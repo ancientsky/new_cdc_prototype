@@ -115,6 +115,7 @@ async function fetchCkanAll() {
 
 // ── 同步 CKAN → content/datasets（只動資料欄位，不碰治理欄位）──
 // 允許更新：lastUpdated、formats、resources、license、provenance。其餘（owner、reviewedAt、aiWhitelist、licenseNote…）一律保留。
+const STANDARD_LICENSES = ['OGDL-1.0', 'CC0-1.0', 'CC-BY-4.0'];
 export function mapLicense(pkg) {
   const id = String(pkg.license_id ?? '').trim();
   const title = String(pkg.license_title ?? '').trim();
@@ -123,6 +124,7 @@ export function mapLicense(pkg) {
   if (/cc-?zero|cc0/.test(s)) return 'CC0-1.0';
   if (/ogdl|政府資料開放授權|open government data/.test(s)) return 'OGDL-1.0';
   if (/^cc-by$|^cc-by-4\.0$/.test(id.toLowerCase()) || /cc-by 4\.0|姓名標示 4\.0/.test(s)) return 'CC-BY-4.0';
+  if (/notspecified|未標示|not specified/.test(s)) return '未標示';
   return id || title;
 }
 export function syncDatasetsFromCkan(packages, { dry = false } = {}) {
@@ -145,7 +147,9 @@ export function syncDatasetsFromCkan(packages, { dry = false } = {}) {
       if (fmts.length) next.formats = fmts;
     }
     const lic = mapLicense(pkg);
-    if (lic) next.license = lic;
+    if (lic && String(lic).toLowerCase() !== String(ds.license ?? '').toLowerCase()) next.license = lic;
+    // 非標準授權且原本沒有說明 → 補 licenseNote，避免 schema 檢查失敗（治理引擎仍會產生授權待辦）
+    if (lic && !STANDARD_LICENSES.includes(lic) && !next.licenseNote) next.licenseNote = `CKAN 標示授權「${pkg.license_title || lic}」，待權責單位確認`;
     const diff = ['lastUpdated', 'formats', 'resources', 'license'].filter((k) => JSON.stringify(ds[k]) !== JSON.stringify(next[k]));
     if (!diff.length) continue;
     next.provenance = { ...(ds.provenance ?? {}), fetchedAt: new Date().toISOString().slice(0, 10), mode: 'live', sourceUrl: `https://data.cdc.gov.tw/api/3/action/package_show?id=${ds.ckanName}` };
