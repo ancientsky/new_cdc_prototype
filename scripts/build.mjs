@@ -15,7 +15,7 @@ import { runEval } from '../eval/run-eval.mjs';
 import { todayISO } from './lib/render.mjs';
 
 const args = Object.fromEntries(process.argv.slice(2).map((a) => { const [k, v] = a.replace(/^--/, '').split('='); return [k, v ?? true]; }));
-const DIST = path.join(ROOT, 'dist');
+const DIST = process.env.DIST_DIR ? path.resolve(process.env.DIST_DIR) : path.join(ROOT, 'dist');
 const t0 = Date.now();
 const log = (...m) => console.log('[build]', ...m);
 
@@ -60,7 +60,7 @@ async function main() {
   fs.mkdirSync(DIST, { recursive: true });
   emitApi(site, writeOut);
   emitSeo(site, writeOut);
-  const pageCount = renderAllPages(site, writeOut);
+  const pageCount = await renderAllPages(site, writeOut);
   // 靜態資源
   copyDir(path.join(ROOT, 'src/styles'), path.join(DIST, 'assets/styles'));
   copyDir(path.join(ROOT, 'src/client'), path.join(DIST, 'assets/js'));

@@ -341,3 +341,22 @@ canonical、hreflang × 7 + x-default、meta description（= summary）、og:*�
 ## 9. 部署
 
 `.github/workflows/pages.yml`：push main 與每日 03:00 UTC 觸發 → `npm ci` → `npm run fetch`（抓不到用快照）→ `npm test` → `npm run build`（含 `--check`）→ upload `dist/` → deploy-pages。basePath 由 `BASE_PATH` 環境變數決定（Pages 為 `/new_cdc_prototype`）。
+
+---
+
+## 10. 多人／多 agent 平行開發約定（重要）
+
+- **模板自動登錄**：`scripts/lib/pages.mjs` 會掃描 `src/templates/{public,pro,admin}/*.mjs`（底線開頭的檔案除外）。每個模板模組匯出 `pages(site)` 宣告自己要輸出哪些路徑與語言，不需要改任何共用登錄檔。簽名見該檔案頂部註解。
+- **後台自訂版面**：模組可匯出 `layout(ctx, pageProps)` 取代預設 layout（例如 `src/templates/admin/_layout.mjs` 由各後台頁 re-export）。
+- **JSON-LD**：模板呼叫 `jsonLdFor(ctx, item)`（`scripts/lib/jsonld.mjs`），把結果放進 `meta()` 回傳的 `jsonLd` 陣列。
+- **各自的輸出目錄**：平行建置時用 `DIST_DIR=/tmp/xxx node scripts/build.mjs`，避免互相刪掉 `dist/`。驗證用 `node scripts/build.mjs --check`（不輸出檔案）。
+- **檔案所有權**（誰改哪裡，避免衝突）：
+  - A 治理／API／SEO：`scripts/lib/governance.mjs`、`emit-api.mjs`、`emit-seo.mjs`、`jsonld.mjs`、`scripts/lib/openapi.mjs`、`tests/**`
+  - B 內容語料：`content/**`、`data/snapshots/**`、`scripts/fetch-data.mjs`（不得改 `content/governance/eval-set.json`，那是 D 的）
+  - C 民眾端：`src/templates/layout.mjs`、`src/templates/public/*`（developers、guide、transparency 除外）、`src/styles/{tokens,base,components}.css`、`src/client/{ui,i18n,charts}.js`
+  - D 答案引擎：`src/client/answer/**`、`src/styles/answer.css`、`scripts/lib/index-builder.mjs`、`eval/**`、`content/governance/eval-set.json`
+  - E 後台：`src/templates/admin/**`、`src/client/admin/**`、`src/styles/admin.css`
+  - F 專業專區／開發者／指南：`src/templates/pro/**`、`src/templates/public/{developers,guide,transparency}.mjs`、`src/client/pro.js`、`docs/**`、`README.md`
+- 要用到別人的東西而它還不存在：先寫最小 stub 在**自己的**檔案裡，或在 prompt 回報，不要去改別人的檔案。
+- 不要 `git commit`／`git push`；由整合者統一提交。
+- 中文正本文字請用台灣用語；不放真人姓名與個資。

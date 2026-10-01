@@ -29,3 +29,5 @@ export function render(ctx) {
 </section>
 <section class="news"><h2>${t('home.news')}</h2><ul class="newslist">${news.map((n) => html`<li><time datetime="${n.publishedAt}">${fmtDate(n.publishedAt)}</time> <a href="${url(`/news/${n.id.replace(/^news\./, '')}/`)}">${n.title}</a></li>`)}</ul></section>`;
 }
+
+export function pages() { return [{ path: '/', lang: '*', props: {} }]; }

@@ -1,8 +1,10 @@
 // 疾病頁（骨架版；Agent C 依 wireframe 第 7 頁補完八區塊、一分鐘重點、三層露出、JSON-LD）
 import { html, raw } from '../../../scripts/lib/render.mjs';
 import { md } from '../../../scripts/lib/markdown.mjs';
+import { langAvailable } from '../../../scripts/lib/pages.mjs';
+import { jsonLdFor } from '../../../scripts/lib/jsonld.mjs';
 
-export function meta(ctx, { item }) { return { title: item.title, description: item.summary, item }; }
+export function meta(ctx, { item }) { return { title: item.title, description: item.summary, item, jsonLd: jsonLdFor(ctx, item), noindex: false }; }
 
 export function render(ctx, { item }) {
   const { site, t, url, fmtDate } = ctx;
@@ -30,4 +32,10 @@ export function markdown(ctx, { item }) {
   lines.push('', item.summary, '', '## 一分鐘重點', ...Object.entries(item.keyFacts).map(([k, v]) => `- ${k}: ${v}`));
   for (const b of item.blocks) { lines.push('', `## ${b.heading}`, ''); if (b.cards) for (const c of b.cards) lines.push(`- 如果你${c.if}：${c.text}`); if (b.markdown) lines.push(b.markdown); if (b.warning) lines.push('', `**警示徵象：**${b.warning}`); }
   return lines.join('\n') + '\n';
+}
+
+export function pages(site) {
+  const out = [];
+  for (const L of site.config.langs) for (const d of site.collections.diseases) if (d.status === 'published' && langAvailable(site, d, L.code)) out.push({ path: `/diseases/${d.slug}/`, lang: L.code, props: { item: d }, md: true });
+  return out;
 }
