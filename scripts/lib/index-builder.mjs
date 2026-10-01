@@ -11,7 +11,7 @@
 //   dataset   series 不入索引（走統計問答）
 // 保證：失效版本（superseded）、逾期、依據正本已修訂（stale）的內容永遠不在索引。
 // 多語：i18n[lang] 有 reviewed（且譯文未過期）者另出同語 chunk；machine 一律不出。
-import { splitPlain } from '../../src/client/answer/core.js';
+import { splitPlain, parseChineseNumber } from '../../src/client/answer/core.js';
 
 const MAX_PARA = 300;
 
@@ -78,7 +78,9 @@ function pathOf(item) {
 function sectionNo(s) {
   if (s.no != null) return String(s.no);
   const m = `${s.heading ?? ''} ${s.key ?? ''}`.match(/第\s*([\d一二三四五六七八九十]+)\s*[條點章節]|^(?:art|sec|s)?-?(\d+)$/i);
-  return m ? (m[1] ?? m[2]) : null;
+  if (!m) return null;
+  const raw = m[1] ?? m[2];
+  return /^\d+$/.test(raw) ? raw : String(parseChineseNumber(raw) ?? raw);
 }
 
 export function buildSearchIndex(site) {

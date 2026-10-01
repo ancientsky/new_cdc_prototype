@@ -158,7 +158,7 @@ export function render(ctx) {
               <div>
                 <a class="pf-row__title" href="${url(`/documents/${slug(c.id)}/`)}">${c.title}</a>
                 <div class="pf-row__ver">${T.current} ${ym(c.effectiveAt)}${prev ? html` · ${T.prev} ${ym(prev.effectiveAt)}` : ''} <span class="pf-badge pf-badge--ok">${c.version}</span> <span class="pf-badge">${owner(c.owner)}</span></div>
-                ${older.map((o) => html`<div class="pf-row__old"><a href="${url(`/documents/${slug(o.id)}/`)}">${o.version}</a>（${T.expired}，${ym(o.effectiveAt)}）</div>`)}
+                ${older.map((o) => html`<div class="pf-row__old"><a href="${url(`/documents/${slug(o.id)}/`, { noLang: true })}">${o.version}</a>（${T.expired}，${ym(o.effectiveAt)}）</div>`)}
               </div>
               <div>${hasDiff ? html`<a class="pf-btn" href="${url(`/documents/${slug(c.id)}/#changes`)}">${T.diff}</a>` : html`<span class="muted">${T.nodiff}</span>`}</div>
             </li>`;

@@ -6,10 +6,19 @@
 - 對應規劃文件：《疾管署官網 AI 應用與資料治理導入：盤點、規格與路線圖》（2026-09-22）與 11 頁 wireframe
 - 狀態：**原型**。架構與規則是真實結構，疫情數字、通函、核准紀錄等為示意資料（見下方〈資料來源與示意聲明〉）
 
-<!-- 截圖位置：docs/screenshots/home.png（首頁：問題框＋現在的疫情） -->
-<!-- 截圖位置：docs/screenshots/answer.png（答案頁：來源編號與來源卡） -->
-<!-- 截圖位置：docs/screenshots/pro.png（專業人員專區） -->
-<!-- 截圖位置：docs/screenshots/admin.png（治理儀表板） -->
+| 首頁（流感高峰 → 情境式首屏） | 答案頁（每句附來源編號） |
+| --- | --- |
+| ![首頁](docs/screenshots/home.png) | ![答案頁](docs/screenshots/answer.png) |
+
+| 疾病頁（八區塊＋一分鐘重點＋三層露出） | 失效版文件（自動警示、noindex、版本鏈） |
+| --- | --- |
+| ![登革熱](docs/screenshots/disease-dengue.png) | ![失效版](docs/screenshots/document-superseded.png) |
+
+| 專業人員專區 | 後台：連動待辦（MMR 事件自動產生） |
+| --- | --- |
+| ![專業專區](docs/screenshots/pro.png) | ![連動待辦](docs/screenshots/admin-todos.png) |
+
+更多：[治理儀表板](docs/screenshots/admin.png)、[手機首頁](docs/screenshots/home-mobile.png)、[越南文首頁](docs/screenshots/home-vi.png)。
 
 ## 這個原型示範什麼
 

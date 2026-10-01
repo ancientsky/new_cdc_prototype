@@ -487,12 +487,14 @@ export function createEngine(rawDeps = {}) {
       for (const n of [d.name, dz?.name, ...(dz?.aliases ?? []), dz?.nameEn]) if (n) names.add(n);
       for (const g of glossary) if ((g.refs ?? []).includes(d.id)) for (const n of [g['zh-TW'], ...(g.aliases ?? []), ...(g.deprecated ?? []), g.en]) if (n) names.add(n);
     }
-    return { toks: new Set(tokenize([...names].join(' '))), names: new Set([...names].map(lc)) };
+    const span = [...(entities?.diseases ?? []), ...(entities?.vaccines ?? [])].filter((x) => !x.derived && !x.preset).map((x) => x.name);
+    return { toks: new Set(tokenize([...names].join(' '))), spanToks: new Set(tokenize(span.join(' '))), names: new Set([...names].map(lc)) };
   }
   function queryWeights(q, expanded, ent = null) {
     const w = new Map();
     const et = ent?.toks ?? new Set();
-    for (const t of tokenize(q, { query: true })) w.set(t, et.has(t) ? 0.25 : 1);
+    const st = ent?.spanToks ?? new Set();
+    for (const t of tokenize(q, { query: true })) w.set(t, st.has(t) ? 0.25 : 1);
     for (const t of tokenize(expanded.added.join(' '), { query: true })) if (!w.has(t)) w.set(t, et.has(t) ? 0.1 : 0.7);
     return w;
   }
@@ -863,6 +865,9 @@ export function createEngine(rawDeps = {}) {
     const qs = q.replace(RUMOR_STRIP, ' ');
     let best = null, bestScore = 0, bestClaim = null;
     for (const c of clarifications) {
+      // 不在白名單的澄清只在「已過時」時使用（治理引擎判定依據已修訂，需告知民眾已過時）
+      const wl = c.gov?.whitelist?.effective ?? c.governance?.whitelist;
+      if (wl === false && !isOutdated(c)) continue;
       const claims = [c.claim, ...(c.claimVariants ?? []), ...(result.lang !== 'zh-TW' ? [c.i18n?.[result.lang]?.claim, c.i18n?.[result.lang]?.title, ...(c.i18n?.[result.lang]?.claimVariants ?? [])] : [])].filter(Boolean);
       for (const claim of claims) { const s = similarity(qs, claim); if (s > bestScore) { bestScore = s; best = c; bestClaim = claim; } }
     }
@@ -875,7 +880,7 @@ export function createEngine(rawDeps = {}) {
     const outdated = isOutdated(best);
     const verdict = outdated ? 'outdated' : best.verdict;
     const i18n = result.lang !== 'zh-TW' ? best.i18n?.[result.lang] : null;
-    const revised = (best.gov?.stale ?? []).map((s) => ({ revisedAt: s.revisedAt, currentId: s.currentId, currentTitle: s.currentTitle }));
+    const revised = (best.gov?.stale ?? best.governance?.stale ?? []).map((s) => ({ revisedAt: s.revisedAt, currentId: s.currentId, currentTitle: s.currentTitle }));
     for (const a of annotationsOf(best)) if (a.kind === 'based-on-revised' && !revised.length) revised.push({ text: a.text, currentId: a.href });
     const text = best.clarificationText ?? mdPlain(best.clarificationMarkdown ?? '');
     result.verdict = verdict;

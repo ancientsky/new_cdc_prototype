@@ -4,7 +4,7 @@ import { md } from '../../../scripts/lib/markdown.mjs';
 import { ldFor, pageHead, sectionHead, verdictPill, provenance, alerts, hrefFor, L, publishedOf, byDateDesc, unitName, isFallbackLink, translationBadge, langOk } from './_partials.mjs';
 
 export function meta(ctx) {
-  return { title: ctx.t('nav.factcheck'), description: ctx.t('factcheck.desc'), scripts: ['/assets/js/answer/factcheck.js'], jsonLd: ldFor(ctx, null, [{ label: ctx.t('nav.factcheck') }]) };
+  return { title: ctx.t('nav.factcheck'), description: ctx.t('factcheck.desc'), styles: ['/assets/styles/answer.css'], scripts: ['/assets/js/answer/factcheck.js'], jsonLd: ldFor(ctx, null, [{ label: ctx.t('nav.factcheck') }]) };
 }
 
 export function clarificationCard(ctx, c) {

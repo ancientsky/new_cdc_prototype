@@ -45,7 +45,7 @@ const ICONS = {
 };
 const icon = (n) => raw(`<svg class="c-tabbar__ic" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[n]}</svg>`);
 
-export function layout(ctx, { title, description, body, jsonLd = [], noindex = false, bodyClass = '', scripts = [], item = null, canonicalPath = null, hideTranslationBar = false }) {
+export function layout(ctx, { styles = [], title, description, body, jsonLd = [], noindex = false, bodyClass = '', scripts = [], item = null, canonicalPath = null, hideTranslationBar = false }) {
   const { site, lang, url, t } = ctx;
   const langDef = config.langs.find((l) => l.code === lang);
   const path = ctx.path ?? '/';
@@ -91,6 +91,7 @@ ${noindex ? raw('<meta name="robots" content="noindex">') : ''}
 <link rel="stylesheet" href="${url('/assets/styles/tokens.css', { noLang: true })}">
 <link rel="stylesheet" href="${url('/assets/styles/base.css', { noLang: true })}">
 <link rel="stylesheet" href="${url('/assets/styles/components.css', { noLang: true })}">
+${(styles ?? []).map((s) => html`<link rel="stylesheet" href="${url(s, { noLang: true })}">`)}
 ${ld.map((j) => raw(`<script type="application/ld+json">${jsonScript(j)}</script>`))}
 </head>
 <body class="${bodyClass}">

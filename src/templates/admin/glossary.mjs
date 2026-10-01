@@ -43,7 +43,7 @@ ${pageHead({ title: '詞彙主檔', what: '七語詞彙主檔：同一個概念�
       <div class="adm-field"><label for="n-dep">停用舊名 deprecated（逗號分隔）</label><input type="text" id="n-dep"></div>
       <div class="adm-field"><label for="n-refs">關聯內容 refs（逗號分隔）</label><input type="text" id="n-refs" placeholder="disease.chikungunya"></div>
     </div>
-    <div class="adm-grid adm-grid--3">${cols.map((l) => html`<div class="adm-field"><label for="n-${l.code}" lang="${l.code}">${l.label}</label><input type="text" id="n-${l.code}" data-lang="${l.code}" lang="${l.code}"></div>`)}</div>
+    <div class="adm-grid adm-grid--3">${cols.map((l) => html`<div class="adm-field"><label for="n-lang-${l.code}" lang="${l.code}">${l.label}</label><input type="text" id="n-lang-${l.code}" data-lang="${l.code}" lang="${l.code}"></div>`)}</div>
     <div class="adm-field"><label for="n-note">備註</label><input type="text" id="n-note"></div>
     <label class="adm-pill" style="width:fit-content"><input type="checkbox" id="n-locked" checked><span>鎖定（機器翻譯不得自由翻譯）</span></label>
     <div id="n-warn" aria-live="polite"></div>

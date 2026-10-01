@@ -7,7 +7,7 @@ const CATS = ['open-dataset', 'stats-system', 'structured-table', 'document-libr
 const V1 = ['diseases', 'vaccines', 'faq', 'news', 'documents', 'clarifications', 'situation', 'travel-alerts', 'country-levels', 'datasets', 'catalog', 'glossary', 'search-index', 'redirects'];
 
 export function meta(ctx) {
-  return { title: ctx.t('nav.data'), description: ctx.t('data.desc'), scripts: ['/assets/js/answer/stats.js'], jsonLd: ldFor(ctx, null, [{ label: ctx.t('nav.data') }]) };
+  return { title: ctx.t('nav.data'), description: ctx.t('data.desc'), styles: ['/assets/styles/answer.css'], scripts: ['/assets/js/answer/stats.js'], jsonLd: ldFor(ctx, null, [{ label: ctx.t('nav.data') }]) };
 }
 
 export function render(ctx) {
