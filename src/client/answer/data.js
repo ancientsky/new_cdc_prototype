@@ -91,3 +91,23 @@ export async function barChart(values, opts = {}) {
   const bars = vals.map((v, i) => `<rect x="${i * bw + 4}" y="${h - 20 - (v / max) * (h - 36)}" width="${bw - 8}" height="${(v / max) * (h - 36)}" rx="2" fill="currentColor" opacity="${i === vals.length - 1 ? 1 : 0.5}"><title>${esc(opts.labels?.[i] ?? i + 1)}：${v}${esc(opts.unit ?? '')}</title></rect><text x="${i * bw + bw / 2}" y="${h - 4}" font-size="10" text-anchor="middle" fill="currentColor">${esc(opts.labels?.[i] ?? '')}</text>`).join('');
   return `<svg class="c-chart c-chart--bar c-chart--mini" viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(opts.title ?? '')}：${esc(vals.map((v, i) => `${opts.labels?.[i] ?? i + 1} ${v}`).join('；'))}">${bars}</svg>`;
 }
+
+/**
+ * 評估集 requires 判斷（瀏覽器版；與 eval/run-eval.mjs 的 contentExists 同規則）：
+ * 'situation:<disease id>'、'travel:<ISO2>'、'dataset-series:<dataset id>'、內容 id 或前綴（含 document family）。
+ * 用法（後台評估頁）：scoreEvalSet(engine, set, { exists: await evalExists() })
+ */
+export async function evalExists() {
+  const [catalog, documents, situation, datasets, travelAlerts, countryLevels] = await Promise.all([
+    v1('catalog', []), v1('documents', []), v1('situation', null), v1('datasets', []), v1('travel-alerts', []), v1('country-levels', []),
+  ]);
+  const ids = (catalog ?? []).map((c) => c.id);
+  const families = new Set((documents ?? []).map((d) => d.family).filter(Boolean));
+  const travel = [...(countryLevels ?? []), ...(travelAlerts ?? [])];
+  return (ref) => {
+    if (ref.startsWith('situation:')) return (situation?.items ?? []).some((i) => i.disease === ref.slice(10));
+    if (ref.startsWith('travel:')) { const iso = ref.slice(7).toUpperCase(); return travel.some((t) => String(t.iso2 ?? t.countryCode ?? t.iso ?? t.code ?? '').toUpperCase() === iso); }
+    if (ref.startsWith('dataset-series:')) return (datasets ?? []).some((d) => d.id === ref.slice(15) && d.series);
+    return families.has(ref) || ids.some((id) => id === ref || id.startsWith(ref));
+  };
+}
