@@ -1,6 +1,7 @@
 // 出國與入境：目的地查詢（國家下拉 + 等級表）與每國一頁。資料來自 site.snapshots（live 或快照），欄位名容錯。
 import { html, raw } from '../../../scripts/lib/render.mjs';
 import { config } from '../../../site.config.mjs';
+import * as JL from '../../../scripts/lib/jsonld.mjs';
 import { ldFor, pageHead, sectionHead, askBox, sourceCard, hrefFor, L, diseasePage, publishedOf, feedback, pill } from './_partials.mjs';
 
 export const TRAVEL_CLINIC_URL = `${config.legacyOrigin}/Category/List/`;
@@ -56,7 +57,9 @@ export function meta(ctx, props = {}) {
   const { t } = ctx;
   if (props.country) {
     const c = props.country;
-    return { title: `${cname(ctx, c)} · ${t('nav.travel')}`, description: t('travel.country.desc', { name: cname(ctx, c) }), jsonLd: ldFor(ctx, null, [{ label: t('nav.travel'), href: '/travel/' }, { label: cname(ctx, c) }]) };
+    const jl = ldFor(ctx, null, [{ label: t('nav.travel'), href: '/travel/' }, { label: cname(ctx, c) }]);
+    try { if (typeof JL.travelJsonLd === 'function') jl.push(JL.travelJsonLd(ctx, c, rowsFor(ctx.site).filter((r) => matchCountry(c, r)).map((r) => ({ disease: r.disease, level: r.code, levelLabel: r.level, advice: r.summary, publishedAt: r.start ? String(r.start).slice(0, 10) : undefined })))); } catch { /* optional */ }
+    return { title: `${cname(ctx, c)} · ${t('nav.travel')}`, description: t('travel.country.desc', { name: cname(ctx, c) }), jsonLd: jl };
   }
   return { title: t('nav.travel'), description: t('travel.desc'), jsonLd: ldFor(ctx, null, [{ label: t('nav.travel') }]) };
 }

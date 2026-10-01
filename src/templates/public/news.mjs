@@ -23,7 +23,7 @@ function listPage(ctx) {
   const items = [...publishedOf(site, 'news'), ...publishedOf(site, 'clarifications')].sort(byDateDesc);
   const years = [...new Set(items.map((n) => n.publishedAt.slice(0, 4)))].sort().reverse();
   const count = (k) => items.filter((n) => kindOf(n) === k).length;
-  return html`${pageHead(ctx, { trail: [{ label: t('nav.news') }], h1: t('nav.news'), lead: t('news.lead'), actions: html`<a class="c-btn c-btn--ghost c-btn--sm" href="${ctx.url('/news/feed.xml', { noLang: true })}">RSS</a> <a class="c-btn c-btn--ghost c-btn--sm" href="${ctx.url('/v1/news.json', { noLang: true })}">JSON API</a>` })}
+  return html`${pageHead(ctx, { trail: [{ label: t('nav.news') }], h1: t('nav.news'), lead: t('news.lead'), actions: html`<a class="c-btn c-btn--ghost c-btn--sm" href="${ctx.url('/feeds/news.xml', { noLang: true })}">RSS</a> <a class="c-btn c-btn--ghost c-btn--sm" href="${ctx.url('/v1/news.json', { noLang: true })}">JSON API</a>` })}
 <div class="c-filterbars">
   <div class="c-filterbar" role="group" aria-label="${t('news.filter.type')}" data-filterbar="news-list" data-key="kind">
     <button type="button" data-v="" aria-pressed="true">${t('all')} (${items.length})</button>

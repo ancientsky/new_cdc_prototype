@@ -74,7 +74,7 @@ function detail(ctx, d) {
     ${scopeTags(ctx, d)}
     ${d.roles?.length ? html`<p class="c-roles"><span class="muted">${t('documents.roles')}</span> ${d.roles.map((r) => html`<span class="c-pill c-pill--info">${t(`role.${r}`)}</span> `)}</p>` : ''}
     ${langStatus && lang !== 'zh-TW' ? html`<p>${translationBadge(ctx, langStatus === 'reviewed' ? 'reviewed' : 'machine')}</p>` : ''}
-    ${alerts(ctx, d)}
+    ${alerts(ctx, d, { skip: ['superseded'] })}
     ${provenance(ctx, d)}
     <p class="c-docactions">
       ${d.pdfUrl ? html`<a class="c-btn" href="${d.pdfUrl}" rel="noopener">${t('documents.pdf')} ↗</a>` : ''}
@@ -110,7 +110,7 @@ export function markdown(ctx, { item: d }) {
   if (!d.isCurrent) lines.push(`> 本版已由 ${cur.version}（${cur.effectiveAt} 生效）取代，請見 ${ctx.url(itemPath(cur), { absolute: true })}`, '');
   lines.push(`# ${L(ctx, d, 'title')}`, '', `> 權責單位：${unitName(ctx, d.owner)} · 版次：${d.version} · 生效日：${d.effectiveAt} · 最後審閱：${d.reviewedAt} · 下次審閱：${d.gov?.nextReviewAt ?? '事件觸發'} · 授權：${d.license} · ID：${d.id}${d.supersedes ? ` · 取代：${d.supersedes}` : ''}${d.pdfUrl ? ` · PDF：${d.pdfUrl}` : ''}`);
   for (const a of d.gov?.annotations ?? []) if (a.kind !== 'superseded') lines.push(`> ⚠ ${a.text}`);
-  lines.push('', d.machineReadableMarkdown ?? '');
+  lines.push('', String(d.machineReadableMarkdown ?? '').replace(/^#\s+[^\n]*\n+/, ''));
   if (d.changes?.length) { lines.push('', '## 本版異動'); for (const c of d.changes) lines.push(`- ${c.section}（${c.kind ?? 'changed'}）：${c.before ? `「${c.before}」→ ` : ''}${c.after ?? '（刪除）'}`); }
   return lines.join('\n') + '\n';
 }

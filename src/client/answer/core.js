@@ -364,6 +364,7 @@ function annotationsOf(item) { return item?.gov?.annotations ?? item?.governance
 function isOutdated(item) {
   if (item?.verdict === 'outdated') return true;
   if (item?.gov?.stale?.length) return true;
+  if (item?.governance?.stale?.length) return true;
   return annotationsOf(item).some((a) => a.kind === 'based-on-revised' || a.kind === 'superseded');
 }
 
@@ -967,7 +968,7 @@ export function createEngine(rawDeps = {}) {
 
   // ───────────── answer ─────────────
   function answer(rawQuery, opts = {}) {
-    const { lang = 'zh-TW', view = 'public', disease: presetDisease = null, mode } = opts;
+    const { lang = 'zh-TW', view = 'public', disease: presetDisease = null, mode, forceIntent = null } = opts;
     const pii = maskPIIDetailed(String(rawQuery ?? '').trim().slice(0, 500));
     const q = pii.text;
     const result = {
@@ -1003,9 +1004,12 @@ export function createEngine(rawDeps = {}) {
     // 2 意圖
     const ci = classifyIntent(q, { view, hasTimeRange: hasRange, hasDisease: !!result.disease });
     result.intent = ci.intent; result.intentReasons = ci.reasons; result.intentScores = ci.scores;
+    if (forceIntent) { result.intent = forceIntent; result.intentReasons.push(`forced.${forceIntent}`); }
 
-    // 3 拒答
+    // 3 拒答（謠言查證頁貼上的是網傳訊息本身：只套用注入、危害、隱私、冒名規則）
+    const RUMOR_RULE_KINDS = new Set(['prompt-injection', 'harmful', 'privacy', 'impersonation']);
     for (const r of REFUSAL_RULES) {
+      if (forceIntent === 'rumor' && !RUMOR_RULE_KINDS.has(r.kind)) continue;
       const hit = r.test ? r.test(q) : r.re.test(q);
       if (hit) { result.intentReasons.push(r.id); return setRefusal(result, r.kind, r.id); }
     }

@@ -41,7 +41,7 @@ ${pageHead({ title: 'AI 開關', what: '暫停或恢復全站 AI 問答。暫停
   <pre class="adm-pre" id="as-out" tabindex="0">{ }</pre>
   <div class="adm-actions"><button type="button" class="adm-btn adm-btn--ghost" id="as-copy">複製</button><button type="button" class="adm-btn adm-btn--ghost" id="as-dl">下載 .json</button></div>
   <h3>覆寫格式（給答案頁讀取）</h3>
-  <p class="adm-muted"><code>localStorage["cdc.aiStatusOverride"]</code> = <code>{"paused": boolean, "reason": string, "updatedAt": ISO 時間, "updatedBy": 單位 id}</code>。存在時優先於建置版本；清除則回到建置版本。</p></section>
+  <p class="adm-muted"><code>localStorage["cdc.aiStatusOverride"]</code> = <code>{"paused": boolean, "reason": string, "updatedAt": ISO 時間, "updatedBy": 單位 id}</code>。存在時優先於建置版本；清除則回到建置版本。為相容目前的答案頁，按鈕同時寫入 <code>cdc.aiStatus</code>（{paused, reason, until}）。</p></section>
 </div>
 <section class="adm-card" aria-labelledby="sop-h"><h2 id="sop-h">暫停 SOP（五步）</h2><ol class="adm-sop">${SOP.map(([a, b]) => html`<li><strong>${a}</strong>：${b}</li>`)}</ol>
   <h3>暫停後前台長這樣</h3><ul><li>答案頁 <code>/ask/</code>：不產生答案句，改列「標題、摘要、更新日」的傳統搜尋結果。</li><li>全站頁首：深色橫幅「AI 問答暫停中，已切回傳統搜尋」。</li><li>內容頁、資料 API、1922 專線資訊照常。</li></ul></section>

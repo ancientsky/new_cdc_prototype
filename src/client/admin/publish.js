@@ -368,14 +368,21 @@ function confirmSubmit() {
 
 async function llmOne(lang) {
   const f = readForm();
-  const d = (llmDrafts[lang] = { pending: true });
-  void d;
+  llmDrafts[lang] = { pending: true };
   try {
     const mod = await import(url('/assets/js/answer/llm.js'));
-    if (typeof mod.translateWithGlossary !== 'function') { llmDrafts[lang] = { error: '答案引擎尚未提供 translateWithGlossary（略過）' }; paintResultKeepFocus(); return; }
-    const glossary = A.locked.map((t) => ({ zh: t.zh, term: t.zh, target: t.tr[lang], translation: t.tr[lang] }));
-    const res = await mod.translateWithGlossary({ text: `${f.title}\n\n${f.body}`, title: f.title, body: f.body, summary: sel.summary, lang, targetLang: lang, to: lang, glossary, apiKey: store.raw('cdc.llmKey'), key: store.raw('cdc.llmKey') });
-    llmDrafts[lang] = { text: typeof res === 'string' ? res : (res?.text ?? res?.translation ?? JSON.stringify(res, null, 2)) };
+    const key = store.raw('cdc.llmKey');
+    if (typeof mod.translateWithGlossary === 'function') {
+      // 約定介面（若答案引擎日後提供）
+      const res = await mod.translateWithGlossary({ text: `${f.title}\n\n${f.body}`, lang, glossary: A.M.glossary, apiKey: key, key });
+      llmDrafts[lang] = { text: typeof res === 'string' ? res : (res?.text ?? res?.translation ?? JSON.stringify(res, null, 2)) };
+    } else if (typeof mod.llmTranslate === 'function') {
+      // 目前答案引擎提供的是 llmTranslate（鎖定詞先換成 placeholder，翻譯後還原為主檔譯名；譯文數字必須與原文一致）
+      const sentences = P.splitSentences(`${f.title}。${f.body}`).map((t, i) => ({ text: t, cite: [`draft#${i}`] }));
+      const res = await mod.llmTranslate({ sentences }, { lang, glossary: A.M.glossary });
+      if (res?.llmError) throw new Error(res.llmError.message || res.llmError.kind);
+      llmDrafts[lang] = { text: (res?.sentences ?? []).map((s) => (s.translationDropped ? `【數字不符，請人工翻譯】${s.original}` : s.text)).join('\n') };
+    } else { llmDrafts[lang] = { error: '答案引擎尚未提供翻譯函式（略過）' }; }
   } catch (err) { llmDrafts[lang] = { error: String(err?.message ?? err).slice(0, 120) }; }
   paintResultKeepFocus();
 }

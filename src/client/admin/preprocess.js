@@ -146,12 +146,13 @@ export function extractEntities(textRaw, lex) {
   // (1) 帶「熱／病／症／炎／病毒／疫苗」結尾
   for (const seg of segs) {
     SUFFIX.lastIndex = 0;
-    let m, prevEnd = -1;
+    let m, prevEnd = 0, lastEnd = -1;
     while ((m = SUFFIX.exec(seg))) {
       const end = m.index + m[1].length;
-      if (m.index === prevEnd) continue; // 連續字尾（如「病症」）只取第一個
+      if (m.index === lastEnd) continue; // 連續字尾（如「病症」）只取第一個
+      lastEnd = end;
+      let w = seg.slice(Math.max(prevEnd, m.index - 4, 0), end);
       prevEnd = end;
-      let w = seg.slice(Math.max(0, m.index - 4), end);
       for (let guard = 0; guard < 3; guard++) { const lv = LEAD_VERBS.find((v) => w.startsWith(v) && w.length > v.length); if (!lv) break; w = w.slice(lv.length); }
       if (w.length >= 2) addCand(w, '帶疾病／病原／疫苗字尾', countOf(w));
     }

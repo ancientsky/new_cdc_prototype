@@ -132,22 +132,25 @@ export function provenance(ctx, item, { showAi = true, extra = null } = {}) {
 export function alertBox(kind, content, { role = 'alert' } = {}) {
   return html`<div class="c-alert c-alert--${kind}" role="${role}">${content}</div>`;
 }
-export function alerts(ctx, item) {
+export function alerts(ctx, item, { skip = [] } = {}) {
   const { t, site, fmtDate } = ctx;
   const g = item.gov;
   if (!g) return '';
   const zh = ctx.lang === 'zh-TW';
   const out = [];
   for (const a of g.annotations ?? []) {
-    if (!['superseded', 'overdue', 'based-on-revised'].includes(a.kind)) continue;
-    const target = a.href ? site.byId.get(a.href) ?? (g.stale?.find((s) => s.currentId === a.href) ? site.byId.get(a.href) : null) : null;
+    if (!['superseded', 'overdue', 'based-on-revised', 'scheduled', 'archived'].includes(a.kind) || skip.includes(a.kind)) continue;
+    const cls = a.kind === 'scheduled' || a.kind === 'archived' ? 'info' : a.kind;
+    let href = null;
+    if (a.path) href = ctx.url(a.path);
+    else if (a.targetId || a.href) { const tg = site.byId.get(a.targetId ?? a.href); if (tg) href = hrefFor(ctx, tg); }
     let text = a.text;
     if (!zh) {
       if (a.kind === 'superseded') text = t('alert.superseded', { v: item.version ?? '', date: fmtDate(site.byId.get(g.supersededBy)?.effectiveAt) });
       if (a.kind === 'overdue') text = t('alert.overdue', { date: fmtDate(g.nextReviewAt) });
-      if (a.kind === 'based-on-revised') { const s = g.stale?.find((x) => x.currentId === a.href); text = t('alert.revised', { pub: fmtDate(item.publishedAt), title: s?.currentTitle ?? '', rev: fmtDate(s?.revisedAt) }); }
+      if (a.kind === 'based-on-revised') text = t('alert.revised', { pub: fmtDate(item.publishedAt), title: a.currentTitle ?? '', rev: fmtDate(a.revisedAt) });
     }
-    out.push(alertBox(a.kind, html`<strong class="c-alert__t">${t(`alert.${a.kind}.t`)}</strong> ${text} ${target ? html`<a class="c-alert__go" href="${hrefFor(ctx, target)}">${t('alert.go')} →</a>` : ''}`));
+    out.push(alertBox(cls, html`<strong class="c-alert__t">${t(`alert.${cls}.t`)}</strong> ${text} ${href ? html`<a class="c-alert__go" href="${href}">${t('alert.go')} →</a>` : ''}`));
   }
   return out.length ? html`<div class="c-alerts">${out}</div>` : '';
 }
@@ -166,7 +169,7 @@ export function pageData(ctx, item, { schema = 'WebPage', api = null, mdPath = n
     <li>${g.whitelist?.effective ? t('pagedata.whitelist') : `${t('pagedata.notwhitelist')}${g.whitelist?.reasons?.length ? `（${g.whitelist.reasons.join('、')}）` : ''}`}</li>
     <li>ID：<code>${item.id}</code></li>
     ${extra}
-    <li><a href="${url('/policy/ai/')}#report">${t('pagedata.report')}</a></li>
+    <li><a href="${url('/policy/ai/')}">${t('pagedata.report')}</a></li>
   </ul>
 </details>`;
 }

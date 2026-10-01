@@ -168,7 +168,8 @@
 .c-statusmeta b{color:var(--ink-3);font-weight:600;margin-right:4px}
 .c-sitbig{display:grid;gap:var(--sp-4)}
 .c-sitbig__body{display:grid;grid-template-columns:1fr 1.2fr;gap:var(--sp-5);align-items:start}
-.c-sitbig__chart{margin:0} .c-sitbig__chart svg{width:100%}
+.c-sitbig__chart{margin:0} .c-sitbig__chart svg.c-chart--bar{width:100%}
+.c-sitbig__chart figcaption svg{vertical-align:middle}
 .c-timeline{list-style:none;margin:0;padding:0 0 0 var(--sp-4);border-left:3px solid var(--green-100)}
 .c-timeline li{position:relative;padding:var(--sp-2) 0 var(--sp-2) var(--sp-3);display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
 .c-timeline li::before{content:"";position:absolute;left:calc(var(--sp-4)*-1 - 7px);top:16px;width:11px;height:11px;border-radius:50%;background:var(--white);border:3px solid var(--green-600)}
@@ -326,6 +327,7 @@ html:not(.js) .c-tabs__print{display:block}
 .c-alert--overdue{background:var(--alert-overdue-bg);color:var(--alert-overdue);border-color:#d9a400}
 .c-alert--superseded{background:var(--alert-superseded-bg);color:var(--alert-superseded);border-color:var(--status-peak)}
 .c-alert--based-on-revised,.c-alert--revised{background:var(--alert-revised-bg);color:var(--alert-revised);border-color:#e07b00}
+.c-alert--info{background:var(--info-bg);color:var(--info);border-color:var(--info)}
 .c-alert a{color:inherit}
 /* 3 本頁的資料 */
 .c-page-data{margin:var(--sp-4) 0;background:var(--paper);padding:var(--sp-3) var(--sp-4);border-radius:var(--radius);font-size:var(--fs-sm)}

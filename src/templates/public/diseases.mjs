@@ -23,7 +23,7 @@ function row(ctx, dm) {
   }
   return html`<li class="c-dis" data-text="${text}">
     <div class="c-dis__main">${link}${ctx.lang !== 'en' && dm.nameEn ? html` <span class="c-dis__en" lang="en">${dm.nameEn}</span>` : ''}</div>
-    <div class="c-dis__meta"><span class="c-scope-tag c-scope-tag--cat">${t('disease.cat', { n: dm.legalCategory })}</span>
+    <div class="c-dis__meta">
       ${dm.notifyWithinHours ? html`<span class="muted">${t('disease.notify.h', { h: dm.notifyWithinHours })}</span>` : ''}
       ${page ? html`<span class="muted">${t('prov.reviewed')} ${fmtDate(page.reviewedAt)}</span>` : html`<span class="c-pill c-pill--neutral">${t('diseases.nopage')}</span> <a class="muted" href="${ctx.url('/ask/')}?q=${encodeURIComponent(dm.name)}">${t('diseases.askit')}</a>`}</div>
   </li>`;

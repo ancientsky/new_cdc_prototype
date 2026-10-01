@@ -120,7 +120,7 @@ export function render(ctx) {
     <div class="c-home__main">
       <section class="c-prozone" aria-labelledby="pro-h"><div><h2 id="pro-h">${t('home.pro')}</h2><p>${t('home.pro.sub')}</p></div><a class="c-btn c-btn--navy" href="${url('/pro/')}?view=pro" data-view-set="pro">${t('home.enter')}</a></section>
       <section class="c-news" aria-labelledby="news-h">
-        <div class="c-sechead"><h2 id="news-h">${t('home.news')}</h2><a class="c-sechead__more" href="${url('/news/')}">${t('home.news.all')} →</a> <a class="c-sechead__more" href="${url('/news/feed.xml', { noLang: true })}">RSS</a></div>
+        <div class="c-sechead"><h2 id="news-h">${t('home.news')}</h2><a class="c-sechead__more" href="${url('/news/')}">${t('home.news.all')} →</a> <a class="c-sechead__more" href="${url('/feeds/news.xml', { noLang: true })}">RSS</a></div>
         <ul class="c-newslist">${news.map((n) => dated(ctx, n, { type: false }))}</ul>
       </section>
     </div>

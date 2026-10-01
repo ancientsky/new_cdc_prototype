@@ -2,7 +2,7 @@
 // meta 介面：{ title, description, body, jsonLd[], noindex, bodyClass, scripts[], item, canonicalPath, hideTranslationBar }
 import { html, raw, jsonScript } from '../../scripts/lib/render.mjs';
 import { config } from '../../site.config.mjs';
-import { orgJsonLd } from '../../scripts/lib/jsonld.mjs';
+import * as JL from '../../scripts/lib/jsonld.mjs';
 import { pausedBanner, translationBadge } from './public/_partials.mjs';
 
 // 介面（UI 字串）本身的翻譯審核狀態；內容頁則看 item.languages[lang]
@@ -60,9 +60,10 @@ export function layout(ctx, { title, description, body, jsonLd = [], noindex = f
   const isHome = path === '/';
   const ld = [...jsonLd];
   if (isHome) {
-    ld.push({ '@context': 'https://schema.org', '@type': 'WebSite', name: t('site.name'), url: `${origin}${langDef?.path ?? ''}/`, inLanguage: lang, potentialAction: { '@type': 'SearchAction', target: { '@type': 'EntryPoint', urlTemplate: `${config.siteUrl}${url('/ask/')}?q={search_term_string}` }, 'query-input': 'required name=search_term_string' } });
-    try { ld.push(orgJsonLd(ctx)); } catch { /* jsonld.mjs 尚無 orgJsonLd */ }
+    try { ld.push(JL.websiteJsonLd(ctx)); } catch { /* optional */ }
+    try { ld.push(JL.orgJsonLd(ctx)); } catch { /* optional */ }
   }
+  const forcePro = path.startsWith('/pro/');
   const wide = /\bpage-wide\b|\bpage-home\b/.test(bodyClass);
   const navItems = [
     ['/diseases/', 'nav.diseases'], ['/vaccines/', 'nav.vaccines'], ['/travel/', 'nav.travel'], ['/situation/', 'nav.situation'],
@@ -73,7 +74,7 @@ export function layout(ctx, { title, description, body, jsonLd = [], noindex = f
     return html`<a href="${config.basePath}${L.path}${same ? path : '/'}" data-lang-path="${L.path}" data-same="${same ? '1' : '0'}" hreflang="${L.code}" lang="${L.code}" ${L.code === lang ? raw('aria-current="true"') : ''}>${L.label}</a>`;
   });
   return html`<!doctype html>
-<html lang="${lang}" dir="${langDef?.dir ?? 'ltr'}" data-base="${config.basePath}" data-lang-path="${langDef?.path ?? ''}" data-view="public">
+<html lang="${lang}" dir="${langDef?.dir ?? 'ltr'}" data-base="${config.basePath}" data-lang-path="${langDef?.path ?? ''}" data-view="${forcePro ? 'pro' : 'public'}"${forcePro ? raw(' data-force-view="pro"') : ''}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -101,8 +102,8 @@ ${ld.map((j) => raw(`<script type="application/ld+json">${jsonScript(j)}</script
 <header class="site-header"><div class="wrap site-header__in">
   <a class="brand" href="${url('/')}"><span class="brand__mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="40" height="40"><rect width="32" height="32" rx="8" fill="currentColor"/><path d="M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z" fill="#fff"/></svg></span><span class="brand__text"><span class="brand__name">${t('site.name')}</span><span class="brand__sub">${lang === 'zh-TW' ? config.nameEn : t('site.parent')}</span></span></a>
   <div class="audience" role="group" aria-label="${t('nav.audience')}">
-    <button type="button" class="audience__btn" data-view-set="public" aria-pressed="true">${t('nav.public')}</button>
-    <a class="audience__btn" href="${url('/pro/')}?view=pro" data-view-set="pro" aria-pressed="false">${t('nav.pro')}</a>
+    <button type="button" class="audience__btn" data-view-set="public" aria-pressed="${forcePro ? 'false' : 'true'}">${t('nav.public')}</button>
+    <a class="audience__btn" href="${url('/pro/')}?view=pro" data-view-set="pro" aria-pressed="${forcePro ? 'true' : 'false'}" ${forcePro ? raw('aria-current="page"') : ''}>${t('nav.pro')}</a>
     <a class="audience__btn" href="${url('/developers/')}">${t('nav.research')}</a>
   </div>
   <button type="button" class="c-nav__toggle" aria-expanded="false" aria-controls="main-nav">${t('nav.menu')}</button>

@@ -94,7 +94,7 @@ html[data-view="pro"] .c-public-only{display:none!important}
   h1{font-size:var(--fs-xl)} h2{font-size:var(--fs-lg)}
   .topbar__links a:not(.hotline){display:none}
   .audience{order:3;width:100%;justify-content:space-between}
-  .audience__btn{flex:1;text-align:center;padding:8px 6px;font-size:var(--fs-xs)}
+  .audience__btn{flex:1 1 0;min-width:0;white-space:normal;line-height:1.25;text-align:center;padding:8px 6px;font-size:var(--fs-xs);display:flex;align-items:center;justify-content:center}
   .site-header__in{padding-top:var(--sp-2);padding-bottom:var(--sp-2)}
   .brand__name{font-size:var(--fs-md)}
   .site-footer__in{grid-template-columns:1fr}

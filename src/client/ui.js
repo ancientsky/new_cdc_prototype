@@ -29,6 +29,7 @@ function applyView(v) {
   qsa('.c-source-card').forEach((d) => { if (v === 'pro') d.open = true; else if (d.dataset.autoOpened) { d.open = false; } if (v === 'pro') d.dataset.autoOpened = '1'; else delete d.dataset.autoOpened; });
 }
 CDC.setView = (v, persist = true) => { if (persist) store.setRaw('cdc.view', v); applyView(v); };
+if (root.dataset.forceView) store.setRaw('cdc.view', root.dataset.forceView);
 const qv = params.get('view');
 if (qv === 'pro' || qv === 'public') store.setRaw('cdc.view', qv);
 applyView(store.getRaw('cdc.view') === 'pro' ? 'pro' : 'public');
@@ -236,7 +237,6 @@ qsa('input[data-filter-input]').forEach((inp) => {
     const q = inp.value.trim().toLowerCase();
     qsa('[data-text]', target).forEach((el) => { el.hidden = !!q && !el.dataset.text.includes(q); });
     qsa('[data-filter-group]', target).forEach((g) => { g.hidden = !!q && qsa('[data-text]', g).every((el) => el.hidden); });
-    if (q) qsa('[data-tabs] [role="tabpanel"]', target.parentElement).forEach((p) => { p.hidden = false; });
   });
 });
 
