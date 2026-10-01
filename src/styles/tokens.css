@@ -1,25 +1,31 @@
-/* 設計 token：wireframe 中保真配色（綠主色、灰、暖白）。所有樣式只能用這裡的變數。 */
+/* 設計 token：wireframe 中保真配色（綠主色、灰、暖白）。所有樣式只能用這裡的變數。
+   對比：文字／背景組合均 ≥ 4.5:1（一般文字）。 */
 :root {
-  --green-900: #0f3d2e; --green-700: #1b5e3f; --green-600: #227a4c; --green-100: #e5efe9; --green-50: #f1f6f3;
-  --navy-700: #2a3350; --navy-100: #e8ebf3;
-  --ink: #1b1f23; --ink-2: #4a5159; --ink-3: #6b737c; --line: #d9dde2; --paper: #f6f6f4; --white: #fff;
-  --status-stable: #2f855a; --status-stable-bg: #e6f4ec;
-  --status-rising: #b7791f; --status-rising-bg: #fbf1dc;
-  --status-peak: #b83232; --status-peak-bg: #f9e3e3;
-  --status-declining: #2b6cb0; --status-declining-bg: #e3edf8;
-  --alert-overdue-bg: #fff6d9; --alert-overdue: #8a6d00;
-  --alert-superseded-bg: #fde8e8; --alert-superseded: #9b2c2c;
-  --alert-revised-bg: #fff1e0; --alert-revised: #9c4a00;
+  --green-900: #0f3d2e; --green-800: #164d37; --green-700: #1b5e3f; --green-600: #227a4c; --green-100: #e5efe9; --green-50: #f1f6f3;
+  --navy-900: #1d2540; --navy-700: #2a3350; --navy-100: #e8ebf3; --blue-50: #eaf2fb; --blue-700: #1e4f8a;
+  --ink: #1b1f23; --ink-2: #444b53; --ink-3: #5b636c; --line: #d9dde2; --line-2: #eceef1; --paper: #f6f6f4; --white: #fff;
+  --status-stable: #276749; --status-stable-bg: #e3f3ea;
+  --status-rising: #8a5700; --status-rising-bg: #fbf0d6;
+  --status-peak: #b02a2a; --status-peak-bg: #f9e3e3;
+  --status-declining: #245c9a; --status-declining-bg: #e3edf8;
+  --alert-overdue-bg: #fff6d9; --alert-overdue: #6f5400;
+  --alert-superseded-bg: #fde8e8; --alert-superseded: #8f2323;
+  --alert-revised-bg: #fff0dc; --alert-revised: #8a4200;
   --paused-bg: #1f2a24; --paused-ink: #fff;
+  --ok: #1b5e3f; --ok-bg: #e3f3ea; --warn: #6f5400; --warn-bg: #fff3cf; --info: #1e4f8a; --info-bg: #e3edf8; --neutral: #444b53; --neutral-bg: #eceef1;
   --verdict-false: var(--status-peak); --verdict-false-bg: var(--status-peak-bg);
   --verdict-partly: var(--status-rising); --verdict-partly-bg: var(--status-rising-bg);
-  --verdict-outdated: #6b7280; --verdict-outdated-bg: #eef0f2;
-  --font: system-ui, -apple-system, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", Roboto, sans-serif;
+  --verdict-outdated: #4b5563; --verdict-outdated-bg: #e8eaee;
+  --verdict-true: var(--status-stable); --verdict-true-bg: var(--status-stable-bg);
+  --font: system-ui, -apple-system, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", "Noto Sans JP", "Noto Sans Thai", Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --fs-xs: .78rem; --fs-sm: .875rem; --fs-md: 1rem; --fs-lg: 1.125rem; --fs-xl: 1.5rem; --fs-2xl: 2rem; --fs-3xl: 2.5rem;
   --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px; --sp-6: 32px; --sp-7: 48px; --sp-8: 64px;
-  --radius: 10px; --radius-sm: 6px; --radius-pill: 999px;
-  --shadow: 0 1px 2px rgba(0,0,0,.04), 0 2px 8px rgba(0,0,0,.04);
+  --radius: 10px; --radius-sm: 6px; --radius-lg: 16px; --radius-pill: 999px;
+  --shadow: 0 1px 2px rgba(0,0,0,.04), 0 2px 8px rgba(0,0,0,.05);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,.14);
   --wrap: 1200px;
-  --focus: 3px solid #ffbf47;
+  --tabbar-h: 58px;
+  --focus: 3px solid #e8a400;
 }
-@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
