@@ -1,0 +1,61 @@
+{
+  "id": "page.accessibility",
+  "type": "page",
+  "slug": "accessibility",
+  "title": "無障礙聲明",
+  "owner": "unit.it",
+  "publishedAt": "2016-01-01",
+  "reviewedAt": "2026-09-15",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-18",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "本站以 WCAG 2.1 AA 為目標，說明 2026 年 9 月實測結果、已知限制、改善時程與回報管道。",
+  "keywords": [
+    "無障礙",
+    "WCAG 2.1",
+    "AA",
+    "鍵盤操作",
+    "螢幕閱讀器"
+  ],
+  "bodyMarkdown": "## 一、目標\n本站依數位發展部「網站無障礙規範」，以 **WCAG 2.1 AA 等級**為目標設計與開發。\n\n## 二、2026 年 9 月實測結果\n以自動化檢測工具與人工檢測（鍵盤操作、NVDA 與 VoiceOver 螢幕閱讀器、200% 放大）測試首頁、疾病頁、問答頁、新聞稿、文件頁與資料目錄：\n\n| 項目 | 結果 |\n| --- | --- |\n| 每頁單一標題階層、跳至主要內容連結 | 符合 |\n| 全站可用鍵盤操作，焦點清楚可見 | 符合 |\n| 文字與背景對比 ≥ 4.5:1 | 符合 |\n| 問答結果以 aria-live 即時朗讀 | 符合 |\n| 收合區塊使用原生 details／summary | 符合 |\n| 趨勢圖提供文字摘要與資料表 | 符合 |\n| 多語頁面標示正確 lang 屬性 | 符合 |\n| 部分 PDF 正本未提供標記 | **部分符合**：已提供機讀版 Markdown 替代 |\n| 外部嵌入影片字幕 | **部分符合**：新影片皆有字幕，舊影片持續補齊 |\n\n## 三、已知限制與改善時程\n- 歷年 PDF 文件將於 2027 年 6 月前完成標記或以機讀版取代。\n- 2024 年以前之宣導影片字幕將於 2027 年 3 月前補齊。\n\n## 四、回報\n使用上遇到困難，請透過頁尾「回報問題」或撥打 1922，我們將於 7 個工作天內回覆。",
+  "i18n": {
+    "en": {
+      "title": "Accessibility statement",
+      "summary": "We target WCAG 2.1 AA. This page reports our September 2026 test results, known limitations, remediation timeline and how to report problems.",
+      "bodyMarkdown": "We target **WCAG 2.1 AA**. September 2026 automated and manual tests (keyboard, NVDA, VoiceOver, 200% zoom) found the site conformant for headings, skip links, keyboard focus, 4.5:1 contrast, aria-live answers, native details/summary, chart text alternatives and language attributes. Partially conformant: some legacy PDFs (machine-readable Markdown provided; remediation by June 2027) and captions on pre-2024 videos (by March 2027). Report problems via the footer link or call 1922; we reply within 7 working days."
+    }
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "id": "clar.2026-01-vinegar-saltwater-flu",
+  "type": "clarification",
+  "title": "網傳「燻白醋、喝鹽水可以殺死流感病毒」沒有科學根據",
+  "owner": "unit.pr",
+  "publishedAt": "2026-01-15",
+  "reviewedAt": "2026-07-01",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "rumor"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.influenza"
+  ],
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-01-20",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "reviewed",
+      "reviewedAt": "2026-01-22",
+      "reviewer": "簽約譯者（越南文）"
+    },
+    "id": {
+      "status": "reviewed",
+      "reviewedAt": "2026-01-22",
+      "reviewer": "簽約譯者（印尼文）"
+    },
+    "th": {
+      "status": "reviewed",
+      "reviewedAt": "2026-01-22",
+      "reviewer": "簽約譯者（泰文）"
+    }
+  },
+  "summary": "燻白醋、喝鹽水無法殺死流感病毒，燻醋可能刺激呼吸道；預防流感最有效的是每年接種疫苗並勤洗手。",
+  "keywords": [
+    "流感",
+    "燻醋",
+    "鹽水",
+    "謠言"
+  ],
+  "claim": "在家燻白醋、每天喝溫鹽水就可以殺死流感病毒，不用打疫苗",
+  "claimVariants": [
+    "燻醋可以預防流感",
+    "喝鹽水殺病毒",
+    "煮醋消毒空氣防流感"
+  ],
+  "verdict": "false",
+  "channels": [
+    "LINE"
+  ],
+  "reportChannel": "1922 防疫專線、LINE 檢舉",
+  "clarificationMarkdown": "燻白醋無法有效殺死空氣中的流感病毒，濃度過高反而可能刺激呼吸道，引發氣喘或咳嗽；喝鹽水也不能殺死呼吸道內的病毒，過量攝取鹽分對高血壓與腎臟病人有害。\n\n預防流感最有效的方法是**每年接種流感疫苗**，並勤洗手、注意咳嗽禮節、保持室內通風。",
+  "shareText": "【疾管署澄清】燻白醋、喝鹽水不能殺死流感病毒，燻醋還可能刺激呼吸道。預防流感最有效的是每年接種流感疫苗，加上勤洗手、咳嗽戴口罩、室內通風。有疑問撥 1922。",
+  "i18n": {
+    "en": {
+      "title": "No evidence that vinegar fumes or salt water kill influenza viruses",
+      "shareText": "Taiwan CDC: vinegar fumes and salt water do not kill flu viruses, and vinegar fumes can irritate the airways. The best protection is an annual flu vaccine plus hand washing, masks when coughing and good ventilation. Questions: call 1922."
+    },
+    "vi": {
+      "title": "Xông giấm, uống nước muối không diệt được vi-rút cúm",
+      "shareText": "CDC Đài Loan: xông giấm, uống nước muối không diệt được vi-rút cúm, xông giấm còn có thể kích ứng đường hô hấp. Cách phòng cúm hiệu quả nhất là tiêm vắc-xin cúm hằng năm, rửa tay thường xuyên, đeo khẩu trang khi ho, thông gió trong nhà. Hỏi thêm: gọi 1922."
+    },
+    "id": {
+      "title": "Asap cuka atau minum air garam tidak membunuh virus influenza",
+      "shareText": "CDC Taiwan: asap cuka dan air garam tidak membunuh virus flu, asap cuka bahkan bisa mengiritasi saluran napas. Perlindungan terbaik adalah vaksin flu setiap tahun, rajin cuci tangan, pakai masker saat batuk dan ventilasi yang baik. Tanya: hubungi 1922."
+    },
+    "th": {
+      "title": "การรมควันน้ำส้มสายชูหรือดื่มน้ำเกลือไม่สามารถฆ่าเชื้อไข้หวัดใหญ่ได้",
+      "shareText": "CDC ไต้หวัน: การรมควันน้ำส้มสายชูและดื่มน้ำเกลือไม่สามารถฆ่าไวรัสไข้หวัดใหญ่ และควันน้ำส้มสายชูอาจระคายเคืองทางเดินหายใจ วิธีป้องกันที่ดีที่สุดคือฉีดวัคซีนไข้หวัดใหญ่ทุกปี ล้างมือบ่อย ๆ สวมหน้ากากเมื่อไอ และเปิดให้อากาศถ่ายเท สอบถามโทร 1922"
+    }
+  }
+}

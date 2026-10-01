@@ -1,0 +1,71 @@
+{
+  "id": "news.2026-03-15-letter-ev-guideline",
+  "type": "letter",
+  "newsType": "letter",
+  "title": "致醫界通函第 608 號：腸病毒感染併發重症臨床處置建議更新",
+  "effectiveAt": "2026-03-15",
+  "letterNo": 608,
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-03-15",
+  "reviewedAt": "2026-03-15",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "tasks": [],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "doc.ev-severe-guideline"
+  ],
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "pending"
+    },
+    "tl": {
+      "status": "pending"
+    },
+    "vi": {
+      "status": "pending"
+    },
+    "id": {
+      "status": "pending"
+    },
+    "th": {
+      "status": "pending"
+    }
+  },
+  "summary": "腸病毒感染併發重症臨床處置建議更新：重申四期分期、第二期以上轉診重症責任醫院，並提醒流行期前完成院內演練。",
+  "keywords": [
+    "致醫界通函",
+    "腸病毒",
+    "重症",
+    "臨床處置"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/List/7tUXjTBf6paRvrhEl-mrPg"
+  ],
+  "bodyMarkdown": "一、腸病毒流行期將至，疾管署更新「腸病毒感染併發重症臨床處置建議」，自 2026 年 3 月 15 日起適用。\n二、請醫師衛教家長重症前兆，並對 3 歲以下、病程 3 日內之病童安排 1–2 日內回診。\n三、第二期（中樞神經系統感染）以上病童應儘速轉診至腸病毒重症責任醫院，轉送途中持續監測心跳與血氧。\n四、腸病毒感染併發重症請於一週內通報。",
+  "attachments": [
+    {
+      "label": "腸病毒感染併發重症臨床處置建議",
+      "url": "https://www.cdc.gov.tw/File/Get/placeholder-ev-severe-2026",
+      "machineReadable": true
+    }
+  ]
+}

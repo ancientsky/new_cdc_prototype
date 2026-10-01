@@ -1,0 +1,158 @@
+{
+  "id": "disease.pertussis",
+  "type": "disease",
+  "slug": "pertussis",
+  "title": "百日咳",
+  "nameEn": "Pertussis",
+  "aliases": [
+    "Whooping cough",
+    "百日咳桿菌"
+  ],
+  "legalCategory": 3,
+  "icd10": [
+    "A37"
+  ],
+  "notifyWithinHours": 168,
+  "incubation": {
+    "min": 4,
+    "max": 21,
+    "typicalMin": 7,
+    "typicalMax": 10,
+    "unit": "day",
+    "text": "4–21 天（通常 7–10 天）"
+  },
+  "transmission": [
+    "droplet"
+  ],
+  "owner": "unit.vaccine",
+  "steward": "預防接種組承辦人",
+  "publishedAt": "2018-03-01",
+  "reviewedAt": "2026-02-10",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "symptoms",
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.pertussis"
+  ],
+  "vaccines": [
+    "vaccine.dtap-hib-ipv"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "百日咳經飛沫傳播，典型症狀為陣發性劇咳與吸氣時的哮聲。未滿 6 個月嬰兒最容易重症，按時接種疫苗、孕婦懷孕後期接種 Tdap 可保護新生兒。",
+  "keywords": [
+    "百日咳",
+    "陣發性咳嗽",
+    "五合一疫苗",
+    "Tdap",
+    "孕婦",
+    "嬰兒"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Disease/Index"
+  ],
+  "keyFacts": {
+    "incubation": "4–21 天（通常 7–10 天）",
+    "symptoms": "初期像感冒，之後陣發性劇咳、吸氣哮聲、咳後嘔吐",
+    "transmission": "飛沫",
+    "prevention": "嬰幼兒按時接種疫苗、孕婦接種 Tdap",
+    "notify": "一週內"
+  },
+  "blocks": [
+    {
+      "key": "what-to-do",
+      "heading": "我該怎麼辦",
+      "cards": [
+        {
+          "if": "嬰兒咳嗽且出現呼吸暫停或臉色發紫",
+          "title": "立即就醫",
+          "text": "小嬰兒的百日咳可能沒有明顯咳嗽，只表現為呼吸暫停或發紺，請立即送醫。"
+        },
+        {
+          "if": "家中有未滿 1 歲嬰兒",
+          "title": "照顧者確認接種狀態",
+          "text": "家中大人咳嗽應戴口罩、避免親吻嬰兒，並與醫師討論是否接種 Tdap。"
+        },
+        {
+          "if": "懷孕 28–36 週",
+          "title": "評估接種 Tdap",
+          "text": "每次懷孕於 28–36 週接種 1 劑 Tdap，抗體可經胎盤保護出生後的寶寶。"
+        }
+      ]
+    },
+    {
+      "key": "symptoms",
+      "heading": "症狀與警示徵象",
+      "markdown": "百日咳病程分三期：\n\n1. **黏膜期**（1–2 週）：流鼻水、輕微咳嗽，像一般感冒。\n2. **陣咳期**（2–6 週）：一連串劇烈咳嗽，咳完吸氣時發出「咻」的哮聲，常咳到嘔吐、臉紅脖子粗。\n3. **恢復期**：咳嗽逐漸減輕，但可持續數週至數月。\n\n青少年與成人症狀可能只是久咳不癒。",
+      "warning": "嬰兒呼吸暫停、臉色發紫、咳嗽時無法進食、抽搐，請立即就醫。"
+    },
+    {
+      "key": "transmission",
+      "heading": "怎麼傳染",
+      "markdown": "經由病人咳嗽、打噴嚏產生的**飛沫**傳染，傳染力很強。黏膜期與陣咳期初期傳染力最高，未治療的病人可傳染約 3 週；使用抗生素 5 天後傳染力明顯下降。\n\n嬰兒常由家中咳嗽的大人或兄姊傳染。"
+    },
+    {
+      "key": "prevention",
+      "heading": "如何預防",
+      "markdown": "- 嬰幼兒依時程接種**五合一疫苗**（2、4、6、18 個月），滿 5 歲至入國小前接種**Tdap-IPV**。\n- 建議孕婦每次懷孕於第 28–36 週自費接種 1 劑 **Tdap**（部分縣市提供補助）。\n- 嬰兒照顧者確認自己的接種狀態；咳嗽時戴口罩、勤洗手。\n- 病人的家庭接觸者，依醫師評估使用預防性抗生素。"
+    },
+    {
+      "key": "treatment",
+      "heading": "診斷與治療",
+      "markdown": "以巨環類抗生素（如 azithromycin）治療，早期使用可減輕症狀並縮短傳染期。嬰兒重症需住院觀察呼吸狀況。止咳藥對百日咳的陣咳效果有限。"
+    },
+    {
+      "key": "vaccine",
+      "heading": "疫苗",
+      "markdown": "公費常規接種：五合一疫苗（白喉、破傷風、非細胞性百日咳、b 型嗜血桿菌、不活化小兒麻痺）於 2、4、6、18 個月各 1 劑；滿 5 歲至入國小前接種 1 劑 Tdap-IPV。疫苗保護力會隨時間下降，青少年與成人可評估追加 Tdap。"
+    },
+    {
+      "key": "situation",
+      "heading": "目前疫情與統計",
+      "markdown": "國內每年確定病例數十例，以未滿 6 個月嬰兒為主。"
+    },
+    {
+      "key": "faq",
+      "heading": "常見問題"
+    }
+  ],
+  "professional": {
+    "specimen": "鼻咽拭子（Dacron 或尼龍植絨拭子）進行 PCR 與培養；發病 3 週內檢出率較高。",
+    "notifyNote": "第三類法定傳染病，應於一週內通報；家庭接觸者由衛生單位評估預防性投藥。"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "id": "news.2025-05-06-enterovirus-season",
+  "type": "news",
+  "newsType": "press",
+  "title": "腸病毒進入流行期，籲請家長落實肥皂洗手並留意重症前兆",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2025-05-06",
+  "reviewedAt": "2025-05-06",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "situation",
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "pending"
+    },
+    "tl": {
+      "status": "pending"
+    },
+    "vi": {
+      "status": "pending"
+    },
+    "id": {
+      "status": "pending"
+    },
+    "th": {
+      "status": "pending"
+    }
+  },
+  "summary": "腸病毒門急診就診人次超過流行閾值，進入流行期。疾管署籲請家長與教托育機構落實肥皂洗手、漂白水消毒，並留意重症前兆。",
+  "keywords": [
+    "腸病毒",
+    "流行期",
+    "重症前兆",
+    "洗手"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+  ],
+  "situationDeclaration": {
+    "disease": "disease.enterovirus",
+    "text": "門急診就診人次超過流行閾值，進入流行期"
+  },
+  "bodyMarkdown": "疾病管制署表示，上週腸病毒門急診就診人次已超過流行閾值，國內正式進入腸病毒流行期，近期社區以克沙奇 A 型病毒為主。\n\n疾管署提醒，腸病毒傳染力強，大人返家應先以肥皂洗手、更換衣物再接觸幼兒；教托育機構應以 500 ppm 漂白水消毒教室與玩具。5 歲以下幼兒若出現嗜睡、意識不清、肌躍型抽搐、持續嘔吐、呼吸急促或心跳加快等重症前兆，請立即送往大醫院。"
+}

@@ -1,0 +1,72 @@
+{
+  "id": "faq.ev-stay-home",
+  "type": "faq",
+  "title": "孩子得了腸病毒，要在家休息幾天？",
+  "question": "孩子得了腸病毒，要在家休息幾天？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2022-04-01",
+  "reviewedAt": "2026-04-22",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.enterovirus"
+  ],
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-04-22",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "腸病毒病童建議在家休息至少 7 天；痊癒後腸道仍可能排出病毒數週，回校後仍需落實肥皂洗手。",
+  "keywords": [
+    "腸病毒",
+    "在家休息",
+    "7 天",
+    "停課"
+  ],
+  "answerMarkdown": "建議生病的孩子**在家休息至少 7 天**，避免與其他幼兒接觸，以減少傳播。\n\n腸病毒在痊癒後仍可能從腸道排出數週，因此孩子回到學校後，家長與老師仍要落實如廁後與用餐前以肥皂洗手。",
+  "structured": {
+    "stayHomeDays": 7
+  },
+  "i18n": {
+    "en": {
+      "question": "How many days should a child with enterovirus stay home?",
+      "answerMarkdown": "A sick child should **stay home for at least 7 days** and avoid contact with other children to reduce spread.\n\nThe virus can still be shed in stool for weeks after recovery, so after the child returns to school, parents and teachers should keep washing hands with soap after toilet use and before meals."
+    }
+  }
+}

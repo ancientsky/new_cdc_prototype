@@ -195,6 +195,7 @@ export const INTENT_RULES = [
   { id: 'sym.symptom-words', intent: 'symptoms', weight: 2, re: /(發燒|發熱|咳嗽|紅疹|起疹|出疹|疹子|拉肚子|腹瀉|嘔吐|頭痛|喉嚨痛|流鼻水|肌肉痠痛|關節痛|後眼窩痛|全身痠痛|倦怠|嗜睡|抽搐|呼吸急促|水泡|口腔潰瘍|黃疸|血便)/, note: '症狀詞' },
   { id: 'sym.symptom-generic', intent: 'symptoms', weight: 2, re: /(症狀|徵象|徵兆|前兆|不舒服|病徵)/, note: '症狀泛稱' },
   { id: 'sym.seek-care', intent: 'symptoms', weight: 3, re: /(要不要看醫生|該不該就醫|何時就醫|什麼時候.{0,4}就醫|幾天內.{0,6}就醫|就醫|看醫生|看診|掛號|急診|回診)/, note: '就醫時機' },
+  { id: 'sym.after-travel', intent: 'symptoms', weight: 4, re: /(回國|返國|回台|回來|入境).{0,8}(發燒|出疹|紅疹|起疹|腹瀉|拉肚子|不舒服|症狀|咳嗽)/, note: '返國後症狀' },
   { id: 'sym.what-to-do', intent: 'symptoms', weight: 1, re: /(怎麼辦|該怎麼做|如何處理)/, note: '求助語' },
   { id: 'sym.en', intent: 'symptoms', weight: 3, re: /\b(fever|symptoms?|rash|cough|diarrh?ea|vomit\w*|headache|see a doctor|seek (medical )?care|hospital|clinic)\b/i, note: 'English symptom words' },
   { id: 'sym.vi', intent: 'symptoms', weight: 3, re: /(sốt|triệu chứng|phát ban|ho\b|tiêu chảy|nôn|đi khám|bác sĩ)/i, note: 'Vietnamese symptom words' },
@@ -347,6 +348,8 @@ const PARAPHRASE = [
 ];
 
 function lc(s) { return String(s ?? '').toLowerCase(); }
+/** 介面字（建議行動標籤）：中文以外一律英文 */
+function tr(lang, zh, en) { return lang === 'zh-TW' ? zh : en; }
 function escapeRe(s) { return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
 function isLatin(s) { return /^[\x00-\x7fÀ-ɏḀ-ỿ\s.\-']+$/.test(s); }
 function matcherFor(name) {
@@ -466,10 +469,21 @@ export function createEngine(rawDeps = {}) {
     }
     return s;
   }
-  function queryWeights(q, expanded) {
+  /** 實體名稱與其別名的 token（實體加權已處理，BM25 端降權，避免同病所有片段分數一樣高） */
+  function entityTokens(entities) {
+    const names = new Set();
+    for (const d of entities?.diseases ?? []) {
+      const dz = diseaseById.get(d.id);
+      for (const n of [d.name, dz?.name, ...(dz?.aliases ?? []), dz?.nameEn]) if (n) names.add(n);
+      for (const g of glossary) if ((g.refs ?? []).includes(d.id)) for (const n of [g['zh-TW'], ...(g.aliases ?? []), ...(g.deprecated ?? []), g.en]) if (n) names.add(n);
+    }
+    return { toks: new Set(tokenize([...names].join(' '))), names: new Set([...names].map(lc)) };
+  }
+  function queryWeights(q, expanded, ent = null) {
     const w = new Map();
-    for (const t of tokenize(q, { query: true })) w.set(t, 1);
-    for (const t of tokenize(expanded.added.join(' '), { query: true })) if (!w.has(t)) w.set(t, 0.7);
+    const et = ent?.toks ?? new Set();
+    for (const t of tokenize(q, { query: true })) w.set(t, et.has(t) ? 0.25 : 1);
+    for (const t of tokenize(expanded.added.join(' '), { query: true })) if (!w.has(t)) w.set(t, et.has(t) ? 0.1 : 0.7);
     return w;
   }
 
@@ -493,7 +507,8 @@ export function createEngine(rawDeps = {}) {
     const pool = poolFor(view, lang);
     if (!pool.chunks.length) return [];
     const model = bm25For(pool.key, pool.chunks);
-    const qw = queryWeights(q, expanded);
+    const ent = entityTokens(entities);
+    const qw = queryWeights(q, expanded, ent);
     if (!qw.size) return [];
     const dIds = new Set(entities.diseases.map((d) => d.id)); if (opts.presetDisease) dIds.add(opts.presetDisease);
     const vIds = new Set(entities.vaccines.map((v) => v.id));
@@ -505,14 +520,17 @@ export function createEngine(rawDeps = {}) {
       let s = bm25Score(model, d, qw);
       if (s <= 0) continue;
       const c = d.c;
-      for (const t of c.terms ?? []) if (t && String(t).length >= 2 && qLower.includes(lc(t))) s += 0.6;
+      for (const t of c.terms ?? []) if (t && String(t).length >= 2 && !ent.names.has(lc(t)) && qLower.includes(lc(t))) s += 0.6;
       if (dIds.size) {
         if ((c.diseases ?? []).some((x) => dIds.has(x))) s = s * 1.6 + 2;
         else if ((c.diseases ?? []).length) continue; // 問的是 A 病，不拿 B 病的內容回答
         else s *= 0.6;
       }
       if (vIds.size && (c.vaccines ?? []).some((x) => vIds.has(x))) s = s * 1.3 + 1;
-      if (cIds.size && (c.countries ?? []).some((x) => cIds.has(x))) s = s * 1.3 + 1;
+      if (cIds.size) {
+        if ((c.countries ?? []).some((x) => cIds.has(x))) s = s * 1.3 + 1;
+        else if ((c.countries ?? []).length) continue; // 問泰國，不拿日本的內容回答
+      }
       if (task && (c.tasks ?? []).includes(task)) s *= 1.15;
       if (view === 'pro' && (c.type === 'document' || c.type === 'letter')) s *= 1.3;
       if (intent !== 'rumor' && c.type === 'clarification') s *= 0.5;
@@ -583,7 +601,7 @@ export function createEngine(rawDeps = {}) {
         if (/(\d+\s*(小時|天|日|週|個月|歲|年|劑)|within|hours|days)/.test(sen)) s += 0.3;
         const slot = slotOf(intent, sen);
         if (slot === 0) s += 0.6; else if (slot === 1) s += 0.3;
-        if (sen.length > 140) s -= 0.6; else if (sen.length < 10) s -= 0.6;
+        if (sen.length > (sen.includes('： ') ? 200 : 140)) s -= 0.6; else if (sen.length < 10) s -= 0.6;
         if (si === 0 && c.type === 'faq') s += 0.3;
         if (view === 'pro' && (c.type === 'document' || c.type === 'letter')) s += 0.5;
         if (cov <= 0.05 && covTitle < 0.3 && !(ci === 0 && si === 0)) return;
@@ -602,7 +620,7 @@ export function createEngine(rawDeps = {}) {
     const queue = [...cands];
     const nextCand = () => {
       let bi = -1, bs = -Infinity;
-      queue.forEach((c, i) => { const eff = c.score - 0.6 * (perChunk.get(c.chunk.id) ?? 0); if (eff > bs) { bs = eff; bi = i; } });
+      queue.forEach((c, i) => { const eff = c.score - 0.6 * (perChunk.get(c.chunk.id) ?? 0) - 0.4 * (perChunk.get(c.chunk.contentId) ?? 0); if (eff > bs) { bs = eff; bi = i; } });
       return bi < 0 ? null : queue.splice(bi, 1)[0];
     };
     for (let c = nextCand(); c; c = nextCand()) {
@@ -616,10 +634,11 @@ export function createEngine(rawDeps = {}) {
       }
       picked.push({ ...c, cite: [...c.cite] });
       perChunk.set(c.chunk.id, (perChunk.get(c.chunk.id) ?? 0) + 1);
+      perChunk.set(c.chunk.contentId, (perChunk.get(c.chunk.contentId) ?? 0) + 1);
       if (picked.length >= max) break;
     }
-    // completeness：意圖必要要點缺漏時，從候選補入
-    const req = REQUIRED_POINTS[intent] ?? [];
+    // completeness：意圖必要要點（＋問句線索要點）缺漏時，從候選補入
+    const req = requiredFor(intent, q);
     for (const r of req) {
       if (picked.some((p) => r.re.test(p.text))) continue;
       const add = allCands.find((c) => r.re.test(c.text) && !picked.some((p) => p.text === c.text) && !PERSONAL_ADVICE_RE.test(c.text) && c.score > 1);
@@ -629,8 +648,18 @@ export function createEngine(rawDeps = {}) {
     return picked;
   }
 
+  const QUERY_POINTS = [
+    { cue: /(預防|防範|怎麼避免|如何避免|防治)/, key: 'prevention', label: '預防作法', re: /(預防|防蚊|長袖|清除|積水|巡、倒|洗手|口罩|接種|避免)/ },
+    { cue: /(怎麼辦|該怎麼做|如何處理|要注意什麼)/, key: 'action', label: '該怎麼做', re: /(就醫|撥打|立即|請|應|建議)/ },
+    { cue: /(多久|幾天|幾小時|何時|什麼時候)/, key: 'time', label: '時間', re: /\d|[一二三四五六七八九十]+\s*(天|週|小時|個月|日)/ },
+  ];
+  function requiredFor(intent, q) {
+    const out = [...(REQUIRED_POINTS[intent] ?? [])];
+    for (const p of QUERY_POINTS) if (p.cue.test(q) && !out.some((x) => x.key === p.key)) out.push(p);
+    return out;
+  }
   function completenessOf(intent, sentences, extra = {}) {
-    const req = REQUIRED_POINTS[intent] ?? [];
+    const req = requiredFor(intent, extra.q ?? '');
     const text = sentences.map((s) => s.text).join(' ');
     const covered = req.filter((r) => r.re.test(text) || (r.key === 'status' && extra.situation)).map((r) => r.key);
     return { required: req.map((r) => r.key), covered, missing: req.map((r) => r.key).filter((k) => !covered.includes(k)), score: req.length ? covered.length / req.length : 1 };
@@ -687,7 +716,7 @@ export function createEngine(rawDeps = {}) {
     return {
       publishedAt: situation.publishedAt, dataDate: situation.dataDate, publisher: situation.publisher, publisherName: ownerNameOf(units, situation.publisher),
       source: situation.source, nextReviewAt: situation.nextReviewAt, note: situation.note ?? null,
-      items: items.map((i) => ({ ...i, diseaseName: i.diseaseName ?? diseaseById.get(i.disease)?.name ?? i.disease, slug: i.slug ?? diseaseById.get(i.disease)?.slug ?? null })),
+      items: items.map((i) => ({ ...i, diseaseName: i.diseaseName ?? diseaseById.get(i.disease)?.name ?? i.disease, diseaseNameEn: diseaseById.get(i.disease)?.nameEn ?? null, slug: i.slug ?? diseaseById.get(i.disease)?.slug ?? null })),
     };
   }
   const STATUS_LABEL = { stable: '平穩', rising: '上升', peak: '高峰', declining: '下降' };
@@ -700,7 +729,7 @@ export function createEngine(rawDeps = {}) {
       const i18n = lang !== 'zh-TW' ? it.i18n?.[lang] : null;
       const status = lang === 'zh-TW' ? STATUS_LABEL[it.status] ?? it.status : it.status;
       if (lang === 'zh-TW') out.push({ text: `${it.diseaseName}目前疫情態勢為「${status}」：${it.metricLabel} ${it.metricValue}${it.deltaText ? `，${it.deltaText}` : ''}（資料日 ${sit.dataDate}）。`, cite: [id], slot: 0, score: 9 });
-      else out.push({ text: `${it.diseaseName}: status "${status}" — ${i18n?.metricLabel ?? it.metricLabel} ${it.metricValue}${i18n?.deltaText ? `, ${i18n.deltaText}` : ''} (data as of ${sit.dataDate}).`, cite: [id], slot: 0, score: 9 });
+      else out.push({ text: `${it.diseaseNameEn ?? it.diseaseName}: status "${status}" — ${i18n?.metricLabel ?? it.metricLabel} ${it.metricValue}${i18n?.deltaText ? `, ${i18n.deltaText}` : ''} (data as of ${sit.dataDate}).`, cite: [id], slot: 0, score: 9 });
       if (it.basis && lang === 'zh-TW') out.push({ text: `判定依據：${it.basis}。`, cite: [id], slot: 0, score: 8 });
       const adv = i18n?.advice ?? it.advice;
       if (adv) out.push({ text: lang === 'zh-TW' ? `建議：${adv}。` : `Advice: ${adv}.`, cite: [id], slot: 1, score: 8 });
@@ -714,7 +743,9 @@ export function createEngine(rawDeps = {}) {
     const out = [];
     for (const c of entities.countries) {
       const iso = String(c.id ?? '').toUpperCase();
-      const hits = travelItems.filter((t) => t.iso2 === iso || (t.name && t.name === c.name));
+      let hits = travelItems.filter((t) => t.iso2 === iso || (t.name && t.name === c.name));
+      // 同時有「依國家彙整」與「依疾病」兩種快照時，優先用依疾病的明細
+      if (hits.some((h) => !h.aggregate)) hits = hits.filter((h) => !h.aggregate);
       if (hits.length) out.push({ iso2: iso, name: hits[0].name ?? c.name, entries: hits });
     }
     return out;
@@ -727,10 +758,10 @@ export function createEngine(rawDeps = {}) {
       const date = c.entries.map((e) => e.date).filter(Boolean).sort().at(-1) ?? null;
       srcs.set(id, { id, contentId: `travel.${c.iso2}`, type: 'travel', title: `旅遊疫情建議 · ${c.name}`, url: `/travel/${c.iso2.toLowerCase()}/`, owner: 'unit.epidemic-intelligence', ownerName: ownerNameOf(units, 'unit.epidemic-intelligence'), reviewedAt: date, isCurrent: true, license: 'OGDL-1.0', lang: 'zh-TW' });
       for (const e of c.entries.slice(0, 4)) {
-        const lvl = e.level != null ? `第 ${e.level} 級${e.levelLabel ? `「${e.levelLabel}」` : LEVEL_LABEL[e.level] ? `「${LEVEL_LABEL[e.level]}」` : ''}` : (e.levelLabel ?? '');
+        const lvl = e.levelLabel ? `「${e.levelLabel}」` : e.level != null ? `第 ${e.level} 級${LEVEL_LABEL[e.level] ? `「${LEVEL_LABEL[e.level]}」` : ''}` : '';
         const dz = e.diseaseNames.join('、');
         sents.push({ text: lang === 'zh-TW' ? `${c.name}${dz ? `（${dz}）` : ''}：旅遊疫情建議${lvl}${e.date ? `，發布日 ${e.date}` : ''}。` : `${c.name}${dz ? ` (${dz})` : ''}: travel notice level ${e.level ?? '-'}${e.date ? `, issued ${e.date}` : ''}.`, cite: [id], slot: 0, score: 9 });
-        if (e.advice && lang === 'zh-TW') sents.push({ text: `建議：${e.advice}`, cite: [id], slot: 0, score: 8 });
+        if (e.advice && lang === 'zh-TW') sents.push({ text: e.advice, cite: [id], slot: 0, score: 8 });
       }
       void top;
     }
@@ -815,6 +846,7 @@ export function createEngine(rawDeps = {}) {
     return Math.max(jac, 0.85 * contClaim, 0.75 * contQuery * Math.min(1, A.size / 6));
   }
   function factCheck(q, result) {
+    const LL = result.lang;
     const qs = q.replace(RUMOR_STRIP, ' ');
     let best = null, bestScore = 0, bestClaim = null;
     for (const c of clarifications) {
@@ -824,7 +856,7 @@ export function createEngine(rawDeps = {}) {
     result.rumorScore = Math.round(bestScore * 100) / 100;
     if (!best || bestScore < 0.4) {
       result.verdict = 'unknown';
-      setRefusal(result, 'no-clarification', 'ref.no-clarification', [{ label: '撥打 1922 詢問', href: 'tel:1922', kind: 'hotline' }, { label: '詐騙請撥 165', href: 'tel:165', kind: 'hotline' }, { label: '到澄清專區', href: '/factcheck/', kind: 'link' }]);
+      setRefusal(result, 'no-clarification', 'ref.no-clarification', [{ label: tr(LL, '撥打 1922 詢問', 'Call 1922'), href: 'tel:1922', kind: 'hotline' }, { label: tr(LL, '詐騙請撥 165', 'Scams: call 165'), href: 'tel:165', kind: 'hotline' }, { label: tr(LL, '到澄清專區', 'Fact-check page'), href: '/factcheck/', kind: 'link' }]);
       return result;
     }
     const outdated = isOutdated(best);
@@ -847,37 +879,38 @@ export function createEngine(rawDeps = {}) {
     result.sentences = sents.map((t) => ({ text: t, cite: [best.id], n: [1] }));
     if (outdated) result.guards.push({ kind: 'clarification-outdated', id: best.id });
     result.actions = [
-      ...(result.shareText ? [{ label: '複製可轉傳短訊', kind: 'copy', value: result.shareText }] : []),
-      ...(best.reportChannel ? [{ label: `通報：${best.reportChannel}`, kind: 'info' }] : []),
-      { label: '撥打 1922', href: 'tel:1922', kind: 'hotline' },
+      ...(result.shareText ? [{ label: tr(LL, '複製可轉傳短訊', 'Copy shareable message'), kind: 'copy', value: result.shareText }] : []),
+      ...(best.reportChannel ? [{ label: tr(LL, `通報：${best.reportChannel}`, `Report: ${best.reportChannel}`), kind: 'info' }] : []),
+      { label: tr(LL, '撥打 1922', 'Call 1922'), href: 'tel:1922', kind: 'hotline' },
     ];
     return result;
   }
 
   // ── 拒答 ──
   function setRefusal(result, kind, ruleId, actions = null) {
+    const LL = result.lang;
     const copy = refusalCopy(kind, result.lang);
     const d = diseaseById.get(result.disease);
     const related = [];
     if (d && (d.hasPage || d.page) && !['prompt-injection', 'harmful', 'privacy', 'media', 'impersonation', 'opinion'].includes(kind)) {
-      related.push({ label: `${d.name}：症狀與警示徵象`, href: `/diseases/${d.slug}/#symptoms` });
-      related.push({ label: `${d.name}：我該怎麼辦`, href: `/diseases/${d.slug}/#what-to-do` });
+      related.push({ label: tr(LL, `${d.name}：症狀與警示徵象`, `${d.nameEn ?? d.name}: symptoms and warning signs`), href: `/diseases/${d.slug}/#symptoms` });
+      related.push({ label: tr(LL, `${d.name}：我該怎麼辦`, `${d.nameEn ?? d.name}: what to do`), href: `/diseases/${d.slug}/#what-to-do` });
     }
     const baseActions = {
-      emergency: [{ label: '撥打 119', href: 'tel:119', kind: 'hotline' }, { label: '撥打 1922', href: 'tel:1922', kind: 'hotline' }],
-      media: [{ label: '聯絡公關室', href: '/about/#pr', kind: 'link' }],
-      forecast: [{ label: '看疫情態勢', href: '/situation/', kind: 'link' }, { label: '看開放資料與統計', href: '/data/', kind: 'link' }],
-      'prompt-injection': [{ label: '重新提問', href: '/ask/', kind: 'link' }],
-      impersonation: [{ label: '看最新新聞稿', href: '/news/', kind: 'link' }],
-      opinion: [{ label: '民意信箱', href: 'https://www.cdc.gov.tw/Mailbox/Index', kind: 'external' }],
+      emergency: [{ label: tr(LL, '撥打 119', 'Call 119'), href: 'tel:119', kind: 'hotline' }, { label: tr(LL, '撥打 1922', 'Call 1922'), href: 'tel:1922', kind: 'hotline' }],
+      media: [{ label: tr(LL, '聯絡公關室', 'Public Relations Office'), href: '/about/#pr', kind: 'link' }],
+      forecast: [{ label: tr(LL, '看疫情態勢', 'Current situation'), href: '/situation/', kind: 'link' }, { label: tr(LL, '看開放資料與統計', 'Open data & statistics'), href: '/data/', kind: 'link' }],
+      'prompt-injection': [{ label: tr(LL, '重新提問', 'Ask again'), href: '/ask/', kind: 'link' }],
+      impersonation: [{ label: tr(LL, '看最新新聞稿', 'Latest press releases'), href: '/news/', kind: 'link' }],
+      opinion: [{ label: tr(LL, '民意信箱', 'Public opinion mailbox'), href: 'https://www.cdc.gov.tw/Mailbox/Index', kind: 'external' }],
     };
     result.refused = true;
     result.refusal = {
       kind, ruleId, title: copy.title, text: copy.text,
-      actions: actions ?? baseActions[kind] ?? [{ label: '撥打 1922', href: 'tel:1922', kind: 'hotline' }],
+      actions: actions ?? baseActions[kind] ?? [{ label: tr(LL, '撥打 1922', 'Call 1922'), href: 'tel:1922', kind: 'hotline' }],
       relatedDisease: d ? { id: d.id, name: d.name, slug: d.slug } : null, related,
     };
-    if (!result.refusal.actions.some((a) => a.href === 'tel:1922') && !['prompt-injection', 'impersonation'].includes(kind)) result.refusal.actions.push({ label: '撥打 1922', href: 'tel:1922', kind: 'hotline' });
+    if (!result.refusal.actions.some((a) => a.href === 'tel:1922') && !['prompt-injection', 'impersonation'].includes(kind)) result.refusal.actions.push({ label: tr(LL, '撥打 1922', 'Call 1922'), href: 'tel:1922', kind: 'hotline' });
     result.sentences = []; result.sources = [];
     return result;
   }
@@ -890,46 +923,47 @@ export function createEngine(rawDeps = {}) {
   }
 
   function actionsFor(result, entities, sit) {
+    const LL = result.lang;
     const a = [];
     const d = diseaseById.get(result.disease);
     const peak = sit?.items?.some((i) => i.status === 'peak');
     const vacc = entities.vaccines[0] ? vaccines.find((v) => v.id === entities.vaccines[0].id) : null;
     switch (result.intent) {
       case 'symptoms':
-        if (d) a.push({ label: `看${d.name}警示徵象`, href: `/diseases/${d.slug}/#symptoms`, kind: 'link' });
-        a.push({ label: '撥打 1922', href: 'tel:1922', kind: 'hotline' });
+        if (d) a.push({ label: tr(LL, `看${d.name}警示徵象`, `Warning signs of ${d.nameEn ?? d.name}`), href: `/diseases/${d.slug}/#symptoms`, kind: 'link' });
+        a.push({ label: tr(LL, '撥打 1922', 'Call 1922'), href: 'tel:1922', kind: 'hotline' });
         break;
       case 'vaccine':
-        a.push({ label: '查附近接種點', href: vacc?.whereUrl ?? 'https://antiflu.cdc.gov.tw/ExecutingUnit', kind: 'external' });
-        if (vacc?.slug) a.push({ label: `看${vacc.name ?? vacc.title}公費對象`, href: `/vaccines/${vacc.slug}/`, kind: 'link' });
-        else a.push({ label: '看疫苗與預防接種', href: '/tasks/vaccines/', kind: 'link' });
+        a.push({ label: tr(LL, '查附近接種點', 'Find a vaccination site'), href: vacc?.whereUrl ?? 'https://antiflu.cdc.gov.tw/ExecutingUnit', kind: 'external' });
+        if (vacc?.slug) a.push({ label: tr(LL, `看${vacc.name ?? vacc.title}公費對象`, `Who is eligible: ${vacc.nameEn ?? vacc.name ?? vacc.title}`), href: `/vaccines/${vacc.slug}/`, kind: 'link' });
+        else a.push({ label: tr(LL, '看疫苗與預防接種', 'Vaccines & immunization'), href: '/tasks/vaccines/', kind: 'link' });
         break;
       case 'travel': {
         const c = entities.countries[0];
-        a.push({ label: c ? `查${c.name}疫情等級` : '查目的地疫情等級', href: c ? `/travel/${String(c.id).toLowerCase()}/` : '/travel/', kind: 'link' });
-        a.push({ label: '找旅遊醫學門診', href: 'https://www.cdc.gov.tw/Category/Page/ZgM7vwV3n6vDbXpq3MNgKg', kind: 'external' });
+        a.push({ label: c ? tr(LL, `查${c.name}疫情等級`, `Travel notice: ${c.name}`) : tr(LL, '查目的地疫情等級', 'Destination travel notice'), href: c ? `/travel/${String(c.id).toLowerCase()}/` : '/travel/', kind: 'link' });
+        a.push({ label: tr(LL, '找旅遊醫學門診', 'Find a travel medicine clinic'), href: 'https://www.cdc.gov.tw/Category/Page/ZgM7vwV3n6vDbXpq3MNgKg', kind: 'external' });
         break;
       }
       case 'situation':
-        a.push({ label: '看完整趨勢', href: '/situation/', kind: 'link' });
+        a.push({ label: tr(LL, '看完整趨勢', 'See full trend'), href: '/situation/', kind: 'link' });
         if (sit?.items?.some((i) => i.disease === 'disease.influenza')) {
-          a.push({ label: '查附近流感疫苗接種點', href: 'https://antiflu.cdc.gov.tw/ExecutingUnit', kind: 'external' });
-          a.push({ label: '公費抗病毒藥劑使用對象', href: '/diseases/influenza/#treatment', kind: 'link' });
+          a.push({ label: tr(LL, '查附近流感疫苗接種點', 'Find a flu vaccination site'), href: 'https://antiflu.cdc.gov.tw/ExecutingUnit', kind: 'external' });
+          a.push({ label: tr(LL, '公費抗病毒藥劑使用對象', 'Who gets publicly funded antivirals'), href: '/diseases/influenza/#treatment', kind: 'link' });
         }
         break;
       case 'professional':
-        if (d) a.push({ label: `${d.name}病例定義與通報`, href: `/pro/diseases/${d.slug}/`, kind: 'link' });
-        a.push({ label: '文件版本異動', href: '/documents/', kind: 'link' });
+        if (d) a.push({ label: tr(LL, `${d.name}病例定義與通報`, `${d.nameEn ?? d.name}: case definition & reporting`), href: `/pro/diseases/${d.slug}/`, kind: 'link' });
+        a.push({ label: tr(LL, '文件版本異動', 'Document version changes'), href: '/documents/', kind: 'link' });
         break;
       case 'stats':
-        if (result.stats) a.push({ label: '下載資料集', href: result.sources[0]?.url, kind: 'external' });
-        a.push({ label: '開放資料與統計', href: '/data/', kind: 'link' });
+        if (result.stats) a.push({ label: tr(LL, '下載資料集', 'Download dataset'), href: result.sources[0]?.url, kind: 'external' });
+        a.push({ label: tr(LL, '開放資料與統計', 'Open data & statistics'), href: '/data/', kind: 'link' });
         break;
       default:
-        if (d) a.push({ label: `看${d.name}完整頁面`, href: `/diseases/${d.slug}/`, kind: 'link' });
+        if (d) a.push({ label: tr(LL, `看${d.name}完整頁面`, `${d.nameEn ?? d.name}: full page`), href: `/diseases/${d.slug}/`, kind: 'link' });
     }
-    if (peak || result.intent === 'symptoms') { if (!a.some((x) => x.href === 'tel:1922')) a.unshift({ label: '撥打 1922', href: 'tel:1922', kind: 'hotline' }); }
-    else if (!a.some((x) => x.href === 'tel:1922')) a.push({ label: '撥打 1922', href: 'tel:1922', kind: 'hotline' });
+    if (peak || result.intent === 'symptoms') { if (!a.some((x) => x.href === 'tel:1922')) a.unshift({ label: tr(LL, '撥打 1922', 'Call 1922'), href: 'tel:1922', kind: 'hotline' }); }
+    else if (!a.some((x) => x.href === 'tel:1922')) a.push({ label: tr(LL, '撥打 1922', 'Call 1922'), href: 'tel:1922', kind: 'hotline' });
     return a.slice(0, 4);
   }
 
@@ -955,7 +989,9 @@ export function createEngine(rawDeps = {}) {
     const model = bm25For(pool.key, pool.chunks);
     const expanded = expandQuery(q, lang);
     const qw = queryWeights(q, expanded);
-    const scored = model.docs.map((d) => ({ c: d.c, s: bm25Score(model, d, qw) })).filter((x) => x.s > 0.5).sort((a, b) => b.s - a.s);
+    const all = model.docs.map((d) => ({ c: d.c, s: bm25Score(model, d, qw) })).sort((a, b) => b.s - a.s);
+    const topS = all[0]?.s ?? 0;
+    const scored = all.filter((x) => x.s > 0.5 && x.s >= topS * 0.25);
     const out = []; const seen = new Set();
     for (const { c, s } of scored) {
       if (seen.has(c.contentId) || c.isCurrent === false) continue;
@@ -969,6 +1005,7 @@ export function createEngine(rawDeps = {}) {
   // ───────────── answer ─────────────
   function answer(rawQuery, opts = {}) {
     const { lang = 'zh-TW', view = 'public', disease: presetDisease = null, mode, forceIntent = null } = opts;
+    const LL = lang;
     const pii = maskPIIDetailed(String(rawQuery ?? '').trim().slice(0, 500));
     const q = pii.text;
     const result = {
@@ -996,7 +1033,13 @@ export function createEngine(rawDeps = {}) {
     if (presetDisease && diseaseById.has(presetDisease) && !entities.diseases.some((d) => d.id === presetDisease)) entities.diseases.push({ id: presetDisease, name: diseaseById.get(presetDisease).name, pos: 999, preset: true });
     result.entities = entities;
     result.diseases = entities.diseases.map((d) => d.id);
-    result.disease = entities.diseases.find((d) => !d.preset)?.id ?? entities.diseases[0]?.id ?? null;
+    result.disease = entities.diseases.find((d) => !d.preset && !d.derived)?.id ?? entities.diseases.find((d) => !d.derived)?.id ?? null;
+    // 出國：目的地旅遊疫情建議列出的疾病，也作為檢索實體（問泰國 → 帶出登革熱的預防內容）
+    if (entities.countries.length && !entities.diseases.length) {
+      for (const c of travelFor(entities)) for (const e of c.entries) for (const dn of e.diseaseNames) {
+        for (const d of detectEntities(dn).diseases) if (!entities.diseases.some((x) => x.id === d.id)) entities.diseases.push({ ...d, pos: 900, derived: true });
+      }
+    }
     const range = parseTimeRange(q);
     const hasRange = range.n != null || range.from != null || (range.years.length > 0 && !/(出生|年次|以後|以前|之後|之前|born|sinh năm|sinh)/i.test(q));
     result.timeRange = hasRange ? range : null;
@@ -1031,11 +1074,11 @@ export function createEngine(rawDeps = {}) {
         result.related = relatedQuestions(result);
         return result;
       }
-      if (st?.empty) return setRefusal(result, 'no-data', 'ref.no-data', [{ label: '開放資料與統計', href: '/data/', kind: 'link' }]);
+      if (st?.empty) return setRefusal(result, 'no-data', 'ref.no-data', [{ label: tr(LL, '開放資料與統計', 'Open data & statistics'), href: '/data/', kind: 'link' }]);
     }
 
     // 4 檢索（同語言 reviewed 優先，否則中文）
-    const k = view === 'pro' ? 8 : 6;
+    const k = view === 'pro' ? 10 : 8;
     let chunks = [];
     if (lang !== 'zh-TW') {
       chunks = retrieve(q, { view, lang, k, intent: result.intent, entities, expanded, presetDisease, guards: result.guards });
@@ -1098,7 +1141,7 @@ export function createEngine(rawDeps = {}) {
     }
     finalizeSentences(result, picked, sourceMap);
     if (!result.sentences.length) return setRefusal(result, 'no-source', 'ref.no-source');
-    result.completeness = completenessOf(result.intent, result.sentences, { situation: !!sit });
+    result.completeness = completenessOf(result.intent, result.sentences, { situation: !!sit, q });
     result.actions = actionsFor(result, entities, sit);
     result.related = relatedQuestions(result);
     return result;
@@ -1118,12 +1161,14 @@ function mdPlain(md) {
 }
 
 function normTravel(t) {
-  const iso = String(t.iso2 ?? t.countryCode ?? t.iso ?? t.code ?? t.country_code ?? '').toUpperCase();
-  const dn = t.diseaseNames ?? t.diseaseName ?? t.disease_name ?? t.diseases ?? t.disease ?? [];
+  const iso = String(t.iso2 ?? t.ISO2 ?? t.countryCode ?? t.iso ?? t.code ?? t.country_code ?? '').toUpperCase();
+  const dn = t.diseaseNames ?? t.diseaseName ?? t.disease_name ?? t.Disease ?? t.disease ?? (Array.isArray(t.diseases) ? t.diseases : null) ?? [];
   return {
-    iso2: iso, name: t.countryName ?? t.nameZh ?? t.name ?? t.country ?? iso, level: t.level ?? t.alertLevel ?? t.levelNumber ?? t.severity ?? null,
-    levelLabel: t.levelLabel ?? t.levelName ?? null, diseaseNames: (Array.isArray(dn) ? dn : [dn]).filter((x) => x && !String(x).startsWith('disease.')),
-    date: t.publishedAt ?? t.updatedAt ?? t.date ?? t.effectiveAt ?? null, advice: t.advice ?? t.recommendation ?? null,
+    iso2: iso, name: t.countryName ?? t.Country ?? t.nameZh ?? t.name ?? t.country ?? iso, nameEn: t.CountryEn ?? t.nameEn ?? null,
+    level: t.LevelCode ?? t.levelCode ?? t.level ?? t.alertLevel ?? t.levelNumber ?? t.severity ?? null,
+    levelLabel: t.levelLabel ?? t.Level ?? t.levelName ?? null, diseaseNames: (Array.isArray(dn) ? dn : [dn]).filter((x) => x && typeof x === 'string' && !x.startsWith('disease.')),
+    date: t.StartDate ?? t.publishedAt ?? t.updatedAt ?? t.date ?? t.effectiveAt ?? null, advice: t.Summary ?? t.advice ?? t.recommendation ?? null,
+    aggregate: Array.isArray(t.Diseases), url: t.Url ?? t.url ?? null,
   };
 }
 

@@ -1,0 +1,71 @@
+{
+  "id": "dataset.flu-express",
+  "type": "dataset",
+  "category": "stats-system",
+  "title": "流感速訊（每週流感監測報告）",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2009-10-01",
+  "reviewedAt": "2026-09-01",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "data",
+    "situation"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "none"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "每週發布之流感監測綜合報告：類流感就診、病毒型別、併發重症與國際疫情。",
+  "keywords": [
+    "流感速訊",
+    "流感監測",
+    "週報",
+    "病毒型別"
+  ],
+  "provenance": {
+    "fetchedAt": "2026-10-01",
+    "mode": "snapshot",
+    "sourceUrl": "https://www.cdc.gov.tw/"
+  },
+  "updateFrequency": "weekly",
+  "lastUpdated": "2026-09-29",
+  "formats": [
+    "PDF",
+    "HTML"
+  ],
+  "canonicalUrl": "https://antiflu.cdc.gov.tw/"
+}

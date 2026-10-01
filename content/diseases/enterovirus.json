@@ -1,0 +1,264 @@
+{
+  "id": "disease.enterovirus",
+  "type": "disease",
+  "slug": "enterovirus",
+  "title": "腸病毒",
+  "nameEn": "Enterovirus infection",
+  "aliases": [
+    "手足口病",
+    "疱疹性咽峽炎",
+    "腸病毒71型",
+    "EV71",
+    "EV-D68",
+    "克沙奇病毒",
+    "腸病毒感染併發重症"
+  ],
+  "legalCategory": 3,
+  "icd10": [
+    "B34.1",
+    "B08.4",
+    "B08.5",
+    "A87.0"
+  ],
+  "notifyWithinHours": 168,
+  "incubation": {
+    "min": 2,
+    "max": 10,
+    "typicalMin": 3,
+    "typicalMax": 5,
+    "unit": "day",
+    "text": "2–10 天（平均 3–5 天）"
+  },
+  "transmission": [
+    "contact",
+    "droplet",
+    "foodborne"
+  ],
+  "owner": "unit.acute-infectious",
+  "steward": "急性傳染病組承辦人",
+  "publishedAt": "2017-04-01",
+  "reviewedAt": "2026-04-22",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "symptoms",
+    "situation",
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "vaccines": [
+    "vaccine.ev71"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-05-06",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "腸病毒傳染力強，5 歲以下幼兒是重症高危險群。多數表現為手足口病或疱疹性咽峽炎，留意嗜睡、肌躍型抽搐等重症前兆，一出現就送大醫院。",
+  "keywords": [
+    "腸病毒",
+    "手足口病",
+    "疱疹性咽峽炎",
+    "重症前兆",
+    "EV71",
+    "洗手"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Disease/Index"
+  ],
+  "keyFacts": {
+    "incubation": "2–10 天（平均 3–5 天）",
+    "symptoms": "發燒、口腔潰瘍、手腳掌與臀部紅疹或水泡",
+    "transmission": "接觸、飛沫、糞口",
+    "prevention": "肥皂洗手、漂白水消毒、生病在家休息",
+    "notify": "腸病毒感染併發重症：一週內"
+  },
+  "blocks": [
+    {
+      "key": "what-to-do",
+      "heading": "我該怎麼辦",
+      "cards": [
+        {
+          "if": "孩子確診手足口病或疱疹性咽峽炎",
+          "title": "在家休息至少 7 天",
+          "text": "在家休息至少 7 天，與其他幼兒分開玩，照顧前後用肥皂洗手。"
+        },
+        {
+          "if": "出現嗜睡、肌躍型抽搐、持續嘔吐等重症前兆",
+          "title": "立即送大醫院",
+          "text": "立即送到重症責任醫院或具兒科急診的大醫院，黃金治療時間很短。"
+        },
+        {
+          "if": "家中有 5 歲以下幼兒",
+          "title": "大人回家先洗手換衣",
+          "text": "大人回家先用肥皂洗手、更換外出衣物，再抱小孩。"
+        }
+      ]
+    },
+    {
+      "key": "symptoms",
+      "heading": "症狀與警示徵象",
+      "markdown": "大多數感染者症狀輕微，常見兩種表現：\n\n- **手足口病**：發燒，口腔、舌頭出現潰瘍，手掌、腳掌、膝蓋、臀部出現紅疹或小水泡。\n- **疱疹性咽峽炎**：突發高燒，喉嚨後方出現小水泡或潰瘍，因疼痛而不吃東西、流口水。\n\n多數 7–10 天內痊癒，但少數會併發腦炎、心肌炎、急性肢體麻痺等重症，以 5 歲以下幼兒風險最高。",
+      "warning": "重症前兆：嗜睡、意識不清、活力不佳、手腳無力、肌躍型抽搐（無故驚嚇或突然全身肌肉收縮）、持續嘔吐、呼吸急促或心跳加快。"
+    },
+    {
+      "key": "transmission",
+      "heading": "怎麼傳染",
+      "markdown": "腸病毒可經由**接觸**病人口鼻分泌物、水泡液、糞便，或吸入病人咳嗽打噴嚏的**飛沫**而感染，也可經由被污染的手、玩具、食物傳播。\n\n發病前數天至發病後一週傳染力最強；病毒可在腸道持續排出數週，因此痊癒後仍要注意如廁後洗手。"
+    },
+    {
+      "key": "prevention",
+      "heading": "如何預防",
+      "markdown": "- **以肥皂濕、搓、沖、捧、擦正確洗手**；乾洗手酒精對腸病毒效果有限。\n- 環境與玩具以 **500 ppm 漂白水**（家用漂白水 1 份加 100 份清水）擦拭消毒。\n- 孩子生病時在家休息，避免與其他幼兒接觸。\n- 教托育機構發現病例應通知家長並加強清消；同一班級一週內 2 名以上幼兒發病時，依地方規定停課。"
+    },
+    {
+      "key": "treatment",
+      "heading": "診斷與治療",
+      "markdown": "腸病毒沒有特效藥，以支持性治療為主：補充水分、退燒、緩解口腔疼痛，可給予冰涼、軟質的飲食。\n\n出現重症前兆時應儘速轉診至**腸病毒重症責任醫院**，由醫師評估靜脈免疫球蛋白、強心劑或葉克膜等處置。"
+    },
+    {
+      "key": "vaccine",
+      "heading": "疫苗",
+      "markdown": "國內已有核准上市的**腸病毒 71 型疫苗**，屬自費接種，適用年齡依各廠牌仿單（多為 2 個月以上至 6 歲以下幼兒）。疫苗只能預防 71 型，無法預防其他型別，接種後仍須落實洗手。"
+    },
+    {
+      "key": "situation",
+      "heading": "目前疫情與統計",
+      "markdown": "腸病毒門急診就診人次每週更新，並標示是否超過流行閾值；開學後與每年 4–6 月為好發期。",
+      "datasets": [
+        "dataset.ev-visits-weekly"
+      ]
+    },
+    {
+      "key": "faq",
+      "heading": "常見問題"
+    }
+  ],
+  "professional": {
+    "manualDoc": "doc.ev-severe-guideline",
+    "specimen": "咽喉擦拭液、糞便或肛門拭子；疑似神經系統併發症加採腦脊髓液。以病毒保存輸送管 4°C 送驗。",
+    "notifyNote": "「腸病毒感染併發重症」為第三類法定傳染病，應於一週內通報；新生兒腸病毒感染亦需留意並通報。"
+  },
+  "relatedDocuments": [
+    "doc.ev-severe-guideline"
+  ],
+  "materials": [
+    {
+      "label": "腸病毒重症前兆衛教單張（七語）",
+      "url": "https://www.cdc.gov.tw/Advocacy",
+      "langs": [
+        "zh-TW",
+        "en",
+        "vi",
+        "id",
+        "th",
+        "tl",
+        "ja"
+      ]
+    }
+  ],
+  "i18n": {
+    "en": {
+      "title": "Enterovirus infection",
+      "summary": "Enteroviruses are highly contagious and children under 5 are at greatest risk of severe illness. Most cases present as hand, foot and mouth disease or herpangina. Watch for warning signs such as lethargy or myoclonic jerks and go to a major hospital immediately.",
+      "keyFacts": {
+        "incubation": "2–10 days (average 3–5)",
+        "symptoms": "Fever, mouth ulcers, rash or blisters on hands, feet and buttocks",
+        "transmission": "Contact, droplets, faecal–oral",
+        "prevention": "Wash hands with soap, disinfect with bleach, keep sick children home",
+        "notify": "Severe complicated enterovirus infection: within one week"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "What to do",
+          "cards": [
+            {
+              "if": "your child has hand, foot and mouth disease or herpangina",
+              "title": "Stay home for at least 7 days",
+              "text": "Keep the child home for at least 7 days, away from other children; wash hands with soap before and after care."
+            },
+            {
+              "if": "there is lethargy, myoclonic jerks or persistent vomiting",
+              "title": "Go to a major hospital now",
+              "text": "Go immediately to a designated severe-enterovirus hospital or a large hospital with paediatric emergency care."
+            },
+            {
+              "if": "there are children under 5 at home",
+              "title": "Wash hands and change clothes when you get home",
+              "text": "Adults should wash hands with soap and change out of outdoor clothes before holding young children."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Symptoms and warning signs",
+          "markdown": "Most infections are mild and appear in two common forms:\n\n- **Hand, foot and mouth disease**: fever, ulcers in the mouth and on the tongue, and red spots or small blisters on the palms, soles, knees and buttocks.\n- **Herpangina**: sudden high fever with small blisters or ulcers at the back of the throat; children may refuse food and drool.\n\nMost recover within 7–10 days, but a few develop encephalitis, myocarditis or acute flaccid paralysis; children under 5 are at highest risk.",
+          "warning": "Warning signs: drowsiness, reduced consciousness, poor activity, limb weakness, myoclonic jerks (sudden startles or whole-body muscle jerks), persistent vomiting, rapid breathing or rapid heartbeat."
+        },
+        {
+          "key": "transmission",
+          "heading": "How it spreads",
+          "markdown": "Enteroviruses spread through **contact** with saliva, nasal secretions, blister fluid or stool, through **droplets** from coughs and sneezes, and through contaminated hands, toys or food.\n\nPeople are most contagious from a few days before to one week after onset, and the virus can be shed in stool for weeks, so hand washing after using the toilet remains important."
+        },
+        {
+          "key": "prevention",
+          "heading": "Prevention",
+          "markdown": "- **Wash hands properly with soap and water**; alcohol hand rub is less effective against enteroviruses.\n- Wipe surfaces and toys with **500 ppm bleach** (1 part household bleach to 100 parts water).\n- Keep sick children at home and away from other children.\n- Childcare settings should inform parents and step up cleaning when a case occurs; classes may be suspended under local rules when 2 or more children in a class fall ill within a week."
+        },
+        {
+          "key": "treatment",
+          "heading": "Diagnosis and treatment",
+          "markdown": "There is no specific medicine. Care is supportive: fluids, fever control and pain relief for mouth ulcers; cool, soft food helps.\n\nChildren with warning signs should be transferred quickly to a **designated severe-enterovirus hospital**, where doctors may consider immunoglobulin, inotropes or ECMO."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vaccine",
+          "markdown": "Licensed **enterovirus A71 (EV71) vaccines** are available in Taiwan on a self-paid basis; eligible ages follow each product label (mostly 2 months to under 6 years). The vaccine protects only against EV71, so hand washing is still essential."
+        },
+        {
+          "key": "situation",
+          "heading": "Current situation and statistics",
+          "markdown": "Weekly enterovirus outpatient and emergency visits are updated with an epidemic threshold indicator; cases rise after school starts and in April to June."
+        },
+        {
+          "key": "faq",
+          "heading": "FAQ"
+        }
+      ]
+    }
+  }
+}

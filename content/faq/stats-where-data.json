@@ -1,0 +1,70 @@
+{
+  "id": "faq.stats-where-data",
+  "type": "faq",
+  "title": "疫情統計數字可以到哪裡查？",
+  "question": "疫情統計數字可以到哪裡查？",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2019-01-01",
+  "reviewedAt": "2026-08-31",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "data",
+    "situation"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "dataset.nidss"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "疫情統計可查傳染病統計資料查詢系統（NIDSS）、疾管署資料開放平台（CSV／JSON／API）與流感速訊。",
+  "keywords": [
+    "統計",
+    "NIDSS",
+    "開放資料",
+    "API"
+  ],
+  "answerMarkdown": "可以利用：\n\n- **傳染病統計資料查詢系統（NIDSS）**：可依疾病、年份、縣市、年齡查詢法定傳染病病例數。\n- **疾管署資料開放平台**：提供 CSV、JSON 與 API，例如登革熱每日確定病例、類流感就診人次。\n- **流感速訊**與每週疫情報導：說明當週流感與腸病毒等監測重點。\n\n本站的「開放資料與統計」頁也整理了常用資料集，並標示資料日、權責單位與授權。",
+  "structured": {
+    "system": "NIDSS"
+  },
+  "i18n": {
+    "en": {
+      "question": "Where can I find infectious disease statistics?",
+      "answerMarkdown": "You can use:\n\n- **NIDSS (Taiwan National Infectious Disease Statistics System)**: case counts of notifiable diseases by disease, year, city or county and age.\n- **Taiwan CDC open data portal**: CSV, JSON and APIs, such as daily dengue cases and influenza-like illness visits.\n- **Influenza Express** and weekly epidemic reports: key surveillance points for influenza, enterovirus and more.\n\nThis site's \"Open data and statistics\" page lists common datasets with data date, owner and licence."
+    }
+  }
+}

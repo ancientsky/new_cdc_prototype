@@ -1,0 +1,866 @@
+{
+  "meta": {
+    "mode": "snapshot",
+    "fetchedAt": "2026-10-01T03:00:00Z",
+    "sourceUrl": "https://www.cdc.gov.tw/CountryEpidLevel/ExportJSON",
+    "label": "各國旅遊疫情建議等級",
+    "count": 49,
+    "note": "原型快照（示意）：由 travel-epidemic 快照依國家彙整最高等級；live 模式以官方 ExportJSON 覆蓋。"
+  },
+  "data": [
+    {
+      "ISO2": "JP",
+      "Country": "日本",
+      "CountryEn": "Japan",
+      "Region": "東亞",
+      "Level": "第一級：注意(Watch)",
+      "LevelCode": 1,
+      "Disease": "麻疹",
+      "StartDate": "2026-05-11",
+      "Summary": "目前有 1 項旅遊疫情建議，最高為第一級：注意。",
+      "Diseases": [
+        {
+          "Disease": "麻疹",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2026-05-11"
+        }
+      ],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "KR",
+      "Country": "韓國",
+      "CountryEn": "South Korea",
+      "Region": "東亞",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "CN",
+      "Country": "中國大陸",
+      "CountryEn": "China",
+      "Region": "東亞",
+      "Level": "第二級：警示(Alert)",
+      "LevelCode": 2,
+      "Disease": "屈公病、新型A型流感",
+      "StartDate": "2025-08-05",
+      "Summary": "目前有 2 項旅遊疫情建議，最高為第二級：警示。",
+      "Diseases": [
+        {
+          "Disease": "屈公病",
+          "Level": "第二級：警示(Alert)",
+          "LevelCode": 2,
+          "StartDate": "2025-08-05"
+        },
+        {
+          "Disease": "新型A型流感",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2024-01-10"
+        }
+      ],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "HK",
+      "Country": "香港",
+      "CountryEn": "Hong Kong",
+      "Region": "東亞",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "MO",
+      "Country": "澳門",
+      "CountryEn": "Macao",
+      "Region": "東亞",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "MN",
+      "Country": "蒙古",
+      "CountryEn": "Mongolia",
+      "Region": "東亞",
+      "Level": "第一級：注意(Watch)",
+      "LevelCode": 1,
+      "Disease": "麻疹",
+      "StartDate": "2026-03-12",
+      "Summary": "目前有 1 項旅遊疫情建議，最高為第一級：注意。",
+      "Diseases": [
+        {
+          "Disease": "麻疹",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2026-03-12"
+        }
+      ],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "VN",
+      "Country": "越南",
+      "CountryEn": "Viet Nam",
+      "Region": "東南亞",
+      "Level": "第一級：注意(Watch)",
+      "LevelCode": 1,
+      "Disease": "登革熱、麻疹",
+      "StartDate": "2026-06-10",
+      "Summary": "目前有 2 項旅遊疫情建議，最高為第一級：注意。",
+      "Diseases": [
+        {
+          "Disease": "登革熱",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2026-06-10"
+        },
+        {
+          "Disease": "麻疹",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2025-11-18"
+        }
+      ],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "TH",
+      "Country": "泰國",
+      "CountryEn": "Thailand",
+      "Region": "東南亞",
+      "Level": "第一級：注意(Watch)",
+      "LevelCode": 1,
+      "Disease": "登革熱",
+      "StartDate": "2026-06-10",
+      "Summary": "目前有 1 項旅遊疫情建議，最高為第一級：注意。",
+      "Diseases": [
+        {
+          "Disease": "登革熱",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2026-06-10"
+        }
+      ],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "ID",
+      "Country": "印尼",
+      "CountryEn": "Indonesia",
+      "Region": "東南亞",
+      "Level": "第一級：注意(Watch)",
+      "LevelCode": 1,
+      "Disease": "登革熱、麻疹",
+      "StartDate": "2026-01-15",
+      "Summary": "目前有 2 項旅遊疫情建議，最高為第一級：注意。",
+      "Diseases": [
+        {
+          "Disease": "登革熱",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2026-01-15"
+        },
+        {
+          "Disease": "麻疹",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2025-09-30"
+        }
+      ],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "PH",
+      "Country": "菲律賓",
+      "CountryEn": "Philippines",
+      "Region": "東南亞",
+      "Level": "第一級：注意(Watch)",
+      "LevelCode": 1,
+      "Disease": "登革熱、麻疹",
+      "StartDate": "2026-06-24",
+      "Summary": "目前有 2 項旅遊疫情建議，最高為第一級：注意。",
+      "Diseases": [
+        {
+          "Disease": "登革熱",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2026-06-24"
+        },
+        {
+          "Disease": "麻疹",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2026-02-03"
+        }
+      ],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "MY",
+      "Country": "馬來西亞",
+      "CountryEn": "Malaysia",
+      "Region": "東南亞",
+      "Level": "第一級：注意(Watch)",
+      "LevelCode": 1,
+      "Disease": "登革熱",
+      "StartDate": "2026-01-15",
+      "Summary": "目前有 1 項旅遊疫情建議，最高為第一級：注意。",
+      "Diseases": [
+        {
+          "Disease": "登革熱",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2026-01-15"
+        }
+      ],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "SG",
+      "Country": "新加坡",
+      "CountryEn": "Singapore",
+      "Region": "東南亞",
+      "Level": "第一級：注意(Watch)",
+      "LevelCode": 1,
+      "Disease": "登革熱",
+      "StartDate": "2026-05-05",
+      "Summary": "目前有 1 項旅遊疫情建議，最高為第一級：注意。",
+      "Diseases": [
+        {
+          "Disease": "登革熱",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2026-05-05"
+        }
+      ],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "KH",
+      "Country": "柬埔寨",
+      "CountryEn": "Cambodia",
+      "Region": "東南亞",
+      "Level": "第一級：注意(Watch)",
+      "LevelCode": 1,
+      "Disease": "登革熱",
+      "StartDate": "2026-07-01",
+      "Summary": "目前有 1 項旅遊疫情建議，最高為第一級：注意。",
+      "Diseases": [
+        {
+          "Disease": "登革熱",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2026-07-01"
+        }
+      ],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "LA",
+      "Country": "寮國",
+      "CountryEn": "Lao PDR",
+      "Region": "東南亞",
+      "Level": "第一級：注意(Watch)",
+      "LevelCode": 1,
+      "Disease": "登革熱",
+      "StartDate": "2026-07-01",
+      "Summary": "目前有 1 項旅遊疫情建議，最高為第一級：注意。",
+      "Diseases": [
+        {
+          "Disease": "登革熱",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2026-07-01"
+        }
+      ],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "MM",
+      "Country": "緬甸",
+      "CountryEn": "Myanmar",
+      "Region": "東南亞",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "IN",
+      "Country": "印度",
+      "CountryEn": "India",
+      "Region": "南亞",
+      "Level": "第一級：注意(Watch)",
+      "LevelCode": 1,
+      "Disease": "登革熱、屈公病",
+      "StartDate": "2026-07-22",
+      "Summary": "目前有 2 項旅遊疫情建議，最高為第一級：注意。",
+      "Diseases": [
+        {
+          "Disease": "登革熱",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2026-07-22"
+        },
+        {
+          "Disease": "屈公病",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2026-04-14"
+        }
+      ],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "NP",
+      "Country": "尼泊爾",
+      "CountryEn": "Nepal",
+      "Region": "南亞",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "BD",
+      "Country": "孟加拉",
+      "CountryEn": "Bangladesh",
+      "Region": "南亞",
+      "Level": "第一級：注意(Watch)",
+      "LevelCode": 1,
+      "Disease": "登革熱",
+      "StartDate": "2026-07-22",
+      "Summary": "目前有 1 項旅遊疫情建議，最高為第一級：注意。",
+      "Diseases": [
+        {
+          "Disease": "登革熱",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2026-07-22"
+        }
+      ],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "PK",
+      "Country": "巴基斯坦",
+      "CountryEn": "Pakistan",
+      "Region": "南亞",
+      "Level": "第一級：注意(Watch)",
+      "LevelCode": 1,
+      "Disease": "小兒麻痺症",
+      "StartDate": "2015-01-01",
+      "Summary": "目前有 1 項旅遊疫情建議，最高為第一級：注意。",
+      "Diseases": [
+        {
+          "Disease": "小兒麻痺症",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2015-01-01"
+        }
+      ],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "LK",
+      "Country": "斯里蘭卡",
+      "CountryEn": "Sri Lanka",
+      "Region": "南亞",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "MV",
+      "Country": "馬爾地夫",
+      "CountryEn": "Maldives",
+      "Region": "南亞",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "AU",
+      "Country": "澳洲",
+      "CountryEn": "Australia",
+      "Region": "大洋洲",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "NZ",
+      "Country": "紐西蘭",
+      "CountryEn": "New Zealand",
+      "Region": "大洋洲",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "PG",
+      "Country": "巴布亞紐幾內亞",
+      "CountryEn": "Papua New Guinea",
+      "Region": "大洋洲",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "US",
+      "Country": "美國",
+      "CountryEn": "United States",
+      "Region": "北美",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "CA",
+      "Country": "加拿大",
+      "CountryEn": "Canada",
+      "Region": "北美",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "MX",
+      "Country": "墨西哥",
+      "CountryEn": "Mexico",
+      "Region": "中南美",
+      "Level": "第一級：注意(Watch)",
+      "LevelCode": 1,
+      "Disease": "登革熱",
+      "StartDate": "2026-08-04",
+      "Summary": "目前有 1 項旅遊疫情建議，最高為第一級：注意。",
+      "Diseases": [
+        {
+          "Disease": "登革熱",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2026-08-04"
+        }
+      ],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "BR",
+      "Country": "巴西",
+      "CountryEn": "Brazil",
+      "Region": "中南美",
+      "Level": "第一級：注意(Watch)",
+      "LevelCode": 1,
+      "Disease": "登革熱、黃熱病",
+      "StartDate": "2026-02-10",
+      "Summary": "目前有 2 項旅遊疫情建議，最高為第一級：注意。",
+      "Diseases": [
+        {
+          "Disease": "登革熱",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2026-02-10"
+        },
+        {
+          "Disease": "黃熱病",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2025-03-18"
+        }
+      ],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "PE",
+      "Country": "秘魯",
+      "CountryEn": "Peru",
+      "Region": "中南美",
+      "Level": "第一級：注意(Watch)",
+      "LevelCode": 1,
+      "Disease": "黃熱病",
+      "StartDate": "2025-04-22",
+      "Summary": "目前有 1 項旅遊疫情建議，最高為第一級：注意。",
+      "Diseases": [
+        {
+          "Disease": "黃熱病",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2025-04-22"
+        }
+      ],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "CO",
+      "Country": "哥倫比亞",
+      "CountryEn": "Colombia",
+      "Region": "中南美",
+      "Level": "第一級：注意(Watch)",
+      "LevelCode": 1,
+      "Disease": "黃熱病",
+      "StartDate": "2025-04-22",
+      "Summary": "目前有 1 項旅遊疫情建議，最高為第一級：注意。",
+      "Diseases": [
+        {
+          "Disease": "黃熱病",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2025-04-22"
+        }
+      ],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "AR",
+      "Country": "阿根廷",
+      "CountryEn": "Argentina",
+      "Region": "中南美",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "GB",
+      "Country": "英國",
+      "CountryEn": "United Kingdom",
+      "Region": "歐洲",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "FR",
+      "Country": "法國",
+      "CountryEn": "France",
+      "Region": "歐洲",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "DE",
+      "Country": "德國",
+      "CountryEn": "Germany",
+      "Region": "歐洲",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "IT",
+      "Country": "義大利",
+      "CountryEn": "Italy",
+      "Region": "歐洲",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "ES",
+      "Country": "西班牙",
+      "CountryEn": "Spain",
+      "Region": "歐洲",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "NL",
+      "Country": "荷蘭",
+      "CountryEn": "Netherlands",
+      "Region": "歐洲",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "RO",
+      "Country": "羅馬尼亞",
+      "CountryEn": "Romania",
+      "Region": "歐洲",
+      "Level": "第一級：注意(Watch)",
+      "LevelCode": 1,
+      "Disease": "麻疹",
+      "StartDate": "2025-06-20",
+      "Summary": "目前有 1 項旅遊疫情建議，最高為第一級：注意。",
+      "Diseases": [
+        {
+          "Disease": "麻疹",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2025-06-20"
+        }
+      ],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "SA",
+      "Country": "沙烏地阿拉伯",
+      "CountryEn": "Saudi Arabia",
+      "Region": "中東",
+      "Level": "第二級：警示(Alert)",
+      "LevelCode": 2,
+      "Disease": "中東呼吸症候群冠狀病毒感染症",
+      "StartDate": "2015-06-01",
+      "Summary": "目前有 1 項旅遊疫情建議，最高為第二級：警示。",
+      "Diseases": [
+        {
+          "Disease": "中東呼吸症候群冠狀病毒感染症",
+          "Level": "第二級：警示(Alert)",
+          "LevelCode": 2,
+          "StartDate": "2015-06-01"
+        }
+      ],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "AE",
+      "Country": "阿拉伯聯合大公國",
+      "CountryEn": "United Arab Emirates",
+      "Region": "中東",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "TR",
+      "Country": "土耳其",
+      "CountryEn": "Türkiye",
+      "Region": "中東",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "EG",
+      "Country": "埃及",
+      "CountryEn": "Egypt",
+      "Region": "非洲",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "NG",
+      "Country": "奈及利亞",
+      "CountryEn": "Nigeria",
+      "Region": "非洲",
+      "Level": "第一級：注意(Watch)",
+      "LevelCode": 1,
+      "Disease": "霍亂、白喉",
+      "StartDate": "2026-07-08",
+      "Summary": "目前有 2 項旅遊疫情建議，最高為第一級：注意。",
+      "Diseases": [
+        {
+          "Disease": "霍亂",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2026-07-08"
+        },
+        {
+          "Disease": "白喉",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2023-09-01"
+        }
+      ],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "KE",
+      "Country": "肯亞",
+      "CountryEn": "Kenya",
+      "Region": "非洲",
+      "Level": "第二級：警示(Alert)",
+      "LevelCode": 2,
+      "Disease": "M痘",
+      "StartDate": "2024-08-20",
+      "Summary": "目前有 1 項旅遊疫情建議，最高為第二級：警示。",
+      "Diseases": [
+        {
+          "Disease": "M痘",
+          "Level": "第二級：警示(Alert)",
+          "LevelCode": 2,
+          "StartDate": "2024-08-20"
+        }
+      ],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "TZ",
+      "Country": "坦尚尼亞",
+      "CountryEn": "Tanzania",
+      "Region": "非洲",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "ZA",
+      "Country": "南非",
+      "CountryEn": "South Africa",
+      "Region": "非洲",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "CD",
+      "Country": "剛果民主共和國",
+      "CountryEn": "Democratic Republic of the Congo",
+      "Region": "非洲",
+      "Level": "第二級：警示(Alert)",
+      "LevelCode": 2,
+      "Disease": "M痘",
+      "StartDate": "2024-08-15",
+      "Summary": "目前有 1 項旅遊疫情建議，最高為第二級：警示。",
+      "Diseases": [
+        {
+          "Disease": "M痘",
+          "Level": "第二級：警示(Alert)",
+          "LevelCode": 2,
+          "StartDate": "2024-08-15"
+        }
+      ],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "UG",
+      "Country": "烏干達",
+      "CountryEn": "Uganda",
+      "Region": "非洲",
+      "Level": "第二級：警示(Alert)",
+      "LevelCode": 2,
+      "Disease": "M痘",
+      "StartDate": "2024-08-20",
+      "Summary": "目前有 1 項旅遊疫情建議，最高為第二級：警示。",
+      "Diseases": [
+        {
+          "Disease": "M痘",
+          "Level": "第二級：警示(Alert)",
+          "LevelCode": 2,
+          "StartDate": "2024-08-20"
+        }
+      ],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    },
+    {
+      "ISO2": "ET",
+      "Country": "衣索比亞",
+      "CountryEn": "Ethiopia",
+      "Region": "非洲",
+      "Level": "第一級：注意(Watch)",
+      "LevelCode": 1,
+      "Disease": "霍亂",
+      "StartDate": "2026-03-02",
+      "Summary": "目前有 1 項旅遊疫情建議，最高為第一級：注意。",
+      "Diseases": [
+        {
+          "Disease": "霍亂",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2026-03-02"
+        }
+      ],
+      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+    }
+  ]
+}

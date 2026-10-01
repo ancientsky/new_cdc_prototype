@@ -1,0 +1,73 @@
+{
+  "id": "faq.ev-severe-signs",
+  "type": "faq",
+  "title": "腸病毒重症前兆有哪些？",
+  "question": "腸病毒重症前兆有哪些？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2022-04-01",
+  "reviewedAt": "2026-04-22",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.enterovirus"
+  ],
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-04-22",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "腸病毒重症前兆：嗜睡、意識不清、活力不佳、手腳無力、肌躍型抽搐、持續嘔吐、呼吸急促或心跳加快，出現就立即送大醫院。",
+  "keywords": [
+    "腸病毒",
+    "重症前兆",
+    "肌躍型抽搐",
+    "幼兒"
+  ],
+  "answerMarkdown": "5 歲以下幼兒感染腸病毒後，若出現**嗜睡、意識不清、活力不佳、手腳無力、肌躍型抽搐**（無故驚嚇或突然全身肌肉收縮）、**持續嘔吐、呼吸急促或心跳加快**等重症前兆，請立即送到大醫院就醫。\n\n重症多在發病後 2 至 7 天出現，這段期間家長要特別留意。",
+  "structured": {
+    "highRiskAge": "5 歲以下",
+    "watchDays": "發病後 2–7 天"
+  },
+  "i18n": {
+    "en": {
+      "question": "What are the warning signs of severe enterovirus infection?",
+      "answerMarkdown": "If a child under 5 with enterovirus shows **drowsiness, confusion, poor activity, limb weakness, myoclonic jerks** (sudden startles or whole-body jerks), **persistent vomiting, rapid breathing or a fast heartbeat**, go to a major hospital immediately.\n\nSevere complications usually appear 2 to 7 days after onset, so parents should watch closely during this period."
+    }
+  }
+}

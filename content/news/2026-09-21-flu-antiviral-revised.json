@@ -1,0 +1,77 @@
+{
+  "id": "news.2026-09-21-flu-antiviral-revised",
+  "type": "news",
+  "newsType": "press",
+  "title": "類流感進入高峰期，65 歲以上有症狀者可直接使用公費抗病毒藥劑免快篩",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-09-21",
+  "reviewedAt": "2026-09-21",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms",
+    "situation"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "doc.flu-antiviral-eligibility"
+  ],
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-21"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-21",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "類流感進入高峰期，疾管署修訂公費抗病毒藥劑使用對象：65 歲以上有類流感症狀者，醫師可直接開立，不需快篩陽性。",
+  "keywords": [
+    "公費抗病毒藥劑",
+    "65 歲以上",
+    "免快篩",
+    "類流感高峰期"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+  ],
+  "situationDeclaration": {
+    "disease": "disease.influenza",
+    "text": "類流感門急診就診率超過流行閾值，進入高峰期"
+  },
+  "bodyMarkdown": "疾病管制署表示，類流感門急診就診率已連續 4 週上升並超過流行閾值，即日起進入類流感高峰期。為加速高風險族群及早治療，自今（21）日起修訂「公費流感抗病毒藥劑使用對象」第 3 條：**65 歲以上有類流感症狀者，醫師可直接開立公費抗病毒藥劑，不需快篩陽性**；未滿 5 歲者仍需快篩陽性。\n\n疾管署提醒，抗病毒藥劑於發病 48 小時內使用效果最佳，長者出現發燒、咳嗽、全身痠痛等症狀請儘早就醫。",
+  "i18n": {
+    "en": {
+      "title": "ILI peak declared: people aged 65+ with symptoms can receive government-funded antivirals without a rapid test",
+      "summary": "With the influenza-like illness peak declared, Taiwan CDC revised Article 3: doctors may prescribe antivirals directly to people aged 65+ with flu-like symptoms without a positive rapid test."
+    }
+  }
+}

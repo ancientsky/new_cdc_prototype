@@ -244,7 +244,7 @@ test('R6 資料集逾期：daily 超過 2 日 ⇒ datasetOverdue＋待辦＋KPI 
 
 test('R6 授權非標準 ⇒ license-missing 待辦＋KPI', () => {
   const site = govern('2026-10-01', (s) => { const ds = s.byId.get('dataset.dengue-daily'); ds.license = 'CC-BY-NC-4.0'; ds.licenseNote = '測試'; });
-  const t = site.gov.todos.find((x) => x.kind === 'license-missing');
+  const t = site.gov.todos.find((x) => x.kind === 'license-missing' && x.itemId === 'dataset.dengue-daily');
   assert.ok(t); assert.match(t.text, /CC-BY-NC-4\.0/);
   assert.ok(site.gov.kpiByKey['dataset-license'].current < 100);
 });

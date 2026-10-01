@@ -1,0 +1,81 @@
+{
+  "id": "news.2026-05-11-japan-measles-level1",
+  "type": "news",
+  "newsType": "press",
+  "title": "日本麻疹疫情升溫，列為第一級旅遊疫情建議；出國前請評估 MMR 接種",
+  "owner": "unit.quarantine",
+  "publishedAt": "2026-05-11",
+  "reviewedAt": "2026-05-11",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "travel",
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "doc.mmr-recommendation"
+  ],
+  "diseases": [
+    "disease.measles"
+  ],
+  "vaccines": [
+    "vaccine.mmr"
+  ],
+  "countries": [
+    "JP"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-05-11",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "日本麻疹病例增加，疾管署今日將日本列為麻疹第一級旅遊疫情建議（注意）。1966 年（含）以後出生且不具免疫力者，出國前 2–4 週評估接種 MMR。",
+  "keywords": [
+    "日本",
+    "麻疹",
+    "旅遊疫情建議",
+    "第一級",
+    "MMR"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+  ],
+  "bodyMarkdown": "疾病管制署表示，日本今年麻疹病例數較往年同期明顯增加，多個都道府縣出現群聚，即日起將日本列為麻疹**第一級：注意（Watch）**旅遊疫情建議，提醒前往民眾遵守當地一般預防措施。\n\n依現行 MMR 預防接種建議，**1966 年（含）以後出生**、不具麻疹免疫力的民眾，計畫前往日本等流行地區，請於出國前 2 至 4 週至旅遊醫學門診評估自費接種 1 劑 MMR 疫苗；未滿 1 歲嬰兒非必要不建議前往。返國後 18 天內如出現發燒、出疹，請戴口罩儘速就醫並告知旅遊史。",
+  "i18n": {
+    "en": {
+      "title": "Measles rising in Japan: Level 1 travel notice; assess MMR before departure",
+      "summary": "Taiwan CDC placed Japan at Level 1 (Watch) for measles. People born in 1966 or later without immunity should be assessed for MMR 2–4 weeks before travel.",
+      "bodyMarkdown": "Measles cases in Japan are markedly higher than in previous years, with clusters in several prefectures. Taiwan CDC has placed Japan at **Level 1: Watch** for measles; travellers should follow usual precautions.\n\nUnder the current MMR recommendations, people **born in 1966 or later** without measles immunity who plan to visit affected areas such as Japan should see a travel clinic 2 to 4 weeks before departure to be assessed for one self-paid MMR dose; infants under 1 should not travel there unless necessary. Anyone who develops fever or rash within 18 days of return should wear a mask, see a doctor promptly and mention their travel."
+    }
+  }
+}

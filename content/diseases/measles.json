@@ -1,0 +1,338 @@
+{
+  "id": "disease.measles",
+  "type": "disease",
+  "slug": "measles",
+  "title": "麻疹",
+  "nameEn": "Measles",
+  "aliases": [
+    "Measles",
+    "Rubeola",
+    "痲疹"
+  ],
+  "legalCategory": 2,
+  "icd10": [
+    "B05"
+  ],
+  "notifyWithinHours": 24,
+  "incubation": {
+    "min": 7,
+    "max": 21,
+    "typicalMin": 10,
+    "typicalMax": 14,
+    "unit": "day",
+    "text": "7–21 天（約 14 天出疹）"
+  },
+  "transmission": [
+    "airborne",
+    "droplet",
+    "contact"
+  ],
+  "owner": "unit.acute-infectious",
+  "steward": "急性傳染病組承辦人",
+  "publishedAt": "2018-03-01",
+  "reviewedAt": "2026-05-14",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "symptoms",
+    "vaccines",
+    "travel"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "doc.mmr-recommendation"
+  ],
+  "diseases": [
+    "disease.measles"
+  ],
+  "vaccines": [
+    "vaccine.mmr"
+  ],
+  "countries": [
+    "JP",
+    "VN",
+    "PH",
+    "ID"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-05-20",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "reviewed",
+      "reviewedAt": "2026-05-22",
+      "reviewer": "簽約譯者（越南文）"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "麻疹是傳染力極強的病毒性疾病，可經空氣傳播。完整接種 2 劑 MMR 疫苗可有效預防；1966 年（含）以後出生、不具免疫力者出國前應評估接種。",
+  "keywords": [
+    "麻疹",
+    "MMR",
+    "1966 年",
+    "柯氏斑",
+    "空氣傳播",
+    "出國"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Disease/Index"
+  ],
+  "keyFacts": {
+    "incubation": "7–21 天（約 14 天出疹）",
+    "symptoms": "高燒、咳嗽、流鼻水、結膜炎，之後全身紅疹",
+    "transmission": "空氣、飛沫、接觸",
+    "prevention": "接種 2 劑 MMR 疫苗",
+    "notify": "24 小時內"
+  },
+  "blocks": [
+    {
+      "key": "what-to-do",
+      "heading": "我該怎麼辦",
+      "cards": [
+        {
+          "if": "出現發燒合併紅疹",
+          "title": "先電話告知再戴口罩就醫",
+          "text": "就醫前先打電話告知院所，戴口罩、避免搭乘大眾運輸，並主動說明旅遊史與接觸史。"
+        },
+        {
+          "if": "被通知曾與麻疹病例接觸",
+          "title": "自主健康管理 18 天",
+          "text": "自接觸日起自主健康管理 18 天，出現症狀前避免出入人潮場所；接觸 72 小時內可評估接種 MMR。"
+        },
+        {
+          "if": "1966 年（含）以後出生、計畫出國",
+          "title": "出國前 2–4 週評估接種",
+          "text": "若不確定是否具免疫力，出國前 2–4 週到旅遊醫學門診評估自費接種 1 劑 MMR。"
+        }
+      ]
+    },
+    {
+      "key": "symptoms",
+      "heading": "症狀與警示徵象",
+      "markdown": "麻疹初期（前驅期）會出現**高燒、咳嗽、流鼻水、結膜炎**，口腔內頰黏膜可能出現白色的柯氏斑（Koplik spots）。\n\n發燒 3–4 天後開始出疹，紅色斑丘疹由耳後、髮際、臉部向下擴散到全身，約持續 4–7 天後逐漸消退並留下褐色色素沉著。",
+      "warning": "呼吸急促或困難、持續高燒、抽搐、意識改變、嚴重腹瀉脫水；嬰幼兒、孕婦與免疫低下者易併發肺炎、中耳炎、腦炎。"
+    },
+    {
+      "key": "transmission",
+      "heading": "怎麼傳染",
+      "markdown": "麻疹可經由**空氣**、飛沫或直接接觸病人鼻咽分泌物傳染，傳染力極強：未具免疫力的人與病人共處一室，約九成會被感染。病毒在空氣中可存活約 2 小時。\n\n出疹前 4 天至出疹後 4 天具傳染力。"
+    },
+    {
+      "key": "prevention",
+      "heading": "如何預防",
+      "markdown": "- 幼兒依時程接種 **2 劑 MMR 疫苗**：出生滿 12 個月接種第 1 劑，滿 5 歲至入國小前接種第 2 劑。\n- **1966 年（含）以後出生**、不具麻疹免疫力的成人，若計畫前往麻疹流行地區，建議出國前 2–4 週至旅遊醫學門診評估自費接種 1 劑 MMR；醫護人員與經常接觸外國人的工作者亦建議評估。\n- 未滿 1 歲嬰兒尚未接種疫苗，非必要不建議帶往流行地區。\n- 流行地區以疾管署「旅遊疫情建議等級」為準。"
+    },
+    {
+      "key": "treatment",
+      "heading": "診斷與治療",
+      "markdown": "麻疹沒有特效藥，以支持性治療為主，包括退燒、補充水分與營養，並治療中耳炎、肺炎等併發症。病人需隔離至出疹後 4 天。\n\n未具免疫力的接觸者，可於暴露後 **72 小時內**接種 MMR 疫苗，或於 6 天內由醫師評估注射免疫球蛋白，以降低發病風險或減輕症狀。"
+    },
+    {
+      "key": "vaccine",
+      "heading": "疫苗",
+      "markdown": "MMR 疫苗（麻疹、腮腺炎、德國麻疹混合疫苗）為活性減毒疫苗，2 劑保護力約 97%。孕婦及嚴重免疫不全者不可接種；育齡女性接種後 4 週內應避免懷孕。成人接種建議依 2025 年 4 月 16 日修訂之「國內現行 MMR 預防接種建議」。"
+    },
+    {
+      "key": "situation",
+      "heading": "目前疫情與統計",
+      "markdown": "近年境外移入及其引起的本土群聚多與東南亞、日本等地疫情相關。年度病例數見資料集。",
+      "datasets": [
+        "dataset.measles-yearly"
+      ]
+    },
+    {
+      "key": "faq",
+      "heading": "常見問題"
+    }
+  ],
+  "professional": {
+    "caseDefinitionDoc": "doc.case-definition-measles",
+    "manualDoc": "doc.mmr-recommendation",
+    "specimen": "出疹 5 日內採咽喉擦拭液與尿液進行 RT-PCR；同時採急性期血清檢測 IgM，必要時於出疹後 10–14 日採恢復期血清。",
+    "notifyNote": "第二類法定傳染病，臨床符合即應於 24 小時內通報，並立即實施空氣隔離；接觸者追蹤由衛生局執行。"
+  },
+  "relatedDocuments": [
+    "doc.mmr-recommendation"
+  ],
+  "materials": [
+    {
+      "label": "麻疹防治衛教單張",
+      "url": "https://www.cdc.gov.tw/Advocacy",
+      "langs": [
+        "zh-TW",
+        "en",
+        "vi",
+        "id",
+        "th",
+        "tl",
+        "ja"
+      ]
+    }
+  ],
+  "i18n": {
+    "en": {
+      "title": "Measles",
+      "summary": "Measles is an extremely contagious viral disease that spreads through the air. Two doses of MMR vaccine prevent it effectively; people born in 1966 or later without immunity should be assessed before travelling.",
+      "keyFacts": {
+        "incubation": "7–21 days (rash around day 14)",
+        "symptoms": "High fever, cough, runny nose, conjunctivitis, then a full-body rash",
+        "transmission": "Airborne, droplets, contact",
+        "prevention": "Two doses of MMR vaccine",
+        "notify": "Within 24 hours"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "What to do",
+          "cards": [
+            {
+              "if": "have a fever with a rash",
+              "title": "Call ahead, wear a mask and see a doctor",
+              "text": "Phone the clinic first, wear a mask, avoid public transport and tell the doctor about your travel and contact history."
+            },
+            {
+              "if": "were told you had contact with a measles case",
+              "title": "Monitor your health for 18 days",
+              "text": "Self-monitor for 18 days from the contact; MMR within 72 hours of exposure may be considered."
+            },
+            {
+              "if": "were born in 1966 or later and plan to travel",
+              "title": "Get assessed 2–4 weeks before departure",
+              "text": "If unsure of your immunity, visit a travel clinic 2–4 weeks before departure to be assessed for one self-paid MMR dose."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Symptoms and warning signs",
+          "markdown": "Measles starts with **high fever, cough, runny nose and conjunctivitis**; white Koplik spots may appear inside the cheeks.\n\nAfter 3–4 days a red blotchy rash appears behind the ears and on the face and spreads downward over the body, fading after 4–7 days and leaving brown discolouration.",
+          "warning": "Rapid or difficult breathing, persistent high fever, seizures, altered consciousness, severe diarrhoea with dehydration; infants, pregnant women and immunocompromised people are prone to pneumonia, ear infection and encephalitis."
+        },
+        {
+          "key": "transmission",
+          "heading": "How it spreads",
+          "markdown": "Measles spreads through the **air**, droplets and direct contact with nose and throat secretions. About nine in ten non-immune people sharing a room with a patient will be infected; the virus can remain in the air for about 2 hours.\n\nPatients are infectious from 4 days before to 4 days after the rash appears."
+        },
+        {
+          "key": "prevention",
+          "heading": "Prevention",
+          "markdown": "- Children receive **two doses of MMR**: the first at 12 months and the second between age 5 and school entry.\n- Adults **born in 1966 or later** without measles immunity who plan to visit affected areas should see a travel clinic 2–4 weeks before departure to be assessed for one self-paid MMR dose; health workers and people in frequent contact with foreign nationals should also be assessed.\n- Infants under 1 year are not yet vaccinated; avoid taking them to affected areas unless necessary.\n- Affected areas follow Taiwan CDC travel health notice levels."
+        },
+        {
+          "key": "treatment",
+          "heading": "Diagnosis and treatment",
+          "markdown": "There is no specific treatment. Care is supportive (fever control, fluids and nutrition) with treatment of complications such as ear infection or pneumonia. Patients are isolated until 4 days after rash onset.\n\nNon-immune contacts can receive MMR within **72 hours** of exposure, or immunoglobulin within 6 days as assessed by a doctor, to lower the risk or severity of illness."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vaccine",
+          "markdown": "MMR (measles, mumps and rubella) is a live attenuated vaccine; two doses are about 97% effective. It must not be given during pregnancy or to severely immunocompromised people; women should avoid pregnancy for 4 weeks after vaccination. Adult recommendations follow the \"Current MMR vaccination recommendations\" revised on 16 April 2025."
+        },
+        {
+          "key": "situation",
+          "heading": "Current situation and statistics",
+          "markdown": "Recent imported cases and related local clusters have been linked to outbreaks in Southeast Asia and Japan. See the dataset for annual counts."
+        },
+        {
+          "key": "faq",
+          "heading": "FAQ"
+        }
+      ]
+    },
+    "vi": {
+      "title": "Bệnh sởi",
+      "summary": "Sởi là bệnh do vi-rút, lây rất mạnh qua không khí. Tiêm đủ 2 liều vắc-xin MMR giúp phòng bệnh hiệu quả; người sinh từ năm 1966 trở về sau chưa có miễn dịch nên được đánh giá tiêm trước khi ra nước ngoài.",
+      "keyFacts": {
+        "incubation": "7–21 ngày (phát ban khoảng ngày 14)",
+        "symptoms": "Sốt cao, ho, sổ mũi, viêm kết mạc, sau đó phát ban toàn thân",
+        "transmission": "Không khí, giọt bắn, tiếp xúc",
+        "prevention": "Tiêm 2 liều vắc-xin MMR",
+        "notify": "Trong vòng 24 giờ"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "Tôi nên làm gì",
+          "cards": [
+            {
+              "if": "bị sốt kèm phát ban",
+              "title": "Gọi điện báo trước, đeo khẩu trang đi khám",
+              "text": "Gọi điện cho cơ sở y tế trước, đeo khẩu trang, tránh đi phương tiện công cộng và khai báo lịch sử đi lại, tiếp xúc."
+            },
+            {
+              "if": "được thông báo đã tiếp xúc với ca bệnh sởi",
+              "title": "Tự theo dõi sức khỏe 18 ngày",
+              "text": "Tự theo dõi sức khỏe 18 ngày kể từ ngày tiếp xúc; có thể được đánh giá tiêm MMR trong vòng 72 giờ sau phơi nhiễm."
+            },
+            {
+              "if": "sinh từ năm 1966 trở về sau và sắp ra nước ngoài",
+              "title": "Đánh giá tiêm 2–4 tuần trước khi đi",
+              "text": "Nếu không chắc đã có miễn dịch, hãy đến phòng khám y học du lịch 2–4 tuần trước khi đi để được đánh giá tiêm 1 liều MMR (tự chi trả)."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Triệu chứng và dấu hiệu cảnh báo",
+          "markdown": "Giai đoạn đầu có **sốt cao, ho, sổ mũi, viêm kết mạc**; có thể thấy hạt Koplik màu trắng ở niêm mạc má.\n\nSau 3–4 ngày sốt bắt đầu phát ban đỏ từ sau tai, chân tóc, mặt rồi lan khắp người, kéo dài 4–7 ngày.",
+          "warning": "Thở nhanh hoặc khó thở, sốt cao kéo dài, co giật, thay đổi ý thức, tiêu chảy nặng mất nước."
+        },
+        {
+          "key": "transmission",
+          "heading": "Lây truyền",
+          "markdown": "Sởi lây qua **không khí**, giọt bắn và tiếp xúc trực tiếp với dịch tiết mũi họng. Khoảng 9/10 người chưa có miễn dịch ở chung phòng với người bệnh sẽ bị lây. Thời gian lây: 4 ngày trước đến 4 ngày sau khi phát ban."
+        },
+        {
+          "key": "prevention",
+          "heading": "Phòng ngừa",
+          "markdown": "- Trẻ em tiêm **2 liều MMR**: liều 1 lúc 12 tháng tuổi, liều 2 từ 5 tuổi đến trước khi vào tiểu học.\n- Người lớn **sinh từ năm 1966 trở về sau** chưa có miễn dịch, nếu đến vùng có dịch, nên đến phòng khám y học du lịch 2–4 tuần trước khi đi để được đánh giá tiêm 1 liều MMR.\n- Vùng có dịch căn cứ theo mức cảnh báo dịch tễ du lịch của CDC Đài Loan."
+        },
+        {
+          "key": "treatment",
+          "heading": "Chẩn đoán và điều trị",
+          "markdown": "Không có thuốc đặc trị; điều trị hỗ trợ và điều trị biến chứng. Người tiếp xúc chưa có miễn dịch có thể tiêm MMR trong vòng **72 giờ** sau phơi nhiễm."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vắc-xin",
+          "markdown": "MMR là vắc-xin sống giảm độc lực; 2 liều bảo vệ khoảng 97%. Phụ nữ mang thai không được tiêm; phụ nữ trong độ tuổi sinh đẻ nên tránh mang thai 4 tuần sau khi tiêm."
+        },
+        {
+          "key": "situation",
+          "heading": "Tình hình hiện nay và thống kê",
+          "markdown": "Các ca bệnh nhập cảnh gần đây liên quan đến dịch ở Đông Nam Á và Nhật Bản."
+        },
+        {
+          "key": "faq",
+          "heading": "Câu hỏi thường gặp"
+        }
+      ]
+    }
+  }
+}

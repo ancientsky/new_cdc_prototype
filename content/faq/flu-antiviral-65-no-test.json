@@ -1,0 +1,76 @@
+{
+  "id": "faq.flu-antiviral-65-no-test",
+  "type": "faq",
+  "title": "65 歲以上長輩有類流感症狀，一定要快篩陽性才能用公費抗病毒藥嗎？",
+  "question": "65 歲以上長輩有類流感症狀，一定要快篩陽性才能用公費抗病毒藥嗎？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2025-12-01",
+  "reviewedAt": "2026-09-22",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "doc.flu-antiviral-eligibility"
+  ],
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-22"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-22",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "類流感高峰期，65 歲以上有類流感症狀者醫師可直接開立公費抗病毒藥劑，不需快篩陽性（2026-09 版第 3 條）。",
+  "keywords": [
+    "公費抗病毒藥劑",
+    "65 歲以上",
+    "不需快篩",
+    "克流感",
+    "類流感高峰期"
+  ],
+  "answerMarkdown": "不一定。依 2026 年 9 月 21 日起適用的「公費流感抗病毒藥劑使用對象」第 3 條，**在類流感高峰期（以疾管署公告期間為準），65 歲以上有類流感症狀者，醫師可直接開立公費抗病毒藥劑，不需快篩陽性**。\n\n未滿 5 歲的類流感患者仍需快篩陽性。舊版（2026 年 6 月版）要求 65 歲以上也需快篩陽性，已不適用。",
+  "structured": {
+    "article": "第 3 條",
+    "ageFrom": 65,
+    "rapidTestRequired": "否（高峰期）",
+    "basisVersion": "2026-09"
+  },
+  "i18n": {
+    "en": {
+      "question": "Does someone aged 65+ with flu-like symptoms need a positive rapid test to get government-funded antivirals?",
+      "answerMarkdown": "Not necessarily. Under Article 3 of the eligibility rules for government-funded influenza antivirals effective 21 September 2026, **during the declared influenza-like illness peak, doctors may prescribe antivirals directly to people aged 65+ with flu-like symptoms without a positive rapid test**.\n\nChildren under 5 still need a positive rapid test. The earlier June 2026 version, which required a positive test for people 65+, no longer applies."
+    }
+  }
+}

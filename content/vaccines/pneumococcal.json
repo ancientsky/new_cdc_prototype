@@ -1,0 +1,96 @@
+{
+  "id": "vaccine.pneumococcal",
+  "type": "vaccine",
+  "slug": "pneumococcal",
+  "title": "肺炎鏈球菌疫苗",
+  "nameEn": "Pneumococcal vaccine",
+  "aliases": [
+    "肺炎鏈球菌疫苗",
+    "PCV",
+    "PPV23",
+    "肺炎疫苗"
+  ],
+  "owner": "unit.vaccine",
+  "publishedAt": "2018-03-01",
+  "reviewedAt": "2026-08-20",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.ipd"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "幼兒 2、4、12–15 個月公費接種結合型疫苗；65 歲以上長者與 55–64 歲原住民公費接種 1 劑 PCV，間隔 1 年再接種 PPV23。",
+  "keywords": [
+    "肺炎鏈球菌疫苗",
+    "PCV",
+    "PPV23",
+    "長者",
+    "幼兒"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/V6unXI5CVl2Fjoap4WVQLw"
+  ],
+  "publicFunded": [
+    {
+      "group": "幼兒",
+      "ageMin": 0.17,
+      "ageMax": 5,
+      "schedule": "結合型疫苗（PCV）出生滿 2、4 個月及 12–15 個月各 1 劑"
+    },
+    {
+      "group": "65 歲以上長者",
+      "ageMin": 65,
+      "schedule": "1 劑 PCV，間隔至少 1 年再接種 1 劑 PPV23"
+    },
+    {
+      "group": "55–64 歲原住民",
+      "ageMin": 55,
+      "ageMax": 64,
+      "schedule": "1 劑 PCV，間隔至少 1 年再接種 1 劑 PPV23"
+    },
+    {
+      "group": "侵襲性肺炎鏈球菌感染高風險對象",
+      "schedule": "依醫師評估接種",
+      "note": "如脾臟切除、人工耳植入、免疫不全等"
+    }
+  ],
+  "bodyMarkdown": "肺炎鏈球菌可引起肺炎、菌血症、腦膜炎等侵襲性感染，幼兒與長者是高風險族群。\n\n幼兒依時程接種 3 劑結合型疫苗。長者先接種 1 劑結合型疫苗（PCV），間隔至少 1 年再接種 1 劑 23 價多醣體疫苗（PPV23）；曾自費接種者請帶接種紀錄由醫師評估銜接。可與流感疫苗同時分開部位接種。",
+  "precautions": "對疫苗成分過敏者不可接種；發燒或急性疾病者宜延後接種。",
+  "whereUrl": "https://vaxmap.cdc.gov.tw/"
+}

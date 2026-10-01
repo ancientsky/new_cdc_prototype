@@ -1,0 +1,93 @@
+{
+  "id": "vaccine.hpv",
+  "type": "vaccine",
+  "slug": "hpv",
+  "title": "人類乳突病毒（HPV）疫苗",
+  "nameEn": "Human papillomavirus (HPV) vaccine",
+  "aliases": [
+    "HPV 疫苗",
+    "子宮頸癌疫苗"
+  ],
+  "owner": "unit.vaccine",
+  "publishedAt": "2018-12-01",
+  "reviewedAt": "2026-08-20",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-25",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "公費 HPV 疫苗提供國中一年級學生（2025 學年度起含男生），校園接種 2 劑、間隔 6 個月，可預防子宮頸癌與多種 HPV 相關癌症。",
+  "keywords": [
+    "HPV",
+    "子宮頸癌",
+    "國一",
+    "公費疫苗",
+    "男生"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/V6unXI5CVl2Fjoap4WVQLw"
+  ],
+  "publicFunded": [
+    {
+      "group": "國中一年級女生",
+      "ageMin": 12,
+      "ageMax": 13,
+      "schedule": "2 劑，間隔 6 個月，校園集中接種"
+    },
+    {
+      "group": "國中一年級男生",
+      "ageMin": 12,
+      "ageMax": 13,
+      "schedule": "2 劑，間隔 6 個月，校園集中接種",
+      "note": "2025 學年度起納入",
+      "startAt": "2025-09-01"
+    }
+  ],
+  "bodyMarkdown": "HPV 感染與子宮頸癌、肛門癌、口咽癌等多種癌症相關。在開始有性行為前接種，保護效果最好。\n\n公費 HPV 疫苗以**國中一年級學生**為對象，以校園集中接種為主，共 2 劑、間隔 6 個月；未在校內完成者可持通知至合約院所補接種。其他年齡層可自費接種，15 歲以上開始接種需 3 劑。",
+  "precautions": "對疫苗成分過敏者不可接種；孕婦暫不建議接種。接種後少數人可能暈厥，建議接種後坐著休息 15 分鐘。",
+  "whereUrl": "https://vaxmap.cdc.gov.tw/",
+  "i18n": {
+    "en": {
+      "title": "Human papillomavirus (HPV) vaccine",
+      "summary": "Government-funded HPV vaccine is offered to first-year junior high students (boys included from the 2025 school year): two doses 6 months apart at school, protecting against cervical and other HPV-related cancers.",
+      "bodyMarkdown": "HPV infection is linked to cervical, anal and oropharyngeal cancers. Vaccination works best before sexual activity begins.\n\nThe government-funded programme covers **first-year junior high school students**, mainly at school: two doses 6 months apart; students who miss school sessions can catch up at contracted clinics. Others can pay for vaccination; those starting at 15 or older need 3 doses."
+    }
+  }
+}

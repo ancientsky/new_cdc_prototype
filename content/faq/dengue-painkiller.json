@@ -1,0 +1,64 @@
+{
+  "id": "faq.dengue-painkiller",
+  "type": "faq",
+  "title": "懷疑登革熱時，可以自己吃止痛藥嗎？",
+  "question": "懷疑登革熱時，可以自己吃止痛藥嗎？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2023-07-01",
+  "reviewedAt": "2026-07-20",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.dengue"
+  ],
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "懷疑登革熱請先就醫，避免自行服用阿斯匹靈或非類固醇消炎止痛藥，以免增加出血風險；用藥依醫師指示。",
+  "keywords": [
+    "登革熱",
+    "止痛藥",
+    "阿斯匹靈",
+    "出血"
+  ],
+  "answerMarkdown": "懷疑登革熱時應先就醫，**不要自行服用阿斯匹靈或非類固醇消炎止痛藥**（如布洛芬），這類藥物可能增加出血風險。醫師通常會以乙醯胺酚處理發燒與疼痛，用藥請依醫師指示。\n\n就醫時請主動告知旅遊史或居住地是否有登革熱病例。",
+  "structured": {
+    "avoid": "阿斯匹靈、NSAIDs"
+  }
+}

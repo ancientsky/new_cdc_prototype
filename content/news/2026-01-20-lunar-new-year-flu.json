@@ -1,0 +1,70 @@
+{
+  "id": "news.2026-01-20-lunar-new-year-flu",
+  "type": "news",
+  "newsType": "press",
+  "title": "流感疫情處高峰，春節連假前請儘速接種疫苗並落實咳嗽禮節",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-01-20",
+  "reviewedAt": "2026-01-20",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "situation",
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "vaccines": [
+    "vaccine.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "pending"
+    },
+    "tl": {
+      "status": "pending"
+    },
+    "vi": {
+      "status": "pending"
+    },
+    "id": {
+      "status": "pending"
+    },
+    "th": {
+      "status": "pending"
+    }
+  },
+  "summary": "類流感門急診就診人次處於高峰，春節連假將至，疾管署呼籲尚未接種的高風險族群儘速接種，並提醒連假期間就醫資源。",
+  "keywords": [
+    "流感",
+    "春節",
+    "高峰",
+    "疫苗",
+    "咳嗽禮節"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+  ],
+  "situationDeclaration": {
+    "disease": "disease.influenza",
+    "text": "類流感門急診就診人次處於流行高峰"
+  },
+  "bodyMarkdown": "疾病管制署表示，近一週類流感門急診就診人次持續處於高峰，社區以 A 型 H3N2 為主，流感併發重症病例亦增加。\n\n春節連假人潮聚集，疾管署呼籲尚未接種公費流感疫苗的長者、幼兒及慢性病人儘速接種；有發燒、咳嗽等症狀應戴口罩、在家休息。如出現呼吸困難、胸痛、意識改變等危險徵兆，請立即就醫。連假期間可查詢各縣市開診院所。"
+}

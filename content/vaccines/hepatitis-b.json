@@ -1,0 +1,82 @@
+{
+  "id": "vaccine.hepatitis-b",
+  "type": "vaccine",
+  "slug": "hepatitis-b",
+  "title": "B 型肝炎疫苗",
+  "nameEn": "Hepatitis B vaccine",
+  "aliases": [
+    "B肝疫苗",
+    "HBV 疫苗"
+  ],
+  "owner": "unit.vaccine",
+  "publishedAt": "2018-03-01",
+  "reviewedAt": "2026-04-15",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.hepatitis-b"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "新生兒公費接種 3 劑 B 型肝炎疫苗：出生 24 小時內、滿 1 個月、滿 6 個月；母親 HBsAg 陽性者另於 24 小時內注射 HBIG。",
+  "keywords": [
+    "B型肝炎疫苗",
+    "新生兒",
+    "HBIG",
+    "公費"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/V6unXI5CVl2Fjoap4WVQLw"
+  ],
+  "publicFunded": [
+    {
+      "group": "新生兒",
+      "ageMin": 0,
+      "ageMax": 1,
+      "schedule": "出生 24 小時內、滿 1 個月、滿 6 個月各 1 劑"
+    },
+    {
+      "group": "HBsAg 陽性母親所生新生兒",
+      "ageMin": 0,
+      "schedule": "出生 24 小時內儘速注射 1 劑 HBIG，並完成 3 劑疫苗；12 個月大追蹤抗體"
+    }
+  ],
+  "bodyMarkdown": "台灣自 1984 年起全面推動新生兒 B 型肝炎疫苗接種，大幅降低兒童帶原率與肝癌發生率。\n\n新生兒**出生後 24 小時內儘速接種第 1 劑**，滿 1 個月、滿 6 個月各接種 1 劑。母親為 B 型肝炎表面抗原陽性者，新生兒另需在出生後 24 小時內注射 B 型肝炎免疫球蛋白（HBIG），並於 12 個月大時抽血追蹤。成人未具抗體者可自費接種。",
+  "precautions": "對疫苗成分過敏者不可接種。",
+  "whereUrl": "https://vaxmap.cdc.gov.tw/"
+}

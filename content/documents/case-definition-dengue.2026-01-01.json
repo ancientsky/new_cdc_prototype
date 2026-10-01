@@ -1,0 +1,112 @@
+{
+  "id": "doc.case-definition-dengue.2026-01-01",
+  "type": "document",
+  "family": "doc.case-definition-dengue",
+  "docType": "case-definition",
+  "title": "傳染病病例定義：登革熱（2026 年版）",
+  "version": "2026-01",
+  "effectiveAt": "2026-01-01",
+  "supersedes": "doc.case-definition-dengue.2023-01-01",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-01-01",
+  "reviewedAt": "2026-01-05",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "tasks": [],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "pending"
+    },
+    "ja": {
+      "status": "pending"
+    },
+    "tl": {
+      "status": "pending"
+    },
+    "vi": {
+      "status": "pending"
+    },
+    "id": {
+      "status": "pending"
+    },
+    "th": {
+      "status": "pending"
+    }
+  },
+  "summary": "現行 2026 年版登革熱病例定義：NS1 快篩陽性且符合臨床條件者列為極可能病例；檢驗條件納入多重病原核酸檢測平台。",
+  "keywords": [
+    "登革熱",
+    "病例定義",
+    "通報定義",
+    "NS1",
+    "檢驗條件"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Disease/Index"
+  ],
+  "note": "原型示意：條文依疾管署公開文件架構改寫，非正式公告文字；正式內容以 PDF 正本為準。",
+  "roles": [
+    "physician",
+    "lab",
+    "infection-control"
+  ],
+  "pdfUrl": "https://www.cdc.gov.tw/File/Get/placeholder-case-definition-dengue-2026",
+  "sections": [
+    {
+      "key": "clinical",
+      "heading": "臨床條件",
+      "markdown": "突然發燒（≥ 38°C）並伴隨下列二種（含）以上症狀：頭痛、後眼窩痛、肌肉痛、關節痛、出疹、白血球減少、噁心／嘔吐、血壓帶試驗陽性、任一警示徵象。"
+    },
+    {
+      "key": "lab",
+      "heading": "檢驗條件",
+      "markdown": "具有下列任一個條件：\n1. 臨床檢體分離並鑑定出登革病毒。\n2. 臨床檢體分子生物學核酸檢測陽性（含經認可之多重病原核酸檢測平台）。\n3. 急性期血清 NS1 抗原檢測陽性（檢驗單位為疾管署或認可實驗室）。\n4. 成對血清 IgM 或 IgG 陽轉，或抗體效價 4 倍以上上升。"
+    },
+    {
+      "key": "epi",
+      "heading": "流行病學條件",
+      "markdown": "發病前 14 日內曾經到過登革熱流行地區，或住家、活動範圍與確定病例有地緣關係。"
+    },
+    {
+      "key": "notify",
+      "heading": "通報定義",
+      "markdown": "符合臨床條件者，或 NS1 抗原快篩陽性者。"
+    },
+    {
+      "key": "class",
+      "heading": "疾病分類",
+      "markdown": "1. 可能病例：符合臨床條件及流行病學條件。\n2. 極可能病例：符合臨床條件，且單一血清 IgM 陽性或 NS1 抗原快篩陽性。\n3. 確定病例：符合檢驗條件。"
+    }
+  ],
+  "changes": [
+    {
+      "section": "檢驗條件",
+      "kind": "changed",
+      "before": "臨床檢體分子生物學核酸檢測陽性",
+      "after": "核酸檢測陽性（含經認可之多重病原核酸檢測平台）"
+    },
+    {
+      "section": "疾病分類",
+      "kind": "changed",
+      "before": "極可能病例：符合臨床條件及單一血清 IgM 陽性",
+      "after": "極可能病例：符合臨床條件，且單一血清 IgM 陽性或 NS1 抗原快篩陽性"
+    }
+  ],
+  "machineReadableMarkdown": "# 傳染病病例定義：登革熱（2026 年版）\n\n## 臨床條件\n突然發燒（≥ 38°C）並伴隨下列二種（含）以上症狀：頭痛、後眼窩痛、肌肉痛、關節痛、出疹、白血球減少、噁心／嘔吐、血壓帶試驗陽性、任一警示徵象。\n\n## 檢驗條件\n具有下列任一個條件：\n1. 臨床檢體分離並鑑定出登革病毒。\n2. 臨床檢體分子生物學核酸檢測陽性（含經認可之多重病原核酸檢測平台）。\n3. 急性期血清 NS1 抗原檢測陽性（檢驗單位為疾管署或認可實驗室）。\n4. 成對血清 IgM 或 IgG 陽轉，或抗體效價 4 倍以上上升。\n\n## 流行病學條件\n發病前 14 日內曾經到過登革熱流行地區，或住家、活動範圍與確定病例有地緣關係。\n\n## 通報定義\n符合臨床條件者，或 NS1 抗原快篩陽性者。\n\n## 疾病分類\n1. 可能病例：符合臨床條件及流行病學條件。\n2. 極可能病例：符合臨床條件，且單一血清 IgM 陽性或 NS1 抗原快篩陽性。\n3. 確定病例：符合檢驗條件。"
+}

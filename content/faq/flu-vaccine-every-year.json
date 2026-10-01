@@ -1,0 +1,75 @@
+{
+  "id": "faq.flu-vaccine-every-year",
+  "type": "faq",
+  "title": "流感疫苗去年打過了，今年還要再打嗎？",
+  "question": "流感疫苗去年打過了，今年還要再打嗎？",
+  "owner": "unit.vaccine",
+  "publishedAt": "2021-10-01",
+  "reviewedAt": "2026-09-18",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "vaccine.influenza"
+  ],
+  "diseases": [
+    "disease.influenza"
+  ],
+  "vaccines": [
+    "vaccine.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-18"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-18",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "流感病毒每年變異、疫苗株每年更新，保護力約 6 個月後下降，因此每年都要接種；接種後約 2 週產生保護力。",
+  "keywords": [
+    "流感疫苗",
+    "每年接種",
+    "保護力",
+    "疫苗株"
+  ],
+  "answerMarkdown": "要。流感病毒每年都可能變異，世界衛生組織每年會依監測結果更新疫苗株；而且接種後的保護力約在 6 個月後逐漸下降，**所以每年都需要接種**。\n\n接種後約 2 週產生保護力，建議在流行季前儘早完成。",
+  "structured": {
+    "protectionOnsetWeeks": 2
+  },
+  "i18n": {
+    "en": {
+      "question": "I had a flu vaccine last year. Do I need another one this year?",
+      "answerMarkdown": "Yes. Influenza viruses change from year to year and the WHO updates the vaccine strains annually based on surveillance. Protection also wanes after about 6 months, **so vaccination is needed every year**.\n\nProtection develops about 2 weeks after vaccination, so get it early before the season peaks."
+    }
+  }
+}

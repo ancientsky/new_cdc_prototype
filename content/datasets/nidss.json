@@ -1,0 +1,77 @@
+{
+  "id": "dataset.nidss",
+  "type": "dataset",
+  "category": "stats-system",
+  "title": "傳染病統計資料查詢系統（NIDSS）",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2011-01-01",
+  "reviewedAt": "2026-01-10",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "data",
+    "situation"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-01-10",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "可依疾病、年度、週別、縣市、年齡查詢法定傳染病病例數與趨勢圖，並下載 CSV。",
+  "keywords": [
+    "NIDSS",
+    "統計查詢",
+    "法定傳染病",
+    "趨勢"
+  ],
+  "provenance": {
+    "fetchedAt": "2026-10-01",
+    "mode": "snapshot",
+    "sourceUrl": "https://www.cdc.gov.tw/"
+  },
+  "updateFrequency": "daily",
+  "lastUpdated": "2026-09-30",
+  "formats": [
+    "HTML",
+    "CSV"
+  ],
+  "canonicalUrl": "https://nidss.cdc.gov.tw/",
+  "portalUrl": "https://nidss.cdc.gov.tw/",
+  "i18n": {
+    "en": {
+      "title": "Taiwan National Infectious Disease Statistics System (NIDSS)",
+      "summary": "Query notifiable disease cases and trends by disease, year, week, county and age, with CSV download."
+    }
+  }
+}

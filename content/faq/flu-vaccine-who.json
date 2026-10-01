@@ -1,0 +1,78 @@
+{
+  "id": "faq.flu-vaccine-who",
+  "type": "faq",
+  "title": "今年公費流感疫苗誰可以打？什麼時候開始？",
+  "question": "今年公費流感疫苗誰可以打？什麼時候開始？",
+  "owner": "unit.vaccine",
+  "publishedAt": "2024-09-20",
+  "reviewedAt": "2026-09-18",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "doc.flu-vaccine-schedule"
+  ],
+  "diseases": [
+    "disease.influenza"
+  ],
+  "vaccines": [
+    "vaccine.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-18"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-18",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "2026–2027 年度公費流感疫苗 10 月 1 日起第一階段（長者、幼兒、孕婦、高風險者、學生等），11 月 1 日起開放 50–64 歲成人。",
+  "keywords": [
+    "公費流感疫苗",
+    "接種對象",
+    "10 月 1 日",
+    "50–64 歲"
+  ],
+  "answerMarkdown": "依「2026–2027 年度公費流感疫苗接種計畫」：\n\n- **2026 年 10 月 1 日起（第一階段）**：65 歲以上長者、55 歲以上原住民、6 個月以上至國小入學前幼兒、孕婦及 6 個月內嬰兒之父母、19–64 歲高風險對象（慢性病、BMI ≥ 30、罕見疾病、重大傷病）、國小至高中職與五專一至三年級學生、醫事防疫人員、長照機構住民與工作人員等。\n- **2026 年 11 月 1 日起（第二階段）**：50 至 64 歲無高風險慢性病成人。\n\n每年對象可能調整，請以當年度計畫為準。",
+  "structured": {
+    "phase1Start": "2026-10-01",
+    "phase2Start": "2026-11-01",
+    "phase2Group": "50–64 歲",
+    "basisVersion": "2026-27"
+  },
+  "i18n": {
+    "en": {
+      "question": "Who can get this season's government-funded flu vaccine, and when does it start?",
+      "answerMarkdown": "Under the 2026–27 government-funded influenza vaccination programme:\n\n- **From 1 October 2026 (phase 1)**: adults 65+, indigenous people 55+, children from 6 months to school entry, pregnant women and parents of infants under 6 months, high-risk adults aged 19–64 (chronic illness, BMI ≥ 30, rare diseases, catastrophic illness), primary to senior high school students, health and public health workers, and long-term care residents and staff.\n- **From 1 November 2026 (phase 2)**: adults aged 50–64 without high-risk conditions.\n\nEligible groups may change each year; follow the current season's programme."
+    }
+  }
+}

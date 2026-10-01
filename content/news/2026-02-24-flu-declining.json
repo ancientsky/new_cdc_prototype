@@ -1,0 +1,65 @@
+{
+  "id": "news.2026-02-24-flu-declining",
+  "type": "news",
+  "newsType": "press",
+  "title": "流感疫情緩降，仍處流行期，請持續注意手部衛生與咳嗽禮節",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-02-24",
+  "reviewedAt": "2026-02-24",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "situation"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "pending"
+    },
+    "tl": {
+      "status": "pending"
+    },
+    "vi": {
+      "status": "pending"
+    },
+    "id": {
+      "status": "pending"
+    },
+    "th": {
+      "status": "pending"
+    }
+  },
+  "summary": "春節後類流感門急診就診人次連續兩週下降，但仍高於流行閾值，疾管署提醒持續落實手部衛生與咳嗽禮節。",
+  "keywords": [
+    "流感",
+    "疫情緩降",
+    "流行期",
+    "咳嗽禮節"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+  ],
+  "situationDeclaration": {
+    "disease": "disease.influenza",
+    "text": "就診人次連續兩週下降，仍高於流行閾值"
+  },
+  "bodyMarkdown": "疾病管制署表示，春節後類流感門急診就診人次連續兩週下降，疫情趨緩，但仍高於流行閾值，社區流感病毒仍持續活動。\n\n疾管署提醒，開學後校園人潮聚集，學生有發燒、咳嗽症狀應在家休息；長者與慢性病人若出現類流感症狀，請儘早就醫，由醫師評估使用抗病毒藥劑。"
+}

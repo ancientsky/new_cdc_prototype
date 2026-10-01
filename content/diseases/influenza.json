@@ -1,0 +1,259 @@
+{
+  "id": "disease.influenza",
+  "type": "disease",
+  "slug": "influenza",
+  "title": "流感",
+  "nameEn": "Influenza",
+  "aliases": [
+    "流行性感冒",
+    "季節性流感",
+    "流感併發重症",
+    "Flu"
+  ],
+  "legalCategory": 4,
+  "icd10": [
+    "J09",
+    "J10",
+    "J11"
+  ],
+  "notifyWithinHours": 168,
+  "incubation": {
+    "min": 1,
+    "max": 4,
+    "typicalMin": 1,
+    "typicalMax": 2,
+    "unit": "day",
+    "text": "1–4 天（平均 2 天）"
+  },
+  "transmission": [
+    "droplet",
+    "contact"
+  ],
+  "owner": "unit.acute-infectious",
+  "steward": "急性傳染病組承辦人",
+  "publishedAt": "2017-10-01",
+  "reviewedAt": "2026-09-20",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "symptoms",
+    "vaccines",
+    "situation"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "vaccines": [
+    "vaccine.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-20"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-24",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "流感由流感病毒引起，經飛沫與接觸傳播，秋冬為流行期。長者、幼兒、孕婦與慢性病人易併發重症，每年接種疫苗是最有效的預防方法。",
+  "keywords": [
+    "流感",
+    "類流感",
+    "流感疫苗",
+    "抗病毒藥劑",
+    "危險徵兆",
+    "流感併發重症"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Disease/Index"
+  ],
+  "keyFacts": {
+    "incubation": "1–4 天（平均 2 天）",
+    "symptoms": "突然發燒、頭痛、肌肉痠痛、倦怠、喉嚨痛、咳嗽",
+    "transmission": "飛沫、接觸病人分泌物",
+    "prevention": "每年接種流感疫苗、勤洗手、咳嗽戴口罩",
+    "notify": "流感併發重症：一週內"
+  },
+  "blocks": [
+    {
+      "key": "what-to-do",
+      "heading": "我該怎麼辦",
+      "cards": [
+        {
+          "if": "突然發燒、全身痠痛、咳嗽",
+          "title": "戴口罩就醫、在家休息",
+          "text": "儘早就醫並在家休息，症狀緩解後 24 小時再上班上課；醫師會評估是否開立抗病毒藥劑。"
+        },
+        {
+          "if": "出現呼吸困難、胸痛或意識改變",
+          "title": "立即到急診",
+          "text": "這些是流感併發重症的危險徵兆，請立即就醫，不要等待。"
+        },
+        {
+          "if": "65 歲以上、幼兒、孕婦或有慢性病",
+          "title": "10 月 1 日起接種公費疫苗",
+          "text": "公費流感疫苗每年 10 月 1 日開打，可查詢住家附近的合約院所。"
+        }
+      ]
+    },
+    {
+      "key": "symptoms",
+      "heading": "症狀與警示徵象",
+      "markdown": "流感常見症狀為**突然**發燒、頭痛、肌肉痠痛、疲倦、流鼻水、喉嚨痛及咳嗽，部分兒童會有腹瀉、嘔吐。多數人約一週內可康復。\n\n與一般感冒不同的是，流感發病急、全身症狀明顯，且可能併發肺炎、腦炎、心肌炎等嚴重併發症。",
+      "warning": "呼吸急促或困難、發紺（嘴唇發紫）、血痰或痰液變濃、胸痛、意識改變、低血壓；兒童另需留意持續高燒超過 3 天、抽搐、活力明顯變差。"
+    },
+    {
+      "key": "transmission",
+      "heading": "怎麼傳染",
+      "markdown": "流感主要透過病人咳嗽、打噴嚏產生的**飛沫**傳播，也可能因手接觸到病人的口鼻分泌物或被污染的物品，再碰觸自己的眼口鼻而感染。\n\n病人在發病前 1 天至症狀出現後 3–7 天都可能具有傳染力，幼兒與免疫力低下者排毒時間可能更長。"
+    },
+    {
+      "key": "prevention",
+      "heading": "如何預防",
+      "markdown": "- **每年接種流感疫苗**：病毒每年會變異，疫苗成分也每年更新，需每年接種。\n- 勤洗手，咳嗽或打噴嚏時以衣袖或紙巾遮住口鼻。\n- 有呼吸道症狀時戴口罩，生病在家休息，避免出入人多擁擠的場所。\n- 流行期間探視長照機構或醫院時，請先確認自己沒有發燒或咳嗽。"
+    },
+    {
+      "key": "treatment",
+      "heading": "診斷與治療",
+      "markdown": "醫師可依臨床判斷開立抗病毒藥劑（如口服克流感、吸入型瑞樂沙、靜脈注射瑞貝塔、口服紓伏效）。**發病後 48 小時內**使用效果最好，但重症或高風險病人即使超過 48 小時仍可使用。\n\n符合公費使用對象者，由疾管署提供公費抗病毒藥劑，對象條件請見專業版「公費流感抗病毒藥劑使用對象」。退燒止痛以乙醯胺酚為主，18 歲以下避免使用阿斯匹靈。"
+    },
+    {
+      "key": "vaccine",
+      "heading": "疫苗",
+      "markdown": "公費流感疫苗每年 10 月 1 日起分階段開打，對象包括 65 歲以上長者、6 個月以上至國小入學前幼兒、孕婦、高風險慢性病人、醫事及防疫人員、國小至高中職學生等，50–64 歲成人於第二階段開放。\n\n8 歲（含）以下兒童若是第一次接種，需接種 2 劑，間隔 4 週以上。完整對象與時程請見「流感疫苗」頁。"
+    },
+    {
+      "key": "situation",
+      "heading": "目前疫情與統計",
+      "markdown": "類流感門急診就診率、流感併發重症病例數每週由疫情中心更新；流行期間疫情態勢層會標示目前狀態。",
+      "datasets": [
+        "dataset.ili-weekly",
+        "dataset.flu-severe"
+      ]
+    },
+    {
+      "key": "faq",
+      "heading": "常見問題"
+    }
+  ],
+  "professional": {
+    "manualDoc": "doc.flu-antiviral-eligibility",
+    "specimen": "咽喉擦拭液或鼻咽擦拭液，以病毒保存輸送管保存，4°C 冷藏 48 小時內送驗；可進行病毒分離與 RT-PCR。",
+    "notifyNote": "「流感併發重症」為第四類法定傳染病，應於一週內通報；類流感病例不須逐案通報，由定點醫師監測與健保資料掌握。"
+  },
+  "relatedDocuments": [
+    "doc.flu-antiviral-eligibility",
+    "doc.flu-vaccine-schedule"
+  ],
+  "materials": [
+    {
+      "label": "流感疫苗接種海報",
+      "url": "https://www.cdc.gov.tw/Advocacy",
+      "langs": [
+        "zh-TW",
+        "en",
+        "vi",
+        "id",
+        "th"
+      ]
+    }
+  ],
+  "i18n": {
+    "en": {
+      "title": "Influenza",
+      "summary": "Influenza is caused by influenza viruses spread by droplets and contact, peaking in autumn and winter. Older adults, young children, pregnant women and people with chronic conditions are at higher risk of severe disease; an annual vaccine is the most effective protection.",
+      "keyFacts": {
+        "incubation": "1–4 days (average 2)",
+        "symptoms": "Sudden fever, headache, muscle aches, fatigue, sore throat, cough",
+        "transmission": "Droplets and contact with secretions",
+        "prevention": "Annual flu vaccine, hand washing, mask when coughing",
+        "notify": "Severe complicated influenza: within one week"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "What to do",
+          "cards": [
+            {
+              "if": "have sudden fever, body aches and cough",
+              "title": "Wear a mask, see a doctor and rest at home",
+              "text": "See a doctor early and stay home until 24 hours after symptoms improve; the doctor will assess whether antivirals are needed."
+            },
+            {
+              "if": "have difficulty breathing, chest pain or confusion",
+              "title": "Go to the emergency department now",
+              "text": "These are danger signs of severe influenza. Seek care immediately."
+            },
+            {
+              "if": "are 65+, a young child, pregnant or have a chronic condition",
+              "title": "Get the government-funded vaccine from 1 October",
+              "text": "Government-funded flu vaccination starts on 1 October each year; find a contracted clinic near you."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Symptoms and warning signs",
+          "markdown": "Common symptoms are **sudden** fever, headache, muscle aches, fatigue, runny nose, sore throat and cough; some children have diarrhoea or vomiting. Most people recover within about a week.\n\nUnlike a common cold, influenza starts abruptly with marked whole-body symptoms and can lead to pneumonia, encephalitis or myocarditis.",
+          "warning": "Rapid or difficult breathing, cyanosis (blue lips), bloody or thick sputum, chest pain, altered consciousness, low blood pressure; in children also high fever for more than 3 days, seizures or marked loss of activity."
+        },
+        {
+          "key": "transmission",
+          "heading": "How it spreads",
+          "markdown": "Influenza spreads mainly through **droplets** from coughs and sneezes. It can also spread when hands touch secretions or contaminated objects and then the eyes, nose or mouth.\n\nPeople may be infectious from 1 day before to 3–7 days after symptoms start; young children and immunocompromised people may shed virus longer."
+        },
+        {
+          "key": "prevention",
+          "heading": "Prevention",
+          "markdown": "- **Get vaccinated every year**: the virus changes and the vaccine is updated annually.\n- Wash hands often; cover coughs and sneezes with a sleeve or tissue.\n- Wear a mask when you have respiratory symptoms, stay home when sick and avoid crowds.\n- During flu season, make sure you have no fever or cough before visiting care homes or hospitals."
+        },
+        {
+          "key": "treatment",
+          "heading": "Diagnosis and treatment",
+          "markdown": "Doctors may prescribe antivirals (oral oseltamivir, inhaled zanamivir, intravenous peramivir or oral baloxavir). They work best **within 48 hours of onset**, but severe or high-risk patients can still benefit later.\n\nTaiwan CDC supplies government-funded antivirals for eligible patients; see the professional document on eligibility. Use paracetamol for fever and avoid aspirin in anyone under 18."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vaccine",
+          "markdown": "Government-funded flu vaccination starts in phases from 1 October each year for people aged 65 and over, children from 6 months to school entry, pregnant women, high-risk chronic patients, health and public health workers, and primary to senior high school students; adults aged 50–64 are included in the second phase.\n\nChildren aged 8 and under receiving flu vaccine for the first time need 2 doses at least 4 weeks apart. See the Influenza vaccine page for details."
+        },
+        {
+          "key": "situation",
+          "heading": "Current situation and statistics",
+          "markdown": "Influenza-like illness visit rates and severe influenza cases are updated weekly by the Epidemic Intelligence Center; the situation layer shows the current status during the season."
+        },
+        {
+          "key": "faq",
+          "heading": "FAQ"
+        }
+      ]
+    }
+  }
+}

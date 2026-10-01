@@ -1,0 +1,65 @@
+{
+  "id": "faq.covid-antiviral",
+  "type": "faq",
+  "title": "新冠確診後，誰可以使用公費口服抗病毒藥？",
+  "question": "新冠確診後，誰可以使用公費口服抗病毒藥？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2023-03-20",
+  "reviewedAt": "2026-09-05",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.covid-19"
+  ],
+  "diseases": [
+    "disease.covid-19"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-05"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "新冠公費口服抗病毒藥提供給 65 歲以上、慢性病、免疫低下等高風險者，須於發病 5 天內由醫師評估開立。",
+  "keywords": [
+    "新冠",
+    "抗病毒藥",
+    "公費",
+    "高風險族群",
+    "5 天內"
+  ],
+  "answerMarkdown": "公費口服抗病毒藥主要提供給**重症高風險族群**，例如 65 歲以上長者、具慢性病（糖尿病、心血管疾病、慢性肺病、慢性腎病等）、免疫低下者、BMI ≥ 30 者與孕婦，由醫師評估後開立。\n\n藥物需在**發病 5 天內**開始使用，因此高風險者確診後應儘早就醫，並主動告知醫師目前服用的藥物，以避免交互作用。",
+  "structured": {
+    "startWithinDays": 5
+  }
+}

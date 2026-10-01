@@ -1,0 +1,134 @@
+{
+  "id": "dataset.measles-yearly",
+  "type": "dataset",
+  "category": "open-dataset",
+  "title": "麻疹確定病例統計",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2015-01-01",
+  "reviewedAt": "2026-05-14",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "data",
+    "travel"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.measles"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-05-14",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "麻疹確定病例依年度、境外移入／本土、感染國家與年齡層統計。",
+  "keywords": [
+    "麻疹",
+    "確定病例",
+    "境外移入",
+    "年統計"
+  ],
+  "portalUrl": "https://data.cdc.gov.tw/dataset/measles-confirmed-cases",
+  "canonicalUrl": "https://data.cdc.gov.tw/dataset/measles-confirmed-cases",
+  "schemaUrl": "https://data.cdc.gov.tw/dataset/measles-confirmed-cases",
+  "resources": [
+    {
+      "name": "麻疹確定病例統計（CSV）",
+      "format": "CSV",
+      "url": "https://data.cdc.gov.tw/dataset/measles-confirmed-cases"
+    },
+    {
+      "name": "麻疹確定病例統計（JSON）",
+      "format": "JSON",
+      "url": "https://data.cdc.gov.tw/dataset/measles-confirmed-cases"
+    }
+  ],
+  "provenance": {
+    "fetchedAt": "2026-10-01",
+    "mode": "snapshot",
+    "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_show?id=measles-confirmed-cases"
+  },
+  "ckanName": "measles-confirmed-cases",
+  "updateFrequency": "monthly",
+  "lastUpdated": "2026-09-05",
+  "formats": [
+    "CSV",
+    "JSON"
+  ],
+  "series": {
+    "label": "麻疹病例（年）",
+    "unit": "例",
+    "granularity": "year",
+    "points": [
+      {
+        "t": "2018",
+        "v": 40
+      },
+      {
+        "t": "2019",
+        "v": 134
+      },
+      {
+        "t": "2020",
+        "v": 9
+      },
+      {
+        "t": "2021",
+        "v": 0
+      },
+      {
+        "t": "2022",
+        "v": 0
+      },
+      {
+        "t": "2023",
+        "v": 10
+      },
+      {
+        "t": "2024",
+        "v": 21
+      },
+      {
+        "t": "2025",
+        "v": 33
+      }
+    ],
+    "note": "示意：2018–2020 量級依公開資料概略整理，2021 年後為示意值；正式值以傳染病統計資料查詢系統為準。"
+  },
+  "i18n": {
+    "en": {
+      "title": "Confirmed measles cases",
+      "summary": "Confirmed measles cases by year, imported or local, country of infection and age group."
+    }
+  }
+}

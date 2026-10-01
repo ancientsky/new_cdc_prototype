@@ -1,0 +1,68 @@
+{
+  "id": "faq.varicella-vaccine-doses",
+  "type": "faq",
+  "title": "水痘疫苗公費打幾劑？需要打第二劑嗎？",
+  "question": "水痘疫苗公費打幾劑？需要打第二劑嗎？",
+  "owner": "unit.vaccine",
+  "publishedAt": "2019-01-01",
+  "reviewedAt": "2026-04-15",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "vaccine.varicella"
+  ],
+  "diseases": [
+    "disease.varicella"
+  ],
+  "vaccines": [
+    "vaccine.varicella"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "公費水痘疫苗出生滿 12 個月接種 1 劑；4–6 歲可自費接種第 2 劑提升保護力，成人未感染者可自費 2 劑。",
+  "keywords": [
+    "水痘疫苗",
+    "公費",
+    "第二劑",
+    "12 個月"
+  ],
+  "answerMarkdown": "公費水痘疫苗於幼兒**出生滿 12 個月接種 1 劑**。為提升保護力，醫界建議 4–6 歲可再自費接種第 2 劑，家長可與醫師討論。\n\n未曾得過水痘也沒有接種過的青少年與成人，可自費接種 2 劑，間隔 4–8 週。孕婦不可接種。",
+  "structured": {
+    "publicDoseAgeMonths": 12,
+    "publicDoses": 1
+  }
+}

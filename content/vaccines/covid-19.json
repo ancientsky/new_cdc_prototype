@@ -1,0 +1,105 @@
+{
+  "id": "vaccine.covid-19",
+  "type": "vaccine",
+  "slug": "covid-19",
+  "title": "新冠疫苗",
+  "nameEn": "COVID-19 vaccine",
+  "aliases": [
+    "COVID-19 疫苗",
+    "新冠肺炎疫苗"
+  ],
+  "owner": "unit.vaccine",
+  "publishedAt": "2021-03-22",
+  "reviewedAt": "2026-09-16",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "doc.covid-vaccine-recommendation"
+  ],
+  "diseases": [
+    "disease.covid-19"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-16"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-18",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "2026–2027 年度新冠疫苗 10 月 1 日起與流感疫苗同步開打，6 個月以上民眾公費 1 劑；65 歲以上與免疫不全者間隔 6 個月可再接種 1 劑。",
+  "keywords": [
+    "新冠疫苗",
+    "公費",
+    "接種對象",
+    "公費接種對象",
+    "6 個月以上",
+    "65 歲以上"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/V6unXI5CVl2Fjoap4WVQLw"
+  ],
+  "publicFunded": [
+    {
+      "group": "6 個月以上民眾",
+      "ageMin": 0.5,
+      "schedule": "本年度 1 劑，與前一劑間隔至少 12 週",
+      "startAt": "2026-10-01"
+    },
+    {
+      "group": "65 歲以上長者、中重度免疫不全者",
+      "ageMin": 65,
+      "schedule": "本年度第 1 劑後間隔 6 個月，可再接種 1 劑",
+      "note": "2026–2027 年度新增",
+      "startAt": "2026-10-01"
+    },
+    {
+      "group": "未曾接種之 6 個月至 4 歲幼兒",
+      "ageMin": 0.5,
+      "ageMax": 4,
+      "schedule": "依仿單接種 2–3 劑基礎劑",
+      "startAt": "2026-10-01"
+    }
+  ],
+  "bodyMarkdown": "新冠疫苗依病毒株變化每年更新成分。2026–2027 年度疫苗依 WHO 建議株，自 **10 月 1 日**起開打，6 個月以上民眾皆可接種公費疫苗；65 歲以上長者、55 歲以上原住民、醫事人員、長照機構住民與工作人員、高風險慢性病人與孕婦為優先對象。\n\n可與流感疫苗同時分開部位接種，或間隔任何時間接種。",
+  "precautions": "對疫苗成分曾發生嚴重過敏反應者不可接種。接種後少數人可能出現注射部位疼痛、疲倦、頭痛、發燒；若出現胸痛、心悸、呼吸急促，應立即就醫。",
+  "whereUrl": "https://antiflu.cdc.gov.tw/",
+  "i18n": {
+    "en": {
+      "title": "COVID-19 vaccine",
+      "summary": "The 2026–27 COVID-19 vaccine starts on 1 October alongside flu vaccine: one government-funded dose for everyone aged 6 months and over; people 65+ and the immunocompromised may get another dose 6 months later.",
+      "bodyMarkdown": "COVID-19 vaccines are updated each year as the virus changes. The 2026–27 vaccine follows WHO-recommended strains and is available from **1 October** for everyone aged 6 months and over; priority groups include adults 65+, indigenous people 55+, health workers, long-term care residents and staff, high-risk chronic patients and pregnant women.\n\nIt can be given with the flu vaccine in different sites, or at any interval."
+    }
+  }
+}

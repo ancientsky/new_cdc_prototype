@@ -1,0 +1,67 @@
+{
+  "id": "faq.ev71-vaccine",
+  "type": "faq",
+  "title": "腸病毒 71 型疫苗是公費的嗎？打了就不會得腸病毒嗎？",
+  "question": "腸病毒 71 型疫苗是公費的嗎？打了就不會得腸病毒嗎？",
+  "owner": "unit.vaccine",
+  "publishedAt": "2023-06-01",
+  "reviewedAt": "2026-04-22",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "vaccine.ev71"
+  ],
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "vaccines": [
+    "vaccine.ev71"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "腸病毒 71 型疫苗目前為自費，只能預防 71 型，接種後仍需落實洗手與留意重症前兆。",
+  "keywords": [
+    "腸病毒",
+    "EV71",
+    "疫苗",
+    "自費"
+  ],
+  "answerMarkdown": "目前腸病毒 71 型疫苗屬**自費**接種，適用年齡依各廠牌仿單，家長可與兒科醫師討論。\n\n疫苗**只能預防 71 型**，無法預防克沙奇病毒等其他型別，接種後仍要落實肥皂洗手與環境消毒，並留意重症前兆。",
+  "structured": {
+    "publicFunded": "否"
+  }
+}

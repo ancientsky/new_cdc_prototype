@@ -106,7 +106,7 @@ export async function evalExists() {
   const travel = [...(countryLevels ?? []), ...(travelAlerts ?? [])];
   return (ref) => {
     if (ref.startsWith('situation:')) return (situation?.items ?? []).some((i) => i.disease === ref.slice(10));
-    if (ref.startsWith('travel:')) { const iso = ref.slice(7).toUpperCase(); return travel.some((t) => String(t.iso2 ?? t.countryCode ?? t.iso ?? t.code ?? '').toUpperCase() === iso); }
+    if (ref.startsWith('travel:')) { const iso = ref.slice(7).toUpperCase(); return travel.some((t) => String(t.iso2 ?? t.ISO2 ?? t.countryCode ?? t.iso ?? t.code ?? '').toUpperCase() === iso); }
     if (ref.startsWith('dataset-series:')) return (datasets ?? []).some((d) => d.id === ref.slice(15) && d.series);
     return families.has(ref) || ids.some((id) => id === ref || id.startsWith(ref));
   };

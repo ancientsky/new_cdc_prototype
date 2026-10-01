@@ -1,0 +1,69 @@
+{
+  "id": "news.2026-08-25-mpox-clade-i",
+  "type": "news",
+  "newsType": "press",
+  "title": "非洲 M痘 clade I 疫情持續，前往當地請避免親密接觸與野生動物",
+  "owner": "unit.quarantine",
+  "publishedAt": "2026-08-25",
+  "reviewedAt": "2026-08-25",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "travel"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.mpox"
+  ],
+  "vaccines": [
+    "vaccine.mpox"
+  ],
+  "countries": [
+    "CD",
+    "UG",
+    "KE"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "pending"
+    },
+    "tl": {
+      "status": "pending"
+    },
+    "vi": {
+      "status": "pending"
+    },
+    "id": {
+      "status": "pending"
+    },
+    "th": {
+      "status": "pending"
+    }
+  },
+  "summary": "中非與東非 M痘 clade I 疫情持續，相關國家維持第二級旅遊疫情建議。前往民眾請避免親密接觸與接觸野生動物，返國有症狀應就醫。",
+  "keywords": [
+    "M痘",
+    "clade I",
+    "非洲",
+    "旅遊疫情建議"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+  ],
+  "bodyMarkdown": "疾病管制署表示，剛果民主共和國、烏干達等中非與東非國家 M痘 clade I 疫情持續，相關國家維持**第二級：警示（Alert）**旅遊疫情建議。\n\n疾管署提醒，前往當地應避免與不明對象親密接觸，不接觸野生動物及其屍體，並注意手部衛生；符合條件者可於出發前完成 2 劑 M痘疫苗。返國後 21 天內如出現發燒、淋巴結腫大或皮疹，請遮蓋病灶後就醫並告知旅遊史。"
+}

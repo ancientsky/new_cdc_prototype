@@ -1,0 +1,72 @@
+{
+  "id": "faq.flu-danger-signs",
+  "type": "faq",
+  "title": "得了流感，出現哪些狀況要馬上就醫？",
+  "question": "得了流感，出現哪些狀況要馬上就醫？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2023-10-01",
+  "reviewedAt": "2026-09-20",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.influenza"
+  ],
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-20"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-20",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "流感危險徵兆：呼吸困難、發紺、血痰、胸痛、意識改變、低血壓；兒童高燒超過 3 天、抽搐或活力差，都應立即就醫。",
+  "keywords": [
+    "流感",
+    "危險徵兆",
+    "併發重症",
+    "就醫時機"
+  ],
+  "answerMarkdown": "出現下列**危險徵兆**請立即就醫：呼吸急促或呼吸困難、嘴唇發紫（發紺）、血痰或痰液變濃、胸痛、意識改變、低血壓。\n\n兒童另需留意：持續高燒超過 3 天、抽搐、呼吸急促、活力明顯變差或不想喝水。這些可能是流感併發重症的前兆。",
+  "structured": {
+    "childHighFeverDays": 3
+  },
+  "i18n": {
+    "en": {
+      "question": "What signs mean someone with influenza should see a doctor immediately?",
+      "answerMarkdown": "Seek care immediately for these **danger signs**: rapid or difficult breathing, blue lips (cyanosis), bloody or thick sputum, chest pain, altered consciousness or low blood pressure.\n\nIn children also watch for high fever lasting more than 3 days, seizures, fast breathing, marked loss of activity or refusing to drink. These may signal severe complications of influenza."
+    }
+  }
+}

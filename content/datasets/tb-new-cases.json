@@ -1,0 +1,145 @@
+{
+  "id": "dataset.tb-new-cases",
+  "type": "dataset",
+  "category": "open-dataset",
+  "title": "結核病新案統計",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2015-03-24",
+  "reviewedAt": "2026-03-24",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-03-24",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "結核病新案數依年度、性別、年齡層與縣市統計，含發生率（每十萬人口）。",
+  "keywords": [
+    "結核病",
+    "新案",
+    "發生率",
+    "年統計"
+  ],
+  "portalUrl": "https://data.cdc.gov.tw/dataset/tuberculosis-new-cases",
+  "canonicalUrl": "https://data.cdc.gov.tw/dataset/tuberculosis-new-cases",
+  "schemaUrl": "https://data.cdc.gov.tw/dataset/tuberculosis-new-cases",
+  "resources": [
+    {
+      "name": "結核病新案統計（CSV）",
+      "format": "CSV",
+      "url": "https://data.cdc.gov.tw/dataset/tuberculosis-new-cases"
+    },
+    {
+      "name": "結核病新案統計（JSON）",
+      "format": "JSON",
+      "url": "https://data.cdc.gov.tw/dataset/tuberculosis-new-cases"
+    }
+  ],
+  "provenance": {
+    "fetchedAt": "2026-10-01",
+    "mode": "snapshot",
+    "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_show?id=tuberculosis-new-cases"
+  },
+  "ckanName": "tuberculosis-new-cases",
+  "updateFrequency": "yearly",
+  "lastUpdated": "2026-03-20",
+  "formats": [
+    "CSV",
+    "JSON"
+  ],
+  "series": {
+    "label": "結核病新案（年）",
+    "unit": "例",
+    "granularity": "year",
+    "points": [
+      {
+        "t": "2015",
+        "v": 10711
+      },
+      {
+        "t": "2016",
+        "v": 10328
+      },
+      {
+        "t": "2017",
+        "v": 9759
+      },
+      {
+        "t": "2018",
+        "v": 9179
+      },
+      {
+        "t": "2019",
+        "v": 8732
+      },
+      {
+        "t": "2020",
+        "v": 7823
+      },
+      {
+        "t": "2021",
+        "v": 7062
+      },
+      {
+        "t": "2022",
+        "v": 6631
+      },
+      {
+        "t": "2023",
+        "v": 6600
+      },
+      {
+        "t": "2024",
+        "v": 6300
+      },
+      {
+        "t": "2025",
+        "v": 6050
+      }
+    ],
+    "note": "2015–2022 依公開年報概略整理；2023–2025 為示意值，正式值以 CKAN 資料集為準。"
+  },
+  "i18n": {
+    "en": {
+      "title": "New tuberculosis cases",
+      "summary": "Annual new TB cases by sex, age group and county, with incidence per 100,000."
+    }
+  }
+}

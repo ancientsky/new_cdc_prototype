@@ -134,7 +134,7 @@ export function disclosureRow(result) {
     <p><span class="c-ai-badge">${esc(L('aiBadge'))}</span> ${esc(L('disclosure'))} <span class="c-ai-disclosure__model">${esc(model)}</span></p>
     <p class="c-ai-disclosure__meta"><span>${esc(L('auditId'))} <code data-audit-slot>${esc(result.auditId)}</code></span>
       <button type="button" class="c-btn c-btn--sm c-btn--ghost" data-act="helpful" aria-pressed="false">${esc(L('helpful'))}</button></p>
-    <details class="c-feedback c-answer-report" data-group="answer-report"><summary class="c-btn c-btn--sm c-btn--ghost">${esc(L('report'))}</summary>
+    <details class="c-answer-report" data-group="answer-report"><summary class="c-btn c-btn--sm c-btn--ghost">${esc(L('report'))}</summary>
       <form class="c-feedback__form" data-answer-report>
         <p><b>${esc(L('reportH'))}</b> · ${esc(L('auditId'))} <code>${esc(result.auditId)}</code></p>
         <fieldset><legend>${esc(L('reportKind'))}</legend>${L('reportKinds').map((k, i) => `<label><input type="radio" name="kind" value="${esc(k)}"${i === 0 ? ' checked' : ''}> ${esc(k)}</label>`).join(' ')}</fieldset>
@@ -165,12 +165,12 @@ export async function situationCards(sit) {
     const chart = it.weekly?.length ? await barChart(it.weekly, { labels, unit: it.metricValue?.includes('%') ? '%' : '', title: it.metricLabel, width: 300, height: 110, color: `var(--status-${it.status}, currentColor)` }) : '';
     const i18n = LANG !== 'zh-TW' ? it.i18n?.[LANG] : null;
     return `<article class="c-sit-card c-sit-card--${esc(it.status)} c-answer-sit">
-      <header><h3>${it.slug ? link(`/diseases/${it.slug}/`, it.diseaseName) : esc(it.diseaseName)}</h3>
+      <header><h3>${(() => { const nm = LANG !== 'zh-TW' ? (it.diseaseNameEn ?? it.diseaseName) : it.diseaseName; return it.slug ? link(`/diseases/${it.slug}/`, nm) : esc(nm); })()}</h3>
         <span class="c-status-tag c-status-tag--${esc(it.status)}">${esc(statusLabel(it.status))}</span>${it.illustrative ? ` <span class="c-tag">${esc(L('illustrative'))}</span>` : ''}</header>
       <p class="c-sit-card__metric"><span aria-hidden="true">${it.trend === 'up' ? '↑' : it.trend === 'down' ? '↓' : '→'}</span> <b>${esc(it.metricValue)}</b> <span class="muted">${esc(i18n?.metricLabel ?? it.metricLabel)}${it.deltaText ? `，${esc(i18n?.deltaText ?? it.deltaText)}` : ''}</span></p>
       ${it.peakCount != null ? `<p class="c-sit-card__sub"><b>${esc(it.peakCount)}</b> ${esc(it.peakCountLabel ?? '')}</p>` : ''}
       ${chart ? `<div class="c-sit-card__chart">${chart}</div>` : ''}
-      ${it.basis ? `<p class="c-sit-card__basis"><b>${esc(L('statusBasis'))}：</b>${esc(it.basis)}</p>` : ''}
+      ${it.basis ? `<p class="c-sit-card__basis"><b>${esc(L('statusBasis'))}：</b>${esc(i18n?.basis ?? it.basis)}</p>` : ''}
       <p class="c-provenance">${esc(L('dataDate'))} <time datetime="${esc(sit.dataDate)}">${esc(sit.dataDate)}</time> · ${esc(sit.publisherName ?? sit.publisher)} ${esc(L('publisher'))} · ${link('/situation/', L('seeTrend'))}</p>
     </article>`;
   }));

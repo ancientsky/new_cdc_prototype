@@ -1,0 +1,161 @@
+{
+  "id": "disease.varicella",
+  "type": "disease",
+  "slug": "varicella",
+  "title": "水痘",
+  "nameEn": "Varicella (chickenpox)",
+  "aliases": [
+    "出水痘",
+    "Chickenpox",
+    "Varicella",
+    "水痘併發症"
+  ],
+  "legalCategory": 4,
+  "icd10": [
+    "B01"
+  ],
+  "notifyWithinHours": 168,
+  "incubation": {
+    "min": 10,
+    "max": 21,
+    "typicalMin": 14,
+    "typicalMax": 16,
+    "unit": "day",
+    "text": "10–21 天（通常 14–16 天）"
+  },
+  "transmission": [
+    "airborne",
+    "droplet",
+    "contact"
+  ],
+  "owner": "unit.vaccine",
+  "steward": "預防接種組承辦人",
+  "publishedAt": "2018-03-01",
+  "reviewedAt": "2026-01-15",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "symptoms",
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.varicella"
+  ],
+  "vaccines": [
+    "vaccine.varicella"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "pending"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "水痘傳染力強，典型表現是發燒與分批出現、同時有不同時期的癢疹水泡。幼兒滿 12 個月接種 1 劑公費疫苗；法定通報項目為「水痘併發症」。",
+  "keywords": [
+    "水痘",
+    "水泡",
+    "水痘疫苗",
+    "帶狀疱疹",
+    "水痘併發症"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Disease/Index"
+  ],
+  "keyFacts": {
+    "incubation": "10–21 天（通常 14–16 天）",
+    "symptoms": "發燒、倦怠，之後全身分批出現斑疹、丘疹、水泡、結痂",
+    "transmission": "空氣、飛沫、接觸水泡液",
+    "prevention": "接種水痘疫苗、病人在家休息到全部結痂",
+    "notify": "水痘併發症：一週內"
+  },
+  "blocks": [
+    {
+      "key": "what-to-do",
+      "heading": "我該怎麼辦",
+      "cards": [
+        {
+          "if": "孩子出水痘",
+          "title": "在家休息到水泡全部結痂",
+          "text": "在家休息至所有水泡結痂（約發疹後 5–7 天），剪短指甲避免抓破感染。"
+        },
+        {
+          "if": "水泡紅腫化膿、高燒不退或呼吸困難",
+          "title": "回診評估併發症",
+          "text": "可能是皮膚細菌感染或肺炎等併發症，請儘速回診。"
+        },
+        {
+          "if": "孕婦或免疫低下者接觸到水痘病人",
+          "title": "儘快聯繫醫師",
+          "text": "請儘快聯繫醫師，評估是否需要免疫球蛋白或抗病毒藥物。"
+        }
+      ]
+    },
+    {
+      "key": "symptoms",
+      "heading": "症狀與警示徵象",
+      "markdown": "先有輕微發燒、倦怠，接著出現**癢疹**，由軀幹、頭皮開始擴散到臉與四肢。皮疹會依序變成斑疹、丘疹、水泡，最後結痂，而且**分批出現**，同一時間可看到不同時期的皮疹。\n\n成人、新生兒與免疫低下者症狀通常較嚴重。痊癒後病毒潛伏在神經節，日後可能再活化成**帶狀疱疹**。",
+      "warning": "皮膚紅腫熱痛或化膿、高燒超過 4 天、咳嗽呼吸困難、嗜睡、走路不穩或抽搐，可能是併發症。"
+    },
+    {
+      "key": "transmission",
+      "heading": "怎麼傳染",
+      "markdown": "經由**空氣、飛沫**或直接接觸水泡液傳染，傳染力很強。出疹前 1–2 天到所有水泡結痂為止都具傳染力。帶狀疱疹病人的水泡液也可能讓未具免疫力者感染水痘。"
+    },
+    {
+      "key": "prevention",
+      "heading": "如何預防",
+      "markdown": "- 幼兒出生滿 12 個月接種 1 劑**公費水痘疫苗**；醫界建議 4–6 歲可自費接種第 2 劑以提升保護力。\n- 病人在家休息至全部水泡結痂，避免接觸孕婦、新生兒與免疫低下者。\n- 未曾得過水痘也未接種疫苗的成人，可自費接種 2 劑（間隔 4–8 週）。"
+    },
+    {
+      "key": "treatment",
+      "heading": "診斷與治療",
+      "markdown": "多數兒童以症狀治療為主：止癢、保持皮膚清潔、剪短指甲。成人、免疫低下者或重症病人，醫師可評估使用抗病毒藥物（acyclovir 等）。\n\n**18 歲以下避免使用阿斯匹靈**，以免引起雷氏症候群。"
+    },
+    {
+      "key": "vaccine",
+      "heading": "疫苗",
+      "markdown": "水痘疫苗為活性減毒疫苗，公費對象為出生滿 12 個月的幼兒，接種 1 劑。孕婦不可接種，接種後 4 週內應避免懷孕。接種後少數人可能在注射部位或全身出現少量水泡。"
+    },
+    {
+      "key": "situation",
+      "heading": "目前疫情與統計",
+      "markdown": "幼兒常規接種後，水痘病例明顯減少；通報資料僅含「水痘併發症」病例。"
+    },
+    {
+      "key": "faq",
+      "heading": "常見問題"
+    }
+  ],
+  "professional": {
+    "specimen": "水泡液拭子進行 PCR；必要時檢測血清 IgM／IgG。",
+    "notifyNote": "第四類法定傳染病「水痘併發症」，應於一週內通報；單純水痘不需通報，但校園或機構群聚應通知衛生局。"
+  }
+}

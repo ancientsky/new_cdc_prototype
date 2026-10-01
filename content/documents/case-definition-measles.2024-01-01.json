@@ -1,0 +1,97 @@
+{
+  "id": "doc.case-definition-measles.2024-01-01",
+  "type": "document",
+  "family": "doc.case-definition-measles",
+  "docType": "case-definition",
+  "title": "傳染病病例定義：麻疹",
+  "version": "2024-01",
+  "effectiveAt": "2024-01-01",
+  "supersedes": null,
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2024-01-01",
+  "reviewedAt": "2026-01-08",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.measles"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "pending"
+    },
+    "ja": {
+      "status": "pending"
+    },
+    "tl": {
+      "status": "pending"
+    },
+    "vi": {
+      "status": "pending"
+    },
+    "id": {
+      "status": "pending"
+    },
+    "th": {
+      "status": "pending"
+    }
+  },
+  "summary": "麻疹病例定義：發燒、出疹合併咳嗽、鼻炎或結膜炎之一者即應通報；咽喉擦拭液或尿液核酸陽性為確定病例。",
+  "keywords": [
+    "麻疹",
+    "病例定義",
+    "通報定義",
+    "RT-PCR",
+    "IgM"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Disease/Index"
+  ],
+  "note": "原型示意：條文依疾管署公開文件架構改寫，非正式公告文字；正式內容以 PDF 正本為準。",
+  "roles": [
+    "physician",
+    "lab",
+    "infection-control"
+  ],
+  "pdfUrl": "https://www.cdc.gov.tw/File/Get/placeholder-case-definition-measles",
+  "sections": [
+    {
+      "key": "clinical",
+      "heading": "臨床條件",
+      "markdown": "同時具有下列三項：\n1. 發燒（≥ 38°C）。\n2. 全身性斑丘疹。\n3. 咳嗽、鼻炎或結膜炎三者之一。"
+    },
+    {
+      "key": "lab",
+      "heading": "檢驗條件",
+      "markdown": "具有下列任一個條件：\n1. 臨床檢體（咽喉擦拭液、尿液或血液）分離並鑑定出麻疹病毒。\n2. 臨床檢體分子生物學核酸檢測陽性。\n3. 血清麻疹 IgM 抗體陽性（排除近期接種疫苗者）。\n4. 成對血清 IgG 陽轉或抗體效價 4 倍以上上升。"
+    },
+    {
+      "key": "epi",
+      "heading": "流行病學條件",
+      "markdown": "出疹前 7 至 18 日內，曾與確定病例有接觸，或曾至麻疹流行地區。"
+    },
+    {
+      "key": "notify",
+      "heading": "通報定義",
+      "markdown": "符合臨床條件者。通報後應立即採取空氣傳染防護措施。"
+    },
+    {
+      "key": "class",
+      "heading": "疾病分類",
+      "markdown": "1. 極可能病例：符合臨床條件及流行病學條件。\n2. 確定病例：符合檢驗條件。"
+    }
+  ],
+  "machineReadableMarkdown": "# 傳染病病例定義：麻疹\n\n## 臨床條件\n同時具有下列三項：\n1. 發燒（≥ 38°C）。\n2. 全身性斑丘疹。\n3. 咳嗽、鼻炎或結膜炎三者之一。\n\n## 檢驗條件\n具有下列任一個條件：\n1. 臨床檢體（咽喉擦拭液、尿液或血液）分離並鑑定出麻疹病毒。\n2. 臨床檢體分子生物學核酸檢測陽性。\n3. 血清麻疹 IgM 抗體陽性（排除近期接種疫苗者）。\n4. 成對血清 IgG 陽轉或抗體效價 4 倍以上上升。\n\n## 流行病學條件\n出疹前 7 至 18 日內，曾與確定病例有接觸，或曾至麻疹流行地區。\n\n## 通報定義\n符合臨床條件者。通報後應立即採取空氣傳染防護措施。\n\n## 疾病分類\n1. 極可能病例：符合臨床條件及流行病學條件。\n2. 確定病例：符合檢驗條件。"
+}

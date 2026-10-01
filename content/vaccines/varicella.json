@@ -1,0 +1,77 @@
+{
+  "id": "vaccine.varicella",
+  "type": "vaccine",
+  "slug": "varicella",
+  "title": "水痘疫苗",
+  "nameEn": "Varicella vaccine",
+  "aliases": [
+    "水痘疫苗",
+    "Chickenpox vaccine"
+  ],
+  "owner": "unit.vaccine",
+  "publishedAt": "2018-03-01",
+  "reviewedAt": "2026-04-15",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.varicella"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "幼兒出生滿 12 個月公費接種 1 劑水痘疫苗；4–6 歲可自費接種第 2 劑，未感染過的成人可自費 2 劑。",
+  "keywords": [
+    "水痘疫苗",
+    "公費",
+    "12 個月",
+    "第二劑"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/V6unXI5CVl2Fjoap4WVQLw"
+  ],
+  "publicFunded": [
+    {
+      "group": "幼兒",
+      "ageMin": 1,
+      "ageMax": 2,
+      "schedule": "出生滿 12 個月接種 1 劑"
+    }
+  ],
+  "bodyMarkdown": "水痘疫苗為活性減毒疫苗。公費對象為出生滿 12 個月的幼兒，接種 1 劑；為提升保護力，醫界建議 4–6 歲可自費接種第 2 劑。\n\n未曾得過水痘也沒有接種過的青少年與成人，可自費接種 2 劑，間隔 4–8 週。",
+  "precautions": "孕婦與嚴重免疫不全者不可接種；接種後 4 週內避免懷孕。18 歲以下接種後 6 週內避免使用阿斯匹靈。",
+  "whereUrl": "https://vaxmap.cdc.gov.tw/"
+}

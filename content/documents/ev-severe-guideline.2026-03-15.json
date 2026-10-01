@@ -1,0 +1,96 @@
+{
+  "id": "doc.ev-severe-guideline.2026-03-15",
+  "type": "document",
+  "family": "doc.ev-severe-guideline",
+  "docType": "guideline",
+  "title": "腸病毒感染併發重症臨床處置建議",
+  "version": "2026-03",
+  "effectiveAt": "2026-03-15",
+  "supersedes": null,
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-03-15",
+  "reviewedAt": "2026-03-15",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "pending"
+    },
+    "ja": {
+      "status": "pending"
+    },
+    "tl": {
+      "status": "pending"
+    },
+    "vi": {
+      "status": "pending"
+    },
+    "id": {
+      "status": "pending"
+    },
+    "th": {
+      "status": "pending"
+    }
+  },
+  "summary": "腸病毒感染臨床四期分期、重症前兆辨識、各期處置原則與轉診重症責任醫院時機。",
+  "keywords": [
+    "腸病毒",
+    "重症",
+    "臨床處置",
+    "分期",
+    "重症責任醫院"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Disease/Index"
+  ],
+  "note": "原型示意：條文依疾管署公開文件架構改寫，非正式公告文字；正式內容以 PDF 正本為準。",
+  "roles": [
+    "physician",
+    "nurse"
+  ],
+  "pdfUrl": "https://www.cdc.gov.tw/File/Get/placeholder-ev-severe-2026",
+  "sections": [
+    {
+      "key": "stage1",
+      "heading": "第一期：手足口病或疱疹性咽峽炎",
+      "markdown": "門診追蹤，衛教家長重症前兆；高危險群（3 歲以下、病程 3 日內、高燒持續）應安排 1–2 日內回診。"
+    },
+    {
+      "key": "stage2",
+      "heading": "第二期：中樞神經系統感染",
+      "markdown": "出現肌躍型抽搐、嗜睡、嘔吐、肢體無力等，應住院密切監測生命徵象、血糖與心跳；必要時給予靜脈免疫球蛋白（IVIG）。"
+    },
+    {
+      "key": "stage3",
+      "heading": "第三期：自主神經失調與心肺衰竭",
+      "markdown": "心跳過速、高血壓、冒冷汗、呼吸急促為肺水腫前兆，應轉入加護病房，評估使用強心劑（milrinone）、插管與葉克膜。"
+    },
+    {
+      "key": "stage4",
+      "heading": "第四期：恢復期",
+      "markdown": "部分病童留有吞嚥困難、肢體無力等後遺症，需長期復健與追蹤。"
+    },
+    {
+      "key": "refer",
+      "heading": "轉診原則",
+      "markdown": "第二期以上病童應儘速轉診至衛生福利部公告之腸病毒重症責任醫院；轉送途中持續監測心跳與血氧。"
+    }
+  ],
+  "machineReadableMarkdown": "# 腸病毒感染併發重症臨床處置建議\n\n## 第一期：手足口病或疱疹性咽峽炎\n門診追蹤，衛教家長重症前兆；高危險群（3 歲以下、病程 3 日內、高燒持續）應安排 1–2 日內回診。\n\n## 第二期：中樞神經系統感染\n出現肌躍型抽搐、嗜睡、嘔吐、肢體無力等，應住院密切監測生命徵象、血糖與心跳；必要時給予靜脈免疫球蛋白（IVIG）。\n\n## 第三期：自主神經失調與心肺衰竭\n心跳過速、高血壓、冒冷汗、呼吸急促為肺水腫前兆，應轉入加護病房，評估使用強心劑（milrinone）、插管與葉克膜。\n\n## 第四期：恢復期\n部分病童留有吞嚥困難、肢體無力等後遺症，需長期復健與追蹤。\n\n## 轉診原則\n第二期以上病童應儘速轉診至衛生福利部公告之腸病毒重症責任醫院；轉送途中持續監測心跳與血氧。"
+}

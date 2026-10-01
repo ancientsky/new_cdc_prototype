@@ -1,0 +1,97 @@
+{
+  "id": "dataset.travel-alert-levels",
+  "type": "dataset",
+  "category": "open-dataset",
+  "title": "國際旅遊疫情建議等級表",
+  "owner": "unit.quarantine",
+  "publishedAt": "2016-01-01",
+  "reviewedAt": "2026-05-11",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "data",
+    "travel"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-05-11",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "各國家地區之旅遊疫情建議等級（第一級注意、第二級警示、第三級警告）、疾病與生效日。",
+  "keywords": [
+    "旅遊疫情建議",
+    "等級",
+    "國家",
+    "出國"
+  ],
+  "portalUrl": "https://data.cdc.gov.tw/dataset/travel-health-notice-levels",
+  "canonicalUrl": "https://data.cdc.gov.tw/dataset/travel-health-notice-levels",
+  "schemaUrl": "https://data.cdc.gov.tw/dataset/travel-health-notice-levels",
+  "resources": [
+    {
+      "name": "國際旅遊疫情建議等級表（JSON）",
+      "format": "JSON",
+      "url": "https://data.cdc.gov.tw/dataset/travel-health-notice-levels"
+    },
+    {
+      "name": "國際旅遊疫情建議等級表（CSV）",
+      "format": "CSV",
+      "url": "https://data.cdc.gov.tw/dataset/travel-health-notice-levels"
+    },
+    {
+      "name": "國際旅遊疫情建議等級表（XML）",
+      "format": "XML",
+      "url": "https://data.cdc.gov.tw/dataset/travel-health-notice-levels"
+    }
+  ],
+  "provenance": {
+    "fetchedAt": "2026-10-01",
+    "mode": "snapshot",
+    "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_show?id=travel-health-notice-levels"
+  },
+  "ckanName": "travel-health-notice-levels",
+  "updateFrequency": "daily",
+  "lastUpdated": "2026-08-14",
+  "formats": [
+    "JSON",
+    "CSV",
+    "XML"
+  ],
+  "i18n": {
+    "en": {
+      "title": "Travel health notice levels",
+      "summary": "Travel health notice levels (Level 1 Watch, Level 2 Alert, Level 3 Warning) by country, disease and effective date."
+    }
+  }
+}

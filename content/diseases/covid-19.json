@@ -1,0 +1,241 @@
+{
+  "id": "disease.covid-19",
+  "type": "disease",
+  "slug": "covid-19",
+  "title": "新冠併發重症",
+  "nameEn": "COVID-19",
+  "aliases": [
+    "新冠肺炎",
+    "COVID-19",
+    "新冠",
+    "新型冠狀病毒"
+  ],
+  "legalCategory": 4,
+  "icd10": [
+    "U07.1"
+  ],
+  "notifyWithinHours": 168,
+  "incubation": {
+    "min": 2,
+    "max": 14,
+    "typicalMin": 2,
+    "typicalMax": 4,
+    "unit": "day",
+    "text": "2–14 天（Omicron 變異株多為 2–4 天）"
+  },
+  "transmission": [
+    "droplet",
+    "airborne",
+    "contact"
+  ],
+  "owner": "unit.acute-infectious",
+  "steward": "急性傳染病組承辦人",
+  "publishedAt": "2023-03-20",
+  "reviewedAt": "2026-09-05",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "symptoms",
+    "vaccines",
+    "situation"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.covid-19"
+  ],
+  "vaccines": [
+    "vaccine.covid-19"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-05"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-12",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "新冠病毒感染多數為輕症，長者與高風險族群可能併發重症。2023 年 3 月起列為第四類「新冠併發重症」，接種最新疫苗與及早使用抗病毒藥物可降低重症。",
+  "keywords": [
+    "新冠",
+    "COVID-19",
+    "新冠疫苗",
+    "抗病毒藥物",
+    "高風險族群"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Disease/Index"
+  ],
+  "keyFacts": {
+    "incubation": "2–14 天（多為 2–4 天）",
+    "symptoms": "發燒、喉嚨痛、咳嗽、流鼻水、倦怠、嗅味覺改變",
+    "transmission": "飛沫、近距離空氣傳播、接觸",
+    "prevention": "接種最新疫苗、有症狀戴口罩、勤洗手",
+    "notify": "新冠併發重症：依第四類規定"
+  },
+  "blocks": [
+    {
+      "key": "what-to-do",
+      "heading": "我該怎麼辦",
+      "cards": [
+        {
+          "if": "有發燒、喉嚨痛等症狀",
+          "title": "戴口罩、可自行快篩",
+          "text": "外出戴口罩、避免探視長者，可使用家用快篩；高風險族群儘早就醫評估用藥。"
+        },
+        {
+          "if": "65 歲以上或有慢性病且確診",
+          "title": "發病 5 天內就醫",
+          "text": "發病 5 天內就醫，醫師可評估開立口服抗病毒藥物，降低重症風險。"
+        },
+        {
+          "if": "呼吸困難、胸痛、意識不清",
+          "title": "立即就醫",
+          "text": "這些是重症徵象，請立即到急診或撥打 119。"
+        }
+      ]
+    },
+    {
+      "key": "symptoms",
+      "heading": "症狀與警示徵象",
+      "markdown": "常見症狀包括發燒、喉嚨痛、咳嗽、流鼻水、肌肉痠痛、倦怠、頭痛，部分人有嗅覺或味覺改變、腹瀉。多數人在一週左右緩解。\n\n65 歲以上長者、慢性病人、免疫力低下者、孕婦與未接種疫苗者較容易發展為肺炎等重症；部分人痊癒後仍有疲倦、喘、腦霧等「長新冠」症狀。",
+      "warning": "呼吸困難或喘、持續胸痛胸悶、意識不清或叫不醒、嘴唇或皮膚發紫、無法進食喝水或排尿明顯減少。"
+    },
+    {
+      "key": "transmission",
+      "heading": "怎麼傳染",
+      "markdown": "主要經由病人咳嗽、打噴嚏、說話產生的**飛沫**，以及在通風不良的密閉空間中近距離吸入含病毒的微粒傳播；也可能因手接觸污染物再碰觸眼口鼻而感染。\n\n發病前 1–2 天至發病後約 5–7 天傳染力最高。"
+    },
+    {
+      "key": "prevention",
+      "heading": "如何預防",
+      "markdown": "- **接種最新的新冠疫苗**，高風險族群尤其重要。\n- 有呼吸道症狀時戴口罩，生病在家休息。\n- 勤洗手，室內保持通風。\n- 探視醫院、長照機構或與長者聚會前，先確認自己沒有症狀。"
+    },
+    {
+      "key": "treatment",
+      "heading": "診斷與治療",
+      "markdown": "多數輕症以症狀治療為主。符合條件的高風險病人可由醫師開立**公費口服抗病毒藥物**（如 Paxlovid、Molnupiravir），需在發病 5 天內使用；住院病人可依醫囑使用 Remdesivir 等藥物。\n\n部分口服抗病毒藥物與常用慢性病藥物有交互作用，請主動告知醫師目前用藥。"
+    },
+    {
+      "key": "vaccine",
+      "heading": "疫苗",
+      "markdown": "新冠疫苗依病毒株變化定期更新成分，每年秋冬與流感疫苗同步提供，**6 個月以上民眾**皆可接種公費疫苗，65 歲以上長者、慢性病人、醫事人員等為優先接種對象。接種時程與劑次請見「新冠疫苗」頁。"
+    },
+    {
+      "key": "situation",
+      "heading": "目前疫情與統計",
+      "markdown": "新冠併發重症通報數與門急診就診人次每週更新。",
+      "datasets": [
+        "dataset.covid-severe-weekly"
+      ]
+    },
+    {
+      "key": "faq",
+      "heading": "常見問題"
+    }
+  ],
+  "professional": {
+    "specimen": "鼻咽或咽喉擦拭液，以病毒保存輸送管送驗，進行 RT-PCR；必要時進行定序監測變異株。",
+    "notifyNote": "自 2023-03-20 起僅通報「新冠併發重症」（第四類）：確診且因新冠感染出現肺炎、需加護或使用呼吸器等併發症者，依病例定義通報。"
+  },
+  "relatedDocuments": [
+    "doc.covid-vaccine-recommendation"
+  ],
+  "i18n": {
+    "en": {
+      "title": "COVID-19",
+      "summary": "Most COVID-19 infections are mild, but older adults and high-risk groups can develop severe disease. Since March 2023 only \"COVID-19 with severe complications\" is notifiable (Category 4). Updated vaccines and early antivirals reduce severe illness.",
+      "keyFacts": {
+        "incubation": "2–14 days (mostly 2–4)",
+        "symptoms": "Fever, sore throat, cough, runny nose, fatigue, change in smell or taste",
+        "transmission": "Droplets, close-range airborne, contact",
+        "prevention": "Updated vaccine, mask when ill, hand washing",
+        "notify": "Severe COVID-19: per Category 4 rules"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "What to do",
+          "cards": [
+            {
+              "if": "have fever, sore throat or similar symptoms",
+              "title": "Wear a mask and consider a home test",
+              "text": "Wear a mask outside and avoid visiting older people; high-risk people should see a doctor early about treatment."
+            },
+            {
+              "if": "are 65+ or have a chronic condition and test positive",
+              "title": "See a doctor within 5 days of onset",
+              "text": "A doctor can assess you for oral antivirals within 5 days of onset to reduce the risk of severe disease."
+            },
+            {
+              "if": "have difficulty breathing, chest pain or confusion",
+              "title": "Seek care immediately",
+              "text": "These are signs of severe disease. Go to the emergency department or call 119."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Symptoms and warning signs",
+          "markdown": "Common symptoms include fever, sore throat, cough, runny nose, muscle aches, fatigue and headache; some people lose smell or taste or have diarrhoea. Most improve within about a week.\n\nPeople aged 65+, those with chronic illness or weak immunity, pregnant women and the unvaccinated are more likely to develop pneumonia; some have lasting fatigue, breathlessness or brain fog (\"long COVID\").",
+          "warning": "Difficulty breathing, persistent chest pain or tightness, confusion or difficulty waking, blue lips or skin, inability to eat or drink, or markedly reduced urine."
+        },
+        {
+          "key": "transmission",
+          "heading": "How it spreads",
+          "markdown": "COVID-19 spreads mainly through **droplets** from coughing, sneezing and talking, and by inhaling virus-laden particles at close range in poorly ventilated spaces. Touching contaminated surfaces and then the face can also spread it.\n\nPeople are most infectious from 1–2 days before to about 5–7 days after onset."
+        },
+        {
+          "key": "prevention",
+          "heading": "Prevention",
+          "markdown": "- **Get the latest COVID-19 vaccine**, especially if you are at high risk.\n- Wear a mask and stay home when you have respiratory symptoms.\n- Wash hands often and keep indoor spaces ventilated.\n- Check that you have no symptoms before visiting hospitals, care homes or older relatives."
+        },
+        {
+          "key": "treatment",
+          "heading": "Diagnosis and treatment",
+          "markdown": "Most mild cases need only symptom relief. Eligible high-risk patients can receive **government-funded oral antivirals** (such as Paxlovid or molnupiravir) within 5 days of onset; hospitalised patients may receive remdesivir.\n\nSome oral antivirals interact with common long-term medicines, so tell your doctor what you take."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vaccine",
+          "markdown": "COVID-19 vaccines are updated as the virus changes and are offered each autumn alongside flu vaccine. **Everyone aged 6 months and over** can receive a government-funded dose; people aged 65+, chronic patients and health workers are priority groups. See the COVID-19 vaccine page."
+        },
+        {
+          "key": "situation",
+          "heading": "Current situation and statistics",
+          "markdown": "Severe COVID-19 reports and outpatient visits are updated weekly."
+        },
+        {
+          "key": "faq",
+          "heading": "FAQ"
+        }
+      ]
+    }
+  }
+}

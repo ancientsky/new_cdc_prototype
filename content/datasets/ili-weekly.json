@@ -1,0 +1,151 @@
+{
+  "id": "dataset.ili-weekly",
+  "type": "dataset",
+  "category": "open-dataset",
+  "title": "類流感門急診就診統計（健保資料）",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2015-01-01",
+  "reviewedAt": "2026-09-01",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "data",
+    "situation"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-01",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "依健保門診與急診申報資料，彙整每週類流感就診人次與就診率（年齡層、縣市別）。",
+  "keywords": [
+    "類流感",
+    "就診率",
+    "健保",
+    "週統計",
+    "流感"
+  ],
+  "portalUrl": "https://data.cdc.gov.tw/dataset/nhi-ili-er-opd-visits",
+  "canonicalUrl": "https://data.cdc.gov.tw/dataset/nhi-ili-er-opd-visits",
+  "schemaUrl": "https://data.cdc.gov.tw/dataset/nhi-ili-er-opd-visits",
+  "resources": [
+    {
+      "name": "類流感門急診就診統計（健保資料）（CSV）",
+      "format": "CSV",
+      "url": "https://data.cdc.gov.tw/dataset/nhi-ili-er-opd-visits"
+    },
+    {
+      "name": "類流感門急診就診統計（健保資料）（JSON）",
+      "format": "JSON",
+      "url": "https://data.cdc.gov.tw/dataset/nhi-ili-er-opd-visits"
+    }
+  ],
+  "provenance": {
+    "fetchedAt": "2026-10-01",
+    "mode": "snapshot",
+    "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_show?id=nhi-ili-er-opd-visits"
+  },
+  "ckanName": "nhi-ili-er-opd-visits",
+  "updateFrequency": "weekly",
+  "lastUpdated": "2026-09-29",
+  "formats": [
+    "CSV",
+    "JSON"
+  ],
+  "series": {
+    "label": "類流感門急診就診率（週）",
+    "unit": "%",
+    "granularity": "week",
+    "points": [
+      {
+        "t": "2026-W27",
+        "v": 5.6
+      },
+      {
+        "t": "2026-W28",
+        "v": 5.5
+      },
+      {
+        "t": "2026-W29",
+        "v": 5.7
+      },
+      {
+        "t": "2026-W30",
+        "v": 5.9
+      },
+      {
+        "t": "2026-W31",
+        "v": 6.4
+      },
+      {
+        "t": "2026-W32",
+        "v": 7
+      },
+      {
+        "t": "2026-W33",
+        "v": 7.8
+      },
+      {
+        "t": "2026-W34",
+        "v": 8.6
+      },
+      {
+        "t": "2026-W35",
+        "v": 9.4
+      },
+      {
+        "t": "2026-W36",
+        "v": 10.3
+      },
+      {
+        "t": "2026-W37",
+        "v": 11.2
+      },
+      {
+        "t": "2026-W38",
+        "v": 12
+      }
+    ],
+    "note": "示意：近 12 週數值為原型示意，與疫情態勢層一致；正式值以 CKAN 資料集為準。"
+  },
+  "i18n": {
+    "en": {
+      "title": "Influenza-like illness outpatient and ER visits (NHI data)",
+      "summary": "Weekly ILI visits and visit rates by age group and county from National Health Insurance claims."
+    }
+  }
+}

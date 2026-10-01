@@ -1,0 +1,73 @@
+{
+  "id": "news.2025-06-10-mpox-summer",
+  "type": "news",
+  "newsType": "press",
+  "title": "暑假出遊與大型活動將至，符合條件者請把握接種 2 劑 M痘疫苗",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2025-06-10",
+  "reviewedAt": "2025-06-10",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "vaccines",
+    "travel"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.mpox"
+  ],
+  "vaccines": [
+    "vaccine.mpox"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2025-06-10",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "暑假將至，疾管署提醒近一年有高風險性行為者把握接種公費 M痘疫苗，完成 2 劑才有完整保護；出現疑似症狀請遮蓋皮疹就醫。",
+  "keywords": [
+    "M痘",
+    "猴痘",
+    "疫苗",
+    "暑假"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+  ],
+  "bodyMarkdown": "暑假出遊旺季與大型活動將至，疾病管制署提醒，M痘主要經由親密接觸傳播，符合公費接種條件者請儘早完成 2 劑疫苗，兩劑間隔至少 4 週。\n\n若出現發燒、淋巴結腫大或皮疹、水泡，請戴口罩、穿著長袖遮蓋病灶後就醫，並主動告知接觸史；就醫前避免與他人親密接觸。",
+  "i18n": {
+    "en": {
+      "title": "Summer travel and events ahead: eligible people should complete two doses of mpox vaccine",
+      "summary": "Taiwan CDC reminds people with high-risk sexual behaviour in the past year to complete two government-funded mpox doses; anyone with symptoms should cover lesions and see a doctor."
+    }
+  }
+}

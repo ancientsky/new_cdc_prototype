@@ -1,0 +1,78 @@
+{
+  "id": "faq.healthcare-workers-mmr",
+  "type": "faq",
+  "title": "醫護人員需要接種 MMR 疫苗嗎？",
+  "question": "醫護人員需要接種 MMR 疫苗嗎？",
+  "owner": "unit.infection-control",
+  "publishedAt": "2025-05-01",
+  "reviewedAt": "2026-05-14",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "doc.mmr-recommendation",
+    "doc.infection-control-healthcare"
+  ],
+  "diseases": [
+    "disease.measles"
+  ],
+  "vaccines": [
+    "vaccine.mmr"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-05-14",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "醫護人員是麻疹暴露高風險族群，應具麻疹免疫力（2 劑 MMR、抗體陽性或曾確診）；不具免疫力者建議接種，並不應照護麻疹病人。",
+  "keywords": [
+    "醫護人員",
+    "MMR",
+    "麻疹",
+    "感染管制",
+    "免疫力"
+  ],
+  "answerMarkdown": "需要確認。**醫護人員**（醫療照護工作人員）是麻疹暴露高風險族群，依現行 MMR 預防接種建議及醫療機構感染管制措施指引，醫護人員應具有麻疹免疫力：曾完成 2 劑 MMR、抗體檢驗陽性或曾經確診者視為具免疫力。\n\n不具免疫力者建議接種 MMR；新進人員到職時應確認並建立麻疹、德國麻疹、水痘與 B 型肝炎免疫紀錄。未具免疫力的工作人員不應照護麻疹病人。",
+  "structured": {
+    "group": "醫護人員",
+    "immunityEvidence": "2 劑接種、抗體陽性或曾確診"
+  },
+  "i18n": {
+    "en": {
+      "question": "Do healthcare workers need the MMR vaccine?",
+      "answerMarkdown": "They should check. **Healthcare workers** are at high risk of measles exposure, and under the current MMR recommendations and the infection-control guideline for healthcare facilities they should be immune to measles: two documented MMR doses, a positive antibody test or past confirmed measles.\n\nThose without immunity are advised to get MMR; new staff should have measles, rubella, varicella and hepatitis B immunity recorded on hiring. Non-immune staff should not care for measles patients."
+    }
+  }
+}

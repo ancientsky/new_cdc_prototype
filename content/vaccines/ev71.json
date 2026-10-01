@@ -1,0 +1,76 @@
+{
+  "id": "vaccine.ev71",
+  "type": "vaccine",
+  "slug": "ev71",
+  "title": "腸病毒 71 型疫苗",
+  "nameEn": "Enterovirus A71 (EV71) vaccine",
+  "aliases": [
+    "EV71 疫苗",
+    "腸病毒疫苗"
+  ],
+  "owner": "unit.vaccine",
+  "publishedAt": "2023-06-01",
+  "reviewedAt": "2026-04-22",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "國內已核准上市的腸病毒 71 型疫苗屬自費接種，適用年齡依仿單；只能預防 EV71，接種後仍需落實洗手。",
+  "keywords": [
+    "腸病毒",
+    "EV71",
+    "疫苗",
+    "自費"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/V6unXI5CVl2Fjoap4WVQLw"
+  ],
+  "publicFunded": [
+    {
+      "group": "目前無公費對象",
+      "schedule": "自費接種，劑次與適用年齡依各廠牌仿單",
+      "note": "多為 2 個月以上至 6 歲以下幼兒"
+    }
+  ],
+  "bodyMarkdown": "腸病毒 71 型（EV71）是較容易引起重症的型別。國內已有核准上市的 EV71 不活化疫苗，屬**自費**接種，家長可與兒科醫師討論是否接種。\n\n疫苗**只能預防 71 型**，無法預防克沙奇病毒等其他型別，因此接種後仍要落實肥皂洗手、環境消毒，並留意重症前兆。",
+  "precautions": "對疫苗成分過敏者不可接種；發燒或急性疾病者宜延後接種。",
+  "whereUrl": "https://vaxmap.cdc.gov.tw/"
+}

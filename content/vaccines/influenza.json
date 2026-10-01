@@ -1,0 +1,143 @@
+{
+  "id": "vaccine.influenza",
+  "type": "vaccine",
+  "slug": "influenza",
+  "title": "流感疫苗",
+  "nameEn": "Influenza vaccine",
+  "aliases": [
+    "公費流感疫苗",
+    "流感疫苗",
+    "Flu vaccine"
+  ],
+  "owner": "unit.vaccine",
+  "publishedAt": "2017-09-01",
+  "reviewedAt": "2026-09-18",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "doc.flu-vaccine-schedule"
+  ],
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-18"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-20",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-22",
+      "reviewer": "簽約譯者（越南文）"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "2026–2027 年度公費流感疫苗 10 月 1 日開打，第一階段長者、幼兒、孕婦、高風險者與學生等；11 月 1 日起 50–64 歲成人。每年都需接種。",
+  "keywords": [
+    "流感疫苗",
+    "公費",
+    "公費流感疫苗",
+    "接種對象",
+    "10 月 1 日",
+    "每年接種"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/V6unXI5CVl2Fjoap4WVQLw"
+  ],
+  "publicFunded": [
+    {
+      "group": "65 歲以上長者",
+      "ageMin": 65,
+      "schedule": "每年 1 劑",
+      "startAt": "2026-10-01"
+    },
+    {
+      "group": "55 歲以上原住民",
+      "ageMin": 55,
+      "schedule": "每年 1 劑",
+      "startAt": "2026-10-01"
+    },
+    {
+      "group": "6 個月以上至國小入學前幼兒",
+      "ageMin": 0.5,
+      "ageMax": 7,
+      "schedule": "每年 1 劑；8 歲（含）以下首次接種者 2 劑，間隔 4 週以上",
+      "startAt": "2026-10-01"
+    },
+    {
+      "group": "孕婦及 6 個月內嬰兒之父母",
+      "schedule": "每年 1 劑",
+      "note": "孕期任何階段皆可接種",
+      "startAt": "2026-10-01"
+    },
+    {
+      "group": "19–64 歲高風險對象（慢性病、BMI ≥ 30、罕見疾病、重大傷病）",
+      "ageMin": 19,
+      "ageMax": 64,
+      "schedule": "每年 1 劑",
+      "startAt": "2026-10-01"
+    },
+    {
+      "group": "國小、國中、高中職、五專一至三年級學生",
+      "schedule": "每年 1 劑，校園集中接種",
+      "startAt": "2026-10-01"
+    },
+    {
+      "group": "醫事防疫人員、禽畜業與動物防疫人員、幼兒園托育人員、長照機構住民與工作人員",
+      "schedule": "每年 1 劑",
+      "startAt": "2026-10-01"
+    },
+    {
+      "group": "50–64 歲無高風險慢性病成人",
+      "ageMin": 50,
+      "ageMax": 64,
+      "schedule": "每年 1 劑",
+      "note": "第二階段",
+      "startAt": "2026-11-01"
+    }
+  ],
+  "bodyMarkdown": "流感病毒每年變異，世界衛生組織每年更新疫苗株，因此**每年都要接種**。本年度採購三價不活化疫苗，接種後約 2 週產生保護力，保護力約可維持 6 個月。\n\n公費疫苗自 **2026 年 10 月 1 日**起分階段開打，可至衛生所與合約院所接種；學生以校園集中接種為主。流感疫苗可與新冠疫苗、肺炎鏈球菌疫苗同時分開部位接種。",
+  "precautions": "對疫苗成分過敏或過去接種曾發生嚴重過敏反應者不可接種；發燒或急性疾病者宜延後接種。常見反應為注射部位疼痛紅腫，少數輕微發燒、倦怠，1–2 天內緩解。",
+  "whereUrl": "https://antiflu.cdc.gov.tw/",
+  "i18n": {
+    "en": {
+      "title": "Influenza vaccine",
+      "summary": "Government-funded flu vaccination for 2026–27 starts on 1 October for older adults, young children, pregnant women, high-risk groups and students; adults aged 50–64 from 1 November. Get vaccinated every year.",
+      "bodyMarkdown": "Influenza viruses change every year and the WHO updates vaccine strains annually, so **annual vaccination is needed**. This season uses a trivalent inactivated vaccine; protection develops about 2 weeks after vaccination and lasts about 6 months.\n\nGovernment-funded vaccination starts in phases from **1 October 2026** at health centres and contracted clinics; students are vaccinated at school. Flu vaccine can be given with COVID-19 or pneumococcal vaccines at the same visit in different sites."
+    },
+    "vi": {
+      "title": "Vắc-xin cúm",
+      "summary": "Vắc-xin cúm miễn phí mùa 2026–2027 bắt đầu từ 1/10 cho người cao tuổi, trẻ nhỏ, phụ nữ mang thai, nhóm nguy cơ cao và học sinh; người 50–64 tuổi từ 1/11. Cần tiêm mỗi năm.",
+      "bodyMarkdown": "Vi-rút cúm thay đổi hằng năm nên **cần tiêm vắc-xin mỗi năm**. Sau khi tiêm khoảng 2 tuần sẽ có miễn dịch. Từ **1/10/2026** có thể tiêm tại trạm y tế và cơ sở y tế ký hợp đồng."
+    }
+  }
+}

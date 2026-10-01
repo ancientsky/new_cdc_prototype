@@ -1,0 +1,73 @@
+{
+  "id": "faq.rabies-bite",
+  "type": "faq",
+  "title": "被狗、貓或野生動物咬傷該怎麼辦？",
+  "question": "被狗、貓或野生動物咬傷該怎麼辦？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2013-08-01",
+  "reviewedAt": "2026-09-28",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.rabies"
+  ],
+  "diseases": [
+    "disease.rabies"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-28"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-28",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "動物咬傷請「一沖二認三送四觀察」：肥皂清水沖洗 15 分鐘、記住動物特徵、儘速就醫評估狂犬病疫苗、觀察動物 10 天。",
+  "keywords": [
+    "狂犬病",
+    "動物咬傷",
+    "一沖二認三送四觀察",
+    "暴露後預防"
+  ],
+  "answerMarkdown": "請記住「**一沖二認三送四觀察**」：\n\n1. **沖**：立即以肥皂及大量清水沖洗傷口 15 分鐘，再以優碘消毒。\n2. **認**：記住動物的外觀特徵與出沒地點。\n3. **送**：儘速就醫，由醫師評估是否需要接種狂犬病疫苗與免疫球蛋白。\n4. **觀察**：若能安全留置動物，隔離觀察 10 天。\n\n在台灣被野生鼬獾、白鼻心咬傷，或在國外被動物咬傷，都應就醫評估暴露後接種。",
+  "structured": {
+    "washMinutes": 15,
+    "observeDays": 10
+  },
+  "i18n": {
+    "en": {
+      "question": "What should I do if I am bitten by a dog, cat or wild animal?",
+      "answerMarkdown": "Remember **\"wash, identify, seek care, observe\"**:\n\n1. **Wash** the wound with soap and plenty of water for 15 minutes, then disinfect with povidone-iodine.\n2. **Identify** the animal's appearance and where it was.\n3. **Seek care** promptly; a doctor will assess the need for rabies vaccine and immunoglobulin.\n4. **Observe** the animal for 10 days if it can be safely confined.\n\nBites from wild ferret-badgers or masked palm civets in Taiwan, or animal bites abroad, should always be assessed for post-exposure vaccination."
+    }
+  }
+}

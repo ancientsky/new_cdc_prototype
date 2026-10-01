@@ -4,33 +4,91 @@
   "slug": "dengue",
   "title": "登革熱",
   "nameEn": "Dengue fever",
-  "aliases": ["登革出血熱", "天狗熱", "斷骨熱"],
+  "aliases": [
+    "登革出血熱",
+    "天狗熱",
+    "斷骨熱"
+  ],
   "legalCategory": 2,
-  "icd10": ["A90", "A91"],
+  "icd10": [
+    "A90",
+    "A91"
+  ],
   "notifyWithinHours": 24,
-  "incubation": { "min": 3, "max": 14, "typicalMin": 4, "typicalMax": 7, "unit": "day", "text": "3–14 天（通常 4–7 天）" },
-  "transmission": ["vector"],
+  "incubation": {
+    "min": 3,
+    "max": 14,
+    "typicalMin": 4,
+    "typicalMax": 7,
+    "unit": "day",
+    "text": "3–14 天（通常 4–7 天）"
+  },
+  "transmission": [
+    "vector"
+  ],
   "owner": "unit.acute-infectious",
   "steward": "急性傳染病組承辦人",
   "publishedAt": "2018-03-01",
   "reviewedAt": "2026-07-15",
   "reviewPeriodMonths": 12,
   "status": "published",
-  "audience": ["public", "professional"],
-  "tasks": ["symptoms", "travel", "situation"],
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "symptoms",
+    "travel",
+    "situation"
+  ],
   "sensitivity": "public",
   "license": "OGDL-1.0",
-  "diseases": ["disease.dengue"],
-  "aiWhitelist": { "requested": true, "approvedBy": "unit.oasis", "approvedAt": "2026-09-01" },
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
   "languages": {
-    "zh-TW": { "status": "source" },
-    "en": { "status": "reviewed", "reviewedAt": "2026-09-10", "reviewer": "內部英文審核人" },
-    "vi": { "status": "reviewed", "reviewedAt": "2026-09-12", "reviewer": "簽約譯者" },
-    "ja": { "status": "machine" }, "tl": { "status": "machine" }, "id": { "status": "machine" }, "th": { "status": "pending" }
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-10",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-12",
+      "reviewer": "簽約譯者（越南文）"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "pending"
+    }
   },
   "summary": "由登革病毒引起，經埃及斑蚊與白線斑蚊叮咬傳播，不會人傳人。台灣為流行高風險地區，每年夏秋為高峰。",
-  "keywords": ["登革熱", "斑蚊", "NS1", "積水容器", "警示徵象"],
-  "legacyUrls": ["https://www.cdc.gov.tw/Disease/SubIndex/WYbKe3aE7LiY5gb-eA8PBw"],
+  "keywords": [
+    "登革熱",
+    "斑蚊",
+    "NS1",
+    "積水容器",
+    "警示徵象"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Disease/SubIndex/WYbKe3aE7LiY5gb-eA8PBw"
+  ],
   "keyFacts": {
     "incubation": "3–14 天（通常 4–7 天）",
     "symptoms": "突發高燒、頭痛、後眼窩痛、肌肉關節痛、出疹",
@@ -39,66 +97,229 @@
     "notify": "24 小時內"
   },
   "blocks": [
-    { "key": "what-to-do", "heading": "我該怎麼辦", "cards": [
-      { "if": "發燒且近兩週去過流行區", "title": "24 小時內就醫", "text": "24 小時內就醫，主動告知旅遊史，醫師可做 NS1 快篩。" },
-      { "if": "已確診在家休養", "title": "退燒後 1–2 天最危險", "text": "退燒後 1–2 天最危險，出現警示徵象立即回診。" },
-      { "if": "住在流行區", "title": "每週巡查清除積水容器", "text": "每週巡查清除積水容器，穿淺色長袖、使用防蚊液。" }
-    ] },
-    { "key": "symptoms", "heading": "症狀與警示徵象", "markdown": "典型症狀為突發高燒（≥ 38°C）、頭痛、後眼窩痛、肌肉與關節痛、出疹。多數人可自行康復。", "warning": "持續嘔吐、腹痛、黏膜出血、嗜睡或躁動、肝腫大、血比容上升合併血小板下降。" },
-    { "key": "transmission", "heading": "怎麼傳染", "markdown": "登革熱經由帶有登革病毒的埃及斑蚊或白線斑蚊叮咬傳播，不會由人直接傳給人。病人在發病前一天至發病後五天為病毒血症期，此時被病媒蚊叮咬，病媒蚊即可能帶有病毒。" },
-    { "key": "prevention", "heading": "如何預防", "markdown": "目前沒有廣泛使用的疫苗，預防重點是避免病媒蚊叮咬與清除孳生源：\n\n- 每週檢查住家內外積水容器，做到「巡、倒、清、刷」。\n- 戶外活動穿淺色長袖長褲，使用含 DEET、Picaridin 或 IR3535 的防蚊液。\n- 居家裝設紗窗紗門，必要時使用蚊帳。" },
-    { "key": "treatment", "heading": "診斷與治療", "markdown": "目前沒有特效抗病毒藥物，以支持性療法為主：補充水分、退燒以乙醯胺酚為主，避免使用阿斯匹靈與非類固醇消炎止痛藥以減少出血風險。發燒期可由醫師安排 NS1 抗原快速診斷試劑檢驗。" },
-    { "key": "vaccine", "heading": "疫苗", "markdown": "台灣目前未引進登革熱疫苗作為常規接種項目。相關評估以疾管署正式公告為準。" },
-    { "key": "situation", "heading": "目前疫情與統計", "markdown": "本土病例數與病媒蚊密度每日更新於疫情態勢層與 nidss。", "datasets": ["dataset.dengue-daily"] },
-    { "key": "faq", "heading": "常見問題" }
+    {
+      "key": "what-to-do",
+      "heading": "我該怎麼辦",
+      "cards": [
+        {
+          "if": "發燒且近兩週去過流行區",
+          "title": "24 小時內就醫",
+          "text": "24 小時內就醫，主動告知旅遊史，醫師可做 NS1 快篩。"
+        },
+        {
+          "if": "已確診在家休養",
+          "title": "退燒後 1–2 天最危險",
+          "text": "退燒後 1–2 天最危險，出現警示徵象立即回診。"
+        },
+        {
+          "if": "住在流行區",
+          "title": "每週巡查清除積水容器",
+          "text": "每週巡查清除積水容器，穿淺色長袖、使用防蚊液。"
+        }
+      ]
+    },
+    {
+      "key": "symptoms",
+      "heading": "症狀與警示徵象",
+      "markdown": "典型症狀為突發高燒（≥ 38°C）、頭痛、後眼窩痛、肌肉與關節痛、出疹。多數人可自行康復。\n\n少數人會發展為重症登革熱，常發生在**退燒前後**，再次感染不同型別病毒者風險較高。",
+      "warning": "持續嘔吐、腹痛、黏膜出血、嗜睡或躁動、肝腫大、血比容上升合併血小板下降。"
+    },
+    {
+      "key": "transmission",
+      "heading": "怎麼傳染",
+      "markdown": "登革熱經由帶有登革病毒的埃及斑蚊或白線斑蚊叮咬傳播，不會由人直接傳給人。病人在發病前一天至發病後五天為病毒血症期，此時被病媒蚊叮咬，病媒蚊即可能帶有病毒，再經 8–12 天即具傳播力。"
+    },
+    {
+      "key": "prevention",
+      "heading": "如何預防",
+      "markdown": "目前沒有廣泛使用的疫苗，預防重點是避免病媒蚊叮咬與清除孳生源：\n\n- 每週檢查住家內外積水容器，做到「巡、倒、清、刷」。\n- 戶外活動穿淺色長袖長褲，使用含 DEET、Picaridin 或 IR3535 的防蚊液。\n- 居家裝設紗窗紗門，必要時使用蚊帳。\n- 從流行地區返國後兩週內，外出仍應防蚊，避免成為傳染源。"
+    },
+    {
+      "key": "treatment",
+      "heading": "診斷與治療",
+      "markdown": "目前沒有特效抗病毒藥物，以支持性療法為主：補充水分、退燒以乙醯胺酚為主，避免使用阿斯匹靈與非類固醇消炎止痛藥以減少出血風險。發燒期可由醫師安排 NS1 抗原快速診斷試劑檢驗。"
+    },
+    {
+      "key": "vaccine",
+      "heading": "疫苗",
+      "markdown": "台灣目前未引進登革熱疫苗作為常規接種項目。相關評估以疾管署正式公告為準。"
+    },
+    {
+      "key": "situation",
+      "heading": "目前疫情與統計",
+      "markdown": "本土病例數與病媒蚊密度每日更新於疫情態勢層與 nidss。",
+      "datasets": [
+        "dataset.dengue-daily",
+        "dataset.dengue-local-weekly"
+      ]
+    },
+    {
+      "key": "faq",
+      "heading": "常見問題"
+    }
   ],
   "professional": {
     "caseDefinitionDoc": "doc.case-definition-dengue",
     "manualDoc": "doc.guidance-dengue",
     "specimen": "急性期血清 2–5 mL，發病 7 日內可做 NS1 抗原、RT-PCR；發病 7 日後採恢復期血清檢測 IgM/IgG。",
-    "notifyNote": "第二類法定傳染病，應於 24 小時內通報。"
+    "notifyNote": "第二類法定傳染病，應於 24 小時內通報；NS1 快篩陽性即應通報，不必等待確認結果。"
   },
-  "relatedDocuments": ["doc.guidance-dengue"],
+  "relatedDocuments": [
+    "doc.guidance-dengue",
+    "doc.case-definition-dengue"
+  ],
   "materials": [
-    { "label": "登革熱防治海報（七語）", "url": "https://www.cdc.gov.tw/Advocacy", "langs": ["zh-TW", "en", "vi", "id", "th", "tl", "ja"] }
+    {
+      "label": "登革熱防治海報（七語）",
+      "url": "https://www.cdc.gov.tw/Advocacy",
+      "langs": [
+        "zh-TW",
+        "en",
+        "vi",
+        "id",
+        "th",
+        "tl",
+        "ja"
+      ]
+    }
   ],
   "i18n": {
     "en": {
       "title": "Dengue fever",
       "summary": "Dengue is caused by dengue viruses transmitted by Aedes aegypti and Aedes albopictus mosquitoes. It does not spread directly from person to person. Taiwan is a high-risk area, with peaks in summer and autumn.",
-      "keyFacts": { "incubation": "3–14 days (usually 4–7)", "symptoms": "Sudden high fever, headache, retro-orbital pain, muscle and joint pain, rash", "transmission": "Bite of infected Aedes mosquitoes", "prevention": "Remove standing water; avoid mosquito bites", "notify": "Within 24 hours" },
+      "keyFacts": {
+        "incubation": "3–14 days (usually 4–7)",
+        "symptoms": "Sudden high fever, headache, retro-orbital pain, muscle and joint pain, rash",
+        "transmission": "Bite of infected Aedes mosquitoes",
+        "prevention": "Remove standing water; avoid mosquito bites",
+        "notify": "Within 24 hours"
+      },
       "blocks": [
-        { "key": "what-to-do", "heading": "What to do", "cards": [
-          { "if": "have a fever and travelled to an affected area in the last two weeks", "title": "See a doctor within 24 hours", "text": "See a doctor within 24 hours and mention your travel history; an NS1 rapid test may be done." },
-          { "if": "are confirmed and resting at home", "title": "The 1–2 days after the fever breaks are the most dangerous", "text": "Return immediately if any warning sign appears." },
-          { "if": "live in an affected area", "title": "Check and empty standing water weekly", "text": "Wear light-coloured long sleeves and use repellent." }
-        ] },
-        { "key": "symptoms", "heading": "Symptoms and warning signs", "markdown": "Typical symptoms are sudden high fever (≥ 38°C), headache, pain behind the eyes, muscle and joint pain and rash. Most people recover on their own.", "warning": "Persistent vomiting, abdominal pain, mucosal bleeding, lethargy or restlessness, liver enlargement, rising haematocrit with falling platelets." },
-        { "key": "transmission", "heading": "How it spreads", "markdown": "Dengue spreads through the bite of Aedes aegypti or Aedes albopictus mosquitoes carrying the virus. It is not transmitted directly between people." },
-        { "key": "prevention", "heading": "Prevention", "markdown": "There is no routine vaccine in Taiwan. Prevention focuses on avoiding bites and removing breeding sites: check containers weekly, wear long sleeves, use DEET, Picaridin or IR3535 repellent, and install screens." },
-        { "key": "treatment", "heading": "Diagnosis and treatment", "markdown": "There is no specific antiviral. Treatment is supportive: fluids and paracetamol for fever. Avoid aspirin and NSAIDs because of bleeding risk." },
-        { "key": "vaccine", "heading": "Vaccine", "markdown": "Dengue vaccine is not part of Taiwan's routine schedule." },
-        { "key": "situation", "heading": "Current situation and statistics", "markdown": "Local case counts and vector density are updated daily on the situation layer and NIDSS." },
-        { "key": "faq", "heading": "FAQ" }
+        {
+          "key": "what-to-do",
+          "heading": "What to do",
+          "cards": [
+            {
+              "if": "have a fever and travelled to an affected area in the last two weeks",
+              "title": "See a doctor within 24 hours",
+              "text": "See a doctor within 24 hours and mention your travel history; an NS1 rapid test may be done."
+            },
+            {
+              "if": "are confirmed and resting at home",
+              "title": "The 1–2 days after the fever breaks are the most dangerous",
+              "text": "Return immediately if any warning sign appears."
+            },
+            {
+              "if": "live in an affected area",
+              "title": "Check and empty standing water weekly",
+              "text": "Wear light-coloured long sleeves and use repellent."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Symptoms and warning signs",
+          "markdown": "Typical symptoms are sudden high fever (≥ 38°C), headache, pain behind the eyes, muscle and joint pain and rash. Most people recover on their own.\n\nA small number develop severe dengue, usually **around the time the fever subsides**. People infected a second time with a different serotype are at higher risk.",
+          "warning": "Persistent vomiting, abdominal pain, mucosal bleeding, lethargy or restlessness, liver enlargement, rising haematocrit with falling platelets."
+        },
+        {
+          "key": "transmission",
+          "heading": "How it spreads",
+          "markdown": "Dengue spreads through the bite of Aedes aegypti or Aedes albopictus mosquitoes carrying the virus. It is not transmitted directly between people. Patients are viraemic from one day before to five days after onset; a mosquito that bites them during this period can transmit the virus 8–12 days later."
+        },
+        {
+          "key": "prevention",
+          "heading": "Prevention",
+          "markdown": "There is no routine vaccine in Taiwan. Prevention focuses on avoiding bites and removing breeding sites:\n\n- Check containers inside and outside your home every week: inspect, empty, clean and scrub.\n- Wear light-coloured long sleeves and trousers and use DEET, Picaridin or IR3535 repellent.\n- Install window and door screens; use bed nets if needed.\n- For two weeks after returning from an affected area, keep avoiding bites so you do not become a source of infection."
+        },
+        {
+          "key": "treatment",
+          "heading": "Diagnosis and treatment",
+          "markdown": "There is no specific antiviral. Treatment is supportive: fluids and paracetamol for fever. Avoid aspirin and NSAIDs because of bleeding risk. During the febrile phase a doctor may order an NS1 antigen rapid test."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vaccine",
+          "markdown": "Dengue vaccine is not part of Taiwan's routine schedule. Any change will be announced officially by Taiwan CDC."
+        },
+        {
+          "key": "situation",
+          "heading": "Current situation and statistics",
+          "markdown": "Local case counts and vector density are updated daily on the situation layer and NIDSS."
+        },
+        {
+          "key": "faq",
+          "heading": "FAQ"
+        }
       ]
     },
     "vi": {
       "title": "Sốt xuất huyết Dengue",
       "summary": "Sốt xuất huyết do vi-rút Dengue gây ra, lây qua vết đốt của muỗi Aedes aegypti và Aedes albopictus, không lây trực tiếp từ người sang người. Đài Loan là vùng nguy cơ cao, đỉnh dịch vào mùa hè và mùa thu.",
-      "keyFacts": { "incubation": "3–14 ngày (thường 4–7 ngày)", "symptoms": "Sốt cao đột ngột, đau đầu, đau sau hốc mắt, đau cơ khớp, phát ban", "transmission": "Muỗi Aedes đốt", "prevention": "Dọn sạch nước đọng, tránh muỗi đốt", "notify": "Trong vòng 24 giờ" },
+      "keyFacts": {
+        "incubation": "3–14 ngày (thường 4–7 ngày)",
+        "symptoms": "Sốt cao đột ngột, đau đầu, đau sau hốc mắt, đau cơ khớp, phát ban",
+        "transmission": "Muỗi Aedes đốt",
+        "prevention": "Dọn sạch nước đọng, tránh muỗi đốt",
+        "notify": "Trong vòng 24 giờ"
+      },
       "blocks": [
-        { "key": "what-to-do", "heading": "Tôi nên làm gì", "cards": [
-          { "if": "bị sốt và đã đến vùng dịch trong 2 tuần qua", "title": "Đi khám trong 24 giờ", "text": "Đi khám trong vòng 24 giờ, chủ động khai báo lịch sử đi lại; bác sĩ có thể làm xét nghiệm nhanh NS1." },
-          { "if": "đã được chẩn đoán và đang nghỉ tại nhà", "title": "1–2 ngày sau khi hết sốt là nguy hiểm nhất", "text": "Xuất hiện dấu hiệu cảnh báo phải tái khám ngay." },
-          { "if": "sống trong vùng dịch", "title": "Kiểm tra và đổ nước đọng hằng tuần", "text": "Mặc áo dài tay màu sáng, dùng thuốc chống muỗi." }
-        ] },
-        { "key": "symptoms", "heading": "Triệu chứng và dấu hiệu cảnh báo", "markdown": "Triệu chứng điển hình: sốt cao đột ngột (≥ 38°C), đau đầu, đau sau hốc mắt, đau cơ khớp, phát ban. Đa số tự khỏi.", "warning": "Nôn liên tục, đau bụng, chảy máu niêm mạc, lừ đừ hoặc kích động, gan to, hematocrit tăng kèm tiểu cầu giảm." },
-        { "key": "transmission", "heading": "Lây truyền", "markdown": "Lây qua muỗi Aedes mang vi-rút đốt; không lây trực tiếp giữa người với người." },
-        { "key": "prevention", "heading": "Phòng ngừa", "markdown": "Chưa có vắc-xin thường quy tại Đài Loan. Phòng ngừa: dọn nước đọng hằng tuần, mặc áo dài tay, dùng thuốc chống muỗi chứa DEET, Picaridin hoặc IR3535, lắp lưới chống muỗi." },
-        { "key": "treatment", "heading": "Chẩn đoán và điều trị", "markdown": "Không có thuốc kháng vi-rút đặc hiệu; điều trị hỗ trợ, hạ sốt bằng paracetamol; tránh aspirin và NSAID." },
-        { "key": "vaccine", "heading": "Vắc-xin", "markdown": "Vắc-xin sốt xuất huyết chưa nằm trong lịch tiêm chủng thường quy của Đài Loan." },
-        { "key": "situation", "heading": "Tình hình hiện nay và thống kê", "markdown": "Số ca nội địa và mật độ muỗi cập nhật hằng ngày." },
-        { "key": "faq", "heading": "Câu hỏi thường gặp" }
+        {
+          "key": "what-to-do",
+          "heading": "Tôi nên làm gì",
+          "cards": [
+            {
+              "if": "bị sốt và đã đến vùng dịch trong 2 tuần qua",
+              "title": "Đi khám trong 24 giờ",
+              "text": "Đi khám trong vòng 24 giờ, chủ động khai báo lịch sử đi lại; bác sĩ có thể làm xét nghiệm nhanh NS1."
+            },
+            {
+              "if": "đã được chẩn đoán và đang nghỉ tại nhà",
+              "title": "1–2 ngày sau khi hết sốt là nguy hiểm nhất",
+              "text": "Xuất hiện dấu hiệu cảnh báo phải tái khám ngay."
+            },
+            {
+              "if": "sống trong vùng dịch",
+              "title": "Kiểm tra và đổ nước đọng hằng tuần",
+              "text": "Mặc áo dài tay màu sáng, dùng thuốc chống muỗi."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Triệu chứng và dấu hiệu cảnh báo",
+          "markdown": "Triệu chứng điển hình: sốt cao đột ngột (≥ 38°C), đau đầu, đau sau hốc mắt, đau cơ khớp, phát ban. Đa số tự khỏi.\n\nMột số ít chuyển nặng, thường vào **khoảng thời gian hết sốt**.",
+          "warning": "Nôn liên tục, đau bụng, chảy máu niêm mạc, lừ đừ hoặc kích động, gan to, hematocrit tăng kèm tiểu cầu giảm."
+        },
+        {
+          "key": "transmission",
+          "heading": "Lây truyền",
+          "markdown": "Lây qua muỗi Aedes mang vi-rút đốt; không lây trực tiếp giữa người với người."
+        },
+        {
+          "key": "prevention",
+          "heading": "Phòng ngừa",
+          "markdown": "Chưa có vắc-xin thường quy tại Đài Loan. Phòng ngừa: dọn nước đọng hằng tuần, mặc áo dài tay, dùng thuốc chống muỗi chứa DEET, Picaridin hoặc IR3535, lắp lưới chống muỗi. Sau khi về từ vùng dịch, tiếp tục tránh muỗi đốt trong 2 tuần."
+        },
+        {
+          "key": "treatment",
+          "heading": "Chẩn đoán và điều trị",
+          "markdown": "Không có thuốc kháng vi-rút đặc hiệu; điều trị hỗ trợ, hạ sốt bằng paracetamol; tránh aspirin và NSAID."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vắc-xin",
+          "markdown": "Vắc-xin sốt xuất huyết chưa nằm trong lịch tiêm chủng thường quy của Đài Loan."
+        },
+        {
+          "key": "situation",
+          "heading": "Tình hình hiện nay và thống kê",
+          "markdown": "Số ca nội địa và mật độ muỗi cập nhật hằng ngày."
+        },
+        {
+          "key": "faq",
+          "heading": "Câu hỏi thường gặp"
+        }
       ]
     }
   }

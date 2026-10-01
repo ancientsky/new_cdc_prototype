@@ -1,0 +1,66 @@
+{
+  "id": "faq.stats-ili-rate",
+  "type": "faq",
+  "title": "「類流感門急診就診率」是什麼意思？",
+  "question": "「類流感門急診就診率」是什麼意思？",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2022-10-01",
+  "reviewedAt": "2026-09-20",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "data",
+    "situation"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "dataset.ili-weekly"
+  ],
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-20"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "類流感門急診就診率是每週門急診就診人次中因類流感就醫的比例，用來判斷流感是否進入流行期，不等於確診數。",
+  "keywords": [
+    "類流感",
+    "就診率",
+    "流行閾值",
+    "監測"
+  ],
+  "answerMarkdown": "指每週健保**門診與急診就診人次中，因類流感（發燒合併咳嗽或喉嚨痛等）就醫所占的比例**。疾管署以此觀察流感活動的高低：連續上升並超過流行閾值時，代表進入流行期。\n\n就診率是群體監測指標，不代表確診人數；個人是否感染流感，仍需由醫師診斷。",
+  "structured": {
+    "unit": "%",
+    "granularity": "week"
+  }
+}

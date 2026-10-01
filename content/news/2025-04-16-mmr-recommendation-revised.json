@@ -1,0 +1,78 @@
+{
+  "id": "news.2025-04-16-mmr-recommendation-revised",
+  "type": "news",
+  "newsType": "press",
+  "title": "修訂國內 MMR 預防接種建議：成人評估對象擴大至 1966 年（含）以後出生者",
+  "owner": "unit.vaccine",
+  "publishedAt": "2025-04-16",
+  "reviewedAt": "2025-04-16",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "vaccines",
+    "travel"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "doc.mmr-recommendation"
+  ],
+  "diseases": [
+    "disease.measles"
+  ],
+  "vaccines": [
+    "vaccine.mmr"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2025-04-16",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "疾管署修訂 MMR 接種建議：1966 年（含）以後出生、不具麻疹免疫力的成人，出國前 2–4 週評估自費接種；新增經常接觸外國人者。",
+  "keywords": [
+    "MMR",
+    "麻疹",
+    "1966 年",
+    "接種建議",
+    "修訂"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+  ],
+  "bodyMarkdown": "因應國際麻疹疫情升溫，疾病管制署今（16）日公布修訂「國內現行 MMR 預防接種建議」，自即日起適用。\n\n本次修訂重點：成人評估接種的出生年分界由原本的 1981 年提前至 **1966 年（含）以後出生**、不具麻疹免疫力者；建議出國前 2 至 4 週至旅遊醫學門診評估自費接種 1 劑；並新增「經常接觸外國人之工作者」（如機場、觀光、移工服務人員）為建議評估對象。流行地區以疾管署旅遊疫情建議等級為準。",
+  "i18n": {
+    "en": {
+      "title": "MMR recommendations revised: adults born in 1966 or later now eligible for assessment",
+      "summary": "Taiwan CDC revised its MMR recommendations: adults born in 1966 or later without measles immunity should be assessed for a self-paid dose 2–4 weeks before travel; workers in frequent contact with foreign nationals were added.",
+      "bodyMarkdown": "In response to rising measles activity worldwide, Taiwan CDC today (16 April) revised the \"Current MMR vaccination recommendations\", effective immediately.\n\nKey changes: the birth-year cut-off for adult assessment moved from 1981 to **1966 or later** for people without measles immunity; travellers should be assessed at a travel clinic 2 to 4 weeks before departure for one self-paid dose; and workers in frequent contact with foreign nationals (such as airport, tourism and migrant-worker services) were added. Affected areas follow Taiwan CDC travel health notice levels."
+    }
+  }
+}

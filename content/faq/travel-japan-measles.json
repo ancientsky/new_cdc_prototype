@@ -1,0 +1,82 @@
+{
+  "id": "faq.travel-japan-measles",
+  "type": "faq",
+  "title": "去日本旅遊需要擔心麻疹嗎？",
+  "question": "去日本旅遊需要擔心麻疹嗎？",
+  "owner": "unit.quarantine",
+  "publishedAt": "2026-05-12",
+  "reviewedAt": "2026-05-14",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "travel"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "doc.mmr-recommendation"
+  ],
+  "diseases": [
+    "disease.measles"
+  ],
+  "vaccines": [
+    "vaccine.mmr"
+  ],
+  "countries": [
+    "JP"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-05-14",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "日本 2026-05-11 起列為麻疹第一級（注意）；1966 年（含）以後出生且不具免疫力者，出國前 2–4 週評估接種 MMR。",
+  "keywords": [
+    "日本",
+    "麻疹",
+    "旅遊疫情建議",
+    "MMR",
+    "第一級"
+  ],
+  "answerMarkdown": "日本自 2026 年 5 月 11 日起被列為麻疹**第一級旅遊疫情建議（注意）**，代表當地有麻疹疫情，請遵守一般預防措施。\n\n出發前請確認自己是否具麻疹免疫力：**1966 年（含）以後出生**、未完成 2 劑接種或不確定者，建議出國前 2–4 週至旅遊醫學門診評估自費接種 1 劑 MMR。未滿 1 歲嬰兒非必要不建議前往。返國 18 天內若出現發燒、出疹，請戴口罩就醫並告知旅遊史。",
+  "structured": {
+    "country": "JP",
+    "level": 1,
+    "since": "2026-05-11",
+    "birthYearFrom": 1966
+  },
+  "i18n": {
+    "en": {
+      "question": "Should I worry about measles when travelling to Japan?",
+      "answerMarkdown": "Since 11 May 2026 Japan has been at **Level 1 (Watch)** for measles, meaning there is measles activity and usual precautions apply.\n\nBefore departure, check your measles immunity: if you were **born in 1966 or later** and have not had 2 doses or are unsure, see a travel clinic 2–4 weeks before departure to be assessed for one self-paid MMR dose. Infants under 1 should not travel there unless necessary. If you develop fever or rash within 18 days of return, wear a mask, see a doctor and mention your travel."
+    }
+  }
+}

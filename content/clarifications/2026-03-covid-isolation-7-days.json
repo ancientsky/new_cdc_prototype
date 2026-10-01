@@ -1,0 +1,81 @@
+{
+  "id": "clar.2026-03-covid-isolation-7-days",
+  "type": "clarification",
+  "title": "網傳「確診新冠要居家隔離 7 天，同住家人也要隔離」為舊規定",
+  "owner": "unit.pr",
+  "publishedAt": "2026-03-20",
+  "reviewedAt": "2026-09-05",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "rumor"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.covid-19"
+  ],
+  "diseases": [
+    "disease.covid-19"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-05"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-08",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "新冠確診隔離與同住家人檢疫已於 2023-03-20 取消；現行為有症狀戴口罩、生病在家休息，高風險者儘早就醫。",
+  "keywords": [
+    "新冠",
+    "隔離",
+    "舊規定",
+    "自主健康管理"
+  ],
+  "claim": "確診新冠要居家隔離 7 天，同住家人也要一起隔離，不能上班上課",
+  "claimVariants": [
+    "新冠確診要隔離七天",
+    "同住家人要居家檢疫",
+    "確診不能出門要隔離"
+  ],
+  "verdict": "outdated",
+  "channels": [
+    "LINE",
+    "Facebook"
+  ],
+  "reportChannel": "1922 防疫專線",
+  "clarificationMarkdown": "居家隔離與同住家人居家檢疫是疫情期間的舊規定。自 **2023 年 3 月 20 日**起，新冠改列第四類法定傳染病「新冠併發重症」，輕症確診者**不需隔離**，同住家人也不需居家檢疫。\n\n現行建議為「有症狀戴口罩、生病在家休息」：輕症者採自主健康管理，症狀緩解前避免探視長者或出入醫院、長照機構；高風險者確診後應儘早就醫評估抗病毒藥物。",
+  "shareText": "【疾管署說明】新冠確診「隔離 7 天、家人也要隔離」是舊規定，2023 年 3 月 20 日起已取消。現在輕症不用隔離，有症狀請戴口罩、生病在家休息，避免探視長者；高風險者確診請儘早就醫。",
+  "i18n": {
+    "en": {
+      "title": "Claim that COVID-19 cases must isolate for 7 days with household members is outdated",
+      "shareText": "Taiwan CDC: mandatory 7-day isolation for cases and quarantine for household members ended on 20 March 2023. Mild cases no longer isolate; wear a mask if symptomatic, rest at home when ill and avoid visiting older people. High-risk people should see a doctor early."
+    }
+  }
+}

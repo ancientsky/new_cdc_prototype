@@ -1,0 +1,167 @@
+{
+  "id": "disease.malaria",
+  "type": "disease",
+  "slug": "malaria",
+  "title": "瘧疾",
+  "nameEn": "Malaria",
+  "aliases": [
+    "Malaria",
+    "打擺子",
+    "惡性瘧",
+    "間日瘧"
+  ],
+  "legalCategory": 2,
+  "icd10": [
+    "B50",
+    "B51",
+    "B52",
+    "B53",
+    "B54"
+  ],
+  "notifyWithinHours": 24,
+  "incubation": {
+    "min": 7,
+    "max": 40,
+    "unit": "day",
+    "text": "惡性瘧 7–14 天；間日瘧、卵形瘧 12–18 天（可潛伏數月）；三日瘧 18–40 天"
+  },
+  "transmission": [
+    "vector",
+    "bloodborne"
+  ],
+  "owner": "unit.acute-infectious",
+  "steward": "急性傳染病組承辦人",
+  "publishedAt": "2018-03-01",
+  "reviewedAt": "2026-04-25",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "symptoms",
+    "travel"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.malaria"
+  ],
+  "countries": [
+    "NG",
+    "KE",
+    "TZ",
+    "IN",
+    "PG",
+    "ID"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "pending"
+    },
+    "tl": {
+      "status": "pending"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "瘧疾由瘧蚊傳播，台灣已於 1965 年根除，現有病例均為境外移入。前往非洲、南亞等流行地區前應諮詢預防用藥，返國後發燒務必告知旅遊史。",
+  "keywords": [
+    "瘧疾",
+    "瘧蚊",
+    "預防用藥",
+    "旅遊醫學門診",
+    "非洲"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Disease/Index"
+  ],
+  "keyFacts": {
+    "incubation": "惡性瘧 7–14 天；其他型別可達數月",
+    "symptoms": "週期性發燒、畏寒、冒汗、頭痛、肌肉痛",
+    "transmission": "瘧蚊叮咬；輸血或共用針具",
+    "prevention": "出國前諮詢預防用藥、防蚊",
+    "notify": "24 小時內"
+  },
+  "blocks": [
+    {
+      "key": "what-to-do",
+      "heading": "我該怎麼辦",
+      "cards": [
+        {
+          "if": "從流行地區返國一年內發燒",
+          "title": "立即就醫並告知旅遊史",
+          "text": "惡性瘧可能在數天內惡化，請立即就醫並說明去過哪些國家。"
+        },
+        {
+          "if": "即將前往非洲、南亞或大洋洲流行區",
+          "title": "出發前 4–6 週到旅遊醫學門診",
+          "text": "醫師會依目的地與行程開立預防用藥，並說明出發前、旅途中與返國後的服藥方式。"
+        },
+        {
+          "if": "正在服用預防用藥",
+          "title": "返國後依指示服完",
+          "text": "多數藥物返國後仍需繼續服用 1–4 週，請勿自行停藥。"
+        }
+      ]
+    },
+    {
+      "key": "symptoms",
+      "heading": "症狀與警示徵象",
+      "markdown": "典型症狀為**發燒、畏寒、冒汗**交替出現，伴隨頭痛、肌肉痛、倦怠、噁心。初期症狀類似流感，容易被忽略。\n\n**惡性瘧**可能快速惡化，造成腦性瘧疾（意識障礙、抽搐）、嚴重貧血、腎衰竭、呼吸窘迫，未及時治療可能致命。間日瘧與卵形瘧可在肝臟潛伏，數月後復發。",
+      "warning": "意識不清、抽搐、呼吸困難、尿量減少、黃疸或出血，請立即就醫。"
+    },
+    {
+      "key": "transmission",
+      "heading": "怎麼傳染",
+      "markdown": "瘧疾經由帶有瘧原蟲的**瘧蚊**（Anopheles）叮咬傳播，瘧蚊多在夜間活動。也可能經由輸血、器官移植或共用針具傳染，孕婦可傳給胎兒。**不會經由一般接觸人傳人**。台灣已無本土瘧疾，但仍有矮小瘧蚊分布，因此境外移入病例需要及早診斷與治療。"
+    },
+    {
+      "key": "prevention",
+      "heading": "如何預防",
+      "markdown": "- 出發前 **4–6 週**至旅遊醫學門診，依目的地評估**預防用藥**（如 atovaquone-proguanil、doxycycline、mefloquine）。\n- 旅途中夜間做好防蚊：使用含 DEET 的防蚊液、睡覺使用蚊帳、選擇有紗窗或空調的住宿。\n- 預防用藥需依指示在出發前、旅途中與返國後持續服用。\n- 返國一年內發燒，就醫時務必告知旅遊史。"
+    },
+    {
+      "key": "treatment",
+      "heading": "診斷與治療",
+      "markdown": "確診後依瘧原蟲種類與嚴重度使用抗瘧藥物治療；重症瘧疾需住院以注射型 artesunate 治療。疾管署儲備部分抗瘧藥物，供醫療院所申請使用。間日瘧與卵形瘧需加上 primaquine 根除肝臟內的休眠體（使用前需檢查 G6PD）。"
+    },
+    {
+      "key": "vaccine",
+      "heading": "疫苗",
+      "markdown": "WHO 已建議在非洲流行地區兒童使用瘧疾疫苗，但不適用於一般旅客。旅客預防仍以防蚊與預防用藥為主。"
+    },
+    {
+      "key": "situation",
+      "heading": "目前疫情與統計",
+      "markdown": "國內每年境外移入病例約 10–20 例，以非洲感染的惡性瘧為主。"
+    },
+    {
+      "key": "faq",
+      "heading": "常見問題"
+    }
+  ],
+  "professional": {
+    "specimen": "全血（EDTA 抗凝）製作厚、薄血片鏡檢，必要時以 PCR 鑑定種別；首次陰性但臨床高度懷疑者，應每 12–24 小時重複採檢共 3 次。",
+    "notifyNote": "第二類法定傳染病，應於 24 小時內通報；疾管署抗瘧藥物可透過區管中心申請。"
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "id": "dataset.budget-final-accounts",
+  "type": "dataset",
+  "category": "open-dataset",
+  "title": "疾病管制署預算與決算書",
+  "owner": "unit.accounting",
+  "publishedAt": "2014-01-01",
+  "reviewedAt": "2026-01-31",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "未標示",
+  "licenseNote": "待權責單位確認授權",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "none"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "疾病管制署年度法定預算、決算書及附屬單位預算，依預算法公開。",
+  "keywords": [
+    "預算",
+    "決算",
+    "主計",
+    "公開資訊"
+  ],
+  "portalUrl": "https://data.cdc.gov.tw/dataset/cdc-budget-final-accounts",
+  "canonicalUrl": "https://data.cdc.gov.tw/dataset/cdc-budget-final-accounts",
+  "schemaUrl": "https://data.cdc.gov.tw/dataset/cdc-budget-final-accounts",
+  "resources": [
+    {
+      "name": "疾病管制署預算與決算書（PDF）",
+      "format": "PDF",
+      "url": "https://data.cdc.gov.tw/dataset/cdc-budget-final-accounts"
+    },
+    {
+      "name": "疾病管制署預算與決算書（ODS）",
+      "format": "ODS",
+      "url": "https://data.cdc.gov.tw/dataset/cdc-budget-final-accounts"
+    }
+  ],
+  "provenance": {
+    "fetchedAt": "2026-10-01",
+    "mode": "snapshot",
+    "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_show?id=cdc-budget-final-accounts"
+  },
+  "ckanName": "cdc-budget-final-accounts",
+  "updateFrequency": "yearly",
+  "lastUpdated": "2026-01-31",
+  "formats": [
+    "PDF",
+    "ODS"
+  ]
+}

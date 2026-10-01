@@ -1,0 +1,67 @@
+{
+  "id": "news.2025-02-18-dengue-imported-spring",
+  "type": "news",
+  "newsType": "press",
+  "title": "春節後登革熱境外移入病例增加，出國返國請落實防蚊",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2025-02-18",
+  "reviewedAt": "2025-02-18",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "travel",
+    "situation"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue"
+  ],
+  "countries": [
+    "ID",
+    "VN",
+    "MY"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "pending"
+    },
+    "tl": {
+      "status": "pending"
+    },
+    "vi": {
+      "status": "pending"
+    },
+    "id": {
+      "status": "pending"
+    },
+    "th": {
+      "status": "pending"
+    }
+  },
+  "summary": "春節連假後登革熱境外移入病例增加，多自印尼、越南、馬來西亞移入。返國兩週內外出請防蚊，發燒就醫告知旅遊史。",
+  "keywords": [
+    "登革熱",
+    "境外移入",
+    "春節",
+    "防蚊"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+  ],
+  "bodyMarkdown": "疾病管制署表示，春節連假後國內登革熱境外移入病例增加，感染國家以印尼、越南、馬來西亞為多，東南亞多國疫情仍處高峰。\n\n疾管署提醒，前往流行地區應穿著淺色長袖衣褲並使用防蚊液；返國後兩週內外出持續防蚊，避免病媒蚊叮咬造成本土傳播。若出現發燒、頭痛、後眼窩痛、肌肉關節痛等症狀，請儘速就醫並主動告知旅遊史。"
+}

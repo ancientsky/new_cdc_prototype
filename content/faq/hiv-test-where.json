@@ -1,0 +1,72 @@
+{
+  "id": "faq.hiv-test-where",
+  "type": "faq",
+  "title": "哪裡可以做匿名 HIV 篩檢？",
+  "question": "哪裡可以做匿名 HIV 篩檢？",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2019-12-01",
+  "reviewedAt": "2026-06-10",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.hiv"
+  ],
+  "diseases": [
+    "disease.hiv"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-06-10",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "HIV 匿名篩檢可至匿名篩檢醫院、社區篩檢點或使用自我篩檢試劑；陽性需到醫院確認，空窗期內陰性建議再篩。",
+  "keywords": [
+    "HIV",
+    "匿名篩檢",
+    "自我篩檢",
+    "空窗期"
+  ],
+  "answerMarkdown": "可以選擇：\n\n- **匿名篩檢醫院**：不需健保卡，提供諮詢與檢驗。\n- **社區篩檢點**：由民間團體與衛生局合作提供。\n- **HIV 自我篩檢試劑**：可於指定藥局、販賣機或網路通路取得，部分對象可申請公費試劑。\n\n自我篩檢結果陽性時，需到醫院做確認檢驗；若距離可能感染不到 3 個月，結果陰性也建議之後再篩一次（空窗期）。",
+  "structured": {
+    "windowPeriodMonths": 3
+  },
+  "i18n": {
+    "en": {
+      "question": "Where can I get an anonymous HIV test?",
+      "answerMarkdown": "You can choose:\n\n- **Anonymous testing hospitals**: no health insurance card needed; counselling and testing provided.\n- **Community testing sites** run by NGOs with local health bureaus.\n- **HIV self-test kits** from designated pharmacies, vending machines or online; some people can get free kits.\n\nA positive self-test must be confirmed at a hospital. If fewer than 3 months have passed since possible exposure, test again later even if negative (window period)."
+    }
+  }
+}

@@ -1,12 +1,296 @@
 [
-  { "iso2": "JP", "name": "日本", "nameEn": "Japan", "region": "東亞" },
-  { "iso2": "KR", "name": "韓國", "nameEn": "South Korea", "region": "東亞" },
-  { "iso2": "VN", "name": "越南", "nameEn": "Viet Nam", "region": "東南亞" },
-  { "iso2": "TH", "name": "泰國", "nameEn": "Thailand", "region": "東南亞" },
-  { "iso2": "ID", "name": "印尼", "nameEn": "Indonesia", "region": "東南亞" },
-  { "iso2": "PH", "name": "菲律賓", "nameEn": "Philippines", "region": "東南亞" },
-  { "iso2": "MY", "name": "馬來西亞", "nameEn": "Malaysia", "region": "東南亞" },
-  { "iso2": "SG", "name": "新加坡", "nameEn": "Singapore", "region": "東南亞" },
-  { "iso2": "CN", "name": "中國大陸", "nameEn": "China", "region": "東亞" },
-  { "iso2": "US", "name": "美國", "nameEn": "United States", "region": "北美" }
+  {
+    "iso2": "JP",
+    "name": "日本",
+    "nameEn": "Japan",
+    "region": "東亞"
+  },
+  {
+    "iso2": "KR",
+    "name": "韓國",
+    "nameEn": "South Korea",
+    "region": "東亞"
+  },
+  {
+    "iso2": "CN",
+    "name": "中國大陸",
+    "nameEn": "China",
+    "region": "東亞"
+  },
+  {
+    "iso2": "HK",
+    "name": "香港",
+    "nameEn": "Hong Kong",
+    "region": "東亞"
+  },
+  {
+    "iso2": "MO",
+    "name": "澳門",
+    "nameEn": "Macao",
+    "region": "東亞"
+  },
+  {
+    "iso2": "MN",
+    "name": "蒙古",
+    "nameEn": "Mongolia",
+    "region": "東亞"
+  },
+  {
+    "iso2": "VN",
+    "name": "越南",
+    "nameEn": "Viet Nam",
+    "region": "東南亞"
+  },
+  {
+    "iso2": "TH",
+    "name": "泰國",
+    "nameEn": "Thailand",
+    "region": "東南亞"
+  },
+  {
+    "iso2": "ID",
+    "name": "印尼",
+    "nameEn": "Indonesia",
+    "region": "東南亞"
+  },
+  {
+    "iso2": "PH",
+    "name": "菲律賓",
+    "nameEn": "Philippines",
+    "region": "東南亞"
+  },
+  {
+    "iso2": "MY",
+    "name": "馬來西亞",
+    "nameEn": "Malaysia",
+    "region": "東南亞"
+  },
+  {
+    "iso2": "SG",
+    "name": "新加坡",
+    "nameEn": "Singapore",
+    "region": "東南亞"
+  },
+  {
+    "iso2": "KH",
+    "name": "柬埔寨",
+    "nameEn": "Cambodia",
+    "region": "東南亞"
+  },
+  {
+    "iso2": "LA",
+    "name": "寮國",
+    "nameEn": "Lao PDR",
+    "region": "東南亞"
+  },
+  {
+    "iso2": "MM",
+    "name": "緬甸",
+    "nameEn": "Myanmar",
+    "region": "東南亞"
+  },
+  {
+    "iso2": "IN",
+    "name": "印度",
+    "nameEn": "India",
+    "region": "南亞"
+  },
+  {
+    "iso2": "NP",
+    "name": "尼泊爾",
+    "nameEn": "Nepal",
+    "region": "南亞"
+  },
+  {
+    "iso2": "BD",
+    "name": "孟加拉",
+    "nameEn": "Bangladesh",
+    "region": "南亞"
+  },
+  {
+    "iso2": "PK",
+    "name": "巴基斯坦",
+    "nameEn": "Pakistan",
+    "region": "南亞"
+  },
+  {
+    "iso2": "LK",
+    "name": "斯里蘭卡",
+    "nameEn": "Sri Lanka",
+    "region": "南亞"
+  },
+  {
+    "iso2": "MV",
+    "name": "馬爾地夫",
+    "nameEn": "Maldives",
+    "region": "南亞"
+  },
+  {
+    "iso2": "AU",
+    "name": "澳洲",
+    "nameEn": "Australia",
+    "region": "大洋洲"
+  },
+  {
+    "iso2": "NZ",
+    "name": "紐西蘭",
+    "nameEn": "New Zealand",
+    "region": "大洋洲"
+  },
+  {
+    "iso2": "PG",
+    "name": "巴布亞紐幾內亞",
+    "nameEn": "Papua New Guinea",
+    "region": "大洋洲"
+  },
+  {
+    "iso2": "US",
+    "name": "美國",
+    "nameEn": "United States",
+    "region": "北美"
+  },
+  {
+    "iso2": "CA",
+    "name": "加拿大",
+    "nameEn": "Canada",
+    "region": "北美"
+  },
+  {
+    "iso2": "MX",
+    "name": "墨西哥",
+    "nameEn": "Mexico",
+    "region": "中南美"
+  },
+  {
+    "iso2": "BR",
+    "name": "巴西",
+    "nameEn": "Brazil",
+    "region": "中南美"
+  },
+  {
+    "iso2": "PE",
+    "name": "秘魯",
+    "nameEn": "Peru",
+    "region": "中南美"
+  },
+  {
+    "iso2": "CO",
+    "name": "哥倫比亞",
+    "nameEn": "Colombia",
+    "region": "中南美"
+  },
+  {
+    "iso2": "AR",
+    "name": "阿根廷",
+    "nameEn": "Argentina",
+    "region": "中南美"
+  },
+  {
+    "iso2": "GB",
+    "name": "英國",
+    "nameEn": "United Kingdom",
+    "region": "歐洲"
+  },
+  {
+    "iso2": "FR",
+    "name": "法國",
+    "nameEn": "France",
+    "region": "歐洲"
+  },
+  {
+    "iso2": "DE",
+    "name": "德國",
+    "nameEn": "Germany",
+    "region": "歐洲"
+  },
+  {
+    "iso2": "IT",
+    "name": "義大利",
+    "nameEn": "Italy",
+    "region": "歐洲"
+  },
+  {
+    "iso2": "ES",
+    "name": "西班牙",
+    "nameEn": "Spain",
+    "region": "歐洲"
+  },
+  {
+    "iso2": "NL",
+    "name": "荷蘭",
+    "nameEn": "Netherlands",
+    "region": "歐洲"
+  },
+  {
+    "iso2": "RO",
+    "name": "羅馬尼亞",
+    "nameEn": "Romania",
+    "region": "歐洲"
+  },
+  {
+    "iso2": "SA",
+    "name": "沙烏地阿拉伯",
+    "nameEn": "Saudi Arabia",
+    "region": "中東"
+  },
+  {
+    "iso2": "AE",
+    "name": "阿拉伯聯合大公國",
+    "nameEn": "United Arab Emirates",
+    "region": "中東"
+  },
+  {
+    "iso2": "TR",
+    "name": "土耳其",
+    "nameEn": "Türkiye",
+    "region": "中東"
+  },
+  {
+    "iso2": "EG",
+    "name": "埃及",
+    "nameEn": "Egypt",
+    "region": "非洲"
+  },
+  {
+    "iso2": "NG",
+    "name": "奈及利亞",
+    "nameEn": "Nigeria",
+    "region": "非洲"
+  },
+  {
+    "iso2": "KE",
+    "name": "肯亞",
+    "nameEn": "Kenya",
+    "region": "非洲"
+  },
+  {
+    "iso2": "TZ",
+    "name": "坦尚尼亞",
+    "nameEn": "Tanzania",
+    "region": "非洲"
+  },
+  {
+    "iso2": "ZA",
+    "name": "南非",
+    "nameEn": "South Africa",
+    "region": "非洲"
+  },
+  {
+    "iso2": "CD",
+    "name": "剛果民主共和國",
+    "nameEn": "Democratic Republic of the Congo",
+    "region": "非洲"
+  },
+  {
+    "iso2": "UG",
+    "name": "烏干達",
+    "nameEn": "Uganda",
+    "region": "非洲"
+  },
+  {
+    "iso2": "ET",
+    "name": "衣索比亞",
+    "nameEn": "Ethiopia",
+    "region": "非洲"
+  }
 ]

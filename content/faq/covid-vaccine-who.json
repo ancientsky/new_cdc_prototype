@@ -1,0 +1,79 @@
+{
+  "id": "faq.covid-vaccine-who",
+  "type": "faq",
+  "title": "今年新冠疫苗誰可以打公費？要打幾劑？",
+  "question": "今年新冠疫苗誰可以打公費？要打幾劑？",
+  "owner": "unit.vaccine",
+  "publishedAt": "2025-10-01",
+  "reviewedAt": "2026-09-16",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "doc.covid-vaccine-recommendation"
+  ],
+  "diseases": [
+    "disease.covid-19"
+  ],
+  "vaccines": [
+    "vaccine.covid-19"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-16"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-16",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "2026–2027 年度新冠疫苗：6 個月以上民眾 10 月 1 日起公費 1 劑；65 歲以上與免疫不全者間隔 6 個月可再接種 1 劑。",
+  "keywords": [
+    "新冠疫苗",
+    "公費",
+    "接種對象",
+    "65 歲以上",
+    "第二劑"
+  ],
+  "answerMarkdown": "依 2026 年 9 月修訂的「新冠疫苗接種建議（2026–2027 年度）」：\n\n- **6 個月以上民眾**自 2026 年 10 月 1 日起可接種 1 劑公費新冠疫苗，與前一劑間隔至少 12 週。\n- **65 歲以上長者與中重度免疫不全者**，在本年度第 1 劑後間隔 6 個月，可再接種 1 劑。\n\n去年度（2025–2026）的建議沒有「再接種 1 劑」的規定，請以現行版為準。",
+  "structured": {
+    "minAgeMonths": 6,
+    "intervalWeeksMin": 12,
+    "seniorExtraDoseAfterMonths": 6,
+    "basisVersion": "2026-27"
+  },
+  "i18n": {
+    "en": {
+      "question": "Who can get a government-funded COVID-19 vaccine this season, and how many doses?",
+      "answerMarkdown": "Under the COVID-19 vaccination recommendations for 2026–27 (revised September 2026):\n\n- **Everyone aged 6 months and over** can receive one government-funded dose from 1 October 2026, at least 12 weeks after any previous dose.\n- **Adults aged 65+ and people who are moderately or severely immunocompromised** may receive another dose 6 months after this season's first dose.\n\nLast season's (2025–26) recommendation did not include the extra dose; follow the current version."
+    }
+  }
+}

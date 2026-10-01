@@ -1,0 +1,82 @@
+{
+  "id": "dataset.country-epid-level",
+  "type": "dataset",
+  "category": "structured-table",
+  "title": "各國旅遊疫情建議等級（CountryEpidLevel ExportJSON）",
+  "owner": "unit.quarantine",
+  "publishedAt": "2018-01-01",
+  "reviewedAt": "2026-05-11",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "data",
+    "travel"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-05-11",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "依國家彙整之各疾病旅遊疫情建議等級結構化匯出，供出國專區與答案引擎查詢。",
+  "keywords": [
+    "旅遊疫情建議等級",
+    "國家",
+    "ExportJSON",
+    "出國"
+  ],
+  "provenance": {
+    "fetchedAt": "2026-10-01",
+    "mode": "snapshot",
+    "sourceUrl": "https://www.cdc.gov.tw/"
+  },
+  "updateFrequency": "daily",
+  "lastUpdated": "2026-09-30",
+  "formats": [
+    "JSON"
+  ],
+  "canonicalUrl": "https://www.cdc.gov.tw/CountryEpidLevel/ExportJSON",
+  "resources": [
+    {
+      "name": "CountryEpidLevel ExportJSON",
+      "format": "JSON",
+      "url": "https://www.cdc.gov.tw/CountryEpidLevel/ExportJSON"
+    }
+  ],
+  "i18n": {
+    "en": {
+      "title": "Travel health notice levels by country (CountryEpidLevel ExportJSON)",
+      "summary": "Structured export of travel health notice levels by country and disease, used by the travel section and answer engine."
+    }
+  }
+}

@@ -1,14 +1,2139 @@
 [
-  { "id": "disease.dengue", "slug": "dengue", "name": "登革熱", "nameEn": "Dengue fever", "aliases": ["登革出血熱", "天狗熱", "斷骨熱", "Dengue"], "legalCategory": 2, "icd10": ["A90", "A91"], "notifyWithinHours": 24, "transmission": ["vector"], "hasPage": true, "owner": "unit.acute-infectious", "datasets": ["dataset.dengue-daily"], "strokes": 12, "zhuyin": "ㄉ" },
-  { "id": "disease.influenza", "slug": "influenza", "name": "流感", "nameEn": "Influenza", "aliases": ["季節性流感", "類流感", "流行性感冒", "Flu"], "legalCategory": 4, "icd10": ["J09", "J10", "J11"], "notifyWithinHours": 168, "transmission": ["droplet", "contact"], "hasPage": false, "owner": "unit.acute-infectious", "datasets": ["dataset.ili-weekly"], "strokes": 10, "zhuyin": "ㄌ", "note": "法定通報項目為「流感併發重症」（第四類）" },
-  { "id": "disease.enterovirus", "slug": "enterovirus", "name": "腸病毒", "nameEn": "Enterovirus infection", "aliases": ["腸病毒感染併發重症", "手足口病", "疱疹性咽峽炎", "EV71", "克沙奇病毒"], "legalCategory": 3, "icd10": ["B34.1", "B08.4", "B08.5"], "notifyWithinHours": 168, "transmission": ["droplet", "contact", "foodborne"], "hasPage": false, "owner": "unit.acute-infectious", "datasets": [], "strokes": 13, "zhuyin": "ㄔ" },
-  { "id": "disease.covid-19", "slug": "covid-19", "name": "新冠併發重症", "nameEn": "COVID-19", "aliases": ["新冠肺炎", "COVID-19", "嚴重特殊傳染性肺炎", "新冠"], "legalCategory": 4, "icd10": ["U07.1"], "notifyWithinHours": 168, "transmission": ["droplet", "airborne", "contact"], "hasPage": false, "owner": "unit.acute-infectious", "datasets": [], "strokes": 13, "zhuyin": "ㄒ" },
-  { "id": "disease.measles", "slug": "measles", "name": "麻疹", "nameEn": "Measles", "aliases": ["Measles", "Rubeola"], "legalCategory": 2, "icd10": ["B05"], "notifyWithinHours": 24, "transmission": ["airborne", "droplet"], "hasPage": false, "owner": "unit.acute-infectious", "datasets": [], "strokes": 11, "zhuyin": "ㄇ",
+  {
+    "id": "disease.smallpox",
+    "slug": "smallpox",
+    "name": "天花",
+    "nameEn": "Smallpox",
+    "aliases": [
+      "Variola",
+      "痘瘡"
+    ],
+    "legalCategory": 1,
+    "icd10": [
+      "B03"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "droplet",
+      "contact"
+    ],
+    "hasPage": false,
+    "owner": "unit.preparedness",
+    "zhuyin": "ㄊ",
+    "strokes": 4,
+    "note": "1979 年 WHO 宣布根除；列管以防生物恐怖攻擊",
+    "i18n": {
+      "en": {
+        "name": "Smallpox"
+      }
+    }
+  },
+  {
+    "id": "disease.plague",
+    "slug": "plague",
+    "name": "鼠疫",
+    "nameEn": "Plague",
+    "aliases": [
+      "黑死病",
+      "Yersinia pestis"
+    ],
+    "legalCategory": 1,
+    "icd10": [
+      "A20"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "zoonotic",
+      "vector",
+      "droplet"
+    ],
+    "hasPage": false,
+    "owner": "unit.preparedness",
+    "zhuyin": "ㄕ",
+    "strokes": 13,
+    "i18n": {
+      "en": {
+        "name": "Plague"
+      }
+    }
+  },
+  {
+    "id": "disease.sars",
+    "slug": "sars",
+    "name": "嚴重急性呼吸道症候群",
+    "nameEn": "Severe acute respiratory syndrome (SARS)",
+    "aliases": [
+      "SARS",
+      "非典型肺炎"
+    ],
+    "legalCategory": 1,
+    "icd10": [
+      "U04.9"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "droplet",
+      "contact"
+    ],
+    "hasPage": false,
+    "owner": "unit.preparedness",
+    "zhuyin": "ㄧ",
+    "strokes": 20,
+    "i18n": {
+      "en": {
+        "name": "Severe acute respiratory syndrome (SARS)"
+      }
+    }
+  },
+  {
+    "id": "disease.rabies",
+    "slug": "rabies",
+    "name": "狂犬病",
+    "nameEn": "Rabies",
+    "aliases": [
+      "恐水病",
+      "Rabies",
+      "麗沙病毒感染"
+    ],
+    "legalCategory": 1,
+    "icd10": [
+      "A82"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "zoonotic"
+    ],
+    "hasPage": false,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄎ",
+    "strokes": 7,
+    "i18n": {
+      "en": {
+        "name": "Rabies"
+      }
+    }
+  },
+  {
+    "id": "disease.diphtheria",
+    "slug": "diphtheria",
+    "name": "白喉",
+    "nameEn": "Diphtheria",
+    "aliases": [
+      "Diphtheria"
+    ],
+    "legalCategory": 2,
+    "icd10": [
+      "A36"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "droplet",
+      "contact"
+    ],
+    "hasPage": false,
+    "owner": "unit.vaccine",
+    "zhuyin": "ㄅ",
+    "strokes": 5,
+    "i18n": {
+      "en": {
+        "name": "Diphtheria"
+      }
+    }
+  },
+  {
+    "id": "disease.typhoid-fever",
+    "slug": "typhoid-fever",
+    "name": "傷寒",
+    "nameEn": "Typhoid fever",
+    "aliases": [
+      "Typhoid",
+      "傷寒桿菌"
+    ],
+    "legalCategory": 2,
+    "icd10": [
+      "A01.0"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "foodborne",
+      "waterborne"
+    ],
+    "hasPage": false,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄕ",
+    "strokes": 13,
+    "i18n": {
+      "en": {
+        "name": "Typhoid fever"
+      }
+    }
+  },
+  {
+    "id": "disease.dengue",
+    "slug": "dengue",
+    "name": "登革熱",
+    "nameEn": "Dengue fever",
+    "aliases": [
+      "登革出血熱",
+      "天狗熱",
+      "斷骨熱",
+      "Dengue"
+    ],
+    "legalCategory": 2,
+    "icd10": [
+      "A90",
+      "A91"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "vector"
+    ],
+    "hasPage": true,
+    "owner": "unit.acute-infectious",
+    "datasets": [
+      "dataset.dengue-daily",
+      "dataset.dengue-local-weekly"
+    ],
+    "zhuyin": "ㄉ",
+    "strokes": 12,
+    "i18n": {
+      "en": {
+        "name": "Dengue fever"
+      }
+    }
+  },
+  {
+    "id": "disease.meningococcal-meningitis",
+    "slug": "meningococcal-meningitis",
+    "name": "流行性腦脊髓膜炎",
+    "nameEn": "Meningococcal meningitis",
+    "aliases": [
+      "腦膜炎雙球菌",
+      "流腦"
+    ],
+    "legalCategory": 2,
+    "icd10": [
+      "A39"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "droplet",
+      "contact"
+    ],
+    "hasPage": false,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄌ",
+    "strokes": 10,
+    "i18n": {
+      "en": {
+        "name": "Meningococcal meningitis"
+      }
+    }
+  },
+  {
+    "id": "disease.paratyphoid-fever",
+    "slug": "paratyphoid-fever",
+    "name": "副傷寒",
+    "nameEn": "Paratyphoid fever",
+    "aliases": [
+      "Paratyphoid"
+    ],
+    "legalCategory": 2,
+    "icd10": [
+      "A01.1",
+      "A01.2",
+      "A01.3",
+      "A01.4"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "foodborne",
+      "waterborne"
+    ],
+    "hasPage": false,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄈ",
+    "strokes": 11,
+    "i18n": {
+      "en": {
+        "name": "Paratyphoid fever"
+      }
+    }
+  },
+  {
+    "id": "disease.polio-afp",
+    "slug": "polio-afp",
+    "name": "小兒麻痺症／急性無力肢體麻痺",
+    "nameEn": "Poliomyelitis / Acute flaccid paralysis",
+    "aliases": [
+      "小兒麻痺",
+      "脊髓灰質炎",
+      "AFP",
+      "Polio"
+    ],
+    "legalCategory": 2,
+    "icd10": [
+      "A80",
+      "G83.9"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "foodborne",
+      "contact"
+    ],
+    "hasPage": false,
+    "owner": "unit.vaccine",
+    "zhuyin": "ㄒ",
+    "strokes": 3,
+    "i18n": {
+      "en": {
+        "name": "Poliomyelitis / Acute flaccid paralysis"
+      }
+    }
+  },
+  {
+    "id": "disease.shigellosis",
+    "slug": "shigellosis",
+    "name": "桿菌性痢疾",
+    "nameEn": "Shigellosis",
+    "aliases": [
+      "志賀氏桿菌",
+      "細菌性痢疾"
+    ],
+    "legalCategory": 2,
+    "icd10": [
+      "A03"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "foodborne",
+      "waterborne",
+      "contact",
+      "sexual"
+    ],
+    "hasPage": false,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄍ",
+    "strokes": 11,
+    "i18n": {
+      "en": {
+        "name": "Shigellosis"
+      }
+    }
+  },
+  {
+    "id": "disease.amoebic-dysentery",
+    "slug": "amoebic-dysentery",
+    "name": "阿米巴性痢疾",
+    "nameEn": "Amoebic dysentery",
+    "aliases": [
+      "阿米巴",
+      "Amoebiasis"
+    ],
+    "legalCategory": 2,
+    "icd10": [
+      "A06"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "foodborne",
+      "waterborne",
+      "sexual"
+    ],
+    "hasPage": false,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄚ",
+    "strokes": 8,
+    "i18n": {
+      "en": {
+        "name": "Amoebic dysentery"
+      }
+    }
+  },
+  {
+    "id": "disease.malaria",
+    "slug": "malaria",
+    "name": "瘧疾",
+    "nameEn": "Malaria",
+    "aliases": [
+      "Malaria",
+      "打擺子"
+    ],
+    "legalCategory": 2,
+    "icd10": [
+      "B50",
+      "B51",
+      "B52",
+      "B53",
+      "B54"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "vector",
+      "bloodborne"
+    ],
+    "hasPage": true,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄋ",
+    "strokes": 14,
+    "i18n": {
+      "en": {
+        "name": "Malaria"
+      }
+    }
+  },
+  {
+    "id": "disease.measles",
+    "slug": "measles",
+    "name": "麻疹",
+    "nameEn": "Measles",
+    "aliases": [
+      "Measles",
+      "Rubeola",
+      "痲疹"
+    ],
+    "legalCategory": 2,
+    "icd10": [
+      "B05"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "airborne",
+      "droplet"
+    ],
+    "hasPage": true,
+    "owner": "unit.acute-infectious",
+    "datasets": [
+      "dataset.measles-yearly"
+    ],
+    "zhuyin": "ㄇ",
+    "strokes": 11,
+    "i18n": {
+      "en": {
+        "name": "Measles"
+      }
+    },
     "auditRules": [
-      { "scope": ["disease.measles"], "pattern": "1981\\s*年(含)?以後出生", "message": "MMR 接種建議已於 2025-04-16 修訂：成人評估對象改為 1966 年（含）以後出生者；「1981 年」為失效條件" },
-      { "scope": ["disease.measles"], "pattern": "日[、,]?韓.{0,4}非流行區", "message": "日本已於 2026-05-11 列為麻疹第一級旅遊疫情建議，「日韓非流行區」已不成立" }
-    ] },
-  { "id": "disease.mpox", "slug": "mpox", "name": "M痘", "nameEn": "Mpox", "aliases": ["猴痘", "Monkeypox", "Mpox"], "legalCategory": 2, "icd10": ["B04"], "notifyWithinHours": 24, "transmission": ["contact", "sexual", "droplet"], "hasPage": false, "owner": "unit.acute-infectious", "datasets": [], "strokes": 0, "zhuyin": "M" },
-  { "id": "disease.tuberculosis", "slug": "tuberculosis", "name": "結核病", "nameEn": "Tuberculosis", "aliases": ["肺結核", "TB"], "legalCategory": 3, "icd10": ["A15", "A16", "A17", "A18", "A19"], "notifyWithinHours": 168, "transmission": ["airborne"], "hasPage": false, "owner": "unit.chronic-infectious", "datasets": [], "strokes": 12, "zhuyin": "ㄐ" },
-  { "id": "disease.hiv", "slug": "hiv", "name": "人類免疫缺乏病毒感染", "nameEn": "HIV infection", "aliases": ["愛滋病", "HIV", "AIDS", "後天免疫缺乏症候群"], "legalCategory": 3, "icd10": ["B20", "B24", "Z21"], "notifyWithinHours": 24, "transmission": ["sexual", "bloodborne", "vertical"], "hasPage": false, "owner": "unit.chronic-infectious", "datasets": [], "strokes": 2, "zhuyin": "ㄖ" }
+      {
+        "scope": [
+          "disease.measles"
+        ],
+        "since": "2025-04-16",
+        "pattern": "1981\\s*年(含)?以後出生",
+        "message": "MMR 接種建議已於 2025-04-16 修訂：成人評估對象改為 1966 年（含）以後出生者；「1981 年」為失效條件"
+      },
+      {
+        "scope": [
+          "disease.measles"
+        ],
+        "since": "2026-05-11",
+        "pattern": "日[、,]?韓.{0,4}非流行區",
+        "message": "日本已於 2026-05-11 列為麻疹第一級旅遊疫情建議，「日韓非流行區」已不成立"
+      }
+    ]
+  },
+  {
+    "id": "disease.hepatitis-a",
+    "slug": "hepatitis-a",
+    "name": "急性病毒性A型肝炎",
+    "nameEn": "Acute viral hepatitis A",
+    "aliases": [
+      "A肝",
+      "A型肝炎",
+      "HAV"
+    ],
+    "legalCategory": 2,
+    "icd10": [
+      "B15"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "foodborne",
+      "waterborne",
+      "sexual"
+    ],
+    "hasPage": true,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄐ",
+    "strokes": 9,
+    "i18n": {
+      "en": {
+        "name": "Acute viral hepatitis A"
+      }
+    }
+  },
+  {
+    "id": "disease.ehec",
+    "slug": "ehec",
+    "name": "腸道出血性大腸桿菌感染症",
+    "nameEn": "Enterohemorrhagic E. coli infection",
+    "aliases": [
+      "O157",
+      "EHEC",
+      "出血性大腸桿菌"
+    ],
+    "legalCategory": 2,
+    "icd10": [
+      "A04.3"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "foodborne",
+      "waterborne"
+    ],
+    "hasPage": false,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄔ",
+    "strokes": 13,
+    "i18n": {
+      "en": {
+        "name": "Enterohemorrhagic E. coli infection"
+      }
+    }
+  },
+  {
+    "id": "disease.hantavirus",
+    "slug": "hantavirus",
+    "name": "漢他病毒症候群",
+    "nameEn": "Hantavirus syndrome",
+    "aliases": [
+      "漢他病毒出血熱",
+      "漢他病毒肺症候群",
+      "Hantavirus"
+    ],
+    "legalCategory": 2,
+    "icd10": [
+      "A98.5",
+      "B33.4"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "zoonotic"
+    ],
+    "hasPage": false,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄏ",
+    "strokes": 14,
+    "i18n": {
+      "en": {
+        "name": "Hantavirus syndrome"
+      }
+    }
+  },
+  {
+    "id": "disease.cholera",
+    "slug": "cholera",
+    "name": "霍亂",
+    "nameEn": "Cholera",
+    "aliases": [
+      "Cholera"
+    ],
+    "legalCategory": 2,
+    "icd10": [
+      "A00"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "foodborne",
+      "waterborne"
+    ],
+    "hasPage": false,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄏ",
+    "strokes": 16,
+    "i18n": {
+      "en": {
+        "name": "Cholera"
+      }
+    }
+  },
+  {
+    "id": "disease.rubella",
+    "slug": "rubella",
+    "name": "德國麻疹",
+    "nameEn": "Rubella",
+    "aliases": [
+      "風疹",
+      "Rubella"
+    ],
+    "legalCategory": 2,
+    "icd10": [
+      "B06"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "droplet",
+      "vertical"
+    ],
+    "hasPage": true,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄉ",
+    "strokes": 15,
+    "i18n": {
+      "en": {
+        "name": "Rubella"
+      }
+    }
+  },
+  {
+    "id": "disease.mdr-tb",
+    "slug": "mdr-tb",
+    "name": "多重抗藥性結核病",
+    "nameEn": "Multidrug-resistant tuberculosis",
+    "aliases": [
+      "MDR-TB",
+      "抗藥性結核"
+    ],
+    "legalCategory": 2,
+    "icd10": [
+      "A15",
+      "U84.3"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "airborne"
+    ],
+    "hasPage": false,
+    "owner": "unit.chronic-infectious",
+    "zhuyin": "ㄉ",
+    "strokes": 6,
+    "i18n": {
+      "en": {
+        "name": "Multidrug-resistant tuberculosis"
+      }
+    }
+  },
+  {
+    "id": "disease.chikungunya",
+    "slug": "chikungunya",
+    "name": "屈公病",
+    "nameEn": "Chikungunya fever",
+    "aliases": [
+      "Chikungunya",
+      "屈公熱"
+    ],
+    "legalCategory": 2,
+    "icd10": [
+      "A92.0"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "vector"
+    ],
+    "hasPage": true,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄑ",
+    "strokes": 8,
+    "i18n": {
+      "en": {
+        "name": "Chikungunya fever"
+      }
+    }
+  },
+  {
+    "id": "disease.west-nile-fever",
+    "slug": "west-nile-fever",
+    "name": "西尼羅熱",
+    "nameEn": "West Nile fever",
+    "aliases": [
+      "西尼羅病毒",
+      "West Nile"
+    ],
+    "legalCategory": 2,
+    "icd10": [
+      "A92.3"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "vector"
+    ],
+    "hasPage": false,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄒ",
+    "strokes": 6,
+    "i18n": {
+      "en": {
+        "name": "West Nile fever"
+      }
+    }
+  },
+  {
+    "id": "disease.epidemic-typhus",
+    "slug": "epidemic-typhus",
+    "name": "流行性斑疹傷寒",
+    "nameEn": "Epidemic typhus",
+    "aliases": [
+      "虱媒斑疹傷寒"
+    ],
+    "legalCategory": 2,
+    "icd10": [
+      "A75.0"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "vector"
+    ],
+    "hasPage": false,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄌ",
+    "strokes": 10,
+    "i18n": {
+      "en": {
+        "name": "Epidemic typhus"
+      }
+    }
+  },
+  {
+    "id": "disease.anthrax",
+    "slug": "anthrax",
+    "name": "炭疽病",
+    "nameEn": "Anthrax",
+    "aliases": [
+      "Anthrax",
+      "炭疽"
+    ],
+    "legalCategory": 2,
+    "icd10": [
+      "A22"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "zoonotic",
+      "contact"
+    ],
+    "hasPage": false,
+    "owner": "unit.preparedness",
+    "zhuyin": "ㄊ",
+    "strokes": 9,
+    "i18n": {
+      "en": {
+        "name": "Anthrax"
+      }
+    }
+  },
+  {
+    "id": "disease.zika",
+    "slug": "zika",
+    "name": "茲卡病毒感染症",
+    "nameEn": "Zika virus infection",
+    "aliases": [
+      "茲卡",
+      "Zika",
+      "小頭症"
+    ],
+    "legalCategory": 2,
+    "icd10": [
+      "A92.5"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "vector",
+      "sexual",
+      "vertical"
+    ],
+    "hasPage": false,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄗ",
+    "strokes": 10,
+    "note": "2016 年公告列為第二類",
+    "i18n": {
+      "en": {
+        "name": "Zika virus infection"
+      }
+    }
+  },
+  {
+    "id": "disease.mpox",
+    "slug": "mpox",
+    "name": "M痘",
+    "nameEn": "Mpox",
+    "aliases": [
+      "猴痘",
+      "Monkeypox",
+      "Mpox",
+      "MPX"
+    ],
+    "legalCategory": 2,
+    "icd10": [
+      "B04"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "contact",
+      "sexual",
+      "droplet"
+    ],
+    "hasPage": true,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "M",
+    "strokes": 0,
+    "note": "2023-03-01 由第五類改列第二類；2022 年中文名由「猴痘」更名為「M痘」",
+    "i18n": {
+      "en": {
+        "name": "Mpox"
+      }
+    }
+  },
+  {
+    "id": "disease.pertussis",
+    "slug": "pertussis",
+    "name": "百日咳",
+    "nameEn": "Pertussis",
+    "aliases": [
+      "Whooping cough",
+      "百日咳桿菌"
+    ],
+    "legalCategory": 3,
+    "icd10": [
+      "A37"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "droplet"
+    ],
+    "hasPage": true,
+    "owner": "unit.vaccine",
+    "zhuyin": "ㄅ",
+    "strokes": 6,
+    "i18n": {
+      "en": {
+        "name": "Pertussis"
+      }
+    }
+  },
+  {
+    "id": "disease.tetanus",
+    "slug": "tetanus",
+    "name": "破傷風",
+    "nameEn": "Tetanus",
+    "aliases": [
+      "Tetanus",
+      "牙關緊閉"
+    ],
+    "legalCategory": 3,
+    "icd10": [
+      "A35"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "other"
+    ],
+    "hasPage": false,
+    "owner": "unit.vaccine",
+    "zhuyin": "ㄆ",
+    "strokes": 10,
+    "i18n": {
+      "en": {
+        "name": "Tetanus"
+      }
+    }
+  },
+  {
+    "id": "disease.neonatal-tetanus",
+    "slug": "neonatal-tetanus",
+    "name": "新生兒破傷風",
+    "nameEn": "Neonatal tetanus",
+    "aliases": [
+      "臍帶破傷風"
+    ],
+    "legalCategory": 3,
+    "icd10": [
+      "A33"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "other"
+    ],
+    "hasPage": false,
+    "owner": "unit.vaccine",
+    "zhuyin": "ㄒ",
+    "strokes": 13,
+    "i18n": {
+      "en": {
+        "name": "Neonatal tetanus"
+      }
+    }
+  },
+  {
+    "id": "disease.japanese-encephalitis",
+    "slug": "japanese-encephalitis",
+    "name": "日本腦炎",
+    "nameEn": "Japanese encephalitis",
+    "aliases": [
+      "JE",
+      "日腦",
+      "大腦炎"
+    ],
+    "legalCategory": 3,
+    "icd10": [
+      "A83.0"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "vector"
+    ],
+    "hasPage": true,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄖ",
+    "strokes": 4,
+    "i18n": {
+      "en": {
+        "name": "Japanese encephalitis"
+      }
+    }
+  },
+  {
+    "id": "disease.tuberculosis",
+    "slug": "tuberculosis",
+    "name": "結核病",
+    "nameEn": "Tuberculosis",
+    "aliases": [
+      "肺結核",
+      "TB",
+      "肺癆"
+    ],
+    "legalCategory": 3,
+    "icd10": [
+      "A15",
+      "A16",
+      "A17",
+      "A18",
+      "A19"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "airborne"
+    ],
+    "hasPage": true,
+    "owner": "unit.chronic-infectious",
+    "datasets": [
+      "dataset.tb-new-cases"
+    ],
+    "zhuyin": "ㄐ",
+    "strokes": 12,
+    "note": "不含多重抗藥性結核病（第二類）",
+    "i18n": {
+      "en": {
+        "name": "Tuberculosis"
+      }
+    }
+  },
+  {
+    "id": "disease.congenital-rubella-syndrome",
+    "slug": "congenital-rubella-syndrome",
+    "name": "先天性德國麻疹症候群",
+    "nameEn": "Congenital rubella syndrome",
+    "aliases": [
+      "CRS"
+    ],
+    "legalCategory": 3,
+    "icd10": [
+      "P35.0"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "vertical"
+    ],
+    "hasPage": false,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄒ",
+    "strokes": 6,
+    "i18n": {
+      "en": {
+        "name": "Congenital rubella syndrome"
+      }
+    }
+  },
+  {
+    "id": "disease.hepatitis-b",
+    "slug": "hepatitis-b",
+    "name": "急性病毒性B型肝炎",
+    "nameEn": "Acute viral hepatitis B",
+    "aliases": [
+      "B肝",
+      "HBV"
+    ],
+    "legalCategory": 3,
+    "icd10": [
+      "B16"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "bloodborne",
+      "sexual",
+      "vertical"
+    ],
+    "hasPage": false,
+    "owner": "unit.chronic-infectious",
+    "zhuyin": "ㄐ",
+    "strokes": 9,
+    "i18n": {
+      "en": {
+        "name": "Acute viral hepatitis B"
+      }
+    }
+  },
+  {
+    "id": "disease.hepatitis-c",
+    "slug": "hepatitis-c",
+    "name": "急性病毒性C型肝炎",
+    "nameEn": "Acute viral hepatitis C",
+    "aliases": [
+      "C肝",
+      "HCV"
+    ],
+    "legalCategory": 3,
+    "icd10": [
+      "B17.1"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "bloodborne",
+      "sexual"
+    ],
+    "hasPage": false,
+    "owner": "unit.chronic-infectious",
+    "zhuyin": "ㄐ",
+    "strokes": 9,
+    "i18n": {
+      "en": {
+        "name": "Acute viral hepatitis C"
+      }
+    }
+  },
+  {
+    "id": "disease.hepatitis-d",
+    "slug": "hepatitis-d",
+    "name": "急性病毒性D型肝炎",
+    "nameEn": "Acute viral hepatitis D",
+    "aliases": [
+      "D肝",
+      "HDV",
+      "δ型肝炎"
+    ],
+    "legalCategory": 3,
+    "icd10": [
+      "B17.0"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "bloodborne",
+      "sexual"
+    ],
+    "hasPage": false,
+    "owner": "unit.chronic-infectious",
+    "zhuyin": "ㄐ",
+    "strokes": 9,
+    "i18n": {
+      "en": {
+        "name": "Acute viral hepatitis D"
+      }
+    }
+  },
+  {
+    "id": "disease.hepatitis-e",
+    "slug": "hepatitis-e",
+    "name": "急性病毒性E型肝炎",
+    "nameEn": "Acute viral hepatitis E",
+    "aliases": [
+      "E肝",
+      "HEV"
+    ],
+    "legalCategory": 3,
+    "icd10": [
+      "B17.2"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "foodborne",
+      "waterborne"
+    ],
+    "hasPage": false,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄐ",
+    "strokes": 9,
+    "i18n": {
+      "en": {
+        "name": "Acute viral hepatitis E"
+      }
+    }
+  },
+  {
+    "id": "disease.hepatitis-unspecified",
+    "slug": "hepatitis-unspecified",
+    "name": "急性病毒性肝炎未定型",
+    "nameEn": "Acute viral hepatitis, unspecified",
+    "aliases": [
+      "未定型肝炎"
+    ],
+    "legalCategory": 3,
+    "icd10": [
+      "B17.9"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "other"
+    ],
+    "hasPage": false,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄐ",
+    "strokes": 9,
+    "i18n": {
+      "en": {
+        "name": "Acute viral hepatitis, unspecified"
+      }
+    }
+  },
+  {
+    "id": "disease.mumps",
+    "slug": "mumps",
+    "name": "流行性腮腺炎",
+    "nameEn": "Mumps",
+    "aliases": [
+      "豬頭皮",
+      "腮腺炎",
+      "Mumps"
+    ],
+    "legalCategory": 3,
+    "icd10": [
+      "B26"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "droplet",
+      "contact"
+    ],
+    "hasPage": false,
+    "owner": "unit.vaccine",
+    "zhuyin": "ㄌ",
+    "strokes": 10,
+    "i18n": {
+      "en": {
+        "name": "Mumps"
+      }
+    }
+  },
+  {
+    "id": "disease.legionellosis",
+    "slug": "legionellosis",
+    "name": "退伍軍人病",
+    "nameEn": "Legionnaires' disease",
+    "aliases": [
+      "退伍軍人症",
+      "軍團菌",
+      "Legionella"
+    ],
+    "legalCategory": 3,
+    "icd10": [
+      "A48.1"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "airborne",
+      "waterborne"
+    ],
+    "hasPage": false,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄊ",
+    "strokes": 10,
+    "i18n": {
+      "en": {
+        "name": "Legionnaires' disease"
+      }
+    }
+  },
+  {
+    "id": "disease.hib",
+    "slug": "hib",
+    "name": "侵襲性b型嗜血桿菌感染症",
+    "nameEn": "Invasive Haemophilus influenzae type b infection",
+    "aliases": [
+      "Hib",
+      "b型嗜血桿菌"
+    ],
+    "legalCategory": 3,
+    "icd10": [
+      "A41.3",
+      "G00.0"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "droplet"
+    ],
+    "hasPage": false,
+    "owner": "unit.vaccine",
+    "zhuyin": "ㄑ",
+    "strokes": 9,
+    "i18n": {
+      "en": {
+        "name": "Invasive Haemophilus influenzae type b infection"
+      }
+    }
+  },
+  {
+    "id": "disease.syphilis",
+    "slug": "syphilis",
+    "name": "梅毒",
+    "nameEn": "Syphilis",
+    "aliases": [
+      "Syphilis",
+      "花柳病"
+    ],
+    "legalCategory": 3,
+    "icd10": [
+      "A51",
+      "A52",
+      "A53"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "sexual",
+      "vertical",
+      "bloodborne"
+    ],
+    "hasPage": false,
+    "owner": "unit.chronic-infectious",
+    "zhuyin": "ㄇ",
+    "strokes": 11,
+    "i18n": {
+      "en": {
+        "name": "Syphilis"
+      }
+    }
+  },
+  {
+    "id": "disease.congenital-syphilis",
+    "slug": "congenital-syphilis",
+    "name": "先天性梅毒",
+    "nameEn": "Congenital syphilis",
+    "aliases": [
+      "胎傳梅毒"
+    ],
+    "legalCategory": 3,
+    "icd10": [
+      "A50"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "vertical"
+    ],
+    "hasPage": false,
+    "owner": "unit.chronic-infectious",
+    "zhuyin": "ㄒ",
+    "strokes": 6,
+    "i18n": {
+      "en": {
+        "name": "Congenital syphilis"
+      }
+    }
+  },
+  {
+    "id": "disease.gonorrhea",
+    "slug": "gonorrhea",
+    "name": "淋病",
+    "nameEn": "Gonorrhoea",
+    "aliases": [
+      "Gonorrhea",
+      "淋菌"
+    ],
+    "legalCategory": 3,
+    "icd10": [
+      "A54"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "sexual",
+      "vertical"
+    ],
+    "hasPage": false,
+    "owner": "unit.chronic-infectious",
+    "zhuyin": "ㄌ",
+    "strokes": 11,
+    "i18n": {
+      "en": {
+        "name": "Gonorrhoea"
+      }
+    }
+  },
+  {
+    "id": "disease.enterovirus",
+    "slug": "enterovirus",
+    "name": "腸病毒",
+    "nameEn": "Enterovirus infection",
+    "aliases": [
+      "腸病毒感染併發重症",
+      "手足口病",
+      "疱疹性咽峽炎",
+      "EV71",
+      "腸病毒71型",
+      "克沙奇病毒"
+    ],
+    "legalCategory": 3,
+    "icd10": [
+      "B34.1",
+      "B08.4",
+      "B08.5",
+      "A87.0"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "droplet",
+      "contact",
+      "foodborne"
+    ],
+    "hasPage": true,
+    "owner": "unit.acute-infectious",
+    "datasets": [
+      "dataset.ev-visits-weekly"
+    ],
+    "zhuyin": "ㄔ",
+    "strokes": 13,
+    "legalName": "腸病毒感染併發重症",
+    "note": "法定通報項目為「腸病毒感染併發重症」；一般腸病毒輕症不須通報",
+    "i18n": {
+      "en": {
+        "name": "Enterovirus infection"
+      }
+    }
+  },
+  {
+    "id": "disease.hiv",
+    "slug": "hiv",
+    "name": "人類免疫缺乏病毒感染",
+    "nameEn": "HIV infection",
+    "aliases": [
+      "愛滋",
+      "愛滋病毒",
+      "HIV",
+      "AIDS",
+      "後天免疫缺乏症候群"
+    ],
+    "legalCategory": 3,
+    "icd10": [
+      "B20",
+      "B24",
+      "Z21"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "sexual",
+      "bloodborne",
+      "vertical"
+    ],
+    "hasPage": true,
+    "owner": "unit.chronic-infectious",
+    "datasets": [
+      "dataset.hiv-monthly"
+    ],
+    "zhuyin": "ㄖ",
+    "strokes": 2,
+    "i18n": {
+      "en": {
+        "name": "HIV infection"
+      }
+    }
+  },
+  {
+    "id": "disease.aids",
+    "slug": "aids",
+    "name": "後天免疫缺乏症候群",
+    "nameEn": "Acquired immunodeficiency syndrome (AIDS)",
+    "aliases": [
+      "AIDS",
+      "愛滋病發病"
+    ],
+    "legalCategory": 3,
+    "icd10": [
+      "B20",
+      "B24"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "sexual",
+      "bloodborne",
+      "vertical"
+    ],
+    "hasPage": false,
+    "owner": "unit.chronic-infectious",
+    "zhuyin": "ㄏ",
+    "strokes": 9,
+    "note": "通報時限原型依第三類一週內登錄；實際以疾管署公告為準",
+    "i18n": {
+      "en": {
+        "name": "Acquired immunodeficiency syndrome (AIDS)"
+      }
+    }
+  },
+  {
+    "id": "disease.leprosy",
+    "slug": "leprosy",
+    "name": "漢生病",
+    "nameEn": "Hansen's disease (leprosy)",
+    "aliases": [
+      "痲瘋病",
+      "Leprosy"
+    ],
+    "legalCategory": 3,
+    "icd10": [
+      "A30"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "droplet",
+      "contact"
+    ],
+    "hasPage": false,
+    "owner": "unit.chronic-infectious",
+    "zhuyin": "ㄏ",
+    "strokes": 14,
+    "i18n": {
+      "en": {
+        "name": "Hansen's disease (leprosy)"
+      }
+    }
+  },
+  {
+    "id": "disease.herpes-b",
+    "slug": "herpes-b",
+    "name": "疱疹B病毒感染症",
+    "nameEn": "Herpes B virus infection",
+    "aliases": [
+      "猴疱疹病毒",
+      "B病毒"
+    ],
+    "legalCategory": 4,
+    "icd10": [
+      "B00.4"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "zoonotic"
+    ],
+    "hasPage": false,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄆ",
+    "strokes": 10,
+    "i18n": {
+      "en": {
+        "name": "Herpes B virus infection"
+      }
+    }
+  },
+  {
+    "id": "disease.leptospirosis",
+    "slug": "leptospirosis",
+    "name": "鉤端螺旋體病",
+    "nameEn": "Leptospirosis",
+    "aliases": [
+      "Leptospirosis",
+      "威爾氏病"
+    ],
+    "legalCategory": 4,
+    "icd10": [
+      "A27"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "zoonotic",
+      "waterborne"
+    ],
+    "hasPage": false,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄍ",
+    "strokes": 13,
+    "i18n": {
+      "en": {
+        "name": "Leptospirosis"
+      }
+    }
+  },
+  {
+    "id": "disease.melioidosis",
+    "slug": "melioidosis",
+    "name": "類鼻疽",
+    "nameEn": "Melioidosis",
+    "aliases": [
+      "Melioidosis",
+      "類鼻疽伯克氏菌"
+    ],
+    "legalCategory": 4,
+    "icd10": [
+      "A24.1",
+      "A24.2",
+      "A24.3",
+      "A24.4"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "other"
+    ],
+    "hasPage": false,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄌ",
+    "strokes": 19,
+    "i18n": {
+      "en": {
+        "name": "Melioidosis"
+      }
+    }
+  },
+  {
+    "id": "disease.botulism",
+    "slug": "botulism",
+    "name": "肉毒桿菌中毒",
+    "nameEn": "Botulism",
+    "aliases": [
+      "Botulism",
+      "肉毒中毒"
+    ],
+    "legalCategory": 4,
+    "icd10": [
+      "A05.1"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "foodborne"
+    ],
+    "hasPage": false,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄖ",
+    "strokes": 6,
+    "i18n": {
+      "en": {
+        "name": "Botulism"
+      }
+    }
+  },
+  {
+    "id": "disease.ipd",
+    "slug": "ipd",
+    "name": "侵襲性肺炎鏈球菌感染症",
+    "nameEn": "Invasive pneumococcal disease",
+    "aliases": [
+      "IPD",
+      "肺炎鏈球菌",
+      "肺炎球菌"
+    ],
+    "legalCategory": 4,
+    "icd10": [
+      "A40.3",
+      "G00.1",
+      "J13"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "droplet"
+    ],
+    "hasPage": false,
+    "owner": "unit.vaccine",
+    "zhuyin": "ㄑ",
+    "strokes": 9,
+    "i18n": {
+      "en": {
+        "name": "Invasive pneumococcal disease"
+      }
+    }
+  },
+  {
+    "id": "disease.q-fever",
+    "slug": "q-fever",
+    "name": "Q熱",
+    "nameEn": "Q fever",
+    "aliases": [
+      "Q fever",
+      "貝氏考克斯菌"
+    ],
+    "legalCategory": 4,
+    "icd10": [
+      "A78"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "zoonotic",
+      "airborne"
+    ],
+    "hasPage": false,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "Q",
+    "strokes": 0,
+    "i18n": {
+      "en": {
+        "name": "Q fever"
+      }
+    }
+  },
+  {
+    "id": "disease.endemic-typhus",
+    "slug": "endemic-typhus",
+    "name": "地方性斑疹傷寒",
+    "nameEn": "Endemic (murine) typhus",
+    "aliases": [
+      "鼠型斑疹傷寒",
+      "Murine typhus"
+    ],
+    "legalCategory": 4,
+    "icd10": [
+      "A75.2"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "vector",
+      "zoonotic"
+    ],
+    "hasPage": false,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄉ",
+    "strokes": 6,
+    "i18n": {
+      "en": {
+        "name": "Endemic (murine) typhus"
+      }
+    }
+  },
+  {
+    "id": "disease.lyme-disease",
+    "slug": "lyme-disease",
+    "name": "萊姆病",
+    "nameEn": "Lyme disease",
+    "aliases": [
+      "Lyme",
+      "萊姆"
+    ],
+    "legalCategory": 4,
+    "icd10": [
+      "A69.2"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "vector"
+    ],
+    "hasPage": false,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄌ",
+    "strokes": 12,
+    "i18n": {
+      "en": {
+        "name": "Lyme disease"
+      }
+    }
+  },
+  {
+    "id": "disease.tularemia",
+    "slug": "tularemia",
+    "name": "兔熱病",
+    "nameEn": "Tularaemia",
+    "aliases": [
+      "Tularemia",
+      "野兔熱"
+    ],
+    "legalCategory": 4,
+    "icd10": [
+      "A21"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "zoonotic",
+      "vector"
+    ],
+    "hasPage": false,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄊ",
+    "strokes": 8,
+    "i18n": {
+      "en": {
+        "name": "Tularaemia"
+      }
+    }
+  },
+  {
+    "id": "disease.scrub-typhus",
+    "slug": "scrub-typhus",
+    "name": "恙蟲病",
+    "nameEn": "Scrub typhus",
+    "aliases": [
+      "Scrub typhus",
+      "叢林斑疹傷寒"
+    ],
+    "legalCategory": 4,
+    "icd10": [
+      "A75.3"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "vector"
+    ],
+    "hasPage": false,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄧ",
+    "strokes": 10,
+    "i18n": {
+      "en": {
+        "name": "Scrub typhus"
+      }
+    }
+  },
+  {
+    "id": "disease.varicella",
+    "slug": "varicella",
+    "name": "水痘併發症",
+    "nameEn": "Varicella with complications",
+    "aliases": [
+      "水痘",
+      "出水痘",
+      "Chickenpox",
+      "Varicella"
+    ],
+    "legalCategory": 4,
+    "icd10": [
+      "B01"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "airborne",
+      "droplet",
+      "contact"
+    ],
+    "hasPage": true,
+    "owner": "unit.vaccine",
+    "zhuyin": "ㄕ",
+    "strokes": 4,
+    "note": "法定通報項目為「水痘併發症」；單純水痘不須通報",
+    "i18n": {
+      "en": {
+        "name": "Varicella with complications"
+      }
+    }
+  },
+  {
+    "id": "disease.toxoplasmosis",
+    "slug": "toxoplasmosis",
+    "name": "弓形蟲感染症",
+    "nameEn": "Toxoplasmosis",
+    "aliases": [
+      "弓漿蟲",
+      "Toxoplasma"
+    ],
+    "legalCategory": 4,
+    "icd10": [
+      "B58"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "foodborne",
+      "zoonotic",
+      "vertical"
+    ],
+    "hasPage": false,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄍ",
+    "strokes": 3,
+    "i18n": {
+      "en": {
+        "name": "Toxoplasmosis"
+      }
+    }
+  },
+  {
+    "id": "disease.influenza",
+    "slug": "influenza",
+    "name": "流感",
+    "nameEn": "Influenza",
+    "aliases": [
+      "流感併發重症",
+      "季節性流感",
+      "類流感",
+      "流行性感冒",
+      "Flu",
+      "Influenza"
+    ],
+    "legalCategory": 4,
+    "icd10": [
+      "J09",
+      "J10",
+      "J11"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "droplet",
+      "contact"
+    ],
+    "hasPage": true,
+    "owner": "unit.acute-infectious",
+    "datasets": [
+      "dataset.ili-weekly",
+      "dataset.flu-severe"
+    ],
+    "zhuyin": "ㄌ",
+    "strokes": 10,
+    "legalName": "流感併發重症",
+    "note": "法定通報項目為「流感併發重症」（第四類）；疾病頁以「流感」為題",
+    "i18n": {
+      "en": {
+        "name": "Influenza"
+      }
+    },
+    "auditRules": [
+      {
+        "scope": [
+          "disease.influenza"
+        ],
+        "since": "2026-09-21",
+        "pattern": "(須|需|需要)快篩陽性(才能|才可|始得)",
+        "message": "公費流感抗病毒藥劑使用對象 2026-09 版第 3 條：類流感高峰期 65 歲以上有類流感症狀者得直接開立，不需快篩陽性"
+      }
+    ]
+  },
+  {
+    "id": "disease.brucellosis",
+    "slug": "brucellosis",
+    "name": "布氏桿菌病",
+    "nameEn": "Brucellosis",
+    "aliases": [
+      "Brucellosis",
+      "馬爾他熱"
+    ],
+    "legalCategory": 4,
+    "icd10": [
+      "A23"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "zoonotic",
+      "foodborne"
+    ],
+    "hasPage": false,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄅ",
+    "strokes": 5,
+    "i18n": {
+      "en": {
+        "name": "Brucellosis"
+      }
+    }
+  },
+  {
+    "id": "disease.cjd",
+    "slug": "cjd",
+    "name": "庫賈氏病",
+    "nameEn": "Creutzfeldt-Jakob disease",
+    "aliases": [
+      "CJD",
+      "狂牛症人類型",
+      "vCJD"
+    ],
+    "legalCategory": 4,
+    "icd10": [
+      "A81.0"
+    ],
+    "notifyWithinHours": 720,
+    "transmission": [
+      "other"
+    ],
+    "hasPage": false,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄎ",
+    "strokes": 10,
+    "note": "通報時限為一個月內（原型以 720 小時表示）",
+    "i18n": {
+      "en": {
+        "name": "Creutzfeldt-Jakob disease"
+      }
+    }
+  },
+  {
+    "id": "disease.covid-19",
+    "slug": "covid-19",
+    "name": "新冠併發重症",
+    "nameEn": "COVID-19 with severe complications",
+    "aliases": [
+      "新冠肺炎",
+      "COVID-19",
+      "新冠",
+      "嚴重特殊傳染性肺炎"
+    ],
+    "legalCategory": 4,
+    "icd10": [
+      "U07.1"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "droplet",
+      "airborne",
+      "contact"
+    ],
+    "hasPage": true,
+    "owner": "unit.acute-infectious",
+    "datasets": [
+      "dataset.covid-severe-weekly"
+    ],
+    "zhuyin": "ㄒ",
+    "strokes": 13,
+    "legalName": "新冠併發重症",
+    "note": "2023-03-20 起由第五類「嚴重特殊傳染性肺炎」改列第四類「新冠併發重症」；通報時限原型待權責單位確認",
+    "i18n": {
+      "en": {
+        "name": "COVID-19 with severe complications"
+      }
+    }
+  },
+  {
+    "id": "disease.listeriosis",
+    "slug": "listeriosis",
+    "name": "李斯特菌症",
+    "nameEn": "Listeriosis",
+    "aliases": [
+      "Listeria",
+      "李斯特菌"
+    ],
+    "legalCategory": 4,
+    "icd10": [
+      "A32"
+    ],
+    "notifyWithinHours": 168,
+    "transmission": [
+      "foodborne",
+      "vertical"
+    ],
+    "hasPage": false,
+    "owner": "unit.acute-infectious",
+    "zhuyin": "ㄌ",
+    "strokes": 7,
+    "note": "2018 年起列為第四類；通報時限原型待確認",
+    "i18n": {
+      "en": {
+        "name": "Listeriosis"
+      }
+    }
+  },
+  {
+    "id": "disease.rift-valley-fever",
+    "slug": "rift-valley-fever",
+    "name": "裂谷熱",
+    "nameEn": "Rift Valley fever",
+    "aliases": [
+      "Rift Valley fever"
+    ],
+    "legalCategory": 5,
+    "icd10": [
+      "A92.4"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "vector",
+      "zoonotic"
+    ],
+    "hasPage": false,
+    "owner": "unit.preparedness",
+    "zhuyin": "ㄌ",
+    "strokes": 12,
+    "i18n": {
+      "en": {
+        "name": "Rift Valley fever"
+      }
+    }
+  },
+  {
+    "id": "disease.marburg",
+    "slug": "marburg",
+    "name": "馬堡病毒出血熱",
+    "nameEn": "Marburg virus disease",
+    "aliases": [
+      "馬堡病毒",
+      "Marburg"
+    ],
+    "legalCategory": 5,
+    "icd10": [
+      "A98.3"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "contact",
+      "bloodborne",
+      "zoonotic"
+    ],
+    "hasPage": false,
+    "owner": "unit.preparedness",
+    "zhuyin": "ㄇ",
+    "strokes": 10,
+    "i18n": {
+      "en": {
+        "name": "Marburg virus disease"
+      }
+    }
+  },
+  {
+    "id": "disease.yellow-fever",
+    "slug": "yellow-fever",
+    "name": "黃熱病",
+    "nameEn": "Yellow fever",
+    "aliases": [
+      "Yellow fever",
+      "黃熱"
+    ],
+    "legalCategory": 5,
+    "icd10": [
+      "A95"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "vector"
+    ],
+    "hasPage": false,
+    "owner": "unit.preparedness",
+    "zhuyin": "ㄏ",
+    "strokes": 12,
+    "i18n": {
+      "en": {
+        "name": "Yellow fever"
+      }
+    }
+  },
+  {
+    "id": "disease.ebola",
+    "slug": "ebola",
+    "name": "伊波拉病毒感染",
+    "nameEn": "Ebola virus disease",
+    "aliases": [
+      "伊波拉",
+      "Ebola",
+      "EVD"
+    ],
+    "legalCategory": 5,
+    "icd10": [
+      "A98.4"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "contact",
+      "bloodborne"
+    ],
+    "hasPage": false,
+    "owner": "unit.preparedness",
+    "zhuyin": "ㄧ",
+    "strokes": 6,
+    "i18n": {
+      "en": {
+        "name": "Ebola virus disease"
+      }
+    }
+  },
+  {
+    "id": "disease.lassa-fever",
+    "slug": "lassa-fever",
+    "name": "拉薩熱",
+    "nameEn": "Lassa fever",
+    "aliases": [
+      "Lassa"
+    ],
+    "legalCategory": 5,
+    "icd10": [
+      "A96.2"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "zoonotic",
+      "contact"
+    ],
+    "hasPage": false,
+    "owner": "unit.preparedness",
+    "zhuyin": "ㄌ",
+    "strokes": 8,
+    "i18n": {
+      "en": {
+        "name": "Lassa fever"
+      }
+    }
+  },
+  {
+    "id": "disease.mers",
+    "slug": "mers",
+    "name": "中東呼吸症候群冠狀病毒感染症",
+    "nameEn": "Middle East respiratory syndrome (MERS)",
+    "aliases": [
+      "MERS",
+      "MERS-CoV",
+      "中東呼吸症候群"
+    ],
+    "legalCategory": 5,
+    "icd10": [
+      "B34.2"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "droplet",
+      "contact",
+      "zoonotic"
+    ],
+    "hasPage": false,
+    "owner": "unit.preparedness",
+    "zhuyin": "ㄓ",
+    "strokes": 4,
+    "i18n": {
+      "en": {
+        "name": "Middle East respiratory syndrome (MERS)"
+      }
+    }
+  },
+  {
+    "id": "disease.novel-influenza-a",
+    "slug": "novel-influenza-a",
+    "name": "新型A型流感",
+    "nameEn": "Novel influenza A virus infection",
+    "aliases": [
+      "禽流感",
+      "H5N1",
+      "H7N9",
+      "H5N6",
+      "Avian influenza"
+    ],
+    "legalCategory": 5,
+    "icd10": [
+      "J09"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "droplet",
+      "contact",
+      "zoonotic"
+    ],
+    "hasPage": false,
+    "owner": "unit.preparedness",
+    "zhuyin": "ㄒ",
+    "strokes": 13,
+    "i18n": {
+      "en": {
+        "name": "Novel influenza A virus infection"
+      }
+    }
+  },
+  {
+    "id": "disease.nipah",
+    "slug": "nipah",
+    "name": "立百病毒感染症",
+    "nameEn": "Nipah virus infection",
+    "aliases": [
+      "Nipah",
+      "立百病毒"
+    ],
+    "legalCategory": 5,
+    "icd10": [
+      "B33.8"
+    ],
+    "notifyWithinHours": 24,
+    "transmission": [
+      "zoonotic",
+      "contact",
+      "foodborne"
+    ],
+    "hasPage": false,
+    "owner": "unit.preparedness",
+    "zhuyin": "ㄌ",
+    "strokes": 5,
+    "note": "2023 年預告列為第五類；原型以公告後版本處理，請權責單位確認",
+    "i18n": {
+      "en": {
+        "name": "Nipah virus infection"
+      }
+    }
+  }
 ]

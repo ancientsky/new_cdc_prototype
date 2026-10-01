@@ -1,0 +1,65 @@
+{
+  "id": "news.2026-07-21-dengue-first-local",
+  "type": "news",
+  "newsType": "press",
+  "title": "今年首例登革熱本土病例出現於高雄市，請民眾清除積水容器",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-07-21",
+  "reviewedAt": "2026-07-21",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "situation"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "pending"
+    },
+    "tl": {
+      "status": "pending"
+    },
+    "vi": {
+      "status": "pending"
+    },
+    "id": {
+      "status": "pending"
+    },
+    "th": {
+      "status": "pending"
+    }
+  },
+  "summary": "今年首例登革熱本土病例出現於高雄市，衛生單位已完成疫調與周邊孳生源清除。疾管署呼籲民眾每週落實「巡倒清刷」。",
+  "keywords": [
+    "登革熱",
+    "本土病例",
+    "高雄",
+    "巡倒清刷"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+  ],
+  "situationDeclaration": {
+    "disease": "disease.dengue",
+    "text": "出現今年首例本土病例（高雄市）"
+  },
+  "bodyMarkdown": "疾病管制署今（21）日公布今年首例登革熱本土病例（示意），個案居住於高雄市，發病前兩週無出國史。衛生局已完成疫情調查，並於個案住家及活動地點周邊進行孳生源清除與針對性室內噴藥。\n\n疾管署提醒，夏季高溫多雨，民眾應每週落實「巡、倒、清、刷」，清除住家內外積水容器；出現發燒、頭痛、後眼窩痛、肌肉關節痛等症狀，請儘速就醫。"
+}

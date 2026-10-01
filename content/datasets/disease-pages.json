@@ -1,0 +1,69 @@
+{
+  "id": "dataset.disease-pages",
+  "type": "dataset",
+  "category": "content-page",
+  "title": "疾病介紹頁（八區塊結構化內容）",
+  "owner": "unit.pr",
+  "publishedAt": "2018-03-01",
+  "reviewedAt": "2026-09-01",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "data",
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "none"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "法定傳染病疾病介紹頁；本站以八區塊結構化並提供 v1/diseases API 與機讀版。",
+  "keywords": [
+    "疾病介紹",
+    "結構化內容",
+    "API",
+    "機讀版"
+  ],
+  "provenance": {
+    "fetchedAt": "2026-10-01",
+    "mode": "snapshot",
+    "sourceUrl": "https://www.cdc.gov.tw/"
+  },
+  "updateFrequency": "irregular",
+  "lastUpdated": "2026-09-28",
+  "formats": [
+    "HTML",
+    "MD",
+    "JSON"
+  ],
+  "canonicalUrl": "https://www.cdc.gov.tw/Disease/Index"
+}

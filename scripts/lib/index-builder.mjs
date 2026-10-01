@@ -194,8 +194,9 @@ export function buildSearchIndex(site) {
           groups.forEach((g, i) => {
             if (g.endAt && today && g.endAt < today) return; // 已結束的公費期間不入索引
             const when = g.startAt || g.endAt ? `（${g.startAt ?? ''}${g.endAt ? ` 至 ${g.endAt}` : ' 起'}）` : '';
-            const sent = lang === 'zh-TW' ? `${item.title}公費對象：${g.group}，${g.schedule}${g.note ? `（${g.note}）` : ''}${when}。` : `${src.title ?? item.title} — publicly funded for ${g.group}: ${g.schedule}${g.note ? ` (${g.note})` : ''}.`;
-            add(make(item, `pf-${i + 1}`, `${src.title ?? item.title} · ${lang === 'zh-TW' ? '公費對象' : 'Publicly funded'}`, [sent], `${base}#public-funded`, { ...L, group: g.group }));
+            // 句型只做欄位串接，不加「公費」字樣（自費族群也可能列在 publicFunded，由 note 說明）
+            const sent = lang === 'zh-TW' ? `${item.title}接種對象：${g.group}，${g.schedule}${g.note ? `（${g.note}）` : ''}${when}。` : `${src.title ?? item.title} — ${g.group}: ${g.schedule}${g.note ? ` (${g.note})` : ''}.`;
+            add(make(item, `pf-${i + 1}`, `${src.title ?? item.title} · ${lang === 'zh-TW' ? '接種對象與時程' : 'Who and when'}`, [sent], `${base}#public-funded`, { ...L, group: g.group }));
           });
           if (lang === 'zh-TW' && item.precautions) add(make(item, 'precautions', `${item.title} · 注意事項`, mdSentences(item.precautions), `${base}#precautions`, { ...L }));
           break;

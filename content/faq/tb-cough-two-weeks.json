@@ -1,0 +1,73 @@
+{
+  "id": "faq.tb-cough-two-weeks",
+  "type": "faq",
+  "title": "咳嗽多久要懷疑是結核病？",
+  "question": "咳嗽多久要懷疑是結核病？",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2020-03-24",
+  "reviewedAt": "2026-04-01",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.tuberculosis"
+  ],
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-04-01",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "咳嗽超過 2 週，尤其合併有痰、體重減輕、夜間盜汗，應至胸腔科照胸部 X 光與驗痰；規則治療幾乎都能治癒。",
+  "keywords": [
+    "結核病",
+    "咳嗽兩週",
+    "胸部 X 光",
+    "驗痰"
+  ],
+  "answerMarkdown": "**咳嗽超過 2 週**，特別是合併有痰、胸痛、體重減輕、食慾不振、午後發燒或夜間盜汗，就應到醫院胸腔科就醫，接受胸部 X 光與驗痰檢查。\n\n結核病只要規則服藥至少 6 個月，幾乎都能治癒，早期發現也能避免傳染給家人。",
+  "structured": {
+    "coughWeeks": 2,
+    "treatmentMonthsMin": 6
+  },
+  "i18n": {
+    "en": {
+      "question": "How long should a cough last before I suspect tuberculosis?",
+      "answerMarkdown": "If you have **coughed for more than 2 weeks**, especially with sputum, chest pain, weight loss, poor appetite, afternoon fever or night sweats, see a chest physician for a chest X-ray and sputum test.\n\nAlmost everyone with TB is cured by taking medicine regularly for at least 6 months, and early detection protects your family."
+    }
+  }
+}

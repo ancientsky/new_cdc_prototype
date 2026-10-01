@@ -1,0 +1,65 @@
+{
+  "id": "faq.hiv-pep",
+  "type": "faq",
+  "title": "發生沒有保護的性行為後，72 小時內可以做什麼？",
+  "question": "發生沒有保護的性行為後，72 小時內可以做什麼？",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2019-12-01",
+  "reviewedAt": "2026-06-10",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.hiv"
+  ],
+  "diseases": [
+    "disease.hiv"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "擔心感染 HIV 時，72 小時內越早越好到 PEP 指定醫院評估暴露後預防性投藥，需連續服藥 28 天。",
+  "keywords": [
+    "HIV",
+    "PEP",
+    "72 小時",
+    "暴露後預防"
+  ],
+  "answerMarkdown": "若擔心感染 HIV，請在**72 小時內、越早越好**到 PEP 指定醫院，由醫師評估是否使用**暴露後預防性投藥（PEP）**。PEP 需連續服藥 28 天，並依醫囑回診追蹤檢驗。\n\n若經常有感染風險，可進一步諮詢**暴露前預防性投藥（PrEP）**。",
+  "structured": {
+    "withinHours": 72,
+    "courseDays": 28
+  }
+}

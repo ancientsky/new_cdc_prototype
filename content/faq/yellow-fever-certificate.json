@@ -1,0 +1,72 @@
+{
+  "id": "faq.yellow-fever-certificate",
+  "type": "faq",
+  "title": "去哪些國家需要黃熱病疫苗證明？",
+  "question": "去哪些國家需要黃熱病疫苗證明？",
+  "owner": "unit.quarantine",
+  "publishedAt": "2018-06-01",
+  "reviewedAt": "2026-06-15",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "travel",
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "dataset.country-epid-level"
+  ],
+  "diseases": [
+    "disease.yellow-fever"
+  ],
+  "countries": [
+    "BR",
+    "NG",
+    "KE"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "部分非洲與中南美洲國家要求黃熱病疫苗證明（黃皮書）；需出發前至少 10 天接種，證明終身有效。",
+  "keywords": [
+    "黃熱病",
+    "黃皮書",
+    "國際預防接種證明",
+    "非洲",
+    "南美"
+  ],
+  "answerMarkdown": "部分非洲與中南美洲國家要求入境旅客出示**國際預防接種證明書（黃皮書）**，或來自黃熱病流行地區者才需出示；規定由各國訂定並可能變動，出發前請查詢目的地國家最新規定。\n\n黃熱病疫苗需在**出發前至少 10 天**接種，證明自接種後第 10 天起生效且終身有效。可至疾管署合約旅遊醫學門診自費接種並開立證明。",
+  "structured": {
+    "daysBeforeTravelMin": 10,
+    "validity": "終身"
+  }
+}

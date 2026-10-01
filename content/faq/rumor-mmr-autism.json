@@ -1,0 +1,76 @@
+{
+  "id": "faq.rumor-mmr-autism",
+  "type": "faq",
+  "title": "MMR 疫苗會造成自閉症嗎？",
+  "question": "MMR 疫苗會造成自閉症嗎？",
+  "owner": "unit.vaccine",
+  "publishedAt": "2019-04-01",
+  "reviewedAt": "2026-05-14",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "rumor",
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "vaccine.mmr"
+  ],
+  "diseases": [
+    "disease.measles"
+  ],
+  "vaccines": [
+    "vaccine.mmr"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-05-14",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "MMR 疫苗不會造成自閉症；該說法源自已撤稿的 1998 年論文，多國大型研究均證實兩者無關聯。",
+  "keywords": [
+    "MMR",
+    "自閉症",
+    "謠言",
+    "疫苗安全"
+  ],
+  "answerMarkdown": "**不會。**「MMR 疫苗導致自閉症」源自 1998 年一篇已被撤稿的論文，作者也遭吊銷醫師執照。之後多國針對數百萬名兒童的大型研究都證實，接種 MMR 與自閉症沒有關聯。\n\n不接種疫苗反而讓孩子暴露在麻疹的風險中，麻疹可能造成肺炎、腦炎甚至死亡。",
+  "structured": {
+    "verdict": "false"
+  },
+  "i18n": {
+    "en": {
+      "question": "Does the MMR vaccine cause autism?",
+      "answerMarkdown": "**No.** The claim comes from a 1998 paper that was later retracted, and its author lost his medical licence. Large studies in many countries covering millions of children have since confirmed there is no link between MMR and autism.\n\nSkipping the vaccine leaves children exposed to measles, which can cause pneumonia, encephalitis and even death."
+    }
+  }
+}

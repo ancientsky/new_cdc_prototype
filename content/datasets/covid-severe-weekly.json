@@ -1,0 +1,150 @@
+{
+  "id": "dataset.covid-severe-weekly",
+  "type": "dataset",
+  "category": "open-dataset",
+  "title": "新冠併發重症病例週統計",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2023-03-20",
+  "reviewedAt": "2026-09-01",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "data",
+    "situation"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.covid-19"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-01",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "2023 年 3 月 20 日改列第四類後之新冠併發重症本土病例週統計，含年齡層與死亡數。",
+  "keywords": [
+    "新冠併發重症",
+    "週統計",
+    "病例",
+    "新冠"
+  ],
+  "portalUrl": "https://data.cdc.gov.tw/dataset/covid19-severe-complications-weekly",
+  "canonicalUrl": "https://data.cdc.gov.tw/dataset/covid19-severe-complications-weekly",
+  "schemaUrl": "https://data.cdc.gov.tw/dataset/covid19-severe-complications-weekly",
+  "resources": [
+    {
+      "name": "新冠併發重症病例週統計（CSV）",
+      "format": "CSV",
+      "url": "https://data.cdc.gov.tw/dataset/covid19-severe-complications-weekly"
+    },
+    {
+      "name": "新冠併發重症病例週統計（JSON）",
+      "format": "JSON",
+      "url": "https://data.cdc.gov.tw/dataset/covid19-severe-complications-weekly"
+    }
+  ],
+  "provenance": {
+    "fetchedAt": "2026-10-01",
+    "mode": "snapshot",
+    "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_show?id=covid19-severe-complications-weekly"
+  },
+  "ckanName": "covid19-severe-complications-weekly",
+  "updateFrequency": "weekly",
+  "lastUpdated": "2026-09-29",
+  "formats": [
+    "CSV",
+    "JSON"
+  ],
+  "series": {
+    "label": "新冠併發重症通報數（週）",
+    "unit": "例",
+    "granularity": "week",
+    "points": [
+      {
+        "t": "2026-W27",
+        "v": 98
+      },
+      {
+        "t": "2026-W28",
+        "v": 112
+      },
+      {
+        "t": "2026-W29",
+        "v": 105
+      },
+      {
+        "t": "2026-W30",
+        "v": 90
+      },
+      {
+        "t": "2026-W31",
+        "v": 78
+      },
+      {
+        "t": "2026-W32",
+        "v": 66
+      },
+      {
+        "t": "2026-W33",
+        "v": 60
+      },
+      {
+        "t": "2026-W34",
+        "v": 58
+      },
+      {
+        "t": "2026-W35",
+        "v": 55
+      },
+      {
+        "t": "2026-W36",
+        "v": 50
+      },
+      {
+        "t": "2026-W37",
+        "v": 47
+      },
+      {
+        "t": "2026-W38",
+        "v": 45
+      }
+    ],
+    "note": "示意：數值為原型示意，與疫情態勢層一致。"
+  },
+  "i18n": {
+    "en": {
+      "title": "Weekly COVID-19 with severe complications",
+      "summary": "Weekly locally acquired severe COVID-19 cases since the March 2023 reclassification, by age group, with deaths."
+    }
+  }
+}

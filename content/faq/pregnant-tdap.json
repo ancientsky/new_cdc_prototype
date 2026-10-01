@@ -1,0 +1,67 @@
+{
+  "id": "faq.pregnant-tdap",
+  "type": "faq",
+  "title": "孕婦需要打百日咳疫苗嗎？",
+  "question": "孕婦需要打百日咳疫苗嗎？",
+  "owner": "unit.vaccine",
+  "publishedAt": "2019-06-01",
+  "reviewedAt": "2026-04-15",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.pertussis"
+  ],
+  "diseases": [
+    "disease.pertussis"
+  ],
+  "vaccines": [
+    "vaccine.dtap-hib-ipv"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "孕婦每次懷孕於第 28–36 週接種 1 劑 Tdap，抗體經胎盤保護新生兒；多為自費，部分縣市有補助。",
+  "keywords": [
+    "百日咳",
+    "孕婦",
+    "Tdap",
+    "新生兒"
+  ],
+  "answerMarkdown": "建議孕婦**每次懷孕於第 28 至 36 週**接種 1 劑 Tdap（減量破傷風、白喉、非細胞性百日咳混合疫苗）。媽媽產生的抗體可經胎盤傳給寶寶，保護出生後還來不及接種疫苗的小嬰兒。\n\nTdap 目前多為自費，部分縣市提供補助，可向產檢院所或衛生所洽詢。",
+  "structured": {
+    "gestationWeeks": "28–36"
+  }
+}

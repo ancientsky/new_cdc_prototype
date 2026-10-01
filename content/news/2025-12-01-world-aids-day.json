@@ -1,0 +1,70 @@
+{
+  "id": "news.2025-12-01-world-aids-day",
+  "type": "news",
+  "newsType": "press",
+  "title": "世界愛滋日：定期篩檢、PrEP 與 U=U，一起終結愛滋",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2025-12-01",
+  "reviewedAt": "2025-12-01",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.hiv"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2025-12-01",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "世界愛滋日，疾管署呼籲有感染風險者定期篩檢，善用 PrEP 與保險套；感染者規則服藥使病毒量測不到，就不會經性行為傳染（U=U）。",
+  "keywords": [
+    "世界愛滋日",
+    "HIV",
+    "篩檢",
+    "PrEP",
+    "U=U"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+  ],
+  "bodyMarkdown": "12 月 1 日是世界愛滋日。疾病管制署表示，國內 HIV 新通報人數自 2017 年起逐年下降，持續朝聯合國 95-95-95 目標邁進。\n\n疾管署呼籲，有感染風險者應定期篩檢，可使用匿名篩檢醫院、社區篩檢點或 HIV 自我篩檢試劑；並可諮詢暴露前預防性投藥（PrEP）。感染者確診後儘速服藥，病毒量持續測不到就不會經由性行為傳染給他人（U=U），也請社會大眾以友善態度支持感染者就醫。",
+  "i18n": {
+    "en": {
+      "title": "World AIDS Day: regular testing, PrEP and U=U to end AIDS",
+      "summary": "Taiwan CDC urges people at risk to test regularly and use PrEP and condoms; people living with HIV who keep their viral load undetectable do not transmit HIV sexually (U=U)."
+    }
+  }
+}

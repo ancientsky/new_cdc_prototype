@@ -1,0 +1,61 @@
+{
+  "id": "page.ai-policy",
+  "type": "page",
+  "slug": "ai-policy",
+  "title": "AI 使用聲明與爬蟲政策",
+  "owner": "unit.oasis",
+  "publishedAt": "2026-09-22",
+  "reviewedAt": "2026-09-22",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-25",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "本站 AI 問答的七條共同規則、模型供應商揭露、對話紀錄保存、15 分鐘暫停機制、季度透明報告，以及對外部 AI 與爬蟲的引用政策。",
+  "keywords": [
+    "AI 聲明",
+    "爬蟲政策",
+    "透明報告",
+    "白名單",
+    "llms.txt"
+  ],
+  "bodyMarkdown": "## 一、我們怎麼使用 AI\n\n本站的「問答」功能協助您更快找到疾管署已發布的官方內容。它**只轉述、不創作**：預設為抽取式整理，每一句回答都直接摘自經權責單位審閱的官方內容，並附上來源編號。\n\n## 二、七條共同規則\n\n1. **只用白名單內容**：AI 只能引用已發布、在審閱期限內、未被新版取代、且經資料治理委員會核准進入白名單的內容。逾期或失效的內容會自動退出。\n2. **每句附來源**：每一句回答都標示來源編號，點開可看到權責單位、最後審閱日與正本連結。對不上來源的句子會被刪除。\n3. **不做個人判斷**：涉及個人症狀判斷、用藥與劑量、法律責任、尚未公布的疫情資訊或媒體詢問，系統會拒答並引導您撥打 1922 防疫專線或就醫。\n4. **疫情狀態由人發布**：「現在流行嗎」這類問題，只讀取疫情中心人工發布的疫情態勢層，數字與狀態不由模型推論或預測。\n5. **版本以現行為準**：手冊、指引與接種建議有新版時，舊版自動標示失效並排除在回答之外；依據舊版的新聞稿會自動加註。\n6. **揭露與可回報**：每次回答都有稽核編號；啟用生成式模式時會標示模型供應商與模型名稱。發現錯誤可一鍵回報，回報會送到對應權責單位。\n7. **保護個資**：輸入內容會先遮蔽身分證字號、電話、電子郵件與地址，再進行處理；請勿輸入個人病歷或身分資料。\n\n## 三、模型供應商揭露\n\n- 預設模式：抽取式整理，不使用生成式模型。\n- 進階模式（測試中）：由使用者自行提供金鑰啟用，供應商為 Anthropic，模型名稱顯示於回答頁右上角；系統提示僅允許依檢索片段作答。\n\n## 四、對話紀錄\n\n問答紀錄經去識別化（移除可識別個人的資訊）後保存 **12 個月**，僅用於品質改善、錯答分析與季度透明報告，不用於模型訓練，期滿刪除。\n\n## 五、暫停機制\n\n當發現系統性錯答、資料來源異常或重大疫情需要統一口徑時，OASIS 得於 **15 分鐘內**暫停 AI 問答，全站顯示暫停橫幅並改為傳統搜尋結果；恢復時亦公告原因。\n\n## 六、季度透明報告\n\n每季公布：問答次數、拒答比例、回報件數與處理結果、評估集六項指標（含版本題正確率）、暫停紀錄與白名單異動。報告見「透明報告」頁。\n\n## 七、外部 AI 與爬蟲政策（附錄 H）\n\n- **歡迎引用**：疾病介紹、Q&A、新聞稿、澄清訊息、疫苗頁與開放資料，依政府資料開放授權條款第 1 版使用。\n- **引用時請附**：來源網址、權責單位與「最後審閱日」；手冊與指引請引用現行版並註明版次。\n- **請勿引用**：已標示「已失效」的版本、標示逾期的內容作為現行建議。\n- **機讀入口**：`/llms.txt` 列出建議讀取的內容與 API；每頁提供同名 `.md` 機讀版；`/v1/` 提供 JSON API 與 OpenAPI 文件。\n- **爬取禮儀**：請遵守 `robots.txt`，每秒請求不超過 2 次，並於 User-Agent 註明聯絡方式。後台、草稿與個人化頁面不開放爬取。\n\n本聲明由 OASIS 維護，每年至少審閱一次。",
+  "i18n": {
+    "en": {
+      "title": "AI use statement and crawler policy",
+      "summary": "Seven common rules for AI answers, provider disclosure, log retention, the 15-minute pause mechanism, quarterly transparency reports and our policy for external AI and crawlers.",
+      "bodyMarkdown": "## How we use AI\nThe Q&A feature only **relays official content; it does not create it**. By default every sentence is extracted from reviewed official content and cited.\n\n## Seven rules\n1. Only whitelisted, current, in-review-period content is used.\n2. Every sentence is cited with owner and last-reviewed date.\n3. No personal diagnosis, dosing, legal or unpublished-data answers; we refer you to the 1922 hotline.\n4. Epidemic status comes only from the human-published situation layer.\n5. Superseded versions are excluded automatically.\n6. Each answer has an audit ID; generative mode discloses provider (Anthropic) and model; errors can be reported.\n7. Personal data in questions is masked before processing.\n\n## Logs, pause and transparency\nDe-identified logs are kept for **12 months** and not used for training. OASIS can pause AI answers within **15 minutes**. A transparency report is published every quarter.\n\n## Crawlers and external AI\nYou are welcome to cite disease pages, FAQs, news, clarifications, vaccine pages and open data under the Open Government Data License v1.0. Please include the source URL, owner and last-reviewed date, and do not cite superseded versions. See /llms.txt, page .md versions and the /v1/ API; respect robots.txt and keep to 2 requests per second."
+    }
+  }
+}

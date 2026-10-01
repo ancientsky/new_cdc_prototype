@@ -1,0 +1,61 @@
+{
+  "id": "faq.rumor-sms-link",
+  "type": "faq",
+  "title": "收到自稱疾管署的簡訊要我點連結填資料，怎麼辦？",
+  "question": "收到自稱疾管署的簡訊要我點連結填資料，怎麼辦？",
+  "owner": "unit.pr",
+  "publishedAt": "2022-05-01",
+  "reviewedAt": "2026-09-16",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "rumor"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "clar.2026-09-anti-epidemic-team-scam"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-16"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "疾管署不會以簡訊要求點連結填個資或匯款；收到可疑訊息請勿點擊，撥 165 查證或 1922 詢問。",
+  "keywords": [
+    "詐騙",
+    "簡訊",
+    "假冒疾管署",
+    "165"
+  ],
+  "answerMarkdown": "疾管署**不會以簡訊或通訊軟體要求民眾點連結填寫個資、信用卡或帳戶資料**，也不會要求匯款或投資。收到這類訊息請不要點連結、不要回覆，可撥打 165 反詐騙專線查證，或撥 1922 防疫專線詢問。\n\n疾管署的官方資訊以官網（cdc.gov.tw）及官方社群帳號公告為準。",
+  "structured": {
+    "reportChannel": "165、1922"
+  }
+}

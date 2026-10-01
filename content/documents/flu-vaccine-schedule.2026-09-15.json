@@ -1,0 +1,112 @@
+{
+  "id": "doc.flu-vaccine-schedule.2026-09-15",
+  "type": "document",
+  "family": "doc.flu-vaccine-schedule",
+  "docType": "recommendation",
+  "title": "2026–2027 年度公費流感疫苗接種計畫：實施對象與時程",
+  "version": "2026-27",
+  "effectiveAt": "2026-09-15",
+  "supersedes": null,
+  "owner": "unit.vaccine",
+  "publishedAt": "2026-09-15",
+  "reviewedAt": "2026-09-15",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "vaccines": [
+    "vaccine.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-15"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-18",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "pending"
+    },
+    "tl": {
+      "status": "pending"
+    },
+    "vi": {
+      "status": "pending"
+    },
+    "id": {
+      "status": "pending"
+    },
+    "th": {
+      "status": "pending"
+    }
+  },
+  "summary": "2026–2027 年度公費流感疫苗：10 月 1 日起第一階段開打（長者、幼兒、孕婦、高風險慢性病、學生等），11 月 1 日起 50–64 歲成人。",
+  "keywords": [
+    "公費流感疫苗",
+    "接種對象",
+    "10 月 1 日",
+    "第二階段",
+    "50–64 歲"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Disease/Index"
+  ],
+  "note": "原型示意：條文依疾管署公開文件架構改寫，非正式公告文字；正式內容以 PDF 正本為準。",
+  "roles": [
+    "physician",
+    "nurse",
+    "local-health"
+  ],
+  "pdfUrl": "https://www.cdc.gov.tw/File/Get/placeholder-flu-vaccine-2026",
+  "sections": [
+    {
+      "key": "phase1",
+      "heading": "一、第一階段（2026 年 10 月 1 日起）",
+      "markdown": "1. 65 歲以上長者；55 歲以上原住民。\n2. 醫事及衛生等單位之防疫相關人員；禽畜養殖等相關行業工作人員、動物園工作人員及動物防疫人員。\n3. 孕婦及 6 個月內嬰兒之父母；幼兒園托育人員及托育機構專業人員。\n4. 安養、養護、長期照顧等機構之受照顧者及其工作人員。\n5. 6 個月以上至國小入學前幼兒。\n6. 具有潛在疾病之 19 至 64 歲高風險對象（含高風險慢性病人、BMI ≥ 30 者、罕見疾病患者、重大傷病患者）。\n7. 國小、國中、高中職、五專一至三年級學生（含境外臺校、自學學生）。"
+    },
+    {
+      "key": "phase2",
+      "heading": "二、第二階段（2026 年 11 月 1 日起）",
+      "markdown": "50 至 64 歲無高風險慢性病成人。"
+    },
+    {
+      "key": "dose",
+      "heading": "三、劑次",
+      "markdown": "8 歲（含）以下兒童，若是第一次接種流感疫苗，應接種 2 劑，間隔 4 週以上；曾接種過者接種 1 劑。9 歲以上接種 1 劑。"
+    },
+    {
+      "key": "vaccine",
+      "heading": "四、疫苗",
+      "markdown": "本年度採購三價流感疫苗，成分依 WHO 北半球建議株。疫苗依年齡選用適用廠牌，接種單位應確認仿單適用年齡。"
+    },
+    {
+      "key": "where",
+      "heading": "五、接種地點",
+      "markdown": "各縣市衛生所及合約醫療院所；校園集中接種由衛生局排定。合約院所名單請至「流感防治一網通」查詢。"
+    }
+  ],
+  "i18n": {
+    "en": {
+      "title": "2026–27 government-funded influenza vaccination: eligible groups and schedule",
+      "summary": "Phase 1 from 1 October 2026 (older adults, young children, pregnant women, high-risk chronic patients, students and others); adults aged 50–64 from 1 November."
+    }
+  },
+  "machineReadableMarkdown": "# 2026–2027 年度公費流感疫苗接種計畫：實施對象與時程\n\n## 一、第一階段（2026 年 10 月 1 日起）\n1. 65 歲以上長者；55 歲以上原住民。\n2. 醫事及衛生等單位之防疫相關人員；禽畜養殖等相關行業工作人員、動物園工作人員及動物防疫人員。\n3. 孕婦及 6 個月內嬰兒之父母；幼兒園托育人員及托育機構專業人員。\n4. 安養、養護、長期照顧等機構之受照顧者及其工作人員。\n5. 6 個月以上至國小入學前幼兒。\n6. 具有潛在疾病之 19 至 64 歲高風險對象（含高風險慢性病人、BMI ≥ 30 者、罕見疾病患者、重大傷病患者）。\n7. 國小、國中、高中職、五專一至三年級學生（含境外臺校、自學學生）。\n\n## 二、第二階段（2026 年 11 月 1 日起）\n50 至 64 歲無高風險慢性病成人。\n\n## 三、劑次\n8 歲（含）以下兒童，若是第一次接種流感疫苗，應接種 2 劑，間隔 4 週以上；曾接種過者接種 1 劑。9 歲以上接種 1 劑。\n\n## 四、疫苗\n本年度採購三價流感疫苗，成分依 WHO 北半球建議株。疫苗依年齡選用適用廠牌，接種單位應確認仿單適用年齡。\n\n## 五、接種地點\n各縣市衛生所及合約醫療院所；校園集中接種由衛生局排定。合約院所名單請至「流感防治一網通」查詢。"
+}

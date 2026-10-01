@@ -1,0 +1,86 @@
+{
+  "id": "dataset.flu-severe",
+  "type": "dataset",
+  "category": "open-dataset",
+  "title": "流感併發重症病例統計",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2016-01-01",
+  "reviewedAt": "2026-09-01",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "data",
+    "situation"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "none"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "流感併發重症確定病例依發病週、年齡層、病毒型別與縣市之統計，含死亡病例數。",
+  "keywords": [
+    "流感併發重症",
+    "病例",
+    "病毒型別",
+    "週統計"
+  ],
+  "portalUrl": "https://data.cdc.gov.tw/dataset/influenza-severe-complications",
+  "canonicalUrl": "https://data.cdc.gov.tw/dataset/influenza-severe-complications",
+  "schemaUrl": "https://data.cdc.gov.tw/dataset/influenza-severe-complications",
+  "resources": [
+    {
+      "name": "流感併發重症病例統計（CSV）",
+      "format": "CSV",
+      "url": "https://data.cdc.gov.tw/dataset/influenza-severe-complications"
+    },
+    {
+      "name": "流感併發重症病例統計（JSON）",
+      "format": "JSON",
+      "url": "https://data.cdc.gov.tw/dataset/influenza-severe-complications"
+    }
+  ],
+  "provenance": {
+    "fetchedAt": "2026-10-01",
+    "mode": "snapshot",
+    "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_show?id=influenza-severe-complications"
+  },
+  "ckanName": "influenza-severe-complications",
+  "updateFrequency": "weekly",
+  "lastUpdated": "2026-09-29",
+  "formats": [
+    "CSV",
+    "JSON"
+  ]
+}

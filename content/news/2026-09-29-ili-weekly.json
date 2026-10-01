@@ -1,0 +1,72 @@
+{
+  "id": "news.2026-09-29-ili-weekly",
+  "type": "news",
+  "newsType": "press",
+  "title": "流感疫情持續上升，10 月 1 日公費疫苗開打，長者幼兒請優先接種",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2026-09-29",
+  "reviewedAt": "2026-09-29",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "situation",
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza",
+    "disease.enterovirus",
+    "disease.dengue"
+  ],
+  "vaccines": [
+    "vaccine.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-29"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "pending"
+    },
+    "tl": {
+      "status": "pending"
+    },
+    "vi": {
+      "status": "pending"
+    },
+    "id": {
+      "status": "pending"
+    },
+    "th": {
+      "status": "pending"
+    }
+  },
+  "summary": "類流感門急診就診率續升，腸病毒與登革熱本土疫情亦仍活躍。疾管署呼籲 10 月 1 日起長者與幼兒優先接種公費流感疫苗。",
+  "keywords": [
+    "疫情週報",
+    "流感",
+    "腸病毒",
+    "登革熱",
+    "公費疫苗"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+  ],
+  "situationDeclaration": {
+    "disease": "disease.influenza",
+    "text": "類流感門急診就診率續升，處流行高峰"
+  },
+  "bodyMarkdown": "疾病管制署今（29）日發布疫情週報：上週類流感門急診就診率持續上升，社區以 A 型 H3N2 為主；腸病毒門急診就診人次開學後上升但仍低於流行閾值；南部登革熱本土病例仍持續出現。\n\n公費流感疫苗將於 10 月 1 日開打，疾管署呼籲長者、幼兒及慢性病人優先接種；65 歲以上有類流感症狀者，於高峰期就醫可由醫師直接開立公費抗病毒藥劑。各項數字以疫情態勢層及傳染病統計資料查詢系統公布為準。"
+}

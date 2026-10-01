@@ -1,0 +1,74 @@
+{
+  "id": "faq.hpv-vaccine-who",
+  "type": "faq",
+  "title": "公費 HPV 疫苗誰可以打？",
+  "question": "公費 HPV 疫苗誰可以打？",
+  "owner": "unit.vaccine",
+  "publishedAt": "2018-12-01",
+  "reviewedAt": "2026-08-20",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "vaccine.hpv"
+  ],
+  "vaccines": [
+    "vaccine.hpv"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-20",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "公費 HPV 疫苗提供國一學生（2025 學年度起含男生），校園接種 2 劑、間隔 6 個月；其他年齡可自費。",
+  "keywords": [
+    "HPV",
+    "子宮頸癌",
+    "國一",
+    "公費疫苗"
+  ],
+  "answerMarkdown": "公費 HPV 疫苗提供給**國中一年級學生**，以校園集中接種為主，2025 學年度起由女生擴及男生。共接種 **2 劑，間隔 6 個月**；未在校內完成者可持接種通知至合約院所補接種。\n\n其他年齡層可自費接種，15 歲以上開始接種者需 3 劑。",
+  "structured": {
+    "grade": "國中一年級",
+    "doses": 2,
+    "intervalMonths": 6
+  },
+  "i18n": {
+    "en": {
+      "question": "Who can get the government-funded HPV vaccine?",
+      "answerMarkdown": "The government-funded HPV vaccine is offered to **first-year junior high school students**, mainly through school vaccination; from the 2025 school year it covers boys as well as girls. **Two doses are given 6 months apart**; students who miss school sessions can catch up at contracted clinics.\n\nOther ages can be vaccinated at their own expense; those starting at age 15 or older need 3 doses."
+    }
+  }
+}

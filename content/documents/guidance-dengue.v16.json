@@ -1,0 +1,114 @@
+{
+  "id": "doc.guidance-dengue.v16",
+  "type": "document",
+  "family": "doc.guidance-dengue",
+  "docType": "guideline",
+  "title": "登革熱／屈公病防治工作指引（第 16 版）",
+  "version": "v16",
+  "effectiveAt": "2025-11-01",
+  "supersedes": "doc.guidance-dengue.v15",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2025-11-01",
+  "reviewedAt": "2025-11-01",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "tasks": [
+    "situation"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue",
+    "disease.chikungunya"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "pending"
+    },
+    "ja": {
+      "status": "pending"
+    },
+    "tl": {
+      "status": "pending"
+    },
+    "vi": {
+      "status": "pending"
+    },
+    "id": {
+      "status": "pending"
+    },
+    "th": {
+      "status": "pending"
+    }
+  },
+  "summary": "第 16 版指引：核心區由固定半徑改為依病例活動範圍風險評估，新增社區動員與孳生源查核頻率。已由第 17 版取代。",
+  "keywords": [
+    "登革熱",
+    "防治工作指引",
+    "緊急防治",
+    "孳生源清除",
+    "NS1"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Disease/Index"
+  ],
+  "note": "原型示意：條文依疾管署公開文件架構改寫，非正式公告文字；正式內容以 PDF 正本為準。",
+  "roles": [
+    "physician",
+    "local-health",
+    "lab"
+  ],
+  "pdfUrl": "https://www.cdc.gov.tw/File/Get/placeholder-guidance-dengue-v16",
+  "sections": [
+    {
+      "key": "scope",
+      "heading": "第一章 總則",
+      "markdown": "本指引適用於各級衛生主管機關辦理登革熱及屈公病之監測、疫情調查與緊急防治，並納入環保、民政、教育等單位之跨局處分工。"
+    },
+    {
+      "key": "surveillance",
+      "heading": "第二章 疫情監測與通報",
+      "markdown": "1. 醫師診治符合登革熱臨床條件或 NS1 抗原快篩陽性之病人，應於 24 小時內通報。\n2. 衛生局接獲通報後，應於 24 小時內完成疫調，掌握病例發病前 2 週及發病後之活動地點。\n3. 境外移入病例應同步通知其入境後停留地點之衛生局。"
+    },
+    {
+      "key": "case",
+      "heading": "第三章 病例處置",
+      "markdown": "1. 病例於發病後 5 日內（病毒血症期）應做好防蚊，住院者安排於有紗窗之病房。\n2. 醫療院所應衛教病人及家屬警示徵象，並安排退燒前後之追蹤。\n3. 重症登革熱病例應依臨床處置指引轉介至具處置能力之醫院。"
+    },
+    {
+      "key": "response",
+      "heading": "第四章 緊急防治",
+      "markdown": "1. 本土病例發生後，依病例住家及活動地點之風險評估劃定核心區（原則為半徑 50 公尺，必要時擴大）。\n2. 核心區孳生源查核每週至少 1 次，連續 2 個潛伏期無新增病例始得解除。\n3. 化學防治應於接獲通報後 3 日內完成，以針對性室內外噴藥為原則。"
+    },
+    {
+      "key": "ns1",
+      "heading": "第五章 NS1 快篩試劑",
+      "markdown": "疾管署於南部高風險縣市基層診所及醫院配置 NS1 抗原快篩試劑，供醫師於發燒 5 日內之疑似病人使用，結果陽性者即應通報並同步衛教防蚊。"
+    }
+  ],
+  "changes": [
+    {
+      "section": "第四章 緊急防治",
+      "kind": "changed",
+      "before": "以病例住家為中心半徑 50 公尺範圍為核心區",
+      "after": "依病例住家及活動地點之風險評估劃定核心區"
+    },
+    {
+      "section": "第四章 緊急防治",
+      "kind": "added",
+      "after": "核心區孳生源查核每週至少 1 次，連續 2 個潛伏期無新增病例始得解除"
+    }
+  ],
+  "machineReadableMarkdown": "# 登革熱／屈公病防治工作指引（第 16 版）\n\n## 第一章 總則\n本指引適用於各級衛生主管機關辦理登革熱及屈公病之監測、疫情調查與緊急防治，並納入環保、民政、教育等單位之跨局處分工。\n\n## 第二章 疫情監測與通報\n1. 醫師診治符合登革熱臨床條件或 NS1 抗原快篩陽性之病人，應於 24 小時內通報。\n2. 衛生局接獲通報後，應於 24 小時內完成疫調，掌握病例發病前 2 週及發病後之活動地點。\n3. 境外移入病例應同步通知其入境後停留地點之衛生局。\n\n## 第三章 病例處置\n1. 病例於發病後 5 日內（病毒血症期）應做好防蚊，住院者安排於有紗窗之病房。\n2. 醫療院所應衛教病人及家屬警示徵象，並安排退燒前後之追蹤。\n3. 重症登革熱病例應依臨床處置指引轉介至具處置能力之醫院。\n\n## 第四章 緊急防治\n1. 本土病例發生後，依病例住家及活動地點之風險評估劃定核心區（原則為半徑 50 公尺，必要時擴大）。\n2. 核心區孳生源查核每週至少 1 次，連續 2 個潛伏期無新增病例始得解除。\n3. 化學防治應於接獲通報後 3 日內完成，以針對性室內外噴藥為原則。\n\n## 第五章 NS1 快篩試劑\n疾管署於南部高風險縣市基層診所及醫院配置 NS1 抗原快篩試劑，供醫師於發燒 5 日內之疑似病人使用，結果陽性者即應通報並同步衛教防蚊。"
+}

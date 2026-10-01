@@ -1,0 +1,77 @@
+{
+  "id": "dataset.travel-epidemic-json",
+  "type": "dataset",
+  "category": "structured-table",
+  "title": "國際旅遊疫情（TravelEpidemic ExportJSON）",
+  "owner": "unit.quarantine",
+  "publishedAt": "2018-01-01",
+  "reviewedAt": "2026-05-11",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "data",
+    "travel"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "none"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "官網國際旅遊疫情頁的結構化匯出（疾病、國家、等級、起始日、摘要），本站每日抓取為快照。",
+  "keywords": [
+    "旅遊疫情",
+    "ExportJSON",
+    "結構化",
+    "每日"
+  ],
+  "provenance": {
+    "fetchedAt": "2026-10-01",
+    "mode": "snapshot",
+    "sourceUrl": "https://www.cdc.gov.tw/"
+  },
+  "updateFrequency": "daily",
+  "lastUpdated": "2026-09-30",
+  "formats": [
+    "JSON"
+  ],
+  "canonicalUrl": "https://www.cdc.gov.tw/TravelEpidemic/ExportJSON",
+  "mirrors": [
+    "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+  ],
+  "resources": [
+    {
+      "name": "TravelEpidemic ExportJSON",
+      "format": "JSON",
+      "url": "https://www.cdc.gov.tw/TravelEpidemic/ExportJSON"
+    }
+  ]
+}

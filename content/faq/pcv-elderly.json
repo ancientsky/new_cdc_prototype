@@ -1,0 +1,69 @@
+{
+  "id": "faq.pcv-elderly",
+  "type": "faq",
+  "title": "長輩的肺炎鏈球菌疫苗要怎麼打？是公費嗎？",
+  "question": "長輩的肺炎鏈球菌疫苗要怎麼打？是公費嗎？",
+  "owner": "unit.vaccine",
+  "publishedAt": "2020-10-01",
+  "reviewedAt": "2026-08-20",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "vaccine.pneumococcal"
+  ],
+  "diseases": [
+    "disease.ipd"
+  ],
+  "vaccines": [
+    "vaccine.pneumococcal"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "65 歲以上長者與 55–64 歲原住民可公費接種肺炎鏈球菌疫苗：先 1 劑 PCV，間隔 1 年再 1 劑 PPV23。",
+  "keywords": [
+    "肺炎鏈球菌疫苗",
+    "長者",
+    "PCV",
+    "PPV23",
+    "公費"
+  ],
+  "answerMarkdown": "**65 歲以上長者**及 **55–64 歲原住民**可接種公費肺炎鏈球菌疫苗：先接種 1 劑結合型疫苗（PCV），間隔至少 1 年再接種 1 劑多醣體疫苗（PPV23）。\n\n曾自費接種過的長者，請帶接種紀錄給醫師評估銜接方式。肺炎鏈球菌疫苗可與流感疫苗同時分開部位接種。",
+  "structured": {
+    "ageFrom": 65,
+    "intervalYears": 1
+  }
+}

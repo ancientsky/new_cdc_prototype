@@ -1,0 +1,973 @@
+{
+  "meta": {
+    "mode": "snapshot",
+    "fetchedAt": "2026-10-01T03:00:00Z",
+    "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_search",
+    "label": "CKAN 資料集目錄（package_search 精簡版）",
+    "count": 42,
+    "note": "原型快照（示意）：資料集名稱與修改時間依 content/datasets 對齊整理，非官方 CKAN 實際回傳；live 模式由 npm run fetch 分頁抓取全部 package 覆蓋。"
+  },
+  "data": [
+    {
+      "name": "dengue-local-cases-weekly",
+      "title": "登革熱本土病例週統計（縣市別）",
+      "notes": "登革熱本土病例依發病週與縣市彙整之週統計，供疫情態勢判讀與地方防治規劃使用。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-09-29T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/dengue-local-cases-weekly/resource/dengue-local-cases-weekly-csv",
+          "name": "登革熱本土病例週統計（縣市別）（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/dengue-local-cases-weekly/resource/dengue-local-cases-weekly-json",
+          "name": "登革熱本土病例週統計（縣市別）（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "nhi-ili-er-opd-visits",
+      "title": "類流感門急診就診統計（健保資料）",
+      "notes": "依健保門診與急診申報資料，彙整每週類流感就診人次與就診率（年齡層、縣市別）。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-09-29T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/nhi-ili-er-opd-visits/resource/nhi-ili-er-opd-visits-csv",
+          "name": "類流感門急診就診統計（健保資料）（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/nhi-ili-er-opd-visits/resource/nhi-ili-er-opd-visits-json",
+          "name": "類流感門急診就診統計（健保資料）（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "nhi-enterovirus-er-opd-visits",
+      "title": "腸病毒門急診就診統計（健保資料）",
+      "notes": "依健保門診與急診申報資料，彙整每週腸病毒就診人次（年齡層、縣市別），並標示流行閾值。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-09-29T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/nhi-enterovirus-er-opd-visits/resource/nhi-enterovirus-er-opd-visits-csv",
+          "name": "腸病毒門急診就診統計（健保資料）（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/nhi-enterovirus-er-opd-visits/resource/nhi-enterovirus-er-opd-visits-json",
+          "name": "腸病毒門急診就診統計（健保資料）（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "influenza-severe-complications",
+      "title": "流感併發重症病例統計",
+      "notes": "流感併發重症確定病例依發病週、年齡層、病毒型別與縣市之統計，含死亡病例數。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-09-29T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/influenza-severe-complications/resource/influenza-severe-complications-csv",
+          "name": "流感併發重症病例統計（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/influenza-severe-complications/resource/influenza-severe-complications-json",
+          "name": "流感併發重症病例統計（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "covid19-severe-complications-weekly",
+      "title": "新冠併發重症病例週統計",
+      "notes": "2023 年 3 月 20 日改列第四類後之新冠併發重症本土病例週統計，含年齡層與死亡數。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-09-29T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/covid19-severe-complications-weekly/resource/covid19-severe-complications-weekly-csv",
+          "name": "新冠併發重症病例週統計（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/covid19-severe-complications-weekly/resource/covid19-severe-complications-weekly-json",
+          "name": "新冠併發重症病例週統計（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "tuberculosis-new-cases",
+      "title": "結核病新案統計",
+      "notes": "結核病新案數依年度、性別、年齡層與縣市統計，含發生率（每十萬人口）。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-03-20T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/tuberculosis-new-cases/resource/tuberculosis-new-cases-csv",
+          "name": "結核病新案統計（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/tuberculosis-new-cases/resource/tuberculosis-new-cases-json",
+          "name": "結核病新案統計（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "hiv-aids-monthly-statistics",
+      "title": "人類免疫缺乏病毒感染（愛滋）通報統計",
+      "notes": "HIV 感染者與愛滋發病者通報數按月統計，含危險因子、年齡層與縣市分布。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-09-10T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/hiv-aids-monthly-statistics/resource/hiv-aids-monthly-statistics-csv",
+          "name": "人類免疫缺乏病毒感染（愛滋）通報統計（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/hiv-aids-monthly-statistics/resource/hiv-aids-monthly-statistics-json",
+          "name": "人類免疫缺乏病毒感染（愛滋）通報統計（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "measles-confirmed-cases",
+      "title": "麻疹確定病例統計",
+      "notes": "麻疹確定病例依年度、境外移入／本土、感染國家與年齡層統計。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-09-05T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/measles-confirmed-cases/resource/measles-confirmed-cases-csv",
+          "name": "麻疹確定病例統計（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/measles-confirmed-cases/resource/measles-confirmed-cases-json",
+          "name": "麻疹確定病例統計（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "nidss-notifiable-diseases-weekly",
+      "title": "傳染病統計資料查詢系統—法定傳染病病例數（週別、縣市、年齡）",
+      "notes": "全部法定傳染病確定病例數，依發病週、縣市、性別、年齡層與境外移入別彙整，為 NIDSS 之開放資料版本。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-09-29T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/nidss-notifiable-diseases-weekly/resource/nidss-notifiable-diseases-weekly-csv",
+          "name": "傳染病統計資料查詢系統—法定傳染病病例數（週別、縣市、年齡）（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/nidss-notifiable-diseases-weekly/resource/nidss-notifiable-diseases-weekly-json",
+          "name": "傳染病統計資料查詢系統—法定傳染病病例數（週別、縣市、年齡）（JSON）"
+        },
+        {
+          "format": "XML",
+          "url": "https://data.cdc.gov.tw/dataset/nidss-notifiable-diseases-weekly/resource/nidss-notifiable-diseases-weekly-xml",
+          "name": "傳染病統計資料查詢系統—法定傳染病病例數（週別、縣市、年齡）（XML）"
+        }
+      ]
+    },
+    {
+      "name": "international-major-epidemics",
+      "title": "國際重要疫情資訊",
+      "notes": "疾管署彙整之國際重要疫情摘要（疾病、國家、發布日、摘要），每日更新。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-08-28T02:15:00",
+      "resources": [
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/international-major-epidemics/resource/international-major-epidemics-json",
+          "name": "國際重要疫情資訊（JSON）"
+        },
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/international-major-epidemics/resource/international-major-epidemics-csv",
+          "name": "國際重要疫情資訊（CSV）"
+        }
+      ]
+    },
+    {
+      "name": "travel-health-notice-levels",
+      "title": "國際旅遊疫情建議等級表",
+      "notes": "各國家地區之旅遊疫情建議等級（第一級注意、第二級警示、第三級警告）、疾病與生效日。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "檢疫組"
+      },
+      "metadata_modified": "2026-08-14T02:15:00",
+      "resources": [
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/travel-health-notice-levels/resource/travel-health-notice-levels-json",
+          "name": "國際旅遊疫情建議等級表（JSON）"
+        },
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/travel-health-notice-levels/resource/travel-health-notice-levels-csv",
+          "name": "國際旅遊疫情建議等級表（CSV）"
+        },
+        {
+          "format": "XML",
+          "url": "https://data.cdc.gov.tw/dataset/travel-health-notice-levels/resource/travel-health-notice-levels-xml",
+          "name": "國際旅遊疫情建議等級表（XML）"
+        }
+      ]
+    },
+    {
+      "name": "sentinel-physician-surveillance",
+      "title": "定點醫師監測資料（類流感、腹瀉、手足口病）",
+      "notes": "全國定點醫師每週通報之類流感、腹瀉、手足口病及疱疹性咽峽炎就診比例。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-09-28T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/sentinel-physician-surveillance/resource/sentinel-physician-surveillance-csv",
+          "name": "定點醫師監測資料（類流感、腹瀉、手足口病）（CSV）"
+        }
+      ]
+    },
+    {
+      "name": "population-reference-for-epidemiology",
+      "title": "疫情分析用人口統計（縣市、性別、年齡）",
+      "notes": "疫情分析計算發生率使用之年中人口數（縣市、性別、五歲年齡組），轉載自內政部戶政統計。",
+      "license_id": "notspecified",
+      "license_title": "未標示",
+      "organization": {
+        "title": "主計室"
+      },
+      "metadata_modified": "2026-02-15T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/population-reference-for-epidemiology/resource/population-reference-for-epidemiology-csv",
+          "name": "疫情分析用人口統計（縣市、性別、年齡）（CSV）"
+        },
+        {
+          "format": "XLSX",
+          "url": "https://data.cdc.gov.tw/dataset/population-reference-for-epidemiology/resource/population-reference-for-epidemiology-xlsx",
+          "name": "疫情分析用人口統計（縣市、性別、年齡）（XLSX）"
+        }
+      ]
+    },
+    {
+      "name": "routine-vaccination-coverage",
+      "title": "常規疫苗接種完成率",
+      "notes": "各項幼兒常規疫苗依出生世代、縣市之接種完成率，以及公費流感疫苗接種人數。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "預防接種組"
+      },
+      "metadata_modified": "2026-04-30T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/routine-vaccination-coverage/resource/routine-vaccination-coverage-csv",
+          "name": "常規疫苗接種完成率（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/routine-vaccination-coverage/resource/routine-vaccination-coverage-json",
+          "name": "常規疫苗接種完成率（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "lab-virus-surveillance-weekly",
+      "title": "病毒性感染症實驗室監測（呼吸道、腸道病毒檢出）",
+      "notes": "合約實驗室每週呼吸道與腸道病毒檢出件數與型別分布（流感 A/B、腸病毒型別、RSV、新冠等）。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "檢驗及疫苗研製中心"
+      },
+      "metadata_modified": "2026-09-26T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/lab-virus-surveillance-weekly/resource/lab-virus-surveillance-weekly-csv",
+          "name": "病毒性感染症實驗室監測（呼吸道、腸道病毒檢出）（CSV）"
+        }
+      ]
+    },
+    {
+      "name": "enterovirus-typing",
+      "title": "腸病毒型別監測",
+      "notes": "社區腸病毒分離株型別週統計（EV71、克沙奇 A 型、克沙奇 B 型、伊科病毒等）。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "檢驗及疫苗研製中心"
+      },
+      "metadata_modified": "2026-09-26T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/enterovirus-typing/resource/enterovirus-typing-csv",
+          "name": "腸病毒型別監測（CSV）"
+        }
+      ]
+    },
+    {
+      "name": "antimicrobial-resistance-annual",
+      "title": "院內感染抗藥性細菌監測年報資料",
+      "notes": "醫院感染管制監測之重要抗藥性細菌（MRSA、VRE、CRE、CRAB）比率年度統計。",
+      "license_id": "cc-by-3.0-tw",
+      "license_title": "CC 姓名標示 3.0 台灣",
+      "organization": {
+        "title": "檢驗及疫苗研製中心"
+      },
+      "metadata_modified": "2026-06-30T02:15:00",
+      "resources": [
+        {
+          "format": "XLSX",
+          "url": "https://data.cdc.gov.tw/dataset/antimicrobial-resistance-annual/resource/antimicrobial-resistance-annual-xlsx",
+          "name": "院內感染抗藥性細菌監測年報資料（XLSX）"
+        },
+        {
+          "format": "PDF",
+          "url": "https://data.cdc.gov.tw/dataset/antimicrobial-resistance-annual/resource/antimicrobial-resistance-annual-pdf",
+          "name": "院內感染抗藥性細菌監測年報資料（PDF）"
+        }
+      ]
+    },
+    {
+      "name": "cdc-budget-final-accounts",
+      "title": "疾病管制署預算與決算書",
+      "notes": "疾病管制署年度法定預算、決算書及附屬單位預算，依預算法公開。",
+      "license_id": "notspecified",
+      "license_title": "未標示",
+      "organization": {
+        "title": "主計室"
+      },
+      "metadata_modified": "2026-01-31T02:15:00",
+      "resources": [
+        {
+          "format": "PDF",
+          "url": "https://data.cdc.gov.tw/dataset/cdc-budget-final-accounts/resource/cdc-budget-final-accounts-pdf",
+          "name": "疾病管制署預算與決算書（PDF）"
+        },
+        {
+          "format": "ODS",
+          "url": "https://data.cdc.gov.tw/dataset/cdc-budget-final-accounts/resource/cdc-budget-final-accounts-ods",
+          "name": "疾病管制署預算與決算書（ODS）"
+        }
+      ]
+    },
+    {
+      "name": "dengue-daily-determined-cases-1998",
+      "title": "登革熱每日確定病例統計",
+      "notes": "1998 年起登革熱每日確定病例（本土／境外移入），含縣市、性別、年齡層。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-09-30T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/dengue-daily-determined-cases-1998/resource/dengue-daily-determined-cases-1998-csv",
+          "name": "登革熱每日確定病例統計（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/dengue-daily-determined-cases-1998/resource/dengue-daily-determined-cases-1998-json",
+          "name": "登革熱每日確定病例統計（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "typhoid-paratyphoid-cases",
+      "title": "傷寒及副傷寒確定病例統計",
+      "notes": "傷寒及副傷寒確定病例統計，依年度、縣市、性別與年齡層彙整。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-09-30T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/typhoid-paratyphoid-cases/resource/typhoid-paratyphoid-cases-csv",
+          "name": "傷寒及副傷寒確定病例統計（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/typhoid-paratyphoid-cases/resource/typhoid-paratyphoid-cases-json",
+          "name": "傷寒及副傷寒確定病例統計（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "shigellosis-cases",
+      "title": "桿菌性痢疾確定病例統計",
+      "notes": "桿菌性痢疾確定病例統計，依年度、縣市、性別與年齡層彙整。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-09-30T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/shigellosis-cases/resource/shigellosis-cases-csv",
+          "name": "桿菌性痢疾確定病例統計（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/shigellosis-cases/resource/shigellosis-cases-json",
+          "name": "桿菌性痢疾確定病例統計（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "amoebic-dysentery-cases",
+      "title": "阿米巴性痢疾確定病例統計",
+      "notes": "阿米巴性痢疾確定病例統計，依年度、縣市、性別與年齡層彙整。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-09-30T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/amoebic-dysentery-cases/resource/amoebic-dysentery-cases-csv",
+          "name": "阿米巴性痢疾確定病例統計（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/amoebic-dysentery-cases/resource/amoebic-dysentery-cases-json",
+          "name": "阿米巴性痢疾確定病例統計（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "malaria-imported-cases",
+      "title": "瘧疾境外移入病例統計",
+      "notes": "瘧疾境外移入病例統計，依年度、縣市、性別與年齡層彙整。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-09-15T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/malaria-imported-cases/resource/malaria-imported-cases-csv",
+          "name": "瘧疾境外移入病例統計（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/malaria-imported-cases/resource/malaria-imported-cases-json",
+          "name": "瘧疾境外移入病例統計（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "hepatitis-a-cases",
+      "title": "急性病毒性A型肝炎確定病例統計",
+      "notes": "急性病毒性A型肝炎確定病例統計，依年度、縣市、性別與年齡層彙整。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-09-30T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/hepatitis-a-cases/resource/hepatitis-a-cases-csv",
+          "name": "急性病毒性A型肝炎確定病例統計（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/hepatitis-a-cases/resource/hepatitis-a-cases-json",
+          "name": "急性病毒性A型肝炎確定病例統計（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "japanese-encephalitis-cases",
+      "title": "日本腦炎確定病例統計",
+      "notes": "日本腦炎確定病例統計，依年度、縣市、性別與年齡層彙整。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-09-30T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/japanese-encephalitis-cases/resource/japanese-encephalitis-cases-csv",
+          "name": "日本腦炎確定病例統計（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/japanese-encephalitis-cases/resource/japanese-encephalitis-cases-json",
+          "name": "日本腦炎確定病例統計（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "scrub-typhus-cases",
+      "title": "恙蟲病確定病例統計",
+      "notes": "恙蟲病確定病例統計，依年度、縣市、性別與年齡層彙整。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-09-30T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/scrub-typhus-cases/resource/scrub-typhus-cases-csv",
+          "name": "恙蟲病確定病例統計（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/scrub-typhus-cases/resource/scrub-typhus-cases-json",
+          "name": "恙蟲病確定病例統計（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "pertussis-cases",
+      "title": "百日咳確定病例統計",
+      "notes": "百日咳確定病例統計，依年度、縣市、性別與年齡層彙整。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-09-30T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/pertussis-cases/resource/pertussis-cases-csv",
+          "name": "百日咳確定病例統計（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/pertussis-cases/resource/pertussis-cases-json",
+          "name": "百日咳確定病例統計（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "varicella-complications-cases",
+      "title": "水痘併發症確定病例統計",
+      "notes": "水痘併發症確定病例統計，依年度、縣市、性別與年齡層彙整。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-09-30T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/varicella-complications-cases/resource/varicella-complications-cases-csv",
+          "name": "水痘併發症確定病例統計（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/varicella-complications-cases/resource/varicella-complications-cases-json",
+          "name": "水痘併發症確定病例統計（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "mpox-cases",
+      "title": "M痘確定病例統計",
+      "notes": "M痘確定病例統計，依年度、縣市、性別與年齡層彙整。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-09-30T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/mpox-cases/resource/mpox-cases-csv",
+          "name": "M痘確定病例統計（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/mpox-cases/resource/mpox-cases-json",
+          "name": "M痘確定病例統計（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "chikungunya-cases",
+      "title": "屈公病確定病例統計",
+      "notes": "屈公病確定病例統計，依年度、縣市、性別與年齡層彙整。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-09-30T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/chikungunya-cases/resource/chikungunya-cases-csv",
+          "name": "屈公病確定病例統計（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/chikungunya-cases/resource/chikungunya-cases-json",
+          "name": "屈公病確定病例統計（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "zika-cases",
+      "title": "茲卡病毒感染症確定病例統計",
+      "notes": "茲卡病毒感染症確定病例統計，依年度、縣市、性別與年齡層彙整。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-06-30T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/zika-cases/resource/zika-cases-csv",
+          "name": "茲卡病毒感染症確定病例統計（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/zika-cases/resource/zika-cases-json",
+          "name": "茲卡病毒感染症確定病例統計（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "leptospirosis-cases",
+      "title": "鉤端螺旋體病確定病例統計",
+      "notes": "鉤端螺旋體病確定病例統計，依年度、縣市、性別與年齡層彙整。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-09-30T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/leptospirosis-cases/resource/leptospirosis-cases-csv",
+          "name": "鉤端螺旋體病確定病例統計（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/leptospirosis-cases/resource/leptospirosis-cases-json",
+          "name": "鉤端螺旋體病確定病例統計（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "legionellosis-cases",
+      "title": "退伍軍人病確定病例統計",
+      "notes": "退伍軍人病確定病例統計，依年度、縣市、性別與年齡層彙整。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-09-30T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/legionellosis-cases/resource/legionellosis-cases-csv",
+          "name": "退伍軍人病確定病例統計（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/legionellosis-cases/resource/legionellosis-cases-json",
+          "name": "退伍軍人病確定病例統計（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "syphilis-gonorrhea-cases",
+      "title": "梅毒及淋病通報統計",
+      "notes": "梅毒及淋病通報統計，依年度、縣市、性別與年齡層彙整。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-09-10T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/syphilis-gonorrhea-cases/resource/syphilis-gonorrhea-cases-csv",
+          "name": "梅毒及淋病通報統計（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/syphilis-gonorrhea-cases/resource/syphilis-gonorrhea-cases-json",
+          "name": "梅毒及淋病通報統計（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "ipd-cases",
+      "title": "侵襲性肺炎鏈球菌感染症確定病例統計",
+      "notes": "侵襲性肺炎鏈球菌感染症確定病例統計，依年度、縣市、性別與年齡層彙整。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-09-30T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/ipd-cases/resource/ipd-cases-csv",
+          "name": "侵襲性肺炎鏈球菌感染症確定病例統計（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/ipd-cases/resource/ipd-cases-json",
+          "name": "侵襲性肺炎鏈球菌感染症確定病例統計（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "rabies-animal-bite-reports",
+      "title": "疑似狂犬病動物抓咬傷通報統計",
+      "notes": "疑似狂犬病動物抓咬傷通報統計，依年度、縣市、性別與年齡層彙整。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-09-20T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/rabies-animal-bite-reports/resource/rabies-animal-bite-reports-csv",
+          "name": "疑似狂犬病動物抓咬傷通報統計（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/rabies-animal-bite-reports/resource/rabies-animal-bite-reports-json",
+          "name": "疑似狂犬病動物抓咬傷通報統計（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "flu-vaccine-doses-weekly",
+      "title": "公費流感疫苗接種人次週統計",
+      "notes": "公費流感疫苗接種人次週統計，依年度、縣市、性別與年齡層彙整。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2025-12-30T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/flu-vaccine-doses-weekly/resource/flu-vaccine-doses-weekly-csv",
+          "name": "公費流感疫苗接種人次週統計（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/flu-vaccine-doses-weekly/resource/flu-vaccine-doses-weekly-json",
+          "name": "公費流感疫苗接種人次週統計（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "covid19-vaccine-doses",
+      "title": "新冠疫苗接種人次統計",
+      "notes": "新冠疫苗接種人次統計，依年度、縣市、性別與年齡層彙整。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-06-30T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/covid19-vaccine-doses/resource/covid19-vaccine-doses-csv",
+          "name": "新冠疫苗接種人次統計（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/covid19-vaccine-doses/resource/covid19-vaccine-doses-json",
+          "name": "新冠疫苗接種人次統計（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "tb-dots-coverage",
+      "title": "結核病都治涵蓋率",
+      "notes": "結核病都治涵蓋率，依年度、縣市、性別與年齡層彙整。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-03-20T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/tb-dots-coverage/resource/tb-dots-coverage-csv",
+          "name": "結核病都治涵蓋率（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/tb-dots-coverage/resource/tb-dots-coverage-json",
+          "name": "結核病都治涵蓋率（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "border-fever-screening",
+      "title": "國際港埠發燒篩檢統計",
+      "notes": "國際港埠發燒篩檢統計，依年度、縣市、性別與年齡層彙整。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-09-28T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/border-fever-screening/resource/border-fever-screening-csv",
+          "name": "國際港埠發燒篩檢統計（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/border-fever-screening/resource/border-fever-screening-json",
+          "name": "國際港埠發燒篩檢統計（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "dengue-vector-index",
+      "title": "登革熱病媒蚊指數調查",
+      "notes": "登革熱病媒蚊指數調查，依年度、縣市、性別與年齡層彙整。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "疫情中心"
+      },
+      "metadata_modified": "2026-09-26T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/dengue-vector-index/resource/dengue-vector-index-csv",
+          "name": "登革熱病媒蚊指數調查（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/dengue-vector-index/resource/dengue-vector-index-json",
+          "name": "登革熱病媒蚊指數調查（JSON）"
+        }
+      ]
+    },
+    {
+      "name": "cdc-press-releases",
+      "title": "疾管署新聞稿",
+      "notes": "疾管署新聞稿，依年度、縣市、性別與年齡層彙整。",
+      "license_id": "OGDL-Taiwan-1.0",
+      "license_title": "政府資料開放授權條款-第1版",
+      "organization": {
+        "title": "公關室"
+      },
+      "metadata_modified": "2026-09-30T02:15:00",
+      "resources": [
+        {
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/cdc-press-releases/resource/cdc-press-releases-csv",
+          "name": "疾管署新聞稿（CSV）"
+        },
+        {
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/cdc-press-releases/resource/cdc-press-releases-json",
+          "name": "疾管署新聞稿（JSON）"
+        }
+      ]
+    }
+  ]
+}

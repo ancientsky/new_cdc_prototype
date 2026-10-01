@@ -1,0 +1,73 @@
+{
+  "id": "faq.measles-symptoms",
+  "type": "faq",
+  "title": "麻疹有哪些症狀？會傳染多久？",
+  "question": "麻疹有哪些症狀？會傳染多久？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2019-03-01",
+  "reviewedAt": "2026-05-14",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.measles"
+  ],
+  "diseases": [
+    "disease.measles"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-05-14",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "麻疹初期高燒、咳嗽、流鼻水、結膜炎，3–4 天後出紅疹；出疹前後各 4 天具傳染力，就醫前先電話告知並戴口罩。",
+  "keywords": [
+    "麻疹",
+    "症狀",
+    "傳染期",
+    "柯氏斑"
+  ],
+  "answerMarkdown": "麻疹初期有**高燒、咳嗽、流鼻水、結膜炎**，口腔內可能出現白色柯氏斑；約 3–4 天後從耳後、臉部開始出紅疹，再擴散到全身。\n\n病人在**出疹前 4 天到出疹後 4 天**都具傳染力，可經空氣傳播。出現發燒合併紅疹時，請先打電話告知醫院，戴口罩就醫並說明旅遊史。",
+  "structured": {
+    "infectiousDaysBeforeRash": 4,
+    "infectiousDaysAfterRash": 4
+  },
+  "i18n": {
+    "en": {
+      "question": "What are the symptoms of measles and how long is it contagious?",
+      "answerMarkdown": "Measles begins with **high fever, cough, runny nose and conjunctivitis**, sometimes with white Koplik spots inside the mouth. After 3–4 days a red rash starts behind the ears and on the face and spreads over the body.\n\nPatients are contagious **from 4 days before to 4 days after the rash appears** and the virus spreads through the air. If you have a fever with a rash, phone the hospital first, wear a mask and mention your travel history."
+    }
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "id": "doc.covid-vaccine-recommendation.2026-09-15",
+  "type": "document",
+  "family": "doc.covid-vaccine-recommendation",
+  "docType": "recommendation",
+  "title": "新冠疫苗接種建議（2026–2027 年度）",
+  "version": "2026-27",
+  "effectiveAt": "2026-09-15",
+  "supersedes": "doc.covid-vaccine-recommendation.2025-09-15",
+  "owner": "unit.vaccine",
+  "publishedAt": "2026-09-15",
+  "reviewedAt": "2026-09-15",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.covid-19"
+  ],
+  "vaccines": [
+    "vaccine.covid-19"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-15"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-18",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "pending"
+    },
+    "tl": {
+      "status": "pending"
+    },
+    "vi": {
+      "status": "pending"
+    },
+    "id": {
+      "status": "pending"
+    },
+    "th": {
+      "status": "pending"
+    }
+  },
+  "summary": "現行 2026–2027 年度新冠疫苗：10 月 1 日起 6 個月以上民眾公費 1 劑；65 歲以上與免疫不全者間隔 6 個月可再接種 1 劑。",
+  "keywords": [
+    "新冠疫苗",
+    "接種建議",
+    "2026–2027",
+    "65 歲以上",
+    "第二劑"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Disease/Index"
+  ],
+  "note": "原型示意：條文依疾管署公開文件架構改寫，非正式公告文字；正式內容以 PDF 正本為準。",
+  "roles": [
+    "physician",
+    "nurse",
+    "local-health"
+  ],
+  "pdfUrl": "https://www.cdc.gov.tw/File/Get/placeholder-covid-vaccine-2026",
+  "sections": [
+    {
+      "key": "who",
+      "heading": "一、接種對象",
+      "markdown": "6 個月以上民眾，自 2026 年 10 月 1 日起與流感疫苗同步開打。優先對象：65 歲以上長者、55 歲以上原住民、醫事人員、長照機構住民與工作人員、高風險慢性病人、孕婦。"
+    },
+    {
+      "key": "dose",
+      "heading": "二、劑次與間隔",
+      "markdown": "每人接種 1 劑本年度新冠疫苗（成分依 WHO 2026 年建議株），與前一劑間隔至少 12 週。**65 歲以上長者及中重度免疫不全者**，於本年度第 1 劑後間隔 6 個月，可再接種 1 劑。"
+    },
+    {
+      "key": "coadmin",
+      "heading": "三、與其他疫苗同時接種",
+      "markdown": "可與流感疫苗或其他疫苗同時分開部位接種，或間隔任何時間接種。"
+    }
+  ],
+  "changes": [
+    {
+      "section": "二、劑次與間隔",
+      "kind": "added",
+      "after": "65 歲以上長者及中重度免疫不全者，本年度第 1 劑後間隔 6 個月可再接種 1 劑"
+    },
+    {
+      "section": "二、劑次與間隔",
+      "kind": "changed",
+      "before": "LP.8.1 單價疫苗",
+      "after": "依 WHO 2026 年建議株之本年度疫苗"
+    }
+  ],
+  "i18n": {
+    "en": {
+      "title": "COVID-19 vaccination recommendations (2026–27)",
+      "summary": "From 1 October 2026, everyone aged 6 months and over can receive one government-funded dose; people aged 65+ and the moderately to severely immunocompromised may get another dose 6 months later."
+    }
+  },
+  "machineReadableMarkdown": "# 新冠疫苗接種建議（2026–2027 年度）\n\n## 一、接種對象\n6 個月以上民眾，自 2026 年 10 月 1 日起與流感疫苗同步開打。優先對象：65 歲以上長者、55 歲以上原住民、醫事人員、長照機構住民與工作人員、高風險慢性病人、孕婦。\n\n## 二、劑次與間隔\n每人接種 1 劑本年度新冠疫苗（成分依 WHO 2026 年建議株），與前一劑間隔至少 12 週。**65 歲以上長者及中重度免疫不全者**，於本年度第 1 劑後間隔 6 個月，可再接種 1 劑。\n\n## 三、與其他疫苗同時接種\n可與流感疫苗或其他疫苗同時分開部位接種，或間隔任何時間接種。"
+}

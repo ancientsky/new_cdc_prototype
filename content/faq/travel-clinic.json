@@ -1,0 +1,70 @@
+{
+  "id": "faq.travel-clinic",
+  "type": "faq",
+  "title": "旅遊醫學門診可以做什麼？要出國前多久去？",
+  "question": "旅遊醫學門診可以做什麼？要出國前多久去？",
+  "owner": "unit.quarantine",
+  "publishedAt": "2018-06-01",
+  "reviewedAt": "2026-06-15",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "travel",
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "vaccine.mmr"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-06-15",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "旅遊醫學門診依目的地提供疫苗、瘧疾預防用藥與衛教建議，建議出國前 4–6 週就診。",
+  "keywords": [
+    "旅遊醫學門診",
+    "出國",
+    "疫苗",
+    "瘧疾預防"
+  ],
+  "answerMarkdown": "旅遊醫學門診會依您的**目的地、行程與健康狀況**，提供行前評估：需要的疫苗（如 A 型肝炎、黃熱病、狂犬病、MMR、日本腦炎）、瘧疾預防用藥、高山症與旅行者腹瀉的備藥與衛教。\n\n建議在**出國前 4 至 6 週**就診，讓疫苗有時間產生保護力；臨時出發也仍可就診評估。合約院所名單可在疾管署網站查詢。",
+  "structured": {
+    "weeksBeforeTravel": "4–6"
+  },
+  "i18n": {
+    "en": {
+      "question": "What does a travel clinic do and how early should I go before travelling?",
+      "answerMarkdown": "Travel clinics assess your **destination, itinerary and health** and advise on vaccines (such as hepatitis A, yellow fever, rabies, MMR and Japanese encephalitis), malaria prevention medicine, and preparation for altitude sickness and travellers' diarrhoea.\n\nVisit **4 to 6 weeks before departure** so vaccines have time to work; last-minute travellers can still be assessed. A list of contracted clinics is on the Taiwan CDC website."
+    }
+  }
+}

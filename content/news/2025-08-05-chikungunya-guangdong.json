@@ -1,0 +1,73 @@
+{
+  "id": "news.2025-08-05-chikungunya-guangdong",
+  "type": "news",
+  "newsType": "press",
+  "title": "中國大陸廣東省屈公病疫情升溫，提升旅遊疫情建議至第二級",
+  "owner": "unit.quarantine",
+  "publishedAt": "2025-08-05",
+  "reviewedAt": "2025-08-05",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "travel"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.chikungunya"
+  ],
+  "countries": [
+    "CN"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2025-08-05",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "中國大陸廣東省屈公病疫情升溫，疾管署將該地旅遊疫情建議提升至第二級（警示），前往民眾請加強防蚊，返國發燒、關節痛應就醫。",
+  "keywords": [
+    "屈公病",
+    "廣東",
+    "旅遊疫情建議",
+    "第二級",
+    "防蚊"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+  ],
+  "bodyMarkdown": "疾病管制署表示，中國大陸廣東省近期屈公病疫情升溫，已擴及多個城市，故將該省旅遊疫情建議提升至**第二級：警示（Alert）**，建議前往民眾加強防護。\n\n屈公病與登革熱同樣由斑蚊傳播，主要症狀為發燒與嚴重關節痛。疾管署提醒，前往當地請全程防蚊；返國後兩週內外出持續防蚊，若出現發燒、關節痛、出疹，請儘速就醫並告知旅遊史。",
+  "i18n": {
+    "en": {
+      "title": "Chikungunya rising in Guangdong, China: travel notice raised to Level 2",
+      "summary": "Taiwan CDC raised its travel health notice for Guangdong Province to Level 2 (Alert). Travellers should prevent mosquito bites and see a doctor for fever or joint pain after return."
+    }
+  }
+}

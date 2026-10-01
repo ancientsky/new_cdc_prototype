@@ -1,0 +1,79 @@
+{
+  "id": "news.2026-09-18-flu-vaccine-oct1",
+  "type": "news",
+  "newsType": "press",
+  "title": "2026–2027 年度公費流感疫苗 10 月 1 日開打，新冠疫苗同步提供",
+  "owner": "unit.vaccine",
+  "publishedAt": "2026-09-18",
+  "reviewedAt": "2026-09-18",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "doc.flu-vaccine-schedule",
+    "doc.covid-vaccine-recommendation"
+  ],
+  "diseases": [
+    "disease.influenza",
+    "disease.covid-19"
+  ],
+  "vaccines": [
+    "vaccine.influenza",
+    "vaccine.covid-19"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-18"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-18",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "2026–2027 年度公費流感疫苗 10 月 1 日開打，第一階段長者、幼兒、孕婦、高風險者與學生等；11 月 1 日開放 50–64 歲，新冠疫苗同步。",
+  "keywords": [
+    "公費流感疫苗",
+    "10 月 1 日",
+    "新冠疫苗",
+    "接種對象"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+  ],
+  "bodyMarkdown": "疾病管制署宣布，2026–2027 年度公費流感疫苗將於 **10 月 1 日**開打。第一階段對象包括 65 歲以上長者、55 歲以上原住民、6 個月以上至國小入學前幼兒、孕婦及 6 個月內嬰兒之父母、19–64 歲高風險對象、國小至高中職與五專一至三年級學生、醫事防疫人員及長照機構住民與工作人員等；**11 月 1 日**起開放 50–64 歲無高風險慢性病成人。\n\n新年度新冠疫苗同日開打，6 個月以上民眾皆可接種，可與流感疫苗同時分開部位接種。接種地點請查詢「流感防治一網通」或疫苗接種地圖。",
+  "i18n": {
+    "en": {
+      "title": "2026–27 government-funded flu vaccination starts 1 October, with COVID-19 vaccine available at the same time",
+      "summary": "Phase 1 covers older adults, young children, pregnant women, high-risk groups and students from 1 October; adults aged 50–64 from 1 November. COVID-19 vaccine is offered from the same day.",
+      "bodyMarkdown": "Taiwan CDC announced that government-funded flu vaccination for 2026–27 starts on **1 October**. Phase 1 covers adults 65+, indigenous people 55+, children from 6 months to school entry, pregnant women and parents of infants under 6 months, high-risk adults aged 19–64, primary to senior high school students, health and public health workers, and long-term care residents and staff. Adults aged 50–64 without high-risk conditions are eligible from **1 November**.\n\nThe new-season COVID-19 vaccine starts the same day for everyone aged 6 months and over and can be given together with the flu vaccine. Find a clinic via the influenza portal or the vaccination map."
+    }
+  }
+}

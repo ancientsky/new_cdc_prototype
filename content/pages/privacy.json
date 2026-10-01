@@ -1,0 +1,61 @@
+{
+  "id": "page.privacy",
+  "type": "page",
+  "slug": "privacy",
+  "title": "隱私權政策（2026 年修訂）",
+  "owner": "unit.it",
+  "publishedAt": "2015-01-01",
+  "reviewedAt": "2026-09-22",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-25",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "說明本站蒐集的資料、Google Analytics 與分享元件的使用、AI 問答紀錄的去識別保存，以及您的權利與聯絡方式。",
+  "keywords": [
+    "隱私權",
+    "個資",
+    "Google Analytics",
+    "AI 問答紀錄",
+    "Cookie"
+  ],
+  "bodyMarkdown": "## 一、適用範圍\n本政策適用於疾病管制署官方網站（含子網域）及其 AI 問答功能。連結至其他機關或網站者，依各該網站之隱私權政策辦理。\n\n## 二、我們蒐集的資料\n1. **瀏覽紀錄**：IP 位址、瀏覽器類型、造訪時間與頁面，用於系統維運與資安防護，保存 6 個月。\n2. **網站分析**：本站使用 **Google Analytics** 統計瀏覽人次與使用路徑，已啟用 IP 匿名化，不蒐集可識別個人之資料。您可透過瀏覽器外掛停用。\n3. **分享元件**：頁面上的 LINE、Facebook 分享按鈕**僅在您點擊時**才連線至該平台，未點擊前不載入第三方追蹤程式。\n4. **AI 問答紀錄**：您輸入的問題會先自動遮蔽身分證字號、電話、電子郵件與地址，再以去識別化方式保存 **12 個月**，用於品質改善與透明報告，不用於模型訓練。\n5. **錯誤回報與聯絡表單**：僅蒐集您主動填寫的內容；聯絡方式為選填。\n\n## 三、本機儲存\n本站以瀏覽器本機儲存（localStorage）記住語言、民眾／專業檢視模式與回報草稿，資料不會傳回伺服器，您可隨時清除。\n\n## 四、資料利用與分享\n除法律另有規定或經您同意外，不會將個人資料提供給第三方。進階 AI 模式由使用者自行提供金鑰，問題直接自您的瀏覽器送至模型供應商，本站不經手該金鑰。\n\n## 五、您的權利\n依個人資料保護法，您得請求查詢、閱覽、補充、更正、停止蒐集處理利用或刪除您的個人資料。請透過「聯絡我們」或撥打 1922 提出。\n\n## 六、修訂\n本政策於 2026 年 9 月修訂，新增 AI 問答紀錄、分享元件與 Google Analytics 之說明。重大修訂將於首頁公告。",
+  "i18n": {
+    "en": {
+      "title": "Privacy policy (revised 2026)",
+      "summary": "What data we collect, how Google Analytics and share buttons are used, how AI Q&A logs are de-identified and kept, and your rights.",
+      "bodyMarkdown": "We collect server logs (kept 6 months), anonymised **Google Analytics** statistics, and **de-identified AI Q&A logs** (personal identifiers masked before processing; kept 12 months; never used for training). Share buttons connect to LINE or Facebook **only when clicked**. Language and view preferences are stored only in your browser. You may request access, correction or deletion of personal data under the Personal Data Protection Act via the contact form or the 1922 hotline. Revised September 2026."
+    }
+  }
+}

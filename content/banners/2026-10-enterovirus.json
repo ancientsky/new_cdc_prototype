@@ -1,0 +1,71 @@
+{
+  "id": "banner.2026-10-enterovirus",
+  "type": "banner",
+  "title": "腸病毒防治：大人回家先洗手",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-09-30",
+  "reviewedAt": "2026-09-30",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-30",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "腸病毒宣導 Banner（2026-10-01 至 2026-11-30）：大人回家先洗手換衣，留意重症前兆。",
+  "keywords": [
+    "腸病毒",
+    "洗手",
+    "宣導"
+  ],
+  "headline": "家有幼兒，大人回家先洗手換衣",
+  "subline": "肥皂洗手防腸病毒，留意嗜睡、肌躍型抽搐等重症前兆",
+  "cta": {
+    "label": "認識重症前兆",
+    "url": "/diseases/enterovirus/#symptoms"
+  },
+  "startAt": "2026-10-01",
+  "endAt": "2026-11-30",
+  "priority": 2,
+  "i18n": {
+    "en": {
+      "headline": "Young children at home? Wash hands and change clothes first",
+      "subline": "Soap stops enterovirus; watch for drowsiness and myoclonic jerks",
+      "cta": {
+        "label": "Know the warning signs",
+        "url": "/diseases/enterovirus/#symptoms"
+      }
+    }
+  }
+}

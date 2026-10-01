@@ -1,0 +1,79 @@
+{
+  "id": "faq.mpox-who-vaccine",
+  "type": "faq",
+  "title": "M痘疫苗誰可以打公費？要打幾劑？",
+  "question": "M痘疫苗誰可以打公費？要打幾劑？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2022-08-01",
+  "reviewedAt": "2026-04-02",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.mpox"
+  ],
+  "diseases": [
+    "disease.mpox"
+  ],
+  "vaccines": [
+    "vaccine.mpox"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-04-02",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "公費 M痘疫苗提供近一年有高風險性行為者及經評估的密切接觸者；共 2 劑、間隔至少 4 週，暴露後最好 4 天內接種。",
+  "keywords": [
+    "M痘",
+    "猴痘",
+    "疫苗",
+    "公費",
+    "2 劑"
+  ],
+  "answerMarkdown": "公費 M痘（舊稱猴痘）疫苗提供給**近一年有高風險性行為者**，例如有多重性伴侶、性交易服務者、曾於營業場所發生性行為者，以及經衛生單位評估的確診者密切接觸者。\n\n疫苗需接種 **2 劑，間隔至少 4 週**，完成 2 劑才有完整保護。接觸確診者後，最好在 4 天內、最遲 14 天內接種。",
+  "structured": {
+    "doses": 2,
+    "intervalWeeksMin": 4,
+    "postExposureDaysBest": 4,
+    "postExposureDaysMax": 14
+  },
+  "i18n": {
+    "en": {
+      "question": "Who can get the government-funded mpox vaccine and how many doses are needed?",
+      "answerMarkdown": "Government-funded mpox (formerly monkeypox) vaccine is offered to **people with high-risk sexual behaviour in the past year**, such as those with multiple partners, sex workers, or people who have had sex at commercial venues, and to close contacts assessed by health authorities.\n\nIt requires **2 doses at least 4 weeks apart** for full protection. After contact with a case, get vaccinated ideally within 4 days and no later than 14 days."
+    }
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "id": "vaccine.mmr",
+  "type": "vaccine",
+  "slug": "mmr",
+  "title": "MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）",
+  "nameEn": "MMR vaccine",
+  "aliases": [
+    "MMR",
+    "麻疹疫苗",
+    "麻疹腮腺炎德國麻疹混合疫苗"
+  ],
+  "owner": "unit.vaccine",
+  "publishedAt": "2018-03-01",
+  "reviewedAt": "2026-05-14",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "vaccines",
+    "travel"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "doc.mmr-recommendation"
+  ],
+  "diseases": [
+    "disease.measles",
+    "disease.rubella",
+    "disease.mumps"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-05-20",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "MMR 疫苗預防麻疹、腮腺炎、德國麻疹。幼兒 12 個月與滿 5 歲至入國小前各 1 劑；1966 年（含）以後出生、不具免疫力的成人出國前評估自費接種。",
+  "keywords": [
+    "MMR",
+    "麻疹",
+    "德國麻疹",
+    "1966 年",
+    "出國"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/V6unXI5CVl2Fjoap4WVQLw"
+  ],
+  "publicFunded": [
+    {
+      "group": "幼兒第 1 劑",
+      "ageMin": 1,
+      "schedule": "出生滿 12 個月接種 1 劑"
+    },
+    {
+      "group": "幼兒第 2 劑",
+      "ageMin": 5,
+      "ageMax": 7,
+      "schedule": "滿 5 歲至入國小前接種 1 劑"
+    },
+    {
+      "group": "產後婦女（德國麻疹抗體陰性）",
+      "schedule": "產後儘速接種 1 劑",
+      "note": "產檢德國麻疹抗體陰性者"
+    },
+    {
+      "group": "1966 年（含）以後出生、不具免疫力且前往流行地區之成人",
+      "schedule": "出國前 2–4 週至旅遊醫學門診評估接種 1 劑",
+      "note": "自費；依 2025-04-16 修訂之接種建議"
+    }
+  ],
+  "bodyMarkdown": "MMR 為活性減毒疫苗，完成 2 劑對麻疹的保護力約 97%。\n\n依 2025 年 4 月 16 日修訂的「國內現行 MMR 預防接種建議」，**1966 年（含）以後出生**、不具麻疹免疫力的成人，若計畫前往麻疹流行地區，建議出國前 2 至 4 週至旅遊醫學門診評估自費接種 1 劑。\n\n**醫護人員**（醫療照護工作人員）及經常接觸外國人的工作者（如機場、觀光、移工服務人員），也建議確認麻疹免疫力並評估接種。",
+  "precautions": "孕婦及嚴重免疫不全者不可接種；育齡女性接種後 4 週內應避免懷孕。近期接受免疫球蛋白或輸血者需間隔一段時間再接種。",
+  "whereUrl": "https://vaxmap.cdc.gov.tw/",
+  "i18n": {
+    "en": {
+      "title": "MMR vaccine (measles, mumps and rubella)",
+      "summary": "MMR protects against measles, mumps and rubella. Children get one dose at 12 months and one between age 5 and school entry; adults born in 1966 or later without immunity should be assessed before travel.",
+      "bodyMarkdown": "MMR is a live attenuated vaccine; two doses are about 97% effective against measles.\n\nUnder the recommendations revised on 16 April 2025, adults **born in 1966 or later** without measles immunity who plan to visit affected areas should see a travel clinic 2 to 4 weeks before departure to be assessed for one self-paid dose; health workers and people in frequent contact with foreign nationals should also be assessed."
+    }
+  }
+}

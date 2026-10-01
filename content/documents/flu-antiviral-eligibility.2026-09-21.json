@@ -1,0 +1,128 @@
+{
+  "id": "doc.flu-antiviral-eligibility.2026-09-21",
+  "type": "document",
+  "family": "doc.flu-antiviral-eligibility",
+  "docType": "guideline",
+  "title": "公費流感抗病毒藥劑使用對象（2026 年 9 月版）",
+  "version": "2026-09",
+  "effectiveAt": "2026-09-21",
+  "supersedes": "doc.flu-antiviral-eligibility.2026-06-01",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-09-21",
+  "reviewedAt": "2026-09-21",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional",
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-21"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-24",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "pending"
+    },
+    "tl": {
+      "status": "pending"
+    },
+    "vi": {
+      "status": "pending"
+    },
+    "id": {
+      "status": "pending"
+    },
+    "th": {
+      "status": "pending"
+    }
+  },
+  "summary": "現行公費流感抗病毒藥劑使用對象：類流感高峰期 65 歲以上有類流感症狀者，醫師得直接開立，不需快篩陽性；其餘對象維持。",
+  "keywords": [
+    "公費抗病毒藥劑",
+    "克流感",
+    "使用對象",
+    "65 歲以上",
+    "不需快篩",
+    "類流感高峰期"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Disease/Index"
+  ],
+  "note": "原型示意：條文依疾管署公開文件架構改寫，非正式公告文字；正式內容以 PDF 正本為準。",
+  "roles": [
+    "physician",
+    "nurse",
+    "local-health"
+  ],
+  "pdfUrl": "https://www.cdc.gov.tw/File/Get/placeholder-flu-antiviral-2026-09",
+  "sections": [
+    {
+      "key": "art1",
+      "heading": "第 1 條",
+      "markdown": "經通報之流感併發重症病例。"
+    },
+    {
+      "key": "art2",
+      "heading": "第 2 條",
+      "markdown": "孕婦及產後 2 週內婦女經評估需及時用藥者。"
+    },
+    {
+      "key": "art3",
+      "heading": "第 3 條",
+      "markdown": "未滿 5 歲之類流感患者，經流感快篩陽性者。65 歲以上有類流感症狀者，於類流感高峰期（以疾管署公告期間為準）得由醫師直接開立，不需快篩陽性。"
+    },
+    {
+      "key": "art4",
+      "heading": "第 4 條",
+      "markdown": "確診或疑似流感住院（含急診待床）之病患。"
+    },
+    {
+      "key": "art5",
+      "heading": "第 5 條",
+      "markdown": "具重大傷病、免疫不全或流感高風險慢性疾病之類流感患者；BMI ≥ 30 之類流感患者。"
+    },
+    {
+      "key": "art6",
+      "heading": "第 6 條",
+      "markdown": "肺炎患者；出現危險徵兆之類流感患者。"
+    },
+    {
+      "key": "art7",
+      "heading": "第 7 條",
+      "markdown": "人口密集機構或醫院發生流感群聚時，經衛生局研判之機構內類流感患者及接觸者預防性用藥。"
+    }
+  ],
+  "changes": [
+    {
+      "section": "第 3 條",
+      "kind": "changed",
+      "before": "未滿 5 歲及 65 歲以上之類流感患者，經流感快篩陽性者",
+      "after": "類流感高峰期 65 歲以上有類流感症狀者得直接開立，不需快篩陽性（未滿 5 歲仍需快篩陽性）"
+    }
+  ],
+  "i18n": {
+    "en": {
+      "title": "Eligibility for government-funded influenza antivirals (September 2026)",
+      "summary": "During the declared ILI peak, doctors may prescribe government-funded antivirals directly to people aged 65+ with influenza-like symptoms without a positive rapid test; other criteria unchanged."
+    }
+  },
+  "machineReadableMarkdown": "# 公費流感抗病毒藥劑使用對象（2026 年 9 月版）\n\n## 第 1 條\n經通報之流感併發重症病例。\n\n## 第 2 條\n孕婦及產後 2 週內婦女經評估需及時用藥者。\n\n## 第 3 條\n未滿 5 歲之類流感患者，經流感快篩陽性者。65 歲以上有類流感症狀者，於類流感高峰期（以疾管署公告期間為準）得由醫師直接開立，不需快篩陽性。\n\n## 第 4 條\n確診或疑似流感住院（含急診待床）之病患。\n\n## 第 5 條\n具重大傷病、免疫不全或流感高風險慢性疾病之類流感患者；BMI ≥ 30 之類流感患者。\n\n## 第 6 條\n肺炎患者；出現危險徵兆之類流感患者。\n\n## 第 7 條\n人口密集機構或醫院發生流感群聚時，經衛生局研判之機構內類流感患者及接觸者預防性用藥。"
+}

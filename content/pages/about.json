@@ -1,0 +1,61 @@
+{
+  "id": "page.about",
+  "type": "page",
+  "slug": "about",
+  "title": "關於新官網與改版小組",
+  "owner": "unit.pr",
+  "publishedAt": "2026-09-22",
+  "reviewedAt": "2026-09-22",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-25",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "新官網的設計原則（內容只存一份、治理是欄位、AI 只轉述），以及公關室、資訊室、OASIS、各業務組與疫情中心的分工。",
+  "keywords": [
+    "關於本站",
+    "官網改版",
+    "分工",
+    "資料治理",
+    "OASIS"
+  ],
+  "bodyMarkdown": "## 為什麼改版\n民眾找疾管署的資訊，越來越常透過搜尋引擎與 AI 助理。新官網的目標是讓每一則官方內容都**有權責單位、有審閱日、有版本**，無論是人還是機器讀到，都能知道它是不是最新、該聽誰的。\n\n## 三個設計原則\n1. **內容只存一份**：網頁、API、機讀版、AI 索引都從同一份內容產生。\n2. **治理是欄位**：每筆內容都標示權責單位、審閱週期與依據正本，逾期與失效由系統自動判斷。\n3. **AI 只轉述**：問答只引用白名單內容，每句附來源。\n\n## 官網改版小組與分工\n| 單位 | 角色 |\n| --- | --- |\n| 公關室 | 內容總編輯：首頁、新聞稿、澄清訊息與用語一致性；本頁權責單位 |\n| 資訊室 | 平台、資安、無障礙與隱私；網站維運與部署 |\n| OASIS | 資料目錄、詞彙主檔、AI 白名單與評估集、透明報告 |\n| 各業務組（急性組、慢性組、預防接種組、感管組、檢疫組、整備組） | 疾病頁、Q&A、手冊指引之 Data Steward，負責內容正確與定期審閱 |\n| 疫情中心 | 疫情態勢層發布、統計資料集與 NIDSS |\n| 檢驗及疫苗研製中心 | 實驗室監測資料集與檢驗相關內容 |\n| 資料治理委員會 | 核定白名單政策與重大爭議 |\n\n## 聯絡我們\n內容錯誤請使用各頁「回報錯誤」；一般諮詢請撥 **1922** 防疫專線（國外請撥 +886-800-001922）。",
+  "i18n": {
+    "en": {
+      "title": "About the new website and the redesign team",
+      "summary": "Design principles of the new site (single source of content, governance as fields, AI that only relays) and the roles of each unit.",
+      "bodyMarkdown": "The new site gives every official item an **owner, a review date and a version**, so people and machines can tell whether it is current. Principles: one source of content for web, API, machine-readable pages and AI index; governance recorded as fields with automatic overdue and superseded checks; AI that only relays whitelisted, cited content. Roles: Public Relations Office (editor-in-chief), Information Management Office (platform, security, accessibility, privacy), OASIS (catalogue, glossary, AI whitelist, evaluation), divisions as data stewards, the Epidemic Intelligence Center (situation layer, statistics), the diagnostics centre (lab datasets) and the Data Governance Committee. Contact: 1922 (abroad +886-800-001922)."
+    }
+  }
+}

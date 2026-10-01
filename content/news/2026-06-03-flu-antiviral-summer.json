@@ -1,0 +1,64 @@
+{
+  "id": "news.2026-06-03-flu-antiviral-summer",
+  "type": "news",
+  "newsType": "press",
+  "title": "夏季流感疫情持續，公費抗病毒藥劑使用對象維持現行規定",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-06-03",
+  "reviewedAt": "2026-06-03",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "doc.flu-antiviral-eligibility"
+  ],
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "pending"
+    },
+    "tl": {
+      "status": "pending"
+    },
+    "vi": {
+      "status": "pending"
+    },
+    "id": {
+      "status": "pending"
+    },
+    "th": {
+      "status": "pending"
+    }
+  },
+  "summary": "夏季仍有流感病毒活動，疾管署說明公費抗病毒藥劑使用對象：未滿 5 歲及 65 歲以上類流感患者經快篩陽性者等。",
+  "keywords": [
+    "流感",
+    "公費抗病毒藥劑",
+    "使用對象",
+    "快篩"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+  ],
+  "bodyMarkdown": "疾病管制署表示，今年入夏後仍有流感病毒活動，近期以 A 型 H1N1 為主。依 2026 年 6 月版「公費流感抗病毒藥劑使用對象」，未滿 5 歲及 65 歲以上之類流感患者經流感快篩陽性者、孕婦、具高風險慢性病之類流感患者、流感併發重症及住院病患等，可由醫師評估使用公費抗病毒藥劑。\n\n疾管署提醒，抗病毒藥劑於發病 48 小時內使用效果最佳，有症狀請儘早就醫。"
+}

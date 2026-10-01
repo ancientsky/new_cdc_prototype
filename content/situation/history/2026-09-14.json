@@ -1,0 +1,354 @@
+{
+  "publishedAt": "2026-09-14",
+  "publisher": "unit.epidemic-intelligence",
+  "approvedBy": "疫情中心狀態發布負責人",
+  "dataDate": "2026-09-14",
+  "source": "nidss",
+  "nextReviewAt": "2026-09-21",
+  "note": "原型資料：狀態與數字為示意，依規格由疫情中心依既有監測門檻人工發布，不由模型推論。",
+  "items": [
+    {
+      "disease": "disease.influenza",
+      "status": "rising",
+      "trend": "up",
+      "metricLabel": "近四週門急診類流感就診率",
+      "metricValue": "11.2%",
+      "metricNumeric": 11.2,
+      "deltaText": "連續 3 週上升",
+      "weekly": [
+        7,
+        7.8,
+        8.6,
+        9.4,
+        10.3,
+        11.2
+      ],
+      "weeklyLabels": [
+        "W32",
+        "W33",
+        "W34",
+        "W35",
+        "W36",
+        "W37"
+      ],
+      "advice": "長者與幼兒 10 月 1 日起儘速接種流感疫苗",
+      "basis": "類流感門急診就診率連續 3 週上升，接近流行閾值",
+      "dataset": "dataset.ili-weekly",
+      "pinned": true,
+      "illustrative": true,
+      "i18n": {
+        "en": {
+          "metricLabel": "ILI outpatient/ER visit rate",
+          "advice": "Older adults and young children should get the flu vaccine from 1 October",
+          "deltaText": "up three weeks running"
+        },
+        "vi": {
+          "metricLabel": "Tỷ lệ khám hội chứng giống cúm",
+          "advice": "Người cao tuổi và trẻ nhỏ nên tiêm vắc-xin cúm từ 1/10",
+          "deltaText": "tăng 3 tuần liên tiếp"
+        },
+        "id": {
+          "metricLabel": "Tingkat kunjungan penyakit mirip influenza",
+          "advice": "Lansia dan anak kecil sebaiknya vaksin flu mulai 1 Oktober",
+          "deltaText": "naik 3 minggu berturut-turut"
+        },
+        "th": {
+          "metricLabel": "อัตราผู้ป่วยอาการคล้ายไข้หวัดใหญ่ที่มาพบแพทย์",
+          "advice": "ผู้สูงอายุและเด็กเล็กควรฉีดวัคซีนไข้หวัดใหญ่ตั้งแต่ 1 ตุลาคม",
+          "deltaText": "เพิ่มขึ้นต่อเนื่อง 3 สัปดาห์"
+        },
+        "ja": {
+          "metricLabel": "インフルエンザ様疾患の外来・救急受診率",
+          "advice": "高齢者と乳幼児は10月1日からインフルエンザワクチンを"
+        },
+        "tl": {
+          "metricLabel": "Rate ng pagpapatingin dahil sa sakit na tulad ng trangkaso",
+          "advice": "Magpabakuna ang matatanda at maliliit na bata simula Oktubre 1"
+        }
+      }
+    },
+    {
+      "disease": "disease.enterovirus",
+      "status": "rising",
+      "trend": "up",
+      "metricLabel": "腸病毒門急診就診人次（週）",
+      "metricValue": "7,900 人次",
+      "metricNumeric": 7900,
+      "deltaText": "開學後上升",
+      "weekly": [
+        5600,
+        5100,
+        4800,
+        5300,
+        6400,
+        7900
+      ],
+      "weeklyLabels": [
+        "W32",
+        "W33",
+        "W34",
+        "W35",
+        "W36",
+        "W37"
+      ],
+      "advice": "落實肥皂洗手，教托育機構加強消毒，留意重症前兆",
+      "basis": "就診人次連續 2 週上升，低於流行閾值 11,000 人次",
+      "dataset": "dataset.ev-visits-weekly",
+      "pinned": true,
+      "illustrative": true,
+      "i18n": {
+        "en": {
+          "metricLabel": "Enterovirus outpatient/ER visits (weekly)",
+          "advice": "Wash hands with soap; disinfect childcare settings; watch for warning signs",
+          "deltaText": "rising after school start"
+        },
+        "vi": {
+          "metricLabel": "Số lượt khám enterovirus (tuần)",
+          "advice": "Rửa tay bằng xà phòng, khử trùng nhà trẻ, chú ý dấu hiệu nặng",
+          "deltaText": "tăng sau khai giảng"
+        },
+        "id": {
+          "metricLabel": "Kunjungan enterovirus per minggu",
+          "advice": "Cuci tangan dengan sabun, disinfeksi tempat penitipan anak, waspadai tanda bahaya",
+          "deltaText": "naik setelah sekolah dimulai"
+        },
+        "th": {
+          "metricLabel": "จำนวนผู้ป่วยเอนเทอโรไวรัสที่มาพบแพทย์ (รายสัปดาห์)",
+          "advice": "ล้างมือด้วยสบู่ ฆ่าเชื้อสถานรับเลี้ยงเด็ก สังเกตอาการรุนแรง",
+          "deltaText": "เพิ่มขึ้นหลังเปิดเทอม"
+        },
+        "ja": {
+          "metricLabel": "エンテロウイルス外来・救急受診数（週）",
+          "advice": "石けんで手洗い、保育施設の消毒、重症化の兆候に注意"
+        },
+        "tl": {
+          "metricLabel": "Lingguhang pagpapatingin dahil sa enterovirus",
+          "advice": "Maghugas ng kamay gamit ang sabon; bantayan ang mga babala"
+        }
+      }
+    },
+    {
+      "disease": "disease.dengue",
+      "status": "rising",
+      "trend": "up",
+      "metricLabel": "本週新增本土病例",
+      "metricValue": "本土 17 例",
+      "metricNumeric": 17,
+      "deltaText": "高雄、台南持續新增",
+      "weekly": [
+        3,
+        4,
+        6,
+        9,
+        12,
+        17
+      ],
+      "weeklyLabels": [
+        "W32",
+        "W33",
+        "W34",
+        "W35",
+        "W36",
+        "W37"
+      ],
+      "advice": "清除積水容器，發燒速就醫並告知旅遊史",
+      "basis": "本土病例連續 3 週增加",
+      "dataset": "dataset.dengue-daily",
+      "pinned": true,
+      "illustrative": true,
+      "i18n": {
+        "en": {
+          "metricLabel": "New local cases this week",
+          "advice": "Remove standing water; see a doctor for fever and mention travel",
+          "deltaText": "new cases continue in Kaohsiung and Tainan"
+        },
+        "vi": {
+          "metricLabel": "Ca nội địa mới trong tuần",
+          "advice": "Dọn nước đọng; sốt hãy đi khám và khai báo đi lại",
+          "deltaText": "tiếp tục có ca mới ở Cao Hùng, Đài Nam"
+        },
+        "id": {
+          "metricLabel": "Kasus lokal baru minggu ini",
+          "advice": "Buang genangan air; periksa ke dokter bila demam dan sebutkan riwayat perjalanan",
+          "deltaText": "kasus baru berlanjut di Kaohsiung dan Tainan"
+        },
+        "th": {
+          "metricLabel": "ผู้ป่วยในประเทศรายใหม่สัปดาห์นี้",
+          "advice": "เทน้ำขัง หากมีไข้ให้พบแพทย์และแจ้งประวัติการเดินทาง",
+          "deltaText": "ยังมีผู้ป่วยใหม่ในเกาสงและไถหนาน"
+        },
+        "ja": {
+          "metricLabel": "今週の国内感染例",
+          "advice": "たまり水をなくし、発熱時は渡航歴を伝えて受診"
+        },
+        "tl": {
+          "metricLabel": "Bagong lokal na kaso ngayong linggo",
+          "advice": "Itapon ang naipong tubig; magpatingin kapag nilagnat"
+        }
+      }
+    },
+    {
+      "disease": "disease.covid-19",
+      "status": "declining",
+      "trend": "down",
+      "metricLabel": "新冠併發重症通報數（週）",
+      "metricValue": "47 例",
+      "metricNumeric": 47,
+      "deltaText": "連續兩週下降",
+      "weekly": [
+        66,
+        60,
+        58,
+        55,
+        50,
+        47
+      ],
+      "weeklyLabels": [
+        "W32",
+        "W33",
+        "W34",
+        "W35",
+        "W36",
+        "W37"
+      ],
+      "advice": "高風險族群 10 月 1 日起接種新年度疫苗",
+      "basis": "併發重症通報數連續 2 週下降",
+      "dataset": "dataset.covid-severe-weekly",
+      "pinned": true,
+      "illustrative": true,
+      "i18n": {
+        "en": {
+          "metricLabel": "Severe COVID-19 reports (weekly)",
+          "advice": "High-risk groups get the updated vaccine from 1 October",
+          "deltaText": "down two weeks running"
+        },
+        "vi": {
+          "metricLabel": "Ca COVID-19 biến chứng nặng (tuần)",
+          "advice": "Nhóm nguy cơ cao tiêm vắc-xin mới từ 1/10",
+          "deltaText": "giảm 2 tuần liên tiếp"
+        },
+        "id": {
+          "metricLabel": "Laporan COVID-19 berat per minggu",
+          "advice": "Kelompok risiko tinggi vaksin terbaru mulai 1 Oktober",
+          "deltaText": "turun 2 minggu berturut-turut"
+        },
+        "th": {
+          "metricLabel": "รายงานผู้ป่วยโควิด-19 อาการรุนแรง (รายสัปดาห์)",
+          "advice": "กลุ่มเสี่ยงสูงฉีดวัคซีนใหม่ตั้งแต่ 1 ตุลาคม",
+          "deltaText": "ลดลงต่อเนื่อง 2 สัปดาห์"
+        },
+        "ja": {
+          "metricLabel": "COVID-19重症報告数（週）",
+          "advice": "重症化リスクの高い人は10月1日から最新ワクチンを"
+        },
+        "tl": {
+          "metricLabel": "Lingguhang ulat ng malubhang COVID-19",
+          "advice": "Magpabakuna ng bagong bakuna simula Oktubre 1 ang may mataas na panganib"
+        }
+      }
+    },
+    {
+      "disease": "disease.mpox",
+      "status": "stable",
+      "trend": "flat",
+      "metricLabel": "近四週 M痘病例數",
+      "metricValue": "7 例",
+      "metricNumeric": 7,
+      "deltaText": "零星發生",
+      "weekly": [
+        1,
+        2,
+        1,
+        3,
+        2,
+        1
+      ],
+      "weeklyLabels": [
+        "W32",
+        "W33",
+        "W34",
+        "W35",
+        "W36",
+        "W37"
+      ],
+      "advice": "符合條件者完成 2 劑疫苗，不明皮疹請就醫",
+      "basis": "近四週病例數與前四週相當，無群聚",
+      "pinned": false,
+      "illustrative": true,
+      "i18n": {
+        "en": {
+          "metricLabel": "Mpox cases in the past 4 weeks",
+          "advice": "Eligible people complete two vaccine doses; see a doctor for unexplained rash",
+          "deltaText": "sporadic"
+        },
+        "vi": {
+          "metricLabel": "Ca đậu mùa khỉ (Mpox) trong 4 tuần",
+          "advice": "Người đủ điều kiện tiêm đủ 2 liều; phát ban bất thường hãy đi khám",
+          "deltaText": "rải rác"
+        },
+        "id": {
+          "metricLabel": "Kasus Mpox 4 minggu terakhir",
+          "advice": "Yang memenuhi syarat lengkapi 2 dosis vaksin; periksa bila ruam tak jelas",
+          "deltaText": "sporadis"
+        },
+        "th": {
+          "metricLabel": "ผู้ป่วยฝีดาษวานร (Mpox) ใน 4 สัปดาห์",
+          "advice": "ผู้มีสิทธิ์ฉีดวัคซีนให้ครบ 2 เข็ม มีผื่นผิดปกติให้พบแพทย์",
+          "deltaText": "เกิดประปราย"
+        }
+      }
+    },
+    {
+      "disease": "disease.measles",
+      "status": "stable",
+      "trend": "flat",
+      "metricLabel": "今年累計麻疹病例",
+      "metricValue": "28 例（境外移入 20 例）",
+      "metricNumeric": 28,
+      "deltaText": "以境外移入為主",
+      "weekly": [
+        0,
+        1,
+        0,
+        2,
+        1,
+        0
+      ],
+      "weeklyLabels": [
+        "W32",
+        "W33",
+        "W34",
+        "W35",
+        "W36",
+        "W37"
+      ],
+      "advice": "1966 年（含）以後出生、不具免疫力者出國前評估接種 MMR",
+      "basis": "近四週無新增本土群聚",
+      "dataset": "dataset.measles-yearly",
+      "pinned": false,
+      "illustrative": true,
+      "i18n": {
+        "en": {
+          "metricLabel": "Measles cases this year",
+          "advice": "People born in 1966 or later without immunity: get assessed for MMR before travel",
+          "deltaText": "mostly imported"
+        },
+        "vi": {
+          "metricLabel": "Ca sởi trong năm",
+          "advice": "Người sinh từ 1966 trở về sau chưa có miễn dịch: đánh giá tiêm MMR trước khi ra nước ngoài",
+          "deltaText": "chủ yếu nhập cảnh"
+        },
+        "id": {
+          "metricLabel": "Kasus campak tahun ini",
+          "advice": "Lahir tahun 1966 atau setelahnya tanpa kekebalan: periksa kebutuhan MMR sebelum bepergian",
+          "deltaText": "sebagian besar impor"
+        },
+        "th": {
+          "metricLabel": "ผู้ป่วยโรคหัดปีนี้",
+          "advice": "ผู้ที่เกิดปี 1966 เป็นต้นไปและไม่มีภูมิคุ้มกัน ควรประเมินการฉีด MMR ก่อนเดินทาง",
+          "deltaText": "ส่วนใหญ่เป็นผู้ป่วยนำเข้า"
+        }
+      }
+    }
+  ]
+}

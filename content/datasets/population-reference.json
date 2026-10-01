@@ -1,0 +1,83 @@
+{
+  "id": "dataset.population-reference",
+  "type": "dataset",
+  "category": "open-dataset",
+  "title": "疫情分析用人口統計（縣市、性別、年齡）",
+  "owner": "unit.accounting",
+  "publishedAt": "2014-01-01",
+  "reviewedAt": "2026-02-15",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "未標示",
+  "licenseNote": "待權責單位確認授權",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "none"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "疫情分析計算發生率使用之年中人口數（縣市、性別、五歲年齡組），轉載自內政部戶政統計。",
+  "keywords": [
+    "人口統計",
+    "發生率",
+    "分母",
+    "年中人口"
+  ],
+  "portalUrl": "https://data.cdc.gov.tw/dataset/population-reference-for-epidemiology",
+  "canonicalUrl": "https://data.cdc.gov.tw/dataset/population-reference-for-epidemiology",
+  "schemaUrl": "https://data.cdc.gov.tw/dataset/population-reference-for-epidemiology",
+  "resources": [
+    {
+      "name": "疫情分析用人口統計（縣市、性別、年齡）（CSV）",
+      "format": "CSV",
+      "url": "https://data.cdc.gov.tw/dataset/population-reference-for-epidemiology"
+    },
+    {
+      "name": "疫情分析用人口統計（縣市、性別、年齡）（XLSX）",
+      "format": "XLSX",
+      "url": "https://data.cdc.gov.tw/dataset/population-reference-for-epidemiology"
+    }
+  ],
+  "provenance": {
+    "fetchedAt": "2026-10-01",
+    "mode": "snapshot",
+    "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_show?id=population-reference-for-epidemiology"
+  },
+  "ckanName": "population-reference-for-epidemiology",
+  "updateFrequency": "yearly",
+  "lastUpdated": "2026-02-15",
+  "formats": [
+    "CSV",
+    "XLSX"
+  ]
+}

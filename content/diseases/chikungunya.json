@@ -1,0 +1,161 @@
+{
+  "id": "disease.chikungunya",
+  "type": "disease",
+  "slug": "chikungunya",
+  "title": "屈公病",
+  "nameEn": "Chikungunya fever",
+  "aliases": [
+    "Chikungunya",
+    "屈公熱"
+  ],
+  "legalCategory": 2,
+  "icd10": [
+    "A92.0"
+  ],
+  "notifyWithinHours": 24,
+  "incubation": {
+    "min": 2,
+    "max": 12,
+    "typicalMin": 3,
+    "typicalMax": 7,
+    "unit": "day",
+    "text": "2–12 天（通常 3–7 天）"
+  },
+  "transmission": [
+    "vector"
+  ],
+  "owner": "unit.acute-infectious",
+  "steward": "急性傳染病組承辦人",
+  "publishedAt": "2018-03-01",
+  "reviewedAt": "2025-07-28",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "symptoms",
+    "travel"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.chikungunya"
+  ],
+  "countries": [
+    "CN",
+    "IN",
+    "BR",
+    "TH"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "pending"
+    },
+    "tl": {
+      "status": "pending"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "pending"
+    }
+  },
+  "summary": "屈公病與登革熱一樣由斑蚊傳播，特徵是發燒合併嚴重關節痛，部分人關節痛可持續數月。國內病例多為境外移入，出國防蚊是預防關鍵。",
+  "keywords": [
+    "屈公病",
+    "斑蚊",
+    "關節痛",
+    "境外移入",
+    "防蚊"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Disease/Index"
+  ],
+  "keyFacts": {
+    "incubation": "2–12 天（通常 3–7 天）",
+    "symptoms": "突發高燒、嚴重關節痛、頭痛、肌肉痛、皮疹",
+    "transmission": "病媒蚊叮咬（埃及斑蚊、白線斑蚊）",
+    "prevention": "防蚊、清除積水容器",
+    "notify": "24 小時內"
+  },
+  "blocks": [
+    {
+      "key": "what-to-do",
+      "heading": "我該怎麼辦",
+      "cards": [
+        {
+          "if": "從流行地區返國後發燒、關節痛",
+          "title": "就醫並告知旅遊史",
+          "text": "請儘速就醫並主動告知旅遊史，返國後兩週內外出持續防蚊。"
+        },
+        {
+          "if": "關節痛持續數週",
+          "title": "回診追蹤",
+          "text": "部分人關節痛會持續數週至數月，可回診由醫師評估止痛與復健。"
+        },
+        {
+          "if": "即將前往流行地區",
+          "title": "出國前準備防蚊用品",
+          "text": "準備含 DEET 或 Picaridin 的防蚊液與淺色長袖衣物，住宿選擇有紗窗或空調的房間。"
+        }
+      ]
+    },
+    {
+      "key": "symptoms",
+      "heading": "症狀與警示徵象",
+      "markdown": "典型症狀為**突發高燒合併嚴重關節痛**，多影響手腕、腳踝、手指等小關節，常伴隨頭痛、肌肉痛、噁心與皮疹。\n\n症狀與登革熱相似，但關節痛更明顯，多數人 1–2 週內好轉，部分人（尤其年長者）關節痛可持續數月。",
+      "warning": "新生兒、65 歲以上長者及慢性病人較可能出現神經、心臟等嚴重併發症，症狀加劇應立即就醫。"
+    },
+    {
+      "key": "transmission",
+      "heading": "怎麼傳染",
+      "markdown": "經由帶病毒的**埃及斑蚊或白線斑蚊**叮咬傳播，與登革熱相同。病人發病前 2 天至發病後 5 天為病毒血症期，被病媒蚊叮咬後可能造成本土傳播。**不會人傳人**。"
+    },
+    {
+      "key": "prevention",
+      "heading": "如何預防",
+      "markdown": "- 前往流行地區時全程做好防蚊措施，穿淺色長袖、使用防蚊液。\n- 返國後 2 週內，外出持續防蚊，避免成為本土傳染源。\n- 居家定期巡查清除積水容器，落實「巡、倒、清、刷」。"
+    },
+    {
+      "key": "treatment",
+      "heading": "診斷與治療",
+      "markdown": "沒有特效藥，以症狀治療為主：休息、補充水分、以乙醯胺酚退燒止痛。在排除登革熱之前，應避免使用阿斯匹靈與非類固醇消炎止痛藥。"
+    },
+    {
+      "key": "vaccine",
+      "heading": "疫苗",
+      "markdown": "國內目前沒有公費屈公病疫苗。國外已有核准上市的疫苗，長期前往流行地區者可至旅遊醫學門診諮詢。"
+    },
+    {
+      "key": "situation",
+      "heading": "目前疫情與統計",
+      "markdown": "國內病例多為境外移入，主要來自南亞、東南亞與中國大陸南方等流行地區；國際疫情請見出國專區。"
+    },
+    {
+      "key": "faq",
+      "heading": "常見問題"
+    }
+  ],
+  "professional": {
+    "caseDefinitionDoc": "doc.case-definition-dengue",
+    "specimen": "發病 5 日內血清進行 RT-PCR；發病 5 日後採血清檢測 IgM，建議同時檢驗登革熱以鑑別診斷。",
+    "notifyNote": "第二類法定傳染病，應於 24 小時內通報；與登革熱同屬斑蚊傳播，病例周邊同步啟動孳生源清除。"
+  }
+}

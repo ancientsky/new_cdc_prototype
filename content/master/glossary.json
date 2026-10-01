@@ -1,17 +1,1508 @@
 [
-  { "id": "term.mpox", "zh-TW": "M痘", "aliases": ["猴痘", "Monkeypox"], "en": "Mpox", "ja": "エムポックス", "tl": "Mpox", "vi": "Đậu mùa khỉ (Mpox)", "id_": "Mpox", "th": "ฝีดาษวานร (Mpox)", "domain": "disease", "locked": true, "deprecated": ["猴痘"], "refs": ["disease.mpox"], "note": "2023 年起官方名稱改為 M痘" },
-  { "id": "term.covid-19", "zh-TW": "新冠併發重症", "aliases": ["新冠肺炎", "COVID-19", "新冠"], "en": "COVID-19", "ja": "COVID-19", "tl": "COVID-19", "vi": "COVID-19", "id_": "COVID-19", "th": "โควิด-19", "domain": "disease", "locked": true, "deprecated": ["武漢肺炎", "嚴重特殊傳染性肺炎"], "refs": ["disease.covid-19"] },
-  { "id": "term.dengue", "zh-TW": "登革熱", "aliases": ["登革出血熱", "天狗熱"], "en": "Dengue fever", "ja": "デング熱", "tl": "Dengue", "vi": "Sốt xuất huyết Dengue", "id_": "Demam berdarah dengue", "th": "ไข้เลือดออก", "domain": "disease", "locked": true, "refs": ["disease.dengue"] },
-  { "id": "term.influenza", "zh-TW": "流感", "aliases": ["季節性流感", "流行性感冒"], "en": "Influenza", "ja": "インフルエンザ", "tl": "Trangkaso", "vi": "Cúm mùa", "id_": "Influenza", "th": "ไข้หวัดใหญ่", "domain": "disease", "locked": true, "refs": ["disease.influenza"] },
-  { "id": "term.ili", "zh-TW": "類流感", "aliases": ["ILI"], "en": "Influenza-like illness (ILI)", "ja": "インフルエンザ様疾患", "tl": "Sakit na tulad ng trangkaso", "vi": "Hội chứng giống cúm", "id_": "Penyakit mirip influenza", "th": "อาการคล้ายไข้หวัดใหญ่", "domain": "general", "locked": true },
-  { "id": "term.enterovirus", "zh-TW": "腸病毒", "aliases": ["手足口病", "疱疹性咽峽炎"], "en": "Enterovirus", "ja": "エンテロウイルス", "tl": "Enterovirus", "vi": "Enterovirus", "id_": "Enterovirus", "th": "เอนเทอโรไวรัส", "domain": "disease", "locked": true, "refs": ["disease.enterovirus"] },
-  { "id": "term.measles", "zh-TW": "麻疹", "aliases": [], "en": "Measles", "ja": "麻しん", "tl": "Tigdas", "vi": "Sởi", "id_": "Campak", "th": "โรคหัด", "domain": "disease", "locked": true, "refs": ["disease.measles"] },
-  { "id": "term.mmr", "zh-TW": "MMR 疫苗", "aliases": ["麻疹腮腺炎德國麻疹混合疫苗", "MMR"], "en": "MMR vaccine", "ja": "MMRワクチン", "tl": "Bakunang MMR", "vi": "Vắc-xin MMR", "id_": "Vaksin MMR", "th": "วัคซีน MMR", "domain": "vaccine", "locked": true, "refs": ["vaccine.mmr"] },
-  { "id": "term.flu-vaccine", "zh-TW": "公費流感疫苗", "aliases": ["流感疫苗"], "en": "Government-funded influenza vaccine", "ja": "公費インフルエンザワクチン", "tl": "Libreng bakuna sa trangkaso", "vi": "Vắc-xin cúm miễn phí", "id_": "Vaksin influenza gratis", "th": "วัคซีนไข้หวัดใหญ่ฟรี", "domain": "vaccine", "locked": true, "refs": ["vaccine.influenza"] },
-  { "id": "term.cdc", "zh-TW": "疾病管制署", "aliases": ["疾管署", "CDC"], "en": "Taiwan Centers for Disease Control", "ja": "台湾疾病管制署", "tl": "Taiwan CDC", "vi": "Trung tâm Kiểm soát Dịch bệnh Đài Loan", "id_": "Pusat Pengendalian Penyakit Taiwan", "th": "ศูนย์ควบคุมโรคไต้หวัน", "domain": "org", "locked": true },
-  { "id": "term.1922", "zh-TW": "防疫專線 1922", "aliases": ["1922"], "en": "1922 hotline", "ja": "防疫ホットライン 1922", "tl": "Hotline 1922", "vi": "Đường dây phòng dịch 1922", "id_": "Hotline 1922", "th": "สายด่วน 1922", "domain": "org", "locked": true },
-  { "id": "term.notifiable", "zh-TW": "法定傳染病", "aliases": [], "en": "Notifiable infectious disease", "ja": "法定感染症", "tl": "Sakit na dapat iulat", "vi": "Bệnh truyền nhiễm phải khai báo", "id_": "Penyakit menular wajib lapor", "th": "โรคติดต่อที่ต้องแจ้ง", "domain": "procedure", "locked": true },
-  { "id": "term.warning-signs", "zh-TW": "警示徵象", "aliases": ["危險徵兆"], "en": "Warning signs", "ja": "警告症状", "tl": "Mga babala", "vi": "Dấu hiệu cảnh báo", "id_": "Tanda bahaya", "th": "สัญญาณเตือน", "domain": "general", "locked": false },
-  { "id": "term.ns1", "zh-TW": "NS1 抗原快速診斷試劑", "aliases": ["NS1 快篩", "NS1"], "en": "NS1 antigen rapid test", "ja": "NS1抗原迅速検査", "tl": "NS1 rapid test", "vi": "Xét nghiệm nhanh kháng nguyên NS1", "id_": "Tes cepat antigen NS1", "th": "ชุดตรวจแอนติเจน NS1", "domain": "procedure", "locked": true },
-  { "id": "term.incubation", "zh-TW": "潛伏期", "aliases": [], "en": "Incubation period", "ja": "潜伏期間", "tl": "Panahon ng incubation", "vi": "Thời gian ủ bệnh", "id_": "Masa inkubasi", "th": "ระยะฟักตัว", "domain": "general", "locked": false }
+  {
+    "id": "term.mpox",
+    "zh-TW": "M痘",
+    "aliases": [
+      "猴痘",
+      "Monkeypox"
+    ],
+    "en": "Mpox",
+    "ja": "エムポックス",
+    "tl": "Mpox",
+    "vi": "Đậu mùa khỉ (Mpox)",
+    "id_": "Mpox",
+    "th": "ฝีดาษวานร (Mpox)",
+    "domain": "disease",
+    "locked": true,
+    "deprecated": [
+      "猴痘"
+    ],
+    "refs": [
+      "disease.mpox"
+    ],
+    "note": "2023 年起官方名稱改為 M痘"
+  },
+  {
+    "id": "term.covid-19",
+    "zh-TW": "新冠併發重症",
+    "aliases": [
+      "新冠肺炎",
+      "COVID-19",
+      "新冠"
+    ],
+    "en": "COVID-19",
+    "ja": "COVID-19",
+    "tl": "COVID-19",
+    "vi": "COVID-19",
+    "id_": "COVID-19",
+    "th": "โควิด-19",
+    "domain": "disease",
+    "locked": true,
+    "deprecated": [
+      "武漢肺炎",
+      "嚴重特殊傳染性肺炎"
+    ],
+    "refs": [
+      "disease.covid-19"
+    ]
+  },
+  {
+    "id": "term.dengue",
+    "zh-TW": "登革熱",
+    "aliases": [
+      "登革出血熱",
+      "天狗熱"
+    ],
+    "en": "Dengue fever",
+    "ja": "デング熱",
+    "tl": "Dengue",
+    "vi": "Sốt xuất huyết Dengue",
+    "id_": "Demam berdarah dengue",
+    "th": "ไข้เลือดออก",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.dengue"
+    ]
+  },
+  {
+    "id": "term.influenza",
+    "zh-TW": "流感",
+    "aliases": [
+      "季節性流感",
+      "流行性感冒"
+    ],
+    "en": "Influenza",
+    "ja": "インフルエンザ",
+    "tl": "Trangkaso",
+    "vi": "Cúm mùa",
+    "id_": "Influenza",
+    "th": "ไข้หวัดใหญ่",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.influenza"
+    ]
+  },
+  {
+    "id": "term.ili",
+    "zh-TW": "類流感",
+    "aliases": [
+      "ILI"
+    ],
+    "en": "Influenza-like illness (ILI)",
+    "ja": "インフルエンザ様疾患",
+    "tl": "Sakit na tulad ng trangkaso",
+    "vi": "Hội chứng giống cúm",
+    "id_": "Penyakit mirip influenza",
+    "th": "อาการคล้ายไข้หวัดใหญ่",
+    "domain": "general",
+    "locked": true
+  },
+  {
+    "id": "term.enterovirus",
+    "zh-TW": "腸病毒",
+    "aliases": [
+      "手足口病",
+      "疱疹性咽峽炎"
+    ],
+    "en": "Enterovirus",
+    "ja": "エンテロウイルス",
+    "tl": "Enterovirus",
+    "vi": "Enterovirus",
+    "id_": "Enterovirus",
+    "th": "เอนเทอโรไวรัส",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.enterovirus"
+    ]
+  },
+  {
+    "id": "term.measles",
+    "zh-TW": "麻疹",
+    "aliases": [],
+    "en": "Measles",
+    "ja": "麻しん",
+    "tl": "Tigdas",
+    "vi": "Sởi",
+    "id_": "Campak",
+    "th": "โรคหัด",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.measles"
+    ]
+  },
+  {
+    "id": "term.mmr",
+    "zh-TW": "MMR 疫苗",
+    "aliases": [
+      "麻疹腮腺炎德國麻疹混合疫苗",
+      "MMR"
+    ],
+    "en": "MMR vaccine",
+    "ja": "MMRワクチン",
+    "tl": "Bakunang MMR",
+    "vi": "Vắc-xin MMR",
+    "id_": "Vaksin MMR",
+    "th": "วัคซีน MMR",
+    "domain": "vaccine",
+    "locked": true,
+    "refs": [
+      "vaccine.mmr"
+    ]
+  },
+  {
+    "id": "term.flu-vaccine",
+    "zh-TW": "公費流感疫苗",
+    "aliases": [
+      "流感疫苗"
+    ],
+    "en": "Government-funded influenza vaccine",
+    "ja": "公費インフルエンザワクチン",
+    "tl": "Libreng bakuna sa trangkaso",
+    "vi": "Vắc-xin cúm miễn phí",
+    "id_": "Vaksin influenza gratis",
+    "th": "วัคซีนไข้หวัดใหญ่ฟรี",
+    "domain": "vaccine",
+    "locked": true,
+    "refs": [
+      "vaccine.influenza"
+    ]
+  },
+  {
+    "id": "term.cdc",
+    "zh-TW": "疾病管制署",
+    "aliases": [
+      "疾管署",
+      "CDC"
+    ],
+    "en": "Taiwan Centers for Disease Control",
+    "ja": "台湾疾病管制署",
+    "tl": "Taiwan CDC",
+    "vi": "Trung tâm Kiểm soát Dịch bệnh Đài Loan",
+    "id_": "Pusat Pengendalian Penyakit Taiwan",
+    "th": "ศูนย์ควบคุมโรคไต้หวัน",
+    "domain": "org",
+    "locked": true
+  },
+  {
+    "id": "term.1922",
+    "zh-TW": "防疫專線 1922",
+    "aliases": [
+      "1922"
+    ],
+    "en": "1922 hotline",
+    "ja": "防疫ホットライン 1922",
+    "tl": "Hotline 1922",
+    "vi": "Đường dây phòng dịch 1922",
+    "id_": "Hotline 1922",
+    "th": "สายด่วน 1922",
+    "domain": "org",
+    "locked": true
+  },
+  {
+    "id": "term.notifiable",
+    "zh-TW": "法定傳染病",
+    "aliases": [],
+    "en": "Notifiable infectious disease",
+    "ja": "法定感染症",
+    "tl": "Sakit na dapat iulat",
+    "vi": "Bệnh truyền nhiễm phải khai báo",
+    "id_": "Penyakit menular wajib lapor",
+    "th": "โรคติดต่อที่ต้องแจ้ง",
+    "domain": "procedure",
+    "locked": true
+  },
+  {
+    "id": "term.warning-signs",
+    "zh-TW": "警示徵象",
+    "aliases": [
+      "危險徵兆"
+    ],
+    "en": "Warning signs",
+    "ja": "警告症状",
+    "tl": "Mga babala",
+    "vi": "Dấu hiệu cảnh báo",
+    "id_": "Tanda bahaya",
+    "th": "สัญญาณเตือน",
+    "domain": "general",
+    "locked": false
+  },
+  {
+    "id": "term.ns1",
+    "zh-TW": "NS1 抗原快速診斷試劑",
+    "aliases": [
+      "NS1 快篩",
+      "NS1"
+    ],
+    "en": "NS1 antigen rapid test",
+    "ja": "NS1抗原迅速検査",
+    "tl": "NS1 rapid test",
+    "vi": "Xét nghiệm nhanh kháng nguyên NS1",
+    "id_": "Tes cepat antigen NS1",
+    "th": "ชุดตรวจแอนติเจน NS1",
+    "domain": "procedure",
+    "locked": true
+  },
+  {
+    "id": "term.incubation",
+    "zh-TW": "潛伏期",
+    "aliases": [],
+    "en": "Incubation period",
+    "ja": "潜伏期間",
+    "tl": "Panahon ng incubation",
+    "vi": "Thời gian ủ bệnh",
+    "id_": "Masa inkubasi",
+    "th": "ระยะฟักตัว",
+    "domain": "general",
+    "locked": false
+  },
+  {
+    "id": "term.tuberculosis",
+    "zh-TW": "結核病",
+    "aliases": [
+      "肺結核",
+      "TB",
+      "肺癆"
+    ],
+    "en": "Tuberculosis (TB)",
+    "ja": "結核",
+    "tl": "Tuberkulosis (TB)",
+    "vi": "Bệnh lao",
+    "id_": "Tuberkulosis (TBC)",
+    "th": "วัณโรค",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.tuberculosis"
+    ]
+  },
+  {
+    "id": "term.mdr-tb",
+    "zh-TW": "多重抗藥性結核病",
+    "aliases": [
+      "MDR-TB",
+      "抗藥性結核"
+    ],
+    "en": "Multidrug-resistant tuberculosis (MDR-TB)",
+    "ja": "多剤耐性結核",
+    "tl": "MDR-TB",
+    "vi": "Lao đa kháng thuốc",
+    "id_": "TBC resistan obat (MDR-TB)",
+    "th": "วัณโรคดื้อยาหลายขนาน",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.mdr-tb"
+    ]
+  },
+  {
+    "id": "term.hiv",
+    "zh-TW": "人類免疫缺乏病毒感染",
+    "aliases": [
+      "愛滋",
+      "HIV",
+      "愛滋病毒"
+    ],
+    "en": "HIV infection",
+    "ja": "HIV感染症",
+    "tl": "Impeksyon ng HIV",
+    "vi": "Nhiễm HIV",
+    "id_": "Infeksi HIV",
+    "th": "การติดเชื้อเอชไอวี",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.hiv"
+    ]
+  },
+  {
+    "id": "term.aids",
+    "zh-TW": "後天免疫缺乏症候群",
+    "aliases": [
+      "AIDS",
+      "愛滋病"
+    ],
+    "en": "AIDS",
+    "ja": "エイズ（後天性免疫不全症候群）",
+    "tl": "AIDS",
+    "vi": "AIDS (Hội chứng suy giảm miễn dịch mắc phải)",
+    "id_": "AIDS",
+    "th": "โรคเอดส์",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.aids"
+    ]
+  },
+  {
+    "id": "term.japanese-encephalitis",
+    "zh-TW": "日本腦炎",
+    "aliases": [
+      "JE",
+      "日腦"
+    ],
+    "en": "Japanese encephalitis",
+    "ja": "日本脳炎",
+    "tl": "Japanese encephalitis",
+    "vi": "Viêm não Nhật Bản",
+    "id_": "Ensefalitis Jepang",
+    "th": "ไข้สมองอักเสบเจอี",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.japanese-encephalitis"
+    ]
+  },
+  {
+    "id": "term.chikungunya",
+    "zh-TW": "屈公病",
+    "aliases": [
+      "屈公熱",
+      "Chikungunya"
+    ],
+    "en": "Chikungunya",
+    "ja": "チクングニア熱",
+    "tl": "Chikungunya",
+    "vi": "Sốt Chikungunya",
+    "id_": "Chikungunya",
+    "th": "โรคชิคุนกุนยา",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.chikungunya"
+    ]
+  },
+  {
+    "id": "term.pertussis",
+    "zh-TW": "百日咳",
+    "aliases": [
+      "Whooping cough"
+    ],
+    "en": "Pertussis (whooping cough)",
+    "ja": "百日咳",
+    "tl": "Pertussis (whooping cough)",
+    "vi": "Ho gà",
+    "id_": "Pertusis (batuk rejan)",
+    "th": "โรคไอกรน",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.pertussis"
+    ]
+  },
+  {
+    "id": "term.hepatitis-a",
+    "zh-TW": "A型肝炎",
+    "aliases": [
+      "A肝",
+      "急性病毒性A型肝炎",
+      "HAV"
+    ],
+    "en": "Hepatitis A",
+    "ja": "A型肝炎",
+    "tl": "Hepatitis A",
+    "vi": "Viêm gan A",
+    "id_": "Hepatitis A",
+    "th": "ไวรัสตับอักเสบเอ",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.hepatitis-a"
+    ]
+  },
+  {
+    "id": "term.hepatitis-b",
+    "zh-TW": "B型肝炎",
+    "aliases": [
+      "B肝",
+      "急性病毒性B型肝炎",
+      "HBV"
+    ],
+    "en": "Hepatitis B",
+    "ja": "B型肝炎",
+    "tl": "Hepatitis B",
+    "vi": "Viêm gan B",
+    "id_": "Hepatitis B",
+    "th": "ไวรัสตับอักเสบบี",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.hepatitis-b"
+    ]
+  },
+  {
+    "id": "term.hepatitis-c",
+    "zh-TW": "C型肝炎",
+    "aliases": [
+      "C肝",
+      "急性病毒性C型肝炎",
+      "HCV"
+    ],
+    "en": "Hepatitis C",
+    "ja": "C型肝炎",
+    "tl": "Hepatitis C",
+    "vi": "Viêm gan C",
+    "id_": "Hepatitis C",
+    "th": "ไวรัสตับอักเสบซี",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.hepatitis-c"
+    ]
+  },
+  {
+    "id": "term.varicella",
+    "zh-TW": "水痘",
+    "aliases": [
+      "出水痘",
+      "水痘併發症",
+      "Chickenpox"
+    ],
+    "en": "Chickenpox (varicella)",
+    "ja": "水痘（水ぼうそう）",
+    "tl": "Bulutong-tubig",
+    "vi": "Thủy đậu",
+    "id_": "Cacar air",
+    "th": "โรคอีสุกอีใส",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.varicella"
+    ]
+  },
+  {
+    "id": "term.rubella",
+    "zh-TW": "德國麻疹",
+    "aliases": [
+      "風疹",
+      "Rubella"
+    ],
+    "en": "Rubella",
+    "ja": "風しん",
+    "tl": "Rubella (tigdas-hangin)",
+    "vi": "Rubella (sởi Đức)",
+    "id_": "Rubela (campak Jerman)",
+    "th": "โรคหัดเยอรมัน",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.rubella"
+    ]
+  },
+  {
+    "id": "term.malaria",
+    "zh-TW": "瘧疾",
+    "aliases": [
+      "Malaria"
+    ],
+    "en": "Malaria",
+    "ja": "マラリア",
+    "tl": "Malarya",
+    "vi": "Sốt rét",
+    "id_": "Malaria",
+    "th": "มาลาเรีย",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.malaria"
+    ]
+  },
+  {
+    "id": "term.rabies",
+    "zh-TW": "狂犬病",
+    "aliases": [
+      "恐水病",
+      "Rabies"
+    ],
+    "en": "Rabies",
+    "ja": "狂犬病",
+    "tl": "Rabis",
+    "vi": "Bệnh dại",
+    "id_": "Rabies",
+    "th": "โรคพิษสุนัขบ้า",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.rabies"
+    ]
+  },
+  {
+    "id": "term.zika",
+    "zh-TW": "茲卡病毒感染症",
+    "aliases": [
+      "茲卡",
+      "Zika"
+    ],
+    "en": "Zika virus infection",
+    "ja": "ジカウイルス感染症",
+    "tl": "Zika",
+    "vi": "Nhiễm vi-rút Zika",
+    "id_": "Infeksi virus Zika",
+    "th": "โรคติดเชื้อไวรัสซิกา",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.zika"
+    ]
+  },
+  {
+    "id": "term.cholera",
+    "zh-TW": "霍亂",
+    "aliases": [
+      "Cholera"
+    ],
+    "en": "Cholera",
+    "ja": "コレラ",
+    "tl": "Kolera",
+    "vi": "Bệnh tả",
+    "id_": "Kolera",
+    "th": "อหิวาตกโรค",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.cholera"
+    ]
+  },
+  {
+    "id": "term.typhoid",
+    "zh-TW": "傷寒",
+    "aliases": [
+      "Typhoid"
+    ],
+    "en": "Typhoid fever",
+    "ja": "腸チフス",
+    "tl": "Tipus (typhoid fever)",
+    "vi": "Thương hàn",
+    "id_": "Demam tifoid",
+    "th": "ไข้ไทฟอยด์",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.typhoid-fever"
+    ]
+  },
+  {
+    "id": "term.shigellosis",
+    "zh-TW": "桿菌性痢疾",
+    "aliases": [
+      "細菌性痢疾",
+      "志賀氏桿菌"
+    ],
+    "en": "Shigellosis",
+    "ja": "細菌性赤痢",
+    "tl": "Shigellosis (disenterya)",
+    "vi": "Lỵ trực khuẩn",
+    "id_": "Disentri basiler (shigelosis)",
+    "th": "โรคบิดชิเกลลา",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.shigellosis"
+    ]
+  },
+  {
+    "id": "term.diphtheria",
+    "zh-TW": "白喉",
+    "aliases": [
+      "Diphtheria"
+    ],
+    "en": "Diphtheria",
+    "ja": "ジフテリア",
+    "tl": "Dipterya",
+    "vi": "Bạch hầu",
+    "id_": "Difteri",
+    "th": "โรคคอตีบ",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.diphtheria"
+    ]
+  },
+  {
+    "id": "term.tetanus",
+    "zh-TW": "破傷風",
+    "aliases": [
+      "Tetanus"
+    ],
+    "en": "Tetanus",
+    "ja": "破傷風",
+    "tl": "Tetano",
+    "vi": "Uốn ván",
+    "id_": "Tetanus",
+    "th": "โรคบาดทะยัก",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.tetanus"
+    ]
+  },
+  {
+    "id": "term.polio",
+    "zh-TW": "小兒麻痺症",
+    "aliases": [
+      "小兒麻痺",
+      "脊髓灰質炎",
+      "Polio"
+    ],
+    "en": "Polio",
+    "ja": "ポリオ（急性灰白髄炎）",
+    "tl": "Polyo",
+    "vi": "Bại liệt",
+    "id_": "Polio",
+    "th": "โรคโปลิโอ",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.polio-afp"
+    ]
+  },
+  {
+    "id": "term.mumps",
+    "zh-TW": "流行性腮腺炎",
+    "aliases": [
+      "腮腺炎",
+      "豬頭皮"
+    ],
+    "en": "Mumps",
+    "ja": "おたふくかぜ（流行性耳下腺炎）",
+    "tl": "Beke (mumps)",
+    "vi": "Quai bị",
+    "id_": "Gondongan (parotitis)",
+    "th": "โรคคางทูม",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.mumps"
+    ]
+  },
+  {
+    "id": "term.scrub-typhus",
+    "zh-TW": "恙蟲病",
+    "aliases": [
+      "叢林斑疹傷寒"
+    ],
+    "en": "Scrub typhus",
+    "ja": "ツツガムシ病",
+    "tl": "Scrub typhus",
+    "vi": "Sốt mò",
+    "id_": "Tifus semak (scrub typhus)",
+    "th": "โรคสครับไทฟัส",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.scrub-typhus"
+    ]
+  },
+  {
+    "id": "term.leptospirosis",
+    "zh-TW": "鉤端螺旋體病",
+    "aliases": [
+      "威爾氏病"
+    ],
+    "en": "Leptospirosis",
+    "ja": "レプトスピラ症",
+    "tl": "Leptospirosis",
+    "vi": "Bệnh xoắn khuẩn vàng da (Leptospirosis)",
+    "id_": "Leptospirosis",
+    "th": "โรคเลปโตสไปโรซิส (ฉี่หนู)",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.leptospirosis"
+    ]
+  },
+  {
+    "id": "term.melioidosis",
+    "zh-TW": "類鼻疽",
+    "aliases": [
+      "Melioidosis"
+    ],
+    "en": "Melioidosis",
+    "ja": "類鼻疽",
+    "tl": "Melioidosis",
+    "vi": "Bệnh Whitmore (Melioidosis)",
+    "id_": "Melioidosis",
+    "th": "โรคเมลิออยโดสิส",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.melioidosis"
+    ]
+  },
+  {
+    "id": "term.legionellosis",
+    "zh-TW": "退伍軍人病",
+    "aliases": [
+      "退伍軍人症",
+      "軍團菌"
+    ],
+    "en": "Legionnaires' disease",
+    "ja": "レジオネラ症",
+    "tl": "Legionnaires' disease",
+    "vi": "Bệnh Legionella",
+    "id_": "Penyakit Legionnaires",
+    "th": "โรคลีเจียนแนร์",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.legionellosis"
+    ]
+  },
+  {
+    "id": "term.syphilis",
+    "zh-TW": "梅毒",
+    "aliases": [
+      "Syphilis"
+    ],
+    "en": "Syphilis",
+    "ja": "梅毒",
+    "tl": "Sipilis",
+    "vi": "Giang mai",
+    "id_": "Sifilis",
+    "th": "ซิฟิลิส",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.syphilis"
+    ]
+  },
+  {
+    "id": "term.gonorrhea",
+    "zh-TW": "淋病",
+    "aliases": [
+      "Gonorrhea"
+    ],
+    "en": "Gonorrhoea",
+    "ja": "淋菌感染症",
+    "tl": "Gonorea (tulo)",
+    "vi": "Bệnh lậu",
+    "id_": "Gonore (kencing nanah)",
+    "th": "หนองใน",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.gonorrhea"
+    ]
+  },
+  {
+    "id": "term.leprosy",
+    "zh-TW": "漢生病",
+    "aliases": [
+      "Leprosy"
+    ],
+    "en": "Hansen's disease (leprosy)",
+    "ja": "ハンセン病",
+    "tl": "Ketong (Hansen's disease)",
+    "vi": "Bệnh phong (Hansen)",
+    "id_": "Kusta",
+    "th": "โรคเรื้อน",
+    "domain": "disease",
+    "locked": true,
+    "deprecated": [
+      "痲瘋病"
+    ],
+    "refs": [
+      "disease.leprosy"
+    ],
+    "note": "官方用語為漢生病，避免使用帶有歧視意涵之舊稱"
+  },
+  {
+    "id": "term.mers",
+    "zh-TW": "中東呼吸症候群冠狀病毒感染症",
+    "aliases": [
+      "MERS",
+      "中東呼吸症候群"
+    ],
+    "en": "Middle East respiratory syndrome (MERS)",
+    "ja": "中東呼吸器症候群（MERS）",
+    "tl": "MERS",
+    "vi": "Hội chứng hô hấp Trung Đông (MERS)",
+    "id_": "MERS",
+    "th": "โรคทางเดินหายใจตะวันออกกลาง (MERS)",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.mers"
+    ]
+  },
+  {
+    "id": "term.novel-influenza-a",
+    "zh-TW": "新型A型流感",
+    "aliases": [
+      "禽流感",
+      "H5N1",
+      "H7N9"
+    ],
+    "en": "Novel influenza A (avian influenza)",
+    "ja": "新型インフルエンザ（鳥インフルエンザ）",
+    "tl": "Bagong influenza A (bird flu)",
+    "vi": "Cúm A chủng mới (cúm gia cầm)",
+    "id_": "Influenza A baru (flu burung)",
+    "th": "ไข้หวัดใหญ่สายพันธุ์ใหม่ชนิดเอ (ไข้หวัดนก)",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.novel-influenza-a"
+    ]
+  },
+  {
+    "id": "term.ebola",
+    "zh-TW": "伊波拉病毒感染",
+    "aliases": [
+      "伊波拉",
+      "Ebola"
+    ],
+    "en": "Ebola virus disease",
+    "ja": "エボラ出血熱",
+    "tl": "Ebola",
+    "vi": "Bệnh do vi-rút Ebola",
+    "id_": "Penyakit virus Ebola",
+    "th": "โรคติดเชื้อไวรัสอีโบลา",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.ebola"
+    ]
+  },
+  {
+    "id": "term.yellow-fever",
+    "zh-TW": "黃熱病",
+    "aliases": [
+      "Yellow fever"
+    ],
+    "en": "Yellow fever",
+    "ja": "黄熱",
+    "tl": "Yellow fever",
+    "vi": "Sốt vàng",
+    "id_": "Demam kuning",
+    "th": "ไข้เหลือง",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.yellow-fever"
+    ]
+  },
+  {
+    "id": "term.plague",
+    "zh-TW": "鼠疫",
+    "aliases": [
+      "黑死病"
+    ],
+    "en": "Plague",
+    "ja": "ペスト",
+    "tl": "Salot (plague)",
+    "vi": "Bệnh dịch hạch",
+    "id_": "Pes",
+    "th": "กาฬโรค",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.plague"
+    ]
+  },
+  {
+    "id": "term.sars",
+    "zh-TW": "嚴重急性呼吸道症候群",
+    "aliases": [
+      "SARS"
+    ],
+    "en": "Severe acute respiratory syndrome (SARS)",
+    "ja": "重症急性呼吸器症候群（SARS）",
+    "tl": "SARS",
+    "vi": "SARS",
+    "id_": "SARS",
+    "th": "โรคซาร์ส",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.sars"
+    ]
+  },
+  {
+    "id": "term.ehec",
+    "zh-TW": "腸道出血性大腸桿菌感染症",
+    "aliases": [
+      "O157",
+      "EHEC"
+    ],
+    "en": "Enterohaemorrhagic E. coli (EHEC) infection",
+    "ja": "腸管出血性大腸菌感染症",
+    "tl": "Impeksyon ng EHEC",
+    "vi": "Nhiễm E. coli gây xuất huyết đường ruột",
+    "id_": "Infeksi E. coli enterohemoragik",
+    "th": "การติดเชื้ออีโคไลชนิดก่อโรคลำไส้อักเสบมีเลือดออก",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.ehec"
+    ]
+  },
+  {
+    "id": "term.hantavirus",
+    "zh-TW": "漢他病毒症候群",
+    "aliases": [
+      "漢他病毒"
+    ],
+    "en": "Hantavirus syndrome",
+    "ja": "ハンタウイルス感染症",
+    "tl": "Hantavirus",
+    "vi": "Hội chứng do vi-rút Hanta",
+    "id_": "Sindrom hantavirus",
+    "th": "กลุ่มอาการจากไวรัสฮันตา",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.hantavirus"
+    ]
+  },
+  {
+    "id": "term.west-nile",
+    "zh-TW": "西尼羅熱",
+    "aliases": [
+      "西尼羅病毒"
+    ],
+    "en": "West Nile fever",
+    "ja": "ウエストナイル熱",
+    "tl": "West Nile fever",
+    "vi": "Sốt Tây sông Nile",
+    "id_": "Demam West Nile",
+    "th": "ไข้เวสต์ไนล์",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.west-nile-fever"
+    ]
+  },
+  {
+    "id": "term.ipd",
+    "zh-TW": "侵襲性肺炎鏈球菌感染症",
+    "aliases": [
+      "IPD",
+      "肺炎鏈球菌"
+    ],
+    "en": "Invasive pneumococcal disease",
+    "ja": "侵襲性肺炎球菌感染症",
+    "tl": "Invasive pneumococcal disease",
+    "vi": "Bệnh phế cầu khuẩn xâm lấn",
+    "id_": "Penyakit pneumokokus invasif",
+    "th": "โรคติดเชื้อนิวโมคอคคัสชนิดรุกราน",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.ipd"
+    ]
+  },
+  {
+    "id": "term.botulism",
+    "zh-TW": "肉毒桿菌中毒",
+    "aliases": [
+      "Botulism"
+    ],
+    "en": "Botulism",
+    "ja": "ボツリヌス症",
+    "tl": "Botulismo",
+    "vi": "Ngộ độc botulinum",
+    "id_": "Botulisme",
+    "th": "โรคโบทูลิซึม",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.botulism"
+    ]
+  },
+  {
+    "id": "term.cjd",
+    "zh-TW": "庫賈氏病",
+    "aliases": [
+      "CJD"
+    ],
+    "en": "Creutzfeldt-Jakob disease",
+    "ja": "クロイツフェルト・ヤコブ病",
+    "tl": "Creutzfeldt-Jakob disease",
+    "vi": "Bệnh Creutzfeldt-Jakob",
+    "id_": "Penyakit Creutzfeldt-Jakob",
+    "th": "โรคครอยต์ซเฟลดต์-จาค็อบ",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.cjd"
+    ]
+  },
+  {
+    "id": "term.listeriosis",
+    "zh-TW": "李斯特菌症",
+    "aliases": [
+      "Listeria"
+    ],
+    "en": "Listeriosis",
+    "ja": "リステリア症",
+    "tl": "Listeriosis",
+    "vi": "Bệnh do Listeria",
+    "id_": "Listeriosis",
+    "th": "โรคลิสทีเรีย",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.listeriosis"
+    ]
+  },
+  {
+    "id": "term.q-fever",
+    "zh-TW": "Q熱",
+    "aliases": [
+      "Q fever"
+    ],
+    "en": "Q fever",
+    "ja": "Q熱",
+    "tl": "Q fever",
+    "vi": "Sốt Q",
+    "id_": "Demam Q",
+    "th": "ไข้คิว",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.q-fever"
+    ]
+  },
+  {
+    "id": "term.lyme",
+    "zh-TW": "萊姆病",
+    "aliases": [
+      "Lyme"
+    ],
+    "en": "Lyme disease",
+    "ja": "ライム病",
+    "tl": "Lyme disease",
+    "vi": "Bệnh Lyme",
+    "id_": "Penyakit Lyme",
+    "th": "โรคไลม์",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.lyme-disease"
+    ]
+  },
+  {
+    "id": "term.toxoplasmosis",
+    "zh-TW": "弓形蟲感染症",
+    "aliases": [
+      "弓漿蟲"
+    ],
+    "en": "Toxoplasmosis",
+    "ja": "トキソプラズマ症",
+    "tl": "Toxoplasmosis",
+    "vi": "Bệnh do Toxoplasma",
+    "id_": "Toksoplasmosis",
+    "th": "โรคท็อกโซพลาสโมซิส",
+    "domain": "disease",
+    "locked": true,
+    "refs": [
+      "disease.toxoplasmosis"
+    ]
+  },
+  {
+    "id": "term.covid-vaccine",
+    "zh-TW": "新冠疫苗",
+    "aliases": [
+      "COVID-19 疫苗"
+    ],
+    "en": "COVID-19 vaccine",
+    "ja": "新型コロナワクチン",
+    "tl": "Bakuna sa COVID-19",
+    "vi": "Vắc-xin COVID-19",
+    "id_": "Vaksin COVID-19",
+    "th": "วัคซีนโควิด-19",
+    "domain": "vaccine",
+    "locked": true,
+    "refs": [
+      "vaccine.covid-19"
+    ]
+  },
+  {
+    "id": "term.ev71-vaccine",
+    "zh-TW": "腸病毒 71 型疫苗",
+    "aliases": [
+      "EV71 疫苗"
+    ],
+    "en": "EV71 vaccine",
+    "ja": "EV71ワクチン",
+    "tl": "Bakuna sa EV71",
+    "vi": "Vắc-xin EV71",
+    "id_": "Vaksin EV71",
+    "th": "วัคซีน EV71",
+    "domain": "vaccine",
+    "locked": true,
+    "refs": [
+      "vaccine.ev71"
+    ]
+  },
+  {
+    "id": "term.hpv-vaccine",
+    "zh-TW": "HPV 疫苗",
+    "aliases": [
+      "人類乳突病毒疫苗",
+      "子宮頸癌疫苗"
+    ],
+    "en": "HPV vaccine",
+    "ja": "HPVワクチン",
+    "tl": "Bakuna sa HPV",
+    "vi": "Vắc-xin HPV",
+    "id_": "Vaksin HPV",
+    "th": "วัคซีนเอชพีวี",
+    "domain": "vaccine",
+    "locked": true,
+    "refs": [
+      "vaccine.hpv"
+    ]
+  },
+  {
+    "id": "term.pneumococcal-vaccine",
+    "zh-TW": "肺炎鏈球菌疫苗",
+    "aliases": [
+      "PCV",
+      "PPV23",
+      "肺炎疫苗"
+    ],
+    "en": "Pneumococcal vaccine",
+    "ja": "肺炎球菌ワクチン",
+    "tl": "Bakuna sa pneumococcus",
+    "vi": "Vắc-xin phế cầu",
+    "id_": "Vaksin pneumokokus",
+    "th": "วัคซีนนิวโมคอคคัส",
+    "domain": "vaccine",
+    "locked": true,
+    "refs": [
+      "vaccine.pneumococcal"
+    ]
+  },
+  {
+    "id": "term.hepb-vaccine",
+    "zh-TW": "B 型肝炎疫苗",
+    "aliases": [
+      "B肝疫苗"
+    ],
+    "en": "Hepatitis B vaccine",
+    "ja": "B型肝炎ワクチン",
+    "tl": "Bakuna sa Hepatitis B",
+    "vi": "Vắc-xin viêm gan B",
+    "id_": "Vaksin hepatitis B",
+    "th": "วัคซีนไวรัสตับอักเสบบี",
+    "domain": "vaccine",
+    "locked": true,
+    "refs": [
+      "vaccine.hepatitis-b"
+    ]
+  },
+  {
+    "id": "term.varicella-vaccine",
+    "zh-TW": "水痘疫苗",
+    "aliases": [],
+    "en": "Varicella vaccine",
+    "ja": "水痘ワクチン",
+    "tl": "Bakuna sa bulutong-tubig",
+    "vi": "Vắc-xin thủy đậu",
+    "id_": "Vaksin cacar air",
+    "th": "วัคซีนอีสุกอีใส",
+    "domain": "vaccine",
+    "locked": true,
+    "refs": [
+      "vaccine.varicella"
+    ]
+  },
+  {
+    "id": "term.bcg",
+    "zh-TW": "卡介苗",
+    "aliases": [
+      "BCG"
+    ],
+    "en": "BCG vaccine",
+    "ja": "BCGワクチン",
+    "tl": "Bakunang BCG",
+    "vi": "Vắc-xin BCG",
+    "id_": "Vaksin BCG",
+    "th": "วัคซีนบีซีจี",
+    "domain": "vaccine",
+    "locked": true,
+    "refs": [
+      "vaccine.bcg"
+    ]
+  },
+  {
+    "id": "term.je-vaccine",
+    "zh-TW": "日本腦炎疫苗",
+    "aliases": [
+      "日腦疫苗"
+    ],
+    "en": "Japanese encephalitis vaccine",
+    "ja": "日本脳炎ワクチン",
+    "tl": "Bakuna sa Japanese encephalitis",
+    "vi": "Vắc-xin viêm não Nhật Bản",
+    "id_": "Vaksin ensefalitis Jepang",
+    "th": "วัคซีนไข้สมองอักเสบเจอี",
+    "domain": "vaccine",
+    "locked": true,
+    "refs": [
+      "vaccine.je"
+    ]
+  },
+  {
+    "id": "term.dtap-hib-ipv",
+    "zh-TW": "五合一疫苗",
+    "aliases": [
+      "DTaP-Hib-IPV",
+      "白喉破傷風非細胞性百日咳 b 型嗜血桿菌及不活化小兒麻痺五合一疫苗"
+    ],
+    "en": "DTaP-Hib-IPV (5-in-1) vaccine",
+    "ja": "五種混合ワクチン",
+    "tl": "5-in-1 na bakuna",
+    "vi": "Vắc-xin 5 trong 1",
+    "id_": "Vaksin 5-in-1 (DTaP-Hib-IPV)",
+    "th": "วัคซีนรวม 5 โรค",
+    "domain": "vaccine",
+    "locked": true,
+    "refs": [
+      "vaccine.dtap-hib-ipv"
+    ]
+  },
+  {
+    "id": "term.mpox-vaccine",
+    "zh-TW": "M痘疫苗",
+    "aliases": [
+      "猴痘疫苗",
+      "JYNNEOS"
+    ],
+    "en": "Mpox vaccine",
+    "ja": "エムポックスワクチン",
+    "tl": "Bakuna sa Mpox",
+    "vi": "Vắc-xin đậu mùa khỉ (Mpox)",
+    "id_": "Vaksin Mpox",
+    "th": "วัคซีนฝีดาษวานร",
+    "domain": "vaccine",
+    "locked": true,
+    "deprecated": [
+      "猴痘疫苗"
+    ],
+    "refs": [
+      "vaccine.mpox"
+    ]
+  },
+  {
+    "id": "term.health-bureau",
+    "zh-TW": "衛生局",
+    "aliases": [
+      "縣市衛生局"
+    ],
+    "en": "Local health bureau",
+    "ja": "地方衛生局",
+    "tl": "Lokal na kawanihan ng kalusugan",
+    "vi": "Sở Y tế địa phương",
+    "id_": "Dinas kesehatan setempat",
+    "th": "สำนักงานสาธารณสุขท้องถิ่น",
+    "domain": "org",
+    "locked": true
+  },
+  {
+    "id": "term.health-center",
+    "zh-TW": "衛生所",
+    "aliases": [
+      "健康服務中心"
+    ],
+    "en": "Public health centre",
+    "ja": "保健所",
+    "tl": "Health center",
+    "vi": "Trạm y tế",
+    "id_": "Puskesmas",
+    "th": "สถานีอนามัย",
+    "domain": "org",
+    "locked": true
+  },
+  {
+    "id": "term.travel-clinic",
+    "zh-TW": "旅遊醫學門診",
+    "aliases": [
+      "旅遊門診"
+    ],
+    "en": "Travel medicine clinic",
+    "ja": "トラベルクリニック",
+    "tl": "Travel medicine clinic",
+    "vi": "Phòng khám y học du lịch",
+    "id_": "Klinik kedokteran perjalanan",
+    "th": "คลินิกเวชศาสตร์การเดินทาง",
+    "domain": "org",
+    "locked": true
+  },
+  {
+    "id": "term.165",
+    "zh-TW": "165 反詐騙專線",
+    "aliases": [
+      "165"
+    ],
+    "en": "165 anti-fraud hotline",
+    "ja": "詐欺防止ホットライン165",
+    "tl": "165 anti-fraud hotline",
+    "vi": "Đường dây chống lừa đảo 165",
+    "id_": "Hotline anti-penipuan 165",
+    "th": "สายด่วนป้องกันการฉ้อโกง 165",
+    "domain": "org",
+    "locked": true
+  },
+  {
+    "id": "term.nidss",
+    "zh-TW": "傳染病統計資料查詢系統",
+    "aliases": [
+      "NIDSS"
+    ],
+    "en": "Taiwan National Infectious Disease Statistics System (NIDSS)",
+    "ja": "感染症統計データ照会システム（NIDSS）",
+    "tl": "NIDSS",
+    "vi": "Hệ thống thống kê bệnh truyền nhiễm (NIDSS)",
+    "id_": "Sistem statistik penyakit menular (NIDSS)",
+    "th": "ระบบสถิติโรคติดต่อ (NIDSS)",
+    "domain": "org",
+    "locked": true,
+    "refs": [
+      "dataset.nidss"
+    ]
+  },
+  {
+    "id": "term.eic",
+    "zh-TW": "疫情中心",
+    "aliases": [
+      "疫情監測中心"
+    ],
+    "en": "Epidemic Intelligence Center",
+    "ja": "疫情センター",
+    "tl": "Epidemic Intelligence Center",
+    "vi": "Trung tâm Tình báo Dịch tễ",
+    "id_": "Pusat Intelijen Epidemi",
+    "th": "ศูนย์ข่าวกรองการระบาด",
+    "domain": "org",
+    "locked": true
+  },
+  {
+    "id": "term.travel-notice",
+    "zh-TW": "旅遊疫情建議等級",
+    "aliases": [
+      "旅遊警示",
+      "第一級注意",
+      "第二級警示",
+      "第三級警告"
+    ],
+    "en": "Travel health notice level",
+    "ja": "渡航疫情勧告レベル",
+    "tl": "Antas ng travel health notice",
+    "vi": "Mức cảnh báo dịch tễ du lịch",
+    "id_": "Tingkat peringatan kesehatan perjalanan",
+    "th": "ระดับคำเตือนด้านสุขภาพสำหรับการเดินทาง",
+    "domain": "procedure",
+    "locked": true,
+    "refs": [
+      "dataset.travel-alert-levels"
+    ]
+  },
+  {
+    "id": "term.self-monitoring",
+    "zh-TW": "自主健康管理",
+    "aliases": [],
+    "en": "Self-health monitoring",
+    "ja": "自主健康管理",
+    "tl": "Sariling pagsubaybay sa kalusugan",
+    "vi": "Tự theo dõi sức khỏe",
+    "id_": "Pemantauan kesehatan mandiri",
+    "th": "การเฝ้าระวังสุขภาพตนเอง",
+    "domain": "procedure",
+    "locked": true
+  },
+  {
+    "id": "term.dots",
+    "zh-TW": "都治",
+    "aliases": [
+      "DOTS",
+      "直接觀察治療"
+    ],
+    "en": "Directly observed treatment (DOTS)",
+    "ja": "直接服薬確認療法（DOTS）",
+    "tl": "DOTS (direktang pinapanood na gamutan)",
+    "vi": "Điều trị có giám sát trực tiếp (DOTS)",
+    "id_": "Pengobatan dengan pengawasan langsung (DOTS)",
+    "th": "การรักษาแบบมีพี่เลี้ยงกำกับ (DOTS)",
+    "domain": "procedure",
+    "locked": true,
+    "refs": [
+      "disease.tuberculosis"
+    ]
+  },
+  {
+    "id": "term.pep",
+    "zh-TW": "暴露後預防性投藥",
+    "aliases": [
+      "PEP"
+    ],
+    "en": "Post-exposure prophylaxis (PEP)",
+    "ja": "曝露後予防内服（PEP）",
+    "tl": "Post-exposure prophylaxis (PEP)",
+    "vi": "Dự phòng sau phơi nhiễm (PEP)",
+    "id_": "Profilaksis pascapajanan (PEP)",
+    "th": "การป้องกันหลังสัมผัส (PEP)",
+    "domain": "procedure",
+    "locked": true,
+    "refs": [
+      "disease.hiv"
+    ]
+  },
+  {
+    "id": "term.prep",
+    "zh-TW": "暴露前預防性投藥",
+    "aliases": [
+      "PrEP"
+    ],
+    "en": "Pre-exposure prophylaxis (PrEP)",
+    "ja": "曝露前予防内服（PrEP）",
+    "tl": "Pre-exposure prophylaxis (PrEP)",
+    "vi": "Dự phòng trước phơi nhiễm (PrEP)",
+    "id_": "Profilaksis prapajanan (PrEP)",
+    "th": "การป้องกันก่อนสัมผัส (PrEP)",
+    "domain": "procedure",
+    "locked": true,
+    "refs": [
+      "disease.hiv"
+    ]
+  },
+  {
+    "id": "term.contact-screening",
+    "zh-TW": "接觸者檢查",
+    "aliases": [
+      "接觸者追蹤"
+    ],
+    "en": "Contact screening",
+    "ja": "接触者健診",
+    "tl": "Pagsusuri sa mga nakasalamuha",
+    "vi": "Khám sàng lọc người tiếp xúc",
+    "id_": "Pemeriksaan kontak",
+    "th": "การตรวจคัดกรองผู้สัมผัส",
+    "domain": "procedure",
+    "locked": true
+  },
+  {
+    "id": "term.container-check",
+    "zh-TW": "巡倒清刷",
+    "aliases": [
+      "巡、倒、清、刷",
+      "孳生源清除"
+    ],
+    "en": "Inspect, empty, clean, scrub",
+    "ja": "点検・水捨て・除去・ブラシ洗い",
+    "tl": "Suriin, itapon, linisin, kuskusin",
+    "vi": "Kiểm tra, đổ, dọn, cọ rửa",
+    "id_": "Periksa, buang, bersihkan, sikat",
+    "th": "สำรวจ เท ทิ้ง ขัด",
+    "domain": "procedure",
+    "locked": true,
+    "refs": [
+      "disease.dengue"
+    ]
+  }
 ]

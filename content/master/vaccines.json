@@ -1,6 +1,148 @@
 [
-  { "id": "vaccine.influenza", "slug": "influenza", "name": "流感疫苗", "nameEn": "Influenza vaccine", "diseases": ["disease.influenza"] },
-  { "id": "vaccine.mmr", "slug": "mmr", "name": "MMR 疫苗", "nameEn": "MMR vaccine", "diseases": ["disease.measles"] },
-  { "id": "vaccine.covid-19", "slug": "covid-19", "name": "新冠疫苗", "nameEn": "COVID-19 vaccine", "diseases": ["disease.covid-19"] },
-  { "id": "vaccine.ev71", "slug": "ev71", "name": "腸病毒 71 型疫苗", "nameEn": "EV71 vaccine", "diseases": ["disease.enterovirus"] }
+  {
+    "id": "vaccine.influenza",
+    "slug": "influenza",
+    "name": "流感疫苗",
+    "nameEn": "Influenza vaccine",
+    "diseases": [
+      "disease.influenza"
+    ],
+    "hasPage": true
+  },
+  {
+    "id": "vaccine.mmr",
+    "slug": "mmr",
+    "name": "MMR 疫苗",
+    "nameEn": "MMR vaccine",
+    "diseases": [
+      "disease.measles",
+      "disease.mumps",
+      "disease.rubella"
+    ],
+    "hasPage": true
+  },
+  {
+    "id": "vaccine.covid-19",
+    "slug": "covid-19",
+    "name": "新冠疫苗",
+    "nameEn": "COVID-19 vaccine",
+    "diseases": [
+      "disease.covid-19"
+    ],
+    "hasPage": true
+  },
+  {
+    "id": "vaccine.ev71",
+    "slug": "ev71",
+    "name": "腸病毒 71 型疫苗",
+    "nameEn": "EV71 vaccine",
+    "diseases": [
+      "disease.enterovirus"
+    ],
+    "hasPage": true,
+    "publicFunded": false
+  },
+  {
+    "id": "vaccine.hpv",
+    "slug": "hpv",
+    "name": "HPV 疫苗",
+    "nameEn": "HPV vaccine",
+    "diseases": [],
+    "hasPage": true
+  },
+  {
+    "id": "vaccine.pneumococcal",
+    "slug": "pneumococcal",
+    "name": "肺炎鏈球菌疫苗",
+    "nameEn": "Pneumococcal vaccine",
+    "diseases": [
+      "disease.ipd"
+    ],
+    "hasPage": true
+  },
+  {
+    "id": "vaccine.hepatitis-b",
+    "slug": "hepatitis-b",
+    "name": "B 型肝炎疫苗",
+    "nameEn": "Hepatitis B vaccine",
+    "diseases": [
+      "disease.hepatitis-b"
+    ],
+    "hasPage": true
+  },
+  {
+    "id": "vaccine.varicella",
+    "slug": "varicella",
+    "name": "水痘疫苗",
+    "nameEn": "Varicella vaccine",
+    "diseases": [
+      "disease.varicella"
+    ],
+    "hasPage": true
+  },
+  {
+    "id": "vaccine.bcg",
+    "slug": "bcg",
+    "name": "卡介苗",
+    "nameEn": "BCG vaccine",
+    "diseases": [
+      "disease.tuberculosis"
+    ],
+    "hasPage": false
+  },
+  {
+    "id": "vaccine.je",
+    "slug": "je",
+    "name": "日本腦炎疫苗",
+    "nameEn": "Japanese encephalitis vaccine",
+    "diseases": [
+      "disease.japanese-encephalitis"
+    ],
+    "hasPage": false
+  },
+  {
+    "id": "vaccine.dtap-hib-ipv",
+    "slug": "dtap-hib-ipv",
+    "name": "五合一疫苗",
+    "nameEn": "DTaP-Hib-IPV vaccine",
+    "diseases": [
+      "disease.diphtheria",
+      "disease.tetanus",
+      "disease.pertussis",
+      "disease.hib",
+      "disease.polio-afp"
+    ],
+    "hasPage": false
+  },
+  {
+    "id": "vaccine.hepatitis-a",
+    "slug": "hepatitis-a",
+    "name": "A 型肝炎疫苗",
+    "nameEn": "Hepatitis A vaccine",
+    "diseases": [
+      "disease.hepatitis-a"
+    ],
+    "hasPage": false
+  },
+  {
+    "id": "vaccine.mpox",
+    "slug": "mpox",
+    "name": "M痘疫苗",
+    "nameEn": "Mpox vaccine",
+    "diseases": [
+      "disease.mpox"
+    ],
+    "hasPage": false
+  },
+  {
+    "id": "vaccine.rabies",
+    "slug": "rabies",
+    "name": "狂犬病疫苗",
+    "nameEn": "Rabies vaccine",
+    "diseases": [
+      "disease.rabies"
+    ],
+    "hasPage": false,
+    "publicFunded": "暴露後"
+  }
 ]

@@ -1,0 +1,72 @@
+{
+  "id": "faq.dengue-container-check",
+  "type": "faq",
+  "title": "防登革熱說的「巡、倒、清、刷」是什麼？",
+  "question": "防登革熱說的「巡、倒、清、刷」是什麼？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2016-05-01",
+  "reviewedAt": "2026-07-20",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.dengue"
+  ],
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-07-20",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "「巡倒清刷」：巡視積水容器、倒掉積水、清除不需要的容器、刷洗內壁去除蟲卵，每週一次可中斷斑蚊繁殖。",
+  "keywords": [
+    "登革熱",
+    "巡倒清刷",
+    "積水容器",
+    "孳生源"
+  ],
+  "answerMarkdown": "「巡倒清刷」是清除病媒蚊孳生源的四個步驟，建議**每週做一次**：\n\n1. **巡**：巡視住家室內外可能積水的容器，如花盆底盤、水桶、廢輪胎。\n2. **倒**：倒掉積水。\n3. **清**：清除不需要的容器。\n4. **刷**：刷洗容器內壁，去除斑蚊蟲卵。\n\n斑蚊從卵到成蚊約 7–10 天，每週清一次就能中斷繁殖。",
+  "structured": {
+    "frequency": "每週一次"
+  },
+  "i18n": {
+    "en": {
+      "question": "What does \"inspect, empty, clean, scrub\" mean for dengue prevention?",
+      "answerMarkdown": "These are four steps to remove mosquito breeding sites, done **once a week**:\n\n1. **Inspect** containers inside and outside the home that may hold water, such as plant saucers, buckets and old tyres.\n2. **Empty** the standing water.\n3. **Clean** away containers you do not need.\n4. **Scrub** the inside walls to remove mosquito eggs.\n\nAedes mosquitoes take about 7–10 days to develop from egg to adult, so weekly cleaning breaks the cycle."
+    }
+  }
+}

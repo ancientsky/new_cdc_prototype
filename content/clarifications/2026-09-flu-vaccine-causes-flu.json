@@ -1,0 +1,112 @@
+{
+  "id": "clar.2026-09-flu-vaccine-causes-flu",
+  "type": "clarification",
+  "title": "網傳「打流感疫苗會得流感、長輩打完會死」並非事實",
+  "owner": "unit.pr",
+  "publishedAt": "2026-09-10",
+  "reviewedAt": "2026-09-10",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "rumor"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "vaccine.influenza"
+  ],
+  "diseases": [
+    "disease.influenza"
+  ],
+  "vaccines": [
+    "vaccine.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-10"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-12",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-14",
+      "reviewer": "簽約譯者（菲律賓文）"
+    },
+    "vi": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-14",
+      "reviewer": "簽約譯者（越南文）"
+    },
+    "id": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-14",
+      "reviewer": "簽約譯者（印尼文）"
+    },
+    "th": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-14",
+      "reviewer": "簽約譯者（泰文）"
+    }
+  },
+  "summary": "公費流感疫苗是不活化疫苗，不會因接種而得流感；常見反應為注射部位疼痛與輕微發燒，長者流感重症風險遠高於疫苗風險。",
+  "keywords": [
+    "流感疫苗",
+    "謠言",
+    "疫苗安全",
+    "長者"
+  ],
+  "claim": "打流感疫苗反而會得流感，長輩打完會死，不要讓爸媽去打",
+  "claimVariants": [
+    "流感疫苗打了會感冒",
+    "老人打流感疫苗會死掉",
+    "流感疫苗有活病毒會傳染"
+  ],
+  "verdict": "false",
+  "relatedNews": [
+    "news.2026-09-10-clarify-flu-vaccine-death"
+  ],
+  "channels": [
+    "LINE",
+    "Facebook",
+    "YouTube"
+  ],
+  "reportChannel": "1922 防疫專線、LINE 檢舉",
+  "clarificationMarkdown": "公費流感疫苗為**不活化疫苗**，不含活病毒，不會因接種而得到流感。接種後常見反應為注射部位疼痛、紅腫，少數人有輕微發燒或倦怠，通常 1–2 天內緩解。\n\n長者感染流感後併發肺炎、住院與死亡的風險，遠高於接種疫苗的風險。我國設有預防接種受害救濟制度並持續監測疫苗安全，請放心接種。",
+  "shareText": "【疾管署澄清】公費流感疫苗是不活化疫苗，不含活病毒，打了不會得流感。常見反應是手臂痠痛、輕微發燒，1–2 天會好。長輩得流感的重症風險遠高於疫苗風險，10 月 1 日起請放心接種。有疑問撥 1922。",
+  "i18n": {
+    "en": {
+      "title": "Claims that flu vaccine causes flu or kills older people are untrue",
+      "shareText": "Taiwan CDC: the government-funded flu vaccine is inactivated and contains no live virus, so it cannot give you flu. Common reactions are a sore arm or mild fever lasting 1–2 days. Influenza is far more dangerous for older people than the vaccine. Get vaccinated from 1 October. Questions: call 1922."
+    },
+    "vi": {
+      "title": "Tin đồn \"tiêm vắc-xin cúm sẽ bị cúm, người già tiêm xong sẽ chết\" là không đúng",
+      "shareText": "CDC Đài Loan: vắc-xin cúm miễn phí là vắc-xin bất hoạt, không chứa vi-rút sống nên không gây bệnh cúm. Phản ứng thường gặp là đau tay, sốt nhẹ, hết sau 1–2 ngày. Người cao tuổi mắc cúm nguy hiểm hơn nhiều so với tiêm vắc-xin. Từ 1/10 hãy yên tâm đi tiêm. Hỏi thêm: gọi 1922."
+    },
+    "id": {
+      "title": "Kabar \"vaksin flu bikin kena flu dan lansia bisa meninggal\" tidak benar",
+      "shareText": "CDC Taiwan: vaksin influenza gratis adalah vaksin inaktif tanpa virus hidup, jadi tidak bisa menyebabkan flu. Reaksi umum berupa nyeri di lengan atau demam ringan selama 1–2 hari. Flu jauh lebih berbahaya bagi lansia daripada vaksinnya. Mulai 1 Oktober silakan vaksin. Tanya: hubungi 1922."
+    },
+    "th": {
+      "title": "ข่าวลือ \"ฉีดวัคซีนไข้หวัดใหญ่แล้วจะเป็นไข้หวัดใหญ่ ผู้สูงอายุฉีดแล้วเสียชีวิต\" ไม่เป็นความจริง",
+      "shareText": "CDC ไต้หวัน: วัคซีนไข้หวัดใหญ่ฟรีเป็นวัคซีนชนิดเชื้อตาย ไม่มีไวรัสที่มีชีวิต จึงไม่ทำให้เป็นไข้หวัดใหญ่ อาการที่พบบ่อยคือปวดแขนหรือมีไข้ต่ำ 1–2 วัน ไข้หวัดใหญ่อันตรายต่อผู้สูงอายุมากกว่าวัคซีนมาก เริ่มฉีดได้ตั้งแต่ 1 ตุลาคม สอบถามโทร 1922"
+    },
+    "tl": {
+      "title": "Hindi totoo na \"nagkakatrangkaso dahil sa bakuna at namamatay ang matatanda pagkatapos magpabakuna\"",
+      "shareText": "Taiwan CDC: inactivated ang libreng bakuna sa trangkaso at walang buhay na virus, kaya hindi ito nagdudulot ng trangkaso. Karaniwang reaksyon ang masakit na braso o bahagyang lagnat nang 1–2 araw. Mas mapanganib ang trangkaso sa matatanda kaysa sa bakuna. Magpabakuna simula Oktubre 1. Magtanong: tumawag sa 1922."
+    }
+  }
+}

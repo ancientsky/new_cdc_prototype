@@ -47,7 +47,7 @@ export function engineFromSite(site, extra = {}) {
 
 function contentExists(site, ref) {
   if (ref.startsWith('situation:')) return (site.situation?.items ?? []).some((i) => i.disease === ref.slice(10));
-  if (ref.startsWith('travel:')) { const iso = ref.slice(7).toUpperCase(); return [...(site.snapshots?.countryLevels?.data ?? []), ...(site.snapshots?.travelAlerts?.data ?? [])].some((t) => String(t.iso2 ?? t.countryCode ?? t.iso ?? t.code ?? '').toUpperCase() === iso); }
+  if (ref.startsWith('travel:')) { const iso = ref.slice(7).toUpperCase(); return [...(site.snapshots?.countryLevels?.data ?? []), ...(site.snapshots?.travelAlerts?.data ?? [])].some((t) => String(t.iso2 ?? t.ISO2 ?? t.countryCode ?? t.iso ?? t.code ?? '').toUpperCase() === iso); }
   if (ref.startsWith('dataset-series:')) return (site.collections.datasets ?? []).some((d) => d.id === ref.slice(15) && d.series);
   if (site.byId?.has(ref)) return true;
   for (const item of site.all ?? []) if (item.status === 'published' && (item.id.startsWith(ref) || item.family === ref)) return true;

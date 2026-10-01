@@ -1,0 +1,99 @@
+{
+  "id": "doc.tb-manual.2025-07-01",
+  "type": "document",
+  "family": "doc.tb-manual",
+  "docType": "manual",
+  "title": "結核病防治工作手冊",
+  "version": "2025",
+  "effectiveAt": "2025-07-01",
+  "supersedes": null,
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2025-07-01",
+  "reviewedAt": "2026-03-24",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis",
+    "disease.mdr-tb"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "pending"
+    },
+    "ja": {
+      "status": "pending"
+    },
+    "tl": {
+      "status": "pending"
+    },
+    "vi": {
+      "status": "pending"
+    },
+    "id": {
+      "status": "pending"
+    },
+    "th": {
+      "status": "pending"
+    }
+  },
+  "summary": "結核病診斷、通報、治療（含都治）、接觸者檢查與潛伏結核感染治療之作業規定。",
+  "keywords": [
+    "結核病",
+    "工作手冊",
+    "都治",
+    "接觸者檢查",
+    "潛伏結核感染"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Disease/Index"
+  ],
+  "note": "原型示意：條文依疾管署公開文件架構改寫，非正式公告文字；正式內容以 PDF 正本為準。",
+  "roles": [
+    "physician",
+    "nurse",
+    "local-health",
+    "lab"
+  ],
+  "pdfUrl": "https://www.cdc.gov.tw/File/Get/placeholder-tb-manual-2025",
+  "sections": [
+    {
+      "key": "dx",
+      "heading": "第一章 診斷與通報",
+      "markdown": "疑似肺結核病人應連續收集 3 套痰液（至少 1 套為晨痰）進行塗片、培養及分子快速檢測。醫師開立 2 種以上抗結核藥物治療時即應通報，於一週內完成。"
+    },
+    {
+      "key": "tx",
+      "heading": "第二章 治療",
+      "markdown": "新病人標準處方為 2HRZE/4HR。治療期間每月追蹤痰液與副作用；治療滿 2 個月痰培養仍陽性者，應評估抗藥性及延長治療。"
+    },
+    {
+      "key": "dots",
+      "heading": "第三章 都治（DOTS）",
+      "markdown": "所有確診病人應納入都治，由關懷員每日送藥並目視服藥，完整記錄服藥情形。病人中斷服藥 3 日以上，關懷員應通報個案管理師追蹤。"
+    },
+    {
+      "key": "contact",
+      "heading": "第四章 接觸者檢查",
+      "markdown": "指標個案確診後 1 個月內完成接觸者第一次檢查（胸部 X 光及 IGRA 或結核菌素測驗），並於 1 年後完成第二次胸部 X 光檢查。"
+    },
+    {
+      "key": "ltbi",
+      "heading": "第五章 潛伏結核感染治療",
+      "markdown": "接觸者經檢驗為潛伏結核感染且排除活動性結核病者，建議接受治療，處方包括 3HP（每週 1 次，共 12 劑）、3HR、4R 或 9H，並納入都治追蹤。"
+    }
+  ],
+  "machineReadableMarkdown": "# 結核病防治工作手冊\n\n## 第一章 診斷與通報\n疑似肺結核病人應連續收集 3 套痰液（至少 1 套為晨痰）進行塗片、培養及分子快速檢測。醫師開立 2 種以上抗結核藥物治療時即應通報，於一週內完成。\n\n## 第二章 治療\n新病人標準處方為 2HRZE/4HR。治療期間每月追蹤痰液與副作用；治療滿 2 個月痰培養仍陽性者，應評估抗藥性及延長治療。\n\n## 第三章 都治（DOTS）\n所有確診病人應納入都治，由關懷員每日送藥並目視服藥，完整記錄服藥情形。病人中斷服藥 3 日以上，關懷員應通報個案管理師追蹤。\n\n## 第四章 接觸者檢查\n指標個案確診後 1 個月內完成接觸者第一次檢查（胸部 X 光及 IGRA 或結核菌素測驗），並於 1 年後完成第二次胸部 X 光檢查。\n\n## 第五章 潛伏結核感染治療\n接觸者經檢驗為潛伏結核感染且排除活動性結核病者，建議接受治療，處方包括 3HP（每週 1 次，共 12 劑）、3HR、4R 或 9H，並納入都治追蹤。"
+}

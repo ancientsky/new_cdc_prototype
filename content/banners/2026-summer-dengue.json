@@ -1,0 +1,71 @@
+{
+  "id": "banner.2026-summer-dengue",
+  "type": "banner",
+  "title": "夏季防登革熱：每週巡倒清刷",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-06-01",
+  "reviewedAt": "2026-06-01",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue"
+  ],
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-06-02",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "夏季登革熱宣導 Banner（2026-06-01 至 2026-09-15），到期自動下架。",
+  "keywords": [
+    "登革熱",
+    "巡倒清刷",
+    "宣導"
+  ],
+  "headline": "夏天防登革熱，每週巡倒清刷",
+  "subline": "清除積水容器，發燒速就醫並告知旅遊史",
+  "cta": {
+    "label": "看防治重點",
+    "url": "/diseases/dengue/"
+  },
+  "startAt": "2026-06-01",
+  "endAt": "2026-09-15",
+  "priority": 2,
+  "i18n": {
+    "en": {
+      "headline": "Fight dengue this summer: check for standing water every week",
+      "subline": "Empty containers; see a doctor for fever and mention travel",
+      "cta": {
+        "label": "Key prevention steps",
+        "url": "/diseases/dengue/"
+      }
+    }
+  }
+}

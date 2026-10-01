@@ -1,0 +1,77 @@
+{
+  "id": "news.2026-09-01-covid-weekly",
+  "type": "news",
+  "newsType": "press",
+  "title": "新冠疫情連續三週下降，10 月起新年度疫苗與流感疫苗同步開打",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-09-01",
+  "reviewedAt": "2026-09-01",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "situation",
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.covid-19"
+  ],
+  "vaccines": [
+    "vaccine.covid-19"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-01",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "新冠門急診就診人次與併發重症通報數連續三週下降。2026–2027 年度新冠疫苗將於 10 月 1 日與流感疫苗同步開打。",
+  "keywords": [
+    "新冠",
+    "疫情下降",
+    "新冠疫苗",
+    "10 月 1 日"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+  ],
+  "situationDeclaration": {
+    "disease": "disease.covid-19",
+    "text": "就診人次與併發重症通報數連續三週下降"
+  },
+  "bodyMarkdown": "疾病管制署表示，近一週新冠門急診就診人次與新冠併發重症通報數連續三週下降，夏季疫情趨緩。\n\n2026–2027 年度新冠疫苗將自 10 月 1 日起與流感疫苗同步開打，6 個月以上民眾皆可接種公費疫苗。疾管署提醒 65 歲以上長者及慢性病人確診後應儘早就醫，由醫師評估於發病 5 天內使用口服抗病毒藥物。",
+  "i18n": {
+    "en": {
+      "title": "COVID-19 declining for three weeks; new-season vaccine starts 1 October with flu vaccine",
+      "summary": "COVID-19 visits and severe cases have fallen for three weeks. The 2026–27 COVID-19 vaccine will be offered from 1 October alongside the flu vaccine."
+    }
+  }
+}

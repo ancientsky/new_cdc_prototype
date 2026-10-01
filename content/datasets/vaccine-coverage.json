@@ -1,0 +1,96 @@
+{
+  "id": "dataset.vaccine-coverage",
+  "type": "dataset",
+  "category": "open-dataset",
+  "title": "常規疫苗接種完成率",
+  "owner": "unit.vaccine",
+  "publishedAt": "2015-01-01",
+  "reviewedAt": "2026-04-30",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "data",
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "vaccines": [
+    "vaccine.mmr",
+    "vaccine.hepatitis-b",
+    "vaccine.varicella"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-04-30",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "各項幼兒常規疫苗依出生世代、縣市之接種完成率，以及公費流感疫苗接種人數。",
+  "keywords": [
+    "疫苗接種率",
+    "常規疫苗",
+    "幼兒",
+    "縣市"
+  ],
+  "portalUrl": "https://data.cdc.gov.tw/dataset/routine-vaccination-coverage",
+  "canonicalUrl": "https://data.cdc.gov.tw/dataset/routine-vaccination-coverage",
+  "schemaUrl": "https://data.cdc.gov.tw/dataset/routine-vaccination-coverage",
+  "resources": [
+    {
+      "name": "常規疫苗接種完成率（CSV）",
+      "format": "CSV",
+      "url": "https://data.cdc.gov.tw/dataset/routine-vaccination-coverage"
+    },
+    {
+      "name": "常規疫苗接種完成率（JSON）",
+      "format": "JSON",
+      "url": "https://data.cdc.gov.tw/dataset/routine-vaccination-coverage"
+    }
+  ],
+  "provenance": {
+    "fetchedAt": "2026-10-01",
+    "mode": "snapshot",
+    "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_show?id=routine-vaccination-coverage"
+  },
+  "ckanName": "routine-vaccination-coverage",
+  "updateFrequency": "yearly",
+  "lastUpdated": "2026-04-30",
+  "formats": [
+    "CSV",
+    "JSON"
+  ],
+  "i18n": {
+    "en": {
+      "title": "Routine vaccination coverage",
+      "summary": "Completion rates of routine childhood vaccines by birth cohort and county, plus government-funded flu vaccine doses."
+    }
+  }
+}
