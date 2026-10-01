@@ -1,0 +1,19 @@
+{
+  "publishedAt": "2026-09-21",
+  "publisher": "unit.epidemic-intelligence",
+  "approvedBy": "疫情中心狀態發布負責人",
+  "dataDate": "2026-09-21",
+  "source": "nidss",
+  "nextReviewAt": "2026-09-28",
+  "note": "原型資料：狀態與數字為示意，依規格由疫情中心依既有監測門檻人工發布，不由模型推論。",
+  "items": [
+    { "disease": "disease.influenza", "status": "peak", "trend": "up", "metricLabel": "近四週門急診類流感就診率", "metricValue": "12%", "metricNumeric": 12, "deltaText": "持續上升", "weekly": [7.8, 8.6, 9.4, 10.3, 11.2, 12.0], "weeklyLabels": ["W33", "W34", "W35", "W36", "W37", "W38"], "advice": "長者與幼兒儘速接種流感疫苗", "basis": "類流感門急診就診率連續 4 週上升且超過流行閾值", "dataset": "dataset.ili-weekly", "pinned": true, "illustrative": true,
+      "i18n": { "en": { "metricLabel": "ILI outpatient/ER visit rate, past 4 weeks", "deltaText": "rising for four weeks", "advice": "older adults and young children should get vaccinated now" }, "vi": { "metricLabel": "Tỷ lệ khám cúm 4 tuần qua", "deltaText": "tăng 4 tuần liên tiếp", "advice": "người cao tuổi và trẻ nhỏ nên tiêm vắc-xin ngay" } } },
+    { "disease": "disease.enterovirus", "status": "rising", "trend": "up", "metricLabel": "腸病毒門急診就診人次週增", "metricValue": "6%", "metricNumeric": 6, "deltaText": "開學後上升，未達流行閾值", "weekly": [3.1, 2.9, 3.4, 4.0, 5.1, 6.0], "weeklyLabels": ["W33", "W34", "W35", "W36", "W37", "W38"], "advice": "落實洗手，教托育機構加強消毒", "basis": "就診人次連續 3 週上升，低於流行閾值 11,000 人次", "pinned": true, "illustrative": true,
+      "i18n": { "en": { "metricLabel": "Enterovirus visits, weekly change", "deltaText": "up after school start", "advice": "wash hands; disinfect childcare settings" } } },
+    { "disease": "disease.dengue", "status": "rising", "trend": "up", "metricLabel": "本週新增本土病例", "metricValue": "本土 23 例", "metricNumeric": 23, "deltaText": "集中於南部縣市", "weekly": [4, 6, 9, 12, 17, 23], "weeklyLabels": ["W33", "W34", "W35", "W36", "W37", "W38"], "advice": "清除積水容器，發燒速就醫並告知旅遊史", "basis": "本土病例連續 4 週增加", "dataset": "dataset.dengue-daily", "pinned": true, "illustrative": true,
+      "i18n": { "en": { "metricLabel": "New local cases this week", "metricValue": "23 local cases", "deltaText": "concentrated in southern counties", "advice": "remove standing water; see a doctor if feverish" } } },
+    { "disease": "disease.covid-19", "status": "declining", "trend": "down", "metricLabel": "新冠併發重症通報數", "metricValue": "4%", "metricNumeric": -4, "deltaText": "連續三週下降", "weekly": [60, 58, 55, 50, 47, 45], "weeklyLabels": ["W33", "W34", "W35", "W36", "W37", "W38"], "advice": "高風險族群接種最新疫苗", "basis": "併發重症通報數連續 3 週下降", "pinned": true, "illustrative": true,
+      "i18n": { "en": { "metricLabel": "Severe COVID-19 reports", "deltaText": "down three weeks running", "advice": "high-risk groups get the updated vaccine" } } }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "$id": "https://cdc-prototype/schemas/document.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "文件（手冊、指引、病例定義、接種建議）— 每個版本一檔，family 串成版本鏈",
+  "allOf": [{ "$ref": "_common.json" }],
+  "type": "object",
+  "required": ["family", "docType", "version", "effectiveAt", "machineReadableMarkdown"],
+  "properties": {
+    "type": { "const": "document" },
+    "family": { "type": "string", "pattern": "^doc\\." },
+    "docType": { "enum": ["manual", "guideline", "case-definition", "form", "recommendation", "report", "letter"] },
+    "version": { "type": "string" },
+    "effectiveAt": { "type": "string", "format": "date" },
+    "supersedes": { "type": ["string", "null"] },
+    "supersededBy": { "type": ["string", "null"], "description": "計算欄位，不手填" },
+    "isCurrent": { "type": "boolean", "description": "計算欄位，不手填" },
+    "pdfUrl": { "type": "string" },
+    "archiveUrl": { "type": "string" },
+    "machineReadableMarkdown": { "type": "string" },
+    "sections": { "type": "array", "items": { "type": "object", "required": ["key", "heading", "markdown"], "properties": { "key": { "type": "string" }, "heading": { "type": "string" }, "markdown": { "type": "string" } } } },
+    "changes": {
+      "type": "array",
+      "description": "本版相對前版的異動（給專業專區「查看異動對照」）",
+      "items": { "type": "object", "required": ["section", "after"], "properties": { "section": { "type": "string" }, "before": { "type": "string" }, "after": { "type": "string" }, "kind": { "enum": ["added", "changed", "removed"] } } }
+    },
+    "roles": { "type": "array", "items": { "enum": ["physician", "nurse", "infection-control", "lab", "local-health"] } },
+    "pageCount": { "type": "integer" },
+    "isbn": { "type": "string" },
+    "gpn": { "type": "string" }
+  }
+}

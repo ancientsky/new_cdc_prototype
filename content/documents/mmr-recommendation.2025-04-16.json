@@ -1,0 +1,42 @@
+{
+  "id": "doc.mmr-recommendation.2025-04-16",
+  "type": "document",
+  "family": "doc.mmr-recommendation",
+  "docType": "recommendation",
+  "title": "國內現行 MMR 預防接種建議（114.04.16 版）",
+  "version": "114.04.16",
+  "effectiveAt": "2025-04-16",
+  "supersedes": "doc.mmr-recommendation.2019-05-14",
+  "owner": "unit.vaccine",
+  "publishedAt": "2025-04-16",
+  "reviewedAt": "2026-04-10",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": ["public", "professional"],
+  "tasks": ["vaccines", "travel"],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": ["disease.measles"],
+  "vaccines": ["vaccine.mmr"],
+  "aiWhitelist": { "requested": true, "approvedBy": "unit.oasis", "approvedAt": "2026-09-01" },
+  "languages": { "zh-TW": { "status": "source" }, "en": { "status": "reviewed", "reviewedAt": "2025-05-02" } },
+  "summary": "現行 MMR 接種建議：1966 年（含）以後出生、不具免疫力的成人前往流行地區前 2–4 週評估自費接種；新增經常接觸外國人者。",
+  "keywords": ["MMR", "麻疹", "接種建議", "1966 年"],
+  "pdfUrl": "https://www.cdc.gov.tw/File/Get/placeholder-mmr-114",
+  "legacyUrls": ["https://www.cdc.gov.tw/Category/List/V6unXI5CVl2Fjoap4WVQLw"],
+  "roles": ["physician", "nurse", "local-health"],
+  "sections": [
+    { "key": "children", "heading": "幼兒常規接種", "markdown": "出生滿 12 個月接種第 1 劑，滿 5 歲至入國小前接種第 2 劑。" },
+    { "key": "adults", "heading": "成人建議", "markdown": "1966 年（含）以後出生、不具麻疹免疫力之成人，若計畫前往麻疹流行地區，建議出國前 2 至 4 週至旅遊醫學門診評估自費接種 1 劑 MMR 疫苗。免疫力以曾完成 2 劑接種、血清抗體陽性或曾經確診為判斷依據。" },
+    { "key": "occupational", "heading": "職業與接觸風險", "markdown": "醫療照護工作人員、經常接觸外國人之工作者（如機場、觀光、移工服務），建議評估接種。" },
+    { "key": "areas", "heading": "流行地區", "markdown": "以疾管署國際疫情與旅遊疫情建議等級為準，不以固定國家名單認定。" }
+  ],
+  "changes": [
+    { "section": "成人建議", "kind": "changed", "before": "1981 年（含）以後出生之成人", "after": "1966 年（含）以後出生、不具麻疹免疫力之成人" },
+    { "section": "成人建議", "kind": "added", "after": "出國前 2 至 4 週至旅遊醫學門診評估；免疫力判斷依據明定" },
+    { "section": "職業與接觸風險", "kind": "added", "after": "新增「經常接觸外國人之工作者」" },
+    { "section": "流行地區", "kind": "changed", "before": "以國際疫情資訊為準", "after": "以旅遊疫情建議等級為準，不以固定國家名單認定" }
+  ],
+  "machineReadableMarkdown": "# 國內現行 MMR 預防接種建議（114.04.16 版）\n\n## 幼兒常規接種\n出生滿 12 個月接種第 1 劑，滿 5 歲至入國小前接種第 2 劑。\n\n## 成人建議\n1966 年（含）以後出生、不具麻疹免疫力之成人，若計畫前往麻疹流行地區，建議出國前 2 至 4 週至旅遊醫學門診評估自費接種 1 劑 MMR 疫苗。免疫力以曾完成 2 劑接種、血清抗體陽性或曾經確診為判斷依據。\n\n## 職業與接觸風險\n醫療照護工作人員、經常接觸外國人之工作者（如機場、觀光、移工服務），建議評估接種。\n\n## 流行地區\n以疾管署國際疫情與旅遊疫情建議等級為準，不以固定國家名單認定。",
+  "i18n": { "en": { "title": "Current MMR vaccination recommendations (revised 16 Apr 2025)", "summary": "Adults born in 1966 or later without measles immunity should be assessed for one self-paid MMR dose 2–4 weeks before travel to affected areas; people in frequent contact with foreign nationals added." } }
+}

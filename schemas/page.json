@@ -1,0 +1,13 @@
+{
+  "$id": "https://cdc-prototype/schemas/page.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "政策／靜態頁（隱私、資安、AI 聲明、無障礙、關於）",
+  "allOf": [{ "$ref": "_common.json" }],
+  "type": "object",
+  "required": ["slug", "bodyMarkdown"],
+  "properties": {
+    "type": { "const": "page" },
+    "slug": { "type": "string" },
+    "bodyMarkdown": { "type": "string" }
+  }
+}

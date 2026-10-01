@@ -1,0 +1,66 @@
+{
+  "$id": "https://cdc-prototype/schemas/disease.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "疾病頁（八個固定區塊）",
+  "allOf": [{ "$ref": "_common.json" }],
+  "type": "object",
+  "required": ["slug", "nameEn", "legalCategory", "blocks", "keyFacts"],
+  "properties": {
+    "type": { "const": "disease" },
+    "slug": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "nameEn": { "type": "string" },
+    "aliases": { "type": "array", "items": { "type": "string" } },
+    "legalCategory": { "type": "integer", "minimum": 1, "maximum": 5 },
+    "icd10": { "type": "array", "items": { "type": "string" } },
+    "notifyWithinHours": { "type": "integer" },
+    "incubation": {
+      "type": "object",
+      "properties": {
+        "min": { "type": "number" }, "max": { "type": "number" },
+        "typicalMin": { "type": "number" }, "typicalMax": { "type": "number" },
+        "unit": { "enum": ["day", "hour", "week", "month", "year"] },
+        "text": { "type": "string" }
+      }
+    },
+    "transmission": { "type": "array", "items": { "enum": ["droplet", "airborne", "contact", "vector", "foodborne", "waterborne", "sexual", "bloodborne", "vertical", "zoonotic", "other"] } },
+    "keyFacts": {
+      "type": "object",
+      "required": ["symptoms", "transmission", "prevention"],
+      "properties": {
+        "incubation": { "type": "string" },
+        "symptoms": { "type": "string" },
+        "transmission": { "type": "string" },
+        "prevention": { "type": "string" },
+        "notify": { "type": "string" }
+      }
+    },
+    "blocks": {
+      "type": "array",
+      "minItems": 8,
+      "items": {
+        "type": "object",
+        "required": ["key", "heading"],
+        "properties": {
+          "key": { "enum": ["what-to-do", "symptoms", "transmission", "prevention", "treatment", "vaccine", "situation", "faq"] },
+          "heading": { "type": "string" },
+          "markdown": { "type": "string" },
+          "status": { "enum": ["ok", "pending"] },
+          "warning": { "type": "string" },
+          "cards": { "type": "array", "items": { "type": "object", "required": ["if", "title", "text"], "properties": { "if": { "type": "string" }, "title": { "type": "string" }, "text": { "type": "string" } } } },
+          "datasets": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "professional": {
+      "type": "object",
+      "properties": {
+        "caseDefinitionDoc": { "type": "string" },
+        "manualDoc": { "type": "string" },
+        "specimen": { "type": "string" },
+        "notifyNote": { "type": "string" }
+      }
+    },
+    "relatedDocuments": { "type": "array", "items": { "type": "string" } },
+    "materials": { "type": "array", "items": { "type": "object", "properties": { "label": { "type": "string" }, "url": { "type": "string" }, "langs": { "type": "array", "items": { "type": "string" } } } } }
+  }
+}

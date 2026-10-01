@@ -1,0 +1,66 @@
+{
+  "$id": "https://cdc-prototype/schemas/governance.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "治理設定檔",
+  "$defs": {
+    "aiStatus": {
+      "type": "object",
+      "required": ["paused", "updatedAt", "updatedBy"],
+      "properties": {
+        "paused": { "type": "boolean" },
+        "reason": { "type": "string" },
+        "updatedAt": { "type": "string" },
+        "updatedBy": { "type": "string" },
+        "mode": { "enum": ["extractive", "llm"] },
+        "beta": { "type": "boolean" },
+        "fallback": { "type": "string" }
+      }
+    },
+    "whitelistPolicy": {
+      "type": "object",
+      "required": ["version", "allowedTypes", "approvedBy", "approvedAt"],
+      "properties": {
+        "version": { "type": "string" },
+        "allowedTypes": { "type": "array", "items": { "type": "string" } },
+        "allowedTypesPro": { "type": "array", "items": { "type": "string" } },
+        "approvedBy": { "type": "string" },
+        "approvedAt": { "type": "string", "format": "date" },
+        "note": { "type": "string" }
+      }
+    },
+    "evalSet": {
+      "type": "object",
+      "required": ["version", "questions"],
+      "properties": {
+        "version": { "type": "string" },
+        "questions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "q", "category", "expect"],
+            "properties": {
+              "id": { "type": "string" },
+              "q": { "type": "string" },
+              "lang": { "type": "string" },
+              "category": { "enum": ["fact", "refusal", "version", "situation", "travel", "vaccine", "stats", "rumor", "professional", "multilingual", "adversarial", "peak"] },
+              "expect": {
+                "type": "object",
+                "properties": {
+                  "intent": { "type": "string" },
+                  "refuse": { "type": "boolean" },
+                  "mustCite": { "type": "array", "items": { "type": "string" }, "description": "答案必須引用的 contentId（前綴比對）" },
+                  "mustNotCite": { "type": "array", "items": { "type": "string" } },
+                  "mustInclude": { "type": "array", "items": { "type": "string" } },
+                  "mustNotInclude": { "type": "array", "items": { "type": "string" } },
+                  "verdict": { "type": "string" },
+                  "disease": { "type": "string" }
+                }
+              },
+              "note": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

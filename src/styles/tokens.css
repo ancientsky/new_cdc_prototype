@@ -1,0 +1,25 @@
+/* 設計 token：wireframe 中保真配色（綠主色、灰、暖白）。所有樣式只能用這裡的變數。 */
+:root {
+  --green-900: #0f3d2e; --green-700: #1b5e3f; --green-600: #227a4c; --green-100: #e5efe9; --green-50: #f1f6f3;
+  --navy-700: #2a3350; --navy-100: #e8ebf3;
+  --ink: #1b1f23; --ink-2: #4a5159; --ink-3: #6b737c; --line: #d9dde2; --paper: #f6f6f4; --white: #fff;
+  --status-stable: #2f855a; --status-stable-bg: #e6f4ec;
+  --status-rising: #b7791f; --status-rising-bg: #fbf1dc;
+  --status-peak: #b83232; --status-peak-bg: #f9e3e3;
+  --status-declining: #2b6cb0; --status-declining-bg: #e3edf8;
+  --alert-overdue-bg: #fff6d9; --alert-overdue: #8a6d00;
+  --alert-superseded-bg: #fde8e8; --alert-superseded: #9b2c2c;
+  --alert-revised-bg: #fff1e0; --alert-revised: #9c4a00;
+  --paused-bg: #1f2a24; --paused-ink: #fff;
+  --verdict-false: var(--status-peak); --verdict-false-bg: var(--status-peak-bg);
+  --verdict-partly: var(--status-rising); --verdict-partly-bg: var(--status-rising-bg);
+  --verdict-outdated: #6b7280; --verdict-outdated-bg: #eef0f2;
+  --font: system-ui, -apple-system, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", Roboto, sans-serif;
+  --fs-xs: .78rem; --fs-sm: .875rem; --fs-md: 1rem; --fs-lg: 1.125rem; --fs-xl: 1.5rem; --fs-2xl: 2rem; --fs-3xl: 2.5rem;
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px; --sp-6: 32px; --sp-7: 48px; --sp-8: 64px;
+  --radius: 10px; --radius-sm: 6px; --radius-pill: 999px;
+  --shadow: 0 1px 2px rgba(0,0,0,.04), 0 2px 8px rgba(0,0,0,.04);
+  --wrap: 1200px;
+  --focus: 3px solid #ffbf47;
+}
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }

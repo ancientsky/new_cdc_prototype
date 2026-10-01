@@ -1,0 +1,40 @@
+{
+  "$id": "https://cdc-prototype/schemas/situation.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "疫情態勢層（疫情中心人工發布；狀態不由模型推論）",
+  "type": "object",
+  "required": ["publishedAt", "publisher", "dataDate", "source", "nextReviewAt", "items"],
+  "properties": {
+    "publishedAt": { "type": "string", "format": "date" },
+    "publisher": { "type": "string", "pattern": "^unit\\." },
+    "approvedBy": { "type": "string" },
+    "dataDate": { "type": "string", "format": "date" },
+    "source": { "type": "string" },
+    "nextReviewAt": { "type": "string", "format": "date" },
+    "note": { "type": "string" },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["disease", "status", "trend", "metricLabel", "metricValue", "advice", "basis"],
+        "properties": {
+          "disease": { "type": "string", "pattern": "^disease\\." },
+          "status": { "enum": ["stable", "rising", "peak", "declining"] },
+          "trend": { "enum": ["up", "down", "flat"] },
+          "metricLabel": { "type": "string" },
+          "metricValue": { "type": "string" },
+          "metricNumeric": { "type": "number" },
+          "deltaText": { "type": "string" },
+          "weekly": { "type": "array", "items": { "type": "number" } },
+          "weeklyLabels": { "type": "array", "items": { "type": "string" } },
+          "advice": { "type": "string" },
+          "basis": { "type": "string", "description": "依據門檻（疫情中心既有監測用語）" },
+          "dataset": { "type": "string" },
+          "pinned": { "type": "boolean" },
+          "illustrative": { "type": "boolean", "description": "true＝數字為示意，非正式發布" },
+          "i18n": { "type": "object" }
+        }
+      }
+    }
+  }
+}

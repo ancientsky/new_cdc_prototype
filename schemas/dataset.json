@@ -1,0 +1,33 @@
+{
+  "$id": "https://cdc-prototype/schemas/dataset.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "資料目錄項目（五類資產之一）",
+  "allOf": [{ "$ref": "_common.json" }],
+  "type": "object",
+  "required": ["category", "canonicalUrl", "updateFrequency"],
+  "properties": {
+    "type": { "const": "dataset" },
+    "category": { "enum": ["open-dataset", "stats-system", "structured-table", "document-library", "content-page", "press", "media"] },
+    "ckanName": { "type": "string" },
+    "portalUrl": { "type": "string" },
+    "canonicalUrl": { "type": "string", "description": "正本位置，唯一" },
+    "mirrors": { "type": "array", "items": { "type": "string" } },
+    "updateFrequency": { "enum": ["daily", "weekly", "monthly", "quarterly", "yearly", "irregular"] },
+    "lastUpdated": { "type": "string", "format": "date" },
+    "formats": { "type": "array", "items": { "type": "string" } },
+    "schemaUrl": { "type": "string" },
+    "resources": { "type": "array", "items": { "type": "object", "properties": { "name": { "type": "string" }, "format": { "type": "string" }, "url": { "type": "string" } } } },
+    "series": {
+      "type": "object",
+      "description": "已結構化的統計時序（統計問答用）",
+      "properties": {
+        "label": { "type": "string" },
+        "unit": { "type": "string" },
+        "granularity": { "enum": ["year", "month", "week", "day"] },
+        "points": { "type": "array", "items": { "type": "object", "required": ["t", "v"], "properties": { "t": { "type": "string" }, "v": { "type": "number" } } } },
+        "note": { "type": "string" }
+      }
+    },
+    "provenance": { "type": "object", "properties": { "fetchedAt": { "type": "string" }, "mode": { "enum": ["live", "snapshot"] }, "sourceUrl": { "type": "string" } } }
+  }
+}

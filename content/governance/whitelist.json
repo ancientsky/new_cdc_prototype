@@ -1,0 +1,8 @@
+{
+  "version": "v1",
+  "allowedTypes": ["faq", "disease", "news", "clarification", "vaccine", "dataset"],
+  "allowedTypesPro": ["document", "letter"],
+  "approvedBy": "unit.governance-committee",
+  "approvedAt": "2026-09-01",
+  "note": "白名單第一批（第一階段）：Q&A、疾病介紹、新聞稿、澄清、疫苗頁、資料目錄。第二批（文件庫、通函）只供專業版。個別內容仍須 aiWhitelist.requested 且通過治理引擎全部條件。"
+}

@@ -1,0 +1,60 @@
+{
+  "$id": "https://cdc-prototype/schemas/master.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "主檔集合",
+  "$defs": {
+    "unit": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^unit\\." },
+        "name": { "type": "string" },
+        "nameEn": { "type": "string" },
+        "kind": { "enum": ["division", "center", "office", "regional", "staff", "committee"] },
+        "stewardTitle": { "type": "string" },
+        "contact": { "type": "string" }
+      }
+    },
+    "diseaseMaster": {
+      "type": "object",
+      "required": ["id", "slug", "name", "nameEn", "legalCategory"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^disease\\." },
+        "slug": { "type": "string" },
+        "name": { "type": "string" },
+        "nameEn": { "type": "string" },
+        "aliases": { "type": "array", "items": { "type": "string" } },
+        "legalCategory": { "type": "integer", "minimum": 1, "maximum": 5 },
+        "icd10": { "type": "array", "items": { "type": "string" } },
+        "notifyWithinHours": { "type": ["integer", "null"] },
+        "transmission": { "type": "array", "items": { "type": "string" } },
+        "hasPage": { "type": "boolean" },
+        "datasets": { "type": "array", "items": { "type": "string" } },
+        "owner": { "type": "string" },
+        "zhuyin": { "type": "string" },
+        "strokes": { "type": "integer" },
+        "i18n": { "type": "object" }
+      }
+    },
+    "glossaryTerm": {
+      "type": "object",
+      "required": ["id", "zh-TW"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^term\\." },
+        "zh-TW": { "type": "string" },
+        "aliases": { "type": "array", "items": { "type": "string" } },
+        "en": { "type": "string" }, "ja": { "type": "string" }, "tl": { "type": "string" }, "vi": { "type": "string" }, "id_": { "type": "string" }, "th": { "type": "string" },
+        "domain": { "enum": ["disease", "vaccine", "org", "procedure", "place", "general"] },
+        "locked": { "type": "boolean" },
+        "deprecated": { "type": "array", "items": { "type": "string" }, "description": "不再使用的舊名（如「武漢肺炎」）" },
+        "refs": { "type": "array", "items": { "type": "string" } },
+        "note": { "type": "string" }
+      }
+    },
+    "country": {
+      "type": "object",
+      "required": ["iso2", "name", "nameEn"],
+      "properties": { "iso2": { "type": "string" }, "name": { "type": "string" }, "nameEn": { "type": "string" }, "region": { "type": "string" } }
+    }
+  }
+}

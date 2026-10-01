@@ -1,0 +1,22 @@
+{
+  "$id": "https://cdc-prototype/schemas/news.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "新聞稿／致醫界通函／澄清稿／其他訊息",
+  "allOf": [{ "$ref": "_common.json" }],
+  "type": "object",
+  "required": ["newsType", "bodyMarkdown"],
+  "properties": {
+    "type": { "enum": ["news", "letter"] },
+    "newsType": { "enum": ["press", "letter", "clarification", "other", "recruit", "procurement"] },
+    "bodyMarkdown": { "type": "string" },
+    "letterNo": { "type": ["integer", "string"] },
+    "region": { "type": "string" },
+    "effectiveAt": { "type": "string", "format": "date", "description": "通函生效日" },
+    "attachments": { "type": "array", "items": { "type": "object", "properties": { "label": { "type": "string" }, "url": { "type": "string" }, "machineReadable": { "type": "boolean" } } } },
+    "situationDeclaration": {
+      "type": "object",
+      "description": "新聞稿中的疫情宣告（供態勢層與答案頁引用）",
+      "properties": { "disease": { "type": "string" }, "text": { "type": "string" } }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "_comment": "各型別預設審閱週期（月）。0＝不定期（事件觸發，例如新聞稿：所依據正本修訂當天自動加註）。",
+  "disease": 12,
+  "vaccine": 6,
+  "faq": 6,
+  "travel": 6,
+  "document": 12,
+  "clarification": 6,
+  "news": 0,
+  "letter": 0,
+  "dataset": 12,
+  "banner": 0,
+  "page": 12
+}

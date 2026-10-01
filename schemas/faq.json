@@ -1,0 +1,18 @@
+{
+  "$id": "https://cdc-prototype/schemas/faq.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Q&A",
+  "allOf": [{ "$ref": "_common.json" }],
+  "type": "object",
+  "required": ["question", "answerMarkdown"],
+  "properties": {
+    "type": { "const": "faq" },
+    "question": { "type": "string" },
+    "answerMarkdown": { "type": "string" },
+    "structured": {
+      "type": "object",
+      "description": "上架預處理抽出的結構化欄位（人確認後保留）",
+      "additionalProperties": { "type": ["string", "number"] }
+    }
+  }
+}

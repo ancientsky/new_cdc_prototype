@@ -1,0 +1,12 @@
+[
+  { "iso2": "JP", "name": "日本", "nameEn": "Japan", "region": "東亞" },
+  { "iso2": "KR", "name": "韓國", "nameEn": "South Korea", "region": "東亞" },
+  { "iso2": "VN", "name": "越南", "nameEn": "Viet Nam", "region": "東南亞" },
+  { "iso2": "TH", "name": "泰國", "nameEn": "Thailand", "region": "東南亞" },
+  { "iso2": "ID", "name": "印尼", "nameEn": "Indonesia", "region": "東南亞" },
+  { "iso2": "PH", "name": "菲律賓", "nameEn": "Philippines", "region": "東南亞" },
+  { "iso2": "MY", "name": "馬來西亞", "nameEn": "Malaysia", "region": "東南亞" },
+  { "iso2": "SG", "name": "新加坡", "nameEn": "Singapore", "region": "東南亞" },
+  { "iso2": "CN", "name": "中國大陸", "nameEn": "China", "region": "東亞" },
+  { "iso2": "US", "name": "美國", "nameEn": "United States", "region": "北美" }
+]

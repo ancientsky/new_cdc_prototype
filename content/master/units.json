@@ -1,0 +1,23 @@
+[
+  { "id": "unit.director", "name": "署長室", "nameEn": "Office of the Director-General", "kind": "office" },
+  { "id": "unit.pr", "name": "公關室", "nameEn": "Public Relations Office", "kind": "office", "stewardTitle": "內容總編輯" },
+  { "id": "unit.it", "name": "資訊室", "nameEn": "Information Management Office", "kind": "office", "stewardTitle": "平台與資安" },
+  { "id": "unit.oasis", "name": "OASIS（資料與 AI 組幕僚）", "nameEn": "Office of Analytics, Strategy and Intelligence Services", "kind": "staff", "stewardTitle": "目錄與詞彙標準" },
+  { "id": "unit.epidemic-intelligence", "name": "疫情中心", "nameEn": "Epidemic Intelligence Center", "kind": "center", "stewardTitle": "統計資料集與 nidss Owner" },
+  { "id": "unit.acute-infectious", "name": "急性傳染病組", "nameEn": "Division of Acute Infectious Diseases", "kind": "division", "stewardTitle": "Data Steward" },
+  { "id": "unit.chronic-infectious", "name": "慢性傳染病組", "nameEn": "Division of Chronic Infectious Diseases", "kind": "division", "stewardTitle": "Data Steward" },
+  { "id": "unit.vaccine", "name": "預防接種組", "nameEn": "Division of Vaccination", "kind": "division", "stewardTitle": "Data Steward" },
+  { "id": "unit.preparedness", "name": "整備應變組", "nameEn": "Division of Preparedness and Emerging Infectious Diseases", "kind": "division", "stewardTitle": "Data Steward" },
+  { "id": "unit.infection-control", "name": "感染管制及生物安全組", "nameEn": "Division of Infection Control and Biosafety", "kind": "division", "stewardTitle": "Data Steward" },
+  { "id": "unit.quarantine", "name": "檢疫組", "nameEn": "Division of Quarantine", "kind": "division", "stewardTitle": "Data Steward" },
+  { "id": "unit.lab", "name": "檢驗及疫苗研製中心", "nameEn": "Center for Diagnostics and Vaccine Development", "kind": "center", "stewardTitle": "Data Steward" },
+  { "id": "unit.planning", "name": "企劃組", "nameEn": "Division of Planning and Coordination", "kind": "division" },
+  { "id": "unit.accounting", "name": "主計室", "nameEn": "Accounting Office", "kind": "office" },
+  { "id": "unit.regional-taipei", "name": "臺北區管制中心", "nameEn": "Taipei Regional Center", "kind": "regional" },
+  { "id": "unit.regional-northern", "name": "北區管制中心", "nameEn": "Northern Regional Center", "kind": "regional" },
+  { "id": "unit.regional-central", "name": "中區管制中心", "nameEn": "Central Regional Center", "kind": "regional" },
+  { "id": "unit.regional-southern", "name": "南區管制中心", "nameEn": "Southern Regional Center", "kind": "regional" },
+  { "id": "unit.regional-kaoping", "name": "高屏區管制中心", "nameEn": "Kaoping Regional Center", "kind": "regional" },
+  { "id": "unit.regional-eastern", "name": "東區管制中心", "nameEn": "Eastern Regional Center", "kind": "regional" },
+  { "id": "unit.governance-committee", "name": "資料治理委員會", "nameEn": "Data Governance Committee", "kind": "committee" }
+]

@@ -1,0 +1,18 @@
+{
+  "$id": "https://cdc-prototype/schemas/banner.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "首頁宣導 Banner（有上下架日與權責，到期自動下架）",
+  "allOf": [{ "$ref": "_common.json" }],
+  "type": "object",
+  "required": ["headline", "startAt", "endAt", "cta"],
+  "properties": {
+    "type": { "const": "banner" },
+    "headline": { "type": "string" },
+    "subline": { "type": "string" },
+    "image": { "type": "string" },
+    "cta": { "type": "object", "required": ["label", "url"], "properties": { "label": { "type": "string" }, "url": { "type": "string" } } },
+    "startAt": { "type": "string", "format": "date" },
+    "endAt": { "type": "string", "format": "date" },
+    "priority": { "type": "integer" }
+  }
+}

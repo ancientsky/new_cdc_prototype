@@ -1,0 +1,19 @@
+{
+  "$id": "https://cdc-prototype/schemas/clarification.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "謠言查證用結構化澄清",
+  "allOf": [{ "$ref": "_common.json" }],
+  "type": "object",
+  "required": ["claim", "verdict", "clarificationMarkdown", "shareText"],
+  "properties": {
+    "type": { "const": "clarification" },
+    "claim": { "type": "string", "description": "網傳訊息原文（去個資）" },
+    "claimVariants": { "type": "array", "items": { "type": "string" } },
+    "verdict": { "enum": ["false", "partly-true", "outdated", "true"] },
+    "clarificationMarkdown": { "type": "string" },
+    "shareText": { "type": "string", "maxLength": 300 },
+    "reportChannel": { "type": "string", "description": "通報管道：165、1922、平台檢舉…" },
+    "relatedNews": { "type": "array", "items": { "type": "string" } },
+    "channels": { "type": "array", "items": { "type": "string" } }
+  }
+}

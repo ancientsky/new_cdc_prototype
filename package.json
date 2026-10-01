@@ -1,0 +1,21 @@
+{
+  "name": "cdc-ai-ready-prototype",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "疾管署 AI-ready 新官網可動原型：內容與資料只存一份，展示與 AI 都是它的消費者。",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "fetch": "node scripts/fetch-data.mjs",
+    "build": "node scripts/build.mjs",
+    "check": "node scripts/build.mjs --check",
+    "test": "node --test tests/*.test.mjs",
+    "eval": "node eval/run-eval.mjs",
+    "dev": "node scripts/build.mjs && node scripts/serve.mjs"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "marked": "^15.0.0"
+  }
+}

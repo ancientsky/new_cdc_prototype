@@ -1,0 +1,22 @@
+{
+  "id": "news.2026-09-22-enterovirus-alert",
+  "type": "news",
+  "newsType": "press",
+  "title": "國內腸病毒疫情持續，籲請家長及教托育機構提高警覺",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-09-22",
+  "reviewedAt": "2026-09-22",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": ["public"],
+  "tasks": ["situation", "symptoms"],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": ["disease.enterovirus"],
+  "aiWhitelist": { "requested": true, "approvedBy": "unit.oasis", "approvedAt": "2026-09-01" },
+  "languages": { "zh-TW": { "status": "source" }, "en": { "status": "machine" } },
+  "summary": "開學後腸病毒門急診就診人次上升，疾管署籲請家長與教托育機構落實洗手與環境消毒，留意重症前兆。",
+  "keywords": ["腸病毒", "開學", "重症前兆"],
+  "bodyMarkdown": "疾病管制署表示，開學後腸病毒門急診就診人次上升，尚未達流行閾值，但仍須提高警覺。籲請家長及教托育機構落實正確洗手、以漂白水稀釋液消毒環境，並留意幼兒是否出現嗜睡、意識不清、活力不佳、手腳無力、肌躍型抽搐、持續嘔吐、呼吸急促或心跳加快等重症前兆，一旦出現請立即送往大醫院。",
+  "situationDeclaration": { "disease": "disease.enterovirus", "text": "就診人次上升，未達流行閾值" }
+}

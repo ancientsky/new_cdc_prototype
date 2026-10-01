@@ -1,0 +1,21 @@
+{
+  "$id": "https://cdc-prototype/schemas/vaccine.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "疫苗頁",
+  "allOf": [{ "$ref": "_common.json" }],
+  "type": "object",
+  "required": ["slug", "nameEn", "publicFunded", "bodyMarkdown"],
+  "properties": {
+    "type": { "const": "vaccine" },
+    "slug": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "nameEn": { "type": "string" },
+    "aliases": { "type": "array", "items": { "type": "string" } },
+    "publicFunded": {
+      "type": "array",
+      "items": { "type": "object", "required": ["group", "schedule"], "properties": { "group": { "type": "string" }, "ageMin": { "type": "number" }, "ageMax": { "type": "number" }, "schedule": { "type": "string" }, "note": { "type": "string" }, "startAt": { "type": "string", "format": "date" }, "endAt": { "type": "string", "format": "date" } } }
+    },
+    "bodyMarkdown": { "type": "string" },
+    "precautions": { "type": "string" },
+    "whereUrl": { "type": "string", "description": "接種地點查詢（vaxmap）" }
+  }
+}

@@ -1,0 +1,6 @@
+[
+  { "id": "vaccine.influenza", "slug": "influenza", "name": "流感疫苗", "nameEn": "Influenza vaccine", "diseases": ["disease.influenza"] },
+  { "id": "vaccine.mmr", "slug": "mmr", "name": "MMR 疫苗", "nameEn": "MMR vaccine", "diseases": ["disease.measles"] },
+  { "id": "vaccine.covid-19", "slug": "covid-19", "name": "新冠疫苗", "nameEn": "COVID-19 vaccine", "diseases": ["disease.covid-19"] },
+  { "id": "vaccine.ev71", "slug": "ev71", "name": "腸病毒 71 型疫苗", "nameEn": "EV71 vaccine", "diseases": ["disease.enterovirus"] }
+]
