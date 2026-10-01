@@ -187,7 +187,7 @@ test('多語：同語言 reviewed chunk 優先；沒有時退回中文並標 tra
   const en = e.answer('How soon should I see a doctor if I have a fever after visiting a dengue area?', { lang: 'en' });
   assert.equal(en.refused, false); assert.ok(en.sources.every((s) => s.lang === 'en' || s.type === 'situation'));
   assert.ok(en.sentences.some((s) => /24 hours/.test(s.text)));
-  const vi = e.answer('Bệnh sởi có triệu chứng gì?', { lang: 'vi' });
+  const vi = e.answer('Bệnh ho gà có triệu chứng gì?', { lang: 'vi' });
   assert.equal(vi.translationNote, 'showing-source');
 });
 

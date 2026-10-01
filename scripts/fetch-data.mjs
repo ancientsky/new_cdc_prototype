@@ -184,4 +184,5 @@ async function main() {
   for (const c of changes) log(`  - ${c.file}：${c.fields.join('、')}`);
 }
 
-main().catch((e) => { log(`未預期錯誤（${e.message}）→ 保留既有快照`); }).finally(() => { process.exitCode = 0; });
+const isCli = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+if (isCli) main().catch((e) => { log(`未預期錯誤（${e.message}）→ 保留既有快照`); }).finally(() => { process.exitCode = 0; });

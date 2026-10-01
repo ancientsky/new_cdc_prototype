@@ -195,7 +195,7 @@ export const INTENT_RULES = [
   { id: 'sym.symptom-words', intent: 'symptoms', weight: 2, re: /(發燒|發熱|咳嗽|紅疹|起疹|出疹|疹子|拉肚子|腹瀉|嘔吐|頭痛|喉嚨痛|流鼻水|肌肉痠痛|關節痛|後眼窩痛|全身痠痛|倦怠|嗜睡|抽搐|呼吸急促|水泡|口腔潰瘍|黃疸|血便)/, note: '症狀詞' },
   { id: 'sym.symptom-generic', intent: 'symptoms', weight: 2, re: /(症狀|徵象|徵兆|前兆|不舒服|病徵)/, note: '症狀泛稱' },
   { id: 'sym.seek-care', intent: 'symptoms', weight: 3, re: /(要不要看醫生|該不該就醫|何時就醫|什麼時候.{0,4}就醫|幾天內.{0,6}就醫|就醫|看醫生|看診|掛號|急診|回診)/, note: '就醫時機' },
-  { id: 'sym.after-travel', intent: 'symptoms', weight: 4, re: /(回國|返國|回台|回來|入境).{0,8}(發燒|出疹|紅疹|起疹|腹瀉|拉肚子|不舒服|症狀|咳嗽)/, note: '返國後症狀' },
+  { id: 'sym.after-travel', intent: 'symptoms', weight: 6, re: /(回國|返國|回台|回來|入境).{0,8}(發燒|出疹|紅疹|起疹|腹瀉|拉肚子|不舒服|症狀|咳嗽)/, note: '返國後症狀' },
   { id: 'sym.what-to-do', intent: 'symptoms', weight: 1, re: /(怎麼辦|該怎麼做|如何處理)/, note: '求助語' },
   { id: 'sym.en', intent: 'symptoms', weight: 3, re: /\b(fever|symptoms?|rash|cough|diarrh?ea|vomit\w*|headache|see a doctor|seek (medical )?care|hospital|clinic)\b/i, note: 'English symptom words' },
   { id: 'sym.vi', intent: 'symptoms', weight: 3, re: /(sốt|triệu chứng|phát ban|ho\b|tiêu chảy|nôn|đi khám|bác sĩ)/i, note: 'Vietnamese symptom words' },
@@ -232,12 +232,13 @@ export const INTENT_RULES = [
 const INTENT_PRIORITY = ['rumor', 'stats', 'professional', 'situation', 'travel', 'vaccine', 'symptoms'];
 
 /** 意圖判斷：回傳 { intent, reasons[], scores{} } */
-export function classifyIntent(q, { view = 'public', hasTimeRange = false, hasDisease = false } = {}) {
+export function classifyIntent(q, { view = 'public', hasTimeRange = false, hasDisease = false, hasCountry = false } = {}) {
   const scores = {}; const reasons = [];
   for (const r of INTENT_RULES) {
     if (r.re.test(q)) { scores[r.intent] = (scores[r.intent] ?? 0) + r.weight; reasons.push(r.id); }
   }
   if (hasTimeRange) { scores.stats = (scores.stats ?? 0) + 3; reasons.push('sta.time-range'); }
+  if (hasCountry) { scores.travel = (scores.travel ?? 0) + 2; reasons.push('trv.country-entity'); }
   if (view === 'pro') { scores.professional = (scores.professional ?? 0) + 4; reasons.push('pro.view'); }
   // 「現在疫情」與統計詞同時出現且沒有時間範圍 → 疫情優先（態勢卡回答）
   if (scores.situation && scores.stats && !hasTimeRange && /(現在|目前|最近|本週|這週|嚴重嗎)/.test(q)) { scores.stats -= 2; reasons.push('sit.over-stats'); }
@@ -356,8 +357,17 @@ function matcherFor(name) {
   if (!name) return null;
   const n = String(name).trim();
   if (n.length < 2 && !/[一-鿿]/.test(n)) return null;
-  if (isLatin(n)) return new RegExp(`(?<![\\p{L}\\p{N}])${escapeRe(n)}(?![\\p{L}\\p{N}])`, 'iu');
-  return new RegExp(escapeRe(n), 'i');
+  if (isLatin(n)) return new RegExp(`(?<![\\p{L}\\p{N}])${escapeRe(n).replace(/\\s+/g, '\\s*')}(?![\\p{L}\\p{N}])`, 'iu');
+  // 中英混排名稱（A 肝、MMR 疫苗、B 型肝炎）：空白可有可無
+  let pat = '';
+  const chars = [...n.replace(/\s+/g, ' ')];
+  chars.forEach((ch, i) => {
+    if (ch === ' ') { pat += '\\s*'; return; }
+    const prev = chars[i - 1];
+    if (prev && prev !== ' ' && (/[A-Za-z0-9]/.test(prev) !== /[A-Za-z0-9]/.test(ch))) pat += '\\s*';
+    pat += escapeRe(ch);
+  });
+  return new RegExp(pat, 'i');
 }
 
 function ownerNameOf(units, id) { return units.find((u) => u.id === id)?.name ?? id ?? ''; }
@@ -579,6 +589,7 @@ export function createEngine(rawDeps = {}) {
     const model = chunks.model; const qw = chunks.qWeights;
     const qIdfSum = [...qw.entries()].filter(([t]) => model.has(t)).reduce((s, [t, w]) => s + w * model.idf(t), 0) || 1;
     const top = chunks[0]._score || 1;
+    const neToks = [...qw.entries()].filter(([t, w]) => w >= 0.5 && model.has(t)).map(([t]) => t);
     const cands = [];
     chunks.forEach((c, ci) => {
       // 以「：」結尾的引言句與其後清單項目合併為一個單位（仍是原文連續片段）
@@ -605,6 +616,8 @@ export function createEngine(rawDeps = {}) {
         if (si === 0 && c.type === 'faq') s += 0.3;
         if (view === 'pro' && (c.type === 'document' || c.type === 'letter')) s += 0.5;
         if (cov <= 0.05 && covTitle < 0.3 && !(ci === 0 && si === 0)) return;
+        // 問句除了病名還有其他關鍵詞時，句子（或其片段標題）至少要命中一個，避免「只因為同一種病」被選入
+        if (neToks.length && !neToks.some((t) => toks.has(t) || titleToks.has(t)) && !(ci === 0 && si === 0)) return;
         cands.push({ text: sen, cite: [c.id], score: s, slot, chunk: c });
       });
     });
@@ -1045,7 +1058,7 @@ export function createEngine(rawDeps = {}) {
     result.timeRange = hasRange ? range : null;
 
     // 2 意圖
-    const ci = classifyIntent(q, { view, hasTimeRange: hasRange, hasDisease: !!result.disease });
+    const ci = classifyIntent(q, { view, hasTimeRange: hasRange, hasDisease: !!result.disease, hasCountry: entities.countries.length > 0 });
     result.intent = ci.intent; result.intentReasons = ci.reasons; result.intentScores = ci.scores;
     if (forceIntent) { result.intent = forceIntent; result.intentReasons.push(`forced.${forceIntent}`); }
 
@@ -1087,6 +1100,14 @@ export function createEngine(rawDeps = {}) {
     if (!chunks.length) {
       chunks = retrieve(q, { view, lang: 'zh-TW', k, intent: result.intent, entities, expanded, presetDisease, guards: result.guards });
       if (lang !== 'zh-TW' && chunks.length) result.translationNote = 'showing-source';
+    }
+    // 沒有疾病實體時：以最相關片段的疾病為主，不混入其他疾病的片段
+    if (!entities.diseases.length && chunks.length && (chunks[0].diseases ?? []).length && !['situation', 'stats', 'rumor'].includes(result.intent)) {
+      const dom = new Set(chunks[0].diseases);
+      const kept = chunks.filter((c) => !(c.diseases ?? []).length || c.diseases.some((d) => dom.has(d)));
+      kept.qWeights = chunks.qWeights; kept.model = chunks.model;
+      chunks = kept;
+      result.guards.push({ kind: 'dominant-disease', diseases: [...dom] });
     }
     result.retrieved = chunks;
 
