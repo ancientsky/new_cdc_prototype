@@ -180,7 +180,7 @@
         "key": "dots",
         "title": "都治（DOTS）",
         "summary": "關懷員每日送藥到手、親眼看服藥；所有確診個案納入，社區、機構與進階都治（DOTS-Plus）。",
-        "docs": [
+        "documents": [
           "doc.dots-manual"
         ],
         "services": [
@@ -195,7 +195,7 @@
         "key": "ltbi",
         "title": "潛伏結核感染（LTBI）檢驗與治療",
         "summary": "接觸者與高風險族群公費 IGRA 檢驗；3HP、1HP、3HR、4R、9H 處方並以 DOPT 陪伴服藥。",
-        "docs": [
+        "documents": [
           "doc.ltbi-guideline"
         ],
         "services": [
@@ -209,7 +209,7 @@
         "key": "contact-investigation",
         "title": "接觸者檢查",
         "summary": "密切接觸者（一天 8 小時或累計 40 小時）確診後 1 個月內胸部 X 光與 IGRA，滿 12 個月再照胸部 X 光。",
-        "docs": [
+        "documents": [
           "doc.tb-contact-investigation"
         ],
         "services": [],
@@ -221,7 +221,7 @@
         "key": "mdr-tmtc",
         "title": "抗藥性結核病醫療照護體系（TMTC）",
         "summary": "多重抗藥性結核病由專責團隊收治，優先採全口服短程處方，結合進階都治，費用由公費支應。",
-        "docs": [
+        "documents": [
           "doc.tb-guideline"
         ],
         "services": [
@@ -235,7 +235,7 @@
         "key": "end-tb-2035",
         "title": "2035 消除結核",
         "summary": "2035 年發生率降至每十萬人口 10 例以下；策略為早期發現、完整治療、潛伏感染治療。",
-        "docs": [],
+        "documents": [],
         "services": [],
         "contentIds": [
           "news.2026-03-24-world-tb-day-end-tb-2035",
@@ -253,7 +253,7 @@
         "key": "high-risk-screening",
         "title": "高風險族群主動篩檢",
         "summary": "依計畫對高風險族群定期胸部 X 光篩檢，並推動潛伏結核感染檢驗與治療。",
-        "docs": [
+        "documents": [
           "doc.tb-manual"
         ],
         "services": [
