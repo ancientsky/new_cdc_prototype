@@ -22,6 +22,7 @@ export function audiencesOf(sv) {
 const trailOf = (ctx, sv) => [{ label: ctx.t('apply.title'), href: '/apply/' }, { label: L(ctx, sv, 'title') }];
 
 export function meta(ctx, props = {}) {
+  props = props.item ? { ...props, item: localized(ctx, props.item) } : props; // JSON-LD 與 meta 也用頁面語言
   if (props.item) { const s = props.item; return { title: L(ctx, s, 'title'), description: L(ctx, s, 'summary'), item: s, jsonLd: ldFor(ctx, s, trailOf(ctx, s)), scripts: INLINE }; }
   return { title: ctx.t('apply.title'), description: ctx.t('apply.lead'), jsonLd: ldFor(ctx, null, [{ label: ctx.t('apply.title') }]), scripts: INLINE };
 }
