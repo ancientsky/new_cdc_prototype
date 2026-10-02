@@ -570,3 +570,57 @@ API（`scripts/lib/emit-api.mjs`）：`/v1/country-levels.json` 原樣輸出 dat
 - V2（模板）：`src/templates/public/{disease,notfound,legacy,developers}.mjs`、`src/templates/public/_partials.mjs`（只加 legacyDisclosure）、`src/templates/admin/{migration,index,todos}.mjs`、`src/client/i18n.js`、`src/styles/*`、`tests/migration-ui.test.mjs`、`docs/screenshots/`。對 V1 的 `site.migration`／`gov.legacy` 一律容錯（缺就不顯示）。
 - V3（文件）：`docs/migration-playbook.md`、`docs/plan-supplement.md`、`docs/roadmap-mapping.md`、`docs/guide-staff.md`、`README.md`。
 - 共同：不切分支、不 commit；`npm test` 與 `BUILD_TODAY=2026-10-01 LINK_CHECK=error npm run build` 全綠。
+
+## 14. 第六輪（2026-10-02）：移轉做法套用到全部疾病、國際合作區塊
+
+> 限制同 §13：連不到 www.cdc.gov.tw 與 /En。英文站「International Cooperation」的子頁依既有認識重建並標 `verified: false`。
+
+### 14.1 移轉清單規模化：由模板推導，人工只寫例外（W1 擁有）
+
+目標：99 種疾病不可能各寫一份 40 筆的清單。舊站每個疾病頁的子頁結構相同，所以：
+- `content/migration/_disease-template.json`：舊站疾病頁的標準子頁樹（type `migration-template`）：疾病介紹（致病原、流行病學、傳染方式、潛伏期、發病症狀、預防方法、治療方法與就醫資訊）、預防接種建議、Q&A、衛教宣導（單張海報／影片）、法規與指引（工作手冊、病例定義、治療指引）、統計資料、檢驗資訊、通報定義、新聞稿列表、相關連結。每筆：`key, oldTitle, oldPath, oldUrlPattern（含 {id}）, oldType, mapTo`。
+  `mapTo` 描述「新站哪裡有對應就算移轉」：`{ kind: 'disease-block', block: 'symptoms' }`｜`{ kind: 'related', type: 'faq'|'document'|'media'|'labtest'|'dataset'|'news'|'publication', docType?: 'manual'|'case-definition'|'guideline' }`｜`{ kind: 'master-field', field: 'notifyWithinHours' }`｜`{ kind: 'page', path: '/report/' }`。
+- 治理引擎對**主檔每一種疾病**推導一份清單（`derived: true`）：有疾病頁且 mapTo 命中 ⇒ `merged`（block／master-field）或 `migrated`（related 命中，target 為該內容 id）；疾病頁存在但 mapTo 未命中 ⇒ `pending`；疾病頁不存在 ⇒ 整份清單 `status: 'no-page'`，所有項目 `pending`。
+- `content/migration/{slug}.json`（人工清單，如結核病）存在時**覆蓋**推導結果：同 key 以人工為準，人工沒寫的 key 仍由模板補（這樣結核病清單也會自動補上模板有而人工沒列的項）。人工清單可用 `extends: 'migration-template.disease'` 明示。
+- 待辦聚合：每份清單只開**一則** `migration-pending` 待辦（「{疾病}：N 個舊頁待移轉」），no-page 清單則為「{疾病}：疾病頁尚未建立，N 個舊頁待移轉」，優先度依法定類別（第一、二類高）；不再逐筆開。
+- `site.migration.stats` 加 `lists, derived, curated, noPage`；`byDisease` Map。輸出 `v1/migration/index.json`（各清單摘要）、`v1/migration/{slug}.json`（完整清單，含 derived 標記），同事可下載成人工清單起點。
+- redirects／legacy-map：推導清單的 oldUrlPattern 都是 `{id}` 佔位 ⇒ 全部 `pattern:true`，不進伺服器檔；`/legacy/` 的模式比對仍可用。
+- 測試：72 種疾病都有清單；16 個有頁的疾病 stats 合理；結核病人工清單覆蓋模板；no-page 一則待辦；override 合併規則。
+
+### 14.2 內容來源語言 `sourceLang`（W1 擁有）
+
+國際合作區塊在舊站只有英文版，新站要讓英文是**來源語言**、中文是譯文，治理規則照常運作：
+- `_common.json` 新增選填 `sourceLang`（enum 七語，預設 `zh-TW`）。規則：`languages[sourceLang].status === 'source'`；頂層欄位＝來源語言文字；其他語言放 `i18n.{lang}`，**包含 `i18n['zh-TW']`**（sourceLang ≠ zh-TW 時 zh-TW 必須有 i18n 且 `languages['zh-TW'].status` 為 reviewed／machine，不可 none：中文官網不能沒有中文）。
+- `L(ctx, item, field)`（_partials）改為：`ctx.lang === (item.sourceLang ?? 'zh-TW')` ⇒ 頂層；否則 `i18n[ctx.lang]?.[field] ?? 頂層`。`langAvailable`：來源語言永遠可渲染；其他照既有規則。sourceHash／譯文過期：以來源語言頂層欄位計算（既有邏輯不變，只是語言標籤換）。index-builder／答案引擎：索引語言依 sourceLang（英文來源內容進英文索引，zh-TW 譯文進中文索引）。
+- 頁面 `<html lang>`、hreflang、sitemap 既有機制不變。測試：sourceLang:'en' 內容在 /en/ 用頂層、在 zh-TW 用 i18n、缺 zh-TW i18n 建置失敗。
+
+### 14.3 國際合作區塊內容（W1 擁有）
+
+全部 `sourceLang: 'en'`，附 zh-TW reviewed 譯文（ja 可選）。owner 新增單位 `unit.international`（國際合作組；看 content/master/units 的格式）。
+- `topic.international-cooperation`（International Cooperation 入口；sections 連下列各頁）。
+- `page.*`（type page）：`ihr-focal-point`（IHR National Focal Point：24/7 窗口、事件通報、WHO 聯繫方式；基於 IHR 2005）、`multilateral`（WHA／WHO 技術會議、APEC Health Working Group、GHSA、全球疫情警報與反應網路）、`bilateral`（雙邊 MOU 與合作：美、日、歐盟、東南亞與新南向夥伴；表格：國家／機構、合作主題、簽署年、狀態）、`training`（Taiwan CDC 國際訓練：FETP、實驗室、都治／結核、登革熱防治工作坊；申請方式、年度場次）、`global-health-security`（抗藥性、疫苗、邊境檢疫合作）、`publications-en`（Taiwan Epidemiology Bulletin、英文年報：連既有 publication）。
+- `news.*` 英文新聞 3 則（sourceLang en）：MOU 簽署、研習營開訓、WHA 技術會議參與。
+- `service.international-training-application`（外國衛生人員申請訓練：步驟、表單、聯絡窗口）。
+- 評估集 +3：英文題「How do I contact Taiwan's IHR focal point?」「How can foreign health officials apply for Taiwan CDC training?」與中文題「疾管署有哪些國際合作？」。
+- migration 清單 `content/migration/international-cooperation.json`：舊英文站 /En 的 International Cooperation 子頁（約 10–12 筆，`legacyRoot: 'https://www.cdc.gov.tw/En/Category/List/{id}'`，`scope: { kind: 'category', name: 'International Cooperation', site: 'en' }`），全部 verified:false。
+
+### 14.4 呈現（W2 擁有）
+
+- `/international/`（lang:'*'，但只在有譯文的語言輸出；zh-TW 與 en 一定有）：英文為來源的設計：頁首顯示「本頁以英文為準，中文為譯文」（zh-TW）／「English is the authoritative version」（en）＝ 既有譯文狀態列的反向用法；區塊：IHR 窗口卡（電話／信箱／24 小時）、多邊與雙邊（雙邊 MOU 表格＋夥伴地圖：重用 `_travel-map.mjs`，加選填 `classOf(iso)`／`legend` 讓顏色與圖例可自訂，不用 travel 等級語意）、訓練與申請、出版品、英文新聞、聯絡窗口。子頁沿用 page 模板但加區塊導覽。
+- 導覽：主選單不加（八項已滿）；放在「研究與媒體」入口頁與 footer 的「關於疾管署」群組，en 版主選單加 International Cooperation（英文站使用者習慣）；`/about/` 加連結。
+- 疾病頁專區導覽套到全部疾病：用 16 個疾病頁與 3 個無頁疾病的連結全部跑過（測試），任何疾病都不可出現空白區塊或 `undefined`。
+- 後台 `/admin/migration/`：72＋ 份清單：摘要表（疾病、法定類別、頁面有無、已移轉／併入／待移轉、進度條、人工／推導標記、下載 JSON）、依「待移轉最多」排序、篩選（有頁／無頁／人工／推導／單位）；單一清單展開逐筆。儀表板卡改顯示整體進度與 no-page 數。
+- `/legacy/`：查不到確定對照時用模式比對提示「這是舊站疾病頁的『{oldTitle}』，新站對應 {疾病} 的 {區塊}」（patterns 已有 oldTitle／to）。
+- i18n 七語；`tests/round6-ui.test.mjs`；截圖 `docs/screenshots/international.png`、`admin-migration-all.png`。
+
+### 14.5 內容與文件（W3 擁有）
+
+- 四個主要疾病內容回補（照結核病模式，規模較小）：`dengue`（防治計畫：孳生源清除、病媒監測、群聚應變；文件：登革熱防治工作指引）、`influenza`（流感疫苗接種計畫、抗病毒藥劑使用對象；既有抗病毒文件）、`measles`（接觸者追蹤、MMR；既有 MMR 文件）、`enterovirus`（重症前兆、停課標準、教托育機構指引）。每個：`professional.programs` 2–3 項、1 份新文件或補 legacyUrls、2–3 題 Q&A、`content/migration/{slug}.json` 人工清單只寫模板沒有的例外（5–8 筆，例如疾病特有專區頁），其餘交給推導。
+- 文件：`docs/guide-staff.md` 第 15 節改為「推導清單 → 只寫例外」流程；`docs/governance-model.md` 加規則 17（推導移轉清單與聚合待辦）、18（sourceLang）；`docs/plan-supplement.md` 加 3 項（推導清單、sourceLang、國際合作雙語）；`docs/migration-playbook.md` 加「規模化：99 種疾病怎麼做」一節；README 第六輪段落。
+
+### 14.6 分工與邊界
+
+- W1：`schemas/{_common,migration,migration-template}.json`、`scripts/lib/{load,validate,governance,emit-api,openapi,index-builder,pages}.mjs`、`src/templates/public/_partials.mjs` 的 `L()` 與 `langAvailable`（只改這兩個函式）、`content/migration/_disease-template.json`、`content/migration/international-cooperation.json`、`content/topics/international-cooperation.json`、`content/pages/international-*.json`、`content/news/*international*`、`content/services/international-training-application.json`、`content/master/units.json`（加單位）、`content/governance/eval-set.json`、`src/client/answer/core.js`（若索引語言需要）、`tests/migration-scale.test.mjs`、`tests/sourcelang.test.mjs`。
+- W2：`src/templates/public/{international,disease,legacy,about,developers}.mjs`、`src/templates/public/_travel-map.mjs`（加 classOf／legend 選項，相容既有呼叫）、`src/templates/layout.mjs`（en 主選單一項、footer 連結）、`src/templates/admin/{migration,_migration,index}.mjs`、`src/client/admin/migration.js`、`src/client/i18n.js`、`src/styles/*`、`tests/round6-ui.test.mjs`、截圖。
+- W3：`content/diseases/{dengue,influenza,measles,enterovirus}.json`、其新文件／Q&A 檔、`content/migration/{dengue,influenza,measles,enterovirus}.json`、`docs/*.md`、`README.md`。
+- 共同：不切分支、不 commit；`npm test` 與 `BUILD_TODAY=2026-10-01 LINK_CHECK=error npm run build` 全綠。W2 對 W1 的新欄位容錯；W3 的人工清單需符合 W1 的 schema（先讀 §14.1，schema 若尚未更新就先照 §13.1 寫，W1 會相容）。
