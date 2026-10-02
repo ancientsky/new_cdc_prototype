@@ -95,7 +95,7 @@ const TK = {
   levelCode: ['LevelCode', 'levelCode', 'Level_Code', 'LevelNo'],
   start: ['StartDate', '發布日期', '發布日', '發佈日期', '日期', '調整日期', 'effective', 'Effective', 'sent', 'PublishDate', 'Date'],
   summary: ['Summary', '摘要', '內容', '建議', '說明', 'description', 'instruction', 'Content', 'summary'],
-  area: ['Area', '區域說明', '省份', '疫區'],
+  area: ['Area', '區域說明', '省份', '疫區', 'areaDetail'],
   url: ['Url', '網址', '連結', 'web', 'url', 'link'],
 };
 
@@ -156,6 +156,7 @@ const shortLevel = (code) => LEVEL_TEXT[code].replace(/\(.*\)$/, '');
 /**
  * 官方 ExportJSON 含歷史紀錄（例如 2020-03-21 全球第三級 COVID-19 警告從未在匯出檔中移除）。
  * 等級表只應呈現「現行」建議，規則：
+ *   0. （aggregateCountryLevels）同國家×疾病×區域只看最新一則事件；最新為「解除」⇒ 不列。這是官方匯出檔表示解除的方式（severity_level = 解除）。
  *   1. 原始列若有結束日／解除日／狀態欄位且已結束 ⇒ 排除（欄位名容錯）。
  *   2. 嚴重特殊傳染性肺炎／COVID-19 的建議於 2023-05-01 全面解除（改列第四類） ⇒ 生效日早於該日者排除。
  *   3. 第三級超過 365 天未更新 ⇒ 視為歷史紀錄排除（第一、二級可長期存在，如沙烏地阿拉伯 MERS 第二級自 2015 年起，不排除）。
@@ -180,27 +181,37 @@ export function aggregateCountryLevels(rows, { countries = [], today = new Date(
   const master = Array.isArray(countries) ? countries : [];
   const findMaster = (r) => master.find((c) => (r.ISO2 && c.iso2 === r.ISO2) || (r.Country && (c.name === r.Country || String(r.Country).startsWith(c.name))) || (r.CountryEn && c.nameEn && c.nameEn.toLowerCase() === String(r.CountryEn).toLowerCase()));
   const groups = new Map();
-  for (const raw of rows ?? []) {
-    if (!raw || typeof raw !== 'object') continue;
+  // 第一階段（事件日誌模式）：官方匯出檔每列是一則「警示事件」（第一／二／三級或「解除」，severity_level），同一國家×疾病×區域會有多則。
+  // 現行建議＝該組合「最新一則」；最新一則為「解除」（LevelCode 0）⇒ 該建議已不存在。快照（每組合一筆）走同一路徑，結果不變。
+  const latest = new Map();
+  (rows ?? []).forEach((raw, idx) => {
+    if (!raw || typeof raw !== 'object') return;
     const r = 'LevelCode' in raw && 'ISO2' in raw ? raw : normalizeTravelRow(raw);
     const m = findMaster(r);
     const iso = r.ISO2 ?? m?.iso2 ?? null;
     const key = iso ?? r.Country;
-    if (!key) continue;
+    if (!key) return;
     if (!groups.has(key)) groups.set(key, { ISO2: iso, Country: m?.name ?? r.Country ?? iso, CountryEn: r.CountryEn ?? m?.nameEn ?? null, Region: m?.region ?? r.Region ?? null, Url: r.Url ?? TRAVEL_LEVEL_PAGE, items: new Map() });
-    const g = groups.get(key);
     const subs = Array.isArray(r.Diseases) ? r.Diseases.map((d) => ({ ...d, LevelCode: normalizeLevel(d.LevelCode ?? d.Level) })) : [r];
     for (const d of subs) {
-      if (!d.Disease || !(d.LevelCode > 0)) continue;
-      if (isStaleNotice(d, raw.__raw ?? raw, today)) continue;
-      const prev = g.items.get(d.Disease);
-      const date = toISODate(d.StartDate);
-      if (prev && (prev.LevelCode > d.LevelCode || (prev.LevelCode === d.LevelCode && String(prev.StartDate ?? '') >= String(date ?? '')))) continue;
-      g.items.set(d.Disease, {
-        Disease: d.Disease, ...(d.DiseaseEn ? { DiseaseEn: d.DiseaseEn } : {}), ...(d.DiseaseId ? { DiseaseId: d.DiseaseId } : {}),
-        Level: LEVEL_TEXT[d.LevelCode], LevelCode: d.LevelCode, StartDate: date, ...(d.Area ? { Area: d.Area } : {}), Summary: d.Summary ?? null, Url: d.Url ?? g.Url,
-      });
+      if (!d.Disease || d.LevelCode == null) continue;
+      const k = `${key}\u0000${d.Disease}\u0000${d.Area ?? ''}`;
+      const date = toISODate(d.StartDate) ?? '';
+      const prev = latest.get(k);
+      if (!prev || date > prev.date || (date === prev.date && idx > prev.idx)) latest.set(k, { raw, d, key, date, idx });
     }
+  });
+  // 第二階段：只保留現行（非解除、非歷史紀錄）；同國同病若有多個區域，取最高等級。
+  for (const { raw, d, key, date } of latest.values()) {
+    if (!(d.LevelCode > 0)) continue;
+    if (isStaleNotice(d, raw.__raw ?? raw, today)) continue;
+    const g = groups.get(key);
+    const prev = g.items.get(d.Disease);
+    if (prev && (prev.LevelCode > d.LevelCode || (prev.LevelCode === d.LevelCode && String(prev.StartDate ?? '') >= date))) continue;
+    g.items.set(d.Disease, {
+      Disease: d.Disease, ...(d.DiseaseEn ? { DiseaseEn: d.DiseaseEn } : {}), ...(d.DiseaseId ? { DiseaseId: d.DiseaseId } : {}),
+      Level: LEVEL_TEXT[d.LevelCode], LevelCode: d.LevelCode, StartDate: date || null, ...(d.Area ? { Area: d.Area } : {}), Summary: d.Summary ?? null, Url: d.Url ?? g.Url,
+    });
   }
   for (const c of master) if (![...groups.values()].some((g) => g.ISO2 === c.iso2)) groups.set(c.iso2, { ISO2: c.iso2, Country: c.name, CountryEn: c.nameEn ?? null, Region: c.region ?? null, Url: TRAVEL_LEVEL_PAGE, items: new Map() });
   const order = new Map(master.map((c, i) => [c.iso2, i]));

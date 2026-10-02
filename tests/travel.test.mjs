@@ -99,6 +99,26 @@ test('aggregateCountryLevels（live 形狀）：韓國 2020 年 COVID 第三級�
   assert.deepEqual(kr.Diseases.map((d) => d.Disease), ['麻疹']);
 });
 
+test('aggregateCountryLevels（事件日誌）：同國同病最新一則為「解除」⇒ 不列；最新為較低等級 ⇒ 以最新為準', () => {
+  const rows = [
+    { areaDesc: '日本', ISO3166: 'JP', alert_disease: '麻疹', severity_level: '第一級:注意(Watch)', effective: '2024-03-01T00:00:00+08:00' },
+    { areaDesc: '日本', ISO3166: 'JP', alert_disease: '麻疹', severity_level: '解除', effective: '2024-09-01T00:00:00+08:00' },
+    { areaDesc: '日本', ISO3166: 'JP', alert_disease: '麻疹', severity_level: '第一級:注意(Watch)', effective: '2026-05-11T00:00:00+08:00' },
+    { areaDesc: '巴西', ISO3166: 'BR', alert_disease: '屈公病', severity_level: '第三級:警告(Warning)', effective: '2023-09-06T00:00:00+08:00' },
+    { areaDesc: '巴西', ISO3166: 'BR', alert_disease: '屈公病', severity_level: '解除', effective: '2024-03-01T00:00:00+08:00' },
+    { areaDesc: '帛琉', ISO3166: 'PW', alert_disease: '新冠併發重症', severity_level: '第三級:警告(Warning)', effective: '2022-01-25T00:00:00+08:00' },
+    { areaDesc: '帛琉', ISO3166: 'PW', alert_disease: '新冠併發重症', severity_level: '第二級:警示(Alert)', effective: '2022-06-01T00:00:00+08:00' },
+    { areaDesc: '沙烏地阿拉伯', ISO3166: 'SA', alert_disease: '中東呼吸症候群冠狀病毒感染症', severity_level: '第二級:警示(Alert)', effective: '2015-06-09T00:00:00+08:00' },
+  ];
+  const out = aggregateCountryLevels(rows, { today: '2026-10-01' });
+  const by = (iso) => out.find((c) => c.ISO2 === iso);
+  assert.equal(by('JP').LevelCode, 1, '解除後再發布 ⇒ 現行第一級');
+  assert.equal(by('JP').Diseases[0].StartDate, '2026-05-11');
+  assert.equal(by('BR').LevelCode, 0, '最新為解除 ⇒ 無建議');
+  assert.equal(by('PW').LevelCode, 0, '最新為 2022 年 COVID 第二級 ⇒ 2023-05-01 前的 COVID 建議視為歷史');
+  assert.equal(by('SA').LevelCode, 2, '長期第二級（無解除）保留');
+});
+
 test('assertPlausibleLevels：快照通過；上百個第二級國家（歷史警示直接聚合）被拒，錯誤附 stats', () => {
   assert.ok(assertPlausibleLevels(levels.data).level1 >= 0);
   const many = Array.from({ length: LEVEL_PLAUSIBLE_MAX.level2 + 1 }, (_, i) => ({ ISO2: `X${i}`, LevelCode: 2, Diseases: [{ Disease: '茲卡病毒感染症', LevelCode: 2 }] }));
