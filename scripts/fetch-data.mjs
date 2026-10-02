@@ -224,11 +224,21 @@ const asArray = (j) => (Array.isArray(j) ? j : Array.isArray(j?.data) ? j.data :
 const readMasterCountries = () => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'master', 'countries.json'), 'utf8')); } catch { return []; } };
 
 const lastRaw = {};
-const SOURCES = [
+export const SOURCES = [
   { file: 'travel-epidemic.json', url: 'https://www.cdc.gov.tw/TravelEpidemic/ExportJSON', label: '國際重要疫情資訊（近 30 天）', pick: (j) => asArray(j).map(normalizeTravelRow),
     meta: (data) => ({ sourcePage: TRAVEL_LEVEL_PAGE, dataDate: data.map((r) => r.StartDate).filter(Boolean).sort().at(-1) ?? new Date().toISOString().slice(0, 10) }) },
   { file: 'country-epid-level.json', url: 'https://www.cdc.gov.tw/CountryEpidLevel/ExportJSON', label: '國際旅遊疫情建議等級表',
-    pick: (j) => { const rawRows = asArray(j); lastRaw.countryLevels = rawRows; return aggregateCountryLevels(rawRows.map((r) => ({ ...normalizeTravelRow(r), __raw: r })), { countries: readMasterCountries() }); },
+    pick: (j) => {
+      const rawRows = asArray(j); lastRaw.countryLevels = rawRows;
+      const today = new Date().toISOString().slice(0, 10);
+      const norm = rawRows.map((r) => ({ ...normalizeTravelRow(r), __raw: r }));
+      const stale = norm.filter((r) => r.Disease && r.LevelCode > 0 && isStaleNotice(r, r.__raw, today));
+      const data = aggregateCountryLevels(norm, { countries: readMasterCountries(), today });
+      const st = levelStats(data);
+      const byLv = (n) => st[`level${n}`];
+      console.log(`[fetch]   等級表：原始 ${rawRows.length} 列，排除歷史紀錄 ${stale.length} 列${stale.length ? `（如 ${stale.slice(0, 3).map((r) => `${r.Country} ${r.Disease} L${r.LevelCode} ${r.StartDate ?? ''}`).join('；')}）` : ''}；現行 第三級 ${byLv(3)}、第二級 ${byLv(2)}、第一級 ${byLv(1)} 國；原始欄位：${Object.keys(rawRows[0] ?? {}).join(', ')}`);
+      return data;
+    },
     meta: (data) => ({ sourcePage: TRAVEL_LEVEL_PAGE, levelDefinitions: LEVEL_DEFINITIONS, stats: levelStats(data), dataDate: new Date().toISOString().slice(0, 10),
       rawCount: lastRaw.countryLevels?.length ?? null, rawFields: Object.keys(lastRaw.countryLevels?.[0] ?? {}), rawSample: (lastRaw.countryLevels ?? []).slice(0, 3),
       filterNote: `已排除歷史紀錄：有結束日／已解除者、${COVID_NOTICES_LIFTED_AT} 前的 COVID-19 建議、第三級逾 365 天未更新者` }) },
