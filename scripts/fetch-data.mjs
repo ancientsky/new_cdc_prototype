@@ -145,7 +145,30 @@ const shortLevel = (code) => LEVEL_TEXT[code].replace(/\(.*\)$/, '');
  * 依疾病的等級列（CountryEpidLevel 每列＝國家 × 疾病）→ 每國一筆，Diseases[] 合併（同病取最高等級、最新日期）。
  * countries（選填，master/countries.json）：補 ISO2／英文名／區域；並為主檔中沒有列在表上的國家補「無旅遊疫情建議」一筆，讓 live 與快照形狀一致。
  */
-export function aggregateCountryLevels(rows, { countries = [] } = {}) {
+/**
+ * 官方 ExportJSON 含歷史紀錄（例如 2020-03-21 全球第三級 COVID-19 警告從未在匯出檔中移除）。
+ * 等級表只應呈現「現行」建議，規則：
+ *   1. 原始列若有結束日／解除日／狀態欄位且已結束 ⇒ 排除（欄位名容錯）。
+ *   2. 嚴重特殊傳染性肺炎／COVID-19 的建議於 2023-05-01 全面解除（改列第四類） ⇒ 生效日早於該日者排除。
+ *   3. 第三級超過 365 天未更新 ⇒ 視為歷史紀錄排除（第一、二級可長期存在，如沙烏地阿拉伯 MERS 第二級自 2015 年起，不排除）。
+ */
+export const COVID_NOTICES_LIFTED_AT = '2023-05-01';
+export function isStaleNotice(d, raw = {}, today = new Date().toISOString().slice(0, 10)) {
+  const end = pick(raw, ['EndDate', 'endDate', 'LiftDate', 'ExpireDate', 'expires', '結束日', '結束日期', '解除日', '解除日期', '迄日', '失效日']);
+  const status = String(pick(raw, ['Status', 'status', 'IsActive', 'Active', 'IsCurrent', '狀態', '是否現行']) ?? '').toLowerCase();
+  if (end && toISODate(end) && toISODate(end) <= today) return true;
+  if (status && /(已解除|解除|結束|歷史|inactive|expired|lifted|false|0)$/.test(status) && !/current|active|現行|true|1$/.test(status)) return true;
+  const date = toISODate(d.StartDate) ?? toISODate(raw.StartDate) ?? null;
+  const name = String(d.Disease ?? '');
+  if (/嚴重特殊傳染性肺炎|covid|新冠|sars-cov-2|武漢肺炎/i.test(name) && date && date < COVID_NOTICES_LIFTED_AT) return true;
+  if (date) {
+    const ageDays = Math.round((Date.parse(`${today}T00:00:00Z`) - Date.parse(`${date}T00:00:00Z`)) / 86400000);
+    if (d.LevelCode >= 3 && ageDays > 365) return true;
+  }
+  return false;
+}
+
+export function aggregateCountryLevels(rows, { countries = [], today = new Date().toISOString().slice(0, 10) } = {}) {
   const master = Array.isArray(countries) ? countries : [];
   const findMaster = (r) => master.find((c) => (r.ISO2 && c.iso2 === r.ISO2) || (r.Country && (c.name === r.Country || String(r.Country).startsWith(c.name))) || (r.CountryEn && c.nameEn && c.nameEn.toLowerCase() === String(r.CountryEn).toLowerCase()));
   const groups = new Map();
@@ -161,6 +184,7 @@ export function aggregateCountryLevels(rows, { countries = [] } = {}) {
     const subs = Array.isArray(r.Diseases) ? r.Diseases.map((d) => ({ ...d, LevelCode: normalizeLevel(d.LevelCode ?? d.Level) })) : [r];
     for (const d of subs) {
       if (!d.Disease || !(d.LevelCode > 0)) continue;
+      if (isStaleNotice(d, raw.__raw ?? raw, today)) continue;
       const prev = g.items.get(d.Disease);
       const date = toISODate(d.StartDate);
       if (prev && (prev.LevelCode > d.LevelCode || (prev.LevelCode === d.LevelCode && String(prev.StartDate ?? '') >= String(date ?? '')))) continue;
@@ -199,11 +223,15 @@ export function levelStats(countryRows) {
 const asArray = (j) => (Array.isArray(j) ? j : Array.isArray(j?.data) ? j.data : Array.isArray(j?.result) ? j.result : Array.isArray(j?.Data) ? j.Data : []);
 const readMasterCountries = () => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'master', 'countries.json'), 'utf8')); } catch { return []; } };
 
+const lastRaw = {};
 const SOURCES = [
   { file: 'travel-epidemic.json', url: 'https://www.cdc.gov.tw/TravelEpidemic/ExportJSON', label: '國際重要疫情資訊（近 30 天）', pick: (j) => asArray(j).map(normalizeTravelRow),
     meta: (data) => ({ sourcePage: TRAVEL_LEVEL_PAGE, dataDate: data.map((r) => r.StartDate).filter(Boolean).sort().at(-1) ?? new Date().toISOString().slice(0, 10) }) },
-  { file: 'country-epid-level.json', url: 'https://www.cdc.gov.tw/CountryEpidLevel/ExportJSON', label: '國際旅遊疫情建議等級表', pick: (j) => aggregateCountryLevels(asArray(j).map(normalizeTravelRow), { countries: readMasterCountries() }),
-    meta: (data) => ({ sourcePage: TRAVEL_LEVEL_PAGE, levelDefinitions: LEVEL_DEFINITIONS, stats: levelStats(data), dataDate: new Date().toISOString().slice(0, 10) }) },
+  { file: 'country-epid-level.json', url: 'https://www.cdc.gov.tw/CountryEpidLevel/ExportJSON', label: '國際旅遊疫情建議等級表',
+    pick: (j) => { const rawRows = asArray(j); lastRaw.countryLevels = rawRows; return aggregateCountryLevels(rawRows.map((r) => ({ ...normalizeTravelRow(r), __raw: r })), { countries: readMasterCountries() }); },
+    meta: (data) => ({ sourcePage: TRAVEL_LEVEL_PAGE, levelDefinitions: LEVEL_DEFINITIONS, stats: levelStats(data), dataDate: new Date().toISOString().slice(0, 10),
+      rawCount: lastRaw.countryLevels?.length ?? null, rawFields: Object.keys(lastRaw.countryLevels?.[0] ?? {}), rawSample: (lastRaw.countryLevels ?? []).slice(0, 3),
+      filterNote: `已排除歷史紀錄：有結束日／已解除者、${COVID_NOTICES_LIFTED_AT} 前的 COVID-19 建議、第三級逾 365 天未更新者` }) },
 ];
 
 // ── CKAN：package_search 分頁抓全部 ────────────────────

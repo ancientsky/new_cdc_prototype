@@ -27,11 +27,11 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - name: Tests (governance rules, on committed content)
+        run: npm test
       - name: Fetch live data from official sources (falls back to snapshots)
         run: npm run fetch
         continue-on-error: true
-      - name: Tests (governance rules)
-        run: npm test
       - name: Build (schema gate + eval gate + static site)
         env:
           BASE_PATH: /${{ github.event.repository.name }}

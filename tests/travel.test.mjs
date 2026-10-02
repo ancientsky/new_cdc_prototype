@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { aggregateCountryLevels, normalizeLevel, normalizeTravelRow, toISODate, levelStats, LEVEL_TEXT } from '../scripts/fetch-data.mjs';
+import { aggregateCountryLevels, normalizeLevel, normalizeTravelRow, toISODate, levelStats, LEVEL_TEXT, isStaleNotice, COVID_NOTICES_LIFTED_AT } from '../scripts/fetch-data.mjs';
 import { makeCtx } from '../scripts/lib/pages.mjs';
 import * as travel from '../src/templates/public/travel.mjs';
 import { t } from '../src/client/i18n.js';
@@ -72,6 +72,31 @@ test('aggregateCountryLevels：國家 × 疾病 → 每國一筆，Diseases[] �
   assert.equal(kr.Level, '無旅遊疫情建議');
   assert.deepEqual(kr.Diseases, []);
   for (const r of out) for (const k of ['ISO2', 'Country', 'Level', 'LevelCode', 'StartDate', 'Summary', 'Diseases']) assert.ok(k in r, `${r.ISO2} 缺 ${k}`);
+});
+
+test('isStaleNotice：官方匯出檔的歷史紀錄（COVID 2020、逾期第三級、已解除）被排除；第一、二級長期建議保留', () => {
+  const today = '2026-10-01';
+  assert.equal(COVID_NOTICES_LIFTED_AT, '2023-05-01');
+  assert.equal(isStaleNotice({ Disease: '嚴重特殊傳染性肺炎', LevelCode: 3, StartDate: '2020-03-21' }, {}, today), true);
+  assert.equal(isStaleNotice({ Disease: 'COVID-19', LevelCode: 1, StartDate: '2022-12-01' }, {}, today), true);
+  assert.equal(isStaleNotice({ Disease: '麻疹', LevelCode: 3, StartDate: '2024-01-01' }, {}, today), true);
+  assert.equal(isStaleNotice({ Disease: '中東呼吸症候群冠狀病毒感染症', LevelCode: 2, StartDate: '2015-06-01' }, {}, today), false, '第二級可長期存在（沙國 MERS）');
+  assert.equal(isStaleNotice({ Disease: '麻疹', LevelCode: 2, StartDate: '2025-06-01' }, {}, today), false);
+  assert.equal(isStaleNotice({ Disease: '登革熱', LevelCode: 1, StartDate: '2019-08-01' }, {}, today), false, '第一級可長期存在');
+  assert.equal(isStaleNotice({ Disease: '麻疹', LevelCode: 1, StartDate: '2026-01-01' }, { EndDate: '2026-05-01' }, today), true);
+  assert.equal(isStaleNotice({ Disease: '麻疹', LevelCode: 1, StartDate: '2026-01-01' }, { 狀態: '已解除' }, today), true);
+  assert.equal(isStaleNotice({ Disease: '麻疹', LevelCode: 1, StartDate: '2026-01-01' }, { Status: 'Active' }, today), false);
+});
+
+test('aggregateCountryLevels（live 形狀）：韓國 2020 年 COVID 第三級不再出現，僅留現行第一級', () => {
+  const rows = [
+    { Country: '韓國', ISO2: 'KR', Disease: '嚴重特殊傳染性肺炎', Level: '第三級：警告(Warning)', StartDate: '2020/03/21' },
+    { Country: '韓國', ISO2: 'KR', Disease: '麻疹', Level: '第一級：注意(Watch)', StartDate: '2026/07/01' },
+  ];
+  const out = aggregateCountryLevels(rows, { today: '2026-10-01' });
+  const kr = out.find((c) => c.ISO2 === 'KR');
+  assert.equal(kr.LevelCode, 1);
+  assert.deepEqual(kr.Diseases.map((d) => d.Disease), ['麻疹']);
 });
 
 test('aggregateCountryLevels 對快照是冪等的（live 與快照形狀一致）', () => {

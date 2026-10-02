@@ -6,7 +6,7 @@ import { config } from '../../../site.config.mjs';
 import * as JL from '../../../scripts/lib/jsonld.mjs';
 import { ldFor, pageHead, sectionHead, askBox, hrefFor, L, diseasePage, publishedOf, feedback, pill } from './_partials.mjs';
 
-export const TRAVEL_CLINIC_URL = `${config.legacyOrigin}/Category/List/`;
+export const TRAVEL_CLINIC_URL = null; // 現行官網門診名單頁 ID 未確認；一律連站內 /apply/travel-clinic-appointment/
 export const TRAVEL_LEVEL_PAGE = 'https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09';
 const LEVEL_EN = { 1: 'Watch', 2: 'Alert', 3: 'Warning' };
 const LEVEL_KEY = { 1: 'watch', 2: 'alert', 3: 'warning' };
@@ -130,7 +130,8 @@ function vaccinesFor(ctx, entries) {
 
 function clinicLink(ctx) {
   const s = svc(ctx.site, 'travel-clinic-appointment');
-  return s ? html`<a href="${hrefFor(ctx, s)}">${ctx.t('travel.clinic.cta')}</a>` : html`<a href="${TRAVEL_CLINIC_URL}" rel="noopener">${ctx.t('travel.clinic.cta')} ↗</a>`;
+  // 服務頁一律存在（content/services/travel-clinic-appointment.json）；若缺則連 /apply/ 總覽，避免輸出外部未確認連結。
+  return s ? html`<a href="${hrefFor(ctx, s)}">${ctx.t('travel.clinic.cta')}</a>` : html`<a href="${ctx.url('/apply/')}">${ctx.t('travel.clinic.cta')}</a>`;
 }
 
 /** 結果卡：無建議＝綠勾＋一般預防措施；有建議＝逐項疾病、等級、發布日、建議、疾病頁、相關疫苗 */
@@ -406,7 +407,7 @@ ${feedback(ctx, { page: ctx.path })}</div>`;
   <div class="tv-prep">
     <div><h3>${t('travel.country.diseases')}</h3><ul>${relPages.map(({ m, page }) => html`<li>${page ? html`<a href="${hrefFor(ctx, page)}">${L(ctx, page, 'title')}</a>` : (ctx.lang === 'zh-TW' ? m.name : m.nameEn ?? m.name)}</li>`)}</ul></div>
     <div><h3>${t('travel.country.vaccines')}</h3>${vax.length ? html`<ul>${vax.map((v) => html`<li>${v}</li>`)}</ul>` : html`<p class="muted">${t('travel.vax.none')}</p>`}</div>
-    <div><h3>${t('travel.country.clinic')}</h3><p>${t('travel.country.clinic.d')}</p><p>${clinicLink(ctx)}</p>${cert ? html`<p><a href="${hrefFor(ctx, cert)}">${t('travel.cert.t')}</a></p>` : ''}<p class="muted"><a href="${TRAVEL_CLINIC_URL}" rel="noopener">${t('travel.country.clinic.cta')} ↗</a></p></div>
+    <div><h3>${t('travel.country.clinic')}</h3><p>${t('travel.country.clinic.d')}</p><p>${clinicLink(ctx)}</p>${cert ? html`<p><a href="${hrefFor(ctx, cert)}">${t('travel.cert.t')}</a></p>` : ''}</div>
   </div>
   ${docs.length ? html`<h3>${t('travel.country.docs')}</h3><ul class="c-linklist">${docs.map((d) => html`<li><a href="${hrefFor(ctx, d)}">${L(ctx, d, 'title')}</a> <span class="muted">${d.version}</span></li>`)}</ul>` : ''}
 </section>
