@@ -2,17 +2,64 @@
   "$id": "https://cdc-prototype/schemas/banner.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "首頁宣導 Banner（有上下架日與權責，到期自動下架）",
-  "allOf": [{ "$ref": "_common.json" }],
+  "allOf": [
+    {
+      "$ref": "_common.json"
+    }
+  ],
   "type": "object",
-  "required": ["headline", "startAt", "endAt", "cta"],
+  "required": [
+    "headline",
+    "startAt",
+    "endAt",
+    "cta"
+  ],
   "properties": {
-    "type": { "const": "banner" },
-    "headline": { "type": "string" },
-    "subline": { "type": "string" },
-    "image": { "type": "string" },
-    "cta": { "type": "object", "required": ["label", "url"], "properties": { "label": { "type": "string" }, "url": { "type": "string" } } },
-    "startAt": { "type": "string", "format": "date" },
-    "endAt": { "type": "string", "format": "date" },
-    "priority": { "type": "integer" }
+    "type": {
+      "const": "banner"
+    },
+    "headline": {
+      "type": "string"
+    },
+    "subline": {
+      "type": "string"
+    },
+    "image": {
+      "type": "string"
+    },
+    "cta": {
+      "type": "object",
+      "required": [
+        "label",
+        "url"
+      ],
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "startAt": {
+      "type": "string",
+      "format": "date"
+    },
+    "endAt": {
+      "type": "string",
+      "format": "date"
+    },
+    "priority": {
+      "type": "integer"
+    },
+    "imageAlt": {
+      "type": "string",
+      "description": "插圖替代文字（圖只當氛圍；文字資訊都在 headline/subline）"
+    },
+    "imageWide": {
+      "type": "string",
+      "description": "16:9 大圖（首頁做法 A 主視覺）；image 為 4:3 卡片圖"
+    }
   }
 }

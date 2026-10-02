@@ -10,6 +10,9 @@ export const config = {
   // 現行官網（來源連結、legacyUrls 用）
   legacyOrigin: 'https://www.cdc.gov.tw',
   openDataOrigin: 'https://data.cdc.gov.tw',
+  // 疫苗及流感藥劑地圖：原型一律導向改良版 vaxmap-next（深連結：#g=flu|covid|pcv|antiviral&city=…&lang=en…）
+  vaxmapUrl: 'https://ancientsky.github.io/vaxmap-next/',
+  vaxmapInfoUrl: 'https://ancientsky.github.io/vaxmap-next/info.html',
   hotline: '1922',
   hotlineIntl: '+886-800-001922',
   defaultLang: 'zh-TW',
