@@ -143,6 +143,8 @@ test('R11 外部連結：收成 site.gov.externalLinks；broken ⇒ link-broken 
     addItem(s, mk({ type: 'news', id: 'news.test-notice-link', newsType: 'recruit', applyUrl: 'https://web3.dgpa.gov.tw/x' }));
     addItem(s, mk({ type: 'publication', id: 'pub.test-pdf', pdfUrl: 'https://www.cdc.gov.tw/File/Get/pub.pdf', linkChecks: { pdfUrl: { lastCheckedAt: '2026-09-29', status: 'ok' } } }));
     addItem(s, mk({ type: 'media', id: 'media.test-video', videoUrl: 'https://www.youtube.com/watch?v=abc', linkChecks: { videoUrl: { lastCheckedAt: '2026-09-29', status: 'broken' } } }));
+    // 語料中的文件 PDF 已全數改連站內 /pending/（尚未遷移），外部 pdfUrl 改用合成文件測
+    addItem(s, mk({ type: 'document', id: 'doc.test-ext-pdf', family: 'test-ext-pdf', pdfUrl: 'https://www.cdc.gov.tw/File/Get/doc.pdf' }));
   });
   const links = site.gov.externalLinks.filter((l) => l.itemId.includes('.test-'));
   const by = (id, field) => links.find((l) => l.itemId === id && l.field === field);
