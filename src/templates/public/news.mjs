@@ -68,7 +68,7 @@ function detail(ctx, n) {
   <div class="c-cols c-cols--2">
     <div class="c-cols__main">
       <div class="c-prose">${raw(md(body))}</div>
-      ${n.attachments?.length ? html`<section class="c-block"><h2>${t('news.attach')}</h2><ul class="c-linklist">${n.attachments.map((a) => html`<li><a href="${a.url}" rel="noopener">${a.label} ↗</a> ${a.machineReadable ? pill(t('news.attach.mr'), 'ok') : ''}</li>`)}</ul></section>` : ''}
+      ${n.attachments?.length ? html`<section class="c-block"><h2>${t('news.attach')}</h2><ul class="c-linklist">${n.attachments.map((a) => html`<li><a href="${/^https?:/.test(a.url) ? a.url : ctx.url(a.url)}" rel="noopener">${a.label} ↗</a> ${a.machineReadable ? pill(t('news.attach.mr'), 'ok') : ''}</li>`)}</ul></section>` : ''}
       ${feedback(ctx, { page: ctx.path })}
     </div>
     <aside class="c-cols__side">

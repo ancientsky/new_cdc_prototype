@@ -9,10 +9,12 @@
 //   - ?query 忽略；#anchor 檢查目標頁有該 id／name（找不到 ⇒ warning）；#t=…、#:~:text=… 等媒體／文字片段不檢。
 //   - 以 / 開頭卻不在 basePath 底下 ⇒ error（missing-basepath：部署到 Pages 子路徑會 404）。
 //   - 排除：/ask/?q=…（動態查詢）、mailto:、tel:、sms:、javascript:、data:、blob:。
+//   - 404.html 不得有相對路徑（Pages 會在任意路徑回應它）⇒ error（relative-in-404）。
 // 外部：收集網域、次數、來源頁 → v1/governance/external-links.json；建置時不連外驗證（CI 另有 fetch-data --check-links）。
 //   黑名單（example.、placeholder、localhost、127.0.0.1、TODO、xxx）⇒ error。
 // 輸出：v1/governance/link-report.json（errors[]、warnings[]、counts）。
 // 用法：node scripts/lib/check-internal-links.mjs [distDir] [--check] [--md]（--check 或 CI 環境下有 error ⇒ exit 1）
+//       --md：也掃 .md 機讀版的站內連結（只算 warning）。build.mjs 在輸出後呼叫；LINK_CHECK=warn 降為警告、off 略過。
 // 匯出：checkInternalLinks(distDir, { basePath, langs, siteUrl, md, write }) → { errors, warnings, counts, external, ok }
 import fs from 'node:fs';
 import path from 'node:path';
@@ -23,8 +25,7 @@ const OTHER_SCHEME = /^[a-z][a-z0-9+.-]*:/i;
 const EXCLUDE = [/\/ask\/\?q=/];
 /** 黑名單：外部網址含這些字樣 ⇒ error（佔位或示意網址不得上線） */
 export const BLACKLIST = [
-  { re: /^https?:\/\/(?:[^/?#]*\.)?example\.[a-z]+(?:[:/?#]|$)/i, why: 'example 網域' },
-  { re: /^https?:\/\/(?:[^/?#]*\.)?example(?:[:/?#]|$)/i, why: 'example 網域' },
+  { re: /^https?:\/\/(?:[^/?#]*\.)?example(?:\.[^/?#:]*)?(?:[:/?#]|$)/i, why: 'example 網域' },
   { re: /placeholder/i, why: '佔位網址（placeholder）' },
   { re: /^https?:\/\/localhost(?:[:/?#]|$)/i, why: 'localhost' },
   { re: /^https?:\/\/127\.0\.0\.1(?:[:/?#]|$)/i, why: '127.0.0.1' },
@@ -229,7 +230,7 @@ export function checkInternalLinks(distDir, opts = {}) {
   const report = {
     basePath, siteOrigin, ok: errors.length === 0, counts,
     rules: {
-      internal: '資料夾型需有 index.html、檔案型需存在；?query 忽略；#anchor 缺 id ⇒ warning；不在 basePath 底下 ⇒ error',
+      internal: '資料夾型需有 index.html、檔案型需存在；?query 忽略；#anchor 缺 id ⇒ warning；不在 basePath 底下 ⇒ error；404.html 不得用相對路徑',
       excluded: ['/ask/?q=', 'mailto:', 'tel:', 'sms:', 'javascript:', 'data:', 'blob:'],
       blacklist: BLACKLIST.map((b) => String(b.re)),
     },

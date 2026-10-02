@@ -41,7 +41,7 @@ function listPage(ctx) {
       return html`<section class="c-block" id="${id}" aria-labelledby="h-${id}"><h2 id="h-${id}">${series} <span class="c-pill c-pill--neutral">${list.length}</span></h2>
         ${sorted.map(([v, ps]) => html`<h3 class="c-pubvol">${t('publications.volume', { n: v })}</h3>
         <div class="c-tablewrap"><table class="c-table c-table--pub"><caption class="sr-only">${series} ${t('publications.volume', { n: v })}</caption><thead><tr><th scope="col">${t('publications.issue')}</th><th scope="col">${t('publications.date')}</th><th scope="col">${t('publications.articles')}</th><th scope="col">${t('publications.pdf')}</th></tr></thead>
-        <tbody>${ps.sort((a, b) => num(b.issue) - num(a.issue)).map((p) => html`<tr><th scope="row"><a href="${hrefFor(ctx, p)}"${isFallbackLink(ctx, p) ? raw(' lang="zh-TW"') : ''}>${volIssue(p)}</a></th><td>${fmtDate(p.publishedAt)}</td><td>${p.articles?.length ?? '—'}</td><td>${p.pdfUrl ? extLink(ctx, p.pdfUrl, 'PDF') : '—'}</td></tr>`)}</tbody></table></div>`)}
+        <tbody>${ps.sort((a, b) => num(b.issue) - num(a.issue)).map((p) => html`<tr><th scope="row"><a href="${hrefFor(ctx, p)}"${isFallbackLink(ctx, p) ? raw(' lang="zh-TW"') : ''}>${volIssue(p)}</a></th><td>${fmtDate(p.publishedAt)}</td><td>${p.articles?.length ?? '—'}</td><td>${p.pdfUrl ? extLink(ctx, /^https?:/.test(p.pdfUrl) ? p.pdfUrl : ctx.url(p.pdfUrl), 'PDF') : '—'}</td></tr>`)}</tbody></table></div>`)}
       </section>`;
     }
     return html`<section class="c-block" id="${id}" aria-labelledby="h-${id}"><h2 id="h-${id}">${series} <span class="c-pill c-pill--neutral">${list.length}</span></h2>
@@ -76,7 +76,7 @@ function detail(ctx, p) {
     ${scopeTags(ctx, p, { region: false })}
     ${langStatus && lang !== 'zh-TW' ? html`<p>${translationBadge(ctx, langStatus === 'reviewed' ? 'reviewed' : 'machine')}</p>` : ''}
     ${alerts(ctx, p)}${provenance(ctx, p)}
-  </div><div class="c-pagehead__actions">${p.pdfUrl ? html`<a class="c-btn" href="${p.pdfUrl}" rel="noopener">${t('publications.pdf.get')} ↗</a>` : ''}<button type="button" class="c-btn c-btn--ghost" data-copy-text="${cite}" data-done="${t('copied')}">${t('publications.cite')}</button></div></header>
+  </div><div class="c-pagehead__actions">${p.pdfUrl ? html`<a class="c-btn" href="${/^https?:/.test(p.pdfUrl) ? p.pdfUrl : ctx.url(p.pdfUrl)}" rel="noopener">${t('publications.pdf.get')} ↗</a>` : ''}<button type="button" class="c-btn c-btn--ghost" data-copy-text="${cite}" data-done="${t('copied')}">${t('publications.cite')}</button></div></header>
   <div class="c-cols c-cols--2">
     <div class="c-cols__main">
       <section class="c-block" aria-labelledby="bib-h"><h2 id="bib-h">${t('publications.bib')}</h2>
@@ -93,7 +93,7 @@ function detail(ctx, p) {
     </div>
     <aside class="c-cols__side">
       ${p.cover && imgSrc(ctx, p.cover) ? html`<div class="c-aside-card"><img class="c-publication__cover" src="${imgSrc(ctx, p.cover)}" alt="" width="240" height="320" loading="lazy"></div>` : ''}
-      ${p.pdfUrl ? html`<section class="c-aside-card"><h2>${t('publications.pdf')}</h2><p>${extLink(ctx, p.pdfUrl, t('publications.pdf.get'))}</p></section>` : ''}
+      ${p.pdfUrl ? html`<section class="c-aside-card"><h2>${t('publications.pdf')}</h2><p>${extLink(ctx, /^https?:/.test(p.pdfUrl) ? p.pdfUrl : ctx.url(p.pdfUrl), t('publications.pdf.get'))}</p></section>` : ''}
       ${pageData(ctx, p, { schema: p.pubType === 'bulletin' ? 'PublicationIssue' : 'Book', api: '/v1/publications.json', mdPath: `${itemPath(p).replace(/\/$/, '')}.md` })}
     </aside>
   </div>

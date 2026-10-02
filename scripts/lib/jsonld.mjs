@@ -28,6 +28,8 @@ const ORG_ID = () => `${siteOrigin()}/#org`;
 const SITE_ID = () => `${siteOrigin()}/#website`;
 const TAIWAN = { '@type': 'Country', name: '臺灣', alternateName: 'Taiwan', identifier: 'TW' };
 
+/** 內容連結欄位：外部網址原樣；站內路徑（/pending/…）→ 絕對網址 */
+const linkAbs = (ctx, u) => (!u || /^https?:\/\//.test(u) ? u : abs(ctx, u, { noLang: true }));
 const abs = (ctx, path, opts = {}) => {
   if (ctx?.url) return ctx.url(path, { absolute: true, ...opts });
   return `${siteOrigin()}${path}`;
@@ -201,7 +203,7 @@ export function jsonLdFor(ctx, item) {
       const common = { name, description, author: (item.authors?.length ? item.authors.map(authorOf) : [unitOrg(ctx, item.owner)]),
         numberOfPages: item.pages, abstract: mdToText(tr(ctx, item, 'abstractMarkdown')) || undefined, image: asAsset(ctx, item.cover),
         identifier: item.gpn ? [{ '@type': 'PropertyValue', propertyID: 'GPN', value: item.gpn }] : undefined,
-        encoding: item.pdfUrl ? [{ '@type': 'MediaObject', encodingFormat: 'application/pdf', contentUrl: item.pdfUrl }] : undefined,
+        encoding: item.pdfUrl ? [{ '@type': 'MediaObject', encodingFormat: 'application/pdf', contentUrl: linkAbs(ctx, item.pdfUrl) }] : undefined,
         hasPart: (item.articles ?? []).map((a) => clean({ '@type': 'ScholarlyArticle', headline: a.title, name: a.title, pagination: a.pages, author: (a.authors ?? []).map(authorOf), sameAs: a.doi ? `https://doi.org/${a.doi}` : undefined, abstract: a.abstract })),
         'cdc:series': item.series, 'cdc:pubType': item.pubType };
       if (isIssue) {
@@ -229,7 +231,7 @@ export function jsonLdFor(ctx, item) {
         sponsor: { '@id': ORG_ID(), '@type': 'GovernmentOrganization', name: config.name },
         member: item.piUnit ? { '@type': 'Organization', name: item.piUnit } : undefined,
         funding: item.budgetNtd ? { '@type': 'MonetaryGrant', funder: { '@id': ORG_ID() }, amount: { '@type': 'MonetaryAmount', value: item.budgetNtd, currency: 'TWD' } } : undefined,
-        subjectOf: item.reportDoc ? { '@type': 'DigitalDocument', name: report?.title ?? '成果報告', url: report ? abs(ctx, pathOf(report)) : item.reportDoc } : undefined,
+        subjectOf: item.reportDoc ? { '@type': 'DigitalDocument', name: report?.title ?? '成果報告', url: report ? abs(ctx, pathOf(report)) : linkAbs(ctx, item.reportDoc) } : undefined,
         knowsAbout: (item.diseases ?? []).map((d) => diseaseRef(ctx, d)),
         'cdc:year': item.year ?? null, 'cdc:projectStatus': item.projectStatus, 'cdc:fundingType': item.fundingType ?? null, 'cdc:objectives': item.objectives ?? [],
         'cdc:irb': item.irb ?? null })];
@@ -276,7 +278,7 @@ export function jsonLdFor(ctx, item) {
       return [clean({ ...baseOf(ctx, item, 'DigitalDocument'), name, description, version: item.version, datePublished: item.effectiveAt ?? item.publishedAt,
         author: unitOrg(ctx, item.owner), genre: item.docType,
         expires: successor?.effectiveAt, // 失效版：新版生效日起不再適用
-        encoding: item.pdfUrl ? [{ '@type': 'MediaObject', encodingFormat: 'application/pdf', contentUrl: item.pdfUrl }] : undefined,
+        encoding: item.pdfUrl ? [{ '@type': 'MediaObject', encodingFormat: 'application/pdf', contentUrl: linkAbs(ctx, item.pdfUrl) }] : undefined,
         associatedMedia: { '@type': 'MediaObject', encodingFormat: 'text/markdown', contentUrl: abs(ctx, `${pathOf(item).replace(/\/$/, '')}.md`) },
         isBasedOn: item.supersedes ? abs(ctx, pathOf(ctx?.site?.byId?.get(item.supersedes) ?? { type: 'document', id: item.supersedes })) : undefined,
         'cdc:family': item.family, 'cdc:supersedes': item.supersedes ?? null, 'cdc:current': current ? abs(ctx, pathOf(current)) : null,

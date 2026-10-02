@@ -88,7 +88,8 @@ export function render(ctx) {
   const x = s(lang);
   const [pre, post] = x.body.split('{doc}');
   const [mid, tail] = post.split('{owner}');
-  const data = { base: config.basePath, refs: refMap(ctx), catalog: url('/v1/catalog.json', { noLang: true }), docFallback: x.docFallback };
+  const cjk = lang === 'zh-TW' || lang === 'ja';
+  const data = { base: config.basePath, refs: refMap(ctx), catalog: url('/v1/catalog.json', { noLang: true }), docFallback: x.docFallback, paren: cjk ? ['（', '）'] : [' (', ')'] };
   return html`${pageHead(ctx, { trail: [{ label: x.title }], h1: x.title, lead: x.lead })}
 <section class="c-callout c-pending" aria-labelledby="pd-h">
   <h2 id="pd-h" class="sr-only">${x.title}</h2>
@@ -113,7 +114,7 @@ const CLIENT = `(function(){
   var $=function(s){return document.querySelector(s)};
   if(doc){ $('[data-pd-doc]').textContent=doc; document.title=doc+' | '+document.title; }
   function show(title,href,owner){
-    if(owner) $('[data-pd-owner]').textContent='（'+owner+'）';
+    if(owner){ var pr=D.paren||['（','）']; $('[data-pd-owner]').textContent=pr[0]+owner+pr[1]; }
     if(href && /^\\//.test(href)){ var a=$('[data-pd-back-link]'); a.href=href; a.textContent=title||href; $('[data-pd-back]').hidden=false; }
   }
   function fromReferrer(){

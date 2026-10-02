@@ -23,7 +23,7 @@ ${pageHead({
   <ul style="margin:var(--sp-2) 0 0;padding-left:1.3em">
     <li>GitHub Actions 每日排程自動執行這個指令（與資料快照同一個工作），<strong>不需要人手動點</strong>。</li>
     <li>對每條 <code>https://</code> 外部連結送 HEAD 請求（失敗再試 GET）；回應 2xx／3xx 記 <code>ok</code>，4xx／5xx／逾時記 <code>broken</code>；尚未檢查過者為 <code>unchecked</code>。</li>
-    <li>失效連結自動變成「連結失效」待辦（<a href="${url('/admin/todos/#link-broken', { noLang: true })}">連動待辦</a>），期限 7 日；站內連結不在此檢查範圍，建置時由參照檢查保證。</li>
+    <li>失效連結自動變成「連結失效」待辦（<a href="${url('/admin/todos/#tab-link-broken', { noLang: true })}">連動待辦</a>），期限 7 日；站內連結不在此檢查範圍，建置時由參照檢查保證。</li>
     <li>本頁在建置時讀取內容檔上的狀態；若有 <code>/v1/governance/links.json</code>，載入後會即時覆蓋狀態與檢查日。</li>
   </ul></div>
 <div class="adm-statrow" style="margin-top:var(--sp-4)">

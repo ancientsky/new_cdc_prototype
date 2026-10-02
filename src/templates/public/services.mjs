@@ -12,7 +12,7 @@ export function render(ctx) {
   return html`${pageHead(ctx, { trail: [{ label: t('services.title') }], h1: t('services.title'), lead: t('services.lead') })}
 ${servicesGrid(ctx)}
 <p class="muted c-services__note">${t('services.note')}</p>
-<section class="c-block" aria-labelledby="svc-topics"><h2 id="svc-topics">${t('home.topics')}</h2>
+<section class="c-block" id="topics" aria-labelledby="svc-topics"><h2 id="svc-topics">${t('home.topics')}</h2>
   ${live.length ? html`<ul class="c-topicrow">${live.map((x) => topicCard(ctx, x))}</ul>` : html`<p class="c-empty">${t('none')}</p>`}
   ${ended.length ? html`<details class="c-source-card"><summary>${t('topic.endedlist', { n: ended.length })}</summary><ul class="c-topicrow">${ended.map((x) => topicCard(ctx, x))}</ul></details>` : ''}
 </section>

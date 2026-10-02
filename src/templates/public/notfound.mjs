@@ -62,8 +62,10 @@ const CLIENT = `(function(){
   Promise.all([get(D.redirects),get(D.catalog)]).then(function(res){
     var out=[], seen={};
     function add(path,title,s){ if(!path||seen[path]||s<30) return; seen[path]=1; out.push({path:path,title:title,s:s}); }
-    ((res[0]&&res[0].data)||[]).forEach(function(r){ if(String(r.from).toLowerCase()===p) add(pathOf(r.toUrl||r.to),r.title||r.to,100); });
-    ((res[1]&&res[1].data)||[]).forEach(function(it){ var x=pathOf(it.page); if(x && x.indexOf('#')<0) add(x,it.title,score(x)); });
+    var cat=(res[1]&&res[1].data)||[], titleOf={};
+    cat.forEach(function(it){ var x=pathOf(it.page); if(x && !titleOf[x]) titleOf[x]=it.title; });
+    ((res[0]&&res[0].data)||[]).forEach(function(r){ if(String(r.from).toLowerCase()===p){ var x=pathOf(r.toUrl||r.to); add(x,r.title||titleOf[x]||x,100); } });
+    cat.forEach(function(it){ var x=pathOf(it.page); if(x) add(x,it.title,score(x)); });
     out.sort(function(a,b){return b.s-a.s}); out=out.slice(0,5);
     if(!out.length) return;
     var ul=document.querySelector('[data-nf-list]');

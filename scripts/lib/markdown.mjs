@@ -1,3 +1,4 @@
+import { config } from '../../site.config.mjs';
 import { marked } from 'marked';
 import { esc } from './render.mjs';
 
@@ -13,7 +14,8 @@ function sanitize(htmlStr) {
 
 export function md(markdown) {
   if (!markdown) return '';
-  return sanitize(marked.parse(String(markdown)));
+  const html = sanitize(marked.parse(String(markdown)));
+  return config.basePath ? html.replace(/(\s(?:href|src)=")\/(?!\/)/g, `$1${config.basePath}/`) : html;
 }
 
 /** Markdown → 純文字（索引、摘要用） */

@@ -30,13 +30,26 @@ export function html(strings, ...vals) {
 
 export const attr = esc;
 
+/** 已登錄的頁面：path → Set(lang)（pages.mjs 在渲染前設定）。用來讓連結在該語言沒有頁面時退回中文正本，避免 404。 */
+let PAGE_LANGS = null;
+export function setPageRegistry(map) { PAGE_LANGS = map; }
+const LANG_ROOTS = config.langs.map((l) => l.path).filter(Boolean);
+function langPrefixFor(p, lang, langDef) {
+  if (!langDef.path) return '';
+  const bare = p.replace(/[?#].*$/, '');
+  if (LANG_ROOTS.some((r) => bare === r || bare === `${r}/` || bare.startsWith(`${r}/`))) return ''; // 已含語言前綴（如 /vi/）
+  const langs = PAGE_LANGS?.get(bare);
+  if (langs && !langs.has(lang) && langs.has(config.defaultLang)) return ''; // 該語言無此頁 → 中文正本
+  return langDef.path;
+}
+
 /** 建立 ctx.url：加 basePath 與語言前綴。絕對網址原樣回傳。 */
 export function makeUrl(lang = config.defaultLang) {
   const langDef = config.langs.find((l) => l.code === lang) ?? config.langs[0];
   return function url(path, { noLang = false, absolute = false } = {}) {
     if (/^https?:\/\//.test(path) || path.startsWith('mailto:') || path.startsWith('tel:')) return path;
     const p = path.startsWith('/') ? path : `/${path}`;
-    const langPrefix = noLang ? '' : langDef.path;
+    const langPrefix = noLang ? '' : langPrefixFor(p, lang, langDef);
     const rel = `${config.basePath}${langPrefix}${p}`.replace(/\/{2,}/g, '/');
     return absolute ? `${config.siteUrl}${rel}` : rel;
   };

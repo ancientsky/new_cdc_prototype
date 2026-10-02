@@ -139,6 +139,9 @@ export function externalLinksOf(item) {
 
 // ───────────────────────── 路徑 helper（與 4.1 路由一致） ─────────────────────────
 
+/** 頁面 slug 與實際路由不同者（與 src/templates/public/_partials.mjs PAGE_PATHS 一致） */
+const PAGE_SLUG_PATHS = { 'ai-policy': '/policy/ai/', privacy: '/policy/privacy/', 'open-data': '/policy/open-data/' };
+
 /** id 去型別前綴：news.2026-09-22-x → 2026-09-22-x */
 export function slugOf(item) { return String(item.id).replace(/^[a-z]+\./, ''); }
 
@@ -152,7 +155,7 @@ export function pathOf(item) {
     case 'document': return `/documents/${slugOf(item)}/`;
     case 'clarification': return `/factcheck/#${item.id}`;
     case 'dataset': return `/data/#${item.id}`;
-    case 'page': return `/${String(item.slug ?? slugOf(item)).replace(/^\/+|\/+$/g, '')}/`;
+    case 'page': { const sl = String(item.slug ?? slugOf(item)).replace(/^\/+|\/+$/g, ''); return PAGE_SLUG_PATHS[sl] ?? `/${sl}/`; }
     case 'media': return `/media/${slugOf(item)}/`;
     case 'topic': return `/topics/${item.slug ?? slugOf(item)}/`;
     case 'service': return `/apply/${item.slug ?? slugOf(item)}/`;

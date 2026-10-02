@@ -67,7 +67,7 @@ function detail(ctx, sv) {
     <div class="c-cols__main">
       ${body ? html`<div class="c-prose">${raw(md(body))}</div>` : ''}
       <section class="c-block" id="steps" aria-labelledby="st-h"><h2 id="st-h">${t('apply.steps')}</h2>
-        <ol class="c-steps">${steps.map((s, i) => html`<li class="c-steps__item"><span class="c-steps__n" aria-hidden="true">${i + 1}</span><div class="c-steps__body"><h3 class="c-steps__t"><span class="sr-only">${t('apply.step', { n: i + 1 })}：</span>${s.title}</h3>${s.text ? html`<p>${s.text}</p>` : ''}<p class="c-steps__m">${s.who ? html`<span class="c-pill c-pill--neutral">${t('apply.step.who')}：${s.who}</span>` : ''}${s.days != null ? html` <span class="c-pill c-pill--info">${s.days ? t('apply.step.days', { n: s.days }) : t('apply.step.sameday')}</span>` : ''}</p></div></li>`)}</ol>
+        <ol class="c-steps">${steps.map((s, i) => html`<li class="c-steps__item" id="step-${i + 1}"><span class="c-steps__n" aria-hidden="true">${i + 1}</span><div class="c-steps__body"><h3 class="c-steps__t"><span class="sr-only">${t('apply.step', { n: i + 1 })}：</span>${s.title}</h3>${s.text ? html`<p>${s.text}</p>` : ''}<p class="c-steps__m">${s.who ? html`<span class="c-pill c-pill--neutral">${t('apply.step.who')}：${s.who}</span>` : ''}${s.days != null ? html` <span class="c-pill c-pill--info">${s.days ? t('apply.step.days', { n: s.days }) : t('apply.step.sameday')}</span>` : ''}</p></div></li>`)}</ol>
       </section>
       ${docs.length ? html`<section class="c-block" id="documents" aria-labelledby="doc-h"><h2 id="doc-h">${t('apply.docs')}</h2>
         <p class="muted">${t('apply.docs.note')} <span class="c-checklist__prog" data-check-prog role="status"></span></p>

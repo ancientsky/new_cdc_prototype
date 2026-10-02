@@ -10,7 +10,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { config } from '../../site.config.mjs';
-import { makeUrl, fmtDate } from './render.mjs';
+import { makeUrl, fmtDate, setPageRegistry } from './render.mjs';
 import { t as i18nT } from '../../src/client/i18n.js';
 import { layout as defaultLayout } from '../../src/templates/layout.mjs';
 import { ROOT } from './load.mjs';
@@ -55,6 +55,7 @@ export async function renderAllPages(site, write) {
   }
   const byPath = new Map();
   for (const p of pages) { if (!byPath.has(p.path)) byPath.set(p.path, new Set()); byPath.get(p.path).add(p.lang); }
+  setPageRegistry(byPath);
   let n = 0;
   const seen = new Set();
   for (const p of pages) {

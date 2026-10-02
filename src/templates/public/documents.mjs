@@ -77,7 +77,7 @@ function detail(ctx, d) {
     ${alerts(ctx, d, { skip: ['superseded'] })}
     ${provenance(ctx, d)}
     <p class="c-docactions">
-      ${d.pdfUrl ? html`<a class="c-btn" href="${d.pdfUrl}" rel="noopener">${t('documents.pdf')} ↗</a>` : ''}
+      ${d.pdfUrl ? html`<a class="c-btn" href="${/^https?:/.test(d.pdfUrl) ? d.pdfUrl : url(d.pdfUrl)}" rel="noopener">${t('documents.pdf')} ↗</a>` : ''}
       <a class="c-btn c-btn--ghost" href="${url(mdUrl)}">${t('documents.md')}</a>
       ${old ? '' : html`<button type="button" class="c-btn c-btn--ghost" data-subscribe="${d.family}" aria-pressed="false" data-on="${t('pro.subscribed')}" data-off="${t('pro.subscribe')}">${t('pro.subscribe')}</button>`}
     </p>
