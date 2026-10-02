@@ -191,6 +191,7 @@ export const LAB_PRO_RE = /(檢體|採檢|送驗|檢驗項目|拭子|檢驗單�
 export const LAB_PUBLIC_RE = /(要驗什麼|驗什麼|要檢查什麼|做什麼檢查|怎麼驗|怎麼檢查|如何診斷|怎麼診斷|要抽血|需要抽血)/;
 // 問句線索 → 型別加權（第二輪：影音、出版品）
 const MEDIA_CUE = /(影片|影音|宣導片|衛教片|動畫|短片|短影音|Podcast|播客|YouTube|video)/i;
+const RESEARCH_CUE = /(研究計畫|研究案|委託研究|成果報告|計畫編號|IRB|研究的?(目標|目的|結果|發現)|這項研究|哪些研究)/;
 const PUB_CUE = /(哪一期|第幾期|那一期|哪期|期刊|疫情報導|年報|卷|出版品|手冊下載|刊登)/;
 const OPEN_CUE = /(現在|目前|正在|有在|還有|進行中|開放|可以報名|可以投標|最新|最近|近期|還能)/;
 const RECRUIT_CUE = /(招募|徵才|職缺|徵人|約聘|約僱|甄選|甄試|工作機會|缺額|招考|人員)/;
@@ -265,7 +266,8 @@ const INTENT_PRIORITY = ['rumor', 'stats', 'notify', 'notice', 'apply', 'lab', '
 /** 意圖判斷：回傳 { intent, reasons[], scores{} } */
 export function classifyIntent(q, { view = 'public', hasTimeRange = false, hasDisease = false, hasCountry = false } = {}) {
   const scores = {}; const reasons = [];
-  const labGate = view === 'pro' || LAB_PRO_RE.test(q);
+  // 研究計畫問句（「血清抗體盛行率研究」）不是在問送驗規定，除非明講檢體／送驗／採檢
+  const labGate = (view === 'pro' || LAB_PRO_RE.test(q)) && !(RESEARCH_CUE.test(q) && !/(檢體|送驗|採檢|容器)/.test(q));
   // 刊名「疫情報導」不是在問疫情現況（出版品問句交給檢索與 PUB_CUE 型別加權）
   const qi = q.replace(/疫情報導/g, '期刊');
   if (qi !== q) reasons.push('pub.bulletin-name');
@@ -610,6 +612,7 @@ export function createEngine(rawDeps = {}) {
       }
       if (c.type === 'media') s = MEDIA_CUE.test(q) ? s * 1.6 + 1.5 : s * 0.85;
       if (c.type === 'publication' && PUB_CUE.test(q)) s = s * 1.6 + 1.5;
+      if (c.type === 'research' && RESEARCH_CUE.test(q)) s = s * 1.6 + 1.5;
       if (labPublic && c.block === 'treatment') s = s * 1.5 + 1;
       scored.push({ ...c, _score: Math.round(s * 1000) / 1000 });
     }
@@ -1405,7 +1408,7 @@ export function createEngine(rawDeps = {}) {
     // 第二輪：意圖對應型別有夠相關的片段時，優先只用該型別（apply → service、lab → labtest、notice → 公告）
     //   問句線索：「影片」→ media、「哪一期」→ publication
     const PREFER = { apply: (c) => c.type === 'service', lab: (c) => c.type === 'labtest', notice: (c) => NOTICE_TYPES.includes(c.newsType), notify: (c) => c.type === 'service' };
-    const preferFn = PREFER[result.intent] ?? (MEDIA_CUE.test(q) ? (c) => c.type === 'media' : PUB_CUE.test(q) ? (c) => c.type === 'publication' : null);
+    const preferFn = PREFER[result.intent] ?? (MEDIA_CUE.test(q) ? (c) => c.type === 'media' : RESEARCH_CUE.test(q) ? (c) => c.type === 'research' : PUB_CUE.test(q) ? (c) => c.type === 'publication' : null);
     if (preferFn && chunks.length) {
       const pref = chunks.filter(preferFn);
       if (pref.length && pref[0]._score >= chunks[0]._score * 0.5) {

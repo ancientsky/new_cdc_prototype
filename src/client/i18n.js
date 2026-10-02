@@ -843,6 +843,8 @@ const ROWS_C2 = {
   'lab.unit.regional-lab.d': ['區管制中心負責的區域性檢驗與支援', 'Regional testing and support by the regional centers'],
   'lab.units.t': ['認可檢驗機構與檢驗單位說明', 'Laboratories and accredited institutions'], 'lab.units.note': ['各項目實際由哪個單位檢驗，以表中「檢驗單位」欄為準。', 'The “Laboratory” column shows which unit actually runs each test.'],
   'lab.request': ['檢驗委託申請', 'Request a laboratory test'], 'lab.request.note': ['委託檢驗需先完成申請；請依「申請專區」的步驟與應備文件辦理。', 'Please complete a request first, following the steps and documents on the Applications page.'],
+  'lab.ask.t': ['詢問檢驗問題', 'Ask a testing question'], 'lab.ask.ph': ['例如：登革熱檢體送驗的容器與時限', 'e.g. container and time limit for dengue specimens'],
+  'apply.ask.t': ['詢問申請問題', 'Ask about applications'], 'apply.ask.ph': ['例如：申請資料要備哪些文件、幾天會好', 'e.g. which documents do I need and how long does it take'],
   'lab.next': ['相關入口', 'Related'],
   'lab.specimens': ['檢體與送驗條件', 'Specimens and submission'], 'lab.volume': ['採檢量', 'Volume'], 'lab.storage': ['保存', 'Storage'], 'lab.transport': ['運送', 'Transport'], 'lab.tests': ['可做檢驗', 'Available tests'], 'lab.note': ['注意', 'Note'],
   'lab.notes': ['注意事項', 'Notes'], 'lab.facts': ['重點', 'At a glance'], 'lab.bsl': ['生物安全等級', 'Biosafety level'], 'lab.form': ['送驗單', 'Submission form'],
@@ -877,6 +879,7 @@ const ROWS_C2 = {
 
   /* 公告 */
   'notices.lead': ['人才招募、採購公告與其他訊息。截止後自動標示並移到「已截止」頁籤。', 'Recruitment, procurement and other notices. After the deadline they are marked automatically and moved to the “Closed” tab.'],
+  'notices.other': ['其他訊息', 'Other notices'],
   'notices.closed': ['已截止', 'Closed'], 'notices.closed.note': ['已截止的公告保留供查閱，不再出現在首頁與進行中列表。', 'Closed notices stay available for reference but no longer appear on the home page or in the open lists.'],
   'notices.empty': ['目前沒有公告', 'No notices right now'], 'notices.rule': ['截止日前 7 日以黃色提醒；逾期自動轉灰並移入「已截止」，不產生待辦。', 'The deadline pill turns yellow 7 days before; after the deadline it turns grey and moves to “Closed”, without creating a to-do.'],
   'news.notices.hint': ['人才招募、採購公告與其他訊息已移到公告專區。', 'Recruitment, procurement and other notices have their own page.'],

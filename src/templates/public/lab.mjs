@@ -4,9 +4,10 @@ import { md } from '../../../scripts/lib/markdown.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
 import {
   ldFor, breadcrumb, pageHead, provenance, alerts, pageData, scopeTags, feedback, translationBadge, hrefFor, L, unitName, publishedOf, slugOf, itemPath,
-  diseaseName, diseaseHref, isExternal, extLink, mdHeader, proScope,
+  diseaseName, diseaseHref, isExternal, extLink, mdHeader, proScope, inlineAsk,
 } from './_partials.mjs';
 
+const INLINE = ['/assets/js/answer/inline.js'];
 export const LAB_KEYS = ['cdc-lab', 'certified-lab', 'hospital-lab', 'regional-lab'];
 const trailOf = (ctx, lt) => [{ label: ctx.t('lab.title'), href: '/lab/' }, { label: L(ctx, lt, 'title') }];
 
@@ -21,8 +22,8 @@ export function resolveDoc(site, ref) {
 }
 
 export function meta(ctx, props = {}) {
-  if (props.item) { const l = props.item; return { title: L(ctx, l, 'title'), description: L(ctx, l, 'summary'), item: l, jsonLd: ldFor(ctx, l, trailOf(ctx, l)) }; }
-  return { title: ctx.t('lab.title'), description: ctx.t('lab.lead'), jsonLd: ldFor(ctx, null, [{ label: ctx.t('lab.title') }]) };
+  if (props.item) { const l = props.item; return { title: L(ctx, l, 'title'), description: L(ctx, l, 'summary'), item: l, jsonLd: ldFor(ctx, l, trailOf(ctx, l)), scripts: INLINE }; }
+  return { title: ctx.t('lab.title'), description: ctx.t('lab.lead'), jsonLd: ldFor(ctx, null, [{ label: ctx.t('lab.title') }]), scripts: INLINE };
 }
 
 const dName = (ctx, id) => diseaseName(ctx, ctx.site.diseaseMasterById.get(id)) || id;
@@ -37,6 +38,7 @@ function listPage(ctx) {
   const labs = LAB_KEYS.filter((k) => items.some((x) => x.labs?.includes(k)));
   const sel = (key, label, opts) => html`<label class="c-labfilter"><span>${label}</span><select class="c-input c-select" data-filter-select="lab-table" data-key="${key}"><option value="">${t('all')}</option>${opts.map(([v, text]) => html`<option value="${v}">${text}</option>`)}</select></label>`;
   return html`${pageHead(ctx, { trail: [{ label: t('lab.title') }], h1: t('lab.title'), lead: t('lab.lead'), tags: proScope(ctx), actions: html`<a class="c-btn c-btn--ghost c-btn--sm" href="${ctx.url('/apply/')}">${t('lab.request')}</a>` })}
+${inlineAsk(ctx, { mode: 'pro', placeholder: t('lab.ask.ph'), label: t('lab.ask.t') })}
 ${rows.length ? html`<form class="c-labfilters" onsubmit="return false" role="search" aria-label="${t('lab.filter')}">
   ${sel('disease', t('lab.col.disease'), diseases.map((d) => [d, dName(ctx, d)]))}
   ${sel('specimen', t('lab.col.specimen'), specimens.map((s) => [s, s]))}
@@ -85,7 +87,7 @@ function detail(ctx, lt) {
   <div class="c-cols c-cols--2">
     <div class="c-cols__main">
       <section class="c-block" aria-labelledby="sp-h"><h2 id="sp-h">${t('lab.specimens')}</h2>
-        <div class="c-labcards">${lt.specimens.map((sp) => html`<section class="c-labcard" aria-label="${sp.name}">
+        <div class="c-labcards">${lt.specimens.map((sp, i) => html`<section class="c-labcard" id="sp-${i + 1}" aria-label="${sp.name}">
           <h3 class="c-labcard__t">${sp.name}${sp.timing ? html` <span class="c-pill c-pill--info">${sp.timing}</span>` : ''}</h3>
           <dl class="c-deflist c-deflist--sm">
             <div><dt>${t('lab.col.container')}</dt><dd>${sp.container}</dd></div>
@@ -97,7 +99,7 @@ function detail(ctx, lt) {
             ${sp.note ? html`<div><dt>${t('lab.note')}</dt><dd>${sp.note}</dd></div>` : ''}
           </dl></section>`)}</div>
       </section>
-      ${notes ? html`<section class="c-block" aria-labelledby="nt-h"><h2 id="nt-h">${t('lab.notes')}</h2><div class="c-prose">${raw(md(notes))}</div></section>` : ''}
+      ${notes ? html`<section class="c-block" id="notes" aria-labelledby="nt-h"><h2 id="nt-h">${t('lab.notes')}</h2><div class="c-prose">${raw(md(notes))}</div></section>` : ''}
       ${feedback(ctx, { page: ctx.path })}
     </div>
     <aside class="c-cols__side">

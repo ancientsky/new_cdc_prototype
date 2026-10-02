@@ -321,7 +321,7 @@ function loadPlayer(box, start = 0) {
 }
 document.addEventListener('click', (e) => {
   const load = e.target.closest('[data-player-load]');
-  if (load) { loadPlayer(load.closest('[data-player]')); return; }
+  if (load) { const bx = load.closest('[data-player]'); loadPlayer(bx, Number(bx.dataset.startAt) || 0); return; }
   const seek = e.target.closest('[data-seek]');
   if (!seek) return;
   const box = document.querySelector('[data-player]');
@@ -331,7 +331,21 @@ document.addEventListener('click', (e) => {
   const tr = document.getElementById('transcript');
   if (tr) { tr.open = true; tr.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
 });
-if (/^#t=(\d+)/.test(location.hash)) { const m = location.hash.match(/^#t=(\d+)/); const box = document.querySelector('[data-player]'); if (box?.dataset.yt) box.dataset.startAt = m[1]; document.getElementById('transcript')?.setAttribute('open', ''); }
+/* #t=秒（答案頁引用連結）：捲到對應章節、標示，並讓播放器之後從該秒開始 */
+function applyHashTime() {
+  const m = location.hash.match(/^#t=(\d+)/);
+  if (!m) return;
+  const sec = Number(m[1]);
+  const box = document.querySelector('[data-player]');
+  if (box?.dataset.yt) box.dataset.startAt = String(sec);
+  const chapters = qsa('.c-chapters li[id^="ch-"]');
+  let hit = null;
+  chapters.forEach((li) => { if (Number(li.id.slice(3)) <= sec) hit = li; li.classList.remove('is-current'); });
+  if (hit) { hit.classList.add('is-current'); hit.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
+  else document.getElementById('transcript')?.setAttribute('open', '');
+}
+applyHashTime();
+window.addEventListener('hashchange', applyHashTime);
 
 /* 逐字稿搜尋與高亮（只處理文字節點，不破壞結構） */
 qsa('[data-transcript]').forEach((wrap) => {

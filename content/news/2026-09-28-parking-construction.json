@@ -13,7 +13,9 @@
   "sensitivity": "public",
   "license": "OGDL-1.0",
   "aiWhitelist": {
-    "requested": false
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-28"
   },
   "languages": {
     "zh-TW": {

@@ -1,10 +1,10 @@
 // /report/：通報專區。法定傳染病通報時限表由主檔 master/diseases.json 自動推導（主檔改了表就改）；NIDRS 外部連結、流程、法規、表單。
 import { html, raw } from '../../../scripts/lib/render.mjs';
-import { ldFor, pageHead, hrefFor, L, publishedOf, diseaseName, diseasePage, extLink, proScope, askBox } from './_partials.mjs';
+import { ldFor, pageHead, inlineAsk, hrefFor, L, publishedOf, diseaseName, diseasePage, extLink, proScope, askBox } from './_partials.mjs';
 import { resolveDoc } from './lab.mjs';
 
 export const NIDRS_URL = 'https://nidrs.cdc.gov.tw/';
-export function meta(ctx) { return { title: ctx.t('report.title'), description: ctx.t('report.lead'), jsonLd: ldFor(ctx, null, [{ label: ctx.t('report.title') }]) }; }
+export function meta(ctx) { return { title: ctx.t('report.title'), description: ctx.t('report.lead'), jsonLd: ldFor(ctx, null, [{ label: ctx.t('report.title') }]), scripts: ['/assets/js/answer/inline.js'] }; }
 
 /** 通報時限表：優先沿用治理引擎的 site.gov.notifyTable（由主檔算出，每列有 notifyLabel、path、labtestPath、caseDefinitionPath）；沒有時直接由主檔推導。 */
 export function notifyTable(site) {
@@ -55,9 +55,7 @@ export function render(ctx) {
     <p><a class="c-btn" href="${NIDRS_URL}" rel="noopener" target="_blank">${t('report.nidrs.go')} ↗</a></p>
     <p class="muted">${t('report.nidrs.note')}</p></section>
   <section class="c-aside-card" aria-labelledby="rp-ask"><h2 id="rp-ask">${t('report.ask.t')}</h2>
-    <form class="c-askbox c-askbox--md" action="${url('/ask/')}" method="get" role="search"><input type="hidden" name="view" value="pro">
-      <label class="sr-only" for="rp-q">${t('report.ask.t')}</label>
-      <input id="rp-q" name="q" type="search" placeholder="${t('report.ask.ph')}" autocomplete="off"><button type="submit" class="c-askbox__btn">${t('home.ask')}</button></form>
+    ${inlineAsk(ctx, { mode: 'pro', placeholder: t('report.ask.ph'), label: t('report.ask.t') })}
     <p class="muted">${t('report.ask.note')}</p></section>
 </div>
 

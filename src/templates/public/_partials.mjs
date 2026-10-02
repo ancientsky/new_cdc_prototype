@@ -538,3 +538,15 @@ export function campaignState(site, b) {
   if (b.startAt && b.startAt > site.today) return 'upcoming';
   return 'active';
 }
+
+/** 頁內問題框（D2 的 inline.js 接手送出：導向 /ask/，專業頁帶 view=pro）。每頁只能有一個 #ask-inline。 */
+export function inlineAsk(ctx, { mode = 'public', placeholder = '', label = '', examples = [] } = {}) {
+  const { t, url } = ctx;
+  return html`<form id="ask-inline" class="c-askbox c-askbox--md c-askinline" data-ask-inline="${mode}" action="${url('/ask/')}" method="get" role="search">
+  ${mode === 'pro' ? html`<input type="hidden" name="view" value="pro">` : ''}
+  <label class="sr-only" for="ask-inline-q">${label || t('home.h1')}</label>
+  <input id="ask-inline-q" name="q" type="search" placeholder="${placeholder}" autocomplete="off" enterkeyhint="search">
+  <button type="submit" class="c-askbox__btn">${t('home.ask')}</button>
+  ${examples.length ? html`<p class="c-askbox__note">${examples.map((q) => html`<button type="button" class="c-chip" data-ask-inline-q="${q}">${q}</button> `)}</p>` : ''}
+</form>`;
+}

@@ -13,7 +13,7 @@ export function render(ctx) {
   const tabs = [
     { id: 'recruit', label: t('news.type.recruit'), list: sortOpen(open.filter((n) => n.newsType === 'recruit')) },
     { id: 'procurement', label: t('news.type.procurement'), list: sortOpen(open.filter((n) => n.newsType === 'procurement')) },
-    { id: 'other', label: t('news.type.other'), list: open.filter((n) => n.newsType === 'other').sort(byDateDesc) },
+    { id: 'other', label: t('notices.other'), list: open.filter((n) => n.newsType === 'other').sort(byDateDesc) },
     { id: 'closed', label: t('notices.closed'), list: closed },
   ];
   return html`${pageHead(ctx, { trail: [{ label: t('notices.title') }], h1: t('notices.title'), lead: t('notices.lead'), actions: html`<a class="c-btn c-btn--ghost c-btn--sm" href="${ctx.url('/news/')}">${t('nav.news')}</a>` })}

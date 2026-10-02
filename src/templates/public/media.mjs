@@ -84,7 +84,7 @@ function chapters(ctx, m) {
   const { t } = ctx;
   if (!m.chapters?.length) return '';
   return html`<section class="c-block" aria-labelledby="chap-h"><h2 id="chap-h">${t('media.chapters')}</h2>
-  <ol class="c-chapters">${m.chapters.map((c) => html`<li><button type="button" class="c-chapters__btn" data-seek="${c.t}"><span class="c-chapters__t">${fmtDur(c.t)}</span> ${c.label}</button></li>`)}</ol>
+  <ol class="c-chapters">${m.chapters.map((c) => html`<li id="ch-${c.t}"><button type="button" class="c-chapters__btn" data-seek="${c.t}"><span class="c-chapters__t">${fmtDur(c.t)}</span> ${c.label}</button></li>`)}</ol>
   <p class="muted">${m.youtubeId ? t('media.chapters.note') : t('media.chapters.demo')}</p></section>`;
 }
 

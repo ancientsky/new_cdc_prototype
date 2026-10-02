@@ -4,7 +4,7 @@
   "title": "麻疹 MMR 疫苗候診衛教動畫（2025 年版）",
   "owner": "unit.vaccine",
   "publishedAt": "2025-01-20",
-  "reviewedAt": "2025-12-01",
+  "reviewedAt": "2025-01-14",
   "reviewPeriodMonths": 12,
   "status": "published",
   "audience": [
@@ -61,7 +61,7 @@
     "出國",
     "成人接種"
   ],
-  "note": "7.7 事件重現：本片製作於 MMR 建議 114.04.16 修訂之前，畫面仍為舊條件；已由 2026-10 重製版 media.mmr-waiting-room-2026 取代，但舊片仍在部分醫院候診區播放",
+  "note": "7.7 事件重現：本片製作於 MMR 建議 114.04.16 修訂之前，畫面仍為舊條件；已由 2026-10 重製版 media.mmr-waiting-room-2026 取代，但舊片仍在部分醫院候診區播放 示範：此影片自 2025-01 上架後未再審閱，正本 2025-04-16 修訂時系統應自動產生「影音過時」待辦（7.7 事件重現）。",
   "mediaType": "animation",
   "durationSeconds": 96,
   "producedAt": "2025-01-14",

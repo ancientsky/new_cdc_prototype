@@ -85,7 +85,7 @@ function detail(ctx, p) {
       </section>
       ${abs ? html`<section class="c-block" aria-labelledby="abs-h"><h2 id="abs-h">${t('publications.abstract')}</h2><div class="c-prose">${raw(md(abs))}</div></section>` : ''}
       ${p.articles?.length ? html`<section class="c-block" aria-labelledby="art-h"><h2 id="art-h">${t('publications.articles')}</h2>
-        <ol class="c-articles">${p.articles.map((a) => html`<li class="c-articles__i"><p class="c-articles__t">${a.title}</p>
+        <ol class="c-articles">${p.articles.map((a, ai) => html`<li class="c-articles__i" id="art-${ai + 1}"><p class="c-articles__t">${a.title}</p>
           <p class="c-articles__m muted">${a.authors?.length ? `${a.authors.join('、')} · ` : ''}${a.pages ? t('publications.pp', { p: a.pages }) : ''}${a.doi ? html` · DOI <a href="https://doi.org/${a.doi}" rel="noopener">${a.doi}</a>` : ''}</p>
           ${a.abstract ? html`<p class="c-articles__a">${a.abstract}</p>` : ''}
           ${a.diseases?.length ? html`<p class="c-articles__d">${a.diseases.map((d) => { const h = diseaseHref(ctx, d); const nm = diseaseName(ctx, site.diseaseMasterById.get(d)) || d; return h ? html`<a class="c-pill c-pill--ok" href="${h}">${nm}</a> ` : html`<span class="c-pill c-pill--neutral">${nm}</span> `; })}</p>` : ''}</li>`)}</ol></section>` : ''}

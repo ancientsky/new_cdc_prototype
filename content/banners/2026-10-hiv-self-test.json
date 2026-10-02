@@ -22,9 +22,7 @@
     "disease.hiv"
   ],
   "aiWhitelist": {
-    "requested": true,
-    "approvedBy": "unit.oasis",
-    "approvedAt": "2026-10-01"
+    "requested": false
   },
   "languages": {
     "zh-TW": {

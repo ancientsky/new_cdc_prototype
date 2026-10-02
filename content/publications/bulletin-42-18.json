@@ -22,7 +22,9 @@
     "disease.tuberculosis"
   ],
   "aiWhitelist": {
-    "requested": false
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-22"
   },
   "languages": {
     "zh-TW": {

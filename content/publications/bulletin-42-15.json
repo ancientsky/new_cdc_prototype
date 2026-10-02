@@ -22,7 +22,9 @@
     "disease.varicella"
   ],
   "aiWhitelist": {
-    "requested": false
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-08-11"
   },
   "languages": {
     "zh-TW": {

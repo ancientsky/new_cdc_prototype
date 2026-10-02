@@ -4,9 +4,10 @@ import { md } from '../../../scripts/lib/markdown.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
 import {
   ldFor, breadcrumb, pageHead, provenance, alerts, pageData, scopeTags, feedback, translationBadge, hrefFor, isFallbackLink, L, unitName, publishedOf,
-  itemPath, isExternal, extLink, mdHeader, pill,
+  itemPath, isExternal, extLink, mdHeader, pill, inlineAsk,
 } from './_partials.mjs';
 
+const INLINE = ['/assets/js/answer/inline.js'];
 export const AUDIENCES = [
   { key: 'public', re: /民眾|public|individual|個人|旅客|citizen|traveler/i },
   { key: 'medical', re: /醫療|院所|醫院|診所|醫師|hospital|clinic|medical|provider/i },
@@ -22,8 +23,8 @@ export function audiencesOf(sv) {
 const trailOf = (ctx, sv) => [{ label: ctx.t('apply.title'), href: '/apply/' }, { label: L(ctx, sv, 'title') }];
 
 export function meta(ctx, props = {}) {
-  if (props.item) { const s = props.item; return { title: L(ctx, s, 'title'), description: L(ctx, s, 'summary'), item: s, jsonLd: ldFor(ctx, s, trailOf(ctx, s)) }; }
-  return { title: ctx.t('apply.title'), description: ctx.t('apply.lead'), jsonLd: ldFor(ctx, null, [{ label: ctx.t('apply.title') }]) };
+  if (props.item) { const s = props.item; return { title: L(ctx, s, 'title'), description: L(ctx, s, 'summary'), item: s, jsonLd: ldFor(ctx, s, trailOf(ctx, s)), scripts: INLINE }; }
+  return { title: ctx.t('apply.title'), description: ctx.t('apply.lead'), jsonLd: ldFor(ctx, null, [{ label: ctx.t('apply.title') }]), scripts: INLINE };
 }
 
 function listPage(ctx) {
@@ -32,6 +33,7 @@ function listPage(ctx) {
   const order = [...AUDIENCES.map((a) => a.key), 'other'];
   const groups = order.map((k) => ({ k, list: items.filter((s) => audiencesOf(s).includes(k)) })).filter((g) => g.list.length);
   return html`${pageHead(ctx, { trail: [{ label: t('apply.title') }], h1: t('apply.title'), lead: t('apply.lead') })}
+${inlineAsk(ctx, { mode: 'public', placeholder: t('apply.ask.ph'), label: t('apply.ask.t') })}
 ${groups.length ? html`<nav class="c-chips-wrap" aria-label="${t('apply.groups')}"><ul class="c-chips c-chips--wrap">${groups.map((g) => html`<li><a class="c-chip" href="#aud-${g.k}">${t(`apply.aud.${g.k}`)} (${g.list.length})</a></li>`)}</ul></nav>` : ''}
 ${groups.map((g) => html`<section class="c-block" id="aud-${g.k}" aria-labelledby="h-aud-${g.k}"><h2 id="h-aud-${g.k}">${t(`apply.aud.${g.k}`)}</h2>
   <ul class="c-svclist">${g.list.map((s) => html`<li class="c-svc">
@@ -64,22 +66,22 @@ function detail(ctx, sv) {
   <div class="c-cols c-cols--2">
     <div class="c-cols__main">
       ${body ? html`<div class="c-prose">${raw(md(body))}</div>` : ''}
-      <section class="c-block" aria-labelledby="st-h"><h2 id="st-h">${t('apply.steps')}</h2>
+      <section class="c-block" id="steps" aria-labelledby="st-h"><h2 id="st-h">${t('apply.steps')}</h2>
         <ol class="c-steps">${steps.map((s, i) => html`<li class="c-steps__item"><span class="c-steps__n" aria-hidden="true">${i + 1}</span><div class="c-steps__body"><h3 class="c-steps__t"><span class="sr-only">${t('apply.step', { n: i + 1 })}：</span>${s.title}</h3>${s.text ? html`<p>${s.text}</p>` : ''}<p class="c-steps__m">${s.who ? html`<span class="c-pill c-pill--neutral">${t('apply.step.who')}：${s.who}</span>` : ''}${s.days != null ? html` <span class="c-pill c-pill--info">${s.days ? t('apply.step.days', { n: s.days }) : t('apply.step.sameday')}</span>` : ''}</p></div></li>`)}</ol>
       </section>
-      ${docs.length ? html`<section class="c-block" aria-labelledby="doc-h"><h2 id="doc-h">${t('apply.docs')}</h2>
+      ${docs.length ? html`<section class="c-block" id="documents" aria-labelledby="doc-h"><h2 id="doc-h">${t('apply.docs')}</h2>
         <p class="muted">${t('apply.docs.note')} <span class="c-checklist__prog" data-check-prog role="status"></span></p>
         <ul class="c-checklist" data-checklist="${sv.id}">${docs.map((d, i) => html`<li><label class="c-checklist__row"><input type="checkbox" data-check="${i}"><span class="c-checklist__box" aria-hidden="true"></span><span class="c-checklist__t">${d}</span></label></li>`)}</ul>
         <button type="button" class="c-btn c-btn--sm c-btn--ghost" data-check-reset>${t('apply.docs.reset')}</button>
       </section>` : ''}
       ${sv.forms?.length ? html`<section class="c-block" aria-labelledby="fm-h"><h2 id="fm-h">${t('apply.forms')}</h2>
         <ul class="c-linklist">${sv.forms.map((f) => html`<li>${isExternal(f.href) ? extLink(ctx, f.href, f.label) : html`<a href="${url(f.href)}">${f.label}</a>`} ${f.format ? html`<span class="c-pill c-pill--neutral">${f.format}</span>` : ''} ${f.machineReadable ? pill(t('news.attach.mr'), 'ok') : ''}</li>`)}</ul></section>` : ''}
-      ${sv.faq?.length ? html`<section class="c-block" aria-labelledby="fq-h"><h2 id="fq-h">${t('apply.faq')}</h2>
+      ${sv.faq?.length ? html`<section class="c-block" id="faq" aria-labelledby="fq-h"><h2 id="fq-h">${t('apply.faq')}</h2>
         ${sv.faq.map((f) => html`<details class="c-faqd"><summary>${f.q}</summary><div class="c-prose">${raw(md(f.a))}</div></details>`)}</section>` : ''}
       ${feedback(ctx, { page: ctx.path })}
     </div>
     <aside class="c-cols__side">
-      <section class="c-aside-card c-service__facts"><h2>${t('apply.facts')}</h2>
+      <section class="c-aside-card c-service__facts" id="sla"><h2>${t('apply.facts')}</h2>
         <dl class="c-deflist c-deflist--sm">
           <div><dt>${t('apply.who')}</dt><dd>${(sv.whoCanApply ?? []).join('、') || '—'}</dd></div>
           <div><dt>${t('apply.days')}</dt><dd>${sv.slaDays != null ? t('apply.sla', { n: sv.slaDays }) : (totalDays ? t('apply.sla', { n: totalDays }) : '—')}</dd></div>
@@ -88,7 +90,7 @@ function detail(ctx, sv) {
           ${sv.contact ? html`<div><dt>${t('apply.contact')}</dt><dd>${sv.contact}</dd></div>` : ''}
         </dl></section>
       ${sv.legalBasis?.length ? html`<section class="c-aside-card"><h2>${t('apply.legal')}</h2><ul class="c-linklist">${sv.legalBasis.map((l) => html`<li>${l}</li>`)}</ul></section>` : ''}
-      ${related ? html`<section class="c-aside-card"><h2>${t('news.related')}</h2><ul class="c-linklist"><li><a href="${url(related[0])}">${t(related[1])}</a></li></ul></section>` : ''}
+      ${related ? html`<section class="c-aside-card"><h2>${t('lab.next')}</h2><ul class="c-linklist"><li><a href="${url(related[0])}">${t(related[1])}</a></li></ul></section>` : ''}
       ${pageData(ctx, sv, { schema: 'GovernmentService', api: '/v1/services.json', mdPath: `${itemPath(sv).replace(/\/$/, '')}.md` })}
     </aside>
   </div>

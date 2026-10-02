@@ -80,6 +80,7 @@
 .c-hero--split{padding:var(--sp-6) 0}
 .c-hero__grid{display:grid;grid-template-columns:3fr 2fr;gap:var(--sp-6);align-items:center}
 .c-hero__ask h1{font-size:var(--fs-3xl);margin-bottom:var(--sp-4)}
+.c-hero__grid>*{min-width:0}
 .c-statusstrip{list-style:none;margin:var(--sp-4) 0 0;padding:0;display:flex;flex-wrap:wrap;gap:var(--sp-2) var(--sp-4);font-size:var(--fs-sm)}
 .c-statusstrip li{display:flex;align-items:center;gap:6px}
 .c-statusstrip a{color:var(--ink);text-decoration:none;font-weight:700}
@@ -406,7 +407,7 @@ html:not(.js) .c-tabs__print{display:block}
   .c-sit-grid{grid-template-columns:repeat(2,1fr)}
 }
 @media (max-width:959px){
-  .c-hero__grid{grid-template-columns:1fr}
+  .c-hero__grid{grid-template-columns:minmax(0,1fr)}
   .c-hero__ask h1{font-size:var(--fs-2xl)}
   .c-home__cols,.c-disease__head,.c-askpage__grid,.c-cols,.c-cols--2,.c-sitbig__body{grid-template-columns:1fr}
   .c-toc{position:static;border:1px solid var(--line);border-radius:var(--radius);padding:var(--sp-3) var(--sp-4);background:#fff}
@@ -730,3 +731,7 @@ mark.c-hit{background:#ffe08a;color:var(--ink);padding:0 2px;border-radius:2px}
   .c-table--bib th{width:7em}
 }
 @media print{.c-player__play,.c-mailbox,.c-transcript__tools{display:none!important}}
+
+.c-askinline{margin:0 0 var(--sp-5)}
+.c-askinline .c-askbox__note{display:flex;flex-wrap:wrap;gap:var(--sp-2)}
+.c-chapters li.is-current .c-chapters__btn{border-color:var(--green-700);background:var(--green-100);font-weight:700}

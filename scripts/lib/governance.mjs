@@ -646,6 +646,13 @@ export function textOf(item) {
   for (const s of item.sections ?? []) parts.push(s.heading, s.markdown);
   for (const v of Object.values(item.keyFacts ?? {})) parts.push(v);
   for (const p of item.publicFunded ?? []) parts.push(p.group, p.schedule, p.note);
+  // 第二輪型別：影音逐字稿、專區／服務簡介、步驟、摘要、檢體說明、篇目
+  parts.push(item.transcriptMarkdown, item.introMarkdown, item.abstractMarkdown, item.notesMarkdown, item.basedOnVersionLabel);
+  for (const st of item.steps ?? []) parts.push(st.title, st.text);
+  for (const a of item.articles ?? []) parts.push(a.title, a.abstract);
+  for (const sp of item.specimens ?? []) parts.push(sp.name, sp.note);
+  for (const c of item.chapters ?? []) parts.push(c.label);
+  for (const f of item.faq ?? []) parts.push(f.q, f.a);
   for (const lang of Object.values(item.i18n ?? {})) parts.push(JSON.stringify(lang));
   return parts.filter(Boolean).join('\n');
 }
