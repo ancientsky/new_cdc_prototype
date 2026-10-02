@@ -5,7 +5,12 @@
     "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_search",
     "label": "CKAN 資料集目錄（package_search 精簡版）",
     "count": 42,
-    "note": "原型快照（示意）：資料集名稱與修改時間依 content/datasets 對齊整理，非官方 CKAN 實際回傳；live 模式由 npm run fetch 分頁抓取全部 package 覆蓋。"
+    "note": "原型快照（示意）：資料集名稱與修改時間依 content/datasets 對齊整理，非官方 CKAN 實際回傳；live 模式由 npm run fetch 分頁抓取全部 package 覆蓋。",
+    "lastLiveAttempt": {
+      "at": "2026-10-02T10:17:32.067Z",
+      "ok": false,
+      "reason": "fetch failed"
+    }
   },
   "data": [
     {
