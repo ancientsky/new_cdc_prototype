@@ -236,11 +236,12 @@ export function aggregateCountryLevels(rows, { countries = [], today = new Date(
 }
 /** 等級分布（給 meta.stats 與頁面摘要） */
 /**
- * live 等級表合理性閘門：官方 CountryEpidLevel/ExportJSON 實為「歷次警示的完整歷史」（每列一則警示，只有生效日、沒有結束日），
- * 直接聚合會得到上百個第二級國家。現行官網頁面實際約：第三級 0–2、第二級 2–6、第一級 20–40。
- * 超出下列上限即視為 live 資料不可直接使用 → 沿用人工校對快照，並把原因寫進 meta.lastLiveAttempt。
+ * live 等級表合理性閘門：官方 CountryEpidLevel/ExportJSON 是「歷次警示事件」（含「解除」），若忽略解除事件直接取最高等級，
+ * 會得到上百個第二級國家（2026-10 實測：160 國）。依「每國每病最新一則、解除即不列」正確聚合後，實測約第三級 1、第二級 29、第一級 215 國
+ * （第一級多為 2023-11-01 全面重發的新冠併發重症與茲卡）。閘門只擋明顯病態的分布（例如解除事件未被正確處理）：
+ * 超出下列上限即沿用人工校對快照，並把原因寫進 meta.lastLiveAttempt。
  */
-export const LEVEL_PLAUSIBLE_MAX = { level3: 5, level2: 20, level1: 60 };
+export const LEVEL_PLAUSIBLE_MAX = { level3: 5, level2: 60, level1: 250 };
 export function assertPlausibleLevels(countryRows, max = LEVEL_PLAUSIBLE_MAX) {
   const st = levelStats(countryRows);
   const bad = Object.entries(max).filter(([k, v]) => st[k] > v);
