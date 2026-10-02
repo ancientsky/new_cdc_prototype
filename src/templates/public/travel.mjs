@@ -218,7 +218,7 @@ export function durationOf(ctx, start) {
   const years = Math.floor(days / 365.25);
   const months = Math.floor(days / 30.44);
   const text = years >= 1 ? ctx.t('travel.dur.years', { year: String(start).slice(0, 4), n: years })
-    : months >= 1 ? ctx.t('travel.dur.months', { date: ctx.fmtDate(start), n: months }) : ctx.t('travel.dur.new', { date: ctx.fmtDate(start) });
+    : months >= 1 ? ctx.t('travel.dur.months', { n: months }) : ctx.t('travel.dur.new');
   return { text, long: days > 3 * 365.25 };
 }
 
@@ -390,6 +390,7 @@ const BASE_CSS = `
 .tv-chg__n--lifted{background:var(--ok-bg);border-color:var(--status-stable)} .tv-chg__n--lifted b{color:var(--status-stable)}
 .tv-evs{list-style:none;margin:0;padding:0;max-width:860px}
 .tv-evs li{display:grid;grid-template-columns:7.5em minmax(0,1fr);gap:2px var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--line-2)}
+.tv-evnote{margin-top:var(--sp-3);font-size:var(--fs-sm)}
 .tv-evs time{color:var(--ink-3);font-size:var(--fs-sm)}
 .tv-ev__w{font-weight:700} .tv-ev__k{margin-left:var(--sp-2);font-size:var(--fs-sm);color:var(--ink-2)}
 .tv-ev--lifted .tv-ev__k{color:var(--status-stable);font-weight:700}
