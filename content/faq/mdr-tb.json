@@ -1,0 +1,67 @@
+{
+  "id": "faq.mdr-tb",
+  "type": "faq",
+  "title": "什麼是抗藥性結核病？要怎麼治療？",
+  "question": "什麼是抗藥性結核病？要怎麼治療？",
+  "owner": "unit.chronic-infectious",
+  "steward": "慢性傳染病組承辦人",
+  "publishedAt": "2026-09-15",
+  "reviewedAt": "2026-09-22",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "doc.tb-guideline"
+  ],
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-30"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "pending"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "對 isoniazid 與 rifampin 都抗藥稱多重抗藥性結核病，由抗藥性結核病醫療照護體系（TMTC）收治並進階都治，優先採全口服短程處方，費用由公費支應。",
+  "keywords": [
+    "抗藥性結核病",
+    "多重抗藥性結核病",
+    "MDR-TB",
+    "TMTC",
+    "全口服"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/{id}#mdr"
+  ],
+  "answerMarkdown": "結核菌對治療藥物產生抗藥性，稱為抗藥性結核病；同時對 isoniazid 與 rifampin 兩種最重要的藥物抗藥，稱為**多重抗藥性結核病（MDR-TB）**，屬第二類法定傳染病。抗藥性多因過去治療不完整、自行停藥，或被抗藥性病人傳染。\n\n疾管署建立**抗藥性結核病醫療照護體系（TMTC）**，由專責醫療團隊收治，搭配進階都治每日送藥。目前優先採用全口服短程處方，療程約 6 個月，治療費用由公費支應。預防抗藥性最好的方法，就是確診後**規則服藥、不自行停藥**。"
+}

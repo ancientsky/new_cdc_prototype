@@ -1,0 +1,70 @@
+{
+  "id": "faq.tb-contact-screening",
+  "type": "faq",
+  "title": "家人得了結核病，我需要做什麼檢查？",
+  "question": "家人得了結核病，我需要做什麼檢查？",
+  "owner": "unit.chronic-infectious",
+  "steward": "慢性傳染病組承辦人",
+  "publishedAt": "2026-09-15",
+  "reviewedAt": "2026-09-22",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "doc.tb-contact-investigation"
+  ],
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-30"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "pending"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "家人確診結核病，衛生所會安排接觸者檢查：確診後 1 個月內胸部 X 光與 IGRA，滿 12 個月再照一次 X 光；費用由公費支應。",
+  "keywords": [
+    "接觸者檢查",
+    "IGRA",
+    "胸部 X 光",
+    "家人確診",
+    "密切接觸者"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/{id}#contact"
+  ],
+  "answerMarkdown": "衛生所會主動聯絡與病人同住或密切接觸的人，安排**接觸者檢查**，費用由公費支應：\n\n1. 病人確診後 **1 個月內**照第一次胸部 X 光，並依年齡與接觸情形抽血做**丙型干擾素釋放試驗（IGRA）**，檢查有沒有潛伏結核感染。\n2. 第一次正常者，在病人確診滿 **12 個月**時再照一次胸部 X 光。\n3. 檢查期間若出現咳嗽超過 2 週等症狀，請不必等通知，直接就醫並告知接觸史。\n\nIGRA 陽性且排除發病者，建議接受潛伏結核感染治療。",
+  "structured": {
+    "firstCheckWithinMonths": 1,
+    "secondCheckAtMonths": 12
+  }
+}

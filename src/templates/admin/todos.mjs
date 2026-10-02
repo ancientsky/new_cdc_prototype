@@ -6,7 +6,7 @@ export { layout } from './_layout.mjs';
 export function pages() { return [{ path: '/admin/todos/', props: {}, noindex: true }]; }
 export function meta() { return adminMeta('連動待辦', 'todos', ['/assets/js/admin/todos.js']); }
 
-const MAIN_KINDS = ['based-on-revised', 'reverse-audit', 'overdue', 'translation-stale', 'dataset-overdue', 'license-missing', 'media-outdated', 'media-no-transcript', 'link-broken', 'labtest-inconsistent'];
+const MAIN_KINDS = ['based-on-revised', 'reverse-audit', 'overdue', 'translation-stale', 'dataset-overdue', 'license-missing', 'media-outdated', 'media-no-transcript', 'link-broken', 'labtest-inconsistent', 'migration-pending'];
 
 function mmrCard(site, url) {
   const fam = 'doc.mmr-recommendation';
@@ -47,18 +47,18 @@ export function render(ctx) {
   const kindName = (k) => KIND_LABEL[k] ?? todos.find((t) => t.kind === k)?.kindLabel ?? k;
   const rowOf = (t) => {
     const it = site.byId.get(t.itemId);
-    const href = t.href ?? (it ? frontPath(it) : null);
+    const href = t.href ?? (t.kind === 'migration-pending' ? '/admin/migration/' : it ? frontPath(it) : null);
     const d = t.dueAt ? daysBetween(site.today, t.dueAt) : null;
     return html`<tr data-id="${t.id}" data-owner="${t.owner}" data-kind="${t.kind}">
       <td>${t.ownerName}</td>
       <td><span class="adm-title"><strong>${t.itemTitle}</strong></span><div class="adm-muted"><code>${t.itemId}</code></div><div>${t.text}</div></td>
       <td>${t.dueAt ?? '—'}</td>
       <td>${t.overdue ? html`<span class="adm-badge adm-badge--bad">逾期 ${d != null ? -d : ''} 日</span>` : d != null ? html`<span class="adm-badge adm-badge--${d <= 7 ? 'warn' : 'gray'}">${d} 日內</span>` : '—'}${t.severity === 'high' ? html` <span class="adm-badge adm-badge--revised">高</span>` : ''}</td>
-      <td>${href ? html`<a href="${url(href)}">前往頁面</a>` : '—'}</td>
+      <td>${href ? html`<a href="${url(href)}">${t.kind === 'migration-pending' ? '前往移轉進度' : '前往頁面'}</a>` : '—'}</td>
       <td><label class="adm-pill"><input type="checkbox" data-done="${t.id}"><span>完成（示範）</span></label></td></tr>`;
   };
   return html`
-${pageHead({ title: '連動待辦', what: '系統依內容欄位自動產生的待辦：依據的正本改版、反向稽核命中舊說法、審閱逾期、譯文過期、資料集沒按頻率更新、授權標示不標準、影音依據的正本已修訂、影音沒有逐字稿、外部連結失效、檢驗項目時限與主檔不一致。每筆有承辦單位、期限與前往頁面。', flow: '待辦來自建置時的治理引擎（/v1/governance/todos.json）。承辦單位修正內容並開 PR，合併後重新建置，待辦自動消失；「完成（示範）」只在本機打勾。' })}
+${pageHead({ title: '連動待辦', what: '系統依內容欄位自動產生的待辦：依據的正本改版、反向稽核命中舊說法、審閱逾期、譯文過期、資料集沒按頻率更新、授權標示不標準、影音依據的正本已修訂、影音沒有逐字稿、外部連結失效、檢驗項目時限與主檔不一致、舊站頁面尚未決定移轉去向。每筆有承辦單位、期限與前往頁面。', flow: '待辦來自建置時的治理引擎（/v1/governance/todos.json）。承辦單位修正內容並開 PR，合併後重新建置，待辦自動消失；「完成（示範）」只在本機打勾。' })}
 ${mmrCard(site, url) ?? html`<div class="adm-box adm-box--info"><strong>MMR 事件示範</strong>本次建置的內容不含 MMR 正本修訂範例。</div>`}
 <section class="adm-card" aria-labelledby="t-h"><h2 id="t-h">待辦清單</h2>
   <div class="adm-filters"><div class="adm-field"><label for="t-unit">單位</label><select id="t-unit">${unitOptions(site, { all: true, selected: 'all' })}</select></div>

@@ -1,0 +1,95 @@
+{
+  "id": "doc.tb-case-definition.2024-01-01",
+  "type": "document",
+  "family": "doc.tb-case-definition",
+  "docType": "case-definition",
+  "title": "結核病病例定義與通報定義",
+  "version": "2024 年版",
+  "effectiveAt": "2024-01-01",
+  "supersedes": null,
+  "owner": "unit.chronic-infectious",
+  "steward": "慢性傳染病組承辦人",
+  "publishedAt": "2024-01-01",
+  "reviewedAt": "2026-01-15",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis",
+    "disease.mdr-tb"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-30"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "pending"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "結核病臨床條件、檢驗條件（培養、分子檢測、塗片、病理）、通報定義與疾病分類；第三類法定傳染病一週內通報，多重抗藥性結核病 24 小時內。",
+  "keywords": [
+    "病例定義",
+    "通報定義",
+    "結核病",
+    "第三類",
+    "一週內通報",
+    "MTBC"
+  ],
+  "pdfUrl": "/pending/?ref=doc.tb-case-definition.2024-01-01&doc=結核病病例定義與通報定義（PDF）",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/DiseaseDefine/{id}#tuberculosis"
+  ],
+  "note": "原型示意：條文依疾管署公開文件架構改寫，版次與生效日為示意，非正式公告文字；正式內容以 PDF 正本為準。",
+  "roles": [
+    "physician",
+    "lab",
+    "infection-control"
+  ],
+  "sections": [
+    {
+      "key": "clinical",
+      "heading": "一、臨床條件",
+      "markdown": "具下列任一項：\n1. 咳嗽、咳痰、發燒、體重減輕、夜間盜汗等疑似結核病症狀，且胸部 X 光或其他影像學檢查異常。\n2. 醫師臨床判斷為結核病，並開立 2 種以上抗結核藥物治療。"
+    },
+    {
+      "key": "lab",
+      "heading": "二、檢驗條件",
+      "markdown": "具下列任一項：\n1. 臨床檢體培養出結核分枝桿菌複合群（MTBC）。\n2. 臨床檢體核酸增幅檢驗（分子檢測）結核分枝桿菌複合群陽性。\n3. 臨床檢體抗酸菌塗片陽性（須輔以培養或分子檢測確認菌種）。\n4. 病理組織切片具結核病典型病灶。"
+    },
+    {
+      "key": "notify",
+      "heading": "三、通報定義與時限",
+      "markdown": "符合臨床條件或檢驗條件之任一項即應通報。結核病為**第三類法定傳染病，應於一週內通報**；多重抗藥性結核病為第二類法定傳染病，應於 24 小時內通報。"
+    },
+    {
+      "key": "classify",
+      "heading": "四、疾病分類",
+      "markdown": "- **可能病例**：符合臨床條件。\n- **確定病例**：符合檢驗條件第 1 或第 2 項，或符合臨床條件且經病理檢查確認。\n- 經培養確認為非結核分枝桿菌者，應銷案。"
+    }
+  ],
+  "machineReadableMarkdown": "# 結核病病例定義與通報定義\n\n## 一、臨床條件\n具下列任一項：\n1. 咳嗽、咳痰、發燒、體重減輕、夜間盜汗等疑似結核病症狀，且胸部 X 光或其他影像學檢查異常。\n2. 醫師臨床判斷為結核病，並開立 2 種以上抗結核藥物治療。\n\n## 二、檢驗條件\n具下列任一項：\n1. 臨床檢體培養出結核分枝桿菌複合群（MTBC）。\n2. 臨床檢體核酸增幅檢驗（分子檢測）結核分枝桿菌複合群陽性。\n3. 臨床檢體抗酸菌塗片陽性（須輔以培養或分子檢測確認菌種）。\n4. 病理組織切片具結核病典型病灶。\n\n## 三、通報定義與時限\n符合臨床條件或檢驗條件之任一項即應通報。結核病為**第三類法定傳染病，應於一週內通報**；多重抗藥性結核病為第二類法定傳染病，應於 24 小時內通報。\n\n## 四、疾病分類\n- **可能病例**：符合臨床條件。\n- **確定病例**：符合檢驗條件第 1 或第 2 項，或符合臨床條件且經病理檢查確認。\n- 經培養確認為非結核分枝桿菌者，應銷案。"
+}

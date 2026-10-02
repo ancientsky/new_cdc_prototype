@@ -1,0 +1,143 @@
+{
+  "id": "service.ltbi-treatment",
+  "type": "service",
+  "owner": "unit.chronic-infectious",
+  "steward": "慢性傳染病組承辦人",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-30"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "pending"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "slug": "ltbi-treatment",
+  "title": "潛伏結核感染檢驗與治療",
+  "publishedAt": "2026-09-15",
+  "reviewedAt": "2026-09-22",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "symptoms",
+    "vaccines"
+  ],
+  "summary": "結核病接觸者與計畫對象可接受公費 IGRA 檢驗與潛伏結核感染治療（3HP、1HP、3HR、4R、9H），治療期間由關懷員陪伴服藥（DOPT）。",
+  "keywords": [
+    "潛伏結核感染",
+    "LTBI",
+    "IGRA",
+    "3HP",
+    "1HP",
+    "DOPT",
+    "公費"
+  ],
+  "basedOn": [
+    "doc.ltbi-guideline",
+    "doc.tb-contact-investigation"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/{id}#ltbi"
+  ],
+  "serviceType": "clinic",
+  "whoCanApply": [
+    "結核病個案之接觸者（由衛生所通知）",
+    "免疫功能低下或將接受免疫抑制治療者（透析、器官移植、生物製劑使用者等，經醫師轉介）",
+    "計畫篩檢對象：山地鄉居民、矯正機關收容人、長期照護機構住民與工作人員"
+  ],
+  "introMarkdown": "潛伏結核感染沒有症狀、不會傳染，但一生中約 5–10% 會發病。**完成潛伏結核感染治療可降低 9 成以上的發病風險。**\n\n檢驗以抽血的丙型干擾素釋放試驗（IGRA）為主，陽性者先照胸部 X 光排除發病，再由合作醫師評估處方；治療期間由關懷員陪伴服藥（DOPT）。檢驗、治療與關懷服務由公費支應。",
+  "requiredDocuments": [
+    "健保卡",
+    "衛生所通知單（接觸者）或醫師轉介單（計畫對象）"
+  ],
+  "steps": [
+    {
+      "title": "衛生所通知或醫師轉介",
+      "text": "接觸者由衛生所主動通知；其他對象由主治醫師評估轉介。",
+      "who": "衛生所／醫療院所",
+      "days": 0
+    },
+    {
+      "title": "IGRA 檢驗與胸部 X 光",
+      "text": "抽血檢驗 IGRA，陽性者照胸部 X 光並評估症狀，排除活動性結核病。",
+      "who": "合作醫療院所",
+      "days": 7
+    },
+    {
+      "title": "醫師評估與選擇處方",
+      "text": "依年齡、共病與用藥交互作用，選擇 3HP、1HP、3HR、4R 或 9H。",
+      "who": "潛伏結核感染治療合作醫師",
+      "days": 3
+    },
+    {
+      "title": "都治陪伴服藥",
+      "text": "關懷員目視服藥並追蹤副作用，每月回診評估。",
+      "who": "衛生所關懷員",
+      "days": 28
+    },
+    {
+      "title": "完成治療",
+      "text": "完成處方劑次即完治，衛生所登錄結果。",
+      "who": "衛生所"
+    }
+  ],
+  "slaDays": 14,
+  "fee": "免費（公費支應）",
+  "legalBasis": [
+    "傳染病防治法第 48 條",
+    "結核病防治工作手冊"
+  ],
+  "forms": [
+    {
+      "label": "潛伏結核感染治療同意書",
+      "href": "/pending/?ref=service.ltbi-treatment&doc=潛伏結核感染治療同意書",
+      "format": "PDF",
+      "machineReadable": false
+    },
+    {
+      "label": "潛伏結核感染治療合作醫師名單",
+      "href": "/pending/?ref=service.ltbi-treatment&doc=潛伏結核感染治療合作醫師名單",
+      "format": "PDF",
+      "machineReadable": false
+    }
+  ],
+  "contact": "請洽戶籍或居住地衛生所；一般諮詢請撥防疫專線 1922（國外 +886-800-001922）",
+  "faq": [
+    {
+      "q": "治療期間可以喝酒嗎？",
+      "a": "治療藥物可能影響肝功能，治療期間請避免飲酒，並告知醫師正在使用的其他藥物。"
+    },
+    {
+      "q": "3HP 和 1HP 有什麼不同？",
+      "a": "3HP 每週服藥 1 次共 12 次；1HP 每天服藥共 28 天。兩者都由醫師依您的狀況評估選擇。"
+    }
+  ]
+}

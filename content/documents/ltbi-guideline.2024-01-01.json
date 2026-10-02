@@ -1,0 +1,101 @@
+{
+  "id": "doc.ltbi-guideline.2024-01-01",
+  "type": "document",
+  "family": "doc.ltbi-guideline",
+  "docType": "guideline",
+  "title": "潛伏結核感染診治指引",
+  "version": "2024 年版",
+  "effectiveAt": "2024-01-01",
+  "supersedes": null,
+  "owner": "unit.chronic-infectious",
+  "steward": "慢性傳染病組承辦人",
+  "publishedAt": "2024-01-01",
+  "reviewedAt": "2026-01-10",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-30"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "pending"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "潛伏結核感染的檢驗對象、IGRA 檢驗、五種治療處方（3HP、1HP、3HR、4R、9H）與都治（DOPT）追蹤原則；接觸者與計畫對象費用由公費支應。",
+  "keywords": [
+    "潛伏結核感染",
+    "LTBI",
+    "IGRA",
+    "3HP",
+    "1HP",
+    "4R",
+    "9H",
+    "DOPT"
+  ],
+  "pdfUrl": "/pending/?ref=doc.ltbi-guideline.2024-01-01&doc=潛伏結核感染診治指引（PDF）",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/File/Get/{id}#ltbi-guideline"
+  ],
+  "note": "原型示意：條文依疾管署公開文件架構改寫，版次與生效日為示意，非正式公告文字；正式內容以 PDF 正本為準。",
+  "roles": [
+    "physician",
+    "nurse",
+    "local-health"
+  ],
+  "sections": [
+    {
+      "key": "who",
+      "heading": "一、檢驗與治療對象",
+      "markdown": "1. 結核病個案之密切接觸者，尤其 5 歲以下幼童與 HIV 感染者。\n2. 免疫功能低下或即將接受免疫抑制治療者：透析病人、器官移植、使用腫瘤壞死因子（TNF-α）抑制劑等生物製劑者。\n3. 依計畫執行主動篩檢之族群：山地鄉居民、矯正機關收容人、長期照護機構住民與工作人員等。"
+    },
+    {
+      "key": "test",
+      "heading": "二、檢驗方法",
+      "markdown": "以丙型干擾素釋放試驗（IGRA）為主要檢驗工具，幼童得以結核菌素皮膚測驗（TST）替代。檢驗陽性者須先照胸部 X 光並評估症狀，**排除活動性結核病後**才可開始潛伏感染治療。"
+    },
+    {
+      "key": "regimen",
+      "heading": "三、治療處方",
+      "markdown": "- **3HP**：rifapentine 加 isoniazid，每週 1 次，共 12 劑。\n- **1HP**：rifapentine 加 isoniazid，每日 1 次，共 28 劑（13 歲以上）。\n- **3HR**：isoniazid 加 rifampin，每日服用 3 個月。\n- **4R**：rifampin 每日服用 4 個月。\n- **9H**：isoniazid 每日服用 9 個月。\n\n處方由醫師依年齡、接觸者指標個案之藥物感受性、共病與藥物交互作用選擇；指標個案為多重抗藥性結核病者，另依專家建議處理。"
+    },
+    {
+      "key": "dopt",
+      "heading": "四、都治與追蹤",
+      "markdown": "潛伏結核感染治療納入都治（DOPT），由關懷員目視服藥並記錄；治療期間每月評估副作用。3HP、1HP 可能出現類流感症狀，治療期間出現黃疸、茶色尿、持續噁心嘔吐或皮疹應停藥就醫並檢查肝功能。"
+    },
+    {
+      "key": "fee",
+      "heading": "五、費用",
+      "markdown": "接觸者與計畫對象之潛伏結核感染檢驗、治療與都治關懷費用由公費支應。"
+    }
+  ],
+  "machineReadableMarkdown": "# 潛伏結核感染診治指引\n\n## 一、檢驗與治療對象\n1. 結核病個案之密切接觸者，尤其 5 歲以下幼童與 HIV 感染者。\n2. 免疫功能低下或即將接受免疫抑制治療者：透析病人、器官移植、使用腫瘤壞死因子（TNF-α）抑制劑等生物製劑者。\n3. 依計畫執行主動篩檢之族群：山地鄉居民、矯正機關收容人、長期照護機構住民與工作人員等。\n\n## 二、檢驗方法\n以丙型干擾素釋放試驗（IGRA）為主要檢驗工具，幼童得以結核菌素皮膚測驗（TST）替代。檢驗陽性者須先照胸部 X 光並評估症狀，**排除活動性結核病後**才可開始潛伏感染治療。\n\n## 三、治療處方\n- **3HP**：rifapentine 加 isoniazid，每週 1 次，共 12 劑。\n- **1HP**：rifapentine 加 isoniazid，每日 1 次，共 28 劑（13 歲以上）。\n- **3HR**：isoniazid 加 rifampin，每日服用 3 個月。\n- **4R**：rifampin 每日服用 4 個月。\n- **9H**：isoniazid 每日服用 9 個月。\n\n處方由醫師依年齡、接觸者指標個案之藥物感受性、共病與藥物交互作用選擇；指標個案為多重抗藥性結核病者，另依專家建議處理。\n\n## 四、都治與追蹤\n潛伏結核感染治療納入都治（DOPT），由關懷員目視服藥並記錄；治療期間每月評估副作用。3HP、1HP 可能出現類流感症狀，治療期間出現黃疸、茶色尿、持續噁心嘔吐或皮疹應停藥就醫並檢查肝功能。\n\n## 五、費用\n接觸者與計畫對象之潛伏結核感染檢驗、治療與都治關懷費用由公費支應。"
+}

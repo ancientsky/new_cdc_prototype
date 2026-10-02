@@ -1,0 +1,74 @@
+{
+  "id": "faq.bcg-when",
+  "type": "faq",
+  "title": "卡介苗什麼時候打？大人需要補打嗎？",
+  "question": "卡介苗什麼時候打？大人需要補打嗎？",
+  "owner": "unit.chronic-infectious",
+  "steward": "慢性傳染病組承辦人",
+  "publishedAt": "2026-09-15",
+  "reviewedAt": "2026-09-22",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.tuberculosis"
+  ],
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "vaccines": [
+    "vaccine.bcg"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-30"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "pending"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "卡介苗為公費疫苗，嬰兒出生滿 5 個月接種 1 劑（建議 5–8 個月），保護幼童免於嚴重結核病；成人不需補種。",
+  "keywords": [
+    "卡介苗",
+    "BCG",
+    "5 個月",
+    "嬰兒疫苗",
+    "成人不需補種"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/{id}#bcg"
+  ],
+  "answerMarkdown": "卡介苗（BCG）是公費常規疫苗，**嬰兒出生滿 5 個月接種 1 劑，建議接種時間為出生滿 5–8 個月**。卡介苗主要保護幼童避免結核性腦膜炎、粟粒性結核等嚴重結核病。\n\n卡介苗對成人肺結核的保護力有限，**成人不需要補種**，也不需要追加。接種後約 2–3 週接種部位會出現紅腫、小膿包，屬正常反應，請保持乾燥清潔、不要擠壓，通常 2–3 個月內結痂癒合。",
+  "structured": {
+    "ageMonthsMin": 5,
+    "ageMonthsRecommendedMax": 8,
+    "doses": 1
+  }
+}

@@ -1,5 +1,6 @@
 // /admin/ 治理儀表板（規劃 7.5 KPI、待辦、白名單、AI 狀態、態勢層延遲、各單位卡、季報匯出）
 import { html } from '../../../scripts/lib/render.mjs';
+import { migrationData } from './_migration.mjs';
 import { pageHead, dataScript, adminMeta, KIND_LABEL, KIND_ORDER, todoList, sitGov, byOwnerRows, kpiProgress, fmtNum, noticeRows, mediaRows, linkRows, linkCounts } from './_partials.mjs';
 export { layout } from './_layout.mjs';
 
@@ -25,6 +26,7 @@ export function render(ctx) {
   const media = mediaRows(site);
   const mTr = media.filter((m) => m.hasTranscript).length, mCur = media.filter((m) => m.basisCurrent).length;
   const lc = linkCounts(linkRows(site));
+  const mg = migrationData(site);
   const extra = { notices: { open: nOpen, soon: nSoon, closedUnarchived: nClosed, total: notices.length }, media: { total: media.length, transcript: mTr, current: mCur }, links: lc };
   const data = {
     extra, today: site.today, kpi, todos: todos.map(({ id, kind, owner, ownerName, itemTitle, dueAt, overdue }) => ({ id, kind, owner, ownerName, itemTitle, dueAt, overdue })),
@@ -41,7 +43,7 @@ ${pageHead({ title: '治理儀表板', what: '署內治理的一頁總覽：品�
   ${tile('態勢層資料日', sg.dataDate ?? '—', sg.lagDays != null ? `延遲 ${sg.lagDays} 日${sg.overdue ? `；已過下次審閱日 ${sg.nextReviewAt}` : `；下次審閱 ${sg.nextReviewAt ?? '—'}`}` : '尚無資料', sg.overdue || (sg.lagDays ?? 0) > 7 ? 'bad' : (sg.lagDays ?? 0) > 1 ? 'warn' : 'ok')}
 </div>
 
-<div class="adm-grid adm-grid--3" style="margin-bottom:var(--sp-5)" aria-label="公告、影音與外部連結">
+<div class="adm-grid adm-grid--4" style="margin-bottom:var(--sp-5)" aria-label="公告、影音、外部連結與移轉進度">
   <section class="adm-minicard ${nClosed ? 'adm-minicard--warn' : 'adm-minicard--ok'}" aria-labelledby="mc-n"><h3 id="mc-n">公告 <a href="${url('/admin/notices/', { noLang: true })}">公告管理 →</a></h3>
     <dl><dt>進行中</dt><dd>${nOpen}</dd><dt>7 日內截止</dt><dd class="${nSoon ? 'adm-yellow' : ''}">${nSoon}</dd><dt>已截止未封存</dt><dd class="${nClosed ? 'adm-red' : ''}">${nClosed}</dd></dl>
     <p>人才招募、採購公告、其他訊息共 ${notices.length} 則；截止後系統自動標「已截止」並退出首頁。</p></section>
@@ -51,6 +53,9 @@ ${pageHead({ title: '治理儀表板', what: '署內治理的一頁總覽：品�
   <section class="adm-minicard ${lc.broken ? 'adm-minicard--bad' : lc.unchecked && lc.unchecked === lc.total ? 'adm-minicard--warn' : 'adm-minicard--ok'}" aria-labelledby="mc-l"><h3 id="mc-l">外部連結 <a href="${url('/admin/links/', { noLang: true })}">連結健康 →</a></h3>
     <dl><dt>ok</dt><dd>${lc.ok}</dd><dt>broken</dt><dd class="${lc.broken ? 'adm-red' : ''}">${lc.broken}</dd><dt>unchecked</dt><dd>${lc.unchecked}</dd></dl>
     <p>共 ${lc.total} 條；CI 每日 <code>npm run fetch -- --check-links</code>，失效自動變待辦。</p></section>
+  <section class="adm-minicard ${mg.total.pending ? 'adm-minicard--warn' : mg.lists.length ? 'adm-minicard--ok' : ''}" aria-labelledby="mc-g" id="dash-migration"><h3 id="mc-g">移轉進度 <a href="${url('/admin/migration/', { noLang: true })}">逐筆對照 →</a></h3>
+    ${mg.lists.length ? html`<dl><dt>舊頁總數</dt><dd>${mg.total.total}</dd><dt>已處理（有去向）</dt><dd>${mg.total.done} <span class="adm-muted">(${mg.donePct}%)</span></dd><dt>待確認</dt><dd class="${mg.total.pending ? 'adm-yellow' : ''}">${mg.total.pending}</dd><dt>已核對網址</dt><dd class="${mg.total.verified < mg.total.total ? 'adm-red' : ''}">${mg.total.verified} / ${mg.total.total}</dd></dl>
+    <p>舊官網頁面逐筆登錄去向；已移轉的舊網址由伺服器 301 與 404 頁自動導到新頁。</p>` : html`<p>尚未建立移轉清單（content/migration/）。建立後這裡顯示舊頁處理進度與待確認數。</p>`}</section>
 </div>
 
 <section class="adm-card" aria-labelledby="kpi-h"><h2 id="kpi-h">品質指標（規劃 7.5）</h2>

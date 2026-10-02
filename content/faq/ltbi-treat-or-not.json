@@ -1,0 +1,72 @@
+{
+  "id": "faq.ltbi-treat-or-not",
+  "type": "faq",
+  "title": "驗出潛伏結核感染，一定要治療嗎？",
+  "question": "驗出潛伏結核感染，一定要治療嗎？",
+  "owner": "unit.chronic-infectious",
+  "steward": "慢性傳染病組承辦人",
+  "publishedAt": "2026-09-15",
+  "reviewedAt": "2026-09-22",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms",
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "doc.ltbi-guideline",
+    "disease.tuberculosis"
+  ],
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-30"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "pending"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "潛伏結核感染沒有症狀也不會傳染，但一生約 5–10% 會發病；接受 3HP、1HP 等治療可降低 9 成以上發病風險，建議治療，費用由公費支應。",
+  "keywords": [
+    "潛伏結核感染",
+    "LTBI",
+    "3HP",
+    "1HP",
+    "要不要治療"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/{id}#ltbi"
+  ],
+  "answerMarkdown": "潛伏結核感染是體內有結核菌、但菌還在「休眠」，**沒有症狀、也不會傳染給別人**。不過一生中約有 5–10% 會發病，多數在感染後 2 年內，幼童與免疫力較差的人風險更高。\n\n接受潛伏結核感染治療可降低 9 成以上的發病風險，因此**建議接受治療**，特別是結核病人的密切接觸者。目前有 3HP（每週 1 次、共 12 次）、1HP（每天 1 次、共 28 天）、3HR、4R、9H 等處方，由醫師依您的年齡、健康狀況與用藥評估選擇，治療期間有關懷員陪伴服藥，費用由公費支應。",
+  "structured": {
+    "lifetimeRiskPct": "5–10",
+    "riskReductionPct": 90
+  }
+}

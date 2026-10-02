@@ -41,7 +41,8 @@
         "service",
         "publication",
         "labtest",
-        "research"
+        "research",
+        "migration"
       ]
     },
     "title": {
@@ -213,9 +214,11 @@
     },
     "legacyUrls": {
       "type": "array",
+      "description": "現行官網對應網址（301 對照與來源連結）。舊網址 ID 不確定者以 URI Template 佔位（例：https://www.cdc.gov.tw/Disease/SubIndex/{id}），轉址時標 pattern、不進伺服器對照檔（ARCHITECTURE 13.1）",
       "items": {
         "type": "string",
-        "format": "uri"
+        "format": "uri-template",
+        "pattern": "^https?://"
       }
     },
     "auditRules": {

@@ -1,0 +1,70 @@
+{
+  "id": "faq.tb-contagious-after-treatment",
+  "type": "faq",
+  "title": "結核病開始吃藥後，還會傳染給家人嗎？",
+  "question": "結核病開始吃藥後，還會傳染給家人嗎？",
+  "owner": "unit.chronic-infectious",
+  "steward": "慢性傳染病組承辦人",
+  "publishedAt": "2026-09-15",
+  "reviewedAt": "2026-09-22",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.tuberculosis"
+  ],
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-30"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "pending"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "規則服藥約 2 週後傳染力明顯下降，但須完成至少 6 個月療程；治療初期戴口罩、保持通風，家人配合接觸者檢查，不需分開碗筷。",
+  "keywords": [
+    "傳染力",
+    "服藥兩週",
+    "戴口罩",
+    "家人",
+    "接觸者檢查"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/{id}#contagious"
+  ],
+  "answerMarkdown": "開始規則服藥約 **2 週後，傳染力會明顯下降**，但仍須完成至少 6 個月的完整療程，才能真正治癒。治療初期請：\n\n- 咳嗽、打噴嚏時戴口罩或以衛生紙掩住口鼻；\n- 居家保持通風，避免長時間待在密閉空間與人近距離接觸；\n- 配合衛生所安排家人做接觸者檢查。\n\n結核病不會經由共用餐具、握手或衣物傳染，家人不需要分開碗筷。是否可以回到學校或職場，請依醫師與衛生所評估。",
+  "structured": {
+    "weeksToReducedInfectiousness": 2,
+    "treatmentMonthsMin": 6
+  }
+}

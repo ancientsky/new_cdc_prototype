@@ -132,6 +132,7 @@ export function provenance(ctx, item, { showAi = true, extra = null } = {}) {
     <button type="button" class="c-btn c-btn--sm c-btn--ghost" data-cite data-cite-title="${L(ctx, item, 'title')}" data-cite-owner="${unitName(ctx, item.owner)}" data-cite-reviewed="${item.reviewedAt}">${t('pro.cite')}</button>
     ${item.type === 'document' && item.family ? html`<button type="button" class="c-btn c-btn--sm c-btn--ghost" data-subscribe="${item.family}" aria-pressed="false">${t('pro.subscribe')}</button>` : html`<button type="button" class="c-btn c-btn--sm c-btn--ghost" data-subscribe="${item.id}" aria-pressed="false">${t('pro.subscribe')}</button>`}
   </p>
+  ${legacyDisclosure(ctx, item)}
 </div>`;
 }
 
@@ -605,4 +606,98 @@ export function vaxmapButton(ctx, { label, cls = 'c-btn', ...linkOpts } = {}) {
   const nw = VAXMAP_NEW_WINDOW[ctx.lang] ?? VAXMAP_NEW_WINDOW.en;
   const text = label ?? (linkOpts.info ? (VAXMAP_INFO_LABEL[ctx.lang] ?? VAXMAP_INFO_LABEL.en) : ctx.t('vaccines.where.cta'));
   return html`<a class="${cls}" href="${href}" target="_blank" rel="noopener" title="${nw}">${text} ↗<span class="sr-only">${ctx.lang === 'zh-TW' ? `（${nw}）` : ` (${nw})`}</span></a>`;
+}
+
+/* ═════════════ 第五輪（V2）：舊網址對應（三層露出）與舊網址正規化 ═════════════ */
+
+/**
+ * 舊網址正規化（建置端與瀏覽器端共用：本函式以 toString() 嵌進頁面，所以必須自成一體、不引用外部變數、只用 ES5 語法）。
+ * 規則同 v1/legacy-map.json 的 key：小寫、無網域、無 hash、無尾斜線、去掉 page 參數（其餘 query 保留）。
+ * 回傳候選 key 陣列，第 [0] 個是「正規化後的完整網址」；其後依序為：解碼版、query 排序版、只含路徑版。
+ */
+export function legacyKeys(input) {
+  function norm(raw, dec) {
+    var s = String(raw == null ? '' : raw).trim();
+    if (dec) { try { s = decodeURIComponent(s); } catch (e) { /* 保留原字串 */ } }
+    s = s.replace(/#.*$/, '').replace(/^[a-z][a-z0-9+.-]*:\/\/[^\/?]*/i, '').replace(/^(?:www\.)?[a-z0-9-]+(?:\.[a-z0-9-]+)+(?=[\/?]|$)/i, '');
+    if (!s) return null;
+    if (s.charAt(0) !== '/' && s.charAt(0) !== '?') s = '/' + s;
+    var i = s.indexOf('?');
+    var path = (i < 0 ? s : s.slice(0, i)).replace(/\/+$/, '') || '/';
+    var qs = (i < 0 ? '' : s.slice(i + 1)).split('&').filter(function (p) { return p && p.split('=')[0].toLowerCase() !== 'page'; });
+    return { path: path.toLowerCase(), qs: qs.map(function (x) { return x.toLowerCase(); }) };
+  }
+  var out = [];
+  function add(k) { if (k && out.indexOf(k) < 0) out.push(k); }
+  [false, true].forEach(function (dec) {
+    var n = norm(input, dec);
+    if (!n) return;
+    add(n.path + (n.qs.length ? '?' + n.qs.join('&') : ''));
+  });
+  [false, true].forEach(function (dec) {
+    var n = norm(input, dec);
+    if (n && n.qs.length > 1) add(n.path + '?' + n.qs.slice().sort().join('&'));
+  });
+  [false, true].forEach(function (dec) { var n = norm(input, dec); if (n) add(n.path); });
+  return out;
+}
+/** 建置端用：單一舊網址 → 正規化 key（與 legacy-map.json 的 key 相同規則） */
+export const legacyKey = (u) => legacyKeys(u)[0] ?? null;
+
+/** 瀏覽器端查詢程式（/legacy/ 與 404 共用）：legacyIndex(map) 建索引、legacyFind(idx, input) 查、legacyWord(input) 取路徑最後一段 */
+export const LEGACY_LOOKUP_JS = `${legacyKeys.toString()}
+function legacyIndex(map){var idx={};Object.keys(map||{}).forEach(function(k){var ks=legacyKeys(k);ks.slice(0,2).forEach(function(n){if(!Object.prototype.hasOwnProperty.call(idx,n))idx[n]=map[k];});});return idx;}
+function legacyFind(idx,input){var ks=legacyKeys(input);for(var i=0;i<ks.length;i++){if(Object.prototype.hasOwnProperty.call(idx,ks[i]))return{key:ks[i],to:idx[ks[i]]};}return null;}
+function legacyWord(input){var k=(legacyKeys(input)[0]||'').split('?')[0].split('/').filter(Boolean).pop()||'';try{k=decodeURIComponent(k);}catch(e){}return k.replace(/\\.(aspx?|html?|php|pdf)$/i,'').replace(/[-_+]+/g,' ').trim().slice(0,60);}`;
+
+/** 取 item.gov.legacy；沒有資料或 show === false 回傳 null（完全不輸出） */
+export function legacyOf(item) {
+  const lg = item?.gov?.legacy;
+  if (!lg || lg.show === false) return null;
+  const items = Array.isArray(lg.items) ? lg.items.filter((x) => x && (x.oldTitle || x.oldUrl)) : [];
+  if (!items.length) return null;
+  return { ...lg, items, urls: lg.urls ?? items.map((x) => x.oldUrl).filter(Boolean) };
+}
+export const LEGACY_STATUS_KIND = { migrated: 'ok', merged: 'info', archived: 'neutral', pending: 'warn', dropped: 'neutral' };
+export const hasPlaceholder = (u) => /[{}]/.test(String(u ?? ''));
+/** 舊網址顯示字：去掉 https:// 與尾斜線 */
+const showUrl = (u) => String(u ?? '').replace(/^https?:\/\//i, '').replace(/\/$/, '');
+
+/** 移轉後新增的治理要求 chip：已知 key 用 i18n，未知 key 原樣顯示 */
+export function legacyReqChips(ctx, reqs = []) {
+  return reqs.length ? html`<span class="c-legacy__reqs" aria-label="${ctx.t('legacy.req.t')}">${reqs.map((k) => {
+    const key = `legacy.req.${k}`;
+    const txt = ctx.t(key);
+    return html`<span class="c-chip c-chip--req">${txt === key ? k : txt}</span>`;
+  })}</span>` : '';
+}
+
+/**
+ * 舊網址對應（三層露出）：預設層一句「本頁取代舊網站 N 個頁面」＋按需層 details（舊標題、舊網址外連、狀態、新增治理要求）
+ * ＋專業層連到 /legacy/?u=。item.gov.legacy 不存在或 show 為 false 時完全不輸出。所有型別頁經 provenance() 自動帶出。
+ */
+export function legacyDisclosure(ctx, item) {
+  const lg = legacyOf(item);
+  if (!lg) return '';
+  const { t, url } = ctx;
+  const n = lg.items.length;
+  const until = lg.showUntil ?? lg.showLegacyUntil ?? null;
+  return html`<div class="c-legacy" data-legacy="${n}">
+  <p class="c-legacy__line"><span class="c-legacy__ic" aria-hidden="true">↪</span> ${t('legacy.line', { n })}</p>
+  <details class="c-legacy__more" data-group="ondemand">
+    <summary>${t('legacy.summary')}</summary>
+    <ul class="c-legacy__list">${lg.items.map((it) => {
+      const st = it.status ?? 'migrated';
+      const ph = hasPlaceholder(it.oldUrl);
+      return html`<li class="c-legacy__item">
+        <p class="c-legacy__row"><strong class="c-legacy__title">${it.oldTitle ?? showUrl(it.oldUrl)}</strong> <span class="c-pill c-pill--${LEGACY_STATUS_KIND[st] ?? 'neutral'}">${t(`legacy.status.${st}`)}</span>${it.verified === false ? html` <span class="c-pill c-pill--neutral">${t('legacy.unverified')}</span>` : ''}</p>
+        ${it.oldPath ? html`<p class="c-legacy__path muted">${it.oldPath}</p>` : ''}
+        ${it.oldUrl ? html`<p class="c-legacy__url"><span class="c-legacy__k">${t('legacy.oldurl')}</span> ${ph ? html`<code>${showUrl(it.oldUrl)}</code> <span class="muted">${t('legacy.placeholder')}</span>` : html`<a href="${it.oldUrl}" rel="nofollow noopener">${showUrl(it.oldUrl)}<span aria-hidden="true"> ↗</span><span class="sr-only"> (${t('external')})</span></a>`}${!ph ? html`<span class="c-pro-only"> · <a href="${url('/legacy/')}?u=${encodeURIComponent(it.oldUrl)}">${t('legacy.pro.lookup')} →</a></span>` : ''}</p>` : ''}
+        ${it.note ? html`<p class="c-legacy__note">${it.note}</p>` : ''}
+        ${legacyReqChips(ctx, it.newRequirements ?? [])}
+      </li>`;
+    })}</ul>
+    <p class="c-legacy__foot muted">${until ? html`${t('legacy.until', { date: ctx.fmtDate(until) })} · ` : ''}<a href="${url('/legacy/')}">${t('legacy.finder')} →</a></p>
+  </details>
+</div>`;
 }

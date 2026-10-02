@@ -1,0 +1,132 @@
+{
+  "id": "doc.tb-guideline.2025-09-01",
+  "type": "document",
+  "family": "doc.tb-guideline",
+  "docType": "guideline",
+  "title": "結核病診治指引（第八版）",
+  "version": "第八版",
+  "effectiveAt": "2025-09-01",
+  "supersedes": "doc.tb-guideline.2022-03-01",
+  "owner": "unit.chronic-infectious",
+  "steward": "慢性傳染病組承辦人",
+  "publishedAt": "2025-09-01",
+  "reviewedAt": "2026-09-01",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis",
+    "disease.mdr-tb"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-30"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "pending"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "現行結核病診治指引：分子快速檢測列為疑似個案第一線檢驗；多重抗藥性結核病優先採全口服短程處方；潛伏結核感染新增 1HP 處方。",
+  "keywords": [
+    "結核病",
+    "診治指引",
+    "第八版",
+    "分子快速檢測",
+    "全口服短程處方",
+    "1HP",
+    "都治"
+  ],
+  "pdfUrl": "/pending/?ref=doc.tb-guideline.2025-09-01&doc=結核病診治指引（第八版）（PDF）",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/File/Get/{id}#tb-guideline"
+  ],
+  "note": "原型示意：條文依疾管署公開文件架構改寫，版次與生效日為示意，非正式公告文字；正式內容以 PDF 正本為準。",
+  "roles": [
+    "physician",
+    "nurse",
+    "infection-control",
+    "lab"
+  ],
+  "sections": [
+    {
+      "key": "dx",
+      "heading": "第一章 診斷",
+      "markdown": "疑似肺結核病人應收集 3 套痰液（至少 1 套為晨痰）進行抗酸菌塗片與培養，並以**分子快速檢測（含 rifampin 抗藥基因）作為第一線檢驗**，所有疑似個案均應執行，以縮短確診與發現抗藥的時間。胸部 X 光異常但痰檢查陰性者，由醫師綜合臨床判斷，必要時以支氣管鏡等方式取得檢體。"
+    },
+    {
+      "key": "tx",
+      "heading": "第二章 藥物敏感結核病治療",
+      "markdown": "新病人標準處方仍為 2HRZE/4HR，總療程至少 6 個月。12 歲以上、非重症之藥物敏感肺結核病人，經評估後可考慮 4 個月短程處方（rifapentine 加 moxifloxacin 為基礎）；非重症兒童結核病可採 4 個月處方。治療滿 2 個月痰培養仍陽性者，應評估抗藥性並考慮延長治療。所有病人均應納入都治（DOTS）。"
+    },
+    {
+      "key": "mdr",
+      "heading": "第三章 抗藥性結核病治療",
+      "markdown": "rifampin 抗藥（RR-TB）或多重抗藥性結核病（MDR-TB）**優先採全口服短程處方**（以 bedaquiline、pretomanid、linezolid 為基礎，療程約 6 個月），不適用者採個別化全口服長程處方；不再常規使用注射劑。所有個案轉介抗藥性結核病醫療照護團隊（TMTC）收治並納入進階都治。"
+    },
+    {
+      "key": "ltbi",
+      "heading": "第四章 潛伏結核感染",
+      "markdown": "潛伏結核感染治療處方包括 9H、4R、3HP、3HR，**新增 1HP**（rifapentine 加 isoniazid 每日服用，共 28 劑）供 13 歲以上對象選用。處方選擇、對象與追蹤細節依「潛伏結核感染診治指引」辦理。"
+    },
+    {
+      "key": "special",
+      "heading": "第五章 特殊族群",
+      "markdown": "兒童、孕婦、HIV 感染者、糖尿病、慢性腎臟病及肝病患者之處方調整與追蹤原則；使用 rifamycin 類藥物者應注意與抗凝血劑、荷爾蒙避孕藥及抗病毒藥物之交互作用。"
+    }
+  ],
+  "changes": [
+    {
+      "section": "第一章 診斷",
+      "kind": "changed",
+      "before": "具多重抗藥性結核病風險者加做分子快速檢測",
+      "after": "所有疑似肺結核個案以分子快速檢測（含 rifampin 抗藥基因）為第一線檢驗"
+    },
+    {
+      "section": "第二章 藥物敏感結核病治療",
+      "kind": "added",
+      "after": "12 歲以上非重症藥物敏感肺結核可考慮 4 個月短程處方；非重症兒童結核病可採 4 個月處方"
+    },
+    {
+      "section": "第三章 抗藥性結核病治療",
+      "kind": "changed",
+      "before": "含第二線注射劑之長程處方，療程 18 至 24 個月",
+      "after": "優先採全口服短程處方（約 6 個月），不再常規使用注射劑"
+    },
+    {
+      "section": "第四章 潛伏結核感染",
+      "kind": "added",
+      "after": "新增 1HP 處方（每日服用共 28 劑，13 歲以上）"
+    },
+    {
+      "section": "第五章 特殊族群",
+      "kind": "added",
+      "after": "新增 rifamycin 類藥物交互作用注意事項"
+    }
+  ],
+  "pageCount": 236,
+  "machineReadableMarkdown": "# 結核病診治指引（第八版）\n\n## 第一章 診斷\n疑似肺結核病人應收集 3 套痰液（至少 1 套為晨痰）進行抗酸菌塗片與培養，並以**分子快速檢測（含 rifampin 抗藥基因）作為第一線檢驗**，所有疑似個案均應執行，以縮短確診與發現抗藥的時間。胸部 X 光異常但痰檢查陰性者，由醫師綜合臨床判斷，必要時以支氣管鏡等方式取得檢體。\n\n## 第二章 藥物敏感結核病治療\n新病人標準處方仍為 2HRZE/4HR，總療程至少 6 個月。12 歲以上、非重症之藥物敏感肺結核病人，經評估後可考慮 4 個月短程處方（rifapentine 加 moxifloxacin 為基礎）；非重症兒童結核病可採 4 個月處方。治療滿 2 個月痰培養仍陽性者，應評估抗藥性並考慮延長治療。所有病人均應納入都治（DOTS）。\n\n## 第三章 抗藥性結核病治療\nrifampin 抗藥（RR-TB）或多重抗藥性結核病（MDR-TB）**優先採全口服短程處方**（以 bedaquiline、pretomanid、linezolid 為基礎，療程約 6 個月），不適用者採個別化全口服長程處方；不再常規使用注射劑。所有個案轉介抗藥性結核病醫療照護團隊（TMTC）收治並納入進階都治。\n\n## 第四章 潛伏結核感染\n潛伏結核感染治療處方包括 9H、4R、3HP、3HR，**新增 1HP**（rifapentine 加 isoniazid 每日服用，共 28 劑）供 13 歲以上對象選用。處方選擇、對象與追蹤細節依「潛伏結核感染診治指引」辦理。\n\n## 第五章 特殊族群\n兒童、孕婦、HIV 感染者、糖尿病、慢性腎臟病及肝病患者之處方調整與追蹤原則；使用 rifamycin 類藥物者應注意與抗凝血劑、荷爾蒙避孕藥及抗病毒藥物之交互作用。"
+}

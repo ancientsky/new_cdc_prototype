@@ -1,0 +1,69 @@
+{
+  "$id": "https://cdc-prototype/schemas/migration.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "移轉清單（migration manifest）：舊站一個專區／欄目樹 → 新站內容的逐頁對照（ARCHITECTURE 13.1）",
+  "description": "content/migration/{slug}.json。每筆舊頁標 verified（權責單位逐筆確認後改 true）與 status；治理引擎據此產生 site.migration、gov.legacy、migration-pending 待辦，emit-api 產生 redirects 與 legacy-map。",
+  "allOf": [{ "$ref": "_common.json" }],
+  "type": "object",
+  "required": ["scope", "legacyRoot", "showLegacyUntil", "items"],
+  "properties": {
+    "type": { "const": "migration" },
+    "scope": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["kind", "disease"],
+          "properties": { "kind": { "const": "disease" }, "disease": { "type": "string", "pattern": "^disease\\." } }
+        },
+        {
+          "type": "object",
+          "required": ["kind", "name"],
+          "properties": { "kind": { "const": "category" }, "name": { "type": "string", "minLength": 1 } }
+        }
+      ]
+    },
+    "legacyRoot": { "type": "string", "format": "uri-template", "pattern": "^https?://", "description": "舊專區入口；ID 不確定以 {id} 佔位" },
+    "showLegacyUntil": { "type": "string", "format": "date", "description": "新站頁面顯示「舊網址對應」的截止日；today > 此日 ⇒ gov.legacy.show=false（自動，不需人工）" },
+    "sourceNote": { "type": "string", "description": "清單來源與限制說明（例如：開發環境無法連線舊站，依 URL 模式重建）" },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/migrationItem" }
+    }
+  },
+  "$defs": {
+    "migrationItem": {
+      "type": "object",
+      "required": ["key", "oldTitle", "oldUrl", "oldType", "verified", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "key": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$", "description": "清單內唯一" },
+        "oldTitle": { "type": "string", "minLength": 1, "description": "舊站標題" },
+        "oldPath": { "type": "string", "description": "舊站麵包屑／階層（以「／」分隔）" },
+        "oldUrl": { "type": "string", "format": "uri-template", "pattern": "^https?://", "description": "舊網址；ID 不確定以 {id} 佔位（轉址標 pattern，不進伺服器對照檔）" },
+        "oldType": { "enum": ["page", "qa", "pdf", "news-list", "media", "list", "external"] },
+        "verified": { "type": "boolean", "description": "權責單位已逐筆核對舊網址與對應" },
+        "verifiedAt": { "type": "string", "format": "date" },
+        "verifiedBy": { "type": "string", "description": "核對者職稱（不放真名）" },
+        "status": { "enum": ["migrated", "merged", "archived", "pending", "dropped"], "description": "migrated 已移轉（一對一）／merged 已併入（多對一）／archived 已封存（舊版保留查閱）／pending 待移轉／dropped 不移轉（過期，建議 410）" },
+        "target": { "type": "string", "pattern": "^[a-z]+\\.[a-z0-9][a-z0-9.-]*$", "description": "新站內容 id（migrated／merged／archived 必填）" },
+        "anchor": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$", "description": "新頁內錨點" },
+        "owner": { "type": "string", "pattern": "^unit\\.", "description": "本筆權責單位（缺省沿用清單 owner）" },
+        "dueAt": { "type": "string", "format": "date", "description": "pending 的預定完成日（缺省：清單 reviewedAt + 60 日）" },
+        "note": { "type": "string", "description": "給同事看的說明" },
+        "newRequirements": {
+          "type": "array",
+          "uniqueItems": true,
+          "description": "這筆移轉後新增的治理要求（展示用）",
+          "items": { "enum": ["owner", "reviewedAt", "reviewPeriod", "basedOn", "machineReadable", "languages", "versionChain", "aiWhitelist", "structuredData", "accessibility", "license", "linkCheck"] }
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "status": { "enum": ["migrated", "merged", "archived"] } }, "required": ["status"] },
+          "then": { "required": ["target"] }
+        }
+      ]
+    }
+  }
+}

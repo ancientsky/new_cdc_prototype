@@ -44,6 +44,18 @@
 - **出國與入境（第四輪）**：以目的地為主：231 個國家／地區各有目的地頁（針對性等級、持續時間、長期建議標籤、旅程三階段建議由疾病主檔規則生成、該國近 30 天疫情資訊）；`/travel/` 依序為查目的地、近 30 天變化、世界地圖（三級三色、點國家進頁）、全球背景提醒、針對性等級表；API 新增 `/v1/country-changes.json`、`/v1/country-background.json`。
 - **新增的自動化**：公告截止自動標示並退出首頁；影片製作日早於正本現行版生效日自動標過時；逐字稿參與反向稽核；外部連結每日 `npm run fetch -- --check-links` 檢查，失效自動變待辦；通報時限表由主檔產生。
 
+## 第五輪：舊網址不 404，結核病專區移轉示範
+
+舊網站的內容不會因為改版而不見，舊網址也不該變成 404。第五輪用**結核病專區**走完一整套「舊頁 → 新頁」的流程，做法可以套到其他 98 種疾病與所有欄目：
+
+- **移轉清單**：`content/migration/tuberculosis.json` 逐筆列出舊頁（標題、舊網址、類型）、處理方式（已移轉／已併入／已封存／待確認／已移除）、對應的新內容與段落。權責單位在後台 `/admin/migration/` 逐筆確認（`verified`）；舊網址 ID 取不到者以 `{id}` 佔位，確認時補上。
+- **新擺法、新要求**：結核病疾病頁加上專區導覽（民眾／專業各一套），指引與手冊走文件版本鏈，另有 Q&A、專區、補助與潛伏結核感染治療服務；頁首治理列有「本頁取代舊網站 N 個頁面」，展開看每筆舊網址與移轉後新增的治理要求。
+- **舊網址不 404**：建置自動輸出 `v1/redirects.json`、`v1/legacy-map.json`，以及三種伺服器轉址檔 `redirects/nginx.map`、`redirects/web.config.rewritemap.xml`、`redirects/_redirects`；404 頁自動帶往新頁，`/legacy/` 可貼舊網址查新頁。靜態主機的 404 頁只是示範與備援，**正式站必須由伺服器回 301**。
+- **上線後監測**：`node scripts/analyze-404-log.mjs access.log --map dist/v1/legacy-map.json --migration content/migration` 把 404 log 分成「可直接 301」「待補對照」「真的不存在（建議 410）」三類，待補對照附可貼進清單的草稿。
+- **規劃回補**：整理了 28 項「規劃文件沒寫到、原型做了」的作法，見 [docs/plan-supplement.md](docs/plan-supplement.md)；完整移轉與轉址手冊見 [docs/migration-playbook.md](docs/migration-playbook.md)；同事操作步驟見 [docs/guide-staff.md](docs/guide-staff.md) 第 15 節。
+
+> 限制：開發環境連不到 `www.cdc.gov.tw`，結核病專區的舊頁清單依規劃文件的 URL 模式重建，每筆標 `verified: false`，等權責單位確認。
+
 ## 快速開始
 
 需求：Node.js 20 以上。
@@ -81,6 +93,7 @@ npm run dev       # 建置並啟動預覽 http://localhost:4173/new_cdc_prototyp
 - 公告過了截止日 → 自動標「已截止」並退出首頁，不需人工
 - 影片製作日早於依據正本現行版生效日 → 自動標過時、退出白名單、開待辦；逐字稿不足 50 字 → 待辦
 - 外部連結每日檢查，失效 → 待辦；檢驗送驗時限與主檔通報時限不一致 → 待辦
+- 舊站移轉清單中狀態為「待確認」（`pending`）的項目 → 自動開 `migration-pending` 待辦給權責單位；新頁的「舊網址對應」揭露在 `showLegacyUntil` 過後自動隱藏，不需人工；舊網址轉址對照（301）與伺服器格式每次建置自動重算
 - AI 暫停開關 → 全站橫幅，答案頁退回傳統列表
 - KPI 與季度 AI 透明報告每次建置重算
 - 評估集閘門：版本題只要錯一題，建置失敗
@@ -130,6 +143,8 @@ docs/                使用說明與治理文件
 | [docs/architecture-decisions.md](docs/architecture-decisions.md) | 為什麼這樣做；示意與真實的區分 |
 | [docs/deploy.md](docs/deploy.md) | 部署與維運、新增內容型別、改 schema |
 | [docs/roadmap-mapping.md](docs/roadmap-mapping.md) | 原型功能與三階段路線圖對照 |
+| [docs/migration-playbook.md](docs/migration-playbook.md) | 舊站→新站內容移轉與網址轉址手冊：301／410 策略、搜尋引擎、舊站保留期、切換日 checklist、404 log 監測、常見錯誤、結核病示範 |
+| [docs/plan-supplement.md](docs/plan-supplement.md) | 規劃文件回補：原型做了、規劃沒寫到的 28 項作法（做法、為何需要、對應規劃章節、原型位置、正式上線還缺什麼） |
 
 ## 貢獻方式
 

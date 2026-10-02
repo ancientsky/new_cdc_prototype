@@ -6,7 +6,7 @@ import { barChartSvg } from '../../client/charts.js';
 import {
   ldFor, breadcrumb, provenance, alerts, pageData, statusTag, scopeTags, viewToggle, feedback, askBox, translationBadge,
   numberSource, datasetSourceCard, hrefFor, isFallbackLink, L, unitName, publishedOf, byDateDesc, dated, itemPath, seriesOf, sitField, licenseLabel,
-  isMediaOutdated, isTopicEnded, fmtDur,
+  isMediaOutdated, isTopicEnded, fmtDur, refItem, isExternal, legacyOf, extLink,
 } from './_partials.mjs';
 
 const trailOf = (ctx, item) => [{ label: ctx.t('nav.diseases'), href: '/diseases/' }, { label: L(ctx, item, 'title') }];
@@ -82,6 +82,76 @@ function renderBlock(ctx, item, b, ctxData) {
 </section>`;
 }
 
+
+/* ═════════════ 第五輪（V2）：專區導覽（sticky 子導覽，民眾／專業兩套）與專業版區塊 ═════════════ */
+const PUB_ORDER = ['what-to-do', 'symptoms', 'transmission', 'prevention', 'treatment', 'vaccine', 'situation', 'faq'];
+
+/** 文件版本鏈：每個 family 只取現行版，並找出同 family 的舊版 */
+function docChain(site, d) {
+  const olds = site.collections.documents
+    .filter((x) => x.family && x.family === d.family && x.id !== d.id && x.status !== 'draft')
+    .sort((a, b) => String(b.effectiveAt).localeCompare(String(a.effectiveAt)));
+  return { doc: d, olds };
+}
+
+/** 防治計畫（容錯：V1 的 professional.programs 形狀以 { key, title, summaryMarkdown?, documents?, services?, links? } 為準） */
+function programsOf(item) {
+  const raw_ = item.professional?.programs;
+  return (Array.isArray(raw_) ? raw_ : []).filter((p) => p && (p.title || p.key)).map((p, i) => ({ ...p, key: String(p.key ?? `p${i + 1}`).replace(/[^\w-]/g, '-') }));
+}
+
+function relatedOf(ctx, item, { sit, blocks, programs }) {
+  const { site } = ctx;
+  const id = item.id;
+  const svcIds = new Set(programs.flatMap((p) => p.services ?? []));
+  for (const tp of site.collections.topics ?? []) if (tp.status === 'published' && (tp.diseases?.includes(id) || tp.contentIds?.includes(id))) for (const c of tp.contentIds ?? []) if (site.byId.get(c)?.type === 'service') svcIds.add(c);
+  const services = (site.collections.services ?? []).filter((x) => x.status === 'published' && (x.diseases?.includes(id) || svcIds.has(x.id)));
+  const dsIds = new Set(blocks.flatMap((b) => b.datasets ?? []));
+  const datasets = (site.collections.datasets ?? []).filter((x) => x.status === 'published' && (x.diseases?.includes(id) || dsIds.has(x.id)));
+  const research = (site.collections.research ?? []).filter((x) => x.status === 'published' && x.diseases?.includes(id)).sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
+  return { services, datasets, research, hasStats: !!sit || datasets.length > 0 };
+}
+
+const hubItem = (id, label) => html`<li><a href="${'#' + id}" data-hub="${id}">${label}</a></li>`;
+
+function hubNav(ctx, { pub, pro }) {
+  const { t } = ctx;
+  if (!pub.length && !pro.length) return '';
+  return html`<nav class="c-hubnav" aria-label="${t('hub.nav')}" data-hubnav>
+  <div class="c-hubnav__in">
+    ${pub.length ? html`<ul class="c-hubnav__list c-public-only">${pub.map((x) => hubItem(x.id, x.label))}</ul>` : ''}
+    ${pro.length ? html`<ul class="c-hubnav__list c-pro-only">${pro.map((x) => hubItem(x.id, x.label))}</ul>` : ''}
+    ${pro.length ? html`<a class="c-hubnav__sw c-public-only" href="?view=pro" data-view-set="pro">${t('view.pro')} →</a>` : ''}
+  </div>
+</nav>
+${pro.length ? html`<p class="c-hubnav__also muted c-public-only"><b>${t('hub.pro.also')}</b>${pro.map((x) => x.label).join(' · ')}</p>` : ''}`;
+}
+
+const HUB_JS = `(function(){var nav=document.querySelector('[data-hubnav]');if(!nav||!('IntersectionObserver' in window))return;
+var links=[].slice.call(nav.querySelectorAll('a[data-hub]'));var by={};links.forEach(function(a){(by[a.dataset.hub]=by[a.dataset.hub]||[]).push(a);});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;links.forEach(function(a){a.removeAttribute('aria-current');a.classList.remove('is-active');});(by[e.target.id]||[]).forEach(function(a){a.setAttribute('aria-current','location');a.classList.add('is-active');});});},{rootMargin:'-12% 0px -70% 0px'});
+Object.keys(by).forEach(function(id){var el=document.getElementById(id);if(el)io.observe(el);});})();`;
+
+function proSection(ctx, id, titleKey, leadKey, body, { badge = false } = {}) {
+  const { t } = ctx;
+  return html`<section class="c-block c-hubsec" id="${id}" aria-labelledby="h-${id}"><h2 id="h-${id}">${t(titleKey)}${badge ? html` ${translationBadge(ctx, 'none', { text: t('scope.pro') })}` : ''}</h2>${leadKey ? html`<p class="muted c-hubsec__lead">${t(leadKey)}</p>` : ''}${body}</section>`;
+}
+
+function programCard(ctx, p) {
+  const { t, site, url } = ctx;
+  const docs = (p.documents ?? []).map((r) => currentDoc(site, r) ?? refItem(site, r)).filter(Boolean);
+  const svcs = (p.services ?? []).map((r) => site.byId.get(r)).filter(Boolean);
+  const links = (p.links ?? []).filter((l) => l && (l.href ?? l.url)).map((l) => ({ label: l.label ?? l.title ?? l.href ?? l.url, href: l.href ?? l.url }));
+  const summary = p.summaryMarkdown ?? p.summary ?? p.description ?? '';
+  return html`<article class="c-program" id="program-${p.key}">
+  <h3>${p.title ?? p.key}</h3>
+  ${summary ? raw(md(summary)) : ''}
+  ${docs.length ? html`<p class="c-program__k">${t('hub.pro.programs.docs')}</p><ul class="c-linklist">${docs.map((d) => html`<li><a href="${hrefFor(ctx, d)}">${L(ctx, d, 'title')}</a>${d.version ? html` <span class="muted">${d.version}</span>` : ''}</li>`)}</ul>` : ''}
+  ${svcs.length ? html`<p class="c-program__k">${t('hub.pro.programs.services')}</p><ul class="c-linklist">${svcs.map((x) => html`<li><a href="${hrefFor(ctx, x)}">${L(ctx, x, 'title')}</a></li>`)}</ul>` : ''}
+  ${links.length ? html`<p class="c-program__k">${t('hub.pro.programs.links')}</p><ul class="c-linklist">${links.map((l) => html`<li>${isExternal(l.href) ? extLink(ctx, l.href, l.label) : html`<a href="${url(l.href)}">${l.label}</a>`}</li>`)}</ul>` : ''}
+</article>`;
+}
+
 export function render(ctx, { item }) {
   const { site, t, url, fmtDate, lang } = ctx;
   const sit = site.situation.items.find((i) => i.disease === item.id);
@@ -94,12 +164,28 @@ export function render(ctx, { item }) {
   const title = L(ctx, item, 'title');
   const catLabel = t('disease.cat', { n: item.legalCategory });
   const langStatus = item.languages?.[lang]?.status;
-  const toc = blocks.filter((b) => b.heading).map((b) => html`<li><a href="${'#' + b.key}">${b.heading}</a></li>`);
   const labtests = publishedOf(site, 'labtests').filter((l) => l.disease === item.id);
   const media = publishedOf(site, 'media').filter((m) => m.diseases?.includes(item.id))
     .sort((a, b) => Number(isMediaOutdated(site, a)) - Number(isMediaOutdated(site, b)) || String(b.producedAt ?? b.publishedAt).localeCompare(String(a.producedAt ?? a.publishedAt))).slice(0, 3);
   const topics = publishedOf(site, 'topics').filter((tp) => (tp.diseases?.includes(item.id) || tp.contentIds?.includes(item.id)) && !isTopicEnded(site, tp)).slice(0, 3);
-  const hasPro = pro.specimen || pro.notifyNote || pro.caseDefinitionDoc || pro.manualDoc || labtests.length || item.notifyWithinHours;
+  const hasReport = !!(pro.specimen || pro.notifyNote || pro.caseDefinitionDoc || pro.manualDoc || labtests.length || item.notifyWithinHours);
+  const programs = programsOf(item);
+  const rel = relatedOf(ctx, item, { sit, blocks, programs });
+  const chains = docs.map((d) => docChain(site, d));
+  const hubPub = PUB_ORDER.map((k) => blocks.find((b) => b.key === k)).filter(Boolean).filter((b) => {
+    if (b.key === 'faq') return faqs.length > 0;
+    if (b.key === 'situation') return !!(sit || b.datasets?.length || b.markdown);
+    return !!(b.markdown || b.cards?.length || b.warning);
+  }).map((b) => ({ id: b.key, label: t(`hub.pub.${b.key}`) }));
+  const hubPro = [
+    chains.length && { id: 'pro-docs', label: t('hub.pro.docs') },
+    hasReport && { id: 'pro-report', label: t('hub.pro.report') },
+    programs.length && { id: 'pro-programs', label: t('hub.pro.programs') },
+    rel.services.length && { id: 'pro-services', label: t('hub.pro.services') },
+    rel.hasStats && { id: 'pro-stats', label: t('hub.pro.stats') },
+    rel.research.length && { id: 'pro-research', label: t('hub.pro.research') },
+  ].filter(Boolean);
+  const hasPro = hubPro.length > 0;
   const vaccines = site.collections.vaccines.filter((v) => v.status === 'published' && v.diseases?.includes(item.id));
   return html`
 ${breadcrumb(ctx, trailOf(ctx, item))}
@@ -130,17 +216,18 @@ ${breadcrumb(ctx, trailOf(ctx, item))}
     <p class="c-askband__note">${t('disease.ask.note')}</p>
   </section>
 
-  <div class="c-cols">
-    <nav class="c-toc" aria-label="${t('disease.toc')}">
-      <p class="c-toc__t">${t('disease.toc')}</p>
-      <ol>${toc}${hasPro ? html`<li class="c-pro-only"><a href="#professional">${t('disease.pro.title')}</a></li>` : ''}</ol>
-      <p class="c-toc__pro c-public-only"><b>${t('disease.pro.also')}</b> ${t('disease.pro.also.list')} <a href="?view=pro" data-view-set="pro">${t('view.pro')} →</a></p>
-    </nav>
+  ${hubNav(ctx, { pub: hubPub, pro: hubPro })}
 
+  <div class="c-cols c-cols--2">
     <div class="c-cols__main">
       ${blocks.map((b) => renderBlock(ctx, item, b, { sit, faqs }))}
-      ${hasPro ? html`<section class="c-block c-pro-only" id="professional" aria-labelledby="h-professional"><h2 id="h-professional">${t('disease.pro.title')} ${translationBadge(ctx, 'none', { text: t('scope.pro') })}</h2>
-        <dl class="c-deflist">
+      ${hasPro ? html`<div class="c-hubpro c-pro-only" id="professional">
+        ${chains.length ? proSection(ctx, 'pro-docs', 'hub.pro.docs', 'hub.pro.docs.lead', html`<ul class="c-hubdocs">${chains.map(({ doc: d, olds }) => html`<li class="c-hubdoc">
+          <p class="c-hubdoc__t"><a href="${hrefFor(ctx, d)}"${isFallbackLink(ctx, d) ? raw(' lang="zh-TW"') : ''}>${L(ctx, d, 'title')}</a> <span class="c-pill c-pill--ok">${t('prov.current')}</span></p>
+          <p class="muted">${d.version ? `${d.version} · ` : ''}${t('prov.effective')} ${fmtDate(d.effectiveAt)}${d.summary ? html` · ${L(ctx, d, 'summary')}` : ''}</p>
+          ${olds.length ? html`<details class="c-hubdoc__old" data-group="ondemand"><summary>${t('hub.pro.docs.old', { n: olds.length })}</summary><ul class="c-linklist">${olds.map((o) => html`<li><a href="${hrefFor(ctx, o)}"${isFallbackLink(ctx, o) ? raw(' lang="zh-TW"') : ''}>${L(ctx, o, 'title')}</a> <span class="muted">${o.version ?? ''} · ${t('prov.effective')} ${fmtDate(o.effectiveAt)}</span> <span class="c-pill c-pill--neutral">${t('prov.superseded')}</span></li>`)}</ul></details>` : ''}
+        </li>`)}</ul>`) : ''}
+        ${hasReport ? proSection(ctx, 'pro-report', 'hub.pro.report', 'hub.pro.report.lead', html`<dl class="c-deflist">
           <div><dt>${t('kf.notify')}</dt><dd>${pro.notifyNote ?? (item.notifyWithinHours ? t('disease.notify.h', { h: item.notifyWithinHours }) : '')}${item.legalCategory ? html` · <a href="${url('/report/')}#category-${item.legalCategory}">${t('disease.pro.notifytable')} →</a>` : ''}</dd></div>
           ${labtests.length ? html`<div><dt>${t('disease.pro.lab')}</dt><dd>${labtests.map((l) => html`<a href="${hrefFor(ctx, l)}">${L(ctx, l, 'title')}</a> `)}<a href="${url('/lab/')}">${t('lab.title')} →</a></dd></div>` : ''}
           ${pro.specimen ? html`<div><dt>${t('disease.specimen')}</dt><dd>${pro.specimen}</dd></div>` : ''}
@@ -148,7 +235,14 @@ ${breadcrumb(ctx, trailOf(ctx, item))}
           ${pro.manualDoc ? html`<div><dt>${t('disease.manual')}</dt><dd>${docLink(ctx, pro.manualDoc)}</dd></div>` : ''}
           ${item.incubation?.text ? html`<div><dt>${t('kf.incubation')}</dt><dd>${item.incubation.text}</dd></div>` : ''}
           ${item.icd10?.length ? html`<div><dt>ICD-10</dt><dd>${item.icd10.join('、')}</dd></div>` : ''}
-        </dl></section>` : ''}
+        </dl>`, { badge: true }) : ''}
+        ${programs.length ? proSection(ctx, 'pro-programs', 'hub.pro.programs', 'hub.pro.programs.lead', html`<div class="c-programs">${programs.map((pg) => programCard(ctx, pg))}</div>`) : ''}
+        ${rel.services.length ? proSection(ctx, 'pro-services', 'hub.pro.services', 'hub.pro.services.lead', html`<ul class="c-linklist c-hubsvc">${rel.services.map((x) => html`<li><a href="${hrefFor(ctx, x)}"${isFallbackLink(ctx, x) ? raw(' lang="zh-TW"') : ''}>${L(ctx, x, 'title')}</a>${x.summary ? html`<br><span class="muted">${L(ctx, x, 'summary')}</span>` : ''}</li>`)}</ul>`) : ''}
+        ${rel.hasStats ? proSection(ctx, 'pro-stats', 'hub.pro.stats', 'hub.pro.stats.lead', html`<ul class="c-linklist">
+          ${sit ? html`<li><a href="${url('/situation/')}">${t('hub.pro.stats.situation')}</a> <span class="muted">${sitField(ctx, sit, 'metricValue')} · ${t('dataDate')} ${fmtDate(site.situation.dataDate)}</span></li>` : ''}
+          ${rel.datasets.map((ds) => html`<li><a href="${url('/data/')}#${ds.id}">${L(ctx, ds, 'title')}</a>${ds.lastUpdated ? html` <span class="muted">${t('hub.pro.stats.updated', { date: fmtDate(ds.lastUpdated) })}</span>` : ''}</li>`)}</ul>`) : ''}
+        ${rel.research.length ? proSection(ctx, 'pro-research', 'hub.pro.research', 'hub.pro.research.lead', html`<ul class="c-linklist">${rel.research.map((r) => html`<li><a href="${hrefFor(ctx, r)}"${isFallbackLink(ctx, r) ? raw(' lang="zh-TW"') : ''}>${L(ctx, r, 'title')}</a> <span class="muted">${r.year ? `${t('hub.pro.research.year', { year: r.year })} · ` : ''}${unitName(ctx, r.owner)}</span></li>`)}</ul>`) : ''}
+      </div>` : ''}
       ${feedback(ctx, { page: ctx.path })}
     </div>
 
@@ -168,7 +262,8 @@ ${breadcrumb(ctx, trailOf(ctx, item))}
       ${pageData(ctx, item, { schema: 'MedicalCondition', api: `/v1/diseases/${item.slug}.json`, mdPath: `/diseases/${item.slug}.md` })}
     </aside>
   </div>
-</article>`;
+</article>
+<script>${raw(HUB_JS)}</script>`;
 }
 
 function docLink(ctx, ref) {
@@ -184,6 +279,8 @@ export function markdown(ctx, { item }) {
   const lines = [`# ${L(ctx, item, 'title')}（${item.nameEn}）`, '',
     `> 權責單位：${owner} · 最後審閱：${item.reviewedAt} · 下次審閱：${item.gov.nextReviewAt} · 授權：${item.license} · ID：${item.id} · 語言：${lang} · 正本：${ctx.url(itemPath(item), { absolute: true, noLang: true })}`];
   for (const a of item.gov.annotations) lines.push(`> ⚠ ${a.text}`);
+  const lg = legacyOf(item);
+  if (lg) lines.push(`> 取代舊網站 ${lg.items.length} 個頁面：${lg.items.map((x) => x.oldTitle ?? x.oldUrl).slice(0, 8).join('、')}${lg.items.length > 8 ? '…' : ''}（對照：/v1/legacy-map.json）`);
   if (lang !== 'zh-TW') lines.push(`> 翻譯狀態：${item.languages?.[lang]?.status ?? 'none'}`);
   lines.push('', L(ctx, item, 'summary'), '', '## 一分鐘重點', ...Object.entries(kf).map(([k, v]) => `- ${k}: ${v}`));
   for (const b of blocks) {

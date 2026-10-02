@@ -1,0 +1,66 @@
+{
+  "id": "faq.tb-treatment-cost",
+  "type": "faq",
+  "title": "結核病治療要花錢嗎？",
+  "question": "結核病治療要花錢嗎？",
+  "owner": "unit.chronic-infectious",
+  "steward": "慢性傳染病組承辦人",
+  "publishedAt": "2026-09-15",
+  "reviewedAt": "2026-09-22",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "service.tb-treatment-subsidy"
+  ],
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-30"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "pending"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "結核病診治由健保給付、部分負擔由疾管署支應；都治、接觸者檢查與潛伏感染治療也由公費支應，隔離治療費用由政府負擔。",
+  "keywords": [
+    "結核病",
+    "治療費用",
+    "部分負擔",
+    "公費",
+    "隔離治療"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/{id}#cost"
+  ],
+  "answerMarkdown": "結核病個案的**診斷與治療費用由健保給付，就醫的部分負擔由疾管署支應**，病人看診、拿藥原則上不需自付部分負擔；都治關懷員送藥服務、接觸者檢查與潛伏結核感染治療也都由公費支應。\n\n多重抗藥性結核病個案由抗藥性結核病醫療照護體系收治，治療費用由公費支應。依《傳染病防治法》經衛生主管機關施行隔離治療者，隔離治療期間費用由政府負擔。申請方式與條件請見「結核病診治費用補助與隔離治療」。"
+}

@@ -1,0 +1,132 @@
+{
+  "id": "service.tb-treatment-subsidy",
+  "type": "service",
+  "owner": "unit.chronic-infectious",
+  "steward": "慢性傳染病組承辦人",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-30"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "pending"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "slug": "tb-treatment-subsidy",
+  "title": "結核病診治費用補助與隔離治療",
+  "publishedAt": "2026-09-15",
+  "reviewedAt": "2026-09-22",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "summary": "結核病個案就醫由健保給付、部分負擔由疾管署支應；多重抗藥性結核病由 TMTC 收治並由公費支應；依法施行隔離治療者，費用由政府負擔。",
+  "keywords": [
+    "結核病",
+    "診治費用",
+    "部分負擔",
+    "隔離治療",
+    "多重抗藥性結核病",
+    "TMTC"
+  ],
+  "basedOn": [
+    "doc.tb-guideline",
+    "doc.dots-manual"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/{id}#subsidy"
+  ],
+  "serviceType": "other",
+  "whoCanApply": [
+    "經醫師通報並登記之結核病個案",
+    "多重抗藥性結核病個案",
+    "經衛生主管機關施行隔離治療者"
+  ],
+  "introMarkdown": "結核病只要完整治療幾乎都能治癒，為避免病人因費用中斷治療：\n\n- **就醫免部分負擔**：通報登記之結核病個案，結核病相關門診、住院與用藥之健保部分負擔由疾管署支應。\n- **多重抗藥性結核病**：由抗藥性結核病醫療照護體系（TMTC）團隊收治，治療與進階都治費用由公費支應。\n- **隔離治療**：具傳染性且拒絕治療或不遵從治療者，依《傳染病防治法》由衛生主管機關施行隔離治療，隔離期間費用由政府負擔。\n\n病人與家屬不需另外送件申請，由醫院與衛生局（所）於通報、登記後協助辦理。",
+  "requiredDocuments": [
+    "健保卡（就醫時出示）",
+    "醫師通報與個案登記（由醫院與衛生所辦理，病人免送件）",
+    "隔離治療通知書（施行隔離治療時由衛生局開立）"
+  ],
+  "steps": [
+    {
+      "title": "醫師診斷與通報",
+      "text": "醫師依病例定義於一週內通報（多重抗藥性結核病 24 小時內）。",
+      "who": "醫療院所",
+      "days": 0
+    },
+    {
+      "title": "個案登記與納入都治",
+      "text": "衛生所個案管理師建立個案資料，安排都治關懷員每日送藥。",
+      "who": "衛生所",
+      "days": 7
+    },
+    {
+      "title": "就醫免部分負擔",
+      "text": "個案登記後，結核病相關就醫之部分負擔由疾管署支應，醫院依規定申報。",
+      "who": "醫療院所",
+      "days": 0
+    },
+    {
+      "title": "必要時施行隔離治療",
+      "text": "經評估具傳染性且不遵從治療者，由衛生局開立隔離治療通知書，送指定隔離治療機構。",
+      "who": "衛生局",
+      "days": 1
+    }
+  ],
+  "slaDays": 7,
+  "fee": "免費（部分負擔由疾管署支應；隔離治療費用由政府負擔）",
+  "legalBasis": [
+    "傳染病防治法第 44 條",
+    "傳染病防治法第 45 條",
+    "傳染病防治法第 48 條"
+  ],
+  "forms": [
+    {
+      "label": "結核病隔離治療通知書（樣式）",
+      "href": "/pending/?ref=service.tb-treatment-subsidy&doc=結核病隔離治療通知書（樣式）",
+      "format": "PDF",
+      "machineReadable": false
+    }
+  ],
+  "contact": "請洽戶籍或居住地衛生所；一般諮詢請撥防疫專線 1922（國外 +886-800-001922）",
+  "faq": [
+    {
+      "q": "我需要自己申請補助嗎？",
+      "a": "不用。醫師通報、衛生所完成個案登記後，就醫時出示健保卡即可，部分負擔由疾管署支應。"
+    },
+    {
+      "q": "隔離治療要住多久？",
+      "a": "依病人傳染力與治療反應而定，經醫師評估痰檢查轉陰、不具傳染力後解除。"
+    }
+  ]
+}

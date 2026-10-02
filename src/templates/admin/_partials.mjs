@@ -21,8 +21,9 @@ export const KIND_LABEL = {
   'based-on-revised': '依據正本已修訂', 'reverse-audit': '反向稽核命中', overdue: '逾期', 'translation-stale': '翻譯過期',
   'dataset-overdue': '資料集逾期', 'license-missing': '授權缺漏', 'superseded-still-linked': '失效版仍被連結', 'situation-overdue': '態勢層逾期',
   'media-outdated': '影音過時', 'media-no-transcript': '無逐字稿', 'link-broken': '連結失效', 'labtest-inconsistent': '檢驗不一致',
+  'migration-pending': '舊頁待移轉',
 };
-export const KIND_ORDER = ['based-on-revised', 'reverse-audit', 'overdue', 'translation-stale', 'dataset-overdue', 'license-missing', 'superseded-still-linked', 'situation-overdue', 'media-outdated', 'media-no-transcript', 'link-broken', 'labtest-inconsistent'];
+export const KIND_ORDER = ['based-on-revised', 'reverse-audit', 'overdue', 'translation-stale', 'dataset-overdue', 'license-missing', 'superseded-still-linked', 'situation-overdue', 'media-outdated', 'media-no-transcript', 'link-broken', 'labtest-inconsistent', 'migration-pending'];
 export const WL_REASON_LABEL = {
   'not-published': '尚未發布', overdue: '逾期未審閱', superseded: '已被新版取代', sensitivity: '敏感等級非公開',
   'based-on-revised': '依據正本已修訂', 'not-requested': '未申請進白名單', 'type-not-allowed': '型別不在白名單政策', 'reverse-audit': '反向稽核命中',
@@ -42,6 +43,7 @@ export const NAV = [
   { key: 'notices', href: '/admin/notices/', label: '公告', count: 'notices' },
   { key: 'media', href: '/admin/media/', label: '影音', count: 'media' },
   { key: 'links', href: '/admin/links/', label: '連結', count: 'links' },
+  { key: 'migration', href: '/admin/migration/', label: '移轉進度', count: 'migration' },
   { key: 'glossary', href: '/admin/glossary/', label: '詞彙主檔' },
   { key: 'situation', href: '/admin/situation/', label: '態勢發布' },
   { key: 'todos', href: '/admin/todos/', label: '連動待辦', count: 'todos' },
@@ -148,7 +150,8 @@ export function counts(site) {
   const media = mediaRows(site).filter((m) => m.outdated || !m.hasTranscript).length;
   const links = linkRows(site).filter((l) => l.status === 'broken').length;
   const notices = noticeRows(site).filter((n) => n.closed && !n.archived).length;
-  return { review, due, todos, media, links, notices };
+  const migration = site.migration?.stats?.pending ?? (site.migration?.pending?.length ?? 0);
+  return { review, due, todos, media, links, notices, migration };
 }
 
 export function daysText(d) {

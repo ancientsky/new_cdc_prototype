@@ -224,3 +224,12 @@ body.adm { background: var(--paper); color: var(--ink); min-height: 100vh; displ
 .adm-sop-box ol, .adm-sop-box ul { margin: var(--sp-2) 0 0; padding-left: 1.4em; }
 .adm-sop-box li { margin-bottom: 4px; }
 .adm-statrow { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: var(--sp-3); margin-bottom: var(--sp-4); }
+
+/* 移轉進度（V2）：堆疊進度條 */
+.adm-stack { display: flex; height: 12px; border-radius: var(--radius-pill); overflow: hidden; background: var(--line); margin: var(--sp-2) 0 var(--sp-3); }
+.adm-stack > i { display: block; height: 100%; }
+.adm-stack__ok { background: var(--status-stable); }
+.adm-stack__info { background: var(--status-declining); }
+.adm-stack__gray { background: #8a929a; }
+.adm-stack__dropped { background: #c4c9ce; }
+.adm-stack__warn { background: var(--status-rising); }
