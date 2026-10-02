@@ -34,9 +34,9 @@ $('#l-csv').addEventListener('click', () => {
   const j = Array.isArray(idx) && idx.some((e) => e.path === '/v1/governance/links.json') ? await v1('governance/links', null) : null;
   const list = Array.isArray(j) ? j : Array.isArray(j?.links) ? j.links : Array.isArray(j?.items) ? j.items : null;
   if (list?.length) {
-    const by = new Map(list.map((x) => [x.href ?? x.url, x]));
+    const by = new Map(list.map((x) => [x.itemId && x.field ? `${x.itemId}|${x.field}` : (x.href ?? x.url), x]));
     for (const tr of rows) {
-      const x = by.get(tr.dataset.href); if (!x || !BADGE[x.status]) continue;
+      const x = by.get(tr.dataset.key) ?? by.get(tr.dataset.href); if (!x || !BADGE[x.status]) continue;
       tr.dataset.state = x.status;
       $('[data-status]', tr).innerHTML = `<span class="adm-badge ${BADGE[x.status][0]}">${BADGE[x.status][1]}</span>`;
       const d = x.lastCheckedAt ?? x.checkedAt; if (d) $('[data-checked]', tr).textContent = d;

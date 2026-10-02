@@ -42,7 +42,7 @@ function buildMarkdown() {
   L.push('## 一、品質指標（規劃 7.5）', '', '| 指標 | 目前 | 第一年目標 | 第三年目標 | 狀態 |', '| --- | ---: | ---: | ---: | --- |');
   const fv = (v, u, dir) => (v == null ? '—' : `${dir === 'lower' ? '≤ ' : ''}${v}${u === '%' ? '%' : ` ${u ?? ''}`.trimEnd()}`);
   const st = { ok: '達標', warn: '接近', bad: '未達標', pending: '待量測', info: '參考' };
-  for (const k of D.kpi ?? []) L.push(`| ${k.label} | ${k.current == null ? '待量測' : fv(k.current, k.unit)} | ${fv(k.target1y, k.unit, k.direction)} | ${fv(k.target3y, k.unit, k.direction)} | ${st[k.status] ?? ''} |`);
+  for (const k of D.kpi ?? []) L.push(`| ${k.label} | ${k.current == null ? (k.key === 'link-health' ? '尚未執行檢查' : '待量測') : fv(k.current, k.unit)} | ${fv(k.target1y, k.unit, k.direction)} | ${fv(k.target3y, k.unit, k.direction)} | ${st[k.status] ?? ''} |`);
   L.push('', '## 二、AI 白名單與開關', '', `- 白名單生效 ${D.whitelist.effective} / 已發布 ${D.whitelist.published} 筆`, `- AI 問答：${a.paused ? `暫停中（${a.reason || '未填原因'}）` : '運作中'}${a.local ? '（本機示範覆寫）' : ''}`);
   if (D.eval) L.push(`- 評估集：${D.eval.passed}/${D.eval.total} 題通過${D.eval.version ? `；版本題 ${D.eval.version.passed}/${D.eval.version.total}` : ''}`);
   const s = D.situation ?? {};

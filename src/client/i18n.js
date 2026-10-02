@@ -758,6 +758,8 @@ const ROWS_C2 = {
   'disease.pro.notifytable': ['通報時限表', 'Notification time limits'],
 
   /* 宣導 */
+  'alert.closed.t': ['已截止', 'Closed', '締切済み', 'Sarado na', 'Đã hết hạn', 'Ditutup', 'ปิดรับแล้ว'],
+  'alert.ended.t': ['已結束', 'Ended', '終了', 'Tapos na', 'Đã kết thúc', 'Berakhir', 'สิ้นสุดแล้ว'],
   'campaigns.lead': ['首頁「本期宣導」的所有 Banner 都在這裡：進行中、即將開始、已結束，每則都有權責單位與上下架日。', 'Every banner behind the home page “Featured campaign” is listed here: live, upcoming and ended, each with an owner and live dates.'],
   'campaigns.rule.t': ['治理規則', 'Governance rule'],
   'campaigns.rule': ['Banner 到期自動下架，與其他內容一樣有權責單位與審閱日；圖片只當氛圍，文字都在頁面上。', 'Banners come down automatically when they expire and, like any other content, have an owner and a review date. Images are decoration only; all text is on the page.'],
@@ -892,7 +894,7 @@ const ROWS_C2 = {
   'about.mission.fallback': ['預防與控制傳染病，保護國人健康。（詳細使命與法定職掌待權責單位補充。）', 'Prevent and control communicable diseases to protect public health. (Detailed mission and statutory duties to be supplied by the responsible unit.)'],
   'about.expand': ['展開全文', 'Show full text'], 'about.fullpage': ['看完整頁面', 'Open full page'],
   'about.org.lead': ['以下由單位主檔自動產生；每個單位卡顯示 Steward 職稱，以及該單位負責的內容數與已進 AI 白名單的內容數。', 'Generated automatically from the unit master data. Each card shows the steward title and the number of content items the unit owns and how many are in the AI whitelist.'],
-  'about.org.steward': ['Steward', 'Steward'], 'about.org.content': ['負責內容', 'Content'], 'about.org.wl': ['白名單', 'Whitelisted'],
+  'about.org.steward': ['Steward', 'Steward'], 'about.org.content': ['負責內容', 'Content'], 'about.org.wl': ['白名單', 'Whitelisted'], 'about.org.latest': ['最近審閱', 'Last review'],
   'about.org.office': ['署長室與幕僚室', 'Offices'], 'about.org.division': ['業務組', 'Divisions'], 'about.org.center': ['中心', 'Centers'], 'about.org.regional': ['區管制中心', 'Regional centers'], 'about.org.staff': ['幕僚', 'Staff units'], 'about.org.committee': ['委員會', 'Committees'],
   'about.org.note': ['原型：組織與數字僅示範資料治理的呈現，不代表署內實際編制。', 'Prototype: the organization and counts demonstrate data governance only and do not describe the real structure.'],
   'about.contact': ['防疫專線、各單位聯絡方式與署長信箱請見聯絡頁。', 'Hotline, unit contacts and the Director-General’s mailbox are on the contact page.'],

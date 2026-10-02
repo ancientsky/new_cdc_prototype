@@ -6,15 +6,18 @@ import { resolveDoc } from './lab.mjs';
 export const NIDRS_URL = 'https://nidrs.cdc.gov.tw/';
 export function meta(ctx) { return { title: ctx.t('report.title'), description: ctx.t('report.lead'), jsonLd: ldFor(ctx, null, [{ label: ctx.t('report.title') }]) }; }
 
-/** 由主檔推導通報時限表（site.gov.notifyTable 若為 { category, diseases[] } 形式則優先沿用其分組）。 */
+/** 通報時限表：優先沿用治理引擎的 site.gov.notifyTable（由主檔算出，每列有 notifyLabel、path、labtestPath、caseDefinitionPath）；沒有時直接由主檔推導。 */
 export function notifyTable(site) {
-  const cats = new Map();
-  const add = (cat, d) => { if (!cats.has(cat)) cats.set(cat, []); cats.get(cat).push(d); };
   const nt = site.gov?.notifyTable;
-  const ids = Array.isArray(nt) ? nt.flatMap((g) => (g.diseases ?? []).map((x) => (typeof x === 'string' ? x : x.id))) : [];
-  const master = site.master.diseases;
-  const pick = ids.length ? master.filter((d) => ids.includes(d.id)) : master;
-  for (const d of pick) add(d.legalCategory, d);
+  const master = new Map(site.master.diseases.map((d) => [d.id, d]));
+  if (Array.isArray(nt) && nt.length && nt[0]?.diseases) {
+    return nt.map((g) => {
+      const diseases = g.diseases.map((d) => ({ ...(master.get(d.id) ?? {}), ...d }));
+      return { category: g.legalCategory ?? g.category, diseases, hours: [...new Set(diseases.map((d) => d.notifyWithinHours).filter((h) => h != null))].sort((a, b) => a - b) };
+    });
+  }
+  const cats = new Map();
+  for (const d of site.master.diseases) { if (!cats.has(d.legalCategory)) cats.set(d.legalCategory, []); cats.get(d.legalCategory).push(d); }
   return [...cats.entries()].sort((a, b) => a[0] - b[0]).map(([category, list]) => ({
     category,
     diseases: list.sort((a, b) => (a.zhuyin ?? a.name).localeCompare(b.zhuyin ?? b.name, 'zh-TW') || a.name.localeCompare(b.name, 'zh-TW')),

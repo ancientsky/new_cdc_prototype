@@ -212,7 +212,9 @@ export function labtestSentences(item, sp, site) {
 export function serviceStepSentence(step, i) {
   const paren = [step.who, step.days == null ? null : step.days === 0 ? '當日' : `${step.days} 天`].filter(Boolean).join('，');
   const text = step.text ? String(step.text).trim().replace(/[。.]?$/, '') : '';
-  return `第 ${i + 1} 步：${String(step.title).replace(/[。.]$/, '')}。${text}${paren ? `（${paren}）` : ''}${text || paren ? '。' : ''}`.replace(/。。$/, '。');
+  const title = String(step.title).replace(/[。.]$/, '');
+  if (!text) return `第 ${i + 1} 步：${title}${paren ? `（${paren}）` : ''}。`;
+  return `第 ${i + 1} 步：${title}。${text}${paren ? `（${paren}）` : ''}。`;
 }
 
 function sectionNo(s) {

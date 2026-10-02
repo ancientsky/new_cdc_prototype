@@ -2,6 +2,7 @@
   "id": "banner.2026-flu-vaccine",
   "type": "banner",
   "title": "公費流感疫苗 10 月 1 日開打",
+  "image": "/img/banners/2026-flu-vaccine.svg",
   "headline": "公費流感疫苗 10 月 1 日開打",
   "subline": "65 歲以上、幼兒與慢性病患第一階段",
   "cta": { "label": "查詢接種點", "url": "https://antiflu.cdc.gov.tw/" },

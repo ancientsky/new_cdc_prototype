@@ -700,7 +700,9 @@ export function createEngine(rawDeps = {}) {
     for (let i = cands.length - 1; i > 0; i--) if (cands[i].score < topCand * 0.45) cands.splice(i, 1);
     const max = view === 'pro' ? 4 : 3;
     const picked = [];
-    const similar = (a, b) => { const A = new Set(bigrams(a)), B = new Set(bigrams(b)); let n = 0; for (const x of A) if (B.has(x)) n++; return n / Math.max(1, Math.min(A.size, B.size)); };
+    // 數字不同的兩句不是同義句（例：不同公告的字號、名額），不合併引用
+    const nums = (t) => (String(t).match(/\d+/g) ?? []).join(',');
+    const similar = (a, b) => { if (nums(a) !== nums(b)) return 0; const A = new Set(bigrams(a)), B = new Set(bigrams(b)); let n = 0; for (const x of A) if (B.has(x)) n++; return n / Math.max(1, Math.min(A.size, B.size)); };
     // 多樣性：同一片段每多選一句，後續句子減分（避免整段只引一個來源）
     const perChunk = new Map();
     const queue = [...cands];
@@ -1246,6 +1248,23 @@ export function createEngine(rawDeps = {}) {
   }
 
   /**
+   * 公告列表：沒問細節（資格、名額、預算…）時，每則公告取一句「截止日」結構化句；進行中在前（依截止日），已截止在後。
+   */
+  const NOTICE_DETAIL = /(資格|條件|名額|預算|金額|字號|案號|待遇|薪|工作內容|地點|怎麼報名|如何報名|怎麼投標)/;
+  function noticeCompose(q, chunks, picked) {
+    if (NOTICE_DETAIL.test(q)) return picked;
+    const ns = chunks.filter((c) => NOTICE_TYPES.includes(c.newsType) && c.deadlineAt);
+    if (!ns.length) return picked;
+    ns.sort((a, b) => (closedNow(a) - closedNow(b)) || (closedNow(a) ? b.deadlineAt.localeCompare(a.deadlineAt) : a.deadlineAt.localeCompare(b.deadlineAt)));
+    const out = [];
+    for (const c of ns.slice(0, 4)) {
+      const t = (c.sentences ?? []).find((x) => x.includes(c.deadlineAt));
+      if (t) out.push({ text: t, cite: [c.id], slot: 0, score: 9, chunk: c });
+    }
+    return out.length ? out : picked;
+  }
+
+  /**
    * 公告句後處理：
    *  - notice 意圖：每則被引用的公告至少帶出一句截止日句（索引建置時產生的結構化句）；
    *  - 任何意圖：出自已截止公告的句子加「（已截止）」（以引擎 today 再算一次，避免索引過期）。
@@ -1430,6 +1449,7 @@ export function createEngine(rawDeps = {}) {
     const sourceMap = new Map(chunks.map((c) => [c.id, sourceOf(c)]));
     let picked = composeSentences(q, chunks, result.intent, view, result.guards);
     if (result.intent === 'apply' || result.intent === 'notify') picked = applyCompose(q, chunks, picked, view, sourceMap, result);
+    if (result.intent === 'notice') { picked = noticeCompose(q, chunks, picked); if (picked.length) result.confidence = Math.max(result.confidence, 0.6); }
     if (sit && (result.intent === 'situation' || (!picked.length && sit.items.length) || (result.peak && picked.length < 3))) {
       const ss = situationSentences(sit, lang);
       for (const [id, s] of ss.sources) sourceMap.set(id, s);

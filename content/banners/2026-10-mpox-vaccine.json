@@ -1,0 +1,87 @@
+{
+  "id": "banner.2026-10-mpox-vaccine",
+  "type": "banner",
+  "title": "M痘疫苗：兩劑完整保護",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-10-01",
+  "reviewedAt": "2026-10-01",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.mpox",
+    "faq.mpox-who-vaccine"
+  ],
+  "diseases": [
+    "disease.mpox"
+  ],
+  "vaccines": [
+    "vaccine.mpox"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-10-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-10-01",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "M痘疫苗宣導 Banner（2026-10-05 至 2026-12-31）：高風險族群請接種兩劑、間隔至少 4 週，已打第一劑者別忘了第二劑。",
+  "keywords": [
+    "M痘",
+    "M痘疫苗",
+    "兩劑",
+    "宣導"
+  ],
+  "image": "/img/banners/2026-10-mpox-vaccine.svg",
+  "headline": "M痘疫苗打兩劑，保護才完整",
+  "subline": "高風險族群公費接種；第一劑後至少間隔 4 週接種第二劑",
+  "cta": {
+    "label": "我適合接種嗎？",
+    "url": "/faq/mpox-who-vaccine/"
+  },
+  "startAt": "2026-10-05",
+  "endAt": "2026-12-31",
+  "priority": 3,
+  "i18n": {
+    "en": {
+      "title": "Mpox vaccine: two doses for full protection",
+      "summary": "Mpox vaccine campaign banner (5 Oct–31 Dec 2026).",
+      "headline": "Two doses of mpox vaccine for full protection",
+      "subline": "Free for high-risk groups; second dose at least 4 weeks after the first",
+      "cta": {
+        "label": "Am I eligible?",
+        "url": "/faq/mpox-who-vaccine/"
+      }
+    }
+  }
+}

@@ -61,7 +61,7 @@ function detail(ctx, n) {
     <p class="lead">${L(ctx, n, 'summary')}</p>
     ${scopeTags(ctx, n)}
     ${langStatus && lang !== 'zh-TW' ? html`<p>${translationBadge(ctx, langStatus === 'reviewed' ? 'reviewed' : 'machine')}</p>` : ''}
-    ${closed ? alertBox('ended', html`<strong class="c-alert__t">${t('notice.closed.t')}</strong> ${t('notice.closed.msg', { date: fmtDate(n.deadlineAt) })}`, { role: 'status' }) : ''}
+    ${closed && !n.gov?.annotations?.some((a) => a.kind === 'closed') ? alertBox('ended', html`<strong class="c-alert__t">${t('notice.closed.t')}</strong> ${t('notice.closed.msg', { date: fmtDate(n.deadlineAt) })}`, { role: 'status' }) : ''}
     ${alerts(ctx, n)}
     ${provenance(ctx, n)}
   </div></header>

@@ -146,7 +146,7 @@ export function alerts(ctx, item, { skip = [] } = {}) {
   const zh = ctx.lang === 'zh-TW';
   const out = [];
   for (const a of g.annotations ?? []) {
-    if (!['superseded', 'overdue', 'based-on-revised', 'scheduled', 'archived'].includes(a.kind) || skip.includes(a.kind)) continue;
+    if (!['superseded', 'overdue', 'based-on-revised', 'scheduled', 'archived', 'closed', 'ended'].includes(a.kind) || skip.includes(a.kind)) continue;
     const cls = a.kind === 'scheduled' || a.kind === 'archived' ? 'info' : a.kind;
     let href = null;
     if (a.path) href = ctx.url(a.path);
@@ -156,6 +156,8 @@ export function alerts(ctx, item, { skip = [] } = {}) {
       if (a.kind === 'superseded') text = t('alert.superseded', { v: item.version ?? '', date: fmtDate(site.byId.get(g.supersededBy)?.effectiveAt) });
       if (a.kind === 'overdue') text = t('alert.overdue', { date: fmtDate(g.nextReviewAt) });
       if (a.kind === 'based-on-revised') text = t('alert.revised', { pub: fmtDate(item.publishedAt), title: a.currentTitle ?? '', rev: fmtDate(a.revisedAt) });
+      if (a.kind === 'closed') text = t('notice.closed.msg', { date: fmtDate(a.deadlineAt ?? item.deadlineAt) });
+      if (a.kind === 'ended') text = t('topic.ended', { date: fmtDate(a.endAt ?? item.endAt) });
     }
     out.push(alertBox(cls, html`<strong class="c-alert__t">${t(`alert.${cls}.t`)}</strong> ${text} ${href ? html`<a class="c-alert__go" href="${href}">${t('alert.go')} →</a>` : ''}`));
   }
@@ -359,6 +361,8 @@ export function fmtDur(sec) {
 const dayDiff = (a, b) => Math.round((new Date(`${b}T00:00:00Z`) - new Date(`${a}T00:00:00Z`)) / 86400000);
 /** 距離截止日剩幾天（負數＝已過） */
 export const daysUntil = (today, iso) => (iso ? dayDiff(today, iso) : null);
+/** 距截止日天數：治理引擎的 gov.daysToDeadline 優先 */
+export const daysLeft = (site, n) => (typeof n.gov?.daysToDeadline === 'number' ? n.gov.daysToDeadline : daysUntil(site.today, n.deadlineAt));
 
 /** 公告是否已截止：治理引擎的 gov.closed 優先，否則由欄位推算 */
 export function isClosed(site, n) {
@@ -368,7 +372,7 @@ export function isClosed(site, n) {
 export function isClosingSoon(site, n) {
   if (isClosed(site, n)) return false;
   if (n.gov && typeof n.gov.closingSoon === 'boolean') return n.gov.closingSoon;
-  const d = daysUntil(site.today, n.deadlineAt);
+  const d = daysLeft(site, n);
   return d != null && d >= 0 && d <= 7;
 }
 export const NOTICE_TYPES = ['recruit', 'procurement', 'other'];
@@ -388,9 +392,16 @@ export function isMediaOutdated(site, m) {
   return !!currentBasis(site, m, true);
 }
 /** basedOn 的現行版；onlyNewer＝只回傳比 producedAt 更新的現行版 */
+/** 參照（內容 id，或文件 family id）→ 內容項；family 取現行版 */
+export function refItem(site, ref) {
+  const d = site.byId.get(ref);
+  if (d) return d;
+  const docs = site.collections.documents ?? [];
+  return docs.find((x) => x.family === ref && x.isCurrent && x.status === 'published') ?? docs.find((x) => x.family === ref) ?? null;
+}
 export function currentBasis(site, m, onlyNewer = false) {
   for (const ref of m.basedOn ?? []) {
-    const d = site.byId.get(ref);
+    const d = refItem(site, ref);
     if (!d) continue;
     const cur = d.type === 'document'
       ? (d.isCurrent ? d : site.collections.documents.find((x) => x.family === d.family && x.isCurrent && x.status === 'published') ?? d)
@@ -407,9 +418,9 @@ export function ownerStats(site, id) {
   let row = null;
   if (Array.isArray(b)) row = b.find((r) => (r.unit ?? r.id) === id);
   else if (b && typeof b === 'object') row = b[id];
-  if (row) return { content: row.content ?? row.published ?? 0, whitelist: row.whitelist ?? 0, types: row.types ?? null };
+  if (row) return { content: row.content ?? row.published ?? 0, whitelist: row.whitelist ?? 0, types: row.types ?? null, latest: row.latestReviewedAt ?? null };
   const own = (site.all ?? []).filter((i) => i.owner === id);
-  return { content: own.length, whitelist: own.filter((i) => i.gov?.whitelist?.effective).length, types: null };
+  return { content: own.length, whitelist: own.filter((i) => i.gov?.whitelist?.effective).length, types: null, latest: own.map((i) => i.reviewedAt).filter(Boolean).sort().pop() ?? null };
 }
 
 /* ───── 影音：海報（無圖時的示意海報）與卡片 ───── */
@@ -469,7 +480,7 @@ export function deadlinePill(ctx, n) {
   const { t, site, fmtDate } = ctx;
   if (!n.deadlineAt) return html`<span class="c-pill c-pill--neutral">${t('notice.nodeadline')}</span>`;
   const closed = isClosed(site, n);
-  const d = daysUntil(site.today, n.deadlineAt);
+  const d = daysLeft(site, n);
   if (closed) return html`<span class="c-deadline c-deadline--closed">${t('notice.closed.on', { date: fmtDate(n.deadlineAt) })}</span>`;
   const soon = isClosingSoon(site, n);
   const txt = d === 0 ? t('notice.today') : t('notice.daysleft', { n: d });
@@ -518,4 +529,12 @@ export function mdHeader(ctx, item, extra = '') {
 /** 專業頁頂的 scope tag（「專業內容」） */
 export function proScope(ctx) {
   return html`<span class="c-scope-tags"><span class="c-scope-tag c-scope-tag--pro">${ctx.t('scope.pro')}</span></span>`;
+}
+
+/** Banner 狀態：gov.campaignStatus 優先 */
+export function campaignState(site, b) {
+  if (b.gov?.campaignStatus) return b.gov.campaignStatus;
+  if (b.endAt && b.endAt < site.today) return 'ended';
+  if (b.startAt && b.startAt > site.today) return 'upcoming';
+  return 'active';
 }

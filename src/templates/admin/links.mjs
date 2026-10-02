@@ -30,7 +30,7 @@ ${pageHead({
   <div class="adm-stat"><p class="adm-stat__label">外部連結</p><p class="adm-stat__value" id="l-total">${c.total}</p><p class="adm-stat__note">專區、服務、公告、出版品、影音</p></div>
   <div class="adm-stat adm-stat--ok"><p class="adm-stat__label">ok</p><p class="adm-stat__value" id="l-ok">${c.ok}</p><p class="adm-stat__note">最近一次檢查正常</p></div>
   <div class="adm-stat ${c.broken ? 'adm-stat--bad' : 'adm-stat--ok'}"><p class="adm-stat__label">broken</p><p class="adm-stat__value" id="l-broken">${c.broken}</p><p class="adm-stat__note">已產生待辦</p></div>
-  <div class="adm-stat adm-stat--warn"><p class="adm-stat__label">unchecked</p><p class="adm-stat__value" id="l-unchecked">${c.unchecked}</p><p class="adm-stat__note">尚未檢查</p></div>
+  <div class="adm-stat adm-stat--warn"><p class="adm-stat__label">unchecked</p><p class="adm-stat__value" id="l-unchecked">${c.unchecked}</p><p class="adm-stat__note">${c.total && c.ok + c.broken === 0 ? '尚未執行檢查' : '尚未檢查'}</p></div>
 </div>
 <section class="adm-card" aria-labelledby="l-h"><h2 id="l-h">全部外部連結</h2>
   <div class="adm-filters">
@@ -43,7 +43,7 @@ ${pageHead({
   </div>
   <div class="adm-tablewrap"><table class="adm-table" id="l-table"><caption>每列一條外部連結；來源內容可點進前台頁面。</caption>
     <thead><tr><th scope="col">來源內容</th><th scope="col">欄位</th><th scope="col">連結標籤</th><th scope="col">網址</th><th scope="col">最後檢查</th><th scope="col">狀態</th></tr></thead>
-    <tbody>${rows.map((r) => html`<tr data-owner="${r.owner}" data-state="${r.status}" data-type="${r.itemType}" data-href="${r.href}" data-q="${`${r.itemId} ${r.itemTitle} ${r.label} ${r.href}`.toLowerCase()}">
+    <tbody>${rows.map((r) => html`<tr data-owner="${r.owner}" data-state="${r.status}" data-type="${r.itemType}" data-href="${r.href}" data-key="${r.itemId}|${r.field}" data-q="${`${r.itemId} ${r.itemTitle} ${r.label} ${r.href}`.toLowerCase()}">
       <td>${r.front ? html`<a href="${url(r.front)}">${r.itemTitle}</a>` : r.itemTitle}<div class="adm-muted"><code>${r.itemId}</code> · ${r.ownerName}</div></td>
       <td><code>${r.field}</code></td>
       <td>${r.label}</td>

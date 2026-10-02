@@ -450,7 +450,7 @@ html:not(.js) .c-tabs__print{display:block}
 /* ═════════ 第二輪（C2）：宣導、影音、專區、申請、出版品、檢驗、通報、研究、公告、署介紹、聯絡 ═════════ */
 .c-note{background:var(--info-bg);border-left:5px solid var(--info);border-radius:var(--radius-sm);padding:var(--sp-3) var(--sp-4);margin:0 0 var(--sp-5);font-size:var(--fs-sm);color:var(--ink)}
 .c-note--inline{margin:0 0 var(--sp-4)}
-.c-alert--ended{background:var(--neutral-bg);color:var(--ink);border-color:var(--ink-3)}
+.c-alert--ended,.c-alert--closed{background:var(--neutral-bg);color:var(--ink);border-color:var(--ink-3)}
 .c-filterbar__label{align-self:center;font-size:var(--fs-sm);font-weight:700;color:var(--ink-2);margin-right:var(--sp-1)}
 .c-tabs__n{display:inline-block;min-width:1.6em;text-align:center;border-radius:var(--radius-pill);background:var(--neutral-bg);color:var(--neutral);font-size:var(--fs-xs);padding:0 6px;margin-left:4px}
 .c-callout{border:1px solid var(--line);border-left:6px solid var(--green-700);border-radius:var(--radius);background:var(--green-50);padding:var(--sp-4) var(--sp-5);margin:0 0 var(--sp-5)}
@@ -571,6 +571,8 @@ mark.c-hit{background:#ffe08a;color:var(--ink);padding:0 2px;border-radius:2px}
 .c-svc__t{font-size:var(--fs-lg);margin-bottom:4px}
 .c-svc__s{color:var(--ink-2);font-size:var(--fs-sm)}
 .c-svc__m{margin:0;display:flex;flex-wrap:wrap;gap:6px}
+.c-svc__m .c-pill,.c-steps__m .c-pill,.c-labcard__t .c-pill,.c-toplink__t .c-pill{white-space:normal}
+.c-svc{min-width:0}
 .c-steps{list-style:none;margin:0 0 var(--sp-4);padding:0;counter-reset:none;display:grid;gap:var(--sp-3)}
 .c-steps__item{display:grid;grid-template-columns:40px minmax(0,1fr);gap:var(--sp-3);position:relative}
 .c-steps__item:not(:last-child)::before{content:"";position:absolute;left:19px;top:42px;bottom:calc(var(--sp-3)*-1 + 2px);width:2px;background:var(--green-100)}
@@ -663,6 +665,7 @@ mark.c-hit{background:#ffe08a;color:var(--ink);padding:0 2px;border-radius:2px}
 .c-org__steward{font-size:var(--fs-xs);color:var(--ink-2)}
 .c-org__counts{display:flex;gap:var(--sp-3);font-size:var(--fs-xs);color:var(--ink-2);margin-top:2px}
 .c-org__counts b{color:var(--ink)}
+.c-org__latest{font-size:var(--fs-xs);color:var(--ink-3)}
 .c-org__note{margin:0}
 .c-about__prov{margin:var(--sp-2) 0}
 
@@ -699,7 +702,7 @@ mark.c-hit{background:#ffe08a;color:var(--ink);padding:0 2px;border-radius:2px}
 }
 @media (max-width:959px){
   .c-media-grid,.c-topicrow{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .c-grid2,.c-svclist{grid-template-columns:1fr}
+  .c-grid2,.c-svclist{grid-template-columns:minmax(0,1fr)}
   .c-promo--row .c-carousel__slide{grid-template-columns:minmax(0,200px) minmax(0,1fr)}
 }
 @media (max-width:720px){

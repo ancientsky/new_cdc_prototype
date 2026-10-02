@@ -122,7 +122,7 @@ export function typeRows(src) {
   const rows = [];
   if (src.type === 'media') {
     const label = `${L(`media.${src.mediaType ?? 'video'}`)}${src.chapter?.label ? ` · ${src.chapter.label}` : ''} · ${src.timeLabel ?? mmss(src.t)}`;
-    rows.push([L('media.video'), `${src.poster ? `<img class="c-source-card__poster" src="${esc(url(src.poster, { noLang: true }))}" alt="" width="96" height="54" loading="lazy">` : ''}${link(src.url, L('watchAt', { t: src.timeLabel ?? mmss(src.t) }))} <span class="muted">${esc(label)}</span>`]);
+    rows.push([L('media.video'), `${src.poster ? `<img class="c-source-card__poster" src="${esc(url(src.poster, { noLang: true }))}" alt="" width="96" height="54" loading="lazy" onerror="this.remove()">` : ''}${link(src.url, L('watchAt', { t: src.timeLabel ?? mmss(src.t) }))} <span class="muted">${esc(label)}</span>`]);
     if (src.basedOnVersionLabel) rows.push([L('basedOnLabel'), esc(src.basedOnVersionLabel)]);
     if (src.producedAt) rows.push([L('producedAt'), esc(src.producedAt)]);
   }

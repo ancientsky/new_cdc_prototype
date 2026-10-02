@@ -1,0 +1,82 @@
+{
+  "id": "banner.2026-11-amr-awareness-week",
+  "type": "banner",
+  "title": "世界抗微生物製劑認知週：感冒不吵抗生素",
+  "owner": "unit.infection-control",
+  "publishedAt": "2026-10-01",
+  "reviewedAt": "2026-10-01",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "topic.amr-one-health"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-10-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-10-01",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "抗生素抗藥性宣導 Banner（2026-11-11 至 2026-11-30，即將上架）：感冒多為病毒引起，不要向醫師要求抗生素，用藥依醫囑。",
+  "keywords": [
+    "抗生素",
+    "抗藥性",
+    "WAAW",
+    "宣導",
+    "即將上架"
+  ],
+  "note": "即將上架：上架日 2026-11-11，原型今日（2026-10-01）應出現在 /campaigns/「即將開始」",
+  "image": "/img/banners/2026-11-amr-awareness-week.svg",
+  "headline": "感冒不吵抗生素，用藥依醫囑",
+  "subline": "抗藥性是看不見的疫情：人、動物、環境一起守護",
+  "cta": {
+    "label": "認識防疫一體",
+    "url": "/topics/amr-one-health/"
+  },
+  "startAt": "2026-11-11",
+  "endAt": "2026-11-30",
+  "priority": 3,
+  "i18n": {
+    "en": {
+      "title": "World AMR Awareness Week: no antibiotics for colds",
+      "summary": "Antimicrobial resistance campaign banner (11–30 Nov 2026, upcoming).",
+      "headline": "No antibiotics for colds; follow your prescription",
+      "subline": "Resistance is an invisible epidemic: people, animals and the environment together",
+      "cta": {
+        "label": "About One Health",
+        "url": "/topics/amr-one-health/"
+      }
+    }
+  }
+}

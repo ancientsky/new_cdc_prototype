@@ -44,7 +44,7 @@ export function render(ctx, { item: tp }) {
     <p class="c-article__meta"><span class="c-pill c-pill--info">${t(`topic.kind.${tp.kind ?? 'resource-hub'}`)}</span>${tp.startAt ? html` <span>${fmtDate(tp.startAt)}${tp.endAt ? ` – ${fmtDate(tp.endAt)}` : ` ${t('topic.ongoing')}`}</span>` : ''}</p>
     <h1>${L(ctx, tp, 'title')}</h1>
     <p class="lead">${L(ctx, tp, 'summary')}</p>
-    ${ended ? alertBox('ended', html`<strong class="c-alert__t">${t('topic.ended.t')}</strong> ${t('topic.ended', { date: fmtDate(tp.endAt) })}`, { role: 'status' }) : ''}
+    ${ended && !tp.gov?.annotations?.some((a) => a.kind === 'ended') ? alertBox('ended', html`<strong class="c-alert__t">${t('topic.ended.t')}</strong> ${t('topic.ended', { date: fmtDate(tp.endAt) })}`, { role: 'status' }) : ''}
     ${scopeTags(ctx, tp, { region: false })}
     ${langStatus && lang !== 'zh-TW' ? html`<p>${translationBadge(ctx, langStatus === 'reviewed' ? 'reviewed' : 'machine')}</p>` : ''}
     ${alerts(ctx, tp)}

@@ -2,6 +2,7 @@
 import { html, raw } from '../../../scripts/lib/render.mjs';
 import { md } from '../../../scripts/lib/markdown.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
+import * as JL from '../../../scripts/lib/jsonld.mjs';
 import { ldFor, pageHead, translationBadge, feedback, L, unitName, ownerStats, hrefFor, PAGE_PATHS } from './_partials.mjs';
 import { standalonePath } from './page.mjs';
 
@@ -11,9 +12,13 @@ const SECTIONS = [
   { id: 'history', page: 'page.history' }, { id: 'director', page: 'page.director' }, { id: 'team', page: 'page.about' }, { id: 'contact', page: 'page.contact' },
 ];
 
+function aboutLd(ctx) {
+  try { return typeof JL.aboutOrgJsonLd === 'function' ? [].concat(JL.aboutOrgJsonLd(ctx)) : []; } catch { return []; }
+}
+
 export function meta(ctx) {
   const item = ctx.site.byId.get('page.about') ?? null;
-  return { title: ctx.t('about.title'), description: ctx.t('about.lead'), item, jsonLd: ldFor(ctx, item, [{ label: ctx.t('about.title') }]) };
+  return { title: ctx.t('about.title'), description: ctx.t('about.lead'), item, jsonLd: [...ldFor(ctx, item, [{ label: ctx.t('about.title') }]), ...aboutLd(ctx)] };
 }
 
 const pg = (site, id) => { const p = site.byId.get(id); return p && p.status === 'published' ? p : null; };
@@ -43,7 +48,8 @@ function unitCard(ctx, u) {
   <strong class="c-org__name">${lang === 'zh-TW' ? u.name : (u.nameEn ?? u.name)}</strong>
   ${lang === 'zh-TW' && u.nameEn ? html`<span class="c-org__en" lang="en">${u.nameEn}</span>` : (lang !== 'zh-TW' ? html`<span class="c-org__en" lang="zh-TW">${u.name}</span>` : '')}
   ${u.stewardTitle ? html`<span class="c-org__steward">${t('about.org.steward')}：${u.stewardTitle}</span>` : ''}
-  <span class="c-org__counts"><span title="${t('about.org.content')}">${t('about.org.content')} <b>${st.content}</b></span><span title="${t('about.org.wl')}">${t('about.org.wl')} <b>${st.whitelist}</b></span></span>
+  <span class="c-org__counts"><span>${t('about.org.content')} <b>${st.content}</b></span><span>${t('about.org.wl')} <b>${st.whitelist}</b></span></span>
+  ${st.latest ? html`<span class="c-org__latest">${t('about.org.latest')} ${ctx.fmtDate(st.latest)}</span>` : ''}
 </li>`;
 }
 

@@ -5,7 +5,7 @@ import { langAvailable } from '../../../scripts/lib/pages.mjs';
 import { config } from '../../../site.config.mjs';
 import {
   ldFor, breadcrumb, pageHead, provenance, alerts, alertBox, pageData, scopeTags, feedback, translationBadge, hrefFor, isFallbackLink, L, unitName,
-  publishedOf, slugOf, diseasePage, diseaseName, itemPath, mediaCard, posterImg, fmtDur, isMediaOutdated, currentBasis, mdHeader, extLink,
+  publishedOf, slugOf, diseasePage, diseaseName, itemPath, mediaCard, posterImg, fmtDur, isMediaOutdated, currentBasis, refItem, mdHeader, extLink,
 } from './_partials.mjs';
 
 const YT_RE = /^[A-Za-z0-9_-]{6,15}$/;
@@ -47,8 +47,8 @@ ${items.length ? html`<ul class="c-media-grid" id="media-list" aria-live="polite
 /* ───────── 詳頁 ───────── */
 function basisCard(ctx, m) {
   const { t, site, fmtDate } = ctx;
-  const refs = (m.basedOn ?? []).map((id) => site.byId.get(id)).filter(Boolean);
   const cur = currentBasis(site, m);
+  const refs = (m.basedOn ?? []).map((id) => refItem(site, id)).filter((r) => r && r !== cur);
   const outdated = isMediaOutdated(site, m);
   return html`<section class="c-basis${outdated ? ' c-basis--outdated' : ''}" aria-labelledby="basis-h">
   <h2 id="basis-h">${t('media.basis.t')}</h2>
@@ -109,12 +109,7 @@ function detail(ctx, m) {
   const { site, t, fmtDate, lang } = ctx;
   const diseases = (m.diseases ?? []).map((id) => ({ id, page: diseasePage(ctx, id), dm: site.diseaseMasterById.get(id) }));
   const outdated = isMediaOutdated(site, m);
-  const hasAnn = m.gov?.annotations?.some((a) => a.kind === 'based-on-revised');
-  const cur = currentBasis(site, m, true);
   const langStatus = m.languages?.[lang]?.status;
-  const fallbackAlert = outdated && !hasAnn && cur
-    ? alertBox('based-on-revised', html`<strong class="c-alert__t">${t('alert.based-on-revised.t')}</strong> ${t('media.outdated.alert', { v: m.basedOnVersionLabel ?? '', rev: fmtDate(cur.effectiveAt) })} <a class="c-alert__go" href="${hrefFor(ctx, cur)}">${t('alert.go')} →</a>`)
-    : '';
   return html`${breadcrumb(ctx, trailOf(ctx, m))}
 <article class="c-article c-media-detail">
   <header class="c-pagehead"><div class="c-pagehead__main">
@@ -123,7 +118,7 @@ function detail(ctx, m) {
     <p class="lead">${L(ctx, m, 'summary')}</p>
     ${scopeTags(ctx, m, { region: false })}
     ${langStatus && lang !== 'zh-TW' ? html`<p>${translationBadge(ctx, langStatus === 'reviewed' ? 'reviewed' : 'machine')}</p>` : ''}
-    ${alerts(ctx, m)}${fallbackAlert}
+    ${alerts(ctx, m)}
     ${provenance(ctx, m)}
   </div></header>
   <div class="c-cols c-cols--2">
@@ -155,7 +150,7 @@ export function markdown(ctx, { item: m }) {
   const lines = [`# ${L(ctx, m, 'title')}`, '', ...mdHeader(ctx, m, `製作日：${m.producedAt}${m.basedOnVersionLabel ? ` · 依 ${m.basedOnVersionLabel} 製作` : ''}`)];
   if (isMediaOutdated(site, m) && !m.gov?.annotations?.some((a) => a.kind === 'based-on-revised')) lines.push(`> ⚠ 本影片所依據的正本已修訂，內容可能與現行版不同。`);
   lines.push('', L(ctx, m, 'summary') ?? '');
-  const refs = (m.basedOn ?? []).map((id) => site.byId.get(id)).filter(Boolean);
+  const refs = (m.basedOn ?? []).map((id) => refItem(site, id)).filter(Boolean);
   if (refs.length) lines.push('', '## 依據正本', '', ...refs.map((r) => `- ${r.title}${r.version ? `（${r.version}）` : ''}：${ctx.url(itemPath(r), { absolute: true, noLang: true })}`));
   if (m.youtubeId) lines.push('', `影片：https://www.youtube.com/watch?v=${m.youtubeId}`);
   if (m.chapters?.length) lines.push('', '## 章節', '', ...m.chapters.map((c) => `- [${fmtDur(c.t)}] ${c.label}`));

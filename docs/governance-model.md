@@ -33,6 +33,21 @@
 
 `nextReviewAt`、`daysToReview`、`overdue`、`superseded`、`stale[]`（依據正本已修訂的清單）、`annotations[]`（頁首警示）、`whitelist{requested, effective, reasons[]}`、`translationStale{}`、`reverseAuditHits[]`。全站層為 `site.gov`：KPI、待辦、白名單數、AI 暫停狀態。
 
+### 1.3 第二輪新增型別的專屬欄位
+
+六種新型別都沿用 1.1 的共同欄位（權責、審閱、授權、`basedOn`…），再各加專屬欄位（完整定義見 `schemas/`）。
+
+| 型別（路徑） | 必填專屬欄位 | 其他重要欄位 | 治理重點 |
+| --- | --- | --- | --- |
+| `media` 影音（`/media/{id}/`） | `mediaType`、`producedAt`、`transcriptMarkdown`；共同欄位的 `basedOn` 實務上必填 | `youtubeId`（可 null）、`basedOnVersionLabel`、`chapters[{t,label}]`、`captions[]`、`series`、`targetGroups` | 製作日早於依據正本現行版生效日 ⇒ 過時；逐字稿 ≥ 50 字；逐字稿進索引與反向稽核 |
+| `topic` 專區（`/topics/{slug}/`） | `slug`、`links[{label,href}]` | `kind`、`introMarkdown`、`startAt`、`endAt`、`contentIds[]`；連結的 `external`、`status`、`lastCheckedAt` | `endAt` 過後自動退出首頁；外部連結每日檢查 |
+| `service` 申請服務（`/apply/{slug}/`） | `slug`、`serviceType`、`whoCanApply[]`、`steps[{title,text,who,days}]` | `requiredDocuments[]`、`slaDays`、`fee`、`legalBasis[]`、`forms[]`、`applyUrl`、`contact`、`faq[]` | 步驟、應備文件、處理天數進問答索引；JSON-LD `GovernmentService` |
+| `publication` 出版品（`/publications/{id}/`） | `series`、`pubType` | `volume`、`issue`、`edition`、`isbn`、`issn`、`gpn`、`articles[]`、`pdfUrl` | `reviewPeriodMonths: 0`（紀錄，不逾期）；RSS `feeds/publications.xml` |
+| `labtest` 檢驗項目（`/lab/{id}/`） | `disease`、`specimens[{name,container,volume,storage,transport}]`、`labs[]` | `sendWithinHours`、`formDoc`、`caseDefinitionDoc`、`biosafetyLevel` | `sendWithinHours` 與主檔 `notifyWithinHours` 一致性；專業版索引以結構化句入索引 |
+| `research` 研究計畫（`/research/{id}/`） | `year`、`projectStatus` | `fundingType`、`piUnit`（機構名，不放個人）、`reportDoc`、`datasets[]`、`irb`、`budgetNtd` | 專業版；`projectStatus` 流轉 planned → ongoing → completed → published |
+
+`news` 型別新增公告欄位：`deadlineAt`、`refNo`、`applyUrl`、`positions`（人才招募）、`budgetNtd`（採購公告）；`newsType` 增加 `recruit`、`procurement`、`other`。人才招募與採購公告預設 `reviewPeriodMonths: 0`。
+
 ## 2. 規則（寫死在引擎，不靠人記）
 
 1. **逾期**：今天 > `nextReviewAt` → 頁首黃色警示、退出白名單、開待辦。
@@ -43,6 +58,17 @@
 6. **資料集**：`lastUpdated` ＋ 更新頻率逾期 → 待辦；授權不在許可清單 → 待辦。
 7. **AI 暫停**：`ai-status.paused === true` → 全站深色橫幅、答案頁退回傳統列表。
 8. **發布閘門**：schema 或參照檢查失敗、評估集版本題未全對 → 建置失敗，不能發布。
+
+第二輪新增規則（同樣由引擎在建置時計算）：
+
+9. **公告截止**：`deadlineAt` < 今日 → `gov.closed`、生命週期「已截止」、退出首頁與進行中列表（保留在「已截止」頁籤）；**不退出白名單、不產生待辦**。7 日內截止 → `gov.closingSoon`。已截止超過 90 天仍上架 → 計入 KPI。
+10. **影音過時**：`producedAt` 早於 `basedOn` 現行版 `effectiveAt` → 沿用規則 3（頁首加註「本影片依 {版本} 製作，建議已於 {日期} 修訂」、退出白名單），`gov.mediaOutdated`，待辦 `media-outdated`（高優先：更新說明欄、加資訊卡或下架）。
+11. **影音逐字稿**：逐字稿少於 50 字 → 待辦 `media-no-transcript`（中優先）。逐字稿參與反向稽核與索引。
+12. **專區到期**：`endAt` 過後 → `gov.ended`、標「已結束」，首頁專區列退場，不退白名單。
+13. **外部連結健康**：專區連結、申請網址與表單、公告報名網址、影片網址、出版品 PDF 彙整為 `site.gov.externalLinks[]`；`fetch-data --check-links` 寫回 `status`／`lastCheckedAt`。`broken` → 待辦 `link-broken`；`unchecked` 不產生待辦。
+14. **檢驗一致性**：`labtest.sendWithinHours` > 主檔 `notifyWithinHours` → 待辦 `labtest-inconsistent`（低優先）。
+15. **通報時限表**：`/report/` 的法定傳染病通報時限表由 `master/diseases.json` 自動產生，主檔改了表就改，零維護。
+
 
 ## 3. 白名單政策
 
@@ -85,6 +111,10 @@
 | 資料出口有 OpenAPI 文件 | 100% | 100% |
 | 已修訂正本仍有未加註衍生內容 | 0 件 | 0 件 |
 | 失效版本仍在搜尋結果 | 0 件 | 0 件（引擎保證） |
+| 影音有逐字稿比例（`media-transcript`） | 100% | 100% |
+| 影音依據正本為現行版比例（`media-current-basis`） | 100% | 100% |
+| 外部連結已檢查且正常比例（`link-health`；尚未執行檢查時顯示「尚未執行檢查」） | 95% | 99% |
+| 已截止超過 90 天仍上架的公告（`notices-closed-unarchived`） | 0 件 | 0 件 |
 | AI 白名單生效內容數 | 追蹤 | 追蹤 |
 
 KPI 目標值是原型設定，正式數字由委員會核定。
