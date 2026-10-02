@@ -244,7 +244,7 @@ export function resultCard(ctx, c, entries, { more = true, headingLevel = 3, vax
   <p>${t('travel.result.none.d', { name })}</p>
   <ul class="tv-prec">${[1, 2, 3].map((i) => html`<li>${t(`travel.prec.${i}`)}</li>`)}</ul>
   ${bgLine(ctx, bgItems)}
-  <p class="tv-card__foot">${clinicLink(ctx)}${more && href ? html` · <a href="${href}">${t('travel.result.more', { name })}</a>` : ''}</p>
+  ${more ? html`<p class="tv-card__foot">${clinicLink(ctx)}${href ? html` · <a href="${href}">${t('travel.result.more', { name })}</a>` : ''}</p>` : ''}
 </div>`;
   }
   const top = maxLevel(tg);
@@ -406,6 +406,7 @@ const BASE_CSS = `
 .tv-band__h h3{margin:0;font-size:var(--fs-lg)} .tv-band--watch h3{color:var(--tv-watch-ink)} .tv-band--alert h3{color:var(--tv-alert-ink)} .tv-band--warning h3{color:var(--tv-warning-ink)}
 .tv-band__sum{font-size:var(--fs-sm);color:var(--ink-3)}
 .tv-band__empty{margin:var(--sp-2) 0 0;color:var(--ink-3)}
+.tv-band__more>summary{cursor:pointer;margin-top:var(--sp-2);color:var(--green-800);font-weight:600} .tv-band__more[open]>summary{margin-bottom:var(--sp-2)}
 .tv-rows{list-style:none;margin:var(--sp-2) 0 0;padding:0}
 .tv-row{display:grid;grid-template-columns:minmax(9em,14em) minmax(0,1fr);gap:var(--sp-2) var(--sp-4);padding:var(--sp-2) 0;border-top:1px solid var(--line-2)}
 .tv-row__d{font-weight:700}
@@ -611,11 +612,15 @@ function levelTable(ctx, model) {
   <p class="muted">${t('travel.table.note')}</p>
   ${bands.map(({ lv, list, nCountries, nItems }) => html`<section class="tv-band tv-band--${LEVEL_KEY[lv]}" aria-labelledby="tv-b${lv}">
     <div class="tv-band__h"><h3 id="tv-b${lv}">${levelName(ctx, lv)}</h3><span class="tv-band__sum">${nItems ? t('travel.table.sum', { level: t(`travel.level.${lv}`), c: nCountries, n: nItems }) : ''}</span></div>
-    ${list.length ? html`<ul class="tv-rows">${list.map((g) => {
-      const m = diseaseMasterOf(site, g.e); const page = m ? diseasePage(ctx, m.id) : null;
-      return html`<li class="tv-row"><div class="tv-row__d">${page ? html`<a href="${hrefFor(ctx, page)}">${dname(ctx, site, g.e)}</a>` : dname(ctx, site, g.e)}</div>
-      <ul class="tv-chips">${g.items.map(({ c, e }) => html`<li>${chip(c, e)}</li>`)}</ul></li>`;
-    })}</ul>` : html`<p class="tv-band__empty">${t('travel.table.none')}</p>`}
+    ${list.length ? (() => {
+      const rows = html`<ul class="tv-rows">${list.map((g) => {
+        const m = diseaseMasterOf(site, g.e); const page = m ? diseasePage(ctx, m.id) : null;
+        return html`<li class="tv-row"><div class="tv-row__d">${page ? html`<a href="${hrefFor(ctx, page)}">${dname(ctx, site, g.e)}</a>` : dname(ctx, site, g.e)}</div>
+        <ul class="tv-chips">${g.items.map(({ c, e }) => html`<li>${chip(c, e)}</li>`)}</ul></li>`;
+      })}</ul>`;
+      // 第一級項目多（> 40）時預設收合：第一級是「注意」，不該把頁面撐成長表；第二、三級永遠展開。
+      return lv === 1 && nItems > 40 ? html`<details class="tv-band__more"><summary>${t('travel.table.expand', { c: nCountries, n: nItems })}</summary>${rows}</details>` : rows;
+    })() : html`<p class="tv-band__empty">${t('travel.table.none')}</p>`}
   </section>`)}
 </section>`;
 }

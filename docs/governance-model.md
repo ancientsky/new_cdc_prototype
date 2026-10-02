@@ -68,6 +68,7 @@
 13. **外部連結健康**：專區連結、申請網址與表單、公告報名網址、影片網址、出版品 PDF 彙整為 `site.gov.externalLinks[]`；`fetch-data --check-links` 寫回 `status`／`lastCheckedAt`。`broken` → 待辦 `link-broken`；`unchecked` 不產生待辦。
 14. **檢驗一致性**：`labtest.sendWithinHours` > 主檔 `notifyWithinHours` → 待辦 `labtest-inconsistent`（低優先）。
 15. **通報時限表**：`/report/` 的法定傳染病通報時限表由 `master/diseases.json` 自動產生，主檔改了表就改，零維護。
+16. **旅遊疫情建議（官方事件流）**：`CountryEpidLevel/ExportJSON` 每列是一則警示事件（含「解除」）。fetch 以每國×疾病×區域最新一則判定現行、解除即不列；同一疾病同一等級涵蓋 ≥ 50% 國家（且 ≥ 20 國）⇒ `Background: true`，表與地圖用排除背景後的「針對性等級」；事件寫入 `country-epid-events.json` 推出新增／調升／調降／解除；分布超出閘門（第三級 >5、第二級 >60、第一級 >250）⇒ 沿用人工校對快照並記錄 `meta.lastLiveAttempt`。全部不需人工。
 
 
 ## 3. 白名單政策
