@@ -12,6 +12,10 @@
 //        publication.pdfUrl、document.pdfUrl（legacyUrls 不檢）。HEAD（失敗再 GET）、timeout 10 秒、同站併發 ≤ 3、總數上限 300。
 //        結果寫回：陣列元素（links[i]、forms[i]）寫在元素上的 lastCheckedAt／status；單一欄位寫在 item.linkChecks[field]。
 //        佔位網址（/File/Get/placeholder-*、example.com…）略過、視為 unchecked。全部連不上（沙箱）⇒ 不改檔、exit 0。
+//   node scripts/fetch-data.mjs --reaggregate [--dry]
+//        不連網（ARCHITECTURE 12.1）：讀既有 country-epid-level.json（與 country-epid-events.json），以主檔重新聚合，
+//        重算 Background／Targeted*、meta.background、stats.targeted、changeSummary30、各國 RecentChanges；
+//        事件快照不存在（或為 derived）⇒ 以 mode:'derived' 從現況每筆建議反推一則 new 事件。mode／fetchedAt／dataDate 不變。
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -25,6 +29,7 @@ const DRY = args.has('--dry');
 const NO_SYNC = args.has('--no-sync');
 const SYNC_ONLY = args.has('--sync-only');
 const CHECK_LINKS = args.has('--check-links');
+const REAGGREGATE = args.has('--reaggregate');
 const UA = 'cdc-ai-ready-prototype/0.2 (+github pages build)';
 const TIMEOUT_MS = 20000;
 const log = (...m) => console.log('[fetch]', ...m);
