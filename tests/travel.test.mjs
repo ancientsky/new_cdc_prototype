@@ -129,12 +129,11 @@ test('aggregateCountryLevels 對快照是冪等的（live 與快照形狀一致�
   assert.deepEqual(aggregateCountryLevels(levels.data, { countries }), levels.data);
 });
 
-test('快照：等級分布貼近現實（第三級 0、第二級 2–3、第一級 25–35、無建議佔多數）', () => {
+test('快照：等級分布在合理性閘門內（第三級 ≤5、第二級 ≤60、第一級 ≤250），meta.stats 一致', () => {
   const s = levelStats(levels.data);
-  assert.equal(s.level3, 0);
-  assert.ok(s.level2 >= 2 && s.level2 <= 3, `level2=${s.level2}`);
-  assert.ok(s.level1 >= 25 && s.level1 <= 35, `level1=${s.level1}`);
-  assert.ok(s.none > levels.data.length / 2, `none=${s.none}/${levels.data.length}`);
+  assert.ok(s.level3 <= LEVEL_PLAUSIBLE_MAX.level3, `level3=${s.level3}`);
+  assert.ok(s.level2 <= LEVEL_PLAUSIBLE_MAX.level2 && s.level2 >= 1, `level2=${s.level2}`);
+  assert.ok(s.level1 <= LEVEL_PLAUSIBLE_MAX.level1 && s.level1 >= 1, `level1=${s.level1}`);
   assert.deepEqual(levels.meta.stats, s);
   const iso = new Set(levels.data.map((r) => r.ISO2));
   for (const c of countries) assert.ok(iso.has(c.iso2), `快照缺 ${c.iso2}`);
@@ -184,17 +183,20 @@ test('travel 模板：/travel/ 依等級分段、不列全部國家大表', asyn
   assert.equal(news10, 10, '近 30 天列表最多 10 則，其餘收在「更多」');
 });
 
-test('travel 模板：無建議國（KR）平靜、有建議國（SA、JP）列疾病等級', () => {
+test('travel 模板：無建議國平靜、有建議國（SA、JP）列疾病等級', () => {
   const site = govern();
-  const kr = site.master.countries.find((c) => c.iso2 === 'KR');
+  const noneIso = levels.data.find((r) => r.LevelCode === 0 && site.master.countries.some((c) => c.iso2 === r.ISO2))?.ISO2;
   const sa = site.master.countries.find((c) => c.iso2 === 'SA');
   const jp = site.master.countries.find((c) => c.iso2 === 'JP');
-  const k = str(travel.render(makeCtx(site, 'zh-TW', { path: '/travel/KR/' }), { country: kr }));
-  assert.match(k, /目前無旅遊疫情建議/);
-  assert.match(k, /勤洗手/);
-  assert.match(k, /旅遊醫學門診/);
-  assert.ok(!/tv-lv--/.test(k.split('tv-card')[1] ?? ''), '無建議不做等級標籤');
-  assert.ok(!/行前準備/.test(k), '無建議頁保持簡短');
+  if (noneIso) {
+    const kr = site.master.countries.find((c) => c.iso2 === noneIso);
+    const k = str(travel.render(makeCtx(site, 'zh-TW', { path: `/travel/${noneIso}/` }), { country: kr }));
+    assert.match(k, /目前無旅遊疫情建議/);
+    assert.match(k, /勤洗手/);
+    assert.match(k, /旅遊醫學門診/);
+    assert.ok(!/tv-lv--/.test(k.split('tv-card')[1] ?? ''), '無建議不做等級標籤');
+    assert.ok(!/行前準備/.test(k), '無建議頁保持簡短');
+  }
   const s = str(travel.render(makeCtx(site, 'zh-TW', { path: '/travel/SA/' }), { country: sa }));
   assert.match(s, /第二級：警示/);
   assert.match(s, /中東呼吸症候群冠狀病毒感染症/);

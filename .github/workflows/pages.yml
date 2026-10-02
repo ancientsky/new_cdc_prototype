@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write # 排程／手動執行時把官方資料快照 commit 回 main
   pages: write
   id-token: write
 
@@ -32,6 +32,16 @@ jobs:
       - name: Fetch live data from official sources (falls back to snapshots)
         run: npm run fetch
         continue-on-error: true
+      - name: Commit refreshed snapshots back to main (schedule / manual runs only)
+        if: github.event_name != 'push'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/snapshots
+          if git diff --cached --quiet; then echo "快照無變更"; exit 0; fi
+          git commit -m "data: 官方資料快照更新（$(date -u +%F)）"
+          git pull --rebase origin main
+          git push origin HEAD:main
       - name: Build (schema gate + eval gate + static site)
         env:
           BASE_PATH: /${{ github.event.repository.name }}
