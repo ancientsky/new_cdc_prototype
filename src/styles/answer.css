@@ -164,7 +164,7 @@ html[data-view="pro"] .ask-page .c-source-card{border-color:var(--navy-700)}
 .c-source-card__poster{display:block;width:96px;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:var(--radius-sm);border:1px solid var(--line);margin:0 0 var(--sp-1);background:var(--paper)}
 .c-source-card--master .c-source-card__t{color:var(--navy-900)}
 .c-labtest-mini{width:100%;max-width:100%;font-size:var(--fs-xs);border-collapse:collapse;margin:var(--sp-1) 0}
-.c-labtest-mini th,.c-labtest-mini td{padding:2px var(--sp-2);border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
-.c-labtest-mini th{white-space:nowrap;color:var(--ink-2);font-weight:400;width:6em}
+.c-source-card .c-labtest-mini th,.c-source-card .c-labtest-mini td{padding:2px var(--sp-2);border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-variant-numeric:normal}
+.c-source-card .c-labtest-mini th{white-space:nowrap;color:var(--ink-2);font-weight:400;width:6em}
 .c-ai-disclosure__transcript{display:inline-block;margin-left:var(--sp-2);font-size:var(--fs-xs);color:var(--ink-2);border:1px solid var(--line);border-radius:var(--radius-pill);padding:0 8px}
 .c-answer__sent--closed{border-left-color:var(--line-2);color:var(--ink-2)}
