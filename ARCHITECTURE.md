@@ -419,3 +419,77 @@ canonical、hreflang × 7 + x-default、meta description（= summary）、og:*�
 - C2 民眾端／專業端模板：`src/templates/public/*`（含新頁）、`src/templates/pro/*`、`src/templates/layout.mjs`、`src/styles/*`（answer.css、admin.css 除外）、`src/client/{ui,i18n,charts,pro}.js`
 - D2 引擎：`src/client/answer/**`、`src/styles/answer.css`、`scripts/lib/index-builder.mjs`、`eval/**`、`content/governance/eval-set.json`
 - E2 後台與文件：`src/templates/admin/**`、`src/client/admin/**`、`src/styles/admin.css`、`docs/**`、`README.md`、`src/templates/public/guide.mjs`
+
+## 12. 第四輪（2026-10-02）：國際旅遊疫情建議「目的地決策」改版
+
+背景：官方 `CountryEpidLevel/ExportJSON` 是歷次警示**事件**（第一／二／三級或「解除」），不是現行表。`scripts/fetch-data.mjs` 以「每國×疾病×區域最新一則、解除即不列」聚合，CI 排程把快照 commit 回 `data/snapshots/`（repo 內的快照＝真實官方資料，`meta.mode: 'live'`）。實測 2026-10：第三級 1、第二級 29、第一級 215 國；第一級中 245 筆是 2023-11-01 全面重發的「新冠併發重症」，屬**背景提醒**而非針對性建議。
+
+本輪四件事（先 2+3，再 1+4，全部實作）：
+1. **目的地優先**：`/travel/` 的主角是「查目的地」，等級表退為索引；每個有 ISO2 的國家都有 `/travel/{ISO2}/`（主檔擴充至官方資料出現的全部國家）。
+2. **背景提醒 vs 針對性建議**：同一疾病同一等級涵蓋 ≥ 50% 國家 ⇒ 背景提醒，表上不逐國列，改成一句「全球背景提醒」；各國的排序與卡片用「針對性等級」。
+3. **變化而非狀態**：近 30／90 天的新增、調升、調降、解除（來自事件流），首頁與 `/travel/` 顯示「近 30 天：新增 n、調升 n、調降 n、解除 n」。
+4. **世界地圖**：三級三色（第一級極淡）、無建議留白、點國家進目的地頁；鍵盤可達、有文字替代（等級表）。
+
+### 12.1 資料契約（T1 擁有）
+
+`data/snapshots/country-epid-level.json`（既有，增欄；舊欄位全部保留）：
+```
+data[] 每國一筆：
+  ISO2, Country, CountryEn, Region, Url
+  LevelCode / Level / Disease / StartDate / Summary   ← 既有：含背景提醒的最高等級（不改，API 相容）
+  TargetedLevelCode (0–3) / TargetedLevel / TargetedDisease / TargetedStartDate  ← 新：排除背景提醒後的最高等級；排序、卡片、地圖、等級表一律用這組
+  Diseases[]: { Disease, DiseaseEn?, DiseaseId?, Level, LevelCode, StartDate, Area?, Summary, Url, Background?: true }
+meta 新增：
+  background[]: { Disease, DiseaseId?, LevelCode, Level, countries: n, share: 0–1, since: 最早 StartDate, latest: 最新 StartDate, Summary }
+  backgroundRule: { share: 0.5, note }
+  stats: 既有 levelStats（含背景）+ targeted: { level3, level2, level1, none }
+  changeSummary30: { new, raised, lowered, lifted, renewed }   ← 由事件快照推得；無事件快照時省略
+```
+`data/snapshots/country-epid-events.json`（新；CI 每日覆寫並 commit）：
+```
+meta: { mode: 'live'|'derived', fetchedAt, sourceUrl, windowDays: 400, note }
+data[] 事件（slim，依 date 降冪）：
+  { date: 'YYYY-MM-DD', ISO2, Country, CountryEn?, Disease, DiseaseId?, Area?: string|null,
+    LevelCode: 0–3 (0＝解除), Level, Summary?, Url,
+    kind: 'new'|'raised'|'lowered'|'lifted'|'renewed', from: 0–3|null, to: 0–3 }
+```
+`kind` 推法：同（ISO2, Disease, Area）依 date 排序，前一則等級 from → 本則 to：from null/0 且 to>0 ⇒ new；to>from ⇒ raised；0<to<from ⇒ lowered；to=0 ⇒ lifted；to=from ⇒ renewed。
+離線時 `npm run fetch -- --reaggregate`：不連網，只用既有快照重算 meta.background、Targeted*、changeSummary30，並把事件快照以 `mode:'derived'`（從現況每筆建議反推一則 new 事件）補出來，讓模板與測試在任何環境都有資料。
+
+`content/master/countries.json`：擴充為官方資料中所有有 ISO2 的國家／地區（≈231）＋原 60 國；欄位 `{ iso2, name, nameEn, region }`，region 用現有十個區域名；原 60 國順序與內容不變、排在前面。
+
+API（`scripts/lib/emit-api.mjs`）：`/v1/country-levels.json` 原樣輸出 data（含新欄）；新增 `/v1/country-changes.json`（事件快照 data + meta）、`/v1/country-background.json`（meta.background）。`site.snapshots.countryEvents` 由 `load.mjs` 讀入。
+
+答案引擎（`src/client/answer/core.js`）：`travelFor` 的逐病清單**排除** `Background: true`，另外加一句「全球背景提醒：{疾病} 第一級，遵守一般預防措施」；國家無針對性建議時說「目前無針對性旅遊疫情建議」。評估集新增 TR010–TR012（韓國無針對性建議、剛果第三級伊波拉、近期解除）。
+
+### 12.2 呈現契約（T2 擁有：`travel.mjs`、`task.mjs`、`home.mjs`、`i18n.js`；T3 擁有：`_travel-map.mjs`）
+
+`/travel/`（由上到下）：
+1. 標題＋一句話；**查目的地**（既有 lookup，放最上、放大）。結果卡用 Targeted 等級；背景提醒只在卡末一行淡字。
+2. **近 30 天變化**：四個數字（新增／調升／調降／解除）＋最多 10 則清單（日期、國家→連結、疾病、from→to），「解除」用安心的綠色；更多收合。
+3. **世界地圖**：`worldMap(ctx, { byIso: Map<ISO2, {code, label}>, hrefFor })` 來自 `./_travel-map.mjs`（T3）；T2 只呼叫，不改其內容。地圖下方放三級圖例與「未上色＝目前無針對性建議」。
+4. **全球背景提醒**一列（meta.background，每項一句：疾病、等級、自何時、涵蓋 n 國、建議）。
+5. **針對性建議等級表**：既有三段式，但只列 `Background` 不為 true 的項目；每項 chip 加 title「自 YYYY-MM-DD」；段落摘要用 targeted 統計。
+6. 近 30 天國際重要疫情資訊（既有）、提問框、來源卡（既有）。
+
+`/travel/{ISO2}/`（目的地頁）：
+1. 卡片：Targeted 最高等級（無則綠勾「目前無針對性旅遊疫情建議」）；逐病列：等級、發布日、**持續時間**（「自 2015 年起 · 11 年」；超過 3 年加「長期建議」標籤）、官方建議句、疾病頁連結。
+2. **旅程三階段**（純規則生成，不手寫）：出發前（依疾病主檔的 vaccines → 疫苗與 2–4 週旅醫門診；無疫苗則衛教）、旅途中（依疾病傳播途徑：蚊媒→防蚊；飛沫→口罩洗手；動物→避免接觸；食水→飲食）、返國後（21 天內發燒／出疹就醫並告知旅遊史；1922）。傳播途徑以疾病主檔 `transmission`／`keywords` 判斷，缺則用一般預防措施。
+3. 近 30 天與該國有關的國際重要疫情資訊（`travelAlerts` 的 areaDesc／areaDesc_EN 含該國名或 ISO2）。
+4. 背景提醒一行淡字；相關疫苗、旅醫門診預約、國際預防接種證明（既有）。
+5. 每頁 JSON-LD 與 `.md` 機讀版照既有做法。
+
+`task.mjs`（出國與入境任務頁）：12 列表格換成「查目的地」＋近 30 天變化四數字。`home.mjs`：任務卡「出國與入境」副標顯示針對性統計一句（例：「29 國有針對性建議 · 近 30 天解除 12 筆」）。七語 i18n 全部補齊（`ROWS_TRAVEL`）。
+
+### 12.3 地圖契約（T3 擁有）
+
+- `scripts/gen-world-map.mjs`（開發期一次性，devDependencies：`world-atlas`、`topojson-client`、`d3-geo`、`i18n-iso-countries`）→ 產生 `src/data/world-paths.json`：`{ viewBox: '0 0 960 500', projection: 'naturalEarth1', paths: { ISO2: 'M…Z' } }`，110m 簡化，數值取整到 1 位小數，不含南極洲；檔案 ≤ 250 KB。產物 commit 進 repo，建置不需 devDeps。
+- `src/templates/public/_travel-map.mjs`：`export function worldMap(ctx, { byIso, hrefFor, title })` 回傳 inline SVG：`<svg role="img" aria-labelledby>`；每國 `<a href=…><path class="wm wm--l{0-3}" data-iso><title>{國名}：{等級}</title></path></a>`（無頁面者不包 `<a>`）；三色沿用 travel 的 `--tv-watch/alert/warning`，第一級用 15% 透明度；無建議 `fill: var(--line-2)`；台灣 `fill: var(--ink-3)` 中性。hover／focus 加描邊；行動裝置寬度 100%、`aspect-ratio: 960/500`。CSS 放在同檔以 `<style>` 輸出一次（`styles` 匯出供 travel.mjs 併入）。
+- `tests/travel-map.test.mjs`：paths ≥ 170 國；主檔 60 國全部有 path；輸出含 60 個 `<a href="/travel/…/">`；無 `href="null"`。
+
+### 12.4 平行開發分工與邊界
+
+- T1（資料／引擎／測試）：`scripts/fetch-data.mjs`、`scripts/lib/{load,emit-api}.mjs`、`src/client/answer/core.js`、`content/governance/eval-set.json`、`content/master/countries.json`、`data/snapshots/country-epid-events.json`、`data/snapshots/country-epid-level.json`（只透過 `--reaggregate` 產生）、`tests/travel.test.mjs`（修既有 5 個失敗測試＝改成對真實資料穩健）、`tests/travel-data.test.mjs`、`src/templates/public/developers.mjs`（只加 API 清單列）。
+- T2（模板）：`src/templates/public/{travel,task,home}.mjs`、`src/client/i18n.js`（`ROWS_TRAVEL` 區塊）、`src/styles/*`（如需）、`docs/guide-public.md`、`tests/travel-ui.test.mjs`。對 T1 新欄位一律容錯（缺欄位時退回既有行為）。
+- T3（地圖）：`scripts/gen-world-map.mjs`、`package.json` devDependencies、`src/data/world-paths.json`、`src/templates/public/_travel-map.mjs`、`tests/travel-map.test.mjs`、`docs/architecture-decisions.md`（新增 ADR）。**第一步**先建立 `_travel-map.mjs` 的空實作（回傳 ''）讓 T2 可以匯入。
+- 共同：不切分支、不 commit；完成後回報變更檔案清單與驗證結果。`npm test` 與 `BUILD_TODAY=2026-10-01 LINK_CHECK=error npm run build` 必須全綠（`[links] error 0`）。
