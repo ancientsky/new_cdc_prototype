@@ -57,6 +57,13 @@ export function L(ctx, item, field) {
   if (ctx.lang === (item.sourceLang ?? 'zh-TW')) return item[field];
   return item.i18n?.[ctx.lang]?.[field] ?? item[field];
 }
+/** 依頁面語言取回「整個物件」的在地化版本：非來源語言時以 i18n[lang] 的欄位覆蓋頂層（含陣列與巢狀欄位），模板可直接讀 sv.steps 等欄位 */
+export function localized(ctx, item) {
+  if (!item) return item;
+  if (ctx.lang === (item.sourceLang ?? 'zh-TW')) return item;
+  const tr = item.i18n?.[ctx.lang];
+  return tr && typeof tr === 'object' ? { ...item, ...tr, i18n: item.i18n } : item;
+}
 export const unitOf = (ctx, id) => ctx.site.unitById.get(id);
 export function unitName(ctx, id) {
   const u = unitOf(ctx, id);

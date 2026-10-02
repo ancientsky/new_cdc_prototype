@@ -4,8 +4,7 @@ import { md } from '../../../scripts/lib/markdown.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
 import {
   ldFor, breadcrumb, pageHead, provenance, alerts, pageData, scopeTags, feedback, translationBadge, hrefFor, isFallbackLink, L, unitName, publishedOf,
-  itemPath, isExternal, extLink, mdHeader, pill, inlineAsk,
-} from './_partials.mjs';
+  itemPath, isExternal, extLink, mdHeader, pill, inlineAsk, localized } from './_partials.mjs';
 
 const INLINE = ['/assets/js/answer/inline.js'];
 export const AUDIENCES = [
@@ -97,9 +96,10 @@ function detail(ctx, sv) {
 </article>`;
 }
 
-export function render(ctx, props = {}) { return props.item ? detail(ctx, props.item) : listPage(ctx); }
+export function render(ctx, props = {}) { return props.item ? detail(ctx, localized(ctx, props.item)) : listPage(ctx); }
 
-export function markdown(ctx, { item: sv }) {
+export function markdown(ctx, { item }) {
+  const sv = localized(ctx, item);
   const lines = [`# ${L(ctx, sv, 'title')}`, '', ...mdHeader(ctx, sv, `類別：${sv.serviceType}`), '', L(ctx, sv, 'summary') ?? '', '', L(ctx, sv, 'introMarkdown') ?? sv.introMarkdown ?? ''];
   lines.push('', `- 誰可申請：${(sv.whoCanApply ?? []).join('、')}`);
   if (sv.slaDays != null) lines.push(`- 處理天數：${sv.slaDays} 個工作天`);

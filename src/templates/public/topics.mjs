@@ -21,7 +21,7 @@ function linkRow(ctx, l) {
   const broken = l.status === 'broken';
   const href = l.href.startsWith('/') ? url(l.href) : l.href;
   return html`<li class="c-toplink${broken ? ' c-toplink--broken' : ''}">
-  <p class="c-toplink__t">${broken ? html`<span class="c-toplink__dead">${l.label}</span>` : html`<a href="${href}"${ext ? raw(' rel="noopener"') : ''}>${l.label}${ext ? html`<span aria-hidden="true"> ↗</span><span class="sr-only"> (${t('external')})</span>` : ''}</a>`}
+  <p class="c-toplink__t">${broken ? html`<span class="c-toplink__dead">${L(ctx, l, 'label')}</span>` : html`<a href="${href}"${ext ? raw(' rel="noopener"') : ''}>${L(ctx, l, 'label')}${ext ? html`<span aria-hidden="true"> ↗</span><span class="sr-only"> (${t('external')})</span>` : ''}</a>`}
     <span class="c-pill c-pill--${ext ? 'neutral' : 'ok'}">${ext ? t('topic.link.ext') : t('topic.link.int')}</span></p>
   ${l.note ? html`<p class="c-toplink__n">${L(ctx, l, 'note') ?? l.note}</p>` : ''}
   ${broken ? html`<p class="c-toplink__err" role="note"><strong>${t('topic.link.broken')}</strong></p>` : ''}
@@ -75,7 +75,7 @@ export function markdown(ctx, { item: tp }) {
   const lines = [`# ${L(ctx, tp, 'title')}`, '', ...mdHeader(ctx, tp, tp.endAt ? `專區期間：${tp.startAt ?? ''}～${tp.endAt}` : '')];
   if (isTopicEnded(site, tp)) lines.push(`> 本專區已於 ${tp.endAt} 結束，保留供查閱。`);
   lines.push('', L(ctx, tp, 'introMarkdown') ?? tp.introMarkdown ?? '', '', '## 連結', '');
-  for (const l of tp.links) lines.push(`- [${l.label}](${l.href.startsWith('/') ? ctx.url(l.href, { absolute: true, noLang: true }) : l.href})${l.note ? `：${l.note}` : ''}${l.status === 'broken' ? '（連結失效，已通知權責單位）' : ''}${l.lastCheckedAt ? `（最後檢查 ${l.lastCheckedAt}）` : ''}`);
+  for (const l of tp.links) lines.push(`- [${L(ctx, l, 'label')}](${l.href.startsWith('/') ? ctx.url(l.href, { absolute: true, noLang: true }) : l.href})${l.note ? `：${l.note}` : ''}${l.status === 'broken' ? '（連結失效，已通知權責單位）' : ''}${l.lastCheckedAt ? `（最後檢查 ${l.lastCheckedAt}）` : ''}`);
   const rel = (tp.contentIds ?? []).map((id) => site.byId.get(id)).filter(Boolean);
   if (rel.length) lines.push('', '## 相關內容', '', ...rel.map((r) => `- ${r.title ?? r.question}：${ctx.url(itemPath(r), { absolute: true, noLang: true })}`));
   return lines.join('\n') + '\n';
