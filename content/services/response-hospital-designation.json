@@ -97,13 +97,13 @@
   "forms": [
     {
       "label": "傳染病防治醫療網醫院申請書",
-      "href": "https://www.cdc.gov.tw/File/Get/placeholder-form-response-hospital-application",
+      "href": "/pending/?ref=service.response-hospital-designation&doc=傳染病防治醫療網醫院申請書",
       "format": "PDF",
       "machineReadable": false
     },
     {
       "label": "負壓隔離病房查核表",
-      "href": "https://www.cdc.gov.tw/File/Get/placeholder-form-negative-pressure-checklist",
+      "href": "/pending/?ref=service.response-hospital-designation&doc=負壓隔離病房查核表",
       "format": "PDF",
       "machineReadable": false
     }

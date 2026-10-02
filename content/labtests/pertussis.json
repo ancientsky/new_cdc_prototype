@@ -103,7 +103,7 @@
     "certified-lab"
   ],
   "sendWithinHours": 72,
-  "formDoc": "https://www.cdc.gov.tw/File/Get/placeholder-form-lab-specimen-form",
+  "formDoc": "service.lab-test-request",
   "biosafetyLevel": "BSL-2",
   "notesMarkdown": "- 嬰幼兒病例請一併調查家庭接觸者並採檢。\n- 鼻咽拭子須深入鼻咽後壁停留數秒。"
 }

@@ -105,7 +105,7 @@
   "forms": [
     {
       "label": "旅遊醫學合約門診名單",
-      "href": "https://www.cdc.gov.tw/File/Get/placeholder-form-travel-clinic-list",
+      "href": "/pending/?ref=service.travel-clinic-appointment&doc=旅遊醫學合約門診名單",
       "format": "PDF",
       "machineReadable": false
     }

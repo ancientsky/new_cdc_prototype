@@ -94,7 +94,7 @@
     "certified-lab"
   ],
   "sendWithinHours": 24,
-  "formDoc": "https://www.cdc.gov.tw/File/Get/placeholder-form-lab-specimen-form",
+  "formDoc": "service.lab-test-request",
   "biosafetyLevel": "BSL-2",
   "notesMarkdown": "- 惡性瘧可能快速惡化，治療不需等待確認結果。\n- 陰性但臨床高度懷疑者，每 12–24 小時重複採檢，共 3 次。\n- 送驗單註明旅遊國家與預防用藥史。",
   "i18n": {

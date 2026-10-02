@@ -54,7 +54,7 @@
     "反歧視",
     "活動"
   ],
-  "note": "活動已於 2025-12-15 結束，專區保留為紀錄；reviewPeriodMonths 設 0（不再定期審閱）",
+  "note": "活動已於 2025-12-15 結束，專區保留為紀錄；reviewPeriodMonths 設 0（不再定期審閱）；連結待權責單位確認深層網址",
   "image": "/img/topics/world-aids-day-2025.svg",
   "slug": "world-aids-day-2025",
   "kind": "campaign",
@@ -73,7 +73,7 @@
     },
     {
       "label": "UNAIDS World AIDS Day",
-      "href": "https://www.unaids.org/en/world-aids-day",
+      "href": "https://www.unaids.org/",
       "external": true,
       "status": "unchecked"
     }

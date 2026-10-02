@@ -105,7 +105,7 @@
   "forms": [
     {
       "label": "國際預防接種證明書樣張",
-      "href": "https://www.cdc.gov.tw/File/Get/placeholder-form-icvp-sample",
+      "href": "/pending/?ref=service.international-vaccination-certificate&doc=國際預防接種證明書樣張",
       "format": "PDF",
       "machineReadable": false
     }

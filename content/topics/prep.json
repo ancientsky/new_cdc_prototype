@@ -76,10 +76,10 @@
     },
     {
       "label": "PrEP 合作醫院名單（現行官網）",
-      "href": "https://www.cdc.gov.tw/Category/Page/placeholder-prep-hospitals",
-      "external": true,
+      "href": "/pending/?ref=topic.prep&doc=PrEP%20合作醫院名單",
+      "external": false,
       "status": "unchecked",
-      "note": "現行官網路徑佔位"
+      "note": "名單尚未遷移到新站；原型期間請洽 1922 或至現行官網查詢"
     }
   ],
   "contentIds": [

@@ -41,7 +41,7 @@ function promoSlide(ctx, b, i, n, { eager = false } = {}) {
   const cta = L(ctx, b, 'cta') ?? b.cta;
   const href = isExternal(cta.url) ? cta.url : url(cta.url);
   const head = L(ctx, b, 'headline') ?? b.title;
-  return html`<div class="c-carousel__slide" data-slide role="group" aria-roledescription="slide" aria-label="${i + 1} / ${n}" ${i ? raw('hidden') : ''}>
+  return html`<div class="c-carousel__slide${i ? '' : ' is-active'}" data-slide role="group" aria-roledescription="slide" aria-label="${i + 1} / ${n}">
       <div class="c-promo__art">${promoImg(ctx, b, { eager: eager && i === 0 })}</div>
       <div class="c-promo__txt">
       <p class="c-promo__kicker">${t('home.promo')}</p>
@@ -141,7 +141,11 @@ export function render(ctx) {
   const clars = publishedOf(site, 'clarifications').sort(byDateDesc).slice(0, 2);
   const migrant = MIGRANT_LANGS.includes(lang);
   const tasks = config.tasks.map((task, i) => (migrant && i === config.tasks.length - 1 ? taskCard(ctx, task, { foreign: true }) : taskCard(ctx, task)));
-  const tasksSec = html`<section class="c-tasks" aria-labelledby="tasks-h"><h2 id="tasks-h">${t('home.tasks')}</h2><div class="c-tasks__grid">${tasks}</div></section>`;
+  // 兩版（A／B）都輸出，隱藏非預設者；`?hero=A|B` 由 ui.js 切換。同一區塊出現兩次時 id 加後綴，隱藏版用 hidden（不進無障礙樹）。
+  const auto = peak ? 'B' : 'A';
+  const bSubject = peak ?? heroBSubject(pinned);
+  const tasksSec = (suffix, cls = '') => html`<section class="c-tasks${cls}" aria-labelledby="tasks-h${suffix}"><h2 id="tasks-h${suffix}">${t('home.tasks')}</h2><div class="c-tasks__grid">${tasks}</div></section>`;
+  const ver = (v, inner) => html`<div data-hero-ver="${v}" ${auto === v ? '' : raw('hidden')}>${inner}</div>`;
   const sitSec = html`<section class="c-situation" aria-labelledby="sit-h">
     <div class="c-sechead"><h2 id="sit-h">${t('home.situation')}</h2><span class="c-sechead__note">${t('home.situation.note', { date: fmtDate(sit.dataDate), source: sit.source })}</span><a class="c-sechead__more" href="${url('/situation/')}">${t('home.situation.more')} →</a></div>
     <div class="c-sit-scroll"><div class="c-sit-grid">${pinned.map((it) => sitCard(ctx, it))}</div></div>
@@ -163,12 +167,13 @@ export function render(ctx) {
   </section>` : '';
   const more = [['/apply/', 'more.apply'], ['/publications/', 'more.publications'], ['/lab/', 'more.lab'], ['/report/', 'more.report'], ['/research/', 'more.research'], ['/notices/', 'more.notices'], ['/contact/', 'more.mailbox'], ['/about/', 'more.about']];
   const moreSec = html`<nav class="c-moreservices" aria-labelledby="more-h"><h2 id="more-h">${t('home.more')}</h2><ul>${more.map(([p, k]) => html`<li><a href="${url(p)}">${t(k)}</a></li>`)}<li><a href="${url('/services/')}">${t('home.more.all')} →</a></li></ul></nav>`;
-  return html`${peak ? heroB(ctx, peak, banners) : heroA(ctx, banners, pinned)}
+  return html`${previewBar(ctx, auto)}
+${ver('A', heroA(ctx, banners, pinned, { eager: auto === 'A' }))}
+${bSubject ? ver('B', heroB(ctx, bSubject, banners, { eager: auto === 'B' })) : ''}
 <div class="wrap c-home">
-  ${peak ? '' : tasksSec}
+  ${ver('A', tasksSec('', ' c-tasks--six'))}
   ${sitSec}
-  ${peak ? promoCarousel(ctx, banners, { variant: 'row' }) : ''}
-  ${peak ? tasksSec : ''}
+  ${bSubject ? ver('B', html`${promoCarousel(ctx, banners, { variant: 'row' })}${tasksSec('-b')}`) : ''}
   <div class="c-home__cols">
     <div class="c-home__main">
       <section class="c-prozone" aria-labelledby="pro-h"><div><h2 id="pro-h">${t('home.pro')}</h2><p>${t('home.pro.sub')}</p></div><a class="c-btn c-btn--navy" href="${url('/pro/')}?view=pro" data-view-set="pro">${t('home.enter')}</a></section>

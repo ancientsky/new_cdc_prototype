@@ -13,6 +13,7 @@ import { emitSeo } from './lib/emit-seo.mjs';
 import { renderAllPages } from './lib/pages.mjs';
 import { runEval } from '../eval/run-eval.mjs';
 import { todayISO } from './lib/render.mjs';
+import { checkInternalLinks, summarize as summarizeLinks } from './lib/check-internal-links.mjs';
 
 const args = Object.fromEntries(process.argv.slice(2).map((a) => { const [k, v] = a.replace(/^--/, '').split('='); return [k, v ?? true]; }));
 const DIST = process.env.DIST_DIR ? path.resolve(process.env.DIST_DIR) : path.join(ROOT, 'dist');
@@ -67,6 +68,19 @@ async function main() {
   if (fs.existsSync(path.join(ROOT, 'src/public'))) copyDir(path.join(ROOT, 'src/public'), DIST);
   writeOut('.nojekyll', '');
   log(`輸出 ${pageCount} 頁 → dist/（${Date.now() - t0} ms）`);
+
+  // 全站連結完整性（站內連結必須指到存在的檔案；外部連結收集清單；佔位／示意網址 = error）
+  // --check 或 CI 下有 error ⇒ exit 1；LINK_CHECK=warn 可暫時降為警告（整合期用），LINK_CHECK=off 略過。
+  if (process.env.LINK_CHECK !== 'off') {
+    const links = checkInternalLinks(DIST, { basePath: config.basePath, langs: config.langs, siteUrl: config.siteUrl });
+    summarizeLinks(links, { limit: 50, log: (m) => console.log(m) });
+    log('連結報告 → v1/governance/link-report.json、external-links.json');
+    if (!links.ok) {
+      const strict = (args.check || process.env.CI) && process.env.LINK_CHECK !== 'warn';
+      console.error(`${strict ? '❌' : '⚠'} 站內連結檢查：${links.counts.errors} 個壞連結（${links.errorsByTarget.length} 種目標）${strict ? '，依治理門檻不得上線' : '（非 --check／CI，僅警告）'}`);
+      if (strict) process.exit(1);
+    }
+  }
 }
 
 function copyDir(src, dst) {

@@ -92,7 +92,7 @@
     "certified-lab"
   ],
   "sendWithinHours": 24,
-  "formDoc": "https://www.cdc.gov.tw/File/Get/placeholder-form-lab-specimen-form",
+  "formDoc": "service.lab-test-request",
   "biosafetyLevel": "BSL-2（病毒培養 BSL-3）",
   "notesMarkdown": "- 與登革熱症狀相似，送驗時可同時勾選登革熱與屈公病檢驗。\n- 送驗單請註明旅遊國家與返國日期。"
 }

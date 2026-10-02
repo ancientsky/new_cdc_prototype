@@ -98,7 +98,7 @@
     "regional-lab"
   ],
   "sendWithinHours": 24,
-  "formDoc": "https://www.cdc.gov.tw/File/Get/placeholder-form-lab-specimen-form",
+  "formDoc": "service.lab-test-request",
   "caseDefinitionDoc": "doc.case-definition-dengue",
   "biosafetyLevel": "BSL-2",
   "notesMarkdown": "- 通報後即採檢；NS1 快篩陽性者仍須送驗確認（見致醫界通函第 616 號）。\n- 檢體溶血或脂血會影響結果。\n- 送驗單請註明發病日與旅遊史，以利研判境外移入或本土。",

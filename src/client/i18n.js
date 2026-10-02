@@ -928,6 +928,56 @@ const ROWS_C2 = {
 };
 for (const [key, vals] of Object.entries(ROWS_C2)) vals.forEach((v, i) => { if (v != null && v !== '') STRINGS[ORDER[i]][key] = v; });
 
+/* ───── 出國與入境（第三輪 H1：國際旅遊疫情建議等級表）。順序同 ORDER；zh-TW、en 齊備，三級名稱與定義七語 ───── */
+const ROWS_TRAVEL = {
+  'travel.desc': ['目的地有沒有旅遊疫情建議、三級定義、國際重要疫情資訊與行前準備。', 'Whether your destination has a travel health notice, what the three levels mean, recent international outbreak news and pre-trip preparation.'],
+  'travel.lead': ['出國前先看目的地有沒有旅遊疫情建議。大多數國家目前沒有建議，遵守一般預防措施即可。', 'Before you go, check whether your destination has a travel health notice. Most countries have none at present — usual precautions are enough.', '出発前に渡航先に感染症危険情報があるか確認しましょう。ほとんどの国は現在情報がなく、一般的な予防策で十分です。', 'Bago umalis, tingnan kung may travel health notice ang iyong destinasyon. Karamihan ng bansa ay wala sa ngayon — sapat na ang karaniwang pag-iingat.', 'Trước khi đi, hãy xem điểm đến có khuyến cáo dịch tễ du lịch hay không. Hầu hết các nước hiện không có khuyến cáo, chỉ cần áp dụng biện pháp phòng ngừa thông thường.', 'Sebelum berangkat, cek apakah tujuan Anda memiliki peringatan kesehatan perjalanan. Sebagian besar negara saat ini tidak ada — cukup lakukan pencegahan biasa.', 'ก่อนเดินทาง ตรวจสอบว่าปลายทางมีคำแนะนำด้านโรคระบาดหรือไม่ ประเทศส่วนใหญ่ขณะนี้ไม่มี เพียงปฏิบัติตามมาตรการป้องกันทั่วไปก็เพียงพอ'],
+  'travel.level.0': ['無旅遊疫情建議', 'No travel health notice', '感染症危険情報なし', 'Walang travel health notice', 'Không có khuyến cáo', 'Tidak ada peringatan', 'ไม่มีคำแนะนำ'],
+  'travel.level.1': ['第一級：注意', 'Level 1: Watch', 'レベル1：注意', 'Antas 1: Watch', 'Mức 1: Chú ý', 'Level 1: Waspada', 'ระดับ 1: เฝ้าระวัง'],
+  'travel.level.2': ['第二級：警示', 'Level 2: Alert', 'レベル2：警戒', 'Antas 2: Alert', 'Mức 2: Cảnh báo', 'Level 2: Siaga', 'ระดับ 2: เตือนภัย'],
+  'travel.level.3': ['第三級：警告', 'Level 3: Warning', 'レベル3：警告', 'Antas 3: Warning', 'Mức 3: Báo động', 'Level 3: Peringatan', 'ระดับ 3: เตือนอันตราย'],
+  'travel.level.1.d': ['提醒遵守當地的一般預防措施', 'Practise usual precautions', '現地での一般的な予防策を守る', 'Sundin ang karaniwang pag-iingat', 'Tuân thủ các biện pháp phòng ngừa thông thường', 'Lakukan tindakan pencegahan biasa', 'ปฏิบัติตามมาตรการป้องกันทั่วไป'],
+  'travel.level.2.d': ['對當地採取加強防護', 'Practise enhanced precautions', '現地で防護を強化する', 'Mas mahigpit na pag-iingat', 'Tăng cường biện pháp phòng hộ', 'Tingkatkan tindakan pencegahan', 'ป้องกันตนเองเข้มงวดขึ้น'],
+  'travel.level.3.d': ['避免所有非必要旅遊', 'Avoid all non-essential travel', '不要不急の渡航を避ける', 'Iwasan ang lahat ng hindi mahalagang biyahe', 'Tránh mọi chuyến đi không cần thiết', 'Hindari semua perjalanan yang tidak penting', 'หลีกเลี่ยงการเดินทางที่ไม่จำเป็นทั้งหมด'],
+  'travel.level.none.d': ['未列在等級表上的國家／地區＝目前無旅遊疫情建議，遵守一般預防措施即可。', 'Countries and regions not on the table have no travel health notice at present; usual precautions are enough.', '表にない国・地域は現在情報なし。一般的な予防策で十分です。', 'Ang mga bansang wala sa talaan ay walang notice sa ngayon.', 'Các quốc gia/khu vực không có trong bảng hiện không có khuyến cáo.', 'Negara/wilayah yang tidak tercantum saat ini tidak memiliki peringatan.', 'ประเทศ/พื้นที่ที่ไม่อยู่ในตารางขณะนี้ไม่มีคำแนะนำ'],
+  'travel.def.t': ['三個等級是什麼意思', 'What the three levels mean'],
+  'travel.lookup.t': ['查目的地', 'Check your destination', '渡航先を調べる', 'Tingnan ang destinasyon', 'Tra cứu điểm đến', 'Cek tujuan', 'ตรวจสอบปลายทาง'],
+  'travel.lookup.label': ['輸入或選擇國家／地區', 'Type or choose a country or region'],
+  'travel.lookup.ph': ['例如：日本、泰國、Vietnam', 'e.g. Japan, Thailand, VN'],
+  'travel.lookup.go': ['查詢', 'Check', '確認', 'Tingnan', 'Tra cứu', 'Cek', 'ตรวจสอบ'],
+  'travel.lookup.notfound': ['找不到「{q}」。請從清單選擇國家／地區；未列在等級表上的地方目前沒有旅遊疫情建議。', 'No match for “{q}”. Choose a country or region from the list; places not on the table have no travel health notice at present.'],
+  'travel.result.none.t': ['目前無旅遊疫情建議', 'No travel health notice at present', '現在、感染症危険情報はありません', 'Walang travel health notice sa ngayon', 'Hiện không có khuyến cáo dịch tễ du lịch', 'Saat ini tidak ada peringatan kesehatan perjalanan', 'ขณะนี้ไม่มีคำแนะนำด้านโรคระบาด'],
+  'travel.result.none.d': ['{name}目前沒有旅遊疫情建議，遵守一般預防措施即可。', '{name} has no travel health notice at present. Usual precautions are enough.'],
+  'travel.result.has.t': ['{name}目前有 {n} 項旅遊疫情建議', '{name}: {n} travel health notice(s)'],
+  'travel.result.issued': ['發布日', 'Issued'],
+  'travel.result.more': ['看{name}的完整建議', 'Full advice for {name}'],
+  'travel.result.vax': ['相關疫苗', 'Related vaccines'],
+  'travel.prec.1': ['勤洗手，注意飲食與飲水衛生。', 'Wash your hands often and take care with food and drinking water.'],
+  'travel.prec.2': ['戶外做好防蚊，不接觸、不餵食動物。', 'Avoid mosquito bites outdoors; do not touch or feed animals.'],
+  'travel.prec.3': ['返國後如有發燒、出疹、腹瀉等症狀，請就醫並告知旅遊史。', 'If you get a fever, rash or diarrhoea after returning, see a doctor and mention your travel history.'],
+  'travel.clinic.cta': ['出國前 2–4 週到旅遊醫學門診', 'See a travel-medicine clinic 2–4 weeks before departure'],
+  'travel.table.t': ['旅遊疫情建議等級表', 'Travel health notice levels', '感染症危険情報レベル表', 'Talaan ng travel health notice', 'Bảng mức khuyến cáo dịch tễ du lịch', 'Tabel level peringatan kesehatan perjalanan', 'ตารางระดับคำแนะนำด้านโรคระบาด'],
+  'travel.table.note': ['依等級分段、每段依疾病列出國家／地區；點國家看完整建議。未列在表上的國家／地區目前無旅遊疫情建議。', 'Grouped by level, then by disease. Select a country for full advice. Places not listed have no travel health notice at present.'],
+  'travel.table.sum': ['共 {c} 國 {n} 項', '{c} countries · {n} notices'],
+  'travel.table.none': ['目前無', 'None at present', '現在なし', 'Wala sa ngayon', 'Hiện không có', 'Saat ini tidak ada', 'ขณะนี้ไม่มี'],
+  'travel.table.others': ['目前無旅遊疫情建議的國家／地區（{n}）', 'Countries and regions with no notice ({n})'],
+  'travel.news.t': ['國際重要疫情資訊（近 30 天）', 'International outbreak news (last 30 days)'],
+  'travel.news.note': ['疫情消息供參考，不等於旅遊疫情建議等級', 'For reference only; news does not change notice levels'],
+  'travel.news.more': ['更多（{n} 則）', 'More ({n})'],
+  'travel.news.empty': ['近 30 天沒有國際重要疫情資訊。', 'No international outbreak news in the last 30 days.'],
+  'travel.src.levels': ['旅遊疫情建議等級表', 'Travel health notice levels'],
+  'travel.src.alerts': ['國際重要疫情資訊', 'International outbreak news'],
+  'travel.src.page': ['官方等級表', 'Official level table'],
+  'travel.src.dataDate': ['資料日', 'Data date'],
+  'travel.cert.t': ['國際預防接種證明書（黃皮書）', 'International Certificate of Vaccination (yellow card)'],
+  'travel.vax.yf': ['黃熱病疫苗（出發前至少 10 天接種，須持國際預防接種證明書）', 'Yellow fever vaccine (at least 10 days before departure; carry the International Certificate of Vaccination)'],
+  'travel.vax.polio': ['小兒麻痺疫苗（長期停留者評估追加）', 'Polio vaccine (booster assessment for long stays)'],
+  'travel.vax.none': ['沒有特定疫苗建議；請確認常規疫苗（如 MMR）已完成。', 'No specific vaccine; make sure routine vaccines (such as MMR) are up to date.'],
+  'travel.country.news': ['{name}近 30 天疫情資訊', 'Recent news for {name} (30 days)'],
+  'travel.country.none.more': ['其他目的地請看', 'For other destinations, see the'],
+};
+for (const [key, vals] of Object.entries(ROWS_TRAVEL)) vals.forEach((v, i) => { if (v != null && v !== '') STRINGS[ORDER[i]][key] = v; });
+
 // translation.bar.reviewed 的 {lang} 佔位：zh 版用語言名稱
 STRINGS['zh-TW']['translation.bar.reviewed'] = STRINGS['zh-TW']['translation.bar.reviewed'].replace('{lang}', '翻譯');
 

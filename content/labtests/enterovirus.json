@@ -107,7 +107,7 @@
     "certified-lab"
   ],
   "sendWithinHours": 72,
-  "formDoc": "https://www.cdc.gov.tw/File/Get/placeholder-form-lab-specimen-form",
+  "formDoc": "service.lab-test-request",
   "biosafetyLevel": "BSL-2",
   "notesMarkdown": "- 有中樞神經症狀者可加採腦脊髓液 0.5–1 mL。\n- 重症處置不需等待檢驗結果，請依腸病毒重症處置指引。"
 }

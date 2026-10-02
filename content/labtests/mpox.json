@@ -106,7 +106,7 @@
     "certified-lab"
   ],
   "sendWithinHours": 24,
-  "formDoc": "https://www.cdc.gov.tw/File/Get/placeholder-form-lab-specimen-form",
+  "formDoc": "service.lab-test-request",
   "biosafetyLevel": "BSL-2（病毒培養 BSL-3）",
   "notesMarkdown": "- 採檢人員穿戴手套、隔離衣、N95 與護目鏡。\n- 有 Clade I 流行地區旅遊史者，送驗單請特別註明以優先分型。",
   "i18n": {

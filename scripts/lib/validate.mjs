@@ -72,8 +72,29 @@ export function validateSite(site) {
     if (item.type === 'media' && !(item.basedOn?.length)) push(item.__file, `影音素材必須填 basedOn（依據正本），見規劃 7.7`);
     for (const ref of item.contentIds ?? []) if (!ids.has(ref)) push(item.__file, `contentIds ${ref} 不存在`);
   }
+  // 3. 佔位／示意網址政策（治理門檻）：內容欄位的連結不得含 placeholder-、example.gov.tw、example.com…
+  //    例外：legacyUrls（現行官網對照用，不檢）。
+  for (const item of site.all) for (const hit of findPlaceholderUrls(item)) push(item.__file, `${hit.path} 含佔位／示意網址：${hit.value}（尚未遷移的文件請改連 /pending/?ref=<id>&doc=<名稱>）`);
+
   for (const it of site.situation.items) if (!diseaseIds.has(it.disease)) push('content/situation/current.json', `disease ${it.disease} 不在主檔`);
   if (!units.has(site.situation.publisher)) push('content/situation/current.json', `publisher ${site.situation.publisher} 不在 units`);
 
   return errors;
+}
+
+/** 佔位／示意網址判定（與 scripts/lib/check-internal-links.mjs 的黑名單同精神；這裡管內容來源） */
+export const PLACEHOLDER_URL_RE = /placeholder-|(?:^|[/.@])example\.(?:gov\.tw|com|org|net)\b/i;
+/** 這些欄位不檢（現行官網對照、建置期附加欄位） */
+export const PLACEHOLDER_EXEMPT_KEYS = new Set(['legacyUrls', 'gov', '__file', 'sourceHash']);
+
+/** 遞迴找出內容中含佔位網址的字串欄位 → [{ path, value }] */
+export function findPlaceholderUrls(item) {
+  const hits = [];
+  const visit = (v, p) => {
+    if (typeof v === 'string') { if (PLACEHOLDER_URL_RE.test(v)) hits.push({ path: p || '/', value: v.length > 160 ? `${v.slice(0, 157)}…` : v }); return; }
+    if (Array.isArray(v)) { v.forEach((x, i) => visit(x, `${p}/${i}`)); return; }
+    if (v && typeof v === 'object') for (const [k, x] of Object.entries(v)) if (!PLACEHOLDER_EXEMPT_KEYS.has(k)) visit(x, `${p}/${k}`);
+  };
+  visit(item, '');
+  return hits;
 }

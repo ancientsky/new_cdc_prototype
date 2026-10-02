@@ -22,7 +22,7 @@
   "languages": { "zh-TW": { "status": "source" }, "en": { "status": "reviewed", "reviewedAt": "2025-05-02" } },
   "summary": "現行 MMR 接種建議：1966 年（含）以後出生、不具免疫力的成人前往流行地區前 2–4 週評估自費接種；新增經常接觸外國人者。",
   "keywords": ["MMR", "麻疹", "接種建議", "1966 年"],
-  "pdfUrl": "https://www.cdc.gov.tw/File/Get/placeholder-mmr-114",
+  "pdfUrl": "/pending/?ref=doc.mmr-recommendation.2025-04-16&doc=國內現行%20MMR%20預防接種建議（114.04.16%20版）（PDF）",
   "legacyUrls": ["https://www.cdc.gov.tw/Category/List/V6unXI5CVl2Fjoap4WVQLw"],
   "roles": ["physician", "nurse", "local-health"],
   "sections": [

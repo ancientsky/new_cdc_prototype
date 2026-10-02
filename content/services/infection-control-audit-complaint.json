@@ -98,7 +98,7 @@
   "forms": [
     {
       "label": "感染管制查核結果複核申請書",
-      "href": "https://www.cdc.gov.tw/File/Get/placeholder-form-ic-audit-review",
+      "href": "/pending/?ref=service.infection-control-audit-complaint&doc=感染管制查核結果複核申請書",
       "format": "PDF",
       "machineReadable": false
     }

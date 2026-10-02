@@ -102,7 +102,7 @@
     "cdc-lab"
   ],
   "sendWithinHours": 24,
-  "formDoc": "https://www.cdc.gov.tw/File/Get/placeholder-form-lab-specimen-form",
+  "formDoc": "service.lab-test-request",
   "biosafetyLevel": "BSL-3",
   "notesMarkdown": "- 第一類法定傳染病，24 小時內通報並聯繫區管中心安排送驗。\n- 動物檢體（咬人動物）依農業部動物防疫機關規定送驗。\n- 暴露後預防接種不需等待檢驗結果。"
 }

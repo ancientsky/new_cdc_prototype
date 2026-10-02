@@ -95,7 +95,7 @@
     "regional-lab"
   ],
   "sendWithinHours": 72,
-  "formDoc": "https://www.cdc.gov.tw/File/Get/placeholder-form-lab-specimen-form",
+  "formDoc": "service.lab-test-request",
   "biosafetyLevel": "BSL-2（新型 A 型流感病毒分離 BSL-3）",
   "notesMarkdown": "- 流感併發重症為第四類法定傳染病，通報時限一週；為利治療與監測，建議通報後 72 小時內送達。\n- 疑似新型 A 型流感（第五類）應 24 小時內通報並依專案送驗。\n- 抗病毒藥劑使用不需等待檢驗結果。",
   "i18n": {

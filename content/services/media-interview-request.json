@@ -99,7 +99,7 @@
   "forms": [
     {
       "label": "媒體採訪申請表",
-      "href": "https://www.cdc.gov.tw/File/Get/placeholder-form-media-interview",
+      "href": "/pending/?ref=service.media-interview-request&doc=媒體採訪申請表",
       "format": "DOCX",
       "machineReadable": false
     }

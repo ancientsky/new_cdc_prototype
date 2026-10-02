@@ -109,13 +109,13 @@
   "forms": [
     {
       "label": "傳染病檢體送驗單",
-      "href": "https://www.cdc.gov.tw/File/Get/placeholder-form-lab-specimen-form",
+      "href": "/pending/?ref=service.lab-test-request&doc=傳染病檢體送驗單",
       "format": "PDF",
       "machineReadable": false
     },
     {
       "label": "檢體採檢手冊",
-      "href": "https://www.cdc.gov.tw/File/Get/placeholder-form-lab-specimen-manual",
+      "href": "/pending/?ref=service.lab-test-request&doc=檢體採檢手冊",
       "format": "PDF",
       "machineReadable": false
     }

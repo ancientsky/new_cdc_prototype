@@ -104,7 +104,7 @@
   "forms": [
     {
       "label": "人口密集機構群聚事件通報單",
-      "href": "https://www.cdc.gov.tw/File/Get/placeholder-form-cluster-report",
+      "href": "/pending/?ref=service.cluster-report-1922&doc=人口密集機構群聚事件通報單",
       "format": "PDF",
       "machineReadable": false
     }

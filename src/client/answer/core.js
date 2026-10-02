@@ -879,13 +879,23 @@ export function createEngine(rawDeps = {}) {
   // ── 旅遊疫情建議等級（結構化快照，只轉述不推論） ──
   const LEVEL_LABEL = { 1: '注意（Watch）', 2: '警示（Alert）', 3: '警告（Warning）' };
   function travelFor(entities) {
+    // 等級一律以「依國家彙整」的等級表（country-epid-level，Diseases[]）為準；近 30 天消息只當新聞，不拿來推等級。
     const out = [];
     for (const c of entities.countries) {
       const iso = String(c.id ?? '').toUpperCase();
-      let hits = travelItems.filter((t) => t.iso2 === iso || (t.name && t.name === c.name));
-      // 同時有「依國家彙整」與「依疾病」兩種快照時，優先用依疾病的明細
-      if (hits.some((h) => !h.aggregate)) hits = hits.filter((h) => !h.aggregate);
-      if (hits.length) out.push({ iso2: iso, name: hits[0].name ?? c.name, entries: hits });
+      const hits = travelItems.filter((t) => t.iso2 === iso || (t.name && t.name === c.name));
+      const table = hits.filter((h) => h.aggregate);
+      const news = hits.filter((h) => !h.aggregate);
+      if (!hits.length) continue;
+      let entries;
+      if (table.length) {
+        const row = table[0];
+        entries = (row.details?.length ? row.details : []).map((d) => ({ level: d.level, levelLabel: d.levelLabel, diseaseNames: [d.disease].filter(Boolean), date: d.date, advice: d.advice ?? null, area: d.area ?? null }));
+        if (!entries.length) entries = [{ level: 0, levelLabel: row.levelLabel ?? '無旅遊疫情建議', diseaseNames: [], date: row.date, advice: row.advice ?? null, none: true }];
+      } else {
+        entries = news.map((h) => ({ level: h.level, levelLabel: h.levelLabel, diseaseNames: h.diseaseNames, date: h.date, advice: h.advice }));
+      }
+      out.push({ iso2: iso, name: (table[0] ?? news[0]).name ?? c.name, entries, news });
     }
     return out;
   }
@@ -895,10 +905,14 @@ export function createEngine(rawDeps = {}) {
       const id = `travel#${c.iso2}`;
       const top = c.entries.reduce((a, b) => ((Number(b.level) || 0) > (Number(a.level) || 0) ? b : a));
       const date = c.entries.map((e) => e.date).filter(Boolean).sort().at(-1) ?? null;
-      srcs.set(id, { id, contentId: `travel.${c.iso2}`, type: 'travel', title: `旅遊疫情建議 · ${c.name}`, url: `/travel/${c.iso2.toLowerCase()}/`, owner: 'unit.epidemic-intelligence', ownerName: ownerNameOf(units, 'unit.epidemic-intelligence'), reviewedAt: date, isCurrent: true, license: 'OGDL-1.0', lang: 'zh-TW' });
+      srcs.set(id, { id, contentId: `travel.${c.iso2}`, type: 'travel', title: `旅遊疫情建議 · ${c.name}`, url: `/travel/${c.iso2.toUpperCase()}/`, owner: 'unit.epidemic-intelligence', ownerName: ownerNameOf(units, 'unit.epidemic-intelligence'), reviewedAt: date, isCurrent: true, license: 'OGDL-1.0', lang: 'zh-TW' });
       for (const e of c.entries.slice(0, 4)) {
+        if (e.none || !(Number(e.level) > 0)) {
+          sents.push({ text: lang === 'zh-TW' ? `${c.name}目前無旅遊疫情建議，請遵守一般預防措施（勤洗手、防蚊、注意飲食衛生）。` : `${c.name}: no travel health notice at present; follow general precautions.`, cite: [id], slot: 0, score: 9 });
+          continue;
+        }
         const lvl = e.levelLabel ? `「${e.levelLabel}」` : e.level != null ? `第 ${e.level} 級${LEVEL_LABEL[e.level] ? `「${LEVEL_LABEL[e.level]}」` : ''}` : '';
-        const dz = e.diseaseNames.join('、');
+        const dz = e.diseaseNames.join('、') + (e.area ? `，${e.area}` : '');
         sents.push({ text: lang === 'zh-TW' ? `${c.name}${dz ? `（${dz}）` : ''}：旅遊疫情建議${lvl}${e.date ? `，發布日 ${e.date}` : ''}。` : `${c.name}${dz ? ` (${dz})` : ''}: travel notice level ${e.level ?? '-'}${e.date ? `, issued ${e.date}` : ''}.`, cite: [id], slot: 0, score: 9 });
         if (e.advice && lang === 'zh-TW') sents.push({ text: e.advice, cite: [id], slot: 0, score: 8 });
       }
@@ -1161,7 +1175,7 @@ export function createEngine(rawDeps = {}) {
         break;
       case 'travel': {
         const c = entities.countries[0];
-        a.push({ label: c ? tr(LL, `查${c.name}疫情等級`, `Travel notice: ${c.name}`) : tr(LL, '查目的地疫情等級', 'Destination travel notice'), href: c ? `/travel/${String(c.id).toLowerCase()}/` : '/travel/', kind: 'link' });
+        a.push({ label: c ? tr(LL, `查${c.name}疫情等級`, `Travel notice: ${c.name}`) : tr(LL, '查目的地疫情等級', 'Destination travel notice'), href: c ? `/travel/${String(c.id).toUpperCase()}/` : '/travel/', kind: 'link' });
         a.push({ label: tr(LL, '找旅遊醫學門診', 'Find a travel medicine clinic'), href: 'https://www.cdc.gov.tw/Category/Page/ZgM7vwV3n6vDbXpq3MNgKg', kind: 'external' });
         break;
       }
@@ -1551,6 +1565,7 @@ function normTravel(t) {
     levelLabel: t.levelLabel ?? t.Level ?? t.levelName ?? null, diseaseNames: (Array.isArray(dn) ? dn : [dn]).filter((x) => x && typeof x === 'string' && !x.startsWith('disease.')),
     date: t.StartDate ?? t.publishedAt ?? t.updatedAt ?? t.date ?? t.effectiveAt ?? null, advice: t.Summary ?? t.advice ?? t.recommendation ?? null,
     aggregate: Array.isArray(t.Diseases), url: t.Url ?? t.url ?? null,
+    details: Array.isArray(t.Diseases) ? t.Diseases.map((d) => ({ disease: d.Disease ?? d.disease ?? null, level: d.LevelCode ?? d.levelCode ?? d.level ?? null, levelLabel: d.Level ?? d.levelLabel ?? null, date: d.StartDate ?? d.date ?? null, area: d.Area ?? d.area ?? null, advice: d.Summary ?? d.advice ?? null })).filter((d) => d.disease) : [],
   };
 }
 

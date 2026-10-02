@@ -99,7 +99,7 @@
     "hospital-lab"
   ],
   "sendWithinHours": 72,
-  "formDoc": "https://www.cdc.gov.tw/File/Get/placeholder-form-lab-specimen-form",
+  "formDoc": "service.lab-test-request",
   "biosafetyLevel": "BSL-2（培養與藥敏 BSL-3）",
   "notesMarkdown": "- 結核病為第三類法定傳染病，通報時限一週；建議通報同時完成 3 套痰液送驗。\n- 多重抗藥性結核菌株送疾管署參考實驗室確認。\n- 痰液請咳出肺部深處痰，非口水。",
   "i18n": {

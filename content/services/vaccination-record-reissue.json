@@ -100,7 +100,7 @@
   "forms": [
     {
       "label": "預防接種紀錄補發申請書",
-      "href": "https://www.cdc.gov.tw/File/Get/placeholder-form-vaccination-record-reissue",
+      "href": "/pending/?ref=service.vaccination-record-reissue&doc=預防接種紀錄補發申請書",
       "format": "PDF",
       "machineReadable": false
     }

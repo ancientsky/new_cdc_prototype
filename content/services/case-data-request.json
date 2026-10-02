@@ -112,13 +112,13 @@
   "forms": [
     {
       "label": "傳染病個案資料申請書",
-      "href": "https://www.cdc.gov.tw/File/Get/placeholder-form-case-data-application",
+      "href": "/pending/?ref=service.case-data-request&doc=傳染病個案資料申請書",
       "format": "PDF",
       "machineReadable": false
     },
     {
       "label": "資料使用切結書",
-      "href": "https://www.cdc.gov.tw/File/Get/placeholder-form-case-data-undertaking",
+      "href": "/pending/?ref=service.case-data-request&doc=資料使用切結書",
       "format": "PDF",
       "machineReadable": false
     }

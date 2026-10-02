@@ -65,7 +65,7 @@
     "lab",
     "infection-control"
   ],
-  "pdfUrl": "https://www.cdc.gov.tw/File/Get/placeholder-case-definition-measles",
+  "pdfUrl": "/pending/?ref=doc.case-definition-measles.2024-01-01&doc=傳染病病例定義：麻疹（PDF）",
   "sections": [
     {
       "key": "clinical",

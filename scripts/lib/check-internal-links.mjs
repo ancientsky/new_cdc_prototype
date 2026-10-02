@@ -148,6 +148,8 @@ export function checkInternalLinks(distDir, opts = {}) {
     } else if (OTHER_SCHEME.test(href)) { counts.skipped++; return; }
 
     counts.internal++;
+    // 404.html 會在任意路徑下被回應，相對路徑會解析錯 ⇒ 一律要求以 / 開頭（或絕對網址）
+    if (from === '404.html' && !pathPart && !href.startsWith('/') && !href.startsWith('#')) { issue(errors, 'relative-in-404', from, href, { where }); return; }
     const pageUrl = pageUrlOf(from, basePath);
     let u;
     try { u = new URL(pathPart ?? href, `http://local${pageUrl}`); } catch { issue(mdSource ? warnings : errors, 'bad-url', from, href, { where }); return; }
@@ -222,7 +224,8 @@ export function checkInternalLinks(distDir, opts = {}) {
   };
   // 依目標彙整（同一個壞連結常出現在上百頁）
   const errorsByTarget = {};
-  for (const e of errors) { const k = `${e.kind} ${e.target ?? e.href}`; (errorsByTarget[k] ??= { kind: e.kind, href: e.href, target: e.target ?? null, count: 0, firstFrom: e.from }).count++; }
+  // 依目標彙整後的排序：次數多的在前
+  for (const e of errors) { const k = `${e.kind} ${e.target ?? e.href}`; (errorsByTarget[k] ??= { kind: e.kind, href: e.href, target: e.target ?? null, why: e.why, count: 0, firstFrom: e.from }).count++; }
   const report = {
     basePath, siteOrigin, ok: errors.length === 0, counts,
     rules: {
@@ -249,8 +252,9 @@ export function summarize(res, { limit = 50, log = console.log } = {}) {
   log(`[links] ${c.pages} 頁、${c.links} 個連結：站內 ${c.internal}（通 ${c.internalOk}）、外部 ${c.external}（${res.external.domains.length} 個網域）、略過 ${c.skipped}；錨點檢查 ${c.anchorsChecked}；${c.ms} ms`);
   log(`[links] error ${c.errors}、warning ${c.warnings}${Object.keys(c.byKind).length ? `（${Object.entries(c.byKind).map(([k, v]) => `${k} ${v}`).join('、')}）` : ''}`);
   if (res.errors.length) {
-    log(`[links] 壞連結（前 ${Math.min(limit, res.errors.length)} 個，來源頁 → 目標）：`);
-    for (const e of res.errors.slice(0, limit)) log(`  ✗ ${e.from} → ${e.href}${e.target && e.target !== e.href ? `（${e.target}）` : ''} [${e.kind}${e.why ? `：${e.why}` : ''}]`);
+    const byT = res.errorsByTarget ?? [];
+    log(`[links] 壞連結（${byT.length} 種目標，依出現次數列前 ${Math.min(limit, byT.length)} 種；來源頁 → 目標）：`);
+    for (const e of byT.slice(0, limit)) log(`  ✗ ${e.firstFrom} → ${e.href}${e.target && e.target !== e.href ? `（${e.target}）` : ''} [${e.kind}${e.why ? `：${e.why}` : ''}]${e.count > 1 ? ` ×${e.count}` : ''}`);
   }
   const anchors = res.warnings.filter((w) => w.kind === 'missing-anchor');
   if (anchors.length) {

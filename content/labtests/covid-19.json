@@ -93,7 +93,7 @@
     "cdc-lab"
   ],
   "sendWithinHours": 72,
-  "formDoc": "https://www.cdc.gov.tw/File/Get/placeholder-form-lab-specimen-form",
+  "formDoc": "service.lab-test-request",
   "biosafetyLevel": "BSL-2（病毒培養 BSL-3）",
   "notesMarkdown": "- 醫院自行檢驗陽性者，依監測需要抽樣送疾管署定序。\n- 家用快篩陽性可作為臨床參考，重症通報仍以醫療院所檢驗為準。"
 }

@@ -6,7 +6,7 @@
   "ckanName": "dengue-daily-determined-cases-1998",
   "portalUrl": "https://data.cdc.gov.tw/dataset/dengue-daily-determined-cases-1998",
   "canonicalUrl": "https://data.cdc.gov.tw/dataset/dengue-daily-determined-cases-1998",
-  "mirrors": ["https://data.gov.tw/dataset/21025"],
+  "mirrors": ["https://data.gov.tw/"],
   "updateFrequency": "daily",
   "lastUpdated": "2026-09-30",
   "formats": ["CSV", "JSON"],
@@ -34,5 +34,6 @@
     ],
     "note": "原型快照：2019–2024 依公開年度統計整理；2025 為暫定值。正式版由 CKAN 每日資料聚合。"
   },
-  "provenance": { "fetchedAt": "2026-10-01", "mode": "snapshot", "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_show?id=dengue-daily-determined-cases-1998" }
+  "provenance": { "fetchedAt": "2026-10-01", "mode": "snapshot", "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_show?id=dengue-daily-determined-cases-1998" },
+  "note": "連結待權責單位確認深層網址"
 }

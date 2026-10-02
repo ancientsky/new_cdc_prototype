@@ -102,13 +102,13 @@
   "forms": [
     {
       "label": "疫苗基金捐款單",
-      "href": "https://www.cdc.gov.tw/File/Get/placeholder-form-vaccine-fund-donation",
+      "href": "/pending/?ref=service.vaccine-fund-donation&doc=疫苗基金捐款單",
       "format": "PDF",
       "machineReadable": false
     },
     {
       "label": "捐款收據資料更正申請",
-      "href": "https://www.cdc.gov.tw/File/Get/placeholder-form-vaccine-fund-receipt-fix",
+      "href": "/pending/?ref=service.vaccine-fund-donation&doc=捐款收據資料更正申請",
       "format": "PDF",
       "machineReadable": false
     }

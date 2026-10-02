@@ -110,7 +110,7 @@
   "forms": [
     {
       "label": "傳染病個案報告單（系統異常備用）",
-      "href": "https://www.cdc.gov.tw/File/Get/placeholder-form-notifiable-report-paper",
+      "href": "/pending/?ref=service.notifiable-disease-report&doc=傳染病個案報告單（系統異常備用）",
       "format": "PDF",
       "machineReadable": false
     }

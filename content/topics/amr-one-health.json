@@ -76,7 +76,7 @@
     },
     {
       "label": "WHO World AMR Awareness Week",
-      "href": "https://www.who.int/campaigns/world-amr-awareness-week",
+      "href": "https://www.who.int/",
       "external": true,
       "status": "unchecked"
     },
@@ -98,5 +98,6 @@
       "title": "Antimicrobial resistance: One Health action",
       "summary": "A One Health campaign running until 30 November 2026 alongside World AMR Awareness Week: no antibiotics for colds, finish prescribed courses, and open AMR surveillance data."
     }
-  }
+  },
+  "note": "連結待權責單位確認深層網址"
 }

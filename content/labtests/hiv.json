@@ -81,7 +81,7 @@
     "hospital-lab"
   ],
   "sendWithinHours": 24,
-  "formDoc": "https://www.cdc.gov.tw/File/Get/placeholder-form-lab-specimen-form",
+  "formDoc": "service.lab-test-request",
   "biosafetyLevel": "BSL-2",
   "notesMarkdown": "- 匿名篩檢陽性者由個管師協助轉介確認檢驗，送驗單以代號填寫。\n- 急性感染期抗體可能尚未陽轉，請加做核酸檢測。"
 }

@@ -41,6 +41,41 @@ function card(ctx, b, state) {
 </li>`;
 }
 
+
+/** 首頁兩種 Banner 做法的縮版示意（建置時直接用 HTML/CSS 畫，圖用目前第一則宣導的 16:9 大圖）；點下去開真實首頁預覽。 */
+function heroDemo(ctx) {
+  const { site, url } = ctx;
+  const first = site.collections.banners
+    .filter((b) => b.status === 'published' && b.startAt <= site.today && site.today <= b.endAt)
+    .sort((a, b) => (a.priority ?? 9) - (b.priority ?? 9))[0];
+  const art = first ? imgSrc(ctx, first.imageWide ?? first.image) : null;
+  const img = art ? html`<img src="${art}" alt="" width="1200" height="675" loading="lazy">` : '';
+  const pos = (css) => raw(`style="${css}"`);
+  const lines = (n) => raw('<i></i>'.repeat(n));
+  const A = html`<a class="c-promo-demo__fig" href="${url('/')}?hero=A" aria-label="開啟首頁做法 A 預覽">
+    <span class="c-promo-demo__bar"></span>
+    <span class="c-promo-demo__ask" ${pos('left:4%;top:14%;width:42%;height:50%')}><i class="b"></i>${lines(1)}<i class="b" style="width:60%"></i></span>
+    <span class="c-promo-demo__img" ${pos('left:51%;top:14%;width:45%;height:46%;border-radius:6px 6px 0 0')}>${img}</span>
+    <span class="c-promo-demo__tx" ${pos('left:51%;top:60%;width:45%;height:30%')}><i class="h"></i>${lines(2)}</span>
+    <span class="c-promo-demo__sit" ${pos('top:70%;height:20%;right:56%')}><b></b><b></b><b></b></span>
+  </a>`;
+  const B = html`<a class="c-promo-demo__fig" href="${url('/')}?hero=B" aria-label="開啟首頁做法 B 預覽">
+    <span class="c-promo-demo__bar"></span>
+    <span class="c-promo-demo__img" ${pos('left:34%;right:0;top:8%;height:46%;border-radius:0;opacity:.85')}>${img}</span>
+    <span class="c-promo-demo__ask" ${pos('left:4%;top:12%;width:42%;height:38%;box-shadow:0 4px 10px rgba(0,0,0,.15)')}><i class="h" style="background:#b02a2a;width:50%"></i>${lines(1)}<i class="b"></i></span>
+    <span class="c-promo-demo__sit" ${pos('top:58%;height:12%')}><b></b><b></b><b></b><b></b></span>
+    <span class="c-promo-demo__tx" ${pos('left:4%;right:4%;top:73%;height:22%;border:1px solid var(--line);border-radius:6px;display:grid;grid-template-columns:2fr 3fr;overflow:hidden')}><span class="c-promo-demo__img" ${pos('position:static;border-radius:0')}>${img}</span><span><i class="h"></i>${lines(1)}</span></span>
+  </a>`;
+  return html`<section class="c-block" aria-labelledby="camp-demo"${ctx.lang === 'zh-TW' ? '' : raw(' lang="zh-TW"')}>
+  <h2 id="camp-demo">首頁兩種做法的示意</h2>
+  <p class="muted">同一批 Banner 在首頁有兩種擺法，依疫情狀態自動選用（原型預覽：首頁網址加 <code>?hero=A</code> 或 <code>?hero=B</code> 可強制切換）。圖只當氛圍，字都在 HTML，首屏永遠是問題框與疫情狀態。</p>
+  <ul class="c-promo-demo">
+    <li class="c-promo-demo__item">${A}<p class="c-promo-demo__t">做法 A · 分割式（非高峰）</p><p class="c-promo-demo__note">左：問題框；右：本期宣導大圖卡（16:9 滿卡寬），字在圖下方，最多 3 則輪播。<a href="${url('/')}?hero=A">看真實首頁 →</a></p></li>
+    <li class="c-promo-demo__item">${B}<p class="c-promo-demo__t">做法 B · 情境式（疾病高峰自動切換）</p><p class="c-promo-demo__note">首屏白色面板講疫情與建議，右側用宣導大圖當氛圍；宣導卡退到疫情狀態卡下方（圖左 40％＋文字右）。<a href="${url('/')}?hero=B">看真實首頁 →</a></p></li>
+  </ul>
+</section>`;
+}
+
 export function render(ctx) {
   const { site, t } = ctx;
   const all = publishedOf(site, 'banners');
@@ -52,6 +87,7 @@ export function render(ctx) {
   const sec = (state) => html`<section class="c-block" aria-labelledby="camp-${state}"><h2 id="camp-${state}">${t(`campaigns.${state}`)} <span class="c-pill c-pill--neutral">${groups[state].length}</span></h2>
     ${groups[state].length ? html`<ul class="c-campaigns">${groups[state].map((b) => card(ctx, b, state))}</ul>` : html`<p class="c-empty">${t('none')}</p>`}</section>`;
   return html`${pageHead(ctx, { trail: [{ label: t('campaigns.title') }], h1: t('campaigns.title'), lead: t('campaigns.lead') })}
+${heroDemo(ctx)}
 <aside class="c-note" aria-label="${t('campaigns.rule.t')}"><strong>${t('campaigns.rule.t')}</strong> ${t('campaigns.rule')}</aside>
 ${sec('active')}${sec('upcoming')}${sec('ended')}`;
 }

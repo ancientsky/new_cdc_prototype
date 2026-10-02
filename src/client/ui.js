@@ -145,6 +145,27 @@ qsa('.langs a[data-same="1"]').forEach((a) => { a.setAttribute('href', a.getAttr
 qsa('[data-fill-q]').forEach((i) => { const q = params.get('q'); if (q && !i.value) i.value = q; });
 qsa('[data-fill-param]').forEach((i) => { const v = params.get(i.dataset.fillParam); if (v) i.value = v; });
 
+/* ───────── 首頁預覽切換：?hero=A|B 強制做法（server 兩版皆輸出；只改顯示，不寫 localStorage） ───────── */
+(() => {
+  const bar = document.querySelector('[data-hero-bar]');
+  const vers = qsa('[data-hero-ver]');
+  const want = String(new URLSearchParams(location.search).get('hero') || '').toUpperCase();
+  if (!bar || !vers.length || (want !== 'A' && want !== 'B')) return;
+  if (!vers.some((el) => el.dataset.heroVer === want)) return;
+  vers.forEach((el) => {
+    const on = el.dataset.heroVer === want;
+    el.hidden = !on;
+    if (on) { const img = el.querySelector('img'); if (img) { img.loading = 'eager'; img.fetchPriority = 'high'; } }
+  });
+  const other = want === 'A' ? 'B' : 'A';
+  const now = bar.querySelector('[data-hero-now]');
+  if (now) now.textContent = `目前為做法 ${want}（網址參數強制）`;
+  const sw = bar.querySelector('[data-hero-switch]');
+  if (sw) { const q = new URLSearchParams(location.search); q.set('hero', other); sw.setAttribute('href', `${location.pathname}?${q}`); sw.querySelector('[data-hero-other]').textContent = other; }
+  const reset = bar.querySelector('[data-hero-reset]');
+  if (reset) reset.hidden = false;
+})();
+
 /* ───────── Banner 輪播（不自動播放；可暫停／手動切換／鍵盤） ───────── */
 qsa('[data-carousel]').forEach((car) => {
   const slides = qsa('[data-slide]', car);
@@ -158,7 +179,7 @@ qsa('[data-carousel]').forEach((car) => {
   let i = 0, timer = null;
   const go = (n, focus = false) => {
     i = (n + slides.length) % slides.length;
-    slides.forEach((s, k) => { s.hidden = k !== i; });
+    slides.forEach((s, k) => { s.classList.toggle('is-active', k === i); });
     dots.forEach((d, k) => d.setAttribute('aria-current', String(k === i)));
     if (cur) cur.textContent = String(i + 1);
     if (focus) slides[i].setAttribute('tabindex', '-1'), slides[i].focus({ preventScroll: true });

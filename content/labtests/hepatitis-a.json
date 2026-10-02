@@ -94,7 +94,7 @@
     "hospital-lab"
   ],
   "sendWithinHours": 24,
-  "formDoc": "https://www.cdc.gov.tw/File/Get/placeholder-form-lab-specimen-form",
+  "formDoc": "service.lab-test-request",
   "biosafetyLevel": "BSL-2",
   "notesMarkdown": "- 醫院自行檢驗 anti-HAV IgM 陽性者仍須通報。\n- 餐飲從業人員病例請同時通知衛生局評估工作限制。"
 }

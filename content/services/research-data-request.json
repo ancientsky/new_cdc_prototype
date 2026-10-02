@@ -101,7 +101,7 @@
   "forms": [
     {
       "label": "研究資料申請書",
-      "href": "https://www.cdc.gov.tw/File/Get/placeholder-form-research-data-application",
+      "href": "/pending/?ref=service.research-data-request&doc=研究資料申請書",
       "format": "PDF",
       "machineReadable": false
     }
