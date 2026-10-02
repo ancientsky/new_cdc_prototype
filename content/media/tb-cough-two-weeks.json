@@ -97,5 +97,8 @@
       "title": "Coughing for more than two weeks? Get a chest X-ray",
       "summary": "A persistent cough may be a sign of tuberculosis. TB is curable with at least six months of treatment, supported by directly observed therapy."
     }
-  }
+  },
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/{id}#video"
+  ]
 }

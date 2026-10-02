@@ -38,7 +38,7 @@ export function render(ctx) {
     <section class="c-notfound__legacy" aria-labelledby="nf-legacy-h">
       <h2 id="nf-legacy-h">${t('404.legacy.t')}</h2>
       <p>${t('404.legacy.d')}</p>
-      <p><a class="c-btn c-btn--ghost" href="${url('/legacy/')}">${t('legacy.finder')} →</a></p>
+      <p><a class="c-btn c-btn--ghost" href="${url('/legacy/')}" data-nf-legacy-link>${t('legacy.finder')} →</a></p>
       <noscript><p class="muted">${t('404.noscript')}</p></noscript>
     </section>
     <section class="c-notfound__suggest" data-nf-suggest hidden aria-labelledby="nf-h">
@@ -70,6 +70,7 @@ const LEGACY_CLIENT = `${LEGACY_LOOKUP_JS}
   function safe(x){return typeof x==='string' && x.charAt(0)==='/' && x.charAt(1)!=='/'}
   function offer(){
     var w=legacyWord(input); if(!w) return;
+    var ll=$('[data-nf-legacy-link]'); if(ll) ll.href=D.legacyPage+'?u='+encodeURIComponent(p+location.search);
     var a=$('[data-nf-search-link]'); a.textContent=S.search.replace('{q}',w); a.href=D.ask+'?q='+encodeURIComponent(w); $('[data-nf-search]').hidden=false;
     var q=document.getElementById('nq'); if(q && !q.value) q.value=w;
   }

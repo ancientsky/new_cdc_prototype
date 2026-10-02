@@ -83,5 +83,8 @@
       "title": "Active TB case finding and DOTS outcomes among migrant workers",
       "summary": "Ongoing commissioned study on TB detection through health checks and dormitory screening, and the effect of multilingual DOTS support on treatment completion."
     }
-  }
+  },
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/ListContent/{id}?uaid={uaid}#migrant-tb-research"
+  ]
 }

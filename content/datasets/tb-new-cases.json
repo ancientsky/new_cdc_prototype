@@ -141,5 +141,8 @@
       "title": "New tuberculosis cases",
       "summary": "Annual new TB cases by sex, age group and county, with incidence per 100,000."
     }
-  }
+  },
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/{id}#statistics"
+  ]
 }

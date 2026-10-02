@@ -69,5 +69,8 @@
       "question": "How long should a cough last before I suspect tuberculosis?",
       "answerMarkdown": "If you have **coughed for more than 2 weeks**, especially with sputum, chest pain, weight loss, poor appetite, afternoon fever or night sweats, see a chest physician for a chest X-ray and sputum test.\n\nAlmost everyone with TB is cured by taking medicine regularly for at least 6 months, and early detection protects your family."
     }
-  }
+  },
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/{id}#cough"
+  ]
 }

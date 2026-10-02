@@ -1,4 +1,4 @@
-// 讀取 content/ 與 data/snapshots/ → site.collections
+// 讀取 content/ 與 data/snapshots/ → site.collections（＋ site.migrationLists：content/migration/*.json）
 import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
@@ -83,9 +83,12 @@ export function loadSite(config) {
     countryEvents: readJSON(path.join(SNAPSHOTS, 'country-epid-events.json'), { meta: { mode: 'missing' }, data: [] }),
     ckan: readJSON(path.join(SNAPSHOTS, 'ckan-packages.json'), { meta: { mode: 'missing' }, data: [] }),
   };
+  // 移轉清單（ARCHITECTURE 13.1）：舊站專區 → 新站內容的逐頁對照。不是對外內容頁，不放進 collections／all
+  // （不進索引、sitemap、白名單、KPI）；治理引擎據此算 site.migration 與 item.gov.legacy。
+  const migrationLists = readDirJSON(path.join(CONTENT, 'migration'));
   const all = Object.values(collections).flat();
   const byId = new Map(all.map((i) => [i.id, i]));
   const unitById = new Map(master.units.map((u) => [u.id, u]));
   const diseaseMasterById = new Map(master.diseases.map((d) => [d.id, d]));
-  return { config, master, collections, situation, governance, snapshots, all, byId, unitById, diseaseMasterById };
+  return { config, master, collections, migrationLists, situation, governance, snapshots, all, byId, unitById, diseaseMasterById };
 }

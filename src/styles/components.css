@@ -861,3 +861,4 @@ mark.c-hit{background:#ffe08a;color:var(--ink);padding:0 2px;border-radius:2px}
   .c-legacycard dl{grid-template-columns:1fr}
   .c-legacycard{padding:var(--sp-4)}
 }
+.c-legacy__unv{margin:0 0 var(--sp-2);color:var(--alert-overdue);font-weight:600}

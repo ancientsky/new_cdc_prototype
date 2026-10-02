@@ -1,0 +1,737 @@
+{
+  "id": "migration.tuberculosis",
+  "type": "migration",
+  "title": "結核病專區（舊站）→ 新站",
+  "owner": "unit.chronic-infectious",
+  "steward": "慢性傳染病組承辦人",
+  "publishedAt": "2026-09-30",
+  "reviewedAt": "2026-09-30",
+  "reviewPeriodMonths": 3,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "舊站結核病專區逐頁移轉對照：每筆舊頁的標題、舊網址、處理方式（移轉／併入／封存／待移轉／不移轉）、新站對應內容與移轉後新增的治理要求。",
+  "keywords": [
+    "移轉清單",
+    "舊網址",
+    "301",
+    "結核病"
+  ],
+  "diseases": [
+    "disease.tuberculosis",
+    "disease.mdr-tb"
+  ],
+  "scope": {
+    "kind": "disease",
+    "disease": "disease.tuberculosis"
+  },
+  "legacyRoot": "https://www.cdc.gov.tw/Disease/SubIndex/{id}",
+  "showLegacyUntil": "2027-12-31",
+  "sourceNote": "開發環境連不到 www.cdc.gov.tw，子頁清單依規劃文件 §1.2 的 URL 模式與對官網的既有認識重建；舊網址 ID 不確定者以 {id} 佔位、同一模式下以 #片段區分頁籤。全部 verified:false，由權責單位在後台「移轉對照」逐筆確認後改 true。",
+  "items": [
+    {
+      "key": "intro",
+      "oldTitle": "疾病介紹",
+      "oldPath": "結核病／疾病介紹",
+      "oldUrl": "https://www.cdc.gov.tw/Disease/SubIndex/{id}",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "disease.tuberculosis",
+      "note": "舊專區首頁（疾病介紹頁籤）改為疾病頁：八個固定區塊、一分鐘重點、民眾／專業分眾。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "reviewPeriod",
+        "aiWhitelist",
+        "languages"
+      ]
+    },
+    {
+      "key": "intro-epidemiology",
+      "oldTitle": "流行病學",
+      "oldPath": "結核病／疾病介紹／流行病學",
+      "oldUrl": "https://www.cdc.gov.tw/Disease/SubIndex/{id}#epidemiology",
+      "oldType": "page",
+      "verified": false,
+      "status": "merged",
+      "target": "disease.tuberculosis",
+      "anchor": "situation",
+      "note": "併入「目前疫情與統計」區塊；數字改連開放資料集，不再手抄在頁面。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "reviewPeriod",
+        "aiWhitelist",
+        "languages",
+        "structuredData"
+      ]
+    },
+    {
+      "key": "intro-transmission",
+      "oldTitle": "傳染方式與潛伏期",
+      "oldPath": "結核病／疾病介紹／傳染方式",
+      "oldUrl": "https://www.cdc.gov.tw/Disease/SubIndex/{id}#transmission",
+      "oldType": "page",
+      "verified": false,
+      "status": "merged",
+      "target": "disease.tuberculosis",
+      "anchor": "transmission",
+      "note": "致病原、傳染方式、潛伏期與可傳染期合併為「怎麼傳染」區塊，潛伏期抽成一分鐘重點。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "reviewPeriod",
+        "aiWhitelist",
+        "languages"
+      ]
+    },
+    {
+      "key": "intro-symptoms",
+      "oldTitle": "臨床症狀",
+      "oldPath": "結核病／疾病介紹／臨床症狀",
+      "oldUrl": "https://www.cdc.gov.tw/Disease/SubIndex/{id}#symptoms",
+      "oldType": "page",
+      "verified": false,
+      "status": "merged",
+      "target": "disease.tuberculosis",
+      "anchor": "symptoms",
+      "note": "併入「症狀與警示徵象」區塊，新增警示徵象提示。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "reviewPeriod",
+        "aiWhitelist",
+        "languages"
+      ]
+    },
+    {
+      "key": "intro-treatment",
+      "oldTitle": "治療照護",
+      "oldPath": "結核病／疾病介紹／治療照護",
+      "oldUrl": "https://www.cdc.gov.tw/Disease/SubIndex/{id}#treatment",
+      "oldType": "page",
+      "verified": false,
+      "status": "merged",
+      "target": "disease.tuberculosis",
+      "anchor": "treatment",
+      "note": "併入「診斷與治療」區塊，加入都治與就醫費用說明。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "reviewPeriod",
+        "aiWhitelist",
+        "languages"
+      ]
+    },
+    {
+      "key": "bcg",
+      "oldTitle": "卡介苗接種",
+      "oldPath": "結核病／預防接種／卡介苗",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#bcg",
+      "oldType": "page",
+      "verified": false,
+      "status": "merged",
+      "target": "disease.tuberculosis",
+      "anchor": "vaccine",
+      "note": "併入疾病頁「疫苗」區塊；常見疑問另立 Q&A。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "reviewPeriod",
+        "aiWhitelist",
+        "languages"
+      ]
+    },
+    {
+      "key": "qa-list",
+      "oldTitle": "結核病 Q&A",
+      "oldPath": "結核病／Q&A",
+      "oldUrl": "https://www.cdc.gov.tw/Category/QAPage/{id}",
+      "oldType": "qa",
+      "verified": false,
+      "status": "merged",
+      "target": "disease.tuberculosis",
+      "anchor": "faq",
+      "note": "舊站單頁長清單拆為 9 則獨立 Q&A：每題有權責單位、審閱週期、依據正本與 AI 白名單狀態。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "reviewPeriod",
+        "basedOn",
+        "aiWhitelist",
+        "languages"
+      ]
+    },
+    {
+      "key": "qa-cough",
+      "oldTitle": "Q&A：咳嗽多久要懷疑是結核病？",
+      "oldPath": "結核病／Q&A",
+      "oldUrl": "https://www.cdc.gov.tw/Category/QAPage/{id}#cough",
+      "oldType": "qa",
+      "verified": false,
+      "status": "migrated",
+      "target": "faq.tb-cough-two-weeks",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "reviewPeriod",
+        "basedOn",
+        "aiWhitelist",
+        "languages"
+      ]
+    },
+    {
+      "key": "qa-ltbi",
+      "oldTitle": "Q&A：潛伏結核感染需要治療嗎？",
+      "oldPath": "結核病／Q&A",
+      "oldUrl": "https://www.cdc.gov.tw/Category/QAPage/{id}#ltbi",
+      "oldType": "qa",
+      "verified": false,
+      "status": "migrated",
+      "target": "faq.ltbi-treat-or-not",
+      "note": "依據正本改連潛伏結核感染診治指引；指引修訂時自動加註並開待辦。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "reviewPeriod",
+        "basedOn",
+        "aiWhitelist",
+        "languages"
+      ]
+    },
+    {
+      "key": "materials-poster",
+      "oldTitle": "宣導素材：咳嗽兩週要就醫（多國語言海報）",
+      "oldPath": "結核病／宣導素材",
+      "oldUrl": "https://www.cdc.gov.tw/Category/List/{id}#posters",
+      "oldType": "pdf",
+      "verified": false,
+      "status": "migrated",
+      "target": "publication.poster-tb-seven-languages",
+      "note": "七語海報建立出版品書目，翻譯狀態逐語言標示。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "languages",
+        "license"
+      ]
+    },
+    {
+      "key": "materials-video",
+      "oldTitle": "宣導素材：咳嗽兩週快去照胸部 X 光（影片）",
+      "oldPath": "結核病／宣導素材／影音",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#video",
+      "oldType": "media",
+      "verified": false,
+      "status": "migrated",
+      "target": "media.tb-cough-two-weeks",
+      "note": "影片補逐字稿與章節，標示依據正本；正本修訂時自動判定是否過時。",
+      "newRequirements": [
+        "owner",
+        "basedOn",
+        "machineReadable",
+        "accessibility"
+      ]
+    },
+    {
+      "key": "materials-migrant",
+      "oldTitle": "宣導素材：移工健康檢查（影片）",
+      "oldPath": "結核病／宣導素材／影音",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#migrant-video",
+      "oldType": "media",
+      "verified": false,
+      "status": "migrated",
+      "target": "media.migrant-worker-health-check",
+      "newRequirements": [
+        "owner",
+        "basedOn",
+        "machineReadable",
+        "accessibility",
+        "languages"
+      ]
+    },
+    {
+      "key": "guideline-current",
+      "oldTitle": "結核病診治指引（第八版）",
+      "oldPath": "結核病／指引及手冊",
+      "oldUrl": "https://www.cdc.gov.tw/File/Get/{id}#tb-guideline",
+      "oldType": "pdf",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.tb-guideline.2025-09-01",
+      "note": "PDF 轉為機讀版本文，建立版本鏈與「異動對照」；舊版自動標示已取代。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "versionChain",
+        "machineReadable",
+        "aiWhitelist"
+      ]
+    },
+    {
+      "key": "guideline-7th",
+      "oldTitle": "結核病診治指引（第七版）",
+      "oldPath": "結核病／指引及手冊／歷史版本",
+      "oldUrl": "https://www.cdc.gov.tw/Uploads/archives/%E7%B5%90%E6%A0%B8%E7%97%85%E8%A8%BA%E6%B2%BB%E6%8C%87%E5%BC%95%E7%AC%AC%E4%B8%83%E7%89%88.pdf",
+      "oldType": "pdf",
+      "verified": false,
+      "status": "archived",
+      "target": "doc.tb-guideline.2022-03-01",
+      "note": "舊版保留查閱：頁首紅色警示、noindex、退出 AI 白名單；舊 PDF 網址 301 至現行版。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "versionChain",
+        "machineReadable",
+        "aiWhitelist"
+      ]
+    },
+    {
+      "key": "ltbi-guideline",
+      "oldTitle": "潛伏結核感染診治指引",
+      "oldPath": "結核病／指引及手冊",
+      "oldUrl": "https://www.cdc.gov.tw/File/Get/{id}#ltbi-guideline",
+      "oldType": "pdf",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.ltbi-guideline.2024-01-01",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "versionChain",
+        "machineReadable",
+        "aiWhitelist"
+      ]
+    },
+    {
+      "key": "ltbi-guideline-old",
+      "oldTitle": "潛伏結核感染治療指引（舊版）",
+      "oldPath": "結核病／指引及手冊／歷史版本",
+      "oldUrl": "https://www.cdc.gov.tw/Uploads/archives/%E6%BD%9B%E4%BC%8F%E7%B5%90%E6%A0%B8%E6%84%9F%E6%9F%93%E6%B2%BB%E7%99%82%E6%8C%87%E5%BC%95.pdf",
+      "oldType": "pdf",
+      "verified": false,
+      "status": "archived",
+      "target": "doc.ltbi-guideline.2024-01-01",
+      "note": "舊版內容已併入現行指引，不另建版本頁；原檔封存，舊網址 301 至現行版。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "versionChain",
+        "machineReadable",
+        "aiWhitelist"
+      ]
+    },
+    {
+      "key": "contact-guideline",
+      "oldTitle": "結核病接觸者檢查指引",
+      "oldPath": "結核病／指引及手冊",
+      "oldUrl": "https://www.cdc.gov.tw/File/Get/{id}#contact-investigation",
+      "oldType": "pdf",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.tb-contact-investigation.2025-01-01",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "versionChain",
+        "machineReadable",
+        "aiWhitelist"
+      ]
+    },
+    {
+      "key": "dots-manual",
+      "oldTitle": "都治計畫作業手冊",
+      "oldPath": "結核病／指引及手冊",
+      "oldUrl": "https://www.cdc.gov.tw/File/Get/{id}#dots-manual",
+      "oldType": "pdf",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.dots-manual.2025-01-01",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "versionChain",
+        "machineReadable",
+        "aiWhitelist"
+      ]
+    },
+    {
+      "key": "tb-manual",
+      "oldTitle": "結核病防治工作手冊",
+      "oldPath": "結核病／指引及手冊",
+      "oldUrl": "https://www.cdc.gov.tw/File/Get/{id}#tb-manual",
+      "oldType": "pdf",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.tb-manual.2025-07-01",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "versionChain",
+        "machineReadable",
+        "aiWhitelist"
+      ]
+    },
+    {
+      "key": "tb-manual-2019",
+      "oldTitle": "結核病防治工作手冊（2019 年版）",
+      "oldPath": "結核病／指引及手冊／歷史版本",
+      "oldUrl": "https://www.cdc.gov.tw/Uploads/archives/%E7%B5%90%E6%A0%B8%E7%97%85%E9%98%B2%E6%B2%BB%E5%B7%A5%E4%BD%9C%E6%89%8B%E5%86%8A2019%E5%B9%B4%E7%89%88.pdf",
+      "oldType": "pdf",
+      "verified": false,
+      "status": "archived",
+      "target": "doc.tb-manual.2025-07-01",
+      "note": "2019 年版未建版本頁；原檔封存，舊網址 301 至現行版。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "versionChain",
+        "machineReadable",
+        "aiWhitelist"
+      ]
+    },
+    {
+      "key": "case-definition",
+      "oldTitle": "結核病病例定義",
+      "oldPath": "結核病／通報定義",
+      "oldUrl": "https://www.cdc.gov.tw/Category/DiseaseDefine/{id}#tuberculosis",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.tb-case-definition.2024-01-01",
+      "note": "病例定義改為文件版本鏈，通報時限表由傳染病主檔自動產生並連回本文件。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "versionChain",
+        "machineReadable",
+        "aiWhitelist"
+      ]
+    },
+    {
+      "key": "notify",
+      "oldTitle": "通報方式與時限",
+      "oldPath": "結核病／通報",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#notify",
+      "oldType": "page",
+      "verified": false,
+      "status": "merged",
+      "target": "service.notifiable-disease-report",
+      "note": "併入法定傳染病通報服務頁；時限不再手寫，由傳染病主檔自動產生。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "structuredData"
+      ]
+    },
+    {
+      "key": "lab",
+      "oldTitle": "檢驗方法與送驗須知",
+      "oldPath": "結核病／檢驗",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#lab",
+      "oldType": "page",
+      "verified": false,
+      "status": "merged",
+      "target": "labtest.tuberculosis",
+      "note": "檢體、容器、保存運送與時限改為結構化欄位，與通報時限自動比對一致性。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "structuredData"
+      ]
+    },
+    {
+      "key": "stats",
+      "oldTitle": "統計資料",
+      "oldPath": "結核病／統計資料",
+      "oldUrl": "https://www.cdc.gov.tw/Category/List/{id}#statistics",
+      "oldType": "list",
+      "verified": false,
+      "status": "merged",
+      "target": "dataset.tb-new-cases",
+      "note": "網頁靜態表格改為開放資料集與 API，標示更新頻率與授權。",
+      "newRequirements": [
+        "owner",
+        "structuredData",
+        "license"
+      ]
+    },
+    {
+      "key": "annual-report",
+      "oldTitle": "結核病年報（歷年 PDF）",
+      "oldPath": "結核病／統計資料／年報",
+      "oldUrl": "https://www.cdc.gov.tw/InfectionReport/Info/{id}?infoId={infoId}",
+      "oldType": "pdf",
+      "verified": false,
+      "status": "pending",
+      "note": "歷年年報 PDF 尚待逐年建立出版品書目（ISBN、GPN）與機讀摘要；完成前舊網址暫不轉址。",
+      "newRequirements": [
+        "owner",
+        "machineReadable",
+        "license"
+      ],
+      "dueAt": "2026-12-31"
+    },
+    {
+      "key": "dots",
+      "oldTitle": "都治（DOTS）",
+      "oldPath": "結核病／防治政策／都治",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#dots",
+      "oldType": "page",
+      "verified": false,
+      "status": "merged",
+      "target": "topic.tb-prevention",
+      "note": "併入結核病防治專區；作業細節改連都治計畫作業手冊，民眾版另立 Q&A。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "reviewPeriod",
+        "aiWhitelist",
+        "languages"
+      ]
+    },
+    {
+      "key": "ltbi",
+      "oldTitle": "潛伏結核感染治療",
+      "oldPath": "結核病／防治政策／潛伏結核感染",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#ltbi",
+      "oldType": "page",
+      "verified": false,
+      "status": "merged",
+      "target": "service.ltbi-treatment",
+      "note": "改為申請服務頁：對象、步驟、應備文件、處理天數。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "reviewPeriod",
+        "aiWhitelist",
+        "languages",
+        "structuredData"
+      ]
+    },
+    {
+      "key": "contact",
+      "oldTitle": "接觸者檢查",
+      "oldPath": "結核病／防治政策／接觸者檢查",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#contact",
+      "oldType": "page",
+      "verified": false,
+      "status": "merged",
+      "target": "faq.tb-contact-screening",
+      "note": "民眾版改為 Q&A；專業規定見接觸者檢查指引。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "reviewPeriod",
+        "basedOn",
+        "aiWhitelist",
+        "languages"
+      ]
+    },
+    {
+      "key": "mdr",
+      "oldTitle": "多重抗藥性結核病醫療照護體系",
+      "oldPath": "結核病／防治政策／抗藥性結核病",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#mdr",
+      "oldType": "page",
+      "verified": false,
+      "status": "merged",
+      "target": "topic.tb-prevention",
+      "note": "併入防治專區「抗藥性結核病醫療照護體系（TMTC）」段落與疾病頁專業版防治計畫。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "reviewPeriod",
+        "aiWhitelist",
+        "languages"
+      ]
+    },
+    {
+      "key": "mdr-hospitals",
+      "oldTitle": "抗藥性結核病醫療照護團隊醫院名單",
+      "oldPath": "結核病／防治政策／抗藥性結核病／團隊醫院",
+      "oldUrl": "https://www.cdc.gov.tw/Category/ListContent/{id}?uaid={uaid}",
+      "oldType": "list",
+      "verified": false,
+      "status": "pending",
+      "note": "名單需轉為結構化資料集（院所代碼、地址、聯絡窗口）並建立更新頻率後上架；完成前保留舊頁。",
+      "newRequirements": [
+        "owner",
+        "structuredData",
+        "reviewPeriod"
+      ],
+      "dueAt": "2026-11-30"
+    },
+    {
+      "key": "end-tb-2035",
+      "oldTitle": "2035 消除結核計畫",
+      "oldPath": "結核病／防治政策／2035 消除結核",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#end-tb-2035",
+      "oldType": "page",
+      "verified": false,
+      "status": "merged",
+      "target": "topic.tb-prevention",
+      "note": "計畫目標與策略併入防治專區；年度成果改由新聞稿與資料集呈現。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "reviewPeriod",
+        "aiWhitelist",
+        "languages"
+      ]
+    },
+    {
+      "key": "high-risk",
+      "oldTitle": "高風險族群主動篩檢",
+      "oldPath": "結核病／防治政策／高風險族群",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#high-risk",
+      "oldType": "page",
+      "verified": false,
+      "status": "merged",
+      "target": "topic.tb-prevention",
+      "note": "矯正機關、長照機構、移工、山地鄉等族群篩檢併入防治專區與疾病頁專業版。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "reviewPeriod",
+        "aiWhitelist",
+        "languages"
+      ]
+    },
+    {
+      "key": "subsidy",
+      "oldTitle": "結核病醫療費用補助及隔離治療",
+      "oldPath": "結核病／防治政策／補助",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#subsidy",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "service.tb-treatment-subsidy",
+      "note": "改為申請服務頁，載明法源、步驟與聯絡窗口。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "reviewPeriod",
+        "aiWhitelist",
+        "languages",
+        "structuredData"
+      ]
+    },
+    {
+      "key": "foreigner",
+      "oldTitle": "外籍人士健康檢查（結核病）",
+      "oldPath": "結核病／外籍人士健檢",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#foreigner",
+      "oldType": "page",
+      "verified": false,
+      "status": "merged",
+      "target": "faq.tb-foreigner-health-check",
+      "note": "併入 Q&A；移工多語素材見新住民與移工健康專區。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "reviewPeriod",
+        "basedOn",
+        "aiWhitelist",
+        "languages"
+      ]
+    },
+    {
+      "key": "research",
+      "oldTitle": "研究成果：移工結核病主動發現",
+      "oldPath": "結核病／研究成果",
+      "oldUrl": "https://www.cdc.gov.tw/Category/ListContent/{id}?uaid={uaid}#migrant-tb-research",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "research.2025-migrant-tb-active-case-finding",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "license"
+      ]
+    },
+    {
+      "key": "training-slides",
+      "oldTitle": "結核病教育訓練教材（投影片）",
+      "oldPath": "結核病／教育訓練",
+      "oldUrl": "https://www.cdc.gov.tw/Category/List/{id}#training",
+      "oldType": "pdf",
+      "verified": false,
+      "status": "pending",
+      "note": "投影片 40 餘份，待權責單位挑選現行版本、補講者備註與機讀摘要後上架；過期教材不移轉。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "machineReadable",
+        "basedOn"
+      ],
+      "dueAt": "2026-12-15"
+    },
+    {
+      "key": "links",
+      "oldTitle": "相關連結",
+      "oldPath": "結核病／相關連結",
+      "oldUrl": "https://www.cdc.gov.tw/Category/List/{id}#links",
+      "oldType": "external",
+      "verified": false,
+      "status": "merged",
+      "target": "topic.tb-prevention",
+      "note": "外部連結併入防治專區，納入每日連結健康檢查。",
+      "newRequirements": [
+        "owner",
+        "linkCheck"
+      ]
+    },
+    {
+      "key": "news-list",
+      "oldTitle": "結核病最新消息",
+      "oldPath": "結核病／最新消息",
+      "oldUrl": "https://www.cdc.gov.tw/Bulletin/List/{id}?page=1#tuberculosis",
+      "oldType": "news-list",
+      "verified": false,
+      "status": "merged",
+      "target": "disease.tuberculosis",
+      "note": "疾病頁自動帶出關聯新聞；新聞稿依據正本修訂時自動加註。",
+      "newRequirements": [
+        "basedOn"
+      ]
+    },
+    {
+      "key": "news-world-tb-day-2025",
+      "oldTitle": "新聞稿：世界結核病日（2025）",
+      "oldPath": "結核病／最新消息",
+      "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/{id}?typeid=9#2025-world-tb-day",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "news.2025-03-24-world-tb-day",
+      "newRequirements": [
+        "owner",
+        "basedOn"
+      ]
+    },
+    {
+      "key": "event-2019",
+      "oldTitle": "2019 世界結核病日健走活動報名",
+      "oldPath": "結核病／活動訊息",
+      "oldUrl": "https://www.cdc.gov.tw/Category/Page/{id}#event-2019",
+      "oldType": "page",
+      "verified": false,
+      "status": "dropped",
+      "note": "過期活動頁（報名已於 2019 年截止），無保存價值；不移轉、不轉址，伺服器回 410。"
+    }
+  ]
+}

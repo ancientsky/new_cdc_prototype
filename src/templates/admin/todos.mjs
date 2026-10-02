@@ -63,6 +63,7 @@ ${mmrCard(site, url) ?? html`<div class="adm-box adm-box--info"><strong>MMR 事�
 <section class="adm-card" aria-labelledby="t-h"><h2 id="t-h">待辦清單</h2>
   <div class="adm-filters"><div class="adm-field"><label for="t-unit">單位</label><select id="t-unit">${unitOptions(site, { all: true, selected: 'all' })}</select></div>
     <label class="adm-pill" style="align-self:end"><input type="checkbox" id="t-hide-done"><span>隱藏已完成（示範）</span></label><span class="adm-count-note" id="t-note" aria-live="polite"></span></div>
+  <span id="migration-pending" aria-hidden="true"></span><!-- 移轉進度頁的深連結錨點（todos.js 以 #類型 選頁籤） -->
   <div class="adm-tabs" role="tablist" aria-label="待辦類型">${kinds.map((k, i) => html`<button type="button" role="tab" id="tab-${k}" aria-controls="panel-${k}" aria-selected="${i === 0 ? 'true' : 'false'}" tabindex="${i === 0 ? '0' : '-1'}" data-kind="${k}">${kindName(k)}<span class="adm-count" data-kcount="${k}">${todos.filter((t) => t.kind === k).length}</span></button>`)}</div>
   ${kinds.map((k, i) => { const list = todos.filter((t) => t.kind === k); return html`<div role="tabpanel" id="panel-${k}" aria-labelledby="tab-${k}" data-panel="${k}" ${i === 0 ? '' : 'hidden'}>
     <div class="adm-tablewrap"><table class="adm-table"><thead><tr><th scope="col">單位</th><th scope="col">內容</th><th scope="col">期限</th><th scope="col">狀態</th><th scope="col">前往</th><th scope="col">處理</th></tr></thead><tbody>${list.map(rowOf)}</tbody></table></div>

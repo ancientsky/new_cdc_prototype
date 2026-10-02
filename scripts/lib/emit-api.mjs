@@ -3,7 +3,7 @@
 // 靜態站無法送 ETag／Last-Modified header → meta.etag（data 內容 sha1 前 12 碼）與 meta.lastModified（集合最大 reviewedAt）。
 import { createHash } from 'node:crypto';
 import { config, siteOrigin } from '../../site.config.mjs';
-import { pathOf, mdPathOf, WHITELIST_REASON_LABELS, LIFECYCLE_LABELS, TODO_KIND_LABELS, NOTICE_TYPES } from './governance.mjs';
+import { pathOf, mdPathOf, WHITELIST_REASON_LABELS, LIFECYCLE_LABELS, TODO_KIND_LABELS, NOTICE_TYPES, legacyPathOf, isLegacyPattern } from './governance.mjs';
 import { buildOpenApi } from './openapi.mjs';
 
 export const etagOf = (data) => createHash('sha1').update(JSON.stringify(data) ?? 'null').digest('hex').slice(0, 12);
@@ -81,9 +81,47 @@ export function diseasesOf(item) {
   return [...set];
 }
 
-/** 301 對照表：失效版 → 現行版；family 穩定網址 → 現行版；現行官網 legacyUrls → 新路徑 */
+/**
+ * 舊網址正規化 key（v1/legacy-map.json 的 key；/legacy/、404 頁與 analyze-404-log 共用同一規則）：
+ * 去網域、去 hash、百分比編碼統一（decodeURI 後 encodeURI，失敗保留原樣）、小寫、去尾斜線（根目錄保留 "/"）、
+ * query 去掉 page 參數（其餘參數保留原順序；無剩餘參數則去掉 "?"）。
+ *   https://www.cdc.gov.tw/Bulletin/List/AbC/?page=2  →  /bulletin/list/abc
+ */
+export function legacyKey(input) {
+  let s = String(input ?? '').trim().replace(/#.*$/, '').replace(/^[a-z][a-z0-9+.-]*:\/\/[^/?#]*/i, '');
+  try { s = encodeURI(decodeURI(s)).replace(/%7B/gi, '{').replace(/%7D/gi, '}'); } catch { /* 編碼不完整：保留原字串 */ }
+  const i = s.indexOf('?');
+  let p = (i < 0 ? s : s.slice(0, i)) || '/';
+  if (!p.startsWith('/')) p = `/${p}`;
+  p = p.replace(/\/+$/, '') || '/';
+  const qs = (i < 0 ? '' : s.slice(i + 1)).split('&').filter((kv) => kv && kv.split('=')[0].toLowerCase() !== 'page');
+  return `${p}${qs.length ? `?${qs.join('&')}` : ''}`.toLowerCase();
+}
+
+/** 舊網址是否屬現行官網（同網域換站才轉址；其他網域的 legacyUrls 不進伺服器對照檔） */
+const isLegacyHost = (url) => {
+  const m = String(url ?? '').match(/^https?:\/\/([^/?#]+)/i);
+  if (!m) return String(url ?? '').startsWith('/');
+  try { return m[1].toLowerCase() === new URL(config.legacyOrigin).host.toLowerCase(); } catch { return false; }
+};
+
+/** 301 對照表：失效版 → 現行版；family 穩定網址 → 現行版；現行官網 legacyUrls → 新路徑；移轉清單（kind: migration）舊頁 → 新頁 */
 export function buildRedirects(site) {
   const out = [];
+  // 移轉清單（ARCHITECTURE 13.1）：from＝舊網址去網域與 hash；to＝target 路徑＋anchor（target 為失效版 ⇒ 現行版）。
+  // 含 {id} 佔位者 pattern:true（只是 URL 模式），不進伺服器對照檔與 legacy-map，只進文件。dropped／無 target 的 pending 不轉址。
+  const migrationKeys = new Set();
+  const migration = [];
+  for (const list of site.migration?.lists ?? []) {
+    for (const it of list.items) {
+      if (!it.to || it.status === 'dropped') continue;
+      const e = { from: it.fromPath, to: it.to, toUrl: absUrl(it.to), status: 301, kind: 'migration', itemId: it.toId, listId: list.id, key: it.key,
+        oldUrl: it.oldUrl, oldTitle: it.oldTitle, migrationStatus: it.status, verified: !!it.verified, pattern: !!it.pattern,
+        ...(it.redirectsToCurrent ? { currentId: it.toId, archivedAt: it.targetPath, targetId: it.target } : {}) };
+      migration.push(e);
+      migrationKeys.add(legacyKey(e.from));
+    }
+  }
   for (const f of site.gov.families) {
     const cur = f.current ? site.byId.get(f.current) : null;
     if (!cur) continue;
@@ -98,10 +136,130 @@ export function buildRedirects(site) {
     if (item.status !== 'published' && item.status !== 'archived') continue;
     const target = item.gov.superseded ? site.byId.get(item.gov.currentId) ?? item : item;
     for (const from of item.legacyUrls ?? []) {
-      out.push({ from, to: pathOf(target), toUrl: absUrl(pathOf(target)), status: 301, kind: 'legacy', itemId: item.id, ...(target !== item ? { currentId: target.id, archivedAt: pathOf(item) } : {}) });
+      const fromPath = legacyPathOf(from);
+      if (migrationKeys.has(legacyKey(fromPath))) continue; // 已由移轉清單對照（較精確：含錨點、狀態、核對）
+      out.push({ from, fromPath, to: pathOf(target), toUrl: absUrl(pathOf(target)), status: 301, kind: 'legacy', itemId: item.id, pattern: isLegacyPattern(from), ...(target !== item ? { currentId: target.id, archivedAt: pathOf(item) } : {}) });
     }
   }
+  out.push(...migration);
   return out;
+}
+
+/**
+ * 伺服器對照檔與 legacy-map 用的轉址清單（純由 redirects.json 推導）：
+ * 只取舊網址 → 新網址的 301（kind migration／legacy），排除 pattern（{id} 佔位）、非現行官網網域、根目錄 "/"、
+ * 轉到自己；同一正規化 key 有多個不同目的地 ⇒ 移轉清單優先，否則列為 ambiguous 不輸出（避免把舊總覽頁導到任一子頁）。
+ * 不含 superseded（失效版頁面保留存取）與 family-latest（新站內部 302，由部署設定另處理）。
+ */
+export function serverRedirects(redirects) {
+  const groups = new Map();
+  for (const r of redirects) {
+    if (r.status !== 301 || (r.kind !== 'migration' && r.kind !== 'legacy') || r.pattern) continue;
+    const src = r.kind === 'legacy' ? r.from : r.oldUrl ?? r.from;
+    if (!isLegacyHost(src)) continue;
+    const from = r.fromPath ?? legacyPathOf(r.from);
+    const key = legacyKey(from);
+    if (key === '/' || key === legacyKey(r.to)) continue;
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push({ ...r, from, key });
+  }
+  const entries = [], ambiguous = [];
+  for (const [key, rs] of groups) {
+    const mig = rs.filter((r) => r.kind === 'migration');
+    const pool = mig.length ? mig : rs;
+    const tos = [...new Set(pool.map((r) => r.to))];
+    if (tos.length > 1) { ambiguous.push({ key, from: pool[0].from, candidates: tos, itemIds: [...new Set(pool.map((r) => r.itemId))] }); continue; }
+    const r = pool[0];
+    entries.push({ key, from: r.from, to: r.to, status: 301, kind: r.kind, itemId: r.itemId, verified: r.kind === 'migration' ? !!r.verified : null, listId: r.listId ?? null });
+  }
+  entries.sort((a, b) => a.key.localeCompare(b.key));
+  ambiguous.sort((a, b) => a.key.localeCompare(b.key));
+  return { entries, ambiguous };
+}
+
+const reEscape = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const xmlEscape = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const splitQuery = (from) => { const i = from.indexOf('?'); return i < 0 ? [from, ''] : [from.slice(0, i), from.slice(i + 1)]; };
+function serverHeader(site, entries, ambiguous, comment, extra = []) {
+  const unverified = entries.filter((e) => e.verified === false).length;
+  return [
+    `${comment} 舊網址 → 新網址 301 對照（由 v1/redirects.json 自動產生，請勿手改；ARCHITECTURE 13.1）`,
+    `${comment} 產生日：${site.today}；${entries.length} 筆（其中移轉清單未核對 verified:false ${unverified} 筆，上線前請權責單位確認）`,
+    `${comment} 不含：{id} 佔位的 URL 模式、失效版文件頁（原頁保留）、版本族穩定網址（302）；同一舊網址對到多個新頁者 ${ambiguous.length} 筆不輸出`,
+    `${comment} 目標路徑不含 basePath（正式站部署於網域根）；比對不分大小寫`,
+    ...extra.map((x) => `${comment} ${x}`),
+  ];
+}
+
+/** Nginx：map $request_uri → 新網址（引號包住，避免 # 被當成註解） */
+export function toNginxMap(site, { entries, ambiguous }) {
+  const lines = serverHeader(site, entries, ambiguous, '#', [
+    '用法（http 區塊）：map $request_uri $cdc_new_uri { default ""; include /etc/nginx/redirects/nginx.map; }',
+    '        （server 區塊）：if ($cdc_new_uri) { return 301 $cdc_new_uri; }',
+  ]);
+  for (const e of entries) {
+    const [p, q] = splitQuery(e.from);
+    const re = q ? `^${reEscape(p)}/?\\?${reEscape(q)}(?:&.*)?$` : `^${reEscape(p.replace(/\/+$/, ''))}/?(?:\\?.*)?$`;
+    lines.push(`"~*${re}" "${e.to}";${e.verified === false ? ' # unverified' : ''}`);
+  }
+  return `${lines.join('\n')}\n`;
+}
+
+/** IIS URL Rewrite：rewriteMap（key＝REQUEST_URI，含 query）＋一條套用規則；貼進 web.config 的 <system.webServer> */
+export function toIisRewriteMap(site, { entries, ambiguous }) {
+  const head = serverHeader(site, entries, ambiguous, '', ['用法：把 <rewrite> 內容併入 web.config 的 <system.webServer>；rewriteMap 比對 {REQUEST_URI}（含 query）。']);
+  const adds = [];
+  for (const e of entries) {
+    const keys = new Set([e.from]);
+    const [p, q] = splitQuery(e.from);
+    keys.add(`${p.endsWith('/') ? p.replace(/\/+$/, '') : `${p}/`}${q ? `?${q}` : ''}`);
+    for (const k of keys) if (k && k !== '/') adds.push(`      <add key="${xmlEscape(k)}" value="${xmlEscape(e.to)}" />${e.verified === false ? ' <!-- unverified -->' : ''}`);
+  }
+  return [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    `<!--\n${head.map((l) => `  ${l.trim()}`).join('\n')}\n-->`,
+    '<rewrite>',
+    '  <rewriteMaps>',
+    '    <rewriteMap name="CdcLegacyRedirects" defaultValue="" ignoreCase="true">',
+    ...adds,
+    '    </rewriteMap>',
+    '  </rewriteMaps>',
+    '  <rules>',
+    '    <rule name="CdcLegacyRedirect" stopProcessing="true">',
+    '      <match url=".*" />',
+    '      <conditions><add input="{CdcLegacyRedirects:{REQUEST_URI}}" pattern="(.+)" /></conditions>',
+    '      <action type="Redirect" url="{C:1}" redirectType="Permanent" appendQueryString="false" />',
+    '    </rule>',
+    '  </rules>',
+    '</rewrite>',
+    '',
+  ].join('\n');
+}
+
+/** Netlify／Cloudflare Pages _redirects：`from to 301`；含 query 的舊網址以 Netlify 參數比對語法（Cloudflare 不支援 query 比對，會比對路徑） */
+export function toRedirectsFile(site, { entries, ambiguous }) {
+  const lines = serverHeader(site, entries, ambiguous, '#');
+  for (const e of entries) {
+    const [p, q] = splitQuery(e.from);
+    const params = q ? ` ${q.split('&').filter(Boolean).join(' ')}` : '';
+    lines.push(`${p}${params}  ${e.to}  301`);
+  }
+  return `${lines.join('\n')}\n`;
+}
+
+/** v1/legacy-map.json：{ "<正規化舊網址>": "<新路徑>" }＋patterns（{id} 佔位，只供說明，不可自動轉址）＋gone（不移轉，建議 410） */
+export function buildLegacyMap(site, redirects, server = serverRedirects(redirects)) {
+  const map = {};
+  for (const e of server.entries) map[e.key] = e.to;
+  const patterns = redirects.filter((r) => r.pattern && (r.kind === 'migration' || r.kind === 'legacy'))
+    .map((r) => ({ pattern: legacyKey(r.fromPath ?? r.from), from: r.fromPath ?? legacyPathOf(r.from), to: r.to, kind: r.kind, itemId: r.itemId, listId: r.listId ?? null, key: r.key ?? null, oldTitle: r.oldTitle ?? null }))
+    .filter((x, i, a) => a.findIndex((y) => y.pattern === x.pattern && y.to === x.to) === i);
+  const gone = [];
+  for (const list of site.migration?.lists ?? []) for (const it of list.items) {
+    if (it.status !== 'dropped') continue;
+    gone.push({ key: legacyKey(it.fromPath), from: it.fromPath, pattern: !!it.pattern, listId: list.id, migrationKey: it.key, oldTitle: it.oldTitle, note: it.note ?? null, status: 410 });
+  }
+  return { map, patterns, gone, ambiguous: server.ambiguous };
 }
 
 export function emitApi(site, write) {
@@ -221,8 +379,25 @@ export function emitApi(site, write) {
       { lastModified: lastModifiedOf(items) ?? site.today }, {}, `任務入口：${task.label}`);
   }
 
-  // 301 對照
-  put('v1/redirects.json', buildRedirects(site), { lastModified: site.today }, {}, '舊版／舊網址 → 正本對照（301）');
+  // 301 對照（含移轉清單）＋伺服器對照檔三格式＋精簡 legacy-map（ARCHITECTURE 13.1）
+  const redirects = buildRedirects(site);
+  const byKind = redirects.reduce((o, r) => ({ ...o, [r.kind]: (o[r.kind] ?? 0) + 1 }), {});
+  put('v1/redirects.json', redirects, { lastModified: site.today, byKind, patterns: redirects.filter((r) => r.pattern).length, unverified: redirects.filter((r) => r.verified === false).length }, {}, '舊版／舊網址 → 正本對照（301；kind：superseded／family-latest／legacy／migration；pattern＝{id} 佔位的 URL 模式，不進伺服器對照檔）');
+  const server = serverRedirects(redirects);
+  for (const [file, text, description] of [
+    ['redirects/nginx.map', toNginxMap(site, server), 'Nginx map（$request_uri → 新網址）'],
+    ['redirects/web.config.rewritemap.xml', toIisRewriteMap(site, server), 'IIS URL Rewrite rewriteMap＋規則'],
+    ['redirects/_redirects', toRedirectsFile(site, server), 'Netlify／Cloudflare Pages _redirects'],
+  ]) {
+    write(file, text);
+    manifest.push({ path: `/${file}`, url: absUrl(`/${file}`), description: `${description}：舊網址 → 新網址 301（由 redirects.json 產生，不含 pattern 項）`, count: server.entries.length });
+  }
+  const lm = buildLegacyMap(site, redirects, server);
+  put('v1/legacy-map.json', lm.map, {
+    lastModified: site.today, count: Object.keys(lm.map).length,
+    keyRule: '去網域、去 hash、百分比編碼統一、小寫、去尾斜線（根目錄保留 /）、query 去掉 page 參數（其餘保留原順序）',
+    valueRule: '新站路徑（不含 basePath 與語言前綴；可含 #錨點）',
+  }, { patterns: lm.patterns, gone: lm.gone, ambiguous: lm.ambiguous }, '舊網址精簡對照 { 正規化舊網址: 新路徑 }（404 頁與 /legacy/ 查詢用）；patterns 為 {id} 佔位的 URL 模式（不可自動轉址）、gone 為不移轉（建議 410）');
 
   // 治理
   const todos = site.gov.todos;

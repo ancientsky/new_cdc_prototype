@@ -65,7 +65,12 @@
     "高風險族群篩檢"
   ],
   "legacyUrls": [
-    "https://www.cdc.gov.tw/Disease/SubIndex/{id}#tb-prevention"
+    "https://www.cdc.gov.tw/Disease/SubIndex/{id}#tb-prevention",
+    "https://www.cdc.gov.tw/Category/MPage/{id}#dots",
+    "https://www.cdc.gov.tw/Category/MPage/{id}#mdr",
+    "https://www.cdc.gov.tw/Category/MPage/{id}#end-tb-2035",
+    "https://www.cdc.gov.tw/Category/MPage/{id}#high-risk",
+    "https://www.cdc.gov.tw/Category/List/{id}#links"
   ],
   "slug": "tb-prevention",
   "kind": "program",

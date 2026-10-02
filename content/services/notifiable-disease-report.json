@@ -132,5 +132,8 @@
       "title": "Notifiable disease reporting (physicians and facilities)",
       "summary": "Physicians must report suspected notifiable diseases via NIDRS within category-specific deadlines (24 hours for categories 1–2, one week for most category 3)."
     }
-  }
+  },
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/{id}#notify"
+  ]
 }

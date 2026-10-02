@@ -1,5 +1,5 @@
 // /admin/migration/ 移轉進度：逐筆表格篩選、匯出 CSV、對照檔預覽（讀取已建置的 redirects/ 檔案前 8 行）。
-import { $, $$, followUnit, toCSV, downloadText, today } from './common.js';
+import { $, $$, toCSV, downloadText, today } from './common.js';
 
 const rows = $$('#mg-table tbody tr');
 function apply() {
@@ -12,8 +12,8 @@ function apply() {
   }
   $('#mg-note').textContent = rows.length ? `${n} / ${rows.length} 筆` : '';
 }
-['#mg-q', '#mg-st', '#mg-vf', '#mg-list'].forEach((s) => $(s)?.addEventListener('input', apply));
-followUnit($('#mg-unit'), apply);
+// 單位篩選預設「全部單位」：移轉清單依專區分屬各單位，總覽比跟隨示範身分更有用
+['#mg-q', '#mg-st', '#mg-vf', '#mg-list', '#mg-unit'].forEach((s) => $(s)?.addEventListener('input', apply));
 $('#mg-csv')?.addEventListener('click', () => {
   const head = ['舊標題', '舊網址', '狀態', '核對', '對應新頁', '權責單位'];
   const data = rows.filter((r) => !r.hidden).map((tr) => {

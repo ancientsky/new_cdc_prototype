@@ -6,7 +6,7 @@ export const MIG_STATUS = ['migrated', 'merged', 'archived', 'pending', 'dropped
 export const MIG_LABEL = { migrated: '已移轉', merged: '已併入', archived: '已封存', pending: '待確認', dropped: '不再提供' };
 export const MIG_BADGE = { migrated: 'ok', merged: 'info', archived: 'gray', pending: 'warn', dropped: 'gray' };
 export const MIG_TYPE_LABEL = { page: '頁面', qa: 'Q&A', pdf: 'PDF', 'news-list': '新聞列表', media: '影音', list: '列表', external: '外部連結' };
-export const REQ_LABEL = { owner: '權責單位', reviewedAt: '審閱日', basedOn: '依據標示', machineReadable: '機讀版', languages: '多語' };
+export const REQ_LABEL = { owner: '權責單位', reviewedAt: '審閱日', reviewPeriod: '審閱週期', aiWhitelist: 'AI 白名單', languages: '多語', structuredData: '結構化資料', basedOn: '依據標示', license: '授權標示', machineReadable: '機讀版', accessibility: '無障礙', versionChain: '版本鏈', linkCheck: '連結檢查' };
 export const hasPh = (u) => /[{}]/.test(String(u ?? ''));
 
 export const daysTo = (today, iso) => (iso ? Math.round((new Date(`${iso}T00:00:00Z`) - new Date(`${today}T00:00:00Z`)) / 86400000) : null);
@@ -29,7 +29,7 @@ export function migrationData(site) {
   const rows = [];
   for (const list of lists) {
     for (const it of list.items ?? []) {
-      const tg = it.target ? site.byId.get(it.target) : null;
+      const tg = (it.toId ?? it.target) ? site.byId.get(it.toId ?? it.target) : null;
       const owner = it.owner ?? tg?.owner ?? list.owner;
       const front = tg ? frontPath(tg) : null;
       rows.push({

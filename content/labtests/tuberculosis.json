@@ -107,5 +107,8 @@
       "title": "Tuberculosis: laboratory tests and specimen requirements",
       "summary": "Three sputum samples (at least one early-morning) of 3–5 mL each, refrigerated and sent within 72 hours for smear, molecular tests, culture and drug susceptibility testing."
     }
-  }
+  },
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/{id}#lab"
+  ]
 }

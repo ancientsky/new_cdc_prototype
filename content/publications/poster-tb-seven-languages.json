@@ -76,5 +76,8 @@
       "title": "Ho hai tuần hãy đi khám: áp phích bệnh lao bằng bảy ngôn ngữ",
       "summary": "Áp phích bệnh lao bằng bảy ngôn ngữ: ho trên hai tuần hãy đi khám; điều trị miễn phí và có người hỗ trợ uống thuốc."
     }
-  }
+  },
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/{id}#posters"
+  ]
 }

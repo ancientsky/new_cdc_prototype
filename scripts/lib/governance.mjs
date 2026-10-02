@@ -21,6 +21,10 @@
 //      item.linkChecks[field]）。broken ⇒ link-broken 待辦（medium）；未檢查標 unchecked、不產生待辦。
 //  R12 檢驗一致性：labtest.sendWithinHours > 主檔 notifyWithinHours ⇒ labtest-inconsistent（low）。
 //  R13 通報時限表：site.gov.notifyTable 由 master/diseases.json＋labtests＋疾病頁 professional.caseDefinitionDoc 推導。
+// 第五輪（ARCHITECTURE.md 13.1）：
+//  R14 移轉清單：site.migrationLists（content/migration/*.json）→ site.migration（lists、byTarget、stats、pending）；
+//      以 target 反向掛 item.gov.legacy = { urls, items, show, showUntil }；today > showLegacyUntil ⇒ show=false（自動退場）。
+//      status pending 且 owner 存在 ⇒ migration-pending 待辦（medium）；verified:false 不開待辦，只在後台列出。
 // annotations[]：{ kind, level, text, href（目標內容 id，沿用骨架語意）, targetId, path（目標前台路徑） }
 //  另：白名單型別政策（allowedTypes 民眾＋專業、allowedTypesPro 只進專業）、失效版仍被引用、態勢層逾期。
 import { createHash } from 'node:crypto';
@@ -67,7 +71,26 @@ export const TODO_KIND_LABELS = {
   'media-no-transcript': '影音缺逐字稿',
   'link-broken': '外部連結失效',
   'labtest-inconsistent': '檢驗與通報時限不一致',
+  'migration-pending': '舊頁待移轉',
 };
+
+/** 移轉清單狀態（ARCHITECTURE 13.1） */
+export const MIGRATION_STATUS_LABELS = { migrated: '已移轉', merged: '已併入', archived: '已封存', pending: '待移轉', dropped: '不移轉' };
+/** 移轉後新增的治理要求（展示用 chip） */
+export const MIGRATION_REQUIREMENT_LABELS = {
+  owner: '權責單位', reviewedAt: '審閱日', reviewPeriod: '審閱週期', basedOn: '依據正本', machineReadable: '機讀版', languages: '多語狀態',
+  versionChain: '版本鏈', aiWhitelist: 'AI 白名單', structuredData: '結構化資料', accessibility: '無障礙', license: '授權標示', linkCheck: '連結健康檢查',
+};
+/** 舊頁待移轉的預設完成期限（清單 reviewedAt 起算） */
+export const MIGRATION_PENDING_DAYS = 60;
+const PLACEHOLDER_SEG_RE = /\{[^}]*\}/;
+/** 舊網址 → 站內 path＋query（去網域、去 hash，保留大小寫）：https://www.cdc.gov.tw/Disease/SubIndex/{id}#x → /Disease/SubIndex/{id} */
+export function legacyPathOf(url) {
+  const s = String(url ?? '').trim().replace(/#.*$/, '').replace(/^[a-z][a-z0-9+.-]*:\/\/[^/?#]*/i, '');
+  return !s ? '/' : s.startsWith('/') ? s : `/${s}`;
+}
+/** 舊網址含 URI Template 佔位（{id}）⇒ 只是 URL 模式，不能當實際轉址來源 */
+export const isLegacyPattern = (url) => PLACEHOLDER_SEG_RE.test(legacyPathOf(url));
 
 export const SEVERITY_RANK = { high: 0, medium: 1, low: 2 };
 
@@ -603,6 +626,9 @@ export function applyGovernance(site) {
   if (situationGov.overdue) addTodo({ id: `situation-overdue:${sit.publishedAt}`, kind: 'situation-overdue', itemId: 'situation.current', itemType: 'situation', itemTitle: '疫情態勢層', owner: sit.publisher,
     dueAt: sit.nextReviewAt, href: '/situation/', severity: 'high', text: `疫情態勢層（${sit.publishedAt} 發布、資料日 ${sit.dataDate}）已過下次審閱日 ${sit.nextReviewAt}，請疫情中心重新發布或確認` });
 
+  // ── R14 移轉清單 ──
+  site.migration = buildMigration(site, { addTodo, unitName });
+
   todos.sort((a, b) => (b.overdue - a.overdue) || (a.dueAt ?? '').localeCompare(b.dueAt ?? '') || SEVERITY_RANK[a.severity] - SEVERITY_RANK[b.severity] || a.id.localeCompare(b.id));
   const ids = new Set();
   for (const t of todos) { if (ids.has(t.id)) warnings.push(`待辦 id 重複：${t.id}`); ids.add(t.id); }
@@ -640,6 +666,78 @@ export function applyGovernance(site) {
   Object.defineProperty(site.gov, 'kpi', { enumerable: true, configurable: true, get: () => computeKpi(site) });
   Object.defineProperty(site.gov, 'kpiByKey', { enumerable: false, configurable: true, get: () => Object.fromEntries(computeKpi(site).map((k) => [k.key, k])) });
   return site.gov;
+}
+
+/**
+ * R14 移轉清單 → site.migration，並把 gov.legacy 掛到 target 內容。
+ * lists[].items[] 擴充欄位：listId、owner、fromPath（去網域與 hash）、pattern（含 {id} 佔位）、statusLabel、
+ *   targetType／targetTitle／targetPath、to（實際轉址目的地：target 路徑＋anchor；target 為失效版文件 ⇒ 現行版）、toId、show。
+ */
+function buildMigration(site, { addTodo, unitName }) {
+  const today = site.today;
+  const lists = [];
+  const byTarget = new Map();
+  const ZERO = () => ({ migrated: 0, merged: 0, archived: 0, pending: 0, dropped: 0, verified: 0, unverified: 0, total: 0 });
+  const stats = ZERO();
+  const pending = [];
+  for (const raw of site.migrationLists ?? []) {
+    const showUntil = raw.showLegacyUntil ?? null;
+    const show = !showUntil || today <= showUntil;
+    const lstats = ZERO();
+    const items = (raw.items ?? []).map((it) => {
+      const target = it.target ? site.byId.get(it.target) ?? null : null;
+      const dest = target?.gov?.superseded ? site.byId.get(target.gov.currentId) ?? target : target;
+      const anchor = it.anchor ? `#${it.anchor}` : '';
+      const to = dest ? (pathOf(dest).includes('#') ? pathOf(dest) : `${pathOf(dest)}${anchor}`) : null;
+      const owner = it.owner ?? raw.owner;
+      return {
+        ...it, listId: raw.id, owner, ownerName: unitName(owner),
+        statusLabel: MIGRATION_STATUS_LABELS[it.status] ?? it.status,
+        fromPath: legacyPathOf(it.oldUrl), pattern: isLegacyPattern(it.oldUrl),
+        targetType: target?.type ?? null, targetTitle: target?.title ?? null, targetPath: target ? pathOf(target) : null,
+        to, toId: dest?.id ?? null, redirectsToCurrent: !!(dest && target && dest !== target),
+        show,
+      };
+    });
+    for (const it of items) {
+      for (const st of [stats, lstats]) {
+        st.total++;
+        if (st[it.status] !== undefined) st[it.status]++;
+        if (it.verified) st.verified++; else st.unverified++;
+      }
+      if (it.target) {
+        if (!byTarget.has(it.target)) byTarget.set(it.target, []);
+        byTarget.get(it.target).push(it);
+      }
+      if (it.status === 'pending') {
+        pending.push(it);
+        if (site.unitById.has(it.owner) && raw.status !== 'archived') {
+          addTodo({ id: `migration-pending:${raw.id}:${it.key}`, kind: 'migration-pending', itemId: raw.id, itemType: 'migration', itemTitle: `${raw.title}：${it.oldTitle}`,
+            owner: it.owner, dueAt: it.dueAt ?? addDays(raw.reviewedAt ?? today, MIGRATION_PENDING_DAYS), href: '/admin/migration/', severity: 'medium',
+            listId: raw.id, migrationKey: it.key, oldUrl: it.oldUrl,
+            text: `舊站「${it.oldTitle}」${it.oldPath ? `（${it.oldPath}）` : ''}尚未移轉${it.note ? `：${it.note}` : ''}` });
+        }
+      }
+    }
+    lists.push({
+      id: raw.id, title: raw.title, scope: raw.scope ?? null, owner: raw.owner, ownerName: unitName(raw.owner), status: raw.status,
+      reviewedAt: raw.reviewedAt ?? null, nextReviewAt: raw.reviewPeriodMonths > 0 && raw.reviewedAt ? addMonths(raw.reviewedAt, raw.reviewPeriodMonths) : null,
+      legacyRoot: raw.legacyRoot ?? null, showLegacyUntil: showUntil, show, sourceNote: raw.sourceNote ?? null, summary: raw.summary ?? null,
+      file: raw.__file ?? null, stats: lstats, items,
+    });
+  }
+  // 反向掛到新站內容：item.gov.legacy（模板「本頁取代舊網站 N 個頁面」）
+  for (const item of site.all) {
+    const its = byTarget.get(item.id);
+    if (!item.gov) continue;
+    if (!its?.length) { item.gov.legacy = null; continue; }
+    const until = its.map((x) => lists.find((l) => l.id === x.listId)?.showLegacyUntil).filter(Boolean).sort().at(-1) ?? null;
+    item.gov.legacy = {
+      count: its.length, urls: its.map((x) => x.oldUrl), items: its,
+      show: its.some((x) => x.show), showUntil: until, showLegacyUntil: until, lists: [...new Set(its.map((x) => x.listId))],
+    };
+  }
+  return { lists, byTarget, stats, pending, statusLabels: MIGRATION_STATUS_LABELS, requirementLabels: MIGRATION_REQUIREMENT_LABELS };
 }
 
 /** 反向稽核掃描的全文（含 i18n） */
@@ -776,6 +874,9 @@ function computeSummary(site) {
     linksBroken: site.gov.linkHealth.broken,
     linksUnchecked: site.gov.linkHealth.unchecked,
     labtestsInconsistent: (site.collections.labtests ?? []).filter((l) => l.gov.labtestCheck && !l.gov.labtestCheck.consistent).length,
+    migrationTotal: site.migration?.stats.total ?? 0,
+    migrationPending: site.migration?.stats.pending ?? 0,
+    migrationUnverified: site.migration?.stats.unverified ?? 0,
   };
 }
 

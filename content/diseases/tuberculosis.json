@@ -95,7 +95,10 @@
   ],
   "legacyUrls": [
     "https://www.cdc.gov.tw/Disease/Index",
-    "https://www.cdc.gov.tw/Disease/SubIndex/{id}"
+    "https://www.cdc.gov.tw/Disease/SubIndex/{id}",
+    "https://www.cdc.gov.tw/Category/MPage/{id}#bcg",
+    "https://www.cdc.gov.tw/Category/QAPage/{id}",
+    "https://www.cdc.gov.tw/Bulletin/List/{id}?page=1#tuberculosis"
   ],
   "keyFacts": {
     "incubation": "感染後終生約 5–10% 發病，多在 2 年內；多數人為潛伏感染",

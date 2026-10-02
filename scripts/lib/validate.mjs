@@ -21,6 +21,7 @@ const typeToSchema = {
   disease: 'disease.json', faq: 'faq.json', news: 'news.json', letter: 'news.json', clarification: 'clarification.json',
   document: 'document.json', vaccine: 'vaccine.json', dataset: 'dataset.json', banner: 'banner.json', page: 'page.json',
   media: 'media.json', topic: 'topic.json', service: 'service.json', publication: 'publication.json', labtest: 'labtest.json', research: 'research.json',
+  migration: 'migration.json',
 };
 
 export function validateSite(site) {
@@ -76,6 +77,31 @@ export function validateSite(site) {
   //    例外：legacyUrls（現行官網對照用，不檢）。
   for (const item of site.all) for (const hit of findPlaceholderUrls(item)) push(item.__file, `${hit.path} 含佔位／示意網址：${hit.value}（尚未遷移的文件請改連 /pending/?ref=<id>&doc=<名稱>）`);
 
+  // 4. 移轉清單（ARCHITECTURE 13.1）：schema、id 唯一、owner、target 存在（pending／dropped 除外）、key 唯一
+  const vMig = ajv.getSchema('https://cdc-prototype/schemas/migration.json');
+  const migIds = new Set();
+  for (const list of site.migrationLists ?? []) {
+    const file = list.__file ?? `content/migration/${list.id}.json`;
+    if (!vMig(list)) for (const e of vMig.errors) push(file, `${e.instancePath || '/'} ${e.message}`);
+    if (migIds.has(list.id) || ids.has(list.id)) push(file, `重複 id：${list.id}`);
+    migIds.add(list.id);
+    if (!units.has(list.owner)) push(file, `owner ${list.owner} 不在 units 主檔`);
+    if (list.scope?.disease && !diseaseIds.has(list.scope.disease)) push(file, `scope.disease ${list.scope.disease} 不在傳染病主檔`);
+    for (const ref of list.diseases ?? []) if (!diseaseIds.has(ref)) push(file, `diseases ${ref} 不在傳染病主檔`);
+    const keys = new Set();
+    (list.items ?? []).forEach((it, i) => {
+      const at = `/items/${i}${it?.key ? `（${it.key}）` : ''}`;
+      if (keys.has(it.key)) push(file, `${at} key 重複：${it.key}`);
+      keys.add(it.key);
+      if (it.owner && !units.has(it.owner)) push(file, `${at} owner ${it.owner} 不在 units 主檔`);
+      const needTarget = !['pending', 'dropped'].includes(it.status);
+      if (it.target && !ids.has(it.target)) push(file, `${at} target ${it.target} 不存在`);
+      else if (needTarget && !it.target) push(file, `${at} status ${it.status} 必須填 target（新站內容 id）`);
+    });
+    // 新站內部欄位仍檢查佔位網址；oldUrl／legacyRoot（舊站網址，可含 {id}）豁免
+    for (const hit of findPlaceholderUrls(list)) push(file, `${hit.path} 含佔位／示意網址：${hit.value}`);
+  }
+
   for (const it of site.situation.items) if (!diseaseIds.has(it.disease)) push('content/situation/current.json', `disease ${it.disease} 不在主檔`);
   if (!units.has(site.situation.publisher)) push('content/situation/current.json', `publisher ${site.situation.publisher} 不在 units`);
 
@@ -84,8 +110,8 @@ export function validateSite(site) {
 
 /** 佔位／示意網址判定（與 scripts/lib/check-internal-links.mjs 的黑名單同精神；這裡管內容來源） */
 export const PLACEHOLDER_URL_RE = /placeholder-|(?:^|[/.@])example\.(?:gov\.tw|com|org|net)\b/i;
-/** 這些欄位不檢（現行官網對照、建置期附加欄位） */
-export const PLACEHOLDER_EXEMPT_KEYS = new Set(['legacyUrls', 'gov', '__file', 'sourceHash']);
+/** 這些欄位不檢（現行官網對照、移轉清單的舊站網址〔可含 {id} 佔位〕、建置期附加欄位） */
+export const PLACEHOLDER_EXEMPT_KEYS = new Set(['legacyUrls', 'oldUrl', 'legacyRoot', 'gov', '__file', 'sourceHash']);
 
 /** 遞迴找出內容中含佔位網址的字串欄位 → [{ path, value }] */
 export function findPlaceholderUrls(item) {

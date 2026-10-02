@@ -3,7 +3,8 @@
 import { html, raw, esc } from '../../../scripts/lib/render.mjs';
 import { siteOrigin } from '../../../site.config.mjs';
 import { proStyles } from '../pro/_styles.mjs';
-import { vaxmapLink, legacyKey, itemPath } from './_partials.mjs';
+import { vaxmapLink } from './_partials.mjs';
+import { buildRedirects, buildLegacyMap } from '../../../scripts/lib/emit-api.mjs';
 
 const ENDPOINTS = [
   { path: '/v1/diseases.json', desc: '傳染病主檔（法定類別、ICD-10、通報時限、別名）與是否已有疾病頁', pick: (s) => s.master.diseases },
@@ -27,20 +28,13 @@ const ENDPOINTS = [
   { path: '/v1/governance/ai-status.json', desc: 'AI 問答開關（運作／暫停、原因、生效時間）', pick: (s) => s.governance.aiStatus },
   { path: '/v1/governance/eval-report.json', desc: '評估報告：六指標、各類別通過率、版本題結果（透明報告頁的資料來源）', pick: (s) => s.evalReport && { version: s.evalReport.version, total: s.evalReport.total, passed: s.evalReport.passed, byCategory: s.evalReport.byCategory, metrics: s.evalReport.metrics } },
   { path: '/v1/redirects.json', desc: '舊版文件與舊網址 → 正本的 301 對照表', pick: (s) => s.collections.documents.filter((d) => d.supersededBy).map((d) => ({ from: `/documents/${d.id.replace(/^doc\./, '')}/`, to: `/documents/${d.supersededBy.replace(/^doc\./, '')}/`, status: 301, legacy: d.legacyUrls ?? [] })) },
-  { path: '/v1/legacy-map.json', plain: true, desc: '舊網址 → 新頁路徑的精簡對照（key 已正規化：小寫、無網域、無尾斜線、無 hash、去 page 參數）；給 404 頁與 /legacy/ 查詢頁用，也可直接匯入你的伺服器', pick: legacyMapOf },
+  { path: '/v1/legacy-map.json', desc: '舊網址 → 新頁路徑的精簡對照（key 已正規化：小寫、無網域、無尾斜線、無 hash、去 page 參數）；另有 patterns（{id} 佔位的 URL 模式）與 gone（不移轉，建議 410）。給 404 頁與 /legacy/ 查詢頁用', pick: legacyMapOf },
   { path: '/openapi.json', desc: 'OpenAPI 3.1 描述檔（建置時由 scripts/lib/openapi.mjs 產生）', raw: true },
 ];
 
-/** 舊網址對照（移轉清單中 status 為 migrated／merged、有 target 且網址無佔位者）：與建置輸出的 v1/legacy-map.json 同規則，供範例顯示用。 */
+/** v1/legacy-map.json 的 data（與建置輸出同一支函式；引擎尚未提供時回傳 null） */
 function legacyMapOf(site) {
-  const out = {};
-  for (const list of site.migration?.lists ?? []) for (const it of list.items ?? []) {
-    if (!it?.oldUrl || /[{}]/.test(it.oldUrl) || !['migrated', 'merged'].includes(it.status)) continue;
-    const tg = site.byId.get(it.target);
-    const key = legacyKey(it.oldUrl);
-    if (tg && key && !(key in out)) out[key] = itemPath(tg) + (it.anchor ? `#${it.anchor}` : '');
-  }
-  return Object.keys(out).length ? out : null;
+  try { const m = buildLegacyMap(site, buildRedirects(site)).map; return Object.keys(m).length ? m : null; } catch { return null; }
 }
 
 const VOCAB = [
@@ -80,7 +74,6 @@ function sampleJson(site, ep) {
   let data;
   try { data = ep.pick(site); } catch { data = null; }
   if (data == null) return null;
-  if (ep.plain) return JSON.stringify(slim(data), null, 2);
   const meta = { api: 'v1', generatedAt: `${site.today}T03:00:00Z`, license: 'OGDL-1.0', source: `${siteOrigin()}/`, docs: `${siteOrigin()}/developers/`, etag: '"…"', lastModified: `${site.today}T03:00:00Z` };
   return JSON.stringify({ meta, data: slim(data) }, null, 2);
 }
@@ -256,12 +249,12 @@ ${vaxmapLink(ctx, { info: true, anchor: 'where', lang: 'vi' })}</code></pre>
     <h3 id="legacy-map">舊官網網址對照（內容移轉）</h3>
     <p>舊官網（www.cdc.gov.tw）上架的內容會依<strong>移轉清單</strong>逐筆對應到新頁。對照結果有四種輸出，都在建置時由同一份清單產生，不需手動維護：</p>
     <div class="pf-table-wrap"><table class="pf-table"><thead><tr><th scope="col">檔案</th><th scope="col">用途</th></tr></thead><tbody>
-      <tr><th scope="row"><a href="${url('/v1/legacy-map.json', { noLang: true })}"><code>/v1/legacy-map.json</code></a></th><td>精簡對照 <code>{ "/disease/subindex/…": "/diseases/tuberculosis/" }</code>。key 已正規化（小寫、無網域、無尾斜線、無 hash、去掉 <code>page</code> 參數）。404 頁與 <a href="${url('/legacy/', { noLang: true })}">/legacy/ 查詢頁</a>即用它。</td></tr>
-      <tr><th scope="row"><a href="${url('/redirects/nginx.map', { noLang: true })}"><code>/redirects/nginx.map</code></a></th><td>Nginx <code>map</code> 指令用，一行一筆：<code>~^/Disease/SubIndex/xxx$ /diseases/tuberculosis/;</code>。</td></tr>
+      <tr><th scope="row"><a href="${url('/v1/legacy-map.json', { noLang: true })}"><code>/v1/legacy-map.json</code></a></th><td>精簡對照，<code>data</code> 內為 <code>{ "/disease/subindex/…": "/diseases/dengue/" }</code>。key 已正規化（小寫、無網域、無尾斜線、無 hash、去掉 <code>page</code> 參數、百分比編碼統一）；另有 <code>patterns</code>（{id} 佔位的 URL 模式）與 <code>gone</code>（不移轉，建議回 410）。404 頁與 <a href="${url('/legacy/', { noLang: true })}">/legacy/ 查詢頁</a>即用它。</td></tr>
+      <tr><th scope="row"><a href="${url('/redirects/nginx.map', { noLang: true })}"><code>/redirects/nginx.map</code></a></th><td>Nginx <code>map $request_uri</code> 用，一行一筆正規表示式對新網址，用法寫在檔頭註解。</td></tr>
       <tr><th scope="row"><a href="${url('/redirects/web.config.rewritemap.xml', { noLang: true })}"><code>/redirects/web.config.rewritemap.xml</code></a></th><td>IIS URL Rewrite 的 <code>rewriteMap</code>，貼進 <code>web.config</code>；署內現行官網若為 IIS 可直接用。</td></tr>
       <tr><th scope="row"><a href="${url('/redirects/_redirects', { noLang: true })}"><code>/redirects/_redirects</code></a></th><td>Netlify／Cloudflare Pages 格式：<code>from to 301</code>。</td></tr>
     </tbody></table></div>
-    <p class="muted">三個 <code>redirects/</code> 檔都只收「已移轉、已併入」且網址完整的項目，狀態為待確認或網址仍是 <code>{id}</code> 佔位的不會輸出（寧可不轉，也不轉錯）。<code>/v1/redirects.json</code> 另含 <code>kind: "migration"</code> 項與每筆的 <code>verified</code> 欄位。政策與關閉日見 <a href="${url('/legacy/', { noLang: true })}">舊網址查詢頁</a>下方說明。</p>
+    <p class="muted">三個 <code>redirects/</code> 檔都只收網址完整、已有去向的項目：<code>{id}</code> 佔位的 URL 模式、已不再提供（410）、同一舊網址對到多個新頁的不輸出（寧可不轉，也不轉錯）；移轉清單尚未核對（<code>verified: false</code>）者照常輸出但檔內標註，上線前請權責單位確認。<code>/v1/redirects.json</code> 另含 <code>kind: "migration"</code> 項與每筆的 <code>verified</code> 欄位。政策與關閉日見 <a href="${url('/legacy/', { noLang: true })}">舊網址查詢頁</a>下方說明。</p>
   </section>
 
   <p class="muted"><a href="#top">回到頁首</a> · <a href="${url('/guide/')}">使用指南</a> · <a href="${url('/transparency/')}">AI 透明報告</a></p>

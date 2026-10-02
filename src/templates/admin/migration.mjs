@@ -43,7 +43,7 @@ export function render(ctx) {
   }
   const owners = [...new Set(m.rows.map((r) => r.owner))].filter(Boolean);
   return html`${head}
-<div class="adm-statrow" aria-label="移轉進度總覽">
+<div class="adm-statrow" style="grid-template-columns:repeat(auto-fit,minmax(145px,1fr))" aria-label="移轉進度總覽">
   ${tile('舊頁總數', html`<span id="mg-total">${t.total}</span>`, `${m.lists.length} 份清單`, 'info')}
   ${tile('已移轉', t.migrated, '一對一搬到新頁', 'ok')}
   ${tile('已併入', t.merged, '併入新頁的某個區塊', 'ok')}
@@ -55,7 +55,7 @@ export function render(ctx) {
 
 <section class="adm-card" aria-labelledby="mg-prog"><h2 id="mg-prog">各清單進度</h2>
   <p class="adm-card__sub">整體處理完成 <strong>${m.donePct}%</strong>（已移轉、併入、封存、不再提供都算已有去向；待確認不算）。條由左至右：已移轉、已併入、已封存、不再提供、待確認。</p>
-  <div class="adm-grid adm-grid--auto">${m.lists.map((l) => {
+  <div class="adm-grid adm-grid--auto" style="grid-template-columns:repeat(auto-fill,minmax(360px,1fr))">${m.lists.map((l) => {
     const c = listStats(l);
     const left = daysTo(site.today, l.showLegacyUntil);
     return html`<article class="adm-unitcard" data-list="${l.id}"><h3>${l.title}</h3>

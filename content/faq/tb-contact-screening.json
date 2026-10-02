@@ -60,7 +60,8 @@
     "密切接觸者"
   ],
   "legacyUrls": [
-    "https://www.cdc.gov.tw/Category/QAPage/{id}#contact"
+    "https://www.cdc.gov.tw/Category/QAPage/{id}#contact",
+    "https://www.cdc.gov.tw/Category/MPage/{id}#contact"
   ],
   "answerMarkdown": "衛生所會主動聯絡與病人同住或密切接觸的人，安排**接觸者檢查**，費用由公費支應：\n\n1. 病人確診後 **1 個月內**照第一次胸部 X 光，並依年齡與接觸情形抽血做**丙型干擾素釋放試驗（IGRA）**，檢查有沒有潛伏結核感染。\n2. 第一次正常者，在病人確診滿 **12 個月**時再照一次胸部 X 光。\n3. 檢查期間若出現咳嗽超過 2 週等症狀，請不必等通知，直接就醫並告知接觸史。\n\nIGRA 陽性且排除發病者，建議接受潛伏結核感染治療。",
   "structured": {

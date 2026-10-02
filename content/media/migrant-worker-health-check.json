@@ -105,5 +105,8 @@
       "title": "Khám sức khỏe cho lao động nước ngoài: trong 3 ngày sau khi nhập cảnh và trong thời gian làm việc",
       "summary": "Hướng dẫn khám sức khỏe trong 3 ngày làm việc sau khi nhập cảnh và vào khoảng tháng thứ 6, 18, 30; nếu ho, sốt hãy gọi 1922 có hỗ trợ tiếng Việt."
     }
-  }
+  },
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/{id}#migrant-video"
+  ]
 }

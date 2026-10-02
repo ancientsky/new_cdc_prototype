@@ -8,7 +8,8 @@ import { config } from '../../../site.config.mjs';
 import { pageHead, hrefFor, L, legacyKey, LEGACY_LOOKUP_JS, LEGACY_STATUS_KIND, hasPlaceholder } from './_partials.mjs';
 
 const STATUSES = ['migrated', 'merged', 'archived', 'pending', 'dropped'];
-const REQS = ['owner', 'reviewedAt', 'basedOn', 'machineReadable', 'languages'];
+import { LEGACY_REQ_KEYS } from './_partials.mjs';
+const REQS = LEGACY_REQ_KEYS;
 
 export function pages() { return [{ path: '/legacy/', lang: '*', noindex: true, props: {} }]; }
 
@@ -20,21 +21,32 @@ export function meta(ctx) {
 export function lookupTables(ctx) {
   const { site } = ctx;
   const items = {};
+  const pats = [];
   const targets = {};
   for (const list of site.migration?.lists ?? []) {
     for (const it of list.items ?? []) {
-      if (!it?.oldUrl || hasPlaceholder(it.oldUrl)) continue;
-      const key = legacyKey(it.oldUrl);
-      if (!key || items[key]) continue;
-      const tg = it.target ? site.byId.get(it.target) : null;
+      if (!it?.oldUrl) continue;
+      const tg = (it.toId ?? it.target) ? site.byId.get(it.toId ?? it.target) : null; // toId：目標為失效版文件時直接指向現行版
       if (tg && !targets[tg.id]) targets[tg.id] = { title: L(ctx, tg, 'title') ?? tg.title, href: hrefFor(ctx, tg) };
-      items[key] = {
+      const info = {
         t: it.oldTitle ?? '', p: it.oldPath ?? '', s: it.status ?? 'pending', v: it.verified !== false,
         g: tg ? tg.id : null, a: it.anchor ?? '', n: it.note ?? '', r: it.newRequirements ?? [],
       };
+      if (hasPlaceholder(it.oldUrl)) {
+        // 舊網址的編號不確定（{id} 佔位）：以 URL 模式＋#片段比對，只在 /legacy/ 查詢頁使用（片段不會送到伺服器，所以 404 與伺服器對照檔不含這類）
+        const [noHash, hash = ''] = String(it.oldUrl).split('#');
+        const k = legacyKey(noHash.replace(/\{[^}]*\}/g, 'zzidzz'));
+        if (!k) continue;
+        const re = `^${k.replace(/[.*+?^$()|[\]\\{}]/g, '\\$&').replace(/zzidzz/g, '[^/?]+')}$`;
+        pats.push({ re, h: hash.toLowerCase(), ...info });
+        continue;
+      }
+      const key = legacyKey(it.oldUrl);
+      if (!key || items[key]) continue;
+      items[key] = info;
     }
   }
-  return { items, targets };
+  return { items, pats, targets };
 }
 
 const statsOf = (list) => {
@@ -47,9 +59,9 @@ export function render(ctx) {
   const { site, t, url } = ctx;
   const lists = site.migration?.lists ?? [];
   const until = lists.map((l) => l.showLegacyUntil).filter(Boolean).sort().pop() ?? null;
-  const { items, targets } = lookupTables(ctx);
+  const { items, pats, targets } = lookupTables(ctx);
   const S = {
-    hitT: t('legacy.hit.t'), hitGo: t('legacy.hit.go'), hitStatus: t('legacy.hit.status'), hitOld: t('legacy.hit.old'), hitNote: t('legacy.hit.note'), hitNopage: t('legacy.hit.nopage'),
+    hitT: t('legacy.hit.t'), hitGo: t('legacy.hit.go'), hitStatus: t('legacy.hit.status'), hitOld: t('legacy.hit.old'), hitNote: t('legacy.hit.note'), hitPattern: t('legacy.hit.pattern'), hitNopage: t('legacy.hit.nopage'),
     missT: t('legacy.miss.t'), missD: t('legacy.miss.d'), missSearch: t('legacy.miss.search', { q: '{q}' }), missCall: t('legacy.miss.call'),
     unverified: t('legacy.unverified'), reqT: t('legacy.req.t'), err: t('legacy.err'), loading: t('legacy.loading'), home: t('404.home'),
     status: Object.fromEntries(STATUSES.map((k) => [k, t(`legacy.status.${k}`)])), kind: LEGACY_STATUS_KIND,
@@ -57,7 +69,7 @@ export function render(ctx) {
   };
   const data = {
     base: config.basePath, map: url('/v1/legacy-map.json', { noLang: true }), ask: url('/ask/'), home: url('/'),
-    items, targets, s: S,
+    items, pats, targets, s: S,
   };
   return html`${pageHead(ctx, { trail: [{ label: t('legacy.title') }], h1: t('legacy.title'), lead: t('legacy.lead') })}
 <form class="c-legacyform" data-lg-form role="search" action="${url('/legacy/')}" method="get">
@@ -112,10 +124,19 @@ const CLIENT = `(function(){
     var l3=mk('li'), a3=mk('a',null,S.home); a3.href=D.home; l3.appendChild(a3); ul.appendChild(l3);
     card.appendChild(ul);
   }
+  function patFind(val){
+    var k=legacyKeys(val)[0]; if(!k||!D.pats) return null;
+    var k0=k.split('?')[0], h=''; var i=String(val).indexOf('#'); if(i>=0){ h=String(val).slice(i+1); try{h=decodeURIComponent(h);}catch(e){} h=h.toLowerCase(); }
+    var hits=D.pats.filter(function(p){ try{ return (new RegExp(p.re).test(k)||new RegExp(p.re).test(k0)); }catch(e){ return false; } });
+    if(!hits.length) return null;
+    var exact=hits.filter(function(p){return p.h===h});
+    return exact[0]||(!h?hits.filter(function(p){return !p.h})[0]:null)||null;
+  }
   function show(val){
     res.textContent='';
     if(!val){ return; }
-    var itf=legacyFind(itemIdx,val), it=itf&&itf.to, mf=idx?legacyFind(idx,val):null;
+    var itf=legacyFind(itemIdx,val), it=itf&&itf.to, mf=idx?legacyFind(idx,val):null, viaPat=false;
+    if(!it&&!mf){ it=patFind(val); viaPat=!!it; }
     var href=null, title=null;
     if(it&&it.g&&D.targets[it.g]){ var tg=D.targets[it.g]; href=tg.href+(it.a?'#'+encodeURIComponent(it.a):''); title=tg.title; }
     else if(mf&&safe(mf.to)){ href=D.base+mf.to; title=mf.to; }
@@ -133,6 +154,7 @@ const CLIENT = `(function(){
     if(it){
       var dl=mk('dl'); row(dl,S.hitOld,it.t+(it.p?'（'+it.p+'）':'')); var st=mk('span'); st.appendChild(pill(it.s)); if(!it.v) st.appendChild(mk('span','muted',' '+S.unverified)); row(dl,S.hitStatus,st);
       row(dl,S.hitNote,it.n||null);
+      if(viaPat) row(dl,'',S.hitPattern);
       if(it.r&&it.r.length){ var rs=mk('span'); it.r.forEach(function(k){ var c=mk('span','c-chip c-chip--req',S.req[k]||k); rs.appendChild(c); rs.appendChild(document.createTextNode(' ')); }); row(dl,S.reqT,rs); }
       card.appendChild(dl);
     }

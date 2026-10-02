@@ -61,7 +61,8 @@
     "居留"
   ],
   "legacyUrls": [
-    "https://www.cdc.gov.tw/Category/QAPage/{id}#foreigner"
+    "https://www.cdc.gov.tw/Category/QAPage/{id}#foreigner",
+    "https://www.cdc.gov.tw/Category/MPage/{id}#foreigner"
   ],
   "answerMarkdown": "需要。依規定，**外籍移工**入國前須在原居住國完成指定醫院健康檢查，**入國後 3 個工作日內**由雇主安排至指定醫院健檢，聘僱期間另依規定定期健檢，項目都包括**胸部 X 光（肺結核）**。申請在臺居留、定居的外籍人士也須檢附含胸部 X 光的健康檢查證明。\n\n檢查發現疑似結核病，會轉介胸腔科診治並納入都治，經衛生主管機關評估可在臺完成治療；請依醫師指示規則服藥。多語衛教單張可在「新住民與移工健康」專區下載。"
 }

@@ -2617,6 +2617,53 @@
         ],
         "action": "/notices/"
       }
+    },
+    {
+      "id": "V019",
+      "category": "version",
+      "view": "pro",
+      "requires": [
+        "doc.tb-guideline"
+      ],
+      "q": "多重抗藥性結核病現在建議用什麼處方？",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "doc.tb-guideline.2025-09-01"
+        ],
+        "mustNotCite": [
+          "doc.tb-guideline.2022-03-01"
+        ],
+        "mustIncludeAny": [
+          "全口服"
+        ],
+        "mustNotInclude": [
+          "以含第二線注射劑之長程處方治療"
+        ]
+      },
+      "note": "結核病診治指引第八版改為全口服短程處方；引到第七版（含注射劑、18–24 個月）＝缺陷"
+    },
+    {
+      "id": "F043",
+      "category": "fact",
+      "requires": [
+        "faq.ltbi-treat-or-not"
+      ],
+      "q": "潛伏結核感染需要治療嗎？",
+      "expect": {
+        "refuse": false,
+        "disease": "disease.tuberculosis",
+        "mustIncludeAny": [
+          "3HP",
+          "1HP",
+          "9 成"
+        ],
+        "mustCiteAny": [
+          "faq.ltbi-treat-or-not",
+          "doc.ltbi-guideline",
+          "service.ltbi-treatment"
+        ]
+      }
     }
   ]
 }
