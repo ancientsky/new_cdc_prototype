@@ -493,3 +493,80 @@ API（`scripts/lib/emit-api.mjs`）：`/v1/country-levels.json` 原樣輸出 dat
 - T2（模板）：`src/templates/public/{travel,task,home}.mjs`、`src/client/i18n.js`（`ROWS_TRAVEL` 區塊）、`src/styles/*`（如需）、`docs/guide-public.md`、`tests/travel-ui.test.mjs`。對 T1 新欄位一律容錯（缺欄位時退回既有行為）。
 - T3（地圖）：`scripts/gen-world-map.mjs`、`package.json` devDependencies、`src/data/world-paths.json`、`src/templates/public/_travel-map.mjs`、`tests/travel-map.test.mjs`、`docs/architecture-decisions.md`（新增 ADR）。**第一步**先建立 `_travel-map.mjs` 的空實作（回傳 ''）讓 T2 可以匯入。
 - 共同：不切分支、不 commit；完成後回報變更檔案清單與驗證結果。`npm test` 與 `BUILD_TODAY=2026-10-01 LINK_CHECK=error npm run build` 必須全綠（`[links] error 0`）。
+
+## 13. 第五輪（2026-10-02）：舊站內容移轉示範（結核病專區）、舊網址不 404、規劃回補
+
+目的：讓同事看到「舊網站上架的內容不會不見、都會移轉，而且擺法更現代、有治理要求、看得到舊網址對應」；同時解決搜尋引擎還記得舊網址的問題。以結核病為第一個完整示範，做法要能套到其他 98 種疾病與所有欄目。
+
+> 限制：開發環境連不到 www.cdc.gov.tw，舊站結核病專區的子頁清單依規劃文件 §1.2 的 URL 模式與對官網的既有認識重建；每筆舊頁在清單中標 `verified: false`，由權責單位在後台「移轉對照」逐筆確認後改 true。舊網址 ID 不確定者保留 URL 模式、ID 以 `{id}` 佔位（legacyUrls 不受佔位網址檢查）。
+
+### 13.1 移轉清單（migration manifest）資料契約（V1 擁有）
+
+`content/migration/{slug}.json`（type `migration`，schema `schemas/migration.json`，一份清單對應舊站的一個專區／欄目樹）：
+```
+{
+  id: 'migration.tuberculosis', type: 'migration', title: '結核病專區（舊站）→ 新站',
+  scope: { kind: 'disease', disease: 'disease.tuberculosis' },   // 或 { kind: 'category', name: '…' }
+  owner, reviewedAt, reviewPeriodMonths, status, audience, sensitivity, license, languages, aiWhitelist  // 既有治理欄位照 _common
+  legacyRoot: 'https://www.cdc.gov.tw/Disease/SubIndex/{id}',       // 舊專區入口
+  showLegacyUntil: '2027-12-31',                                      // 新站頁面顯示「舊網址對應」的截止日（過期自動隱藏，不需人工）
+  items: [{
+    key: 'intro',                                  // 清單內唯一
+    oldTitle: '疾病介紹',                           // 舊站標題
+    oldPath: '疾病介紹',                            // 舊站麵包屑／階層（以「／」分隔）
+    oldUrl: 'https://www.cdc.gov.tw/Disease/SubIndex/{id}#intro',
+    oldType: 'page'|'qa'|'pdf'|'news-list'|'media'|'list'|'external',
+    verified: false,
+    status: 'migrated'|'merged'|'archived'|'pending'|'dropped',
+    target: 'disease.tuberculosis'|'doc.tb-guideline'|…,           // 新站內容 id（migrated／merged 必填）
+    anchor: 'symptoms',                            // 選填：新頁內錨點
+    note: '併入疾病頁「症狀」區塊',                  // 給同事看的說明
+    newRequirements: ['owner','reviewedAt','basedOn','machineReadable','languages']  // 這筆移轉後新增的治理要求（展示用）
+  }]
+}
+```
+治理引擎（governance.mjs）：
+- `site.migration = { lists: [...], byTarget: Map<contentId, items[]>, stats: { migrated, merged, archived, pending, dropped, verified, total }, pending: items[] }`。
+- `status: 'pending'` 且 owner 存在 ⇒ 待辦 `migration-pending`（中優先，說明：舊頁尚未移轉）；`verified: false` 不開待辦，只在後台列出。
+- 以 `target` 反向建立 `item.gov.legacy = { urls: [...oldUrl], items: [...] }`，模板用它顯示「此頁取代舊網站的 N 個頁面」。`today > showLegacyUntil` ⇒ `gov.legacy.show = false`。
+- validate：target 必須存在（pending／dropped 除外）；key 唯一；status enum。
+
+轉址輸出（emit-api.mjs，沿用 `buildRedirects`）：
+- `redirects.json` 新增 `kind: 'migration'` 項（from = oldUrl 去掉網域後的 path+query+hash 去 hash；to = target 路徑＋anchor），`verified` 一併輸出；`{id}` 佔位的 from 以 `pattern: true` 標示，不進伺服器對照檔，只進文件。
+- 新增三種伺服器格式（純由 redirects.json 轉出，不含 pattern 項）：`redirects/nginx.map`（`~^/Disease/SubIndex/xxx$ /diseases/tuberculosis/;`）、`redirects/web.config.rewritemap.xml`（IIS rewriteMap）、`redirects/_redirects`（Netlify／Cloudflare Pages 格式 `from to 301`）。
+- `v1/legacy-map.json`：精簡版 `{ "/Disease/SubIndex/xxx": "/diseases/tuberculosis/", … }` 給 404 頁與 `/legacy/` 查詢頁用（path 比對不含網域、不分大小寫、忽略尾斜線與 query 的 page 參數）。
+
+`scripts/analyze-404-log.mjs`：讀伺服器 access log（Nginx combined 或 IIS W3C，自動判斷），抓 404 的路徑與次數，對照 legacy-map 與 migration 清單：已有對照 ⇒ 列「可直接 301」；符合舊站 URL 模式但無對照 ⇒ 列「待補對照」並產生可貼進 migration JSON 的 items 草稿；其餘列「真的不存在（建議 410）」。輸出 Markdown 報表到 stdout。附 `tests/fixtures/access-404.log` 範例。
+
+### 13.2 結核病內容回補（V1 擁有）
+
+依舊站結核病專區重建內容（全部走既有型別，不新增型別；每筆都要有完整治理欄位、`legacyUrls`、`basedOn` 視情況）：
+- 疾病頁 `content/diseases/tuberculosis.json`：補齊 blocks（致病原、流行病學、潛伏期、傳染方式、症狀、預防、診斷治療、卡介苗、就醫與補助、統計），`professional` 補 `programs`（都治 DOTS、潛伏結核感染 LTBI、接觸者檢查、抗藥性結核病醫療照護體系、2035 消除結核、高風險族群篩檢：矯正機關／長照機構／移工／山地鄉）。
+- 文件（版本鏈）：`doc.tb-guideline`（結核病診治指引，兩版：舊版 superseded＋現行版，含 changes）、`doc.ltbi-guideline`（潛伏結核感染診治指引）、`doc.tb-contact-investigation`（接觸者檢查指引）、`doc.dots-manual`（都治計畫作業手冊）、`doc.tb-case-definition`（病例定義／通報定義）。既有 `doc.tb-manual` 保留。
+- Q&A：至少 8 題（咳嗽兩週、潛伏感染要不要治、都治是什麼、接觸者檢查、卡介苗、抗藥性、治療費用、外籍人士健檢）。
+- 專區 `topic.tb-prevention`（結核病防治專區：給專業人員與衛生局的入口，sections 連到上述文件、檢驗、通報、統計、計畫）。
+- 申請服務：`service.tb-treatment-subsidy`（結核病診治費用補助／隔離治療）、`service.ltbi-treatment`（潛伏結核感染治療）。
+- 新聞：補 2 則（2035 消除結核計畫、都治成效）。影音、海報、資料集、檢驗、研究既有者補 `legacyUrls`。
+- 全部以 `content/migration/tuberculosis.json` 列出舊頁與對應（約 30–40 筆，涵蓋：疾病介紹各子頁、Q&A、衛教素材、法規與指引各 PDF、統計、通報定義、檢驗、都治、LTBI、接觸者、MDR、2035、高風險族群、補助、外籍健檢、相關連結、新聞列表）。
+
+### 13.3 呈現契約（V2 擁有）
+
+- 疾病頁（`disease.mjs`）：新增「專區導覽」sticky 子導覽（民眾：怎麼辦／症狀／傳染／預防／治療／疫苗／統計／Q&A；專業：指引與手冊／通報與檢驗／防治計畫／補助與服務／統計／研究），專業版多出的區塊從 `professional.programs`、關聯文件、服務、檢驗、研究自動帶出；任何疾病都適用，沒有資料的區塊不出現。
+- **舊網址對應（三層露出）**：預設層＝頁首治理列一句「本頁取代舊網站 N 個頁面」（`gov.legacy.show` 為 true 才出現）；按需層＝`<details>` 列每筆舊標題、舊網址（外連、`rel="nofollow"`）、狀態（已移轉／已併入／已封存／待確認）與移轉後新增的治理要求（chip）；專業層＝連到 `/legacy/?u=`。元件放 `_partials.mjs` 的 `legacyDisclosure(ctx, item)`，所有型別頁都可用（文件、Q&A、專區、服務頁也要掛）。
+- `/legacy/`（新頁，七語）：貼舊網址或路徑 → 查 `v1/legacy-map.json` → 顯示新頁連結；查不到 → 顯示同站搜尋與 1922；頁面說明轉址政策（301、保留期、關閉日）。
+- `notfound.mjs`（404）：載入 `v1/legacy-map.json`，用目前 `location.pathname + search` 查對照；命中 ⇒ 顯示「舊網址已搬家，3 秒後帶你到新頁」並 `location.replace`（`<noscript>` 顯示連結）；未命中 ⇒ 既有 404 內容＋`/legacy/` 入口＋站內搜尋帶入路徑關鍵字。
+- 後台 `/admin/migration/`：各清單進度（已移轉／併入／封存／待確認／待核對 verified），待辦連動，逐筆表格（舊標題、舊網址、狀態、對應新頁、owner），匯出對照（連到 redirects 三格式）。`/admin/` 儀表板加一張「移轉進度」卡；待辦頁加 `migration-pending` 頁籤。
+- 開發者頁列出新檔；i18n 七語；`tests/migration-ui.test.mjs`；截圖 `docs/screenshots/tb-hub.png`、`legacy-lookup.png`、`admin-migration.png`。
+
+### 13.4 文件（V3 擁有）
+
+- `docs/migration-playbook.md`：舊站→新站移轉手冊：同網域換站的 301 策略（path 對照、301 永久、410 已移除、302 僅限版本族穩定網址）、sitemap 與 Search Console（網址異動、重新提交、涵蓋範圍報表）、canonical／hreflang、舊站唯讀保留期與頁首告示、切換日 checklist、上線後監測（404 log → `analyze-404-log` → 待辦）、何時關閉舊網址對應（`showLegacyUntil`）、常見錯誤（鏈式轉址、轉到首頁、大小寫）。
+- `docs/plan-supplement.md`：規劃文件（盤點／規格／路線圖、架構、藍圖、wireframe）**沒寫到、原型做了**的新作法回補，每項：做法、為何需要、對應規劃章節、原型位置、正式上線還缺什麼。至少涵蓋：官方等級表當事件日誌＋背景提醒＋合理性閘門、CI 每日快照 commit 回 repo、建置時全站連結檢查與 `/pending/`、外部連結健康、公告截止自動退場、影音過時規則、逐字稿反向稽核、三層露出的實作細節、BYOK LLM 後檢、評估集閘門、Banner A/B 預覽、vaxmap 整合、目的地決策式旅遊頁、世界地圖、移轉清單與 404 自動轉址、404 log 分析。
+- `docs/roadmap-mapping.md`：「舊網址 301」改為已示範並補說明；新增「內容移轉清單」列。`docs/guide-staff.md` 新增「15. 舊站內容移轉 SOP」。README 加第五輪段落。
+
+### 13.5 分工與邊界
+
+- V1（內容／資料／引擎）：`content/**`（結核病相關新舊檔、`content/migration/`）、`schemas/migration.json`、`schemas/_common.json`（type enum 加 migration）、`scripts/lib/{load,validate,governance,emit-api,openapi}.mjs`、`scripts/analyze-404-log.mjs`、`tests/fixtures/`、`tests/migration.test.mjs`、評估集可加 2 題（結核病相關）。
+- V2（模板）：`src/templates/public/{disease,notfound,legacy,developers}.mjs`、`src/templates/public/_partials.mjs`（只加 legacyDisclosure）、`src/templates/admin/{migration,index,todos}.mjs`、`src/client/i18n.js`、`src/styles/*`、`tests/migration-ui.test.mjs`、`docs/screenshots/`。對 V1 的 `site.migration`／`gov.legacy` 一律容錯（缺就不顯示）。
+- V3（文件）：`docs/migration-playbook.md`、`docs/plan-supplement.md`、`docs/roadmap-mapping.md`、`docs/guide-staff.md`、`README.md`。
+- 共同：不切分支、不 commit；`npm test` 與 `BUILD_TODAY=2026-10-01 LINK_CHECK=error npm run build` 全綠。

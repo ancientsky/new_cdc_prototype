@@ -107,7 +107,7 @@ ${breadcrumb(ctx, trailOf(ctx, item))}
   <header class="c-disease__head">
     <div class="c-disease__headmain">
       <div class="c-disease__topline">
-        ${sit ? html`<p class="c-statusline">${statusTag(ctx, sit)}<span class="c-statusline__t">${t('disease.now')}：<b>${t(`status.${sit.status}`)}</b></span> <span class="c-statusline__m">${sitField(ctx, sit, 'metricValue')}</span> <span class="muted">${t('dataDate')} ${fmtDate(site.situation.dataDate)}</span> <a href="${url('/situation/')}">${t('disease.trend')} →</a></p>` : '<span></span>'}
+        ${sit ? html`<p class="c-statusline">${statusTag(ctx, sit)}<span class="c-statusline__t">${t('disease.now')}：<b>${t(`status.${sit.status}`)}</b></span> <span class="c-statusline__m">${sitField(ctx, sit, 'metricValue')}</span> <span class="muted">${t('dataDate')} ${fmtDate(site.situation.dataDate)}</span> <a href="${url('/situation/')}">${t('disease.trend')} →</a></p>` : ''}
         ${viewToggle(ctx)}
       </div>
       <h1>${title}${lang !== 'en' ? html` <small class="c-disease__en" lang="en">${item.nameEn}</small>` : ''} <span class="c-scope-tag c-scope-tag--cat">${catLabel}</span></h1>
