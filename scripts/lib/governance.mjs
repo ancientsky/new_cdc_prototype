@@ -24,7 +24,14 @@
 // 第五輪（ARCHITECTURE.md 13.1）：
 //  R14 移轉清單：site.migrationLists（content/migration/*.json）→ site.migration（lists、byTarget、stats、pending）；
 //      以 target 反向掛 item.gov.legacy = { urls, items, show, showUntil }；today > showLegacyUntil ⇒ show=false（自動退場）。
-//      status pending 且 owner 存在 ⇒ migration-pending 待辦（medium）；verified:false 不開待辦，只在後台列出。
+//      verified:false 不開待辦，只在後台列出。
+// 第六輪（ARCHITECTURE 14.1／14.2）：
+//  R15 推導移轉清單：content/migration/_disease-template.json（site.migrationTemplates）× 主檔每一種疾病 ⇒ 一份清單
+//      （derived:true）；有疾病頁且 mapTo 命中 ⇒ merged／migrated；未命中 ⇒ pending；無疾病頁 ⇒ 清單 status:no-page、全部 pending。
+//      人工清單（同 scope.disease）覆蓋：同 key 以人工為準，人工沒寫的 key 由模板補（omit 可排除）。
+//      待辦聚合：每份清單只開一則 migration-pending（「{疾病}：N 個舊頁待移轉」），優先度依法定類別（第一、二類 high、
+//      第三類 medium、第四、五類 low）。site.migration.stats 加 lists／derived／curated／noPage；byDisease Map。
+//  R16 來源語言：item.sourceLang（預設 zh-TW）永遠可渲染、不算譯文；其他語言（含 zh-TW）以來源語言頂層欄位的 sourceHash 判斷過期。
 // annotations[]：{ kind, level, text, href（目標內容 id，沿用骨架語意）, targetId, path（目標前台路徑） }
 //  另：白名單型別政策（allowedTypes 民眾＋專業、allowedTypesPro 只進專業）、失效版仍被引用、態勢層逾期。
 import { createHash } from 'node:crypto';
@@ -208,9 +215,14 @@ const median = (arr) => {
 };
 const pct = (n, d) => (d ? Math.round((n / d) * 1000) / 10 : null);
 
-/** 某內容在某語言是否可渲染（與 scripts/lib/pages.mjs 的 langAvailable 一致） */
+/** 語言中文名（待辦與譯文狀態說明用） */
+export const LANG_NAME_ZH = { 'zh-TW': '中文', en: '英文', ja: '日文', tl: '他加祿文', vi: '越南文', id: '印尼文', th: '泰文' };
+/** 內容的來源語言（ARCHITECTURE 14.2；預設 zh-TW） */
+export const sourceLangOf = (item) => item?.sourceLang ?? 'zh-TW';
+
+/** 某內容在某語言是否可渲染（與 scripts/lib/pages.mjs 的 langAvailable 一致）：來源語言與 zh-TW 永遠可渲染 */
 export function langRenderable(site, item, lang) {
-  if (lang === site.config.defaultLang || lang === 'zh-TW') return true;
+  if (lang === sourceLangOf(item) || lang === site.config.defaultLang || lang === 'zh-TW') return true;
   const st = item.languages?.[lang]?.status;
   if (!st || st === 'none' || st === 'pending') return false;
   if (site.config.tier1Types.includes(item.type)) return st === 'reviewed';
@@ -391,12 +403,15 @@ export function applyGovernance(site) {
     }
     if (item.status === 'archived' && !gov.superseded) gov.annotations.push({ kind: 'archived', level: 'info', text: '本內容已封存，僅供查閱。', href: null, path: null });
 
-    // R5 翻譯與可渲染語言
+    // R5 翻譯與可渲染語言（R16：以來源語言為準；sourceLang≠zh-TW 時 zh-TW 也是譯文）
+    const srcLang = sourceLangOf(item);
+    gov.sourceLang = srcLang;
+    const srcLabel = srcLang === 'zh-TW' ? '中文' : `${LANG_NAME_ZH[srcLang] ?? srcLang}正本`;
     for (const L of cfg.langs) {
       const lang = L.code;
       const renderable = langRenderable(site, item, lang);
       if (renderable) gov.renderableLangs.push(lang);
-      if (lang === 'zh-TW') continue;
+      if (lang === srcLang) continue;
       const meta = item.languages?.[lang];
       if (!meta || meta.status === 'none' || meta.status === 'pending') {
         if (meta) gov.languageNotes[lang] = { status: meta.status, stale: false, renderable: false, note: '尚未提供此語言版本' };
@@ -407,7 +422,7 @@ export function applyGovernance(site) {
       gov.translationStale[lang] = stale;
       gov.languageNotes[lang] = {
         status: meta.status, stale, renderable,
-        note: stale ? '中文已更新，譯文待複核'
+        note: stale ? `${srcLabel}已更新，譯文待複核`
           : meta.status === 'machine' ? (renderable ? '機器翻譯，尚未經人工複核' : '一級內容僅提供人工複核譯文，本語言改顯示英文或中文')
           : null,
       };
@@ -524,7 +539,8 @@ export function applyGovernance(site) {
       if (!stale || item.status !== 'published') continue;
       const label = cfg.langs.find((l) => l.code === lang)?.label ?? lang;
       addTodo({ id: `translation-stale:${item.id}:${lang}`, kind: 'translation-stale', item, lang, dueAt: addDays(item.reviewedAt, TRANSLATION_DUE_DAYS),
-        severity: cfg.tier1Types.includes(item.type) ? 'medium' : 'low', text: `「${item.title}」中文已更新，${label}（${lang}）譯文待複核` });
+        severity: cfg.tier1Types.includes(item.type) || lang === 'zh-TW' ? 'medium' : 'low',
+        text: `「${item.title}」${gov.sourceLang !== 'zh-TW' ? `${LANG_NAME_ZH[gov.sourceLang] ?? gov.sourceLang}正本` : '中文'}已更新，${label}（${lang}）譯文待複核` });
     }
     // 待辦：影音缺逐字稿
     if (item.type === 'media' && item.status === 'published' && !gov.hasTranscript) {
@@ -669,32 +685,187 @@ export function applyGovernance(site) {
 }
 
 /**
- * R14 移轉清單 → site.migration，並把 gov.legacy 掛到 target 內容。
+ * R14／R15 移轉清單 → site.migration，並把 gov.legacy 掛到 target 內容。
+ * 清單來源：①主檔每一種疾病 × 模板（推導）＋同疾病的人工清單（覆蓋同 key）；②其他範圍（category）的人工清單。
+ * lists[] 欄位（13.1 既有，只加不減）：id、title、scope、owner、ownerName、status（推導無頁＝'no-page'）、reviewedAt、nextReviewAt、
+ *   legacyRoot、showLegacyUntil、show、sourceNote、summary、file、stats、items；
+ *   第六輪新增：slug、derived（整份由模板推導）、curated（有人工清單）、hasPage、disease、diseaseName、legalCategory、pageId、pagePath、
+ *   site（舊站語言版）、extends、templateId、derivedItems、curatedItems、apiPath。
  * lists[].items[] 擴充欄位：listId、owner、fromPath（去網域與 hash）、pattern（含 {id} 佔位）、statusLabel、
- *   targetType／targetTitle／targetPath、to（實際轉址目的地：target 路徑＋anchor；target 為失效版文件 ⇒ 現行版）、toId、show。
+ *   targetType／targetTitle／targetPath、to（實際轉址目的地：target 路徑＋anchor；target 為失效版文件 ⇒ 現行版）、toId、show；
+ *   第六輪：derived（此筆由模板推導）、mapTo、relatedIds（related 命中的全部內容 id）。
  */
+export const MIGRATION_TEMPLATE_DISEASE = 'migration-template.disease';
+/** 待辦優先度依法定類別（14.1：第一、二類高） */
+export const MIGRATION_SEVERITY_BY_CATEGORY = { 1: 'high', 2: 'high', 3: 'medium', 4: 'low', 5: 'low' };
+const MIGRATION_DUE_DAYS_BY_SEVERITY = { high: 30, medium: MIGRATION_PENDING_DAYS, low: 90 };
+const MAPTO_LABELS = {
+  faq: 'Q&A', document: '文件', media: '影音', labtest: '檢驗項目', dataset: '資料集', news: '新聞稿', publication: '出版品', topic: '專區', service: '申請服務',
+  manual: '工作手冊', guideline: '指引', 'case-definition': '病例定義', recommendation: '建議', form: '表單',
+};
+const BLOCK_LABELS = { 'what-to-do': '我該怎麼辦', symptoms: '症狀', transmission: '傳染方式', prevention: '預防', treatment: '治療', vaccine: '疫苗', situation: '疫情與統計', faq: '常見問題' };
+const hasValue = (v) => v != null && v !== '' && !(Array.isArray(v) && !v.length) && !(typeof v === 'object' && !Array.isArray(v) && !Object.keys(v).length);
+
+/** 內容關聯的疾病（diseases[]、labtest.disease、出版品篇目、專區 contentIds；與 emit-api diseasesOf 同規則） */
+function linkedDiseases(item) {
+  const set = new Set(item.diseases ?? []);
+  if (item.disease) set.add(item.disease);
+  for (const a of item.articles ?? []) for (const d of a.diseases ?? []) set.add(d);
+  for (const id of item.contentIds ?? []) if (String(id).startsWith('disease.')) set.add(id);
+  return set;
+}
+
+/** mapTo → 命中結果 { status, target, anchor, toPath, relatedIds, note } 或 null（未命中） */
+export function resolveMapTo(site, dm, page, mapTo) {
+  if (!page || !mapTo) return null;
+  switch (mapTo.kind) {
+    case 'disease-page':
+      return { status: 'migrated', target: page.id, note: '移轉為新站疾病頁' };
+    case 'disease-block': {
+      const b = (page.blocks ?? []).find((x) => x.key === mapTo.block);
+      const filled = b && b.status !== 'pending' && (String(b.markdown ?? '').trim() || b.warning || b.cards?.length || b.datasets?.length);
+      return filled ? { status: 'merged', target: page.id, anchor: mapTo.block, note: `併入疾病頁「${b.heading ?? BLOCK_LABELS[mapTo.block] ?? mapTo.block}」區塊` } : null;
+    }
+    case 'master-field': {
+      const v = page[mapTo.field] ?? dm[mapTo.field];
+      return hasValue(v) ? { status: 'merged', target: page.id, anchor: mapTo.anchor, note: `併入疾病頁（結構化欄位 ${mapTo.field}）` } : null;
+    }
+    case 'page': {
+      const anchor = mapTo.anchor ? mapTo.anchor.replace(/\{slug\}/g, dm.slug) : undefined;
+      const content = site.all.find((i) => i.status === 'published' && pathOf(i) === mapTo.path) ?? null;
+      return { status: 'merged', target: content?.id, anchor, toPath: mapTo.path, note: `併入站內共用頁 ${mapTo.path}${anchor ? `#${anchor}` : ''}` };
+    }
+    case 'related': {
+      const docRefs = new Set([page.professional?.caseDefinitionDoc, page.professional?.manualDoc, ...(page.relatedDocuments ?? [])].filter(Boolean));
+      const dsRefs = new Set([...(dm.datasets ?? []), ...(page.blocks ?? []).flatMap((b) => b.datasets ?? [])]);
+      const hits = site.all.filter((i) => {
+        if (i.type !== mapTo.type) return false;
+        if (i.status !== 'published' || i.gov?.superseded) return false;
+        if (mapTo.type === 'news' && NOTICE_TYPES.has(i.newsType)) return false;
+        if (mapTo.docType && i.docType !== mapTo.docType) return false;
+        if (mapTo.mediaType && !mapTo.mediaType.includes(i.mediaType)) return false;
+        if (mapTo.pubType && i.pubType !== mapTo.pubType) return false;
+        if (linkedDiseases(i).has(dm.id)) return true;
+        if (i.type === 'document' && (docRefs.has(i.id) || docRefs.has(i.family))) return true;
+        if (i.type === 'dataset' && dsRefs.has(i.id)) return true;
+        return false;
+      }).sort((a, b) => (b.isCurrent === true) - (a.isCurrent === true) || String(b.reviewedAt ?? '').localeCompare(String(a.reviewedAt ?? '')) || a.id.localeCompare(b.id));
+      if (!hits.length) return null;
+      const label = MAPTO_LABELS[mapTo.docType] ?? MAPTO_LABELS[mapTo.type] ?? mapTo.type;
+      if (mapTo.into === 'disease-page') return { status: 'merged', target: page.id, anchor: mapTo.anchor, relatedIds: hits.map((h) => h.id), note: `併入疾病頁${mapTo.anchor ? `「${BLOCK_LABELS[mapTo.anchor] ?? mapTo.anchor}」` : ''}（新站有 ${hits.length} 則${label}）` };
+      return { status: 'migrated', target: hits[0].id, relatedIds: hits.map((h) => h.id), note: `移轉為「${hits[0].title}」${hits.length > 1 ? `（另有 ${hits.length - 1} 則相關${label}）` : ''}` };
+    }
+    default: return null;
+  }
+}
+
+/** 模板一筆 → 某疾病的推導項 */
+function deriveItem(site, dm, page, t) {
+  const base = {
+    key: t.key, oldTitle: t.oldTitle, oldPath: `${dm.name}／${t.oldPath ?? t.oldTitle}`, oldUrl: t.oldUrlPattern, oldType: t.oldType,
+    verified: false, derived: true, mapTo: t.mapTo, newRequirements: t.newRequirements ?? [],
+  };
+  if (!page) return { ...base, status: 'pending', note: '疾病頁尚未建立；建立後依模板自動對應' };
+  const hit = resolveMapTo(site, dm, page, t.mapTo);
+  if (!hit) {
+    const m = t.mapTo ?? {};
+    const want = m.kind === 'disease-block' ? `疾病頁「${BLOCK_LABELS[m.block] ?? m.block}」區塊尚無內容`
+      : m.kind === 'master-field' ? `疾病頁與主檔尚無 ${m.field}`
+      : m.kind === 'related' ? `新站尚無關聯本疾病的${MAPTO_LABELS[m.docType] ?? MAPTO_LABELS[m.type] ?? m.type}`
+      : '新站尚無對應';
+    return { ...base, status: 'pending', note: `${want}（模板推導）` };
+  }
+  const { toPath, ...rest } = hit;
+  const out = { ...base, ...Object.fromEntries(Object.entries(rest).filter(([, v]) => v !== undefined)) };
+  if (toPath) out.toPath = toPath;
+  return out;
+}
+
+/** 主檔一種疾病 → 清單原料（模板推導＋人工覆蓋） */
+function composeDiseaseList(site, dm, template, manual) {
+  const pageRaw = site.byId.get(dm.id);
+  const page = pageRaw?.type === 'disease' && pageRaw.status === 'published' ? pageRaw : null;
+  const tplId = manual?.extends ?? MIGRATION_TEMPLATE_DISEASE;
+  const useTpl = tplId !== 'none' && template && template.id === tplId ? template : (tplId !== 'none' ? template : null);
+  const omit = new Set(manual?.omit ?? []);
+  const manualByKey = new Map((manual?.items ?? []).map((it) => [it.key, it]));
+  const items = [];
+  const seen = new Set();
+  for (const t of useTpl?.items ?? []) {
+    if (manualByKey.has(t.key)) { items.push({ ...manualByKey.get(t.key), derived: false }); seen.add(t.key); continue; }
+    if (omit.has(t.key)) continue;
+    items.push(deriveItem(site, dm, page, t));
+  }
+  for (const it of manual?.items ?? []) if (!seen.has(it.key)) items.push({ ...it, derived: false });
+  const status = !page ? (manual?.status === 'archived' ? 'archived' : 'no-page') : (manual?.status ?? 'published');
+  return {
+    raw: manual ?? null,
+    id: manual?.id ?? `migration.${dm.slug}`,
+    slug: manual ? String(manual.id).replace(/^migration\./, '') : dm.slug,
+    title: manual?.title ?? `${dm.name}（舊站疾病頁）→ 新站`,
+    scope: manual?.scope ?? { kind: 'disease', disease: dm.id },
+    owner: manual?.owner ?? dm.owner ?? page?.owner ?? useTpl?.owner ?? 'unit.oasis',
+    status,
+    reviewedAt: manual?.reviewedAt ?? useTpl?.reviewedAt ?? null,
+    reviewPeriodMonths: manual?.reviewPeriodMonths ?? useTpl?.reviewPeriodMonths ?? 0,
+    legacyRoot: manual?.legacyRoot ?? useTpl?.legacyRoot ?? null,
+    showLegacyUntil: manual?.showLegacyUntil ?? useTpl?.showLegacyUntil ?? null,
+    sourceNote: manual?.sourceNote ?? useTpl?.sourceNote ?? null,
+    summary: manual?.summary ?? null,
+    file: manual?.__file ?? null,
+    derived: !manual, curated: !!manual, hasPage: !!page, disease: dm.id, diseaseName: dm.name, legalCategory: dm.legalCategory ?? null,
+    pageId: page?.id ?? null, pagePath: page ? pathOf(page) : null, site: 'zh-TW',
+    extends: useTpl ? useTpl.id : 'none', templateId: useTpl?.id ?? null,
+    items,
+  };
+}
+
 function buildMigration(site, { addTodo, unitName }) {
   const today = site.today;
+  const template = (site.migrationTemplates ?? []).find((t) => t.id === MIGRATION_TEMPLATE_DISEASE) ?? null;
+  const manualByDisease = new Map();
+  const otherManual = [];
+  for (const raw of site.migrationLists ?? []) {
+    const d = raw.scope?.kind === 'disease' ? raw.scope.disease : null;
+    if (d && site.diseaseMasterById.has(d) && !manualByDisease.has(d)) manualByDisease.set(d, raw);
+    else otherManual.push(raw);
+  }
+  const sources = [];
+  for (const dm of site.master.diseases ?? []) sources.push(composeDiseaseList(site, dm, template, manualByDisease.get(dm.id)));
+  for (const raw of otherManual) {
+    const dm = raw.scope?.disease ? site.diseaseMasterById.get(raw.scope.disease) : null;
+    sources.push({
+      raw, id: raw.id, slug: String(raw.id).replace(/^migration\./, ''), title: raw.title, scope: raw.scope ?? null, owner: raw.owner, status: raw.status,
+      reviewedAt: raw.reviewedAt ?? null, reviewPeriodMonths: raw.reviewPeriodMonths ?? 0, legacyRoot: raw.legacyRoot ?? null, showLegacyUntil: raw.showLegacyUntil ?? null,
+      sourceNote: raw.sourceNote ?? null, summary: raw.summary ?? null, file: raw.__file ?? null,
+      derived: false, curated: true, hasPage: null, disease: dm?.id ?? null, diseaseName: dm?.name ?? null, legalCategory: dm?.legalCategory ?? null,
+      pageId: null, pagePath: null, site: raw.scope?.site ?? 'zh-TW', extends: raw.extends ?? 'none', templateId: null,
+      items: (raw.items ?? []).map((it) => ({ ...it, derived: false })),
+    });
+  }
+
   const lists = [];
   const byTarget = new Map();
+  const byDisease = new Map();
   const ZERO = () => ({ migrated: 0, merged: 0, archived: 0, pending: 0, dropped: 0, verified: 0, unverified: 0, total: 0 });
-  const stats = ZERO();
+  const stats = { ...ZERO(), lists: 0, derived: 0, curated: 0, noPage: 0, hasPage: 0, derivedItems: 0, curatedItems: 0 };
   const pending = [];
-  for (const raw of site.migrationLists ?? []) {
-    const showUntil = raw.showLegacyUntil ?? null;
+  for (const src of sources) {
+    const showUntil = src.showLegacyUntil ?? null;
     const show = !showUntil || today <= showUntil;
     const lstats = ZERO();
-    const items = (raw.items ?? []).map((it) => {
+    const items = src.items.map((it) => {
       const target = it.target ? site.byId.get(it.target) ?? null : null;
       const dest = target?.gov?.superseded ? site.byId.get(target.gov.currentId) ?? target : target;
       const anchor = it.anchor ? `#${it.anchor}` : '';
-      const to = dest ? (pathOf(dest).includes('#') ? pathOf(dest) : `${pathOf(dest)}${anchor}`) : null;
-      const owner = it.owner ?? raw.owner;
+      const to = dest ? (pathOf(dest).includes('#') ? pathOf(dest) : `${pathOf(dest)}${anchor}`) : it.toPath ? `${it.toPath}${anchor}` : null;
+      const owner = it.owner ?? src.owner;
+      const { toPath, ...rest } = it;
       return {
-        ...it, listId: raw.id, owner, ownerName: unitName(owner),
+        ...rest, listId: src.id, owner, ownerName: unitName(owner),
         statusLabel: MIGRATION_STATUS_LABELS[it.status] ?? it.status,
         fromPath: legacyPathOf(it.oldUrl), pattern: isLegacyPattern(it.oldUrl),
-        targetType: target?.type ?? null, targetTitle: target?.title ?? null, targetPath: target ? pathOf(target) : null,
+        targetType: target?.type ?? null, targetTitle: target?.title ?? null, targetPath: target ? pathOf(target) : toPath ?? null,
         to, toId: dest?.id ?? null, redirectsToCurrent: !!(dest && target && dest !== target),
         show,
       };
@@ -705,39 +876,60 @@ function buildMigration(site, { addTodo, unitName }) {
         if (st[it.status] !== undefined) st[it.status]++;
         if (it.verified) st.verified++; else st.unverified++;
       }
+      if (it.derived) stats.derivedItems++; else stats.curatedItems++;
       if (it.target) {
         if (!byTarget.has(it.target)) byTarget.set(it.target, []);
         byTarget.get(it.target).push(it);
       }
-      if (it.status === 'pending') {
-        pending.push(it);
-        if (site.unitById.has(it.owner) && raw.status !== 'archived') {
-          addTodo({ id: `migration-pending:${raw.id}:${it.key}`, kind: 'migration-pending', itemId: raw.id, itemType: 'migration', itemTitle: `${raw.title}：${it.oldTitle}`,
-            owner: it.owner, dueAt: it.dueAt ?? addDays(raw.reviewedAt ?? today, MIGRATION_PENDING_DAYS), href: '/admin/migration/', severity: 'medium',
-            listId: raw.id, migrationKey: it.key, oldUrl: it.oldUrl,
-            text: `舊站「${it.oldTitle}」${it.oldPath ? `（${it.oldPath}）` : ''}尚未移轉${it.note ? `：${it.note}` : ''}` });
-        }
-      }
+      if (it.status === 'pending') pending.push(it);
     }
-    lists.push({
-      id: raw.id, title: raw.title, scope: raw.scope ?? null, owner: raw.owner, ownerName: unitName(raw.owner), status: raw.status,
-      reviewedAt: raw.reviewedAt ?? null, nextReviewAt: raw.reviewPeriodMonths > 0 && raw.reviewedAt ? addMonths(raw.reviewedAt, raw.reviewPeriodMonths) : null,
-      legacyRoot: raw.legacyRoot ?? null, showLegacyUntil: showUntil, show, sourceNote: raw.sourceNote ?? null, summary: raw.summary ?? null,
-      file: raw.__file ?? null, stats: lstats, items,
-    });
+    const list = {
+      id: src.id, title: src.title, scope: src.scope, owner: src.owner, ownerName: unitName(src.owner), status: src.status,
+      reviewedAt: src.reviewedAt, nextReviewAt: src.reviewPeriodMonths > 0 && src.reviewedAt ? addMonths(src.reviewedAt, src.reviewPeriodMonths) : null,
+      legacyRoot: src.legacyRoot, showLegacyUntil: showUntil, show, sourceNote: src.sourceNote, summary: src.summary,
+      file: src.file, stats: lstats, items,
+      slug: src.slug, derived: src.derived, curated: src.curated, hasPage: src.hasPage, disease: src.disease, diseaseName: src.diseaseName,
+      legalCategory: src.legalCategory, pageId: src.pageId, pagePath: src.pagePath, site: src.site, extends: src.extends, templateId: src.templateId,
+      derivedItems: items.filter((i) => i.derived).length, curatedItems: items.filter((i) => !i.derived).length,
+      apiPath: `/v1/migration/${src.slug}.json`,
+    };
+    lists.push(list);
+    stats.lists++;
+    if (list.derived) stats.derived++; else stats.curated++;
+    if (list.status === 'no-page') stats.noPage++;
+    if (list.hasPage) stats.hasPage++;
+    if (list.disease && !byDisease.has(list.disease)) byDisease.set(list.disease, list);
+
+    // 待辦聚合（14.1）：每份清單一則
+    const pend = items.filter((i) => i.status === 'pending');
+    if (pend.length && site.unitById.has(list.owner) && list.status !== 'archived') {
+      const severity = list.legalCategory ? MIGRATION_SEVERITY_BY_CATEGORY[list.legalCategory] ?? 'medium' : 'medium';
+      const explicit = pend.map((i) => i.dueAt).filter(Boolean).sort()[0];
+      const name = list.diseaseName ?? list.title;
+      list.todoId = `migration-pending:${list.id}`;
+      addTodo({
+        id: list.todoId, kind: 'migration-pending', itemId: list.id, itemType: 'migration', itemTitle: list.title,
+        owner: list.owner, dueAt: explicit ?? addDays(list.reviewedAt ?? today, MIGRATION_DUE_DAYS_BY_SEVERITY[severity]), href: '/admin/migration/', severity,
+        listId: list.id, count: pend.length, pendingKeys: pend.map((i) => i.key), disease: list.disease, legalCategory: list.legalCategory, noPage: list.status === 'no-page', derived: list.derived,
+        text: list.status === 'no-page'
+          ? `${name}：疾病頁尚未建立，${pend.length} 個舊頁待移轉`
+          : `${name}：${pend.length} 個舊頁待移轉${pend.length <= 3 ? `（${pend.map((i) => i.oldTitle).join('、')}）` : ''}`,
+      });
+    }
   }
   // 反向掛到新站內容：item.gov.legacy（模板「本頁取代舊網站 N 個頁面」）
+  const listById = new Map(lists.map((l) => [l.id, l]));
   for (const item of site.all) {
     const its = byTarget.get(item.id);
     if (!item.gov) continue;
     if (!its?.length) { item.gov.legacy = null; continue; }
-    const until = its.map((x) => lists.find((l) => l.id === x.listId)?.showLegacyUntil).filter(Boolean).sort().at(-1) ?? null;
+    const until = its.map((x) => listById.get(x.listId)?.showLegacyUntil).filter(Boolean).sort().at(-1) ?? null;
     item.gov.legacy = {
       count: its.length, urls: its.map((x) => x.oldUrl), items: its,
       show: its.some((x) => x.show), showUntil: until, showLegacyUntil: until, lists: [...new Set(its.map((x) => x.listId))],
     };
   }
-  return { lists, byTarget, stats, pending, statusLabels: MIGRATION_STATUS_LABELS, requirementLabels: MIGRATION_REQUIREMENT_LABELS };
+  return { lists, byTarget, byDisease, stats, pending, template: template ? { id: template.id, title: template.title, items: template.items.length, file: template.__file ?? null } : null, statusLabels: MIGRATION_STATUS_LABELS, requirementLabels: MIGRATION_REQUIREMENT_LABELS };
 }
 
 /** 反向稽核掃描的全文（含 i18n） */

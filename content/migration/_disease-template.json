@@ -1,0 +1,353 @@
+{
+  "id": "migration-template.disease",
+  "type": "migration-template",
+  "title": "舊站疾病頁標準子頁樹（推導移轉清單用）",
+  "summary": "舊站每個疾病頁的子頁結構相同：疾病介紹七個分頁、預防接種、Q&A、衛教宣導、法規與指引、統計、檢驗、通報定義、新聞稿列表與相關連結。治理引擎依本模板對主檔每一種疾病推導移轉清單，人工清單只寫例外。",
+  "owner": "unit.oasis",
+  "reviewedAt": "2026-10-01",
+  "reviewPeriodMonths": 6,
+  "appliesTo": "disease",
+  "legacyRoot": "https://www.cdc.gov.tw/Disease/SubIndex/{id}",
+  "showLegacyUntil": "2027-12-31",
+  "sourceNote": "開發環境連不到 www.cdc.gov.tw，子頁樹依規劃文件 §1.2 的 URL 模式與對官網的既有認識重建；各疾病舊網址 ID 不確定，一律以 {id} 佔位（轉址標 pattern，不進伺服器對照檔）。推導項全部 verified:false。",
+  "items": [
+    {
+      "key": "intro",
+      "oldTitle": "疾病介紹",
+      "oldPath": "疾病介紹",
+      "oldUrlPattern": "https://www.cdc.gov.tw/Disease/SubIndex/{id}",
+      "oldType": "page",
+      "mapTo": {
+        "kind": "disease-page"
+      },
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "reviewPeriod",
+        "languages",
+        "structuredData",
+        "aiWhitelist"
+      ]
+    },
+    {
+      "key": "intro-pathogen",
+      "oldTitle": "致病原",
+      "oldPath": "疾病介紹／致病原",
+      "oldUrlPattern": "https://www.cdc.gov.tw/Disease/SubIndex/{id}#pathogen",
+      "oldType": "page",
+      "mapTo": {
+        "kind": "disease-block",
+        "block": "transmission"
+      },
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "machineReadable"
+      ]
+    },
+    {
+      "key": "intro-epidemiology",
+      "oldTitle": "流行病學",
+      "oldPath": "疾病介紹／流行病學",
+      "oldUrlPattern": "https://www.cdc.gov.tw/Disease/SubIndex/{id}#epidemiology",
+      "oldType": "page",
+      "mapTo": {
+        "kind": "disease-block",
+        "block": "situation"
+      },
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "machineReadable"
+      ]
+    },
+    {
+      "key": "intro-transmission",
+      "oldTitle": "傳染方式",
+      "oldPath": "疾病介紹／傳染方式",
+      "oldUrlPattern": "https://www.cdc.gov.tw/Disease/SubIndex/{id}#transmission",
+      "oldType": "page",
+      "mapTo": {
+        "kind": "disease-block",
+        "block": "transmission"
+      },
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "machineReadable"
+      ]
+    },
+    {
+      "key": "intro-incubation",
+      "oldTitle": "潛伏期",
+      "oldPath": "疾病介紹／潛伏期",
+      "oldUrlPattern": "https://www.cdc.gov.tw/Disease/SubIndex/{id}#incubation",
+      "oldType": "page",
+      "mapTo": {
+        "kind": "master-field",
+        "field": "incubation"
+      },
+      "newRequirements": [
+        "structuredData",
+        "machineReadable"
+      ]
+    },
+    {
+      "key": "intro-symptoms",
+      "oldTitle": "發病症狀",
+      "oldPath": "疾病介紹／發病症狀",
+      "oldUrlPattern": "https://www.cdc.gov.tw/Disease/SubIndex/{id}#symptoms",
+      "oldType": "page",
+      "mapTo": {
+        "kind": "disease-block",
+        "block": "symptoms"
+      },
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "machineReadable",
+        "aiWhitelist"
+      ]
+    },
+    {
+      "key": "intro-prevention",
+      "oldTitle": "預防方法",
+      "oldPath": "疾病介紹／預防方法",
+      "oldUrlPattern": "https://www.cdc.gov.tw/Disease/SubIndex/{id}#prevention",
+      "oldType": "page",
+      "mapTo": {
+        "kind": "disease-block",
+        "block": "prevention"
+      },
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "machineReadable",
+        "aiWhitelist"
+      ]
+    },
+    {
+      "key": "intro-treatment",
+      "oldTitle": "治療方法與就醫資訊",
+      "oldPath": "疾病介紹／治療方法",
+      "oldUrlPattern": "https://www.cdc.gov.tw/Disease/SubIndex/{id}#treatment",
+      "oldType": "page",
+      "mapTo": {
+        "kind": "disease-block",
+        "block": "treatment"
+      },
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "machineReadable"
+      ]
+    },
+    {
+      "key": "vaccine",
+      "oldTitle": "預防接種建議",
+      "oldPath": "預防接種",
+      "oldUrlPattern": "https://www.cdc.gov.tw/Category/MPage/{id}#vaccine",
+      "oldType": "page",
+      "mapTo": {
+        "kind": "disease-block",
+        "block": "vaccine"
+      },
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "basedOn"
+      ]
+    },
+    {
+      "key": "qa-list",
+      "oldTitle": "Q&A",
+      "oldPath": "Q&A",
+      "oldUrlPattern": "https://www.cdc.gov.tw/Category/QAPage/{id}",
+      "oldType": "qa",
+      "mapTo": {
+        "kind": "related",
+        "type": "faq",
+        "into": "disease-page",
+        "anchor": "faq"
+      },
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "reviewPeriod",
+        "aiWhitelist",
+        "structuredData"
+      ]
+    },
+    {
+      "key": "materials-poster",
+      "oldTitle": "衛教宣導：單張海報",
+      "oldPath": "衛教宣導／單張海報",
+      "oldUrlPattern": "https://www.cdc.gov.tw/Category/List/{id}#posters",
+      "oldType": "pdf",
+      "mapTo": {
+        "kind": "related",
+        "type": "publication",
+        "pubType": "poster"
+      },
+      "newRequirements": [
+        "owner",
+        "basedOn",
+        "license",
+        "accessibility"
+      ]
+    },
+    {
+      "key": "materials-video",
+      "oldTitle": "衛教宣導：影片",
+      "oldPath": "衛教宣導／影音",
+      "oldUrlPattern": "https://www.cdc.gov.tw/Category/MPage/{id}#video",
+      "oldType": "media",
+      "mapTo": {
+        "kind": "related",
+        "type": "media",
+        "mediaType": [
+          "video",
+          "animation",
+          "short"
+        ]
+      },
+      "newRequirements": [
+        "owner",
+        "basedOn",
+        "accessibility"
+      ]
+    },
+    {
+      "key": "manual",
+      "oldTitle": "工作手冊",
+      "oldPath": "法規與指引／工作手冊",
+      "oldUrlPattern": "https://www.cdc.gov.tw/Category/DiseaseManual/{id}",
+      "oldType": "pdf",
+      "mapTo": {
+        "kind": "related",
+        "type": "document",
+        "docType": "manual"
+      },
+      "newRequirements": [
+        "versionChain",
+        "machineReadable",
+        "owner",
+        "reviewedAt"
+      ]
+    },
+    {
+      "key": "case-definition",
+      "oldTitle": "病例定義",
+      "oldPath": "法規與指引／病例定義",
+      "oldUrlPattern": "https://www.cdc.gov.tw/Category/DiseaseDefine/{id}",
+      "oldType": "page",
+      "mapTo": {
+        "kind": "related",
+        "type": "document",
+        "docType": "case-definition"
+      },
+      "newRequirements": [
+        "versionChain",
+        "machineReadable",
+        "owner"
+      ]
+    },
+    {
+      "key": "guideline",
+      "oldTitle": "治療指引",
+      "oldPath": "法規與指引／治療指引",
+      "oldUrlPattern": "https://www.cdc.gov.tw/File/Get/{id}#guideline",
+      "oldType": "pdf",
+      "mapTo": {
+        "kind": "related",
+        "type": "document",
+        "docType": "guideline"
+      },
+      "newRequirements": [
+        "versionChain",
+        "machineReadable",
+        "basedOn",
+        "owner"
+      ]
+    },
+    {
+      "key": "stats",
+      "oldTitle": "統計資料",
+      "oldPath": "統計資料",
+      "oldUrlPattern": "https://www.cdc.gov.tw/Category/List/{id}#statistics",
+      "oldType": "list",
+      "mapTo": {
+        "kind": "related",
+        "type": "dataset"
+      },
+      "newRequirements": [
+        "license",
+        "owner",
+        "machineReadable"
+      ]
+    },
+    {
+      "key": "lab",
+      "oldTitle": "檢驗資訊",
+      "oldPath": "檢驗資訊",
+      "oldUrlPattern": "https://www.cdc.gov.tw/Category/MPage/{id}#lab",
+      "oldType": "page",
+      "mapTo": {
+        "kind": "related",
+        "type": "labtest"
+      },
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "structuredData"
+      ]
+    },
+    {
+      "key": "notify",
+      "oldTitle": "通報定義與時限",
+      "oldPath": "通報定義",
+      "oldUrlPattern": "https://www.cdc.gov.tw/Category/MPage/{id}#notify",
+      "oldType": "page",
+      "mapTo": {
+        "kind": "page",
+        "path": "/report/",
+        "anchor": "n-{slug}"
+      },
+      "newRequirements": [
+        "structuredData",
+        "owner"
+      ]
+    },
+    {
+      "key": "news-list",
+      "oldTitle": "新聞稿列表",
+      "oldPath": "最新消息",
+      "oldUrlPattern": "https://www.cdc.gov.tw/Bulletin/List/{id}",
+      "oldType": "news-list",
+      "mapTo": {
+        "kind": "related",
+        "type": "news",
+        "into": "disease-page"
+      },
+      "newRequirements": [
+        "basedOn",
+        "owner"
+      ]
+    },
+    {
+      "key": "links",
+      "oldTitle": "相關連結",
+      "oldPath": "相關連結",
+      "oldUrlPattern": "https://www.cdc.gov.tw/Category/List/{id}#links",
+      "oldType": "external",
+      "mapTo": {
+        "kind": "related",
+        "type": "topic"
+      },
+      "newRequirements": [
+        "linkCheck",
+        "owner"
+      ]
+    }
+  ]
+}

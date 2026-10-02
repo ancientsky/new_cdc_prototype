@@ -54,8 +54,9 @@ ${pageHead({ title: '治理儀表板', what: '署內治理的一頁總覽：品�
     <dl><dt>ok</dt><dd>${lc.ok}</dd><dt>broken</dt><dd class="${lc.broken ? 'adm-red' : ''}">${lc.broken}</dd><dt>unchecked</dt><dd>${lc.unchecked}</dd></dl>
     <p>共 ${lc.total} 條；CI 每日 <code>npm run fetch -- --check-links</code>，失效自動變待辦。</p></section>
   <section class="adm-minicard ${mg.total.pending ? 'adm-minicard--warn' : mg.lists.length ? 'adm-minicard--ok' : ''}" aria-labelledby="mc-g" id="dash-migration"><h3 id="mc-g">移轉進度 <a href="${url('/admin/migration/', { noLang: true })}">逐筆對照 →</a></h3>
-    ${mg.lists.length ? html`<dl><dt>舊頁總數</dt><dd>${mg.total.total}</dd><dt>已處理（有去向）</dt><dd>${mg.total.done} <span class="adm-muted">(${mg.donePct}%)</span></dd><dt>待確認</dt><dd class="${mg.total.pending ? 'adm-yellow' : ''}">${mg.total.pending}</dd><dt>已核對網址</dt><dd class="${mg.total.verified < mg.total.total ? 'adm-red' : ''}">${mg.total.verified} / ${mg.total.total}</dd></dl>
-    <p>舊官網頁面逐筆登錄去向；已移轉的舊網址由伺服器 301 與 404 頁自動導到新頁。</p>` : html`<p>尚未建立移轉清單（content/migration/）。建立後這裡顯示舊頁處理進度與待確認數。</p>`}</section>
+    ${mg.lists.length ? html`<dl><dt>整體進度</dt><dd>${mg.total.done} / ${mg.total.total} <span class="adm-muted">(${mg.donePct}%)</span></dd><dt>清單</dt><dd>${mg.summary.lists} 份 <span class="adm-muted">推導 ${mg.summary.derived}・人工 ${mg.summary.curated}</span></dd><dt>待移轉</dt><dd class="${mg.total.pending ? 'adm-yellow' : ''}">${mg.total.pending}</dd><dt>尚無疾病頁</dt><dd class="${mg.summary.noPage ? 'adm-yellow' : ''}">${mg.summary.noPage} 種</dd><dt>舊頁總數</dt><dd>${mg.total.total}</dd></dl>
+    <div class="adm-stack adm-stack--card" role="img" aria-label="整體進度 ${mg.donePct}%，待移轉 ${mg.total.pending} 筆"><i class="adm-stack__ok" style="width:${mg.donePct}%"></i></div>
+    <p>每種傳染病一份清單，標準子頁由模板推導；已移轉的舊網址由伺服器 301 與 404 頁自動導到新頁。</p>` : html`<p>尚未建立移轉清單（content/migration/）。建立後這裡顯示舊頁處理進度與待確認數。</p>`}</section>
 </div>
 
 <section class="adm-card" aria-labelledby="kpi-h"><h2 id="kpi-h">品質指標（規劃 7.5）</h2>

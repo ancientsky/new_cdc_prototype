@@ -52,9 +52,20 @@
 - **新擺法、新要求**：結核病疾病頁加上專區導覽（民眾／專業各一套），指引與手冊走文件版本鏈，另有 Q&A、專區、補助與潛伏結核感染治療服務；頁首治理列有「本頁取代舊網站 N 個頁面」，展開看每筆舊網址與移轉後新增的治理要求。
 - **舊網址不 404**：建置自動輸出 `v1/redirects.json`、`v1/legacy-map.json`，以及三種伺服器轉址檔 `redirects/nginx.map`、`redirects/web.config.rewritemap.xml`、`redirects/_redirects`；404 頁自動帶往新頁，`/legacy/` 可貼舊網址查新頁。靜態主機的 404 頁只是示範與備援，**正式站必須由伺服器回 301**。
 - **上線後監測**：`node scripts/analyze-404-log.mjs access.log --map dist/v1/legacy-map.json --migration content/migration` 把 404 log 分成「可直接 301」「待補對照」「真的不存在（建議 410）」三類，待補對照附可貼進清單的草稿。
-- **規劃回補**：整理了 28 項「規劃文件沒寫到、原型做了」的作法，見 [docs/plan-supplement.md](docs/plan-supplement.md)；完整移轉與轉址手冊見 [docs/migration-playbook.md](docs/migration-playbook.md)；同事操作步驟見 [docs/guide-staff.md](docs/guide-staff.md) 第 15 節。
+- **規劃回補**：整理了 31 項「規劃文件沒寫到、原型做了」的作法，見 [docs/plan-supplement.md](docs/plan-supplement.md)；完整移轉與轉址手冊見 [docs/migration-playbook.md](docs/migration-playbook.md)；同事操作步驟見 [docs/guide-staff.md](docs/guide-staff.md) 第 15 節。
 
 > 限制：開發環境連不到 `www.cdc.gov.tw`，結核病專區的舊頁清單依規劃文件的 URL 模式重建，每筆標 `verified: false`，等權責單位確認。
+
+## 第六輪：移轉套用到全部疾病、國際合作區塊、內容來源語言
+
+第五輪證明「一個專區走完整套」可行；第六輪回答「99 種疾病怎麼辦」，並補上舊站只有英文版的國際合作區塊：
+
+- **移轉套用全部疾病（推導清單 → 只寫例外）**：舊站每個疾病頁的子頁結構相同，所以標準子頁樹寫成一份模板 `content/migration/_disease-template.json`，治理引擎對主檔**每一種疾病**推導一份移轉清單（原型主檔 72 種：16 種已有疾病頁，其餘標 `no-page`）；有疾病頁且新站有對應內容就算已移轉／已併入，沒有就是待移轉。人工清單**只寫模板沒有的例外**（疾病特有專區頁、專屬指引與公告），同 `key` 覆蓋推導結果。待辦每份清單只開一則，優先度依法定類別。結核病之外，登革熱、流感、麻疹、腸病毒也回補了防治計畫（`professional.programs`）、文件、Q&A 與例外清單。後台 `/admin/migration/` 看 72 份清單進度，`/v1/migration/{slug}.json` 可下載當人工清單的起點。
+- **國際合作區塊**：舊英文站的 International Cooperation 移到新站（IHR 國家聯絡窗口、多邊與雙邊合作、國際訓練與申請、英文出版品與新聞），入口為 `/international/`，主選單不增項，放在研究與媒體入口與頁尾。
+- **內容來源語言 `sourceLang`**：國際合作內容以**英文為來源語言**、中文為必備的審核譯文：頂層欄位是英文，中文放 `i18n['zh-TW']`；缺中文譯文建置失敗；頁首標示「本頁以英文為準，中文為譯文」。逾期、譯文過期、白名單等治理規則照常運作。
+- **規劃回補與手冊**：[docs/plan-supplement.md](docs/plan-supplement.md) 新增第 29–31 項（推導清單、sourceLang、國際合作雙語）；[docs/governance-model.md](docs/governance-model.md) 新增規則 17、18；[docs/migration-playbook.md](docs/migration-playbook.md) 新增第 10 節「規模化：99 種疾病怎麼做」；[docs/guide-staff.md](docs/guide-staff.md) 第 15 節改為「推導清單 → 只寫例外」流程。
+
+> 限制：推導清單的舊網址一律以 `{id}` 佔位（標 `pattern`），不進伺服器轉址檔；要讓 301 真的生效，需向資訊室取得舊站 ID 對照（見 playbook 第 10.5 節）。英文站 `/En` 同樣連不到，國際合作的舊頁清單依既有認識重建，全部 `verified: false`。
 
 ## 快速開始
 
@@ -144,7 +155,7 @@ docs/                使用說明與治理文件
 | [docs/deploy.md](docs/deploy.md) | 部署與維運、新增內容型別、改 schema |
 | [docs/roadmap-mapping.md](docs/roadmap-mapping.md) | 原型功能與三階段路線圖對照 |
 | [docs/migration-playbook.md](docs/migration-playbook.md) | 舊站→新站內容移轉與網址轉址手冊：301／410 策略、搜尋引擎、舊站保留期、切換日 checklist、404 log 監測、常見錯誤、結核病示範 |
-| [docs/plan-supplement.md](docs/plan-supplement.md) | 規劃文件回補：原型做了、規劃沒寫到的 28 項作法（做法、為何需要、對應規劃章節、原型位置、正式上線還缺什麼） |
+| [docs/plan-supplement.md](docs/plan-supplement.md) | 規劃文件回補：原型做了、規劃沒寫到的 31 項作法（做法、為何需要、對應規劃章節、原型位置、正式上線還缺什麼） |
 
 ## 貢獻方式
 

@@ -1,0 +1,85 @@
+{
+  "$id": "https://cdc-prototype/schemas/migration-template.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "移轉清單模板（migration template）：舊站疾病頁的標準子頁樹（ARCHITECTURE 14.1）",
+  "description": "content/migration/_disease-template.json（底線開頭＝模板，不是清單）。治理引擎對傳染病主檔的每一種疾病，依本模板推導一份移轉清單（derived:true）：有疾病頁且 mapTo 命中 ⇒ merged（區塊／主檔欄位／站內頁）或 migrated（關聯內容命中，target 為該內容 id）；疾病頁存在但 mapTo 未命中 ⇒ pending；疾病頁不存在 ⇒ 清單 status:no-page、全部 pending。人工清單 content/migration/{slug}.json 同 key 覆蓋推導結果。oldUrlPattern 都含 {id} 佔位 ⇒ 轉址一律 pattern:true，不進伺服器對照檔。",
+  "type": "object",
+  "required": ["id", "type", "title", "owner", "reviewedAt", "legacyRoot", "showLegacyUntil", "items"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^migration-template\\.[a-z0-9-]+$", "description": "例：migration-template.disease（人工清單以 extends 引用）" },
+    "type": { "const": "migration-template" },
+    "title": { "type": "string", "minLength": 1 },
+    "summary": { "type": "string" },
+    "owner": { "type": "string", "pattern": "^unit\\.", "description": "模板維護單位；推導清單的 owner 依序取主檔疾病 owner → 疾病頁 owner → 本欄" },
+    "reviewedAt": { "type": "string", "format": "date", "description": "模板最後審閱日；推導清單的 reviewedAt（待辦期限起算日）" },
+    "reviewPeriodMonths": { "type": "integer", "minimum": 0, "maximum": 60 },
+    "appliesTo": { "const": "disease", "description": "模板套用範圍（目前只有 disease：主檔每一種疾病）" },
+    "legacyRoot": { "type": "string", "format": "uri-template", "pattern": "^https?://", "description": "舊站疾病頁入口（{id} 佔位）" },
+    "showLegacyUntil": { "type": "string", "format": "date", "description": "推導清單的「舊網址對應」顯示截止日" },
+    "sourceNote": { "type": "string" },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/templateItem" }
+    }
+  },
+  "$defs": {
+    "templateItem": {
+      "type": "object",
+      "required": ["key", "oldTitle", "oldUrlPattern", "oldType", "mapTo"],
+      "additionalProperties": false,
+      "properties": {
+        "key": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$", "description": "模板內唯一；人工清單同 key 即覆蓋" },
+        "oldTitle": { "type": "string", "minLength": 1 },
+        "oldPath": { "type": "string", "description": "舊站階層（不含疾病名；推導時自動加上「{疾病}／」）" },
+        "oldUrlPattern": { "type": "string", "format": "uri-template", "pattern": "^https?://.*\\{[^}]+\\}", "description": "舊網址模式，必含 {id} 佔位" },
+        "oldType": { "enum": ["page", "qa", "pdf", "news-list", "media", "list", "external"] },
+        "mapTo": { "$ref": "#/$defs/mapTo" },
+        "note": { "type": "string" },
+        "newRequirements": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "enum": ["owner", "reviewedAt", "reviewPeriod", "basedOn", "machineReadable", "languages", "versionChain", "aiWhitelist", "structuredData", "accessibility", "license", "linkCheck"] }
+        }
+      }
+    },
+    "mapTo": {
+      "description": "新站哪裡有對應就算移轉",
+      "oneOf": [
+        {
+          "type": "object", "additionalProperties": false, "required": ["kind"],
+          "description": "疾病頁本身 ⇒ migrated（target＝疾病頁）",
+          "properties": { "kind": { "const": "disease-page" } }
+        },
+        {
+          "type": "object", "additionalProperties": false, "required": ["kind", "block"],
+          "description": "疾病頁區塊有內容（markdown／warning／cards／datasets 任一，且未標 pending）⇒ merged（anchor＝區塊 key）",
+          "properties": { "kind": { "const": "disease-block" }, "block": { "enum": ["what-to-do", "symptoms", "transmission", "prevention", "treatment", "vaccine", "situation", "faq"] } }
+        },
+        {
+          "type": "object", "additionalProperties": false, "required": ["kind", "type"],
+          "description": "關聯內容（published、非失效版、關聯本疾病）命中 ⇒ migrated（target＝最新一筆）；into:disease-page ⇒ merged 到疾病頁（anchor）",
+          "properties": {
+            "kind": { "const": "related" },
+            "type": { "enum": ["faq", "document", "media", "labtest", "dataset", "news", "publication", "topic", "service"] },
+            "docType": { "enum": ["manual", "guideline", "case-definition", "form", "recommendation"] },
+            "mediaType": { "type": "array", "items": { "type": "string" } },
+            "pubType": { "type": "string" },
+            "into": { "const": "disease-page" },
+            "anchor": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" }
+          }
+        },
+        {
+          "type": "object", "additionalProperties": false, "required": ["kind", "field"],
+          "description": "疾病頁或主檔欄位有值 ⇒ merged（target＝疾病頁）",
+          "properties": { "kind": { "const": "master-field" }, "field": { "type": "string" }, "anchor": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" } }
+        },
+        {
+          "type": "object", "additionalProperties": false, "required": ["kind", "path"],
+          "description": "站內共用頁（例：/report/ 通報時限表）⇒ merged；anchor 可用 {slug}",
+          "properties": { "kind": { "const": "page" }, "path": { "type": "string", "pattern": "^/" }, "anchor": { "type": "string", "pattern": "^[a-z0-9{][a-z0-9{}-]*$" } }
+        }
+      ]
+    }
+  }
+}

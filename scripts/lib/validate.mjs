@@ -73,13 +73,33 @@ export function validateSite(site) {
     if (item.type === 'media' && !(item.basedOn?.length)) push(item.__file, `影音素材必須填 basedOn（依據正本），見規劃 7.7`);
     for (const ref of item.contentIds ?? []) if (!ids.has(ref)) push(item.__file, `contentIds ${ref} 不存在`);
   }
+  // 2b. 來源語言（ARCHITECTURE 14.2）：languages[sourceLang] 為 source、只有來源語言可標 source；
+  //     sourceLang≠zh-TW ⇒ i18n['zh-TW'] 必須存在（含 title、summary）且 languages['zh-TW'] 為 reviewed／machine（中文官網不能沒有中文）。
+  for (const item of site.all) for (const msg of sourceLangErrors(item)) push(item.__file, msg);
+
   // 3. 佔位／示意網址政策（治理門檻）：內容欄位的連結不得含 placeholder-、example.gov.tw、example.com…
   //    例外：legacyUrls（現行官網對照用，不檢）。
   for (const item of site.all) for (const hit of findPlaceholderUrls(item)) push(item.__file, `${hit.path} 含佔位／示意網址：${hit.value}（尚未遷移的文件請改連 /pending/?ref=<id>&doc=<名稱>）`);
 
+  // 4a. 移轉清單模板（ARCHITECTURE 14.1）：schema、id 唯一、owner、key 唯一
+  const vTpl = ajv.getSchema('https://cdc-prototype/schemas/migration-template.json');
+  const tplById = new Map();
+  for (const tpl of site.migrationTemplates ?? []) {
+    const file = tpl.__file ?? `content/migration/_${tpl.id}.json`;
+    if (!vTpl(tpl)) for (const e of vTpl.errors) push(file, `${e.instancePath || '/'} ${e.message}`);
+    if (tplById.has(tpl.id)) push(file, `重複模板 id：${tpl.id}`);
+    tplById.set(tpl.id, tpl);
+    if (tpl.owner && !units.has(tpl.owner)) push(file, `owner ${tpl.owner} 不在 units 主檔`);
+    const tkeys = new Set();
+    (tpl.items ?? []).forEach((it, i) => { if (tkeys.has(it.key)) push(file, `/items/${i} key 重複：${it.key}`); tkeys.add(it.key); });
+    for (const hit of findPlaceholderUrls(tpl)) push(file, `${hit.path} 含佔位／示意網址：${hit.value}`);
+  }
+
   // 4. 移轉清單（ARCHITECTURE 13.1）：schema、id 唯一、owner、target 存在（pending／dropped 除外）、key 唯一
+  //    第六輪（14.1）：同一疾病只能有一份人工清單；extends 指向的模板要存在；omit 的 key 要在模板內。
   const vMig = ajv.getSchema('https://cdc-prototype/schemas/migration.json');
   const migIds = new Set();
+  const migByDisease = new Map();
   for (const list of site.migrationLists ?? []) {
     const file = list.__file ?? `content/migration/${list.id}.json`;
     if (!vMig(list)) for (const e of vMig.errors) push(file, `${e.instancePath || '/'} ${e.message}`);
@@ -87,6 +107,14 @@ export function validateSite(site) {
     migIds.add(list.id);
     if (!units.has(list.owner)) push(file, `owner ${list.owner} 不在 units 主檔`);
     if (list.scope?.disease && !diseaseIds.has(list.scope.disease)) push(file, `scope.disease ${list.scope.disease} 不在傳染病主檔`);
+    if (list.scope?.disease) {
+      if (migByDisease.has(list.scope.disease)) push(file, `scope.disease ${list.scope.disease} 已有人工清單 ${migByDisease.get(list.scope.disease)}（同一疾病只能一份，例外請寫在同一份）`);
+      else migByDisease.set(list.scope.disease, list.id);
+      const tplId = list.extends ?? 'migration-template.disease';
+      if (tplId !== 'none' && list.extends && !tplById.has(tplId)) push(file, `extends ${tplId} 模板不存在`);
+      const tpl = tplById.get(tplId);
+      for (const k of list.omit ?? []) if (tpl && !tpl.items?.some((x) => x.key === k)) push(file, `omit ${k} 不在模板 ${tplId} 的 key 內`);
+    } else if (list.extends && list.extends !== 'none') push(file, `extends 只適用於疾病範圍（scope.kind=disease）的清單`);
     for (const ref of list.diseases ?? []) if (!diseaseIds.has(ref)) push(file, `diseases ${ref} 不在傳染病主檔`);
     const keys = new Set();
     (list.items ?? []).forEach((it, i) => {
@@ -106,6 +134,22 @@ export function validateSite(site) {
   if (!units.has(site.situation.publisher)) push('content/situation/current.json', `publisher ${site.situation.publisher} 不在 units`);
 
   return errors;
+}
+
+/** 來源語言規則（ARCHITECTURE 14.2）→ 錯誤訊息陣列 */
+export function sourceLangErrors(item) {
+  const errs = [];
+  const src = item.sourceLang ?? 'zh-TW';
+  const langs = item.languages ?? {};
+  if (langs[src]?.status !== 'source') errs.push(`languages.${src}.status 必須為 source（sourceLang＝${src}）`);
+  for (const [lang, m] of Object.entries(langs)) if (lang !== src && m?.status === 'source') errs.push(`languages.${lang}.status 為 source，但來源語言是 ${src}（只有 sourceLang 可標 source；其他語言改 reviewed／machine）`);
+  if (src !== 'zh-TW') {
+    const zh = item.i18n?.['zh-TW'];
+    if (!zh || typeof zh !== 'object') errs.push(`sourceLang＝${src} 時必須提供中文譯文 i18n["zh-TW"]（中文官網不能沒有中文）`);
+    else for (const f of ['title', 'summary']) if (!zh[f]) errs.push(`i18n["zh-TW"].${f} 必填（sourceLang＝${src}）`);
+    if (!['reviewed', 'machine'].includes(langs['zh-TW']?.status)) errs.push(`sourceLang＝${src} 時 languages["zh-TW"].status 必須為 reviewed 或 machine（目前 ${langs['zh-TW']?.status ?? '未填'}）`);
+  }
+  return errs;
 }
 
 /** 佔位／示意網址判定（與 scripts/lib/check-internal-links.mjs 的黑名單同精神；這裡管內容來源） */

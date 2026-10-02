@@ -1,0 +1,66 @@
+{
+  "id": "faq.dengue-spraying-refuse",
+  "type": "faq",
+  "title": "衛生單位說要進家裡噴藥，可以拒絕嗎？",
+  "question": "衛生單位說要進家裡噴藥，可以拒絕嗎？",
+  "owner": "unit.acute-infectious",
+  "steward": "急性傳染病組承辦人",
+  "publishedAt": "2026-09-24",
+  "reviewedAt": "2026-09-24",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "doc.guidance-dengue"
+  ],
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-30"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "pending"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "登革熱本土病例周邊的室內噴藥是針對性防治，會事先通知並說明注意事項；有嬰幼兒、孕婦或寵物請事先告知，仍要持續清除積水容器。",
+  "keywords": [
+    "登革熱",
+    "噴藥",
+    "室內噴藥",
+    "拒絕",
+    "孳生源"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/{id}#dengue-spray"
+  ],
+  "answerMarkdown": "建議配合。登革熱本土病例發生後，衛生單位依風險評估，才會在病例住家及周邊進行**針對性室內噴藥**，目的是快速降低帶病毒的成蚊數量。噴藥前會以書面或電話通知，並說明使用的藥劑與注意事項。\n\n若家中有嬰幼兒、孕婦、魚缸或寵物，請事先告知人員，他們會說明需要暫時離開的時間與遮蓋方式。噴藥只能壓低成蚊，**清除積水容器（巡、倒、清、刷）才是根本**，兩者要一起做。"
+}

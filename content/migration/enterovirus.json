@@ -1,0 +1,175 @@
+{
+  "id": "migration.enterovirus",
+  "type": "migration",
+  "title": "腸病毒專區（舊站）→ 新站：疾病特有頁面（例外清單）",
+  "extends": "migration-template.disease",
+  "owner": "unit.acute-infectious",
+  "steward": "急性傳染病組承辦人",
+  "publishedAt": "2026-10-02",
+  "reviewedAt": "2026-10-02",
+  "reviewPeriodMonths": 3,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "腸病毒專區中標準疾病頁模板沒有的舊頁：防治專區首頁、教托育機構指引與停課通報、重症臨床處置與重症責任醫院、EV71 疫苗與洗手動畫的對照。",
+  "keywords": [
+    "移轉清單",
+    "舊網址",
+    "301",
+    "腸病毒"
+  ],
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "scope": {
+    "kind": "disease",
+    "disease": "disease.enterovirus"
+  },
+  "legacyRoot": "https://www.cdc.gov.tw/Disease/SubIndex/{id}#enterovirus",
+  "showLegacyUntil": "2027-12-31",
+  "sourceNote": "本清單只寫標準疾病頁模板（migration-template.disease）沒有的例外：疾病特有的專區頁、專屬指引與公告。疾病介紹、Q&A、衛教、統計、檢驗、通報定義等標準子頁由模板推導，不在此重複。開發環境連不到 www.cdc.gov.tw，頁面清單依規劃文件 URL 模式與對官網的既有認識重建；ID 不確定者以 {id} 佔位。全部 verified:false，由權責單位在後台「移轉對照」逐筆確認後改 true。",
+  "items": [
+    {
+      "key": "ev-zone",
+      "oldTitle": "腸病毒防治專區（首頁）",
+      "oldPath": "腸病毒／防治專區",
+      "oldUrl": "https://www.cdc.gov.tw/Category/Page/{id}#ev-zone",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "disease.enterovirus",
+      "note": "舊專區首頁改為疾病頁：家長、教托育機構與醫療人員三種入口以專區導覽分流。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "reviewPeriod",
+        "aiWhitelist",
+        "languages"
+      ]
+    },
+    {
+      "key": "ev-childcare-guideline",
+      "oldTitle": "教托育機構腸病毒防治指引",
+      "oldPath": "腸病毒／教托育機構／指引",
+      "oldUrl": "https://www.cdc.gov.tw/File/Get/{id}#ev-childcare-guideline",
+      "oldType": "pdf",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.ev-childcare-guideline.2026-09-10",
+      "note": "民眾與機構共讀；停課標準數字須與地方公告一致，指引修訂時 Q&A 自動加註。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "basedOn",
+        "machineReadable",
+        "languages"
+      ]
+    },
+    {
+      "key": "ev-closure-reporting",
+      "oldTitle": "停課標準與疫情通報",
+      "oldPath": "腸病毒／教托育機構／停課與通報",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#ev-closure",
+      "oldType": "page",
+      "verified": false,
+      "status": "merged",
+      "target": "doc.ev-childcare-guideline.2026-09-10",
+      "note": "併入教托育機構指引「停課標準」章節；通報窗口連到群聚通報服務頁。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "basedOn",
+        "machineReadable"
+      ]
+    },
+    {
+      "key": "ev-severe-referral",
+      "oldTitle": "腸病毒重症責任醫院名單與轉診",
+      "oldPath": "腸病毒／醫療專區／重症責任醫院",
+      "oldUrl": "https://www.cdc.gov.tw/Category/List/{id}#ev-severe-hospitals",
+      "oldType": "list",
+      "verified": false,
+      "status": "pending",
+      "dueAt": "2026-12-15",
+      "note": "名單依年度公告更新；需先確認是否以結構化資料集提供（含更新頻率）並與疫情警示連動。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "structuredData",
+        "linkCheck"
+      ]
+    },
+    {
+      "key": "ev-severe-clinical",
+      "oldTitle": "腸病毒感染併發重症臨床處置建議",
+      "oldPath": "腸病毒／醫療專區／指引",
+      "oldUrl": "https://www.cdc.gov.tw/File/Get/{id}#ev-severe-guideline",
+      "oldType": "pdf",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.ev-severe-guideline.2026-03-15",
+      "note": "臨床四期分期與轉診時機；通函 608 號為其公告，另以新聞型別上架。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "machineReadable",
+        "languages"
+      ]
+    },
+    {
+      "key": "ev-ev71-vaccine",
+      "oldTitle": "腸病毒 71 型疫苗專區",
+      "oldPath": "腸病毒／預防接種／EV71 疫苗",
+      "oldUrl": "https://www.cdc.gov.tw/Category/Page/{id}#ev71-vaccine",
+      "oldType": "page",
+      "verified": false,
+      "status": "merged",
+      "target": "vaccine.ev71",
+      "note": "併入疫苗頁（自費、適用年齡依仿單、只能預防 71 型）；審閱週期 6 個月。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "reviewPeriod",
+        "languages"
+      ]
+    },
+    {
+      "key": "ev-handwashing-video",
+      "oldTitle": "影音：濕搓沖捧擦洗手五步驟動畫",
+      "oldPath": "腸病毒／衛教宣導／影音",
+      "oldUrl": "https://www.cdc.gov.tw/Category/List/{id}#ev-video",
+      "oldType": "media",
+      "verified": false,
+      "status": "migrated",
+      "target": "media.enterovirus-handwashing",
+      "note": "影片須有逐字稿；教托育機構指引修訂時自動標過時。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "basedOn",
+        "accessibility"
+      ]
+    },
+    {
+      "key": "ev-old-posters",
+      "oldTitle": "歷年腸病毒宣導海報（2015–2020）",
+      "oldPath": "腸病毒／衛教宣導／歷年海報",
+      "oldUrl": "https://www.cdc.gov.tw/Category/List/{id}#ev-old-posters",
+      "oldType": "list",
+      "verified": false,
+      "status": "dropped",
+      "note": "內容與現行建議不一致且無查閱需求，不移轉；舊網址回 410。現行海報在疾病頁素材區。"
+    }
+  ]
+}

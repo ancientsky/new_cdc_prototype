@@ -92,7 +92,11 @@
     "流感併發重症"
   ],
   "legacyUrls": [
-    "https://www.cdc.gov.tw/Disease/Index"
+    "https://www.cdc.gov.tw/Disease/Index",
+    "https://www.cdc.gov.tw/Disease/SubIndex/{id}#influenza",
+    "https://www.cdc.gov.tw/Category/QAPage/{id}#influenza",
+    "https://www.cdc.gov.tw/Category/List/{id}#flu-vaccine-program",
+    "https://www.cdc.gov.tw/Bulletin/List/{id}?page=1#influenza"
   ],
   "keyFacts": {
     "incubation": "1–4 天（平均 2 天）",
@@ -166,11 +170,65 @@
   "professional": {
     "manualDoc": "doc.flu-antiviral-eligibility",
     "specimen": "咽喉擦拭液或鼻咽擦拭液，以病毒保存輸送管保存，4°C 冷藏 48 小時內送驗；可進行病毒分離與 RT-PCR。",
-    "notifyNote": "「流感併發重症」為第四類法定傳染病，應於一週內通報；類流感病例不須逐案通報，由定點醫師監測與健保資料掌握。"
+    "notifyNote": "「流感併發重症」為第四類法定傳染病，應於一週內通報；類流感病例不須逐案通報，由定點醫師監測與健保資料掌握。",
+    "programs": [
+      {
+        "key": "public-vaccine-program",
+        "title": "公費流感疫苗接種計畫",
+        "summary": "每年 10 月 1 日起分階段接種：第一階段為長者、幼兒、孕婦、高風險對象與學生等，11 月 1 日起開放 50–64 歲成人；由衛生所與合約院所執行。",
+        "documents": [
+          "doc.flu-vaccine-schedule",
+          "doc.flu-vaccine-manual"
+        ],
+        "services": [
+          "service.vaccination-record-reissue"
+        ],
+        "contentIds": [
+          "faq.influenza-vaccine-where",
+          "faq.flu-vaccine-who",
+          "faq.flu-vaccine-every-year",
+          "news.2026-09-18-flu-vaccine-oct1",
+          "vaccine.influenza",
+          "media.ltc-flu-vaccine"
+        ]
+      },
+      {
+        "key": "antiviral-eligibility",
+        "title": "公費抗病毒藥劑使用對象",
+        "summary": "併發重症、孕婦、未滿 5 歲快篩陽性、住院、高風險慢性病與肺炎等對象可由醫師開立；類流感高峰期 65 歲以上有症狀者免快篩。",
+        "documents": [
+          "doc.flu-antiviral-eligibility"
+        ],
+        "services": [],
+        "contentIds": [
+          "faq.influenza-antiviral-who",
+          "faq.flu-antiviral-65-no-test",
+          "news.2026-09-21-flu-antiviral-revised"
+        ]
+      },
+      {
+        "key": "severe-surveillance",
+        "title": "流感併發重症監測",
+        "summary": "流感併發重症為第四類法定傳染病，一週內通報；搭配定點醫師類流感監測、門急診就診率與病毒型別監測掌握流行強度。",
+        "documents": [],
+        "services": [
+          "service.notifiable-disease-report"
+        ],
+        "contentIds": [
+          "faq.influenza-severe-what",
+          "dataset.flu-severe",
+          "dataset.ili-weekly",
+          "dataset.flu-express",
+          "dataset.sentinel-physician",
+          "labtest.influenza"
+        ]
+      }
+    ]
   },
   "relatedDocuments": [
     "doc.flu-antiviral-eligibility",
-    "doc.flu-vaccine-schedule"
+    "doc.flu-vaccine-schedule",
+    "doc.flu-vaccine-manual"
   ],
   "materials": [
     {

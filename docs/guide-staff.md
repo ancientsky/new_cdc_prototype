@@ -196,34 +196,88 @@ CI 會跑三道關卡，任何一道不過就不能合併：（1）schema 與參
 
 ## 15. 舊站內容移轉 SOP
 
-**適用：** 把現行官網（舊站）上的某個專區、欄目或疾病的所有頁面移轉到新站，並確保**每一個舊網址都有明確的去處**。第一個完整示範是結核病專區（`content/migration/tuberculosis.json`）。
-**誰：** OASIS 建清單與彙整進度；各組 Steward 逐筆確認名下舊頁；資訊室處理伺服器轉址。
-**為什麼要做：** 舊網址是加密 ID，不可能自動對應；漏掉一個，民眾的書籤、LINE 轉傳的連結、其他機關的引用和搜尋排名就少一個。完整道理與伺服器設定見 [migration-playbook.md](migration-playbook.md)。
+**適用：** 把現行官網（舊站）上的專區、欄目或疾病頁移轉到新站，並確保**每一個舊網址都有明確的去處**。做法是「**推導清單 → 只寫例外**」：舊站每個疾病頁的子頁結構相同，所以每一種法定傳染病（原型主檔收 72 種，正式為 99 種）的移轉清單由系統依**標準模板**自動推導，同事**只需要補模板沒有的例外**（疾病特有的專區頁、專屬指引與公告）。第一個完整示範是結核病專區（`content/migration/tuberculosis.json`），第六輪另有登革熱、流感、麻疹、腸病毒四份「只寫例外」的範例。
+**誰：** OASIS 維護模板與彙整進度；各組 Steward 確認名下疾病的清單、補例外；資訊室處理伺服器轉址。
+**為什麼要做：** 舊網址是加密 ID，不可能自動對應；漏掉一個，民眾的書籤、LINE 轉傳的連結、其他機關的引用和搜尋排名就少一個。每種疾病各寫 40 筆既不可能也不必要，因為其中約 20 項是每個疾病都一樣的標準子頁。完整道理與伺服器設定見 [migration-playbook.md](migration-playbook.md)。
 
-### 15.1 流程總覽
+### 15.1 兩種清單：推導的與人工的
+
+| | 推導清單 | 人工清單 |
+| --- | --- | --- |
+| 來源 | 系統依 `content/migration/_disease-template.json` 對主檔每一種疾病自動產生 | `content/migration/{slug}.json`，同事手寫 |
+| 數量 | 72 份（主檔每一種傳染病各一份；已有新站疾病頁者依對應推導，尚無疾病頁者標 `no-page`） | 只在有例外時才有（結核病、登革熱、流感、麻疹、腸病毒…） |
+| 內容 | 標準子頁：疾病介紹各分頁、預防接種、Q&A、衛教單張與影片、工作手冊、病例定義、治療指引、統計、檢驗、通報定義、新聞稿列表、相關連結 | **只寫模板沒有的**：疾病特有專區頁、專屬 PDF、特定公告與名單 |
+| 狀態怎麼來 | 新站有對應就算移轉：疾病頁區塊或主檔欄位命中 ⇒ `merged`；關聯的 Q&A、文件、影音、資料集、檢驗、新聞命中 ⇒ `migrated`；沒命中 ⇒ `pending` | 同事逐筆寫 `status` 與 `target` |
+| 疾病頁還沒建立 | 整份清單標 `no-page`，所有項目 `pending` | — |
+| 衝突時 | 被覆蓋 | **同 `key` 以人工為準**；人工沒寫的 key 仍由模板補（結核病也會自動補上模板有而人工沒列的項目） |
+| `verified` | 一律 `false`，由 Steward 確認後才改（見 15.8） | 同左 |
+
+人工清單用 `"extends": "migration-template.disease"` 明示自己是例外清單。**不要在人工清單重寫模板已有的標準子頁**；只有「模板的某一格對不到、或要指定到某一份具名文件」時，才用同 `key` 覆蓋。
+
+### 15.2 流程總覽
 
 | 步驟 | 誰 | 產出 | 在哪裡 |
 | --- | --- | --- | --- |
-| 1 盤點舊頁 | OASIS＋Steward | 舊頁清單與保留／合併／封存判斷 | 舊站導覽、log、Search Console |
-| 2 建移轉清單 | OASIS | `content/migration/{slug}.json` | repo |
-| 3 逐筆對應 | Steward | 每筆的 `status`、`target`、`anchor`、`note` | repo／後台 |
-| 4 後台確認 | Steward | `verified: true` | `/admin/migration/` |
-| 5 上架新內容、補治理欄位 | Steward | 新頁（含 `owner`、`reviewedAt`…） | `/admin/publish/` |
-| 6 檢查轉址 | Steward＋資訊室 | 新頁揭露、`/legacy/` 查得到、伺服器 301 | 新頁、`/legacy/`、伺服器 |
-| 7 上線後看 404 報表 | OASIS＋Steward | 補進清單的新項目 | `scripts/analyze-404-log.mjs` |
-| 8 到期關閉與揭露 | 資訊室＋OASIS | 舊站下線、揭露自動隱藏 | `showLegacyUntil` |
+| 1 看推導清單 | Steward | 知道自己疾病有哪些標準子頁已移轉、哪些 `pending` | `/admin/migration/`（15.4） |
+| 2 補內容讓推導命中 | Steward | 補疾病頁區塊、Q&A、文件、影音、資料集等，`pending` 自然變 `migrated`／`merged` | `content/`、`/admin/publish/` |
+| 3 盤點舊頁中的例外 | OASIS＋Steward | 模板沒有的疾病特有頁面清單 | 舊站導覽、log、Search Console |
+| 4 寫人工清單（只寫例外） | Steward（OASIS 協助） | `content/migration/{slug}.json`（5–8 筆是常態） | repo |
+| 5 後台確認 | Steward | `verified: true` | `/admin/migration/` |
+| 6 上架新內容、補治理欄位 | Steward | 新頁（含 `owner`、`reviewedAt`…） | `/admin/publish/` |
+| 7 檢查轉址 | Steward＋資訊室 | 新頁揭露、`/legacy/` 查得到、伺服器 301 | 新頁、`/legacy/`、伺服器 |
+| 8 上線後看 404 報表 | OASIS＋Steward | 補進清單的新項目 | `scripts/analyze-404-log.mjs` |
+| 9 到期關閉與揭露 | 資訊室＋OASIS | 舊站下線、揭露自動隱藏 | `showLegacyUntil` |
 
-### 15.2 盤點舊頁
+### 15.3 模板由誰維護
 
-1. 從舊站該專區的導覽開始，把**所有**頁面列出來：疾病介紹的每個子頁籤、Q&A、新聞稿列表、指引與手冊的 PDF、衛教素材、統計、檢驗與通報說明、相關連結。
+- **維護單位：** OASIS（模板檔的 `owner`）。模板是全站共用的規則，不是任何一個疾病的內容；改動前請在 PR 說明影響到幾份清單。
+- **檔案：** `content/migration/_disease-template.json`（底線開頭代表模板，不是清單）。每一筆含 `key`、`oldTitle`、`oldPath`、`oldUrlPattern`（含 `{id}` 佔位）、`oldType`，以及 `mapTo`——描述「新站哪裡有對應就算移轉」：
+  - `disease-block`：對應疾病頁的某個區塊（例：發病症狀 ⇒ `symptoms`）；
+  - `master-field`：對應主檔欄位（例：潛伏期、通報時限）；
+  - `related`：對應關聯內容（Q&A、文件、影音、資料集、檢驗、新聞、專區），可指定 `docType` 等條件；
+  - `page`：對應站內固定頁（例：通報定義 ⇒ `/report/`）。
+- **何時改模板：** 舊站所有（或絕大多數）疾病頁新增或移除了一種標準子頁；新站新增了可以承接某種舊頁的內容型別。**單一疾病的特殊頁面不要放模板**，寫人工清單。
+- **改完怎麼驗：** `npm run check` 通過後看 `/admin/migration/` 的總體進度與 `no-page` 數是否合理；`key` 一旦被人工清單引用就不要改名。
+
+### 15.4 後台怎麼看 72 份清單
+
+打開 `/admin/migration/`：
+
+1. **總體進度**：整體已移轉／已併入／待移轉筆數與進度條；`no-page`（疾病頁尚未建立）有幾份。
+2. **摘要表**：每種疾病一列——法定類別、疾病頁有無、已移轉／已併入／待移轉、進度條、標示「人工」或「推導」、下載 JSON。預設依**待移轉最多**排序，先處理差距最大的。可篩選「有頁／無頁」「人工／推導」與單位。
+3. **展開單一清單**：逐筆看舊標題、舊網址、狀態、對應新頁、權責單位；「下載 JSON」（也在 `/v1/migration/{slug}.json`）可當成人工清單的起點，刪掉不需要覆蓋的項目後存成 `content/migration/{slug}.json`。
+4. **待辦**：每份清單只開**一則**聚合待辦「{疾病}：N 個舊頁待移轉」（`no-page` 清單為「{疾病}：疾病頁尚未建立，N 個舊頁待移轉」），優先度依法定類別（第一、二類高、第三類中、第四與五類低）；在 `/admin/todos/` 的 `migration-pending` 頁籤處理，不再一筆一筆開。
+5. 推導清單的項目一律 `verified: false`，這是正常的：確認的人是 Steward，見 15.8。
+
+### 15.5 何時需要人工清單？只寫例外
+
+先看自己疾病的推導清單。符合以下任一種情況才需要建人工清單：
+
+| 情況 | 例子 | 怎麼寫 |
+| --- | --- | --- |
+| 舊站有**疾病特有的專區頁** | 登革熱防治專區、病媒蚊密度調查、流感疫苗專區、麻疹群聚專區、腸病毒停課與通報 | 新增 `key`（加疾病前綴，如 `dengue-zone`，避免與模板 key 撞名） |
+| **具名的專屬 PDF／公告**要指定到某一份文件 | 接觸者追蹤指引、歷版指引、通函 | 新增項目，`target` 填具名文件（`document` 要寫含版本日期的 id，如 `doc.xxx.2026-09-10`） |
+| 模板某格**對錯了**或要指定到別處 | 模板把「治療指引」對到任意 guideline，但這個疾病要指定某份 | 用**同 `key`** 覆蓋 |
+| 舊頁**過時不移轉** | 歷年海報、逾期計畫 | `dropped`，`note` 寫理由 |
+
+步驟：
+
+1. 複製 `content/migration/dengue.json` 當範本；改 `id`（`migration.{slug}`）、`title`、`scope`（`{ "kind": "disease", "disease": "disease.xxx" }`）、`owner`、`diseases`、`legacyRoot`、`showLegacyUntil`；保留 `"extends": "migration-template.disease"`。治理共同欄位（`reviewedAt`、`reviewPeriodMonths` 等）和其他內容一樣要填。
+2. 在 `sourceNote` 寫明「本清單只寫模板沒有的例外」。
+3. 每個例外一筆 `items`（5–8 筆是常態，超過 15 筆要想想是不是該改模板）。欄位與狀態規則見 15.7。
+4. `npm run check`；再看 `/admin/migration/` 該疾病的列已標「人工」，且模板的標準子頁仍在（未被你覆蓋的 key 照常推導）。
+
+### 15.6 盤點舊頁
+
+1. 從舊站該專區的導覽開始，把頁面列出來，**先對照模板，已涵蓋的標準子頁不必再列**，只記錄模板沒有的：疾病介紹的每個子頁籤、Q&A、新聞稿列表、指引與手冊的 PDF、衛教素材、統計、檢驗與通報說明、相關連結。
 2. 補上「有流量但導覽找不到」的頁面：請資訊室提供過去 12 個月的 access log 與 Search Console 熱門頁面，凡是有流量的舊網址都要在清單內。
 3. 每一頁做判斷（規劃文件 §7.4 第 4 點的四因子：使用者需求、相關性、重複性、優先度）：**保留、合併進別頁、封存、不再提供**。
-4. 舊網址的 ID 請照官網原樣貼上（22 字元，區分大小寫）。**不確定 ID 時保留 URL 模式，ID 寫成 `{id}`**，但這種項目上線前一定要補成真實 ID（見 15.4）。
+4. 舊網址的 ID 請照官網原樣貼上（22 字元，區分大小寫）。**不確定 ID 時保留 URL 模式，ID 寫成 `{id}`**，但這種項目上線前一定要補成真實 ID（見 15.8）。
 
-### 15.3 建清單與逐筆對應
+### 15.7 逐筆對應（欄位與狀態規則）
 
-1. 複製 `content/migration/tuberculosis.json` 當範本，改 `id`（`migration.{slug}`）、`title`、`scope`（疾病用 `{ "kind": "disease", "disease": "disease.xxx" }`，欄目用 `{ "kind": "category", "name": "…" }`）、`owner`、`legacyRoot`、`showLegacyUntil`。治理共同欄位（`reviewedAt`、`reviewPeriodMonths` 等）和其他內容一樣要填。
-2. 每個舊頁一筆 `items`：`key`（清單內唯一，小寫英數與連字號）、`oldTitle`、`oldPath`（麵包屑，以「／」分隔）、`oldUrl`、`oldType`（`page`、`qa`、`pdf`、`news-list`、`media`、`list`、`external`）。
+1. 清單頂層欄位請見 15.5；本節說明每一筆 `items` 的寫法。
+2. 每個例外舊頁一筆 `items`：`key`（清單內唯一，小寫英數與連字號）、`oldTitle`、`oldPath`（麵包屑，以「／」分隔）、`oldUrl`、`oldType`（`page`、`qa`、`pdf`、`news-list`、`media`、`list`、`external`）。
 3. 決定 `status` 與 `target`：
 
 | 舊頁情況 | `status` | `target` | 伺服器結果 |
@@ -235,21 +289,21 @@ CI 會跑三道關卡，任何一道不過就不能合併：（1）schema 與參
 | 刻意不再提供 | `dropped` | 空 | 410 |
 
 4. `target` 的規則：必須是已存在的內容 id（`migrated`／`merged`／`archived` 必填；`pending`／`dropped` 可空），否則建置失敗。**一個舊頁只能對到一個新頁**（一對多不可）；同時涵蓋兩個主題時，選主要用途那個，另一個在新頁以「相關內容」連過去，並在 `note` 記下取捨。
-5. 舊的 PDF（手冊、指引）的 `target` 填**文件（`document`）的 id**，不是 PDF 檔；沒有文件頁的先上架一筆文件（見 15.5）。舊版本的 PDF 優先對到該版本自己的文件頁。
+5. 舊的 PDF（手冊、指引）的 `target` 填**文件（`document`）的 id**，不是 PDF 檔；沒有文件頁的先上架一筆文件（見 15.9）。**`target` 要寫含版本的完整 id（例 `doc.tb-guideline.2025-09-01`），不是版本族 id（`doc.tb-guideline`）。**舊版本的 PDF 優先對到該版本自己的文件頁。`anchor` 只用在疾病頁已有的區塊 key（如 `symptoms`、`vaccine`）；文件章節目前沒有錨點，不要填，否則連結檢查會出現 `missing-anchor` 警告。
 6. 選填：單筆的 `owner`（缺省沿用清單的權責單位）、`dueAt`（`pending` 的預定完成日，缺省為清單 `reviewedAt` 後 60 日）、`verifiedAt`／`verifiedBy`（確認日與確認者職稱，不放真名）。
 7. `note` 寫給同事看的說明，例如「併入疾病頁『症狀』區塊」；`newRequirements` 寫這筆移轉後新增的治理要求（`owner`、`reviewedAt`、`basedOn`、`machineReadable`、`languages`），新頁會用 chip 顯示。
 
-### 15.4 後台確認 `verified`
+### 15.8 後台確認 `verified`
 
 **誰：** 該專區權責單位的 Steward。這一步是對外承諾「這個舊網址就是這一頁，新頁就是對的」，不能由 OASIS 代填。
 
-1. 打開 `/admin/migration/`，找到你的清單，看進度：已移轉、已併入、已封存、待確認、**待核對（`verified: false`）**。
+1. 打開 `/admin/migration/`，找到你的疾病（推導與人工清單都在這裡），看進度：已移轉、已併入、已封存、待確認、**待核對（`verified: false`）**。
 2. 逐筆打開 `oldUrl` 確認它真的是這個舊頁，再打開新頁確認內容涵蓋舊頁；錨點段落確實存在。
-3. 該筆確認無誤，在清單 JSON 把 `verified` 改為 `true`，並填 `verifiedAt` 與 `verifiedBy`（職稱），開 PR。
+3. 該筆確認無誤，在清單 JSON 把 `verified` 改為 `true`（**推導清單沒有 JSON 檔可改：先從後台下載該疾病清單、存成人工清單，再改 `verified`**，這時你會得到一份完整確認過的清單），並填 `verifiedAt` 與 `verifiedBy`（職稱），開 PR。
 4. **`oldUrl` 含 `{id}` 佔位的，在這一步補成真實的舊網址**；補完才會進伺服器轉址檔。切換前「`{id}` 佔位」筆數必須為 0。
 5. 確認時順便檢查：這個舊頁的 `owner` 對嗎？內容是否已過時需要審閱？移轉是檢視內容的好時機，不要把過時內容原樣搬過去。
 
-### 15.5 上架新內容、補治理欄位
+### 15.9 上架新內容、補治理欄位
 
 每筆 `migrated`／`merged` 的 `target` 都是一則新站內容，**移轉不等於搬運**：進新站就要符合治理要求。
 
@@ -265,7 +319,7 @@ CI 會跑三道關卡，任何一道不過就不能合併：（1）schema 與參
 
 各型別的上架步驟照第 2 節與第 8 至 13 節。新內容裡的舊網址放在 `legacyUrls`（或由清單 `target` 帶出），不要自己在內文寫死舊網址。尚未能遷移的附件，內文連到 `/pending/?ref=<內容 id>&doc=<文件名稱>`，不要連回舊網址。
 
-### 15.6 檢查轉址
+### 15.10 檢查轉址
 
 PR 合併後（或在本機 `npm run build`）：
 
@@ -273,9 +327,9 @@ PR 合併後（或在本機 `npm run build`）：
 2. **`/legacy/`**：把一個舊網址貼進去，應該顯示對應新頁的連結。
 3. **404 頁**：在網址列輸入舊路徑，應顯示「舊網址已搬家，3 秒後帶你到新頁」。（這是原型的備援；正式站由伺服器 301。）
 4. **後台**：`/admin/migration/` 的進度與你預期一致；`/admin/todos/` 的 `migration-pending` 頁籤只剩你確定還沒做的項目。
-5. **正式伺服器**（資訊室）：把 `redirects/nginx.map`（或 IIS、`_redirects` 版本）匯入測試機，用真實舊網址檢查一跳到位。方法見 [migration-playbook.md](migration-playbook.md) 第 2.5、3.2 節。
+5. **正式伺服器**（資訊室）：把 `redirects/nginx.map`（或 IIS、`_redirects` 版本）匯入測試機，用真實舊網址檢查一跳到位。方法見 [migration-playbook.md](migration-playbook.md) 第 2.5、3.2 節。推導清單的舊網址都是 `{id}` 佔位（標 `pattern`），不會進伺服器檔；補成真實 ID 並確認後才會進。
 
-### 15.7 上線後看 404 報表
+### 15.11 上線後看 404 報表
 
 **誰：** OASIS 每週跑；Steward 處理分派給自己的項目。
 
@@ -288,19 +342,19 @@ node scripts/analyze-404-log.mjs access.log --map dist/v1/legacy-map.json --migr
 | 報表分類 | 意思 | 你要做什麼 |
 | --- | --- | --- |
 | 可直接 301 | 對照已有，但伺服器沒命中 | 交資訊室查規則是否已部署、比對方式是否一致 |
-| 待補對照 | 符合舊站網址模式但清單沒有 | 把報表附的 `items` 草稿貼進清單（`verified: false`），確認 `target` 後依 15.4 改 `true`，開 PR |
+| 待補對照 | 符合舊站網址模式但清單沒有 | 把報表附的 `items` 草稿貼進清單（`verified: false`），確認 `target` 後依 15.8 改 `true`，開 PR |
 | 真的不存在（建議 410） | 不符合任何舊站模式 | 次數高的先確認不是漏盤的舊頁；確認後列入 410 名單 |
 
 節奏：上線後前兩週每天、到第 90 天每週、之後每月。**報表是待辦來源，不是看完就算**：每週一併入 `/admin/todos/` 的檢視，OASIS 把「待補對照」分派到對應 Steward。
 
-### 15.8 到期關閉與揭露
+### 15.12 到期關閉與揭露
 
 1. 清單的 `showLegacyUntil` 到期（建議上線日 + 12 個月）：**新頁上的「本頁取代舊網站 N 個頁面」自動隱藏，不需要任何人操作。**
 2. 到期前 60 天：OASIS 確認 `migration-pending` 已清零（要嘛移轉完成，要嘛決定 `dropped`），公關室預告舊站關閉。
 3. 資訊室在到期日下線舊站唯讀本體。
 4. **伺服器上的 301 不關。** 也不要刪除或停用 `content/migration/*.json`——它是轉址檔的來源。需要整理清單時，先比對轉址檔條數，確認沒有減少。
 
-### 15.9 常見問題
+### 15.13 常見問題
 
 | 問題 | 回答 |
 | --- | --- |
@@ -310,6 +364,9 @@ node scripts/analyze-404-log.mjs access.log --map dist/v1/legacy-map.json --migr
 | 可以把所有沒對應的舊頁都轉首頁嗎？ | 不行。搜尋引擎會當成 soft 404，民眾也找不到東西。沒對應就回 410 |
 | 清單裡的項目比新頁數量多很多，正常嗎？ | 正常。舊站拆很細，新站一頁八個區塊，多對一是常態；用 `anchor` 對到段落 |
 | 要不要通知別人我們換網址了？ | 要。切換前由公關室通知引用我們連結的機關與媒體，並更新 1922 話術、LINE 疾管家與衛教影片說明欄中的網址 |
+| 我的疾病沒有人工清單，進度卡住不動？ | 看推導清單的 `pending` 項目：多半是新站缺 Q&A、文件、影音或資料集。補上內容（含關聯疾病 id）後，下次建置自動轉為已移轉；不需要改清單 |
+| 推導清單說「已併入」，但我覺得對不上？ | 推導只確認「新站有對應內容」，不保證內容涵蓋舊頁。Steward 在 15.8 逐筆確認時才是真正的把關；對不上就建人工清單用同 `key` 覆蓋 |
+| 疾病頁還沒建立，清單也要管嗎？ | 要。`no-page` 清單所有項目 `pending`，只開一則待辦，優先度依法定類別；先建疾病頁，推導項目就會陸續命中 |
 
 ---
 

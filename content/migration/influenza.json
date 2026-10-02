@@ -1,0 +1,176 @@
+{
+  "id": "migration.influenza",
+  "type": "migration",
+  "title": "流感專區（舊站）→ 新站：疾病特有頁面（例外清單）",
+  "extends": "migration-template.disease",
+  "owner": "unit.acute-infectious",
+  "steward": "急性傳染病組承辦人",
+  "publishedAt": "2026-10-02",
+  "reviewedAt": "2026-10-02",
+  "reviewPeriodMonths": 3,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "流感專區中標準疾病頁模板沒有的舊頁：流感疫苗專區與接種計畫、作業手冊、合約院所查詢，以及公費抗病毒藥劑使用對象與合約院所的對照。",
+  "keywords": [
+    "移轉清單",
+    "舊網址",
+    "301",
+    "流感"
+  ],
+  "diseases": [
+    "disease.influenza"
+  ],
+  "scope": {
+    "kind": "disease",
+    "disease": "disease.influenza"
+  },
+  "legacyRoot": "https://www.cdc.gov.tw/Disease/SubIndex/{id}",
+  "showLegacyUntil": "2027-12-31",
+  "sourceNote": "本清單只寫標準疾病頁模板（migration-template.disease）沒有的例外：疾病特有的專區頁、專屬指引與公告。疾病介紹、Q&A、衛教、統計、檢驗、通報定義等標準子頁由模板推導，不在此重複。開發環境連不到 www.cdc.gov.tw，頁面清單依規劃文件 URL 模式與對官網的既有認識重建；ID 不確定者以 {id} 佔位。全部 verified:false，由權責單位在後台「移轉對照」逐筆確認後改 true。",
+  "items": [
+    {
+      "key": "flu-vaccine-zone",
+      "oldTitle": "流感疫苗專區（首頁）",
+      "oldPath": "流感／流感疫苗專區",
+      "oldUrl": "https://www.cdc.gov.tw/Category/Page/{id}#flu-vaccine",
+      "oldType": "page",
+      "verified": false,
+      "status": "merged",
+      "target": "disease.influenza",
+      "anchor": "vaccine",
+      "note": "併入疾病頁「疫苗」區塊與專業版防治計畫；接種對象、地點分別連到計畫文件與疫苗頁。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "reviewPeriod",
+        "aiWhitelist",
+        "languages"
+      ]
+    },
+    {
+      "key": "flu-vaccine-plan",
+      "oldTitle": "公費流感疫苗接種計畫：實施對象與時程",
+      "oldPath": "流感／流感疫苗專區／接種計畫",
+      "oldUrl": "https://www.cdc.gov.tw/File/Get/{id}#flu-vaccine-plan",
+      "oldType": "pdf",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.flu-vaccine-schedule.2026-09-15",
+      "note": "每年度另建一筆文件，舊年度自動失效；對象與時程是 AI 與民眾最常問的版本題。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "versionChain",
+        "machineReadable",
+        "aiWhitelist"
+      ]
+    },
+    {
+      "key": "flu-vaccine-manual",
+      "oldTitle": "公費流感疫苗接種計畫作業手冊",
+      "oldPath": "流感／流感疫苗專區／醫療人員",
+      "oldUrl": "https://www.cdc.gov.tw/File/Get/{id}#flu-vaccine-manual",
+      "oldType": "pdf",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.flu-vaccine-manual.2026-09-16",
+      "note": "給合約院所與衛生所的作業手冊，依據接種計畫文件，計畫修訂時自動加註。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "basedOn",
+        "machineReadable",
+        "languages"
+      ]
+    },
+    {
+      "key": "flu-vaccine-contract-sites",
+      "oldTitle": "公費流感疫苗合約院所查詢",
+      "oldPath": "流感／流感疫苗專區／接種地點",
+      "oldUrl": "https://www.cdc.gov.tw/Category/List/{id}#flu-vaccine-sites",
+      "oldType": "list",
+      "verified": false,
+      "status": "pending",
+      "dueAt": "2026-12-15",
+      "note": "原型不自己列院所，只做深連結到接種點查詢（vaxmap）；待與衛生局確認名單更新責任與深連結參數。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "linkCheck"
+      ]
+    },
+    {
+      "key": "flu-antiviral-eligibility",
+      "oldTitle": "公費流感抗病毒藥劑使用對象",
+      "oldPath": "流感／抗病毒藥劑專區",
+      "oldUrl": "https://www.cdc.gov.tw/Category/Page/{id}#flu-antiviral",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.flu-antiviral-eligibility.2026-09-21",
+      "note": "現行版與 2026 年 6 月版各為獨立文件；現行版第 3 條已放寬 65 歲以上高峰期免快篩。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "versionChain",
+        "machineReadable",
+        "aiWhitelist"
+      ]
+    },
+    {
+      "key": "flu-antiviral-eligibility-2026-06",
+      "oldTitle": "公費流感抗病毒藥劑使用對象（2026 年 6 月版）",
+      "oldPath": "流感／抗病毒藥劑專區／歷版",
+      "oldUrl": "https://www.cdc.gov.tw/Category/Page/{id}#flu-antiviral-2026-06",
+      "oldType": "pdf",
+      "verified": false,
+      "status": "archived",
+      "target": "doc.flu-antiviral-eligibility.2026-06-01",
+      "note": "已由 9 月版取代，保留供查閱並加失效警示，舊連結 301 到現行版。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "versionChain"
+      ]
+    },
+    {
+      "key": "flu-antiviral-contract-sites",
+      "oldTitle": "公費抗病毒藥劑合約院所與藥局",
+      "oldPath": "流感／抗病毒藥劑專區／合約院所",
+      "oldUrl": "https://www.cdc.gov.tw/Category/List/{id}#flu-antiviral-sites",
+      "oldType": "list",
+      "verified": false,
+      "status": "pending",
+      "dueAt": "2026-11-30",
+      "note": "合約名單依院所簽約狀態每週異動，需決定改為資料集（含更新頻率）或深連結；未決定前舊站唯讀保留。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "structuredData",
+        "linkCheck"
+      ]
+    },
+    {
+      "key": "flu-past-seasons",
+      "oldTitle": "歷年流感疫苗接種計畫（2020–2024 年度）",
+      "oldPath": "流感／流感疫苗專區／歷年計畫",
+      "oldUrl": "https://www.cdc.gov.tw/Category/List/{id}#flu-past-seasons",
+      "oldType": "list",
+      "verified": false,
+      "status": "dropped",
+      "note": "逾 2 個年度的計畫已失效且無查閱需求，不移轉；舊網址回 410，如需查閱改洽署內檔案。"
+    }
+  ]
+}

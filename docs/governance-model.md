@@ -20,6 +20,7 @@
 | `sensitivity` | 承辦 | `public` `professional` `internal`；只有 `public` 可進一般白名單 |
 | `license` | 承辦 | 預設 `OGDL-1.0`；例外要寫 `licenseNote` |
 | `languages` | 承辦 | 每語言狀態：`source` `reviewed` `machine` `pending` `none` |
+| `sourceLang` | 承辦 | 選填，來源語言（七語之一，預設 `zh-TW`）。頂層欄位即為此語言文字，其他語言放 `i18n`；來源語言不是中文時，中文必須有譯文，見規則 18 |
 | `basedOn` | 承辦 | 依據的正本 id，衍生內容必填 |
 | `aiWhitelist.requested` | 承辦 | 申請進 AI 白名單；**是否生效由引擎算** |
 | `summary` | 承辦 | ≤ 120 字，兼作 meta description |
@@ -69,6 +70,8 @@
 14. **檢驗一致性**：`labtest.sendWithinHours` > 主檔 `notifyWithinHours` → 待辦 `labtest-inconsistent`（低優先）。
 15. **通報時限表**：`/report/` 的法定傳染病通報時限表由 `master/diseases.json` 自動產生，主檔改了表就改，零維護。
 16. **旅遊疫情建議（官方事件流）**：`CountryEpidLevel/ExportJSON` 每列是一則警示事件（含「解除」）。fetch 以每國×疾病×區域最新一則判定現行、解除即不列；同一疾病同一等級涵蓋 ≥ 50% 國家（且 ≥ 20 國）⇒ `Background: true`，表與地圖用排除背景後的「針對性等級」；事件寫入 `country-epid-events.json` 推出新增／調升／調降／解除；分布超出閘門（第三級 >5、第二級 >60、第一級 >250）⇒ 沿用人工校對快照並記錄 `meta.lastLiveAttempt`。全部不需人工。
+17. **推導移轉清單與聚合待辦**：舊站每個疾病頁的子頁結構相同，`content/migration/_disease-template.json`（標準子頁樹，每筆含 `mapTo`：疾病頁區塊、主檔欄位、關聯內容或站內頁）由引擎對**主檔每一種疾病**推導一份移轉清單（`derived: true`）：疾病頁存在且 `mapTo` 命中 ⇒ `merged`（區塊、主檔欄位、站內頁）或 `migrated`（關聯內容，`target` 為該內容 id）；疾病頁存在但未命中 ⇒ `pending`；疾病頁不存在 ⇒ 整份清單 `status: no-page`，所有項目 `pending`。人工清單（`content/migration/{slug}.json`，可用 `extends: 'migration-template.disease'` 明示）**同 `key` 覆蓋推導結果**，人工沒寫的 `key` 仍由模板補。推導項一律 `verified: false`。待辦**每份清單只開一則** `migration-pending`：「{疾病}：N 個舊頁待移轉」（`no-page` 為「{疾病}：疾病頁尚未建立，N 個舊頁待移轉」），不再逐筆開；優先度依法定類別（第一、二類高、第三類中、第四與五類低）。`{id}` 佔位的舊網址標 `pattern: true`，不進伺服器轉址檔。`site.migration.stats` 另計 `lists`、`derived`、`curated`、`noPage`，並輸出 `v1/migration/index.json` 與 `v1/migration/{slug}.json`。
+18. **內容來源語言（`sourceLang`）**：內容可以以英文（或其他語言）為來源語言——例如只有英文版的「國際合作」區塊。規則：`languages[sourceLang].status` 必須為 `source`；頂層欄位是來源語言的文字，其他語言放 `i18n.{lang}`，**包含 `i18n['zh-TW']`**。`sourceLang` 不是 `zh-TW` 時，`i18n['zh-TW']` 必填，且 `languages['zh-TW'].status` 只能是 `reviewed` 或 `machine`，不可是 `none`（中文官網不能沒有中文）。來源語言的頁面永遠可渲染；`sourceHash` 以來源語言頂層欄位計算，譯文 `sourceHash` 不同即標過期（規則 5 照常，只是語言標籤換了）；頁首顯示「本頁以英文為準，中文為譯文」（反向的譯文狀態列）；搜尋與答案引擎的索引語言依 `sourceLang`（英文來源進英文索引，中文譯文進中文索引）。缺中文譯文時建置失敗。
 
 
 ## 3. 白名單政策

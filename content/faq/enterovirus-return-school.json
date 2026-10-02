@@ -1,0 +1,66 @@
+{
+  "id": "faq.enterovirus-return-school",
+  "type": "faq",
+  "title": "孩子腸病毒好了，什麼時候可以回學校？",
+  "question": "孩子腸病毒好了，什麼時候可以回學校？",
+  "owner": "unit.acute-infectious",
+  "steward": "急性傳染病組承辦人",
+  "publishedAt": "2026-09-24",
+  "reviewedAt": "2026-09-24",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "doc.ev-childcare-guideline"
+  ],
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-30"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "pending"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "腸病毒確診的孩子應在家休息至少 7 天，退燒、能進食且症狀改善後再返校，返校後仍須落實洗手。",
+  "keywords": [
+    "腸病毒",
+    "返校",
+    "在家休息",
+    "7 天",
+    "手足口病"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/{id}#ev-return"
+  ],
+  "answerMarkdown": "確診手足口病或疱疹性咽峽炎的孩子，**請在家休息至少 7 天**。返校前，請確認孩子已退燒、可正常進食，口腔潰瘍與水泡明顯改善。\n\n腸病毒在痊癒後仍可能從腸道排出病毒達數週，因此返校後家長與老師仍要提醒孩子**如廁後、用餐前用肥皂洗手**，並避免共用杯子與玩具。若孩子回到學校後再度發燒或有重症前兆（嗜睡、肌躍型抽搐、持續嘔吐），請立即就醫。"
+}

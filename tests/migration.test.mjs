@@ -1,5 +1,7 @@
 // 第五輪（ARCHITECTURE 13.1／13.2）：移轉清單 schema 與驗證、site.migration、gov.legacy、待辦、redirects 與伺服器對照檔、
 // legacy-map key 正規化、analyze-404-log 三類分類。
+// 第六輪（14.1）起疾病清單由模板推導、人工清單只寫例外 ⇒ 結核病清單筆數會隨模板增加，這裡改用相對條件
+// （人工清單原有的 40 筆與 15/18/3/3/1 仍逐筆保留；規模化本身見 tests/migration-scale.test.mjs）。
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -41,6 +43,7 @@ test('移轉清單：schema 與參照驗證通過；target 不存在、key 重�
   const bad = structuredClone(list);
   bad.__file = 'test/migration-bad.json';
   bad.id = 'migration.test-bad';
+  bad.scope = { kind: 'category', name: '測試欄目' }; // 同一疾病只能一份人工清單（14.1），破壞性案例改用欄目範圍
   bad.items = [
     { key: 'a', oldTitle: 'A', oldUrl: 'https://www.cdc.gov.tw/Category/Page/{id}', oldType: 'page', verified: false, status: 'migrated', target: 'faq.no-such-thing' },
     { key: 'a', oldTitle: 'A2', oldUrl: 'https://www.cdc.gov.tw/Category/Page/{id}#2', oldType: 'page', verified: false, status: 'pending' },
@@ -58,8 +61,8 @@ test('移轉清單：schema 與參照驗證通過；target 不存在、key 重�
 test('佔位網址檢查：oldUrl／legacyRoot／legacyUrls 的 {id} 豁免，但新站內部欄位仍檢查', () => {
   const site = loadSite(config);
   site.today = '2026-10-01';
-  const list = structuredClone(site.migrationLists[0]);
-  list.__file = 'test/migration-ph.json'; list.id = 'migration.test-ph';
+  const list = structuredClone(site.migrationLists.find((l) => l.id === 'migration.tuberculosis'));
+  list.__file = 'test/migration-ph.json'; list.id = 'migration.test-ph'; list.scope = { kind: 'category', name: '測試欄目' };
   list.items = [{ key: 'x', oldTitle: 'X', oldUrl: 'https://www.cdc.gov.tw/File/Get/{id}', oldType: 'pdf', verified: false, status: 'pending', note: '新站暫放 https://www.example.com/x' }];
   site.migrationLists.push(list);
   const errs = validateSite(site).filter((e) => e.startsWith('test/migration-ph.json'));
@@ -70,42 +73,57 @@ test('佔位網址檢查：oldUrl／legacyRoot／legacyUrls 的 {id} 豁免，�
   assert.deepEqual(validateSite(loadSite(config)).filter((e) => e.includes('legacyUrls')), []);
 });
 
-test('site.migration.stats：各狀態數量、總數、verified', () => {
+test('site.migration.stats：各狀態數量、總數、verified（結核病人工清單逐筆保留，模板補齊後筆數增加）', () => {
   const site = govern('2026-10-01');
   const m = site.migration;
-  assert.ok(m && m.byTarget instanceof Map);
-  const list = site.migrationLists.find((l) => l.id === 'migration.tuberculosis');
-  const count = (st) => list.items.filter((i) => i.status === st).length;
-  assert.deepEqual(
-    { migrated: m.stats.migrated, merged: m.stats.merged, archived: m.stats.archived, pending: m.stats.pending, dropped: m.stats.dropped, verified: m.stats.verified, total: m.stats.total },
-    { migrated: count('migrated'), merged: count('merged'), archived: count('archived'), pending: count('pending'), dropped: count('dropped'), verified: 0, total: list.items.length },
-  );
-  assert.equal(m.stats.migrated, 15); assert.equal(m.stats.merged, 18); assert.equal(m.stats.archived, 3); assert.equal(m.stats.pending, 3); assert.equal(m.stats.dropped, 1); assert.equal(m.stats.total, 40);
-  assert.equal(m.stats.migrated + m.stats.merged + m.stats.archived + m.stats.pending + m.stats.dropped, m.stats.total);
-  assert.ok(m.stats.migrated + m.stats.merged > m.stats.total / 2, '多數為 migrated／merged');
-  assert.equal(m.pending.length, m.stats.pending);
+  assert.ok(m && m.byTarget instanceof Map && m.byDisease instanceof Map);
+  const raw = site.migrationLists.find((l) => l.id === 'migration.tuberculosis');
   const l = m.lists.find((x) => x.id === 'migration.tuberculosis');
-  assert.deepEqual(l.stats, m.stats, '單一清單時清單統計＝全站統計');
+  assert.equal(m.byDisease.get('disease.tuberculosis'), l);
+  // 人工清單原有 40 筆全部保留、狀態不變（15/18/3/3/1）
+  const manual = l.items.filter((i) => !i.derived);
+  assert.equal(manual.length, raw.items.length);
+  assert.equal(raw.items.length, 40);
+  const count = (arr, st) => arr.filter((i) => i.status === st).length;
+  assert.deepEqual(['migrated', 'merged', 'archived', 'pending', 'dropped'].map((st) => count(manual, st)), [15, 18, 3, 3, 1]);
+  for (const it of raw.items) assert.equal(l.items.find((x) => x.key === it.key)?.status, it.status, it.key);
+  // 模板補齊：清單筆數 ≥ 人工筆數，補上的都是 derived
+  assert.ok(l.items.length > raw.items.length, `模板補齊（${l.items.length} > ${raw.items.length}）`);
+  assert.equal(l.derivedItems, l.items.length - raw.items.length);
+  // 清單統計＝逐筆計數；全站統計＝各清單加總
+  for (const st of ['migrated', 'merged', 'archived', 'pending', 'dropped']) assert.equal(l.stats[st], count(l.items, st), st);
+  assert.equal(l.stats.total, l.items.length); assert.equal(l.stats.verified, 0);
+  assert.equal(l.stats.migrated + l.stats.merged + l.stats.archived + l.stats.pending + l.stats.dropped, l.stats.total);
+  assert.ok(l.stats.migrated + l.stats.merged > l.stats.total / 2, '多數為 migrated／merged');
+  for (const k of ['migrated', 'merged', 'archived', 'pending', 'dropped', 'verified', 'total']) assert.equal(m.stats[k], m.lists.reduce((n, x) => n + x.stats[k], 0), k);
+  assert.equal(m.stats.migrated + m.stats.merged + m.stats.archived + m.stats.pending + m.stats.dropped, m.stats.total);
+  assert.equal(m.pending.length, m.stats.pending);
   assert.equal(l.ownerName, '慢性傳染病組');
-  assert.equal(site.gov.summary.migrationPending, 3);
+  assert.equal(site.gov.summary.migrationPending, m.stats.pending);
 });
 
-test('pending ⇒ migration-pending 待辦（medium、連到後台）；verified:false 不開待辦；改 verified 不影響', () => {
+test('pending ⇒ 每份清單聚合一則 migration-pending 待辦（連到後台）；verified:false 不開待辦', () => {
   const site = govern('2026-10-01');
   const todos = site.gov.todos.filter((t) => t.kind === 'migration-pending');
-  assert.equal(todos.length, site.migration.stats.pending);
+  assert.equal(todos.length, site.migration.lists.filter((l) => l.stats.pending > 0 && l.status !== 'archived').length, '每份有待移轉的清單一則');
+  assert.equal(new Set(todos.map((t) => t.listId)).size, todos.length);
   for (const t of todos) {
-    assert.equal(t.severity, 'medium'); assert.equal(t.owner, 'unit.chronic-infectious'); assert.equal(t.itemType, 'migration');
-    assert.equal(t.href, '/admin/migration/'); assert.ok(t.dueAt); assert.equal(t.kindLabel, '舊頁待移轉');
+    assert.equal(t.itemType, 'migration'); assert.equal(t.href, '/admin/migration/'); assert.ok(t.dueAt); assert.equal(t.kindLabel, '舊頁待移轉');
+    assert.equal(t.count, site.migration.lists.find((l) => l.id === t.listId).stats.pending);
   }
-  assert.ok(todos.some((t) => t.migrationKey === 'training-slides'), '教育訓練教材待移轉');
-  // 不是 pending 的（含 verified:false）不開待辦
-  const nonPending = site.migration.lists[0].items.filter((i) => i.status !== 'pending').length;
-  assert.ok(nonPending > 30);
-  assert.equal(site.gov.todos.filter((t) => t.kind === 'migration-pending').length, 3);
-  // 把一筆 pending 改 migrated ⇒ 待辦少一筆
-  const s2 = govern('2026-10-01', (s) => { const it = s.migrationLists[0].items.find((i) => i.key === 'training-slides'); it.status = 'migrated'; it.target = 'topic.tb-prevention'; });
-  assert.equal(s2.gov.todos.filter((t) => t.kind === 'migration-pending').length, 2);
+  const tb = todos.find((t) => t.listId === 'migration.tuberculosis');
+  assert.ok(tb, '結核病清單一則');
+  assert.equal(tb.severity, 'medium', '第三類 ⇒ medium'); assert.equal(tb.owner, 'unit.chronic-infectious');
+  assert.ok(tb.pendingKeys.includes('training-slides'), '教育訓練教材待移轉');
+  assert.match(tb.text, /^結核病：\d+ 個舊頁待移轉/);
+  // 不是 pending 的（含 verified:false）不計
+  const l = site.migration.lists.find((x) => x.id === 'migration.tuberculosis');
+  assert.equal(tb.count, l.items.filter((i) => i.status === 'pending').length);
+  // 把一筆 pending 改 migrated ⇒ 同一則待辦的筆數少 1（不是少一則）
+  const s2 = govern('2026-10-01', (s) => { const it = s.migrationLists.find((x) => x.id === 'migration.tuberculosis').items.find((i) => i.key === 'training-slides'); it.status = 'migrated'; it.target = 'topic.tb-prevention'; });
+  const tb2 = s2.gov.todos.find((t) => t.kind === 'migration-pending' && t.listId === 'migration.tuberculosis');
+  assert.equal(tb2.count, tb.count - 1);
+  assert.equal(s2.gov.todos.filter((t) => t.kind === 'migration-pending').length, todos.length);
 });
 
 test('gov.legacy 以 target 反向掛到新站內容；失效版 target 的轉址導向現行版', () => {
@@ -121,8 +139,9 @@ test('gov.legacy 以 target 反向掛到新站內容；失效版 target 的轉�
   assert.deepEqual(site.migration.byTarget.get('disease.tuberculosis'), tb.gov.legacy.items);
   // 其他型別也掛得到（服務、Q&A、文件）
   for (const id of ['service.tb-treatment-subsidy', 'faq.ltbi-treat-or-not', 'doc.tb-guideline.2025-09-01', 'topic.tb-prevention']) assert.ok(site.byId.get(id).gov.legacy?.items.length, id);
-  // 沒有對應的內容 gov.legacy＝null
-  assert.equal(site.byId.get('disease.dengue').gov.legacy, null);
+  // 沒有對應的內容 gov.legacy＝null（第六輪起每個疾病頁都有推導清單對應，改用政策頁）
+  assert.equal(site.byId.get('page.privacy').gov.legacy, null);
+  assert.ok(site.byId.get('disease.dengue').gov.legacy?.count > 0, '推導清單也掛到疾病頁');
   // 第七版（失效）：legacy 掛在舊版頁，轉址 to 指向現行第八版
   const old = site.byId.get('doc.tb-guideline.2022-03-01');
   assert.equal(old.gov.superseded, true);
@@ -144,8 +163,10 @@ test('showLegacyUntil 過期 ⇒ gov.legacy.show=false（自動退場，不需�
 test('v1/redirects.json：含 migration 項（verified、pattern）；dropped／pending 無 target 不轉址；不與 legacy 重複', () => {
   const { json, site } = emitted();
   const r = json('v1/redirects.json');
-  const mig = r.data.filter((x) => x.kind === 'migration');
-  const list = site.migration.lists[0];
+  const allMig = r.data.filter((x) => x.kind === 'migration');
+  assert.equal(allMig.length, site.migration.lists.reduce((n, l) => n + l.items.filter((i) => i.to && i.status !== 'dropped').length, 0));
+  const mig = allMig.filter((x) => x.listId === 'migration.tuberculosis');
+  const list = site.migration.lists.find((l) => l.id === 'migration.tuberculosis');
   assert.equal(mig.length, list.items.filter((i) => i.target && i.status !== 'dropped').length);
   assert.ok(mig.every((x) => x.status === 301 && typeof x.verified === 'boolean' && typeof x.pattern === 'boolean' && x.listId === 'migration.tuberculosis'));
   assert.ok(mig.every((x) => !x.from.includes('#') && !/^https?:/.test(x.from)), 'from 去網域與 hash');
@@ -159,7 +180,7 @@ test('v1/redirects.json：含 migration 項（verified、pattern）；dropped／
   // 同一舊網址已有 migration 項 ⇒ 不再出 legacy 項
   const keys = new Set(mig.map((x) => legacyKey(x.from)));
   assert.ok(!r.data.some((x) => x.kind === 'legacy' && keys.has(legacyKey(x.fromPath))));
-  assert.equal(r.meta.byKind.migration, mig.length);
+  assert.equal(r.meta.byKind.migration, allMig.length);
   // 既有對照不受影響
   assert.ok(r.data.some((x) => x.kind === 'legacy' && x.itemId === 'disease.dengue' && x.to === '/diseases/dengue/'));
 });
@@ -285,7 +306,7 @@ test('analyze-404-log：IIS W3C 格式（#Fields 欄位順序）自動判斷；�
   const { json } = emitted();
   const lists = loadMigrationLists(MIGRATION_DIR);
   // 示範：把 dropped 的活動頁改成確定網址 ⇒ 精確命中時歸 410
-  const ev = lists[0].items.find((i) => i.key === 'event-2019');
+  const ev = lists.find((l) => l.id === 'migration.tuberculosis').items.find((i) => i.key === 'event-2019');
   ev.oldUrl = 'https://www.cdc.gov.tw/Category/Page/OldEvent2019Signup';
   const { categories } = analyze(entries, { map: json('v1/legacy-map.json').data, migrationLists: lists });
   assert.deepEqual(categories.redirect.map((r) => r.to).sort(), ['/diseases/dengue/', '/news/2026-06-02-measles-travel-mmr-1966/']);

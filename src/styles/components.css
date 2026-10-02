@@ -862,3 +862,54 @@ mark.c-hit{background:#ffe08a;color:var(--ink);padding:0 2px;border-radius:2px}
   .c-legacycard{padding:var(--sp-4)}
 }
 .c-legacy__unv{margin:0 0 var(--sp-2);color:var(--alert-overdue);font-weight:600}
+
+/* ═════ 第六輪（W2）：國際合作入口、語言權威性提示、同系列子頁導覽、/legacy/ 模式提示 ═════ */
+.c-translation-badge--source{background:var(--info-bg);color:var(--info)}
+.c-authority{display:flex;flex-wrap:wrap;align-items:center;gap:6px var(--sp-3);margin:var(--sp-3) 0;padding:var(--sp-2) var(--sp-3);border:1px solid var(--line);border-left:4px solid var(--blue-700);border-radius:var(--radius-sm);background:var(--blue-50);font-size:var(--fs-sm);color:var(--ink)}
+.c-authority__t{font-weight:600}
+.c-authority a{white-space:nowrap}
+.c-seriesnav{margin:0 0 var(--sp-4);padding:var(--sp-2) 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.c-seriesnav__t{margin:0 0 var(--sp-1);font-size:var(--fs-xs);font-weight:700;color:var(--ink-3);letter-spacing:.02em}
+.c-seriesnav__list{display:flex;flex-wrap:wrap;gap:var(--sp-1) var(--sp-2);list-style:none;margin:0;padding:0}
+.c-seriesnav__list a{display:block;padding:6px 14px;border:1px solid #9aa3ab;border-radius:var(--radius-pill);color:var(--ink);text-decoration:none;font-size:var(--fs-sm);background:#fff}
+.c-seriesnav__list a:hover{border-color:var(--green-700);background:var(--green-50);color:var(--green-900)}
+.c-seriesnav__list a[aria-current="page"]{background:var(--green-100);border-color:var(--green-700);color:var(--green-900);font-weight:700}
+.c-pager{display:flex;justify-content:space-between;gap:var(--sp-3);margin:var(--sp-6) 0 var(--sp-4);flex-wrap:wrap}
+.c-pager__a{display:flex;flex-direction:column;gap:2px;flex:1 1 220px;max-width:46%;padding:var(--sp-3) var(--sp-4);border:1px solid var(--line);border-radius:var(--radius);text-decoration:none;color:var(--ink);background:#fff}
+.c-pager__a:hover{border-color:var(--green-700);background:var(--green-50)}
+.c-pager__a--next{text-align:right;margin-left:auto}
+.c-pager__k{font-size:var(--fs-xs);color:var(--ink-3);font-weight:700}
+.c-pager__v{font-weight:600}
+.c-intl .c-chips-wrap{margin:var(--sp-3) 0 var(--sp-5)}
+.c-intl__intro{margin-bottom:var(--sp-4)}
+.c-intl__sub{margin:0 0 var(--sp-5)}
+.c-intl__sub>h3{font-size:var(--fs-lg);margin:0 0 var(--sp-2)}
+.c-intl__more{margin:var(--sp-2) 0 0}
+.c-intl__hl{list-style:none;margin:var(--sp-2) 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:var(--sp-2)}
+.c-intl__hl li{border:1px solid var(--line);border-radius:var(--radius-sm);padding:var(--sp-2) var(--sp-3);background:#fff;font-size:var(--fs-sm)}
+.c-intl__map{margin:var(--sp-3) 0;border:1px solid var(--line);border-radius:var(--radius);padding:var(--sp-3);background:#fff}
+.c-intl__map .wm-fig{margin:0}
+.c-intl .wm{stroke:#fff}
+.c-table--mou th[scope=row]{font-weight:600;min-width:12em}
+.c-table--mou td:nth-child(3){white-space:nowrap}
+.c-intl__facts{margin:var(--sp-3) 0;display:grid;grid-template-columns:max-content minmax(0,1fr);gap:6px var(--sp-4)}
+.c-intl__facts>div{display:contents}
+.c-intl__facts dt{color:var(--ink-3);font-size:var(--fs-sm)}
+.c-intl__facts dd{margin:0;overflow-wrap:anywhere}
+.c-intl__facts dd a+a{margin-left:var(--sp-3)}
+.c-intl__steps{margin:0;padding-left:1.2em}
+.c-intl__svc{margin:var(--sp-3) 0}
+.c-ihr{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:var(--sp-5);border:1px solid var(--line);border-left:6px solid var(--blue-700);border-radius:var(--radius);padding:var(--sp-4) var(--sp-5);background:#fff;box-shadow:var(--shadow)}
+.c-ihr h3{margin:0 0 var(--sp-2)}
+.c-ihr__note{font-size:var(--fs-sm)}
+.c-ihr__contact{margin:0;display:grid;gap:var(--sp-3);align-content:start;padding:var(--sp-3) var(--sp-4);border-radius:var(--radius);background:var(--blue-50)}
+.c-ihr__contact>div{display:grid;gap:2px}
+.c-ihr__contact dt{font-size:var(--fs-xs);color:var(--ink-3);font-weight:700}
+.c-ihr__contact dd{margin:0;display:flex;flex-direction:column;gap:2px;overflow-wrap:anywhere}
+.c-ihr__247 dd{color:var(--blue-700)}
+.c-legacycard__hint{margin:var(--sp-2) 0}
+@media (max-width:760px){
+  .c-ihr{grid-template-columns:1fr;padding:var(--sp-4)}
+  .c-intl__facts{grid-template-columns:1fr}
+  .c-pager__a{max-width:100%}
+}

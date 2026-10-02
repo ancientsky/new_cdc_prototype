@@ -1,0 +1,162 @@
+{
+  "id": "migration.measles",
+  "type": "migration",
+  "title": "麻疹專區（舊站）→ 新站：疾病特有頁面（例外清單）",
+  "extends": "migration-template.disease",
+  "owner": "unit.acute-infectious",
+  "steward": "急性傳染病組承辦人",
+  "publishedAt": "2026-10-02",
+  "reviewedAt": "2026-10-02",
+  "reviewPeriodMonths": 3,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "麻疹專區中標準疾病頁模板沒有的舊頁：消除專區、群聚與接觸者追蹤、MMR 建議與舊版、候診室動畫、旅遊疫情提醒與接觸者活動場所公告的對照。",
+  "keywords": [
+    "移轉清單",
+    "舊網址",
+    "301",
+    "麻疹"
+  ],
+  "diseases": [
+    "disease.measles",
+    "disease.rubella"
+  ],
+  "scope": {
+    "kind": "disease",
+    "disease": "disease.measles"
+  },
+  "legacyRoot": "https://www.cdc.gov.tw/Disease/SubIndex/{id}#measles",
+  "showLegacyUntil": "2027-12-31",
+  "sourceNote": "本清單只寫標準疾病頁模板（migration-template.disease）沒有的例外：疾病特有的專區頁、專屬指引與公告。疾病介紹、Q&A、衛教、統計、檢驗、通報定義等標準子頁由模板推導，不在此重複。開發環境連不到 www.cdc.gov.tw，頁面清單依規劃文件 URL 模式與對官網的既有認識重建；ID 不確定者以 {id} 佔位。全部 verified:false，由權責單位在後台「移轉對照」逐筆確認後改 true。",
+  "items": [
+    {
+      "key": "measles-elimination-zone",
+      "oldTitle": "麻疹及德國麻疹消除專區",
+      "oldPath": "麻疹／消除專區",
+      "oldUrl": "https://www.cdc.gov.tw/Category/Page/{id}#elimination",
+      "oldType": "page",
+      "verified": false,
+      "status": "pending",
+      "dueAt": "2026-12-31",
+      "note": "含 WHO 區域查證委員會消除認證與歷年報告；新站尚缺對應內容，需由急性傳染病組決定放專區或文件並訂審閱週期。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "basedOn",
+        "languages"
+      ]
+    },
+    {
+      "key": "measles-cluster-response",
+      "oldTitle": "麻疹群聚事件應變專區",
+      "oldPath": "麻疹／醫療專區／群聚應變",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#cluster",
+      "oldType": "page",
+      "verified": false,
+      "status": "merged",
+      "target": "doc.measles-contact-tracing.2026-09-12",
+      "note": "併入「麻疹接觸者追蹤作業指引」第五章（群聚定義、應變小組、解除條件）。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "basedOn",
+        "machineReadable"
+      ]
+    },
+    {
+      "key": "measles-contact-tracing",
+      "oldTitle": "麻疹接觸者追蹤作業指引",
+      "oldPath": "麻疹／醫療專區／指引",
+      "oldUrl": "https://www.cdc.gov.tw/File/Get/{id}#measles-contact-tracing",
+      "oldType": "pdf",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.measles-contact-tracing.2026-09-12",
+      "note": "依據 MMR 預防接種建議與病例定義；建議修訂時自動加註並開 7 日待辦。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "basedOn",
+        "machineReadable",
+        "languages"
+      ]
+    },
+    {
+      "key": "measles-exposure-notice",
+      "oldTitle": "麻疹病例接觸者活動場所公告",
+      "oldPath": "麻疹／疫情公告",
+      "oldUrl": "https://www.cdc.gov.tw/Bulletin/List/{id}?page=1#measles-exposure",
+      "oldType": "news-list",
+      "verified": false,
+      "status": "pending",
+      "dueAt": "2026-11-30",
+      "note": "事件型公告（場所、時段、需自主健康管理者）；需與公關室確認以新聞稿或專區何者承接，並訂事件結束後的退場規則。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "accessibility"
+      ]
+    },
+    {
+      "key": "measles-mmr-2019",
+      "oldTitle": "國內 MMR 預防接種建議（108.05.14 版）",
+      "oldPath": "麻疹／預防接種／歷版建議",
+      "oldUrl": "https://www.cdc.gov.tw/File/Get/{id}#mmr-recommendation-2019",
+      "oldType": "pdf",
+      "verified": false,
+      "status": "archived",
+      "target": "doc.mmr-recommendation.2019-05-14",
+      "note": "已由 114.04.16 版取代；舊版內容與現行建議不同，保留供查閱，AI 與搜尋一律以現行版為準。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "versionChain"
+      ]
+    },
+    {
+      "key": "measles-mmr-video",
+      "oldTitle": "麻疹 MMR 疫苗候診衛教動畫",
+      "oldPath": "麻疹／衛教宣導／影音",
+      "oldUrl": "https://www.cdc.gov.tw/Category/List/{id}#mmr-video",
+      "oldType": "media",
+      "verified": false,
+      "status": "migrated",
+      "target": "media.mmr-waiting-room-2026",
+      "note": "2026 年重製版取代 2025 年版；影片須有逐字稿與依據正本。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "basedOn",
+        "accessibility"
+      ]
+    },
+    {
+      "key": "measles-japan-travel",
+      "oldTitle": "日本麻疹疫情旅遊提醒",
+      "oldPath": "麻疹／國際旅遊／疫情提醒",
+      "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/{id}#japan-measles",
+      "oldType": "news-list",
+      "verified": false,
+      "status": "migrated",
+      "target": "news.2026-05-11-japan-measles-level1",
+      "note": "旅遊疫情建議改由旅遊目的地頁依官方事件流自動產生；舊提醒新聞稿保留。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "basedOn"
+      ]
+    }
+  ]
+}

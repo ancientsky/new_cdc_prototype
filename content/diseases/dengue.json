@@ -87,7 +87,10 @@
     "警示徵象"
   ],
   "legacyUrls": [
-    "https://www.cdc.gov.tw/Disease/SubIndex/WYbKe3aE7LiY5gb-eA8PBw"
+    "https://www.cdc.gov.tw/Disease/SubIndex/WYbKe3aE7LiY5gb-eA8PBw",
+    "https://www.cdc.gov.tw/Category/QAPage/{id}#dengue",
+    "https://www.cdc.gov.tw/Category/List/{id}#dengue-guidance",
+    "https://www.cdc.gov.tw/Bulletin/List/{id}?page=1#dengue"
   ],
   "keyFacts": {
     "incubation": "3–14 天（通常 4–7 天）",
@@ -162,11 +165,66 @@
     "caseDefinitionDoc": "doc.case-definition-dengue",
     "manualDoc": "doc.guidance-dengue",
     "specimen": "急性期血清 2–5 mL，發病 7 日內可做 NS1 抗原、RT-PCR；發病 7 日後採恢復期血清檢測 IgM/IgG。",
-    "notifyNote": "第二類法定傳染病，應於 24 小時內通報；NS1 快篩陽性即應通報，不必等待確認結果。"
+    "notifyNote": "第二類法定傳染病，應於 24 小時內通報；NS1 快篩陽性即應通報，不必等待確認結果。",
+    "programs": [
+      {
+        "key": "source-reduction",
+        "title": "孳生源清除與社區動員",
+        "summary": "推動「巡、倒、清、刷」：里（村）指定聯絡人、每週巡檢住家與公共空間積水容器；空地、工地等管理人限期改善，疫情升溫前辦理社區說明會。",
+        "documents": [
+          "doc.dengue-community-workplan",
+          "doc.guidance-dengue"
+        ],
+        "services": [],
+        "contentIds": [
+          "faq.dengue-container-check",
+          "faq.dengue-community-mobilize",
+          "media.dengue-village-chief",
+          "research.2024-community-dengue-source-reduction"
+        ]
+      },
+      {
+        "key": "vector-surveillance",
+        "title": "病媒蚊監測與密度調查",
+        "summary": "活動季每月調查住宅指數、容器指數與布氏指數，依級別調整查核頻率；本土病例周邊於 3 日內完成密度調查，作為擴大防治的依據。",
+        "documents": [
+          "doc.dengue-community-workplan"
+        ],
+        "services": [
+          "service.lab-test-request"
+        ],
+        "contentIds": [
+          "dataset.dengue-local-weekly",
+          "dataset.dengue-daily",
+          "labtest.dengue",
+          "research.2026-sea-dengue-genomic-surveillance"
+        ]
+      },
+      {
+        "key": "cluster-response",
+        "title": "群聚事件應變",
+        "summary": "同一村里 14 日內 2 例以上有關聯之本土病例即啟動應變：24 小時內疫調劃定風險範圍、針對性室內噴藥、連續 2 個潛伏期無新增才解除。",
+        "documents": [
+          "doc.guidance-dengue",
+          "doc.dengue-community-workplan"
+        ],
+        "services": [
+          "service.cluster-report-1922",
+          "service.notifiable-disease-report"
+        ],
+        "contentIds": [
+          "faq.dengue-spraying-refuse",
+          "clar.2025-07-dengue-spraying-poison",
+          "news.2026-08-18-dengue-rising-south",
+          "news.2026-09-15-letter-616-ns1"
+        ]
+      }
+    ]
   },
   "relatedDocuments": [
     "doc.guidance-dengue",
-    "doc.case-definition-dengue"
+    "doc.case-definition-dengue",
+    "doc.dengue-community-workplan"
   ],
   "materials": [
     {

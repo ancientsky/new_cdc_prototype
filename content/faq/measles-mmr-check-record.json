@@ -1,0 +1,71 @@
+{
+  "id": "faq.measles-mmr-check-record",
+  "type": "faq",
+  "title": "我不確定有沒有打過 MMR，要怎麼評估要不要補打？",
+  "question": "我不確定有沒有打過 MMR，要怎麼評估要不要補打？",
+  "owner": "unit.vaccine",
+  "steward": "預防接種組承辦人",
+  "publishedAt": "2026-09-24",
+  "reviewedAt": "2026-09-24",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "vaccines",
+    "travel"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "doc.mmr-recommendation"
+  ],
+  "diseases": [
+    "disease.measles"
+  ],
+  "vaccines": [
+    "vaccine.mmr"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-30"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "pending"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "不確定 MMR 接種史可查接種紀錄卡或向衛生所申請補發；1966 年（含）以後出生且不具免疫力者，出國前 2–4 週評估自費接種。",
+  "keywords": [
+    "MMR",
+    "接種紀錄",
+    "補打",
+    "自費",
+    "1966 年",
+    "免疫力"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/{id}#measles-mmr-record"
+  ],
+  "answerMarkdown": "先查紀錄：幼兒時期的接種紀錄可看**兒童預防接種紀錄卡**，或向戶籍地衛生所申請補發接種紀錄。\n\n評估重點：\n\n- 已完成 **2 劑 MMR**、曾確診麻疹，或抗體檢驗陽性者，視為具免疫力。\n- **1966 年（含）以後出生**、不具免疫力的成人，若計畫前往麻疹流行地區，建議出國前 **2 至 4 週**到旅遊醫學門診評估自費接種 1 劑；醫護人員及經常接觸外國人的工作者也建議評估。\n- 查不到紀錄也不必然要驗血，醫師會依年齡、風險與出國計畫建議。\n\n孕婦與免疫不全者不可接種 MMR，請先與醫師討論。"
+}

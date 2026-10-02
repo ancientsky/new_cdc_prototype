@@ -34,9 +34,12 @@ export function makeCtx(site, lang, extra = {}) {
   return { site, lang, url, t: (key, vars) => i18nT(lang, key, vars), fmtDate: (d) => fmtDate(d, lang), today: site.today, view: 'public', ...extra };
 }
 
-/** 某內容在某語言是否可渲染：一級內容需 reviewed；其他 reviewed/machine 皆可。 */
+/**
+ * 某內容在某語言是否可渲染：來源語言（item.sourceLang，預設 zh-TW）永遠可渲染；zh-TW 永遠可渲染
+ * （sourceLang≠zh-TW 時 validate 保證有 i18n['zh-TW'] 且為 reviewed／machine）；其他語言：一級內容需 reviewed，其他 reviewed/machine 皆可。
+ */
 export function langAvailable(site, item, lang) {
-  if (lang === 'zh-TW') return true;
+  if (lang === (item.sourceLang ?? 'zh-TW') || lang === 'zh-TW') return true;
   const st = item.languages?.[lang]?.status;
   if (!st || st === 'none' || st === 'pending') return false;
   if (site.config.tier1Types.includes(item.type)) return st === 'reviewed';

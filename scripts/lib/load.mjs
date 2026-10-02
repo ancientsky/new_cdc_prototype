@@ -1,4 +1,5 @@
-// 讀取 content/ 與 data/snapshots/ → site.collections（＋ site.migrationLists：content/migration/*.json）
+// 讀取 content/ 與 data/snapshots/ → site.collections（＋ site.migrationLists：content/migration/*.json；
+// 底線開頭的 content/migration/_*.json 是模板 → site.migrationTemplates，ARCHITECTURE 14.1）
 import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
@@ -27,7 +28,10 @@ function readDirJSON(dir) {
     });
 }
 
-/** 中文正本的內容雜湊（翻譯過期偵測） */
+/**
+ * 來源語言正本的內容雜湊（翻譯過期偵測）。只取頂層欄位＝來源語言（item.sourceLang，預設 zh-TW）的文字；
+ * i18n（含 sourceLang≠zh-TW 時的 i18n['zh-TW']）不參與，所以譯文更新不會讓其他語言過期（ARCHITECTURE 14.2）。
+ */
 export function sourceHashOf(item) {
   const pick = {
     title: item.title, summary: item.summary, question: item.question, answerMarkdown: item.answerMarkdown,
@@ -85,10 +89,14 @@ export function loadSite(config) {
   };
   // 移轉清單（ARCHITECTURE 13.1）：舊站專區 → 新站內容的逐頁對照。不是對外內容頁，不放進 collections／all
   // （不進索引、sitemap、白名單、KPI）；治理引擎據此算 site.migration 與 item.gov.legacy。
-  const migrationLists = readDirJSON(path.join(CONTENT, 'migration'));
+  // 第六輪（14.1）：底線開頭的檔案是模板（type migration-template），由治理引擎對主檔每種疾病推導清單。
+  const migrationFiles = readDirJSON(path.join(CONTENT, 'migration'));
+  const isTemplateFile = (x) => path.basename(x.__file ?? '').startsWith('_') || x.type === 'migration-template';
+  const migrationLists = migrationFiles.filter((x) => !isTemplateFile(x));
+  const migrationTemplates = migrationFiles.filter(isTemplateFile);
   const all = Object.values(collections).flat();
   const byId = new Map(all.map((i) => [i.id, i]));
   const unitById = new Map(master.units.map((u) => [u.id, u]));
   const diseaseMasterById = new Map(master.diseases.map((d) => [d.id, d]));
-  return { config, master, collections, migrationLists, situation, governance, snapshots, all, byId, unitById, diseaseMasterById };
+  return { config, master, collections, migrationLists, migrationTemplates, situation, governance, snapshots, all, byId, unitById, diseaseMasterById };
 }

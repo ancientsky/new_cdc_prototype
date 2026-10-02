@@ -233,8 +233,39 @@ body.adm { background: var(--paper); color: var(--ink); min-height: 100vh; displ
 .adm-stack__gray { background: #8a929a; }
 .adm-stack__dropped { background: #c4c9ce; }
 .adm-stack__warn { background: var(--status-rising); }
-#mg-table td:nth-child(1) { min-width: 220px; max-width: 300px; }
-#mg-table td:nth-child(2) { min-width: 200px; max-width: 280px; word-break: break-all; font-size: var(--fs-sm); }
-#mg-table td:nth-child(5) { min-width: 180px; }
-#mg-table td:nth-child(7) { min-width: 200px; }
-#mg-table td { vertical-align: top; }
+.mg-items td:nth-child(1) { min-width: 220px; max-width: 300px; }
+.mg-items td:nth-child(2) { min-width: 200px; max-width: 280px; word-break: break-all; font-size: var(--fs-sm); }
+.mg-items td:nth-child(5) { min-width: 180px; }
+.mg-items td:nth-child(7) { min-width: 200px; }
+.mg-items td { vertical-align: top; }
+
+/* ═════ 第六輪（W2）：移轉進度 72＋ 份清單 ═════ */
+.adm-seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--green-700); border-radius: var(--radius-sm); overflow: hidden; background: #fff; }
+.adm-seg__b { font: inherit; font-size: var(--fs-sm); font-weight: 600; padding: 8px 14px; border: 0; border-right: 1px solid var(--green-100); background: #fff; color: var(--green-800); cursor: pointer; }
+.adm-seg__b:last-child { border-right: 0; }
+.adm-seg__b:hover { background: var(--green-50); }
+.adm-seg__b[aria-checked="true"] { background: var(--green-700); color: #fff; }
+.adm-seg__b:focus-visible { outline: var(--focus); outline-offset: -3px; }
+.adm-seg__n { display: inline-block; min-width: 1.6em; margin-left: 4px; padding: 0 6px; border-radius: var(--radius-pill); background: rgba(0,0,0,.08); font-size: var(--fs-xs); text-align: center; }
+.adm-seg__b[aria-checked="true"] .adm-seg__n { background: rgba(255,255,255,.25); }
+.mg-sum { min-width: 980px; }
+.mg-sum tbody.mg-list { border-bottom: 1px solid var(--line); }
+.mg-sum tbody[hidden] { display: none; }
+.mg-sum tbody.mg-list:hover .mg-list__row { background: var(--paper); }
+.mg-sum .mg-list__row th, .mg-sum .mg-list__row td { vertical-align: middle; }
+.mg-toggle { all: unset; box-sizing: border-box; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-weight: 700; color: var(--green-900); padding: 2px 4px; border-radius: var(--radius-sm); }
+.mg-toggle:hover { background: var(--green-50); }
+.mg-toggle:focus-visible { outline: var(--focus); outline-offset: 1px; }
+.mg-toggle__ic { display: inline-block; width: 1em; color: var(--green-700); }
+.mg-en { padding-left: calc(1em + 10px); font-weight: 400; }
+.mg-prog { min-width: 150px; }
+.mg-prog .adm-stack { margin: 0 0 2px; }
+.mg-stack--sm { height: 8px; }
+.mg-stack--big { height: 20px; }
+.mg-list__ex > td { background: var(--paper); padding: var(--sp-3) var(--sp-4) var(--sp-4); }
+.mg-list__ex[hidden] { display: none; }
+.mg-ex__head { display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-4); align-items: center; justify-content: space-between; margin-bottom: var(--sp-2); }
+.mg-ex__head p { margin: 0; flex: 1 1 360px; }
+.mg-ex__pend { font-size: var(--fs-sm); font-weight: 600; white-space: nowrap; }
+.mg-items { min-width: 860px; background: #fff; }
+.adm-stack--card { height: 8px; margin: var(--sp-1) 0 var(--sp-2); }

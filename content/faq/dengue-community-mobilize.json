@@ -1,0 +1,66 @@
+{
+  "id": "faq.dengue-community-mobilize",
+  "type": "faq",
+  "title": "社區或里長要怎麼帶大家一起防登革熱？",
+  "question": "社區或里長要怎麼帶大家一起防登革熱？",
+  "owner": "unit.acute-infectious",
+  "steward": "急性傳染病組承辦人",
+  "publishedAt": "2026-09-24",
+  "reviewedAt": "2026-09-24",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "doc.dengue-community-workplan"
+  ],
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-30"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "pending"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "社區防登革熱可由里長指定聯絡人、每週組織巡倒清刷、回報空屋與工地積水；衛生所提供多語教材與說明會。",
+  "keywords": [
+    "登革熱",
+    "社區動員",
+    "里長",
+    "巡倒清刷",
+    "孳生源清除"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/{id}#dengue-community"
+  ],
+  "answerMarkdown": "可以從三件事開始：\n\n1. **指定聯絡人**：里（村）指定一位窗口，與衛生所保持聯繫。\n2. **每週巡倒清刷**：召集志工與住戶，每週一次巡視住家、公共空間與空地的積水容器，倒掉積水、清除不需要的容器、刷洗內壁。\n3. **回報困難處**：發現廢棄容器堆置、空屋或工地積水，請通知衛生所或環保單位處理，管理人有責任限期改善。\n\n衛生所可提供海報、影音與外籍勞工多語教材，疫情升溫前也會辦說明會。"
+}

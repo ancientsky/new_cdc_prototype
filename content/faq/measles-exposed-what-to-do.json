@@ -1,0 +1,68 @@
+{
+  "id": "faq.measles-exposed-what-to-do",
+  "type": "faq",
+  "title": "我和麻疹病人接觸過，要怎麼辦？",
+  "question": "我和麻疹病人接觸過，要怎麼辦？",
+  "owner": "unit.acute-infectious",
+  "steward": "急性傳染病組承辦人",
+  "publishedAt": "2026-09-24",
+  "reviewedAt": "2026-09-24",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms",
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "doc.measles-contact-tracing"
+  ],
+  "diseases": [
+    "disease.measles"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-30"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "pending"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "接觸麻疹病人後請聯絡衛生所或 1922；沒有免疫力者暴露後 72 小時內可接種 MMR；18 日內自主健康管理，出現症狀先電話通知再就醫。",
+  "keywords": [
+    "麻疹",
+    "接觸者",
+    "暴露後預防",
+    "MMR",
+    "72 小時",
+    "自主健康管理"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/{id}#measles-contact"
+  ],
+  "answerMarkdown": "請先確認自己是否**具麻疹免疫力**：完成 2 劑 MMR、曾確診麻疹或抗體陽性者，一般視為具免疫力。\n\n不確定或沒有免疫力的話：\n\n1. **盡快聯絡衛生所或撥打 1922**，說明接觸時間與場合。\n2. 暴露後 **72 小時內**接種 MMR 可降低發病風險；嬰兒、孕婦與免疫不全者不宜接種時，請衛生局評估免疫球蛋白。\n3. 自最後一次接觸起 **18 日內**自主健康管理，每日量體溫。出現發燒、咳嗽、結膜炎或出疹，請**先電話通知衛生單位**，戴口罩依指示就醫，不要直接坐在候診區。"
+}

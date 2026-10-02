@@ -1,0 +1,67 @@
+{
+  "id": "faq.dengue-imported-return",
+  "type": "faq",
+  "title": "從登革熱流行地區回國後，要注意什麼？",
+  "question": "從登革熱流行地區回國後，要注意什麼？",
+  "owner": "unit.acute-infectious",
+  "steward": "急性傳染病組承辦人",
+  "publishedAt": "2026-09-24",
+  "reviewedAt": "2026-09-24",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms",
+    "travel"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "doc.guidance-dengue"
+  ],
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-30"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "pending"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "從登革熱流行地區返國後 14 日內需做好防蚊；發燒、頭痛、後眼窩痛或出疹請就醫並告知旅遊史。",
+  "keywords": [
+    "登革熱",
+    "境外移入",
+    "返國",
+    "防蚊",
+    "旅遊史"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/{id}#dengue-imported"
+  ],
+  "answerMarkdown": "回國後 **14 日內**請做好防蚊（穿淺色長袖衣褲、使用政府核可的防蚊藥劑、睡前確認紗窗完整），避免被蚊子叮咬後再傳給家人與社區。\n\n若發燒、頭痛、後眼窩痛、肌肉關節痛或出疹，請**盡速就醫並告知旅遊史**；醫師可使用 NS1 快篩協助判斷。境外移入病例返國後，衛生單位會依規定在 14 日內每週追蹤防蚊情形，請配合。"
+}

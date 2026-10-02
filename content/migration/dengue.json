@@ -1,0 +1,184 @@
+{
+  "id": "migration.dengue",
+  "type": "migration",
+  "title": "登革熱專區（舊站）→ 新站：疾病特有頁面（例外清單）",
+  "extends": "migration-template.disease",
+  "owner": "unit.acute-infectious",
+  "steward": "急性傳染病組承辦人",
+  "publishedAt": "2026-10-02",
+  "reviewedAt": "2026-10-02",
+  "reviewPeriodMonths": 3,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "登革熱專區中標準疾病頁模板沒有的舊頁：防治專區首頁、病媒蚊密度調查、孳生源清除與群聚應變、NS1 公告、歷版指引與外籍勞工教材的對照。",
+  "keywords": [
+    "移轉清單",
+    "舊網址",
+    "301",
+    "登革熱"
+  ],
+  "diseases": [
+    "disease.dengue",
+    "disease.chikungunya"
+  ],
+  "scope": {
+    "kind": "disease",
+    "disease": "disease.dengue"
+  },
+  "legacyRoot": "https://www.cdc.gov.tw/Disease/SubIndex/WYbKe3aE7LiY5gb-eA8PBw",
+  "showLegacyUntil": "2027-12-31",
+  "sourceNote": "本清單只寫標準疾病頁模板（migration-template.disease）沒有的例外：疾病特有的專區頁、專屬指引與公告。疾病介紹、Q&A、衛教、統計、檢驗、通報定義等標準子頁由模板推導，不在此重複。開發環境連不到 www.cdc.gov.tw，頁面清單依規劃文件 URL 模式與對官網的既有認識重建；ID 不確定者以 {id} 佔位。全部 verified:false，由權責單位在後台「移轉對照」逐筆確認後改 true。",
+  "items": [
+    {
+      "key": "dengue-zone",
+      "oldTitle": "登革熱防治專區（首頁）",
+      "oldPath": "登革熱／防治專區",
+      "oldUrl": "https://www.cdc.gov.tw/Category/Page/{id}",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "disease.dengue",
+      "note": "舊防治專區首頁改為疾病頁：民眾版與專業版（防治計畫、指引、通報與檢驗）以專區導覽分流。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "reviewPeriod",
+        "aiWhitelist",
+        "languages"
+      ]
+    },
+    {
+      "key": "dengue-vector-density",
+      "oldTitle": "病媒蚊密度調查結果",
+      "oldPath": "登革熱／防治專區／病媒蚊監測",
+      "oldUrl": "https://www.cdc.gov.tw/Category/List/{id}#vector-density",
+      "oldType": "list",
+      "verified": false,
+      "status": "pending",
+      "dueAt": "2026-12-15",
+      "note": "各縣市住宅指數、容器指數與布氏指數月報；新站尚未建立對應資料集，需先確認資料更新頻率與是否公開到區域別。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "structuredData",
+        "license"
+      ]
+    },
+    {
+      "key": "dengue-source-reduction",
+      "oldTitle": "孳生源清除與社區動員（巡倒清刷）",
+      "oldPath": "登革熱／防治專區／孳生源清除",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#source-reduction",
+      "oldType": "page",
+      "verified": false,
+      "status": "merged",
+      "target": "doc.dengue-community-workplan.2026-09-10",
+      "note": "併入「登革熱社區防治工作指引」第二章；民眾版巡倒清刷說明見 Q&A。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "basedOn",
+        "machineReadable",
+        "languages"
+      ]
+    },
+    {
+      "key": "dengue-cluster-response",
+      "oldTitle": "群聚事件應變與緊急防治",
+      "oldPath": "登革熱／防治專區／本土疫情應變",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#cluster-response",
+      "oldType": "page",
+      "verified": false,
+      "status": "merged",
+      "target": "doc.dengue-community-workplan.2026-09-10",
+      "note": "併入工作指引第四章（群聚定義、分工、解除條件）；噴藥疑慮另見澄清與 Q&A。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "basedOn",
+        "machineReadable",
+        "languages"
+      ]
+    },
+    {
+      "key": "dengue-ns1-notice",
+      "oldTitle": "NS1 抗原快篩試劑配置公告（致醫界通函）",
+      "oldPath": "登革熱／醫療專區／公告",
+      "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/{id}#ns1",
+      "oldType": "news-list",
+      "verified": false,
+      "status": "migrated",
+      "target": "news.2026-09-15-letter-616-ns1",
+      "note": "通函另以新聞型別上架，依據正本為防治工作指引，指引修訂時自動加註。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "basedOn",
+        "languages"
+      ]
+    },
+    {
+      "key": "dengue-guidance-v16-archive",
+      "oldTitle": "登革熱／屈公病防治工作指引（第 16 版）",
+      "oldPath": "登革熱／醫療專區／歷版指引",
+      "oldUrl": "https://www.cdc.gov.tw/File/Get/{id}#dengue-guidance-v16",
+      "oldType": "pdf",
+      "verified": false,
+      "status": "archived",
+      "target": "doc.guidance-dengue.v16",
+      "note": "已由第 17 版取代，舊版保留供查閱（noindex、頁首紅色警示），外部舊連結 301 到現行版。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "versionChain",
+        "machineReadable"
+      ]
+    },
+    {
+      "key": "dengue-village-chief-video",
+      "oldTitle": "影音：里長帶頭巡倒清刷",
+      "oldPath": "登革熱／衛教宣導／影音",
+      "oldUrl": "https://www.cdc.gov.tw/Category/List/{id}#dengue-video",
+      "oldType": "media",
+      "verified": false,
+      "status": "migrated",
+      "target": "media.dengue-village-chief",
+      "note": "影片改為影音型別，須有逐字稿與依據正本，正本修訂時自動標過時。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "basedOn",
+        "accessibility"
+      ]
+    },
+    {
+      "key": "dengue-migrant-worker-materials",
+      "oldTitle": "外籍勞工登革熱防治宣導（多語單張）",
+      "oldPath": "登革熱／衛教宣導／多語素材",
+      "oldUrl": "https://www.cdc.gov.tw/Category/List/{id}#migrant-materials",
+      "oldType": "media",
+      "verified": false,
+      "status": "pending",
+      "dueAt": "2026-12-15",
+      "note": "越、印、泰、菲語單張尚未逐一核對版本與授權，核對後併入專區「新住民與移工健康」。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "languages",
+        "license"
+      ]
+    }
+  ]
+}

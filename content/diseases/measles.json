@@ -101,7 +101,11 @@
     "出國"
   ],
   "legacyUrls": [
-    "https://www.cdc.gov.tw/Disease/Index"
+    "https://www.cdc.gov.tw/Disease/Index",
+    "https://www.cdc.gov.tw/Disease/SubIndex/{id}#measles",
+    "https://www.cdc.gov.tw/Category/QAPage/{id}#measles",
+    "https://www.cdc.gov.tw/Category/List/{id}#measles-guidance",
+    "https://www.cdc.gov.tw/Bulletin/List/{id}?page=1#measles"
   ],
   "keyFacts": {
     "incubation": "7–21 天（約 14 天出疹）",
@@ -175,10 +179,67 @@
     "caseDefinitionDoc": "doc.case-definition-measles",
     "manualDoc": "doc.mmr-recommendation",
     "specimen": "出疹 5 日內採咽喉擦拭液與尿液進行 RT-PCR；同時採急性期血清檢測 IgM，必要時於出疹後 10–14 日採恢復期血清。",
-    "notifyNote": "第二類法定傳染病，臨床符合即應於 24 小時內通報，並立即實施空氣隔離；接觸者追蹤由衛生局執行。"
+    "notifyNote": "第二類法定傳染病，臨床符合即應於 24 小時內通報，並立即實施空氣隔離；接觸者追蹤由衛生局執行。",
+    "programs": [
+      {
+        "key": "contact-tracing",
+        "title": "接觸者追蹤與疫調",
+        "summary": "通報後 24 小時內疫調，界定可傳染期（出疹前 4 日至出疹後 4 日）的接觸者；暴露後 72 小時內接種 MMR，18 日自主健康管理。",
+        "documents": [
+          "doc.measles-contact-tracing",
+          "doc.case-definition-measles"
+        ],
+        "services": [
+          "service.notifiable-disease-report"
+        ],
+        "contentIds": [
+          "faq.measles-exposed-what-to-do",
+          "faq.measles-health-dept-call",
+          "labtest.measles"
+        ]
+      },
+      {
+        "key": "mmr-catch-up",
+        "title": "MMR 補接種與自費評估",
+        "summary": "幼兒依時程接種 2 劑；1966 年（含）以後出生、不具免疫力的成人，出國前或有風險時評估自費接種；醫護人員納入評估。",
+        "documents": [
+          "doc.mmr-recommendation"
+        ],
+        "services": [
+          "service.vaccination-record-reissue",
+          "service.travel-clinic-appointment"
+        ],
+        "contentIds": [
+          "faq.measles-mmr-check-record",
+          "faq.measles-mmr-adult-who",
+          "faq.measles-mmr-born-1970",
+          "faq.healthcare-workers-mmr",
+          "vaccine.mmr",
+          "dataset.vaccine-coverage"
+        ]
+      },
+      {
+        "key": "cluster-response",
+        "title": "群聚應變",
+        "summary": "21 日內 2 例以上有關聯之確定病例即啟動應變，擴大接觸者清查與疫苗接種；最後一例發病後 2 個最長潛伏期無新增始得解除。",
+        "documents": [
+          "doc.measles-contact-tracing"
+        ],
+        "services": [
+          "service.cluster-report-1922"
+        ],
+        "contentIds": [
+          "dataset.measles-yearly",
+          "news.2026-05-11-japan-measles-level1",
+          "clar.2026-05-mmr-all-adults"
+        ]
+      }
+    ]
   },
   "relatedDocuments": [
-    "doc.mmr-recommendation"
+    "doc.mmr-recommendation",
+    "doc.measles-contact-tracing",
+    "doc.case-definition-measles"
   ],
   "materials": [
     {

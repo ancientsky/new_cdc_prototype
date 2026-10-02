@@ -112,6 +112,13 @@ function relatedOf(ctx, item, { sit, blocks, programs }) {
   return { services, datasets, research, hasStats: !!sit || datasets.length > 0 };
 }
 
+/** 第六輪：沒有任何內容的區塊（只有標題、或沒有對應資料的 Q&A／統計）不輸出，導覽與內文一致 */
+export const blockHasBody = (b, { sit = null, faqs = [] } = {}) => {
+  if (b.key === 'faq') return faqs.length > 0;
+  if (b.key === 'situation') return !!(sit || b.datasets?.length || b.markdown);
+  return !!(b.markdown || b.cards?.length || b.warning);
+};
+
 const hubItem = (id, label) => html`<li><a href="${'#' + id}" data-hub="${id}">${label}</a></li>`;
 
 function hubNav(ctx, { pub, pro }) {
@@ -220,7 +227,7 @@ ${breadcrumb(ctx, trailOf(ctx, item))}
 
   <div class="c-cols c-cols--2">
     <div class="c-cols__main">
-      ${blocks.map((b) => renderBlock(ctx, item, b, { sit, faqs }))}
+      ${blocks.filter((b) => blockHasBody(b, { sit, faqs })).map((b) => renderBlock(ctx, item, b, { sit, faqs }))}
       ${hasPro ? html`<div class="c-hubpro c-pro-only" id="professional">
         ${chains.length ? proSection(ctx, 'pro-docs', 'hub.pro.docs', 'hub.pro.docs.lead', html`<ul class="c-hubdocs">${chains.map(({ doc: d, olds }) => html`<li class="c-hubdoc">
           <p class="c-hubdoc__t"><a href="${hrefFor(ctx, d)}"${isFallbackLink(ctx, d) ? raw(' lang="zh-TW"') : ''}>${L(ctx, d, 'title')}</a> <span class="c-pill c-pill--ok">${t('prov.current')}</span></p>

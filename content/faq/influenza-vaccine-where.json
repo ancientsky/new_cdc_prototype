@@ -1,0 +1,67 @@
+{
+  "id": "faq.influenza-vaccine-where",
+  "type": "faq",
+  "title": "公費流感疫苗要去哪裡打？要帶什麼？",
+  "question": "公費流感疫苗要去哪裡打？要帶什麼？",
+  "owner": "unit.vaccine",
+  "steward": "預防接種組承辦人",
+  "publishedAt": "2026-09-24",
+  "reviewedAt": "2026-09-24",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "doc.flu-vaccine-manual",
+    "doc.flu-vaccine-schedule"
+  ],
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-30"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "pending"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "公費流感疫苗可至衛生所或合約院所接種，帶健保卡；10 月 1 日起第一階段，11 月 1 日起 50–64 歲成人；接種後留觀 15 分鐘。",
+  "keywords": [
+    "公費流感疫苗",
+    "合約院所",
+    "健保卡",
+    "接種地點",
+    "10 月 1 日"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/{id}#flu-vaccine-where"
+  ],
+  "answerMarkdown": "公費流感疫苗可到**各縣市衛生所**或**與衛生局簽約的合約醫療院所**接種；合約院所名單請到「流感防治一網通」查詢，出發前也建議先電話確認接種時段。\n\n請攜帶**健保卡**（幼兒另帶兒童預防接種紀錄卡，若有）。2026–2027 年度第一階段自 **10 月 1 日**起（長者、幼兒、孕婦、高風險慢性病人、學生等），50–64 歲無高風險慢性病成人自 **11 月 1 日**起。接種後請在現場留觀 15 分鐘。"
+}

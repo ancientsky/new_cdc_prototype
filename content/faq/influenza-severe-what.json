@@ -1,0 +1,66 @@
+{
+  "id": "faq.influenza-severe-what",
+  "type": "faq",
+  "title": "什麼是「流感併發重症」？",
+  "question": "什麼是「流感併發重症」？",
+  "owner": "unit.acute-infectious",
+  "steward": "急性傳染病組承辦人",
+  "publishedAt": "2026-09-24",
+  "reviewedAt": "2026-09-24",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.influenza"
+  ],
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-30"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "pending"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "流感併發重症是第四類法定傳染病，指流感併發嚴重症狀並需加護病房治療或死亡者，醫師須一週內通報；出現危險徵兆應立即就醫。",
+  "keywords": [
+    "流感併發重症",
+    "第四類",
+    "加護病房",
+    "危險徵兆",
+    "通報"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/{id}#flu-severe"
+  ],
+  "answerMarkdown": "「流感併發重症」是**第四類法定傳染病**：確定感染流感病毒，並因肺炎、腦炎、心肌炎、急性呼吸窘迫或其他嚴重併發症而需**加護病房住院治療**，或死亡的病例。醫師診斷符合時須於**一週內**通報。\n\n長者、幼兒、孕婦及慢性病人較容易發生。出現呼吸急促或困難、持續高燒、意識改變、胸痛、嘔吐無法進食等**危險徵兆**，請立即就醫。每年接種流感疫苗可降低併發重症風險。疫情統計請見「流感併發重症病例統計」資料集。"
+}

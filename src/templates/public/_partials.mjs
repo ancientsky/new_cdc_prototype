@@ -19,7 +19,7 @@ export function itemPath(item) {
     case 'document': return `/documents/${slugOf(item)}/`;
     case 'clarification': return `/factcheck/#${item.id}`;
     case 'dataset': return `/data/#${item.id}`;
-    case 'page': return PAGE_PATHS[item.slug] ?? (String(item.slug ?? '').includes('/') ? `/${item.slug}/` : '/about/');
+    case 'page': return PAGE_PATHS[item.slug] ?? (String(item.slug ?? '').includes('/') ? `/${item.slug}/` : (/^page\.international-/.test(item.id ?? '') ? `/international/${String(item.id).replace(/^page\.international-/, '')}/` : '/about/'));
     case 'media': return `/media/${slugOf(item)}/`;
     case 'topic': return `/topics/${item.slug ?? slugOf(item)}/`;
     case 'service': return `/apply/${item.slug ?? slugOf(item)}/`;
@@ -34,7 +34,7 @@ export const PAGE_PATHS = { 'ai-policy': '/policy/ai/', privacy: '/policy/privac
 
 /** 內容在某語言是否有頁面（與 scripts/lib/pages.mjs 的 langAvailable 同規則；避免循環匯入） */
 export function langOk(site, item, lang) {
-  if (lang === 'zh-TW') return true;
+  if (lang === (item.sourceLang ?? 'zh-TW') || lang === 'zh-TW') return true;
   const st = item.languages?.[lang]?.status;
   if (!st || st === 'none' || st === 'pending') return false;
   if (site.config.tier1Types.includes(item.type)) return st === 'reviewed';
@@ -48,9 +48,13 @@ export function hrefFor(ctx, item) {
 }
 export const isFallbackLink = (ctx, item) => !langOk(ctx.site, item, ctx.lang);
 
-/** 本地化欄位：i18n[lang][field] ?? item[field]（僅在該語言頁可用時才有意義） */
+/**
+ * 本地化欄位（ARCHITECTURE 14.2）：ctx.lang＝來源語言（item.sourceLang，預設 zh-TW）⇒ 頂層欄位；
+ * 否則 i18n[ctx.lang][field] ?? 頂層（來源語言）。sourceLang:'en' 的內容在 zh-TW 頁讀 i18n['zh-TW']。
+ */
 export function L(ctx, item, field) {
-  if (ctx.lang === 'zh-TW') return item[field];
+  if (!item) return undefined;
+  if (ctx.lang === (item.sourceLang ?? 'zh-TW')) return item[field];
   return item.i18n?.[ctx.lang]?.[field] ?? item[field];
 }
 export const unitOf = (ctx, id) => ctx.site.unitById.get(id);

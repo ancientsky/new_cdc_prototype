@@ -194,7 +194,21 @@
             "type": "string"
           }
         }
-      }
+      },
+      "description": "每語言一筆翻譯狀態；來源語言（sourceLang，預設 zh-TW）為 source。zh-TW 一律必填。"
+    },
+    "sourceLang": {
+      "enum": [
+        "zh-TW",
+        "en",
+        "ja",
+        "tl",
+        "vi",
+        "id",
+        "th"
+      ],
+      "default": "zh-TW",
+      "description": "內容來源語言（ARCHITECTURE 14.2）：頂層欄位＝此語言文字；languages[sourceLang].status 必須為 source；其他語言（含 sourceLang≠zh-TW 時的 zh-TW）放 i18n.{lang}。sourceLang≠zh-TW 時 i18n[\"zh-TW\"] 必填且 languages[\"zh-TW\"].status 為 reviewed 或 machine（中文官網不能沒有中文）。sourceHash 以來源語言頂層欄位計算。"
     },
     "i18n": {
       "type": "object"

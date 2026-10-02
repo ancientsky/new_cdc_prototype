@@ -19,6 +19,8 @@
 //   news recruit/procurement  一塊（截止日結構化句＋本文）；closed（已截止）標記；terms 加「招募」或「採購」
 // 保證：失效版本（superseded）、逾期、依據正本已修訂（stale）的內容永遠不在索引。
 // 多語：i18n[lang] 有 reviewed（且譯文未過期）者另出同語 chunk；machine 一律不出。
+// 來源語言（ARCHITECTURE 14.2）：頂層欄位以 item.sourceLang（預設 zh-TW）出 chunk（英文來源 ⇒ 進英文索引）；
+//   sourceLang≠zh-TW 時 i18n['zh-TW']（reviewed）另出中文 chunk（進中文索引）。topic／service 的譯文 chunk 需 i18n 有本文欄位才出。
 import { splitPlain, parseChineseNumber } from '../../src/client/answer/core.js';
 
 const MAX_PARA = 300;
@@ -209,7 +211,13 @@ export function labtestSentences(item, sp, site) {
 }
 
 /** 申請步驟句：「第 N 步：{title}。{text}（{who}，{days} 天）」 */
-export function serviceStepSentence(step, i) {
+export function serviceStepSentence(step, i, lang = 'zh-TW') {
+  if (lang !== 'zh-TW') {
+    const parenEn = [step.who, step.days == null ? null : step.days === 0 ? 'same day' : `${step.days} day${step.days === 1 ? '' : 's'}`].filter(Boolean).join(', ');
+    const textEn = step.text ? String(step.text).trim().replace(/[。.]?$/, '') : '';
+    const titleEn = String(step.title).replace(/[。.]$/, '');
+    return `Step ${i + 1}: ${titleEn}.${textEn ? ` ${textEn}` : ''}${parenEn ? ` (${parenEn})` : ''}.`.replace(/\.\.$/, '.');
+  }
   const paren = [step.who, step.days == null ? null : step.days === 0 ? '當日' : `${step.days} 天`].filter(Boolean).join('，');
   const text = step.text ? String(step.text).trim().replace(/[。.]?$/, '') : '';
   const title = String(step.title).replace(/[。.]$/, '');
@@ -228,7 +236,8 @@ function sectionNo(s) {
 export function buildSearchIndex(site) {
   const pub = [], pro = [];
   const today = site.today;
-  const langsOf = (item) => Object.entries(item.languages ?? {}).filter(([l, m]) => l !== 'zh-TW' && m?.status === 'reviewed' && !item.gov?.translationStale?.[l] && item.i18n?.[l]).map(([l]) => l);
+  const srcLangOf = (item) => item.sourceLang ?? 'zh-TW';
+  const langsOf = (item) => Object.entries(item.languages ?? {}).filter(([l, m]) => l !== srcLangOf(item) && m?.status === 'reviewed' && !item.gov?.translationStale?.[l] && item.i18n?.[l]).map(([l]) => l);
 
   function make(item, key, title, sentences, url, extra = {}) {
     const sents = (sentences ?? []).map((s) => String(s).trim()).filter((s) => s.length >= 4);
@@ -237,10 +246,11 @@ export function buildSearchIndex(site) {
     const text = sents.join(' ');
     const lang = extra.lang ?? 'zh-TW';
     const terms = Array.from(new Set([
-      ...(item.keywords ?? []), ...(item.aliases ?? []), ...diseaseNames(site, item.diseases), ...glossaryHits(site, `${title} ${text}`),
+      ...(extra.keywords ?? item.keywords ?? []), ...(item.aliases ?? []), ...diseaseNames(site, item.diseases), ...glossaryHits(site, `${title} ${text}`),
       ...(extra.extraTerms ?? []),
     ].filter((t) => t && String(t).length >= 2)));
     delete extra.extraTerms;
+    delete extra.keywords; // 譯文 chunk 用譯文關鍵字（i18n[lang].keywords），不 spread 進 chunk
     return {
       id: `${item.id}#${key}${lang !== 'zh-TW' ? `@${lang}` : ''}`, contentId: item.id, type: item.type, lang,
       title, text, sentences: sents, url, summary: extra.summary ?? item.summary ?? null,
@@ -281,16 +291,18 @@ export function buildSearchIndex(site) {
     const base = pathOf(item);
     const add = (c, { proOnly = false } = {}) => { if (c) out.push({ c, proOnly }); };
 
-    // 譯文只取 i18n[lang] 本身的欄位（不 fallback 中文，避免中文句子被標成外語 chunk）
-    const variants = [{ lang: 'zh-TW', src: item }, ...langsOf(item).map((l) => ({ lang: l, src: { title: item.i18n[l].title ?? item.nameEn ?? item.title, ...item.i18n[l] } }))];
-    for (const { lang, src } of variants) {
-      const L = { lang };
+    // 譯文只取 i18n[lang] 本身的欄位（不 fallback 來源語言，避免來源語言句子被標成其他語言 chunk）
+    const srcLang = srcLangOf(item);
+    const variants = [{ lang: srcLang, src: item, isSource: true }, ...langsOf(item).map((l) => ({ lang: l, isSource: false, src: { title: item.i18n[l].title ?? (l === 'en' ? item.nameEn : null) ?? item.title, ...item.i18n[l] } }))];
+    for (const { lang, src, isSource } of variants) {
+      const L = { lang, ...(isSource ? {} : { keywords: src.keywords ?? item.keywords }), ...(!isSource && srcLang !== 'zh-TW' ? { summary: src.summary ?? item.summary } : {}) };
+      const zh = lang === 'zh-TW';
       switch (item.type) {
         case 'disease': {
           const blocks = src.blocks ?? [];
           for (const b of blocks) {
             const zhBlock = (item.blocks ?? []).find((x) => x.key === b.key) ?? b;
-            if (lang !== 'zh-TW' && !b.markdown && !b.warning && !b.cards?.length) continue;
+            if (!isSource && !b.markdown && !b.warning && !b.cards?.length) continue;
             const warnLabel = { 'zh-TW': '警示徵象：', en: 'Warning signs: ', vi: 'Dấu hiệu cảnh báo: ' }[lang] ?? '';
             const sents = [...mdSentences(b.markdown), ...(b.warning ? splitPlain(`${warnLabel}${b.warning}`) : [])];
             add(make(item, b.key, `${src.title ?? item.title} · ${b.heading ?? zhBlock.heading}`, sents, `${base}#${b.key}`, { ...L, block: b.key }));
@@ -303,7 +315,7 @@ export function buildSearchIndex(site) {
           const kf = src.keyFacts ?? {};
           const label = lang === 'zh-TW' ? { incubation: '潛伏期', symptoms: '主要症狀', transmission: '傳染途徑', prevention: '預防', treatment: '治療', notify: '通報時限' } : { incubation: 'Incubation', symptoms: 'Symptoms', transmission: 'Transmission', prevention: 'Prevention', treatment: 'Treatment', notify: 'Notification' };
           add(make(item, 'keyfacts', `${src.title ?? item.title} · ${lang === 'zh-TW' ? '一分鐘重點' : 'Key facts'}`, Object.entries(kf).map(([k, v]) => `${src.title ?? item.title}${lang === 'zh-TW' ? '' : ' — '}${label[k] ?? k}${lang === 'zh-TW' ? '：' : ': '}${v}${lang === 'zh-TW' ? '。' : '.'}`), base, { ...L, block: 'keyfacts' }));
-          if (lang === 'zh-TW' && item.professional) {
+          if (isSource && item.professional) {
             const p = item.professional;
             const sents = [p.notifyNote, p.specimen ? `檢體：${p.specimen}` : null, p.caseDefinition ? `病例定義：${p.caseDefinition}` : null].filter(Boolean).flatMap((x) => splitPlain(x));
             add(make(item, 'professional', `${item.title} · 專業人員重點`, sents, `${base}#professional`, { ...L, block: 'professional', audience: ['professional'] }), { proOnly: true });
@@ -315,7 +327,7 @@ export function buildSearchIndex(site) {
           break;
         case 'news': case 'letter': {
           if (['recruit', 'procurement'].includes(item.newsType)) {
-            if (lang !== 'zh-TW') break;
+            if (!isSource) break;
             const closed = isClosed(item, today);
             const kind = item.newsType === 'recruit' ? '招募' : '採購';
             const head = [
@@ -335,7 +347,7 @@ export function buildSearchIndex(site) {
           break;
         }
         case 'document': {
-          if (lang !== 'zh-TW' && !src.sections) break;
+          if (!isSource && !src.sections) break;
           const prev = item.supersedes ? site.byId.get(item.supersedes) : null;
           const secs = src.sections?.length ? src.sections : [{ key: 'body', heading: src.title ?? item.title, markdown: src.machineReadableMarkdown ?? '' }];
           for (const s of secs) {
@@ -362,11 +374,11 @@ export function buildSearchIndex(site) {
             const sent = lang === 'zh-TW' ? `${item.title}接種對象：${g.group}，${g.schedule}${g.note ? `（${g.note}）` : ''}${when}。` : `${src.title ?? item.title} — ${g.group}: ${g.schedule}${g.note ? ` (${g.note})` : ''}.`;
             add(make(item, `pf-${i + 1}`, `${src.title ?? item.title} · ${lang === 'zh-TW' ? '接種對象與時程' : 'Who and when'}`, [sent], `${base}#public-funded`, { ...L, group: g.group }));
           });
-          if (lang === 'zh-TW' && item.precautions) add(make(item, 'precautions', `${item.title} · 注意事項`, mdSentences(item.precautions), `${base}#precautions`, { ...L }));
+          if (isSource && item.precautions) add(make(item, 'precautions', `${item.title} · 注意事項`, mdSentences(item.precautions), `${base}#precautions`, { ...L }));
           break;
         }
         case 'media': {
-          if (lang !== 'zh-TW') break; // 逐字稿只有中文正本
+          if (!isSource) break; // 逐字稿只有來源語言正本
           const id = String(item.id).replace(/^media\./, '');
           // 第一塊前加一句結構化影片資訊（片名、製作日、依據版本），讓「哪一支影片」「依哪一版製作」可被引用
           const MT = { video: '影片', animation: '動畫影片', podcast: 'Podcast 節目', short: '短影音' };
@@ -386,33 +398,47 @@ export function buildSearchIndex(site) {
           break;
         }
         case 'topic': {
-          if (lang !== 'zh-TW') break;
-          const intro = mdSentences(item.introMarkdown ?? '');
-          add(make(item, 'intro', item.title, intro.length ? intro : splitPlain(item.summary ?? ''), base, { ...L, kind: item.kind ?? null, extraTerms: ['專區'] }));
-          const labels = (item.links ?? []).map((l) => String(l.label).trim()).filter(Boolean);
-          if (labels.length) add(make(item, 'links', `${item.title} · 專區連結`, [`${item.title}專區提供：${labels.join('、')}。`], `${base}#links`, { ...L, links: (item.links ?? []).map((l) => ({ label: l.label, href: l.href, external: !!l.external, status: l.status ?? null })), extraTerms: ['專區', ...labels] }));
+          if (!isSource && !src.introMarkdown) break; // 譯文需有簡介本文才出 chunk（只有標題摘要的譯文不入索引）
+          const title = src.title ?? item.title;
+          const intro = mdSentences(src.introMarkdown ?? '');
+          add(make(item, 'intro', title, intro.length ? intro : splitPlain(src.summary ?? item.summary ?? ''), base, { ...L, kind: item.kind ?? null, extraTerms: zh ? ['專區'] : ['topic', 'hub'] }));
+          const linkLabel = (l) => String((isSource ? l.label : l.i18n?.[lang]?.label) ?? '').trim();
+          const labels = (item.links ?? []).map(linkLabel).filter(Boolean);
+          if (labels.length) add(make(item, 'links', zh ? `${title} · 專區連結` : `${title} · Links`, [zh ? `${title}專區提供：${labels.join('、')}。` : `${title} provides: ${labels.join('; ')}.`], `${base}#links`, { ...L, links: (item.links ?? []).map((l) => ({ label: linkLabel(l) || l.label, href: l.href, external: !!l.external, status: l.status ?? null })), extraTerms: [...(zh ? ['專區'] : []), ...labels] }));
           break;
         }
         case 'service': {
-          if (lang !== 'zh-TW') break;
-          const svc = { serviceType: item.serviceType ?? null, slaDays: item.slaDays ?? null, stepsCount: (item.steps ?? []).length, applyUrl: item.applyUrl ?? null, forms: (item.forms ?? []).map((f) => ({ label: f.label, href: f.href, format: f.format ?? null })), fee: item.fee ?? null, slug: item.slug ?? null };
-          const terms = ['申請', '怎麼申請', ...(item.whoCanApply ?? [])];
-          const who = item.whoCanApply?.length ? [`${item.title}申請對象：${item.whoCanApply.join('、')}。`] : [];
-          const intro = mdSentences(item.introMarkdown ?? '');
-          add(make(item, 'intro', item.title, [...(intro.length ? intro : splitPlain(item.summary ?? '')), ...who], base, { ...L, ...svc, block: 'intro', extraTerms: terms }));
-          if (item.steps?.length) add(make(item, 'steps', `${item.title} · 申請步驟`, item.steps.map(serviceStepSentence), `${base}#steps`, { ...L, ...svc, block: 'steps', extraTerms: [...terms, '步驟', '流程'] }));
-          if (item.requiredDocuments?.length) add(make(item, 'documents', `${item.title} · 應備文件`, [`${item.title}申請需準備：${item.requiredDocuments.join('、')}。`], `${base}#documents`, { ...L, ...svc, block: 'documents', extraTerms: [...terms, '應備文件', '要帶什麼', '準備'] }));
-          const sla = [
-            item.slaDays != null ? `${item.title}處理天數：${item.slaDays} 天。` : null,
-            item.fee ? `${item.title}費用：${String(item.fee).replace(/[。]$/, '')}。` : null,
-            item.legalBasis?.length ? `${item.title}法源依據：${item.legalBasis.join('、')}。` : null,
-          ].filter(Boolean);
-          if (sla.length) add(make(item, 'sla', `${item.title} · 處理天數、費用與法源`, sla, `${base}#sla`, { ...L, ...svc, block: 'sla', extraTerms: [...terms, '天數', '幾天', '費用', '法源'] }));
-          (item.faq ?? []).forEach((f, i) => add(make(item, `faq-${i + 1}`, f.q, splitPlain(f.a), `${base}#faq`, { ...L, ...svc, block: 'faq', question: f.q, extraTerms: [...terms, f.q] })));
+          if (!isSource && !src.introMarkdown && !src.steps) break; // 譯文需有簡介或步驟才出 chunk
+          const pick = (f) => src[f] ?? (isSource ? item[f] : undefined);
+          const title = src.title ?? item.title;
+          const svc = { serviceType: item.serviceType ?? null, slaDays: item.slaDays ?? null, stepsCount: (item.steps ?? []).length, applyUrl: item.applyUrl ?? null, forms: (item.forms ?? []).map((f) => ({ label: f.label, href: f.href, format: f.format ?? null })), fee: pick('fee') ?? null, slug: item.slug ?? null };
+          const whoList = pick('whoCanApply') ?? [];
+          const terms = [...(zh ? ['申請', '怎麼申請'] : ['apply', 'application', 'how to apply']), ...whoList];
+          const who = whoList.length ? [zh ? `${title}申請對象：${whoList.join('、')}。` : `Who can apply for ${title}: ${whoList.join('; ')}.`] : [];
+          const intro = mdSentences(pick('introMarkdown') ?? '');
+          add(make(item, 'intro', title, [...(intro.length ? intro : splitPlain(src.summary ?? item.summary ?? '')), ...who], base, { ...L, ...svc, block: 'intro', extraTerms: terms }));
+          const steps = pick('steps') ?? [];
+          if (steps.length) add(make(item, 'steps', zh ? `${title} · 申請步驟` : `${title} · Steps`, steps.map((st, i) => serviceStepSentence(st, i, lang)), `${base}#steps`, { ...L, ...svc, block: 'steps', extraTerms: [...terms, ...(zh ? ['步驟', '流程'] : ['steps', 'procedure'])] }));
+          const docs = pick('requiredDocuments') ?? [];
+          if (docs.length) add(make(item, 'documents', zh ? `${title} · 應備文件` : `${title} · Required documents`, [zh ? `${title}申請需準備：${docs.join('、')}。` : `Documents required for ${title}: ${docs.join('; ')}.`], `${base}#documents`, { ...L, ...svc, block: 'documents', extraTerms: [...terms, ...(zh ? ['應備文件', '要帶什麼', '準備'] : ['documents', 'required'])] }));
+          const fee = pick('fee');
+          const legal = pick('legalBasis') ?? [];
+          const sla = zh ? [
+            item.slaDays != null ? `${title}處理天數：${item.slaDays} 天。` : null,
+            fee ? `${title}費用：${String(fee).replace(/[。]$/, '')}。` : null,
+            legal.length ? `${title}法源依據：${legal.join('、')}。` : null,
+          ] : [
+            item.slaDays != null ? `${title} processing time: ${item.slaDays} days.` : null,
+            fee ? `${title} fee: ${String(fee).replace(/[.。]$/, '')}.` : null,
+            legal.length ? `${title} legal basis: ${legal.join('; ')}.` : null,
+          ];
+          const slaS = sla.filter(Boolean);
+          if (slaS.length) add(make(item, 'sla', zh ? `${title} · 處理天數、費用與法源` : `${title} · Processing time, fee and legal basis`, slaS, `${base}#sla`, { ...L, ...svc, block: 'sla', extraTerms: [...terms, ...(zh ? ['天數', '幾天', '費用', '法源'] : ['days', 'fee', 'cost'])] }));
+          (pick('faq') ?? []).forEach((f, i) => add(make(item, `faq-${i + 1}`, f.q, splitPlain(f.a), `${base}#faq`, { ...L, ...svc, block: 'faq', question: f.q, extraTerms: [...terms, f.q] })));
           break;
         }
         case 'publication': {
-          if (lang !== 'zh-TW') break;
+          if (!isSource) break;
           const vol = [item.volume != null ? `第 ${item.volume} 卷` : null, item.issue != null ? `第 ${item.issue} 期` : null].filter(Boolean).join('');
           const pubExtra = { pubType: item.pubType ?? null, series: item.series ?? null, volume: item.volume ?? null, issue: item.issue ?? null, cover: item.cover ?? null };
           const pterms = [item.series, vol, item.volume != null ? `${item.volume}卷` : null, item.issue != null ? `${item.issue}期` : null, '出版品', '期刊'].filter(Boolean);
@@ -425,7 +451,7 @@ export function buildSearchIndex(site) {
           break;
         }
         case 'labtest': {
-          if (lang !== 'zh-TW') break;
+          if (!isSource) break;
           const dz = [item.disease, ...(item.diseases ?? [])].filter((x, i, a) => x && a.indexOf(x) === i);
           const labs = (item.labs ?? []).map((l) => LAB_LABELS[l] ?? l);
           (item.specimens ?? []).forEach((sp, i) => {
@@ -440,7 +466,7 @@ export function buildSearchIndex(site) {
           break;
         }
         case 'research': {
-          if (lang !== 'zh-TW') break;
+          if (!isSource) break;
           const obj = item.objectives?.length ? [`研究目標：${item.objectives.map((o) => String(o).replace(/[。；;]$/, '')).join('；')}。`] : [];
           const abs = mdSentences(item.abstractMarkdown ?? '');
           add(make(item, 'abstract', item.title, [...(abs.length ? abs : splitPlain(item.summary ?? '')), ...obj], base, {

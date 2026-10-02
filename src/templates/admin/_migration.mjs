@@ -23,26 +23,56 @@ export function listStats(list) {
   return c;
 }
 
-/** 全部清單的逐筆列與總計 */
+/** 一份清單的摘要列（疾病、法定類別、頁面有無、人工／推導、下載路徑）；W1 規模化新增的欄位缺時由 scope／主檔推得 */
+export function listSummary(site, list) {
+  const c = listStats(list);
+  const diseaseId = list.disease ?? (list.scope?.kind === 'disease' ? list.scope.disease : null) ?? null;
+  const dm = diseaseId ? site.diseaseMasterById?.get(diseaseId) ?? null : null;
+  const page = diseaseId ? (site.collections?.diseases ?? []).find((d) => d.id === diseaseId && d.status === 'published') ?? null : null;
+  const hasPage = typeof list.hasPage === 'boolean' ? list.hasPage : list.status === 'no-page' ? false : diseaseId ? !!page : null;
+  const slug = list.slug ?? dm?.slug ?? String(list.id ?? '').replace(/^migration\./, '');
+  const owner = list.owner ?? dm?.owner ?? page?.owner ?? null;
+  const name = dm?.name ?? list.scope?.name ?? String(list.title ?? slug).replace(/[（(].*$/, '').replace(/專區.*$/, '') ?? slug;
+  const cat = list.legalCategory ?? dm?.legalCategory ?? null;
+  const done = c.done;
+  return {
+    id: list.id, title: list.title ?? name, name: name || slug, nameEn: dm?.nameEn ?? '', slug, diseaseId, kind: diseaseId ? 'disease' : 'category',
+    legalCategory: cat, hasPage, derived: list.derived === true, owner, ownerName: site.unitById?.get(owner)?.name ?? owner ?? '—',
+    c, donePct: c.total ? Math.round((done / c.total) * 100) : 0, front: page ? frontPath(page) : null,
+    download: `/v1/migration/${slug}.json`, legacyRoot: list.legacyRoot ?? null, showLegacyUntil: list.showLegacyUntil ?? null, list,
+  };
+}
+
+/** 一份清單的逐筆列（status 保證在 MIG_STATUS 內；target 解析出標題與前台路徑） */
+export function rowsOf(site, list, items = list.items ?? []) {
+  const rows = [];
+  for (const it of items) {
+    const tg = (it.toId ?? it.target) ? site.byId.get(it.toId ?? it.target) : null;
+    const owner = it.owner ?? tg?.owner ?? list.owner;
+    const front = tg ? frontPath(tg) : null;
+    rows.push({
+      listId: list.id, listTitle: list.title, key: it.key, oldTitle: it.oldTitle ?? it.key, oldPath: it.oldPath ?? '', oldUrl: it.oldUrl ?? '', oldType: it.oldType ?? 'page',
+      status: MIG_STATUS.includes(it.status) ? it.status : 'pending', verified: it.verified === true, target: it.target ?? null, targetTitle: tg?.title ?? null,
+      targetFront: front ? `${front}${it.anchor ? `#${it.anchor}` : ''}` : null, anchor: it.anchor ?? '', owner, ownerName: site.unitById.get(owner)?.name ?? owner ?? '—',
+      note: it.note ?? '', reqs: it.newRequirements ?? [], placeholder: hasPh(it.oldUrl),
+    });
+  }
+  return rows;
+}
+
+/** 全部清單的逐筆列與總計；listRows＝每份清單一列的摘要（預設依待移轉由多到少） */
 export function migrationData(site) {
   const lists = (site.migration?.lists ?? []).filter(Boolean);
-  const rows = [];
-  for (const list of lists) {
-    for (const it of list.items ?? []) {
-      const tg = (it.toId ?? it.target) ? site.byId.get(it.toId ?? it.target) : null;
-      const owner = it.owner ?? tg?.owner ?? list.owner;
-      const front = tg ? frontPath(tg) : null;
-      rows.push({
-        listId: list.id, listTitle: list.title, key: it.key, oldTitle: it.oldTitle ?? it.key, oldPath: it.oldPath ?? '', oldUrl: it.oldUrl ?? '', oldType: it.oldType ?? 'page',
-        status: MIG_STATUS.includes(it.status) ? it.status : 'pending', verified: it.verified === true, target: it.target ?? null, targetTitle: tg?.title ?? null,
-        targetFront: front ? `${front}${it.anchor ? `#${it.anchor}` : ''}` : null, anchor: it.anchor ?? '', owner, ownerName: site.unitById.get(owner)?.name ?? owner ?? '—',
-        note: it.note ?? '', reqs: it.newRequirements ?? [], placeholder: hasPh(it.oldUrl),
-      });
-    }
-  }
+  const rows = lists.flatMap((list) => rowsOf(site, list));
   const total = { total: rows.length, migrated: 0, merged: 0, archived: 0, pending: 0, dropped: 0, verified: 0 };
   for (const r of rows) { total[r.status]++; if (r.verified) total.verified++; }
   total.done = total.migrated + total.merged + total.archived + total.dropped;
   const pct = (n, d = total.total) => (d ? Math.round((n / d) * 100) : 0);
-  return { lists, rows, total, pct, donePct: pct(total.done), verifiedPct: pct(total.verified) };
+  const listRows = lists.map((l) => listSummary(site, l)).sort((a, b) => b.c.pending - a.c.pending || b.c.total - a.c.total || a.name.localeCompare(b.name, 'zh-Hant'));
+  const summary = {
+    lists: lists.length,
+    derived: listRows.filter((r) => r.derived).length, curated: listRows.filter((r) => !r.derived).length,
+    noPage: listRows.filter((r) => r.hasPage === false).length, hasPage: listRows.filter((r) => r.hasPage === true).length,
+  };
+  return { lists, rows, listRows, summary, total, pct, donePct: pct(total.done), verifiedPct: pct(total.verified) };
 }

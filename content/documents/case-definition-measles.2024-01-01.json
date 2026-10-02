@@ -57,7 +57,8 @@
     "IgM"
   ],
   "legacyUrls": [
-    "https://www.cdc.gov.tw/Disease/Index"
+    "https://www.cdc.gov.tw/Disease/Index",
+    "https://www.cdc.gov.tw/File/Get/{id}#case-definition-measles"
   ],
   "note": "原型示意：條文依疾管署公開文件架構改寫，非正式公告文字；正式內容以 PDF 正本為準。",
   "roles": [

@@ -4,6 +4,7 @@ import { html, raw, jsonScript } from '../../scripts/lib/render.mjs';
 import { config } from '../../site.config.mjs';
 import * as JL from '../../scripts/lib/jsonld.mjs';
 import { pausedBanner, translationBadge } from './public/_partials.mjs';
+import { intlTopic } from './public/_international.mjs';
 
 // 介面（UI 字串）本身的翻譯審核狀態；內容頁則看 item.languages[lang]
 const UI_TRANSLATION = { en: { status: 'reviewed', date: '2026-09-10' } };
@@ -21,6 +22,10 @@ const FOOT_SERVICES = [
 function translationBar(ctx, item, hide) {
   const { lang, t, fmtDate, site } = ctx;
   if (lang === 'zh-TW' || hide) return '';
+  // 第六輪：內容的來源語言不是中文（如國際合作區塊以英文為準）。來源語言頁不是譯文，不顯示「已審核譯文」（頁內有語言權威性提示）；
+  // 其他語言的譯文頁，「查看原文」要連到來源語言版而不是中文
+  const srcLang = item?.sourceLang && item.sourceLang !== 'zh-TW' ? item.sourceLang : null;
+  if (srcLang && lang === srcLang) return '';
   let status, date, stale = false;
   if (item?.languages) {
     const l = item.languages[lang];
@@ -33,13 +38,16 @@ function translationBar(ctx, item, hide) {
     date = u?.date;
   }
   const kind = status === 'reviewed' ? 'reviewed' : status === 'machine' ? 'machine' : 'none';
-  const zhHref = ctx.alternates?.includes('zh-TW') ? ctx.url(ctx.path ?? '/', { noLang: true }) : ctx.url('/', { noLang: true });
+  const origCode = srcLang && ctx.alternates?.includes(srcLang) ? srcLang : 'zh-TW';
+  const origDef = config.langs.find((l) => l.code === origCode);
+  const zhHref = ctx.alternates?.includes(origCode) ? (origCode === 'zh-TW' ? ctx.url(ctx.path ?? '/', { noLang: true }) : `${config.basePath}${origDef.path}${ctx.path ?? '/'}`) : ctx.url('/', { noLang: true });
+  const origLabel = origCode === 'zh-TW' ? t('translation.original') : t('authority.view', { lang: t(`langname.${origCode}`) });
   const text = kind === 'reviewed' ? t('translation.bar.reviewed', { date: fmtDate(date) }) : kind === 'machine' ? t('translation.bar.machine') : t('translation.bar.none');
   void site;
   return html`<aside class="c-translation-bar c-translation-bar--${kind}" aria-label="${t('translation.label')}"><div class="wrap c-translation-bar__in">
   ${translationBadge(ctx, kind)}
   <span class="c-translation-bar__text">${text}${stale ? html` <b>${t('translation.stale')}</b>` : ''}</span>
-  <a href="${zhHref}" hreflang="zh-TW" lang="zh-TW" class="c-translation-bar__orig">${t('translation.original')}</a>
+  <a href="${zhHref}" hreflang="${origCode}" lang="${origCode}" class="c-translation-bar__orig">${origLabel}</a>
 </div></aside>`;
 }
 
@@ -75,6 +83,9 @@ export function layout(ctx, { styles = [], title, description, body, jsonLd = []
     ['/diseases/', 'nav.diseases'], ['/vaccines/', 'nav.vaccines'], ['/travel/', 'nav.travel'], ['/situation/', 'nav.situation'],
     ['/factcheck/', 'nav.factcheck'], ['/data/', 'nav.data'], ['/news/', 'nav.news'], ['/faq/', 'nav.faq'],
   ];
+  // 第六輪：國際合作入口。zh-TW 主選單已滿（八項）不加；英文站使用者習慣在主選單找 International Cooperation，所以只有 en 多一項。其他語言放頁尾「關於疾管署」群組
+  const hasIntl = !!intlTopic(site);
+  if (hasIntl && lang === 'en') navItems.push(['/international/', 'international.title']);
   const langLinks = config.langs.map((L) => {
     const same = alts.includes(L.code);
     return html`<a href="${config.basePath}${L.path}${same ? path : '/'}" data-lang-path="${L.path}" data-same="${same ? '1' : '0'}" hreflang="${L.code}" lang="${L.code}" ${L.code === lang ? raw('aria-current="true"') : ''}>${L.label}</a>`;
@@ -121,7 +132,7 @@ ${pausedBanner(ctx)}
 <main id="main"${wide ? '' : raw(' class="wrap"')}>${raw(String(body))}</main>
 ${translationBar(ctx, item, hideTranslationBar)}
 <footer class="site-footer"><div class="wrap site-footer__in">
-  <nav aria-label="${t('footer.nav')}" class="site-footer__links"><a href="${url('/about/')}">${t('footer.about')}</a><a href="${url('/policy/privacy/')}">${t('footer.privacy')}</a><a href="${url('/policy/ai/')}">${t('footer.ai')}</a><a href="${url('/policy/open-data/')}">${t('footer.license')}</a><a href="${url('/developers/')}">${t('footer.api')}</a><a href="${url('/accessibility/')}">${t('footer.a11y')}</a></nav>
+  <nav aria-label="${t('footer.nav')}" class="site-footer__links"><a href="${url('/about/')}">${t('footer.about')}</a>${hasIntl ? html`<a href="${url('/international/')}">${t('international.title')}</a>` : ''}<a href="${url('/policy/privacy/')}">${t('footer.privacy')}</a><a href="${url('/policy/ai/')}">${t('footer.ai')}</a><a href="${url('/policy/open-data/')}">${t('footer.license')}</a><a href="${url('/developers/')}">${t('footer.api')}</a><a href="${url('/accessibility/')}">${t('footer.a11y')}</a></nav>
   <nav aria-label="${t('footer.services')}" class="site-footer__svc"><strong class="site-footer__svc-t">${t('footer.services')}</strong>${FOOT_SERVICES.map(([p, k]) => html`<a href="${url(p)}">${t(k)}</a>`)}</nav>
   <p class="site-footer__hot"><a href="tel:1922">1922</a> · <a href="tel:0800001922">0800-001922</a></p>
   <p class="site-footer__more"><a href="${url('/transparency/')}">${t('footer.transparency')}</a><a href="${url('/guide/')}">${t('footer.guide')}</a><a href="${url('/sitemap-page/')}">${t('sitemap')}</a><a href="${url('/admin/', { noLang: true })}">${t('footer.admin')}</a></p>

@@ -263,6 +263,25 @@ export function buildLegacyMap(site, redirects, server = serverRedirects(redirec
   return { map, patterns, gone: goneEntries(site), ambiguous: server.ambiguous };
 }
 
+/** v1/migration/index.json 的一列 */
+export function migrationSummary(l) {
+  return {
+    id: l.id, slug: l.slug, title: l.title, scope: l.scope, disease: l.disease ?? null, diseaseName: l.diseaseName ?? null, legalCategory: l.legalCategory ?? null,
+    hasPage: l.hasPage ?? null, pagePath: l.pagePath ?? null, derived: !!l.derived, curated: !!l.curated, status: l.status, site: l.site ?? 'zh-TW',
+    owner: l.owner, ownerName: l.ownerName, reviewedAt: l.reviewedAt ?? null, showLegacyUntil: l.showLegacyUntil ?? null, show: l.show,
+    stats: l.stats, derivedItems: l.derivedItems ?? 0, curatedItems: l.curatedItems ?? l.items.length, todoId: l.todoId ?? null,
+    url: absUrl(l.apiPath ?? `/v1/migration/${l.slug}.json`), path: l.apiPath ?? `/v1/migration/${l.slug}.json`,
+  };
+}
+/** v1/migration/{slug}.json 的 data：清單欄位＋逐筆（去掉建置期欄位以外原樣保留） */
+export function migrationDetail(l) {
+  const items = l.items.map(({ listId, show, ...it }) => it);
+  return {
+    ...migrationSummary(l), legacyRoot: l.legacyRoot ?? null, sourceNote: l.sourceNote ?? null, summary: l.summary ?? null, file: l.file ?? null,
+    extends: l.extends ?? null, templateId: l.templateId ?? null, items,
+  };
+}
+
 /** 不移轉（status: dropped）的舊頁 → 建議回 410（內容已移除，不轉址）；{id} 佔位者 pattern:true 不進伺服器檔 */
 export function goneEntries(site) {
   const gone = [];
@@ -403,6 +422,15 @@ export function emitApi(site, write) {
   ]) {
     write(file, text);
     manifest.push({ path: `/${file}`, url: absUrl(`/${file}`), description: `${description}：舊網址 → 新網址 301（由 redirects.json 產生，不含 pattern 項）`, count: server.entries.length });
+  }
+  // 移轉清單（ARCHITECTURE 14.1）：各清單摘要＋每份完整清單（含 derived 標記，可下載當人工清單起點）
+  const mig = site.migration;
+  if (mig?.lists) {
+    const summaries = mig.lists.map((l) => migrationSummary(l));
+    put('v1/migration/index.json', summaries, { lastModified: site.today, stats: mig.stats, template: mig.template ?? null, statusLabels: mig.statusLabels }, {},
+      '移轉清單摘要：主檔每種疾病一份（derived＝模板推導、curated＝有人工清單；status no-page＝疾病頁尚未建立）＋欄目清單；stats 為全站統計');
+    for (const l of mig.lists) write(`v1/migration/${l.slug}.json`, wrap(site, migrationDetail(l), { lastModified: l.reviewedAt ?? site.today, count: l.items.length }));
+    manifest.push({ path: '/v1/migration/{slug}.json', url: absUrl('/v1/migration/{slug}.json'), description: `單一移轉清單完整內容（${mig.lists.length} 份；items[].derived＝由模板推導；可下載後改寫成 content/migration/{slug}.json 人工清單，只留例外）`, count: mig.lists.length });
   }
   const lm = buildLegacyMap(site, redirects, server);
   put('v1/legacy-map.json', lm.map, {

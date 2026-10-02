@@ -97,7 +97,11 @@
     "洗手"
   ],
   "legacyUrls": [
-    "https://www.cdc.gov.tw/Disease/Index"
+    "https://www.cdc.gov.tw/Disease/Index",
+    "https://www.cdc.gov.tw/Disease/SubIndex/{id}#enterovirus",
+    "https://www.cdc.gov.tw/Category/QAPage/{id}#enterovirus",
+    "https://www.cdc.gov.tw/Category/List/{id}#ev-guidance",
+    "https://www.cdc.gov.tw/Bulletin/List/{id}?page=1#enterovirus"
   ],
   "keyFacts": {
     "incubation": "2–10 天（平均 3–5 天）",
@@ -170,10 +174,61 @@
   "professional": {
     "manualDoc": "doc.ev-severe-guideline",
     "specimen": "咽喉擦拭液、糞便或肛門拭子；疑似神經系統併發症加採腦脊髓液。以病毒保存輸送管 4°C 送驗。",
-    "notifyNote": "「腸病毒感染併發重症」為第三類法定傳染病，應於一週內通報；新生兒腸病毒感染亦需留意並通報。"
+    "notifyNote": "「腸病毒感染併發重症」為第三類法定傳染病，應於一週內通報；新生兒腸病毒感染亦需留意並通報。",
+    "programs": [
+      {
+        "key": "severe-warning-referral",
+        "title": "重症前兆病徵與轉診",
+        "summary": "嗜睡、意識不清、肌躍型抽搐、持續嘔吐或呼吸急促為重症前兆，應立即送具兒科急診之大醫院或重症責任醫院；醫師依臨床分期處置。",
+        "documents": [
+          "doc.ev-severe-guideline"
+        ],
+        "services": [
+          "service.notifiable-disease-report"
+        ],
+        "contentIds": [
+          "faq.ev-severe-signs",
+          "labtest.enterovirus",
+          "dataset.ev-lab-types",
+          "research.2025-ev-molecular-epidemiology"
+        ]
+      },
+      {
+        "key": "childcare-suspension",
+        "title": "教托育機構停課標準與通報",
+        "summary": "同班 1 週內 2 名以上確診停課 7 日、2 個以上班級停課得全園停課；機構 24 小時內通報衛生局，並落實洗手與 500 ppm 漂白水清消。",
+        "documents": [
+          "doc.ev-childcare-guideline"
+        ],
+        "services": [
+          "service.cluster-report-1922"
+        ],
+        "contentIds": [
+          "faq.enterovirus-class-suspension",
+          "faq.enterovirus-return-school",
+          "faq.enterovirus-childcare-disinfect",
+          "faq.ev-stay-home",
+          "media.enterovirus-handwashing",
+          "news.2026-09-22-enterovirus-alert"
+        ]
+      },
+      {
+        "key": "ev71-vaccine",
+        "title": "腸病毒 71 型疫苗",
+        "summary": "EV71 疫苗為自費接種，只能預防 71 型；接種前與兒科醫師討論，接種後仍須洗手、消毒並留意重症前兆。",
+        "documents": [],
+        "services": [],
+        "contentIds": [
+          "vaccine.ev71",
+          "faq.ev71-vaccine",
+          "clar.2026-04-enterovirus-only-kids"
+        ]
+      }
+    ]
   },
   "relatedDocuments": [
-    "doc.ev-severe-guideline"
+    "doc.ev-severe-guideline",
+    "doc.ev-childcare-guideline"
   ],
   "materials": [
     {

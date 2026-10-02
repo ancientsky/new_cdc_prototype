@@ -80,13 +80,13 @@ const EXTRA = {
   Governance: GOV,
   ApiFields: { type: 'object', properties: { url: { type: 'string', format: 'uri' }, path: { type: 'string' }, md: { type: ['string', 'null'] }, governance: ref('Governance') } },
   Chunk: { type: 'object', description: '答案單元（ARCHITECTURE 5.1）', required: ['id', 'contentId', 'type', 'title', 'text', 'url'], properties: { id: { type: 'string' }, contentId: { type: 'string' }, type: { type: 'string' }, lang: { type: 'string' }, title: { type: 'string' }, text: { type: 'string' }, sentences: { type: 'array', items: { type: 'string' } }, url: { type: 'string' }, owner: { type: 'string' }, ownerName: { type: 'string' }, reviewedAt: { type: 'string' }, nextReviewAt: { type: ['string', 'null'] }, isCurrent: { type: 'boolean' }, whitelist: { type: 'boolean' }, terms: { type: 'array', items: { type: 'string' } } } },
-  Todo: { type: 'object', required: ['id', 'kind', 'itemId', 'owner', 'dueAt', 'text'], properties: { id: { type: 'string' }, kind: { enum: ['based-on-revised', 'overdue', 'translation-stale', 'license-missing', 'dataset-overdue', 'reverse-audit', 'superseded-still-linked', 'situation-overdue', 'media-outdated', 'media-no-transcript', 'link-broken', 'labtest-inconsistent', 'migration-pending'] }, itemId: { type: 'string' }, itemTitle: { type: 'string' }, owner: { type: 'string' }, ownerName: { type: 'string' }, dueAt: { type: ['string', 'null'] }, overdue: { type: 'boolean' }, text: { type: 'string' }, href: { type: 'string' }, severity: { enum: ['high', 'medium', 'low'] } } },
+  Todo: { type: 'object', required: ['id', 'kind', 'itemId', 'owner', 'dueAt', 'text'], properties: { id: { type: 'string' }, kind: { enum: ['based-on-revised', 'overdue', 'translation-stale', 'license-missing', 'dataset-overdue', 'reverse-audit', 'superseded-still-linked', 'situation-overdue', 'media-outdated', 'media-no-transcript', 'link-broken', 'labtest-inconsistent', 'migration-pending'] }, itemId: { type: 'string' }, itemTitle: { type: 'string' }, owner: { type: 'string' }, ownerName: { type: 'string' }, dueAt: { type: ['string', 'null'] }, overdue: { type: 'boolean' }, text: { type: 'string' }, href: { type: 'string' }, severity: { enum: ['high', 'medium', 'low'] }, count: { type: 'integer', description: 'migration-pending：本清單待移轉筆數（每份清單聚合一則）' }, listId: { type: 'string' }, legalCategory: { type: ['integer', 'null'] }, noPage: { type: 'boolean' } } },
   Kpi: { type: 'object', required: ['key', 'label', 'current', 'unit'], properties: { key: { type: 'string' }, label: { type: 'string' }, current: { type: ['number', 'null'] }, numerator: { type: ['number', 'null'] }, denominator: { type: ['number', 'null'] }, pct: { type: ['number', 'null'] }, target1y: { type: ['number', 'null'] }, target3y: { type: ['number', 'null'] }, unit: { type: 'string' }, direction: { enum: ['higher', 'lower'] }, status: { enum: ['ok', 'warn', 'bad', 'pending', 'info'] }, note: { type: 'string' } } },
   CatalogEntry: { type: 'object', properties: { id: { type: 'string' }, type: { type: 'string' }, category: { type: 'string' }, title: { type: 'string' }, owner: { type: 'string' }, canonicalUrl: { type: 'string' }, license: { type: 'string' }, sensitivity: { type: 'string' }, reviewedAt: { type: 'string' }, nextReviewAt: { type: ['string', 'null'] }, whitelist: { type: 'boolean' }, isCurrent: { type: 'boolean' }, legacyUrls: { type: 'array', items: { type: 'string' } } } },
   Redirect: { type: 'object', required: ['from', 'to', 'status', 'kind'], properties: {
     from: { type: 'string', description: 'legacy：現行官網完整網址；migration：舊網址去網域與 hash 後的 path＋query；其他：新站路徑' }, fromPath: { type: 'string', description: 'legacy：from 去網域與 hash' },
     to: { type: 'string', description: '新站路徑（不含 basePath；migration 可含 #錨點）' }, toUrl: { type: 'string' }, status: { enum: [301, 302] },
-    kind: { enum: ['superseded', 'legacy', 'family-latest', 'migration'] }, itemId: { type: 'string', description: '實際導向的內容 id' }, currentId: { type: 'string' }, retained: { type: 'boolean' },
+    kind: { enum: ['superseded', 'legacy', 'family-latest', 'migration'] }, itemId: { type: ['string', 'null'], description: '實際導向的內容 id（移轉到站內共用頁、無對應內容時為 null）' }, currentId: { type: 'string' }, retained: { type: 'boolean' },
     pattern: { type: 'boolean', description: '舊網址含 {id} 佔位（URL 模式）：只進文件，不進伺服器對照檔與 legacy-map' },
     verified: { type: 'boolean', description: 'migration：權責單位已核對舊網址與對應' }, listId: { type: 'string', description: 'migration：移轉清單 id' }, key: { type: 'string', description: 'migration：清單內舊頁 key' },
     oldUrl: { type: 'string' }, oldTitle: { type: 'string' }, migrationStatus: { enum: ['migrated', 'merged', 'archived', 'pending'] }, targetId: { type: 'string', description: 'migration：清單填的 target（失效版文件時與 itemId 不同）' }, archivedAt: { type: 'string' } } },
@@ -104,6 +104,24 @@ const EXTRA = {
   } },
   ExternalLink: { type: 'object', required: ['url', 'itemId', 'field', 'status'], properties: { url: { type: 'string', format: 'uri' }, itemId: { type: 'string' }, itemType: { type: 'string' }, itemTitle: { type: 'string' }, owner: { type: 'string' }, ownerName: { type: 'string' }, field: { type: 'string', description: '欄位，例：links[0]、applyUrl、pdfUrl' }, label: { type: ['string', 'null'] }, lastCheckedAt: { type: ['string', 'null'], format: 'date' }, status: { enum: ['ok', 'broken', 'unchecked'] }, path: { type: 'string' } } },
   PublicationSeries: { type: 'object', properties: { series: { type: 'string' }, seriesEn: { type: ['string', 'null'] }, pubType: { type: ['string', 'null'] }, issn: { type: ['string', 'null'] }, count: { type: 'integer' }, latest: { type: ['string', 'null'] }, items: { type: 'array', items: { type: 'string' } } } },
+  MigrationListSummary: { type: 'object', required: ['id', 'slug', 'title', 'derived', 'curated', 'status', 'stats'], description: '移轉清單摘要（ARCHITECTURE 14.1）', properties: {
+    id: { type: 'string', description: 'migration.{slug}' }, slug: { type: 'string' }, title: { type: 'string' }, scope: { type: 'object' },
+    disease: { type: ['string', 'null'] }, diseaseName: { type: ['string', 'null'] }, legalCategory: { type: ['integer', 'null'], minimum: 1, maximum: 5 },
+    hasPage: { type: ['boolean', 'null'], description: '疾病頁是否已上架（欄目清單為 null）' }, pagePath: { type: ['string', 'null'] },
+    derived: { type: 'boolean', description: '整份由模板推導（無人工清單）' }, curated: { type: 'boolean', description: '有人工清單（content/migration/{slug}.json）' },
+    status: { type: 'string', description: 'published／archived；推導且疾病頁不存在＝no-page' }, site: { enum: ['zh-TW', 'en'], description: '舊站語言版' },
+    owner: { type: 'string' }, ownerName: { type: 'string' }, reviewedAt: { type: ['string', 'null'] }, showLegacyUntil: { type: ['string', 'null'] }, show: { type: 'boolean' },
+    stats: { type: 'object', properties: Object.fromEntries(['migrated', 'merged', 'archived', 'pending', 'dropped', 'verified', 'unverified', 'total'].map((k) => [k, { type: 'integer' }])) },
+    derivedItems: { type: 'integer' }, curatedItems: { type: 'integer' }, todoId: { type: ['string', 'null'], description: '聚合待辦 id（每份清單一則 migration-pending）' },
+    url: { type: 'string' }, path: { type: 'string' } } },
+  MigrationListDetail: { allOf: [ref('MigrationListSummary'), { type: 'object', properties: {
+    legacyRoot: { type: ['string', 'null'] }, sourceNote: { type: ['string', 'null'] }, summary: { type: ['string', 'null'] }, file: { type: ['string', 'null'] },
+    extends: { type: ['string', 'null'] }, templateId: { type: ['string', 'null'] },
+    items: { type: 'array', items: { allOf: [ref('MigrationItem'), { type: 'object', properties: {
+      derived: { type: 'boolean', description: '此筆由模板推導（人工清單沒寫的 key）' }, mapTo: { type: 'object', description: '模板的對應規則' },
+      relatedIds: { type: 'array', items: { type: 'string' }, description: 'related 命中的全部內容 id' },
+      owner: { type: 'string' }, ownerName: { type: 'string' }, statusLabel: { type: 'string' }, fromPath: { type: 'string' }, pattern: { type: 'boolean' },
+      targetType: { type: ['string', 'null'] }, targetTitle: { type: ['string', 'null'] }, targetPath: { type: ['string', 'null'] }, to: { type: ['string', 'null'] }, toId: { type: ['string', 'null'] } } }] } } } }] },
   Endpoint: { type: 'object', properties: { path: { type: 'string' }, url: { type: 'string' }, description: { type: 'string' }, count: { type: ['integer', 'null'] } } },
 };
 
@@ -149,6 +167,8 @@ export const ENDPOINTS = [
   ['/v1/legacy-map.json', 'meta', '舊網址精簡對照（404 頁與 /legacy/ 查詢用）；patterns＝{id} 佔位的 URL 模式（不可自動轉址）、gone＝不移轉（建議 410）、ambiguous＝同一舊網址對到多個新頁（不輸出）', ref('LegacyMap'),
     { patterns: arr(ref('LegacyPattern')), gone: arr({ type: 'object', properties: { key: { type: 'string' }, from: { type: 'string' }, pattern: { type: 'boolean' }, listId: { type: 'string' }, migrationKey: { type: 'string' }, oldTitle: { type: 'string' }, note: { type: ['string', 'null'] }, status: { const: 410 } } }),
       ambiguous: arr({ type: 'object', properties: { key: { type: 'string' }, from: { type: 'string' }, candidates: { type: 'array', items: { type: 'string' } }, itemIds: { type: 'array', items: { type: 'string' } } } }) }],
+  ['/v1/migration/index.json', 'meta', '移轉清單摘要（ARCHITECTURE 14.1）：主檔每一種疾病一份（derived＝由模板 content/migration/_disease-template.json 推導；curated＝有人工清單覆蓋同 key；status no-page＝疾病頁尚未建立、全部待移轉）＋欄目清單（如英文站 International Cooperation）；meta.stats 含 lists／derived／curated／noPage', arr(ref('MigrationListSummary'))],
+  ['/v1/migration/{slug}.json', 'meta', '單一移轉清單完整內容：items[].derived＝由模板推導（舊網址皆 {id} 佔位，轉址為 pattern，不進伺服器對照檔）；可下載後改寫成人工清單（只留例外）', ref('MigrationListDetail')],
   ['/v1/governance/kpi.json', 'governance', '品質指標（規劃 7.5 全列）', arr(ref('Kpi'))],
   ['/v1/governance/todos.json', 'governance', '治理待辦（正本修訂連動、逾期、譯文過期、反向稽核…）', arr(ref('Todo'))],
   ['/v1/governance/summary.json', 'governance', '治理儀表板數字', free],
@@ -173,7 +193,8 @@ export function buildOpenApi(site) {
   const paths = {};
   for (const [p, tag, summary, data, top] of ENDPOINTS) {
     const params = [];
-    if (p.includes('{slug}')) params.push({ name: 'slug', in: 'path', required: true, schema: { type: 'string', enum: (site?.collections?.diseases ?? []).map((d) => d.slug) }, description: '疾病頁 slug（見 /v1/diseases.json 的 api 欄位）' });
+    if (p.startsWith('/v1/migration/') && p.includes('{slug}')) params.push({ name: 'slug', in: 'path', required: true, schema: { type: 'string', enum: (site?.migration?.lists ?? []).map((l) => l.slug) }, description: '移轉清單 slug（見 /v1/migration/index.json）' });
+    else if (p.includes('{slug}')) params.push({ name: 'slug', in: 'path', required: true, schema: { type: 'string', enum: (site?.collections?.diseases ?? []).map((d) => d.slug) }, description: '疾病頁 slug（見 /v1/diseases.json 的 api 欄位）' });
     if (p.includes('{task}')) params.push({ name: 'task', in: 'path', required: true, schema: { type: 'string', enum: config.tasks.map((t) => t.key) } });
     const opId = `get${p.replace(/\.json$/, '').split(/[/{}-]+/).filter(Boolean).map((x) => x[0].toUpperCase() + x.slice(1)).join('')}`;
     paths[p] = {
@@ -203,6 +224,8 @@ export function buildOpenApi(site) {
         '- 每個檔案外殼 `{ meta, data }`；`meta.etag` 為 data 內容雜湊、`meta.lastModified` 為集合最大審閱日（靜態站無法送 ETag／Last-Modified header）。',
         '- 每筆內容附 `governance`：權責單位、審閱日、下次審閱日、是否現行版、AI 白名單與不生效原因、自動加註。',
         '- 失效版本 `isCurrent:false`，請改用 `supersededBy`／`families[].current`；舊網址對照見 `/v1/redirects.json` 與精簡版 `/v1/legacy-map.json`；伺服器對照檔：`/redirects/nginx.map`、`/redirects/web.config.rewritemap.xml`、`/redirects/_redirects`。',
+        '- 舊站移轉清單：`/v1/migration/index.json`（各清單摘要）與 `/v1/migration/{slug}.json`（完整清單）；疾病清單由模板推導，人工清單只寫例外。',
+        '- 內容可宣告 `sourceLang`（預設 zh-TW）：頂層欄位為來源語言，其他語言（含 zh-TW 譯文）在 `i18n`；`governance.translationStale` 以來源語言判斷。',
         '- 變更事件：`/feeds/news.xml`、`/feeds/documents.xml`、`/feeds/situation.xml`、`/feeds/publications.xml`、`/feeds/notices.xml`。',
       ].join('\n'),
       contact: { name: config.name, url: `${siteOrigin()}/developers/` },

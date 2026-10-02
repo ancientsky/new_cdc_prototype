@@ -5,11 +5,12 @@ import { langAvailable } from '../../../scripts/lib/pages.mjs';
 import * as JL from '../../../scripts/lib/jsonld.mjs';
 import { ldFor, pageHead, translationBadge, feedback, L, unitName, ownerStats, hrefFor, PAGE_PATHS } from './_partials.mjs';
 import { standalonePath } from './page.mjs';
+import { intlTopic } from './_international.mjs';
 
 export const ORG_GROUPS = ['office', 'division', 'center', 'regional', 'staff', 'committee'];
 const SECTIONS = [
   { id: 'mission', page: 'page.mission' }, { id: 'org' }, { id: 'regional', page: 'page.regional-centers' },
-  { id: 'history', page: 'page.history' }, { id: 'director', page: 'page.director' }, { id: 'team', page: 'page.about' }, { id: 'contact', page: 'page.contact' },
+  { id: 'history', page: 'page.history' }, { id: 'director', page: 'page.director' }, { id: 'team', page: 'page.about' }, { id: 'international' }, { id: 'contact', page: 'page.contact' },
 ];
 
 function aboutLd(ctx) {
@@ -73,15 +74,19 @@ export function render(ctx) {
   const about = site.byId.get('page.about');
   const regionalFallback = html`<ul class="c-linklist c-linklist--inline">${(site.master.units ?? []).filter((u) => u.kind === 'regional').map((u) => html`<li>${lang === 'zh-TW' ? u.name : (u.nameEn ?? u.name)}</li>`)}</ul>`;
   const langStatus = about?.languages?.[lang]?.status;
+  const intl = intlTopic(site);
   return html`${pageHead(ctx, { trail: [{ label: t('about.title') }], h1: t('about.title'), lead: t('about.lead') })}
 ${langStatus && lang !== 'zh-TW' ? html`<p>${translationBadge(ctx, langStatus === 'reviewed' ? 'reviewed' : 'machine')}</p>` : ''}
-<nav class="c-chips-wrap" aria-label="${t('about.toc')}"><ul class="c-chips c-chips--wrap">${SECTIONS.map((s) => html`<li><a class="c-chip" href="#${s.id}">${t(`about.s.${s.id}`)}</a></li>`)}</ul></nav>
+<nav class="c-chips-wrap" aria-label="${t('about.toc')}"><ul class="c-chips c-chips--wrap">${SECTIONS.filter((s) => s.id !== 'international' || intl).map((s) => html`<li><a class="c-chip" href="#${s.id}">${s.id === 'international' ? t('international.title') : t(`about.s.${s.id}`)}</a></li>`)}</ul></nav>
 ${pageSection(ctx, SECTIONS[0], { open: true, fallback: html`<p>${t('about.mission.fallback')}</p>` })}
 <section class="c-block" id="org" aria-labelledby="h-org"><h2 id="h-org">${t('about.s.org')}</h2><p class="muted">${t('about.org.lead')}</p>${orgChart(ctx)}</section>
 ${pageSection(ctx, SECTIONS[2], { fallback: regionalFallback })}
 ${pageSection(ctx, SECTIONS[3])}
 ${pageSection(ctx, SECTIONS[4])}
 ${about ? pageSection(ctx, SECTIONS[5], { open: true }) : ''}
+${intl ? html`<section class="c-block" id="international" aria-labelledby="h-international"><h2 id="h-international">${t('international.title')}</h2>
+  <p>${L(ctx, intl, 'summary') ?? t('international.lead')}</p>
+  <p><a class="c-btn c-btn--ghost c-btn--sm" href="${url('/international/')}">${t('international.title')} →</a></p></section>` : ''}
 <section class="c-block" id="contact" aria-labelledby="h-contact"><h2 id="h-contact">${t('about.s.contact')}</h2>
   <p>${t('about.contact')} <a class="c-btn c-btn--sm" href="${url('/contact/')}">${t('contact.title')} →</a></p>
   <ul class="c-linklist c-linklist--inline"><li><a href="${url('/policy/privacy/')}">${t('footer.privacy')}</a></li><li><a href="${url('/policy/ai/')}">${t('footer.ai')}</a></li><li><a href="${url('/policy/open-data/')}">${t('footer.license')}</a></li><li><a href="${url('/accessibility/')}">${t('footer.a11y')}</a></li></ul></section>

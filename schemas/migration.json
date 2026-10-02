@@ -1,8 +1,8 @@
 {
   "$id": "https://cdc-prototype/schemas/migration.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "移轉清單（migration manifest）：舊站一個專區／欄目樹 → 新站內容的逐頁對照（ARCHITECTURE 13.1）",
-  "description": "content/migration/{slug}.json。每筆舊頁標 verified（權責單位逐筆確認後改 true）與 status；治理引擎據此產生 site.migration、gov.legacy、migration-pending 待辦，emit-api 產生 redirects 與 legacy-map。",
+  "title": "移轉清單（migration manifest）：舊站一個專區／欄目樹 → 新站內容的逐頁對照（ARCHITECTURE 13.1、14.1）",
+  "description": "content/migration/{slug}.json（底線開頭的檔案是模板，見 migration-template.json）。每筆舊頁標 verified（權責單位逐筆確認後改 true）與 status；治理引擎據此產生 site.migration、gov.legacy、migration-pending 待辦，emit-api 產生 redirects、legacy-map 與 v1/migration/。疾病範圍（scope.kind=disease）的人工清單只寫例外：同 key 覆蓋模板推導結果，人工沒寫的 key 由模板（extends，預設 migration-template.disease）補齊（ARCHITECTURE 14.1）。",
   "allOf": [{ "$ref": "_common.json" }],
   "type": "object",
   "required": ["scope", "legacyRoot", "showLegacyUntil", "items"],
@@ -18,12 +18,14 @@
         {
           "type": "object",
           "required": ["kind", "name"],
-          "properties": { "kind": { "const": "category" }, "name": { "type": "string", "minLength": 1 } }
+          "properties": { "kind": { "const": "category" }, "name": { "type": "string", "minLength": 1 }, "site": { "enum": ["zh-TW", "en"], "description": "舊站語言版：中文站或英文站（/En）；預設 zh-TW" } }
         }
       ]
     },
     "legacyRoot": { "type": "string", "format": "uri-template", "pattern": "^https?://", "description": "舊專區入口；ID 不確定以 {id} 佔位" },
     "showLegacyUntil": { "type": "string", "format": "date", "description": "新站頁面顯示「舊網址對應」的截止日；today > 此日 ⇒ gov.legacy.show=false（自動，不需人工）" },
+    "extends": { "enum": ["migration-template.disease", "none"], "description": "疾病範圍清單由哪個模板補齊（預設 migration-template.disease，可明示）；none＝不補，只用人工清單" },
+    "omit": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" }, "description": "模板中不適用本疾病、不要補齊的 key（例：舊站本來就沒有疫苗子頁 ⇒ [\"vaccine\"]）" },
     "sourceNote": { "type": "string", "description": "清單來源與限制說明（例如：開發環境無法連線舊站，依 URL 模式重建）" },
     "items": {
       "type": "array",
