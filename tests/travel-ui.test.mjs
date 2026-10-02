@@ -18,7 +18,7 @@ test('/travel/：查目的地在最上，之後是近 30 天變化、背景提�
   assert.ok(order.every((i) => i > 0), `缺區塊：${order}`);
   assert.deepEqual([...order].sort((a, b) => a - b), order, '區塊順序：查目的地 → 變化 → 背景提醒 → 等級表 → 疫情資訊');
   assert.match(h, /查目的地/);
-  assert.match(h, /近 30 天變化/);
+  assert.match(h, /近 (30|90) 天變化/);
   assert.match(h, /tv-chg__n--lifted/, '四個數字含「解除」（綠色）');
   for (const k of ['新增', '調升', '調降', '解除']) assert.ok(h.includes(`<span>${k}</span>`), k);
   assert.match(h, /全球背景提醒/);
@@ -48,6 +48,16 @@ test('/travel/：近 30 天事件清單最多 10 則，其餘收合；無事件�
   const hh = str(travel.render(makeCtx(empty, 'zh-TW', { path: '/travel/' }), {}));
   assert.match(hh, /尚無變化資料/);
   assert.ok(!/class="tv-evs"/.test(hh));
+});
+
+test('adaptiveChanges：30 天事件不足 10 則即改看 90 天，days 隨之改變且標題同步', () => {
+  const s = govern();
+  const cd30 = travel.changeData(s, '2026-10-01', { days: 30 });
+  const ad = travel.adaptiveChanges(s, '2026-10-01');
+  const total30 = Object.values(cd30.counts).reduce((a, b) => a + b, 0);
+  assert.equal(ad.days, total30 >= travel.CHANGE_MIN_EVENTS ? 30 : 90);
+  const h = str(travel.render(makeCtx(s, 'zh-TW', { path: '/travel/' }), {}));
+  assert.match(h, new RegExp(`近 ${ad.days} 天變化`));
 });
 
 test('changeData／travelStats：事件快照決定數字；缺快照退回', () => {
@@ -118,7 +128,7 @@ test('routesOf：傳播途徑對照與關鍵字後備', () => {
 
 test('多語：en 版可渲染（/travel/ 與目的地頁），七語新字串齊備', () => {
   const en = page('en');
-  assert.match(en, /Changes in the last 30 days/);
+  assert.match(en, /Changes in the last (30|90) days/);
   assert.match(en, /Global background reminder/);
   assert.match(en, /Check your destination/);
   const cd = page('en', 'CD');
@@ -149,6 +159,6 @@ test('首頁任務卡副標與任務頁：針對性統計一句、查目的地�
   const task = await import('../src/templates/public/task.mjs');
   const tk = str(task.render(makeCtx(site, 'zh-TW', { path: '/tasks/travel/' }), { task: site.config.tasks.find((x) => x.key === 'travel') }));
   assert.match(tk, /data-tv-quick/);
-  assert.match(tk, /近 30 天變化/);
+  assert.match(tk, /近 (30|90) 天變化/);
   assert.ok(!/<table class="c-table">/.test(tk), '12 列表格已移除');
 });
