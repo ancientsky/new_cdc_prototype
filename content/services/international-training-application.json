@@ -1,0 +1,195 @@
+{
+  "id": "service.international-training-application",
+  "type": "service",
+  "sourceLang": "en",
+  "title": "Apply for Taiwan CDC international training",
+  "owner": "unit.international",
+  "steward": "國際合作組承辦人",
+  "publishedAt": "2026-10-01",
+  "reviewedAt": "2026-10-01",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-10-01"
+  },
+  "languages": {
+    "en": {
+      "status": "source"
+    },
+    "zh-TW": {
+      "status": "reviewed",
+      "reviewedAt": "2026-10-01",
+      "reviewer": "國際合作組中文審核人",
+      "sourceHash": "9f9f8cb91564"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "Foreign health officials and professionals can apply online for Taiwan CDC international training (FETP exchange, workshops, laboratory, TB-DOTS and dengue control); applications are reviewed within 30 days.",
+  "slug": "international-training-application",
+  "serviceType": "other",
+  "tasks": [],
+  "keywords": [
+    "international training",
+    "apply",
+    "foreign health officials",
+    "FETP",
+    "workshop",
+    "application form"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/En/Category/MPage/{id}#training-application"
+  ],
+  "whoCanApply": [
+    "Health officials of foreign governments",
+    "Public health and laboratory professionals nominated by their agency",
+    "Staff of partner institutions under a cooperation arrangement"
+  ],
+  "introMarkdown": "Taiwan CDC welcomes health officials and professionals from partner countries to its international training programs: FETP exchanges, international workshops (including GCTF), laboratory training, TB control and DOTS, and dengue control.\n\nApply online with the application form and a nomination letter from your agency or the partner representative office. The Division of International Cooperation reviews each application with the hosting division and replies within 30 days.",
+  "requiredDocuments": [
+    "Completed application form",
+    "Nomination or endorsement letter from your agency or representative office",
+    "Short CV (education and current duties)",
+    "Copy of passport identity page"
+  ],
+  "steps": [
+    {
+      "title": "Choose a program",
+      "text": "Check the program list and annual schedule on the International training page.",
+      "who": "Applicant",
+      "days": 0
+    },
+    {
+      "title": "Submit the application",
+      "text": "Submit the online form with the nomination letter, CV and passport copy.",
+      "who": "Applicant",
+      "days": 0
+    },
+    {
+      "title": "Review",
+      "text": "The Division of International Cooperation reviews the application with the hosting division.",
+      "who": "Taiwan CDC",
+      "days": 21
+    },
+    {
+      "title": "Notification and arrangements",
+      "text": "Accepted applicants receive an invitation letter and arrangement details; others are informed of the result.",
+      "who": "Taiwan CDC",
+      "days": 9
+    }
+  ],
+  "slaDays": 30,
+  "fee": "Training is free of charge; travel and accommodation arrangements depend on the program.",
+  "forms": [
+    {
+      "label": "International training application form",
+      "href": "/pending/?ref=service.international-training-application&doc=International training application form",
+      "format": "PDF",
+      "machineReadable": false
+    }
+  ],
+  "contact": "Division of International Cooperation, Taiwan CDC — switchboard +886-2-2395-9825 (office hours); 1922 hotline (from abroad +886-800-001922)",
+  "faq": [
+    {
+      "q": "Is there a fee for the training?",
+      "a": "Training is free of charge. Whether travel and accommodation are covered depends on the program and is stated in the invitation letter."
+    },
+    {
+      "q": "Can individuals apply without a nomination?",
+      "a": "Applications normally need a nomination or endorsement from the applicant’s agency or a partner representative office."
+    }
+  ],
+  "i18n": {
+    "zh-TW": {
+      "title": "外國衛生人員申請疾管署國際訓練",
+      "summary": "外國衛生官員與專業人員可線上申請疾管署國際訓練（FETP 交流、研習營、實驗室、結核病都治、登革熱防治），30 日內回覆審查結果。",
+      "keywords": [
+        "國際訓練",
+        "申請",
+        "外國衛生人員",
+        "FETP",
+        "研習營",
+        "申請表"
+      ],
+      "whoCanApply": [
+        "外國政府衛生官員",
+        "經所屬機關推薦之公共衛生與實驗室專業人員",
+        "合作協定下之夥伴機構人員"
+      ],
+      "introMarkdown": "疾管署歡迎夥伴國家衛生官員與專業人員參加國際訓練：FETP 交流、國際研習營（含 GCTF）、實驗室訓練、結核病防治與都治、登革熱防治。\n\n請線上填寫申請表，並附所屬機關或夥伴國駐臺代表機構推薦函。國際合作組會同主辦單位審查，30 日內回覆。",
+      "requiredDocuments": [
+        "申請表",
+        "所屬機關或駐臺代表機構推薦函",
+        "簡歷（學經歷與現職）",
+        "護照基本資料頁影本"
+      ],
+      "steps": [
+        {
+          "title": "選擇訓練計畫",
+          "text": "於國際訓練頁查閱計畫與年度時程。",
+          "who": "申請人",
+          "days": 0
+        },
+        {
+          "title": "送出申請",
+          "text": "線上填寫申請表並上傳推薦函、簡歷與護照影本。",
+          "who": "申請人",
+          "days": 0
+        },
+        {
+          "title": "審查",
+          "text": "國際合作組會同主辦單位審查。",
+          "who": "疾管署",
+          "days": 21
+        },
+        {
+          "title": "通知與安排",
+          "text": "錄取者收到邀請函與行程安排；未錄取者亦會收到通知。",
+          "who": "疾管署",
+          "days": 9
+        }
+      ],
+      "fee": "訓練免費；交通與住宿依各計畫規定。",
+      "contact": "疾管署國際合作組：總機 +886-2-2395-9825（上班時間）；防疫專線 1922（國外 +886-800-001922）",
+      "faq": [
+        {
+          "q": "參加訓練需要付費嗎？",
+          "a": "訓練免費；交通與住宿是否補助依各計畫規定，並載明於邀請函。"
+        },
+        {
+          "q": "個人可以不經推薦直接申請嗎？",
+          "a": "申請通常需所屬機關或夥伴國駐臺代表機構推薦。"
+        }
+      ],
+      "forms": [
+        {
+          "label": "國際訓練申請表",
+          "href": "/pending/?ref=service.international-training-application&doc=International training application form",
+          "format": "PDF",
+          "machineReadable": false
+        }
+      ]
+    }
+  }
+}

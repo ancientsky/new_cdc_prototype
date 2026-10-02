@@ -1,0 +1,237 @@
+{
+  "id": "migration.international-cooperation",
+  "type": "migration",
+  "title": "英文站 International Cooperation（舊站）→ 新站國際合作區塊",
+  "owner": "unit.international",
+  "steward": "國際合作組承辦人",
+  "publishedAt": "2026-10-01",
+  "reviewedAt": "2026-10-01",
+  "reviewPeriodMonths": 3,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "舊英文站（/En）International Cooperation 欄目逐頁移轉對照：IHR 窗口、多邊與雙邊合作、國際訓練、英文出版品；新站以英文為來源語言並附中文譯文。",
+  "keywords": [
+    "移轉清單",
+    "英文站",
+    "國際合作",
+    "舊網址"
+  ],
+  "scope": {
+    "kind": "category",
+    "name": "International Cooperation",
+    "site": "en"
+  },
+  "legacyRoot": "https://www.cdc.gov.tw/En/Category/List/{id}",
+  "showLegacyUntil": "2027-12-31",
+  "sourceNote": "開發環境連不到 www.cdc.gov.tw／En，子頁依英文站 URL 模式與既有認識重建；舊網址 ID 不確定者以 {id} 佔位、同一模式以 #片段區分。全部 verified:false，由國際合作組逐筆確認。",
+  "items": [
+    {
+      "key": "intl-root",
+      "oldTitle": "International Cooperation",
+      "oldPath": "International Cooperation",
+      "oldUrl": "https://www.cdc.gov.tw/En/Category/List/{id}",
+      "oldType": "list",
+      "verified": false,
+      "status": "migrated",
+      "target": "topic.international-cooperation",
+      "note": "英文站欄目首頁改為國際合作專區（英文為來源語言、附中文譯文）",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "languages",
+        "aiWhitelist",
+        "structuredData"
+      ]
+    },
+    {
+      "key": "ihr",
+      "oldTitle": "IHR National Focal Point",
+      "oldPath": "International Cooperation／IHR",
+      "oldUrl": "https://www.cdc.gov.tw/En/Category/MPage/{id}#ihr",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "page.international-ihr-focal-point",
+      "note": "24 小時窗口與聯絡管道結構化（contactInfo）",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "reviewPeriod",
+        "languages",
+        "structuredData"
+      ]
+    },
+    {
+      "key": "who-wha",
+      "oldTitle": "WHO and World Health Assembly",
+      "oldPath": "International Cooperation／Multilateral／WHO",
+      "oldUrl": "https://www.cdc.gov.tw/En/Category/MPage/{id}#who",
+      "oldType": "page",
+      "verified": false,
+      "status": "merged",
+      "target": "page.international-multilateral",
+      "note": "併入多邊合作頁",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "languages"
+      ]
+    },
+    {
+      "key": "apec",
+      "oldTitle": "APEC Health Working Group",
+      "oldPath": "International Cooperation／Multilateral／APEC",
+      "oldUrl": "https://www.cdc.gov.tw/En/Category/MPage/{id}#apec",
+      "oldType": "page",
+      "verified": false,
+      "status": "merged",
+      "target": "page.international-multilateral",
+      "note": "併入多邊合作頁",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "languages"
+      ]
+    },
+    {
+      "key": "ghsa",
+      "oldTitle": "Global Health Security",
+      "oldPath": "International Cooperation／Global Health Security",
+      "oldUrl": "https://www.cdc.gov.tw/En/Category/MPage/{id}#ghsa",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "page.international-global-health-security",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "languages"
+      ]
+    },
+    {
+      "key": "bilateral",
+      "oldTitle": "Bilateral Cooperation",
+      "oldPath": "International Cooperation／Bilateral",
+      "oldUrl": "https://www.cdc.gov.tw/En/Category/MPage/{id}#bilateral",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "page.international-bilateral",
+      "note": "合作夥伴改為結構化欄位（partners），可畫地圖與表格",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "languages",
+        "structuredData"
+      ]
+    },
+    {
+      "key": "new-southbound",
+      "oldTitle": "New Southbound Policy Health Cooperation",
+      "oldPath": "International Cooperation／Bilateral／New Southbound",
+      "oldUrl": "https://www.cdc.gov.tw/En/Category/MPage/{id}#new-southbound",
+      "oldType": "page",
+      "verified": false,
+      "status": "merged",
+      "target": "page.international-bilateral",
+      "note": "併入雙邊合作頁「新南向醫衛合作」段落",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "languages"
+      ]
+    },
+    {
+      "key": "training",
+      "oldTitle": "International Training Programs",
+      "oldPath": "International Cooperation／Training",
+      "oldUrl": "https://www.cdc.gov.tw/En/Category/MPage/{id}#training",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "page.international-training",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "languages"
+      ]
+    },
+    {
+      "key": "training-apply",
+      "oldTitle": "Training Application",
+      "oldPath": "International Cooperation／Training／Application",
+      "oldUrl": "https://www.cdc.gov.tw/En/Category/MPage/{id}#training-application",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "service.international-training-application",
+      "note": "申請流程改為申請服務型別（步驟、應備文件、處理天數）",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "languages",
+        "structuredData",
+        "aiWhitelist"
+      ]
+    },
+    {
+      "key": "workshops",
+      "oldTitle": "International Workshops",
+      "oldPath": "International Cooperation／Training／Workshops",
+      "oldUrl": "https://www.cdc.gov.tw/En/Category/List/{id}#workshops",
+      "oldType": "list",
+      "verified": false,
+      "status": "merged",
+      "target": "page.international-training",
+      "note": "歷年研習營列表併入國際訓練頁；個別活動以新聞稿上架",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "languages"
+      ]
+    },
+    {
+      "key": "teb",
+      "oldTitle": "Taiwan Epidemiology Bulletin (English)",
+      "oldPath": "Publications／Taiwan Epidemiology Bulletin",
+      "oldUrl": "https://www.cdc.gov.tw/En/Category/List/{id}#teb",
+      "oldType": "list",
+      "verified": false,
+      "status": "merged",
+      "target": "page.international-publications-en",
+      "note": "英文出版品入口；各期以出版品型別上架",
+      "newRequirements": [
+        "owner",
+        "license",
+        "machineReadable"
+      ]
+    },
+    {
+      "key": "photo-gallery",
+      "oldTitle": "International Cooperation Photo Gallery",
+      "oldPath": "International Cooperation／Photo Gallery",
+      "oldUrl": "https://www.cdc.gov.tw/En/Category/List/{id}#gallery",
+      "oldType": "media",
+      "verified": false,
+      "status": "pending",
+      "note": "照片授權與當事人同意待逐張確認，確認後以影音素材型別上架",
+      "newRequirements": [
+        "owner",
+        "license",
+        "accessibility"
+      ]
+    }
+  ]
+}

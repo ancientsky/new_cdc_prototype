@@ -786,7 +786,7 @@ function composeDiseaseList(site, dm, template, manual) {
   const pageRaw = site.byId.get(dm.id);
   const page = pageRaw?.type === 'disease' && pageRaw.status === 'published' ? pageRaw : null;
   const tplId = manual?.extends ?? MIGRATION_TEMPLATE_DISEASE;
-  const useTpl = tplId !== 'none' && template && template.id === tplId ? template : (tplId !== 'none' ? template : null);
+  const useTpl = tplId !== 'none' ? template : null; // 目前只有疾病模板；extends 指向不存在的模板由 validate 擋下
   const omit = new Set(manual?.omit ?? []);
   const manualByKey = new Map((manual?.items ?? []).map((it) => [it.key, it]));
   const items = [];

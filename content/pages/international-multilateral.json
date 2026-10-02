@@ -1,0 +1,77 @@
+{
+  "id": "page.international-multilateral",
+  "type": "page",
+  "sourceLang": "en",
+  "title": "Multilateral cooperation: WHO, WHA, APEC and GHSA",
+  "owner": "unit.international",
+  "steward": "國際合作組承辦人",
+  "publishedAt": "2026-10-01",
+  "reviewedAt": "2026-10-01",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "en": {
+      "status": "source"
+    },
+    "zh-TW": {
+      "status": "reviewed",
+      "reviewedAt": "2026-10-01",
+      "reviewer": "國際合作組中文審核人",
+      "sourceHash": "4336c534580e"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "Taiwan CDC joins technical exchanges with WHO, holds expert meetings during the WHA week, works in the APEC Health Working Group and aligns with the Global Health Security Agenda.",
+  "slug": "international/multilateral",
+  "keywords": [
+    "WHO",
+    "WHA",
+    "APEC Health Working Group",
+    "GHSA",
+    "GCTF",
+    "global health security"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/En/Category/MPage/{id}#multilateral",
+    "https://www.cdc.gov.tw/En/Category/MPage/{id}#apec"
+  ],
+  "bodyMarkdown": "Taiwan CDC takes part in regional and global health cooperation wherever it can contribute expertise and receive timely information.\n\n- **World Health Organization (WHO)** — technical exchanges with WHO experts and participation in WHO technical meetings when invited; Taiwan CDC follows WHO guidance and shares surveillance data relevant to global health security.\n- **World Health Assembly (WHA) week** — Taiwan CDC experts hold technical exchanges with health officials and experts from partner countries during the WHA period in Geneva.\n- **APEC Health Working Group** — joins work on emerging infectious diseases, preparedness and health security in the Asia-Pacific Economic Cooperation forum.\n- **Global Health Security Agenda (GHSA)** — aligns domestic capacity building with GHSA action packages such as surveillance, laboratory systems, workforce development and antimicrobial resistance.\n- **Global outbreak alert and response** — follows global outbreak alerts and offers field epidemiology and laboratory expertise to partners when requested.\n- **Global Cooperation and Training Framework (GCTF)** — co-organises international workshops on public health topics such as dengue, antimicrobial resistance and laboratory diagnosis.\n\n> The list describes ongoing areas of cooperation; participation in specific meetings depends on each year's invitations and arrangements.",
+  "i18n": {
+    "zh-TW": {
+      "title": "多邊合作：WHO、WHA、APEC 與 GHSA",
+      "summary": "疾管署與 WHO 技術交流、於 WHA 期間舉行專家會談、參與 APEC 衛生工作小組，並依全球衛生安全綱領推動能力建構。",
+      "keywords": [
+        "世界衛生組織",
+        "世界衛生大會",
+        "APEC 衛生工作小組",
+        "全球衛生安全綱領",
+        "GCTF",
+        "國際合作"
+      ],
+      "bodyMarkdown": "疾管署在能貢獻專業、也能及時取得資訊的場域參與區域與全球衛生合作。\n\n- **世界衛生組織（WHO）**：與 WHO 專家技術交流，受邀時參與 WHO 技術會議；遵循 WHO 指引並分享與全球衛生安全相關的監測資料。\n- **世界衛生大會（WHA）期間**：疾管署專家於日內瓦 WHA 期間與夥伴國家衛生官員及專家進行技術交流。\n- **APEC 衛生工作小組**：參與亞太經濟合作會議新興傳染病、整備與衛生安全相關工作。\n- **全球衛生安全綱領（GHSA）**：依 GHSA 行動方案（監測、實驗室系統、人力發展、抗藥性等）推動國內能力建構。\n- **全球疫情警報與反應**：追蹤全球疫情警報，應夥伴請求提供田野流行病學與實驗室專業協助。\n- **全球合作暨訓練架構（GCTF）**：合辦登革熱、抗藥性、實驗室診斷等公共衛生國際研習營。\n\n> 以上為持續進行的合作領域；個別會議的參與依各年度邀請與安排而定。"
+    }
+  }
+}

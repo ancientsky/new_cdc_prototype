@@ -43,7 +43,7 @@ function itemsTable(ctx, r) {
       <td>${x.verified ? html`<span class="adm-badge adm-badge--ok">已核對</span>` : html`<span class="adm-badge adm-badge--gray">未核對</span>`}</td>
       <td>${x.target ? (x.targetFront ? html`<a href="${url(x.targetFront)}">${x.targetTitle ?? x.target}</a>` : (x.targetTitle ?? x.target)) : html`<span class="adm-muted">—</span>`}${x.target ? html`<div class="adm-muted"><code>${x.target}</code></div>` : ''}</td>
       <td>${x.ownerName}</td>
-      <td>${x.reqs.length ? x.reqs.map((k) => html`<span class="adm-chip adm-chip--plain">${REQ_LABEL[k] ?? k}</span> `) : html`<span class="adm-muted">—</span>`}</td></tr>`)}</tbody></table></div>`;
+      <td class="adm-muted">${x.reqs.length ? x.reqs.map((k) => REQ_LABEL[k] ?? k).join('、') : '—'}</td></tr>`)}</tbody></table></div>`;
 }
 
 export function render(ctx) {
@@ -88,7 +88,7 @@ export function render(ctx) {
 <section class="adm-card" aria-labelledby="mg-sum"><h2 id="mg-sum">各疾病清單（${S.lists} 份）</h2>
   <p class="adm-card__sub">預設依「待移轉」由多到少排序，先處理缺口最大的。按「展開」看逐筆對照；篩選、排序與展開狀態會記在這個瀏覽器（也寫進網址的 # 之後，可以貼給同事）。</p>
   <div class="adm-filters mg-filters" role="group" aria-label="篩選與排序">
-    <div class="adm-field"><span class="adm-label" id="mg-f-l">顯示</span>
+    <div class="adm-field adm-field--seg"><span class="adm-label" id="mg-f-l">顯示</span>
       <div class="adm-seg" role="radiogroup" aria-labelledby="mg-f-l" id="mg-f">
         ${[['all', '全部', S.lists], ['has', '有疾病頁', S.hasPage], ['no', '無疾病頁', S.noPage], ['curated', '人工', S.curated], ['derived', '推導', S.derived]].map(([k, label, n]) => html`<button type="button" class="adm-seg__b" role="radio" aria-checked="${k === 'all' ? 'true' : 'false'}" data-f="${k}">${label} <span class="adm-seg__n">${n}</span></button>`)}
       </div></div>
@@ -116,7 +116,7 @@ export function render(ctx) {
       </tr>
       <tr class="mg-list__ex" id="mg-ex-${r.slug}" hidden><td colspan="10">
         <div class="mg-ex__head">
-          <p class="adm-muted">${r.legacyRoot ? html`舊專區入口 <code>${String(r.legacyRoot).replace(/^https?:\/\//, '')}</code> · ` : ''}新頁揭露至 ${r.showLegacyUntil ?? '—'}${(() => { const left = daysTo(site.today, r.showLegacyUntil); return left != null ? ` ${left >= 0 ? `（${left} 日）` : '（已隱藏）'}` : ''; })()} · 共 ${r.c.total} 筆，已核對 ${r.c.verified}。${r.hasPage === false ? '這種疾病還沒有疾病頁，所有舊頁都待移轉；建立疾病頁後清單會自動重新推導。' : ''}</p>
+          <p class="adm-muted">${r.legacyRoot ? html`舊專區入口 <code>${String(r.legacyRoot).replace(/^https?:\/\//, '')}</code> · ` : ''}新頁揭露至 ${r.showLegacyUntil ?? '—'}${(() => { const left = daysTo(site.today, r.showLegacyUntil); return left != null ? ` ${left >= 0 ? `（${left} 日）` : '（已隱藏）'}` : ''; })()} · 共 ${r.c.total} 筆，已核對網址 ${r.c.verified} / ${r.c.total}。${r.hasPage === false ? '這種疾病還沒有疾病頁，所有舊頁都待移轉；建立疾病頁後清單會自動重新推導。' : ''}</p>
           <label class="mg-ex__pend"><input type="checkbox" data-only-pending> 只看待移轉</label>
         </div>
         ${itemsTable(ctx, r)}

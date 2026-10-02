@@ -1,0 +1,76 @@
+{
+  "id": "news.2026-05-22-international-wha-technical-exchange",
+  "type": "news",
+  "sourceLang": "en",
+  "title": "Taiwan CDC experts hold technical exchanges during the World Health Assembly week",
+  "owner": "unit.international",
+  "steward": "國際合作組承辦人",
+  "publishedAt": "2026-05-22",
+  "reviewedAt": "2026-05-22",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-10-01"
+  },
+  "languages": {
+    "en": {
+      "status": "source"
+    },
+    "zh-TW": {
+      "status": "reviewed",
+      "reviewedAt": "2026-05-22",
+      "reviewer": "國際合作組中文審核人",
+      "sourceHash": "f7e19729ddba"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "During the World Health Assembly week in Geneva, Taiwan CDC experts met health officials and experts from partner countries to exchange experience on surveillance, IHR implementation and preparedness.",
+  "newsType": "press",
+  "keywords": [
+    "WHA",
+    "World Health Assembly",
+    "WHO",
+    "IHR",
+    "technical exchange"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/En/Bulletin/Detail/{id}#2026-05-22-international-wha-technical-exchange"
+  ],
+  "bodyMarkdown": "During the World Health Assembly (WHA) week in Geneva, Taiwan CDC experts held technical exchanges with health officials and experts from partner countries.\n\nTopics included event-based surveillance, implementation of the International Health Regulations (IHR 2005) and its 24/7 National Focal Point, preparedness for emerging infectious diseases and antimicrobial resistance.\n\nTaiwan CDC will continue to share its epidemic prevention experience and seek meaningful participation in WHO technical meetings.\n\nThis release is illustrative prototype content; the date and meeting details are examples.",
+  "i18n": {
+    "zh-TW": {
+      "title": "疾管署專家於世界衛生大會期間進行技術交流",
+      "summary": "世界衛生大會（WHA）期間，疾管署專家於日內瓦與夥伴國家衛生官員及專家交流監測、IHR 實施與整備經驗。",
+      "keywords": [
+        "世界衛生大會",
+        "WHA",
+        "WHO",
+        "國際衛生條例",
+        "技術交流"
+      ],
+      "bodyMarkdown": "世界衛生大會（WHA）期間，疾管署專家於日內瓦與夥伴國家衛生官員及專家進行技術交流。\n\n交流主題包括事件型監測、國際衛生條例（IHR 2005）實施與 24 小時國家對口窗口、新興傳染病整備及抗藥性。\n\n疾管署將持續分享防疫經驗，爭取有意義參與 WHO 技術會議。\n\n本則為原型示意內容，日期與會議細節為示例。"
+    }
+  }
+}

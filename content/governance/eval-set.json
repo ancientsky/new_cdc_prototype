@@ -1,8 +1,8 @@
 {
-  "version": "2026.10-r3",
+  "version": "2026.10-r4",
   "updatedAt": "2026-10-02",
   "owner": "unit.oasis",
-  "note": "答案引擎評估集（原型 140+ 題；規格目標 500 題）。每次正本修訂或換模型都重跑；version 類別（曾因修訂而改變答案的題目）須全對才能上線。requires 列出該題依賴的內容 id／前綴，內容尚未建置時該題略過不計分。 r3（2026-10-02）：新增申請（apply）、檢驗（lab，專業）、通報時限（notify，主檔結構化回答）、公告（notice）類別，與影片版本題（過時影片不得被引用）。",
+  "note": "答案引擎評估集（原型 140+ 題；規格目標 500 題）。每次正本修訂或換模型都重跑；version 類別（曾因修訂而改變答案的題目）須全對才能上線。requires 列出該題依賴的內容 id／前綴，內容尚未建置時該題略過不計分。 r3（2026-10-02）：新增申請（apply）、檢驗（lab，專業）、通報時限（notify，主檔結構化回答）、公告（notice）類別，與影片版本題（過時影片不得被引用）。 r4（2026-10-02 第六輪）：新增國際合作 3 題（英文來源 sourceLang:en 內容進英文索引、中文譯文進中文索引）。",
   "categories": {
     "version": "版本題：曾因正本修訂而改變答案，引到失效版或過時衍生內容即失敗",
     "fact": "事實題：答案須含關鍵事實並引用正確來源",
@@ -2664,6 +2664,75 @@
           "service.ltbi-treatment"
         ]
       }
+    },
+    {
+      "id": "INTL001",
+      "category": "multilingual",
+      "lang": "en",
+      "requires": [
+        "topic.international-cooperation"
+      ],
+      "q": "How do I contact Taiwan's IHR focal point?",
+      "expect": {
+        "refuse": false,
+        "mustInclude": [
+          "1922"
+        ],
+        "mustCiteAny": [
+          "topic.international-cooperation",
+          "page.international-ihr-focal-point",
+          "news.2026-05-22-international-wha-technical-exchange"
+        ]
+      },
+      "note": "英文為來源語言（sourceLang:en）的內容進英文索引；IHR 國家對口窗口 24 小時，經 1922 聯絡"
+    },
+    {
+      "id": "INTL002",
+      "category": "multilingual",
+      "lang": "en",
+      "requires": [
+        "service.international-training-application"
+      ],
+      "q": "How can foreign health officials apply for Taiwan CDC training?",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "service.international-training-application",
+          "topic.international-cooperation",
+          "news.2026-08-17-international-fetp-workshop"
+        ],
+        "mustIncludeAny": [
+          "apply",
+          "application"
+        ]
+      },
+      "note": "英文來源的申請服務：答案須引用國際訓練申請服務或國際合作專區"
+    },
+    {
+      "id": "INTL003",
+      "category": "fact",
+      "requires": [
+        "topic.international-cooperation"
+      ],
+      "q": "疾管署有哪些國際合作？",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "topic.international-cooperation",
+          "service.international-training-application",
+          "news.2026-09-15-international-health-mou",
+          "news.2026-05-22-international-wha-technical-exchange",
+          "news.2026-08-17-international-fetp-workshop"
+        ],
+        "mustIncludeAny": [
+          "國際衛生條例",
+          "WHO",
+          "APEC",
+          "新南向",
+          "FETP"
+        ]
+      },
+      "note": "英文來源內容的中文譯文（i18n['zh-TW']，reviewed）進中文索引"
     }
   ]
 }

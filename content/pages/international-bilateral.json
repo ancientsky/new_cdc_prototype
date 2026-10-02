@@ -1,0 +1,260 @@
+{
+  "id": "page.international-bilateral",
+  "type": "page",
+  "sourceLang": "en",
+  "title": "Bilateral cooperation and MOUs",
+  "owner": "unit.international",
+  "steward": "國際合作組承辦人",
+  "publishedAt": "2026-10-01",
+  "reviewedAt": "2026-10-01",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "en": {
+      "status": "source"
+    },
+    "zh-TW": {
+      "status": "reviewed",
+      "reviewedAt": "2026-10-01",
+      "reviewer": "國際合作組中文審核人",
+      "sourceHash": "6d4b992ac405"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "Taiwan CDC cooperates bilaterally with the United States, Japan, the European Union and New Southbound partners on emerging infections, laboratories, TB, dengue and migrant health.",
+  "slug": "international/bilateral",
+  "countries": [
+    "US",
+    "JP",
+    "PH",
+    "VN",
+    "TH",
+    "ID",
+    "IN"
+  ],
+  "keywords": [
+    "bilateral cooperation",
+    "MOU",
+    "United States",
+    "Japan",
+    "European Union",
+    "New Southbound Policy"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/En/Category/MPage/{id}#bilateral",
+    "https://www.cdc.gov.tw/En/Category/MPage/{id}#new-southbound"
+  ],
+  "partners": [
+    {
+      "iso2": "US",
+      "name": "United States (AIT–TECRO framework)",
+      "topics": [
+        "Emerging infectious diseases",
+        "Laboratory capacity",
+        "Field epidemiology",
+        "GCTF workshops"
+      ],
+      "year": "",
+      "status": "Active"
+    },
+    {
+      "iso2": "JP",
+      "name": "Japan (Japan–Taiwan Exchange Association / Taiwan–Japan Relations Association)",
+      "topics": [
+        "Surveillance information exchange",
+        "Vaccine-preventable diseases",
+        "Emerging infections"
+      ],
+      "year": "",
+      "status": "Active"
+    },
+    {
+      "iso2": "",
+      "name": "European Union",
+      "topics": [
+        "Antimicrobial resistance",
+        "Preparedness expert exchanges"
+      ],
+      "year": "",
+      "status": "Active (expert exchanges)"
+    },
+    {
+      "iso2": "PH",
+      "name": "Philippines (New Southbound partner)",
+      "topics": [
+        "Tuberculosis control",
+        "Migrant worker health",
+        "Laboratory training"
+      ],
+      "year": "",
+      "status": "Active"
+    },
+    {
+      "iso2": "VN",
+      "name": "Viet Nam (New Southbound partner)",
+      "topics": [
+        "Dengue and vector control",
+        "Migrant worker health"
+      ],
+      "year": "",
+      "status": "Active"
+    },
+    {
+      "iso2": "TH",
+      "name": "Thailand (New Southbound partner)",
+      "topics": [
+        "Dengue",
+        "Malaria",
+        "Border health"
+      ],
+      "year": "",
+      "status": "Under discussion"
+    },
+    {
+      "iso2": "ID",
+      "name": "Indonesia (New Southbound partner)",
+      "topics": [
+        "Pre-departure health checks",
+        "Tuberculosis"
+      ],
+      "year": "",
+      "status": "Under discussion"
+    },
+    {
+      "iso2": "IN",
+      "name": "India (New Southbound partner)",
+      "topics": [
+        "Laboratory and vaccine research exchanges"
+      ],
+      "year": "",
+      "status": "Planned"
+    }
+  ],
+  "partnersNote": "Partner topics and statuses are illustrative; signing years are left blank until confirmed.",
+  "bodyMarkdown": "Taiwan CDC works with partner countries and regions through memoranda of understanding (MOUs), cooperation arrangements between representative offices, and joint projects.\n\n| Country / partner | Cooperation topics | Year signed | Status |\n| --- | --- | --- | --- |\n| United States (AIT–TECRO framework) | Emerging infectious diseases; Laboratory capacity; Field epidemiology; GCTF workshops | — | Active |\n| Japan (Japan–Taiwan Exchange Association / Taiwan–Japan Relations Association) | Surveillance information exchange; Vaccine-preventable diseases; Emerging infections | — | Active |\n| European Union | Antimicrobial resistance; Preparedness expert exchanges | — | Active (expert exchanges) |\n| Philippines (New Southbound partner) | Tuberculosis control; Migrant worker health; Laboratory training | — | Active |\n| Viet Nam (New Southbound partner) | Dengue and vector control; Migrant worker health | — | Active |\n| Thailand (New Southbound partner) | Dengue; Malaria; Border health | — | Under discussion |\n| Indonesia (New Southbound partner) | Pre-departure health checks; Tuberculosis | — | Under discussion |\n| India (New Southbound partner) | Laboratory and vaccine research exchanges | — | Planned |\n\n## New Southbound health cooperation\nUnder the New Southbound Policy, Taiwan CDC cooperates with partners in South and Southeast Asia on tuberculosis, dengue and other vector-borne diseases, migrant worker health and laboratory capacity, and welcomes their health officials to training programs in Taiwan.\n\n> Partner topics and statuses are illustrative in this prototype, and signing years are left blank until the Division of International Cooperation confirms them (dates are recorded by year when published).",
+  "i18n": {
+    "zh-TW": {
+      "title": "雙邊合作與合作備忘錄",
+      "summary": "疾管署與美國、日本、歐盟及新南向夥伴在新興傳染病、實驗室、結核病、登革熱與移工健康等領域雙邊合作。",
+      "keywords": [
+        "雙邊合作",
+        "合作備忘錄",
+        "美國",
+        "日本",
+        "歐盟",
+        "新南向"
+      ],
+      "partners": [
+        {
+          "iso2": "US",
+          "name": "美國（AIT–TECRO 架構）",
+          "topics": [
+            "新興傳染病",
+            "實驗室能力",
+            "田野流行病學",
+            "GCTF 研習營"
+          ],
+          "year": "",
+          "status": "合作中"
+        },
+        {
+          "iso2": "JP",
+          "name": "日本（日本台灣交流協會／台灣日本關係協會）",
+          "topics": [
+            "監測資訊交換",
+            "疫苗可預防疾病",
+            "新興傳染病"
+          ],
+          "year": "",
+          "status": "合作中"
+        },
+        {
+          "iso2": "",
+          "name": "歐盟",
+          "topics": [
+            "抗微生物製劑抗藥性",
+            "整備專家交流"
+          ],
+          "year": "",
+          "status": "合作中（專家交流）"
+        },
+        {
+          "iso2": "PH",
+          "name": "菲律賓（新南向夥伴）",
+          "topics": [
+            "結核病防治",
+            "移工健康",
+            "實驗室訓練"
+          ],
+          "year": "",
+          "status": "合作中"
+        },
+        {
+          "iso2": "VN",
+          "name": "越南（新南向夥伴）",
+          "topics": [
+            "登革熱與病媒防治",
+            "移工健康"
+          ],
+          "year": "",
+          "status": "合作中"
+        },
+        {
+          "iso2": "TH",
+          "name": "泰國（新南向夥伴）",
+          "topics": [
+            "登革熱",
+            "瘧疾",
+            "邊境衛生"
+          ],
+          "year": "",
+          "status": "洽談中"
+        },
+        {
+          "iso2": "ID",
+          "name": "印尼（新南向夥伴）",
+          "topics": [
+            "行前健康檢查",
+            "結核病"
+          ],
+          "year": "",
+          "status": "洽談中"
+        },
+        {
+          "iso2": "IN",
+          "name": "印度（新南向夥伴）",
+          "topics": [
+            "實驗室與疫苗研究交流"
+          ],
+          "year": "",
+          "status": "規劃中"
+        }
+      ],
+      "partnersNote": "合作主題與狀態為示意；簽署年待確認後登錄。",
+      "bodyMarkdown": "疾管署透過合作備忘錄（MOU）、駐外代表機構間的合作協定與共同計畫，與夥伴國家及地區合作。\n\n| 國家／夥伴 | 合作主題 | 簽署年 | 狀態 |\n| --- | --- | --- | --- |\n| 美國（AIT–TECRO 架構） | 新興傳染病、實驗室能力、田野流行病學、GCTF 研習營 | — | 合作中 |\n| 日本（日本台灣交流協會／台灣日本關係協會） | 監測資訊交換、疫苗可預防疾病、新興傳染病 | — | 合作中 |\n| 歐盟 | 抗微生物製劑抗藥性、整備專家交流 | — | 合作中（專家交流） |\n| 菲律賓（新南向夥伴） | 結核病防治、移工健康、實驗室訓練 | — | 合作中 |\n| 越南（新南向夥伴） | 登革熱與病媒防治、移工健康 | — | 合作中 |\n| 泰國（新南向夥伴） | 登革熱、瘧疾、邊境衛生 | — | 洽談中 |\n| 印尼（新南向夥伴） | 行前健康檢查、結核病 | — | 洽談中 |\n| 印度（新南向夥伴） | 實驗室與疫苗研究交流 | — | 規劃中 |\n\n## 新南向醫衛合作\n依新南向政策，疾管署與南亞及東南亞夥伴在結核病、登革熱等病媒傳染病、移工健康與實驗室能力等領域合作，並邀請夥伴國衛生官員來臺參加訓練。\n\n> 本原型中的合作主題與狀態為示意，簽署年待國際合作組確認後以「年度」登錄，目前留空。"
+    }
+  }
+}

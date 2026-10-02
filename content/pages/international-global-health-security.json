@@ -1,0 +1,77 @@
+{
+  "id": "page.international-global-health-security",
+  "type": "page",
+  "sourceLang": "en",
+  "title": "Global health security: AMR, vaccines and border quarantine",
+  "owner": "unit.international",
+  "steward": "國際合作組承辦人",
+  "publishedAt": "2026-10-01",
+  "reviewedAt": "2026-10-01",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "en": {
+      "status": "source"
+    },
+    "zh-TW": {
+      "status": "reviewed",
+      "reviewedAt": "2026-10-01",
+      "reviewer": "國際合作組中文審核人",
+      "sourceHash": "79ef8133131a"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "Taiwan CDC contributes to global health security through One Health AMR surveillance, vaccine cooperation and IHR core capacities at airports and seaports.",
+  "slug": "international/global-health-security",
+  "keywords": [
+    "global health security",
+    "antimicrobial resistance",
+    "AMR",
+    "One Health",
+    "vaccines",
+    "border quarantine",
+    "points of entry"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/En/Category/MPage/{id}#ghsa"
+  ],
+  "bodyMarkdown": "Global health security depends on what every partner can detect, prevent and respond to. Taiwan CDC contributes in three areas.\n\n- **Antimicrobial resistance (AMR)** — One Health surveillance of resistant organisms in hospitals and the community, stewardship programs and expert exchanges; see the [AMR and One Health hub](/topics/amr-one-health/).\n- **Vaccines** — vaccine-preventable disease surveillance, cooperation on vaccine supply during emergencies, and sharing of immunization program experience; see [vaccines](/vaccines/).\n- **Border quarantine** — core capacities at designated airports and seaports under the IHR, cooperation on ill travellers and conveyances, and travel health notices for destinations; see [travel health notices](/travel/).\n\n> These descriptions summarise ongoing work; detailed agreements are listed on the [bilateral cooperation page](/international/bilateral/).",
+  "i18n": {
+    "zh-TW": {
+      "title": "全球衛生安全：抗藥性、疫苗與邊境檢疫",
+      "summary": "疾管署以一體健康抗藥性監測、疫苗合作與機場港口的 IHR 核心能力，參與全球衛生安全。",
+      "keywords": [
+        "全球衛生安全",
+        "抗藥性",
+        "一體健康",
+        "疫苗",
+        "邊境檢疫",
+        "入境口岸"
+      ],
+      "bodyMarkdown": "全球衛生安全取決於每個夥伴的偵測、預防與應變能力。疾管署在三個領域貢獻：\n\n- **抗微生物製劑抗藥性（AMR）**：以一體健康（One Health）監測醫院與社區抗藥性菌株、推動抗生素管理計畫與專家交流；見[抗藥性與一體健康專區](/topics/amr-one-health/)。\n- **疫苗**：疫苗可預防疾病監測、緊急時期疫苗供應合作、分享預防接種計畫經驗；見[疫苗](/vaccines/)。\n- **邊境檢疫**：依 IHR 建置指定機場、港口的核心能力，合作處理有症狀旅客與交通工具，並發布各目的地旅遊疫情建議；見[國際旅遊疫情建議](/travel/)。\n\n> 以上為持續進行工作的摘要；個別協議列於[雙邊合作頁](/international/bilateral/)。"
+    }
+  }
+}

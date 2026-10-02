@@ -269,3 +269,6 @@ body.adm { background: var(--paper); color: var(--ink); min-height: 100vh; displ
 .mg-ex__pend { font-size: var(--fs-sm); font-weight: 600; white-space: nowrap; }
 .mg-items { min-width: 860px; background: #fff; }
 .adm-stack--card { height: 8px; margin: var(--sp-1) 0 var(--sp-2); }
+.adm-filters .adm-field--seg { flex: 0 0 auto; min-width: 0; }
+.adm-seg { flex-wrap: nowrap; }
+@media (max-width: 760px) { .adm-seg { flex-wrap: wrap; } }

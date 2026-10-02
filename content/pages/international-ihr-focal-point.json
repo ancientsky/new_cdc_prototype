@@ -1,0 +1,85 @@
+{
+  "id": "page.international-ihr-focal-point",
+  "type": "page",
+  "sourceLang": "en",
+  "title": "IHR National Focal Point (24/7)",
+  "owner": "unit.international",
+  "steward": "國際合作組承辦人",
+  "publishedAt": "2026-10-01",
+  "reviewedAt": "2026-10-01",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "en": {
+      "status": "source"
+    },
+    "zh-TW": {
+      "status": "reviewed",
+      "reviewedAt": "2026-10-01",
+      "reviewer": "國際合作組中文審核人",
+      "sourceHash": "16cfde5a9a2f"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "Taiwan CDC serves as the IHR (2005) National Focal Point, operating 24/7 to notify, verify and share information on urgent public health events; reach it through the 1922 hotline (from abroad +886-800-001922).",
+  "slug": "international/ihr-focal-point",
+  "keywords": [
+    "IHR",
+    "International Health Regulations",
+    "National Focal Point",
+    "24/7",
+    "WHO",
+    "event notification",
+    "1922"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/En/Category/MPage/{id}#ihr"
+  ],
+  "contactInfo": {
+    "hotline": "1922",
+    "phone": "+886-800-001922",
+    "switchboard": "+886-2-2395-9825",
+    "hours247": true,
+    "note": "Hotline and switchboard as published on the Contact page; no personal names."
+  },
+  "bodyMarkdown": "Taiwan CDC carries out the functions of Taiwan's **National Focal Point under the International Health Regulations (IHR 2005)**. The focal point is staffed **24 hours a day, 7 days a week**, so that urgent public health events can be assessed, notified and followed up without delay.\n\n## What the focal point does\n- **Event notification** — assesses events that may constitute a public health emergency of international concern (using the IHR Annex 2 decision instrument) and communicates them to WHO through the IHR channel.\n- **Verification** — answers verification requests from WHO and IHR focal points of other countries and areas.\n- **Information sharing** — exchanges case and contact information for cross-border events (for example, travellers on the same flight or ship).\n- **Points of entry** — coordinates with airport and seaport quarantine stations on ill travellers and conveyances.\n\n## How to reach the focal point\n| Purpose | Channel |\n| --- | --- |\n| Urgent event, any time (24/7) | Taiwan CDC hotline **1922** (toll-free 0800-001922; from abroad **+886-800-001922**) |\n| Official correspondence (office hours) | Taiwan CDC switchboard **+886-2-2395-9825**, Division of International Cooperation |\n| WHO and other IHR focal points | Through the established IHR contact channel; the email address is shared with counterparts through official channels |\n\n## Legal basis\n- International Health Regulations (2005)\n- Communicable Disease Control Act (Taiwan)\n\n> Contact channels on this page follow Taiwan CDC's published hotline and switchboard; no personal names are listed. Points of contact are reviewed every 12 months.",
+  "i18n": {
+    "zh-TW": {
+      "title": "國際衛生條例（IHR）國家對口窗口（24 小時）",
+      "summary": "疾管署為國際衛生條例（IHR 2005）國家對口窗口，24 小時受理、評估與通報緊急公共衛生事件並與 WHO 及各國窗口交換資訊；緊急聯絡請撥 1922（國外 +886-800-001922）。",
+      "keywords": [
+        "國際衛生條例",
+        "IHR",
+        "國家對口窗口",
+        "24 小時",
+        "世界衛生組織",
+        "事件通報",
+        "1922"
+      ],
+      "bodyMarkdown": "疾管署執行臺灣於**國際衛生條例（IHR 2005）下的國家對口窗口（National Focal Point）**職能，**全年無休、24 小時**運作，確保可能構成國際關注公共衛生緊急事件的訊息能即時評估、通報與追蹤。\n\n## 窗口的工作\n- **事件通報**：依 IHR 附件二決策工具評估事件，經 IHR 管道與世界衛生組織（WHO）聯繫。\n- **查證**：回覆 WHO 與其他國家／地區 IHR 窗口的查證請求。\n- **資訊交換**：跨境事件（例如同班機、同船旅客）之個案與接觸者資訊交換。\n- **入境口岸**：與機場、港口檢疫站協調處理有症狀旅客與交通工具。\n\n## 聯絡方式\n| 目的 | 管道 |\n| --- | --- |\n| 緊急事件（24 小時） | 疾管署防疫專線 **1922**（免付費 0800-001922；國外 **+886-800-001922**） |\n| 公文往來（上班時間） | 疾管署總機 **+886-2-2395-9825**，國際合作組 |\n| WHO 與其他 IHR 窗口 | 透過既有 IHR 聯繫管道；電子郵件信箱經官方管道提供給對口單位 |\n\n## 法源\n- 國際衛生條例（2005）\n- 傳染病防治法\n\n> 本頁聯絡方式沿用疾管署公開之防疫專線與總機，不列個人姓名；窗口資訊每 12 個月審閱。"
+    }
+  }
+}

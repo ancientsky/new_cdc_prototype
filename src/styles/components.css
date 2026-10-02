@@ -913,3 +913,5 @@ mark.c-hit{background:#ffe08a;color:var(--ink);padding:0 2px;border-radius:2px}
   .c-intl__facts{grid-template-columns:1fr}
   .c-pager__a{max-width:100%}
 }
+.c-ihr__num{display:block}
+.c-ihr__num .muted{font-size:var(--fs-xs)}

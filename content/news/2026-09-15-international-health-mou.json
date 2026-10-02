@@ -1,0 +1,76 @@
+{
+  "id": "news.2026-09-15-international-health-mou",
+  "type": "news",
+  "sourceLang": "en",
+  "title": "Taiwan CDC signs a public health cooperation MOU with a New Southbound partner",
+  "owner": "unit.international",
+  "steward": "國際合作組承辦人",
+  "publishedAt": "2026-09-15",
+  "reviewedAt": "2026-09-15",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-10-01"
+  },
+  "languages": {
+    "en": {
+      "status": "source"
+    },
+    "zh-TW": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-15",
+      "reviewer": "國際合作組中文審核人",
+      "sourceHash": "12c402ea3e41"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "Taiwan CDC signed a memorandum of understanding with a partner institution in Southeast Asia on tuberculosis and dengue control, laboratory training and information exchange.",
+  "newsType": "press",
+  "keywords": [
+    "MOU",
+    "New Southbound",
+    "bilateral cooperation",
+    "tuberculosis",
+    "dengue"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/En/Bulletin/Detail/{id}#2026-09-15-international-health-mou"
+  ],
+  "bodyMarkdown": "Taiwan CDC signed a memorandum of understanding (MOU) on public health cooperation with a partner institution in Southeast Asia under the New Southbound Policy.\n\nThe MOU covers tuberculosis and dengue control, laboratory training, migrant worker health and the timely exchange of information on cross-border events through IHR channels.\n\nThe cooperation will be reviewed each year, and its status is listed on the bilateral cooperation page.\n\nThis release is illustrative prototype content; the partner, date and scope are examples.",
+  "i18n": {
+    "zh-TW": {
+      "title": "疾管署與新南向夥伴簽署公共衛生合作備忘錄",
+      "summary": "疾管署與東南亞夥伴機構簽署合作備忘錄，合作結核病與登革熱防治、實驗室訓練及資訊交換。",
+      "keywords": [
+        "合作備忘錄",
+        "新南向",
+        "雙邊合作",
+        "結核病",
+        "登革熱"
+      ],
+      "bodyMarkdown": "疾管署依新南向政策，與東南亞夥伴機構簽署公共衛生合作備忘錄（MOU）。\n\n合作範圍包括結核病與登革熱防治、實驗室訓練、移工健康，以及透過 IHR 管道即時交換跨境事件資訊。\n\n合作每年度檢討，狀態列於雙邊合作頁。\n\n本則為原型示意內容，夥伴、日期與範圍為示例。"
+    }
+  }
+}

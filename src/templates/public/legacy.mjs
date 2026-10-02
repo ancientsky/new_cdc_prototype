@@ -5,7 +5,7 @@
 // 對 V1 的 site.migration 一律容錯：沒有資料時仍可查（只靠 legacy-map），只是不顯示狀態。
 import { html, raw, jsonScript } from '../../../scripts/lib/render.mjs';
 import { config } from '../../../site.config.mjs';
-import { pageHead, hrefFor, L, legacyKey, LEGACY_LOOKUP_JS, LEGACY_STATUS_KIND, hasPlaceholder } from './_partials.mjs';
+import { pageHead, hrefFor, L, legacyKey, LEGACY_LOOKUP_JS, LEGACY_STATUS_KIND, hasPlaceholder, diseaseName } from './_partials.mjs';
 
 const STATUSES = ['migrated', 'merged', 'archived', 'pending', 'dropped'];
 import { LEGACY_REQ_KEYS } from './_partials.mjs';
@@ -17,13 +17,43 @@ export function meta(ctx) {
   return { title: ctx.t('legacy.title'), description: ctx.t('legacy.lead'), noindex: true, bodyClass: 'page-legacy' };
 }
 
-/** 逐筆狀態表（key＝正規化後的舊網址）與目標頁資訊；沒有 site.migration 就是空的 */
+/** 新站區塊（疾病頁錨點）→ 介面字 key；用於「新站對應 {疾病} 的 {區塊}」提示 */
+const BLOCK_KEY = {
+  'what-to-do': 'hub.pub.what-to-do', symptoms: 'hub.pub.symptoms', transmission: 'hub.pub.transmission', prevention: 'hub.pub.prevention', treatment: 'hub.pub.treatment',
+  vaccine: 'hub.pub.vaccine', situation: 'hub.pub.situation', faq: 'hub.pub.faq', 'pro-docs': 'hub.pro.docs', 'pro-report': 'hub.pro.report', 'pro-programs': 'hub.pro.programs',
+  'pro-services': 'hub.pro.services', 'pro-stats': 'hub.pro.stats', 'pro-research': 'hub.pro.research',
+};
+/** 目標內容型別 → 區塊（錨點沒寫時，用 mapTo／目標型別推得：Q&A 對應 Q&A 區塊、文件對應「指引與手冊」…） */
+const TYPE_BLOCK_KEY = {
+  faq: 'hub.pub.faq', document: 'hub.pro.docs', labtest: 'hub.pro.report', dataset: 'hub.pro.stats', news: 'disease.news', media: 'disease.materials', publication: 'disease.materials',
+  topic: 'home.topics', research: 'hub.pro.research', service: 'hub.pro.services',
+};
+
+/** 這筆舊頁在新站對應的區塊名稱（依 mapTo → 錨點 → 目標型別；都沒有回傳 null） */
+export function blockLabel(ctx, it, tg) {
+  const mt = it?.mapTo ?? {};
+  let k = BLOCK_KEY[mt.block] ?? BLOCK_KEY[mt.anchor] ?? BLOCK_KEY[it?.anchor] ?? null;
+  if (!k && mt.kind === 'disease-page') k = 'disease.onemin';
+  if (!k && mt.kind === 'master-field') k = mt.field === 'incubation' ? 'kf.incubation' : 'hub.pro.report';
+  if (!k && mt.kind === 'page' && /report/.test(mt.path ?? '')) k = 'hub.pro.report';
+  if (!k && mt.kind === 'related') k = TYPE_BLOCK_KEY[mt.type] ?? null;
+  if (!k && tg) k = TYPE_BLOCK_KEY[tg.type] ?? null;
+  return k ? ctx.t(k) : null;
+}
+
+/**
+ * 逐筆狀態表（key＝正規化後的舊網址）與目標頁資訊；沒有 site.migration 就是空的。
+ * {id} 佔位的網址（推導清單全部都是）改以「URL 模式＋#片段」比對，並依 (模式, 片段) 合併：72 種疾病共用同一種模式，
+ * 光看網址無法知道是哪一種疾病，所以每組記下 c＝涉及幾份清單；c＝1 才有確定的疾病與目標，c＞1 只提示「這是舊站疾病頁的『{oldTitle}』」並導向傳染病列表。
+ */
 export function lookupTables(ctx) {
   const { site } = ctx;
   const items = {};
-  const pats = [];
+  const groups = new Map();
   const targets = {};
   for (const list of site.migration?.lists ?? []) {
+    const dId = list.disease ?? (list.scope?.kind === 'disease' ? list.scope.disease : null);
+    const dm = dId ? site.diseaseMasterById?.get(dId) : null;
     for (const it of list.items ?? []) {
       if (!it?.oldUrl) continue;
       const tg = (it.toId ?? it.target) ? site.byId.get(it.toId ?? it.target) : null; // toId：目標為失效版文件時直接指向現行版
@@ -33,12 +63,17 @@ export function lookupTables(ctx) {
         g: tg ? tg.id : null, a: it.anchor ?? '', n: it.note ?? '', r: it.newRequirements ?? [],
       };
       if (hasPlaceholder(it.oldUrl)) {
-        // 舊網址的編號不確定（{id} 佔位）：以 URL 模式＋#片段比對，只在 /legacy/ 查詢頁使用（片段不會送到伺服器，所以 404 與伺服器對照檔不含這類）
         const [noHash, hash = ''] = String(it.oldUrl).split('#');
         const k = legacyKey(noHash.replace(/\{[^}]*\}/g, 'zzidzz'));
         if (!k) continue;
         const re = `^${k.replace(/[.*+?^$()|[\]\\{}]/g, '\\$&').replace(/zzidzz/g, '[^/?]+')}$`;
-        pats.push({ re, h: hash.toLowerCase(), ...info });
+        const gk = `${re}|${hash.toLowerCase()}`;
+        let g = groups.get(gk);
+        if (!g) { g = { re, h: hash.toLowerCase(), ...info, lists: new Map(), blocks: new Map() }; groups.set(gk, g); }
+        const lid = list.id ?? `${groups.size}:${g.lists.size}`;
+        if (!g.lists.has(lid)) g.lists.set(lid, { g: info.g, a: info.a, dn: dm ? diseaseName(ctx, dm) : null });
+        const b = blockLabel(ctx, it, tg);
+        if (b) g.blocks.set(b, (g.blocks.get(b) ?? 0) + 1);
         continue;
       }
       const key = legacyKey(it.oldUrl);
@@ -46,6 +81,11 @@ export function lookupTables(ctx) {
       items[key] = info;
     }
   }
+  const pats = [...groups.values()].map(({ lists, blocks, ...g }) => {
+    const only = lists.size === 1 ? [...lists.values()][0] : null;
+    const b = [...blocks.entries()].sort((x, y) => y[1] - x[1])[0]?.[0] ?? null;
+    return { ...g, c: lists.size, b, ...(only ? { g: only.g, a: only.a, dn: only.dn } : { g: null, a: '' }) };
+  });
   return { items, pats, targets };
 }
 
@@ -60,15 +100,18 @@ export function render(ctx) {
   const lists = site.migration?.lists ?? [];
   const until = lists.map((l) => l.showLegacyUntil).filter(Boolean).sort().pop() ?? null;
   const { items, pats, targets } = lookupTables(ctx);
+  // 第六輪：每種傳染病一份的推導清單（70 份上下）合併成一列，只逐列列出人工清單
+  const derivedLists = lists.filter((l) => l.derived === true);
+  const derivedTotal = derivedLists.reduce((a, l) => { const c = statsOf(l); for (const k of Object.keys(a)) a[k] += c[k]; return a; }, { total: 0, migrated: 0, merged: 0, archived: 0, pending: 0, dropped: 0 });
   const S = {
     hitT: t('legacy.hit.t'), hitGo: t('legacy.hit.go'), hitStatus: t('legacy.hit.status'), hitOld: t('legacy.hit.old'), hitNote: t('legacy.hit.note'), hitPattern: t('legacy.hit.pattern'), hitNopage: t('legacy.hit.nopage'),
     missT: t('legacy.miss.t'), missD: t('legacy.miss.d'), missSearch: t('legacy.miss.search', { q: '{q}' }), missCall: t('legacy.miss.call'),
-    unverified: t('legacy.unverified'), reqT: t('legacy.req.t'), err: t('legacy.err'), loading: t('legacy.loading'), home: t('404.home'),
+    unverified: t('legacy.unverified'), hintT: t('legacy.hint.t'), hintOne: t('legacy.hint.one', { title: '{title}', disease: '{disease}', block: '{block}' }), hintMany: t('legacy.hint.many', { title: '{title}', block: '{block}' }), hintGo: t('legacy.hint.go', { disease: '{disease}', block: '{block}' }), hintList: t('legacy.hint.list'), hintBlock: t('legacy.hint.block'), reqT: t('legacy.req.t'), err: t('legacy.err'), loading: t('legacy.loading'), home: t('404.home'),
     status: Object.fromEntries(STATUSES.map((k) => [k, t(`legacy.status.${k}`)])), kind: LEGACY_STATUS_KIND,
     req: Object.fromEntries(REQS.map((k) => [k, t(`legacy.req.${k}`)])),
   };
   const data = {
-    base: config.basePath, map: url('/v1/legacy-map.json', { noLang: true }), ask: url('/ask/'), home: url('/'),
+    base: config.basePath, map: url('/v1/legacy-map.json', { noLang: true }), ask: url('/ask/'), home: url('/'), diseases: url('/diseases/'),
     items, pats, targets, s: S,
   };
   return html`${pageHead(ctx, { trail: [{ label: t('legacy.title') }], h1: t('legacy.title'), lead: t('legacy.lead') })}
@@ -80,7 +123,8 @@ export function render(ctx) {
 <div class="c-legacyres" id="lg-res" aria-live="polite"><noscript><p class="muted">${t('legacy.nojs')}</p></noscript></div>
 
 ${lists.length ? html`<section class="c-block" aria-labelledby="lg-cov"><h2 id="lg-cov">${t('legacy.cov.t')}</h2>
-  <ul class="c-legacycov">${lists.map((l) => { const c = statsOf(l); return html`<li><strong>${L(ctx, l, 'title') ?? l.title}</strong><br><span class="muted">${t('legacy.cov.row', c)}</span></li>`; })}</ul>
+  <ul class="c-legacycov">${lists.filter((l) => l.derived !== true).map((l) => { const c = statsOf(l); return html`<li><strong>${L(ctx, l, 'title') ?? l.title}</strong><br><span class="muted">${t('legacy.cov.row', c)}</span></li>`; })}
+    ${derivedLists.length ? html`<li><strong>${t('legacy.cov.derived', { n: derivedLists.length })}</strong><br><span class="muted">${t('legacy.cov.row', derivedTotal)}</span></li>` : ''}</ul>
 </section>` : ''}
 
 <section class="c-block" aria-labelledby="lg-policy"><h2 id="lg-policy">${t('legacy.policy.t')}</h2>
@@ -132,11 +176,20 @@ const CLIENT = `(function(){
     var exact=hits.filter(function(p){return p.h===h});
     return exact[0]||(!h?hits.filter(function(p){return !p.h})[0]:null)||null;
   }
+  function hint(it){
+    var many=it.c>1, tg=(!many&&it.g&&D.targets[it.g])?D.targets[it.g]:null, blk=it.b||S.hintBlock;
+    var card=mk('section','c-legacycard c-legacycard--hint'); card.appendChild(mk('h2',null,S.hintT));
+    card.appendChild(mk('p','c-legacycard__hint',(many?S.hintMany:S.hintOne).replace('{title}',it.t).replace('{block}',blk).replace('{disease}',it.dn||(tg?tg.title:''))));
+    if(tg){ var a=mk('a','c-btn c-legacycard__go',S.hintGo.replace('{disease}',it.dn||tg.title).replace('{block}',blk)); a.href=tg.href+(it.a?'#'+encodeURIComponent(it.a):''); card.appendChild(a); }
+    else if(many){ var a2=mk('a','c-btn c-legacycard__go',S.hintList); a2.href=D.diseases; card.appendChild(a2); }
+    return card;
+  }
   function show(val){
     res.textContent='';
     if(!val){ return; }
     var itf=legacyFind(itemIdx,val), it=itf&&itf.to, mf=idx?legacyFind(idx,val):null, viaPat=false;
     if(!it&&!mf){ it=patFind(val); viaPat=!!it; }
+    if(viaPat&&it){ var hc=hint(it); missLinks(hc,legacyWord(val)); res.appendChild(hc); return; }
     var href=null, title=null;
     if(it&&it.g&&D.targets[it.g]){ var tg=D.targets[it.g]; href=tg.href+(it.a?'#'+encodeURIComponent(it.a):''); title=tg.title; }
     else if(mf&&safe(mf.to)){ href=D.base+mf.to; title=mf.to; }

@@ -1,0 +1,191 @@
+{
+  "id": "topic.international-cooperation",
+  "type": "topic",
+  "sourceLang": "en",
+  "title": "International Cooperation",
+  "owner": "unit.international",
+  "steward": "國際合作組承辦人",
+  "publishedAt": "2026-10-01",
+  "reviewedAt": "2026-10-01",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-10-01"
+  },
+  "languages": {
+    "en": {
+      "status": "source"
+    },
+    "zh-TW": {
+      "status": "reviewed",
+      "reviewedAt": "2026-10-01",
+      "reviewer": "國際合作組中文審核人",
+      "sourceHash": "53b6895040d0"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "How Taiwan CDC works with WHO and partner countries: the 24/7 IHR National Focal Point, multilateral and bilateral cooperation, international training and English publications.",
+  "slug": "international-cooperation",
+  "kind": "program",
+  "priority": 9,
+  "keywords": [
+    "international cooperation",
+    "IHR",
+    "National Focal Point",
+    "WHO",
+    "APEC",
+    "GHSA",
+    "New Southbound",
+    "FETP",
+    "international training"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/En/Category/List/{id}#international-cooperation"
+  ],
+  "introMarkdown": "Taiwan Centers for Disease Control (Taiwan CDC) works with the World Health Organization (WHO), regional networks and partner countries so that outbreaks are detected early and information crosses borders quickly.\n\n- **IHR National Focal Point, 24/7** — Taiwan CDC carries out the National Focal Point functions under the International Health Regulations (IHR 2005). To contact the focal point about an urgent public health event, call the Taiwan CDC hotline 1922 at any time (from abroad +886-800-001922); official correspondence goes through the switchboard +886-2-2395-9825.\n- **Multilateral cooperation** — technical exchanges with WHO and during the World Health Assembly week, the APEC Health Working Group and the Global Health Security Agenda (GHSA).\n- **Bilateral cooperation** — the United States, Japan, the European Union and New Southbound partners in South and Southeast Asia.\n- **Training** — the Field Epidemiology Training Program (FETP), international workshops and laboratory training; foreign health officials apply online through the international training application service.\n- **Publications** — the Taiwan Epidemiology Bulletin and the Taiwan CDC Annual Report in English.",
+  "links": [
+    {
+      "label": "IHR National Focal Point (24/7)",
+      "href": "/international/ihr-focal-point/",
+      "sourceLang": "en",
+      "i18n": {
+        "zh-TW": {
+          "label": "IHR 國家對口窗口（24 小時）"
+        }
+      }
+    },
+    {
+      "label": "Multilateral cooperation: WHO, WHA, APEC, GHSA",
+      "href": "/international/multilateral/",
+      "sourceLang": "en",
+      "i18n": {
+        "zh-TW": {
+          "label": "多邊合作：WHO、WHA、APEC、GHSA"
+        }
+      }
+    },
+    {
+      "label": "Bilateral cooperation and MOUs",
+      "href": "/international/bilateral/",
+      "sourceLang": "en",
+      "i18n": {
+        "zh-TW": {
+          "label": "雙邊合作與合作備忘錄"
+        }
+      }
+    },
+    {
+      "label": "International training and FETP",
+      "href": "/international/training/",
+      "sourceLang": "en",
+      "i18n": {
+        "zh-TW": {
+          "label": "國際訓練與 FETP"
+        }
+      }
+    },
+    {
+      "label": "Global health security",
+      "href": "/international/global-health-security/",
+      "sourceLang": "en",
+      "i18n": {
+        "zh-TW": {
+          "label": "全球衛生安全"
+        }
+      }
+    },
+    {
+      "label": "English publications",
+      "href": "/international/publications-en/",
+      "sourceLang": "en",
+      "i18n": {
+        "zh-TW": {
+          "label": "英文出版品"
+        }
+      }
+    },
+    {
+      "label": "Apply for international training",
+      "href": "/apply/international-training-application/",
+      "sourceLang": "en",
+      "i18n": {
+        "zh-TW": {
+          "label": "申請國際訓練"
+        }
+      }
+    },
+    {
+      "label": "Taiwan Epidemiology Bulletin",
+      "href": "/publications/bulletin-42-18/",
+      "sourceLang": "en",
+      "i18n": {
+        "zh-TW": {
+          "label": "疫情報導（英文）"
+        }
+      }
+    }
+  ],
+  "sections": [
+    "page.international-ihr-focal-point",
+    "page.international-multilateral",
+    "page.international-bilateral",
+    "page.international-training",
+    "page.international-global-health-security",
+    "page.international-publications-en"
+  ],
+  "contentIds": [
+    "page.international-ihr-focal-point",
+    "page.international-multilateral",
+    "page.international-bilateral",
+    "page.international-training",
+    "page.international-global-health-security",
+    "page.international-publications-en",
+    "service.international-training-application",
+    "news.2026-05-22-international-wha-technical-exchange",
+    "news.2026-08-17-international-fetp-workshop",
+    "news.2026-09-15-international-health-mou",
+    "publication.bulletin-42-18",
+    "publication.annual-report-2025",
+    "topic.amr-one-health"
+  ],
+  "i18n": {
+    "zh-TW": {
+      "title": "國際合作",
+      "summary": "疾管署如何與 WHO 及夥伴國家合作：24 小時國際衛生條例國家對口窗口、多邊與雙邊合作、國際訓練與英文出版品。",
+      "keywords": [
+        "國際合作",
+        "國際衛生條例",
+        "國家對口窗口",
+        "世界衛生組織",
+        "APEC",
+        "全球衛生安全綱領",
+        "新南向",
+        "FETP",
+        "國際訓練"
+      ],
+      "introMarkdown": "疾管署與世界衛生組織（WHO）、區域網絡及夥伴國家合作，讓疫情及早被偵測、資訊快速跨境流通。\n\n- **國際衛生條例國家對口窗口（24 小時）**：疾管署執行國際衛生條例（IHR 2005）國家對口窗口職能。緊急公共衛生事件請隨時撥打防疫專線 1922（國外 +886-800-001922）；公文往來請經總機 +886-2-2395-9825。\n- **多邊合作**：與 WHO 技術交流、世界衛生大會（WHA）期間專家會談、APEC 衛生工作小組、全球衛生安全綱領（GHSA）。\n- **雙邊合作**：美國、日本、歐盟與南亞及東南亞的新南向夥伴。\n- **國際訓練**：田野流行病學訓練計畫（FETP）、國際研習營與實驗室訓練；外國衛生人員可線上申請國際訓練。\n- **出版品**：英文疫情報導（Taiwan Epidemiology Bulletin）與疾病管制署年報。"
+    }
+  }
+}

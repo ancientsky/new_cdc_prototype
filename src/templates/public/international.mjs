@@ -89,15 +89,15 @@ const CLS_ORDER = ['wm--c1', 'wm--c2', 'wm--c3'];
 export function bilateralData(ctx, page) {
   if (!page) return null;
   const { site, t } = ctx;
-  const structured = page.partners ?? page.mous ?? page.agreements;
+  const structured = L(ctx, page, 'partners') ?? page.partners ?? page.mous ?? page.agreements;
   if (Array.isArray(structured) && structured.length) {
     const rows = structured.map((p) => {
       const iso = String(p.iso2 ?? p.iso ?? p.country ?? '').toUpperCase();
       const name = p.name ?? p.partner ?? p.agency ?? p.country ?? iso;
-      const topic = Array.isArray(p.topics ?? p.topic) ? (p.topics ?? p.topic).join(', ') : (p.topics ?? p.topic ?? '');
+      const topic = Array.isArray(p.topics ?? p.topic) ? (p.topics ?? p.topic).join(ctx.lang === 'zh-TW' ? '；' : '; ') : (p.topics ?? p.topic ?? '');
       const year = p.year ?? p.signedYear ?? '';
       const status = p.status ?? '';
-      return { cells: [name, topic, String(year), status], isos: /^[A-Z]{2}$/.test(iso) ? [iso] : isosIn(site, name), cls: statusClass(status) };
+      return { cells: [name, topic, String(year || '—'), status || '—'], isos: /^[A-Z]{2}$/.test(iso) ? [iso] : isosIn(site, name), cls: statusClass(status) };
     });
     return { header: [t('international.bi.partner'), t('international.bi.topic'), t('international.bi.year'), t('international.bi.status')], rows };
   }
@@ -138,17 +138,21 @@ function mapOptions(ctx, data) {
 /** IHR 窗口：結構化欄位優先（contactInfo／contacts），否則從本語言內文抓電話、信箱與 24 小時字樣 */
 export function ihrContacts(ctx, page) {
   if (!page) return { phones: [], emails: [], always: false };
+  const { t } = ctx;
   const info = page.contactInfo ?? page.contacts ?? {};
   const body = `${L(ctx, page, 'bodyMarkdown') ?? ''}\n${page.bodyMarkdown ?? ''}\n${L(ctx, page, 'summary') ?? ''}`;
   const norm = (s) => String(s).replace(/\s+/g, ' ').trim();
   const phones = new Map(), emails = new Map();
-  const addPhone = (s) => { const d = String(s).replace(/\D/g, ''); if (d.length >= 8 && !phones.has(d)) phones.set(d, norm(s)); };
-  for (const k of ['phone', 'tel', 'telephone', 'hotline', 'switchboard']) for (const v of [].concat(info[k] ?? [])) if (typeof v === 'string') addPhone(v);
+  const addPhone = (s, label = null, minDigits = 8) => { const d = String(s).replace(/\D/g, ''); if (d.length >= minDigits && !phones.has(d)) phones.set(d, { num: norm(s), label }); };
+  // 結構化欄位優先並帶說明文字：hotline＝國內專線（1922）、phone＝國外撥打、switchboard＝總機（上班時間）
+  for (const v of [].concat(info.hotline ?? [])) if (typeof v === 'string') addPhone(v, t('international.contact.hotline'), 3);
+  for (const k of ['phone', 'tel', 'telephone']) for (const v of [].concat(info[k] ?? [])) if (typeof v === 'string') addPhone(v, t('international.contact.hotline.intl'));
+  for (const v of [].concat(info.switchboard ?? [])) if (typeof v === 'string') addPhone(v, t('international.ihr.switchboard'));
   for (const k of ['email', 'mail']) for (const v of [].concat(info[k] ?? [])) if (typeof v === 'string' && v.includes('@')) emails.set(v.toLowerCase(), v);
   for (const m of body.matchAll(/\+\d{1,3}[\s-]?\(?\d{1,4}\)?[\d\s-]{5,}\d/g)) addPhone(m[0]);
   for (const m of body.matchAll(/[\w.+-]+@[\w-]+(?:\.[\w-]+)+/g)) emails.set(m[0].toLowerCase(), m[0]);
   const always = info.hours247 === true || /\b24\s*(?:\/\s*7|hours?)\b|24\s*小時|全年無休|24-hour/i.test(body);
-  return { phones: [...phones.values()].slice(0, 3), emails: [...emails.values()].slice(0, 3), always };
+  return { phones: [...phones.values()].slice(0, 4), emails: [...emails.values()].slice(0, 3), always };
 }
 
 /** 內文中以粗體開頭的條列 → 重點（多邊合作的機構／機制） */
@@ -238,7 +242,7 @@ ${bilateral && mapOpts?.isoCount ? raw(`<style>${TravelMap.styles}</style>`) : '
       </div>
       <dl class="c-ihr__contact">
         ${contacts.always ? html`<div class="c-ihr__247"><dt>${t('international.ihr.hours')}</dt><dd><strong>${t('international.ihr.247')}</strong></dd></div>` : ''}
-        ${contacts.phones.length ? html`<div><dt>${t('international.ihr.phone')}</dt><dd>${contacts.phones.map((p) => html`<a href="${telHref(p)}">${p}</a>`)}</dd></div>` : ''}
+        ${contacts.phones.length ? html`<div><dt>${t('international.ihr.phone')}</dt><dd>${contacts.phones.map((p) => html`<span class="c-ihr__num">${p.label ? html`<span class="muted">${p.label}</span> ` : ''}<a href="${telHref(p.num)}">${p.num}</a></span>`)}</dd></div>` : ''}
         ${contacts.emails.length ? html`<div><dt>${t('international.ihr.email')}</dt><dd>${contacts.emails.map((e) => html`<a href="mailto:${e}">${e}</a>`)}</dd></div>` : ''}
         ${!contacts.always && !contacts.phones.length && !contacts.emails.length ? html`<div><dd class="muted">${t('international.ihr.none')}</dd></div>` : ''}
       </dl>
@@ -283,7 +287,7 @@ ${bilateral && mapOpts?.isoCount ? raw(`<style>${TravelMap.styles}</style>`) : '
   <section class="c-block" id="contact" aria-labelledby="h-contact"><h2 id="h-contact">${t('international.sec.contact')}</h2>
     <dl class="c-intl__facts c-intl__facts--contact">
       ${owner ? html`<div><dt>${t('international.contact.unit')}</dt><dd>${owner}</dd></div>` : ''}
-      ${ihr && (contacts.phones.length || contacts.emails.length) ? html`<div><dt>${t('international.sec.ihr')}</dt><dd>${contacts.phones.map((p) => html`<a href="${telHref(p)}">${p}</a> `)}${contacts.emails.map((e) => html`<a href="mailto:${e}">${e}</a> `)}</dd></div>` : ''}
+      ${ihr && (contacts.phones.length || contacts.emails.length) ? html`<div><dt>${t('international.sec.ihr')}</dt><dd>${contacts.phones.map((p) => html`<a href="${telHref(p.num)}">${p.num}</a> `)}${contacts.emails.map((e) => html`<a href="mailto:${e}">${e}</a> `)}</dd></div>` : ''}
       ${sv?.contact ? html`<div><dt>${t('international.contact.service')}</dt><dd>${L(ctx, sv, 'contact') ?? sv.contact}</dd></div>` : ''}
       <div><dt>${t('international.contact.hotline')}</dt><dd><a href="tel:${config.hotline}">${config.hotline}</a></dd></div>
       <div><dt>${t('international.contact.hotline.intl')}</dt><dd><a href="${telHref(config.hotlineIntl)}">${config.hotlineIntl}</a></dd></div>
