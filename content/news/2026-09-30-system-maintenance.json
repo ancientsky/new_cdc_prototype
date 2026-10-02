@@ -1,0 +1,61 @@
+{
+  "id": "news.2026-09-30-system-maintenance",
+  "type": "news",
+  "title": "10 月 3 日晚間官網與傳染病通報系統例行維護",
+  "owner": "unit.it",
+  "publishedAt": "2026-09-30",
+  "reviewedAt": "2026-09-30",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-30",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "2026 年 10 月 3 日 22:00 至 10 月 4 日 06:00 進行官網與傳染病通報系統（NIDRS）例行維護，期間服務可能中斷，緊急通報請以電話或傳真通知衛生局。",
+  "keywords": [
+    "系統維護",
+    "NIDRS",
+    "官網",
+    "服務中斷",
+    "資訊室"
+  ],
+  "newsType": "other",
+  "deadlineAt": "2026-10-04",
+  "bodyMarkdown": "## 維護時間\n2026 年 10 月 3 日（星期六）22:00 至 10 月 4 日（星期日）06:00\n\n## 影響範圍\n- 疾管署官網、開放資料 API：可能短暫無法連線\n- 傳染病通報系統（NIDRS）：暫停服務\n\n## 維護期間緊急通報\n請以電話或傳真通報轄區衛生局，系統恢復後補登。民眾防疫諮詢請撥 **1922**，不受影響。",
+  "i18n": {
+    "en": {
+      "title": "Scheduled maintenance of the website and NIDRS on 3 October",
+      "summary": "Website and NIDRS maintenance from 22:00 on 3 October to 06:00 on 4 October 2026; report urgent cases to local health bureaus by phone or fax."
+    }
+  }
+}

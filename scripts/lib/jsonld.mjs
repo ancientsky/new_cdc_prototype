@@ -7,9 +7,13 @@
 //   situationJsonLd(ctx, situation) → Dataset + cdc:situation（態勢層）
 //   travelJsonLd(ctx, country, alerts) → SpecialAnnouncement + cdc:travel（旅遊疫情，自訂）
 //   governanceExt(ctx, item)        → cdc:* 擴充欄位（owner、reviewedAt、nextReviewAt、version、whitelist…）
+//   第二輪：media → VideoObject（Clip 章節）、topic → CollectionPage、service → GovernmentService＋HowTo、
+//          publication → PublicationIssue／Book、labtest → MedicalTest、research → ResearchProject、
+//          news(recruit) → JobPosting、news(procurement) → WebPage＋cdc:refNo／cdc:validThrough
+//   aboutOrgJsonLd(ctx)             → GovernmentOrganization＋subOrganization[]（/about/ 組織架構，master/units＋site.gov.byOwner）
 import { config, siteOrigin } from '../../site.config.mjs';
 import { mdToText } from './markdown.mjs';
-import { pathOf } from './governance.mjs';
+import { pathOf, mdPathOf } from './governance.mjs';
 
 /** cdc: 詞彙前綴；說明在 /developers/#vocab-<term> */
 export const CDC_VOCAB = () => `${siteOrigin()}/developers/#vocab-`;
@@ -51,6 +55,21 @@ export function orgJsonLd(ctx) {
     sameAs: [config.legacyOrigin, config.openDataOrigin].filter(Boolean),
     parentOrganization: { '@type': 'GovernmentOrganization', name: '衛生福利部', alternateName: 'Ministry of Health and Welfare' },
     inLanguage: ctx?.lang,
+  });
+}
+
+/** /about/：GovernmentOrganization＋subOrganization[]（由 master/units 產生；每單位附負責內容數與白名單數） */
+export function aboutOrgJsonLd(ctx) {
+  const site = ctx?.site;
+  const stats = new Map((site?.gov?.byOwner ?? []).map((r) => [r.unit, r]));
+  return clean({
+    ...orgJsonLd(ctx), '@context': CONTEXT(),
+    url: abs(ctx, '/about/'),
+    subOrganization: (site?.master?.units ?? []).map((u) => clean({
+      '@type': 'GovernmentOrganization', '@id': `${siteOrigin()}/about/#${u.id}`, name: u.name, alternateName: u.nameEn, identifier: u.id,
+      parentOrganization: { '@id': ORG_ID() }, description: u.duties ?? u.description,
+      'cdc:kind': u.kind ?? null, 'cdc:contentCount': stats.get(u.id)?.content ?? 0, 'cdc:whitelistCount': stats.get(u.id)?.whitelist ?? 0,
+    })),
   });
 }
 
@@ -115,10 +134,123 @@ function baseOf(ctx, item, type) {
 const correctionsOf = (item) => (item.gov?.annotations ?? []).filter((a) => a.kind === 'based-on-revised' || a.kind === 'superseded')
   .map((a) => ({ '@type': 'CorrectionComment', text: a.text }));
 
+/** 秒 → ISO 8601 duration（PT1M35S） */
+export function isoDuration(sec) {
+  if (sec == null || !Number.isFinite(Number(sec))) return undefined;
+  let n = Math.max(0, Math.round(Number(sec)));
+  const h = Math.floor(n / 3600); n -= h * 3600;
+  const m = Math.floor(n / 60); const s = n - m * 60;
+  return `PT${h ? `${h}H` : ''}${m ? `${m}M` : ''}${s || (!h && !m) ? `${s}S` : ''}`;
+}
+const SERVICE_OUTPUT = { 'data-request': '資料提供', 'lab-request': '檢驗報告', certificate: '證明文件', donation: '捐款收據', clinic: '門診服務', notification: '通報受理', license: '許可文件', other: '服務結果' };
+const LAB_LABELS = { 'cdc-lab': '疾管署檢驗中心', 'certified-lab': '認可檢驗機構', 'hospital-lab': '醫院檢驗單位', 'regional-lab': '區域實驗室' };
+const asAsset = (ctx, p) => (p ? abs(ctx, p, { noLang: true }) : undefined);
+const diseaseRef = (ctx, id) => clean({ '@type': 'MedicalCondition', name: ctx?.site?.diseaseMasterById?.get(id)?.name ?? id, alternateName: ctx?.site?.diseaseMasterById?.get(id)?.nameEn, identifier: id });
+/** 作者欄：本站不放真人姓名，作者一律是機關／單位名 → Organization */
+const authorOf = (name) => ({ '@type': 'Organization', name });
+const TAIPEI = { '@type': 'Place', address: { '@type': 'PostalAddress', addressLocality: '臺北市', addressRegion: '臺北市', addressCountry: 'TW' } };
+
 export function jsonLdFor(ctx, item) {
   const name = tr(ctx, item, 'title');
   const description = tr(ctx, item, 'summary');
   switch (item.type) {
+    case 'media': {
+      const url = abs(ctx, pathOf(item));
+      const chapters = item.chapters ?? [];
+      const md = mdPathOf(item);
+      return [clean({ ...baseOf(ctx, item, 'VideoObject'), name, description: description ?? name,
+        uploadDate: item.publishedAt, dateCreated: item.producedAt, duration: isoDuration(item.durationSeconds),
+        thumbnailUrl: asAsset(ctx, item.poster),
+        embedUrl: item.youtubeId ? `https://www.youtube-nocookie.com/embed/${item.youtubeId}` : undefined,
+        contentUrl: item.videoUrl, transcript: mdToText(tr(ctx, item, 'transcriptMarkdown')) || undefined,
+        author: unitOrg(ctx, item.owner), genre: item.mediaType,
+        subtitleLanguage: item.captions?.length ? item.captions : undefined,
+        associatedMedia: md ? { '@type': 'MediaObject', encodingFormat: 'text/markdown', contentUrl: abs(ctx, md), name: '逐字稿（機讀版）' } : undefined,
+        hasPart: chapters.map((ch, i) => clean({ '@type': 'Clip', name: ch.label, startOffset: ch.t, endOffset: chapters[i + 1]?.t ?? item.durationSeconds, url: `${url}#t=${ch.t}` })),
+        about: (item.diseases ?? []).map((d) => diseaseRef(ctx, d)),
+        correction: correctionsOf(item),
+        'cdc:producedAt': item.producedAt ?? null, 'cdc:basedOnVersionLabel': item.basedOnVersionLabel ?? null,
+        'cdc:mediaOutdated': !!item.gov?.mediaOutdated, 'cdc:hasTranscript': item.gov?.hasTranscript ?? null })];
+    }
+    case 'topic': {
+      const links = item.links ?? [];
+      return [clean({ ...baseOf(ctx, item, 'CollectionPage'), name, description, lastReviewed: item.reviewedAt, reviewedBy: unitOrg(ctx, item.owner),
+        about: (item.diseases ?? []).map((d) => diseaseRef(ctx, d)),
+        mainEntity: links.length ? { '@type': 'ItemList', numberOfItems: links.length, itemListElement: links.map((l, i) => clean({ '@type': 'ListItem', position: i + 1, name: l.label, url: /^https?:/.test(l.href) ? l.href : abs(ctx, l.href) })) } : undefined,
+        hasPart: (item.contentIds ?? []).map((id) => ctx?.site?.byId?.get(id)).filter(Boolean).map((x) => ({ '@type': 'WebPage', name: x.title, url: abs(ctx, pathOf(x)) })),
+        expires: item.endAt, 'cdc:startAt': item.startAt ?? null, 'cdc:endAt': item.endAt ?? null, 'cdc:ended': !!item.gov?.ended, 'cdc:kind': item.kind ?? null })];
+    }
+    case 'service': {
+      const url = abs(ctx, pathOf(item));
+      const steps = item.steps ?? [];
+      const svc = clean({ ...baseOf(ctx, item, 'GovernmentService'), name, description, serviceType: item.serviceType,
+        provider: unitOrg(ctx, item.owner), areaServed: TAIWAN,
+        audience: (item.whoCanApply ?? []).map((w) => ({ '@type': 'Audience', audienceType: w })),
+        availableChannel: clean({ '@type': 'ServiceChannel', name: item.applyUrl ? '線上申請' : '服務說明', serviceUrl: item.applyUrl ?? url, processingTime: item.slaDays ? `P${item.slaDays}D` : undefined }),
+        serviceOutput: { '@type': 'Thing', name: SERVICE_OUTPUT[item.serviceType] ?? SERVICE_OUTPUT.other },
+        termsOfService: item.legalBasis?.length ? item.legalBasis.join('；') : undefined,
+        'cdc:slaDays': item.slaDays ?? null, 'cdc:fee': item.fee ?? null, 'cdc:requiredDocuments': item.requiredDocuments ?? [] });
+      const howto = clean({ '@context': CONTEXT(), '@type': 'HowTo', '@id': `${url}#howto`, url, name: `如何申請：${name}`, inLanguage: ctx?.lang ?? 'zh-TW',
+        totalTime: item.slaDays ? `P${item.slaDays}D` : undefined,
+        supply: (item.requiredDocuments ?? []).map((d) => ({ '@type': 'HowToSupply', name: d })),
+        step: steps.map((st, i) => clean({ '@type': 'HowToStep', position: i + 1, name: st.title, text: st.text ?? st.title, url: `${url}#step-${i + 1}` })) });
+      return [svc, howto];
+    }
+    case 'publication': {
+      const isIssue = item.issue != null || item.pubType === 'bulletin';
+      const common = { name, description, author: (item.authors?.length ? item.authors.map(authorOf) : [unitOrg(ctx, item.owner)]),
+        numberOfPages: item.pages, abstract: mdToText(tr(ctx, item, 'abstractMarkdown')) || undefined, image: asAsset(ctx, item.cover),
+        identifier: item.gpn ? [{ '@type': 'PropertyValue', propertyID: 'GPN', value: item.gpn }] : undefined,
+        encoding: item.pdfUrl ? [{ '@type': 'MediaObject', encodingFormat: 'application/pdf', contentUrl: item.pdfUrl }] : undefined,
+        hasPart: (item.articles ?? []).map((a) => clean({ '@type': 'ScholarlyArticle', headline: a.title, name: a.title, pagination: a.pages, author: (a.authors ?? []).map(authorOf), sameAs: a.doi ? `https://doi.org/${a.doi}` : undefined, abstract: a.abstract })),
+        'cdc:series': item.series, 'cdc:pubType': item.pubType };
+      if (isIssue) {
+        return [clean({ ...baseOf(ctx, item, 'PublicationIssue'), ...common, issueNumber: item.issue != null ? String(item.issue) : undefined, datePublished: item.publishedAt,
+          isPartOf: clean({ '@type': ['PublicationVolume', 'Periodical'], name: item.series, alternateName: item.seriesEn, volumeNumber: item.volume != null ? String(item.volume) : undefined, issn: item.issn, publisher: { '@id': ORG_ID() } }) })];
+      }
+      return [clean({ ...baseOf(ctx, item, 'Book'), ...common, isbn: item.isbn, bookEdition: item.edition, issn: item.issn,
+        isPartOf: item.series ? clean({ '@type': 'CreativeWorkSeries', name: item.series, alternateName: item.seriesEn }) : undefined, offers: item.price ? { '@type': 'Offer', price: item.price, priceCurrency: 'TWD' } : undefined })];
+    }
+    case 'labtest': {
+      const specimens = item.specimens ?? [];
+      return [clean({ ...baseOf(ctx, item, 'MedicalTest'), name, description, audience: audienceOf(item),
+        usedToDiagnose: diseaseRef(ctx, item.disease),
+        usesDevice: [...new Set(specimens.map((s) => s.container).filter(Boolean))].map((c) => ({ '@type': 'MedicalDevice', name: c })),
+        relevantSpecialty: 'https://schema.org/LaboratoryScience',
+        'cdc:specimens': specimens.map((s) => clean({ name: s.name, timing: s.timing, container: s.container, volume: s.volume, storage: s.storage, transport: s.transport, tests: s.tests, turnaroundDays: s.turnaroundDays, note: s.note })),
+        'cdc:labs': (item.labs ?? []).map((l) => LAB_LABELS[l] ?? l), 'cdc:sendWithinHours': item.sendWithinHours ?? null,
+        'cdc:notifyWithinHours': ctx?.site?.diseaseMasterById?.get(item.disease)?.notifyWithinHours ?? null,
+        'cdc:biosafetyLevel': item.biosafetyLevel ?? null })];
+    }
+    case 'research': {
+      const report = item.reportDoc ? ctx?.site?.byId?.get(item.reportDoc) : null;
+      return [clean({ ...baseOf(ctx, item, 'ResearchProject'), name, description,
+        identifier: item.projectNo, foundingDate: item.year ? String(item.year) : undefined,
+        sponsor: { '@id': ORG_ID(), '@type': 'GovernmentOrganization', name: config.name },
+        member: item.piUnit ? { '@type': 'Organization', name: item.piUnit } : undefined,
+        funding: item.budgetNtd ? { '@type': 'MonetaryGrant', funder: { '@id': ORG_ID() }, amount: { '@type': 'MonetaryAmount', value: item.budgetNtd, currency: 'TWD' } } : undefined,
+        subjectOf: item.reportDoc ? { '@type': 'DigitalDocument', name: report?.title ?? '成果報告', url: report ? abs(ctx, pathOf(report)) : item.reportDoc } : undefined,
+        knowsAbout: (item.diseases ?? []).map((d) => diseaseRef(ctx, d)),
+        'cdc:year': item.year ?? null, 'cdc:projectStatus': item.projectStatus, 'cdc:fundingType': item.fundingType ?? null, 'cdc:objectives': item.objectives ?? [],
+        'cdc:irb': item.irb ?? null })];
+    }
+    case 'news': case 'letter':
+      if (item.newsType === 'recruit') {
+        return [clean({ ...baseOf(ctx, item, 'JobPosting'), title: name, name, description: mdToText(tr(ctx, item, 'bodyMarkdown')) || description,
+          datePosted: item.publishedAt, validThrough: item.deadlineAt,
+          hiringOrganization: { '@type': 'GovernmentOrganization', '@id': ORG_ID(), name: config.name, sameAs: config.legacyOrigin },
+          jobLocation: TAIPEI, totalJobOpenings: item.positions, identifier: item.refNo ? { '@type': 'PropertyValue', name: config.name, value: item.refNo } : undefined,
+          directApply: false, sameAs: item.applyUrl, 'cdc:refNo': item.refNo ?? null, 'cdc:closed': !!item.gov?.closed })];
+      }
+      if (item.newsType === 'procurement') {
+        return [clean({ ...baseOf(ctx, item, 'WebPage'), name, description, author: unitOrg(ctx, item.owner), lastReviewed: item.reviewedAt,
+          significantLink: item.applyUrl, 'cdc:refNo': item.refNo ?? null, 'cdc:validThrough': item.deadlineAt ?? null, 'cdc:budgetNtd': item.budgetNtd ?? null, 'cdc:closed': !!item.gov?.closed })];
+      }
+      return [clean({ ...baseOf(ctx, item, 'NewsArticle'), headline: String(name).slice(0, 110), name, description,
+        author: unitOrg(ctx, item.owner), sourceOrganization: { '@id': ORG_ID() },
+        articleSection: item.newsType ?? item.type, correction: correctionsOf(item),
+        'cdc:refNo': item.refNo, 'cdc:deadlineAt': item.deadlineAt,
+        about: (item.diseases ?? []).map((d) => ({ '@type': 'MedicalCondition', name: ctx?.site?.diseaseMasterById?.get(d)?.name ?? d, identifier: d })) })];
     case 'disease': {
       const condition = clean({
         '@type': 'MedicalCondition', '@id': `${abs(ctx, pathOf(item))}#condition`, name, alternateName: [item.nameEn, ...(item.aliases ?? [])].filter(Boolean), description,
@@ -137,11 +269,6 @@ export function jsonLdFor(ctx, item) {
       return [clean({ ...baseOf(ctx, item, 'FAQPage'), name: q, description, lastReviewed: item.reviewedAt, reviewedBy: unitOrg(ctx, item.owner),
         mainEntity: [{ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a, dateModified: item.reviewedAt, author: unitOrg(ctx, item.owner) } }] })];
     }
-    case 'news': case 'letter':
-      return [clean({ ...baseOf(ctx, item, 'NewsArticle'), headline: String(name).slice(0, 110), name, description,
-        author: unitOrg(ctx, item.owner), sourceOrganization: { '@id': ORG_ID() },
-        articleSection: item.newsType ?? item.type, correction: correctionsOf(item),
-        about: (item.diseases ?? []).map((d) => ({ '@type': 'MedicalCondition', name: ctx?.site?.diseaseMasterById?.get(d)?.name ?? d, identifier: d })) })];
     case 'document': {
       const g = item.gov ?? {};
       const successor = g.supersededBy ? ctx?.site?.byId?.get(g.supersededBy) : null;

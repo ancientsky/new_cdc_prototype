@@ -1,0 +1,147 @@
+{
+  "id": "service.case-data-request",
+  "type": "service",
+  "title": "傳染病個案資料申請（學術研究用）",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2025-03-01",
+  "reviewedAt": "2026-08-20",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-08-20"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-20",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "研究者可申請去識別化之傳染病個案資料供學術研究，須檢附研究計畫書與 IRB 核准文件，經審查後於資料專區提供，處理期間約 30 日。",
+  "keywords": [
+    "個案資料",
+    "資料申請",
+    "學術研究",
+    "IRB",
+    "去識別化",
+    "傳染病防治法"
+  ],
+  "note": "處理流程與規費為示意，正式依疾管署資料申請作業規定",
+  "slug": "case-data-request",
+  "serviceType": "data-request",
+  "whoCanApply": [
+    "研究者",
+    "學研機構",
+    "醫療院所研究單位"
+  ],
+  "introMarkdown": "疾管署依《傳染病防治法》及《個人資料保護法》，提供**去識別化**之法定傳染病個案資料供學術研究使用。資料僅限於核准之研究目的，**於本署資料專區（或遠端分析環境）內使用**，攜出結果須經檢核，不得嘗試再識別個人。\n\n已公開的彙總統計請先查詢開放資料與 NIDSS，不需申請。",
+  "requiredDocuments": [
+    "申請書（載明研究題目、所需變項與年度）",
+    "研究計畫書",
+    "人體研究倫理審查委員會（IRB）核准證明",
+    "資料使用切結書",
+    "計畫主持人所屬機構同意函"
+  ],
+  "steps": [
+    {
+      "title": "確認公開資料是否足夠",
+      "text": "先查 NIDSS 與開放資料平臺，彙總統計不需申請。",
+      "who": "申請人",
+      "days": 0
+    },
+    {
+      "title": "線上送件",
+      "text": "填寫申請書並上傳應備文件。",
+      "who": "申請人",
+      "days": 1
+    },
+    {
+      "title": "形式審查",
+      "text": "檢查文件完整性，不全者通知補件（補件期間不計入處理天數）。",
+      "who": "疫情中心",
+      "days": 5
+    },
+    {
+      "title": "實質審查",
+      "text": "審查變項必要性與去識別化程度，必要時召開審查會議。",
+      "who": "資料審查小組",
+      "days": 20
+    },
+    {
+      "title": "核定與資料提供",
+      "text": "核定後簽署使用約定，於資料專區開通使用帳號。",
+      "who": "疫情中心",
+      "days": 5
+    }
+  ],
+  "slaDays": 30,
+  "fee": "依資料專區使用規費標準收費（示意）",
+  "legalBasis": [
+    "傳染病防治法",
+    "個人資料保護法第 16 條",
+    "政府資訊公開法"
+  ],
+  "forms": [
+    {
+      "label": "傳染病個案資料申請書",
+      "href": "https://www.cdc.gov.tw/File/Get/placeholder-form-case-data-application",
+      "format": "PDF",
+      "machineReadable": false
+    },
+    {
+      "label": "資料使用切結書",
+      "href": "https://www.cdc.gov.tw/File/Get/placeholder-form-case-data-undertaking",
+      "format": "PDF",
+      "machineReadable": false
+    }
+  ],
+  "contact": "疾病管制署疫情中心（總機 02-2395-9825）；一般諮詢請撥防疫專線 1922（國外 +886-800-001922）",
+  "faq": [
+    {
+      "q": "可以拿到有姓名或身分證字號的資料嗎？",
+      "a": "不可以。研究用資料一律去識別化，且只提供研究必要之變項。"
+    },
+    {
+      "q": "學生可以申請嗎？",
+      "a": "可以，但須由指導教授擔任計畫主持人，並檢附 IRB 核准證明。"
+    },
+    {
+      "q": "30 日從什麼時候開始算？",
+      "a": "自文件齊備之日起算，補件期間不計入。"
+    }
+  ],
+  "i18n": {
+    "en": {
+      "title": "Request for notifiable disease case data (research)",
+      "summary": "Researchers may request de-identified case data with a research protocol and IRB approval; review takes about 30 days."
+    }
+  }
+}

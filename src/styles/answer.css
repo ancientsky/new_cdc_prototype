@@ -138,3 +138,33 @@ html[data-view="pro"] .ask-page .c-source-card{border-color:var(--navy-700)}
   .ask-page .c-cite-pop[hidden]{display:block!important}
   .c-answer-report,.c-answer__actions{display:none}
 }
+
+/* ── 第二輪：通報時限結構化卡、影片／申請／檢驗／主檔來源卡、已截止公告 ── */
+.c-answer__notify{margin:0 0 var(--sp-5)}
+.c-notify-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--sp-4)}
+.c-notify-card{border:1px solid var(--line);border-top:6px solid var(--navy-700);border-radius:var(--radius);padding:var(--sp-4);background:var(--white)}
+.c-notify-card--1,.c-notify-card--5{border-top-color:var(--status-peak)}
+.c-notify-card--2{border-top-color:var(--status-rising)}
+.c-notify-card--3{border-top-color:var(--status-declining)}
+.c-notify-card--4{border-top-color:var(--status-stable)}
+.c-notify-card header{display:flex;flex-wrap:wrap;align-items:center;gap:var(--sp-2)}
+.ask-page .c-notify-card h3{margin:0;font-size:var(--fs-md)}
+.c-notify-card__hours{margin:var(--sp-3) 0;line-height:1.2}
+.c-notify-card__hours b{font-size:var(--fs-2xl);color:var(--ink);display:inline-block}
+.c-notify-card__lead{font-size:var(--fs-sm);color:var(--ink-2)}
+.c-notify-card__links{display:flex;flex-wrap:wrap;gap:var(--sp-2);margin:0}
+.c-notify-pill{display:inline-block;border-radius:var(--radius-pill);padding:2px 12px;font-size:var(--fs-sm);font-weight:700;background:var(--navy-100);color:var(--navy-900);white-space:nowrap}
+.c-notify-pill--1,.c-notify-pill--5{background:var(--status-peak-bg);color:var(--status-peak)}
+.c-notify-pill--2{background:var(--status-rising-bg);color:var(--ink)}
+.c-notify-pill--3{background:var(--status-declining-bg);color:var(--status-declining)}
+.c-notify-pill--4{background:var(--status-stable-bg);color:var(--ink)}
+.c-answer__notify-note{margin:var(--sp-3) 0 0;padding:var(--sp-2) var(--sp-3);border-left:4px solid var(--info);background:var(--info-bg);font-size:var(--fs-sm);color:var(--ink)}
+
+.c-source-card__kind{color:var(--status-peak)}
+.c-source-card__poster{display:block;width:96px;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:var(--radius-sm);border:1px solid var(--line);margin:0 0 var(--sp-1);background:var(--paper)}
+.c-source-card--master .c-source-card__t{color:var(--navy-900)}
+.c-labtest-mini{width:100%;max-width:100%;font-size:var(--fs-xs);border-collapse:collapse;margin:var(--sp-1) 0}
+.c-labtest-mini th,.c-labtest-mini td{padding:2px var(--sp-2);border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.c-labtest-mini th{white-space:nowrap;color:var(--ink-2);font-weight:400;width:6em}
+.c-ai-disclosure__transcript{display:inline-block;margin-left:var(--sp-2);font-size:var(--fs-xs);color:var(--ink-2);border:1px solid var(--line);border-radius:var(--radius-pill);padding:0 8px}
+.c-answer__sent--closed{border-left-color:var(--line-2);color:var(--ink-2)}

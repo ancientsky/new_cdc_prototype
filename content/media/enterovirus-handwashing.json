@@ -1,0 +1,106 @@
+{
+  "id": "media.enterovirus-handwashing",
+  "type": "media",
+  "title": "濕搓沖捧擦：腸病毒洗手五步驟動畫",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-04-15",
+  "reviewedAt": "2026-04-15",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.enterovirus",
+    "doc.ev-severe-guideline"
+  ],
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-04-15"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-04-15",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "以動畫示範「濕、搓、沖、捧、擦」洗手五步驟，提醒大人回家先洗手換衣再抱孩子，並教家長辨識腸病毒重症前兆。",
+  "keywords": [
+    "腸病毒",
+    "洗手",
+    "濕搓沖捧擦",
+    "重症前兆",
+    "幼兒"
+  ],
+  "note": "YouTube 影片 id 原型無法驗證，一律 null；頻道網址沿用舊式 /user/taiwancdc，dataset.youtube-channel 記為 @TwCDC，上線前請公關室確認頻道 handle。",
+  "mediaType": "animation",
+  "durationSeconds": 75,
+  "producedAt": "2026-04-01",
+  "basedOnVersionLabel": "2026-03-15 腸病毒重症處置指引",
+  "targetGroups": [
+    "幼兒家長",
+    "托嬰中心與幼兒園",
+    "學童"
+  ],
+  "series": "腸病毒防治",
+  "captions": [
+    "zh-TW",
+    "en"
+  ],
+  "chapters": [
+    {
+      "t": 0,
+      "label": "腸病毒怎麼傳染"
+    },
+    {
+      "t": 18,
+      "label": "洗手五步驟"
+    },
+    {
+      "t": 45,
+      "label": "大人回家先洗手換衣"
+    },
+    {
+      "t": 58,
+      "label": "重症前兆要就醫"
+    }
+  ],
+  "transcriptMarkdown": "**[00:00] 腸病毒怎麼傳染**\n\n小熊：媽媽，為什麼我又要洗手？\n\n媽媽：因為腸病毒很會躲！它會藏在玩具、門把和大家的手上，透過口水、鼻涕和糞便傳染。5 歲以下的小朋友最容易發生重症，所以洗手很重要。\n\n**[00:18] 洗手五步驟**\n\n旁白：跟著小熊一起做——\n\n- 濕：雙手用水打濕。\n- 搓：抹上肥皂，手心、手背、指縫、指尖、手腕都要搓，至少 20 秒。\n- 沖：用清水把泡泡沖乾淨。\n- 捧：捧水把水龍頭沖一沖。\n- 擦：用乾淨的毛巾或紙巾把手擦乾。\n\n旁白：要用肥皂喔！酒精對腸病毒的效果有限。\n\n**[00:45] 大人回家先洗手換衣**\n\n爸爸：我下班回家，第一件事是洗手、換衣服，再抱寶寶。大人感染腸病毒可能沒有症狀，卻會把病毒帶回家。\n\n**[00:58] 重症前兆要就醫**\n\n旁白：孩子如果出現嗜睡、意識不清、活力不佳、手腳無力，或睡覺時突然肌躍型抽搐，還有持續嘔吐、呼吸急促、心跳加快，這些都是重症前兆，請立刻送到大醫院。生病的孩子請在家休息，不要上學，避免傳染給其他小朋友。",
+  "youtubeId": null,
+  "videoUrl": "https://www.youtube.com/user/taiwancdc",
+  "poster": "/img/media/enterovirus-handwashing.svg",
+  "i18n": {
+    "en": {
+      "title": "Wet, rub, rinse, splash, dry: handwashing against enterovirus",
+      "summary": "An animation showing five steps of handwashing with soap, reminding adults to wash and change clothes before holding children, and listing warning signs of severe enterovirus infection."
+    }
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "id": "page.contact",
+  "type": "page",
+  "title": "聯絡我們",
+  "owner": "unit.pr",
+  "publishedAt": "2026-10-01",
+  "reviewedAt": "2026-10-01",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-10-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-10-01",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "疾管署地址：100008 臺北市中正區林森南路 6 號；總機 02-2395-9825；防疫專線 1922（0800-001922）；聽語障傳真 0800-655955；各區管制中心聯絡方式。",
+  "keywords": [
+    "聯絡我們",
+    "地址",
+    "總機",
+    "1922",
+    "聽語障",
+    "署長信箱"
+  ],
+  "slug": "contact",
+  "contactInfo": {
+    "address": "100008 臺北市中正區林森南路 6 號",
+    "switchboard": "02-2395-9825",
+    "hotline": "1922",
+    "hotlineTollFree": "0800-001922",
+    "hotlineIntl": "+886-800-001922",
+    "ttyFax": "0800-655955"
+  },
+  "bodyMarkdown": "## 疾病管制署\n- **地址**：100008 臺北市中正區林森南路 6 號\n- **總機**：02-2395-9825（上班時間）\n- **防疫專線**：**1922**（手機、市話皆可撥打；免付費 0800-001922；國外 +886-800-001922）\n- **聽語障人士傳真**：0800-655955\n\n## 我該找誰？\n| 我想… | 管道 |\n| --- | --- |\n| 詢問防疫、疫苗、旅遊健康 | 撥 **1922** |\n| 通報疑似群聚 | 撥 **1922** 或轄區衛生局 |\n| 對政策提出建議或陳情 | **署長信箱**（/contact/mailbox/） |\n| 回報網頁內容錯誤 | 各頁「回報錯誤」 |\n| 回報 AI 問答錯誤 | 答案頁「回報」鍵 |\n| 媒體採訪 | 公關室：媒體採訪申請（/apply/media-interview-request/） |\n\n## 各區管制中心\n| 區管制中心 | 轄區 | 電話 |\n| --- | --- | --- |\n| 臺北區管制中心 | 臺北市、新北市、基隆市、宜蘭縣、金門縣、連江縣 | (02) 2085-xxxx（示意） |\n| 北區管制中心 | 桃園市、新竹市、新竹縣、苗栗縣 | (03) 398-xxxx（示意） |\n| 中區管制中心 | 臺中市、彰化縣、南投縣 | (04) 2473-xxxx（示意） |\n| 南區管制中心 | 雲林縣、嘉義市、嘉義縣、臺南市 | (06) 269-xxxx（示意） |\n| 高屏區管制中心 | 高雄市、屏東縣、澎湖縣 | (07) 557-xxxx（示意） |\n| 東區管制中心 | 花蓮縣、臺東縣 | (03) 822-xxxx（示意） |\n\n區管中心電話為示意。",
+  "i18n": {
+    "en": {
+      "title": "Contact us",
+      "summary": "Taiwan CDC, No. 6 Linsen S. Rd., Zhongzheng Dist., Taipei 100008; switchboard +886-2-2395-9825; hotline 1922 (+886-800-001922 from abroad); TTY fax 0800-655955."
+    }
+  }
+}

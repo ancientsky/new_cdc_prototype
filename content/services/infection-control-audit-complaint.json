@@ -1,0 +1,117 @@
+{
+  "id": "service.infection-control-audit-complaint",
+  "type": "service",
+  "title": "醫療與長照機構感染管制查核申訴與諮詢",
+  "owner": "unit.infection-control",
+  "publishedAt": "2024-06-01",
+  "reviewedAt": "2026-06-01",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional",
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-06-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "機構對感染管制查核結果有異議可於收受通知後 30 日內申請複核；民眾發現機構感染管制疏失可向衛生局或疾管署陳情，處理期間約 30 日。",
+  "keywords": [
+    "感染管制",
+    "查核",
+    "申訴",
+    "複核",
+    "陳情",
+    "長照機構"
+  ],
+  "slug": "infection-control-audit-complaint",
+  "serviceType": "other",
+  "whoCanApply": [
+    "醫療機構",
+    "長照機構",
+    "民眾"
+  ],
+  "introMarkdown": "感染管制查核由地方衛生局會同疾管署辦理。\n\n- **機構申請複核**：對查核結果有異議者，請於收受結果通知之日起 **30 日內**檢具理由與佐證申請複核。\n- **民眾陳情**：對醫院或長照機構感染管制（例如未落實手部衛生、群聚未通報）有疑慮，可向轄區衛生局陳情，或透過署長信箱反映。\n\n本服務不處理醫療糾紛與個別醫療行為爭議，請洽衛生局醫政單位。",
+  "requiredDocuments": [
+    "機構複核：申請書、查核結果通知、佐證資料",
+    "民眾陳情：機構名稱、發生時間、具體事實（可匿名，但無法回覆）"
+  ],
+  "steps": [
+    {
+      "title": "提出申請或陳情",
+      "text": "機構以公文、民眾以信箱或電話提出。",
+      "who": "申請人",
+      "days": 0
+    },
+    {
+      "title": "分案",
+      "text": "依機構所在地分送衛生局與區管中心。",
+      "who": "感染管制及生物安全組",
+      "days": 3
+    },
+    {
+      "title": "調查或複核",
+      "text": "書面審查，必要時實地訪查。",
+      "who": "地方衛生局／區管中心",
+      "days": 20
+    },
+    {
+      "title": "回覆結果",
+      "text": "以書面回覆申請人。",
+      "who": "感染管制及生物安全組",
+      "days": 7
+    }
+  ],
+  "slaDays": 30,
+  "fee": "免費",
+  "legalBasis": [
+    "傳染病防治法第 32 條",
+    "醫療機構執行感染控制措施及查核辦法",
+    "行政程序法"
+  ],
+  "forms": [
+    {
+      "label": "感染管制查核結果複核申請書",
+      "href": "https://www.cdc.gov.tw/File/Get/placeholder-form-ic-audit-review",
+      "format": "PDF",
+      "machineReadable": false
+    }
+  ],
+  "contact": "疾病管制署感染管制及生物安全組（總機 02-2395-9825）；一般諮詢請撥防疫專線 1922（國外 +886-800-001922）",
+  "faq": [
+    {
+      "q": "陳情會不會讓機構知道是我？",
+      "a": "陳情人身分依法保密，調查時不會揭露。"
+    },
+    {
+      "q": "複核期間需要先改善嗎？",
+      "a": "涉及病人安全之缺失仍須先行改善，複核結果另行通知。"
+    }
+  ]
+}

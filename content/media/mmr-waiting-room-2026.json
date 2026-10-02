@@ -1,0 +1,109 @@
+{
+  "id": "media.mmr-waiting-room-2026",
+  "type": "media",
+  "title": "麻疹 MMR 疫苗候診衛教動畫（2026 年重製版）",
+  "owner": "unit.vaccine",
+  "publishedAt": "2026-10-01",
+  "reviewedAt": "2026-10-01",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "vaccines",
+    "travel"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "doc.mmr-recommendation"
+  ],
+  "diseases": [
+    "disease.measles"
+  ],
+  "vaccines": [
+    "vaccine.mmr"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-10-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-10-01",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "依 114.04.16 版 MMR 建議重製：1966 年（含）以後出生、不具免疫力的成人，前往流行地區前 2–4 週評估自費接種；流行地區以旅遊疫情建議等級為準。",
+  "keywords": [
+    "麻疹",
+    "MMR",
+    "1966 年",
+    "候診衛教",
+    "旅遊疫情建議"
+  ],
+  "note": "取代 media.mmr-waiting-room-2025；公關室已請各醫院候診區更換播放檔",
+  "mediaType": "animation",
+  "durationSeconds": 104,
+  "producedAt": "2026-10-01",
+  "basedOnVersionLabel": "114.04.16 版建議",
+  "targetGroups": [
+    "醫院候診區民眾",
+    "計畫出國成人",
+    "經常接觸外國人之工作者"
+  ],
+  "series": "候診區衛教動畫",
+  "captions": [
+    "zh-TW",
+    "en"
+  ],
+  "chapters": [
+    {
+      "t": 0,
+      "label": "麻疹傳染力有多強"
+    },
+    {
+      "t": 28,
+      "label": "哪些成人要評估接種"
+    },
+    {
+      "t": 62,
+      "label": "流行地區怎麼查"
+    },
+    {
+      "t": 84,
+      "label": "回國後出現症狀"
+    }
+  ],
+  "transcriptMarkdown": "**[00:00] 麻疹傳染力有多強**\n\n旁白：麻疹是傳染力非常強的疾病，病毒可以在空氣中飄散，和患者待在同一個空間就可能被傳染。症狀包括發燒、咳嗽、流鼻水、結膜炎，接著從耳後、臉部開始出疹，再蔓延到全身，少數人會併發肺炎或腦炎。\n\n**[00:28] 哪些成人要評估接種**\n\n旁白：依疾管署 114 年 4 月 16 日修訂的建議，1966 年（含）以後出生、不具麻疹免疫力的成人，如果計畫前往麻疹流行地區，建議在出國前 2 到 4 週，到旅遊醫學門診評估自費接種一劑 MMR 疫苗。怎麼知道自己有沒有免疫力？曾經完成兩劑接種、抽血驗出抗體陽性，或曾經確診麻疹，都算具有免疫力。醫療照護人員，以及在機場、觀光、移工服務等經常接觸外國人的工作者，也建議評估接種。\n\n**[01:02] 流行地區怎麼查**\n\n旁白：流行地區不是固定的國家名單，會隨疫情變化。出國前請查詢疾管署「國際旅遊疫情建議等級」，看目的地是否列有麻疹旅遊疫情建議。像日本在 2026 年 5 月就曾因麻疹疫情被列為第一級注意，熱門旅遊地也可能是流行地區。\n\n**[01:24] 回國後出現症狀**\n\n旁白：回國後 18 天內如果出現發燒、出疹，請戴口罩就醫，主動告知旅遊史，並避免搭乘大眾運輸。保護自己，也保護身邊的人。更多資訊請撥打 1922。",
+  "youtubeId": null,
+  "videoUrl": "https://www.youtube.com/user/taiwancdc",
+  "poster": "/img/media/mmr-waiting-room-2026.svg",
+  "i18n": {
+    "en": {
+      "title": "Measles and MMR vaccine: waiting-room animation (2026 remake)",
+      "summary": "Remade under the 16 Apr 2025 recommendation: adults born in 1966 or later without measles immunity should be assessed for one self-paid MMR dose 2–4 weeks before travelling to affected areas, which are defined by current travel health notices."
+    }
+  }
+}

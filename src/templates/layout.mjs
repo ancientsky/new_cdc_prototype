@@ -12,6 +12,12 @@ const FAVICON = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' vi
 
 const EARLY_JS = `try{var d=document.documentElement;d.classList.add('js');var v=new URLSearchParams(location.search).get('view')||localStorage.getItem('cdc.view');if(v==='pro')d.dataset.view='pro'}catch(e){document.documentElement.classList.add('js')}`;
 
+// 頁尾「更多服務」連結（第二輪）：民眾主選單不放機關型入口，集中在這裡
+const FOOT_SERVICES = [
+  ['/publications/', 'more.publications'], ['/apply/', 'more.apply'], ['/lab/', 'more.lab'], ['/report/', 'more.report'], ['/research/', 'more.research'],
+  ['/notices/', 'more.notices'], ['/media/', 'services.media'], ['/campaigns/', 'campaigns.title'], ['/contact/', 'more.mailbox'], ['/services/', 'services.title'],
+];
+
 function translationBar(ctx, item, hide) {
   const { lang, t, fmtDate, site } = ctx;
   if (lang === 'zh-TW' || hide) return '';
@@ -116,6 +122,7 @@ ${pausedBanner(ctx)}
 ${translationBar(ctx, item, hideTranslationBar)}
 <footer class="site-footer"><div class="wrap site-footer__in">
   <nav aria-label="${t('footer.nav')}" class="site-footer__links"><a href="${url('/about/')}">${t('footer.about')}</a><a href="${url('/policy/privacy/')}">${t('footer.privacy')}</a><a href="${url('/policy/ai/')}">${t('footer.ai')}</a><a href="${url('/policy/open-data/')}">${t('footer.license')}</a><a href="${url('/developers/')}">${t('footer.api')}</a><a href="${url('/accessibility/')}">${t('footer.a11y')}</a></nav>
+  <nav aria-label="${t('footer.services')}" class="site-footer__svc"><strong class="site-footer__svc-t">${t('footer.services')}</strong>${FOOT_SERVICES.map(([p, k]) => html`<a href="${url(p)}">${t(k)}</a>`)}</nav>
   <p class="site-footer__hot"><a href="tel:1922">1922</a> · <a href="tel:0800001922">0800-001922</a></p>
   <p class="site-footer__more"><a href="${url('/transparency/')}">${t('footer.transparency')}</a><a href="${url('/guide/')}">${t('footer.guide')}</a><a href="${url('/sitemap-page/')}">${t('sitemap')}</a><a href="${url('/admin/', { noLang: true })}">${t('footer.admin')}</a></p>
   <p class="site-footer__meta">${t('footer.proto', { date: site.today })}</p>

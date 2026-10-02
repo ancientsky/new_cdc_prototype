@@ -1,0 +1,95 @@
+{
+  "id": "media.amr-one-health-podcast",
+  "type": "media",
+  "title": "Podcast｜抗生素不是萬靈丹：談抗藥性與防疫一體",
+  "owner": "unit.infection-control",
+  "publishedAt": "2026-09-15",
+  "reviewedAt": "2026-09-15",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "doc.infection-control-healthcare",
+    "dataset.antimicrobial-resistance"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-15"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "感管組與獸醫專家對談：抗生素對病毒性感冒無效、不要自行停藥或分藥，並說明人、動物、環境「防疫一體」如何一起減少抗藥性細菌。",
+  "keywords": [
+    "抗生素",
+    "抗藥性",
+    "AMR",
+    "防疫一體",
+    "One Health",
+    "Podcast"
+  ],
+  "note": "YouTube 影片 id 原型無法驗證，一律 null；頻道網址沿用舊式 /user/taiwancdc，dataset.youtube-channel 記為 @TwCDC，上線前請公關室確認頻道 handle。",
+  "mediaType": "podcast",
+  "durationSeconds": 900,
+  "producedAt": "2026-09-05",
+  "basedOnVersionLabel": "醫療機構感染管制指引（2026-03-01 版）與抗藥性監測資料",
+  "targetGroups": [
+    "一般民眾",
+    "醫療人員",
+    "畜牧與獸醫從業人員"
+  ],
+  "series": "防疫一體 Podcast",
+  "captions": [
+    "zh-TW"
+  ],
+  "chapters": [
+    {
+      "t": 0,
+      "label": "開場：什麼是抗藥性"
+    },
+    {
+      "t": 180,
+      "label": "感冒要不要吃抗生素"
+    },
+    {
+      "t": 420,
+      "label": "醫院裡的抗藥性細菌"
+    },
+    {
+      "t": 660,
+      "label": "防疫一體：人、動物、環境"
+    }
+  ],
+  "transcriptMarkdown": "**[00:00] 開場：什麼是抗藥性**\n\n主持人：歡迎收聽疾管署 Podcast。今天要談一個看不見、但越來越重要的問題：抗生素抗藥性。\n\n感管組專員：細菌在長期接觸抗生素之後，會演化出不怕藥的能力，這就是抗藥性。當原本有效的藥物失效，一般的感染也可能變得難以治療。世界衛生組織把抗藥性列為全球重要的公共衛生威脅之一。\n\n**[03:00] 感冒要不要吃抗生素**\n\n主持人：很多人感冒會跟醫師要抗生素，這樣對嗎？\n\n感管組專員：大部分感冒、流感是病毒引起的，抗生素只對細菌有效，吃了不會比較快好，反而增加副作用和抗藥性。如果醫師確實開了抗生素，就要依照醫囑吃完，不要症狀好了就停藥，也不要把剩下的藥留給家人吃。\n\n**[07:00] 醫院裡的抗藥性細菌**\n\n感管組專員：在醫院裡，抗藥性細菌可能透過醫護人員的手或醫療器材傳播。所以我們推動手部衛生、接觸隔離與抗生素管理計畫，請醫院定期監測抗藥性比率，這些資料也會以開放資料公開。\n\n**[11:00] 防疫一體：人、動物、環境**\n\n獸醫專家：抗藥性不是只有人的問題。畜牧業與寵物用藥、環境中的抗生素殘留，都會影響細菌。「防疫一體」就是讓醫療、農業、環境部門一起合作，減少不必要的用藥。\n\n主持人：今天的重點：感冒不吵抗生素、吃藥依醫囑、勤洗手。我們下集見。",
+  "youtubeId": null,
+  "videoUrl": "https://www.youtube.com/user/taiwancdc",
+  "poster": "/img/media/amr-one-health-podcast.svg"
+}

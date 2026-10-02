@@ -186,9 +186,19 @@ export function rocDate(iso) {
 
 const PRO_TERMS = '通報|送驗|檢體|採檢|容器|運送|時限|病例定義|通函|致醫界|手冊|指引|工作手冊|防治手冊|第\\s*[\\d一二三四五六七八九十]+\\s*條|條文|條次|版次|新版|舊版|前版|改版|修訂|生效|快篩陽性|抗病毒藥劑使用對象|使用對象|疑似病例|確定病例|可能病例|檢驗|實驗室|ICD|隔離治療|接觸者|匡列|疫調|疫情調查|醫事人員|醫療院所|感染管制|感控|法定傳染病|傳染病類別|第[一二三四五]類|報告時限';
 
+// 檢驗意圖（lab）只在專業模式、或問句含專業詞時啟用；民眾問「要驗什麼」導向疾病頁「診斷與治療」區塊
+export const LAB_PRO_RE = /(檢體|採檢|送驗|檢驗項目|拭子|檢驗單位|採血管|痰(液)?(檢體|抹片|培養)|驗痰|specimen)/i;
+export const LAB_PUBLIC_RE = /(要驗什麼|驗什麼|要檢查什麼|做什麼檢查|怎麼驗|怎麼檢查|如何診斷|怎麼診斷|要抽血|需要抽血)/;
+// 問句線索 → 型別加權（第二輪：影音、出版品）
+const MEDIA_CUE = /(影片|影音|宣導片|衛教片|動畫|短片|短影音|Podcast|播客|YouTube|video)/i;
+const PUB_CUE = /(哪一期|第幾期|那一期|哪期|期刊|疫情報導|年報|卷|出版品|手冊下載|刊登)/;
+const OPEN_CUE = /(現在|目前|正在|有在|還有|進行中|開放|可以報名|可以投標|最新|最近|近期|還能)/;
+const RECRUIT_CUE = /(招募|徵才|職缺|徵人|約聘|約僱|甄選|甄試|工作機會|缺額|招考|人員)/;
+const PROCUREMENT_CUE = /(採購|標案|招標|投標|決標|公開評選|開標|案號)/;
+
 /**
- * 可解釋意圖規則。每條：{ id, intent, weight, re, note }。命中加權，最高分者為意圖；分數 < 2 → unknown。
- * view==='pro' 另加 pro.view 規則。
+ * 可解釋意圖規則。每條：{ id, intent, weight, re, note, gate? }。命中加權，最高分者為意圖；分數 < 2 → unknown。
+ * view==='pro' 另加 pro.view 規則；gate:'lab' 的規則只在專業模式或含專業詞（LAB_PRO_RE）時計分。
  */
 export const INTENT_RULES = [
   // 症狀
@@ -227,26 +237,56 @@ export const INTENT_RULES = [
   { id: 'sta.count', intent: 'stats', weight: 3, re: /(幾例|多少例|多少人(?!.{0,4}(可以|能|要|需要))|病例數|個案數|確診數|人數|統計|數據|趨勢|就診率|發生率|死亡數|資料集|總共|合計|加總|累計|最高|最低|最多|最少|平均|歷年|每年|逐年|哪一年|哪年)/, note: '統計詞' },
   { id: 'sta.en', intent: 'stats', weight: 3, re: /\b(how many|number of cases|statistics|stats|case counts?|trend|data ?set)\b/i, note: 'English stats words' },
   { id: 'sta.vi', intent: 'stats', weight: 3, re: /(bao nhiêu ca|số ca|thống kê)/i, note: 'Vietnamese stats words' },
+  // ── 第二輪（ARCHITECTURE.md 11.3）──
+  // 申請：怎麼申請、要帶什麼、幾天、費用、黃皮書、證明、捐款、委託、預約
+  { id: 'app.how', intent: 'apply', weight: 5, re: /(怎麼|如何|要怎麼|怎樣|去哪裡?|哪裡可以|在哪裡?)(線上)?(申請|辦理|預約|委託|捐款|捐贈|捐|索取|申辦|開立|補發)|申請(流程|方式|步驟|資格|條件|表單|書|窗口|管道)|線上申請|臨櫃/, note: '怎麼申請／辦理' },
+  { id: 'app.documents', intent: 'apply', weight: 4, re: /(申請|辦理|委託|送件|臨櫃|預約|黃皮書|證明).{0,10}(要帶|帶什麼|準備什麼|準備哪些|要準備|附什麼|帶哪些)|(應備|需備|檢附).{0,4}(文件|證件|資料|表單)|帶哪些證件/, note: '應備文件' },
+  { id: 'app.named', intent: 'apply', weight: 4, re: /(黃皮書|國際預防接種證明|預防接種證明|接種證明|個案資料申請|資料申請|研究資料|檢驗委託|委託檢驗|疫苗基金|捐款|捐贈|門診預約|預約門診)/, note: '具名服務（黃皮書、資料申請、檢驗委託、疫苗基金…）' },
+  { id: 'app.generic', intent: 'apply', weight: 2, re: /(申請|委託|預約|證明書?|捐款|捐贈|核發)/, note: '申請泛稱' },
+  { id: 'app.sla-fee', intent: 'apply', weight: 1, re: /(幾天|多久|幾個工作天|工作天|處理時間|審核時間|費用|規費|多少錢|收費|要錢嗎|免費嗎)/, note: '處理天數／費用（只加強，不單獨成立）' },
+  // 檢驗（專業）：檢體、容器、送驗、保存、運送、檢驗項目、週轉
+  { id: 'lab.specimen', intent: 'lab', weight: 4, gate: 'lab', re: /(檢體|採檢|送驗|採血|血清|拭子|痰(液)?(檢體|抹片|培養)|驗痰|幾套|幾管|採檢管|檢體瓶|specimen)/i, note: '檢體／採檢／送驗' },
+  { id: 'lab.handling', intent: 'lab', weight: 3, gate: 'lab', re: /(檢體|採檢|拭子|血清|痰|全血|尿液|糞便).{0,6}(容器|保存|冷藏|冷凍|運送|寄送|溫度)|(容器|保存|運送).{0,4}檢體|週轉|幾天出(報告|結果)|多久出(報告|結果)/, note: '檢體容器、保存、運送、週轉（須與檢體詞同現，避免「積水容器」）' },
+  { id: 'lab.tests', intent: 'lab', weight: 3, gate: 'lab', re: /(檢驗項目|要驗什麼|驗什麼|檢驗方法|PCR|核酸檢驗|抗原檢驗|抗體檢驗|IgM|NS1|病毒培養|檢驗單位|哪裡驗|送哪裡)/i, note: '檢驗項目／單位' },
+  // 通報：時限、第幾類、法定傳染病分類（可由主檔直接回答）
+  { id: 'ntf.within', intent: 'notify', weight: 6, re: /((幾|多少)\s*(個)?\s*(小時|天|日|週)|多久)(內|之內)?.{0,4}通報|通報(時限|期限|時間|期程)|報告時限|(應|要|需|需要|必須|應該)(在|於)?.{0,6}(小時|天|日|週)內(通報|報告)/, note: '通報時限' },
+  { id: 'ntf.category', intent: 'notify', weight: 5, re: /(第\s*[一二三四五1-5]\s*類|第幾類|幾類|哪一類|哪類)(法定)?(傳染病)?|法定傳染病(分類|類別|有哪些|有幾類)|傳染病(分類|類別)/, note: '法定傳染病分類' },
+  { id: 'ntf.generic', intent: 'notify', weight: 3, re: /(通報|要不要報|需不需要報|法定傳染病)/, note: '通報泛稱' },
+  // 公告：人才招募、採購、截止
+  { id: 'ntc.recruit', intent: 'notice', weight: 5, re: /(招募|徵才|職缺|徵人|約聘|約僱|甄選|甄試|工作機會|缺額|招考|人才招募)/, note: '人才招募' },
+  { id: 'ntc.procurement', intent: 'notice', weight: 5, re: /(採購|標案|招標|投標|決標|公開評選|開標|案號)/, note: '採購公告' },
+  { id: 'ntc.deadline', intent: 'notice', weight: 2, re: /(截止|報名期限|收件期限)/, note: '截止' },
 ];
+/** 專業子意圖（專業模式下不被 professional 覆寫） */
+export const PRO_SUB_INTENTS = ['apply', 'lab', 'notify', 'notice'];
 
-const INTENT_PRIORITY = ['rumor', 'stats', 'professional', 'situation', 'travel', 'vaccine', 'symptoms'];
+const INTENT_PRIORITY = ['rumor', 'stats', 'notify', 'notice', 'apply', 'lab', 'professional', 'situation', 'travel', 'vaccine', 'symptoms'];
 
 /** 意圖判斷：回傳 { intent, reasons[], scores{} } */
 export function classifyIntent(q, { view = 'public', hasTimeRange = false, hasDisease = false, hasCountry = false } = {}) {
   const scores = {}; const reasons = [];
+  const labGate = view === 'pro' || LAB_PRO_RE.test(q);
+  // 刊名「疫情報導」不是在問疫情現況（出版品問句交給檢索與 PUB_CUE 型別加權）
+  const qi = q.replace(/疫情報導/g, '期刊');
+  if (qi !== q) reasons.push('pub.bulletin-name');
   for (const r of INTENT_RULES) {
-    if (r.re.test(q)) { scores[r.intent] = (scores[r.intent] ?? 0) + r.weight; reasons.push(r.id); }
+    if (r.gate === 'lab' && !labGate) continue;
+    if (r.re.test(qi)) { scores[r.intent] = (scores[r.intent] ?? 0) + r.weight; reasons.push(r.id); }
   }
   if (hasTimeRange) { scores.stats = (scores.stats ?? 0) + 3; reasons.push('sta.time-range'); }
   if (hasCountry) { scores.travel = (scores.travel ?? 0) + 2; reasons.push('trv.country-entity'); }
-  if (view === 'pro') { scores.professional = (scores.professional ?? 0) + 4; reasons.push('pro.view'); }
+  if (view === 'pro') {
+    scores.professional = (scores.professional ?? 0) + 4; reasons.push('pro.view');
+    // 專業子意圖（檢驗、通報、申請、公告）與 professional 同享專業模式加權，具體者優先
+    for (const k of PRO_SUB_INTENTS) if ((scores[k] ?? 0) >= 2) { scores[k] += 4; reasons.push(`pro.view-${k}`); }
+  }
   // 「現在疫情」與統計詞同時出現且沒有時間範圍 → 疫情優先（態勢卡回答）
   if (scores.situation && scores.stats && !hasTimeRange && /(現在|目前|最近|本週|這週|嚴重嗎)/.test(q)) { scores.stats -= 2; reasons.push('sit.over-stats'); }
   let best = 'unknown', bestScore = 0;
   for (const intent of INTENT_PRIORITY) { const s = scores[intent] ?? 0; if (s > bestScore) { best = intent; bestScore = s; } }
   if (bestScore < 2) { best = 'unknown'; if (hasDisease) reasons.push('unk.disease-only'); }
   // 專業模式：除謠言、統計、疫情外，一律以專業意圖回答（引用條次與版次，不白話化）
-  if (view === 'pro' && !['rumor', 'stats', 'situation', 'professional'].includes(best)) { best = 'professional'; reasons.push('pro.view-override'); }
+  if (view === 'pro' && !['rumor', 'stats', 'situation', 'professional', ...PRO_SUB_INTENTS].includes(best)) { best = 'professional'; reasons.push('pro.view-override'); }
   return { intent: best, reasons, scores };
 }
 
@@ -299,6 +339,7 @@ const REFUSAL_TEXT = {
     'no-source': { title: '找不到足夠的官方依據', text: '官方內容中沒有足以回答這個問題的依據，為避免錯答，我不替你判斷。你可以改用關鍵字搜尋，或撥打 1922 詢問。' },
     'no-clarification': { title: '目前沒有對應的官方澄清', text: '目前沒有與這則訊息對應的官方澄清。請先不要轉傳；可撥打 1922 詢問，或透過本頁回報讓我們查證。' },
     'no-data': { title: '找不到對應的統計資料', text: '資料目錄中沒有可直接回答的統計序列。你可以到開放資料平台查詢原始資料集。' },
+    'pro-only': { title: '檢驗與送驗規定屬專業內容', text: '檢體採集、容器、保存運送與送驗時限是給醫療院所與檢驗人員的專業內容，請切換專業模式或到檢驗專區查詢。想了解疾病怎麼診斷，可看疾病頁「診斷與治療」。' },
   },
   en: {
     'prompt-injection': { title: "I can't follow that request", text: 'This looks like an attempt to change the system rules. This service only summarizes official content and will not change its rules or reveal its settings.' },
@@ -316,6 +357,7 @@ const REFUSAL_TEXT = {
     'no-source': { title: 'Not enough official information', text: 'Official content does not contain enough to answer this. To avoid a wrong answer, I will not guess. Please call the 1922 hotline.' },
     'no-clarification': { title: 'No matching official clarification', text: 'There is no official clarification matching this message yet. Please do not forward it; you can call 1922 or report it here.' },
     'no-data': { title: 'No matching statistics', text: 'No statistical series in the data catalogue answers this directly.' },
+    'pro-only': { title: 'Specimen rules are professional content', text: 'Specimen collection, containers, storage and shipping rules are for healthcare and laboratory staff. Switch to professional mode or see the laboratory testing page.' },
   },
 };
 
@@ -346,6 +388,9 @@ const PARAPHRASE = [
   [/打針|打疫苗|施打/, '接種 疫苗'], [/危險徵兆|警訊|嚴重的徵兆|重症徵兆/, '警示徵象 重症前兆 危險徵兆'], [/警示徵象/, '警示徵象 重症前兆'],
   [/自己好|會好嗎|自癒/, '自行康復'], [/特效藥|吃藥會好/, '特效 抗病毒藥物 支持性療法'], [/打幾劑|幾劑/, '劑'], [/多久內|幾天內|幾小時內/, '小時內 天內'],
   [/開打|什麼時候打/, '接種 開始 起'], [/哪裡打|哪裡可以打|接種地點/, '接種地點 合約院所'],
+  [/要驗什麼|驗什麼|怎麼驗|怎麼檢查|做什麼檢查|要檢查什麼|如何診斷|怎麼診斷/, '診斷 檢驗 治療'],
+  [/怎麼申請|如何申請|申請流程|怎麼辦理/, '申請 步驟'], [/要帶什麼|準備什麼|帶哪些/, '應備文件 準備'],
+  [/影片|宣導片|衛教片|動畫/, '影片 影音'], [/職缺|徵才|徵人/, '招募'], [/標案|招標|投標/, '採購'],
 ];
 
 function lc(s) { return String(s ?? '').toLowerCase(); }
@@ -388,7 +433,12 @@ export function createEngine(rawDeps = {}) {
   const {
     index = [], indexPro = [], situation = null, clarifications = [], glossary = [], diseases = [], vaccines = [], countries = [],
     datasets = [], faq = [], units = [], aiStatus = {}, today, random = Math.random, now = () => new Date(), travel = [],
+    services = [], notifyTable = null, media = [],
   } = deps;
+  // 第二輪 deps：services（申請頁 actions）、notifyTable（通報時限表，補病例定義與檢驗連結）、media（影片海報等，可選）
+  const serviceById = new Map((Array.isArray(services) ? services : []).map((x) => [x.id, x]));
+  const mediaById = new Map((Array.isArray(media) ? media : []).map((x) => [x.id, x]));
+  const notifyRows = normalizeNotifyTable(notifyTable);
   const travelItems = (Array.isArray(travel) ? travel : []).map(normTravel).filter((t) => t.iso2 || t.name);
 
   // 詞彙主檔：別名／deprecated／各語言 → 正名；正名 → 全部別名
@@ -527,6 +577,9 @@ export function createEngine(rawDeps = {}) {
     const cIds = new Set(entities.countries.map((c) => c.id));
     const task = INTENT_TASK[intent];
     const qLower = lc(expanded.text);
+    const wantOpen = OPEN_CUE.test(q);
+    const noticeType = RECRUIT_CUE.test(q) && !PROCUREMENT_CUE.test(q) ? 'recruit' : PROCUREMENT_CUE.test(q) && !RECRUIT_CUE.test(q) ? 'procurement' : null;
+    const labPublic = view !== 'pro' && LAB_PUBLIC_RE.test(q);
     const scored = [];
     for (const d of model.docs) {
       let s = bm25Score(model, d, qw);
@@ -546,6 +599,18 @@ export function createEngine(rawDeps = {}) {
       if (task && (c.tasks ?? []).includes(task)) s *= 1.15;
       if (view === 'pro' && (c.type === 'document' || c.type === 'letter')) s *= 1.3;
       if (intent !== 'rumor' && c.type === 'clarification') s *= 0.5;
+      // 第二輪：意圖 → 型別加權；問句線索（影片、哪一期）→ 型別加權
+      if ((intent === 'apply' || intent === 'notify') && c.type === 'service') s = s * 1.8 + 2;
+      if (intent === 'lab' && c.type === 'labtest') s = s * 1.8 + 2;
+      if (intent === 'notice') {
+        if (NOTICE_TYPES.includes(c.newsType)) s = s * 2 + 2; else s *= 0.4;
+        if (noticeType && NOTICE_TYPES.includes(c.newsType) && c.newsType !== noticeType) s *= 0.3; // 問職缺不拿標案
+        if (NOTICE_TYPES.includes(c.newsType) && !closedNow(c)) s *= 1.2; // 進行中優先
+        if (wantOpen && closedNow(c)) { guards.push({ kind: 'closed-dropped', id: c.id }); continue; }
+      }
+      if (c.type === 'media') s = MEDIA_CUE.test(q) ? s * 1.6 + 1.5 : s * 0.85;
+      if (c.type === 'publication' && PUB_CUE.test(q)) s = s * 1.6 + 1.5;
+      if (labPublic && c.block === 'treatment') s = s * 1.5 + 1;
       scored.push({ ...c, _score: Math.round(s * 1000) / 1000 });
     }
     scored.sort((a, b) => b._score - a._score);
@@ -570,6 +635,9 @@ export function createEngine(rawDeps = {}) {
     travel: [/(等級|警示|注意|警告|第[一二三]級|level|alert|warning)/i, /(疫苗|接種|MMR|vaccin)/i, /(行前|出國前|返國|入境|旅遊史|回國)/],
     situation: [/(\d+(\.\d+)?\s*%|例|就診率|上升|下降|高峰|流行閾值|人次)/, /(建議|請|儘速|呼籲|提醒|注意)/],
     professional: [/(第\s*\d+\s*條|應於|通報|送驗|檢體|定義|時限|小時內)/, /(版|生效|修訂)/],
+    apply: [/(第\s*\d+\s*步|步驟|申請對象|線上申請|填寫|送件|臨櫃)/, /(申請需準備|文件|證件|護照|身分證|表單)/, /(處理天數|\d+\s*天|費用|元|免費|法源)/],
+    lab: [/(容器|管|mL|ml|毫升|保存|運送|°C|冷藏|冷凍)/, /(送驗時限|小時|週轉|檢驗單位|可做)/],
+    notice: [/(截止|報名|投標)/, /(名額|預算|字號)/],
   };
   const REQUIRED_POINTS = {
     symptoms: [{ key: 'seek-care', label: '就醫時機', re: /(就醫|看醫生|回診|急診|立即|see a doctor|seek|119)/i }],
@@ -577,6 +645,9 @@ export function createEngine(rawDeps = {}) {
     travel: [{ key: 'before-travel', label: '行前準備', re: /(出國|行前|旅遊|返國|入境|前往|travel|before)/i }],
     situation: [{ key: 'status', label: '態勢狀態', re: /(態勢|高峰|上升|下降|平穩|流行|就診率|%)/ }],
     professional: [{ key: 'rule', label: '條文或時限', re: /(第\s*\d+\s*條|應於|小時|日內|定義|送驗|檢體|對象)/ }],
+    apply: [{ key: 'how', label: '申請方式', re: /(第\s*\d+\s*步|申請|填寫|線上|送件|臨櫃|向)/ }],
+    lab: [{ key: 'specimen', label: '檢體與容器', re: /(檢體|容器|血清|拭子|管|痰)/ }],
+    notice: [{ key: 'deadline', label: '截止日', re: /截止/ }],
   };
   const PERSONAL_ADVICE_RE = /(你應該(服用|吃|使用)|建議你(吃|服用|使用)|你可以(吃|服用).{0,6}藥|你(就是|應該是|可能是|一定是)(得了|感染)|you should take|you (definitely|probably) have)/i;
 
@@ -667,10 +738,14 @@ export function createEngine(rawDeps = {}) {
     { cue: /(預防|防範|怎麼避免|如何避免|防治)/, key: 'prevention', label: '預防作法', re: /(預防|防蚊|長袖|清除|積水|巡、倒|洗手|口罩|接種|避免)/ },
     { cue: /(怎麼辦|該怎麼做|如何處理|要注意什麼)/, key: 'action', label: '該怎麼做', re: /(就醫|撥打|立即|請|應|建議)/ },
     { cue: /(多久|幾天|幾小時|何時|什麼時候)/, key: 'time', label: '時間', re: /\d|[一二三四五六七八九十]+\s*(天|週|小時|個月|日)/ },
+    { cue: /(要帶|準備什麼|準備哪些|應備|文件|證件)/, key: 'documents', label: '應備文件', re: /(準備|文件|證|表|護照)/, intents: ['apply'] },
+    { cue: /(費用|多少錢|收費|免費|規費)/, key: 'fee', label: '費用', re: /(元|費|免費)/, intents: ['apply'] },
+    { cue: /(誰能|誰可以|哪些人|資格|對象)/, key: 'who', label: '申請對象', re: /(對象|資格|醫師|醫療院所|民眾|研究|機關|衛生局|者)/, intents: ['apply'] },
+    { cue: /(溫度|保存|冷藏|冷凍)/, key: 'storage', label: '保存條件', re: /(保存|°C|冷藏|冷凍|室溫)/, intents: ['lab'] },
   ];
   function requiredFor(intent, q) {
     const out = [...(REQUIRED_POINTS[intent] ?? [])];
-    for (const p of QUERY_POINTS) if (p.cue.test(q) && !out.some((x) => x.key === p.key)) out.push(p);
+    for (const p of QUERY_POINTS) if (p.cue.test(q) && (!p.intents || p.intents.includes(intent)) && !out.some((x) => x.key === p.key)) out.push(p);
     return out;
   }
   function completenessOf(intent, sentences, extra = {}) {
@@ -686,8 +761,31 @@ export function createEngine(rawDeps = {}) {
       reviewedAt: c.reviewedAt, nextReviewAt: c.nextReviewAt ?? null, publishedAt: c.publishedAt ?? null, version: c.version ?? null, effectiveAt: c.effectiveAt ?? null,
       isCurrent: c.isCurrent !== false, section: c.section ?? null, family: c.family ?? null, supersedes: c.supersedes ?? null, supersedesVersion: c.supersedesVersion ?? null,
       change: c.change ?? null, license: c.license ?? 'OGDL-1.0', docTitle: c.docTitle ?? null, mdUrl: c.mdUrl ?? null, legacyUrl: c.legacyUrl ?? null,
+      ...typeExtras(c),
     };
   }
+  /** 來源卡的型別專屬欄位（media 時間戳、service 步驟數與天數、labtest 檢體表、公告截止） */
+  function typeExtras(c) {
+    switch (c.type) {
+      case 'media': {
+        const m = mediaById.get(c.contentId);
+        return { mediaType: c.mediaType ?? m?.mediaType ?? 'video', chapter: c.chapter ?? null, t: c.t ?? 0, timeLabel: mmssOf(c.t ?? 0), poster: c.poster ?? m?.poster ?? null, producedAt: c.producedAt ?? m?.producedAt ?? null, basedOnVersionLabel: c.basedOnVersionLabel ?? m?.basedOnVersionLabel ?? null, durationSeconds: c.durationSeconds ?? m?.durationSeconds ?? null };
+      }
+      case 'service': {
+        const sv = serviceById.get(c.contentId);
+        return { serviceType: c.serviceType ?? sv?.serviceType ?? null, slug: c.slug ?? sv?.slug ?? null, stepsCount: c.stepsCount ?? sv?.steps?.length ?? null, slaDays: c.slaDays ?? sv?.slaDays ?? null, fee: c.fee ?? sv?.fee ?? null, applyUrl: c.applyUrl ?? sv?.applyUrl ?? null, forms: c.forms ?? sv?.forms ?? [] };
+      }
+      case 'labtest': return { specimen: c.specimen ?? null, sendWithinHours: c.sendWithinHours ?? null, labs: c.labs ?? [] };
+      case 'publication': return { series: c.series ?? null, volume: c.volume ?? null, issue: c.issue ?? null, article: c.article ?? null, cover: c.cover ?? null };
+      case 'research': return { year: c.year ?? null, projectStatus: c.projectStatus ?? null, piUnit: c.piUnit ?? null };
+      case 'topic': return { links: c.links ?? null };
+      default:
+        if (NOTICE_TYPES.includes(c.newsType)) return { newsType: c.newsType, closed: closedNow(c), deadlineAt: c.deadlineAt ?? null, refNo: c.refNo ?? null, applyUrl: c.applyUrl ?? null };
+        return {};
+    }
+  }
+  /** 公告是否已截止（建置時標記，或以引擎 today 再算一次） */
+  function closedNow(c) { return !!(c.closed || (c.deadlineAt && today && c.deadlineAt < today)); }
 
   /** 專業模式引用標籤：依「文件」第 3 條，v2026-09 生效 115/9/15，取代前版第 3 條「限快篩陽性」 */
   function citeLabelOf(src) {
@@ -904,6 +1002,83 @@ export function createEngine(rawDeps = {}) {
     return result;
   }
 
+  // ── 通報時限（結構化回答，不走檢索）：只讀傳染病主檔＋通報時限表 ──
+  const NOTIFY_HOW_RE = /(怎麼|如何|流程|方式|哪裡|向誰|找誰|群聚)/;
+  const NOTIFY_PERSONAL_RE = new RegExp(`${PERSON}.{0,10}(得了|得到|感染|確診|疑似|好像得|可能得)`);
+  function masterSource(d, row, cat) {
+    return {
+      id: `master.diseases#${d ? d.id : `category-${cat}`}`, contentId: 'master.diseases', type: 'master', lang: 'zh-TW',
+      title: '傳染病主檔 · 傳染病防治法公告', subject: d ? d.name : `第${CAT_ZH[cat] ?? cat}類法定傳染病`, basis: '傳染病防治法公告',
+      url: `/report/#category-${cat}`, owner: d?.owner ?? 'unit.epidemic-intelligence', ownerName: ownerNameOf(units, d?.owner ?? 'unit.epidemic-intelligence'),
+      reviewedAt: null, nextReviewAt: null, isCurrent: true, license: 'OGDL-1.0', mdUrl: null,
+      legalCategory: cat, notifyWithinHours: d?.notifyWithinHours ?? null, hoursLabel: d ? notifyHoursLabel(d.notifyWithinHours) : null,
+      caseDefinitionUrl: row?.caseDefinitionPath ?? null, labtestUrl: row?.labtestPath ?? null, diseaseUrl: row?.path ?? (d && (d.hasPage || d.page) ? `/diseases/${d.slug}/` : null),
+    };
+  }
+  function notifyAnswer(q, result, entities) {
+    const LL = result.lang;
+    const picked = []; const sources = []; const items = [];
+    const ds = entities.diseases.filter((x) => !x.derived).map((x) => diseaseById.get(x.id)).filter((d) => d && d.legalCategory != null && d.notifyWithinHours != null);
+    if (entities.diseases.some((x) => !x.derived) && !ds.length) return null; // 問的是非法定傳染病：交給檢索
+    // 沒有疾病、問的是「怎麼通報／群聚通報流程」而非時限或類別 ⇒ 交給檢索（申請服務：群聚通報、法定傳染病通報）
+    if (!ds.length && NOTIFY_HOW_RE.test(q) && !/(第\s*[一二三四五1-5]\s*類|幾類|哪一?類|時限|多久|幾小時|幾天)/.test(q)) return null;
+    if (ds.length) {
+      for (const d of ds.slice(0, 3)) {
+        const cat = d.legalCategory; const row = notifyRows.get(d.id) ?? null;
+        const src = masterSource(d, row, cat);
+        const text = LL === 'zh-TW'
+          ? `${d.name}${d.nameEn ? `（${d.nameEn}）` : ''}為第${CAT_ZH[cat] ?? cat}類法定傳染病，應於${hoursPhrase(d.notifyWithinHours)}通報。`
+          : `${d.nameEn ?? d.name} is a Category ${cat} notifiable disease and must be reported within ${d.notifyWithinHours} hours.`;
+        picked.push({ text, cite: [src.id] }); sources.push(src);
+        items.push({ id: d.id, name: d.name, nameEn: d.nameEn ?? null, legalCategory: cat, categoryLabel: `第${CAT_ZH[cat] ?? cat}類`, notifyWithinHours: d.notifyWithinHours, hoursLabel: notifyHoursLabel(d.notifyWithinHours),
+          caseDefinitionUrl: src.caseDefinitionUrl, labtestUrl: src.labtestUrl, diseaseUrl: src.diseaseUrl, reportUrl: src.url });
+      }
+    } else {
+      const m = q.match(/第\s*([一二三四五1-5])\s*類/);
+      const want = m ? (Number(m[1]) || parseChineseNumber(m[1])) : null;
+      const byCat = new Map();
+      for (const d of diseases) if (d.legalCategory != null && d.notifyWithinHours != null) { if (!byCat.has(d.legalCategory)) byCat.set(d.legalCategory, []); byCat.get(d.legalCategory).push(d); }
+      const cats = [...byCat.keys()].sort((a, b) => a - b).filter((c) => want == null || c === want);
+      if (!cats.length) return null;
+      for (const cat of cats) {
+        const list = byCat.get(cat);
+        const counts = new Map(); for (const d of list) counts.set(d.notifyWithinHours, (counts.get(d.notifyWithinHours) ?? 0) + 1);
+        const [h0] = [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0] - b[0])[0];
+        const examples = list.filter((d) => d.notifyWithinHours === h0).slice(0, 3).map((d) => d.name).join('、');
+        const others = [...counts.keys()].filter((h) => h !== h0).sort((a, b) => a - b).map((h) => {
+          const names = list.filter((d) => d.notifyWithinHours === h).map((d) => d.name);
+          return `${names.length <= 3 ? names.join('、') : `${names.slice(0, 3).join('、')}等 ${names.length} 種`}應於${hoursPhrase(h)}通報`;
+        });
+        const src = masterSource(null, null, cat);
+        const text = `第${CAT_ZH[cat] ?? cat}類法定傳染病（主檔共 ${list.length} 種，如${examples}）${others.length ? '多數' : ''}應於${hoursPhrase(h0)}通報${others.length ? `；其中${others.join('，')}` : ''}。`;
+        picked.push({ text, cite: [src.id] }); sources.push(src);
+        items.push({ id: null, name: `第${CAT_ZH[cat] ?? cat}類法定傳染病`, legalCategory: cat, categoryLabel: `第${CAT_ZH[cat] ?? cat}類`, notifyWithinHours: h0, hoursLabel: notifyHoursLabel(h0), count: list.length, reportUrl: src.url });
+      }
+    }
+    const sourceMap = new Map(sources.map((x) => [x.id, x]));
+    finalizeSentences(result, picked, sourceMap);
+    // 結構化片段也放進 retrieved，讓 grounding 檢核可逐句比對
+    result.retrieved = sources.map((x) => { const sents = picked.filter((p) => p.cite[0] === x.id).map((p) => p.text); return { id: x.id, contentId: x.contentId, type: 'master', title: x.title, url: x.url, sentences: sents, text: sents.join(' ') }; });
+    const personal = NOTIFY_PERSONAL_RE.test(q);
+    result.notify = {
+      items, structured: true, source: 'master.diseases', basis: '傳染病防治法公告', personal,
+      note: result.view === 'pro' ? null : tr(LL, '法定傳染病由診治醫師依規定通報；民眾發現疑似病例或群聚，請撥打 1922 防疫專線。', 'Notifiable diseases are reported by the attending physician. If you suspect a case or cluster, call the 1922 hotline.'),
+    };
+    result.confidence = 0.95;
+    result.completeness = { required: ['category', 'hours'], covered: ['category', 'hours'], missing: [], score: 1 };
+    const a = [];
+    if (personal || result.view !== 'pro') a.push({ label: tr(LL, '撥打 1922', 'Call 1922'), href: 'tel:1922', kind: 'hotline' });
+    const it = items[0];
+    a.push({ label: tr(LL, '前往通報專區', 'Reporting'), href: it?.reportUrl ?? '/report/', kind: 'link' });
+    if (it?.caseDefinitionUrl) a.push({ label: tr(LL, `${it.name}病例定義`, `Case definition: ${it.nameEn ?? it.name}`), href: it.caseDefinitionUrl, kind: 'link' });
+    if (it?.labtestUrl) a.push({ label: tr(LL, `${it.name}檢驗項目`, `Lab tests: ${it.nameEn ?? it.name}`), href: it.labtestUrl, kind: 'link' });
+    if (it?.diseaseUrl && a.length < 4) a.push({ label: tr(LL, `看${it.name}完整頁面`, `${it.nameEn ?? it.name}: full page`), href: it.diseaseUrl, kind: 'link' });
+    if (!a.some((x) => x.href === 'tel:1922')) a.push({ label: tr(LL, '撥打 1922', 'Call 1922'), href: 'tel:1922', kind: 'hotline' });
+    result.actions = a.slice(0, 4);
+    result.related = relatedQuestions(result);
+    return result;
+  }
+
   // ── 拒答 ──
   function setRefusal(result, kind, ruleId, actions = null) {
     const LL = result.lang;
@@ -973,6 +1148,34 @@ export function createEngine(rawDeps = {}) {
         if (d) a.push({ label: tr(LL, `${d.name}病例定義與通報`, `${d.nameEn ?? d.name}: case definition & reporting`), href: `/pro/diseases/${d.slug}/`, kind: 'link' });
         a.push({ label: tr(LL, '文件版本異動', 'Document version changes'), href: '/documents/', kind: 'link' });
         break;
+      case 'notify': // 「怎麼通報」走檢索（群聚通報、法定傳染病通報服務）時
+      case 'apply': {
+        if (result.intent === 'notify') a.push({ label: tr(LL, '前往通報專區', 'Reporting'), href: '/report/', kind: 'link' });
+        const svcSrc = (result.sources ?? []).find((s) => s.type === 'service');
+        const sv = svcSrc ? serviceById.get(svcSrc.contentId) : null;
+        const slug = svcSrc?.slug ?? sv?.slug ?? null;
+        const forms = (svcSrc?.forms?.length ? svcSrc.forms : sv?.forms) ?? [];
+        const applyUrl = svcSrc?.applyUrl ?? sv?.applyUrl ?? null;
+        if (svcSrc) a.push({ label: tr(LL, '前往申請頁', 'Go to application page'), href: slug ? `/apply/${slug}/` : String(svcSrc.url).replace(/#.*$/, ''), kind: 'link' });
+        if (forms[0]?.href) a.push({ label: tr(LL, '下載表單', 'Download form'), href: forms[0].href, kind: /^https?:/.test(forms[0].href) ? 'external' : 'link', format: forms[0].format ?? null });
+        if (applyUrl) a.push({ label: tr(LL, '線上申請', 'Apply online'), href: applyUrl, kind: /^https?:/.test(applyUrl) ? 'external' : 'link' });
+        if (!svcSrc) a.push({ label: tr(LL, '看全部申請項目', 'All applications & services'), href: '/apply/', kind: 'link' });
+        break;
+      }
+      case 'lab': {
+        const lt = (result.sources ?? []).find((s) => s.type === 'labtest');
+        if (lt) a.push({ label: tr(LL, `看${lt.title.split(' · ')[0]}`, 'See lab test details'), href: String(lt.url).replace(/#.*$/, ''), kind: 'link' });
+        if (result.view !== 'pro') a.push({ label: tr(LL, '以專業模式查詢', 'Ask in professional mode'), href: `/ask/?q=${encodeURIComponent(result.query)}&view=pro`, kind: 'link' });
+        a.push({ label: tr(LL, '檢驗專區', 'Laboratory testing'), href: '/lab/', kind: 'link' });
+        a.push({ label: tr(LL, '檢驗委託申請', 'Request lab testing'), href: '/apply/', kind: 'link' });
+        break;
+      }
+      case 'notice': {
+        const open = (result.sources ?? []).find((s) => NOTICE_TYPES.includes(s.newsType) && !s.closed && s.applyUrl);
+        a.push({ label: tr(LL, '看全部公告', 'All notices'), href: '/notices/', kind: 'link' });
+        if (open) a.push({ label: tr(LL, open.newsType === 'procurement' ? '前往投標網站' : '前往報名網站', 'Apply / bid'), href: open.applyUrl, kind: /^https?:/.test(open.applyUrl) ? 'external' : 'link' });
+        break;
+      }
       case 'stats':
         if (result.stats) a.push({ label: tr(LL, '下載資料集', 'Download dataset'), href: result.sources[0]?.url, kind: 'external' });
         a.push({ label: tr(LL, '開放資料與統計', 'Open data & statistics'), href: '/data/', kind: 'link' });
@@ -1018,6 +1221,55 @@ export function createEngine(rawDeps = {}) {
       if (out.length >= n) break;
     }
     return out;
+  }
+
+  /**
+   * 申請「怎麼辦」：以最相關申請服務的步驟塊為主體（每步一句，依序），再補應備文件、（問到時）天數／費用。
+   * 句子仍逐字出自索引片段；步驟塊不在檢索結果時從同一索引池取出並列入 retrieved。
+   */
+  const APPLY_HOW = /(怎麼|如何|流程|步驟|程序|方式|怎樣|去哪|哪裡)/;
+  function applyCompose(q, chunks, picked, view, sourceMap, result) {
+    const top = chunks.find((c) => c.type === 'service');
+    if (!top || !APPLY_HOW.test(q)) return picked;
+    const pool = poolFor(view, 'zh-TW').chunks;
+    const get = (key) => chunks.find((c) => c.id === `${top.contentId}#${key}`) ?? pool.find((c) => c.id === `${top.contentId}#${key}`);
+    const steps = get('steps');
+    if (!steps) return picked;
+    const use = (c) => { if (!sourceMap.has(c.id)) { sourceMap.set(c.id, sourceOf(c)); result.retrieved = [...(result.retrieved ?? []), c]; } return c; };
+    const out = steps.sentences.slice(0, 5).map((t, i) => ({ text: t, cite: [use(steps).id], slot: 0, score: 9 - i * 0.01, chunk: steps }));
+    const docs = get('documents');
+    if (docs && !/(幾天|多久|費用|多少錢)/.test(q)) out.push({ text: docs.sentences[0], cite: [use(docs).id], slot: 1, score: 8, chunk: docs });
+    const sla = get('sla');
+    if (sla && /(幾天|多久|費用|多少錢|收費|免費)/.test(q)) for (const t of sla.sentences.filter((x) => /(天|費)/.test(x)).slice(0, 2)) out.push({ text: t, cite: [use(sla).id], slot: 1, score: 8, chunk: sla });
+    result.guards.push({ kind: 'apply-steps', id: steps.id });
+    return out.slice(0, 7);
+  }
+
+  /**
+   * 公告句後處理：
+   *  - notice 意圖：每則被引用的公告至少帶出一句截止日句（索引建置時產生的結構化句）；
+   *  - 任何意圖：出自已截止公告的句子加「（已截止）」（以引擎 today 再算一次，避免索引過期）。
+   */
+  function markNotices(picked, result) {
+    const out = [...picked];
+    if (result.intent === 'notice') {
+      const seen = new Set();
+      for (const p of picked) {
+        const c = p.chunk; if (!c || !NOTICE_TYPES.includes(c.newsType) || seen.has(c.id)) continue;
+        seen.add(c.id);
+        if (!c.deadlineAt || out.some((x) => x.chunk?.id === c.id && x.text.includes(c.deadlineAt))) continue;
+        const ds = (c.sentences ?? []).find((x) => x.includes(c.deadlineAt));
+        if (ds) out.splice(out.indexOf(p), 0, { ...p, text: ds, cite: [c.id], slot: 0, score: p.score + 1 });
+      }
+    }
+    return out.map((p) => {
+      const c = p.chunk;
+      if (c && NOTICE_TYPES.includes(c.newsType) && closedNow(c)) {
+        if (!p.text.includes('已截止')) return { ...p, text: `${p.text}${CLOSED_MARK}`, closed: true };
+        return { ...p, closed: true };
+      }
+      return p;
+    });
   }
 
   // ───────────── answer ─────────────
@@ -1095,6 +1347,23 @@ export function createEngine(rawDeps = {}) {
       if (st?.empty) return setRefusal(result, 'no-data', 'ref.no-data', [{ label: tr(LL, '開放資料與統計', 'Open data & statistics'), href: '/data/', kind: 'link' }]);
     }
 
+    // 檢驗（民眾模式）：檢驗項目表只在專業索引 ⇒ 導向專業模式／檢驗專區／疾病頁診斷與治療，不拿民眾片段硬湊
+    if (result.intent === 'lab' && view !== 'pro') {
+      const dz = diseaseById.get(result.disease);
+      const acts = [
+        { label: tr(LL, '以專業模式查詢', 'Ask in professional mode'), href: `/ask/?q=${encodeURIComponent(q)}&view=pro`, kind: 'link' },
+        { label: tr(LL, '檢驗專區', 'Laboratory testing'), href: dz ? `/lab/${dz.slug}/` : '/lab/', kind: 'link' },
+        ...(dz && (dz.hasPage || dz.page) ? [{ label: tr(LL, `看${dz.name}診斷與治療`, `${dz.nameEn ?? dz.name}: diagnosis & treatment`), href: `/diseases/${dz.slug}/#treatment`, kind: 'link' }] : []),
+      ];
+      return setRefusal(result, 'pro-only', 'ref.lab-pro-only', acts);
+    }
+
+    // 通報時限：主檔結構化回答（不走檢索）
+    if (result.intent === 'notify') {
+      const na = notifyAnswer(q, result, entities);
+      if (na) return na;
+    }
+
     // 4 檢索（同語言 reviewed 優先，否則中文）
     const k = view === 'pro' ? 10 : 8;
     let chunks = [];
@@ -1114,7 +1383,35 @@ export function createEngine(rawDeps = {}) {
       chunks = kept;
       result.guards.push({ kind: 'dominant-disease', diseases: [...dom] });
     }
+    // 第二輪：意圖對應型別有夠相關的片段時，優先只用該型別（apply → service、lab → labtest、notice → 公告）
+    //   問句線索：「影片」→ media、「哪一期」→ publication
+    const PREFER = { apply: (c) => c.type === 'service', lab: (c) => c.type === 'labtest', notice: (c) => NOTICE_TYPES.includes(c.newsType), notify: (c) => c.type === 'service' };
+    const preferFn = PREFER[result.intent] ?? (MEDIA_CUE.test(q) ? (c) => c.type === 'media' : PUB_CUE.test(q) ? (c) => c.type === 'publication' : null);
+    if (preferFn && chunks.length) {
+      const pref = chunks.filter(preferFn);
+      if (pref.length && pref[0]._score >= chunks[0]._score * 0.5) {
+        // 使用者明說要影片／期刊 ⇒ 只用該型別；意圖推得的偏好 ⇒ 仍保留分數更高的其他片段
+        const byCue = !PREFER[result.intent];
+        // 「最新的影片」：依製作日排序加權（只轉述欄位，不推論）
+        if (byCue && /(最新|新版|重製|最近)/.test(q) && pref[0].type === 'media') {
+          const newest = pref.map((c) => c.producedAt ?? '').sort().at(-1);
+          for (const c of pref) if (c.producedAt === newest) c._score = Math.round(c._score * 1.3 * 1000) / 1000;
+          pref.sort((a, b) => b._score - a._score);
+        }
+        const kept = [...pref, ...(byCue ? [] : chunks.filter((c) => !preferFn(c) && c._score >= pref[0]._score))].slice(0, k);
+        kept.sort((a, b) => b._score - a._score);
+        kept.qWeights = chunks.qWeights; kept.model = chunks.model;
+        if (kept.length < chunks.length) result.guards.push({ kind: 'prefer-type', intent: result.intent, type: pref[0].type, dropped: chunks.length - kept.length });
+        chunks = kept;
+      }
+    }
     result.retrieved = chunks;
+
+    // 公告意圖但檢索不到任何公告（全部截止、或尚未進白名單）⇒ 不拿無關片段硬湊，導向公告頁
+    if (result.intent === 'notice' && !chunks.some((c) => NOTICE_TYPES.includes(c.newsType))) {
+      result.list = traditionalList(q, view, lang, 5);
+      return setRefusal(result, 'no-source', 'ref.no-notice', [{ label: tr(LL, '看全部公告', 'All notices'), href: '/notices/', kind: 'link' }, { label: tr(LL, '撥打 1922', 'Call 1922'), href: 'tel:1922', kind: 'hotline' }]);
+    }
 
     // 態勢（只讀結構化欄位）
     const sit = (result.intent === 'situation' || (result.disease && ['symptoms', 'vaccine', 'unknown'].includes(result.intent))) ? situationFor(entities, result.intent) : null;
@@ -1132,6 +1429,7 @@ export function createEngine(rawDeps = {}) {
     // 5 組句
     const sourceMap = new Map(chunks.map((c) => [c.id, sourceOf(c)]));
     let picked = composeSentences(q, chunks, result.intent, view, result.guards);
+    if (result.intent === 'apply' || result.intent === 'notify') picked = applyCompose(q, chunks, picked, view, sourceMap, result);
     if (sit && (result.intent === 'situation' || (!picked.length && sit.items.length) || (result.peak && picked.length < 3))) {
       const ss = situationSentences(sit, lang);
       for (const [id, s] of ss.sources) sourceMap.set(id, s);
@@ -1165,17 +1463,28 @@ export function createEngine(rawDeps = {}) {
       result.list = traditionalList(q, view, lang, 8);
       result.fallbackList = true;
     }
+    picked = markNotices(picked, result);
     finalizeSentences(result, picked, sourceMap);
     if (!result.sentences.length) return setRefusal(result, 'no-source', 'ref.no-source');
+    for (const s of result.sentences) { const p = picked.find((x) => x.text === s.text); if (p?.closed) s.closed = true; }
     result.completeness = completenessOf(result.intent, result.sentences, { situation: !!sit, q });
     result.actions = actionsFor(result, entities, sit);
+    // 民眾問「要驗什麼」：導向疾病頁「診斷與治療」區塊（檢驗細節屬專業內容）
+    const dz = diseaseById.get(result.disease);
+    if (view !== 'pro' && dz && (dz.hasPage || dz.page) && LAB_PUBLIC_RE.test(q)) {
+      result.labRedirect = true;
+      result.actions = [{ label: tr(LL, `看${dz.name}診斷與治療`, `${dz.nameEn ?? dz.name}: diagnosis & treatment`), href: `/diseases/${dz.slug}/#treatment`, kind: 'link' }, ...result.actions.filter((x) => !x.href?.endsWith('#treatment'))].slice(0, 4);
+    }
+    // 影片逐字稿引用揭露
+    if (result.sources.some((x) => x.type === 'media')) { result.disclosure.transcript = true; result.disclosure.note = tr(LL, '引用自官方影片逐字稿', 'Quoted from official video transcripts'); }
+    if (result.sources.some((x) => x.closed)) result.hasClosedNotice = true;
     result.related = relatedQuestions(result);
     return result;
   }
 
   return {
     answer, retrieve, detectEntities, detectDisease, expandQuery, relatedQuestions, traditionalList,
-    classifyIntent: (q, o) => classifyIntent(q, o), maskPII, detectInjection, statsAnswer, situationFor, citeLabelOf,
+    classifyIntent: (q, o) => classifyIntent(q, o), maskPII, detectInjection, statsAnswer, situationFor, citeLabelOf, notifyRows,
     get diseaseById() { return diseaseById; },
   };
 }
@@ -1207,3 +1516,33 @@ export function splitPlain(text) {
 
 /** 相容舊名稱 */
 export const REFUSAL_PATTERNS = REFUSAL_RULES;
+
+// ───────────────────────── 第二輪小工具 ─────────────────────────
+
+export const NOTICE_TYPES = ['recruit', 'procurement'];
+/** 已截止公告句的標記（grounding 檢核時會先去除再比對原文） */
+export const CLOSED_MARK = '（已截止）';
+const CAT_ZH = { 1: '一', 2: '二', 3: '三', 4: '四', 5: '五' };
+/** 通報時限（小時）→ 中文；一週、一個月附小時數 */
+export function notifyHoursLabel(h) {
+  if (h == null) return '';
+  if (h === 168) return '一週（168 小時）內';
+  if (h === 720) return '一個月（720 小時）內';
+  if (h % 24 === 0 && h > 24) return `${h / 24} 日（${h} 小時）內`;
+  return `${h} 小時內`;
+}
+/** 「應於」後的時限片語：數字開頭前加空白（應於 24 小時內），中文開頭不加（應於一週（168 小時）內） */
+function hoursPhrase(h) { const l = notifyHoursLabel(h); return /^\d/.test(l) ? ` ${l}` : l; }
+function mmssOf(t) { const n = Math.max(0, Math.round(Number(t) || 0)); return `${Math.floor(n / 60)}:${String(n % 60).padStart(2, '0')}`; }
+/**
+ * 通報時限表（治理引擎 site.gov.notifyTable／v1/notify-table.json）→ Map(diseaseId → row)。
+ * 容錯：[{legalCategory, diseases:[row]}]（分組）、[row]、{rows|items|data:[…]}、{ [id]: row }；不存在回空 Map。
+ */
+export function normalizeNotifyTable(t) {
+  const out = new Map();
+  if (!t) return out;
+  let arr = Array.isArray(t) ? t : Array.isArray(t.rows) ? t.rows : Array.isArray(t.items) ? t.items : Array.isArray(t.data) ? t.data : Object.entries(t).map(([id, r]) => ({ id, ...(r && typeof r === 'object' ? r : {}) }));
+  arr = arr.flatMap((g) => (Array.isArray(g?.diseases) ? g.diseases.map((r) => ({ legalCategory: g.legalCategory, ...r })) : [g]));
+  for (const r of arr) { const id = r?.id ?? r?.disease ?? r?.diseaseId; if (id) out.set(id, r); }
+  return out;
+}

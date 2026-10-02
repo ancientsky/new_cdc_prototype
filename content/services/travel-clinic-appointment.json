@@ -1,0 +1,130 @@
+{
+  "id": "service.travel-clinic-appointment",
+  "type": "service",
+  "title": "旅遊醫學門診預約",
+  "owner": "unit.quarantine",
+  "publishedAt": "2024-06-01",
+  "reviewedAt": "2026-06-15",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "travel",
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.malaria",
+    "disease.measles"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-06-15"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-06-15",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "出國前 4 到 6 週向全國旅遊醫學合約門診預約，評估疫苗接種、瘧疾預防用藥與行前衛教；需要黃皮書者也在此辦理。",
+  "keywords": [
+    "旅遊醫學門診",
+    "預約",
+    "出國",
+    "瘧疾預防",
+    "疫苗"
+  ],
+  "slug": "travel-clinic-appointment",
+  "serviceType": "clinic",
+  "whoCanApply": [
+    "民眾",
+    "出國旅客",
+    "外派人員與留學生"
+  ],
+  "introMarkdown": "疾管署與全國醫院合作設置**旅遊醫學合約門診**，提供：\n\n- 依目的地與行程評估疫苗（A 型肝炎、黃熱病、MMR、狂犬病暴露前等）\n- 瘧疾預防用藥處方與用法說明\n- 國際預防接種證明書（黃皮書）\n- 慢性病患者、孕婦、兒童的行前健康諮詢\n\n請直接向各合約醫院預約，院所名單與聯絡電話見現行官網。",
+  "requiredDocuments": [
+    "健保卡",
+    "行程資料（國家、城市、停留天數、活動）",
+    "既有疫苗接種紀錄"
+  ],
+  "steps": [
+    {
+      "title": "查詢目的地疫情等級",
+      "text": "於旅遊疫情建議頁查詢。",
+      "who": "民眾",
+      "days": 0
+    },
+    {
+      "title": "向合約門診預約",
+      "text": "電話或網路預約，告知出國日期。",
+      "who": "民眾",
+      "days": 1
+    },
+    {
+      "title": "看診評估",
+      "text": "醫師依行程評估疫苗與用藥。",
+      "who": "旅遊醫學門診",
+      "days": 0
+    },
+    {
+      "title": "接種與取藥",
+      "text": "多劑疫苗依時程回診。",
+      "who": "旅遊醫學門診",
+      "days": 0
+    }
+  ],
+  "slaDays": 7,
+  "fee": "掛號費與自費疫苗、藥品費用依各院所公告",
+  "legalBasis": [
+    "傳染病防治法"
+  ],
+  "forms": [
+    {
+      "label": "旅遊醫學合約門診名單",
+      "href": "https://www.cdc.gov.tw/File/Get/placeholder-form-travel-clinic-list",
+      "format": "PDF",
+      "machineReadable": false
+    }
+  ],
+  "contact": "疾病管制署檢疫組（總機 02-2395-9825）；一般諮詢請撥防疫專線 1922（國外 +886-800-001922）",
+  "faq": [
+    {
+      "q": "出國前一週才想到，還來得及嗎？",
+      "a": "仍建議就診，部分疫苗與預防用藥即使出發前才開始仍有幫助。"
+    },
+    {
+      "q": "旅遊醫學門診健保有給付嗎？",
+      "a": "一般預防性諮詢與自費疫苗健保不給付，費用依院所公告。"
+    }
+  ],
+  "i18n": {
+    "en": {
+      "title": "Book a travel medicine clinic",
+      "summary": "Book a contracted travel medicine clinic 4–6 weeks before departure for vaccines, malaria prophylaxis, the yellow card and pre-travel advice."
+    }
+  }
+}

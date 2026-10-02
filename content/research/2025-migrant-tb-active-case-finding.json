@@ -1,0 +1,87 @@
+{
+  "id": "research.2025-migrant-tb-active-case-finding",
+  "type": "research",
+  "title": "移工結核病主動發現與都治成效評估",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2025-03-01",
+  "reviewedAt": "2026-06-01",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional",
+    "public"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-06-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-06-01",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "委託研究（執行中）：評估移工定期健康檢查與宿舍主動篩檢的結核病發現率，並比較多語都治關懷對完治率的影響。",
+  "keywords": [
+    "結核病",
+    "移工",
+    "主動發現",
+    "都治",
+    "多語"
+  ],
+  "note": "計畫編號、經費與 IRB 字號為示意；執行單位以機構名稱表示，不列個人姓名",
+  "projectNo": "MOHW114-CDC-C-315-000105",
+  "year": 2025,
+  "projectStatus": "ongoing",
+  "fundingType": "commissioned",
+  "piUnit": "某醫學大學公共衛生學系",
+  "budgetNtd": 2400000,
+  "abstractMarkdown": "本計畫以移工健康檢查與宿舍接觸者調查資料，估計主動發現策略之個案發現率與成本，並以越南語、印尼語、泰語關懷員介入，評估多語都治對完治率與失落率之影響。",
+  "objectives": [
+    "估計不同篩檢策略之個案發現率",
+    "評估多語都治關懷之完治率提升",
+    "提出移工結核病防治政策建議"
+  ],
+  "datasets": [
+    "dataset.tb-new-cases"
+  ],
+  "irb": {
+    "required": true,
+    "approvalNo": "N202502011（示意）",
+    "committee": "某醫學大學聯合人體研究倫理委員會"
+  },
+  "i18n": {
+    "en": {
+      "title": "Active TB case finding and DOTS outcomes among migrant workers",
+      "summary": "Ongoing commissioned study on TB detection through health checks and dormitory screening, and the effect of multilingual DOTS support on treatment completion."
+    }
+  }
+}

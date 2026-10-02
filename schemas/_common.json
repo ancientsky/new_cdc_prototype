@@ -3,64 +3,262 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "所有內容共同欄位（治理欄位）",
   "type": "object",
-  "required": ["id", "type", "title", "owner", "publishedAt", "reviewedAt", "reviewPeriodMonths", "status", "audience", "sensitivity", "license", "languages", "summary"],
+  "required": [
+    "id",
+    "type",
+    "title",
+    "owner",
+    "publishedAt",
+    "reviewedAt",
+    "reviewPeriodMonths",
+    "status",
+    "audience",
+    "sensitivity",
+    "license",
+    "languages",
+    "summary"
+  ],
   "properties": {
-    "id": { "type": "string", "pattern": "^[a-z]+\\.[a-z0-9][a-z0-9.-]*$", "description": "穩定可讀 ID，如 disease.dengue、news.2026-09-22-enterovirus" },
-    "type": { "enum": ["disease", "faq", "news", "letter", "clarification", "document", "vaccine", "dataset", "banner", "page", "media", "topic", "service", "publication", "labtest", "research"] },
-    "title": { "type": "string", "minLength": 1 },
-    "owner": { "type": "string", "pattern": "^unit\\." },
-    "steward": { "type": "string" },
-    "reviewer": { "type": "string" },
-    "publishedAt": { "type": "string", "format": "date" },
-    "reviewedAt": { "type": "string", "format": "date" },
-    "reviewPeriodMonths": { "type": "integer", "minimum": 0, "maximum": 60 },
-    "nextReviewAt": { "type": "string", "format": "date", "description": "由治理引擎計算，不手填" },
-    "status": { "enum": ["draft", "review", "published", "archived"] },
-    "audience": { "type": "array", "minItems": 1, "items": { "enum": ["public", "professional"] } },
-    "tasks": { "type": "array", "items": { "enum": ["symptoms", "vaccines", "travel", "situation", "rumor", "data"] } },
-    "sensitivity": { "enum": ["public", "professional", "internal"] },
-    "license": { "type": "string" },
-    "licenseNote": { "type": "string" },
-    "basedOn": { "type": "array", "items": { "type": "string" } },
-    "diseases": { "type": "array", "items": { "type": "string", "pattern": "^disease\\." } },
-    "vaccines": { "type": "array", "items": { "type": "string", "pattern": "^vaccine\\." } },
-    "countries": { "type": "array", "items": { "type": "string", "pattern": "^[A-Z]{2}$" } },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z]+\\.[a-z0-9][a-z0-9.-]*$",
+      "description": "穩定可讀 ID，如 disease.dengue、news.2026-09-22-enterovirus"
+    },
+    "type": {
+      "enum": [
+        "disease",
+        "faq",
+        "news",
+        "letter",
+        "clarification",
+        "document",
+        "vaccine",
+        "dataset",
+        "banner",
+        "page",
+        "media",
+        "topic",
+        "service",
+        "publication",
+        "labtest",
+        "research"
+      ]
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "owner": {
+      "type": "string",
+      "pattern": "^unit\\."
+    },
+    "steward": {
+      "type": "string"
+    },
+    "reviewer": {
+      "type": "string"
+    },
+    "publishedAt": {
+      "type": "string",
+      "format": "date"
+    },
+    "reviewedAt": {
+      "type": "string",
+      "format": "date"
+    },
+    "reviewPeriodMonths": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 60
+    },
+    "nextReviewAt": {
+      "type": "string",
+      "format": "date",
+      "description": "由治理引擎計算，不手填"
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "review",
+        "published",
+        "archived"
+      ]
+    },
+    "audience": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "enum": [
+          "public",
+          "professional"
+        ]
+      }
+    },
+    "tasks": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "symptoms",
+          "vaccines",
+          "travel",
+          "situation",
+          "rumor",
+          "data"
+        ]
+      }
+    },
+    "sensitivity": {
+      "enum": [
+        "public",
+        "professional",
+        "internal"
+      ]
+    },
+    "license": {
+      "type": "string"
+    },
+    "licenseNote": {
+      "type": "string"
+    },
+    "basedOn": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "diseases": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^disease\\."
+      }
+    },
+    "vaccines": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^vaccine\\."
+      }
+    },
+    "countries": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Z]{2}$"
+      }
+    },
     "aiWhitelist": {
       "type": "object",
       "properties": {
-        "requested": { "type": "boolean" },
-        "approvedBy": { "type": "string" },
-        "approvedAt": { "type": "string", "format": "date" }
+        "requested": {
+          "type": "boolean"
+        },
+        "approvedBy": {
+          "type": "string"
+        },
+        "approvedAt": {
+          "type": "string",
+          "format": "date"
+        }
       }
     },
     "languages": {
       "type": "object",
-      "required": ["zh-TW"],
+      "required": [
+        "zh-TW"
+      ],
       "additionalProperties": {
         "type": "object",
-        "required": ["status"],
+        "required": [
+          "status"
+        ],
         "properties": {
-          "status": { "enum": ["source", "reviewed", "machine", "pending", "none"] },
-          "reviewedAt": { "type": "string", "format": "date" },
-          "reviewer": { "type": "string" },
-          "sourceHash": { "type": "string" }
+          "status": {
+            "enum": [
+              "source",
+              "reviewed",
+              "machine",
+              "pending",
+              "none"
+            ]
+          },
+          "reviewedAt": {
+            "type": "string",
+            "format": "date"
+          },
+          "reviewer": {
+            "type": "string"
+          },
+          "sourceHash": {
+            "type": "string"
+          }
         }
       }
     },
-    "i18n": { "type": "object" },
-    "sourceHash": { "type": "string" },
-    "summary": { "type": "string", "maxLength": 400 },
-    "keywords": { "type": "array", "items": { "type": "string" } },
-    "legacyUrls": { "type": "array", "items": { "type": "string", "format": "uri" } },
+    "i18n": {
+      "type": "object"
+    },
+    "sourceHash": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string",
+      "maxLength": 400
+    },
+    "keywords": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "legacyUrls": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      }
+    },
     "auditRules": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["pattern", "message"],
+        "required": [
+          "pattern",
+          "message"
+        ],
         "properties": {
-          "scope": { "type": "array", "items": { "type": "string" } },
-          "pattern": { "type": "string" },
-          "message": { "type": "string" }
+          "scope": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "pattern": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "linkChecks": {
+      "type": "object",
+      "description": "連結檢查結果（scripts/fetch-data.mjs --check-links 寫回）：{ applyUrl|videoUrl|pdfUrl: { lastCheckedAt, status } }",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "lastCheckedAt": {
+            "type": "string",
+            "format": "date"
+          },
+          "status": {
+            "enum": [
+              "ok",
+              "broken",
+              "unchecked"
+            ]
+          }
         }
       }
     }

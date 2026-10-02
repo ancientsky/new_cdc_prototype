@@ -3,7 +3,7 @@
 // 靜態站無法送 ETag／Last-Modified header → meta.etag（data 內容 sha1 前 12 碼）與 meta.lastModified（集合最大 reviewedAt）。
 import { createHash } from 'node:crypto';
 import { config, siteOrigin } from '../../site.config.mjs';
-import { pathOf, mdPathOf, WHITELIST_REASON_LABELS, LIFECYCLE_LABELS, TODO_KIND_LABELS } from './governance.mjs';
+import { pathOf, mdPathOf, WHITELIST_REASON_LABELS, LIFECYCLE_LABELS, TODO_KIND_LABELS, NOTICE_TYPES } from './governance.mjs';
 import { buildOpenApi } from './openapi.mjs';
 
 export const etagOf = (data) => createHash('sha1').update(JSON.stringify(data) ?? 'null').digest('hex').slice(0, 12);
@@ -40,6 +40,12 @@ export function govSummary(item) {
     isCurrent: g.isCurrent, superseded: g.superseded, supersededBy: g.supersededBy, currentId: g.currentId, noindex: g.noindex,
     stale: g.stale, basisRevisions: g.basisRevisions, predatesBasis: g.predatesBasis,
     annotations: g.annotations, reverseAuditHits: g.reverseAuditHits.length,
+    ...(g.deadlineAt !== undefined ? { deadlineAt: g.deadlineAt, daysToDeadline: g.daysToDeadline, closed: g.closed, closingSoon: g.closingSoon } : {}),
+    ...(g.ended !== undefined ? { ended: g.ended, upcoming: g.upcoming } : {}),
+    ...(g.mediaOutdated !== undefined ? { mediaOutdated: g.mediaOutdated, hasTranscript: g.hasTranscript } : {}),
+    ...(g.campaignStatus ? { campaignStatus: g.campaignStatus } : {}),
+    ...(g.linkHealth?.total ? { linkHealth: g.linkHealth } : {}),
+    ...(g.labtestCheck ? { labtestCheck: g.labtestCheck } : {}),
     license: item.license, licenseNote: item.licenseNote ?? null, sensitivity: item.sensitivity, sourceHash: item.sourceHash,
     languages: item.languages, translationStale: g.translationStale, renderableLangs: g.renderableLangs,
   };
@@ -56,7 +62,24 @@ const strip = apiItem;
 const noFile = (o) => { if (!o || typeof o !== 'object') return o; const { __file, ...r } = o; return r; };
 const brief = (i) => ({ id: i.id, type: i.type, title: i.title, summary: i.summary, url: absUrl(pathOf(i)), path: pathOf(i), reviewedAt: i.reviewedAt, owner: i.owner, ownerName: i.gov.ownerName, lifecycle: i.gov.lifecycle, whitelist: i.gov.whitelist.effective });
 
-const CATEGORY_OF = { disease: 'content-page', faq: 'content-page', vaccine: 'content-page', clarification: 'content-page', page: 'content-page', banner: 'content-page', news: 'press', letter: 'press', document: 'document-library' };
+export const CATEGORY_OF = {
+  disease: 'content-page', faq: 'content-page', vaccine: 'content-page', clarification: 'content-page', page: 'content-page', banner: 'content-page',
+  news: 'press', letter: 'press', document: 'document-library',
+  media: 'media', topic: 'content-page', service: 'content-page', publication: 'document-library', labtest: 'content-page', research: 'document-library',
+};
+/** 七類資產（7.7 第 1 點：原五類＋新聞稿、影音宣導素材） */
+export const ASSET_CATEGORIES = {
+  'open-dataset': '開放資料集', 'stats-system': '統計查詢系統', 'structured-table': '結構化表格', 'document-library': '文件庫',
+  'content-page': '內容頁', press: '新聞稿／公告', media: '影音宣導素材',
+};
+/** 內容的關聯疾病（diseases[]、labtest.disease、出版品篇目、專區 contentIds） */
+export function diseasesOf(item) {
+  const set = new Set(item.diseases ?? []);
+  if (item.disease) set.add(item.disease);
+  for (const a of item.articles ?? []) for (const d of a.diseases ?? []) set.add(d);
+  for (const id of item.contentIds ?? []) if (String(id).startsWith('disease.')) set.add(id);
+  return [...set];
+}
 
 /** 301 對照表：失效版 → 現行版；family 穩定網址 → 現行版；現行官網 legacyUrls → 新路徑 */
 export function buildRedirects(site) {
@@ -92,12 +115,13 @@ export function emitApi(site, write) {
 
   // 疾病：主檔 + 疾病頁
   const pageById = new Map(c.diseases.map((p) => [p.id, p]));
-  const related = new Map(); // disease id → { faq, news, documents, vaccines, datasets, clarifications }
+  const related = new Map(); // disease id → { faq, news, documents, vaccines, datasets, clarifications, media, labtests, services, publications, topics }
+  const RELATED_KEY = { faq: 'faq', news: 'news', letter: 'news', document: 'documents', vaccine: 'vaccines', dataset: 'datasets', clarification: 'clarifications', media: 'media', labtest: 'labtests', service: 'services', publication: 'publications', topic: 'topics' };
   for (const item of site.all) {
     if (item.status !== 'published' || item.gov.superseded) continue;
-    for (const d of item.diseases ?? []) {
-      if (!related.has(d)) related.set(d, { faq: [], news: [], documents: [], vaccines: [], datasets: [], clarifications: [] });
-      const key = { faq: 'faq', news: 'news', letter: 'news', document: 'documents', vaccine: 'vaccines', dataset: 'datasets', clarification: 'clarifications' }[item.type];
+    for (const d of diseasesOf(item)) {
+      if (!related.has(d)) related.set(d, { faq: [], news: [], documents: [], vaccines: [], datasets: [], clarifications: [], media: [], labtests: [], services: [], publications: [], topics: [] });
+      const key = RELATED_KEY[item.type];
       if (key) related.get(d)[key].push(brief(item));
     }
   }
@@ -129,15 +153,46 @@ export function emitApi(site, write) {
   put('v1/glossary.json', site.master.glossary ?? [], { lastModified: site.today }, {}, '七語詞彙主檔');
   put('v1/units.json', site.master.units ?? [], { lastModified: site.today }, {}, '權責單位');
   put('v1/countries.json', site.master.countries ?? [], { lastModified: site.today }, {}, '國家主檔');
+  // ── 第二輪：影音、專區、申請服務、出版品、檢驗、研究、公告、通報時限、宣導檔期 ──
+  const byPubDesc = (a, b) => (b.publishedAt ?? '').localeCompare(a.publishedAt ?? '') || a.id.localeCompare(b.id);
+  put('v1/media.json', [...published(c.media)].sort(byPubDesc).map(strip), {}, {}, '影音宣導素材（含逐字稿、章節、依據正本與是否過時）');
+  put('v1/topics.json', [...published(c.topics)].sort((a, b) => (a.priority ?? 99) - (b.priority ?? 99) || a.id.localeCompare(b.id)).map(strip), {}, {}, '專區／專題（ended＝已結束；links 含外部連結檢查狀態）');
+  put('v1/services.json', [...published(c.services)].sort((a, b) => a.id.localeCompare(b.id)).map(strip), {}, {}, '申請／服務（步驟、應備文件、處理天數、表單）');
+  const pubs = [...published(c.publications)].sort((a, b) => (a.series ?? '').localeCompare(b.series ?? '') || String(b.volume ?? '').localeCompare(String(a.volume ?? ''), undefined, { numeric: true }) || String(b.issue ?? '').localeCompare(String(a.issue ?? ''), undefined, { numeric: true }) || byPubDesc(a, b));
+  const seriesMap = new Map();
+  for (const p of pubs) {
+    const k = p.series ?? '其他';
+    if (!seriesMap.has(k)) seriesMap.set(k, { series: k, seriesEn: p.seriesEn ?? null, pubType: p.pubType ?? null, issn: p.issn ?? null, count: 0, latest: null, items: [] });
+    const g = seriesMap.get(k);
+    g.count++; g.items.push(p.id);
+    if (!g.latest || (p.publishedAt ?? '') > (site.byId.get(g.latest)?.publishedAt ?? '')) g.latest = p.id;
+  }
+  put('v1/publications.json', pubs.map(strip), {}, { series: [...seriesMap.values()] }, '出版品（書目完整；series 為系列分組）');
+  put('v1/labtests.json', [...published(c.labtests)].sort((a, b) => a.id.localeCompare(b.id)).map((l) => ({ ...strip(l), master: noFile(site.diseaseMasterById.get(l.disease)) ?? null })), {}, {}, '檢驗項目（疾病 × 檢體 × 容器 × 保存運送 × 時限；含與通報時限一致性）');
+  put('v1/research.json', [...published(c.research)].sort((a, b) => (b.year ?? 0) - (a.year ?? 0) || a.id.localeCompare(b.id)).map(strip), {}, {}, '研究計畫（年度、狀態、成果報告、資料集）');
+  const notices = published(c.news).filter((n) => NOTICE_TYPES.has(n.newsType))
+    .sort((a, b) => (a.gov.closed - b.gov.closed) || (a.gov.closed ? (b.deadlineAt ?? '').localeCompare(a.deadlineAt ?? '') : (a.deadlineAt ?? '9999').localeCompare(b.deadlineAt ?? '9999')) || byPubDesc(a, b))
+    .map((n) => ({ ...strip(n), closed: !!n.gov.closed, closingSoon: !!n.gov.closingSoon, daysToDeadline: n.gov.daysToDeadline ?? null }));
+  put('v1/notices.json', notices, { open: notices.filter((n) => !n.closed).length, closed: notices.filter((n) => n.closed).length }, {}, '機關公告：人才招募、採購公告、其他訊息（closed＝已截止；進行中依截止日排序）');
+  const nt = site.gov.notifyTable ?? [];
+  put('v1/notify-table.json', nt, { lastModified: site.today, diseases: nt.reduce((n, g) => n + g.diseases.length, 0), source: `${siteOrigin()}/report/` }, {}, '法定傳染病通報時限表（由傳染病主檔自動產生）');
+  const STATUS_ORDER = { active: 0, upcoming: 1, ended: 2 };
+  const campaigns = (c.banners ?? []).filter((b) => b.status === 'published' || b.status === 'archived')
+    .sort((a, b) => STATUS_ORDER[a.gov.campaignStatus] - STATUS_ORDER[b.gov.campaignStatus] || (a.priority ?? 99) - (b.priority ?? 99) || (b.startAt ?? '').localeCompare(a.startAt ?? ''))
+    .map((b) => ({ ...strip(b), campaignStatus: b.gov.campaignStatus }));
+  put('v1/campaigns.json', campaigns, { active: campaigns.filter((x) => x.campaignStatus === 'active').length, upcoming: campaigns.filter((x) => x.campaignStatus === 'upcoming').length, ended: campaigns.filter((x) => x.campaignStatus === 'ended').length }, {}, '全部宣導 Banner（campaignStatus：active／upcoming／ended）');
+
   put('v1/banners.json', (c.banners ?? []).filter((b) => b.status === 'published' && b.startAt <= site.today && b.endAt >= site.today).sort((a, b) => (a.priority ?? 99) - (b.priority ?? 99)).map(strip), {}, {}, '目前上架中的首頁 Banner');
 
   // 五類資產總目錄
-  put('v1/catalog.json', site.all.filter((i) => i.status === 'published').map((i) => ({
+  const catalog = site.all.filter((i) => i.status === 'published').map((i) => ({
     id: i.id, type: i.type, category: i.category ?? CATEGORY_OF[i.type] ?? 'content-page', title: i.title, owner: i.owner, ownerName: i.gov.ownerName,
     canonicalUrl: i.canonicalUrl ?? absUrl(pathOf(i)), page: absUrl(pathOf(i)), md: mdPathOf(i) ? absUrl(mdPathOf(i)) : null,
     license: i.license, sensitivity: i.sensitivity, reviewedAt: i.reviewedAt, nextReviewAt: i.gov.nextReviewAt, lifecycle: i.gov.lifecycle,
     isCurrent: i.gov.isCurrent, whitelist: i.gov.whitelist.effective, languages: i.gov.renderableLangs, legacyUrls: i.legacyUrls ?? [],
-  })), {}, {}, '五類資產總目錄');
+  }));
+  const categories = Object.entries(ASSET_CATEGORIES).map(([key, label]) => ({ key, label, count: catalog.filter((x) => x.category === key).length }));
+  put('v1/catalog.json', catalog, { categories }, {}, '七類資產總目錄（開放資料集、統計查詢系統、結構化表格、文件庫、內容頁、新聞稿／公告、影音宣導素材）');
 
   // 搜尋（靜態版＝答案單元索引）
   const si = site.searchIndex ?? { public: [], pro: [] };
@@ -171,6 +226,8 @@ export function emitApi(site, write) {
   put('v1/governance/todos.json', todos, { lastModified: site.today, overdue: todos.filter((t) => t.overdue).length, kindLabels: TODO_KIND_LABELS }, {}, '治理待辦');
   put('v1/governance/summary.json', site.gov.summary, { lastModified: site.today }, {}, '治理儀表板數字');
   put('v1/governance/by-owner.json', site.gov.byOwner, { lastModified: site.today }, {}, '各權責單位待辦／逾期／白名單／內容數');
+  const lh = site.gov.linkHealth ?? {};
+  put('v1/governance/links.json', site.gov.externalLinks ?? [], { lastModified: lh.lastCheckedAt ?? site.today, ok: lh.ok ?? 0, broken: lh.broken ?? 0, unchecked: lh.unchecked ?? 0, checker: 'node scripts/fetch-data.mjs --check-links' }, {}, '外部連結健康（status：ok／broken／unchecked）');
   put('v1/governance/ai-status.json', site.governance.aiStatus, { lastModified: site.governance.aiStatus?.updatedAt?.slice?.(0, 10) ?? site.today }, {}, 'AI 問答開關');
   put('v1/governance/whitelist.json', {
     policy: site.governance.whitelist, reasonLabels: WHITELIST_REASON_LABELS, lifecycleLabels: LIFECYCLE_LABELS,

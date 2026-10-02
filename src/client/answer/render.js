@@ -22,6 +22,11 @@ const S = {
     llmDropped: '已刪除 {n} 句無法對應官方片段的句子。', empty: '請輸入問題。', side: { disease: '疾病百科', news: '最新新聞稿', data: '相關資料集', channels: '同一答案，三個管道', full: '完整頁面', symptoms: '症狀', transmission: '傳染途徑', incubation: '潛伏期', prevention: '預防', treatment: '治療', notify: '通報時限' },
     channels: ['網站：本頁的答案與來源', 'API：v1/search-index.json 同一份答案單元', '1922：話務人員使用相同的官方內容'],
     confidence: '信心', guards: '輸出檢查',
+    media: { video: '影片', animation: '動畫', podcast: 'Podcast', short: '短影音' }, watchAt: '從 {t} 開始看', transcriptNote: '引用自官方影片逐字稿', basedOnLabel: '製作依據', producedAt: '製作日',
+    steps: '步驟', stepsN: '{n} 個步驟', slaDays: '處理天數', days: '{n} 天', fee: '費用', applyPage: '前往申請頁', forms: '表單',
+    specimen: '檢體', container: '容器', volume: '量', timing: '採檢時機', storage: '保存', transport: '運送', tests: '可做檢驗', turnaround: '週轉', sendWithin: '送驗時限', labs: '檢驗單位', hours: '{n} 小時',
+    masterBasis: '依傳染病防治法公告', masterNote: '主檔結構化欄位，非檢索摘錄', notifyH: '通報時限', notifyCategory: '法定傳染病類別', notifyWithin: '應於', notifyReport: '通報專區', caseDef: '病例定義', labtestLink: '檢驗項目', diseasePage: '疾病頁',
+    closed: '已截止', deadline: '截止日', notices: '全部公告', proOnlyNote: '專業內容',
   },
   en: {
     answerH: 'Answer', answerSub: 'Quotes official content only — tap a number to see the source', aiBadge: 'AI summary', next: 'What you can do next', sourcesH: 'Sources', relatedH: 'You may also want to know',
@@ -41,6 +46,11 @@ const S = {
     llmDropped: '{n} sentence(s) without matching official passages were removed.', empty: 'Please enter a question.', side: { disease: 'Disease facts', news: 'Latest press releases', data: 'Related datasets', channels: 'One answer, three channels', full: 'Full page', symptoms: 'Symptoms', transmission: 'Transmission', incubation: 'Incubation', prevention: 'Prevention', treatment: 'Treatment', notify: 'Notification' },
     channels: ['Web: this page with sources', 'API: the same answer units in v1/search-index.json', '1922: hotline staff use the same official content'],
     confidence: 'Confidence', guards: 'Output checks',
+    media: { video: 'Video', animation: 'Animation', podcast: 'Podcast', short: 'Short video' }, watchAt: 'Watch from {t}', transcriptNote: 'Quoted from official video transcripts', basedOnLabel: 'Based on', producedAt: 'Produced',
+    steps: 'Steps', stepsN: '{n} steps', slaDays: 'Processing time', days: '{n} days', fee: 'Fee', applyPage: 'Go to application page', forms: 'Forms',
+    specimen: 'Specimen', container: 'Container', volume: 'Volume', timing: 'Timing', storage: 'Storage', transport: 'Transport', tests: 'Tests', turnaround: 'Turnaround', sendWithin: 'Send within', labs: 'Laboratories', hours: '{n} hours',
+    masterBasis: 'Communicable Disease Control Act announcement', masterNote: 'Structured master data, not a retrieved excerpt', notifyH: 'Notification deadline', notifyCategory: 'Notifiable disease category', notifyWithin: 'Report within', notifyReport: 'Reporting', caseDef: 'Case definition', labtestLink: 'Lab tests', diseasePage: 'Disease page',
+    closed: 'Closed', deadline: 'Deadline', notices: 'All notices', proOnlyNote: 'Professional content',
   },
   vi: {
     answerH: 'Câu trả lời', answerSub: 'Chỉ trích dẫn nội dung chính thức', aiBadge: 'AI tổng hợp', next: 'Bạn có thể', sourcesH: 'Nguồn', relatedH: 'Có thể bạn muốn biết',
@@ -74,6 +84,12 @@ export function sourceCardBody(src, { pro = false } = {}) {
   const rows = [];
   const add = (k, v) => { if (v) rows.push(`<div><dt>${esc(k)}</dt><dd>${v}</dd></div>`); };
   add(L('canonical'), link(src.url, src.docTitle ?? src.title));
+  if (src.type === 'master') {
+    add(L('notifyCategory'), src.legalCategory ? `<span class="c-notify-pill c-notify-pill--${esc(src.legalCategory)}">${esc(catLabel(src.legalCategory))}</span>` : '');
+    add(L('notifyH'), esc(src.hoursLabel ?? ''));
+    add(L('masterBasis'), esc(L('masterNote')));
+  }
+  rows.push(...typeRows(src).map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${v}</dd></div>`));
   add(L('owner'), esc(src.ownerName ?? src.owner));
   add(L('reviewed'), src.reviewedAt ? `<time datetime="${esc(src.reviewedAt)}">${esc(src.reviewedAt)}</time>` : '');
   add(L('current'), src.isCurrent === false ? `<span class="c-tag c-tag--warn">${esc(L('currentNo'))}</span>` : esc(L('currentYes')));
@@ -97,6 +113,61 @@ export function sourceCardBody(src, { pro = false } = {}) {
   return `<dl class="c-deflist c-deflist--sm">${rows.join('')}</dl><p class="c-source-card__actions">${btns.join(' ')}</p>`;
 }
 
+const CAT_ZH = { 1: '一', 2: '二', 3: '三', 4: '四', 5: '五' };
+const catLabel = (c) => (LANG === 'zh-TW' ? `第${CAT_ZH[c] ?? c}類` : `Category ${c}`);
+export function mmss(t) { const n = Math.max(0, Math.round(Number(t) || 0)); return `${Math.floor(n / 60)}:${String(n % 60).padStart(2, '0')}`; }
+
+/** 來源卡型別專屬列：media（海報、章節時間戳）、service（步驟數、處理天數、表單）、labtest（檢體表縮版）、公告（截止） */
+export function typeRows(src) {
+  const rows = [];
+  if (src.type === 'media') {
+    const label = `${L(`media.${src.mediaType ?? 'video'}`)}${src.chapter?.label ? ` · ${src.chapter.label}` : ''} · ${src.timeLabel ?? mmss(src.t)}`;
+    rows.push([L('media.video'), `${src.poster ? `<img class="c-source-card__poster" src="${esc(url(src.poster, { noLang: true }))}" alt="" width="96" height="54" loading="lazy">` : ''}${link(src.url, L('watchAt', { t: src.timeLabel ?? mmss(src.t) }))} <span class="muted">${esc(label)}</span>`]);
+    if (src.basedOnVersionLabel) rows.push([L('basedOnLabel'), esc(src.basedOnVersionLabel)]);
+    if (src.producedAt) rows.push([L('producedAt'), esc(src.producedAt)]);
+  }
+  if (src.type === 'service') {
+    if (src.stepsCount) rows.push([L('steps'), esc(L('stepsN', { n: src.stepsCount }))]);
+    if (src.slaDays != null) rows.push([L('slaDays'), esc(L('days', { n: src.slaDays }))]);
+    if (src.fee) rows.push([L('fee'), esc(src.fee)]);
+    if (src.forms?.length) rows.push([L('forms'), src.forms.slice(0, 3).map((f) => link(f.href, `${f.label}${f.format ? `（${f.format}）` : ''}`)).join('、')]);
+  }
+  if (src.type === 'labtest' && src.specimen) {
+    const sp = src.specimen;
+    const cells = [[L('container'), sp.container], [L('volume'), sp.volume], [L('timing'), sp.timing], [L('storage'), sp.storage], [L('transport'), sp.transport], [L('tests'), (sp.tests ?? []).join('、')], [L('turnaround'), sp.turnaroundDays != null ? L('days', { n: sp.turnaroundDays }) : ''], [L('sendWithin'), src.sendWithinHours != null ? L('hours', { n: src.sendWithinHours }) : ''], [L('labs'), (src.labs ?? []).join('、')]].filter(([, v]) => v);
+    rows.push([`${L('specimen')}：${sp.name}`, `<table class="c-table c-table--sm c-labtest-mini"><tbody>${cells.map(([k, v]) => `<tr><th scope="row">${esc(k)}</th><td>${esc(v)}</td></tr>`).join('')}</tbody></table>`]);
+  }
+  if (src.deadlineAt) rows.push([L('deadline'), `${esc(src.deadlineAt)}${src.closed ? ` <span class="c-tag c-tag--warn">${esc(L('closed'))}</span>` : ''}`]);
+  return rows;
+}
+
+/** 來源卡摘要列（summary 第二行）：依型別顯示「影片 · 章節 · mm:ss」「主檔 · 依法公告」等 */
+export function sourceMeta(s) {
+  if (s.type === 'media') return `${L(`media.${s.mediaType ?? 'video'}`)}${s.chapter?.label ? ` · ${s.chapter.label}` : ''} · ${s.timeLabel ?? mmss(s.t)}${s.producedAt ? ` · ${L('producedAt')} ${s.producedAt}` : ''}`;
+  if (s.type === 'master') return `${s.subject ?? ''}${s.legalCategory ? ` · ${catLabel(s.legalCategory)}` : ''}${s.hoursLabel ? ` · ${s.hoursLabel}` : ''}`;
+  if (s.type === 'service') return `${s.ownerName ?? ''}${s.stepsCount ? ` · ${L('stepsN', { n: s.stepsCount })}` : ''}${s.slaDays != null ? ` · ${L('slaDays')} ${L('days', { n: s.slaDays })}` : ''}`;
+  if (s.type === 'labtest') return `${s.ownerName ?? ''}${s.specimen?.name ? ` · ${s.specimen.name}` : ''}${s.sendWithinHours != null ? ` · ${L('sendWithin')} ${L('hours', { n: s.sendWithinHours })}` : ''}`;
+  return `${s.ownerName ?? ''} · ${L('reviewed')} ${s.reviewedAt ?? ''}${s.version ? ` · ${s.version}` : ''}${s.closed ? ` · ${L('closed')}` : ''}`;
+}
+
+/** 通報時限結構化卡（類別 pill、時限大字、連結）：r.notify 存在時取代一般句子列表的上方 */
+export function notifyBlock(result) {
+  const n = result.notify; if (!n?.items?.length) return '';
+  const card = (it) => `<article class="c-notify-card c-notify-card--${esc(it.legalCategory)}">
+      <header><span class="c-notify-pill c-notify-pill--${esc(it.legalCategory)}">${esc(it.categoryLabel ?? catLabel(it.legalCategory))}</span> <h3>${esc(it.name)}${it.nameEn ? ` <span class="muted">${esc(it.nameEn)}</span>` : ''}</h3></header>
+      <p class="c-notify-card__hours"><span class="c-notify-card__lead">${esc(L('notifyWithin'))}</span> <b>${esc(it.hoursLabel)}</b>${it.count ? ` <span class="muted">· ${esc(it.count)}</span>` : ''}</p>
+      <p class="c-notify-card__links">${[
+    link(it.reportUrl ?? '/report/', L('notifyReport'), 'c-btn c-btn--sm'),
+    it.caseDefinitionUrl ? link(it.caseDefinitionUrl, L('caseDef'), 'c-btn c-btn--sm c-btn--ghost') : '',
+    it.labtestUrl ? link(it.labtestUrl, L('labtestLink'), 'c-btn c-btn--sm c-btn--ghost') : '',
+    it.diseaseUrl ? link(it.diseaseUrl, L('diseasePage'), 'c-btn c-btn--sm c-btn--ghost') : '',
+  ].filter(Boolean).join(' ')}</p>
+    </article>`;
+  return `<section class="c-answer__notify" aria-labelledby="notify-h"><h2 id="notify-h">${esc(L('notifyH'))} <span class="c-answer__sub">· ${esc(n.basis ?? L('masterBasis'))}</span></h2>
+    <div class="c-notify-grid">${n.items.map(card).join('')}</div>
+    ${n.note ? `<p class="c-answer__notify-note">${esc(n.note)}</p>` : ''}</section>`;
+}
+
 /** APA 式引用（含審閱日） */
 export function apaCitation(src) {
   const owner = src.ownerName ?? '衛生福利部疾病管制署';
@@ -109,8 +180,8 @@ export function apaCitation(src) {
 export function sourceList(sources, { pro = false } = {}) {
   if (!sources?.length) return '';
   return `<section class="c-answer__sources" aria-labelledby="ans-src-h"><h3 id="ans-src-h">${esc(L('sourcesH'))}</h3><ol class="c-source-list">${sources.map((s) => `
-    <li id="src-${esc(s.n)}"><details class="c-source-card" data-group="answer-sources"${pro ? ' open' : ''}>
-      <summary><span class="c-source-card__n" aria-hidden="true">${esc(s.n)}</span><span class="c-source-card__t">${esc(s.title)}</span><span class="c-source-card__m">${esc(s.ownerName ?? '')} · ${esc(L('reviewed'))} ${esc(s.reviewedAt ?? '')}${s.version ? ` · ${esc(s.version)}` : ''}</span></summary>
+    <li id="src-${esc(s.n)}"><details class="c-source-card c-source-card--${esc(s.type ?? 'content')}" data-group="answer-sources"${pro ? ' open' : ''}>
+      <summary><span class="c-source-card__n" aria-hidden="true">${esc(s.n)}</span><span class="c-source-card__t">${s.type === 'media' ? '<span class="c-source-card__kind" aria-hidden="true">▶</span> ' : ''}${esc(s.title)}</span><span class="c-source-card__m">${esc(sourceMeta(s))}</span></summary>
       <div class="c-source-card__body">${sourceCardBody(s, { pro })}</div>
     </details></li>`).join('')}</ol></section>`;
 }
@@ -119,7 +190,7 @@ export function sourceList(sources, { pro = false } = {}) {
 export function sentenceList(result, { pro = false } = {}) {
   const byN = new Map((result.sources ?? []).map((s) => [s.n, s]));
   return `<ol class="c-answer__sents">${(result.sentences ?? []).map((s, i) => `
-    <li class="c-answer__sent"><p>${esc(s.text)}${(s.n ?? []).map((n) => `<sup><button type="button" class="c-cite" aria-expanded="false" aria-controls="cite-pop-${i}-${n}" data-n="${esc(n)}" aria-label="${esc(`${L('sourcesH')} ${n}：${byN.get(n)?.title ?? ''}`)}">${esc(n)}</button></sup>`).join('')}</p>
+    <li class="c-answer__sent${s.closed ? ' c-answer__sent--closed' : ''}"><p>${esc(s.text)}${(s.n ?? []).map((n) => `<sup><button type="button" class="c-cite" aria-expanded="false" aria-controls="cite-pop-${i}-${n}" data-n="${esc(n)}" aria-label="${esc(`${L('sourcesH')} ${n}：${byN.get(n)?.title ?? ''}`)}">${esc(n)}</button></sup>`).join('')}</p>
       ${pro && s.citeLabel ? `<p class="c-answer__citelabel">${esc(s.citeLabel)}</p>` : ''}
       ${s.original ? `<p class="c-answer__original" lang="zh-TW">${esc(s.original)}</p>` : ''}
       ${(s.n ?? []).map((n) => `<div class="c-source-card c-cite-pop" id="cite-pop-${i}-${n}" role="region" aria-label="${esc(`${L('sourcesH')} ${n}`)}" hidden><p class="c-cite-pop__t"><b>${esc(n)}</b> ${esc(byN.get(n)?.title ?? '')}</p>${byN.get(n) ? sourceCardBody(byN.get(n), { pro }) : ''}</div>`).join('')}
@@ -131,7 +202,7 @@ export function disclosureRow(result) {
   const d = result.disclosure ?? {};
   const model = d.mode === 'llm' || d.provider ? L('modelLlm', { p: d.provider ?? 'Anthropic', m: d.model ?? '' }) : L('modelExtractive');
   return `<div class="c-ai-disclosure" data-feedback data-audit-id="${esc(result.auditId)}" data-page="${esc(location.pathname)}">
-    <p><span class="c-ai-badge">${esc(L('aiBadge'))}</span> ${esc(L('disclosure'))} <span class="c-ai-disclosure__model">${esc(model)}</span></p>
+    <p><span class="c-ai-badge">${esc(L('aiBadge'))}</span> ${esc(L('disclosure'))} <span class="c-ai-disclosure__model">${esc(model)}</span>${d.transcript ? ` <span class="c-ai-disclosure__transcript">${esc(d.note ?? L('transcriptNote'))}</span>` : ''}</p>
     <p class="c-ai-disclosure__meta"><span>${esc(L('auditId'))} <code data-audit-slot>${esc(result.auditId)}</code></span>
       <button type="button" class="c-btn c-btn--sm c-btn--ghost" data-act="helpful" aria-pressed="false">${esc(L('helpful'))}</button></p>
     <details class="c-answer-report" data-group="answer-report"><summary class="c-btn c-btn--sm c-btn--ghost">${esc(L('report'))}</summary>

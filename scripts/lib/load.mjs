@@ -33,7 +33,10 @@ export function sourceHashOf(item) {
     title: item.title, summary: item.summary, question: item.question, answerMarkdown: item.answerMarkdown,
     bodyMarkdown: item.bodyMarkdown, blocks: item.blocks, keyFacts: item.keyFacts, machineReadableMarkdown: item.machineReadableMarkdown,
     clarificationMarkdown: item.clarificationMarkdown, claim: item.claim, publicFunded: item.publicFunded, headline: item.headline,
-    transcriptMarkdown: item.transcriptMarkdown, introMarkdown: item.introMarkdown, steps: item.steps, abstractMarkdown: item.abstractMarkdown, specimens: item.specimens, links: item.links, articles: item.articles,
+    transcriptMarkdown: item.transcriptMarkdown, introMarkdown: item.introMarkdown, steps: item.steps, abstractMarkdown: item.abstractMarkdown, specimens: item.specimens, articles: item.articles,
+    // 連結檢查寫回的欄位（lastCheckedAt、status）不算內容變更，剔除後再雜湊
+    links: item.links?.map(({ lastCheckedAt, status, ...rest }) => rest),
+    forms: item.forms?.map(({ lastCheckedAt, status, ...rest }) => rest),
   };
   return createHash('sha1').update(JSON.stringify(pick)).digest('hex').slice(0, 12);
 }

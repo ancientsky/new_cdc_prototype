@@ -1,0 +1,78 @@
+{
+  "id": "research.2025-ev-molecular-epidemiology",
+  "type": "research",
+  "title": "腸病毒 71 型與 D68 型分子流行病學監測",
+  "owner": "unit.lab",
+  "publishedAt": "2025-02-01",
+  "reviewedAt": "2026-07-01",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional",
+    "public"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-07-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "自行研究（執行中，2025–2027）：以全基因體定序追蹤腸病毒 71 型與 D68 型基因型變化，分析與重症病例之關聯，作為疫苗株評估參考。",
+  "keywords": [
+    "腸病毒",
+    "EV71",
+    "D68",
+    "分子流行病學",
+    "基因定序"
+  ],
+  "note": "計畫編號、經費與 IRB 字號為示意；執行單位以機構名稱表示，不列個人姓名",
+  "projectNo": "MOHW114-CDC-I-315-000104",
+  "year": 2025,
+  "projectStatus": "ongoing",
+  "fundingType": "in-house",
+  "piUnit": "疾管署檢驗及疫苗研製中心",
+  "budgetNtd": 1500000,
+  "abstractMarkdown": "本計畫分析病毒實驗室監測網分離之腸病毒 71 型與 D68 型病毒株，進行全基因體定序與親緣分析，觀察基因型更替與重症病例之時間關聯，並提供腸病毒 71 型疫苗株代表性評估。",
+  "objectives": [
+    "每年完成至少 200 株全基因體定序",
+    "建立基因型與重症關聯分析",
+    "評估國產 EV71 疫苗株之代表性"
+  ],
+  "datasets": [
+    "dataset.ev-lab-types",
+    "dataset.lab-virus-surveillance"
+  ],
+  "irb": {
+    "required": false
+  }
+}

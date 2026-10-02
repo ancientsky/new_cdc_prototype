@@ -1,0 +1,113 @@
+{
+  "id": "media.travel-clinic-before-departure",
+  "type": "media",
+  "title": "出國前 4 到 6 週，先到旅遊醫學門診",
+  "owner": "unit.quarantine",
+  "publishedAt": "2026-06-12",
+  "reviewedAt": "2026-06-12",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "travel",
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "faq.travel-clinic",
+    "doc.mmr-recommendation"
+  ],
+  "diseases": [
+    "disease.measles",
+    "disease.malaria",
+    "disease.dengue"
+  ],
+  "vaccines": [
+    "vaccine.mmr",
+    "vaccine.hepatitis-a"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-06-12"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-06-12",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "提醒民眾出國前 4 到 6 週到旅遊醫學門診，依目的地旅遊疫情建議等級評估疫苗、預防瘧疾用藥與防蚊，並說明回國後發燒要告知旅遊史。",
+  "keywords": [
+    "旅遊醫學門診",
+    "出國",
+    "旅遊疫情建議",
+    "疫苗",
+    "瘧疾"
+  ],
+  "note": "YouTube 影片 id 原型無法驗證，一律 null；頻道網址沿用舊式 /user/taiwancdc，dataset.youtube-channel 記為 @TwCDC，上線前請公關室確認頻道 handle。",
+  "mediaType": "video",
+  "durationSeconds": 100,
+  "producedAt": "2026-06-05",
+  "basedOnVersionLabel": "旅遊醫學門診說明與 114.04.16 版 MMR 建議",
+  "targetGroups": [
+    "出國旅客",
+    "商務與留學",
+    "探親旅客"
+  ],
+  "series": "旅遊健康",
+  "captions": [
+    "zh-TW",
+    "en"
+  ],
+  "chapters": [
+    {
+      "t": 0,
+      "label": "查目的地疫情等級"
+    },
+    {
+      "t": 25,
+      "label": "旅遊醫學門診做什麼"
+    },
+    {
+      "t": 60,
+      "label": "行李裡的防疫用品"
+    },
+    {
+      "t": 80,
+      "label": "回國後發燒說旅遊史"
+    }
+  ],
+  "transcriptMarkdown": "**[00:00] 查目的地疫情等級**\n\n旁白：計畫出國了嗎？出發前，第一件事是上疾管署網站查詢「國際旅遊疫情建議等級」，確認目的地目前列有哪些疫情建議，以及對應的防護措施。等級會隨國際疫情調整，即使是常去的國家，每次出發前都要重新查一次。\n\n**[00:25] 旅遊醫學門診做什麼**\n\n旁白：建議在出國前 4 到 6 週，到全國的旅遊醫學合約門診諮詢。醫師會依照你的目的地、行程和健康狀況，評估需要的疫苗，例如 A 型肝炎、黃熱病、MMR 等；前往瘧疾流行地區，也會開立預防用藥，並說明怎麼服用。需要國際預防接種證明，也就是俗稱的「黃皮書」，同樣在旅遊醫學門診辦理。部分疫苗需要接種多劑或需要時間產生保護力，所以要提早安排。\n\n**[01:00] 行李裡的防疫用品**\n\n旁白：前往東南亞等蚊媒傳染病流行地區，防蚊最重要：行李裡準備含 DEET 或派卡瑞丁的防蚊液，穿著淺色長袖衣褲，住宿選擇有紗窗或冷氣的房間。另外帶上口罩和常備藥品；在外飲食注意衛生，避免生飲生食。\n\n**[01:20] 回國後發燒說旅遊史**\n\n旁白：入境時如果有發燒、腹瀉等症狀，請主動告知檢疫人員。回國後一段時間內出現發燒、出疹，請戴口罩就醫，並告訴醫師你去過哪裡。旅途平安，從行前準備開始。詳情請撥 1922。",
+  "youtubeId": null,
+  "videoUrl": "https://www.youtube.com/user/taiwancdc",
+  "poster": "/img/media/travel-clinic-before-departure.svg",
+  "i18n": {
+    "en": {
+      "title": "See a travel medicine clinic 4–6 weeks before you leave",
+      "summary": "Check travel health notices for your destination and visit a travel medicine clinic 4–6 weeks ahead for vaccines, malaria prophylaxis and advice; report your travel history if you fall ill after returning."
+    }
+  }
+}

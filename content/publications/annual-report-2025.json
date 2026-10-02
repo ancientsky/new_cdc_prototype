@@ -1,0 +1,77 @@
+{
+  "id": "publication.annual-report-2025",
+  "type": "publication",
+  "title": "衛生福利部疾病管制署 2025 年報",
+  "owner": "unit.planning",
+  "publishedAt": "2026-06-30",
+  "reviewedAt": "2026-06-30",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-06-30"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-06-30",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "彙整 2025 年疾管署施政成果：傳染病監測、預防接種、邊境檢疫、國際合作與數位轉型，並附重要統計與大事紀，中英文對照。",
+  "keywords": [
+    "年報",
+    "2025",
+    "施政成果",
+    "傳染病防治",
+    "大事紀"
+  ],
+  "note": "ISBN、GPN 為示意號碼",
+  "pubType": "annual-report",
+  "series": "疾病管制署年報",
+  "seriesEn": "Taiwan CDC Annual Report",
+  "edition": "初版",
+  "isbn": "978-626-0000-25-0",
+  "gpn": "1011500123",
+  "pages": 168,
+  "authors": [
+    "衛生福利部疾病管制署"
+  ],
+  "pdfUrl": "https://www.cdc.gov.tw/File/Get/placeholder-annual-report-2025",
+  "price": "新臺幣 350 元（電子版免費）",
+  "abstractMarkdown": "本年報以中英文對照呈現 2025 年度重點工作：\n\n- 傳染病監測與疫情應變（流感、新冠、登革熱、腸病毒）\n- 預防接種政策調整，包括 MMR 接種建議修訂\n- 邊境檢疫與國際旅遊疫情建議\n- 結核病與愛滋病防治\n- 國際衛生合作與新南向\n- 官網與資料治理數位轉型",
+  "i18n": {
+    "en": {
+      "title": "Taiwan CDC Annual Report 2025",
+      "summary": "Achievements in 2025: surveillance, immunisation, border quarantine, international cooperation and digital transformation, with key statistics; bilingual."
+    }
+  }
+}

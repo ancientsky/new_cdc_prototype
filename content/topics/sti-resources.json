@@ -1,0 +1,96 @@
+{
+  "id": "topic.sti-resources",
+  "type": "topic",
+  "title": "性傳染病衛教資源",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2025-12-01",
+  "reviewedAt": "2026-07-01",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.hiv",
+    "disease.mpox"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-07-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "彙整愛滋、梅毒、淋病、M痘等性傳染病的衛教單張、影片與校園教材，說明安全性行為、保險套與篩檢資訊，供民眾、學校與團體下載使用。",
+  "keywords": [
+    "性傳染病",
+    "愛滋",
+    "梅毒",
+    "保險套",
+    "衛教資源",
+    "校園"
+  ],
+  "image": "/img/topics/sti-resources.svg",
+  "slug": "sti-resources",
+  "kind": "resource-hub",
+  "priority": 5,
+  "introMarkdown": "性傳染病多半可以預防、也可以治療。本專區彙整疾管署製作的**衛教單張、影片與教學簡報**，學校、醫療院所與民間團體可免費下載使用（政府資料開放授權）。\n\n- **預防**：全程正確使用保險套與水性潤滑液；高風險者可考慮 PrEP、M痘疫苗。\n- **篩檢**：曾有無套性行為建議定期篩檢 HIV 與梅毒；匿名篩檢不需健保卡。\n- **就醫**：生殖器出現潰瘍、分泌物或皮疹，請儘速至皮膚科、泌尿科或感染科就醫。",
+  "links": [
+    {
+      "label": "HIV 疾病介紹",
+      "href": "/diseases/hiv/"
+    },
+    {
+      "label": "M痘疾病介紹",
+      "href": "/diseases/mpox/"
+    },
+    {
+      "label": "影片：HIV 匿名篩檢這樣做",
+      "href": "/media/hiv-anonymous-testing/"
+    },
+    {
+      "label": "衛教素材資料集",
+      "href": "/data/#dataset.health-education-materials"
+    },
+    {
+      "label": "教育部性別平等教育全球資訊網",
+      "href": "https://www.gender.edu.tw/",
+      "external": true,
+      "status": "unchecked",
+      "note": "網址待確認"
+    }
+  ],
+  "contentIds": [
+    "disease.hiv",
+    "disease.mpox",
+    "media.hiv-anonymous-testing",
+    "media.mpox-vaccine",
+    "dataset.health-education-materials"
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "id": "topic.world-aids-day-2025",
+  "type": "topic",
+  "title": "2025 世界愛滋日：篩檢、治療、不歧視",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2025-11-15",
+  "reviewedAt": "2025-12-15",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.hiv"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2025-12-15"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "2025 年世界愛滋日活動專區（2025-11-15 至 12-15）：推廣匿名篩檢、U=U 與反歧視，活動已結束，頁面保留作為紀錄。",
+  "keywords": [
+    "世界愛滋日",
+    "HIV",
+    "U=U",
+    "反歧視",
+    "活動"
+  ],
+  "note": "活動已於 2025-12-15 結束，專區保留為紀錄；reviewPeriodMonths 設 0（不再定期審閱）",
+  "image": "/img/topics/world-aids-day-2025.svg",
+  "slug": "world-aids-day-2025",
+  "kind": "campaign",
+  "startAt": "2025-11-15",
+  "endAt": "2025-12-15",
+  "priority": 7,
+  "introMarkdown": "**本活動已於 2025 年 12 月 15 日結束**，以下內容保留作為紀錄；最新服務請見「性傳染病匿名諮詢與篩檢」專區。\n\n2025 年世界愛滋日，疾管署以「篩檢、治療、不歧視」為主軸，與民間團體合辦社區篩檢快閃、校園講座與線上活動，推廣 U=U（測不到病毒就不具傳染力）的觀念。",
+  "links": [
+    {
+      "label": "新聞稿：2025 世界愛滋日",
+      "href": "/news/2025-12-01-world-aids-day/"
+    },
+    {
+      "label": "性傳染病匿名諮詢與篩檢（現行服務）",
+      "href": "/topics/anonymous-testing/"
+    },
+    {
+      "label": "UNAIDS World AIDS Day",
+      "href": "https://www.unaids.org/en/world-aids-day",
+      "external": true,
+      "status": "unchecked"
+    }
+  ],
+  "contentIds": [
+    "news.2025-12-01-world-aids-day",
+    "topic.anonymous-testing",
+    "disease.hiv"
+  ]
+}

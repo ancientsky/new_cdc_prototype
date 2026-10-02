@@ -1,0 +1,108 @@
+{
+  "id": "labtest.shigellosis",
+  "type": "labtest",
+  "title": "桿菌性痢疾檢驗項目與送驗規定",
+  "owner": "unit.lab",
+  "publishedAt": "2025-01-15",
+  "reviewedAt": "2026-07-15",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "publication.manual-communicable-disease-control-2026"
+  ],
+  "diseases": [
+    "disease.shigellosis"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-07-15"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-07-15",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "桿菌性痢疾：糞便或肛門拭子置 Cary-Blair 運送培養基，冷藏 24 小時內送驗，做細菌培養、血清分型與抗藥性監測。",
+  "keywords": [
+    "桿菌性痢疾",
+    "檢體",
+    "送驗",
+    "採檢",
+    "細菌培養",
+    "血清分型"
+  ],
+  "note": "檢體量、保存與時效為原型示意，以檢驗及疫苗研製中心「傳染病檢體採檢手冊」現行版為準",
+  "disease": "disease.shigellosis",
+  "specimens": [
+    {
+      "name": "糞便",
+      "timing": "腹瀉期間、使用抗生素前",
+      "container": "Cary-Blair 運送培養基",
+      "volume": "糞便 2–5 g（水樣便 5 mL）",
+      "storage": "2–8°C 冷藏",
+      "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+      "tests": [
+        "細菌培養",
+        "血清分型",
+        "抗生素感受性"
+      ],
+      "turnaroundDays": 3
+    },
+    {
+      "name": "肛門拭子",
+      "timing": "無法取得糞便時",
+      "container": "Cary-Blair 運送培養基",
+      "volume": "拭子 1 支（可見糞便沾染）",
+      "storage": "2–8°C 冷藏",
+      "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+      "tests": [
+        "細菌培養"
+      ],
+      "turnaroundDays": 3
+    }
+  ],
+  "labs": [
+    "certified-lab",
+    "cdc-lab",
+    "regional-lab"
+  ],
+  "sendWithinHours": 24,
+  "formDoc": "https://www.cdc.gov.tw/File/Get/placeholder-form-lab-specimen-form",
+  "biosafetyLevel": "BSL-2",
+  "notesMarkdown": "- 第二類法定傳染病，24 小時內通報；接觸者與餐飲從業人員需採檢至連續 3 次陰性（示意，依工作手冊）。\n- 多重抗藥菌株送疾管署分子分型。",
+  "i18n": {
+    "en": {
+      "title": "Shigellosis: laboratory tests and specimen requirements",
+      "summary": "Stool or rectal swab in Cary-Blair transport medium, refrigerated and delivered within 24 hours for culture, serotyping and antimicrobial susceptibility."
+    }
+  }
+}

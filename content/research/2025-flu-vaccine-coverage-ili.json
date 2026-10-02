@@ -1,0 +1,83 @@
+{
+  "id": "research.2025-flu-vaccine-coverage-ili",
+  "type": "research",
+  "title": "流感疫苗接種率與類流感就診率之區域分析",
+  "owner": "unit.vaccine",
+  "publishedAt": "2025-03-01",
+  "reviewedAt": "2026-04-15",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional",
+    "public"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "vaccines": [
+    "vaccine.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-04-15"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "2025 年自行研究（已結案）：分析各縣市 65 歲以上流感疫苗接種率與流感季類流感就診率、重症率之關聯，作為接種資源配置參考。",
+  "keywords": [
+    "流感疫苗",
+    "接種率",
+    "類流感",
+    "區域分析",
+    "長者"
+  ],
+  "note": "計畫編號、經費與 IRB 字號為示意；執行單位以機構名稱表示，不列個人姓名",
+  "projectNo": "MOHW114-CDC-I-315-000108",
+  "year": 2025,
+  "projectStatus": "completed",
+  "fundingType": "in-house",
+  "piUnit": "疾管署預防接種組與疫情中心",
+  "budgetNtd": 600000,
+  "reportDoc": "https://www.cdc.gov.tw/File/Get/placeholder-report-2025-flu-coverage",
+  "abstractMarkdown": "以 2019–2025 年各縣市 65 歲以上接種率與健保類流感就診、流感併發重症資料，進行生態研究與時間序列分析。接種率較高之縣市，流感季長者重症發生率較低（示意），建議優先加強低接種率地區之長照機構與社區設站。",
+  "objectives": [
+    "描述縣市接種率差異",
+    "分析接種率與重症率之關聯",
+    "提出資源配置建議"
+  ],
+  "datasets": [
+    "dataset.vaccine-coverage",
+    "dataset.ili-weekly",
+    "dataset.flu-severe"
+  ],
+  "irb": {
+    "required": false
+  }
+}

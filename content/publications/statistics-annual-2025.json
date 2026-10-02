@@ -1,0 +1,76 @@
+{
+  "id": "publication.statistics-annual-2025",
+  "type": "publication",
+  "title": "傳染病統計暨監視年報（2025 年）",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2026-08-31",
+  "reviewedAt": "2026-08-31",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "professional",
+    "public"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-08-31"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-31",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "2025 年各類法定傳染病確定病例數、發生率、年齡性別與縣市分布，以及症狀與實驗室監測統計；表格同步以開放資料提供。",
+  "keywords": [
+    "統計年報",
+    "監視",
+    "法定傳染病",
+    "發生率",
+    "開放資料"
+  ],
+  "note": "ISBN、GPN 為示意號碼",
+  "pubType": "statistics",
+  "series": "傳染病統計暨監視年報",
+  "seriesEn": "Statistics of Communicable Diseases and Surveillance Report",
+  "edition": "2025 年版",
+  "isbn": "978-626-0000-26-7",
+  "gpn": "1011500150",
+  "pages": 312,
+  "authors": [
+    "疫情中心"
+  ],
+  "pdfUrl": "https://www.cdc.gov.tw/File/Get/placeholder-stats-annual-2025",
+  "abstractMarkdown": "收錄 2025 年第一至第五類法定傳染病之確定病例數與發生率（依年齡、性別、縣市、月份），以及類流感、腸病毒、腹瀉門急診症狀監測與病毒實驗室監測結果。所有統計表同步以 CSV 開放資料提供（dataset.nidss-notifiable），數字以開放資料為準。",
+  "i18n": {
+    "en": {
+      "title": "Statistics of Communicable Diseases and Surveillance Report 2025",
+      "summary": "Confirmed cases and incidence of notifiable diseases by age, sex, county and month in 2025, plus syndromic and laboratory surveillance; tables also released as open data."
+    }
+  }
+}

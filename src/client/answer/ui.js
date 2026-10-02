@@ -1,7 +1,8 @@
 // 搜尋即答案頁（/ask/）：掛到 C 的殼 #ask-form／#ask-q、#answer、#answer-side、#ask-advanced、#llm-key。
 // 流程：讀 ?q= → core（抽取式）→ 依意圖渲染 wireframe 第 3 頁區塊 →（有 key 且啟用）LLM 重組或翻譯 → 後檢 → 重新渲染。
 import { loadEngine, currentView, url, esc, v1, LANG } from './data.js';
-import { L, link, sentenceList, sourceList, disclosureRow, refusalCard, situationCards, verdictBlock, statsBlock, traditionalList, wireInteractions, ensureStyles } from './render.js';
+import { L, link, sentenceList, sourceList, disclosureRow, refusalCard, situationCards, verdictBlock, statsBlock, traditionalList, wireInteractions, ensureStyles, notifyBlock } from './render.js';
+import './inline.js'; // 頁內問題框（#ask-inline／[data-ask-inline]）→ /ask/
 import { getKey, setKey, getModel, setModel, LLM_MODELS, llmAnswer, llmTranslate } from './llm.js';
 
 ensureStyles();
@@ -59,7 +60,7 @@ async function run(q) {
   renderSide(result, deps);
   // LLM（BYOK）：重組或翻譯；任何失敗都保留抽取式結果
   if (llmEnabled() && !result.paused && !result.refused) {
-    const canAnswer = !result.stats && result.intent !== 'rumor' && result.retrieved?.length;
+    const canAnswer = !result.stats && !result.notify?.structured && result.intent !== 'rumor' && result.retrieved?.length;
     const needTranslate = LANG !== 'zh-TW' && result.translationNote === 'showing-source';
     if (canAnswer || needTranslate) {
       const note = document.createElement('p');
@@ -95,6 +96,7 @@ async function render(r, deps) {
   }
   if (r.verdict) parts.push(verdictBlock(r));
   if (r.stats) parts.push(await statsBlock(r));
+  if (r.notify) parts.push(notifyBlock(r));
 
   if (!r.stats && r.sentences?.length) {
     const tnote = r.translationNote === 'showing-source' ? L('translationSource') : r.translationNote === 'machine' ? L('translationMachine') : '';

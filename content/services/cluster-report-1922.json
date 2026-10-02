@@ -1,0 +1,129 @@
+{
+  "id": "service.cluster-report-1922",
+  "type": "service",
+  "title": "疑似傳染病群聚通報（民眾、學校、機構）",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2024-01-01",
+  "reviewedAt": "2026-09-01",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-01",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "學校、機構或團體短時間內多人出現腹瀉、發燒、咳嗽等相似症狀時，請撥 1922 或通報轄區衛生局，衛生單位將協助調查與採檢。",
+  "keywords": [
+    "群聚",
+    "通報",
+    "1922",
+    "腹瀉",
+    "學校",
+    "長照機構"
+  ],
+  "slug": "cluster-report-1922",
+  "serviceType": "notification",
+  "whoCanApply": [
+    "民眾",
+    "學校與托育機構",
+    "長照與安養機構",
+    "企業與團體"
+  ],
+  "introMarkdown": "短時間內（例如 3 天內）同一場所 **2 人以上**出現相似症狀，例如腹瀉嘔吐、發燒咳嗽、出疹，可能是傳染病群聚。\n\n- **民眾**：撥打防疫專線 **1922**（國外 +886-800-001922），客服會轉知衛生局。\n- **學校、托育、長照機構**：依各主管機關規定通報轄區衛生局，並啟動隔離、環境清消。\n- 若有人症狀嚴重，請先就醫或撥 119。",
+  "requiredDocuments": [
+    "場所名稱與地址",
+    "發病人數與症狀",
+    "首例發病日",
+    "聯絡人電話"
+  ],
+  "steps": [
+    {
+      "title": "撥打 1922 或通報衛生局",
+      "text": "說明場所、人數與症狀。",
+      "who": "民眾／機構",
+      "days": 0
+    },
+    {
+      "title": "衛生局聯繫與現場評估",
+      "text": "衛生局聯繫通報人，必要時到場。",
+      "who": "地方衛生局",
+      "days": 1
+    },
+    {
+      "title": "採檢與防治措施",
+      "text": "採集檢體、指導隔離與清消。",
+      "who": "地方衛生局／區管中心",
+      "days": 2
+    },
+    {
+      "title": "結果回覆與結案",
+      "text": "依檢驗結果研判並追蹤至無新增病例。",
+      "who": "地方衛生局",
+      "days": 14
+    }
+  ],
+  "slaDays": 1,
+  "fee": "免費",
+  "legalBasis": [
+    "傳染病防治法第 41 條",
+    "傳染病防治法第 43 條"
+  ],
+  "forms": [
+    {
+      "label": "人口密集機構群聚事件通報單",
+      "href": "https://www.cdc.gov.tw/File/Get/placeholder-form-cluster-report",
+      "format": "PDF",
+      "machineReadable": false
+    }
+  ],
+  "contact": "防疫專線 1922（國外 +886-800-001922；免付費 0800-001922）；疾病管制署總機 02-2395-9825",
+  "faq": [
+    {
+      "q": "只有家人一起拉肚子，需要通報嗎？",
+      "a": "家庭內多為共同飲食，症狀輕微者先就醫即可；若懷疑來自餐廳或團膳，可撥 1922 或向衛生局反映。"
+    },
+    {
+      "q": "通報後會公開學校或機構名稱嗎？",
+      "a": "原則不公開，除非為防疫必要並依法定程序。"
+    }
+  ],
+  "i18n": {
+    "en": {
+      "title": "Report a suspected outbreak (public, schools, facilities)",
+      "summary": "If several people at the same place fall ill with similar symptoms within a short time, call 1922 or the local health bureau for investigation and testing."
+    }
+  }
+}

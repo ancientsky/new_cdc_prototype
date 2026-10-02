@@ -1,0 +1,109 @@
+{
+  "id": "labtest.pertussis",
+  "type": "labtest",
+  "title": "百日咳檢驗項目與送驗規定",
+  "owner": "unit.lab",
+  "publishedAt": "2025-01-15",
+  "reviewedAt": "2026-07-15",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.pertussis"
+  ],
+  "diseases": [
+    "disease.pertussis"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-07-15"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "none"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "百日咳：以細軟拭子採鼻咽檢體（咳嗽 3 週內），PCR 用冷藏、培養用 Regan-Lowe 運送培養基室溫保存，72 小時內送驗。",
+  "keywords": [
+    "百日咳",
+    "檢體",
+    "送驗",
+    "採檢",
+    "PCR",
+    "細菌培養"
+  ],
+  "note": "檢體量、保存與時效為原型示意，以檢驗及疫苗研製中心「傳染病檢體採檢手冊」現行版為準",
+  "disease": "disease.pertussis",
+  "specimens": [
+    {
+      "name": "鼻咽拭子（PCR 用）",
+      "timing": "咳嗽 3 週內",
+      "container": "乾燥無菌拭子管（Dacron／rayon，勿用棉棒）",
+      "volume": "拭子 1 支",
+      "storage": "2–8°C 冷藏",
+      "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+      "tests": [
+        "PCR"
+      ],
+      "turnaroundDays": 2
+    },
+    {
+      "name": "鼻咽拭子（培養用）",
+      "timing": "咳嗽 2 週內、未使用抗生素前",
+      "container": "Regan-Lowe 運送培養基",
+      "volume": "拭子 1 支",
+      "storage": "室溫",
+      "transport": "室溫運送",
+      "tests": [
+        "細菌培養"
+      ],
+      "turnaroundDays": 7
+    },
+    {
+      "name": "血清",
+      "timing": "咳嗽 2 週以上",
+      "container": "無菌血清分離管（紅頭或黃頭，無抗凝劑）",
+      "volume": "血清 2 mL",
+      "storage": "2–8°C 冷藏",
+      "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+      "tests": [
+        "抗百日咳毒素 IgG"
+      ],
+      "turnaroundDays": 5
+    }
+  ],
+  "labs": [
+    "cdc-lab",
+    "certified-lab"
+  ],
+  "sendWithinHours": 72,
+  "formDoc": "https://www.cdc.gov.tw/File/Get/placeholder-form-lab-specimen-form",
+  "biosafetyLevel": "BSL-2",
+  "notesMarkdown": "- 嬰幼兒病例請一併調查家庭接觸者並採檢。\n- 鼻咽拭子須深入鼻咽後壁停留數秒。"
+}

@@ -1,0 +1,90 @@
+{
+  "id": "topic.vaccine-fund-donation",
+  "type": "topic",
+  "title": "疫苗基金：您的捐款，守護下一代",
+  "owner": "unit.vaccine",
+  "publishedAt": "2025-01-01",
+  "reviewedAt": "2026-07-01",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "vaccines": [
+    "vaccine.ev71",
+    "vaccine.pneumococcal"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-07-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-07-01",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "疫苗基金依法接受各界捐款，專款用於公費疫苗採購與新疫苗導入；說明捐款方式、收據與抵稅，並公開基金收支與捐款運用情形。",
+  "keywords": [
+    "疫苗基金",
+    "捐款",
+    "公費疫苗",
+    "抵稅",
+    "收據"
+  ],
+  "image": "/img/topics/vaccine-fund-donation.svg",
+  "slug": "vaccine-fund-donation",
+  "kind": "program",
+  "priority": 6,
+  "introMarkdown": "依《傳染病防治法》設置之**疫苗基金**，用於採購公費疫苗、擴大接種對象與導入新疫苗。基金來源包括政府預算、菸品健康福利捐分配，以及**各界捐款**。\n\n- 捐款可用郵政劃撥、銀行匯款或臨櫃方式辦理，詳見申請服務頁。\n- 疫苗基金開立之收據可依《所得稅法》作為列舉扣除憑證。\n- 基金收支與決算依規定公開，可於開放資料查詢。",
+  "links": [
+    {
+      "label": "我要捐款：捐款方式與收據",
+      "href": "/apply/vaccine-fund-donation/"
+    },
+    {
+      "label": "疫苗與預防接種",
+      "href": "/vaccines/"
+    },
+    {
+      "label": "預算與決算開放資料",
+      "href": "/data/#dataset.budget-final-accounts"
+    }
+  ],
+  "contentIds": [
+    "service.vaccine-fund-donation",
+    "dataset.budget-final-accounts",
+    "vaccine.pneumococcal"
+  ],
+  "i18n": {
+    "en": {
+      "title": "Vaccine Fund donations",
+      "summary": "The statutory Vaccine Fund accepts public donations to purchase publicly funded vaccines; how to donate, receipts, tax deduction and fund disclosures."
+    }
+  }
+}

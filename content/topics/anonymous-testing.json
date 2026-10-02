@@ -1,0 +1,97 @@
+{
+  "id": "topic.anonymous-testing",
+  "type": "topic",
+  "title": "性傳染病匿名諮詢與篩檢",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2025-06-01",
+  "reviewedAt": "2026-06-10",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.hiv"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-06-10"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-06-10",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "全國匿名篩檢醫院不需健保卡、以代號登記，提供 HIV 與梅毒篩檢及諮詢；也可索取或購買 HIV 自我篩檢試劑，陽性者由個管師協助轉介治療。",
+  "keywords": [
+    "匿名篩檢",
+    "HIV",
+    "梅毒",
+    "自我篩檢",
+    "個案管理師"
+  ],
+  "image": "/img/topics/anonymous-testing.svg",
+  "slug": "anonymous-testing",
+  "kind": "program",
+  "priority": 4,
+  "introMarkdown": "**匿名篩檢**：全國指定醫院提供 HIV 匿名篩檢與諮詢服務，不需健保卡、不留真實姓名，以代號登記；同時可詢問梅毒篩檢與 PrEP。\n\n**自我篩檢**：可透過自動服務機、合作藥局或網路購買 HIV 自我篩檢試劑，部分族群符合條件可享優惠。結果陽性請至醫院做確認檢驗。\n\n**空窗期提醒**：距離危險行為時間太短，陰性結果不代表沒有感染，請依說明再次篩檢。\n\n**陽性怎麼辦**：個案管理師會協助轉介愛滋指定醫院，及早治療可達到病毒量測不到（U=U）。",
+  "links": [
+    {
+      "label": "哪裡可以做匿名 HIV 篩檢？",
+      "href": "/faq/hiv-test-where/"
+    },
+    {
+      "label": "影片：HIV 匿名篩檢這樣做",
+      "href": "/media/hiv-anonymous-testing/"
+    },
+    {
+      "label": "暴露後預防性投藥 PEP",
+      "href": "/faq/hiv-pep/"
+    },
+    {
+      "label": "HIV 自我篩檢計畫網站",
+      "href": "https://hiva.cdc.gov.tw/",
+      "external": true,
+      "status": "unchecked",
+      "note": "網址待慢性組確認"
+    }
+  ],
+  "contentIds": [
+    "faq.hiv-test-where",
+    "faq.hiv-pep",
+    "disease.hiv",
+    "media.hiv-anonymous-testing"
+  ],
+  "i18n": {
+    "en": {
+      "title": "Anonymous counselling and testing for sexually transmitted infections",
+      "summary": "Designated hospitals offer anonymous HIV and syphilis testing without an NHI card; HIV self-test kits are also available, and case managers link positive results to care."
+    }
+  }
+}

@@ -11,6 +11,8 @@ const statusEl = $('#f-status');
 const typeLabel = (t) => P.TYPES.find((x) => x.value === t)?.label ?? t;
 
 let basedOn = [];
+let contentIds = []; // 專區：相關內容 id
+let datasetIds = []; // 研究：資料集 id
 let idTouched = false;
 let A = null; // 最近一次預處理結果 {entities, structured, summary0, checks, locked, lex}
 let sel = { chips: {}, manual: [], summary: '', st: {}, ack: false, stage: 'edit' };
@@ -36,6 +38,23 @@ function readForm() {
     extra: {
       family: val('#x-family').trim(), docType: val('#x-doctype'), version: val('#x-version').trim(), effectiveAt: val('#x-effective'), supersedes: val('#x-supersedes'),
       letterNo: val('#x-letterno').trim(), claim: val('#x-claim').trim(), verdict: val('#x-verdict'), shareText: val('#x-share').trim(), disease: val('#x-disease'), vaccine: val('#x-vaccine'),
+      // 影音
+      mediaType: val('#x-mediatype'), youtube: val('#x-ytid').trim(), producedAt: val('#x-produced'), versionLabel: val('#x-vlabel').trim(), chapters: val('#x-chapters'), transcript: val('#x-transcript'),
+      captions: $$('input[name="captions"]:checked').map((x) => x.value),
+      // 專區
+      topicKind: val('#x-topickind'), startAt: val('#x-startat'), endAt: val('#x-endat'), links: val('#x-links'), contentIds: [...contentIds],
+      // 申請服務
+      serviceType: val('#x-servicetype'), who: $$('input[name="who"]:checked').map((x) => x.value), steps: val('#x-steps'), docs: val('#x-docs'), slaDays: val('#x-sla'), fee: val('#x-fee').trim(),
+      legal: val('#x-legal'), forms: val('#x-forms'), applyUrl: val('#x-applyurl').trim(), contact: val('#x-contact').trim(),
+      // 出版品
+      pubType: val('#x-pubtype'), series: val('#x-series').trim(), volume: val('#x-volume').trim(), issue: val('#x-issue').trim(), edition: val('#x-edition').trim(),
+      isbn: val('#x-isbn').trim(), issn: val('#x-issn').trim(), gpn: val('#x-gpn').trim(), articles: val('#x-articles'),
+      // 檢驗項目
+      labDisease: val('#x-labdisease'), sendHours: val('#x-sendhours'), labs: $$('input[name="labs"]:checked').map((x) => x.value), specimens: val('#x-specimens'),
+      // 研究
+      year: val('#x-year'), projectStatus: val('#x-projstatus'), fundingType: val('#x-funding'), projectNo: val('#x-projno').trim(), piUnit: val('#x-piunit').trim(), datasets: [...datasetIds],
+      // 招募／採購
+      deadlineAt: val('#x-deadline'), refNo: val('#x-refno').trim(), newsApplyUrl: val('#x-napply').trim(), positions: val('#x-positions'), budgetNtd: val('#x-budget'),
     },
   };
 }
@@ -60,6 +79,20 @@ function writeForm(s) {
   fillSupersedes(); $('#x-supersedes').value = ex.supersedes ?? '';
   $('#x-letterno').value = ex.letterNo ?? ''; $('#x-claim').value = ex.claim ?? ''; $('#x-verdict').value = ex.verdict || 'false'; $('#x-share').value = ex.shareText ?? '';
   $('#x-disease').value = ex.disease ?? ''; $('#x-vaccine').value = ex.vaccine ?? '';
+  $('#x-mediatype').value = ex.mediaType || 'video'; $('#x-ytid').value = ex.youtube ?? ''; $('#x-produced').value = ex.producedAt ?? ''; $('#x-vlabel').value = ex.versionLabel ?? '';
+  $('#x-chapters').value = ex.chapters ?? ''; $('#x-transcript').value = ex.transcript ?? ''; $('#x-transcript-count').textContent = `${(ex.transcript ?? '').length} 字`;
+  $$('input[name="captions"]').forEach((x) => { x.checked = (ex.captions ?? []).includes(x.value); });
+  $('#x-topickind').value = ex.topicKind || 'campaign'; $('#x-startat').value = ex.startAt ?? ''; $('#x-endat').value = ex.endAt ?? ''; $('#x-links').value = ex.links ?? '';
+  contentIds = [...(ex.contentIds ?? [])]; paintChips('#x-content-chips', contentIds);
+  $('#x-servicetype').value = ex.serviceType || 'data-request'; $$('input[name="who"]').forEach((x) => { x.checked = (ex.who ?? []).includes(x.value); });
+  $('#x-steps').value = ex.steps ?? ''; $('#x-docs').value = ex.docs ?? ''; $('#x-sla').value = ex.slaDays ?? ''; $('#x-fee').value = ex.fee ?? ''; $('#x-legal').value = ex.legal ?? '';
+  $('#x-forms').value = ex.forms ?? ''; $('#x-applyurl').value = ex.applyUrl ?? ''; $('#x-contact').value = ex.contact ?? '';
+  $('#x-pubtype').value = ex.pubType || 'bulletin'; $('#x-series').value = ex.series ?? ''; $('#x-volume').value = ex.volume ?? ''; $('#x-issue').value = ex.issue ?? ''; $('#x-edition').value = ex.edition ?? '';
+  $('#x-isbn').value = ex.isbn ?? ''; $('#x-issn').value = ex.issn ?? ''; $('#x-gpn').value = ex.gpn ?? ''; $('#x-articles').value = ex.articles ?? '';
+  $('#x-labdisease').value = ex.labDisease ?? ''; $('#x-sendhours').value = ex.sendHours ?? ''; $$('input[name="labs"]').forEach((x) => { x.checked = (ex.labs ?? []).includes(x.value); }); $('#x-specimens').value = ex.specimens ?? '';
+  $('#x-year').value = ex.year ?? ''; $('#x-projstatus').value = ex.projectStatus || 'ongoing'; $('#x-funding').value = ex.fundingType ?? ''; $('#x-projno').value = ex.projectNo ?? ''; $('#x-piunit').value = ex.piUnit ?? '';
+  datasetIds = [...(ex.datasets ?? [])]; paintChips('#x-ds-chips', datasetIds);
+  $('#x-deadline').value = ex.deadlineAt ?? ''; $('#x-refno').value = ex.refNo ?? ''; $('#x-napply').value = ex.newsApplyUrl ?? ''; $('#x-positions').value = ex.positions ?? ''; $('#x-budget').value = ex.budgetNtd ?? '';
   $('#f-id').value = s.id ?? ''; idTouched = !!s.idTouched;
   $('#f-body-count').textContent = `${(s.body ?? '').length} 字`;
 }
@@ -68,6 +101,9 @@ function writeForm(s) {
 function applyTypeUI(resetDefaults = true) {
   const type = val('#f-type');
   $('[data-pub-title]').textContent = type === 'faq' ? '上架：疾病 Q&A' : `上架：${typeLabel(type)}`;
+  const role = P.BODY_ROLE[type];
+  $('#f-body-label').textContent = role ? role.label : '內文（中文正本）';
+  $('#f-based-req').hidden = type !== 'media';
   const def = P.defaultsFor(type);
   if (resetDefaults) {
     $('#f-period').value = def.reviewPeriodMonths;
@@ -78,7 +114,7 @@ function applyTypeUI(resetDefaults = true) {
   $('#f-langs-hint').textContent = `「${typeLabel(type)}」預設：${def.langs.length >= 7 ? '七語' : def.langs.map((c) => P.LANGS.find((l) => l.code === c).label).join('＋')}；取消預設勾選的語言須填理由。`;
   const extra = $('#f-extra');
   let any = false;
-  $$('[data-for]', extra).forEach((el) => { const on = el.dataset.for === type; el.hidden = !on; any ||= on; });
+  $$('[data-for]', extra).forEach((el) => { const on = el.dataset.for.split(' ').includes(type); el.hidden = !on; any ||= on; });
   extra.hidden = !any;
   if (resetDefaults) autoId();
 }
@@ -107,7 +143,8 @@ function autoId() {
   const ex = readForm().extra;
   const dm = (D.diseaseMaster ?? []).find((d) => d.id === ex.disease);
   const vm = (D.vaccinesMaster ?? []).find((v) => v.id === ex.vaccine);
-  const dslug = A?.entities?.diseaseIds?.[0] ? (D.diseaseMaster ?? []).find((d) => d.id === A.entities.diseaseIds[0])?.slug : '';
+  const labD = (D.diseaseMaster ?? []).find((d) => d.id === ex.labDisease);
+  const dslug = type === 'labtest' ? labD?.slug : A?.entities?.diseaseIds?.[0] ? (D.diseaseMaster ?? []).find((d) => d.id === A.entities.diseaseIds[0])?.slug : '';
   $('#f-id').value = P.suggestId(type, { title: val('#f-title'), today: D.today, slug: type === 'disease' ? dm?.slug : type === 'vaccine' ? vm?.slug : dslug, family: ex.family, version: ex.effectiveAt });
 }
 
@@ -127,6 +164,33 @@ function searchBased(q) {
   list.hidden = false; input.setAttribute('aria-expanded', 'true');
 }
 
+// 通用 combobox 選擇器（專區相關內容、研究資料集）：選到的 id 以 chips 呈現
+function paintChips(sel, arr) {
+  $(sel).innerHTML = arr.map((id, i) => `<li class="adm-chip">${esc(id)}<button type="button" data-prm="${i}" aria-label="移除 ${esc(id)}">×</button></li>`).join('');
+}
+function picker({ q, list, chips, arr, filter }) {
+  const input = $(q), ul = $(list);
+  input.addEventListener('input', () => {
+    const v = input.value.trim().toLowerCase();
+    if (!v) { ul.hidden = true; input.setAttribute('aria-expanded', 'false'); return; }
+    const items = (D.catalog ?? []).filter(filter).filter((c) => !arr().includes(c.id) && (c.id.toLowerCase().includes(v) || c.title.toLowerCase().includes(v))).slice(0, 8);
+    ul.innerHTML = items.length ? items.map((c) => `<li role="option"><button type="button" data-padd="${esc(c.id)}"><code>${esc(c.id)}</code>　${esc(c.title)}</button></li>`).join('') : '<li class="adm-muted" style="padding:6px 10px">沒有符合的內容</li>';
+    ul.hidden = false; input.setAttribute('aria-expanded', 'true');
+  });
+  input.addEventListener('keydown', (e) => { if (e.key === 'Escape') ul.hidden = true; if (e.key === 'ArrowDown') $('button', ul)?.focus(); });
+  ul.addEventListener('click', (e) => { const b = e.target.closest('[data-padd]'); if (!b) return; arr().push(b.dataset.padd); paintChips(chips, arr()); input.value = ''; ul.hidden = true; input.setAttribute('aria-expanded', 'false'); input.focus(); autosave(); if (A) paintResultKeepFocus(); });
+  $(chips).addEventListener('click', (e) => { const b = e.target.closest('[data-prm]'); if (!b) return; arr().splice(Number(b.dataset.prm), 1); paintChips(chips, arr()); autosave(); });
+}
+picker({ q: '#x-content-q', list: '#x-content-list', chips: '#x-content-chips', arr: () => contentIds, filter: (c) => !['banner'].includes(c.type) });
+picker({ q: '#x-ds-q', list: '#x-ds-list', chips: '#x-ds-chips', arr: () => datasetIds, filter: (c) => c.type === 'dataset' });
+
+/** 影音：依據正本選定後，依據版本標示留空就帶入現行版次（可改）。 */
+function fillVersionLabel() {
+  if (val('#f-type') !== 'media' || val('#x-vlabel')) return;
+  const b = P.resolveBasis(basedOn, D.families)[0];
+  if (b?.current?.version) $('#x-vlabel').value = `${b.current.version} 建議`;
+}
+
 // ---------- 草稿 ----------
 function saveDraft(msg) {
   const d = { ...readForm(), derived: sel, savedAt: new Date().toISOString() };
@@ -134,6 +198,22 @@ function saveDraft(msg) {
   if (msg) { statusEl.textContent = `已儲存草稿（${new Date().toLocaleTimeString('zh-TW', { hour12: false })}，僅存本機瀏覽器）`; }
 }
 const autosave = debounce(() => saveDraft(false), 400);
+
+// ---------- 型別專屬：預處理文字與檢查 ----------
+/** 送進實體抽取／一致性檢查的文字：標題＋內文＋該型別的文字欄位（影音＝逐字稿）。 */
+function analysisText(st) {
+  const ex = st.extra;
+  const more = { media: [ex.transcript], service: [ex.steps, ex.docs, ex.legal], labtest: [ex.specimens], publication: [ex.articles], topic: [], research: [] }[st.type] ?? [];
+  return [st.title, st.body, ...more].filter(Boolean).join('\n');
+}
+/** 每次重繪都重算的型別檢查（便宜且確定；改欄位立即反映）。 */
+function typeChecks(f) {
+  const ex = f.extra;
+  if (f.type === 'media') return P.mediaChecks({ transcript: ex.transcript, producedAt: ex.producedAt, basedOn: f.basedOn, label: ex.versionLabel, youtube: ex.youtube, chapters: ex.chapters, captions: ex.captions }, D.families);
+  if (f.type === 'labtest') return P.labtestChecks({ disease: ex.labDisease, specimens: ex.specimens, sendWithinHours: ex.sendHours }, D.diseaseMaster);
+  return P.miscChecks(f.type, ex, D.today);
+}
+const allChecks = () => [...(A?.checks ?? []), ...typeChecks(readForm())];
 
 // ---------- 預處理 ----------
 async function loadMasters() {
@@ -147,12 +227,14 @@ async function runPreprocess({ silent = false } = {}) {
   const t0 = performance.now();
   resultEl.setAttribute('aria-busy', 'true');
   const st = readForm();
-  const text = `${st.title}\n${st.body}`;
+  const isMedia = st.type === 'media';
+  const text = analysisText(st);
+  const spoken = isMedia ? P.spokenToDigits(text) : text; // 逐字稿口語數字（二十四小時）→ 阿拉伯數字再比對
   const M = await loadMasters();
   const lex = P.buildLexicon(M);
   const entities = P.extractEntities(text, lex);
-  const structured = P.extractStructured(text);
-  const summary0 = P.suggestSummary(st.body || st.title, entities);
+  const structured = P.extractStructured(spoken);
+  const summary0 = P.suggestSummary(isMedia ? (st.body || st.extra.transcript || st.title) : (st.body || st.title), entities);
   // 疾病頁（取主要疾病的 v1/diseases/<slug>.json）
   const diseasePages = {};
   const pids = [...new Set([...(entities.relatedDiseaseIds ?? []).slice(0, 3)])];
@@ -160,7 +242,10 @@ async function runPreprocess({ silent = false } = {}) {
     const m = (M.diseases ?? []).find((d) => d.id === id);
     if (m?.hasPage || m?.page) { const pg = await v1(`diseases/${m.slug}`, null); if (pg) diseasePages[id] = pg; }
   }));
-  const checks = P.consistencyChecks({ text, entities, structured, diseaseMaster: M.diseases, diseasePages, documents: M.documents, basedOn: st.basedOn, vaccinesMaster: M.vaccines, type: st.type });
+  const checks = P.consistencyChecks({
+    text: spoken, entities, structured, diseaseMaster: M.diseases, diseasePages, documents: M.documents, basedOn: st.basedOn, vaccinesMaster: M.vaccines, type: st.type,
+    ...(isMedia ? { auditText: P.spokenToDigits(st.extra.transcript), auditLabel: '逐字稿' } : {}),
+  });
   const locked = P.lockedTerms(text, M.glossary);
   A = { entities, structured, summary0, checks, locked, M, text };
   // 預設勾選：已對應與主題詞勾選、未對應詞不勾
@@ -199,6 +284,7 @@ function derive() {
   const f = readForm();
   if (f.type === 'disease' && f.extra.disease) dis.add(f.extra.disease);
   if (f.type === 'vaccine' && f.extra.vaccine) vac.add(f.extra.vaccine);
+  if (f.type === 'labtest' && f.extra.labDisease) dis.add(f.extra.labDisease);
   const structured = {};
   for (const s of A?.structured ?? []) if (sel.st[s.key]) structured[s.key] = s.value;
   return { keywords: [...kw], diseases: [...dis], vaccines: [...vac], countries: [...cty], structured };
@@ -223,8 +309,9 @@ function langIssues() {
 function paintResult() {
   if (!A) return;
   const f = readForm();
-  const { entities, structured, checks, locked } = A;
-  const errs = checks.filter((c) => c.level === 'error'), warns = checks.filter((c) => c.level === 'warn'), oks = checks.filter((c) => c.level === 'ok');
+  const { entities, structured, locked } = A;
+  const checks = allChecks();
+  const errs = checks.filter((c) => c.level === 'error'), warns = checks.filter((c) => c.level === 'warn'), oks = checks.filter((c) => c.level === 'ok'), infos = checks.filter((c) => c.level === 'info');
   const chip = (m) => `<li><label class="adm-chip${m.kind === 'topic' ? ' adm-chip--plain' : ''}"><input type="checkbox" data-chip="${esc(chipKey(m))}" ${sel.chips[chipKey(m)] ? 'checked' : ''}> ${esc(m.label)}${m.id && m.kind !== 'term' ? ` · <code>${esc(m.id)}</code>` : ''}${m.via?.length ? `<span class="adm-muted">（文中寫作「${esc(m.via.join('、'))}」）</span>` : ''}${m.locked ? '<span class="adm-badge adm-badge--info" title="詞彙主檔鎖定詞：機器翻譯不得自由翻譯">鎖定</span>' : ''}</label></li>`;
   const unm = (u) => `<li><label class="adm-chip adm-chip--warn"><input type="checkbox" data-chip="u:${esc(u.term)}" ${sel.chips[`u:${u.term}`] ? 'checked' : ''}> 『${esc(u.term)}』未在主檔 → 建議新增別名／詞彙<span class="adm-muted">（${esc(u.reason.join('、'))}）</span></label> <a class="adm-muted" href="${url('/admin/glossary/')}?new=${encodeURIComponent(u.term)}">加到詞彙主檔</a></li>`;
   const dep = entities.deprecated.map((d) => `<li><span class="adm-chip adm-chip--warn">『${esc(d.term)}』為停用舊名 → 請改用『${esc(d.preferred)}』</span></li>`).join('');
@@ -256,8 +343,10 @@ function paintResult() {
   <section aria-labelledby="r-d"><h3 id="r-d">(d) 一致性檢查</h3>
     ${errs.map((c) => `<div class="adm-box adm-box--err" role="alert"><strong>${esc(c.title)}</strong>${esc(c.message)}</div>`).join('')}
     ${warns.map((c) => `<div class="adm-box adm-box--warn"><strong>${esc(c.title)}</strong>${esc(c.message)}</div>`).join('')}
+    ${infos.map((c) => `<div class="adm-box adm-box--info"><strong>${esc(c.title)}</strong>${esc(c.message)}</div>`).join('')}
     ${!errs.length && !warns.length ? '<div class="adm-box adm-box--ok"><strong>未發現與主檔或現行版衝突</strong>仍請承辦人通讀確認。</div>' : ''}
     ${oks.length ? `<details class="adm-details"><summary>已比對且一致（${oks.length}）</summary>${oks.map((c) => `<div class="adm-box adm-box--ok"><strong>${esc(c.title)}</strong>${esc(c.message)}</div>`).join('')}</details>` : ''}</section>
+  ${typeExtraHtml(f)}
   <section aria-labelledby="r-e"><h3 id="r-e">(e) 多語初稿</h3>
     <div class="adm-tablewrap"><table class="adm-table"><thead><tr><th>語言</th><th>初稿狀態</th><th>術語鎖定（詞彙主檔 locked）</th><th>複核規則</th></tr></thead><tbody>${rows}</tbody></table></div>
     <p class="adm-muted">鎖定詞不得由機器自由翻譯，一律替換為主檔譯名。${key ? '偵測到本機 BYOK 金鑰，可由 LLM 模式產生初稿。' : '無 LLM 時只列出會鎖定的詞；初稿待啟用 LLM 模式（/ask/ 右上「進階」輸入自己的 key）後產生。'}</p></section>
@@ -272,10 +361,29 @@ function paintResult() {
     <pre class="adm-pre" id="exp-pre" tabindex="0">${esc(JSON.stringify(obj, null, 2))}</pre>
     <div class="adm-actions"><button type="button" class="adm-btn" id="btn-dl">下載 .json</button><button type="button" class="adm-btn adm-btn--ghost" id="btn-copy">複製</button></div></section>`;
 }
-const DIRS = { faq: 'faq', disease: 'diseases', news: 'news', letter: 'news', document: 'documents', clarification: 'clarifications', vaccine: 'vaccines' };
 function pathFor(o) {
   const rest = String(o.id ?? '').replace(/^[a-z]+\./, '') || 'new';
-  return `content/${DIRS[$('#f-type').value] ?? 'faq'}/${rest}.json`;
+  return `content/${P.DIRS[$('#f-type').value] ?? 'faq'}/${rest}.json`;
+}
+
+/** 型別專屬的結果區塊：影音＝說明欄第一行與章節；專區＝連結列預覽。 */
+function typeExtraHtml(f) {
+  const ex = f.extra;
+  if (f.type === 'media') {
+    const b = P.resolveBasis(f.basedOn, D.families)[0];
+    const line = P.mediaDescriptionLine({ producedAt: ex.producedAt, label: ex.versionLabel, url: b?.url });
+    const ch = P.parseChapters(ex.chapters).items;
+    return `<section aria-labelledby="r-m"><h3 id="r-m">(m) 影音上架：說明欄與章節</h3>
+      <p class="adm-muted">YouTube 說明欄第一行（7.7 第 4 點）；影片畫面片頭也要印同樣的製作日期與依據版本。</p>
+      <pre class="adm-pre" id="desc-line" tabindex="0">${esc(line)}</pre>
+      <div class="adm-actions" style="margin-top:6px"><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" id="btn-desc">複製說明欄第一行</button></div>
+      <p class="adm-muted">章節 ${ch.length} 個${ch.length ? `：${ch.map((c) => `${Math.floor(c.t / 60)}:${String(c.t % 60).padStart(2, '0')} ${esc(c.label)}`).join('、')}` : '（未填）'}；逐字稿 ${(ex.transcript ?? '').length} 字；字幕 ${(ex.captions ?? []).length ? esc(ex.captions.join('、')) : '無'}。</p></section>`;
+  }
+  if (f.type === 'topic') {
+    const l = P.parseLinks(ex.links).items;
+    return `<section aria-labelledby="r-t"><h3 id="r-t">(t) 連結列預覽</h3>${l.length ? `<ul class="adm-kv">${l.map((x) => `<li><span class="adm-badge ${x.external ? 'adm-badge--info' : 'adm-badge--gray'}">${x.external ? '外部' : '站內'}</span> ${esc(x.label)} <code>${esc(x.href)}</code>${x.note ? `<span class="adm-muted">${esc(x.note)}</span>` : ''}</li>`).join('')}</ul>` : '<p class="adm-muted">尚未填連結列。</p>'}</section>`;
+  }
+  return '';
 }
 
 // ---------- 事件 ----------
@@ -286,8 +394,56 @@ $('#btn-clear').addEventListener('click', () => {
   writeForm({ type: 'faq', owner: getUnit() === 'all' ? undefined : getUnit(), audience: ['public'] }); applyTypeUI(true);
   resultEl.innerHTML = '<p class="adm-muted">已清空。</p>'; secEl.textContent = '尚未送出'; statusEl.textContent = '已清空草稿。';
 });
+const SAMPLES = {
+  media: {
+    type: 'media', title: '候診室衛教影片：成人要不要再打 MMR？（示範）', owner: 'unit.acute-infectious', audience: ['public'], tasks: ['vaccines'], basedOn: ['doc.mmr-recommendation'],
+    body: '給候診民眾看的麻疹與 MMR 疫苗衛教短片。',
+    extra: {
+      mediaType: 'video', youtube: '', producedAt: '2025-01-10', versionLabel: '108.05.14 建議', chapters: '0 開場\n30 誰需要評估接種\n90 怎麼接種', captions: ['zh-TW'],
+      transcript: '各位候診的朋友大家好，今天要談麻疹。麻疹的傳染力很強，潛伏期大約七到十八天。依照目前的建議，1981 年以後出生的成人，如果沒有接種紀錄，建議評估接種兩劑 MMR 疫苗。懷孕的女性不可以接種。麻疹是第二類法定傳染病，醫師發現疑似個案要在二十四小時內通報。',
+    },
+  },
+  topic: {
+    type: 'topic', title: '防災避難衛生須知（示範）', owner: 'unit.preparedness', audience: ['public'], tasks: [],
+    body: '颱風、地震後避難所的傳染病預防重點：飲水、廁所衛生、洗手、咳嗽禮節與腹瀉症狀通報。',
+    extra: { topicKind: 'emergency', startAt: '', endAt: '', links: '避難所衛生檢核表 | https://example.gov.tw/shelter-checklist | 示意連結\n腸病毒與腹瀉防治 | /diseases/enterovirus/\n撥打 1922 防疫專線 | tel:1922', contentIds: ['disease.enterovirus'] },
+  },
+  service: {
+    type: 'service', title: '個案資料申請（示範）', owner: 'unit.epidemic-intelligence', audience: ['public', 'professional'], tasks: ['data'],
+    body: '學研單位申請傳染病個案去連結資料作研究使用。',
+    extra: { serviceType: 'data-request', who: ['研究者'], steps: '備齊文件 | 研究計畫書與倫理審查證明 | 申請人 | 3\n線上送件 | 於申請系統上傳 | 申請人 | 1\n審查 | 資料治理小組審查 | 承辦單位 | 14\n通知與提供 | 核准後以安全方式提供 | 承辦單位 | 7', docs: '申請書\n研究計畫書\n倫理審查核可證明', slaDays: '30', fee: '免費', legal: '傳染病防治法第 9 條', forms: '資料申請書 | https://example.gov.tw/forms/data-request.odt | odt', applyUrl: '', contact: '1922' },
+  },
+  publication: {
+    type: 'publication', title: '疫情報導（示範卷期）', owner: 'unit.epidemic-intelligence', audience: ['public', 'professional'], tasks: [],
+    body: '本期收錄登革熱本土疫情調查與腸病毒監測週報。',
+    extra: { pubType: 'bulletin', series: '疫情報導', volume: '42', issue: '18', edition: '', isbn: '', issn: '1021-2477', gpn: '', articles: '登革熱本土疫情調查 | 示範作者甲、示範作者乙 | 241-250\n腸病毒監測週報 | 示範作者丙 | 251-256' },
+  },
+  labtest: {
+    type: 'labtest', title: '登革熱檢驗項目（示範）', owner: 'unit.lab', audience: ['professional'], tasks: [],
+    body: '',
+    extra: { labDisease: 'disease.dengue', sendHours: '48', labs: ['cdc-lab', 'certified-lab'], specimens: '急性期血清 | 血清分離管 | 2–5 mL | 4°C 冷藏 | 48 小時內冷藏送達 | 發病 7 日內 | NS1 抗原、RT-PCR\n恢復期血清 | 血清分離管 | 2–5 mL | 4°C 冷藏 | 48 小時內冷藏送達 | 發病 14 日後 | IgM、IgG' },
+  },
+  research: {
+    type: 'research', title: '登革熱病媒監測智慧化研究（示範）', owner: 'unit.acute-infectious', audience: ['professional'], tasks: ['data'],
+    body: '以物聯網誘蚊產卵器資料建立登革熱病媒密度預警模型。',
+    extra: { year: '2026', projectStatus: 'ongoing', fundingType: 'commissioned', projectNo: 'DOC-115-001', piUnit: '示範大學公共衛生學院', datasets: [] },
+  },
+  recruit: {
+    type: 'recruit', title: '疾管署公開招考約聘人員（示範）', owner: 'unit.planning', audience: ['public'], tasks: [],
+    body: '本署因業務需要，公開招考約聘研究員 2 名，報名方式與資格請見附件。',
+    extra: { deadlineAt: '2026-10-31', refNo: '疾管人字第 1150000001 號', newsApplyUrl: 'https://example.gov.tw/recruit/apply', positions: '2' },
+  },
+  procurement: {
+    type: 'procurement', title: '傳染病監測系統維運勞務採購（示範）', owner: 'unit.planning', audience: ['public'], tasks: [],
+    body: '本案採公開招標，投標須知與規格請至政府電子採購網下載。',
+    extra: { deadlineAt: '2026-10-15', refNo: 'CDC-115-0012', newsApplyUrl: 'https://web.pcc.gov.tw/', budgetNtd: '3200000' },
+  },
+};
 $('#btn-sample').addEventListener('click', () => {
-  writeForm({
+  const type = val('#f-type');
+  const sm = SAMPLES[type];
+  if (sm) { contentIds = []; datasetIds = []; writeForm(sm); }
+  else writeForm({
     type: 'faq', title: '登革熱發燒後幾天內要就醫？', owner: 'unit.acute-infectious', audience: ['public'], tasks: ['symptoms', 'travel'], basedOn: ['disease.dengue'],
     body: '感染登革病毒後潛伏期約 3 至 14 天。出現發燒且有登革熱流行地區旅遊史或居住史者，應於 24 小時內就醫並主動告知醫師。退燒後 1 至 2 天是出現警示徵象的高風險期，若有持續嘔吐、腹痛、出血、嗜睡等情形應立即回診。\n\n登革出血熱屬於較嚴重的表現，須儘速住院觀察。屈公病的症狀與登革熱相似，屈公病疑似病例應於 24 小時內通報衛生局。',
   });
@@ -296,14 +452,16 @@ $('#btn-sample').addEventListener('click', () => {
 });
 form.addEventListener('input', (e) => {
   if (e.target.id === 'f-body') $('#f-body-count').textContent = `${e.target.value.length} 字`;
+  if (e.target.id === 'x-transcript') $('#x-transcript-count').textContent = `${e.target.value.length} 字`;
   if (e.target.id === 'f-id') idTouched = !!e.target.value.trim();
   if (e.target.id === 'x-family') fillSupersedes();
-  if (['f-title', 'x-family', 'x-effective', 'x-disease', 'x-vaccine'].includes(e.target.id)) autoId();
+  if (['f-title', 'x-family', 'x-effective', 'x-disease', 'x-vaccine', 'x-labdisease'].includes(e.target.id)) autoId();
   autosave();
 });
 form.addEventListener('change', (e) => {
   if (e.target.id === 'f-type') applyTypeUI(true);
   if (e.target.name === 'lang') paintLangReasons();
+  if (e.target.id === 'x-labdisease') { const d = D.diseaseMaster.find((x) => x.id === e.target.value); $('#x-sendhours-hint').textContent = d?.notifyWithinHours != null ? `${d.name}主檔通報時限 ${d.notifyWithinHours} 小時；送驗時限超過會警告。` : '超過主檔通報時限時會警告。'; autoId(); if (d && !val('#f-title')) $('#f-title').value = `${d.name}檢驗項目`; }
   if (e.target.id === 'x-disease' && e.target.value) { const d = D.diseaseMaster.find((x) => x.id === e.target.value); if (d && !val('#f-title')) $('#f-title').value = d.name; }
   autosave();
   if (A) paintResultKeepFocus();
@@ -311,7 +469,7 @@ form.addEventListener('change', (e) => {
 function paintResultKeepFocus() { const id = document.activeElement?.id; paintResult(); if (id) document.getElementById(id)?.focus?.(); }
 $('#f-based-q').addEventListener('input', (e) => searchBased(e.target.value));
 $('#f-based-q').addEventListener('keydown', (e) => { if (e.key === 'Escape') { $('#f-based-list').hidden = true; } if (e.key === 'ArrowDown') $('#f-based-list button')?.focus(); });
-$('#f-based-list').addEventListener('click', (e) => { const b = e.target.closest('[data-add]'); if (!b) return; basedOn.push(b.dataset.add); paintBased(); $('#f-based-q').value = ''; $('#f-based-list').hidden = true; $('#f-based-q').focus(); autosave(); });
+$('#f-based-list').addEventListener('click', (e) => { const b = e.target.closest('[data-add]'); if (!b) return; basedOn.push(b.dataset.add); paintBased(); fillVersionLabel(); $('#f-based-q').value = ''; $('#f-based-list').hidden = true; $('#f-based-q').focus(); autosave(); });
 $('#f-based-chips').addEventListener('click', (e) => { const b = e.target.closest('[data-rm]'); if (!b) return; basedOn.splice(Number(b.dataset.rm), 1); paintBased(); autosave(); });
 
 resultEl.addEventListener('change', (e) => {
@@ -339,6 +497,7 @@ resultEl.addEventListener('click', async (e) => {
   else if (t.id === 'sum-reset') { sel.summary = A.summary0; paintResult(); autosave(); }
   else if (t.id === 'btn-dl') { const o = exportObj(); downloadText(`${String(o.id).replace(/[^a-z0-9.-]/gi, '_')}.json`, `${JSON.stringify(o, null, 2)}\n`); }
   else if (t.id === 'btn-copy') copyText(`${JSON.stringify(exportObj(), null, 2)}\n`, t);
+  else if (t.id === 'btn-desc') copyText($('#desc-line')?.textContent ?? '', t);
   else if (t.id === 'btn-return') { sel.stage = 'edit'; $('#submit-msg').textContent = '已退回修改：請在左側調整內文後重新「送出預處理」。'; $('#f-title').focus(); saveDraft(false); }
   else if (t.id === 'btn-confirm') confirmSubmit();
   else if (t.dataset.llm) llmOne(t.dataset.llm);
@@ -349,7 +508,7 @@ function confirmSubmit() {
   const miss = [...P.requiredCheck(obj, (D.units ?? []).map((u) => u.id)), ...langIssues()];
   const msg = $('#submit-msg');
   if (miss.length) { msg.textContent = `無法送複核，請先補齊：${miss.join('；')}`; msg.className = 'adm-red'; return; }
-  const reds = A.checks.filter((c) => c.level === 'error').length;
+  const reds = allChecks().filter((c) => c.level === 'error').length;
   if (reds && !sel.ack) {
     sel.ack = true; $('#btn-confirm').textContent = '仍要送複核（已知有紅框）';
     msg.className = 'adm-red'; msg.textContent = `一致性檢查仍有 ${reds} 項紅框（例如依據正本失效或與現行版矛盾）。建議先修正；若確認要送，再按一次。`; return;
@@ -398,7 +557,8 @@ async function llmOne(lang) {
     statusEl.textContent = `已還原上次草稿（${saved.savedAt ? new Date(saved.savedAt).toLocaleString('zh-TW', { hour12: false }) : ''}）`;
     if (sel.stage !== 'edit' || (saved.derived && Object.keys(saved.derived.chips ?? {}).length)) runPreprocess({ silent: true });
   } else {
-    writeForm({ type: 'faq', owner: u !== 'all' ? u : undefined, audience: ['public'] });
+    const qt = new URLSearchParams(location.search).get('type');
+    writeForm({ type: P.TYPES.some((t) => t.value === qt) ? qt : 'faq', owner: u !== 'all' ? u : undefined, audience: ['public'] });
     applyTypeUI(true);
   }
   document.addEventListener('adm:unit', () => { if (!val('#f-title') && !val('#f-body') && getUnit() !== 'all') $('#f-owner').value = getUnit(); });

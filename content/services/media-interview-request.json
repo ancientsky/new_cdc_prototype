@@ -1,0 +1,124 @@
+{
+  "id": "service.media-interview-request",
+  "type": "service",
+  "title": "媒體採訪與拍攝申請",
+  "owner": "unit.pr",
+  "publishedAt": "2024-01-01",
+  "reviewedAt": "2026-04-01",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-04-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-04-01",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "媒體採訪疾管署業務、專家或拍攝影像，請提前 3 個工作日向公關室提出申請，載明主題、受訪對象需求與播出時間，由公關室協調安排。",
+  "keywords": [
+    "媒體採訪",
+    "拍攝",
+    "公關室",
+    "記者",
+    "新聞聯絡"
+  ],
+  "slug": "media-interview-request",
+  "serviceType": "other",
+  "whoCanApply": [
+    "新聞媒體",
+    "影音製作單位",
+    "學術與教育單位"
+  ],
+  "introMarkdown": "疾管署公關室受理媒體採訪、專訪與拍攝申請。**每週例行記者會**之資訊與直播連結公布於新聞稿頁；緊急疫情回應請以電話聯繫公關室。\n\n- 一般採訪請提前 **3 個工作日**申請。\n- 進入實驗室、檢疫站等管制區拍攝，須另經權責單位同意並遵守生物安全規定。\n- 本署新聞稿、圖片與影片依政府資料開放授權條款釋出，可直接引用並註明來源。",
+  "requiredDocuments": [
+    "媒體名稱與記者聯絡方式",
+    "採訪主題與題綱",
+    "希望受訪單位或專業領域",
+    "播出或刊登時間"
+  ],
+  "steps": [
+    {
+      "title": "提出申請",
+      "text": "以電子郵件或表單送公關室。",
+      "who": "媒體",
+      "days": 0
+    },
+    {
+      "title": "公關室協調權責單位",
+      "text": "依主題指派受訪單位。",
+      "who": "公關室",
+      "days": 1
+    },
+    {
+      "title": "確認時間與形式",
+      "text": "回覆受訪者職稱、時間與地點。",
+      "who": "公關室",
+      "days": 1
+    },
+    {
+      "title": "採訪與事後確認",
+      "text": "必要時提供專業內容確認。",
+      "who": "權責單位",
+      "days": 1
+    }
+  ],
+  "slaDays": 3,
+  "fee": "免費",
+  "legalBasis": [
+    "政府資訊公開法"
+  ],
+  "forms": [
+    {
+      "label": "媒體採訪申請表",
+      "href": "https://www.cdc.gov.tw/File/Get/placeholder-form-media-interview",
+      "format": "DOCX",
+      "machineReadable": false
+    }
+  ],
+  "contact": "疾病管制署公關室（總機 02-2395-9825 轉公關室）",
+  "faq": [
+    {
+      "q": "可以指定由署長受訪嗎？",
+      "a": "可以提出，但由公關室依主題與行程安排最適合的受訪者（職稱）。"
+    },
+    {
+      "q": "可以使用疾管署的衛教影片片段嗎？",
+      "a": "可以，依政府資料開放授權條款引用並註明出處；但請使用依現行版本製作之影片。"
+    }
+  ],
+  "i18n": {
+    "en": {
+      "title": "Media interview and filming requests",
+      "summary": "Media should apply to the Public Relations Office at least three working days in advance, stating the topic, desired expertise and publication date."
+    }
+  }
+}

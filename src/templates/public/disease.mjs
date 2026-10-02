@@ -6,6 +6,7 @@ import { barChartSvg } from '../../client/charts.js';
 import {
   ldFor, breadcrumb, provenance, alerts, pageData, statusTag, scopeTags, viewToggle, feedback, askBox, translationBadge,
   numberSource, datasetSourceCard, hrefFor, isFallbackLink, L, unitName, publishedOf, byDateDesc, dated, itemPath, seriesOf, sitField, licenseLabel,
+  isMediaOutdated, isTopicEnded, fmtDur,
 } from './_partials.mjs';
 
 const trailOf = (ctx, item) => [{ label: ctx.t('nav.diseases'), href: '/diseases/' }, { label: L(ctx, item, 'title') }];
@@ -94,7 +95,11 @@ export function render(ctx, { item }) {
   const catLabel = t('disease.cat', { n: item.legalCategory });
   const langStatus = item.languages?.[lang]?.status;
   const toc = blocks.filter((b) => b.heading).map((b) => html`<li><a href="${'#' + b.key}">${b.heading}</a></li>`);
-  const hasPro = pro.specimen || pro.notifyNote || pro.caseDefinitionDoc || pro.manualDoc;
+  const labtests = publishedOf(site, 'labtests').filter((l) => l.disease === item.id);
+  const media = publishedOf(site, 'media').filter((m) => m.diseases?.includes(item.id))
+    .sort((a, b) => Number(isMediaOutdated(site, a)) - Number(isMediaOutdated(site, b)) || String(b.producedAt ?? b.publishedAt).localeCompare(String(a.producedAt ?? a.publishedAt))).slice(0, 3);
+  const topics = publishedOf(site, 'topics').filter((tp) => (tp.diseases?.includes(item.id) || tp.contentIds?.includes(item.id)) && !isTopicEnded(site, tp)).slice(0, 3);
+  const hasPro = pro.specimen || pro.notifyNote || pro.caseDefinitionDoc || pro.manualDoc || labtests.length || item.notifyWithinHours;
   const vaccines = site.collections.vaccines.filter((v) => v.status === 'published' && v.diseases?.includes(item.id));
   return html`
 ${breadcrumb(ctx, trailOf(ctx, item))}
@@ -136,7 +141,8 @@ ${breadcrumb(ctx, trailOf(ctx, item))}
       ${blocks.map((b) => renderBlock(ctx, item, b, { sit, faqs }))}
       ${hasPro ? html`<section class="c-block c-pro-only" id="professional" aria-labelledby="h-professional"><h2 id="h-professional">${t('disease.pro.title')} ${translationBadge(ctx, 'none', { text: t('scope.pro') })}</h2>
         <dl class="c-deflist">
-          <div><dt>${t('kf.notify')}</dt><dd>${pro.notifyNote ?? (item.notifyWithinHours ? t('disease.notify.h', { h: item.notifyWithinHours }) : '')}</dd></div>
+          <div><dt>${t('kf.notify')}</dt><dd>${pro.notifyNote ?? (item.notifyWithinHours ? t('disease.notify.h', { h: item.notifyWithinHours }) : '')}${item.legalCategory ? html` · <a href="${url('/report/')}#category-${item.legalCategory}">${t('disease.pro.notifytable')} →</a>` : ''}</dd></div>
+          ${labtests.length ? html`<div><dt>${t('disease.pro.lab')}</dt><dd>${labtests.map((l) => html`<a href="${hrefFor(ctx, l)}">${L(ctx, l, 'title')}</a> `)}<a href="${url('/lab/')}">${t('lab.title')} →</a></dd></div>` : ''}
           ${pro.specimen ? html`<div><dt>${t('disease.specimen')}</dt><dd>${pro.specimen}</dd></div>` : ''}
           ${pro.caseDefinitionDoc ? html`<div><dt>${t('disease.casedef')}</dt><dd>${docLink(ctx, pro.caseDefinitionDoc)}</dd></div>` : ''}
           ${pro.manualDoc ? html`<div><dt>${t('disease.manual')}</dt><dd>${docLink(ctx, pro.manualDoc)}</dd></div>` : ''}
@@ -155,7 +161,10 @@ ${breadcrumb(ctx, trailOf(ctx, item))}
         <p class="muted">${t('disease.docs.note')}</p></section>
       ${vaccines.length ? html`<section class="c-aside-card"><h2>${t('nav.vaccines')}</h2><ul class="c-linklist">${vaccines.map((v) => html`<li><a href="${hrefFor(ctx, v)}">${L(ctx, v, 'title')}</a></li>`)}</ul></section>` : ''}
       <section class="c-aside-card"><h2>${t('disease.materials')}</h2>
-        ${item.materials?.length ? html`<ul class="c-linklist">${item.materials.map((m) => html`<li><a href="${m.url}" rel="noopener">${m.label} ↗</a></li>`)}</ul>` : html`<p class="muted">${t('none')}</p>`}</section>
+        ${item.materials?.length ? html`<ul class="c-linklist">${item.materials.map((m) => html`<li><a href="${m.url}" rel="noopener">${m.label} ↗</a></li>`)}</ul>` : (media.length || topics.length ? '' : html`<p class="muted">${t('none')}</p>`)}
+        ${media.length ? html`<ul class="c-linklist c-matmedia" aria-label="${t('home.media')}">${media.map((m) => html`<li><a href="${hrefFor(ctx, m)}"${isFallbackLink(ctx, m) ? raw(' lang="zh-TW"') : ''}>${L(ctx, m, 'title')}</a> <span class="muted">${m.durationSeconds ? fmtDur(m.durationSeconds) : ''}</span>${isMediaOutdated(site, m) ? html` <span class="c-pill c-pill--warn">${t('media.outdated.tag')}</span>` : ''}${m.basedOnVersionLabel ? html`<br><span class="muted">${t('media.basedOn.short', { v: m.basedOnVersionLabel })}</span>` : ''}</li>`)}</ul>
+        <a href="${url('/media/')}">${t('home.media.all')} →</a>` : ''}
+        ${topics.length ? html`<p class="c-matmedia__h"><b>${t('home.topics')}</b></p><ul class="c-linklist">${topics.map((tp) => html`<li><a href="${hrefFor(ctx, tp)}"${isFallbackLink(ctx, tp) ? raw(' lang="zh-TW"') : ''}>${L(ctx, tp, 'title')}</a></li>`)}</ul>` : ''}</section>
       ${pageData(ctx, item, { schema: 'MedicalCondition', api: `/v1/diseases/${item.slug}.json`, mdPath: `/diseases/${item.slug}.md` })}
     </aside>
   </div>

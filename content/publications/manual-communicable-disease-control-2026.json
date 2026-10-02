@@ -1,0 +1,82 @@
+{
+  "id": "publication.manual-communicable-disease-control-2026",
+  "type": "publication",
+  "title": "傳染病防治工作手冊（2026 年版）",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-03-01",
+  "reviewedAt": "2026-03-01",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue",
+    "disease.measles",
+    "disease.influenza",
+    "disease.enterovirus"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-03-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-03-01",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "供地方衛生局與醫療院所使用之各類法定傳染病防治工作手冊，含病例定義、通報、檢體採檢、疫調、接觸者追蹤與防治措施。",
+  "keywords": [
+    "工作手冊",
+    "傳染病防治",
+    "病例定義",
+    "疫調",
+    "接觸者追蹤"
+  ],
+  "note": "GPN 為示意號碼；手冊內容版本以 documents 現行版為準",
+  "pubType": "manual",
+  "series": "傳染病防治工作手冊",
+  "seriesEn": "Manual for Communicable Disease Control",
+  "edition": "2026 年版（第 9 版）",
+  "gpn": "1011500045",
+  "pages": 420,
+  "authors": [
+    "急性傳染病組",
+    "慢性傳染病組",
+    "預防接種組"
+  ],
+  "pdfUrl": "https://www.cdc.gov.tw/File/Get/placeholder-manual-cdc-2026",
+  "abstractMarkdown": "本手冊依疾病分章，每章包含：疾病概述、致病原、流行病學、臨床表現、**病例定義**、**通報定義與時限**、檢體採檢送驗、疫情調查、防治措施與接觸者追蹤。2026 年版主要修訂：登革熱病例定義（2026-01-01 生效）、MMR 接種建議引用更新、腸病毒重症處置指引（2026-03-15）。\n\n各疾病之最新病例定義以「文件」區之現行版本為準。",
+  "i18n": {
+    "en": {
+      "title": "Manual for Communicable Disease Control (2026 edition)",
+      "summary": "Chapters by disease with case definitions, reporting, specimen collection, investigation, contact tracing and control measures for health departments and clinicians."
+    }
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "id": "news.2026-09-15-procurement-website-redesign",
+  "type": "news",
+  "title": "「疾病管制署全球資訊網 AI-ready 改版建置暨維運案」招標公告",
+  "owner": "unit.it",
+  "publishedAt": "2026-09-15",
+  "reviewedAt": "2026-09-15",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-15",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "官網 AI-ready 改版建置暨維運勞務採購公開招標，含內容模型、治理欄位、開放 API、七語介面與無障礙，預算約 2,800 萬元，10 月 28 日截止投標。",
+  "keywords": [
+    "採購公告",
+    "官網改版",
+    "AI-ready",
+    "勞務採購",
+    "資料治理"
+  ],
+  "newsType": "procurement",
+  "deadlineAt": "2026-10-28",
+  "budgetNtd": 28000000,
+  "refNo": "案號 CDC-115-IT-012（示意）",
+  "applyUrl": "https://web.pcc.gov.tw/",
+  "bodyMarkdown": "## 採購標的\n疾病管制署全球資訊網改版建置與三年維運，範圍包括：\n- 單一內容模型與治理欄位（權責單位、審閱日、依據正本、版本）\n- 民眾版、專業版、開放 API 與機讀版（.md／JSON-LD）\n- AI 問答白名單與評估集機制\n- 七語介面、無障礙 AA 等級、資安與個資保護\n\n本案需求規格參考本原型（新官網可動原型）之架構文件。\n\n## 預算金額\n新臺幣 28,000,000 元（示意）。\n\n## 投標方式\n請至政府電子採購網下載招標文件。截止投標日：**2026 年 10 月 28 日 17:00**。廠商說明會：2026 年 10 月 7 日（示意）。",
+  "i18n": {
+    "en": {
+      "title": "Tender: AI-ready redesign and maintenance of the Taiwan CDC website",
+      "summary": "Open tender for the AI-ready website redesign with content model, governance fields, open APIs, seven languages and accessibility; bids close 28 October 2026."
+    }
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "id": "page.director-mailbox",
+  "type": "page",
+  "title": "署長信箱",
+  "owner": "unit.director",
+  "publishedAt": "2026-10-01",
+  "reviewedAt": "2026-10-01",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-10-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-10-01",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "署長信箱受理防疫政策建議與陳情，依類別分流至權責單位，原則 30 日內回覆；說明不受理事項、個資告知，以及緊急事項請撥 1922。",
+  "keywords": [
+    "署長信箱",
+    "陳情",
+    "人民陳情",
+    "個資告知",
+    "處理天數",
+    "分流"
+  ],
+  "note": "原型以表單分類對應權責單位後預覽，送出改用 mailto 或複製；正式環境接署內陳情系統",
+  "slug": "contact/mailbox",
+  "mailboxCategories": [
+    {
+      "key": "vaccine",
+      "label": "疫苗接種與公費疫苗",
+      "unit": "unit.vaccine",
+      "examples": "接種對象、接種紀錄、疫苗不良事件"
+    },
+    {
+      "key": "acute",
+      "label": "急性傳染病（登革熱、流感、腸病毒、麻疹等）",
+      "unit": "unit.acute-infectious",
+      "examples": "疾病防治措施、病例定義"
+    },
+    {
+      "key": "chronic",
+      "label": "結核病、愛滋與性傳染病",
+      "unit": "unit.chronic-infectious",
+      "examples": "都治、匿名篩檢、PrEP"
+    },
+    {
+      "key": "travel",
+      "label": "國際旅遊與邊境檢疫",
+      "unit": "unit.quarantine",
+      "examples": "旅遊疫情建議、黃皮書、入境檢疫"
+    },
+    {
+      "key": "infection-control",
+      "label": "醫療機構與長照機構感染管制",
+      "unit": "unit.infection-control",
+      "examples": "院內感染、查核申訴"
+    },
+    {
+      "key": "lab",
+      "label": "檢驗與實驗室生物安全",
+      "unit": "unit.lab",
+      "examples": "送驗、檢驗結果、感染性生物材料"
+    },
+    {
+      "key": "data",
+      "label": "統計資料與開放資料",
+      "unit": "unit.epidemic-intelligence",
+      "examples": "資料集、NIDSS、資料申請"
+    },
+    {
+      "key": "website",
+      "label": "官網使用、無障礙與系統問題",
+      "unit": "unit.it",
+      "examples": "網頁無法開啟、無障礙、通報系統帳號"
+    },
+    {
+      "key": "media",
+      "label": "新聞、媒體與宣導素材",
+      "unit": "unit.pr",
+      "examples": "新聞稿、宣導影片、Banner"
+    },
+    {
+      "key": "ai",
+      "label": "AI 問答與資料治理",
+      "unit": "unit.oasis",
+      "examples": "AI 答錯、白名單、詞彙"
+    },
+    {
+      "key": "other",
+      "label": "其他／不確定",
+      "unit": "unit.director",
+      "examples": "由署長室收文後分案"
+    }
+  ],
+  "slaDays": 30,
+  "bodyMarkdown": "> **緊急或疫情相關諮詢請撥 1922**（24 小時）；疑似群聚請撥 1922 或通報衛生局。署長信箱非即時服務。\n\n## 受理範圍\n- 對本署防疫政策、法規、措施之建議或陳情。\n- 對本署服務品質、人員態度之意見。\n- 對官網內容、資料開放之建議。\n\n## 不受理事項\n- 未具真實姓名或聯絡方式、內容空泛無具體事實者（依《行政院暨所屬機關處理人民陳情案件要點》得不予處理）。\n- 同一事由經答覆後重複陳情者。\n- 個人病情診斷、用藥建議（請洽醫師或撥 1922）。\n- 檢舉不實訊息請至「謠言查證」；回報 AI 問答錯誤請用答案頁「回報」鍵。\n- 非本署權責者，將移送權責機關並副知您。\n\n## 處理天數\n收件後分送權責單位，**原則 30 日內**回覆；需會辦多單位或調查者，得延長並先行告知。\n\n## 分流類別\n| 類別 | 權責單位 | 例如 |\n| --- | --- | --- |\n| 疫苗接種與公費疫苗 | unit.vaccine | 接種對象、接種紀錄、疫苗不良事件 |\n| 急性傳染病（登革熱、流感、腸病毒、麻疹等） | unit.acute-infectious | 疾病防治措施、病例定義 |\n| 結核病、愛滋與性傳染病 | unit.chronic-infectious | 都治、匿名篩檢、PrEP |\n| 國際旅遊與邊境檢疫 | unit.quarantine | 旅遊疫情建議、黃皮書、入境檢疫 |\n| 醫療機構與長照機構感染管制 | unit.infection-control | 院內感染、查核申訴 |\n| 檢驗與實驗室生物安全 | unit.lab | 送驗、檢驗結果、感染性生物材料 |\n| 統計資料與開放資料 | unit.epidemic-intelligence | 資料集、NIDSS、資料申請 |\n| 官網使用、無障礙與系統問題 | unit.it | 網頁無法開啟、無障礙、通報系統帳號 |\n| 新聞、媒體與宣導素材 | unit.pr | 新聞稿、宣導影片、Banner |\n| AI 問答與資料治理 | unit.oasis | AI 答錯、白名單、詞彙 |\n| 其他／不確定 | unit.director | 由署長室收文後分案 |\n\n（權責單位以單位代碼表示，頁面呈現時由主檔轉為單位名稱。）\n\n## 個人資料蒐集告知\n依《個人資料保護法》第 8 條告知：本署為處理您的陳情（特定目的：一般行政、陳情請願案件處理），蒐集您提供之姓名、電子郵件、電話及陳情內容；僅於處理期間及依檔案法保存年限內，於本署及受移送之權責機關利用。您可依法請求查詢、閱覽、更正或刪除；如不提供必要資料，將無法回覆。",
+  "i18n": {
+    "en": {
+      "title": "Director-General’s mailbox",
+      "summary": "Submit policy suggestions or complaints; messages are routed to the responsible unit and answered within 30 days in principle. Call 1922 for urgent matters."
+    }
+  }
+}

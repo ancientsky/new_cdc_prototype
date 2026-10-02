@@ -1,0 +1,110 @@
+{
+  "id": "labtest.japanese-encephalitis",
+  "type": "labtest",
+  "title": "日本腦炎檢驗項目與送驗規定",
+  "owner": "unit.lab",
+  "publishedAt": "2025-01-15",
+  "reviewedAt": "2026-07-15",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.japanese-encephalitis"
+  ],
+  "diseases": [
+    "disease.japanese-encephalitis"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-07-15"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "none"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "日本腦炎：急性期與恢復期成對血清及腦脊髓液，冷藏 72 小時內送疾管署，做 IgM 捕捉 ELISA 與 RT-PCR；恢復期血清於發病 14 日後採。",
+  "keywords": [
+    "日本腦炎",
+    "檢體",
+    "送驗",
+    "採檢",
+    "IgM 捕捉 ELISA",
+    "RT-PCR"
+  ],
+  "note": "檢體量、保存與時效為原型示意，以檢驗及疫苗研製中心「傳染病檢體採檢手冊」現行版為準",
+  "disease": "disease.japanese-encephalitis",
+  "specimens": [
+    {
+      "name": "急性期血清",
+      "timing": "發病 7 日內",
+      "container": "無菌血清分離管（紅頭或黃頭，無抗凝劑）",
+      "volume": "血清 2 mL",
+      "storage": "2–8°C 冷藏",
+      "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+      "tests": [
+        "IgM 捕捉 ELISA",
+        "RT-PCR"
+      ],
+      "turnaroundDays": 3
+    },
+    {
+      "name": "腦脊髓液",
+      "timing": "有腦炎症狀時",
+      "container": "無菌螺旋蓋管",
+      "volume": "0.5–1 mL",
+      "storage": "2–8°C 冷藏（72 小時以上 -70°C）",
+      "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+      "tests": [
+        "IgM 抗體",
+        "RT-PCR"
+      ],
+      "turnaroundDays": 3
+    },
+    {
+      "name": "恢復期血清",
+      "timing": "發病 14 日後",
+      "container": "無菌血清分離管（紅頭或黃頭，無抗凝劑）",
+      "volume": "血清 2 mL",
+      "storage": "2–8°C 冷藏",
+      "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+      "tests": [
+        "IgM／IgG 抗體（成對血清）"
+      ],
+      "turnaroundDays": 3
+    }
+  ],
+  "labs": [
+    "cdc-lab"
+  ],
+  "sendWithinHours": 72,
+  "formDoc": "https://www.cdc.gov.tw/File/Get/placeholder-form-lab-specimen-form",
+  "biosafetyLevel": "BSL-2（病毒培養 BSL-3）",
+  "notesMarkdown": "- 需與其他病毒性腦炎鑑別，送驗單請註明接種史。\n- 疫情高峰 5–10 月，豬舍、稻田附近居住史請一併註明。"
+}

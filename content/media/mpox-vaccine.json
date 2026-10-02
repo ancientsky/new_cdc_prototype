@@ -1,0 +1,97 @@
+{
+  "id": "media.mpox-vaccine",
+  "type": "media",
+  "title": "M痘疫苗兩劑完整保護，高風險族群請把握接種",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-09-05",
+  "reviewedAt": "2026-09-05",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "vaccines",
+    "travel"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.mpox",
+    "faq.mpox-who-vaccine"
+  ],
+  "diseases": [
+    "disease.mpox"
+  ],
+  "vaccines": [
+    "vaccine.mpox"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-05"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "none"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "短影音提醒 M痘疫苗需接種兩劑、間隔至少 4 週才有完整保護，說明公費接種對象與出現皮疹、發燒時應就醫並避免親密接觸。",
+  "keywords": [
+    "M痘",
+    "猴痘",
+    "M痘疫苗",
+    "兩劑",
+    "公費疫苗"
+  ],
+  "note": "YouTube 影片 id 原型無法驗證，一律 null；頻道網址沿用舊式 /user/taiwancdc，dataset.youtube-channel 記為 @TwCDC，上線前請公關室確認頻道 handle。",
+  "mediaType": "short",
+  "durationSeconds": 45,
+  "producedAt": "2026-08-30",
+  "basedOnVersionLabel": "M痘疾病頁與公費疫苗接種對象（2026-08 審閱）",
+  "targetGroups": [
+    "近一年有高風險性行為者",
+    "前往流行地區者",
+    "性病門診就診者"
+  ],
+  "series": "愛滋與性病防治",
+  "captions": [
+    "zh-TW"
+  ],
+  "chapters": [
+    {
+      "t": 0,
+      "label": "M痘怎麼傳染"
+    },
+    {
+      "t": 15,
+      "label": "疫苗打兩劑"
+    },
+    {
+      "t": 32,
+      "label": "有症狀怎麼辦"
+    }
+  ],
+  "transcriptMarkdown": "**[00:00] M痘怎麼傳染**\n\n旁白：M痘，過去稱為猴痘，主要透過親密接觸傳染，例如性行為、皮膚對皮膚的接觸，或接觸到患者的皮疹、體液，以及使用過的床單、毛巾。2026 年國際間仍有 I 型 M痘疫情，出國旅遊或參加大型活動時要特別留意。\n\n**[00:15] 疫苗打兩劑**\n\n旁白：M痘疫苗要打兩劑，兩劑間隔至少 4 週，才有完整的保護力。近一年有高風險性行為、曾經得過性病，或是即將前往流行地區且可能有高風險行為的人，都是公費接種對象。已經打過第一劑的人，別忘了回來打第二劑。全國有多家合約醫療院所提供接種，預約前請先查詢院所名單。\n\n**[00:32] 有症狀怎麼辦**\n\n旁白：如果出現發燒、淋巴結腫大，或是生殖器、肛門、口腔周圍出現皮疹、水泡，請戴口罩、穿長袖遮住皮疹，儘速就醫，並主動告知接觸史。在痊癒之前，請避免和他人有親密接觸，也不要共用毛巾與床單。兩劑疫苗，完整保護。詳情請撥 1922。",
+  "youtubeId": null,
+  "videoUrl": "https://www.youtube.com/user/taiwancdc",
+  "poster": "/img/media/mpox-vaccine.svg"
+}

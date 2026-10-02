@@ -1,0 +1,96 @@
+{
+  "id": "topic.prep",
+  "type": "topic",
+  "title": "PrEP 暴露愛滋病毒前預防性投藥計畫",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2025-06-01",
+  "reviewedAt": "2026-06-05",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.hiv"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-06-05"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-06-05",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "疾管署與合作醫院推動 PrEP 計畫：說明服藥方式、適用對象、服藥前後檢查與補助申請，並列出合作醫院查詢與諮詢管道。",
+  "keywords": [
+    "PrEP",
+    "預防性投藥",
+    "HIV",
+    "合作醫院",
+    "補助"
+  ],
+  "image": "/img/topics/prep.svg",
+  "slug": "prep",
+  "kind": "program",
+  "priority": 4,
+  "introMarkdown": "PrEP 是在可能暴露 HIV **之前**服用抗病毒藥物，正確使用可大幅降低經性行為感染的風險。\n\n**誰適合**：近期有無套性行為、伴侶為未穩定治療之感染者、曾罹患性傳染病或曾使用 PEP 者，可與 PrEP 合作醫院醫師討論。\n\n**怎麼開始**：預約合作醫院 → 抽血確認 HIV 陰性、腎功能與 B 型肝炎 → 醫師評估每日或事件型服藥 → 每 3 個月回診追蹤。\n\n**補助**：符合計畫條件者可獲藥費或檢驗費補助，名額與條件以當年度公告為準（示意）。",
+  "links": [
+    {
+      "label": "影片：三分鐘認識 PrEP",
+      "href": "/media/prep-intro/"
+    },
+    {
+      "label": "HIV 疾病介紹",
+      "href": "/diseases/hiv/"
+    },
+    {
+      "label": "暴露後預防性投藥 PEP",
+      "href": "/faq/hiv-pep/"
+    },
+    {
+      "label": "PrEP 合作醫院名單（現行官網）",
+      "href": "https://www.cdc.gov.tw/Category/Page/placeholder-prep-hospitals",
+      "external": true,
+      "status": "unchecked",
+      "note": "現行官網路徑佔位"
+    }
+  ],
+  "contentIds": [
+    "media.prep-intro",
+    "disease.hiv",
+    "faq.hiv-pep"
+  ],
+  "i18n": {
+    "en": {
+      "title": "PrEP programme",
+      "summary": "How to start pre-exposure prophylaxis with partner hospitals: eligibility, dosing options, tests before and during PrEP, and subsidies."
+    }
+  }
+}

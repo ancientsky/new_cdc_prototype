@@ -31,7 +31,7 @@ export function layout(ctx, { title, description, body, scripts = [], adminKey =
     </label>
   </div>
 </div></header>
-<nav class="adm-nav" aria-label="後台導覽"><ul>${NAV.map((n) => html`<li><a href="${url(n.href, { noLang: true })}" ${n.key === adminKey ? raw('aria-current="page"') : ''}>${n.label}${n.count ? html`<span class="adm-count" data-count="${n.count}" aria-label="${c[n.count]} 項">${c[n.count]}</span>` : ''}</a></li>`)}</ul></nav>
+<nav class="adm-nav" aria-label="後台導覽"><ul>${NAV.map((n) => html`<li><a href="${url(n.href, { noLang: true })}" ${n.key === adminKey ? raw('aria-current="page"') : ''}>${n.label}${n.count && (c[n.count] > 0 || ['review', 'due', 'todos'].includes(n.count)) ? html`<span class="adm-count" data-count="${n.count}" aria-label="${c[n.count]} 項">${c[n.count]}</span>` : ''}</a></li>`)}</ul></nav>
 <div class="adm-demo" role="note">示範原型：此後台不連接任何正式系統；所有操作只存在你的瀏覽器（localStorage），正式環境一律走 Git Pull Request。</div>
 <main id="main" class="adm-main" tabindex="-1">${raw(String(body))}</main>
 <footer class="adm-foot"><a href="${url('/', { noLang: true })}">回前台首頁</a><a href="${url('/v1/catalog.json', { noLang: true })}">目錄 API（/v1/catalog.json）</a><a href="${url('/guide/', { noLang: true })}">使用說明</a><span>建置日 ${site.today}</span></footer>

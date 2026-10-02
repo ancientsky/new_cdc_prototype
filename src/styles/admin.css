@@ -200,3 +200,27 @@ body.adm { background: var(--paper); color: var(--ink); min-height: 100vh; displ
 .adm-search-results li button:hover, .adm-search-results li button:focus-visible { background: var(--green-50); outline: none; box-shadow: inset 3px 0 0 var(--green-700); }
 .adm-details > summary { cursor: pointer; font-weight: 700; color: var(--green-700); }
 @media print { .adm-top, .adm-nav, .adm-foot, .adm-actions { display: none; } }
+
+/* ───── 第二輪（E2）：新型別表單、公告／影音／連結頁、儀表板小卡 ───── */
+.adm-field--wide { grid-column: 1 / -1; }
+.adm-field textarea.adm-ta-sm { min-height: 96px; }
+.adm-req { color: var(--status-peak); font-weight: 700; }
+.adm-minicard { background: var(--white); border: 1px solid var(--line); border-top: 4px solid var(--status-declining); border-radius: var(--radius); padding: var(--sp-3) var(--sp-4); }
+.adm-minicard h3 { margin: 0 0 var(--sp-2); font-size: var(--fs-md); display: flex; justify-content: space-between; align-items: baseline; gap: var(--sp-2); flex-wrap: wrap; }
+.adm-minicard h3 a { font-size: var(--fs-xs); font-weight: 400; }
+.adm-minicard dl { display: grid; grid-template-columns: 1fr auto; gap: 3px var(--sp-3); margin: 0; font-size: var(--fs-sm); }
+.adm-minicard dt { color: var(--ink-2); }
+.adm-minicard dd { margin: 0; text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+.adm-minicard--warn { border-top-color: var(--status-rising); }
+.adm-minicard--bad { border-top-color: var(--status-peak); }
+.adm-minicard--ok { border-top-color: var(--status-stable); }
+.adm-minicard p { margin: var(--sp-2) 0 0; font-size: var(--fs-xs); color: var(--ink-3); }
+.adm-tick { font-weight: 700; white-space: nowrap; }
+.adm-tick--ok { color: var(--status-stable); }
+.adm-tick--no { color: var(--status-peak); }
+.adm-linkcounts { display: inline-flex; gap: 4px; flex-wrap: wrap; }
+.adm-desc-out { margin-top: var(--sp-3); }
+.adm-sop-box { background: var(--green-50); border-left: 4px solid var(--green-600); padding: var(--sp-3) var(--sp-4); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: var(--fs-sm); }
+.adm-sop-box ol, .adm-sop-box ul { margin: var(--sp-2) 0 0; padding-left: 1.4em; }
+.adm-sop-box li { margin-bottom: 4px; }
+.adm-statrow { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: var(--sp-3); margin-bottom: var(--sp-4); }

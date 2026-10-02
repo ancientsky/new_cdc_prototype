@@ -1,0 +1,91 @@
+{
+  "id": "publication.bulletin-42-14",
+  "type": "publication",
+  "title": "疫情報導 第 42 卷第 14 期",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2026-07-28",
+  "reviewedAt": "2026-07-28",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "professional",
+    "public"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis",
+    "disease.chikungunya"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "none"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "本期收錄 2 篇：結核病都治計畫完治率之區域差異分析等。",
+  "keywords": [
+    "疫情報導",
+    "第 42 卷",
+    "流行病學",
+    "慢性傳染病組",
+    "南區管制中心"
+  ],
+  "note": "卷期與篇目為示意；ISSN 與 PDF 連結待出版單位確認",
+  "pubType": "bulletin",
+  "series": "疫情報導",
+  "seriesEn": "Taiwan Epidemiology Bulletin",
+  "volume": 42,
+  "issue": 14,
+  "issn": "1680-5739",
+  "authors": [
+    "疾病管制署"
+  ],
+  "pdfUrl": "https://www.cdc.gov.tw/File/Get/placeholder-teb-42-14",
+  "abstractMarkdown": "《疫情報導》為疾管署發行之同儕審查期刊，每月出刊 2 期，刊載疫情調查、監測分析與防治政策。本期（第 42 卷第 14 期，2026-07-28 出刊）收錄：\n\n1. 結核病都治計畫完治率之區域差異分析\n2. 屈公病境外移入病例臨床表現回顧",
+  "articles": [
+    {
+      "title": "結核病都治計畫完治率之區域差異分析",
+      "authors": [
+        "慢性傳染病組"
+      ],
+      "pages": "1-8",
+      "diseases": [
+        "disease.tuberculosis"
+      ]
+    },
+    {
+      "title": "屈公病境外移入病例臨床表現回顧",
+      "authors": [
+        "南區管制中心"
+      ],
+      "pages": "9-16",
+      "diseases": [
+        "disease.chikungunya"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,136 @@
+{
+  "id": "service.notifiable-disease-report",
+  "type": "service",
+  "title": "法定傳染病通報（醫師與醫療機構）",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2024-01-01",
+  "reviewedAt": "2026-09-01",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-01",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "醫師診治疑似法定傳染病病人，應依各類別時限（第一、二類 24 小時、第三類一週等）於傳染病通報系統（NIDRS）通報，並依規定採檢送驗。",
+  "keywords": [
+    "法定傳染病",
+    "通報",
+    "NIDRS",
+    "通報時限",
+    "傳染病防治法第39條"
+  ],
+  "slug": "notifiable-disease-report",
+  "serviceType": "notification",
+  "whoCanApply": [
+    "醫師",
+    "醫療機構",
+    "法醫師",
+    "檢驗機構"
+  ],
+  "introMarkdown": "依《傳染病防治法》第 39 條，醫師診治病人或法醫師檢驗屍體，發現傳染病或疑似傳染病時，應於規定期限內通報當地主管機關。\n\n- **通報時限**：依疾病類別而異，第一類、第二類及部分第三類為 24 小時內；多數第三類為一週內；第四、五類依個別規定。完整時限表由傳染病主檔自動產生，見通報專區（/report/）。\n- **通報管道**：傳染病通報系統（NIDRS）；系統異常時以電話或傳真通報衛生局。\n- **未依規定通報**：依法可處罰鍰。",
+  "requiredDocuments": [
+    "病人基本資料",
+    "臨床症狀與發病日",
+    "檢驗結果（如有）",
+    "旅遊史與接觸史"
+  ],
+  "steps": [
+    {
+      "title": "判斷是否符合通報定義",
+      "text": "參考各疾病病例定義。",
+      "who": "醫師",
+      "days": 0
+    },
+    {
+      "title": "登入 NIDRS 通報",
+      "text": "以醫事人員憑證登入，依時限完成通報。",
+      "who": "醫師／感管人員",
+      "days": 0
+    },
+    {
+      "title": "採檢送驗",
+      "text": "依檢驗專區規格採檢並列印送驗單。",
+      "who": "醫療機構",
+      "days": 0
+    },
+    {
+      "title": "衛生局疫調",
+      "text": "衛生局接獲通報後進行疫情調查與防治。",
+      "who": "地方衛生局",
+      "days": 1
+    },
+    {
+      "title": "研判與回覆",
+      "text": "依檢驗與疫調結果研判，結果登錄系統。",
+      "who": "疫情中心／區管中心",
+      "days": 3
+    }
+  ],
+  "slaDays": 1,
+  "fee": "免費",
+  "legalBasis": [
+    "傳染病防治法第 39 條",
+    "傳染病防治法第 64 條（罰則）",
+    "傳染病分類及第四類與第五類傳染病之防治措施"
+  ],
+  "forms": [
+    {
+      "label": "傳染病個案報告單（系統異常備用）",
+      "href": "https://www.cdc.gov.tw/File/Get/placeholder-form-notifiable-report-paper",
+      "format": "PDF",
+      "machineReadable": false
+    }
+  ],
+  "applyUrl": "https://nidrs.cdc.gov.tw/",
+  "contact": "疾病管制署疫情中心（總機 02-2395-9825）；一般諮詢請撥防疫專線 1922（國外 +886-800-001922）；通報系統操作問題洽系統客服",
+  "faq": [
+    {
+      "q": "只是疑似，也要通報嗎？",
+      "a": "要。法定傳染病以「疑似」即應通報，由檢驗與疫調研判。"
+    },
+    {
+      "q": "NIDRS 當機怎麼辦？",
+      "a": "以電話或傳真通報轄區衛生局，系統恢復後補登。"
+    }
+  ],
+  "i18n": {
+    "en": {
+      "title": "Notifiable disease reporting (physicians and facilities)",
+      "summary": "Physicians must report suspected notifiable diseases via NIDRS within category-specific deadlines (24 hours for categories 1–2, one week for most category 3)."
+    }
+  }
+}

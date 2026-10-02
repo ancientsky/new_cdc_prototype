@@ -1,0 +1,137 @@
+{
+  "id": "service.vaccine-fund-donation",
+  "type": "service",
+  "title": "疫苗基金捐款",
+  "owner": "unit.vaccine",
+  "publishedAt": "2024-01-01",
+  "reviewedAt": "2026-07-01",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-07-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-07-01",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "個人或企業可透過郵政劃撥、銀行匯款或臨櫃方式捐款至疫苗基金，專款採購公費疫苗；收據可作為綜合所得稅列舉扣除憑證。",
+  "keywords": [
+    "疫苗基金",
+    "捐款",
+    "收據",
+    "抵稅",
+    "郵政劃撥"
+  ],
+  "note": "劃撥帳號與銀行帳號原型不放，正式上線依主計室公告",
+  "slug": "vaccine-fund-donation",
+  "serviceType": "donation",
+  "whoCanApply": [
+    "民眾",
+    "企業與團體"
+  ],
+  "introMarkdown": "**疫苗基金**依《傳染病防治法》設置，捐款專款用於公費疫苗採購與新疫苗導入。捐款方式：\n\n| 方式 | 說明 |\n| --- | --- |\n| 郵政劃撥 | 劃撥單通訊欄註明「疫苗基金捐款」與收據抬頭（帳號示意，以公告為準） |\n| 銀行匯款 | 匯款後請來電或來信告知匯款帳號末五碼與收據資料 |\n| 臨櫃捐款 | 至疾管署（臺北市中正區林森南路 6 號）出納辦理 |\n\n**收據**：於款項入帳後約 2 週內寄發；可依《所得稅法》第 17 條列舉扣除。如需匿名或不寄收據請註明。",
+  "requiredDocuments": [
+    "收據抬頭（個人姓名或公司名稱）",
+    "身分證字號或統一編號（需抵稅者，供報稅資料上傳）",
+    "收據寄送地址"
+  ],
+  "steps": [
+    {
+      "title": "選擇捐款方式",
+      "text": "郵政劃撥、銀行匯款或臨櫃。",
+      "who": "捐款人",
+      "days": 0
+    },
+    {
+      "title": "完成捐款並提供收據資料",
+      "text": "匯款者請告知末五碼。",
+      "who": "捐款人",
+      "days": 0
+    },
+    {
+      "title": "入帳確認",
+      "text": "核對款項與捐款人資料。",
+      "who": "主計室",
+      "days": 7
+    },
+    {
+      "title": "開立並寄送收據",
+      "text": "寄送正式收據並上傳財政部報稅資料（示意）。",
+      "who": "預防接種組",
+      "days": 7
+    }
+  ],
+  "slaDays": 14,
+  "fee": "免手續費（劃撥／匯款手續費由捐款人自行負擔）",
+  "legalBasis": [
+    "傳染病防治法第 27 條",
+    "所得稅法第 17 條",
+    "疫苗基金收支保管及運用辦法"
+  ],
+  "forms": [
+    {
+      "label": "疫苗基金捐款單",
+      "href": "https://www.cdc.gov.tw/File/Get/placeholder-form-vaccine-fund-donation",
+      "format": "PDF",
+      "machineReadable": false
+    },
+    {
+      "label": "捐款收據資料更正申請",
+      "href": "https://www.cdc.gov.tw/File/Get/placeholder-form-vaccine-fund-receipt-fix",
+      "format": "PDF",
+      "machineReadable": false
+    }
+  ],
+  "contact": "疾病管制署預防接種組（總機 02-2395-9825）；一般諮詢請撥防疫專線 1922（國外 +886-800-001922）",
+  "faq": [
+    {
+      "q": "可以指定捐給某一種疫苗嗎？",
+      "a": "基金依年度計畫統籌運用，無法指定單一疫苗，但收支與運用情形均公開。"
+    },
+    {
+      "q": "收據遺失可以補發嗎？",
+      "a": "可以申請補發證明，請提供捐款日期、金額與收據抬頭。"
+    },
+    {
+      "q": "捐款資料會公開嗎？",
+      "a": "僅公開捐款總額與筆數；個人姓名需經同意才會刊登於感謝名單。"
+    }
+  ],
+  "i18n": {
+    "en": {
+      "title": "Donate to the Vaccine Fund",
+      "summary": "Individuals and companies can donate by postal transfer, bank transfer or in person; donations fund publicly funded vaccines and receipts are tax-deductible."
+    }
+  }
+}

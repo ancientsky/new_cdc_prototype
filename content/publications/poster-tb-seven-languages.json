@@ -1,0 +1,80 @@
+{
+  "id": "publication.poster-tb-seven-languages",
+  "type": "publication",
+  "title": "咳嗽兩週要就醫：結核病七語衛教海報",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2026-03-20",
+  "reviewedAt": "2026-03-20",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-03-20"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-03-20",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "reviewed",
+      "reviewedAt": "2026-03-20",
+      "reviewer": "越南語審核人（約用通譯）"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "結核病衛教海報，提供繁中、英、日、越、印、泰、菲七種語言，提醒咳嗽兩週就醫、治療免費與都治計畫，可下載張貼於移工宿舍與社區。",
+  "keywords": [
+    "結核病",
+    "海報",
+    "七語",
+    "移工",
+    "多語衛教"
+  ],
+  "pubType": "poster",
+  "series": "多語衛教海報",
+  "seriesEn": "Multilingual health education posters",
+  "edition": "2026 年版",
+  "authors": [
+    "慢性傳染病組"
+  ],
+  "pdfUrl": "https://www.cdc.gov.tw/File/Get/placeholder-poster-tb-7lang",
+  "abstractMarkdown": "A3 直式海報，七種語言各一版（繁體中文、English、日本語、Tiếng Việt、Bahasa Indonesia、ไทย、Tagalog）。重點：咳嗽超過兩週、有痰、體重減輕、夜間盜汗請就醫；結核病可治癒、治療免費；都治關懷員陪伴服藥。海報圖片不承載唯一資訊，文字內容另提供純文字版本。",
+  "i18n": {
+    "en": {
+      "title": "Cough for two weeks? See a doctor: TB poster in seven languages",
+      "summary": "TB awareness poster in seven languages for dormitories and communities: seek care for a two-week cough; treatment is free and supported."
+    },
+    "vi": {
+      "title": "Ho hai tuần hãy đi khám: áp phích bệnh lao bằng bảy ngôn ngữ",
+      "summary": "Áp phích bệnh lao bằng bảy ngôn ngữ: ho trên hai tuần hãy đi khám; điều trị miễn phí và có người hỗ trợ uống thuốc."
+    }
+  }
+}

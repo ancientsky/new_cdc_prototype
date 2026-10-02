@@ -11,6 +11,16 @@
 //  R5 翻譯：languages[lang].sourceHash（或 i18n[lang].sourceHash）≠ item.sourceHash ⇒ 譯文過期；一級內容只渲染 reviewed。
 //  R6 資料集：lastUpdated 超過 updateFrequency 容許天數 ⇒ 待辦；license 非標準 ⇒ 待辦。
 //  R7 AI 暫停：governance/ai-status.json paused ⇒ site.gov.pausedAI。
+// 第二輪（ARCHITECTURE.md 第 11 節）：
+//  R8 公告截止：news.deadlineAt < today ⇒ gov.closed、lifecycle closed「已截止」（不退白名單、不產生待辦）；7 日內 ⇒ gov.closingSoon。
+//  R9 影音過時：media.producedAt 早於 basedOn 現行版 effectiveAt ⇒ 沿用 R3（加註、退出白名單），註記改「本影片依…製作」，
+//     gov.mediaOutdated；待辦改為 media-outdated（high，更新說明欄或下架）。逐字稿 < 50 字 ⇒ media-no-transcript（medium）。
+//  R10 專區到期：topic.endAt < today ⇒ gov.ended、lifecycle ended「已結束」（不退白名單；首頁列表由模板以 gov.ended 過濾）。
+//  R11 外部連結健康：topic.links[]、service.forms[]／applyUrl、news.applyUrl、media.videoUrl、publication.pdfUrl、document.pdfUrl
+//      → site.gov.externalLinks[]；status 由 scripts/fetch-data.mjs --check-links 寫回（陣列元素寫在元素上；單一欄位寫在
+//      item.linkChecks[field]）。broken ⇒ link-broken 待辦（medium）；未檢查標 unchecked、不產生待辦。
+//  R12 檢驗一致性：labtest.sendWithinHours > 主檔 notifyWithinHours ⇒ labtest-inconsistent（low）。
+//  R13 通報時限表：site.gov.notifyTable 由 master/diseases.json＋labtests＋疾病頁 professional.caseDefinitionDoc 推導。
 // annotations[]：{ kind, level, text, href（目標內容 id，沿用骨架語意）, targetId, path（目標前台路徑） }
 //  另：白名單型別政策（allowedTypes 民眾＋專業、allowedTypesPro 只進專業）、失效版仍被引用、態勢層逾期。
 import { createHash } from 'node:crypto';
@@ -40,6 +50,8 @@ export const LIFECYCLE_LABELS = {
   draft: '草稿',
   archived: '封存',
   scheduled: '尚未生效',
+  closed: '已截止',
+  ended: '已結束',
 };
 
 export const TODO_KIND_LABELS = {
@@ -51,6 +63,10 @@ export const TODO_KIND_LABELS = {
   'reverse-audit': '反向稽核命中',
   'superseded-still-linked': '仍連結失效版本',
   'situation-overdue': '態勢層逾期未更新',
+  'media-outdated': '影音依據已修訂',
+  'media-no-transcript': '影音缺逐字稿',
+  'link-broken': '外部連結失效',
+  'labtest-inconsistent': '檢驗與通報時限不一致',
 };
 
 export const SEVERITY_RANK = { high: 0, medium: 1, low: 2 };
@@ -64,8 +80,62 @@ export const TRANSLATION_DUE_DAYS = 14;
 /** 審閱到期提醒（30 日內黃） */
 export const DUE_SOON_DAYS = 30;
 /** 對外內容頁（KPI「有更新日與權責」分母） */
-export const PUBLIC_PAGE_TYPES = new Set(['disease', 'vaccine', 'faq', 'clarification', 'news', 'letter', 'document', 'dataset', 'page']);
+export const PUBLIC_PAGE_TYPES = new Set(['disease', 'vaccine', 'faq', 'clarification', 'news', 'letter', 'document', 'dataset', 'page', 'media', 'topic', 'service', 'publication', 'labtest', 'research']);
 const NEWS_TYPES = new Set(['news', 'letter']);
+/** 機關公告（/notices/）：news 中的人才招募、採購公告、其他訊息 */
+export const NOTICE_TYPES = new Set(['recruit', 'procurement', 'other']);
+/** 公告截止前提醒天數 */
+export const CLOSING_SOON_DAYS = 7;
+/** 已截止公告超過此天數仍 published ⇒ KPI「已截止未封存」 */
+export const CLOSED_ARCHIVE_DAYS = 90;
+/** 影音逐字稿最少字數 */
+export const MIN_TRANSCRIPT_CHARS = 50;
+/** 外部連結失效 → 修復期限 */
+export const LINK_FIX_DAYS = 7;
+/** 法定傳染病類別中文 */
+export const LEGAL_CATEGORY_LABELS = { 1: '第一類', 2: '第二類', 3: '第三類', 4: '第四類', 5: '第五類' };
+/** 通報時限（小時）→ 中文 */
+export function notifyLabel(hours) {
+  if (hours == null) return null;
+  if (hours === 24) return '24 小時內';
+  if (hours === 168) return '一週內';
+  if (hours === 720) return '一個月內';
+  if (hours % 24 === 0 && hours > 24) return `${hours / 24} 日內`;
+  return `${hours} 小時內`;
+}
+/** 外部連結欄位定義：type → [{ field, list? }]（legacyUrls 不檢） */
+export const EXTERNAL_LINK_FIELDS = {
+  topic: [{ field: 'links', list: true }],
+  service: [{ field: 'forms', list: true }, { field: 'applyUrl' }],
+  news: [{ field: 'applyUrl' }],
+  letter: [{ field: 'applyUrl' }],
+  media: [{ field: 'videoUrl' }],
+  publication: [{ field: 'pdfUrl' }],
+  document: [{ field: 'pdfUrl' }],
+};
+/** basedOnVersionLabel 可能寫成畫面上的整句「依 114.04.16 建議製作」→ 取中間版本字樣 */
+export function versionLabelOf(media) {
+  const raw = String(media.basedOnVersionLabel ?? '').trim().replace(/^依\s*/, '').replace(/\s*製作$/, '').trim();
+  return raw || media.producedAt;
+}
+const isHttp = (u) => typeof u === 'string' && /^https?:\/\//i.test(u);
+
+/** 一筆內容的外部連結：[{ url, field, label, lastCheckedAt, status }]（status 缺 ⇒ unchecked） */
+export function externalLinksOf(item) {
+  const out = [];
+  for (const { field, list } of EXTERNAL_LINK_FIELDS[item.type] ?? []) {
+    if (list) {
+      (item[field] ?? []).forEach((l, i) => {
+        if (!l || !isHttp(l.href)) return; // 站內連結不檢
+        out.push({ url: l.href, field: `${field}[${i}]`, label: l.label ?? null, lastCheckedAt: l.lastCheckedAt ?? null, status: l.status ?? 'unchecked' });
+      });
+    } else if (isHttp(item[field])) {
+      const chk = item.linkChecks?.[field] ?? {};
+      out.push({ url: item[field], field, label: null, lastCheckedAt: chk.lastCheckedAt ?? null, status: chk.status ?? 'unchecked' });
+    }
+  }
+  return out;
+}
 
 // ───────────────────────── 路徑 helper（與 4.1 路由一致） ─────────────────────────
 
@@ -200,6 +270,35 @@ export function applyGovernance(site) {
     };
     item.gov = gov;
 
+    // R8 公告截止（news／letter 有 deadlineAt）
+    if (NEWS_TYPES.has(item.type)) {
+      gov.notice = NOTICE_TYPES.has(item.newsType);
+      if (item.deadlineAt) {
+        gov.deadlineAt = item.deadlineAt;
+        gov.daysToDeadline = daysBetween(today, item.deadlineAt);
+        gov.closed = item.deadlineAt < today;
+        gov.closingSoon = !gov.closed && gov.daysToDeadline <= CLOSING_SOON_DAYS;
+        gov.closedDays = gov.closed ? daysBetween(item.deadlineAt, today) : 0;
+        if (gov.closed && published) gov.annotations.push({ kind: 'closed', level: 'info', text: `本公告已於 ${item.deadlineAt} 截止，僅供查閱。`, href: null, path: null, deadlineAt: item.deadlineAt });
+      } else { gov.closed = false; gov.closingSoon = false; gov.deadlineAt = null; gov.daysToDeadline = null; }
+    }
+    // R10 專區期間
+    if (item.type === 'topic') {
+      gov.upcoming = !!item.startAt && item.startAt > today;
+      gov.ended = !!item.endAt && item.endAt < today;
+      if (gov.ended && published) gov.annotations.push({ kind: 'ended', level: 'info', text: `本專區已於 ${item.endAt} 結束，保留供查閱。`, href: null, path: null, endAt: item.endAt });
+    }
+    // 宣導 Banner 檔期
+    if (item.type === 'banner') {
+      gov.campaignStatus = item.startAt && item.startAt > today ? 'upcoming' : item.endAt && item.endAt < today ? 'ended' : 'active';
+    }
+    // R9 影音：逐字稿
+    if (item.type === 'media') {
+      gov.transcriptChars = (item.transcriptMarkdown ?? '').trim().length;
+      gov.hasTranscript = gov.transcriptChars >= MIN_TRANSCRIPT_CHARS;
+      gov.mediaOutdated = false;
+    }
+
     // R1 審閱週期
     if (item.reviewPeriodMonths > 0 && item.reviewedAt) {
       gov.nextReviewAt = addMonths(item.reviewedAt, item.reviewPeriodMonths);
@@ -234,24 +333,31 @@ export function applyGovernance(site) {
 
     // R3 basedOn 連動
     const isNews = NEWS_TYPES.has(item.type);
+    const isMedia = item.type === 'media';
+    // 影音以製作日比對（畫面內容在製作時就固定了）；其他以發布日比對
+    const refDate = isMedia ? item.producedAt ?? item.publishedAt : item.publishedAt;
     for (const ref of item.basedOn ?? []) {
       const { doc } = resolveBasis(ref);
       if (!doc || doc === item || doc.family === item.family) continue;
-      if (!(doc.effectiveAt > item.publishedAt)) continue;
+      if (!(doc.effectiveAt > refDate)) continue;
       const resolved = item.reviewedAt >= doc.effectiveAt;
       const rev = { basedOn: ref, revisedAt: doc.effectiveAt, currentId: doc.id, currentTitle: doc.title, currentVersion: doc.version ?? null, currentHref: pathOf(doc), dueAt: addDays(doc.effectiveAt, BASIS_REVISION_DAYS), resolved, resolvedAt: resolved ? item.reviewedAt : null };
       gov.basisRevisions.push(rev);
       if (!resolved) gov.stale.push(rev);
-      if (isNews) gov.predatesBasis = true;
+      // 新聞稿與影音：內文／畫面不改，永久加註且不作答案依據
+      if (isNews || isMedia) gov.predatesBasis = true;
     }
     // 去重（同一正本被多個 ref 指到）
     const uniq = (arr) => arr.filter((x, i, a) => a.findIndex((y) => y.currentId === x.currentId) === i);
     gov.basisRevisions = uniq(gov.basisRevisions); gov.stale = uniq(gov.stale);
-    const noteRevs = isNews ? gov.basisRevisions : gov.stale;
+    if (isMedia) gov.mediaOutdated = gov.basisRevisions.length > 0;
+    const noteRevs = isNews || isMedia ? gov.basisRevisions : gov.stale;
     for (const s of noteRevs) {
       gov.annotations.push({
         kind: 'based-on-revised', level: 'warning',
-        text: isNews
+        text: isMedia
+          ? `本影片依 ${versionLabelOf(item)} 製作，所依據的「${s.currentTitle}」已於 ${s.revisedAt} 修訂，請以現行版為準`
+          : isNews
           ? `本${item.newsType === 'letter' || item.type === 'letter' ? '通函' : '新聞稿'}發布於 ${item.publishedAt}，相關建議已於 ${s.revisedAt} 修訂，現行版請見「${s.currentTitle}」。`
           : `本內容發布於 ${item.publishedAt}，所依據的「${s.currentTitle}」已於 ${s.revisedAt} 修訂；權責單位更新前，請以現行版為準。`,
         href: s.currentId, targetId: s.currentId, path: s.currentHref, revisedAt: s.revisedAt, currentTitle: s.currentTitle,
@@ -362,6 +468,8 @@ export function applyGovernance(site) {
       : gov.superseded ? 'superseded'
       : item.status === 'archived' ? 'archived'
       : gov.scheduled ? 'scheduled'
+      : gov.closed ? 'closed'
+      : gov.ended ? 'ended'
       : gov.overdue ? 'overdue'
       : gov.stale.length || gov.predatesBasis ? 'based-on-revised'
       : 'current';
@@ -375,6 +483,11 @@ export function applyGovernance(site) {
     }
     // 待辦：正本修訂連動
     for (const s of gov.stale) {
+      if (item.type === 'media') {
+        addTodo({ id: `media-outdated:${item.id}:${s.currentId}`, kind: 'media-outdated', item, dueAt: s.dueAt, severity: 'high', basisId: s.currentId, revisedAt: s.revisedAt,
+          text: `影音「${item.title}」依 ${versionLabelOf(item)} 製作，所依據的「${s.currentTitle}」已於 ${s.revisedAt} 修訂：前台已自動加註並退出 AI 白名單，請於 ${BASIS_REVISION_DAYS} 日內更新說明欄或下架（重製後更新 producedAt）` });
+        continue;
+      }
       addTodo({ id: `based-on-revised:${item.id}:${s.currentId}`, kind: 'based-on-revised', item, dueAt: s.dueAt, severity: 'high', basisId: s.currentId, revisedAt: s.revisedAt,
         text: NEWS_TYPES.has(item.type)
           ? `「${item.title}」依據的「${s.currentTitle}」已於 ${s.revisedAt} 修訂：前台已自動加註（內文不改），請於 ${BASIS_REVISION_DAYS} 日內確認加註並更新審閱日，必要時發布更新稿`
@@ -387,7 +500,54 @@ export function applyGovernance(site) {
       addTodo({ id: `translation-stale:${item.id}:${lang}`, kind: 'translation-stale', item, lang, dueAt: addDays(item.reviewedAt, TRANSLATION_DUE_DAYS),
         severity: cfg.tier1Types.includes(item.type) ? 'medium' : 'low', text: `「${item.title}」中文已更新，${label}（${lang}）譯文待複核` });
     }
+    // 待辦：影音缺逐字稿
+    if (item.type === 'media' && item.status === 'published' && !gov.hasTranscript) {
+      addTodo({ id: `media-no-transcript:${item.id}`, kind: 'media-no-transcript', item, dueAt: addDays(item.publishedAt > today ? item.publishedAt : item.reviewedAt, BASIS_REVISION_DAYS), severity: 'medium',
+        text: `影音「${item.title}」逐字稿不足 ${MIN_TRANSCRIPT_CHARS} 字（目前 ${gov.transcriptChars} 字）：逐字稿是 AI 唯一可引用的影片內容，也是無障礙必要條件，請補齊` });
+    }
   }
+
+  // ── R11 外部連結健康 ──
+  const externalLinks = [];
+  for (const item of site.all) {
+    if (item.status !== 'published' && item.status !== 'archived') continue;
+    const links = externalLinksOf(item);
+    item.gov.linkHealth = { total: links.length, ok: 0, broken: 0, unchecked: 0 };
+    for (const l of links) {
+      const status = ['ok', 'broken'].includes(l.status) ? l.status : 'unchecked';
+      item.gov.linkHealth[status]++;
+      externalLinks.push({ url: l.url, itemId: item.id, itemType: item.type, itemTitle: item.title, owner: item.owner, ownerName: unitName(item.owner), field: l.field, label: l.label, lastCheckedAt: l.lastCheckedAt, status, path: pathOf(item) });
+      if (status === 'broken' && item.status === 'published' && !item.gov.superseded) {
+        addTodo({ id: `link-broken:${item.id}:${l.field}`, kind: 'link-broken', item, url: l.url, field: l.field, dueAt: addDays(l.lastCheckedAt ?? today, LINK_FIX_DAYS), severity: 'medium',
+          text: `「${item.title}」的外部連結 ${l.field}${l.label ? `「${l.label}」` : ''}（${l.url}）於 ${l.lastCheckedAt ?? '最近一次檢查'} 檢查失敗，請更新網址或移除` });
+      }
+    }
+  }
+
+  // ── R12 檢驗一致性 ──
+  const labtestsByDisease = new Map();
+  for (const lt of site.collections.labtests ?? []) {
+    const master = site.diseaseMasterById.get(lt.disease);
+    const page = site.byId.get(lt.disease);
+    const notify = master?.notifyWithinHours ?? null;
+    const send = lt.sendWithinHours ?? null;
+    lt.gov.labtestCheck = {
+      disease: lt.disease, diseaseName: master?.name ?? lt.disease, notifyWithinHours: notify, sendWithinHours: send,
+      consistent: !(send != null && notify != null && send > notify),
+      diseasePage: page?.type === 'disease' ? page.id : null, diseaseSpecimen: !!page?.professional?.specimen,
+    };
+    if (lt.status === 'published' && !lt.gov.superseded) {
+      if (!labtestsByDisease.has(lt.disease)) labtestsByDisease.set(lt.disease, []);
+      labtestsByDisease.get(lt.disease).push(lt);
+      if (!lt.gov.labtestCheck.consistent) {
+        addTodo({ id: `labtest-inconsistent:${lt.id}`, kind: 'labtest-inconsistent', item: lt, dueAt: addDays(lt.reviewedAt, 30), severity: 'low',
+          text: `檢驗項目「${lt.title}」送驗時限 ${send} 小時，長於「${master?.name ?? lt.disease}」通報時限 ${notify} 小時（${notifyLabel(notify)}），請確認是否一致` });
+      }
+    }
+  }
+
+  // ── R13 通報時限表 ──
+  const notifyTable = buildNotifyTable(site, labtestsByDisease, currentOfFamily);
 
   // ── 失效版本仍被引用 ──
   const supersededDocs = (site.collections.documents ?? []).filter((d) => d.gov.superseded);
@@ -467,6 +627,9 @@ export function applyGovernance(site) {
     reasonLabels: WHITELIST_REASON_LABELS,
     lifecycleLabels: LIFECYCLE_LABELS,
     todoKindLabels: TODO_KIND_LABELS,
+    externalLinks,
+    linkHealth: summarizeLinks(externalLinks),
+    notifyTable,
   };
   site.gov.byOwner = computeByOwner(site);
   site.gov.summary = computeSummary(site);
@@ -487,16 +650,62 @@ export function textOf(item) {
   return parts.filter(Boolean).join('\n');
 }
 
+/** 通報時限表：[{ legalCategory, label, diseases: [{ id, slug, name, nameEn, notifyWithinHours, notifyLabel, hasPage, path, caseDefinitionDoc?, labtestId? }] }] */
+function buildNotifyTable(site, labtestsByDisease, currentOfFamily) {
+  const resolveDoc = (ref) => {
+    if (!ref) return null;
+    const it = site.byId.get(ref);
+    const cur = it?.type === 'document' ? currentOfFamily(it.family ?? it.id) : currentOfFamily(ref);
+    return cur ?? (it?.type === 'document' ? it : null);
+  };
+  const groups = new Map();
+  for (const d of site.master.diseases ?? []) {
+    const cat = d.legalCategory ?? null;
+    if (!groups.has(cat)) groups.set(cat, []);
+    const page = site.byId.get(d.id);
+    const hasPage = page?.type === 'disease' && page.status === 'published';
+    const lts = labtestsByDisease.get(d.id) ?? [];
+    const cdRef = (hasPage ? page.professional?.caseDefinitionDoc : null) ?? lts.find((l) => l.caseDefinitionDoc)?.caseDefinitionDoc ?? null;
+    const cdDoc = resolveDoc(cdRef);
+    const row = {
+      id: d.id, slug: d.slug, name: d.name, nameEn: d.nameEn ?? null, legalName: d.legalName ?? null,
+      notifyWithinHours: d.notifyWithinHours ?? null, notifyLabel: notifyLabel(d.notifyWithinHours),
+      hasPage, path: hasPage ? pathOf(page) : null,
+    };
+    if (cdRef) Object.assign(row, { caseDefinitionDoc: cdRef, caseDefinitionCurrentId: cdDoc?.id ?? null, caseDefinitionPath: cdDoc ? pathOf(cdDoc) : null });
+    if (lts.length) Object.assign(row, { labtestId: lts[0].id, labtestPath: pathOf(lts[0]), labtestIds: lts.map((l) => l.id) });
+    groups.get(cat).push(row);
+  }
+  return [...groups.entries()]
+    .sort(([a], [b]) => (a ?? 99) - (b ?? 99))
+    .map(([cat, diseases]) => ({
+      legalCategory: cat, label: LEGAL_CATEGORY_LABELS[cat] ?? '未分類',
+      diseases: diseases.sort((a, b) => (a.notifyWithinHours ?? 1e9) - (b.notifyWithinHours ?? 1e9) || a.name.localeCompare(b.name, 'zh-Hant')),
+    }));
+}
+
+function summarizeLinks(links) {
+  const by = { ok: 0, broken: 0, unchecked: 0 };
+  for (const l of links) by[l.status]++;
+  const checked = by.ok + by.broken;
+  return { total: links.length, ...by, checked, lastCheckedAt: links.map((l) => l.lastCheckedAt).filter(Boolean).sort().at(-1) ?? null, healthyPct: pct(by.ok, links.length) };
+}
+
 function computeByOwner(site) {
   const map = new Map();
   const row = (id) => {
-    if (!map.has(id)) map.set(id, { unit: id, name: site.unitById.get(id)?.name ?? id, content: 0, published: 0, whitelist: 0, overdue: 0, dueSoon: 0, stale: 0, todos: 0, todosOverdue: 0, todosHigh: 0 });
+    if (!map.has(id)) {
+      const u = site.unitById.get(id);
+      map.set(id, { unit: id, name: u?.name ?? id, nameEn: u?.nameEn ?? null, kind: u?.kind ?? null, content: 0, published: 0, whitelist: 0, overdue: 0, dueSoon: 0, stale: 0, todos: 0, todosOverdue: 0, todosHigh: 0, types: {}, latestReviewedAt: null });
+    }
     return map.get(id);
   };
   for (const u of site.master.units ?? []) row(u.id);
   for (const item of site.all) {
     const r = row(item.owner);
     r.content++;
+    r.types[item.type] = (r.types[item.type] ?? 0) + 1;
+    if (item.reviewedAt && (!r.latestReviewedAt || item.reviewedAt > r.latestReviewedAt)) r.latestReviewedAt = item.reviewedAt;
     if (item.status === 'published') r.published++;
     if (item.gov.whitelist.effective) r.whitelist++;
     if (item.gov.overdue) r.overdue++;
@@ -546,6 +755,17 @@ function computeSummary(site) {
     situationDataDate: site.gov.situation.dataDate,
     situationLagDays: site.gov.situation.lagDays,
     situationOverdue: site.gov.situation.overdue,
+    noticesOpen: all.filter((i) => i.gov.notice && i.status === 'published' && i.gov.deadlineAt && !i.gov.closed).length,
+    noticesClosed: all.filter((i) => i.gov.closed).length,
+    noticesClosingSoon: all.filter((i) => i.gov.closingSoon && i.status === 'published').length,
+    topicsEnded: all.filter((i) => i.gov.ended).length,
+    media: (site.collections.media ?? []).length,
+    mediaOutdated: all.filter((i) => i.gov.mediaOutdated).length,
+    mediaNoTranscript: (site.collections.media ?? []).filter((m) => !m.gov.hasTranscript).length,
+    linksTotal: site.gov.linkHealth.total,
+    linksBroken: site.gov.linkHealth.broken,
+    linksUnchecked: site.gov.linkHealth.unchecked,
+    labtestsInconsistent: (site.collections.labtests ?? []).filter((l) => l.gov.labtestCheck && !l.gov.labtestCheck.consistent).length,
   };
 }
 
@@ -557,7 +777,7 @@ function kpiStatus(k) {
   return k.current >= tgt ? 'ok' : k.current >= tgt * 0.8 ? 'warn' : 'bad';
 }
 
-/** 7.5 品質指標表（13 列）＋白名單參考列。每季報告與後台儀表板共用。 */
+/** 7.5 品質指標表（13 列）＋第二輪四列（影音逐字稿、影音依據現行、外部連結健康、已截止未封存公告）＋白名單參考列。每季報告與後台儀表板共用。 */
 export function computeKpi(site) {
   const cfg = site.config;
   const all = site.all;
@@ -589,6 +809,13 @@ export function computeKpi(site) {
     supersededIndexed = hit.size;
   } else supersededIndexed = superseded.filter((d) => d.gov.whitelist.effective || !d.gov.noindex).length;
   const ver = site.evalReport?.byCategory?.version;
+  // 第二輪：影音、外部連結、公告
+  const media = pub.filter((i) => i.type === 'media');
+  const mediaTr = media.filter((i) => i.gov.hasTranscript);
+  const mediaCur = media.filter((i) => !i.gov.mediaOutdated);
+  const links = site.gov.externalLinks ?? [];
+  const linksOk = links.filter((l) => l.status === 'ok');
+  const closedUnarchived = pub.filter((i) => i.gov.closed && i.gov.closedDays > CLOSED_ARCHIVE_DAYS);
 
   const rows = [
     { key: 'provenance', label: '對外內容頁有更新日與權責單位', current: pct(withProv.length, contentPages.length), numerator: withProv.length, denominator: contentPages.length, target1y: 100, target3y: 100, unit: '%' },
@@ -604,6 +831,10 @@ export function computeKpi(site) {
     { key: 'stale-derived', label: '已修訂正本仍有未加註衍生內容', current: staleItems.length, target1y: 0, target3y: 0, unit: '件', direction: 'lower', items: staleItems.map((i) => i.id) },
     { key: 'superseded-indexed', label: '失效版本仍在搜尋結果', current: supersededIndexed, target1y: 0, target3y: 0, unit: '件', direction: 'lower', note: site.searchIndex ? '以實際答案單元索引檢查' : '失效版自動 noindex、退出白名單，由引擎保證' },
     { key: 'eval-version-accuracy', label: '評估集版本題正確率', current: ver?.total ? pct(ver.passed, ver.total) : null, numerator: ver?.passed ?? null, denominator: ver?.total ?? null, target1y: 100, target3y: 100, unit: '%', note: ver ? '建置時以評估集計算；未達 100% 不得上線' : '待評估集執行（建置後段產生）' },
+    { key: 'media-transcript', label: '影音有逐字稿比例', current: pct(mediaTr.length, media.length), numerator: mediaTr.length, denominator: media.length, target1y: 100, target3y: 100, unit: '%', note: `逐字稿 ≥ ${MIN_TRANSCRIPT_CHARS} 字才計入；逐字稿是 AI 唯一可引用的影片內容` },
+    { key: 'media-current-basis', label: '影音依據正本為現行版比例', current: pct(mediaCur.length, media.length), numerator: mediaCur.length, denominator: media.length, target1y: 100, target3y: 100, unit: '%', note: '製作日早於依據正本現行版生效日者不計入', items: media.filter((i) => i.gov.mediaOutdated).map((i) => i.id) },
+    { key: 'link-health', label: '外部連結已檢查且正常比例', current: links.some((l) => l.status !== 'unchecked') ? pct(linksOk.length, links.length) : null, numerator: linksOk.length, denominator: links.length, target1y: 95, target3y: 99, unit: '%', note: `共 ${links.length} 個外部連結：正常 ${linksOk.length}、失效 ${links.filter((l) => l.status === 'broken').length}、未檢查 ${links.filter((l) => l.status === 'unchecked').length}（由 fetch-data --check-links 檢查${links.some((l) => l.status !== 'unchecked') ? '' : '；尚未執行檢查'}）` },
+    { key: 'notices-closed-unarchived', label: `已截止超過 ${CLOSED_ARCHIVE_DAYS} 天仍上架的公告`, current: closedUnarchived.length, target1y: 0, target3y: 0, unit: '件', direction: 'lower', items: closedUnarchived.map((i) => i.id) },
     { key: 'whitelist', label: 'AI 白名單生效內容數（參考）', current: site.gov.whitelistCount, numerator: site.gov.whitelistCount, denominator: pub.length, target1y: null, target3y: null, unit: '筆', reference: true },
   ];
   for (const r of rows) {

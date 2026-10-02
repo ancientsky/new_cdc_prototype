@@ -1,0 +1,89 @@
+{
+  "id": "research.2026-ltc-respiratory-early-warning",
+  "type": "research",
+  "title": "長照機構呼吸道群聚早期預警模式之建立與驗證",
+  "owner": "unit.infection-control",
+  "publishedAt": "2026-02-01",
+  "reviewedAt": "2026-08-01",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional",
+    "public"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza",
+    "disease.covid-19"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-08-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-01",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "2026 年委託研究（執行中）：結合機構住民每日症狀紀錄與社區類流感監測，建立長照機構呼吸道群聚早期預警模式，並於試辦縣市驗證。",
+  "keywords": [
+    "長照機構",
+    "群聚",
+    "早期預警",
+    "類流感",
+    "委託研究"
+  ],
+  "note": "計畫編號、經費與 IRB 字號為示意；執行單位以機構名稱表示，不列個人姓名",
+  "projectNo": "MOHW115-CDC-C-315-000103",
+  "year": 2026,
+  "projectStatus": "ongoing",
+  "fundingType": "commissioned",
+  "piUnit": "某國立大學公共衛生學院",
+  "budgetNtd": 2800000,
+  "abstractMarkdown": "長照機構呼吸道群聚常於發現時已多人感染。本計畫蒐集試辦機構住民每日體溫與呼吸道症狀，結合社區類流感與流感重症監測資料，建立預警分數，並評估提早介入（採檢、隔離、抗病毒藥物）對群聚規模之影響。",
+  "objectives": [
+    "建立機構症狀監測最小資料集",
+    "開發並驗證群聚預警分數",
+    "評估預警後介入之成本效益"
+  ],
+  "datasets": [
+    "dataset.ili-weekly",
+    "dataset.flu-severe"
+  ],
+  "irb": {
+    "required": true,
+    "approvalNo": "IRB-2025-1234（示意）",
+    "committee": "某國立大學人體研究倫理審查委員會"
+  },
+  "i18n": {
+    "en": {
+      "title": "Early-warning model for respiratory outbreaks in long-term care facilities",
+      "summary": "Ongoing 2026 commissioned study combining daily resident symptoms with community surveillance to build and validate an outbreak early-warning score."
+    }
+  }
+}

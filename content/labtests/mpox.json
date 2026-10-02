@@ -1,0 +1,118 @@
+{
+  "id": "labtest.mpox",
+  "type": "labtest",
+  "title": "M痘檢驗項目與送驗規定",
+  "owner": "unit.lab",
+  "publishedAt": "2025-01-15",
+  "reviewedAt": "2026-07-15",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.mpox"
+  ],
+  "diseases": [
+    "disease.mpox"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-07-15"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-07-15",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "M痘：以拭子用力擦拭 2 處以上皮疹病灶（水泡液或痂皮），置乾燥無菌管或 VTM，冷藏 24 小時內送驗做 PCR 與分支鑑定。",
+  "keywords": [
+    "M痘",
+    "檢體",
+    "送驗",
+    "採檢",
+    "PCR",
+    "分支鑑定（Clade I／II）"
+  ],
+  "note": "檢體量、保存與時效為原型示意，以檢驗及疫苗研製中心「傳染病檢體採檢手冊」現行版為準",
+  "disease": "disease.mpox",
+  "specimens": [
+    {
+      "name": "皮疹病灶拭子",
+      "timing": "皮疹出現時，取 2 處以上不同部位",
+      "container": "乾燥無菌拭子管或 病毒運送培養基（VTM）拭子管",
+      "volume": "每處病灶 1 支",
+      "storage": "2–8°C 冷藏；72 小時以上請 -20°C 以下冷凍",
+      "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+      "tests": [
+        "PCR",
+        "分支鑑定（Clade I／II）"
+      ],
+      "turnaroundDays": 1
+    },
+    {
+      "name": "痂皮",
+      "timing": "病灶結痂時",
+      "container": "無菌螺旋蓋管",
+      "volume": "痂皮 2–3 片",
+      "storage": "2–8°C 冷藏",
+      "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+      "tests": [
+        "PCR"
+      ],
+      "turnaroundDays": 1
+    },
+    {
+      "name": "咽喉拭子",
+      "timing": "無皮疹或早期",
+      "container": "病毒運送培養基（VTM）拭子管",
+      "volume": "拭子 1 支",
+      "storage": "2–8°C 冷藏",
+      "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+      "tests": [
+        "PCR"
+      ],
+      "turnaroundDays": 1
+    }
+  ],
+  "labs": [
+    "cdc-lab",
+    "certified-lab"
+  ],
+  "sendWithinHours": 24,
+  "formDoc": "https://www.cdc.gov.tw/File/Get/placeholder-form-lab-specimen-form",
+  "biosafetyLevel": "BSL-2（病毒培養 BSL-3）",
+  "notesMarkdown": "- 採檢人員穿戴手套、隔離衣、N95 與護目鏡。\n- 有 Clade I 流行地區旅遊史者，送驗單請特別註明以優先分型。",
+  "i18n": {
+    "en": {
+      "title": "Mpox: laboratory tests and specimen requirements",
+      "summary": "Vigorously swab two or more lesions into dry sterile tubes or VTM, refrigerate and deliver within 24 hours for PCR and clade typing."
+    }
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "id": "research.2024-community-dengue-source-reduction",
+  "type": "research",
+  "title": "社區登革熱孳生源清除介入成效評估",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2024-02-01",
+  "reviewedAt": "2026-03-01",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional",
+    "public"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-03-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-03-01",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "2024 年委託研究（已結案）：比較里長帶領志工每週巡查與一般宣導的社區，布氏指數與本土病例數差異，結果顯示定期巡查可顯著降低指數。",
+  "keywords": [
+    "登革熱",
+    "孳生源",
+    "社區介入",
+    "布氏指數",
+    "里長"
+  ],
+  "note": "計畫編號、經費與 IRB 字號為示意；執行單位以機構名稱表示，不列個人姓名",
+  "projectNo": "MOHW113-CDC-C-315-000107",
+  "year": 2024,
+  "projectStatus": "completed",
+  "fundingType": "commissioned",
+  "piUnit": "某國立大學熱帶醫學研究所",
+  "budgetNtd": 2100000,
+  "reportDoc": "https://www.cdc.gov.tw/File/Get/placeholder-report-2024-dengue-source-reduction",
+  "abstractMarkdown": "本研究於南部 24 個里進行群集隨機試驗：介入里由里長帶領志工每週巡查「巡、倒、清、刷」，對照里維持一般宣導。結果顯示介入里之布氏指數平均下降約四成（示意），且噴藥需求減少。成果已作為「里長帶頭巡倒清刷」宣導影片之依據。",
+  "objectives": [
+    "評估社區動員對病媒蚊指數之效果",
+    "估計介入成本",
+    "提出可推廣之社區操作模式"
+  ],
+  "datasets": [
+    "dataset.dengue-local-weekly",
+    "dataset.dengue-daily"
+  ],
+  "irb": {
+    "required": true,
+    "approvalNo": "HREC-113-001（示意）",
+    "committee": "受託機構人類研究倫理審查委員會"
+  },
+  "i18n": {
+    "en": {
+      "title": "Effectiveness of community-led dengue source reduction",
+      "summary": "Completed 2024 commissioned trial: weekly inspections led by village chiefs significantly reduced Breteau index compared with routine campaigns."
+    }
+  }
+}

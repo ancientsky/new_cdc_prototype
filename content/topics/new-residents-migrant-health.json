@@ -1,0 +1,119 @@
+{
+  "id": "topic.new-residents-migrant-health",
+  "type": "topic",
+  "title": "新住民與移工健康：七語防疫資訊",
+  "owner": "unit.pr",
+  "publishedAt": "2025-09-01",
+  "reviewedAt": "2026-08-15",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms",
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis",
+    "disease.dengue",
+    "disease.measles"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-08-15"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-15",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-15",
+      "reviewer": "越南語審核人（約用通譯）"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "彙整中、英、日、越、印、泰、菲七語的防疫資訊：移工健康檢查、結核病、登革熱、疫苗接種與 1922 多語服務，供新住民、移工、雇主與仲介使用。",
+  "keywords": [
+    "新住民",
+    "移工",
+    "多語",
+    "越南語",
+    "印尼語",
+    "泰語",
+    "1922"
+  ],
+  "image": "/img/topics/new-residents-migrant-health.svg",
+  "slug": "new-residents-migrant-health",
+  "kind": "resource-hub",
+  "priority": 5,
+  "introMarkdown": "本專區提供**七種語言**（繁體中文、English、日本語、Tiếng Việt、Bahasa Indonesia、ไทย、Tagalog）的防疫資訊與衛教素材。\n\n- **移工健康檢查**：入境後 3 個工作日內及聘僱期間定期檢查。\n- **結核病**：咳嗽超過兩週請就醫，治療免費。\n- **疫苗**：新住民子女與成人可依身分接種公費疫苗。\n- **1922 防疫專線**：提供越南語、印尼語、泰語、英語服務（服務時段以公告為準）。\n\n各語版本的審核狀態標示於每頁語言選單；機器翻譯版本會明確標示。",
+  "links": [
+    {
+      "label": "影片：移工健康檢查（越南語字幕）",
+      "href": "/media/migrant-worker-health-check/"
+    },
+    {
+      "label": "結核病：咳嗽兩週要就醫",
+      "href": "/faq/tb-cough-two-weeks/"
+    },
+    {
+      "label": "Vietnamese / Tiếng Việt",
+      "href": "/vi/"
+    },
+    {
+      "label": "Bahasa Indonesia",
+      "href": "/id/"
+    },
+    {
+      "label": "勞動部勞動力發展署 1955 專線",
+      "href": "https://www.wda.gov.tw/",
+      "external": true,
+      "status": "unchecked",
+      "note": "網址待確認"
+    },
+    {
+      "label": "內政部移民署新住民資訊",
+      "href": "https://www.immigration.gov.tw/",
+      "external": true,
+      "status": "unchecked",
+      "note": "網址待確認"
+    }
+  ],
+  "contentIds": [
+    "media.migrant-worker-health-check",
+    "faq.tb-cough-two-weeks",
+    "disease.tuberculosis",
+    "publication.poster-tb-seven-languages"
+  ],
+  "i18n": {
+    "en": {
+      "title": "Health for new residents and migrant workers: information in seven languages",
+      "summary": "Disease prevention information in seven languages: migrant worker health checks, TB, dengue, vaccines and the multilingual 1922 hotline."
+    },
+    "vi": {
+      "title": "Sức khỏe cho tân di dân và lao động nhập cư: thông tin bằng bảy ngôn ngữ",
+      "summary": "Thông tin phòng dịch bằng bảy ngôn ngữ: khám sức khỏe lao động, bệnh lao, sốt xuất huyết, tiêm chủng và đường dây 1922 đa ngôn ngữ."
+    }
+  }
+}

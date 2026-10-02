@@ -1,0 +1,108 @@
+{
+  "id": "labtest.rabies",
+  "type": "labtest",
+  "title": "狂犬病檢驗項目與送驗規定",
+  "owner": "unit.lab",
+  "publishedAt": "2025-01-15",
+  "reviewedAt": "2026-07-15",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.rabies"
+  ],
+  "diseases": [
+    "disease.rabies"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-07-15"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "none"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "狂犬病（人類疑似病例）：唾液、頸背部含毛囊皮膚切片與腦脊髓液，冷凍或冷藏 24 小時內送疾管署，做 RT-PCR、抗原與抗體檢驗。",
+  "keywords": [
+    "狂犬病",
+    "檢體",
+    "送驗",
+    "採檢",
+    "RT-PCR"
+  ],
+  "note": "檢體量、保存與時效為原型示意，以檢驗及疫苗研製中心「傳染病檢體採檢手冊」現行版為準",
+  "disease": "disease.rabies",
+  "specimens": [
+    {
+      "name": "唾液",
+      "timing": "每 3–6 小時採 1 次，共 3 次",
+      "container": "無菌螺旋蓋管",
+      "volume": "0.5–1 mL",
+      "storage": "-20°C 以下冷凍",
+      "transport": "乾冰或冷凍運送",
+      "tests": [
+        "RT-PCR"
+      ],
+      "turnaroundDays": 2
+    },
+    {
+      "name": "頸背部皮膚切片（含毛囊）",
+      "timing": "臨床疑似時",
+      "container": "無菌螺旋蓋管（加少量生理食鹽水）",
+      "volume": "直徑 5–6 mm",
+      "storage": "-20°C 以下冷凍",
+      "transport": "乾冰或冷凍運送",
+      "tests": [
+        "RT-PCR",
+        "免疫螢光抗原"
+      ],
+      "turnaroundDays": 2
+    },
+    {
+      "name": "腦脊髓液與血清",
+      "timing": "臨床疑似時",
+      "container": "無菌螺旋蓋管／血清分離管",
+      "volume": "腦脊髓液 1 mL、血清 2 mL",
+      "storage": "2–8°C 冷藏",
+      "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+      "tests": [
+        "中和抗體"
+      ],
+      "turnaroundDays": 3
+    }
+  ],
+  "labs": [
+    "cdc-lab"
+  ],
+  "sendWithinHours": 24,
+  "formDoc": "https://www.cdc.gov.tw/File/Get/placeholder-form-lab-specimen-form",
+  "biosafetyLevel": "BSL-3",
+  "notesMarkdown": "- 第一類法定傳染病，24 小時內通報並聯繫區管中心安排送驗。\n- 動物檢體（咬人動物）依農業部動物防疫機關規定送驗。\n- 暴露後預防接種不需等待檢驗結果。"
+}

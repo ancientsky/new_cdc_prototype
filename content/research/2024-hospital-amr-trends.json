@@ -1,0 +1,86 @@
+{
+  "id": "research.2024-hospital-amr-trends",
+  "type": "research",
+  "title": "醫院抗藥性細菌監測趨勢分析（2015–2024）",
+  "owner": "unit.infection-control",
+  "publishedAt": "2024-01-15",
+  "reviewedAt": "2026-09-10",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional",
+    "public"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-10"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-10",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "自行研究（成果已發表）：分析 2015–2024 年醫院抗藥性細菌監測資料，描述碳青黴烯類抗藥腸道菌等重要抗藥菌比率趨勢，摘要刊於疫情報導。",
+  "keywords": [
+    "抗藥性",
+    "AMR",
+    "醫院監測",
+    "CRE",
+    "感染管制"
+  ],
+  "note": "計畫編號、經費與 IRB 字號為示意；執行單位以機構名稱表示，不列個人姓名",
+  "projectNo": "MOHW113-CDC-I-315-000110",
+  "year": 2024,
+  "projectStatus": "published",
+  "fundingType": "in-house",
+  "piUnit": "疾管署感染管制及生物安全組",
+  "budgetNtd": 450000,
+  "reportDoc": "https://www.cdc.gov.tw/File/Get/placeholder-report-2024-amr",
+  "publications": [
+    "publication.bulletin-42-18"
+  ],
+  "abstractMarkdown": "以台灣醫院感染管制與抗藥性監測管理系統資料，分析重要抗藥性細菌（如碳青黴烯類抗藥性腸道菌、MRSA）於醫學中心與區域醫院之比率趨勢。結果顯示部分抗藥菌比率仍持續上升（示意），支持推動抗生素管理計畫與「防疫一體」跨部門合作。",
+  "objectives": [
+    "描述十年抗藥性比率趨勢",
+    "比較不同層級醫院差異",
+    "評估抗生素管理計畫之成效"
+  ],
+  "datasets": [
+    "dataset.antimicrobial-resistance"
+  ],
+  "irb": {
+    "required": false
+  },
+  "i18n": {
+    "en": {
+      "title": "Trends in hospital antimicrobial resistance, 2015–2024",
+      "summary": "Published in-house analysis of ten years of hospital AMR surveillance, summarised in the Taiwan Epidemiology Bulletin."
+    }
+  }
+}

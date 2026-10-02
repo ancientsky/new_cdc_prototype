@@ -1,0 +1,100 @@
+{
+  "id": "labtest.hepatitis-a",
+  "type": "labtest",
+  "title": "急性病毒性A型肝炎檢驗項目與送驗規定",
+  "owner": "unit.lab",
+  "publishedAt": "2025-01-15",
+  "reviewedAt": "2026-07-15",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.hepatitis-a"
+  ],
+  "diseases": [
+    "disease.hepatitis-a"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-07-15"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "none"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "急性病毒性 A 型肝炎：血清 2 mL 做 anti-HAV IgM，冷藏 24 小時內送驗；群聚或境外移入個案加採糞便做 RT-PCR 基因定型。",
+  "keywords": [
+    "急性病毒性A型肝炎",
+    "檢體",
+    "送驗",
+    "採檢",
+    "anti-HAV IgM",
+    "RT-PCR"
+  ],
+  "note": "檢體量、保存與時效為原型示意，以檢驗及疫苗研製中心「傳染病檢體採檢手冊」現行版為準",
+  "disease": "disease.hepatitis-a",
+  "specimens": [
+    {
+      "name": "血清",
+      "timing": "出現黃疸或肝功能異常時",
+      "container": "無菌血清分離管（紅頭或黃頭，無抗凝劑）",
+      "volume": "血清 2 mL",
+      "storage": "2–8°C 冷藏",
+      "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+      "tests": [
+        "anti-HAV IgM"
+      ],
+      "turnaroundDays": 2
+    },
+    {
+      "name": "糞便",
+      "timing": "發病 14 日內",
+      "container": "無菌糞便盒",
+      "volume": "5–10 g",
+      "storage": "2–8°C 冷藏",
+      "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+      "tests": [
+        "RT-PCR",
+        "基因定型"
+      ],
+      "turnaroundDays": 5,
+      "note": "群聚事件或境外移入時加採"
+    }
+  ],
+  "labs": [
+    "certified-lab",
+    "cdc-lab",
+    "hospital-lab"
+  ],
+  "sendWithinHours": 24,
+  "formDoc": "https://www.cdc.gov.tw/File/Get/placeholder-form-lab-specimen-form",
+  "biosafetyLevel": "BSL-2",
+  "notesMarkdown": "- 醫院自行檢驗 anti-HAV IgM 陽性者仍須通報。\n- 餐飲從業人員病例請同時通知衛生局評估工作限制。"
+}

@@ -1,0 +1,97 @@
+{
+  "id": "labtest.rubella",
+  "type": "labtest",
+  "title": "德國麻疹檢驗項目與送驗規定",
+  "owner": "unit.lab",
+  "publishedAt": "2025-01-15",
+  "reviewedAt": "2026-07-15",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.rubella"
+  ],
+  "diseases": [
+    "disease.rubella"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-07-15"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "none"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "德國麻疹：咽喉拭子（出疹 7 日內）做 RT-PCR，血清做 IgM／IgG，冷藏 24 小時內送疾管署；孕婦接觸者需追蹤抗體。",
+  "keywords": [
+    "德國麻疹",
+    "檢體",
+    "送驗",
+    "採檢",
+    "RT-PCR",
+    "基因定型"
+  ],
+  "note": "檢體量、保存與時效為原型示意，以檢驗及疫苗研製中心「傳染病檢體採檢手冊」現行版為準",
+  "disease": "disease.rubella",
+  "specimens": [
+    {
+      "name": "咽喉拭子",
+      "timing": "出疹日起 7 日內",
+      "container": "病毒運送培養基（VTM）拭子管",
+      "volume": "拭子 1 支",
+      "storage": "2–8°C 冷藏",
+      "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+      "tests": [
+        "RT-PCR",
+        "基因定型"
+      ],
+      "turnaroundDays": 2
+    },
+    {
+      "name": "血清",
+      "timing": "出疹後 5 日以上 IgM 較敏感",
+      "container": "無菌血清分離管（紅頭或黃頭，無抗凝劑）",
+      "volume": "血清 2–5 mL",
+      "storage": "2–8°C 冷藏",
+      "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+      "tests": [
+        "IgM／IgG 抗體"
+      ],
+      "turnaroundDays": 2
+    }
+  ],
+  "labs": [
+    "cdc-lab"
+  ],
+  "sendWithinHours": 24,
+  "formDoc": "https://www.cdc.gov.tw/File/Get/placeholder-form-lab-specimen-form",
+  "biosafetyLevel": "BSL-2",
+  "notesMarkdown": "- 常與麻疹同時鑑別，可於送驗單同時勾選。\n- 孕婦接觸者請另採血清檢測抗體並轉介產科。"
+}

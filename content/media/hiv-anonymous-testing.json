@@ -1,0 +1,99 @@
+{
+  "id": "media.hiv-anonymous-testing",
+  "type": "media",
+  "title": "想知道就去篩：HIV 匿名篩檢這樣做",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2026-05-20",
+  "reviewedAt": "2026-05-20",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.hiv",
+    "faq.hiv-test-where"
+  ],
+  "diseases": [
+    "disease.hiv"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-05-20"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "none"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "說明 HIV 匿名篩檢不需健保卡、不用留真實姓名，介紹匿名篩檢醫院、自我篩檢與空窗期，並提醒篩檢陽性可立即銜接治療。",
+  "keywords": [
+    "HIV",
+    "愛滋",
+    "匿名篩檢",
+    "自我篩檢",
+    "空窗期",
+    "U=U"
+  ],
+  "note": "YouTube 影片 id 原型無法驗證，一律 null；頻道網址沿用舊式 /user/taiwancdc，dataset.youtube-channel 記為 @TwCDC，上線前請公關室確認頻道 handle。",
+  "mediaType": "video",
+  "durationSeconds": 110,
+  "producedAt": "2026-05-10",
+  "basedOnVersionLabel": "HIV 疾病頁與匿名篩檢說明（2026-06 審閱）",
+  "targetGroups": [
+    "有過無套性行為者",
+    "男男間性行為者",
+    "年輕族群"
+  ],
+  "series": "愛滋防治",
+  "captions": [
+    "zh-TW",
+    "en"
+  ],
+  "chapters": [
+    {
+      "t": 0,
+      "label": "為什麼要篩檢"
+    },
+    {
+      "t": 30,
+      "label": "匿名篩檢怎麼做"
+    },
+    {
+      "t": 65,
+      "label": "自我篩檢與空窗期"
+    },
+    {
+      "t": 90,
+      "label": "陽性也不用怕"
+    }
+  ],
+  "transcriptMarkdown": "**[00:00] 為什麼要篩檢**\n\n旁白：感染 HIV 初期可能沒有任何症狀，也可能只是像感冒一樣發燒、喉嚨痛，很容易被忽略。唯一確定的方法，就是篩檢。只要曾經有過沒有戴保險套的性行為，或與他人共用針具，都建議定期篩檢。\n\n**[00:30] 匿名篩檢怎麼做**\n\n旁白：全國有多家醫院提供 HIV 匿名篩檢服務。匿名篩檢不需要健保卡，也不用留真實姓名，只要用代號登記。醫院會先由個案管理師進行諮詢，了解你的擔心，再抽血檢驗。等待結果期間，也可以詢問預防性投藥 PrEP 或其他性傳染病的檢查。各縣市衛生局所、部分民間團體也提供篩檢服務。\n\n**[01:05] 自我篩檢與空窗期**\n\n旁白：不方便到醫院？可以使用 HIV 自我篩檢試劑，在家自己檢測。要注意的是，篩檢有「空窗期」：感染後到能驗出抗體需要一段時間，如果距離危險行為還不夠久，即使結果是陰性，也建議過一段時間再驗一次。自我篩檢結果為陽性，必須到醫院做確認檢驗。\n\n**[01:30] 陽性也不用怕**\n\n旁白：現在的治療非常進步。確診後及早服藥，可以讓病毒量降到測不到，測不到就不會透過性行為傳染，也就是「U=U」。HIV 已經是可以控制的慢性病。想知道，就去篩。匿名篩檢醫院名單請上疾管署網站查詢，或撥打 1922。",
+  "youtubeId": null,
+  "videoUrl": "https://www.youtube.com/user/taiwancdc",
+  "poster": "/img/media/hiv-anonymous-testing.svg"
+}

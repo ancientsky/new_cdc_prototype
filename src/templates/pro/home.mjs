@@ -2,6 +2,7 @@
 // 登入只加個人化，公開指引不設門檻；原型的「登入」只是示意，角色與訂閱都存在瀏覽器 localStorage。
 import { html, raw } from '../../../scripts/lib/render.mjs';
 import { proStyles } from './_styles.mjs';
+import { servicesGrid, noticeRow, isClosed } from '../public/_partials.mjs';
 
 const ROLES = [
   { key: 'physician', zh: '醫師', en: 'Physician' },
@@ -32,6 +33,7 @@ const TXT = {
     copyRss: '複製 RSS/Atom 網址', copied: '已複製', ics: '下載 .ics 提醒', icsNote: '.ics 示範：把「下次審閱日」加進你的行事曆，提前 7 天提醒。',
     chain: '版本鏈', chainBody: '每份文件都記錄「取代誰、被誰取代、生效日」。舊版會自動標示失效、加上 noindex 並 301 導向現行版，但仍可在版本鏈中查閱。AI 回答若引用到失效版本，視為嚴重缺陷，評估集的版本題必須全對才能上線。',
     chainLink: '看版本鏈範例', status: '狀態', metric: '指標', illus: '示意數字', owner: '權責', reviewed: '審閱',
+    svc: '應用專區', notices: '最新公告（人才／採購）', noticesAll: '全部公告 →', noticesNone: '目前沒有進行中的人才招募或採購公告。',
   },
   en: {
     title: 'Health professionals', lead: 'Current versions, change comparisons and subscriptions for guidelines, manuals and letters. Public guidance needs no login.',
@@ -45,6 +47,7 @@ const TXT = {
     copyRss: 'Copy RSS/Atom URL', copied: 'Copied', ics: 'Download .ics reminder', icsNote: '.ics demo: adds the next review date to your calendar with a 7-day reminder.',
     chain: 'Version chain', chainBody: 'Every document records what it supersedes, what supersedes it and its effective date. Old versions are flagged, set to noindex and redirected (301) to the current one, yet remain readable. An AI answer that cites a superseded version is a critical defect.',
     chainLink: 'See an example chain', status: 'Status', metric: 'Metric', illus: 'illustrative', owner: 'Owner', reviewed: 'Reviewed',
+    svc: 'Applications and services', notices: 'Latest notices (recruitment / procurement)', noticesAll: 'All notices →', noticesNone: 'No open recruitment or procurement notices right now.',
   },
 };
 
@@ -101,6 +104,9 @@ export function render(ctx) {
     { href: askUrl('感染管制查核 醫院 長照機構'), title: '感染管制查核', title_en: 'Infection-control audits', sub: '醫院 · 長照機構', sub_en: 'Hospitals · long-term care', roles: 'infection-control nurse local-health' },
   ];
 
+  const openNotices = (site.collections.news ?? [])
+    .filter((n) => n.status === 'published' && ['recruit', 'procurement'].includes(n.newsType) && !isClosed(site, n))
+    .sort((a, b) => (a.deadlineAt ?? '9999-12-31').localeCompare(b.deadlineAt ?? '9999-12-31') || (b.publishedAt ?? '').localeCompare(a.publishedAt ?? '')).slice(0, 2);
   return html`${proStyles}
 <script>try{localStorage.setItem('cdc.view','pro')}catch(e){}document.documentElement.dataset.view='pro'</script>
 <div class="pf" data-pro-home>
@@ -166,6 +172,11 @@ export function render(ctx) {
         </ul>` : html`<p class="muted">${T.none}</p>`}
       </section>
 
+      <section class="pf-card" aria-labelledby="svc-h">
+        <h2 id="svc-h" style="font-size:var(--fs-lg);margin:0 0 var(--sp-3)">${T.svc}</h2>
+        ${servicesGrid(ctx, { heading: T.svc })}
+      </section>
+
       <section class="pf-card" aria-labelledby="tasks-h">
         <h2 id="tasks-h" style="font-size:var(--fs-lg);margin:0 0 var(--sp-3)">${T.tasks}</h2>
         <div class="pf-tasks js-role-sortable">
@@ -191,6 +202,12 @@ export function render(ctx) {
         </table></div>
         <p class="pf-hint">${en ? 'Data date' : '資料日'} ${fmtDate(site.situation.dataDate)} · ${en ? 'Published by' : '發布'}：${owner(site.situation.publisher)}</p>
         <p class="pf-hint">${T.sitSrc}：<a href="https://nidss.cdc.gov.tw/" rel="noopener" target="_blank">NIDSS ↗</a> · <a href="${url('/v1/situation.json', { noLang: true })}">/v1/situation.json</a> · <a href="${url('/situation/')}">${en ? 'Trends' : '趨勢與發布依據'}</a></p>` : html`<p class="muted">—</p>`}
+      </section>
+
+      <section class="pf-card" aria-labelledby="ntc-h">
+        <h2 id="ntc-h" style="font-size:var(--fs-lg);margin:0">${T.notices}</h2>
+        ${openNotices.length ? html`<ul class="c-noticelist c-noticelist--compact">${openNotices.map((n) => noticeRow(ctx, n))}</ul>` : html`<p class="muted">${T.noticesNone}</p>`}
+        <p class="pf-hint"><a href="${url('/notices/')}">${T.noticesAll}</a></p>
       </section>
 
       <section class="pf-card" aria-labelledby="subs-h">

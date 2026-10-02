@@ -1,0 +1,106 @@
+{
+  "id": "labtest.malaria",
+  "type": "labtest",
+  "title": "瘧疾檢驗項目與送驗規定",
+  "owner": "unit.lab",
+  "publishedAt": "2025-01-15",
+  "reviewedAt": "2026-07-15",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.malaria"
+  ],
+  "diseases": [
+    "disease.malaria"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-07-15"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-07-15",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "瘧疾：EDTA 全血 3 mL 及厚、薄血片各 2 片，室溫或冷藏 24 小時內送驗，做顯微鏡鏡檢與 PCR 蟲種鑑定；結果陰性但高度懷疑應重複採檢。",
+  "keywords": [
+    "瘧疾",
+    "檢體",
+    "送驗",
+    "採檢",
+    "顯微鏡鏡檢",
+    "PCR 蟲種鑑定"
+  ],
+  "note": "檢體量、保存與時效為原型示意，以檢驗及疫苗研製中心「傳染病檢體採檢手冊」現行版為準",
+  "disease": "disease.malaria",
+  "specimens": [
+    {
+      "name": "EDTA 全血",
+      "timing": "發燒時，未服抗瘧藥前",
+      "container": "EDTA 紫頭管",
+      "volume": "3 mL",
+      "storage": "室溫（24 小時內）或 2–8°C",
+      "transport": "室溫或冷藏運送",
+      "tests": [
+        "顯微鏡鏡檢",
+        "PCR 蟲種鑑定"
+      ],
+      "turnaroundDays": 1
+    },
+    {
+      "name": "厚、薄血片",
+      "timing": "同全血",
+      "container": "玻片盒",
+      "volume": "厚薄片各 2 片",
+      "storage": "室溫乾燥",
+      "transport": "室溫運送",
+      "tests": [
+        "顯微鏡鏡檢（原蟲密度）"
+      ],
+      "turnaroundDays": 1
+    }
+  ],
+  "labs": [
+    "cdc-lab",
+    "certified-lab"
+  ],
+  "sendWithinHours": 24,
+  "formDoc": "https://www.cdc.gov.tw/File/Get/placeholder-form-lab-specimen-form",
+  "biosafetyLevel": "BSL-2",
+  "notesMarkdown": "- 惡性瘧可能快速惡化，治療不需等待確認結果。\n- 陰性但臨床高度懷疑者，每 12–24 小時重複採檢，共 3 次。\n- 送驗單註明旅遊國家與預防用藥史。",
+  "i18n": {
+    "en": {
+      "title": "Malaria: laboratory tests and specimen requirements",
+      "summary": "EDTA whole blood 3 mL plus thick and thin smears, delivered within 24 hours for microscopy and PCR species identification; repeat if negative but suspicion is high."
+    }
+  }
+}

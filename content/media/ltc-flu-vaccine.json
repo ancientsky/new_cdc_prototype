@@ -1,0 +1,109 @@
+{
+  "id": "media.ltc-flu-vaccine",
+  "type": "media",
+  "title": "長照機構住民與工作人員，一起打流感疫苗",
+  "owner": "unit.vaccine",
+  "publishedAt": "2026-09-25",
+  "reviewedAt": "2026-09-25",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "doc.flu-vaccine-schedule",
+    "vaccine.influenza"
+  ],
+  "diseases": [
+    "disease.influenza"
+  ],
+  "vaccines": [
+    "vaccine.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-25"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-25",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "長照機構住民為流感重症高風險族群，影片說明 10 月 1 日起公費流感疫苗開打，住民與工作人員應同步接種，並示範機構內集中接種流程。",
+  "keywords": [
+    "流感疫苗",
+    "長照機構",
+    "公費疫苗",
+    "集中接種",
+    "工作人員"
+  ],
+  "note": "YouTube 影片 id 原型無法驗證，一律 null；頻道網址沿用舊式 /user/taiwancdc，dataset.youtube-channel 記為 @TwCDC，上線前請公關室確認頻道 handle。",
+  "mediaType": "video",
+  "durationSeconds": 150,
+  "producedAt": "2026-09-20",
+  "basedOnVersionLabel": "2026-09-15 流感疫苗接種計畫",
+  "targetGroups": [
+    "長照機構住民",
+    "長照機構工作人員",
+    "機構負責人"
+  ],
+  "series": "流感疫苗宣導",
+  "captions": [
+    "zh-TW",
+    "en"
+  ],
+  "chapters": [
+    {
+      "t": 0,
+      "label": "為什麼長照機構要優先接種"
+    },
+    {
+      "t": 40,
+      "label": "誰可以打公費疫苗"
+    },
+    {
+      "t": 85,
+      "label": "機構集中接種怎麼安排"
+    },
+    {
+      "t": 120,
+      "label": "接種後觀察與通報"
+    }
+  ],
+  "transcriptMarkdown": "**[00:00] 為什麼長照機構要優先接種**\n\n旁白：每年秋冬，流感病毒在社區流行，住在長照機構的長輩因為年紀大、多有慢性病，感染後容易併發肺炎，甚至需要住院。機構裡大家一起吃飯、一起活動，只要一個人感染，很快就會在樓層間傳開。\n\n機構護理長：我們最怕的就是群聚。所以每年疫苗一到，我們就把住民和同仁的接種排在第一週。\n\n**[00:40] 誰可以打公費疫苗**\n\n旁白：今年公費流感疫苗自 10 月 1 日起開打。長期照顧服務機構、安養機構的住民與工作人員，都是公費接種對象。不只照服員，包括護理、廚房、清潔、行政人員，只要在機構內工作，都建議接種。\n\n**[01:25] 機構集中接種怎麼安排**\n\n旁白：機構可以與合約醫療院所或衛生所聯繫，安排到機構集中接種。接種前，請先確認住民的健保卡與同意書；長輩若當天發燒或身體不適，可以先暫緩，等身體狀況穩定再補打。工作人員也別忘了自己，保護自己，就是保護長輩。\n\n**[02:00] 接種後觀察與通報**\n\n旁白：接種後請在現場休息觀察至少 30 分鐘。常見的反應是注射部位紅腫、輕微發燒，通常一到兩天就會改善。若出現持續高燒、呼吸困難等情形，請立即就醫。機構若發現住民陸續出現發燒、咳嗽，請依規定通報衛生單位，及早處理。\n\n旁白：保護長輩，從今年的一劑流感疫苗開始。更多資訊請上疾管署網站，或撥打防疫專線 1922。",
+  "youtubeId": null,
+  "videoUrl": "https://www.youtube.com/user/taiwancdc",
+  "poster": "/img/media/ltc-flu-vaccine.svg",
+  "i18n": {
+    "en": {
+      "title": "Long-term care residents and staff: get your flu shot together",
+      "summary": "Publicly funded flu vaccination starts on 1 October. Residents and all staff of long-term care facilities are eligible and should be vaccinated together."
+    }
+  }
+}

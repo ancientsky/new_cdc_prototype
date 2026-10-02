@@ -7,7 +7,7 @@
 // 失效版本：不進 sitemap、頁面 noindex，但 robots.txt 不擋（要讓爬蟲讀得到 noindex，見 7.7(3)）。
 import { config } from '../../site.config.mjs';
 import { makeUrl } from './render.mjs';
-import { pathOf, mdPathOf } from './governance.mjs';
+import { pathOf, mdPathOf, NOTICE_TYPES } from './governance.mjs';
 
 const LANGS = () => config.langs.map((l) => l.code);
 const urlFns = new Map();
@@ -20,7 +20,11 @@ const maxDate = (arr) => arr.filter(Boolean).sort().at(-1) ?? null;
 const rfc822 = (iso) => new Date(`${String(iso).slice(0, 10)}T00:00:00+08:00`).toUTCString();
 
 /** 靜態頁（zh-TW；其他語言是否存在依模板而定，推算模式只確定首頁為七語） */
-export const STATIC_PATHS = ['/', '/situation/', '/diseases/', '/vaccines/', '/travel/', '/factcheck/', '/data/', '/news/', '/faq/', '/documents/', '/pro/', '/developers/', '/policy/ai/', '/policy/privacy/', '/policy/open-data/', '/accessibility/', '/about/', '/transparency/', '/guide/'];
+export const STATIC_PATHS = ['/', '/situation/', '/diseases/', '/vaccines/', '/travel/', '/factcheck/', '/data/', '/news/', '/faq/', '/documents/', '/pro/', '/developers/', '/policy/ai/', '/policy/privacy/', '/policy/open-data/', '/accessibility/', '/about/', '/transparency/', '/guide/',
+  // 第二輪（ARCHITECTURE 11.2）
+  '/campaigns/', '/media/', '/services/', '/apply/', '/publications/', '/lab/', '/report/', '/research/', '/notices/', '/contact/'];
+/** 分類 sitemap（zh-TW）；其餘語言各一份 sitemap-{lang}.xml */
+export const SITEMAP_GROUPS = ['pages', 'diseases', 'news', 'documents', 'faq', 'media', 'publications'];
 /** 推算模式下七語皆輸出的靜態頁（與民眾端模板 lang:'*' 一致；任務頁與旅遊國家頁亦為七語） */
 export const LOCALIZED_STATIC_PATHS = ['/', '/situation/', '/diseases/', '/vaccines/', '/travel/', '/factcheck/', '/data/', '/news/', '/faq/', '/documents/'];
 const EXCLUDE = [/^\/admin\//, /^\/ask\//, /^\/404\.html$/];
@@ -33,11 +37,14 @@ export function derivePages(site) {
   const out = [];
   const add = (path, langs, lastmod, group) => { for (const lang of langs) out.push({ path, lang, lastmod, group }); };
   const groupMax = (arr) => maxDate(arr.map((i) => i.reviewedAt)) ?? latest;
-  const listLast = { '/diseases/': groupMax(pub(c.diseases)), '/news/': groupMax(pub(c.news)), '/faq/': groupMax(pub(c.faq)), '/documents/': groupMax(pub(c.documents)), '/vaccines/': groupMax(pub(c.vaccines)), '/factcheck/': groupMax(pub(c.clarifications)), '/data/': groupMax(pub(c.datasets)), '/situation/': site.situation?.publishedAt ?? latest };
+  const listLast = { '/diseases/': groupMax(pub(c.diseases)), '/news/': groupMax(pub(c.news)), '/faq/': groupMax(pub(c.faq)), '/documents/': groupMax(pub(c.documents)), '/vaccines/': groupMax(pub(c.vaccines)), '/factcheck/': groupMax(pub(c.clarifications)), '/data/': groupMax(pub(c.datasets)), '/situation/': site.situation?.publishedAt ?? latest,
+    '/campaigns/': groupMax(pub(c.banners)), '/media/': groupMax(pub(c.media)), '/services/': groupMax(pub(c.services)), '/apply/': groupMax(pub(c.services)), '/publications/': groupMax(pub(c.publications)),
+    '/lab/': groupMax(pub(c.labtests)), '/research/': groupMax(pub(c.research)), '/notices/': groupMax(pub(c.news).filter((n) => NOTICE_TYPES.has(n.newsType))), '/report/': site.today };
   for (const p of STATIC_PATHS) add(p, LOCALIZED_STATIC_PATHS.includes(p) ? LANGS() : ['zh-TW'], listLast[p] ?? latest, 'pages');
   for (const t of config.tasks) add(`/tasks/${t.key}/`, LANGS(), latest, 'pages');
   for (const ctry of site.master.countries ?? []) if (ctry.iso2) add(`/travel/${ctry.iso2.toUpperCase()}/`, LANGS(), site.snapshots?.travelAlerts?.meta?.fetchedAt?.slice?.(0, 10) ?? latest, 'pages');
-  const contentGroups = [['diseases', c.diseases], ['vaccines', c.vaccines], ['faq', c.faq], ['news', c.news], ['documents', c.documents]];
+  const contentGroups = [['diseases', c.diseases], ['vaccines', c.vaccines], ['faq', c.faq], ['news', c.news], ['documents', c.documents],
+    ['media', c.media], ['publications', c.publications], ['pages', c.topics], ['pages', c.services], ['pages', c.labtests], ['pages', c.research]];
   for (const [group, arr] of contentGroups) for (const i of pub(arr)) add(pathOf(i), i.gov?.renderableLangs ?? ['zh-TW'], i.reviewedAt, group === 'vaccines' ? 'pages' : group);
   for (const pg of pub(c.pages)) add(pathOf(pg), pg.gov?.renderableLangs ?? ['zh-TW'], pg.reviewedAt, 'pages');
   // 去重（content/pages 可能與靜態頁重疊）
@@ -61,7 +68,7 @@ export async function collectPages(site) {
 }
 
 function groupOf(path) {
-  const m = path.match(/^\/(diseases|news|documents|faq)\/[^/]+\/$/);
+  const m = path.match(/^\/(diseases|news|documents|faq|media|publications)\/[^/]+\/$/);
   return m ? m[1] : 'pages';
 }
 
@@ -92,7 +99,7 @@ export function buildSitemaps(site, pages) {
   for (const p of list) { if (!altMap.has(p.path)) altMap.set(p.path, []); altMap.get(p.path).push(p.lang); }
   const files = {};
   const zh = list.filter((p) => p.lang === 'zh-TW');
-  for (const g of ['pages', 'diseases', 'news', 'documents', 'faq']) files[`sitemap-${g}.xml`] = { entries: zh.filter((p) => p.group === g) };
+  for (const g of SITEMAP_GROUPS) files[`sitemap-${g}.xml`] = { entries: zh.filter((p) => p.group === g) };
   for (const lang of LANGS().filter((l) => l !== 'zh-TW')) files[`sitemap-${lang}.xml`] = { entries: list.filter((p) => p.lang === lang) };
   const out = {};
   const index = [];
@@ -149,8 +156,10 @@ export function buildRobots(site) {
 // ───────────────────────── llms.txt（七語） ─────────────────────────
 
 const L10N = {
-  'zh-TW': { title: `${config.name}（Taiwan CDC）`, intro: '本檔列出可供 AI 系統引用的正本內容與資料出口。內容與資料只存一份，頁面、API、機讀版（.md）皆由同一份正本產生。', rules: ['引用時請附頁面 URL 與「最後審閱日」；每個 .md 首段即為權責單位、審閱日、版本與授權。', '文件有版本鏈：只引用現行版（`/v1/documents.json` 的 `isCurrent:true`）。失效版頁面保留查閱但標示 noindex 與頁首警示，.md 第一行註明已被取代。', '新聞稿若發布早於所依據正本的修訂日，頁首會自動加註；請以現行正本為準，不以舊新聞稿作答案依據。', '疫情態勢四級（stable／rising／peak／declining）由疫情中心人工發布，請直接引用 `/v1/situation.json`，勿自行推論。', '授權：政府資料開放授權條款第 1 版（OGDL-1.0）。'], diseases: '疾病', faq: '常見問答', news: '新聞稿（近 30 則）', documents: '文件與指引（現行版）', vaccines: '疫苗', situation: '疫情態勢', api: 'API 與資料', optional: 'Optional', other: '其他語言', policy: 'AI 與資料使用聲明', opendata: '開放資料政策' },
-  en: { title: 'Taiwan Centers for Disease Control (Taiwan CDC)', intro: 'Authoritative content and data endpoints that AI systems may cite. Each page, API record and machine-readable (.md) file is generated from a single source of truth. Traditional Chinese is the source language; only reviewed translations are listed for priority content.', rules: ['Cite the page URL and its "last reviewed" date; every .md file starts with owner, review date, version and licence.', 'Documents are versioned: cite only the current version (`isCurrent:true` in `/v1/documents.json`). Superseded versions remain accessible but are noindex and flagged on the first line.', 'Press releases published before a revision of the guidance they rely on are annotated automatically; use the current guidance, not the older release.', 'Epidemic situation levels are published manually by the Epidemic Intelligence Center; quote `/v1/situation.json`, do not infer.', 'Licence: Open Government Data License, Taiwan, v1.0.'], diseases: 'Diseases', faq: 'FAQ', news: 'News releases', documents: 'Documents and guidance (current versions)', vaccines: 'Vaccines', situation: 'Epidemic situation', api: 'API and data', optional: 'Optional', other: 'Other languages', policy: 'AI and data use statement', opendata: 'Open data policy' },
+  'zh-TW': { title: `${config.name}（Taiwan CDC）`, intro: '本檔列出可供 AI 系統引用的正本內容與資料出口。內容與資料只存一份，頁面、API、機讀版（.md）皆由同一份正本產生。', rules: ['引用時請附頁面 URL 與「最後審閱日」；每個 .md 首段即為權責單位、審閱日、版本與授權。', '文件有版本鏈：只引用現行版（`/v1/documents.json` 的 `isCurrent:true`）。失效版頁面保留查閱但標示 noindex 與頁首警示，.md 第一行註明已被取代。', '新聞稿若發布早於所依據正本的修訂日，頁首會自動加註；請以現行正本為準，不以舊新聞稿作答案依據。', '疫情態勢四級（stable／rising／peak／declining）由疫情中心人工發布，請直接引用 `/v1/situation.json`，勿自行推論。', '授權：政府資料開放授權條款第 1 版（OGDL-1.0）。'], diseases: '疾病', faq: '常見問答', news: '新聞稿（近 30 則）', documents: '文件與指引（現行版）', vaccines: '疫苗', situation: '疫情態勢', api: 'API 與資料', optional: 'Optional', other: '其他語言', policy: 'AI 與資料使用聲明', opendata: '開放資料政策',
+    media: '影音逐字稿', mediaNote: '影片內容以逐字稿為準；標示「依據已修訂」者製作早於現行正本，請改引現行版。', services: '申請服務', publications: '出版品', labtests: '檢驗項目（專業）', notify: '通報時限表', notifyNote: '法定傳染病類別與通報時限由傳染病主檔自動產生，請直接引用。', notices: '機關公告（人才招募、採購）' },
+  en: { title: 'Taiwan Centers for Disease Control (Taiwan CDC)', intro: 'Authoritative content and data endpoints that AI systems may cite. Each page, API record and machine-readable (.md) file is generated from a single source of truth. Traditional Chinese is the source language; only reviewed translations are listed for priority content.', rules: ['Cite the page URL and its "last reviewed" date; every .md file starts with owner, review date, version and licence.', 'Documents are versioned: cite only the current version (`isCurrent:true` in `/v1/documents.json`). Superseded versions remain accessible but are noindex and flagged on the first line.', 'Press releases published before a revision of the guidance they rely on are annotated automatically; use the current guidance, not the older release.', 'Epidemic situation levels are published manually by the Epidemic Intelligence Center; quote `/v1/situation.json`, do not infer.', 'Licence: Open Government Data License, Taiwan, v1.0.'], diseases: 'Diseases', faq: 'FAQ', news: 'News releases', documents: 'Documents and guidance (current versions)', vaccines: 'Vaccines', situation: 'Epidemic situation', api: 'API and data', optional: 'Optional', other: 'Other languages', policy: 'AI and data use statement', opendata: 'Open data policy',
+    media: 'Video transcripts', mediaNote: 'Cite video content from transcripts only; items flagged as based on revised guidance predate the current version.', services: 'Applications and services', publications: 'Publications', labtests: 'Laboratory tests (professional)', notify: 'Notifiable disease reporting deadlines', notifyNote: 'Generated from the notifiable disease master list; quote directly.', notices: 'Notices (recruitment, procurement)' },
   ja: { title: '台湾衛生福利部疾病管制署（Taiwan CDC）', intro: 'AI システムが引用できる正本コンテンツとデータの一覧です。中国語（繁体字）が正本で、優先コンテンツは人による確認済みの翻訳のみ掲載します。', rules: ['引用時はページ URL と最終確認日を明記してください。', '文書は現行版のみ引用してください（/v1/documents.json の isCurrent:true）。', 'ライセンス：台湾政府オープンデータライセンス第 1 版。'], diseases: '感染症', faq: 'よくある質問', news: 'プレスリリース', documents: '文書（現行版）', vaccines: 'ワクチン', situation: '流行状況', api: 'API とデータ', optional: 'Optional', other: '他の言語', policy: 'AI とデータ利用に関する声明', opendata: 'オープンデータ方針' },
   tl: { title: 'Taiwan Centers for Disease Control (Taiwan CDC)', intro: 'Mga opisyal na nilalaman at data na maaaring banggitin ng mga AI system. Ang Traditional Chinese ang orihinal na wika; mga na-review na salin lamang ang nakalista para sa pangunahing nilalaman.', rules: ['Banggitin ang URL ng pahina at ang petsa ng huling pagsusuri.', 'Banggitin lamang ang kasalukuyang bersyon ng mga dokumento (isCurrent:true sa /v1/documents.json).', 'Lisensya: Open Government Data License, Taiwan, v1.0.'], diseases: 'Mga sakit', faq: 'Mga madalas itanong', news: 'Mga balita', documents: 'Mga dokumento (kasalukuyang bersyon)', vaccines: 'Mga bakuna', situation: 'Kalagayan ng epidemya', api: 'API at data', optional: 'Optional', other: 'Iba pang wika', policy: 'Pahayag sa AI at paggamit ng data', opendata: 'Patakaran sa open data' },
   vi: { title: 'Cục Kiểm soát Dịch bệnh Đài Loan (Taiwan CDC)', intro: 'Danh sách nội dung chính thức và dữ liệu mà hệ thống AI có thể trích dẫn. Tiếng Trung phồn thể là ngôn ngữ gốc; nội dung ưu tiên chỉ liệt kê bản dịch đã được duyệt.', rules: ['Khi trích dẫn, ghi rõ URL trang và ngày duyệt gần nhất.', 'Chỉ trích dẫn phiên bản hiện hành của tài liệu (isCurrent:true trong /v1/documents.json).', 'Giấy phép: Giấy phép Dữ liệu Mở Chính phủ Đài Loan, phiên bản 1.0.'], diseases: 'Bệnh truyền nhiễm', faq: 'Câu hỏi thường gặp', news: 'Thông cáo báo chí', documents: 'Tài liệu (phiên bản hiện hành)', vaccines: 'Vắc-xin', situation: 'Tình hình dịch', api: 'API và dữ liệu', optional: 'Optional', other: 'Ngôn ngữ khác', policy: 'Tuyên bố về AI và sử dụng dữ liệu', opendata: 'Chính sách dữ liệu mở' },
@@ -161,7 +170,7 @@ const L10N = {
 const tr = (item, lang, field) => (lang === 'zh-TW' ? item[field] : item.i18n?.[lang]?.[field] ?? item[field]);
 
 export function buildLlms(site, lang = 'zh-TW') {
-  const T = L10N[lang] ?? L10N.en;
+  const T = { ...L10N.en, ...(L10N[lang] ?? {}) };
   const c = site.collections;
   const ok = (i) => i.status === 'published' && !i.gov?.superseded && !i.gov?.scheduled && (i.gov?.renderableLangs ?? ['zh-TW']).includes(lang);
   const line = (i) => {
@@ -173,6 +182,7 @@ export function buildLlms(site, lang = 'zh-TW') {
   };
   const section = (heading, items) => (items.length ? [`## ${heading}`, '', ...items.map(line), ''] : []);
   const byDate = (a, b) => (b.publishedAt ?? '').localeCompare(a.publishedAt ?? '');
+  const media = [...(c.media ?? [])].filter(ok).sort(byDate);
   const out = [
     `# ${T.title}`, '',
     `> ${T.intro}`, '',
@@ -181,7 +191,16 @@ export function buildLlms(site, lang = 'zh-TW') {
     ...section(T.vaccines, (c.vaccines ?? []).filter(ok)),
     ...section(T.faq, (c.faq ?? []).filter(ok)),
     ...section(T.documents, (c.documents ?? []).filter(ok)),
-    ...section(T.news, [...(c.news ?? [])].filter(ok).sort(byDate).slice(0, 30)),
+    ...section(T.news, [...(c.news ?? [])].filter(ok).filter((n) => !NOTICE_TYPES.has(n.newsType)).sort(byDate).slice(0, 30)),
+    ...(media.length ? [`## ${T.media}`, '', `> ${T.mediaNote}`, '', ...media.map(line), ''] : []),
+    ...section(T.services, (c.services ?? []).filter(ok)),
+    ...section(T.publications, [...(c.publications ?? [])].filter(ok).sort(byDate).slice(0, 30)),
+    ...section(T.labtests, (c.labtests ?? []).filter(ok)),
+    ...section(T.notices, [...(c.news ?? [])].filter(ok).filter((n) => NOTICE_TYPES.has(n.newsType) && !n.gov?.closed).sort(byDate).slice(0, 20)),
+    `## ${T.notify}`, '',
+    `> ${T.notifyNote}`, '',
+    `- [${T.notify}](${absUrl('/report/', 'zh-TW')}): ${(site.gov?.notifyTable ?? []).map((g) => `${g.label} ${g.diseases.length}`).join('、')}`,
+    `- [notify-table.json](${apiUrl('/v1/notify-table.json')})`, '',
     `## ${T.situation}`, '',
     `- [${T.situation}](${absUrl('/situation/', lang)}): ${site.situation?.publishedAt ?? ''} · data ${site.situation?.dataDate ?? ''}`,
     `- [situation.json](${apiUrl('/v1/situation.json')})`,
@@ -196,7 +215,8 @@ export function buildLlms(site, lang = 'zh-TW') {
     `- [search-index.json](${apiUrl('/v1/search-index.json')})`,
     `- [glossary.json](${apiUrl('/v1/glossary.json')})`,
     `- [redirects.json](${apiUrl('/v1/redirects.json')})`,
-    `- [RSS news](${apiUrl('/feeds/news.xml')}) · [RSS documents](${apiUrl('/feeds/documents.xml')})`, '',
+    `- [media.json](${apiUrl('/v1/media.json')}) · [services.json](${apiUrl('/v1/services.json')}) · [publications.json](${apiUrl('/v1/publications.json')}) · [labtests.json](${apiUrl('/v1/labtests.json')}) · [notices.json](${apiUrl('/v1/notices.json')})`,
+    `- [RSS news](${apiUrl('/feeds/news.xml')}) · [RSS documents](${apiUrl('/feeds/documents.xml')}) · [RSS publications](${apiUrl('/feeds/publications.xml')}) · [RSS notices](${apiUrl('/feeds/notices.xml')})`, '',
     `## ${T.optional}`, '',
     `- [${T.policy}](${absUrl('/policy/ai/', 'zh-TW')})`,
     `- [${T.opendata}](${absUrl('/policy/open-data/', 'zh-TW')})`,
@@ -231,6 +251,14 @@ ${(it.categories ?? []).map((cat) => `    <category>${xmlEsc(cat)}</category>`).
 `;
 }
 
+/** 出版品書目一行（卷期、版次、ISBN、ISSN、GPN） */
+export function bibOf(p) {
+  return [
+    p.volume != null ? `第 ${p.volume} 卷` : '', p.issue != null ? `第 ${p.issue} 期` : '', p.edition ? `${p.edition}` : '',
+    p.isbn ? `ISBN ${p.isbn}` : '', p.issn ? `ISSN ${p.issn}` : '', p.gpn ? `GPN ${p.gpn}` : '',
+  ].filter(Boolean).join('，');
+}
+
 export function buildFeeds(site) {
   const c = site.collections;
   const news = (c.news ?? []).filter((n) => n.status === 'published').sort((a, b) => b.publishedAt.localeCompare(a.publishedAt) || a.id.localeCompare(b.id)).slice(0, 50);
@@ -262,7 +290,28 @@ export function buildFeeds(site) {
     description: (s.items ?? []).map((it) => `${site.diseaseMasterById.get(it.disease)?.name ?? it.disease}：${{ stable: '平穩', rising: '上升', peak: '高峰', declining: '下降' }[it.status] ?? it.status}${it.metricValue ? `（${it.metricLabel ?? ''} ${it.metricValue}）` : ''}`).join('；'),
   }));
   const sitXml = rss({ title: `${config.name} 疫情態勢`, link: absUrl('/situation/'), self: apiUrl('/feeds/situation.xml'), description: '疫情中心人工發布的各疾病態勢（四級）。', lastBuild: sit.publishedAt ?? site.today, items: sitItems });
-  return { 'feeds/news.xml': newsXml, 'feeds/documents.xml': docsXml, 'feeds/situation.xml': sitXml };
+  // 出版品
+  const pubList = (c.publications ?? []).filter((p) => p.status === 'published').sort((a, b) => b.publishedAt.localeCompare(a.publishedAt) || a.id.localeCompare(b.id)).slice(0, 50);
+  const pubXml = rss({
+    title: `${config.name} 出版品`, link: absUrl('/publications/'), self: apiUrl('/feeds/publications.xml'), description: '疫情報導卷期、年報、手冊、海報等出版品（guid＝出版品 id）。',
+    lastBuild: maxDate(pubList.map((p) => p.publishedAt)) ?? site.today,
+    items: pubList.map((p) => ({
+      title: p.title, link: absUrl(pathOf(p)), guid: p.id, date: p.publishedAt, categories: [p.series, p.pubType].filter(Boolean),
+      description: [p.summary, bibOf(p), ...(p.articles ?? []).slice(0, 10).map((a) => `・${a.title}`)].filter(Boolean).join(' '),
+    })),
+  });
+  // 機關公告
+  const NOTICE_LABEL = { recruit: '人才招募', procurement: '採購公告', other: '其他訊息' };
+  const notices = (c.news ?? []).filter((n) => n.status === 'published' && NOTICE_TYPES.has(n.newsType)).sort((a, b) => b.publishedAt.localeCompare(a.publishedAt) || a.id.localeCompare(b.id)).slice(0, 50);
+  const noticeXml = rss({
+    title: `${config.name} 機關公告`, link: absUrl('/notices/'), self: apiUrl('/feeds/notices.xml'), description: '人才招募、採購公告與其他訊息；含字號與截止日，截止後標示「已截止」。',
+    lastBuild: maxDate(notices.map((n) => n.publishedAt)) ?? site.today,
+    items: notices.map((n) => ({
+      title: `${n.gov?.closed ? '【已截止】' : ''}${n.title}`, link: absUrl(pathOf(n)), guid: n.id, date: n.publishedAt, categories: [NOTICE_LABEL[n.newsType] ?? n.newsType, n.gov?.closed ? '已截止' : null].filter(Boolean),
+      description: [n.summary, n.refNo ? `字號：${n.refNo}` : '', n.deadlineAt ? `截止日：${n.deadlineAt}` : '', n.positions ? `名額：${n.positions}` : '', n.budgetNtd ? `預算金額：新臺幣 ${n.budgetNtd.toLocaleString('en-US')} 元` : '', n.applyUrl ? `報名／投標：${n.applyUrl}` : ''].filter(Boolean).join(' '),
+    })),
+  });
+  return { 'feeds/news.xml': newsXml, 'feeds/documents.xml': docsXml, 'feeds/situation.xml': sitXml, 'feeds/publications.xml': pubXml, 'feeds/notices.xml': noticeXml };
 }
 
 export function emitSeo(site, write, opts = {}) {

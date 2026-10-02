@@ -1,0 +1,63 @@
+{
+  "id": "page.mission",
+  "type": "page",
+  "title": "使命與法定職掌",
+  "owner": "unit.planning",
+  "publishedAt": "2026-10-01",
+  "reviewedAt": "2026-10-01",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-10-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-10-01",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "疾管署的使命是防範傳染病於境外、阻絕於社區，並依組織法掌理傳染病監測、預防接種、邊境檢疫、感染管制、檢驗研究與疫苗研製等業務。",
+  "keywords": [
+    "使命",
+    "願景",
+    "法定職掌",
+    "組織法",
+    "疾病管制署"
+  ],
+  "note": "職掌條文為摘要改寫，正式文字以全國法規資料庫為準",
+  "slug": "about/mission",
+  "bodyMarkdown": "## 使命\n以實證為基礎，**防範傳染病於境外、阻絕於社區**，守護國人健康；在疫情發生時迅速應變，平時則持續監測、整備與溝通，讓民眾能取得正確、及時、可信的防疫資訊。\n\n## 願景\n成為值得信賴、與國際接軌的防疫專業機關。\n\n## 法定職掌\n依《衛生福利部疾病管制署組織法》，本署掌理下列事項（摘要）：\n\n1. 傳染病防治政策、制度與法規之研擬及執行。\n2. 國內外疫情監視、調查、預警及資訊管理。\n3. 預防接種政策規劃與疫苗供應管理。\n4. 國際港埠檢疫與旅遊醫學。\n5. 醫療機構感染管制與實驗室生物安全。\n6. 傳染病檢驗、研究與疫苗研製。\n7. 防疫物資整備與緊急應變。\n8. 國際衛生合作與《國際衛生條例》聯繫。\n9. 其他有關疾病管制事項。\n\n## 主要法規\n- 《傳染病防治法》\n- 《衛生福利部疾病管制署組織法》與處務規程\n- 《國際衛生條例（2005）》（我國比照遵循）\n\n組織架構與各單位職掌請見「關於本署」組織圖（由單位主檔自動產生）。",
+  "i18n": {
+    "en": {
+      "title": "Mission and statutory functions",
+      "summary": "Taiwan CDC aims to keep communicable diseases out at the border and contain them in the community, with statutory functions in surveillance, immunisation, quarantine, infection control, laboratory research and vaccine development."
+    }
+  }
+}

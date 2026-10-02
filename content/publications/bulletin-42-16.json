@@ -1,0 +1,91 @@
+{
+  "id": "publication.bulletin-42-16",
+  "type": "publication",
+  "title": "疫情報導 第 42 卷第 16 期",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2026-08-25",
+  "reviewedAt": "2026-08-25",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "professional",
+    "public"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.japanese-encephalitis",
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "none"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "本期收錄 2 篇：日本腦炎病例之流行病學特徵：2020–2025 年等。",
+  "keywords": [
+    "疫情報導",
+    "第 42 卷",
+    "流行病學",
+    "急性傳染病組",
+    "檢驗及疫苗研製中心"
+  ],
+  "note": "卷期與篇目為示意；ISSN 與 PDF 連結待出版單位確認",
+  "pubType": "bulletin",
+  "series": "疫情報導",
+  "seriesEn": "Taiwan Epidemiology Bulletin",
+  "volume": 42,
+  "issue": 16,
+  "issn": "1680-5739",
+  "authors": [
+    "疾病管制署"
+  ],
+  "pdfUrl": "https://www.cdc.gov.tw/File/Get/placeholder-teb-42-16",
+  "abstractMarkdown": "《疫情報導》為疾管署發行之同儕審查期刊，每月出刊 2 期，刊載疫情調查、監測分析與防治政策。本期（第 42 卷第 16 期，2026-08-25 出刊）收錄：\n\n1. 日本腦炎病例之流行病學特徵：2020–2025 年\n2. 登革熱 NS1 快篩於基層診所之運用成效",
+  "articles": [
+    {
+      "title": "日本腦炎病例之流行病學特徵：2020–2025 年",
+      "authors": [
+        "急性傳染病組"
+      ],
+      "pages": "1-8",
+      "diseases": [
+        "disease.japanese-encephalitis"
+      ]
+    },
+    {
+      "title": "登革熱 NS1 快篩於基層診所之運用成效",
+      "authors": [
+        "檢驗及疫苗研製中心"
+      ],
+      "pages": "9-16",
+      "diseases": [
+        "disease.dengue"
+      ]
+    }
+  ]
+}

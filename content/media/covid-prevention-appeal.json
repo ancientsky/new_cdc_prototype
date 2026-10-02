@@ -1,0 +1,106 @@
+{
+  "id": "media.covid-prevention-appeal",
+  "type": "media",
+  "title": "秋冬預防新冠，高風險族群請接種新一季疫苗",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-09-26",
+  "reviewedAt": "2026-09-26",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "vaccines",
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "doc.covid-vaccine-recommendation",
+    "disease.covid-19"
+  ],
+  "diseases": [
+    "disease.covid-19"
+  ],
+  "vaccines": [
+    "vaccine.covid-19"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-26"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-26",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "秋冬呼吸道疾病好發，影片呼籲 65 歲以上長者與慢性病患者接種新一季新冠疫苗，並提醒有症狀戴口罩、在家休息，出現重症徵兆及早就醫。",
+  "keywords": [
+    "新冠",
+    "COVID-19",
+    "新冠疫苗",
+    "秋冬",
+    "高風險族群"
+  ],
+  "note": "YouTube 影片 id 原型無法驗證，一律 null；頻道網址沿用舊式 /user/taiwancdc，dataset.youtube-channel 記為 @TwCDC，上線前請公關室確認頻道 handle。",
+  "mediaType": "video",
+  "durationSeconds": 90,
+  "producedAt": "2026-09-22",
+  "basedOnVersionLabel": "2026-09-15 新冠疫苗接種建議",
+  "targetGroups": [
+    "65 歲以上長者",
+    "慢性病患者",
+    "一般民眾"
+  ],
+  "series": "秋冬呼吸道疾病防治",
+  "captions": [
+    "zh-TW",
+    "en"
+  ],
+  "chapters": [
+    {
+      "t": 0,
+      "label": "秋冬為什麼要提高警覺"
+    },
+    {
+      "t": 25,
+      "label": "新一季疫苗誰該打"
+    },
+    {
+      "t": 55,
+      "label": "有症狀時怎麼做"
+    }
+  ],
+  "transcriptMarkdown": "**[00:00] 秋冬為什麼要提高警覺**\n\n旁白：天氣轉涼，大家待在室內的時間變長，新冠、流感等呼吸道病毒也更容易傳播。對多數年輕人來說，新冠可能像一場感冒；但對長輩、慢性病患者和免疫力較弱的人，仍可能引起肺炎、住院，甚至危及生命。\n\n**[00:25] 新一季疫苗誰該打**\n\n旁白：新一季新冠疫苗已經依照最新的接種建議開放。65 歲以上長者、有慢性病或免疫功能低下的人、住在長照機構的長輩，以及醫療照護人員，請優先接種。距離上一劑或上次感染已經超過一段時間的人，也可以向醫師詢問是否適合接種。新冠疫苗和流感疫苗可以同一天、在不同部位接種，一次完成更方便。\n\n**[00:55] 有症狀時怎麼做**\n\n旁白：如果出現發燒、咳嗽、喉嚨痛，請戴口罩、盡量在家休息，避免探視長輩或到人多的地方。高風險族群確診後，可以請醫師評估是否使用抗病毒藥物，越早使用效果越好。若出現呼吸急促、胸痛、意識不清或嘴唇發紫，請立即就醫。\n\n旁白：打疫苗、勤洗手、有症狀戴口罩，一起平安過秋冬。詳情請上疾管署網站，或撥打 1922。",
+  "youtubeId": null,
+  "videoUrl": "https://www.youtube.com/user/taiwancdc",
+  "poster": "/img/media/covid-prevention-appeal.svg",
+  "i18n": {
+    "en": {
+      "title": "Autumn and winter COVID-19 prevention: high-risk groups should get this season’s vaccine",
+      "summary": "Older adults and people with chronic conditions are urged to get the new-season COVID-19 vaccine; wear a mask when sick and seek care early for warning signs."
+    }
+  }
+}

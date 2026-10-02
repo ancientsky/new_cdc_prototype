@@ -1,0 +1,118 @@
+{
+  "id": "publication.bulletin-42-18",
+  "type": "publication",
+  "title": "疫情報導 第 42 卷第 18 期",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2026-09-22",
+  "reviewedAt": "2026-09-22",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "professional",
+    "public"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.enterovirus",
+    "disease.influenza",
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-22",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "本期收錄 4 篇：秋冬腸病毒疫情回升之監測指標分析等。",
+  "keywords": [
+    "疫情報導",
+    "第 42 卷",
+    "流行病學",
+    "疫情中心",
+    "感染管制及生物安全組"
+  ],
+  "note": "卷期與篇目為示意；ISSN 與 PDF 連結待出版單位確認",
+  "pubType": "bulletin",
+  "series": "疫情報導",
+  "seriesEn": "Taiwan Epidemiology Bulletin",
+  "volume": 42,
+  "issue": 18,
+  "issn": "1680-5739",
+  "authors": [
+    "疾病管制署"
+  ],
+  "pdfUrl": "https://www.cdc.gov.tw/File/Get/placeholder-teb-42-18",
+  "abstractMarkdown": "《疫情報導》為疾管署發行之同儕審查期刊，每月出刊 2 期，刊載疫情調查、監測分析與防治政策。本期（第 42 卷第 18 期，2026-09-22 出刊）收錄：\n\n1. 秋冬腸病毒疫情回升之監測指標分析\n2. 醫院抗藥性細菌監測：2025 年度報告摘要\n3. 流感抗病毒藥劑公費使用條件修訂之說明\n4. 一起移工宿舍結核病接觸者調查",
+  "articles": [
+    {
+      "title": "秋冬腸病毒疫情回升之監測指標分析",
+      "authors": [
+        "疫情中心"
+      ],
+      "pages": "1-8",
+      "diseases": [
+        "disease.enterovirus"
+      ]
+    },
+    {
+      "title": "醫院抗藥性細菌監測：2025 年度報告摘要",
+      "authors": [
+        "感染管制及生物安全組"
+      ],
+      "pages": "9-16",
+      "diseases": []
+    },
+    {
+      "title": "流感抗病毒藥劑公費使用條件修訂之說明",
+      "authors": [
+        "急性傳染病組"
+      ],
+      "pages": "17-24",
+      "diseases": [
+        "disease.influenza"
+      ]
+    },
+    {
+      "title": "一起移工宿舍結核病接觸者調查",
+      "authors": [
+        "中區管制中心"
+      ],
+      "pages": "25-32",
+      "diseases": [
+        "disease.tuberculosis"
+      ]
+    }
+  ],
+  "i18n": {
+    "en": {
+      "title": "Taiwan Epidemiology Bulletin, Vol. 42, No. 18",
+      "summary": "This issue contains 4 articles on surveillance, outbreak investigations and control policy."
+    }
+  }
+}

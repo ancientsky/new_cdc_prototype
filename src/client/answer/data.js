@@ -28,6 +28,18 @@ export function v1(name, fallback = null) {
 }
 
 /**
+ * 可選檔案（第二輪新增：services、notify-table、media、notices）：先查 v1/index.json 是否有列出，
+ * 沒列出就不發 request（避免 404 噪音），列出但讀取失敗同樣回 fallback。
+ */
+let indexListing = null;
+export async function v1Optional(name, fallback = null) {
+  indexListing ??= v1('index', null).then((list) => (Array.isArray(list) ? new Set(list.map((x) => x.path)) : null));
+  const paths = await indexListing;
+  if (paths && !paths.has(`/v1/${name}.json`)) return fallback;
+  return v1(name, fallback);
+}
+
+/**
  * 暫停狀態：發布的 v1/governance/ai-status.json ＋ 後台（/admin/ai-status/）示範用本機覆寫。
  * 覆寫 key 優先序：cdc.aiStatusOverride（E：{paused, reason, updatedAt, updatedBy}）→ cdc.aiStatus（相容）→ cdc.aiPause；可帶 until（ISO 或毫秒）自動失效。
  */
@@ -49,10 +61,12 @@ const enginePromise = new Map();
 export function loadEngine(view = 'public') {
   if (enginePromise.has(view)) return enginePromise.get(view);
   const p = (async () => {
-    const [index, indexPro, situation, clarifications, glossary, diseases, vaccines, countries, datasets, faq, units, aiStatus, travelAlerts, countryLevels] = await Promise.all([
+    const [index, indexPro, situation, clarifications, glossary, diseases, vaccines, countries, datasets, faq, units, aiStatus, travelAlerts, countryLevels, services, notifyTable, media] = await Promise.all([
       v1('search-index', []), view === 'pro' ? v1('search-index-pro', []) : Promise.resolve([]), v1('situation', null), v1('clarifications', []), v1('glossary', []),
       v1('diseases', []), v1('vaccines', []), v1('countries', []), v1('datasets', []), v1('faq', []), v1('units', []), v1('governance/ai-status', {}),
       v1('travel-alerts', []), v1('country-levels', []),
+      // 第二輪（可選，404 容錯）：申請服務（actions）、通報時限表（病例定義與檢驗連結）、影音（來源卡海報）
+      v1Optional('services', []), v1Optional('notify-table', null), v1Optional('media', []),
     ]);
     const deps = {
       index: index ?? [], indexPro: indexPro ?? [], situation,
@@ -66,6 +80,9 @@ export function loadEngine(view = 'public') {
       units: units ?? [],
       aiStatus: effectiveAiStatus(aiStatus),
       travel: [...(Array.isArray(countryLevels) ? countryLevels : []), ...(Array.isArray(travelAlerts) ? travelAlerts : [])],
+      services: (services ?? []).map((x) => ({ id: x.id, slug: x.slug, title: x.title, serviceType: x.serviceType, steps: x.steps, slaDays: x.slaDays, fee: x.fee, applyUrl: x.applyUrl, forms: x.forms ?? [] })),
+      notifyTable,
+      media: (media ?? []).map((x) => ({ id: x.id, mediaType: x.mediaType, poster: x.poster, producedAt: x.producedAt, basedOnVersionLabel: x.basedOnVersionLabel, durationSeconds: x.durationSeconds })),
     };
     return { engine: createEngine(deps), deps };
   })();
@@ -98,8 +115,8 @@ export async function barChart(values, opts = {}) {
  * 用法（後台評估頁）：scoreEvalSet(engine, set, { exists: await evalExists() })
  */
 export async function evalExists() {
-  const [catalog, documents, situation, datasets, travelAlerts, countryLevels] = await Promise.all([
-    v1('catalog', []), v1('documents', []), v1('situation', null), v1('datasets', []), v1('travel-alerts', []), v1('country-levels', []),
+  const [catalog, documents, situation, datasets, travelAlerts, countryLevels, notices] = await Promise.all([
+    v1('catalog', []), v1('documents', []), v1('situation', null), v1('datasets', []), v1('travel-alerts', []), v1('country-levels', []), v1Optional('notices', []),
   ]);
   const ids = (catalog ?? []).map((c) => c.id);
   const families = new Set((documents ?? []).map((d) => d.family).filter(Boolean));
@@ -108,6 +125,7 @@ export async function evalExists() {
     if (ref.startsWith('situation:')) return (situation?.items ?? []).some((i) => i.disease === ref.slice(10));
     if (ref.startsWith('travel:')) { const iso = ref.slice(7).toUpperCase(); return travel.some((t) => String(t.iso2 ?? t.ISO2 ?? t.countryCode ?? t.iso ?? t.code ?? '').toUpperCase() === iso); }
     if (ref.startsWith('dataset-series:')) return (datasets ?? []).some((d) => d.id === ref.slice(15) && d.series);
+    if (ref.startsWith('newsType:')) { const [, t, open] = ref.split(':'); return (notices ?? []).some((n) => n.newsType === t && (n.governance?.whitelist ?? n.gov?.whitelist?.effective ?? true) !== false && (!open || !n.closed)); }
     return families.has(ref) || ids.some((id) => id === ref || id.startsWith(ref));
   };
 }

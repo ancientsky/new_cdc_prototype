@@ -1,0 +1,102 @@
+{
+  "id": "publication.bulletin-42-13",
+  "type": "publication",
+  "title": "疫情報導 第 42 卷第 13 期",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2026-07-14",
+  "reviewedAt": "2026-07-14",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "professional",
+    "public"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue",
+    "disease.enterovirus",
+    "disease.covid-19"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "none"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "本期收錄 3 篇：2026 年首例本土登革熱病例疫情調查與社區防治等。",
+  "keywords": [
+    "疫情報導",
+    "第 42 卷",
+    "流行病學",
+    "高屏區管制中心",
+    "檢驗及疫苗研製中心"
+  ],
+  "note": "卷期與篇目為示意；ISSN 與 PDF 連結待出版單位確認",
+  "pubType": "bulletin",
+  "series": "疫情報導",
+  "seriesEn": "Taiwan Epidemiology Bulletin",
+  "volume": 42,
+  "issue": 13,
+  "issn": "1680-5739",
+  "authors": [
+    "疾病管制署"
+  ],
+  "pdfUrl": "https://www.cdc.gov.tw/File/Get/placeholder-teb-42-13",
+  "abstractMarkdown": "《疫情報導》為疾管署發行之同儕審查期刊，每月出刊 2 期，刊載疫情調查、監測分析與防治政策。本期（第 42 卷第 13 期，2026-07-14 出刊）收錄：\n\n1. 2026 年首例本土登革熱病例疫情調查與社區防治\n2. 腸病毒 71 型實驗室監測與基因型分析\n3. 長照機構新冠群聚事件之感染管制介入評估",
+  "articles": [
+    {
+      "title": "2026 年首例本土登革熱病例疫情調查與社區防治",
+      "authors": [
+        "高屏區管制中心"
+      ],
+      "pages": "1-8",
+      "diseases": [
+        "disease.dengue"
+      ]
+    },
+    {
+      "title": "腸病毒 71 型實驗室監測與基因型分析",
+      "authors": [
+        "檢驗及疫苗研製中心"
+      ],
+      "pages": "9-16",
+      "diseases": [
+        "disease.enterovirus"
+      ]
+    },
+    {
+      "title": "長照機構新冠群聚事件之感染管制介入評估",
+      "authors": [
+        "感染管制及生物安全組"
+      ],
+      "pages": "17-24",
+      "diseases": [
+        "disease.covid-19"
+      ]
+    }
+  ]
+}

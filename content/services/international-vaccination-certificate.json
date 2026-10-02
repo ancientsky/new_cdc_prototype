@@ -1,0 +1,130 @@
+{
+  "id": "service.international-vaccination-certificate",
+  "type": "service",
+  "title": "國際預防接種證明書（黃皮書）",
+  "owner": "unit.quarantine",
+  "publishedAt": "2024-06-01",
+  "reviewedAt": "2026-06-15",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "travel",
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "vaccines": [
+    "vaccine.mmr"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-06-15"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-06-15",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "前往要求黃熱病等疫苗證明的國家，須於旅遊醫學門診接種並核發國際預防接種證明書（俗稱黃皮書）；黃熱病疫苗接種 10 日後生效。",
+  "keywords": [
+    "黃皮書",
+    "國際預防接種證明書",
+    "黃熱病",
+    "旅遊醫學門診",
+    "出國"
+  ],
+  "slug": "international-vaccination-certificate",
+  "serviceType": "certificate",
+  "whoCanApply": [
+    "民眾",
+    "出國旅客",
+    "外籍人士"
+  ],
+  "introMarkdown": "**國際預防接種證明書**（International Certificate of Vaccination or Prophylaxis，俗稱黃皮書）依《國際衛生條例》格式核發，部分國家入境要求出示**黃熱病**疫苗接種證明。\n\n請於出國前至少 **10 日**（建議 4–6 週）至旅遊醫學合約門診評估接種；黃熱病疫苗接種後 10 日起生效，一劑終身有效。",
+  "requiredDocuments": [
+    "護照（姓名須與證明書一致）",
+    "身分證或居留證",
+    "既有之預防接種紀錄（如有）"
+  ],
+  "steps": [
+    {
+      "title": "查詢目的地規定",
+      "text": "確認目的地是否要求黃熱病疫苗證明。",
+      "who": "民眾",
+      "days": 0
+    },
+    {
+      "title": "預約旅遊醫學門診",
+      "text": "向全國旅遊醫學合約門診預約。",
+      "who": "民眾",
+      "days": 1
+    },
+    {
+      "title": "醫師評估與接種",
+      "text": "評估禁忌症後接種。",
+      "who": "旅遊醫學門診",
+      "days": 0
+    },
+    {
+      "title": "核發證明書",
+      "text": "當場核發並簽章，請核對護照英文姓名。",
+      "who": "旅遊醫學門診",
+      "days": 0
+    }
+  ],
+  "slaDays": 1,
+  "fee": "疫苗費、證明書工本費與掛號費依各院所公告（自費）",
+  "legalBasis": [
+    "國際衛生條例（2005）",
+    "傳染病防治法"
+  ],
+  "forms": [
+    {
+      "label": "國際預防接種證明書樣張",
+      "href": "https://www.cdc.gov.tw/File/Get/placeholder-form-icvp-sample",
+      "format": "PDF",
+      "machineReadable": false
+    }
+  ],
+  "contact": "疾病管制署檢疫組（總機 02-2395-9825）；一般諮詢請撥防疫專線 1922（國外 +886-800-001922）",
+  "faq": [
+    {
+      "q": "黃皮書遺失可以補發嗎？",
+      "a": "可以，請攜帶護照至原接種院所申請補發，院所依接種紀錄核發。"
+    },
+    {
+      "q": "不能打黃熱病疫苗怎麼辦？",
+      "a": "經醫師評估有禁忌症者，可開立豁免證明，但入境國是否接受依該國規定。"
+    }
+  ],
+  "i18n": {
+    "en": {
+      "title": "International Certificate of Vaccination (yellow card)",
+      "summary": "Travellers to countries requiring yellow fever vaccination get vaccinated and receive the certificate at travel medicine clinics; it becomes valid 10 days after vaccination."
+    }
+  }
+}

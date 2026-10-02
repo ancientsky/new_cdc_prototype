@@ -1,0 +1,111 @@
+{
+  "id": "labtest.tuberculosis",
+  "type": "labtest",
+  "title": "結核病檢驗項目與送驗規定",
+  "owner": "unit.lab",
+  "publishedAt": "2025-01-15",
+  "reviewedAt": "2026-07-15",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.tuberculosis",
+    "doc.tb-manual"
+  ],
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-07-15"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-07-15",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "結核病：連續 3 套痰液（至少 1 套晨痰）各 3–5 mL，冷藏 72 小時內送認可實驗室，做抗酸菌塗片、培養、分子檢測與藥物感受性試驗。",
+  "keywords": [
+    "結核病",
+    "檢體",
+    "送驗",
+    "採檢",
+    "抗酸菌塗片",
+    "分子檢測（MTB／RIF）"
+  ],
+  "note": "檢體量、保存與時效為原型示意，以檢驗及疫苗研製中心「傳染病檢體採檢手冊」現行版為準",
+  "disease": "disease.tuberculosis",
+  "specimens": [
+    {
+      "name": "痰液（3 套）",
+      "timing": "通報前後連續採檢，至少 1 套為清晨第一口痰",
+      "container": "無菌螺旋蓋痰盒",
+      "volume": "每套 3–5 mL",
+      "storage": "2–8°C 冷藏",
+      "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+      "tests": [
+        "抗酸菌塗片",
+        "分子檢測（MTB／RIF）",
+        "培養與鑑定",
+        "藥物感受性試驗"
+      ],
+      "turnaroundDays": 1,
+      "note": "塗片 1 日；分子檢測 1–2 日；培養 6–8 週"
+    },
+    {
+      "name": "支氣管沖洗液或胃液",
+      "timing": "無法自咳痰者",
+      "container": "無菌螺旋蓋容器",
+      "volume": "5 mL 以上",
+      "storage": "2–8°C 冷藏",
+      "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+      "tests": [
+        "抗酸菌塗片",
+        "培養"
+      ],
+      "turnaroundDays": 1
+    }
+  ],
+  "labs": [
+    "certified-lab",
+    "hospital-lab"
+  ],
+  "sendWithinHours": 72,
+  "formDoc": "https://www.cdc.gov.tw/File/Get/placeholder-form-lab-specimen-form",
+  "biosafetyLevel": "BSL-2（培養與藥敏 BSL-3）",
+  "notesMarkdown": "- 結核病為第三類法定傳染病，通報時限一週；建議通報同時完成 3 套痰液送驗。\n- 多重抗藥性結核菌株送疾管署參考實驗室確認。\n- 痰液請咳出肺部深處痰，非口水。",
+  "i18n": {
+    "en": {
+      "title": "Tuberculosis: laboratory tests and specimen requirements",
+      "summary": "Three sputum samples (at least one early-morning) of 3–5 mL each, refrigerated and sent within 72 hours for smear, molecular tests, culture and drug susceptibility testing."
+    }
+  }
+}

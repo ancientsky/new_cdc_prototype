@@ -1,0 +1,84 @@
+{
+  "id": "research.2026-ai-health-qa-accuracy",
+  "type": "research",
+  "title": "AI 輔助衛教問答之正確性、可引用性與民眾信任評估",
+  "owner": "unit.oasis",
+  "publishedAt": "2026-09-01",
+  "reviewedAt": "2026-09-01",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional",
+    "public"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-01",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "2026 年委託研究（規劃中）：以疾管署評估集與真實提問樣本，評估 AI 衛教問答的正確性、來源可引用性與版本正確率，並調查民眾信任度。",
+  "keywords": [
+    "AI",
+    "衛教問答",
+    "評估集",
+    "可信度",
+    "委託研究"
+  ],
+  "note": "計畫編號、經費與 IRB 字號為示意；執行單位以機構名稱表示，不列個人姓名",
+  "projectNo": "MOHW115-CDC-C-315-000101",
+  "year": 2026,
+  "projectStatus": "planned",
+  "fundingType": "commissioned",
+  "piUnit": "某國立大學資訊管理學系暨公共衛生學院（合作）",
+  "budgetNtd": 3200000,
+  "abstractMarkdown": "新官網答案引擎僅引用白名單內容並逐句附來源。本計畫將以第三方角度驗證：\n\n1. 依附錄 D 六指標（Grounding、事實正確、完整、回答率、拒答精確、聲譽安全）重新抽樣評估；\n2. 比較抽取式與生成式模式在**版本題**（如 MMR 1966 年條件）之表現；\n3. 以線上問卷與可用性測試評估民眾對「附來源」答案的信任與理解。",
+  "objectives": [
+    "建立獨立於開發團隊之評估集抽樣方法",
+    "量測版本題與過時內容之誤答率",
+    "提出民眾端來源呈現設計建議"
+  ],
+  "datasets": [
+    "dataset.disease-pages",
+    "dataset.press-rss"
+  ],
+  "irb": {
+    "required": true,
+    "committee": "受託機構人體研究倫理審查委員會（待送審）"
+  },
+  "i18n": {
+    "en": {
+      "title": "Evaluating accuracy, citability and public trust of AI-assisted health Q&A",
+      "summary": "Planned 2026 commissioned study evaluating the accuracy, source citation and version correctness of AI health answers, and public trust."
+    }
+  }
+}

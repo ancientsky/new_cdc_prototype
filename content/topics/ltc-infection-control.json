@@ -1,0 +1,105 @@
+{
+  "id": "topic.ltc-infection-control",
+  "type": "topic",
+  "title": "長照機構感染管制專區",
+  "owner": "unit.infection-control",
+  "publishedAt": "2025-03-01",
+  "reviewedAt": "2026-09-10",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "professional",
+    "public"
+  ],
+  "tasks": [
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza",
+    "disease.covid-19",
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-10"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-10",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "提供長期照護機構感染管制手冊、查核基準、群聚通報流程、住民與工作人員疫苗接種及教育訓練教材，協助機構預防呼吸道與腸胃道群聚。",
+  "keywords": [
+    "長照機構",
+    "感染管制",
+    "群聚",
+    "查核",
+    "教育訓練",
+    "流感疫苗"
+  ],
+  "image": "/img/topics/ltc-infection-control.svg",
+  "slug": "ltc-infection-control",
+  "kind": "resource-hub",
+  "priority": 5,
+  "introMarkdown": "長照機構住民年紀大、慢性病多、共同生活，是呼吸道與腸胃道群聚的高風險場所。本專區提供機構負責人、護理人員與照服員：\n\n- **手冊與基準**：長期照護機構感染管制手冊、感染管制查核基準。\n- **群聚處理**：住民 3 天內出現 2 人以上類似症狀，請啟動調查並通報衛生局。\n- **疫苗**：住民與工作人員每年接種流感疫苗，並依建議接種新冠疫苗、肺炎鏈球菌疫苗。\n- **教育訓練**：手部衛生、隔離防護、環境清消教材。",
+  "links": [
+    {
+      "label": "長照機構感染管制手冊",
+      "href": "/publications/manual-ltc-infection-control-2026/"
+    },
+    {
+      "label": "影片：長照機構一起打流感疫苗",
+      "href": "/media/ltc-flu-vaccine/"
+    },
+    {
+      "label": "疑似群聚通報 1922",
+      "href": "/apply/cluster-report-1922/"
+    },
+    {
+      "label": "感染管制查核申訴與諮詢",
+      "href": "/apply/infection-control-audit-complaint/"
+    },
+    {
+      "label": "衛福部長照專區",
+      "href": "https://1966.gov.tw/",
+      "external": true,
+      "status": "unchecked",
+      "note": "網址待確認"
+    }
+  ],
+  "contentIds": [
+    "media.ltc-flu-vaccine",
+    "doc.infection-control-healthcare.2026-03-01",
+    "faq.flu-vaccine-who",
+    "publication.manual-ltc-infection-control-2026"
+  ],
+  "i18n": {
+    "en": {
+      "title": "Infection control in long-term care facilities",
+      "summary": "Manuals, audit criteria, cluster reporting, vaccination for residents and staff, and training materials to help long-term care facilities prevent outbreaks."
+    }
+  }
+}

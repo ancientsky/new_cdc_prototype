@@ -19,7 +19,14 @@ export function itemPath(item) {
     case 'document': return `/documents/${slugOf(item)}/`;
     case 'clarification': return `/factcheck/#${item.id}`;
     case 'dataset': return `/data/#${item.id}`;
-    case 'page': return PAGE_PATHS[item.slug] ?? `/about/`;
+    case 'page': return PAGE_PATHS[item.slug] ?? (String(item.slug ?? '').includes('/') ? `/${item.slug}/` : '/about/');
+    case 'media': return `/media/${slugOf(item)}/`;
+    case 'topic': return `/topics/${item.slug ?? slugOf(item)}/`;
+    case 'service': return `/apply/${item.slug ?? slugOf(item)}/`;
+    case 'publication': return `/publications/${slugOf(item)}/`;
+    case 'labtest': return `/lab/${slugOf(item)}/`;
+    case 'research': return `/research/${slugOf(item)}/`;
+    case 'banner': return `/campaigns/#${item.id}`;
     default: return '/';
   }
 }
@@ -331,3 +338,184 @@ export function dated(ctx, item, { type = true } = {}) {
 export function seriesOf(ds) { return ds?.series?.points?.length ? ds.series : null; }
 
 export function mdLine(s) { return String(s ?? '').replace(/\n+/g, ' '); }
+
+/* ═════════════ 第二輪（C2）：影音、專區、申請、公告、機關型區塊共用元件 ═════════════ */
+
+/** 圖片路徑 → 可用的 src（站內路徑走 basePath；外部網址原樣） */
+export function imgSrc(ctx, p) {
+  if (!p) return null;
+  if (/^(https?:)?\/\//.test(p) || p.startsWith('data:')) return p;
+  return ctx.url(p.startsWith('/') ? p : `/${p}`, { noLang: true });
+}
+
+/** 秒數 → m:ss / h:mm:ss */
+export function fmtDur(sec) {
+  const s = Math.max(0, Math.round(Number(sec) || 0));
+  const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), r = s % 60;
+  const mm = h ? String(m).padStart(2, '0') : String(m);
+  return `${h ? `${h}:` : ''}${mm}:${String(r).padStart(2, '0')}`;
+}
+
+const dayDiff = (a, b) => Math.round((new Date(`${b}T00:00:00Z`) - new Date(`${a}T00:00:00Z`)) / 86400000);
+/** 距離截止日剩幾天（負數＝已過） */
+export const daysUntil = (today, iso) => (iso ? dayDiff(today, iso) : null);
+
+/** 公告是否已截止：治理引擎的 gov.closed 優先，否則由欄位推算 */
+export function isClosed(site, n) {
+  if (n.gov && typeof n.gov.closed === 'boolean') return n.gov.closed;
+  return !!n.deadlineAt && n.deadlineAt < site.today;
+}
+export function isClosingSoon(site, n) {
+  if (isClosed(site, n)) return false;
+  if (n.gov && typeof n.gov.closingSoon === 'boolean') return n.gov.closingSoon;
+  const d = daysUntil(site.today, n.deadlineAt);
+  return d != null && d >= 0 && d <= 7;
+}
+export const NOTICE_TYPES = ['recruit', 'procurement', 'other'];
+export const isNotice = (n) => NOTICE_TYPES.includes(n.newsType);
+export const HOME_NEWS_TYPES = ['press', 'clarification', 'letter'];
+
+/** 專區是否已結束 */
+export function isTopicEnded(site, tp) {
+  if (tp.gov && typeof tp.gov.ended === 'boolean') return tp.gov.ended;
+  return !!tp.endAt && tp.endAt < site.today;
+}
+
+/** 影音是否依據已修訂的正本（過時）：gov.mediaOutdated 優先；否則由 basedOn 現行版 effectiveAt 與 producedAt 比對 */
+export function isMediaOutdated(site, m) {
+  if (m.gov && typeof m.gov.mediaOutdated === 'boolean') return m.gov.mediaOutdated;
+  if (m.gov?.annotations?.some((a) => a.kind === 'based-on-revised')) return true;
+  return !!currentBasis(site, m, true);
+}
+/** basedOn 的現行版；onlyNewer＝只回傳比 producedAt 更新的現行版 */
+export function currentBasis(site, m, onlyNewer = false) {
+  for (const ref of m.basedOn ?? []) {
+    const d = site.byId.get(ref);
+    if (!d) continue;
+    const cur = d.type === 'document'
+      ? (d.isCurrent ? d : site.collections.documents.find((x) => x.family === d.family && x.isCurrent && x.status === 'published') ?? d)
+      : d;
+    if (!onlyNewer) return cur;
+    if (cur?.effectiveAt && m.producedAt && cur.effectiveAt > m.producedAt) return cur;
+  }
+  return null;
+}
+
+/** 單位統計：相容 site.gov.byOwner 為陣列或物件；缺資料時自行由 site.all 計算 */
+export function ownerStats(site, id) {
+  const b = site.gov?.byOwner;
+  let row = null;
+  if (Array.isArray(b)) row = b.find((r) => (r.unit ?? r.id) === id);
+  else if (b && typeof b === 'object') row = b[id];
+  if (row) return { content: row.content ?? row.published ?? 0, whitelist: row.whitelist ?? 0, types: row.types ?? null };
+  const own = (site.all ?? []).filter((i) => i.owner === id);
+  return { content: own.length, whitelist: own.filter((i) => i.gov?.whitelist?.effective).length, types: null };
+}
+
+/* ───── 影音：海報（無圖時的示意海報）與卡片 ───── */
+export function posterArt(label = '') {
+  return raw(`<svg viewBox="0 0 320 180" class="c-media-card__svg" aria-hidden="true" focusable="false" preserveAspectRatio="xMidYMid slice"><rect width="320" height="180" fill="#e5efe9"/><circle cx="260" cy="40" r="56" fill="#cfe3d8"/><circle cx="50" cy="150" r="46" fill="#cfe3d8"/><circle cx="160" cy="90" r="26" fill="#1b5e3f"/><path d="M152 78l22 12-22 12z" fill="#fff"/>${label ? `<text x="160" y="160" text-anchor="middle" font-size="12" fill="#164d37">${esc(label)}</text>` : ''}</svg>`);
+}
+export function posterImg(ctx, m, { loading = 'lazy' } = {}) {
+  const src = imgSrc(ctx, m.poster);
+  return src ? html`<img class="c-media-card__img" src="${src}" alt="" width="320" height="180" loading="${loading}">` : posterArt();
+}
+
+/** 影音卡：海報 16:9、時長角標、過時標記、「依 … 製作」小字；整張卡可點（標題連結拉伸） */
+export function mediaCard(ctx, m, { tag = 'li' } = {}) {
+  const { t } = ctx;
+  const outdated = isMediaOutdated(ctx.site, m);
+  const fb = isFallbackLink(ctx, m);
+  const open = tag === 'li' ? '<li' : '<div';
+  const close = tag === 'li' ? '</li>' : '</div>';
+  const diseases = (m.diseases ?? []).join(' ');
+  return raw(`${open} class="c-media-card${outdated ? ' c-media-card--outdated' : ''}" data-disease="${esc(diseases)}" data-task="${esc((m.tasks ?? []).join(' '))}" data-cap="${esc((m.captions ?? []).join(' '))}" data-outdated="${outdated ? '1' : '0'}">${html`
+  <div class="c-media-card__poster">${posterImg(ctx, m)}${m.durationSeconds ? html`<span class="c-media-card__dur"><span class="sr-only">${t('media.duration')} </span>${fmtDur(m.durationSeconds)}</span>` : ''}${outdated ? html`<span class="c-media-card__flag">${t('media.outdated.tag')}</span>` : ''}</div>
+  <div class="c-media-card__body">
+    <h3 class="c-media-card__t"><a href="${hrefFor(ctx, m)}"${fb ? raw(' lang="zh-TW"') : ''}>${fb ? m.title : L(ctx, m, 'title')}</a></h3>
+    ${m.basedOnVersionLabel ? html`<p class="c-media-card__basis">${t('media.basedOn.short', { v: m.basedOnVersionLabel })}</p>` : ''}
+  </div>`}${close}`);
+}
+
+/* ───── 服務：八圖示入口 ───── */
+const SVC_ICONS = {
+  report: '<path d="M3 10v4h3l5 4V6L6 10z"/><path d="M15 9a4 4 0 0 1 0 6M18 6a8 8 0 0 1 0 12"/>',
+  lab: '<path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/><path d="M7.5 15h9"/>',
+  media: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9l5 3-5 3z"/>',
+  data: '<path d="M4 20V10m6 10V4m6 16v-7m4 7H2"/>',
+  apply: '<path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/>',
+  research: '<circle cx="11" cy="11" r="6"/><path d="M16 16l5 5"/>',
+  publications: '<path d="M4 5a2 2 0 0 1 2-2h13v15H6a2 2 0 0 0-2 2z"/><path d="M4 20a2 2 0 0 0 2 2h13M9 7h6"/>',
+  fund: '<path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/>',
+};
+export const svcIcon = (name, size = 28) => raw(`<svg class="c-services__ic" viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${SVC_ICONS[name] ?? ''}</svg>`);
+
+export const SERVICE_ITEMS = [
+  { key: 'report', path: '/report/' }, { key: 'lab', path: '/lab/' }, { key: 'media', path: '/media/' }, { key: 'data', path: '/data/' },
+  { key: 'apply', path: '/apply/' }, { key: 'research', path: '/research/' }, { key: 'publications', path: '/publications/' }, { key: 'fund', path: '/apply/' },
+];
+/** 「應用專區」八圖示（/services/ 與 /pro/ 共用） */
+export function servicesGrid(ctx, { heading = null } = {}) {
+  const { t, url, site } = ctx;
+  const hasFund = (site.collections.services ?? []).some((s) => s.slug === 'vaccine-fund-donation' && s.status === 'published');
+  return html`<nav class="c-services" aria-label="${heading ?? t('services.title')}"><ul class="c-services__grid">${SERVICE_ITEMS.map((s) => {
+    const path = s.key === 'fund' && hasFund ? '/apply/vaccine-fund-donation/' : s.path;
+    return html`<li><a class="c-services__item" href="${url(path)}">${svcIcon(s.key)}<span class="c-services__t">${t(`services.${s.key}`)}</span><span class="c-services__sub">${t(`services.${s.key}.sub`)}</span></a></li>`;
+  })}</ul></nav>`;
+}
+
+/* ───── 公告列（人才招募／採購／其他） ───── */
+export function deadlinePill(ctx, n) {
+  const { t, site, fmtDate } = ctx;
+  if (!n.deadlineAt) return html`<span class="c-pill c-pill--neutral">${t('notice.nodeadline')}</span>`;
+  const closed = isClosed(site, n);
+  const d = daysUntil(site.today, n.deadlineAt);
+  if (closed) return html`<span class="c-deadline c-deadline--closed">${t('notice.closed.on', { date: fmtDate(n.deadlineAt) })}</span>`;
+  const soon = isClosingSoon(site, n);
+  const txt = d === 0 ? t('notice.today') : t('notice.daysleft', { n: d });
+  return html`<span class="c-deadline ${soon ? 'c-deadline--soon' : 'c-deadline--open'}">${txt}</span>`;
+}
+export function noticeRow(ctx, n) {
+  const { t, fmtDate, site } = ctx;
+  const closed = isClosed(site, n);
+  const fb = isFallbackLink(ctx, n);
+  const href = hrefFor(ctx, n);
+  return html`<li class="c-notice${closed ? ' c-notice--closed' : ''}" data-type="${n.newsType}" data-state="${closed ? 'closed' : 'open'}">
+  <div class="c-notice__main">
+    <p class="c-notice__t"><span class="c-pill c-pill--${n.newsType === 'recruit' ? 'info' : n.newsType === 'procurement' ? 'warn' : 'neutral'}">${t(`news.type.${n.newsType}`)}</span> <a href="${href}"${fb ? raw(' lang="zh-TW"') : ''}>${fb ? n.title : L(ctx, n, 'title')}</a></p>
+    <p class="c-notice__meta muted">${n.refNo ? html`${t('notice.refNo')}：${n.refNo} · ` : ''}${t('news.published')} ${fmtDate(n.publishedAt)} · ${unitName(ctx, n.owner)}${n.positions ? ` · ${t('notice.positions')}：${n.positions}` : ''}${n.budgetNtd ? ` · ${t('notice.budget')}：${Number(n.budgetNtd).toLocaleString('en-US')}` : ''}</p>
+  </div>
+  <div class="c-notice__side">${deadlinePill(ctx, n)}${n.applyUrl && !closed ? html`<a class="c-btn c-btn--sm c-btn--ghost" href="${n.applyUrl}" rel="noopener">${n.newsType === 'procurement' ? t('notice.bid') : t('notice.apply')} ↗</a>` : ''}</div>
+</li>`;
+}
+
+/* ───── 專區卡 ───── */
+export function topicCard(ctx, tp) {
+  const { t } = ctx;
+  const img = imgSrc(ctx, tp.image);
+  const fb = isFallbackLink(ctx, tp);
+  return html`<li class="c-topiccard">
+  <a class="c-topiccard__a" href="${hrefFor(ctx, tp)}"${fb ? raw(' lang="zh-TW"') : ''}>
+    <span class="c-topiccard__img">${img ? html`<img src="${img}" alt="" width="96" height="96" loading="lazy">` : raw('<svg viewBox="0 0 96 96" aria-hidden="true" focusable="false"><rect width="96" height="96" fill="#e5efe9"/><circle cx="48" cy="44" r="18" fill="#1b5e3f"/><path d="M40 44h16M48 36v16" stroke="#fff" stroke-width="5" stroke-linecap="round"/></svg>')}</span>
+    <span class="c-topiccard__body"><strong class="c-topiccard__t">${fb ? tp.title : L(ctx, tp, 'title')}</strong><span class="c-topiccard__s">${fb ? tp.summary : L(ctx, tp, 'summary')}</span>${tp.endAt ? html`<span class="c-topiccard__until">${t('topic.until', { date: ctx.fmtDate(tp.endAt) })}</span>` : ''}</span>
+  </a>
+</li>`;
+}
+
+/* ───── 外部連結標記 ───── */
+export function extLink(ctx, href, label, { cls = '' } = {}) {
+  return html`<a${cls ? raw(` class="${cls}"`) : ''} href="${href}" rel="noopener">${label}<span aria-hidden="true"> ↗</span><span class="sr-only"> (${ctx.t('external')})</span></a>`;
+}
+
+/** 通用：把 markdown 變機讀 .md 的標頭引言列 */
+export function mdHeader(ctx, item, extra = '') {
+  const owner = unitName(ctx, item.owner);
+  const lines = [`> 權責單位：${owner} · 最後審閱：${item.reviewedAt}${item.gov?.nextReviewAt ? ` · 下次審閱：${item.gov.nextReviewAt}` : ''} · 授權：${item.license} · ID：${item.id}${extra ? ` · ${extra}` : ''}`];
+  for (const a of item.gov?.annotations ?? []) lines.push(`> ⚠ ${a.text}`);
+  return lines;
+}
+
+/** 專業頁頂的 scope tag（「專業內容」） */
+export function proScope(ctx) {
+  return html`<span class="c-scope-tags"><span class="c-scope-tag c-scope-tag--pro">${ctx.t('scope.pro')}</span></span>`;
+}

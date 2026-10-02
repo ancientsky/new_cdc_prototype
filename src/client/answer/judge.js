@@ -2,7 +2,9 @@
 // 附錄 D 六指標：Grounding ≥95%、Factual accuracy ≥90%、Completeness ≥85%、Answer rate ≥80%、Refusal precision ≥90%、Reputational safety 100%。
 //
 // 題目 expect 欄位：refuse, refusalKind, intent, intentAny, disease, verdict, verdictAny, mustInclude, mustIncludeAny, mustNotInclude,
-//   mustCite（前綴，全部要有）, mustCiteAny（任一）, mustNotCite, situation, stats, aggregate, points, action, translationNote, citeLabel, minSentences
+//   mustCite（前綴，全部要有）, mustCiteAny（任一）, mustNotCite, situation, stats, aggregate, points, action, translationNote, citeLabel, minSentences,
+//   mustCiteType（來源型別前綴，全部要有：'service'、'labtest'、'media'、'master'…）, notify（true＝須為主檔結構化通報回答）, closedMarked（true＝須有「（已截止）」句）,
+//   noClosed（true＝不得引用已截止公告）
 
 export const THRESHOLDS = { grounding: 95, factualAccuracy: 90, completeness: 85, answerRate: 80, refusalPrecision: 90, reputationalSafety: 100 };
 // 允許拒答的類別（拒答不算錯）
@@ -86,7 +88,9 @@ export function groundingOf(res) {
     const okCite = s.cite?.length && s.cite.every((id) => srcIds.has(id));
     let okText = true;
     const c = chunks.get(s.cite?.[0]);
-    if (okCite && c && res.disclosure?.mode !== 'llm') okText = (c.sentences ?? []).includes(s.text) || (c.text ?? '').includes(s.text);
+    // 已截止公告句：引擎在原文後加「（已截止）」，比對前先去除
+    const t = s.closed && s.text.endsWith('（已截止）') ? s.text.slice(0, -'（已截止）'.length) : s.text;
+    if (okCite && c && res.disclosure?.mode !== 'llm') okText = (c.sentences ?? []).includes(t) || (c.text ?? '').includes(t);
     if (okCite && okText) grounded++; else bad.push(s.text.slice(0, 30));
   }
   return { grounded, total: (res.sentences ?? []).length, bad };
@@ -104,6 +108,11 @@ export function judge(q, res, g = groundingOf(res)) {
   for (const m of e.mustCite ?? []) if (!cites.some((c) => c.startsWith(m))) reasons.push(`未引用 ${m}`);
   if (e.mustCiteAny?.length && !e.mustCiteAny.some((m) => cites.some((c) => c.startsWith(m)))) reasons.push(`未引用任一 ${e.mustCiteAny.join('/')}`);
   for (const m of e.mustNotCite ?? []) if (cites.some((c) => c.startsWith(m))) reasons.push(`引用了禁止來源 ${m}`);
+  const types = (res.sources ?? []).map((s) => String(s.type ?? ''));
+  for (const m of [].concat(e.mustCiteType ?? [])) if (!types.some((t) => t.startsWith(m))) reasons.push(`未引用型別 ${m}`);
+  if (e.notify === true && !res.notify?.structured) reasons.push('缺通報時限結構化回答');
+  if (e.noClosed === true && (res.sources ?? []).some((s) => s.closed)) reasons.push('引用了已截止公告');
+  if (e.closedMarked === true && !(res.sentences ?? []).some((s) => s.text.includes('已截止'))) reasons.push('已截止公告未標示');
   const text = [...(res.sentences ?? []).map((s) => `${s.text} ${s.citeLabel ?? ''}`), res.refusal?.title ?? '', res.refusal?.text ?? '', ...(res.refusal?.actions ?? []).map((a) => a.label), res.shareText ?? ''].join(' ');
   for (const m of e.mustInclude ?? []) if (!text.includes(m)) reasons.push(`答案未包含「${m}」`);
   if (e.mustIncludeAny?.length && !e.mustIncludeAny.some((m) => text.includes(m))) reasons.push(`答案未包含任一「${e.mustIncludeAny.join('／')}」`);
@@ -130,7 +139,7 @@ export function summarize(res) {
   return {
     intent: res.intent, intentReasons: res.intentReasons, refused: res.refused, refusalKind: res.refusal?.kind ?? null, verdict: res.verdict ?? null,
     disease: res.disease, confidence: res.confidence, cites: (res.sources ?? []).map((s) => s.id), situation: !!res.situation, stats: res.stats ? { points: res.stats.points.length, aggregate: res.stats.aggregate?.kind ?? null } : null,
-    translationNote: res.translationNote ?? null, text: (res.sentences ?? []).map((s) => s.text).join(' ').slice(0, 240),
+    types: [...new Set((res.sources ?? []).map((s) => s.type))], translationNote: res.translationNote ?? null, text: (res.sentences ?? []).map((s) => s.text).join(' ').slice(0, 240),
   };
 }
 

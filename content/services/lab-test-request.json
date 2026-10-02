@@ -1,0 +1,141 @@
+{
+  "id": "service.lab-test-request",
+  "type": "service",
+  "title": "傳染病檢驗委託（醫療院所送驗）",
+  "owner": "unit.lab",
+  "publishedAt": "2025-01-15",
+  "reviewedAt": "2026-07-15",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-07-15"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-07-15",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "醫療院所通報法定傳染病後，依檢驗項目採檢並附送驗單，經衛生局或直接送疾管署檢驗及疫苗研製中心檢驗，結果於 NIDRS 回覆。",
+  "keywords": [
+    "檢驗委託",
+    "送驗",
+    "採檢",
+    "檢體",
+    "送驗單",
+    "NIDRS"
+  ],
+  "slug": "lab-test-request",
+  "serviceType": "lab-request",
+  "whoCanApply": [
+    "醫療院所",
+    "地方衛生局",
+    "認可檢驗機構"
+  ],
+  "introMarkdown": "法定傳染病及新興傳染病之**確認檢驗**由疾管署檢驗及疫苗研製中心或認可檢驗機構執行。醫療院所於**通報後**依「檢驗項目」頁所列檢體、容器、保存與運送條件採檢送驗；檢驗結果於傳染病通報系統（NIDRS）回覆。\n\n各疾病檢體規格請見檢驗專區（/lab/）。",
+  "requiredDocuments": [
+    "傳染病檢體送驗單（系統列印，含通報編號）",
+    "符合規格之檢體與三層包裝",
+    "必要時：臨床資料與旅遊史"
+  ],
+  "steps": [
+    {
+      "title": "完成通報",
+      "text": "於 NIDRS 完成個案通報並取得通報編號。",
+      "who": "醫療院所",
+      "days": 0
+    },
+    {
+      "title": "依規格採檢",
+      "text": "依檢驗專區所列檢體種類、時機與容器採檢。",
+      "who": "醫療院所",
+      "days": 0
+    },
+    {
+      "title": "包裝與運送",
+      "text": "以 UN3373 三層包裝，依保存條件於時限內送達衛生局或檢驗單位。",
+      "who": "醫療院所／衛生局",
+      "days": 1
+    },
+    {
+      "title": "檢驗",
+      "text": "實驗室收件、檢驗與品管。",
+      "who": "檢驗及疫苗研製中心",
+      "days": 3
+    },
+    {
+      "title": "回覆結果",
+      "text": "結果登錄 NIDRS，院所可即時查詢。",
+      "who": "檢驗及疫苗研製中心",
+      "days": 1
+    }
+  ],
+  "slaDays": 5,
+  "fee": "法定傳染病確認檢驗免費",
+  "legalBasis": [
+    "傳染病防治法第 46 條",
+    "傳染病檢驗及檢驗機構管理辦法",
+    "感染性生物材料管理辦法"
+  ],
+  "forms": [
+    {
+      "label": "傳染病檢體送驗單",
+      "href": "https://www.cdc.gov.tw/File/Get/placeholder-form-lab-specimen-form",
+      "format": "PDF",
+      "machineReadable": false
+    },
+    {
+      "label": "檢體採檢手冊",
+      "href": "https://www.cdc.gov.tw/File/Get/placeholder-form-lab-specimen-manual",
+      "format": "PDF",
+      "machineReadable": false
+    }
+  ],
+  "applyUrl": "https://nidrs.cdc.gov.tw/",
+  "contact": "疾病管制署檢驗及疫苗研製中心（總機 02-2395-9825）；一般諮詢請撥防疫專線 1922（國外 +886-800-001922）",
+  "faq": [
+    {
+      "q": "檢體可以直接寄到疾管署嗎？",
+      "a": "原則由轄區衛生局收件後轉送；部分急件與特殊檢體依區管中心指示直送。"
+    },
+    {
+      "q": "結果多久出來？",
+      "a": "依疾病而異，多數 PCR 檢驗 1 至 3 個工作天；各項目見檢驗專區。"
+    }
+  ],
+  "i18n": {
+    "en": {
+      "title": "Laboratory testing for notifiable diseases (specimens from healthcare facilities)",
+      "summary": "After notification, facilities collect specimens per lab specifications and send them with a requisition form; results are returned via NIDRS."
+    }
+  }
+}

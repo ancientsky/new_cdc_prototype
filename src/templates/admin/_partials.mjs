@@ -1,23 +1,28 @@
 // 後台共用片段（Agent E）。底線開頭＝不會被當成頁面模板自動登錄。
 // 原則：治理狀態一律來自 item.gov / site.gov（建置時由引擎算），這裡只做呈現，不重算規則。
 import { html, raw, jsonScript, esc, daysBetween } from '../../../scripts/lib/render.mjs';
+import { config } from '../../../site.config.mjs';
 
 export const DEFAULT_UNIT = 'unit.acute-infectious';
 
 export const TYPE_LABEL = {
   disease: '疾病頁', faq: 'Q&A', news: '新聞稿', letter: '致醫界通函', clarification: '澄清', document: '文件', vaccine: '疫苗頁',
   dataset: '資料集', banner: '宣導 Banner', page: '一般頁面',
+  media: '影音', topic: '專區', service: '申請服務', publication: '出版品', labtest: '檢驗項目', research: '研究計畫',
 };
+/** news 型別的 newsType（含人才招募、採購公告）。 */
+export const NEWS_SUBTYPE_LABEL = { press: '新聞稿', letter: '致醫界通函', clarification: '澄清稿', other: '其他訊息', recruit: '人才招募', procurement: '採購公告' };
 export const STATUS_LABEL = { draft: '草稿', review: '複核中', published: '已發布', archived: '已封存' };
 export const CATEGORY_LABEL = {
   'open-dataset': '開放資料集', 'stats-system': '統計系統', 'structured-table': '結構化表格', 'document-library': '文件庫',
-  'content-page': '內容頁', press: '新聞稿', media: '影音',
+  'content-page': '內容頁', press: '新聞稿／公告', media: '影音宣導素材', topic: '專區', service: '申請服務', publication: '出版品', labtest: '檢驗項目', research: '研究計畫',
 };
 export const KIND_LABEL = {
   'based-on-revised': '依據正本已修訂', 'reverse-audit': '反向稽核命中', overdue: '逾期', 'translation-stale': '翻譯過期',
   'dataset-overdue': '資料集逾期', 'license-missing': '授權缺漏', 'superseded-still-linked': '失效版仍被連結', 'situation-overdue': '態勢層逾期',
+  'media-outdated': '影音過時', 'media-no-transcript': '無逐字稿', 'link-broken': '連結失效', 'labtest-inconsistent': '檢驗不一致',
 };
-export const KIND_ORDER = ['based-on-revised', 'reverse-audit', 'overdue', 'translation-stale', 'dataset-overdue', 'license-missing', 'superseded-still-linked', 'situation-overdue'];
+export const KIND_ORDER = ['based-on-revised', 'reverse-audit', 'overdue', 'translation-stale', 'dataset-overdue', 'license-missing', 'superseded-still-linked', 'situation-overdue', 'media-outdated', 'media-no-transcript', 'link-broken', 'labtest-inconsistent'];
 export const WL_REASON_LABEL = {
   'not-published': '尚未發布', overdue: '逾期未審閱', superseded: '已被新版取代', sensitivity: '敏感等級非公開',
   'based-on-revised': '依據正本已修訂', 'not-requested': '未申請進白名單', 'type-not-allowed': '型別不在白名單政策', 'reverse-audit': '反向稽核命中',
@@ -34,6 +39,9 @@ export const NAV = [
   { key: 'review', href: '/admin/review/', label: '複核區', count: 'review' },
   { key: 'due', href: '/admin/due/', label: '審閱到期', count: 'due' },
   { key: 'catalog', href: '/admin/catalog/', label: '資料目錄' },
+  { key: 'notices', href: '/admin/notices/', label: '公告', count: 'notices' },
+  { key: 'media', href: '/admin/media/', label: '影音', count: 'media' },
+  { key: 'links', href: '/admin/links/', label: '連結', count: 'links' },
   { key: 'glossary', href: '/admin/glossary/', label: '詞彙主檔' },
   { key: 'situation', href: '/admin/situation/', label: '態勢發布' },
   { key: 'todos', href: '/admin/todos/', label: '連動待辦', count: 'todos' },
@@ -52,6 +60,12 @@ export function frontPath(item) {
     case 'news': case 'letter': return `/news/${rest}/`;
     case 'document': return `/documents/${rest}/`;
     case 'vaccine': return `/vaccines/${item.slug ?? rest}/`;
+    case 'media': return `/media/${rest}/`;
+    case 'topic': return `/topics/${item.slug ?? rest}/`;
+    case 'service': return `/apply/${item.slug ?? rest}/`;
+    case 'publication': return `/publications/${rest}/`;
+    case 'labtest': return `/lab/${rest}/`;
+    case 'research': return `/research/${rest}/`;
     case 'clarification': return '/factcheck/';
     case 'dataset': return '/data/';
     default: return null;
@@ -62,13 +76,19 @@ export function categoryOf(item) {
   if (item.type === 'dataset') return item.category ?? 'open-dataset';
   if (['news', 'letter', 'clarification'].includes(item.type)) return 'press';
   if (item.type === 'document') return 'document-library';
+  if (['media', 'topic', 'service', 'publication', 'labtest', 'research'].includes(item.type)) return item.type;
   return 'content-page';
 }
 
 /** 把 site.all 攤平成後台用列（可直接 JSON 嵌入頁面）。 */
 export function catalogRows(site) {
   const licOk = new Set(site.config.licenses.allowed);
+  const mediaById = new Map(mediaRows(site).map((r) => [r.id, r]));
+  const linksByItem = new Map();
+  for (const l of linkRows(site)) { const h = linksByItem.get(l.itemId) ?? { ok: 0, broken: 0, unchecked: 0, total: 0 }; h[l.status] = (h[l.status] ?? 0) + 1; h.total++; linksByItem.set(l.itemId, h); }
+  const noticeById = new Map(noticeRows(site).map((r) => [r.id, r]));
   return site.all.map((i) => {
+    const mr = mediaById.get(i.id), nr = noticeById.get(i.id);
     const g = i.gov ?? { whitelist: { effective: false, reasons: [] }, stale: [], reverseAuditHits: [], annotations: [] };
     return {
       id: i.id, type: i.type, title: i.title, owner: i.owner, ownerName: site.unitById.get(i.owner)?.name ?? i.owner, steward: i.steward ?? '',
@@ -82,6 +102,9 @@ export function catalogRows(site) {
       canonicalUrl: i.canonicalUrl ?? null, legacy: (i.legacyUrls ?? [])[0] ?? null, updateFrequency: i.updateFrequency ?? null, lastUpdated: i.lastUpdated ?? null,
       datasetOverdue: !!g.datasetOverdue, front: frontPath(i), version: i.version ?? null, family: i.family ?? null, basedOn: i.basedOn ?? [],
       diseases: i.diseases ?? [], languages: Object.fromEntries(Object.entries(i.languages ?? {}).map(([k, v]) => [k, v.status])),
+      newsType: i.newsType ?? null, notice: nr ? { deadlineAt: nr.deadlineAt, days: nr.days, closed: nr.closed, closingSoon: nr.closingSoon } : null,
+      media: mr ? { hasTranscript: mr.hasTranscript, basisCurrent: mr.basisCurrent, outdated: mr.outdated, transcriptChars: mr.transcriptChars } : null,
+      linkHealth: i.type === 'topic' ? (linksByItem.get(i.id) ?? { ok: 0, broken: 0, unchecked: 0, total: 0 }) : null,
     };
   });
 }
@@ -121,8 +144,11 @@ export function counts(site) {
   const rows = site.all;
   const review = rows.filter((i) => i.status === 'review').length;
   const due = rows.filter((i) => i.status === 'published' && !i.gov?.superseded && i.gov?.nextReviewAt && i.gov.daysToReview != null && i.gov.daysToReview <= 30).length;
-  const todos = (site.gov?.todos ?? []).length;
-  return { review, due, todos };
+  const todos = todoList(site).length;
+  const media = mediaRows(site).filter((m) => m.outdated || !m.hasTranscript).length;
+  const links = linkRows(site).filter((l) => l.status === 'broken').length;
+  const notices = noticeRows(site).filter((n) => n.closed && !n.archived).length;
+  return { review, due, todos, media, links, notices };
 }
 
 export function daysText(d) {
@@ -148,7 +174,8 @@ export function sitGov(site) {
   return { dataDate: g?.dataDate ?? sit.dataDate ?? null, publishedAt: g?.publishedAt ?? sit.publishedAt ?? null, publisher: sit.publisher, nextReviewAt, lagDays: lag, overdue: g?.overdue ?? (nextReviewAt ? nextReviewAt < site.today : false) };
 }
 export function todoList(site) {
-  return (site.gov?.todos ?? []).map((t, i) => ({
+  const base = site.gov?.todos ?? [];
+  return [...base, ...derivedTodos(site, base)].map((t, i) => ({
     ...t,
     id: t.id ?? `${t.kind}:${t.itemId}:${i}`,
     ownerName: t.ownerName ?? site.unitById.get(t.owner)?.name ?? t.owner,
@@ -173,3 +200,141 @@ export function kpiProgress(k) {
   return t3 > 0 ? Math.min(100, Math.round((k.current / t3) * 100)) : 100;
 }
 export const fmtNum = (v, unit) => (v == null ? '—' : `${v}${unit === '%' ? '%' : ''}`);
+
+
+// ───────── 第二輪（ARCHITECTURE §11）：影音、公告、外部連結的後台取值 ─────────
+export const addDays = (iso, n) => { const d = new Date(`${iso}T00:00:00Z`); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
+const isHttp = (u) => /^https?:\/\//i.test(String(u ?? ''));
+/** B2 內容的標示常寫成「依 114.04.16 建議製作」：去掉頭尾的「依」「製作」，免得說明欄變成「依據 依 …」。 */
+export const cleanLabel = (l) => String(l ?? '').trim().replace(/^依據?\s*/, '').replace(/\s*製作$/, '');
+export const HAS_TRANSCRIPT_MIN = 50; // 逐字稿少於這個字數視為「沒有」（與引擎 MIN_TRANSCRIPT_CHARS 一致）
+export const absUrl = (path) => `${config.siteUrl}${config.basePath}${path}`;
+
+/** 文件 family → { family, title, versions[] 新到舊, current }。 */
+function docFamilies(site) {
+  const map = new Map();
+  for (const d of site.collections.documents ?? []) {
+    if (!d.family) continue;
+    if (!map.has(d.family)) map.set(d.family, { family: d.family, versions: [] });
+    map.get(d.family).versions.push(d);
+  }
+  for (const f of map.values()) {
+    f.versions.sort((a, b) => String(b.effectiveAt).localeCompare(String(a.effectiveAt)));
+    f.current = f.versions.find((v) => v.gov?.isCurrent) ?? f.versions.find((v) => v.status === 'published') ?? f.versions[0];
+    f.title = String(f.current?.title ?? f.family).replace(/（.*版）$/, '');
+  }
+  return map;
+}
+/** basedOn 的每一項（文件 id、family 或其他內容 id）解析成正本資訊。 */
+function resolveBasis(site, refs = []) {
+  const fams = docFamilies(site);
+  return refs.map((ref) => {
+    const doc = site.byId.get(ref);
+    const fam = fams.get(ref) ?? (doc?.family ? fams.get(doc.family) : null);
+    if (fam) return { ref, kind: 'document', family: fam.family, title: fam.title, current: fam.current, used: doc ?? null, path: frontPath(fam.current) };
+    if (doc) return { ref, kind: doc.type, family: null, title: doc.title, current: doc, used: doc, path: frontPath(doc), diseases: doc.diseases ?? [] };
+    return { ref, kind: 'unknown', family: null, title: ref, current: null, used: null, path: null };
+  });
+}
+function auditHitsOf(site, item, text, basis) {
+  const out = [];
+  const seen = new Set();
+  for (const h of item.gov?.reverseAuditHits ?? []) { const k = h.rule ?? h.message ?? h.term; if (!seen.has(k)) { seen.add(k); out.push({ match: h.term ?? h.snippet ?? '', message: h.rule ?? h.message ?? '' }); } }
+  const scope = new Set([...(item.diseases ?? []), ...basis.flatMap((b) => [...(b.current?.diseases ?? []), ...(b.diseases ?? [])]), ...(item.basedOn ?? [])]);
+  for (const d of site.master.diseases ?? []) for (const r of d.auditRules ?? []) {
+    if (r.scope?.length && !r.scope.some((x) => scope.has(x))) continue;
+    try { const m = new RegExp(r.pattern).exec(String(text).replace(/[（(]含[）)]/g, '')); if (m && !seen.has(r.message)) { seen.add(r.message); out.push({ match: m[0], message: r.message }); } } catch { /* 無效 regex 略過 */ }
+  }
+  return out;
+}
+
+/** 影音管理列（每支影片）。優先用引擎算好的 gov；沒有就由 producedAt vs 正本現行版 effectiveAt 推算。 */
+export function mediaRows(site) {
+  return (site.collections.media ?? []).map((m) => {
+    const g = m.gov ?? {};
+    const basis = resolveBasis(site, m.basedOn ?? []);
+    const b0 = basis.find((b) => b.current) ?? null;
+    const computed = basis.some((b) => b.kind === 'document' && b.current?.effectiveAt && m.producedAt && m.producedAt < b.current.effectiveAt);
+    const outdated = g.mediaOutdated != null ? !!g.mediaOutdated : ((g.stale ?? []).length > 0 || computed);
+    const transcript = String(m.transcriptMarkdown ?? '');
+    const chars = g.transcriptChars ?? transcript.replace(/\s/g, '').length;
+    const hasTranscript = g.hasTranscript != null ? !!g.hasTranscript : chars >= HAS_TRANSCRIPT_MIN;
+    const curPath = b0?.path ?? null;
+    return {
+      id: m.id, title: m.title, owner: m.owner, ownerName: site.unitById.get(m.owner)?.name ?? m.owner, status: m.status, front: frontPath(m), mediaType: m.mediaType ?? 'video',
+      youtubeId: m.youtubeId ?? null, producedAt: m.producedAt ?? null, label: cleanLabel(m.basedOnVersionLabel), basedOn: m.basedOn ?? [],
+      basis: basis.map((b) => ({ ref: b.ref, title: b.title, version: b.current?.version ?? null, effectiveAt: b.current?.effectiveAt ?? null, path: b.path })),
+      curVersion: b0?.current?.version ?? null, curEffectiveAt: b0?.current?.effectiveAt ?? null, curPath, curUrl: curPath ? absUrl(curPath) : null,
+      noBasis: !(m.basedOn ?? []).length, outdated, basisCurrent: basis.length > 0 && !outdated, transcriptChars: chars, hasTranscript,
+      captions: m.captions ?? [], chapters: (m.chapters ?? []).length, audit: auditHitsOf(site, m, `${transcript}\n${m.title ?? ''}\n${m.summary ?? ''}`, basis),
+      wl: !!g.whitelist?.effective,
+    };
+  });
+}
+
+/** 公告管理列：人才招募、採購公告、其他訊息。截止狀態優先用引擎的 gov.closed／closingSoon，否則由 deadlineAt 推算。 */
+export function noticeRows(site) {
+  const today = site.today;
+  return (site.collections.news ?? []).filter((n) => ['recruit', 'procurement', 'other'].includes(n.newsType)).map((n) => {
+    const g = n.gov ?? {};
+    const days = n.deadlineAt ? daysBetween(today, n.deadlineAt) : null;
+    const closed = g.closed != null ? !!g.closed : (days != null && days < 0);
+    const closingSoon = g.closingSoon != null ? !!g.closingSoon : (!closed && days != null && days <= 7);
+    return {
+      id: n.id, title: n.title, newsType: n.newsType, owner: n.owner, ownerName: site.unitById.get(n.owner)?.name ?? n.owner, status: n.status, front: frontPath(n),
+      deadlineAt: n.deadlineAt ?? null, days, closed, closingSoon, open: !closed && n.status === 'published', archived: n.status === 'archived',
+      refNo: n.refNo ?? '', applyUrl: n.applyUrl ?? '', positions: n.positions ?? null, budgetNtd: n.budgetNtd ?? null, publishedAt: n.publishedAt,
+    };
+  }).sort((a, b) => String(a.deadlineAt ?? '9999').localeCompare(String(b.deadlineAt ?? '9999')));
+}
+
+/** 全部外部連結（專區連結、申請網址與表單、公告報名網址、出版品 PDF、影片網址）。 */
+export function linkRows(site) {
+  // 引擎已彙整（site.gov.externalLinks，含 CI 檢查結果）就直接用；否則由內容欄位自行收集
+  if (Array.isArray(site.gov?.externalLinks)) {
+    return site.gov.externalLinks.map((l) => ({
+      itemId: l.itemId, itemTitle: l.itemTitle, itemType: l.itemType, owner: l.owner, ownerName: l.ownerName ?? site.unitById.get(l.owner)?.name ?? l.owner,
+      front: site.byId.get(l.itemId) ? frontPath(site.byId.get(l.itemId)) : null, field: l.field, label: l.label ?? '', href: l.url ?? l.href,
+      lastCheckedAt: l.lastCheckedAt ?? null, status: ['ok', 'broken'].includes(l.status) ? l.status : 'unchecked',
+    }));
+  }
+  const out = [];
+  const add = (item, field, label, href, extra = {}) => {
+    if (!isHttp(href)) return;
+    out.push({
+      itemId: item.id, itemTitle: item.title, itemType: item.type, owner: item.owner, ownerName: site.unitById.get(item.owner)?.name ?? item.owner, front: frontPath(item),
+      field, label, href, lastCheckedAt: (item.linkChecks?.[field] ?? extra).lastCheckedAt ?? null, status: ['ok', 'broken'].includes((item.linkChecks?.[field] ?? extra).status) ? (item.linkChecks?.[field] ?? extra).status : 'unchecked',
+    });
+  };
+  for (const t of site.collections.topics ?? []) (t.links ?? []).forEach((l, i) => add(t, `links[${i}]`, l.label, l.href, l));
+  for (const sv of site.collections.services ?? []) {
+    add(sv, 'applyUrl', '線上申請', sv.applyUrl);
+    (sv.forms ?? []).forEach((f, i) => add(sv, `forms[${i}]`, f.label, f.href));
+  }
+  for (const n of site.collections.news ?? []) add(n, 'applyUrl', '報名／投標', n.applyUrl);
+  for (const p of site.collections.publications ?? []) add(p, 'pdfUrl', 'PDF', p.pdfUrl);
+  for (const m of site.collections.media ?? []) add(m, 'videoUrl', '影片網址', m.videoUrl);
+  return out;
+}
+export const linkCounts = (rows) => ({ ok: rows.filter((r) => r.status === 'ok').length, broken: rows.filter((r) => r.status === 'broken').length, unchecked: rows.filter((r) => r.status === 'unchecked').length, total: rows.length });
+
+/** 引擎產生的待辦優先；引擎尚未涵蓋的（同 kind＋同內容沒有待辦），後台依欄位補推算，讓頁籤不是空的。 */
+function derivedTodos(site, base) {
+  const has = (kind, itemId) => base.some((t) => t.kind === kind && (itemId == null || t.itemId === itemId));
+  const out = [];
+  const due = addDays(site.today, 7);
+  {
+    for (const m of mediaRows(site).filter((r) => r.outdated && !has('media-outdated', r.id))) {
+      const b = m.basis.find((x) => x.version);
+      out.push({ kind: 'media-outdated', itemId: m.id, owner: m.owner, dueAt: due, derived: true,
+        text: `影片製作於 ${m.producedAt}，早於依據正本${b ? `《${b.title}》現行版 ${b.version}（${b.effectiveAt} 生效）` : '現行版'}。請擇一：更新說明欄、加資訊卡、或下架。` });
+    }
+  }
+  {
+    for (const m of mediaRows(site).filter((r) => !r.hasTranscript && !has('media-no-transcript', r.id))) out.push({ kind: 'media-no-transcript', itemId: m.id, owner: m.owner, dueAt: addDays(site.today, 14), derived: true, text: '影片沒有逐字稿（或過短）：補逐字稿後才能進 AI 索引與反向稽核。' });
+  }
+  {
+    for (const l of linkRows(site).filter((r) => r.status === 'broken' && !base.some((t) => t.kind === 'link-broken' && t.itemId === r.itemId && String(t.text ?? '').includes(r.href)))) out.push({ kind: 'link-broken', itemId: l.itemId, owner: l.owner, dueAt: due, derived: true, text: `外部連結失效：${l.label}（${l.href}）。請更新網址或移除。` });
+  }
+  return out;
+}

@@ -1,0 +1,107 @@
+{
+  "id": "topic.disaster-evacuation",
+  "type": "topic",
+  "title": "防災避難須知：災後防疫與避難所衛生",
+  "owner": "unit.preparedness",
+  "publishedAt": "2026-06-01",
+  "reviewedAt": "2026-09-01",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue",
+    "disease.hepatitis-a",
+    "disease.shigellosis"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-01",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "颱風、地震、水災後的防疫重點：清除積水防登革熱、飲水與食物衛生防腸胃道傳染病、避難所防呼吸道群聚，並連結全民安全指引。",
+  "keywords": [
+    "防災",
+    "避難",
+    "災後防疫",
+    "全民安全指引",
+    "避難所",
+    "颱風"
+  ],
+  "image": "/img/topics/disaster-evacuation.svg",
+  "slug": "disaster-evacuation",
+  "kind": "emergency",
+  "priority": 1,
+  "introMarkdown": "天然災害或緊急狀況發生時，請先依中央與地方政府指示**確保人身安全**。災後最常見的傳染病風險來自**積水孳生病媒蚊**、**飲水與食物受污染**，以及**避難所人群密集**。\n\n- 清理家園時穿長袖、雨鞋與手套，傷口避免接觸污水，有傷口泡到污水後出現發燒請就醫。\n- 只喝煮沸水或包裝水；食物泡過水就丟棄。\n- 避難所內有發燒、咳嗽、腹瀉者請告知管理人員，戴口罩並與他人保持距離。\n- 災後兩週內住家周圍容器要「巡、倒、清、刷」。\n\n全民應變準備（避難包、避難處所、空襲警報應變等）請參考行政院發布之**全民安全指引**。",
+  "links": [
+    {
+      "label": "全民安全指引（行政院）",
+      "href": "https://www.ey.gov.tw/",
+      "external": true,
+      "status": "unchecked",
+      "note": "指引正式網址待整備應變組確認；原型暫連行政院首頁"
+    },
+    {
+      "label": "消防署防災避難看板與避難處所查詢",
+      "href": "https://www.nfa.gov.tw/",
+      "external": true,
+      "status": "unchecked",
+      "note": "網址待確認"
+    },
+    {
+      "label": "登革熱：巡倒清刷清除積水",
+      "href": "/diseases/dengue/#prevention"
+    },
+    {
+      "label": "A 型肝炎：飲水與食物衛生",
+      "href": "/diseases/hepatitis-a/#prevention"
+    },
+    {
+      "label": "疑似群聚通報：撥打 1922",
+      "href": "/apply/cluster-report-1922/"
+    }
+  ],
+  "contentIds": [
+    "disease.dengue",
+    "faq.dengue-container-check",
+    "disease.hepatitis-a",
+    "media.dengue-village-chief"
+  ],
+  "i18n": {
+    "en": {
+      "title": "Disaster and evacuation: disease prevention after disasters",
+      "summary": "Key steps after typhoons, earthquakes and floods: remove standing water, keep drinking water and food safe, prevent outbreaks in shelters, and follow the national civil defence guide."
+    }
+  }
+}

@@ -10,7 +10,35 @@ export const TYPES = [
   { value: 'document', label: '文件新版' },
   { value: 'clarification', label: '澄清' },
   { value: 'vaccine', label: '疫苗頁' },
+  // 第二輪新增（ARCHITECTURE §11）
+  { value: 'media', label: '影音' },
+  { value: 'topic', label: '專區' },
+  { value: 'service', label: '申請服務' },
+  { value: 'publication', label: '出版品' },
+  { value: 'labtest', label: '檢驗項目' },
+  { value: 'research', label: '研究計畫' },
+  { value: 'recruit', label: '人才招募' },
+  { value: 'procurement', label: '採購公告' },
 ];
+/** 「人才招募」「採購公告」在 schema 裡是 news 型別的 newsType。 */
+export const schemaType = (t) => (t === 'recruit' || t === 'procurement' ? 'news' : t);
+/** 建議放進 content/ 的哪個子目錄。 */
+export const DIRS = {
+  faq: 'faq', disease: 'diseases', news: 'news', letter: 'news', document: 'documents', clarification: 'clarifications', vaccine: 'vaccines',
+  media: 'media', topic: 'topics', service: 'services', publication: 'publications', labtest: 'labtests', research: 'research', recruit: 'news', procurement: 'news',
+};
+/** 內文欄位在各型別的意義（標籤、placeholder、對應 schema 欄位）。 */
+export const BODY_ROLE = {
+  media: { label: '影片簡介（選填，供摘要與關鍵字抽取；逐字稿請貼在下方專屬欄位）', field: null },
+  topic: { label: '專區簡介（introMarkdown）', field: 'introMarkdown' },
+  service: { label: '服務簡介（introMarkdown）', field: 'introMarkdown' },
+  publication: { label: '摘要（abstractMarkdown）', field: 'abstractMarkdown' },
+  labtest: { label: '備註（notesMarkdown，選填）', field: 'notesMarkdown' },
+  research: { label: '研究摘要（abstractMarkdown）', field: 'abstractMarkdown' },
+  recruit: { label: '公告內文（bodyMarkdown）', field: 'bodyMarkdown' },
+  procurement: { label: '公告內文（bodyMarkdown）', field: 'bodyMarkdown' },
+};
+export const BODY_OPTIONAL = new Set(['media', 'labtest']);
 export const LANGS = [
   { code: 'zh-TW', label: '繁體中文' }, { code: 'en', label: 'English' }, { code: 'ja', label: '日本語' }, { code: 'tl', label: 'Tagalog' },
   { code: 'vi', label: 'Tiếng Việt' }, { code: 'id', label: 'Bahasa Indonesia' }, { code: 'th', label: 'ไทย' },
@@ -19,9 +47,12 @@ export const TASKS = [
   { key: 'symptoms', label: '有症狀怎麼辦' }, { key: 'vaccines', label: '疫苗與預防接種' }, { key: 'travel', label: '出國與入境' },
   { key: 'situation', label: '現在的疫情' }, { key: 'rumor', label: '謠言查證' }, { key: 'data', label: '開放資料與統計' },
 ];
-export const REVIEW_PERIOD_DEFAULT = { disease: 12, vaccine: 6, faq: 6, news: 0, letter: 0, document: 12, clarification: 6 };
+export const REVIEW_PERIOD_DEFAULT = { disease: 12, vaccine: 6, faq: 6, news: 0, letter: 0, document: 12, clarification: 6, media: 12, topic: 6, service: 12, publication: 0, labtest: 12, research: 12, recruit: 0, procurement: 0 };
 const SEVEN = ['zh-TW', 'en', 'ja', 'tl', 'vi', 'id', 'th'];
-export const LANG_DEFAULT = { disease: SEVEN, vaccine: SEVEN, faq: SEVEN, clarification: SEVEN, letter: ['zh-TW', 'en'], news: ['zh-TW', 'en'], document: ['zh-TW', 'en'] };
+export const LANG_DEFAULT = {
+  disease: SEVEN, vaccine: SEVEN, faq: SEVEN, clarification: SEVEN, letter: ['zh-TW', 'en'], news: ['zh-TW', 'en'], document: ['zh-TW', 'en'],
+  media: ['zh-TW', 'en'], topic: ['zh-TW', 'en'], service: ['zh-TW', 'en'], publication: ['zh-TW'], labtest: ['zh-TW'], research: ['zh-TW'], recruit: ['zh-TW'], procurement: ['zh-TW'],
+};
 export const TIER1 = ['disease', 'vaccine', 'clarification', 'situation'];
 
 export const defaultsFor = (type) => ({
@@ -242,7 +273,13 @@ export function consistencyChecks(ctx) {
   const text = norm(ctx.text);
   const sv = Object.fromEntries((ctx.structured ?? []).map((s) => [s.key, s.value]));
   const vaccineIds = ctx.entities?.relatedVaccineIds ?? ctx.entities?.vaccineIds ?? [];
-  const diseaseIds = [...new Set([...(ctx.entities?.relatedDiseaseIds ?? ctx.entities?.diseaseIds ?? []), ...vaccineIds.flatMap((vid) => ctx.vaccinesMaster?.find((v) => v.id === vid)?.diseases ?? [])])];
+  // 依據正本（文件 id 或 family）所屬疾病也算關聯：影片逐字稿沒講「麻疹」二字，只要依據 MMR 建議，反向稽核規則照樣適用
+  const basisDiseaseIds = (ctx.basedOn ?? []).flatMap((ref) => (ctx.documents ?? []).filter((d) => d.id === ref || d.family === ref).flatMap((d) => d.diseases ?? []));
+  const diseaseIds = [...new Set([...(ctx.entities?.relatedDiseaseIds ?? ctx.entities?.diseaseIds ?? []), ...vaccineIds.flatMap((vid) => ctx.vaccinesMaster?.find((v) => v.id === vid)?.diseases ?? []), ...basisDiseaseIds])];
+  // 影音：反向稽核與出生年份比對只掃逐字稿，並回報行號
+  // 稽核前先去掉「（含）」：「1981 年（含）以後出生」與規則的「1981 年以後出生」是同一句話
+  const scanText = (ctx.auditText != null ? norm(ctx.auditText) : text).replace(/[（(]含[）)]/g, '');
+  const where = (idx) => (ctx.auditLabel ? `（${ctx.auditLabel}第 ${scanText.slice(0, idx).split('\n').length} 行）` : '');
   const primary = ctx.entities?.diseaseIds?.[0] ?? diseaseIds[0];
   const master = ctx.diseaseMaster?.find((d) => d.id === primary);
   const page = ctx.diseasePages?.[primary];
@@ -292,14 +329,14 @@ export function consistencyChecks(ctx) {
     else if (mm.length) out.push({ level: 'ok', title: '就醫時限一致', message: `${sv.seekCareWithinHours} 小時內就醫，與${dname}疾病頁一致。` });
   }
   // 5. 出生年份條件 vs 現行版文件
-  const myYears = [...text.matchAll(/(\d{4})\s*年(?:（含）|\(含\))?\s*(?:以後|之後|以前|之前)?\s*出生/g)].map((x) => x[1]);
+  const myYears = [...scanText.matchAll(/(\d{4})\s*年(?:（含）|\(含\))?\s*(?:以後|之後|以前|之前)?\s*出生/g)].map((x) => x[1]);
   if (myYears.length) {
     const related = (ctx.documents ?? []).filter((d) => d.governance?.isCurrent !== false && ((d.diseases ?? []).some((x) => diseaseIds.includes(x)) || (d.vaccines ?? []).some((x) => vaccineIds.includes(x))));
     for (const d of related) {
       const docYears = new Set([...norm(`${d.machineReadableMarkdown ?? ''} ${d.summary ?? ''}`).matchAll(/(\d{4})\s*年(?:（含）|\(含\))?\s*(?:以後|之後|以前|之前)?\s*出生/g)].map((x) => x[1]));
       if (!docYears.size) continue;
       const bad = myYears.filter((y) => !docYears.has(y));
-      if (bad.length) out.push({ level: 'error', title: '與現行版文件矛盾', message: `內文「${[...new Set(bad)].join('、')} 年（含）以後出生」與現行版《${d.title}》的「${[...docYears].join('、')} 年」不同 → 請改依現行版。` });
+      if (bad.length) out.push({ level: 'error', title: '與現行版文件矛盾', message: `${ctx.auditLabel ?? '內文'}「${[...new Set(bad)].join('、')} 年（含）以後出生」與現行版《${d.title}》的「${[...docYears].join('、')} 年」不同 → 請改依現行版。` });
       else out.push({ level: 'ok', title: '出生年份一致', message: `「${[...new Set(myYears)].join('、')} 年」與現行版《${d.title}》一致。` });
     }
   }
@@ -308,10 +345,10 @@ export function consistencyChecks(ctx) {
   // 7. 反向稽核規則
   const scopeIds = new Set([...diseaseIds, ...(ctx.basedOn ?? []), ...vaccineIds]);
   for (const d of ctx.diseaseMaster ?? []) for (const rule of d.auditRules ?? []) {
-    if (rule.scope?.length && !rule.scope.some((s) => scopeIds.has(s)) && !text.includes(d.name)) continue;
+    if (rule.scope?.length && !rule.scope.some((s) => scopeIds.has(s)) && !scanText.includes(d.name)) continue;
     try {
-      const m = new RegExp(rule.pattern).exec(text);
-      if (m) out.push({ level: 'error', title: '命中反向稽核規則', message: `內文出現「${m[0]}」：${rule.message}` });
+      const m = new RegExp(rule.pattern).exec(scanText);
+      if (m) out.push({ level: 'error', title: ctx.auditLabel ? '命中反向稽核規則（逐字稿）' : '命中反向稽核規則', message: `${ctx.auditLabel ?? '內文'}出現「${m[0]}」${where(m.index)}：${rule.message}` });
     } catch { /* 無效 regex 略過 */ }
   }
   return out;
@@ -332,6 +369,217 @@ export function lockedTerms(textRaw, glossary = []) {
 }
 export const reviewRule = (type) => (TIER1.includes(type) ? '一級內容 · 簽約審核 · 必審' : '二級內容 · 先發布標示機器翻譯 · 每月抽審 10%');
 
+// ---------- 第二輪：六種新型別的欄位解析與檢查 ----------
+export const lines = (text) => String(text ?? '').replace(/\r/g, '').split('\n').map((l) => l.trim()).filter(Boolean);
+const pipe = (line) => String(line).split(/[|｜]/).map((x) => x.trim());
+const isExternal = (href) => /^https?:\/\//i.test(href);
+const isHref = (href) => /^(https?:\/\/|\/|mailto:|tel:)/i.test(href);
+
+/** 口語中文數字轉阿拉伯數字（逐字稿常寫「二十四小時」「十到十四天」），只轉後面緊接單位的數字，避免誤傷一般文字。 */
+const CN = { 零: 0, 〇: 0, 一: 1, 二: 2, 兩: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9 };
+function cnToInt(s) {
+  if (!s) return null;
+  if (!s.includes('十') && !s.includes('百')) { let n = 0; for (const ch of s) { if (!(ch in CN)) return null; n = n * 10 + CN[ch]; } return n; }
+  let total = 0, rest = s;
+  const h = rest.indexOf('百');
+  if (h >= 0) { total += (h === 0 ? 1 : CN[rest[0]] ?? 0) * 100; rest = rest.slice(h + 1); }
+  const t = rest.indexOf('十');
+  if (t >= 0) { total += (t === 0 ? 1 : CN[rest[0]] ?? 0) * 10; rest = rest.slice(t + 1); }
+  if (rest) total += CN[rest] ?? 0;
+  return total;
+}
+export function spokenToDigits(text) {
+  const UNIT = '(?:天|日|小時|週|周|年|歲|個月|劑)';
+  const re = new RegExp(`([零〇一二兩三四五六七八九十百]+)(?=(?:至|到|~)?[零〇一二兩三四五六七八九十百]*\\s*${UNIT})`, 'g');
+  return String(text ?? '').replace(re, (m) => { const n = cnToInt(m); return n == null ? m : String(n); });
+}
+
+/** YouTube 網址或 id → 11 碼 id；空字串回傳 ''；格式不符回傳 null。 */
+export function youtubeIdFrom(raw) {
+  const s = String(raw ?? '').trim();
+  if (!s) return '';
+  const m = /(?:youtu\.be\/|[?&]v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/.exec(s);
+  if (m) return m[1];
+  return /^[A-Za-z0-9_-]{11}$/.test(s) ? s : null;
+}
+
+/** 章節：每行「秒數 標題」，秒數也接受 m:ss／h:mm:ss。 */
+export function parseChapters(text) {
+  const items = [], errors = [];
+  lines(text).forEach((l, i) => {
+    const m = /^(\d+(?::\d{1,2}){0,2})\s+(.+)$/.exec(norm(l));
+    if (!m) { errors.push(`章節第 ${i + 1} 行格式應為「秒數 標題」：${l.slice(0, 30)}`); return; }
+    const parts = m[1].split(':').map(Number);
+    const t = parts.reduce((a, b) => a * 60 + b, 0);
+    items.push({ t, label: m[2].trim() });
+  });
+  const sorted = items.every((c, i) => i === 0 || c.t > items[i - 1].t);
+  if (items.length && !sorted) errors.push('章節秒數需由小到大排列、不可重複');
+  return { items, errors };
+}
+
+/** 專區連結列：每行「標題 | 網址 | 備註(選填)」，網址 http(s) 自動判 external。 */
+export function parseLinks(text) {
+  const items = [], errors = [];
+  lines(text).forEach((l, i) => {
+    const [label, href, note] = pipe(l);
+    if (!label || !href) { errors.push(`連結第 ${i + 1} 行需有「標題 | 網址」`); return; }
+    if (!isHref(href)) { errors.push(`連結第 ${i + 1} 行網址需以 https:// 或 / 開頭：${href.slice(0, 30)}`); return; }
+    const ext = isExternal(href);
+    items.push({ label, href, external: ext, ...(note ? { note } : {}), ...(ext ? { status: 'unchecked' } : {}) });
+  });
+  return { items, errors };
+}
+
+/** 申請步驟：每行「標題 | 說明 | 誰 | 天」。 */
+export function parseSteps(text) {
+  const items = [], errors = [];
+  lines(text).forEach((l, i) => {
+    const [title, desc, who, days] = pipe(l);
+    if (!title) { errors.push(`步驟第 ${i + 1} 行缺標題`); return; }
+    const d = days != null && days !== '' ? Number(norm(days)) : null;
+    if (days && !Number.isInteger(d)) { errors.push(`步驟第 ${i + 1} 行「天」需為整數：${days}`); return; }
+    items.push({ title, ...(desc ? { text: desc } : {}), ...(who ? { who } : {}), ...(d != null ? { days: d } : {}) });
+  });
+  return { items, errors };
+}
+
+/** 檢體：每行「名稱 | 容器 | 量 | 保存 | 運送 | 時機 | 檢驗(以、分隔)」前五欄必填。 */
+export function parseSpecimens(text) {
+  const items = [], errors = [];
+  lines(text).forEach((l, i) => {
+    const [name, container, volume, storage, transport, timing, tests] = pipe(l);
+    const miss = [['名稱', name], ['容器', container], ['量', volume], ['保存', storage], ['運送', transport]].filter(([, v]) => !v).map(([k]) => k);
+    if (miss.length) { errors.push(`檢體第 ${i + 1} 行缺「${miss.join('、')}」（格式：名稱 | 容器 | 量 | 保存 | 運送 | 時機 | 檢驗）`); return; }
+    const t = (tests ?? '').split(/[、,，/]/).map((x) => x.trim()).filter(Boolean);
+    items.push({ name, ...(timing ? { timing } : {}), container, volume, storage, transport, ...(t.length ? { tests: t } : {}) });
+  });
+  return { items, errors };
+}
+
+/** 表單：每行「標題 | 網址 | 格式(選填)」。 */
+export function parseForms(text) {
+  const items = [], errors = [];
+  lines(text).forEach((l, i) => {
+    const [label, href, format] = pipe(l);
+    if (!label || !href) { errors.push(`表單第 ${i + 1} 行需有「標題 | 網址」`); return; }
+    items.push({ label, href, ...(format ? { format, machineReadable: /^(csv|json|xml|ods|odt|txt)$/i.test(format) } : {}) });
+  });
+  return { items, errors };
+}
+
+/** 篇目：每行「篇名 | 作者(以、分隔) | 頁碼」。 */
+export function parseArticles(text) {
+  const items = [], errors = [];
+  lines(text).forEach((l, i) => {
+    const [title, authors, pages] = pipe(l);
+    if (!title) { errors.push(`篇目第 ${i + 1} 行缺篇名`); return; }
+    const a = (authors ?? '').split(/[、,，]/).map((x) => x.trim()).filter(Boolean);
+    items.push({ title, ...(a.length ? { authors: a } : {}), ...(pages ? { pages } : {}) });
+  });
+  return { items, errors };
+}
+
+/** 依據正本：回傳 { family, versions[], current }（refs 可為文件 id 或 family）。families 取自 publish.mjs 內嵌資料。 */
+export function resolveBasis(refs = [], families = []) {
+  const out = [];
+  for (const ref of refs) {
+    const fam = families.find((f) => f.family === ref || f.versions.some((v) => v.id === ref));
+    if (!fam) continue;
+    const used = fam.versions.find((v) => v.id === ref) ?? null;
+    const current = fam.versions.find((v) => v.isCurrent) ?? fam.versions[0];
+    out.push({ ref, family: fam.family, title: fam.title, used, current, url: current?.url ?? null });
+  }
+  return out;
+}
+
+/**
+ * 影音專屬檢查（7.7）：依據正本必填、製作日 vs 現行版生效日（紅框）、版本標示、YouTube id、章節、逐字稿、字幕。
+ * st = { transcript, producedAt, basedOn[], label, youtube(raw), chapters(text), captions[] }
+ */
+export function mediaChecks(st, families = []) {
+  const out = [];
+  const tr = String(st.transcript ?? '').trim();
+  if (!tr) out.push({ level: 'error', title: '缺逐字稿', message: '影音一律須有逐字稿：它是 AI 唯一能引用的影片內容，也是反向稽核與無障礙的基礎。沒有逐字稿不得上架。' });
+  else if (tr.length < 60) out.push({ level: 'warn', title: '逐字稿過短', message: `目前只有 ${tr.length} 字，請確認是完整逐字稿而非摘要。` });
+  if (!(st.basedOn ?? []).length) out.push({ level: 'error', title: '缺依據正本', message: '影音必填「依據正本」：正本修訂時，系統才能自動把影片標為過時並產生待辦（7.7 第 4 點）。' });
+  if (!st.producedAt) out.push({ level: 'error', title: '缺製作日期', message: '製作日期用來與依據正本現行版的生效日比對。' });
+  for (const b of resolveBasis(st.basedOn, families)) {
+    const cur = b.current;
+    if (st.producedAt && cur?.effectiveAt && st.producedAt < cur.effectiveAt) {
+      out.push({ level: 'error', title: '製作日早於依據正本現行版生效日', message: `製作日 ${st.producedAt} 早於《${b.title}》現行版 ${cur.version}（${cur.effectiveAt} 生效）。上架後系統會自動標「本影片依舊版製作」、退出 AI 白名單並產生待辦；建議先依現行版重製或改依現行版。` });
+    } else if (st.producedAt && cur?.effectiveAt) {
+      out.push({ level: 'ok', title: '製作日不早於現行版', message: `製作日 ${st.producedAt} ≥《${b.title}》現行版 ${cur.version} 生效日 ${cur.effectiveAt}。` });
+    }
+    if (b.used && cur && b.used.id !== cur.id) out.push({ level: 'warn', title: '依據的是舊版', message: `選到的 ${b.used.id}（${b.used.version}）已不是現行版；現行版為 ${cur.version}。建議改選 family「${b.family}」，系統會自動指向現行版。` });
+    if (cur?.version && st.label && !st.label.includes(cur.version) && !String(st.label).includes(String(cur.version).replace(/\./g, ''))) {
+      out.push({ level: 'warn', title: '版本標示與現行版不同', message: `畫面／說明欄標示「${st.label}」，依據正本現行版為 ${cur.version}；若影片確實依舊版製作，系統日後會加註「建議已修訂」。` });
+    }
+  }
+  if (!String(st.label ?? '').trim()) out.push({ level: 'warn', title: '未填依據版本標示', message: '請填畫面與說明欄印出的版本，例如「114.04.16 建議」，之後才能產生說明欄第一行。' });
+  const yt = youtubeIdFrom(st.youtube);
+  if (yt === null) out.push({ level: 'warn', title: 'YouTube id 格式不符', message: '應為 11 碼英數、底線或連字號，或直接貼影片網址。' });
+  else if (yt === '') out.push({ level: 'info', title: '未填 YouTube id', message: '前台將顯示示意海報與頻道連結（原型無法驗證影片存在）。' });
+  const ch = parseChapters(st.chapters);
+  for (const e of ch.errors) out.push({ level: 'warn', title: '章節格式', message: e });
+  if (!(st.captions ?? []).length) out.push({ level: 'warn', title: '尚無字幕', message: '未勾選任何字幕語言：聽障與外語民眾無法使用；逐字稿可作為字幕檔來源。' });
+  return out;
+}
+
+/** 影片說明欄第一行範本（7.7 第 4 點）：製作日期 · 依據版本 · 正本網址。 */
+export const mediaDescriptionLine = ({ producedAt, label, url }) => {
+  const l = String(label ?? '').trim().replace(/^依據?\s*/, '').replace(/\s*製作$/, '');
+  return `製作日期 ${producedAt || '（未填）'} · 依據 ${l || '（未填版本）'} · 正本 ${url || '（未選正本）'}`;
+};
+
+/** 檢驗項目專屬檢查：送驗時限 vs 主檔通報時限；檢體列格式。 */
+export function labtestChecks(st, diseaseMaster = []) {
+  const out = [];
+  const d = diseaseMaster.find((x) => x.id === st.disease);
+  const sp = parseSpecimens(st.specimens);
+  for (const e of sp.errors) out.push({ level: 'error', title: '檢體格式', message: e });
+  if (!st.disease) out.push({ level: 'error', title: '未選疾病', message: '檢驗項目須對應傳染病主檔。' });
+  const h = st.sendWithinHours === '' || st.sendWithinHours == null ? null : Number(st.sendWithinHours);
+  if (h != null && d?.notifyWithinHours != null) {
+    if (h > d.notifyWithinHours) out.push({ level: 'warn', title: '送驗時限超過通報時限', message: `送驗時限 ${h} 小時 > ${d.name}主檔通報時限 ${d.notifyWithinHours} 小時。若兩者本來就不同（例如通報 24 小時、檢體 48 小時內送達）請在備註說明；否則請修正。上架後引擎會做同樣的 labtest-inconsistent 檢查。` });
+    else out.push({ level: 'ok', title: '送驗時限未超過通報時限', message: `送驗 ${h} 小時 ≤ ${d.name}通報 ${d.notifyWithinHours} 小時。` });
+  }
+  return out;
+}
+
+/** 其他新型別的格式提醒（非阻擋）。 */
+export function miscChecks(type, st, today = '') {
+  const out = [];
+  if (type === 'topic') {
+    const l = parseLinks(st.links);
+    for (const e of l.errors) out.push({ level: 'error', title: '連結列格式', message: e });
+    const ext = l.items.filter((x) => x.external).length;
+    if (l.items.length) out.push({ level: 'info', title: '外部連結', message: `共 ${l.items.length} 條連結，其中 ${ext} 條判定為外部（https:// 開頭）。外部連結上架後由 CI 每日 HEAD 檢查，失效自動變待辦。` });
+    if (st.startAt && st.endAt && st.endAt < st.startAt) out.push({ level: 'error', title: '起迄日顛倒', message: '結束日早於開始日。' });
+    if (st.endAt && today && st.endAt < today) out.push({ level: 'warn', title: '結束日已過', message: '上架後會直接顯示「已結束」並退出首頁專區列。' });
+  } else if (type === 'service') {
+    const s = parseSteps(st.steps);
+    for (const e of s.errors) out.push({ level: 'error', title: '步驟格式', message: e });
+    for (const e of parseForms(st.forms).errors) out.push({ level: 'error', title: '表單格式', message: e });
+    const sum = s.items.reduce((a, b) => a + (b.days ?? 0), 0);
+    if (st.slaDays !== '' && st.slaDays != null && sum && sum > Number(st.slaDays)) out.push({ level: 'warn', title: '步驟天數合計超過承諾處理天數', message: `步驟天數合計 ${sum} 天，大於承諾處理天數 ${st.slaDays} 天。` });
+  } else if (type === 'publication') {
+    for (const e of parseArticles(st.articles).errors) out.push({ level: 'error', title: '篇目格式', message: e });
+    const isbn = String(st.isbn ?? '').replace(/[-\s]/g, '');
+    if (isbn && !/^(\d{9}[\dXx]|\d{13})$/.test(isbn)) out.push({ level: 'warn', title: 'ISBN 格式', message: 'ISBN 應為 10 或 13 碼。' });
+    if (st.issn && !/^\d{4}-\d{3}[\dXx]$/.test(st.issn)) out.push({ level: 'warn', title: 'ISSN 格式', message: 'ISSN 應為 NNNN-NNNN。' });
+    if (st.gpn && !/^\d{10}$/.test(String(st.gpn).replace(/[-\s]/g, ''))) out.push({ level: 'warn', title: 'GPN 格式', message: '政府出版品統一編號 GPN 為 10 碼數字。' });
+    out.push({ level: 'info', title: '審閱週期', message: '出版品是紀錄，審閱週期預設 0（不逾期）；內容有誤以勘誤版次處理，不改原件。' });
+  } else if (type === 'recruit' || type === 'procurement') {
+    if (st.deadlineAt && today && st.deadlineAt < today) out.push({ level: 'warn', title: '截止日已過', message: '上架後會直接標為「已截止」並退出首頁與進行中列表（保留在「已截止」頁籤）。' });
+    if (st.newsApplyUrl && !isExternal(st.newsApplyUrl)) out.push({ level: 'warn', title: '報名網址', message: '報名／投標網址應為 https:// 開頭的外部連結（政府電子採購網、人事行政總處）。' });
+    out.push({ level: 'info', title: '截止後自動處理', message: '截止日一過，系統自動標「已截止」並退出首頁，無須人工下架；之後可在「公告管理」頁依建議封存。' });
+  } else if (type === 'research') {
+    if (st.year && (Number(st.year) < 1990 || Number(st.year) > 2100)) out.push({ level: 'warn', title: '年度', message: '年度請填西元年（例：2026）。' });
+  }
+  return out;
+}
+
 // ---------- 匯出 ----------
 export function hash4(s) {
   let h = 2166136261;
@@ -348,9 +596,20 @@ export function suggestId(type, { title = '', today = '', slug = '', family = ''
     case 'document': return `${family || 'doc.new-document'}.${(version && /^\d{4}-\d{2}-\d{2}$/.test(version) ? version : d)}`;
     case 'disease': return `disease.${slug || `new-${h}`}`;
     case 'vaccine': return `vaccine.${slug || `new-${h}`}`;
+    case 'media': return `media.${slug ? `${slug}-` : ''}${d.slice(0, 7)}-${h}`;
+    case 'topic': return `topic.new-${h}`;
+    case 'service': return `service.new-${h}`;
+    case 'publication': return `publication.${d.slice(0, 7)}-${h}`;
+    case 'labtest': return `labtest.${slug ? `${slug}-` : ''}${h}`;
+    case 'research': return `research.${d.slice(0, 4)}-${h}`;
+    case 'recruit': return `news.${d}-recruit-${h}`;
+    case 'procurement': return `news.${d}-procurement-${h}`;
     default: return `page.new-${h}`;
   }
 }
+
+/** content id → slug（schema 要求 ^[a-z0-9-]+$）：去掉型別前綴，其餘非法字元換成連字號。 */
+export const slugOfId = (id) => String(id ?? '').replace(/^[a-z]+\./, '').replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '');
 
 const DISEASE_BLOCKS = [
   ['what-to-do', '我該怎麼辦'], ['symptoms', '症狀與警示徵象'], ['transmission', '怎麼傳染'], ['prevention', '如何預防'],
@@ -374,7 +633,7 @@ export function buildExport(st) {
   const audience = st.audience?.length ? st.audience : ['public'];
   const out = {
     id: st.id,
-    type: st.type,
+    type: schemaType(st.type),
     title: st.title,
     owner: st.owner,
     steward: st.steward || '承辦人',
@@ -397,6 +656,9 @@ export function buildExport(st) {
   };
   if (st.structured && Object.keys(st.structured).length) out.structured = st.structured;
   const ex = st.extra ?? {};
+  const intOrNull = (v) => (v === '' || v == null || Number.isNaN(Number(v)) ? null : Math.trunc(Number(v)));
+  const numOrStr = (v) => (v === '' || v == null ? null : /^\d+$/.test(String(v)) ? Number(v) : String(v));
+  const put = (k, v) => { if (v != null && v !== '' && !(Array.isArray(v) && !v.length)) out[k] = v; };
   switch (st.type) {
     case 'faq': out.question = st.title; out.answerMarkdown = st.body; break;
     case 'news': out.newsType = 'press'; out.bodyMarkdown = st.body; break;
@@ -413,6 +675,49 @@ export function buildExport(st) {
       break;
     case 'vaccine':
       out.slug = ex.slug || 'new-vaccine'; out.nameEn = ex.nameEn || 'New vaccine'; out.publicFunded = [{ group: '待補', schedule: '待補' }]; out.bodyMarkdown = st.body; break;
+    case 'media': {
+      out.mediaType = ex.mediaType || 'video';
+      const yt = youtubeIdFrom(ex.youtube);
+      out.youtubeId = yt || null;
+      out.producedAt = ex.producedAt || '';
+      put('basedOnVersionLabel', ex.versionLabel);
+      out.transcriptMarkdown = ex.transcript ?? '';
+      put('chapters', parseChapters(ex.chapters).items);
+      put('captions', ex.captions);
+      break;
+    }
+    case 'topic':
+      out.slug = slugOfId(st.id); put('kind', ex.topicKind); put('introMarkdown', st.body);
+      put('startAt', ex.startAt); put('endAt', ex.endAt);
+      out.links = parseLinks(ex.links).items;
+      put('contentIds', ex.contentIds);
+      break;
+    case 'service':
+      out.slug = slugOfId(st.id); out.serviceType = ex.serviceType || 'other'; out.whoCanApply = ex.who ?? []; put('introMarkdown', st.body);
+      put('requiredDocuments', lines(ex.docs)); out.steps = parseSteps(ex.steps).items;
+      put('slaDays', intOrNull(ex.slaDays)); put('fee', ex.fee); put('legalBasis', lines(ex.legal)); put('forms', parseForms(ex.forms).items);
+      put('applyUrl', ex.applyUrl); put('contact', ex.contact);
+      break;
+    case 'publication':
+      out.pubType = ex.pubType || 'bulletin'; out.series = ex.series ?? '';
+      put('volume', numOrStr(ex.volume)); put('issue', numOrStr(ex.issue)); put('edition', ex.edition);
+      put('isbn', ex.isbn); put('issn', ex.issn); put('gpn', ex.gpn); put('abstractMarkdown', st.body);
+      put('articles', parseArticles(ex.articles).items);
+      break;
+    case 'labtest':
+      out.disease = ex.labDisease ?? ''; out.specimens = parseSpecimens(ex.specimens).items; out.labs = ex.labs ?? [];
+      put('sendWithinHours', intOrNull(ex.sendHours)); put('notesMarkdown', st.body);
+      break;
+    case 'research':
+      out.year = intOrNull(ex.year) ?? 0; out.projectStatus = ex.projectStatus || 'ongoing';
+      put('fundingType', ex.fundingType); put('projectNo', ex.projectNo); put('piUnit', ex.piUnit); put('abstractMarkdown', st.body);
+      put('datasets', ex.datasets);
+      break;
+    case 'recruit': case 'procurement':
+      out.newsType = st.type; out.bodyMarkdown = st.body; out.deadlineAt = ex.deadlineAt || '';
+      put('refNo', ex.refNo); put('applyUrl', ex.newsApplyUrl);
+      if (st.type === 'recruit') put('positions', intOrNull(ex.positions)); else put('budgetNtd', intOrNull(ex.budgetNtd));
+      break;
     default: break;
   }
   void tier1;
@@ -426,8 +731,21 @@ export function requiredCheck(obj, ownerIds = []) {
   for (const k of need) if (obj[k] == null || obj[k] === '' || (Array.isArray(obj[k]) && !obj[k].length)) miss.push(k);
   if (!/^[a-z]+\.[a-z0-9][a-z0-9.-]*$/.test(obj.id ?? '')) miss.push('id（格式：小寫英數與連字號，如 faq.xxx）');
   if (ownerIds.length && !ownerIds.includes(obj.owner)) miss.push('owner（不在單位主檔）');
-  const typeNeed = { faq: ['question', 'answerMarkdown'], news: ['newsType', 'bodyMarkdown'], letter: ['newsType', 'bodyMarkdown'], clarification: ['claim', 'verdict', 'clarificationMarkdown', 'shareText'], document: ['family', 'docType', 'version', 'effectiveAt', 'machineReadableMarkdown'], disease: ['slug', 'nameEn', 'legalCategory', 'blocks', 'keyFacts'], vaccine: ['slug', 'nameEn', 'publicFunded', 'bodyMarkdown'] }[obj.type] ?? [];
-  for (const k of typeNeed) if (obj[k] == null || obj[k] === '') miss.push(k);
+  const typeNeed = {
+    faq: ['question', 'answerMarkdown'], news: ['newsType', 'bodyMarkdown'], letter: ['newsType', 'bodyMarkdown'], clarification: ['claim', 'verdict', 'clarificationMarkdown', 'shareText'],
+    document: ['family', 'docType', 'version', 'effectiveAt', 'machineReadableMarkdown'], disease: ['slug', 'nameEn', 'legalCategory', 'blocks', 'keyFacts'], vaccine: ['slug', 'nameEn', 'publicFunded', 'bodyMarkdown'],
+    media: ['mediaType', 'producedAt', 'transcriptMarkdown'], topic: ['slug', 'links'], service: ['slug', 'serviceType', 'whoCanApply', 'steps'], publication: ['series', 'pubType'],
+    labtest: ['disease', 'specimens', 'labs'], research: ['year', 'projectStatus'],
+  }[obj.type] ?? [];
+  for (const k of typeNeed) if (obj[k] == null || obj[k] === '' || obj[k] === 0 || (Array.isArray(obj[k]) && !obj[k].length)) miss.push(k);
+  // 型別附加規則
+  if (obj.type === 'media') {
+    if (!(obj.basedOn ?? []).length) miss.push('basedOn（影音必填依據正本）');
+    if (obj.youtubeId === undefined) miss.push('youtubeId');
+  }
+  if (obj.type === 'news' && ['recruit', 'procurement'].includes(obj.newsType) && !obj.deadlineAt) miss.push('deadlineAt（截止日）');
+  if (obj.type === 'labtest' && obj.disease && !/^disease\./.test(obj.disease)) miss.push('disease（須為 disease.*）');
+  if ((obj.type === 'topic' || obj.type === 'service') && obj.slug && !/^[a-z0-9-]+$/.test(obj.slug)) miss.push('slug（小寫英數與連字號）');
   if (obj.summary && obj.summary.length > 120) miss.push('summary（建議 ≤ 120 字）');
   return miss;
 }

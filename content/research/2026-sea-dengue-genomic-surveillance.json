@@ -1,0 +1,78 @@
+{
+  "id": "research.2026-sea-dengue-genomic-surveillance",
+  "type": "research",
+  "title": "東南亞登革病毒跨國基因體監測合作計畫",
+  "owner": "unit.lab",
+  "publishedAt": "2026-08-15",
+  "reviewedAt": "2026-08-15",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional",
+    "public"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-08-15"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "2026 年國際合作計畫（規劃中）：與東南亞夥伴國家交換登革病毒基因序列，追蹤血清型與基因型變化，及早預警境外移入引發的本土疫情。",
+  "keywords": [
+    "登革熱",
+    "基因體監測",
+    "國際合作",
+    "新南向",
+    "血清型"
+  ],
+  "note": "計畫編號、經費與 IRB 字號為示意；執行單位以機構名稱表示，不列個人姓名",
+  "projectNo": "MOHW115-CDC-N-315-000102",
+  "year": 2026,
+  "projectStatus": "planned",
+  "fundingType": "international",
+  "piUnit": "疾管署檢驗及疫苗研製中心與東南亞夥伴國家國家級衛生研究機構",
+  "budgetNtd": 5800000,
+  "abstractMarkdown": "我國本土登革熱多由境外移入引發。本計畫規劃與東南亞夥伴機構建立序列資料交換機制與共同分析平台，比對境外移入株與當地流行株，作為邊境檢疫與社區防治之預警依據。",
+  "objectives": [
+    "建立跨國登革病毒序列交換協議與資料格式",
+    "每季產出血清型／基因型分布報告",
+    "辦理夥伴國家實驗室訓練"
+  ],
+  "datasets": [
+    "dataset.dengue-daily",
+    "dataset.lab-virus-surveillance"
+  ],
+  "irb": {
+    "required": false
+  }
+}

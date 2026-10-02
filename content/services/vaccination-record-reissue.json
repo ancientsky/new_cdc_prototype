@@ -1,0 +1,119 @@
+{
+  "id": "service.vaccination-record-reissue",
+  "type": "service",
+  "title": "預防接種紀錄與接種證明補發",
+  "owner": "unit.vaccine",
+  "publishedAt": "2024-06-01",
+  "reviewedAt": "2026-05-20",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-05-20"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "兒童預防接種紀錄卡遺失或入學、出國需要接種證明時，可至衛生所或原接種院所申請補發，也可透過健康存摺查詢下載接種紀錄。",
+  "keywords": [
+    "接種紀錄",
+    "接種證明",
+    "補發",
+    "黃卡",
+    "健康存摺",
+    "衛生所"
+  ],
+  "slug": "vaccination-record-reissue",
+  "serviceType": "certificate",
+  "whoCanApply": [
+    "民眾",
+    "家長或法定代理人",
+    "學校"
+  ],
+  "introMarkdown": "國內接種紀錄登錄於全國性預防接種資訊管理系統（NIIS）。需要接種紀錄時：\n\n- **自行查詢**：透過健保快易通 APP「健康存摺」查詢與下載。\n- **兒童接種紀錄卡補發**：攜帶兒童健保卡與家長身分證件至戶籍地或居住地衛生所申請。\n- **英文接種證明**（留學、出國）：至衛生所或原接種院所申請，部分院所收取工本費。",
+  "requiredDocuments": [
+    "被接種者健保卡或身分證明",
+    "代理申請者身分證明與關係證明",
+    "英文證明需護照影本"
+  ],
+  "steps": [
+    {
+      "title": "先自行查詢",
+      "text": "以健康存摺查詢是否已有完整紀錄。",
+      "who": "民眾",
+      "days": 0
+    },
+    {
+      "title": "臨櫃申請",
+      "text": "攜帶證件至衛生所或原接種院所。",
+      "who": "民眾",
+      "days": 0
+    },
+    {
+      "title": "查核 NIIS 紀錄",
+      "text": "比對系統紀錄，缺漏者協助向原接種單位查證。",
+      "who": "衛生所",
+      "days": 3
+    },
+    {
+      "title": "核發",
+      "text": "當場或於查證後核發紀錄卡／證明。",
+      "who": "衛生所",
+      "days": 1
+    }
+  ],
+  "slaDays": 5,
+  "fee": "紀錄卡補發免費；英文證明工本費依各單位公告",
+  "legalBasis": [
+    "傳染病防治法",
+    "預防接種作業與兒童預防接種紀錄檢查辦法（示意）"
+  ],
+  "forms": [
+    {
+      "label": "預防接種紀錄補發申請書",
+      "href": "https://www.cdc.gov.tw/File/Get/placeholder-form-vaccination-record-reissue",
+      "format": "PDF",
+      "machineReadable": false
+    }
+  ],
+  "contact": "疾病管制署預防接種組（總機 02-2395-9825）；一般諮詢請撥防疫專線 1922（國外 +886-800-001922）；補發請洽各地衛生所",
+  "faq": [
+    {
+      "q": "小時候的紀錄查不到怎麼辦？",
+      "a": "早年紀錄可能未電子化，可洽原戶籍地衛生所查詢紙本；確實無紀錄者，可由醫師評估補接種或抽血檢驗抗體。"
+    },
+    {
+      "q": "新冠疫苗接種證明怎麼取得？",
+      "a": "可透過健康存摺下載接種紀錄，或至接種院所申請紙本。"
+    }
+  ]
+}

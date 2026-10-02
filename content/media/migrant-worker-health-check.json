@@ -1,0 +1,110 @@
+{
+  "id": "media.migrant-worker-health-check",
+  "type": "media",
+  "title": "移工健康檢查：入境後三日內與聘僱期間的檢查項目",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2026-08-10",
+  "reviewedAt": "2026-08-10",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.tuberculosis",
+    "doc.tb-manual"
+  ],
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-08-10"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "reviewed",
+      "reviewedAt": "2026-08-10",
+      "reviewer": "越南語審核人（約用通譯）"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "以越南語字幕說明移工入境後三日內及聘僱期間第 6、18、30 個月的健康檢查，包括胸部 X 光等項目，並提醒有咳嗽發燒可撥 1922 多語服務。",
+  "keywords": [
+    "移工",
+    "外籍勞工",
+    "健康檢查",
+    "胸部X光",
+    "越南語",
+    "多語"
+  ],
+  "note": "外國人健康檢查之權責分工（疾管署／衛福部）與檢查時點以現行規定為準，製作前已請權責單位確認；檢查項目為示意摘要",
+  "mediaType": "video",
+  "durationSeconds": 140,
+  "producedAt": "2026-07-30",
+  "basedOnVersionLabel": "外國人健康檢查規定與結核病防治工作手冊",
+  "targetGroups": [
+    "移工",
+    "雇主與仲介",
+    "新住民"
+  ],
+  "series": "新住民與移工健康",
+  "captions": [
+    "zh-TW",
+    "vi",
+    "id",
+    "th",
+    "en"
+  ],
+  "chapters": [
+    {
+      "t": 0,
+      "label": "為什麼要做健康檢查"
+    },
+    {
+      "t": 35,
+      "label": "什麼時候要檢查"
+    },
+    {
+      "t": 80,
+      "label": "檢查項目與醫院"
+    },
+    {
+      "t": 115,
+      "label": "生病了怎麼辦"
+    }
+  ],
+  "transcriptMarkdown": "**[00:00] 為什麼要做健康檢查**\n\n旁白：歡迎來到臺灣工作。為了保護你自己、你的同事和雇主家人的健康，依照規定，來臺工作的移工需要接受定期健康檢查。健康檢查可以及早發現結核病等傳染病，早發現、早治療，大多可以治好。\n\n**[00:35] 什麼時候要檢查**\n\n旁白：入境臺灣後三個工作日內，請由雇主或仲介陪同，到指定醫院完成第一次健康檢查。之後在聘僱期間第 6 個月、第 18 個月、第 30 個月前後，也要再做定期健康檢查。雇主要記得提醒移工按時檢查，並保存檢查結果。\n\n**[01:20] 檢查項目與醫院**\n\n旁白：健康檢查包括胸部 X 光、寄生蟲檢查等項目，醫院會依規定辦理。請一定要到衛生福利部指定的醫院檢查，結果才有效。如果檢查發現胸部 X 光異常，醫院會進一步安排驗痰或就醫，不用緊張，配合醫師就可以。\n\n**[01:55] 生病了怎麼辦**\n\n旁白：如果你咳嗽超過兩週、發燒、體重變輕，請告訴雇主並儘快就醫。確診結核病，政府提供免費治療，關懷員會陪你每天吃藥，治療期間依規定可以繼續在臺工作，不要害怕、不要躲起來。需要協助，請撥打防疫專線 1922，有越南語、印尼語、泰語與英語服務。",
+  "youtubeId": null,
+  "videoUrl": "https://www.youtube.com/user/taiwancdc",
+  "poster": "/img/media/migrant-worker-health-check.svg",
+  "i18n": {
+    "vi": {
+      "title": "Khám sức khỏe cho lao động nước ngoài: trong 3 ngày sau khi nhập cảnh và trong thời gian làm việc",
+      "summary": "Hướng dẫn khám sức khỏe trong 3 ngày làm việc sau khi nhập cảnh và vào khoảng tháng thứ 6, 18, 30; nếu ho, sốt hãy gọi 1922 có hỗ trợ tiếng Việt."
+    }
+  }
+}

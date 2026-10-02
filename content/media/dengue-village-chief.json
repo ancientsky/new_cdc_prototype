@@ -1,0 +1,98 @@
+{
+  "id": "media.dengue-village-chief",
+  "type": "media",
+  "title": "里長帶頭巡倒清刷：社區防登革熱篇",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-07-15",
+  "reviewedAt": "2026-07-15",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms",
+    "situation"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "disease.dengue",
+    "doc.guidance-dengue"
+  ],
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-07-15"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "由里長示範帶領社區志工「巡、倒、清、刷」清除積水容器，說明孳生源清除比噴藥更重要，並提醒出現發燒、頭痛、骨頭痛應儘速就醫。",
+  "keywords": [
+    "登革熱",
+    "孳生源",
+    "巡倒清刷",
+    "里長",
+    "社區動員"
+  ],
+  "note": "YouTube 影片 id 原型無法驗證，一律 null；頻道網址沿用舊式 /user/taiwancdc，dataset.youtube-channel 記為 @TwCDC，上線前請公關室確認頻道 handle。",
+  "mediaType": "video",
+  "durationSeconds": 120,
+  "producedAt": "2026-07-08",
+  "basedOnVersionLabel": "登革熱防治工作指引第 17 版",
+  "targetGroups": [
+    "里長與里幹事",
+    "社區志工",
+    "一般民眾"
+  ],
+  "series": "登革熱社區動員",
+  "captions": [
+    "zh-TW"
+  ],
+  "chapters": [
+    {
+      "t": 0,
+      "label": "里長的一週巡查"
+    },
+    {
+      "t": 35,
+      "label": "巡倒清刷四步驟"
+    },
+    {
+      "t": 75,
+      "label": "噴藥不能取代清積水"
+    },
+    {
+      "t": 100,
+      "label": "發燒就醫說旅遊史"
+    }
+  ],
+  "transcriptMarkdown": "**[00:00] 里長的一週巡查**\n\n里長：每個禮拜六早上，我們里的志工都會集合，一條巷子一條巷子走。登革熱是靠埃及斑蚊和白線斑蚊傳播的，蚊子在哪裡生，我們就去哪裡清。\n\n**[00:35] 巡倒清刷四步驟**\n\n旁白：防登革熱，記住四個字：「巡、倒、清、刷」。巡：巡視住家內外可能積水的容器，像花盆底盤、廢輪胎、水桶、帆布。倒：把積水倒掉。清：不要的容器清除，要用的容器倒放或加蓋。刷：容器內壁要刷洗，因為斑蚊的卵會黏在壁上，只倒水不刷，卵還是會孵化。\n\n志工：我們最常找到的地方，是陽台花盆底盤、冷氣滴水，還有工地的積水，下過雨後一定要再巡一次。\n\n**[01:15] 噴藥不能取代清積水**\n\n旁白：有確定病例時，衛生單位會進行緊急防治噴藥，目的是殺死已經帶病毒的成蚊。但噴藥殺不了水裡的孑孓，真正斷根，還是要靠大家清除孳生源。噴藥時請配合關好門窗、收好食物，不必過度擔心。\n\n**[01:40] 發燒就醫說旅遊史**\n\n旁白：如果出現發燒、頭痛、後眼窩痛、肌肉關節痛或出疹，請儘速就醫，並告訴醫師最近去過哪裡。退燒前後是重症的關鍵期，出現腹痛、持續嘔吐、牙齦出血或嗜睡，要立刻回診。里長和志工的一小時，守住全里的一整個夏天。",
+  "youtubeId": null,
+  "videoUrl": "https://www.youtube.com/user/taiwancdc",
+  "poster": "/img/media/dengue-village-chief.svg"
+}

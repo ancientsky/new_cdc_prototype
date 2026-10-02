@@ -7,9 +7,15 @@
 //   node scripts/fetch-data.mjs --dry      只抓取與比對，不寫任何檔案（列出會變更的內容）
 //   node scripts/fetch-data.mjs --no-sync  只更新快照，不動 content/datasets
 //   node scripts/fetch-data.mjs --sync-only 不連網，用既有 ckan-packages.json 快照同步資料目錄
+//   node scripts/fetch-data.mjs --check-links [--dry]
+//        只做外部連結健康檢查（ARCHITECTURE 11.1）：topic.links[]、service.forms[]／applyUrl、news.applyUrl、media.videoUrl、
+//        publication.pdfUrl、document.pdfUrl（legacyUrls 不檢）。HEAD（失敗再 GET）、timeout 10 秒、同站併發 ≤ 3、總數上限 300。
+//        結果寫回：陣列元素（links[i]、forms[i]）寫在元素上的 lastCheckedAt／status；單一欄位寫在 item.linkChecks[field]。
+//        佔位網址（/File/Get/placeholder-*、example.com…）略過、視為 unchecked。全部連不上（沙箱）⇒ 不改檔、exit 0。
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { EXTERNAL_LINK_FIELDS } from './lib/governance.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SNAPSHOTS = path.join(ROOT, 'data', 'snapshots');
@@ -18,6 +24,7 @@ const args = new Set(process.argv.slice(2));
 const DRY = args.has('--dry');
 const NO_SYNC = args.has('--no-sync');
 const SYNC_ONLY = args.has('--sync-only');
+const CHECK_LINKS = args.has('--check-links');
 const UA = 'cdc-ai-ready-prototype/0.2 (+github pages build)';
 const TIMEOUT_MS = 20000;
 const log = (...m) => console.log('[fetch]', ...m);
@@ -159,8 +166,133 @@ export function syncDatasetsFromCkan(packages, { dry = false } = {}) {
   return changes;
 }
 
+// ── 外部連結健康檢查（--check-links）────────────────────
+const CONTENT_DIR = path.join(ROOT, 'content');
+/** 會被檢查的內容子目錄（型別由檔案內 type 決定，欄位定義與治理引擎共用 EXTERNAL_LINK_FIELDS） */
+export const LINK_CHECK_DIRS = ['topics', 'services', 'news', 'media', 'publications', 'documents'];
+export const LINK_CHECK = { timeoutMs: 10000, perHost: 3, maxUrls: 300 };
+const PLACEHOLDER_PATTERNS = [/\/File\/Get\/placeholder-/i, /placeholder/i, /^https?:\/\/([^/]+\.)?example\.(com|org|net)(\/|$)/i, /^https?:\/\/[^/]+\.(invalid|test|example|localhost)(:\d+)?(\/|$)/i, /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?(\/|$)/i, /xxx|TODO/];
+export const isPlaceholderUrl = (u) => PLACEHOLDER_PATTERNS.some((re) => re.test(String(u)));
+const isHttpUrl = (u) => typeof u === 'string' && /^https?:\/\//i.test(u);
+
+/** 一筆內容（原始 JSON）的外部連結目標：[{ url, field, list?, index? }] */
+export function linkTargetsOf(item) {
+  const out = [];
+  for (const { field, list } of EXTERNAL_LINK_FIELDS[item?.type] ?? []) {
+    if (list) (item[field] ?? []).forEach((l, index) => { if (l && isHttpUrl(l.href)) out.push({ url: l.href, field, list: true, index }); });
+    else if (isHttpUrl(item[field])) out.push({ url: item[field], field });
+  }
+  return out;
+}
+
+/** 伺服器有回應但不代表連結失效（擋爬蟲、需登入、限流）：不寫回，下次再檢 */
+const INDETERMINATE = new Set([401, 403, 429]);
+/** 單一網址：HEAD → 失敗（例外或 ≥ 400）再 GET。
+ *  回傳 { status: ok|broken|indeterminate, code, network, error }；代理拒絕（x-deny-reason）與連線失敗視為 network。 */
+export async function checkUrl(url, { fetchImpl = fetch, timeoutMs = LINK_CHECK.timeoutMs } = {}) {
+  const attempt = async (method) => {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+    try {
+      const res = await fetchImpl(url, { method, redirect: 'follow', signal: ctrl.signal, headers: { 'User-Agent': UA, Accept: '*/*' } });
+      try { await res.body?.cancel?.(); } catch { /* 忽略 */ }
+      const deny = res.headers?.get?.('x-deny-reason');
+      if (deny) return { error: `proxy:${deny}` }; // 沙箱代理拒絕 ≠ 連結失效
+      return { code: res.status };
+    } catch (e) { return { error: e?.name === 'AbortError' ? 'timeout' : (e?.cause?.code ?? e?.message ?? String(e)) }; } finally { clearTimeout(timer); }
+  };
+  const head = await attempt('HEAD');
+  if (head.code && head.code < 400) return { status: 'ok', code: head.code, network: false };
+  const get = await attempt('GET');
+  const code = get.code ?? head.code;
+  if (code) return { status: code < 400 ? 'ok' : INDETERMINATE.has(code) ? 'indeterminate' : 'broken', code, network: false };
+  return { status: 'broken', code: null, network: true, error: get.error ?? head.error };
+}
+
+/** 依網域分組、每網域併發 ≤ perHost；回傳 Map(url → result) */
+export async function runLinkChecks(urls, { fetchImpl = fetch, perHost = LINK_CHECK.perHost, timeoutMs = LINK_CHECK.timeoutMs } = {}) {
+  const byHost = new Map();
+  for (const u of urls) {
+    let host; try { host = new URL(u).host; } catch { host = '?'; }
+    if (!byHost.has(host)) byHost.set(host, []);
+    byHost.get(host).push(u);
+  }
+  const results = new Map();
+  await Promise.all([...byHost.values()].map(async (list) => {
+    let i = 0;
+    const worker = async () => { while (i < list.length) { const u = list[i++]; results.set(u, await checkUrl(u, { fetchImpl, timeoutMs })); } };
+    await Promise.all(Array.from({ length: Math.min(perHost, list.length) }, worker));
+  }));
+  return results;
+}
+
+/** 把結果寫回一筆內容（只動 lastCheckedAt／status）；回傳是否有變更 */
+export function applyLinkResults(item, results, today) {
+  let changed = false;
+  const set = (obj, status, checkedAt) => {
+    if (obj.status !== status) { obj.status = status; changed = true; }
+    if (checkedAt && obj.lastCheckedAt !== checkedAt) { obj.lastCheckedAt = checkedAt; changed = true; }
+  };
+  for (const t of linkTargetsOf(item)) {
+    const placeholder = isPlaceholderUrl(t.url);
+    const r = results.get(t.url);
+    if (!placeholder && (!r || r.status === 'indeterminate')) continue; // 超過上限未檢查、或無法判定：保留原值
+    if (t.list) {
+      const obj = item[t.field][t.index];
+      if (placeholder) { if (obj.status && obj.status !== 'unchecked') { obj.status = 'unchecked'; changed = true; } continue; }
+      set(obj, r.status, today);
+    } else {
+      if (placeholder) {
+        const cur = item.linkChecks?.[t.field];
+        if (cur?.status && cur.status !== 'unchecked') { cur.status = 'unchecked'; changed = true; }
+        continue;
+      }
+      item.linkChecks ??= {};
+      item.linkChecks[t.field] ??= {};
+      set(item.linkChecks[t.field], r.status, today);
+    }
+  }
+  return changed;
+}
+
+/** 主程序：掃 content/** → 檢查 → 寫回。fetchImpl／contentDir 可注入（測試用） */
+export async function checkLinks({ contentDir = CONTENT_DIR, fetchImpl = fetch, dry = false, today = new Date().toISOString().slice(0, 10), maxUrls = LINK_CHECK.maxUrls, perHost = LINK_CHECK.perHost, timeoutMs = LINK_CHECK.timeoutMs, logger = log } = {}) {
+  const files = [];
+  for (const dir of LINK_CHECK_DIRS) {
+    const d = path.join(contentDir, dir);
+    if (!fs.existsSync(d)) continue;
+    for (const f of fs.readdirSync(d).filter((x) => x.endsWith('.json')).sort()) {
+      const file = path.join(d, f);
+      try { files.push({ file, item: JSON.parse(fs.readFileSync(file, 'utf8')) }); } catch (e) { logger(`✗ 無法解析 ${path.relative(contentDir, file)}：${e.message}`); }
+    }
+  }
+  const all = [], placeholders = new Set();
+  for (const { item } of files) for (const t of linkTargetsOf(item)) (isPlaceholderUrl(t.url) ? placeholders.add(t.url) : all.push(t.url));
+  const unique = [...new Set(all)];
+  const urls = unique.slice(0, maxUrls);
+  const summary = { files: files.length, urls: unique.length, checked: urls.length, skippedOverLimit: unique.length - urls.length, placeholders: placeholders.size, ok: 0, broken: 0, indeterminate: 0, network: 0, offline: false, changedFiles: [] };
+  logger(`外部連結：${unique.length} 個（檢查 ${urls.length}${summary.skippedOverLimit ? `，超過上限略過 ${summary.skippedOverLimit}` : ''}；佔位略過 ${placeholders.size}）`);
+  if (!urls.length) { logger('沒有需要檢查的外部連結'); return summary; }
+  const results = await runLinkChecks(urls, { fetchImpl, perHost, timeoutMs });
+  for (const r of results.values()) { summary[r.status]++; if (r.network) summary.network++; }
+  if (summary.ok === 0) { // 全部失敗（沙箱無法連外、代理拒絕）：不改檔
+    summary.offline = true;
+    logger(`無法連外，略過（${summary.network} 個連線失敗、${summary.indeterminate} 個無法判定、${summary.broken - summary.network} 個 HTTP 錯誤；不改任何內容檔）`);
+    return summary;
+  }
+  for (const { file, item } of files) {
+    if (!applyLinkResults(item, results, today)) continue;
+    summary.changedFiles.push(path.relative(contentDir, file));
+    if (!dry) fs.writeFileSync(file, JSON.stringify(item, null, 2) + '\n');
+  }
+  for (const [u, r] of results) if (r.status !== 'ok') logger(`  ${r.status === 'broken' ? '✗' : '?'} ${u}（${r.code ?? r.error}）`);
+  logger(`正常 ${summary.ok}、失效 ${summary.broken}（其中連線失敗 ${summary.network}）、無法判定 ${summary.indeterminate}；更新 ${summary.changedFiles.length} 檔${dry ? '（dry，未寫入）' : ''}`);
+  return summary;
+}
+
 // ── 主流程 ────────────────────────────────────────────
 async function main() {
+  if (CHECK_LINKS) { await checkLinks({ dry: DRY }); return; }
   if (DRY) log('dry-run：只抓取與比對，不寫入檔案');
   let packages = null;
   if (!SYNC_ONLY) {

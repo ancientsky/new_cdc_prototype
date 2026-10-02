@@ -1,0 +1,69 @@
+{
+  "id": "publication.annual-report-2024",
+  "type": "publication",
+  "title": "衛生福利部疾病管制署 2024 年報",
+  "owner": "unit.planning",
+  "publishedAt": "2025-06-30",
+  "reviewedAt": "2025-06-30",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2025-06-30"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "彙整 2024 年疾管署施政成果與重要統計，包括新冠轉常規防治、M痘疫苗接種、登革熱防治與國際衛生合作，中英文對照。",
+  "keywords": [
+    "年報",
+    "2024",
+    "施政成果",
+    "統計",
+    "國際合作"
+  ],
+  "note": "ISBN、GPN 為示意號碼",
+  "pubType": "annual-report",
+  "series": "疾病管制署年報",
+  "seriesEn": "Taiwan CDC Annual Report",
+  "edition": "初版",
+  "isbn": "978-626-0000-24-3",
+  "gpn": "1011400118",
+  "pages": 160,
+  "authors": [
+    "衛生福利部疾病管制署"
+  ],
+  "pdfUrl": "https://www.cdc.gov.tw/File/Get/placeholder-annual-report-2024",
+  "price": "新臺幣 350 元（電子版免費）",
+  "abstractMarkdown": "本年報以中英文對照呈現 2024 年度重點：新冠防治轉入常規、M痘高風險族群疫苗接種、登革熱南部疫情防治、結核病與愛滋防治成果、國際衛生合作，並附年度大事紀與統計。"
+}

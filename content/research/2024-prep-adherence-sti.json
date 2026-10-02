@@ -1,0 +1,91 @@
+{
+  "id": "research.2024-prep-adherence-sti",
+  "type": "research",
+  "title": "PrEP 使用者服藥順從性與性傳染病發生率追蹤研究",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2024-03-01",
+  "reviewedAt": "2026-05-01",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional",
+    "public"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.hiv"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-05-01"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-05-01",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "2024 年委託研究（成果已發表）：追蹤 PrEP 計畫使用者 12 個月之服藥順從性、HIV 新感染與梅毒等性傳染病發生率，結果刊登於疫情報導。",
+  "keywords": [
+    "PrEP",
+    "HIV",
+    "服藥順從性",
+    "性傳染病",
+    "疫情報導"
+  ],
+  "note": "計畫編號、經費與 IRB 字號為示意；執行單位以機構名稱表示，不列個人姓名",
+  "projectNo": "MOHW113-CDC-C-315-000109",
+  "year": 2024,
+  "projectStatus": "published",
+  "fundingType": "commissioned",
+  "piUnit": "某醫學大學附設醫院感染科",
+  "budgetNtd": 2600000,
+  "reportDoc": "https://www.cdc.gov.tw/File/Get/placeholder-report-2024-prep",
+  "publications": [
+    "publication.bulletin-42-11"
+  ],
+  "abstractMarkdown": "於 PrEP 合作醫院招募使用者進行 12 個月世代追蹤。每日服藥與事件型服藥者之順從性均良好，追蹤期間 HIV 新感染極少（示意），但梅毒與淋病發生率仍高，建議 PrEP 回診時常規篩檢性傳染病並加強保險套衛教。",
+  "objectives": [
+    "描述 PrEP 使用者服藥模式與順從性",
+    "估計 HIV 與性傳染病發生率",
+    "提出 PrEP 計畫服務模式建議"
+  ],
+  "datasets": [
+    "dataset.hiv-monthly"
+  ],
+  "irb": {
+    "required": true,
+    "approvalNo": "JIRB-N202403001（示意）",
+    "committee": "某醫學大學聯合人體研究倫理委員會"
+  },
+  "i18n": {
+    "en": {
+      "title": "Adherence and STI incidence among PrEP users",
+      "summary": "Published 2024 commissioned cohort study: good adherence and very few HIV infections among PrEP users, but high syphilis and gonorrhoea incidence."
+    }
+  }
+}

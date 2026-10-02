@@ -9,7 +9,8 @@
 //     refuse?: bool, refusalKind?: string, intent?: string, intentAny?: [], disease?: string, verdict?: string,
 //     mustInclude?: [], mustIncludeAny?: [], mustNotInclude?: [], mustCite?: [前綴], mustCiteAny?: [前綴], mustNotCite?: [前綴],
 //     situation?: bool, stats?: bool, aggregate?: 'sum'|'max'|'min'|'avg', points?: n, action?: href 片段, translationNote?: string,
-//     citeLabel?: bool, minSentences?: n } }
+//     citeLabel?: bool, minSentences?: n, mustCiteType?: [型別前綴], notify?: bool, closedMarked?: bool } }
+// requires：內容 id／前綴、'situation:<id>'、'travel:<ISO2>'、'dataset-series:<id>'、'newsType:<type>[:open]'。
 // requires 中的內容不存在 → 該題 skipped（不計分，報告列出），避免內容尚未建置時誤擋上線。
 import { createEngine } from '../src/client/answer/core.js';
 import { scoreEvalSet, THRESHOLDS, judge, groundingOf } from '../src/client/answer/judge.js';
@@ -39,6 +40,10 @@ export function engineFromSite(site, extra = {}) {
     faq: (site.collections.faq ?? []).filter((f) => f.status === 'published').map((f) => ({ id: f.id, question: f.question, diseases: f.diseases, tasks: f.tasks, whitelist: f.gov?.whitelist?.effective !== false && !f.gov?.stale?.length })),
     units: site.master.units,
     travel: [...(site.snapshots?.countryLevels?.data ?? []), ...(site.snapshots?.travelAlerts?.data ?? [])],
+    // 第二輪：申請服務（actions 用）、通報時限表（治理引擎 R13；不存在時引擎只用主檔）、影音（來源卡海報）
+    services: (site.collections.services ?? []).filter((x) => x.status === 'published').map((x) => ({ id: x.id, slug: x.slug, title: x.title, serviceType: x.serviceType, steps: x.steps, slaDays: x.slaDays, fee: x.fee, applyUrl: x.applyUrl, forms: x.forms ?? [] })),
+    notifyTable: site.gov?.notifyTable ?? null,
+    media: (site.collections.media ?? []).filter((x) => x.status === 'published').map((x) => ({ id: x.id, mediaType: x.mediaType, poster: x.poster, producedAt: x.producedAt, basedOnVersionLabel: x.basedOnVersionLabel, durationSeconds: x.durationSeconds })),
     aiStatus: { ...site.governance.aiStatus, paused: false, ...(extra.aiStatus ?? {}) },
     today: site.today,
     random: extra.random,
@@ -49,6 +54,8 @@ function contentExists(site, ref) {
   if (ref.startsWith('situation:')) return (site.situation?.items ?? []).some((i) => i.disease === ref.slice(10));
   if (ref.startsWith('travel:')) { const iso = ref.slice(7).toUpperCase(); return [...(site.snapshots?.countryLevels?.data ?? []), ...(site.snapshots?.travelAlerts?.data ?? [])].some((t) => String(t.iso2 ?? t.ISO2 ?? t.countryCode ?? t.iso ?? t.code ?? '').toUpperCase() === iso); }
   if (ref.startsWith('dataset-series:')) return (site.collections.datasets ?? []).some((d) => d.id === ref.slice(15) && d.series);
+  // 'newsType:recruit'：至少一則該類公告已進 AI 白名單；'newsType:recruit:open'：且未截止
+  if (ref.startsWith('newsType:')) { const [, t, open] = ref.split(':'); return (site.collections.news ?? []).some((n) => n.status === 'published' && n.newsType === t && n.gov?.whitelist?.effective && (!open || !(n.gov?.closed ?? (n.deadlineAt && n.deadlineAt < site.today)))); }
   if (site.byId?.has(ref)) return true;
   for (const item of site.all ?? []) if (item.status === 'published' && (item.id.startsWith(ref) || item.family === ref)) return true;
   return false;

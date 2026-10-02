@@ -54,6 +54,8 @@ function buildMarkdown() {
   for (const [k, list] of Object.entries(byKind)) { L.push(`### ${D.kindNames?.[k] ?? k}（${list.length}）`, ''); for (const t of list) L.push(`- ${done[t.id] ? '[x]' : '[ ]'} ${t.ownerName}：${t.itemTitle}（期限 ${t.dueAt ?? '—'}${t.overdue ? '，已逾期' : ''}）`); L.push(''); }
   L.push('## 五、各單位現況', '', '| 單位 | 內容 | 已發布 | 白名單 | 逾期未審 | 依據已修訂 | 待辦 |', '| --- | ---: | ---: | ---: | ---: | ---: | ---: |');
   for (const o of D.owners ?? []) L.push(`| ${o.name} | ${o.content} | ${o.published} | ${o.whitelist} | ${o.overdue} | ${o.stale} | ${o.todos} |`);
+  const x = D.extra;
+  if (x) L.push('', '## 六、公告、影音與外部連結', '', `- 公告：進行中 ${x.notices.open}、7 日內截止 ${x.notices.soon}、已截止未封存 ${x.notices.closedUnarchived}（共 ${x.notices.total} 則）`, `- 影音：共 ${x.media.total} 支，有逐字稿 ${x.media.transcript}、依據正本現行版 ${x.media.current}`, `- 外部連結：ok ${x.links.ok}、broken ${x.links.broken}、unchecked ${x.links.unchecked}（共 ${x.links.total} 條）`);
   L.push('', '---', '*本季報由後台自動產生，無人工填報；若與正式資料有出入，以 /v1/governance/*.json 為準。*');
   void pad; void fmtDT;
   return `${L.join('\n')}\n`;

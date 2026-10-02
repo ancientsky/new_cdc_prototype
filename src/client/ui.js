@@ -213,12 +213,18 @@ qsa('[data-tabs]').forEach((box) => {
 
 /* ───────── 篩選列（新聞、資料目錄）與文字篩選（疾病索引） ───────── */
 const filterState = new Map();
+const tokens = (v) => String(v ?? '').split(/\s+/).filter(Boolean);
 function applyFilter(targetId) {
   const target = document.getElementById(targetId);
   if (!target) return;
   const st = filterState.get(targetId) || {};
   const rows = target.matches('table') ? qsa('tbody tr', target) : [...target.children];
-  rows.forEach((r) => { r.hidden = Object.entries(st).some(([k, v]) => v && r.dataset[k] !== v); });
+  rows.forEach((r) => { r.hidden = Object.entries(st).some(([k, v]) => v && !tokens(r.dataset[k]).includes(v)); });
+  const n = rows.filter((r) => !r.hidden).length;
+  qsa(`[data-filter-count="${targetId}"]`).forEach((c) => { c.textContent = Object.values(st).some(Boolean) ? T('filter.count', { n, total: rows.length }) : ''; });
+  // 篩選後沒有任何結果時，顯示 target 後面的空狀態（若有）
+  const empty = document.querySelector(`[data-filter-empty="${targetId}"]`);
+  if (empty) empty.hidden = n > 0;
 }
 document.addEventListener('click', (e) => {
   const b = e.target.closest('.c-filterbar button[data-v]');
@@ -229,6 +235,15 @@ document.addEventListener('click', (e) => {
   st[bar.dataset.key] = b.dataset.v;
   filterState.set(id, st);
   qsa('button[data-v]', bar).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+  applyFilter(id);
+});
+document.addEventListener('change', (e) => {
+  const sel = e.target.closest('select[data-filter-select]');
+  if (!sel) return;
+  const id = sel.dataset.filterSelect;
+  const st = filterState.get(id) || {};
+  st[sel.dataset.key] = sel.value;
+  filterState.set(id, st);
   applyFilter(id);
 });
 qsa('input[data-filter-input]').forEach((inp) => {
@@ -267,3 +282,152 @@ refreshHelpful();
 refreshSubs();
 // 動態內容（答案頁）插入後，D 可呼叫 CDC.refresh() 重新同步狀態
 CDC.refresh = () => { refreshHelpful(); refreshSubs(); applyView(root.dataset.view); };
+
+/* ═════════ 第二輪：影音播放器、逐字稿、複製、勾選清單、署長信箱 ═════════ */
+const esc = (v) => String(v).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+async function copyText(text, btn) {
+  try { await navigator.clipboard.writeText(text); } catch {
+    const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.append(ta); ta.select();
+    try { document.execCommand('copy'); } catch { /* ignore */ } ta.remove();
+  }
+  if (btn) { const old = btn.textContent; btn.textContent = btn.dataset.done || T('copied'); setTimeout(() => { btn.textContent = old; }, 1800); }
+}
+document.addEventListener('click', (e) => {
+  const b = e.target.closest('[data-copy-text]');
+  if (b) copyText(b.dataset.copyText, b);
+});
+
+/* 影片：點擊才載入 youtube-nocookie；章節可跳轉（尚未載入就從該秒開始載入）；無 id 的示意影片只提示並展開逐字稿 */
+function loadPlayer(box, start = 0) {
+  const id = box.dataset.yt;
+  if (!id) return false;
+  const stage = box.querySelector('[data-player-stage]');
+  const q = new URLSearchParams({ autoplay: '1', rel: '0', ...(start ? { start: String(Math.floor(start)) } : {}) });
+  const src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?${q}`;
+  let ifr = box.querySelector('iframe');
+  if (!ifr) {
+    ifr = document.createElement('iframe');
+    ifr.className = 'c-player__frame';
+    ifr.title = box.dataset.title || 'YouTube';
+    ifr.allow = 'accelerometer; autoplay; encrypted-media; picture-in-picture; fullscreen';
+    ifr.allowFullscreen = true;
+    ifr.referrerPolicy = 'strict-origin-when-cross-origin';
+    ifr.setAttribute('loading', 'lazy');
+    stage.replaceChildren(ifr);
+  }
+  ifr.src = src;
+  stage.classList.add('is-playing');
+  return true;
+}
+document.addEventListener('click', (e) => {
+  const load = e.target.closest('[data-player-load]');
+  if (load) { loadPlayer(load.closest('[data-player]')); return; }
+  const seek = e.target.closest('[data-seek]');
+  if (!seek) return;
+  const box = document.querySelector('[data-player]');
+  const t0 = Number(seek.dataset.seek) || 0;
+  if (box && loadPlayer(box, t0)) { box.scrollIntoView({ block: 'center', behavior: 'smooth' }); return; }
+  // 示意影片：展開逐字稿
+  const tr = document.getElementById('transcript');
+  if (tr) { tr.open = true; tr.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
+});
+if (/^#t=(\d+)/.test(location.hash)) { const m = location.hash.match(/^#t=(\d+)/); const box = document.querySelector('[data-player]'); if (box?.dataset.yt) box.dataset.startAt = m[1]; document.getElementById('transcript')?.setAttribute('open', ''); }
+
+/* 逐字稿搜尋與高亮（只處理文字節點，不破壞結構） */
+qsa('[data-transcript]').forEach((wrap) => {
+  const input = wrap.querySelector('[data-transcript-search]');
+  const body = wrap.querySelector('#transcript-body');
+  const count = wrap.querySelector('[data-transcript-count]');
+  if (!input || !body) return;
+  const clear = () => { qsa('mark.c-hit', body).forEach((m) => { m.replaceWith(document.createTextNode(m.textContent)); }); body.normalize(); };
+  const run = () => {
+    clear();
+    const q = input.value.trim();
+    if (!q) { count.textContent = ''; return; }
+    const re = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+    const walker = document.createTreeWalker(body, NodeFilter.SHOW_TEXT);
+    const nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode);
+    let n = 0;
+    nodes.forEach((node) => {
+      const text = node.nodeValue; re.lastIndex = 0;
+      if (!re.test(text)) return;
+      re.lastIndex = 0;
+      const frag = document.createDocumentFragment(); let last = 0, m;
+      while ((m = re.exec(text))) { frag.append(text.slice(last, m.index)); const mk = document.createElement('mark'); mk.className = 'c-hit'; mk.textContent = m[0]; frag.append(mk); last = m.index + m[0].length; n++; if (m[0].length === 0) re.lastIndex++; }
+      frag.append(text.slice(last)); node.replaceWith(frag);
+    });
+    count.textContent = n ? T('media.transcript.hits', { n }) : T('media.transcript.nohit');
+    const first = body.querySelector('mark.c-hit'); if (first) first.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  };
+  let tm = null;
+  input.addEventListener('input', () => { clearTimeout(tm); tm = setTimeout(run, 150); });
+  input.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); run(); } });
+  wrap.addEventListener('toggle', () => { if (!wrap.open) { input.value = ''; clear(); count.textContent = ''; } });
+});
+
+/* 應備文件勾選清單：存 localStorage cdc.checklist = { [serviceId]: [index…] }（無痕模式時只在本頁有效） */
+qsa('[data-checklist]').forEach((list) => {
+  const id = list.dataset.checklist;
+  const boxes = qsa('input[data-check]', list);
+  const prog = list.parentElement.querySelector('[data-check-prog]');
+  const all = () => store.get('cdc.checklist', {});
+  const render = () => {
+    const done = boxes.filter((b) => b.checked).length;
+    if (prog) prog.textContent = T('apply.docs.prog', { done, total: boxes.length });
+  };
+  const saved = new Set(all()[id] ?? []);
+  boxes.forEach((b) => { b.checked = saved.has(Number(b.dataset.check)); });
+  const save = () => { const m = all(); m[id] = boxes.filter((b) => b.checked).map((b) => Number(b.dataset.check)); store.set('cdc.checklist', m); render(); };
+  boxes.forEach((b) => b.addEventListener('change', save));
+  list.parentElement.querySelector('[data-check-reset]')?.addEventListener('click', () => { boxes.forEach((b) => { b.checked = false; }); save(); });
+  render();
+});
+
+/* 署長信箱（示範）：分類 → 顯示分流單位；送出 → 信件預覽、mailto、複製；本機記錄 cdc.mailbox（不含 email） */
+qsa('[data-mailbox]').forEach((root) => {
+  const form = root.querySelector('[data-mailbox-form]');
+  const cat = root.querySelector('[data-mb-cat]');
+  const route = root.querySelector('[data-mb-route]');
+  const err = root.querySelector('[data-mb-err]');
+  const pv = root.querySelector('[data-mb-preview]');
+  const addr = root.dataset.addr;
+  const optOf = () => cat.selectedOptions[0];
+  const setRoute = () => {
+    const o = optOf();
+    route.textContent = o && o.value ? route.dataset.tpl.replace('{unit}', o.dataset.unit) : route.dataset.empty;
+  };
+  cat.addEventListener('change', setRoute);
+  const logList = root.querySelector('[data-mb-log]');
+  const renderLog = () => {
+    const rows = store.get('cdc.mailbox', []);
+    logList.innerHTML = rows.length ? rows.slice().reverse().map((r) => `<li><time>${esc(r.at.slice(0, 16).replace('T', ' '))}</time> · ${esc(r.categoryLabel)} → ${esc(r.unit)}<br><strong>${esc(r.subject)}</strong></li>`).join('') : `<li class="muted">${esc(T('none'))}</li>`;
+  };
+  renderLog();
+  root.querySelector('[data-mb-clear]')?.addEventListener('click', () => { store.set('cdc.mailbox', []); renderLog(); });
+  root.querySelector('[data-mb-edit]')?.addEventListener('click', () => { pv.hidden = true; form.hidden = false; form.querySelector('input,select,textarea')?.focus(); });
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const fd = new FormData(form);
+    const o = optOf();
+    const subject = String(fd.get('subject') || '').trim();
+    const body = String(fd.get('body') || '').trim();
+    const email = String(fd.get('email') || '').trim();
+    const okEmail = !email || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (!o?.value || !subject || !body || !fd.get('consent') || !okEmail) { err.hidden = false; (!o?.value ? cat : !subject ? form.subject : !body ? form.body : !okEmail ? form.email : form.consent).focus(); return; }
+    err.hidden = true;
+    const unit = o.dataset.unit, label = o.dataset.label;
+    const subj = `[${T('contact.mail.prefix')}][${label}] ${subject}`;
+    const text = `${T('contact.pv.to')}: ${addr}\n${T('contact.pv.route')}: ${unit}\n${T('contact.pv.subject')}: ${subj}\n${email ? `${T('contact.f.email')}: ${email}\n` : ''}\n${body}\n\n--\n${T('contact.mail.foot')}`;
+    root.querySelector('[data-mb-pv-unit]').textContent = unit;
+    root.querySelector('[data-mb-pv-subject]').textContent = subj;
+    root.querySelector('[data-mb-pv-body]').textContent = text;
+    root.querySelector('[data-mb-mailto]').href = `mailto:${addr}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(`${body}\n\n${email ? `${T('contact.f.email')}: ${email}\n` : ''}-- ${T('contact.mail.foot')}`)}`;
+    const rows = store.get('cdc.mailbox', []);
+    rows.push({ at: new Date().toISOString(), category: o.value, categoryLabel: label, unit, subject, body });
+    const saved = store.set('cdc.mailbox', rows.slice(-20));
+    root.querySelector('[data-mb-saved]').hidden = !saved;
+    renderLog();
+    form.hidden = true; pv.hidden = false; pv.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    root.querySelector('[data-mb-mailto]').focus();
+  });
+});

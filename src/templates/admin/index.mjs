@@ -1,6 +1,6 @@
 // /admin/ 治理儀表板（規劃 7.5 KPI、待辦、白名單、AI 狀態、態勢層延遲、各單位卡、季報匯出）
 import { html } from '../../../scripts/lib/render.mjs';
-import { pageHead, dataScript, adminMeta, KIND_LABEL, KIND_ORDER, todoList, sitGov, byOwnerRows, kpiProgress, fmtNum } from './_partials.mjs';
+import { pageHead, dataScript, adminMeta, KIND_LABEL, KIND_ORDER, todoList, sitGov, byOwnerRows, kpiProgress, fmtNum, noticeRows, mediaRows, linkRows, linkCounts } from './_partials.mjs';
 export { layout } from './_layout.mjs';
 
 export function pages() { return [{ path: '/admin/', props: {}, noindex: true }]; }
@@ -19,8 +19,15 @@ export function render(ctx) {
   const reviewN = site.all.filter((i) => i.status === 'review').length;
   const wlPct = site.gov.totalPublished ? Math.round((site.gov.whitelistCount / site.gov.totalPublished) * 100) : 0;
   const tile = (label, value, note, tone = '') => html`<div class="adm-stat ${tone ? `adm-stat--${tone}` : ''}"><p class="adm-stat__label">${label}</p><p class="adm-stat__value">${value}</p><p class="adm-stat__note">${note}</p></div>`;
+  // 第二輪：公告／影音／外部連結小卡（數字優先採引擎算好的 gov，否則由欄位推算）
+  const notices = noticeRows(site);
+  const nOpen = notices.filter((n) => n.open).length, nSoon = notices.filter((n) => n.closingSoon && !n.closed && n.status === 'published').length, nClosed = notices.filter((n) => n.closed && !n.archived).length;
+  const media = mediaRows(site);
+  const mTr = media.filter((m) => m.hasTranscript).length, mCur = media.filter((m) => m.basisCurrent).length;
+  const lc = linkCounts(linkRows(site));
+  const extra = { notices: { open: nOpen, soon: nSoon, closedUnarchived: nClosed, total: notices.length }, media: { total: media.length, transcript: mTr, current: mCur }, links: lc };
   const data = {
-    today: site.today, kpi, todos: todos.map(({ id, kind, owner, ownerName, itemTitle, dueAt, overdue }) => ({ id, kind, owner, ownerName, itemTitle, dueAt, overdue })),
+    extra, today: site.today, kpi, todos: todos.map(({ id, kind, owner, ownerName, itemTitle, dueAt, overdue }) => ({ id, kind, owner, ownerName, itemTitle, dueAt, overdue })),
     kindNames: Object.fromEntries(kinds.map((k) => [k, kindName(k)])), owners, whitelist: { effective: site.gov.whitelistCount, published: site.gov.totalPublished },
     ai: { paused: !!ai.paused, reason: ai.reason ?? '', mode: ai.mode, updatedAt: ai.updatedAt }, situation: sg, review: reviewN,
     eval: site.evalReport ? { total: site.evalReport.total, passed: site.evalReport.passed, version: site.evalReport.byCategory?.version ?? null, metrics: site.evalReport.metrics ?? {} } : null,
@@ -32,6 +39,18 @@ ${pageHead({ title: '治理儀表板', what: '署內治理的一頁總覽：品�
   ${tile('系統待辦', todos.length, `${overdueTodos} 件已逾期；已在本機標完成者見下方`, overdueTodos ? 'bad' : todos.length ? 'warn' : 'ok')}
   ${tile('AI 問答狀態', html`<span id="dash-ai">${ai.paused ? '暫停中' : '運作中'}</span>`, html`<span id="dash-ai-note">${ai.paused ? `原因：${ai.reason || '—'}` : `模式：${ai.mode === 'llm' ? 'LLM' : '抽取式'}；前往「AI 開關」可暫停`}</span>`, ai.paused ? 'bad' : 'ok')}
   ${tile('態勢層資料日', sg.dataDate ?? '—', sg.lagDays != null ? `延遲 ${sg.lagDays} 日${sg.overdue ? `；已過下次審閱日 ${sg.nextReviewAt}` : `；下次審閱 ${sg.nextReviewAt ?? '—'}`}` : '尚無資料', sg.overdue || (sg.lagDays ?? 0) > 7 ? 'bad' : (sg.lagDays ?? 0) > 1 ? 'warn' : 'ok')}
+</div>
+
+<div class="adm-grid adm-grid--3" style="margin-bottom:var(--sp-5)" aria-label="公告、影音與外部連結">
+  <section class="adm-minicard ${nClosed ? 'adm-minicard--warn' : 'adm-minicard--ok'}" aria-labelledby="mc-n"><h3 id="mc-n">公告 <a href="${url('/admin/notices/', { noLang: true })}">公告管理 →</a></h3>
+    <dl><dt>進行中</dt><dd>${nOpen}</dd><dt>7 日內截止</dt><dd class="${nSoon ? 'adm-yellow' : ''}">${nSoon}</dd><dt>已截止未封存</dt><dd class="${nClosed ? 'adm-red' : ''}">${nClosed}</dd></dl>
+    <p>人才招募、採購公告、其他訊息共 ${notices.length} 則；截止後系統自動標「已截止」並退出首頁。</p></section>
+  <section class="adm-minicard ${media.length && (mTr < media.length || mCur < media.length) ? 'adm-minicard--warn' : 'adm-minicard--ok'}" aria-labelledby="mc-m"><h3 id="mc-m">影音 <a href="${url('/admin/media/', { noLang: true })}">影音管理 →</a></h3>
+    <dl><dt>影片總數</dt><dd>${media.length}</dd><dt>有逐字稿</dt><dd class="${media.length && mTr < media.length ? 'adm-red' : ''}">${mTr} / ${media.length}</dd><dt>依據正本現行版</dt><dd class="${media.length && mCur < media.length ? 'adm-red' : ''}">${mCur} / ${media.length}</dd></dl>
+    <p>逐字稿與依據正本是影音上架的必填欄位；正本修訂後過時的影片自動產生待辦。</p></section>
+  <section class="adm-minicard ${lc.broken ? 'adm-minicard--bad' : lc.unchecked && lc.unchecked === lc.total ? 'adm-minicard--warn' : 'adm-minicard--ok'}" aria-labelledby="mc-l"><h3 id="mc-l">外部連結 <a href="${url('/admin/links/', { noLang: true })}">連結健康 →</a></h3>
+    <dl><dt>ok</dt><dd>${lc.ok}</dd><dt>broken</dt><dd class="${lc.broken ? 'adm-red' : ''}">${lc.broken}</dd><dt>unchecked</dt><dd>${lc.unchecked}</dd></dl>
+    <p>共 ${lc.total} 條；CI 每日 <code>npm run fetch -- --check-links</code>，失效自動變待辦。</p></section>
 </div>
 
 <section class="adm-card" aria-labelledby="kpi-h"><h2 id="kpi-h">品質指標（規劃 7.5）</h2>

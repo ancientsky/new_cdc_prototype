@@ -23,8 +23,18 @@ export function render(ctx) {
   ${group(t('nav.news'), publishedOf(site, 'news').map((n) => li(hrefFor(ctx, n), L(ctx, n, 'title'), n.publishedAt)))}
   ${group(t('nav.faq'), publishedOf(site, 'faq').map((f) => li(hrefFor(ctx, f), L(ctx, f, 'question') ?? f.title)))}
   ${group(t('nav.documents'), docs.map((d) => li(hrefFor(ctx, d), L(ctx, d, 'title'), `${d.version}${d.isCurrent ? '' : ` · ${t('documents.expired')}`}`)))}
+  ${group(t('home.more'), [
+    li(url('/services/'), t('services.title')), li(url('/apply/'), t('apply.title')), li(url('/publications/'), t('publications.title')), li(url('/lab/'), t('lab.title')), li(url('/report/'), t('report.title')),
+    li(url('/research/'), t('research.title')), li(url('/notices/'), t('notices.title')), li(url('/media/'), t('media.title')), li(url('/campaigns/'), t('campaigns.title')), li(url('/contact/'), t('contact.title')), li(url('/about/'), t('footer.about')),
+  ])}
+  ${group(t('home.media'), publishedOf(site, 'media').map((d) => li(hrefFor(ctx, d), L(ctx, d, 'title'), d.basedOnVersionLabel ?? '')))}
+  ${group(t('home.topics'), publishedOf(site, 'topics').map((d) => li(hrefFor(ctx, d), L(ctx, d, 'title'))))}
+  ${group(t('apply.title'), publishedOf(site, 'services').map((d) => li(hrefFor(ctx, d), L(ctx, d, 'title'))))}
+  ${group(t('publications.title'), publishedOf(site, 'publications').map((d) => li(hrefFor(ctx, d), L(ctx, d, 'title'))))}
+  ${group(t('lab.title'), publishedOf(site, 'labtests').map((d) => li(hrefFor(ctx, d), L(ctx, d, 'title'))))}
+  ${group(t('research.title'), publishedOf(site, 'research').map((d) => li(hrefFor(ctx, d), L(ctx, d, 'title'), String(d.year))))}
   ${group(t('sitemap.policy'), [
-    ...Object.entries(PAGE_PATHS).map(([slug, p]) => li(url(p), t(`page.${slug}`))), li(url('/transparency/'), t('footer.transparency')), li(url('/guide/'), t('footer.guide')),
+    ...Object.entries(PAGE_PATHS).filter(([slug]) => slug !== 'about').map(([slug, p]) => li(url(p), t(`page.${slug}`))), li(url('/transparency/'), t('footer.transparency')), li(url('/guide/'), t('footer.guide')),
   ])}
   ${group(t('sitemap.pro'), [li(url('/pro/'), t('nav.pro')), li(url('/developers/'), t('footer.api')), li(url('/openapi.json', { noLang: true }), 'openapi.json'), li(url('/llms.txt', { noLang: true }), 'llms.txt'), li(url('/admin/', { noLang: true }), t('footer.admin'))])}
 </div>`;
