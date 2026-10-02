@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { aggregateCountryLevels, normalizeLevel, normalizeTravelRow, toISODate, levelStats, LEVEL_TEXT, isStaleNotice, COVID_NOTICES_LIFTED_AT } from '../scripts/fetch-data.mjs';
+import { aggregateCountryLevels, normalizeLevel, normalizeTravelRow, toISODate, levelStats, LEVEL_TEXT, isStaleNotice, COVID_NOTICES_LIFTED_AT, assertPlausibleLevels, LEVEL_PLAUSIBLE_MAX } from '../scripts/fetch-data.mjs';
 import { makeCtx } from '../scripts/lib/pages.mjs';
 import * as travel from '../src/templates/public/travel.mjs';
 import { t } from '../src/client/i18n.js';
@@ -97,6 +97,12 @@ test('aggregateCountryLevels（live 形狀）：韓國 2020 年 COVID 第三級�
   const kr = out.find((c) => c.ISO2 === 'KR');
   assert.equal(kr.LevelCode, 1);
   assert.deepEqual(kr.Diseases.map((d) => d.Disease), ['麻疹']);
+});
+
+test('assertPlausibleLevels：快照通過；上百個第二級國家（歷史警示直接聚合）被拒，錯誤附 stats', () => {
+  assert.ok(assertPlausibleLevels(levels.data).level1 >= 0);
+  const many = Array.from({ length: LEVEL_PLAUSIBLE_MAX.level2 + 1 }, (_, i) => ({ ISO2: `X${i}`, LevelCode: 2, Diseases: [{ Disease: '茲卡病毒感染症', LevelCode: 2 }] }));
+  assert.throws(() => assertPlausibleLevels(many), (e) => e.code === 'IMPLAUSIBLE_LEVELS' && e.stats.level2 === many.length);
 });
 
 test('aggregateCountryLevels 對快照是冪等的（live 與快照形狀一致）', () => {

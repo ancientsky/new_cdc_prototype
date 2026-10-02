@@ -57,6 +57,14 @@ function writeSnapshot(file, meta, data) {
 function keepSnapshot(file, s, err) {
   const exists = fs.existsSync(path.join(SNAPSHOTS, file));
   log(`✗ ${s.label}（${err.message}）→ ${exists ? '沿用既有快照' : '建立空快照'}`);
+  if (exists && !DRY) {
+    // 保留 data；只在 meta 記錄這次 live 失敗／被拒的原因，後台「資料目錄」可顯示。
+    const snap = readSnapshot(file);
+    if (snap) {
+      snap.meta = { ...snap.meta, lastLiveAttempt: { at: new Date().toISOString(), ok: false, reason: err.message, ...(err.stats ? { stats: err.stats } : {}) } };
+      fs.writeFileSync(path.join(SNAPSHOTS, file), JSON.stringify(snap, null, 2) + '\n');
+    }
+  }
   if (!exists && !DRY) {
     fs.mkdirSync(SNAPSHOTS, { recursive: true });
     fs.writeFileSync(path.join(SNAPSHOTS, file), JSON.stringify({ meta: { mode: 'snapshot', fetchedAt: null, sourceUrl: s.url, label: s.label, note: '尚無快照；請在可連外環境執行 npm run fetch' }, data: [] }, null, 2) + '\n');
@@ -216,6 +224,22 @@ export function aggregateCountryLevels(rows, { countries = [], today = new Date(
   return out.sort((a, b) => (order.get(a.ISO2) ?? 999) - (order.get(b.ISO2) ?? 999));
 }
 /** 等級分布（給 meta.stats 與頁面摘要） */
+/**
+ * live 等級表合理性閘門：官方 CountryEpidLevel/ExportJSON 實為「歷次警示的完整歷史」（每列一則警示，只有生效日、沒有結束日），
+ * 直接聚合會得到上百個第二級國家。現行官網頁面實際約：第三級 0–2、第二級 2–6、第一級 20–40。
+ * 超出下列上限即視為 live 資料不可直接使用 → 沿用人工校對快照，並把原因寫進 meta.lastLiveAttempt。
+ */
+export const LEVEL_PLAUSIBLE_MAX = { level3: 5, level2: 20, level1: 60 };
+export function assertPlausibleLevels(countryRows, max = LEVEL_PLAUSIBLE_MAX) {
+  const st = levelStats(countryRows);
+  const bad = Object.entries(max).filter(([k, v]) => st[k] > v);
+  if (bad.length) {
+    const err = new Error(`live 等級分布不合理（第三級 ${st.level3}、第二級 ${st.level2}、第一級 ${st.level1} 國；上限 ${max.level3}/${max.level2}/${max.level1}）→ 官方匯出檔為歷史警示清單，需結束日或解除紀錄才能判定現行建議`);
+    err.stats = st; err.code = 'IMPLAUSIBLE_LEVELS';
+    throw err;
+  }
+  return st;
+}
 export function levelStats(countryRows) {
   const rows = countryRows ?? [];
   return { level3: rows.filter((r) => r.LevelCode === 3).length, level2: rows.filter((r) => r.LevelCode === 2).length, level1: rows.filter((r) => r.LevelCode === 1).length, none: rows.filter((r) => !r.LevelCode).length, entries: rows.reduce((n, r) => n + (r.Diseases?.length ?? 0), 0) };
@@ -236,7 +260,20 @@ export const SOURCES = [
       const data = aggregateCountryLevels(norm, { countries: readMasterCountries(), today });
       const st = levelStats(data);
       const byLv = (n) => st[`level${n}`];
-      console.log(`[fetch]   等級表：原始 ${rawRows.length} 列，排除歷史紀錄 ${stale.length} 列${stale.length ? `（如 ${stale.slice(0, 3).map((r) => `${r.Country} ${r.Disease} L${r.LevelCode} ${r.StartDate ?? ''}`).join('；')}）` : ''}；現行 第三級 ${byLv(3)}、第二級 ${byLv(2)}、第一級 ${byLv(1)} 國；原始欄位：${Object.keys(rawRows[0] ?? {}).join(', ')}`);
+      console.log(`[fetch]   等級表：原始 ${rawRows.length} 列，排除歷史紀錄 ${stale.length} 列${stale.length ? `（如 ${stale.slice(0, 3).map((r) => `${r.Country} ${r.Disease} L${r.LevelCode} ${r.StartDate ?? ''}`).join('；')}）` : ''}；聚合後 第三級 ${byLv(3)}、第二級 ${byLv(2)}、第一級 ${byLv(1)} 國；原始欄位：${Object.keys(rawRows[0] ?? {}).join(', ')}`);
+      // 診斷（只印 log，不入檔）：了解官方匯出檔如何表示「解除」，以便日後正確判定現行建議
+      const cnt = (arr) => { const m = new Map(); for (const v of arr) m.set(v, (m.get(v) ?? 0) + 1); return [...m.entries()].sort((a, b) => b[1] - a[1]); };
+      const r0 = rawRows[0] ?? {};
+      const titleKey = Object.keys(r0).find((k) => /title/i.test(k));
+      const sevKey = Object.keys(r0).find((k) => /severity|level/i.test(k));
+      const effKey = Object.keys(r0).find((k) => /effective|date|日/i.test(k));
+      const titles = titleKey ? rawRows.map((r) => String(r[titleKey] ?? '')) : [];
+      const lifted = titles.filter((t) => /解除|取消|降級|lift|remov/i.test(t));
+      const effs = effKey ? rawRows.map((r) => toISODate(r[effKey])).filter(Boolean).sort() : [];
+      console.log(`[fetch]   等級表診斷：${sevKey ?? '等級欄'} 值分布 ${JSON.stringify(cnt(rawRows.map((r) => String(r[sevKey] ?? ''))).slice(0, 8))}；生效日範圍 ${effs[0] ?? '?'} ～ ${effs.at(-1) ?? '?'}；標題含「解除／取消／降級」${lifted.length} 則${lifted.length ? `（如 ${lifted.slice(0, 3).map((t) => t.slice(0, 40)).join('｜')}）` : ''}`);
+      const l2 = norm.filter((r) => r.LevelCode === 2 && !stale.includes(r));
+      console.log(`[fetch]   等級表診斷：第二級未排除列 ${l2.length}，依疾病 ${JSON.stringify(cnt(l2.map((r) => r.Disease)).slice(0, 8))}；樣本 ${JSON.stringify((l2.slice(-2)).map(({ __raw }) => __raw)).slice(0, 700)}`);
+      assertPlausibleLevels(data);
       return data;
     },
     meta: (data) => ({ sourcePage: TRAVEL_LEVEL_PAGE, levelDefinitions: LEVEL_DEFINITIONS, stats: levelStats(data), dataDate: new Date().toISOString().slice(0, 10),

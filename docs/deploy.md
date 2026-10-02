@@ -44,7 +44,7 @@ BASE_PATH='' npm run build && node scripts/serve.mjs
 檔案：`.github/workflows/pages.yml`。
 
 - **觸發：** push 到 `main`、每日 03:00 UTC（台灣 11:00）排程、手動 `workflow_dispatch`。
-- **build 工作：** checkout → Node 22 → `npm ci` → `npm run fetch`（失敗不中斷）→ `npm test` → `npm run build`（`BASE_PATH` 取自儲存庫名稱、`SITE_URL` 取自擁有者）→ 上傳 `dist/`。
+- **build 工作：** checkout → Node 22 → `npm ci` → `npm test`（只驗 repo 內的內容與快照）→ `npm run fetch`（失敗不中斷）→ `npm run build`（`BASE_PATH` 取自儲存庫名稱、`SITE_URL` 取自擁有者）→ 上傳 `dist/`。
 - **deploy 工作：** `actions/deploy-pages` 發布，網址 `https://ancientsky.github.io/new_cdc_prototype/`。
 - **併發：** 同一時間只保留最新一次部署，舊的會被取消。
 
@@ -66,6 +66,7 @@ CI 任一項失敗即不部署：JSON Schema 與跨檔參照（`owner`、`basedO
 | 部署後樣式全沒了 | `BASE_PATH` 與實際網址不一致 |
 | 版本題未全對 | 看輸出的失敗題與原因，通常是舊版仍在白名單，或新版缺 `machineReadableMarkdown` |
 | 旅遊疫情日期很舊 | 看 `data/snapshots/*.json` 的 `meta.mode` 與 `fetchedAt`，確認 `npm run fetch` 是否被來源擋下 |
+| 等級表出現幾十個第二級國家、或 2020 年的 COVID 第三級 | 官方 `CountryEpidLevel/ExportJSON` 是「歷次警示的完整歷史」（只有生效日、沒有結束日）。fetch 會先排除明顯歷史紀錄（已解除、2023-05-01 前的 COVID、第三級逾 365 天），再以合理性閘門（第三級 ≤5、第二級 ≤20、第一級 ≤60 國）把關；不過關就沿用人工校對快照，原因寫在 `meta.lastLiveAttempt`，CI log 另印「等級表診斷」行供對照官方欄位 |
 | Pages 404 | 確認 Source 已設為 GitHub Actions，且 `.nojekyll` 有輸出 |
 
 ## 3. 新增一種內容型別
