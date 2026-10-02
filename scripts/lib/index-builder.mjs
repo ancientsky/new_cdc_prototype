@@ -249,7 +249,7 @@ export function buildSearchIndex(site) {
       version: item.version ?? null, effectiveAt: item.effectiveAt ?? null, family: item.family ?? null, supersedes: item.supersedes ?? null,
       isCurrent: item.gov?.isCurrent !== false, whitelist: !!item.gov?.whitelist?.effective, license: item.license ?? 'OGDL-1.0',
       mdUrl: url.startsWith('/factcheck') ? null : `${url.replace(/#.*$/, '').replace(/\/$/, '')}.md`,
-      legacyUrl: item.legacyUrls?.[0] ?? null,
+      legacyUrl: (item.legacyUrls ?? []).find((u) => !/[{}]/.test(String(u))) ?? null, // 略過 {id} 佔位的舊網址
       terms,
       ...extra,
     };

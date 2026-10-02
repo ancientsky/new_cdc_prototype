@@ -192,22 +192,21 @@ function serverHeader(site, entries, ambiguous, comment, extra = []) {
 }
 
 /** Nginx：map $request_uri → 新網址（引號包住，避免 # 被當成註解） */
-export function toNginxMap(site, { entries, ambiguous }) {
+export function toNginxMap(site, { entries, ambiguous }, gone = []) {
   const lines = serverHeader(site, entries, ambiguous, '#', [
     '用法（http 區塊）：map $request_uri $cdc_new_uri { default ""; include /etc/nginx/redirects/nginx.map; }',
-    '        （server 區塊）：if ($cdc_new_uri) { return 301 $cdc_new_uri; }',
+    '        （server 區塊）：if ($cdc_new_uri = "410") { return 410; } if ($cdc_new_uri) { return 301 $cdc_new_uri; }',
+    `值為 "410" 者＝已移除、不轉址（移轉清單 status: dropped），共 ${(gone ?? []).filter((g) => !g.pattern).length} 筆`,
   ]);
-  for (const e of entries) {
-    const [p, q] = splitQuery(e.from);
-    const re = q ? `^${reEscape(p)}/?\\?${reEscape(q)}(?:&.*)?$` : `^${reEscape(p.replace(/\/+$/, ''))}/?(?:\\?.*)?$`;
-    lines.push(`"~*${re}" "${e.to}";${e.verified === false ? ' # unverified' : ''}`);
-  }
+  const nginxRe = (from) => { const [p, q] = splitQuery(from); return q ? `^${reEscape(p)}/?\\?${reEscape(q)}(?:&.*)?$` : `^${reEscape(p.replace(/\/+$/, ''))}/?(?:\\?.*)?$`; };
+  for (const e of entries) lines.push(`"~*${nginxRe(e.from)}" "${e.to}";${e.verified === false ? ' # unverified' : ''}`);
+  for (const g of (gone ?? []).filter((x) => !x.pattern)) lines.push(`"~*${nginxRe(g.from)}" "410"; # gone: ${g.oldTitle ?? g.migrationKey}`);
   return `${lines.join('\n')}\n`;
 }
 
 /** IIS URL Rewrite：rewriteMap（key＝REQUEST_URI，含 query）＋一條套用規則；貼進 web.config 的 <system.webServer> */
-export function toIisRewriteMap(site, { entries, ambiguous }) {
-  const head = serverHeader(site, entries, ambiguous, '', ['用法：把 <rewrite> 內容併入 web.config 的 <system.webServer>；rewriteMap 比對 {REQUEST_URI}（含 query）。']);
+export function toIisRewriteMap(site, { entries, ambiguous }, gone = []) {
+  const head = serverHeader(site, entries, ambiguous, '', ['用法：把 <rewrite> 內容併入 web.config 的 <system.webServer>；rewriteMap 比對 {REQUEST_URI}（含 query）。', `value 為 410 者＝已移除、回 410 不轉址，共 ${(gone ?? []).filter((g) => !g.pattern).length} 筆`]);
   const adds = [];
   for (const e of entries) {
     const keys = new Set([e.from]);
@@ -215,6 +214,7 @@ export function toIisRewriteMap(site, { entries, ambiguous }) {
     keys.add(`${p.endsWith('/') ? p.replace(/\/+$/, '') : `${p}/`}${q ? `?${q}` : ''}`);
     for (const k of keys) if (k && k !== '/') adds.push(`      <add key="${xmlEscape(k)}" value="${xmlEscape(e.to)}" />${e.verified === false ? ' <!-- unverified -->' : ''}`);
   }
+  for (const g of (gone ?? []).filter((x) => !x.pattern)) adds.push(`      <add key="${xmlEscape(g.from)}" value="410" /> <!-- gone: ${xmlEscape(g.oldTitle ?? g.migrationKey)} -->`);
   return [
     '<?xml version="1.0" encoding="UTF-8"?>',
     `<!--\n${head.map((l) => `  ${l.trim()}`).join('\n')}\n-->`,
@@ -225,6 +225,11 @@ export function toIisRewriteMap(site, { entries, ambiguous }) {
     '    </rewriteMap>',
     '  </rewriteMaps>',
     '  <rules>',
+    '    <rule name="CdcLegacyGone" stopProcessing="true">',
+    '      <match url=".*" />',
+    '      <conditions><add input="{CdcLegacyRedirects:{REQUEST_URI}}" pattern="^410$" /></conditions>',
+    '      <action type="CustomResponse" statusCode="410" statusReason="Gone" statusDescription="此內容已移除" />',
+    '    </rule>',
     '    <rule name="CdcLegacyRedirect" stopProcessing="true">',
     '      <match url=".*" />',
     '      <conditions><add input="{CdcLegacyRedirects:{REQUEST_URI}}" pattern="(.+)" /></conditions>',
@@ -237,13 +242,14 @@ export function toIisRewriteMap(site, { entries, ambiguous }) {
 }
 
 /** Netlify／Cloudflare Pages _redirects：`from to 301`；含 query 的舊網址以 Netlify 參數比對語法（Cloudflare 不支援 query 比對，會比對路徑） */
-export function toRedirectsFile(site, { entries, ambiguous }) {
+export function toRedirectsFile(site, { entries, ambiguous }, gone = []) {
   const lines = serverHeader(site, entries, ambiguous, '#');
   for (const e of entries) {
     const [p, q] = splitQuery(e.from);
     const params = q ? ` ${q.split('&').filter(Boolean).join(' ')}` : '';
     lines.push(`${p}${params}  ${e.to}  301`);
   }
+  for (const g of (gone ?? []).filter((x) => !x.pattern)) lines.push(`${splitQuery(g.from)[0]}  /410.html  410  # gone: ${g.oldTitle ?? g.migrationKey}`);
   return `${lines.join('\n')}\n`;
 }
 
@@ -254,12 +260,17 @@ export function buildLegacyMap(site, redirects, server = serverRedirects(redirec
   const patterns = redirects.filter((r) => r.pattern && (r.kind === 'migration' || r.kind === 'legacy'))
     .map((r) => ({ pattern: legacyKey(r.fromPath ?? r.from), from: r.fromPath ?? legacyPathOf(r.from), to: r.to, kind: r.kind, itemId: r.itemId, listId: r.listId ?? null, key: r.key ?? null, oldTitle: r.oldTitle ?? null }))
     .filter((x, i, a) => a.findIndex((y) => y.pattern === x.pattern && y.to === x.to) === i);
+  return { map, patterns, gone: goneEntries(site), ambiguous: server.ambiguous };
+}
+
+/** 不移轉（status: dropped）的舊頁 → 建議回 410（內容已移除，不轉址）；{id} 佔位者 pattern:true 不進伺服器檔 */
+export function goneEntries(site) {
   const gone = [];
   for (const list of site.migration?.lists ?? []) for (const it of list.items) {
-    if (it.status !== 'dropped') continue;
+    if (it.status !== 'dropped' || !it.fromPath) continue;
     gone.push({ key: legacyKey(it.fromPath), from: it.fromPath, pattern: !!it.pattern, listId: list.id, migrationKey: it.key, oldTitle: it.oldTitle, note: it.note ?? null, status: 410 });
   }
-  return { map, patterns, gone, ambiguous: server.ambiguous };
+  return gone;
 }
 
 export function emitApi(site, write) {
@@ -384,10 +395,11 @@ export function emitApi(site, write) {
   const byKind = redirects.reduce((o, r) => ({ ...o, [r.kind]: (o[r.kind] ?? 0) + 1 }), {});
   put('v1/redirects.json', redirects, { lastModified: site.today, byKind, patterns: redirects.filter((r) => r.pattern).length, unverified: redirects.filter((r) => r.verified === false).length }, {}, '舊版／舊網址 → 正本對照（301；kind：superseded／family-latest／legacy／migration；pattern＝{id} 佔位的 URL 模式，不進伺服器對照檔）');
   const server = serverRedirects(redirects);
+  const gone = goneEntries(site);
   for (const [file, text, description] of [
-    ['redirects/nginx.map', toNginxMap(site, server), 'Nginx map（$request_uri → 新網址）'],
-    ['redirects/web.config.rewritemap.xml', toIisRewriteMap(site, server), 'IIS URL Rewrite rewriteMap＋規則'],
-    ['redirects/_redirects', toRedirectsFile(site, server), 'Netlify／Cloudflare Pages _redirects'],
+    ['redirects/nginx.map', toNginxMap(site, server, gone), 'Nginx map（$request_uri → 新網址；410 為已移除）'],
+    ['redirects/web.config.rewritemap.xml', toIisRewriteMap(site, server, gone), 'IIS URL Rewrite rewriteMap＋301／410 規則'],
+    ['redirects/_redirects', toRedirectsFile(site, server, gone), 'Netlify／Cloudflare Pages _redirects（含 410）'],
   ]) {
     write(file, text);
     manifest.push({ path: `/${file}`, url: absUrl(`/${file}`), description: `${description}：舊網址 → 新網址 301（由 redirects.json 產生，不含 pattern 項）`, count: server.entries.length });

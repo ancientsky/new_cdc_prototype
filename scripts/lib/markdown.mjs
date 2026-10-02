@@ -12,9 +12,15 @@ function sanitize(htmlStr) {
     .replace(/(href|src)\s*=\s*(["']?)\s*javascript:[^"'\s>]*\2/gi, '$1="#"');
 }
 
+// CommonMark 的強調規則在中日韓文裡常失效（「常見**咳嗽**、」兩側都是非空白字元，** 既是左側也是右側分隔符，無法開啟），
+// 先把 **粗體** 轉成 <strong>，再交給 marked；行內 code 區塊不處理。
+export function cjkStrong(src) {
+  return String(src).split(/(`[^`\n]*`)/).map((seg, i) => (i % 2 ? seg : seg.replace(/\*\*([^*\n]+?)\*\*/g, '<strong>$1</strong>'))).join('');
+}
+
 export function md(markdown) {
   if (!markdown) return '';
-  const html = sanitize(marked.parse(String(markdown)));
+  const html = sanitize(marked.parse(cjkStrong(markdown)));
   return config.basePath ? html.replace(/(\s(?:href|src)=")\/(?!\/)/g, `$1${config.basePath}/`) : html;
 }
 
@@ -32,7 +38,7 @@ export function mdToText(markdown) {
 
 export function mdInline(markdown) {
   if (!markdown) return '';
-  return sanitize(marked.parseInline(String(markdown)));
+  return sanitize(marked.parseInline(cjkStrong(markdown)));
 }
 
 export { esc };
