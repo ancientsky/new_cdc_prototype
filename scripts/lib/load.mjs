@@ -79,6 +79,8 @@ export function loadSite(config) {
   const snapshots = {
     travelAlerts: readJSON(path.join(SNAPSHOTS, 'travel-epidemic.json'), { meta: { mode: 'missing' }, data: [] }),
     countryLevels: readJSON(path.join(SNAPSHOTS, 'country-epid-level.json'), { meta: { mode: 'missing' }, data: [] }),
+    // 旅遊疫情建議事件流（ARCHITECTURE 12.1；kind：new／raised／lowered／lifted／renewed）
+    countryEvents: readJSON(path.join(SNAPSHOTS, 'country-epid-events.json'), { meta: { mode: 'missing' }, data: [] }),
     ckan: readJSON(path.join(SNAPSHOTS, 'ckan-packages.json'), { meta: { mode: 'missing' }, data: [] }),
   };
   const all = Object.values(collections).flat();

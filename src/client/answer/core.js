@@ -197,6 +197,10 @@ const OPEN_CUE = /(現在|目前|正在|有在|還有|進行中|開放|可以報
 const RECRUIT_CUE = /(招募|徵才|職缺|徵人|約聘|約僱|甄選|甄試|工作機會|缺額|招考|人員)/;
 const PROCUREMENT_CUE = /(採購|標案|招標|投標|決標|公開評選|開標|案號)/;
 
+/** 旅遊疫情建議「變化」問句（最近哪些國家解除／調升…）；trv.change 意圖規則與 travelChanges 共用 */
+const TRAVEL_CHANGE_KINDS = { lifted: /(解除|取消|撤銷|撤除|\blift(ed)?\b)/i, raised: /(調升|升級|提高|\braised?\b)/i, lowered: /(調降|降級|降低|\blowered\b)/i, new: /(新增|新發布|新列)/ };
+const TRAVEL_CHANGE_RE = /((旅遊疫情建議|旅遊警示|疫情等級|旅遊等級).{0,12}(解除|取消|撤銷|調升|調降|升級|降級|新增|變化|異動|調整)|(解除|取消|撤銷|調升|調降|新增).{0,12}(旅遊疫情建議|旅遊警示|疫情等級)|travel (health )?(notices?|advisor(y|ies)).{0,20}\b(lifted|raised|lowered|changes?)\b)/i;
+
 /**
  * 可解釋意圖規則。每條：{ id, intent, weight, re, note, gate? }。命中加權，最高分者為意圖；分數 < 2 → unknown。
  * view==='pro' 另加 pro.view 規則；gate:'lab' 的規則只在專業模式或含專業詞（LAB_PRO_RE）時計分。
@@ -220,6 +224,7 @@ export const INTENT_RULES = [
   { id: 'trv.travel-words', intent: 'travel', weight: 3, re: /(出國|出境|旅遊|旅行|入境|回國|返國|返台|國外|行前|旅遊醫學|海外|轉機|自由行|跟團|遊學|出差)/, note: '旅遊詞' },
   { id: 'trv.go-to-country', intent: 'travel', weight: 2, re: /(去|到|前往|飛)(日本|韓國|越南|泰國|印尼|菲律賓|馬來西亞|新加坡|柬埔寨|緬甸|印度|中國|大陸|香港|澳門|美國|加拿大|歐洲|英國|法國|德國|非洲|中東|澳洲|紐西蘭|巴西|南美)/, note: '前往某國' },
   { id: 'trv.level', intent: 'travel', weight: 2, re: /(旅遊疫情建議|旅遊警示|疫情等級|第[一二三]級|注意\(Watch\)|警示\(Alert\)|警告\(Warning\))/i, note: '旅遊等級' },
+  { id: 'trv.change', intent: 'travel', weight: 3, re: TRAVEL_CHANGE_RE, note: '旅遊疫情建議的變化（新增／調升／調降／解除）' },
   { id: 'trv.en', intent: 'travel', weight: 3, re: /\b(travel\w*|trip|abroad|overseas|going to|flight|destination)\b/i, note: 'English travel words' },
   { id: 'trv.vi', intent: 'travel', weight: 3, re: /(du lịch|đi nước ngoài|xuất cảnh|nhập cảnh|về nước)/i, note: 'Vietnamese travel words' },
   // 疫情
@@ -878,6 +883,7 @@ export function createEngine(rawDeps = {}) {
 
   // ── 旅遊疫情建議等級（結構化快照，只轉述不推論） ──
   const LEVEL_LABEL = { 1: '注意（Watch）', 2: '警示（Alert）', 3: '警告（Warning）' };
+  const LEVEL_ZH = { 1: '一', 2: '二', 3: '三' };
   function travelFor(entities) {
     // 等級一律以「依國家彙整」的等級表（country-epid-level，Diseases[]）為準；近 30 天消息只當新聞，不拿來推等級。
     const out = [];
@@ -887,15 +893,18 @@ export function createEngine(rawDeps = {}) {
       const table = hits.filter((h) => h.aggregate);
       const news = hits.filter((h) => !h.aggregate);
       if (!hits.length) continue;
-      let entries;
+      let entries; let background = [];
       if (table.length) {
         const row = table[0];
-        entries = (row.details?.length ? row.details : []).map((d) => ({ level: d.level, levelLabel: d.levelLabel, diseaseNames: [d.disease].filter(Boolean), date: d.date, advice: d.advice ?? null, area: d.area ?? null }));
-        if (!entries.length) entries = [{ level: 0, levelLabel: row.levelLabel ?? '無旅遊疫情建議', diseaseNames: [], date: row.date, advice: row.advice ?? null, none: true }];
+        // 背景提醒（ARCHITECTURE 12.1：同病同級涵蓋 ≥ 50% 國家，如新冠併發重症第一級）不逐病列，另成一句全球背景提醒
+        const details = row.details ?? [];
+        background = details.filter((d) => d.background).map((d) => ({ level: d.level, levelLabel: d.levelLabel, disease: d.disease, date: d.date }));
+        entries = details.filter((d) => !d.background).map((d) => ({ level: d.level, levelLabel: d.levelLabel, diseaseNames: [d.disease].filter(Boolean), date: d.date, advice: d.advice ?? null, area: d.area ?? null }));
+        if (!entries.length) entries = [{ level: 0, levelLabel: row.targetedLevelLabel ?? '無針對性旅遊疫情建議', diseaseNames: [], date: row.date, advice: null, none: true, targeted: true }];
       } else {
         entries = news.map((h) => ({ level: h.level, levelLabel: h.levelLabel, diseaseNames: h.diseaseNames, date: h.date, advice: h.advice }));
       }
-      out.push({ iso2: iso, name: (table[0] ?? news[0]).name ?? c.name, entries, news });
+      out.push({ iso2: iso, name: (table[0] ?? news[0]).name ?? c.name, entries, background, news });
     }
     return out;
   }
@@ -908,7 +917,7 @@ export function createEngine(rawDeps = {}) {
       srcs.set(id, { id, contentId: `travel.${c.iso2}`, type: 'travel', title: `旅遊疫情建議 · ${c.name}`, url: `/travel/${c.iso2.toUpperCase()}/`, owner: 'unit.epidemic-intelligence', ownerName: ownerNameOf(units, 'unit.epidemic-intelligence'), reviewedAt: date, isCurrent: true, license: 'OGDL-1.0', lang: 'zh-TW' });
       for (const e of c.entries.slice(0, 4)) {
         if (e.none || !(Number(e.level) > 0)) {
-          sents.push({ text: lang === 'zh-TW' ? `${c.name}目前無旅遊疫情建議，請遵守一般預防措施（勤洗手、防蚊、注意飲食衛生）。` : `${c.name}: no travel health notice at present; follow general precautions.`, cite: [id], slot: 0, score: 9 });
+          sents.push({ text: lang === 'zh-TW' ? `${c.name}目前無針對性旅遊疫情建議，請遵守一般預防措施（勤洗手、防蚊、注意飲食衛生）。` : `${c.name}: no targeted travel health notice at present; follow general precautions.`, cite: [id], slot: 0, score: 9 });
           continue;
         }
         const lvl = e.levelLabel ? `「${e.levelLabel}」` : e.level != null ? `第 ${e.level} 級${LEVEL_LABEL[e.level] ? `「${LEVEL_LABEL[e.level]}」` : ''}` : '';
@@ -918,7 +927,52 @@ export function createEngine(rawDeps = {}) {
       }
       void top;
     }
+    // 全球背景提醒：各國共通，只說一次（放在逐國句之後；answer() 會保留這一句）
+    const bg = new Map();
+    for (const c of tr) for (const b of c.background ?? []) if (!bg.has(`${b.disease}|${b.level}`)) bg.set(`${b.disease}|${b.level}`, b);
+    if (bg.size && tr[0]) {
+      const id = `travel#${tr[0].iso2}`;
+      const list = [...bg.values()];
+      sents.push({
+        background: true, cite: [id], slot: 0, score: 7,
+        text: lang === 'zh-TW'
+          ? `全球背景提醒：${list.map((b) => `${b.disease}第${LEVEL_ZH[b.level] ?? b.level}級${LEVEL_LABEL[b.level] ? `「${LEVEL_LABEL[b.level]}」` : ''}${b.date ? `（${b.date} 起，多數國家皆列）` : ''}`).join('、')}，遵守一般預防措施即可。`
+          : `Global background notice: ${list.map((b) => `${b.disease} level ${b.level}`).join(', ')} applies to most countries; follow usual precautions.`,
+      });
+    }
     return { sentences: sents, sources: srcs };
+  }
+
+  // ── 旅遊疫情建議的變化（近 30 天新增／調升／調降／解除；資料為等級表各國 RecentChanges） ──
+  const KIND_ZH = { new: '新增', raised: '調升', lowered: '調降', lifted: '解除', renewed: '重新發布' };
+  const KIND_EN = { new: 'new', raised: 'raised', lowered: 'lowered', lifted: 'lifted', renewed: 'renewed' };
+  function travelChanges(q, lang, days = 30) {
+    if (!TRAVEL_CHANGE_RE.test(q)) return null;
+    const rows = travelItems.filter((t) => t.aggregate);
+    // 新格式等級表（有 Targeted*）一律附事件快照推得的 RecentChanges（無變化的國家不帶此欄）；舊快照沒有變化資料 ⇒ 不回答
+    if (!rows.length || !rows.some((r) => Array.isArray(r.recentChanges) || r.targetedLevel != null)) return null;
+    const asOf = today ?? now().toISOString().slice(0, 10);
+    const since = new Date(Date.parse(`${asOf}T00:00:00Z`) - days * 864e5).toISOString().slice(0, 10);
+    const all = rows.flatMap((r) => (r.recentChanges ?? []).map((c) => ({ ...c, iso2: r.iso2, name: r.name }))).filter((e) => e.date <= asOf).sort((a, b) => b.date.localeCompare(a.date));
+    const recent = all.filter((e) => e.date >= since);
+    const asked = Object.entries(TRAVEL_CHANGE_KINDS).filter(([, re]) => re.test(q)).map(([k]) => k);
+    const kinds = asked.length ? asked : ['lifted', 'raised', 'lowered', 'new'];
+    const id = 'travel#changes';
+    const src = { id, contentId: 'travel.changes', type: 'travel', title: '旅遊疫情建議 · 近期變化', url: '/travel/', owner: 'unit.epidemic-intelligence', ownerName: ownerNameOf(units, 'unit.epidemic-intelligence'), reviewedAt: all[0]?.date ?? null, isCurrent: true, license: 'OGDL-1.0', lang: 'zh-TW' };
+    const zh = lang === 'zh-TW';
+    const fmt = (e) => `${e.name}${e.Disease ? `（${e.Disease}${e.Area ? `，${e.Area}` : ''}，${e.date}）` : `（${e.date}）`}`;
+    const sents = [];
+    for (const k of kinds) {
+      const hits = recent.filter((e) => e.kind === k);
+      if (hits.length) sents.push({ text: zh ? `近 ${days} 天${KIND_ZH[k]}旅遊疫情建議的有：${hits.slice(0, 8).map(fmt).join('、')}${hits.length > 8 ? ` 等 ${hits.length} 則` : ''}。` : `Travel notices ${KIND_EN[k]} in the last ${days} days: ${hits.slice(0, 8).map((e) => `${e.name} (${e.Disease}, ${e.date})`).join('; ')}.`, cite: [id], slot: 0, score: 9 });
+      else if (asked.length) {
+        const older = all.filter((e) => e.kind === k);
+        sents.push({ text: zh ? `近 ${days} 天（${since} 起）沒有${KIND_ZH[k]}的旅遊疫情建議${older.length ? `；較早一則為${fmt(older[0])}` : ''}。` : `No travel notices ${KIND_EN[k]} in the last ${days} days (since ${since}).`, cite: [id], slot: 0, score: 9 });
+      }
+    }
+    const n = (k) => recent.filter((e) => e.kind === k).length;
+    sents.push({ text: zh ? `近 ${days} 天變化：新增 ${n('new')}、調升 ${n('raised')}、調降 ${n('lowered')}、解除 ${n('lifted')}；各國現行等級請查目的地。` : `Last ${days} days: ${n('new')} new, ${n('raised')} raised, ${n('lowered')} lowered, ${n('lifted')} lifted.`, cite: [id], slot: 0, score: 8 });
+    return { sentences: sents, sources: new Map([[id, src]]) };
   }
 
   // ── 統計 ──
@@ -1504,7 +1558,19 @@ export function createEngine(rawDeps = {}) {
         result.travel = tr;
         const ts = travelSentences(tr, lang);
         for (const [id, src] of ts.sources) sourceMap.set(id, src);
-        picked = [...ts.sentences.slice(0, 2), ...picked].slice(0, 4);
+        // 全球背景提醒：目的地沒有針對性建議時緊接在「目前無針對性建議」之後；有針對性建議時排在最後（有空位才出現）
+        const bgS = ts.sentences.filter((x) => x.background);
+        const main = ts.sentences.filter((x) => !x.background).slice(0, 2);
+        const noneOnly = tr.every((c) => c.entries.every((e) => e.none));
+        picked = (noneOnly ? [...main, ...bgS, ...picked] : [...main, ...picked, ...bgS]).slice(0, 4);
+        result.confidence = Math.max(result.confidence, 0.7);
+      }
+    } else if (result.intent === 'travel') {
+      const ch = travelChanges(q, lang);
+      if (ch?.sentences.length) {
+        result.travelChanges = true;
+        for (const [id, src] of ch.sources) sourceMap.set(id, src);
+        picked = [...ch.sentences.slice(0, 3), ...picked].slice(0, 4);
         result.confidence = Math.max(result.confidence, 0.7);
       }
     }
@@ -1516,7 +1582,7 @@ export function createEngine(rawDeps = {}) {
       return setRefusal(result, 'no-source', 'ref.no-source', actionsFor(result, entities, sit));
     }
     const sitOnly = picked.length && picked.every((p) => p.cite.every((id) => id.startsWith('situation#')));
-    if (lowConf && !sitOnly && !(sit && result.intent === 'situation') && !result.travel) {
+    if (lowConf && !sitOnly && !(sit && result.intent === 'situation') && !result.travel && !result.travelChanges) {
       result.list = traditionalList(q, view, lang, 8);
       if (result.confidence < 0.3) return setRefusal(result, 'no-source', 'ref.low-confidence', actionsFor(result, entities, sit));
     }
@@ -1565,9 +1631,14 @@ function normTravel(t) {
     levelLabel: t.levelLabel ?? t.Level ?? t.levelName ?? null, diseaseNames: (Array.isArray(dn) ? dn : [dn]).filter((x) => x && typeof x === 'string' && !x.startsWith('disease.')),
     date: t.StartDate ?? t.publishedAt ?? t.updatedAt ?? t.date ?? t.effectiveAt ?? null, advice: t.Summary ?? t.advice ?? t.recommendation ?? null,
     aggregate: Array.isArray(t.Diseases), url: t.Url ?? t.url ?? null,
-    details: Array.isArray(t.Diseases) ? t.Diseases.map((d) => ({ disease: d.Disease ?? d.disease ?? null, level: d.LevelCode ?? d.levelCode ?? d.level ?? null, levelLabel: d.Level ?? d.levelLabel ?? null, date: d.StartDate ?? d.date ?? null, area: d.Area ?? d.area ?? null, advice: d.Summary ?? d.advice ?? null })).filter((d) => d.disease) : [],
+    // 針對性等級（排除全球背景提醒；ARCHITECTURE 12.1）；舊快照沒有 Targeted* 時退回含背景的等級
+    targetedLevel: t.TargetedLevelCode ?? t.targetedLevel ?? null, targetedLevelLabel: t.TargetedLevel ?? t.targetedLevelLabel ?? null,
+    targetedDiseases: t.TargetedDisease ? String(t.TargetedDisease).split('、').filter(Boolean) : [], targetedDate: t.TargetedStartDate ?? null,
+    details: Array.isArray(t.Diseases) ? t.Diseases.map((d) => ({ disease: d.Disease ?? d.disease ?? null, level: d.LevelCode ?? d.levelCode ?? d.level ?? null, levelLabel: d.Level ?? d.levelLabel ?? null, date: d.StartDate ?? d.date ?? null, area: d.Area ?? d.area ?? null, advice: d.Summary ?? d.advice ?? null, background: d.Background === true || d.background === true })).filter((d) => d.disease) : [],
+    recentChanges: Array.isArray(t.RecentChanges) ? t.RecentChanges.filter((c) => c && c.date && c.kind) : undefined,
   };
 }
+
 
 /** 句切（中英標點、換行）；索引建置與前端共用 */
 export function splitPlain(text) {

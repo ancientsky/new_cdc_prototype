@@ -149,6 +149,10 @@ export function emitApi(site, write) {
   const ta = snap(site.snapshots?.travelAlerts), cl = snap(site.snapshots?.countryLevels);
   put('v1/travel-alerts.json', ta.data ?? [], { provenance: ta.meta, lastModified: ta.meta?.fetchedAt?.slice?.(0, 10) ?? site.today }, {}, '國際旅遊疫情建議（快照或每日抓取）');
   put('v1/country-levels.json', cl.data ?? [], { provenance: cl.meta, lastModified: cl.meta?.fetchedAt?.slice?.(0, 10) ?? site.today }, {}, '各國疫情等級');
+  // ARCHITECTURE 12.1：事件流（近 400 天，kind＝new／raised／lowered／lifted／renewed）與全球背景提醒
+  const ce = snap(site.snapshots?.countryEvents);
+  put('v1/country-changes.json', ce.data ?? [], { provenance: ce.meta, changeSummary30: cl.meta?.changeSummary30 ?? null, lastModified: ce.meta?.fetchedAt?.slice?.(0, 10) ?? site.today }, {}, '旅遊疫情建議變化事件（新增、調升、調降、解除、重發；依日期降冪）');
+  put('v1/country-background.json', cl.meta?.background ?? [], { backgroundRule: cl.meta?.backgroundRule ?? null, provenance: { mode: cl.meta?.mode ?? 'missing', fetchedAt: cl.meta?.fetchedAt ?? null, dataDate: cl.meta?.dataDate ?? null, sourceUrl: cl.meta?.sourceUrl ?? null }, lastModified: cl.meta?.fetchedAt?.slice?.(0, 10) ?? site.today }, {}, '全球背景提醒（同一疾病同一等級涵蓋 ≥ 50% 國家者，不逐國列出）');
   put('v1/datasets.json', published(c.datasets).map(strip), {}, {}, '資料目錄（CKAN 快照＋治理欄位）');
   put('v1/glossary.json', site.master.glossary ?? [], { lastModified: site.today }, {}, '七語詞彙主檔');
   put('v1/units.json', site.master.units ?? [], { lastModified: site.today }, {}, '權責單位');

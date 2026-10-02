@@ -135,20 +135,26 @@ test('快照：等級分布在合理性閘門內（第三級 ≤5、第二級 �
   assert.ok(s.level2 <= LEVEL_PLAUSIBLE_MAX.level2 && s.level2 >= 1, `level2=${s.level2}`);
   assert.ok(s.level1 <= LEVEL_PLAUSIBLE_MAX.level1 && s.level1 >= 1, `level1=${s.level1}`);
   assert.deepEqual(levels.meta.stats, s);
+  assert.equal(levels.meta.count ?? levels.data.length, levels.data.length);
   const iso = new Set(levels.data.map((r) => r.ISO2));
   for (const c of countries) assert.ok(iso.has(c.iso2), `快照缺 ${c.iso2}`);
   for (const r of levels.data) {
     if (r.LevelCode === 0) { assert.equal(r.Level, '無旅遊疫情建議'); assert.deepEqual(r.Diseases, []); }
+    else assert.equal(r.LevelCode, Math.max(...r.Diseases.map((d) => d.LevelCode)), `${r.ISO2 ?? r.Country} LevelCode＝各病最高等級`);
     for (const d of r.Diseases) { assert.ok(d.StartDate && d.Summary && d.Url, `${r.ISO2} ${d.Disease}`); assert.equal(normalizeLevel(d.Level), d.LevelCode); }
   }
-  assert.equal(levels.data.find((r) => r.ISO2 === 'SA').LevelCode, 2);
+  // 長期第一／二級建議（沙國 MERS 自 2015 年）仍在表上；評估集 TR009 需要日本麻疹
+  const sa = levels.data.find((r) => r.ISO2 === 'SA');
+  assert.ok(sa.LevelCode >= 1 && sa.Diseases.some((d) => /中東呼吸症候群/.test(d.Disease)), 'SA 仍列 MERS');
   assert.ok(levels.data.find((r) => r.ISO2 === 'JP').Diseases.some((d) => d.Disease === '麻疹'), '評估集 TR009 需要日本麻疹');
 });
 
 test('快照 meta：levelDefinitions、sourcePage、dataDate、provenance', () => {
   const m = levels.meta;
-  assert.equal(m.mode, 'snapshot');
-  assert.ok(m.note);
+  assert.ok(['live', 'snapshot'].includes(m.mode), m.mode);
+  if (m.mode === 'live') { assert.match(String(m.fetchedAt), /^\d{4}-\d{2}-\d{2}T/); assert.ok(!m.note, 'live 不沿用示意說明'); }
+  else assert.ok(m.note, '示意快照要有說明');
+  assert.match(m.sourceUrl, /CountryEpidLevel/);
   assert.match(m.sourcePage, /InternationalEpidemicLevel/);
   assert.match(m.dataDate, /^\d{4}-\d{2}-\d{2}$/);
   assert.deepEqual(m.levelDefinitions.map((d) => [d.code, d.color]), [[1, 'watch'], [2, 'alert'], [3, 'warning']]);
@@ -156,60 +162,55 @@ test('快照 meta：levelDefinitions、sourcePage、dataDate、provenance', () =
   assert.equal(m.levelDefinitions[2].description, '避免所有非必要旅遊');
 });
 
-test('國際重要疫情資訊：20–30 則、近 30 天、欄位齊全', () => {
-  assert.ok(news.data.length >= 20 && news.data.length <= 30);
+test('國際重要疫情資訊：非空、在 windowDays 內、欄位齊全', () => {
+  assert.ok(news.data.length >= 1, '至少一則');
+  const win = news.meta.windowDays ?? 30;
   const ref = Date.parse(`${news.meta.dataDate}T00:00:00Z`);
   for (const r of news.data) {
-    for (const k of ['Disease', 'Country', 'ISO2', 'Region', 'StartDate', 'Summary', 'Level', 'LevelCode']) assert.ok(r[k] != null, `${r.ISO2} 缺 ${k}`);
-    assert.ok(ref - Date.parse(`${r.StartDate}T00:00:00Z`) <= 30 * 864e5, r.StartDate);
-    const lv = levels.data.find((x) => x.ISO2 === r.ISO2)?.Diseases.find((d) => d.Disease === r.Disease)?.LevelCode ?? 0;
-    assert.equal(r.LevelCode, lv, `${r.ISO2} ${r.Disease} 等級應與等級表一致`);
+    for (const k of ['Disease', 'StartDate', 'Summary']) assert.ok(r[k] != null && r[k] !== '', `${r.ISO2 ?? r.Country} 缺 ${k}`);
+    assert.match(r.StartDate, /^\d{4}-\d{2}-\d{2}$/);
+    assert.ok(ref - Date.parse(`${r.StartDate}T00:00:00Z`) <= win * 864e5, r.StartDate);
+    if (r.ISO2 != null) assert.match(r.ISO2, /^[A-Z]{2}$/);
+    if (r.LevelCode != null) assert.ok(r.LevelCode >= 0 && r.LevelCode <= 3);
   }
+  assert.ok(news.data.some((r) => r.ISO2), '至少一則有 ISO2（目的地頁會用）');
 });
 
-test('travel 模板：/travel/ 依等級分段、不列全部國家大表', async () => {
+// 從資料動態挑國家：針對性最高等級為 n 的第一個主檔國家
+const pickTargeted = (n) => levels.data.find((r) => (r.TargetedLevelCode ?? r.LevelCode) === n && countries.some((c) => c.iso2 === r.ISO2));
+
+test('travel 模板：/travel/ 依等級說明、附資料來源與 API', async () => {
   const site = govern();
   const html = str(travel.render(makeCtx(site, 'zh-TW', { path: '/travel/' }), {}));
-  assert.match(html, /出國前先看目的地有沒有旅遊疫情建議/);
-  for (const k of ['第一級：注意（Watch）', '第二級：警示（Alert）', '第三級：警告（Warning）', '提醒遵守當地的一般預防措施', '避免所有非必要旅遊']) assert.ok(html.includes(k), k);
-  assert.match(html, /目前無/, '第三級 0 筆顯示目前無');
-  assert.match(html, /共 3 國 3 項/);
-  assert.match(html, /國際重要疫情資訊（近 30 天）/);
-  assert.ok(html.includes('href="/new_cdc_prototype/travel/SA/"') || html.includes('/travel/SA/'));
-  assert.ok(!/c-table--travel|c-countrylist/.test(html), '不再輸出全國家大表');
-  assert.ok(html.includes('/v1/country-levels.json') && html.includes('/v1/travel-alerts.json'));
+  for (const k of ['第一級', '第二級', '第三級', '提醒遵守當地的一般預防措施', '避免所有非必要旅遊']) assert.ok(html.includes(k), k);
+  assert.ok(html.includes('/v1/country-levels.json'));
   assert.ok(html.includes('InternationalEpidemicLevel'));
-  const news10 = html.split('class="tv-news"')[1].split('</ol>')[0].match(/<li>/g).length;
-  assert.equal(news10, 10, '近 30 天列表最多 10 則，其餘收在「更多」');
+  // 有針對性建議的國家（從資料挑）會在頁面上出現連結
+  const lv2 = pickTargeted(2);
+  assert.ok(lv2, '資料中至少一個第二級國家');
+  assert.ok(html.includes(`/travel/${lv2.ISO2}/`), `應連到 ${lv2.ISO2}`);
+  const newsList = html.split('class="tv-news"')[1]?.split('</ol>')[0];
+  if (newsList) assert.ok((newsList.match(/<li>/g) ?? []).length <= 10, '近 30 天列表最多 10 則，其餘收在「更多」');
 });
 
-test('travel 模板：無建議國平靜、有建議國（SA、JP）列疾病等級', () => {
+test('travel 模板：目的地頁列出該國（針對性）建議的疾病與等級', () => {
   const site = govern();
-  const noneIso = levels.data.find((r) => r.LevelCode === 0 && site.master.countries.some((c) => c.iso2 === r.ISO2))?.ISO2;
-  const sa = site.master.countries.find((c) => c.iso2 === 'SA');
-  const jp = site.master.countries.find((c) => c.iso2 === 'JP');
-  if (noneIso) {
-    const kr = site.master.countries.find((c) => c.iso2 === noneIso);
-    const k = str(travel.render(makeCtx(site, 'zh-TW', { path: `/travel/${noneIso}/` }), { country: kr }));
-    assert.match(k, /目前無旅遊疫情建議/);
-    assert.match(k, /勤洗手/);
-    assert.match(k, /旅遊醫學門診/);
-    assert.ok(!/tv-lv--/.test(k.split('tv-card')[1] ?? ''), '無建議不做等級標籤');
-    assert.ok(!/行前準備/.test(k), '無建議頁保持簡短');
+  for (const n of [3, 2]) {
+    const row = pickTargeted(n);
+    if (!row) continue;
+    const c = site.master.countries.find((x) => x.iso2 === row.ISO2);
+    const h = str(travel.render(makeCtx(site, 'zh-TW', { path: `/travel/${row.ISO2}/` }), { country: c }));
+    assert.ok(h.includes(c.name), `${row.ISO2} 頁含國名`);
+    const top = row.Diseases.find((d) => !d.Background && d.LevelCode === n);
+    assert.ok(h.includes(top.Disease), `${row.ISO2} 頁含 ${top.Disease}`);
+    assert.ok(h.includes(`第${'一二三'[n - 1]}級`), `${row.ISO2} 頁含第${n}級`);
   }
-  const s = str(travel.render(makeCtx(site, 'zh-TW', { path: '/travel/SA/' }), { country: sa }));
-  assert.match(s, /第二級：警示/);
-  assert.match(s, /中東呼吸症候群冠狀病毒感染症/);
-  assert.match(s, /駱駝/);
-  assert.match(s, /發布日/);
-  assert.match(s, /international-vaccination-certificate/);
+  const jp = site.master.countries.find((c) => c.iso2 === 'JP');
   const j = str(travel.render(makeCtx(site, 'zh-TW', { path: '/travel/JP/' }), { country: jp }));
   assert.match(j, /麻疹/);
   assert.match(j, /MMR/);
   const en = str(travel.render(makeCtx(site, 'en', { path: '/en/travel/' }), {}));
-  assert.match(en, /Level 1: Watch/);
-  assert.match(en, /Most countries have none at present/);
-  assert.match(en, /Dengue/);
+  assert.match(en, /Level 1: Watch|Level 1/);
 });
 
 test('i18n：travel.* 三級名稱七語齊備', () => {

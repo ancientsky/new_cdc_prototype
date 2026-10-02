@@ -1412,6 +1412,56 @@
       }
     },
     {
+      "id": "TR010",
+      "category": "travel",
+      "requires": [
+        "travel:KR"
+      ],
+      "q": "韓國現在有旅遊疫情建議嗎？",
+      "note": "韓國只有全球背景提醒（新冠併發重症第一級）⇒ 應說目前無針對性建議，並以一句背景提醒帶過（ARCHITECTURE 12.1）",
+      "expect": {
+        "refuse": false,
+        "intent": "travel",
+        "mustIncludeAny": [
+          "針對性",
+          "背景提醒"
+        ]
+      }
+    },
+    {
+      "id": "TR011",
+      "category": "travel",
+      "requires": [
+        "travel:CD"
+      ],
+      "q": "去剛果民主共和國安全嗎？",
+      "note": "剛果民主共和國伊波拉病毒感染第三級（針對性最高等級）",
+      "expect": {
+        "refuse": false,
+        "intent": "travel",
+        "mustInclude": [
+          "伊波拉",
+          "第三級"
+        ]
+      }
+    },
+    {
+      "id": "TR012",
+      "category": "travel",
+      "requires": [
+        "travel:JP"
+      ],
+      "q": "最近有哪些國家的旅遊疫情建議解除？",
+      "note": "變化問句：由等級表各國 RecentChanges（事件快照推得）彙整近 30 天解除；沒有也要明說「沒有解除」",
+      "expect": {
+        "refuse": false,
+        "intent": "travel",
+        "mustIncludeAny": [
+          "解除"
+        ]
+      }
+    },
+    {
       "id": "VA001",
       "category": "vaccine",
       "requires": [

@@ -2,7 +2,7 @@
 import { html, raw } from '../../../scripts/lib/render.mjs';
 import { config } from '../../../site.config.mjs';
 import { ldFor, pageHead, sectionHead, askBox, sitCard, hrefFor, isFallbackLink, L, publishedOf, byDateDesc, verdictPill, pill, feedback, dated, unitName } from './_partials.mjs';
-import { asRows } from './travel.mjs';
+import { quickLookup, changeData, changeTiles, travelStyles } from './travel.mjs';
 
 export function meta(ctx, { task }) {
   return { title: ctx.t(`task.${task.key}.label`), description: ctx.t(`task.${task.key}.sub`).replaceAll(' · ', '、'), jsonLd: ldFor(ctx, null, [{ label: ctx.t(`task.${task.key}.label`) }]) };
@@ -35,10 +35,12 @@ export function render(ctx, { task }) {
   if (k === 'situation') {
     hero = html`<section aria-labelledby="ts-h">${sectionHead(ctx, { id: 'ts-h', title: t('home.situation'), more: `${t('home.situation.more')} →`, moreHref: url('/situation/'), note: t('home.situation.note', { date: ctx.fmtDate(site.situation.dataDate), source: site.situation.source }) })}<div class="c-sit-scroll"><div class="c-sit-grid">${site.situation.items.map((it) => sitCard(ctx, it))}</div></div></section>`;
   } else if (k === 'travel') {
-    const rows = asRows(site.snapshots?.countryLevels).slice(0, 12);
-    hero = html`<section aria-labelledby="tt-h">${sectionHead(ctx, { id: 'tt-h', title: t('travel.levels.t'), more: `${t('nav.travel')} →`, moreHref: url('/travel/') })}
-      ${rows.length ? html`<div class="c-tablewrap"><table class="c-table"><thead><tr><th scope="col">${t('travel.col.country')}</th><th scope="col">${t('travel.col.disease')}</th><th scope="col">${t('travel.col.level')}</th></tr></thead><tbody>${rows.map((r) => html`<tr><th scope="row">${r.country ?? r.iso2}</th><td>${r.disease ?? '—'}</td><td>${r.code ? html`<span class="c-level c-level--${r.code}">${t(`travel.level.${r.code}`)}</span>` : (r.level ?? '—')}</td></tr>`)}</tbody></table></div>` : html`<p class="c-empty">${t('travel.empty')}</p>`}
-      <p class="c-linkrow"><a class="c-btn" href="${url('/travel/')}">${t('travel.pick')} →</a></p></section>`;
+    const cd = changeData(site, ctx.today);
+    hero = html`${travelStyles}<div class="tv"><section aria-labelledby="tt-h">${sectionHead(ctx, { id: 'tt-h', title: t('travel.lookup.t'), more: `${t('travel.task.go')} →`, moreHref: url('/travel/') })}
+      <p class="tv-lookup__sub">${t('travel.lookup.sub')}</p>
+      ${quickLookup(ctx)}</section>
+      <section aria-labelledby="tt-ch-h">${sectionHead(ctx, { id: 'tt-ch-h', title: t('travel.chg.t'), more: `${t('nav.travel')} →`, moreHref: url('/travel/') })}
+      ${cd ? changeTiles(ctx, cd.counts) : html`<p class="muted">${t('travel.chg.none')}</p>`}</section></div>`;
   } else if (k === 'rumor') {
     hero = html`<section><a class="c-btn" href="${url('/factcheck/')}">${t('factcheck.submit')} →</a></section>`;
   } else if (k === 'data') {

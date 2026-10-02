@@ -16,6 +16,8 @@ const ENDPOINTS = [
   { path: '/v1/situation.json', desc: '疫情態勢層；items[]、publisher、dataDate；狀態由疫情中心人工發布', pick: (s) => ({ ...s.situation, history: undefined, items: s.situation.items }) },
   { path: '/v1/travel-alerts.json', desc: '旅遊疫情建議（每日排程抓取，附 provenance）', pick: (s) => s.snapshots.travelAlerts.data },
   { path: '/v1/country-levels.json', desc: '各國旅遊疫情建議等級', pick: (s) => s.snapshots.countryLevels.data },
+  { path: '/v1/country-changes.json', desc: '旅遊疫情建議變化事件（近 400 天；kind：new 新增、raised 調升、lowered 調降、lifted 解除、renewed 重發）', pick: (s) => s.snapshots.countryEvents?.data ?? [] },
+  { path: '/v1/country-background.json', desc: '全球背景提醒（同一疾病同一等級涵蓋 ≥ 50% 國家，如新冠併發重症第一級）；各國排序請用 TargetedLevelCode', pick: (s) => s.snapshots.countryLevels.meta?.background ?? [] },
   { path: '/v1/datasets.json', desc: '資料目錄（CKAN 快照＋治理欄位：正本位置、授權、更新頻率）', pick: (s) => s.collections.datasets },
   { path: '/v1/catalog.json', desc: '五類資產總目錄（id、type、owner、canonicalUrl、license、sensitivity、whitelist、reviewedAt）', pick: (s) => s.all.filter((i) => i.status === 'published').map((i) => ({ id: i.id, type: i.type, title: i.title, owner: i.owner, license: i.license, sensitivity: i.sensitivity, reviewedAt: i.reviewedAt, whitelist: i.gov?.whitelist?.effective })) },
   { path: '/v1/glossary.json', desc: '七語詞彙主檔；locked 的詞機器翻譯時不得自由翻譯', pick: (s) => s.master.glossary },

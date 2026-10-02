@@ -116,6 +116,8 @@ export const ENDPOINTS = [
   ['/v1/situation.json', 'situation', '疫情態勢層（疫情中心人工發布，status 四級）', ref('Situation')],
   ['/v1/travel-alerts.json', 'situation', '國際旅遊疫情建議（快照／每日抓取）', arr(free)],
   ['/v1/country-levels.json', 'situation', '各國疫情等級', arr(free)],
+  ['/v1/country-changes.json', 'situation', '旅遊疫情建議變化事件（kind：new／raised／lowered／lifted／renewed）', arr(free)],
+  ['/v1/country-background.json', 'situation', '全球背景提醒（同一疾病同一等級涵蓋 ≥ 50% 國家）', arr(free)],
   ['/v1/datasets.json', 'data', '資料目錄（CKAN 快照＋治理欄位）', arr(withApi('Dataset'))],
   ['/v1/catalog.json', 'data', '五類資產總目錄', arr(ref('CatalogEntry'))],
   ['/v1/glossary.json', 'data', '七語詞彙主檔', arr(ref('GlossaryTerm'))],

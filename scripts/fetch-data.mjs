@@ -182,9 +182,16 @@ export function isStaleNotice(d, raw = {}, today = new Date().toISOString().slic
   return false;
 }
 
-export function aggregateCountryLevels(rows, { countries = [], today = new Date().toISOString().slice(0, 10) } = {}) {
+export function aggregateCountryLevels(rows, { countries = [], today = new Date().toISOString().slice(0, 10), backgroundShare = BACKGROUND_SHARE, backgroundMinCountries = BACKGROUND_MIN_COUNTRIES } = {}) {
   const master = Array.isArray(countries) ? countries : [];
-  const findMaster = (r) => master.find((c) => (r.ISO2 && c.iso2 === r.ISO2) || (r.Country && (c.name === r.Country || String(r.Country).startsWith(c.name))) || (r.CountryEn && c.nameEn && c.nameEn.toLowerCase() === String(r.CountryEn).toLowerCase()));
+  // 主檔對應：先比 ISO2；列上有 ISO2 但主檔沒有 ⇒ 不再用名稱猜（避免「澳洲」開頭的可可斯群島被併入 AU）；
+  // 沒有 ISO2 ⇒ 名稱完全相同、名稱後接括號、或英文名相同才算（避免「馬爾他騎士團」被併入 MT、「智利復活島」被併入 CL）。
+  const findMaster = (r) => {
+    if (r.ISO2) return master.find((c) => c.iso2 === r.ISO2) ?? null;
+    const name = r.Country == null ? null : String(r.Country);
+    const en = r.CountryEn == null ? null : String(r.CountryEn).toLowerCase();
+    return master.find((c) => (name && (c.name === name || name.startsWith(`${c.name}(`) || name.startsWith(`${c.name}（`))) || (en && c.nameEn && c.nameEn.toLowerCase() === en)) ?? null;
+  };
   const groups = new Map();
   // 第一階段（事件日誌模式）：官方匯出檔每列是一則「警示事件」（第一／二／三級或「解除」，severity_level），同一國家×疾病×區域會有多則。
   // 現行建議＝該組合「最新一則」；最新一則為「解除」（LevelCode 0）⇒ 該建議已不存在。快照（每組合一筆）走同一路徑，結果不變。
@@ -197,6 +204,8 @@ export function aggregateCountryLevels(rows, { countries = [], today = new Date(
     const key = iso ?? r.Country;
     if (!key) return;
     if (!groups.has(key)) groups.set(key, { ISO2: iso, Country: m?.name ?? r.Country ?? iso, CountryEn: r.CountryEn ?? m?.nameEn ?? null, Region: m?.region ?? r.Region ?? null, Url: r.Url ?? TRAVEL_LEVEL_PAGE, items: new Map() });
+    // 快照形狀（每國一筆）再聚合時，保留事件快照算出的 RecentChanges（attachRecentChanges 會在有事件時覆寫）
+    if (Array.isArray(r.RecentChanges) && r.RecentChanges.length) groups.get(key).RecentChanges = r.RecentChanges;
     const subs = Array.isArray(r.Diseases) ? r.Diseases.map((d) => ({ ...d, LevelCode: normalizeLevel(d.LevelCode ?? d.Level) })) : [r];
     for (const d of subs) {
       if (!d.Disease || d.LevelCode == null) continue;
@@ -235,9 +244,199 @@ export function aggregateCountryLevels(rows, { countries = [], today = new Date(
       Level: top ? LEVEL_TEXT[top] : LEVEL_NONE, LevelCode: top,
       Disease: names.length ? names.join('、') : null, StartDate: Diseases.map((d) => d.StartDate).filter(Boolean).sort().at(-1) ?? null,
       Summary, Diseases, Url: g.Url,
+      ...(g.RecentChanges ? { RecentChanges: g.RecentChanges } : {}),
     };
   });
-  return out.sort((a, b) => (order.get(a.ISO2) ?? 999) - (order.get(b.ISO2) ?? 999));
+  out.sort((a, b) => (order.get(a.ISO2) ?? 999) - (order.get(b.ISO2) ?? 999));
+  return classifyBackground(out, { share: backgroundShare, minCountries: backgroundMinCountries });
+}
+
+// ── 背景提醒 vs 針對性建議（ARCHITECTURE 12.1）────────────────
+/**
+ * 同一疾病同一等級涵蓋 ≥ BACKGROUND_SHARE 的國家／地區（分母＝等級表全部列，含無建議國與無 ISO2 的地區）⇒ 背景提醒：
+ * 該疾病該等級的所有項目標 Background: true（例：2023-11-01 全面重發的「新冠併發重症」第一級，245/246）。
+ * 列數少於 BACKGROUND_MIN_COUNTRIES 時不判定（測試用小樣本、或抓取異常時不把唯一一筆建議誤當背景）。
+ */
+export const BACKGROUND_SHARE = 0.5;
+export const BACKGROUND_MIN_COUNTRIES = 20;
+export const TARGETED_NONE = '無針對性旅遊疫情建議';
+export const BACKGROUND_NOTE = '同一疾病同一等級涵蓋 50% 以上國家／地區者視為全球背景提醒（遵守一般預防措施），不逐國列出；各國排序、卡片、地圖與等級表改用排除背景提醒後的針對性等級（Targeted*）。';
+const bgKey = (disease, code) => `${disease}\u0000${code}`;
+
+/** 背景提醒的（疾病, 等級）→ { Disease, LevelCode, countries, share }；分母為 rows.length */
+export function backgroundKeys(rows, { share = BACKGROUND_SHARE, minCountries = BACKGROUND_MIN_COUNTRIES } = {}) {
+  const list = rows ?? [];
+  const total = list.length;
+  const count = new Map();
+  for (const r of list) {
+    const seen = new Set();
+    for (const d of r.Diseases ?? []) {
+      if (!d?.Disease || !(d.LevelCode > 0)) continue;
+      const k = bgKey(d.Disease, d.LevelCode);
+      if (seen.has(k)) continue;
+      seen.add(k);
+      count.set(k, { Disease: d.Disease, LevelCode: d.LevelCode, countries: (count.get(k)?.countries ?? 0) + 1 });
+    }
+  }
+  const out = new Map();
+  if (total < minCountries) return out;
+  for (const [k, v] of count) if (v.countries / total >= share) out.set(k, { ...v, share: v.countries / total });
+  return out;
+}
+
+/** 依背景提醒標 Diseases[].Background 並算每國 Targeted*（排除背景後的最高等級）；回傳同一陣列（就地修改、冪等） */
+export function classifyBackground(rows, opts = {}) {
+  const keys = backgroundKeys(rows, opts);
+  for (const r of rows ?? []) {
+    const Diseases = (r.Diseases ?? []).map((d) => {
+      const { Background, ...rest } = d;
+      return keys.has(bgKey(d.Disease, d.LevelCode)) ? { ...rest, Background: true } : rest;
+    });
+    const tg = Diseases.filter((d) => !d.Background && d.LevelCode > 0);
+    const top = tg.length ? Math.max(...tg.map((d) => d.LevelCode)) : 0;
+    const { TargetedLevelCode, TargetedLevel, TargetedDisease, TargetedStartDate, Diseases: _old, Summary, Url, RecentChanges, ...head } = r;
+    // 欄位順序：既有欄位 → Targeted* → Summary、Diseases、Url、RecentChanges（保持快照可讀）
+    const had = { Summary: 'Summary' in r, Url: 'Url' in r };
+    Object.keys(r).forEach((k) => delete r[k]);
+    Object.assign(r, head, {
+      TargetedLevelCode: top, TargetedLevel: top ? LEVEL_TEXT[top] : TARGETED_NONE,
+      TargetedDisease: tg.length ? tg.map((d) => d.Disease).join('、') : null,
+      TargetedStartDate: tg.map((d) => d.StartDate).filter(Boolean).sort().at(-1) ?? null,
+    }, had.Summary ? { Summary } : {}, { Diseases }, had.Url ? { Url } : {}, RecentChanges ? { RecentChanges } : {});
+  }
+  return rows;
+}
+
+/** meta.background[]：{ Disease, DiseaseId?, LevelCode, Level, countries, share, since, latest, Summary } */
+export function backgroundSummary(rows) {
+  const total = (rows ?? []).length;
+  const by = new Map();
+  for (const r of rows ?? []) for (const d of r.Diseases ?? []) {
+    if (!d.Background) continue;
+    const k = bgKey(d.Disease, d.LevelCode);
+    if (!by.has(k)) by.set(k, { Disease: d.Disease, DiseaseId: d.DiseaseId ?? null, LevelCode: d.LevelCode, isos: new Set(), dates: [], summaries: new Map() });
+    const b = by.get(k);
+    b.isos.add(r.ISO2 ?? r.Country);
+    if (d.StartDate) b.dates.push(d.StartDate);
+    if (d.Summary) b.summaries.set(d.Summary, (b.summaries.get(d.Summary) ?? 0) + 1);
+  }
+  return [...by.values()].map((b) => {
+    const dates = b.dates.sort();
+    return {
+      Disease: b.Disease, ...(b.DiseaseId ? { DiseaseId: b.DiseaseId } : {}), LevelCode: b.LevelCode, Level: LEVEL_TEXT[b.LevelCode],
+      countries: b.isos.size, share: total ? Math.round((b.isos.size / total) * 1000) / 1000 : 0,
+      since: dates[0] ?? null, latest: dates.at(-1) ?? null,
+      Summary: [...b.summaries.entries()].sort((x, y) => y[1] - x[1])[0]?.[0] ?? null,
+    };
+  }).sort((a, b) => b.countries - a.countries || b.LevelCode - a.LevelCode || a.Disease.localeCompare(b.Disease));
+}
+
+// ── 事件流：kind 推法與變化摘要（ARCHITECTURE 12.1）──────────────
+export const EVENTS_FILE = 'country-epid-events.json';
+export const EVENTS_WINDOW_DAYS = 400;
+export const RECENT_CHANGES_DAYS = 90;
+export const EVENT_KINDS = ['new', 'raised', 'lowered', 'lifted', 'renewed'];
+const EVENT_LEVEL_TEXT = (code) => (code > 0 ? LEVEL_TEXT[code] : '解除');
+const daysBefore = (iso, n) => new Date(Date.parse(`${iso}T00:00:00Z`) - n * 864e5).toISOString().slice(0, 10);
+
+/** 單則事件 kind：from null/0 且 to>0 ⇒ new；to=0 ⇒ lifted；to>from ⇒ raised；0<to<from ⇒ lowered；to=from ⇒ renewed */
+export function eventKind(from, to) {
+  if (!(to > 0)) return 'lifted';
+  if (from == null || !(from > 0)) return 'new';
+  if (to > from) return 'raised';
+  if (to < from) return 'lowered';
+  return 'renewed';
+}
+
+/**
+ * 事件（任意順序）→ 依（ISO2 或國名, Disease, Area）分組、依 date 升冪推 from／to／kind；回傳依 date 降冪。
+ * 已有 kind 的事件（derived）照樣重算；同日多則依輸入順序。
+ */
+export function deriveEventKinds(events) {
+  const list = (events ?? []).map((e, idx) => ({ e, idx })).filter(({ e }) => e && e.date && e.Disease && e.LevelCode != null);
+  list.sort((a, b) => a.e.date.localeCompare(b.e.date) || a.idx - b.idx);
+  const last = new Map();
+  const out = [];
+  for (const { e, idx } of list) {
+    const k = `${e.ISO2 ?? e.Country}\u0000${e.Disease}\u0000${e.Area ?? ''}`;
+    const from = last.has(k) ? last.get(k) : null;
+    const to = e.LevelCode;
+    last.set(k, to);
+    out.push({ idx, ev: { ...e, kind: eventKind(from, to), from, to } });
+  }
+  return out.sort((a, b) => b.ev.date.localeCompare(a.ev.date) || b.idx - a.idx).map((x) => x.ev);
+}
+
+/** 官方原始列（已 normalizeTravelRow）→ slim 事件（未推 kind） */
+export function slimEvent(r, { countries = [] } = {}) {
+  const code = r.LevelCode;
+  const date = toISODate(r.StartDate);
+  if (code == null || !date || !r.Disease) return null;
+  const m = r.ISO2 ? countries.find((c) => c.iso2 === r.ISO2) : null;
+  const instr = r.Summary ?? null;
+  return {
+    date, ISO2: r.ISO2 ?? null, Country: m?.name ?? r.Country ?? r.ISO2 ?? null, ...(r.CountryEn ? { CountryEn: r.CountryEn } : {}),
+    Disease: r.Disease, ...(r.DiseaseId ? { DiseaseId: r.DiseaseId } : {}), Area: r.Area ? String(r.Area) : null,
+    LevelCode: code, Level: EVENT_LEVEL_TEXT(code), ...(instr && code > 0 ? { Summary: instr } : {}), Url: r.Url ?? TRAVEL_LEVEL_PAGE,
+  };
+}
+
+/** live：原始列 → 事件快照 data（推 kind 用全部歷史，輸出只留 asOf 前 windowDays 天內） */
+export function buildEvents(rows, { countries = [], asOf = new Date().toISOString().slice(0, 10), windowDays = EVENTS_WINDOW_DAYS } = {}) {
+  const all = deriveEventKinds((rows ?? []).map((r) => slimEvent('LevelCode' in r && 'ISO2' in r ? r : normalizeTravelRow(r), { countries })).filter(Boolean));
+  const since = daysBefore(asOf, windowDays);
+  return all.filter((e) => e.date >= since && e.date <= asOf);
+}
+
+/** 離線（--reaggregate）：無事件快照時，從現況每筆建議反推一則 new 事件（date＝StartDate） */
+export function deriveEventsFromLevels(rows, { asOf = new Date().toISOString().slice(0, 10), windowDays = EVENTS_WINDOW_DAYS } = {}) {
+  const evs = [];
+  for (const r of rows ?? []) for (const d of r.Diseases ?? []) {
+    if (!(d.LevelCode > 0) || !d.StartDate) continue;
+    evs.push({ date: d.StartDate, ISO2: r.ISO2 ?? null, Country: r.Country, ...(r.CountryEn ? { CountryEn: r.CountryEn } : {}), Disease: d.Disease, ...(d.DiseaseId ? { DiseaseId: d.DiseaseId } : {}),
+      Area: d.Area ?? null, LevelCode: d.LevelCode, Level: d.Level ?? LEVEL_TEXT[d.LevelCode], ...(d.Summary ? { Summary: d.Summary } : {}), Url: d.Url ?? r.Url ?? TRAVEL_LEVEL_PAGE });
+  }
+  const since = daysBefore(asOf, windowDays);
+  return deriveEventKinds(evs).filter((e) => e.date >= since && e.date <= asOf);
+}
+
+/** 近 days 天（含 asOf 當天往前 days 天）各 kind 筆數：{ new, raised, lowered, lifted, renewed } */
+export function changeSummary(events, { asOf = new Date().toISOString().slice(0, 10), days = 30 } = {}) {
+  const since = daysBefore(asOf, days);
+  const out = Object.fromEntries(EVENT_KINDS.map((k) => [k, 0]));
+  for (const e of events ?? []) if (e.date >= since && e.date <= asOf && e.kind in out) out[e.kind]++;
+  return out;
+}
+
+/**
+ * 每國 RecentChanges（近 RECENT_CHANGES_DAYS 天的事件，slim：{ date, Disease, Area?, kind, from, to }，依 date 降冪）。
+ * 給答案引擎用：引擎只拿得到等級表 data[]（拿不到 meta 與事件快照），問「最近哪些國家解除」時由此彙整。沒有變化的國家不帶此欄。
+ */
+export function attachRecentChanges(rows, events, { asOf = new Date().toISOString().slice(0, 10), days = RECENT_CHANGES_DAYS } = {}) {
+  const since = daysBefore(asOf, days);
+  const by = new Map();
+  for (const e of events ?? []) {
+    if (!(e.date >= since && e.date <= asOf)) continue;
+    const k = e.ISO2 ?? e.Country;
+    if (!by.has(k)) by.set(k, []);
+    by.get(k).push({ date: e.date, Disease: e.Disease, ...(e.Area ? { Area: e.Area } : {}), kind: e.kind, from: e.from ?? null, to: e.to ?? e.LevelCode });
+  }
+  for (const r of rows ?? []) {
+    const list = by.get(r.ISO2 ?? r.Country) ?? (r.ISO2 ? by.get(r.Country) : null);
+    if (list?.length) r.RecentChanges = [...list].sort((a, b) => b.date.localeCompare(a.date));
+    else delete r.RecentChanges;
+  }
+  return rows;
+}
+
+/** 等級快照 meta 的衍生欄位（live 與 --reaggregate 共用） */
+export function levelMetaExtras(rows, events, { asOf, eventsMode = null } = {}) {
+  return {
+    stats: levelStats(rows),
+    background: backgroundSummary(rows),
+    backgroundRule: { share: BACKGROUND_SHARE, minCountries: BACKGROUND_MIN_COUNTRIES, note: BACKGROUND_NOTE },
+    ...(Array.isArray(events) ? { changeSummary30: changeSummary(events, { asOf, days: 30 }), changeSummaryAsOf: asOf, changeSummaryMode: eventsMode } : {}),
+  };
 }
 /** 等級分布（給 meta.stats 與頁面摘要） */
 /**
@@ -259,7 +458,12 @@ export function assertPlausibleLevels(countryRows, max = LEVEL_PLAUSIBLE_MAX) {
 }
 export function levelStats(countryRows) {
   const rows = countryRows ?? [];
-  return { level3: rows.filter((r) => r.LevelCode === 3).length, level2: rows.filter((r) => r.LevelCode === 2).length, level1: rows.filter((r) => r.LevelCode === 1).length, none: rows.filter((r) => !r.LevelCode).length, entries: rows.reduce((n, r) => n + (r.Diseases?.length ?? 0), 0) };
+  const tg = (r) => r.TargetedLevelCode ?? r.LevelCode;
+  return {
+    level3: rows.filter((r) => r.LevelCode === 3).length, level2: rows.filter((r) => r.LevelCode === 2).length, level1: rows.filter((r) => r.LevelCode === 1).length, none: rows.filter((r) => !r.LevelCode).length, entries: rows.reduce((n, r) => n + (r.Diseases?.length ?? 0), 0),
+    // 針對性統計（排除背景提醒；ARCHITECTURE 12.1）
+    targeted: { level3: rows.filter((r) => tg(r) === 3).length, level2: rows.filter((r) => tg(r) === 2).length, level1: rows.filter((r) => tg(r) === 1).length, none: rows.filter((r) => !tg(r)).length },
+  };
 }
 const asArray = (j) => (Array.isArray(j) ? j : Array.isArray(j?.data) ? j.data : Array.isArray(j?.result) ? j.result : Array.isArray(j?.Data) ? j.Data : []);
 const readMasterCountries = () => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'master', 'countries.json'), 'utf8')); } catch { return []; } };
@@ -300,12 +504,61 @@ export const SOURCES = [
       const noIso = norm.filter((r) => !r.ISO2 && r.LevelCode > 0);
       console.log(`[fetch]   等級表診斷 無 ISO 碼警示：${noIso.length} 則；areaDesc ${JSON.stringify(cnt(noIso.map((r) => r.Country)).slice(0, 8))}；areaDetail 非空列 ${norm.filter((r) => r.Area).length}`);
       assertPlausibleLevels(data);
+      // 事件流（每列＝一則事件）→ 事件快照；近 90 天變化掛到各國 RecentChanges（答案引擎用）
+      const master = readMasterCountries();
+      lastRaw.events = buildEvents(norm, { countries: master, asOf: today });
+      attachRecentChanges(data, lastRaw.events, { asOf: today });
+      const bg = backgroundSummary(data), cs = changeSummary(lastRaw.events, { asOf: today });
+      console.log(`[fetch]   背景提醒：${bg.map((b) => `${b.Disease} L${b.LevelCode} ${b.countries} 國（${Math.round(b.share * 100)}%）`).join('、') || '無'}；針對性 ${JSON.stringify(levelStats(data).targeted)}；事件 ${lastRaw.events.length} 則（近 ${EVENTS_WINDOW_DAYS} 天），近 30 天 ${JSON.stringify(cs)}`);
       return data;
     },
-    meta: (data) => ({ sourcePage: TRAVEL_LEVEL_PAGE, levelDefinitions: LEVEL_DEFINITIONS, stats: levelStats(data), dataDate: new Date().toISOString().slice(0, 10),
+    after: (data) => writeEventsSnapshot({ mode: 'live', fetchedAt: new Date().toISOString(), sourceUrl: 'https://www.cdc.gov.tw/CountryEpidLevel/ExportJSON', windowDays: EVENTS_WINDOW_DAYS, note: EVENTS_NOTE_LIVE }, lastRaw.events ?? []),
+    meta: (data) => ({ sourcePage: TRAVEL_LEVEL_PAGE, levelDefinitions: LEVEL_DEFINITIONS, ...levelMetaExtras(data, lastRaw.events, { asOf: new Date().toISOString().slice(0, 10), eventsMode: 'live' }), dataDate: new Date().toISOString().slice(0, 10),
       rawCount: lastRaw.countryLevels?.length ?? null, rawFields: Object.keys(lastRaw.countryLevels?.[0] ?? {}), rawSample: (lastRaw.countryLevels ?? []).slice(0, 3),
       filterNote: `已排除歷史紀錄：有結束日／已解除者、${COVID_NOTICES_LIFTED_AT} 前的 COVID-19 建議、第三級逾 365 天未更新者` }) },
 ];
+
+// ── 事件快照與離線重算（--reaggregate）──────────────────────
+const LEVEL_FILE = 'country-epid-level.json';
+const EVENTS_NOTE_LIVE = '官方 CountryEpidLevel/ExportJSON 每列為一則警示事件（第一／二／三級或「解除」）；kind 由同（ISO2, Disease, Area）前一則等級推得（new／raised／lowered／lifted／renewed），只留近 windowDays 天。';
+const EVENTS_NOTE_DERIVED = '離線反推：無官方事件流時，由等級表現況每筆建議反推一則 new 事件（date＝發布日），不含調升／調降／解除；連網執行 npm run fetch 後改為 live。';
+function writeEventsSnapshot(meta, data) {
+  const out = { meta: { ...meta, count: data.length }, data };
+  if (DRY) { log(`(dry) 不寫入 ${EVENTS_FILE}：${data.length} 則`); return; }
+  fs.mkdirSync(SNAPSHOTS, { recursive: true });
+  fs.writeFileSync(path.join(SNAPSHOTS, EVENTS_FILE), JSON.stringify(out, null, 2) + '\n');
+  log(`✓ 旅遊疫情建議事件 ${data.length} 則（${meta.mode}）→ ${EVENTS_FILE}`);
+}
+
+/**
+ * 不連網：用既有等級快照（＋事件快照）重算 12.1 的衍生欄位；保留 mode／fetchedAt／dataDate／rawSample 等既有 meta。
+ * 回傳 { level, events }（dry 時不寫檔）。
+ */
+export function reaggregateSnapshots({ level, events = null, countries = readMasterCountries(), now = new Date().toISOString() } = {}) {
+  if (!level || !Array.isArray(level.data)) throw new Error(`找不到 ${LEVEL_FILE}`);
+  const asOf = level.meta?.dataDate ?? now.slice(0, 10);
+  const data = aggregateCountryLevels(level.data, { countries, today: asOf });
+  let ev = events;
+  if (!ev || !Array.isArray(ev.data) || ev.meta?.mode === 'derived') {
+    ev = { meta: { mode: 'derived', fetchedAt: level.meta?.fetchedAt ?? null, derivedAt: now, sourceUrl: level.meta?.sourceUrl ?? 'https://www.cdc.gov.tw/CountryEpidLevel/ExportJSON', windowDays: EVENTS_WINDOW_DAYS, note: EVENTS_NOTE_DERIVED }, data: deriveEventsFromLevels(data, { asOf }) };
+  } else if (!ev.data.every((e) => EVENT_KINDS.includes(e.kind))) {
+    // 缺 kind 才重推（live 事件的 kind 是用全部歷史推的，只看窗內資料重推會失去窗外的前一則等級）
+    ev = { meta: ev.meta, data: deriveEventKinds(ev.data) };
+  }
+  ev.meta = { ...ev.meta, count: ev.data.length };
+  attachRecentChanges(data, ev.data, { asOf });
+  const meta = { ...level.meta, ...levelMetaExtras(data, ev.data, { asOf, eventsMode: ev.meta.mode }), count: data.length };
+  return { level: { meta, data }, events: ev };
+}
+function reaggregate() {
+  const r = reaggregateSnapshots({ level: readSnapshot(LEVEL_FILE), events: readSnapshot(EVENTS_FILE) });
+  const m = r.level.meta;
+  log(`重算（不連網）：${r.level.data.length} 國；背景提醒 ${m.background.map((b) => `${b.Disease} L${b.LevelCode} ${b.countries} 國`).join('、') || '無'}；針對性 ${JSON.stringify(m.stats.targeted)}；事件 ${r.events.data.length} 則（${r.events.meta.mode}），近 30 天 ${JSON.stringify(m.changeSummary30)}`);
+  if (DRY) { log('(dry) 不寫入'); return; }
+  fs.writeFileSync(path.join(SNAPSHOTS, LEVEL_FILE), JSON.stringify(r.level, null, 2) + '\n');
+  fs.writeFileSync(path.join(SNAPSHOTS, EVENTS_FILE), JSON.stringify(r.events, null, 2) + '\n');
+  log(`✓ ${LEVEL_FILE}、${EVENTS_FILE}`);
+}
 
 // ── CKAN：package_search 分頁抓全部 ────────────────────
 const CKAN = { file: 'ckan-packages.json', base: 'https://data.cdc.gov.tw/api/3/action/package_search', label: 'CKAN 資料集目錄（package_search 精簡版）', rows: 100, maxPages: 50 };
@@ -502,11 +755,12 @@ export async function checkLinks({ contentDir = CONTENT_DIR, fetchImpl = fetch, 
 // ── 主流程 ────────────────────────────────────────────
 async function main() {
   if (CHECK_LINKS) { await checkLinks({ dry: DRY }); return; }
+  if (REAGGREGATE) { reaggregate(); return; }
   if (DRY) log('dry-run：只抓取與比對，不寫入檔案');
   let packages = null;
   if (!SYNC_ONLY) {
     for (const s of SOURCES) {
-      try { const data = s.pick(await getJSON(s.url)); writeSnapshot(s.file, { sourceUrl: s.url, label: s.label, ...(s.meta?.(data) ?? {}) }, data); } catch (e) { keepSnapshot(s.file, s, e); }
+      try { const data = s.pick(await getJSON(s.url)); writeSnapshot(s.file, { sourceUrl: s.url, label: s.label, ...(s.meta?.(data) ?? {}) }, data); s.after?.(data); } catch (e) { keepSnapshot(s.file, s, e); }
     }
     try {
       packages = await fetchCkanAll();
