@@ -63,39 +63,147 @@ function keepSnapshot(file, s, err) {
   }
 }
 
-// ── 旅遊疫情：欄位名容錯，補上本站慣用欄位（原欄位保留）────
-const LEVEL_TEXT = { 1: '第一級：注意(Watch)', 2: '第二級：警示(Alert)', 3: '第三級：警告(Warning)' };
+// ── 旅遊疫情：欄位名容錯（中英欄位），補上本站慣用欄位（原欄位保留）────
+// 官方 CountryEpidLevel 匯出（近似）：國家/地區、疾病、等級（「第一級：注意(Watch)」）、發布日期、英文國名、ISO
+// 官方 TravelEpidemic 匯出（近似）：疾病、國家、地區、摘要／內容、發布日
+// 另容錯 CAP 樣式欄位（alert_disease、severity_level、areaDesc、ISO3166、effective、description…）。
+export const LEVEL_TEXT = { 1: '第一級：注意(Watch)', 2: '第二級：警示(Alert)', 3: '第三級：警告(Warning)' };
+export const LEVEL_NONE = '無旅遊疫情建議';
+export const TRAVEL_LEVEL_PAGE = 'https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09';
+export const LEVEL_DEFINITIONS = [
+  { code: 1, key: 'watch', name: '第一級：注意', nameEn: 'Level 1: Watch', label: LEVEL_TEXT[1], description: '提醒遵守當地的一般預防措施', descriptionEn: 'Practise usual precautions', color: 'watch' },
+  { code: 2, key: 'alert', name: '第二級：警示', nameEn: 'Level 2: Alert', label: LEVEL_TEXT[2], description: '對當地採取加強防護', descriptionEn: 'Practise enhanced precautions', color: 'alert' },
+  { code: 3, key: 'warning', name: '第三級：警告', nameEn: 'Level 3: Warning', label: LEVEL_TEXT[3], description: '避免所有非必要旅遊', descriptionEn: 'Avoid all non-essential travel', color: 'warning' },
+];
 const pick = (o, keys) => { for (const k of keys) if (o?.[k] != null && o[k] !== '') return o[k]; return null; };
+const TK = {
+  country: ['Country', '國家/地區', '國家／地區', '國家', '國家名稱', 'areaDesc', 'country', 'CountryName', 'CountryZh'],
+  countryEn: ['CountryEn', '英文國名', '英文名稱', 'areaDesc_EN', 'country_en', 'CountryEnglish', 'EnglishName'],
+  iso: ['ISO2', 'ISO', 'Iso2', 'iso2', 'ISO3166', 'CountryCode', '國家代碼'],
+  disease: ['Disease', '疾病', '疾病名稱', 'alert_disease', 'disease', 'DiseaseName', 'headline'],
+  diseaseEn: ['DiseaseEn', '疾病英文名稱', 'alert_disease_EN', 'DiseaseEnglish'],
+  region: ['Region', '區域', '洲別', '地區', 'regionDesc', 'region'],
+  level: ['Level', '等級', '旅遊疫情建議等級', '疫情等級', 'severity_level', 'level', 'LevelName', 'AlertLevel'],
+  levelCode: ['LevelCode', 'levelCode', 'Level_Code', 'LevelNo'],
+  start: ['StartDate', '發布日期', '發布日', '發佈日期', '日期', '調整日期', 'effective', 'Effective', 'sent', 'PublishDate', 'Date'],
+  summary: ['Summary', '摘要', '內容', '建議', '說明', 'description', 'instruction', 'Content', 'summary'],
+  area: ['Area', '區域說明', '省份', '疫區'],
+  url: ['Url', '網址', '連結', 'web', 'url', 'link'],
+};
+
+/** 等級文字／數字 → 0–3（0＝無建議；null＝無法判讀）。例：「第一級：注意(Watch)」→ 1、「Level 2: Alert」→ 2、「無」→ 0 */
+export function normalizeLevel(v) {
+  if (v == null || v === '') return null;
+  if (typeof v === 'number') return v >= 0 && v <= 3 ? Math.trunc(v) : null;
+  const s = String(v).trim();
+  if (/^[0-3]$/.test(s)) return Number(s);
+  const m = s.match(/第\s*([一二三1-3])\s*級|level\s*([1-3])|^([1-3])\b/i);
+  if (m) { const x = m[1] ?? m[2] ?? m[3]; return '一二三'.includes(x) ? '一二三'.indexOf(x) + 1 : Number(x); }
+  if (/warning|警告/i.test(s)) return 3;
+  if (/alert|警示/i.test(s)) return 2;
+  if (/watch|注意/i.test(s)) return 1;
+  if (/^(無|none|解除|—|-)/i.test(s) || /無旅遊疫情建議/.test(s)) return 0;
+  return null;
+}
+/** 日期容錯：2025/8/5、2025-08-05T…、民國 114/08/05 → 2025-08-05 */
+export function toISODate(v) {
+  if (v == null || v === '') return null;
+  const m = String(v).trim().match(/^(\d{2,4})[/.\-年](\d{1,2})[/.\-月](\d{1,2})/);
+  if (!m) return String(v).slice(0, 10);
+  let y = Number(m[1]); if (y < 1911) y += 1911;
+  return `${y}-${String(m[2]).padStart(2, '0')}-${String(m[3]).padStart(2, '0')}`;
+}
 export function normalizeTravelRow(r) {
   if (!r || typeof r !== 'object') return r;
-  const levelText = pick(r, ['Level', 'level', 'severity_level', 'LevelName', 'AlertLevel', '等級']);
-  let code = pick(r, ['LevelCode', 'levelCode', 'Level_Code']);
-  if (code == null && levelText != null) {
-    const s = String(levelText);
-    const m = s.match(/[1-3一二三]/);
-    code = m ? ('一二三'.includes(m[0]) ? '一二三'.indexOf(m[0]) + 1 : Number(m[0])) : /watch|注意/i.test(s) ? 1 : /alert|警示/i.test(s) ? 2 : /warning|警告/i.test(s) ? 3 : null;
-  }
-  const iso = pick(r, ['ISO2', 'Iso2', 'iso2', 'ISO3166', 'CountryCode']);
-  const start = pick(r, ['StartDate', 'effective', 'Effective', 'sent', 'PublishDate', 'Date']);
-  return {
+  const levelRaw = pick(r, TK.level);
+  let code = pick(r, TK.levelCode);
+  code = code != null ? normalizeLevel(code) : normalizeLevel(levelRaw);
+  const iso = pick(r, TK.iso);
+  const start = pick(r, TK.start);
+  const out = {
     ...r,
-    Disease: r.Disease ?? pick(r, ['alert_disease', 'disease', 'DiseaseName', 'headline', '疾病']),
-    Country: r.Country ?? pick(r, ['areaDesc', 'country', 'CountryName', '國家']),
-    CountryEn: r.CountryEn ?? pick(r, ['areaDesc_EN', 'country_en', 'CountryEnglish']),
-    ISO2: r.ISO2 ?? (iso ? String(iso).toUpperCase().slice(0, 2) : null),
-    Region: r.Region ?? pick(r, ['regionDesc', 'region', '區域']),
-    Level: levelText ?? (code ? LEVEL_TEXT[code] : null),
-    LevelCode: code != null ? Number(code) : null,
-    StartDate: start ? String(start).replace(/\//g, '-').slice(0, 10) : null,
-    Summary: r.Summary ?? pick(r, ['description', 'instruction', 'Content', 'summary', '摘要']),
-    Url: r.Url ?? pick(r, ['web', 'url', 'link']),
+    Disease: pick(r, TK.disease),
+    DiseaseEn: pick(r, TK.diseaseEn),
+    Country: pick(r, TK.country),
+    CountryEn: pick(r, TK.countryEn),
+    ISO2: iso && /^[A-Za-z]{2}/.test(String(iso)) ? String(iso).toUpperCase().slice(0, 2) : null,
+    Region: pick(r, TK.region),
+    Level: code ? LEVEL_TEXT[code] : code === 0 ? LEVEL_NONE : levelRaw,
+    LevelCode: code,
+    StartDate: toISODate(start),
+    Summary: pick(r, TK.summary),
+    Url: pick(r, TK.url),
   };
+  if (levelRaw != null && String(levelRaw) !== out.Level) out.LevelRaw = levelRaw;
+  const area = pick(r, TK.area); if (area != null) out.Area = area;
+  if (out.DiseaseEn == null) delete out.DiseaseEn;
+  return out;
+}
+
+const shortLevel = (code) => LEVEL_TEXT[code].replace(/\(.*\)$/, '');
+/**
+ * 依疾病的等級列（CountryEpidLevel 每列＝國家 × 疾病）→ 每國一筆，Diseases[] 合併（同病取最高等級、最新日期）。
+ * countries（選填，master/countries.json）：補 ISO2／英文名／區域；並為主檔中沒有列在表上的國家補「無旅遊疫情建議」一筆，讓 live 與快照形狀一致。
+ */
+export function aggregateCountryLevels(rows, { countries = [] } = {}) {
+  const master = Array.isArray(countries) ? countries : [];
+  const findMaster = (r) => master.find((c) => (r.ISO2 && c.iso2 === r.ISO2) || (r.Country && (c.name === r.Country || String(r.Country).startsWith(c.name))) || (r.CountryEn && c.nameEn && c.nameEn.toLowerCase() === String(r.CountryEn).toLowerCase()));
+  const groups = new Map();
+  for (const raw of rows ?? []) {
+    if (!raw || typeof raw !== 'object') continue;
+    const r = 'LevelCode' in raw && 'ISO2' in raw ? raw : normalizeTravelRow(raw);
+    const m = findMaster(r);
+    const iso = r.ISO2 ?? m?.iso2 ?? null;
+    const key = iso ?? r.Country;
+    if (!key) continue;
+    if (!groups.has(key)) groups.set(key, { ISO2: iso, Country: m?.name ?? r.Country ?? iso, CountryEn: r.CountryEn ?? m?.nameEn ?? null, Region: m?.region ?? r.Region ?? null, Url: r.Url ?? TRAVEL_LEVEL_PAGE, items: new Map() });
+    const g = groups.get(key);
+    const subs = Array.isArray(r.Diseases) ? r.Diseases.map((d) => ({ ...d, LevelCode: normalizeLevel(d.LevelCode ?? d.Level) })) : [r];
+    for (const d of subs) {
+      if (!d.Disease || !(d.LevelCode > 0)) continue;
+      const prev = g.items.get(d.Disease);
+      const date = toISODate(d.StartDate);
+      if (prev && (prev.LevelCode > d.LevelCode || (prev.LevelCode === d.LevelCode && String(prev.StartDate ?? '') >= String(date ?? '')))) continue;
+      g.items.set(d.Disease, {
+        Disease: d.Disease, ...(d.DiseaseEn ? { DiseaseEn: d.DiseaseEn } : {}), ...(d.DiseaseId ? { DiseaseId: d.DiseaseId } : {}),
+        Level: LEVEL_TEXT[d.LevelCode], LevelCode: d.LevelCode, StartDate: date, ...(d.Area ? { Area: d.Area } : {}), Summary: d.Summary ?? null, Url: d.Url ?? g.Url,
+      });
+    }
+  }
+  for (const c of master) if (![...groups.values()].some((g) => g.ISO2 === c.iso2)) groups.set(c.iso2, { ISO2: c.iso2, Country: c.name, CountryEn: c.nameEn ?? null, Region: c.region ?? null, Url: TRAVEL_LEVEL_PAGE, items: new Map() });
+  const order = new Map(master.map((c, i) => [c.iso2, i]));
+  const out = [...groups.values()].map((g) => {
+    const Diseases = [...g.items.values()].sort((a, b) => b.LevelCode - a.LevelCode || String(b.StartDate ?? '').localeCompare(String(a.StartDate ?? '')));
+    const top = Diseases.length ? Math.max(...Diseases.map((d) => d.LevelCode)) : 0;
+    const names = Diseases.map((d) => d.Disease);
+    let Summary;
+    if (!Diseases.length) Summary = '目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。';
+    else {
+      const byLv = [3, 2, 1].map((lv) => [lv, Diseases.filter((d) => d.LevelCode === lv).map((d) => d.Disease)]).filter(([, n]) => n.length);
+      Summary = `${byLv.map(([lv, n]) => `${n.join('、')}為${shortLevel(lv)}`).join('；')}。${Diseases[0].Summary ?? ''}`.trim();
+    }
+    return {
+      ISO2: g.ISO2, Country: g.Country, CountryEn: g.CountryEn, Region: g.Region,
+      Level: top ? LEVEL_TEXT[top] : LEVEL_NONE, LevelCode: top,
+      Disease: names.length ? names.join('、') : null, StartDate: Diseases.map((d) => d.StartDate).filter(Boolean).sort().at(-1) ?? null,
+      Summary, Diseases, Url: g.Url,
+    };
+  });
+  return out.sort((a, b) => (order.get(a.ISO2) ?? 999) - (order.get(b.ISO2) ?? 999));
+}
+/** 等級分布（給 meta.stats 與頁面摘要） */
+export function levelStats(countryRows) {
+  const rows = countryRows ?? [];
+  return { level3: rows.filter((r) => r.LevelCode === 3).length, level2: rows.filter((r) => r.LevelCode === 2).length, level1: rows.filter((r) => r.LevelCode === 1).length, none: rows.filter((r) => !r.LevelCode).length, entries: rows.reduce((n, r) => n + (r.Diseases?.length ?? 0), 0) };
 }
 const asArray = (j) => (Array.isArray(j) ? j : Array.isArray(j?.data) ? j.data : Array.isArray(j?.result) ? j.result : Array.isArray(j?.Data) ? j.Data : []);
+const readMasterCountries = () => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, 'content', 'master', 'countries.json'), 'utf8')); } catch { return []; } };
 
 const SOURCES = [
-  { file: 'travel-epidemic.json', url: 'https://www.cdc.gov.tw/TravelEpidemic/ExportJSON', label: '國際重要疫情／旅遊疫情建議', pick: (j) => asArray(j).map(normalizeTravelRow) },
-  { file: 'country-epid-level.json', url: 'https://www.cdc.gov.tw/CountryEpidLevel/ExportJSON', label: '各國旅遊疫情建議等級', pick: (j) => asArray(j).map(normalizeTravelRow) },
+  { file: 'travel-epidemic.json', url: 'https://www.cdc.gov.tw/TravelEpidemic/ExportJSON', label: '國際重要疫情資訊（近 30 天）', pick: (j) => asArray(j).map(normalizeTravelRow),
+    meta: (data) => ({ sourcePage: TRAVEL_LEVEL_PAGE, dataDate: data.map((r) => r.StartDate).filter(Boolean).sort().at(-1) ?? new Date().toISOString().slice(0, 10) }) },
+  { file: 'country-epid-level.json', url: 'https://www.cdc.gov.tw/CountryEpidLevel/ExportJSON', label: '國際旅遊疫情建議等級表', pick: (j) => aggregateCountryLevels(asArray(j).map(normalizeTravelRow), { countries: readMasterCountries() }),
+    meta: (data) => ({ sourcePage: TRAVEL_LEVEL_PAGE, levelDefinitions: LEVEL_DEFINITIONS, stats: levelStats(data), dataDate: new Date().toISOString().slice(0, 10) }) },
 ];
 
 // ── CKAN：package_search 分頁抓全部 ────────────────────
@@ -297,7 +405,7 @@ async function main() {
   let packages = null;
   if (!SYNC_ONLY) {
     for (const s of SOURCES) {
-      try { writeSnapshot(s.file, { sourceUrl: s.url, label: s.label }, s.pick(await getJSON(s.url))); } catch (e) { keepSnapshot(s.file, s, e); }
+      try { const data = s.pick(await getJSON(s.url)); writeSnapshot(s.file, { sourceUrl: s.url, label: s.label, ...(s.meta?.(data) ?? {}) }, data); } catch (e) { keepSnapshot(s.file, s, e); }
     }
     try {
       packages = await fetchCkanAll();

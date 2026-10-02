@@ -56,6 +56,8 @@
   ],
   "note": "即將上架：上架日 2026-11-11，原型今日（2026-10-01）應出現在 /campaigns/「即將開始」",
   "image": "/img/banners/2026-11-amr-awareness-week.svg",
+  "imageWide": "/img/banners/2026-11-amr-awareness-week-wide.svg",
+  "imageAlt": "人、動物、環境三個相扣的圓圈，中央是盾牌與膠囊，象徵防疫一體共同對抗抗藥性",
   "headline": "感冒不吵抗生素，用藥依醫囑",
   "subline": "抗藥性是看不見的疫情：人、動物、環境一起守護",
   "cta": {

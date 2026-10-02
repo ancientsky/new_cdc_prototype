@@ -24,42 +24,56 @@ function chips(ctx) {
   return html`<div class="c-chips-wrap"><ul class="c-chips" aria-label="${t('home.chips.label')}">${[1, 2, 3, 4].map((n) => html`<li><a class="c-chip" href="${url('/ask/')}?q=${encodeURIComponent(t(`home.chip${n}`))}">${t(`home.chip${n}`)}</a></li>`)}</ul><p class="c-chips__note">${t('home.chips.multi')}</p></div>`;
 }
 
-function promoSlide(ctx, b, i, n) {
+/** 宣導插圖：16:9 大圖優先（imageWide），沒有就退回 4:3 image（object-fit: cover）。圖只當氛圍，字都在 HTML。 */
+function promoImg(ctx, b, { eager = false } = {}) {
+  const wide = imgSrc(ctx, b.imageWide);
+  const src = wide ?? imgSrc(ctx, b.image);
+  if (!src) return promoArt();
+  const head = L(ctx, b, 'headline') ?? b.title;
+  const alt = L(ctx, b, 'imageAlt') ?? head;
+  const altLang = ctx.lang !== 'zh-TW' && b.imageAlt && !b.i18n?.[ctx.lang]?.imageAlt && alt === b.imageAlt;
+  const [w, h] = wide ? [1200, 675] : [400, 300];
+  return html`<img src="${src}" alt="${alt}"${altLang ? raw(' lang="zh-TW"') : ''} width="${w}" height="${h}" ${eager ? raw('loading="eager" fetchpriority="high" decoding="async"') : raw('loading="lazy" decoding="async"')}>`;
+}
+
+function promoSlide(ctx, b, i, n, { eager = false } = {}) {
   const { t, url, fmtDate } = ctx;
   const cta = L(ctx, b, 'cta') ?? b.cta;
   const href = isExternal(cta.url) ? cta.url : url(cta.url);
   const head = L(ctx, b, 'headline') ?? b.title;
-  const src = imgSrc(ctx, b.image);
   return html`<div class="c-carousel__slide" data-slide role="group" aria-roledescription="slide" aria-label="${i + 1} / ${n}" ${i ? raw('hidden') : ''}>
-      <div class="c-promo__art">${src ? html`<img src="${src}" alt="${head}" width="400" height="300" loading="${i ? 'lazy' : 'eager'}">` : promoArt()}</div>
+      <div class="c-promo__art">${promoImg(ctx, b, { eager: eager && i === 0 })}</div>
       <div class="c-promo__txt">
       <p class="c-promo__kicker">${t('home.promo')}</p>
       <h2 class="c-promo__title">${head}</h2>
       ${L(ctx, b, 'subline') ? html`<p class="c-promo__sub">${L(ctx, b, 'subline')}</p>` : ''}
-      <p><a class="c-btn" href="${href}"${isExternal(cta.url) ? raw(' rel="noopener"') : ''}>${cta.label}${isExternal(cta.url) ? ' ↗' : ' →'}</a></p>
+      <p class="c-promo__cta"><a class="c-btn" href="${href}"${isExternal(cta.url) ? raw(' rel="noopener"') : ''}>${cta.label}${isExternal(cta.url) ? ' ↗' : ' →'}</a></p>
       <p class="c-promo__meta">${t('home.promo.meta', { owner: unitName(ctx, b.owner), from: fmtDate(b.startAt), to: fmtDate(b.endAt) })}</p>
       </div>
     </div>`;
 }
 
-/** 本期宣導：card＝做法 A 右側卡；row＝做法 B 退到態勢卡下方的橫卡。最多 3 則輪播（不自動播、暫停鈕、指示點、鍵盤）。 */
-function promoCarousel(ctx, banners, { variant = 'card' } = {}) {
+/** 本期宣導：card＝做法 A 右側大圖卡；row＝做法 B 退到態勢卡下方的橫卡（圖左 40%）。最多 3 則輪播（不自動播、暫停鈕、指示點、鍵盤）。
+ *  兩版同頁輸出時 id 不可重複；本元件沒有 id。eager＝此版預設可見，首張圖 fetchpriority=high。 */
+function promoCarousel(ctx, banners, { variant = 'card', eager = false } = {}) {
   const { t, url } = ctx;
   if (!banners.length) return '';
   const n = banners.length;
   const body = html`<div class="c-carousel" data-carousel aria-roledescription="carousel" aria-label="${t('home.promo')}">
-    <div class="c-carousel__slides" aria-live="polite">${banners.map((b, i) => promoSlide(ctx, b, i, n))}</div>
-    ${n > 1 ? html`<div class="c-carousel__ctl" hidden>
+    <div class="c-carousel__slides" aria-live="polite">${banners.map((b, i) => promoSlide(ctx, b, i, n, { eager }))}</div>
+    <div class="c-promo__foot">
+      <a class="c-promo__all" href="${url('/campaigns/')}">${t('home.promo.all')} →</a>
+      ${n > 1 ? html`<div class="c-carousel__ctl" hidden>
       <button type="button" class="c-carousel__btn" data-carousel-prev aria-label="${t('banner.prev')}">‹</button>
       <span class="c-carousel__dots" role="group" aria-label="${t('banner.dots')}">${banners.map((b, i) => html`<button type="button" class="c-carousel__dot" data-carousel-dot="${i}" aria-label="${i + 1} / ${n}" ${i === 0 ? raw('aria-current="true"') : ''}></button>`)}</span>
       <button type="button" class="c-carousel__btn" data-carousel-next aria-label="${t('banner.next')}">›</button>
       <button type="button" class="c-carousel__play" data-carousel-play aria-pressed="false" data-on="${t('banner.autoOn')}" data-off="${t('banner.autoOff')}">${t('banner.autoOff')}</button>
       <span class="c-carousel__count" aria-hidden="true"><span data-carousel-cur>1</span>/${n}</span>
     </div>` : ''}
-    <p class="c-promo__all"><a href="${url('/campaigns/')}">${t('home.promo.all')} →</a></p>
+    </div>
   </div>`;
   if (variant === 'row') return html`<section class="c-promo c-promo--row" aria-label="${t('home.promo')}">${body}</section>`;
-  return html`<aside class="c-promo" aria-label="${t('home.promo')}">${body}</aside>`;
+  return html`<aside class="c-promo c-promo--card" aria-label="${t('home.promo')}">${body}</aside>`;
 }
 
 function statusStrip(ctx, items) {
@@ -67,7 +81,7 @@ function statusStrip(ctx, items) {
   return html`<ul class="c-statusstrip" aria-label="${ctx.t('home.situation')}">${items.map((it) => html`<li><a href="${ctx.url('/situation/')}">${diseaseName(ctx, site.diseaseMasterById.get(it.disease))}</a> ${statusTag(ctx, it)}</li>`)}</ul>`;
 }
 
-function heroA(ctx, banners, pinned) {
+function heroA(ctx, banners, pinned, { eager = false } = {}) {
   const { t } = ctx;
   return html`<section class="c-hero c-hero--split" aria-labelledby="hero-h">
   <div class="wrap c-hero__grid">
@@ -77,29 +91,44 @@ function heroA(ctx, banners, pinned) {
       ${chips(ctx)}
       ${statusStrip(ctx, pinned)}
     </div>
-    ${promoCarousel(ctx, banners)}
+    ${promoCarousel(ctx, banners, { variant: 'card', eager })}
   </div>
 </section>`;
 }
 
-function heroB(ctx, peak, banners) {
+function heroB(ctx, peak, banners, { eager = false } = {}) {
   const { t, site, url } = ctx;
   const dm = site.diseaseMasterById.get(peak.disease);
   const name = diseaseName(ctx, dm);
   const b = banners[0];
   const cta = b ? (L(ctx, b, 'cta') ?? b.cta) : null;
-  return html`<section class="c-hero c-hero--situational c-hero--${peak.status}" aria-labelledby="hero-h">
+  const art = b ? (imgSrc(ctx, b.imageWide) ?? imgSrc(ctx, b.image)) : null;
+  return html`<section class="c-hero c-hero--situational c-hero--${peak.status}" aria-labelledby="hero-h-b">
+  ${art ? html`<div class="c-hero__art" aria-hidden="true"><img src="${art}" alt="" width="1200" height="675" ${eager ? raw('loading="eager" fetchpriority="high" decoding="async"') : raw('loading="lazy" decoding="async"')}></div>` : ''}
   <div class="wrap c-hero__bgwrap">
     <div class="c-hero__panel">
       <p class="c-hero__pillrow">${statusTag(ctx, peak)}<span class="c-hero__sentence">${sitField(ctx, peak, 'metricLabel')} <b>${sitField(ctx, peak, 'metricValue')}</b>${sitField(ctx, peak, 'deltaText') ? `，${sitField(ctx, peak, 'deltaText')}` : ''}</span></p>
-      <h1 id="hero-h">${t('home.peak.h1', { name, status: t(`status.${peak.status}`), advice: sitField(ctx, peak, 'advice') })}</h1>
+      <h1 id="hero-h-b">${t('home.peak.h1', { name, status: t(`status.${peak.status}`), advice: sitField(ctx, peak, 'advice') })}</h1>
       <p class="c-hero__prompt">${t('home.h1')}</p>
-      ${askBox(ctx, { id: 'q', label: t('home.h1') })}
+      ${askBox(ctx, { id: 'q-b', label: t('home.h1') })}
       ${chips(ctx)}
       <p class="c-hero__btns"><a class="c-btn" href="${url('/situation/')}">${t('home.peak.detail')}</a>${cta ? html`<a class="c-btn c-btn--ghost" href="${isExternal(cta.url) ? cta.url : url(cta.url)}"${isExternal(cta.url) ? raw(' rel="noopener"') : ''}>${cta.label}</a>` : html`<a class="c-btn c-btn--ghost" href="${url('/vaccines/')}">${t('nav.vaccines')}</a>`}</p>
     </div>
   </div>
 </section>`;
+}
+
+const STATUS_RANK = { peak: 4, rising: 3, declining: 2, stable: 1 };
+/** 做法 B 要有一個「主角疾病」：有高峰用高峰；沒有高峰時（僅供 ?hero=B 預覽）退而取最嚴重的釘選項目。 */
+function heroBSubject(pinned) {
+  return pinned.find((i) => i.status === 'peak') ?? [...pinned].sort((a, b) => (STATUS_RANK[b.status] ?? 0) - (STATUS_RANK[a.status] ?? 0))[0] ?? null;
+}
+
+/** 原型預覽列（topbar 下方、右對齊小灰字）：說明目前是哪一做法、可切換；`?hero=A|B` 由 ui.js 套用（不寫 localStorage）。 */
+function previewBar(ctx, auto) {
+  const other = auto === 'B' ? 'A' : 'B';
+  const label = auto === 'B' ? '目前為做法 B（流感高峰自動切換）' : '目前為做法 A（非高峰，預設）';
+  return html`<div class="c-promo__preview" data-hero-bar lang="zh-TW" data-auto="${auto}"><div class="wrap"><p>原型預覽：<span data-hero-now>${label}</span> · <a data-hero-switch href="${ctx.url('/')}?hero=${other}" rel="nofollow">切換看做法 <span data-hero-other>${other}</span></a><span data-hero-reset hidden> · <a href="${ctx.url('/')}">回到自動</a></span></p></div></div>`;
 }
 
 export function render(ctx) {

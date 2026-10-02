@@ -3,9 +3,14 @@
   "type": "banner",
   "title": "公費流感疫苗 10 月 1 日開打",
   "image": "/img/banners/2026-flu-vaccine.svg",
+  "imageWide": "/img/banners/2026-flu-vaccine-wide.svg",
+  "imageAlt": "診所裡的長者捲起袖子接種流感疫苗，護理師手持針筒，孫子站在一旁；窗外是秋天的樹與黃葉",
   "headline": "公費流感疫苗 10 月 1 日開打",
   "subline": "65 歲以上、幼兒與慢性病患第一階段",
-  "cta": { "label": "查詢接種點", "url": "https://antiflu.cdc.gov.tw/" },
+  "cta": {
+    "label": "查詢接種點",
+    "url": "https://ancientsky.github.io/vaxmap-next/#g=flu"
+  },
   "startAt": "2026-09-18",
   "endAt": "2026-11-30",
   "priority": 1,
@@ -14,12 +19,35 @@
   "reviewedAt": "2026-09-18",
   "reviewPeriodMonths": 0,
   "status": "published",
-  "audience": ["public"],
-  "tasks": ["vaccines"],
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "vaccines"
+  ],
   "sensitivity": "public",
   "license": "OGDL-1.0",
-  "vaccines": ["vaccine.influenza"],
-  "languages": { "zh-TW": { "status": "source" }, "en": { "status": "reviewed", "reviewedAt": "2026-09-18" } },
+  "vaccines": [
+    "vaccine.influenza"
+  ],
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-18"
+    }
+  },
   "summary": "公費流感疫苗第一階段 10 月 1 日開打。",
-  "i18n": { "en": { "headline": "Government-funded flu vaccination starts 1 October", "subline": "Phase 1: 65+, young children, chronic conditions", "cta": { "label": "Find a clinic", "url": "https://antiflu.cdc.gov.tw/" } } }
+  "i18n": {
+    "en": {
+      "headline": "Government-funded flu vaccination starts 1 October",
+      "subline": "Phase 1: 65+, young children, chronic conditions",
+      "cta": {
+        "label": "Find a clinic",
+        "url": "https://ancientsky.github.io/vaxmap-next/#g=flu&lang=en"
+      }
+    }
+  }
 }

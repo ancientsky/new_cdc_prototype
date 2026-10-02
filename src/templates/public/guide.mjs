@@ -2,6 +2,7 @@
 // 沒有 JS 時三段全部顯示；pro.js 會把它們變成分頁（網址 #public / #pro / #staff）。
 import { html } from '../../../scripts/lib/render.mjs';
 import { proStyles } from '../pro/_styles.mjs';
+import { vaxmapLink, vaxmapButton } from './_partials.mjs';
 
 export function pages() { return [{ path: '/guide/', lang: 'zh-TW' }]; }
 
@@ -64,6 +65,16 @@ export function render(ctx) {
       <li><strong>影音與專區怎麼看。</strong>${A('/media/', '影音庫')}的每支影片都標著「製作日期 · 依據哪一版建議」，旁邊有逐字稿（可搜尋、可複製），不方便聽的人可以直接讀；影片依據的建議如果後來修訂了，影片頁會自動提醒「建議已修訂」。${A('/topics/', '專區')}（防災須知、PrEP、匿名篩檢…）集中放某個主題的連結，外部連結會標示「外部」與最後檢查日，連不上時會顯示警示。</li>
       <li><strong>申請怎麼走。</strong>要申請資料、檢驗委託、接種證明或捐款，到 ${A('/apply/', '申請專區')}依自己的身分（民眾、醫療院所、研究者、地方衛生局）找項目；每個項目是一份步驟清單，寫明要備的文件、處理天數與費用，不必猜下一步。人才招募與採購公告在 ${A('/notices/', '公告')}，截止日過了會自動移到「已截止」。</li>
     </ol>
+    <h3 id="find-site">怎麼找接種點</h3>
+    <p>要找「哪裡可以打流感、新冠、肺炎鏈球菌疫苗，或哪裡有流感抗病毒藥劑」，在疫苗頁（${A('/vaccines/', '疫苗與預防接種')}）、首頁的流感宣導橫幅或答案頁的建議行動按下「查詢接種點」。按鈕會<strong>開新視窗</strong>，帶您到疫苗及流感藥劑地圖（vaxmap-next）：</p>
+    <ul>
+      <li>地圖已先選好該疫苗的群組，例如流感疫苗頁開啟的就是流感疫苗；可再用縣市、「今天有看診」、「有庫存」篩選。</li>
+      <li><strong>網址可以分享</strong>：篩選條件都記在網址的 <code>#</code> 後面（例如 <code>#g=flu&amp;city=臺北市</code>），把網址傳給家人，對方打開就看到同樣的結果。</li>
+      <li>庫存與看診時段是定時快照，只顯示「有／無庫存」；出發前請先電話確認。本站不自行列出院所，因為庫存會變。</li>
+      <li>介面語言會跟著本站目前的語言（英、日、越、印尼、泰、Tagalog）；麻疹、HPV、B 肝等沒有地圖的疫苗，會連到「接種資訊」專區（衛生局連結）。</li>
+    </ul>
+    <p class="c-linkrow">${vaxmapButton(ctx, { group: 'flu', label: '流感疫苗接種點' })} ${vaxmapButton(ctx, { group: 'covid', label: '新冠疫苗接種點', cls: 'c-btn c-btn--ghost' })} ${vaxmapButton(ctx, { group: 'antiviral', label: '流感抗病毒藥劑', cls: 'c-btn c-btn--ghost' })}</p>
+    <p class="muted">直接開啟：<a href="${vaxmapLink(ctx, {})}" target="_blank" rel="noopener">疫苗及流感藥劑地圖（開新視窗 ↗）</a>。整合說明：<code>docs/vaxmap-integration.md</code>。</p>
     ${shot('首頁問題框與態勢卡')}
     ${shot('答案頁：來源編號、來源卡展開、回報錯誤')}
     <p>延伸：${A('/ask/', '提問頁')} · ${A('/factcheck/', '謠言查證')} · ${A('/accessibility/', '無障礙說明')} · ${A('/policy/ai/', 'AI 與資料使用聲明')}。完整版：<code>docs/guide-public.md</code>。</p>

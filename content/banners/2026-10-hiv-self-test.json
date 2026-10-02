@@ -55,6 +55,8 @@
     "宣導"
   ],
   "image": "/img/banners/2026-10-hiv-self-test.svg",
+  "imageWide": "/img/banners/2026-10-hiv-self-test-wide.svg",
+  "imageAlt": "溫暖的諮詢室裡，個管師與民眾在小圓桌兩側的扶手椅上面對面談話，牆上掛著紅絲帶畫框",
   "headline": "想知道，就去篩",
   "subline": "HIV 匿名篩檢不需健保卡；也可在家自我篩檢",
   "cta": {

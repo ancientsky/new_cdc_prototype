@@ -2,7 +2,7 @@
 import { html, raw } from '../../../scripts/lib/render.mjs';
 import { md } from '../../../scripts/lib/markdown.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
-import { ldFor, pageHead, breadcrumb, provenance, alerts, pageData, scopeTags, feedback, askBox, sectionHead, hrefFor, isFallbackLink, L, publishedOf, byDateDesc, dated, diseasePage, sourceCard, unitName, translationBadge, pill, itemPath } from './_partials.mjs';
+import { ldFor, pageHead, breadcrumb, provenance, alerts, pageData, scopeTags, feedback, askBox, sectionHead, hrefFor, isFallbackLink, L, publishedOf, byDateDesc, dated, diseasePage, sourceCard, unitName, translationBadge, pill, itemPath, vaxmapButton, vaxmapLinkForVaccine, VAXMAP_GROUP_OF } from './_partials.mjs';
 import { currentDoc } from './disease.mjs';
 
 const trailOf = (ctx, item) => [{ label: ctx.t('nav.vaccines'), href: '/vaccines/' }, { label: L(ctx, item, 'title') }];
@@ -65,8 +65,8 @@ function detail(ctx, v) {
       ${v.precautions ? html`<section class="c-block" id="precautions"><h2>${t('vaccines.precautions')}</h2><div class="c-warning">${raw(md(L(ctx, v, 'precautions')))}</div></section>` : ''}
       <section class="c-block" id="where"><h2>${t('vaccines.where')}</h2>
         <p>${t('vaccines.where.d')}</p>
-        <p class="c-linkrow">${v.whereUrl ? html`<a class="c-btn" href="${v.whereUrl}" rel="noopener">${t('vaccines.where.cta')} ↗</a>` : ''} <a class="c-btn c-btn--ghost" href="${url('/travel/')}">${t('travel.country.clinic')}</a></p>
-        ${v.whereUrl ? sourceCard(ctx, { title: t('source.card'), canonicalUrl: v.whereUrl, owner: unitName(ctx, v.owner), license: v.license, dataDate: v.reviewedAt }) : ''}
+        <p class="c-linkrow">${v.whereUrl ? (VAXMAP_GROUP_OF[v.id] ? vaxmapButton(ctx, { group: VAXMAP_GROUP_OF[v.id] }) : vaxmapButton(ctx, { info: true, anchor: 'where' })) : ''} <a class="c-btn c-btn--ghost" href="${url('/travel/')}">${t('travel.country.clinic')}</a></p>
+        ${v.whereUrl ? sourceCard(ctx, { title: t('source.card'), canonicalUrl: vaxmapLinkForVaccine(ctx, v), owner: unitName(ctx, v.owner), license: v.license, dataDate: v.reviewedAt }) : ''}
       </section>
       ${feedback(ctx, { page: ctx.path })}
     </div>
@@ -89,7 +89,7 @@ export function markdown(ctx, { item }) {
   for (const r of item.publicFunded ?? []) lines.push(`- ${r.group}：${r.schedule}${r.note ? `（${r.note}）` : ''}`);
   if (item.bodyMarkdown) lines.push('', '## 時程', '', L(ctx, item, 'bodyMarkdown'));
   if (item.precautions) lines.push('', '## 注意事項', '', L(ctx, item, 'precautions'));
-  if (item.whereUrl) lines.push('', `接種地點查詢：${item.whereUrl}`);
+  if (item.whereUrl) lines.push('', `接種地點查詢（疫苗及流感藥劑地圖 vaxmap）：${vaxmapLinkForVaccine(ctx, item)}`);
   return lines.join('\n') + '\n';
 }
 

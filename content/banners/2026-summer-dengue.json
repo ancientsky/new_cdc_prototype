@@ -50,6 +50,8 @@
     "宣導"
   ],
   "image": "/img/banners/2026-summer-dengue.svg",
+  "imageWide": "/img/banners/2026-summer-dengue-wide.svg",
+  "imageAlt": "里長拿著檢查表巡查，居民把水桶裡的積水倒掉；地上有輪胎與花盆底盤，右上角是被禁止圈圈住的斑蚊",
   "headline": "夏天防登革熱，每週巡倒清刷",
   "subline": "清除積水容器，發燒速就醫並告知旅遊史",
   "cta": {

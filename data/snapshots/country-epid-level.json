@@ -2,10 +2,51 @@
   "meta": {
     "mode": "snapshot",
     "fetchedAt": "2026-10-01T03:00:00Z",
+    "dataDate": "2026-10-01",
     "sourceUrl": "https://www.cdc.gov.tw/CountryEpidLevel/ExportJSON",
-    "label": "各國旅遊疫情建議等級",
-    "count": 49,
-    "note": "原型快照（示意）：由 travel-epidemic 快照依國家彙整最高等級；live 模式以官方 ExportJSON 覆蓋。"
+    "sourcePage": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
+    "label": "國際旅遊疫情建議等級表",
+    "count": 60,
+    "stats": {
+      "level3": 0,
+      "level2": 3,
+      "level1": 26,
+      "none": 31,
+      "entries": 54
+    },
+    "levelDefinitions": [
+      {
+        "code": 1,
+        "key": "watch",
+        "name": "第一級：注意",
+        "nameEn": "Level 1: Watch",
+        "label": "第一級：注意(Watch)",
+        "description": "提醒遵守當地的一般預防措施",
+        "descriptionEn": "Practise usual precautions",
+        "color": "watch"
+      },
+      {
+        "code": 2,
+        "key": "alert",
+        "name": "第二級：警示",
+        "nameEn": "Level 2: Alert",
+        "label": "第二級：警示(Alert)",
+        "description": "對當地採取加強防護",
+        "descriptionEn": "Practise enhanced precautions",
+        "color": "alert"
+      },
+      {
+        "code": 3,
+        "key": "warning",
+        "name": "第三級：警告",
+        "nameEn": "Level 3: Warning",
+        "label": "第三級：警告(Warning)",
+        "description": "避免所有非必要旅遊",
+        "descriptionEn": "Avoid all non-essential travel",
+        "color": "warning"
+      }
+    ],
+    "note": "原型快照（示意）：沙箱無法連線官網，依疾管署「國際旅遊疫情建議等級表」頁面結構（等級 × 疾病 × 國家／地區 × 發布日）整理，國家、等級與日期為示意；每國一筆、Diseases[] 列該國所有建議，未列於等級表的國家為「無旅遊疫情建議」。GitHub Actions 建置時 npm run fetch 會以官方 ExportJSON 覆蓋並聚合成相同形狀。"
   },
   "data": [
     {
@@ -17,16 +58,20 @@
       "LevelCode": 1,
       "Disease": "麻疹",
       "StartDate": "2026-05-11",
-      "Summary": "目前有 1 項旅遊疫情建議，最高為第一級：注意。",
+      "Summary": "麻疹為第一級：注意。1966 年（含）以後出生、未完成 2 劑 MMR 或不確定是否具免疫力者，出國前 2–4 週可至旅遊醫學門診評估接種。",
       "Diseases": [
         {
           "Disease": "麻疹",
+          "DiseaseEn": "Measles",
+          "DiseaseId": "disease.measles",
           "Level": "第一級：注意(Watch)",
           "LevelCode": 1,
-          "StartDate": "2026-05-11"
+          "StartDate": "2026-05-11",
+          "Summary": "1966 年（含）以後出生、未完成 2 劑 MMR 或不確定是否具免疫力者，出國前 2–4 週可至旅遊醫學門診評估接種。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "KR",
@@ -37,9 +82,9 @@
       "LevelCode": 0,
       "Disease": null,
       "StartDate": null,
-      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Summary": "目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。",
       "Diseases": [],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "CN",
@@ -49,23 +94,32 @@
       "Level": "第二級：警示(Alert)",
       "LevelCode": 2,
       "Disease": "屈公病、新型A型流感",
-      "StartDate": "2025-08-05",
-      "Summary": "目前有 2 項旅遊疫情建議，最高為第二級：警示。",
+      "StartDate": "2025-08-12",
+      "Summary": "屈公病為第二級：警示；新型A型流感為第一級：注意。廣東省屈公病疫情持續，前往者請加強防蚊（長袖衣褲、防蚊液），返國後出現發燒、關節痛請就醫並告知旅遊史。",
       "Diseases": [
         {
           "Disease": "屈公病",
+          "DiseaseEn": "Chikungunya fever",
+          "DiseaseId": "disease.chikungunya",
           "Level": "第二級：警示(Alert)",
           "LevelCode": 2,
-          "StartDate": "2025-08-05"
+          "StartDate": "2025-08-12",
+          "Area": "廣東省",
+          "Summary": "廣東省屈公病疫情持續，前往者請加強防蚊（長袖衣褲、防蚊液），返國後出現發燒、關節痛請就醫並告知旅遊史。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         },
         {
           "Disease": "新型A型流感",
+          "DiseaseEn": "Novel influenza A virus infection",
+          "DiseaseId": "disease.novel-influenza-a",
           "Level": "第一級：注意(Watch)",
           "LevelCode": 1,
-          "StartDate": "2024-01-10"
+          "StartDate": "2024-01-10",
+          "Summary": "避免接觸禽鳥及其排泄物、不去活禽市場，禽肉蛋類應熟食。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "HK",
@@ -76,9 +130,9 @@
       "LevelCode": 0,
       "Disease": null,
       "StartDate": null,
-      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Summary": "目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。",
       "Diseases": [],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "MO",
@@ -89,29 +143,22 @@
       "LevelCode": 0,
       "Disease": null,
       "StartDate": null,
-      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Summary": "目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。",
       "Diseases": [],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "MN",
       "Country": "蒙古",
       "CountryEn": "Mongolia",
       "Region": "東亞",
-      "Level": "第一級：注意(Watch)",
-      "LevelCode": 1,
-      "Disease": "麻疹",
-      "StartDate": "2026-03-12",
-      "Summary": "目前有 1 項旅遊疫情建議，最高為第一級：注意。",
-      "Diseases": [
-        {
-          "Disease": "麻疹",
-          "Level": "第一級：注意(Watch)",
-          "LevelCode": 1,
-          "StartDate": "2026-03-12"
-        }
-      ],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "VN",
@@ -120,24 +167,42 @@
       "Region": "東南亞",
       "Level": "第一級：注意(Watch)",
       "LevelCode": 1,
-      "Disease": "登革熱、麻疹",
+      "Disease": "登革熱、麻疹、狂犬病",
       "StartDate": "2026-06-10",
-      "Summary": "目前有 2 項旅遊疫情建議，最高為第一級：注意。",
+      "Summary": "登革熱、麻疹、狂犬病為第一級：注意。當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
       "Diseases": [
         {
           "Disease": "登革熱",
+          "DiseaseEn": "Dengue fever",
+          "DiseaseId": "disease.dengue",
           "Level": "第一級：注意(Watch)",
           "LevelCode": 1,
-          "StartDate": "2026-06-10"
+          "StartDate": "2026-06-10",
+          "Summary": "當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         },
         {
           "Disease": "麻疹",
+          "DiseaseEn": "Measles",
+          "DiseaseId": "disease.measles",
           "Level": "第一級：注意(Watch)",
           "LevelCode": 1,
-          "StartDate": "2025-11-18"
+          "StartDate": "2025-11-18",
+          "Summary": "1966 年（含）以後出生、未完成 2 劑 MMR 或不確定是否具免疫力者，出國前 2–4 週可至旅遊醫學門診評估接種。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+        },
+        {
+          "Disease": "狂犬病",
+          "DiseaseEn": "Rabies",
+          "DiseaseId": "disease.rabies",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2024-11-05",
+          "Summary": "當地有犬貓等動物狂犬病，請避免接觸、餵食動物；被咬抓傷立即以肥皂和清水沖洗 15 分鐘並儘速就醫。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "TH",
@@ -146,18 +211,42 @@
       "Region": "東南亞",
       "Level": "第一級：注意(Watch)",
       "LevelCode": 1,
-      "Disease": "登革熱",
+      "Disease": "登革熱、麻疹、茲卡病毒感染症",
       "StartDate": "2026-06-10",
-      "Summary": "目前有 1 項旅遊疫情建議，最高為第一級：注意。",
+      "Summary": "登革熱、麻疹、茲卡病毒感染症為第一級：注意。當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
       "Diseases": [
         {
           "Disease": "登革熱",
+          "DiseaseEn": "Dengue fever",
+          "DiseaseId": "disease.dengue",
           "Level": "第一級：注意(Watch)",
           "LevelCode": 1,
-          "StartDate": "2026-06-10"
+          "StartDate": "2026-06-10",
+          "Summary": "當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+        },
+        {
+          "Disease": "麻疹",
+          "DiseaseEn": "Measles",
+          "DiseaseId": "disease.measles",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2026-03-20",
+          "Summary": "1966 年（含）以後出生、未完成 2 劑 MMR 或不確定是否具免疫力者，出國前 2–4 週可至旅遊醫學門診評估接種。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+        },
+        {
+          "Disease": "茲卡病毒感染症",
+          "DiseaseEn": "Zika virus infection",
+          "DiseaseId": "disease.zika",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2023-05-01",
+          "Summary": "孕婦及備孕者宜暫緩前往；當地旅遊請做好防蚊，返國後安全性行為或避免懷孕至少 2 個月。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "ID",
@@ -166,24 +255,42 @@
       "Region": "東南亞",
       "Level": "第一級：注意(Watch)",
       "LevelCode": 1,
-      "Disease": "登革熱、麻疹",
+      "Disease": "登革熱、麻疹、狂犬病",
       "StartDate": "2026-01-15",
-      "Summary": "目前有 2 項旅遊疫情建議，最高為第一級：注意。",
+      "Summary": "登革熱、麻疹、狂犬病為第一級：注意。當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
       "Diseases": [
         {
           "Disease": "登革熱",
+          "DiseaseEn": "Dengue fever",
+          "DiseaseId": "disease.dengue",
           "Level": "第一級：注意(Watch)",
           "LevelCode": 1,
-          "StartDate": "2026-01-15"
+          "StartDate": "2026-01-15",
+          "Summary": "當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         },
         {
           "Disease": "麻疹",
+          "DiseaseEn": "Measles",
+          "DiseaseId": "disease.measles",
           "Level": "第一級：注意(Watch)",
           "LevelCode": 1,
-          "StartDate": "2025-09-30"
+          "StartDate": "2025-09-30",
+          "Summary": "1966 年（含）以後出生、未完成 2 劑 MMR 或不確定是否具免疫力者，出國前 2–4 週可至旅遊醫學門診評估接種。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+        },
+        {
+          "Disease": "狂犬病",
+          "DiseaseEn": "Rabies",
+          "DiseaseId": "disease.rabies",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2024-11-05",
+          "Summary": "當地有犬貓等動物狂犬病，請避免接觸、餵食動物；被咬抓傷立即以肥皂和清水沖洗 15 分鐘並儘速就醫。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "PH",
@@ -192,24 +299,42 @@
       "Region": "東南亞",
       "Level": "第一級：注意(Watch)",
       "LevelCode": 1,
-      "Disease": "登革熱、麻疹",
+      "Disease": "登革熱、麻疹、狂犬病",
       "StartDate": "2026-06-24",
-      "Summary": "目前有 2 項旅遊疫情建議，最高為第一級：注意。",
+      "Summary": "登革熱、麻疹、狂犬病為第一級：注意。當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
       "Diseases": [
         {
           "Disease": "登革熱",
+          "DiseaseEn": "Dengue fever",
+          "DiseaseId": "disease.dengue",
           "Level": "第一級：注意(Watch)",
           "LevelCode": 1,
-          "StartDate": "2026-06-24"
+          "StartDate": "2026-06-24",
+          "Summary": "當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         },
         {
           "Disease": "麻疹",
+          "DiseaseEn": "Measles",
+          "DiseaseId": "disease.measles",
           "Level": "第一級：注意(Watch)",
           "LevelCode": 1,
-          "StartDate": "2026-02-03"
+          "StartDate": "2026-02-03",
+          "Summary": "1966 年（含）以後出生、未完成 2 劑 MMR 或不確定是否具免疫力者，出國前 2–4 週可至旅遊醫學門診評估接種。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+        },
+        {
+          "Disease": "狂犬病",
+          "DiseaseEn": "Rabies",
+          "DiseaseId": "disease.rabies",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2024-11-05",
+          "Summary": "當地有犬貓等動物狂犬病，請避免接觸、餵食動物；被咬抓傷立即以肥皂和清水沖洗 15 分鐘並儘速就醫。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "MY",
@@ -220,16 +345,20 @@
       "LevelCode": 1,
       "Disease": "登革熱",
       "StartDate": "2026-01-15",
-      "Summary": "目前有 1 項旅遊疫情建議，最高為第一級：注意。",
+      "Summary": "登革熱為第一級：注意。當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
       "Diseases": [
         {
           "Disease": "登革熱",
+          "DiseaseEn": "Dengue fever",
+          "DiseaseId": "disease.dengue",
           "Level": "第一級：注意(Watch)",
           "LevelCode": 1,
-          "StartDate": "2026-01-15"
+          "StartDate": "2026-01-15",
+          "Summary": "當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "SG",
@@ -240,16 +369,20 @@
       "LevelCode": 1,
       "Disease": "登革熱",
       "StartDate": "2026-05-05",
-      "Summary": "目前有 1 項旅遊疫情建議，最高為第一級：注意。",
+      "Summary": "登革熱為第一級：注意。當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
       "Diseases": [
         {
           "Disease": "登革熱",
+          "DiseaseEn": "Dengue fever",
+          "DiseaseId": "disease.dengue",
           "Level": "第一級：注意(Watch)",
           "LevelCode": 1,
-          "StartDate": "2026-05-05"
+          "StartDate": "2026-05-05",
+          "Summary": "當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "KH",
@@ -260,16 +393,20 @@
       "LevelCode": 1,
       "Disease": "登革熱",
       "StartDate": "2026-07-01",
-      "Summary": "目前有 1 項旅遊疫情建議，最高為第一級：注意。",
+      "Summary": "登革熱為第一級：注意。當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
       "Diseases": [
         {
           "Disease": "登革熱",
+          "DiseaseEn": "Dengue fever",
+          "DiseaseId": "disease.dengue",
           "Level": "第一級：注意(Watch)",
           "LevelCode": 1,
-          "StartDate": "2026-07-01"
+          "StartDate": "2026-07-01",
+          "Summary": "當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "LA",
@@ -280,16 +417,20 @@
       "LevelCode": 1,
       "Disease": "登革熱",
       "StartDate": "2026-07-01",
-      "Summary": "目前有 1 項旅遊疫情建議，最高為第一級：注意。",
+      "Summary": "登革熱為第一級：注意。當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
       "Diseases": [
         {
           "Disease": "登革熱",
+          "DiseaseEn": "Dengue fever",
+          "DiseaseId": "disease.dengue",
           "Level": "第一級：注意(Watch)",
           "LevelCode": 1,
-          "StartDate": "2026-07-01"
+          "StartDate": "2026-07-01",
+          "Summary": "當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "MM",
@@ -300,9 +441,22 @@
       "LevelCode": 0,
       "Disease": null,
       "StartDate": null,
-      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Summary": "目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。",
       "Diseases": [],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+    },
+    {
+      "ISO2": "BN",
+      "Country": "汶萊",
+      "CountryEn": "Brunei",
+      "Region": "東南亞",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "IN",
@@ -311,24 +465,52 @@
       "Region": "南亞",
       "Level": "第一級：注意(Watch)",
       "LevelCode": 1,
-      "Disease": "登革熱、屈公病",
+      "Disease": "登革熱、屈公病、麻疹、狂犬病",
       "StartDate": "2026-07-22",
-      "Summary": "目前有 2 項旅遊疫情建議，最高為第一級：注意。",
+      "Summary": "登革熱、屈公病、麻疹、狂犬病為第一級：注意。當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
       "Diseases": [
         {
           "Disease": "登革熱",
+          "DiseaseEn": "Dengue fever",
+          "DiseaseId": "disease.dengue",
           "Level": "第一級：注意(Watch)",
           "LevelCode": 1,
-          "StartDate": "2026-07-22"
+          "StartDate": "2026-07-22",
+          "Summary": "當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         },
         {
           "Disease": "屈公病",
+          "DiseaseEn": "Chikungunya fever",
+          "DiseaseId": "disease.chikungunya",
           "Level": "第一級：注意(Watch)",
           "LevelCode": 1,
-          "StartDate": "2026-04-14"
+          "StartDate": "2026-04-14",
+          "Summary": "屈公病經斑蚊傳播，請做好防蚊措施；返國後如出現發燒、關節痛請就醫並告知旅遊史。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+        },
+        {
+          "Disease": "麻疹",
+          "DiseaseEn": "Measles",
+          "DiseaseId": "disease.measles",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2025-12-02",
+          "Summary": "1966 年（含）以後出生、未完成 2 劑 MMR 或不確定是否具免疫力者，出國前 2–4 週可至旅遊醫學門診評估接種。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+        },
+        {
+          "Disease": "狂犬病",
+          "DiseaseEn": "Rabies",
+          "DiseaseId": "disease.rabies",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2024-11-05",
+          "Summary": "當地有犬貓等動物狂犬病，請避免接觸、餵食動物；被咬抓傷立即以肥皂和清水沖洗 15 分鐘並儘速就醫。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "NP",
@@ -339,9 +521,9 @@
       "LevelCode": 0,
       "Disease": null,
       "StartDate": null,
-      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Summary": "目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。",
       "Diseases": [],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "BD",
@@ -352,16 +534,20 @@
       "LevelCode": 1,
       "Disease": "登革熱",
       "StartDate": "2026-07-22",
-      "Summary": "目前有 1 項旅遊疫情建議，最高為第一級：注意。",
+      "Summary": "登革熱為第一級：注意。當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
       "Diseases": [
         {
           "Disease": "登革熱",
+          "DiseaseEn": "Dengue fever",
+          "DiseaseId": "disease.dengue",
           "Level": "第一級：注意(Watch)",
           "LevelCode": 1,
-          "StartDate": "2026-07-22"
+          "StartDate": "2026-07-22",
+          "Summary": "當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "PK",
@@ -372,42 +558,126 @@
       "LevelCode": 1,
       "Disease": "小兒麻痺症",
       "StartDate": "2015-01-01",
-      "Summary": "目前有 1 項旅遊疫情建議，最高為第一級：注意。",
+      "Summary": "小兒麻痺症為第一級：注意。前往者請確認已完成小兒麻痺疫苗接種；長期停留者可至旅遊醫學門診評估追加。",
       "Diseases": [
         {
           "Disease": "小兒麻痺症",
+          "DiseaseEn": "Poliomyelitis",
+          "DiseaseId": "disease.polio-afp",
           "Level": "第一級：注意(Watch)",
           "LevelCode": 1,
-          "StartDate": "2015-01-01"
+          "StartDate": "2015-01-01",
+          "Summary": "前往者請確認已完成小兒麻痺疫苗接種；長期停留者可至旅遊醫學門診評估追加。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "LK",
       "Country": "斯里蘭卡",
       "CountryEn": "Sri Lanka",
       "Region": "南亞",
-      "Level": "無旅遊疫情建議",
-      "LevelCode": 0,
-      "Disease": null,
-      "StartDate": null,
-      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
-      "Diseases": [],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Level": "第一級：注意(Watch)",
+      "LevelCode": 1,
+      "Disease": "登革熱、屈公病",
+      "StartDate": "2026-06-02",
+      "Summary": "登革熱、屈公病為第一級：注意。當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
+      "Diseases": [
+        {
+          "Disease": "登革熱",
+          "DiseaseEn": "Dengue fever",
+          "DiseaseId": "disease.dengue",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2026-06-02",
+          "Summary": "當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+        },
+        {
+          "Disease": "屈公病",
+          "DiseaseEn": "Chikungunya fever",
+          "DiseaseId": "disease.chikungunya",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2025-10-08",
+          "Summary": "屈公病經斑蚊傳播，請做好防蚊措施；返國後如出現發燒、關節痛請就醫並告知旅遊史。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+        }
+      ],
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "MV",
       "Country": "馬爾地夫",
       "CountryEn": "Maldives",
       "Region": "南亞",
-      "Level": "無旅遊疫情建議",
-      "LevelCode": 0,
-      "Disease": null,
-      "StartDate": null,
-      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
-      "Diseases": [],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Level": "第一級：注意(Watch)",
+      "LevelCode": 1,
+      "Disease": "登革熱",
+      "StartDate": "2026-06-02",
+      "Summary": "登革熱為第一級：注意。當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
+      "Diseases": [
+        {
+          "Disease": "登革熱",
+          "DiseaseEn": "Dengue fever",
+          "DiseaseId": "disease.dengue",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2026-06-02",
+          "Summary": "當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+        }
+      ],
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+    },
+    {
+      "ISO2": "AF",
+      "Country": "阿富汗",
+      "CountryEn": "Afghanistan",
+      "Region": "南亞",
+      "Level": "第一級：注意(Watch)",
+      "LevelCode": 1,
+      "Disease": "小兒麻痺症",
+      "StartDate": "2015-01-01",
+      "Summary": "小兒麻痺症為第一級：注意。前往者請確認已完成小兒麻痺疫苗接種；長期停留者可至旅遊醫學門診評估追加。",
+      "Diseases": [
+        {
+          "Disease": "小兒麻痺症",
+          "DiseaseEn": "Poliomyelitis",
+          "DiseaseId": "disease.polio-afp",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2015-01-01",
+          "Summary": "前往者請確認已完成小兒麻痺疫苗接種；長期停留者可至旅遊醫學門診評估追加。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+        }
+      ],
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+    },
+    {
+      "ISO2": "KZ",
+      "Country": "哈薩克",
+      "CountryEn": "Kazakhstan",
+      "Region": "中亞",
+      "Level": "第一級：注意(Watch)",
+      "LevelCode": 1,
+      "Disease": "麻疹",
+      "StartDate": "2025-02-18",
+      "Summary": "麻疹為第一級：注意。1966 年（含）以後出生、未完成 2 劑 MMR 或不確定是否具免疫力者，出國前 2–4 週可至旅遊醫學門診評估接種。",
+      "Diseases": [
+        {
+          "Disease": "麻疹",
+          "DiseaseEn": "Measles",
+          "DiseaseId": "disease.measles",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2025-02-18",
+          "Summary": "1966 年（含）以後出生、未完成 2 劑 MMR 或不確定是否具免疫力者，出國前 2–4 週可至旅遊醫學門診評估接種。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+        }
+      ],
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "AU",
@@ -418,9 +688,9 @@
       "LevelCode": 0,
       "Disease": null,
       "StartDate": null,
-      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Summary": "目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。",
       "Diseases": [],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "NZ",
@@ -431,9 +701,9 @@
       "LevelCode": 0,
       "Disease": null,
       "StartDate": null,
-      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Summary": "目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。",
       "Diseases": [],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "PG",
@@ -444,35 +714,71 @@
       "LevelCode": 0,
       "Disease": null,
       "StartDate": null,
-      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Summary": "目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。",
       "Diseases": [],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+    },
+    {
+      "ISO2": "FJ",
+      "Country": "斐濟",
+      "CountryEn": "Fiji",
+      "Region": "大洋洲",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "US",
       "Country": "美國",
       "CountryEn": "United States",
       "Region": "北美",
-      "Level": "無旅遊疫情建議",
-      "LevelCode": 0,
-      "Disease": null,
-      "StartDate": null,
-      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
-      "Diseases": [],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Level": "第一級：注意(Watch)",
+      "LevelCode": 1,
+      "Disease": "麻疹",
+      "StartDate": "2025-03-11",
+      "Summary": "麻疹為第一級：注意。1966 年（含）以後出生、未完成 2 劑 MMR 或不確定是否具免疫力者，出國前 2–4 週可至旅遊醫學門診評估接種。",
+      "Diseases": [
+        {
+          "Disease": "麻疹",
+          "DiseaseEn": "Measles",
+          "DiseaseId": "disease.measles",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2025-03-11",
+          "Area": "部分州",
+          "Summary": "1966 年（含）以後出生、未完成 2 劑 MMR 或不確定是否具免疫力者，出國前 2–4 週可至旅遊醫學門診評估接種。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+        }
+      ],
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "CA",
       "Country": "加拿大",
       "CountryEn": "Canada",
       "Region": "北美",
-      "Level": "無旅遊疫情建議",
-      "LevelCode": 0,
-      "Disease": null,
-      "StartDate": null,
-      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
-      "Diseases": [],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Level": "第一級：注意(Watch)",
+      "LevelCode": 1,
+      "Disease": "麻疹",
+      "StartDate": "2025-06-17",
+      "Summary": "麻疹為第一級：注意。1966 年（含）以後出生、未完成 2 劑 MMR 或不確定是否具免疫力者，出國前 2–4 週可至旅遊醫學門診評估接種。",
+      "Diseases": [
+        {
+          "Disease": "麻疹",
+          "DiseaseEn": "Measles",
+          "DiseaseId": "disease.measles",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2025-06-17",
+          "Summary": "1966 年（含）以後出生、未完成 2 劑 MMR 或不確定是否具免疫力者，出國前 2–4 週可至旅遊醫學門診評估接種。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+        }
+      ],
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "MX",
@@ -481,18 +787,42 @@
       "Region": "中南美",
       "Level": "第一級：注意(Watch)",
       "LevelCode": 1,
-      "Disease": "登革熱",
+      "Disease": "登革熱、麻疹、茲卡病毒感染症",
       "StartDate": "2026-08-04",
-      "Summary": "目前有 1 項旅遊疫情建議，最高為第一級：注意。",
+      "Summary": "登革熱、麻疹、茲卡病毒感染症為第一級：注意。當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
       "Diseases": [
         {
           "Disease": "登革熱",
+          "DiseaseEn": "Dengue fever",
+          "DiseaseId": "disease.dengue",
           "Level": "第一級：注意(Watch)",
           "LevelCode": 1,
-          "StartDate": "2026-08-04"
+          "StartDate": "2026-08-04",
+          "Summary": "當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+        },
+        {
+          "Disease": "麻疹",
+          "DiseaseEn": "Measles",
+          "DiseaseId": "disease.measles",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2025-07-08",
+          "Summary": "1966 年（含）以後出生、未完成 2 劑 MMR 或不確定是否具免疫力者，出國前 2–4 週可至旅遊醫學門診評估接種。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+        },
+        {
+          "Disease": "茲卡病毒感染症",
+          "DiseaseEn": "Zika virus infection",
+          "DiseaseId": "disease.zika",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2023-05-01",
+          "Summary": "孕婦及備孕者宜暫緩前往；當地旅遊請做好防蚊，返國後安全性行為或避免懷孕至少 2 個月。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "BR",
@@ -501,24 +831,52 @@
       "Region": "中南美",
       "Level": "第一級：注意(Watch)",
       "LevelCode": 1,
-      "Disease": "登革熱、黃熱病",
+      "Disease": "登革熱、屈公病、黃熱病、茲卡病毒感染症",
       "StartDate": "2026-02-10",
-      "Summary": "目前有 2 項旅遊疫情建議，最高為第一級：注意。",
+      "Summary": "登革熱、屈公病、黃熱病、茲卡病毒感染症為第一級：注意。當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
       "Diseases": [
         {
           "Disease": "登革熱",
+          "DiseaseEn": "Dengue fever",
+          "DiseaseId": "disease.dengue",
           "Level": "第一級：注意(Watch)",
           "LevelCode": 1,
-          "StartDate": "2026-02-10"
+          "StartDate": "2026-02-10",
+          "Summary": "當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+        },
+        {
+          "Disease": "屈公病",
+          "DiseaseEn": "Chikungunya fever",
+          "DiseaseId": "disease.chikungunya",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2025-04-01",
+          "Summary": "屈公病經斑蚊傳播，請做好防蚊措施；返國後如出現發燒、關節痛請就醫並告知旅遊史。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         },
         {
           "Disease": "黃熱病",
+          "DiseaseEn": "Yellow fever",
+          "DiseaseId": "disease.yellow-fever",
           "Level": "第一級：注意(Watch)",
           "LevelCode": 1,
-          "StartDate": "2025-03-18"
+          "StartDate": "2025-03-18",
+          "Summary": "前往流行地區前至少 10 天接種黃熱病疫苗，並攜帶國際預防接種證明書（黃皮書）。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+        },
+        {
+          "Disease": "茲卡病毒感染症",
+          "DiseaseEn": "Zika virus infection",
+          "DiseaseId": "disease.zika",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2023-05-01",
+          "Summary": "孕婦及備孕者宜暫緩前往；當地旅遊請做好防蚊，返國後安全性行為或避免懷孕至少 2 個月。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "PE",
@@ -527,18 +885,32 @@
       "Region": "中南美",
       "Level": "第一級：注意(Watch)",
       "LevelCode": 1,
-      "Disease": "黃熱病",
-      "StartDate": "2025-04-22",
-      "Summary": "目前有 1 項旅遊疫情建議，最高為第一級：注意。",
+      "Disease": "登革熱、黃熱病",
+      "StartDate": "2026-03-03",
+      "Summary": "登革熱、黃熱病為第一級：注意。當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
       "Diseases": [
         {
-          "Disease": "黃熱病",
+          "Disease": "登革熱",
+          "DiseaseEn": "Dengue fever",
+          "DiseaseId": "disease.dengue",
           "Level": "第一級：注意(Watch)",
           "LevelCode": 1,
-          "StartDate": "2025-04-22"
+          "StartDate": "2026-03-03",
+          "Summary": "當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+        },
+        {
+          "Disease": "黃熱病",
+          "DiseaseEn": "Yellow fever",
+          "DiseaseId": "disease.yellow-fever",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2025-04-22",
+          "Summary": "前往流行地區前至少 10 天接種黃熱病疫苗，並攜帶國際預防接種證明書（黃皮書）。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "CO",
@@ -547,18 +919,42 @@
       "Region": "中南美",
       "Level": "第一級：注意(Watch)",
       "LevelCode": 1,
-      "Disease": "黃熱病",
-      "StartDate": "2025-04-22",
-      "Summary": "目前有 1 項旅遊疫情建議，最高為第一級：注意。",
+      "Disease": "登革熱、黃熱病、茲卡病毒感染症",
+      "StartDate": "2026-03-03",
+      "Summary": "登革熱、黃熱病、茲卡病毒感染症為第一級：注意。當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
       "Diseases": [
         {
-          "Disease": "黃熱病",
+          "Disease": "登革熱",
+          "DiseaseEn": "Dengue fever",
+          "DiseaseId": "disease.dengue",
           "Level": "第一級：注意(Watch)",
           "LevelCode": 1,
-          "StartDate": "2025-04-22"
+          "StartDate": "2026-03-03",
+          "Summary": "當地登革熱流行，請穿著淺色長袖衣褲、使用政府核可防蚊藥劑；返國後如發燒請就醫並告知旅遊史。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+        },
+        {
+          "Disease": "黃熱病",
+          "DiseaseEn": "Yellow fever",
+          "DiseaseId": "disease.yellow-fever",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2025-04-22",
+          "Summary": "前往流行地區前至少 10 天接種黃熱病疫苗，並攜帶國際預防接種證明書（黃皮書）。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+        },
+        {
+          "Disease": "茲卡病毒感染症",
+          "DiseaseEn": "Zika virus infection",
+          "DiseaseId": "disease.zika",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2023-05-01",
+          "Summary": "孕婦及備孕者宜暫緩前往；當地旅遊請做好防蚊，返國後安全性行為或避免懷孕至少 2 個月。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "AR",
@@ -569,9 +965,9 @@
       "LevelCode": 0,
       "Disease": null,
       "StartDate": null,
-      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Summary": "目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。",
       "Diseases": [],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "GB",
@@ -582,9 +978,9 @@
       "LevelCode": 0,
       "Disease": null,
       "StartDate": null,
-      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Summary": "目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。",
       "Diseases": [],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "FR",
@@ -595,9 +991,9 @@
       "LevelCode": 0,
       "Disease": null,
       "StartDate": null,
-      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Summary": "目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。",
       "Diseases": [],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "DE",
@@ -608,9 +1004,9 @@
       "LevelCode": 0,
       "Disease": null,
       "StartDate": null,
-      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Summary": "目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。",
       "Diseases": [],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "IT",
@@ -621,9 +1017,9 @@
       "LevelCode": 0,
       "Disease": null,
       "StartDate": null,
-      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Summary": "目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。",
       "Diseases": [],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "ES",
@@ -634,9 +1030,9 @@
       "LevelCode": 0,
       "Disease": null,
       "StartDate": null,
-      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Summary": "目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。",
       "Diseases": [],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "NL",
@@ -647,9 +1043,9 @@
       "LevelCode": 0,
       "Disease": null,
       "StartDate": null,
-      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Summary": "目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。",
       "Diseases": [],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "RO",
@@ -660,16 +1056,98 @@
       "LevelCode": 1,
       "Disease": "麻疹",
       "StartDate": "2025-06-20",
-      "Summary": "目前有 1 項旅遊疫情建議，最高為第一級：注意。",
+      "Summary": "麻疹為第一級：注意。1966 年（含）以後出生、未完成 2 劑 MMR 或不確定是否具免疫力者，出國前 2–4 週可至旅遊醫學門診評估接種。",
       "Diseases": [
         {
           "Disease": "麻疹",
+          "DiseaseEn": "Measles",
+          "DiseaseId": "disease.measles",
           "Level": "第一級：注意(Watch)",
           "LevelCode": 1,
-          "StartDate": "2025-06-20"
+          "StartDate": "2025-06-20",
+          "Summary": "1966 年（含）以後出生、未完成 2 劑 MMR 或不確定是否具免疫力者，出國前 2–4 週可至旅遊醫學門診評估接種。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+    },
+    {
+      "ISO2": "CH",
+      "Country": "瑞士",
+      "CountryEn": "Switzerland",
+      "Region": "歐洲",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+    },
+    {
+      "ISO2": "AT",
+      "Country": "奧地利",
+      "CountryEn": "Austria",
+      "Region": "歐洲",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+    },
+    {
+      "ISO2": "CZ",
+      "Country": "捷克",
+      "CountryEn": "Czechia",
+      "Region": "歐洲",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+    },
+    {
+      "ISO2": "PT",
+      "Country": "葡萄牙",
+      "CountryEn": "Portugal",
+      "Region": "歐洲",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+    },
+    {
+      "ISO2": "GR",
+      "Country": "希臘",
+      "CountryEn": "Greece",
+      "Region": "歐洲",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+    },
+    {
+      "ISO2": "SE",
+      "Country": "瑞典",
+      "CountryEn": "Sweden",
+      "Region": "歐洲",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "SA",
@@ -680,16 +1158,20 @@
       "LevelCode": 2,
       "Disease": "中東呼吸症候群冠狀病毒感染症",
       "StartDate": "2015-06-01",
-      "Summary": "目前有 1 項旅遊疫情建議，最高為第二級：警示。",
+      "Summary": "中東呼吸症候群冠狀病毒感染症為第二級：警示。當地持續有 MERS 病例，請避免接觸駱駝、勿生飲駱駝奶，非必要不前往醫療院所；返國 14 天內出現發燒或呼吸道症狀請就醫並告知旅遊史。",
       "Diseases": [
         {
           "Disease": "中東呼吸症候群冠狀病毒感染症",
+          "DiseaseEn": "MERS",
+          "DiseaseId": "disease.mers",
           "Level": "第二級：警示(Alert)",
           "LevelCode": 2,
-          "StartDate": "2015-06-01"
+          "StartDate": "2015-06-01",
+          "Summary": "當地持續有 MERS 病例，請避免接觸駱駝、勿生飲駱駝奶，非必要不前往醫療院所；返國 14 天內出現發燒或呼吸道症狀請就醫並告知旅遊史。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "AE",
@@ -700,9 +1182,9 @@
       "LevelCode": 0,
       "Disease": null,
       "StartDate": null,
-      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Summary": "目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。",
       "Diseases": [],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "TR",
@@ -713,9 +1195,22 @@
       "LevelCode": 0,
       "Disease": null,
       "StartDate": null,
-      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Summary": "目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。",
       "Diseases": [],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+    },
+    {
+      "ISO2": "QA",
+      "Country": "卡達",
+      "CountryEn": "Qatar",
+      "Region": "中東",
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "EG",
@@ -726,9 +1221,9 @@
       "LevelCode": 0,
       "Disease": null,
       "StartDate": null,
-      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Summary": "目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。",
       "Diseases": [],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "NG",
@@ -737,44 +1232,66 @@
       "Region": "非洲",
       "Level": "第一級：注意(Watch)",
       "LevelCode": 1,
-      "Disease": "霍亂、白喉",
-      "StartDate": "2026-07-08",
-      "Summary": "目前有 2 項旅遊疫情建議，最高為第一級：注意。",
+      "Disease": "拉薩熱、瘧疾",
+      "StartDate": "2026-02-12",
+      "Summary": "拉薩熱、瘧疾為第一級：注意。避免接觸囓齒類動物及其排泄物污染的食物，注意飲食衛生。",
       "Diseases": [
         {
-          "Disease": "霍亂",
+          "Disease": "拉薩熱",
+          "DiseaseEn": "Lassa fever",
+          "DiseaseId": "disease.lassa-fever",
           "Level": "第一級：注意(Watch)",
           "LevelCode": 1,
-          "StartDate": "2026-07-08"
+          "StartDate": "2026-02-12",
+          "Summary": "避免接觸囓齒類動物及其排泄物污染的食物，注意飲食衛生。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         },
         {
-          "Disease": "白喉",
+          "Disease": "瘧疾",
+          "DiseaseEn": "Malaria",
+          "DiseaseId": "disease.malaria",
           "Level": "第一級：注意(Watch)",
           "LevelCode": 1,
-          "StartDate": "2023-09-01"
+          "StartDate": "2023-05-01",
+          "Summary": "前往流行地區請至旅遊醫學門診評估預防用藥，並做好防蚊；返國後一年內發燒就醫時請告知旅遊史。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "KE",
       "Country": "肯亞",
       "CountryEn": "Kenya",
       "Region": "非洲",
-      "Level": "第二級：警示(Alert)",
-      "LevelCode": 2,
-      "Disease": "M痘",
+      "Level": "第一級：注意(Watch)",
+      "LevelCode": 1,
+      "Disease": "M痘、瘧疾",
       "StartDate": "2024-08-20",
-      "Summary": "目前有 1 項旅遊疫情建議，最高為第二級：警示。",
+      "Summary": "M痘、瘧疾為第一級：注意。避免與不明對象發生性行為或親密接觸，避免接觸野生動物；高風險者可評估接種 M痘疫苗。",
       "Diseases": [
         {
           "Disease": "M痘",
-          "Level": "第二級：警示(Alert)",
-          "LevelCode": 2,
-          "StartDate": "2024-08-20"
+          "DiseaseEn": "Mpox",
+          "DiseaseId": "disease.mpox",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2024-08-20",
+          "Summary": "避免與不明對象發生性行為或親密接觸，避免接觸野生動物；高風險者可評估接種 M痘疫苗。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+        },
+        {
+          "Disease": "瘧疾",
+          "DiseaseEn": "Malaria",
+          "DiseaseId": "disease.malaria",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2023-05-01",
+          "Summary": "前往流行地區請至旅遊醫學門診評估預防用藥，並做好防蚊；返國後一年內發燒就醫時請告知旅遊史。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "TZ",
@@ -785,9 +1302,9 @@
       "LevelCode": 0,
       "Disease": null,
       "StartDate": null,
-      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Summary": "目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。",
       "Diseases": [],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "ZA",
@@ -798,9 +1315,9 @@
       "LevelCode": 0,
       "Disease": null,
       "StartDate": null,
-      "Summary": "目前無旅遊疫情建議，請遵守一般衛生措施。",
+      "Summary": "目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。",
       "Diseases": [],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "CD",
@@ -809,58 +1326,80 @@
       "Region": "非洲",
       "Level": "第二級：警示(Alert)",
       "LevelCode": 2,
-      "Disease": "M痘",
+      "Disease": "M痘、瘧疾",
       "StartDate": "2024-08-15",
-      "Summary": "目前有 1 項旅遊疫情建議，最高為第二級：警示。",
+      "Summary": "M痘為第二級：警示；瘧疾為第一級：注意。當地 Clade Ib M痘疫情持續，請避免與不明對象親密接觸、避免接觸野生動物；高風險者出國前評估接種 M痘疫苗。",
       "Diseases": [
         {
           "Disease": "M痘",
+          "DiseaseEn": "Mpox",
+          "DiseaseId": "disease.mpox",
           "Level": "第二級：警示(Alert)",
           "LevelCode": 2,
-          "StartDate": "2024-08-15"
+          "StartDate": "2024-08-15",
+          "Area": "全國（Clade Ib）",
+          "Summary": "當地 Clade Ib M痘疫情持續，請避免與不明對象親密接觸、避免接觸野生動物；高風險者出國前評估接種 M痘疫苗。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+        },
+        {
+          "Disease": "瘧疾",
+          "DiseaseEn": "Malaria",
+          "DiseaseId": "disease.malaria",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2023-05-01",
+          "Summary": "前往流行地區請至旅遊醫學門診評估預防用藥，並做好防蚊；返國後一年內發燒就醫時請告知旅遊史。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "UG",
       "Country": "烏干達",
       "CountryEn": "Uganda",
       "Region": "非洲",
-      "Level": "第二級：警示(Alert)",
-      "LevelCode": 2,
-      "Disease": "M痘",
+      "Level": "第一級：注意(Watch)",
+      "LevelCode": 1,
+      "Disease": "M痘、瘧疾",
       "StartDate": "2024-08-20",
-      "Summary": "目前有 1 項旅遊疫情建議，最高為第二級：警示。",
+      "Summary": "M痘、瘧疾為第一級：注意。避免與不明對象發生性行為或親密接觸，避免接觸野生動物；高風險者可評估接種 M痘疫苗。",
       "Diseases": [
         {
           "Disease": "M痘",
-          "Level": "第二級：警示(Alert)",
-          "LevelCode": 2,
-          "StartDate": "2024-08-20"
+          "DiseaseEn": "Mpox",
+          "DiseaseId": "disease.mpox",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2024-08-20",
+          "Summary": "避免與不明對象發生性行為或親密接觸，避免接觸野生動物；高風險者可評估接種 M痘疫苗。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+        },
+        {
+          "Disease": "瘧疾",
+          "DiseaseEn": "Malaria",
+          "DiseaseId": "disease.malaria",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2023-05-01",
+          "Summary": "前往流行地區請至旅遊醫學門診評估預防用藥，並做好防蚊；返國後一年內發燒就醫時請告知旅遊史。",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "ET",
       "Country": "衣索比亞",
       "CountryEn": "Ethiopia",
       "Region": "非洲",
-      "Level": "第一級：注意(Watch)",
-      "LevelCode": 1,
-      "Disease": "霍亂",
-      "StartDate": "2026-03-02",
-      "Summary": "目前有 1 項旅遊疫情建議，最高為第一級：注意。",
-      "Diseases": [
-        {
-          "Disease": "霍亂",
-          "Level": "第一級：注意(Watch)",
-          "LevelCode": 1,
-          "StartDate": "2026-03-02"
-        }
-      ],
-      "Url": "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      "Level": "無旅遊疫情建議",
+      "LevelCode": 0,
+      "Disease": null,
+      "StartDate": null,
+      "Summary": "目前無旅遊疫情建議，遵守一般預防措施即可（勤洗手、注意飲食衛生、出現症狀就醫並告知旅遊史）。",
+      "Diseases": [],
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     }
   ]
 }

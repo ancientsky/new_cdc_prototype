@@ -103,6 +103,8 @@ docs/                使用說明與治理文件
 
 完整說明見 [ARCHITECTURE.md](ARCHITECTURE.md)。
 
+- **相關專案**：[疫苗及流感藥劑地圖 vaxmap-next](https://ancientsky.github.io/vaxmap-next/)（接種點、庫存、八語）。本站所有接種點入口以深連結導向它，整合方案見 [`docs/vaxmap-integration.md`](docs/vaxmap-integration.md)。
+
 ## 資料來源與示意聲明
 
 - **官方來源資料**：旅遊疫情、國家等級、CKAN 資料目錄由 `scripts/fetch-data.mjs` 抓取到 `data/snapshots/`，每檔記錄來源與時間；抓不到時沿用既有快照。

@@ -61,6 +61,8 @@
     "宣導"
   ],
   "image": "/img/banners/2026-10-mpox-vaccine.svg",
+  "imageWide": "/img/banners/2026-10-mpox-vaccine-wide.svg",
+  "imageAlt": "日曆上標示第一劑與四週後的第二劑，旁邊是兩支疫苗瓶與貼著圓形繃帶的手臂",
   "headline": "M痘疫苗打兩劑，保護才完整",
   "subline": "高風險族群公費接種；第一劑後至少間隔 4 週接種第二劑",
   "cta": {

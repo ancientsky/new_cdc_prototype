@@ -82,7 +82,7 @@
   ],
   "bodyMarkdown": "HPV 感染與子宮頸癌、肛門癌、口咽癌等多種癌症相關。在開始有性行為前接種，保護效果最好。\n\n公費 HPV 疫苗以**國中一年級學生**為對象，以校園集中接種為主，共 2 劑、間隔 6 個月；未在校內完成者可持通知至合約院所補接種。其他年齡層可自費接種，15 歲以上開始接種需 3 劑。",
   "precautions": "對疫苗成分過敏者不可接種；孕婦暫不建議接種。接種後少數人可能暈厥，建議接種後坐著休息 15 分鐘。",
-  "whereUrl": "https://vaxmap.cdc.gov.tw/",
+  "whereUrl": "https://ancientsky.github.io/vaxmap-next/info.html#where",
   "i18n": {
     "en": {
       "title": "Human papillomavirus (HPV) vaccine",

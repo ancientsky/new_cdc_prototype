@@ -90,6 +90,12 @@
     "region": "東南亞"
   },
   {
+    "iso2": "BN",
+    "name": "汶萊",
+    "nameEn": "Brunei",
+    "region": "東南亞"
+  },
+  {
     "iso2": "IN",
     "name": "印度",
     "nameEn": "India",
@@ -126,6 +132,18 @@
     "region": "南亞"
   },
   {
+    "iso2": "AF",
+    "name": "阿富汗",
+    "nameEn": "Afghanistan",
+    "region": "南亞"
+  },
+  {
+    "iso2": "KZ",
+    "name": "哈薩克",
+    "nameEn": "Kazakhstan",
+    "region": "中亞"
+  },
+  {
     "iso2": "AU",
     "name": "澳洲",
     "nameEn": "Australia",
@@ -141,6 +159,12 @@
     "iso2": "PG",
     "name": "巴布亞紐幾內亞",
     "nameEn": "Papua New Guinea",
+    "region": "大洋洲"
+  },
+  {
+    "iso2": "FJ",
+    "name": "斐濟",
+    "nameEn": "Fiji",
     "region": "大洋洲"
   },
   {
@@ -228,6 +252,42 @@
     "region": "歐洲"
   },
   {
+    "iso2": "CH",
+    "name": "瑞士",
+    "nameEn": "Switzerland",
+    "region": "歐洲"
+  },
+  {
+    "iso2": "AT",
+    "name": "奧地利",
+    "nameEn": "Austria",
+    "region": "歐洲"
+  },
+  {
+    "iso2": "CZ",
+    "name": "捷克",
+    "nameEn": "Czechia",
+    "region": "歐洲"
+  },
+  {
+    "iso2": "PT",
+    "name": "葡萄牙",
+    "nameEn": "Portugal",
+    "region": "歐洲"
+  },
+  {
+    "iso2": "GR",
+    "name": "希臘",
+    "nameEn": "Greece",
+    "region": "歐洲"
+  },
+  {
+    "iso2": "SE",
+    "name": "瑞典",
+    "nameEn": "Sweden",
+    "region": "歐洲"
+  },
+  {
     "iso2": "SA",
     "name": "沙烏地阿拉伯",
     "nameEn": "Saudi Arabia",
@@ -243,6 +303,12 @@
     "iso2": "TR",
     "name": "土耳其",
     "nameEn": "Türkiye",
+    "region": "中東"
+  },
+  {
+    "iso2": "QA",
+    "name": "卡達",
+    "nameEn": "Qatar",
     "region": "中東"
   },
   {

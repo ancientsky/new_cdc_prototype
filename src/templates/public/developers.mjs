@@ -3,6 +3,7 @@
 import { html, raw, esc } from '../../../scripts/lib/render.mjs';
 import { siteOrigin } from '../../../site.config.mjs';
 import { proStyles } from '../pro/_styles.mjs';
+import { vaxmapLink } from './_partials.mjs';
 
 const ENDPOINTS = [
   { path: '/v1/diseases.json', desc: '傳染病主檔（法定類別、ICD-10、通報時限、別名）與是否已有疾病頁', pick: (s) => s.master.diseases },
@@ -110,7 +111,7 @@ for (const it of data.items) console.log(it.diseaseName, it.status, it.metricVal
   <h1>開發者入口</h1>
   <p class="lead">內容只存一份；網頁、API、機讀版、AI 索引都是它的消費者。這裡說明怎麼取用、怎麼引用，以及每個欄位的意思。</p>
   <nav aria-label="本頁目錄"><ul class="pf-pills">
-    ${[['quick', '快速開始'], ['meta', 'meta 外殼'], ['endpoints', '端點'], ['openapi', 'OpenAPI'], ['limits', '限流與金鑰'], ['events', '變更事件'], ['machine', '機讀版'], ['vocab', 'cdc: 詞彙表'], ['license', '授權與引用'], ['embed', '嵌入範例'], ['redirects', '舊網址對照']].map(([id, label]) => html`<li><a class="pf-btn" href="#${id}">${label}</a></li>`)}
+    ${[['quick', '快速開始'], ['meta', 'meta 外殼'], ['endpoints', '端點'], ['openapi', 'OpenAPI'], ['limits', '限流與金鑰'], ['events', '變更事件'], ['machine', '機讀版'], ['vocab', 'cdc: 詞彙表'], ['license', '授權與引用'], ['embed', '嵌入範例'], ['vaxmap', '相關服務：接種點地圖'], ['redirects', '舊網址對照']].map(([id, label]) => html`<li><a class="pf-btn" href="#${id}">${label}</a></li>`)}
   </ul></nav>
 
   <section id="quick" aria-labelledby="quick-h">
@@ -212,6 +213,24 @@ for (const it of data.items) console.log(it.diseaseName, it.status, it.metricVal
     <p><button type="button" class="pf-btn pf-btn--primary" data-embed-run>執行上面的 fetch 看結果</button></p>
     <div class="pf-tiles" data-embed-demo aria-live="polite"></div>
     <p class="muted">態勢「狀態」四級（平穩、上升、高峰、下降）由疫情中心人工發布，嵌入時請原樣顯示並標示資料日與發布單位，不要自行推算。</p>
+  </section>
+
+  <section id="vaxmap" aria-labelledby="vx-h">
+    <h2 id="vx-h">相關服務：疫苗及流感藥劑地圖（vaxmap-next）</h2>
+    <p>「哪裡可以打疫苗、哪裡有流感抗病毒藥劑」由獨立的改良版地圖網站提供：<a href="${vaxmapLink(ctx, { lang: null })}" target="_blank" rel="noopener">${vaxmapLink(ctx, { lang: null })}</a>（開新視窗）。本站不自行列出院所，因為庫存每天變動；請用深連結導向它。可分享網址的狀態全部放在 hash（<code>#</code> 後面），不需要金鑰：</p>
+    <div class="pf-table-wrap"><table class="pf-table"><thead><tr><th scope="col">參數</th><th scope="col">值</th><th scope="col">範例</th></tr></thead><tbody>
+      <tr><th scope="row"><code>g</code></th><td>群組，可多選（逗號）：<code>flu</code> 流感疫苗、<code>covid</code> COVID-19 疫苗、<code>pcv</code> 肺炎鏈球菌疫苗、<code>antiviral</code> 流感抗病毒藥劑</td><td><code>#g=flu,covid</code></td></tr>
+      <tr><th scope="row"><code>p</code></th><td>產品：<code>flu</code>、<code>mod_adult</code>、<code>mod_child</code>、<code>novavax</code>、<code>pcv20</code>、<code>pcv21</code>、<code>antiviral</code></td><td><code>#g=pcv&amp;p=pcv20</code></td></tr>
+      <tr><th scope="row"><code>today</code>、<code>stock</code></th><td><code>1</code>：只看今日有看診、只看有庫存</td><td><code>#g=flu&amp;today=1&amp;stock=1</code></td></tr>
+      <tr><th scope="row"><code>city</code>、<code>dist</code></th><td>縣市、鄉鎮市區（中文，須 URL 編碼；先有 city 才認 dist）</td><td><code>#g=flu&amp;city=臺北市&amp;dist=大安區</code></td></tr>
+      <tr><th scope="row"><code>q</code>、<code>id</code>、<code>map</code></th><td>關鍵字（最長 60 字）、院所 id、地圖視野 <code>緯度,經度,縮放</code></td><td><code>#id=2050&amp;map=22.65,120.29,15</code></td></tr>
+      <tr><th scope="row"><code>lang</code></th><td><code>en</code>、<code>ja</code>、<code>ko</code>、<code>id</code>、<code>vi</code>、<code>th</code>、<code>tl</code>；繁中不寫。本站語言碼與它相同（本站沒有 ko）</td><td><code>#g=flu&amp;lang=en</code></td></tr>
+      <tr><th scope="row">接種資訊專區</th><td><code>info.html#&lt;錨點&gt;&amp;lang=…</code>；錨點如 <code>where</code>、<code>coins</code>、<code>eligibility</code></td><td><code>info.html#where&amp;lang=vi</code></td></tr>
+    </tbody></table></div>
+    <pre><code>${vaxmapLink(ctx, { group: 'flu', city: '臺北市' })}
+${vaxmapLink(ctx, { group: 'antiviral', lang: 'en' })}
+${vaxmapLink(ctx, { info: true, anchor: 'where', lang: 'vi' })}</code></pre>
+    <p class="muted">不認得的參數值會被忽略，不會報錯。資料為每日兩次的快照，頁面會顯示資料時間；整合方案（連結、資料、呈現、治理四層）見 <code>docs/vaxmap-integration.md</code>。</p>
   </section>
 
   <section id="redirects" aria-labelledby="red-h">

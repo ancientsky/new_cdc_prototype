@@ -94,7 +94,7 @@
   ],
   "bodyMarkdown": "新冠疫苗依病毒株變化每年更新成分。2026–2027 年度疫苗依 WHO 建議株，自 **10 月 1 日**起開打，6 個月以上民眾皆可接種公費疫苗；65 歲以上長者、55 歲以上原住民、醫事人員、長照機構住民與工作人員、高風險慢性病人與孕婦為優先對象。\n\n可與流感疫苗同時分開部位接種，或間隔任何時間接種。",
   "precautions": "對疫苗成分曾發生嚴重過敏反應者不可接種。接種後少數人可能出現注射部位疼痛、疲倦、頭痛、發燒；若出現胸痛、心悸、呼吸急促，應立即就醫。",
-  "whereUrl": "https://antiflu.cdc.gov.tw/",
+  "whereUrl": "https://ancientsky.github.io/vaxmap-next/#g=covid",
   "i18n": {
     "en": {
       "title": "COVID-19 vaccine",

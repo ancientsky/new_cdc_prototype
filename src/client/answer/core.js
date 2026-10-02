@@ -398,6 +398,27 @@ const PARAPHRASE = [
 function lc(s) { return String(s ?? '').toLowerCase(); }
 /** 介面字（建議行動標籤）：中文以外一律英文 */
 function tr(lang, zh, en) { return lang === 'zh-TW' ? zh : en; }
+
+// ───────── 疫苗及流感藥劑地圖（vaxmap-next）深連結 ─────────
+// 網址與 site.config.mjs 的 vaxmapUrl／vaxmapInfoUrl 相同。client 端無法 import site.config，所以在此寫死；
+// 頁面可用 window.CDC.config = { vaxmapUrl, vaxmapInfoUrl } 覆寫（site 端若日後注入就不用改這裡）。
+// 規則（docs/vaxmap-integration.md）：#g=flu|covid|pcv|antiviral；語言 zh-TW 不帶、其餘 lang=<碼>。
+const VAXMAP_URL = 'https://ancientsky.github.io/vaxmap-next/';
+const VAXMAP_INFO_URL = 'https://ancientsky.github.io/vaxmap-next/info.html';
+const VAXMAP_LANGS = new Set(['en', 'ja', 'vi', 'id', 'th', 'tl']);
+const VAXMAP_GROUP_OF = { 'vaccine.influenza': 'flu', 'vaccine.covid-19': 'covid', 'vaccine.pneumococcal': 'pcv' };
+const VAXMAP_GROUP_OF_DISEASE = { 'disease.influenza': 'flu', 'disease.covid-19': 'covid', 'disease.ipd': 'pcv' };
+const ANTIVIRAL_RE = /抗病毒|克流感|瑞樂沙|柏洛沙韋|antiviral|oseltamivir|tamiflu|xofluza|baloxavir|タミフル|ゾフルーザ|抗ウイルス|thuốc kháng vi-rút|antivirus|obat antiviral|ยาต้านไวรัส|gamot na antiviral/i;
+export function vaxmapHref(group, lang, { info = false, anchor = '' } = {}) {
+  const cfg = (typeof window !== 'undefined' && window.CDC && window.CDC.config) || {};
+  const lg = VAXMAP_LANGS.has(lang) ? `lang=${lang}` : '';
+  if (info) {
+    const h = [anchor, lg].filter(Boolean).join('&');
+    return (cfg.vaxmapInfoUrl || VAXMAP_INFO_URL) + (h ? `#${h}` : '');
+  }
+  const h = [group ? `g=${group}` : '', lg].filter(Boolean).join('&');
+  return (cfg.vaxmapUrl || VAXMAP_URL) + (h ? `#${h}` : '');
+}
 function escapeRe(s) { return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
 function isLatin(s) { return /^[\x00-\x7fÀ-ɏḀ-ỿ\s.\-']+$/.test(s); }
 function matcherFor(name) {
@@ -1132,7 +1153,9 @@ export function createEngine(rawDeps = {}) {
         a.push({ label: tr(LL, '撥打 1922', 'Call 1922'), href: 'tel:1922', kind: 'hotline' });
         break;
       case 'vaccine':
-        a.push({ label: tr(LL, '查附近接種點', 'Find a vaccination site'), href: vacc?.whereUrl ?? 'https://antiflu.cdc.gov.tw/ExecutingUnit', kind: 'external' });
+        if (ANTIVIRAL_RE.test(result.query ?? '')) a.push({ label: tr(LL, '查附近有流感抗病毒藥劑的院所', 'Find clinics with flu antivirals'), href: vaxmapHref('antiviral', LL), kind: 'external' });
+        else if (vacc && !VAXMAP_GROUP_OF[vacc.id]) a.push({ label: tr(LL, '接種資訊（vaxmap）', 'Vaccination info (vaxmap)'), href: vaxmapHref(null, LL, { info: true, anchor: 'where' }), kind: 'external' });
+        else a.push({ label: tr(LL, '查附近接種點', 'Find a vaccination site'), href: vaxmapHref(VAXMAP_GROUP_OF[vacc?.id] ?? VAXMAP_GROUP_OF_DISEASE[result.disease] ?? null, LL), kind: 'external' });
         if (vacc?.slug) a.push({ label: tr(LL, `看${vacc.name ?? vacc.title}公費對象`, `Who is eligible: ${vacc.nameEn ?? vacc.name ?? vacc.title}`), href: `/vaccines/${vacc.slug}/`, kind: 'link' });
         else a.push({ label: tr(LL, '看疫苗與預防接種', 'Vaccines & immunization'), href: '/tasks/vaccines/', kind: 'link' });
         break;
@@ -1145,7 +1168,8 @@ export function createEngine(rawDeps = {}) {
       case 'situation':
         a.push({ label: tr(LL, '看完整趨勢', 'See full trend'), href: '/situation/', kind: 'link' });
         if (sit?.items?.some((i) => i.disease === 'disease.influenza')) {
-          a.push({ label: tr(LL, '查附近流感疫苗接種點', 'Find a flu vaccination site'), href: 'https://antiflu.cdc.gov.tw/ExecutingUnit', kind: 'external' });
+          a.push({ label: tr(LL, '查附近流感疫苗接種點', 'Find a flu vaccination site'), href: vaxmapHref('flu', LL), kind: 'external' });
+          a.push({ label: tr(LL, '查附近有抗病毒藥劑的院所', 'Find clinics with flu antivirals'), href: vaxmapHref('antiviral', LL), kind: 'external' });
           a.push({ label: tr(LL, '公費抗病毒藥劑使用對象', 'Who gets publicly funded antivirals'), href: '/diseases/influenza/#treatment', kind: 'link' });
         }
         break;

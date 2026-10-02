@@ -550,3 +550,59 @@ export function inlineAsk(ctx, { mode = 'public', placeholder = '', label = '', 
   ${examples.length ? html`<p class="c-askbox__note">${examples.map((q) => html`<button type="button" class="c-chip" data-ask-inline-q="${q}">${q}</button> `)}</p>` : ''}
 </form>`;
 }
+
+/* ───────── 疫苗及流感藥劑地圖（vaxmap-next）深連結 ─────────
+   可分享網址用 hash：#g=flu,covid&p=…&today=1&stock=1&city=…&dist=…&q=…&id=…&map=lat,lng,z&lang=en
+   群組 g：flu／covid／pcv／antiviral；產品 p：flu、mod_adult、mod_child、novavax、pcv20、pcv21、antiviral。
+   本站語言 → vaxmap 語系：zh-TW 不帶，其餘同碼（en、ja、vi、id、th、tl；vaxmap 另有 ko，本站沒有）。
+   規則與參數表見 docs/vaxmap-integration.md。 */
+export const VAXMAP_LANG = { 'zh-TW': null, en: 'en', ja: 'ja', vi: 'vi', id: 'id', th: 'th', tl: 'tl' };
+/** 本站疫苗主檔 id → vaxmap 群組；沒有對應的疫苗（MMR、HPV、B 肝、水痘、EV71…）改連「接種資訊」專區 */
+export const VAXMAP_GROUP_OF = { 'vaccine.influenza': 'flu', 'vaccine.covid-19': 'covid', 'vaccine.pneumococcal': 'pcv' };
+const VAXMAP_GROUPS = ['flu', 'covid', 'pcv', 'antiviral'];
+const VAXMAP_PRODUCTS = ['flu', 'mod_adult', 'mod_child', 'novavax', 'pcv20', 'pcv21', 'antiviral'];
+const VAXMAP_NEW_WINDOW = { 'zh-TW': '開新視窗', en: 'opens in a new window', ja: '新しいウィンドウで開きます', tl: 'magbubukas sa bagong window', vi: 'mở cửa sổ mới', id: 'membuka jendela baru', th: 'เปิดในหน้าต่างใหม่' };
+export const VAXMAP_INFO_LABEL = { 'zh-TW': '接種資訊（vaxmap）', en: 'Vaccination info (vaxmap)', ja: '接種情報（vaxmap）', tl: 'Impormasyon sa pagbabakuna (vaxmap)', vi: 'Thông tin tiêm chủng (vaxmap)', id: 'Info vaksinasi (vaxmap)', th: 'ข้อมูลการฉีดวัคซีน (vaxmap)' };
+const _list = (v) => (Array.isArray(v) ? v : v ? [v] : []);
+
+/**
+ * 回傳 vaxmap-next 深連結。
+ * opts: { group, product, city, dist, q, today, stock, lang, info, anchor }
+ *  - group／product 可傳字串或陣列；不認得的值丟棄（與 vaxmap decodeState 一致，不會產生壞網址）。
+ *  - info: true → 接種資訊專區 info.html#<anchor>&lang=…
+ *  - lang: 預設取 ctx.lang；傳 null 強制不帶。
+ */
+export function vaxmapLink(ctx, { group, product, city, dist, q, today, stock, lang, info, anchor } = {}) {
+  const cfg = ctx.site.config;
+  const lg = lang === undefined ? VAXMAP_LANG[ctx.lang] ?? null : (lang === 'zh-TW' ? null : lang);
+  const p = [];
+  if (info) {
+    if (anchor) p.push(String(anchor).replace(/[^\w-]/g, ''));
+    if (lg) p.push(`lang=${encodeURIComponent(lg)}`);
+    return (cfg.vaxmapInfoUrl ?? `${cfg.vaxmapUrl}info.html`) + (p.length ? `#${p.join('&')}` : '');
+  }
+  const g = _list(group).filter((x) => VAXMAP_GROUPS.includes(x));
+  const pr = _list(product).filter((x) => VAXMAP_PRODUCTS.includes(x));
+  if (g.length) p.push(`g=${g.join(',')}`);
+  if (pr.length) p.push(`p=${pr.join(',')}`);
+  if (today) p.push('today=1');
+  if (stock) p.push('stock=1');
+  if (city) { p.push(`city=${encodeURIComponent(city)}`); if (dist) p.push(`dist=${encodeURIComponent(dist)}`); }
+  if (q) p.push(`q=${encodeURIComponent(String(q).slice(0, 60))}`);
+  if (lg) p.push(`lang=${encodeURIComponent(lg)}`);
+  return cfg.vaxmapUrl + (p.length ? `#${p.join('&')}` : '');
+}
+
+/** 疫苗主檔 item → 對應的 vaxmap 連結（有群組帶 #g=，沒有的疫苗連接種資訊專區） */
+export function vaxmapLinkForVaccine(ctx, vaccine, opts = {}) {
+  const group = VAXMAP_GROUP_OF[vaccine?.id];
+  return group ? vaxmapLink(ctx, { group, ...opts }) : vaxmapLink(ctx, { info: true, anchor: 'where', ...opts });
+}
+
+/** 開新視窗的按鈕：<a class="c-btn" target="_blank" rel="noopener">文字 ↗ （開新視窗）</a>；cls 預設 'c-btn' */
+export function vaxmapButton(ctx, { label, cls = 'c-btn', ...linkOpts } = {}) {
+  const href = vaxmapLink(ctx, linkOpts);
+  const nw = VAXMAP_NEW_WINDOW[ctx.lang] ?? VAXMAP_NEW_WINDOW.en;
+  const text = label ?? (linkOpts.info ? (VAXMAP_INFO_LABEL[ctx.lang] ?? VAXMAP_INFO_LABEL.en) : ctx.t('vaccines.where.cta'));
+  return html`<a class="${cls}" href="${href}" target="_blank" rel="noopener" title="${nw}">${text} ↗<span class="sr-only">${ctx.lang === 'zh-TW' ? `（${nw}）` : ` (${nw})`}</span></a>`;
+}
