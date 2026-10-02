@@ -147,7 +147,25 @@ export function changeData(site, today, { days = 30 } = {}) {
     .map((e) => ({ date: String(e.date).slice(0, 10), iso2: e.ISO2 ?? null, country: e.Country ?? null, countryEn: e.CountryEn ?? null, disease: e.Disease, diseaseEn: e.DiseaseEn ?? null, diseaseId: e.DiseaseId ?? null, area: e.Area ?? null, kind: e.kind, from: e.from ?? null, to: e.to ?? 0 }))
     .sort((a, b) => b.date.localeCompare(a.date) || b.to - a.to || String(a.iso2).localeCompare(String(b.iso2)));
   const counts = Object.fromEntries(CHANGE_KINDS.map((k) => [k, list.filter((e) => e.kind === k).length]));
-  return { counts, list, summaryOnly: false };
+  return { counts, list, summaryOnly: false, days };
+}
+
+/**
+ * 自適應視窗：官方等級調整多半成批（例如 2026-08-11 一次調整數十筆），固定 30 天常常只剩 0–1 則，看不出變化。
+ * 先看 30 天；事件少於 CHANGE_MIN_EVENTS（10）則就改看 90 天（標題與數字一起換成「近 90 天」），兩者都沒有才回 30 天的空結果。
+ */
+export const CHANGE_WINDOWS = [30, 90];
+export const CHANGE_MIN_EVENTS = 10;
+export function adaptiveChanges(site, today) {
+  let first = null;
+  for (const days of CHANGE_WINDOWS) {
+    const cd = changeData(site, today, { days });
+    if (!cd) return null;
+    first ??= cd;
+    const total = Object.values(cd.counts).reduce((a, b) => a + b, 0);
+    if (total >= CHANGE_MIN_EVENTS || cd.summaryOnly) return { ...cd, days: cd.days ?? days };
+  }
+  return { ...first, days: first.days ?? CHANGE_WINDOWS[0] };
 }
 
 /** 首頁／任務頁用的一組統計（針對性） */
@@ -155,7 +173,8 @@ export function travelStats(site, today) {
   const { adv } = travelModel(site);
   const st = { level1: 0, level2: 0, level3: 0, withAdv: 0, hasData: adv.size > 0 && [...adv.values()].some((l) => l.length) };
   for (const list of adv.values()) { const m = maxLevel(targetedOf(list)); if (m >= 1) { st[`level${m}`] += 1; st.withAdv += 1; } }
-  st.change = changeData(site, today)?.counts ?? null;
+  const cd = adaptiveChanges(site, today);
+  st.change = cd?.counts ?? null; st.changeDays = cd?.days ?? CHANGE_WINDOWS[0];
   return st;
 }
 
@@ -548,15 +567,16 @@ function eventItem(ctx, e, byIso) {
 }
 function changeSection(ctx, model) {
   const { t } = ctx;
-  const cd = changeData(ctx.site, ctx.today);
+  const cd = adaptiveChanges(ctx.site, ctx.today);
   const byIso = new Map(model.masters.map((c) => [c.iso2, c]));
-  const head = sectionHead(ctx, { id: 'tv-ch-h', title: t('travel.chg.t'), note: t('travel.chg.note') });
+  const days = cd?.days ?? CHANGE_WINDOWS[0];
+  const head = sectionHead(ctx, { id: 'tv-ch-h', title: t('travel.chg.t', { days }), note: t('travel.chg.note') });
   if (!cd) return html`<section aria-labelledby="tv-ch-h">${head}<p class="muted">${t('travel.chg.none')}</p></section>`;
   const first = cd.list.slice(0, NEWS_MAX); const rest = cd.list.slice(NEWS_MAX);
   const evMeta = ctx.site.snapshots?.countryEvents?.meta;
   return html`<section aria-labelledby="tv-ch-h">${head}
   ${changeTiles(ctx, cd.counts)}
-  ${cd.summaryOnly ? '' : cd.list.length ? html`<ol class="tv-evs">${first.map((e) => eventItem(ctx, e, byIso))}</ol>${rest.length ? html`<details class="tv-evmore"><summary>${t('travel.chg.more', { n: rest.length })}</summary><ol class="tv-evs">${rest.map((e) => eventItem(ctx, e, byIso))}</ol></details>` : ''}` : html`<p class="muted">${t('travel.chg.empty')}</p>`}
+  ${cd.summaryOnly ? '' : cd.list.length ? html`<ol class="tv-evs">${first.map((e) => eventItem(ctx, e, byIso))}</ol>${rest.length ? html`<details class="tv-evmore"><summary>${t('travel.chg.more', { n: rest.length })}</summary><ol class="tv-evs">${rest.map((e) => eventItem(ctx, e, byIso))}</ol></details>` : ''}` : html`<p class="muted">${t('travel.chg.empty', { days })}</p>`}
   ${evMeta?.mode && evMeta.mode !== 'live' && evMeta.note ? html`<p class="muted tv-evnote" lang="zh-TW">${evMeta.note}</p>` : ''}
 </section>`;
 }

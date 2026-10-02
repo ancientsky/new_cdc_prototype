@@ -143,7 +143,7 @@ export function render(ctx) {
   const migrant = MIGRANT_LANGS.includes(lang);
   // 「出國與入境」任務卡副標：針對性統計（資料算得出來才換；缺資料退回原副標）
   const ts = travelStats(site, ctx.today);
-  const travelSub = ts.hasData ? [t('home.travel.stat', { n: ts.withAdv }), ts.change?.lifted ? t('home.travel.lifted', { n: ts.change.lifted }) : ts.change?.new ? t('home.travel.new', { n: ts.change.new }) : null].filter(Boolean).join(' · ') : null;
+  const travelSub = ts.hasData ? [t('home.travel.stat', { n: ts.withAdv }), ts.change?.lifted ? t('home.travel.lifted', { n: ts.change.lifted, days: ts.changeDays }) : ts.change?.new ? t('home.travel.new', { n: ts.change.new, days: ts.changeDays }) : null].filter(Boolean).join(' · ') : null;
   const travelCtx = travelSub ? { ...ctx, t: (k, v) => (k === 'task.travel.sub' ? travelSub : ctx.t(k, v)) } : ctx;
   const tasks = config.tasks.map((task, i) => (migrant && i === config.tasks.length - 1 ? taskCard(ctx, task, { foreign: true }) : taskCard(task.key === 'travel' ? travelCtx : ctx, task)));
   // 兩版（A／B）都輸出，隱藏非預設者；`?hero=A|B` 由 ui.js 切換。同一區塊出現兩次時 id 加後綴，隱藏版用 hidden（不進無障礙樹）。

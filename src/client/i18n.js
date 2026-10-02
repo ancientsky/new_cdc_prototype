@@ -978,14 +978,14 @@ const ROWS_TRAVEL = {
   'travel.country.none.more': ['其他目的地請看', 'For other destinations, see the'],
   /* ── 第四輪：目的地決策（針對性建議、近 30 天變化、地圖、背景提醒、旅程三階段）── */
   'travel.lookup.sub': ['輸入國家或地區，馬上看有沒有針對性的旅遊疫情建議與行前準備。', 'Type a country or region to see whether it has a targeted travel health notice, and how to prepare.', '国・地域名を入力すると、個別の感染症情報と事前準備がわかります。', 'Maglagay ng bansa o rehiyon para makita kung may partikular na travel health notice at paano maghanda.', 'Nhập quốc gia hoặc khu vực để xem có khuyến cáo dịch tễ riêng và cách chuẩn bị.', 'Ketik negara atau wilayah untuk melihat apakah ada peringatan khusus dan cara persiapannya.', 'พิมพ์ชื่อประเทศหรือภูมิภาคเพื่อดูว่ามีคำแนะนำเฉพาะและการเตรียมตัวอย่างไร'],
-  'travel.chg.t': ['近 30 天變化', 'Changes in the last 30 days', '直近30日の変更', 'Mga pagbabago sa nakaraang 30 araw', 'Thay đổi trong 30 ngày qua', 'Perubahan 30 hari terakhir', 'การเปลี่ยนแปลงใน 30 วันที่ผ่านมา'],
+  'travel.chg.t': ['近 {days} 天變化', 'Changes in the last {days} days', '直近{days}日の変更', 'Mga pagbabago sa nakaraang {days} araw', 'Thay đổi trong {days} ngày qua', 'Perubahan {days} hari terakhir', 'การเปลี่ยนแปลงใน {days} วันที่ผ่านมา'],
   'travel.chg.note': ['依官方歷次公告整理；「解除」代表該項建議已取消。', 'Compiled from official notices; “Lifted” means the notice has been withdrawn.', '公式発表をもとに集計。「解除」はその情報が取り下げられたことを示します。', 'Hango sa mga opisyal na abiso; ang “Inalis” ay nangangahulugang binawi na ang abiso.', 'Tổng hợp từ các thông báo chính thức; “Gỡ bỏ” nghĩa là khuyến cáo đã được hủy.', 'Disusun dari pengumuman resmi; “Dicabut” berarti peringatan telah ditarik.', 'สรุปจากประกาศอย่างเป็นทางการ “ยกเลิก” หมายถึงคำแนะนำนั้นถูกยกเลิกแล้ว'],
   'travel.chg.new': ['新增', 'New', '新規', 'Bago', 'Mới', 'Baru', 'ใหม่'],
   'travel.chg.raised': ['調升', 'Raised', '引き上げ', 'Itinaas', 'Nâng mức', 'Dinaikkan', 'ปรับขึ้น'],
   'travel.chg.lowered': ['調降', 'Lowered', '引き下げ', 'Ibinaba', 'Hạ mức', 'Diturunkan', 'ปรับลง'],
   'travel.chg.lifted': ['解除', 'Lifted', '解除', 'Inalis', 'Gỡ bỏ', 'Dicabut', 'ยกเลิก'],
   'travel.chg.none': ['尚無變化資料', 'No change data yet', '変更データはまだありません', 'Wala pang datos ng pagbabago', 'Chưa có dữ liệu thay đổi', 'Belum ada data perubahan', 'ยังไม่มีข้อมูลการเปลี่ยนแปลง'],
-  'travel.chg.empty': ['近 30 天沒有新增或調整。', 'No new or changed notices in the last 30 days.', '直近30日に新規・変更はありません。', 'Walang bago o binago sa nakaraang 30 araw.', 'Không có khuyến cáo mới hoặc thay đổi trong 30 ngày qua.', 'Tidak ada peringatan baru atau perubahan dalam 30 hari terakhir.', 'ไม่มีคำแนะนำใหม่หรือการเปลี่ยนแปลงใน 30 วันที่ผ่านมา'],
+  'travel.chg.empty': ['近 {days} 天沒有新增或調整。', 'No new or changed notices in the last {days} days.', '直近{days}日に新規・変更はありません。', 'Walang bago o binago sa nakaraang {days} araw.', 'Không có khuyến cáo mới hoặc thay đổi trong {days} ngày qua.', 'Tidak ada peringatan baru atau perubahan dalam {days} hari terakhir.', 'ไม่มีคำแนะนำใหม่หรือการเปลี่ยนแปลงใน {days} วันที่ผ่านมา'],
   'travel.chg.more': ['更多（{n} 筆）', 'More ({n})', 'さらに表示（{n}件）', 'Higit pa ({n})', 'Xem thêm ({n})', 'Selengkapnya ({n})', 'เพิ่มเติม ({n})'],
   'travel.chg.d.new': ['新增{to}', 'New: {to}', '新規：{to}', 'Bago: {to}', 'Mới: {to}', 'Baru: {to}', 'ใหม่: {to}'],
   'travel.chg.d.raised': ['{from}調升為{to}', 'Raised from {from} to {to}', '{from}から{to}へ引き上げ', 'Itinaas mula {from} sa {to}', 'Nâng từ {from} lên {to}', 'Dinaikkan dari {from} ke {to}', 'ปรับขึ้นจาก {from} เป็น {to}'],
@@ -1028,8 +1028,8 @@ const ROWS_TRAVEL = {
   'travel.j.a.2': ['有疑問可撥防疫專線 1922，就醫前先電話告知，再前往醫療院所。', 'Call the 1922 hotline if you are unsure, and phone ahead before going to a clinic or hospital.', '迷ったときは防疫ホットライン1922へ。医療機関へ行く前に電話で連絡しましょう。', 'Tumawag sa hotline 1922 kung may tanong, at tumawag muna bago pumunta sa klinika o ospital.', 'Gọi đường dây phòng dịch 1922 khi cần hỏi, và gọi báo trước khi đến cơ sở y tế.', 'Hubungi hotline 1922 bila ragu, dan telepon dulu sebelum ke klinik atau rumah sakit.', 'โทรสายด่วน 1922 หากมีข้อสงสัย และโทรแจ้งก่อนไปสถานพยาบาล'],
   'travel.task.go': ['看完整等級表與世界地圖', 'Full level table and world map', '等級表と世界地図を見る', 'Tingnan ang talaan at mapa', 'Xem bảng mức và bản đồ', 'Lihat tabel dan peta', 'ดูตารางระดับและแผนที่'],
   'home.travel.stat': ['{n} 國有針對性建議', '{n} countries with targeted notices', '個別情報あり：{n}か国', '{n} bansa ang may partikular na abiso', '{n} quốc gia có khuyến cáo riêng', '{n} negara punya peringatan khusus', '{n} ประเทศมีคำแนะนำเฉพาะ'],
-  'home.travel.lifted': ['近 30 天解除 {n} 筆', '{n} lifted in the last 30 days', '直近30日で{n}件解除', '{n} ang inalis sa nakaraang 30 araw', '{n} khuyến cáo gỡ bỏ trong 30 ngày qua', '{n} dicabut dalam 30 hari terakhir', 'ยกเลิก {n} รายการใน 30 วันที่ผ่านมา'],
-  'home.travel.new': ['近 30 天新增 {n} 筆', '{n} new in the last 30 days', '直近30日で新規{n}件', '{n} bago sa nakaraang 30 araw', '{n} khuyến cáo mới trong 30 ngày qua', '{n} baru dalam 30 hari terakhir', 'ใหม่ {n} รายการใน 30 วันที่ผ่านมา'],
+  'home.travel.lifted': ['近 {days} 天解除 {n} 筆', '{n} lifted in the last {days} days', '直近{days}日で{n}件解除', '{n} ang inalis sa nakaraang {days} araw', '{n} khuyến cáo gỡ bỏ trong {days} ngày qua', '{n} dicabut dalam {days} hari terakhir', 'ยกเลิก {n} รายการใน {days} วันที่ผ่านมา'],
+  'home.travel.new': ['近 {days} 天新增 {n} 筆', '{n} new in the last {days} days', '直近{days}日で新規{n}件', '{n} bago sa nakaraang {days} araw', '{n} khuyến cáo mới trong {days} ngày qua', '{n} baru dalam {days} hari terakhir', 'ใหม่ {n} รายการใน {days} วันที่ผ่านมา'],
 };
 for (const [key, vals] of Object.entries(ROWS_TRAVEL)) vals.forEach((v, i) => { if (v != null && v !== '') STRINGS[ORDER[i]][key] = v; });
 

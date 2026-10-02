@@ -2,7 +2,7 @@
 import { html, raw } from '../../../scripts/lib/render.mjs';
 import { config } from '../../../site.config.mjs';
 import { ldFor, pageHead, sectionHead, askBox, sitCard, hrefFor, isFallbackLink, L, publishedOf, byDateDesc, verdictPill, pill, feedback, dated, unitName } from './_partials.mjs';
-import { quickLookup, changeData, changeTiles, travelStyles } from './travel.mjs';
+import { quickLookup, adaptiveChanges, changeTiles, travelStyles } from './travel.mjs';
 
 export function meta(ctx, { task }) {
   return { title: ctx.t(`task.${task.key}.label`), description: ctx.t(`task.${task.key}.sub`).replaceAll(' · ', '、'), jsonLd: ldFor(ctx, null, [{ label: ctx.t(`task.${task.key}.label`) }]) };
@@ -35,11 +35,11 @@ export function render(ctx, { task }) {
   if (k === 'situation') {
     hero = html`<section aria-labelledby="ts-h">${sectionHead(ctx, { id: 'ts-h', title: t('home.situation'), more: `${t('home.situation.more')} →`, moreHref: url('/situation/'), note: t('home.situation.note', { date: ctx.fmtDate(site.situation.dataDate), source: site.situation.source }) })}<div class="c-sit-scroll"><div class="c-sit-grid">${site.situation.items.map((it) => sitCard(ctx, it))}</div></div></section>`;
   } else if (k === 'travel') {
-    const cd = changeData(site, ctx.today);
+    const cd = adaptiveChanges(site, ctx.today);
     hero = html`${travelStyles}<div class="tv"><section aria-labelledby="tt-h">${sectionHead(ctx, { id: 'tt-h', title: t('travel.lookup.t'), more: `${t('travel.task.go')} →`, moreHref: url('/travel/') })}
       <p class="tv-lookup__sub">${t('travel.lookup.sub')}</p>
       ${quickLookup(ctx)}</section>
-      <section aria-labelledby="tt-ch-h">${sectionHead(ctx, { id: 'tt-ch-h', title: t('travel.chg.t'), more: `${t('nav.travel')} →`, moreHref: url('/travel/') })}
+      <section aria-labelledby="tt-ch-h">${sectionHead(ctx, { id: 'tt-ch-h', title: t('travel.chg.t', { days: cd?.days ?? 30 }), more: `${t('nav.travel')} →`, moreHref: url('/travel/') })}
       ${cd ? changeTiles(ctx, cd.counts) : html`<p class="muted">${t('travel.chg.none')}</p>`}</section></div>`;
   } else if (k === 'rumor') {
     hero = html`<section><a class="c-btn" href="${url('/factcheck/')}">${t('factcheck.submit')} →</a></section>`;
