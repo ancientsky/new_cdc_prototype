@@ -33,6 +33,7 @@ export function sourceHashOf(item) {
     title: item.title, summary: item.summary, question: item.question, answerMarkdown: item.answerMarkdown,
     bodyMarkdown: item.bodyMarkdown, blocks: item.blocks, keyFacts: item.keyFacts, machineReadableMarkdown: item.machineReadableMarkdown,
     clarificationMarkdown: item.clarificationMarkdown, claim: item.claim, publicFunded: item.publicFunded, headline: item.headline,
+    transcriptMarkdown: item.transcriptMarkdown, introMarkdown: item.introMarkdown, steps: item.steps, abstractMarkdown: item.abstractMarkdown, specimens: item.specimens, links: item.links, articles: item.articles,
   };
   return createHash('sha1').update(JSON.stringify(pick)).digest('hex').slice(0, 12);
 }
@@ -56,6 +57,12 @@ export function loadSite(config) {
     datasets: readDirJSON(path.join(CONTENT, 'datasets')),
     banners: readDirJSON(path.join(CONTENT, 'banners')),
     pages: readDirJSON(path.join(CONTENT, 'pages')),
+    media: readDirJSON(path.join(CONTENT, 'media')),
+    topics: readDirJSON(path.join(CONTENT, 'topics')),
+    services: readDirJSON(path.join(CONTENT, 'services')),
+    publications: readDirJSON(path.join(CONTENT, 'publications')),
+    labtests: readDirJSON(path.join(CONTENT, 'labtests')),
+    research: readDirJSON(path.join(CONTENT, 'research')),
   };
   for (const list of Object.values(collections)) for (const item of list) item.sourceHash = sourceHashOf(item);
 

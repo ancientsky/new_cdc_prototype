@@ -10,5 +10,11 @@
   "letter": 0,
   "dataset": 12,
   "banner": 0,
-  "page": 12
+  "page": 12,
+  "media": 12,
+  "topic": 6,
+  "service": 12,
+  "publication": 0,
+  "labtest": 12,
+  "research": 12
 }

@@ -1,0 +1,23 @@
+{
+  "$id": "https://cdc-prototype/schemas/media.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "影音宣導素材（影片、動畫、Podcast）— 7.7 要求：有依據正本、有製作版本、有逐字稿",
+  "allOf": [{ "$ref": "_common.json" }],
+  "type": "object",
+  "required": ["mediaType", "producedAt", "transcriptMarkdown"],
+  "properties": {
+    "type": { "const": "media" },
+    "mediaType": { "enum": ["video", "animation", "podcast", "short"] },
+    "youtubeId": { "type": ["string", "null"], "description": "YouTube 影片 id；null＝原型無法驗證，顯示示意海報與頻道連結" },
+    "videoUrl": { "type": "string" },
+    "durationSeconds": { "type": "integer" },
+    "producedAt": { "type": "string", "format": "date", "description": "製作日期；與 basedOn 現行版 effectiveAt 比對" },
+    "basedOnVersionLabel": { "type": "string", "description": "畫面上印的「依 114.04.16 建議製作」" },
+    "transcriptMarkdown": { "type": "string", "description": "逐字稿（機讀；進索引與反向稽核）" },
+    "chapters": { "type": "array", "items": { "type": "object", "required": ["t", "label"], "properties": { "t": { "type": "integer" }, "label": { "type": "string" } } } },
+    "captions": { "type": "array", "items": { "type": "string" }, "description": "有字幕的語言代碼" },
+    "poster": { "type": "string", "description": "海報圖路徑（原型用 SVG 示意）" },
+    "series": { "type": "string" },
+    "targetGroups": { "type": "array", "items": { "type": "string" } }
+  }
+}

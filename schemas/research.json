@@ -1,0 +1,23 @@
+{
+  "$id": "https://cdc-prototype/schemas/research.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "研究計畫（委託／自行研究；成果報告、資料集、倫理審查）",
+  "allOf": [{ "$ref": "_common.json" }],
+  "type": "object",
+  "required": ["year", "projectStatus"],
+  "properties": {
+    "type": { "const": "research" },
+    "year": { "type": "integer" },
+    "projectNo": { "type": "string" },
+    "projectStatus": { "enum": ["planned", "ongoing", "completed", "published"] },
+    "fundingType": { "enum": ["commissioned", "in-house", "collaborative", "international"] },
+    "piUnit": { "type": "string", "description": "執行單位（學研機構名稱，不放個人姓名）" },
+    "abstractMarkdown": { "type": "string" },
+    "objectives": { "type": "array", "items": { "type": "string" } },
+    "reportDoc": { "type": "string", "description": "成果報告文件 id 或 URL" },
+    "datasets": { "type": "array", "items": { "type": "string" } },
+    "publications": { "type": "array", "items": { "type": "string" } },
+    "irb": { "type": "object", "properties": { "required": { "type": "boolean" }, "approvalNo": { "type": "string" }, "committee": { "type": "string" } } },
+    "budgetNtd": { "type": "integer" }
+  }
+}

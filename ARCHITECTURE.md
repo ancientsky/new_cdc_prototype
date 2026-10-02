@@ -360,3 +360,62 @@ canonical、hreflang × 7 + x-default、meta description（= summary）、og:*�
 - 要用到別人的東西而它還不存在：先寫最小 stub 在**自己的**檔案裡，或在 prompt 回報，不要去改別人的檔案。
 - 不要 `git commit`／`git push`；由整合者統一提交。
 - 中文正本文字請用台灣用語；不放真人姓名與個資。
+
+---
+
+## 11. 第二輪擴充（2026-10-02）：宣導視覺、影音、專區與機關型區塊
+
+> 動機：現行官網首頁有大 Banner 輪播、YouTube 影片輪播、小 Banner 專區連結列，以及「人才招募、採購公告、資料申請、研究計畫、出版品、檢驗、通報、署長信箱、疾管署介紹」等機關型區塊。全部納入，但照同一套治理欄位，且**首屏仍以問題框與疫情狀態為先**。
+
+### 11.1 新增內容型別（schemas/ 已就位；`content/` 子目錄：media、topics、services、publications、labtests、research）
+
+| 型別 | 路徑 | 用途 | 治理重點 |
+| --- | --- | --- | --- |
+| `media` | `/media/{id}/` | 影片、動畫、Podcast | **必填 `basedOn` 與 `transcriptMarkdown`**；`producedAt` 早於正本現行版 `effectiveAt` ⇒ 自動加註「本影片依 {basedOnVersionLabel} 製作，建議已於 {revisedAt} 修訂」、退出白名單、待辦；逐字稿進索引（可引用到影片＋章節時間）與反向稽核 |
+| `topic` | `/topics/{slug}/` | 專區／專題（防災須知、PrEP、匿名篩檢、抗生素抗藥性…）取代小 Banner 列 | `endAt` 到期自動從首頁列退場；`links[]` 外部連結由 `scripts/fetch-data.mjs --check-links` 在 CI 做 HEAD 檢查，`status: broken` ⇒ 待辦 `link-broken` |
+| `service` | `/apply/{slug}/` | 申請／服務：個案資料申請、檢驗委託、接種證明（黃皮書）、疫苗基金捐款、旅遊醫學門診、研究資料申請… | 步驟、應備文件、處理天數、法源、表單；JSON-LD `GovernmentService` |
+| `publication` | `/publications/{id}/` | 疫情報導（1985 起卷期）、年報、手冊、海報 | 書目（ISBN、GPN、版次）；`reviewPeriodMonths: 0`（出版品不逾期，是紀錄）；JSON-LD `PublicationIssue`／`Book`；RSS `feeds/publications.xml` |
+| `labtest` | `/lab/{id}/` | 檢驗項目結構化表：疾病 × 檢體 × 容器 × 保存運送 × 時限 × 檢驗單位 | 專業版索引以「結構化句」入索引（「登革熱急性期血清：2–5 mL，發病 7 日內，4°C 冷藏 48 小時內送達」）；`sendWithinHours` 與主檔 `notifyWithinHours` 一致性檢查 |
+| `research` | `/research/{id}/` | 研究計畫：年度、狀態、執行單位（機構名）、成果報告、資料集、IRB | 專業版；`projectStatus` 流轉；成果報告以 `document` 連結 |
+
+`news` 型別新增欄位（人才招募 `recruit`、採購公告 `procurement`、其他 `other`）：`deadlineAt`、`refNo`、`applyUrl`、`positions`、`budgetNtd`。治理：`deadlineAt < today` ⇒ `gov.closed = true`、生命週期標籤「已截止」、退出首頁與 `/notices/` 進行中列表（保留在「已截止」頁籤），不產生待辦。
+
+### 11.2 新頁面與擺放位置
+
+| 路徑 | 內容 | 說明 |
+| --- | --- | --- |
+| `/`（調整） | 做法 A 右側「本期宣導」卡：主 Banner ＋ 最多 3 則輪播（不自動播、有暫停、鍵盤可操作、圖只當氛圍、文字全 HTML）；新聞下方新增「影音」三格（點擊才載入 YouTube，`youtube-nocookie`；無 id 顯示示意海報）；再下方「專區與資源」一列（`topic` 進行中者，最多 6 個）；頁尾上方「更多服務」小列（連 `/services/`） | 首屏規則不變：問題框與疫情狀態永遠在最前；流感高峰（做法 B）時宣導卡退到態勢卡下方 |
+| `/campaigns/` | 全部宣導 Banner：進行中／即將開始／已結束，每則顯示權責單位、上下架日、CTA、關聯內容 | 治理可見：這就是 Banner 的「資料目錄」 |
+| `/media/`、`/media/{id}/` | 影音庫（依疾病／任務／語言字幕篩選）；詳頁：點擊載入播放器、章節、逐字稿（可搜尋、可複製）、依據正本與版本標示、狀況層加註、相關頁面 | 7.7 第 4 點：畫面與說明欄標「依 … 版製作」；逐字稿是 AI 唯一可引用的影片內容 |
+| `/topics/{slug}/` | 專區頁：簡介、連結（內部／外部標示、最後檢查日、失連警示）、相關內容 | |
+| `/services/` | 「應用專區」八圖示入口（通報、檢驗、宣導素材、統計專區、申請、研究、出版品、疫苗基金）給專業與研究媒體；同一列也放在 `/pro/` | 民眾首頁只放「更多服務」一行，不放八圖示（先期構想：民眾腦中沒有應用專區） |
+| `/apply/`、`/apply/{slug}/` | 申請專區：依對象（民眾／醫療院所／研究者／地方衛生局）分組；詳頁為步驟式 checklist | |
+| `/publications/`、`/publications/{id}/` | 出版品：疫情報導依卷期瀏覽、年報、手冊、海報；書目完整；篇目列表 | |
+| `/lab/`、`/lab/{id}/` | 檢驗專區（專業）：檢驗項目表（可依疾病、檢體、檢驗單位篩選）、認可檢驗機構說明、送驗單、檢驗委託 → `/apply/` | |
+| `/report/` | 通報專區（專業）：**法定傳染病通報時限表由 `master/diseases.json` 自動產生**（類別、時限、病例定義連結、檢驗項目連結），通報系統（NIDRS）、流程、法規、表單；民眾：疑似群聚請撥 1922 | 零維護：主檔改了表就改 |
+| `/research/`、`/research/{id}/` | 研究計畫：年度、狀態篩選；詳頁含成果報告、資料集、IRB、相關出版品；研究資料申請 → `/apply/` | |
+| `/notices/`（頁籤：人才招募／採購公告／其他訊息／已截止）、`/news/{id}/` | 用 `news` 型別 `newsType` 區分；每則顯示截止日倒數、字號、報名／投標外部連結 | |
+| `/about/`（擴充為 hub） | 署介紹：使命與法定職掌、**組織架構由 `master/units.json` 自動產生**（每單位：職掌、Steward、負責內容數、白名單數——來自 `site.gov.byOwner`）、六區管中心與轄區、歷史沿革、署長（職稱與職掌，不放真名）、聯絡資訊、官網改版小組（既有） | |
+| `/contact/` | 署長信箱（原型：表單分類→自動對應權責單位→預覽信件→`mailto:` 或複製；明示個資處理與 1922 分流；回報 AI 錯答另走答案頁回報鍵）、1922、各單位聯絡 | 正式環境接署內表單系統 |
+
+### 11.3 索引與答案引擎
+
+- 民眾索引新增：`media`（逐字稿分章節切塊，`url` 帶 `#t=秒數`）、`topic`（簡介）、`service`（步驟每步一句、應備文件、處理天數）、`publication`（摘要）。
+- 專業索引新增：`labtest`（每個檢體一塊，結構化句）、`research`（摘要）、`notice`（通函以外不入）。
+- 意圖新增：`apply`（怎麼申請、要帶什麼、幾天）、`lab`（檢體、容器、送驗，專業）、`notify`（通報時限，可從主檔直接回答：「{疾病}為第{類}類法定傳染病，應於 {N} 小時內通報」—— 結構化回答，不走檢索）。
+- 評估集新增 ≥ 25 題（apply 8、lab 6、notify 6、media 版本題 3、notice 2）。
+
+### 11.4 後台
+
+- 上架表單型別新增六種；影音型別強制 `basedOn` 與逐字稿欄位，預處理對逐字稿做反向稽核與數字一致性。
+- 資料目錄五類資產補「新聞稿」「影音宣導素材」兩類（7.7 第 1 點）。
+- 待辦新頁籤：`link-broken`、`media-outdated`。
+- 儀表板新增：影音有逐字稿比例、影音依據正本現行比例、專區外部連結健康度、公告已截止未封存數。
+
+### 11.5 所有權（第二輪）
+
+- A2 治理／API／SEO：`scripts/lib/{governance,emit-api,emit-seo,jsonld,openapi}.mjs`、`scripts/fetch-data.mjs`（連結檢查）、`tests/**`
+- B2 內容：`content/{media,topics,services,publications,labtests,research,news,pages,banners}/**`、`src/public/img/**`（SVG 示意圖）
+- C2 民眾端／專業端模板：`src/templates/public/*`（含新頁）、`src/templates/pro/*`、`src/templates/layout.mjs`、`src/styles/*`（answer.css、admin.css 除外）、`src/client/{ui,i18n,charts,pro}.js`
+- D2 引擎：`src/client/answer/**`、`src/styles/answer.css`、`scripts/lib/index-builder.mjs`、`eval/**`、`content/governance/eval-set.json`
+- E2 後台與文件：`src/templates/admin/**`、`src/client/admin/**`、`src/styles/admin.css`、`docs/**`、`README.md`、`src/templates/public/guide.mjs`

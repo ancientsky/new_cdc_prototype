@@ -1,0 +1,27 @@
+{
+  "$id": "https://cdc-prototype/schemas/publication.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "出版品（疫情報導、年報、手冊、多媒體；書目完整：ISBN、GPN、版次）",
+  "allOf": [{ "$ref": "_common.json" }],
+  "type": "object",
+  "required": ["series", "pubType"],
+  "properties": {
+    "type": { "const": "publication" },
+    "pubType": { "enum": ["bulletin", "annual-report", "manual", "poster", "book", "multimedia", "statistics"] },
+    "series": { "type": "string", "description": "系列名，例如「疫情報導」「年報」" },
+    "seriesEn": { "type": "string" },
+    "volume": { "type": ["integer", "string"] },
+    "issue": { "type": ["integer", "string"] },
+    "edition": { "type": "string", "description": "版次" },
+    "isbn": { "type": "string" },
+    "issn": { "type": "string" },
+    "gpn": { "type": "string", "description": "政府出版品統一編號" },
+    "pages": { "type": "integer" },
+    "authors": { "type": "array", "items": { "type": "string" } },
+    "abstractMarkdown": { "type": "string" },
+    "articles": { "type": "array", "items": { "type": "object", "required": ["title"], "properties": { "title": { "type": "string" }, "authors": { "type": "array", "items": { "type": "string" } }, "pages": { "type": "string" }, "doi": { "type": "string" }, "abstract": { "type": "string" }, "diseases": { "type": "array", "items": { "type": "string" } } } } },
+    "pdfUrl": { "type": "string" },
+    "price": { "type": "string" },
+    "cover": { "type": "string" }
+  }
+}

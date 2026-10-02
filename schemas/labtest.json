@@ -1,0 +1,37 @@
+{
+  "$id": "https://cdc-prototype/schemas/labtest.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "檢驗項目（結構化：疾病 × 檢體 × 容器 × 保存運送 × 時限 × 檢驗單位）",
+  "allOf": [{ "$ref": "_common.json" }],
+  "type": "object",
+  "required": ["disease", "specimens", "labs"],
+  "properties": {
+    "type": { "const": "labtest" },
+    "disease": { "type": "string", "pattern": "^disease\\." },
+    "specimens": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name", "container", "volume", "storage", "transport"],
+        "properties": {
+          "name": { "type": "string", "description": "急性期血清、咽喉拭子、糞便…" },
+          "timing": { "type": "string", "description": "採檢時機，例如「發病 7 日內」" },
+          "container": { "type": "string" },
+          "volume": { "type": "string" },
+          "storage": { "type": "string", "description": "保存條件" },
+          "transport": { "type": "string", "description": "運送條件" },
+          "tests": { "type": "array", "items": { "type": "string" }, "description": "可做檢驗：RT-PCR、NS1 抗原、IgM…" },
+          "turnaroundDays": { "type": "integer" },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "labs": { "type": "array", "items": { "enum": ["cdc-lab", "certified-lab", "hospital-lab", "regional-lab"] } },
+    "sendWithinHours": { "type": "integer", "description": "送驗時限" },
+    "formDoc": { "type": "string", "description": "送驗單文件 id 或 URL" },
+    "caseDefinitionDoc": { "type": "string" },
+    "biosafetyLevel": { "type": "string" },
+    "notesMarkdown": { "type": "string" }
+  }
+}

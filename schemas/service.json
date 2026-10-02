@@ -1,0 +1,24 @@
+{
+  "$id": "https://cdc-prototype/schemas/service.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "申請／服務項目（資料申請、檢驗委託、接種證明、疫苗基金捐款、旅遊醫學門診…）",
+  "allOf": [{ "$ref": "_common.json" }],
+  "type": "object",
+  "required": ["slug", "serviceType", "whoCanApply", "steps"],
+  "properties": {
+    "type": { "const": "service" },
+    "slug": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "serviceType": { "enum": ["data-request", "lab-request", "certificate", "donation", "clinic", "notification", "license", "other"] },
+    "whoCanApply": { "type": "array", "items": { "type": "string" } },
+    "introMarkdown": { "type": "string" },
+    "requiredDocuments": { "type": "array", "items": { "type": "string" } },
+    "steps": { "type": "array", "minItems": 1, "items": { "type": "object", "required": ["title"], "properties": { "title": { "type": "string" }, "text": { "type": "string" }, "who": { "type": "string" }, "days": { "type": "integer" } } } },
+    "slaDays": { "type": "integer", "description": "承諾處理天數" },
+    "fee": { "type": "string" },
+    "legalBasis": { "type": "array", "items": { "type": "string" } },
+    "forms": { "type": "array", "items": { "type": "object", "required": ["label", "href"], "properties": { "label": { "type": "string" }, "href": { "type": "string" }, "format": { "type": "string" }, "machineReadable": { "type": "boolean" } } } },
+    "applyUrl": { "type": "string" },
+    "contact": { "type": "string" },
+    "faq": { "type": "array", "items": { "type": "object", "required": ["q", "a"], "properties": { "q": { "type": "string" }, "a": { "type": "string" } } } }
+  }
+}

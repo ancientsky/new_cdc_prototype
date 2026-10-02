@@ -1,0 +1,24 @@
+{
+  "$id": "https://cdc-prototype/schemas/topic.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "專區／專題（取代現行小 Banner 連結列：防災避難須知、PrEP、匿名篩檢…）",
+  "allOf": [{ "$ref": "_common.json" }],
+  "type": "object",
+  "required": ["slug", "links"],
+  "properties": {
+    "type": { "const": "topic" },
+    "slug": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "kind": { "enum": ["campaign", "resource-hub", "program", "emergency"] },
+    "introMarkdown": { "type": "string" },
+    "image": { "type": "string", "description": "示意圖（SVG），只當氛圍" },
+    "startAt": { "type": "string", "format": "date" },
+    "endAt": { "type": "string", "format": "date", "description": "有填則到期自動從首頁列退場，專區頁保留並標「已結束」" },
+    "links": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "object", "required": ["label", "href"], "properties": { "label": { "type": "string" }, "href": { "type": "string" }, "external": { "type": "boolean" }, "note": { "type": "string" }, "lastCheckedAt": { "type": "string", "format": "date" }, "status": { "enum": ["ok", "broken", "unchecked"] } } }
+    },
+    "contentIds": { "type": "array", "items": { "type": "string" }, "description": "站內相關內容 id（疾病、FAQ、文件、影片…）" },
+    "priority": { "type": "integer" }
+  }
+}

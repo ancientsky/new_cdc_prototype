@@ -83,6 +83,12 @@ export function pathOf(item) {
     case 'clarification': return `/factcheck/#${item.id}`;
     case 'dataset': return `/data/#${item.id}`;
     case 'page': return `/${String(item.slug ?? slugOf(item)).replace(/^\/+|\/+$/g, '')}/`;
+    case 'media': return `/media/${slugOf(item)}/`;
+    case 'topic': return `/topics/${item.slug ?? slugOf(item)}/`;
+    case 'service': return `/apply/${item.slug ?? slugOf(item)}/`;
+    case 'publication': return `/publications/${slugOf(item)}/`;
+    case 'labtest': return `/lab/${slugOf(item)}/`;
+    case 'research': return `/research/${slugOf(item)}/`;
     default: return '/';
   }
 }
