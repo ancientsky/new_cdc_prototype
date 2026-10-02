@@ -282,8 +282,17 @@ export const SOURCES = [
       const lifted = titles.filter((t) => /解除|取消|降級|lift|remov/i.test(t));
       const effs = effKey ? rawRows.map((r) => toISODate(r[effKey])).filter(Boolean).sort() : [];
       console.log(`[fetch]   等級表診斷：${sevKey ?? '等級欄'} 值分布 ${JSON.stringify(cnt(rawRows.map((r) => String(r[sevKey] ?? ''))).slice(0, 8))}；生效日範圍 ${effs[0] ?? '?'} ～ ${effs.at(-1) ?? '?'}；標題含「解除／取消／降級」${lifted.length} 則${lifted.length ? `（如 ${lifted.slice(0, 3).map((t) => t.slice(0, 40)).join('｜')}）` : ''}`);
-      const l2 = norm.filter((r) => r.LevelCode === 2 && !stale.includes(r));
-      console.log(`[fetch]   等級表診斷：第二級未排除列 ${l2.length}，依疾病 ${JSON.stringify(cnt(l2.map((r) => r.Disease)).slice(0, 8))}；樣本 ${JSON.stringify((l2.slice(-2)).map(({ __raw }) => __raw)).slice(0, 700)}`);
+      // 現行（聚合後）各國最高等級與疾病，依等級分析：年份分布、疾病分布、有無 ISO 碼
+      const cur = data.flatMap((c) => (c.Diseases ?? []).map((d) => ({ ...d, ISO2: c.ISO2, Country: c.Country })));
+      for (const lv of [3, 2, 1]) {
+        const xs = cur.filter((d) => d.LevelCode === lv);
+        console.log(`[fetch]   等級表診斷 L${lv}：現行 ${xs.length} 筆；年份 ${JSON.stringify(cnt(xs.map((d) => String(d.StartDate ?? '').slice(0, 4))))}；疾病 ${JSON.stringify(cnt(xs.map((d) => d.Disease)).slice(0, 10))}`);
+        if (lv <= 2) console.log(`[fetch]   等級表診斷 L${lv} 名單：${xs.map((d) => `${d.Country}/${d.Disease}/${d.StartDate}`).join('、').slice(0, 900)}`);
+      }
+      const liftedRows = norm.filter((r) => r.LevelCode === 0);
+      console.log(`[fetch]   等級表診斷 解除：${liftedRows.length} 則；年份 ${JSON.stringify(cnt(liftedRows.map((r) => String(r.StartDate ?? '').slice(0, 4))))}；疾病 ${JSON.stringify(cnt(liftedRows.map((r) => r.Disease)).slice(0, 8))}；無 ISO 碼 ${liftedRows.filter((r) => !r.ISO2).length} 則（areaDesc 如 ${JSON.stringify(cnt(liftedRows.filter((r) => !r.ISO2).map((r) => r.Country)).slice(0, 5))}）`);
+      const noIso = norm.filter((r) => !r.ISO2 && r.LevelCode > 0);
+      console.log(`[fetch]   等級表診斷 無 ISO 碼警示：${noIso.length} 則；areaDesc ${JSON.stringify(cnt(noIso.map((r) => r.Country)).slice(0, 8))}；areaDetail 非空列 ${norm.filter((r) => r.Area).length}`);
       assertPlausibleLevels(data);
       return data;
     },
