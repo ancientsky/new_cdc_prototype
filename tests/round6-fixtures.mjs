@@ -39,11 +39,11 @@ const PAGES = [
 /** 把國際合作區塊加進 site（要在 applyGovernance 之前：用 govern(today, (s) => addIntl(s))） */
 export function addIntl(site) {
   const base = (id, extra) => ({
-    id, owner: 'unit.international', sourceLang: 'en', publishedAt: '2026-09-20', reviewedAt: '2026-09-30', reviewPeriodMonths: 12, audience: ['public', 'professional'],
+    id, owner: 'unit.planning', sourceLang: 'en', publishedAt: '2026-09-20', reviewedAt: '2026-09-30', reviewPeriodMonths: 12, audience: ['public', 'professional'],
     languages: { en: { status: 'source' }, 'zh-TW': { status: 'reviewed', ...REV }, ja: { status: 'none' } }, ...extra,
   });
-  if (!site.unitById.has('unit.international')) {
-    const u = { id: 'unit.international', name: '國際合作組', nameEn: 'Division of International Cooperation', kind: 'division' };
+  if (!site.unitById.has('unit.planning')) {
+    const u = { id: 'unit.planning', name: '企劃組', nameEn: 'Division of Planning and Coordination', kind: 'division' };
     site.master.units.push(u); site.unitById.set(u.id, u);
   }
   const pageIds = [];
@@ -59,7 +59,7 @@ export function addIntl(site) {
   const svc = mk(base('service.international-training-application', {
     type: 'service', slug: 'international-training-application', title: 'Apply for Taiwan CDC international training', summary: 'Foreign health officials can apply for FETP and laboratory training.',
     whoCanApply: ['Foreign health officials'], steps: [{ title: 'Submit the application form', text: 'x', days: 0 }, { title: 'Review', text: 'y', days: 10 }, { title: 'Notification', text: 'z', days: 5 }], slaDays: 15,
-    contact: 'Division of International Cooperation, intl@example.gov.tw',
+    contact: 'Division of Planning and Coordination, intl@example.gov.tw',
     i18n: { 'zh-TW': { title: '外國衛生人員國際訓練申請', summary: '外國衛生人員可申請 FETP 與實驗室訓練。', whoCanApply: ['外國衛生人員'], steps: [{ title: '送出申請表' }, { title: '審查' }, { title: '通知' }] } },
   }));
   addItem(site, svc);

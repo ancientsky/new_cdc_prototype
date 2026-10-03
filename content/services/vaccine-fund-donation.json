@@ -2,7 +2,7 @@
   "id": "service.vaccine-fund-donation",
   "type": "service",
   "title": "疫苗基金捐款",
-  "owner": "unit.vaccine",
+  "owner": "unit.acute-infectious",
   "publishedAt": "2024-01-01",
   "reviewedAt": "2026-07-01",
   "reviewPeriodMonths": 12,
@@ -88,7 +88,7 @@
     {
       "title": "開立並寄送收據",
       "text": "寄送正式收據並上傳財政部報稅資料（示意）。",
-      "who": "預防接種組",
+      "who": "急性傳染病組",
       "days": 7
     }
   ],
@@ -113,7 +113,7 @@
       "machineReadable": false
     }
   ],
-  "contact": "疾病管制署預防接種組（總機 02-2395-9825）；一般諮詢請撥防疫專線 1922（國外 +886-800-001922）",
+  "contact": "疾病管制署急性傳染病組（總機 02-2395-9825）；一般諮詢請撥防疫專線 1922（國外 +886-800-001922）",
   "faq": [
     {
       "q": "可以指定捐給某一種疫苗嗎？",

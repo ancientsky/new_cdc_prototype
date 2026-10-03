@@ -2,7 +2,7 @@
   "id": "service.vaccination-record-reissue",
   "type": "service",
   "title": "預防接種紀錄與接種證明補發",
-  "owner": "unit.vaccine",
+  "owner": "unit.acute-infectious",
   "publishedAt": "2024-06-01",
   "reviewedAt": "2026-05-20",
   "reviewPeriodMonths": 12,
@@ -105,7 +105,7 @@
       "machineReadable": false
     }
   ],
-  "contact": "疾病管制署預防接種組（總機 02-2395-9825）；一般諮詢請撥防疫專線 1922（國外 +886-800-001922）；補發請洽各地衛生所",
+  "contact": "疾病管制署急性傳染病組（總機 02-2395-9825）；一般諮詢請撥防疫專線 1922（國外 +886-800-001922）；補發請洽各地衛生所",
   "faq": [
     {
       "q": "小時候的紀錄查不到怎麼辦？",

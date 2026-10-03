@@ -596,7 +596,7 @@ API（`scripts/lib/emit-api.mjs`）：`/v1/country-levels.json` 原樣輸出 dat
 
 ### 14.3 國際合作區塊內容（W1 擁有）
 
-全部 `sourceLang: 'en'`，附 zh-TW reviewed 譯文（ja 可選）。owner 新增單位 `unit.international`（國際合作組；看 content/master/units 的格式）。
+全部 `sourceLang: 'en'`，附 zh-TW reviewed 譯文（ja 可選）。owner 用既有單位 `unit.planning`（企劃組，國際合作為其業務；疾管署沒有獨立的國際合作組）（看 content/master/units 的格式）。
 - `topic.international-cooperation`（International Cooperation 入口；sections 連下列各頁）。
 - `page.*`（type page）：`ihr-focal-point`（IHR National Focal Point：24/7 窗口、事件通報、WHO 聯繫方式；基於 IHR 2005）、`multilateral`（WHA／WHO 技術會議、APEC Health Working Group、GHSA、全球疫情警報與反應網路）、`bilateral`（雙邊 MOU 與合作：美、日、歐盟、東南亞與新南向夥伴；表格：國家／機構、合作主題、簽署年、狀態）、`training`（Taiwan CDC 國際訓練：FETP、實驗室、都治／結核、登革熱防治工作坊；申請方式、年度場次）、`global-health-security`（抗藥性、疫苗、邊境檢疫合作）、`publications-en`（Taiwan Epidemiology Bulletin、英文年報：連既有 publication）。
 - `news.*` 英文新聞 3 則（sourceLang en）：MOU 簽署、研習營開訓、WHA 技術會議參與。

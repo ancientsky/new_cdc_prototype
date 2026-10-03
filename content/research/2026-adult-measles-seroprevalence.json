@@ -2,7 +2,7 @@
   "id": "research.2026-adult-measles-seroprevalence",
   "type": "research",
   "title": "成人麻疹抗體血清流行病學調查（1966–1990 年出生世代）",
-  "owner": "unit.vaccine",
+  "owner": "unit.acute-infectious",
   "publishedAt": "2026-01-15",
   "reviewedAt": "2026-08-20",
   "reviewPeriodMonths": 12,
@@ -68,7 +68,7 @@
   "year": 2026,
   "projectStatus": "ongoing",
   "fundingType": "collaborative",
-  "piUnit": "某國立大學醫學院與疾管署預防接種組（合作）",
+  "piUnit": "某國立大學醫學院與疾管署急性傳染病組（合作）",
   "budgetNtd": 3600000,
   "abstractMarkdown": "MMR 接種建議於 2025-04-16 修訂，將成人評估對象擴大為 1966 年（含）以後出生者。本計畫以健檢剩餘血清抽樣，估計各出生世代之麻疹 IgG 抗體盛行率，評估免疫缺口，並分析自費接種政策之涵蓋情形。",
   "objectives": [

@@ -1,6 +1,6 @@
 # 新官網原型 × 疫苗及流感藥劑地圖（vaxmap-next）整合方案
 
-給同事（預防接種組、疫情中心、公關室、OASIS）與資訊室看。分四層，由「現在就能做」到「要一起治理」；最後一節是分階段時程。
+給同事（急性傳染病組、疫情中心、公關室、OASIS）與資訊室看。分四層，由「現在就能做」到「要一起治理」；最後一節是分階段時程。
 
 - 本站（新官網原型）：<https://ancientsky.github.io/new_cdc_prototype/>
 - vaxmap-next（改良版接種點地圖，**概念原型、非官方站**）：<https://ancientsky.github.io/vaxmap-next/>
@@ -109,7 +109,7 @@ https://ancientsky.github.io/vaxmap-next/#g=flu,covid&p=flu,pcv20&today=1&stock=
   "type": "dataset",
   "category": "vaccine",
   "title": "疫苗及流感藥劑接種點與庫存快照",
-  "owner": "unit.vaccine",
+  "owner": "unit.acute-infectious",
   "license": "OGDL-1.0",
   "updateFrequency": "daily",
   "formats": ["JSON"],
@@ -122,13 +122,13 @@ https://ancientsky.github.io/vaxmap-next/#g=flu,covid&p=flu,pcv20&today=1&stock=
 
 | 欄位 | 值 | 說明 |
 | --- | --- | --- |
-| Owner | `unit.vaccine`（預防接種組） | 資料內容的權責；技術維運是 vaxmap 維護者（原型階段）→ 日後資訊室 |
+| Owner | `unit.acute-infectious`（急性傳染病組） | 資料內容的權責；技術維運是 vaxmap 維護者（原型階段）→ 日後資訊室 |
 | 更新頻率 | 每日兩次 | 現有 `daily` 容許 2 天；vaxmap 的 `freshness.yml` 門檻是 **36 小時**，兩者要對齊（見下） |
-| 授權 | 原型暫填 OGDL-1.0 | 資料源自 vaxmap.cdc.gov.tw 的公開資料，正式登錄前請預防接種組確認授權與是否可再散布 |
+| 授權 | 原型暫填 OGDL-1.0 | 資料源自 vaxmap.cdc.gov.tw 的公開資料，正式登錄前請急性傳染病組確認授權與是否可再散布 |
 | 正本位置 | vaxmap 的 `data` 分支／Pages 發布的 `data/hospitals.json` | 本站不存副本，只存 metadata；`lastUpdated` 由排程讀 `meta.generatedAt` |
 | 對外 API | `v1/vaccine-sites.json` | 第二階段先提供 metadata（筆數、縣市分布、資料時間）；第三階段才是完整查詢（見第 5 節） |
 
-**時效告警對齊**：本站 `DATASET_FREQ_DAYS`（`scripts/lib/governance.mjs`）只有 `daily: 2`（天）。建議新增 `twice-daily: 1.5`（36 小時），或資料集欄位 `maxAgeHours`，並讓待辦文字寫小時。超過 36 小時未更新 → 產生待辦給預防接種組，與 vaxmap 每日 09:00 的 `freshness.yml` 失敗通知是**同一個門檻、兩邊各一道**：vaxmap 通知維護者「擷取壞了」，本站待辦通知 Owner「資料已不可信，請決定是否在疫苗頁加註」。
+**時效告警對齊**：本站 `DATASET_FREQ_DAYS`（`scripts/lib/governance.mjs`）只有 `daily: 2`（天）。建議新增 `twice-daily: 1.5`（36 小時），或資料集欄位 `maxAgeHours`，並讓待辦文字寫小時。超過 36 小時未更新 → 產生待辦給急性傳染病組，與 vaxmap 每日 09:00 的 `freshness.yml` 失敗通知是**同一個門檻、兩邊各一道**：vaxmap 通知維護者「擷取壞了」，本站待辦通知 Owner「資料已不可信，請決定是否在疫苗頁加註」。
 
 ---
 
@@ -187,14 +187,14 @@ https://ancientsky.github.io/vaxmap-next/#g=flu,covid&p=flu,pcv20&today=1&stock=
 
 | 資產 | Owner（內容負責） | Steward／維運 |
 | --- | --- | --- |
-| 疫苗主檔、公費對象、時程（本站） | 預防接種組 | 預防接種組 Data Steward |
-| 院所＋庫存快照（`dataset.vaccine-sites`） | 預防接種組 | 原型：vaxmap 維護者；正式：資訊室（擷取機器、排程、部署） |
-| 接種資訊專區（`info.html`，源自疾管署「疫苗接種專區」頁面） | 預防接種組＋公關室 | OASIS（翻譯詞彙表）；翻譯為機器翻譯、需標示 |
+| 疫苗主檔、公費對象、時程（本站） | 急性傳染病組 | 急性傳染病組 Data Steward |
+| 院所＋庫存快照（`dataset.vaccine-sites`） | 急性傳染病組 | 原型：vaxmap 維護者；正式：資訊室（擷取機器、排程、部署） |
+| 接種資訊專區（`info.html`，源自疾管署「疫苗接種專區」頁面） | 急性傳染病組＋公關室 | OASIS（翻譯詞彙表）；翻譯為機器翻譯、需標示 |
 | 兩站對照表、深連結規則 | OASIS | 資訊室（變更 URL 結構時通知） |
 
 ### 4.2 資料日顯示規則（與本站「數字的來源卡」一致）
 
-- 凡出現院所數、庫存相關數字，**同時顯示資料時間**（`meta.generatedAt`，臺北時間到分鐘）與資料來源（預防接種組、vaxmap 快照）。
+- 凡出現院所數、庫存相關數字，**同時顯示資料時間**（`meta.generatedAt`，臺北時間到分鐘）與資料來源（急性傳染病組、vaxmap 快照）。
 - 本站用既有的來源卡（`sourceCard`：權責單位、資料日、授權），資料日取 `generatedAt`，不取本站建置日。
 - 資料超過 36 小時：不顯示數字，改顯示「資料更新中，請直接開啟地圖查看最新資料」。
 - 資料日與「疫苗開打日」並列時避免誤導（例：開打日前庫存少是正常，不是缺貨）。
@@ -210,7 +210,7 @@ vaxmap 現有 `legend.note` 與「實際接種前務必先電洽院所」語意�
 ### 4.4 無障礙與多語
 
 - 兩站都以 WCAG 2.1 AA 為目標；vaxmap 有 Playwright 與無障礙測試，本站有無障礙說明頁。深連結按鈕統一標示「開新視窗」：視覺箭頭 ↗＋螢幕閱讀器文字＋`title`（已在 `vaxmapButton()` 實作，七語）。
-- 語言：vaxmap 八語（zh-Hant、en、ja、ko、id、vi、th、tl），本站七語（zh-TW、en、ja、tl、vi、id、th）。差一個：**ko**。處理：本站沒有 ko 頁，vaxmap 反向連結 ko 使用者到 `/en/`（見 1.3）；是否增設 ko 由預防接種組與公關室依僑外生人數決定。**tl 兩邊都有**。
+- 語言：vaxmap 八語（zh-Hant、en、ja、ko、id、vi、th、tl），本站七語（zh-TW、en、ja、tl、vi、id、th）。差一個：**ko**。處理：本站沒有 ko 頁，vaxmap 反向連結 ko 使用者到 `/en/`（見 1.3）；是否增設 ko 由急性傳染病組與公關室依僑外生人數決定。**tl 兩邊都有**。
 - 翻譯狀態標示：本站分「已審核」與「機器翻譯 · 待審核」；vaxmap 的翻譯也是 AI 初稿（`draft`），建議使用同樣的兩段標示用語。
 - 詞彙一致：疫苗與廠牌名稱以本站 `glossary.json`（locked 詞）為準，vaxmap 的 `translate-info.mjs` 詞彙表應由它輸出，避免「肺鏈」「肺炎鏈球菌疫苗」「PCV」各說各話。
 
@@ -237,9 +237,9 @@ vaxmap 現有 `legend.note` 與「實際接種前務必先電洽院所」語意�
 
 | 階段 | 內容 | 負責 | 驗收 |
 | --- | --- | --- | --- |
-| **第一階段：連結層＋資料目錄登錄** | 全站接種點入口改深連結（已完成）；vaxmap 加反向連結與語言互帶；`dataset.vaccine-sites` 登錄；`twice-daily`／36 小時門檻；免責文字統一 | 本站 Steward、vaxmap 維護者、預防接種組確認授權 | `grep antiflu.cdc.gov.tw\|vaxmap.cdc.gov.tw content src` 只剩資料來源用途；資料目錄看得到接種點資產；`VA008` 評估題更新 |
+| **第一階段：連結層＋資料目錄登錄** | 全站接種點入口改深連結（已完成）；vaxmap 加反向連結與語言互帶；`dataset.vaccine-sites` 登錄；`twice-daily`／36 小時門檻；免責文字統一 | 本站 Steward、vaxmap 維護者、急性傳染病組確認授權 | `grep antiflu.cdc.gov.tw\|vaxmap.cdc.gov.tw content src` 只剩資料來源用途；資料目錄看得到接種點資產；`VA008` 評估題更新 |
 | **第二階段：主檔對齊與元件** | 主檔加 `vaxmap` 欄位；vaxmap 讀 `v1/vaccines.json`；`summary.json` 縣市計數＋資料時間；態勢卡帶縣市；設計 token 對齊；考慮 Web Component | OASIS、資訊室、vaxmap | 疫苗頁顯示「某縣市 N 家（資料時間）」；對照表無孤兒 id；token 差異表清零 |
-| **第三階段：同一 API 閘道** | `api.cdc.gov.tw/v1/vaccine-sites`（查詢：`group`、`city`、`dist`、`stock`、`updatedAfter`；回傳含 `meta.dataDate`、授權、`owner`）；vaxmap 與本站都改讀它；擷取機器、排程、告警併入資訊室維運；`frame-ancestors` 白名單隨正式網域設定 | 資訊室、預防接種組 | 單一資料入口；兩站不再各自讀 `vaxmap.cdc.gov.tw`；時效告警在閘道層統一 |
+| **第三階段：同一 API 閘道** | `api.cdc.gov.tw/v1/vaccine-sites`（查詢：`group`、`city`、`dist`、`stock`、`updatedAfter`；回傳含 `meta.dataDate`、授權、`owner`）；vaxmap 與本站都改讀它；擷取機器、排程、告警併入資訊室維運；`frame-ancestors` 白名單隨正式網域設定 | 資訊室、急性傳染病組 | 單一資料入口；兩站不再各自讀 `vaxmap.cdc.gov.tw`；時效告警在閘道層統一 |
 
 ### 風險與待決
 

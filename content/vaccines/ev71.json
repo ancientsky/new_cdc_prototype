@@ -8,7 +8,7 @@
     "EV71 疫苗",
     "腸病毒疫苗"
   ],
-  "owner": "unit.vaccine",
+  "owner": "unit.acute-infectious",
   "publishedAt": "2023-06-01",
   "reviewedAt": "2026-04-22",
   "reviewPeriodMonths": 6,

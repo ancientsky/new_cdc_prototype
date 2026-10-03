@@ -8,7 +8,7 @@
     "水痘疫苗",
     "Chickenpox vaccine"
   ],
-  "owner": "unit.vaccine",
+  "owner": "unit.acute-infectious",
   "publishedAt": "2018-03-01",
   "reviewedAt": "2026-04-15",
   "reviewPeriodMonths": 6,

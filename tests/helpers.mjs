@@ -11,7 +11,7 @@ const LONG_TRANSCRIPT = '（旁白）出現發燒、頭痛、後眼窩痛、肌�
 export function mk(over = {}) {
   const type = over.type ?? 'faq';
   const base = {
-    id: `${ID_PREFIX[type] ?? type}.test-${Math.random().toString(36).slice(2, 8)}`, type, title: '測試內容', owner: 'unit.vaccine',
+    id: `${ID_PREFIX[type] ?? type}.test-${Math.random().toString(36).slice(2, 8)}`, type, title: '測試內容', owner: 'unit.acute-infectious',
     publishedAt: '2024-01-01', reviewedAt: '2026-09-01', reviewPeriodMonths: 6, status: 'published', audience: ['public'], sensitivity: 'public', license: 'OGDL-1.0',
     languages: { 'zh-TW': { status: 'source' } }, summary: '測試摘要', aiWhitelist: { requested: true, approvedBy: 'unit.oasis', approvedAt: '2026-09-01' },
   };

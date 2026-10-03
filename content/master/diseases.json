@@ -131,7 +131,7 @@
       "contact"
     ],
     "hasPage": false,
-    "owner": "unit.vaccine",
+    "owner": "unit.acute-infectious",
     "zhuyin": "ㄅ",
     "strokes": 5,
     "i18n": {
@@ -282,7 +282,7 @@
       "contact"
     ],
     "hasPage": false,
-    "owner": "unit.vaccine",
+    "owner": "unit.acute-infectious",
     "zhuyin": "ㄒ",
     "strokes": 3,
     "i18n": {
@@ -792,7 +792,7 @@
       "droplet"
     ],
     "hasPage": true,
-    "owner": "unit.vaccine",
+    "owner": "unit.acute-infectious",
     "zhuyin": "ㄅ",
     "strokes": 6,
     "i18n": {
@@ -819,7 +819,7 @@
       "other"
     ],
     "hasPage": false,
-    "owner": "unit.vaccine",
+    "owner": "unit.acute-infectious",
     "zhuyin": "ㄆ",
     "strokes": 10,
     "i18n": {
@@ -845,7 +845,7 @@
       "other"
     ],
     "hasPage": false,
-    "owner": "unit.vaccine",
+    "owner": "unit.acute-infectious",
     "zhuyin": "ㄒ",
     "strokes": 13,
     "i18n": {
@@ -1104,7 +1104,7 @@
       "contact"
     ],
     "hasPage": false,
-    "owner": "unit.vaccine",
+    "owner": "unit.acute-infectious",
     "zhuyin": "ㄌ",
     "strokes": 10,
     "i18n": {
@@ -1161,7 +1161,7 @@
       "droplet"
     ],
     "hasPage": false,
-    "owner": "unit.vaccine",
+    "owner": "unit.acute-infectious",
     "zhuyin": "ㄑ",
     "strokes": 9,
     "i18n": {
@@ -1525,7 +1525,7 @@
       "droplet"
     ],
     "hasPage": false,
-    "owner": "unit.vaccine",
+    "owner": "unit.acute-infectious",
     "zhuyin": "ㄑ",
     "strokes": 9,
     "i18n": {
@@ -1694,7 +1694,7 @@
       "contact"
     ],
     "hasPage": true,
-    "owner": "unit.vaccine",
+    "owner": "unit.acute-infectious",
     "zhuyin": "ㄕ",
     "strokes": 4,
     "note": "法定通報項目為「水痘併發症」；單純水痘不須通報",

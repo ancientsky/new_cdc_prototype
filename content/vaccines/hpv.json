@@ -8,7 +8,7 @@
     "HPV 疫苗",
     "子宮頸癌疫苗"
   ],
-  "owner": "unit.vaccine",
+  "owner": "unit.acute-infectious",
   "publishedAt": "2018-12-01",
   "reviewedAt": "2026-08-20",
   "reviewPeriodMonths": 6,

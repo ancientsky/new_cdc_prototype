@@ -2,7 +2,7 @@
   "id": "page.director",
   "type": "page",
   "title": "署長職掌與施政重點",
-  "owner": "unit.director",
+  "owner": "unit.secretariat",
   "publishedAt": "2026-10-01",
   "reviewedAt": "2026-10-01",
   "reviewPeriodMonths": 12,
@@ -48,7 +48,7 @@
     "署長",
     "職掌",
     "施政重點",
-    "署長室",
+    "秘書室",
     "組織"
   ],
   "slug": "about/director",

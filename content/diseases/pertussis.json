@@ -24,8 +24,8 @@
   "transmission": [
     "droplet"
   ],
-  "owner": "unit.vaccine",
-  "steward": "預防接種組承辦人",
+  "owner": "unit.acute-infectious",
+  "steward": "急性傳染病組承辦人",
   "publishedAt": "2018-03-01",
   "reviewedAt": "2026-02-10",
   "reviewPeriodMonths": 12,

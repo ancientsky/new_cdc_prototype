@@ -51,7 +51,7 @@ CI 會跑三道關卡，任何一道不過就不能合併：（1）schema 與參
 
 **誰、做什麼：**
 
-1. **預防接種組 Steward** 在 `content/documents/` 新增一個**獨立檔案** `mmr-recommendation.2025-04-16.json`（不要覆蓋舊檔）：`family` 同 `doc.mmr-recommendation`、新的 `version`、`effectiveAt`、`supersedes` 指向舊版 id、填 `changes`（逐段前後差異）、貼上 `machineReadableMarkdown`。`supersededBy` 與 `isCurrent` **不要填**。
+1. **急性傳染病組 Steward** 在 `content/documents/` 新增一個**獨立檔案** `mmr-recommendation.2025-04-16.json`（不要覆蓋舊檔）：`family` 同 `doc.mmr-recommendation`、新的 `version`、`effectiveAt`、`supersedes` 指向舊版 id、填 `changes`（逐段前後差異）、貼上 `machineReadableMarkdown`。`supersededBy` 與 `isCurrent` **不要填**。
 2. 開 PR，CI 通過後合併。
 
 **系統自動做的事（同一次建置）：**

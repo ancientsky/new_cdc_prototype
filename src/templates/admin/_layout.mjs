@@ -27,7 +27,7 @@ export function layout(ctx, { title, description, body, scripts = [], adminKey =
   <a class="adm-brand" href="${url('/admin/', { noLang: true })}"><strong>內容管理後台</strong><span>疾管署 AI-ready 新官網原型 · 示範</span></a>
   <div class="adm-who">
     <label for="adm-unit"><span class="adm-who__name" id="adm-who-name">${unitName} · 承辦人</span><span>（示範身分，可切換單位）</span>
-      <select id="adm-unit" aria-describedby="adm-who-name">${site.master.units.map((u) => html`<option value="${u.id}" ${u.id === DEFAULT_UNIT ? raw('selected') : ''}>${u.name}</option>`)}<option value="all">全部單位（總覽）</option></select>
+      <select id="adm-unit" aria-describedby="adm-who-name">${site.master.units.filter((u) => u.publishes !== false).map((u) => html`<option value="${u.id}" ${u.id === DEFAULT_UNIT ? raw('selected') : ''}>${u.name}</option>`)}<option value="all">全部單位（總覽）</option></select>
     </label>
   </div>
 </div></header>

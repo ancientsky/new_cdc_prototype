@@ -163,7 +163,7 @@ test('謠言：n-gram 比對澄清；改寫句也能命中；查無澄清不自�
 
 test('謠言 outdated：澄清依據的正本已修訂（治理引擎 stale／annotations）→ 判定改為 outdated', () => {
   const s = site();
-  const base = { id: 'clar.test', title: 'MMR 1981', claim: '1981 年以後出生的成人才要打 MMR', claimVariants: [], verdict: 'true', shareText: '舊建議', clarificationMarkdown: '依現行建議。', owner: 'unit.vaccine' };
+  const base = { id: 'clar.test', title: 'MMR 1981', claim: '1981 年以後出生的成人才要打 MMR', claimVariants: [], verdict: 'true', shareText: '舊建議', clarificationMarkdown: '依現行建議。', owner: 'unit.acute-infectious' };
   const viaGov = createEngine({ clarifications: [{ ...base, gov: { stale: [{ revisedAt: '2025-04-16', currentId: 'doc.mmr-recommendation.2025-04-16', currentTitle: 'MMR 建議' }] } }], glossary: s.master.glossary, diseases: s.master.diseases });
   assert.equal(viaGov.answer('網傳 1981 年以後出生的成人才要打 MMR，是真的嗎？').verdict, 'outdated');
   const viaApi = createEngine({ clarifications: [{ ...base, governance: { annotations: [{ kind: 'based-on-revised', text: '…', href: 'doc.mmr-recommendation.2025-04-16' }] } }], glossary: s.master.glossary, diseases: s.master.diseases });

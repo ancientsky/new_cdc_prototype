@@ -27,7 +27,7 @@ test('型別對應：疾病 MedicalWebPage+MedicalCondition、Q&A FAQPage、新�
 test('cdc: 治理擴充欄位（owner、reviewedAt、nextReviewAt、version、whitelist）與 @context', () => {
   const d = one('doc.mmr-recommendation.2025-04-16');
   for (const k of ['cdc:owner', 'cdc:reviewedAt', 'cdc:nextReviewAt', 'cdc:version', 'cdc:aiWhitelist', 'cdc:isCurrent', 'cdc:lifecycle']) assert.ok(k in d, k);
-  assert.equal(d['cdc:owner'], '預防接種組');
+  assert.equal(d['cdc:owner'], '急性傳染病組');
   assert.equal(d['@context'][0], 'https://schema.org');
   assert.ok(d['@context'][1].cdc.endsWith('/developers/#vocab-'));
   assert.equal(d.license, 'https://data.gov.tw/license');

@@ -11,7 +11,7 @@ export function render(ctx) {
   const pageMap = {};
   for (const r of catalogRows(site)) if (r.front && r.type !== 'dataset' && r.type !== 'clarification') pageMap[r.front] = { id: r.id, title: r.title, owner: r.owner, ownerName: r.ownerName, steward: r.steward };
   const unitName = (id) => site.unitById.get(id)?.name ?? id;
-  const fixed = { '/ask/': 'unit.oasis', '/': 'unit.pr', '/situation/': 'unit.epidemic-intelligence', '/factcheck/': 'unit.pr', '/travel/': 'unit.quarantine', '/data/': 'unit.oasis', '/vaccines/': 'unit.vaccine', '/diseases/': 'unit.acute-infectious', '/news/': 'unit.pr', '/faq/': 'unit.acute-infectious', '/documents/': 'unit.vaccine' };
+  const fixed = { '/ask/': 'unit.oasis', '/': 'unit.pr', '/situation/': 'unit.epidemic-intelligence', '/factcheck/': 'unit.pr', '/travel/': 'unit.quarantine', '/data/': 'unit.oasis', '/vaccines/': 'unit.acute-infectious', '/diseases/': 'unit.acute-infectious', '/news/': 'unit.pr', '/faq/': 'unit.acute-infectious', '/documents/': 'unit.acute-infectious' };
   for (const [p, o] of Object.entries(fixed)) pageMap[p] ??= { id: null, title: '（頁面層級）', owner: o, ownerName: unitName(o), steward: '' };
   for (const c of site.collections.clarifications) pageMap[`/factcheck/#${c.id}`] = { id: c.id, title: c.title, owner: c.owner, ownerName: unitName(c.owner), steward: c.steward ?? '' };
   return html`

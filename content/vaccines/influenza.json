@@ -9,7 +9,7 @@
     "流感疫苗",
     "Flu vaccine"
   ],
-  "owner": "unit.vaccine",
+  "owner": "unit.acute-infectious",
   "publishedAt": "2017-09-01",
   "reviewedAt": "2026-09-18",
   "reviewPeriodMonths": 6,

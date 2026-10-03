@@ -23,7 +23,7 @@ export function render(ctx) {
   });
   const data = {
     today: site.today,
-    units: site.master.units.map((u) => ({ id: u.id, name: u.name })),
+    units: site.master.units.filter((u) => u.publishes !== false).map((u) => ({ id: u.id, name: u.name })),
     reviewPeriods: site.master.reviewPeriods,
     vaccinesMaster: site.master.vaccines,
     diseaseMaster: site.master.diseases.map((d) => ({ id: d.id, slug: d.slug, name: d.name, nameEn: d.nameEn, legalCategory: d.legalCategory, notifyWithinHours: d.notifyWithinHours ?? null })),

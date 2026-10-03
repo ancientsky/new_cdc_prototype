@@ -134,7 +134,7 @@ export function pageHead({ title, what, flow }) {
 export function unitOptions(site, { all = true, selected = DEFAULT_UNIT, allLabel = '全部單位' } = {}) {
   return [
     ...(all ? [html`<option value="all">${allLabel}</option>`] : []),
-    ...site.master.units.map((u) => html`<option value="${u.id}" ${u.id === selected ? raw('selected') : ''}>${u.name}</option>`),
+    ...site.master.units.filter((u) => u.publishes !== false).map((u) => html`<option value="${u.id}" ${u.id === selected ? raw('selected') : ''}>${u.name}</option>`),
   ];
 }
 

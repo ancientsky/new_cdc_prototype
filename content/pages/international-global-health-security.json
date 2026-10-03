@@ -3,8 +3,8 @@
   "type": "page",
   "sourceLang": "en",
   "title": "Global health security: AMR, vaccines and border quarantine",
-  "owner": "unit.international",
-  "steward": "國際合作組承辦人",
+  "owner": "unit.planning",
+  "steward": "企劃組承辦人",
   "publishedAt": "2026-10-01",
   "reviewedAt": "2026-10-01",
   "reviewPeriodMonths": 12,
@@ -25,7 +25,7 @@
     "zh-TW": {
       "status": "reviewed",
       "reviewedAt": "2026-10-01",
-      "reviewer": "國際合作組中文審核人",
+      "reviewer": "企劃組中文審核人",
       "sourceHash": "79ef8133131a"
     },
     "ja": {

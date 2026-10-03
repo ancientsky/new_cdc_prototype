@@ -11,14 +11,14 @@ export const MAIL_CATEGORIES = [
   { key: 'general', unit: 'unit.pr' },
   { key: 'acute', unit: 'unit.acute-infectious' },
   { key: 'chronic', unit: 'unit.chronic-infectious' },
-  { key: 'vaccine', unit: 'unit.vaccine' },
+  { key: 'vaccine', unit: 'unit.acute-infectious' },
   { key: 'quarantine', unit: 'unit.quarantine' },
   { key: 'infection-control', unit: 'unit.infection-control' },
   { key: 'lab', unit: 'unit.lab' },
   { key: 'data', unit: 'unit.epidemic-intelligence' },
   { key: 'website', unit: 'unit.it' },
   { key: 'ai-error', unit: 'unit.oasis' },
-  { key: 'petition', unit: 'unit.director' },
+  { key: 'petition', unit: 'unit.secretariat' },
 ];
 
 export function meta(ctx) {

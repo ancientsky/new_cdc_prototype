@@ -90,7 +90,7 @@ test('tasks／search／governance 端點形狀', async () => {
   assert.equal(todos.meta.overdue, todos.data.filter((t) => t.overdue).length);
   const wl = json('v1/governance/whitelist.json').data;
   assert.ok(wl.reasonLabels.superseded);
-  assert.ok(json('v1/governance/by-owner.json').data.some((r) => r.unit === 'unit.vaccine'));
+  assert.ok(json('v1/governance/by-owner.json').data.some((r) => r.unit === 'unit.acute-infectious'));
   const idx = json('v1/index.json').data;
   assert.ok(idx.some((e) => e.path === '/v1/catalog.json'));
 });

@@ -9,7 +9,7 @@
     "麻疹疫苗",
     "麻疹腮腺炎德國麻疹混合疫苗"
   ],
-  "owner": "unit.vaccine",
+  "owner": "unit.acute-infectious",
   "publishedAt": "2018-03-01",
   "reviewedAt": "2026-05-14",
   "reviewPeriodMonths": 6,

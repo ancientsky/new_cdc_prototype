@@ -3,7 +3,7 @@
   "type": "dataset",
   "category": "open-dataset",
   "title": "常規疫苗接種完成率",
-  "owner": "unit.vaccine",
+  "owner": "unit.acute-infectious",
   "publishedAt": "2015-01-01",
   "reviewedAt": "2026-04-30",
   "reviewPeriodMonths": 12,

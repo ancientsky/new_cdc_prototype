@@ -217,7 +217,7 @@ test('JSON-LD：/about/ GovernmentOrganization＋subOrganization[]（units）', 
   const o = aboutOrgJsonLd(ctx());
   assert.equal(o['@type'], 'GovernmentOrganization');
   assert.equal(o.subOrganization.length, site.master.units.length);
-  const vac = o.subOrganization.find((u) => u.identifier === 'unit.vaccine');
+  const vac = o.subOrganization.find((u) => u.identifier === 'unit.acute-infectious');
   assert.equal(vac['@type'], 'GovernmentOrganization'); assert.ok(vac.name); assert.ok(vac['cdc:contentCount'] >= 1);
   assert.equal(vac.parentOrganization['@id'], o['@id']);
 });

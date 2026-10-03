@@ -3,8 +3,8 @@
   "type": "news",
   "sourceLang": "en",
   "title": "Taiwan CDC signs a public health cooperation MOU with a New Southbound partner",
-  "owner": "unit.international",
-  "steward": "國際合作組承辦人",
+  "owner": "unit.planning",
+  "steward": "企劃組承辦人",
   "publishedAt": "2026-09-15",
   "reviewedAt": "2026-09-15",
   "reviewPeriodMonths": 0,
@@ -27,7 +27,7 @@
     "zh-TW": {
       "status": "reviewed",
       "reviewedAt": "2026-09-15",
-      "reviewer": "國際合作組中文審核人",
+      "reviewer": "企劃組中文審核人",
       "sourceHash": "12c402ea3e41"
     },
     "ja": {

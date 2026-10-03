@@ -3,8 +3,8 @@
   "type": "news",
   "sourceLang": "en",
   "title": "International field epidemiology workshop opens in Taipei",
-  "owner": "unit.international",
-  "steward": "國際合作組承辦人",
+  "owner": "unit.planning",
+  "steward": "企劃組承辦人",
   "publishedAt": "2026-08-17",
   "reviewedAt": "2026-08-17",
   "reviewPeriodMonths": 0,
@@ -27,7 +27,7 @@
     "zh-TW": {
       "status": "reviewed",
       "reviewedAt": "2026-08-17",
-      "reviewer": "國際合作組中文審核人",
+      "reviewer": "企劃組中文審核人",
       "sourceHash": "9a61f7da4e16"
     },
     "ja": {

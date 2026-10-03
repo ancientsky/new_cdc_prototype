@@ -3,7 +3,7 @@
   "type": "faq",
   "title": "我是 1970 年出生的，出國前需要打 MMR 疫苗嗎？",
   "question": "我是 1970 年出生的，出國前需要打 MMR 疫苗嗎？",
-  "owner": "unit.vaccine",
+  "owner": "unit.acute-infectious",
   "publishedAt": "2025-05-20",
   "reviewedAt": "2026-05-14",
   "reviewPeriodMonths": 6,

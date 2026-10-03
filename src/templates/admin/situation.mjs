@@ -18,7 +18,7 @@ export function render(ctx) {
   const { history, ...current } = sit;
   const data = {
     today: site.today, current: Object.fromEntries(Object.entries(current).filter(([k]) => k !== '__file')),
-    diseases: site.master.diseases.map((d) => ({ id: d.id, name: d.name, slug: d.slug })), units: site.master.units.map((u) => ({ id: u.id, name: u.name })),
+    diseases: site.master.diseases.map((d) => ({ id: d.id, name: d.name, slug: d.slug })), units: site.master.units.filter((u) => u.publishes !== false).map((u) => ({ id: u.id, name: u.name })),
   };
   return html`
 ${pageHead({ title: '態勢發布', what: '疫情中心在這裡發布首頁的「現在的疫情」：每種疾病四級狀態、趨勢、指標、近週數字與一句話建議。狀態由疫情中心依既有監測門檻判定，不由模型推論；表單即時預覽首頁卡片。', flow: '填寫 → 匯出 situation/current.json（舊檔自動進 situation/history/）→ 疫情中心開 PR → CI 驗證 schema 與主檔 → 核定後合併即發布首頁、/situation/ 與 /v1/situation.json。' })}

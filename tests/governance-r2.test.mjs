@@ -221,14 +221,14 @@ test('R13 通報時限表：依類別分組、每種主檔疾病恰一列、含�
 // ── byOwner ──
 test('byOwner：每單位 types 計數加總＝content、latestReviewedAt＝最大審閱日', () => {
   const site = govern(TODAY, (s) => {
-    addItem(s, mk({ type: 'media', id: 'media.test-owner', owner: 'unit.vaccine', reviewedAt: '2026-09-30' }));
+    addItem(s, mk({ type: 'media', id: 'media.test-owner', owner: 'unit.acute-infectious', reviewedAt: '2026-09-30' }));
   });
   for (const r of site.gov.byOwner) {
     assert.equal(Object.values(r.types).reduce((a, b) => a + b, 0), r.content, r.unit);
     const items = site.all.filter((i) => i.owner === r.unit);
     assert.equal(r.latestReviewedAt, items.map((i) => i.reviewedAt).sort().at(-1) ?? null, r.unit);
   }
-  const vac = site.gov.byOwner.find((r) => r.unit === 'unit.vaccine');
+  const vac = site.gov.byOwner.find((r) => r.unit === 'unit.acute-infectious');
   assert.ok(vac.types.media >= 1); assert.ok(vac.types.faq >= 1);
   assert.ok(vac.latestReviewedAt >= '2026-09-30');
 });

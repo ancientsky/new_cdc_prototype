@@ -2,8 +2,8 @@
   "id": "migration.international-cooperation",
   "type": "migration",
   "title": "英文站 International Cooperation（舊站）→ 新站國際合作區塊",
-  "owner": "unit.international",
-  "steward": "國際合作組承辦人",
+  "owner": "unit.planning",
+  "steward": "企劃組承辦人",
   "publishedAt": "2026-10-01",
   "reviewedAt": "2026-10-01",
   "reviewPeriodMonths": 3,
@@ -35,7 +35,7 @@
   },
   "legacyRoot": "https://www.cdc.gov.tw/En/Category/List/{id}",
   "showLegacyUntil": "2027-12-31",
-  "sourceNote": "開發環境連不到 www.cdc.gov.tw／En，子頁依英文站 URL 模式與既有認識重建；舊網址 ID 不確定者以 {id} 佔位、同一模式以 #片段區分。全部 verified:false，由國際合作組逐筆確認。",
+  "sourceNote": "開發環境連不到 www.cdc.gov.tw／En，子頁依英文站 URL 模式與既有認識重建；舊網址 ID 不確定者以 {id} 佔位、同一模式以 #片段區分。全部 verified:false，由企劃組逐筆確認。",
   "items": [
     {
       "key": "intl-root",

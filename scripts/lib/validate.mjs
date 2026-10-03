@@ -61,9 +61,11 @@ export function validateSite(site) {
   const dup = site.all.map((i) => i.id).filter((id, i, a) => a.indexOf(id) !== i);
   for (const d of new Set(dup)) errors.push(`重複 id：${d}`);
   const units = new Set(site.master.units.map((u) => u.id));
+  const unitById = new Map((site.master.units ?? []).map((u) => [u.id, u]));
   const diseaseIds = new Set(site.master.diseases.map((d) => d.id));
   for (const item of site.all) {
     if (!units.has(item.owner)) push(item.__file, `owner ${item.owner} 不在 units 主檔`);
+    else if (unitById.get(item.owner)?.publishes === false) push(item.__file, `owner ${item.owner}（${unitById.get(item.owner).name}）不上架內容，請改為實際承辦單位`);
     for (const ref of item.basedOn ?? []) if (!ids.has(ref) && !site.collections.documents.some((d) => d.family === ref)) push(item.__file, `basedOn ${ref} 不存在（可填內容 id 或文件 family）`);
     for (const ref of item.diseases ?? []) if (!diseaseIds.has(ref)) push(item.__file, `diseases ${ref} 不在傳染病主檔`);
     if (item.type === 'document' && item.supersedes && !ids.has(item.supersedes)) push(item.__file, `supersedes ${item.supersedes} 不存在`);

@@ -2,7 +2,7 @@
   "id": "topic.vaccine-fund-donation",
   "type": "topic",
   "title": "疫苗基金：您的捐款，守護下一代",
-  "owner": "unit.vaccine",
+  "owner": "unit.acute-infectious",
   "publishedAt": "2025-01-01",
   "reviewedAt": "2026-07-01",
   "reviewPeriodMonths": 6,

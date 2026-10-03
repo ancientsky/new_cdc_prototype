@@ -35,13 +35,13 @@ test('國際合作內容：全部 sourceLang en、languages.en＝source、附 zh
     assert.equal(it.languages.en.status, 'source', id);
     assert.equal(it.languages['zh-TW'].status, 'reviewed', id);
     assert.ok(it.i18n['zh-TW'].title && it.i18n['zh-TW'].summary, `${id} 中文譯文`);
-    assert.equal(it.owner, 'unit.international');
+    assert.equal(it.owner, 'unit.planning');
     assert.deepEqual(sourceLangErrors(it), [], id);
     assert.equal(it.gov.sourceLang, 'en');
     assert.equal(it.gov.translationStale['zh-TW'], false, `${id} 中文譯文未過期（sourceHash 一致）`);
     assert.ok(!('en' in it.gov.translationStale), '來源語言不算譯文');
   }
-  assert.equal(site.unitById.get('unit.international').name, '國際合作組');
+  assert.equal(site.unitById.get('unit.planning').name, '企劃組');
   assert.deepEqual(validateSite(loadSite(config)).filter((e) => /international/.test(e)), []);
 });
 
