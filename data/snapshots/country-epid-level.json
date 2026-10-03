@@ -1,8 +1,8 @@
 {
   "meta": {
     "mode": "live",
-    "fetchedAt": "2026-10-02T10:44:33.531Z",
-    "dataDate": "2026-10-02",
+    "fetchedAt": "2026-10-03T08:46:13.540Z",
+    "dataDate": "2026-10-03",
     "sourceUrl": "https://www.cdc.gov.tw/CountryEpidLevel/ExportJSON",
     "sourcePage": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
     "label": "國際旅遊疫情建議等級表",
@@ -144,7 +144,7 @@
       "lifted": 0,
       "renewed": 0
     },
-    "changeSummaryAsOf": "2026-10-02",
+    "changeSummaryAsOf": "2026-10-03",
     "changeSummaryMode": "live"
   },
   "data": [

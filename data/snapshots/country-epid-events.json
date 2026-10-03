@@ -1,7 +1,7 @@
 {
   "meta": {
     "mode": "live",
-    "fetchedAt": "2026-10-02T10:44:33.533Z",
+    "fetchedAt": "2026-10-03T08:46:13.543Z",
     "sourceUrl": "https://www.cdc.gov.tw/CountryEpidLevel/ExportJSON",
     "windowDays": 400,
     "note": "官方 CountryEpidLevel/ExportJSON 每列為一則警示事件（第一／二／三級或「解除」）；kind 由同（ISO2, Disease, Area）前一則等級推得（new／raised／lowered／lifted／renewed），只留近 windowDays 天。",
