@@ -11,14 +11,14 @@ import { config } from '../../../site.config.mjs';
 import { readExport } from './reader.mjs';
 import {
   loadRules, parseUrl, matchUrlPattern, bulletinType, ownerForCategory, detectDiseases, blockKeyFor, mergeBlockFor, docTypeFor, stripTitlePrefix,
-  normTitle, manifestPathRegex, ageYears,
+  normTitle, manifestPathRegex, ageYears, shortFor,
 } from './rules.mjs';
 import { extractPage, rewriteBody, toMd, splitSections, faqItems, bodyChecks, parseDate } from './convert.mjs';
 import { tableProblems, plainText, textOf } from './html.mjs';
 import { AssetBag, findExportFile } from './assets.mjs';
 import { computeConfidence, needsReview, MARKDOWN_WARNING_CODES } from './confidence.mjs';
 import { validateDraft } from './validate.mjs';
-import { buildPatch, applyPatch } from './migration.mjs';
+import { buildPatch, applyPatch, expandTemplateItems } from './migration.mjs';
 import { renderReportMd } from './report.mjs';
 
 const h6 = (s) => createHash('sha1').update(String(s)).digest('hex').slice(0, 6);
@@ -32,6 +32,7 @@ const uniqBy = (arr, f) => { const seen = new Set(); return arr.filter((x) => { 
 export function loadContentIndex(contentDir = CONTENT) {
   const byId = new Map();
   const faqByTitle = new Map();
+  const newsByTitle = new Map();
   for (const d of CONTENT_DIRS) {
     const dir = path.join(contentDir, d);
     if (!fs.existsSync(dir)) continue;
@@ -39,13 +40,14 @@ export function loadContentIndex(contentDir = CONTENT) {
       try {
         const j = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
         if (j?.id) {
-          byId.set(j.id, { type: j.type, title: j.title, owner: j.owner, file: `content/${d}/${f}` });
+          byId.set(j.id, { type: j.type, title: j.title, owner: j.owner, file: `content/${d}/${f}`, status: j.status, diseases: [...(j.diseases ?? []), ...(j.basedOn ?? [])], docType: j.docType, pubType: j.pubType, mediaType: j.mediaType, family: j.family, effectiveAt: j.effectiveAt ?? j.publishedAt });
           if (j.type === 'faq') faqByTitle.set(normTitle(j.question ?? j.title), j.id);
+          if (j.type === 'news' || j.type === 'letter' || j.type === 'clarification') newsByTitle.set(normTitle(j.title), j.id);
         }
       } catch { /* 壞檔略過；整站驗證會另外報 */ }
     }
   }
-  return { byId, faqByTitle };
+  return { byId, faqByTitle, newsByTitle };
 }
 
 const summaryOf = (md, title, max = 120) => {
@@ -95,14 +97,18 @@ export function runImport(opts) {
   };
   const unitIds = new Set(master.units.filter((u) => u.publishes !== false).map((u) => u.id));
   const diseaseById = new Map(master.diseases.map((d) => [d.id, d]));
-  const diseaseShort = new Map((rules.diseases ?? []).map((d) => [d.id, d.short]));
   const index = loadContentIndex(contentDir);
 
   // 移轉清單（選用）
   const mfPath = manifestPath ?? path.join(contentDir, 'migration', `${slug}.json`);
   const manifest = fs.existsSync(mfPath) ? { path: mfPath, data: JSON.parse(fs.readFileSync(mfPath, 'utf8')) } : null;
   const mItems = manifest?.data.items ?? [];
-  const mRegex = mItems.map((it) => ({ it, re: manifestPathRegex(it.oldUrl), frag: (String(it.oldUrl).split('#')[1] ?? ''), q: new URLSearchParams(String(it.oldUrl).split('#')[0].split('?')[1] ?? '') }));
+  // 清單只寫例外（extends 模板）時，把模板依該疾病展開成推導項一起比對（治理引擎 R15 的作法）；推導項只進報告，不寫回清單
+  const manifestDisease = manifest?.data.scope?.kind === 'disease' ? manifest.data.scope.disease ?? null : null;
+  const derivedItems = manifest ? expandTemplateItems({ manifest: manifest.data, contentDir, index, diseaseById }) : [];
+  const isPattern = (u) => /\{[a-z]+\}/i.test(String(u));
+  const mRegex = [...mItems.map((it) => ({ it, derived: false })), ...derivedItems.map((it) => ({ it, derived: true }))]
+    .map((m) => ({ ...m, re: manifestPathRegex(m.it.oldUrl), pattern: isPattern(m.it.oldUrl), frag: (String(m.it.oldUrl).split('#')[1] ?? ''), q: new URLSearchParams(String(m.it.oldUrl).split('#')[0].split('?')[1] ?? '') }));
   const mUsed = new Set();
 
   fs.rmSync(path.join(out, 'content'), { recursive: true, force: true });
@@ -125,7 +131,7 @@ export function runImport(opts) {
       key: page.name, htmlFile: page.htmlFile,
       source: { url: side.url ?? '', title: '', category: side.category ?? '', publishedAt: null, updatedAt: null, breadcrumbs: [], tab: side.tab ?? '' },
       pattern: null, kind: 'page', type: 'page', manifestKey: null, target: null, targetExists: false, targetType: null,
-      owner: null, ownerRule: null, diseases: [], issues: [], outputs: [], flags: {}, typeClear: true, attachmentsOk: true, unique: true,
+      owner: null, ownerRule: null, diseases: [], issues: [], outputs: [], flags: {}, typeClear: true, attachmentsOk: true, unique: true, manifestDerived: false,
       word: null, stats: { images: 0, links: 0, legacyLinks: 0, attachments: 0 },
     };
     const issue = (code, severity, message) => pr.issues.push({ code, severity, message });
@@ -150,9 +156,16 @@ export function runImport(opts) {
     const category = side.category ?? '';
     const own = ownerForCategory(rules, category, breadcrumbs);
     const ds = detectDiseases(rules, master.diseases, [breadcrumbs.join('／'), title]);
+    if (!ds.length && manifestDisease && diseaseById.has(manifestDisease)) {
+      ds.push({ id: manifestDisease, hit: '(清單 scope)' });
+      issue('disease-from-manifest', 'info', `麵包屑與標題看不出疾病，依移轉清單 scope 視為 ${diseaseById.get(manifestDisease)?.name ?? manifestDisease}`);
+    }
     pr.diseases = ds.map((d) => d.id);
     let owner = own?.owner ?? null;
-    if (!owner && rules.ownerFallbackToDisease && ds[0]) owner = diseaseById.get(ds[0].id)?.owner ?? null;
+    if (!owner && rules.ownerFallbackToDisease && ds[0]) {
+      owner = diseaseById.get(ds[0].id)?.owner ?? null;
+      if (owner) issue('owner-from-disease', 'info', `類別「${category || '（無）'}」沒有對應規則，權責單位依疾病主檔取 ${owner}（${diseaseById.get(ds[0].id)?.name ?? ds[0].id}）`);
+    }
     pr.ownerRule = own?.rule ?? (owner ? 'disease-fallback' : null);
     if (!owner) {
       issue('unmapped-category', 'warn', `未對應類別「${category || '（無）'}」：規則檔 categoryOwners 沒有對應的權責單位，暫填 ${rules.defaultOwner ?? 'unit.oasis'}，請補規則或人工指定`);
@@ -164,20 +177,31 @@ export function runImport(opts) {
     // 移轉清單比對
     let mi = null;
     if (manifest && side.url) {
-      const cands = mRegex.filter((m) => !mUsed.has(m.it.key) && m.re.test(u.path)
+      // 候選：路徑（{id} 佔位＝任一 ID）與 query 相符；人工項目排在推導項之前
+      const cands = mRegex.filter((m) => !mUsed.has(`${m.derived ? 'd:' : ''}${m.it.key}`) && m.re.test(u.path)
         && [...m.q.keys()].filter((k) => k.toLowerCase() !== 'page' && !/^\{/.test(m.q.get(k))).every((k) => u.query.get(k) === m.q.get(k)));
       const byTab = cands.filter((m) => m.frag && m.frag === tab);
-      const byTitle = (arr) => arr.filter((m) => normTitle(stripTitlePrefix(rules, m.it.oldTitle)) === normTitle(stripTitlePrefix(rules, title)));
-      const noFragCand = cands.filter((m) => !m.frag && !tab);
-      mi = (byTab[0] ?? (byTitle(cands)[0]) ?? (cands.length === 1 && !cands[0].frag ? cands[0] : null) ?? noFragCand[0] ?? null)?.it ?? null;
-      if (!mi && cands.length === 1 && !tab) mi = cands[0].it;
+      const nt = normTitle(stripTitlePrefix(rules, title));
+      // 去掉疾病名後再比一次：舊頁標題常是「登革熱 Q&A」，模板項只寫「Q&A」
+      const dnames = ds.flatMap((d) => [diseaseById.get(d.id)?.name, ...(diseaseById.get(d.id)?.aliases ?? [])]).filter(Boolean);
+      const ntBare = dnames.reduce((acc, n) => acc.split(normTitle(n)).join(''), nt);
+      const byTitle = cands.filter((m) => { const o = normTitle(stripTitlePrefix(rules, m.it.oldTitle)); return o === nt || (o && o === ntBare); });
+      const byTitleLoose = cands.filter((m) => { const o = normTitle(stripTitlePrefix(rules, m.it.oldTitle)); return o.length >= 3 && nt.length >= 3 && (o.includes(nt) || nt.includes(o)); });
+      // {id} 佔位的網址會命中同一模式下的所有頁，所以只有 fragment 或標題也對得上才算；寫死 ID 的網址（只剩一個候選）才可直接採用
+      const exact = cands.filter((m) => !m.pattern);
+      const pick = byTab[0] ?? byTitle[0] ?? byTitleLoose[0] ?? (exact.length === 1 ? exact[0] : null) ?? null;
+      mi = pick?.it ?? null;
+      pr.manifestDerived = !!pick?.derived;
+      if (pick) mUsed.add(`${pick.derived ? 'd:' : ''}${pick.it.key}`);
+      const ambiguous = !mi && cands.filter((m) => m.pattern).length;
+      if (ambiguous) issue('manifest-ambiguous', 'info', `網址符合清單 ${ambiguous} 個 {id} 佔位項目的模式，但標題與分頁都對不上，不視為對應（避免錯配）`);
     }
     if (mi) {
-      mUsed.add(mi.key);
       pr.manifestKey = mi.key; pr.target = mi.target ?? null;
       pr.manifestStatus = mi.status;
       if (mi.target) { const t = index.byId.get(mi.target); pr.targetExists = !!t; pr.targetType = t?.type ?? mi.target.split('.')[0]; }
-    } else if (manifest) issue('not-in-manifest', 'warn', '移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目）');
+    } else if (manifest) issue('not-in-manifest', 'warn', `移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目${derivedItems.length ? '；模板推導的標準子頁也沒對上' : ''}）`);
+    if (pr.manifestDerived) issue('manifest-derived', 'info', `對到的是模板推導項 ${mi.key}（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單`);
 
     // 型別判斷
     const patKind = pat?.kind ?? 'page';
@@ -208,7 +232,7 @@ export function runImport(opts) {
 
     // 抽內容：先決定輸出單元的 id，再改寫圖片與連結
     const dis = primary ? diseaseById.get(primary) : null;
-    const short = diseaseShort.get(primary) ?? 'x';
+    const short = primary ? shortFor(rules, primary) : 'x';
     const attList = (side.attachments ?? []).map((a) => ({ ...a, file: a.file ?? decodeURIComponent(path.basename(parseUrl(a.url, siteBase).rawPath)) }));
     const attByPath = new Map();
     for (const a of attList) { const pu = parseUrl(a.url, siteBase); attByPath.set(`${pu.path}${pu.search}`.toLowerCase(), a); attByPath.set(pu.path.toLowerCase(), a); }
@@ -324,7 +348,9 @@ export function runImport(opts) {
       const bt = bulletinType(rules, u);
       if (!bt || bt.unknown) { pr.typeClear = false; issue('type-unclear', 'warn', bt ? `Bulletin typeid=${bt.typeid} 不在規則檔 bulletinTypes，暫以其他訊息（other）處理` : '網址沒有 typeid，暫以其他訊息（other）處理'); }
       if (bt?.hint) issue('news-type-hint', 'info', bt.hint);
-      const id = reserveId(pr.target?.startsWith('news.') ? pr.target : `news.${(publishedAt ?? exportedAt)}-legacy-${h6(side.url)}`, `news.${publishedAt ?? exportedAt}-legacy-${h6(side.url + page.name)}`);
+      // 既有新聞依標題對上 ⇒ 用既有 id（標 existing 供比對），否則新 id
+      const byTitleId = index.newsByTitle.get(normTitle(stripTitlePrefix(rules, title)));
+      const id = reserveId(pr.target?.startsWith('news.') ? pr.target : byTitleId ?? `news.${(publishedAt ?? exportedAt)}-legacy-${h6(side.url)}`, `news.${publishedAt ?? exportedAt}-legacy-${h6(side.url + page.name)}`);
       const ctx = makeCtx(id, `${short}-news`, { withAttachments: true });
       const stat = rewriteBody(ext.body, ctx);
       afterRewrite(stat);
@@ -518,18 +544,18 @@ export function runImport(opts) {
   }
 
   // ───── 報告與移轉清單 ─────
-  const patch = buildPatch({ manifest, prs, units, index, exportedAt, slug, rules });
+  const patch = buildPatch({ manifest, prs, units, index, exportedAt, slug, rules, derivedItems });
   const sum = summarize({ prs, draftRecs, bags, patch, manifest, exp, exportedAt });
   const report = {
     format: 'cdc-legacy-import-report/1',
     batch: slug, generatedAt: convertedAt, exportedAt, simulated: exp.meta.simulated === true,
     source: { dir: path.relative(ROOT, exp.dir) || exp.dir, note: exp.meta.source ?? null, site: exp.meta.site ?? siteBase },
     rules: { file: rules.__file, version: rules.version },
-    manifest: manifest ? { id: manifest.data.id, file: path.relative(ROOT, manifest.path), items: mItems.length } : null,
+    manifest: manifest ? { id: manifest.data.id, file: path.relative(ROOT, manifest.path), items: mItems.length, extends: manifest.data.extends ?? null, derivedItems: derivedItems.length, disease: manifestDisease } : null,
     summary: sum,
     pages: prs.map((p) => ({
       key: p.key, file: p.htmlFile, source: { url: p.source.url, title: p.source.title, category: p.source.category, publishedAt: p.source.publishedAt, updatedAt: p.source.updatedAt, breadcrumbs: p.source.breadcrumbs, tab: p.source.tab },
-      pattern: p.pattern, kind: p.kind, type: p.type, manifestKey: p.manifestKey, target: p.target, targetExists: p.targetExists, existing: p.existing, compareWith: p.compareWith,
+      pattern: p.pattern, kind: p.kind, type: p.type, manifestKey: p.manifestKey, manifestDerived: p.manifestDerived, target: p.target, targetExists: p.targetExists, existing: p.existing, compareWith: p.compareWith,
       owner: p.owner, ownerRule: p.ownerRule, diseases: p.diseases, outputs: p.outputs, confidence: p.confidence, parts: p.parts, needsReview: p.needsReview,
       issues: p.issues, action: p.action, flags: p.flags, stats: p.stats,
     })),
@@ -577,7 +603,7 @@ function summarize({ prs, draftRecs, bags, patch, manifest, exp, exportedAt }) {
     byType, byKind, byAction, avgConfidence: avg, needsReview: prs.filter((p) => p.needsReview).length,
     existing: prs.filter((p) => p.existing).length, schemaInvalid: draftRecs.filter((d) => !d.schemaValid).length,
     assets: asset, issues: { error: prs.flatMap((p) => p.issues).filter((i) => i.severity === 'error').length, warn: prs.flatMap((p) => p.issues).filter((i) => i.severity === 'warn').length, info: prs.flatMap((p) => p.issues).filter((i) => i.severity === 'info').length },
-    manifest: manifest ? { items: manifest.data.items.length, matched: patch.summary.matched, missingPages: patch.summary.missingPages } : null,
+    manifest: manifest ? { items: manifest.data.items.length, matched: patch.summary.matched, missingPages: patch.summary.missingPages, derivedItems: patch.summary.derivedItems ?? 0, derivedMatched: patch.summary.derivedMatched ?? 0 } : null,
     exportedAt, pagesWithoutOutput: prs.filter((p) => !p.outputs.length).length,
   };
 }

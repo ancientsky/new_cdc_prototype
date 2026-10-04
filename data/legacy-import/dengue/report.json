@@ -1,0 +1,3476 @@
+{
+  "format": "cdc-legacy-import-report/1",
+  "batch": "dengue",
+  "generatedAt": "2026-10-04T22:30:00Z",
+  "exportedAt": "2026-10-03",
+  "simulated": true,
+  "source": {
+    "dir": "data/legacy-export/dengue",
+    "note": "模擬匯出：依 content/migration/_disease-template.json（標準子頁 20 項）＋ content/migration/dengue.json（人工例外 8 項）＋ 近 3 年新聞 5 篇合成，不是舊站的真實資料（網址 ID、數字、PDF 內容皆為示意）。正式匯出取代整個目錄即可。",
+    "site": "https://www.cdc.gov.tw"
+  },
+  "rules": {
+    "file": "content/migration/import/_import-rules.json",
+    "version": 2
+  },
+  "manifest": {
+    "id": "migration.dengue",
+    "file": "content/migration/dengue.json",
+    "items": 8,
+    "extends": "migration-template.disease",
+    "derivedItems": 20,
+    "disease": "disease.dengue"
+  },
+  "summary": {
+    "pages": 33,
+    "drafts": 31,
+    "mergedPages": 9,
+    "byType": {
+      "faq": 7,
+      "page": 13,
+      "document": 4,
+      "news": 6,
+      "disease": 1
+    },
+    "byKind": {
+      "disease-block": 9,
+      "faq": 1,
+      "list": 7,
+      "page": 6,
+      "document": 4,
+      "news": 6
+    },
+    "byAction": {
+      "merge-into-disease": 9,
+      "compare-existing": 15,
+      "manual-review": 1,
+      "review-before-publish": 3,
+      "skip-list": 5
+    },
+    "avgConfidence": 0.88,
+    "needsReview": 3,
+    "existing": 27,
+    "schemaInvalid": 0,
+    "assets": {
+      "total": 10,
+      "attachment": 7,
+      "image": 2,
+      "data": 1,
+      "needsAlt": 2,
+      "noTextLayer": 2
+    },
+    "issues": {
+      "error": 0,
+      "warn": 14,
+      "info": 101
+    },
+    "manifest": {
+      "items": 8,
+      "matched": 8,
+      "missingPages": 0,
+      "derivedItems": 20,
+      "derivedMatched": 19
+    },
+    "exportedAt": "2026-10-03",
+    "pagesWithoutOutput": 0
+  },
+  "pages": [
+    {
+      "key": "01-intro",
+      "file": "01-intro.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/WYbKe3aE7LiY5gb-eA8PBw",
+        "title": "疾病介紹",
+        "category": "登革熱／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "疾病介紹"
+        ],
+        "tab": ""
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro",
+      "manifestDerived": true,
+      "target": "disease.dengue",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.dengue"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "disease.dengue",
+          "type": "disease",
+          "role": "merged",
+          "block": "transmission",
+          "file": "content/diseases/dengue.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 43 處（mso 樣式 15、Mso 類別 14、命名空間標籤 14）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「登革熱／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "02-intro-pathogen",
+      "file": "02-intro-pathogen.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/WYbKe3aE7LiY5gb-eA8PBw",
+        "title": "致病原",
+        "category": "登革熱／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "疾病介紹",
+          "致病原"
+        ],
+        "tab": "pathogen"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-pathogen",
+      "manifestDerived": true,
+      "target": "disease.dengue",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.dengue"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "disease.dengue",
+          "type": "disease",
+          "role": "merged",
+          "block": "transmission",
+          "file": "content/diseases/dengue.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「登革熱／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-pathogen（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "03-intro-epidemiology",
+      "file": "03-intro-epidemiology.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/WYbKe3aE7LiY5gb-eA8PBw",
+        "title": "流行病學",
+        "category": "登革熱／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "疾病介紹",
+          "流行病學"
+        ],
+        "tab": "epidemiology"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-epidemiology",
+      "manifestDerived": true,
+      "target": "disease.dengue",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.dengue"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "disease.dengue",
+          "type": "disease",
+          "role": "merged",
+          "block": "situation",
+          "file": "content/diseases/dengue.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 63 處（mso 樣式 22、Mso 類別 21、命名空間標籤 20）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「登革熱／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-epidemiology（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "image-no-alt",
+          "severity": "warn",
+          "message": "圖片「dengue-trend.png」舊頁沒有替代文字，暫用檔名「dengue-trend」，請補 alt（needsAlt）"
+        },
+        {
+          "code": "image-license-assumed",
+          "severity": "info",
+          "message": "圖片「dengue-trend.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 1,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "04-intro-transmission",
+      "file": "04-intro-transmission.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/WYbKe3aE7LiY5gb-eA8PBw",
+        "title": "傳染方式",
+        "category": "登革熱／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "疾病介紹",
+          "傳染方式"
+        ],
+        "tab": "transmission"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-transmission",
+      "manifestDerived": true,
+      "target": "disease.dengue",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.dengue"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "disease.dengue",
+          "type": "disease",
+          "role": "merged",
+          "block": "transmission",
+          "file": "content/diseases/dengue.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「登革熱／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-transmission（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "05-intro-incubation",
+      "file": "05-intro-incubation.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/WYbKe3aE7LiY5gb-eA8PBw",
+        "title": "潛伏期",
+        "category": "登革熱／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "疾病介紹",
+          "潛伏期"
+        ],
+        "tab": "incubation"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-incubation",
+      "manifestDerived": true,
+      "target": "disease.dengue",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.dengue"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "disease.dengue",
+          "type": "disease",
+          "role": "merged",
+          "block": "transmission",
+          "file": "content/diseases/dengue.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 23 處（mso 樣式 9、Mso 類別 7、命名空間標籤 7）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「登革熱／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-incubation（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "06-intro-symptoms",
+      "file": "06-intro-symptoms.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/WYbKe3aE7LiY5gb-eA8PBw",
+        "title": "發病症狀",
+        "category": "登革熱／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "疾病介紹",
+          "發病症狀"
+        ],
+        "tab": "symptoms"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-symptoms",
+      "manifestDerived": true,
+      "target": "disease.dengue",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.dengue"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "disease.dengue",
+          "type": "disease",
+          "role": "merged",
+          "block": "symptoms",
+          "file": "content/diseases/dengue.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 11 處（mso 樣式 5、Mso 類別 3、命名空間標籤 3）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「登革熱／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-symptoms（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "07-intro-prevention",
+      "file": "07-intro-prevention.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/WYbKe3aE7LiY5gb-eA8PBw",
+        "title": "預防方法",
+        "category": "登革熱／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "疾病介紹",
+          "預防方法"
+        ],
+        "tab": "prevention"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-prevention",
+      "manifestDerived": true,
+      "target": "disease.dengue",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.dengue"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "disease.dengue",
+          "type": "disease",
+          "role": "merged",
+          "block": "prevention",
+          "file": "content/diseases/dengue.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 19 處（mso 樣式 17、Mso 類別 5、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「登革熱／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-prevention（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "08-intro-treatment",
+      "file": "08-intro-treatment.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/WYbKe3aE7LiY5gb-eA8PBw",
+        "title": "治療方法與就醫資訊",
+        "category": "登革熱／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "疾病介紹",
+          "治療方法"
+        ],
+        "tab": "treatment"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-treatment",
+      "manifestDerived": true,
+      "target": "disease.dengue",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.dengue"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "disease.dengue",
+          "type": "disease",
+          "role": "merged",
+          "block": "treatment",
+          "file": "content/diseases/dengue.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「登革熱／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-treatment（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "09-vaccine",
+      "file": "09-vaccine.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/w0zYM6B9tfqAm2A5O7xXt5",
+        "title": "預防接種建議",
+        "category": "登革熱／預防接種",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "預防接種"
+        ],
+        "tab": "vaccine"
+      },
+      "pattern": "mpage",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "vaccine",
+      "manifestDerived": true,
+      "target": "disease.dengue",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.dengue"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "disease.dengue",
+          "type": "disease",
+          "role": "merged",
+          "block": "vaccine",
+          "file": "content/diseases/dengue.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「登革熱／預防接種」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 vaccine（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（36 字，低於 40）"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "10-qa-list",
+      "file": "10-qa-list.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/QAPage/4kMzhnwTwPIrf_KETxhqzF",
+        "title": "Q&A",
+        "category": "登革熱／Q&A",
+        "publishedAt": "2026-09-24",
+        "updatedAt": "2026-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "Q&A"
+        ],
+        "tab": ""
+      },
+      "pattern": "qa",
+      "kind": "faq",
+      "type": "faq",
+      "manifestKey": "qa-list",
+      "manifestDerived": true,
+      "target": "disease.dengue",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "faq.dengue-community-mobilize",
+        "faq.dengue-container-check",
+        "faq.dengue-fever-when-to-see-doctor",
+        "faq.dengue-imported-return",
+        "faq.dengue-painkiller",
+        "faq.dengue-spraying-refuse",
+        "faq.travel-return-fever",
+        "disease.dengue"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "faq.dengue-community-mobilize",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/dengue-community-mobilize.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.dengue-container-check",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/dengue-container-check.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.dengue-fever-when-to-see-doctor",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/dengue-fever-when-to-see-doctor.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.dengue-imported-return",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/dengue-imported-return.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.dengue-painkiller",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/dengue-painkiller.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.dengue-spraying-refuse",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/dengue-spraying-refuse.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.travel-return-fever",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/travel-return-fever.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 74 處（mso 樣式 48、Mso 類別 20、命名空間標籤 13）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「登革熱／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "11-materials-poster",
+      "file": "11-materials-poster.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/LUpyIsMuAB-KVgWh8d78i-",
+        "title": "衛教宣導：單張海報",
+        "category": "登革熱／衛教宣導",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "衛教宣導",
+          "單張海報"
+        ],
+        "tab": "posters"
+      },
+      "pattern": "category-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "materials-poster",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "page.dengue-materials-poster",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/dengue-materials-poster.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.4,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": true,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 4 處（mso 樣式 1、Mso 類別 2、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「登革熱／衛教宣導」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 materials-poster（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        },
+        {
+          "code": "pdf-no-text-layer",
+          "severity": "warn",
+          "message": "PDF「dengue-poster-7lang.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+        },
+        {
+          "code": "image-no-alt",
+          "severity": "warn",
+          "message": "圖片「dengue-poster.png」舊頁沒有替代文字，暫用檔名「dengue-poster」，請補 alt（needsAlt）"
+        },
+        {
+          "code": "image-license-assumed",
+          "severity": "info",
+          "message": "圖片「dengue-poster.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        }
+      ],
+      "action": "manual-review",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 1,
+        "links": 5,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "12-materials-video",
+      "file": "12-materials-video.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/CLbo-hZJ7DMhVXD7dzOVGd",
+        "title": "衛教宣導：影片",
+        "category": "登革熱／衛教宣導",
+        "publishedAt": "2026-07-15",
+        "updatedAt": "2026-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "衛教宣導",
+          "影音"
+        ],
+        "tab": "video"
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "materials-video",
+      "manifestDerived": true,
+      "target": "media.dengue-village-chief",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "media.dengue-village-chief"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "page.dengue-materials-video",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/dengue-materials-video.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 34 處（mso 樣式 14、Mso 類別 10、命名空間標籤 10）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「登革熱／衛教宣導」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 materials-video（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "embedded-media",
+          "severity": "warn",
+          "message": "內文有嵌入媒體 1 個（iframe）未轉入；影音請另建 media 內容"
+        },
+        {
+          "code": "target-type-differs",
+          "severity": "info",
+          "message": "對應的新站內容是 media.dengue-village-chief（media），草稿以 page 暫存，請比對後改建為 media"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "13-manual",
+      "file": "13-manual.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/DiseaseManual/QfdYJUGw2n5jaHqO-cy_Ce",
+        "title": "傳染病防治工作手冊（2026 年版）",
+        "category": "登革熱／法規與指引",
+        "publishedAt": "2026-03-01",
+        "updatedAt": "2026-03-01",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "法規與指引",
+          "工作手冊"
+        ],
+        "tab": ""
+      },
+      "pattern": "disease-docs",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "manual",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "doc.dengue-manual.2026-03-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/dengue-manual.2026-03-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 14 處（mso 樣式 6、Mso 類別 4、命名空間標籤 4）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「登革熱／法規與指引」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 manual（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "14-case-definition",
+      "file": "14-case-definition.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/DiseaseDefine/q7EpU6zgW8ZaV760caAnem",
+        "title": "傳染病病例定義：登革熱（2026 年版）",
+        "category": "登革熱／法規與指引",
+        "publishedAt": "2026-01-01",
+        "updatedAt": "2026-01-05",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "法規與指引",
+          "病例定義"
+        ],
+        "tab": ""
+      },
+      "pattern": "disease-docs",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "case-definition",
+      "manifestDerived": true,
+      "target": "doc.case-definition-dengue.2023-01-01",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.case-definition-dengue.2023-01-01"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "doc.case-definition-dengue.2023-01-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/case-definition-dengue.2023-01-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 64 處（mso 樣式 30、Mso 類別 21、命名空間標籤 17）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「登革熱／法規與指引」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 case-definition（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "15-guideline",
+      "file": "15-guideline.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/File/Get/SSH7ZzPb8Df0AsqCjVeXnt",
+        "title": "登革熱社區防治工作指引：孳生源清除、病媒蚊監測與群聚應變",
+        "category": "登革熱／法規與指引",
+        "publishedAt": "2026-09-10",
+        "updatedAt": "2026-09-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "法規與指引",
+          "治療指引"
+        ],
+        "tab": ""
+      },
+      "pattern": "file",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "doc.dengue-d7bdfa.2026-09-10",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/dengue-d7bdfa.2026-09-10.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 75 處（mso 樣式 45、Mso 類別 23、命名空間標籤 15）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「登革熱／法規與指引」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "manifest-ambiguous",
+          "severity": "info",
+          "message": "網址符合清單 2 個 {id} 佔位項目的模式，但標題與分頁都對不上，不視為對應（避免錯配）"
+        },
+        {
+          "code": "not-in-manifest",
+          "severity": "warn",
+          "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2026-09-10"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "16-stats",
+      "file": "16-stats.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/24UnSJ76XgcjnNUGy3DMcd",
+        "title": "統計資料",
+        "category": "登革熱／統計資料",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "統計資料"
+        ],
+        "tab": "statistics"
+      },
+      "pattern": "category-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "stats",
+      "manifestDerived": true,
+      "target": "dataset.dengue-daily",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "dataset.dengue-daily"
+      ],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "／統計",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "page.dengue-stats",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/dengue-stats.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.6,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 61 處（mso 樣式 21、Mso 類別 20、命名空間標籤 20）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 stats（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        },
+        {
+          "code": "target-type-differs",
+          "severity": "info",
+          "message": "對應的新站內容是 dataset.dengue-daily（dataset），草稿以 page 暫存，請比對後改建為 dataset"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "17-lab",
+      "file": "17-lab.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/nBSoKp75tD_JsUcg-PolJx",
+        "title": "檢驗資訊",
+        "category": "登革熱／檢驗資訊",
+        "publishedAt": "2025-01-15",
+        "updatedAt": "2026-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "檢驗資訊"
+        ],
+        "tab": "lab"
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "lab",
+      "manifestDerived": true,
+      "target": "labtest.dengue",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "labtest.dengue"
+      ],
+      "owner": "unit.lab",
+      "ownerRule": "／檢驗",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "page.dengue-lab",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/dengue-lab.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 40 處（mso 樣式 22、Mso 類別 12、命名空間標籤 9）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 lab（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "target-type-differs",
+          "severity": "info",
+          "message": "對應的新站內容是 labtest.dengue（labtest），草稿以 page 暫存，請比對後改建為 labtest"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "18-notify",
+      "file": "18-notify.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/Pf3UBeMVfwJ2iKzOXg70zj",
+        "title": "通報定義與時限",
+        "category": "登革熱／通報定義",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "通報定義"
+        ],
+        "tab": "notify"
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "notify",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "／通報",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "page.dengue-notify",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/dengue-notify.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 38 處（mso 樣式 14、Mso 類別 12、命名空間標籤 12）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 notify（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "19-news-list",
+      "file": "19-news-list.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/List/Ec6GP0RNpHHLRvO7x-1nRT",
+        "title": "新聞稿列表",
+        "category": "登革熱／最新消息",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "最新消息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "news-list",
+      "manifestDerived": true,
+      "target": "disease.dengue",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.dengue"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "page.dengue-news-list",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/dengue-news-list.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.6,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「登革熱／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 news-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        },
+        {
+          "code": "target-type-differs",
+          "severity": "info",
+          "message": "對應的新站內容是 disease.dengue（disease），草稿以 page 暫存，請比對後改建為 disease"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 8,
+        "legacyLinks": 8,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "20-links",
+      "file": "20-links.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/0Pl9_aCavv9CeM29DdTD7G",
+        "title": "相關連結",
+        "category": "登革熱／相關連結",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "相關連結"
+        ],
+        "tab": "links"
+      },
+      "pattern": "category-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "links",
+      "manifestDerived": true,
+      "target": "topic.disaster-evacuation",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "topic.disaster-evacuation"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "page.dengue-links",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/dengue-links.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.6,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「登革熱／相關連結」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 links（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        },
+        {
+          "code": "target-type-differs",
+          "severity": "info",
+          "message": "對應的新站內容是 topic.disaster-evacuation（topic），草稿以 page 暫存，請比對後改建為 topic"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 4,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "21-dengue-zone",
+      "file": "21-dengue-zone.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/Page/IUXWpR9CZiGGA6OjQiiKOc",
+        "title": "登革熱防治專區（首頁）",
+        "category": "登革熱／防治專區",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "防治專區"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "dengue-zone",
+      "manifestDerived": false,
+      "target": "disease.dengue",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.dengue"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "page.dengue-zone",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/dengue-zone.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 40 處（mso 樣式 14、Mso 類別 13、命名空間標籤 13）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「登革熱／防治專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "target-type-differs",
+          "severity": "info",
+          "message": "對應的新站內容是 disease.dengue（disease），草稿以 page 暫存，請比對後改建為 disease"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 6,
+        "legacyLinks": 6,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "22-dengue-vector-density",
+      "file": "22-dengue-vector-density.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/3ZwNd9eoMVqqi7PDTlqIyw",
+        "title": "病媒蚊密度調查結果",
+        "category": "登革熱／防治專區",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "防治專區",
+          "病媒蚊監測"
+        ],
+        "tab": ""
+      },
+      "pattern": "category-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "dengue-vector-density",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "page.dengue-vector-density",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/dengue-vector-density.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.6,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 58 處（mso 樣式 20、Mso 類別 19、命名空間標籤 19）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「登革熱／防治專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 2,
+        "legacyLinks": 2,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "23-dengue-source-reduction",
+      "file": "23-dengue-source-reduction.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/rLPU3Gwbwg97BZ_2MG5efk",
+        "title": "孳生源清除與社區動員（巡倒清刷）",
+        "category": "登革熱／防治專區",
+        "publishedAt": "2026-09-10",
+        "updatedAt": "2026-09-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "防治專區",
+          "孳生源清除"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "dengue-source-reduction",
+      "manifestDerived": false,
+      "target": "doc.dengue-community-workplan.2026-09-10",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.dengue-community-workplan.2026-09-10"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "page.dengue-source-reduction",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/dengue-source-reduction.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 75 處（mso 樣式 45、Mso 類別 23、命名空間標籤 15）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「登革熱／防治專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "target-type-differs",
+          "severity": "info",
+          "message": "對應的新站內容是 doc.dengue-community-workplan.2026-09-10（document），草稿以 page 暫存，請比對後改建為 document"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "24-dengue-cluster-response",
+      "file": "24-dengue-cluster-response.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/j_J4tv6ANjXOs3PJQTPe8z",
+        "title": "群聚事件應變與緊急防治",
+        "category": "登革熱／防治專區",
+        "publishedAt": "2026-09-10",
+        "updatedAt": "2026-09-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "防治專區",
+          "本土疫情應變"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "dengue-cluster-response",
+      "manifestDerived": false,
+      "target": "doc.dengue-community-workplan.2026-09-10",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.dengue-community-workplan.2026-09-10"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "page.dengue-cluster-response",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/dengue-cluster-response.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 75 處（mso 樣式 45、Mso 類別 23、命名空間標籤 15）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「登革熱／防治專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "target-type-differs",
+          "severity": "info",
+          "message": "對應的新站內容是 doc.dengue-community-workplan.2026-09-10（document），草稿以 page 暫存，請比對後改建為 document"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "25-dengue-ns1-notice",
+      "file": "25-dengue-ns1-notice.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/UTWPs0f26dqP75NLaqYOpg?typeid=11",
+        "title": "NS1 抗原快篩試劑配置公告（致醫界通函）",
+        "category": "登革熱／醫療專區",
+        "publishedAt": "2026-09-15",
+        "updatedAt": "2026-09-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "醫療專區",
+          "公告"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": "dengue-ns1-notice",
+      "manifestDerived": false,
+      "target": "news.2026-09-15-letter-616-ns1",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-15-letter-616-ns1"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-09-15-letter-616-ns1",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-09-15-letter-616-ns1.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「登革熱／醫療專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "26-dengue-guidance-v16-archive",
+      "file": "26-dengue-guidance-v16-archive.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/File/Get/eisdR8ngYeiulZ08rD9J9A",
+        "title": "登革熱／屈公病防治工作指引（第 16 版）",
+        "category": "登革熱／醫療專區",
+        "publishedAt": "2025-11-01",
+        "updatedAt": "2025-11-01",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "醫療專區",
+          "歷版指引"
+        ],
+        "tab": ""
+      },
+      "pattern": "file",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "dengue-guidance-v16-archive",
+      "manifestDerived": false,
+      "target": "doc.guidance-dengue.v16",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.guidance-dengue.v16"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue",
+        "disease.chikungunya"
+      ],
+      "outputs": [
+        {
+          "id": "doc.guidance-dengue.v16",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/guidance-dengue.v16.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 64 處（mso 樣式 34、Mso 類別 21、命名空間標籤 15）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「登革熱／醫療專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "pdf-no-text-layer",
+          "severity": "warn",
+          "message": "PDF「guidance-dengue.v16.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2025-11-01"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "27-dengue-village-chief-video",
+      "file": "27-dengue-village-chief-video.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/wcABV3owliF5_29uKba1VA",
+        "title": "影音：里長帶頭巡倒清刷",
+        "category": "登革熱／衛教宣導",
+        "publishedAt": "2026-07-15",
+        "updatedAt": "2026-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "衛教宣導",
+          "影音"
+        ],
+        "tab": ""
+      },
+      "pattern": "category-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "dengue-village-chief-video",
+      "manifestDerived": false,
+      "target": "media.dengue-village-chief",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "media.dengue-village-chief"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "page.dengue-village-chief-video",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/dengue-village-chief-video.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.4,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": true,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「登革熱／衛教宣導」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        },
+        {
+          "code": "embedded-media",
+          "severity": "warn",
+          "message": "內文有嵌入媒體 1 個（iframe）未轉入；影音請另建 media 內容"
+        },
+        {
+          "code": "target-type-differs",
+          "severity": "info",
+          "message": "對應的新站內容是 media.dengue-village-chief（media），草稿以 page 暫存，請比對後改建為 media"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "28-dengue-migrant-worker-materials",
+      "file": "28-dengue-migrant-worker-materials.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/yNCv7fIZytqR8M72_3DGXS",
+        "title": "外籍勞工登革熱防治宣導（多語單張）",
+        "category": "登革熱／衛教宣導",
+        "publishedAt": "2026-07-15",
+        "updatedAt": "2026-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "衛教宣導",
+          "多語素材"
+        ],
+        "tab": ""
+      },
+      "pattern": "category-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "dengue-migrant-worker-materials",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "page.dengue-migrant-worker-materials",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/dengue-migrant-worker-materials.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.4,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": true,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「登革熱／衛教宣導」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        },
+        {
+          "code": "embedded-media",
+          "severity": "warn",
+          "message": "內文有嵌入媒體 1 個（iframe）未轉入；影音請另建 media 內容"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "29-news-2026-09-29-ili-weekly",
+      "file": "29-news-2026-09-29-ili-weekly.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/j9AyvNwbg3RF2utKUq6c6I?typeid=9",
+        "title": "流感疫情持續上升，10 月 1 日公費疫苗開打，長者幼兒請優先接種",
+        "category": "登革熱／最新消息",
+        "publishedAt": "2026-09-29",
+        "updatedAt": "2026-09-29",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "最新消息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-29-ili-weekly"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue",
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-09-29-ili-weekly",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-09-29-ili-weekly.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「登革熱／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "not-in-manifest",
+          "severity": "warn",
+          "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "30-news-2026-08-18-dengue-rising-south",
+      "file": "30-news-2026-08-18-dengue-rising-south.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/x14hC_-aNBFlGE_fgPYXtG?typeid=9",
+        "title": "南部登革熱本土疫情上升，籲請民眾配合孳生源清除與防治工作",
+        "category": "登革熱／最新消息",
+        "publishedAt": "2026-08-18",
+        "updatedAt": "2026-08-18",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "最新消息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-08-18-dengue-rising-south"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-08-18-dengue-rising-south",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-08-18-dengue-rising-south.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「登革熱／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "not-in-manifest",
+          "severity": "warn",
+          "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "31-news-2026-07-21-dengue-first-local",
+      "file": "31-news-2026-07-21-dengue-first-local.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/9EfoEs8AvQebnkHbh47GM3?typeid=9",
+        "title": "今年首例登革熱本土病例出現於高雄市，請民眾清除積水容器",
+        "category": "登革熱／最新消息",
+        "publishedAt": "2026-07-21",
+        "updatedAt": "2026-07-21",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "最新消息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-07-21-dengue-first-local"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-07-21-dengue-first-local",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-07-21-dengue-first-local.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「登革熱／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "not-in-manifest",
+          "severity": "warn",
+          "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "32-news-2026-07-01-letter-dengue-guidance-v17",
+      "file": "32-news-2026-07-01-letter-dengue-guidance-v17.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/Ztstqjy7MJdl7pkQSReHpB?typeid=11",
+        "title": "致醫界通函第 612 號：登革熱／屈公病防治工作指引第 17 版自即日起適用",
+        "category": "登革熱／最新消息",
+        "publishedAt": "2026-07-01",
+        "updatedAt": "2026-07-01",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "最新消息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-07-01-letter-dengue-guidance-v17"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue",
+        "disease.chikungunya"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-07-01-letter-dengue-guidance-v17",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-07-01-letter-dengue-guidance-v17.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「登革熱／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "not-in-manifest",
+          "severity": "warn",
+          "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "33-news-2025-11-11-letter-dengue-guidance-v16",
+      "file": "33-news-2025-11-11-letter-dengue-guidance-v16.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/C3M3v5QNkdLxk3VSZVzpzv?typeid=11",
+        "title": "致醫界通函第 603 號：登革熱／屈公病防治工作指引第 16 版公布",
+        "category": "登革熱／最新消息",
+        "publishedAt": "2025-11-11",
+        "updatedAt": "2025-11-11",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "最新消息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2025-11-11-letter-dengue-guidance-v16"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue",
+        "disease.chikungunya"
+      ],
+      "outputs": [
+        {
+          "id": "news.2025-11-11-letter-dengue-guidance-v16",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2025-11-11-letter-dengue-guidance-v16.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「登革熱／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "not-in-manifest",
+          "severity": "warn",
+          "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    }
+  ],
+  "drafts": [
+    {
+      "id": "faq.dengue-community-mobilize",
+      "type": "faq",
+      "title": "社區或里長要怎麼帶大家一起防登革熱？",
+      "file": "content/faq/dengue-community-mobilize.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.dengue-community-mobilize"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.dengue-container-check",
+      "type": "faq",
+      "title": "防登革熱說的「巡、倒、清、刷」是什麼？",
+      "file": "content/faq/dengue-container-check.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.dengue-container-check"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.dengue-fever-when-to-see-doctor",
+      "type": "faq",
+      "title": "登革熱發燒後幾天內要就醫？",
+      "file": "content/faq/dengue-fever-when-to-see-doctor.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.dengue-fever-when-to-see-doctor"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.dengue-imported-return",
+      "type": "faq",
+      "title": "從登革熱流行地區回國後，要注意什麼？",
+      "file": "content/faq/dengue-imported-return.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.dengue-imported-return"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.dengue-painkiller",
+      "type": "faq",
+      "title": "懷疑登革熱時，可以自己吃止痛藥嗎？",
+      "file": "content/faq/dengue-painkiller.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.dengue-painkiller"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.dengue-spraying-refuse",
+      "type": "faq",
+      "title": "衛生單位說要進家裡噴藥，可以拒絕嗎？",
+      "file": "content/faq/dengue-spraying-refuse.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.dengue-spraying-refuse"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.travel-return-fever",
+      "type": "faq",
+      "title": "出國回來後發燒，應該怎麼辦？",
+      "file": "content/faq/travel-return-fever.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.travel-return-fever"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.dengue-materials-poster",
+      "type": "page",
+      "title": "衛教宣導：單張海報",
+      "file": "content/pages/dengue-materials-poster.json",
+      "confidence": 0.4,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 2,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "11-materials-poster"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.dengue-materials-video",
+      "type": "page",
+      "title": "衛教宣導：影片",
+      "file": "content/pages/dengue-materials-video.json",
+      "confidence": 0.8,
+      "existing": true,
+      "compareWith": [
+        "media.dengue-village-chief"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "12-materials-video"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.dengue-manual.2026-03-01",
+      "type": "document",
+      "title": "傳染病防治工作手冊（2026 年版）",
+      "file": "content/documents/dengue-manual.2026-03-01.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "13-manual"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.case-definition-dengue.2023-01-01",
+      "type": "document",
+      "title": "傳染病病例定義：登革熱（2026 年版）",
+      "file": "content/documents/case-definition-dengue.2023-01-01.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.case-definition-dengue.2023-01-01"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "14-case-definition"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.dengue-d7bdfa.2026-09-10",
+      "type": "document",
+      "title": "登革熱社區防治工作指引：孳生源清除、病媒蚊監測與群聚應變",
+      "file": "content/documents/dengue-d7bdfa.2026-09-10.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "15-guideline"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.dengue-stats",
+      "type": "page",
+      "title": "統計資料",
+      "file": "content/pages/dengue-stats.json",
+      "confidence": 0.6,
+      "existing": true,
+      "compareWith": [
+        "dataset.dengue-daily"
+      ],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "16-stats"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.dengue-lab",
+      "type": "page",
+      "title": "檢驗資訊",
+      "file": "content/pages/dengue-lab.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "labtest.dengue"
+      ],
+      "status": "review",
+      "owner": "unit.lab",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "17-lab"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.dengue-notify",
+      "type": "page",
+      "title": "通報定義與時限",
+      "file": "content/pages/dengue-notify.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "18-notify"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.dengue-news-list",
+      "type": "page",
+      "title": "新聞稿列表",
+      "file": "content/pages/dengue-news-list.json",
+      "confidence": 0.6,
+      "existing": true,
+      "compareWith": [
+        "disease.dengue"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "19-news-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.dengue-links",
+      "type": "page",
+      "title": "相關連結",
+      "file": "content/pages/dengue-links.json",
+      "confidence": 0.6,
+      "existing": true,
+      "compareWith": [
+        "topic.disaster-evacuation"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "20-links"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.dengue-zone",
+      "type": "page",
+      "title": "登革熱防治專區（首頁）",
+      "file": "content/pages/dengue-zone.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "disease.dengue"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "21-dengue-zone"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.dengue-vector-density",
+      "type": "page",
+      "title": "病媒蚊密度調查結果",
+      "file": "content/pages/dengue-vector-density.json",
+      "confidence": 0.6,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "22-dengue-vector-density"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.dengue-source-reduction",
+      "type": "page",
+      "title": "孳生源清除與社區動員（巡倒清刷）",
+      "file": "content/pages/dengue-source-reduction.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.dengue-community-workplan.2026-09-10"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "23-dengue-source-reduction"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.dengue-cluster-response",
+      "type": "page",
+      "title": "群聚事件應變與緊急防治",
+      "file": "content/pages/dengue-cluster-response.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.dengue-community-workplan.2026-09-10"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "24-dengue-cluster-response"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-09-15-letter-616-ns1",
+      "type": "news",
+      "title": "NS1 抗原快篩試劑配置公告（致醫界通函）",
+      "file": "content/news/2026-09-15-letter-616-ns1.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-15-letter-616-ns1"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "25-dengue-ns1-notice"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.guidance-dengue.v16",
+      "type": "document",
+      "title": "登革熱／屈公病防治工作指引（第 16 版）",
+      "file": "content/documents/guidance-dengue.v16.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.guidance-dengue.v16"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "26-dengue-guidance-v16-archive"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.dengue-village-chief-video",
+      "type": "page",
+      "title": "影音：里長帶頭巡倒清刷",
+      "file": "content/pages/dengue-village-chief-video.json",
+      "confidence": 0.4,
+      "existing": true,
+      "compareWith": [
+        "media.dengue-village-chief"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "27-dengue-village-chief-video"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.dengue-migrant-worker-materials",
+      "type": "page",
+      "title": "外籍勞工登革熱防治宣導（多語單張）",
+      "file": "content/pages/dengue-migrant-worker-materials.json",
+      "confidence": 0.4,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "28-dengue-migrant-worker-materials"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-09-29-ili-weekly",
+      "type": "news",
+      "title": "流感疫情持續上升，10 月 1 日公費疫苗開打，長者幼兒請優先接種",
+      "file": "content/news/2026-09-29-ili-weekly.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-29-ili-weekly"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "29-news-2026-09-29-ili-weekly"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-08-18-dengue-rising-south",
+      "type": "news",
+      "title": "南部登革熱本土疫情上升，籲請民眾配合孳生源清除與防治工作",
+      "file": "content/news/2026-08-18-dengue-rising-south.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-08-18-dengue-rising-south"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "30-news-2026-08-18-dengue-rising-south"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-07-21-dengue-first-local",
+      "type": "news",
+      "title": "今年首例登革熱本土病例出現於高雄市，請民眾清除積水容器",
+      "file": "content/news/2026-07-21-dengue-first-local.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-07-21-dengue-first-local"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "31-news-2026-07-21-dengue-first-local"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-07-01-letter-dengue-guidance-v17",
+      "type": "news",
+      "title": "致醫界通函第 612 號：登革熱／屈公病防治工作指引第 17 版自即日起適用",
+      "file": "content/news/2026-07-01-letter-dengue-guidance-v17.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-07-01-letter-dengue-guidance-v17"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "32-news-2026-07-01-letter-dengue-guidance-v17"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2025-11-11-letter-dengue-guidance-v16",
+      "type": "news",
+      "title": "致醫界通函第 603 號：登革熱／屈公病防治工作指引第 16 版公布",
+      "file": "content/news/2025-11-11-letter-dengue-guidance-v16.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2025-11-11-letter-dengue-guidance-v16"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "33-news-2025-11-11-letter-dengue-guidance-v16"
+      ],
+      "merged": false
+    },
+    {
+      "id": "disease.dengue",
+      "type": "disease",
+      "title": "登革熱",
+      "file": "content/diseases/dengue.json",
+      "confidence": 0.96,
+      "existing": true,
+      "compareWith": [
+        "disease.dengue"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "01-intro",
+        "02-intro-pathogen",
+        "03-intro-epidemiology",
+        "04-intro-transmission",
+        "05-intro-incubation",
+        "06-intro-symptoms",
+        "07-intro-prevention",
+        "08-intro-treatment",
+        "09-vaccine"
+      ],
+      "merged": true
+    }
+  ],
+  "migration": {
+    "patchFile": "migration-patch.json",
+    "applied": true,
+    "summary": {
+      "derivedItems": 20,
+      "derivedMatched": 19,
+      "items": 8,
+      "matched": 8,
+      "missingPages": 0,
+      "unmatchedPages": 6,
+      "agree": 8,
+      "conflicts": 0,
+      "statusChanges": 0,
+      "pendingToMigrated": 0,
+      "targetChanges": 0,
+      "noteChanges": 8,
+      "stillPending": 2
+    },
+    "file": "content/migration/dengue.json",
+    "statusChanges": [],
+    "targetChanges": [],
+    "noteChanges": 8
+  }
+}

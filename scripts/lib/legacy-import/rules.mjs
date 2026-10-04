@@ -53,24 +53,34 @@ export function ownerForCategory(rules, category, breadcrumbs = []) {
   return best;
 }
 
-/** 在文字中找疾病：依主檔名稱與別名＋規則別名，最長命中優先。回傳 [{ id, hit }]（依出現順序、去重） */
+/** 疾病 id → 草稿 id 用的短碼：規則檔 short 優先，否則取主檔 id 去掉 disease. 前綴（disease.dengue → dengue） */
+export function shortFor(rules, diseaseId) {
+  const r = (rules.diseases ?? []).find((d) => d.id === diseaseId);
+  return r?.short ?? String(diseaseId ?? '').replace(/^disease\./, '') ?? 'x';
+}
+
+/**
+ * 在文字中找疾病：候選以主檔（content/master/diseases.json）每一種疾病為底，名稱＋主檔別名＋規則檔別名；最長命中優先。
+ * 回傳 [{ id, hit }]（依出現順序、去重）。第九輪只認規則檔列的疾病，第十輪改成主檔全列，規則檔只補舊站寫法。
+ */
 export function detectDiseases(rules, masterDiseases, texts) {
-  const entries = [];
-  for (const d of rules.diseases ?? []) entries.push({ id: d.id, names: d.aliases ?? [] });
-  const byId = new Map(entries.map((e) => [e.id, e]));
-  for (const m of masterDiseases ?? []) {
-    const e = byId.get(m.id);
-    if (e) e.names = [...new Set([...e.names, m.name, ...(m.aliases ?? [])])];
+  const byId = new Map();
+  for (const m of masterDiseases ?? []) byId.set(m.id, { id: m.id, names: [m.name, ...(m.aliases ?? [])].filter(Boolean) });
+  for (const d of rules.diseases ?? []) {
+    const e = byId.get(d.id) ?? { id: d.id, names: [] };
+    e.names = [...new Set([...e.names, ...(d.aliases ?? [])])];
+    byId.set(d.id, e);
   }
+  const entries = [...byId.values()];
   const found = [];
   for (const text of texts.filter(Boolean)) {
     const t = String(text);
-    // 每個疾病取它最長的別名命中位置，再依位置排序
+    // 每個疾病取它最長的別名命中位置，再依位置排序；純英文縮寫（TB、Flu…）要整字命中，避免「LTBI」裡的 TB 之類的誤判
     const hits = [];
     for (const e of entries) {
       const names = [...e.names].sort((a, b) => b.length - a.length);
-      const n = names.find((x) => x && t.includes(x));
-      if (n) hits.push({ id: e.id, hit: n, at: t.indexOf(n), len: n.length });
+      const n = names.find((x) => x && (/^[A-Za-z0-9 .-]+$/.test(x) ? new RegExp(`(^|[^A-Za-z0-9])${x.replace(/[.*+?^$|()[\]\\]/g, '\\$&')}(?![A-Za-z0-9])`, 'i').test(t) : t.includes(x)));
+      if (n) { const at = /^[A-Za-z0-9 .-]+$/.test(n) ? t.search(new RegExp(n.replace(/[.*+?^$|()[\]\\]/g, '\\$&'), 'i')) : t.indexOf(n); hits.push({ id: e.id, hit: n, at, len: n.length }); }
     }
     // 較長名稱涵蓋較短者（「多重抗藥性結核病」涵蓋「結核病」）：同一位置範圍內只留較長的
     hits.sort((a, b) => a.at - b.at || b.len - a.len);

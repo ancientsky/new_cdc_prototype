@@ -12,31 +12,31 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
 const C = (p) => JSON.parse(fs.readFileSync(path.join(ROOT, 'content', p), 'utf8'));
-const BASE = 'https://www.cdc.gov.tw';
+export const BASE = 'https://www.cdc.gov.tw';
 export const EXPORTED_AT = '2026-10-03';
 
 // ───────────────────────── 小工具 ─────────────────────────
-const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-const fakeId = (s) => createHash('sha256').update(`sim:${s}`).digest('base64url').slice(0, 22);
+export const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+export const fakeId = (s) => createHash('sha256').update(`sim:${s}`).digest('base64url').slice(0, 22);
 
 /** 內嵌標記：**粗體**、[文字](網址) */
-const inl = (t) => esc(t)
+export const inl = (t) => esc(t)
   .replace(/\*\*([^*]+)\*\*/g, '<b style="mso-bidi-font-weight:normal"><span lang="ZH-TW" style="font-family:\'新細明體\',serif">$1</span></b>')
   .replace(/(^|[^*])\*([^*]+)\*(?!\*)/g, '$1<i style="mso-bidi-font-style:normal">$2</i>')
   .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2"><span lang="ZH-TW">$1</span></a>');
 
-const SPAN = (t) => `<span lang="ZH-TW" style="font-size:12.0pt;font-family:'新細明體',serif;mso-ascii-font-family:'Times New Roman';mso-hansi-font-family:'Times New Roman'">${t}</span>`;
+export const SPAN = (t) => `<span lang="ZH-TW" style="font-size:12.0pt;font-family:'新細明體',serif;mso-ascii-font-family:'Times New Roman';mso-hansi-font-family:'Times New Roman'">${t}</span>`;
 /** Word 貼上的一般段落（MsoNormal＋mso 樣式＋ <o:p>） */
-const P = (t) => `<p class="MsoNormal" style="margin:0cm;margin-bottom:.0001pt;text-align:justify;text-justify:inter-ideograph;line-height:150%">${SPAN(inl(t))}<span lang="EN-US" style="font-size:12.0pt"><o:p></o:p></span></p>`;
+export const P = (t) => `<p class="MsoNormal" style="margin:0cm;margin-bottom:.0001pt;text-align:justify;text-justify:inter-ideograph;line-height:150%">${SPAN(inl(t))}<span lang="EN-US" style="font-size:12.0pt"><o:p></o:p></span></p>`;
 /** Word 貼上的清單項目（mso-list） */
-const LI = (t, level = 1) => `<p class="MsoListParagraph" style="margin-left:${18 + 18 * level}pt;text-indent:-18.0pt;mso-list:l0 level${level} lfo1"><![if !supportLists]><span lang="EN-US" style="font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol"><span style="mso-list:Ignore">·<span style="font:7.0pt 'Times New Roman'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>${SPAN(inl(t))}</p>`;
+export const LI = (t, level = 1) => `<p class="MsoListParagraph" style="margin-left:${18 + 18 * level}pt;text-indent:-18.0pt;mso-list:l0 level${level} lfo1"><![if !supportLists]><span lang="EN-US" style="font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol"><span style="mso-list:Ignore">·<span style="font:7.0pt 'Times New Roman'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>${SPAN(inl(t))}</p>`;
 /** Word 編號清單項目（標記「1.」） */
-const LIO = (n, t) => `<p class="MsoListParagraph" style="margin-left:36.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo2"><![if !supportLists]><span lang="EN-US"><span style="mso-list:Ignore">${n}.<span style="font:7.0pt 'Times New Roman'">&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>${SPAN(inl(t))}</p>`;
-const H = (n, t) => `<h${n}><span lang="ZH-TW" style="font-family:'微軟正黑體',sans-serif">${esc(t)}</span></h${n}>`;
-const A = (href, t) => `<a href="${esc(href)}">${esc(t)}</a>`;
+export const LIO = (n, t) => `<p class="MsoListParagraph" style="margin-left:36.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo2"><![if !supportLists]><span lang="EN-US"><span style="mso-list:Ignore">${n}.<span style="font:7.0pt 'Times New Roman'">&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>${SPAN(inl(t))}</p>`;
+export const H = (n, t) => `<h${n}><span lang="ZH-TW" style="font-family:'微軟正黑體',sans-serif">${esc(t)}</span></h${n}>`;
+export const A = (href, t) => `<a href="${esc(href)}">${esc(t)}</a>`;
 
 /** 簡易 Markdown（段落、- 清單、###/#### 標題、**粗體**、*斜體*）→ Word 貼上 HTML */
-function mdHtml(md) {
+export function mdHtml(md) {
   const out = [];
   let para = [];
   const flush = () => { if (para.length) { out.push(P(para.join(''))); para = []; } };
@@ -54,7 +54,7 @@ function mdHtml(md) {
 }
 
 /** 表格；儲存格可為字串或 { t, rowspan, colspan } */
-function TABLE(head, rows, { caption } = {}) {
+export function TABLE(head, rows, { caption } = {}) {
   const cell = (c, tag) => {
     const o = typeof c === 'object' ? c : { t: c };
     const attrs = `${o.rowspan ? ` rowspan="${o.rowspan}"` : ''}${o.colspan ? ` colspan="${o.colspan}"` : ''}`;
@@ -74,7 +74,7 @@ function buildPdf(objs) {
   return Buffer.from(body, 'latin1');
 }
 /** 有文字層的單頁 PDF（Helvetica，只放 ASCII；中文標題見 .md 與 HTML 說明） */
-function pdfText(title, lines) {
+export function pdfText(title, lines) {
   const ops = ['BT', '/F1 18 Tf', '50 780 Td', `${pdfStr(title)} Tj`, '/F1 11 Tf', '0 -28 Td', '14 TL', ...lines.map((l) => `${pdfStr(l)} Tj T*`), 'ET'].join('\n');
   return buildPdf([
     '<< /Type /Catalog /Pages 2 0 R >>', '<< /Type /Pages /Kids [3 0 R] /Count 1 >>',
@@ -84,7 +84,7 @@ function pdfText(title, lines) {
   ]);
 }
 /** 掃描檔式 PDF：整頁是一張影像，沒有任何文字運算子（pdfHasTextLayer 為 false） */
-function pdfScan(seed) {
+export function pdfScan(seed) {
   const w = 16, h = 20;
   const raw = Buffer.alloc(w * h);
   for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) raw[y * w + x] = ((x * 7 + y * 13 + seed) % 5 === 0) ? 40 : 235;
@@ -123,7 +123,7 @@ function chunk(type, data) {
   return Buffer.concat([len, td, crc]);
 }
 /** 小型 PNG（RGB）：長條圖示意 */
-function png(w, h, bars, color) {
+export function png(w, h, bars, color) {
   const rows = [];
   for (let y = 0; y < h; y++) {
     const row = Buffer.alloc(1 + w * 3);
@@ -147,7 +147,7 @@ const faq = (id) => C(`faq/${id}.json`);
 const doc = (id) => C(`documents/${id}.json`);
 
 /** 頁面外殼（Bootstrap 3 版型、導覽、麵包屑、側欄、頁尾） */
-function shell({ title, crumbs, bodyHtml, updated, menuActive }) {
+export function shell({ title, crumbs, bodyHtml, updated, menuActive }) {
   const menu = ['疾病介紹', '預防接種', 'Q&A', '宣導素材', '指引及手冊', '通報定義', '通報', '檢驗', '統計資料', '防治政策', '外籍人士健檢', '研究成果', '教育訓練', '相關連結', '最新消息', '活動訊息'];
   return `<!DOCTYPE html>
 <html lang="zh-Hant-TW">
@@ -197,7 +197,7 @@ ${bodyHtml}
 }
 
 /** Q&A 手風琴（Bootstrap panel） */
-function qaPanels(items) {
+export function qaPanels(items) {
   return `<div class="panel-group" id="accordion">${items.map((it, i) => `
 <div class="panel panel-default">
   <div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#q${i + 1}">Q${i + 1}. ${esc(it.q)}</a></h4></div>

@@ -1,0 +1,69 @@
+{
+  "id": "page.dengue-village-chief-video",
+  "type": "page",
+  "title": "影音：里長帶頭巡倒清刷",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-07-15",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "由里長示範帶領社區志工「巡、倒、清、刷」清除積水容器，說明孳生源清除比噴藥更重要，並提醒出現發燒、頭痛、骨頭痛應儘速就醫。",
+  "slug": "dengue-village-chief-video",
+  "bodyMarkdown": "由里長示範帶領社區志工「巡、倒、清、刷」清除積水容器，說明孳生源清除比噴藥更重要，並提醒出現發燒、頭痛、骨頭痛應儘速就醫。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/wcABV3owliF5_29uKba1VA"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.4,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「登革熱／衛教宣導」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+      },
+      {
+        "code": "list-page",
+        "severity": "info",
+        "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+      },
+      {
+        "code": "embedded-media",
+        "severity": "warn",
+        "message": "內文有嵌入媒體 1 個（iframe）未轉入；影音請另建 media 內容"
+      },
+      {
+        "code": "target-type-differs",
+        "severity": "info",
+        "message": "對應的新站內容是 media.dengue-village-chief（media），草稿以 page 暫存，請比對後改建為 media"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/List/wcABV3owliF5_29uKba1VA",
+    "convertedAt": "2026-10-04T22:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "media.dengue-village-chief"
+    ]
+  }
+}
