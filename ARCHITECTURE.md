@@ -734,3 +734,59 @@ manualStatus?: enum[cancelled, failed（流標）], award?: { date, winner, amou
 - Y2：`src/client/admin/{md-convert,zip-store,assets-panel,publish}.js`、`src/client/admin/preprocess.js`（資產預檢）、`src/templates/admin/publish.mjs`、`src/public/vendor/marked.min.js`（＋LICENSE）、`src/styles/admin.css`、`tests/admin-editor.test.mjs`、截圖。
 - Y3：`docs/**`、`README.md`。
 - 共同：不切分支、不 commit；`npm test` 與 `BUILD_TODAY=2026-10-01 LINK_CHECK=error npm run build` 全綠。
+
+## 17. 第九輪（2026-10-04）：發布車道與自動合併、預覽網址、預定與緊急發布、舊站匯出批次轉換
+
+目的：讓承辦人感受到的流程「跟舊後台一樣簡單、速度差不多」，但治理在背後自動發生；並示範舊站匯出一鍵轉成內容草稿。原型沒有後端，所以「送出」在原型裡是：上架包 ZIP → 開 PR；而 PR 之後的一切（分車道、檢查、合併、部署、預覽）在 GitHub Actions 上**真的會跑**。
+
+### 17.1 發布車道（Z1 擁有）
+
+`content/governance/lanes.json`：
+```
+{ lanes: {
+    emergency: { label: '緊急發布', types: ['situation'], alsoWhen: { urgent: true },   // 任何型別標 urgent:true
+                 autoMerge: true, requiredApprovals: 0, postPublishReviewHours: 24, slaMinutes: 10 },
+    fast:      { label: '快車道', types: ['news','letter','clarification','job','tender','banner'],
+                 autoMerge: true, requiredApprovals: 0, postPublishReviewHours: 24, slaMinutes: 180 },
+    standard:  { label: '一般車道', types: ['disease','vaccine','document','faq','topic','service','page','publication','labtest','research','dataset','media','migration'],
+                 autoMerge: false, requiredApprovals: 1, reviewers: ['unit.pr'], tier1Reviewers: ['unit.pr','unit.oasis'], slaWorkingDays: 2 } },
+  rules: { translationsNeverBlock: true, machineTranslationAllowedFor: ['news','faq','topic','service'], ciIsTheReviewer: true } }
+```
+- `_common.json` 新增選填 `publishAt`（date-time 或 date；未到 ⇒ 不渲染、不進索引／sitemap／API／RSS，後台列「排程中」）、`urgent`（bool，只有 news／letter／clarification 可用）、`postPublishReview: { status: 'pending'|'done', reviewedBy?, reviewedAt? }`。
+- 治理：`item.gov.lane`（依型別與 urgent）、`item.gov.scheduled`（publishAt > now）、待辦 `post-publish-review`（快車道／緊急發布已上線但尚未複核，owner unit.pr，期限 publishedAt + 24h，中優先；逾期升高）、`lane-sla-breach`（PR 開啟超過 SLA 仍未合併：由 CI 在 PR 上標籤與留言，不是建置待辦）。`scripts/lane.mjs <changed files…>`：由變更檔案推出車道與審核需求（多檔取最嚴格），輸出 JSON 給 CI 用。
+- 時間基準：`BUILD_TODAY` 凍結只影響治理日期，`publishAt` 以真實現在時間（UTC）判斷，讓排程發布在原型上真的會到點上線。
+
+### 17.2 CI：PR 車道、自動合併、預覽網址、排程（Z1 擁有）
+
+- `.github/workflows/content-pr.yml`（`pull_request` 針對 `content/**`、`data/snapshots/**` 以外的路徑也可，但車道只看 content）：checkout → npm ci → `npm test` → `node scripts/build.mjs --check` → `node scripts/lane.mjs`（改動檔案由 `git diff --name-only origin/main...HEAD`）→ 以 `BASE_PATH=/new_cdc_prototype/preview/pr-{N}` 建置預覽 → 把 dist 推到 `previews` 分支的 `pr-{N}/` 目錄（孤兒分支、force 覆蓋該目錄）→ 觸發 `pages.yml` 的 `workflow_dispatch` 讓主站重新部署（主站建置時把 `previews` 分支內容複製到 `dist/preview/`）→ 在 PR 留言（或更新同一則留言）：車道、檢查結果摘要、預覽網址 `https://ancientsky.github.io/new_cdc_prototype/preview/pr-{N}/`、SLA 到期時間、需要誰審 → 加標籤 `lane:fast|standard|emergency`。
+- 自動合併：車道 autoMerge 且全部檢查通過 ⇒ 同一工作流程直接 `gh pr merge --squash --delete-branch`（不用倉庫的 auto-merge 設定）；一般車道 ⇒ 檢查 `gh pr view --json reviews` 是否有核准（原型沒有 team，CODEOWNERS 以註解標示單位對應，核准人用倉庫擁有者示範），有核准且檢查通過才合併；否則留言說明還缺什麼。PR 開啟超過 SLA ⇒ `.github/workflows/lane-sla.yml`（每小時）留言並加 `sla:breach` 標籤。
+- `.github/workflows/preview-cleanup.yml`：PR 關閉 ⇒ 刪 `previews/pr-{N}/`，再觸發主站部署。
+- `pages.yml`：排程改為每 2 小時一次建置（讓 `publishAt` 到點上線），但 `npm run fetch` 與快照回寫只在每日 03:00 UTC 的那一次與手動執行時跑（用 `github.event.schedule` 判斷）；建置前 checkout `previews` 分支到 `dist/preview/`（不存在就略過）；`.nojekyll` 照舊。
+- `.github/CODEOWNERS`：`content/diseases/** content/vaccines/** content/documents/** content/faq/**` → 公關室＋OASIS（註解寫單位，實際帳號用倉庫擁有者）；其餘目錄 → 各單位（註解）。
+- 測試 `tests/lanes.test.mjs`：lane 推導（型別、urgent、多檔取最嚴）、publishAt 未到不渲染／不進 sitemap／API、post-publish-review 待辦、lanes.json schema。YAML 以 `node -e` 用簡單檢查（存在、含必要步驟名）測；**真正的端到端由整合者開一個測試 PR 驗證**。
+
+### 17.3 舊站匯出批次轉換（Z2 擁有）
+
+- `scripts/import-legacy.mjs <export-dir> --out <dir> [--apply-migration] [--rules content/migration/_import-rules.json]`：
+  - 輸入：匯出目錄，每頁一個 `.html`＋同名 `.json` 側檔（url、title、category、publishedAt、updatedAt、breadcrumbs、attachments:[{url,label,file}]），或一個 `index.json` 陣列；附件檔放 `files/` 子目錄。這是我們定義的「匯出格式」，正式站由資訊室從 CMS 資料庫匯出成此格式（文件要寫清楚欄位）。
+  - 規則 `content/migration/_import-rules.json`：URL 模式 → 型別與目錄（`/Disease/SubIndex/` → disease blocks、`/Category/QAPage/` → faq（每題一筆）、`/Bulletin/Detail/` → news（typeid 9 press、8772 clarification、11 other）、`/Category/MPage|Page/` → page 或併入疾病 blocks、`/File/Get/` → asset）；類別 → owner 單位；疾病名 → disease id（用主檔別名比對）；標題關鍵字 → blocks key（致病原→intro、傳染方式→transmission…）。
+  - 轉換：HTML → Markdown 用 `src/client/admin/md-convert.js`（純函式，Node 可直接 import）；清 Word 樣式；表格保留；圖片改成 `/files/{id}/…` 並宣告 assets（複製檔案、算 sha256、讀尺寸；alt 先用圖片的 title／alt／檔名，標 `needsAlt`）；PDF 附件宣告為 attachment（machineReadable 用 Y1 的 `pdfHasTextLayer` 偵測）。
+  - 輸出：`{out}/content/{dir}/{id}.json` 草稿（`status: 'review'`、`conversion: { mode: 'auto', confidence: 0–1, issues: [...], sourceUrl, convertedAt }`、legacyUrls、assets、owner、reviewedAt=匯出日、reviewPeriodMonths 依型別預設）、`{out}/content/assets/{id}/…`、`{out}/report.json` 與 `{out}/report.md`（每頁：來源、型別、目標 id、信心、問題清單（表格複雜、圖無 alt、未對應類別、內文過短、重複標題）、建議動作）、`{out}/migration-patch.json`（對應移轉清單 key 的 status／target 更新；`--apply-migration` 才寫回 `content/migration/{slug}.json`，且只改 status／target／note，不動 verified）。
+  - 信心計算：型別對應明確 +0.4、owner 對應 +0.2、Markdown 無轉換警告 +0.2、附件全部找到 +0.1、無重複 +0.1。< 0.6 ⇒ 建議人工檢視。
+- **第一批實測：結核病 40 個舊頁**。開發環境連不到舊站，所以由 Z2 依 `content/migration/tuberculosis.json` 的 40 筆人工項目**合成一份模擬匯出** `data/legacy-export/tuberculosis/`（HTML 要像舊站：Bootstrap 版型、Word 貼上的 span／mso 樣式、表格、附件連結、麵包屑；內容用既有結核病內容反推，明確標示為模擬匯出，正式匯出取代即可）。跑 `import-legacy` → `data/legacy-import/tuberculosis/`（草稿、assets、report），**不要**把草稿放進 `content/`（會與既有結核病內容重複）；報告要能和既有內容對照（同 target 的草稿標「既有內容已存在，供比對」）。`--apply-migration` 對結核病清單實際套用一次（status 由 pending → migrated 的筆數要寫在回報）。
+- 後台 `/admin/import/`：讀 `data/legacy-import/*/report.json`：批次摘要（頁數、型別分布、平均信心、需人工檢視數、附件數）、逐頁表（來源、型別、目標、信心、問題、動作）、下載草稿 JSON、對應移轉清單的連結；`/admin/` 加一張卡。
+- 測試 `tests/import-legacy.test.mjs`：規則比對、HTML→草稿（含 Word 樣式清理、表格、附件宣告、圖片 needsAlt）、信心計算、report 形狀、migration-patch 不動 verified、結核病批次 40 頁全部有輸出且草稿通過 schema 驗證（用 validate 的單檔驗證）。
+
+### 17.4 後台與文件（Z3 擁有）
+
+- 後台 `/admin/publish/`：型別選定後顯示**車道徽章**與說明（「快車道：送出後約 3 分鐘上線，公關室 24 小時內複核」／「一般車道：需 1 位審核，SLA 2 個工作天」／「緊急發布：立即上線並通知複核」）；新增欄位 `publishAt`（排程發布）與 `urgent`（只有可用型別顯示）；「送出」按鈕：原型環境產生上架包後，顯示**模擬送出時間軸**（建立分支 → 開 PR → CI 檢查（列出會跑的檢查）→ 車道判定 → 自動合併或等待審核 → 部署 → 預覽網址格式），並附「正式環境這一步由系統代做，承辦人只按一次送出」。預檢加：urgent 只能用於允許型別、publishAt 必須晚於現在。
+- `docs/publishing-lanes.md`（**建議書**，給主管與各單位）：問題陳述（舊後台直接上架 vs 新流程的抱怨點）、原則（流程看不見、CI 當審核者、分車道、多語不擋中文）、車道表（型別、是否自動合併、審核人、SLA、上線後複核）、時程（送出到上線 3 分鐘的拆解）、預覽網址、預定與緊急發布、上線後複核怎麼做、CODEOWNERS 與審核權限、SLA 逾期處理、試行計畫（兩單位、兩個月、量什麼）、溝通要點（按鍵數對照表：舊後台 vs 新流程）、風險與對策、附錄：GitHub 上實際跑的工作流程說明與原型驗證結果（整合者補數字）。
+- `docs/legacy-import.md`：匯出格式規格（側檔欄位）、規則檔怎麼寫、信心分級與人工檢視原則、三級處理（現行一級內容人工確認／近年新聞自動上線／久遠封存）、PDF 不整批轉、報告怎麼看、結核病首批結果（整合者補數字）、正式批次的排程建議（每批一個欄目樹、對照移轉清單）。
+- `docs/guide-staff.md`：第 2 節加「車道與送出」小節、排程與緊急發布操作；第 15 節加「用匯入工具產生草稿」步驟。`docs/governance-model.md` 規則 25（車道與自動合併）、26（排程發布與上線後複核）、27（自動轉換草稿的信心與人工檢視）。`docs/plan-supplement.md` +3；`docs/roadmap-mapping.md` 內容管理後台列更新；README 第九輪。
+
+### 17.5 分工與邊界
+
+- Z1：`content/governance/lanes.json`、`schemas/_common.json`（publishAt、urgent、postPublishReview）、`scripts/lib/{governance,lanes}.mjs`、`scripts/lane.mjs`、`scripts/build.mjs`（previews 複製、publishAt 過濾）、`scripts/lib/{emit-api,emit-seo,pages}.mjs`（排程中不輸出）、`.github/workflows/{content-pr,preview-cleanup,lane-sla,pages}.yml`、`.github/CODEOWNERS`、`tests/lanes.test.mjs`。
+- Z2：`scripts/import-legacy.mjs`、`scripts/lib/legacy-import/**`、`content/migration/_import-rules.json`、`data/legacy-export/tuberculosis/**`、`data/legacy-import/**`、`content/migration/tuberculosis.json`（只透過 --apply-migration）、`src/templates/admin/import.mjs`、`src/templates/admin/index.mjs`（加卡）、`tests/import-legacy.test.mjs`、截圖 `docs/screenshots/admin-import.png`。
+- Z3：`src/templates/admin/publish.mjs`、`src/client/admin/{publish,preprocess,editor}.js`（車道徽章、publishAt、urgent、模擬送出時間軸）、`src/styles/admin.css`、`docs/**`、`README.md`、截圖 `docs/screenshots/admin-lanes.png`。
+- 共同：不切分支、不 commit；`npm test` 與 `BUILD_TODAY=2026-10-01 LINK_CHECK=error npm run build` 全綠。CI YAML 無法在本機跑，Z1 要用 `node -e` 讀 YAML 做基本檢查（不要新增 yaml 套件；用簡單字串檢查即可），整合者會開真實 PR 驗證。
