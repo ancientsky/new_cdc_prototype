@@ -54,10 +54,11 @@ export const DEFAULT_LIMITS = {
   maxBytes: { pdf: 20 * 1024 * 1024, image: 2 * 1024 * 1024, data: 50 * 1024 * 1024 },
   allowedExt: Object.keys(MIME_BY_EXT),
   maxFiles: 30,
+  altMaxLength: 150,
 };
 const limitsOf = (config) => {
   const a = config?.assets ?? {};
-  return { maxBytes: { ...DEFAULT_LIMITS.maxBytes, ...(a.maxBytes ?? {}) }, allowedExt: a.allowedExt ?? DEFAULT_LIMITS.allowedExt, maxFiles: a.maxFiles ?? DEFAULT_LIMITS.maxFiles };
+  return { maxBytes: { ...DEFAULT_LIMITS.maxBytes, ...(a.maxBytes ?? {}) }, allowedExt: a.allowedExt ?? DEFAULT_LIMITS.allowedExt, maxFiles: a.maxFiles ?? DEFAULT_LIMITS.maxFiles, altMaxLength: a.altMaxLength ?? DEFAULT_LIMITS.altMaxLength };
 };
 
 // 這些欄位不掃 /files/ 引用（宣告本身、舊站網址、建置期欄位）
@@ -284,7 +285,7 @@ export function validateAssets(site, config = site.config, { assetsDir = ASSETS_
       if ((a.kind === 'attachment' || a.kind === 'data') && !String(a.label ?? '').trim()) err(item, `${at} ${KIND_LABELS[a.kind]}必須填 label（顯示名稱，如「新聞稿全文（PDF）」）`);
       if (a.kind === 'image') {
         if (!String(a.license ?? '').trim()) err(item, `${at} 圖片必須填 license（本署自製填 OGDL-1.0；非本署素材另填 source）`);
-        if (a.alt != null && String(a.alt).length > 150) err(item, `${at} alt 超過 150 字（目前 ${String(a.alt).length} 字）；長說明請放內文`);
+        if (a.alt != null && [...String(a.alt)].length > lim.altMaxLength) err(item, `${at} alt 超過 ${lim.altMaxLength} 字（目前 ${[...String(a.alt)].length} 字）；長說明請放內文`);
       }
       if (a.accessibleAlt) {
         if (a.accessibleAlt === a.file) err(item, `${at} accessibleAlt 不可指向自己`);
@@ -345,7 +346,7 @@ export function validateAssets(site, config = site.config, { assetsDir = ASSETS_
     for (const [file, a] of map) {
       if (a.kind !== 'image' || String(a.alt ?? '').trim()) continue;
       const s = imageAltOk.get(`${id}/${file}`);
-      if (!s?.anyRef) err(item, `assets（${file}）圖片必須填 alt（替代文字，≤ 150 字）`);
+      if (!s?.anyRef) err(item, `assets（${file}）圖片必須填 alt（替代文字，≤ ${lim.altMaxLength} 字）`);
       else for (const e of s.emptyRef) err(e.item, `${e.field} 圖片 /files/${id}/${file} 沒有替代文字：Markdown ![替代文字](…) 或 assets.alt 擇一必填`);
     }
   }

@@ -67,11 +67,41 @@
     "disease": "disease.influenza",
     "text": "類流感門急診就診率超過流行閾值，進入高峰期"
   },
-  "bodyMarkdown": "疾病管制署表示，類流感門急診就診率已連續 4 週上升並超過流行閾值，即日起進入類流感高峰期。為加速高風險族群及早治療，自今（21）日起修訂「公費流感抗病毒藥劑使用對象」第 3 條：**65 歲以上有類流感症狀者，醫師可直接開立公費抗病毒藥劑，不需快篩陽性**；未滿 5 歲者仍需快篩陽性。\n\n疾管署提醒，抗病毒藥劑於發病 48 小時內使用效果最佳，長者出現發燒、咳嗽、全身痠痛等症狀請儘早就醫。",
+  "bodyMarkdown": "疾病管制署表示，類流感門急診就診率已連續 4 週上升並超過流行閾值，即日起進入類流感高峰期。為加速高風險族群及早治療，自今（21）日起修訂「公費流感抗病毒藥劑使用對象」第 3 條：**65 歲以上有類流感症狀者，醫師可直接開立公費抗病毒藥劑，不需快篩陽性**；未滿 5 歲者仍需快篩陽性。\n\n![](/files/news.2026-09-21-flu-antiviral-revised/chart-ili.svg)\n\n疾管署提醒，抗病毒藥劑於發病 48 小時內使用效果最佳，長者出現發燒、咳嗽、全身痠痛等症狀請儘早就醫。",
   "i18n": {
     "en": {
       "title": "ILI peak declared: people aged 65+ with symptoms can receive government-funded antivirals without a rapid test",
       "summary": "With the influenza-like illness peak declared, Taiwan CDC revised Article 3: doctors may prescribe antivirals directly to people aged 65+ with flu-like symptoms without a positive rapid test."
     }
-  }
+  },
+  "attachments": [
+    {
+      "label": "新聞稿全文（PDF，示意）",
+      "url": "/files/news.2026-09-21-flu-antiviral-revised/press-release.pdf",
+      "machineReadable": true
+    }
+  ],
+  "assets": [
+    {
+      "file": "press-release.pdf",
+      "kind": "attachment",
+      "label": "新聞稿全文（PDF，示意）",
+      "mime": "application/pdf",
+      "bytes": 3749,
+      "sha256": "5a17de0ad0797c5900c6711e38c7b080588f5cb1bfdcacc192b2043e1607606d",
+      "machineReadable": true
+    },
+    {
+      "file": "chart-ili.svg",
+      "kind": "image",
+      "alt": "類流感門急診就診率週趨勢圖（示意）：第 31 至 38 週由 5.2% 升至 12.0%，自第 34 週起超過流行閾值 7%，連續 4 週上升。",
+      "mime": "image/svg+xml",
+      "bytes": 3593,
+      "sha256": "0561eb9adbe6435276d41986aa450979e152a6b2103bb5176580d1fc538a2190",
+      "width": 640,
+      "height": 360,
+      "source": "疾管署急性傳染病組（原型示意圖）",
+      "license": "OGDL-1.0"
+    }
+  ]
 }

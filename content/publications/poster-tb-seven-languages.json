@@ -65,7 +65,7 @@
   "authors": [
     "慢性傳染病組"
   ],
-  "pdfUrl": "/pending/?ref=publication.poster-tb-seven-languages&doc=咳嗽兩週要就醫：結核病七語衛教海報（PDF）",
+  "pdfUrl": "/files/publication.poster-tb-seven-languages/poster-tb-seven-languages.pdf",
   "abstractMarkdown": "A3 直式海報，七種語言各一版（繁體中文、English、日本語、Tiếng Việt、Bahasa Indonesia、ไทย、Tagalog）。重點：咳嗽超過兩週、有痰、體重減輕、夜間盜汗請就醫；結核病可治癒、治療免費；都治關懷員陪伴服藥。海報圖片不承載唯一資訊，文字內容另提供純文字版本。",
   "i18n": {
     "en": {
@@ -79,5 +79,26 @@
   },
   "legacyUrls": [
     "https://www.cdc.gov.tw/Category/List/{id}#posters"
+  ],
+  "assets": [
+    {
+      "file": "poster-tb-seven-languages.pdf",
+      "kind": "attachment",
+      "label": "結核病七語衛教海報（PDF，A4 示意）",
+      "mime": "application/pdf",
+      "bytes": 3536,
+      "sha256": "51d3b4f7b6b3a81d4403b5ac400c817fad2647d963a887828450d50b626bcf3b",
+      "machineReadable": false,
+      "accessibleAlt": "poster-tb-seven-languages.md"
+    },
+    {
+      "file": "poster-tb-seven-languages.md",
+      "kind": "attachment",
+      "label": "結核病七語衛教海報純文字版（Markdown，七語）",
+      "mime": "text/markdown",
+      "bytes": 2781,
+      "sha256": "cf3692f742855ad216692b0e4f5deaeadc8ab3c16a31beaec8624273f8d51049",
+      "machineReadable": true
+    }
   ]
 }

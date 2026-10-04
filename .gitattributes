@@ -1,0 +1,2 @@
+# 檔案資產不做換行轉換，否則 Windows autocrlf 會讓 .md／.csv／.svg 的 sha256 與宣告不符
+content/assets/** -text

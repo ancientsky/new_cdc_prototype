@@ -146,6 +146,7 @@ export function provenance(ctx, item, { showAi = true, extra = null } = {}) {
     ${item.type === 'document' && item.family ? html`<button type="button" class="c-btn c-btn--sm c-btn--ghost" data-subscribe="${item.family}" aria-pressed="false">${t('pro.subscribe')}</button>` : html`<button type="button" class="c-btn c-btn--sm c-btn--ghost" data-subscribe="${item.id}" aria-pressed="false">${t('pro.subscribe')}</button>`}
   </p>
   ${legacyDisclosure(ctx, item)}
+  ${assetsBlock(ctx, item)}
 </div>`;
 }
 
@@ -714,4 +715,27 @@ export function legacyDisclosure(ctx, item) {
     <p class="c-legacy__foot muted">${until ? html`${t('legacy.until', { date: ctx.fmtDate(until) })} · ` : ''}<a href="${url('/legacy/')}">${t('legacy.finder')} →</a></p>
   </details>
 </div>`;
+}
+
+/**
+ * 檔案資產區（第八輪）：列出內容宣告的附件與資料檔（assets[]），略過已經在 attachments／pdfUrl／forms 顯示過的檔，
+ * 讓 PDF 的可及性版本（.md）、資料檔（CSV）等也有連結。內文圖片（kind image）不列。
+ */
+export function assetsBlock(ctx, item) {
+  const list = Array.isArray(item?.assets) ? item.assets : [];
+  if (!list.length) return '';
+  const { t, url } = ctx;
+  const already = new Set([
+    ...(item.attachments ?? []).map((a) => String(a.url ?? '')),
+    ...(item.forms ?? []).map((f) => String(f.href ?? f.url ?? '')),
+    String(item.pdfUrl ?? ''),
+  ].map((u) => u.replace(/^https?:\/\/[^/]+/, '').replace(/^\/[a-z]{2}(?=\/files\/)/, '')));
+  const base = `/files/${item.id}/`;
+  const rows = list.filter((a) => a.kind !== 'image' && !already.has(`${base}${a.file}`));
+  if (!rows.length) return '';
+  const kindLabel = (k) => t(`assets.kind.${k}`);
+  const fmtBytes = (b) => (b >= 1048576 ? `${(b / 1048576).toFixed(1)} MB` : b >= 1024 ? `${Math.round(b / 1024)} KB` : b ? `${b} B` : '');
+  return html`<details class="c-assets" data-group="ondemand"><summary>${t('assets.t')}（${rows.length}）</summary>
+  <ul class="c-linklist c-assets__list">${rows.map((a) => html`<li><a href="${url(`${base}${a.file}`)}" download>${a.label ?? a.file}</a> <span class="c-pill c-pill--neutral">${kindLabel(a.kind)}</span>${a.bytes ? html` <span class="muted">${fmtBytes(a.bytes)}</span>` : ''}${a.machineReadable ? html` ${pill(t('assets.mr'), 'ok')}` : ''}${a.accessibleAlt ? html` <a class="muted" href="${url(`${base}${a.accessibleAlt}`)}">${t('assets.alt')}</a>` : ''}</li>`)}</ul>
+</details>`;
 }

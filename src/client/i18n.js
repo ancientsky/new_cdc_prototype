@@ -115,6 +115,12 @@ const ROWS = {
   'illustrative': ['示意', 'illustrative', '参考値', 'halimbawa', 'minh họa', 'ilustrasi', 'ตัวอย่าง'],
 
   /* ───── 來歷（元件 1）與治理詞彙 ───── */
+  'assets.t': ['檔案與機讀版本', 'Files and machine-readable versions', 'ファイルと機械可読版', 'Mga file at machine-readable na bersyon', 'Tệp và phiên bản máy đọc được', 'Berkas dan versi terbaca mesin', 'ไฟล์และเวอร์ชันที่เครื่องอ่านได้'],
+  'assets.kind.attachment': ['附件', 'Attachment', '添付', 'Kalakip', 'Tệp đính kèm', 'Lampiran', 'ไฟล์แนบ'],
+  'assets.kind.data': ['資料檔', 'Data file', 'データファイル', 'Data file', 'Tệp dữ liệu', 'Berkas data', 'ไฟล์ข้อมูล'],
+  'assets.kind.image': ['圖片', 'Image', '画像', 'Larawan', 'Hình ảnh', 'Gambar', 'รูปภาพ'],
+  'assets.mr': ['機讀', 'Machine-readable', '機械可読', 'Machine-readable', 'Máy đọc được', 'Terbaca mesin', 'เครื่องอ่านได้'],
+  'assets.alt': ['可及性版本', 'Accessible version', 'アクセシブル版', 'Accessible na bersyon', 'Bản dễ tiếp cận', 'Versi aksesibel', 'เวอร์ชันเข้าถึงได้'],
   'prov.owner': ['權責單位', 'Responsible unit', '担当部署', 'Responsableng yunit', 'Đơn vị phụ trách', 'Unit penanggung jawab', 'หน่วยงานรับผิดชอบ'],
   'prov.reviewed': ['最後審閱', 'Last reviewed', '最終確認', 'Huling nasuri', 'Xem xét lần cuối', 'Terakhir ditinjau', 'ทบทวนล่าสุด'],
   'prov.next': ['下次審閱', 'Next review', '次回確認', 'Susunod na pagsusuri', 'Lần xem xét tới', 'Tinjauan berikutnya', 'ทบทวนครั้งต่อไป'],

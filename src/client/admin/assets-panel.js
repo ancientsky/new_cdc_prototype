@@ -4,45 +4,8 @@
 import { $, $$, esc } from './common.js';
 import * as P from './preprocess.js';
 
-const hex = (buf) => [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join('');
-/** SHA-256（Web Crypto）；不可用（非安全來源）時回傳空字串，預檢會提示。 */
-export async function sha256Hex(blobOrBytes) {
-  try {
-    const buf = blobOrBytes instanceof Uint8Array ? blobOrBytes : await blobOrBytes.arrayBuffer();
-    return hex(await crypto.subtle.digest('SHA-256', buf));
-  } catch { return ''; }
-}
-/** SVG 內容掃描：<script>、on*= 事件屬性、javascript: 網址、foreignObject 一律拒收。回傳原因或空字串。 */
-export function scanSvg(text) {
-  const t = String(text);
-  if (/<\s*script/i.test(t)) return 'SVG 內含 <script>';
-  if (/[\s"'/]on[a-z]+\s*=/i.test(t)) return 'SVG 內含事件屬性（on…=）';
-  if (/javascript\s*:/i.test(t)) return 'SVG 內含 javascript: 網址';
-  if (/<\s*foreignObject/i.test(t)) return 'SVG 內含 foreignObject';
-  return '';
-}
-/** 檔頭簽章與副檔名是否相符（只檢查有固定簽章的格式）。回傳錯誤說明或空字串。 */
-export function sniffMismatch(ext, head) {
-  const b = head;
-  const at = (i, s) => [...s].every((c, k) => b[i + k] === c.charCodeAt(0));
-  const is = {
-    pdf: at(0, '%PDF'),
-    png: b[0] === 0x89 && at(1, 'PNG'),
-    jpg: b[0] === 0xff && b[1] === 0xd8, jpeg: b[0] === 0xff && b[1] === 0xd8,
-    webp: at(0, 'RIFF') && at(8, 'WEBP'),
-    xlsx: at(0, 'PK'), docx: at(0, 'PK'), odt: at(0, 'PK'),
-  }[ext];
-  return is === false ? `內容不是有效的 .${ext} 檔（檔頭簽章不符）` : '';
-}
-/** 讀 SVG 的 width／height（數字）或 viewBox */
-export function svgSize(text) {
-  const m = /<svg\b[^>]*>/i.exec(text)?.[0] ?? '';
-  const num = (n) => { const v = new RegExp(`\\s${n}\\s*=\\s*["']?\\s*([\\d.]+)\\s*(?:px)?\\s*["']`, 'i').exec(m); return v ? Math.round(Number(v[1])) : 0; };
-  let w = num('width'), h = num('height');
-  const vb = /viewBox\s*=\s*["']\s*[-\d.]+[ ,]+[-\d.]+[ ,]+([\d.]+)[ ,]+([\d.]+)/i.exec(m);
-  if ((!w || !h) && vb) { w = Math.round(Number(vb[1])); h = Math.round(Number(vb[2])); }
-  return w && h ? { width: w, height: h } : {};
-}
+const { sha256Hex, scanSvg, sniffMismatch, svgSize } = P;
+export { sha256Hex, scanSvg, sniffMismatch, svgSize };
 function imageSize(url) {
   return new Promise((resolve) => {
     const im = new Image();

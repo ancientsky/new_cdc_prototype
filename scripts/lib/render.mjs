@@ -49,7 +49,7 @@ export function makeUrl(lang = config.defaultLang) {
   return function url(path, { noLang = false, absolute = false } = {}) {
     if (/^https?:\/\//.test(path) || path.startsWith('mailto:') || path.startsWith('tel:')) return path;
     const p = path.startsWith('/') ? path : `/${path}`;
-    const langPrefix = noLang ? '' : langPrefixFor(p, lang, langDef);
+    const langPrefix = noLang || p.startsWith('/files/') ? '' : langPrefixFor(p, lang, langDef); // /files/ 七語共用，不加語言前綴
     const rel = `${config.basePath}${langPrefix}${p}`.replace(/\/{2,}/g, '/');
     return absolute ? `${config.siteUrl}${rel}` : rel;
   };

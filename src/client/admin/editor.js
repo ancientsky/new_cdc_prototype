@@ -88,13 +88,18 @@ export function initEditor(opts) {
 
   // ---------- 選取範圍 ----------
   const inWys = (node) => node && wys.contains(node.nodeType === 1 ? node : node.parentNode);
-  document.addEventListener('selectionchange', () => {
+  /** 記下編輯區內目前的選取（selectionchange 是非同步且會合併，焦點移走前要同步記一次） */
+  function snapshot() {
     const s = document.getSelection();
-    if (s && s.rangeCount && inWys(s.anchorNode)) { lastRange = s.getRangeAt(0).cloneRange(); paintState(); }
-  });
+    if (s && s.rangeCount && inWys(s.anchorNode)) { lastRange = s.getRangeAt(0).cloneRange(); return true; }
+    return false;
+  }
+  document.addEventListener('selectionchange', () => { if (snapshot()) paintState(); });
+  wys.addEventListener('focusout', snapshot);
   function restoreRange() {
-    wys.focus();
     const s = document.getSelection();
+    if (document.activeElement === wys && s.rangeCount && inWys(s.anchorNode)) return; // 已在編輯區內：沿用目前選取（selectionchange 是非同步的，lastRange 可能過時）
+    wys.focus();
     if (lastRange && inWys(lastRange.startContainer)) { s.removeAllRanges(); s.addRange(lastRange); return; }
     const r = document.createRange(); r.selectNodeContents(wys); r.collapse(false); s.removeAllRanges(); s.addRange(r);
   }
@@ -120,16 +125,32 @@ export function initEditor(opts) {
   }
   function insertHtml(html) { restoreRange(); document.execCommand('insertHTML', false, html); schedule(); }
 
+  /** 表格：insertHTML 在 Chrome 會把 <table> 拆壞，改用 DOM 直接插在游標所在區塊後面（空段落則取代） */
+  function insertTable() {
+    restoreRange();
+    const tpl = document.createElement('template');
+    tpl.innerHTML = TABLE_HTML;
+    const s = document.getSelection();
+    let blk = s.anchorNode && inWys(s.anchorNode) ? (s.anchorNode.nodeType === 1 ? s.anchorNode : s.anchorNode.parentNode) : wys;
+    while (blk && blk.parentNode !== wys && blk !== wys) blk = blk.parentNode;
+    const frag = tpl.content;
+    const firstCell = frag.querySelector('th');
+    if (!blk || blk === wys) wys.appendChild(frag);
+    else if (!blk.textContent.trim() && blk.tagName === 'P') blk.replaceWith(frag);
+    else blk.after(frag);
+    const r = document.createRange(); r.selectNodeContents(firstCell); s.removeAllRanges(); s.addRange(r);
+    schedule();
+  }
   const COMMANDS = {
     h2: () => block('h2'), h3: () => block('h3'),
     bold: () => exec('bold'), italic: () => exec('italic'),
     ul: () => exec('insertUnorderedList'), ol: () => exec('insertOrderedList'),
-    link: () => openLink(), table: () => { insertHtml(TABLE_HTML); say('已插入 3×3 表格（第一列為表頭）'); },
+    link: () => openLink(), table: () => { insertTable(); say('已插入 3×3 表格（第一列為表頭）'); },
     image: () => openImages(), quote: () => block('blockquote'),
     hr: () => { exec('insertHorizontalRule'); },
     undo: () => exec('undo'),
   };
-  bar.addEventListener('mousedown', (e) => { if (e.target.closest('button')) e.preventDefault(); }); // 不奪走選取
+  bar.addEventListener('mousedown', (e) => { if (e.target.closest('button')) { snapshot(); e.preventDefault(); } }); // 不奪走選取
   bar.addEventListener('click', (e) => {
     const b = e.target.closest('button[data-cmd]'); if (!b) return;
     hidePopovers(b.dataset.cmd === 'link' || b.dataset.cmd === 'image' ? b.dataset.cmd : '');
@@ -152,6 +173,7 @@ export function initEditor(opts) {
     if (except !== 'image') imgBox.hidden = true;
   }
   function openLink() {
+    snapshot();
     restoreRange();
     const a = ancestor('a');
     const sel = document.getSelection();
@@ -185,6 +207,7 @@ export function initEditor(opts) {
 
   // ---------- 圖片 ----------
   function openImages() {
+    snapshot();
     const list = opts.getImages?.() ?? [];
     const ul = $('#ed-img-list');
     ul.innerHTML = list.length
@@ -206,6 +229,7 @@ export function initEditor(opts) {
 
   /** 在游標處插入圖片。im：{ path, alt, blobUrl } */
   function insertImage(im) {
+    if (/\/files\/\//.test(im.path)) { say('請先填寫「內容 ID」（頁面下方），圖片路徑會用到它。'); return; }
     const alt = (im.alt ?? '').replace(/[\r\n]+/g, ' ');
     if (mode === 'wys') {
       const a = alt.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');

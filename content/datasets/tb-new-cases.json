@@ -144,5 +144,16 @@
   },
   "legacyUrls": [
     "https://www.cdc.gov.tw/Category/List/{id}#statistics"
+  ],
+  "assets": [
+    {
+      "file": "tb-new-cases-sample.csv",
+      "kind": "data",
+      "label": "結核病新案統計範例（CSV，示意數字；正式資料以資料開放平臺為準）",
+      "mime": "text/csv",
+      "bytes": 563,
+      "sha256": "31631cd7e20c22e788ce5f9304799f622f6b2bcf4b728800f9f1c13a6e3f0a82",
+      "machineReadable": true
+    }
   ]
 }

@@ -60,7 +60,7 @@
     "1HP",
     "都治"
   ],
-  "pdfUrl": "/pending/?ref=doc.tb-guideline.2025-09-01&doc=結核病診治指引（第八版）（PDF）",
+  "pdfUrl": "/files/doc.tb-guideline.2025-09-01/tb-guideline-v8.pdf",
   "legacyUrls": [
     "https://www.cdc.gov.tw/File/Get/{id}#tb-guideline"
   ],
@@ -128,5 +128,30 @@
     }
   ],
   "pageCount": 236,
-  "machineReadableMarkdown": "# 結核病診治指引（第八版）\n\n## 第一章 診斷\n疑似肺結核病人應收集 3 套痰液（至少 1 套為晨痰）進行抗酸菌塗片與培養，並以**分子快速檢測（含 rifampin 抗藥基因）作為第一線檢驗**，所有疑似個案均應執行，以縮短確診與發現抗藥的時間。胸部 X 光異常但痰檢查陰性者，由醫師綜合臨床判斷，必要時以支氣管鏡等方式取得檢體。\n\n## 第二章 藥物敏感結核病治療\n新病人標準處方仍為 2HRZE/4HR，總療程至少 6 個月。12 歲以上、非重症之藥物敏感肺結核病人，經評估後可考慮 4 個月短程處方（rifapentine 加 moxifloxacin 為基礎）；非重症兒童結核病可採 4 個月處方。治療滿 2 個月痰培養仍陽性者，應評估抗藥性並考慮延長治療。所有病人均應納入都治（DOTS）。\n\n## 第三章 抗藥性結核病治療\nrifampin 抗藥（RR-TB）或多重抗藥性結核病（MDR-TB）**優先採全口服短程處方**（以 bedaquiline、pretomanid、linezolid 為基礎，療程約 6 個月），不適用者採個別化全口服長程處方；不再常規使用注射劑。所有個案轉介抗藥性結核病醫療照護團隊（TMTC）收治並納入進階都治。\n\n## 第四章 潛伏結核感染\n潛伏結核感染治療處方包括 9H、4R、3HP、3HR，**新增 1HP**（rifapentine 加 isoniazid 每日服用，共 28 劑）供 13 歲以上對象選用。處方選擇、對象與追蹤細節依「潛伏結核感染診治指引」辦理。\n\n## 第五章 特殊族群\n兒童、孕婦、HIV 感染者、糖尿病、慢性腎臟病及肝病患者之處方調整與追蹤原則；使用 rifamycin 類藥物者應注意與抗凝血劑、荷爾蒙避孕藥及抗病毒藥物之交互作用。"
+  "machineReadableMarkdown": "# 結核病診治指引（第八版）\n\n## 第一章 診斷\n疑似肺結核病人應收集 3 套痰液（至少 1 套為晨痰）進行抗酸菌塗片與培養，並以**分子快速檢測（含 rifampin 抗藥基因）作為第一線檢驗**，所有疑似個案均應執行，以縮短確診與發現抗藥的時間。胸部 X 光異常但痰檢查陰性者，由醫師綜合臨床判斷，必要時以支氣管鏡等方式取得檢體。\n\n## 第二章 藥物敏感結核病治療\n新病人標準處方仍為 2HRZE/4HR，總療程至少 6 個月。12 歲以上、非重症之藥物敏感肺結核病人，經評估後可考慮 4 個月短程處方（rifapentine 加 moxifloxacin 為基礎）；非重症兒童結核病可採 4 個月處方。治療滿 2 個月痰培養仍陽性者，應評估抗藥性並考慮延長治療。所有病人均應納入都治（DOTS）。\n\n## 第三章 抗藥性結核病治療\nrifampin 抗藥（RR-TB）或多重抗藥性結核病（MDR-TB）**優先採全口服短程處方**（以 bedaquiline、pretomanid、linezolid 為基礎，療程約 6 個月），不適用者採個別化全口服長程處方；不再常規使用注射劑。所有個案轉介抗藥性結核病醫療照護團隊（TMTC）收治並納入進階都治。\n\n## 第四章 潛伏結核感染\n潛伏結核感染治療處方包括 9H、4R、3HP、3HR，**新增 1HP**（rifapentine 加 isoniazid 每日服用，共 28 劑）供 13 歲以上對象選用。處方選擇、對象與追蹤細節依「潛伏結核感染診治指引」辦理。\n\n## 第五章 特殊族群\n兒童、孕婦、HIV 感染者、糖尿病、慢性腎臟病及肝病患者之處方調整與追蹤原則；使用 rifamycin 類藥物者應注意與抗凝血劑、荷爾蒙避孕藥及抗病毒藥物之交互作用。",
+  "assets": [
+    {
+      "file": "tb-guideline-v8.pdf",
+      "kind": "attachment",
+      "label": "結核病診治指引（第八版）全文（PDF，示意）",
+      "mime": "application/pdf",
+      "bytes": 3484,
+      "sha256": "07e68c10e001fcafa98e26bed94dfe3b7f0de29eea6c7b9e7a23ac48b1befb08",
+      "machineReadable": false,
+      "accessibleAlt": "tb-guideline-v8.md",
+      "version": "第八版",
+      "effectiveAt": "2025-09-01"
+    },
+    {
+      "file": "tb-guideline-v8.md",
+      "kind": "attachment",
+      "label": "結核病診治指引（第八版）可及性版本（Markdown）",
+      "mime": "text/markdown",
+      "bytes": 2168,
+      "sha256": "f9c240644e478a2c949b808eb1c697cb439ed38c2d723e741d5e0f27817ff753",
+      "machineReadable": true,
+      "version": "第八版",
+      "effectiveAt": "2025-09-01"
+    }
+  ]
 }

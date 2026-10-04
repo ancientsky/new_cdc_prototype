@@ -118,9 +118,15 @@
   "forms": [
     {
       "label": "潛伏結核感染治療同意書",
-      "href": "/pending/?ref=service.ltbi-treatment&doc=潛伏結核感染治療同意書",
+      "href": "/files/service.ltbi-treatment/ltbi-consent-form.pdf",
       "format": "PDF",
       "machineReadable": false
+    },
+    {
+      "label": "潛伏結核感染治療同意書（純文字無障礙版）",
+      "href": "/files/service.ltbi-treatment/ltbi-consent-form.md",
+      "format": "Markdown",
+      "machineReadable": true
     },
     {
       "label": "潛伏結核感染治療合作醫師名單",
@@ -138,6 +144,27 @@
     {
       "q": "3HP 和 1HP 有什麼不同？",
       "a": "3HP 每週服藥 1 次共 12 次；1HP 每天服藥共 28 天。兩者都由醫師依您的狀況評估選擇。"
+    }
+  ],
+  "assets": [
+    {
+      "file": "ltbi-consent-form.pdf",
+      "kind": "attachment",
+      "label": "潛伏結核感染治療同意書（PDF，示意表單）",
+      "mime": "application/pdf",
+      "bytes": 3540,
+      "sha256": "e939c093cf56d95142c719ea5c2f2b987202944573838a5cf2109167e822ae38",
+      "machineReadable": false,
+      "accessibleAlt": "ltbi-consent-form.md"
+    },
+    {
+      "file": "ltbi-consent-form.md",
+      "kind": "attachment",
+      "label": "潛伏結核感染治療同意書（純文字無障礙版）",
+      "mime": "text/markdown",
+      "bytes": 1007,
+      "sha256": "cf82c2bade3bc4430c694a35632536e7def3204049b33c30b7925c40ae970ea4",
+      "machineReadable": true
     }
   ]
 }
