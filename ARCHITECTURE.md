@@ -624,3 +624,60 @@ API（`scripts/lib/emit-api.mjs`）：`/v1/country-levels.json` 原樣輸出 dat
 - W2：`src/templates/public/{international,disease,legacy,about,developers}.mjs`、`src/templates/public/_travel-map.mjs`（加 classOf／legend 選項，相容既有呼叫）、`src/templates/layout.mjs`（en 主選單一項、footer 連結）、`src/templates/admin/{migration,_migration,index}.mjs`、`src/client/admin/migration.js`、`src/client/i18n.js`、`src/styles/*`、`tests/round6-ui.test.mjs`、截圖。
 - W3：`content/diseases/{dengue,influenza,measles,enterovirus}.json`、其新文件／Q&A 檔、`content/migration/{dengue,influenza,measles,enterovirus}.json`、`docs/*.md`、`README.md`。
 - 共同：不切分支、不 commit；`npm test` 與 `BUILD_TODAY=2026-10-01 LINK_CHECK=error npm run build` 全綠。W2 對 W1 的新欄位容錯；W3 的人工清單需符合 W1 的 schema（先讀 §14.1，schema 若尚未更新就先照 §13.1 寫，W1 會相容）。
+
+## 15. 第七輪（2026-10-04）：人才招募（人事室）與採購公告（秘書室）分家；招募生命週期與模擬報名
+
+> 限制同前：連不到 www.cdc.gov.tw，舊站「人才招募」「採購公告」欄目依既有認識重建，移轉清單全部 `verified:false`。
+
+### 15.1 資料契約（X1 擁有）
+
+單位：`content/master/units.json` 新增 `unit.personnel`（人事室，Personnel Office，kind office，stewardTitle「Data Steward（人才招募、甄選結果）」）。採購公告 owner 維持 `unit.secretariat`。
+
+**`job`（招募職缺）** `schemas/job.json`，檔在 `content/jobs/`，id `job.{yyyy-mm-dd}-{slug}`，路徑 `/careers/{slug}/`：
+```
+title, owner: 'unit.personnel'（固定）, hiringUnit: unit id（用人單位）, jobType: enum[約聘人員, 約僱人員, 聘用研究員, 公費醫師, 技工工友駐衛警, 公務人員商調, 計畫助理, 臨時人員],
+positions: int, workplace: string, salaryNote: string（薪點／薪資範圍，文字）, qualifications: string[], duties: string[], requiredDocuments: string[],
+applyStart: date, deadlineAt: date, applyMethod: enum[online, email, mail, in-person], applyUrl?: url（外部報名系統；省略＝用本站 /careers/{slug}/apply/）,
+examPlan: [{ stage: enum[書面審查, 筆試, 口試, 實作, 體能], date?: date, note?: string }], resultPlannedAt?: date,
+contact: string, attachments?: [{ label, url, machineReadable? }], legacyUrls?: [],
+manualStatus?: enum[cancelled, filled]（人工覆蓋；其餘階段一律由日期與 result 推導）,
+result?: { publishedAt: date, refNo?: string, admitted: [{ seq: int, candidateNo: string, nameMasked: string }], waitlist: [{ rank: int, candidateNo: string, nameMasked: string, validUntil?: date }], note?: string, attachments?: [] },
+waitlistUpdates?: [{ date, candidateNo, nameMasked, note }]（遞補公告）
+```
+治理：`gov.jobStage` = upcoming（today < applyStart）｜open（≤ deadlineAt）｜closed（過截止、examPlan 尚未開始）｜screening（examPlan 有已到期日期、無 result）｜result（有 result）｜filled／cancelled（manualStatus）。**個資**：validate 強制 `nameMasked` 必須含遮罩字（○／◯／〇／＊），且不得含 3 個以上連續中文字的完整姓名樣式；candidateNo 不得像身分證字號（`^[A-Z][12]\d{8}$` 擋下）。result 區塊 `sensitivity` 視為 public 但 AI 白名單**排除 result 與 waitlistUpdates**（答案引擎不得唸出名單，只能給連結）。待辦：`job-result-overdue`（today > resultPlannedAt + 7 且無 result，owner 人事室、抄 hiringUnit，中優先）、`job-waitlist-expiring`（備取 validUntil 14 天內，低）、`job-apply-url-dead`（applyUrl 外部連結失效，沿用外部連結健康）。已截止職缺自動退出首頁與開放中清單（沿用公告截止邏輯）；result 後 90 天自動移入「歷史」。
+
+**`tender`（採購公告）** `schemas/tender.json`，檔在 `content/tenders/`，id `tender.{yyyy-mm-dd}-{slug}`，路徑 `/procurement/{slug}/`：
+```
+title, owner: 'unit.secretariat'（固定）, requestingUnit: unit id, tenderNo: string, method: enum[公開招標, 限制性招標, 公開取得報價或企劃書, 共同供應契約], budgetNtd: int, category: enum[財物, 勞務, 工程],
+announcedAt, deadlineAt（投標截止）, openingAt?（開標）, pccUrl?: url（政府電子採購網）, attachments?, contact, legacyUrls?,
+manualStatus?: enum[cancelled, failed（流標）], award?: { date, winner, amountNtd?, note? }
+```
+`gov.tenderStage` = open｜closed（過截止、未開標）｜opened（過 openingAt、無 award）｜awarded｜failed／cancelled。待辦 `tender-award-overdue`（openingAt + 30 天無 award 且非 failed／cancelled）。
+
+既有 9 則 recruit／procurement 新聞 → 轉成 job／tender 檔（原 id 放進 `legacyIds` 以保留 301：`redirects.json` 加 `kind:'moved'`，舊 `/news/{slug}/` → 新路徑），`schemas/news.json` 的 newsType 移除 recruit／procurement。至少做到：職缺 8 筆涵蓋 upcoming、open（3，含 1 筆外部 applyUrl）、closed、screening、result（2，含備取與 1 筆遞補）、cancelled；採購 7 筆涵蓋 open、closed、opened、awarded（2）、failed。
+
+輸出：`/v1/jobs.json`、`/v1/tenders.json`（含 stage）、RSS `feeds/careers.xml`、`feeds/procurement.xml`（錄取結果與決標各自是一筆 feed 項）、JSON-LD `JobPosting`（title、datePosted、validThrough、employmentType、hiringOrganization、jobLocation、applicantLocationRequirements 省略、baseSalary 以文字 description 代替）、tender 用 `GovernmentService`＋`Offer`（簡化）。sitemap 加入；`.md` 機讀版。答案引擎：意圖 `careers`（「疾管署有缺嗎」「怎麼報名」「截止日」）→ 結構化列開放中職缺與截止；問「誰錄取」→ 不唸名單，給結果頁連結並說明只公布報名編號與遮罩姓名；評估集 +3。移轉清單 `content/migration/careers.json`、`content/migration/procurement.json`（scope category，各 6–8 筆）。
+
+### 15.2 呈現契約（X2 擁有）
+
+- `/careers/`：頁首「加入疾管署」一句＋開放中職缺卡（倒數天數、職稱、用人單位、名額、地點、報名方式、線上報名按鈕）；篩選（職類／地點／單位）；分頁籤：開放中／即將開放／審查與甄試中／錄取結果／歷史；訂閱（RSS 連結＋既有訂閱頁）；人事室聯絡。
+- `/careers/{slug}/`：**時間軸**（公告→報名截止→甄試→結果→遞補）標示目前階段；區塊：工作內容、資格條件、薪資待遇、應備文件、甄試方式與日期、報名方式（open 顯示大按鈕「線上報名」或外部連結；closed 顯示「已截止，結果預計 {date} 公布」）、聯絡、附件、舊網址揭露；有 result 時「甄選結果」區：正取／備取表（序號、報名編號、遮罩姓名、備取有效期）、遞補紀錄、報到須知、結果公告日；頁首 pill 顯示階段。
+- `/careers/{slug}/apply/`（**模擬線上報名**，只在 open 且無外部 applyUrl 的職缺輸出；closed 輸出「已截止」頁）：明顯橫幅「原型示範：資料只存在你的瀏覽器，不會送出」；三步驟（基本資料與聯絡方式／學經歷與應備文件（檔案只列檔名不上傳）／聲明與個資告知事項同意→確認）；即時驗證與錯誤摘要、鍵盤可達、草稿存 localStorage、送出後產生報名編號 `CDC-{yyyymmdd}-{6 碼}`、顯示收執（可列印、可下載 JSON、可下載甄試日 .ics）、再次強調非正式。
+- `/procurement/`：分頁籤 招標中／已截止／已開標／已決標／流標；卡片（案名、標案案號、採購方式、預算、投標截止、開標日、政府電子採購網外連）；`/procurement/{slug}/` 標案資訊表、時程、決標資訊、附件、聯絡、舊網址揭露。
+- 導覽：footer「更多服務」把「人才招募與採購」拆成「人才招募」「採購公告」；`/notices/` 移除招募／採購頁籤改為兩張入口卡；`/about/`、`/contact/` 連結更新；首頁若有相關卡片同步。
+- 後台 `/admin/jobs/`（人事室：職缺與階段、待辦、結果上架檢核：遮罩檢核結果、正取數 ≤ 名額、備取有效期）、`/admin/tenders/`（秘書室：標案與階段、決標逾期）；`/admin/` 儀表板各加一張卡；待辦頁加三個 kind 頁籤。
+- i18n 七語（介面字串；職缺內容 zh-TW 為主，title／summary 可有 en）；`tests/round7-ui.test.mjs`；截圖 `docs/screenshots/careers.png`、`careers-job.png`、`careers-apply.png`、`procurement.png`。
+
+### 15.3 文件（X3 擁有）
+
+- `docs/guide-staff.md`：新增「16. 人才招募上架 SOP（人事室）」（公告→截止自動退場→甄試→結果上架（遮罩規則、報名編號）→遞補→歷史）與「17. 採購公告 SOP（秘書室）」（公告→截止→開標→決標／流標）；「找誰」表加兩列。
+- `docs/governance-model.md` 規則 19（招募階段推導與待辦）、20（甄選結果個資遮罩為建置閘門、AI 白名單排除名單）、21（採購階段推導與決標逾期）。
+- `docs/plan-supplement.md` +3；`docs/roadmap-mapping.md` 人才招募／採購列更新；`docs/migration-playbook.md` 加「欄目型（非疾病）清單：人才招募、採購」一小節；README 第七輪段落（含「模擬報名不送出任何資料」）。
+- 新文件 `docs/careers-privacy.md`：招募資料的個資處理原則（正式站報名系統在站外或後端、本站只公布編號與遮罩姓名、保存期限、刪除）。
+
+### 15.4 分工與邊界
+
+- X1：`schemas/{job,tender,news,_common}.json`、`content/{jobs,tenders}/**`、刪除 9 則 recruit／procurement 新聞檔、`content/master/units.json`、`content/migration/{careers,procurement}.json`、`scripts/lib/{load,validate,governance,emit-api,emit-seo,jsonld,openapi,index-builder}.mjs`、`src/client/answer/core.js`、`content/governance/eval-set.json`、`tests/jobs.test.mjs`、既有測試若因新聞型別移除而失敗的修正。
+- X2：`src/templates/public/{careers,procurement,notices,about,contact,home}.mjs`（careers、procurement 新；apply 子頁放在 careers.mjs 的 pages() 內）、`src/templates/layout.mjs`（footer）、`src/templates/admin/{jobs,tenders,index,todos}.mjs`、`src/client/{careers-apply.js}`（新，模擬報名）、`src/client/i18n.js`、`src/styles/*`、`tests/round7-ui.test.mjs`、截圖。對 X1 欄位容錯。
+- X3：`docs/**`、`README.md`。
+- 共同：不切分支、不 commit；`npm test` 與 `BUILD_TODAY=2026-10-01 LINK_CHECK=error npm run build` 全綠。
