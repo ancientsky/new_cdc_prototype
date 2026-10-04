@@ -25,15 +25,18 @@
 | `basedOn` | 承辦 | 依據的正本 id，衍生內容必填 |
 | `aiWhitelist.requested` | 承辦 | 申請進 AI 白名單；**是否生效由引擎算** |
 | `summary` | 承辦 | ≤ 120 字，兼作 meta description |
+| `assets[]` | 承辦 | 第八輪起，所有型別可用。內容所帶檔案（附件、內文圖片、資料檔）的宣告：`file`、`kind`、`label`、`alt`、`mime`、`bytes`、`sha256`、`machineReadable`、`accessibleAlt`、`license`、`source`…；檔案放 `content/assets/{id}/`，公開於 `/files/{id}/`。`mime`／`bytes`／`sha256`（及圖片寬高）可由 `npm run build -- --fix-assets` 補寫。規則 22–24，政策見 [assets-policy.md](assets-policy.md) |
 | `nextReviewAt` | **系統** | `reviewedAt` ＋ 週期；不要手填 |
 | `sourceHash` | **系統** | 中文正本內容雜湊，用於判斷譯文是否過期 |
 | `isCurrent`、`supersededBy` | **系統** | 文件版本鏈，依 `effectiveAt` 計算 |
+
+`assets[]` 的細部欄位：`file`（檔名，必填、唯一）、`kind`（`attachment` 附件／`image` 內文圖片／`data` 資料檔）、`label`（附件、資料檔必填）、`alt`（圖片必填，≤ 150 字）、`mime`、`bytes`、`sha256`（建置核對）、`machineReadable`（PDF 是否有文字層）、`accessibleAlt`（可及性替代版檔名）、`version`、`effectiveAt`、`source`、`license`（圖片必填）。既有的 `attachments[]`、`pdfUrl`、`materials[]` 保留；網址以 `/files/{id}/` 開頭者必須在 `assets` 宣告。
 
 文件另有 `family`（版本家族）、`version`、`effectiveAt`、`supersedes`、`changes`、`machineReadableMarkdown`、`roles`；資料集另有 `canonicalUrl`（正本位置，唯一）、`updateFrequency`、`lastUpdated`。
 
 ### 1.2 引擎輸出（`item.gov`）
 
-`nextReviewAt`、`daysToReview`、`overdue`、`superseded`、`stale[]`（依據正本已修訂的清單）、`annotations[]`（頁首警示）、`whitelist{requested, effective, reasons[]}`、`translationStale{}`、`reverseAuditHits[]`。全站層為 `site.gov`：KPI、待辦、白名單數、AI 暫停狀態。`job` 另有 `gov.jobStage`，`tender` 另有 `gov.tenderStage`（見規則 19、21）。
+`nextReviewAt`、`daysToReview`、`overdue`、`superseded`、`stale[]`（依據正本已修訂的清單）、`annotations[]`（頁首警示）、`whitelist{requested, effective, reasons[]}`、`translationStale{}`、`reverseAuditHits[]`。全站層為 `site.gov`：KPI、待辦、白名單數、AI 暫停狀態。第八輪起每筆內容另有 `gov.assets`（該筆的附件、圖片、資料檔計數與位元組、缺可及性版本的檔、授權問題），全站層為 `site.gov.assets`（內容數、檔案數、總位元組、依 kind 分計、孤兒檔、缺可及性版本數、圖片授權待確認數；規則 22–24）。`job` 另有 `gov.jobStage`，`tender` 另有 `gov.tenderStage`（見規則 19、21）。
 
 ### 1.3 第二輪新增型別的專屬欄位
 
@@ -93,6 +96,12 @@
 20. **甄選結果個資遮罩是建置閘門；AI 不唸名單**：`result.admitted[]`、`result.waitlist[]`、`waitlistUpdates[]` 的每一筆，`validate` 強制：`nameMasked` 必須含遮罩字（`○` `◯` `〇` `＊` 任一），且不得含 3 個以上連續中文字的完整姓名樣式（「王○明」可、「王小明」不可）；`candidateNo`（報名編號，3–24 個英數字與連字號）不得像身分證字號或居留證號（任何位置出現 `[A-Z][1289]\d{8}` 樣式都擋）；`result.note` 與遞補 `note` 同樣掃描身分證字號樣式；同一職缺報名編號不得重複；`admitted` 筆數不得超過 `positions`。**違反即建置失敗，不能發布，不是警告**；後台 `/admin/jobs/` 的「結果上架檢核」逐項顯示（`gov.resultCheck`）。AI 白名單：職缺與採購公告屬第四批核准範圍（民眾版），但**排除 `result` 與 `waitlistUpdates`**，不進答案索引與反向稽核文字：職缺公告內容（職稱、資格、日期、報名方式）可被引用，名單不可；答案引擎遇「誰錄取」類問題只回結果頁連結，並說明本站只公布報名編號與遮罩姓名（評估集有對應題）。報名資料本身不進 repo、不進 Git，見 [careers-privacy.md](careers-privacy.md)。
 21. **採購階段推導與決標逾期（`gov.tenderStage`）**：優先順序：`manualStatus`（`failed` 流標、`cancelled` 取消）＞ 有 `award`（`awarded`）＞ 今天 ≤ `deadlineAt`（`open`）＞ 今天 ≥ `openingAt`（`opened`）＞ 其餘（`closed`）。頁籤：招標中、已截止、已開標、已決標、流標（取消併入流標頁籤）。待辦 `tender-award-overdue`：階段為 `opened`（已開標、無 `award`、非流標取消）且今天 > `openingAt` + 30 日（owner 秘書室、抄送 `requestingUnit`，中優先）；**沒填 `openingAt` 不會有這個待辦**。`pccUrl` 失效沿用規則 13。validate：`slug` 與 id 一致、`requestingUnit` 存在、`announcedAt` ≤ `deadlineAt` ≤ `openingAt` ≤ `award.date`，且已有 `award` 不得再填 `manualStatus`。**本站只做入口與狀態，正式公告以政府電子採購網為準。**
 
+第八輪新增規則（檔案資產：附件、圖片、資料檔）：
+
+22. **檔案資產宣告與建置檢查**：內容把檔案放在 `content/assets/{id}/`，並在 `assets[]` 逐一宣告；建置時由 `scripts/lib/assets.mjs`（validate 階段）檢查，**任一項不過即建置失敗**（孤兒檔除外）：（a）**存在**：宣告的檔案必須存在；`content/assets/` 底下的資料夾名稱必須是存在的內容 id；（b）**hash**：`sha256` 與 `bytes` 必須與實際檔案相符，不符時訊息同時印出宣告值與實際值，`npm run build -- --fix-assets` 可自動補寫 `bytes`／`sha256`／`mime`／寬高（讀檔頭）；（c）**大小**：PDF 與文件類（pdf、docx、odt、md、ics）≤ 20 MB、圖片 ≤ 2 MB、資料檔（csv、json、xlsx）≤ 50 MB，一筆內容 ≤ 30 個檔（設定在 `site.config.mjs` 的 `assets`：`maxBytes.{pdf,image,data}`、`allowedExt`、`maxFiles`、`altMaxLength`）；（d）**格式**：副檔名須在允許清單（pdf、png、jpg、jpeg、webp、svg、csv、json、xlsx、docx、odt、md、ics），且與 `mime` 一致；檔名只能小寫英數、連字號、底線與點，不可有空白與中文（失敗時給建議檔名）；SVG 不得含 `<script>` 與 `on*=`；（e）**內容與副檔名相符**：檔案內容須與副檔名一致，`.json` 須可解析，SVG 另掃 `javascript:` 連結與 `<!ENTITY>`；缺 `bytes`／`sha256`／`mime` 同樣建置失敗（訊息附實際值）；（f）**孤兒**：`content/assets/{id}/` 有檔但內容未宣告 ⇒ 警告，並開待辦 `asset-orphan`（低優先，期限 30 日，每筆內容只開一則），孤兒檔不複製到站台；（g）**引用**：Markdown 內文與既有欄位（`attachments[]`、`pdfUrl`、`materials[]`）中，網址以 `/files/{id}/` 開頭者必須在 `assets` 宣告，內文圖片引用的 kind 必須是 `image`；外部網址仍走規則 13 的外部連結健康（`/files/` 不列入外部連結檢查）。建置只把**有宣告**、且內容狀態為 `published` 或 `archived` 的檔案複製到 `dist/files/{id}/`；`width`／`height` 與實際不符、`machineReadable: true` 的 PDF 偵測不到文字層，只是警告；`/files/` 視為站內連結，由全站連結檢查保證存在；`/v1/catalog.json` 每筆帶 `assets` 摘要（`file`、`kind`、`label`、`url`、`bytes`、`mime`、`machineReadable`），其他 `/v1/` 內容回應的 `assets` 每筆另加絕對網址 `url`；`llms.txt` 不列檔案。檔案隨內容生命週期：內容 `archived` 後檔案仍可存取，不因下架而消失（見 [assets-policy.md](assets-policy.md) 第 9 節）。
+23. **圖片 alt 與授權是建置閘門**：`kind: image` 的資產必須有 `alt`（≤ 150 字）與 `license`，缺任一項**建置失敗，不是警告**。內文 Markdown 的 `![替代文字](…)` 與 `assets.alt` 擇一非空即可，渲染時以 `assets.alt` 補進 `<img alt>`，並加 `loading="lazy"` 與 `width`／`height`（有值時）。`license` 不是 `OGDL-1.0` 的素材（外購、CC、第三方，即非本署自製）還必須有 `source`（原作者與出處），缺 `source`，或 `license` 不在許可清單（`OGDL-1.0`、`CC0-1.0`、`CC-BY-4.0`）⇒ 待辦 `image-license-missing`（中優先，期限 30 日，只對 `published` 且未被取代的內容開，owner 補來源與授權證明；清單外者沿用第 4 節，寫明限制並由 OASIS 確認）。
+24. **PDF 無可及性版本 ⇒ 待辦 `attachment-no-accessible-version`**：`kind: attachment` 的 PDF，若 `machineReadable` 不是 `true`（填 `false` 或沒填；沒有文字層或不是標籤 PDF），且 `accessibleAlt` 沒有指向同一內容宣告過的 `.md`、`.docx` 或 `.odt` 替代版 ⇒ 開待辦（中優先，owner 為內容權責單位，期限 30 日；只對 `published` 且未被取代的內容開）：找回原始檔重新匯出，或另附文字版。`machineReadable` 是承辦人的聲明；建置只做簡易偵測（宣告 `true` 卻找不到文字層 ⇒ 警告，不擋建置），標籤與閱讀順序無法自動判斷，因此由複核者抽查。`accessibleAlt` 只能是 `.md`、`.docx`、`.odt`，並須指向同一內容已宣告的檔，否則 validate 失敗。這條規則補足 KPI「現行文件有機讀版」在**附件層級**的缺口：文件型別的 `machineReadableMarkdown` 仍是機讀版的正本，PDF 只是附件。
+
 ## 3. 白名單政策
 
 「白名單」＝ AI 問答允許引用的內容集合。它不是人工清單，而是**同時滿足**以下條件的內容：
@@ -112,6 +121,7 @@
 - 許可清單：`OGDL-1.0`、`CC0-1.0`、`CC-BY-4.0`。清單外的值引擎會開 `license-missing` 待辦。
 - 第三方素材（照片、圖表、外部資料）若無法適用上述授權，必須在 `licenseNote` 寫明來源與限制，並由 OASIS 確認是否可進 API。
 - 所有 API 回應外殼都帶 `meta.license`；引用時須標示來源（網址與最後審閱日）。
+- **圖片與檔案的授權**：圖片 `license` 為必填、非本署素材須有 `source`（規則 23）；授權欄位與內容授權分開記，同一頁可以內文是 OGDL、某張外購圖是別的授權。細節見 [assets-policy.md](assets-policy.md) 第 5 節。
 
 ## 5. 個資與對話紀錄
 
@@ -120,6 +130,7 @@
 - **BYOK**（自備金鑰）：金鑰只存在使用者瀏覽器，直接連供應商，不經本站；介面標示供應商與模型。
 - **正式環境建議（待委員會議定）**：對話紀錄只留稽核編號、意圖、引用來源 id、是否拒答、回報狀態，不留原始輸入全文；保存期限與去識別化方式需符合個資法與機關規定；回報若含個資，先遮蔽再轉給 Steward。
 - **人才招募**：報名資料不進 repo、不進 Git；本站只公布報名編號與遮罩姓名，遮罩由建置閘門強制（規則 20）；模擬報名資料只存使用者自己的瀏覽器。原則、保存期限與刪除見 [careers-privacy.md](careers-privacy.md)。
+- **檔案中的個資**：含個資的檔案（附件、圖片、資料檔）不得上架；PDF 塗黑不等於刪除，圖片要移除 EXIF。正式站上傳前須經病毒掃描並留日誌；原型的建置檢查**不做**個資與病毒偵測，靠流程把關。要刪檔的理由與流程見 [assets-policy.md](assets-policy.md) 第 9、10 節。
 - 內容與範例一律不放真人姓名，承辦人以職稱表示。
 
 ## 6. KPI（每次建置重算，`/v1/governance/kpi.json`）

@@ -52,7 +52,7 @@
 - **新擺法、新要求**：結核病疾病頁加上專區導覽（民眾／專業各一套），指引與手冊走文件版本鏈，另有 Q&A、專區、補助與潛伏結核感染治療服務；頁首治理列有「本頁取代舊網站 N 個頁面」，展開看每筆舊網址與移轉後新增的治理要求。
 - **舊網址不 404**：建置自動輸出 `v1/redirects.json`、`v1/legacy-map.json`，以及三種伺服器轉址檔 `redirects/nginx.map`、`redirects/web.config.rewritemap.xml`、`redirects/_redirects`；404 頁自動帶往新頁，`/legacy/` 可貼舊網址查新頁。靜態主機的 404 頁只是示範與備援，**正式站必須由伺服器回 301**。
 - **上線後監測**：`node scripts/analyze-404-log.mjs access.log --map dist/v1/legacy-map.json --migration content/migration` 把 404 log 分成「可直接 301」「待補對照」「真的不存在（建議 410）」三類，待補對照附可貼進清單的草稿。
-- **規劃回補**：整理了 34 項「規劃文件沒寫到、原型做了」的作法，見 [docs/plan-supplement.md](docs/plan-supplement.md)（第 29–34 項為後兩輪新增）；完整移轉與轉址手冊見 [docs/migration-playbook.md](docs/migration-playbook.md)；同事操作步驟見 [docs/guide-staff.md](docs/guide-staff.md) 第 15 節。
+- **規劃回補**：整理了 36 項「規劃文件沒寫到、原型做了」的作法，見 [docs/plan-supplement.md](docs/plan-supplement.md)（第 29–36 項為後三輪新增）；完整移轉與轉址手冊見 [docs/migration-playbook.md](docs/migration-playbook.md)；同事操作步驟見 [docs/guide-staff.md](docs/guide-staff.md) 第 15 節。
 
 > 限制：開發環境連不到 `www.cdc.gov.tw`，結核病專區的舊頁清單依規劃文件的 URL 模式重建，每筆標 `verified: false`，等權責單位確認。
 
@@ -80,6 +80,20 @@
 - **輸出**：`/v1/jobs.json`、`/v1/tenders.json`（含階段）、RSS `feeds/careers.xml`、`feeds/procurement.xml`、JSON-LD `JobPosting`；後台 `/admin/jobs/`（人事室：職缺與階段、待辦、結果上架檢核）、`/admin/tenders/`（秘書室）。
 
 > 限制：連不到 `www.cdc.gov.tw`，舊站「人才招募」「採購公告」欄目的移轉清單（`content/migration/careers.json`、`procurement.json`）依既有認識重建，全部 `verified: false`。示範資料中的職缺、錄取名單（報名編號與遮罩姓名）與決標廠商皆為虛構，不可當作真實公告引用。
+
+## 第八輪：上架功能補完：所見即所得編輯、附件與圖片的放法
+
+前幾輪的上架流程要同事「貼 Markdown、手寫附件網址」。第八輪補上兩個缺口：不會 Markdown 的人怎麼寫內文，以及附件與內文圖片放哪裡、建置時檢查什麼。**正本仍是 Markdown＋JSON**（可 diff、可機讀、可給 AI），所見即所得只是輸入方式。
+
+- **三頁籤內文編輯**：`/admin/publish/` 內文欄有**所見即所得／Markdown／預覽**三個頁籤，同一份資料、即時轉換；工具列有標題、粗斜體、清單、連結、表格、圖片、引用；貼上 Word 或網頁內容時自動清成支援的子集。**存檔一律是 Markdown**。
+- **附件與圖片面板**：拖放多檔；檔名自動正規化（中文檔名要自己改）、選 `kind`（附件／內文圖片／資料檔）、填 label 與 alt、授權與來源、PDF 是否有文字層、算 SHA-256；一鍵把圖片插進內文。
+- **上架包**：「產生上架包」下載 **ZIP**（內含 `content/{型別}/{id}.json` 與 `content/assets/{id}/…` 原檔），畫面列出放哪裡與 PR 指引；解壓到 repo、開 PR、CI 檢查即可。
+- **檔案放哪裡**：`content/assets/{內容 id}/` → 公開網址 `/files/{內容 id}/{檔名}`（七語共用，不帶語言前綴）；內容用 `assets[]` 宣告每個檔。檔名只能小寫英數、連字號、底線與點。
+- **建置閘門**：檔案存在、`sha256`／`bytes` 相符、格式與大小在限制內（PDF ≤ 20 MB、圖片 ≤ 2 MB、資料檔 ≤ 50 MB）、SVG 無腳本、內文 `/files/` 引用都有宣告；**圖片沒有 alt 或授權直接建置失敗**；孤兒檔開待辦。hash 不符時訊息印出實際值，`npm run build -- --fix-assets` 可自動補寫 `bytes`／`sha256`／`mime`／寬高。
+- **PDF 可及性**：PDF 沒有文字層又沒附 `.md`／`.docx` 替代版 ⇒ 待辦 `attachment-no-accessible-version`。
+- **文件**：[docs/assets-policy.md](docs/assets-policy.md)（新）；[docs/guide-staff.md](docs/guide-staff.md) 第 2 節重寫為完整上架 SOP（三種編輯方式、附件與圖片、上架包、常見錯誤）；[docs/governance-model.md](docs/governance-model.md) 新增規則 22–24 與共同欄位 `assets`；[docs/plan-supplement.md](docs/plan-supplement.md) 新增第 35–36 項；ARCHITECTURE §16。
+
+> 限制：原型的建置檢查不做**病毒掃描**與**個資偵測**，PDF 文字層只有簡易偵測（宣告 `machineReadable: true` 卻偵測不到時警告；標籤與閱讀順序無法判斷，`machineReadable` 是承辦人聲明，由複核者抽查）；這些列為正式站待辦，見 [docs/assets-policy.md](docs/assets-policy.md) 第 10 節。範例檔案皆為本輪由 `scripts/gen-sample-assets.mjs` 產生的示意檔。
 
 ## 快速開始
 
@@ -122,6 +136,9 @@ npm run dev       # 建置並啟動預覽 http://localhost:4173/new_cdc_prototyp
 - 招募階段（即將開放、報名中、已截止、審查與甄試中、結果公布）與採購階段（招標中、已截止、已開標、已決標）由日期與結果推導，截止自動退場、結果滿 90 天自動進歷史、備取有效期過後自動不顯示；結果逾期、備取將到期、外部報名網址失效、決標逾期 → 待辦
 - 甄選結果個資遮罩：`nameMasked` 未遮罩、報名編號像身分證字號、正取數超過名額 → 建置失敗；AI 白名單排除名單，答案引擎不唸錄取者
 - 採購公告開標後 30 日仍無決標資訊 → 待辦；本站只做入口與狀態，正式公告以政府電子採購網為準
+- 檔案資產宣告與建置檢查（規則 22）：宣告的檔案不存在、`sha256`／`bytes` 不符、超過大小、格式或檔名不合法、SVG 含腳本、內文引用了未宣告的 `/files/` → 建置失敗；`content/assets/{id}/` 有檔卻未宣告 → 孤兒檔警告與 `asset-orphan` 待辦
+- 圖片 alt 與授權是建置閘門（規則 23）：圖片缺 alt 或 license → 建置失敗；非本署素材缺來源 → `image-license-missing` 待辦
+- PDF 沒有文字層又沒附可及性替代版（規則 24）→ 待辦 `attachment-no-accessible-version`
 - AI 暫停開關 → 全站橫幅，答案頁退回傳統列表
 - KPI 與季度 AI 透明報告每次建置重算
 - 評估集閘門：版本題只要錯一題，建置失敗
@@ -172,7 +189,8 @@ docs/                使用說明與治理文件
 | [docs/deploy.md](docs/deploy.md) | 部署與維運、新增內容型別、改 schema |
 | [docs/roadmap-mapping.md](docs/roadmap-mapping.md) | 原型功能與三階段路線圖對照 |
 | [docs/migration-playbook.md](docs/migration-playbook.md) | 舊站→新站內容移轉與網址轉址手冊：301／410 策略、搜尋引擎、舊站保留期、切換日 checklist、404 log 監測、常見錯誤、結核病示範 |
-| [docs/plan-supplement.md](docs/plan-supplement.md) | 規劃文件回補：原型做了、規劃沒寫到的 34 項作法（做法、為何需要、對應規劃章節、原型位置、正式上線還缺什麼） |
+| [docs/plan-supplement.md](docs/plan-supplement.md) | 規劃文件回補：原型做了、規劃沒寫到的 36 項作法（做法、為何需要、對應規劃章節、原型位置、正式上線還缺什麼） |
+| [docs/assets-policy.md](docs/assets-policy.md) | 檔案資產政策：附件、圖片、資料檔放哪裡（`content/assets/{id}/` → `/files/{id}/`）、命名與正規化、格式與大小、PDF 可及性（文字層、標籤、`.md` 替代版、掃描檔）、圖片 alt／來源／授權、資料檔與 CKAN、版本與保存、刪除與下架、病毒掃描與個資、與 `/pending/` 的關係、同事檢查清單 |
 | [docs/careers-privacy.md](docs/careers-privacy.md) | 人才招募個資處理原則：報名資料不進 repo、模擬報名只存瀏覽器、正式報名在站外或後端、只公布報名編號與遮罩姓名、保存與下架、查詢與刪除、個資法對應與告知事項範本 |
 
 ## 貢獻方式

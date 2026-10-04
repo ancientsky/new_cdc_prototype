@@ -1,6 +1,9 @@
 // /admin/publish/ 互動：表單 ↔ localStorage(cdc.admin.draft) ↔ 預處理（preprocess.js）↔ 匯出 / 送複核。
 import { $, $$, esc, store, v1, url, readEmbedded, today, downloadText, copyText, debounce, getUnit, unitLabel, normPath } from './common.js';
 import * as P from './preprocess.js';
+import { initEditor } from './editor.js';
+import { initAssets } from './assets-panel.js';
+import { zipBlob } from './zip-store.js';
 
 const D = readEmbedded('adm-publish-data', {});
 const KEY = 'cdc.admin.draft';
@@ -17,6 +20,10 @@ let idTouched = false;
 let A = null; // 最近一次預處理結果 {entities, structured, summary0, checks, locked, lex}
 let sel = { chips: {}, manual: [], summary: '', st: {}, ack: false, stage: 'edit' };
 let llmDrafts = {};
+let ED = null; // 內文編輯器（editor.js）
+let ASSETS = null; // 附件與圖片面板（assets-panel.js）
+let lastId = ''; // 內容 ID 變動時，內文裡的 /files/{舊id}/ 引用跟著改
+const LIMITS = P.normalizeLimits(window.CDC_ASSETS_LIMITS ?? D.assetsLimits);
 
 // ---------- 表單讀寫 ----------
 const val = (id) => $(id).value;
@@ -30,9 +37,10 @@ function langState() {
   return out;
 }
 function readForm() {
+  ED?.flush();
   const type = val('#f-type');
   return {
-    type, title: val('#f-title').trim(), body: val('#f-body'), owner: val('#f-owner'), period: val('#f-period'),
+    type, title: val('#f-title').trim(), body: val('#f-body'), assets: ASSETS?.meta() ?? [], owner: val('#f-owner'), period: val('#f-period'),
     audience: $$('input[name="audience"]:checked').map((x) => x.value), tasks: $$('input[name="tasks"]:checked').map((x) => x.value),
     basedOn: [...basedOn], langs: langState(), id: val('#f-id').trim(), idTouched,
     extra: {
@@ -61,6 +69,8 @@ function readForm() {
 function writeForm(s) {
   $('#f-type').value = s.type ?? 'faq';
   $('#f-title').value = s.title ?? ''; $('#f-body').value = s.body ?? '';
+  if (Array.isArray(s.assets)) ASSETS?.restore(s.assets);
+  ED?.refresh();
   if (s.owner) $('#f-owner').value = s.owner;
   $('#f-period').value = s.period ?? P.defaultsFor($('#f-type').value).reviewPeriodMonths;
   $$('input[name="audience"]').forEach((x) => { x.checked = (s.audience ?? ['public']).includes(x.value); });
@@ -93,7 +103,7 @@ function writeForm(s) {
   $('#x-year').value = ex.year ?? ''; $('#x-projstatus').value = ex.projectStatus || 'ongoing'; $('#x-funding').value = ex.fundingType ?? ''; $('#x-projno').value = ex.projectNo ?? ''; $('#x-piunit').value = ex.piUnit ?? '';
   datasetIds = [...(ex.datasets ?? [])]; paintChips('#x-ds-chips', datasetIds);
   $('#x-deadline').value = ex.deadlineAt ?? ''; $('#x-refno').value = ex.refNo ?? ''; $('#x-napply').value = ex.newsApplyUrl ?? ''; $('#x-positions').value = ex.positions ?? ''; $('#x-budget').value = ex.budgetNtd ?? '';
-  $('#f-id').value = s.id ?? ''; idTouched = !!s.idTouched;
+  $('#f-id').value = s.id ?? ''; idTouched = !!s.idTouched; lastId = $('#f-id').value.trim();
   $('#f-body-count').textContent = `${(s.body ?? '').length} 字`;
 }
 
@@ -137,6 +147,24 @@ function fillSupersedes() {
   if (cur && [...sel2.options].some((o) => o.value === cur)) sel2.value = cur;
   else if (fam && list[0]) { const curV = list[0].versions.find((v) => v.isCurrent) ?? list[0].versions[0]; sel2.value = curV.id; }
 }
+/** 內容 ID 變動：內文裡的 /files/{舊id}/… 引用同步改成新 id（附件路徑以 id 為資料夾） */
+function setIdValue(v) {
+  const el = $('#f-id');
+  const old = lastId;
+  el.value = v;
+  const now = v.trim();
+  if (old && now && old !== now) rewriteBody((b) => b.split(`/files/${old}/`).join(`/files/${now}/`));
+  lastId = now;
+}
+function rewriteBody(fn) {
+  ED?.flush();
+  const ta = $('#f-body');
+  const next = fn(ta.value);
+  if (next === ta.value) return;
+  ta.value = next;
+  $('#f-body-count').textContent = `${next.length} 字`;
+  ED?.refresh();
+}
 function autoId() {
   if (idTouched) return;
   const type = val('#f-type');
@@ -145,7 +173,7 @@ function autoId() {
   const vm = (D.vaccinesMaster ?? []).find((v) => v.id === ex.vaccine);
   const labD = (D.diseaseMaster ?? []).find((d) => d.id === ex.labDisease);
   const dslug = type === 'labtest' ? labD?.slug : A?.entities?.diseaseIds?.[0] ? (D.diseaseMaster ?? []).find((d) => d.id === A.entities.diseaseIds[0])?.slug : '';
-  $('#f-id').value = P.suggestId(type, { title: val('#f-title'), today: D.today, slug: type === 'disease' ? dm?.slug : type === 'vaccine' ? vm?.slug : dslug, family: ex.family, version: ex.effectiveAt });
+  setIdValue(P.suggestId(type, { title: val('#f-title'), today: D.today, slug: type === 'disease' ? dm?.slug : type === 'vaccine' ? vm?.slug : dslug, family: ex.family, version: ex.effectiveAt }));
 }
 
 // ---------- 依據正本 ----------
@@ -213,7 +241,7 @@ function typeChecks(f) {
   if (f.type === 'labtest') return P.labtestChecks({ disease: ex.labDisease, specimens: ex.specimens, sendWithinHours: ex.sendHours }, D.diseaseMaster);
   return P.miscChecks(f.type, ex, D.today);
 }
-const allChecks = () => [...(A?.checks ?? []), ...typeChecks(readForm())];
+const allChecks = () => [...(A?.checks ?? []), ...typeChecks(readForm()), ...P.assetWarnings(exportObj(), LIMITS)];
 
 // ---------- 預處理 ----------
 async function loadMasters() {
@@ -299,7 +327,12 @@ function exportObj() {
     type: f.type, id: f.id, title: f.title, body: f.body, owner: f.owner, steward: `${unitLabel(f.owner) || ''}承辦人`, reviewPeriodMonths: f.period === '' ? 0 : f.period,
     audience: f.audience, tasks: f.tasks, basedOn: f.basedOn, langs: f.langs, summary: sel.summary, keywords: dv.keywords, diseases: dv.diseases, vaccines: dv.vaccines, countries: dv.countries,
     structured: dv.structured, extra, today: D.today, submitted: sel.stage === 'submitted',
+    assets: P.buildAssetsJson(ASSETS?.exportList() ?? []),
   });
+}
+function missAll(obj) {
+  const gone = (ASSETS?.missingFiles() ?? []).map((f) => `檔案 ${f}：重新整理後需要重新選取`);
+  return [...P.requiredCheck(obj, (D.units ?? []).map((u) => u.id), { limits: LIMITS }), ...langIssues(), ...gone];
 }
 function langIssues() {
   const def = new Set(P.defaultsFor(val('#f-type')).langs);
@@ -325,7 +358,7 @@ function paintResult() {
   }).join('');
   const dv = derive();
   const obj = exportObj();
-  const miss = [...P.requiredCheck(obj, (D.units ?? []).map((u) => u.id)), ...langIssues()];
+  const miss = missAll(obj);
   const steps = [['承辦人確認預處理', '本頁'], ['公關室內容審核', '內容、用語、標示'], ['多語審核', '一級簽約審核／二級抽審'], ['發布', '七語頁面、索引、API 同步']];
   const stage = sel.stage === 'submitted' ? 2 : 1;
   resultEl.innerHTML = `
@@ -356,14 +389,31 @@ function paintResult() {
     <div id="ack-box"></div>
     <div class="adm-actions"><button type="button" class="adm-btn" id="btn-confirm" ${sel.stage === 'submitted' ? 'disabled' : ''}>確認並送複核</button><button type="button" class="adm-btn adm-btn--ghost" id="btn-return">退回修改</button>${sel.stage === 'submitted' ? `<a class="adm-btn adm-btn--ghost" href="${url('/admin/review/')}">前往複核區</a>` : ''}</div>
     <p class="adm-muted" id="submit-msg" role="status" aria-live="polite">${sel.stage === 'submitted' ? '已送複核（示範）：已加入本機複核佇列，狀態為第 2 步「公關室內容審核」。' : ''}</p></section>
-  <section aria-labelledby="r-g"><h3 id="r-g">(g) 匯出 content JSON</h3>
-    <p class="adm-muted">建議放入 <code>${esc(pathFor(obj))}</code>。正式環境：此檔進入 content/ 並開 Pull Request，CI 驗證 schema、治理規則與評估集後合併即發布。</p>
-    <pre class="adm-pre" id="exp-pre" tabindex="0">${esc(JSON.stringify(obj, null, 2))}</pre>
-    <div class="adm-actions"><button type="button" class="adm-btn" id="btn-dl">下載 .json</button><button type="button" class="adm-btn adm-btn--ghost" id="btn-copy">複製</button></div></section>`;
+  <section aria-labelledby="r-g"><h3 id="r-g">(g) 產生上架包</h3>
+    <p class="adm-muted">上架包 ＝ <code>${esc(pathFor(obj))}</code>${obj.assets?.length ? ` ＋ ${obj.assets.length} 個檔案（<code>content/assets/${esc(obj.id)}/</code>）` : ''}。正式環境：解壓縮到 repo 根目錄 → 開 Pull Request → CI 驗證 schema、治理規則、檔案 sha256／大小／檔名與評估集 → 合併即發布。</p>
+    <div class="adm-actions" style="margin-top:0"><button type="button" class="adm-btn" id="btn-zip">產生上架包（.zip）</button><button type="button" class="adm-btn adm-btn--ghost" id="btn-dl">只下載 JSON</button><button type="button" class="adm-btn adm-btn--ghost" id="btn-copy">複製 JSON</button></div>
+    <p class="adm-muted" id="pkg-msg" role="status" aria-live="polite"></p>
+    <h4 class="adm-sub">放在哪裡</h4>
+    <pre class="adm-pre adm-tree" id="pkg-tree" tabindex="0" aria-label="上架包的檔案放置路徑">${esc(P.renderTree(P.packagePaths(obj, f.type)))}</pre>
+    <h4 class="adm-sub">怎麼交（git／Pull Request）</h4>
+    <ol class="adm-sop" id="pkg-git">${gitSteps(obj)}</ol>
+    <h4 class="adm-sub">content JSON 預覽</h4>
+    <pre class="adm-pre" id="exp-pre" tabindex="0">${esc(JSON.stringify(obj, null, 2))}</pre></section>`;
 }
-function pathFor(o) {
-  const rest = String(o.id ?? '').replace(/^[a-z]+\./, '') || 'new';
-  return `content/${P.DIRS[$('#f-type').value] ?? 'faq'}/${rest}.json`;
+function pathFor(o) { return P.packagePaths(o, $('#f-type').value).json; }
+function gitSteps(o) {
+  const pp = P.packagePaths(o, $('#f-type').value);
+  const slug = String(o.id ?? 'new').replace(/[^a-z0-9.-]+/gi, '-');
+  const add = [pp.json, ...(o.assets?.length ? [`content/assets/${o.id}/`] : [])].join(' ');
+  return [
+    '把 ZIP 解壓縮到 repo 根目錄（資料夾已經是 <code>content/…</code>，不要改名；同名檔案是新版覆蓋舊版）。',
+    `<code>git switch -c content/${esc(slug)}</code>`,
+    `<code>git add ${esc(add)}</code>`,
+    `<code>git commit -m "content: ${esc(o.id ?? '')} ${esc(o.title ?? '')}"</code>`,
+    '<code>git push -u origin HEAD</code>，到 GitHub 開 Pull Request；CI 會驗證 schema、治理規則、檔案雜湊與評估集。',
+    '若 CI 回報檔案 bytes／sha256 不符，在本機跑 <code>npm run build -- --fix-assets</code> 自動補寫，再 commit。',
+    '公關室內容審核、多語審核通過後合併，即發布七語頁面、索引與 API。',
+  ].map((x) => `<li>${x}</li>`).join('');
 }
 
 /** 型別專屬的結果區塊：影音＝說明欄第一行與章節；專區＝連結列預覽。 */
@@ -387,10 +437,10 @@ function typeExtraHtml(f) {
 }
 
 // ---------- 事件 ----------
-form.addEventListener('submit', (e) => { e.preventDefault(); if (!val('#f-body').trim() && !val('#f-title').trim()) { statusEl.textContent = '請先填寫標題或內文。'; $('#f-title').focus(); return; } statusEl.textContent = ''; runPreprocess(); });
+form.addEventListener('submit', (e) => { e.preventDefault(); ED?.flush(); if (!val('#f-body').trim() && !val('#f-title').trim()) { statusEl.textContent = '請先填寫標題或內文。'; $('#f-title').focus(); return; } statusEl.textContent = ''; runPreprocess(); });
 $('#btn-save').addEventListener('click', () => saveDraft(true));
 $('#btn-clear').addEventListener('click', () => {
-  store.del(KEY); sel = { chips: {}, manual: [], summary: '', st: {}, ack: false, stage: 'edit' }; A = null; llmDrafts = {}; idTouched = false;
+  store.del(KEY); sel = { chips: {}, manual: [], summary: '', st: {}, ack: false, stage: 'edit' }; A = null; llmDrafts = {}; idTouched = false; lastId = ''; ASSETS?.clear();
   writeForm({ type: 'faq', owner: getUnit() === 'all' ? undefined : getUnit(), audience: ['public'] }); applyTypeUI(true);
   resultEl.innerHTML = '<p class="adm-muted">已清空。</p>'; secEl.textContent = '尚未送出'; statusEl.textContent = '已清空草稿。';
 });
@@ -443,7 +493,12 @@ $('#btn-sample').addEventListener('click', () => {
 form.addEventListener('input', (e) => {
   if (e.target.id === 'f-body') $('#f-body-count').textContent = `${e.target.value.length} 字`;
   if (e.target.id === 'x-transcript') $('#x-transcript-count').textContent = `${e.target.value.length} 字`;
-  if (e.target.id === 'f-id') idTouched = !!e.target.value.trim();
+  if (e.target.id === 'f-id') {
+    idTouched = !!e.target.value.trim();
+    const now = e.target.value.trim();
+    if (lastId && now && lastId !== now) rewriteBody((b) => b.split(`/files/${lastId}/`).join(`/files/${now}/`));
+    lastId = now;
+  }
   if (e.target.id === 'x-family') fillSupersedes();
   if (['f-title', 'x-family', 'x-effective', 'x-disease', 'x-vaccine', 'x-labdisease'].includes(e.target.id)) autoId();
   autosave();
@@ -477,7 +532,7 @@ function addKw() { const i = $('#kw-add'); const v = i.value.trim(); if (v && !s
 function refreshExport() {
   const obj = exportObj();
   const pre = $('#exp-pre'); if (pre) pre.textContent = JSON.stringify(obj, null, 2);
-  const miss = [...P.requiredCheck(obj, (D.units ?? []).map((u) => u.id)), ...langIssues()];
+  const miss = missAll(obj);
   const mb = $('#miss-box'); if (mb && !miss.length) paintResult();
 }
 resultEl.addEventListener('click', async (e) => {
@@ -485,6 +540,7 @@ resultEl.addEventListener('click', async (e) => {
   if (t.id === 'kw-add-btn') addKw();
   else if (t.dataset.kwrm) { sel.manual.splice(Number(t.dataset.kwrm), 1); paintResult(); autosave(); }
   else if (t.id === 'sum-reset') { sel.summary = A.summary0; paintResult(); autosave(); }
+  else if (t.id === 'btn-zip') await buildPackage();
   else if (t.id === 'btn-dl') { const o = exportObj(); downloadText(`${String(o.id).replace(/[^a-z0-9.-]/gi, '_')}.json`, `${JSON.stringify(o, null, 2)}\n`); }
   else if (t.id === 'btn-copy') copyText(`${JSON.stringify(exportObj(), null, 2)}\n`, t);
   else if (t.id === 'btn-desc') copyText($('#desc-line')?.textContent ?? '', t);
@@ -493,9 +549,39 @@ resultEl.addEventListener('click', async (e) => {
   else if (t.dataset.llm) llmOne(t.dataset.llm);
 });
 
+function downloadBlob(filename, blob) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+}
+/** 產生上架包：content/{dir}/{id}.json ＋ content/assets/{id}/{檔案}（store-only ZIP，全在瀏覽器內組成） */
+async function buildPackage() {
+  const msg = $('#pkg-msg');
+  const obj = exportObj();
+  if (!obj.id) { msg.textContent = '請先填寫「內容 ID」。'; $('#f-id').focus(); return; }
+  const gone = ASSETS?.missingFiles() ?? [];
+  if (gone.length) { msg.className = 'adm-red'; msg.textContent = `還有檔案需要重新選取才能打包：${gone.join('、')}`; return; }
+  try {
+    const pp = P.packagePaths(obj, val('#f-type'));
+    const entries = [{ name: pp.json, data: `${JSON.stringify(obj, null, 2)}\n` }];
+    for (const a of ASSETS.items()) {
+      const bytes = await ASSETS.bytesOf(a);
+      if (typeof a.bytes === 'number' && bytes.length !== a.bytes) throw new Error(`${a.file} 的大小在選取後變了，請重新選取`);
+      entries.push({ name: `content/assets/${obj.id}/${a.file}`, data: bytes });
+    }
+    const blob = zipBlob(entries);
+    const name = `${String(obj.id).replace(/[^a-z0-9._-]/gi, '_')}-package.zip`;
+    downloadBlob(name, blob);
+    const left = missAll(obj).length;
+    msg.className = left ? 'adm-yellow' : 'adm-green';
+    msg.textContent = `已產生 ${name}（${entries.length} 個檔案，${P.fmtBytes(blob.size)}）。${left ? `注意：仍有 ${left} 項必填待補，CI 會擋下，建議先補齊再交。` : '必填欄位已齊。'}`;
+  } catch (err) { msg.className = 'adm-red'; msg.textContent = `產生上架包失敗：${String(err?.message ?? err)}`; }
+}
+
 function confirmSubmit() {
   const obj = exportObj();
-  const miss = [...P.requiredCheck(obj, (D.units ?? []).map((u) => u.id)), ...langIssues()];
+  const miss = missAll(obj);
   const msg = $('#submit-msg');
   if (miss.length) { msg.textContent = `無法送複核，請先補齊：${miss.join('；')}`; msg.className = 'adm-red'; return; }
   const reds = allChecks().filter((c) => c.level === 'error').length;
@@ -537,7 +623,24 @@ async function llmOne(lang) {
 }
 
 // ---------- 啟動 ----------
+function mountEditor() {
+  const ta = $('#f-body');
+  ASSETS = initAssets({
+    root: $('#asset-panel'), limits: LIMITS, licenses: D.licenses,
+    getContentId: () => $('#f-id').value.trim(), getBody: () => { ED?.flush(); return ta.value; },
+    onChange: ({ structural } = {}) => { autosave(); if (structural) ED?.repaint(); repaintResultSoon(); },
+    insertImage: (im) => ED?.insertImage(im),
+    renameRefs: (from, to) => rewriteBody((b) => b.split(from).join(to)),
+  });
+  ED = initEditor({
+    textarea: ta, resolveImg: (p) => ASSETS?.resolveImg(p),
+    getImages: () => ASSETS?.images() ?? [], requestImage: () => ASSETS?.requestImage(), onFiles: (fs) => ASSETS?.addFiles(fs),
+    onChange: () => { ASSETS?.refreshIssues(); },
+  });
+}
+const repaintResultSoon = debounce(() => { if (A) paintResultKeepFocus(); }, 300);
 (function init() {
+  mountEditor();
   fillSupersedes();
   const u = getUnit();
   const saved = store.get(KEY);
@@ -552,6 +655,6 @@ async function llmOne(lang) {
     applyTypeUI(true);
   }
   document.addEventListener('adm:unit', () => { if (!val('#f-title') && !val('#f-body') && getUnit() !== 'all') $('#f-owner').value = getUnit(); });
-  window.__admPublish = { runPreprocess, exportObj, get state() { return { sel, A }; } }; // 供自動化測試
+  window.__admPublish = { runPreprocess, exportObj, buildPackage, get editor() { return ED; }, get assets() { return ASSETS; }, get state() { return { sel, A }; } }; // 供自動化測試
 })();
 void normPath; void today;

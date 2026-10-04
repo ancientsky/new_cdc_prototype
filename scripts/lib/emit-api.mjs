@@ -5,6 +5,7 @@ import { createHash } from 'node:crypto';
 import { config, siteOrigin } from '../../site.config.mjs';
 import { pathOf, mdPathOf, WHITELIST_REASON_LABELS, LIFECYCLE_LABELS, TODO_KIND_LABELS, NOTICE_TYPES, legacyPathOf, isLegacyPattern, JOB_STAGE_LABELS, TENDER_STAGE_LABELS, JOB_TAB_LABELS, TENDER_TAB_LABELS } from './governance.mjs';
 import { buildOpenApi } from './openapi.mjs';
+import { assetSummary, assetUrl } from './assets.mjs';
 
 export const etagOf = (data) => createHash('sha1').update(JSON.stringify(data) ?? 'null').digest('hex').slice(0, 12);
 const absUrl = (p) => (p == null ? null : /^https?:/.test(p) ? p : `${siteOrigin()}${p}`);
@@ -58,6 +59,8 @@ export function apiItem(item) {
   const { __file, gov, ...rest } = item;
   const path = pathOf(item);
   const md = mdPathOf(item);
+  // 第八輪（16.1）：assets 每筆加公開網址（/files/{id}/{file}，不含語言前綴）
+  if (Array.isArray(rest.assets)) rest.assets = rest.assets.map((a) => (a?.file ? { ...a, url: absUrl(assetUrl(item, a)) } : a));
   return { ...rest, url: absUrl(path), path, md: md ? absUrl(md) : null, governance: govSummary(item) };
 }
 const strip = apiItem;
@@ -420,10 +423,13 @@ export function emitApi(site, write) {
 
   // 五類資產總目錄
   const catalog = site.all.filter((i) => i.status === 'published').map((i) => ({
-    id: i.id, type: i.type, category: (ASSET_CATEGORIES[i.category] ? i.category : null) ?? CATEGORY_OF[i.type] ?? 'content-page', // tender.category（財物／勞務／工程）不是資產類別 title: i.title, owner: i.owner, ownerName: i.gov.ownerName,
+    // tender.category（財物／勞務／工程）不是資產類別 ⇒ 只採用七類資產內的 category
+    id: i.id, type: i.type, category: (ASSET_CATEGORIES[i.category] ? i.category : null) ?? CATEGORY_OF[i.type] ?? 'content-page', title: i.title, owner: i.owner, ownerName: i.gov.ownerName,
     canonicalUrl: i.canonicalUrl ?? absUrl(pathOf(i)), page: absUrl(pathOf(i)), md: mdPathOf(i) ? absUrl(mdPathOf(i)) : null,
     license: i.license, sensitivity: i.sensitivity, reviewedAt: i.reviewedAt, nextReviewAt: i.gov.nextReviewAt, lifecycle: i.gov.lifecycle,
     isCurrent: i.gov.isCurrent, whitelist: i.gov.whitelist.effective, languages: i.gov.renderableLangs, legacyUrls: i.legacyUrls ?? [],
+    // 第八輪（16.1）：檔案資產摘要（file、kind、label、url、bytes、mime、machineReadable；圖片含 alt）
+    assets: assetSummary(i, absUrl),
   }));
   const categories = Object.entries(ASSET_CATEGORIES).map(([key, label]) => ({ key, label, count: catalog.filter((x) => x.category === key).length }));
   put('v1/catalog.json', catalog, { categories }, {}, '七類資產總目錄（開放資料集、統計查詢系統、結構化表格、文件庫、內容頁、新聞稿／公告、影音宣導素材）');

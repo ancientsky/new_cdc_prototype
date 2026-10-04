@@ -280,6 +280,95 @@
           }
         }
       }
+    },
+    "assets": {
+      "type": "array",
+      "description": "第八輪（ARCHITECTURE 16.1）：本筆內容的檔案資產。檔案放 content/assets/{id}/{file}，建置時複製到 dist/files/{id}/{file}，公開網址 /files/{id}/{file}（不含語言前綴）。條件必填（attachment／data 要 label；image 要 alt 與 license；accessibleAlt 要指向同筆已宣告的檔）、大小與副檔名限制（site.config.assets）、sha256／bytes／mime 核對、SVG 掃描、孤兒檔都在 scripts/lib/assets.mjs 檢查。bytes／sha256／mime／width／height 可用 npm run build -- --fix-assets 自動補寫。",
+      "items": {
+        "type": "object",
+        "required": [
+          "file",
+          "kind"
+        ],
+        "properties": {
+          "file": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._-]*\\.[a-z0-9]+$",
+            "maxLength": 120,
+            "description": "content/assets/{id}/ 下的檔名：小寫英數、連字號、底線與點，須有副檔名；同筆內容內唯一"
+          },
+          "kind": {
+            "enum": [
+              "attachment",
+              "image",
+              "data"
+            ],
+            "description": "attachment＝附件（列在頁面附件區）；image＝內文圖片（Markdown 引用）；data＝資料檔（CSV、JSON、XLSX）"
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "description": "顯示名稱，如「新聞稿全文（PDF）」；attachment／data 必填"
+          },
+          "alt": {
+            "type": "string",
+            "maxLength": 150,
+            "description": "替代文字（無障礙）；image 必填（Markdown 內 ![alt] 與此擇一非空即可，渲染時以此補進 <img alt>）"
+          },
+          "mime": {
+            "type": "string",
+            "pattern": "^[a-z]+/[a-z0-9.+-]+$",
+            "description": "須與副檔名一致；建置時核對"
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "檔案大小；建置時核對"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "description": "檔案 SHA-256（小寫 16 進位）；建置時核對，不符 ⇒ 建置失敗並印出實際值"
+          },
+          "width": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "圖片寬（px）；--fix-assets 由檔頭讀出（PNG／JPEG／WebP／SVG）"
+          },
+          "height": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "圖片高（px）"
+          },
+          "machineReadable": {
+            "type": "boolean",
+            "description": "attachment：PDF 是否有可用的文字層／本身即機讀格式"
+          },
+          "accessibleAlt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "PDF 的可及性替代版本檔名（同筆內容已宣告的 .md／.docx／.odt）；PDF 且 machineReadable 非 true 又沒有 ⇒ 待辦 attachment-no-accessible-version"
+          },
+          "version": {
+            "type": "string",
+            "description": "文件型附件的版次（如 114.04.16）"
+          },
+          "effectiveAt": {
+            "type": "string",
+            "format": "date"
+          },
+          "source": {
+            "type": "string",
+            "description": "圖片／素材來源；非本署素材（license 不是 OGDL-1.0）必填，缺 ⇒ 待辦 image-license-missing"
+          },
+          "license": {
+            "type": "string",
+            "description": "圖片授權；image 必填（缺 ⇒ 建置失敗）。本署自製素材填 OGDL-1.0"
+          }
+        }
+      }
     }
   }
 }

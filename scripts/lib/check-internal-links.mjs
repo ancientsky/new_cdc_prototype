@@ -10,6 +10,8 @@
 //   - 以 / 開頭卻不在 basePath 底下 ⇒ error（missing-basepath：部署到 Pages 子路徑會 404）。
 //   - 排除：/ask/?q=…（動態查詢）、mailto:、tel:、sms:、javascript:、data:、blob:。
 //   - 404.html 不得有相對路徑（Pages 會在任意路徑回應它）⇒ error（relative-in-404）。
+//   - 第八輪（ARCHITECTURE 16.1）：/files/{id}/{file} 是站內檔案（content/assets 複製而來），一樣必須存在；找不到 ⇒ error（missing，
+//     附 asset:true 與 hint：未宣告、內容非 published，或誤加了語言前綴 /en/files/…——檔案網址七語共用、不含語言前綴）。
 // 外部：收集網域、次數、來源頁 → v1/governance/external-links.json；建置時不連外驗證（CI 另有 fetch-data --check-links）。
 //   黑名單（example.、placeholder、localhost、127.0.0.1、TODO、xxx）⇒ error。
 // 輸出：v1/governance/link-report.json（errors[]、warnings[]、counts）。
@@ -60,6 +62,13 @@ function walk(dir, rel = '', out = []) {
 }
 
 function safeDecode(s) { try { return decodeURIComponent(s); } catch { return s; } }
+
+/** /files/ 目標找不到時的說明（第八輪 16.1） */
+function fileHint(p) {
+  if (/^\/files\//.test(p)) return { asset: true, hint: '檔案不在 dist/files/：確認已在該內容的 assets 宣告、檔案在 content/assets/{id}/，且內容為 published／archived' };
+  if (/^\/[a-z]{2}(?:-[A-Z]{2})?\/files\//.test(p)) return { asset: true, hint: '檔案網址不含語言前綴：請用 /files/{id}/{file}' };
+  return {};
+}
 
 /** 頁面檔案相對路徑 → 網址路徑（含 basePath）：about/index.html → /base/about/index.html */
 const pageUrlOf = (rel, basePath) => `${basePath}/${rel}`;
@@ -162,7 +171,7 @@ export function checkInternalLinks(distDir, opts = {}) {
       p = p.slice(basePath.length);
     }
     const target = resolveFile(p);
-    if (!target) { issue(mdSource ? warnings : errors, 'missing', from, href, { where, target: p }); return; }
+    if (!target) { issue(mdSource ? warnings : errors, 'missing', from, href, { where, target: p, ...fileHint(p) }); return; }
     counts.internalOk++;
     if (frag && !FRAGMENT_SKIP.test(frag) && target.endsWith('.html')) {
       counts.anchorsChecked++;
@@ -226,7 +235,7 @@ export function checkInternalLinks(distDir, opts = {}) {
   // 依目標彙整（同一個壞連結常出現在上百頁）
   const errorsByTarget = {};
   // 依目標彙整後的排序：次數多的在前
-  for (const e of errors) { const k = `${e.kind} ${e.target ?? e.href}`; (errorsByTarget[k] ??= { kind: e.kind, href: e.href, target: e.target ?? null, why: e.why, count: 0, firstFrom: e.from }).count++; }
+  for (const e of errors) { const k = `${e.kind} ${e.target ?? e.href}`; (errorsByTarget[k] ??= { kind: e.kind, href: e.href, target: e.target ?? null, why: e.why, ...(e.hint ? { hint: e.hint } : {}), count: 0, firstFrom: e.from }).count++; }
   const report = {
     basePath, siteOrigin, ok: errors.length === 0, counts,
     rules: {
@@ -255,7 +264,7 @@ export function summarize(res, { limit = 50, log = console.log } = {}) {
   if (res.errors.length) {
     const byT = res.errorsByTarget ?? [];
     log(`[links] 壞連結（${byT.length} 種目標，依出現次數列前 ${Math.min(limit, byT.length)} 種；來源頁 → 目標）：`);
-    for (const e of byT.slice(0, limit)) log(`  ✗ ${e.firstFrom} → ${e.href}${e.target && e.target !== e.href ? `（${e.target}）` : ''} [${e.kind}${e.why ? `：${e.why}` : ''}]${e.count > 1 ? ` ×${e.count}` : ''}`);
+    for (const e of byT.slice(0, limit)) log(`  ✗ ${e.firstFrom} → ${e.href}${e.target && e.target !== e.href ? `（${e.target}）` : ''} [${e.kind}${e.why ? `：${e.why}` : ''}]${e.count > 1 ? ` ×${e.count}` : ''}${e.hint ? `（${e.hint}）` : ''}`);
   }
   const anchors = res.warnings.filter((w) => w.kind === 'missing-anchor');
   if (anchors.length) {

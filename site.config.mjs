@@ -44,6 +44,18 @@ export const config = {
     llmProvider: 'Anthropic',
     llmModel: 'claude-sonnet-5-5',
   },
+  // 第八輪（ARCHITECTURE 16.1）：檔案資產（content/assets/{content-id}/ → dist/files/{content-id}/，公開網址 /files/{content-id}/{file}）
+  // 超限、副檔名不在清單、檔數超過 maxFiles ⇒ 建置失敗（scripts/lib/assets.mjs）。後台上架包預檢也讀這裡（site.config.assets）。
+  assets: {
+    maxBytes: {
+      pdf: 20 * 1024 * 1024, // PDF 與文件類（docx、odt、md、ics 比照）
+      image: 2 * 1024 * 1024, // png、jpg、jpeg、webp、svg
+      data: 50 * 1024 * 1024, // csv、json、xlsx
+    },
+    allowedExt: ['pdf', 'png', 'jpg', 'jpeg', 'webp', 'svg', 'csv', 'json', 'xlsx', 'docx', 'odt', 'md', 'ics'],
+    maxFiles: 30, // 一筆內容最多幾個檔
+    altMaxLength: 150,
+  },
   licenses: {
     allowed: ['OGDL-1.0', 'CC0-1.0', 'CC-BY-4.0'],
     labels: {

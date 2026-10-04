@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 // 建置總管：load → validate → govern → index → render → emit
-// 用法：node scripts/build.mjs [--check] [--today=YYYY-MM-DD]
+// 用法：node scripts/build.mjs [--check] [--today=YYYY-MM-DD] [--fix-assets]
+//   --fix-assets：先把 content/assets/{id}/ 實際檔案的 bytes／sha256／mime／width／height 補寫回內容 JSON（只改 assets 欄位），再照常驗證與建置
+//                 （npm run build -- --fix-assets；只想補寫不輸出：node scripts/build.mjs --check --fix-assets）
 import fs from 'node:fs';
 import path from 'node:path';
 import { config } from '../site.config.mjs';
@@ -14,6 +16,7 @@ import { renderAllPages } from './lib/pages.mjs';
 import { runEval } from '../eval/run-eval.mjs';
 import { todayISO } from './lib/render.mjs';
 import { checkInternalLinks, summarize as summarizeLinks } from './lib/check-internal-links.mjs';
+import { validateAssets, fixAssets, copyAssets, normalizeFileLinks } from './lib/assets.mjs';
 
 const args = Object.fromEntries(process.argv.slice(2).map((a) => { const [k, v] = a.replace(/^--/, '').split('='); return [k, v ?? true]; }));
 const DIST = process.env.DIST_DIR ? path.resolve(process.env.DIST_DIR) : path.join(ROOT, 'dist');
@@ -23,7 +26,8 @@ const log = (...m) => console.log('[build]', ...m);
 export function writeOut(rel, content) {
   const p = path.join(DIST, rel);
   fs.mkdirSync(path.dirname(p), { recursive: true });
-  fs.writeFileSync(p, content);
+  // 第八輪（16.1）：/files/ 網址七語共用 ⇒ HTML 內的檔案連結統一為 basePath + /files/…（去掉 ctx.url() 加的語言前綴、補 basePath）
+  fs.writeFileSync(p, rel.endsWith('.html') ? normalizeFileLinks(content, { basePath: config.basePath, langs: config.langs, siteUrl: config.siteUrl }) : content);
 }
 
 async function main() {
@@ -33,13 +37,19 @@ async function main() {
   site.today = today;
   log(`載入 ${site.all.length} 筆內容、${site.master.diseases.length} 種傳染病主檔`);
 
-  const errors = validateSite(site);
+  if (args['fix-assets']) {
+    const fixed = fixAssets(site);
+    log(`--fix-assets：補寫 ${fixed.changed.length} 個檔的欄位、改寫 ${fixed.written.length} 個內容檔${fixed.written.length ? `（${fixed.written.join('、')}）` : ''}`);
+  }
+  const assetReport = validateAssets(site, config);
+  for (const w of assetReport.warnings) console.warn('  ⚠ [assets]', w);
+  const errors = [...validateSite(site), ...assetReport.errors.map((e) => `[assets] ${e}`)];
   if (errors.length) {
     console.error(`\n❌ 治理門檻未通過（${errors.length} 項）：`);
     for (const e of errors) console.error('  -', e);
     process.exit(1);
   }
-  log('schema 與參照檢查通過');
+  log(`schema 與參照檢查通過；檔案資產 ${assetReport.files} 個（${assetReport.items} 筆內容、${(assetReport.bytes / 1024).toFixed(0)} KB${assetReport.orphans.length ? `、孤兒檔 ${assetReport.orphans.length}` : ''}）`);
 
   applyGovernance(site);
   log(`治理：白名單 ${site.gov.whitelistCount}/${site.gov.totalPublished}、待辦 ${site.gov.todos.length}、AI ${site.gov.pausedAI ? '暫停' : '運作'}`);
@@ -66,6 +76,9 @@ async function main() {
   copyDir(path.join(ROOT, 'src/styles'), path.join(DIST, 'assets/styles'));
   copyDir(path.join(ROOT, 'src/client'), path.join(DIST, 'assets/js'));
   if (fs.existsSync(path.join(ROOT, 'src/public'))) copyDir(path.join(ROOT, 'src/public'), DIST);
+  // 檔案資產：只複製 published／archived 內容有宣告的檔 → dist/files/{id}/{file}
+  const copied = copyAssets(site, DIST);
+  log(`檔案資產 → dist/files/：${copied.files} 個檔（${copied.items} 筆內容、${(copied.bytes / 1024).toFixed(0)} KB）`);
   writeOut('.nojekyll', '');
   log(`輸出 ${pageCount} 頁 → dist/（${Date.now() - t0} ms）`);
 

@@ -2,7 +2,7 @@
 import { html, raw } from '../../../scripts/lib/render.mjs';
 import { config } from '../../../site.config.mjs';
 import { pageHead, dataScript, adminMeta, unitOptions, DEFAULT_UNIT, LANGS } from './_partials.mjs';
-import { TYPES as PP_TYPES, LANGS as PP_LANGS } from '../../client/admin/preprocess.js';
+import { TYPES as PP_TYPES, LANGS as PP_LANGS, normalizeLimits } from '../../client/admin/preprocess.js';
 export { layout } from './_layout.mjs';
 
 const TYPES = PP_TYPES.map((t) => [t.value, t.label]);
@@ -10,6 +10,16 @@ const CAPTION_LANGS = PP_LANGS;
 const WHO = ['民眾', '醫療院所', '研究者', '地方衛生局', '學校與托育機構', '長照與安養機構', '出國旅客', '新聞媒體'].map((l) => [l, l]);
 const LABS = [['cdc-lab', '疾管署實驗室'], ['certified-lab', '認可檢驗機構'], ['hospital-lab', '醫院檢驗室'], ['regional-lab', '區管中心實驗室']];
 const TASKS = [['symptoms', '有症狀怎麼辦'], ['vaccines', '疫苗與預防接種'], ['travel', '出國與入境'], ['situation', '現在的疫情'], ['rumor', '謠言查證'], ['data', '開放資料與統計']];
+
+const TOOLS = [
+  ['h2', 'H2', '標題 2'], ['h3', 'H3', '標題 3'], ['bold', '<b>B</b>', '粗體（Ctrl+B）'], ['italic', '<i>I</i>', '斜體（Ctrl+I）'],
+  ['ul', '• 清單', '項目清單'], ['ol', '1. 清單', '編號清單'], ['link', '連結', '連結（Ctrl+K）'], ['table', '表格', '插入表格 3×3'],
+  ['image', '圖片', '插入圖片'], ['quote', '引用', '引用'], ['hr', '—', '分隔線'], ['undo', '復原', '復原'],
+];
+// 檔案資產上限：優先用 site.config.assets（Y1 擁有），沒有就用 §16.1 預設。client 端另可被 window.CDC_ASSETS_LIMITS 覆寫。
+const LIM = normalizeLimits(config.assets);
+const MBS = { pdf: Math.round(LIM.pdfBytes / 1048576), image: Math.round(LIM.imageBytes / 1048576), data: Math.round(LIM.dataBytes / 1048576) };
+const ASSET_ACCEPT = LIM.extensions.map((e) => `.${e}`).join(',');
 
 export function pages() { return [{ path: '/admin/publish/', props: {}, noindex: true }]; }
 export function meta() { return adminMeta('上架新內容', 'publish', ['/assets/js/admin/publish.js']); }
@@ -30,6 +40,8 @@ export function render(ctx) {
     catalog: site.all.map((i) => ({ id: i.id, type: i.type, title: i.title, owner: i.owner })),
     siteBase: `${config.siteUrl}${config.basePath}`,
     families,
+    assetsLimits: LIM,
+    licenses: config.licenses?.allowed ?? [],
   };
   return html`
 ${pageHead({
@@ -44,8 +56,54 @@ ${pageHead({
       <div class="adm-field"><label for="f-type">型別</label>
         <select id="f-type" name="type">${TYPES.map(([v, l]) => html`<option value="${v}">${l}</option>`)}</select></div>
       <div class="adm-field"><label for="f-title">標題</label><input type="text" id="f-title" name="title" placeholder="例：登革熱發燒後幾天內要就醫？"></div>
-      <div class="adm-field"><label for="f-body" id="f-body-label">內文（中文正本）</label><textarea id="f-body" name="body" placeholder="貼上 Markdown 或純文字"></textarea>
+      <div class="adm-field adm-editor">
+        <span class="adm-label" id="f-body-label">內文（中文正本）</span>
+        <span class="adm-hint" id="f-body-hint">用哪一種方式都可以，存檔一律是 Markdown。</span>
+        <div class="adm-tabs adm-tabs--editor" role="tablist" aria-label="內文編輯方式">
+          <button type="button" role="tab" id="et-wys" aria-controls="ep-wys" aria-selected="true">所見即所得</button>
+          <button type="button" role="tab" id="et-md" aria-controls="ep-md" aria-selected="false" tabindex="-1">Markdown</button>
+          <button type="button" role="tab" id="et-prev" aria-controls="ep-prev" aria-selected="false" tabindex="-1">預覽</button>
+        </div>
+        <div role="tabpanel" id="ep-wys" aria-labelledby="et-wys">
+          <div class="adm-toolbar" id="ed-toolbar" role="toolbar" aria-label="格式工具列" aria-controls="f-wys">
+            ${TOOLS.map(([cmd, text, label], i) => html`<button type="button" class="adm-tool" data-cmd="${cmd}" aria-label="${label}" title="${label}" ${cmd === 'bold' || cmd === 'italic' || cmd === 'ul' || cmd === 'ol' || cmd === 'h2' || cmd === 'h3' || cmd === 'quote' ? raw('aria-pressed="false"') : ''} tabindex="${i === 0 ? 0 : -1}">${raw(text)}</button>`)}
+          </div>
+          <div class="adm-pop" id="ed-linkbox" role="group" aria-label="插入連結" hidden>
+            <label for="ed-link-url">連結網址</label>
+            <input type="text" id="ed-link-url" inputmode="url" placeholder="https://… 或 /diseases/dengue/" autocomplete="off">
+            <button type="button" class="adm-btn adm-btn--sm" id="ed-link-ok">套用</button>
+            <button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" id="ed-link-rm" hidden>移除連結</button>
+            <button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" id="ed-link-cancel">取消</button>
+            <span class="adm-red" id="ed-link-err" role="alert"></span>
+          </div>
+          <div class="adm-pop" id="ed-imgbox" role="group" aria-label="插入圖片" hidden>
+            <strong>插入圖片到游標處</strong>
+            <ul class="adm-pop__list" id="ed-img-list"></ul>
+            <button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" id="ed-img-add">從電腦選圖片…</button>
+            <button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" id="ed-img-cancel">取消</button>
+          </div>
+          <div id="f-wys" class="adm-wys c-prose" contenteditable="true" role="textbox" aria-multiline="true" aria-label="內文（所見即所得編輯區）" spellcheck="false" tabindex="0"></div>
+        </div>
+        <div role="tabpanel" id="ep-md" aria-labelledby="et-md" hidden>
+          <textarea id="f-body" name="body" aria-labelledby="f-body-label" placeholder="貼上 Markdown 或純文字（Ctrl+B 粗體、Ctrl+I 斜體、Ctrl+K 連結）"></textarea>
+        </div>
+        <div role="tabpanel" id="ep-prev" aria-labelledby="et-prev" hidden>
+          <div id="f-preview" class="adm-previewpane c-prose" tabindex="0" aria-label="內文預覽（站上樣式）"></div>
+        </div>
+        <p class="adm-hint adm-sr-live" id="ed-notice" role="status" aria-live="polite"></p>
         <span class="adm-counter" id="f-body-count" aria-live="off">0 字</span></div>
+      <section class="adm-assets" id="asset-panel" aria-labelledby="as-h">
+        <h3 id="as-h" class="adm-assets__h">附件與圖片</h3>
+        <p class="adm-hint">PDF、表單、圖檔、資料檔都放這裡。檔案只在你的瀏覽器記憶體裡，不會上傳；按「產生上架包」才會連同 JSON 一起打包。內文圖片請按該檔的「插入圖片到內文」。</p>
+        <div class="adm-drop" id="as-drop"><span>把檔案拖到這裡，或</span> <button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" id="as-pick">選擇檔案（可多選）</button>
+          <input type="file" id="as-input" multiple hidden accept="${ASSET_ACCEPT}" aria-label="選擇附件與圖片檔案">
+          <span class="adm-hint">PDF ≤ ${MBS.pdf} MB、圖片 ≤ ${MBS.image} MB、資料檔 ≤ ${MBS.data} MB；每筆內容最多 ${LIM.maxFiles} 個；允許 ${LIM.extensions.join('、')}。</span></div>
+        <p class="adm-muted" id="as-summary" aria-live="polite"></p>
+        <ul class="adm-asset-global" id="as-global" role="list"></ul>
+        <ul class="adm-assetlist" id="as-list" role="list"></ul>
+        <p class="adm-hint" id="as-msg" role="status" aria-live="polite"></p>
+        <datalist id="as-licenses">${(config.licenses?.allowed ?? []).map((l) => html`<option value="${l}"></option>`)}</datalist>
+      </section>
       <div class="adm-row">
         <div class="adm-field" style="flex:1 1 200px"><label for="f-owner">權責單位</label><select id="f-owner" name="owner">${unitOptions(site, { all: false, selected: DEFAULT_UNIT })}</select></div>
         <div class="adm-field" style="flex:0 1 150px"><label for="f-period">審閱週期（月）</label><input type="number" id="f-period" name="period" min="0" max="60" value="6"><span class="adm-hint" id="f-period-hint">依型別預設；0＝事件觸發</span></div>
@@ -147,5 +205,6 @@ ${pageHead({
     </div>
   </section>
 </div>
-${dataScript('adm-publish-data', data)}`;
+${dataScript('adm-publish-data', data)}
+<script src="${ctx.url('/vendor/marked.min.js', { noLang: true })}" defer></script>`;
 }

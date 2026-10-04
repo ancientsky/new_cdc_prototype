@@ -18,9 +18,53 @@ export function cjkStrong(src) {
   return String(src).split(/(`[^`\n]*`)/).map((seg, i) => (i % 2 ? seg : seg.replace(/\*\*([^*\n]+?)\*\*/g, '<strong>$1</strong>'))).join('');
 }
 
-export function md(markdown) {
+// ── 第八輪（ARCHITECTURE 16.1）：內文圖片 ──
+// 全站檔案資產登錄：'/files/{id}/{file}' → { alt, width, height, kind }。治理引擎（applyGovernance）每次建置設定一次，
+// 所以模板不必改呼叫方式；md() 第二參數 { assets, id } 可覆寫（測試或單筆預覽用）。
+let ASSET_REG = null;
+export function setAssetRegistry(map) { ASSET_REG = map instanceof Map ? map : null; }
+export function getAssetRegistry() { return ASSET_REG; }
+
+const safeDecode = (s) => { try { return decodeURIComponent(s); } catch { return s; } };
+const unescAttr = (s) => String(s).replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+
+function assetMetaFor(src, opts) {
+  const p = safeDecode(unescAttr(src).replace(/[?#].*$/, ''));
+  const m = p.match(/^\/files\/([^/]+)\/([^/]+)$/);
+  if (!m) return null;
+  if (Array.isArray(opts?.assets) && (!opts.id || opts.id === m[1])) {
+    const a = opts.assets.find((x) => x?.file === m[2]);
+    if (a) return a;
+  }
+  return ASSET_REG?.get(p) ?? null;
+}
+
+/** <img>：/files/ 圖片以 assets.alt 補空白 alt、加 width／height（若有）；所有圖片加 loading="lazy" decoding="async" */
+export function enhanceImages(htmlStr, opts = {}) {
+  return htmlStr.replace(/<img\b([^>]*?)\s*\/?>/gi, (tag, attrs) => {
+    let a = attrs;
+    const src = a.match(/\ssrc\s*=\s*"([^"]*)"/i)?.[1] ?? '';
+    const meta = src ? assetMetaFor(src, opts) : null;
+    if (meta?.alt) {
+      if (/\salt\s*=\s*""/i.test(a)) a = a.replace(/\salt\s*=\s*""/i, ` alt="${esc(meta.alt)}"`);
+      else if (!/\salt\s*=/i.test(a)) a += ` alt="${esc(meta.alt)}"`;
+    } else if (!/\salt\s*=/i.test(a)) a += ' alt=""';
+    if (meta?.width && !/\swidth\s*=/i.test(a)) a += ` width="${Number(meta.width)}"`;
+    if (meta?.height && !/\sheight\s*=/i.test(a)) a += ` height="${Number(meta.height)}"`;
+    if (!/\sloading\s*=/i.test(a)) a += ' loading="lazy"';
+    if (!/\sdecoding\s*=/i.test(a)) a += ' decoding="async"';
+    return `<img${a}>`;
+  });
+}
+
+/**
+ * Markdown → HTML（淨化、站內路徑加 basePath；/files/ 路徑也加 basePath、不加語言前綴）。
+ * @param {string} markdown
+ * @param {{ assets?: object[], id?: string }} [opts] 選填：該筆內容的 assets（不給則查全站登錄）
+ */
+export function md(markdown, opts = {}) {
   if (!markdown) return '';
-  const html = sanitize(marked.parse(cjkStrong(markdown)));
+  const html = enhanceImages(sanitize(marked.parse(cjkStrong(markdown))), opts);
   return config.basePath ? html.replace(/(\s(?:href|src)=")\/(?!\/)/g, `$1${config.basePath}/`) : html;
 }
 

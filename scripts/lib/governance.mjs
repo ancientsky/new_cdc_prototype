@@ -39,6 +39,14 @@
 //      （today > resultPlannedAt + 7 且無 result，owner 人事室、cc 用人單位，medium）、job-waitlist-expiring（備取 validUntil 14 日內，low）、
 //      job-apply-url-dead（applyUrl 外部連結檢查失敗，取代 link-broken）。甄選結果個資閘門在 validate（建置失敗）；result／waitlistUpdates
 //      不進答案索引（index-builder）。
+//  R19 檔案資產（第八輪，ARCHITECTURE 16.1）：建置失敗的檢查在 scripts/lib/assets.mjs（validateAssets）；這裡只產生待辦：
+//      attachment-no-accessible-version（medium）：附件 PDF 的 machineReadable 不是 true 且沒有 accessibleAlt（.md／.docx／.odt）；
+//      image-license-missing（medium）：圖片授權待確認——非本署素材（license ≠ OGDL-1.0）缺 source，或 license 不在開放授權清單
+//        （license 整個沒填是建置失敗，不走待辦）；
+//      asset-orphan（low）：content/assets/{id}/ 有檔未宣告（site.assetReport.orphans，validateAssets 算出），每筆內容一則。
+//      只對 published 且非 superseded 的內容開 attachment／image 待辦。item.gov.assets、site.gov.assets 為統計；
+//      md() 的圖片 alt／width／height 由 setAssetRegistry(assetRegistryOf(site)) 提供（模板不必改呼叫方式）。
+//      外部連結健康（R11）不檢 /files/（站內檔案由建置後連結檢查確認存在）。
 //  R18 採購公告（tender）：gov.tenderStage＝manualStatus（failed／cancelled）＞ awarded（有 award）＞ open（today ≤ deadlineAt）
 //      ＞ opened（today ≥ openingAt）＞ closed。待辦 tender-award-overdue（openingAt + 30 日仍無 award 且非 failed／cancelled，owner 秘書室、cc 需求單位）。
 // annotations[]：{ kind, level, text, href（目標內容 id，沿用骨架語意）, targetId, path（目標前台路徑） }
@@ -46,6 +54,9 @@
 import { createHash } from 'node:crypto';
 import { addMonths, daysBetween } from './render.mjs';
 import { jobPiiErrors } from './validate.mjs';
+import { setAssetRegistry } from './markdown.mjs';
+import { assetRegistryOf, assetUrl, extOf, imageLicenseProblems, needsAccessibleVersion } from './assets.mjs';
+import { siteOrigin } from '../../site.config.mjs';
 
 // ───────────────────────── 常數與對照表 ─────────────────────────
 
@@ -93,7 +104,12 @@ export const TODO_KIND_LABELS = {
   'job-waitlist-expiring': '備取有效期將屆',
   'job-apply-url-dead': '報名連結失效',
   'tender-award-overdue': '決標逾期未公告',
+  'attachment-no-accessible-version': 'PDF 附件缺可及性版本',
+  'image-license-missing': '圖片授權或來源待確認',
+  'asset-orphan': '未宣告的孤兒檔',
 };
+/** 檔案資產待辦期限（日） */
+export const ASSET_FIX_DAYS = 30;
 
 // ───────────────────────── 第七輪：招募職缺與採購公告（ARCHITECTURE 15.1） ─────────────────────────
 
@@ -205,7 +221,9 @@ export function versionLabelOf(media) {
   const raw = String(media.basedOnVersionLabel ?? '').trim().replace(/^依\s*/, '').replace(/\s*製作$/, '').trim();
   return raw || media.producedAt;
 }
-const isHttp = (u) => typeof u === 'string' && /^https?:\/\//i.test(u);
+/** 本站檔案（/files/…，含本站絕對網址）：由建置後的站內連結檢查確認存在，不列入外部連結健康檢查 */
+export const isSiteFile = (u) => typeof u === 'string' && (u.startsWith('/files/') || u.startsWith(`${siteOrigin()}/files/`));
+const isHttp = (u) => typeof u === 'string' && /^https?:\/\//i.test(u) && !isSiteFile(u);
 
 /** 一筆內容的外部連結：[{ url, field, label, lastCheckedAt, status }]（status 缺 ⇒ unchecked） */
 export function externalLinksOf(item) {
@@ -684,6 +702,9 @@ export function applyGovernance(site) {
     }
   }
 
+  // ── R19 檔案資產（ARCHITECTURE 16.1） ──
+  const assetGov = buildAssetGov(site, { addTodo, today, allowed: cfg.licenses?.allowed ?? [] });
+
   // ── R13 通報時限表 ──
   const notifyTable = buildNotifyTable(site, labtestsByDisease, currentOfFamily);
 
@@ -770,6 +791,7 @@ export function applyGovernance(site) {
     todoKindLabels: TODO_KIND_LABELS,
     externalLinks,
     linkHealth: summarizeLinks(externalLinks),
+    assets: assetGov,
     notifyTable,
     // 第七輪：招募與採購階段統計（後台儀表板、/careers/、/procurement/ 頁籤計數）
     jobs: stageStats(site.collections.jobs, 'jobStage', 'jobTab', JOB_STAGE_LABELS, JOB_TAB_LABELS),
@@ -782,6 +804,56 @@ export function applyGovernance(site) {
   Object.defineProperty(site.gov, 'kpi', { enumerable: true, configurable: true, get: () => computeKpi(site) });
   Object.defineProperty(site.gov, 'kpiByKey', { enumerable: false, configurable: true, get: () => Object.fromEntries(computeKpi(site).map((k) => [k.key, k])) });
   return site.gov;
+}
+
+/**
+ * R19 檔案資產：item.gov.assets、待辦（attachment-no-accessible-version、image-license-missing、asset-orphan）、md() 圖片登錄。
+ * @returns site.gov.assets 統計 { items, files, bytes, byKind, orphans, orphanFiles[], noAccessibleVersion, imageLicense }
+ */
+function buildAssetGov(site, { addTodo, today, allowed }) {
+  setAssetRegistry(assetRegistryOf(site));
+  const stats = { items: 0, files: 0, bytes: 0, byKind: { attachment: 0, image: 0, data: 0 }, orphans: 0, orphanFiles: [], noAccessibleVersion: 0, imageLicense: 0 };
+  for (const item of site.all) {
+    const list = (Array.isArray(item.assets) ? item.assets : []).filter((a) => a?.file);
+    if (!item.gov) continue;
+    const g = { count: list.length, attachments: 0, images: 0, data: 0, bytes: 0, noAccessibleVersion: [], licenseIssues: [] };
+    item.gov.assets = g;
+    if (!list.length) continue;
+    stats.items++;
+    for (const a of list) {
+      stats.files++;
+      if (stats.byKind[a.kind] != null) stats.byKind[a.kind]++;
+      if (a.kind === 'attachment') g.attachments++; else if (a.kind === 'image') g.images++; else if (a.kind === 'data') g.data++;
+      g.bytes += a.bytes ?? 0; stats.bytes += a.bytes ?? 0;
+      if (needsAccessibleVersion(a)) g.noAccessibleVersion.push(a.file);
+      if (a.kind === 'image') { const p = imageLicenseProblems(a, allowed); if (p.length) g.licenseIssues.push({ file: a.file, problems: p }); }
+    }
+    if (item.status !== 'published' || item.gov.superseded) continue;
+    for (const file of g.noAccessibleVersion) {
+      const a = list.find((x) => x.file === file);
+      stats.noAccessibleVersion++;
+      addTodo({ id: `attachment-no-accessible-version:${item.id}:${file}`, kind: 'attachment-no-accessible-version', item, file, url: assetUrl(item, file),
+        dueAt: addDays(item.reviewedAt ?? today, ASSET_FIX_DAYS), severity: 'medium',
+        text: `「${item.title}」的附件「${a?.label ?? file}」是 PDF 且未標示有文字層（machineReadable），也沒有可及性版本：請附同名 .md（或 .docx／.odt）並填 accessibleAlt，或確認 PDF 有文字層後改 machineReadable:true` });
+    }
+    for (const { file, problems } of g.licenseIssues) {
+      stats.imageLicense++;
+      addTodo({ id: `image-license-missing:${item.id}:${file}`, kind: 'image-license-missing', item, file, url: assetUrl(item, file),
+        dueAt: addDays(item.reviewedAt ?? today, ASSET_FIX_DAYS), severity: 'medium',
+        text: `「${item.title}」的圖片 ${file}：${problems.join('；')}` });
+    }
+  }
+  const orphansById = new Map();
+  for (const o of site.assetReport?.orphans ?? []) { if (!orphansById.has(o.id)) orphansById.set(o.id, []); orphansById.get(o.id).push(o); }
+  for (const [id, list] of orphansById) {
+    const item = site.byId.get(id);
+    stats.orphans += list.length;
+    stats.orphanFiles.push(...list.map((o) => ({ id, file: o.file, bytes: o.bytes ?? null })));
+    addTodo({ id: `asset-orphan:${id}`, kind: 'asset-orphan', item, itemId: id, files: list.map((o) => o.file), count: list.length,
+      dueAt: addDays(today, ASSET_FIX_DAYS), severity: 'low',
+      text: `content/assets/${id}/ 有 ${list.length} 個檔未在 assets 宣告（${list.map((o) => o.file).join('、')}）：不會複製到網站；請宣告或刪除` });
+  }
+  return stats;
 }
 
 /** 階段統計：{ total, byStage, byTab, stageLabels, tabLabels }（只計 published） */

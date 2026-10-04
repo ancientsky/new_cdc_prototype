@@ -115,6 +115,7 @@ nginx 的 `$uri` 不含 query；識別型參數要改用 `$request_uri` 或 `$ar
 
 - 舊附件網址 → **301 到新的文件頁**（`/documents/{id}/`），不是直接轉到新 PDF 檔。民眾和 AI 一進來就看得到「這是第幾版、現行嗎、誰負責」。
 - 指向舊版的附件：清單 `target` 優先填**該版本自己的文件頁**（頁面有紅色失效橫條，一鍵到現行版）。上線前以 `v1/redirects.json` 的 `to` 欄位抽驗，確認舊版 PDF 去的是預期的那一頁。
+- 新站的 PDF 本身放在該文件版本的 `content/assets/{id}/`，公開於 `/files/{id}/{檔名}`（不帶語言前綴），並在內容的 `assets` 宣告；`redirects.json` **不處理 `/files/`**，舊附件網址一律轉到文件頁，不直接轉到新 PDF。電子檔還沒取得時，內文連到 `/pending/`，取得並確認可及性後再換成 `/files/`，規則見 [assets-policy.md](assets-policy.md)。
 - 附件網址在舊站 robots 是被禁爬的（見第 1 節），一定要先放行才能讓搜尋引擎看到 301。規劃文件附錄 H 的做法是：現行檔放 `/File/Public/`，失效版放 `/File/Archive/` 並由伺服器回 `X-Robots-Tag: noindex`，`/Uploads/` 改由伺服器 301。
 
 ### 2.9 原型和正式站的差別（重要）

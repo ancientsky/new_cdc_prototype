@@ -719,11 +719,12 @@ export function buildExport(st) {
     default: break;
   }
   void tier1;
+  if (st.assets?.length) out.assets = st.assets;
   return out;
 }
 
 /** 簡易必填檢查（正式驗證在 CI 的 JSON Schema）。 */
-export function requiredCheck(obj, ownerIds = []) {
+export function requiredCheck(obj, ownerIds = [], opts = {}) {
   const miss = [];
   const need = ['id', 'type', 'title', 'owner', 'publishedAt', 'reviewedAt', 'reviewPeriodMonths', 'status', 'audience', 'sensitivity', 'license', 'languages', 'summary'];
   for (const k of need) if (obj[k] == null || obj[k] === '' || (Array.isArray(obj[k]) && !obj[k].length)) miss.push(k);
@@ -745,5 +746,243 @@ export function requiredCheck(obj, ownerIds = []) {
   if (obj.type === 'labtest' && obj.disease && !/^disease\./.test(obj.disease)) miss.push('disease（須為 disease.*）');
   if ((obj.type === 'topic' || obj.type === 'service') && obj.slug && !/^[a-z0-9-]+$/.test(obj.slug)) miss.push('slug（小寫英數與連字號）');
   if (obj.summary && obj.summary.length > 120) miss.push('summary（建議 ≤ 120 字）');
+  for (const i of assetIssues(obj, opts.limits)) if (i.level === 'error') miss.push(i.msg);
   return miss;
+}
+
+// ───────────────────────── 檔案資產（第八輪，ARCHITECTURE §16.1／16.2）─────────────────────────
+// 契約由 Y1 的 schemas/_common.json（assets）與 scripts/lib/assets.mjs 擁有；這裡是「上架前預檢」的瀏覽器版：
+// 規則與建置檢查對齊，讓同事在送 PR 之前就看到會被擋的項目。純函式，Node 測試共用。
+
+const MB = 1024 * 1024;
+export const ASSET_EXTENSIONS = ['pdf', 'png', 'jpg', 'jpeg', 'webp', 'svg', 'csv', 'json', 'xlsx', 'docx', 'odt', 'md', 'ics'];
+export const ASSET_DEFAULTS = { pdfBytes: 20 * MB, imageBytes: 2 * MB, dataBytes: 50 * MB, maxFiles: 30, extensions: ASSET_EXTENSIONS };
+export const ASSET_KINDS = [['attachment', '附件（列在頁面附件區）'], ['image', '內文圖片'], ['data', '資料檔（CSV、JSON）']];
+export const ASSET_MIME = {
+  pdf: 'application/pdf', png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', webp: 'image/webp', svg: 'image/svg+xml',
+  csv: 'text/csv', json: 'application/json', md: 'text/markdown', ics: 'text/calendar',
+  xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  odt: 'application/vnd.oasis.opendocument.text',
+};
+const IMAGE_EXT = new Set(['png', 'jpg', 'jpeg', 'webp', 'svg']);
+const DATA_EXT = new Set(['csv', 'json']);
+/** 內容檔名規則（與 §16.1 一致）：小寫英數、連字號、底線與點；不可有空白與中文。 */
+export const ASSET_NAME_RE = /^[a-z0-9][a-z0-9._-]*$/;
+
+/**
+ * 限制值正規化：接受 window.CDC_ASSETS_LIMITS 或 site.config.assets 的各種寫法（bytes 或 MB；欄位別名），缺的用預設。
+ * 回傳 { pdfBytes, imageBytes, dataBytes, maxFiles, extensions }。
+ */
+export function normalizeLimits(raw) {
+  const d = ASSET_DEFAULTS;
+  if (!raw || typeof raw !== 'object') return { ...d, extensions: [...d.extensions] };
+  const num = (keys, dflt) => {
+    for (const k of keys) {
+      const parts = k.split('.');
+      let v = raw; for (const q of parts) v = v?.[q];
+      if (v == null || v === '' || Number.isNaN(Number(v))) continue;
+      v = Number(v);
+      if (/MB$|Mb$/.test(k)) return v * MB;
+      return v > 0 && v < 100000 ? v * MB : v; // < 100000 視為 MB，其餘為 bytes
+    }
+    return dflt;
+  };
+  const exts = raw.extensions ?? raw.allowedExtensions ?? raw.allowExtensions ?? raw.allowedExts;
+  return {
+    pdfBytes: num(['pdfBytes', 'pdfMaxBytes', 'maxPdfBytes', 'pdfMB', 'pdfMaxMB', 'maxBytes.pdf', 'maxBytes.attachment', 'pdf'], d.pdfBytes),
+    imageBytes: num(['imageBytes', 'imageMaxBytes', 'maxImageBytes', 'imageMB', 'imageMaxMB', 'maxBytes.image', 'image'], d.imageBytes),
+    dataBytes: num(['dataBytes', 'dataMaxBytes', 'maxDataBytes', 'dataMB', 'dataMaxMB', 'maxBytes.data', 'data'], d.dataBytes),
+    maxFiles: Number(raw.maxFiles ?? raw.maxFilesPerContent ?? raw.maxPerContent ?? raw.maxCount ?? d.maxFiles) || d.maxFiles,
+    extensions: (Array.isArray(exts) && exts.length ? exts : d.extensions).map((e) => String(e).replace(/^\./, '').toLowerCase()),
+  };
+}
+
+export const assetExt = (name) => { const m = /\.([A-Za-z0-9]+)$/.exec(String(name ?? '')); return m ? m[1].toLowerCase() : ''; };
+export const assetKindFor = (name) => { const e = assetExt(name); return IMAGE_EXT.has(e) ? 'image' : DATA_EXT.has(e) ? 'data' : 'attachment'; };
+export const assetMimeFor = (name) => ASSET_MIME[assetExt(name)] ?? '';
+export const assetLimitFor = (kind, limits = ASSET_DEFAULTS) => (kind === 'image' ? limits.imageBytes : kind === 'data' ? limits.dataBytes : limits.pdfBytes);
+export const fmtBytes = (n) => (n >= MB ? `${(n / MB).toFixed(n >= 10 * MB ? 0 : 1)} MB` : n >= 1024 ? `${Math.round(n / 1024)} KB` : `${n} B`);
+
+/**
+ * 檔名正規化：小寫、空白與不合法字元→連字號、去中文、連續符號合併、副檔名小寫。
+ * taken：已用檔名（重複時加 -2、-3）。回傳 { name, changed, notes[] }。
+ */
+export function normalizeAssetName(original, taken = []) {
+  const orig = String(original ?? '').replace(/^.*[\\/]/, '').trim();
+  const dot = orig.lastIndexOf('.');
+  const rawBase = dot > 0 ? orig.slice(0, dot) : orig;
+  const ext = dot > 0 ? orig.slice(dot + 1).toLowerCase().replace(/[^a-z0-9]/g, '') : '';
+  const notes = [];
+  if (/\s/.test(orig)) notes.push('檔名有空白，已改成連字號');
+  if (/[⺀-鿿豈-﫿＀-￯　-〿]/.test(orig)) notes.push('檔名含中文（或全形字），已移除；建議自行取一個英文檔名，例如 press-release.pdf');
+  if (/[A-Z]/.test(orig)) notes.push('已改為小寫');
+  let base = rawBase.toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9._-]+/g, '-').replace(/[-_.]*\.[-_.]*/g, '.').replace(/-{2,}/g, '-').replace(/_{2,}/g, '_').replace(/^[-_.]+|[-_.]+$/g, '');
+  if (!base) { base = 'file'; if (!notes.length) notes.push('檔名無法使用，已改為 file'); }
+  let name = ext ? `${base}.${ext}` : base;
+  if (!notes.length && name !== orig) notes.push('檔名已正規化');
+  const used = new Set(taken);
+  if (used.has(name)) {
+    let k = 2;
+    while (used.has(ext ? `${base}-${k}.${ext}` : `${base}-${k}`)) k++;
+    name = ext ? `${base}-${k}.${ext}` : `${base}-${k}`;
+    notes.push('與已加入的檔名重複，已加上流水號');
+  }
+  return { name, changed: name !== orig, notes };
+}
+
+/** 取出一筆內容的所有 Markdown 內文（answerMarkdown、bodyMarkdown、blocks[].markdown…），預檢內文引用用。 */
+export function bodyMarkdownOf(obj) {
+  const out = [];
+  const walk = (v, key) => {
+    if (typeof v === 'string') { if (/Markdown$|^markdown$/.test(key ?? '')) out.push(v); }
+    else if (Array.isArray(v)) v.forEach((x) => walk(x, key));
+    else if (v && typeof v === 'object') for (const [k, x] of Object.entries(v)) if (k !== 'assets') walk(x, k);
+  };
+  walk(obj, '');
+  return out.join('\n\n');
+}
+
+/** 內文中對 /files/{id}/{file} 的引用（Markdown 圖片、連結、HTML img） */
+export function bodyFileRefs(md) {
+  const out = [];
+  const s = String(md ?? '');
+  const re = /(!?)\[([^\]]*)\]\(\s*<?(\/files\/([^/\s)>]+)\/([^\s)>?#"']+))[^)]*\)|<img\b[^>]*?\bsrc=["']?(\/files\/([^/\s"'>]+)\/([^\s"'>?#]+))/gi;
+  let m;
+  const dec = (x) => { try { return decodeURIComponent(x); } catch { return x; } };
+  while ((m = re.exec(s))) {
+    if (m[3]) out.push({ id: dec(m[4]), file: dec(m[5]), image: m[1] === '!', alt: m[2] });
+    else out.push({ id: dec(m[7]), file: dec(m[8]), image: true, alt: '' });
+  }
+  return out;
+}
+
+/**
+ * 資產預檢（純函式）。obj 是將匯出的 content JSON（含 assets[] 與各 *Markdown 內文）。
+ * 回傳 [{ level:'error'|'warn', code, file, msg }]。error 對應建置會失敗的項目，warn 對應待辦或建議。
+ */
+export function assetIssues(obj, limits = ASSET_DEFAULTS) {
+  limits = { ...ASSET_DEFAULTS, ...(limits ?? {}) };
+  const out = [];
+  const assets = Array.isArray(obj?.assets) ? obj.assets : [];
+  const md = bodyMarkdownOf(obj);
+  const refs = bodyFileRefs(md);
+  const myId = obj?.id ?? '';
+  const add = (level, code, file, msg) => out.push({ level, code, file: file ?? null, msg });
+  const by = new Map();
+  if (assets.length > limits.maxFiles) add('error', 'too-many', null, `附件與圖片共 ${assets.length} 個，超過上限 ${limits.maxFiles} 個`);
+  for (const a of assets) {
+    const f = a.file ?? '';
+    if (by.has(f)) add('error', 'duplicate', f, `檔名重複：${f}`);
+    by.set(f, a);
+  }
+  for (const a of assets) {
+    const f = a.file ?? '';
+    const ext = assetExt(f);
+    const tag = `檔案 ${f || '（未命名）'}`;
+    if (!f) { add('error', 'name', null, '有檔案沒有檔名'); continue; }
+    if (a.missing) add('error', 'missing-file', f, `${tag}：重新整理後需要重新選取檔案（瀏覽器不保存檔案內容）`);
+    if (!ASSET_NAME_RE.test(f)) add('error', 'name', f, `${tag}：檔名不合法（只能小寫英數、連字號、底線與點，不可有空白與中文）；建議「${normalizeAssetName(f).name}」`);
+    if (!limits.extensions.includes(ext)) add('error', 'ext', f, `${tag}：不允許的副檔名 .${ext || '（無）'}（允許：${limits.extensions.join('、')}）`);
+    if (!['attachment', 'image', 'data'].includes(a.kind)) add('error', 'kind', f, `${tag}：種類須為附件、內文圖片或資料檔`);
+    const exp = assetMimeFor(f);
+    if (a.mime && exp && a.mime !== exp) add('error', 'mime', f, `${tag}：內容類型 ${a.mime} 與副檔名 .${ext} 不一致（應為 ${exp}）`);
+    if (typeof a.bytes === 'number') {
+      const lim = assetLimitFor(a.kind, limits);
+      if (a.bytes > lim) add('error', 'size', f, `${tag}：${fmtBytes(a.bytes)} 超過${a.kind === 'image' ? '圖片' : a.kind === 'data' ? '資料檔' : '附件（PDF）'}上限 ${fmtBytes(lim)}`);
+      if (a.bytes === 0) add('error', 'empty', f, `${tag}：檔案是空的`);
+    }
+    if (!a.missing && !a.sha256) add('warn', 'sha256', f, `${tag}：沒有 sha256（此瀏覽器不支援 Web Crypto？）；建置時請用 npm run build -- --fix-assets 補寫`);
+    if (a.kind === 'image') {
+      const alt = String(a.alt ?? '').trim();
+      const refAlt = refs.filter((r) => r.file === f && r.id === myId).map((r) => r.alt.trim()).find(Boolean);
+      if (!alt && !refAlt) add('error', 'alt', f, `${tag}：圖片缺替代文字（alt）`);
+      else if (!alt) add('warn', 'alt-json', f, `${tag}：assets 的 alt 空白，目前只有內文的替代文字；請兩邊都填`);
+      if (alt.length > 150) add('error', 'alt-long', f, `${tag}：alt 超過 150 字（${alt.length}）`);
+      if (!String(a.license ?? '').trim()) add('error', 'license', f, `${tag}：圖片缺授權（license，例如 OGDL-1.0）`);
+      else if (a.license !== 'OGDL-1.0' && !String(a.source ?? '').trim()) add('warn', 'source', f, `${tag}：非本署素材（授權 ${a.license}）請填來源（source）`);
+      if (!refs.some((r) => r.file === f && r.id === myId)) add('warn', 'unreferenced', f, `${tag}：已宣告為內文圖片，但內文沒有引用（內文要有 ![替代文字](/files/${myId}/${f})）`);
+    } else if (!String(a.label ?? '').trim()) {
+      add('error', 'label', f, `${tag}：${a.kind === 'data' ? '資料檔' : '附件'}缺顯示名稱（label）`);
+    }
+    if (a.kind === 'attachment' && ext === 'pdf' && a.machineReadable === false) {
+      const stem = f.replace(/\.[^.]+$/, '');
+      const alt = a.accessibleAlt ? by.get(a.accessibleAlt) : [...by.values()].find((x) => /\.(md|docx|odt)$/.test(x.file ?? '') && String(x.file).replace(/\.[^.]+$/, '') === stem);
+      if (!alt) add('warn', 'pdf-accessible', f, `${tag}：PDF 未勾「有文字層」且沒有 .md／.docx／.odt 替代版 → 建置會產生待辦「attachment-no-accessible-version」`);
+    }
+  }
+  const seen = new Set();
+  for (const r of refs) {
+    const key = `${r.id}/${r.file}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    if (r.id !== myId) { add('error', 'foreign', r.file, `內文引用了其他內容的檔案 /files/${r.id}/${r.file}（每筆內容只能引用自己的 assets）`); continue; }
+    const a = by.get(r.file);
+    if (!a) add('error', 'undeclared', r.file, `內文引用 /files/${r.id}/${r.file}，但沒有在附件與圖片中宣告`);
+    else if (r.image && a.kind !== 'image') add('error', 'not-image', r.file, `內文把 ${r.file} 當圖片引用，但它的種類是「${a.kind === 'data' ? '資料檔' : '附件'}」`);
+  }
+  return out;
+}
+/** 轉成預處理「一致性檢查」的 check 物件（只取 warn；error 走 requiredCheck 的必補清單） */
+export function assetWarnings(obj, limits) {
+  return assetIssues(obj, limits).filter((i) => i.level === 'warn').map((i) => ({ level: 'warn', title: '檔案資產', message: i.msg, code: `asset-${i.code}` }));
+}
+
+/**
+ * 把面板的檔案清單轉成 content JSON 的 assets[]（欄位順序同 §16.1）。
+ * 輸入每筆：{ file, kind, label, alt, mime, bytes, sha256, machineReadable, accessibleAlt, license, source, width, height }
+ */
+export function buildAssetsJson(list = []) {
+  const keep = (v) => v != null && v !== '' && !(typeof v === 'number' && Number.isNaN(v));
+  return list.map((a) => {
+    const o = { file: a.file, kind: a.kind };
+    if (keep(String(a.label ?? '').trim())) o.label = String(a.label).trim();
+    if (a.kind === 'image' && keep(String(a.alt ?? '').trim())) o.alt = String(a.alt).trim();
+    if (keep(a.mime)) o.mime = a.mime;
+    if (keep(a.bytes)) o.bytes = a.bytes;
+    if (keep(a.sha256)) o.sha256 = a.sha256;
+    if (a.kind === 'attachment') {
+      o.machineReadable = a.machineReadable !== false;
+      if (assetExt(a.file) === 'pdf' && a.machineReadable === false && keep(a.accessibleAlt)) o.accessibleAlt = a.accessibleAlt;
+    }
+    if (a.kind === 'image') {
+      if (keep(String(a.license ?? '').trim())) o.license = String(a.license).trim();
+      if (keep(String(a.source ?? '').trim())) o.source = String(a.source).trim();
+      if (keep(a.width)) o.width = a.width;
+      if (keep(a.height)) o.height = a.height;
+    }
+    return o;
+  });
+}
+
+/** 上架包內的放置路徑：{ json: 'content/news/2026-….json', assets: ['content/assets/<id>/<file>', …] }（供樹狀圖與 ZIP 共用） */
+export function packagePaths(obj, uiType) {
+  const rest = String(obj.id ?? '').replace(/^[a-z]+\./, '') || 'new';
+  return {
+    json: `content/${DIRS[uiType] ?? 'faq'}/${rest}.json`,
+    assets: (obj.assets ?? []).map((a) => `content/assets/${obj.id}/${a.file}`),
+  };
+}
+
+/** 上架包放置路徑 → 樹狀圖文字（├─ └─）。paths：packagePaths() 的結果。 */
+export function renderTree(paths) {
+  const root = {};
+  for (const f of [paths.json, ...paths.assets]) {
+    let n = root;
+    const parts = f.split('/');
+    parts.forEach((part, i) => { n = n[part] ??= i === parts.length - 1 ? null : {}; });
+  }
+  const mark = (name) => (name === paths.json.split('/').pop() ? '   ← content JSON' : '');
+  const lines = ['（repo 根目錄）'];
+  const walk = (node, prefix) => {
+    const keys = Object.keys(node);
+    keys.forEach((k, i) => {
+      const last = i === keys.length - 1;
+      lines.push(`${prefix}${last ? '└─ ' : '├─ '}${k}${node[k] ? '/' : mark(k)}`);
+      if (node[k]) walk(node[k], prefix + (last ? '   ' : '│  '));
+    });
+  };
+  walk(root, '');
+  return lines.join('\n');
 }

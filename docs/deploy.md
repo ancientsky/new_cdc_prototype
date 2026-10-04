@@ -17,6 +17,7 @@ npm run dev            # 建置後啟動預覽伺服器（預設 http://localhos
 | --- | --- |
 | `npm run fetch` | 抓官方資料到 `data/snapshots/`（抓不到沿用既有快照，不會失敗） |
 | `npm run build` | 載入內容 → 驗證 → 治理 → 索引 → 評估 → 輸出 |
+| `npm run build -- --fix-assets` | 先把 `content/assets/{id}/` 實際檔案的 `bytes`／`sha256`／`mime`／寬高補寫回內容 JSON（只改 `assets` 欄位），再照常建置。只想補寫不輸出：`node scripts/build.mjs --check --fix-assets`。檔案規則見 [assets-policy.md](assets-policy.md) |
 | `npm run check` | 同上但**不輸出檔案**；用來在 PR 前快速驗證 |
 | `npm test` | 跑 `tests/*.test.mjs`（治理規則測試） |
 | `npm run eval` | 在 Node 跑評估集，印出各類別通過率 |

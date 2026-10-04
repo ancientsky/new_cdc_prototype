@@ -1,4 +1,6 @@
 // JSON Schema 驗證 + 跨檔參照檢查。任何一項失敗 → build 失敗（治理門檻）。
+// 檔案資產（assets[]、/files/ 引用、content/assets/ 實體檔）的檢查在 scripts/lib/assets.mjs 的 validateAssets()，
+// build.mjs 在本檢查後呼叫並把錯誤併入同一份失敗清單（ARCHITECTURE 16.1）。
 import fs from 'node:fs';
 import path from 'node:path';
 import Ajv2020 from 'ajv/dist/2020.js';
@@ -112,7 +114,7 @@ export function validateSite(site) {
 
   // 3. 佔位／示意網址政策（治理門檻）：內容欄位的連結不得含 placeholder-、example.gov.tw、example.com…
   //    例外：legacyUrls（現行官網對照用，不檢）。
-  for (const item of site.all) for (const hit of findPlaceholderUrls(item)) push(item.__file, `${hit.path} 含佔位／示意網址：${hit.value}（尚未遷移的文件請改連 /pending/?ref=<id>&doc=<名稱>）`);
+  for (const item of site.all) for (const hit of findPlaceholderUrls(item)) push(item.__file, `${hit.path} 含佔位／示意網址：${hit.value}（檔案請放 content/assets/<id>/ 並在 assets 宣告後以 /files/<id>/<檔名> 引用；尚未取得的文件改連 /pending/?ref=<id>&doc=<名稱>）`);
 
   // 4a. 移轉清單模板（ARCHITECTURE 14.1）：schema、id 唯一、owner、key 唯一
   const vTpl = ajv.getSchema('https://cdc-prototype/schemas/migration-template.json');
