@@ -1,0 +1,59 @@
+{
+  "id": "page.dengue-lab",
+  "type": "page",
+  "title": "檢驗資訊",
+  "owner": "unit.lab",
+  "publishedAt": "2025-01-15",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "登革熱：急性期血清 2–5 mL（發病 7 日內），4°C 冷藏 24 小時內送達，可做 NS1 抗原、RT-PCR 與 IgM／IgG；恢復期血清於發病 14–40 日採檢。",
+  "slug": "dengue-lab",
+  "bodyMarkdown": "登革熱：急性期血清 2–5 mL（發病 7 日內），4°C 冷藏 24 小時內送達，可做 NS1 抗原、RT-PCR 與 IgM／IgG；恢復期血清於發病 14–40 日採檢。\n\n| 項目 | 內容 |\n| --- | --- |\n| 檢體 | 急性期血清、恢復期血清 |\n| 送驗時限 | 24 小時內 |\n| 生物安全等級 | BSL-2 |\n\n- 通報後即採檢；NS1 快篩陽性者仍須送驗確認（見致醫界通函第 616 號）。\n- 檢體溶血或脂血會影響結果。\n- 送驗單請註明發病日與旅遊史，以利研判境外移入或本土。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/nBSoKp75tD_JsUcg-PolJx"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 40 處（mso 樣式 22、Mso 類別 12、命名空間標籤 9）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 lab（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "target-type-differs",
+        "severity": "info",
+        "message": "對應的新站內容是 labtest.dengue（labtest），草稿以 page 暫存，請比對後改建為 labtest"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/nBSoKp75tD_JsUcg-PolJx",
+    "convertedAt": "2026-10-04T22:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "labtest.dengue"
+    ]
+  }
+}

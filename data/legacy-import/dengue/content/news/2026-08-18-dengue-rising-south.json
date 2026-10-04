@@ -1,0 +1,59 @@
+{
+  "id": "news.2026-08-18-dengue-rising-south",
+  "type": "news",
+  "title": "南部登革熱本土疫情上升，籲請民眾配合孳生源清除與防治工作",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-08-18",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "疾病管制署表示，近兩週南部縣市登革熱本土病例持續增加（示意），病例集中於高雄市與台南市部分行政區，疫情有擴散風險。",
+  "newsType": "press",
+  "bodyMarkdown": "疾病管制署表示，近兩週南部縣市登革熱本土病例持續增加（示意），病例集中於高雄市與台南市部分行政區，疫情有擴散風險。\n\n疾管署籲請民眾配合衛生單位進行孳生源清除與噴藥，並提醒醫師對發燒病人提高警覺，可善用 NS1 快篩試劑及早診斷與通報。民眾外出請穿淺色長袖衣褲並使用防蚊液。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/x14hC_-aNBFlGE_fgPYXtG?typeid=9"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「登革熱／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+      },
+      {
+        "code": "not-in-manifest",
+        "severity": "warn",
+        "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/x14hC_-aNBFlGE_fgPYXtG?typeid=9",
+    "convertedAt": "2026-10-04T22:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "news.2026-08-18-dengue-rising-south"
+    ]
+  }
+}

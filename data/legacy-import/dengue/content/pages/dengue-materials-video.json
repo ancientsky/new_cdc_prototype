@@ -1,0 +1,69 @@
+{
+  "id": "page.dengue-materials-video",
+  "type": "page",
+  "title": "衛教宣導：影片",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-07-15",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "由里長示範帶領社區志工「巡、倒、清、刷」清除積水容器，說明孳生源清除比噴藥更重要，並提醒出現發燒、頭痛、骨頭痛應儘速就醫。",
+  "slug": "dengue-materials-video",
+  "bodyMarkdown": "由里長示範帶領社區志工「巡、倒、清、刷」清除積水容器，說明孳生源清除比噴藥更重要，並提醒出現發燒、頭痛、骨頭痛應儘速就醫。\n\n### 影片文字稿\n\n**\\[00:00\\] 里長的一週巡查**\n\n里長：每個禮拜六早上，我們里的志工都會集合，一條巷子一條巷子走。登革熱是靠埃及斑蚊和白線斑蚊傳播的，蚊子在哪裡生，我們就去哪裡清。\n\n**\\[00:35\\] 巡倒清刷四步驟**\n\n旁白：防登革熱，記住四個字：「巡、倒、清、刷」。巡：巡視住家內外可能積水的容器，像花盆底盤、廢輪胎、水桶、帆布。倒：把積水倒掉。清：不要的容器清除，要用的容器倒放或加蓋。刷：容器內壁要刷洗，因為斑蚊的卵會黏在壁上，只倒水不刷，卵還是會孵化。\n\n志工：我們最常找到的地方，是陽台花盆底盤、冷氣滴水，還有工地的積水，下過雨後一定要再巡一次。\n\n**\\[01:15\\] 噴藥不能取代清積水**\n\n旁白：有確定病例時，衛生單位會進行緊急防治噴藥，目的是殺死已經帶病毒的成蚊。但噴藥殺不了水裡的孑孓，真正斷根，還是要靠大家清除孳生源。噴藥時請配合關好門窗、收好食物，不必過度擔心。\n\n**\\[01:40\\] 發燒就醫說旅遊史**\n\n旁白：如果出現發燒、頭痛、後眼窩痛、肌肉關節痛或出疹，請儘速就醫，並告訴醫師最近去過哪裡。退燒前後是重症的關鍵期，出現腹痛、持續嘔吐、牙齦出血或嗜睡，要立刻回診。里長和志工的一小時，守住全里的一整個夏天。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/CLbo-hZJ7DMhVXD7dzOVGd"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.8,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 34 處（mso 樣式 14、Mso 類別 10、命名空間標籤 10）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「登革熱／衛教宣導」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 materials-video（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "embedded-media",
+        "severity": "warn",
+        "message": "內文有嵌入媒體 1 個（iframe）未轉入；影音請另建 media 內容"
+      },
+      {
+        "code": "target-type-differs",
+        "severity": "info",
+        "message": "對應的新站內容是 media.dengue-village-chief（media），草稿以 page 暫存，請比對後改建為 media"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/CLbo-hZJ7DMhVXD7dzOVGd",
+    "convertedAt": "2026-10-04T22:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "media.dengue-village-chief"
+    ]
+  }
+}

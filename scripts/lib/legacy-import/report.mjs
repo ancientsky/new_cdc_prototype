@@ -28,6 +28,8 @@ export function renderReportMd(report, patch) {
   if (patch?.summary && report.manifest) {
     const p = patch.summary;
     L.push(`| 移轉清單對應 | 對上 ${p.matched} / ${p.items} 筆；status 變化 ${report.migration.applied ? report.migration.statusChanges.length : `${p.statusChanges}（尚未套用）`}；note 更新 ${report.migration.applied ? report.migration.noteChanges : p.noteChanges}；仍待移轉 ${p.stillPending}；與清單判定不同 ${p.conflicts} |`);
+    if (p.derivedItems) L.push(`| 模板推導項（清單只寫例外） | ${p.derivedItems} 項，對上 ${p.derivedMatched}；只列在 migration-patch.json 的 derivedItems，不寫回清單 |`);
+    if (p.unmatchedPages) L.push(`| 清單沒有的舊頁 | ${p.unmatchedPages}（migration-patch.json 的 unmatchedPages 有建議的 pending 項目） |`);
   }
   L.push('');
   L.push('處理原則：一級內容（疾病頁、指引、手冊）一律人工確認後才入庫；近年新聞信心 ≥ 0.8 可核對後自動上線；久遠與歷史版本封存；草稿放在本目錄，**不會**寫進 `content/`。');

@@ -1,5 +1,50 @@
 // 與移轉清單（content/migration/{slug}.json）的對應：產生 migration-patch.json；--apply-migration 才寫回，且只改 status／target／note，不動 verified。
 import fs from 'node:fs';
+import path from 'node:path';
+
+/**
+ * 清單只寫例外（extends 模板）時，把模板（content/migration/_disease-template.json）依該疾病展開成推導項（治理引擎 R15 的同一套規則）：
+ * 人工清單已有的 key 與 omit 的 key 不展開；target 依新站既有內容決定（疾病頁區塊 → 疾病頁；related → 第一筆關聯該疾病的同型別內容），找不到就 pending。
+ * 推導項只參與比對與報告，不寫回清單。
+ */
+export function expandTemplateItems({ manifest, contentDir, index, diseaseById }) {
+  if (!manifest || manifest.scope?.kind !== 'disease' || manifest.extends === 'none') return [];
+  const diseaseId = manifest.scope.disease;
+  const dm = diseaseById?.get(diseaseId);
+  if (!dm) return [];
+  const tplId = manifest.extends ?? 'migration-template.disease';
+  const dir = path.join(contentDir, 'migration');
+  if (!fs.existsSync(dir)) return [];
+  let tpl = null;
+  for (const f of fs.readdirSync(dir).filter((x) => x.endsWith('.json'))) {
+    try { const j = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')); if (j.type === 'migration-template' && j.id === tplId) { tpl = j; break; } } catch { /* 略過壞檔 */ }
+  }
+  if (!tpl) return [];
+  const manual = new Set((manifest.items ?? []).map((i) => i.key));
+  const omit = new Set(manifest.omit ?? []);
+  const page = index.byId.get(diseaseId);
+  const hasPage = page?.type === 'disease' && page.status === 'published';
+  const related = (type, pred = () => true) => [...index.byId.entries()].filter(([, v]) => v.type === type && (v.diseases ?? []).includes(diseaseId) && pred(v)).map(([id]) => id).sort();
+  const out = [];
+  for (const t of tpl.items ?? []) {
+    if (manual.has(t.key) || omit.has(t.key)) continue;
+    const m = t.mapTo ?? {};
+    let status = 'pending';
+    let target = null;
+    if (hasPage) {
+      if (m.kind === 'disease-page' || m.kind === 'disease-block' || m.kind === 'master-field' || (m.kind === 'related' && m.into === 'disease-page')) { status = m.kind === 'disease-page' ? 'migrated' : 'merged'; target = diseaseId; }
+      else if (m.kind === 'related' && m.type) {
+        const hits = related(m.type, (v) => (!m.docType || v.docType === m.docType) && (!m.pubType || v.pubType === m.pubType));
+        if (hits.length) { status = 'migrated'; target = hits[0]; }
+      }
+    }
+    out.push({
+      key: t.key, oldTitle: t.oldTitle, oldPath: `${dm.name}／${t.oldPath ?? t.oldTitle}`, oldUrl: t.oldUrlPattern, oldType: t.oldType,
+      verified: false, derived: true, status, target, mapTo: t.mapTo ?? null, templateId: tpl.id,
+    });
+  }
+  return out;
+}
 
 export const ACTION_LABEL = {
   'manual-review': '人工檢視（信心低於門檻）',
@@ -16,23 +61,27 @@ const klass = (s) => (s === 'migrated' || s === 'merged' ? 'done' : s);
 const NOTE_RE = /\s*【匯入[^】]*】.*$/s;
 export const ALLOWED_KEYS = new Set(['status', 'target', 'note']);
 
-export function buildPatch({ manifest, prs, index, exportedAt, slug }) {
+export function buildPatch({ manifest, prs, index, exportedAt, slug, derivedItems = [] }) {
   const patch = {
     format: 'cdc-legacy-migration-patch/1', manifest: manifest?.data.id ?? null, batch: slug, exportedAt, applied: null,
     rule: '只改 status／target／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。',
-    items: [], missingPages: [], unmatchedPages: [], conflicts: [],
+    items: [], missingPages: [], unmatchedPages: [], conflicts: [], derivedItems: [],
   };
   if (!manifest) { patch.summary = { items: 0, matched: 0, missingPages: 0, unmatchedPages: prs.length, agree: 0, conflicts: 0, statusChanges: 0, noteChanges: 0 }; patch.unmatchedPages = prs.map((p) => suggestItem(p)); return patch; }
   for (const it of manifest.data.items) {
-    const pr = prs.find((p) => p.manifestKey === it.key);
+    const pr = prs.find((p) => p.manifestKey === it.key && !p.manifestDerived);
     if (!pr) { patch.missingPages.push({ key: it.key, oldTitle: it.oldTitle, oldUrl: it.oldUrl, status: it.status }); continue; }
     const outs = pr.outputs.filter((o) => o.role !== 'duplicate');
     const dupOf = pr.outputs.filter((o) => o.role === 'duplicate').map((o) => o.id);
     const existOut = outs.find((o) => index.byId.has(o.id));
     const dest = pr.targetExists || !!existOut;
+    // 對到的文件已有較新版次（同 family、effectiveAt 較晚）⇒ 舊版，建議封存
+    const tgt = index.byId.get(it.target ?? existOut?.id ?? '');
+    const tgtId = it.target ?? existOut?.id ?? '';
+    const superseded = !!(tgt?.family && [...index.byId.entries()].some(([vid, v]) => v.family === tgt.family && vid !== tgtId && String(v.effectiveAt ?? '') > String(tgt.effectiveAt ?? '')));
     let proposed;
     if (pr.flags.drop) proposed = 'dropped';
-    else if (pr.flags.historical && dest) proposed = 'archived';
+    else if ((pr.flags.historical || superseded) && dest) proposed = 'archived';
     else if (dest) proposed = pr.kind === 'disease-block' ? 'merged' : 'migrated';
     else proposed = 'pending';
     const proposedTarget = it.target ?? (dest ? existOut?.id ?? null : null);
@@ -51,8 +100,15 @@ export function buildPatch({ manifest, prs, index, exportedAt, slug }) {
     if (!entry.agree && !statusChange) patch.conflicts.push({ key: it.key, current: it.status, suggestion: proposed, reason: conflictReason(it, pr, proposed) });
     patch.items.push(entry);
   }
+  // 模板推導項：只報告，不寫回（清單本來就沒有這些列；要改就改模板或在人工清單加例外）
+  for (const it of derivedItems) {
+    const pr = prs.find((p) => p.manifestKey === it.key && p.manifestDerived);
+    const outs = pr ? pr.outputs.filter((o) => o.role !== 'duplicate') : [];
+    patch.derivedItems.push({ key: it.key, oldTitle: it.oldTitle, oldUrl: it.oldUrl, template: { status: it.status, target: it.target ?? null }, page: pr?.key ?? null, draftIds: outs.map((o) => o.id), confidence: pr?.confidence ?? null, existing: pr?.existing ?? null, matched: !!pr });
+  }
   patch.unmatchedPages = prs.filter((p) => !p.manifestKey).map(suggestItem);
   patch.summary = {
+    derivedItems: derivedItems.length, derivedMatched: patch.derivedItems.filter((d) => d.matched).length,
     items: manifest.data.items.length, matched: patch.items.length, missingPages: patch.missingPages.length, unmatchedPages: patch.unmatchedPages.length,
     agree: patch.items.filter((i) => i.agree).length, conflicts: patch.conflicts.length,
     statusChanges: patch.items.filter((i) => i.change.status).length, pendingToMigrated: patch.items.filter((i) => i.change.status && i.proposed.status === 'migrated').length,

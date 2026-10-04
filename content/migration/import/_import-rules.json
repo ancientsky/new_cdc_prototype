@@ -1,7 +1,7 @@
 {
   "id": "import-rules.legacy",
   "type": "import-rules",
-  "version": 1,
+  "version": 2,
   "title": "舊站匯出批次轉換規則（scripts/import-legacy.mjs 讀取）",
   "summary": "把舊站 CMS 匯出（每頁 .html＋.json 側檔）對應成新站內容草稿的規則：URL 模式→型別與目錄、類別→權責單位、疾病別名→疾病 id、標題關鍵字→疾病頁區塊、Bulletin typeid→newsType、信心計算權重與人工檢視門檻。規則是資料不是程式；正式批次先改這個檔再跑。",
   "owner": "unit.it",
@@ -52,14 +52,20 @@
     { "match": "結核病／防治政策", "owner": "unit.chronic-infectious" },
     { "match": "結核病／外籍人士健檢", "owner": "unit.chronic-infectious" },
     { "match": "結核病／研究成果", "owner": "unit.chronic-infectious" },
-    { "match": "結核病／最新消息", "owner": "unit.chronic-infectious" }
+    { "match": "結核病／最新消息", "owner": "unit.chronic-infectious" },
+    { "_comment": "以下不綁疾病：任何欄目樹的檢驗／統計／通報子類別都歸同一單位；其他子類別由 ownerFallbackToDisease 依疾病主檔的 owner 決定", "match": "／檢驗", "owner": "unit.lab" },
+    { "match": "／統計資料", "owner": "unit.epidemic-intelligence" },
+    { "match": "／統計", "owner": "unit.epidemic-intelligence" },
+    { "match": "／通報", "owner": "unit.epidemic-intelligence" }
   ],
   "defaultOwner": "unit.oasis",
-  "ownerFallbackToDisease": false,
+  "ownerFallbackToDisease": true,
 
   "diseases": [
-    { "id": "disease.tuberculosis", "short": "tb", "aliases": ["結核病", "結核", "肺結核", "潛伏結核感染", "LTBI", "TB"] },
-    { "id": "disease.mdr-tb", "short": "mdr", "aliases": ["多重抗藥性結核病", "抗藥性結核病", "抗藥性結核", "MDR-TB"] }
+    { "_comment": "疾病候選以 content/master/diseases.json 全部疾病為底；這裡只補主檔沒有的舊站寫法與草稿 id 用的短碼（沒寫 short 就用主檔 id 去掉 disease.）", "id": "disease.tuberculosis", "short": "tb", "aliases": ["結核病", "結核", "肺結核", "潛伏結核感染", "LTBI", "TB"] },
+    { "id": "disease.mdr-tb", "short": "mdr", "aliases": ["多重抗藥性結核病", "抗藥性結核病", "抗藥性結核", "MDR-TB"] },
+    { "id": "disease.dengue", "short": "dengue", "aliases": ["登革", "登革病毒", "DENV", "骨痛熱"] },
+    { "id": "disease.chikungunya", "short": "chik", "aliases": ["屈公病毒", "CHIKV"] }
   ],
 
   "blockKeywords": [
