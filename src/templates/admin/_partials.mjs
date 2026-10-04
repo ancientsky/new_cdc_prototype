@@ -48,6 +48,7 @@ export const NAV = [
   { key: 'media', href: '/admin/media/', label: '影音', count: 'media' },
   { key: 'links', href: '/admin/links/', label: '連結', count: 'links' },
   { key: 'migration', href: '/admin/migration/', label: '移轉進度', count: 'migration' },
+  { key: 'import', href: '/admin/import/', label: '舊站匯入' },
   { key: 'glossary', href: '/admin/glossary/', label: '詞彙主檔' },
   { key: 'situation', href: '/admin/situation/', label: '態勢發布' },
   { key: 'todos', href: '/admin/todos/', label: '連動待辦', count: 'todos' },

@@ -40,7 +40,7 @@
 - **內容型別（16 種）**：疾病、Q&A、新聞稿／通函／澄清、文件（版本鏈）、疫苗、資料集、Banner、一般頁，加上第二輪新增的**影音、專區、申請服務、出版品、檢驗項目、研究計畫**，以及第七輪獨立出的**人才招募（`job`）、採購公告（`tender`）**。
 - **民眾端**：一句話提問、六任務、疫情態勢、疾病與疫苗、旅遊、謠言查證、影音庫、專區、申請專區、公告、署長信箱。
 - **專業端**：版本異動對照、檢驗專區、通報專區（時限表自動產生）、研究計畫、出版品、訂閱。
-- **後台**：上架預處理（十五種型別）、複核、審閱到期、資料目錄（含影音、專區、申請、出版品、檢驗、研究）、**公告管理、影音管理、外部連結健康**、連動待辦（含影音過時、無逐字稿、連結失效、檢驗不一致）、態勢發布、AI 開關、評估、儀表板。
+- **後台**：上架預處理（十五種型別，含發布車道徽章、排程與緊急發布、模擬送出）、複核、審閱到期、資料目錄（含影音、專區、申請、出版品、檢驗、研究）、**公告管理、影音管理、外部連結健康**、連動待辦（含影音過時、無逐字稿、連結失效、檢驗不一致）、態勢發布、AI 開關、評估、儀表板。
 - **出國與入境（第四輪）**：以目的地為主：231 個國家／地區各有目的地頁（針對性等級、持續時間、長期建議標籤、旅程三階段建議由疾病主檔規則生成、該國近 30 天疫情資訊）；`/travel/` 依序為查目的地、近 30 天變化、世界地圖（三級三色、點國家進頁）、全球背景提醒、針對性等級表；API 新增 `/v1/country-changes.json`、`/v1/country-background.json`。
 - **新增的自動化**：公告截止自動標示並退出首頁；影片製作日早於正本現行版生效日自動標過時；逐字稿參與反向稽核；外部連結每日 `npm run fetch -- --check-links` 檢查，失效自動變待辦；通報時限表由主檔產生。
 
@@ -52,7 +52,7 @@
 - **新擺法、新要求**：結核病疾病頁加上專區導覽（民眾／專業各一套），指引與手冊走文件版本鏈，另有 Q&A、專區、補助與潛伏結核感染治療服務；頁首治理列有「本頁取代舊網站 N 個頁面」，展開看每筆舊網址與移轉後新增的治理要求。
 - **舊網址不 404**：建置自動輸出 `v1/redirects.json`、`v1/legacy-map.json`，以及三種伺服器轉址檔 `redirects/nginx.map`、`redirects/web.config.rewritemap.xml`、`redirects/_redirects`；404 頁自動帶往新頁，`/legacy/` 可貼舊網址查新頁。靜態主機的 404 頁只是示範與備援，**正式站必須由伺服器回 301**。
 - **上線後監測**：`node scripts/analyze-404-log.mjs access.log --map dist/v1/legacy-map.json --migration content/migration` 把 404 log 分成「可直接 301」「待補對照」「真的不存在（建議 410）」三類，待補對照附可貼進清單的草稿。
-- **規劃回補**：整理了 36 項「規劃文件沒寫到、原型做了」的作法，見 [docs/plan-supplement.md](docs/plan-supplement.md)（第 29–36 項為後三輪新增）；完整移轉與轉址手冊見 [docs/migration-playbook.md](docs/migration-playbook.md)；同事操作步驟見 [docs/guide-staff.md](docs/guide-staff.md) 第 15 節。
+- **規劃回補**：整理了 39 項「規劃文件沒寫到、原型做了」的作法，見 [docs/plan-supplement.md](docs/plan-supplement.md)（第 29–39 項為後四輪新增）；完整移轉與轉址手冊見 [docs/migration-playbook.md](docs/migration-playbook.md)；同事操作步驟見 [docs/guide-staff.md](docs/guide-staff.md) 第 15 節。
 
 > 限制：開發環境連不到 `www.cdc.gov.tw`，結核病專區的舊頁清單依規劃文件的 URL 模式重建，每筆標 `verified: false`，等權責單位確認。
 
@@ -94,6 +94,23 @@
 - **文件**：[docs/assets-policy.md](docs/assets-policy.md)（新）；[docs/guide-staff.md](docs/guide-staff.md) 第 2 節重寫為完整上架 SOP（三種編輯方式、附件與圖片、上架包、常見錯誤）；[docs/governance-model.md](docs/governance-model.md) 新增規則 22–24 與共同欄位 `assets`；[docs/plan-supplement.md](docs/plan-supplement.md) 新增第 35–36 項；ARCHITECTURE §16。
 
 > 限制：原型的建置檢查不做**病毒掃描**與**個資偵測**，PDF 文字層只有簡易偵測（宣告 `machineReadable: true` 卻偵測不到時警告；標籤與閱讀順序無法判斷，`machineReadable` 是承辦人聲明，由複核者抽查）；這些列為正式站待辦，見 [docs/assets-policy.md](docs/assets-policy.md) 第 10 節。範例檔案皆為本輪由 `scripts/gen-sample-assets.mjs` 產生的示意檔。
+
+## 第九輪：發布車道與自動合併、預覽網址、預定與緊急發布、舊站匯出批次轉換
+
+目標：承辦人感受到的流程**跟舊後台一樣簡單**（登入 → 選型別 → 填標題 → 貼內文 → 拖附件 → 送出，一樣 6 步），治理在背後自動發生；並示範舊站匯出一鍵轉成內容草稿。原型沒有後端，所以後台的「送出」是**模擬**（產生上架包 → 開 PR 的時間軸展示），**但 PR 之後的一切在 GitHub Actions 上真的會跑**。
+
+- **三條發布車道**（`content/governance/lanes.json`，由系統依型別判定）：**快車道**（新聞稿、通函、澄清、職缺、採購、Banner）CI 通過就自動合併，約 3 分鐘上線，公關室 24 小時內複核；**一般車道**（疾病、疫苗、文件、Q&A、專區…）CI 通過還要 1 位審核人核准（疾病與疫苗為公關室＋OASIS），SLA 2 個工作天；**緊急發布**（疫情態勢，以及標了 `urgent` 的新聞稿／通函／澄清）10 分鐘內上線。一個 PR 含多種內容時取最嚴格的車道。**CI 是第一位審核者**；多語不擋中文。
+- **後台 `/admin/publish/`**：型別一選就顯示**車道徽章**與一句說明；新增「**排程發布**」（`publishAt`，臺北時間）與「**緊急發布**」（`urgent`，只對新聞稿／通函／澄清顯示）；預檢加「urgent 只能用於允許型別」「`publishAt` 必須晚於現在」；預處理結果最下面「**模擬送出**」展開時間軸：建立分支 → 開 PR → CI 檢查（schema、治理規則、評估集、檔案資產、連結）→ 車道判定 → 自動合併／等待審核（列審核人與 SLA）→ 部署 → 預覽網址，每步附「正式環境由系統代做」。模擬送出**不呼叫任何 API**。
+
+  ![發布車道與模擬送出](docs/screenshots/admin-lanes.png)
+
+- **PR 預覽網址**：每個 PR 有專屬預覽 `https://ancientsky.github.io/new_cdc_prototype/preview/pr-{N}/`（`previews` 分支，主站部署時複製進 `dist/preview/`），PR 關閉自動清除。**預覽目錄在 GitHub Pages 上是公開的**，只能示範，正式環境必須放內網或加存取控制。
+- **排程發布與上線後複核**：`publishAt` 未到點的內容不渲染、不進索引、sitemap、API、RSS、`llms.txt`（以真實時間判斷，不受 `BUILD_TODAY` 影響）；主站改為**每 2 小時重建**，到點後最晚 2 小時內上線。快車道與緊急發布的內容上線後，治理引擎自動開 `post-publish-review` 待辦（公關室，24 小時內，逾期升為高優先）。
+- **工作流程**：`content-pr.yml`（檢查、車道判定、預覽、PR 留言與標籤、自動合併）、`preview-cleanup.yml`、`lane-sla.yml`（逾期加 `sla:breach`）、`pages.yml`（每 2 小時）；`.github/CODEOWNERS` 以註解標示單位對應。`node scripts/lane.mjs <變更檔案…>` 可在本機試車道判定。
+- **舊站匯出批次轉換**：`node scripts/import-legacy.mjs <匯出目錄> --out <輸出目錄>` 讀舊站匯出（每頁 `.html`＋`.json` 側檔），依規則檔 `content/migration/import/_import-rules.json` 轉成內容**草稿**（`status: review`、信心 0–1、問題清單）、搬附件並宣告 `assets`、輸出批次報告與移轉清單更新建議；信心 < 0.6 一定人工檢視；後台 `/admin/import/` 看報告。第一批實測是結核病 40 個舊頁（**模擬匯出**，整合者補實測數字）。
+- **文件**：[docs/publishing-lanes.md](docs/publishing-lanes.md)（**建議書**，給主管與各單位：問題、原則、車道表、時程、預覽、預定與緊急、複核、權限、SLA、試行計畫、按鍵數對照、風險）；[docs/legacy-import.md](docs/legacy-import.md)（匯出格式、規則檔、信心分級、三級處理、結核病首批）；[docs/guide-staff.md](docs/guide-staff.md) 第 2.8、2.9 節與第 15.14 節；[docs/governance-model.md](docs/governance-model.md) 新增規則 25–27 與欄位 `publishAt`、`urgent`、`postPublishReview`、`conversion`；[docs/plan-supplement.md](docs/plan-supplement.md) 新增第 37–39 項；[docs/deploy.md](docs/deploy.md) 補工作流程與注意事項；ARCHITECTURE §17。
+
+> 限制：(1) 後台的「送出」是**展示**，原型不能代承辦人開 PR，交件仍是下載 ZIP；(2) GitHub 工作流程**無法在本機驗證**，是否如預期運作以開一個真實測試 PR 的結果為準（見 [docs/publishing-lanes.md](docs/publishing-lanes.md) 附錄 B）；(3) 排程發布受每 2 小時重建限制，延遲最多 2 小時；(4) 開發環境連不到舊站，結核病首批用的是**依既有內容反推的模擬匯出**，真實匯出的版型與品質可能不同，規則要用真實樣本校準。
 
 ## 快速開始
 
@@ -139,6 +156,10 @@ npm run dev       # 建置並啟動預覽 http://localhost:4173/new_cdc_prototyp
 - 檔案資產宣告與建置檢查（規則 22）：宣告的檔案不存在、`sha256`／`bytes` 不符、超過大小、格式或檔名不合法、SVG 含腳本、內文引用了未宣告的 `/files/` → 建置失敗；`content/assets/{id}/` 有檔卻未宣告 → 孤兒檔警告與 `asset-orphan` 待辦
 - 圖片 alt 與授權是建置閘門（規則 23）：圖片缺 alt 或 license → 建置失敗；非本署素材缺來源 → `image-license-missing` 待辦
 - PDF 沒有文字層又沒附可及性替代版（規則 24）→ 待辦 `attachment-no-accessible-version`
+- 發布車道（規則 25）：內容依型別由系統判定車道（快車道、一般車道、緊急發布），CI 檢查全過才可能合併；快車道與緊急發布自動合併、一般車道需 1 位核准；一個 PR 含多種內容取最嚴格；`urgent` 用在不允許的型別 → schema 驗證失敗
+- 排程發布（規則 26）：`publishAt` 未到點 → 不渲染、不進索引／sitemap／API／RSS／`llms.txt`，狀態「排程中」；到點後下一次建置（每 2 小時）自動上線
+- 上線後複核（規則 26）：快車道與緊急發布的內容上線後，自動開 `post-publish-review` 待辦給公關室，期限上線後 24 小時，逾期升為高優先；PR 逾 SLA 由 CI 加 `sla:breach` 標籤並留言
+- 舊站匯出轉換草稿（規則 27）：信心 < 0.6 → 建議人工檢視；草稿一律 `status: review`、不直接進 `content/`；`--apply-migration` 不動 `verified`
 - AI 暫停開關 → 全站橫幅，答案頁退回傳統列表
 - KPI 與季度 AI 透明報告每次建置重算
 - 評估集閘門：版本題只要錯一題，建置失敗
@@ -189,8 +210,10 @@ docs/                使用說明與治理文件
 | [docs/deploy.md](docs/deploy.md) | 部署與維運、新增內容型別、改 schema |
 | [docs/roadmap-mapping.md](docs/roadmap-mapping.md) | 原型功能與三階段路線圖對照 |
 | [docs/migration-playbook.md](docs/migration-playbook.md) | 舊站→新站內容移轉與網址轉址手冊：301／410 策略、搜尋引擎、舊站保留期、切換日 checklist、404 log 監測、常見錯誤、結核病示範 |
-| [docs/plan-supplement.md](docs/plan-supplement.md) | 規劃文件回補：原型做了、規劃沒寫到的 36 項作法（做法、為何需要、對應規劃章節、原型位置、正式上線還缺什麼） |
+| [docs/plan-supplement.md](docs/plan-supplement.md) | 規劃文件回補：原型做了、規劃沒寫到的 39 項作法（做法、為何需要、對應規劃章節、原型位置、正式上線還缺什麼） |
 | [docs/assets-policy.md](docs/assets-policy.md) | 檔案資產政策：附件、圖片、資料檔放哪裡（`content/assets/{id}/` → `/files/{id}/`）、命名與正規化、格式與大小、PDF 可及性（文字層、標籤、`.md` 替代版、掃描檔）、圖片 alt／來源／授權、資料檔與 CKAN、版本與保存、刪除與下架、病毒掃描與個資、與 `/pending/` 的關係、同事檢查清單 |
+| [docs/publishing-lanes.md](docs/publishing-lanes.md) | **發布車道建議書**：舊後台直接上架 vs 新流程的問題、設計原則（流程看不見、CI 當審核者、分車道、多語不擋中文）、車道表（型別、自動合併、審核人、SLA、上線後複核）、送出到上線 3 分鐘的拆解、PR 預覽網址、預定與緊急發布、上線後複核、CODEOWNERS 與權限、SLA 逾期處理、試行計畫（兩單位、兩個月）、按鍵數對照表、風險與對策、GitHub 工作流程說明與驗證結果 |
+| [docs/legacy-import.md](docs/legacy-import.md) | 舊站匯出批次轉換：匯出格式規格（側檔欄位）、規則檔怎麼寫、信心分級與人工檢視原則、三級處理（現行一級內容人工確認／近年新聞自動上線／久遠封存）、PDF 不整批轉、報告怎麼看、結核病首批結果、正式批次排程建議 |
 | [docs/careers-privacy.md](docs/careers-privacy.md) | 人才招募個資處理原則：報名資料不進 repo、模擬報名只存瀏覽器、正式報名在站外或後端、只公布報名編號與遮罩姓名、保存與下架、查詢與刪除、個資法對應與告知事項範本 |
 
 ## 貢獻方式

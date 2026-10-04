@@ -1,0 +1,26 @@
+{
+  "url": "https://www.cdc.gov.tw/Category/List/IAhbEkxy103_prlTA55Skx",
+  "title": "結核病教育訓練教材（投影片）",
+  "category": "結核病／教育訓練",
+  "publishedAt": "2023-08-10",
+  "updatedAt": "2024-11-12",
+  "breadcrumbs": [
+    "首頁",
+    "傳染病與防疫專題",
+    "結核病",
+    "教育訓練"
+  ],
+  "tab": "training",
+  "attachments": [
+    {
+      "url": "https://www.cdc.gov.tw/File/Get/MjCC3zwFUZo5fJwpd3iwDV",
+      "label": "第一單元：結核病診斷與通報（PDF）",
+      "file": "tb-training-part1.pdf"
+    },
+    {
+      "url": "https://www.cdc.gov.tw/File/Get/Jd7gAsN3MLIff2rM3nGpQd",
+      "label": "第二單元：都治與接觸者檢查（PDF）",
+      "file": "tb-training-part2.pdf"
+    }
+  ]
+}

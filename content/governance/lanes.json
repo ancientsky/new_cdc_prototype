@@ -1,0 +1,53 @@
+{
+  "version": "v1",
+  "note": "發布車道（ARCHITECTURE 17.1）。由變更檔案推出車道與審核需求（scripts/lane.mjs，多檔取最嚴格：standard ＞ fast ＞ emergency）；CI（.github/workflows/content-pr.yml）依此決定自動合併或等待審核。一級內容（site.config.tier1Types）走一般車道時，審核人改用 tier1Reviewers。",
+  "lanes": {
+    "emergency": {
+      "label": "緊急發布",
+      "description": "疫情態勢與標記 urgent 的新聞稿／通函／澄清：檢查通過即上線，公關室 24 小時內上線後複核",
+      "types": ["situation"],
+      "alsoWhen": { "urgent": true },
+      "autoMerge": true,
+      "requiredApprovals": 0,
+      "reviewers": [],
+      "postPublishReviewHours": 24,
+      "postPublishReviewer": "unit.pr",
+      "slaMinutes": 10
+    },
+    "fast": {
+      "label": "快車道",
+      "description": "新聞稿、通函、澄清、職缺、採購、宣導 Banner：檢查通過即自動合併，送出後約 3 分鐘上線，公關室 24 小時內複核",
+      "types": ["news", "letter", "clarification", "job", "tender", "banner"],
+      "autoMerge": true,
+      "requiredApprovals": 0,
+      "reviewers": [],
+      "postPublishReviewHours": 24,
+      "postPublishReviewer": "unit.pr",
+      "slaMinutes": 180
+    },
+    "standard": {
+      "label": "一般車道",
+      "description": "疾病、疫苗、文件、Q&A 等需人審的內容，以及所有程式／文件變更：檢查通過＋1 位核准才合併",
+      "types": ["disease", "vaccine", "document", "faq", "topic", "service", "page", "publication", "labtest", "research", "dataset", "media", "migration"],
+      "autoMerge": false,
+      "requiredApprovals": 1,
+      "reviewers": ["unit.pr"],
+      "tier1Reviewers": ["unit.pr", "unit.oasis"],
+      "slaWorkingDays": 2
+    }
+  },
+  "strictness": ["emergency", "fast", "standard"],
+  "rules": {
+    "translationsNeverBlock": true,
+    "machineTranslationAllowedFor": ["news", "faq", "topic", "service"],
+    "ciIsTheReviewer": true,
+    "urgentAllowedTypes": ["news", "letter", "clarification"],
+    "postPublishReviewSince": "2026-10-04",
+    "timezone": "Asia/Taipei"
+  },
+  "reviewerAccounts": {
+    "unit.pr": "ancientsky",
+    "unit.oasis": "ancientsky",
+    "default": "ancientsky"
+  }
+}

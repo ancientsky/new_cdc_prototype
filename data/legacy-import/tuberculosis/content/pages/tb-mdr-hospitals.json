@@ -1,0 +1,51 @@
+{
+  "id": "page.tb-mdr-hospitals",
+  "type": "page",
+  "title": "抗藥性結核病醫療照護團隊醫院名單",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2020-06-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis",
+    "disease.mdr-tb"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "抗藥性結核病醫療照護團隊（TMTC）醫院名單（示意名單，非正式公告）：",
+  "slug": "tb-mdr-hospitals",
+  "bodyMarkdown": "抗藥性結核病醫療照護團隊（TMTC）醫院名單（示意名單，非正式公告）：\n\n| 區域 | 醫院 | 聯絡窗口 |\n| --- | --- | --- |\n| 北區 | 示意醫院 A | 感染科 |\n| 示意醫院 B | 胸腔內科 |   |\n| 中區 | 示意醫院 C | 胸腔內科 |\n| 示意醫院 D | 感染科 |   |\n| 南區與東區 | 示意醫院 E | 胸腔內科 |",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/ListContent/KMmkJs7_fOvZYL0fDztyGW?uaid=gudmfQEkqWG4QWSZAdoP5Z"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.8,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 53 處（mso 樣式 19、Mso 類別 17、命名空間標籤 17）"
+      },
+      {
+        "code": "table-complex",
+        "severity": "warn",
+        "message": "表格複雜（合併儲存格 2 格）：Markdown 表格不支援合併儲存格，已攤平，請人工檢視"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/ListContent/KMmkJs7_fOvZYL0fDztyGW?uaid=gudmfQEkqWG4QWSZAdoP5Z",
+    "convertedAt": "2026-10-04T13:56:12.582Z"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "url": "https://www.cdc.gov.tw/Category/List/IR-4OsM3biF9t30fng00vq",
+  "title": "統計資料",
+  "category": "結核病／統計資料",
+  "publishedAt": "2018-03-01",
+  "updatedAt": "2026-09-20",
+  "breadcrumbs": [
+    "首頁",
+    "傳染病與防疫專題",
+    "結核病",
+    "統計資料"
+  ],
+  "tab": "statistics",
+  "attachments": [
+    {
+      "url": "https://www.cdc.gov.tw/File/Get/JLpEpQTEw47I2bdAtULjgC",
+      "label": "結核病歷年新案數（CSV，示意數字）",
+      "file": "tb-new-cases-by-year.csv"
+    }
+  ]
+}

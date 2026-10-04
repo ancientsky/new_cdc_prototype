@@ -653,6 +653,9 @@ export function buildExport(st) {
     keywords: st.keywords ?? [],
   };
   if (st.structured && Object.keys(st.structured).length) out.structured = st.structured;
+  // 第九輪：排程發布與緊急發布（§17.1）。publishAt 以臺北時間輸入，輸出帶 +08:00；urgent 只在 true 時寫出。
+  if (st.publishAt) out.publishAt = st.publishAt;
+  if (st.urgent === true) out.urgent = true;
   const ex = st.extra ?? {};
   const intOrNull = (v) => (v === '' || v == null || Number.isNaN(Number(v)) ? null : Math.trunc(Number(v)));
   const numOrStr = (v) => (v === '' || v == null ? null : /^\d+$/.test(String(v)) ? Number(v) : String(v));
@@ -1026,4 +1029,159 @@ export function svgSize(text) {
   const vb = /viewBox\s*=\s*["']\s*[-\d.]+[ ,]+[-\d.]+[ ,]+([\d.]+)[ ,]+([\d.]+)/i.exec(m);
   if ((!w || !h) && vb) { w = Math.round(Number(vb[1])); h = Math.round(Number(vb[2])); }
   return w && h ? { width: w, height: h } : {};
+}
+
+
+// ───────────────────────── 發布車道、排程與緊急發布、模擬送出（第九輪，ARCHITECTURE §17.1／17.4）─────────────────────────
+// 契約由 Z1 的 content/governance/lanes.json 與 scripts/lib/lanes.mjs 擁有；這裡是瀏覽器端的「呈現」：
+// 型別選定就顯示車道與一句說明、預檢 urgent／publishAt、並把送出之後 GitHub 上會發生的事畫成時間軸。
+// 全部是展示，不呼叫任何 API。純函式，Node 測試共用。lanes.json 不存在或欄位缺漏時用下列預設值（與 §17.1 相同）。
+
+/** 可標 urgent 的型別（§17.1：只有 news／letter／clarification）。 */
+export const URGENT_TYPES = ['news', 'letter', 'clarification'];
+export const LANE_DEFAULTS = {
+  lanes: {
+    emergency: { label: '緊急發布', types: ['situation'], alsoWhen: { urgent: true }, autoMerge: true, requiredApprovals: 0, postPublishReviewHours: 24, slaMinutes: 10 },
+    fast: { label: '快車道', types: ['news', 'letter', 'clarification', 'job', 'tender', 'banner'], autoMerge: true, requiredApprovals: 0, postPublishReviewHours: 24, slaMinutes: 180 },
+    standard: {
+      label: '一般車道',
+      types: ['disease', 'vaccine', 'document', 'faq', 'topic', 'service', 'page', 'publication', 'labtest', 'research', 'dataset', 'media', 'migration'],
+      autoMerge: false, requiredApprovals: 1, reviewers: ['unit.pr'], tier1Reviewers: ['unit.pr', 'unit.oasis'], slaWorkingDays: 2,
+    },
+  },
+  rules: { translationsNeverBlock: true, machineTranslationAllowedFor: ['news', 'faq', 'topic', 'service'], ciIsTheReviewer: true, urgentAllowedTypes: URGENT_TYPES },
+};
+export const LANE_ORDER = ['emergency', 'fast', 'standard'];
+/** 預覽網址格式（§17.2）。 */
+export const PREVIEW_BASE = 'https://ancientsky.github.io/new_cdc_prototype/preview';
+/** CI 會跑的檢查（content-pr.yml）。 */
+export const CI_CHECKS = [
+  ['schema', 'schema 與跨檔參照', '欄位、owner、basedOn、publishAt／urgent 格式'],
+  ['governance', '治理規則', 'npm test：逾期、版本鏈、白名單、反向稽核…'],
+  ['eval', '評估集', '版本題必須全對'],
+  ['assets', '檔案資產', '存在、sha256／bytes、格式與大小、圖片 alt 與授權'],
+  ['links', '連結', '站內連結與 /files/ 引用都存在'],
+];
+
+/** 讀進來的 lanes.json（可能是 undefined、缺欄位）合併預設；回傳 { lanes, rules }，保證三條車道都在。 */
+export function normalizeLanes(raw) {
+  const out = { lanes: {}, rules: { ...LANE_DEFAULTS.rules, ...(raw && typeof raw === 'object' ? raw.rules : {}) } };
+  for (const id of LANE_ORDER) {
+    const d = LANE_DEFAULTS.lanes[id];
+    const r = raw && typeof raw === 'object' && raw.lanes && typeof raw.lanes === 'object' ? raw.lanes[id] : null;
+    out.lanes[id] = r && typeof r === 'object' ? { ...d, ...r, types: Array.isArray(r.types) ? r.types : d.types } : { ...d };
+  }
+  return out;
+}
+/** 某型別可否標 urgent。 */
+export const urgentAllowed = (type, cfg = LANE_DEFAULTS) => (cfg?.rules?.urgentAllowedTypes ?? URGENT_TYPES).includes(schemaType(type));
+/** 型別（與是否 urgent）→ 車道。回傳 { id, ...lane }。找不到型別的一律走一般車道（最嚴）。 */
+export function laneOf(type, urgent = false, cfg = LANE_DEFAULTS) {
+  const c = cfg?.lanes ? cfg : normalizeLanes(cfg);
+  const t = schemaType(type);
+  if (urgent && urgentAllowed(t, c)) return { id: 'emergency', ...c.lanes.emergency };
+  for (const id of LANE_ORDER) if ((c.lanes[id].types ?? []).includes(t)) return { id, ...c.lanes[id] };
+  return { id: 'standard', ...c.lanes.standard };
+}
+/** 審核人 id 清單：一般車道的一級內容（疾病、疫苗…）用 tier1Reviewers。 */
+export function reviewersOf(lane, type) {
+  if (lane.id !== 'standard') return [];
+  return (TIER1.includes(schemaType(type)) ? lane.tier1Reviewers : lane.reviewers) ?? lane.reviewers ?? [];
+}
+const joinNames = (ids, names = {}) => ids.map((u) => names[u] ?? u).join('、') || '指定審核人';
+const shortUnit = (n) => String(n ?? '').replace(/（.*）$/, '');
+/** 車道一句說明（§17.4 的三句）。names：{unit id: 單位名}。 */
+export function laneSentence(lane, type, names = {}) {
+  const pr = shortUnit(names['unit.pr'] ?? '公關室');
+  if (lane.id === 'emergency') return `緊急發布：立即上線並通知複核（${pr} ${lane.postPublishReviewHours ?? 24} 小時內複核，目標 ${lane.slaMinutes ?? 10} 分鐘內上線）`;
+  if (lane.id === 'fast') return `快車道：送出後約 3 分鐘上線，${pr} ${lane.postPublishReviewHours ?? 24} 小時內複核`;
+  const rv = reviewersOf(lane, type).map((u) => shortUnit(names[u] ?? u));
+  const n = lane.requiredApprovals ?? 1;
+  return `一般車道：需 ${n} 位審核（${rv.join('、')}），SLA ${lane.slaWorkingDays ?? 2} 個工作天`;
+}
+
+/** datetime-local（「2026-10-05T09:00」，臺北時間）→ ISO 8601 帶 +08:00；空字串或格式不符回 ''。 */
+export function toPublishAtIso(local) {
+  const m = /^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2})(?::(\d{2}))?$/.exec(String(local ?? '').trim());
+  return m ? `${m[1]}T${m[2]}:${m[3] ?? '00'}+08:00` : '';
+}
+/** 排程時間點 → 毫秒（nan 代表無效）。接受 ISO（帶偏移）、純日期（視為臺北當天 00:00）。 */
+export function publishAtMs(v) {
+  const s = String(v ?? '').trim();
+  if (!s) return NaN;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return Date.parse(`${s}T00:00:00+08:00`);
+  if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?$/.test(s)) return Date.parse(toPublishAtIso(s));
+  return Date.parse(s);
+}
+/** 臺北時間顯示（YYYY-MM-DD HH:mm）。 */
+export function fmtTaipei(ms) {
+  if (!Number.isFinite(ms)) return '';
+  const d = new Date(ms + 8 * 3600e3);
+  const p = (n) => String(n).padStart(2, '0');
+  return `${d.getUTCFullYear()}-${p(d.getUTCMonth() + 1)}-${p(d.getUTCDate())} ${p(d.getUTCHours())}:${p(d.getUTCMinutes())}`;
+}
+/**
+ * 預檢：urgent 只能用於允許型別；publishAt 必須晚於現在（以真實現在時間判斷，與 BUILD_TODAY 無關）。
+ * 回傳 [{ level:'error'|'warn'|'info', code, title, message }]。
+ */
+export function laneChecks({ type, urgent = false, publishAt = '' } = {}, nowMs = Date.now(), cfg = LANE_DEFAULTS) {
+  const allowed = cfg?.rules?.urgentAllowedTypes ?? URGENT_TYPES;
+  const out = [];
+  if (urgent && !urgentAllowed(type, cfg)) out.push({ level: 'error', code: 'urgent-type', title: '緊急發布不能用於此型別', message: `「緊急發布」只能用於新聞稿、致醫界通函、澄清（${allowed.join('、')}）；其他型別請走一般車道，或改選允許的型別。` });
+  if (publishAt) {
+    const t = publishAtMs(publishAt);
+    if (!Number.isFinite(t)) out.push({ level: 'error', code: 'publish-at-format', title: '排程發布時間格式不正確', message: '請用日期時間欄位選擇（臺北時間），或留空表示合併後立即上線。' });
+    else if (t <= nowMs) out.push({ level: 'error', code: 'publish-at-past', title: '排程發布時間必須晚於現在', message: `你選的是 ${fmtTaipei(t)}（臺北時間），已經過了。要立即上線請清空這個欄位。` });
+    else if (urgent) out.push({ level: 'warn', code: 'urgent-and-scheduled', title: '緊急發布與排程發布擇一', message: '緊急發布的意思是立即上線；同時排程沒有意義。請取消其中一項。' });
+  }
+  return out;
+}
+
+/**
+ * 模擬送出時間軸（只是展示，不呼叫任何 API）。回傳 steps：
+ *   { key, title, at（相對時間字串）, status:'ok'|'wait'|'fail'|'skip', detail[], system:'正式環境由系統代做…', checks? }
+ * obj：exportObj() 的結果；opts：{ lanes, names, prNumber, miss:[CI 會擋下的項目], failures:{ schema:[], assets:[] }, nowMs }
+ */
+export function submitTimeline(obj, opts = {}) {
+  const cfg = opts.lanes?.lanes ? opts.lanes : normalizeLanes(opts.lanes);
+  const names = opts.names ?? {};
+  const n = opts.prNumber ?? 57;
+  const type = obj.type;
+  const urgent = obj.urgent === true;
+  const lane = laneOf(type, urgent, cfg);
+  const miss = opts.miss ?? [];
+  const failed = miss.length > 0;
+  const sys = '正式環境由系統代做，承辦人不用動手。';
+  const tl = opts.typeLabel ?? obj.type;
+  const slug = String(obj.id ?? 'new').replace(/[^a-z0-9.-]+/gi, '-');
+  const publishMs = publishAtMs(obj.publishAt);
+  const scheduled = Number.isFinite(publishMs) && publishMs > (opts.nowMs ?? Date.now());
+  const reviewers = reviewersOf(lane, type).map((u) => shortUnit(names[u] ?? u));
+  const previewUrl = `${PREVIEW_BASE}/pr-${n}/`;
+  const steps = [];
+  steps.push({ key: 'branch', title: '建立分支', at: 'T+0:05', status: 'ok', system: sys, detail: [`把上架包（${obj.assets?.length ? `${obj.assets.length + 1} 個檔案` : '1 個檔案'}）commit 到新分支 content/${slug}。`] });
+  steps.push({ key: 'pr', title: '開 Pull Request', at: 'T+0:10', status: 'ok', system: sys, detail: [`標題「content: ${obj.id ?? ''} ${obj.title ?? ''}」；PR 編號由 GitHub 指派（這裡以 #${n} 示意）。`, 'CI 一啟動就在 PR 上留言並加標籤 lane:fast、lane:standard 或 lane:emergency。'] });
+  const fails = opts.failures ?? {};
+  steps.push({
+    key: 'ci', title: 'CI 檢查', at: failed ? 'T+1:40（未通過）' : 'T+1:40', status: failed ? 'fail' : 'ok', system: sys,
+    detail: failed ? [`有 ${miss.length} 項沒過，PR 會停在這裡，不會合併也不會上線；修好再推一次，CI 自動重跑。`] : ['五項檢查全過，PR 標示綠燈。'],
+    checks: CI_CHECKS.map(([k, label, note]) => ({ key: k, label, note, ok: !(fails[k]?.length) })), issues: miss,
+  });
+  const skip = failed ? 'skip' : 'ok';
+  const laneFacts = lane.id === 'standard'
+    ? [`型別「${tl}」→ ${lane.label}：自動合併「否」，需 ${lane.requiredApprovals} 位核准（${reviewers.join('、')}），SLA ${lane.slaWorkingDays} 個工作天。`]
+    : [`型別「${tl}」${lane.id === 'emergency' && urgent ? '，且標了 urgent' : ''} → ${lane.label}：自動合併「是」，核准 0 位，上線後 ${lane.postPublishReviewHours} 小時內複核，SLA ${lane.slaMinutes} 分鐘。`];
+  steps.push({ key: 'lane', title: '車道判定', at: 'T+1:45', status: skip, lane: lane.id, system: sys, detail: [...laneFacts, `多語不擋中文：翻譯還沒審完的語言先不上線，不會卡住中文正本。`] });
+  if (lane.id === 'standard') {
+    steps.push({ key: 'merge', title: '等待審核', at: `最長 ${lane.slaWorkingDays} 個工作天`, status: failed ? 'skip' : 'wait', system: sys, detail: [`通知審核人：${reviewers.join('、')}（CODEOWNERS）。審核人看 PR 的內容 diff 與預覽網址，核准後才合併。`, 'CI 是第一位審核者：機器能判斷的都已經過了，人只看措辭與正確性。', `超過 SLA 沒人處理，系統會在 PR 留言並加 sla:breach 標籤。`] });
+  } else {
+    steps.push({ key: 'merge', title: '自動合併', at: 'T+1:50', status: skip, system: sys, detail: [`檢查全過，不需要人工核准，系統自動 squash 合併並刪除分支。`, `${lane.id === 'emergency' ? '緊急發布同時通知複核人。' : '上線後才複核：後台「連動待辦」出現 post-publish-review。'}`] });
+  }
+  const dep = [];
+  if (scheduled) dep.push(`合併後不會立刻出現：排程 ${fmtTaipei(publishMs)}（臺北時間）到點後，下一次建置（每 2 小時一次）才上線。到點前網站、索引、sitemap、API、RSS 都看不到，狀態標為「排程中」。`);
+  else dep.push(lane.id === 'standard' ? '核准並合併後，pages.yml 自動建置與部署，約 3 分鐘上線。' : '合併後 pages.yml 自動建置與部署，整段約 3 分鐘上線（T+3:20）。');
+  steps.push({ key: 'deploy', title: '部署', at: scheduled ? '到點後最晚約 2 小時內' : lane.id === 'standard' ? '核准後約 3 分鐘' : 'T+3:20', status: failed ? 'skip' : lane.id === 'standard' || scheduled ? 'wait' : 'ok', system: sys, detail: dep });
+  steps.push({ key: 'preview', title: '預覽網址', at: 'T+3:10 起可看', status: failed ? 'skip' : 'ok', system: sys, detail: [`格式：${PREVIEW_BASE}/pr-{N}/`, '預覽要等主站重新部署一次（開 PR 後約 3 分鐘）才打得開；審核人與你都用它檢查版面、連結、附件。PR 關閉後自動清除。'], previewUrl, previewN: n });
+  if (lane.id !== 'standard') steps.push({ key: 'review', title: '上線後複核', at: `上線後 ${lane.postPublishReviewHours} 小時內`, status: 'wait', system: sys, detail: [`${names['unit.pr'] ?? '公關室'}收到待辦 post-publish-review（逾期會升高優先度）；複核有問題可直接改或下架，改動仍走車道。`] });
+  return { lane, steps, scheduled, previewUrl };
 }

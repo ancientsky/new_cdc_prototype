@@ -1,6 +1,7 @@
 // /admin/ 治理儀表板（規劃 7.5 KPI、待辦、白名單、AI 狀態、態勢層延遲、各單位卡、季報匯出）
 import { html } from '../../../scripts/lib/render.mjs';
 import { migrationData } from './_migration.mjs';
+import { loadBatches } from './import.mjs';
 import { pageHead, dataScript, adminMeta, KIND_LABEL, KIND_ORDER, todoList, sitGov, byOwnerRows, kpiProgress, fmtNum, noticeRows, mediaRows, linkRows, linkCounts, jobRows, tenderRows } from './_partials.mjs';
 export { layout } from './_layout.mjs';
 
@@ -27,6 +28,9 @@ export function render(ctx) {
   const mTr = media.filter((m) => m.hasTranscript).length, mCur = media.filter((m) => m.basisCurrent).length;
   const lc = linkCounts(linkRows(site));
   const mg = migrationData(site);
+  const imports = loadBatches();
+  const impPages = imports.reduce((a, b) => a + b.report.summary.pages, 0), impReview = imports.reduce((a, b) => a + b.report.summary.needsReview, 0), impDrafts = imports.reduce((a, b) => a + b.report.summary.drafts, 0);
+  const impConf = impPages ? Math.round((imports.reduce((a, b) => a + b.report.summary.avgConfidence * b.report.summary.pages, 0) / impPages) * 100) / 100 : null;
   const jobs = jobRows(site), tenders = tenderRows(site);
   const jOpen = jobs.filter((j) => j.stage === 'open').length, jReview = jobs.filter((j) => ['closed', 'screening'].includes(j.stage)).length, jResult = jobs.filter((j) => j.stage === 'result' && !j.history).length, jAttn = jobs.filter((j) => j.attention).length;
   const tOpen = tenders.filter((x) => x.stage === 'open').length, tOpened = tenders.filter((x) => x.stage === 'opened').length, tAwarded = tenders.filter((x) => x.stage === 'awarded').length, tAttn = tenders.filter((x) => x.attention).length;
@@ -69,6 +73,9 @@ ${pageHead({ title: '治理儀表板', what: '署內治理的一頁總覽：品�
   <section class="adm-minicard ${tAttn ? 'adm-minicard--bad' : tenders.length ? 'adm-minicard--ok' : ''}" aria-labelledby="mc-t" id="dash-tenders"><h3 id="mc-t">採購公告 <a href="${url('/admin/tenders/', { noLang: true })}">標案與決標 →</a></h3>
     <dl><dt>招標中</dt><dd>${tOpen}</dd><dt>已開標未決標</dt><dd>${tOpened}</dd><dt>已決標</dt><dd>${tAwarded}</dd><dt>決標逾期</dt><dd class="${tAttn ? 'adm-red' : ''}">${tAttn}</dd></dl>
     <p>秘書室負責；共 ${tenders.length} 件。開標後 30 日仍無決標資訊會產生待辦。</p></section>
+  <section class="adm-minicard ${impReview ? 'adm-minicard--warn' : imports.length ? 'adm-minicard--ok' : ''}" aria-labelledby="mc-i" id="dash-import"><h3 id="mc-i">舊站匯入 <a href="${url('/admin/import/', { noLang: true })}">批次與草稿 →</a></h3>
+    ${imports.length ? html`<dl><dt>批次</dt><dd>${imports.length}</dd><dt>舊頁 → 草稿</dt><dd>${impPages} → ${impDrafts}</dd><dt>平均信心</dt><dd>${impConf}</dd><dt>需人工檢視</dt><dd class="${impReview ? 'adm-yellow' : ''}">${impReview}</dd></dl>
+    <p>舊站匯出一鍵轉成內容草稿；信心低於 0.6 的頁要人工檢視，草稿不會自動入庫。</p>` : html`<p>尚無匯入批次。執行 <code>node scripts/import-legacy.mjs</code> 後這裡顯示批次摘要。</p>`}</section>
 </div>
 
 <section class="adm-card" aria-labelledby="kpi-h"><h2 id="kpi-h">品質指標（規劃 7.5）</h2>

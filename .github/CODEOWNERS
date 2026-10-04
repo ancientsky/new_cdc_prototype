@@ -1,0 +1,77 @@
+# CODEOWNERS（ARCHITECTURE 17.2）
+#
+# 原型沒有 GitHub team，也不放真人帳號：每一行上方的註解寫「實際應對應的單位」，
+# 帳號一律用倉庫擁有者 @ancientsky 示範。正式環境把 @ancientsky 換成各單位的 team，
+# 例如 @taiwan-cdc/pr、@taiwan-cdc/oasis，再在分支保護開啟「Require review from Code Owners」。
+#
+# 審核要求由發布車道決定（content/governance/lanes.json、scripts/lane.mjs、.github/workflows/content-pr.yml）：
+#   快車道／緊急發布：CI 即審核者，檢查通過即自動合併，公關室 24 小時內上線後複核（不靠 CODEOWNERS 擋）。
+#   一般車道：需 1 位核准；一級內容（疾病、疫苗）由公關室＋OASIS 審。
+# 後面的規則優先（GitHub 取最後一條符合的）。
+
+# 預設：資訊室（平台與資安）
+* @ancientsky
+
+# ── 程式、建置與 CI：資訊室 ──
+# 資訊室
+/scripts/ @ancientsky
+# 資訊室
+/src/ @ancientsky
+# 資訊室（工作流程、CODEOWNERS 本身）
+/.github/ @ancientsky
+# 資訊室＋OASIS（schema 是內容契約）
+/schemas/ @ancientsky
+# OASIS（評估集）
+/eval/ @ancientsky
+# 資訊室（文件）
+/docs/ @ancientsky
+
+# ── 一級內容與正本：公關室＋OASIS ──
+# 公關室＋OASIS
+/content/diseases/ @ancientsky
+# 公關室＋OASIS
+/content/vaccines/ @ancientsky
+# 公關室＋OASIS（文件庫：指引、手冊、病例定義）
+/content/documents/ @ancientsky
+# 公關室＋OASIS（Q&A）
+/content/faq/ @ancientsky
+
+# ── 治理與主檔：資料治理委員會／OASIS ──
+# 資料治理委員會（白名單、AI 狀態、車道設定）
+/content/governance/ @ancientsky
+# OASIS（傳染病、疫苗、國家、詞彙、單位主檔）
+/content/master/ @ancientsky
+
+# ── 各單位內容 ──
+# 疫情中心（疫情態勢層：緊急發布車道）
+/content/situation/ @ancientsky
+# 公關室（新聞稿、通函：快車道）
+/content/news/ @ancientsky
+# 公關室（謠言澄清：快車道）
+/content/clarifications/ @ancientsky
+# 公關室（宣導 Banner：快車道）
+/content/banners/ @ancientsky
+# 公關室（影音宣導素材）
+/content/media/ @ancientsky
+# 人事室（人才招募：快車道）
+/content/jobs/ @ancientsky
+# 秘書室（採購公告：快車道）
+/content/tenders/ @ancientsky
+# 疫情中心（資料集）
+/content/datasets/ @ancientsky
+# 檢驗及疫苗研製中心（檢驗項目）
+/content/labtests/ @ancientsky
+# 企劃組（研究計畫）
+/content/research/ @ancientsky
+# 企劃組（出版品）
+/content/publications/ @ancientsky
+# 各權責單位（專區、申請服務、一般頁面；以內容 owner 為準）
+/content/topics/ @ancientsky
+/content/services/ @ancientsky
+/content/pages/ @ancientsky
+# 資訊室＋各疾病權責組（舊站移轉清單）
+/content/migration/ @ancientsky
+# 各權責單位（檔案資產，隨所屬內容）
+/content/assets/ @ancientsky
+# 疫情中心（官方資料快照：排程回寫）
+/data/snapshots/ @ancientsky

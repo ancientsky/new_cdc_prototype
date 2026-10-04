@@ -1,0 +1,52 @@
+{
+  "id": "faq.tb-treatment-cost",
+  "type": "faq",
+  "title": "結核病治療要花錢嗎？",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2020-03-24",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "結核病個案的診斷與治療費用由健保給付，就醫的部分負擔由疾管署支應，病人看診、拿藥原則上不需自付部分負擔；都治關懷員送藥服務、接觸者檢查與潛伏結核感染治療也都由公費支應。",
+  "question": "結核病治療要花錢嗎？",
+  "answerMarkdown": "結核病個案的診斷與治療費用由健保給付，就醫的部分負擔由疾管署支應，病人看診、拿藥原則上不需自付部分負擔；都治關懷員送藥服務、接觸者檢查與潛伏結核感染治療也都由公費支應。\n\n多重抗藥性結核病個案由抗藥性結核病醫療照護體系收治，治療費用由公費支應。依《傳染病防治法》經衛生主管機關施行隔離治療者，隔離治療期間費用由政府負擔。申請方式與條件請見「結核病診治費用補助與隔離治療」。",
+  "basedOn": [
+    "disease.tuberculosis"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/ZW0TrgKarQJWRWZrMIWzeq"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 79 處（mso 樣式 45、Mso 類別 20、命名空間標籤 17）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/ZW0TrgKarQJWRWZrMIWzeq",
+    "convertedAt": "2026-10-04T13:56:12.582Z",
+    "existing": true,
+    "compareWith": [
+      "faq.tb-treatment-cost"
+    ]
+  }
+}

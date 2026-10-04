@@ -1,0 +1,55 @@
+{
+  "id": "page.tb-event-2019",
+  "type": "page",
+  "title": "2019 世界結核病日健走活動報名",
+  "owner": "unit.oasis",
+  "publishedAt": "2019-03-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "2019 世界結核病日健走活動報名即日起開始。 日期：2019 年 3 月 24 日 報名截止：2019 年 3 月 15 日",
+  "slug": "tb-event-2019",
+  "bodyMarkdown": "2019 世界結核病日健走活動報名即日起開始。\n\n- 日期：2019 年 3 月 24 日\n- 報名截止：2019 年 3 月 15 日",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/Page/QQKO4J2F-vQx1ycSsRZ0nI"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.8,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 11 處（mso 樣式 9、Mso 類別 3、命名空間標籤 1）"
+      },
+      {
+        "code": "unmapped-category",
+        "severity": "warn",
+        "message": "未對應類別「結核病／活動訊息」：規則檔 categoryOwners 沒有對應的權責單位，暫填 unit.oasis，請補規則或人工指定"
+      },
+      {
+        "code": "old-content",
+        "severity": "info",
+        "message": "久遠且已結束的活動訊息，建議不轉換（回 410）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/Page/QQKO4J2F-vQx1ycSsRZ0nI",
+    "convertedAt": "2026-10-04T13:56:12.582Z"
+  }
+}

@@ -3,6 +3,12 @@
 // 用法：node scripts/build.mjs [--check] [--today=YYYY-MM-DD] [--fix-assets]
 //   --fix-assets：先把 content/assets/{id}/ 實際檔案的 bytes／sha256／mime／width／height 補寫回內容 JSON（只改 assets 欄位），再照常驗證與建置
 //                 （npm run build -- --fix-assets；只想補寫不輸出：node scripts/build.mjs --check --fix-assets）
+// 第九輪（ARCHITECTURE 17.1／17.2）：
+//   - 排程發布：publishAt 以真實現在時間判斷（BUILD_NOW=ISO 可覆寫，測試／重現用；BUILD_TODAY 只影響治理日期）。
+//     排程中內容不渲染、不進答案索引、sitemap、API、RSS、llms.txt，也不複製其檔案資產（一律經 scripts/lib/lanes.mjs 的 publicView／isPublic）。
+//     PREVIEW_SCHEDULED=1（只給 PR 預覽用）：「現在」推到最晚 publishAt 之後，預覽裡看得到排程中內容。
+//   - PR 預覽：PREVIEWS_DIR（pages.yml 把 previews 分支取出到這裡）存在 ⇒ 連結檢查之後整包複製到 dist/preview/（pr-{N}/…）；
+//     不存在就略過。預覽站各自以自己的 BASE_PATH 建置，不納入主站連結檢查。
 import fs from 'node:fs';
 import path from 'node:path';
 import { config } from '../site.config.mjs';
@@ -17,6 +23,7 @@ import { runEval } from '../eval/run-eval.mjs';
 import { todayISO } from './lib/render.mjs';
 import { checkInternalLinks, summarize as summarizeLinks } from './lib/check-internal-links.mjs';
 import { validateAssets, fixAssets, copyAssets, normalizeFileLinks } from './lib/assets.mjs';
+import { publicView, scheduledItems, taipeiTime, publishAtMs } from './lib/lanes.mjs';
 
 const args = Object.fromEntries(process.argv.slice(2).map((a) => { const [k, v] = a.replace(/^--/, '').split('='); return [k, v ?? true]; }));
 const DIST = process.env.DIST_DIR ? path.resolve(process.env.DIST_DIR) : path.join(ROOT, 'dist');
@@ -35,6 +42,14 @@ async function main() {
   log(`today=${today} basePath=${config.basePath || '/'}`);
   const site = loadSite(config);
   site.today = today;
+  // 排程發布的「現在」：整個建置用同一個時間點（治理、頁面、API、SEO 一致）
+  site.now = process.env.BUILD_NOW ? new Date(process.env.BUILD_NOW).getTime() : Date.now();
+  if (!Number.isFinite(site.now)) { console.error(`❌ BUILD_NOW 不是有效時間：${process.env.BUILD_NOW}`); process.exit(1); }
+  // PR 預覽（content-pr.yml 設 PREVIEW_SCHEDULED=1）：把「現在」推到最晚的 publishAt 之後，讓審核人在預覽裡看得到排程中內容
+  if (process.env.PREVIEW_SCHEDULED === '1') {
+    const latest = Math.max(0, ...site.all.map((i) => publishAtMs(i.publishAt) ?? 0));
+    if (latest >= site.now) { site.now = latest + 1000; log(`PREVIEW_SCHEDULED：now 推到 ${new Date(site.now).toISOString()}，預覽顯示排程中內容`); }
+  }
   log(`載入 ${site.all.length} 筆內容、${site.master.diseases.length} 種傳染病主檔`);
 
   if (args['fix-assets']) {
@@ -53,8 +68,11 @@ async function main() {
 
   applyGovernance(site);
   log(`治理：白名單 ${site.gov.whitelistCount}/${site.gov.totalPublished}、待辦 ${site.gov.todos.length}、AI ${site.gov.pausedAI ? '暫停' : '運作'}`);
+  const scheduled = scheduledItems(site);
+  log(`排程發布：now=${new Date(site.now).toISOString()}；排程中 ${scheduled.length} 筆${scheduled.length ? `（${scheduled.map((i) => `${i.id}＠${taipeiTime(publishAtMs(i.publishAt))}`).join('、')}）` : ''}，不輸出`);
 
-  site.searchIndex = buildSearchIndex(site);
+  // 答案索引只收已上線內容（排程中不進索引）
+  site.searchIndex = buildSearchIndex(publicView(site));
   log(`答案單元：民眾 ${site.searchIndex.public.length}、專業 ${site.searchIndex.pro.length}`);
 
   const evalReport = await runEval(site);
@@ -77,7 +95,7 @@ async function main() {
   copyDir(path.join(ROOT, 'src/client'), path.join(DIST, 'assets/js'));
   if (fs.existsSync(path.join(ROOT, 'src/public'))) copyDir(path.join(ROOT, 'src/public'), DIST);
   // 檔案資產：只複製 published／archived 內容有宣告的檔 → dist/files/{id}/{file}
-  const copied = copyAssets(site, DIST);
+  const copied = copyAssets(publicView(site), DIST);
   log(`檔案資產 → dist/files/：${copied.files} 個檔（${copied.items} 筆內容、${(copied.bytes / 1024).toFixed(0)} KB）`);
   writeOut('.nojekyll', '');
   log(`輸出 ${pageCount} 頁 → dist/（${Date.now() - t0} ms）`);
@@ -94,6 +112,14 @@ async function main() {
       if (strict) process.exit(1);
     }
   }
+
+  // PR 預覽（17.2）：連結檢查之後才複製，預覽站不影響主站閘門
+  const previews = process.env.PREVIEWS_DIR ? path.resolve(process.env.PREVIEWS_DIR) : null;
+  if (previews && fs.existsSync(previews)) {
+    const dirs = fs.readdirSync(previews, { withFileTypes: true }).filter((e) => e.isDirectory() && /^pr-\d+$/.test(e.name)).map((e) => e.name);
+    for (const d of dirs) copyDir(path.join(previews, d), path.join(DIST, 'preview', d));
+    log(`PR 預覽 → dist/preview/：${dirs.length} 個（${dirs.join('、') || '無'}）`);
+  } else if (previews) log(`PREVIEWS_DIR=${previews} 不存在，略過 PR 預覽`);
 }
 
 function copyDir(src, dst) {

@@ -1,0 +1,66 @@
+name: Lane SLA
+
+# 第九輪（ARCHITECTURE 17.2）：每小時檢查開啟中的 PR，依 lane:* 標籤與建立時間判斷是否超過車道 SLA
+# （content/governance/lanes.json：緊急 10 分鐘、快車道 3 小時、一般車道 2 個工作天）。
+# 逾期 ⇒ 留言＋加 sla:breach 標籤；已有 sla:breach 標籤的 PR 不重複留言（只留一次）。
+on:
+  schedule:
+    - cron: '23 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write # 建立標籤、PR 留言
+
+concurrency:
+  group: lane-sla
+  cancel-in-progress: false
+
+jobs:
+  sla:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: List open PRs
+        run: gh pr list -R "$REPO" --state open --limit 200 --json number,createdAt,labels,isDraft > "$RUNNER_TEMP/prs.json"
+
+      - name: Find SLA breaches (lane label + createdAt vs lanes.json)
+        run: |
+          node --input-type=module -e '
+            import fs from "node:fs";
+            import { slaOf } from "./scripts/lib/lanes.mjs";
+            const prs = JSON.parse(fs.readFileSync(process.env.RUNNER_TEMP + "/prs.json", "utf8"));
+            const now = Date.now();
+            const out = [];
+            for (const pr of prs) {
+              const names = pr.labels.map((l) => l.name);
+              const lane = names.find((n) => n.startsWith("lane:"))?.slice(5);
+              if (!lane || pr.isDraft || names.includes("sla:breach")) continue;
+              const sla = slaOf(lane, pr.createdAt);
+              if (Date.parse(sla.dueAt) < now) out.push([pr.number, lane, sla.label, sla.dueAtLocal].join("\t"));
+            }
+            fs.writeFileSync(process.env.RUNNER_TEMP + "/breaches.tsv", out.join("\n") + (out.length ? "\n" : ""));
+            console.log("逾期 PR：" + out.length);
+          '
+          cat "$RUNNER_TEMP/breaches.tsv"
+
+      - name: Comment and label (sla:breach, once per PR)
+        run: |
+          [ -s "$RUNNER_TEMP/breaches.tsv" ] || { echo "沒有逾期 PR"; exit 0; }
+          gh label list -R "$REPO" --limit 200 --json name --jq '.[].name' | grep -qx "sla:breach" || gh label create "sla:breach" -R "$REPO" --color d93f0b --description "PR 開啟超過車道 SLA 仍未合併" || true
+          while IFS=$'\t' read -r N LANE LABEL DUE; do
+            [ -n "$N" ] || continue
+            # 再確認一次沒有標籤（避免與手動執行重疊時重複留言）
+            if gh pr view "$N" -R "$REPO" --json labels --jq '.labels[].name' | grep -qx "sla:breach"; then continue; fi
+            gh pr edit "$N" -R "$REPO" --add-label "sla:breach"
+            gh pr comment "$N" -R "$REPO" --body "<!-- lane-sla -->⏰ **SLA 逾期**：本 PR 走 \`lane:$LANE\`（SLA $LABEL），已超過到期時間 $DUE（台灣時間）仍未合併。請審核人優先處理；若檢查失敗，請承辦人依 PR 上的車道留言修正後重新推送。"
+          done < "$RUNNER_TEMP/breaches.tsv"

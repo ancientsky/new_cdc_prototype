@@ -1,0 +1,66 @@
+{
+  "id": "page.tb-subsidy",
+  "type": "page",
+  "title": "結核病醫療費用補助及隔離治療",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2019-01-15",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "結核病只要完整治療幾乎都能治癒，為避免病人因費用中斷治療： 就醫免部分負擔：通報登記之結核病個案，結核病相關門診、住院與用藥之健保部分負擔由疾管署支應。",
+  "slug": "tb-subsidy",
+  "bodyMarkdown": "結核病只要完整治療幾乎都能治癒，為避免病人因費用中斷治療：\n\n- 就醫免部分負擔：通報登記之結核病個案，結核病相關門診、住院與用藥之健保部分負擔由疾管署支應。\n- 多重抗藥性結核病：由抗藥性結核病醫療照護體系（TMTC）團隊收治，治療與進階都治費用由公費支應。\n- 隔離治療：具傳染性且拒絕治療或不遵從治療者，依《傳染病防治法》由衛生主管機關施行隔離治療，隔離期間費用由政府負擔。\n\n病人與家屬不需另外送件申請，由醫院與衛生局（所）於通報、登記後協助辦理。\n\n個案另有需要時可填寫：[結核病醫療費用補助申請表（PDF）](/files/page.tb-subsidy/tb-subsidy-application.pdf)",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/RciPYzg3oErAFrFO2Edl3L"
+  ],
+  "assets": [
+    {
+      "file": "tb-subsidy-application.pdf",
+      "kind": "attachment",
+      "label": "結核病醫療費用補助申請表（PDF）",
+      "mime": "application/pdf",
+      "bytes": 729,
+      "sha256": "c0a9625ac3e2cc7a1ffc08eb348069d2d449f30dd87ece5a7b1a7c678ec7e1de",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 24 處（mso 樣式 18、Mso 類別 6、命名空間標籤 3）"
+      },
+      {
+        "code": "target-type-differs",
+        "severity": "info",
+        "message": "對應的新站內容是 service.tb-treatment-subsidy（service），草稿以 page 暫存，請比對後改建為 service"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/RciPYzg3oErAFrFO2Edl3L",
+    "convertedAt": "2026-10-04T13:56:12.582Z",
+    "existing": true,
+    "compareWith": [
+      "service.tb-treatment-subsidy"
+    ]
+  }
+}

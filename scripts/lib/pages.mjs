@@ -6,6 +6,9 @@
 //   markdown?(ctx, props)    → string（同頁 .md 機讀版；md:true 才會輸出）
 //   layout?                  → 若模組要用自己的 layout（後台），匯出 layout(ctx, pageProps)
 // path 以 '/' 開頭、資料夾型路徑以 '/' 結尾；lang 省略＝只出 zh-TW；lang:'*'＝全部語言（模板自行處理可用性）。
+// 第九輪（ARCHITECTURE 17.1）：排程中（publishAt 未到）內容不渲染——所有模板（含後台）的 pages()／render() 拿到的都是
+// publicView(site)（排程中內容整筆不在 collections／all／byId），否則後台的前台連結會指到不存在的頁、讓連結檢查失敗。
+// 後台要列「排程中」：用 scheduledItems(ctx.site)（scripts/lib/lanes.mjs；view 上也有 hiddenScheduled、fullSite），且不要連到前台頁。
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -14,6 +17,7 @@ import { makeUrl, fmtDate, setPageRegistry } from './render.mjs';
 import { t as i18nT } from '../../src/client/i18n.js';
 import { layout as defaultLayout } from '../../src/templates/layout.mjs';
 import { ROOT } from './load.mjs';
+import { publicView } from './lanes.mjs';
 
 const TEMPLATE_DIRS = ['public', 'pro', 'admin'].map((d) => path.join(ROOT, 'src/templates', d));
 
@@ -46,14 +50,19 @@ export function langAvailable(site, item, lang) {
   return true;
 }
 
+/** 模板看到的 site：一律是去掉排程中內容的 publicView（name 保留給日後依模板區分） */
+export const siteForTemplate = (site, name, view = publicView(site)) => view;
+
 export async function renderAllPages(site, write) {
   const mods = await loadTemplates();
   const pages = [];
+  const view = publicView(site);
   for (const { name, mod } of mods) {
     if (typeof mod.pages !== 'function') continue;
-    for (const p of mod.pages(site)) {
+    const tSite = siteForTemplate(site, name, view);
+    for (const p of mod.pages(tSite)) {
       const langs = p.lang === '*' ? config.langs.map((l) => l.code) : [p.lang ?? 'zh-TW'];
-      for (const lang of langs) pages.push({ ...p, lang, mod, name });
+      for (const lang of langs) pages.push({ ...p, lang, mod, name, tSite });
     }
   }
   const byPath = new Map();
@@ -66,7 +75,7 @@ export async function renderAllPages(site, write) {
     const outKey = `${langDef.path}${p.path}`;
     if (seen.has(outKey)) { console.warn(`[pages] 重複路徑略過：${outKey}（${p.name}）`); continue; }
     seen.add(outKey);
-    const ctx = makeCtx(site, p.lang, { path: p.path, alternates: [...byPath.get(p.path)], view: p.view ?? 'public' });
+    const ctx = makeCtx(p.tSite, p.lang, { path: p.path, alternates: [...byPath.get(p.path)], view: p.view ?? 'public' });
     const body = p.mod.render(ctx, p.props ?? {});
     const meta = p.mod.meta?.(ctx, p.props ?? {}) ?? {};
     const lay = p.mod.layout ?? defaultLayout;

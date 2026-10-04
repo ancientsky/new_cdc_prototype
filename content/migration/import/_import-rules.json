@@ -1,0 +1,122 @@
+{
+  "id": "import-rules.legacy",
+  "type": "import-rules",
+  "version": 1,
+  "title": "舊站匯出批次轉換規則（scripts/import-legacy.mjs 讀取）",
+  "summary": "把舊站 CMS 匯出（每頁 .html＋.json 側檔）對應成新站內容草稿的規則：URL 模式→型別與目錄、類別→權責單位、疾病別名→疾病 id、標題關鍵字→疾病頁區塊、Bulletin typeid→newsType、信心計算權重與人工檢視門檻。規則是資料不是程式；正式批次先改這個檔再跑。",
+  "owner": "unit.it",
+  "reviewedAt": "2026-10-04",
+  "siteBase": "https://www.cdc.gov.tw",
+
+  "extraction": {
+    "_comment": "舊站版型外殼（導覽列、麵包屑、側欄、頁尾）一律不轉；只取內容區。選擇器語法：#id、.class、tag、tag.class，可用逗號列多個，取第一個命中者。",
+    "contentSelectors": ["#CCMS_Content", "div.cp", "main", "body"],
+    "bodySelectors": [".content-body", ".cp-body"],
+    "titleSelectors": ["h2.title", "h1.title", "h1"],
+    "updatedSelectors": [".update", ".last-update"],
+    "removeSelectors": ["script", "style", "nav", "header", "footer", ".breadcrumb", ".share-bar", ".counter", ".print-hide", ".file-list", ".update", ".last-update", ".back-top", "h2.title", "h1.title"],
+    "faq": { "itemSelector": ".panel", "questionSelector": ".panel-title", "answerSelector": ".panel-body" },
+    "attachmentLinkPattern": "(/File/(Get|NewGet)/|/Uploads/|\\.(pdf|docx?|odt|xlsx?|csv|ods|pptx?)(\\?|#|$))"
+  },
+
+  "urlPatterns": [
+    { "id": "disease-subindex", "match": "^/Disease/SubIndex/", "kind": "disease-block", "type": "disease", "dir": "diseases", "label": "疾病頁子頁（併入疾病頁區塊）" },
+    { "id": "qa", "match": "^/Category/QAPage/", "kind": "faq", "type": "faq", "dir": "faq", "label": "Q&A（每題一筆）" },
+    { "id": "bulletin-detail", "match": "^/Bulletin/Detail/", "kind": "news", "type": "news", "dir": "news", "label": "新聞／公告內頁" },
+    { "id": "bulletin-list", "match": "^/Bulletin/List/", "kind": "list", "type": "page", "dir": "pages", "typeClear": false, "label": "新聞列表（新站自動產生，不轉）" },
+    { "id": "file", "match": "^/(File/(Get|NewGet)|Uploads)/", "kind": "document", "type": "document", "dir": "documents", "asset": true, "label": "檔案（宣告為附件；有檔案說明頁者建文件草稿）" },
+    { "id": "infection-report", "match": "^/InfectionReport/Info/", "kind": "document", "type": "document", "dir": "documents", "docType": "report", "label": "出版品／年報" },
+    { "id": "disease-docs", "match": "^/Category/Disease(Define|Manual|Teach)/", "kind": "document", "type": "document", "dir": "documents", "docTypeByPath": { "Define": "case-definition", "Manual": "manual", "Teach": "guideline" }, "label": "疾病 × 文件矩陣" },
+    { "id": "mpage", "match": "^/Category/(MPage|Page)/", "kind": "page", "type": "page", "dir": "pages", "mergeable": true, "label": "欄目內頁（page，或依標題併入疾病頁區塊）" },
+    { "id": "listcontent", "match": "^/Category/ListContent/", "kind": "page", "type": "page", "dir": "pages", "label": "清單項目內頁" },
+    { "id": "category-list", "match": "^/Category/(List|Fpage|NewsPage)", "kind": "list", "type": "page", "dir": "pages", "typeClear": false, "label": "欄目清單頁（連結集合，通常不轉）" }
+  ],
+
+  "bulletinTypes": {
+    "9": { "newsType": "press", "label": "新聞稿" },
+    "8772": { "newsType": "clarification", "label": "澄清稿", "hint": "新站澄清稿有專屬型別 clarification（claim／verdict），草稿先以 news 暫存" },
+    "11": { "newsType": "other", "label": "其他訊息" },
+    "158": { "newsType": "press", "label": "英文新聞稿", "lang": "en", "hint": "英文新聞稿以 sourceLang: en 建立，需補中文版" }
+  },
+
+  "categoryOwners": [
+    { "match": "結核病／檢驗", "owner": "unit.lab" },
+    { "match": "結核病／統計資料", "owner": "unit.epidemic-intelligence" },
+    { "match": "結核病／通報", "owner": "unit.epidemic-intelligence" },
+    { "match": "結核病／疾病介紹", "owner": "unit.chronic-infectious" },
+    { "match": "結核病／預防接種", "owner": "unit.chronic-infectious" },
+    { "match": "結核病／Q&A", "owner": "unit.chronic-infectious" },
+    { "match": "結核病／宣導素材", "owner": "unit.chronic-infectious" },
+    { "match": "結核病／指引及手冊", "owner": "unit.chronic-infectious" },
+    { "match": "結核病／通報定義", "owner": "unit.chronic-infectious" },
+    { "match": "結核病／防治政策", "owner": "unit.chronic-infectious" },
+    { "match": "結核病／外籍人士健檢", "owner": "unit.chronic-infectious" },
+    { "match": "結核病／研究成果", "owner": "unit.chronic-infectious" },
+    { "match": "結核病／最新消息", "owner": "unit.chronic-infectious" }
+  ],
+  "defaultOwner": "unit.oasis",
+  "ownerFallbackToDisease": false,
+
+  "diseases": [
+    { "id": "disease.tuberculosis", "short": "tb", "aliases": ["結核病", "結核", "肺結核", "潛伏結核感染", "LTBI", "TB"] },
+    { "id": "disease.mdr-tb", "short": "mdr", "aliases": ["多重抗藥性結核病", "抗藥性結核病", "抗藥性結核", "MDR-TB"] }
+  ],
+
+  "blockKeywords": [
+    { "block": "vaccine", "keys": ["預防接種", "卡介苗", "疫苗"] },
+    { "block": "transmission", "keys": ["致病原", "傳染方式", "傳染途徑", "潛伏期"] },
+    { "block": "symptoms", "keys": ["症狀", "臨床表現"] },
+    { "block": "situation", "keys": ["流行病學", "疫情", "統計"] },
+    { "block": "treatment", "keys": ["治療", "就醫", "診斷"] },
+    { "block": "prevention", "keys": ["預防"] },
+    { "block": "what-to-do", "keys": ["怎麼辦", "我該"] },
+    { "block": "faq", "keys": ["Q&A", "常見問題"] }
+  ],
+  "blockHeadings": {
+    "what-to-do": "我該怎麼辦",
+    "symptoms": "症狀與警示徵象",
+    "transmission": "怎麼傳染",
+    "prevention": "如何預防",
+    "treatment": "診斷與治療",
+    "vaccine": "疫苗",
+    "situation": "目前疫情與統計",
+    "faq": "常見問題"
+  },
+  "mergeScopes": ["疾病介紹", "預防接種"],
+
+  "docTypeKeywords": [
+    { "docType": "case-definition", "keys": ["病例定義", "通報定義"] },
+    { "docType": "manual", "keys": ["手冊"] },
+    { "docType": "guideline", "keys": ["指引", "指南"] },
+    { "docType": "form", "keys": ["表單", "申請書", "同意書", "通報單"] },
+    { "docType": "recommendation", "keys": ["接種建議"] },
+    { "docType": "report", "keys": ["年報", "報告"] }
+  ],
+
+  "audience": {
+    "byType": { "disease": ["public", "professional"], "faq": ["public"], "news": ["public"], "document": ["professional"], "page": ["public"] },
+    "professionalCategories": ["指引及手冊", "防治政策", "通報", "檢驗", "教育訓練", "研究成果", "通報定義"]
+  },
+  "titlePrefixes": ["Q&A：", "新聞稿：", "宣導素材：", "研究成果："],
+  "historicalKeywords": ["歷史版本", "舊版", "封存"],
+
+  "dropRules": [
+    { "id": "old-event", "titleKeywords": ["活動報名", "報名"], "publishedBefore": "2021-01-01", "note": "久遠且已結束的活動訊息，建議不轉換（回 410）" }
+  ],
+
+  "thresholds": {
+    "minBodyChars": 40,
+    "reviewConfidence": 0.6,
+    "autoConfidence": 0.8,
+    "archiveAfterYears": 3,
+    "summaryChars": 120
+  },
+  "confidence": {
+    "_comment": "ARCHITECTURE 17.3：型別對應明確 +0.4、owner 對應 +0.2、Markdown 無轉換警告 +0.2、附件全部找到 +0.1、無重複 +0.1；< reviewConfidence ⇒ 建議人工檢視",
+    "type": 0.4,
+    "owner": 0.2,
+    "markdown": 0.2,
+    "attachments": 0.1,
+    "unique": 0.1
+  }
+}

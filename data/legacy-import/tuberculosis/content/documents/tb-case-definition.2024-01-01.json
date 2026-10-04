@@ -1,0 +1,57 @@
+{
+  "id": "doc.tb-case-definition.2024-01-01",
+  "type": "document",
+  "title": "結核病病例定義",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2024-01-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "結核病臨床條件、檢驗條件（培養、分子檢測、塗片、病理）、通報定義與疾病分類；第三類法定傳染病一週內通報，多重抗藥性結核病 24 小時內。",
+  "family": "doc.tb-case-definition",
+  "docType": "case-definition",
+  "version": "2024-01-01",
+  "effectiveAt": "2024-01-01",
+  "machineReadableMarkdown": "結核病臨床條件、檢驗條件（培養、分子檢測、塗片、病理）、通報定義與疾病分類；第三類法定傳染病一週內通報，多重抗藥性結核病 24 小時內。\n\n### 一、臨床條件\n\n具下列任一項：1. 咳嗽、咳痰、發燒、體重減輕、夜間盜汗等疑似結核病症狀，且胸部 X 光或其他影像學檢查異常。2. 醫師臨床判斷為結核病，並開立 2 種以上抗結核藥物治療。\n\n### 二、檢驗條件\n\n具下列任一項：1. 臨床檢體培養出結核分枝桿菌複合群（MTBC）。2. 臨床檢體核酸增幅檢驗（分子檢測）結核分枝桿菌複合群陽性。3. 臨床檢體抗酸菌塗片陽性（須輔以培養或分子檢測確認菌種）。4. 病理組織切片具結核病典型病灶。\n\n### 三、通報定義與時限\n\n符合臨床條件或檢驗條件之任一項即應通報。結核病為第三類法定傳染病，應於一週內通報；多重抗藥性結核病為第二類法定傳染病，應於 24 小時內通報。\n\n### 四、疾病分類\n\n- 可能病例：符合臨床條件。\n- 確定病例：符合檢驗條件第 1 或第 2 項，或符合臨床條件且經病理檢查確認。\n- 經培養確認為非結核分枝桿菌者，應銷案。\n\n| 分類 | 條件 |\n| --- | --- |\n| 確定病例 | 具結核病臨床症狀或影像，且檢驗確認（培養、分子檢測或病理） |\n| 極可能病例 | 臨床條件符合，但檢驗未確認，經醫師診斷並給予完整治療 |\n| 疑似病例 | 有症狀但尚未完成檢驗 |",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/DiseaseDefine/u-4_D_c5j4hXi35nyiejt2"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 52 處（mso 樣式 28、Mso 類別 15、命名空間標籤 12）"
+      },
+      {
+        "code": "version-unknown",
+        "severity": "info",
+        "message": "標題看不出版次，version 暫填 2024-01-01"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/DiseaseDefine/u-4_D_c5j4hXi35nyiejt2",
+    "convertedAt": "2026-10-04T13:56:12.582Z",
+    "existing": true,
+    "compareWith": [
+      "doc.tb-case-definition.2024-01-01"
+    ]
+  }
+}

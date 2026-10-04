@@ -24,6 +24,8 @@ let ED = null; // 內文編輯器（editor.js）
 let ASSETS = null; // 附件與圖片面板（assets-panel.js）
 let lastId = ''; // 內容 ID 變動時，內文裡的 /files/{舊id}/ 引用跟著改
 const LIMITS = P.normalizeLimits(window.CDC_ASSETS_LIMITS ?? D.assetsLimits);
+const LANES = P.normalizeLanes(D.lanes); // 發布車道（建置時內嵌 content/governance/lanes.json；缺檔用契約預設）
+let simShown = false; // 已按過「模擬送出」：重繪結果時一併重畫時間軸
 
 // ---------- 表單讀寫 ----------
 const val = (id) => $(id).value;
@@ -43,6 +45,7 @@ function readForm() {
     type, title: val('#f-title').trim(), body: val('#f-body'), assets: ASSETS?.meta() ?? [], owner: val('#f-owner'), period: val('#f-period'),
     audience: $$('input[name="audience"]:checked').map((x) => x.value), tasks: $$('input[name="tasks"]:checked').map((x) => x.value),
     basedOn: [...basedOn], langs: langState(), id: val('#f-id').trim(), idTouched,
+    publishAtLocal: val('#f-publish-at'), publishAt: P.toPublishAtIso(val('#f-publish-at')), urgent: $('#f-urgent').checked,
     extra: {
       family: val('#x-family').trim(), docType: val('#x-doctype'), version: val('#x-version').trim(), effectiveAt: val('#x-effective'), supersedes: val('#x-supersedes'),
       letterNo: val('#x-letterno').trim(), claim: val('#x-claim').trim(), verdict: val('#x-verdict'), shareText: val('#x-share').trim(), disease: val('#x-disease'), vaccine: val('#x-vaccine'),
@@ -76,6 +79,7 @@ function writeForm(s) {
   $$('input[name="audience"]').forEach((x) => { x.checked = (s.audience ?? ['public']).includes(x.value); });
   $$('input[name="tasks"]').forEach((x) => { x.checked = (s.tasks ?? []).includes(x.value); });
   basedOn = [...(s.basedOn ?? [])]; paintBased();
+  $('#f-publish-at').value = s.publishAtLocal ?? ''; $('#f-urgent').checked = s.urgent === true;
   applyTypeUI(false);
   for (const l of P.LANGS) {
     if (l.code === 'zh-TW') continue;
@@ -126,7 +130,23 @@ function applyTypeUI(resetDefaults = true) {
   let any = false;
   $$('[data-for]', extra).forEach((el) => { const on = el.dataset.for.split(' ').includes(type); el.hidden = !on; any ||= on; });
   extra.hidden = !any;
+  // 發布車道：urgent 只對允許型別顯示；換成不允許的型別就取消勾選並說明
+  const ua = P.urgentAllowed(type, LANES);
+  $('#f-urgent-wrap').hidden = !ua;
+  if (!ua && $('#f-urgent').checked) { $('#f-urgent').checked = false; statusEl.textContent = '已取消「緊急發布」：只有新聞稿、致醫界通函、澄清可以用。'; }
+  paintLane();
   if (resetDefaults) autoId();
+}
+/** 車道徽章與一句說明（隨型別、urgent、publishAt 即時更新），並顯示 urgent／publishAt 的預檢。 */
+function paintLane() {
+  const f = readForm();
+  const lane = P.laneOf(f.type, f.urgent, LANES);
+  const box = $('#lane-box');
+  box.dataset.lane = lane.id;
+  $('#lane-badge').textContent = lane.label;
+  const at = P.publishAtMs(f.publishAt);
+  $('#lane-text').textContent = `${P.laneSentence(lane, f.type, D.unitNames)}${Number.isFinite(at) ? `；排程 ${P.fmtTaipei(at)} 後上線` : ''}`;
+  $('#f-timing-msgs').innerHTML = P.laneChecks(f, Date.now(), LANES).map((c) => `<li class="${c.level === 'error' ? 'adm-red' : 'adm-yellow'}">${esc(c.title)}：${esc(c.message)}</li>`).join('');
 }
 function paintLangReasons() {
   const def = new Set(P.defaultsFor(val('#f-type')).langs);
@@ -241,7 +261,8 @@ function typeChecks(f) {
   if (f.type === 'labtest') return P.labtestChecks({ disease: ex.labDisease, specimens: ex.specimens, sendWithinHours: ex.sendHours }, D.diseaseMaster);
   return P.miscChecks(f.type, ex, D.today);
 }
-const allChecks = () => [...(A?.checks ?? []), ...typeChecks(readForm()), ...P.assetWarnings(exportObj(), LIMITS)];
+const laneCheckList = () => P.laneChecks(readForm(), Date.now(), LANES);
+const allChecks = () => [...(A?.checks ?? []), ...typeChecks(readForm()), ...P.assetWarnings(exportObj(), LIMITS), ...laneCheckList().filter((c) => c.level !== 'error').map((c) => ({ ...c, level: c.level === 'warn' ? 'warn' : 'info' }))];
 
 // ---------- 預處理 ----------
 async function loadMasters() {
@@ -326,13 +347,14 @@ function exportObj() {
   return P.buildExport({
     type: f.type, id: f.id, title: f.title, body: f.body, owner: f.owner, steward: `${unitLabel(f.owner) || ''}承辦人`, reviewPeriodMonths: f.period === '' ? 0 : f.period,
     audience: f.audience, tasks: f.tasks, basedOn: f.basedOn, langs: f.langs, summary: sel.summary, keywords: dv.keywords, diseases: dv.diseases, vaccines: dv.vaccines, countries: dv.countries,
-    structured: dv.structured, extra, today: D.today, submitted: sel.stage === 'submitted',
+    structured: dv.structured, extra, today: D.today, submitted: sel.stage === 'submitted', publishAt: f.publishAt, urgent: f.urgent && P.urgentAllowed(f.type, LANES),
     assets: P.buildAssetsJson(ASSETS?.exportList() ?? []),
   });
 }
 function missAll(obj) {
   const gone = (ASSETS?.missingFiles() ?? []).map((f) => `檔案 ${f}：重新整理後需要重新選取`);
-  return [...P.requiredCheck(obj, (D.units ?? []).map((u) => u.id), { limits: LIMITS }), ...langIssues(), ...gone];
+  const lane = laneCheckList().filter((c) => c.level === 'error').map((c) => `${c.title}（${c.message}）`);
+  return [...P.requiredCheck(obj, (D.units ?? []).map((u) => u.id), { limits: LIMITS }), ...langIssues(), ...gone, ...lane];
 }
 function langIssues() {
   const def = new Set(P.defaultsFor(val('#f-type')).langs);
@@ -391,14 +413,45 @@ function paintResult() {
     <p class="adm-muted" id="submit-msg" role="status" aria-live="polite">${sel.stage === 'submitted' ? '已送複核（示範）：已加入本機複核佇列，狀態為第 2 步「公關室內容審核」。' : ''}</p></section>
   <section aria-labelledby="r-g"><h3 id="r-g">(g) 產生上架包</h3>
     <p class="adm-muted">上架包 ＝ <code>${esc(pathFor(obj))}</code>${obj.assets?.length ? ` ＋ ${obj.assets.length} 個檔案（<code>content/assets/${esc(obj.id)}/</code>）` : ''}。正式環境：解壓縮到 repo 根目錄 → 開 Pull Request → CI 驗證 schema、治理規則、檔案 sha256／大小／檔名與評估集 → 合併即發布。</p>
-    <div class="adm-actions" style="margin-top:0"><button type="button" class="adm-btn" id="btn-zip">產生上架包（.zip）</button><button type="button" class="adm-btn adm-btn--ghost" id="btn-dl">只下載 JSON</button><button type="button" class="adm-btn adm-btn--ghost" id="btn-copy">複製 JSON</button></div>
+    <div class="adm-actions" style="margin-top:0"><button type="button" class="adm-btn" id="btn-zip">產生上架包（.zip）</button><button type="button" class="adm-btn adm-btn--ghost" id="btn-sim" aria-controls="sim-out">模擬送出</button><button type="button" class="adm-btn adm-btn--ghost" id="btn-dl">只下載 JSON</button><button type="button" class="adm-btn adm-btn--ghost" id="btn-copy">複製 JSON</button></div>
     <p class="adm-muted" id="pkg-msg" role="status" aria-live="polite"></p>
+    <p class="adm-muted">「模擬送出」只示範送出之後會發生的事：原型不會開 PR、不呼叫任何 API。要真的交件，請用上面的 ZIP。</p>
+    <div id="sim-out" tabindex="-1" aria-live="polite">${simShown ? simHtml(obj, f.type) : ''}</div>
     <h4 class="adm-sub">放在哪裡</h4>
     <pre class="adm-pre adm-tree" id="pkg-tree" tabindex="0" aria-label="上架包的檔案放置路徑">${esc(P.renderTree(P.packagePaths(obj, f.type)))}</pre>
     <h4 class="adm-sub">怎麼交（git／Pull Request）</h4>
     <ol class="adm-sop" id="pkg-git">${gitSteps(obj)}</ol>
     <h4 class="adm-sub">content JSON 預覽</h4>
     <pre class="adm-pre" id="exp-pre" tabindex="0">${esc(JSON.stringify(obj, null, 2))}</pre></section>`;
+}
+// ---------- 模擬送出（只是展示；ARCHITECTURE §17.4）----------
+const SIM_STATUS = { ok: ['adm-badge--ok', '完成'], wait: ['adm-badge--warn', '等待中'], fail: ['adm-badge--bad', '未通過'], skip: ['adm-badge--gray', '未執行'] };
+function simHtml(obj, uiType) {
+  const miss = missAll(obj);
+  const assetMsgs = new Set(P.assetIssues(obj, LIMITS).filter((i) => i.level === 'error').map((i) => i.msg));
+  const failures = { assets: miss.filter((m) => assetMsgs.has(m) || /^檔案 /.test(m)), schema: miss.filter((m) => !assetMsgs.has(m) && !/^檔案 /.test(m)) };
+  const tl = P.submitTimeline(obj, { lanes: LANES, names: D.unitNames, miss, failures, typeLabel: typeLabel(uiType), nowMs: Date.now() });
+  const li = tl.steps.map((st, i) => {
+    const [cls, label] = SIM_STATUS[st.status] ?? SIM_STATUS.skip;
+    const checks = st.checks ? `<ul class="adm-tl__checks">${st.checks.map((c) => `<li class="${c.ok ? 'is-ok' : 'is-no'}"><span class="adm-tick ${c.ok ? 'adm-tick--ok' : 'adm-tick--no'}">${c.ok ? '✓' : '✗'}</span> ${esc(c.label)}<span class="adm-muted">　${esc(c.note)}</span></li>`).join('')}</ul>` : '';
+    const issues = st.issues?.length ? `<ul class="adm-tl__issues">${st.issues.map((m) => `<li class="adm-red">${esc(m)}</li>`).join('')}</ul>` : '';
+    const laneBadge = st.lane ? ` <span class="adm-lane__badge" data-lane="${esc(st.lane)}">${esc(tl.lane.label)}</span>` : '';
+    return `<li class="adm-tl is-${st.status}"><span class="adm-tl__dot" aria-hidden="true">${i + 1}</span><div class="adm-tl__body">
+      <div class="adm-tl__head"><strong>${esc(st.title)}</strong>${laneBadge} <span class="adm-badge ${cls}">${label}</span> <span class="adm-tl__at">${esc(st.at)}</span></div>
+      ${st.detail.map((d) => `<p>${esc(d)}</p>`).join('')}${checks}${issues}
+      ${st.previewUrl ? `<p>本例（PR #${esc(st.previewN)}，示意編號）：<code class="adm-tl__url">${esc(st.previewUrl)}</code></p>` : ''}
+      <p class="adm-tl__sys">正式環境由系統代做。</p></div></li>`;
+  }).join('');
+  return `<section class="adm-sim" aria-labelledby="sim-h"><h4 class="adm-sub" id="sim-h">模擬送出：送出之後會發生的事 <span class="adm-lane__badge" data-lane="${esc(tl.lane.id)}">${esc(tl.lane.label)}</span></h4>
+    <p class="adm-muted">示意。時間為預估（T＝按下送出），實測數字見《發布車道建議書》附錄。</p>
+    <ol class="adm-timeline" aria-label="送出後的處理時間軸">${li}</ol>
+    <div class="adm-box adm-box--note"><strong>承辦人只按一次「送出」</strong>建立分支、開 PR、跑檢查、判定車道、合併、部署、產生預覽網址，都是系統的工作；承辦人要做的只有填對欄位，以及（一般車道）等審核人看預覽。</div></section>`;
+}
+function showSim() {
+  simShown = true;
+  const out = $('#sim-out');
+  out.innerHTML = simHtml(exportObj(), val('#f-type'));
+  out.focus();
 }
 function pathFor(o) { return P.packagePaths(o, $('#f-type').value).json; }
 function gitSteps(o) {
@@ -440,7 +493,7 @@ function typeExtraHtml(f) {
 form.addEventListener('submit', (e) => { e.preventDefault(); ED?.flush(); if (!val('#f-body').trim() && !val('#f-title').trim()) { statusEl.textContent = '請先填寫標題或內文。'; $('#f-title').focus(); return; } statusEl.textContent = ''; runPreprocess(); });
 $('#btn-save').addEventListener('click', () => saveDraft(true));
 $('#btn-clear').addEventListener('click', () => {
-  store.del(KEY); sel = { chips: {}, manual: [], summary: '', st: {}, ack: false, stage: 'edit' }; A = null; llmDrafts = {}; idTouched = false; lastId = ''; ASSETS?.clear();
+  simShown = false; store.del(KEY); sel = { chips: {}, manual: [], summary: '', st: {}, ack: false, stage: 'edit' }; A = null; llmDrafts = {}; idTouched = false; lastId = ''; ASSETS?.clear();
   writeForm({ type: 'faq', owner: getUnit() === 'all' ? undefined : getUnit(), audience: ['public'] }); applyTypeUI(true);
   resultEl.innerHTML = '<p class="adm-muted">已清空。</p>'; secEl.textContent = '尚未送出'; statusEl.textContent = '已清空草稿。';
 });
@@ -500,11 +553,13 @@ form.addEventListener('input', (e) => {
     lastId = now;
   }
   if (e.target.id === 'x-family') fillSupersedes();
+  if (e.target.id === 'f-publish-at') paintLane();
   if (['f-title', 'x-family', 'x-effective', 'x-disease', 'x-vaccine', 'x-labdisease'].includes(e.target.id)) autoId();
   autosave();
 });
 form.addEventListener('change', (e) => {
   if (e.target.id === 'f-type') applyTypeUI(true);
+  if (e.target.id === 'f-urgent' || e.target.id === 'f-publish-at') paintLane();
   if (e.target.name === 'lang') paintLangReasons();
   if (e.target.id === 'x-labdisease') { const d = D.diseaseMaster.find((x) => x.id === e.target.value); $('#x-sendhours-hint').textContent = d?.notifyWithinHours != null ? `${d.name}主檔通報時限 ${d.notifyWithinHours} 小時；送驗時限超過會警告。` : '超過主檔通報時限時會警告。'; autoId(); if (d && !val('#f-title')) $('#f-title').value = `${d.name}檢驗項目`; }
   if (e.target.id === 'x-disease' && e.target.value) { const d = D.diseaseMaster.find((x) => x.id === e.target.value); if (d && !val('#f-title')) $('#f-title').value = d.name; }
@@ -541,6 +596,7 @@ resultEl.addEventListener('click', async (e) => {
   else if (t.dataset.kwrm) { sel.manual.splice(Number(t.dataset.kwrm), 1); paintResult(); autosave(); }
   else if (t.id === 'sum-reset') { sel.summary = A.summary0; paintResult(); autosave(); }
   else if (t.id === 'btn-zip') await buildPackage();
+  else if (t.id === 'btn-sim') showSim();
   else if (t.id === 'btn-dl') { const o = exportObj(); downloadText(`${String(o.id).replace(/[^a-z0-9.-]/gi, '_')}.json`, `${JSON.stringify(o, null, 2)}\n`); }
   else if (t.id === 'btn-copy') copyText(`${JSON.stringify(exportObj(), null, 2)}\n`, t);
   else if (t.id === 'btn-desc') copyText($('#desc-line')?.textContent ?? '', t);

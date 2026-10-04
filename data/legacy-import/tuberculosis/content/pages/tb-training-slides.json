@@ -1,0 +1,77 @@
+{
+  "id": "page.tb-training-slides",
+  "type": "page",
+  "title": "結核病教育訓練教材（投影片）",
+  "owner": "unit.oasis",
+  "publishedAt": "2023-08-10",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "結核病教育訓練教材（投影片）：醫事人員在職訓練用。 第一單元：結核病診斷與通報（PDF） 第二單元：都治與接觸者檢查（PDF）",
+  "slug": "tb-training-slides",
+  "bodyMarkdown": "結核病教育訓練教材（投影片）：醫事人員在職訓練用。\n\n- [第一單元：結核病診斷與通報（PDF）](/files/page.tb-training-slides/tb-training-part1.pdf)\n- [第二單元：都治與接觸者檢查（PDF）](https://www.cdc.gov.tw/File/Get/Jd7gAsN3MLIff2rM3nGpQd)",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/IAhbEkxy103_prlTA55Skx"
+  ],
+  "assets": [
+    {
+      "file": "tb-training-part1.pdf",
+      "kind": "attachment",
+      "label": "第一單元：結核病診斷與通報（PDF）",
+      "mime": "application/pdf",
+      "bytes": 706,
+      "sha256": "673c2c3c58a85a38ce33013a54e87816cdb6dcfbf50904dd57d01c3ddd9d06bd",
+      "machineReadable": false,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.3,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 11 處（mso 樣式 9、Mso 類別 3、命名空間標籤 1）"
+      },
+      {
+        "code": "unmapped-category",
+        "severity": "warn",
+        "message": "未對應類別「結核病／教育訓練」：規則檔 categoryOwners 沒有對應的權責單位，暫填 unit.oasis，請補規則或人工指定"
+      },
+      {
+        "code": "list-page",
+        "severity": "info",
+        "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+      },
+      {
+        "code": "pdf-no-text-layer",
+        "severity": "warn",
+        "message": "PDF「tb-training-part1.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+      },
+      {
+        "code": "attachment-missing",
+        "severity": "error",
+        "message": "附件「tb-training-part2.pdf」在匯出的 files/ 找不到"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/List/IAhbEkxy103_prlTA55Skx",
+    "convertedAt": "2026-10-04T13:56:12.582Z"
+  }
+}

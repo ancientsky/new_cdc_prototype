@@ -49,7 +49,7 @@
       "verified": false,
       "status": "migrated",
       "target": "disease.tuberculosis",
-      "note": "舊專區首頁（疾病介紹頁籤）改為疾病頁：八個固定區塊、一分鐘重點、民眾／專業分眾。",
+      "note": "舊專區首頁（疾病介紹頁籤）改為疾病頁：八個固定區塊、一分鐘重點、民眾／專業分眾。　【匯入 2026-10-03】草稿 disease.tuberculosis（信心 1；既有內容已存在，供比對；併入疾病頁）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -68,7 +68,7 @@
       "status": "merged",
       "target": "disease.tuberculosis",
       "anchor": "situation",
-      "note": "併入「目前疫情與統計」區塊；數字改連開放資料集，不再手抄在頁面。",
+      "note": "併入「目前疫情與統計」區塊；數字改連開放資料集，不再手抄在頁面。　【匯入 2026-10-03】草稿 disease.tuberculosis（信心 1；既有內容已存在，供比對；併入疾病頁）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -88,7 +88,7 @@
       "status": "merged",
       "target": "disease.tuberculosis",
       "anchor": "transmission",
-      "note": "致病原、傳染方式、潛伏期與可傳染期合併為「怎麼傳染」區塊，潛伏期抽成一分鐘重點。",
+      "note": "致病原、傳染方式、潛伏期與可傳染期合併為「怎麼傳染」區塊，潛伏期抽成一分鐘重點。　【匯入 2026-10-03】草稿 disease.tuberculosis（信心 1；既有內容已存在，供比對；併入疾病頁）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -107,7 +107,7 @@
       "status": "merged",
       "target": "disease.tuberculosis",
       "anchor": "symptoms",
-      "note": "併入「症狀與警示徵象」區塊，新增警示徵象提示。",
+      "note": "併入「症狀與警示徵象」區塊，新增警示徵象提示。　【匯入 2026-10-03】草稿 disease.tuberculosis（信心 1；既有內容已存在，供比對；併入疾病頁）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -126,7 +126,7 @@
       "status": "merged",
       "target": "disease.tuberculosis",
       "anchor": "treatment",
-      "note": "併入「診斷與治療」區塊，加入都治與就醫費用說明。",
+      "note": "併入「診斷與治療」區塊，加入都治與就醫費用說明。　【匯入 2026-10-03】草稿 disease.tuberculosis（信心 1；既有內容已存在，供比對；併入疾病頁）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -145,7 +145,7 @@
       "status": "merged",
       "target": "disease.tuberculosis",
       "anchor": "vaccine",
-      "note": "併入疾病頁「疫苗」區塊；常見疑問另立 Q&A。",
+      "note": "併入疾病頁「疫苗」區塊；常見疑問另立 Q&A。　【匯入 2026-10-03】草稿 disease.tuberculosis（信心 1；既有內容已存在，供比對；併入疾病頁）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -164,7 +164,7 @@
       "status": "merged",
       "target": "disease.tuberculosis",
       "anchor": "faq",
-      "note": "舊站單頁長清單拆為 9 則獨立 Q&A：每題有權責單位、審閱週期、依據正本與 AI 白名單狀態。",
+      "note": "舊站單頁長清單拆為 9 則獨立 Q&A：每題有權責單位、審閱週期、依據正本與 AI 白名單狀態。　【匯入 2026-10-03】草稿 faq.tb-cough-two-weeks、faq.ltbi-treat-or-not、faq.tb-dots-what、faq.tb-contact-screening、faq.mdr-tb、faq.tb-treatment-cost、faq.tb-foreigner-health-check、faq.tb-contagious-after-treatment（信心 1；既有內容已存在，供比對）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -190,7 +190,8 @@
         "basedOn",
         "aiWhitelist",
         "languages"
-      ]
+      ],
+      "note": "【匯入 2026-10-03】與 faq.tb-cough-two-weeks 重複，未另出草稿（信心 0.9；既有內容已存在，供比對）"
     },
     {
       "key": "qa-ltbi",
@@ -201,7 +202,7 @@
       "verified": false,
       "status": "migrated",
       "target": "faq.ltbi-treat-or-not",
-      "note": "依據正本改連潛伏結核感染診治指引；指引修訂時自動加註並開待辦。",
+      "note": "依據正本改連潛伏結核感染診治指引；指引修訂時自動加註並開待辦。　【匯入 2026-10-03】與 faq.ltbi-treat-or-not 重複，未另出草稿（信心 0.9；既有內容已存在，供比對）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -220,7 +221,7 @@
       "verified": false,
       "status": "migrated",
       "target": "publication.poster-tb-seven-languages",
-      "note": "七語海報建立出版品書目，翻譯狀態逐語言標示。",
+      "note": "七語海報建立出版品書目，翻譯狀態逐語言標示。　【匯入 2026-10-03】草稿 page.tb-materials-poster（信心 0.4；既有內容已存在，供比對；需人工檢視）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -237,7 +238,7 @@
       "verified": false,
       "status": "migrated",
       "target": "media.tb-cough-two-weeks",
-      "note": "影片補逐字稿與章節，標示依據正本；正本修訂時自動判定是否過時。",
+      "note": "影片補逐字稿與章節，標示依據正本；正本修訂時自動判定是否過時。　【匯入 2026-10-03】草稿 page.tb-materials-video（信心 0.8；既有內容已存在，供比對）",
       "newRequirements": [
         "owner",
         "basedOn",
@@ -260,7 +261,8 @@
         "machineReadable",
         "accessibility",
         "languages"
-      ]
+      ],
+      "note": "【匯入 2026-10-03】草稿 page.tb-materials-migrant（信心 0.8；既有內容已存在，供比對）"
     },
     {
       "key": "guideline-current",
@@ -271,7 +273,7 @@
       "verified": false,
       "status": "migrated",
       "target": "doc.tb-guideline.2025-09-01",
-      "note": "PDF 轉為機讀版本文，建立版本鏈與「異動對照」；舊版自動標示已取代。",
+      "note": "PDF 轉為機讀版本文，建立版本鏈與「異動對照」；舊版自動標示已取代。　【匯入 2026-10-03】草稿 doc.tb-guideline.2025-09-01（信心 1；既有內容已存在，供比對）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -289,7 +291,7 @@
       "verified": false,
       "status": "archived",
       "target": "doc.tb-guideline.2022-03-01",
-      "note": "舊版保留查閱：頁首紅色警示、noindex、退出 AI 白名單；舊 PDF 網址 301 至現行版。",
+      "note": "舊版保留查閱：頁首紅色警示、noindex、退出 AI 白名單；舊 PDF 網址 301 至現行版。　【匯入 2026-10-03】草稿 doc.tb-guideline.2022-03-01（信心 1；既有內容已存在，供比對）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -313,7 +315,8 @@
         "versionChain",
         "machineReadable",
         "aiWhitelist"
-      ]
+      ],
+      "note": "【匯入 2026-10-03】草稿 doc.ltbi-guideline.2024-01-01（信心 1；既有內容已存在，供比對）"
     },
     {
       "key": "ltbi-guideline-old",
@@ -324,7 +327,7 @@
       "verified": false,
       "status": "archived",
       "target": "doc.ltbi-guideline.2024-01-01",
-      "note": "舊版內容已併入現行指引，不另建版本頁；原檔封存，舊網址 301 至現行版。",
+      "note": "舊版內容已併入現行指引，不另建版本頁；原檔封存，舊網址 301 至現行版。　【匯入 2026-10-03】草稿 doc.ltbi-guideline.2021-05-01（信心 1；既有內容已存在，供比對）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -348,7 +351,8 @@
         "versionChain",
         "machineReadable",
         "aiWhitelist"
-      ]
+      ],
+      "note": "【匯入 2026-10-03】草稿 doc.tb-contact-investigation.2025-01-01（信心 1；既有內容已存在，供比對）"
     },
     {
       "key": "dots-manual",
@@ -365,7 +369,8 @@
         "versionChain",
         "machineReadable",
         "aiWhitelist"
-      ]
+      ],
+      "note": "【匯入 2026-10-03】草稿 doc.dots-manual.2025-01-01（信心 1；既有內容已存在，供比對）"
     },
     {
       "key": "tb-manual",
@@ -382,7 +387,8 @@
         "versionChain",
         "machineReadable",
         "aiWhitelist"
-      ]
+      ],
+      "note": "【匯入 2026-10-03】草稿 doc.tb-manual.2025-07-01（信心 1；既有內容已存在，供比對）"
     },
     {
       "key": "tb-manual-2019",
@@ -393,7 +399,7 @@
       "verified": false,
       "status": "archived",
       "target": "doc.tb-manual.2025-07-01",
-      "note": "2019 年版未建版本頁；原檔封存，舊網址 301 至現行版。",
+      "note": "2019 年版未建版本頁；原檔封存，舊網址 301 至現行版。　【匯入 2026-10-03】草稿 doc.tb-manual.2019-06-28（信心 1；既有內容已存在，供比對）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -411,7 +417,7 @@
       "verified": false,
       "status": "migrated",
       "target": "doc.tb-case-definition.2024-01-01",
-      "note": "病例定義改為文件版本鏈，通報時限表由傳染病主檔自動產生並連回本文件。",
+      "note": "病例定義改為文件版本鏈，通報時限表由傳染病主檔自動產生並連回本文件。　【匯入 2026-10-03】草稿 doc.tb-case-definition.2024-01-01（信心 1；既有內容已存在，供比對）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -429,7 +435,7 @@
       "verified": false,
       "status": "merged",
       "target": "service.notifiable-disease-report",
-      "note": "併入法定傳染病通報服務頁；時限不再手寫，由傳染病主檔自動產生。",
+      "note": "併入法定傳染病通報服務頁；時限不再手寫，由傳染病主檔自動產生。　【匯入 2026-10-03】草稿 page.tb-notify（信心 1；既有內容已存在，供比對）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -445,7 +451,7 @@
       "verified": false,
       "status": "merged",
       "target": "labtest.tuberculosis",
-      "note": "檢體、容器、保存運送與時限改為結構化欄位，與通報時限自動比對一致性。",
+      "note": "檢體、容器、保存運送與時限改為結構化欄位，與通報時限自動比對一致性。　【匯入 2026-10-03】草稿 page.tb-lab（信心 1；既有內容已存在，供比對）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -461,7 +467,7 @@
       "verified": false,
       "status": "merged",
       "target": "dataset.tb-new-cases",
-      "note": "網頁靜態表格改為開放資料集與 API，標示更新頻率與授權。",
+      "note": "網頁靜態表格改為開放資料集與 API，標示更新頻率與授權。　【匯入 2026-10-03】草稿 page.tb-stats（信心 0.6；既有內容已存在，供比對）",
       "newRequirements": [
         "owner",
         "structuredData",
@@ -476,7 +482,7 @@
       "oldType": "pdf",
       "verified": false,
       "status": "pending",
-      "note": "歷年年報 PDF 尚待逐年建立出版品書目（ISBN、GPN）與機讀摘要；完成前舊網址暫不轉址。",
+      "note": "歷年年報 PDF 尚待逐年建立出版品書目（ISBN、GPN）與機讀摘要；完成前舊網址暫不轉址。　【匯入 2026-10-03】草稿 doc.tb-annual-report.2025-12-31（信心 1）",
       "newRequirements": [
         "owner",
         "machineReadable",
@@ -493,7 +499,7 @@
       "verified": false,
       "status": "merged",
       "target": "topic.tb-prevention",
-      "note": "併入結核病防治專區；作業細節改連都治計畫作業手冊，民眾版另立 Q&A。",
+      "note": "併入結核病防治專區；作業細節改連都治計畫作業手冊，民眾版另立 Q&A。　【匯入 2026-10-03】草稿 page.tb-dots（信心 1；既有內容已存在，供比對）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -511,7 +517,7 @@
       "verified": false,
       "status": "merged",
       "target": "service.ltbi-treatment",
-      "note": "改為申請服務頁：對象、步驟、應備文件、處理天數。",
+      "note": "改為申請服務頁：對象、步驟、應備文件、處理天數。　【匯入 2026-10-03】草稿 page.tb-ltbi（信心 1；既有內容已存在，供比對）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -530,7 +536,7 @@
       "verified": false,
       "status": "merged",
       "target": "faq.tb-contact-screening",
-      "note": "民眾版改為 Q&A；專業規定見接觸者檢查指引。",
+      "note": "民眾版改為 Q&A；專業規定見接觸者檢查指引。　【匯入 2026-10-03】草稿 page.tb-contact（信心 1；既有內容已存在，供比對）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -549,7 +555,7 @@
       "verified": false,
       "status": "merged",
       "target": "topic.tb-prevention",
-      "note": "併入防治專區「抗藥性結核病醫療照護體系（TMTC）」段落與疾病頁專業版防治計畫。",
+      "note": "併入防治專區「抗藥性結核病醫療照護體系（TMTC）」段落與疾病頁專業版防治計畫。　【匯入 2026-10-03】草稿 page.tb-mdr（信心 1；既有內容已存在，供比對）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -566,7 +572,7 @@
       "oldType": "list",
       "verified": false,
       "status": "pending",
-      "note": "名單需轉為結構化資料集（院所代碼、地址、聯絡窗口）並建立更新頻率後上架；完成前保留舊頁。",
+      "note": "名單需轉為結構化資料集（院所代碼、地址、聯絡窗口）並建立更新頻率後上架；完成前保留舊頁。　【匯入 2026-10-03】草稿 page.tb-mdr-hospitals（信心 0.8）",
       "newRequirements": [
         "owner",
         "structuredData",
@@ -583,7 +589,7 @@
       "verified": false,
       "status": "merged",
       "target": "topic.tb-prevention",
-      "note": "計畫目標與策略併入防治專區；年度成果改由新聞稿與資料集呈現。",
+      "note": "計畫目標與策略併入防治專區；年度成果改由新聞稿與資料集呈現。　【匯入 2026-10-03】草稿 page.tb-end-tb-2035（信心 1；既有內容已存在，供比對）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -601,7 +607,7 @@
       "verified": false,
       "status": "merged",
       "target": "topic.tb-prevention",
-      "note": "矯正機關、長照機構、移工、山地鄉等族群篩檢併入防治專區與疾病頁專業版。",
+      "note": "矯正機關、長照機構、移工、山地鄉等族群篩檢併入防治專區與疾病頁專業版。　【匯入 2026-10-03】草稿 page.tb-high-risk（信心 1；既有內容已存在，供比對）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -619,7 +625,7 @@
       "verified": false,
       "status": "migrated",
       "target": "service.tb-treatment-subsidy",
-      "note": "改為申請服務頁，載明法源、步驟與聯絡窗口。",
+      "note": "改為申請服務頁，載明法源、步驟與聯絡窗口。　【匯入 2026-10-03】草稿 page.tb-subsidy（信心 1；既有內容已存在，供比對）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -638,7 +644,7 @@
       "verified": false,
       "status": "merged",
       "target": "faq.tb-foreigner-health-check",
-      "note": "併入 Q&A；移工多語素材見新住民與移工健康專區。",
+      "note": "併入 Q&A；移工多語素材見新住民與移工健康專區。　【匯入 2026-10-03】草稿 page.tb-foreigner（信心 1；既有內容已存在，供比對）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -661,7 +667,8 @@
         "owner",
         "reviewedAt",
         "license"
-      ]
+      ],
+      "note": "【匯入 2026-10-03】草稿 page.tb-research（信心 1；既有內容已存在，供比對）"
     },
     {
       "key": "training-slides",
@@ -671,7 +678,7 @@
       "oldType": "pdf",
       "verified": false,
       "status": "pending",
-      "note": "投影片 40 餘份，待權責單位挑選現行版本、補講者備註與機讀摘要後上架；過期教材不移轉。",
+      "note": "投影片 40 餘份，待權責單位挑選現行版本、補講者備註與機讀摘要後上架；過期教材不移轉。　【匯入 2026-10-03】草稿 page.tb-training-slides（信心 0.3；需人工檢視）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -689,7 +696,7 @@
       "verified": false,
       "status": "merged",
       "target": "topic.tb-prevention",
-      "note": "外部連結併入防治專區，納入每日連結健康檢查。",
+      "note": "外部連結併入防治專區，納入每日連結健康檢查。　【匯入 2026-10-03】草稿 page.tb-links（信心 0.4；既有內容已存在，供比對；需人工檢視）",
       "newRequirements": [
         "owner",
         "linkCheck"
@@ -704,7 +711,7 @@
       "verified": false,
       "status": "merged",
       "target": "disease.tuberculosis",
-      "note": "疾病頁自動帶出關聯新聞；新聞稿依據正本修訂時自動加註。",
+      "note": "疾病頁自動帶出關聯新聞；新聞稿依據正本修訂時自動加註。　【匯入 2026-10-03】草稿 page.tb-news-list（信心 0.6；既有內容已存在，供比對）",
       "newRequirements": [
         "basedOn"
       ]
@@ -721,7 +728,8 @@
       "newRequirements": [
         "owner",
         "basedOn"
-      ]
+      ],
+      "note": "【匯入 2026-10-03】草稿 news.2025-03-24-world-tb-day（信心 1；既有內容已存在，供比對）"
     },
     {
       "key": "event-2019",
@@ -731,7 +739,7 @@
       "oldType": "page",
       "verified": false,
       "status": "dropped",
-      "note": "過期活動頁（報名已於 2019 年截止），無保存價值；不移轉、不轉址，伺服器回 410。"
+      "note": "過期活動頁（報名已於 2019 年截止），無保存價值；不移轉、不轉址，伺服器回 410。　【匯入 2026-10-03】草稿 page.tb-event-2019（信心 0.8）"
     }
   ]
 }

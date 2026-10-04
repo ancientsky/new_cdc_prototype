@@ -1,0 +1,80 @@
+{
+  "id": "doc.tb-guideline.2022-03-01",
+  "type": "document",
+  "title": "結核病診治指引（第七版）",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2022-03-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "舊版結核病診治指引：新病人 2HRZE/4HR、多重抗藥性結核病採含注射劑長程處方、潛伏結核感染 9H／4R／3HP／3HR。本版已由第八版取代。",
+  "family": "doc.tb-guideline",
+  "docType": "guideline",
+  "version": "第七版",
+  "effectiveAt": "2022-03-01",
+  "machineReadableMarkdown": "| 項目 | 內容 |\n| --- | --- |\n| 文件名稱 | 結核病診治指引（第七版） |\n| 版次 | 第七版 |\n| 生效日 | 2022-03-01 |\n| 權責單位 | 慢性傳染病組 |\n| 檔案格式 | PDF |\n\n舊版結核病診治指引：新病人 2HRZE/4HR、多重抗藥性結核病採含注射劑長程處方、潛伏結核感染 9H／4R／3HP／3HR。本版已由第八版取代。\n\n### 第一章 診斷\n\n疑似肺結核病人應收集 3 套痰液（至少 1 套為晨痰）進行抗酸菌塗片與培養；具多重抗藥性結核病風險者（曾接受治療、來自高負擔國家、多重抗藥個案接觸者）加做分子快速檢測。胸部 X 光異常但痰檢查陰性者，由醫師綜合臨床判斷。\n\n### 第二章 藥物敏感結核病治療\n\n新病人標準處方為 2HRZE/4HR：前 2 個月 isoniazid、rifampin、pyrazinamide、ethambutol 四種藥物，後 4 個月 isoniazid、rifampin 兩種藥物，總療程至少 6 個月。治療滿 2 個月痰培養仍陽性者，應評估抗藥性並考慮延長治療。\n\n### 第三章 抗藥性結核病治療\n\n多重抗藥性結核病（MDR-TB）以含第二線注射劑之長程處方治療，療程 18 至 24 個月，轉介抗藥性結核病醫療照護團隊（TMTC）收治。\n\n下載：[結核病診治指引（第七版）PDF](/files/doc.tb-guideline.2022-03-01/tb-guideline-7th-1.pdf)",
+  "pdfUrl": "/files/doc.tb-guideline.2022-03-01/tb-guideline-7th-1.pdf",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Uploads/archives/%E7%B5%90%E6%A0%B8%E7%97%85%E8%A8%BA%E6%B2%BB%E6%8C%87%E5%BC%95%E7%AC%AC%E4%B8%83%E7%89%88.pdf"
+  ],
+  "assets": [
+    {
+      "file": "tb-guideline-7th-1.pdf",
+      "kind": "attachment",
+      "label": "結核病診治指引（第七版）PDF",
+      "mime": "application/pdf",
+      "bytes": 704,
+      "sha256": "1f4521ee0cb5a19ccc768e52a2af20cb87ce4b49f6907dac76c1774c128eb0ff",
+      "machineReadable": false,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 52 處（mso 樣式 18、Mso 類別 17、命名空間標籤 17）"
+      },
+      {
+        "code": "historical-version",
+        "severity": "info",
+        "message": "歷史版本：建議封存（舊版保留查閱），不取代現行版"
+      },
+      {
+        "code": "file-renamed",
+        "severity": "info",
+        "message": "檔名「結核病診治指引第七版.pdf」不合規則，改為 tb-guideline-7th-1.pdf"
+      },
+      {
+        "code": "pdf-no-text-layer",
+        "severity": "warn",
+        "message": "PDF「結核病診治指引第七版.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Uploads/archives/%E7%B5%90%E6%A0%B8%E7%97%85%E8%A8%BA%E6%B2%BB%E6%8C%87%E5%BC%95%E7%AC%AC%E4%B8%83%E7%89%88.pdf",
+    "convertedAt": "2026-10-04T13:56:12.582Z",
+    "existing": true,
+    "compareWith": [
+      "doc.tb-guideline.2022-03-01"
+    ]
+  }
+}

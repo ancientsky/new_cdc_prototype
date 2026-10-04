@@ -65,6 +65,57 @@
       "type": "string",
       "format": "date"
     },
+    "publishAt": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "string",
+          "format": "date"
+        }
+      ],
+      "description": "第九輪（ARCHITECTURE 17.1）排程發布：未到此時間（以建置當下真實時間判斷，不受 BUILD_TODAY 影響）⇒ 不渲染、不進索引／sitemap／API／RSS／llms.txt，後台列「排程中」。date-time 須帶時區（例 2026-10-05T09:00:00+08:00）；只填日期＝當日 00:00 台灣時間。主站每 2 小時重建一次，所以實際上線時間最多晚 2 小時。"
+    },
+    "urgent": {
+      "type": "boolean",
+      "description": "第九輪（17.1）緊急發布：只有 news／letter／clarification 可用；true ⇒ 走緊急發布車道（檢查通過即上線，公關室 24 小時內上線後複核）"
+    },
+    "postPublishReview": {
+      "type": "object",
+      "required": [
+        "status"
+      ],
+      "additionalProperties": false,
+      "description": "第九輪（17.1）上線後複核（快車道／緊急發布）：status 不是 done ⇒ 治理待辦 post-publish-review（owner 公關室，期限上線後 24 小時；逾期升為高優先）",
+      "properties": {
+        "status": {
+          "enum": [
+            "pending",
+            "done"
+          ]
+        },
+        "reviewedBy": {
+          "type": "string"
+        },
+        "reviewedAt": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "string",
+              "format": "date"
+            }
+          ]
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    },
     "reviewedAt": {
       "type": "string",
       "format": "date"
@@ -370,5 +421,31 @@
         }
       }
     }
-  }
+  },
+  "allOf": [
+    {
+      "$comment": "urgent:true 只限 news／letter／clarification（ARCHITECTURE 17.1）",
+      "if": {
+        "required": [
+          "urgent"
+        ],
+        "properties": {
+          "urgent": {
+            "const": true
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "type": {
+            "enum": [
+              "news",
+              "letter",
+              "clarification"
+            ]
+          }
+        }
+      }
+    }
+  ]
 }

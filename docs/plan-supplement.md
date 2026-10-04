@@ -21,6 +21,7 @@
 | F 工程慣例 | 27–28 | 附錄 B（API 規格）、§9 風險 |
 | G 規模化與多語（第六輪） | 29–31 | §7.8「內容移轉與網址治理」（補規模化）、多語言策略段落（補「來源語言」）、§1.8 子網站整合（國際合作區塊與英文站）、§7.5 品質指標（移轉進度） |
 | H 機關型事務的狀態化與個資（第七輪） | 32–34 | §1.1（第一層導覽含採購、人才）、§7.4 內容生命週期（補「事件型內容的階段推導」）、§6.1 共同規則（補「名單不由 AI 唸出」）、個資相關章節（補甄選結果的遮罩與保存） |
+| J 發布流程與舊站匯入（第九輪） | 37–39 | §7.1 內容管理與上架流程（補「分車道、CI 當審核者、預覽網址」）、§7.4 內容生命週期（補「排程發布與上線後複核」）、§8.2 第二階段「舊站轉址與封存」（補「匯出批次轉換與信心分級」）、§9 風險（補「預覽公開、自動合併的權限」） |
 | I 上架編輯與檔案資產（第八輪） | 35–36 | §7.1 內容管理與上架流程（補「編輯方式與正本格式」）、§5.1 資料層（補「檔案資產」）、無障礙章節（補 PDF 可及性與圖片替代文字）、§7.4 內容生命週期（補檔案的版本與下架）、§6.1 共同規則（補「含個資的檔不得上架」） |
 
 **最需要補進規劃的是 E 組。** 規劃在 §5.2 說「舊 CMS 內容經盤點後遷移或封存」、§8.2 列了「舊站轉址與封存」一行，但沒有寫轉址策略、搜尋引擎處理、舊站保留期與上線後監測；這正是新官網上線當天最容易出事的地方。詳細做法見 [migration-playbook.md](migration-playbook.md)。
@@ -41,7 +42,7 @@
 
 ### 2. CI 每日把官方資料快照 commit 回 repo
 
-- **做法**：GitHub Actions 每日 03:00 UTC 跑 `npm run fetch`，把旅遊疫情、國家等級、CKAN 目錄存成 `data/snapshots/*.json`，每檔帶 provenance（來源、抓取時間、`meta.mode: live|snapshot|derived`），排程與手動執行時 commit 回 `main`；抓不到時沿用上一份並記錄 `meta.lastLiveAttempt`。
+- **做法**：GitHub Actions 每日 02:00 UTC 跑 `npm run fetch`，把旅遊疫情、國家等級、CKAN 目錄存成 `data/snapshots/*.json`，每檔帶 provenance（來源、抓取時間、`meta.mode: live|snapshot|derived`），排程與手動執行時 commit 回 `main`；抓不到時沿用上一份並記錄 `meta.lastLiveAttempt`。
 - **為何需要**：靜態網站沒有後端，快照讓建置可重現（任何一個 commit 都能重建「當時的網站」）；抓取失敗降級而不是讓建置失敗，外部服務中斷不會拖垮官網。
 - **對應規劃章節**：§5.1 資料層（資料目錄、OpenAPI 閘道）；§7.5「資料集在更新頻率內更新」；§8.1 2027 Q2 知識檢索層。規劃只談目錄與閘道，沒談「怎麼穩定取得外部資料」。
 - **原型位置**：`.github/workflows/pages.yml`、`data/snapshots/`、`scripts/fetch-data.mjs`、[architecture-decisions.md](architecture-decisions.md) 第 6 項。
@@ -347,6 +348,32 @@
 - **原型位置**：`content/assets/**`、`schemas/_common.json`（`assets`）、`site.config.mjs`（`assets` 限制）、`scripts/lib/assets.mjs`、`scripts/gen-sample-assets.mjs`、`src/client/admin/assets-panel.js`、`src/client/admin/zip-store.js`、`tests/assets.test.mjs`、`/v1/catalog.json`；[assets-policy.md](assets-policy.md)；[governance-model.md](governance-model.md) 規則 22–24；[guide-staff.md](guide-staff.md) 第 2 節；ARCHITECTURE §16.1。
 - **正式上線還缺什麼**：病毒掃描與日誌（原型不做）；個資偵測工具（身分證字號、電話樣式、PDF 隱藏文字與中繼資料）；PDF 無障礙自動檢測（PDF/UA、標籤與閱讀順序，原型只有簡易偵測——宣告有文字層卻偵測不到時警告——其餘靠承辦人聲明 `machineReadable` 與複核抽查）；大檔案的儲存（Git LFS 或物件儲存＋CDN）與 repo 容量治理；檔案真刪與清除 Git 歷史的標準作業程序；去識別化的機關規範（資料檔小樣本）；保存年限與銷毀（檔案管理規定）；舊站 `/File/Get/{id}` 全量盤點與對應。
 
+## J. 發布流程與舊站匯入（第九輪）
+
+### 37. 發布車道、CI 當審核者、預覽網址：低風險內容自動上線，高風險內容人先審
+
+- **做法**：內容依型別分三條**發布車道**（`content/governance/lanes.json`）：**快車道**（新聞稿、通函、澄清、職缺、採購、Banner）CI 通過就自動合併上線，約 3 分鐘，上線後公關室 24 小時內複核；**一般車道**（疾病、疫苗、文件、Q&A、專區…）CI 通過還要 1 位審核人核准（一級內容為公關室＋OASIS），SLA 2 個工作天；**緊急發布**（疫情態勢，以及標 `urgent` 的新聞稿／通函／澄清）10 分鐘內上線。**CI 是第一位審核者**：schema、治理規則、評估集、檔案資產、連結全過才可能合併，人只審措辭與事實。每個 PR 有專屬**預覽網址** `…/preview/pr-{N}/`，審核人看到的就是上線後的樣子；PR 關閉自動清除。一個 PR 含多種內容時取最嚴格的車道；程式與設定變更一律一般車道；**多語不擋中文**。後台 `/admin/publish/` 型別選定就顯示車道徽章與一句說明，並可「模擬送出」看時間軸。
+- **為何需要**：規劃把「內容管理與上架流程」寫成簽核與複核四步，但沒有區分風險：全部先審，新聞稿與澄清稿失去時效；全部不審，疾病頁與 Q&A 這類 AI 引用的根據沒有把關。實務上承辦人也最在意「我要多按幾下」。把機器能判斷的交給 CI、把人力留給機器不能判斷的，再用預覽網址讓審核「看得見」，才能同時達到速度與治理，而且承辦人的按鍵數與舊後台相同（[publishing-lanes.md](publishing-lanes.md) 第 11 節）。
+- **對應規劃章節**：§7.1 內容管理與上架流程（複核四步）；§7.4 內容生命週期；§9 風險（誤發布）。規劃**沒有**寫車道、自動合併與預覽環境。
+- **原型位置**：`content/governance/lanes.json`、`scripts/lib/lanes.mjs`、`scripts/lane.mjs`、`.github/workflows/{content-pr,preview-cleanup,lane-sla,pages}.yml`、`.github/CODEOWNERS`、治理引擎 `gov.lane`、`/admin/publish/`（`src/client/admin/preprocess.js` 的車道函式）、`tests/lanes.test.mjs`、`tests/admin-lanes.test.mjs`；[publishing-lanes.md](publishing-lanes.md)；[governance-model.md](governance-model.md) 規則 25；[guide-staff.md](guide-staff.md) 第 2.8 節；ARCHITECTURE §17.1–17.2。
+- **正式上線還缺什麼**：把原型的 GitHub 流程換成機關可控的 Git 服務與 CI（流程與 `lanes.json` 與平台無關，只有 workflow 要改寫）；**預覽環境的存取控制**（原型的預覽目錄是公開的）；團隊／群組與分支保護、管理員繞過留紀錄；承辦人不會 Git，需有後端或表單服務代開 PR（原型只能下載上架包）；車道範圍、SLA 與審核人名單由資料治理委員會核定；國定假日行事曆（SLA 工作天）；帳號雙因素與簽章；試行兩個月的實測（附錄 B 待補）。
+
+### 38. 排程發布與緊急發布、上線後複核
+
+- **做法**：內容可填 `publishAt`（臺北時間）：未到點**不渲染、不進搜尋索引、sitemap、API、RSS、`llms.txt`**，檔案資產也不複製，AI 不引用；主站每 2 小時重建一次，到點後的下一次建置自動上線（以真實時間判斷，不受 `BUILD_TODAY` 影響）。`urgent: true` 只限新聞稿、通函、澄清，走緊急車道，CI 仍要全過。快車道與緊急發布的內容上線後，治理引擎自動開待辦 `post-publish-review`（公關室，上線後 24 小時內，逾期升為高優先），複核完成在內容標 `postPublishReview.status: done`。後台預檢：urgent 只能用在允許型別、`publishAt` 必須晚於現在。
+- **為何需要**：記者會同步發稿、疫苗開打日公告等「預定時間」靠人到點去按一定會出事；重大疫情的澄清稿又需要明確的快速通道，否則承辦人不確定能不能跳過流程。快速上線的代價是事後可能發現錯誤，所以**上線後複核必須是系統開的待辦，不是靠人記得**。
+- **對應規劃章節**：§7.4 內容生命週期（只有審閱週期，沒有排程與上線後複核）；§7.7 過時資訊防治；規劃的「發布」是單一動作，沒有「預定」與「緊急」。
+- **原型位置**：`schemas/_common.json`（`publishAt`、`urgent`、`postPublishReview`）、`scripts/lib/{lanes,governance,emit-api,emit-seo}.mjs`、`scripts/build.mjs`（排程中過濾）、`.github/workflows/pages.yml`（每 2 小時）、`/admin/publish/`（發布時間、緊急發布、預檢）、`tests/lanes.test.mjs`；[governance-model.md](governance-model.md) 規則 26；[guide-staff.md](guide-staff.md) 第 2.9 節；ARCHITECTURE §17.1。
+- **正式上線還缺什麼**：精準排程（現為每 2 小時重建，延遲最多 2 小時；正式環境可在 `publishAt` 觸發一次部署）；緊急發布的通知管道（簡訊、LINE、值班電話；原型只有待辦）；緊急發布使用次數與理由納入季報；公關室複核的人力與值班安排；排程內容的後台清單（原型的治理引擎已標「排程中」）。
+
+### 39. 舊站匯出批次轉換：自動草稿、信心分級、人工檢視
+
+- **做法**：資訊室從舊 CMS 匯出每頁 `.html`＋`.json` 側檔（url、title、category、publishedAt、updatedAt、breadcrumbs、attachments）與附件檔；`scripts/import-legacy.mjs` 依**規則檔**（`content/migration/import/_import-rules.json`：URL 模式→型別與目錄、類別→權責單位、疾病別名→疾病 id、標題關鍵字→疾病頁區塊、Bulletin typeid→新聞類型）把每頁轉成內容**草稿**（`status: 'review'`、帶 `conversion`：信心 0–1、問題清單、來源網址）、搬附件並宣告 `assets`，輸出批次報告（逐頁來源、型別、目標、信心、問題、建議動作）與移轉清單更新建議。信心 < 0.6 一定人工檢視。處理分三級：**現行一級內容人工逐頁確認**、**近年新聞自動上線（走快車道）**、**久遠內容封存**；**PDF 不整批轉**，只宣告為附件。結核病 40 個舊頁做為第一批實測。
+- **為何需要**：規劃把「舊內容遷移」寫成盤點後遷移或封存，沒有說明**怎麼轉**。舊站有大量舊頁，手工逐頁複製貼上既不可能也容易漏；全自動又會把 Word 殘留樣式、斷掉的表格、沒有 alt 的圖片帶進新站。折衷是機器做 80% 的體力活並誠實標出信心，人只看有疑慮的。規則寫成資料，正式批次先改規則再跑，才可重複。
+- **對應規劃章節**：§5.2 資料與內容層（「舊 CMS 內容經盤點後遷移或封存」）；§7.4 上線前盤點；§8.2 第二階段「舊站轉址與封存」。
+- **原型位置**：`scripts/import-legacy.mjs`、`scripts/lib/legacy-import/**`、`content/migration/import/_import-rules.json`、`data/legacy-export/tuberculosis/`（模擬匯出）、`data/legacy-import/tuberculosis/`（草稿與報告）、`/admin/import/`、`tests/import-legacy.test.mjs`；[legacy-import.md](legacy-import.md)；[governance-model.md](governance-model.md) 規則 27；[guide-staff.md](guide-staff.md) 第 15.14 節；ARCHITECTURE §17.3。
+- **正式上線還缺什麼**：**真實匯出**（開發環境連不到舊站，結核病批次用的是依既有內容反推的**模擬匯出**，HTML 版型與真實舊站可能不同，規則要在真實樣本上調校）；匯出格式由資訊室實作並與規格核對；各欄目的類別→單位對照表；信心門檻（0.6、0.8）用真實批次校準；轉換品質的抽樣檢視（建議每批 10%）；久遠內容封存年限由委員會議定；PDF 的選擇性轉換（只轉現行有效、有需要的）。
+
 ---
 
 ## 彙整：哪些最急
@@ -358,4 +385,5 @@
 | 3 | 6–7（影音過時與逐字稿） | MMR 事件的直接教訓 |
 | 4 | 29（推導移轉清單）、30–31（sourceLang、國際合作雙語）、33（甄選結果個資遮罩） | 29 決定全站移轉能否在上線前清零（需要舊站 ID 對照）；30–31 影響英文站與國際窗口的資訊正確性；33 是個資外洩的最後一道閘門，正式上線前須定案 |
 | 5 | 36（檔案資產閘門：病毒掃描、個資偵測、PDF 無障礙檢測） | 檔案是個資與無障礙缺口最容易出現的地方，上線前必須定案掃描與刪除流程 |
-| 6 | 其餘 | 品質與體驗，可隨第二階段分批 |
+| 6 | 37（車道、預覽網址：預覽的存取控制、承辦人不會 Git 的代開 PR）、39（匯出批次轉換：真實匯出與規則校準） | 37 的預覽目錄在原型是公開的，正式環境不先處理就等於未審內容外洩；39 決定舊站大量舊頁能否在時程內進新站，且規則必須用真實樣本調校 |
+| 7 | 其餘 | 品質與體驗，可隨第二階段分批 |

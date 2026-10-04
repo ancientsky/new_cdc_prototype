@@ -8,6 +8,8 @@
 import { config } from '../../site.config.mjs';
 import { makeUrl } from './render.mjs';
 import { pathOf, mdPathOf, NOTICE_TYPES } from './governance.mjs';
+// 第九輪（ARCHITECTURE 17.1）：排程中（publishAt 未到）內容不進 sitemap／llms.txt／RSS：各輸出函式先換成 publicView，再以 isPublic() 過濾
+import { isPublic, nowOf, publicView } from './lanes.mjs';
 
 const LANGS = () => config.langs.map((l) => l.code);
 const urlFns = new Map();
@@ -32,10 +34,12 @@ export const LOCALIZED_STATIC_PATHS = ['/', '/situation/', '/diseases/', '/vacci
 const EXCLUDE = [/^\/admin\//, /^\/ask\//, /^\/404\.html$/, /^\/careers\/[^/]+\/apply\//];
 
 /** 由集合推算全部可索引頁面：[{ path, lang, lastmod, group }] */
-export function derivePages(site) {
+export function derivePages(fullSite) {
+  const site = publicView(fullSite);
+  const now = nowOf(site);
   const c = site.collections;
-  const pub = (arr) => (arr ?? []).filter((i) => i.status === 'published' && !i.gov?.superseded && !i.gov?.scheduled);
-  const latest = maxDate(site.all.filter((i) => i.status === 'published').map((i) => i.reviewedAt)) ?? site.today;
+  const pub = (arr) => (arr ?? []).filter((i) => isPublic(i, now) && !i.gov?.superseded && !i.gov?.scheduled);
+  const latest = maxDate(site.all.filter((i) => isPublic(i, now)).map((i) => i.reviewedAt)) ?? site.today;
   const out = [];
   const add = (path, langs, lastmod, group) => { for (const lang of langs) out.push({ path, lang, lastmod, group }); };
   const groupMax = (arr) => maxDate(arr.map((i) => i.reviewedAt)) ?? latest;
@@ -56,7 +60,8 @@ export function derivePages(site) {
 }
 
 /** 由模板實際收集頁面（async；整合者可用來取代推算） */
-export async function collectPages(site) {
+export async function collectPages(fullSite) {
+  const site = publicView(fullSite);
   const { loadTemplates } = await import('./pages.mjs');
   const mods = await loadTemplates();
   const out = [];
@@ -76,7 +81,8 @@ function groupOf(path) {
 }
 
 function normalizePages(site, pages) {
-  const byPath = new Map(site.all.map((i) => [pathOf(i), i]));
+  // 用完整 site 對照：排程中內容 gov.noindex=true ⇒ 即使頁面清單裡有也排除
+  const byPath = new Map((site.fullSite ?? site).all.map((i) => [pathOf(i), i]));
   const latest = maxDate(site.all.map((i) => i.reviewedAt)) ?? site.today;
   return pages
     .filter((p) => !p.noindex && !p.file && p.path.endsWith('/') && !EXCLUDE.some((re) => re.test(p.path)))
@@ -128,6 +134,8 @@ export function buildRobots(site) {
   for (const l of config.langs) for (const p of ['/ask/', '/admin/']) disallow.push(`${base}${l.path}${p}`);
   // 第七輪：職缺模擬報名頁（/careers/{slug}/apply/）不給爬蟲（頁面另有 noindex）；* 萬用字元為主要搜尋引擎支援的擴充語法
   for (const l of config.langs) disallow.push(`${base}${l.path}/careers/*/apply/`);
+  // 第九輪（17.2）：PR 預覽站（previews 分支複製到 /preview/pr-{N}/）不給爬蟲
+  disallow.push(`${base}/preview/`);
   const uniqDis = [...new Set(disallow)];
   const block = (agents, rules) => `${agents.map((a) => `User-agent: ${a}`).join('\n')}\n${rules.join('\n')}`;
   const allowRules = [`Allow: ${base}/`, ...uniqDis.map((d) => `Disallow: ${d}`)];
@@ -174,10 +182,12 @@ const L10N = {
 
 const tr = (item, lang, field) => (lang === 'zh-TW' ? item[field] : item.i18n?.[lang]?.[field] ?? item[field]);
 
-export function buildLlms(site, lang = 'zh-TW') {
+export function buildLlms(fullSite, lang = 'zh-TW') {
+  const site = publicView(fullSite);
+  const now = nowOf(site);
   const T = { ...L10N.en, ...(L10N[lang] ?? {}) };
   const c = site.collections;
-  const ok = (i) => i.status === 'published' && !i.gov?.superseded && !i.gov?.scheduled && (i.gov?.renderableLangs ?? ['zh-TW']).includes(lang);
+  const ok = (i) => isPublic(i, now) && !i.gov?.superseded && !i.gov?.scheduled && (i.gov?.renderableLangs ?? ['zh-TW']).includes(lang);
   const line = (i) => {
     const md = mdPathOf(i);
     const title = tr(i, lang, i.type === 'faq' ? 'question' : 'title') ?? i.title;
@@ -267,9 +277,12 @@ export function bibOf(p) {
   ].filter(Boolean).join('，');
 }
 
-export function buildFeeds(site) {
+export function buildFeeds(fullSite) {
+  const site = publicView(fullSite);
+  const now = nowOf(site);
+  const live = (i) => isPublic(i, now);
   const c = site.collections;
-  const news = (c.news ?? []).filter((n) => n.status === 'published').sort((a, b) => b.publishedAt.localeCompare(a.publishedAt) || a.id.localeCompare(b.id)).slice(0, 50);
+  const news = (c.news ?? []).filter(live).sort((a, b) => b.publishedAt.localeCompare(a.publishedAt) || a.id.localeCompare(b.id)).slice(0, 50);
   const newsXml = rss({
     title: `${config.name} 新聞稿與通函`, link: absUrl('/news/'), self: apiUrl('/feeds/news.xml'), description: '新聞稿、致醫界通函、澄清稿；所依據正本修訂時自動加註。',
     lastBuild: maxDate(news.map((n) => n.reviewedAt)) ?? site.today,
@@ -278,7 +291,7 @@ export function buildFeeds(site) {
       description: [n.summary, ...(n.gov?.annotations ?? []).filter((a) => a.kind === 'based-on-revised').map((a) => `【加註】${a.text}`)].join(' '),
     })),
   });
-  const docs = (c.documents ?? []).filter((d) => d.status === 'published' || d.status === 'archived').sort((a, b) => (b.effectiveAt ?? '').localeCompare(a.effectiveAt ?? '') || a.id.localeCompare(b.id));
+  const docs = (c.documents ?? []).filter((d) => isPublic(d, now, { archived: true })).sort((a, b) => (b.effectiveAt ?? '').localeCompare(a.effectiveAt ?? '') || a.id.localeCompare(b.id));
   const docItems = [];
   for (const d of docs) {
     const prev = d.supersedes ? site.byId.get(d.supersedes) : null;
@@ -299,7 +312,7 @@ export function buildFeeds(site) {
   }));
   const sitXml = rss({ title: `${config.name} 疫情態勢`, link: absUrl('/situation/'), self: apiUrl('/feeds/situation.xml'), description: '疫情中心人工發布的各疾病態勢（四級）。', lastBuild: sit.publishedAt ?? site.today, items: sitItems });
   // 出版品
-  const pubList = (c.publications ?? []).filter((p) => p.status === 'published').sort((a, b) => b.publishedAt.localeCompare(a.publishedAt) || a.id.localeCompare(b.id)).slice(0, 50);
+  const pubList = (c.publications ?? []).filter(live).sort((a, b) => b.publishedAt.localeCompare(a.publishedAt) || a.id.localeCompare(b.id)).slice(0, 50);
   const pubXml = rss({
     title: `${config.name} 出版品`, link: absUrl('/publications/'), self: apiUrl('/feeds/publications.xml'), description: '疫情報導卷期、年報、手冊、海報等出版品（guid＝出版品 id）。',
     lastBuild: maxDate(pubList.map((p) => p.publishedAt)) ?? site.today,
@@ -310,7 +323,7 @@ export function buildFeeds(site) {
   });
   // 機關公告
   const NOTICE_LABEL = { recruit: '人才招募', procurement: '採購公告', other: '其他訊息' }; // recruit／procurement：第七輪前相容
-  const notices = (c.news ?? []).filter((n) => n.status === 'published' && NOTICE_TYPES.has(n.newsType)).sort((a, b) => b.publishedAt.localeCompare(a.publishedAt) || a.id.localeCompare(b.id)).slice(0, 50);
+  const notices = (c.news ?? []).filter((n) => live(n) && NOTICE_TYPES.has(n.newsType)).sort((a, b) => b.publishedAt.localeCompare(a.publishedAt) || a.id.localeCompare(b.id)).slice(0, 50);
   const noticeXml = rss({
     title: `${config.name} 機關公告`, link: absUrl('/notices/'), self: apiUrl('/feeds/notices.xml'), description: '其他機關公告（含字號與截止日，截止後標示「已截止」）；人才招募見 feeds/careers.xml、採購公告見 feeds/procurement.xml。',
     lastBuild: maxDate(notices.map((n) => n.publishedAt)) ?? site.today,
@@ -321,7 +334,7 @@ export function buildFeeds(site) {
   });
   // 第七輪：人才招募（職缺公告一筆＋甄選結果一筆＋每次遞補一筆；名單不放進 feed，只給結果頁連結）
   const unitName = (id) => site.unitById?.get(id)?.name ?? id;
-  const jobsPub = (c.jobs ?? []).filter((j) => j.status === 'published');
+  const jobsPub = (c.jobs ?? []).filter(live);
   const careerItems = [];
   for (const j of jobsPub) {
     careerItems.push({
@@ -344,7 +357,7 @@ export function buildFeeds(site) {
     lastBuild: maxDate(careerItems.map((x) => x.date)) ?? site.today, items: careerItems.slice(0, 50),
   });
   // 第七輪：採購公告（招標公告一筆＋決標／流標一筆）
-  const tendersPub = (c.tenders ?? []).filter((x) => x.status === 'published');
+  const tendersPub = (c.tenders ?? []).filter(live);
   const procItems = [];
   const ntd = (n) => `新臺幣 ${Number(n).toLocaleString('en-US')} 元`;
   for (const x of tendersPub) {

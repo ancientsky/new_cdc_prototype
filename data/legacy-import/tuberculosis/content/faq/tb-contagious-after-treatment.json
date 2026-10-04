@@ -1,0 +1,52 @@
+{
+  "id": "faq.tb-contagious-after-treatment",
+  "type": "faq",
+  "title": "結核病開始吃藥後，還會傳染給家人嗎？",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2020-03-24",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "開始規則服藥約 2 週後，傳染力會明顯下降，但仍須完成至少 6 個月的完整療程，才能真正治癒。治療初期請：",
+  "question": "結核病開始吃藥後，還會傳染給家人嗎？",
+  "answerMarkdown": "開始規則服藥約 2 週後，傳染力會明顯下降，但仍須完成至少 6 個月的完整療程，才能真正治癒。治療初期請：\n\n- 咳嗽、打噴嚏時戴口罩或以衛生紙掩住口鼻；\n- 居家保持通風，避免長時間待在密閉空間與人近距離接觸；\n- 配合衛生所安排家人做接觸者檢查。\n\n結核病不會經由共用餐具、握手或衣物傳染，家人不需要分開碗筷。是否可以回到學校或職場，請依醫師與衛生所評估。",
+  "basedOn": [
+    "disease.tuberculosis"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/ZW0TrgKarQJWRWZrMIWzeq"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 79 處（mso 樣式 45、Mso 類別 20、命名空間標籤 17）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/ZW0TrgKarQJWRWZrMIWzeq",
+    "convertedAt": "2026-10-04T13:56:12.582Z",
+    "existing": true,
+    "compareWith": [
+      "faq.tb-contagious-after-treatment"
+    ]
+  }
+}

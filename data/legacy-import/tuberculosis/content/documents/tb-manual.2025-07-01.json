@@ -1,0 +1,70 @@
+{
+  "id": "doc.tb-manual.2025-07-01",
+  "type": "document",
+  "title": "結核病防治工作手冊",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2025-07-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "結核病診斷、通報、治療（含都治）、接觸者檢查與潛伏結核感染治療之作業規定。 疑似肺結核病人應連續收集 3 套痰液（至少 1 套為晨痰）進行塗片、培養及分子快速檢測。醫師開立 2 種以上抗結核藥物治療時即應通報，於一週內完成。",
+  "family": "doc.tb-manual",
+  "docType": "manual",
+  "version": "2025-07-01",
+  "effectiveAt": "2025-07-01",
+  "machineReadableMarkdown": "| 項目 | 內容 |\n| --- | --- |\n| 文件名稱 | 結核病防治工作手冊 |\n| 版次 | 2025 |\n| 生效日 | 2025-07-01 |\n| 權責單位 | 慢性傳染病組 |\n| 檔案格式 | PDF |\n\n結核病診斷、通報、治療（含都治）、接觸者檢查與潛伏結核感染治療之作業規定。\n\n### 第一章 診斷與通報\n\n疑似肺結核病人應連續收集 3 套痰液（至少 1 套為晨痰）進行塗片、培養及分子快速檢測。醫師開立 2 種以上抗結核藥物治療時即應通報，於一週內完成。\n\n### 第二章 治療\n\n新病人標準處方為 2HRZE/4HR。治療期間每月追蹤痰液與副作用；治療滿 2 個月痰培養仍陽性者，應評估抗藥性及延長治療。\n\n### 第三章 都治（DOTS）\n\n所有確診病人應納入都治，由關懷員每日送藥並目視服藥，完整記錄服藥情形。病人中斷服藥 3 日以上，關懷員應通報個案管理師追蹤。\n\n下載：[結核病防治工作手冊 PDF](/files/doc.tb-manual.2025-07-01/tb-manual-2025.pdf)",
+  "pdfUrl": "/files/doc.tb-manual.2025-07-01/tb-manual-2025.pdf",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/File/Get/IYwaS2qZ19saaWSRCrUUT8"
+  ],
+  "assets": [
+    {
+      "file": "tb-manual-2025.pdf",
+      "kind": "attachment",
+      "label": "結核病防治工作手冊 PDF",
+      "mime": "application/pdf",
+      "bytes": 791,
+      "sha256": "197e5ff11efdf01f586506f4b6d7e04f94b096c39d45e5f2edb84f4096f9af71",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 52 處（mso 樣式 18、Mso 類別 17、命名空間標籤 17）"
+      },
+      {
+        "code": "version-unknown",
+        "severity": "info",
+        "message": "標題看不出版次，version 暫填 2025-07-01"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/File/Get/IYwaS2qZ19saaWSRCrUUT8",
+    "convertedAt": "2026-10-04T13:56:12.582Z",
+    "existing": true,
+    "compareWith": [
+      "doc.tb-manual.2025-07-01"
+    ]
+  }
+}

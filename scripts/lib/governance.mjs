@@ -49,6 +49,15 @@
 //      外部連結健康（R11）不檢 /files/（站內檔案由建置後連結檢查確認存在）。
 //  R18 採購公告（tender）：gov.tenderStage＝manualStatus（failed／cancelled）＞ awarded（有 award）＞ open（today ≤ deadlineAt）
 //      ＞ opened（today ≥ openingAt）＞ closed。待辦 tender-award-overdue（openingAt + 30 日仍無 award 且非 failed／cancelled，owner 秘書室、cc 需求單位）。
+// 第九輪（ARCHITECTURE 17.1）：
+//  R20 發布車道：gov.lane＝laneOfItem（content/governance/lanes.json：urgent:true 且型別允許 ⇒ emergency；否則依型別 fast／standard）、gov.laneLabel。
+//  R21 排程發布：publishAt > 現在（真實時間 site.now／BUILD_NOW／Date.now()，不用 BUILD_TODAY）⇒ gov.publishScheduled、gov.scheduled、
+//      lifecycle scheduled「排程中」、noindex、退出白名單（scheduled）、不算 totalPublished；對外輸出一律經 scripts/lib/lanes.mjs 的
+//      isPublic()／publicView()（不渲染、不進索引／sitemap／API／RSS／llms.txt）。後台拿完整 site，列「排程中」。
+//  R22 上線後複核：快車道／緊急發布已上線（isPublic）且 postPublishReview.status ≠ done ⇒ 待辦 post-publish-review
+//      （owner 公關室〔lanes.json postPublishReviewer〕、cc 原 owner，期限＝上線時間（publishAt 或 publishedAt 00:00 台灣時間）+ 24h，
+//      中優先；已過期限 ⇒ high、overdue）。車道上線前（lanes.json rules.postPublishReviewSince）發布且未宣告 postPublishReview 的舊內容不追溯。
+//      PR 的 SLA 逾期（lane-sla-breach）是 CI 在 PR 上標籤與留言（.github/workflows/lane-sla.yml），不是建置待辦。
 // annotations[]：{ kind, level, text, href（目標內容 id，沿用骨架語意）, targetId, path（目標前台路徑） }
 //  另：白名單型別政策（allowedTypes 民眾＋專業、allowedTypesPro 只進專業）、失效版仍被引用、態勢層逾期。
 import { createHash } from 'node:crypto';
@@ -57,6 +66,7 @@ import { jobPiiErrors } from './validate.mjs';
 import { setAssetRegistry } from './markdown.mjs';
 import { assetRegistryOf, assetUrl, extOf, imageLicenseProblems, needsAccessibleVersion } from './assets.mjs';
 import { siteOrigin } from '../../site.config.mjs';
+import { loadLanes, laneOfItem, isScheduled, isPublic, nowOf, publishAtMs, taipeiDate, taipeiTime } from './lanes.mjs';
 
 // ───────────────────────── 常數與對照表 ─────────────────────────
 
@@ -67,6 +77,7 @@ export const WHITELIST_REASON_LABELS = {
   'type-not-allowed': '此內容型別不在白名單政策內',
   sensitivity: '敏感等級不允許（內部資料，或專業資料不得進民眾端）',
   'not-yet-effective': '本版尚未生效',
+  scheduled: '排程發布，尚未上線',
   superseded: '已由新版取代（失效版本）',
   overdue: '已超過審閱期限，待權責單位重新審閱',
   'based-on-revised': '所依據的正本已修訂，衍生內容尚未更新',
@@ -107,7 +118,10 @@ export const TODO_KIND_LABELS = {
   'attachment-no-accessible-version': 'PDF 附件缺可及性版本',
   'image-license-missing': '圖片授權或來源待確認',
   'asset-orphan': '未宣告的孤兒檔',
+  'post-publish-review': '上線後複核',
 };
+/** 排程發布（publishAt 未到）的生命週期顯示文字（lifecycle 仍為 scheduled，與文件「尚未生效」共用代碼） */
+export const SCHEDULED_PUBLISH_LABEL = '排程中';
 /** 檔案資產待辦期限（日） */
 export const ASSET_FIX_DAYS = 30;
 
@@ -312,6 +326,9 @@ export function langRenderable(site, item, lang) {
 export function applyGovernance(site) {
   const today = site.today;
   const cfg = site.config;
+  // 第九輪：排程發布以真實現在時間判斷（測試以 site.now 注入）；車道設定可由 site.governance.lanes 覆寫
+  const now = nowOf(site);
+  const lanesCfg = site.governance?.lanes ?? loadLanes();
   const policy = site.governance?.whitelist ?? {};
   const allowedPublic = new Set(policy.allowedTypes ?? []);
   const allowedPro = new Set(policy.allowedTypesPro ?? []);
@@ -344,7 +361,8 @@ export function applyGovernance(site) {
   const familyInfo = new Map();
   for (const [family, versions] of docsByFamily) {
     versions.sort(byEff);
-    const effective = versions.filter((v) => v.status === 'published' && (v.effectiveAt ?? '') <= today);
+    // 排程發布（publishAt 未到）的版本還沒上線，不能取代現行版（R21）
+    const effective = versions.filter((v) => v.status === 'published' && (v.effectiveAt ?? '') <= today && !isScheduled(v, now));
     const current = effective.at(-1) ?? null;
     for (const v of versions) {
       v.isCurrent = v === current;
@@ -438,6 +456,19 @@ export function applyGovernance(site) {
       } else if (gov.scheduled) {
         gov.annotations.push({ kind: 'scheduled', level: 'info', text: `本版將於 ${item.effectiveAt} 生效${current ? `；生效前請以「${current.title}」為準` : ''}。`, href: current?.id ?? null, targetId: current?.id ?? null, path: current ? pathOf(current) : null });
       }
+    }
+
+    // R20 發布車道、R21 排程發布（publishAt 未到）
+    gov.lane = laneOfItem(item, lanesCfg);
+    gov.laneLabel = lanesCfg.lanes?.[gov.lane]?.label ?? gov.lane;
+    gov.publishAt = item.publishAt ?? null;
+    gov.publishScheduled = published && isScheduled(item, now);
+    if (gov.publishScheduled) {
+      const at = publishAtMs(item.publishAt);
+      gov.scheduled = true;
+      gov.noindex = true;
+      gov.publishAtLocal = taipeiTime(at);
+      gov.annotations.push({ kind: 'scheduled', level: 'info', text: `本內容排程於 ${taipeiTime(at)}（台灣時間）上線；上線前不對外輸出。`, href: null, targetId: null, path: null, publishAt: item.publishAt });
     }
 
     // R1 逾期（只對已發布且非失效內容；新聞稿 nextReviewAt=null 不逾期）
@@ -572,7 +603,8 @@ export function applyGovernance(site) {
     if (item.status !== 'published') r.push('not-published');
     if (!gov.whitelist.tier) r.push('type-not-allowed');
     if (item.sensitivity === 'internal' || (item.sensitivity === 'professional' && gov.whitelist.tier !== 'pro')) r.push('sensitivity');
-    if (gov.scheduled) r.push('not-yet-effective');
+    if (gov.publishScheduled) r.push('scheduled');
+    else if (gov.scheduled) r.push('not-yet-effective');
     if (gov.superseded) r.push('superseded');
     if (gov.overdue) r.push('overdue');
     if (gov.stale.length) r.push('based-on-revised');
@@ -582,7 +614,7 @@ export function applyGovernance(site) {
     gov.whitelist.reasonLabels = r.map((x) => WHITELIST_REASON_LABELS[x] ?? x);
     gov.whitelist.public = gov.whitelist.effective && gov.whitelist.tier === 'public' && (item.audience ?? []).includes('public');
     gov.whitelist.pro = gov.whitelist.effective;
-    if (item.status === 'published') totalPublished++;
+    if (item.status === 'published' && !gov.publishScheduled) totalPublished++;
     if (gov.whitelist.effective) whitelistCount++;
 
     // 生命週期標籤
@@ -595,7 +627,27 @@ export function applyGovernance(site) {
       : gov.overdue ? 'overdue'
       : gov.stale.length || gov.predatesBasis ? 'based-on-revised'
       : 'current';
-    gov.lifecycleLabel = LIFECYCLE_LABELS[gov.lifecycle];
+    gov.lifecycleLabel = gov.lifecycle === 'scheduled' && gov.publishScheduled ? SCHEDULED_PUBLISH_LABEL : LIFECYCLE_LABELS[gov.lifecycle];
+
+    // R22 上線後複核（快車道／緊急發布）
+    const laneDef = lanesCfg.lanes?.[gov.lane];
+    if (laneDef?.postPublishReviewHours && isPublic(item, now)) {
+      const st = item.postPublishReview?.status ?? null;
+      const since = lanesCfg.rules?.postPublishReviewSince ?? '0000-00-00';
+      const inScope = !!item.postPublishReview || item.urgent === true || !!item.publishAt || (item.publishedAt ?? '') >= since;
+      if (inScope) {
+        const liveAt = Math.max(publishAtMs(item.publishAt) ?? 0, publishAtMs(item.publishedAt) ?? 0);
+        const dueMs = liveAt + laneDef.postPublishReviewHours * 3600e3;
+        const done = st === 'done';
+        const ppOverdue = !done && now > dueMs;
+        gov.postPublishReview = { required: true, status: st ?? 'pending', done, dueAt: new Date(dueMs).toISOString(), dueAtLocal: taipeiTime(dueMs), overdue: ppOverdue, reviewer: laneDef.postPublishReviewer ?? 'unit.pr', reviewedBy: item.postPublishReview?.reviewedBy ?? null, reviewedAt: item.postPublishReview?.reviewedAt ?? null };
+        if (!done) {
+          addTodo({ id: `post-publish-review:${item.id}`, kind: 'post-publish-review', item, owner: laneDef.postPublishReviewer ?? 'unit.pr', ccOwner: item.owner,
+            dueAt: taipeiDate(dueMs), dueAtTime: new Date(dueMs).toISOString(), overdue: ppOverdue, severity: ppOverdue ? 'high' : 'medium', lane: gov.lane, laneLabel: gov.laneLabel,
+            text: `${gov.laneLabel}已上線的「${item.title}」尚未完成上線後複核：請於 ${taipeiTime(dueMs)}（上線後 ${laneDef.postPublishReviewHours} 小時）前確認內容，完成後在 postPublishReview 標 done${ppOverdue ? '（已逾期）' : ''}` });
+        }
+      } else gov.postPublishReview = { required: false, status: st ?? 'legacy' };
+    } else gov.postPublishReview = { required: false, status: item.postPublishReview?.status ?? null };
 
     // 待辦：逾期
     if (gov.overdue) {
@@ -995,7 +1047,7 @@ export function resolveMapTo(site, dm, page, mapTo) {
     }
     case 'page': {
       const anchor = mapTo.anchor ? mapTo.anchor.replace(/\{slug\}/g, dm.slug) : undefined;
-      const content = site.all.find((i) => i.status === 'published' && pathOf(i) === mapTo.path) ?? null;
+      const content = site.all.find((i) => i.status === 'published' && !i.gov?.publishScheduled && pathOf(i) === mapTo.path) ?? null;
       return { status: 'merged', target: content?.id, anchor, toPath: mapTo.path, note: `併入站內共用頁 ${mapTo.path}${anchor ? `#${anchor}` : ''}` };
     }
     case 'related': {
@@ -1003,7 +1055,7 @@ export function resolveMapTo(site, dm, page, mapTo) {
       const dsRefs = new Set([...(dm.datasets ?? []), ...(page.blocks ?? []).flatMap((b) => b.datasets ?? [])]);
       const hits = site.all.filter((i) => {
         if (i.type !== mapTo.type) return false;
-        if (i.status !== 'published' || i.gov?.superseded) return false;
+        if (i.status !== 'published' || i.gov?.superseded || i.gov?.publishScheduled) return false; // 排程中（R21）還沒上線
         if (mapTo.type === 'news' && NOTICE_TYPES.has(i.newsType)) return false;
         if (mapTo.docType && i.docType !== mapTo.docType) return false;
         if (mapTo.mediaType && !mapTo.mediaType.includes(i.mediaType)) return false;

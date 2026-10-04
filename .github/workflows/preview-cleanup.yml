@@ -1,0 +1,81 @@
+name: Preview cleanup
+
+# 第九輪（ARCHITECTURE 17.2）：PR 關閉 ⇒ 刪 previews 分支的 pr-N/ ⇒ 觸發主站重新部署（/preview/pr-N/ 隨之消失）。
+# 由 content-pr.yml 以 GITHUB_TOKEN 自動合併的 PR 不會觸發 closed 事件（GitHub 規則），
+# 所以另有每日排程：掃 previews 分支所有 pr-N/，PR 已不是 OPEN 的一併清掉。
+on:
+  pull_request:
+    types: [closed]
+  schedule:
+    - cron: '41 1 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write # 推 previews 分支
+  actions: write # gh workflow run pages.yml
+  pull-requests: read
+
+concurrency:
+  group: preview-cleanup
+  cancel-in-progress: false
+
+jobs:
+  cleanup:
+    # 分叉來的 PR 沒有預覽、也拿不到寫入權杖
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      REPO: ${{ github.repository }}
+      PR: ${{ github.event.pull_request.number }}
+    steps:
+      - name: Remove pr-N/ from previews branch
+        id: prune
+        run: |
+          set -euo pipefail
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          URL="https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git"
+          W="$RUNNER_TEMP/previews"
+          if ! git ls-remote --exit-code --heads "$URL" previews > /dev/null 2>&1; then
+            echo "previews 分支不存在，無事可做"
+            echo "removed=0" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          for attempt in 1 2 3 4 5; do
+            rm -rf "$W"
+            git clone --quiet --depth 1 --branch previews --single-branch "$URL" "$W"
+            OLD="$(git -C "$W" rev-parse HEAD)"
+            REMOVED=""
+            if [ -n "$PR" ]; then
+              if [ -d "$W/pr-$PR" ]; then rm -rf "$W/pr-$PR"; REMOVED="pr-$PR"; fi
+            else
+              for d in "$W"/pr-*/; do
+                [ -d "$d" ] || continue
+                n="$(basename "$d")"; n="${n#pr-}"
+                state="$(gh pr view "$n" -R "$REPO" --json state --jq .state 2> /dev/null || echo UNKNOWN)"
+                if [ "$state" != "OPEN" ]; then rm -rf "$d"; REMOVED="$REMOVED pr-$n"; fi
+              done
+            fi
+            if [ -z "$REMOVED" ]; then
+              echo "沒有要清的預覽"
+              echo "removed=0" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            # 與 content-pr.yml 相同：只保留一個快照提交，force-with-lease 防止蓋掉別人剛推的預覽
+            git -C "$W" checkout --quiet --orphan "snapshot-$attempt"
+            git -C "$W" add -A
+            git -C "$W" commit --quiet --allow-empty -m "preview: remove$REMOVED"
+            if git -C "$W" push --quiet --force-with-lease="previews:${OLD}" origin HEAD:previews; then
+              echo "已清除：$REMOVED"
+              echo "removed=1" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            echo "push 失敗（第 $attempt 次），重試…"
+            sleep $((attempt * 5))
+          done
+          exit 1
+
+      - name: Redeploy main site (gh workflow run pages.yml)
+        if: steps.prune.outputs.removed == '1'
+        run: gh workflow run pages.yml --ref main -R "$REPO" -f refresh=false

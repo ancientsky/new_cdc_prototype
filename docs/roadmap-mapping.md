@@ -34,7 +34,8 @@
 | 疫情態勢層（四級狀態人工發布） | `situation/current.json`、`/admin/situation/` | 已示範 | 與 nidss 資料管線自動帶入數字（狀態仍人工） |
 | 專業人員專區 | `/pro/`：角色、版本異動、訂閱、常用作業、專業問答 | 已示範 | 真實登入與個人化、電子郵件寄送 |
 | 文件庫與異動對照 | `/documents/`、`changes` | 已示範 | 手冊與指引全量結構化、機讀版 |
-| 內容管理後台（上架預處理、複核、待辦） | `/admin/*`（純前端） | 部分 | 與 Git／PR 流程整合的真實權限與簽核 |
+| 內容管理後台（上架預處理、複核、待辦、發布車道） | `/admin/*`（純前端）；第九輪起 `/admin/publish/` 型別一選就顯示**發布車道**徽章（快車道、一般車道、緊急發布）與一句說明、`publishAt` 排程與 `urgent` 緊急欄位與預檢、「**模擬送出**」時間軸（建立分支 → 開 PR → CI 檢查 → 車道判定 → 自動合併或等待審核 → 部署 → 預覽網址）；後台之後的流程在 GitHub Actions 上**真的會跑**：`content-pr.yml` 檢查與車道判定、快車道自動合併、PR 預覽網址 `…/preview/pr-{N}/`、`lane-sla.yml` 逾期提醒、`pages.yml` 每 2 小時重建讓排程到點上線；治理引擎自動開上線後複核待辦 `post-publish-review` | **已示範**（流程與規則；後台為純前端，送出為模擬） | 後端或表單服務代承辦人開 PR（原型只下載上架包）；機關可控的 Git 與 CI 平台；**預覽環境的存取控制**（原型公開）；團隊與分支保護；車道範圍、SLA 與審核人由委員會核定；精準排程與緊急發布通知管道；試行兩個月並以實測校正。見 [publishing-lanes.md](publishing-lanes.md) |
+| 舊內容匯入（批次轉換） | `scripts/import-legacy.mjs` 讀舊站匯出（每頁 `.html`＋`.json` 側檔，格式見 [legacy-import.md](legacy-import.md)）→ 依規則檔 `content/migration/import/_import-rules.json` 轉成內容**草稿**（`status: review`、信心 0–1、問題清單）、搬附件並宣告 `assets`、輸出批次報告與移轉清單更新建議；`/admin/import/` 看報告；結核病 40 個舊頁為第一批（模擬匯出） | **部分**（工具與流程已示範；匯出為依既有內容反推的**模擬**） | 資訊室實作真實匯出；規則與信心門檻用真實樣本校準；各欄目類別→單位對照；轉換品質抽樣檢視；久遠內容封存年限；PDF 的選擇性轉換 |
 | 七語服務與翻譯過期標示 | 語言狀態、`sourceHash`、一級內容審核規則 | 部分 | 翻譯供應與審核人力 |
 | 無障礙 AA | 語意標記、鍵盤操作、對比 | 部分 | 第三方檢測與標章申請 |
 | 舊網址 301 | `redirects.json`（`legacy`／`superseded`／`family-latest`／`migration`）、`redirects/nginx.map`、`redirects/web.config.rewritemap.xml`、`redirects/_redirects`；結核病專區完整示範；版本族穩定網址 302；404 頁與 `/legacy/` 兜底 | **已示範**（機制與流程；結核病為第一個案例） | 其餘 98 種疾病與全部欄目的清單；舊站真實 ID（原型以 `{id}` 佔位）；在正式伺服器（IIS／Nginx／CDN）實測 301，**靜態主機的 404 頁不是 301**；410 清單；RSS 與英文區對照。做法見 [migration-playbook.md](migration-playbook.md) |
@@ -101,7 +102,7 @@
 | 階段 | 驗收看什麼 | 在原型哪裡看 |
 | --- | --- | --- |
 | 第一階段 | 對外內容 100% 有更新日與權責單位；資料集授權標示一致；現行文件都有機讀版；已修訂正本仍有未加註衍生內容為 0 件 | `/admin/` KPI 表、`/v1/governance/kpi.json` |
-| 第二階段 | 版本題全對；六項評估指標達門檻；拒答精準度；暫停演練在 15 分鐘內完成；一級內容七語涵蓋；**舊網址轉址命中率與 404 率達標、`pending` 移轉項目清零** | `/transparency/`、`/admin/eval/`、`/admin/ai-status/`、`/admin/migration/`、404 log 報表 |
+| 第二階段 | 版本題全對；六項評估指標達門檻；**發布車道試行（兩單位、兩個月）達成送出到上線與 SLA 目標，見 [publishing-lanes.md](publishing-lanes.md) 第 10 節**；拒答精準度；暫停演練在 15 分鐘內完成；一級內容七語涵蓋；**舊網址轉址命中率與 404 率達標、`pending` 移轉項目清零** | `/transparency/`、`/admin/eval/`、`/admin/ai-status/`、`/admin/migration/`、`/admin/publish/`（模擬送出）、404 log 報表 |
 | 第三階段 | 季報連續發布；外部整合（API 使用者）可用；長期趨勢可追 | `/v1/governance/eval-report.json` 逐季歸檔 |
 
 ## 各單位在三階段的責任

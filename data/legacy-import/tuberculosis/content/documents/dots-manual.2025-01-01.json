@@ -1,0 +1,70 @@
+{
+  "id": "doc.dots-manual.2025-01-01",
+  "type": "document",
+  "title": "都治計畫作業手冊",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2025-01-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "都治（DOTS）作業：關懷員每日送藥到手、親眼看服藥；社區、機構、進階都治與 DOPT 型態；中斷服藥 3 日以上通報個管師與後續處理。",
+  "family": "doc.dots-manual",
+  "docType": "manual",
+  "version": "2025-01-01",
+  "effectiveAt": "2025-01-01",
+  "machineReadableMarkdown": "| 項目 | 內容 |\n| --- | --- |\n| 文件名稱 | 結核病都治（DOTS）計畫作業手冊 |\n| 版次 | 2025 年版 |\n| 生效日 | 2025-01-01 |\n| 權責單位 | 慢性傳染病組 |\n| 檔案格式 | PDF |\n\n都治（DOTS）作業：關懷員每日送藥到手、親眼看服藥；社區、機構、進階都治與 DOPT 型態；中斷服藥 3 日以上通報個管師與後續處理。\n\n### 一、都治是什麼\n\n都治（DOTS，直接觀察治療）是由經訓練的關懷員每日送藥到手、親眼看著病人服藥（送藥到手、服藥入口、吞了再走），並記錄服藥與副作用情形。臺灣自 2006 年起推動都治計畫，所有確診結核病人均應納入。\n\n### 二、都治型態\n\n- 社區都治：關懷員至病人住家、工作地點或約定地點送藥。\n- 機構都治：長照機構、矯正機關、醫院由機構人員執行，衛生局督導。\n- 進階都治（DOTS-Plus）：多重抗藥性結核病由 TMTC 團隊與關懷員共同照護。\n- 潛伏結核感染都治（DOPT）：潛伏感染治療比照辦理。\n\n### 三、關懷員職責\n\n依排定時間送藥並目視服藥；觀察與記錄副作用；協助回診與痰液送驗；提供衛教與心理支持；轉介社福資源。關懷員不得代為保管或調整藥物。\n\n下載：[都治計畫作業手冊 PDF](/files/doc.dots-manual.2025-01-01/dots-manual-2025.pdf)",
+  "pdfUrl": "/files/doc.dots-manual.2025-01-01/dots-manual-2025.pdf",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/File/Get/nXEWGwO9pZUFPxYvi2A3b1"
+  ],
+  "assets": [
+    {
+      "file": "dots-manual-2025.pdf",
+      "kind": "attachment",
+      "label": "都治計畫作業手冊 PDF",
+      "mime": "application/pdf",
+      "bytes": 780,
+      "sha256": "8898396ab97f066a66475dd1e9b9b8a0dbcf49880771c1fb9546997f81322718",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 70 處（mso 樣式 38、Mso 類別 20、命名空間標籤 16）"
+      },
+      {
+        "code": "version-unknown",
+        "severity": "info",
+        "message": "標題看不出版次，version 暫填 2025-01-01"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/File/Get/nXEWGwO9pZUFPxYvi2A3b1",
+    "convertedAt": "2026-10-04T13:56:12.582Z",
+    "existing": true,
+    "compareWith": [
+      "doc.dots-manual.2025-01-01"
+    ]
+  }
+}

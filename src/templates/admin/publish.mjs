@@ -1,8 +1,9 @@
 // /admin/publish/ 上架新內容＋預處理（規格 6.5、wireframe 第 5 頁）。互動邏輯在 src/client/admin/publish.js 與 preprocess.js。
+import fs from 'node:fs';
 import { html, raw } from '../../../scripts/lib/render.mjs';
 import { config } from '../../../site.config.mjs';
 import { pageHead, dataScript, adminMeta, unitOptions, DEFAULT_UNIT, LANGS } from './_partials.mjs';
-import { TYPES as PP_TYPES, LANGS as PP_LANGS, normalizeLimits } from '../../client/admin/preprocess.js';
+import { TYPES as PP_TYPES, LANGS as PP_LANGS, normalizeLimits, normalizeLanes, URGENT_TYPES } from '../../client/admin/preprocess.js';
 export { layout } from './_layout.mjs';
 
 const TYPES = PP_TYPES.map((t) => [t.value, t.label]);
@@ -21,11 +22,18 @@ const LIM = normalizeLimits(config.assets);
 const MBS = { pdf: Math.round(LIM.pdfBytes / 1048576), image: Math.round(LIM.imageBytes / 1048576), data: Math.round(LIM.dataBytes / 1048576) };
 const ASSET_ACCEPT = LIM.extensions.map((e) => `.${e}`).join(',');
 
+// 發布車道（第九輪，ARCHITECTURE §17.1）：建置時把 content/governance/lanes.json 內嵌成頁面資料；檔案不存在或壞掉就用契約預設值。
+function readLanes() {
+  try { return normalizeLanes(JSON.parse(fs.readFileSync(new URL('../../../content/governance/lanes.json', import.meta.url), 'utf8'))); } catch { return normalizeLanes(null); }
+}
+
 export function pages() { return [{ path: '/admin/publish/', props: {}, noindex: true }]; }
 export function meta() { return adminMeta('上架新內容', 'publish', ['/assets/js/admin/publish.js']); }
 
 export function render(ctx) {
   const { site } = ctx;
+  const LANES = readLanes();
+  const EM = LANES.lanes.emergency;
   const docs = site.collections.documents;
   const families = [...new Set(docs.map((d) => d.family))].map((f) => {
     const vs = docs.filter((d) => d.family === f).sort((a, b) => b.effectiveAt.localeCompare(a.effectiveAt));
@@ -42,6 +50,9 @@ export function render(ctx) {
     families,
     assetsLimits: LIM,
     licenses: config.licenses?.allowed ?? [],
+    lanes: LANES,
+    urgentTypes: URGENT_TYPES,
+    unitNames: Object.fromEntries(site.master.units.map((u) => [u.id, u.name])),
   };
   return html`
 ${pageHead({
@@ -54,7 +65,8 @@ ${pageHead({
     <h2 id="pub-h" data-pub-title>上架：疾病 Q&amp;A</h2>
     <form id="pub-form" class="adm-form" novalidate autocomplete="off">
       <div class="adm-field"><label for="f-type">型別</label>
-        <select id="f-type" name="type">${TYPES.map(([v, l]) => html`<option value="${v}">${l}</option>`)}</select></div>
+        <select id="f-type" name="type" aria-describedby="lane-box">${TYPES.map(([v, l]) => html`<option value="${v}">${l}</option>`)}</select>
+        <div class="adm-lane" id="lane-box" data-lane="standard" role="status" aria-live="polite"><span class="adm-lane__badge" id="lane-badge">一般車道</span><span class="adm-lane__text" id="lane-text"></span></div></div>
       <div class="adm-field"><label for="f-title">標題</label><input type="text" id="f-title" name="title" placeholder="例：登革熱發燒後幾天內要就醫？"></div>
       <div class="adm-field adm-editor">
         <span class="adm-label" id="f-body-label">內文（中文正本）</span>
@@ -187,6 +199,13 @@ ${pageHead({
       <fieldset class="adm-fieldset"><legend>提供語言</legend>
         <div class="adm-langs" id="f-langs">${LANGS.map((l) => html`<div class="adm-lang"><label><input type="checkbox" name="lang" value="${l.code}" ${l.code === 'zh-TW' ? raw('checked disabled') : ''}> ${l.label}${l.code === 'zh-TW' ? '（正本）' : ''}</label>${l.code === 'zh-TW' ? '' : html`<input type="text" data-reason="${l.code}" hidden placeholder="取消理由（必填）" aria-label="${l.label} 取消提供的理由">`}</div>`)}</div>
         <span class="adm-hint" id="f-langs-hint">依型別預設勾選；取消勾選須填理由。</span></fieldset>
+      <fieldset class="adm-fieldset" id="f-timing"><legend>發布時間</legend>
+        <div class="adm-grid adm-grid--2">
+          <div class="adm-field"><label for="f-publish-at">排程發布（選填）</label><input type="datetime-local" id="f-publish-at" name="publishAt" aria-describedby="f-publish-at-hint f-timing-msgs"><span class="adm-hint" id="f-publish-at-hint">臺北時間。留空＝合併後立即上線；填了就到點才上線，未到點網站、索引、sitemap、API 都看不到，狀態標為「排程中」。</span></div>
+          <div class="adm-field" id="f-urgent-wrap" hidden><label class="adm-check" for="f-urgent"><input type="checkbox" id="f-urgent" name="urgent"> 緊急發布：立即上線並通知複核</label><span class="adm-hint">只限新聞稿、致醫界通函、澄清。走緊急車道（${EM.slaMinutes} 分鐘內上線），上線後公關室 ${EM.postPublishReviewHours} 小時內複核；不要用在不趕時間的內容。</span></div>
+        </div>
+        <ul class="adm-lanemsgs" id="f-timing-msgs" role="status" aria-live="polite"></ul>
+      </fieldset>
       <div class="adm-field"><label for="f-id">內容 ID（自動產生，可修改）</label><input type="text" id="f-id" placeholder="faq.xxx"></div>
       <div class="adm-actions">
         <button type="submit" class="adm-btn" id="btn-submit">送出預處理</button>

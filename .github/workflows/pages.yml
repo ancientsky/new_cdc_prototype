@@ -4,9 +4,15 @@ on:
   push:
     branches: [main]
   schedule:
-    # 每日 03:00 UTC（台灣 11:00）重抓官方資料並重建：旅遊疫情、國家等級、CKAN 目錄
-    - cron: '0 3 * * *'
+    # 每 2 小時重建一次（第九輪 17.2）：讓 publishAt 排程發布到點上線、逾期與白名單狀態跟著時間更新。
+    # 重抓官方資料（旅遊疫情、國家等級、CKAN 目錄）並回寫快照只在 02:00 UTC（台灣 10:00）那一次做，其餘只建置。
+    - cron: '0 */2 * * *'
   workflow_dispatch:
+    inputs:
+      refresh:
+        description: '重抓官方資料並把快照回寫 main（content-pr.yml 為了預覽／合併觸發時傳 false）'
+        type: boolean
+        default: true
 
 permissions:
   contents: write # 排程／手動執行時把官方資料快照 commit 回 main
@@ -29,11 +35,23 @@ jobs:
       - run: npm ci
       - name: Tests (governance rules, on committed content)
         run: npm test
+      - name: Decide whether to refresh official data (manual run, or the 02 UTC schedule)
+        id: refresh
+        env:
+          EVENT: ${{ github.event_name }}
+          INPUT_REFRESH: ${{ github.event.inputs.refresh }}
+        run: |
+          REFRESH=false
+          if [ "$EVENT" = "workflow_dispatch" ] && [ "$INPUT_REFRESH" != "false" ]; then REFRESH=true; fi
+          if [ "$EVENT" = "schedule" ] && [ "$(date -u +%H)" = "02" ]; then REFRESH=true; fi
+          echo "refresh=$REFRESH" >> "$GITHUB_OUTPUT"
+          echo "event=$EVENT refresh=$REFRESH（UTC $(date -u +%H) 時）"
       - name: Fetch live data from official sources (falls back to snapshots)
+        if: steps.refresh.outputs.refresh == 'true'
         run: npm run fetch
         continue-on-error: true
-      - name: Commit refreshed snapshots back to main (schedule / manual runs only)
-        if: github.event_name != 'push'
+      - name: Commit refreshed snapshots back to main (02 UTC schedule / manual runs only)
+        if: steps.refresh.outputs.refresh == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -42,21 +60,37 @@ jobs:
           git commit -m "data: 官方資料快照更新（$(date -u +%F)）"
           git pull --rebase origin main
           git push origin HEAD:main
+      - name: Fetch PR previews (previews branch → dist/preview/ after build; skipped if the branch does not exist)
+        run: |
+          if git fetch --depth 1 origin +refs/heads/previews:refs/remotes/origin/previews 2>/dev/null; then
+            mkdir -p "$RUNNER_TEMP/previews"
+            git --work-tree="$RUNNER_TEMP/previews" checkout origin/previews -- .
+            git reset --quiet # 上一行會改到 index，還原（工作目錄不受影響）
+            echo "PREVIEWS_DIR=$RUNNER_TEMP/previews" >> "$GITHUB_ENV"
+            ls "$RUNNER_TEMP/previews"
+          else
+            echo "previews 分支不存在，略過 PR 預覽"
+          fi
       - name: Build (schema gate + eval gate + static site)
         env:
           BASE_PATH: /${{ github.event.repository.name }}
           # 原型凍結「今天」在 2026-10-01：示意內容的審閱日與態勢資料日以此為基準，
           # 讓治理案例（逾期、失效、依據已修訂）維持可展示；移除此行即以真實日期計算。
+          # publishAt 排程發布不受此影響，一律以建置當下的真實時間判斷。
           BUILD_TODAY: ${{ vars.BUILD_TODAY || '2026-10-01' }}
           SITE_URL: https://${{ github.repository_owner }}.github.io
+          # 建置在站內連結檢查之後，把 PREVIEWS_DIR 的 pr-N/ 複製到 dist/preview/
         run: npm run build
+      - name: Check PR previews are in the upload (dist/preview)
+        run: |
+          if [ -d dist/preview ]; then ls dist/preview; du -sh dist/preview; else echo "沒有 PR 預覽"; fi
       - uses: actions/configure-pages@v5
         with:
           enablement: true
         continue-on-error: true
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: dist # 含 dist/preview/pr-N/
   deploy:
     needs: build
     runs-on: ubuntu-latest

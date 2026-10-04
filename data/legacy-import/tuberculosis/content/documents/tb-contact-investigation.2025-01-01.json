@@ -1,0 +1,70 @@
+{
+  "id": "doc.tb-contact-investigation.2025-01-01",
+  "type": "document",
+  "title": "結核病接觸者檢查指引",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2025-01-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "結核病接觸者檢查：指標個案定義、密切接觸者範圍（一天 8 小時或累計 40 小時）、確診後 1 個月內與第 12 個月胸部 X 光、IGRA 與潛伏感染治療轉介。",
+  "family": "doc.tb-contact-investigation",
+  "docType": "guideline",
+  "version": "2025-01-01",
+  "effectiveAt": "2025-01-01",
+  "machineReadableMarkdown": "| 項目 | 內容 |\n| --- | --- |\n| 文件名稱 | 結核病接觸者檢查指引 |\n| 版次 | 2025 年版 |\n| 生效日 | 2025-01-01 |\n| 權責單位 | 慢性傳染病組 |\n| 檔案格式 | PDF |\n\n結核病接觸者檢查：指標個案定義、密切接觸者範圍（一天 8 小時或累計 40 小時）、確診後 1 個月內與第 12 個月胸部 X 光、IGRA 與潛伏感染治療轉介。\n\n### 一、指標個案\n\n確診之肺結核、喉結核病人，或痰抗酸菌塗片、培養、分子檢測陽性者，為接觸者調查之指標個案；肺外結核原則不需調查接觸者，惟兒童個案應回溯尋找感染源。\n\n### 二、接觸者範圍\n\n密切接觸者：與指標個案共同居住者，或於指標個案可傳染期內一天內接觸 8 小時以上、或累計接觸達 40 小時以上者。可傳染期原則以指標個案出現咳嗽症狀或確診日往前推 3 個月起算。\n\n### 三、檢查時程\n\n1\\. 指標個案確診後 1 個月內完成接觸者第一次胸部 X 光檢查，並依年齡與接觸程度安排 IGRA 檢驗。2. 第一次檢查正常者，於指標個案確診滿 12 個月時完成第二次胸部 X 光檢查。3. 有咳嗽等疑似症狀者隨時就醫，不受時程限制。\n\n下載：[結核病接觸者檢查指引 PDF](/files/doc.tb-contact-investigation.2025-01-01/tb-contact-investigation-2025.pdf)",
+  "pdfUrl": "/files/doc.tb-contact-investigation.2025-01-01/tb-contact-investigation-2025.pdf",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/File/Get/HDxRqA-TWSdShJlGFue-UF"
+  ],
+  "assets": [
+    {
+      "file": "tb-contact-investigation-2025.pdf",
+      "kind": "attachment",
+      "label": "結核病接觸者檢查指引 PDF",
+      "mime": "application/pdf",
+      "bytes": 802,
+      "sha256": "6f58a994c1d352434eba20028512ccfed72e79d7b0a87b7408c304a9d85e5fcf",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 55 處（mso 樣式 21、Mso 類別 17、命名空間標籤 17）"
+      },
+      {
+        "code": "version-unknown",
+        "severity": "info",
+        "message": "標題看不出版次，version 暫填 2025-01-01"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/File/Get/HDxRqA-TWSdShJlGFue-UF",
+    "convertedAt": "2026-10-04T13:56:12.582Z",
+    "existing": true,
+    "compareWith": [
+      "doc.tb-contact-investigation.2025-01-01"
+    ]
+  }
+}

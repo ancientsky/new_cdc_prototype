@@ -6,6 +6,8 @@ import { config, siteOrigin } from '../../site.config.mjs';
 import { pathOf, mdPathOf, WHITELIST_REASON_LABELS, LIFECYCLE_LABELS, TODO_KIND_LABELS, NOTICE_TYPES, legacyPathOf, isLegacyPattern, JOB_STAGE_LABELS, TENDER_STAGE_LABELS, JOB_TAB_LABELS, TENDER_TAB_LABELS } from './governance.mjs';
 import { buildOpenApi } from './openapi.mjs';
 import { assetSummary, assetUrl } from './assets.mjs';
+// 第九輪（ARCHITECTURE 17.1）：對外輸出一律經 isPublic()（published［＋archived］且 publishAt 已到）；emitApi 一進來就換成 publicView（排程中內容整筆消失，含治理待辦與版本鏈）
+import { isPublic, nowOf, publicView } from './lanes.mjs';
 
 export const etagOf = (data) => createHash('sha1').update(JSON.stringify(data) ?? 'null').digest('hex').slice(0, 12);
 const absUrl = (p) => (p == null ? null : /^https?:/.test(p) ? p : `${siteOrigin()}${p}`);
@@ -117,8 +119,9 @@ const isLegacyHost = (url) => {
  */
 export function movedRedirects(site) {
   const out = [];
+  const now = nowOf(site);
   for (const item of site.all) {
-    if (item.status !== 'published' && item.status !== 'archived') continue;
+    if (!isPublic(item, now, { archived: true })) continue;
     for (const old of item.legacyIds ?? []) {
       const from = pathOf({ type: String(old).split('.')[0], id: old });
       if (!from || from === '/' || from === pathOf(item)) continue;
@@ -156,8 +159,9 @@ export function buildRedirects(site) {
         note: '失效版：原頁保留存取（noindex＋頁首警示），搜尋與 AI 引用一律以現行版為準；正式站外部舊連結以 301 轉址' });
     }
   }
+  const now = nowOf(site);
   for (const item of site.all) {
-    if (item.status !== 'published' && item.status !== 'archived') continue;
+    if (!isPublic(item, now, { archived: true })) continue;
     const target = item.gov.superseded ? site.byId.get(item.gov.currentId) ?? item : item;
     for (const from of item.legacyUrls ?? []) {
       const fromPath = legacyPathOf(from);
@@ -317,21 +321,23 @@ export function goneEntries(site) {
   return gone;
 }
 
-export function emitApi(site, write) {
+export function emitApi(fullSite, write) {
+  const site = publicView(fullSite);
+  const now = nowOf(site);
   const c = site.collections;
   const manifest = [];
   const put = (file, data, extra, top, description) => {
     write(file, wrap(site, data, extra, top));
     manifest.push({ path: `/${file}`, url: absUrl(`/${file}`), description: description ?? '', count: Array.isArray(data) ? data.length : null });
   };
-  const published = (arr) => (arr ?? []).filter((i) => i.status === 'published' || i.status === 'archived');
+  const published = (arr) => (arr ?? []).filter((i) => isPublic(i, now, { archived: true }));
 
   // 疾病：主檔 + 疾病頁
   const pageById = new Map(c.diseases.map((p) => [p.id, p]));
   const related = new Map(); // disease id → { faq, news, documents, vaccines, datasets, clarifications, media, labtests, services, publications, topics }
   const RELATED_KEY = { faq: 'faq', news: 'news', letter: 'news', document: 'documents', vaccine: 'vaccines', dataset: 'datasets', clarification: 'clarifications', media: 'media', labtest: 'labtests', service: 'services', publication: 'publications', topic: 'topics' };
   for (const item of site.all) {
-    if (item.status !== 'published' || item.gov.superseded) continue;
+    if (!isPublic(item, now) || item.gov.superseded) continue;
     for (const d of diseasesOf(item)) {
       if (!related.has(d)) related.set(d, { faq: [], news: [], documents: [], vaccines: [], datasets: [], clarifications: [], media: [], labtests: [], services: [], publications: [], topics: [] });
       const key = RELATED_KEY[item.type];
@@ -340,7 +346,7 @@ export function emitApi(site, write) {
   }
   put('v1/diseases.json', site.master.diseases.map((d) => {
     const p = pageById.get(d.id);
-    return { ...d, page: p && p.status === 'published' ? absUrl(pathOf(p)) : null, path: p ? pathOf(p) : null, api: p ? absUrl(`/v1/diseases/${p.slug}.json`) : null, governance: p ? govSummary(p) : null };
+    return { ...d, page: p && isPublic(p, now) ? absUrl(pathOf(p)) : null, path: p ? pathOf(p) : null, api: p ? absUrl(`/v1/diseases/${p.slug}.json`) : null, governance: p ? govSummary(p) : null };
   }), {}, {}, '傳染病主檔（含疾病頁連結與治理摘要）');
   for (const d of c.diseases) {
     put(`v1/diseases/${d.slug}.json`, { ...strip(d), master: site.diseaseMasterById.get(d.id) ?? null, related: related.get(d.id) ?? null }, {}, {}, `疾病頁：${d.title}`);
@@ -414,15 +420,15 @@ export function emitApi(site, write) {
   const nt = site.gov.notifyTable ?? [];
   put('v1/notify-table.json', nt, { lastModified: site.today, diseases: nt.reduce((n, g) => n + g.diseases.length, 0), source: `${siteOrigin()}/report/` }, {}, '法定傳染病通報時限表（由傳染病主檔自動產生）');
   const STATUS_ORDER = { active: 0, upcoming: 1, ended: 2 };
-  const campaigns = (c.banners ?? []).filter((b) => b.status === 'published' || b.status === 'archived')
+  const campaigns = published(c.banners)
     .sort((a, b) => STATUS_ORDER[a.gov.campaignStatus] - STATUS_ORDER[b.gov.campaignStatus] || (a.priority ?? 99) - (b.priority ?? 99) || (b.startAt ?? '').localeCompare(a.startAt ?? ''))
     .map((b) => ({ ...strip(b), campaignStatus: b.gov.campaignStatus }));
   put('v1/campaigns.json', campaigns, { active: campaigns.filter((x) => x.campaignStatus === 'active').length, upcoming: campaigns.filter((x) => x.campaignStatus === 'upcoming').length, ended: campaigns.filter((x) => x.campaignStatus === 'ended').length }, {}, '全部宣導 Banner（campaignStatus：active／upcoming／ended）');
 
-  put('v1/banners.json', (c.banners ?? []).filter((b) => b.status === 'published' && b.startAt <= site.today && b.endAt >= site.today).sort((a, b) => (a.priority ?? 99) - (b.priority ?? 99)).map(strip), {}, {}, '目前上架中的首頁 Banner');
+  put('v1/banners.json', (c.banners ?? []).filter((b) => isPublic(b, now) && b.startAt <= site.today && b.endAt >= site.today).sort((a, b) => (a.priority ?? 99) - (b.priority ?? 99)).map(strip), {}, {}, '目前上架中的首頁 Banner');
 
   // 五類資產總目錄
-  const catalog = site.all.filter((i) => i.status === 'published').map((i) => ({
+  const catalog = site.all.filter((i) => isPublic(i, now)).map((i) => ({
     // tender.category（財物／勞務／工程）不是資產類別 ⇒ 只採用七類資產內的 category
     id: i.id, type: i.type, category: (ASSET_CATEGORIES[i.category] ? i.category : null) ?? CATEGORY_OF[i.type] ?? 'content-page', title: i.title, owner: i.owner, ownerName: i.gov.ownerName,
     canonicalUrl: i.canonicalUrl ?? absUrl(pathOf(i)), page: absUrl(pathOf(i)), md: mdPathOf(i) ? absUrl(mdPathOf(i)) : null,
@@ -448,7 +454,7 @@ export function emitApi(site, write) {
 
   // 六任務入口聚合
   for (const task of config.tasks) {
-    const items = site.all.filter((i) => i.status === 'published' && !i.gov.superseded && (i.tasks ?? []).includes(task.key) && i.type !== 'banner')
+    const items = site.all.filter((i) => isPublic(i, now) && !i.gov.superseded && (i.tasks ?? []).includes(task.key) && i.type !== 'banner')
       .sort((a, b) => (b.reviewedAt ?? '').localeCompare(a.reviewedAt ?? '') || a.id.localeCompare(b.id));
     const byType = {};
     for (const i of items) (byType[i.type] ??= []).push(brief(i));
