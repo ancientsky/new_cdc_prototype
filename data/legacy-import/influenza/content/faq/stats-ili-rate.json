@@ -1,0 +1,62 @@
+{
+  "id": "faq.stats-ili-rate",
+  "type": "faq",
+  "title": "「類流感門急診就診率」是什麼意思？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2025-12-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "指每週健保門診與急診就診人次中，因類流感（發燒合併咳嗽或喉嚨痛等）就醫所占的比例。疾管署以此觀察流感活動的高低：連續上升並超過流行閾值時，代表進入流行期。",
+  "question": "「類流感門急診就診率」是什麼意思？",
+  "answerMarkdown": "指每週健保**門診與急診就診人次中，因類流感（發燒合併咳嗽或喉嚨痛等）就醫所占的比例**。疾管署以此觀察流感活動的高低：連續上升並超過流行閾值時，代表進入流行期。\n\n就診率是群體監測指標，不代表確診人數；個人是否感染流感，仍需由醫師診斷。",
+  "basedOn": [
+    "disease.influenza"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/Zfg30duS6fEOkNhHjVRix8"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 121 處（mso 樣式 81、Mso 類別 29、命名空間標籤 20）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「流感／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/Zfg30duS6fEOkNhHjVRix8",
+    "convertedAt": "2026-10-04T23:00:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.stats-ili-rate"
+    ]
+  }
+}

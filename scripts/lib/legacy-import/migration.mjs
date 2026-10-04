@@ -94,7 +94,8 @@ export function buildPatch({ manifest, prs, index, exportedAt, slug, derivedItem
       key: it.key, oldTitle: it.oldTitle, page: pr.key, current: { status: it.status, target: it.target ?? null, note: it.note ?? null },
       proposed: { status: statusChange ? proposed : it.status, target: statusChange && !it.target ? proposedTarget : it.target ?? null, note },
       suggestion: { status: proposed, target: proposedTarget }, draftIds: ids,
-      agree: klass(proposed) === klass(it.status),
+      // 人工已判定「不轉」或「封存」而工具也找不到新站去向 ⇒ 兩者一致（pending 的意思就是新站沒有對應）
+      agree: klass(proposed) === klass(it.status) || (proposed === 'pending' && (it.status === 'dropped' || it.status === 'archived')),
       change: { status: statusChange, target: statusChange && !it.target && !!proposedTarget, note: note !== (it.note ?? null) },
     };
     if (!entry.agree && !statusChange) patch.conflicts.push({ key: it.key, current: it.status, suggestion: proposed, reason: conflictReason(it, pr, proposed) });

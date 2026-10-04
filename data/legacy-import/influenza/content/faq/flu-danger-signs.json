@@ -1,0 +1,62 @@
+{
+  "id": "faq.flu-danger-signs",
+  "type": "faq",
+  "title": "得了流感，出現哪些狀況要馬上就醫？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2025-12-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "出現下列危險徵兆請立即就醫：呼吸急促或呼吸困難、嘴唇發紫（發紺）、血痰或痰液變濃、胸痛、意識改變、低血壓。",
+  "question": "得了流感，出現哪些狀況要馬上就醫？",
+  "answerMarkdown": "出現下列**危險徵兆**請立即就醫：呼吸急促或呼吸困難、嘴唇發紫（發紺）、血痰或痰液變濃、胸痛、意識改變、低血壓。\n\n兒童另需留意：持續高燒超過 3 天、抽搐、呼吸急促、活力明顯變差或不想喝水。這些可能是流感併發重症的前兆。",
+  "basedOn": [
+    "disease.influenza"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/Zfg30duS6fEOkNhHjVRix8"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 121 處（mso 樣式 81、Mso 類別 29、命名空間標籤 20）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「流感／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/Zfg30duS6fEOkNhHjVRix8",
+    "convertedAt": "2026-10-04T23:00:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.flu-danger-signs"
+    ]
+  }
+}

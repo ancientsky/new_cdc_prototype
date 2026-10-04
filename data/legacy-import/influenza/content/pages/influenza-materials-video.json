@@ -1,0 +1,69 @@
+{
+  "id": "page.influenza-materials-video",
+  "type": "page",
+  "title": "衛教宣導：影片",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-09-25",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "長照機構住民為流感重症高風險族群，影片說明 10 月 1 日起公費流感疫苗開打，住民與工作人員應同步接種，並示範機構內集中接種流程。",
+  "slug": "influenza-materials-video",
+  "bodyMarkdown": "長照機構住民為流感重症高風險族群，影片說明 10 月 1 日起公費流感疫苗開打，住民與工作人員應同步接種，並示範機構內集中接種流程。\n\n### 影片文字稿\n\n**\\[00:00\\] 為什麼長照機構要優先接種**\n\n旁白：每年秋冬，流感病毒在社區流行，住在長照機構的長輩因為年紀大、多有慢性病，感染後容易併發肺炎，甚至需要住院。機構裡大家一起吃飯、一起活動，只要一個人感染，很快就會在樓層間傳開。\n\n機構護理長：我們最怕的就是群聚。所以每年疫苗一到，我們就把住民和同仁的接種排在第一週。\n\n**\\[00:40\\] 誰可以打公費疫苗**\n\n旁白：今年公費流感疫苗自 10 月 1 日起開打。長期照顧服務機構、安養機構的住民與工作人員，都是公費接種對象。不只照服員，包括護理、廚房、清潔、行政人員，只要在機構內工作，都建議接種。\n\n**\\[01:25\\] 機構集中接種怎麼安排**\n\n旁白：機構可以與合約醫療院所或衛生所聯繫，安排到機構集中接種。接種前，請先確認住民的健保卡與同意書；長輩若當天發燒或身體不適，可以先暫緩，等身體狀況穩定再補打。工作人員也別忘了自己，保護自己，就是保護長輩。\n\n**\\[02:00\\] 接種後觀察與通報**\n\n旁白：接種後請在現場休息觀察至少 30 分鐘。常見的反應是注射部位紅腫、輕微發燒，通常一到兩天就會改善。若出現持續高燒、呼吸困難等情形，請立即就醫。機構若發現住民陸續出現發燒、咳嗽，請依規定通報衛生單位，及早處理。\n\n旁白：保護長輩，從今年的一劑流感疫苗開始。更多資訊請上疾管署網站，或撥打防疫專線 1922。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/Z9lGEBVEdvHjmkowXcJ_b1"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.8,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 37 處（mso 樣式 15、Mso 類別 11、命名空間標籤 11）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「流感／衛教宣導」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 materials-video（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "embedded-media",
+        "severity": "warn",
+        "message": "內文有嵌入媒體 1 個（iframe）未轉入；影音請另建 media 內容"
+      },
+      {
+        "code": "target-type-differs",
+        "severity": "info",
+        "message": "對應的新站內容是 media.ltc-flu-vaccine（media），草稿以 page 暫存，請比對後改建為 media"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/Z9lGEBVEdvHjmkowXcJ_b1",
+    "convertedAt": "2026-10-04T23:00:00Z",
+    "existing": true,
+    "compareWith": [
+      "media.ltc-flu-vaccine"
+    ]
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "id": "doc.flu-antiviral-eligibility.2026-09-21",
+  "type": "document",
+  "title": "公費流感抗病毒藥劑使用對象",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-09-21",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "現行公費流感抗病毒藥劑使用對象：類流感高峰期 65 歲以上有類流感症狀者，醫師得直接開立，不需快篩陽性；其餘對象維持。",
+  "family": "doc.flu-antiviral-eligibility",
+  "docType": "guideline",
+  "version": "2026-09-21",
+  "effectiveAt": "2026-09-21",
+  "machineReadableMarkdown": "現行公費流感抗病毒藥劑使用對象：類流感高峰期 65 歲以上有類流感症狀者，醫師得直接開立，不需快篩陽性；其餘對象維持。\n\n### 第 1 條\n\n經通報之流感併發重症病例。\n\n### 第 2 條\n\n孕婦及產後 2 週內婦女經評估需及時用藥者。\n\n### 第 3 條\n\n未滿 5 歲之類流感患者，經流感快篩陽性者。65 歲以上有類流感症狀者，於類流感高峰期（以疾管署公告期間為準）得由醫師直接開立，不需快篩陽性。\n\n| 項目 | 內容 |\n| --- | --- |\n| 文件名稱 | 公費流感抗病毒藥劑使用對象（2026 年 9 月版） |\n| 版次 | 2026-09 |\n| 生效日 | 2026-09-21 |\n| 權責單位 | 急性傳染病組 |\n| 檔案格式 | PDF |\n\n完整內容請下載附件：\\<a href=\"https://www.cdc.gov.tw/File/Get/eXnBfv62o-oR5Vuf2GuzHT\">公費流感抗病毒藥劑使用對象（2026 年 9 月版）（PDF）\\</a>",
+  "pdfUrl": "/files/doc.flu-antiviral-eligibility.2026-09-21/flu-antiviral-eligibility.2026-09-21.pdf",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/Page/DcQhnxOUXS4BnGFxCjEXLb"
+  ],
+  "assets": [
+    {
+      "file": "flu-antiviral-eligibility.2026-09-21.pdf",
+      "kind": "attachment",
+      "label": "公費流感抗病毒藥劑使用對象（2026 年 9 月版）",
+      "mime": "application/pdf",
+      "bytes": 893,
+      "sha256": "9841a6bdf1944485b3a0081fd26c625c637de1ce60b1aa2f40b313d3cf5ebdb0",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 52 處（mso 樣式 18、Mso 類別 17、命名空間標籤 17）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「流感／抗病毒藥劑專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站內容是文件 doc.flu-antiviral-eligibility.2026-09-21，草稿依清單建成 document（舊頁本身是欄目內頁）"
+      },
+      {
+        "code": "doctype-guessed",
+        "severity": "info",
+        "message": "標題與網址看不出文件種類，暫填 guideline"
+      },
+      {
+        "code": "version-unknown",
+        "severity": "info",
+        "message": "標題看不出版次，version 暫填 2026-09-21"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/Page/DcQhnxOUXS4BnGFxCjEXLb",
+    "convertedAt": "2026-10-04T23:00:00Z",
+    "existing": true,
+    "compareWith": [
+      "doc.flu-antiviral-eligibility.2026-09-21"
+    ]
+  }
+}

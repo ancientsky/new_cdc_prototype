@@ -189,7 +189,11 @@ export function runImport(opts) {
       const byTitleLoose = cands.filter((m) => { const o = normTitle(stripTitlePrefix(rules, m.it.oldTitle)); return o.length >= 3 && nt.length >= 3 && (o.includes(nt) || nt.includes(o)); });
       // {id} 佔位的網址會命中同一模式下的所有頁，所以只有 fragment 或標題也對得上才算；寫死 ID 的網址（只剩一個候選）才可直接採用
       const exact = cands.filter((m) => !m.pattern);
-      const pick = byTab[0] ?? byTitle[0] ?? byTitleLoose[0] ?? (exact.length === 1 ? exact[0] : null) ?? null;
+      // 模板推導的文件項（工作手冊、病例定義、治療指引）標題是通稱，舊頁標題是正式名稱（「…作業手冊」「…防治工作指引」），
+      // 改用語意對：舊頁是文件型、標題看得出文件種類、且與推導項 mapTo.docType 相同
+      const dtHere = pat?.kind === 'document' ? docTypeFor(rules, title, pat, u) : null;
+      const byDocType = dtHere?.clear ? cands.filter((m) => m.derived && m.it.mapTo?.kind === 'related' && m.it.mapTo.type === 'document' && m.it.mapTo.docType === dtHere.docType) : [];
+      const pick = byTab[0] ?? byTitle[0] ?? byTitleLoose[0] ?? (exact.length === 1 ? exact[0] : null) ?? byDocType[0] ?? null;
       mi = pick?.it ?? null;
       pr.manifestDerived = !!pick?.derived;
       if (pick) mUsed.add(`${pick.derived ? 'd:' : ''}${pick.it.key}`);
@@ -217,6 +221,11 @@ export function runImport(opts) {
     }
     if (kind === 'disease-block' && !blockKey) blockKey = blockKeyFor(rules, title) ?? (tab ? blockKeyFor(rules, tab) : null);
     if (kind === 'disease-block' && !primary) { kind = 'page'; pr.typeClear = false; issue('type-unclear', 'warn', '疾病頁子頁，但從麵包屑與標題找不到疾病，改以 page 處理'); }
+    // 欄目內頁（MPage／Page）但移轉清單說它對應的是新站的一份文件 ⇒ 草稿直接建成 document（同 target id），不再以 page 暫存
+    if (kind === 'page' && pr.targetExists && pr.targetType === 'document' && pat?.id !== 'category-list') {
+      kind = 'document';
+      issue('type-from-manifest', 'info', `清單對應的新站內容是文件 ${pr.target}，草稿依清單建成 document（舊頁本身是欄目內頁）`);
+    }
     if (kind === 'list') issue('list-page', 'info', '清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結');
     pr.kind = kind;
     pr.type = kind === 'disease-block' ? 'disease' : kind === 'faq' ? 'faq' : kind === 'news' ? 'news' : kind === 'document' ? 'document' : 'page';

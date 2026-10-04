@@ -1,0 +1,93 @@
+# 舊站匯出轉換報告：influenza
+
+> **模擬匯出**（開發環境連不到舊站，依移轉清單合成；正式匯出取代即可）。匯出日 2026-10-03；轉換時間 2026-10-04T23:00:00Z；規則檔 `content/migration/import/_import-rules.json`；移轉清單 `content/migration/influenza.json`（8 筆）。
+
+## 批次摘要
+
+| 項目 | 數字 |
+| --- | --- |
+| 舊頁數 | 33 |
+| 產出草稿 | 34（Q&A 10、頁面 11、文件 7、新聞 5、疾病頁 1） |
+| 舊頁型別 | 併入疾病頁 9、Q&A 1、清單頁 7、頁面 4、文件 7、新聞 5 |
+| 平均信心 | 0.89 |
+| 需人工檢視（信心 < 0.6） | 1 |
+| 既有內容已存在（供比對） | 26 |
+| 附件與圖片 | 10（附件 7、內文圖片 2、資料檔 1；圖片待補 alt 2、PDF 無文字層 2） |
+| 草稿 schema 驗證 | 34 / 34 通過 |
+| 問題 | 錯誤 0、警告 12、提示 109 |
+| 移轉清單對應 | 對上 8 / 8 筆；status 變化 0；note 更新 8；仍待移轉 2；與清單判定不同 0 |
+| 模板推導項（清單只寫例外） | 20 項，對上 19；只列在 migration-patch.json 的 derivedItems，不寫回清單 |
+| 清單沒有的舊頁 | 6（migration-patch.json 的 unmatchedPages 有建議的 pending 項目） |
+
+處理原則：一級內容（疾病頁、指引、手冊）一律人工確認後才入庫；近年新聞信心 ≥ 0.8 可核對後自動上線；久遠與歷史版本封存；草稿放在本目錄，**不會**寫進 `content/`。
+
+## 逐頁結果
+
+| # | 來源 | 型別 | 目標 | 信心 | 問題 | 建議動作 |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | 疾病介紹<br><sub>www.cdc.gov.tw/Disease/SubIndex/onsQVJBHAI493DBVEgcN_0</sub> | 併入疾病頁 → `disease.influenza`（併入：transmission） | `disease.influenza`（既有） | 1 | — | 併入疾病頁區塊（與既有內容逐段比對） |
+| 2 | 致病原<br><sub>www.cdc.gov.tw/Disease/SubIndex/onsQVJBHAI493DBVEgcN_0</sub> | 併入疾病頁 → `disease.influenza`（併入：transmission） | `disease.influenza`（既有） | 1 | — | 併入疾病頁區塊（與既有內容逐段比對） |
+| 3 | 流行病學<br><sub>www.cdc.gov.tw/Disease/SubIndex/onsQVJBHAI493DBVEgcN_0</sub> | 併入疾病頁 → `disease.influenza`（併入：situation） | `disease.influenza`（既有） | 0.8 | image-no-alt | 併入疾病頁區塊（與既有內容逐段比對） |
+| 4 | 傳染方式<br><sub>www.cdc.gov.tw/Disease/SubIndex/onsQVJBHAI493DBVEgcN_0</sub> | 併入疾病頁 → `disease.influenza`（併入：transmission） | `disease.influenza`（既有） | 1 | — | 併入疾病頁區塊（與既有內容逐段比對） |
+| 5 | 潛伏期<br><sub>www.cdc.gov.tw/Disease/SubIndex/onsQVJBHAI493DBVEgcN_0</sub> | 併入疾病頁 → `disease.influenza`（併入：transmission） | `disease.influenza`（既有） | 1 | — | 併入疾病頁區塊（與既有內容逐段比對） |
+| 6 | 發病症狀<br><sub>www.cdc.gov.tw/Disease/SubIndex/onsQVJBHAI493DBVEgcN_0</sub> | 併入疾病頁 → `disease.influenza`（併入：symptoms） | `disease.influenza`（既有） | 1 | — | 併入疾病頁區塊（與既有內容逐段比對） |
+| 7 | 預防方法<br><sub>www.cdc.gov.tw/Disease/SubIndex/onsQVJBHAI493DBVEgcN_0</sub> | 併入疾病頁 → `disease.influenza`（併入：prevention） | `disease.influenza`（既有） | 1 | — | 併入疾病頁區塊（與既有內容逐段比對） |
+| 8 | 治療方法與就醫資訊<br><sub>www.cdc.gov.tw/Disease/SubIndex/onsQVJBHAI493DBVEgcN_0</sub> | 併入疾病頁 → `disease.influenza`（併入：treatment） | `disease.influenza`（既有） | 1 | — | 併入疾病頁區塊（與既有內容逐段比對） |
+| 9 | 預防接種建議<br><sub>www.cdc.gov.tw/Category/MPage/L-P0gM1I3qTWG35LXVu7xA</sub> | 併入疾病頁 → `disease.influenza`（併入：vaccine） | `disease.influenza`（既有） | 1 | — | 併入疾病頁區塊（與既有內容逐段比對） |
+| 10 | Q&A<br><sub>www.cdc.gov.tw/Category/QAPage/Zfg30duS6fEOkNhHjVRix8</sub> | Q&A → `faq.flu-antiviral-65-no-test`<br>`faq.flu-covid-same-day`<br>`faq.flu-danger-signs`<br>`faq.flu-vaccine-every-year`<br>`faq.flu-vaccine-who`<br>`faq.flu-vs-cold`<br>`faq.influenza-antiviral-who`<br>`faq.influenza-severe-what`<br>`faq.influenza-vaccine-where`<br>`faq.stats-ili-rate` | `disease.influenza`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
+| 11 | 衛教宣導：單張海報<br><sub>www.cdc.gov.tw/Category/List/Dseef2nyUuF_ufJ_-HsVuH</sub> | 清單頁 → `page.influenza-materials-poster` | — | 0.4 ⚠ | pdf-no-text-layer、image-no-alt | 人工檢視（信心低於門檻） |
+| 12 | 衛教宣導：影片<br><sub>www.cdc.gov.tw/Category/MPage/Z9lGEBVEdvHjmkowXcJ_b1</sub> | 頁面 → `page.influenza-materials-video` | `media.ltc-flu-vaccine`（既有） | 0.8 | embedded-media | 既有內容已存在，供比對，不建議覆蓋 |
+| 13 | 2026–2027 年度公費流感疫苗接種計畫作業手冊<br><sub>www.cdc.gov.tw/Category/DiseaseManual/8RS6i4p1QMCqQDExvvqLYV</sub> | 文件 → `doc.flu-vaccine-manual.2026-09-16` | `doc.flu-vaccine-manual.2026-09-16`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
+| 14 | 病例定義<br><sub>www.cdc.gov.tw/Category/DiseaseDefine/YblgPS6l9Yb4mfUYx6mCKZ</sub> | 文件 → `doc.influenza-case-definition.2017-10-01` | — | 0.8 | body-short | 核對後入庫（新站尚無對應內容） |
+| 15 | 公費流感抗病毒藥劑使用對象（2026 年 9 月版）<br><sub>www.cdc.gov.tw/File/Get/IPFXeARGZRM-wffFgc1vJ5</sub> | 文件 → `doc.influenza-cb914b.2026-09-21` | — | 1 | not-in-manifest | 核對後入庫（新站尚無對應內容） |
+| 16 | 統計資料<br><sub>www.cdc.gov.tw/Category/List/14Z7BcTsilzv0ni-tFHF80</sub> | 清單頁 → `page.influenza-stats` | `dataset.flu-express`（既有） | 0.6 | — | 既有內容已存在，供比對，不建議覆蓋 |
+| 17 | 檢驗資訊<br><sub>www.cdc.gov.tw/Category/MPage/BXQ_3PvoU6VyCBHauEQKa6</sub> | 頁面 → `page.influenza-lab` | `labtest.influenza`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
+| 18 | 通報定義與時限<br><sub>www.cdc.gov.tw/Category/MPage/gvY0i6-FEYc2VKEyu5ZRTR</sub> | 頁面 → `page.influenza-notify` | — | 1 | — | 核對後入庫（新站尚無對應內容） |
+| 19 | 新聞稿列表<br><sub>www.cdc.gov.tw/Bulletin/List/bIp1EzRH4-l_1Wf3-Xbhgv</sub> | 清單頁 → `page.influenza-news-list` | `disease.influenza`（既有） | 0.6 | — | 清單頁，不轉換（新站由系統自動產生列表） |
+| 20 | 相關連結<br><sub>www.cdc.gov.tw/Category/List/6TFWM0mSjy0cOE0UG2TWhz</sub> | 清單頁 → `page.influenza-links` | `topic.ltc-infection-control`（既有） | 0.6 | — | 清單頁，不轉換（新站由系統自動產生列表） |
+| 21 | 流感疫苗專區（首頁）<br><sub>www.cdc.gov.tw/Category/Page/-CgApFZQk-AhWIGG2NnkmA</sub> | 頁面 → `page.influenza-flu-vaccine-zone` | `disease.influenza`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
+| 22 | 公費流感疫苗接種計畫：實施對象與時程<br><sub>www.cdc.gov.tw/File/Get/TRISN3J9An-J4lAzbB1EFN</sub> | 文件 → `doc.flu-vaccine-schedule.2026-09-15` | `doc.flu-vaccine-schedule.2026-09-15`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
+| 23 | 公費流感疫苗接種計畫作業手冊<br><sub>www.cdc.gov.tw/File/Get/k6H6568EM4MUyLmxDp6yVF</sub> | 文件 → `doc.flu-vaccine-manual.2026-09-16-2` | `doc.flu-vaccine-manual.2026-09-16`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
+| 24 | 公費流感疫苗合約院所查詢<br><sub>www.cdc.gov.tw/Category/List/4RgtNMNbqmGxb90C5PCRNH</sub> | 清單頁 → `page.influenza-flu-vaccine-contract-sites` | — | 0.6 | — | 清單頁，不轉換（新站由系統自動產生列表） |
+| 25 | 公費流感抗病毒藥劑使用對象<br><sub>www.cdc.gov.tw/Category/Page/DcQhnxOUXS4BnGFxCjEXLb</sub> | 文件 → `doc.flu-antiviral-eligibility.2026-09-21` | `doc.flu-antiviral-eligibility.2026-09-21`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
+| 26 | 公費流感抗病毒藥劑使用對象（2026 年 6 月版）<br><sub>www.cdc.gov.tw/Category/Page/Tsy161Va94LybxcU8KHFRV</sub> | 文件 → `doc.flu-antiviral-eligibility.2026-06-01` | `doc.flu-antiviral-eligibility.2026-06-01`（既有） | 1 | pdf-no-text-layer | 既有內容已存在，供比對，不建議覆蓋 |
+| 27 | 公費抗病毒藥劑合約院所與藥局<br><sub>www.cdc.gov.tw/Category/List/Cf1DIbpAUq0ymjkxv1xC7U</sub> | 清單頁 → `page.influenza-flu-antiviral-contract-sites` | — | 0.6 | — | 清單頁，不轉換（新站由系統自動產生列表） |
+| 28 | 歷年流感疫苗接種計畫（2020–2024 年度）<br><sub>www.cdc.gov.tw/Category/List/ewfWns-6XlMWzGdtpDFLK1</sub> | 清單頁 → `page.influenza-flu-past-seasons` | — | 0.6 | — | 清單頁，不轉換（新站由系統自動產生列表） |
+| 29 | 流感疫情持續上升，10 月 1 日公費疫苗開打，長者幼兒請優先接種<br><sub>www.cdc.gov.tw/Bulletin/Detail/8lZ1ophntJAgEqI_IgPLNQ?typeid=9</sub> | 新聞 → `news.2026-09-29-ili-weekly` | — | 1 | not-in-manifest | 既有內容已存在，供比對，不建議覆蓋 |
+| 30 | 類流感進入高峰期，65 歲以上有症狀者可直接使用公費抗病毒藥劑免快篩<br><sub>www.cdc.gov.tw/Bulletin/Detail/PGF89OEzK1r1Z_C6VybzcY?typeid=9</sub> | 新聞 → `news.2026-09-21-flu-antiviral-revised` | — | 1 | not-in-manifest | 既有內容已存在，供比對，不建議覆蓋 |
+| 31 | 2026–2027 年度公費流感疫苗 10 月 1 日開打，新冠疫苗同步提供<br><sub>www.cdc.gov.tw/Bulletin/Detail/YhMh5ap_Ft8C_2_Gy5z5J9?typeid=9</sub> | 新聞 → `news.2026-09-18-flu-vaccine-oct1` | — | 1 | not-in-manifest | 既有內容已存在，供比對，不建議覆蓋 |
+| 32 | 澄清：網傳「打流感疫苗會得流感、長輩打完會死」並非事實<br><sub>www.cdc.gov.tw/Bulletin/Detail/e_1DvbI5FdTnW6hLu35VWK?typeid=8772</sub> | 新聞 → `news.2026-09-10-clarify-flu-vaccine-death` | — | 1 | not-in-manifest | 既有內容已存在，供比對，不建議覆蓋 |
+| 33 | 夏季流感疫情持續，公費抗病毒藥劑使用對象維持現行規定<br><sub>www.cdc.gov.tw/Bulletin/Detail/A_1lDFgtPBFnJ0u06cQ18z?typeid=9</sub> | 新聞 → `news.2026-06-03-flu-antiviral-summer` | — | 1 | not-in-manifest | 既有內容已存在，供比對，不建議覆蓋 |
+
+## 需人工檢視（1 頁）
+
+- **衛教宣導：單張海報**（信心 0.4）
+  - 警告：PDF「influenza-poster-7lang.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF
+  - 警告：圖片「influenza-poster.png」舊頁沒有替代文字，暫用檔名「influenza-poster」，請補 alt（needsAlt）
+
+## 併入疾病頁（9 頁）
+
+- 「疾病介紹」→ `disease.influenza` 區塊 transmission（疾病頁既有內容已存在，供比對）
+- 「致病原」→ `disease.influenza` 區塊 transmission（疾病頁既有內容已存在，供比對）
+- 「流行病學」→ `disease.influenza` 區塊 situation（疾病頁既有內容已存在，供比對）
+- 「傳染方式」→ `disease.influenza` 區塊 transmission（疾病頁既有內容已存在，供比對）
+- 「潛伏期」→ `disease.influenza` 區塊 transmission（疾病頁既有內容已存在，供比對）
+- 「發病症狀」→ `disease.influenza` 區塊 symptoms（疾病頁既有內容已存在，供比對）
+- 「預防方法」→ `disease.influenza` 區塊 prevention（疾病頁既有內容已存在，供比對）
+- 「治療方法與就醫資訊」→ `disease.influenza` 區塊 treatment（疾病頁既有內容已存在，供比對）
+- 「預防接種建議」→ `disease.influenza` 區塊 vaccine（疾病頁既有內容已存在，供比對）
+
+## 附件與圖片需要處理的
+
+- 流行病學：圖片「influenza-trend.png」舊頁沒有替代文字，暫用檔名「influenza-trend」，請補 alt（needsAlt）
+- 衛教宣導：單張海報：PDF「influenza-poster-7lang.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF
+- 衛教宣導：單張海報：圖片「influenza-poster.png」舊頁沒有替代文字，暫用檔名「influenza-poster」，請補 alt（needsAlt）
+- 公費流感抗病毒藥劑使用對象（2026 年 6 月版）：PDF「flu-antiviral-eligibility.2026-06-01.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF
+
+## 與移轉清單的差異
+
+- 清單有、匯出沒有：無
+- 匯出有、清單沒有：15-guideline、29-news-2026-09-29-ili-weekly、30-news-2026-09-21-flu-antiviral-revised、31-news-2026-09-18-flu-vaccine-oct1、32-news-2026-09-10-clarify-flu-vaccine-death、33-news-2026-06-03-flu-antiviral-summer
+- 與清單判定不同（不覆蓋，人工決定）：無
+- 套用規則：只改 status／target／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。
+

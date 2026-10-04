@@ -1,0 +1,21 @@
+{
+  "url": "https://www.cdc.gov.tw/Category/List/14Z7BcTsilzv0ni-tFHF80",
+  "title": "統計資料",
+  "category": "流感／統計資料",
+  "publishedAt": "2017-10-01",
+  "updatedAt": "2026-09-20",
+  "breadcrumbs": [
+    "首頁",
+    "傳染病與防疫專題",
+    "流感",
+    "統計資料"
+  ],
+  "tab": "statistics",
+  "attachments": [
+    {
+      "url": "https://www.cdc.gov.tw/File/Get/WVZD0SFKfIOhdgtmT-SHc2",
+      "label": "流感年度統計（CSV，示意）",
+      "file": "influenza-stats.csv"
+    }
+  ]
+}
