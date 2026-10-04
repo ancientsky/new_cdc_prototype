@@ -3,7 +3,7 @@
 // 靜態站無法送 ETag／Last-Modified header → meta.etag（data 內容 sha1 前 12 碼）與 meta.lastModified（集合最大 reviewedAt）。
 import { createHash } from 'node:crypto';
 import { config, siteOrigin } from '../../site.config.mjs';
-import { pathOf, mdPathOf, WHITELIST_REASON_LABELS, LIFECYCLE_LABELS, TODO_KIND_LABELS, NOTICE_TYPES, legacyPathOf, isLegacyPattern } from './governance.mjs';
+import { pathOf, mdPathOf, WHITELIST_REASON_LABELS, LIFECYCLE_LABELS, TODO_KIND_LABELS, NOTICE_TYPES, legacyPathOf, isLegacyPattern, JOB_STAGE_LABELS, TENDER_STAGE_LABELS, JOB_TAB_LABELS, TENDER_TAB_LABELS } from './governance.mjs';
 import { buildOpenApi } from './openapi.mjs';
 
 export const etagOf = (data) => createHash('sha1').update(JSON.stringify(data) ?? 'null').digest('hex').slice(0, 12);
@@ -46,6 +46,8 @@ export function govSummary(item) {
     ...(g.campaignStatus ? { campaignStatus: g.campaignStatus } : {}),
     ...(g.linkHealth?.total ? { linkHealth: g.linkHealth } : {}),
     ...(g.labtestCheck ? { labtestCheck: g.labtestCheck } : {}),
+    ...(g.jobStage ? { jobStage: g.jobStage, jobStageLabel: g.jobStageLabel, jobTab: g.jobTab, archivedStage: g.archivedStage, resultOverdue: g.resultOverdue, resultDueAt: g.resultDueAt, applyHref: g.applyHref } : {}),
+    ...(g.tenderStage ? { tenderStage: g.tenderStage, tenderStageLabel: g.tenderStageLabel, tenderTab: g.tenderTab, awardOverdue: g.awardOverdue, awardDueAt: g.awardDueAt } : {}),
     license: item.license, licenseNote: item.licenseNote ?? null, sensitivity: item.sensitivity, sourceHash: item.sourceHash,
     languages: item.languages, translationStale: g.translationStale, renderableLangs: g.renderableLangs,
   };
@@ -66,6 +68,7 @@ export const CATEGORY_OF = {
   disease: 'content-page', faq: 'content-page', vaccine: 'content-page', clarification: 'content-page', page: 'content-page', banner: 'content-page',
   news: 'press', letter: 'press', document: 'document-library',
   media: 'media', topic: 'content-page', service: 'content-page', publication: 'document-library', labtest: 'content-page', research: 'document-library',
+  job: 'press', tender: 'press',
 };
 /** 七類資產（7.7 第 1 點：原五類＋新聞稿、影音宣導素材） */
 export const ASSET_CATEGORIES = {
@@ -105,7 +108,25 @@ const isLegacyHost = (url) => {
   try { return m[1].toLowerCase() === new URL(config.legacyOrigin).host.toLowerCase(); } catch { return false; }
 };
 
-/** 301 對照表：失效版 → 現行版；family 穩定網址 → 現行版；現行官網 legacyUrls → 新路徑；移轉清單（kind: migration）舊頁 → 新頁 */
+/**
+ * 新站內部搬家（kind: moved）：內容換型別後的舊新站路徑 → 新路徑（第七輪：recruit／procurement 新聞 → job／tender）。
+ * legacyIds 只支援 news.*（validate 檢查）：舊路徑 /news/{slug}/。
+ */
+export function movedRedirects(site) {
+  const out = [];
+  for (const item of site.all) {
+    if (item.status !== 'published' && item.status !== 'archived') continue;
+    for (const old of item.legacyIds ?? []) {
+      const from = pathOf({ type: String(old).split('.')[0], id: old });
+      if (!from || from === '/' || from === pathOf(item)) continue;
+      out.push({ from, fromPath: from, to: pathOf(item), toUrl: absUrl(pathOf(item)), status: 301, kind: 'moved', itemId: item.id, legacyId: old,
+        note: '內容換型別搬家（第七輪：人才招募 → /careers/、採購公告 → /procurement/）；舊路徑轉到新路徑' });
+    }
+  }
+  return out;
+}
+
+/** 301 對照表：失效版 → 現行版；family 穩定網址 → 現行版；現行官網 legacyUrls → 新路徑；移轉清單（kind: migration）舊頁 → 新頁；新站內部搬家（kind: moved） */
 export function buildRedirects(site) {
   const out = [];
   // 移轉清單（ARCHITECTURE 13.1）：from＝舊網址去網域與 hash；to＝target 路徑＋anchor（target 為失效版 ⇒ 現行版）。
@@ -142,20 +163,21 @@ export function buildRedirects(site) {
     }
   }
   out.push(...migration);
+  out.push(...movedRedirects(site));
   return out;
 }
 
 /**
  * 伺服器對照檔與 legacy-map 用的轉址清單（純由 redirects.json 推導）：
- * 只取舊網址 → 新網址的 301（kind migration／legacy），排除 pattern（{id} 佔位）、非現行官網網域、根目錄 "/"、
+ * 只取舊網址 → 新網址的 301（kind migration／legacy，第七輪加 moved：新站內部換型別搬家），排除 pattern（{id} 佔位）、非現行官網網域、根目錄 "/"、
  * 轉到自己；同一正規化 key 有多個不同目的地 ⇒ 移轉清單優先，否則列為 ambiguous 不輸出（避免把舊總覽頁導到任一子頁）。
  * 不含 superseded（失效版頁面保留存取）與 family-latest（新站內部 302，由部署設定另處理）。
  */
 export function serverRedirects(redirects) {
   const groups = new Map();
   for (const r of redirects) {
-    if (r.status !== 301 || (r.kind !== 'migration' && r.kind !== 'legacy') || r.pattern) continue;
-    const src = r.kind === 'legacy' ? r.from : r.oldUrl ?? r.from;
+    if (r.status !== 301 || !['migration', 'legacy', 'moved'].includes(r.kind) || r.pattern) continue;
+    const src = r.kind === 'migration' ? r.oldUrl ?? r.from : r.from;
     if (!isLegacyHost(src)) continue;
     const from = r.fromPath ?? legacyPathOf(r.from);
     const key = legacyKey(from);
@@ -365,7 +387,25 @@ export function emitApi(site, write) {
   const notices = published(c.news).filter((n) => NOTICE_TYPES.has(n.newsType))
     .sort((a, b) => (a.gov.closed - b.gov.closed) || (a.gov.closed ? (b.deadlineAt ?? '').localeCompare(a.deadlineAt ?? '') : (a.deadlineAt ?? '9999').localeCompare(b.deadlineAt ?? '9999')) || byPubDesc(a, b))
     .map((n) => ({ ...strip(n), closed: !!n.gov.closed, closingSoon: !!n.gov.closingSoon, daysToDeadline: n.gov.daysToDeadline ?? null }));
-  put('v1/notices.json', notices, { open: notices.filter((n) => !n.closed).length, closed: notices.filter((n) => n.closed).length }, {}, '機關公告：人才招募、採購公告、其他訊息（closed＝已截止；進行中依截止日排序）');
+  put('v1/notices.json', notices, { open: notices.filter((n) => !n.closed).length, closed: notices.filter((n) => n.closed).length }, {}, '機關公告：其他訊息（closed＝已截止；進行中依截止日排序）；人才招募見 jobs.json、採購公告見 tenders.json');
+  // 第七輪（ARCHITECTURE 15.1）：人才招募、採購公告（stage 由治理引擎推導）
+  const JOB_TAB_ORDER = Object.keys(JOB_TAB_LABELS);
+  const jobs = published(c.jobs)
+    .sort((a, b) => JOB_TAB_ORDER.indexOf(a.gov.jobTab) - JOB_TAB_ORDER.indexOf(b.gov.jobTab) || (a.gov.jobTab === 'open' || a.gov.jobTab === 'upcoming' ? (a.deadlineAt ?? '').localeCompare(b.deadlineAt ?? '') : byPubDesc(a, b)) || a.id.localeCompare(b.id))
+    .map((j) => ({ ...strip(j), stage: j.gov.jobStage, stageLabel: j.gov.jobStageLabel, tab: j.gov.jobTab, tabLabel: j.gov.jobTabLabel, archivedStage: j.gov.archivedStage,
+      hiringUnitName: site.unitById.get(j.hiringUnit)?.name ?? j.hiringUnit, applyHref: j.gov.applyHref, applyOnSite: j.gov.applyOnSite, daysToDeadline: j.gov.daysToDeadline, closingSoon: j.gov.closingSoon,
+      resultUrl: j.result ? absUrl(`${pathOf(j)}#result`) : null, timeline: j.gov.timeline }));
+  put('v1/jobs.json', jobs, { stageLabels: JOB_STAGE_LABELS, tabLabels: JOB_TAB_LABELS, byStage: site.gov.jobs?.byStage ?? {}, byTab: site.gov.jobs?.byTab ?? {}, owner: 'unit.personnel',
+    privacy: '甄選結果（result）只公布序號、報名編號與遮罩姓名；建置時個資閘門檢查，未遮罩即建置失敗。result 與 waitlistUpdates 不進 AI 答案索引。' }, {},
+    '人才招募職缺（stage：upcoming／open／closed／screening／result／filled／cancelled；tab：open／upcoming／review／result／history）');
+  const TENDER_TAB_ORDER = Object.keys(TENDER_TAB_LABELS);
+  const tenders = published(c.tenders)
+    .sort((a, b) => TENDER_TAB_ORDER.indexOf(a.gov.tenderTab) - TENDER_TAB_ORDER.indexOf(b.gov.tenderTab) || (a.gov.tenderStage === 'open' ? (a.deadlineAt ?? '').localeCompare(b.deadlineAt ?? '') : (b.deadlineAt ?? '').localeCompare(a.deadlineAt ?? '')) || a.id.localeCompare(b.id))
+    .map((x) => ({ ...strip(x), stage: x.gov.tenderStage, stageLabel: x.gov.tenderStageLabel, tab: x.gov.tenderTab, tabLabel: x.gov.tenderTabLabel,
+      requestingUnitName: site.unitById.get(x.requestingUnit)?.name ?? x.requestingUnit, daysToDeadline: x.gov.daysToDeadline, closingSoon: x.gov.closingSoon, awardOverdue: x.gov.awardOverdue, timeline: x.gov.timeline }));
+  put('v1/tenders.json', tenders, { stageLabels: TENDER_STAGE_LABELS, tabLabels: TENDER_TAB_LABELS, byStage: site.gov.tenders?.byStage ?? {}, byTab: site.gov.tenders?.byTab ?? {}, owner: 'unit.secretariat',
+    note: '正式招標文件、投標與決標公告以政府電子採購網為準' }, {},
+    '採購公告（stage：open／closed／opened／awarded／failed／cancelled）');
   const nt = site.gov.notifyTable ?? [];
   put('v1/notify-table.json', nt, { lastModified: site.today, diseases: nt.reduce((n, g) => n + g.diseases.length, 0), source: `${siteOrigin()}/report/` }, {}, '法定傳染病通報時限表（由傳染病主檔自動產生）');
   const STATUS_ORDER = { active: 0, upcoming: 1, ended: 2 };
@@ -412,7 +452,7 @@ export function emitApi(site, write) {
   // 301 對照（含移轉清單）＋伺服器對照檔三格式＋精簡 legacy-map（ARCHITECTURE 13.1）
   const redirects = buildRedirects(site);
   const byKind = redirects.reduce((o, r) => ({ ...o, [r.kind]: (o[r.kind] ?? 0) + 1 }), {});
-  put('v1/redirects.json', redirects, { lastModified: site.today, byKind, patterns: redirects.filter((r) => r.pattern).length, unverified: redirects.filter((r) => r.verified === false).length }, {}, '舊版／舊網址 → 正本對照（301；kind：superseded／family-latest／legacy／migration；pattern＝{id} 佔位的 URL 模式，不進伺服器對照檔）');
+  put('v1/redirects.json', redirects, { lastModified: site.today, byKind, patterns: redirects.filter((r) => r.pattern).length, unverified: redirects.filter((r) => r.verified === false).length }, {}, '舊版／舊網址 → 正本對照（301；kind：superseded／family-latest／legacy／migration／moved；pattern＝{id} 佔位的 URL 模式，不進伺服器對照檔；moved＝新站內部換型別搬家）');
   const server = serverRedirects(redirects);
   const gone = goneEntries(site);
   for (const [file, text, description] of [

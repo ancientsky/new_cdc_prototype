@@ -26,6 +26,8 @@ export function itemPath(item) {
     case 'publication': return `/publications/${slugOf(item)}/`;
     case 'labtest': return `/lab/${slugOf(item)}/`;
     case 'research': return `/research/${slugOf(item)}/`;
+    case 'job': return `/careers/${item.slug ?? slugOf(item)}/`;
+    case 'tender': return `/procurement/${item.slug ?? slugOf(item)}/`;
     case 'banner': return `/campaigns/#${item.id}`;
     default: return '/';
   }

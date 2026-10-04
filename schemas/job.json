@@ -1,0 +1,116 @@
+{
+  "$id": "https://cdc-prototype/schemas/job.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "招募職缺（人事室）",
+  "description": "content/jobs/{yyyy-mm-dd}-{slug}.json；id job.{yyyy-mm-dd}-{slug}，前台路徑 /careers/{slug}/（ARCHITECTURE 15.1）。階段（gov.jobStage）由治理引擎依日期與 result 推導，只有 cancelled／filled 可人工覆蓋（manualStatus）。甄選結果只公布報名編號與遮罩姓名：nameMasked 必須含遮罩字（○◯〇＊）且不得是完整姓名、candidateNo 不得像身分證字號，違反即建置失敗（scripts/lib/validate.mjs 個資閘門）。result 與 waitlistUpdates 不進 AI 答案索引。",
+  "allOf": [{ "$ref": "_common.json" }],
+  "type": "object",
+  "required": ["slug", "hiringUnit", "jobType", "positions", "workplace", "salaryNote", "qualifications", "duties", "requiredDocuments", "applyStart", "deadlineAt", "applyMethod", "examPlan", "contact"],
+  "properties": {
+    "type": { "const": "job" },
+    "id": { "type": "string", "pattern": "^job\\.\\d{4}-\\d{2}-\\d{2}-[a-z0-9][a-z0-9-]*$" },
+    "owner": { "const": "unit.personnel", "description": "招募公告一律由人事室上架（用人單位放 hiringUnit）" },
+    "slug": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$", "description": "前台路徑 /careers/{slug}/；必須等於 id 去掉 job.{yyyy-mm-dd}- 的部分" },
+    "legacyIds": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^[a-z]+\\.[a-z0-9][a-z0-9.-]*$" }, "description": "本職缺在新站的舊內容 id（例：第七輪前以 news 型別發布的 news.2026-09-30-recruit-epidemic-physician）；emit-api 產生 redirects kind:moved（舊 /news/{slug}/ → /careers/{slug}/）" },
+    "refNo": { "type": "string", "description": "公告字號（例：疾管人字第 1150100245 號）" },
+    "hiringUnit": { "type": "string", "pattern": "^unit\\.", "description": "用人單位（units 主檔 id）" },
+    "jobType": { "enum": ["約聘人員", "約僱人員", "聘用研究員", "公費醫師", "技工工友駐衛警", "公務人員商調", "計畫助理", "臨時人員"] },
+    "positions": { "type": "integer", "minimum": 1, "description": "名額（正取人數上限）" },
+    "workplace": { "type": "string", "minLength": 1, "description": "工作地點（縣市開頭，例：臺北市中正區林森南路 6 號（疾管署本部））" },
+    "salaryNote": { "type": "string", "minLength": 1, "description": "薪資待遇文字（比照…薪點／薪資範圍）；不寫成數字欄位，避免被當成可計算的確定金額" },
+    "qualifications": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "duties": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "requiredDocuments": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "applyStart": { "type": "string", "format": "date", "description": "報名開始日（today < applyStart ⇒ upcoming）" },
+    "deadlineAt": { "type": "string", "format": "date", "description": "報名截止日（含當日；today > deadlineAt ⇒ 已截止，自動退出首頁與開放中清單）" },
+    "applyMethod": { "enum": ["online", "email", "mail", "in-person"], "description": "online 且無 applyUrl ⇒ 本站 /careers/{slug}/apply/（原型為模擬報名，不送出資料）" },
+    "applyUrl": { "type": "string", "format": "uri", "pattern": "^https?://", "description": "外部報名系統（例：行政院人事行政總處事求人）；省略＝本站報名頁" },
+    "examPlan": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["stage"],
+        "additionalProperties": false,
+        "properties": {
+          "stage": { "enum": ["書面審查", "筆試", "口試", "實作", "體能"] },
+          "date": { "type": "string", "format": "date" },
+          "note": { "type": "string" }
+        }
+      },
+      "description": "甄試方式與日期；任一 date ≤ today 且無 result ⇒ screening"
+    },
+    "resultPlannedAt": { "type": "string", "format": "date", "description": "預定公告結果日；today > resultPlannedAt + 7 且無 result ⇒ 待辦 job-result-overdue" },
+    "contact": { "type": "string", "minLength": 1, "description": "聯絡窗口（單位與總機轉分機；不放承辦人姓名）" },
+    "attachments": { "$ref": "#/$defs/jobAttachments" },
+    "manualStatus": { "enum": ["cancelled", "filled"], "description": "人工覆蓋：cancelled 停止甄選、filled 已補實（其餘階段一律由日期與 result 推導）" },
+    "manualStatusNote": { "type": "string", "description": "人工覆蓋的理由（例：因員額調整停止甄選）" },
+    "result": {
+      "type": "object",
+      "required": ["publishedAt", "admitted"],
+      "additionalProperties": false,
+      "description": "甄選結果（公開，但不進 AI 答案索引）。只公布序號、報名編號與遮罩姓名。",
+      "properties": {
+        "publishedAt": { "type": "string", "format": "date" },
+        "refNo": { "type": "string" },
+        "admitted": { "type": "array", "items": { "$ref": "#/$defs/jobAdmittedEntry" } },
+        "waitlist": { "type": "array", "items": { "$ref": "#/$defs/jobWaitlistEntry" } },
+        "note": { "type": "string", "description": "報到須知等（不得含姓名或身分證字號）" },
+        "attachments": { "$ref": "#/$defs/jobAttachments" }
+      }
+    },
+    "waitlistUpdates": {
+      "type": "array",
+      "description": "遞補公告（公開，但不進 AI 答案索引）",
+      "items": {
+        "type": "object",
+        "required": ["date", "candidateNo", "nameMasked"],
+        "additionalProperties": false,
+        "properties": {
+          "date": { "type": "string", "format": "date" },
+          "candidateNo": { "$ref": "#/$defs/jobCandidateNo" },
+          "nameMasked": { "$ref": "#/$defs/jobNameMasked" },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "note": { "type": "string", "description": "給同事看的說明（例：分機為示意）" }
+  },
+  "$defs": {
+    "jobCandidateNo": { "type": "string", "pattern": "^[0-9A-Za-z][0-9A-Za-z-]{2,23}$", "description": "報名編號（例：1150924-012＝民國 115 年 9 月 24 日公告第 012 號）；不得使用身分證字號" },
+    "jobNameMasked": { "type": "string", "minLength": 2, "maxLength": 12, "description": "遮罩姓名（例：王○明、林○）；必須含 ○◯〇＊ 之一" },
+    "jobAdmittedEntry": {
+      "type": "object",
+      "required": ["seq", "candidateNo", "nameMasked"],
+      "additionalProperties": false,
+      "properties": {
+        "seq": { "type": "integer", "minimum": 1 },
+        "candidateNo": { "$ref": "#/$defs/jobCandidateNo" },
+        "nameMasked": { "$ref": "#/$defs/jobNameMasked" }
+      }
+    },
+    "jobWaitlistEntry": {
+      "type": "object",
+      "required": ["rank", "candidateNo", "nameMasked"],
+      "additionalProperties": false,
+      "properties": {
+        "rank": { "type": "integer", "minimum": 1 },
+        "candidateNo": { "$ref": "#/$defs/jobCandidateNo" },
+        "nameMasked": { "$ref": "#/$defs/jobNameMasked" },
+        "validUntil": { "type": "string", "format": "date", "description": "備取有效期限；14 日內屆滿 ⇒ 待辦 job-waitlist-expiring" }
+      }
+    },
+    "jobAttachments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["label", "url"],
+        "properties": {
+          "label": { "type": "string" },
+          "url": { "type": "string" },
+          "format": { "type": "string" },
+          "machineReadable": { "type": "boolean" }
+        }
+      }
+    }
+  }
+}

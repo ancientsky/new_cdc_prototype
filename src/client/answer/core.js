@@ -196,6 +196,25 @@ const PUB_CUE = /(哪一期|第幾期|那一期|哪期|期刊|疫情報導|年�
 const OPEN_CUE = /(現在|目前|正在|有在|還有|進行中|開放|可以報名|可以投標|最新|最近|近期|還能)/;
 const RECRUIT_CUE = /(招募|徵才|職缺|徵人|約聘|約僱|甄選|甄試|工作機會|缺額|招考|人員)/;
 const PROCUREMENT_CUE = /(採購|標案|招標|投標|決標|公開評選|開標|案號)/;
+// 第七輪（ARCHITECTURE 15.1）：人才招募（job）與採購公告（tender）
+/** 問「誰錄取／錄取名單／結果」：不唸名單，只給結果頁連結 */
+export const ADMIT_RE = /(錄取|正取|備取|遞補|榜單|放榜|上榜|甄選結果|甄試結果|錄用)/;
+/** 職缺細節問句（資格、薪資、應備文件、甄試…）⇒ 走檢索組句（仍只用職缺片段） */
+const CAREERS_DETAIL_RE = /(資格|條件|工作內容|做什麼|負責什麼|應備|文件|要準備|要帶|甄試方式|考什麼|筆試|口試|實作|薪水|薪資|待遇|薪點|月薪|多少錢|在哪上班|工作地點)/;
+/** 採購細節問句（標的、規格、特別規定、履約）⇒ 走檢索組句 */
+const PROCUREMENT_DETAIL_RE = /(採購標的|標的物|標的是|規格|特別規定|履約|服務期間|交貨|要買什麼|買什麼)/;
+/** 職稱比對時去掉的泛用字 */
+const JOB_TITLE_GENERIC_RE = /(徵求|名額|約聘|約僱|聘用|人員|招募|職缺|疾管署|疾病管制署|案|採購|勞務|財物|年度|\d+|[\s（）()「」、，,．.·－-])/g;
+/** 問職稱（「防疫醫師」）或用人單位（「疫情中心」）⇒ 聚焦在相符的職缺／標案：title 去泛用字後的雙字片段命中 ≥ 2 個 */
+function titleHits(q, title) {
+  const t = String(title ?? '').replace(JOB_TITLE_GENERIC_RE, '');
+  const grams = new Set(); for (let i = 0; i + 1 < t.length; i++) grams.add(t.slice(i, i + 2));
+  let n = 0; for (const g of grams) if (q.includes(g)) n++;
+  return n;
+}
+/** 問句是否指名某一則職缺／標案：職稱雙字片段命中 ≥ 2，或命中該則的辨識關鍵字（focusTerms，索引建置時由 keywords 去泛用詞） */
+const focusOf = (q, c) => titleHits(q, c.title) >= 2 || (c.focusTerms ?? []).some((k) => q.toLowerCase().includes(String(k).toLowerCase()))
+  || (!!c.tenderNo && q.toUpperCase().includes(String(c.tenderNo).toUpperCase()));
 
 /** 旅遊疫情建議「變化」問句（最近哪些國家解除／調升…）；trv.change 意圖規則與 travelChanges 共用 */
 const TRAVEL_CHANGE_KINDS = { lifted: /(解除|取消|撤銷|撤除|\blift(ed)?\b)/i, raised: /(調升|升級|提高|\braised?\b)/i, lowered: /(調降|降級|降低|\blowered\b)/i, new: /(新增|新發布|新列)/ };
@@ -259,14 +278,17 @@ export const INTENT_RULES = [
   { id: 'ntf.category', intent: 'notify', weight: 5, re: /(第\s*[一二三四五1-5]\s*類|第幾類|幾類|哪一類|哪類)(法定)?(傳染病)?|法定傳染病(分類|類別|有哪些|有幾類)|傳染病(分類|類別)/, note: '法定傳染病分類' },
   { id: 'ntf.generic', intent: 'notify', weight: 3, re: /(通報|要不要報|需不需要報|法定傳染病)/, note: '通報泛稱' },
   // 公告：人才招募、採購、截止
-  { id: 'ntc.recruit', intent: 'notice', weight: 5, re: /(招募|徵才|職缺|徵人|約聘|約僱|甄選|甄試|工作機會|缺額|招考|人才招募)/, note: '人才招募' },
-  { id: 'ntc.procurement', intent: 'notice', weight: 5, re: /(採購|標案|招標|投標|決標|公開評選|開標|案號)/, note: '採購公告' },
   { id: 'ntc.deadline', intent: 'notice', weight: 2, re: /(截止|報名期限|收件期限)/, note: '截止' },
+  // 第七輪：人才招募（job）、採購公告（tender）各自成為意圖（原 ntc.recruit／ntc.procurement）
+  { id: 'car.recruit', intent: 'careers', weight: 5, re: /(招募|徵才|職缺|徵人|約聘|約僱|甄選|甄試|工作機會|缺額|招考|人才招募|有缺|缺人|開缺|人事室|錄取|正取|備取|遞補|榜單|放榜|徵求.{0,6}(人員|醫師|助理|技工|研究員|技術員))/, note: '人才招募（職缺、甄選、錄取、人事室）' },
+  { id: 'car.salary', intent: 'careers', weight: 3, re: /(薪水|薪資|待遇|薪點|月薪|起薪)/, note: '薪資待遇' },
+  { id: 'car.apply', intent: 'careers', weight: 2, re: /(報名|投履歷|應徵|求職|上班)/, note: '報名（弱：與其他「報名」共用）' },
+  { id: 'prc.words', intent: 'procurement', weight: 5, re: /(採購|標案|招標|投標|決標|公開評選|開標|案號|流標|得標|廢標|政府電子採購網)/, note: '採購公告（招標、投標、決標）' },
 ];
 /** 專業子意圖（專業模式下不被 professional 覆寫） */
-export const PRO_SUB_INTENTS = ['apply', 'lab', 'notify', 'notice'];
+export const PRO_SUB_INTENTS = ['apply', 'lab', 'notify', 'notice', 'careers', 'procurement'];
 
-const INTENT_PRIORITY = ['rumor', 'stats', 'notify', 'notice', 'apply', 'lab', 'professional', 'situation', 'travel', 'vaccine', 'symptoms'];
+const INTENT_PRIORITY = ['rumor', 'stats', 'notify', 'careers', 'procurement', 'notice', 'apply', 'lab', 'professional', 'situation', 'travel', 'vaccine', 'symptoms'];
 
 /** 意圖判斷：回傳 { intent, reasons[], scores{} } */
 export function classifyIntent(q, { view = 'public', hasTimeRange = false, hasDisease = false, hasCountry = false } = {}) {
@@ -326,7 +348,8 @@ export const REFUSAL_RULES = [
   { id: 'ref.forecast', kind: 'forecast', re: /(預測|預估|推估|predict|forecast|projection)|((明年|下個月|下週|下禮拜|下一季|未來幾(週|個月|年)|年底|過年後).{0,12}(會|病例|疫情|流行|多少|幾例|高峰|幾人))|((會不會|是否會|會).{0,4}(大流行|爆發|變嚴重|更嚴重|升高|增加|破\d)|(什麼時候|何時).{0,3}(結束|退燒|趨緩|消失))|\b(next year|will .{0,30}(increase|peak|rise|get worse))\b/i, note: '預測未來' },
   { id: 'ref.impersonation', kind: 'impersonation', re: /((以|用)(你的|疾管署的?|官方的?|政府的?)(名義|身分|口吻|立場))|((幫我|替我|請你)(寫|發|擬|產生).{0,8}(新聞稿|公告|聲明|公文|澄清稿))|((寫成|改寫成|改成|模仿|仿照|假裝).{0,10}(疾管署|官方|政府|衛福部|機關).{0,6}(口吻|語氣|名義|格式|公告|澄清|新聞稿|聲明))|(write|draft|issue) (a |an )?(press release|official (statement|announcement))/i, note: '冒用機關名義產生公告' },
   { id: 'ref.opinion', kind: 'opinion', re: /((你覺得|你認為|你的看法|你怎麼看|評價一下|給.{0,4}打分數).{0,12}(疾管署|政府|政策|部長|署長|防疫|官員|執政))|((疾管署|政府|部長|署長).{0,8}(爛|無能|失職|該下台|做得好嗎|做得好不好))/, note: '評論機關或政策' },
-  { id: 'ref.privacy', kind: 'privacy', re: /((確診者|個案|病人|患者|感染者).{0,6}(住哪|住在|地址|姓名|名字|是誰|身分|電話|哪一家|工作地點))|(誰確診|哪個人確診|公布.{0,4}(姓名|名單))/, note: '他人個資' },
+  { id: 'ref.privacy', kind: 'privacy', test: (q) => /((確診者|個案|病人|患者|感染者).{0,6}(住哪|住在|地址|姓名|名字|是誰|身分|電話|哪一家|工作地點))|(誰確診|哪個人確診|公布.{0,4}(姓名|名單))/.test(q) && !(ADMIT_RE.test(q) && !/(確診|個案|病人|患者|感染)/.test(q)), note: '他人個資（問職缺錄取名單另由 careers 意圖只給結果頁連結）' },
+  { id: 'ref.privacy.admitted', kind: 'privacy', re: /(錄取|正取|備取|遞補|上榜|應考|考生|報名者).{0,12}(住哪|住在|地址|電話|手機|身分證|生日|幾歲|年紀|全名|真名|本名|完整姓名|學校|畢業|臉書|IG|照片)/, note: '錄取者個資（只公布報名編號與遮罩姓名）' },
 ];
 
 const REFUSAL_TEXT = {
@@ -347,6 +370,9 @@ const REFUSAL_TEXT = {
     'no-clarification': { title: '目前沒有對應的官方澄清', text: '目前沒有與這則訊息對應的官方澄清。請先不要轉傳；可撥打 1922 詢問，或透過本頁回報讓我們查證。' },
     'no-data': { title: '找不到對應的統計資料', text: '資料目錄中沒有可直接回答的統計序列。你可以到開放資料平台查詢原始資料集。' },
     'pro-only': { title: '檢驗與送驗規定屬專業內容', text: '檢體採集、容器、保存運送與送驗時限是給醫療院所與檢驗人員的專業內容，請切換專業模式或到檢驗專區查詢。想了解疾病怎麼診斷，可看疾病頁「診斷與治療」。' },
+    'no-open-job': { title: '目前沒有開放報名的職缺', text: '疾管署目前沒有報名中的職缺。即將開放、審查中與歷次錄取結果請看「人才招募」頁，也可訂閱人才招募 RSS。' },
+    'no-job-result': { title: '目前沒有已公告的甄選結果', text: '目前沒有已公告甄選結果的職缺。甄選結果只在各職缺頁公布報名編號與遮罩姓名，答案不會唸出名單。' },
+    'no-open-tender': { title: '目前沒有招標中的標案', text: '疾管署目前沒有投標期間內的採購案。已截止、已開標、決標與流標的案件請看「採購公告」頁；正式公告以政府電子採購網為準。' },
   },
   en: {
     'prompt-injection': { title: "I can't follow that request", text: 'This looks like an attempt to change the system rules. This service only summarizes official content and will not change its rules or reveal its settings.' },
@@ -365,6 +391,9 @@ const REFUSAL_TEXT = {
     'no-clarification': { title: 'No matching official clarification', text: 'There is no official clarification matching this message yet. Please do not forward it; you can call 1922 or report it here.' },
     'no-data': { title: 'No matching statistics', text: 'No statistical series in the data catalogue answers this directly.' },
     'pro-only': { title: 'Specimen rules are professional content', text: 'Specimen collection, containers, storage and shipping rules are for healthcare and laboratory staff. Switch to professional mode or see the laboratory testing page.' },
+    'no-open-job': { title: 'No open vacancies right now', text: 'Taiwan CDC has no vacancies open for application at the moment. See the Jobs page for upcoming vacancies and past results.' },
+    'no-job-result': { title: 'No published selection results', text: 'No selection results have been published. Results list only applicant numbers and masked names on each vacancy page; this service does not read out the list.' },
+    'no-open-tender': { title: 'No open tenders right now', text: 'Taiwan CDC has no tenders open for bids at the moment. See the Procurement page; official notices are on the Government e-Procurement System.' },
   },
 };
 
@@ -636,6 +665,13 @@ export function createEngine(rawDeps = {}) {
         if (NOTICE_TYPES.includes(c.newsType) && !closedNow(c)) s *= 1.2; // 進行中優先
         if (wantOpen && closedNow(c)) { guards.push({ kind: 'closed-dropped', id: c.id }); continue; }
       }
+      // 第七輪：careers → 職缺、procurement → 標案；問「現在／開放」不拿已截止
+      if (intent === 'careers' || intent === 'procurement') {
+        const want = intent === 'careers' ? 'job' : 'tender';
+        if (c.type === want) s = s * 2 + 2; else s *= 0.4;
+        if (c.type === want && !closedNow(c)) s *= 1.2;
+        if (wantOpen && c.type === want && closedNow(c)) { guards.push({ kind: 'closed-dropped', id: c.id }); continue; }
+      }
       if (c.type === 'media') s = MEDIA_CUE.test(q) ? s * 1.6 + 1.5 : s * 0.85;
       if (c.type === 'publication' && PUB_CUE.test(q)) s = s * 1.6 + 1.5;
       if (c.type === 'research' && RESEARCH_CUE.test(q)) s = s * 1.6 + 1.5;
@@ -667,6 +703,8 @@ export function createEngine(rawDeps = {}) {
     apply: [/(第\s*\d+\s*步|步驟|申請對象|線上申請|填寫|送件|臨櫃)/, /(申請需準備|文件|證件|護照|身分證|表單)/, /(處理天數|\d+\s*天|費用|元|免費|法源)/],
     lab: [/(容器|管|mL|ml|毫升|保存|運送|°C|冷藏|冷凍)/, /(送驗時限|小時|週轉|檢驗單位|可做)/],
     notice: [/(截止|報名|投標)/, /(名額|預算|字號)/],
+    careers: [/(報名期間|截止|名額)/, /(資格|工作內容|應備文件|甄試|薪資)/],
+    procurement: [/(投標截止|開標|決標)/, /(案號|預算)/],
   };
   const REQUIRED_POINTS = {
     symptoms: [{ key: 'seek-care', label: '就醫時機', re: /(就醫|看醫生|回診|急診|立即|see a doctor|seek|119)/i }],
@@ -677,6 +715,8 @@ export function createEngine(rawDeps = {}) {
     apply: [{ key: 'how', label: '申請方式', re: /(第\s*\d+\s*步|申請|填寫|線上|送件|臨櫃|向)/ }],
     lab: [{ key: 'specimen', label: '檢體與容器', re: /(檢體|容器|血清|拭子|管|痰)/ }],
     notice: [{ key: 'deadline', label: '截止日', re: /截止/ }],
+    careers: [{ key: 'job', label: '職缺資訊', re: /(報名期間|資格|工作內容|應備文件|甄試|薪資|名額)/ }],
+    procurement: [{ key: 'tender', label: '標案資訊', re: /(案號|投標截止|標的|決標|預算)/ }],
   };
   const PERSONAL_ADVICE_RE = /(你應該(服用|吃|使用)|建議你(吃|服用|使用)|你可以(吃|服用).{0,6}藥|你(就是|應該是|可能是|一定是)(得了|感染)|you should take|you (definitely|probably) have)/i;
 
@@ -810,13 +850,37 @@ export function createEngine(rawDeps = {}) {
       case 'publication': return { series: c.series ?? null, volume: c.volume ?? null, issue: c.issue ?? null, article: c.article ?? null, cover: c.cover ?? null };
       case 'research': return { year: c.year ?? null, projectStatus: c.projectStatus ?? null, piUnit: c.piUnit ?? null };
       case 'topic': return { links: c.links ?? null };
+      case 'job': return { jobStage: jobStageNow(c), hiringUnitName: c.hiringUnitName ?? null, positions: c.positions ?? null, applyStart: c.applyStart ?? null, deadlineAt: c.deadlineAt ?? null, applyHref: c.applyHref ?? null, applyExternal: !!c.applyExternal, hasResult: !!c.hasResult, resultUrl: c.resultUrl ?? null, closed: closedNow(c) };
+      case 'tender': return { tenderStage: tenderStageNow(c), tenderNo: c.tenderNo ?? null, requestingUnitName: c.requestingUnitName ?? null, deadlineAt: c.deadlineAt ?? null, openingAt: c.openingAt ?? null, budgetNtd: c.budgetNtd ?? null, pccUrl: c.pccUrl ?? null, closed: closedNow(c) };
       default:
         if (NOTICE_TYPES.includes(c.newsType)) return { newsType: c.newsType, closed: closedNow(c), deadlineAt: c.deadlineAt ?? null, refNo: c.refNo ?? null, applyUrl: c.applyUrl ?? null };
         return {};
     }
   }
   /** 公告是否已截止（建置時標記，或以引擎 today 再算一次） */
-  function closedNow(c) { return !!(c.closed || (c.deadlineAt && today && c.deadlineAt < today)); }
+  function closedNow(c) {
+    if (c.type === 'job') return !['open', 'upcoming'].includes(jobStageNow(c));
+    if (c.type === 'tender') return tenderStageNow(c) !== 'open';
+    return !!(c.closed || (c.deadlineAt && today && c.deadlineAt < today));
+  }
+  /** 第七輪：職缺／標案階段以引擎 today 再算一次（索引建置日可能較舊）；與治理引擎 jobStageOf／tenderStageOf 同規則 */
+  function todayRt() { return today ?? now().toISOString().slice(0, 10); }
+  function jobStageNow(c) {
+    if (c.manualStatus) return c.manualStatus;
+    if (c.hasResult) return 'result';
+    const T = todayRt();
+    if (c.applyStart && T < c.applyStart) return 'upcoming';
+    if (!c.deadlineAt || T <= c.deadlineAt) return 'open';
+    return c.jobStage === 'screening' ? 'screening' : 'closed';
+  }
+  function tenderStageNow(c) {
+    if (c.manualStatus) return c.manualStatus;
+    if (c.awarded) return 'awarded';
+    const T = todayRt();
+    if (!c.deadlineAt || T <= c.deadlineAt) return 'open';
+    if (c.openingAt && T >= c.openingAt) return 'opened';
+    return 'closed';
+  }
 
   /** 專業模式引用標籤：依「文件」第 3 條，v2026-09 生效 115/9/15，取代前版第 3 條「限快篩陽性」 */
   function citeLabelOf(src) {
@@ -1173,6 +1237,95 @@ export function createEngine(rawDeps = {}) {
     return result;
   }
 
+  // ── 第七輪：人才招募／採購公告（結構化回答：只讀索引中職缺／標案的結構化句與欄位，不走全文檢索） ──
+  // 個資：職缺 chunk 不含 result／waitlistUpdates（index-builder 排除），問「誰錄取」只引用「甄選結果已於…公告，名單只公布報名編號與遮罩姓名」句並給結果頁連結。
+  function overviewChunks(type, view) {
+    const seen = new Set();
+    return poolFor(view, 'zh-TW').chunks.filter((c) => c.type === type && c.block === 'overview' && !seen.has(c.contentId) && seen.add(c.contentId));
+  }
+  function structuredFinish(result, picked, chunks, extra) {
+    const sourceMap = new Map(chunks.map((c) => [c.id, sourceOf(c)]));
+    // （已截止）只標在報名期間／投標截止句，避免「已決標（已截止）」之類的重複標示
+    const marked = picked.map((p) => (extra.markClosed && closedNow(p.chunk) && /(報名期間|投標截止日)/.test(p.text) && !p.text.includes('已截止') ? { ...p, text: `${p.text}${CLOSED_MARK}`, closed: true } : p));
+    finalizeSentences(result, marked, sourceMap);
+    for (const s of result.sentences) { const p = marked.find((x) => x.text === s.text); if (p?.closed) s.closed = true; }
+    result.retrieved = chunks;
+    result.confidence = 0.9;
+    result.completeness = { required: extra.required ?? ['deadline'], covered: extra.required ?? ['deadline'], missing: [], score: 1 };
+    result.actions = actionsFor(result, result.entities ?? { diseases: [], vaccines: [], countries: [] }, null);
+    if (extra.actions) result.actions = [...extra.actions, ...result.actions.filter((x) => !extra.actions.some((y) => y.href === x.href))].slice(0, 4);
+    result.related = [];
+    return result;
+  }
+  const pickSent = (c, re) => (c.sentences ?? []).find((x) => re.test(x));
+  function careersAnswer(q, result, view) {
+    const LL = result.lang;
+    const all = overviewChunks('job', view);
+    const focus = all.filter((c) => focusOf(q, c));
+    result.focusIds = focus.map((c) => c.contentId);
+    // 用人單位、職類只當篩選條件（仍只列開放中）
+    const byCat = all.filter((c) => (c.hiringUnitName && q.includes(c.hiringUnitName)) || (c.jobType && q.includes(c.jobType)));
+    const careersLink = { label: tr(LL, '看全部職缺', 'All vacancies'), href: '/careers/', kind: 'link' };
+    // 問錄取結果：不唸名單，給結果頁連結
+    if (ADMIT_RE.test(q)) {
+      let pool = (focus.length ? focus : all).filter((c) => c.hasResult || c.resultPlannedAt);
+      if (!focus.length) pool = pool.filter((c) => c.hasResult);
+      pool.sort((a, b) => (b.hasResult - a.hasResult) || (a.archivedStage - b.archivedStage) || String(b.resultPublishedAt ?? b.resultPlannedAt ?? '').localeCompare(String(a.resultPublishedAt ?? a.resultPlannedAt ?? '')));
+      pool = pool.slice(0, 3);
+      if (!pool.length) return setRefusal(result, 'no-job-result', 'ref.no-job-result', [careersLink]);
+      const picked = pool.map((c) => ({ text: pickSent(c, /甄選結果(已於|預計)/), cite: [c.id], chunk: c, slot: 0, score: 9 })).filter((p) => p.text);
+      const items = pool.map((c) => ({ id: c.contentId, title: c.title, url: c.url, resultUrl: c.resultUrl, resultPublishedAt: c.resultPublishedAt ?? null, resultPlannedAt: c.resultPlannedAt ?? null, stage: jobStageNow(c) }));
+      result.careers = { mode: 'admitted', structured: true, privacy: true, items, note: tr(LL, '甄選結果只在職缺頁公布報名編號與遮罩姓名，答案不唸出名單。', 'Results list only applicant numbers and masked names on the vacancy page; this answer does not read out the list.') };
+      const acts = items.filter((x) => x.resultUrl).slice(0, 2).map((x) => ({ label: tr(LL, `看「${x.title}」甄選結果`, 'See selection result'), href: x.resultUrl, kind: 'link' }));
+      result.guards.push({ kind: 'admitted-list-withheld', ids: items.map((x) => x.id) });
+      return structuredFinish(result, picked, pool, { required: ['result-link'], actions: [...acts, careersLink], markClosed: false });
+    }
+    // 指名職缺並問薪資：職缺概要句＋薪資句
+    if (focus.length && /(薪水|薪資|待遇|薪點|月薪|多少錢|起薪)/.test(q)) {
+      const pickedS = [];
+      for (const c of focus.slice(0, 3)) for (const t of [pickSent(c, /用人，職類為/), pickSent(c, /薪資待遇/)]) if (t) pickedS.push({ text: t, cite: [c.id], chunk: c, slot: 0, score: 9 });
+      result.careers = { mode: 'focus', structured: true, items: focus.slice(0, 3).map((c) => ({ id: c.contentId, title: c.title, url: c.url, stage: jobStageNow(c) })) };
+      return structuredFinish(result, pickedS, focus.slice(0, 3), { required: ['salary'], markClosed: true });
+    }
+    if (CAREERS_DETAIL_RE.test(q)) return null; // 資格、薪資、應備文件…：走檢索組句
+    const openOf = (arr) => arr.filter((c) => jobStageNow(c) === 'open');
+    let list = focus.length ? focus : openOf(byCat).length ? openOf(byCat) : openOf(all);
+    if (!focus.length && byCat.length && !openOf(byCat).length && list.length) result.guards.push({ kind: 'category-no-open', fallback: 'all-open' });
+    if (!list.length) {
+      result.careers = { mode: 'list', structured: true, items: [], upcoming: all.filter((c) => jobStageNow(c) === 'upcoming').map((c) => ({ id: c.contentId, title: c.title, url: c.url, applyStart: c.applyStart, deadlineAt: c.deadlineAt })) };
+      return setRefusal(result, 'no-open-job', 'ref.no-open-job', [careersLink]);
+    }
+    list = [...list].sort((a, b) => String(a.deadlineAt).localeCompare(String(b.deadlineAt)) || a.contentId.localeCompare(b.contentId)).slice(0, 5);
+    const picked = [];
+    for (const c of list) {
+      const s1 = pickSent(c, /用人，職類為/); const s2 = pickSent(c, /報名期間/);
+      for (const t of [s1, s2]) if (t) picked.push({ text: t, cite: [c.id], chunk: c, slot: 0, score: 9 });
+      if (focus.length && !['open', 'upcoming'].includes(jobStageNow(c))) { const s3 = pickSent(c, /甄選結果(已於|預計)|已停止甄選|已補實/); if (s3) picked.push({ text: s3, cite: [c.id], chunk: c, slot: 0, score: 9 }); }
+    }
+    result.careers = { mode: focus.length ? 'focus' : 'list', structured: true, items: list.map((c) => ({ id: c.contentId, title: c.title, hiringUnitName: c.hiringUnitName, positions: c.positions, applyStart: c.applyStart, deadlineAt: c.deadlineAt,
+      daysLeft: c.deadlineAt ? Math.round((Date.parse(c.deadlineAt) - Date.parse(todayRt())) / 864e5) : null, url: c.url, applyHref: c.applyHref ?? null, applyExternal: !!c.applyExternal, stage: jobStageNow(c) })) };
+    return structuredFinish(result, picked, list, { required: ['deadline'], markClosed: true });
+  }
+  function procurementAnswer(q, result, view) {
+    const LL = result.lang;
+    const all = overviewChunks('tender', view);
+    const focus = all.filter((c) => focusOf(q, c));
+    result.focusIds = focus.map((c) => c.contentId);
+    const listLink = { label: tr(LL, '看全部採購公告', 'All procurement notices'), href: '/procurement/', kind: 'link' };
+    if (PROCUREMENT_DETAIL_RE.test(q)) return null;
+    const wantAward = /(決標|得標|流標|廢標)/.test(q) && !focus.length;
+    let list = focus.length ? focus : wantAward ? all.filter((c) => ['awarded', 'failed', 'cancelled'].includes(tenderStageNow(c))) : all.filter((c) => tenderStageNow(c) === 'open');
+    if (!list.length) return setRefusal(result, 'no-open-tender', 'ref.no-open-tender', [listLink]);
+    list = [...list].sort((a, b) => (wantAward ? String(b.awardDate ?? b.deadlineAt).localeCompare(String(a.awardDate ?? a.deadlineAt)) : String(a.deadlineAt).localeCompare(String(b.deadlineAt))) || a.contentId.localeCompare(b.contentId)).slice(0, 5);
+    const picked = [];
+    for (const c of list) {
+      const sents = wantAward ? [pickSent(c, /已於 .* 決標|流標|已取消/), pickSent(c, /案號/)] : [pickSent(c, /案號/), pickSent(c, /投標截止日/), ...(focus.length ? [pickSent(c, /已於 .* 決標|流標|已取消/)] : [])];
+      for (const t of sents) if (t) picked.push({ text: t, cite: [c.id], chunk: c, slot: 0, score: 9 });
+    }
+    result.procurement = { mode: focus.length ? 'focus' : wantAward ? 'award' : 'list', structured: true, items: list.map((c) => ({ id: c.contentId, title: c.title, tenderNo: c.tenderNo, requestingUnitName: c.requestingUnitName, budgetNtd: c.budgetNtd, deadlineAt: c.deadlineAt, openingAt: c.openingAt, url: c.url, pccUrl: c.pccUrl ?? null, stage: tenderStageNow(c) })) };
+    return structuredFinish(result, picked, list, { required: ['deadline'], markClosed: !wantAward });
+  }
+
   // ── 拒答 ──
   function setRefusal(result, kind, ruleId, actions = null) {
     const LL = result.lang;
@@ -1197,7 +1350,7 @@ export function createEngine(rawDeps = {}) {
       actions: actions ?? baseActions[kind] ?? [{ label: tr(LL, '撥打 1922', 'Call 1922'), href: 'tel:1922', kind: 'hotline' }],
       relatedDisease: d ? { id: d.id, name: d.name, slug: d.slug } : null, related,
     };
-    if (!result.refusal.actions.some((a) => a.href === 'tel:1922') && !['prompt-injection', 'impersonation'].includes(kind)) result.refusal.actions.push({ label: tr(LL, '撥打 1922', 'Call 1922'), href: 'tel:1922', kind: 'hotline' });
+    if (!result.refusal.actions.some((a) => a.href === 'tel:1922') && !['prompt-injection', 'impersonation', 'no-open-job', 'no-job-result', 'no-open-tender'].includes(kind)) result.refusal.actions.push({ label: tr(LL, '撥打 1922', 'Call 1922'), href: 'tel:1922', kind: 'hotline' });
     result.sentences = []; result.sources = [];
     return result;
   }
@@ -1272,6 +1425,20 @@ export function createEngine(rawDeps = {}) {
         a.push({ label: tr(LL, '看全部公告', 'All notices'), href: '/notices/', kind: 'link' });
         if (open) a.push({ label: tr(LL, open.newsType === 'procurement' ? '前往投標網站' : '前往報名網站', 'Apply / bid'), href: open.applyUrl, kind: /^https?:/.test(open.applyUrl) ? 'external' : 'link' });
         break;
+      }
+      case 'careers': {
+        const jobSrc = (result.sources ?? []).find((s) => s.type === 'job');
+        if (jobSrc?.jobStage === 'open' && jobSrc.applyHref) a.push({ label: tr(LL, jobSrc.applyExternal ? '前往報名網站' : '線上報名', 'Apply'), href: jobSrc.applyHref, kind: /^https?:/.test(jobSrc.applyHref) ? 'external' : 'link' });
+        if (jobSrc) a.push({ label: tr(LL, '看職缺詳情', 'Vacancy details'), href: String(jobSrc.url).replace(/#.*$/, ''), kind: 'link' });
+        a.push({ label: tr(LL, '看全部職缺', 'All vacancies'), href: '/careers/', kind: 'link' });
+        return a.slice(0, 4); // 招募問題不附 1922
+      }
+      case 'procurement': {
+        const tSrc = (result.sources ?? []).find((s) => s.type === 'tender');
+        if (tSrc) a.push({ label: tr(LL, '看標案詳情', 'Tender details'), href: String(tSrc.url).replace(/#.*$/, ''), kind: 'link' });
+        if (tSrc?.pccUrl && tSrc.tenderStage === 'open') a.push({ label: tr(LL, '政府電子採購網', 'Government e-Procurement System'), href: tSrc.pccUrl, kind: 'external' });
+        a.push({ label: tr(LL, '看全部採購公告', 'All procurement notices'), href: '/procurement/', kind: 'link' });
+        return a.slice(0, 4);
       }
       case 'stats':
         if (result.stats) a.push({ label: tr(LL, '下載資料集', 'Download dataset'), href: result.sources[0]?.url, kind: 'external' });
@@ -1378,7 +1545,7 @@ export function createEngine(rawDeps = {}) {
     }
     return out.map((p) => {
       const c = p.chunk;
-      if (c && NOTICE_TYPES.includes(c.newsType) && closedNow(c)) {
+      if (c && (NOTICE_TYPES.includes(c.newsType) || ((c.type === 'job' || c.type === 'tender') && /(報名期間|投標截止日)/.test(p.text))) && closedNow(c)) {
         if (!p.text.includes('已截止')) return { ...p, text: `${p.text}${CLOSED_MARK}`, closed: true };
         return { ...p, closed: true };
       }
@@ -1432,6 +1599,11 @@ export function createEngine(rawDeps = {}) {
     const ci = classifyIntent(q, { view, hasTimeRange: hasRange, hasDisease: !!result.disease, hasCountry: entities.countries.length > 0 });
     result.intent = ci.intent; result.intentReasons = ci.reasons; result.intentScores = ci.scores;
     if (forceIntent) { result.intent = forceIntent; result.intentReasons.push(`forced.${forceIntent}`); }
+    // 第七輪：問句指名某職缺／標案並問細節（「防疫醫師的資格」「官網改版標案的規格」）⇒ careers／procurement
+    if (!forceIntent && !['careers', 'procurement', 'rumor', 'stats', 'notify'].includes(result.intent)) {
+      if (CAREERS_DETAIL_RE.test(q) && overviewChunks('job', view).some((c) => titleHits(q, c.title) >= 3 || (c.focusTerms ?? []).some((k) => q.includes(k)))) { result.intent = 'careers'; result.intentReasons.push('car.title-match'); }
+      else if (PROCUREMENT_DETAIL_RE.test(q) && overviewChunks('tender', view).some((c) => focusOf(q, c))) { result.intent = 'procurement'; result.intentReasons.push('prc.title-match'); }
+    }
 
     // 3 拒答（謠言查證頁貼上的是網傳訊息本身：只套用注入、危害、隱私、冒名規則）
     const RUMOR_RULE_KINDS = new Set(['prompt-injection', 'harmful', 'privacy', 'impersonation']);
@@ -1478,6 +1650,10 @@ export function createEngine(rawDeps = {}) {
       if (na) return na;
     }
 
+    // 第七輪：人才招募／採購公告（結構化列表、「誰錄取」只給結果頁連結）；細節問句才走檢索
+    if (result.intent === 'careers') { const ca = careersAnswer(q, result, view); if (ca) return ca; }
+    if (result.intent === 'procurement') { const pa = procurementAnswer(q, result, view); if (pa) return pa; }
+
     // 4 檢索（同語言 reviewed 優先，否則中文）
     const k = view === 'pro' ? 10 : 8;
     let chunks = [];
@@ -1499,7 +1675,7 @@ export function createEngine(rawDeps = {}) {
     }
     // 第二輪：意圖對應型別有夠相關的片段時，優先只用該型別（apply → service、lab → labtest、notice → 公告）
     //   問句線索：「影片」→ media、「哪一期」→ publication
-    const PREFER = { apply: (c) => c.type === 'service', lab: (c) => c.type === 'labtest', notice: (c) => NOTICE_TYPES.includes(c.newsType), notify: (c) => c.type === 'service' };
+    const PREFER = { apply: (c) => c.type === 'service', lab: (c) => c.type === 'labtest', notice: (c) => NOTICE_TYPES.includes(c.newsType), notify: (c) => c.type === 'service', careers: (c) => c.type === 'job', procurement: (c) => c.type === 'tender' };
     const preferFn = PREFER[result.intent] ?? (MEDIA_CUE.test(q) ? (c) => c.type === 'media' : RESEARCH_CUE.test(q) ? (c) => c.type === 'research' : PUB_CUE.test(q) ? (c) => c.type === 'publication' : null);
     if (preferFn && chunks.length) {
       const pref = chunks.filter(preferFn);
@@ -1519,12 +1695,23 @@ export function createEngine(rawDeps = {}) {
         chunks = kept;
       }
     }
+    // 第七輪：問句指名某一則職缺／標案 ⇒ 只用那幾則的片段
+    if ((result.intent === 'careers' || result.intent === 'procurement') && result.focusIds?.length) {
+      const kept = chunks.filter((c) => result.focusIds.includes(c.contentId));
+      if (kept.length) { kept.qWeights = chunks.qWeights; kept.model = chunks.model; if (kept.length < chunks.length) result.guards.push({ kind: 'focus', ids: result.focusIds, dropped: chunks.length - kept.length }); chunks = kept; }
+    }
     result.retrieved = chunks;
 
     // 公告意圖但檢索不到任何公告（全部截止、或尚未進白名單）⇒ 不拿無關片段硬湊，導向公告頁
     if (result.intent === 'notice' && !chunks.some((c) => NOTICE_TYPES.includes(c.newsType))) {
       result.list = traditionalList(q, view, lang, 5);
       return setRefusal(result, 'no-source', 'ref.no-notice', [{ label: tr(LL, '看全部公告', 'All notices'), href: '/notices/', kind: 'link' }, { label: tr(LL, '撥打 1922', 'Call 1922'), href: 'tel:1922', kind: 'hotline' }]);
+    }
+
+    // 職缺／採購細節問句檢索不到對應型別 ⇒ 導向列表頁，不拿無關片段硬湊
+    if ((result.intent === 'careers' && !chunks.some((c) => c.type === 'job')) || (result.intent === 'procurement' && !chunks.some((c) => c.type === 'tender'))) {
+      const href = result.intent === 'careers' ? '/careers/' : '/procurement/';
+      return setRefusal(result, 'no-source', `ref.no-${result.intent}`, [{ label: tr(LL, result.intent === 'careers' ? '看全部職缺' : '看全部採購公告', result.intent === 'careers' ? 'All vacancies' : 'All procurement notices'), href, kind: 'link' }]);
     }
 
     // 態勢（只讀結構化欄位）

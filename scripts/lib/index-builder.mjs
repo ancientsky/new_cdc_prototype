@@ -16,7 +16,13 @@
 //   publication  摘要一塊；articles[] 每篇標題＋摘要一塊（帶篇目 diseases）
 //   labtest      （專業）每個檢體一塊，結構化句；terms 加「檢體」「容器」「送驗」
 //   research     （專業）摘要＋目標一塊
-//   news recruit/procurement  一塊（截止日結構化句＋本文）；closed（已截止）標記；terms 加「招募」或「採購」
+//   news other（機關公告）一塊（截止日結構化句＋本文）；closed（已截止）標記（第七輪前的 recruit／procurement 相容保留）
+//   ── 第七輪（ARCHITECTURE 15.1）──
+//   job       overview 一塊（職稱、用人單位、職類、名額、地點、報名期間、報名方式、薪資、結果已公告句）＋ details 一塊（工作內容、資格、應備文件、甄試方式）；
+//             **result（正取／備取名單）與 waitlistUpdates（遞補）一律不入索引**：答案引擎問「誰錄取」只給結果頁連結。
+//             chunk 帶 jobStage、applyStart、deadlineAt、hiringUnitName、positions、applyHref、hasResult、resultUrl（答案引擎 careers 意圖結構化列出）
+//   tender    overview 一塊（案號、需求單位、採購方式、類別、預算、投標截止、開標、決標／流標）＋ scope 一塊（採購標的、特別規定、履約期限）；
+//             chunk 帶 tenderStage、tenderNo、deadlineAt、openingAt、budgetNtd、pccUrl（procurement 意圖）
 // 保證：失效版本（superseded）、逾期、依據正本已修訂（stale）的內容永遠不在索引。
 // 多語：i18n[lang] 有 reviewed（且譯文未過期）者另出同語 chunk；machine 一律不出。
 // 來源語言（ARCHITECTURE 14.2）：頂層欄位以 item.sourceLang（預設 zh-TW）出 chunk（英文來源 ⇒ 進英文索引）；
@@ -87,12 +93,64 @@ function pathOf(item) {
     case 'publication': return `/publications/${slug}/`;
     case 'labtest': return `/lab/${slug}/`;
     case 'research': return `/research/${slug}/`;
+    case 'job': return `/careers/${item.slug ?? slug.replace(/^\d{4}-\d{2}-\d{2}-/, '')}/`;
+    case 'tender': return `/procurement/${item.slug ?? slug.replace(/^\d{4}-\d{2}-\d{2}-/, '')}/`;
     default: return '/';
   }
 }
 
 export const LAB_LABELS = { 'cdc-lab': '疾管署檢驗及疫苗研製中心', 'certified-lab': '認可檢驗機構', 'hospital-lab': '醫院檢驗室', 'regional-lab': '區域檢驗實驗室' };
 const NOTICE_TERMS = { recruit: ['招募', '徵才', '職缺', '人才招募'], procurement: ['採購', '標案', '招標', '採購公告'] };
+
+/** 職缺報名方式（中文） */
+export const APPLY_METHOD_LABELS = { online: '線上報名', email: '電子郵件報名', mail: '郵寄報名', 'in-person': '親自送件報名' };
+/** 職缺不得進索引的欄位（個資：甄選名單與遞補公告） */
+export const JOB_INDEX_EXCLUDED_FIELDS = ['result', 'waitlistUpdates'];
+const fmtNtd = (n) => Number(n).toLocaleString('en-US');
+/** 職缺／標案關鍵字中的泛用詞（不拿來判斷「問的是哪一則」） */
+const FOCUS_GENERIC = new Set(['人才招募', '招募', '職缺', '徵才', '甄選', '報名', '約聘', '約僱', '採購公告', '採購', '招標', '標案', '投標', '決標', '流標', '勞務採購', '財物採購', '公開招標', '政府電子採購網', '公費疫苗']);
+/** 可辨識單一職缺／標案的關鍵字（答案引擎聚焦用）：keywords 去掉泛用詞與 2 字以下 */
+export const focusTermsOf = (item) => (item.keywords ?? []).filter((k) => String(k).length >= 3 && !FOCUS_GENERIC.has(k));
+const quoted = (t) => (/^[「『]/.test(t) || String(t).includes('」') ? t : `「${t}」`);
+/** 職缺 → 索引句（只讀白名單欄位；不讀 result 名單與 waitlistUpdates） */
+export function jobSentences(item, site) {
+  const unitName = (id) => site?.unitById?.get(id)?.name ?? id;
+  const t = quoted(item.title);
+  const overview = [
+    `${t}由${unitName(item.hiringUnit)}用人，職類為${item.jobType}，名額 ${item.positions} 名，工作地點：${item.workplace}。`,
+    `${t}報名期間 ${item.applyStart} 至 ${item.deadlineAt}，${APPLY_METHOD_LABELS[item.applyMethod] ?? item.applyMethod}${item.applyUrl ? '（外部報名系統）' : item.applyMethod === 'online' ? '（本站報名頁）' : ''}。`,
+    `${t}薪資待遇：${String(item.salaryNote).replace(/[。]$/, '')}。`,
+  ];
+  if (item.result?.publishedAt) overview.push(`${t}甄選結果已於 ${item.result.publishedAt} 公告，名單只公布報名編號與遮罩姓名，請至職缺頁「甄選結果」查看。`);
+  else if (item.resultPlannedAt && item.manualStatus !== 'cancelled') overview.push(`${t}甄選結果預計 ${item.resultPlannedAt} 公告。`);
+  if (item.manualStatus === 'cancelled') overview.push(`${t}已停止甄選${item.manualStatusNote ? `（${String(item.manualStatusNote).replace(/[。]$/, '')}）` : ''}。`);
+  if (item.manualStatus === 'filled') overview.push(`${t}已補實。`);
+  const details = [
+    ...(item.duties?.length ? [`${t}工作內容：${item.duties.map((x) => String(x).replace(/[。；]$/, '')).join('；')}。`] : []),
+    ...(item.qualifications?.length ? [`${t}資格條件：${item.qualifications.map((x) => String(x).replace(/[。；]$/, '')).join('；')}。`] : []),
+    ...(item.requiredDocuments?.length ? [`${t}應備文件：${item.requiredDocuments.join('、')}。`] : []),
+    ...(item.examPlan?.length ? [`${t}甄試方式：${item.examPlan.map((e) => `${e.stage}${e.date ? `（${e.date}）` : ''}`).join('、')}。`] : []),
+  ];
+  return { overview, details };
+}
+/** 採購公告 → 索引句 */
+export function tenderSentences(item, site) {
+  const unitName = (id) => site?.unitById?.get(id)?.name ?? id;
+  const t = quoted(item.title);
+  const overview = [
+    `${t}（案號 ${item.tenderNo}）由${unitName(item.requestingUnit)}需求，採${item.method}${item.awardRule ? `（${item.awardRule}）` : ''}，${item.category}採購，預算金額 ${fmtNtd(item.budgetNtd)} 元。`,
+    `${t}投標截止日 ${item.deadlineAt}${item.openingAt ? `，開標日 ${item.openingAt}` : ''}。`,
+  ];
+  if (item.award) overview.push(`${t}已於 ${item.award.date} 決標${item.award.amountNtd != null ? `，決標金額 ${fmtNtd(item.award.amountNtd)} 元` : ''}，得標廠商：${item.award.winner}。`);
+  if (item.manualStatus === 'failed') overview.push(`${t}流標${item.manualStatusNote ? `（${String(item.manualStatusNote).replace(/[。]$/, '')}）` : ''}。`);
+  if (item.manualStatus === 'cancelled') overview.push(`${t}已取消${item.manualStatusNote ? `（${String(item.manualStatusNote).replace(/[。]$/, '')}）` : ''}。`);
+  const scope = [
+    ...(item.scope?.length ? [`${t}採購標的：${item.scope.map((x) => String(x).replace(/[。；]$/, '')).join('；')}。`] : []),
+    ...(item.specialTerms?.length ? [`${t}特別規定：${item.specialTerms.map((x) => String(x).replace(/[。；]$/, '')).join('；')}。`] : []),
+    ...(item.contractPeriod ? [`${t}履約期限：${String(item.contractPeriod).replace(/[。]$/, '')}。`] : []),
+  ];
+  return { overview, scope };
+}
 
 /** 秒 → m:ss（逐字稿章節標示） */
 export function mmss(t) { const n = Math.max(0, Math.round(Number(t) || 0)); return `${Math.floor(n / 60)}:${String(n % 60).padStart(2, '0')}`; }
@@ -465,6 +523,40 @@ export function buildSearchIndex(site) {
           if (item.notesMarkdown) add(make({ ...item, diseases: dz }, 'notes', `${item.title} · 注意事項`, mdSentences(item.notesMarkdown), `${base}#notes`, { ...L, diseases: dz, audience: ['professional'], extraTerms: ['檢體', '送驗'] }), { proOnly: true });
           break;
         }
+        case 'job': {
+          if (!isSource) break; // 職缺內容以中文正本為準（i18n 只有標題摘要）
+          // 個資：只讀 jobSentences（白名單欄位）；result／waitlistUpdates 不進任何 chunk 欄位
+          const { overview, details } = jobSentences(item, site);
+          const g = item.gov ?? {};
+          const unitName = site.unitById.get(item.hiringUnit)?.name ?? item.hiringUnit;
+          const jobExtra = {
+            jobStage: g.jobStage ?? null, jobStageLabel: g.jobStageLabel ?? null, jobTab: g.jobTab ?? null, archivedStage: !!g.archivedStage,
+            slug: item.slug ?? null, jobType: item.jobType, hiringUnit: item.hiringUnit, hiringUnitName: unitName, positions: item.positions, workplace: item.workplace,
+            applyStart: item.applyStart, deadlineAt: item.deadlineAt, applyMethod: item.applyMethod, applyHref: g.applyHref ?? item.applyUrl ?? null, applyExternal: !!item.applyUrl,
+            manualStatus: item.manualStatus ?? null, hasResult: !!item.result, resultPublishedAt: item.result?.publishedAt ?? null, resultPlannedAt: item.resultPlannedAt ?? null,
+            resultUrl: item.result ? `${base}#result` : null, closed: !!g.closed, focusTerms: focusTermsOf(item),
+          };
+          const terms = ['人才招募', '招募', '職缺', '徵才', '甄選', '報名', item.jobType, unitName, ...(item.result ? ['甄選結果', '錄取'] : [])];
+          add(make(item, 'overview', item.title, overview, base, { ...L, ...jobExtra, block: 'overview', extraTerms: terms }));
+          add(make(item, 'details', `${item.title} · 工作內容與資格`, details, `${base}#details`, { ...L, ...jobExtra, block: 'details', extraTerms: [...terms, '資格', '條件', '應備文件', '甄試'] }));
+          break;
+        }
+        case 'tender': {
+          if (!isSource) break;
+          const { overview, scope } = tenderSentences(item, site);
+          const g = item.gov ?? {};
+          const unitName = site.unitById.get(item.requestingUnit)?.name ?? item.requestingUnit;
+          const tenderExtra = {
+            tenderStage: g.tenderStage ?? null, tenderStageLabel: g.tenderStageLabel ?? null, tenderTab: g.tenderTab ?? null, slug: item.slug ?? null,
+            tenderNo: item.tenderNo, method: item.method, category: item.category, budgetNtd: item.budgetNtd, requestingUnit: item.requestingUnit, requestingUnitName: unitName,
+            announcedAt: item.announcedAt, deadlineAt: item.deadlineAt, openingAt: item.openingAt ?? null, pccUrl: item.pccUrl ?? null,
+            manualStatus: item.manualStatus ?? null, awarded: !!item.award, awardDate: item.award?.date ?? null, closed: !!g.closed, focusTerms: focusTermsOf(item),
+          };
+          const terms = ['採購公告', '採購', '招標', '標案', '投標', item.method, item.category, unitName, ...(item.award ? ['決標'] : []), ...(item.manualStatus === 'failed' ? ['流標'] : [])];
+          add(make(item, 'overview', item.title, overview, base, { ...L, ...tenderExtra, block: 'overview', extraTerms: terms }));
+          if (scope.length) add(make(item, 'scope', `${item.title} · 採購標的`, scope, `${base}#scope`, { ...L, ...tenderExtra, block: 'scope', extraTerms: [...terms, '標的', '規格'] }));
+          break;
+        }
         case 'research': {
           if (!isSource) break;
           const obj = item.objectives?.length ? [`研究目標：${item.objectives.map((o) => String(o).replace(/[。；;]$/, '')).join('；')}。`] : [];
@@ -488,16 +580,18 @@ export function buildSearchIndex(site) {
   const dedupe = (arr) => { const seen = new Set(); return arr.filter((c) => (seen.has(c.id) ? false : seen.add(c.id))); };
   const P = dedupe(pub), R = dedupe(pro);
   // byType：民眾索引各型別塊數（新型別即使 0 也列出，方便儀表板看出「內容尚未進來」）；byTypePro：專業索引
-  const TYPES = ['disease', 'faq', 'news', 'clarification', 'vaccine', 'media', 'topic', 'service', 'publication'];
+  const TYPES = ['disease', 'faq', 'news', 'clarification', 'vaccine', 'media', 'topic', 'service', 'publication', 'job', 'tender'];
   const TYPES_PRO = [...TYPES, 'document', 'letter', 'labtest', 'research'];
   const byType = Object.fromEntries(TYPES.map((t) => [t, 0]));
   for (const c of P) byType[c.type] = (byType[c.type] ?? 0) + 1;
   const byTypePro = Object.fromEntries(TYPES_PRO.map((t) => [t, 0]));
   for (const c of R) byTypePro[c.type] = (byTypePro[c.type] ?? 0) + 1;
-  const notices = { open: P.filter((c) => c.newsType && ['recruit', 'procurement'].includes(c.newsType) && !c.closed).length, closed: P.filter((c) => c.closed).length };
+  const notices = { open: P.filter((c) => c.newsType && ['recruit', 'procurement'].includes(c.newsType) && !c.closed).length, closed: P.filter((c) => c.newsType && c.closed).length };
+  const jobs = { open: P.filter((c) => c.type === 'job' && c.block === 'overview' && c.jobStage === 'open').length, total: P.filter((c) => c.type === 'job' && c.block === 'overview').length };
+  const tenders = { open: P.filter((c) => c.type === 'tender' && c.block === 'overview' && c.tenderStage === 'open').length, total: P.filter((c) => c.type === 'tender' && c.block === 'overview').length };
   const byLang = {};
   for (const c of [...P, ...R]) byLang[c.lang] = (byLang[c.lang] ?? 0) + 1;
   const result = { public: P, pro: R };
-  Object.defineProperty(result, 'stats', { value: { chunks: P.length, chunksPro: R.length, byType, byTypePro, byLang, notices }, enumerable: true });
+  Object.defineProperty(result, 'stats', { value: { chunks: P.length, chunksPro: R.length, byType, byTypePro, byLang, notices, jobs, tenders }, enumerable: true });
   return result;
 }

@@ -32,10 +32,20 @@
 //      待辦聚合：每份清單只開一則 migration-pending（「{疾病}：N 個舊頁待移轉」），優先度依法定類別（第一、二類 high、
 //      第三類 medium、第四、五類 low）。site.migration.stats 加 lists／derived／curated／noPage；byDisease Map。
 //  R16 來源語言：item.sourceLang（預設 zh-TW）永遠可渲染、不算譯文；其他語言（含 zh-TW）以來源語言頂層欄位的 sourceHash 判斷過期。
+// 第七輪（ARCHITECTURE 15.1）：
+//  R17 招募職缺（job）：gov.jobStage＝manualStatus（cancelled／filled）＞ result ＞ upcoming（today < applyStart）＞ open（today ≤ deadlineAt）
+//      ＞ screening（examPlan 有 date ≤ today）＞ closed。不是 upcoming／open ⇒ gov.closed（退出首頁與開放中清單）。result 公告超過 90 天
+//      ⇒ gov.archivedStage（歷史）。gov.jobTab：open／upcoming／review（closed、screening）／result／history。待辦：job-result-overdue
+//      （today > resultPlannedAt + 7 且無 result，owner 人事室、cc 用人單位，medium）、job-waitlist-expiring（備取 validUntil 14 日內，low）、
+//      job-apply-url-dead（applyUrl 外部連結檢查失敗，取代 link-broken）。甄選結果個資閘門在 validate（建置失敗）；result／waitlistUpdates
+//      不進答案索引（index-builder）。
+//  R18 採購公告（tender）：gov.tenderStage＝manualStatus（failed／cancelled）＞ awarded（有 award）＞ open（today ≤ deadlineAt）
+//      ＞ opened（today ≥ openingAt）＞ closed。待辦 tender-award-overdue（openingAt + 30 日仍無 award 且非 failed／cancelled，owner 秘書室、cc 需求單位）。
 // annotations[]：{ kind, level, text, href（目標內容 id，沿用骨架語意）, targetId, path（目標前台路徑） }
 //  另：白名單型別政策（allowedTypes 民眾＋專業、allowedTypesPro 只進專業）、失效版仍被引用、態勢層逾期。
 import { createHash } from 'node:crypto';
 import { addMonths, daysBetween } from './render.mjs';
+import { jobPiiErrors } from './validate.mjs';
 
 // ───────────────────────── 常數與對照表 ─────────────────────────
 
@@ -79,7 +89,49 @@ export const TODO_KIND_LABELS = {
   'link-broken': '外部連結失效',
   'labtest-inconsistent': '檢驗與通報時限不一致',
   'migration-pending': '舊頁待移轉',
+  'job-result-overdue': '甄選結果逾期未公告',
+  'job-waitlist-expiring': '備取有效期將屆',
+  'job-apply-url-dead': '報名連結失效',
+  'tender-award-overdue': '決標逾期未公告',
 };
+
+// ───────────────────────── 第七輪：招募職缺與採購公告（ARCHITECTURE 15.1） ─────────────────────────
+
+/** 職缺階段（gov.jobStage）中文 */
+export const JOB_STAGE_LABELS = { upcoming: '即將開放報名', open: '報名中', closed: '已截止（待甄試）', screening: '審查與甄試中', result: '已公告甄選結果', filled: '已補實', cancelled: '已停止甄選' };
+/** 採購階段（gov.tenderStage）中文 */
+export const TENDER_STAGE_LABELS = { open: '招標中', closed: '已截止（待開標）', opened: '已開標（待決標）', awarded: '已決標', failed: '流標', cancelled: '已取消' };
+/** /careers/ 頁籤（gov.jobTab）與 /procurement/ 頁籤（gov.tenderTab） */
+export const JOB_TAB_LABELS = { open: '開放中', upcoming: '即將開放', review: '審查與甄試中', result: '錄取結果', history: '歷史' };
+export const TENDER_TAB_LABELS = { open: '招標中', closed: '已截止', opened: '已開標', awarded: '已決標', failed: '流標' };
+/** 結果預定日後幾天仍無 result ⇒ job-result-overdue */
+export const JOB_RESULT_GRACE_DAYS = 7;
+/** result 公告後幾天移入「歷史」 */
+export const JOB_HISTORY_DAYS = 90;
+/** 備取有效期幾天內屆滿 ⇒ job-waitlist-expiring */
+export const WAITLIST_EXPIRING_DAYS = 14;
+/** 開標後幾天仍無決標 ⇒ tender-award-overdue */
+export const TENDER_AWARD_DAYS = 30;
+/** 本站模擬報名頁（只在 open 且 applyMethod online、無外部 applyUrl 時由模板輸出） */
+export const jobApplyPath = (job) => `${pathOf(job).replace(/\/$/, '')}/apply/`;
+
+/** 職缺階段（純函式；today 為 ISO 日期） */
+export function jobStageOf(job, today) {
+  if (job.manualStatus === 'cancelled' || job.manualStatus === 'filled') return job.manualStatus;
+  if (job.result) return 'result';
+  if (job.applyStart && today < job.applyStart) return 'upcoming';
+  if (!job.deadlineAt || today <= job.deadlineAt) return 'open';
+  if ((job.examPlan ?? []).some((e) => e.date && e.date <= today)) return 'screening';
+  return 'closed';
+}
+/** 採購階段（純函式） */
+export function tenderStageOf(tender, today) {
+  if (tender.manualStatus === 'failed' || tender.manualStatus === 'cancelled') return tender.manualStatus;
+  if (tender.award) return 'awarded';
+  if (!tender.deadlineAt || today <= tender.deadlineAt) return 'open';
+  if (tender.openingAt && today >= tender.openingAt) return 'opened';
+  return 'closed';
+}
 
 /** 移轉清單狀態（ARCHITECTURE 13.1） */
 export const MIGRATION_STATUS_LABELS = { migrated: '已移轉', merged: '已併入', archived: '已封存', pending: '待移轉', dropped: '不移轉' };
@@ -110,9 +162,12 @@ export const TRANSLATION_DUE_DAYS = 14;
 /** 審閱到期提醒（30 日內黃） */
 export const DUE_SOON_DAYS = 30;
 /** 對外內容頁（KPI「有更新日與權責」分母） */
-export const PUBLIC_PAGE_TYPES = new Set(['disease', 'vaccine', 'faq', 'clarification', 'news', 'letter', 'document', 'dataset', 'page', 'media', 'topic', 'service', 'publication', 'labtest', 'research']);
+export const PUBLIC_PAGE_TYPES = new Set(['disease', 'vaccine', 'faq', 'clarification', 'news', 'letter', 'document', 'dataset', 'page', 'media', 'topic', 'service', 'publication', 'labtest', 'research', 'job', 'tender']);
 const NEWS_TYPES = new Set(['news', 'letter']);
-/** 機關公告（/notices/）：news 中的人才招募、採購公告、其他訊息 */
+/**
+ * 機關公告（/notices/）：news 中的其他訊息。第七輪起人才招募改 job、採購公告改 tender 型別；
+ * recruit／procurement 只為相容既有（第七輪前）資料與測試保留，schemas/news.json 已不接受。
+ */
 export const NOTICE_TYPES = new Set(['recruit', 'procurement', 'other']);
 /** 公告截止前提醒天數 */
 export const CLOSING_SOON_DAYS = 7;
@@ -142,6 +197,8 @@ export const EXTERNAL_LINK_FIELDS = {
   media: [{ field: 'videoUrl' }],
   publication: [{ field: 'pdfUrl' }],
   document: [{ field: 'pdfUrl' }],
+  job: [{ field: 'applyUrl' }],
+  tender: [{ field: 'pccUrl' }],
 };
 /** basedOnVersionLabel 可能寫成畫面上的整句「依 114.04.16 建議製作」→ 取中間版本字樣 */
 export function versionLabelOf(media) {
@@ -192,6 +249,9 @@ export function pathOf(item) {
     case 'publication': return `/publications/${slugOf(item)}/`;
     case 'labtest': return `/lab/${slugOf(item)}/`;
     case 'research': return `/research/${slugOf(item)}/`;
+    // 第七輪：id job.{yyyy-mm-dd}-{slug} → /careers/{slug}/；tender 同理 → /procurement/{slug}/
+    case 'job': return `/careers/${item.slug ?? slugOf(item).replace(/^\d{4}-\d{2}-\d{2}-/, '')}/`;
+    case 'tender': return `/procurement/${item.slug ?? slugOf(item).replace(/^\d{4}-\d{2}-\d{2}-/, '')}/`;
     default: return '/';
   }
 }
@@ -326,6 +386,9 @@ export function applyGovernance(site) {
       gov.ended = !!item.endAt && item.endAt < today;
       if (gov.ended && published) gov.annotations.push({ kind: 'ended', level: 'info', text: `本專區已於 ${item.endAt} 結束，保留供查閱。`, href: null, path: null, endAt: item.endAt });
     }
+    // R17／R18 招募職缺與採購公告
+    if (item.type === 'job') Object.assign(gov, jobGov(item, today, published));
+    if (item.type === 'tender') Object.assign(gov, tenderGov(item, today, published));
     // 宣導 Banner 檔期
     if (item.type === 'banner') {
       gov.campaignStatus = item.startAt && item.startAt > today ? 'upcoming' : item.endAt && item.endAt < today ? 'ended' : 'active';
@@ -560,9 +623,42 @@ export function applyGovernance(site) {
       item.gov.linkHealth[status]++;
       externalLinks.push({ url: l.url, itemId: item.id, itemType: item.type, itemTitle: item.title, owner: item.owner, ownerName: unitName(item.owner), field: l.field, label: l.label, lastCheckedAt: l.lastCheckedAt, status, path: pathOf(item) });
       if (status === 'broken' && item.status === 'published' && !item.gov.superseded) {
+        if (item.type === 'job' && l.field === 'applyUrl') {
+          // R17：職缺外部報名連結失效（報名中／即將開放 ⇒ high：民眾無法報名）
+          const live = ['open', 'upcoming'].includes(item.gov.jobStage);
+          addTodo({ id: `job-apply-url-dead:${item.id}`, kind: 'job-apply-url-dead', item, url: l.url, field: l.field, cc: [item.hiringUnit].filter(Boolean),
+            dueAt: live ? addDays(l.lastCheckedAt ?? today, 1) : addDays(l.lastCheckedAt ?? today, LINK_FIX_DAYS), severity: live ? 'high' : 'medium', stage: item.gov.jobStage,
+            text: `職缺「${item.title}」的外部報名連結（${l.url}）於 ${l.lastCheckedAt ?? '最近一次檢查'} 檢查失敗${live ? '，目前仍在報名期間，請立即更新報名網址或改用本站報名頁' : '，請更新或移除'}` });
+          continue;
+        }
         addTodo({ id: `link-broken:${item.id}:${l.field}`, kind: 'link-broken', item, url: l.url, field: l.field, dueAt: addDays(l.lastCheckedAt ?? today, LINK_FIX_DAYS), severity: 'medium',
           text: `「${item.title}」的外部連結 ${l.field}${l.label ? `「${l.label}」` : ''}（${l.url}）於 ${l.lastCheckedAt ?? '最近一次檢查'} 檢查失敗，請更新網址或移除` });
       }
+    }
+  }
+
+  // ── R17／R18 招募與採購待辦 ──
+  for (const job of site.collections.jobs ?? []) {
+    if (job.status !== 'published' || !job.gov) continue;
+    const g = job.gov;
+    if (g.resultOverdue) {
+      addTodo({ id: `job-result-overdue:${job.id}`, kind: 'job-result-overdue', item: job, owner: 'unit.personnel', cc: [job.hiringUnit].filter(Boolean), ccNames: [job.hiringUnit].filter(Boolean).map(unitName),
+        dueAt: g.resultDueAt, severity: 'medium', stage: g.jobStage, resultPlannedAt: job.resultPlannedAt,
+        text: `職缺「${job.title}」預定 ${job.resultPlannedAt} 公告甄選結果，已逾 ${JOB_RESULT_GRACE_DAYS} 日仍未上架：請人事室會同${unitName(job.hiringUnit)}公告結果（只公布報名編號與遮罩姓名），或更新預定日` });
+    }
+    if (g.waitlistExpiring?.length) {
+      const first = g.waitlistExpiring[0];
+      addTodo({ id: `job-waitlist-expiring:${job.id}`, kind: 'job-waitlist-expiring', item: job, owner: 'unit.personnel', cc: [job.hiringUnit].filter(Boolean), ccNames: [job.hiringUnit].filter(Boolean).map(unitName),
+        dueAt: first.validUntil, severity: 'low', ranks: g.waitlistExpiring.map((w) => w.rank), count: g.waitlistExpiring.length,
+        text: `職缺「${job.title}」備取第 ${g.waitlistExpiring.map((w) => w.rank).join('、')} 名有效期將於 ${first.validUntil} 屆滿（剩 ${first.daysLeft} 日）：如需遞補請於期限前公告，屆滿後不再遞補` });
+    }
+  }
+  for (const td of site.collections.tenders ?? []) {
+    if (td.status !== 'published' || !td.gov) continue;
+    if (td.gov.awardOverdue) {
+      addTodo({ id: `tender-award-overdue:${td.id}`, kind: 'tender-award-overdue', item: td, owner: 'unit.secretariat', cc: [td.requestingUnit].filter(Boolean), ccNames: [td.requestingUnit].filter(Boolean).map(unitName),
+        dueAt: td.gov.awardDueAt, severity: 'medium', stage: td.gov.tenderStage, openingAt: td.openingAt,
+        text: `標案「${td.title}」（${td.tenderNo}）已於 ${td.openingAt} 開標，逾 ${TENDER_AWARD_DAYS} 日仍無決標或流標紀錄：請秘書室會同${unitName(td.requestingUnit)}更新決標資訊（award）或標記流標／取消（manualStatus）` });
     }
   }
 
@@ -675,6 +771,10 @@ export function applyGovernance(site) {
     externalLinks,
     linkHealth: summarizeLinks(externalLinks),
     notifyTable,
+    // 第七輪：招募與採購階段統計（後台儀表板、/careers/、/procurement/ 頁籤計數）
+    jobs: stageStats(site.collections.jobs, 'jobStage', 'jobTab', JOB_STAGE_LABELS, JOB_TAB_LABELS),
+    tenders: stageStats(site.collections.tenders, 'tenderStage', 'tenderTab', TENDER_STAGE_LABELS, TENDER_TAB_LABELS),
+    jobStageLabels: JOB_STAGE_LABELS, tenderStageLabels: TENDER_STAGE_LABELS, jobTabLabels: JOB_TAB_LABELS, tenderTabLabels: TENDER_TAB_LABELS,
   };
   site.gov.byOwner = computeByOwner(site);
   site.gov.summary = computeSummary(site);
@@ -682,6 +782,97 @@ export function applyGovernance(site) {
   Object.defineProperty(site.gov, 'kpi', { enumerable: true, configurable: true, get: () => computeKpi(site) });
   Object.defineProperty(site.gov, 'kpiByKey', { enumerable: false, configurable: true, get: () => Object.fromEntries(computeKpi(site).map((k) => [k.key, k])) });
   return site.gov;
+}
+
+/** 階段統計：{ total, byStage, byTab, stageLabels, tabLabels }（只計 published） */
+function stageStats(list, stageKey, tabKey, stageLabels, tabLabels) {
+  const pub = (list ?? []).filter((x) => x.status === 'published' && x.gov);
+  const byStage = Object.fromEntries(Object.keys(stageLabels).map((k) => [k, 0]));
+  const byTab = Object.fromEntries(Object.keys(tabLabels).map((k) => [k, 0]));
+  for (const x of pub) { byStage[x.gov[stageKey]] = (byStage[x.gov[stageKey]] ?? 0) + 1; byTab[x.gov[tabKey]] = (byTab[x.gov[tabKey]] ?? 0) + 1; }
+  return { total: pub.length, byStage, byTab };
+}
+
+/** R17：職缺的 gov 欄位（Object.assign 到 item.gov） */
+export function jobGov(job, today, published = job.status === 'published') {
+  const stage = jobStageOf(job, today);
+  const daysSinceResult = job.result?.publishedAt ? daysBetween(job.result.publishedAt, today) : null;
+  const archivedStage = stage === 'result' && daysSinceResult != null && daysSinceResult > JOB_HISTORY_DAYS;
+  const tab = archivedStage || stage === 'filled' || stage === 'cancelled' ? 'history'
+    : stage === 'open' ? 'open' : stage === 'upcoming' ? 'upcoming' : stage === 'closed' || stage === 'screening' ? 'review' : 'result';
+  const daysToDeadline = job.deadlineAt ? daysBetween(today, job.deadlineAt) : null;
+  const applyOnSite = job.applyMethod === 'online' && !job.applyUrl;
+  const resultDueAt = job.resultPlannedAt ? addDays(job.resultPlannedAt, JOB_RESULT_GRACE_DAYS) : null;
+  const resultOverdue = !job.result && !job.manualStatus && !!resultDueAt && today > resultDueAt && ['closed', 'screening'].includes(stage);
+  const waitlistExpiring = stage === 'result' ? (job.result?.waitlist ?? [])
+    .filter((w) => w.validUntil && !(job.waitlistUpdates ?? []).some((u) => u.candidateNo === w.candidateNo))
+    .map((w) => ({ rank: w.rank, validUntil: w.validUntil, daysLeft: daysBetween(today, w.validUntil) }))
+    .filter((w) => w.daysLeft >= 0 && w.daysLeft <= WAITLIST_EXPIRING_DAYS)
+    .sort((a, b) => a.validUntil.localeCompare(b.validUntil) || a.rank - b.rank) : [];
+  const pii = job.result || job.waitlistUpdates?.length ? jobPiiErrors(job) : [];
+  const admitted = job.result?.admitted?.length ?? 0;
+  // 時間軸（模板 /careers/{slug}/ 用）：done＝已發生；current＝目前所在
+  const timeline = [
+    { key: 'announced', label: '公告', date: job.publishedAt },
+    { key: 'apply', label: '報名期間', date: job.applyStart, endDate: job.deadlineAt },
+    ...(job.examPlan ?? []).map((e, i) => ({ key: `exam-${i + 1}`, label: e.stage, date: e.date ?? null, note: e.note ?? null })),
+    { key: 'result', label: '甄選結果', date: job.result?.publishedAt ?? job.resultPlannedAt ?? null, planned: !job.result },
+    ...(job.waitlistUpdates ?? []).map((u, i) => ({ key: `waitlist-${i + 1}`, label: '遞補公告', date: u.date })),
+  ].map((x) => ({ ...x, done: !!x.date && (x.endDate ?? x.date) < today || (x.key === 'result' && !!job.result) }));
+  const currentKey = stage === 'upcoming' ? 'announced' : stage === 'open' ? 'apply' : stage === 'result' ? ((job.waitlistUpdates ?? []).length ? `waitlist-${job.waitlistUpdates.length}` : 'result')
+    : stage === 'closed' || stage === 'screening' ? ([...timeline].reverse().find((x) => x.key.startsWith('exam-') && x.date && x.date <= today)?.key ?? 'apply') : null;
+  for (const x of timeline) x.current = x.key === currentKey;
+  const out = {
+    jobStage: stage, jobStageLabel: JOB_STAGE_LABELS[stage], jobTab: tab, jobTabLabel: JOB_TAB_LABELS[tab],
+    archivedStage, daysSinceResult,
+    deadlineAt: job.deadlineAt ?? null, daysToDeadline,
+    closed: !['upcoming', 'open'].includes(stage), closingSoon: stage === 'open' && daysToDeadline != null && daysToDeadline <= CLOSING_SOON_DAYS,
+    daysToOpen: stage === 'upcoming' && job.applyStart ? daysBetween(today, job.applyStart) : null,
+    applyOnSite, applyHref: job.applyUrl ?? (applyOnSite ? jobApplyPath(job) : null), applyExternal: !!job.applyUrl,
+    resultDueAt, resultOverdue, waitlistExpiring,
+    resultCheck: job.result ? { masked: !pii.some((e) => e.startsWith('個資閘門')), errors: pii, admitted, positions: job.positions, withinPositions: admitted <= (job.positions ?? Infinity),
+      waitlist: job.result.waitlist?.length ?? 0, waitlistValid: (job.result.waitlist ?? []).every((w) => !w.validUntil || w.validUntil >= job.result.publishedAt), updates: job.waitlistUpdates?.length ?? 0 } : null,
+    timeline,
+  };
+  out.annotations = [];
+  if (published) {
+    if (stage === 'closed' || stage === 'screening') out.annotations.push({ kind: 'closed', level: 'info', text: `本職缺已於 ${job.deadlineAt} 截止報名${job.result ? '' : job.resultPlannedAt ? `，甄選結果預計 ${job.resultPlannedAt} 公布` : ''}。`, href: null, path: null, deadlineAt: job.deadlineAt });
+    if (stage === 'result') out.annotations.push({ kind: 'job-result', level: 'info', text: `甄選結果已於 ${job.result.publishedAt} 公告；名單只公布報名編號與遮罩姓名。`, href: null, path: `${pathOf(job)}#result` });
+    if (stage === 'cancelled') out.annotations.push({ kind: 'cancelled', level: 'info', text: `本職缺已停止甄選${job.manualStatusNote ? `（${job.manualStatusNote}）` : ''}。`, href: null, path: null });
+    if (stage === 'filled') out.annotations.push({ kind: 'filled', level: 'info', text: `本職缺已補實${job.manualStatusNote ? `（${job.manualStatusNote}）` : ''}。`, href: null, path: null });
+  }
+  return out;
+}
+
+/** R18：採購公告的 gov 欄位 */
+export function tenderGov(td, today, published = td.status === 'published') {
+  const stage = tenderStageOf(td, today);
+  const tab = stage === 'cancelled' ? 'failed' : stage;
+  const daysToDeadline = td.deadlineAt ? daysBetween(today, td.deadlineAt) : null;
+  const awardDueAt = td.openingAt ? addDays(td.openingAt, TENDER_AWARD_DAYS) : null;
+  const awardOverdue = stage === 'opened' && !!awardDueAt && today > awardDueAt;
+  const timeline = [
+    { key: 'announced', label: '公告', date: td.announcedAt },
+    ...(td.briefingAt ? [{ key: 'briefing', label: '廠商說明會', date: td.briefingAt }] : []),
+    { key: 'deadline', label: '投標截止', date: td.deadlineAt },
+    ...(td.openingAt ? [{ key: 'opening', label: '開標', date: td.openingAt }] : []),
+    { key: 'award', label: stage === 'failed' ? '流標' : stage === 'cancelled' ? '取消' : '決標', date: td.award?.date ?? null, planned: !td.award },
+  ].map((x) => ({ ...x, done: x.key === 'award' ? !!td.award || stage === 'failed' || stage === 'cancelled' : !!x.date && x.date < today }));
+  const currentKey = { open: 'deadline', closed: td.openingAt ? 'opening' : 'deadline', opened: 'award', awarded: 'award', failed: 'award', cancelled: 'award' }[stage];
+  for (const x of timeline) x.current = x.key === currentKey;
+  const out = {
+    tenderStage: stage, tenderStageLabel: TENDER_STAGE_LABELS[stage], tenderTab: tab, tenderTabLabel: TENDER_TAB_LABELS[tab],
+    deadlineAt: td.deadlineAt ?? null, daysToDeadline, closed: stage !== 'open', closingSoon: stage === 'open' && daysToDeadline != null && daysToDeadline <= CLOSING_SOON_DAYS,
+    daysToOpening: td.openingAt ? daysBetween(today, td.openingAt) : null, awardDueAt, awardOverdue, timeline,
+  };
+  out.annotations = [];
+  if (published) {
+    if (stage === 'closed' || stage === 'opened') out.annotations.push({ kind: 'closed', level: 'info', text: `本案已於 ${td.deadlineAt} 截止投標${stage === 'opened' ? `，${td.openingAt} 開標，決標結果待公告` : td.openingAt ? `，預定 ${td.openingAt} 開標` : ''}。`, href: null, path: null, deadlineAt: td.deadlineAt });
+    if (stage === 'awarded') out.annotations.push({ kind: 'awarded', level: 'info', text: `本案已於 ${td.award.date} 決標。`, href: null, path: null });
+    if (stage === 'failed') out.annotations.push({ kind: 'failed', level: 'info', text: `本案流標${td.manualStatusNote ? `（${td.manualStatusNote}）` : ''}。`, href: null, path: null });
+    if (stage === 'cancelled') out.annotations.push({ kind: 'cancelled', level: 'info', text: `本案已取消${td.manualStatusNote ? `（${td.manualStatusNote}）` : ''}。`, href: null, path: null });
+  }
+  return out;
 }
 
 /**
@@ -946,6 +1137,9 @@ export function textOf(item) {
   for (const sp of item.specimens ?? []) parts.push(sp.name, sp.note);
   for (const c of item.chapters ?? []) parts.push(c.label);
   for (const f of item.faq ?? []) parts.push(f.q, f.a);
+  // 第七輪：職缺與採購正文（不含 result／waitlistUpdates：名單不進稽核文字與索引）
+  for (const k of ['duties', 'qualifications', 'requiredDocuments', 'scope', 'specialTerms']) for (const x of item[k] ?? []) parts.push(x);
+  parts.push(item.salaryNote, item.contractPeriod);
   for (const lang of Object.values(item.i18n ?? {})) parts.push(JSON.stringify(lang));
   return parts.filter(Boolean).join('\n');
 }
@@ -1056,7 +1250,7 @@ function computeSummary(site) {
     situationLagDays: site.gov.situation.lagDays,
     situationOverdue: site.gov.situation.overdue,
     noticesOpen: all.filter((i) => i.gov.notice && i.status === 'published' && i.gov.deadlineAt && !i.gov.closed).length,
-    noticesClosed: all.filter((i) => i.gov.closed).length,
+    noticesClosed: all.filter((i) => i.gov.notice && i.gov.closed).length,
     noticesClosingSoon: all.filter((i) => i.gov.closingSoon && i.status === 'published').length,
     topicsEnded: all.filter((i) => i.gov.ended).length,
     media: (site.collections.media ?? []).length,
@@ -1069,6 +1263,11 @@ function computeSummary(site) {
     migrationTotal: site.migration?.stats.total ?? 0,
     migrationPending: site.migration?.stats.pending ?? 0,
     migrationUnverified: site.migration?.stats.unverified ?? 0,
+    // 第七輪
+    jobs: site.gov.jobs?.total ?? 0, jobsOpen: site.gov.jobs?.byStage.open ?? 0, jobsByStage: site.gov.jobs?.byStage ?? {},
+    jobsResultOverdue: (site.collections.jobs ?? []).filter((j) => j.gov?.resultOverdue).length,
+    tenders: site.gov.tenders?.total ?? 0, tendersOpen: site.gov.tenders?.byStage.open ?? 0, tendersByStage: site.gov.tenders?.byStage ?? {},
+    tendersAwardOverdue: (site.collections.tenders ?? []).filter((x) => x.gov?.awardOverdue).length,
   };
 }
 
@@ -1118,7 +1317,7 @@ export function computeKpi(site) {
   const mediaCur = media.filter((i) => !i.gov.mediaOutdated);
   const links = site.gov.externalLinks ?? [];
   const linksOk = links.filter((l) => l.status === 'ok');
-  const closedUnarchived = pub.filter((i) => i.gov.closed && i.gov.closedDays > CLOSED_ARCHIVE_DAYS);
+  const closedUnarchived = pub.filter((i) => i.gov.notice && i.gov.closed && i.gov.closedDays > CLOSED_ARCHIVE_DAYS); // 職缺／標案保留歷史，不計
 
   const rows = [
     { key: 'provenance', label: '對外內容頁有更新日與權責單位', current: pct(withProv.length, contentPages.length), numerator: withProv.length, denominator: contentPages.length, target1y: 100, target3y: 100, unit: '%' },

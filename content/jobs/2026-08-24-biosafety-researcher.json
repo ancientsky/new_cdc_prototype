@@ -1,0 +1,103 @@
+{
+  "id": "job.2026-08-24-biosafety-researcher",
+  "type": "job",
+  "title": "感染管制及生物安全組徵求聘用研究員 1 名（生物安全）",
+  "owner": "unit.personnel",
+  "steward": "人事室承辦人",
+  "publishedAt": "2026-08-24",
+  "reviewedAt": "2026-08-24",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-08-24"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "感染管制及生物安全組徵求聘用研究員 1 名，辦理實驗室生物安全管理、查核與教育訓練；目前進行筆試與口試，結果預計 2026 年 10 月 15 日公告。",
+  "keywords": [
+    "人才招募",
+    "聘用研究員",
+    "生物安全",
+    "感染管制及生物安全組"
+  ],
+  "slug": "biosafety-researcher",
+  "refNo": "疾管人字第 1150100205 號",
+  "hiringUnit": "unit.infection-control",
+  "jobType": "聘用研究員",
+  "positions": 1,
+  "workplace": "臺北市中正區林森南路 6 號（疾管署本部）",
+  "salaryNote": "依聘用人員聘用條例，比照聘用人員薪點表研究員級 430 薪點起敘（依學經歷核定，示意）",
+  "qualifications": [
+    "國內外大學以上微生物、公共衛生、醫事檢驗或相關系所碩士以上",
+    "具生物安全第三等級實驗室操作或管理經驗者優先",
+    "具生物安全相關訓練證明者優先"
+  ],
+  "duties": [
+    "實驗室生物安全管理制度規劃與查核",
+    "感染性生物材料管理業務",
+    "生物安全教育訓練規劃與辦理"
+  ],
+  "requiredDocuments": [
+    "履歷表（含自傳）",
+    "最高學歷畢業證書影本",
+    "研究著作或工作成果（有者檢附）"
+  ],
+  "applyStart": "2026-08-24",
+  "deadlineAt": "2026-09-10",
+  "applyMethod": "online",
+  "applyUrl": "https://web3.dgpa.gov.tw/",
+  "examPlan": [
+    {
+      "stage": "書面審查",
+      "date": "2026-09-17"
+    },
+    {
+      "stage": "筆試",
+      "date": "2026-09-26",
+      "note": "生物安全法規與實驗室管理"
+    },
+    {
+      "stage": "口試",
+      "date": "2026-10-08"
+    }
+  ],
+  "resultPlannedAt": "2026-10-15",
+  "contact": "疾管署人事室：（02）2395-9825 轉人事室分機（示意）；職務內容洽詢：感染管制及生物安全組（同總機轉接）",
+  "attachments": [
+    {
+      "label": "甄選簡章（PDF）",
+      "url": "/pending/?ref=job.2026-08-24-biosafety-researcher&doc=甄選簡章",
+      "format": "pdf",
+      "machineReadable": false
+    }
+  ],
+  "note": "聯絡電話為疾管署總機，分機與報名信箱以正式簡章為準（本原型為示意，不放承辦人姓名）；薪資待遇為示意文字，實際依核定薪點折算。"
+}

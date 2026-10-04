@@ -89,7 +89,7 @@ ${intl ? html`<section class="c-block" id="international" aria-labelledby="h-int
   <p><a class="c-btn c-btn--ghost c-btn--sm" href="${url('/international/')}">${t('international.title')} →</a></p></section>` : ''}
 <section class="c-block" id="contact" aria-labelledby="h-contact"><h2 id="h-contact">${t('about.s.contact')}</h2>
   <p>${t('about.contact')} <a class="c-btn c-btn--sm" href="${url('/contact/')}">${t('contact.title')} →</a></p>
-  <ul class="c-linklist c-linklist--inline"><li><a href="${url('/policy/privacy/')}">${t('footer.privacy')}</a></li><li><a href="${url('/policy/ai/')}">${t('footer.ai')}</a></li><li><a href="${url('/policy/open-data/')}">${t('footer.license')}</a></li><li><a href="${url('/accessibility/')}">${t('footer.a11y')}</a></li></ul></section>
+  <ul class="c-linklist c-linklist--inline"><li><a href="${url('/careers/')}">${t('careers.title')}</a></li><li><a href="${url('/procurement/')}">${t('proc.title')}</a></li><li><a href="${url('/policy/privacy/')}">${t('footer.privacy')}</a></li><li><a href="${url('/policy/ai/')}">${t('footer.ai')}</a></li><li><a href="${url('/policy/open-data/')}">${t('footer.license')}</a></li><li><a href="${url('/accessibility/')}">${t('footer.a11y')}</a></li></ul></section>
 ${feedback(ctx, { page: ctx.path })}`;
 }
 

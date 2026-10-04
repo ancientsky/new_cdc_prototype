@@ -36,6 +36,8 @@ function infoColumn(ctx) {
   ${body ? html`<div class="c-prose">${raw(md(body))}</div>` : ''}
   ${p ? html`<p class="c-about__prov muted">${t('prov.owner')}：${unitName(ctx, p.owner)} · ${t('prov.reviewed')} ${ctx.fmtDate(p.reviewedAt)}</p>` : ''}
   <p class="muted">${t('contact.emergency')}</p>
+  <h3 class="c-contact__sub">${t('contact.other')}</h3>
+  <ul class="c-linklist"><li><a href="${ctx.url('/careers/')}">${t('careers.title')}</a> <span class="muted">${t('contact.careers.unit')}</span></li><li><a href="${ctx.url('/procurement/')}">${t('proc.title')}</a> <span class="muted">${t('contact.proc.unit')}</span></li></ul>
   <ul class="c-linklist"><li><a href="${ctx.url('/ask/')}">${t('ask.title')}</a></li><li><a href="${ctx.url('/factcheck/')}">${t('nav.factcheck')}</a></li><li><a href="${ctx.url('/faq/')}">${t('nav.faq')}</a></li></ul>
 </section>`;
 }

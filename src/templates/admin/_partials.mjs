@@ -2,13 +2,14 @@
 // 原則：治理狀態一律來自 item.gov / site.gov（建置時由引擎算），這裡只做呈現，不重算規則。
 import { html, raw, jsonScript, esc, daysBetween } from '../../../scripts/lib/render.mjs';
 import { config } from '../../../site.config.mjs';
+import { allJobs, allTenders, applyOnSite, jobStage, jobIsHistory, tenderStage, jobPath, tenderPath, MASK_RE } from '../public/_careers.mjs';
 
 export const DEFAULT_UNIT = 'unit.acute-infectious';
 
 export const TYPE_LABEL = {
   disease: '疾病頁', faq: 'Q&A', news: '新聞稿', letter: '致醫界通函', clarification: '澄清', document: '文件', vaccine: '疫苗頁',
   dataset: '資料集', banner: '宣導 Banner', page: '一般頁面',
-  media: '影音', topic: '專區', service: '申請服務', publication: '出版品', labtest: '檢驗項目', research: '研究計畫',
+  media: '影音', topic: '專區', service: '申請服務', publication: '出版品', labtest: '檢驗項目', research: '研究計畫', job: '招募職缺', tender: '採購公告',
 };
 /** news 型別的 newsType（含人才招募、採購公告）。 */
 export const NEWS_SUBTYPE_LABEL = { press: '新聞稿', letter: '致醫界通函', clarification: '澄清稿', other: '其他訊息', recruit: '人才招募', procurement: '採購公告' };
@@ -22,8 +23,9 @@ export const KIND_LABEL = {
   'dataset-overdue': '資料集逾期', 'license-missing': '授權缺漏', 'superseded-still-linked': '失效版仍被連結', 'situation-overdue': '態勢層逾期',
   'media-outdated': '影音過時', 'media-no-transcript': '無逐字稿', 'link-broken': '連結失效', 'labtest-inconsistent': '檢驗不一致',
   'migration-pending': '舊頁待移轉',
+  'job-result-overdue': '招募結果逾期', 'job-waitlist-expiring': '備取將到期', 'job-apply-url-dead': '報名網址失效', 'tender-award-overdue': '決標逾期',
 };
-export const KIND_ORDER = ['based-on-revised', 'reverse-audit', 'overdue', 'translation-stale', 'dataset-overdue', 'license-missing', 'superseded-still-linked', 'situation-overdue', 'media-outdated', 'media-no-transcript', 'link-broken', 'labtest-inconsistent', 'migration-pending'];
+export const KIND_ORDER = ['based-on-revised', 'reverse-audit', 'overdue', 'translation-stale', 'dataset-overdue', 'license-missing', 'superseded-still-linked', 'situation-overdue', 'media-outdated', 'media-no-transcript', 'link-broken', 'labtest-inconsistent', 'migration-pending', 'job-result-overdue', 'job-waitlist-expiring', 'job-apply-url-dead', 'tender-award-overdue'];
 export const WL_REASON_LABEL = {
   'not-published': '尚未發布', overdue: '逾期未審閱', superseded: '已被新版取代', sensitivity: '敏感等級非公開',
   'based-on-revised': '依據正本已修訂', 'not-requested': '未申請進白名單', 'type-not-allowed': '型別不在白名單政策', 'reverse-audit': '反向稽核命中',
@@ -41,6 +43,8 @@ export const NAV = [
   { key: 'due', href: '/admin/due/', label: '審閱到期', count: 'due' },
   { key: 'catalog', href: '/admin/catalog/', label: '資料目錄' },
   { key: 'notices', href: '/admin/notices/', label: '公告', count: 'notices' },
+  { key: 'jobs', href: '/admin/jobs/', label: '人才招募', count: 'jobs' },
+  { key: 'tenders', href: '/admin/tenders/', label: '採購', count: 'tenders' },
   { key: 'media', href: '/admin/media/', label: '影音', count: 'media' },
   { key: 'links', href: '/admin/links/', label: '連結', count: 'links' },
   { key: 'migration', href: '/admin/migration/', label: '移轉進度', count: 'migration' },
@@ -68,6 +72,8 @@ export function frontPath(item) {
     case 'publication': return `/publications/${rest}/`;
     case 'labtest': return `/lab/${rest}/`;
     case 'research': return `/research/${rest}/`;
+    case 'job': return jobPath(item);
+    case 'tender': return tenderPath(item);
     case 'clarification': return '/factcheck/';
     case 'dataset': return '/data/';
     default: return null;
@@ -151,7 +157,9 @@ export function counts(site) {
   const links = linkRows(site).filter((l) => l.status === 'broken').length;
   const notices = noticeRows(site).filter((n) => n.closed && !n.archived).length;
   const migration = site.migration?.stats?.pending ?? (site.migration?.pending?.length ?? 0);
-  return { review, due, todos, media, links, notices, migration };
+  const jobs = jobRows(site).filter((j) => j.attention).length;
+  const tenders = tenderRows(site).filter((x) => x.attention).length;
+  return { review, due, todos, media, links, notices, migration, jobs, tenders };
 }
 
 export function daysText(d) {
@@ -339,5 +347,64 @@ function derivedTodos(site, base) {
   {
     for (const l of linkRows(site).filter((r) => r.status === 'broken' && !base.some((t) => t.kind === 'link-broken' && t.itemId === r.itemId && String(t.text ?? '').includes(r.href)))) out.push({ kind: 'link-broken', itemId: l.itemId, owner: l.owner, dueAt: due, derived: true, text: `外部連結失效：${l.label}（${l.href}）。請更新網址或移除。` });
   }
+  // 第七輪：引擎（governance.mjs）已產生這四種待辦時以引擎為準；沒有時由欄位補推算
+  for (const j of jobRows(site)) {
+    if (j.resultOverdue && !has('job-result-overdue', j.id)) out.push({ kind: 'job-result-overdue', itemId: j.id, owner: 'unit.personnel', dueAt: addDays(j.resultPlannedAt, 7), derived: true, text: `預計 ${j.resultPlannedAt} 公布結果，已逾 ${j.resultOverdueDays} 日仍未上架。請上架甄選結果或更新預計日。` });
+    const wl = (allJobs(site).find((x) => x.id === j.id)?.result?.waitlist ?? []).filter((w) => w.validUntil && w.validUntil >= site.today && w.validUntil <= addDays(site.today, 14));
+    if (wl.length && !has('job-waitlist-expiring', j.id)) out.push({ kind: 'job-waitlist-expiring', itemId: j.id, owner: 'unit.personnel', dueAt: wl.map((w) => w.validUntil).sort()[0], derived: true, text: `${wl.length} 位備取的有效期在 14 日內屆滿。` });
+  }
+  for (const x of tenderRows(site)) if (x.awardOverdue && !has('tender-award-overdue', x.id)) out.push({ kind: 'tender-award-overdue', itemId: x.id, owner: 'unit.secretariat', dueAt: addDays(x.openingAt, 30), derived: true, text: `開標日 ${x.openingAt} 起已逾 ${x.sinceOpen} 日仍無決標資訊。請上架決標資訊或標示流標。` });
   return out;
+}
+
+/* ───────── 第七輪：人才招募（人事室）與採購公告（秘書室） ───────── */
+const dayDiff = (a, b) => (a && b ? daysBetween(a, b) : null);
+/**
+ * 職缺列：階段優先用 gov.jobStage。結果上架檢核（只對有 result 的職缺）：
+ *  - mask：正取／備取／遞補的 nameMasked 是否全含遮罩字（○◯〇＊）
+ *  - capacity：正取數 ≤ 名額
+ *  - waitlist：備取皆有 validUntil、且最晚有效期未過今日（沒有備取視為不適用）
+ */
+export function jobRows(site) {
+  const today = site.today;
+  return allJobs(site).map((j) => {
+    const stage = jobStage(site, j);
+    const r = j.result ?? null;
+    const names = r ? [...(r.admitted ?? []), ...(r.waitlist ?? []), ...(j.waitlistUpdates ?? [])] : [];
+    const maskBad = names.filter((n) => !MASK_RE.test(String(n.nameMasked ?? ''))).length;
+    const admitted = r ? (r.admitted ?? []).length : null;
+    const wl = r ? (r.waitlist ?? []) : [];
+    const noValid = wl.filter((w) => !w.validUntil).length;
+    const lastValid = wl.map((w) => w.validUntil).filter(Boolean).sort().pop() ?? null;
+    const checks = r ? {
+      mask: { ok: maskBad === 0, text: maskBad === 0 ? `${names.length} 筆姓名全含遮罩字` : `${maskBad} 筆姓名沒有遮罩字（建置會失敗）` },
+      capacity: { ok: j.positions == null || admitted <= j.positions, text: `正取 ${admitted} ／ 名額 ${j.positions ?? '—'}` },
+      waitlist: wl.length ? { ok: noValid === 0 && (!lastValid || lastValid >= today), text: noValid ? `${noValid} 位備取沒有有效期` : lastValid && lastValid < today ? `備取有效期已於 ${lastValid} 屆滿` : `備取 ${wl.length} 位，有效至 ${lastValid ?? '—'}` } : { ok: true, text: '無備取' },
+    } : null;
+    const resultDue = j.resultPlannedAt && !r && ['closed', 'screening'].includes(stage) ? dayDiff(j.resultPlannedAt, today) : null;
+    const resultOverdue = resultDue != null && resultDue > 7;
+    const checksBad = checks ? Object.values(checks).some((c) => !c.ok) : false;
+    return {
+      id: j.id, title: j.title, status: j.status, stage, history: jobIsHistory(site, j, stage), jobType: j.jobType ?? '', hiringUnit: j.hiringUnit, hiringName: site.unitById.get(j.hiringUnit)?.name ?? j.hiringUnit ?? '',
+      positions: j.positions ?? null, applyStart: j.applyStart ?? null, deadlineAt: j.deadlineAt ?? null, resultPlannedAt: j.resultPlannedAt ?? null, resultAt: r?.publishedAt ?? null,
+      external: !!j.applyUrl, onSite: applyOnSite(j), applyMethod: j.applyMethod ?? '', applyUrl: j.applyUrl ?? '', daysLeft: stage === 'open' ? dayDiff(today, j.deadlineAt) : null, front: jobPath(j),
+      checks, checksBad, resultOverdue, resultOverdueDays: resultOverdue ? resultDue : 0, waitlistUpdates: (j.waitlistUpdates ?? []).length,
+      attention: checksBad || resultOverdue,
+    };
+  }).sort((a, b) => String(a.deadlineAt ?? '9999').localeCompare(String(b.deadlineAt ?? '9999')));
+}
+export function tenderRows(site) {
+  const today = site.today;
+  return allTenders(site).map((x) => {
+    const stage = tenderStage(site, x);
+    const sinceOpen = x.openingAt && !x.award && !['failed', 'cancelled'].includes(stage) ? dayDiff(x.openingAt, today) : null;
+    const awardOverdue = sinceOpen != null && sinceOpen > 30;
+    return {
+      id: x.id, title: x.title, status: x.status, stage, tenderNo: x.tenderNo ?? '', method: x.method ?? '', category: x.category ?? '', budgetNtd: x.budgetNtd ?? null,
+      requestingUnit: x.requestingUnit, requestingName: site.unitById.get(x.requestingUnit)?.name ?? x.requestingUnit ?? '',
+      announcedAt: x.announcedAt ?? null, deadlineAt: x.deadlineAt ?? null, openingAt: x.openingAt ?? null, awardAt: x.award?.date ?? null, winner: x.award?.winner ?? '',
+      pccUrl: x.pccUrl ?? '', front: tenderPath(x), daysLeft: stage === 'open' ? dayDiff(today, x.deadlineAt) : null,
+      sinceOpen, awardOverdue, attention: awardOverdue,
+    };
+  }).sort((a, b) => String(a.deadlineAt ?? '9999').localeCompare(String(b.deadlineAt ?? '9999')));
 }

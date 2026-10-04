@@ -11,11 +11,12 @@
 | 欄位 | 誰填 | 說明 |
 | --- | --- | --- |
 | `id` | 承辦 | 穩定、可讀、全站唯一，例：`disease.dengue`、`doc.mmr-recommendation.2025-04-16`。對外引用以它為準，取代現行官網的加密 ID |
-| `type` | 承辦 | `disease` `faq` `news` `letter` `clarification` `document` `vaccine` `dataset` `banner` `page` |
+| `type` | 承辦 | `disease` `faq` `news` `letter` `clarification` `document` `vaccine` `dataset` `banner` `page`，以及第二輪起的 `media` `topic` `service` `publication` `labtest` `research`，第七輪的 `job` `tender` |
 | `owner` | 承辦 | 權責單位 id，必須存在於 `content/master/units.json`；對內容正確性負責 |
 | `publishedAt` / `reviewedAt` | 承辦 | 首次發布日／最後審閱日。**審閱日不是編輯日**，代表權責單位重新確認過內容仍正確 |
 | `reviewPeriodMonths` | 承辦 | 審閱週期（月）。預設見 `master/review-periods.json`；0 代表事件觸發 |
 | `status` | 承辦 | `draft` `review` `published` `archived` |
+| `manualStatus` | 承辦（僅 `job`、`tender`） | 人工覆蓋階段：`job` 為 `cancelled`、`filled`；`tender` 為 `cancelled`、`failed`（流標）。**平常不填**；其餘階段一律由日期與 `result`／`award` 推導。與 `status`（發布狀態）無關 |
 | `audience` | 承辦 | `public` `professional` 可複選 |
 | `sensitivity` | 承辦 | `public` `professional` `internal`；只有 `public` 可進一般白名單 |
 | `license` | 承辦 | 預設 `OGDL-1.0`；例外要寫 `licenseNote` |
@@ -32,7 +33,7 @@
 
 ### 1.2 引擎輸出（`item.gov`）
 
-`nextReviewAt`、`daysToReview`、`overdue`、`superseded`、`stale[]`（依據正本已修訂的清單）、`annotations[]`（頁首警示）、`whitelist{requested, effective, reasons[]}`、`translationStale{}`、`reverseAuditHits[]`。全站層為 `site.gov`：KPI、待辦、白名單數、AI 暫停狀態。
+`nextReviewAt`、`daysToReview`、`overdue`、`superseded`、`stale[]`（依據正本已修訂的清單）、`annotations[]`（頁首警示）、`whitelist{requested, effective, reasons[]}`、`translationStale{}`、`reverseAuditHits[]`。全站層為 `site.gov`：KPI、待辦、白名單數、AI 暫停狀態。`job` 另有 `gov.jobStage`，`tender` 另有 `gov.tenderStage`（見規則 19、21）。
 
 ### 1.3 第二輪新增型別的專屬欄位
 
@@ -47,7 +48,16 @@
 | `labtest` 檢驗項目（`/lab/{id}/`） | `disease`、`specimens[{name,container,volume,storage,transport}]`、`labs[]` | `sendWithinHours`、`formDoc`、`caseDefinitionDoc`、`biosafetyLevel` | `sendWithinHours` 與主檔 `notifyWithinHours` 一致性；專業版索引以結構化句入索引 |
 | `research` 研究計畫（`/research/{id}/`） | `year`、`projectStatus` | `fundingType`、`piUnit`（機構名，不放個人）、`reportDoc`、`datasets[]`、`irb`、`budgetNtd` | 專業版；`projectStatus` 流轉 planned → ongoing → completed → published |
 
-`news` 型別新增公告欄位：`deadlineAt`、`refNo`、`applyUrl`、`positions`（人才招募）、`budgetNtd`（採購公告）；`newsType` 增加 `recruit`、`procurement`、`other`。人才招募與採購公告預設 `reviewPeriodMonths: 0`。
+`news` 型別的公告欄位：`deadlineAt`、`refNo`、`applyUrl`；`newsType` 有 `other`（其他訊息）。**第二輪曾以 `news` 的 `recruit`、`procurement` 承載人才招募與採購公告，第七輪已分家**，改為下列兩個獨立型別，`newsType` 不再有這兩個值（舊 `/news/{slug}/` 網址 301 到新路徑）。
+
+### 1.4 第七輪新增型別：人才招募與採購公告
+
+| 型別（路徑） | 權責單位（固定） | 必填專屬欄位 | 其他重要欄位 | 治理重點 |
+| --- | --- | --- | --- | --- |
+| `job` 招募職缺（`/careers/{slug}/`） | `unit.personnel` 人事室 | `slug`（= id 去掉 `job.{日期}-`）、`title`、`hiringUnit`（用人單位）、`jobType`、`positions`、`workplace`、`salaryNote`、`qualifications[]`、`duties[]`、`requiredDocuments[]`、`applyStart`、`deadlineAt`、`applyMethod`、`contact` | `refNo`、`legacyIds`（舊 news id，產生 301）、`applyUrl`（外部報名系統；省略＝本站模擬報名）、`examPlan[{stage,date,note}]`、`resultPlannedAt`、`attachments[]`、`legacyUrls[]`、`manualStatus`、`manualStatusNote`、`result{publishedAt,refNo,admitted[],waitlist[],note}`、`waitlistUpdates[]` | 階段由日期與 `result` 推導；`result` 與 `waitlistUpdates` 的個資遮罩是建置閘門；AI 白名單排除名單 |
+| `tender` 採購公告（`/procurement/{slug}/`） | `unit.secretariat` 秘書室 | `slug`、`title`、`requestingUnit`、`tenderNo`、`method`、`category`、`budgetNtd`、`announcedAt`、`deadlineAt`、`contact` | `openingAt`、`pccUrl`（政府電子採購網）、`awardRule`、`briefingAt`、`scope[]`、`specialTerms[]`、`contractPeriod`、`attachments[]`、`legacyIds`、`manualStatus`、`manualStatusNote`、`award{date,winner,amountNtd,note}` | 階段由日期與 `award` 推導；決標逾期待辦；正式公告以政府電子採購網為準 |
+
+兩者都是事件型內容，`reviewPeriodMonths` 預設 0。人事室的單位 id 為 `unit.personnel`（Data Steward：人才招募、甄選結果）。個資處理原則見 [careers-privacy.md](careers-privacy.md)。
 
 ## 2. 規則（寫死在引擎，不靠人記）
 
@@ -73,6 +83,15 @@
 17. **推導移轉清單與聚合待辦**：舊站每個疾病頁的子頁結構相同，`content/migration/_disease-template.json`（標準子頁樹，每筆含 `mapTo`：疾病頁區塊、主檔欄位、關聯內容或站內頁）由引擎對**主檔每一種疾病**推導一份移轉清單（`derived: true`）：疾病頁存在且 `mapTo` 命中 ⇒ `merged`（區塊、主檔欄位、站內頁）或 `migrated`（關聯內容，`target` 為該內容 id）；疾病頁存在但未命中 ⇒ `pending`；疾病頁不存在 ⇒ 整份清單 `status: no-page`，所有項目 `pending`。人工清單（`content/migration/{slug}.json`，可用 `extends: 'migration-template.disease'` 明示）**同 `key` 覆蓋推導結果**，人工沒寫的 `key` 仍由模板補。推導項一律 `verified: false`。待辦**每份清單只開一則** `migration-pending`：「{疾病}：N 個舊頁待移轉」（`no-page` 為「{疾病}：疾病頁尚未建立，N 個舊頁待移轉」），不再逐筆開；優先度依法定類別（第一、二類高、第三類中、第四與五類低）。`{id}` 佔位的舊網址標 `pattern: true`，不進伺服器轉址檔。`site.migration.stats` 另計 `lists`、`derived`、`curated`、`noPage`，並輸出 `v1/migration/index.json` 與 `v1/migration/{slug}.json`。
 18. **內容來源語言（`sourceLang`）**：內容可以以英文（或其他語言）為來源語言——例如只有英文版的「國際合作」區塊。規則：`languages[sourceLang].status` 必須為 `source`；頂層欄位是來源語言的文字，其他語言放 `i18n.{lang}`，**包含 `i18n['zh-TW']`**。`sourceLang` 不是 `zh-TW` 時，`i18n['zh-TW']` 必填，且 `languages['zh-TW'].status` 只能是 `reviewed` 或 `machine`，不可是 `none`（中文官網不能沒有中文）。來源語言的頁面永遠可渲染；`sourceHash` 以來源語言頂層欄位計算，譯文 `sourceHash` 不同即標過期（規則 5 照常，只是語言標籤換了）；頁首顯示「本頁以英文為準，中文為譯文」（反向的譯文狀態列）；搜尋與答案引擎的索引語言依 `sourceLang`（英文來源進英文索引，中文譯文進中文索引）。缺中文譯文時建置失敗。
 
+第七輪新增規則（人才招募與採購公告）：
+
+19. **招募階段由日期與結果推導（`gov.jobStage`）**：`job` 的階段不是人填的，是引擎每次建置依下列優先順序算出：`manualStatus`（`cancelled`／`filled`）＞ 有 `result`（`result`）＞ 今天 < `applyStart`（`upcoming`）＞ 今天 ≤ `deadlineAt`（`open`）＞ `examPlan` 有日期已到（`screening`）＞ 其餘（`closed`）。**唯一的人工覆蓋是 `manualStatus`**。不是 `upcoming`／`open` 者 `gov.closed = true`，自動退出首頁與開放中清單。頁籤 `gov.jobTab`：`open`（開放中）、`upcoming`（即將開放）、`review`（審查與甄試中：`closed`、`screening`）、`result`（錄取結果）、`history`（歷史：`result.publishedAt` 超過 90 日、或已取消、已補實）。三個待辦：
+    - `job-result-overdue`：階段為 `closed`／`screening`，今天 > `resultPlannedAt` + 7 日且無 `result`（owner 人事室、抄送 `hiringUnit`，中優先）；沒填 `resultPlannedAt` 不開；
+    - `job-waitlist-expiring`：階段為 `result`，備取 `validUntil` 在 14 日內且該備取尚未遞補（低優先）；
+    - `job-apply-url-dead`：外部報名網址 `applyUrl` 失效（沿用規則 13 的外部連結健康，`broken` 才開，取代 `link-broken`）；階段為 `open`／`upcoming` 時為高優先、期限 1 日，其他階段為中優先。
+    `unchecked` 不產生待辦。另有 validate 一致性檢查（失敗即建置失敗）：`slug` 與 id 一致且唯一、`hiringUnit` 存在、`applyStart` ≤ `deadlineAt`、`examPlan` 日期不早於 `deadlineAt`、`cancelled` 的職缺不得有 `result`、`legacyIds` 不得仍是現存 id。
+20. **甄選結果個資遮罩是建置閘門；AI 不唸名單**：`result.admitted[]`、`result.waitlist[]`、`waitlistUpdates[]` 的每一筆，`validate` 強制：`nameMasked` 必須含遮罩字（`○` `◯` `〇` `＊` 任一），且不得含 3 個以上連續中文字的完整姓名樣式（「王○明」可、「王小明」不可）；`candidateNo`（報名編號，3–24 個英數字與連字號）不得像身分證字號或居留證號（任何位置出現 `[A-Z][1289]\d{8}` 樣式都擋）；`result.note` 與遞補 `note` 同樣掃描身分證字號樣式；同一職缺報名編號不得重複；`admitted` 筆數不得超過 `positions`。**違反即建置失敗，不能發布，不是警告**；後台 `/admin/jobs/` 的「結果上架檢核」逐項顯示（`gov.resultCheck`）。AI 白名單：職缺與採購公告屬第四批核准範圍（民眾版），但**排除 `result` 與 `waitlistUpdates`**，不進答案索引與反向稽核文字：職缺公告內容（職稱、資格、日期、報名方式）可被引用，名單不可；答案引擎遇「誰錄取」類問題只回結果頁連結，並說明本站只公布報名編號與遮罩姓名（評估集有對應題）。報名資料本身不進 repo、不進 Git，見 [careers-privacy.md](careers-privacy.md)。
+21. **採購階段推導與決標逾期（`gov.tenderStage`）**：優先順序：`manualStatus`（`failed` 流標、`cancelled` 取消）＞ 有 `award`（`awarded`）＞ 今天 ≤ `deadlineAt`（`open`）＞ 今天 ≥ `openingAt`（`opened`）＞ 其餘（`closed`）。頁籤：招標中、已截止、已開標、已決標、流標（取消併入流標頁籤）。待辦 `tender-award-overdue`：階段為 `opened`（已開標、無 `award`、非流標取消）且今天 > `openingAt` + 30 日（owner 秘書室、抄送 `requestingUnit`，中優先）；**沒填 `openingAt` 不會有這個待辦**。`pccUrl` 失效沿用規則 13。validate：`slug` 與 id 一致、`requestingUnit` 存在、`announcedAt` ≤ `deadlineAt` ≤ `openingAt` ≤ `award.date`，且已有 `award` 不得再填 `manualStatus`。**本站只做入口與狀態，正式公告以政府電子採購網為準。**
 
 ## 3. 白名單政策
 
@@ -100,6 +119,7 @@
 - **原型不保存提問**：沒有後端，答案在瀏覽器內組出；回報寫在使用者自己的 localStorage（`cdc.reports`）。
 - **BYOK**（自備金鑰）：金鑰只存在使用者瀏覽器，直接連供應商，不經本站；介面標示供應商與模型。
 - **正式環境建議（待委員會議定）**：對話紀錄只留稽核編號、意圖、引用來源 id、是否拒答、回報狀態，不留原始輸入全文；保存期限與去識別化方式需符合個資法與機關規定；回報若含個資，先遮蔽再轉給 Steward。
+- **人才招募**：報名資料不進 repo、不進 Git；本站只公布報名編號與遮罩姓名，遮罩由建置閘門強制（規則 20）；模擬報名資料只存使用者自己的瀏覽器。原則、保存期限與刪除見 [careers-privacy.md](careers-privacy.md)。
 - 內容與範例一律不放真人姓名，承辦人以職稱表示。
 
 ## 6. KPI（每次建置重算，`/v1/governance/kpi.json`）

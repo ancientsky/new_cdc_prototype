@@ -1,4 +1,4 @@
-// /admin/todos/ 連動待辦（規劃 7.7）：正本修訂、反向稽核、逾期、翻譯過期、資料集逾期、授權缺漏
+// /admin/todos/ 連動待辦（規劃 7.7）：正本修訂、反向稽核、逾期、翻譯過期、資料集逾期、授權缺漏、招募與採購（第七輪）
 import { html } from '../../../scripts/lib/render.mjs';
 import { pageHead, adminMeta, unitOptions, KIND_LABEL, KIND_ORDER, todoList, frontPath, daysBetween, mediaRows } from './_partials.mjs';
 export { layout } from './_layout.mjs';
@@ -6,7 +6,7 @@ export { layout } from './_layout.mjs';
 export function pages() { return [{ path: '/admin/todos/', props: {}, noindex: true }]; }
 export function meta() { return adminMeta('連動待辦', 'todos', ['/assets/js/admin/todos.js']); }
 
-const MAIN_KINDS = ['based-on-revised', 'reverse-audit', 'overdue', 'translation-stale', 'dataset-overdue', 'license-missing', 'media-outdated', 'media-no-transcript', 'link-broken', 'labtest-inconsistent', 'migration-pending'];
+const MAIN_KINDS = ['based-on-revised', 'reverse-audit', 'overdue', 'translation-stale', 'dataset-overdue', 'license-missing', 'media-outdated', 'media-no-transcript', 'link-broken', 'labtest-inconsistent', 'migration-pending', 'job-result-overdue', 'job-waitlist-expiring', 'job-apply-url-dead', 'tender-award-overdue'];
 
 function mmrCard(site, url) {
   const fam = 'doc.mmr-recommendation';
@@ -58,12 +58,13 @@ export function render(ctx) {
       <td><label class="adm-pill"><input type="checkbox" data-done="${t.id}"><span>完成（示範）</span></label></td></tr>`;
   };
   return html`
-${pageHead({ title: '連動待辦', what: '系統依內容欄位自動產生的待辦：依據的正本改版、反向稽核命中舊說法、審閱逾期、譯文過期、資料集沒按頻率更新、授權標示不標準、影音依據的正本已修訂、影音沒有逐字稿、外部連結失效、檢驗項目時限與主檔不一致、舊站頁面尚未決定移轉去向。每筆有承辦單位、期限與前往頁面。', flow: '待辦來自建置時的治理引擎（/v1/governance/todos.json）。承辦單位修正內容並開 PR，合併後重新建置，待辦自動消失；「完成（示範）」只在本機打勾。' })}
+${pageHead({ title: '連動待辦', what: '系統依內容欄位自動產生的待辦：依據的正本改版、反向稽核命中舊說法、審閱逾期、譯文過期、資料集沒按頻率更新、授權標示不標準、影音依據的正本已修訂、影音沒有逐字稿、外部連結失效、檢驗項目時限與主檔不一致、舊站頁面尚未決定移轉去向、招募結果逾期未上架、備取將到期、報名網址失效、決標逾期。每筆有承辦單位、期限與前往頁面。', flow: '待辦來自建置時的治理引擎（/v1/governance/todos.json）。承辦單位修正內容並開 PR，合併後重新建置，待辦自動消失；「完成（示範）」只在本機打勾。' })}
 ${mmrCard(site, url) ?? html`<div class="adm-box adm-box--info"><strong>MMR 事件示範</strong>本次建置的內容不含 MMR 正本修訂範例。</div>`}
 <section class="adm-card" aria-labelledby="t-h"><h2 id="t-h">待辦清單</h2>
   <div class="adm-filters"><div class="adm-field"><label for="t-unit">單位</label><select id="t-unit">${unitOptions(site, { all: true, selected: 'all' })}</select></div>
     <label class="adm-pill" style="align-self:end"><input type="checkbox" id="t-hide-done"><span>隱藏已完成（示範）</span></label><span class="adm-count-note" id="t-note" aria-live="polite"></span></div>
   <span id="migration-pending" aria-hidden="true"></span><!-- 移轉進度頁的深連結錨點（todos.js 以 #類型 選頁籤） -->
+  ${['job-result-overdue', 'job-waitlist-expiring', 'job-apply-url-dead', 'tender-award-overdue'].map((k) => html`<span id="${k}" aria-hidden="true"></span>`)}<!-- 招募／採購後台頁的深連結錨點 -->
   <div class="adm-tabs" role="tablist" aria-label="待辦類型">${kinds.map((k, i) => html`<button type="button" role="tab" id="tab-${k}" aria-controls="panel-${k}" aria-selected="${i === 0 ? 'true' : 'false'}" tabindex="${i === 0 ? '0' : '-1'}" data-kind="${k}">${kindName(k)}<span class="adm-count" data-kcount="${k}">${todos.filter((t) => t.kind === k).length}</span></button>`)}</div>
   ${kinds.map((k, i) => { const list = todos.filter((t) => t.kind === k); return html`<div role="tabpanel" id="panel-${k}" aria-labelledby="tab-${k}" data-panel="${k}" ${i === 0 ? '' : 'hidden'}>
     <div class="adm-tablewrap"><table class="adm-table"><thead><tr><th scope="col">單位</th><th scope="col">內容</th><th scope="col">期限</th><th scope="col">狀態</th><th scope="col">前往</th><th scope="col">處理</th></tr></thead><tbody>${list.map(rowOf)}</tbody></table></div>

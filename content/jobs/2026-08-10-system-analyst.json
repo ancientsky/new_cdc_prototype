@@ -1,0 +1,145 @@
+{
+  "id": "job.2026-08-10-system-analyst",
+  "type": "job",
+  "title": "資訊室徵求約聘系統分析師 1 名（官網與資料平台）",
+  "owner": "unit.personnel",
+  "steward": "人事室承辦人",
+  "publishedAt": "2026-08-10",
+  "reviewedAt": "2026-08-10",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-08-10"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "資訊室徵求約聘系統分析師 1 名，負責官網與開放資料平台系統分析、API 規格、資安與無障礙；甄選結果已於 2026 年 9 月 22 日公告，9 月 30 日辦理備取遞補。",
+  "keywords": [
+    "人才招募",
+    "系統分析師",
+    "資訊室",
+    "官網",
+    "資安",
+    "約聘"
+  ],
+  "slug": "system-analyst",
+  "legacyIds": [
+    "news.2026-08-10-recruit-system-analyst"
+  ],
+  "refNo": "疾管人字第 1150100198 號",
+  "hiringUnit": "unit.it",
+  "jobType": "約聘人員",
+  "positions": 1,
+  "workplace": "臺北市中正區林森南路 6 號（疾管署本部）",
+  "salaryNote": "比照行政院暨所屬機關約用人員薪點，資訊類 430 薪點起敘（依學經歷核定，示意）",
+  "qualifications": [
+    "國內外大學以上資訊工程、資訊管理或相關學系畢業",
+    "具 3 年以上系統分析或系統設計實務經驗",
+    "熟悉 RESTful API、OpenAPI 規格與關聯式資料庫",
+    "具資訊安全（ISO 27001）或網站無障礙檢測經驗者優先"
+  ],
+  "duties": [
+    "官網與開放資料平台之需求分析與系統設計",
+    "API 規格管理與版本控管",
+    "資訊安全管理與弱點改善追蹤",
+    "網站無障礙檢測與改善"
+  ],
+  "requiredDocuments": [
+    "履歷表（含自傳）",
+    "最高學歷畢業證書影本",
+    "工作經歷證明",
+    "專業證照影本（有者檢附）"
+  ],
+  "applyStart": "2026-08-10",
+  "deadlineAt": "2026-08-31",
+  "applyMethod": "online",
+  "applyUrl": "https://web3.dgpa.gov.tw/",
+  "examPlan": [
+    {
+      "stage": "書面審查",
+      "date": "2026-09-04"
+    },
+    {
+      "stage": "筆試",
+      "date": "2026-09-11",
+      "note": "系統分析與資訊安全實務"
+    },
+    {
+      "stage": "口試",
+      "date": "2026-09-15"
+    }
+  ],
+  "resultPlannedAt": "2026-09-22",
+  "contact": "疾管署人事室：（02）2395-9825 轉人事室分機（示意）；職務內容洽詢：資訊室（同總機轉接）",
+  "attachments": [
+    {
+      "label": "甄選簡章（PDF）",
+      "url": "/pending/?ref=job.2026-08-10-system-analyst&doc=甄選簡章",
+      "format": "pdf",
+      "machineReadable": false
+    }
+  ],
+  "result": {
+    "publishedAt": "2026-09-22",
+    "refNo": "疾管人字第 1150100236 號",
+    "admitted": [
+      {
+        "seq": 1,
+        "candidateNo": "1150810-006",
+        "nameMasked": "李○翰"
+      }
+    ],
+    "waitlist": [
+      {
+        "rank": 1,
+        "candidateNo": "1150810-002",
+        "nameMasked": "蔡○廷",
+        "validUntil": "2026-12-21"
+      },
+      {
+        "rank": 2,
+        "candidateNo": "1150810-013",
+        "nameMasked": "鄭○雯",
+        "validUntil": "2026-12-21"
+      }
+    ],
+    "note": "正取人員請於 2026 年 10 月 1 日前至人事室報到；備取有效期間 3 個月（至 2026 年 12 月 21 日）。"
+  },
+  "waitlistUpdates": [
+    {
+      "date": "2026-09-30",
+      "candidateNo": "1150810-002",
+      "nameMasked": "蔡○廷",
+      "note": "正取人員放棄錄取，由備取第 1 名遞補；請於 2026 年 10 月 7 日前至人事室報到。"
+    }
+  ],
+  "note": "聯絡電話為疾管署總機，分機與報名信箱以正式簡章為準（本原型為示意，不放承辦人姓名）；薪資待遇為示意文字，實際依核定薪點折算。"
+}

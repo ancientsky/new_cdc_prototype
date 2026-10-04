@@ -1,0 +1,148 @@
+{
+  "id": "job.2026-05-25-quarantine-officer-kaoping",
+  "type": "job",
+  "title": "高屏區管制中心徵求約聘港埠檢疫人員 4 名",
+  "owner": "unit.personnel",
+  "steward": "人事室承辦人",
+  "publishedAt": "2026-05-25",
+  "reviewedAt": "2026-05-25",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-05-25"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "高屏區管制中心徵求約聘港埠檢疫人員 4 名，於高雄國際機場及高雄港執行入境旅客健康評估與船舶衛生檢查；甄選結果已於 2026 年 6 月 30 日公告。",
+  "keywords": [
+    "人才招募",
+    "檢疫人員",
+    "高屏區管制中心",
+    "機場",
+    "港口",
+    "約聘"
+  ],
+  "slug": "quarantine-officer-kaoping",
+  "legacyIds": [
+    "news.2026-05-25-recruit-quarantine-officer"
+  ],
+  "refNo": "疾管人字第 1150100120 號",
+  "hiringUnit": "unit.regional-kaoping",
+  "jobType": "約聘人員",
+  "positions": 4,
+  "workplace": "高雄市小港區（高雄國際機場檢疫站、高雄港檢疫站）",
+  "salaryNote": "比照行政院暨所屬機關約用人員薪點，328 薪點起敘（依學經歷核定；夜間輪班另依規定支給，示意）",
+  "qualifications": [
+    "國內外大學以上醫學、護理、公共衛生或相關學系畢業",
+    "具護理師證書者優先",
+    "能配合 24 小時輪班（含夜間及例假日）",
+    "具英語溝通能力者優先（請檢附語言能力證明）"
+  ],
+  "duties": [
+    "入境旅客體溫監測、健康評估與後送聯繫",
+    "航空器、船舶衛生檢查與檢疫文件審核",
+    "港埠傳染病疫情監測與通報",
+    "其他臨時交辦之檢疫業務"
+  ],
+  "requiredDocuments": [
+    "履歷表（含自傳）",
+    "最高學歷畢業證書影本",
+    "專業證照影本（具護理師證書者）",
+    "語言能力證明（有者檢附）"
+  ],
+  "applyStart": "2026-05-25",
+  "deadlineAt": "2026-06-15",
+  "applyMethod": "online",
+  "applyUrl": "https://web3.dgpa.gov.tw/",
+  "examPlan": [
+    {
+      "stage": "書面審查",
+      "date": "2026-06-19"
+    },
+    {
+      "stage": "口試",
+      "date": "2026-06-26",
+      "note": "書面審查合格者另行通知時間與地點"
+    }
+  ],
+  "resultPlannedAt": "2026-06-30",
+  "contact": "疾管署人事室：（02）2395-9825 轉人事室分機（示意）；職務內容洽詢：高屏區管制中心（同總機轉接）",
+  "attachments": [
+    {
+      "label": "甄選簡章（PDF）",
+      "url": "/pending/?ref=job.2026-05-25-quarantine-officer-kaoping&doc=甄選簡章",
+      "format": "pdf",
+      "machineReadable": false
+    }
+  ],
+  "result": {
+    "publishedAt": "2026-06-30",
+    "refNo": "疾管人字第 1150100187 號",
+    "admitted": [
+      {
+        "seq": 1,
+        "candidateNo": "1150525-003",
+        "nameMasked": "陳○婷"
+      },
+      {
+        "seq": 2,
+        "candidateNo": "1150525-011",
+        "nameMasked": "林○宏"
+      },
+      {
+        "seq": 3,
+        "candidateNo": "1150525-017",
+        "nameMasked": "黃○"
+      },
+      {
+        "seq": 4,
+        "candidateNo": "1150525-024",
+        "nameMasked": "張○瑜"
+      }
+    ],
+    "waitlist": [
+      {
+        "rank": 1,
+        "candidateNo": "1150525-008",
+        "nameMasked": "吳○豪",
+        "validUntil": "2026-10-10"
+      },
+      {
+        "rank": 2,
+        "candidateNo": "1150525-020",
+        "nameMasked": "劉○君",
+        "validUntil": "2026-10-10"
+      }
+    ],
+    "note": "正取人員請於 2026 年 7 月 13 日上午 9 時攜帶應備文件正本至高屏區管制中心報到；逾期未報到者，由備取人員依序遞補。備取有效期間至 2026 年 10 月 10 日。"
+  },
+  "note": "聯絡電話為疾管署總機，分機與報名信箱以正式簡章為準（本原型為示意，不放承辦人姓名）；薪資待遇為示意文字，實際依核定薪點折算。"
+}

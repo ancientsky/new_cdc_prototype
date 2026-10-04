@@ -1,0 +1,53 @@
+{
+  "$id": "https://cdc-prototype/schemas/tender.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "採購公告（秘書室）",
+  "description": "content/tenders/{yyyy-mm-dd}-{slug}.json；id tender.{yyyy-mm-dd}-{slug}，前台路徑 /procurement/{slug}/（ARCHITECTURE 15.1）。階段（gov.tenderStage）由治理引擎依截止日、開標日與 award 推導，只有 failed（流標）／cancelled 可人工覆蓋（manualStatus）。正式招標文件與投標以政府電子採購網為準。",
+  "allOf": [{ "$ref": "_common.json" }],
+  "type": "object",
+  "required": ["slug", "requestingUnit", "tenderNo", "method", "budgetNtd", "category", "announcedAt", "deadlineAt", "contact"],
+  "properties": {
+    "type": { "const": "tender" },
+    "id": { "type": "string", "pattern": "^tender\\.\\d{4}-\\d{2}-\\d{2}-[a-z0-9][a-z0-9-]*$" },
+    "owner": { "const": "unit.secretariat", "description": "採購公告一律由秘書室上架（需求單位放 requestingUnit）" },
+    "slug": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$", "description": "前台路徑 /procurement/{slug}/；必須等於 id 去掉 tender.{yyyy-mm-dd}- 的部分" },
+    "legacyIds": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^[a-z]+\\.[a-z0-9][a-z0-9.-]*$" }, "description": "本案在新站的舊內容 id（第七輪前以 news 型別發布者）；emit-api 產生 redirects kind:moved" },
+    "requestingUnit": { "type": "string", "pattern": "^unit\\.", "description": "需求單位（units 主檔 id）" },
+    "tenderNo": { "type": "string", "minLength": 1, "description": "標案案號" },
+    "method": { "enum": ["公開招標", "限制性招標", "公開取得報價或企劃書", "共同供應契約"] },
+    "awardRule": { "enum": ["最低標", "最有利標", "準用最有利標", "複數決標"], "description": "決標方式（選填）" },
+    "budgetNtd": { "type": "integer", "minimum": 0, "description": "預算金額（新臺幣元）" },
+    "category": { "enum": ["財物", "勞務", "工程"] },
+    "announcedAt": { "type": "string", "format": "date", "description": "公告日" },
+    "deadlineAt": { "type": "string", "format": "date", "description": "投標截止日（含當日）；today > deadlineAt ⇒ 已截止" },
+    "openingAt": { "type": "string", "format": "date", "description": "開標日；today ≥ openingAt 且無 award ⇒ opened；openingAt + 30 日仍無 award ⇒ 待辦 tender-award-overdue" },
+    "briefingAt": { "type": "string", "format": "date", "description": "廠商說明會日期（選填）" },
+    "pccUrl": { "type": "string", "format": "uri", "pattern": "^https?://", "description": "政府電子採購網連結" },
+    "scope": { "type": "array", "items": { "type": "string" }, "description": "採購標的重點（條列）" },
+    "specialTerms": { "type": "array", "items": { "type": "string" }, "description": "特別規定（條列）" },
+    "contractPeriod": { "type": "string", "description": "履約期限／服務期間（文字）" },
+    "attachments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["label", "url"],
+        "properties": { "label": { "type": "string" }, "url": { "type": "string" }, "format": { "type": "string" }, "machineReadable": { "type": "boolean" } }
+      }
+    },
+    "contact": { "type": "string", "minLength": 1, "description": "聯絡窗口（單位與總機轉分機；不放承辦人姓名）" },
+    "manualStatus": { "enum": ["cancelled", "failed"], "description": "人工覆蓋：failed 流標（無廠商投標或資格不符）、cancelled 廢標／取消" },
+    "manualStatusNote": { "type": "string", "description": "流標／取消原因" },
+    "award": {
+      "type": "object",
+      "required": ["date", "winner"],
+      "additionalProperties": false,
+      "properties": {
+        "date": { "type": "string", "format": "date", "description": "決標日" },
+        "winner": { "type": "string", "minLength": 1, "description": "得標廠商（法人名稱；原型為示意）" },
+        "amountNtd": { "type": "integer", "minimum": 0, "description": "決標金額（新臺幣元）" },
+        "note": { "type": "string" }
+      }
+    },
+    "note": { "type": "string", "description": "給同事看的說明" }
+  }
+}

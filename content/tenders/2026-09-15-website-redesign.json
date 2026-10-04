@@ -1,0 +1,88 @@
+{
+  "id": "tender.2026-09-15-website-redesign",
+  "type": "tender",
+  "title": "疾病管制署全球資訊網 AI-ready 改版建置暨維運案",
+  "owner": "unit.secretariat",
+  "steward": "秘書室採購承辦人",
+  "publishedAt": "2026-09-15",
+  "reviewedAt": "2026-09-15",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-15"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-15",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "官網 AI-ready 改版建置暨維運勞務採購公開招標，含內容模型、治理欄位、開放 API、七語介面與無障礙，預算約 2,800 萬元，10 月 28 日截止投標。",
+  "keywords": [
+    "採購公告",
+    "官網改版",
+    "AI-ready",
+    "勞務採購",
+    "資料治理"
+  ],
+  "i18n": {
+    "en": {
+      "title": "Tender: AI-ready redesign and maintenance of the Taiwan CDC website",
+      "summary": "Open tender for the AI-ready website redesign with content model, governance fields, open APIs, seven languages and accessibility; bids close 28 October 2026."
+    }
+  },
+  "slug": "website-redesign",
+  "legacyIds": [
+    "news.2026-09-15-procurement-website-redesign"
+  ],
+  "requestingUnit": "unit.it",
+  "tenderNo": "CDC-115-IT-012",
+  "method": "公開招標",
+  "awardRule": "最有利標",
+  "budgetNtd": 28000000,
+  "category": "勞務",
+  "announcedAt": "2026-09-15",
+  "briefingAt": "2026-10-07",
+  "deadlineAt": "2026-10-28",
+  "openingAt": "2026-10-29",
+  "scope": [
+    "單一內容模型與治理欄位（權責單位、審閱日、依據正本、版本）",
+    "民眾版、專業版、開放 API 與機讀版（.md、JSON-LD）",
+    "AI 問答白名單與評估集機制",
+    "七語介面、無障礙 AA 等級、資安與個資保護"
+  ],
+  "specialTerms": [
+    "需求規格參考本原型（新官網可動原型）之架構文件",
+    "決標後三年維運，含每年第三方無障礙與資安檢測"
+  ],
+  "contractPeriod": "決標日起建置 12 個月，上線後維運 3 年",
+  "contact": "疾管署秘書室：（02）2395-9825 轉秘書室分機（示意）；規格洽詢：資訊室（同總機轉接）",
+  "note": "預算、案號、決標金額與得標廠商皆為示意；正式招標文件、投標與決標公告以政府電子採購網為準。",
+  "pccUrl": "https://web.pcc.gov.tw/"
+}

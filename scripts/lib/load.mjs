@@ -1,4 +1,4 @@
-// 讀取 content/ 與 data/snapshots/ → site.collections（＋ site.migrationLists：content/migration/*.json；
+// 讀取 content/ 與 data/snapshots/ → site.collections（第七輪加 jobs、tenders；＋ site.migrationLists：content/migration/*.json；
 // 底線開頭的 content/migration/_*.json 是模板 → site.migrationTemplates，ARCHITECTURE 14.1）
 import fs from 'node:fs';
 import path from 'node:path';
@@ -41,6 +41,9 @@ export function sourceHashOf(item) {
     // 連結檢查寫回的欄位（lastCheckedAt、status）不算內容變更，剔除後再雜湊
     links: item.links?.map(({ lastCheckedAt, status, ...rest }) => rest),
     forms: item.forms?.map(({ lastCheckedAt, status, ...rest }) => rest),
+    // 第七輪（ARCHITECTURE 15.1）：職缺與採購公告的正文欄位（不含 result／waitlistUpdates／award：結果公告不影響譯文）
+    duties: item.duties, qualifications: item.qualifications, requiredDocuments: item.requiredDocuments, salaryNote: item.salaryNote, workplace: item.workplace,
+    scope: item.scope, specialTerms: item.specialTerms,
   };
   return createHash('sha1').update(JSON.stringify(pick)).digest('hex').slice(0, 12);
 }
@@ -70,6 +73,9 @@ export function loadSite(config) {
     publications: readDirJSON(path.join(CONTENT, 'publications')),
     labtests: readDirJSON(path.join(CONTENT, 'labtests')),
     research: readDirJSON(path.join(CONTENT, 'research')),
+    // 第七輪（ARCHITECTURE 15.1）：人才招募（人事室）與採購公告（秘書室）
+    jobs: readDirJSON(path.join(CONTENT, 'jobs')),
+    tenders: readDirJSON(path.join(CONTENT, 'tenders')),
   };
   for (const list of Object.values(collections)) for (const item of list) item.sourceHash = sourceHashOf(item);
 

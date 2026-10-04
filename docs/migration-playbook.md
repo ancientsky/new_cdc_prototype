@@ -493,6 +493,26 @@ KPI（後台 `/admin/migration/`）：整體已移轉＋已併入比例、`pendi
 - **document 的 `target` 寫版本族 id。** 要寫含版本的完整 id。
 - **`no-page` 清單被忽略。** 56 份 `no-page` 的待辦優先度低不等於可以不做：舊網址若沒人處理，上線後就是 404。
 
+### 10.8 欄目型（非疾病）清單：人才招募、採購
+
+不是所有舊站內容都長得像疾病頁。人才招募與採購公告是**欄目型**：沒有「標準子頁樹」可以套模板，所以走人工清單，`scope.kind` 為 `category`（與國際合作區塊同類）。第七輪有兩份：
+
+| 清單 | 檔案 | 舊站範圍 | 新站去處 |
+| --- | --- | --- | --- |
+| 人才招募 | `content/migration/careers.json` | 舊站「人才招募」列表與各則公告頁（含歷次錄取名單頁） | 每則公告 → `job.{日期}-{slug}`（`/careers/{slug}/`）；列表頁 → `/careers/` |
+| 採購公告 | `content/migration/procurement.json` | 舊站「採購公告」列表與各則公告頁（含決標公告） | 每則公告 → `tender.{日期}-{slug}`（`/procurement/{slug}/`）；列表頁 → `/procurement/` |
+
+做法與疾病清單相同，但有幾點不同：
+
+1. **一份清單 6–8 筆是示範規模；正式做法是「列表頁一筆＋歷年公告逐則」。** 歷年公告很多、流量集中在近一年，可依規劃 §7.4 四因子判斷：近兩年的逐則 `migrated`，更早的整批列為 `archived`（對到「歷史」頁籤）或 `dropped`（回 410）。**不要把全部舊公告轉到 `/careers/` 首頁**（soft 404）。
+2. **舊的錄取名單頁要特別處理。** 舊站若公布了完整姓名，**不得原樣搬到新站**：新站只公布報名編號與遮罩姓名（[careers-privacy.md](careers-privacy.md)），建置閘門會擋未遮罩的結果。逐則判斷：已超過保存期限者 `dropped`；仍需保留者依遮罩規則重做 `result`。舊 PDF 附件的 `target` 不要指向含完整姓名的檔案。
+3. **舊新聞稿式網址已有 301。** 第二輪時招募與採購公告是 `news`（`/news/{slug}/`）；第七輪搬到新路徑後，原 id 保留在 `legacyIds`，`redirects.json` 以 `kind: 'moved'` 把舊 `/news/{slug}/` 301 到新路徑，不需要人工再寫。
+4. **`pending` 的處理與疾病清單一樣**：新頁還沒建的項目會產生 `migration-pending` 待辦（每份清單一則），權責單位分別是人事室與秘書室。
+5. **採購公告的舊網址以採購網為準**：舊站的採購公告頁若本來就是採購網的轉述，`oldType` 填 `external`、`target` 指向對應的 `tender`，由秘書室確認 `pccUrl`。
+6. 所有項目 `verified: false`，由人事室、秘書室的 Steward 在 `/admin/migration/` 逐筆確認（做法同 [guide-staff.md](guide-staff.md) 15.8），`{id}` 佔位者補成真實 ID 後才進伺服器轉址檔。
+
+同樣適用於其他欄目：新聞稿、出版品、影音、宣導、法規等欄目型內容，都用 `scope.kind: 'category'` 人工清單；本節的 1–2 點（只做近期逐則、敏感頁面別原樣搬）是欄目型清單的共同做法。
+
 ---
 
 ## 11. 檔案與指令對照
@@ -500,6 +520,7 @@ KPI（後台 `/admin/migration/`）：整體已移轉＋已併入比例、`pendi
 | 項目 | 位置 |
 | --- | --- |
 | 移轉清單（人維護，只寫例外） | `content/migration/{slug}.json`（schema：`schemas/migration.json`） |
+| 欄目型清單：人才招募、採購（人工） | `content/migration/careers.json`、`content/migration/procurement.json`（見 10.8） |
 | 標準子頁模板（OASIS 維護） | `content/migration/_disease-template.json`（schema：`schemas/migration-template.json`） |
 | 各疾病清單（推導＋人工，可下載當起點） | `dist/v1/migration/index.json`、`dist/v1/migration/{slug}.json` |
 | 轉址對照（機器產生） | `dist/v1/redirects.json`、`dist/v1/legacy-map.json` |

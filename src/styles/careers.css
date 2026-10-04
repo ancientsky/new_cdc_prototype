@@ -1,0 +1,128 @@
+/* 第七輪：人才招募、採購公告、模擬線上報名。只用 tokens.css 的變數；class 命名 c-卡片名__元素。 */
+
+/* ───── 入口卡（/notices/） ───── */
+.c-entrycards{list-style:none;margin:0 0 var(--sp-5);padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--sp-4)}
+.c-entrycard__a{display:grid;gap:var(--sp-2);height:100%;border:1px solid var(--line);border-left:6px solid var(--green-700);border-radius:var(--radius);background:#fff;padding:var(--sp-4);color:var(--ink);text-decoration:none}
+.c-entrycard__a:hover,.c-entrycard__a:focus-visible{border-color:var(--green-700);background:var(--green-50);box-shadow:var(--shadow)}
+.c-entrycard__t{font-size:var(--fs-lg);color:var(--green-900)}
+.c-entrycard__s{color:var(--ink-2);font-size:var(--fs-sm)}
+.c-entrycard .c-pill{justify-self:start}
+
+/* ───── 職缺／標案卡 ───── */
+.c-joblist{list-style:none;margin:0 0 var(--sp-4);padding:0;display:grid;gap:var(--sp-3)}
+.c-job{display:flex;gap:var(--sp-4);justify-content:space-between;align-items:flex-start;flex-wrap:wrap;border:1px solid var(--line);border-radius:var(--radius);background:#fff;padding:var(--sp-4)}
+.c-job[hidden]{display:none}
+.c-job__main{flex:1 1 360px;min-width:0}
+.c-job__meta{display:flex;flex-wrap:wrap;gap:var(--sp-2);margin:0 0 var(--sp-2)}
+.c-job__t{font-size:var(--fs-lg);margin:0 0 var(--sp-2)}
+.c-job__facts{display:flex;flex-wrap:wrap;gap:4px var(--sp-5);margin:0;font-size:var(--fs-sm)}
+.c-job__facts>div{display:flex;gap:6px}
+.c-job__facts dt{color:var(--ink-3)}
+.c-job__facts dt::after{content:"："}
+.c-job__facts dd{margin:0}
+.c-job__side{display:flex;flex-direction:column;align-items:flex-end;gap:var(--sp-2);flex:0 0 auto;text-align:right}
+.c-job__date{font-size:var(--fs-sm)}
+.c-deadline--info{background:var(--info-bg);color:var(--info)}
+.c-tabs__hint{margin:0 0 var(--sp-3)}
+.c-btn--lg{padding:14px 28px;font-size:var(--fs-lg)}
+
+/* ───── 篩選列 ───── */
+.c-jobfilters{display:flex;flex-wrap:wrap;gap:var(--sp-3) var(--sp-4);align-items:flex-end;margin:0 0 var(--sp-4);padding:var(--sp-3) var(--sp-4);background:var(--paper);border-radius:var(--radius)}
+.c-jobfilters__f{margin:0;min-width:160px;flex:1 1 160px}
+.c-jobfilters__note{margin:0;flex:1 1 100%}
+.c-jobfilters__note:empty{display:none}
+html:not(.js) .c-jobfilters{display:none}
+
+/* ───── 時間軸 ───── */
+.c-jtl{list-style:none;margin:0 0 var(--sp-4);padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;align-items:start}
+.c-jtl--4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.c-jtl__item{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:var(--sp-2);padding:0 var(--sp-1)}
+.c-jtl__item::before{content:"";position:absolute;top:16px;left:-50%;right:50%;height:4px;background:var(--line)}
+.c-jtl__item:first-child::before{display:none}
+.c-jtl__item.is-done::before,.c-jtl__item.is-current::before{background:var(--green-700)}
+.c-jtl__dot{position:relative;z-index:1;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;background:#fff;border:3px solid var(--line);color:var(--ink-3)}
+.c-jtl__item.is-done .c-jtl__dot{background:var(--green-700);border-color:var(--green-700);color:#fff}
+.c-jtl__item.is-current .c-jtl__dot{background:var(--green-50);border-color:var(--green-700);color:var(--green-900);box-shadow:0 0 0 4px var(--green-100)}
+.c-jtl__body{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0}
+.c-jtl__t{font-size:var(--fs-sm)}
+.c-jtl__item.is-todo .c-jtl__t{color:var(--ink-3)}
+.c-jtl__now{display:inline-block;background:var(--green-700);color:#fff;border-radius:var(--radius-pill);padding:0 10px;font-size:var(--fs-xs);font-weight:700;line-height:1.7}
+.c-jtl__d{display:grid;gap:2px;font-size:var(--fs-sm);color:var(--ink-2)}
+.c-jtl__line{display:block;font-size:var(--fs-xs)}
+.c-jtl--cancelled .c-jtl__dot{border-style:dashed}
+
+/* ───── 詳情區塊 ───── */
+.c-bullets{margin:0 0 var(--sp-3);padding-left:1.3em}
+.c-bullets li{margin-bottom:4px}
+.c-howto p{margin:0 0 var(--sp-3)}
+.c-howto__closed{font-weight:700;font-size:var(--fs-lg)}
+.c-jobresult h3{margin:var(--sp-4) 0 var(--sp-2);font-size:var(--fs-md);display:flex;gap:var(--sp-2);align-items:center}
+.c-jobresult__meta{color:var(--ink-3);font-size:var(--fs-sm)}
+.c-masked{font-variant-ligatures:none;letter-spacing:.06em}
+.c-table--kv th{width:9em;white-space:nowrap;background:var(--paper)}
+.c-contact__sub{font-size:var(--fs-md);margin:var(--sp-3) 0 var(--sp-1)}
+.c-careers__foot .c-aside-card{margin-bottom:0}
+.c-careers__cols{margin-bottom:0}
+
+/* ───── 模擬報名 ───── */
+.c-demo-banner{display:flex;gap:var(--sp-3);align-items:flex-start;background:#1d2540;color:#fff;border-left:8px solid #e8a400;border-radius:var(--radius);padding:var(--sp-3) var(--sp-4);margin:0 0 var(--sp-4)}
+.c-demo-banner__ic{flex:none;width:26px;height:26px;border-radius:50%;background:#e8a400;color:#1d2540;font-weight:900;display:flex;align-items:center;justify-content:center}
+.c-demo-banner--strong{background:var(--alert-overdue-bg);color:var(--alert-overdue);border:2px solid #d9a400;border-left-width:8px}
+.c-apply__steps{list-style:none;margin:0 0 var(--sp-3);padding:0;display:flex;gap:var(--sp-2);flex-wrap:wrap}
+.c-apply__steps li{display:flex;gap:var(--sp-2);align-items:center;padding:6px 14px 6px 8px;border:1px solid var(--line);border-radius:var(--radius-pill);background:#fff;color:var(--ink-3);font-size:var(--fs-sm);font-weight:600}
+.c-apply__steps li[aria-current="step"]{border-color:var(--green-700);background:var(--green-50);color:var(--green-900)}
+.c-apply__steps li.is-done{color:var(--green-900)}
+.c-apply__stepn{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--neutral-bg);font-weight:800}
+.c-apply__steps li[aria-current="step"] .c-apply__stepn,.c-apply__steps li.is-done .c-apply__stepn{background:var(--green-700);color:#fff}
+.c-apply__draftmsg{min-height:1.4em;margin:0 0 var(--sp-2)}
+.c-apply__form{max-width:720px}
+.c-apply__step{border:1px solid var(--line);border-radius:var(--radius);padding:var(--sp-4);margin:0 0 var(--sp-4);background:#fff;min-width:0}
+.c-apply__step[hidden]{display:none}
+.c-apply__step legend{font-weight:800;font-size:var(--fs-lg);padding:0 var(--sp-2);color:var(--green-900)}
+.c-apply__errors{margin:0 0 var(--sp-4)}
+.c-apply__errors ul{margin:var(--sp-2) 0 0;padding-left:1.3em}
+.c-apply__errors a{color:inherit;font-weight:700}
+.c-apply__errors:focus{outline:var(--focus);outline-offset:2px}
+.c-apply .c-input[aria-invalid="true"]{border:2px solid var(--status-peak);background:#fff8f8}
+.c-field__err{margin:0;color:var(--status-peak);font-size:var(--fs-sm);font-weight:700}
+.c-field__err::before{content:"⚠ "}
+.c-req{color:var(--status-peak);font-weight:800}
+.c-opt{font-weight:400}
+.c-apply__docs{margin-top:var(--sp-4);padding-top:var(--sp-3);border-top:1px dashed var(--line)}
+.c-apply__docs h3{font-size:var(--fs-md);margin-bottom:var(--sp-1)}
+.c-apply__summary{margin:0 0 var(--sp-4);padding:var(--sp-3) var(--sp-4);background:var(--paper);border-radius:var(--radius)}
+.c-apply__summary dd{overflow-wrap:anywhere}
+.c-apply__nav{display:flex;gap:var(--sp-3);flex-wrap:wrap;align-items:center}
+.c-apply__clear{margin-left:auto}
+.c-receipt{max-width:720px;border:2px solid var(--green-700);border-radius:var(--radius);background:#fff;padding:var(--sp-5)}
+.c-receipt[hidden]{display:none}
+.c-receipt:focus{outline:var(--focus);outline-offset:3px}
+.c-receipt__lead{margin:0;color:var(--ink-3);font-size:var(--fs-sm)}
+.c-receipt__no{font-size:var(--fs-2xl);font-weight:800;letter-spacing:.04em;color:var(--green-900);margin:0 0 var(--sp-3);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.c-receipt__acts{display:flex;flex-wrap:wrap;gap:var(--sp-2);margin:var(--sp-4) 0 0}
+.c-receipt__acts .c-btn[disabled]{opacity:.5;cursor:not-allowed}
+
+/* ───── 響應式 ───── */
+@media (max-width:900px){
+  .c-jtl,.c-jtl--4{grid-template-columns:1fr;gap:var(--sp-3)}
+  .c-jtl__item{flex-direction:row;align-items:flex-start;text-align:left;padding:0;gap:var(--sp-3)}
+  .c-jtl__item::before{display:none}
+  .c-jtl__body{align-items:flex-start}
+  .c-job__side{align-items:flex-start;text-align:left;flex-direction:row;flex-wrap:wrap}
+}
+@media (max-width:640px){
+  .c-entrycards{grid-template-columns:1fr}
+  .c-job{padding:var(--sp-3)}
+  .c-apply__clear{margin-left:0}
+  .c-btn--lg{width:100%}
+}
+
+/* ───── 列印：只印收執 ───── */
+@media print{
+  .topbar,.site-header,.c-nav,.site-footer,.c-tabbar,.skip-link,.c-translation-bar,.c-breadcrumb,.c-pagehead,.c-demo-banner:not(.c-demo-banner--strong),.c-apply__steps,.c-apply__draftmsg,[data-apply],.c-receipt__acts,.c-feedback{display:none!important}
+  .c-receipt{border:2px solid #000;max-width:none}
+  .c-receipt[hidden]{display:none!important}
+}
+
+/* 沒有 JS：所有步驟都顯示（表單仍可讀；送出需要 JS） */
+html:not(.js) .c-apply__step[hidden]{display:block}

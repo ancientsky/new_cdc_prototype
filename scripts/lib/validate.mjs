@@ -21,7 +21,7 @@ const typeToSchema = {
   disease: 'disease.json', faq: 'faq.json', news: 'news.json', letter: 'news.json', clarification: 'clarification.json',
   document: 'document.json', vaccine: 'vaccine.json', dataset: 'dataset.json', banner: 'banner.json', page: 'page.json',
   media: 'media.json', topic: 'topic.json', service: 'service.json', publication: 'publication.json', labtest: 'labtest.json', research: 'research.json',
-  migration: 'migration.json',
+  migration: 'migration.json', job: 'job.json', tender: 'tender.json',
 };
 
 export function validateSite(site) {
@@ -75,6 +75,37 @@ export function validateSite(site) {
     if (item.type === 'media' && !(item.basedOn?.length)) push(item.__file, `影音素材必須填 basedOn（依據正本），見規劃 7.7`);
     for (const ref of item.contentIds ?? []) if (!ids.has(ref)) push(item.__file, `contentIds ${ref} 不存在`);
   }
+  // 2a. 第七輪（ARCHITECTURE 15.1）：職缺與採購公告
+  //     id／slug 一致、slug 唯一、用人／需求單位存在、日期先後、legacyIds 不得與現存 id 重複；
+  //     個資閘門（甄選結果只公布報名編號與遮罩姓名）：違反即建置失敗。
+  const slugSeen = new Map();
+  for (const item of site.all) {
+    if (item.type !== 'job' && item.type !== 'tender') continue;
+    const prefix = item.type === 'job' ? 'job' : 'tender';
+    const expectSlug = String(item.id).replace(new RegExp(`^${prefix}\\.\\d{4}-\\d{2}-\\d{2}-`), '');
+    if (item.slug && item.slug !== expectSlug) push(item.__file, `slug ${item.slug} 必須等於 id 去掉「${prefix}.{yyyy-mm-dd}-」的部分（${expectSlug}）`);
+    const sk = `${item.type}:${item.slug ?? expectSlug}`;
+    if (slugSeen.has(sk)) push(item.__file, `slug ${item.slug ?? expectSlug} 與 ${slugSeen.get(sk)} 重複（前台路徑會衝突）`);
+    else slugSeen.set(sk, item.id);
+    const unitField = item.type === 'job' ? 'hiringUnit' : 'requestingUnit';
+    if (item[unitField] && !units.has(item[unitField])) push(item.__file, `${unitField} ${item[unitField]} 不在 units 主檔`);
+    for (const old of item.legacyIds ?? []) {
+      if (ids.has(old)) push(item.__file, `legacyIds ${old} 仍是現存內容 id（搬家後舊檔要刪除，否則轉址與原頁衝突）`);
+      if (!/^news\./.test(old)) push(item.__file, `legacyIds ${old}：目前只支援第七輪前的 news.* 舊 id`);
+    }
+    if (item.type === 'job') {
+      if (item.applyStart && item.deadlineAt && item.applyStart > item.deadlineAt) push(item.__file, `applyStart ${item.applyStart} 晚於 deadlineAt ${item.deadlineAt}`);
+      for (const e of item.examPlan ?? []) if (e.date && item.deadlineAt && e.date < item.deadlineAt) push(item.__file, `examPlan「${e.stage}」日期 ${e.date} 早於報名截止 ${item.deadlineAt}`);
+      if (item.result && item.manualStatus === 'cancelled') push(item.__file, 'manualStatus cancelled 的職缺不得有 result');
+      for (const msg of jobPiiErrors(item)) push(item.__file, msg);
+    } else {
+      if (item.announcedAt && item.deadlineAt && item.announcedAt > item.deadlineAt) push(item.__file, `announcedAt ${item.announcedAt} 晚於 deadlineAt ${item.deadlineAt}`);
+      if (item.openingAt && item.deadlineAt && item.openingAt < item.deadlineAt) push(item.__file, `openingAt ${item.openingAt} 早於投標截止 ${item.deadlineAt}`);
+      if (item.award && item.manualStatus) push(item.__file, `已決標（award）的標案不得再標 manualStatus ${item.manualStatus}`);
+      if (item.award?.date && item.openingAt && item.award.date < item.openingAt) push(item.__file, `award.date ${item.award.date} 早於開標日 ${item.openingAt}`);
+    }
+  }
+
   // 2b. 來源語言（ARCHITECTURE 14.2）：languages[sourceLang] 為 source、只有來源語言可標 source；
   //     sourceLang≠zh-TW ⇒ i18n['zh-TW'] 必須存在（含 title、summary）且 languages['zh-TW'] 為 reviewed／machine（中文官網不能沒有中文）。
   for (const item of site.all) for (const msg of sourceLangErrors(item)) push(item.__file, msg);
@@ -136,6 +167,65 @@ export function validateSite(site) {
   if (!units.has(site.situation.publisher)) push('content/situation/current.json', `publisher ${site.situation.publisher} 不在 units`);
 
   return errors;
+}
+
+// ───────────────────────── 第七輪：甄選結果個資閘門（ARCHITECTURE 15.1） ─────────────────────────
+
+/** 遮罩字（任一即可）：○ U+25CB、◯ U+25EF、〇 U+3007、＊ U+FF0A、* */
+export const MASK_CHARS_RE = /[○◯〇＊*]/;
+/** 完整姓名樣式：3 個以上連續中文字（王小明、歐陽小明）；遮罩後的「王○明」「歐陽○明」不會命中 */
+export const FULL_NAME_RE = /[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]{3,}/u;
+/** 身分證字號／居留證號樣式（含新式居留證 8、9 開頭）：出現在任何結果欄位都擋下 */
+export const NATIONAL_ID_RE = /[A-Z][1289]\d{8}/i;
+/** 報名編號完整比對（契約：^[A-Z][12]\d{8}$ 一律擋下；這裡更嚴，任何位置出現都擋） */
+export const CANDIDATE_NO_ID_RE = /^[A-Z][12]\d{8}$/i;
+
+/** 單一遮罩姓名的問題（空陣列＝通過） */
+export function maskedNameProblems(name) {
+  const v = String(name ?? '').trim();
+  const out = [];
+  if (!v) { out.push('姓名欄空白'); return out; }
+  if (!MASK_CHARS_RE.test(v)) out.push(`「${v}」沒有遮罩字（○、◯、〇、＊ 擇一，例：王○明）`);
+  const m = v.match(FULL_NAME_RE);
+  if (m) out.push(`「${v}」含 ${m[0].length} 個連續中文字，疑似完整姓名（只留姓與最後一字，中間以 ○ 遮罩）`);
+  if (NATIONAL_ID_RE.test(v)) out.push(`「${v}」含身分證字號樣式`);
+  return out;
+}
+/** 單一報名編號的問題 */
+export function candidateNoProblems(no) {
+  const v = String(no ?? '').trim();
+  const out = [];
+  if (!v) { out.push('報名編號空白'); return out; }
+  if (CANDIDATE_NO_ID_RE.test(v) || NATIONAL_ID_RE.test(v)) out.push(`報名編號「${v.slice(0, 2)}********」疑似身分證字號（請改用報名編號，例：1150924-012）`);
+  return out;
+}
+
+/**
+ * 職缺甄選結果的個資閘門 → 錯誤訊息陣列（違反即建置失敗）。
+ * 檢查 result.admitted[]、result.waitlist[]、waitlistUpdates[] 的 nameMasked 與 candidateNo；
+ * result.note 與 waitlistUpdates[].note 不得含身分證字號樣式；正取人數不得超過名額。
+ */
+export function jobPiiErrors(job) {
+  const errs = [];
+  const head = '個資閘門（甄選結果只公布報名編號與遮罩姓名）';
+  const rows = [
+    ...(job.result?.admitted ?? []).map((r, i) => ({ at: `result.admitted[${i}]`, r })),
+    ...(job.result?.waitlist ?? []).map((r, i) => ({ at: `result.waitlist[${i}]`, r })),
+    ...(job.waitlistUpdates ?? []).map((r, i) => ({ at: `waitlistUpdates[${i}]`, r })),
+  ];
+  for (const { at, r } of rows) {
+    for (const p of maskedNameProblems(r?.nameMasked)) errs.push(`${head}：${at}.nameMasked ${p}`);
+    for (const p of candidateNoProblems(r?.candidateNo)) errs.push(`${head}：${at}.candidateNo ${p}`);
+  }
+  for (const [at, text] of [['result.note', job.result?.note], ...(job.waitlistUpdates ?? []).map((u, i) => [`waitlistUpdates[${i}].note`, u?.note])]) {
+    if (text && NATIONAL_ID_RE.test(String(text))) errs.push(`${head}：${at} 含身分證字號樣式`);
+  }
+  const admitted = job.result?.admitted?.length ?? 0;
+  if (job.positions != null && admitted > job.positions) errs.push(`甄選結果：正取 ${admitted} 名超過名額 ${job.positions} 名`);
+  const inResult = [...(job.result?.admitted ?? []), ...(job.result?.waitlist ?? [])].map((r) => r?.candidateNo).filter(Boolean);
+  const dupNo = inResult.filter((x, i, a) => a.indexOf(x) !== i);
+  if (dupNo.length) errs.push(`甄選結果：報名編號重複 ${[...new Set(dupNo)].join('、')}`);
+  return errs;
 }
 
 /** 來源語言規則（ARCHITECTURE 14.2）→ 錯誤訊息陣列 */

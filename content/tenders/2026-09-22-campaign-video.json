@@ -1,0 +1,86 @@
+{
+  "id": "tender.2026-09-22-campaign-video",
+  "type": "tender",
+  "title": "115 年度防疫宣導影片製作暨多語字幕案",
+  "owner": "unit.secretariat",
+  "steward": "秘書室採購承辦人",
+  "publishedAt": "2026-09-22",
+  "reviewedAt": "2026-09-22",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-22"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-22",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "防疫宣導影片製作暨多語字幕勞務採購，須依現行正本版本製作並交付逐字稿與章節時間碼，預算約 650 萬元，10 月 15 日截止投標。",
+  "keywords": [
+    "採購公告",
+    "宣導影片",
+    "多語字幕",
+    "逐字稿",
+    "公關室"
+  ],
+  "i18n": {
+    "en": {
+      "title": "Tender: health campaign videos with multilingual subtitles",
+      "summary": "Videos must state the source document version and deliver machine-readable transcripts and chapter timecodes; bids close 15 October 2026."
+    }
+  },
+  "slug": "campaign-video",
+  "legacyIds": [
+    "news.2026-09-22-procurement-campaign-video"
+  ],
+  "requestingUnit": "unit.pr",
+  "tenderNo": "CDC-115-PR-009",
+  "method": "公開招標",
+  "awardRule": "準用最有利標",
+  "budgetNtd": 6500000,
+  "category": "勞務",
+  "announcedAt": "2026-09-22",
+  "deadlineAt": "2026-10-15",
+  "openingAt": "2026-10-16",
+  "scope": [
+    "防疫宣導影片 8 支、短影音 12 支",
+    "中文、英文、越南語、印尼語、泰語字幕"
+  ],
+  "specialTerms": [
+    "每支影片須標示「依○○版（日期）製作」並交付依據正本清單",
+    "須交付逐字稿（機讀文字檔）與章節時間碼，作為官網影音頁與 AI 索引之唯一引用來源",
+    "正本於影片上架前修訂者，廠商應配合修改"
+  ],
+  "contractPeriod": "決標日起至 2027 年 6 月 30 日",
+  "contact": "疾管署秘書室：（02）2395-9825 轉秘書室分機（示意）；規格洽詢：公關室（同總機轉接）",
+  "note": "預算、案號、決標金額與得標廠商皆為示意；正式招標文件、投標與決標公告以政府電子採購網為準。",
+  "pccUrl": "https://web.pcc.gov.tw/"
+}

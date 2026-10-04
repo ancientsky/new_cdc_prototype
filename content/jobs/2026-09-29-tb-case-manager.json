@@ -1,0 +1,98 @@
+{
+  "id": "job.2026-09-29-tb-case-manager",
+  "type": "job",
+  "title": "慢性傳染病組徵求約僱人員 1 名（結核病個案管理）",
+  "owner": "unit.personnel",
+  "steward": "人事室承辦人",
+  "publishedAt": "2026-09-29",
+  "reviewedAt": "2026-09-29",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-29"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "慢性傳染病組徵求約僱人員 1 名，協助結核病個案管理資料品質與地方衛生局聯繫；2026 年 10 月 12 日開放報名，10 月 26 日截止，以電子郵件報名。",
+  "keywords": [
+    "人才招募",
+    "約僱",
+    "結核病",
+    "個案管理",
+    "慢性傳染病組"
+  ],
+  "slug": "tb-case-manager",
+  "refNo": "疾管人字第 1150100249 號",
+  "hiringUnit": "unit.chronic-infectious",
+  "jobType": "約僱人員",
+  "positions": 1,
+  "workplace": "臺北市中正區林森南路 6 號（疾管署本部）",
+  "salaryNote": "比照行政院暨所屬機關約用人員薪點，280 薪點起敘（依學經歷核定，示意）",
+  "qualifications": [
+    "國內外專科以上護理、公共衛生或相關科系畢業",
+    "熟悉試算表與資料核對作業",
+    "具結核病個案管理或公共衛生護理經驗者優先"
+  ],
+  "duties": [
+    "結核病個案管理資料品質檢核",
+    "地方衛生局都治（DOTS）執行情形聯繫",
+    "結核病防治會議行政作業"
+  ],
+  "requiredDocuments": [
+    "履歷表（含自傳）",
+    "最高學歷畢業證書影本",
+    "護理師證書影本（有者檢附）"
+  ],
+  "applyStart": "2026-10-12",
+  "deadlineAt": "2026-10-26",
+  "applyMethod": "email",
+  "examPlan": [
+    {
+      "stage": "書面審查",
+      "date": "2026-10-29"
+    },
+    {
+      "stage": "口試",
+      "date": "2026-11-05"
+    }
+  ],
+  "resultPlannedAt": "2026-11-12",
+  "contact": "疾管署人事室：（02）2395-9825 轉人事室分機（示意）；職務內容洽詢：慢性傳染病組（同總機轉接）；報名信箱見甄選簡章",
+  "attachments": [
+    {
+      "label": "甄選簡章（PDF）",
+      "url": "/pending/?ref=job.2026-09-29-tb-case-manager&doc=甄選簡章",
+      "format": "pdf",
+      "machineReadable": false
+    }
+  ],
+  "note": "聯絡電話為疾管署總機，分機與報名信箱以正式簡章為準（本原型為示意，不放承辦人姓名）；薪資待遇為示意文字，實際依核定薪點折算。"
+}

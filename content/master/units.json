@@ -12,6 +12,7 @@
   {"id": "unit.lab", "name": "檢驗及疫苗研製中心", "nameEn": "Center for Diagnostics and Vaccine Development", "kind": "center", "stewardTitle": "Data Steward"},
   {"id": "unit.planning", "name": "企劃組", "nameEn": "Division of Planning and Coordination", "kind": "division", "stewardTitle": "Data Steward（企劃、國際合作、IHR 國家對口窗口）"},
   {"id": "unit.secretariat", "name": "秘書室", "nameEn": "Secretariat Office", "kind": "office", "stewardTitle": "Data Steward（署長信箱、採購公告、綜合業務）"},
+  {"id": "unit.personnel", "name": "人事室", "nameEn": "Personnel Office", "kind": "office", "stewardTitle": "Data Steward（人才招募、甄選結果）"},
   {"id": "unit.ethics", "name": "政風室", "nameEn": "Civil Service Ethics Office", "kind": "office", "stewardTitle": "Data Steward（廉政宣導、檢舉管道）"},
   {"id": "unit.preventive-medicine", "name": "預防醫學辦公室", "nameEn": "Office of Preventive Medicine", "kind": "office", "stewardTitle": "Data Steward（預防醫學、健康促進）"},
   {"id": "unit.accounting", "name": "主計室", "nameEn": "Accounting Office", "kind": "office"},

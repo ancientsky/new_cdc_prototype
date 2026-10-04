@@ -37,7 +37,7 @@
 ## 規模與功能清單
 
 - **規模**：內容 245 筆（疾病、疫苗、FAQ、新聞與公告、文件、澄清、資料集、影音、專區、申請服務、出版品、檢驗項目、研究計畫）；七語靜態頁 1,173 頁；後台 15 頁；評估集 183 題（版本題 18）；治理測試 103 項。
-- **內容型別（16 種）**：疾病、Q&A、新聞稿／通函／澄清、文件（版本鏈）、疫苗、資料集、Banner、一般頁，加上第二輪新增的**影音、專區、申請服務、出版品、檢驗項目、研究計畫**，以及新聞型別的**人才招募、採購公告**。
+- **內容型別（16 種）**：疾病、Q&A、新聞稿／通函／澄清、文件（版本鏈）、疫苗、資料集、Banner、一般頁，加上第二輪新增的**影音、專區、申請服務、出版品、檢驗項目、研究計畫**，以及第七輪獨立出的**人才招募（`job`）、採購公告（`tender`）**。
 - **民眾端**：一句話提問、六任務、疫情態勢、疾病與疫苗、旅遊、謠言查證、影音庫、專區、申請專區、公告、署長信箱。
 - **專業端**：版本異動對照、檢驗專區、通報專區（時限表自動產生）、研究計畫、出版品、訂閱。
 - **後台**：上架預處理（十五種型別）、複核、審閱到期、資料目錄（含影音、專區、申請、出版品、檢驗、研究）、**公告管理、影音管理、外部連結健康**、連動待辦（含影音過時、無逐字稿、連結失效、檢驗不一致）、態勢發布、AI 開關、評估、儀表板。
@@ -52,7 +52,7 @@
 - **新擺法、新要求**：結核病疾病頁加上專區導覽（民眾／專業各一套），指引與手冊走文件版本鏈，另有 Q&A、專區、補助與潛伏結核感染治療服務；頁首治理列有「本頁取代舊網站 N 個頁面」，展開看每筆舊網址與移轉後新增的治理要求。
 - **舊網址不 404**：建置自動輸出 `v1/redirects.json`、`v1/legacy-map.json`，以及三種伺服器轉址檔 `redirects/nginx.map`、`redirects/web.config.rewritemap.xml`、`redirects/_redirects`；404 頁自動帶往新頁，`/legacy/` 可貼舊網址查新頁。靜態主機的 404 頁只是示範與備援，**正式站必須由伺服器回 301**。
 - **上線後監測**：`node scripts/analyze-404-log.mjs access.log --map dist/v1/legacy-map.json --migration content/migration` 把 404 log 分成「可直接 301」「待補對照」「真的不存在（建議 410）」三類，待補對照附可貼進清單的草稿。
-- **規劃回補**：整理了 31 項「規劃文件沒寫到、原型做了」的作法，見 [docs/plan-supplement.md](docs/plan-supplement.md)；完整移轉與轉址手冊見 [docs/migration-playbook.md](docs/migration-playbook.md)；同事操作步驟見 [docs/guide-staff.md](docs/guide-staff.md) 第 15 節。
+- **規劃回補**：整理了 34 項「規劃文件沒寫到、原型做了」的作法，見 [docs/plan-supplement.md](docs/plan-supplement.md)（第 29–34 項為後兩輪新增）；完整移轉與轉址手冊見 [docs/migration-playbook.md](docs/migration-playbook.md)；同事操作步驟見 [docs/guide-staff.md](docs/guide-staff.md) 第 15 節。
 
 > 限制：開發環境連不到 `www.cdc.gov.tw`，結核病專區的舊頁清單依規劃文件的 URL 模式重建，每筆標 `verified: false`，等權責單位確認。
 
@@ -66,6 +66,20 @@
 - **規劃回補與手冊**：[docs/plan-supplement.md](docs/plan-supplement.md) 新增第 29–31 項（推導清單、sourceLang、國際合作雙語）；[docs/governance-model.md](docs/governance-model.md) 新增規則 17、18；[docs/migration-playbook.md](docs/migration-playbook.md) 新增第 10 節「規模化：99 種疾病怎麼做」；[docs/guide-staff.md](docs/guide-staff.md) 第 15 節改為「推導清單 → 只寫例外」流程。
 
 > 限制：推導清單的舊網址一律以 `{id}` 佔位（標 `pattern`），不進伺服器轉址檔；要讓 301 真的生效，需向資訊室取得舊站 ID 對照（見 playbook 第 10.5 節）。英文站 `/En` 同樣連不到，國際合作的舊頁清單依既有認識重建，全部 `verified: false`。
+
+## 第七輪：人才招募與採購公告分家、招募生命週期、模擬報名
+
+第二輪把人才招募與採購公告放在新聞稿底下，只有一個截止日。第七輪把兩者拆開，各有權責單位與自己的生命週期：
+
+- **人才招募與採購公告分家**：人才招募成為獨立的 `job` 型別（`/careers/`，權責**人事室**，新單位 `unit.personnel`），採購公告成為 `tender` 型別（`/procurement/`，權責秘書室）。`news` 不再有招募與採購兩種；舊 `/news/{slug}/` 網址 301 到新路徑。頁尾「更多服務」也拆成「人才招募」「採購公告」兩個入口。
+- **招募生命週期（日期推導，不靠人記）**：即將開放 → 報名中 → 已截止 → 審查與甄試中 → 結果公布 → 90 天後進歷史；人工只有「取消」「已補實」兩種覆蓋。職缺頁有**時間軸**標示目前階段，已截止頁寫明「結果預計 {日期} 公布」。三個待辦：結果逾期、備取將到期、外部報名網址失效。備取名單過有效期後自動不顯示。
+- **模擬報名「不送出任何資料」**：`/careers/{slug}/apply/` 是三步驟的示範表單（即時驗證、草稿、收執可列印、可下載 JSON 與 `.ics`），**資料只存在你的瀏覽器 localStorage，不送出任何資料**，頁面明示為原型示範。正式站的報名系統在站外或後端（職缺填 `applyUrl`），本站只公布職缺、時程與結果。
+- **個資遮罩閘門**：甄選結果與遞補公告只公布**報名編號與遮罩姓名**；`nameMasked` 必須含遮罩字（○）且不得有完整姓名樣式、`candidateNo` 不得像身分證字號、正取數不得超過名額，**違反即建置失敗**。AI 白名單排除名單，答案引擎問「誰錄取」只給結果頁連結。
+- **採購公告狀態化**：招標中 → 已截止 → 已開標 → 已決標（或流標、取消），決標逾期自動開待辦；本站只做入口與狀態，**正式公告以政府電子採購網為準**。
+- **文件**：[docs/careers-privacy.md](docs/careers-privacy.md)（招募個資處理原則）；[docs/guide-staff.md](docs/guide-staff.md) 新增第 16 節（人才招募 SOP，人事室）與第 17 節（採購公告 SOP，秘書室）；[docs/governance-model.md](docs/governance-model.md) 新增規則 19–21；[docs/plan-supplement.md](docs/plan-supplement.md) 新增第 32–34 項；[docs/migration-playbook.md](docs/migration-playbook.md) 新增 10.8「欄目型清單：人才招募、採購」。
+- **輸出**：`/v1/jobs.json`、`/v1/tenders.json`（含階段）、RSS `feeds/careers.xml`、`feeds/procurement.xml`、JSON-LD `JobPosting`；後台 `/admin/jobs/`（人事室：職缺與階段、待辦、結果上架檢核）、`/admin/tenders/`（秘書室）。
+
+> 限制：連不到 `www.cdc.gov.tw`，舊站「人才招募」「採購公告」欄目的移轉清單（`content/migration/careers.json`、`procurement.json`）依既有認識重建，全部 `verified: false`。示範資料中的職缺、錄取名單（報名編號與遮罩姓名）與決標廠商皆為虛構，不可當作真實公告引用。
 
 ## 快速開始
 
@@ -105,6 +119,9 @@ npm run dev       # 建置並啟動預覽 http://localhost:4173/new_cdc_prototyp
 - 影片製作日早於依據正本現行版生效日 → 自動標過時、退出白名單、開待辦；逐字稿不足 50 字 → 待辦
 - 外部連結每日檢查，失效 → 待辦；檢驗送驗時限與主檔通報時限不一致 → 待辦
 - 舊站移轉清單中狀態為「待確認」（`pending`）的項目 → 自動開 `migration-pending` 待辦給權責單位；新頁的「舊網址對應」揭露在 `showLegacyUntil` 過後自動隱藏，不需人工；舊網址轉址對照（301）與伺服器格式每次建置自動重算
+- 招募階段（即將開放、報名中、已截止、審查與甄試中、結果公布）與採購階段（招標中、已截止、已開標、已決標）由日期與結果推導，截止自動退場、結果滿 90 天自動進歷史、備取有效期過後自動不顯示；結果逾期、備取將到期、外部報名網址失效、決標逾期 → 待辦
+- 甄選結果個資遮罩：`nameMasked` 未遮罩、報名編號像身分證字號、正取數超過名額 → 建置失敗；AI 白名單排除名單，答案引擎不唸錄取者
+- 採購公告開標後 30 日仍無決標資訊 → 待辦；本站只做入口與狀態，正式公告以政府電子採購網為準
 - AI 暫停開關 → 全站橫幅，答案頁退回傳統列表
 - KPI 與季度 AI 透明報告每次建置重算
 - 評估集閘門：版本題只要錯一題，建置失敗
@@ -155,7 +172,8 @@ docs/                使用說明與治理文件
 | [docs/deploy.md](docs/deploy.md) | 部署與維運、新增內容型別、改 schema |
 | [docs/roadmap-mapping.md](docs/roadmap-mapping.md) | 原型功能與三階段路線圖對照 |
 | [docs/migration-playbook.md](docs/migration-playbook.md) | 舊站→新站內容移轉與網址轉址手冊：301／410 策略、搜尋引擎、舊站保留期、切換日 checklist、404 log 監測、常見錯誤、結核病示範 |
-| [docs/plan-supplement.md](docs/plan-supplement.md) | 規劃文件回補：原型做了、規劃沒寫到的 31 項作法（做法、為何需要、對應規劃章節、原型位置、正式上線還缺什麼） |
+| [docs/plan-supplement.md](docs/plan-supplement.md) | 規劃文件回補：原型做了、規劃沒寫到的 34 項作法（做法、為何需要、對應規劃章節、原型位置、正式上線還缺什麼） |
+| [docs/careers-privacy.md](docs/careers-privacy.md) | 人才招募個資處理原則：報名資料不進 repo、模擬報名只存瀏覽器、正式報名在站外或後端、只公布報名編號與遮罩姓名、保存與下架、查詢與刪除、個資法對應與告知事項範本 |
 
 ## 貢獻方式
 

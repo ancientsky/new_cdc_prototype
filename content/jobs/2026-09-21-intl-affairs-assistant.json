@@ -1,0 +1,89 @@
+{
+  "id": "job.2026-09-21-intl-affairs-assistant",
+  "type": "job",
+  "title": "企劃組徵求約僱人員 1 名（國際事務）",
+  "owner": "unit.personnel",
+  "steward": "人事室承辦人",
+  "publishedAt": "2026-09-21",
+  "reviewedAt": "2026-09-21",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-21"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "企劃組徵求約僱人員 1 名辦理國際合作行政業務；因年度員額調整，已停止本次甄選。",
+  "keywords": [
+    "人才招募",
+    "約僱",
+    "國際事務",
+    "企劃組"
+  ],
+  "slug": "intl-affairs-assistant",
+  "refNo": "疾管人字第 1150100228 號",
+  "hiringUnit": "unit.planning",
+  "jobType": "約僱人員",
+  "positions": 1,
+  "workplace": "臺北市中正區林森南路 6 號（疾管署本部）",
+  "salaryNote": "比照行政院暨所屬機關約用人員薪點，280 薪點起敘（依學經歷核定，示意）",
+  "qualifications": [
+    "國內外大學以上外文、國際事務或公共衛生相關學系畢業",
+    "英語聽說讀寫流利（請檢附語言能力證明）"
+  ],
+  "duties": [
+    "國際會議與外賓接待行政作業",
+    "國際合作計畫文件翻譯與彙整"
+  ],
+  "requiredDocuments": [
+    "履歷表（含自傳）",
+    "最高學歷畢業證書影本",
+    "語言能力證明"
+  ],
+  "applyStart": "2026-09-21",
+  "deadlineAt": "2026-10-09",
+  "applyMethod": "online",
+  "examPlan": [
+    {
+      "stage": "書面審查",
+      "date": "2026-10-14"
+    },
+    {
+      "stage": "口試",
+      "date": "2026-10-21"
+    }
+  ],
+  "resultPlannedAt": "2026-10-28",
+  "contact": "疾管署人事室：（02）2395-9825 轉人事室分機（示意）；職務內容洽詢：企劃組（同總機轉接）",
+  "manualStatus": "cancelled",
+  "manualStatusNote": "因年度員額調整停止本次甄選；已報名者由人事室另行通知",
+  "note": "聯絡電話為疾管署總機，分機與報名信箱以正式簡章為準（本原型為示意，不放承辦人姓名）；薪資待遇為示意文字，實際依核定薪點折算。"
+}

@@ -16,7 +16,7 @@ const EARLY_JS = `try{var d=document.documentElement;d.classList.add('js');var v
 // 頁尾「更多服務」連結（第二輪）：民眾主選單不放機關型入口，集中在這裡
 const FOOT_SERVICES = [
   ['/publications/', 'more.publications'], ['/apply/', 'more.apply'], ['/lab/', 'more.lab'], ['/report/', 'more.report'], ['/research/', 'more.research'],
-  ['/notices/', 'more.notices'], ['/media/', 'services.media'], ['/campaigns/', 'campaigns.title'], ['/contact/', 'more.mailbox'], ['/services/', 'services.title'],
+  ['/careers/', 'more.careers'], ['/procurement/', 'more.procurement'], ['/notices/', 'more.notices'], ['/media/', 'services.media'], ['/campaigns/', 'campaigns.title'], ['/contact/', 'more.mailbox'], ['/services/', 'services.title'],
 ];
 
 function translationBar(ctx, item, hide) {

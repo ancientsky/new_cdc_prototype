@@ -1,7 +1,7 @@
 // /admin/ 治理儀表板（規劃 7.5 KPI、待辦、白名單、AI 狀態、態勢層延遲、各單位卡、季報匯出）
 import { html } from '../../../scripts/lib/render.mjs';
 import { migrationData } from './_migration.mjs';
-import { pageHead, dataScript, adminMeta, KIND_LABEL, KIND_ORDER, todoList, sitGov, byOwnerRows, kpiProgress, fmtNum, noticeRows, mediaRows, linkRows, linkCounts } from './_partials.mjs';
+import { pageHead, dataScript, adminMeta, KIND_LABEL, KIND_ORDER, todoList, sitGov, byOwnerRows, kpiProgress, fmtNum, noticeRows, mediaRows, linkRows, linkCounts, jobRows, tenderRows } from './_partials.mjs';
 export { layout } from './_layout.mjs';
 
 export function pages() { return [{ path: '/admin/', props: {}, noindex: true }]; }
@@ -27,6 +27,9 @@ export function render(ctx) {
   const mTr = media.filter((m) => m.hasTranscript).length, mCur = media.filter((m) => m.basisCurrent).length;
   const lc = linkCounts(linkRows(site));
   const mg = migrationData(site);
+  const jobs = jobRows(site), tenders = tenderRows(site);
+  const jOpen = jobs.filter((j) => j.stage === 'open').length, jReview = jobs.filter((j) => ['closed', 'screening'].includes(j.stage)).length, jResult = jobs.filter((j) => j.stage === 'result' && !j.history).length, jAttn = jobs.filter((j) => j.attention).length;
+  const tOpen = tenders.filter((x) => x.stage === 'open').length, tOpened = tenders.filter((x) => x.stage === 'opened').length, tAwarded = tenders.filter((x) => x.stage === 'awarded').length, tAttn = tenders.filter((x) => x.attention).length;
   const extra = { notices: { open: nOpen, soon: nSoon, closedUnarchived: nClosed, total: notices.length }, media: { total: media.length, transcript: mTr, current: mCur }, links: lc };
   const data = {
     extra, today: site.today, kpi, todos: todos.map(({ id, kind, owner, ownerName, itemTitle, dueAt, overdue }) => ({ id, kind, owner, ownerName, itemTitle, dueAt, overdue })),
@@ -57,6 +60,15 @@ ${pageHead({ title: '治理儀表板', what: '署內治理的一頁總覽：品�
     ${mg.lists.length ? html`<dl><dt>整體進度</dt><dd>${mg.total.done} / ${mg.total.total} <span class="adm-muted">(${mg.donePct}%)</span></dd><dt>清單</dt><dd>${mg.summary.lists} 份 <span class="adm-muted">推導 ${mg.summary.derived}・人工 ${mg.summary.curated}</span></dd><dt>待移轉</dt><dd class="${mg.total.pending ? 'adm-yellow' : ''}">${mg.total.pending}</dd><dt>尚無疾病頁</dt><dd class="${mg.summary.noPage ? 'adm-yellow' : ''}">${mg.summary.noPage} 種</dd><dt>舊頁總數</dt><dd>${mg.total.total}</dd></dl>
     <div class="adm-stack adm-stack--card" role="img" aria-label="整體進度 ${mg.donePct}%，待移轉 ${mg.total.pending} 筆"><i class="adm-stack__ok" style="width:${mg.donePct}%"></i></div>
     <p>每種傳染病一份清單，標準子頁由模板推導；已移轉的舊網址由伺服器 301 與 404 頁自動導到新頁。</p>` : html`<p>尚未建立移轉清單（content/migration/）。建立後這裡顯示舊頁處理進度與待確認數。</p>`}</section>
+</div>
+
+<div class="adm-grid adm-grid--4" style="margin-bottom:var(--sp-5)" aria-label="人才招募與採購公告">
+  <section class="adm-minicard ${jAttn ? 'adm-minicard--bad' : jobs.length ? 'adm-minicard--ok' : ''}" aria-labelledby="mc-j" id="dash-jobs"><h3 id="mc-j">人才招募 <a href="${url('/admin/jobs/', { noLang: true })}">職缺與結果檢核 →</a></h3>
+    <dl><dt>報名中</dt><dd>${jOpen}</dd><dt>審查與甄試中</dt><dd>${jReview}</dd><dt>近期結果</dt><dd>${jResult}</dd><dt>需處理（結果逾期／檢核未過）</dt><dd class="${jAttn ? 'adm-red' : ''}">${jAttn}</dd></dl>
+    <p>人事室（Data Steward）負責；共 ${jobs.length} 則。階段由日期與結果推導，截止後自動退出開放中清單。</p></section>
+  <section class="adm-minicard ${tAttn ? 'adm-minicard--bad' : tenders.length ? 'adm-minicard--ok' : ''}" aria-labelledby="mc-t" id="dash-tenders"><h3 id="mc-t">採購公告 <a href="${url('/admin/tenders/', { noLang: true })}">標案與決標 →</a></h3>
+    <dl><dt>招標中</dt><dd>${tOpen}</dd><dt>已開標未決標</dt><dd>${tOpened}</dd><dt>已決標</dt><dd>${tAwarded}</dd><dt>決標逾期</dt><dd class="${tAttn ? 'adm-red' : ''}">${tAttn}</dd></dl>
+    <p>秘書室負責；共 ${tenders.length} 件。開標後 30 日仍無決標資訊會產生待辦。</p></section>
 </div>
 
 <section class="adm-card" aria-labelledby="kpi-h"><h2 id="kpi-h">品質指標（規劃 7.5）</h2>

@@ -9,7 +9,10 @@
 //   governanceExt(ctx, item)        → cdc:* 擴充欄位（owner、reviewedAt、nextReviewAt、version、whitelist…）
 //   第二輪：media → VideoObject（Clip 章節）、topic → CollectionPage、service → GovernmentService＋HowTo、
 //          publication → PublicationIssue／Book、labtest → MedicalTest、research → ResearchProject、
-//          news(recruit) → JobPosting、news(procurement) → WebPage＋cdc:refNo／cdc:validThrough
+//          news(recruit) → JobPosting、news(procurement) → WebPage＋cdc:refNo／cdc:validThrough（第七輪前相容）
+//   第七輪：job → JobPosting（title、datePosted、validThrough、employmentType、hiringOrganization、jobLocation、totalJobOpenings；
+//          薪資以 description 文字呈現，不給 baseSalary；甄選名單不放進 JSON-LD）、
+//          tender → GovernmentService＋Offer（簡化：預算、公告／截止日、政府電子採購網連結、決標）
 //   aboutOrgJsonLd(ctx)             → GovernmentOrganization＋subOrganization[]（/about/ 組織架構，master/units＋site.gov.byOwner）
 import { config, siteOrigin } from '../../site.config.mjs';
 import { mdToText } from './markdown.mjs';
@@ -152,10 +155,67 @@ const diseaseRef = (ctx, id) => clean({ '@type': 'MedicalCondition', name: ctx?.
 const authorOf = (name) => ({ '@type': 'Organization', name });
 const TAIPEI = { '@type': 'Place', address: { '@type': 'PostalAddress', addressLocality: '臺北市', addressRegion: '臺北市', addressCountry: 'TW' } };
 
+/** 職類 → schema.org employmentType */
+export const EMPLOYMENT_TYPE = {
+  約聘人員: ['FULL_TIME', 'TEMPORARY'], 約僱人員: ['FULL_TIME', 'TEMPORARY'], 聘用研究員: ['FULL_TIME', 'TEMPORARY'], 計畫助理: ['FULL_TIME', 'TEMPORARY'],
+  公費醫師: ['FULL_TIME'], 技工工友駐衛警: ['FULL_TIME'], 公務人員商調: ['FULL_TIME'], 臨時人員: ['TEMPORARY'],
+};
+/** 工作地點文字 → Place（取開頭縣市為 addressRegion；其餘原文放 streetAddress） */
+export function placeOfWorkplace(workplace) {
+  const w = String(workplace ?? '').trim();
+  const m = w.match(/^([\u4e00-\u9fff]{1,3}[市縣])/);
+  return clean({ '@type': 'Place', address: clean({ '@type': 'PostalAddress', streetAddress: w || undefined, addressRegion: m ? m[1].replace(/^台/, '臺') : undefined, addressCountry: 'TW' }) });
+}
+const endOfDay = (d) => (d ? `${d}T23:59:59+08:00` : undefined);
+
+/** 職缺 → JobPosting（只讀職缺正文欄位；result／waitlistUpdates 不輸出） */
+export function jobPostingJsonLd(ctx, item) {
+  const name = tr(ctx, item, 'title');
+  const unit = ctx?.site?.unitById?.get(item.hiringUnit);
+  const lines = [
+    tr(ctx, item, 'summary'),
+    item.duties?.length ? `工作內容：${item.duties.join('；')}` : null,
+    item.qualifications?.length ? `資格條件：${item.qualifications.join('；')}` : null,
+    item.salaryNote ? `薪資待遇：${item.salaryNote}` : null,
+    item.requiredDocuments?.length ? `應備文件：${item.requiredDocuments.join('、')}` : null,
+    item.examPlan?.length ? `甄試方式：${item.examPlan.map((e) => `${e.stage}${e.date ? `（${e.date}）` : ''}`).join('、')}` : null,
+  ].filter(Boolean);
+  const g = item.gov ?? {};
+  const applyHref = g.applyHref ?? item.applyUrl ?? null;
+  return clean({ ...baseOf(ctx, item, 'JobPosting'), title: name, name, description: lines.join('\n'),
+    datePosted: item.publishedAt, validThrough: endOfDay(item.deadlineAt),
+    employmentType: EMPLOYMENT_TYPE[item.jobType] ?? ['OTHER'],
+    hiringOrganization: { '@type': 'GovernmentOrganization', '@id': ORG_ID(), name: config.name, sameAs: config.legacyOrigin },
+    jobLocation: placeOfWorkplace(item.workplace), totalJobOpenings: item.positions,
+    identifier: item.refNo ? { '@type': 'PropertyValue', name: config.name, value: item.refNo } : undefined,
+    responsibilities: item.duties?.join('；'), qualifications: item.qualifications?.join('；'),
+    directApply: !!g.applyOnSite, sameAs: item.applyUrl,
+    potentialAction: applyHref && ['open'].includes(g.jobStage) ? { '@type': 'ApplyAction', target: /^https?:/.test(applyHref) ? applyHref : abs(ctx, applyHref) } : undefined,
+    'cdc:hiringUnit': unit?.name ?? item.hiringUnit, 'cdc:jobType': item.jobType, 'cdc:salaryNote': item.salaryNote,
+    'cdc:jobStage': g.jobStage ?? null, 'cdc:applyStart': item.applyStart, 'cdc:refNo': item.refNo ?? null, 'cdc:closed': !!g.closed,
+    'cdc:resultPublishedAt': item.result?.publishedAt ?? null });
+}
+
+/** 採購公告 → GovernmentService＋Offer（簡化） */
+export function tenderJsonLd(ctx, item) {
+  const name = tr(ctx, item, 'title');
+  const g = item.gov ?? {};
+  return clean({ ...baseOf(ctx, item, 'GovernmentService'), name, description: tr(ctx, item, 'summary'), serviceType: `政府採購（${item.category}）`,
+    provider: unitOrg(ctx, item.owner), areaServed: TAIWAN, identifier: item.tenderNo,
+    availableChannel: item.pccUrl ? { '@type': 'ServiceChannel', name: '政府電子採購網', serviceUrl: item.pccUrl } : undefined,
+    offers: clean({ '@type': 'Offer', name: `${item.method}${item.awardRule ? `（${item.awardRule}）` : ''}`, category: item.category, price: item.budgetNtd, priceCurrency: 'TWD',
+      availabilityStarts: item.announcedAt, availabilityEnds: endOfDay(item.deadlineAt), validThrough: endOfDay(item.deadlineAt), url: item.pccUrl, seller: { '@id': ORG_ID() } }),
+    'cdc:tenderNo': item.tenderNo, 'cdc:method': item.method, 'cdc:requestingUnit': ctx?.site?.unitById?.get(item.requestingUnit)?.name ?? item.requestingUnit,
+    'cdc:budgetNtd': item.budgetNtd, 'cdc:openingAt': item.openingAt ?? null, 'cdc:tenderStage': g.tenderStage ?? null, 'cdc:closed': !!g.closed,
+    'cdc:award': item.award ? clean({ date: item.award.date, winner: item.award.winner, amountNtd: item.award.amountNtd }) : null });
+}
+
 export function jsonLdFor(ctx, item) {
   const name = tr(ctx, item, 'title');
   const description = tr(ctx, item, 'summary');
   switch (item.type) {
+    case 'job': return [jobPostingJsonLd(ctx, item)];
+    case 'tender': return [tenderJsonLd(ctx, item)];
     case 'media': {
       const url = abs(ctx, pathOf(item));
       const chapters = item.chapters ?? [];
