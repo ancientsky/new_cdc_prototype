@@ -1,7 +1,7 @@
 // 舊頁 HTML → 內容區抽取 → 圖片與連結改寫 → Markdown（用 md-convert.js 的 htmlToMd，與上架編輯器同一份轉換器）。
 import { htmlToMd } from '../../../src/client/admin/md-convert.js';
 import {
-  parseHtml, firstOf, findAll, findFirst, removeNode, textOf, innerHtml, serialize, wordStats, tableProblems, walkEls, isEl, makeRoot, plainText,
+  parseHtml, firstOf, findAll, findFirst, removeNode, textOf, innerHtml, serialize, wordStats, cleanWordStyles, tableProblems, walkEls, isEl, makeRoot, plainText,
 } from './html.mjs';
 
 const DATE_RE = /(\d{4})\s*[/\-.年]\s*(\d{1,2})\s*[/\-.月]\s*(\d{1,2})/;
@@ -27,6 +27,7 @@ export function extractPage(rules, html) {
   const bcEl = findFirst(root, '.breadcrumb');
   const breadcrumbs = bcEl ? findAll(bcEl, 'li').map((li) => textOf(li).replace(/\s+/g, ' ').trim()).filter(Boolean) : [];
   const word = wordStats(container);
+  cleanWordStyles(container);
   for (const sel of ex.removeSelectors ?? []) for (const el of findAll(container, sel)) removeNode(el);
   const body = firstOf(container, ex.bodySelectors ?? []) ?? container;
   return { root, container, body, htmlTitle, updatedAt, breadcrumbs, word };

@@ -67,7 +67,7 @@ eval/run-eval.mjs          在 Node 跑評估集（與瀏覽器共用答案引�
 tests/*.test.mjs           node:test
 docs/                      使用指南：民眾、專業人員、同事（Steward／公關室／資訊室）、治理 SOP
 dist/                      建置輸出（git ignore；Pages 由 Actions 上傳）
-.github/workflows/pages.yml  建置＋部署；每日 03:00 UTC 排程重抓資料
+.github/workflows/pages.yml  建置＋部署；每 2 小時建置、每日 02:00 UTC 排程重抓資料
 ```
 
 ---
@@ -340,7 +340,7 @@ canonical、hreflang × 7 + x-default、meta description（= summary）、og:*�
 
 ## 9. 部署
 
-`.github/workflows/pages.yml`：push main 與每日 03:00 UTC 觸發 → `npm ci` → `npm run fetch`（抓不到用快照）→ `npm test` → `npm run build`（含 `--check`）→ upload `dist/` → deploy-pages。basePath 由 `BASE_PATH` 環境變數決定（Pages 為 `/new_cdc_prototype`）。
+`.github/workflows/pages.yml`：push main、每 2 小時排程與手動觸發 → `npm ci` → `npm test` → `npm run fetch`（只在每日 02:00 UTC 那一次與手動；抓不到用快照）→ `npm run build`（含 `--check`）→ upload `dist/` → deploy-pages。basePath 由 `BASE_PATH` 環境變數決定（Pages 為 `/new_cdc_prototype`）。
 
 ---
 
@@ -761,7 +761,7 @@ manualStatus?: enum[cancelled, failed（流標）], award?: { date, winner, amou
 - `.github/workflows/content-pr.yml`（`pull_request` 針對 `content/**`、`data/snapshots/**` 以外的路徑也可，但車道只看 content）：checkout → npm ci → `npm test` → `node scripts/build.mjs --check` → `node scripts/lane.mjs`（改動檔案由 `git diff --name-only origin/main...HEAD`）→ 以 `BASE_PATH=/new_cdc_prototype/preview/pr-{N}` 建置預覽 → 把 dist 推到 `previews` 分支的 `pr-{N}/` 目錄（孤兒分支、force 覆蓋該目錄）→ 觸發 `pages.yml` 的 `workflow_dispatch` 讓主站重新部署（主站建置時把 `previews` 分支內容複製到 `dist/preview/`）→ 在 PR 留言（或更新同一則留言）：車道、檢查結果摘要、預覽網址 `https://ancientsky.github.io/new_cdc_prototype/preview/pr-{N}/`、SLA 到期時間、需要誰審 → 加標籤 `lane:fast|standard|emergency`。
 - 自動合併：車道 autoMerge 且全部檢查通過 ⇒ 同一工作流程直接 `gh pr merge --squash --delete-branch`（不用倉庫的 auto-merge 設定）；一般車道 ⇒ 檢查 `gh pr view --json reviews` 是否有核准（原型沒有 team，CODEOWNERS 以註解標示單位對應，核准人用倉庫擁有者示範），有核准且檢查通過才合併；否則留言說明還缺什麼。PR 開啟超過 SLA ⇒ `.github/workflows/lane-sla.yml`（每小時）留言並加 `sla:breach` 標籤。
 - `.github/workflows/preview-cleanup.yml`：PR 關閉 ⇒ 刪 `previews/pr-{N}/`，再觸發主站部署。
-- `pages.yml`：排程改為每 2 小時一次建置（讓 `publishAt` 到點上線），但 `npm run fetch` 與快照回寫只在每日 03:00 UTC 的那一次與手動執行時跑（用 `github.event.schedule` 判斷）；建置前 checkout `previews` 分支到 `dist/preview/`（不存在就略過）；`.nojekyll` 照舊。
+- `pages.yml`：排程改為每 2 小時一次建置（讓 `publishAt` 到點上線），但 `npm run fetch` 與快照回寫只在每日 02:00 UTC 的那一次與手動執行時跑（用 `github.event.schedule` 判斷）；建置前 checkout `previews` 分支到 `dist/preview/`（不存在就略過）；`.nojekyll` 照舊。
 - `.github/CODEOWNERS`：`content/diseases/** content/vaccines/** content/documents/** content/faq/**` → 公關室＋OASIS（註解寫單位，實際帳號用倉庫擁有者）；其餘目錄 → 各單位（註解）。
 - 測試 `tests/lanes.test.mjs`：lane 推導（型別、urgent、多檔取最嚴）、publishAt 未到不渲染／不進 sitemap／API、post-publish-review 待辦、lanes.json schema。YAML 以 `node -e` 用簡單檢查（存在、含必要步驟名）測；**真正的端到端由整合者開一個測試 PR 驗證**。
 

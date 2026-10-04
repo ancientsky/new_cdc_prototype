@@ -81,6 +81,23 @@ export function wordStats(root) {
   return { elements, namespaced, classes, styles };
 }
 
+/**
+ * Word 樣式清理（就地）：移除 style 裡的 mso-* 宣告（保留 md-convert 認得的 mso-list／mso-hide）。
+ * 為什麼要先清：Word 的粗體寫成 <b style="mso-bidi-font-weight:normal">，md-convert 的 /font-weight:normal/ 會把它誤判成「非粗體」，
+ * 先把 mso-bidi-font-weight 之類的宣告拿掉，粗體才不會在轉換時掉光。
+ */
+export function cleanWordStyles(root) {
+  let n = 0;
+  for (const el of walkEls(root)) {
+    const st = el.attrs?.style;
+    if (!st || !/mso-/i.test(st)) continue;
+    const kept = st.split(';').map((d) => d.trim()).filter((d) => d && (!/^mso-/i.test(d) || /^mso-(list|hide)\s*:/i.test(d)));
+    if (kept.length) el.attrs.style = kept.join(';'); else delete el.attrs.style;
+    n++;
+  }
+  return n;
+}
+
 /** 表格複雜度：rowspan／colspan、巢狀表格、無表頭 */
 export function tableProblems(root) {
   const out = [];
