@@ -41,10 +41,11 @@ export function sourceHashOf(item) {
     // 連結檢查寫回的欄位（lastCheckedAt、status）不算內容變更，剔除後再雜湊
     links: item.links?.map(({ lastCheckedAt, status, ...rest }) => rest),
     forms: item.forms?.map(({ lastCheckedAt, status, ...rest }) => rest),
-    // 第七輪（ARCHITECTURE 15.1）：職缺與採購公告的正文欄位（不含 result／waitlistUpdates／award：結果公告不影響譯文）
-    duties: item.duties, qualifications: item.qualifications, requiredDocuments: item.requiredDocuments, salaryNote: item.salaryNote, workplace: item.workplace,
-    scope: item.scope, specialTerms: item.specialTerms,
   };
+  // 第七輪（ARCHITECTURE 15.1）：職缺與採購公告的正文欄位（只限 job／tender，其他型別雜湊不變；不含 result／waitlistUpdates／award：結果公告不影響譯文）
+  if (item.type === 'job' || item.type === 'tender') {
+    Object.assign(pick, { duties: item.duties, qualifications: item.qualifications, requiredDocuments: item.requiredDocuments, salaryNote: item.salaryNote, workplace: item.workplace, scope: item.scope, specialTerms: item.specialTerms });
+  }
   return createHash('sha1').update(JSON.stringify(pick)).digest('hex').slice(0, 12);
 }
 

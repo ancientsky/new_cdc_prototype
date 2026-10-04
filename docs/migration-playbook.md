@@ -505,7 +505,7 @@ KPI（後台 `/admin/migration/`）：整體已移轉＋已併入比例、`pendi
 做法與疾病清單相同，但有幾點不同：
 
 1. **一份清單 6–8 筆是示範規模；正式做法是「列表頁一筆＋歷年公告逐則」。** 歷年公告很多、流量集中在近一年，可依規劃 §7.4 四因子判斷：近兩年的逐則 `migrated`，更早的整批列為 `archived`（對到「歷史」頁籤）或 `dropped`（回 410）。**不要把全部舊公告轉到 `/careers/` 首頁**（soft 404）。
-2. **舊的錄取名單頁要特別處理。** 舊站若公布了完整姓名，**不得原樣搬到新站**：新站只公布報名編號與遮罩姓名（[careers-privacy.md](careers-privacy.md)），建置閘門會擋未遮罩的結果。逐則判斷：已超過保存期限者 `dropped`；仍需保留者依遮罩規則重做 `result`。舊 PDF 附件的 `target` 不要指向含完整姓名的檔案。
+2. **舊的錄取名單頁要特別處理。** 舊站若公布了完整姓名，**不得原樣搬到新站**：新站只公布報名編號與遮罩姓名（[careers-privacy.md](careers-privacy.md)），建置閘門會擋未遮罩的結果。逐則判斷：已超過保存期限者 `dropped`；仍需保留者依遮罩規則重做 `result`。舊 PDF 附件的 `target` 不要指向含完整姓名的檔案。示範清單中的「歷次錄取名單 PDF」（`admitted-list-pdf`）即標 `dropped`，結果改由新站職缺頁的遮罩版 `result` 承接（`result-system-analyst` 為 `merged`）。
 3. **舊新聞稿式網址已有 301。** 第二輪時招募與採購公告是 `news`（`/news/{slug}/`）；第七輪搬到新路徑後，原 id 保留在 `legacyIds`，`redirects.json` 以 `kind: 'moved'` 把舊 `/news/{slug}/` 301 到新路徑，不需要人工再寫。
 4. **`pending` 的處理與疾病清單一樣**：新頁還沒建的項目會產生 `migration-pending` 待辦（每份清單一則），權責單位分別是人事室與秘書室。
 5. **採購公告的舊網址以採購網為準**：舊站的採購公告頁若本來就是採購網的轉述，`oldType` 填 `external`、`target` 指向對應的 `tender`，由秘書室確認 `pccUrl`。
