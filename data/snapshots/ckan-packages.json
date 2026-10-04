@@ -7,7 +7,7 @@
     "count": 42,
     "note": "原型快照（示意）：資料集名稱與修改時間依 content/datasets 對齊整理，非官方 CKAN 實際回傳；live 模式由 npm run fetch 分頁抓取全部 package 覆蓋。",
     "lastLiveAttempt": {
-      "at": "2026-10-03T08:46:23.959Z",
+      "at": "2026-10-04T09:11:54.554Z",
       "ok": false,
       "reason": "fetch failed"
     }
