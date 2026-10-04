@@ -345,7 +345,7 @@ test('service／topic／publication 切塊：步驟句型、應備文件、處�
   assert.deepEqual(get('publication.b#art-1').diseases, ['disease.tuberculosis']);
 });
 
-test('公告 recruit／procurement：一塊、closed 標記與「（已截止）」、terms 加招募；引擎問「現在」不引用已截止、其餘句加（已截止）', () => {
+test('公告 recruit／procurement（第七輪前的相容路徑；新內容改 job／tender，見 jobs.test.mjs）：一塊、closed 標記與「（已截止）」、terms 加招募；notice 意圖問「現在」不引用已截止、其餘句加（已截止）', () => {
   const mk = (id, deadlineAt, title) => ({ id, type: 'news', newsType: 'recruit', title, deadlineAt, refNo: `字第 ${id.length} 號`, positions: 2, applyUrl: 'https://example.gov.tw/apply', bodyMarkdown: '## 職缺內容\n\n負責資料分析工作，需具統計背景。', publishedAt: '2026-09-01' });
   const s = miniSite([mk('news.r-open', '2026-11-05', '徵求防疫醫師 3 名'), mk('news.r-closed', '2026-06-15', '徵求檢疫人員 4 名')]);
   const idx = buildSearchIndex(s);
@@ -357,12 +357,13 @@ test('公告 recruit／procurement：一塊、closed 標記與「（已截止）
   assert.ok(open.terms.includes('招募') && closed.terms.includes('已截止'));
   assert.ok(!open.sentences.includes('職缺內容'), '標題行不當句子');
   const eng = createEngine({ index: idx.public, diseases: [], today: '2026-10-01' });
-  const now = eng.answer('現在有在招募什麼職缺');
+  // 第七輪起「招募」問句的意圖是 careers（職缺型別）；這裡以 forceIntent 驗證舊 news 公告的 notice 路徑仍正確
+  const now = eng.answer('現在有在招募什麼職缺', { forceIntent: 'notice' });
   assert.equal(now.intent, 'notice');
   assert.ok(now.sources.length && now.sources.every((x) => !x.closed), '問現在不引用已截止');
   assert.ok(now.sentences.some((x) => x.text.includes('2026-11-05')), '含截止日');
   assert.ok(now.actions.some((a) => a.href === '/notices/'));
-  const any = eng.answer('檢疫人員招募名額幾名');
+  const any = eng.answer('檢疫人員招募名額幾名', { forceIntent: 'notice' });
   const marked = any.sentences.filter((x) => x.closed);
   assert.ok(marked.length && marked.every((x) => x.text.includes('已截止')), JSON.stringify(any.sentences));
   assert.equal(groundingOf(any).bad.length, 0, '（已截止）標記不影響 grounding');
@@ -408,7 +409,7 @@ test('apply 意圖：規則 id 與權重；回答優先取 service、怎麼申�
   assert.notEqual(classifyIntent('登革熱要清除哪些積水容器', { view: 'pro' }).intent, 'lab');
   assert.equal(classifyIntent('流感檢體保存溫度').intent, 'lab');
   assert.notEqual(classifyIntent('登革熱有幾種血清型').intent, 'lab');
-  assert.equal(classifyIntent('現在有在招募什麼職缺').intent, 'notice');
+  assert.equal(classifyIntent('現在有在招募什麼職缺').intent, 'careers', '第七輪：招募問句改 careers 意圖');
   // 合成 service：步驟、actions
   const s = miniSite([{ id: 'service.t', type: 'service', slug: 't', title: '黃皮書', keywords: ['黃皮書'], serviceType: 'certificate', whoCanApply: ['民眾'], introMarkdown: '國際預防接種證明書俗稱黃皮書。', requiredDocuments: ['護照'], steps: [{ title: '預約門診', who: '民眾', days: 1 }, { title: '核發證明書', who: '門診', days: 0 }], slaDays: 1, forms: [{ label: '樣張', href: 'https://example.gov.tw/f.pdf' }] }]);
   const idx = buildSearchIndex(s);

@@ -3,7 +3,7 @@ import { config } from '../site.config.mjs';
 import { loadSite, sourceHashOf } from '../scripts/lib/load.mjs';
 import { applyGovernance } from '../scripts/lib/governance.mjs';
 
-const COLLECTION_OF = { disease: 'diseases', faq: 'faq', news: 'news', letter: 'news', document: 'documents', clarification: 'clarifications', vaccine: 'vaccines', dataset: 'datasets', banner: 'banners', page: 'pages', media: 'media', topic: 'topics', service: 'services', publication: 'publications', labtest: 'labtests', research: 'research' };
+const COLLECTION_OF = { disease: 'diseases', faq: 'faq', news: 'news', letter: 'news', document: 'documents', clarification: 'clarifications', vaccine: 'vaccines', dataset: 'datasets', banner: 'banners', page: 'pages', media: 'media', topic: 'topics', service: 'services', publication: 'publications', labtest: 'labtests', research: 'research', job: 'jobs', tender: 'tenders' };
 const ID_PREFIX = { document: 'doc', publication: 'pub', labtest: 'lab' };
 const LONG_TRANSCRIPT = '（旁白）出現發燒、頭痛、後眼窩痛、肌肉關節痛等症狀，請儘速就醫並告知醫師旅遊史。清除積水容器，落實巡、倒、清、刷，是預防登革熱最有效的方法。';
 

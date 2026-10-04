@@ -395,6 +395,8 @@ export function emitApi(site, write) {
     .map((j) => ({ ...strip(j), stage: j.gov.jobStage, stageLabel: j.gov.jobStageLabel, tab: j.gov.jobTab, tabLabel: j.gov.jobTabLabel, archivedStage: j.gov.archivedStage,
       hiringUnitName: site.unitById.get(j.hiringUnit)?.name ?? j.hiringUnit, applyHref: j.gov.applyHref, applyOnSite: j.gov.applyOnSite, daysToDeadline: j.gov.daysToDeadline, closingSoon: j.gov.closingSoon,
       resultUrl: j.result ? absUrl(`${pathOf(j)}#result`) : null, timeline: j.gov.timeline }));
+  // 備取有效期已過者不輸出（與頁面一致）
+  for (const j of jobs) if (j.result?.waitlist) j.result = { ...j.result, waitlist: j.result.waitlist.filter((w) => !w.validUntil || String(w.validUntil) >= String(site.today)) };
   put('v1/jobs.json', jobs, { stageLabels: JOB_STAGE_LABELS, tabLabels: JOB_TAB_LABELS, byStage: site.gov.jobs?.byStage ?? {}, byTab: site.gov.jobs?.byTab ?? {}, owner: 'unit.personnel',
     privacy: '甄選結果（result）只公布序號、報名編號與遮罩姓名；建置時個資閘門檢查，未遮罩即建置失敗。result 與 waitlistUpdates 不進 AI 答案索引。' }, {},
     '人才招募職缺（stage：upcoming／open／closed／screening／result／filled／cancelled；tab：open／upcoming／review／result／history）');
@@ -418,7 +420,7 @@ export function emitApi(site, write) {
 
   // 五類資產總目錄
   const catalog = site.all.filter((i) => i.status === 'published').map((i) => ({
-    id: i.id, type: i.type, category: i.category ?? CATEGORY_OF[i.type] ?? 'content-page', title: i.title, owner: i.owner, ownerName: i.gov.ownerName,
+    id: i.id, type: i.type, category: (ASSET_CATEGORIES[i.category] ? i.category : null) ?? CATEGORY_OF[i.type] ?? 'content-page', // tender.category（財物／勞務／工程）不是資產類別 title: i.title, owner: i.owner, ownerName: i.gov.ownerName,
     canonicalUrl: i.canonicalUrl ?? absUrl(pathOf(i)), page: absUrl(pathOf(i)), md: mdPathOf(i) ? absUrl(mdPathOf(i)) : null,
     license: i.license, sensitivity: i.sensitivity, reviewedAt: i.reviewedAt, nextReviewAt: i.gov.nextReviewAt, lifecycle: i.gov.lifecycle,
     isCurrent: i.gov.isCurrent, whitelist: i.gov.whitelist.effective, languages: i.gov.renderableLangs, legacyUrls: i.legacyUrls ?? [],

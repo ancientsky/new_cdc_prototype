@@ -283,6 +283,8 @@ export const INTENT_RULES = [
   { id: 'car.recruit', intent: 'careers', weight: 5, re: /(招募|徵才|職缺|徵人|約聘|約僱|甄選|甄試|工作機會|缺額|招考|人才招募|有缺|缺人|開缺|人事室|錄取|正取|備取|遞補|榜單|放榜|徵求.{0,6}(人員|醫師|助理|技工|研究員|技術員))/, note: '人才招募（職缺、甄選、錄取、人事室）' },
   { id: 'car.salary', intent: 'careers', weight: 3, re: /(薪水|薪資|待遇|薪點|月薪|起薪)/, note: '薪資待遇' },
   { id: 'car.apply', intent: 'careers', weight: 2, re: /(報名|投履歷|應徵|求職|上班)/, note: '報名（弱：與其他「報名」共用）' },
+  { id: 'car.en', intent: 'careers', weight: 5, re: /\b(jobs?|vacanc(y|ies)|recruit\w*|hiring|careers?|job openings?)\b/i, note: 'English jobs words' },
+  { id: 'prc.en', intent: 'procurement', weight: 5, re: /\b(tenders?|procurement|bidding)\b/i, note: 'English procurement words' },
   { id: 'prc.words', intent: 'procurement', weight: 5, re: /(採購|標案|招標|投標|決標|公開評選|開標|案號|流標|得標|廢標|政府電子採購網)/, note: '採購公告（招標、投標、決標）' },
 ];
 /** 專業子意圖（專業模式下不被 professional 覆寫） */
@@ -1250,6 +1252,7 @@ export function createEngine(rawDeps = {}) {
     finalizeSentences(result, marked, sourceMap);
     for (const s of result.sentences) { const p = marked.find((x) => x.text === s.text); if (p?.closed) s.closed = true; }
     result.retrieved = chunks;
+    if (result.lang !== 'zh-TW') result.translationNote = 'showing-source'; // 職缺與標案內容只有中文正本
     result.confidence = 0.9;
     result.completeness = { required: extra.required ?? ['deadline'], covered: extra.required ?? ['deadline'], missing: [], score: 1 };
     result.actions = actionsFor(result, result.entities ?? { diseases: [], vaccines: [], countries: [] }, null);

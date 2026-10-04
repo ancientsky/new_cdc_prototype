@@ -17,10 +17,8 @@ export const TYPES = [
   { value: 'publication', label: '出版品' },
   { value: 'labtest', label: '檢驗項目' },
   { value: 'research', label: '研究計畫' },
-  { value: 'recruit', label: '人才招募' },
-  { value: 'procurement', label: '採購公告' },
 ];
-/** 「人才招募」「採購公告」在 schema 裡是 news 型別的 newsType。 */
+/** 第七輪起人才招募／採購公告為獨立型別 job／tender（content/jobs、content/tenders；見 docs/guide-staff.md 16、17），示範表單不提供。舊的 recruit／procurement 分支保留以相容既有草稿。 */
 export const schemaType = (t) => (t === 'recruit' || t === 'procurement' ? 'news' : t);
 /** 建議放進 content/ 的哪個子目錄。 */
 export const DIRS = {

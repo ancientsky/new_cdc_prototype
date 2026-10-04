@@ -428,16 +428,6 @@ const SAMPLES = {
     body: '以物聯網誘蚊產卵器資料建立登革熱病媒密度預警模型。',
     extra: { year: '2026', projectStatus: 'ongoing', fundingType: 'commissioned', projectNo: 'DOC-115-001', piUnit: '示範大學公共衛生學院', datasets: [] },
   },
-  recruit: {
-    type: 'recruit', title: '疾管署公開招考約聘人員（示範）', owner: 'unit.planning', audience: ['public'], tasks: [],
-    body: '本署因業務需要，公開招考約聘研究員 2 名，報名方式與資格請見附件。',
-    extra: { deadlineAt: '2026-10-31', refNo: '疾管人字第 1150000001 號', newsApplyUrl: 'https://example.gov.tw/recruit/apply', positions: '2' },
-  },
-  procurement: {
-    type: 'procurement', title: '傳染病監測系統維運勞務採購（示範）', owner: 'unit.planning', audience: ['public'], tasks: [],
-    body: '本案採公開招標，投標須知與規格請至政府電子採購網下載。',
-    extra: { deadlineAt: '2026-10-15', refNo: 'CDC-115-0012', newsApplyUrl: 'https://web.pcc.gov.tw/', budgetNtd: '3200000' },
-  },
 };
 $('#btn-sample').addEventListener('click', () => {
   const type = val('#f-type');

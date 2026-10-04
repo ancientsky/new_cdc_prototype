@@ -163,7 +163,8 @@ function resultBlock(ctx, j) {
   if (!r) return '';
   const { t, fmtDate } = ctx;
   const admitted = [...(r.admitted ?? [])].sort((a, b) => (a.seq ?? 0) - (b.seq ?? 0));
-  const waitlist = [...(r.waitlist ?? [])].sort((a, b) => (a.rank ?? 0) - (b.rank ?? 0));
+  // 備取有效期已過者不再顯示（個資最小化；docs/careers-privacy.md 第 6 節）
+  const waitlist = [...(r.waitlist ?? [])].filter((w) => !w.validUntil || String(w.validUntil) >= String(ctx.today)).sort((a, b) => (a.rank ?? 0) - (b.rank ?? 0));
   const updates = j.waitlistUpdates ?? [];
   const tbl = (cap, head, rows) => html`<div class="c-tablewrap"><table class="c-table c-table--result"><caption class="sr-only">${cap}</caption><thead><tr>${head.map((h) => html`<th scope="col">${h}</th>`)}</tr></thead><tbody>${rows}</tbody></table></div>`;
   return html`<section class="c-block c-jobresult" id="result" aria-labelledby="h-result"><h2 id="h-result">${t('job.s.result')}</h2>
@@ -216,6 +217,7 @@ function detail(ctx, j) {
       <section class="c-block" id="timeline" aria-labelledby="h-timeline"><h2 id="h-timeline">${t('job.timeline')}</h2>${timeline(ctx, j, stage)}</section>
       ${resultBlock(ctx, j)}
       <section class="c-block c-howto-sec" id="how" aria-labelledby="h-how"><h2 id="h-how">${t('job.s.how')}</h2>${howBody}</section>
+      <span id="details" class="sr-only" aria-hidden="true"></span>
       ${listBlock(t('job.s.duties'), 'duties', j.duties)}
       ${listBlock(t('job.s.qual'), 'qualifications', j.qualifications)}
       ${j.salaryNote ? html`<section class="c-block" id="salary" aria-labelledby="h-salary"><h2 id="h-salary">${t('job.s.salary')}</h2><p>${j.salaryNote}</p></section>` : ''}
@@ -352,7 +354,7 @@ export function markdown(ctx, { item: j }) {
   if (j.examPlan?.length) lines.push('', '## 甄試方式與日期', '', ...j.examPlan.map((e) => `- ${e.stage}：${e.date ?? '另行通知'}${e.note ? `（${e.note}）` : ''}`));
   if (j.result) {
     lines.push('', `## 甄選結果（${j.result.publishedAt}）`, '', '> 只公布報名編號與遮罩姓名。', '', '### 正取', '', ...(j.result.admitted ?? []).map((a) => `- ${a.seq}. ${a.candidateNo} ${safeName(a.nameMasked)}`));
-    lines.push('', '### 備取', '', ...(j.result.waitlist ?? []).map((a) => `- ${a.rank}. ${a.candidateNo} ${safeName(a.nameMasked)}${a.validUntil ? `（有效至 ${a.validUntil}）` : ''}`));
+    lines.push('', '### 備取', '', ...(j.result.waitlist ?? []).filter((w) => !w.validUntil || String(w.validUntil) >= String(ctx.today)).map((a) => `- ${a.rank}. ${a.candidateNo} ${safeName(a.nameMasked)}${a.validUntil ? `（有效至 ${a.validUntil}）` : ''}`));
     if (j.waitlistUpdates?.length) lines.push('', '### 遞補紀錄', '', ...j.waitlistUpdates.map((u) => `- ${u.date}：${u.candidateNo} ${safeName(u.nameMasked)}${u.note ? ` — ${u.note}` : ''}`));
   }
   if (j.contact) lines.push('', `## 聯絡`, '', j.contact);

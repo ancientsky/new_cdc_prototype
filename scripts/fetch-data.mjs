@@ -631,7 +631,7 @@ export function syncDatasetsFromCkan(packages, { dry = false } = {}) {
 // ── 外部連結健康檢查（--check-links）────────────────────
 const CONTENT_DIR = path.join(ROOT, 'content');
 /** 會被檢查的內容子目錄（型別由檔案內 type 決定，欄位定義與治理引擎共用 EXTERNAL_LINK_FIELDS） */
-export const LINK_CHECK_DIRS = ['topics', 'services', 'news', 'media', 'publications', 'documents'];
+export const LINK_CHECK_DIRS = ['topics', 'services', 'news', 'media', 'publications', 'documents', 'jobs', 'tenders'];
 export const LINK_CHECK = { timeoutMs: 10000, perHost: 3, maxUrls: 300 };
 const PLACEHOLDER_PATTERNS = [/\/File\/Get\/placeholder-/i, /placeholder/i, /^https?:\/\/([^/]+\.)?example\.(com|org|net)(\/|$)/i, /^https?:\/\/[^/]+\.(invalid|test|example|localhost)(:\d+)?(\/|$)/i, /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?(\/|$)/i, /xxx|TODO/];
 export const isPlaceholderUrl = (u) => PLACEHOLDER_PATTERNS.some((re) => re.test(String(u)));
