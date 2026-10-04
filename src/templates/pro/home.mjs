@@ -2,7 +2,7 @@
 // 登入只加個人化，公開指引不設門檻；原型的「登入」只是示意，角色與訂閱都存在瀏覽器 localStorage。
 import { html, raw } from '../../../scripts/lib/render.mjs';
 import { proStyles } from './_styles.mjs';
-import { servicesGrid, noticeRow, isClosed } from '../public/_partials.mjs';
+import { servicesGrid, hrefFor, L } from '../public/_partials.mjs';
 
 const ROLES = [
   { key: 'physician', zh: '醫師', en: 'Physician' },
@@ -104,9 +104,12 @@ export function render(ctx) {
     { href: askUrl('感染管制查核 醫院 長照機構'), title: '感染管制查核', title_en: 'Infection-control audits', sub: '醫院 · 長照機構', sub_en: 'Hospitals · long-term care', roles: 'infection-control nurse local-health' },
   ];
 
-  const openNotices = (site.collections.news ?? [])
-    .filter((n) => n.status === 'published' && ['recruit', 'procurement'].includes(n.newsType) && !isClosed(site, n))
-    .sort((a, b) => (a.deadlineAt ?? '9999-12-31').localeCompare(b.deadlineAt ?? '9999-12-31') || (b.publishedAt ?? '').localeCompare(a.publishedAt ?? '')).slice(0, 2);
+  // 第七輪：招募與採購改為 job／tender 型別，階段由治理引擎推導；只列開放中的前兩筆
+  const openNotices = [
+    ...(site.collections.jobs ?? []).filter((j) => j.status === 'published' && j.gov?.jobStage === 'open').map((j) => ({ ...j, kindLabel: en ? 'Recruitment' : '人才招募' })),
+    ...(site.collections.tenders ?? []).filter((t) => t.status === 'published' && t.gov?.tenderStage === 'open').map((t) => ({ ...t, kindLabel: en ? 'Procurement' : '採購公告' })),
+  ].sort((a, b) => (a.deadlineAt ?? '9999-12-31').localeCompare(b.deadlineAt ?? '9999-12-31')).slice(0, 2);
+  const noticeItem = (n) => html`<li class="c-notice"><span class="c-pill c-pill--neutral">${n.kindLabel}</span> <a href="${hrefFor(ctx, n)}">${L(ctx, n, 'title')}</a>${n.deadlineAt ? html` <span class="muted">${en ? 'Deadline' : '截止'} ${ctx.fmtDate(n.deadlineAt)}</span>` : ''}</li>`;
   return html`${proStyles}
 <script>try{localStorage.setItem('cdc.view','pro')}catch(e){}document.documentElement.dataset.view='pro'</script>
 <div class="pf" data-pro-home>
@@ -206,7 +209,7 @@ export function render(ctx) {
 
       <section class="pf-card" aria-labelledby="ntc-h">
         <h2 id="ntc-h" style="font-size:var(--fs-lg);margin:0">${T.notices}</h2>
-        ${openNotices.length ? html`<ul class="c-noticelist c-noticelist--compact">${openNotices.map((n) => noticeRow(ctx, n))}</ul>` : html`<p class="muted">${T.noticesNone}</p>`}
+        ${openNotices.length ? html`<ul class="c-noticelist c-noticelist--compact">${openNotices.map(noticeItem)}</ul>` : html`<p class="muted">${T.noticesNone}</p>`}
         <p class="pf-hint"><a href="${url('/notices/')}">${T.noticesAll}</a></p>
       </section>
 
