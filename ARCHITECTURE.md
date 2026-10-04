@@ -681,3 +681,56 @@ manualStatus?: enum[cancelled, failed（流標）], award?: { date, winner, amou
 - X2：`src/templates/public/{careers,procurement,notices,about,contact,home}.mjs`（careers、procurement 新；apply 子頁放在 careers.mjs 的 pages() 內）、`src/templates/layout.mjs`（footer）、`src/templates/admin/{jobs,tenders,index,todos}.mjs`、`src/client/{careers-apply.js}`（新，模擬報名）、`src/client/i18n.js`、`src/styles/*`、`tests/round7-ui.test.mjs`、截圖。對 X1 欄位容錯。
 - X3：`docs/**`、`README.md`。
 - 共同：不切分支、不 commit；`npm test` 與 `BUILD_TODAY=2026-10-01 LINK_CHECK=error npm run build` 全綠。
+
+## 16. 第八輪（2026-10-04）：上架功能補完：所見即所得編輯、附件與圖片的放法
+
+目的：同事上架時不必會 Markdown；附件（PDF、表單、圖檔）與內文圖片有明確的「放哪裡、怎麼命名、建置時檢查什麼」，而且多筆附件、內文夾圖都做得到。**正本仍是 Markdown＋JSON**（可 diff、可機讀、可給 AI），所見即所得只是輸入方式。
+
+### 16.1 檔案資產（assets）資料契約（Y1 擁有）
+
+- **放哪裡**：每筆內容的檔案放 `content/assets/{content-id}/`（例：`content/assets/news.2026-09-21-flu-antiviral-revised/press-release.pdf`、`…/chart-ili.png`）。建置時原樣複製到 `dist/files/{content-id}/{filename}`，公開網址 `/files/{content-id}/{filename}`（不含語言前綴，七語共用）。檔名規則：小寫英數、連字號、底線與點；不可有空白與中文（validate 擋下，給出建議檔名）。
+- **內容宣告**（`_common.json` 新增，所有型別可用）：
+  ```
+  assets: [{
+    file: 'press-release.pdf',           // content/assets/{id}/ 下的檔名（必填、唯一）
+    kind: 'attachment' | 'image' | 'data',  // 附件（列在頁面附件區）／內文圖片（Markdown 引用）／資料檔（CSV、JSON）
+    label: '新聞稿全文（PDF）',           // attachment／data 必填；image 可省略
+    alt: '…',                              // image 必填（無障礙），≤ 150 字
+    mime: 'application/pdf', bytes: 123456, sha256: '…',   // 建置時核對（缺則建置時自動補寫回 JSON？不：驗證失敗並印出正確值，由同事貼回；--fix-assets 旗標可自動補寫）
+    machineReadable: true|false,           // attachment：PDF 是否有文字層／是否另附機讀版
+    accessibleAlt: 'press-release.md' | null,  // attachment 為 PDF 且 machineReadable:false 時，建議附上同名 .md 或 .docx；缺 ⇒ 待辦 attachment-no-accessible-version
+    version?: '114.04.16', effectiveAt?: date,  // 文件型附件可帶版次
+    source?: '…', license?: 'OGDL-1.0'      // 圖片來源與授權（image 必填 license；非本署素材需 source）
+  }]
+  ```
+  既有 `attachments[]`（news）、`pdfUrl`（document／publication）、`materials[]` 保留相容：若 `url` 以 `/files/{id}/` 開頭，必須在 `assets` 中宣告；外部網址照舊走外部連結檢查。
+- **內文圖片**：Markdown `![替代文字](/files/{id}/chart.png)`；validate 檢查每個 `/files/` 引用都在 `assets` 宣告、kind 為 image、alt 非空（Markdown 的 alt 與 assets.alt 擇一非空即可，建置時以 assets.alt 補進 `<img alt>`）。渲染時 `md()` 把 `/files/` 路徑加上 basePath、加 `loading="lazy"`、`width/height`（若 assets 有 `width/height` 欄位）。
+- **限制**（`site.config.mjs` → `assets`）：PDF ≤ 20 MB、圖片 ≤ 2 MB、資料檔 ≤ 50 MB；允許副檔名 pdf、png、jpg、jpeg、webp、svg、csv、json、xlsx、docx、odt、md、ics；一筆內容 ≤ 30 個檔。超限 ⇒ 驗證失敗。SVG 需不含 `<script>`／`on*=`（validate 掃描）。
+- **建置檢查**（`scripts/lib/assets.mjs`，build 的 validate 階段呼叫）：檔案存在、sha256／bytes 相符（不符 ⇒ 建置失敗，訊息給出實際值）、副檔名與 mime 一致、檔名規則、孤兒檔（`content/assets/{id}/` 有檔卻未宣告 ⇒ 警告＋待辦 `asset-orphan`）、`content/assets/` 下的 id 必須存在。複製到 dist 時只複製有宣告的檔。`npm run build -- --fix-assets` 自動把 bytes／sha256／mime／width／height（PNG／JPEG 讀檔頭即可，不需外部套件）補寫回 JSON。
+- **治理**：待辦 `attachment-no-accessible-version`（中）、`asset-orphan`（低）、`image-license-missing`（中）。版本鏈：文件新版的 PDF 放在新版內容的 assets，舊版照舊保留；`redirects.json` 不處理檔案（舊 PDF 直接以新版文件頁取代，見 migration-playbook 2.x）。連結檢查：`/files/` 視為站內連結、必須存在。API：`/v1/catalog.json` 每筆加 `assets` 摘要（file、kind、label、url、bytes、machineReadable）；`llms.txt` 不列檔案。
+- **樣本**：至少 6 筆內容改用真實檔案（放進 repo，皆為本輪產生的示意檔，不抄外部）：1 則新聞稿附 PDF＋內文 1 張 PNG 圖表（用 Node 畫一個簡單 SVG 再轉？不能轉 PNG——直接用 SVG 當內文圖；另用 Node 零依賴產生一張小 PNG 作為範例也可）、1 份文件附 PDF（用 Node 零依賴寫出合法的單頁 PDF，含文字層）＋ `.md` 可及性版本、1 份出版品海報 PDF、1 個申請服務的表單 docx 替代為 `.md`＋ `.pdf`、1 筆資料集附 CSV（kind data）、1 則專區附圖片（含 source／license）。`scripts/gen-sample-assets.mjs` 產生這些檔（可重跑）。既有指向 `/pending/` 的附件至少改 3 筆。
+- 測試 `tests/assets.test.mjs`：宣告缺檔／hash 不符／檔名不合法／SVG 含 script／圖片無 alt／PDF 無可及性版本 → 各自結果；複製到 dist；內文圖片渲染加 alt 與 lazy；catalog 含 assets。
+
+### 16.2 上架編輯器（Y2 擁有）
+
+後台 `/admin/publish/` 內文編輯改為三頁籤：**所見即所得**／**Markdown**／**預覽**（三者同一份資料，切換即時轉換）：
+- 所見即所得：`contenteditable` 區＋工具列（標題 2／3、粗體、斜體、項目／編號清單、連結、表格 3×3、圖片、引用、分隔線、復原）；貼上 Word／網頁內容時清成支援子集（移除樣式、span、字型、顏色，保留段落、標題、清單、表格、連結、粗斜體）；HTML→Markdown 轉換用自寫轉換器（`src/client/admin/md-convert.js`，純函式，零依賴），Markdown→HTML 用 `src/public/vendor/marked.min.js`（從 node_modules 複製一份，附 LICENSE）＋白名單淨化。
+- Markdown 頁籤：既有 textarea；預覽頁籤：用站上 `c-prose` 樣式渲染，圖片用 blob URL 預覽（檔案選了但還沒進 repo）。
+- **附件與圖片面板**：拖放或選檔，多檔；每檔列：檔名（自動正規化成合法檔名並提示）、kind（附件／內文圖片／資料檔，依副檔名預設）、label、alt（圖片必填）、machineReadable、license／source（圖片）、大小與 mime 檢查（依 `site.config.assets` 限制）、Web Crypto 算 sha256、PDF 無文字層提示（無法在瀏覽器判斷 ⇒ 問同事勾選）；「插入圖片到內文」把 `![alt](/files/{id}/file)` 插到游標處；移除檔案時若內文仍引用 ⇒ 警告。
+- **輸出**：既有「產生 JSON」改為「產生上架包」：下載 **ZIP（store-only，自寫 `src/client/admin/zip-store.js`，CRC32 自算）**，內含 `content/{dir}/{id}.json`（assets 欄位已填好）與 `content/assets/{id}/…` 原檔；畫面顯示「放哪裡」樹狀圖與 git／PR 指引；同時保留只下載 JSON。預檢清單增加資產項（缺 alt、超限、檔名、孤兒）。
+- 樣式與無障礙：工具列按鈕有 aria-label 與鍵盤快捷鍵（Ctrl+B／I／K）；contenteditable 區有 `role="textbox" aria-multiline`；錯誤摘要沿用既有。
+- 測試 `tests/admin-editor.test.mjs`：md-convert 雙向（標題、清單、表格、連結、圖片、粗斜體、巢狀清單、Word 貼上清理）、zip-store 產出可被 Node `zlib`／自寫解析讀回且 CRC 正確、檔名正規化、預檢規則；Playwright 跑一次完整流程（輸入→切頁籤→插圖→附件→下載 zip）並截圖 `docs/screenshots/admin-editor.png`、`admin-assets.png`。
+- `src/templates/admin/publish.mjs` 的欄位說明更新：「內文（中文正本）」旁加「用哪一種方式都可以，存檔一律是 Markdown」。
+
+### 16.3 文件（Y3 擁有）
+
+- 新文件 `docs/assets-policy.md`：檔案放哪裡（路徑與網址）、命名、格式與大小、PDF 可及性（文字層、標籤、`.md` 替代）、圖片 alt／來源／授權、資料檔、版本與保存、刪除與下架（檔案不刪只下架：移到 `archived` 內容仍可存取）、病毒掃描與個資（正式站上傳前掃描、含個資的檔不得上架）、與 CKAN 的關係（資料檔同時登錄資料目錄）。
+- `docs/guide-staff.md` 第 2 節上架 SOP 重寫：三種編輯方式、附件與圖片怎麼加、上架包怎麼交（PR 流程）、常見錯誤（檔名中文、圖沒 alt、PDF 沒文字層、hash 不符）。
+- `docs/governance-model.md` 規則 22（檔案資產宣告與建置檢查）、23（圖片 alt 與授權為建置閘門）、24（PDF 可及性版本待辦）；`docs/plan-supplement.md` +2；README 第八輪段落與治理自動化清單。
+
+### 16.4 分工與邊界
+
+- Y1：`schemas/_common.json`（assets）、`site.config.mjs`（assets 限制）、`scripts/lib/{assets,validate,governance,markdown,emit-api,check-internal-links}.mjs`、`scripts/build.mjs`（呼叫與 --fix-assets）、`scripts/gen-sample-assets.mjs`、`content/assets/**`、樣本內容檔的 assets 欄位、`tests/assets.test.mjs`。
+- Y2：`src/client/admin/{md-convert,zip-store,assets-panel,publish}.js`、`src/client/admin/preprocess.js`（資產預檢）、`src/templates/admin/publish.mjs`、`src/public/vendor/marked.min.js`（＋LICENSE）、`src/styles/admin.css`、`tests/admin-editor.test.mjs`、截圖。
+- Y3：`docs/**`、`README.md`。
+- 共同：不切分支、不 commit；`npm test` 與 `BUILD_TODAY=2026-10-01 LINK_CHECK=error npm run build` 全綠。
