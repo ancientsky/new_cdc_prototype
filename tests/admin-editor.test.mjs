@@ -668,6 +668,29 @@ test('端到端：所見即所得 → Markdown → 預覽 → 加 PNG 與 PDF �
     assert.match(rej, /fake\.png：內容不是有效的 \.png/);
     assert.equal(await page.locator('#as-list > li').count(), 2);
 
+    // ⑨b 貼上 Word 內容：清成支援子集（在所見即所得裡貼上 → 轉成 Markdown）；Markdown 頁籤的 Ctrl+B
+    await page.fill('#f-body', '');
+    await page.click('#et-wys');
+    await page.evaluate(() => {
+      const dt = new DataTransfer();
+      dt.setData('text/html', "<p class=MsoNormal><span style='font-family:Calibri;color:red'>貼上<b>粗體</b></span><o:p></o:p></p><p class=MsoListParagraph style='mso-list:l0 level1 lfo1'><![if !supportLists]><span style='mso-list:Ignore'>·<span>&nbsp;</span></span><![endif]>項目甲</p><p class=MsoListParagraph style='mso-list:l0 level2 lfo1'><![if !supportLists]><span style='mso-list:Ignore'>o<span>&nbsp;</span></span><![endif]>子項</p><script>window.__pwned = 1</script><img src='file:///C:/Users/a/x.png' onerror='window.__pwned = 1'>");
+      dt.setData('text/plain', '貼上粗體');
+      const el = document.querySelector('#f-wys'); el.focus();
+      el.dispatchEvent(new ClipboardEvent('paste', { clipboardData: dt, bubbles: true, cancelable: true }));
+    });
+    const wysHtml = await page.locator('#f-wys').innerHTML();
+    assert.ok(!/<span|style=|class=|mso|<script|onerror|<img/i.test(wysHtml), wysHtml);
+    assert.ok(/<ul>[\s\S]*<ul>/.test(wysHtml), '巢狀清單');
+    assert.equal(await page.evaluate(() => window.__pwned), undefined);
+    await page.click('#et-md');
+    assert.equal(await page.inputValue('#f-body'), '貼上**粗體**\n\n- 項目甲\n  - 子項');
+    await page.fill('#f-body', '貼上粗體');
+    await page.evaluate(() => { const ta = document.querySelector('#f-body'); ta.focus(); ta.setSelectionRange(2, 4); });
+    await page.keyboard.press('Control+b');
+    assert.equal(await page.inputValue('#f-body'), '貼上**粗體**');
+    await page.keyboard.press('Control+i');
+    assert.equal(await page.inputValue('#f-body'), '貼上***粗體***');
+
     // ⑩ 截圖
     if (process.env.SHOTS) {
       const dir = path.join(ROOT, 'docs/screenshots');
