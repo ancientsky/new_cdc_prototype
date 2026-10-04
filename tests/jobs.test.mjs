@@ -220,14 +220,14 @@ test('redirects：舊 /news/{slug}/ → /careers/{slug}/、/procurement/{slug}/�
   const r = buildRedirects(site);
   const moved = r.filter((x) => x.kind === 'moved');
   const legacy = [...jobs, ...tenders].flatMap((x) => (x.legacyIds ?? []).map((id) => [id, x]));
-  assert.equal(legacy.length, 9, '9 則舊新聞全部有 legacyIds');
+  assert.equal(legacy.length, 8, '8 則舊新聞有 legacyIds（官網改版案示意標案已移除，不保留轉址）');
   for (const [old, item] of legacy) {
     assert.ok(!site.byId.has(old), `${old} 舊檔已刪除`);
     const m = moved.find((x) => x.legacyId === old);
     assert.ok(m, old); assert.equal(m.from, `/news/${old.replace(/^news\./, '')}/`); assert.equal(m.to, pathOf(item)); assert.equal(m.status, 301);
   }
   assert.equal(pathOf(byId('job.2026-09-30-epidemic-physician')), '/careers/epidemic-physician/');
-  assert.equal(pathOf(byId('tender.2026-09-15-website-redesign')), '/procurement/website-redesign/');
+  assert.equal(pathOf(byId('tender.2026-09-15-antiviral-115')), '/procurement/antiviral-115/');
   const lm = buildLegacyMap(site, r, serverRedirects(r));
   assert.equal(lm.map['/news/2026-09-30-recruit-epidemic-physician'], '/careers/epidemic-physician/');
   assert.equal(lm.map['/news/2026-02-20-procurement-flu-vaccine'], '/procurement/flu-vaccine-115/');
@@ -259,8 +259,8 @@ test('v1/jobs.json、v1/tenders.json：含 stage／stageLabel／tab，列入 ind
   assert.ok(o.paths['/v1/jobs.json'] && o.paths['/v1/tenders.json'] && o.paths['/feeds/careers.xml'] && o.paths['/feeds/procurement.xml']);
   assert.ok(o.components.schemas.Job && o.components.schemas.Tender);
   const r = jsonOut('v1/redirects.json');
-  assert.ok(r.meta.byKind.moved >= 9);
-  assert.equal(jsonOut('v1/catalog.json').data.find((x) => x.id === 'tender.2026-09-15-website-redesign').category, 'press');
+  assert.ok(r.meta.byKind.moved >= 8);
+  assert.equal(jsonOut('v1/catalog.json').data.find((x) => x.id === 'tender.2026-09-15-antiviral-115').category, 'press');
 });
 
 test('feeds：careers.xml（職缺＋甄選結果＋遞補各一筆、不含名單）、procurement.xml（招標＋決標＋流標各一筆）', () => {
@@ -271,12 +271,12 @@ test('feeds：careers.xml（職缺＋甄選結果＋遞補各一筆、不含名�
   for (const r of ALL_NAMES) { assert.ok(!c.includes(r.nameMasked), r.nameMasked); assert.ok(!c.includes(r.candidateNo)); }
   const p = feeds['feeds/procurement.xml'];
   assert.ok(p.includes('tender.2026-02-20-flu-vaccine-115#award')); assert.ok(p.includes('tender.2026-08-18-cold-chain-monitor#failed'));
-  assert.ok(p.includes('<guid isPermaLink="false">tender.2026-09-15-website-redesign</guid>'));
+  assert.ok(p.includes('<guid isPermaLink="false">tender.2026-09-15-antiviral-115</guid>'));
 });
 
 test('sitemap／robots／llms：/careers/、/procurement/ 與各職缺、標案頁；模擬報名頁不收、robots 擋', () => {
   const pages = derivePages(site).filter((p) => p.lang === 'zh-TW').map((p) => p.path);
-  for (const p of ['/careers/', '/procurement/', '/careers/epidemic-physician/', '/procurement/website-redesign/']) assert.ok(pages.includes(p), p);
+  for (const p of ['/careers/', '/procurement/', '/careers/epidemic-physician/', '/procurement/antiviral-115/']) assert.ok(pages.includes(p), p);
   assert.ok(!pages.some((p) => p.includes('/apply/') && p.startsWith('/careers/')));
   assert.ok(derivePages(site).some((p) => p.path === '/careers/' && p.lang === 'en'), '列表頁七語');
   assert.match(buildRobots(site), new RegExp(`Disallow: ${config.basePath}/careers/\\*/apply/`));
@@ -295,9 +295,9 @@ test('JSON-LD：job → JobPosting（validThrough、employmentType、hiringOrgan
   assert.ok(!JSON.stringify(jp).includes('李○翰'));
   const [open] = jsonLdFor(ctx, byId('job.2026-09-30-epidemic-physician'));
   assert.equal(open.directApply, true); assert.ok(open.potentialAction.target.endsWith('/careers/epidemic-physician/apply/'));
-  const [gs] = jsonLdFor(ctx, byId('tender.2026-09-15-website-redesign'));
-  assert.equal(gs['@type'], 'GovernmentService'); assert.equal(gs.offers['@type'], 'Offer'); assert.equal(gs.offers.price, 28000000); assert.equal(gs.offers.priceCurrency, 'TWD');
-  assert.equal(gs.identifier, 'CDC-115-IT-012');
+  const [gs] = jsonLdFor(ctx, byId('tender.2026-09-15-antiviral-115'));
+  assert.equal(gs['@type'], 'GovernmentService'); assert.equal(gs.offers['@type'], 'Offer'); assert.equal(gs.offers.price, 96000000); assert.equal(gs.offers.priceCurrency, 'TWD');
+  assert.equal(gs.identifier, 'CDC-115-AC-031');
 });
 
 // ── 答案引擎 ──

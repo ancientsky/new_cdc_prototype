@@ -72,14 +72,14 @@
       ]
     },
     {
-      "key": "tender-website-redesign",
-      "oldTitle": "「疾病管制署全球資訊網 AI-ready 改版建置暨維運案」招標公告",
+      "key": "tender-antiviral-115",
+      "oldTitle": "「115 年度公費流感抗病毒藥劑採購案」招標公告",
       "oldPath": "採購公告／招標公告",
-      "oldUrl": "https://www.cdc.gov.tw/Category/ListContent/{id}#website-redesign",
+      "oldUrl": "https://www.cdc.gov.tw/Category/ListContent/{id}#antiviral-115",
       "oldType": "page",
       "verified": false,
       "status": "migrated",
-      "target": "tender.2026-09-15-website-redesign",
+      "target": "tender.2026-09-15-antiviral-115",
       "newRequirements": [
         "owner",
         "reviewedAt",
