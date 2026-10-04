@@ -30,6 +30,8 @@ const SPAN = (t) => `<span lang="ZH-TW" style="font-size:12.0pt;font-family:'新
 const P = (t) => `<p class="MsoNormal" style="margin:0cm;margin-bottom:.0001pt;text-align:justify;text-justify:inter-ideograph;line-height:150%">${SPAN(inl(t))}<span lang="EN-US" style="font-size:12.0pt"><o:p></o:p></span></p>`;
 /** Word 貼上的清單項目（mso-list） */
 const LI = (t, level = 1) => `<p class="MsoListParagraph" style="margin-left:${18 + 18 * level}pt;text-indent:-18.0pt;mso-list:l0 level${level} lfo1"><![if !supportLists]><span lang="EN-US" style="font-family:Symbol;mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol"><span style="mso-list:Ignore">·<span style="font:7.0pt 'Times New Roman'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>${SPAN(inl(t))}</p>`;
+/** Word 編號清單項目（標記「1.」） */
+const LIO = (n, t) => `<p class="MsoListParagraph" style="margin-left:36.0pt;text-indent:-18.0pt;mso-list:l1 level1 lfo2"><![if !supportLists]><span lang="EN-US"><span style="mso-list:Ignore">${n}.<span style="font:7.0pt 'Times New Roman'">&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><![endif]>${SPAN(inl(t))}</p>`;
 const H = (n, t) => `<h${n}><span lang="ZH-TW" style="font-family:'微軟正黑體',sans-serif">${esc(t)}</span></h${n}>`;
 const A = (href, t) => `<a href="${esc(href)}">${esc(t)}</a>`;
 
@@ -41,6 +43,8 @@ function mdHtml(md) {
   for (const line of String(md).split('\n')) {
     if (!line.trim()) { flush(); continue; }
     if (/^\s*-\s+/.test(line)) { flush(); out.push(LI(line.replace(/^\s*-\s+/, ''))); continue; }
+    const ol = /^\s*(\d+)\.\s+(.*)$/.exec(line);
+    if (ol) { flush(); out.push(LIO(ol[1], ol[2])); continue; }
     const h = /^(#{3,4})\s+(.*)$/.exec(line);
     if (h) { flush(); out.push(H(h[1].length, h[2])); continue; }
     para.push(line);

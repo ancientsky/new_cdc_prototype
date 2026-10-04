@@ -25,7 +25,7 @@
   },
   "summary": "結核病只要完整治療幾乎都能治癒，為避免病人因費用中斷治療： 就醫免部分負擔：通報登記之結核病個案，結核病相關門診、住院與用藥之健保部分負擔由疾管署支應。",
   "slug": "tb-subsidy",
-  "bodyMarkdown": "結核病只要完整治療幾乎都能治癒，為避免病人因費用中斷治療：\n\n- 就醫免部分負擔：通報登記之結核病個案，結核病相關門診、住院與用藥之健保部分負擔由疾管署支應。\n- 多重抗藥性結核病：由抗藥性結核病醫療照護體系（TMTC）團隊收治，治療與進階都治費用由公費支應。\n- 隔離治療：具傳染性且拒絕治療或不遵從治療者，依《傳染病防治法》由衛生主管機關施行隔離治療，隔離期間費用由政府負擔。\n\n病人與家屬不需另外送件申請，由醫院與衛生局（所）於通報、登記後協助辦理。\n\n個案另有需要時可填寫：[結核病醫療費用補助申請表（PDF）](/files/page.tb-subsidy/tb-subsidy-application.pdf)",
+  "bodyMarkdown": "結核病只要完整治療幾乎都能治癒，為避免病人因費用中斷治療：\n\n- **就醫免部分負擔**：通報登記之結核病個案，結核病相關門診、住院與用藥之健保部分負擔由疾管署支應。\n- **多重抗藥性結核病**：由抗藥性結核病醫療照護體系（TMTC）團隊收治，治療與進階都治費用由公費支應。\n- **隔離治療**：具傳染性且拒絕治療或不遵從治療者，依《傳染病防治法》由衛生主管機關施行隔離治療，隔離期間費用由政府負擔。\n\n病人與家屬不需另外送件申請，由醫院與衛生局（所）於通報、登記後協助辦理。\n\n個案另有需要時可填寫：[結核病醫療費用補助申請表（PDF）](/files/page.tb-subsidy/tb-subsidy-application.pdf)",
   "legacyUrls": [
     "https://www.cdc.gov.tw/Category/MPage/RciPYzg3oErAFrFO2Edl3L"
   ],
@@ -57,7 +57,7 @@
       }
     ],
     "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/RciPYzg3oErAFrFO2Edl3L",
-    "convertedAt": "2026-10-04T13:56:12.582Z",
+    "convertedAt": "2026-10-04T14:04:24.484Z",
     "existing": true,
     "compareWith": [
       "service.tb-treatment-subsidy"

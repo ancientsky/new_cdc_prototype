@@ -28,7 +28,7 @@
   "docType": "guideline",
   "version": "第八版",
   "effectiveAt": "2025-09-01",
-  "machineReadableMarkdown": "| 項目 | 內容 |\n| --- | --- |\n| 文件名稱 | 結核病診治指引（第八版） |\n| 版次 | 第八版 |\n| 生效日 | 2025-09-01 |\n| 權責單位 | 慢性傳染病組 |\n| 檔案格式 | PDF |\n\n現行結核病診治指引：分子快速檢測列為疑似個案第一線檢驗；多重抗藥性結核病優先採全口服短程處方；潛伏結核感染新增 1HP 處方。\n\n### 第一章 診斷\n\n疑似肺結核病人應收集 3 套痰液（至少 1 套為晨痰）進行抗酸菌塗片與培養，並以分子快速檢測（含 rifampin 抗藥基因）作為第一線檢驗，所有疑似個案均應執行，以縮短確診與發現抗藥的時間。胸部 X 光異常但痰檢查陰性者，由醫師綜合臨床判斷，必要時以支氣管鏡等方式取得檢體。\n\n### 第二章 藥物敏感結核病治療\n\n新病人標準處方仍為 2HRZE/4HR，總療程至少 6 個月。12 歲以上、非重症之藥物敏感肺結核病人，經評估後可考慮 4 個月短程處方（rifapentine 加 moxifloxacin 為基礎）；非重症兒童結核病可採 4 個月處方。治療滿 2 個月痰培養仍陽性者，應評估抗藥性並考慮延長治療。所有病人均應納入都治（DOTS）。\n\n### 第三章 抗藥性結核病治療\n\nrifampin 抗藥（RR-TB）或多重抗藥性結核病（MDR-TB）優先採全口服短程處方（以 bedaquiline、pretomanid、linezolid 為基礎，療程約 6 個月），不適用者採個別化全口服長程處方；不再常規使用注射劑。所有個案轉介抗藥性結核病醫療照護團隊（TMTC）收治並納入進階都治。\n\n下載：[結核病診治指引（第八版）PDF](/files/doc.tb-guideline.2025-09-01/tb-guideline-v8.pdf)",
+  "machineReadableMarkdown": "| 項目 | 內容 |\n| --- | --- |\n| 文件名稱 | 結核病診治指引（第八版） |\n| 版次 | 第八版 |\n| 生效日 | 2025-09-01 |\n| 權責單位 | 慢性傳染病組 |\n| 檔案格式 | PDF |\n\n現行結核病診治指引：分子快速檢測列為疑似個案第一線檢驗；多重抗藥性結核病優先採全口服短程處方；潛伏結核感染新增 1HP 處方。\n\n### 第一章 診斷\n\n疑似肺結核病人應收集 3 套痰液（至少 1 套為晨痰）進行抗酸菌塗片與培養，並以**分子快速檢測（含 rifampin 抗藥基因）作為第一線檢驗**，所有疑似個案均應執行，以縮短確診與發現抗藥的時間。胸部 X 光異常但痰檢查陰性者，由醫師綜合臨床判斷，必要時以支氣管鏡等方式取得檢體。\n\n### 第二章 藥物敏感結核病治療\n\n新病人標準處方仍為 2HRZE/4HR，總療程至少 6 個月。12 歲以上、非重症之藥物敏感肺結核病人，經評估後可考慮 4 個月短程處方（rifapentine 加 moxifloxacin 為基礎）；非重症兒童結核病可採 4 個月處方。治療滿 2 個月痰培養仍陽性者，應評估抗藥性並考慮延長治療。所有病人均應納入都治（DOTS）。\n\n### 第三章 抗藥性結核病治療\n\nrifampin 抗藥（RR-TB）或多重抗藥性結核病（MDR-TB）**優先採全口服短程處方**（以 bedaquiline、pretomanid、linezolid 為基礎，療程約 6 個月），不適用者採個別化全口服長程處方；不再常規使用注射劑。所有個案轉介抗藥性結核病醫療照護團隊（TMTC）收治並納入進階都治。\n\n下載：[結核病診治指引（第八版）PDF](/files/doc.tb-guideline.2025-09-01/tb-guideline-v8.pdf)",
   "pdfUrl": "/files/doc.tb-guideline.2025-09-01/tb-guideline-v8.pdf",
   "legacyUrls": [
     "https://www.cdc.gov.tw/File/Get/3mTpTQQFER94u5HtekRstw"
@@ -56,7 +56,7 @@
       }
     ],
     "sourceUrl": "https://www.cdc.gov.tw/File/Get/3mTpTQQFER94u5HtekRstw",
-    "convertedAt": "2026-10-04T13:56:12.582Z",
+    "convertedAt": "2026-10-04T14:04:24.484Z",
     "existing": true,
     "compareWith": [
       "doc.tb-guideline.2025-09-01"

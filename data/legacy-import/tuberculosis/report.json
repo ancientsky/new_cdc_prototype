@@ -1,7 +1,7 @@
 {
   "format": "cdc-legacy-import-report/1",
   "batch": "tuberculosis",
-  "generatedAt": "2026-10-04T13:56:12.582Z",
+  "generatedAt": "2026-10-04T14:04:24.484Z",
   "exportedAt": "2026-10-03",
   "simulated": true,
   "source": {
@@ -602,7 +602,7 @@
         {
           "code": "word-cleaned",
           "severity": "info",
-          "message": "清除 Word 貼上殘留 79 處（mso 樣式 45、Mso 類別 20、命名空間標籤 17）"
+          "message": "清除 Word 貼上殘留 85 處（mso 樣式 53、Mso 類別 22、命名空間標籤 16）"
         }
       ],
       "action": "compare-existing",
@@ -1216,7 +1216,7 @@
         {
           "code": "word-cleaned",
           "severity": "info",
-          "message": "清除 Word 貼上殘留 78 處（mso 樣式 44、Mso 類別 22、命名空間標籤 17）"
+          "message": "清除 Word 貼上殘留 84 處（mso 樣式 52、Mso 類別 24、命名空間標籤 16）"
         },
         {
           "code": "file-renamed",
@@ -1295,7 +1295,7 @@
         {
           "code": "word-cleaned",
           "severity": "info",
-          "message": "清除 Word 貼上殘留 78 處（mso 樣式 44、Mso 類別 22、命名空間標籤 17）"
+          "message": "清除 Word 貼上殘留 84 處（mso 樣式 52、Mso 類別 24、命名空間標籤 16）"
         },
         {
           "code": "historical-version",
@@ -1388,7 +1388,7 @@
         {
           "code": "word-cleaned",
           "severity": "info",
-          "message": "清除 Word 貼上殘留 55 處（mso 樣式 21、Mso 類別 17、命名空間標籤 17）"
+          "message": "清除 Word 貼上殘留 61 處（mso 樣式 29、Mso 類別 19、命名空間標籤 16）"
         },
         {
           "code": "version-unknown",
@@ -1696,7 +1696,7 @@
         {
           "code": "word-cleaned",
           "severity": "info",
-          "message": "清除 Word 貼上殘留 52 處（mso 樣式 28、Mso 類別 15、命名空間標籤 12）"
+          "message": "清除 Word 貼上殘留 70 處（mso 樣式 46、Mso 類別 21、命名空間標籤 12）"
         },
         {
           "code": "version-unknown",
@@ -2224,7 +2224,7 @@
         {
           "code": "word-cleaned",
           "severity": "info",
-          "message": "清除 Word 貼上殘留 16 處（mso 樣式 8、Mso 類別 4、命名空間標籤 4）"
+          "message": "清除 Word 貼上殘留 22 處（mso 樣式 16、Mso 類別 6、命名空間標籤 3）"
         },
         {
           "code": "target-type-differs",
@@ -3955,12 +3955,12 @@
       "statusChanges": 0,
       "pendingToMigrated": 0,
       "targetChanges": 0,
-      "noteChanges": 0,
+      "noteChanges": 40,
       "stillPending": 3
     },
     "file": "content/migration/tuberculosis.json",
     "statusChanges": [],
     "targetChanges": [],
-    "noteChanges": 0
+    "noteChanges": 40
   }
 }

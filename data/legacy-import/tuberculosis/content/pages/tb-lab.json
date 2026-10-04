@@ -25,7 +25,7 @@
   },
   "summary": "疑似結核病個案應連續收集 3 套痰液（至少 1 套為晨痰）送驗，進行抗酸菌塗片、培養與分子快速檢測（含 rifampin 抗藥基因）。",
   "slug": "tb-lab",
-  "bodyMarkdown": "疑似結核病個案應連續收集 3 套痰液（至少 1 套為晨痰）送驗，進行抗酸菌塗片、培養與分子快速檢測（含 rifampin 抗藥基因）。\n\n| 檢體 | 容器 | 保存與運送 | 檢驗項目 |\n| --- | --- | --- | --- |\n| 痰液 | 無菌痰盒 | 4°C 冷藏，24 小時內送達 | 塗片、培養、分子快速檢測 |\n| 支氣管沖洗液 | 無菌試管 | 4°C 冷藏，24 小時內送達 | 塗片、培養、分子快速檢測 |\n| 血液（IGRA） | 專用採血管 | 室溫，16 小時內送達 | 丙型干擾素釋放試驗 |\n\n填寫送驗單：[結核病檢驗送驗單（PDF）](/files/page.tb-lab/tb-lab-request-form.pdf)",
+  "bodyMarkdown": "疑似結核病個案應連續收集 **3 套痰液**（至少 1 套為晨痰）送驗，進行抗酸菌塗片、培養與**分子快速檢測**（含 rifampin 抗藥基因）。\n\n| 檢體 | 容器 | 保存與運送 | 檢驗項目 |\n| --- | --- | --- | --- |\n| 痰液 | 無菌痰盒 | 4°C 冷藏，24 小時內送達 | 塗片、培養、分子快速檢測 |\n| 支氣管沖洗液 | 無菌試管 | 4°C 冷藏，24 小時內送達 | 塗片、培養、分子快速檢測 |\n| 血液（IGRA） | 專用採血管 | 室溫，16 小時內送達 | 丙型干擾素釋放試驗 |\n\n填寫送驗單：[結核病檢驗送驗單（PDF）](/files/page.tb-lab/tb-lab-request-form.pdf)",
   "legacyUrls": [
     "https://www.cdc.gov.tw/Category/MPage/pcLTri1XT4Q2NERg39nz5q"
   ],
@@ -57,7 +57,7 @@
       }
     ],
     "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/pcLTri1XT4Q2NERg39nz5q",
-    "convertedAt": "2026-10-04T13:56:12.582Z",
+    "convertedAt": "2026-10-04T14:04:24.484Z",
     "existing": true,
     "compareWith": [
       "labtest.tuberculosis"

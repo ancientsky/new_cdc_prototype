@@ -121,7 +121,7 @@ function batchSection(ctx, b) {
     const infos = p.issues.filter((x) => x.severity === 'info');
     return html`<tr class="imp-row" data-action="${p.action}" data-kind="${p.kind}" data-review="${p.needsReview ? 1 : 0}" data-warn="${probs.length ? 1 : 0}" data-q="${`${p.source.title} ${p.source.url} ${p.target ?? ''} ${p.outputs.map((o) => o.id).join(' ')}`.toLowerCase()}">
       <td class="num">${i + 1}</td>
-      <td><strong>${p.source.title}</strong><div class="adm-muted">${p.source.breadcrumbs.filter((x) => x !== '首頁').join('／')}</div><div class="adm-muted"><code>${String(p.source.url).replace(/^https?:\/\/(www\.)?/, '').slice(0, 64)}${String(p.source.url).length > 74 ? '…' : ''}</code></div></td>
+      <td><strong>${p.source.title}</strong><div class="adm-muted">${p.source.breadcrumbs.filter((x) => x !== '首頁').join('／')}</div><div class="adm-muted imp-url"><code>${String(p.source.url).replace(/^https?:\/\/(www\.)?cdc\.gov\.tw/, '').slice(0, 60)}${String(p.source.url).replace(/^https?:\/\/(www\.)?cdc\.gov\.tw/, '').length > 60 ? '…' : ''}</code></div></td>
       <td><span class="adm-badge adm-badge--gray">${KIND[p.kind] ?? p.kind}</span>
         ${p.outputs.map((o) => {
       const d = draftsById.get(o.id);
@@ -139,6 +139,20 @@ function batchSection(ctx, b) {
   })}</tbody></table></div>
 </section>`;
 }
+
+const STYLE = `
+.imp-table{min-width:980px;table-layout:fixed}
+.imp-table th:nth-child(1){width:34px}
+.imp-table th:nth-child(2){width:22%}.imp-table th:nth-child(3){width:24%}.imp-table th:nth-child(4){width:17%}
+.imp-table th:nth-child(5){width:58px}.imp-table th:nth-child(6){width:11%}
+.imp-table td{vertical-align:top;overflow-wrap:anywhere}
+.imp-url{font-size:var(--fs-xs);word-break:break-all}
+.imp-out{margin-top:6px}.imp-out summary{font-size:var(--fs-sm)}
+.imp-actions{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:6px 0}
+.imp-issues{margin:6px 0 0;padding-left:1.1em;font-size:var(--fs-sm)}
+.imp-issues li[data-sev=error]{color:var(--alert-overdue)}
+.imp-row[hidden]{display:none}
+`;
 
 const SCRIPT = `(function(){
   var secs=document.querySelectorAll('.imp-batch');
@@ -190,5 +204,5 @@ export function render(ctx, props = {}) {
   if (!batches.length) {
     return html`${head}<div class="adm-box adm-box--info" role="note"><strong>目前沒有匯入批次</strong>執行 <code>node scripts/import-legacy.mjs &lt;匯出目錄&gt; --out data/legacy-import/&lt;批次名&gt;</code> 後，重新建置即可在這裡看到結果。</div>`;
   }
-  return html`${head}${batches.map((b) => batchSection(ctx, b))}<script>${raw(SCRIPT)}</script>`;
+  return html`${head}<style>${raw(STYLE)}</style>${batches.map((b) => batchSection(ctx, b))}<script>${raw(SCRIPT)}</script>`;
 }

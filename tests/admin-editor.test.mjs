@@ -711,3 +711,8 @@ test('端到端：所見即所得 → Markdown → 預覽 → 加 PNG 與 PDF �
     fs.rmSync(tmp, { recursive: true, force: true });
   }
 });
+
+test('md-convert：Word 的 <b style="mso-bidi-font-weight:normal"> 仍是粗體；真正 font-weight:normal 的 <b> 才不是', () => {
+  assert.match(htmlToMd('<p><b style="mso-bidi-font-weight:normal">重點</b>內容</p>'), /\*\*重點\*\*/);
+  assert.doesNotMatch(htmlToMd('<p><b style="font-weight:normal">非粗</b>內容</p>'), /\*\*非粗\*\*/);
+});

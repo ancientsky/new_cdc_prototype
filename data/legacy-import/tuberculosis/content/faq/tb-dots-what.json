@@ -25,7 +25,7 @@
   },
   "summary": "都治（DOTS）是「直接觀察治療」：由經過訓練的都治關懷員每天把藥送到您手上，親眼看著您把藥吞下，並關心副作用與生活狀況，也就是「送藥到手、服藥入口、吞了再走」。",
   "question": "什麼是都治（DOTS）？",
-  "answerMarkdown": "都治（DOTS）是「直接觀察治療」：由經過訓練的都治關懷員每天把藥送到您手上，親眼看著您把藥吞下，並關心副作用與生活狀況，也就是「送藥到手、服藥入口、吞了再走」。\n\n結核病至少要規則服藥 6 個月，中途自行停藥可能復發或產生抗藥性。都治讓病人不會漏藥，是提高治癒率的關鍵；關懷員可配合您的時間與地點送藥，服務免費。",
+  "answerMarkdown": "都治（DOTS）是「直接觀察治療」：由經過訓練的**都治關懷員每天把藥送到您手上，親眼看著您把藥吞下**，並關心副作用與生活狀況，也就是「送藥到手、服藥入口、吞了再走」。\n\n結核病至少要規則服藥 6 個月，中途自行停藥可能復發或產生抗藥性。都治讓病人不會漏藥，是提高治癒率的關鍵；關懷員可配合您的時間與地點送藥，服務免費。",
   "basedOn": [
     "disease.tuberculosis"
   ],
@@ -39,11 +39,11 @@
       {
         "code": "word-cleaned",
         "severity": "info",
-        "message": "清除 Word 貼上殘留 79 處（mso 樣式 45、Mso 類別 20、命名空間標籤 17）"
+        "message": "清除 Word 貼上殘留 85 處（mso 樣式 53、Mso 類別 22、命名空間標籤 16）"
       }
     ],
     "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/ZW0TrgKarQJWRWZrMIWzeq",
-    "convertedAt": "2026-10-04T13:56:12.582Z",
+    "convertedAt": "2026-10-04T14:04:24.484Z",
     "existing": true,
     "compareWith": [
       "faq.tb-dots-what"

@@ -25,7 +25,7 @@
   },
   "summary": "移工健康檢查：入境後三日內與聘僱期間的檢查項目 以越南語字幕說明移工入境後三日內及聘僱期間第 6、18、30 個月的健康檢查，包括胸部 X 光等項目，並提醒有咳嗽發燒可撥 1922 多語服務。",
   "slug": "tb-materials-migrant",
-  "bodyMarkdown": "移工健康檢查：入境後三日內與聘僱期間的檢查項目\n\n以越南語字幕說明移工入境後三日內及聘僱期間第 6、18、30 個月的健康檢查，包括胸部 X 光等項目，並提醒有咳嗽發燒可撥 1922 多語服務。",
+  "bodyMarkdown": "**移工健康檢查：入境後三日內與聘僱期間的檢查項目**\n\n以越南語字幕說明移工入境後三日內及聘僱期間第 6、18、30 個月的健康檢查，包括胸部 X 光等項目，並提醒有咳嗽發燒可撥 1922 多語服務。",
   "legacyUrls": [
     "https://www.cdc.gov.tw/Category/MPage/vONM9MVB6T0IMaoT_2kYS6"
   ],
@@ -50,7 +50,7 @@
       }
     ],
     "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/vONM9MVB6T0IMaoT_2kYS6",
-    "convertedAt": "2026-10-04T13:56:12.582Z",
+    "convertedAt": "2026-10-04T14:04:24.484Z",
     "existing": true,
     "compareWith": [
       "media.migrant-worker-health-check"

@@ -239,7 +239,7 @@ function escLineStarts(s) {
     .replace(/^(`{3,}|~{3,})/, '\\$1')).join('\n');
 }
 
-const bodyStyleBold = (st) => /font-weight:(bold|bolder|[6-9]00)/.test(st);
+const bodyStyleBold = (st) => /(?:^|[;\s])font-weight:\s*(bold|bolder|[6-9]00)\b/.test(st);
 const bodyStyleItalic = (st) => /font-style:italic/.test(st);
 const bodyStyleStrike = (st) => /text-decoration[a-z-]*:[^;]*line-through/.test(st);
 
@@ -279,7 +279,7 @@ function inlineNode(n, ctx) {
       return `![${alt}](${encUrl(src)})`;
     }
     case 'strong': case 'b': {
-      if (tag === 'b' && /font-weight:(normal|400)/.test(st)) return kids();
+      if (tag === 'b' && /(?:^|[;\s])font-weight:\s*(normal|400)\b/.test(st)) return kids(); // 不把 mso-bidi-font-weight:normal 誤判成非粗體
       if (ctx.strong) return kids();
       return wrapMark('**', kids({ ...ctx, strong: true }));
     }
