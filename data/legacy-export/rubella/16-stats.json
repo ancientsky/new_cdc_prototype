@@ -1,0 +1,21 @@
+{
+  "url": "https://www.cdc.gov.tw/Category/List/7D-9ddKaIc59m_gAxyZAAQ",
+  "title": "統計資料",
+  "category": "德國麻疹／統計資料",
+  "publishedAt": "2018-03-01",
+  "updatedAt": "2025-10-30",
+  "breadcrumbs": [
+    "首頁",
+    "傳染病與防疫專題",
+    "德國麻疹",
+    "統計資料"
+  ],
+  "tab": "statistics",
+  "attachments": [
+    {
+      "url": "https://www.cdc.gov.tw/File/Get/6dq2krWRvJ6QSl6FshzxxQ",
+      "label": "德國麻疹年度統計（CSV，示意）",
+      "file": "rubella-stats.csv"
+    }
+  ]
+}

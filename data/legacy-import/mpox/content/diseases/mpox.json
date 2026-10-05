@@ -1,0 +1,265 @@
+{
+  "id": "disease.mpox",
+  "type": "disease",
+  "title": "M痘",
+  "slug": "mpox",
+  "nameEn": "Mpox",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2022-06-23",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.mpox"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "M痘（舊稱猴痘）主要經親密接觸傳播，症狀為發燒、淋巴結腫大與皮疹。高風險族群可接種公費 M痘疫苗 2 劑，2023 年起列為第二類法定傳染病。",
+  "aliases": [
+    "猴痘",
+    "Monkeypox",
+    "Mpox",
+    "MPX"
+  ],
+  "legalCategory": 2,
+  "icd10": [
+    "B04"
+  ],
+  "notifyWithinHours": 24,
+  "transmission": [
+    "contact",
+    "sexual",
+    "droplet"
+  ],
+  "keyFacts": {
+    "symptoms": "初期常見發燒、頭痛、肌肉痠痛、背痛、倦怠與淋巴結腫大。 1–3 天後出現皮疹，依序由斑疹、丘疹、水泡、膿疱到結痂，可能…",
+    "transmission": "主要經由直接接觸病人的皮疹、結痂或體液傳播，近年疫情多與性接觸等親密接觸有關；",
+    "prevention": "符合條件的高風險族群接種公費 M痘疫苗 2 劑。 避免與不明對象發生親密接觸；"
+  },
+  "blocks": [
+    {
+      "key": "what-to-do",
+      "heading": "我該怎麼辦",
+      "markdown": "",
+      "status": "pending"
+    },
+    {
+      "key": "symptoms",
+      "heading": "症狀與警示徵象",
+      "markdown": "初期常見**發燒、頭痛、肌肉痠痛、背痛、倦怠與淋巴結腫大**。\n\n1–3 天後出現皮疹，依序由斑疹、丘疹、水泡、膿疱到結痂，可能集中在生殖器、肛門、口腔或臉部、手腳；病灶可能疼痛或發癢。病程約 2–4 週，多數可自行痊癒。\n\n**注意：**病灶大量擴散或出現在眼睛、直腸疼痛或出血、吞嚥困難、意識改變；免疫低下者（例如未控制的 HIV 感染者）較易發展為重症。"
+    },
+    {
+      "key": "transmission",
+      "heading": "怎麼傳染",
+      "markdown": "### 致病原\n\n主要經由**直接接觸**病人的皮疹、結痂或體液傳播，近年疫情多與**性接觸等親密接觸**有關；也可能因長時間面對面接觸的飛沫，或接觸被污染的床單、衣物、毛巾而感染，孕婦可能傳給胎兒。\n\n主要經由**直接接觸**病人的皮疹、結痂或體液傳播，近年疫情多與**性接觸等親密接觸**有關；也可能因長時間面對面接觸的飛沫，或接觸被污染的床單、衣物、毛巾而感染，孕婦可能傳給胎兒。\n\n主要經由**直接接觸**病人的皮疹、結痂或體液傳播，近年疫情多與**性接觸等親密接觸**有關；也可能因長時間面對面接觸的飛沫，或接觸被污染的床單、衣物、毛巾而感染，孕婦可能傳給胎兒。\n\n從出現症狀到所有病灶結痂脫落、長出新皮膚為止都具傳染力。\n\nM痘的潛伏期為 **5–21 天（通常 6–13 天）**。\n\n| 項目 | 內容 |\n| --- | --- |\n| 潛伏期 | 5–21 天（通常 6–13 天） |\n| 可傳染期 | 病媒／接觸相關（親密接觸（含性接觸）、接觸病灶或污染物） |"
+    },
+    {
+      "key": "prevention",
+      "heading": "如何預防",
+      "markdown": "- 符合條件的高風險族群接種**公費 M痘疫苗 2 劑**。\n- 避免與不明對象發生親密接觸；性行為全程使用保險套雖不能完全預防，仍可降低其他性病風險。\n- 不共用毛巾、床單、衣物與餐具。\n- 前往疫情發生國家時，避免接觸野生動物（特別是囓齒類）。"
+    },
+    {
+      "key": "treatment",
+      "heading": "診斷與治療",
+      "markdown": "多數病人以支持性治療為主：緩解疼痛、保持病灶清潔乾燥、預防細菌感染。重症或高風險病人可由醫師評估使用抗病毒藥物 tecovirimat。\n\n病人應避免與他人密切接觸直到病灶全部結痂脫落。"
+    },
+    {
+      "key": "vaccine",
+      "heading": "疫苗",
+      "markdown": "國內使用非複製型活性減毒疫苗（JYNNEOS），**2 劑，間隔至少 4 週**。公費對象包括近一年有高風險性行為者（如多重性伴侶、性交易服務者、於營業場所發生性行為者），以及經衛生單位評估之暴露後接觸者。接種地點可查詢合作醫療院所名單。"
+    },
+    {
+      "key": "situation",
+      "heading": "目前疫情與統計",
+      "markdown": "國內病例多為零星發生；國際上 clade I 疫情集中於中非與東非部分國家，相關旅遊疫情建議等級請見出國專區。\n\n近年確定病例趨勢如下表與圖（**示意數字，非正式統計**，正式數字見統計資料）：\n\n| 年度 | 確定病例數（示意） | 每十萬人口發生率（示意） |\n| --- | --- | --- |\n| 2021 | 475 | 37.5 |\n| 2022 | 900 | 20 |\n| 2023 | 425 | 2.5 |\n| 2024 | 850 | 25 |\n| 2025 | 375 | 7.5 |\n\n![mpox-trend](/files/disease.mpox/mpox-trend.png)"
+    },
+    {
+      "key": "faq",
+      "heading": "常見問題",
+      "markdown": "",
+      "status": "pending"
+    }
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Disease/SubIndex/aXu8JDvA20XT7R_YM999td",
+    "https://www.cdc.gov.tw/Category/MPage/6g4ELlOqCPBSeGl_xt58t2"
+  ],
+  "assets": [
+    {
+      "file": "mpox-trend.png",
+      "kind": "image",
+      "alt": "mpox-trend",
+      "license": "OGDL-1.0",
+      "needsAlt": true,
+      "mime": "image/png",
+      "bytes": 359,
+      "sha256": "5da3a4e98fdc80539a7542ee2e19aea774fc32d0efe990856a52ca52d1d53354",
+      "width": 160,
+      "height": 90
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.98,
+    "issues": [
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「M痘／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（M痘）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-pathogen（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-epidemiology（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "image-no-alt",
+        "severity": "warn",
+        "message": "圖片「mpox-trend.png」舊頁沒有替代文字，暫用檔名「mpox-trend」，請補 alt（needsAlt）"
+      },
+      {
+        "code": "image-license-assumed",
+        "severity": "info",
+        "message": "圖片「mpox-trend.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-transmission（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-incubation（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-symptoms（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-prevention（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-treatment（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「M痘／預防接種」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（M痘）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 vaccine（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留共 182 處（9 個來源頁）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Disease/SubIndex/aXu8JDvA20XT7R_YM999td",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "sourceUrls": [
+      "https://www.cdc.gov.tw/Disease/SubIndex/aXu8JDvA20XT7R_YM999td",
+      "https://www.cdc.gov.tw/Category/MPage/6g4ELlOqCPBSeGl_xt58t2"
+    ],
+    "existing": true,
+    "compareWith": [
+      "disease.mpox"
+    ],
+    "mergedFrom": [
+      {
+        "page": "01-intro",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/aXu8JDvA20XT7R_YM999td",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "02-intro-pathogen",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/aXu8JDvA20XT7R_YM999td",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "03-intro-epidemiology",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/aXu8JDvA20XT7R_YM999td",
+        "blocks": [
+          "situation"
+        ]
+      },
+      {
+        "page": "04-intro-transmission",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/aXu8JDvA20XT7R_YM999td",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "05-intro-incubation",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/aXu8JDvA20XT7R_YM999td",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "06-intro-symptoms",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/aXu8JDvA20XT7R_YM999td",
+        "blocks": [
+          "symptoms"
+        ]
+      },
+      {
+        "page": "07-intro-prevention",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/aXu8JDvA20XT7R_YM999td",
+        "blocks": [
+          "prevention"
+        ]
+      },
+      {
+        "page": "08-intro-treatment",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/aXu8JDvA20XT7R_YM999td",
+        "blocks": [
+          "treatment"
+        ]
+      },
+      {
+        "page": "09-vaccine",
+        "url": "https://www.cdc.gov.tw/Category/MPage/6g4ELlOqCPBSeGl_xt58t2",
+        "blocks": [
+          "vaccine"
+        ]
+      }
+    ],
+    "introMarkdown": "M痘（舊稱猴痘）主要經親密接觸傳播，症狀為發燒、淋巴結腫大與皮疹。高風險族群可接種公費 M痘疫苗 2 劑，2023 年起列為第二類法定傳染病。\n\n| 項目 | 內容 |\n| --- | --- |\n| 法定傳染病類別 | 第二類 |\n| 通報時限 | 24 小時內 |\n| ICD-10 | B04 |\n| 主要傳染途徑 | 親密接觸（含性接觸）、接觸病灶或污染物 |\n| 潛伏期 | 5–21 天（通常 6–13 天） |"
+  }
+}

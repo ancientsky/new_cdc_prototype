@@ -1,0 +1,84 @@
+{
+  "id": "dataset.chik-stats",
+  "type": "dataset",
+  "title": "屈公病統計資料",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2018-03-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.chikungunya"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "屈公病統計資料。 資料檔：<a href=\"https://www.cdc.gov.tw/File/Get/O32UJGT9Y8l1btGcmDe7lS\"屈公病年度統計（CSV）</a；",
+  "category": "structured-table",
+  "canonicalUrl": "https://www.cdc.gov.tw/Category/List/iq84oKkMOnZY9lbV-HK_xI",
+  "updateFrequency": "yearly",
+  "lastUpdated": "2025-07-28",
+  "formats": [
+    "CSV"
+  ],
+  "resources": [
+    {
+      "label": "屈公病年度統計（CSV，示意）",
+      "href": "/files/dataset.chik-stats/chikungunya-stats.csv",
+      "format": "CSV"
+    }
+  ],
+  "provenance": {
+    "mode": "snapshot",
+    "fetchedAt": "2026-10-03",
+    "sourceUrl": "https://www.cdc.gov.tw/Category/List/iq84oKkMOnZY9lbV-HK_xI"
+  },
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/iq84oKkMOnZY9lbV-HK_xI"
+  ],
+  "assets": [
+    {
+      "file": "chikungunya-stats.csv",
+      "kind": "data",
+      "label": "屈公病年度統計（CSV，示意）",
+      "mime": "text/csv",
+      "bytes": 79,
+      "sha256": "3d1afe230f9a8c3c8d4088d007964180399e2b5fa4d79de2290fa1d1a31e51f6",
+      "machineReadable": true
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 61 處（mso 樣式 21、Mso 類別 20、命名空間標籤 20）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 stats（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站型別是 dataset，草稿直接建成 dataset，看不出來的欄位以「（待補）」佔位"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/List/iq84oKkMOnZY9lbV-HK_xI",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

@@ -11,14 +11,22 @@
   },
   "rules": {
     "file": "content/migration/import/_import-rules.json",
-    "version": 3
+    "version": 4
   },
   "manifest": {
     "id": "migration.tuberculosis",
     "file": "content/migration/tuberculosis.json",
+    "synthetic": false,
     "items": 40,
     "extends": null,
     "derivedItems": 5,
+    "derivedCovered": [
+      {
+        "key": "manual",
+        "coveredBy": "tb-manual-2019",
+        "target": "doc.tb-manual.2025-07-01"
+      }
+    ],
     "disease": "disease.tuberculosis"
   },
   "summary": {
@@ -4052,12 +4060,12 @@
       "statusChanges": 0,
       "pendingToMigrated": 0,
       "targetChanges": 0,
-      "noteChanges": 12,
+      "noteChanges": 0,
       "stillPending": 3
     },
     "file": "content/migration/tuberculosis.json",
     "statusChanges": [],
     "targetChanges": [],
-    "noteChanges": 12
+    "noteChanges": 0
   }
 }

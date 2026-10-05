@@ -23,7 +23,7 @@ import { renderReportMd } from './report.mjs';
 import { STRUCTURED_TYPES, extractFields, serviceTypeFor, typeOfId } from './types.mjs';
 
 const h6 = (s) => createHash('sha1').update(String(s)).digest('hex').slice(0, 6);
-const DIRS = { disease: 'diseases', faq: 'faq', news: 'news', document: 'documents', page: 'pages', publication: 'publications', media: 'media', dataset: 'datasets', labtest: 'labtests', service: 'services', clarification: 'clarifications' };
+const DIRS = { disease: 'diseases', faq: 'faq', news: 'news', document: 'documents', page: 'pages', publication: 'publications', media: 'media', dataset: 'datasets', labtest: 'labtests', service: 'services', clarification: 'clarifications', topic: 'topics', vaccine: 'vaccines' };
 const BLOCK_ORDER = ['what-to-do', 'symptoms', 'transmission', 'prevention', 'treatment', 'vaccine', 'situation', 'faq'];
 const CONTENT_DIRS = ['diseases', 'faq', 'news', 'documents', 'clarifications', 'vaccines', 'datasets', 'banners', 'pages', 'media', 'topics', 'services', 'publications', 'labtests', 'research', 'jobs', 'tenders'];
 const idRest = (id) => String(id).replace(/^[a-z]+\./, '');
@@ -102,11 +102,16 @@ export function runImport(opts) {
 
   // 移轉清單（選用）
   const mfPath = manifestPath ?? path.join(contentDir, 'migration', `${slug}.json`);
-  const manifest = fs.existsSync(mfPath) ? { path: mfPath, data: JSON.parse(fs.readFileSync(mfPath, 'utf8')) } : null;
+  // 沒有人工清單的疾病（slug 對得到主檔）⇒ 合成一份「只有模板」的清單做推導比對（治理引擎 R15 對每種疾病都這麼做）；合成清單不能 --apply-migration
+  const slugDisease = master.diseases.find((d) => d.slug === slug) ?? null;
+  const synthetic = !fs.existsSync(mfPath) && slugDisease ? { id: `migration.${slug}`, type: 'migration', title: `${slugDisease.name}（舊站疾病頁）→ 新站（模板推導，尚無人工清單）`, extends: 'migration-template.disease', scope: { kind: 'disease', disease: slugDisease.id }, items: [], synthetic: true } : null;
+  const manifest = fs.existsSync(mfPath) ? { path: mfPath, data: JSON.parse(fs.readFileSync(mfPath, 'utf8')) } : synthetic ? { path: mfPath, data: synthetic, synthetic: true } : null;
   const mItems = manifest?.data.items ?? [];
   // 清單只寫例外（extends 模板）時，把模板依該疾病展開成推導項一起比對（治理引擎 R15 的作法）；推導項只進報告，不寫回清單
   const manifestDisease = manifest?.data.scope?.kind === 'disease' ? manifest.data.scope.disease ?? null : null;
-  const derivedItems = manifest ? expandTemplateItems({ manifest: manifest.data, contentDir, index, diseaseById }) : [];
+  const derivedAll = manifest ? expandTemplateItems({ manifest: manifest.data, contentDir, index, diseaseById }) : [];
+  const derivedCovered = derivedAll.filter((d) => d.coveredBy);
+  const derivedItems = derivedAll.filter((d) => !d.coveredBy);
   const isPattern = (u) => /\{[a-z]+\}/i.test(String(u));
   const mRegex = [...mItems.map((it) => ({ it, derived: false })), ...derivedItems.map((it) => ({ it, derived: true }))]
     .map((m) => ({ ...m, re: manifestPathRegex(m.it.oldUrl), pattern: isPattern(m.it.oldUrl), frag: (String(m.it.oldUrl).split('#')[1] ?? ''), q: new URLSearchParams(String(m.it.oldUrl).split('#')[0].split('?')[1] ?? '') }));
@@ -237,7 +242,9 @@ export function runImport(opts) {
     // 結構化型別直接產（第四批）：清單目標或模板推導項說新站是 publication／media／dataset／labtest／service／clarification ⇒ 草稿就建成那個型別
     const mapType = mi?.mapTo?.kind === 'related' ? mi.mapTo.type : null;
     const wantType = STRUCTURED_TYPES.has(pr.targetType) ? pr.targetType : STRUCTURED_TYPES.has(mapType) ? mapType : null;
-    if (wantType && !mergedInto && ['page', 'list', 'document', 'news'].includes(kind) && !(kind === 'news' && wantType !== 'clarification')) {
+    // 第五批：相關連結頁（模板 links → related topic）建成 topic；清單說「已移轉」到疫苗頁的疫苗專區頁（原本依關鍵字歸疾病頁疫苗區塊）建成 vaccine；「併入」仍照 mergedInto 走
+    if (wantType && !mergedInto && (['page', 'list', 'document', 'news'].includes(kind) || (kind === 'disease-block' && wantType === 'vaccine')) && !(kind === 'news' && wantType !== 'clarification')) {
+      if (kind === 'disease-block') blockKey = null;
       kind = wantType; pr.typeClear = true;
       issue('type-from-manifest', 'info', `清單對應的新站型別是 ${wantType}${pr.target ? `（${pr.target}）` : ''}，草稿直接建成 ${wantType}，看不出來的欄位以「（待補）」佔位`);
     }
@@ -411,9 +418,10 @@ export function runImport(opts) {
       const prefix = kind === 'clarification' ? 'clar' : kind;
       const eff = publishedAt ?? exportedAt;
       const byTitleId = kind === 'clarification' ? index.newsByTitle.get(normTitle(stripTitlePrefix(rules, title))) : null;
-      const wanted = pr.target && typeOfId(pr.target) === kind ? pr.target
+      // 專區（相關連結）不沿用推導目標的 id：推導到的是「與此疾病相關的某個專區」，不是同一份內容，只列為比對對象；其他型別同 id 供逐欄比對
+      const wanted = pr.target && typeOfId(pr.target) === kind && kind !== 'topic' ? pr.target
         : (byTitleId && typeOfId(byTitleId) === 'clarification' ? byTitleId : null)
-        ?? (kind === 'clarification' ? `clar.${eff}-${short}-${h6(side.url)}` : kind === 'labtest' ? `labtest.${dis?.slug ?? short}` : `${prefix}.${slugStem}`);
+        ?? (kind === 'clarification' ? `clar.${eff}-${short}-${h6(side.url)}` : kind === 'labtest' ? `labtest.${dis?.slug ?? short}` : kind === 'topic' && pr.manifestKey === 'links' ? `topic.${dis?.slug ?? short}-links` : `${prefix}.${slugStem}`);
       if (usedIds.has(wanted)) issue('target-shared', 'info', `與 ${usedIds.get(wanted)} 指向同一個對應 ${wanted}，另以新 id 列一份供人工刪一份`);
       // 既有新聞其實是澄清（newsType clarification）而新草稿是 clarification 型別 ⇒ 列為比對對象
       if (kind === 'clarification' && byTitleId && typeOfId(byTitleId) !== 'clarification' && !pr.target) { pr.target = byTitleId; pr.targetExists = true; pr.targetType = typeOfId(byTitleId); issue('type-upgrade', 'info', `既有內容 ${byTitleId} 以 news 存放同一則澄清，新草稿改為 clarification 型別，請比對後擇一`); }
@@ -538,7 +546,7 @@ export function runImport(opts) {
       Object.assign(d, un.fields);
       if (un.type === 'clarification') d.summary = un.fields.shareText;
       if (un.type === 'publication' && !d.pdfUrl) { const pdf = bags.get(un.draftId)?.assets.find((a) => a.file.endsWith('.pdf') && a.kind === 'attachment'); if (pdf) d.pdfUrl = `/files/${un.draftId}/${pdf.file}`; }
-      if (un.diseaseId && ['labtest', 'media', 'clarification'].includes(un.type)) d.basedOn = [un.diseaseId];
+      if (un.diseaseId && ['labtest', 'media', 'clarification', 'vaccine'].includes(un.type)) d.basedOn = [un.diseaseId];
     } else {
       d = base(un.title, un.markdown, 'page');
       Object.assign(d, { slug: idRest(un.draftId), bodyMarkdown: un.markdown });
@@ -606,13 +614,14 @@ export function runImport(opts) {
 
   // ───── 報告與移轉清單 ─────
   const patch = buildPatch({ manifest, prs, units, index, exportedAt, slug, rules, derivedItems });
+  if (patch && derivedCovered.length) patch.derivedCovered = derivedCovered.map((d) => ({ key: d.key, oldTitle: d.oldTitle, coveredBy: d.coveredBy, target: d.target }));
   const sum = summarize({ prs, draftRecs, bags, patch, manifest, exp, exportedAt });
   const report = {
     format: 'cdc-legacy-import-report/1',
     batch: slug, generatedAt: convertedAt, exportedAt, simulated: exp.meta.simulated === true,
     source: { dir: path.relative(ROOT, exp.dir) || exp.dir, note: exp.meta.source ?? null, site: exp.meta.site ?? siteBase },
     rules: { file: rules.__file, version: rules.version },
-    manifest: manifest ? { id: manifest.data.id, file: path.relative(ROOT, manifest.path), items: mItems.length, extends: manifest.data.extends ?? null, derivedItems: derivedItems.length, disease: manifestDisease } : null,
+    manifest: manifest ? { id: manifest.data.id, file: manifest.synthetic ? null : path.relative(ROOT, manifest.path), synthetic: !!manifest.synthetic, items: mItems.length, extends: manifest.data.extends ?? null, derivedItems: derivedItems.length, derivedCovered: derivedCovered.map((d) => ({ key: d.key, coveredBy: d.coveredBy, target: d.target })), disease: manifestDisease } : null,
     summary: sum,
     pages: prs.map((p) => ({
       key: p.key, file: p.htmlFile, source: { url: p.source.url, title: p.source.title, category: p.source.category, publishedAt: p.source.publishedAt, updatedAt: p.source.updatedAt, breadcrumbs: p.source.breadcrumbs, tab: p.source.tab },
@@ -625,7 +634,7 @@ export function runImport(opts) {
   };
   fs.writeFileSync(path.join(out, 'migration-patch.json'), `${JSON.stringify(patch, null, 2)}\n`);
   if (applyMigration) {
-    if (!manifest) throw new Error(`找不到移轉清單 ${path.relative(ROOT, mfPath)}，無法 --apply-migration`);
+    if (!manifest || manifest.synthetic) throw new Error(`找不到移轉清單 ${path.relative(ROOT, mfPath)}（${manifest?.synthetic ? '這批只有模板推導，沒有人工清單檔可寫' : '無法'}），無法 --apply-migration`);
     const res = applyPatch(manifest.path, patch);
     report.migration = { ...report.migration, applied: true, file: path.relative(ROOT, manifest.path), ...res };
     patch.applied = res;

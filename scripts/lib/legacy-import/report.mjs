@@ -2,7 +2,7 @@
 import { ACTION_LABEL } from './migration.mjs';
 
 const esc = (s) => String(s ?? '').replace(/\|/g, '\\|').replace(/\n/g, ' ');
-const EXTRA = { publication: '出版品', media: '影音', dataset: '資料集', labtest: '檢驗', service: '服務', clarification: '澄清稿' };
+const EXTRA = { publication: '出版品', media: '影音', dataset: '資料集', labtest: '檢驗', service: '服務', clarification: '澄清稿', topic: '專區', vaccine: '疫苗' };
 const TYPE_LABEL = { disease: '疾病頁', faq: 'Q&A', news: '新聞', document: '文件', page: '頁面', ...EXTRA };
 const KIND_LABEL = { 'disease-block': '併入疾病頁', faq: 'Q&A', news: '新聞', document: '文件', page: '頁面', list: '清單頁', ...EXTRA };
 

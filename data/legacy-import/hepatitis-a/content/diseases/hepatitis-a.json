@@ -1,0 +1,264 @@
+{
+  "id": "disease.hepatitis-a",
+  "type": "disease",
+  "title": "急性病毒性A型肝炎",
+  "slug": "hepatitis-a",
+  "nameEn": "Acute viral hepatitis A",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2018-03-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.hepatitis-a"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "A 型肝炎經由受污染的食物、飲水或口肛性行為傳播，成人感染常出現黃疸。注意飲食衛生、接種疫苗可有效預防；2017 年起出生的幼兒為公費接種對象。",
+  "aliases": [
+    "A肝",
+    "A型肝炎",
+    "HAV"
+  ],
+  "legalCategory": 2,
+  "icd10": [
+    "B15"
+  ],
+  "notifyWithinHours": 24,
+  "transmission": [
+    "foodborne",
+    "waterborne",
+    "sexual"
+  ],
+  "keyFacts": {
+    "symptoms": "常見症狀為發燒、倦怠、食慾不振、噁心嘔吐、腹部不適，數天後出現茶色尿與黃疸（皮膚、眼白發黃）。",
+    "transmission": "主要經由糞口途徑傳染：吃進被病毒污染的食物或飲水，例如生食貝類、未煮熟食物或處理食物者未洗手。也可能經由口肛性行為傳染。",
+    "prevention": "接種 A 肝疫苗：2 劑間隔 6 個月，保護力可達 95% 以上。 飯前、便後與處理食物前用肥皂洗手。"
+  },
+  "blocks": [
+    {
+      "key": "what-to-do",
+      "heading": "我該怎麼辦",
+      "markdown": "",
+      "status": "pending"
+    },
+    {
+      "key": "symptoms",
+      "heading": "症狀與警示徵象",
+      "markdown": "常見症狀為發燒、倦怠、食慾不振、噁心嘔吐、腹部不適，數天後出現**茶色尿與黃疸**（皮膚、眼白發黃）。\n\n6 歲以下兒童感染多無症狀，年紀越大症狀越明顯。多數人數週內康復，感染後可終身免疫，**不會變成慢性肝炎**，但少數成人可能發生猛爆性肝炎。\n\n**注意：**意識改變、嗜睡、明顯出血傾向或黃疸急速加深，可能是猛爆性肝炎，請立即就醫。"
+    },
+    {
+      "key": "transmission",
+      "heading": "怎麼傳染",
+      "markdown": "### 致病原\n\n主要經由**糞口途徑**傳染：吃進被病毒污染的食物或飲水，例如生食貝類、未煮熟食物或處理食物者未洗手。也可能經由**口肛性行為**傳染。\n\n主要經由**糞口途徑**傳染：吃進被病毒污染的食物或飲水，例如生食貝類、未煮熟食物或處理食物者未洗手。也可能經由**口肛性行為**傳染。\n\n主要經由**糞口途徑**傳染：吃進被病毒污染的食物或飲水，例如生食貝類、未煮熟食物或處理食物者未洗手。也可能經由**口肛性行為**傳染。\n\n發病前 2 週至黃疸出現後 1 週傳染力最強。\n\n急性病毒性A型肝炎的潛伏期為 **15–50 天（平均 28–30 天）**。\n\n| 項目 | 內容 |\n| --- | --- |\n| 潛伏期 | 15–50 天（平均 28–30 天） |\n| 可傳染期 | 病媒／接觸相關（糞口傳染（受污染食物、飲水）、口肛性行為） |"
+    },
+    {
+      "key": "prevention",
+      "heading": "如何預防",
+      "markdown": "- **接種 A 肝疫苗**：2 劑間隔 6 個月，保護力可達 95% 以上。\n- 飯前、便後與處理食物前用肥皂洗手。\n- 避免生食，特別是貝類；飲用煮沸過的水。\n- 性行為避免口肛接觸，並使用保險套。"
+    },
+    {
+      "key": "treatment",
+      "heading": "診斷與治療",
+      "markdown": "沒有特效藥，以支持性治療為主：休息、補充營養與水分。避免飲酒及服用非必要藥物，以減輕肝臟負擔。病人在發病後 1 週內應避免準備食物給他人。"
+    },
+    {
+      "key": "vaccine",
+      "heading": "疫苗",
+      "markdown": "公費對象：**2017 年 1 月 1 日（含）以後出生**的幼兒，於出生滿 12 個月、18 個月各接種 1 劑；以及山地鄉、離島等特定地區學童與高風險對象。其他成人可自費接種 2 劑，間隔 6–12 個月。"
+    },
+    {
+      "key": "situation",
+      "heading": "目前疫情與統計",
+      "markdown": "國內病例多為零星發生，曾出現與口肛性行為相關的群聚。\n\n近年確定病例趨勢如下表與圖（**示意數字，非正式統計**，正式數字見統計資料）：\n\n| 年度 | 確定病例數（示意） | 每十萬人口發生率（示意） |\n| --- | --- | --- |\n| 2021 | 337 | 35.3 |\n| 2022 | 116 | 23.2 |\n| 2023 | 795 | 11.1 |\n| 2024 | 574 | 39 |\n| 2025 | 353 | 26.9 |\n\n![hepatitis-a-trend](/files/disease.hepatitis-a/hepatitis-a-trend.png)"
+    },
+    {
+      "key": "faq",
+      "heading": "常見問題",
+      "markdown": "",
+      "status": "pending"
+    }
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Disease/SubIndex/XcstomQl69G-9H5pZM7QUe",
+    "https://www.cdc.gov.tw/Category/MPage/wF2k2OXKOov3b0T1sh_wXQ"
+  ],
+  "assets": [
+    {
+      "file": "hepatitis-a-trend.png",
+      "kind": "image",
+      "alt": "hepatitis-a-trend",
+      "license": "OGDL-1.0",
+      "needsAlt": true,
+      "mime": "image/png",
+      "bytes": 359,
+      "sha256": "5da3a4e98fdc80539a7542ee2e19aea774fc32d0efe990856a52ca52d1d53354",
+      "width": 160,
+      "height": 90
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.98,
+    "issues": [
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「急性病毒性A型肝炎／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（急性病毒性A型肝炎）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-pathogen（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-epidemiology（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "image-no-alt",
+        "severity": "warn",
+        "message": "圖片「hepatitis-a-trend.png」舊頁沒有替代文字，暫用檔名「hepatitis-a-trend」，請補 alt（needsAlt）"
+      },
+      {
+        "code": "image-license-assumed",
+        "severity": "info",
+        "message": "圖片「hepatitis-a-trend.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-transmission（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-incubation（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-symptoms（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-prevention（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-treatment（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「急性病毒性A型肝炎／預防接種」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（急性病毒性A型肝炎）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 vaccine（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留共 180 處（9 個來源頁）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Disease/SubIndex/XcstomQl69G-9H5pZM7QUe",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "sourceUrls": [
+      "https://www.cdc.gov.tw/Disease/SubIndex/XcstomQl69G-9H5pZM7QUe",
+      "https://www.cdc.gov.tw/Category/MPage/wF2k2OXKOov3b0T1sh_wXQ"
+    ],
+    "existing": true,
+    "compareWith": [
+      "disease.hepatitis-a"
+    ],
+    "mergedFrom": [
+      {
+        "page": "01-intro",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/XcstomQl69G-9H5pZM7QUe",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "02-intro-pathogen",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/XcstomQl69G-9H5pZM7QUe",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "03-intro-epidemiology",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/XcstomQl69G-9H5pZM7QUe",
+        "blocks": [
+          "situation"
+        ]
+      },
+      {
+        "page": "04-intro-transmission",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/XcstomQl69G-9H5pZM7QUe",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "05-intro-incubation",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/XcstomQl69G-9H5pZM7QUe",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "06-intro-symptoms",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/XcstomQl69G-9H5pZM7QUe",
+        "blocks": [
+          "symptoms"
+        ]
+      },
+      {
+        "page": "07-intro-prevention",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/XcstomQl69G-9H5pZM7QUe",
+        "blocks": [
+          "prevention"
+        ]
+      },
+      {
+        "page": "08-intro-treatment",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/XcstomQl69G-9H5pZM7QUe",
+        "blocks": [
+          "treatment"
+        ]
+      },
+      {
+        "page": "09-vaccine",
+        "url": "https://www.cdc.gov.tw/Category/MPage/wF2k2OXKOov3b0T1sh_wXQ",
+        "blocks": [
+          "vaccine"
+        ]
+      }
+    ],
+    "introMarkdown": "A 型肝炎經由受污染的食物、飲水或口肛性行為傳播，成人感染常出現黃疸。注意飲食衛生、接種疫苗可有效預防；2017 年起出生的幼兒為公費接種對象。\n\n| 項目 | 內容 |\n| --- | --- |\n| 法定傳染病類別 | 第二類 |\n| 通報時限 | 24 小時內 |\n| ICD-10 | B15 |\n| 主要傳染途徑 | 糞口傳染（受污染食物、飲水）、口肛性行為 |\n| 潛伏期 | 15–50 天（平均 28–30 天） |"
+  }
+}

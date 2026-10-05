@@ -1,0 +1,21 @@
+{
+  "url": "https://www.cdc.gov.tw/Category/List/65a9cxGB--xB7NQ4IsERQr",
+  "title": "統計資料",
+  "category": "瘧疾／統計資料",
+  "publishedAt": "2018-03-01",
+  "updatedAt": "2026-04-25",
+  "breadcrumbs": [
+    "首頁",
+    "傳染病與防疫專題",
+    "瘧疾",
+    "統計資料"
+  ],
+  "tab": "statistics",
+  "attachments": [
+    {
+      "url": "https://www.cdc.gov.tw/File/Get/LaLve-hFnBE7_TSp-d3Hx7",
+      "label": "瘧疾年度統計（CSV，示意）",
+      "file": "malaria-stats.csv"
+    }
+  ]
+}

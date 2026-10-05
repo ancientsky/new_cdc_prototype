@@ -1,0 +1,83 @@
+{
+  "id": "media.rubella-materials-video",
+  "type": "media",
+  "title": "德國麻疹衛教宣導：影片",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2018-03-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.rubella"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "德國麻疹宣導影片。",
+  "mediaType": "video",
+  "youtubeId": "xxxxxxxxxxx",
+  "producedAt": "2018-03-01",
+  "transcriptMarkdown": "（待補：舊頁沒有文字稿，請由影片字幕或腳本補入）",
+  "captions": [
+    "zh-TW"
+  ],
+  "basedOn": [
+    "disease.rubella"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/H6aKXiOv6zmhsMSFeBSlB8"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.8,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「德國麻疹／衛教宣導」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（德國麻疹）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 materials-video（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站型別是 media，草稿直接建成 media，看不出來的欄位以「（待補）」佔位"
+      },
+      {
+        "code": "body-short",
+        "severity": "warn",
+        "message": "內文過短（9 字，低於 40）"
+      },
+      {
+        "code": "fields-pending",
+        "severity": "warn",
+        "message": "media 的欄位從舊頁看不出來，以「（待補）」佔位：transcriptMarkdown"
+      },
+      {
+        "code": "field-guessed",
+        "severity": "info",
+        "message": "模擬匯出的影片 id 為示意值"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/H6aKXiOv6zmhsMSFeBSlB8",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

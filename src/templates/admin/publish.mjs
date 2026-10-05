@@ -63,6 +63,7 @@ ${pageHead({
 <div class="adm-split">
   <section class="adm-card" aria-labelledby="pub-h">
     <h2 id="pub-h" data-pub-title>上架：疾病 Q&amp;A</h2>
+    <div class="adm-box adm-box--info" id="edit-box" role="note" hidden></div>
     <form id="pub-form" class="adm-form" novalidate autocomplete="off">
       <div class="adm-field"><label for="f-type">型別</label>
         <select id="f-type" name="type" aria-describedby="lane-box">${TYPES.map(([v, l]) => html`<option value="${v}">${l}</option>`)}</select>

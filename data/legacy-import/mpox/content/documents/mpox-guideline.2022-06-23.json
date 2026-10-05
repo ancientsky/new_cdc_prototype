@@ -1,0 +1,68 @@
+{
+  "id": "doc.mpox-guideline.2022-06-23",
+  "type": "document",
+  "title": "治療指引",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2022-06-23",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.mpox"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "治療指引：本頁內容由舊站「M痘」專區移入，請權責單位確認是否仍為現行版本。",
+  "family": "doc.mpox-guideline",
+  "docType": "guideline",
+  "version": "2022-06-23",
+  "effectiveAt": "2022-06-23",
+  "machineReadableMarkdown": "治療指引：本頁內容由舊站「M痘」專區移入，請權責單位確認是否仍為現行版本。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/File/Get/69RXxo_H2U7TyvYvMBHYoZ"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.8,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「M痘／法規與指引」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（M痘）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 guideline（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "body-short",
+        "severity": "warn",
+        "message": "內文過短（37 字，低於 40）"
+      },
+      {
+        "code": "version-unknown",
+        "severity": "info",
+        "message": "標題看不出版次，version 暫填 2022-06-23"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/File/Get/69RXxo_H2U7TyvYvMBHYoZ",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

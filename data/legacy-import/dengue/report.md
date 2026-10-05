@@ -7,15 +7,15 @@
 | 項目 | 數字 |
 | --- | --- |
 | 舊頁數 | 31 |
-| 產出草稿 | 29（Q&A 7、出版品 1、文件 3、資料集 1、檢驗 1、頁面 8、新聞 6、影音 1、疾病頁 1） |
-| 舊頁型別 | 併入疾病頁 9、Q&A 1、出版品 1、文件 3、資料集 1、檢驗 1、頁面 4、清單頁 4、新聞 6、影音 1 |
-| 平均信心 | 0.92 |
+| 產出草稿 | 29（Q&A 7、出版品 1、文件 3、資料集 1、檢驗 1、頁面 7、專區 1、新聞 6、影音 1、疾病頁 1） |
+| 舊頁型別 | 併入疾病頁 9、Q&A 1、出版品 1、文件 3、資料集 1、檢驗 1、頁面 4、清單頁 3、專區 1、新聞 6、影音 1 |
+| 平均信心 | 0.94 |
 | 需人工檢視（信心 < 0.6） | 1 |
 | 既有內容已存在（供比對） | 26 |
 | 附件與圖片 | 9（附件 6、內文圖片 2、資料檔 1；圖片待補 alt 2、PDF 無文字層 2） |
 | 草稿 schema 驗證 | 29 / 29 通過 |
 | 問題 | 錯誤 0、警告 12、提示 93 |
-| 移轉清單對應 | 對上 8 / 8 筆；status 變化 0；note 更新 1；仍待移轉 2；與清單判定不同 0 |
+| 移轉清單對應 | 對上 8 / 8 筆；status 變化 0；note 更新 0；仍待移轉 2；與清單判定不同 0 |
 | 模板推導項（清單只寫例外） | 18 項，對上 18；只列在 migration-patch.json 的 derivedItems，不寫回清單 |
 | 清單沒有的舊頁 | 5（migration-patch.json 的 unmatchedPages 有建議的 pending 項目） |
 
@@ -42,7 +42,7 @@
 | 15 | 檢驗資訊<br><sub>www.cdc.gov.tw/Category/MPage/nBSoKp75tD_JsUcg-PolJx</sub> | 檢驗 → `labtest.dengue` | `labtest.dengue`（既有） | 1 | fields-pending | 既有內容已存在，供比對，不建議覆蓋 |
 | 16 | 通報定義與時限<br><sub>www.cdc.gov.tw/Category/MPage/Pf3UBeMVfwJ2iKzOXg70zj</sub> | 頁面 → `page.dengue-notify` | — | 1 | — | 核對後入庫（新站尚無對應內容） |
 | 17 | 新聞稿列表<br><sub>www.cdc.gov.tw/Bulletin/List/Ec6GP0RNpHHLRvO7x-1nRT</sub> | 清單頁 → `page.dengue-news-list` | `disease.dengue`（既有） | 0.6 | — | 清單頁，不轉換（新站由系統自動產生列表） |
-| 18 | 相關連結<br><sub>www.cdc.gov.tw/Category/List/0Pl9_aCavv9CeM29DdTD7G</sub> | 清單頁 → `page.dengue-links` | `topic.disaster-evacuation`（既有） | 0.6 | — | 清單頁，不轉換（新站由系統自動產生列表） |
+| 18 | 相關連結<br><sub>www.cdc.gov.tw/Category/List/0Pl9_aCavv9CeM29DdTD7G</sub> | 專區 → `topic.dengue-links` | `topic.disaster-evacuation`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 19 | 登革熱防治專區（首頁）<br><sub>www.cdc.gov.tw/Category/Page/IUXWpR9CZiGGA6OjQiiKOc</sub> | 頁面 → `page.dengue-zone` | `disease.dengue`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 20 | 病媒蚊密度調查結果<br><sub>www.cdc.gov.tw/Category/List/3ZwNd9eoMVqqi7PDTlqIyw</sub> | 清單頁 → `page.dengue-vector-density` | — | 0.6 | — | 清單頁，不轉換（新站由系統自動產生列表） |
 | 21 | 孳生源清除與社區動員（巡倒清刷）<br><sub>www.cdc.gov.tw/Category/MPage/rLPU3Gwbwg97BZ_2MG5efk</sub> | 頁面 → `page.dengue-source-reduction` | `doc.dengue-community-workplan.2026-09-10`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |

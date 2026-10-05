@@ -1,0 +1,72 @@
+{
+  "id": "faq.chik-legacy-7f51c6",
+  "type": "faq",
+  "title": "Q&A",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2018-03-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.chikungunya"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "屈公病常見問題整理中。",
+  "question": "Q&A",
+  "answerMarkdown": "屈公病常見問題整理中。",
+  "basedOn": [
+    "disease.chikungunya"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/3TeaG2bDJdZXc_HhjDLhUo"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.8,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「屈公病／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（屈公病）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "faq-structure-missing",
+        "severity": "warn",
+        "message": "找不到 Q&A 結構（.panel／.panel-title／.panel-body），整頁當作一題處理"
+      },
+      {
+        "code": "body-short",
+        "severity": "warn",
+        "message": "內文過短（11 字，低於 40）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/3TeaG2bDJdZXc_HhjDLhUo",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "disease.chikungunya"
+    ]
+  }
+}

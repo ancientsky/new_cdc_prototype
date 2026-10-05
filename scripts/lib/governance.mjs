@@ -1104,12 +1104,16 @@ function composeDiseaseList(site, dm, template, manual) {
   const useTpl = tplId !== 'none' ? template : null; // 目前只有疾病模板；extends 指向不存在的模板由 validate 擋下
   const omit = new Set(manual?.omit ?? []);
   const manualByKey = new Map((manual?.items ?? []).map((it) => [it.key, it]));
+  // 人工例外已指向同一份新站內容（例如疫苗專區的作業手冊＝模板「工作手冊」位置）⇒ 推導項標 coveredBy，狀態跟例外走，不再各算一筆
+  const manualByTarget = new Map((manual?.items ?? []).filter((it) => it.target && it.target !== page?.id).map((it) => [it.target, it]));
   const items = [];
   const seen = new Set();
   for (const t of useTpl?.items ?? []) {
     if (manualByKey.has(t.key)) { items.push({ ...manualByKey.get(t.key), derived: false }); seen.add(t.key); continue; }
     if (omit.has(t.key)) continue;
-    items.push(deriveItem(site, dm, page, t));
+    const d = deriveItem(site, dm, page, t);
+    const cover = d.target && d.target !== page?.id ? manualByTarget.get(d.target) : null;
+    items.push(cover ? { ...d, status: cover.status, coveredBy: cover.key, note: `模板位置已由人工例外「${cover.oldTitle}」涵蓋（同一份新站內容 ${d.target}），不另計` } : d);
   }
   for (const it of manual?.items ?? []) if (!seen.has(it.key)) items.push({ ...it, derived: false });
   const status = !page ? (manual?.status === 'archived' ? 'archived' : 'no-page') : (manual?.status ?? 'published');

@@ -7,15 +7,15 @@
 | 項目 | 數字 |
 | --- | --- |
 | 舊頁數 | 31 |
-| 產出草稿 | 27（Q&A 6、出版品 1、文件 4、資料集 1、檢驗 1、頁面 6、服務 1、影音 1、新聞 5、疾病頁 1） |
-| 舊頁型別 | 併入疾病頁 10、Q&A 1、出版品 1、文件 4、資料集 1、檢驗 1、頁面 3、清單頁 3、服務 1、影音 1、新聞 5 |
-| 平均信心 | 0.93 |
+| 產出草稿 | 27（Q&A 6、出版品 1、文件 4、資料集 1、檢驗 1、頁面 5、專區 1、服務 1、影音 1、新聞 5、疾病頁 1） |
+| 舊頁型別 | 併入疾病頁 10、Q&A 1、出版品 1、文件 4、資料集 1、檢驗 1、頁面 3、清單頁 2、專區 1、服務 1、影音 1、新聞 5 |
+| 平均信心 | 0.94 |
 | 需人工檢視（信心 < 0.6） | 0 |
 | 既有內容已存在（供比對） | 24 |
 | 附件與圖片 | 8（附件 5、內文圖片 2、資料檔 1；圖片待補 alt 2、PDF 無文字層 1） |
 | 草稿 schema 驗證 | 27 / 27 通過 |
-| 問題 | 錯誤 0、警告 11、提示 96 |
-| 移轉清單對應 | 對上 8 / 8 筆；status 變化 0；note 更新 8；仍待移轉 1；與清單判定不同 0 |
+| 問題 | 錯誤 0、警告 11、提示 97 |
+| 移轉清單對應 | 對上 8 / 8 筆；status 變化 0；note 更新 0；仍待移轉 1；與清單判定不同 0 |
 | 模板推導項（清單只寫例外） | 18 項，對上 18；只列在 migration-patch.json 的 derivedItems，不寫回清單 |
 | 清單沒有的舊頁 | 5（migration-patch.json 的 unmatchedPages 有建議的 pending 項目） |
 
@@ -42,7 +42,7 @@
 | 15 | 檢驗資訊<br><sub>www.cdc.gov.tw/Category/MPage/iudh9pwKq4SQ9Oqzy_UBOH</sub> | 檢驗 → `labtest.enterovirus` | `labtest.enterovirus`（既有） | 1 | fields-pending | 既有內容已存在，供比對，不建議覆蓋 |
 | 16 | 通報定義與時限<br><sub>www.cdc.gov.tw/Category/MPage/Wo5A9PG4FAHfk5guqQMY4D</sub> | 頁面 → `page.enterovirus-notify` | — | 1 | — | 核對後入庫（新站尚無對應內容） |
 | 17 | 新聞稿列表<br><sub>www.cdc.gov.tw/Bulletin/List/vEuUWp4k0BNJpajvJT8uC8</sub> | 清單頁 → `page.enterovirus-news-list` | `disease.enterovirus`（既有） | 0.6 | — | 清單頁，不轉換（新站由系統自動產生列表） |
-| 18 | 相關連結<br><sub>www.cdc.gov.tw/Category/List/-Eb5hH3dNxaSbt0ybYI10D</sub> | 清單頁 → `page.enterovirus-links` | — | 0.6 | — | 清單頁，不轉換（新站由系統自動產生列表） |
+| 18 | 相關連結<br><sub>www.cdc.gov.tw/Category/List/-Eb5hH3dNxaSbt0ybYI10D</sub> | 專區 → `topic.enterovirus-links` | — | 1 | — | 核對後入庫（新站尚無對應內容） |
 | 19 | 腸病毒防治專區（首頁）<br><sub>www.cdc.gov.tw/Category/Page/6QsvXrxmvoS6chnGweHl7I</sub> | 頁面 → `page.enterovirus-ev-zone` | `disease.enterovirus`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 20 | 教托育機構腸病毒防治指引<br><sub>www.cdc.gov.tw/File/Get/fkUlQvd40ukJzqzUefwg9A</sub> | 文件 → `doc.ev-childcare-guideline.2026-09-10` | `doc.ev-childcare-guideline.2026-09-10`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 21 | 停課標準與疫情通報<br><sub>www.cdc.gov.tw/Category/MPage/qsqJZnirkyFTBcEqWteQUP</sub> | 頁面 → `page.enterovirus-ev-closure-reporting` | `doc.ev-childcare-guideline.2026-09-10`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |

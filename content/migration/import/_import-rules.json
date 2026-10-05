@@ -1,7 +1,7 @@
 {
   "id": "import-rules.legacy",
   "type": "import-rules",
-  "version": 3,
+  "version": 4,
   "title": "舊站匯出批次轉換規則（scripts/import-legacy.mjs 讀取）",
   "summary": "把舊站 CMS 匯出（每頁 .html＋.json 側檔）對應成新站內容草稿的規則：URL 模式→型別與目錄、類別→權責單位、疾病別名→疾病 id、標題關鍵字→疾病頁區塊、Bulletin typeid→newsType、信心計算權重與人工檢視門檻。規則是資料不是程式；正式批次先改這個檔再跑。",
   "owner": "unit.it",
@@ -481,6 +481,13 @@
       ],
       "clarification": [
         "public"
+      ],
+      "topic": [
+        "public"
+      ],
+      "vaccine": [
+        "public",
+        "professional"
       ]
     },
     "professionalCategories": [

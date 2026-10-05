@@ -1,0 +1,64 @@
+{
+  "id": "page.chik-news-list",
+  "type": "page",
+  "title": "新聞稿列表",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2018-03-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.chikungunya"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "2025-08-05 中國大陸廣東省屈公病疫情升溫，提升旅遊疫情建議至第二級 2025-11-11 致醫界通函第 603 號：登革熱／屈公病防治工作指引第 16 版公布 2026-07-01 致醫界通函第 612 號：登革熱／屈公病防治工…",
+  "slug": "chik-news-list",
+  "bodyMarkdown": "- 2025-08-05 [中國大陸廣東省屈公病疫情升溫，提升旅遊疫情建議至第二級](https://www.cdc.gov.tw/Bulletin/Detail/dufsjMxg3pX7vpZwr6qLo7?typeid=9)\n- 2025-11-11 [致醫界通函第 603 號：登革熱／屈公病防治工作指引第 16 版公布](https://www.cdc.gov.tw/Bulletin/Detail/baFqJvppFHqAysw9PA4y4S?typeid=11)\n- 2026-07-01 [致醫界通函第 612 號：登革熱／屈公病防治工作指引第 17 版自即日起適用](https://www.cdc.gov.tw/Bulletin/Detail/1VyQ-8qHlvjXmbC8S-YUyO?typeid=11)",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/List/I8xFC9Fukg1T4AJCPH3HFL"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.6,
+    "issues": [
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「屈公病／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（屈公病）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 news-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "list-page",
+        "severity": "info",
+        "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+      },
+      {
+        "code": "target-type-differs",
+        "severity": "info",
+        "message": "對應的新站內容是 disease.chikungunya（disease），草稿以 page 暫存，請比對後改建為 disease"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/List/I8xFC9Fukg1T4AJCPH3HFL",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "disease.chikungunya"
+    ]
+  }
+}

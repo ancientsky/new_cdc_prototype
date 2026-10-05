@@ -6,7 +6,7 @@
   "applied": {
     "statusChanges": [],
     "targetChanges": [],
-    "noteChanges": 12
+    "noteChanges": 0
   },
   "rule": "只改 status／target／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。",
   "items": [
@@ -272,7 +272,7 @@
       "current": {
         "status": "migrated",
         "target": "publication.poster-tb-seven-languages",
-        "note": "七語海報建立出版品書目，翻譯狀態逐語言標示。　【匯入 2026-10-03】草稿 page.tb-materials-poster（信心 0.4；既有內容已存在，供比對；需人工檢視）"
+        "note": "七語海報建立出版品書目，翻譯狀態逐語言標示。　【匯入 2026-10-03】草稿 publication.poster-tb-seven-languages（信心 0.8；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
@@ -290,7 +290,7 @@
       "change": {
         "status": false,
         "target": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -300,7 +300,7 @@
       "current": {
         "status": "migrated",
         "target": "media.tb-cough-two-weeks",
-        "note": "影片補逐字稿與章節，標示依據正本；正本修訂時自動判定是否過時。　【匯入 2026-10-03】草稿 page.tb-materials-video（信心 0.8；既有內容已存在，供比對）"
+        "note": "影片補逐字稿與章節，標示依據正本；正本修訂時自動判定是否過時。　【匯入 2026-10-03】草稿 media.tb-cough-two-weeks（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
@@ -318,7 +318,7 @@
       "change": {
         "status": false,
         "target": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -328,7 +328,7 @@
       "current": {
         "status": "migrated",
         "target": "media.migrant-worker-health-check",
-        "note": "【匯入 2026-10-03】草稿 page.tb-materials-migrant（信心 0.8；既有內容已存在，供比對）"
+        "note": "【匯入 2026-10-03】草稿 media.migrant-worker-health-check（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
@@ -346,7 +346,7 @@
       "change": {
         "status": false,
         "target": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -608,7 +608,7 @@
       "current": {
         "status": "merged",
         "target": "service.notifiable-disease-report",
-        "note": "併入法定傳染病通報服務頁；時限不再手寫，由傳染病主檔自動產生。　【匯入 2026-10-03】草稿 page.tb-notify（信心 1；既有內容已存在，供比對）"
+        "note": "併入法定傳染病通報服務頁；時限不再手寫，由傳染病主檔自動產生。　【匯入 2026-10-03】草稿 service.notifiable-disease-report（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "merged",
@@ -626,7 +626,7 @@
       "change": {
         "status": false,
         "target": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -636,7 +636,7 @@
       "current": {
         "status": "merged",
         "target": "labtest.tuberculosis",
-        "note": "檢體、容器、保存運送與時限改為結構化欄位，與通報時限自動比對一致性。　【匯入 2026-10-03】草稿 page.tb-lab（信心 1；既有內容已存在，供比對）"
+        "note": "檢體、容器、保存運送與時限改為結構化欄位，與通報時限自動比對一致性。　【匯入 2026-10-03】草稿 labtest.tuberculosis（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "merged",
@@ -654,7 +654,7 @@
       "change": {
         "status": false,
         "target": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -664,7 +664,7 @@
       "current": {
         "status": "merged",
         "target": "dataset.tb-new-cases",
-        "note": "網頁靜態表格改為開放資料集與 API，標示更新頻率與授權。　【匯入 2026-10-03】草稿 page.tb-stats（信心 0.6；既有內容已存在，供比對）"
+        "note": "網頁靜態表格改為開放資料集與 API，標示更新頻率與授權。　【匯入 2026-10-03】草稿 dataset.tb-new-cases（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "merged",
@@ -682,7 +682,7 @@
       "change": {
         "status": false,
         "target": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -748,7 +748,7 @@
       "current": {
         "status": "merged",
         "target": "service.ltbi-treatment",
-        "note": "改為申請服務頁：對象、步驟、應備文件、處理天數。　【匯入 2026-10-03】草稿 page.tb-ltbi（信心 1；既有內容已存在，供比對）"
+        "note": "改為申請服務頁：對象、步驟、應備文件、處理天數。　【匯入 2026-10-03】草稿 service.ltbi-treatment（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "merged",
@@ -766,7 +766,7 @@
       "change": {
         "status": false,
         "target": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -832,7 +832,7 @@
       "current": {
         "status": "pending",
         "target": null,
-        "note": "名單需轉為結構化資料集（院所代碼、地址、聯絡窗口）並建立更新頻率後上架；完成前保留舊頁。　【匯入 2026-10-03】草稿 page.tb-mdr-hospitals（信心 0.8）"
+        "note": "名單需轉為結構化資料集（院所代碼、地址、聯絡窗口）並建立更新頻率後上架；完成前保留舊頁。　【匯入 2026-10-03】草稿 service.tb-mdr-hospitals（信心 0.8）"
       },
       "proposed": {
         "status": "pending",
@@ -850,7 +850,7 @@
       "change": {
         "status": false,
         "target": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -916,7 +916,7 @@
       "current": {
         "status": "migrated",
         "target": "service.tb-treatment-subsidy",
-        "note": "改為申請服務頁，載明法源、步驟與聯絡窗口。　【匯入 2026-10-03】草稿 page.tb-subsidy（信心 1；既有內容已存在，供比對）"
+        "note": "改為申請服務頁，載明法源、步驟與聯絡窗口。　【匯入 2026-10-03】草稿 service.tb-treatment-subsidy（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
@@ -934,7 +934,7 @@
       "change": {
         "status": false,
         "target": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -1000,7 +1000,7 @@
       "current": {
         "status": "pending",
         "target": null,
-        "note": "投影片 40 餘份，待權責單位挑選現行版本、補講者備註與機讀摘要後上架；過期教材不移轉。　【匯入 2026-10-03】草稿 page.tb-training-slides（信心 0.3；需人工檢視）"
+        "note": "投影片 40 餘份，待權責單位挑選現行版本、補講者備註與機讀摘要後上架；過期教材不移轉。　【匯入 2026-10-03】草稿 page.tb-training-slides（信心 0.5；需人工檢視）"
       },
       "proposed": {
         "status": "pending",
@@ -1018,7 +1018,7 @@
       "change": {
         "status": false,
         "target": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -1028,7 +1028,7 @@
       "current": {
         "status": "merged",
         "target": "topic.tb-prevention",
-        "note": "外部連結併入防治專區，納入每日連結健康檢查。　【匯入 2026-10-03】草稿 page.tb-links（信心 0.4；既有內容已存在，供比對；需人工檢視）"
+        "note": "外部連結併入防治專區，納入每日連結健康檢查。　【匯入 2026-10-03】草稿 page.tb-links（信心 0.6；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "merged",
@@ -1046,7 +1046,7 @@
       "change": {
         "status": false,
         "target": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -1112,7 +1112,7 @@
       "current": {
         "status": "dropped",
         "target": null,
-        "note": "過期活動頁（報名已於 2019 年截止），無保存價值；不移轉、不轉址，伺服器回 410。　【匯入 2026-10-03】草稿 page.tb-event-2019（信心 0.8）"
+        "note": "過期活動頁（報名已於 2019 年截止），無保存價值；不移轉、不轉址，伺服器回 410。　【匯入 2026-10-03】草稿 page.tb-event-2019（信心 1）"
       },
       "proposed": {
         "status": "dropped",
@@ -1130,7 +1130,7 @@
       "change": {
         "status": false,
         "target": false,
-        "note": true
+        "note": false
       }
     }
   ],
@@ -1221,7 +1221,15 @@
     "statusChanges": 0,
     "pendingToMigrated": 0,
     "targetChanges": 0,
-    "noteChanges": 12,
+    "noteChanges": 0,
     "stillPending": 3
-  }
+  },
+  "derivedCovered": [
+    {
+      "key": "manual",
+      "oldTitle": "工作手冊",
+      "coveredBy": "tb-manual-2019",
+      "target": "doc.tb-manual.2025-07-01"
+    }
+  ]
 }

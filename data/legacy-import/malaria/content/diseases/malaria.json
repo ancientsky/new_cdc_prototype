@@ -1,0 +1,266 @@
+{
+  "id": "disease.malaria",
+  "type": "disease",
+  "title": "瘧疾",
+  "slug": "malaria",
+  "nameEn": "Malaria",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2018-03-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.malaria"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "瘧疾由瘧蚊傳播，台灣已於 1965 年根除，現有病例均為境外移入。前往非洲、南亞等流行地區前應諮詢預防用藥，返國後發燒務必告知旅遊史。",
+  "aliases": [
+    "Malaria",
+    "打擺子"
+  ],
+  "legalCategory": 2,
+  "icd10": [
+    "B50",
+    "B51",
+    "B52",
+    "B53",
+    "B54"
+  ],
+  "notifyWithinHours": 24,
+  "transmission": [
+    "vector",
+    "bloodborne"
+  ],
+  "keyFacts": {
+    "symptoms": "典型症狀為發燒、畏寒、冒汗交替出現，伴隨頭痛、肌肉痛、倦怠、噁心。初期症狀類似流感，容易被忽略。",
+    "transmission": "瘧疾經由帶有瘧原蟲的瘧蚊（Anopheles）叮咬傳播，瘧蚊多在夜間活動。",
+    "prevention": "出發前 4–6 週至旅遊醫學門診，依目的地評估預防用藥（如 atovaquone-proguanil、doxycycl…"
+  },
+  "blocks": [
+    {
+      "key": "what-to-do",
+      "heading": "我該怎麼辦",
+      "markdown": "",
+      "status": "pending"
+    },
+    {
+      "key": "symptoms",
+      "heading": "症狀與警示徵象",
+      "markdown": "典型症狀為**發燒、畏寒、冒汗**交替出現，伴隨頭痛、肌肉痛、倦怠、噁心。初期症狀類似流感，容易被忽略。\n\n**惡性瘧**可能快速惡化，造成腦性瘧疾（意識障礙、抽搐）、嚴重貧血、腎衰竭、呼吸窘迫，未及時治療可能致命。間日瘧與卵形瘧可在肝臟潛伏，數月後復發。\n\n**注意：**意識不清、抽搐、呼吸困難、尿量減少、黃疸或出血，請立即就醫。"
+    },
+    {
+      "key": "transmission",
+      "heading": "怎麼傳染",
+      "markdown": "### 致病原\n\n瘧疾經由帶有瘧原蟲的**瘧蚊**（Anopheles）叮咬傳播，瘧蚊多在夜間活動。也可能經由輸血、器官移植或共用針具傳染，孕婦可傳給胎兒。**不會經由一般接觸人傳人**。台灣已無本土瘧疾，但仍有矮小瘧蚊分布，因此境外移入病例需要及早診斷與治療。\n\n瘧疾經由帶有瘧原蟲的**瘧蚊**（Anopheles）叮咬傳播，瘧蚊多在夜間活動。也可能經由輸血、器官移植或共用針具傳染，孕婦可傳給胎兒。**不會經由一般接觸人傳人**。台灣已無本土瘧疾，但仍有矮小瘧蚊分布，因此境外移入病例需要及早診斷與治療。\n\n瘧疾經由帶有瘧原蟲的**瘧蚊**（Anopheles）叮咬傳播，瘧蚊多在夜間活動。也可能經由輸血、器官移植或共用針具傳染，孕婦可傳給胎兒。**不會經由一般接觸人傳人**。台灣已無本土瘧疾，但仍有矮小瘧蚊分布，因此境外移入病例需要及早診斷與治療。\n\n瘧疾的潛伏期為 **惡性瘧 7–14 天；其他型別可達數月**。\n\n| 項目 | 內容 |\n| --- | --- |\n| 潛伏期 | 惡性瘧 7–14 天；其他型別可達數月 |\n| 可傳染期 | 病媒／接觸相關（瘧蚊叮咬；輸血或共用針具） |"
+    },
+    {
+      "key": "prevention",
+      "heading": "如何預防",
+      "markdown": "- 出發前 **4–6 週**至旅遊醫學門診，依目的地評估**預防用藥**（如 atovaquone-proguanil、doxycycline、mefloquine）。\n- 旅途中夜間做好防蚊：使用含 DEET 的防蚊液、睡覺使用蚊帳、選擇有紗窗或空調的住宿。\n- 預防用藥需依指示在出發前、旅途中與返國後持續服用。\n- 返國一年內發燒，就醫時務必告知旅遊史。"
+    },
+    {
+      "key": "treatment",
+      "heading": "診斷與治療",
+      "markdown": "確診後依瘧原蟲種類與嚴重度使用抗瘧藥物治療；重症瘧疾需住院以注射型 artesunate 治療。疾管署儲備部分抗瘧藥物，供醫療院所申請使用。間日瘧與卵形瘧需加上 primaquine 根除肝臟內的休眠體（使用前需檢查 G6PD）。"
+    },
+    {
+      "key": "vaccine",
+      "heading": "疫苗",
+      "markdown": "WHO 已建議在非洲流行地區兒童使用瘧疾疫苗，但不適用於一般旅客。旅客預防仍以防蚊與預防用藥為主。"
+    },
+    {
+      "key": "situation",
+      "heading": "目前疫情與統計",
+      "markdown": "國內每年境外移入病例約 10–20 例，以非洲感染的惡性瘧為主。\n\n近年確定病例趨勢如下表與圖（**示意數字，非正式統計**，正式數字見統計資料）：\n\n| 年度 | 確定病例數（示意） | 每十萬人口發生率（示意） |\n| --- | --- | --- |\n| 2021 | 505 | 24.5 |\n| 2022 | 940 | 28 |\n| 2023 | 475 | 31.5 |\n| 2024 | 910 | 35 |\n| 2025 | 445 | 38.5 |\n\n![malaria-trend](/files/disease.malaria/malaria-trend.png)"
+    },
+    {
+      "key": "faq",
+      "heading": "常見問題",
+      "markdown": "",
+      "status": "pending"
+    }
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Disease/SubIndex/rHgtQdKhzVW9hGmLeapjuO",
+    "https://www.cdc.gov.tw/Category/MPage/dg4uL74VvlYRLHUOQypG8J"
+  ],
+  "assets": [
+    {
+      "file": "malaria-trend.png",
+      "kind": "image",
+      "alt": "malaria-trend",
+      "license": "OGDL-1.0",
+      "needsAlt": true,
+      "mime": "image/png",
+      "bytes": 359,
+      "sha256": "5da3a4e98fdc80539a7542ee2e19aea774fc32d0efe990856a52ca52d1d53354",
+      "width": 160,
+      "height": 90
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.98,
+    "issues": [
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「瘧疾／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（瘧疾）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-pathogen（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-epidemiology（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "image-no-alt",
+        "severity": "warn",
+        "message": "圖片「malaria-trend.png」舊頁沒有替代文字，暫用檔名「malaria-trend」，請補 alt（needsAlt）"
+      },
+      {
+        "code": "image-license-assumed",
+        "severity": "info",
+        "message": "圖片「malaria-trend.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-transmission（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-incubation（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-symptoms（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-prevention（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-treatment（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「瘧疾／預防接種」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（瘧疾）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 vaccine（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留共 169 處（7 個來源頁）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Disease/SubIndex/rHgtQdKhzVW9hGmLeapjuO",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "sourceUrls": [
+      "https://www.cdc.gov.tw/Disease/SubIndex/rHgtQdKhzVW9hGmLeapjuO",
+      "https://www.cdc.gov.tw/Category/MPage/dg4uL74VvlYRLHUOQypG8J"
+    ],
+    "existing": true,
+    "compareWith": [
+      "disease.malaria"
+    ],
+    "mergedFrom": [
+      {
+        "page": "01-intro",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/rHgtQdKhzVW9hGmLeapjuO",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "02-intro-pathogen",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/rHgtQdKhzVW9hGmLeapjuO",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "03-intro-epidemiology",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/rHgtQdKhzVW9hGmLeapjuO",
+        "blocks": [
+          "situation"
+        ]
+      },
+      {
+        "page": "04-intro-transmission",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/rHgtQdKhzVW9hGmLeapjuO",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "05-intro-incubation",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/rHgtQdKhzVW9hGmLeapjuO",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "06-intro-symptoms",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/rHgtQdKhzVW9hGmLeapjuO",
+        "blocks": [
+          "symptoms"
+        ]
+      },
+      {
+        "page": "07-intro-prevention",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/rHgtQdKhzVW9hGmLeapjuO",
+        "blocks": [
+          "prevention"
+        ]
+      },
+      {
+        "page": "08-intro-treatment",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/rHgtQdKhzVW9hGmLeapjuO",
+        "blocks": [
+          "treatment"
+        ]
+      },
+      {
+        "page": "09-vaccine",
+        "url": "https://www.cdc.gov.tw/Category/MPage/dg4uL74VvlYRLHUOQypG8J",
+        "blocks": [
+          "vaccine"
+        ]
+      }
+    ],
+    "introMarkdown": "瘧疾由瘧蚊傳播，台灣已於 1965 年根除，現有病例均為境外移入。前往非洲、南亞等流行地區前應諮詢預防用藥，返國後發燒務必告知旅遊史。\n\n| 項目 | 內容 |\n| --- | --- |\n| 法定傳染病類別 | 第二類 |\n| 通報時限 | 24 小時內 |\n| ICD-10 | B50、B51、B52、B53、B54 |\n| 主要傳染途徑 | 瘧蚊叮咬；輸血或共用針具 |\n| 潛伏期 | 惡性瘧 7–14 天；其他型別可達數月 |"
+  }
+}

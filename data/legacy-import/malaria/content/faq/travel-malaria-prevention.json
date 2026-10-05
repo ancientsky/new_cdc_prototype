@@ -1,0 +1,62 @@
+{
+  "id": "faq.travel-malaria-prevention",
+  "type": "faq",
+  "title": "去非洲需要吃瘧疾預防藥嗎？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2018-06-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.malaria"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "前往撒哈拉以南非洲等瘧疾流行地區，多數情況建議使用預防用藥，但種類與服法需由旅遊醫學門診醫師依目的地、停留時間與個人健康狀況評估開立。",
+  "question": "去非洲需要吃瘧疾預防藥嗎？",
+  "answerMarkdown": "前往撒哈拉以南非洲等瘧疾流行地區，多數情況建議使用**預防用藥**，但種類與服法需由旅遊醫學門診醫師依目的地、停留時間與個人健康狀況評估開立。\n\n預防用藥通常需在出發前開始服用，並在返國後持續服用一段時間。同時仍要做好夜間防蚊。返國一年內若發燒，請就醫並告知旅遊史。",
+  "basedOn": [
+    "disease.malaria"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/Fpb_HE3bigFTOpCIKFyaTC"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 14 處（mso 樣式 6、Mso 類別 4、命名空間標籤 4）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「瘧疾／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（瘧疾）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/Fpb_HE3bigFTOpCIKFyaTC",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.travel-malaria-prevention"
+    ]
+  }
+}

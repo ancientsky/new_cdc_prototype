@@ -1,9 +1,9 @@
-// 結構化型別的欄位抽取（第十一輪／第四批）：publication、media、dataset、labtest、service、clarification。
+// 結構化型別的欄位抽取（第十一輪／第四批）：publication、media、dataset、labtest、service、clarification；第五批加 topic（相關連結 → 專區）、vaccine（疫苗專區 → 疫苗頁）。
 // 原則：舊頁能看出來的就填（表格列、清單項、連結、嵌入影片 id、標題關鍵字），看不出來的填「（待補：…）」佔位並記 fields-pending 警告，
 // 讓草稿先過 schema、進報告供人比對，而不是以 page／news 暫存再請人改型別。
 const CLAR_WORDS = ['網傳', '謠言', '澄清', '不實', '錯誤訊息', '假訊息'];
 
-export const STRUCTURED_TYPES = new Set(['publication', 'media', 'dataset', 'labtest', 'service', 'clarification']);
+export const STRUCTURED_TYPES = new Set(['publication', 'media', 'dataset', 'labtest', 'service', 'clarification', 'topic', 'vaccine']);
 export const PENDING = (what) => `（待補：${what}）`;
 
 /** Markdown 表格 → [{cells:[...]}]（跳過分隔列） */
@@ -27,7 +27,10 @@ export function kvTable(md) {
 }
 
 export const listItems = (md) => String(md ?? '').split('\n').map((l) => /^\s*(?:[-*]|\d+[.)、])\s+(.+)$/.exec(l)?.[1]?.trim()).filter(Boolean);
-export const mdLinks = (md) => [...String(md ?? '').matchAll(/\[([^\]]*)\]\((https?:\/\/[^)\s]+)\)/g)].map((m) => ({ label: m[1], href: m[2] }));
+/** Markdown 連結（含已改寫成新站相對路徑的；不含圖片與純錨點） */
+export const mdLinks = (md) => [...String(md ?? '').replace(/!\[[^\]]*\]\([^)]*\)/g, '').matchAll(/\[([^\]]*)\]\(((?:https?:\/\/|\/)[^)\s]+)\)/g)].map((m) => ({ label: m[1].trim(), href: m[2] }));
+export const hostOf = (href) => { try { return new URL(href).hostname.toLowerCase(); } catch { return ''; } };
+export const isCdcHost = (href) => /(^|\.)cdc\.gov\.tw$/.test(hostOf(href));
 const strip = (s) => String(s ?? '').replace(/\*\*/g, '').trim();
 const dash = (v) => !v || /^[—\-–]+$/.test(strip(v));
 
@@ -143,6 +146,32 @@ export function extractFields(kind, ctx) {
     if (!v.clear) notes.push('標題與內文看不出判定，verdict 暫填 false，請公關室確認');
     const share = ctx.summary ?? '';
     return { fields: { claim, verdict: v.verdict, clarificationMarkdown: md, shareText: share.length > 10 ? share : `${claim}：${v.verdict === 'false' ? '不正確' : v.verdict === 'outdated' ? '已過時' : v.verdict === 'partly-true' ? '部分正確' : '正確'}，詳見疾管署說明。`, reportChannel: '1922' }, pending, notes };
+  }
+  if (kind === 'topic') {
+    // 相關連結頁 → 專區（resource-hub）：連結清單進 links（站外標 external、舊站未對應網址加 note），全部 unchecked 交連結檢查工具；清單以外的文字當 introMarkdown
+    const links = mdLinks(md).filter((l) => !/^#/.test(l.href)).map((l) => {
+      const abs = /^https?:\/\//.test(l.href);
+      const ext = abs && !isCdcHost(l.href);
+      return { label: l.label || l.href, href: l.href, ...(ext ? { external: true } : {}), ...(abs && hostOf(l.href) === 'www.cdc.gov.tw' ? { note: '舊站網址，尚未對應到新站路徑' } : {}), status: 'unchecked' };
+    });
+    if (!links.length) { links.push({ label: PENDING('舊頁沒有可辨識的連結'), href: pageUrl, status: 'unchecked' }); pending.push('links'); }
+    else notes.push(`${links.length} 個連結 status 填 unchecked，由連結檢查更新；${links.filter((l) => l.external).length} 個站外`);
+    const intro = String(md ?? '').split('\n').filter((l) => !/^\s*(?:[-*]|\d+[.)、])\s+\[/.test(l) && !l.trim().startsWith('|')).join('\n').replace(/\n{3,}/g, '\n\n').trim();
+    return { fields: { slug: String(draftId).replace(/^[a-z]+\./, ''), kind: 'resource-hub', introMarkdown: intro || `${title}。`, links }, pending, notes };
+  }
+  if (kind === 'vaccine') {
+    // 疫苗專區頁 → 疫苗頁：表格列有「公費」字樣的列當 publicFunded（對象＝第一欄、劑次＝第二欄）；英文名舊頁看不出來 ⇒ 待補
+    const rows = mdTableRows(md);
+    const head = rows[0]?.map(strip) ?? [];
+    const col = (re, dflt) => { const i = head.findIndex((h) => re.test(h)); return i >= 0 ? i : dflt; };
+    const gi = col(/對象|族群|適用/, 0); const si = col(/劑|時程|接種/, 1);
+    const publicFunded = rows.slice(1).filter((r) => r.some((c) => /公費/.test(c))).map((r) => ({ group: strip(r[gi]) || PENDING('對象'), schedule: strip(r[si]) && !dash(r[si]) ? strip(r[si]) : PENDING('劑次與時程') }));
+    if (!publicFunded.length) { pending.push('publicFunded'); notes.push('舊頁表格沒有「公費」列，publicFunded 先為空陣列（自費疫苗可維持空）'); }
+    pending.push('nameEn');
+    const where = mdLinks(md).find((l) => /vaxmap|接種地點|合約院所|哪裡打/.test(`${l.href} ${l.label}`));
+    const fields = { slug: String(draftId).replace(/^[a-z]+\./, ''), nameEn: PENDING('疫苗英文名'), publicFunded, bodyMarkdown: md };
+    if (where) fields.whereUrl = where.href;
+    return { fields, pending, notes };
   }
   return { fields: {}, pending, notes };
 }

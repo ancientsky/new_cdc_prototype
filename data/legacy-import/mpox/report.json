@@ -1,0 +1,2221 @@
+{
+  "format": "cdc-legacy-import-report/1",
+  "batch": "mpox",
+  "generatedAt": "2026-10-05T02:30:00Z",
+  "exportedAt": "2026-10-03",
+  "simulated": true,
+  "source": {
+    "dir": "data/legacy-export/mpox",
+    "note": "模擬匯出：依 content/migration/_disease-template.json（標準子頁 20 項）＋ 近 3 年新聞 2 篇合成，不是舊站的真實資料（網址 ID、數字、PDF 內容皆為示意）。正式匯出取代整個目錄即可。",
+    "site": "https://www.cdc.gov.tw"
+  },
+  "rules": {
+    "file": "content/migration/import/_import-rules.json",
+    "version": 4
+  },
+  "manifest": {
+    "id": "migration.mpox",
+    "file": null,
+    "synthetic": true,
+    "items": 0,
+    "extends": "migration-template.disease",
+    "derivedItems": 20,
+    "derivedCovered": [],
+    "disease": "disease.mpox"
+  },
+  "summary": {
+    "pages": 22,
+    "drafts": 14,
+    "mergedPages": 9,
+    "byType": {
+      "faq": 1,
+      "publication": 1,
+      "media": 1,
+      "document": 3,
+      "dataset": 1,
+      "labtest": 1,
+      "page": 2,
+      "topic": 1,
+      "news": 2,
+      "disease": 1
+    },
+    "byKind": {
+      "disease-block": 9,
+      "faq": 1,
+      "publication": 1,
+      "media": 1,
+      "document": 3,
+      "dataset": 1,
+      "labtest": 1,
+      "page": 1,
+      "list": 1,
+      "topic": 1,
+      "news": 2
+    },
+    "byAction": {
+      "merge-into-disease": 9,
+      "compare-existing": 6,
+      "review-before-publish": 6,
+      "skip-list": 1
+    },
+    "avgConfidence": 0.94,
+    "needsReview": 0,
+    "existing": 16,
+    "schemaInvalid": 0,
+    "assets": {
+      "total": 5,
+      "attachment": 2,
+      "image": 2,
+      "data": 1,
+      "needsAlt": 2,
+      "noTextLayer": 1
+    },
+    "issues": {
+      "error": 0,
+      "warn": 9,
+      "info": 74
+    },
+    "manifest": {
+      "items": 0,
+      "matched": 0,
+      "missingPages": 0,
+      "derivedItems": 20,
+      "derivedMatched": 20
+    },
+    "exportedAt": "2026-10-03",
+    "pagesWithoutOutput": 0
+  },
+  "pages": [
+    {
+      "key": "01-intro",
+      "file": "01-intro.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/aXu8JDvA20XT7R_YM999td",
+        "title": "疾病介紹",
+        "category": "M痘／疾病介紹",
+        "publishedAt": "2022-06-23",
+        "updatedAt": "2026-03-18",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "M痘",
+          "疾病介紹"
+        ],
+        "tab": ""
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro",
+      "manifestDerived": true,
+      "target": "disease.mpox",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.mpox"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.mpox"
+      ],
+      "outputs": [
+        {
+          "id": "disease.mpox",
+          "type": "disease",
+          "role": "merged",
+          "block": "transmission",
+          "file": "content/diseases/mpox.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 45 處（mso 樣式 17、Mso 類別 14、命名空間標籤 14）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「M痘／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（M痘）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "02-intro-pathogen",
+      "file": "02-intro-pathogen.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/aXu8JDvA20XT7R_YM999td",
+        "title": "致病原",
+        "category": "M痘／疾病介紹",
+        "publishedAt": "2022-06-23",
+        "updatedAt": "2026-03-18",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "M痘",
+          "疾病介紹",
+          "致病原"
+        ],
+        "tab": "pathogen"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-pathogen",
+      "manifestDerived": true,
+      "target": "disease.mpox",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.mpox"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.mpox"
+      ],
+      "outputs": [
+        {
+          "id": "disease.mpox",
+          "type": "disease",
+          "role": "merged",
+          "block": "transmission",
+          "file": "content/diseases/mpox.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 5 處（mso 樣式 3、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「M痘／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（M痘）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-pathogen（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "03-intro-epidemiology",
+      "file": "03-intro-epidemiology.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/aXu8JDvA20XT7R_YM999td",
+        "title": "流行病學",
+        "category": "M痘／疾病介紹",
+        "publishedAt": "2022-06-23",
+        "updatedAt": "2026-03-18",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "M痘",
+          "疾病介紹",
+          "流行病學"
+        ],
+        "tab": "epidemiology"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-epidemiology",
+      "manifestDerived": true,
+      "target": "disease.mpox",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.mpox"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.mpox"
+      ],
+      "outputs": [
+        {
+          "id": "disease.mpox",
+          "type": "disease",
+          "role": "merged",
+          "block": "situation",
+          "file": "content/diseases/mpox.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 63 處（mso 樣式 22、Mso 類別 21、命名空間標籤 20）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「M痘／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（M痘）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-epidemiology（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "image-no-alt",
+          "severity": "warn",
+          "message": "圖片「mpox-trend.png」舊頁沒有替代文字，暫用檔名「mpox-trend」，請補 alt（needsAlt）"
+        },
+        {
+          "code": "image-license-assumed",
+          "severity": "info",
+          "message": "圖片「mpox-trend.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 1,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "04-intro-transmission",
+      "file": "04-intro-transmission.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/aXu8JDvA20XT7R_YM999td",
+        "title": "傳染方式",
+        "category": "M痘／疾病介紹",
+        "publishedAt": "2022-06-23",
+        "updatedAt": "2026-03-18",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "M痘",
+          "疾病介紹",
+          "傳染方式"
+        ],
+        "tab": "transmission"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-transmission",
+      "manifestDerived": true,
+      "target": "disease.mpox",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.mpox"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.mpox"
+      ],
+      "outputs": [
+        {
+          "id": "disease.mpox",
+          "type": "disease",
+          "role": "merged",
+          "block": "transmission",
+          "file": "content/diseases/mpox.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 8 處（mso 樣式 4、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「M痘／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（M痘）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-transmission（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "05-intro-incubation",
+      "file": "05-intro-incubation.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/aXu8JDvA20XT7R_YM999td",
+        "title": "潛伏期",
+        "category": "M痘／疾病介紹",
+        "publishedAt": "2022-06-23",
+        "updatedAt": "2026-03-18",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "M痘",
+          "疾病介紹",
+          "潛伏期"
+        ],
+        "tab": "incubation"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-incubation",
+      "manifestDerived": true,
+      "target": "disease.mpox",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.mpox"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.mpox"
+      ],
+      "outputs": [
+        {
+          "id": "disease.mpox",
+          "type": "disease",
+          "role": "merged",
+          "block": "transmission",
+          "file": "content/diseases/mpox.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 23 處（mso 樣式 9、Mso 類別 7、命名空間標籤 7）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「M痘／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（M痘）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-incubation（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "06-intro-symptoms",
+      "file": "06-intro-symptoms.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/aXu8JDvA20XT7R_YM999td",
+        "title": "發病症狀",
+        "category": "M痘／疾病介紹",
+        "publishedAt": "2022-06-23",
+        "updatedAt": "2026-03-18",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "M痘",
+          "疾病介紹",
+          "發病症狀"
+        ],
+        "tab": "symptoms"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-symptoms",
+      "manifestDerived": true,
+      "target": "disease.mpox",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.mpox"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.mpox"
+      ],
+      "outputs": [
+        {
+          "id": "disease.mpox",
+          "type": "disease",
+          "role": "merged",
+          "block": "symptoms",
+          "file": "content/diseases/mpox.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 11 處（mso 樣式 5、Mso 類別 3、命名空間標籤 3）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「M痘／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（M痘）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-symptoms（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "07-intro-prevention",
+      "file": "07-intro-prevention.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/aXu8JDvA20XT7R_YM999td",
+        "title": "預防方法",
+        "category": "M痘／疾病介紹",
+        "publishedAt": "2022-06-23",
+        "updatedAt": "2026-03-18",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "M痘",
+          "疾病介紹",
+          "預防方法"
+        ],
+        "tab": "prevention"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-prevention",
+      "manifestDerived": true,
+      "target": "disease.mpox",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.mpox"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.mpox"
+      ],
+      "outputs": [
+        {
+          "id": "disease.mpox",
+          "type": "disease",
+          "role": "merged",
+          "block": "prevention",
+          "file": "content/diseases/mpox.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 17 處（mso 樣式 17、Mso 類別 4、命名空間標籤 0）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「M痘／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（M痘）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-prevention（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "08-intro-treatment",
+      "file": "08-intro-treatment.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/aXu8JDvA20XT7R_YM999td",
+        "title": "治療方法與就醫資訊",
+        "category": "M痘／疾病介紹",
+        "publishedAt": "2022-06-23",
+        "updatedAt": "2026-03-18",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "M痘",
+          "疾病介紹",
+          "治療方法"
+        ],
+        "tab": "treatment"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-treatment",
+      "manifestDerived": true,
+      "target": "disease.mpox",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.mpox"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.mpox"
+      ],
+      "outputs": [
+        {
+          "id": "disease.mpox",
+          "type": "disease",
+          "role": "merged",
+          "block": "treatment",
+          "file": "content/diseases/mpox.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「M痘／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（M痘）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-treatment（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "09-vaccine",
+      "file": "09-vaccine.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/6g4ELlOqCPBSeGl_xt58t2",
+        "title": "預防接種建議",
+        "category": "M痘／預防接種",
+        "publishedAt": "2022-06-23",
+        "updatedAt": "2026-03-18",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "M痘",
+          "預防接種"
+        ],
+        "tab": "vaccine"
+      },
+      "pattern": "mpage",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "vaccine",
+      "manifestDerived": true,
+      "target": "disease.mpox",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.mpox"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.mpox"
+      ],
+      "outputs": [
+        {
+          "id": "disease.mpox",
+          "type": "disease",
+          "role": "merged",
+          "block": "vaccine",
+          "file": "content/diseases/mpox.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 4 處（mso 樣式 2、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「M痘／預防接種」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（M痘）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 vaccine（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "10-qa-list",
+      "file": "10-qa-list.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/QAPage/qmMaCThh1HmKBrk0zmkYw8",
+        "title": "Q&A",
+        "category": "M痘／Q&A",
+        "publishedAt": "2022-08-01",
+        "updatedAt": "2026-03-18",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "M痘",
+          "Q&A"
+        ],
+        "tab": ""
+      },
+      "pattern": "qa",
+      "kind": "faq",
+      "type": "faq",
+      "manifestKey": "qa-list",
+      "manifestDerived": true,
+      "target": "disease.mpox",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "faq.mpox-who-vaccine",
+        "disease.mpox"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.mpox"
+      ],
+      "outputs": [
+        {
+          "id": "faq.mpox-who-vaccine",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/mpox-who-vaccine.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 8 處（mso 樣式 4、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「M痘／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（M痘）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "11-materials-poster",
+      "file": "11-materials-poster.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/xdmnb43pMif6QG4JK7Xdqe",
+        "title": "衛教宣導：單張海報",
+        "category": "M痘／衛教宣導",
+        "publishedAt": "2022-06-23",
+        "updatedAt": "2026-03-18",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "M痘",
+          "衛教宣導",
+          "單張海報"
+        ],
+        "tab": "posters"
+      },
+      "pattern": "category-list",
+      "kind": "publication",
+      "type": "publication",
+      "manifestKey": "materials-poster",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.mpox"
+      ],
+      "outputs": [
+        {
+          "id": "publication.mpox-materials-poster",
+          "type": "publication",
+          "role": "draft",
+          "file": "content/publications/mpox-materials-poster.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 4 處（mso 樣式 1、Mso 類別 2、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「M痘／衛教宣導」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（M痘）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 materials-poster（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 publication，草稿直接建成 publication，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "pdf-no-text-layer",
+          "severity": "warn",
+          "message": "PDF「mpox-poster-7lang.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+        },
+        {
+          "code": "image-no-alt",
+          "severity": "warn",
+          "message": "圖片「mpox-poster.png」舊頁沒有替代文字，暫用檔名「mpox-poster」，請補 alt（needsAlt）"
+        },
+        {
+          "code": "image-license-assumed",
+          "severity": "info",
+          "message": "圖片「mpox-poster.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 1,
+        "links": 5,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "12-materials-video",
+      "file": "12-materials-video.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/cQcSwFkMT5XWnlxmb76aj-",
+        "title": "衛教宣導：影片",
+        "category": "M痘／衛教宣導",
+        "publishedAt": "2026-09-05",
+        "updatedAt": "2026-03-18",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "M痘",
+          "衛教宣導",
+          "影音"
+        ],
+        "tab": "video"
+      },
+      "pattern": "mpage",
+      "kind": "media",
+      "type": "media",
+      "manifestKey": "materials-video",
+      "manifestDerived": true,
+      "target": "media.mpox-vaccine",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "media.mpox-vaccine"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.mpox"
+      ],
+      "outputs": [
+        {
+          "id": "media.mpox-vaccine",
+          "type": "media",
+          "role": "draft",
+          "file": "content/media/mpox-vaccine.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 24 處（mso 樣式 10、Mso 類別 7、命名空間標籤 7）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「M痘／衛教宣導」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（M痘）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 materials-video（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 media（media.mpox-vaccine），草稿直接建成 media，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "模擬匯出的影片 id 為示意值"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "13-manual",
+      "file": "13-manual.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/DiseaseManual/4ZWV5h25svHNXJKpXk95bk",
+        "title": "工作手冊",
+        "category": "M痘／法規與指引",
+        "publishedAt": "2022-06-23",
+        "updatedAt": "2026-03-18",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "M痘",
+          "法規與指引",
+          "工作手冊"
+        ],
+        "tab": ""
+      },
+      "pattern": "disease-docs",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "manual",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.mpox"
+      ],
+      "outputs": [
+        {
+          "id": "doc.mpox-manual.2022-06-23",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/mpox-manual.2022-06-23.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「M痘／法規與指引」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（M痘）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 manual（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（37 字，低於 40）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2022-06-23"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "14-case-definition",
+      "file": "14-case-definition.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/DiseaseDefine/iWUpwd-A5TUuyR7YM_HFZZ",
+        "title": "病例定義",
+        "category": "M痘／法規與指引",
+        "publishedAt": "2022-06-23",
+        "updatedAt": "2026-03-18",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "M痘",
+          "法規與指引",
+          "病例定義"
+        ],
+        "tab": ""
+      },
+      "pattern": "disease-docs",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "case-definition",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.mpox"
+      ],
+      "outputs": [
+        {
+          "id": "doc.mpox-case-definition.2022-06-23",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/mpox-case-definition.2022-06-23.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「M痘／法規與指引」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（M痘）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 case-definition（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（37 字，低於 40）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2022-06-23"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "15-guideline",
+      "file": "15-guideline.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/File/Get/69RXxo_H2U7TyvYvMBHYoZ",
+        "title": "治療指引",
+        "category": "M痘／法規與指引",
+        "publishedAt": "2022-06-23",
+        "updatedAt": "2026-03-18",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "M痘",
+          "法規與指引",
+          "治療指引"
+        ],
+        "tab": ""
+      },
+      "pattern": "file",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "guideline",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.mpox"
+      ],
+      "outputs": [
+        {
+          "id": "doc.mpox-guideline.2022-06-23",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/mpox-guideline.2022-06-23.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「M痘／法規與指引」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（M痘）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 guideline（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（37 字，低於 40）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2022-06-23"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "16-stats",
+      "file": "16-stats.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/ZRw3IE-DsR69lDELfbz-rB",
+        "title": "統計資料",
+        "category": "M痘／統計資料",
+        "publishedAt": "2022-06-23",
+        "updatedAt": "2026-03-18",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "M痘",
+          "統計資料"
+        ],
+        "tab": "statistics"
+      },
+      "pattern": "category-list",
+      "kind": "dataset",
+      "type": "dataset",
+      "manifestKey": "stats",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "／統計",
+      "diseases": [
+        "disease.mpox"
+      ],
+      "outputs": [
+        {
+          "id": "dataset.mpox-stats",
+          "type": "dataset",
+          "role": "draft",
+          "file": "content/datasets/mpox-stats.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 61 處（mso 樣式 21、Mso 類別 20、命名空間標籤 20）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 stats（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 dataset，草稿直接建成 dataset，看不出來的欄位以「（待補）」佔位"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "17-lab",
+      "file": "17-lab.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/40VEXSdLdOfP1hvetNmQUM",
+        "title": "檢驗資訊",
+        "category": "M痘／檢驗資訊",
+        "publishedAt": "2025-01-15",
+        "updatedAt": "2026-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "M痘",
+          "檢驗資訊"
+        ],
+        "tab": "lab"
+      },
+      "pattern": "mpage",
+      "kind": "labtest",
+      "type": "labtest",
+      "manifestKey": "lab",
+      "manifestDerived": true,
+      "target": "labtest.mpox",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "labtest.mpox"
+      ],
+      "owner": "unit.lab",
+      "ownerRule": "／檢驗",
+      "diseases": [
+        "disease.mpox"
+      ],
+      "outputs": [
+        {
+          "id": "labtest.mpox",
+          "type": "labtest",
+          "role": "draft",
+          "file": "content/labtests/mpox.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 36 處（mso 樣式 18、Mso 類別 11、命名空間標籤 9）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 lab（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 labtest（labtest.mpox），草稿直接建成 labtest，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "labtest 的欄位從舊頁看不出來，以「（待補）」佔位：specimens[].container/volume/storage/transport"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "labs 暫填 cdc-lab（署檢驗中心），合約與區域實驗室請檢驗中心確認"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "18-notify",
+      "file": "18-notify.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/EHadAzU-vUv65tYy_r4Ece",
+        "title": "通報定義與時限",
+        "category": "M痘／通報定義",
+        "publishedAt": "2022-06-23",
+        "updatedAt": "2026-03-18",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "M痘",
+          "通報定義"
+        ],
+        "tab": "notify"
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "notify",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "／通報",
+      "diseases": [
+        "disease.mpox"
+      ],
+      "outputs": [
+        {
+          "id": "page.mpox-notify",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/mpox-notify.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 38 處（mso 樣式 14、Mso 類別 12、命名空間標籤 12）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 notify（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "19-news-list",
+      "file": "19-news-list.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/List/1b_2Bai8-aoblQWkwPU5ru",
+        "title": "新聞稿列表",
+        "category": "M痘／最新消息",
+        "publishedAt": "2022-06-23",
+        "updatedAt": "2026-03-18",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "M痘",
+          "最新消息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "news-list",
+      "manifestDerived": true,
+      "target": "disease.mpox",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.mpox"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.mpox"
+      ],
+      "outputs": [
+        {
+          "id": "page.mpox-news-list",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/mpox-news-list.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.6,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「M痘／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（M痘）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 news-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        },
+        {
+          "code": "target-type-differs",
+          "severity": "info",
+          "message": "對應的新站內容是 disease.mpox（disease），草稿以 page 暫存，請比對後改建為 disease"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 2,
+        "legacyLinks": 2,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "20-links",
+      "file": "20-links.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/vd335REbDZXudlwc97M_2C",
+        "title": "相關連結",
+        "category": "M痘／相關連結",
+        "publishedAt": "2022-06-23",
+        "updatedAt": "2026-03-18",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "M痘",
+          "相關連結"
+        ],
+        "tab": "links"
+      },
+      "pattern": "category-list",
+      "kind": "topic",
+      "type": "topic",
+      "manifestKey": "links",
+      "manifestDerived": true,
+      "target": "topic.sti-resources",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "topic.sti-resources"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.mpox"
+      ],
+      "outputs": [
+        {
+          "id": "topic.mpox-links",
+          "type": "topic",
+          "role": "draft",
+          "file": "content/topics/mpox-links.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「M痘／相關連結」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（M痘）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 links（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 topic（topic.sti-resources），草稿直接建成 topic，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "4 個連結 status 填 unchecked，由連結檢查更新；3 個站外"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 4,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "21-news-2026-08-25-mpox-clade-i",
+      "file": "21-news-2026-08-25-mpox-clade-i.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/LWw0ouKnmrdPOmby8GtHsy?typeid=9",
+        "title": "非洲 M痘 clade I 疫情持續，前往當地請避免親密接觸與野生動物",
+        "category": "M痘／最新消息",
+        "publishedAt": "2026-08-25",
+        "updatedAt": "2026-08-25",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "M痘",
+          "最新消息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-08-25-mpox-clade-i"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.mpox"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-08-25-mpox-clade-i",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-08-25-mpox-clade-i.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 7 處（mso 樣式 3、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「M痘／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（M痘）"
+        },
+        {
+          "code": "not-in-manifest",
+          "severity": "warn",
+          "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "22-news-2025-06-10-mpox-summer",
+      "file": "22-news-2025-06-10-mpox-summer.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/Jf2m_HzrGOgHJmU87rm7-t?typeid=9",
+        "title": "暑假出遊與大型活動將至，符合條件者請把握接種 2 劑 M痘疫苗",
+        "category": "M痘／最新消息",
+        "publishedAt": "2025-06-10",
+        "updatedAt": "2025-06-10",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "M痘",
+          "最新消息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2025-06-10-mpox-summer"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.mpox"
+      ],
+      "outputs": [
+        {
+          "id": "news.2025-06-10-mpox-summer",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2025-06-10-mpox-summer.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「M痘／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（M痘）"
+        },
+        {
+          "code": "not-in-manifest",
+          "severity": "warn",
+          "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    }
+  ],
+  "drafts": [
+    {
+      "id": "faq.mpox-who-vaccine",
+      "type": "faq",
+      "title": "M痘疫苗誰可以打公費？要打幾劑？",
+      "file": "content/faq/mpox-who-vaccine.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.mpox-who-vaccine",
+        "disease.mpox"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "publication.mpox-materials-poster",
+      "type": "publication",
+      "title": "M痘衛教宣導：單張海報",
+      "file": "content/publications/mpox-materials-poster.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 2,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "11-materials-poster"
+      ],
+      "merged": false
+    },
+    {
+      "id": "media.mpox-vaccine",
+      "type": "media",
+      "title": "M痘衛教宣導：影片",
+      "file": "content/media/mpox-vaccine.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "media.mpox-vaccine"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "12-materials-video"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.mpox-manual.2022-06-23",
+      "type": "document",
+      "title": "工作手冊",
+      "file": "content/documents/mpox-manual.2022-06-23.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "13-manual"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.mpox-case-definition.2022-06-23",
+      "type": "document",
+      "title": "病例定義",
+      "file": "content/documents/mpox-case-definition.2022-06-23.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "14-case-definition"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.mpox-guideline.2022-06-23",
+      "type": "document",
+      "title": "治療指引",
+      "file": "content/documents/mpox-guideline.2022-06-23.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "15-guideline"
+      ],
+      "merged": false
+    },
+    {
+      "id": "dataset.mpox-stats",
+      "type": "dataset",
+      "title": "M痘統計資料",
+      "file": "content/datasets/mpox-stats.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "16-stats"
+      ],
+      "merged": false
+    },
+    {
+      "id": "labtest.mpox",
+      "type": "labtest",
+      "title": "M痘檢驗資訊",
+      "file": "content/labtests/mpox.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "labtest.mpox"
+      ],
+      "status": "review",
+      "owner": "unit.lab",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "17-lab"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.mpox-notify",
+      "type": "page",
+      "title": "通報定義與時限",
+      "file": "content/pages/mpox-notify.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "18-notify"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.mpox-news-list",
+      "type": "page",
+      "title": "新聞稿列表",
+      "file": "content/pages/mpox-news-list.json",
+      "confidence": 0.6,
+      "existing": true,
+      "compareWith": [
+        "disease.mpox"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "19-news-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "topic.mpox-links",
+      "type": "topic",
+      "title": "M痘相關連結",
+      "file": "content/topics/mpox-links.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "topic.sti-resources"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "20-links"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-08-25-mpox-clade-i",
+      "type": "news",
+      "title": "非洲 M痘 clade I 疫情持續，前往當地請避免親密接觸與野生動物",
+      "file": "content/news/2026-08-25-mpox-clade-i.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-08-25-mpox-clade-i"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "21-news-2026-08-25-mpox-clade-i"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2025-06-10-mpox-summer",
+      "type": "news",
+      "title": "暑假出遊與大型活動將至，符合條件者請把握接種 2 劑 M痘疫苗",
+      "file": "content/news/2025-06-10-mpox-summer.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2025-06-10-mpox-summer"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "22-news-2025-06-10-mpox-summer"
+      ],
+      "merged": false
+    },
+    {
+      "id": "disease.mpox",
+      "type": "disease",
+      "title": "M痘",
+      "file": "content/diseases/mpox.json",
+      "confidence": 0.98,
+      "existing": true,
+      "compareWith": [
+        "disease.mpox"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "01-intro",
+        "02-intro-pathogen",
+        "03-intro-epidemiology",
+        "04-intro-transmission",
+        "05-intro-incubation",
+        "06-intro-symptoms",
+        "07-intro-prevention",
+        "08-intro-treatment",
+        "09-vaccine"
+      ],
+      "merged": true
+    }
+  ],
+  "migration": {
+    "patchFile": "migration-patch.json",
+    "applied": false,
+    "summary": {
+      "derivedItems": 20,
+      "derivedMatched": 20,
+      "items": 0,
+      "matched": 0,
+      "missingPages": 0,
+      "unmatchedPages": 2,
+      "agree": 0,
+      "conflicts": 0,
+      "statusChanges": 0,
+      "pendingToMigrated": 0,
+      "targetChanges": 0,
+      "noteChanges": 0,
+      "stillPending": 0
+    }
+  }
+}

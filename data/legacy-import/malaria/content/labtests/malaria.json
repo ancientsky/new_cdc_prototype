@@ -1,0 +1,100 @@
+{
+  "id": "labtest.malaria",
+  "type": "labtest",
+  "title": "瘧疾檢驗資訊",
+  "owner": "unit.lab",
+  "publishedAt": "2025-01-15",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.malaria"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "瘧疾：EDTA 全血 3 mL 及厚、薄血片各 2 片，室溫或冷藏 24 小時內送驗，做顯微鏡鏡檢與 PCR 蟲種鑑定；結果陰性但高度懷疑應重複採檢。",
+  "disease": "disease.malaria",
+  "specimens": [
+    {
+      "name": "EDTA 全血",
+      "container": "（待補：舊頁未載明，依採檢手冊補）",
+      "volume": "（待補：舊頁未載明，依採檢手冊補）",
+      "storage": "（待補：舊頁未載明，依採檢手冊補）",
+      "transport": "（待補：舊頁未載明，依採檢手冊補）"
+    },
+    {
+      "name": "厚",
+      "container": "（待補：舊頁未載明，依採檢手冊補）",
+      "volume": "（待補：舊頁未載明，依採檢手冊補）",
+      "storage": "（待補：舊頁未載明，依採檢手冊補）",
+      "transport": "（待補：舊頁未載明，依採檢手冊補）"
+    },
+    {
+      "name": "薄血片",
+      "container": "（待補：舊頁未載明，依採檢手冊補）",
+      "volume": "（待補：舊頁未載明，依採檢手冊補）",
+      "storage": "（待補：舊頁未載明，依採檢手冊補）",
+      "transport": "（待補：舊頁未載明，依採檢手冊補）"
+    }
+  ],
+  "labs": [
+    "cdc-lab"
+  ],
+  "notesMarkdown": "瘧疾：EDTA 全血 3 mL 及厚、薄血片各 2 片，室溫或冷藏 24 小時內送驗，做顯微鏡鏡檢與 PCR 蟲種鑑定；結果陰性但高度懷疑應重複採檢。\n\n| 項目 | 內容 |\n| --- | --- |\n| 檢體 | EDTA 全血、厚、薄血片 |\n| 送驗時限 | 24 小時內 |\n| 生物安全等級 | BSL-2 |\n\n- 惡性瘧可能快速惡化，治療不需等待確認結果。\n- 陰性但臨床高度懷疑者，每 12–24 小時重複採檢，共 3 次。\n- 送驗單註明旅遊國家與預防用藥史。",
+  "sendWithinHours": 24,
+  "biosafetyLevel": "BSL-2",
+  "basedOn": [
+    "disease.malaria"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/OuIJKtMV2X64PXwMLLYzyd"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 40 處（mso 樣式 22、Mso 類別 12、命名空間標籤 9）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 lab（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站型別是 labtest（labtest.malaria），草稿直接建成 labtest，看不出來的欄位以「（待補）」佔位"
+      },
+      {
+        "code": "fields-pending",
+        "severity": "warn",
+        "message": "labtest 的欄位從舊頁看不出來，以「（待補）」佔位：specimens[].container/volume/storage/transport"
+      },
+      {
+        "code": "field-guessed",
+        "severity": "info",
+        "message": "labs 暫填 cdc-lab（署檢驗中心），合約與區域實驗室請檢驗中心確認"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/OuIJKtMV2X64PXwMLLYzyd",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "labtest.malaria"
+    ]
+  }
+}

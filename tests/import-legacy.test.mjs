@@ -679,7 +679,13 @@ test('流感批次：欄目內頁依清單目標建成 document；例外涵蓋�
   const cd = drafts.find((x) => x.id === clar.outputs[0].id);
   assert.equal(cd.type, 'clarification'); assert.equal(cd.verdict, 'false'); assert.match(cd.claim, /流感疫苗/); assert.ok(cd.shareText.length > 10 && cd.clarificationMarkdown.length > 40);
   assert.equal(clar.existing, true);
-  assert.deepEqual(s.byType, { faq: 10, publication: 1, media: 1, document: 5, dataset: 1, labtest: 1, page: 5, service: 2, news: 4, clarification: 1, disease: 1 });
+  assert.deepEqual(s.byType, { faq: 10, publication: 1, media: 1, document: 5, dataset: 1, labtest: 1, page: 4, service: 2, news: 4, clarification: 1, disease: 1, topic: 1 });
+  // (6) 第五批前置：模板「相關連結」位置（related topic）建成 topic 草稿，id 固定 topic.<slug>-links；推導到的既有專區只當比對對象，不搶它的 id；連結全 unchecked、站外標 external
+  const links = report.pages.find((p) => p.manifestKey === 'links');
+  assert.equal(links.type, 'topic'); assert.equal(links.outputs[0].id, 'topic.influenza-links'); assert.deepEqual(links.compareWith, ['topic.ltc-infection-control']);
+  const topic = drafts.find((d) => d.id === 'topic.influenza-links');
+  assert.equal(topic.kind, 'resource-hub'); assert.ok(topic.links.length >= 1 && topic.links.every((l) => l.status === 'unchecked'));
+  assert.ok(!links.issues.some((i) => i.code === 'list-page' || i.code === 'target-type-differs'));
   assert.ok(s.avgConfidence >= 0.8 && s.needsReview <= 3);
   assert.deepEqual(JSON.parse(fs.readFileSync(mf, 'utf8')), readJSON(path.join(CONTENT, 'migration/influenza.json')), '沒加 --apply-migration 不改清單');
 });
@@ -728,8 +734,9 @@ test('模板展開：同型別多筆取現行最新；人工例外已指向同�
   const idx = loadContentIndex(CONTENT);
   const dmap = new Map(master.map((d) => [d.id, d]));
   const flu = expandTemplateItems({ manifest: readJSON(path.join(CONTENT, 'migration/influenza.json')), contentDir: CONTENT, index: idx, diseaseById: dmap });
-  assert.equal(flu.length, 18);
-  assert.ok(!flu.some((d) => d.key === 'manual' || d.key === 'guideline'), '作業手冊與抗病毒藥劑使用對象已由例外指向 ⇒ 不推導');
+  assert.equal(flu.length, 20);
+  assert.equal(flu.filter((d) => !d.coveredBy).length, 18);
+  assert.deepEqual(flu.filter((d) => d.coveredBy).map((d) => [d.key, d.coveredBy]), [['manual', 'flu-vaccine-manual'], ['guideline', 'flu-antiviral-eligibility']], '作業手冊與抗病毒藥劑使用對象已由例外指向 ⇒ 保留但標 coveredBy，匯入與模擬器都不處理');
   const bare = expandTemplateItems({ manifest: { extends: 'migration-template.disease', scope: { kind: 'disease', disease: 'disease.influenza' }, items: [] }, contentDir: CONTENT, index: idx, diseaseById: dmap });
   assert.equal(bare.length, 20);
   assert.equal(bare.find((d) => d.key === 'guideline').target, 'doc.flu-antiviral-eligibility.2026-09-21', '兩個版次取現行最新的，不是字母序第一個（6 月版）');
@@ -787,6 +794,25 @@ test('第四批：麻疹＋腸病毒各一份模擬匯出；出版品、影音�
   for (const { mf } of [M, E]) assert.deepEqual(JSON.parse(fs.readFileSync(mf, 'utf8')), readJSON(path.join(CONTENT, `migration/${path.basename(mf)}`)), '沒加 --apply-migration 不改清單');
 });
 
+test('第五批前置：清單把疫苗專區頁標成「已移轉」到疫苗頁 ⇒ 草稿建成 vaccine（同 id、existing 供比對、publicFunded 由表格「公費」列抽、英文名待補）；「併入」維持疾病頁疫苗區塊', () => {
+  const dir = tmp('ev-vaccine');
+  const mf = path.join(dir, 'enterovirus.json');
+  const raw = readJSON(path.join(CONTENT, 'migration/enterovirus.json'));
+  raw.items.find((i) => i.key === 'ev-ev71-vaccine').status = 'migrated';
+  fs.writeFileSync(mf, JSON.stringify(raw, null, 2));
+  const out = path.join(dir, 'out');
+  const { report, drafts } = runImport({ exportDir: EXPORT_EV, outDir: out, manifestPath: mf, slug: 'enterovirus', now: NOW });
+  const p = report.pages.find((p) => p.manifestKey === 'ev-ev71-vaccine');
+  assert.equal(p.kind, 'vaccine'); assert.equal(p.type, 'vaccine'); assert.equal(p.outputs[0].id, 'vaccine.ev71'); assert.equal(p.existing, true);
+  assert.ok(p.issues.some((i) => i.code === 'type-from-manifest') && p.issues.some((i) => i.code === 'fields-pending' && /nameEn/.test(i.message)));
+  const v = drafts.find((d) => d.id === 'vaccine.ev71');
+  assert.equal(report.summary.schemaInvalid, 0);
+  assert.equal(v.slug, 'ev71'); assert.ok(Array.isArray(v.publicFunded)); assert.ok(v.bodyMarkdown.length > 20); assert.deepEqual(v.basedOn, ['disease.enterovirus']);
+  assert.ok(fs.existsSync(path.join(out, 'content/vaccines/ev71.json')));
+  // 既有輸出（status merged）維持疾病頁疫苗區塊，不建 vaccine
+  assert.equal(readJSON(path.join(ROOT, 'data/legacy-import/enterovirus/report.json')).pages.find((p) => p.manifestKey === 'ev-ev71-vaccine').type, 'disease');
+});
+
 test('已提交的第四批輸出（measles、enterovirus）：schema 全過、清單只多 note、verified 全是 false、模擬匯出可重現；五批重跑後 TB／登革熱／流感的既有輸出也更新', () => {
   for (const [slug, pages] of [['measles', 28], ['enterovirus', 31], ['tuberculosis', 40], ['dengue', 31], ['influenza', 31]]) {
     const dir = path.join(ROOT, 'data/legacy-import', slug);
@@ -803,5 +829,37 @@ test('已提交的第四批輸出（measles、enterovirus）：schema 全過、�
     const dir = tmp('exp4');
     generateDisease(id, dir);
     for (const f of fs.readdirSync(exp).filter((x) => x.endsWith('.json') && x !== '_export.json')) assert.deepEqual(JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')), JSON.parse(fs.readFileSync(path.join(exp, f), 'utf8')), `${id} ${f}`);
+  }
+});
+
+const BATCH5 = [['rabies', 20], ['malaria', 20], ['hepatitis-a', 20], ['rubella', 20], ['chikungunya', 23], ['mpox', 22]];
+
+test('第五批：沒有人工清單的疾病用合成清單（模板推導 20 項）轉檔；synthetic 記在報告、--apply-migration 拒絕寫檔；相關連結建成 topic', () => {
+  const dir = tmp('b5');
+  const { report, patch, drafts } = runImport({ exportDir: path.join(ROOT, 'data/legacy-export/rabies'), outDir: path.join(dir, 'out'), manifestPath: path.join(dir, 'rabies.json'), slug: 'rabies', now: NOW });
+  assert.equal(report.manifest.synthetic, true); assert.equal(report.manifest.file, null); assert.equal(report.manifest.derivedItems, 20); assert.deepEqual(report.manifest.derivedCovered, []);
+  assert.equal(report.summary.pages, 20); assert.equal(report.summary.schemaInvalid, 0); assert.equal(report.summary.pagesWithoutOutput, 0);
+  assert.equal(patch.summary.derivedMatched, 20); assert.equal(patch.summary.conflicts, 0); assert.equal(report.migration.applied, false);
+  assert.ok(report.pages.every((p) => p.manifestDerived), '每頁都對到模板位置');
+  assert.equal(drafts.find((d) => d.type === 'topic')?.id, 'topic.rabies-links');
+  assert.throws(() => runImport({ exportDir: path.join(ROOT, 'data/legacy-export/rabies'), outDir: path.join(dir, 'out2'), manifestPath: path.join(dir, 'rabies.json'), slug: 'rabies', now: NOW, applyMigration: true }), /沒有人工清單檔可寫/);
+});
+
+test('已提交的第五批輸出（狂犬病、瘧疾、A 型肝炎、德國麻疹、屈公病、M 痘）：schema 全過、合成清單未寫檔、模擬匯出可重現', () => {
+  for (const [slug, pages] of BATCH5) {
+    const dir = path.join(ROOT, 'data/legacy-import', slug);
+    const r = readJSON(path.join(dir, 'report.json'));
+    assert.equal(r.summary.pages, pages, slug); assert.equal(r.summary.schemaInvalid, 0, slug); assert.equal(r.summary.pagesWithoutOutput, 0, slug);
+    assert.equal(r.manifest.synthetic, true, slug); assert.equal(r.migration.applied, false, slug);
+    assert.ok(!fs.existsSync(path.join(CONTENT, `migration/${slug}.json`)), `${slug} 不該產生人工清單檔`);
+    for (const d of r.drafts) assert.ok(fs.existsSync(path.join(dir, d.file)), d.file);
+    for (const t of ['labtest', 'dataset', 'publication', 'media', 'topic', 'disease']) assert.equal(r.summary.byType[t], 1, `${slug} ${t}`);
+    assert.equal(readJSON(path.join(dir, 'migration-patch.json')).summary.derivedMatched, 20, slug);
+  }
+  for (const [slug] of BATCH5) {
+    const exp = path.join(ROOT, 'data/legacy-export', slug);
+    const dir = tmp('exp5');
+    generateDisease(`disease.${slug}`, dir);
+    for (const f of fs.readdirSync(exp).filter((x) => x.endsWith('.json') && x !== '_export.json')) assert.deepEqual(readJSON(path.join(dir, f)), readJSON(path.join(exp, f)), `${slug} ${f}`);
   }
 });

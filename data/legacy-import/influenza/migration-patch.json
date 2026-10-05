@@ -6,7 +6,7 @@
   "applied": {
     "statusChanges": [],
     "targetChanges": [],
-    "noteChanges": 3
+    "noteChanges": 0
   },
   "rule": "只改 status／target／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。",
   "items": [
@@ -73,7 +73,7 @@
       "current": {
         "status": "migrated",
         "target": "doc.flu-vaccine-manual.2026-09-16",
-        "note": "給合約院所與衛生所的作業手冊，依據接種計畫文件，計畫修訂時自動加註。　【匯入 2026-10-03】草稿 doc.flu-vaccine-manual.2026-09-16-2（信心 1；既有內容已存在，供比對）"
+        "note": "給合約院所與衛生所的作業手冊，依據接種計畫文件，計畫修訂時自動加註。　【匯入 2026-10-03】草稿 doc.flu-vaccine-manual.2026-09-16（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
@@ -91,7 +91,7 @@
       "change": {
         "status": false,
         "target": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -101,7 +101,7 @@
       "current": {
         "status": "pending",
         "target": null,
-        "note": "原型不自己列院所，只做深連結到接種點查詢（vaxmap）；待與衛生局確認名單更新責任與深連結參數。　【匯入 2026-10-03】草稿 page.influenza-flu-vaccine-contract-sites（信心 0.6）"
+        "note": "原型不自己列院所，只做深連結到接種點查詢（vaxmap）；待與衛生局確認名單更新責任與深連結參數。　【匯入 2026-10-03】草稿 service.influenza-flu-vaccine-contract-sites（信心 0.6）"
       },
       "proposed": {
         "status": "pending",
@@ -119,7 +119,7 @@
       "change": {
         "status": false,
         "target": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -185,7 +185,7 @@
       "current": {
         "status": "pending",
         "target": null,
-        "note": "合約名單依院所簽約狀態每週異動，需決定改為資料集（含更新頻率）或深連結；未決定前舊站唯讀保留。　【匯入 2026-10-03】草稿 page.influenza-flu-antiviral-contract-sites（信心 0.6）"
+        "note": "合約名單依院所簽約狀態每週異動，需決定改為資料集（含更新頻率）或深連結；未決定前舊站唯讀保留。　【匯入 2026-10-03】草稿 service.influenza-flu-antiviral-contract-sites（信心 0.6）"
       },
       "proposed": {
         "status": "pending",
@@ -203,7 +203,7 @@
       "change": {
         "status": false,
         "target": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -596,9 +596,9 @@
       },
       "page": "18-links",
       "draftIds": [
-        "page.influenza-links"
+        "topic.influenza-links"
       ],
-      "confidence": 0.6,
+      "confidence": 1,
       "existing": true,
       "matched": true
     }
@@ -615,7 +615,21 @@
     "statusChanges": 0,
     "pendingToMigrated": 0,
     "targetChanges": 0,
-    "noteChanges": 3,
+    "noteChanges": 0,
     "stillPending": 2
-  }
+  },
+  "derivedCovered": [
+    {
+      "key": "manual",
+      "oldTitle": "工作手冊",
+      "coveredBy": "flu-vaccine-manual",
+      "target": "doc.flu-vaccine-manual.2026-09-16"
+    },
+    {
+      "key": "guideline",
+      "oldTitle": "治療指引",
+      "coveredBy": "flu-antiviral-eligibility",
+      "target": "doc.flu-antiviral-eligibility.2026-09-21"
+    }
+  ]
 }
