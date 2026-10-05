@@ -1,0 +1,72 @@
+{
+  "id": "media.dengue-village-chief",
+  "type": "media",
+  "title": "里長帶頭巡倒清刷：社區防登革熱篇",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-07-15",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "由里長示範帶領社區志工「巡、倒、清、刷」清除積水容器，說明孳生源清除比噴藥更重要，並提醒出現發燒、頭痛、骨頭痛應儘速就醫。",
+  "mediaType": "video",
+  "youtubeId": "xxxxxxxxxxx",
+  "producedAt": "2026-07-15",
+  "transcriptMarkdown": "### \\[00:00\\] 里長的一週巡查\n\n里長：每個禮拜六早上，我們里的志工都會集合，一條巷子一條巷子走。登革熱是靠埃及斑蚊和白線斑蚊傳播的，蚊子在哪裡生，我們就去哪裡清。\n\n### \\[00:35\\] 巡倒清刷四步驟\n\n旁白：防登革熱，記住四個字：「巡、倒、清、刷」。巡：巡視住家內外可能積水的容器，像花盆底盤、廢輪胎、水桶、帆布。倒：把積水倒掉。清：不要的容器清除，要用的容器倒放或加蓋。刷：容器內壁要刷洗，因為斑蚊的卵會黏在壁上，只倒水不刷，卵還是會孵化。\n\n志工：我們最常找到的地方，是陽台花盆底盤、冷氣滴水，還有工地的積水，下過雨後一定要再巡一次。",
+  "captions": [
+    "zh-TW"
+  ],
+  "basedOn": [
+    "disease.dengue"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/ListContent/44k4KHKf48A57gNpJRnnj3?uaid=VQRmxBAVBgtS5ytV4SMyZ0"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 12 處（mso 樣式 4、Mso 類別 4、命名空間標籤 4）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "素材的權責單位依疾病主檔取 unit.acute-infectious（登革熱），不歸宣導素材欄目的公關室"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站型別是 media（media.dengue-village-chief），草稿直接建成 media，看不出來的欄位以「（待補）」佔位"
+      },
+      {
+        "code": "field-guessed",
+        "severity": "info",
+        "message": "模擬匯出的影片 id 為示意值"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/ListContent/44k4KHKf48A57gNpJRnnj3?uaid=VQRmxBAVBgtS5ytV4SMyZ0",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "media.dengue-village-chief"
+    ]
+  }
+}

@@ -28,6 +28,9 @@
   "series": "麻疹宣導素材",
   "abstractMarkdown": "麻疹宣導單張與海報，歡迎下載運用（多國語言版本見附件）。\n\n- [麻疹防治海報（中文）](/files/publication.measles-materials-poster/measles-poster-7lang.pdf)\n- [麻疹防治海報（英文）](/files/publication.measles-materials-poster/measles-poster-7lang.pdf)\n- [麻疹防治海報（越南文）](/files/publication.measles-materials-poster/measles-poster-7lang.pdf)\n- [麻疹防治海報（印尼文）](/files/publication.measles-materials-poster/measles-poster-7lang.pdf)\n- [麻疹防治海報（泰文）](/files/publication.measles-materials-poster/measles-poster-7lang.pdf)\n\n![measles-poster](/files/publication.measles-materials-poster/measles-poster.png)",
   "pdfUrl": "/files/publication.measles-materials-poster/measles-poster-7lang.pdf",
+  "basedOn": [
+    "disease.measles"
+  ],
   "legacyUrls": [
     "https://www.cdc.gov.tw/Category/List/ndPddmtQlGVto1kLRIiu3S"
   ],

@@ -1,0 +1,747 @@
+{
+  "format": "cdc-legacy-migration-patch/1",
+  "manifest": "migration.materials",
+  "batch": "materials",
+  "exportedAt": "2026-10-03",
+  "applied": {
+    "statusChanges": [],
+    "targetChanges": [],
+    "newPathChanges": [],
+    "noteChanges": 21
+  },
+  "rule": "只改 status／target／newPath／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。",
+  "items": [
+    {
+      "key": "animation-ev-handwashing",
+      "oldTitle": "濕搓沖捧擦：腸病毒洗手五步驟動畫",
+      "page": "01-animation-ev-handwashing",
+      "current": {
+        "status": "migrated",
+        "target": "media.enterovirus-handwashing",
+        "newPath": null,
+        "note": "動畫頁，動畫與文字稿對應既有媒體內容"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": "media.enterovirus-handwashing",
+        "newPath": null,
+        "note": "動畫頁，動畫與文字稿對應既有媒體內容　【匯入 2026-10-03】草稿 media.enterovirus-handwashing（信心 1；既有內容已存在，供比對）"
+      },
+      "suggestion": {
+        "status": "migrated",
+        "target": "media.enterovirus-handwashing",
+        "newPath": null
+      },
+      "draftIds": [
+        "media.enterovirus-handwashing"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "commercial-media-table",
+      "oldTitle": "防疫衛教宣導之商業媒體運用情形一覽表",
+      "page": "02-commercial-media-table",
+      "current": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "歷年商業媒體運用情形一覽表（大表與 CSV），待決定以資料集或文件呈現"
+      },
+      "proposed": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "歷年商業媒體運用情形一覽表（大表與 CSV），待決定以資料集或文件呈現　【匯入 2026-10-03】草稿 page.x-commercial-media-table（信心 1）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null,
+        "newPath": null
+      },
+      "draftIds": [
+        "page.x-commercial-media-table"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "e-learning",
+      "oldTitle": "數位學習課程",
+      "page": "03-e-learning",
+      "current": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "外部系統入口：兩個站外數位學習平臺連結，建議放 /services/ 入口或決定 dropped"
+      },
+      "proposed": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "外部系統入口：兩個站外數位學習平臺連結，建議放 /services/ 入口或決定 dropped　【匯入 2026-10-03】草稿 page.x-e-learning（信心 1）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null,
+        "newPath": null
+      },
+      "draftIds": [
+        "page.x-e-learning"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "fb-1922",
+      "oldTitle": "1922 防疫達人（Facebook／LINE）",
+      "page": "04-fb-1922",
+      "current": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "外部系統入口：Facebook 與 LINE 社群連結，建議放 /services/ 入口或決定 dropped"
+      },
+      "proposed": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "外部系統入口：Facebook 與 LINE 社群連結，建議放 /services/ 入口或決定 dropped　【匯入 2026-10-03】草稿 page.x-fb-1922（信心 1）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null,
+        "newPath": null
+      },
+      "draftIds": [
+        "page.x-fb-1922"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "infographic-mpox",
+      "oldTitle": "M痘防治懶人包（社群圖卡）",
+      "page": "05-infographic-mpox",
+      "current": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "懶人包圖卡 4 張建成一筆出版品（pubType poster）"
+      },
+      "proposed": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "懶人包圖卡 4 張建成一筆出版品（pubType poster）　【匯入 2026-10-03】草稿 publication.mpox-infographic-mpox（信心 1）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null,
+        "newPath": null
+      },
+      "draftIds": [
+        "publication.mpox-infographic-mpox"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "leaflet-ev-handwashing",
+      "oldTitle": "腸病毒洗手五步驟單張",
+      "page": "06-leaflet-ev-handwashing",
+      "current": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "單張只有一張圖、沒有文字與替代文字；須補純文字版"
+      },
+      "proposed": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "單張只有一張圖、沒有文字與替代文字；須補純文字版　【匯入 2026-10-03】草稿 publication.enterovirus-leaflet-ev-handwashing（信心 0.8）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null,
+        "newPath": null
+      },
+      "draftIds": [
+        "publication.enterovirus-leaflet-ev-handwashing"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "list-leaflets",
+      "oldTitle": "單張",
+      "page": "07-list-leaflets",
+      "current": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/publications/",
+        "note": "列表頁（單張）：新站由系統產生，舊網址 301 到 /publications/（系統產生頁／功能頁，非內容 id）"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/publications/",
+        "note": "列表頁（單張）：新站由系統產生，舊網址 301 到 /publications/（系統產生頁／功能頁，非內容 id）　【匯入 2026-10-03】草稿 page.x-list-leaflets（信心 0.4；需人工檢視）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null,
+        "newPath": "/publications/"
+      },
+      "draftIds": [
+        "page.x-list-leaflets"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "list-manuals",
+      "oldTitle": "手冊",
+      "page": "08-list-manuals",
+      "current": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/publications/",
+        "note": "列表頁（手冊）：新站由系統產生，舊網址 301 到 /publications/（系統產生頁／功能頁，非內容 id）"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/publications/",
+        "note": "列表頁（手冊）：新站由系統產生，舊網址 301 到 /publications/（系統產生頁／功能頁，非內容 id）　【匯入 2026-10-03】草稿 page.x-list-manuals（信心 0.4；需人工檢視）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null,
+        "newPath": "/publications/"
+      },
+      "draftIds": [
+        "page.x-list-manuals"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "list-materials",
+      "oldTitle": "宣導素材",
+      "page": "09-list-materials",
+      "current": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/publications/",
+        "note": "列表頁（欄目根「宣導素材」）：新站由系統產生，舊網址 301 到 /publications/（系統產生頁／功能頁，非內容 id）"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/publications/",
+        "note": "列表頁（欄目根「宣導素材」）：新站由系統產生，舊網址 301 到 /publications/（系統產生頁／功能頁，非內容 id）　【匯入 2026-10-03】草稿 page.x-list-materials（信心 0.6）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null,
+        "newPath": "/publications/"
+      },
+      "draftIds": [
+        "page.x-list-materials"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "list-multimedia",
+      "oldTitle": "多媒體",
+      "page": "10-list-multimedia",
+      "current": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/media/",
+        "note": "列表頁（多媒體）：新站由系統產生，舊網址 301 到 /media/（系統產生頁／功能頁，非內容 id）"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/media/",
+        "note": "列表頁（多媒體）：新站由系統產生，舊網址 301 到 /media/（系統產生頁／功能頁，非內容 id）　【匯入 2026-10-03】草稿 page.x-list-multimedia（信心 0.6）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null,
+        "newPath": "/media/"
+      },
+      "draftIds": [
+        "page.x-list-multimedia"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "list-posters",
+      "oldTitle": "海報",
+      "page": "11-list-posters",
+      "current": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/publications/",
+        "note": "列表頁（海報）：新站由系統產生，舊網址 301 到 /publications/（系統產生頁／功能頁，非內容 id）"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/publications/",
+        "note": "列表頁（海報）：新站由系統產生，舊網址 301 到 /publications/（系統產生頁／功能頁，非內容 id）　【匯入 2026-10-03】草稿 page.x-list-posters（信心 0.6）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null,
+        "newPath": "/publications/"
+      },
+      "draftIds": [
+        "page.x-list-posters"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "list-videos",
+      "oldTitle": "影片",
+      "page": "12-list-videos",
+      "current": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/media/",
+        "note": "列表頁（影片）：新站由系統產生，舊網址 301 到 /media/（系統產生頁／功能頁，非內容 id）"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/media/",
+        "note": "列表頁（影片）：新站由系統產生，舊網址 301 到 /media/（系統產生頁／功能頁，非內容 id）　【匯入 2026-10-03】草稿 page.x-list-videos（信心 0.4；需人工檢視）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null,
+        "newPath": "/media/"
+      },
+      "draftIds": [
+        "page.x-list-videos"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "manual-ltc-ic-public",
+      "oldTitle": "長照機構感染管制手冊（宣導版）",
+      "page": "13-manual-ltc-ic-public",
+      "current": {
+        "status": "migrated",
+        "target": "publication.manual-ltc-infection-control-2026",
+        "newPath": null,
+        "note": "宣導版手冊對應既有出版品，PDF 附件供比對"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": "publication.manual-ltc-infection-control-2026",
+        "newPath": null,
+        "note": "宣導版手冊對應既有出版品，PDF 附件供比對　【匯入 2026-10-03】草稿 publication.manual-ltc-infection-control-2026（信心 1；既有內容已存在，供比對）"
+      },
+      "suggestion": {
+        "status": "migrated",
+        "target": "publication.manual-ltc-infection-control-2026",
+        "newPath": null
+      },
+      "draftIds": [
+        "publication.manual-ltc-infection-control-2026"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "multilingual-materials",
+      "oldTitle": "多國語言衛教素材",
+      "page": "14-multilingual-materials",
+      "current": {
+        "status": "migrated",
+        "target": "dataset.health-education-materials",
+        "newPath": null,
+        "note": "多國語言衛教素材（疾病×語言表與 8 個 PDF）對應既有資料集；附件各語言版本請對照資料集檔案清單"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": "dataset.health-education-materials",
+        "newPath": null,
+        "note": "多國語言衛教素材（疾病×語言表與 8 個 PDF）對應既有資料集；附件各語言版本請對照資料集檔案清單　【匯入 2026-10-03】草稿 dataset.health-education-materials（信心 1；既有內容已存在，供比對）"
+      },
+      "suggestion": {
+        "status": "migrated",
+        "target": "dataset.health-education-materials",
+        "newPath": null
+      },
+      "draftIds": [
+        "dataset.health-education-materials"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "podcast-amr",
+      "oldTitle": "Podcast｜抗生素不是萬靈丹：談抗藥性與防疫一體",
+      "page": "15-podcast-amr",
+      "current": {
+        "status": "migrated",
+        "target": "media.amr-one-health-podcast",
+        "newPath": null,
+        "note": "廣播頁，音訊與文字稿對應既有媒體內容"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": "media.amr-one-health-podcast",
+        "newPath": null,
+        "note": "廣播頁，音訊與文字稿對應既有媒體內容　【匯入 2026-10-03】草稿 media.amr-one-health-podcast（信心 1；既有內容已存在，供比對）"
+      },
+      "suggestion": {
+        "status": "migrated",
+        "target": "media.amr-one-health-podcast",
+        "newPath": null
+      },
+      "draftIds": [
+        "media.amr-one-health-podcast"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "poster-covid-new-life-2021",
+      "oldTitle": "防疫新生活運動海報（COVID-19）",
+      "page": "16-poster-covid-new-life-2021",
+      "current": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "2021 年新冠防疫海報，久遠，建議封存或 dropped，由權責單位決定"
+      },
+      "proposed": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "2021 年新冠防疫海報，久遠，建議封存或 dropped，由權責單位決定　【匯入 2026-10-03】草稿 publication.covid-19-poster-covid-new-life-2021（信心 1）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null,
+        "newPath": null
+      },
+      "draftIds": [
+        "publication.covid-19-poster-covid-new-life-2021"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "poster-dengue-patrol-series",
+      "oldTitle": "登革熱「巡、倒、清、刷」海報系列",
+      "page": "17-poster-dengue-patrol-series",
+      "current": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "海報系列（6 張圖建成一筆出版品）；圖片文字須另有純文字版與替代文字"
+      },
+      "proposed": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "海報系列（6 張圖建成一筆出版品）；圖片文字須另有純文字版與替代文字　【匯入 2026-10-03】草稿 publication.dengue-poster-dengue-patrol-series（信心 0.8）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null,
+        "newPath": null
+      },
+      "draftIds": [
+        "publication.dengue-poster-dengue-patrol-series"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "poster-flu-vaccine-7lang",
+      "oldTitle": "流感疫苗接種宣導海報（七語）",
+      "page": "18-poster-flu-vaccine-7lang",
+      "current": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "七語海報（中文與六種外語 PDF）；一筆出版品、多語檔案"
+      },
+      "proposed": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "七語海報（中文與六種外語 PDF）；一筆出版品、多語檔案　【匯入 2026-10-03】草稿 publication.influenza-poster-flu-vaccine-7lang（信心 0.8）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null,
+        "newPath": null
+      },
+      "draftIds": [
+        "publication.influenza-poster-flu-vaccine-7lang"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "poster-measles-2019",
+      "oldTitle": "麻疹防治宣導海報（2019 年版）",
+      "page": "19-poster-measles-2019",
+      "current": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "2019 年版海報，久遠，建議封存或 dropped，由權責單位決定"
+      },
+      "proposed": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "2019 年版海報，久遠，建議封存或 dropped，由權責單位決定　【匯入 2026-10-03】草稿 publication.measles-poster-measles-2019（信心 0.8）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null,
+        "newPath": null
+      },
+      "draftIds": [
+        "publication.measles-poster-measles-2019"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "video-dengue-village-chief",
+      "oldTitle": "里長帶頭巡倒清刷：社區防登革熱篇",
+      "page": "21-video-dengue-village-chief",
+      "current": {
+        "status": "migrated",
+        "target": "media.dengue-village-chief",
+        "newPath": null,
+        "note": "影片頁，影片與文字稿對應既有媒體內容"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": "media.dengue-village-chief",
+        "newPath": null,
+        "note": "影片頁，影片與文字稿對應既有媒體內容　【匯入 2026-10-03】草稿 media.dengue-village-chief（信心 1；既有內容已存在，供比對）"
+      },
+      "suggestion": {
+        "status": "migrated",
+        "target": "media.dengue-village-chief",
+        "newPath": null
+      },
+      "draftIds": [
+        "media.dengue-village-chief"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "video-rabies-pets",
+      "oldTitle": "寵物打狂犬病疫苗：守護家人也守護毛孩（影片）",
+      "page": "22-video-rabies-pets",
+      "current": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "影片頁沒有文字稿，須補逐字稿或摘要才能上線"
+      },
+      "proposed": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "影片頁沒有文字稿，須補逐字稿或摘要才能上線　【匯入 2026-10-03】草稿 media.rabies-video-rabies-pets（信心 0.8）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null,
+        "newPath": null
+      },
+      "draftIds": [
+        "media.rabies-video-rabies-pets"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    }
+  ],
+  "missingPages": [],
+  "unmatchedPages": [
+    {
+      "page": "20-poster-tb-7lang",
+      "suggest": {
+        "key": "import-20-poster-tb-7lang",
+        "oldTitle": "宣導素材：咳嗽兩週要就醫（多國語言海報）",
+        "oldPath": "傳染病與防疫專題／結核病／宣導素材",
+        "oldUrl": "https://www.cdc.gov.tw/Category/List/HFc75kGSabhKRWZ0sV_2Ii",
+        "oldType": "page",
+        "verified": false,
+        "status": "pending",
+        "note": "匯入時清單沒有對應項目，請權責單位確認後加入"
+      }
+    },
+    {
+      "page": "23-video-tb-cough",
+      "suggest": {
+        "key": "import-23-video-tb-cough",
+        "oldTitle": "宣導素材：咳嗽兩週快去照胸部 X 光（影片）",
+        "oldPath": "傳染病與防疫專題／結核病／宣導素材／影音",
+        "oldUrl": "https://www.cdc.gov.tw/Category/MPage/dLJ7UFpx2F-K6hTsKuUoSK",
+        "oldType": "media",
+        "verified": false,
+        "status": "pending",
+        "note": "匯入時清單沒有對應項目，請權責單位確認後加入"
+      }
+    },
+    {
+      "page": "24-video-tb-migrant",
+      "suggest": {
+        "key": "import-24-video-tb-migrant",
+        "oldTitle": "宣導素材：移工健康檢查（影片）",
+        "oldPath": "傳染病與防疫專題／結核病／宣導素材／影音",
+        "oldUrl": "https://www.cdc.gov.tw/Category/MPage/vONM9MVB6T0IMaoT_2kYS6",
+        "oldType": "media",
+        "verified": false,
+        "status": "pending",
+        "note": "匯入時清單沒有對應項目，請權責單位確認後加入"
+      }
+    }
+  ],
+  "conflicts": [],
+  "derivedItems": [],
+  "summary": {
+    "derivedItems": 0,
+    "derivedMatched": 0,
+    "items": 21,
+    "matched": 21,
+    "missingPages": 0,
+    "unmatchedPages": 3,
+    "agree": 21,
+    "conflicts": 0,
+    "statusChanges": 0,
+    "pendingToMigrated": 0,
+    "targetChanges": 0,
+    "newPathChanges": 0,
+    "noteChanges": 21,
+    "stillPending": 10
+  }
+}

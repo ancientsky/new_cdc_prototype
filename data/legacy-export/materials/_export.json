@@ -1,0 +1,10 @@
+{
+  "format": "cdc-legacy-export/1",
+  "simulated": true,
+  "exportedAt": "2026-10-03",
+  "site": "https://www.cdc.gov.tw",
+  "batch": "materials",
+  "pages": 24,
+  "source": "模擬匯出：宣導素材欄目。依既有新站內容（content/media 三筆、多國語言衛教素材資料集、長照感管手冊）反推 21 頁：列表 6 頁、MPage 3 頁、素材內頁 9 頁、既有 media 反推 3 頁；另複製結核病批匯出的 3 頁宣導素材（同網址，含附件與圖檔）。宣導素材根、多媒體、影片、多國語言衛教素材、商業媒體運用一覽表、數位學習課程的網址 ID 為舊站真實 ID；其餘 ID、素材內頁路徑（/Category/ListContent/{listId}?uaid={id}，推測的模式）、經費、數字與連結皆為示意，不是舊站的真實資料。正式匯出取代整個目錄即可。",
+  "generator": "scripts/lib/legacy-import/sim-export-materials.mjs"
+}

@@ -28,6 +28,9 @@
   "series": "瘧疾宣導素材",
   "abstractMarkdown": "瘧疾宣導單張與海報，歡迎下載運用（多國語言版本見附件）。\n\n- [瘧疾防治海報（中文）](/files/publication.malaria-materials-poster/malaria-poster-7lang.pdf)\n- [瘧疾防治海報（英文）](/files/publication.malaria-materials-poster/malaria-poster-7lang.pdf)\n- [瘧疾防治海報（越南文）](/files/publication.malaria-materials-poster/malaria-poster-7lang.pdf)\n- [瘧疾防治海報（印尼文）](/files/publication.malaria-materials-poster/malaria-poster-7lang.pdf)\n- [瘧疾防治海報（泰文）](/files/publication.malaria-materials-poster/malaria-poster-7lang.pdf)\n\n![malaria-poster](/files/publication.malaria-materials-poster/malaria-poster.png)",
   "pdfUrl": "/files/publication.malaria-materials-poster/malaria-poster-7lang.pdf",
+  "basedOn": [
+    "disease.malaria"
+  ],
   "legacyUrls": [
     "https://www.cdc.gov.tw/Category/List/3K9OACAcjzyugn-ntFG-8q"
   ],

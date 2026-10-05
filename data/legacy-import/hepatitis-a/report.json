@@ -11,7 +11,7 @@
   },
   "rules": {
     "file": "content/migration/import/_import-rules.json",
-    "version": 8
+    "version": 9
   },
   "manifest": {
     "id": "migration.hepatitis-a",
@@ -1388,7 +1388,7 @@
       "existing": false,
       "compareWith": [],
       "owner": "unit.epidemic-intelligence",
-      "ownerRule": "／統計",
+      "ownerRule": "／統計資料",
       "diseases": [
         "disease.hepatitis-a"
       ],

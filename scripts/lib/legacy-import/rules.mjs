@@ -47,7 +47,8 @@ export function ownerForCategory(rules, category, breadcrumbs = []) {
   let best = null;
   for (const r of rules.categoryOwners ?? []) {
     if (cats.some((c) => String(c).startsWith(r.match) || String(c).includes(r.match))) {
-      if (!best || r.match.length > best.rule.match.length) best = { owner: r.owner, rule: r.match };
+      // 第十批修正：best.rule 是字串，原本 best.rule.match.length 取到的是 String.prototype.match 的參數個數（恆為 1），語意變成「後面命中的覆蓋前面」；改回「最長命中優先」
+      if (!best || r.match.length > best.rule.length) best = { owner: r.owner, rule: r.match };
     }
   }
   return best;

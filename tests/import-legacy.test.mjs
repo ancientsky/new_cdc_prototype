@@ -480,6 +480,7 @@ import { generateNews } from '../scripts/lib/legacy-import/sim-export-news.mjs';
 import { generateGuidelines } from '../scripts/lib/legacy-import/sim-export-guidelines.mjs';
 import { generateQa } from '../scripts/lib/legacy-import/sim-export-qa.mjs';
 import { generateTravel } from '../scripts/lib/legacy-import/sim-export-travel.mjs';
+import { generateMaterials } from '../scripts/lib/legacy-import/sim-export-materials.mjs';
 import { faqItemsLoose, tasksFor, datedDeadlines, structuredFromText } from '../scripts/lib/legacy-import/qa.mjs';
 import { parseHtml, textOf } from '../scripts/lib/legacy-import/html.mjs';
 import { versionFree, versionRank, dateFromText } from '../scripts/lib/legacy-import/index.mjs';
@@ -1275,5 +1276,179 @@ test('已提交的第九批輸出（data/legacy-import/travel）：20 頁 13 份
   const tmpDir = tmp('exp9');
   generateTravel(tmpDir);
   const exp = path.join(ROOT, 'data/legacy-export/travel');
+  for (const f of fs.readdirSync(exp).filter((x) => x.endsWith('.json') && x !== '_export.json')) assert.deepEqual(readJSON(path.join(tmpDir, f)), readJSON(path.join(exp, f)), f);
+});
+
+// ───────────────────────── 第十批：宣導素材欄目 ─────────────────────────
+import { materialScope, materialKind, imageOnly, imageGallery, langVariants, materialOutdated, externalSystemPage } from '../scripts/lib/legacy-import/materials.mjs';
+import { png, pdfText } from '../scripts/lib/legacy-import/sim-export.mjs';
+
+test('第十批工具：素材型別（標題優先於麵包屑、非素材欄目不生效）、圖片承載、圖庫、附件語言版本、素材早於正本、外部系統頁', () => {
+  assert.equal(rules.version, 9);
+  const M = ['首頁', '宣導素材'];
+  assert.ok(materialScope(rules, { breadcrumbs: [...M, '海報'] })); assert.ok(materialScope(rules, { category: '結核病／宣導素材' })); assert.ok(!materialScope(rules, { breadcrumbs: ['首頁', '傳染病與防疫專題', '登革熱'] }));
+  assert.deepEqual(materialKind(rules, { title: '登革熱「巡、倒、清、刷」海報系列', breadcrumbs: [...M, '海報'] }), { type: 'publication', pubType: 'poster', via: 'title', rule: '海報|單張|摺頁|貼紙|懶人包|圖卡', hit: '海報' });
+  // 標題優先：麵包屑是「影片」，標題說「手冊」⇒ manual
+  assert.equal(materialKind(rules, { title: '長照機構感染管制手冊（宣導版）', breadcrumbs: [...M, '多媒體', '影片'] }).pubType, 'manual');
+  // 標題沒命中 ⇒ 麵包屑由最後一層往前：「多媒體／動畫」⇒ animation（不是多媒體的 video）
+  const an = materialKind(rules, { title: '手部衛生小教室', breadcrumbs: [...M, '多媒體', '動畫'] });
+  assert.equal(an.type, 'media'); assert.equal(an.mediaType, 'animation'); assert.equal(an.via, 'breadcrumb');
+  assert.equal(materialKind(rules, { title: '抗藥性細菌一起顧', breadcrumbs: [...M, '多媒體', '廣播'] }).mediaType, 'podcast');
+  assert.equal(materialKind(rules, { title: '寵物打狂犬病疫苗（影片）', breadcrumbs: [...M, '多媒體'] }).mediaType, 'video');
+  assert.equal(materialKind(rules, { title: '30 秒短影音', breadcrumbs: [...M, '多媒體', '影片'] }).mediaType, 'short');
+  assert.equal(materialKind(rules, { title: '登革熱防治海報', breadcrumbs: ['首頁', '傳染病與防疫專題', '登革熱'] }), null, '非 materialScopes 不生效');
+  assert.equal(materialKind(rules, { title: '1922 防疫達人', breadcrumbs: [...M, '社群'] }), null, '素材欄目但標題與麵包屑都沒命中');
+  // 圖片承載：有圖且純文字 < 80 字（minBodyChars 40 × 2）；圖片 alt 不算內文
+  assert.equal(imageOnly({ markdown: '![洗手五步驟很長很長的替代文字](/files/x/a.png)', images: 1, minChars: 40 }), true);
+  assert.equal(imageOnly({ markdown: '勤洗手。', images: 0, minChars: 40 }), false, '沒有圖不算');
+  assert.equal(imageOnly({ markdown: `${'說明文字'.repeat(21)}\n\n![a](/x.png)`, images: 1, minChars: 40 }), false, '84 字不算');
+  assert.equal(imageGallery(4), 4); assert.equal(imageGallery([1, 2, 3]), 0);
+  // 附件語言：七語＋簡體（不在站上七語）
+  const lv = langVariants(['中文版', 'English', '日本語', 'Tiếng Việt', 'Bahasa Indonesia', 'ไทย', 'Tagalog', '簡體中文'].map((l, i) => ({ label: `流感疫苗接種海報（${l}）`, file: `f${i}.pdf` })));
+  assert.deepEqual([...lv.keys()].sort(), ['en', 'id', 'ja', 'th', 'tl', 'vi', 'zh-CN', 'zh-TW']);
+  assert.equal(lv.get('zh-CN')[0].file, 'f7.pdf', '「簡體中文」不算繁中');
+  assert.deepEqual([...langVariants([{ label: 'Poster (Vietnamese)' }, { label: '登革熱單張', file: 'dengue-indonesian.pdf' }, { label: '海報' }]).keys()], ['vi', 'id']);
+  // 素材早於正本：只算「素材日落在同家族舊版與新版之間」（依據已修訂）；只有一版、或素材早於家族第一版（當時沒有正本）都不算
+  const idx = loadContentIndex(CONTENT);
+  const mo = materialOutdated({ publishedAt: '2019-09-01', diseaseId: 'disease.measles', contentIndex: idx });
+  assert.deepEqual(mo, { docId: 'doc.mmr-recommendation.2025-04-16', effectiveAt: '2025-04-16', supersededId: 'doc.mmr-recommendation.2019-05-14', supersededAt: '2019-05-14' });
+  assert.equal(materialOutdated({ publishedAt: '2019-03-01', diseaseId: 'disease.measles', contentIndex: idx }), null, '早於家族第一版（當時沒有正本）⇒ 不算修訂，是久遠');
+  assert.equal(materialOutdated({ publishedAt: '2026-10-01', diseaseId: 'disease.measles', contentIndex: idx }), null, '晚於正本 ⇒ null');
+  assert.equal(materialOutdated({ publishedAt: '2019-09-01', diseaseId: 'disease.no-such', contentIndex: idx }), null);
+  // 外部系統頁：字少、無站內連結、有站外連結
+  const ext = '1922 防疫達人社群，歡迎加入。\n\n- [Facebook 粉絲專頁](https://www.facebook.com/x)\n- [LINE 官方帳號](https://line.me/R/ti/p/x)';
+  assert.deepEqual(externalSystemPage({ markdown: ext, stat: { links: 2, legacyLinks: 0 } }), ['www.facebook.com', 'line.me']);
+  assert.deepEqual(externalSystemPage({ markdown: `${ext}\n\n[疾管署](https://www.cdc.gov.tw/Category/List/A)`, stat: { links: 3, legacyLinks: 1 } }), [], '有舊站連結不算');
+  assert.deepEqual(externalSystemPage({ markdown: `${'說明'.repeat(120)}\n\n[x](https://line.me/x)`, stat: {} }), [], '內文長不算');
+  assert.deepEqual(externalSystemPage({ markdown: '只有文字。', stat: {} }), [], '沒有站外連結不算');
+});
+
+/** 合成宣導素材欄目的小匯出：單張（只有圖）、七語海報、2019 麻疹海報、狂犬病影片（無文字稿）、動畫（只有麵包屑看得出）、M 痘圖卡（4 圖）、1922 社群（外部連結）、TB 七語海報（同網址複製）、長照手冊（清單 target 既有）、海報列表頁 */
+function synthMaterials(dir) {
+  fs.mkdirSync(path.join(dir, 'files'), { recursive: true });
+  fs.writeFileSync(path.join(dir, '_export.json'), JSON.stringify({ exportedAt: '2026-10-03', simulated: true, batch: 'materials' }));
+  const M = ['首頁', '宣導素材'];
+  const img = (file, alt) => { fs.writeFileSync(path.join(dir, 'files', file), png(40, 30, [0.4, 0.8, 0.6], [200, 60, 60])); return `<p><img src="/Upload/images/2026/09/${file}"${alt == null ? '' : ` alt="${alt}"`}></p>`; };
+  const pdf = (file, label) => { fs.writeFileSync(path.join(dir, 'files', file), pdfText('Poster', ['Simulated poster PDF'])); return { url: `https://www.cdc.gov.tw/File/Get/${file.replace(/\W/g, '')}`, label, file }; };
+  const put = (name, url, title, crumbs, body, { publishedAt = '2026-07-01', updatedAt = publishedAt, attachments = [] } = {}) => {
+    fs.writeFileSync(path.join(dir, `${name}.html`), travelShell(title, crumbs, body));
+    fs.writeFileSync(path.join(dir, `${name}.json`), JSON.stringify({ url: `https://www.cdc.gov.tw${url}`, title, category: crumbs.slice(1).join('／'), publishedAt, updatedAt, breadcrumbs: crumbs, attachments }));
+  };
+  put('01-leaflet-ev', '/Category/ListContent/L2?uaid=P1', '腸病毒洗手五步驟單張', [...M, '單張'], `<p>勤洗手。</p>${img('ev-handwash.png', '洗手五步驟：濕、搓、沖、捧、擦')}`, { publishedAt: '2026-09-20', attachments: [pdf('ev-handwash.pdf', '腸病毒洗手五步驟單張（PDF）')] });
+  const langs = ['中文版', 'English', '日本語', 'Tiếng Việt', 'Bahasa Indonesia', 'ไทย', 'Tagalog', '簡體中文'];
+  put('02-poster-flu-7lang', '/Category/ListContent/L1?uaid=P2', '流感疫苗接種宣導海報（七語）', [...M, '海報'], `<p>流感疫苗接種宣導海報，提供多種語言版本。</p>${img('flu-7lang.png', '流感疫苗接種海報')}`,
+    { publishedAt: '2026-09-25', attachments: langs.map((l, i) => pdf(`flu-poster-${i}.pdf`, `流感疫苗接種海報（${l}）`)) });
+  put('03-poster-measles-2019', '/Category/ListContent/L1?uaid=P3', '麻疹防治宣導海報（2019 年版）', [...M, '海報'], `<p>出國前確認麻疹疫苗接種紀錄。</p>${img('measles-2019.png', '麻疹防治海報')}`,
+    { publishedAt: '2019-09-01', attachments: [pdf('measles-2019.pdf', '麻疹防治宣導海報（PDF）')] });
+  put('04-video-rabies', '/Category/ListContent/V1?uaid=P4', '寵物打狂犬病疫苗：守護家人也守護毛孩（影片）', [...M, '多媒體', '影片'], '<p>帶毛孩打狂犬病疫苗。</p><iframe src="https://www.youtube.com/embed/xxxxxxxxxxx" title="影片"></iframe>', { publishedAt: '2026-08-20' });
+  put('05-animation', '/Category/ListContent/V2?uaid=P5', '手部衛生小教室', [...M, '多媒體', '動畫'], '<p>一起學正確洗手。</p><iframe src="https://www.youtube.com/embed/yyyyyyyyyyy" title="動畫"></iframe>', { publishedAt: '2026-08-21' });
+  put('06-mpox-cards', '/Category/ListContent/L1?uaid=P6', 'M痘防治懶人包（社群圖卡）', [...M, '海報'],
+    `<p>M痘主要透過親密接觸傳播，出現皮疹、發燒等症狀請儘速就醫並主動告知接觸史。</p><p>高風險族群可接種公費疫苗，兩劑間隔四週，完成接種後仍應注意安全性行為。</p><p>圖卡歡迎分享至社群平台，請勿修改內容。</p>${[1, 2, 3, 4].map((n) => img(`mpox-${n}.png`, `M痘圖卡 ${n}`)).join('')}`, { publishedAt: '2026-05-15' });
+  put('07-fb-1922', '/Category/MPage/F1', '1922 防疫達人（Facebook／LINE）', [...M, '社群'], '<p>加入 1922 防疫達人，即時掌握防疫資訊。</p><ul><li><a href="https://www.facebook.com/example">Facebook 粉絲專頁</a></li><li><a href="https://line.me/R/ti/p/example">LINE 官方帳號</a></li></ul>');
+  // TB 批已轉過的七語海報（原樣複製）
+  const tb = path.join(ROOT, 'data/legacy-export/tuberculosis');
+  for (const ext of ['html', 'json']) fs.copyFileSync(path.join(tb, `10-materials-poster.${ext}`), path.join(dir, `08-poster-tb-7lang.${ext}`));
+  for (const f of ['tb-poster-7lang.pdf', 'tb-poster-7lang-thumb.png']) fs.copyFileSync(path.join(tb, 'files', f), path.join(dir, 'files', f));
+  put('09-manual-ltc', '/Category/ListContent/L3?uaid=P9', '長照機構感染管制手冊（宣導版）', [...M, '手冊'], '<p>長照機構工作人員日常感染管制重點：手部衛生、環境清潔、群聚通報。</p>', { publishedAt: '2026-03-01', attachments: [pdf('ltc-ic.pdf', '長照機構感染管制手冊（PDF）')] });
+  put('10-list-posters', '/Category/List/L1', '海報', [...M, '海報'], '<ul><li><a href="/Category/ListContent/L1?uaid=P2">流感疫苗接種宣導海報（七語）</a></li></ul>');
+  return dir;
+}
+
+test('第十批（宣導素材欄目，合成匯出）：海報與單張建 publication（只有圖 ⇒ image-only、文字版待補）、七語附件 languages pending、2019 海報封存＋早於正本、影片無文字稿、動畫由麵包屑判、外部系統頁、TB 同網址 skip-duplicate、清單 target 既有 ⇒ compare-existing', () => {
+  const dir = tmp('materials');
+  const exp = synthMaterials(path.join(dir, 'exp'));
+  const mf = path.join(dir, 'materials.json');
+  fs.writeFileSync(mf, JSON.stringify({ id: 'migration.materials-test', type: 'migration', title: '測試', scope: { kind: 'category', name: '宣導素材' }, items: [
+    { key: 'manual-ltc-ic-public', oldTitle: '長照機構感染管制手冊（宣導版）', oldUrl: 'https://www.cdc.gov.tw/Category/ListContent/L3?uaid=P9', oldType: 'page', verified: false, status: 'migrated', target: 'publication.manual-ltc-infection-control-2026' },
+  ] }, null, 2));
+  const out = path.join(dir, 'out');
+  const { report, drafts } = runImport({ exportDir: exp, outDir: out, manifestPath: mf, slug: 'materials', now: NOW, priorBatchesDir: path.join(ROOT, 'data/legacy-import') });
+  const by = (k) => report.pages.find((p) => p.key === k);
+  const draft = (p) => drafts.find((d) => d.id === p.outputs[0]?.id);
+  const iss = (p, code) => p.issues.find((i) => i.code === code);
+  assert.equal(report.summary.pages, 10); assert.equal(report.summary.schemaInvalid, 0, JSON.stringify(report.drafts.filter((d) => !d.schemaValid).map((d) => d.errors)));
+  const env = { units: new Set(readJSON(path.join(CONTENT, 'master/units.json')).map((u) => u.id)), diseaseIds: new Set(master.map((d) => d.id)), assetsDir: path.join(out, 'content/assets'), licenses: ['OGDL-1.0', 'CC0-1.0', 'CC-BY-4.0'] };
+  for (const d of drafts) assert.deepEqual(validateDraft(d, env), [], d.id);
+  // (a) 單張只有圖：publication poster（標題「單張」⇒ type-from-category）、image-only（warn）、圖片進 assets、摘要＝文字＋alt 條列＋（待補）
+  const ev = by('01-leaflet-ev');
+  assert.equal(ev.kind, 'publication'); assert.equal(ev.type, 'publication'); assert.match(ev.outputs[0].id, /^publication\./);
+  assert.equal(iss(ev, 'type-from-category').severity, 'info'); assert.match(iss(ev, 'type-from-category').message, /標題有「單張」.*publication（pubType poster）/);
+  assert.equal(iss(ev, 'image-only').severity, 'warn');
+  assert.match(iss(ev, 'fields-pending').message, /abstractMarkdown/);
+  assert.equal(ev.owner, 'unit.acute-infectious', '有疾病的素材歸疾病業務組（preferDiseaseFor material），不歸公關室'); assert.ok(iss(ev, 'owner-from-disease'));
+  const evd = draft(ev);
+  assert.equal(evd.pubType, 'poster'); assert.match(evd.pdfUrl, /\.pdf$/);
+  assert.match(evd.abstractMarkdown, /勤洗手。/); assert.match(evd.abstractMarkdown, /- 洗手五步驟：濕、搓、沖、捧、擦/); assert.match(evd.abstractMarkdown, /（待補：海報文字版）/);
+  assert.deepEqual(evd.assets.filter((a) => a.kind === 'image').map((a) => [a.alt, a.license, a.needsAlt]), [['洗手五步驟：濕、搓、沖、捧、擦', 'OGDL-1.0', false]]);
+  assert.deepEqual(evd.basedOn, ['disease.enterovirus']);
+  // (b) 七語附件：languages 六語 pending（簡體不進）、附件 label 保留語言字樣
+  const flu = by('02-poster-flu-7lang');
+  assert.equal(flu.kind, 'publication');
+  assert.match(iss(flu, 'lang-variants').message, /附件含 6 種語言版本（en、ja、vi、id、th、tl）.*zh-CN 不在站上七語/);
+  const fd = draft(flu);
+  assert.deepEqual(Object.keys(fd.languages).sort(), ['en', 'id', 'ja', 'th', 'tl', 'vi', 'zh-TW']);
+  assert.ok(['en', 'id', 'ja', 'th', 'tl', 'vi'].every((l) => fd.languages[l].status === 'pending')); assert.equal(fd.languages['zh-TW'].status, 'source');
+  assert.ok(fd.assets.some((a) => a.label === '流感疫苗接種海報（Tiếng Việt）') && fd.assets.some((a) => a.label === '流感疫苗接種海報（簡體中文）'));
+  // (c) 2019 麻疹海報：久遠 ⇒ archive；早於麻疹現行文件 ⇒ material-outdated、basedOn 加文件 id
+  const ms = by('03-poster-measles-2019');
+  assert.equal(ms.kind, 'publication'); assert.equal(ms.action, 'archive'); assert.ok(iss(ms, 'old-content'));
+  assert.equal(iss(ms, 'material-outdated').severity, 'warn');
+  assert.match(iss(ms, 'material-outdated').message, /素材製作日 2019-09-01 時依據的 doc\.mmr-recommendation\.2019-05-14（2019-05-14）已於 2025-04-16 被 doc\.mmr-recommendation\.2025-04-16 取代/);
+  assert.deepEqual(draft(ms).basedOn, ['disease.measles', 'doc.mmr-recommendation.2025-04-16']);
+  // (d) 影片無文字稿：media video、transcriptMarkdown 待補、basedOn 含疾病；嵌入影片不算未轉入
+  const rv = by('04-video-rabies');
+  assert.equal(rv.kind, 'media'); assert.match(rv.outputs[0].id, /^media\./);
+  const rvd = draft(rv);
+  assert.equal(rvd.mediaType, 'video'); assert.match(rvd.transcriptMarkdown, /待補/); assert.match(iss(rv, 'fields-pending').message, /transcriptMarkdown/);
+  assert.equal(rvd.basedOn[0], 'disease.rabies'); assert.ok(!iss(rv, 'embedded-media'));
+  // (e) 動畫：標題看不出，麵包屑最後一層「動畫」⇒ animation
+  const an = by('05-animation');
+  assert.equal(an.kind, 'media'); assert.equal(draft(an).mediaType, 'animation'); assert.match(iss(an, 'type-from-category').message, /麵包屑有「動畫」/);
+  // (f) 4 張圖：image-gallery（一筆、多個 image 資產），文字夠長不算 image-only
+  const mp = by('06-mpox-cards');
+  assert.match(iss(mp, 'image-gallery').message, /同頁 4 張圖建成一筆/); assert.ok(!iss(mp, 'image-only'));
+  assert.equal(draft(mp).assets.filter((a) => a.kind === 'image').length, 4); assert.equal(draft(mp).pubType, 'poster');
+  // (g) 外部系統頁：external-system（info），仍是 page、review-before-publish
+  const fb = by('07-fb-1922');
+  assert.equal(fb.kind, 'page'); assert.equal(fb.action, 'review-before-publish');
+  assert.match(iss(fb, 'external-system').message, /網域 www\.facebook\.com、line\.me/);
+  // (h) TB 七語海報（同網址、TB 批已轉過）⇒ skip-duplicate，不出草稿
+  const tb = by('08-poster-tb-7lang');
+  assert.equal(tb.action, 'skip-duplicate'); assert.deepEqual(tb.flags.convertedElsewhere, { batch: 'tuberculosis', key: '10-materials-poster' });
+  assert.deepEqual(tb.outputs.map((o) => [o.id, o.role]), [['publication.poster-tb-seven-languages', 'duplicate']]);
+  assert.ok(!drafts.some((d) => d.id === 'publication.poster-tb-seven-languages'));
+  // (i) 清單 target 是既有出版品 ⇒ 依清單建 publication（type-from-manifest 優先，不記 type-from-category）、compare-existing
+  const lt = by('09-manual-ltc');
+  assert.equal(lt.kind, 'publication'); assert.deepEqual(lt.outputs.map((o) => o.id), ['publication.manual-ltc-infection-control-2026']); assert.equal(lt.action, 'compare-existing');
+  assert.ok(iss(lt, 'type-from-manifest')); assert.ok(!iss(lt, 'type-from-category'));
+  // (j) 列表頁不因標題「海報」改型別：仍是 list ⇒ skip-list
+  const ls = by('10-list-posters');
+  assert.equal(ls.kind, 'list'); assert.equal(ls.action, 'skip-list');
+  // 同一份匯出在 tuberculosis 批自己跑：家是本批，不讓
+  const r2 = runImport({ exportDir: exp, outDir: path.join(dir, 'out-tb'), manifestPath: mf, slug: 'tuberculosis', now: NOW, priorBatchesDir: path.join(ROOT, 'data/legacy-import') });
+  const tb2 = r2.report.pages.find((p) => p.key === '08-poster-tb-7lang');
+  assert.notEqual(tb2.action, 'skip-duplicate'); assert.ok(!tb2.flags.convertedElsewhere);
+});
+
+test('已提交的第十批輸出（data/legacy-import/materials）：24 頁 21 份草稿、7 頁型別由欄目位置決定、TB 三頁 skip-duplicate、清單 21 筆 6 筆 newPath、模擬匯出可重現', () => {
+  const dir = path.join(ROOT, 'data/legacy-import/materials');
+  const r = readJSON(path.join(dir, 'report.json'));
+  assert.equal(r.summary.pages, 24); assert.equal(r.summary.drafts, 21); assert.equal(r.summary.schemaInvalid, 0);
+  assert.equal(r.migration.applied, true); assert.equal(r.manifest.file, 'content/migration/materials.json');
+  for (const d of r.drafts) assert.ok(fs.existsSync(path.join(dir, d.file)), d.file);
+  assert.deepEqual(r.summary.byAction, { 'compare-existing': 5, 'review-before-publish': 8, 'skip-list': 6, archive: 2, 'skip-duplicate': 3 });
+  assert.equal(r.summary.byType.publication, 7); assert.equal(r.summary.byType.media, 4);
+  const codes = (c) => r.pages.flatMap((p) => p.issues).filter((i) => i.code === c).length;
+  assert.equal(codes('type-from-category'), 7); assert.equal(codes('image-only'), 5); assert.equal(codes('lang-variants'), 2); assert.equal(codes('material-outdated'), 2); assert.equal(codes('external-system'), 2);
+  // 結核病批已轉過的三頁：不出草稿、家批 tuberculosis；有疾病的素材 owner 回到疾病業務組
+  for (const k of ['20-poster-tb-7lang', '23-video-tb-cough', '24-video-tb-migrant']) { const p = r.pages.find((x) => x.key === k); assert.equal(p.action, 'skip-duplicate', k); assert.equal(p.flags.convertedElsewhere.batch, 'tuberculosis'); }
+  assert.ok(r.pages.filter((p) => p.diseases?.length && p.kind !== 'list').every((p) => p.owner !== 'unit.pr'), '有疾病的素材不歸公關室');
+  const manifest = readJSON(path.join(CONTENT, 'migration/materials.json'));
+  assert.equal(manifest.items.length, 21); assert.equal(manifest.scope.kind, 'category'); assert.ok(manifest.items.every((i) => i.verified === false));
+  assert.ok(manifest.items.every((i) => /【匯入 /.test(i.note ?? '')));
+  assert.equal(manifest.items.filter((i) => i.newPath).length, 6); assert.equal(manifest.items.filter((i) => i.status === 'pending').length, 10);
+  const tmpDir = tmp('exp10');
+  generateMaterials(tmpDir);
+  const exp = path.join(ROOT, 'data/legacy-export/materials');
   for (const f of fs.readdirSync(exp).filter((x) => x.endsWith('.json') && x !== '_export.json')) assert.deepEqual(readJSON(path.join(tmpDir, f)), readJSON(path.join(exp, f)), f);
 });

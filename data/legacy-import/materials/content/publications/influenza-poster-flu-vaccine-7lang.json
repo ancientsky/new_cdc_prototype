@@ -1,0 +1,193 @@
+{
+  "id": "publication.influenza-poster-flu-vaccine-7lang",
+  "type": "publication",
+  "title": "流感疫苗接種宣導海報（七語）",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-09-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "pending"
+    },
+    "ja": {
+      "status": "pending"
+    },
+    "vi": {
+      "status": "pending"
+    },
+    "id": {
+      "status": "pending"
+    },
+    "th": {
+      "status": "pending"
+    },
+    "tl": {
+      "status": "pending"
+    }
+  },
+  "summary": "每年秋冬流感疫苗開打，海報提供七種語言版本，歡迎下載張貼。",
+  "pubType": "poster",
+  "series": "流感宣導素材",
+  "abstractMarkdown": "每年秋冬流感疫苗開打，海報提供七種語言版本，歡迎下載張貼。\n\n圖片內容（替代文字）：\n\n- 流感疫苗接種宣導海報縮圖\n\n（待補：海報文字版）",
+  "pdfUrl": "/files/publication.influenza-poster-flu-vaccine-7lang/flu-vaccine-poster-zh.pdf",
+  "basedOn": [
+    "disease.influenza",
+    "doc.flu-antiviral-eligibility.2026-09-18"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=-XlC5SdLwgyfRsnIbvDA-R"
+  ],
+  "assets": [
+    {
+      "file": "flu-vaccine-poster-zh.pdf",
+      "kind": "attachment",
+      "label": "流感疫苗接種海報（中文版）",
+      "mime": "application/pdf",
+      "bytes": 711,
+      "sha256": "291d18dca72deca405ec42de939854de2002e960e15435132d0a5707f4f96eda",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "flu-vaccine-poster-en.pdf",
+      "kind": "attachment",
+      "label": "流感疫苗接種海報（English）",
+      "mime": "application/pdf",
+      "bytes": 715,
+      "sha256": "0f3eacf42cfd931799add2050c688685ef313a6a33b1cbdd198951d124442563",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "flu-vaccine-poster-ja.pdf",
+      "kind": "attachment",
+      "label": "流感疫苗接種海報（日本語）",
+      "mime": "application/pdf",
+      "bytes": 711,
+      "sha256": "291d18dca72deca405ec42de939854de2002e960e15435132d0a5707f4f96eda",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "flu-vaccine-poster-vi.pdf",
+      "kind": "attachment",
+      "label": "流感疫苗接種海報（Tiếng Việt）",
+      "mime": "application/pdf",
+      "bytes": 718,
+      "sha256": "1e4b65534c2b28bf17747aa8ec8920c4b4f782c444d2aabe450444117558c883",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "flu-vaccine-poster-id.pdf",
+      "kind": "attachment",
+      "label": "流感疫苗接種海報（Bahasa Indonesia）",
+      "mime": "application/pdf",
+      "bytes": 724,
+      "sha256": "99e520b210d050188ddadec0c382264a79697e15bc7323456bcaa027e986d518",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "flu-vaccine-poster-th.pdf",
+      "kind": "attachment",
+      "label": "流感疫苗接種海報（ไทย）",
+      "mime": "application/pdf",
+      "bytes": 711,
+      "sha256": "291d18dca72deca405ec42de939854de2002e960e15435132d0a5707f4f96eda",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "flu-vaccine-poster-tl.pdf",
+      "kind": "attachment",
+      "label": "流感疫苗接種海報（Tagalog）",
+      "mime": "application/pdf",
+      "bytes": 715,
+      "sha256": "3daf52e51c1aa6ff3d7caf4a7d8ca95474d39cb801dea4a26a5e2c1934605da2",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "flu-vaccine-poster.png",
+      "kind": "image",
+      "alt": "流感疫苗接種宣導海報縮圖",
+      "license": "OGDL-1.0",
+      "needsAlt": false,
+      "mime": "image/png",
+      "bytes": 940,
+      "sha256": "89ee998dd86d504fd5b1c3b3ab63b43e0eea7f5437306c397f9b703f02c50bd8",
+      "width": 240,
+      "height": 160
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.8,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "素材的權責單位依疾病主檔取 unit.acute-infectious（流感），不歸宣導素材欄目的公關室"
+      },
+      {
+        "code": "type-from-category",
+        "severity": "info",
+        "message": "素材頁的標題有「海報」，草稿建成 publication（pubType poster）"
+      },
+      {
+        "code": "lang-variants",
+        "severity": "info",
+        "message": "附件含 6 種語言版本（en、ja、vi、id、th、tl）：一筆內容、多語檔案；languages 標 pending，請補 i18n 標題與摘要"
+      },
+      {
+        "code": "image-license-assumed",
+        "severity": "info",
+        "message": "圖片「flu-vaccine-poster.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+      },
+      {
+        "code": "body-short",
+        "severity": "warn",
+        "message": "內文過短（29 字，低於 40）"
+      },
+      {
+        "code": "image-only",
+        "severity": "warn",
+        "message": "圖片承載唯一資訊：海報／單張的文字要另有純文字版（可及性），abstractMarkdown 以（待補）佔位"
+      },
+      {
+        "code": "material-outdated",
+        "severity": "warn",
+        "message": "素材製作日 2026-09-01 時依據的 doc.flu-antiviral-eligibility.2026-08-24（2026-08-24）已於 2026-09-18 被 doc.flu-antiviral-eligibility.2026-09-18 取代；上線前請確認內容仍正確（治理 R9 影音過時的事前版）"
+      },
+      {
+        "code": "fields-pending",
+        "severity": "warn",
+        "message": "publication 的欄位從舊頁看不出來，以「（待補）」佔位：abstractMarkdown"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=-XlC5SdLwgyfRsnIbvDA-R",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

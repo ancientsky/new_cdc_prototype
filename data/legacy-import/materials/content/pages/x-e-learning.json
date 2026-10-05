@@ -1,0 +1,47 @@
+{
+  "id": "page.x-e-learning",
+  "type": "page",
+  "title": "數位學習課程",
+  "owner": "unit.pr",
+  "publishedAt": "2017-06-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "疾管署提供防疫人員與一般民眾的線上數位學習課程，完成課程可取得時數認證。 感染管制數位學習平臺 民眾防疫知識線上課程",
+  "slug": "x-e-learning",
+  "bodyMarkdown": "疾管署提供防疫人員與一般民眾的線上數位學習課程，完成課程可取得時數認證。\n\n- [感染管制數位學習平臺](https://e-learning.example.gov.tw/course/infection-control)\n- [民眾防疫知識線上課程](https://e-learning.example.gov.tw/course/public)",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/1ptYuzMUqvZ6J2QOzSLk6A"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "external-system",
+        "severity": "info",
+        "message": "舊頁主要連到外部系統（網域 e-learning.example.gov.tw）：新站以入口連結呈現，建議 /services/ 放入口或清單決定 dropped"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/1ptYuzMUqvZ6J2QOzSLk6A",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

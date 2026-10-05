@@ -1,0 +1,121 @@
+{
+  "id": "publication.covid-19-poster-covid-new-life-2021",
+  "type": "publication",
+  "title": "新冠併發重症防疫新生活運動海報（COVID-19）",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2021-05-20",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.covid-19"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "COVID-19 疫情期間的防疫新生活運動，提醒民眾戴口罩、勤洗手、保持社交距離。",
+  "pubType": "poster",
+  "series": "新冠併發重症宣導素材",
+  "abstractMarkdown": "COVID-19 疫情期間的防疫新生活運動，提醒民眾戴口罩、勤洗手、保持社交距離。\n\n圖片內容（替代文字）：\n\n- 新生活運動：戴口罩\n- 新生活運動：勤洗手\n\n（待補：海報文字版）",
+  "pdfUrl": "/files/publication.covid-19-poster-covid-new-life-2021/covid-new-life-2021.pdf",
+  "basedOn": [
+    "disease.covid-19"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=jqYodXZl8Ti6hySLNXVlBs"
+  ],
+  "assets": [
+    {
+      "file": "covid-new-life-2021.pdf",
+      "kind": "attachment",
+      "label": "防疫新生活運動海報（PDF）",
+      "mime": "application/pdf",
+      "bytes": 709,
+      "sha256": "f5b582df07a4f205b87f5a4d382e098085c422df4a4e2b2c37afdb44d9011d13",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "covid-new-life-1.png",
+      "kind": "image",
+      "alt": "新生活運動：戴口罩",
+      "license": "OGDL-1.0",
+      "needsAlt": false,
+      "mime": "image/png",
+      "bytes": 762,
+      "sha256": "a55b7a945afbd86bd8dfa0364748551b66d8411497846041d62625996e06ad4d",
+      "width": 240,
+      "height": 160
+    },
+    {
+      "file": "covid-new-life-2.png",
+      "kind": "image",
+      "alt": "新生活運動：勤洗手",
+      "license": "OGDL-1.0",
+      "needsAlt": false,
+      "mime": "image/png",
+      "bytes": 781,
+      "sha256": "5126c1fc571d8bc9ce875d3c1d2df4722d6ab7f490c186b9b3c326d9e8471e6f",
+      "width": 240,
+      "height": 160
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "素材的權責單位依疾病主檔取 unit.acute-infectious（新冠併發重症），不歸宣導素材欄目的公關室"
+      },
+      {
+        "code": "type-from-category",
+        "severity": "info",
+        "message": "素材頁的標題有「海報」，草稿建成 publication（pubType poster）"
+      },
+      {
+        "code": "old-content",
+        "severity": "info",
+        "message": "最後更新於 2021-05-20（5.4 年前），建議走久遠封存而非上線"
+      },
+      {
+        "code": "image-license-assumed",
+        "severity": "info",
+        "message": "圖片「covid-new-life-1.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+      },
+      {
+        "code": "image-license-assumed",
+        "severity": "info",
+        "message": "圖片「covid-new-life-2.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+      },
+      {
+        "code": "image-only",
+        "severity": "warn",
+        "message": "圖片承載唯一資訊：海報／單張的文字要另有純文字版（可及性），abstractMarkdown 以（待補）佔位"
+      },
+      {
+        "code": "fields-pending",
+        "severity": "warn",
+        "message": "publication 的欄位從舊頁看不出來，以「（待補）」佔位：abstractMarkdown"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=jqYodXZl8Ti6hySLNXVlBs",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

@@ -11,7 +11,7 @@
   },
   "rules": {
     "file": "content/migration/import/_import-rules.json",
-    "version": 8
+    "version": 9
   },
   "manifest": {
     "id": "migration.influenza",
@@ -1308,7 +1308,7 @@
         "dataset.flu-severe"
       ],
       "owner": "unit.epidemic-intelligence",
-      "ownerRule": "／統計",
+      "ownerRule": "／統計資料",
       "diseases": [
         "disease.influenza"
       ],

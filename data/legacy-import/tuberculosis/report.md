@@ -14,7 +14,7 @@
 | 既有內容已存在（供比對） | 36 |
 | 附件與圖片 | 19（附件 16、內文圖片 2、資料檔 1；圖片待補 alt 1、PDF 無文字層 5） |
 | 草稿 schema 驗證 | 40 / 40 通過 |
-| 問題 | 錯誤 1、警告 14、提示 92 |
+| 問題 | 錯誤 1、警告 18、提示 92 |
 | 移轉清單對應 | 對上 40 / 40 筆；status 變化 0；note 更新 0；仍待移轉 3；與清單判定不同 0 |
 | 模板推導項（清單只寫例外） | 5 項，對上 0；只列在 migration-patch.json 的 derivedItems，不寫回清單 |
 
@@ -33,9 +33,9 @@
 | 7 | 結核病 Q&A<br><sub>www.cdc.gov.tw/Category/QAPage/ZW0TrgKarQJWRWZrMIWzeq</sub> | Q&A → `faq.tb-cough-two-weeks`<br>`faq.ltbi-treat-or-not`<br>`faq.tb-dots-what`<br>`faq.tb-contact-screening`<br>`faq.mdr-tb`<br>`faq.tb-treatment-cost`<br>`faq.tb-foreigner-health-check`<br>`faq.tb-contagious-after-treatment` | `disease.tuberculosis`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 8 | Q&A：咳嗽多久要懷疑是結核病？<br><sub>www.cdc.gov.tw/Category/QAPage/O1wZbGi7vPb9z_a60WXUfb</sub> | Q&A → `faq.tb-cough-two-weeks`（重複，未輸出） | `faq.tb-cough-two-weeks`（既有） | 0.9 | duplicate-title | 既有內容已存在，供比對，不建議覆蓋 |
 | 9 | Q&A：潛伏結核感染需要治療嗎？<br><sub>www.cdc.gov.tw/Category/QAPage/phF8VNqXQgWfNk3LB4BkIh</sub> | Q&A → `faq.ltbi-treat-or-not`（重複，未輸出） | `faq.ltbi-treat-or-not`（既有） | 0.9 | duplicate-title | 既有內容已存在，供比對，不建議覆蓋 |
-| 10 | 宣導素材：咳嗽兩週要就醫（多國語言海報）<br><sub>www.cdc.gov.tw/Category/List/HFc75kGSabhKRWZ0sV_2Ii</sub> | 出版品 → `publication.poster-tb-seven-languages` | `publication.poster-tb-seven-languages`（既有） | 0.8 | image-no-alt | 既有內容已存在，供比對，不建議覆蓋 |
-| 11 | 宣導素材：咳嗽兩週快去照胸部 X 光（影片）<br><sub>www.cdc.gov.tw/Category/MPage/dLJ7UFpx2F-K6hTsKuUoSK</sub> | 影音 → `media.tb-cough-two-weeks` | `media.tb-cough-two-weeks`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
-| 12 | 宣導素材：移工健康檢查（影片）<br><sub>www.cdc.gov.tw/Category/MPage/vONM9MVB6T0IMaoT_2kYS6</sub> | 影音 → `media.migrant-worker-health-check` | `media.migrant-worker-health-check`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
+| 10 | 宣導素材：咳嗽兩週要就醫（多國語言海報）<br><sub>www.cdc.gov.tw/Category/List/HFc75kGSabhKRWZ0sV_2Ii</sub> | 出版品 → `publication.poster-tb-seven-languages` | `publication.poster-tb-seven-languages`（既有） | 0.8 | image-no-alt、image-only、fields-pending | 既有內容已存在，供比對，不建議覆蓋 |
+| 11 | 宣導素材：咳嗽兩週快去照胸部 X 光（影片）<br><sub>www.cdc.gov.tw/Category/MPage/dLJ7UFpx2F-K6hTsKuUoSK</sub> | 影音 → `media.tb-cough-two-weeks` | `media.tb-cough-two-weeks`（既有） | 1 | material-outdated | 既有內容已存在，供比對，不建議覆蓋 |
+| 12 | 宣導素材：移工健康檢查（影片）<br><sub>www.cdc.gov.tw/Category/MPage/vONM9MVB6T0IMaoT_2kYS6</sub> | 影音 → `media.migrant-worker-health-check` | `media.migrant-worker-health-check`（既有） | 1 | material-outdated | 既有內容已存在，供比對，不建議覆蓋 |
 | 13 | 結核病診治指引（第八版）<br><sub>www.cdc.gov.tw/File/Get/3mTpTQQFER94u5HtekRstw</sub> | 文件 → `doc.tb-guideline.2025-09-01` | `doc.tb-guideline.2025-09-01`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 14 | 結核病診治指引（第七版）<br><sub>www.cdc.gov.tw/Uploads/archives/%E7%B5%90%E6%A0%B8%E7%97%85%E8%A8%BA%E6%B2%BB%E6%8C%87%E5%BC%95%E7%AC%AC%E4%B8%83%E7%89%88.pdf</sub> | 文件 → `doc.tb-guideline.2022-03-01` | `doc.tb-guideline.2022-03-01`（既有） | 1 | pdf-no-text-layer | 封存（歷史版本／久遠內容，舊版保留查閱） |
 | 15 | 潛伏結核感染診治指引<br><sub>www.cdc.gov.tw/File/Get/Ig7qjx7eTWrpnMXjfJgp_g</sub> | 文件 → `doc.ltbi-guideline.2024-01-01` | `doc.ltbi-guideline.2024-01-01`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |

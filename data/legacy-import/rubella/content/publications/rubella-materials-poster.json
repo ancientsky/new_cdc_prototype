@@ -28,6 +28,9 @@
   "series": "德國麻疹宣導素材",
   "abstractMarkdown": "德國麻疹宣導單張與海報，歡迎下載運用（多國語言版本見附件）。\n\n- [德國麻疹防治海報（中文）](/files/publication.rubella-materials-poster/rubella-poster-7lang.pdf)\n- [德國麻疹防治海報（英文）](/files/publication.rubella-materials-poster/rubella-poster-7lang.pdf)\n- [德國麻疹防治海報（越南文）](/files/publication.rubella-materials-poster/rubella-poster-7lang.pdf)\n- [德國麻疹防治海報（印尼文）](/files/publication.rubella-materials-poster/rubella-poster-7lang.pdf)\n- [德國麻疹防治海報（泰文）](/files/publication.rubella-materials-poster/rubella-poster-7lang.pdf)\n\n![rubella-poster](/files/publication.rubella-materials-poster/rubella-poster.png)",
   "pdfUrl": "/files/publication.rubella-materials-poster/rubella-poster-7lang.pdf",
+  "basedOn": [
+    "disease.rubella"
+  ],
   "legacyUrls": [
     "https://www.cdc.gov.tw/Category/List/STTakYaGzsFpVLfv4ezH_3"
   ],

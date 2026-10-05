@@ -1,0 +1,42 @@
+{
+  "id": "page.x-list-materials",
+  "type": "page",
+  "title": "宣導素材",
+  "owner": "unit.pr",
+  "publishedAt": "2026-10-03",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "多國語言衛教素材 防疫衛教宣導之商業媒體運用情形一覽表 數位學習課程 登革熱「巡、倒、清、刷」海報系列 流感疫苗接種宣導海報（七語） 腸病毒洗手五步驟單張 麻疹防治宣導海報（2019 年版） 防疫新生活運動海報（COVID-19） M痘防…",
+  "slug": "x-list-materials",
+  "bodyMarkdown": "- [多國語言衛教素材](https://www.cdc.gov.tw/Category/MPage/Y_AH_Ka7q03cfN15CyI-nQ)\n- [防疫衛教宣導之商業媒體運用情形一覽表](https://www.cdc.gov.tw/Category/MPage/-2qVuGOsbhtkGWlpYw1scA)\n- [數位學習課程](https://www.cdc.gov.tw/Category/MPage/1ptYuzMUqvZ6J2QOzSLk6A)\n- [登革熱「巡、倒、清、刷」海報系列](https://www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=OW0GWvcK_N7x2_x6CcO_sV)\n- [流感疫苗接種宣導海報（七語）](https://www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=-XlC5SdLwgyfRsnIbvDA-R)\n- [腸病毒洗手五步驟單張](https://www.cdc.gov.tw/Category/ListContent/Z5jlKeN6dG0jpwhf4TO0JV?uaid=RCqem2td9FR_uO2EXyBUul)\n- [麻疹防治宣導海報（2019 年版）](https://www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=RYSFjWglrrDCumRjbTT1_t)\n- [防疫新生活運動海報（COVID-19）](https://www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=jqYodXZl8Ti6hySLNXVlBs)\n- [M痘防治懶人包（社群圖卡）](https://www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=9brwAIb5B5QVwyszmo6TZh)\n- [長照機構感染管制手冊（宣導版）](https://www.cdc.gov.tw/Category/ListContent/DG4AoD4j09j2qW_YhrYAZ2?uaid=JaTSqWyasrqZpL-tvXo9BS)\n- [寵物打狂犬病疫苗：守護家人也守護毛孩（影片）](https://www.cdc.gov.tw/Category/ListContent/44k4KHKf48A57gNpJRnnj3?uaid=laU0p6BaBsID7VGsQ3zBHj)\n- [1922 防疫達人（Facebook／LINE）](https://www.cdc.gov.tw/Category/ListContent/T4NQf3E9zQFFjYKNWGBgTK?uaid=THu-Ah2wZaY7MEXWOAcXcp)\n- [里長帶頭巡倒清刷：社區防登革熱篇](https://www.cdc.gov.tw/Category/ListContent/44k4KHKf48A57gNpJRnnj3?uaid=VQRmxBAVBgtS5ytV4SMyZ0)\n- [濕搓沖捧擦：腸病毒洗手五步驟動畫](https://www.cdc.gov.tw/Category/ListContent/VujZUu3PXzEl4PjbFhh5D8?uaid=2J2WLQQVD-Okme7i011Cw5)\n- [Podcast｜抗生素不是萬靈丹：談抗藥性與防疫一體](https://www.cdc.gov.tw/Category/ListContent/VujZUu3PXzEl4PjbFhh5D8?uaid=GEJHb3XRbbo3EPVrBVucx2)",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/VOFCg57Yk3iO3I_WxoXOIA"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.6,
+    "issues": [
+      {
+        "code": "list-page",
+        "severity": "info",
+        "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/List/VOFCg57Yk3iO3I_WxoXOIA",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

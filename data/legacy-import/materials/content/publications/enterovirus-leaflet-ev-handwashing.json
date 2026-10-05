@@ -1,0 +1,93 @@
+{
+  "id": "publication.enterovirus-leaflet-ev-handwashing",
+  "type": "publication",
+  "title": "腸病毒洗手五步驟單張",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-04-10",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "腸病毒洗手五步驟單張",
+  "pubType": "poster",
+  "series": "腸病毒宣導素材",
+  "abstractMarkdown": "圖片內容（替代文字）：\n\n- ev-handwashing-steps（舊頁沒有替代文字，待補 alt）\n\n（待補：海報文字版）",
+  "basedOn": [
+    "disease.enterovirus"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/ListContent/Z5jlKeN6dG0jpwhf4TO0JV?uaid=RCqem2td9FR_uO2EXyBUul"
+  ],
+  "assets": [
+    {
+      "file": "ev-handwashing-steps.png",
+      "kind": "image",
+      "alt": "ev-handwashing-steps",
+      "license": "OGDL-1.0",
+      "needsAlt": true,
+      "mime": "image/png",
+      "bytes": 1353,
+      "sha256": "1edee52a76791d6e8b2cc6bb4ff7fd0b21772b4b8db38c7d7d55aa3ad3f144ed",
+      "width": 240,
+      "height": 160
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.8,
+    "issues": [
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "素材的權責單位依疾病主檔取 unit.acute-infectious（腸病毒），不歸宣導素材欄目的公關室"
+      },
+      {
+        "code": "type-from-category",
+        "severity": "info",
+        "message": "素材頁的標題有「單張」，草稿建成 publication（pubType poster）"
+      },
+      {
+        "code": "image-no-alt",
+        "severity": "warn",
+        "message": "圖片「ev-handwashing-steps.png」舊頁沒有替代文字，暫用檔名「ev-handwashing-steps」，請補 alt（needsAlt）"
+      },
+      {
+        "code": "image-license-assumed",
+        "severity": "info",
+        "message": "圖片「ev-handwashing-steps.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+      },
+      {
+        "code": "body-short",
+        "severity": "warn",
+        "message": "內文過短（0 字，低於 40）"
+      },
+      {
+        "code": "image-only",
+        "severity": "warn",
+        "message": "圖片承載唯一資訊：海報／單張的文字要另有純文字版（可及性），abstractMarkdown 以（待補）佔位"
+      },
+      {
+        "code": "fields-pending",
+        "severity": "warn",
+        "message": "publication 的欄位從舊頁看不出來，以「（待補）」佔位：pdfUrl、abstractMarkdown"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/ListContent/Z5jlKeN6dG0jpwhf4TO0JV?uaid=RCqem2td9FR_uO2EXyBUul",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}
