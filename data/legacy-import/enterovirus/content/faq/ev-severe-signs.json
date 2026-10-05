@@ -26,6 +26,9 @@
   "summary": "5 歲以下幼兒感染腸病毒後，若出現嗜睡、意識不清、活力不佳、手腳無力、肌躍型抽搐（無故驚嚇或突然全身肌肉收縮）、持續嘔吐、呼吸急促或心跳加快等重症前兆，請立即送到大醫院就醫。",
   "question": "腸病毒重症前兆有哪些？",
   "answerMarkdown": "5 歲以下幼兒感染腸病毒後，若出現**嗜睡、意識不清、活力不佳、手腳無力、肌躍型抽搐**（無故驚嚇或突然全身肌肉收縮）、**持續嘔吐、呼吸急促或心跳加快**等重症前兆，請立即送到大醫院就醫。\n\n重症多在發病後 2 至 7 天出現，這段期間家長要特別留意。",
+  "tasks": [
+    "symptoms"
+  ],
   "basedOn": [
     "disease.enterovirus"
   ],
@@ -50,6 +53,21 @@
         "code": "manifest-derived",
         "severity": "info",
         "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「孩子腸病毒好了，什麼時候可以回學校？」從答案抽出結構化候選 {\"days\":7}，請確認後保留或刪除"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「孩子得了腸病毒，要在家休息幾天？」從答案抽出結構化候選 {\"days\":7}，請確認後保留或刪除"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「幼兒園怎麼消毒，才對腸病毒有效？」→ situation；「孩子腸病毒好了，什麼時候可以回學校？」→ symptoms；「腸病毒重症前兆有哪些？」→ symptoms；「腸病毒 71 型疫苗是公費的嗎？打了就不會得腸病毒嗎？」→ vaccines"
       }
     ],
     "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/zID4oBmzvgDWu3fb9-fOlP",

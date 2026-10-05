@@ -26,6 +26,9 @@
   "summary": "結核病個案的診斷與治療費用由健保給付，就醫的部分負擔由疾管署支應，病人看診、拿藥原則上不需自付部分負擔；都治關懷員送藥服務、接觸者檢查與潛伏結核感染治療也都由公費支應。",
   "question": "結核病治療要花錢嗎？",
   "answerMarkdown": "結核病個案的**診斷與治療費用由健保給付，就醫的部分負擔由疾管署支應**，病人看診、拿藥原則上不需自付部分負擔；都治關懷員送藥服務、接觸者檢查與潛伏結核感染治療也都由公費支應。\n\n多重抗藥性結核病個案由抗藥性結核病醫療照護體系收治，治療費用由公費支應。依《傳染病防治法》經衛生主管機關施行隔離治療者，隔離治療期間費用由政府負擔。申請方式與條件請見「結核病診治費用補助與隔離治療」。",
+  "tasks": [
+    "symptoms"
+  ],
   "basedOn": [
     "disease.tuberculosis"
   ],
@@ -40,6 +43,16 @@
         "code": "word-cleaned",
         "severity": "info",
         "message": "清除 Word 貼上殘留 85 處（mso 樣式 53、Mso 類別 22、命名空間標籤 16）"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「咳嗽多久要懷疑是結核病？」從答案抽出結構化候選 {\"weeks\":2,\"months\":6}，請確認後保留或刪除"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「咳嗽多久要懷疑是結核病？」→ symptoms；「驗出潛伏結核感染，一定要治療嗎？」→ symptoms；「什麼是都治（DOTS）？」→ symptoms；「家人得了結核病，我需要做什麼檢查？」→ symptoms；「什麼是抗藥性結核病？要怎麼治療？」→ symptoms；「結核病治療要花錢嗎？」→ symptoms；「外籍人士來臺工作或居留，需要做結核病檢查嗎？」→ symptoms；「結核病開始吃藥後，還會傳染給家人嗎？」→ symptoms"
       }
     ],
     "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/ZW0TrgKarQJWRWZrMIWzeq",

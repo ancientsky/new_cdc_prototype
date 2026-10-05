@@ -478,6 +478,9 @@ import { shortFor } from '../scripts/lib/legacy-import/rules.mjs';
 import { generateDisease } from '../scripts/lib/legacy-import/sim-export-disease.mjs';
 import { generateNews } from '../scripts/lib/legacy-import/sim-export-news.mjs';
 import { generateGuidelines } from '../scripts/lib/legacy-import/sim-export-guidelines.mjs';
+import { generateQa } from '../scripts/lib/legacy-import/sim-export-qa.mjs';
+import { faqItemsLoose, tasksFor, datedDeadlines, structuredFromText } from '../scripts/lib/legacy-import/qa.mjs';
+import { parseHtml } from '../scripts/lib/legacy-import/html.mjs';
 import { versionFree, versionRank, dateFromText } from '../scripts/lib/legacy-import/index.mjs';
 
 const EXPORT_DENGUE = path.join(ROOT, 'data/legacy-export/dengue');
@@ -989,4 +992,118 @@ test('已提交的第七批輸出（data/legacy-import/guidelines）：26 頁 32
   generateGuidelines(tmpDir);
   const exp = path.join(ROOT, 'data/legacy-export/guidelines');
   for (const f of fs.readdirSync(exp).filter((x) => x.endsWith('.json') && x !== '_export.json')) assert.deepEqual(readJSON(path.join(tmpDir, f)), readJSON(path.join(exp, f)), f);
+});
+
+// ───────────────────────── 第八批：常見問答欄目 ─────────────────────────
+
+test('問答工具：鬆散結構拆題（h3／粗體 Q：）、tasks 關鍵字（題目優先、答案取最多）、期限已過、數字＋單位抽結構化候選', () => {
+  const rules = loadRules();
+  const h3 = parseHtml('<div><h3>Q1. 多久更新？</h3><p>每週更新。</p><h3>Q2. 哪裡查？</h3><p>A：到資料開放平臺。</p><p>補充說明。</p></div>');
+  const items = faqItemsLoose(h3);
+  assert.deepEqual(items.map((i) => i.question), ['多久更新？', '哪裡查？']);
+  assert.equal(items[1].answerNode.children.length, 2);
+  assert.match(items[1].answerNode.children[0].children[0].text, /^到資料開放平臺/, '答案開頭的「A：」去掉');
+  const bold = parseHtml('<div><p><strong>Q：謠言 A 是真的嗎？</strong></p><p>答：不是。</p><p><strong>Q：謠言 B？</strong></p><p>也不是。</p></div>');
+  assert.equal(faqItemsLoose(bold).length, 2);
+  assert.deepEqual(faqItemsLoose(parseHtml('<div><h3>只有一個標題</h3><p>一般內文</p></div>')), [], '一題以下不當問答頁');
+  assert.deepEqual(faqItemsLoose(parseHtml('<div><p>前言</p><h3>Q1. 問？</h3><h3>Q2. 沒答案？</h3></div>')), [], '有題沒答案就不採用');
+  assert.deepEqual(tasksFor(rules, '去日本旅遊需要打疫苗嗎？', ''), ['vaccines', 'travel'], '題目命中的都給（最多兩個，依規則檔順序）');
+  assert.deepEqual(tasksFor(rules, '這題什麼都沒提到', '疫苗疫苗疫苗，統計一次'), ['vaccines'], '題目沒命中 ⇒ 答案命中次數最多的一個');
+  assert.deepEqual(tasksFor(rules, '無', '無'), []);
+  const d = datedDeadlines('113 年度公費疫苗自 113 年 10 月 1 日起開打，至 114 年 3 月 31 日止。', '2026-10-05T00:00:00Z');
+  assert.equal(d.allPast, true); assert.deepEqual(d.deadlines.map((x) => x.date).sort(), ['2024-12-31', '2025-03-31']);
+  assert.equal(datedDeadlines('2026 年 8 月 24 日至 2026 年 10 月 31 日適用。', '2026-10-05T00:00:00Z').allPast, false, '還沒到的期限不算');
+  assert.equal(datedDeadlines('依 2023 年 5 月 3 日公告辦理。', '2026-10-05T00:00:00Z').deadlines.length, 0, '不是期限的日期不看');
+  assert.deepEqual(structuredFromText('打完多久有保護力？', '接種後約 2 週產生保護力，可維持約 6 個月；10 月 1 日起開打。'), { weeks: 2, months: 6 }, '「10 月 1 日」的「1 日」不算天數');
+  assert.deepEqual(structuredFromText('出國前多久去？', '建議出國前 4 至 6 週。'), { weeksMin: 4, weeksMax: 6 });
+  assert.equal(structuredFromText('這是什麼？', '約 2 週。'), null, '題目沒在問數量就不抽');
+});
+
+test('第八批（常見問答欄目，欄目清單）：疾病批已轉過的同網址頁 skip-duplicate 且不搶清單項目、鬆散結構拆題、英文頁 sourceLang、期限已過警告、tasks／structured 候選、一頁多題維持 pending；一級內容不 auto-ok', () => {
+  const dir = tmp('qa');
+  const mf = path.join(dir, 'qa.json');
+  fs.copyFileSync(path.join(CONTENT, 'migration/qa.json'), mf);
+  const exp = path.join(ROOT, 'data/legacy-export/qa');
+  const out = path.join(dir, 'out');
+  const { report, patch, drafts } = runImport({ exportDir: exp, outDir: out, manifestPath: mf, slug: 'qa', now: NOW, priorBatchesDir: path.join(ROOT, 'data/legacy-import') });
+  const s = report.summary;
+  assert.equal(s.pages, 15); assert.equal(s.drafts, 34); assert.equal(s.schemaInvalid, 0); assert.equal(s.pagesWithoutOutput, 0);
+  assert.equal(s.manifest.matched, 13); assert.equal(patch.summary.conflicts, 0);
+  const env = { units: new Set(readJSON(path.join(CONTENT, 'master/units.json')).map((u) => u.id)), diseaseIds: new Set(master.map((d) => d.id)), assetsDir: path.join(out, 'content/assets'), licenses: ['OGDL-1.0', 'CC0-1.0', 'CC-BY-4.0'] };
+  for (const d of drafts) assert.deepEqual(validateDraft(d, env), [], d.id);
+  assert.ok(!report.pages.some((p) => p.action === 'auto-ok'), 'Q&A 是一級內容，沒有 auto-ok');
+  const byKey = (k) => report.pages.find((p) => p.key.endsWith(`-${k}`));
+  const draft = (id) => drafts.find((d) => d.id === id);
+  // (1) 跟疾病批同網址的結核病、登革熱 Q&A 頁：已在疾病批轉過 ⇒ skip-duplicate、輸出全是「重複」、不記 not-in-manifest、也沒搶走清單裡別的項目
+  for (const k of ['tuberculosis-qa', 'dengue-qa']) {
+    const p = byKey(k);
+    assert.equal(p.action, 'skip-duplicate', k); assert.equal(p.manifestKey, null); assert.ok(p.outputs.length >= 7 && p.outputs.every((o) => o.role === 'duplicate'));
+    assert.ok(p.issues.some((i) => i.code === 'converted-elsewhere') && !p.issues.some((i) => i.code === 'not-in-manifest'));
+  }
+  assert.equal(byKey('hepatitis-b-qa').manifestKey, 'hepatitis-b-qa', '「Q&A」這種通稱標題不會被登革熱頁搶走');
+  assert.ok(!drafts.some((d) => d.id === 'faq.tb-cough-two-weeks'), '結核病的題在本批沒有草稿');
+  // (2) 鬆散結構：統計頁（<h3>）與謠言頁（<p><strong>Q：</strong></p>）各拆 3 題，記 faq-structure-loose（info），既有題對到既有 id
+  for (const k of ['stats-qa', 'rumor-qa']) { const p = byKey(k); assert.equal(p.outputs.filter((o) => o.role === 'draft').length, 3, k); assert.ok(p.issues.some((i) => i.code === 'faq-structure-loose' && i.severity === 'info')); assert.equal(p.action, 'compare-existing'); }
+  assert.ok(draft('faq.stats-ili-rate') && draft('faq.rumor-mmr-autism'));
+  assert.doesNotMatch(draft('faq.rumor-mmr-autism').answerMarkdown, /^A：/, '答案開頭的「A：」去掉');
+  // (3) 英文頁：needs-source-zh、sourceLang en、tasks 不給、不 auto-ok
+  const en = byKey('dengue-en-qa');
+  assert.ok(en.issues.some((i) => i.code === 'needs-source-zh')); assert.equal(en.action, 'review-before-publish');
+  const enDrafts = en.outputs.map((o) => draft(o.id));
+  assert.ok(enDrafts.every((d) => d.sourceLang === 'en' && !d.tasks && /^faq\.dengue-legacy-/.test(d.id)));
+  // (4) 期限已過：113 年度流感疫苗 Q&A 三題都記 answer-dated（warn），草稿 conversion.dated 列出期限
+  const flu = byKey('flu-season-2024-qa');
+  assert.equal(flu.issues.filter((i) => i.code === 'answer-dated' && i.severity === 'warn').length, 3);
+  for (const o of flu.outputs) { const d = draft(o.id); assert.ok(d.conversion.dated?.length >= 1, o.id); assert.ok(d.conversion.dated.every((x) => x.date < '2026-10-04')); }
+  assert.ok(!draft('faq.covid-antiviral').conversion.dated, '沒有過期期限的題不標');
+  // (5) tasks 與 structured：旅遊頁的新題 tasks=travel、structured 週數範圍；預防接種頁「保護力多久」抽 weeks/months；既有題也給 tasks 候選
+  const travel = byKey('travel-qa');
+  const newTravel = travel.outputs.map((o) => draft(o.id)).find((d) => /^faq\.x-legacy-/.test(d.id));
+  assert.deepEqual(newTravel.tasks, ['travel']); assert.deepEqual(newTravel.structured, { weeksMin: 4, weeksMax: 6 }); assert.equal(newTravel.conversion.structuredFromText, true);
+  const protect = drafts.find((d) => d.question === '流感疫苗打完多久才有保護力？');
+  assert.deepEqual(protect.structured, { weeks: 2, months: 6 }); assert.deepEqual(protect.tasks, ['vaccines']);
+  assert.deepEqual(draft('faq.hpv-vaccine-who').tasks, ['vaccines']); assert.deepEqual(draft('faq.stats-where-data').tasks, ['data', 'situation']);
+  assert.ok(travel.issues.some((i) => i.code === 'tasks-from-keywords') && travel.issues.some((i) => i.code === 'structured-from-text'));
+  // (6) 同批重複：水痘頁的唯一一題已由預防接種頁轉出 ⇒ duplicate-title，清單目標是疾病頁 ⇒ compare-existing（不另出草稿）
+  const var1 = byKey('varicella-qa');
+  assert.ok(var1.issues.some((i) => i.code === 'duplicate-title')); assert.equal(var1.action, 'compare-existing'); assert.ok(var1.outputs.every((o) => o.role === 'duplicate'));
+  // (7) 一頁多題且清單沒有單一目標 ⇒ 記 one-to-many、patch 維持 pending（不提議 migrated 到第一題）；單題頁可提議 migrated
+  for (const k of ['vaccination-qa', 'travel-qa', 'stats-qa', 'rumor-qa']) {
+    assert.ok(byKey(k).issues.some((i) => i.code === 'one-to-many'), k);
+    const e = patch.items.find((x) => x.key === k); assert.equal(e.proposed.status, 'pending', k); assert.equal(e.proposed.target, null, k); assert.ok(e.draftIds.length > 1);
+  }
+  assert.equal(patch.items.find((x) => x.key === 'hepatitis-b-qa').suggestion.status, 'migrated');
+  // (8) 整頁一題、標題就是問題 ⇒ faq-structure-missing 退路對到既有 faq.rabies-bite；列表頁略過、歸 OASIS
+  const single = byKey('single-qa'); assert.deepEqual(single.outputs.map((o) => o.id), ['faq.rabies-bite']); assert.ok(single.issues.some((i) => i.code === 'faq-structure-missing'));
+  const list = byKey('qa-list'); assert.equal(list.action, 'skip-list'); assert.equal(list.owner, 'unit.oasis');
+  assert.deepEqual(s.byAction, { 'compare-existing': 10, 'review-before-publish': 2, 'skip-duplicate': 2, 'skip-list': 1 });
+  assert.deepEqual(JSON.parse(fs.readFileSync(mf, 'utf8')), readJSON(path.join(CONTENT, 'migration/qa.json')), '沒加 --apply-migration 不改清單');
+  // 沒有其他批次可查（priorBatchesDir 空）時，同網址頁照常轉：不會因為找不到報告而出錯
+  const out2 = path.join(dir, 'out2');
+  const r2 = runImport({ exportDir: exp, outDir: out2, manifestPath: mf, slug: 'qa', now: NOW, priorBatchesDir: path.join(dir, 'nothing') });
+  assert.equal(r2.report.pages.find((p) => p.key.endsWith('-tuberculosis-qa')).action, 'compare-existing');
+});
+
+test('已提交的第八批輸出（data/legacy-import/qa）：15 頁 34 份草稿、schema 全過、清單 13 筆 verified 全 false、模擬匯出可重現', () => {
+  const dir = path.join(ROOT, 'data/legacy-import/qa');
+  const r = readJSON(path.join(dir, 'report.json'));
+  assert.equal(r.summary.pages, 15); assert.equal(r.summary.drafts, 34); assert.equal(r.summary.schemaInvalid, 0); assert.equal(r.migration.applied, true); assert.equal(r.manifest.file, 'content/migration/qa.json');
+  for (const d of r.drafts) assert.ok(fs.existsSync(path.join(dir, d.file)), d.file);
+  assert.equal(r.summary.byAction['skip-duplicate'], 2);
+  const manifest = readJSON(path.join(CONTENT, 'migration/qa.json'));
+  assert.equal(manifest.items.length, 13); assert.equal(manifest.scope.kind, 'category'); assert.ok(manifest.items.every((i) => i.verified === false));
+  assert.ok(manifest.items.every((i) => /【匯入 /.test(i.note ?? '')));
+  assert.ok(manifest.items.filter((i) => i.status === 'pending').length >= 5, '一頁多題的主題頁維持 pending');
+  const tmpDir = tmp('exp8');
+  generateQa(tmpDir);
+  const exp = path.join(ROOT, 'data/legacy-export/qa');
+  for (const f of fs.readdirSync(exp).filter((x) => x.endsWith('.json') && x !== '_export.json')) assert.deepEqual(readJSON(path.join(tmpDir, f)), readJSON(path.join(exp, f)), f);
+  // 第八批重跑後，各疾病批的 Q&A 草稿也帶 tasks 候選（既有題中第一個 task 多數與人工相同）
+  let same = 0, total = 0;
+  for (const b of fs.readdirSync(path.join(ROOT, 'data/legacy-import'))) {
+    const fd = path.join(ROOT, 'data/legacy-import', b, 'content/faq');
+    if (!fs.existsSync(fd)) continue;
+    for (const f of fs.readdirSync(fd)) { const ex = path.join(CONTENT, 'faq', f); if (!fs.existsSync(ex)) continue; total++; const t = readJSON(path.join(fd, f)).tasks?.[0]; if (t && readJSON(ex).tasks?.includes(t)) same++; }
+  }
+  assert.ok(total >= 60 && same / total >= 0.85, `第一個 task 與人工一致 ${same}/${total}`);
 });

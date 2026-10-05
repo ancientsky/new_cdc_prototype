@@ -26,6 +26,9 @@
   "summary": "回國後 14 日內請做好防蚊（穿淺色長袖衣褲、使用政府核可的防蚊藥劑、睡前確認紗窗完整），避免被蚊子叮咬後再傳給家人與社區。",
   "question": "從登革熱流行地區回國後，要注意什麼？",
   "answerMarkdown": "回國後 **14 日內**請做好防蚊（穿淺色長袖衣褲、使用政府核可的防蚊藥劑、睡前確認紗窗完整），避免被蚊子叮咬後再傳給家人與社區。\n\n若發燒、頭痛、後眼窩痛、肌肉關節痛或出疹，請**盡速就醫並告知旅遊史**；醫師可使用 NS1 快篩協助判斷。境外移入病例返國後，衛生單位會依規定在 14 日內每週追蹤防蚊情形，請配合。",
+  "tasks": [
+    "symptoms"
+  ],
   "basedOn": [
     "disease.dengue"
   ],
@@ -50,6 +53,16 @@
         "code": "manifest-derived",
         "severity": "info",
         "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「登革熱發燒後幾天內要就醫？」從答案抽出結構化候選 {\"daysMin\":3,\"daysMax\":14,\"hours\":24}，請確認後保留或刪除"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「社區或里長要怎麼帶大家一起防登革熱？」→ situation；「登革熱發燒後幾天內要就醫？」→ symptoms；「從登革熱流行地區回國後，要注意什麼？」→ symptoms；「懷疑登革熱時，可以自己吃止痛藥嗎？」→ symptoms；「衛生單位說要進家裡噴藥，可以拒絕嗎？」→ symptoms；「出國回來後發燒，應該怎麼辦？」→ travel、symptoms"
       }
     ],
     "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/4kMzhnwTwPIrf_KETxhqzF",

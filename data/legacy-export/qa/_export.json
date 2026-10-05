@@ -1,0 +1,10 @@
+{
+  "format": "cdc-legacy-export/1",
+  "simulated": true,
+  "exportedAt": "2026-10-03",
+  "site": "https://www.cdc.gov.tw",
+  "batch": "qa",
+  "pages": 15,
+  "source": "模擬匯出：常見問答（Q&A）欄目。由既有 content/faq 57 題反推成問答頁 12 頁（約 33 題，含新站沒有的題與鬆散排版、過期年度、英文頁、單題頁），另複製疾病批匯出裡同網址的 Q&A 頁 2 頁（結核病、登革熱）與列表頁 1 頁；不是舊站的真實資料（網址 ID、數字皆為示意）。正式匯出取代整個目錄即可。",
+  "generator": "scripts/lib/legacy-import/sim-export-qa.mjs"
+}

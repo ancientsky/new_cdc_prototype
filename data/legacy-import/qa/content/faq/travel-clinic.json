@@ -1,0 +1,74 @@
+{
+  "id": "faq.travel-clinic",
+  "type": "faq",
+  "title": "旅遊醫學門診可以做什麼？要出國前多久去？",
+  "owner": "unit.quarantine",
+  "publishedAt": "2017-11-20",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "旅遊醫學門診會依您的目的地、行程與健康狀況，提供行前評估：需要的疫苗（如 A 型肝炎、黃熱病、狂犬病、MMR、日本腦炎）、瘧疾預防用藥、高山症與旅行者腹瀉的備藥與衛教。",
+  "question": "旅遊醫學門診可以做什麼？要出國前多久去？",
+  "answerMarkdown": "旅遊醫學門診會依您的**目的地、行程與健康狀況**，提供行前評估：需要的疫苗（如 A 型肝炎、黃熱病、狂犬病、MMR、日本腦炎）、瘧疾預防用藥、高山症與旅行者腹瀉的備藥與衛教。\n\n建議在**出國前 4 至 6 週**就診，讓疫苗有時間產生保護力；臨時出發也仍可就診評估。合約院所名單可在疾管署網站查詢。",
+  "tasks": [
+    "travel"
+  ],
+  "structured": {
+    "weeksMin": 4,
+    "weeksMax": 6
+  },
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/oDFvYopfPTouRB6a4gWcs5"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 42 處（mso 樣式 20、Mso 類別 11、命名空間標籤 11）"
+      },
+      {
+        "code": "one-to-many",
+        "severity": "info",
+        "message": "一頁 6 題、清單沒有單一目標：status 維持 pending，請決定併入疾病頁（merged）或各題獨立（新站以 tasks 歸類）"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「旅遊醫學門診可以做什麼？要出國前多久去？」從答案抽出結構化候選 {\"weeksMin\":4,\"weeksMax\":6}，請確認後保留或刪除"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「出國前多久要到旅遊醫學門診諮詢？」從答案抽出結構化候選 {\"weeksMin\":4,\"weeksMax\":6}，請確認後保留或刪除"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「旅遊醫學門診可以做什麼？要出國前多久去？」→ travel；「去日本旅遊需要擔心麻疹嗎？」→ travel；「去非洲需要吃瘧疾預防藥嗎？」→ symptoms；「出國回來後發燒，應該怎麼辦？」→ travel、symptoms；「去哪些國家需要黃熱病疫苗證明？」→ vaccines；「出國前多久要到旅遊醫學門診諮詢？」→ travel"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/oDFvYopfPTouRB6a4gWcs5",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.travel-clinic"
+    ],
+    "structuredFromText": true
+  }
+}

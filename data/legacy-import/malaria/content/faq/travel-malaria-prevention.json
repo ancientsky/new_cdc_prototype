@@ -26,6 +26,9 @@
   "summary": "前往撒哈拉以南非洲等瘧疾流行地區，多數情況建議使用預防用藥，但種類與服法需由旅遊醫學門診醫師依目的地、停留時間與個人健康狀況評估開立。",
   "question": "去非洲需要吃瘧疾預防藥嗎？",
   "answerMarkdown": "前往撒哈拉以南非洲等瘧疾流行地區，多數情況建議使用**預防用藥**，但種類與服法需由旅遊醫學門診醫師依目的地、停留時間與個人健康狀況評估開立。\n\n預防用藥通常需在出發前開始服用，並在返國後持續服用一段時間。同時仍要做好夜間防蚊。返國一年內若發燒，請就醫並告知旅遊史。",
+  "tasks": [
+    "symptoms"
+  ],
   "basedOn": [
     "disease.malaria"
   ],
@@ -50,6 +53,11 @@
         "code": "manifest-derived",
         "severity": "info",
         "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「去非洲需要吃瘧疾預防藥嗎？」→ symptoms；「出國回來後發燒，應該怎麼辦？」→ travel、symptoms"
       }
     ],
     "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/Fpb_HE3bigFTOpCIKFyaTC",

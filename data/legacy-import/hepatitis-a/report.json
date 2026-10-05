@@ -11,7 +11,7 @@
   },
   "rules": {
     "file": "content/migration/import/_import-rules.json",
-    "version": 6
+    "version": 7
   },
   "manifest": {
     "id": "migration.hepatitis-a",
@@ -71,7 +71,7 @@
     "issues": {
       "error": 0,
       "warn": 9,
-      "info": 70
+      "info": 71
     },
     "manifest": {
       "items": 0,
@@ -897,6 +897,11 @@
           "code": "body-short",
           "severity": "warn",
           "message": "內文過短（17 字，低於 40）"
+        },
+        {
+          "code": "tasks-unknown",
+          "severity": "info",
+          "message": "題目沒有命中 faqTasks 關鍵字，tasks 留空，請人工補"
         }
       ],
       "action": "compare-existing",

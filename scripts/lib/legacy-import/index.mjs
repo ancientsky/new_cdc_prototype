@@ -21,6 +21,7 @@ import { validateDraft } from './validate.mjs';
 import { buildPatch, applyPatch, expandTemplateItems } from './migration.mjs';
 import { renderReportMd } from './report.mjs';
 import { STRUCTURED_TYPES, extractFields, serviceTypeFor, typeOfId } from './types.mjs';
+import { faqItemsLoose, tasksFor, datedDeadlines, structuredFromText } from './qa.mjs';
 
 const h6 = (s) => createHash('sha1').update(String(s)).digest('hex').slice(0, 6);
 const DIRS = { disease: 'diseases', faq: 'faq', news: 'news', document: 'documents', page: 'pages', publication: 'publications', media: 'media', dataset: 'datasets', labtest: 'labtests', service: 'services', clarification: 'clarifications', topic: 'topics', vaccine: 'vaccines', letter: 'news' };
@@ -120,6 +121,29 @@ export function dateFromText(text) {
   return null;
 }
 
+/** 網址比對用的鍵：去協定、小寫、去尾斜線（舊站網址大小寫不敏感） */
+export const normUrlKey = (u) => String(u ?? '').replace(/^https?:\/\//i, '').replace(/\/+$/, '').toLowerCase();
+
+/** 同一個輸出根目錄下其他批次的 report.json → Map(網址鍵 → [{ batch, key, outputs }…])（同網址可能出現在多批）；沒有就空 Map */
+export function loadPriorPages(rootDir, selfOut) {
+  const map = new Map();
+  if (!rootDir || !fs.existsSync(rootDir)) return map;
+  for (const name of fs.readdirSync(rootDir).sort()) {
+    const dir = path.join(rootDir, name);
+    if (path.resolve(dir) === path.resolve(selfOut)) continue;
+    const f = path.join(dir, 'report.json');
+    if (!fs.existsSync(f)) continue;
+    let r; try { r = JSON.parse(fs.readFileSync(f, 'utf8')); } catch { continue; }
+    for (const p of r.pages ?? []) {
+      const k = normUrlKey(p.source?.url);
+      if (!k) continue;
+      if (!map.has(k)) map.set(k, []);
+      map.get(k).push({ batch: r.batch ?? name, key: p.key, outputs: (p.outputs ?? []).filter((o) => o.role !== 'duplicate').map((o) => ({ id: o.id, type: o.type })) });
+    }
+  }
+  return map;
+}
+
 // ───────────────────────────────────────── 主流程 ─────────────────────────────────────────
 
 export function runImport(opts) {
@@ -145,6 +169,8 @@ export function runImport(opts) {
   const unitIds = new Set(master.units.filter((u) => u.publishes !== false).map((u) => u.id));
   const diseaseById = new Map(master.diseases.map((d) => [d.id, d]));
   const index = loadContentIndex(contentDir);
+  // 第八批：其他批次已轉過的頁（同網址）。欄目匯出會把疾病專題的 Q&A 再匯一次，這些頁歸疾病批；這裡讀同一個輸出根目錄下其他批次的 report.json
+  const priorPages = loadPriorPages(opts.priorBatchesDir ?? path.dirname(out), out);
 
   // 移轉清單（選用）
   const mfPath = manifestPath ?? path.join(contentDir, 'migration', `${slug}.json`);
@@ -237,6 +263,20 @@ export function runImport(opts) {
     }
     pr.owner = owner;
     pr.ownerMapped = !!pr.ownerRule;
+
+    // 第八批：疾病專題的 Q&A 頁在欄目匯出裡會再出現一次（同網址）；它的「家」是該疾病的批次，疾病批已轉過就不重複出草稿，也不參與本批的清單比對（免得搶走別的清單項目）
+    if (pat?.kind === 'faq' && side.url) {
+      const home = ds[0] ? diseaseById.get(ds[0].id)?.slug ?? null : null;
+      const prior = home && home !== slug ? (priorPages.get(normUrlKey(side.url)) ?? []).find((x) => x.batch === home) : null;
+      if (prior) {
+        pr.flags.convertedElsewhere = { batch: prior.batch, key: prior.key };
+        pr.kind = 'faq'; pr.type = 'faq'; pr.pattern = pat.id;
+        issue('converted-elsewhere', 'info', `同網址的頁已在 ${prior.batch} 批（${prior.key}）轉過，草稿 ${prior.outputs.map((o) => o.id).join('、') || '（無）'}；本批不重複出草稿，內容若有更新請在該批重跑`);
+        for (const o of prior.outputs) pr.outputs.push({ id: o.id, type: o.type, role: 'duplicate', duplicateOf: `${prior.batch}/${prior.key}` });
+        pr.issues = uniqIssues(pr.issues);
+        continue;
+      }
+    }
 
     // 移轉清單比對
     let mi = null;
@@ -414,10 +454,20 @@ export function runImport(opts) {
     } else if (kind === 'faq') {
       let items = faqItems(rules, ext.container);
       if (!items.length) {
+        // 第八批：沒有手風琴元件、編輯手排的問答頁（<h3>Q1. …</h3> 或 <p><strong>Q：…</strong></p> ＋ 答案段落）
+        items = faqItemsLoose(ext.body);
+        if (items.length) issue('faq-structure-loose', 'info', `沒有 .panel 結構，依「Q 開頭的標題／段落」拆成 ${items.length} 題，請核對題目與答案的切分`);
+      }
+      if (!items.length) {
         issue('faq-structure-missing', 'warn', '找不到 Q&A 結構（.panel／.panel-title／.panel-body），整頁當作一題處理');
         items = [{ question: stripTitlePrefix(rules, title), answerNode: ext.body }];
       }
+      // 英文問答頁（/En/…）：來源語言是英文、新站以中文為正本 ⇒ 要補中文版
+      const faqLang = pat?.lang && pat.lang !== 'zh-TW' ? pat.lang : null;
+      if (faqLang) issue('needs-source-zh', 'warn', `來源語言 ${faqLang}：新站以中文為正本（治理規則 18），請補中文版後再上線`);
+      if (items.length > 1 && !pr.target) issue('one-to-many', 'info', `一頁 ${items.length} 題、清單沒有單一目標：status 維持 pending，請決定併入疾病頁（merged）或各題獨立（新站以 tasks 歸類）`);
       let first = true;
+      const taskNotes = [];
       for (const it of items) {
         const nq = normTitle(it.question);
         let id = index.faqByTitle.get(nq) ?? (items.length === 1 && pr.target?.startsWith('faq.') ? pr.target : null) ?? `faq.${short}-legacy-${h6(it.question)}`;
@@ -434,9 +484,23 @@ export function runImport(opts) {
         afterRewrite(stat);
         const { markdown, dropped } = toMd(it.answerNode.children);
         checks(markdown, it.answerNode, stat, dropped);
-        units.push({ pageKey: page.name, kind, type: 'faq', draftId: id, question: it.question, markdown, diseaseId: primary, publishedAt: publishedAt ?? exportedAt });
+        // 第八批：tasks 由關鍵字給、答案期限已過要警告、問「多久／幾劑」的題抽結構化候選
+        const answerText = plainText(markdown);
+        const tasks = faqLang ? [] : tasksFor(rules, it.question, answerText);
+        if (tasks.length) taskNotes.push(`「${it.question}」→ ${tasks.join('、')}`);
+        const conv = {};
+        const dated = datedDeadlines(`${it.question} ${answerText}`, now);
+        if (dated.allPast) {
+          conv.dated = dated.deadlines;
+          issue('answer-dated', 'warn', `「${it.question}」的答案寫的期限都已過（${dated.deadlines.map((d) => d.text).join('、')}）：請確認是否已有新年度版本或應封存`);
+        }
+        const structured = faqLang ? null : structuredFromText(it.question, answerText);
+        if (structured) { conv.structuredFromText = true; issue('structured-from-text', 'info', `「${it.question}」從答案抽出結構化候選 ${JSON.stringify(structured)}，請確認後保留或刪除`); }
+        units.push({ pageKey: page.name, kind, type: 'faq', draftId: id, question: it.question, markdown, diseaseId: primary, publishedAt: publishedAt ?? exportedAt, tasks, structured, lang: faqLang, conv });
         pr.outputs.push({ id, type: 'faq', role: 'draft' });
       }
+      if (taskNotes.length) issue('tasks-from-keywords', 'info', `tasks 依題目關鍵字給：${taskNotes.join('；')}`);
+      else if (!faqLang && pr.outputs.some((o) => o.role === 'draft')) issue('tasks-unknown', 'info', '題目沒有命中 faqTasks 關鍵字，tasks 留空，請人工補');
     } else if (kind === 'news') {
       const bt = bulletinType(rules, u);
       if (!bt || bt.unknown) { pr.typeClear = false; issue('type-unclear', 'warn', bt ? `Bulletin typeid=${bt.typeid} 不在規則檔 bulletinTypes，暫以其他訊息（other）處理` : '網址沒有 typeid，暫以其他訊息（other）處理'); }
@@ -665,7 +729,10 @@ export function runImport(opts) {
     if (un.type === 'faq') {
       d = base(un.question, un.markdown, 'faq');
       Object.assign(d, { question: un.question, answerMarkdown: un.markdown });
+      if (un.tasks?.length) d.tasks = un.tasks;
       if (un.diseaseId) d.basedOn = [un.diseaseId];
+      if (un.structured) d.structured = un.structured;
+      if (un.lang && un.lang !== 'zh-TW') d.sourceLang = un.lang;
     } else if (un.type === 'news') {
       d = base(un.title, un.markdown, un.letter ? 'letter' : 'news');
       d.type = un.letter ? 'letter' : 'news';
@@ -690,7 +757,7 @@ export function runImport(opts) {
       d = base(un.title, un.markdown, 'page');
       Object.assign(d, { slug: idRest(un.draftId), bodyMarkdown: un.markdown });
     }
-    drafts.push(finish(d, [pr], un.type === 'document' ? un.conv ?? {} : {}));
+    drafts.push(finish(d, [pr], un.conv ?? {}));
   }
 
   for (const [id, us] of diseaseUnits) {
@@ -793,6 +860,9 @@ export function runImport(opts) {
 export function decideAction(pr, rules) {
   if (pr.flags.drop) return 'drop';
   if (pr.flags.historical) return 'archive';
+  if (pr.flags.convertedElsewhere) return 'skip-duplicate';
+  // 第八批：整頁每一題都已由本批其他頁轉出（Q&A 題目重複）且沒有清單目標可比對 ⇒ 不重複出草稿
+  if (pr.outputs.length && pr.outputs.every((o) => o.role === 'duplicate') && !pr.targetExists) return 'skip-duplicate';
   if (pr.kind === 'list' && !pr.stats.attachments && !pr.stats.images) return 'skip-list';
   if (pr.needsReview) return 'manual-review';
   if (pr.kind === 'disease-block') return 'merge-into-disease';

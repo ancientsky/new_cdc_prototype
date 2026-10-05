@@ -1,0 +1,65 @@
+{
+  "id": "faq.rumor-sms-link",
+  "type": "faq",
+  "title": "收到自稱疾管署的簡訊要我點連結填資料，怎麼辦？",
+  "owner": "unit.pr",
+  "publishedAt": "2021-02-08",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "疾管署不會以簡訊或通訊軟體要求民眾點連結填寫個資、信用卡或帳戶資料，也不會要求匯款或投資。收到這類訊息請不要點連結、不要回覆，可撥打 165 反詐騙專線查證，或撥 1922 防疫專線詢問。",
+  "question": "收到自稱疾管署的簡訊要我點連結填資料，怎麼辦？",
+  "answerMarkdown": "疾管署**不會以簡訊或通訊軟體要求民眾點連結填寫個資、信用卡或帳戶資料**，也不會要求匯款或投資。收到這類訊息請不要點連結、不要回覆，可撥打 165 反詐騙專線查證，或撥 1922 防疫專線詢問。\n\n疾管署的官方資訊以官網（cdc.gov.tw）及官方社群帳號公告為準。",
+  "tasks": [
+    "rumor",
+    "symptoms"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/Y6mjmeVxUGO8zXmBiXV284"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 21 處（mso 樣式 8、Mso 類別 8、命名空間標籤 5）"
+      },
+      {
+        "code": "faq-structure-loose",
+        "severity": "info",
+        "message": "沒有 .panel 結構，依「Q 開頭的標題／段落」拆成 3 題，請核對題目與答案的切分"
+      },
+      {
+        "code": "one-to-many",
+        "severity": "info",
+        "message": "一頁 3 題、清單沒有單一目標：status 維持 pending，請決定併入疾病頁（merged）或各題獨立（新站以 tasks 歸類）"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「MMR 疫苗會造成自閉症嗎？」→ vaccines；「收到自稱疾管署的簡訊要我點連結填資料，怎麼辦？」→ rumor、symptoms；「網傳多喝熱水、多曬太陽可以預防流感，是真的嗎？」→ rumor"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/Y6mjmeVxUGO8zXmBiXV284",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.rumor-sms-link"
+    ]
+  }
+}

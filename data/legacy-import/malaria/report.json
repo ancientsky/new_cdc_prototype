@@ -11,7 +11,7 @@
   },
   "rules": {
     "file": "content/migration/import/_import-rules.json",
-    "version": 6
+    "version": 7
   },
   "manifest": {
     "id": "migration.malaria",
@@ -71,7 +71,7 @@
     "issues": {
       "error": 0,
       "warn": 9,
-      "info": 71
+      "info": 72
     },
     "manifest": {
       "items": 0,
@@ -896,6 +896,11 @@
           "code": "manifest-derived",
           "severity": "info",
           "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "tasks-from-keywords",
+          "severity": "info",
+          "message": "tasks 依題目關鍵字給：「去非洲需要吃瘧疾預防藥嗎？」→ symptoms；「出國回來後發燒，應該怎麼辦？」→ travel、symptoms"
         }
       ],
       "action": "compare-existing",

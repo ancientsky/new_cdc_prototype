@@ -1,0 +1,2258 @@
+{
+  "format": "cdc-legacy-import-report/1",
+  "batch": "qa",
+  "generatedAt": "2026-10-05T02:30:00Z",
+  "exportedAt": "2026-10-03",
+  "simulated": true,
+  "source": {
+    "dir": "data/legacy-export/qa",
+    "note": "模擬匯出：常見問答（Q&A）欄目。由既有 content/faq 57 題反推成問答頁 12 頁（約 33 題，含新站沒有的題與鬆散排版、過期年度、英文頁、單題頁），另複製疾病批匯出裡同網址的 Q&A 頁 2 頁（結核病、登革熱）與列表頁 1 頁；不是舊站的真實資料（網址 ID、數字皆為示意）。正式匯出取代整個目錄即可。",
+    "site": "https://www.cdc.gov.tw"
+  },
+  "rules": {
+    "file": "content/migration/import/_import-rules.json",
+    "version": 7
+  },
+  "manifest": {
+    "id": "migration.qa",
+    "file": "content/migration/qa.json",
+    "synthetic": false,
+    "items": 13,
+    "extends": null,
+    "derivedItems": 0,
+    "derivedCovered": [],
+    "disease": null
+  },
+  "summary": {
+    "pages": 15,
+    "drafts": 34,
+    "mergedPages": 0,
+    "byType": {
+      "faq": 33,
+      "page": 1
+    },
+    "byKind": {
+      "faq": 14,
+      "list": 1
+    },
+    "byAction": {
+      "compare-existing": 10,
+      "review-before-publish": 2,
+      "skip-duplicate": 2,
+      "skip-list": 1
+    },
+    "avgConfidence": 0.95,
+    "needsReview": 0,
+    "existing": 10,
+    "schemaInvalid": 0,
+    "assets": {
+      "total": 0,
+      "attachment": 0,
+      "image": 0,
+      "data": 0,
+      "needsAlt": 0,
+      "noTextLayer": 0
+    },
+    "issues": {
+      "error": 0,
+      "warn": 6,
+      "info": 52
+    },
+    "manifest": {
+      "items": 13,
+      "matched": 13,
+      "missingPages": 0,
+      "derivedItems": 0,
+      "derivedMatched": 0
+    },
+    "exportedAt": "2026-10-03",
+    "pagesWithoutOutput": 0
+  },
+  "pages": [
+    {
+      "key": "01-covid-qa",
+      "file": "01-covid-qa.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/QAPage/BvAeVrOkFy2tQv8lwkcQXM",
+        "title": "新冠併發重症 Q&A",
+        "category": "新冠併發重症／Q&A",
+        "publishedAt": "2023-05-01",
+        "updatedAt": "2026-03-10",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "新冠併發重症",
+          "Q&A"
+        ],
+        "tab": ""
+      },
+      "pattern": "qa",
+      "kind": "faq",
+      "type": "faq",
+      "manifestKey": "covid-qa",
+      "manifestDerived": false,
+      "target": "disease.covid-19",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "faq.covid-antiviral",
+        "faq.covid-vaccine-who",
+        "faq.flu-covid-same-day",
+        "disease.covid-19"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.covid-19"
+      ],
+      "outputs": [
+        {
+          "id": "faq.covid-antiviral",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/covid-antiviral.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.covid-vaccine-who",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/covid-vaccine-who.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.flu-covid-same-day",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/flu-covid-same-day.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 31 處（mso 樣式 19、Mso 類別 8、命名空間標籤 6）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「新冠併發重症／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（新冠併發重症）"
+        },
+        {
+          "code": "structured-from-text",
+          "severity": "info",
+          "message": "「今年新冠疫苗誰可以打公費？要打幾劑？」從答案抽出結構化候選 {\"months\":6,\"doses\":1,\"weeks\":12,\"ageYears\":65}，請確認後保留或刪除"
+        },
+        {
+          "code": "tasks-from-keywords",
+          "severity": "info",
+          "message": "tasks 依題目關鍵字給：「新冠確診後，誰可以使用公費口服抗病毒藥？」→ symptoms；「今年新冠疫苗誰可以打公費？要打幾劑？」→ vaccines；「流感疫苗和新冠疫苗可以同一天打嗎？」→ vaccines"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "02-dengue-en-qa",
+      "file": "02-dengue-en-qa.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/En/Category/QAPage/MZc3ZyAJNuiEZUIBNEvj4Z",
+        "title": "Dengue Fever FAQ",
+        "category": "Diseases／Dengue Fever／FAQ",
+        "publishedAt": "2022-06-01",
+        "updatedAt": "2026-07-15",
+        "breadcrumbs": [
+          "Home",
+          "Diseases",
+          "Dengue Fever",
+          "FAQ"
+        ],
+        "tab": ""
+      },
+      "pattern": "qa-en",
+      "kind": "faq",
+      "type": "faq",
+      "manifestKey": "dengue-en-qa",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "faq.dengue-legacy-4db8ab",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/dengue-legacy-4db8ab.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.dengue-legacy-13c7cc",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/dengue-legacy-13c7cc.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.dengue-legacy-c72cba",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/dengue-legacy-c72cba.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 30 處（mso 樣式 22、Mso 類別 8、命名空間標籤 4）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「Diseases／Dengue Fever／FAQ」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "needs-source-zh",
+          "severity": "warn",
+          "message": "來源語言 en：新站以中文為正本（治理規則 18），請補中文版後再上線"
+        },
+        {
+          "code": "one-to-many",
+          "severity": "info",
+          "message": "一頁 3 題、清單沒有單一目標：status 維持 pending，請決定併入疾病頁（merged）或各題獨立（新站以 tasks 歸類）"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "03-dengue-qa",
+      "file": "03-dengue-qa.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/QAPage/4kMzhnwTwPIrf_KETxhqzF",
+        "title": "Q&A",
+        "category": "登革熱／Q&A",
+        "publishedAt": "2026-09-24",
+        "updatedAt": "2026-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "Q&A"
+        ],
+        "tab": ""
+      },
+      "pattern": "qa",
+      "kind": "faq",
+      "type": "faq",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [
+        "faq.dengue-community-mobilize",
+        "faq.dengue-container-check",
+        "faq.dengue-fever-when-to-see-doctor",
+        "faq.dengue-imported-return",
+        "faq.dengue-painkiller",
+        "faq.dengue-spraying-refuse",
+        "faq.travel-return-fever"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "faq.dengue-community-mobilize",
+          "type": "faq",
+          "role": "duplicate",
+          "duplicateOf": "dengue/10-qa-list"
+        },
+        {
+          "id": "faq.dengue-container-check",
+          "type": "faq",
+          "role": "duplicate",
+          "duplicateOf": "dengue/10-qa-list"
+        },
+        {
+          "id": "faq.dengue-fever-when-to-see-doctor",
+          "type": "faq",
+          "role": "duplicate",
+          "duplicateOf": "dengue/10-qa-list"
+        },
+        {
+          "id": "faq.dengue-imported-return",
+          "type": "faq",
+          "role": "duplicate",
+          "duplicateOf": "dengue/10-qa-list"
+        },
+        {
+          "id": "faq.dengue-painkiller",
+          "type": "faq",
+          "role": "duplicate",
+          "duplicateOf": "dengue/10-qa-list"
+        },
+        {
+          "id": "faq.dengue-spraying-refuse",
+          "type": "faq",
+          "role": "duplicate",
+          "duplicateOf": "dengue/10-qa-list"
+        },
+        {
+          "id": "faq.travel-return-fever",
+          "type": "faq",
+          "role": "duplicate",
+          "duplicateOf": "dengue/10-qa-list",
+          "file": "content/faq/travel-return-fever.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 74 處（mso 樣式 48、Mso 類別 20、命名空間標籤 13）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「登革熱／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "converted-elsewhere",
+          "severity": "info",
+          "message": "同網址的頁已在 dengue 批（10-qa-list）轉過，草稿 faq.dengue-community-mobilize、faq.dengue-container-check、faq.dengue-fever-when-to-see-doctor、faq.dengue-imported-return、faq.dengue-painkiller、faq.dengue-spraying-refuse、faq.travel-return-fever；本批不重複出草稿，內容若有更新請在該批重跑"
+        }
+      ],
+      "action": "skip-duplicate",
+      "flags": {
+        "convertedElsewhere": {
+          "batch": "dengue",
+          "key": "10-qa-list"
+        }
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "04-flu-season-2024-qa",
+      "file": "04-flu-season-2024-qa.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/QAPage/zU9zOhcsoqjv8REH6XHH-Y",
+        "title": "113 年度公費流感疫苗接種 Q&A",
+        "category": "預防接種／流感疫苗／常見問答",
+        "publishedAt": "2024-09-20",
+        "updatedAt": "2024-12-02",
+        "breadcrumbs": [
+          "首頁",
+          "預防接種",
+          "流感疫苗",
+          "常見問答"
+        ],
+        "tab": ""
+      },
+      "pattern": "qa",
+      "kind": "faq",
+      "type": "faq",
+      "manifestKey": "flu-season-2024-qa",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "faq.influenza-legacy-286a86",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/influenza-legacy-286a86.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.influenza-legacy-d3274b",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/influenza-legacy-d3274b.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.influenza-legacy-28a4c0",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/influenza-legacy-28a4c0.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 10 處（mso 樣式 4、Mso 類別 3、命名空間標籤 3）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「預防接種／流感疫苗／常見問答」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "one-to-many",
+          "severity": "info",
+          "message": "一頁 3 題、清單沒有單一目標：status 維持 pending，請決定併入疾病頁（merged）或各題獨立（新站以 tasks 歸類）"
+        },
+        {
+          "code": "answer-dated",
+          "severity": "warn",
+          "message": "「113 年度公費流感疫苗什麼時候開打？」的答案寫的期限都已過（114 年 3 月 31 日、113 年度）：請確認是否已有新年度版本或應封存"
+        },
+        {
+          "code": "structured-from-text",
+          "severity": "info",
+          "message": "「113 年度公費流感疫苗什麼時候開打？」從答案抽出結構化候選 {\"ageYears\":65}，請確認後保留或刪除"
+        },
+        {
+          "code": "answer-dated",
+          "severity": "warn",
+          "message": "「113 年度公費流感疫苗有哪些廠牌？」的答案寫的期限都已過（113 年度）：請確認是否已有新年度版本或應封存"
+        },
+        {
+          "code": "answer-dated",
+          "severity": "warn",
+          "message": "「錯過第一階段，之後還能打嗎？」的答案寫的期限都已過（114 年 3 月 31 日）：請確認是否已有新年度版本或應封存"
+        },
+        {
+          "code": "tasks-from-keywords",
+          "severity": "info",
+          "message": "tasks 依題目關鍵字給：「113 年度公費流感疫苗什麼時候開打？」→ vaccines；「113 年度公費流感疫苗有哪些廠牌？」→ vaccines；「錯過第一階段，之後還能打嗎？」→ vaccines"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "05-hepatitis-b-qa",
+      "file": "05-hepatitis-b-qa.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/QAPage/AOyssgHzaQZuuM8MdMmEDw",
+        "title": "急性病毒性B型肝炎 Q&A",
+        "category": "急性病毒性B型肝炎／Q&A",
+        "publishedAt": "2019-08-12",
+        "updatedAt": "2024-11-05",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "急性病毒性B型肝炎",
+          "Q&A"
+        ],
+        "tab": ""
+      },
+      "pattern": "qa",
+      "kind": "faq",
+      "type": "faq",
+      "manifestKey": "hepatitis-b-qa",
+      "manifestDerived": false,
+      "target": "faq.hepb-newborn",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "faq.hepb-newborn"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.hepatitis-b"
+      ],
+      "outputs": [
+        {
+          "id": "faq.hepb-newborn",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/hepb-newborn.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 7 處（mso 樣式 3、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「急性病毒性B型肝炎／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.chronic-infectious（急性病毒性B型肝炎）"
+        },
+        {
+          "code": "structured-from-text",
+          "severity": "info",
+          "message": "「新生兒的 B 型肝炎疫苗什麼時候打？」從答案抽出結構化候選 {\"doses\":3,\"hours\":24,\"months\":1}，請確認後保留或刪除"
+        },
+        {
+          "code": "tasks-from-keywords",
+          "severity": "info",
+          "message": "tasks 依題目關鍵字給：「新生兒的 B 型肝炎疫苗什麼時候打？」→ vaccines"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "06-hiv-qa",
+      "file": "06-hiv-qa.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/QAPage/StC0qbIcZz2pDen8xIEI0x",
+        "title": "人類免疫缺乏病毒感染 Q&A",
+        "category": "人類免疫缺乏病毒感染／Q&A",
+        "publishedAt": "2018-12-01",
+        "updatedAt": "2026-06-18",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "人類免疫缺乏病毒感染",
+          "Q&A"
+        ],
+        "tab": ""
+      },
+      "pattern": "qa",
+      "kind": "faq",
+      "type": "faq",
+      "manifestKey": "hiv-qa",
+      "manifestDerived": false,
+      "target": "disease.hiv",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "faq.hiv-pep",
+        "faq.hiv-test-where",
+        "disease.hiv"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.hiv"
+      ],
+      "outputs": [
+        {
+          "id": "faq.hiv-pep",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/hiv-pep.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.hiv-test-where",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/hiv-test-where.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 30 處（mso 樣式 22、Mso 類別 7、命名空間標籤 4）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「人類免疫缺乏病毒感染／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.chronic-infectious（人類免疫缺乏病毒感染）"
+        },
+        {
+          "code": "tasks-from-keywords",
+          "severity": "info",
+          "message": "tasks 依題目關鍵字給：「發生沒有保護的性行為後，72 小時內可以做什麼？」→ symptoms；「哪裡可以做匿名 HIV 篩檢？」→ symptoms"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "07-pertussis-qa",
+      "file": "07-pertussis-qa.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/QAPage/brTyOBKZhav8nqkwfudS5x",
+        "title": "百日咳 Q&A",
+        "category": "百日咳／Q&A",
+        "publishedAt": "2021-03-15",
+        "updatedAt": "2025-09-02",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "百日咳",
+          "Q&A"
+        ],
+        "tab": ""
+      },
+      "pattern": "qa",
+      "kind": "faq",
+      "type": "faq",
+      "manifestKey": "pertussis-qa",
+      "manifestDerived": false,
+      "target": "disease.pertussis",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "faq.pregnant-tdap",
+        "disease.pertussis"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.pertussis"
+      ],
+      "outputs": [
+        {
+          "id": "faq.pregnant-tdap",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/pregnant-tdap.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 7 處（mso 樣式 3、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「百日咳／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（百日咳）"
+        },
+        {
+          "code": "tasks-from-keywords",
+          "severity": "info",
+          "message": "tasks 依題目關鍵字給：「孕婦需要打百日咳疫苗嗎？」→ vaccines"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "08-rumor-qa",
+      "file": "08-rumor-qa.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/QAPage/Y6mjmeVxUGO8zXmBiXV284",
+        "title": "謠言澄清常見問答",
+        "category": "新聞與公告／澄清專區／常見問答",
+        "publishedAt": "2021-02-08",
+        "updatedAt": "2026-09-05",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "澄清專區",
+          "常見問答"
+        ],
+        "tab": ""
+      },
+      "pattern": "qa",
+      "kind": "faq",
+      "type": "faq",
+      "manifestKey": "rumor-qa",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "faq.rumor-mmr-autism",
+        "faq.rumor-sms-link"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "faq.rumor-mmr-autism",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/rumor-mmr-autism.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.rumor-sms-link",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/rumor-sms-link.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.x-legacy-74dfc3",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/x-legacy-74dfc3.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 21 處（mso 樣式 8、Mso 類別 8、命名空間標籤 5）"
+        },
+        {
+          "code": "faq-structure-loose",
+          "severity": "info",
+          "message": "沒有 .panel 結構，依「Q 開頭的標題／段落」拆成 3 題，請核對題目與答案的切分"
+        },
+        {
+          "code": "one-to-many",
+          "severity": "info",
+          "message": "一頁 3 題、清單沒有單一目標：status 維持 pending，請決定併入疾病頁（merged）或各題獨立（新站以 tasks 歸類）"
+        },
+        {
+          "code": "tasks-from-keywords",
+          "severity": "info",
+          "message": "tasks 依題目關鍵字給：「MMR 疫苗會造成自閉症嗎？」→ vaccines；「收到自稱疾管署的簡訊要我點連結填資料，怎麼辦？」→ rumor、symptoms；「網傳多喝熱水、多曬太陽可以預防流感，是真的嗎？」→ rumor"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "09-single-qa",
+      "file": "09-single-qa.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/QAPage/OEo24-Y1ZChzoCUaupYf1K",
+        "title": "被狗、貓或野生動物咬傷該怎麼辦？",
+        "category": "狂犬病／Q&A",
+        "publishedAt": "2013-08-05",
+        "updatedAt": "2025-10-10",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "狂犬病",
+          "Q&A"
+        ],
+        "tab": ""
+      },
+      "pattern": "qa",
+      "kind": "faq",
+      "type": "faq",
+      "manifestKey": "single-qa",
+      "manifestDerived": false,
+      "target": "faq.rabies-bite",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "faq.rabies-bite"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.rabies"
+      ],
+      "outputs": [
+        {
+          "id": "faq.rabies-bite",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/rabies-bite.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 23 處（mso 樣式 19、Mso 類別 6、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「狂犬病／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（狂犬病）"
+        },
+        {
+          "code": "faq-structure-missing",
+          "severity": "warn",
+          "message": "找不到 Q&A 結構（.panel／.panel-title／.panel-body），整頁當作一題處理"
+        },
+        {
+          "code": "tasks-from-keywords",
+          "severity": "info",
+          "message": "tasks 依題目關鍵字給：「被狗、貓或野生動物咬傷該怎麼辦？」→ symptoms"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "10-stats-qa",
+      "file": "10-stats-qa.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/QAPage/4VcQG32UMghZ8yHk42hUVQ",
+        "title": "統計資料常見問答",
+        "category": "統計資料／常見問答",
+        "publishedAt": "2016-09-01",
+        "updatedAt": "2026-01-12",
+        "breadcrumbs": [
+          "首頁",
+          "統計資料",
+          "常見問答"
+        ],
+        "tab": ""
+      },
+      "pattern": "qa",
+      "kind": "faq",
+      "type": "faq",
+      "manifestKey": "stats-qa",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "faq.stats-ili-rate",
+        "faq.stats-where-data"
+      ],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "／統計",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "faq.stats-ili-rate",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/stats-ili-rate.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.stats-where-data",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/stats-where-data.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.x-legacy-378f51",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/x-legacy-378f51.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 31 處（mso 樣式 21、Mso 類別 8、命名空間標籤 5）"
+        },
+        {
+          "code": "faq-structure-loose",
+          "severity": "info",
+          "message": "沒有 .panel 結構，依「Q 開頭的標題／段落」拆成 3 題，請核對題目與答案的切分"
+        },
+        {
+          "code": "one-to-many",
+          "severity": "info",
+          "message": "一頁 3 題、清單沒有單一目標：status 維持 pending，請決定併入疾病頁（merged）或各題獨立（新站以 tasks 歸類）"
+        },
+        {
+          "code": "tasks-from-keywords",
+          "severity": "info",
+          "message": "tasks 依題目關鍵字給：「「類流感門急診就診率」是什麼意思？」→ data；「疫情統計數字可以到哪裡查？」→ data、situation；「傳染病統計多久更新一次？」→ data、situation"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "11-travel-qa",
+      "file": "11-travel-qa.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/QAPage/oDFvYopfPTouRB6a4gWcs5",
+        "title": "國際旅遊常見問答",
+        "category": "國際旅遊與健康／常見問答",
+        "publishedAt": "2017-11-20",
+        "updatedAt": "2026-07-01",
+        "breadcrumbs": [
+          "首頁",
+          "國際旅遊與健康",
+          "常見問答"
+        ],
+        "tab": ""
+      },
+      "pattern": "qa",
+      "kind": "faq",
+      "type": "faq",
+      "manifestKey": "travel-qa",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "faq.travel-clinic",
+        "faq.travel-japan-measles",
+        "faq.travel-malaria-prevention",
+        "faq.travel-return-fever",
+        "faq.yellow-fever-certificate"
+      ],
+      "owner": "unit.quarantine",
+      "ownerRule": "國際旅遊與健康",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "faq.travel-clinic",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/travel-clinic.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.travel-japan-measles",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/travel-japan-measles.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.travel-malaria-prevention",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/travel-malaria-prevention.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.travel-return-fever",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/travel-return-fever.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.yellow-fever-certificate",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/yellow-fever-certificate.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.x-legacy-3456c6",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/x-legacy-3456c6.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 42 處（mso 樣式 20、Mso 類別 11、命名空間標籤 11）"
+        },
+        {
+          "code": "one-to-many",
+          "severity": "info",
+          "message": "一頁 6 題、清單沒有單一目標：status 維持 pending，請決定併入疾病頁（merged）或各題獨立（新站以 tasks 歸類）"
+        },
+        {
+          "code": "structured-from-text",
+          "severity": "info",
+          "message": "「旅遊醫學門診可以做什麼？要出國前多久去？」從答案抽出結構化候選 {\"weeksMin\":4,\"weeksMax\":6}，請確認後保留或刪除"
+        },
+        {
+          "code": "structured-from-text",
+          "severity": "info",
+          "message": "「出國前多久要到旅遊醫學門診諮詢？」從答案抽出結構化候選 {\"weeksMin\":4,\"weeksMax\":6}，請確認後保留或刪除"
+        },
+        {
+          "code": "tasks-from-keywords",
+          "severity": "info",
+          "message": "tasks 依題目關鍵字給：「旅遊醫學門診可以做什麼？要出國前多久去？」→ travel；「去日本旅遊需要擔心麻疹嗎？」→ travel；「去非洲需要吃瘧疾預防藥嗎？」→ symptoms；「出國回來後發燒，應該怎麼辦？」→ travel、symptoms；「去哪些國家需要黃熱病疫苗證明？」→ vaccines；「出國前多久要到旅遊醫學門診諮詢？」→ travel"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "12-tuberculosis-qa",
+      "file": "12-tuberculosis-qa.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/QAPage/ZW0TrgKarQJWRWZrMIWzeq",
+        "title": "結核病 Q&A",
+        "category": "結核病／Q&A",
+        "publishedAt": "2020-03-24",
+        "updatedAt": "2026-09-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "Q&A"
+        ],
+        "tab": ""
+      },
+      "pattern": "qa",
+      "kind": "faq",
+      "type": "faq",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [
+        "faq.tb-cough-two-weeks",
+        "faq.ltbi-treat-or-not",
+        "faq.tb-dots-what",
+        "faq.tb-contact-screening",
+        "faq.mdr-tb",
+        "faq.tb-treatment-cost",
+        "faq.tb-foreigner-health-check",
+        "faq.tb-contagious-after-treatment"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／Q&A",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "faq.tb-cough-two-weeks",
+          "type": "faq",
+          "role": "duplicate",
+          "duplicateOf": "tuberculosis/07-qa-list"
+        },
+        {
+          "id": "faq.ltbi-treat-or-not",
+          "type": "faq",
+          "role": "duplicate",
+          "duplicateOf": "tuberculosis/07-qa-list"
+        },
+        {
+          "id": "faq.tb-dots-what",
+          "type": "faq",
+          "role": "duplicate",
+          "duplicateOf": "tuberculosis/07-qa-list"
+        },
+        {
+          "id": "faq.tb-contact-screening",
+          "type": "faq",
+          "role": "duplicate",
+          "duplicateOf": "tuberculosis/07-qa-list"
+        },
+        {
+          "id": "faq.mdr-tb",
+          "type": "faq",
+          "role": "duplicate",
+          "duplicateOf": "tuberculosis/07-qa-list"
+        },
+        {
+          "id": "faq.tb-treatment-cost",
+          "type": "faq",
+          "role": "duplicate",
+          "duplicateOf": "tuberculosis/07-qa-list"
+        },
+        {
+          "id": "faq.tb-foreigner-health-check",
+          "type": "faq",
+          "role": "duplicate",
+          "duplicateOf": "tuberculosis/07-qa-list"
+        },
+        {
+          "id": "faq.tb-contagious-after-treatment",
+          "type": "faq",
+          "role": "duplicate",
+          "duplicateOf": "tuberculosis/07-qa-list"
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 85 處（mso 樣式 53、Mso 類別 22、命名空間標籤 16）"
+        },
+        {
+          "code": "converted-elsewhere",
+          "severity": "info",
+          "message": "同網址的頁已在 tuberculosis 批（07-qa-list）轉過，草稿 faq.tb-cough-two-weeks、faq.ltbi-treat-or-not、faq.tb-dots-what、faq.tb-contact-screening、faq.mdr-tb、faq.tb-treatment-cost、faq.tb-foreigner-health-check、faq.tb-contagious-after-treatment；本批不重複出草稿，內容若有更新請在該批重跑"
+        }
+      ],
+      "action": "skip-duplicate",
+      "flags": {
+        "convertedElsewhere": {
+          "batch": "tuberculosis",
+          "key": "07-qa-list"
+        }
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "13-vaccination-qa",
+      "file": "13-vaccination-qa.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/QAPage/5CWvlVkPteCHZwIes6tUPQ",
+        "title": "預防接種常見問答",
+        "category": "預防接種／常見問答",
+        "publishedAt": "2019-04-01",
+        "updatedAt": "2026-08-30",
+        "breadcrumbs": [
+          "首頁",
+          "預防接種",
+          "常見問答"
+        ],
+        "tab": ""
+      },
+      "pattern": "qa",
+      "kind": "faq",
+      "type": "faq",
+      "manifestKey": "vaccination-qa",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "faq.hpv-vaccine-who",
+        "faq.pcv-elderly",
+        "faq.bcg-when",
+        "faq.flu-vaccine-every-year",
+        "faq.varicella-vaccine-doses"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "預防接種／常見問答",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "faq.hpv-vaccine-who",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/hpv-vaccine-who.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.pcv-elderly",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/pcv-elderly.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.bcg-when",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/bcg-when.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.flu-vaccine-every-year",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/flu-vaccine-every-year.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.varicella-vaccine-doses",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/varicella-vaccine-doses.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.x-legacy-fafc41",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/x-legacy-fafc41.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.x-legacy-be6f07",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/x-legacy-be6f07.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 47 處（mso 樣式 23、Mso 類別 12、命名空間標籤 12）"
+        },
+        {
+          "code": "one-to-many",
+          "severity": "info",
+          "message": "一頁 7 題、清單沒有單一目標：status 維持 pending，請決定併入疾病頁（merged）或各題獨立（新站以 tasks 歸類）"
+        },
+        {
+          "code": "structured-from-text",
+          "severity": "info",
+          "message": "「卡介苗什麼時候打？大人需要補打嗎？」從答案抽出結構化候選 {\"months\":5,\"doses\":1,\"weeksMin\":2,\"weeksMax\":3}，請確認後保留或刪除"
+        },
+        {
+          "code": "structured-from-text",
+          "severity": "info",
+          "message": "「水痘疫苗公費打幾劑？需要打第二劑嗎？」從答案抽出結構化候選 {\"months\":12,\"doses\":1,\"ageYearsMin\":4,\"ageYearsMax\":6}，請確認後保留或刪除"
+        },
+        {
+          "code": "structured-from-text",
+          "severity": "info",
+          "message": "「流感疫苗打完多久才有保護力？」從答案抽出結構化候選 {\"weeks\":2,\"months\":6}，請確認後保留或刪除"
+        },
+        {
+          "code": "tasks-from-keywords",
+          "severity": "info",
+          "message": "tasks 依題目關鍵字給：「公費 HPV 疫苗誰可以打？」→ vaccines；「長輩的肺炎鏈球菌疫苗要怎麼打？是公費嗎？」→ vaccines；「卡介苗什麼時候打？大人需要補打嗎？」→ vaccines；「流感疫苗去年打過了，今年還要再打嗎？」→ vaccines；「水痘疫苗公費打幾劑？需要打第二劑嗎？」→ vaccines；「成人需要補打哪些疫苗？」→ vaccines；「流感疫苗打完多久才有保護力？」→ vaccines"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "14-varicella-qa",
+      "file": "14-varicella-qa.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/QAPage/y8nJ_XO0gNtPWKylGVhLGv",
+        "title": "水痘併發症 Q&A",
+        "category": "水痘併發症／Q&A",
+        "publishedAt": "2020-06-30",
+        "updatedAt": "2025-01-20",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "水痘併發症",
+          "Q&A"
+        ],
+        "tab": ""
+      },
+      "pattern": "qa",
+      "kind": "faq",
+      "type": "faq",
+      "manifestKey": "varicella-qa",
+      "manifestDerived": false,
+      "target": "disease.varicella",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "faq.varicella-vaccine-doses",
+        "disease.varicella"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.varicella"
+      ],
+      "outputs": [
+        {
+          "id": "faq.varicella-vaccine-doses",
+          "type": "faq",
+          "role": "duplicate",
+          "duplicateOf": "13-vaccination-qa",
+          "file": "content/faq/varicella-vaccine-doses.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.9,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 7 處（mso 樣式 3、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「水痘併發症／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（水痘併發症）"
+        },
+        {
+          "code": "duplicate-title",
+          "severity": "warn",
+          "message": "問題「水痘疫苗公費打幾劑？需要打第二劑嗎？」已由 13-vaccination-qa 轉出（faq.varicella-vaccine-doses），本頁不重複輸出"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "15-qa-list",
+      "file": "15-qa-list.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/C9F0xuVE7Hy5VGtc-zHtDW",
+        "title": "常見問答總覽",
+        "category": "常見問答",
+        "publishedAt": "2026-10-03",
+        "updatedAt": "2026-10-03",
+        "breadcrumbs": [
+          "首頁",
+          "常見問答"
+        ],
+        "tab": ""
+      },
+      "pattern": "category-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "qa-list",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.oasis",
+      "ownerRule": "首頁／常見問答",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "page.x-qa-list",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/x-qa-list.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.6,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 12,
+        "legacyLinks": 12,
+        "attachments": 0
+      }
+    }
+  ],
+  "drafts": [
+    {
+      "id": "faq.covid-antiviral",
+      "type": "faq",
+      "title": "新冠確診後，誰可以使用公費口服抗病毒藥？",
+      "file": "content/faq/covid-antiviral.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.covid-antiviral"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "01-covid-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.covid-vaccine-who",
+      "type": "faq",
+      "title": "今年新冠疫苗誰可以打公費？要打幾劑？",
+      "file": "content/faq/covid-vaccine-who.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.covid-vaccine-who"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "01-covid-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.flu-covid-same-day",
+      "type": "faq",
+      "title": "流感疫苗和新冠疫苗可以同一天打嗎？",
+      "file": "content/faq/flu-covid-same-day.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.flu-covid-same-day"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "01-covid-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.dengue-legacy-4db8ab",
+      "type": "faq",
+      "title": "How soon should I see a doctor if I have a fever and might have dengue?",
+      "file": "content/faq/dengue-legacy-4db8ab.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "02-dengue-en-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.dengue-legacy-13c7cc",
+      "type": "faq",
+      "title": "What does \"inspect, empty, clean, scrub\" mean for dengue prevention?",
+      "file": "content/faq/dengue-legacy-13c7cc.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "02-dengue-en-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.dengue-legacy-c72cba",
+      "type": "faq",
+      "title": "Can I take painkillers if I suspect dengue?",
+      "file": "content/faq/dengue-legacy-c72cba.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "02-dengue-en-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.influenza-legacy-286a86",
+      "type": "faq",
+      "title": "113 年度公費流感疫苗什麼時候開打？",
+      "file": "content/faq/influenza-legacy-286a86.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "04-flu-season-2024-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.influenza-legacy-d3274b",
+      "type": "faq",
+      "title": "113 年度公費流感疫苗有哪些廠牌？",
+      "file": "content/faq/influenza-legacy-d3274b.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "04-flu-season-2024-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.influenza-legacy-28a4c0",
+      "type": "faq",
+      "title": "錯過第一階段，之後還能打嗎？",
+      "file": "content/faq/influenza-legacy-28a4c0.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "04-flu-season-2024-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.hepb-newborn",
+      "type": "faq",
+      "title": "新生兒的 B 型肝炎疫苗什麼時候打？",
+      "file": "content/faq/hepb-newborn.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.hepb-newborn"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "05-hepatitis-b-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.hiv-pep",
+      "type": "faq",
+      "title": "發生沒有保護的性行為後，72 小時內可以做什麼？",
+      "file": "content/faq/hiv-pep.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.hiv-pep"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "06-hiv-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.hiv-test-where",
+      "type": "faq",
+      "title": "哪裡可以做匿名 HIV 篩檢？",
+      "file": "content/faq/hiv-test-where.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.hiv-test-where"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "06-hiv-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.pregnant-tdap",
+      "type": "faq",
+      "title": "孕婦需要打百日咳疫苗嗎？",
+      "file": "content/faq/pregnant-tdap.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.pregnant-tdap",
+        "disease.pertussis"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "07-pertussis-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.rumor-mmr-autism",
+      "type": "faq",
+      "title": "MMR 疫苗會造成自閉症嗎？",
+      "file": "content/faq/rumor-mmr-autism.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.rumor-mmr-autism"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "08-rumor-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.rumor-sms-link",
+      "type": "faq",
+      "title": "收到自稱疾管署的簡訊要我點連結填資料，怎麼辦？",
+      "file": "content/faq/rumor-sms-link.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.rumor-sms-link"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "08-rumor-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.x-legacy-74dfc3",
+      "type": "faq",
+      "title": "網傳多喝熱水、多曬太陽可以預防流感，是真的嗎？",
+      "file": "content/faq/x-legacy-74dfc3.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "08-rumor-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.rabies-bite",
+      "type": "faq",
+      "title": "被狗、貓或野生動物咬傷該怎麼辦？",
+      "file": "content/faq/rabies-bite.json",
+      "confidence": 0.8,
+      "existing": true,
+      "compareWith": [
+        "faq.rabies-bite"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "09-single-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.stats-ili-rate",
+      "type": "faq",
+      "title": "「類流感門急診就診率」是什麼意思？",
+      "file": "content/faq/stats-ili-rate.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.stats-ili-rate"
+      ],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-stats-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.stats-where-data",
+      "type": "faq",
+      "title": "疫情統計數字可以到哪裡查？",
+      "file": "content/faq/stats-where-data.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.stats-where-data"
+      ],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-stats-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.x-legacy-378f51",
+      "type": "faq",
+      "title": "傳染病統計多久更新一次？",
+      "file": "content/faq/x-legacy-378f51.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-stats-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.travel-clinic",
+      "type": "faq",
+      "title": "旅遊醫學門診可以做什麼？要出國前多久去？",
+      "file": "content/faq/travel-clinic.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.travel-clinic"
+      ],
+      "status": "review",
+      "owner": "unit.quarantine",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "11-travel-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.travel-japan-measles",
+      "type": "faq",
+      "title": "去日本旅遊需要擔心麻疹嗎？",
+      "file": "content/faq/travel-japan-measles.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.travel-japan-measles"
+      ],
+      "status": "review",
+      "owner": "unit.quarantine",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "11-travel-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.travel-malaria-prevention",
+      "type": "faq",
+      "title": "去非洲需要吃瘧疾預防藥嗎？",
+      "file": "content/faq/travel-malaria-prevention.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.travel-malaria-prevention"
+      ],
+      "status": "review",
+      "owner": "unit.quarantine",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "11-travel-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.travel-return-fever",
+      "type": "faq",
+      "title": "出國回來後發燒，應該怎麼辦？",
+      "file": "content/faq/travel-return-fever.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.travel-return-fever"
+      ],
+      "status": "review",
+      "owner": "unit.quarantine",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "11-travel-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.yellow-fever-certificate",
+      "type": "faq",
+      "title": "去哪些國家需要黃熱病疫苗證明？",
+      "file": "content/faq/yellow-fever-certificate.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.yellow-fever-certificate"
+      ],
+      "status": "review",
+      "owner": "unit.quarantine",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "11-travel-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.x-legacy-3456c6",
+      "type": "faq",
+      "title": "出國前多久要到旅遊醫學門診諮詢？",
+      "file": "content/faq/x-legacy-3456c6.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.quarantine",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "11-travel-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.hpv-vaccine-who",
+      "type": "faq",
+      "title": "公費 HPV 疫苗誰可以打？",
+      "file": "content/faq/hpv-vaccine-who.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.hpv-vaccine-who"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "13-vaccination-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.pcv-elderly",
+      "type": "faq",
+      "title": "長輩的肺炎鏈球菌疫苗要怎麼打？是公費嗎？",
+      "file": "content/faq/pcv-elderly.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.pcv-elderly"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "13-vaccination-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.bcg-when",
+      "type": "faq",
+      "title": "卡介苗什麼時候打？大人需要補打嗎？",
+      "file": "content/faq/bcg-when.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.bcg-when"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "13-vaccination-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.flu-vaccine-every-year",
+      "type": "faq",
+      "title": "流感疫苗去年打過了，今年還要再打嗎？",
+      "file": "content/faq/flu-vaccine-every-year.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.flu-vaccine-every-year"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "13-vaccination-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.varicella-vaccine-doses",
+      "type": "faq",
+      "title": "水痘疫苗公費打幾劑？需要打第二劑嗎？",
+      "file": "content/faq/varicella-vaccine-doses.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.varicella-vaccine-doses"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "13-vaccination-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.x-legacy-fafc41",
+      "type": "faq",
+      "title": "成人需要補打哪些疫苗？",
+      "file": "content/faq/x-legacy-fafc41.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "13-vaccination-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.x-legacy-be6f07",
+      "type": "faq",
+      "title": "流感疫苗打完多久才有保護力？",
+      "file": "content/faq/x-legacy-be6f07.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "13-vaccination-qa"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.x-qa-list",
+      "type": "page",
+      "title": "常見問答總覽",
+      "file": "content/pages/x-qa-list.json",
+      "confidence": 0.6,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.oasis",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "15-qa-list"
+      ],
+      "merged": false
+    }
+  ],
+  "sampling": {
+    "rate": 0.1,
+    "autoOk": 0,
+    "picked": []
+  },
+  "migration": {
+    "patchFile": "migration-patch.json",
+    "applied": true,
+    "summary": {
+      "derivedItems": 0,
+      "derivedMatched": 0,
+      "items": 13,
+      "matched": 13,
+      "missingPages": 0,
+      "unmatchedPages": 2,
+      "agree": 13,
+      "conflicts": 0,
+      "statusChanges": 0,
+      "pendingToMigrated": 0,
+      "targetChanges": 0,
+      "noteChanges": 0,
+      "stillPending": 6
+    },
+    "file": "content/migration/qa.json",
+    "statusChanges": [],
+    "targetChanges": [],
+    "noteChanges": 0
+  }
+}

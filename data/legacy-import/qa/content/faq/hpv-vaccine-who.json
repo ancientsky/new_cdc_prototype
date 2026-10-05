@@ -1,0 +1,74 @@
+{
+  "id": "faq.hpv-vaccine-who",
+  "type": "faq",
+  "title": "公費 HPV 疫苗誰可以打？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2019-04-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "公費 HPV 疫苗提供給國中一年級學生，以校園集中接種為主，2025 學年度起由女生擴及男生。共接種 2 劑，間隔 6 個月；未在校內完成者可持接種通知至合約院所補接種。",
+  "question": "公費 HPV 疫苗誰可以打？",
+  "answerMarkdown": "公費 HPV 疫苗提供給**國中一年級學生**，以校園集中接種為主，2025 學年度起由女生擴及男生。共接種 **2 劑，間隔 6 個月**；未在校內完成者可持接種通知至合約院所補接種。\n\n其他年齡層可自費接種，15 歲以上開始接種者需 3 劑。",
+  "tasks": [
+    "vaccines"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/5CWvlVkPteCHZwIes6tUPQ"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 47 處（mso 樣式 23、Mso 類別 12、命名空間標籤 12）"
+      },
+      {
+        "code": "one-to-many",
+        "severity": "info",
+        "message": "一頁 7 題、清單沒有單一目標：status 維持 pending，請決定併入疾病頁（merged）或各題獨立（新站以 tasks 歸類）"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「卡介苗什麼時候打？大人需要補打嗎？」從答案抽出結構化候選 {\"months\":5,\"doses\":1,\"weeksMin\":2,\"weeksMax\":3}，請確認後保留或刪除"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「水痘疫苗公費打幾劑？需要打第二劑嗎？」從答案抽出結構化候選 {\"months\":12,\"doses\":1,\"ageYearsMin\":4,\"ageYearsMax\":6}，請確認後保留或刪除"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「流感疫苗打完多久才有保護力？」從答案抽出結構化候選 {\"weeks\":2,\"months\":6}，請確認後保留或刪除"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「公費 HPV 疫苗誰可以打？」→ vaccines；「長輩的肺炎鏈球菌疫苗要怎麼打？是公費嗎？」→ vaccines；「卡介苗什麼時候打？大人需要補打嗎？」→ vaccines；「流感疫苗去年打過了，今年還要再打嗎？」→ vaccines；「水痘疫苗公費打幾劑？需要打第二劑嗎？」→ vaccines；「成人需要補打哪些疫苗？」→ vaccines；「流感疫苗打完多久才有保護力？」→ vaccines"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/5CWvlVkPteCHZwIes6tUPQ",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.hpv-vaccine-who"
+    ]
+  }
+}
