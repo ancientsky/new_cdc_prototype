@@ -1,0 +1,93 @@
+{
+  "id": "doc.influenza-h7n9-guideline-2017.2017-04-10",
+  "type": "document",
+  "title": "H7N9 流感防治工作指引（2017 年版）",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2017-04-10",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza",
+    "disease.novel-influenza-a"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "（待補：本文件正本為 PDF「H7N9 流感防治工作指引（2017 年版）（PDF，掃描檔）」，舊頁只有下載連結。上架前請權責單位提供文字版（assets-policy 第 4 節），或確認僅以附件提供。）",
+  "family": "doc.influenza-h7n9-guideline-2017",
+  "docType": "guideline",
+  "version": "2017 年版",
+  "effectiveAt": "2017-04-10",
+  "machineReadableMarkdown": "（待補：本文件正本為 PDF「H7N9 流感防治工作指引（2017 年版）（PDF，掃描檔）」，舊頁只有下載連結。上架前請權責單位提供文字版（assets-policy 第 4 節），或確認僅以附件提供。）\n\n歷版文件，全文請見附件（掃描檔）。",
+  "pdfUrl": "/files/doc.influenza-h7n9-guideline-2017.2017-04-10/h7n9-guideline-2017.pdf",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/DiseaseTeach/avfKJ8q0g9hQK4hGSOyUO8"
+  ],
+  "assets": [
+    {
+      "file": "h7n9-guideline-2017.pdf",
+      "kind": "attachment",
+      "label": "H7N9 流感防治工作指引（2017 年版）（PDF，掃描檔）",
+      "mime": "application/pdf",
+      "bytes": 704,
+      "sha256": "7d48ed7e58de55f45a7a823ee49527f740d7bd4e4e0b0499c78f4338f9f02a57",
+      "machineReadable": false,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.8,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「傳染病介紹／流感／指引及手冊／歷版」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+      },
+      {
+        "code": "historical-version",
+        "severity": "info",
+        "message": "歷史版本：建議封存（舊版保留查閱），不取代現行版"
+      },
+      {
+        "code": "pdf-no-text-layer",
+        "severity": "warn",
+        "message": "PDF「h7n9-guideline-2017.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+      },
+      {
+        "code": "body-short",
+        "severity": "warn",
+        "message": "內文過短（17 字，低於 40）"
+      },
+      {
+        "code": "pdf-only",
+        "severity": "warn",
+        "message": "舊頁內文只有下載連結，正本是 PDF「H7N9 流感防治工作指引（2017 年版）（PDF，掃描檔）」；machineReadableMarkdown 以（待補）佔位，PDF 不整批轉（第 8 節），上架前請提供文字版"
+      },
+      {
+        "code": "fields-pending",
+        "severity": "info",
+        "message": "待補欄位：machineReadableMarkdown（正本文字版）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/DiseaseTeach/avfKJ8q0g9hQK4hGSOyUO8",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "pdfOnly": true
+  }
+}

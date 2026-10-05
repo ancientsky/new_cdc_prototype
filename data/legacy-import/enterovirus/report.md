@@ -14,7 +14,7 @@
 | 既有內容已存在（供比對） | 24 |
 | 附件與圖片 | 8（附件 5、內文圖片 2、資料檔 1；圖片待補 alt 2、PDF 無文字層 1） |
 | 草稿 schema 驗證 | 27 / 27 通過 |
-| 問題 | 錯誤 0、警告 11、提示 98 |
+| 問題 | 錯誤 0、警告 11、提示 99 |
 | 移轉清單對應 | 對上 8 / 8 筆；status 變化 0；note 更新 0；仍待移轉 1；與清單判定不同 0 |
 | 模板推導項（清單只寫例外） | 18 項，對上 18；只列在 migration-patch.json 的 derivedItems，不寫回清單 |
 | 清單沒有的舊頁 | 5（migration-patch.json 的 unmatchedPages 有建議的 pending 項目） |
@@ -36,7 +36,7 @@
 | 9 | 預防接種建議<br><sub>www.cdc.gov.tw/Category/MPage/bdPocx77c0cRnTw5pV_G4Y</sub> | 併入疾病頁 → `disease.enterovirus`（併入：vaccine） | `disease.enterovirus`（既有） | 1 | — | 併入疾病頁區塊（與既有內容逐段比對） |
 | 10 | Q&A<br><sub>www.cdc.gov.tw/Category/QAPage/zID4oBmzvgDWu3fb9-fOlP</sub> | Q&A → `faq.enterovirus-childcare-disinfect`<br>`faq.enterovirus-class-suspension`<br>`faq.enterovirus-return-school`<br>`faq.ev-severe-signs`<br>`faq.ev-stay-home`<br>`faq.ev71-vaccine` | `disease.enterovirus`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 11 | 衛教宣導：單張海報<br><sub>www.cdc.gov.tw/Category/List/56ss3snA1H2Mgxy9BNSOs3</sub> | 出版品 → `publication.enterovirus-materials-poster` | — | 0.8 | pdf-no-text-layer、image-no-alt | 核對後入庫（新站尚無對應內容） |
-| 12 | 傳染病防治工作手冊（2026 年版）<br><sub>www.cdc.gov.tw/Category/DiseaseManual/6y1bSwV46VS9GwNJJXyRai</sub> | 文件 → `doc.enterovirus-manual.2026-03-01` | — | 1 | — | 核對後入庫（新站尚無對應內容） |
+| 12 | 傳染病防治工作手冊（2026 年版）<br><sub>www.cdc.gov.tw/Category/DiseaseManual/6y1bSwV46VS9GwNJJXyRai</sub> | 文件 → `doc.enterovirus-manual.2026-01-01` | — | 1 | — | 核對後入庫（新站尚無對應內容） |
 | 13 | 病例定義<br><sub>www.cdc.gov.tw/Category/DiseaseDefine/ahqwMH4BvVvYe2hgDtm53l</sub> | 文件 → `doc.enterovirus-case-definition.2017-04-01` | — | 0.8 | body-short | 核對後入庫（新站尚無對應內容） |
 | 14 | 統計資料<br><sub>www.cdc.gov.tw/Category/List/Yb1FWIwSMecXeT6vLUmIMf</sub> | 資料集 → `dataset.ev-lab-types` | `dataset.ev-lab-types`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 15 | 檢驗資訊<br><sub>www.cdc.gov.tw/Category/MPage/iudh9pwKq4SQ9Oqzy_UBOH</sub> | 檢驗 → `labtest.enterovirus` | `labtest.enterovirus`（既有） | 1 | fields-pending | 既有內容已存在，供比對，不建議覆蓋 |

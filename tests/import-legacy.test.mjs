@@ -477,6 +477,8 @@ test('後台 /admin/import/：批次摘要、逐頁表、草稿下載連結；�
 import { shortFor } from '../scripts/lib/legacy-import/rules.mjs';
 import { generateDisease } from '../scripts/lib/legacy-import/sim-export-disease.mjs';
 import { generateNews } from '../scripts/lib/legacy-import/sim-export-news.mjs';
+import { generateGuidelines } from '../scripts/lib/legacy-import/sim-export-guidelines.mjs';
+import { versionFree, versionRank, dateFromText } from '../scripts/lib/legacy-import/index.mjs';
 
 const EXPORT_DENGUE = path.join(ROOT, 'data/legacy-export/dengue');
 const COMMITTED_DENGUE = path.join(ROOT, 'data/legacy-import/dengue');
@@ -908,3 +910,83 @@ test('已提交的第六批輸出（data/legacy-import/news）：62 頁、schema
   for (const f of ['dengue/content/news/2026-07-01-letter-dengue-guidance-v17.json', 'enterovirus/content/news/2026-03-15-letter-ev-guideline.json']) { const d = readJSON(path.join(ROOT, 'data/legacy-import', f)); assert.equal(d.type, 'letter'); assert.ok(Number.isInteger(d.letterNo)); }
 });
 
+
+// ───────────────────────── 第七批：指引與手冊；文件版次鏈（第十二輪） ─────────────────────────
+test('版次工具：去版次同名、版次排序、民國年與西元日期抽取', () => {
+  assert.equal(versionFree('結核病診治指引（第八版）'), versionFree('結核病診治指引第七版（2022 年 3 月 1 日）'));
+  assert.equal(versionFree('狂犬病防治工作手冊（108 年版）'), versionFree('狂犬病防治工作手冊（113 年 12 月修訂版）'));
+  assert.equal(versionFree('國內現行 MMR 預防接種建議（114.04.16 版）'), versionFree('國內現行 MMR 預防接種建議（108.05.14 版，2019 年 5 月 14 日）'));
+  assert.notEqual(versionFree('結核病診治指引'), versionFree('結核病防治工作手冊'));
+  assert.equal(versionRank('第十七版'), 17); assert.equal(versionRank('v16'), 16); assert.equal(versionRank('2023 年版'), 2023); assert.ok(versionRank('114.04.16') > versionRank('108.05.14'));
+  assert.equal(dateFromText('114.04.16 修訂'), '2025-04-16'); assert.equal(dateFromText('本手冊自 113 年 12 月 20 日修訂生效'), '2024-12-20'); assert.equal(dateFromText('（第七版，2022 年 3 月 1 日）'), '2022-03-01'); assert.equal(dateFromText('2026-09-18 生效'), '2026-09-18'); assert.equal(dateFromText('沒有日期'), null);
+});
+
+test('第七批（指引與手冊，欄目清單）：一頁多版拆歷版並沿用既有 id、同名多頁串家族、純 PDF 佔位、歷版封存、生效日從文字抽；一級內容不 auto-ok', () => {
+  const dir = tmp('guidelines');
+  const mf = path.join(dir, 'guidelines.json');
+  fs.copyFileSync(path.join(CONTENT, 'migration/guidelines.json'), mf);
+  const exp = path.join(ROOT, 'data/legacy-export/guidelines');
+  const out = path.join(dir, 'out');
+  const { report, patch, drafts } = runImport({ exportDir: exp, outDir: out, manifestPath: mf, slug: 'guidelines', now: NOW });
+  const s = report.summary;
+  assert.equal(s.pages, 26); assert.equal(s.drafts, 32); assert.equal(s.schemaInvalid, 0); assert.equal(s.pagesWithoutOutput, 0);
+  assert.equal(report.manifest.extends, null); assert.equal(s.manifest.matched, 26); assert.equal(patch.summary.conflicts, 0);
+  const env = { units: new Set(readJSON(path.join(CONTENT, 'master/units.json')).map((u) => u.id)), diseaseIds: new Set(master.map((d) => d.id)), assetsDir: path.join(out, 'content/assets'), licenses: ['OGDL-1.0', 'CC0-1.0', 'CC-BY-4.0'] };
+  for (const d of drafts) assert.deepEqual(validateDraft(d, env), [], d.id);
+  assert.ok(!report.pages.some((p) => p.action === 'auto-ok'), '文件是一級內容，沒有 auto-ok');
+  const byKey = (k) => report.pages.find((p) => p.key.endsWith(`-${k}`));
+  const draft = (id) => drafts.find((d) => d.id === id);
+  // (1) 一頁多版：結核病診治指引頁的附件列表有第七版 PDF ⇒ 另建純 PDF 舊版草稿，id 沿用新站既有 doc.tb-guideline.2022-03-01，檔案歸舊版草稿；現行版 supersedes 舊版
+  const tb = byKey('tb-guideline');
+  assert.deepEqual(tb.outputs.map((o) => o.id), ['doc.tb-guideline.2025-09-01', 'doc.tb-guideline.2022-03-01']);
+  assert.ok(tb.issues.some((i) => i.code === 'version-from-attachment') && tb.issues.some((i) => i.code === 'version-chain'));
+  const tb7 = draft('doc.tb-guideline.2022-03-01'), tb8 = draft('doc.tb-guideline.2025-09-01');
+  assert.equal(tb7.version, '第七版'); assert.equal(tb7.effectiveAt, '2022-03-01'); assert.equal(tb7.supersedes, null); assert.match(tb7.machineReadableMarkdown, /^（待補：本版次正本為 PDF/);
+  assert.equal(tb7.pdfUrl, `/files/doc.tb-guideline.2022-03-01/${tb7.assets[0].file}`); assert.equal(tb7.conversion.pdfOnly, true); assert.equal(tb7.conversion.versionChain.supersededBy, 'doc.tb-guideline.2025-09-01'); assert.equal(tb7.conversion.existing, true);
+  assert.equal(tb8.supersedes, 'doc.tb-guideline.2022-03-01'); assert.equal(tb8.assets.length, 1, '歷版 PDF 不留在現行版草稿'); assert.equal(tb8.conversion.versionChain.current, true);
+  // 登革熱指引 v15／v16 的 id 由版次（vN）對到既有文件，不是 family.日期
+  assert.deepEqual(byKey('guidance-dengue').outputs.map((o) => o.id), ['doc.guidance-dengue.v17', 'doc.guidance-dengue.v15', 'doc.guidance-dengue.v16']);
+  assert.equal(draft('doc.guidance-dengue.v17').supersedes, 'doc.guidance-dengue.v16'); assert.equal(draft('doc.guidance-dengue.v16').supersedes, 'doc.guidance-dengue.v15');
+  // 附表之類不同名的附件不拆：所有拆出的草稿都與頁面去版次同名
+  for (const p of report.pages.filter((p) => p.issues.some((i) => i.code === 'version-from-attachment'))) for (const o of p.outputs.slice(1)) assert.equal(versionFree(draft(o.id).title), versionFree(p.source.title), o.id);
+  // (2) 歷版各一頁且清單各有 target：流感抗病毒藥劑三版同 family、依生效日串鏈，舊版那兩頁建議封存（historical-version）
+  const flu = ['flu-antiviral-eligibility-2026-06', 'flu-antiviral-eligibility-2026-08', 'flu-antiviral-eligibility'].map(byKey);
+  assert.deepEqual(flu.map((p) => p.action), ['archive', 'archive', 'compare-existing']);
+  assert.equal(draft('doc.flu-antiviral-eligibility.2026-09-18').supersedes, 'doc.flu-antiviral-eligibility.2026-08-24'); assert.equal(draft('doc.flu-antiviral-eligibility.2026-08-24').supersedes, 'doc.flu-antiviral-eligibility.2026-06-01');
+  // (3) 無清單目標、去版次同名的兩頁（狂犬病手冊 108 年版／113 年 12 月修訂版）⇒ 同 family（標題雜湊），新版生效日取內文「113 年 12 月 20 日修訂生效」，舊版封存
+  const r1 = byKey('rabies-manual'), r0 = byKey('rabies-manual-2019');
+  assert.ok(r1.issues.some((i) => i.code === 'version-family') && r0.issues.some((i) => i.code === 'version-family'));
+  const rNew = draft(r1.outputs[0].id), rOld = draft(r0.outputs[0].id);
+  assert.equal(rNew.family, rOld.family); assert.equal(rNew.effectiveAt, '2024-12-20'); assert.equal(rNew.supersedes, rOld.id); assert.equal(rNew.docType, 'manual');
+  assert.ok(r1.issues.some((i) => i.code === 'effective-from-text')); assert.equal(r0.action, 'archive'); assert.equal(r1.action, 'review-before-publish');
+  // (4) 純 PDF 頁：內文只有下載連結 ⇒ pdf-only 警告、正本以（待補）佔位、不 auto-ok；歸感管組（categoryOwners 感染管制）
+  const ic = byKey('crowded-ic-guideline');
+  assert.ok(ic.issues.some((i) => i.code === 'pdf-only' && i.severity === 'warn') && ic.issues.some((i) => i.code === 'fields-pending'));
+  assert.equal(ic.owner, 'unit.infection-control'); assert.equal(ic.action, 'review-before-publish');
+  assert.match(draft(ic.outputs[0].id).machineReadableMarkdown, /^（待補：本文件正本為 PDF「人口密集機構感染管制措施指引/);
+  // (5) 歷版掃描檔：麵包屑「歷版」⇒ 封存；PDF 無文字層
+  const h7 = byKey('h7n9-guideline-2017');
+  assert.equal(h7.action, 'archive'); assert.ok(h7.issues.some((i) => i.code === 'pdf-no-text-layer') && h7.issues.some((i) => i.code === 'pdf-only'));
+  // (6) 生效日從標題抽：MMR（114.04.16 版）⇒ 2025-04-16，不是頁面日期
+  const mmr = byKey('mmr-recommendation');
+  assert.ok(mmr.issues.some((i) => i.code === 'effective-from-text')); assert.equal(draft('doc.mmr-recommendation.2025-04-16').effectiveAt, '2025-04-16'); assert.equal(draft('doc.mmr-recommendation.2019-05-14').effectiveAt, '2019-05-14');
+  // (7) 總覽列表頁略過，權責 OASIS（首頁／指引及手冊）
+  const list = byKey('guidelines-list'); assert.equal(list.action, 'skip-list'); assert.equal(list.owner, 'unit.oasis'); assert.ok(!list.issues.some((i) => i.code === 'unmapped-category'));
+  assert.deepEqual(s.byAction, { 'compare-existing': 19, 'review-before-publish': 2, archive: 4, 'skip-list': 1 });
+  assert.deepEqual(JSON.parse(fs.readFileSync(mf, 'utf8')), readJSON(path.join(CONTENT, 'migration/guidelines.json')), '沒加 --apply-migration 不改清單');
+});
+
+test('已提交的第七批輸出（data/legacy-import/guidelines）：26 頁 32 份草稿、schema 全過、清單 26 筆 verified 全 false、模擬匯出可重現', () => {
+  const dir = path.join(ROOT, 'data/legacy-import/guidelines');
+  const r = readJSON(path.join(dir, 'report.json'));
+  assert.equal(r.summary.pages, 26); assert.equal(r.summary.drafts, 32); assert.equal(r.summary.schemaInvalid, 0); assert.equal(r.migration.applied, true); assert.equal(r.manifest.file, 'content/migration/guidelines.json');
+  for (const d of r.drafts) assert.ok(fs.existsSync(path.join(dir, d.file)), d.file);
+  assert.equal(r.drafts.filter((d) => d.existing).length, 27);
+  const manifest = readJSON(path.join(CONTENT, 'migration/guidelines.json'));
+  assert.equal(manifest.items.length, 26); assert.equal(manifest.scope.kind, 'category'); assert.ok(manifest.items.every((i) => i.verified === false));
+  assert.ok(manifest.items.every((i) => /【匯入 /.test(i.note ?? '')));
+  const tmpDir = tmp('exp7');
+  generateGuidelines(tmpDir);
+  const exp = path.join(ROOT, 'data/legacy-export/guidelines');
+  for (const f of fs.readdirSync(exp).filter((x) => x.endsWith('.json') && x !== '_export.json')) assert.deepEqual(readJSON(path.join(tmpDir, f)), readJSON(path.join(exp, f)), f);
+});

@@ -11,7 +11,7 @@
   },
   "rules": {
     "file": "content/migration/import/_import-rules.json",
-    "version": 5
+    "version": 6
   },
   "manifest": {
     "id": "migration.chikungunya",
@@ -73,7 +73,7 @@
     },
     "issues": {
       "error": 0,
-      "warn": 13,
+      "warn": 14,
       "info": 78
     },
     "manifest": {
@@ -1184,6 +1184,16 @@
           "code": "version-unknown",
           "severity": "info",
           "message": "標題看不出版次，version 暫填 2018-03-01"
+        },
+        {
+          "code": "pdf-only",
+          "severity": "warn",
+          "message": "舊頁內文只有下載連結，正本是 PDF「屈公病防治工作手冊」；machineReadableMarkdown 以（待補）佔位，PDF 不整批轉（第 8 節），上架前請提供文字版"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "info",
+          "message": "待補欄位：machineReadableMarkdown（正本文字版）"
         }
       ],
       "action": "review-before-publish",
@@ -1353,11 +1363,6 @@
           "code": "manifest-derived",
           "severity": "info",
           "message": "對到的是模板推導項 guideline（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
-        },
-        {
-          "code": "version-unknown",
-          "severity": "info",
-          "message": "標題看不出版次，version 暫填 2026-07-01"
         }
       ],
       "action": "compare-existing",

@@ -29,6 +29,7 @@
   "version": "2019 年版",
   "effectiveAt": "2019-06-28",
   "machineReadableMarkdown": "| 項目 | 內容 |\n| --- | --- |\n| 文件名稱 | 結核病防治工作手冊 |\n| 版次 | 2019 年版 |\n| 生效日 | 2025-07-01 |\n| 權責單位 | 慢性傳染病組 |\n| 檔案格式 | PDF |\n\n結核病診斷、通報、治療（含都治）、接觸者檢查與潛伏結核感染治療之作業規定。\n\n### 第一章 診斷與通報\n\n疑似肺結核病人應連續收集 3 套痰液（至少 1 套為晨痰）進行塗片、培養及分子快速檢測。醫師開立 2 種以上抗結核藥物治療時即應通報，於一週內完成。\n\n### 第二章 治療\n\n新病人標準處方為 2HRZE/4HR。治療期間每月追蹤痰液與副作用；治療滿 2 個月痰培養仍陽性者，應評估抗藥性及延長治療。\n\n### 第三章 都治（DOTS）\n\n所有確診病人應納入都治，由關懷員每日送藥並目視服藥，完整記錄服藥情形。病人中斷服藥 3 日以上，關懷員應通報個案管理師追蹤。\n\n下載：[結核病防治工作手冊（2019 年版）PDF](/files/doc.tb-manual.2019-06-28/tb-manual-2019-1.pdf)",
+  "supersedes": null,
   "pdfUrl": "/files/doc.tb-manual.2019-06-28/tb-manual-2019-1.pdf",
   "legacyUrls": [
     "https://www.cdc.gov.tw/Uploads/archives/%E7%B5%90%E6%A0%B8%E7%97%85%E9%98%B2%E6%B2%BB%E5%B7%A5%E4%BD%9C%E6%89%8B%E5%86%8A2019%E5%B9%B4%E7%89%88.pdf"
@@ -80,6 +81,13 @@
     "existing": true,
     "compareWith": [
       "doc.tb-manual.2025-07-01"
-    ]
+    ],
+    "versionChain": {
+      "family": "doc.tb-manual",
+      "position": 1,
+      "of": 2,
+      "current": false,
+      "supersededBy": "doc.tb-manual.2025-07-01"
+    }
   }
 }

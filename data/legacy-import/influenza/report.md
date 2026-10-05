@@ -14,7 +14,7 @@
 | 既有內容已存在（供比對） | 25 |
 | 附件與圖片 | 8（附件 5、內文圖片 2、資料檔 1；圖片待補 alt 2、PDF 無文字層 2） |
 | 草稿 schema 驗證 | 32 / 32 通過 |
-| 問題 | 錯誤 0、警告 13、提示 107 |
+| 問題 | 錯誤 0、警告 13、提示 109 |
 | 移轉清單對應 | 對上 8 / 8 筆；status 變化 0；note 更新 0；仍待移轉 2；與清單判定不同 0 |
 | 模板推導項（清單只寫例外） | 18 項，對上 18；只列在 migration-patch.json 的 derivedItems，不寫回清單 |
 | 清單沒有的舊頁 | 5（migration-patch.json 的 unmatchedPages 有建議的 pending 項目） |
@@ -48,7 +48,7 @@
 | 21 | 公費流感疫苗接種計畫作業手冊<br><sub>www.cdc.gov.tw/File/Get/k6H6568EM4MUyLmxDp6yVF</sub> | 文件 → `doc.flu-vaccine-manual.2026-09-16` | `doc.flu-vaccine-manual.2026-09-16`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 22 | 公費流感疫苗合約院所查詢<br><sub>www.cdc.gov.tw/Category/List/4RgtNMNbqmGxb90C5PCRNH</sub> | 服務 → `service.influenza-flu-vaccine-contract-sites` | — | 0.6 | fields-pending | 核對後入庫（新站尚無對應內容） |
 | 23 | 公費流感抗病毒藥劑使用對象<br><sub>www.cdc.gov.tw/Category/Page/DcQhnxOUXS4BnGFxCjEXLb</sub> | 文件 → `doc.flu-antiviral-eligibility.2026-09-18` | `doc.flu-antiviral-eligibility.2026-09-18`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
-| 24 | 公費流感抗病毒藥劑使用對象（全年適用條件）<br><sub>www.cdc.gov.tw/Category/Page/Tsy161Va94LybxcU8KHFRV</sub> | 文件 → `doc.flu-antiviral-eligibility.2026-06-01` | `doc.flu-antiviral-eligibility.2026-06-01`（既有） | 1 | pdf-no-text-layer | 既有內容已存在，供比對，不建議覆蓋 |
+| 24 | 公費流感抗病毒藥劑使用對象（全年適用條件）<br><sub>www.cdc.gov.tw/Category/Page/Tsy161Va94LybxcU8KHFRV</sub> | 文件 → `doc.flu-antiviral-eligibility.2026-06-01` | `doc.flu-antiviral-eligibility.2026-06-01`（既有） | 1 | pdf-no-text-layer | 封存（歷史版本／久遠內容，舊版保留查閱） |
 | 25 | 公費抗病毒藥劑合約院所與藥局<br><sub>www.cdc.gov.tw/Category/List/Cf1DIbpAUq0ymjkxv1xC7U</sub> | 服務 → `service.influenza-flu-antiviral-contract-sites` | — | 0.6 | fields-pending | 核對後入庫（新站尚無對應內容） |
 | 26 | 歷年流感疫苗接種計畫（2020–2024 年度）<br><sub>www.cdc.gov.tw/Category/List/ewfWns-6XlMWzGdtpDFLK1</sub> | 清單頁 → `page.influenza-flu-past-seasons` | — | 0.6 | — | 清單頁，不轉換（新站由系統自動產生列表） |
 | 27 | 流感疫情持續上升，10 月 1 日公費疫苗開打，長者幼兒請優先接種<br><sub>www.cdc.gov.tw/Bulletin/Detail/8lZ1ophntJAgEqI_IgPLNQ?typeid=9</sub> | 新聞 → `news.2026-09-29-ili-weekly` | — | 1 | not-in-manifest | 既有內容已存在，供比對，不建議覆蓋 |

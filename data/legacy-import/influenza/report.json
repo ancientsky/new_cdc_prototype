@@ -11,7 +11,7 @@
   },
   "rules": {
     "file": "content/migration/import/_import-rules.json",
-    "version": 5
+    "version": 6
   },
   "manifest": {
     "id": "migration.influenza",
@@ -70,9 +70,10 @@
     },
     "byAction": {
       "merge-into-disease": 9,
-      "compare-existing": 15,
+      "compare-existing": 14,
       "review-before-publish": 5,
-      "skip-list": 2
+      "skip-list": 2,
+      "archive": 1
     },
     "avgConfidence": 0.93,
     "needsReview": 0,
@@ -89,7 +90,7 @@
     "issues": {
       "error": 0,
       "warn": 13,
-      "info": 107
+      "info": 109
     },
     "manifest": {
       "items": 8,
@@ -2083,6 +2084,11 @@
           "code": "version-unknown",
           "severity": "info",
           "message": "標題看不出版次，version 暫填 2026-09-18"
+        },
+        {
+          "code": "version-chain",
+          "severity": "info",
+          "message": "版次鏈 doc.flu-antiviral-eligibility：2026-06-01（2026-06-01） → 2026-09-18（2026-09-18）；本版為現行版，supersedes doc.flu-antiviral-eligibility.2026-06-01"
         }
       ],
       "action": "compare-existing",
@@ -2165,6 +2171,11 @@
           "message": "清單對應的新站內容是文件 doc.flu-antiviral-eligibility.2026-06-01，草稿依清單建成 document（舊頁本身是欄目內頁）"
         },
         {
+          "code": "historical-version",
+          "severity": "info",
+          "message": "歷史版本：建議封存（舊版保留查閱），不取代現行版"
+        },
+        {
           "code": "doctype-guessed",
           "severity": "info",
           "message": "標題與網址看不出文件種類，暫填 guideline"
@@ -2180,9 +2191,9 @@
           "message": "標題看不出版次，version 暫填 2026-06-01"
         }
       ],
-      "action": "compare-existing",
+      "action": "archive",
       "flags": {
-        "historical": false
+        "historical": true
       },
       "stats": {
         "images": 0,

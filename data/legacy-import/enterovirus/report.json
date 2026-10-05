@@ -11,7 +11,7 @@
   },
   "rules": {
     "file": "content/migration/import/_import-rules.json",
-    "version": 5
+    "version": 6
   },
   "manifest": {
     "id": "migration.enterovirus",
@@ -87,7 +87,7 @@
     "issues": {
       "error": 0,
       "warn": 11,
-      "info": 98
+      "info": 99
     },
     "manifest": {
       "items": 8,
@@ -1089,10 +1089,10 @@
       ],
       "outputs": [
         {
-          "id": "doc.enterovirus-manual.2026-03-01",
+          "id": "doc.enterovirus-manual.2026-01-01",
           "type": "document",
           "role": "draft",
-          "file": "content/documents/enterovirus-manual.2026-03-01.json",
+          "file": "content/documents/enterovirus-manual.2026-01-01.json",
           "schemaValid": true
         }
       ],
@@ -1120,6 +1120,11 @@
           "code": "manifest-derived",
           "severity": "info",
           "message": "對到的是模板推導項 manual（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "effective-from-text",
+          "severity": "info",
+          "message": "生效日 2026-01-01 取自內文（舊頁發布日 2026-03-01）"
         }
       ],
       "action": "review-before-publish",
@@ -2827,10 +2832,10 @@
       "merged": false
     },
     {
-      "id": "doc.enterovirus-manual.2026-03-01",
+      "id": "doc.enterovirus-manual.2026-01-01",
       "type": "document",
       "title": "傳染病防治工作手冊（2026 年版）",
-      "file": "content/documents/enterovirus-manual.2026-03-01.json",
+      "file": "content/documents/enterovirus-manual.2026-01-01.json",
       "confidence": 1,
       "existing": false,
       "compareWith": [],

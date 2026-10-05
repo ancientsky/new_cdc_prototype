@@ -41,7 +41,7 @@ export function loadContentIndex(contentDir = CONTENT) {
       try {
         const j = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
         if (j?.id) {
-          byId.set(j.id, { type: j.type, title: j.title, owner: j.owner, file: `content/${d}/${f}`, status: j.status, diseases: [...(j.diseases ?? []), ...(j.basedOn ?? [])], docType: j.docType, pubType: j.pubType, mediaType: j.mediaType, family: j.family, effectiveAt: j.effectiveAt ?? j.publishedAt });
+          byId.set(j.id, { type: j.type, title: j.title, owner: j.owner, file: `content/${d}/${f}`, status: j.status, diseases: [...(j.diseases ?? []), ...(j.basedOn ?? [])], docType: j.docType, family: j.family ?? null, version: j.version ?? null, effectiveAt: j.effectiveAt ?? null, pubType: j.pubType, mediaType: j.mediaType, family: j.family, effectiveAt: j.effectiveAt ?? j.publishedAt });
           if (j.type === 'faq') faqByTitle.set(normTitle(j.question ?? j.title), j.id);
           if (j.type === 'news' || j.type === 'letter' || j.type === 'clarification') newsByTitle.set(normTitle(j.title), j.id);
         }
@@ -63,16 +63,62 @@ const summaryOf = (md, title, max = 120) => {
 };
 
 function parseVersion(title) {
-  let m = /第([一二三四五六七八九十百零〇]+)版/.exec(title);
+  let m = /第\s*([一二三四五六七八九十百零〇\d]+)\s*版/.exec(title);
   if (m) return `第${m[1]}版`;
   m = /(\d{2,3})\.(\d{1,2})\.(\d{1,2})/.exec(title);
   if (m) return m[0];
-  m = /((?:19|20)\d{2})\s*年版?/.exec(title);
+  m = /\bv(\d+)\b/i.exec(title);
+  if (m) return `v${m[1]}`;
+  m = /((?:19|20)\d{2})\s*年(?:版|度)/.exec(title); // 「2023 年版」「2026–2027 年度」；單純日期（2022 年 3 月）不算版次
   if (m) return `${m[1]} 年版`;
   return null;
 }
 
 const uniqIssues = (issues) => uniqBy(issues, (i) => `${i.code}|${i.message}`);
+
+// ───── 第七批：文件版次鏈 ─────
+const CN_DIGIT = { 零: 0, 〇: 0, 一: 1, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9 };
+/** 中文數字（到百位）→ 整數：「十七」17、「二十」20、「一百零三」103 */
+export function cnToInt(str) {
+  if (/^\d+$/.test(str)) return Number(str);
+  let n = 0, cur = 0;
+  for (const ch of str) {
+    if (ch === '百') { n += (cur || 1) * 100; cur = 0; } else if (ch === '十') { n += (cur || 1) * 10; cur = 0; } else if (ch in CN_DIGIT) cur = CN_DIGIT[ch];
+  }
+  return n + cur;
+}
+/** 版次排序用的數字：第 N 版→N、vN→N、YYYY 年版→YYYY、民國 NNN.MM.DD→西元日期數；看不出來→null */
+export function versionRank(v) {
+  if (!v) return null;
+  let m = /第([一二三四五六七八九十百零〇\d]+)版/.exec(v); if (m) return cnToInt(m[1]);
+  m = /^v(\d+)$/i.exec(String(v).trim()); if (m) return Number(m[1]);
+  m = /((?:19|20)\d{2})\s*年/.exec(v); if (m) return Number(m[1]);
+  m = /^(\d{2,3})\.(\d{1,2})\.(\d{1,2})$/.exec(String(v).trim()); if (m) return (Number(m[1]) + 1911) * 10000 + Number(m[2]) * 100 + Number(m[3]);
+  return null;
+}
+/** 去掉版次、年份、日期與括號註記後的標題（正規化），同名即同一文件家族 */
+export function versionFree(title) {
+  return normTitle(String(title ?? '')
+    .replace(/[（(][^）)]*(版|修訂|年|舊版|歷版|v\d+)[^）)]*[）)]/gi, '')
+    .replace(/第[一二三四五六七八九十百零〇\d]+版/g, '')
+    .replace(/\bv\d+\b/gi, '')
+    .replace(/(?:19|20)\d{2}\s*年版?/g, '')
+    .replace(/\d{2,3}\.\d{1,2}\.\d{1,2}/g, '')
+    .replace(/(?:19|20)\d{2}-\d{2}-\d{2}/g, '')
+    .replace(/\d{2,3}\s*年\s*\d{1,2}\s*月(?:\s*\d{1,2}\s*日)?/g, '')
+    .replace(/(修訂|公告|核定)?版$/g, ''));
+}
+/** 從文字抽第一個日期（西元或民國）：「2025 年 9 月 1 日」「114.04.16」「民國 111 年 3 月」「2022-03-01」→ YYYY-MM-DD（缺日補 01） */
+export function dateFromText(text) {
+  const t = String(text ?? '');
+  const pad = (n) => String(n).padStart(2, '0');
+  const ok = (y, mo, d) => (y >= 1911 && y <= 2100 && mo >= 1 && mo <= 12 && d >= 1 && d <= 31 ? `${y}-${pad(mo)}-${pad(d)}` : null);
+  let m = /((?:19|20)\d{2})-(\d{2})-(\d{2})/.exec(t); if (m) return ok(+m[1], +m[2], +m[3]);
+  m = /(?:民國\s*)?(\d{2,4})\s*年\s*(\d{1,2})\s*月(?:\s*(\d{1,2})\s*日)?/.exec(t);
+  if (m) { const y = +m[1]; return ok(y < 1911 ? y + 1911 : y, +m[2], m[3] ? +m[3] : 1); }
+  m = /(\d{2,3})\.(\d{1,2})\.(\d{1,2})/.exec(t); if (m) return ok(+m[1] + 1911, +m[2], +m[3]);
+  return null;
+}
 
 // ───────────────────────────────────────── 主流程 ─────────────────────────────────────────
 
@@ -129,6 +175,10 @@ export function runImport(opts) {
   const titleSeen = new Map(); // normTitle → page key
   const units = []; // 組草稿用
   const prs = []; // 每頁一筆報告紀錄
+
+  // 第七批：去版次後同名的頁數（文件家族偵測用）
+  const vfCount = new Map();
+  for (const page of exp.pages) { const vf = versionFree(stripTitlePrefix(rules, page.side?.title ?? '')); if (vf) vfCount.set(vf, (vfCount.get(vf) ?? 0) + 1); }
 
   // ───── 第一階段：逐頁 ─────
   for (const page of exp.pages) {
@@ -411,24 +461,70 @@ export function runImport(opts) {
     } else if (kind === 'document') {
       const dt = docTypeFor(rules, title, pat, u);
       if (!dt.clear) issue('doctype-guessed', 'info', '標題與網址看不出文件種類，暫填 guideline');
-      const eff = publishedAt ?? exportedAt;
-      const family0 = pr.target?.startsWith('doc.') ? pr.target.replace(/\.\d{4}-\d{2}-\d{2}$/, '') : `doc.${short}-${pr.manifestKey ?? h6(side.url)}`;
+      // 第七批：生效日優先從標題（「2025 年 9 月版」「114.04.16」）抽，其次內文開頭「…年…月…日修訂／生效」，最後才用發布日
+      const effTitle = dateFromText(title);
+      const effBody0 = /((?:民國\s*)?\d{2,4}\s*年\s*\d{1,2}\s*月(?:\s*\d{1,2}\s*日)?|\d{2,3}\.\d{1,2}\.\d{1,2}|(?:19|20)\d{2}-\d{2}-\d{2})[^\n。]{0,12}?(修訂|生效|公告|發布|公布|核定|實施)/.exec(textOf(ext.body).slice(0, 600));
+      const effBody = effBody0 ? dateFromText(effBody0[1]) : null;
+      // 標題只有年月（「113 年 12 月修訂版」）而內文有完整日期（「113 年 12 月 20 日修訂生效」）時，以內文為準
+      const titleHasDay = /\d{1,2}\s*日|\d{2,3}\.\d{1,2}\.\d{1,2}|(?:19|20)\d{2}-\d{2}-\d{2}/.test(title);
+      const effText = effTitle && (titleHasDay || !effBody) ? effTitle : effBody ?? effTitle;
+      const eff = effText ?? publishedAt ?? exportedAt;
+      if (effText && effText !== (publishedAt ?? exportedAt)) issue('effective-from-text', 'info', `生效日 ${eff} 取自${effTitle ? '標題' : '內文'}（舊頁發布日 ${publishedAt ?? '缺'}）`);
+      // 第七批：去版次後同名的多頁 ⇒ 同一文件家族（family 依標題，不依網址），版次鏈在第一階段結束後依生效日串
+      const vf = versionFree(stripTitlePrefix(rules, title));
+      const sharesTitle = !pr.target?.startsWith('doc.') && (vfCount.get(vf) ?? 0) > 1;
+      // 家族：清單目標存在 ⇒ 用既有文件的 family（id 不一定以日期結尾，如 doc.guidance-dengue.v17）；否則由目標 id 去掉版次段
+      const family0 = pr.target?.startsWith('doc.') ? (index.byId.get(pr.target)?.family ?? pr.target.replace(/\.(\d{4}-\d{2}-\d{2}|v\d+)$/i, '')) : sharesTitle ? `doc.${short}-${h6(vf)}` : `doc.${short}-${pr.manifestKey ?? h6(side.url)}`;
+      if (sharesTitle) issue('version-family', 'info', `去掉版次後與另外 ${vfCount.get(vf) - 1} 頁同名，視為同一文件家族 ${family0}；版次鏈依生效日串接，舊版建議封存`);
       let id = pr.target?.startsWith('doc.') ? pr.target : `${family0}.${eff}`;
       if (usedIds.has(id)) {
         issue('target-shared', 'info', `與 ${usedIds.get(id)} 指向同一個對應 ${id}（不同版次），改以 ${family0}.${eff} 另列一版`);
         id = `${family0}.${eff}`;
       }
       id = reserveId(id, `${family0}.${eff}`);
-      const family = id.replace(/\.\d{4}-\d{2}-\d{2}(-\d+)?$/, '');
+      const family = index.byId.get(id)?.family ?? (id === pr.target ? family0 : id.replace(/\.\d{4}-\d{2}-\d{2}(-\d+)?$/, ''));
       const ctx = makeCtx(id, slugStem, { withAttachments: true });
       const stat = rewriteBody(ext.body, ctx);
       afterRewrite(stat);
-      const { markdown, dropped } = toMd(ext.body.children);
+      let { markdown, dropped } = toMd(ext.body.children);
       checks(markdown, ext.body, stat, dropped);
       const version = parseVersion(title);
       if (!version) issue('version-unknown', 'info', `標題看不出版次，version 暫填 ${eff}`);
-      units.push({ pageKey: page.name, kind, type: 'document', draftId: id, title: stripTitlePrefix(rules, title), markdown, docType: dt.docType, version: version ?? eff, effectiveAt: eff, family, diseaseId: primary, publishedAt: eff });
+      const mainBag = bags.get(id);
+      const pdfAtts = attList.filter((a) => /\.pdf$/i.test(a.file));
+      // 第七批：舊頁只有「請下載附件」、正本在 PDF ⇒ 純 PDF 文件：機讀正本以「（待補）」佔位，不整批轉 PDF（第 8 節），上架前由權責單位提供文字版
+      const pdfOnly = pdfAtts.length > 0 && plainText(markdown).replace(/\s/g, '').length < (rules.thresholds?.minBodyChars ?? 40);
+      if (pdfOnly) {
+        issue('pdf-only', 'warn', `舊頁內文只有下載連結，正本是 PDF「${pdfAtts[0].label ?? pdfAtts[0].file}」；machineReadableMarkdown 以（待補）佔位，PDF 不整批轉（第 8 節），上架前請提供文字版`);
+        issue('fields-pending', 'info', '待補欄位：machineReadableMarkdown（正本文字版）');
+        markdown = `（待補：本文件正本為 PDF「${pdfAtts[0].label ?? pdfAtts[0].file}」，舊頁只有下載連結。上架前請權責單位提供文字版（assets-policy 第 4 節），或確認僅以附件提供。）${markdown.trim() ? `\n\n${markdown.trim()}` : ''}`;
+      }
+      units.push({ pageKey: page.name, kind, type: 'document', draftId: id, title: stripTitlePrefix(rules, title), markdown, docType: dt.docType, version: version ?? eff, effectiveAt: eff, family, diseaseId: primary, publishedAt: eff, pdfOnly, conv: pdfOnly ? { pdfOnly: true } : {} });
       pr.outputs.push({ id, type: 'document', role: 'draft' });
+      // 第七批：一頁多版——附件列表裡標了別的版次的 PDF（「…第七版（2022 年 3 月）」）⇒ 同家族的舊版各建一份純 PDF 草稿（只搬檔，不轉內文），生效日從附件標籤抽
+      const curRank = versionRank(version);
+      for (const a of pdfAtts) {
+        const v = parseVersion(a.label ?? '');
+        const labelName = versionFree(String(a.label ?? '').replace(/[（(]\s*pdf\s*[）)]/gi, '').replace(/\.pdf$/i, ''));
+        // 只有「頁面本身版次已知、附件標籤版次不同、去版次後同名」才算另一版次；附表、申請書等不同名附件不拆
+        if (!version || !v || v === version || labelName !== vf || (curRank != null && versionRank(v) === curRank)) continue;
+        const effOld = dateFromText(String(a.label ?? '').replace(v, ''));
+        // 新站已有同家族、同生效日（或同版次）的文件 ⇒ 沿用它的 id（供比對），否則 family.生效日
+        const vr = versionRank(v);
+        const existingOld = [...index.byId.entries()].find(([xid, x]) => x.type === 'document' && x.family === family && xid !== id && ((effOld && x.effectiveAt === effOld) || (x.version && (x.version === v || (vr != null && versionRank(x.version) === vr)))))?.[0] ?? null;
+        const oldId0 = existingOld ?? `${family}.${effOld ?? eff}`;
+        const oldId = reserveId(usedIds.has(oldId0) ? `${oldId0}-${versionRank(v) ?? 'x'}` : oldId0, `${oldId0}-${versionRank(v) ?? 'x'}`);
+        const oldBag = bagOf(oldId, slugStem);
+        const r = oldBag.add({ src: a.file, as: 'attachment', label: a.label, pageKey: page.name });
+        addIssues(r.issues.filter((i) => i.code !== 'file-renamed'));
+        if (!r.ok) continue;
+        // 檔案改歸舊版草稿，主草稿不重複宣告
+        if (mainBag) { const i = mainBag.assets.findIndex((x) => x.kind === 'attachment' && x.label === (String(a.label ?? '').trim() || a.file.replace(/\.[^.]+$/, ''))); if (i >= 0) { try { fs.rmSync(path.join(out, 'content/assets', id, mainBag.assets[i].file)); } catch { /* 已不存在 */ } mainBag.assets.splice(i, 1); } }
+        if (!effOld) issue('version-date-unknown', 'warn', `附件「${a.label}」是 ${v}，但標籤看不出生效日，暫用 ${eff}；請人工補日期再排版次鏈`);
+        issue('version-from-attachment', 'info', `附件「${a.label}」是另一版次（${v}），另建純 PDF 草稿 ${oldId}（同家族 ${family}，不轉內文）`);
+        units.push({ pageKey: page.name, kind, type: 'document', draftId: oldId, title: `${stripTitlePrefix(rules, title).replace(version ?? '\u0000', '').replace(/（\s*）/g, '').trim()}（${v}）`, markdown: `（待補：本版次正本為 PDF「${a.label}」，由舊頁「${title}」的附件列表拆出，不轉內文；僅供查閱的失效版本。）`, docType: dt.docType, version: v, effectiveAt: effOld ?? eff, family, diseaseId: primary, publishedAt: effOld ?? eff, pdfOnly: true, fromAttachment: true, conv: { pdfOnly: true, fromAttachment: true } });
+        pr.outputs.push({ id: oldId, type: 'document', role: 'draft' });
+      }
     } else if (STRUCTURED_TYPES.has(kind)) {
       const prefix = kind === 'clarification' ? 'clar' : kind;
       const eff = publishedAt ?? exportedAt;
@@ -490,6 +586,31 @@ export function runImport(opts) {
     pr.existing = pr.targetExists || pr.outputs.some((o) => o.role !== 'duplicate' && index.byId.has(o.id));
     pr.compareWith = uniqBy([...pr.outputs.filter((o) => index.byId.has(o.id)).map((o) => o.id), ...(pr.targetExists ? [pr.target] : [])].map((id) => ({ id })), (x) => x.id).map((x) => x.id);
     pr.action = decideAction(pr, rules);
+  }
+
+  // ───── 第七批：文件版次鏈——同家族依生效日（再依版次數字）排序，新版 supersedes 舊版；舊版那一頁建議封存 ─────
+  {
+    const fams = new Map();
+    for (const un of units) if (un.type === 'document') { if (!fams.has(un.family)) fams.set(un.family, []); fams.get(un.family).push(un); }
+    const prByKey0 = new Map(prs.map((p) => [p.key, p]));
+    for (const [family, us] of fams) {
+      if (us.length < 2) continue;
+      us.sort((a, b) => a.effectiveAt.localeCompare(b.effectiveAt) || ((versionRank(a.version) ?? 0) - (versionRank(b.version) ?? 0)));
+      for (let i = 0; i < us.length; i++) {
+        const un = us[i];
+        un.supersedes = i > 0 ? us[i - 1].draftId : null;
+        un.conv = { ...(un.conv ?? {}), versionChain: { family, position: i + 1, of: us.length, current: i === us.length - 1, ...(i < us.length - 1 ? { supersededBy: us[i + 1].draftId } : {}) } };
+        const pr = prByKey0.get(un.pageKey);
+        if (!pr) continue;
+        const own = pr.outputs.some((o) => o.id === un.draftId && o.role === 'draft') && !un.fromAttachment;
+        if (i < us.length - 1 && own && !pr.flags.historical) {
+          pr.flags.historical = true;
+          pr.issues.push({ code: 'historical-version', severity: 'info', message: `同家族 ${family} 有更新的版次 ${us[us.length - 1].draftId}（${us[us.length - 1].version}，${us[us.length - 1].effectiveAt} 生效）；本頁是舊版，建議封存（保留查閱、加失效警示）` });
+          pr.action = decideAction(pr, rules);
+        }
+        if (i === us.length - 1 && own) pr.issues.push({ code: 'version-chain', severity: 'info', message: `版次鏈 ${family}：${us.map((x) => `${x.version}（${x.effectiveAt}）`).join(' → ')}；本版為現行版，supersedes ${un.supersedes}` });
+      }
+    }
   }
 
   // ───── 第二階段：組草稿 ─────
@@ -555,6 +676,7 @@ export function runImport(opts) {
     } else if (un.type === 'document') {
       d = base(un.title, un.markdown, 'document');
       Object.assign(d, { family: un.family, docType: un.docType, version: un.version, effectiveAt: un.effectiveAt, machineReadableMarkdown: un.markdown });
+      if (un.supersedes !== undefined) d.supersedes = un.supersedes;
       const bag = bags.get(un.draftId);
       const pdf = bag?.assets.find((a) => a.file.endsWith('.pdf') && a.kind === 'attachment');
       if (pdf) d.pdfUrl = `/files/${un.draftId}/${pdf.file}`;
@@ -568,7 +690,7 @@ export function runImport(opts) {
       d = base(un.title, un.markdown, 'page');
       Object.assign(d, { slug: idRest(un.draftId), bodyMarkdown: un.markdown });
     }
-    drafts.push(finish(d, [pr]));
+    drafts.push(finish(d, [pr], un.type === 'document' ? un.conv ?? {} : {}));
   }
 
   for (const [id, us] of diseaseUnits) {

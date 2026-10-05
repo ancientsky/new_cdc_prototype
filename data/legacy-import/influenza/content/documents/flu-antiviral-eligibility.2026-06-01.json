@@ -29,6 +29,7 @@
   "version": "2026-06-01",
   "effectiveAt": "2026-06-01",
   "machineReadableMarkdown": "公費流感抗病毒藥劑全年適用對象：流感併發重症、新型 A 型流感、孕婦、未滿 5 歲及 65 歲以上、住院、高風險慢性病、BMI ≥ 30 之類流感患者與群聚預防性用藥；經醫師評估符合者不需快篩。2026 年 8 月起另有擴大版。\n\n### 第 1 條\n\n經通報之「流感併發重症」病例。\n\n### 第 2 條\n\n經通報之「新型 A 型流感」病例。\n\n### 第 3 條\n\n孕婦經評估需及時用藥者。\n\n| 項目 | 內容 |\n| --- | --- |\n| 文件名稱 | 公費流感抗病毒藥劑使用對象（全年適用條件） |\n| 版次 | 2026-06 |\n| 生效日 | 2026-06-01 |\n| 權責單位 | 急性傳染病組 |\n| 檔案格式 | PDF |\n\n完整內容請下載附件：\\<a href=\"https://www.cdc.gov.tw/File/Get/pJVCfh-INcNIG0o5ngr34J\">公費流感抗病毒藥劑使用對象（全年適用條件）（PDF）\\</a>",
+  "supersedes": null,
   "pdfUrl": "/files/doc.flu-antiviral-eligibility.2026-06-01/flu-antiviral-eligibility.2026-06-01.pdf",
   "legacyUrls": [
     "https://www.cdc.gov.tw/Category/Page/Tsy161Va94LybxcU8KHFRV"
@@ -65,6 +66,11 @@
         "message": "清單對應的新站內容是文件 doc.flu-antiviral-eligibility.2026-06-01，草稿依清單建成 document（舊頁本身是欄目內頁）"
       },
       {
+        "code": "historical-version",
+        "severity": "info",
+        "message": "歷史版本：建議封存（舊版保留查閱），不取代現行版"
+      },
+      {
         "code": "doctype-guessed",
         "severity": "info",
         "message": "標題與網址看不出文件種類，暫填 guideline"
@@ -85,6 +91,13 @@
     "existing": true,
     "compareWith": [
       "doc.flu-antiviral-eligibility.2026-06-01"
-    ]
+    ],
+    "versionChain": {
+      "family": "doc.flu-antiviral-eligibility",
+      "position": 1,
+      "of": 2,
+      "current": false,
+      "supersededBy": "doc.flu-antiviral-eligibility.2026-09-18"
+    }
   }
 }

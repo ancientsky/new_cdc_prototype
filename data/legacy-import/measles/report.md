@@ -14,7 +14,7 @@
 | 既有內容已存在（供比對） | 23 |
 | 附件與圖片 | 9（附件 6、內文圖片 2、資料檔 1；圖片待補 alt 2、PDF 無文字層 2） |
 | 草稿 schema 驗證 | 29 / 29 通過 |
-| 問題 | 錯誤 0、警告 8、提示 84 |
+| 問題 | 錯誤 0、警告 8、提示 86 |
 | 移轉清單對應 | 對上 7 / 7 筆；status 變化 0；note 更新 0；仍待移轉 2；與清單判定不同 0 |
 | 模板推導項（清單只寫例外） | 18 項，對上 18；只列在 migration-patch.json 的 derivedItems，不寫回清單 |
 | 清單沒有的舊頁 | 3（migration-patch.json 的 unmatchedPages 有建議的 pending 項目） |
@@ -36,7 +36,7 @@
 | 9 | 預防接種建議<br><sub>www.cdc.gov.tw/Category/MPage/D7GS7y0HwfNsQP8xpY6sIX</sub> | 併入疾病頁 → `disease.measles`（併入：vaccine） | `disease.measles`（既有） | 1 | — | 併入疾病頁區塊（與既有內容逐段比對） |
 | 10 | Q&A<br><sub>www.cdc.gov.tw/Category/QAPage/s5OaifVY2y_Oh-5Zt4ecui</sub> | Q&A → `faq.healthcare-workers-mmr`<br>`faq.measles-exposed-what-to-do`<br>`faq.measles-health-dept-call`<br>`faq.measles-mmr-adult-who`<br>`faq.measles-mmr-born-1970`<br>`faq.measles-mmr-check-record`<br>`faq.measles-symptoms`<br>`faq.rumor-mmr-autism`<br>`faq.travel-japan-measles`<br>`faq.travel-return-fever` | `disease.measles`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 11 | 衛教宣導：單張海報<br><sub>www.cdc.gov.tw/Category/List/ndPddmtQlGVto1kLRIiu3S</sub> | 出版品 → `publication.measles-materials-poster` | — | 0.8 | pdf-no-text-layer、image-no-alt | 核對後入庫（新站尚無對應內容） |
-| 12 | 傳染病防治工作手冊（2026 年版）<br><sub>www.cdc.gov.tw/Category/DiseaseManual/fKswAQpMktNyzXETPocXZ2</sub> | 文件 → `doc.measles-manual.2026-03-01` | — | 1 | — | 核對後入庫（新站尚無對應內容） |
+| 12 | 傳染病防治工作手冊（2026 年版）<br><sub>www.cdc.gov.tw/Category/DiseaseManual/fKswAQpMktNyzXETPocXZ2</sub> | 文件 → `doc.measles-manual.2026-01-01` | — | 1 | — | 核對後入庫（新站尚無對應內容） |
 | 13 | 傳染病病例定義：麻疹<br><sub>www.cdc.gov.tw/Category/DiseaseDefine/cMMH-s4zN4Dw12teXD11mn</sub> | 文件 → `doc.case-definition-measles.2024-01-01` | `doc.case-definition-measles.2024-01-01`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 14 | 統計資料<br><sub>www.cdc.gov.tw/Category/List/SJd_VUKQ_blXx4LfMYrEyA</sub> | 資料集 → `dataset.measles-yearly` | `dataset.measles-yearly`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 15 | 檢驗資訊<br><sub>www.cdc.gov.tw/Category/MPage/T6DUjtV8a7bam_ZzaJUVy3</sub> | 檢驗 → `labtest.measles` | `labtest.measles`（既有） | 1 | fields-pending | 既有內容已存在，供比對，不建議覆蓋 |
@@ -47,7 +47,7 @@
 | 20 | 麻疹群聚事件應變專區<br><sub>www.cdc.gov.tw/Category/MPage/-_YEYLxc3bH82jAhp_t9c3</sub> | 頁面 → `page.measles-cluster-response` | `doc.measles-contact-tracing.2026-09-12`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 21 | 麻疹接觸者追蹤作業指引<br><sub>www.cdc.gov.tw/File/Get/uTI-ThoSeLurTG6lnklL3e</sub> | 文件 → `doc.measles-contact-tracing.2026-09-12` | `doc.measles-contact-tracing.2026-09-12`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 22 | 麻疹病例接觸者活動場所公告<br><sub>www.cdc.gov.tw/Bulletin/List/6BjM8s3a1iKGa6nJ9OjFfl?page=1</sub> | 清單頁 → `page.measles-exposure-notice` | — | 0.6 | — | 清單頁，不轉換（新站由系統自動產生列表） |
-| 23 | 國內 MMR 預防接種建議（108.05.14 版）<br><sub>www.cdc.gov.tw/File/Get/cTCUM_BSq6o_O9hCLVtrfF</sub> | 文件 → `doc.mmr-recommendation.2019-05-14` | `doc.mmr-recommendation.2019-05-14`（既有） | 1 | pdf-no-text-layer | 既有內容已存在，供比對，不建議覆蓋 |
+| 23 | 國內 MMR 預防接種建議（108.05.14 版）<br><sub>www.cdc.gov.tw/File/Get/cTCUM_BSq6o_O9hCLVtrfF</sub> | 文件 → `doc.mmr-recommendation.2019-05-14` | `doc.mmr-recommendation.2019-05-14`（既有） | 1 | pdf-no-text-layer | 封存（歷史版本／久遠內容，舊版保留查閱） |
 | 24 | 麻疹 MMR 疫苗候診衛教動畫<br><sub>www.cdc.gov.tw/Category/List/zqJsMSQMzdsSMSFci6k7Aj</sub> | 影音 → `media.mmr-waiting-room-2026` | `media.mmr-waiting-room-2026`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 25 | 日本麻疹疫情旅遊提醒<br><sub>www.cdc.gov.tw/Bulletin/Detail/76xmEQXxa2oFlWbwwCd1lv?typeid=9</sub> | 新聞 → `news.2026-05-11-japan-measles-level1` | `news.2026-05-11-japan-measles-level1`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 26 | 暑假出國前請評估麻疹免疫力：1966 年（含）以後出生者出國前 2 至 4 週評估接種 MMR<br><sub>www.cdc.gov.tw/Bulletin/Detail/gjtvo59pOflfbxnRphUP1p?typeid=9</sub> | 新聞 → `news.2026-06-02-measles-travel-mmr-1966` | — | 1 | not-in-manifest | 既有內容已存在，供比對，不建議覆蓋 |

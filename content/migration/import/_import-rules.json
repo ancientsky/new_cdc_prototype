@@ -1,11 +1,11 @@
 {
   "id": "import-rules.legacy",
   "type": "import-rules",
-  "version": 5,
+  "version": 6,
   "title": "舊站匯出批次轉換規則（scripts/import-legacy.mjs 讀取）",
   "summary": "把舊站 CMS 匯出（每頁 .html＋.json 側檔）對應成新站內容草稿的規則：URL 模式→型別與目錄、類別→權責單位、疾病別名→疾病 id、標題關鍵字→疾病頁區塊、Bulletin typeid→newsType、信心計算權重與人工檢視門檻。規則是資料不是程式；正式批次先改這個檔再跑。",
   "owner": "unit.it",
-  "reviewedAt": "2026-10-04",
+  "reviewedAt": "2026-10-05",
   "siteBase": "https://www.cdc.gov.tw",
   "extraction": {
     "_comment": "舊站版型外殼（導覽列、麵包屑、側欄、頁尾）一律不轉；只取內容區。選擇器語法：#id、.class、tag、tag.class，可用逗號列多個，取第一個命中者。",
@@ -241,6 +241,15 @@
     {
       "match": "／通報",
       "owner": "unit.epidemic-intelligence"
+    },
+    {
+      "match": "感染管制",
+      "owner": "unit.infection-control"
+    },
+    {
+      "match": "首頁／指引及手冊",
+      "owner": "unit.oasis",
+      "_comment": "第七批：指引及手冊欄目的總覽列表頁歸 OASIS（文件庫）；各文件頁的麵包屑是「傳染病介紹／某疾病／指引及手冊」，對不到這條，權責依疾病主檔（ownerFallbackToDisease）"
     },
     {
       "match": "新聞與公告",
@@ -529,7 +538,8 @@
   "historicalKeywords": [
     "歷史版本",
     "舊版",
-    "封存"
+    "封存",
+    "歷版"
   ],
   "dropRules": [
     {
