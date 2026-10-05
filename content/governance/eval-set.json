@@ -1,8 +1,8 @@
 {
-  "version": "2026.10-r5",
-  "updatedAt": "2026-10-04",
+  "version": "2026.10-r6",
+  "updatedAt": "2026-10-05",
   "owner": "unit.oasis",
-  "note": "答案引擎評估集（原型 140+ 題；規格目標 500 題）。每次正本修訂或換模型都重跑；version 類別（曾因修訂而改變答案的題目）須全對才能上線。requires 列出該題依賴的內容 id／前綴，內容尚未建置時該題略過不計分。 r3（2026-10-02）：新增申請（apply）、檢驗（lab，專業）、通報時限（notify，主檔結構化回答）、公告（notice）類別，與影片版本題（過時影片不得被引用）。 r4（2026-10-02 第六輪）：新增國際合作 3 題（英文來源 sourceLang:en 內容進英文索引、中文譯文進中文索引）。 r5（2026-10-04 第七輪）：人才招募改 careers 意圖（結構化列開放中職缺、問「誰錄取」只給結果頁連結不唸名單）、採購改 procurement 意圖；NC001／NC002 改依職缺與標案內容，新增 NC003–NC006（含「誰錄取」不得出現遮罩姓名與報名編號、錄取者個資拒答）。",
+  "note": "答案引擎評估集（原型 140+ 題；規格目標 500 題）。每次正本修訂或換模型都重跑；version 類別（曾因修訂而改變答案的題目）須全對才能上線。requires 列出該題依賴的內容 id／前綴，內容尚未建置時該題略過不計分。 r3（2026-10-02）：新增申請（apply）、檢驗（lab，專業）、通報時限（notify，主檔結構化回答）、公告（notice）類別，與影片版本題（過時影片不得被引用）。 r4（2026-10-02 第六輪）：新增國際合作 3 題（英文來源 sourceLang:en 內容進英文索引、中文譯文進中文索引）。 r5（2026-10-04 第七輪）：人才招募改 careers 意圖（結構化列開放中職缺、問「誰錄取」只給結果頁連結不唸名單）、採購改 procurement 意圖；NC001／NC002 改依職缺與標案內容，新增 NC003–NC006（含「誰錄取」不得出現遮罩姓名與報名編號、錄取者個資拒答）。 r6（2026-10-05）：新增 VA011–VA014 年齡／身分跨疫苗彙整題（由疫苗接種時程主檔結構化回答，行動須連到疫苗接種時程地圖並帶 #age）。",
   "categories": {
     "version": "版本題：曾因正本修訂而改變答案，引到失效版或過時衍生內容即失敗",
     "fact": "事實題：答案須含關鍵事實並引用正確來源",
@@ -1598,6 +1598,75 @@
           "醫護"
         ]
       }
+    },
+    {
+      "id": "VA011",
+      "category": "vaccine",
+      "requires": [
+        "vaccine.influenza",
+        "vaccine.pneumococcal",
+        "vaccine.covid-19"
+      ],
+      "q": "65 歲以上可以打哪些公費疫苗",
+      "expect": {
+        "intent": "vaccine",
+        "mustCite": [
+          "vaccine.influenza",
+          "vaccine.pneumococcal",
+          "vaccine.covid-19"
+        ],
+        "action": "/vaccines/schedule/#age=65"
+      },
+      "note": "跨疫苗彙整：由疫苗接種時程主檔依年齡篩選，一疫苗一句；不得只引新冠"
+    },
+    {
+      "id": "VA012",
+      "category": "vaccine",
+      "q": "滿一歲的小孩要打什麼疫苗",
+      "expect": {
+        "intent": "vaccine",
+        "mustIncludeAny": [
+          "MMR",
+          "水痘",
+          "A 型肝炎"
+        ],
+        "mustNotInclude": [
+          "Tdap"
+        ],
+        "action": "/vaccines/schedule/#age=m12"
+      },
+      "note": "滿一歲＝12 個月；修正前誤答孕婦 Tdap"
+    },
+    {
+      "id": "VA013",
+      "category": "vaccine",
+      "q": "國中生有哪些公費疫苗",
+      "expect": {
+        "intent": "vaccine",
+        "mustInclude": [
+          "HPV",
+          "流感"
+        ]
+      }
+    },
+    {
+      "id": "VA014",
+      "category": "vaccine",
+      "requires": [
+        "vaccine.influenza",
+        "vaccine.pneumococcal",
+        "vaccine.covid-19"
+      ],
+      "q": "我 70 歲有哪些公費疫苗",
+      "expect": {
+        "intent": "vaccine",
+        "mustCite": [
+          "vaccine.influenza",
+          "vaccine.pneumococcal",
+          "vaccine.covid-19"
+        ]
+      },
+      "note": "同 VA011，單純年齡寫法"
     },
     {
       "id": "T001",

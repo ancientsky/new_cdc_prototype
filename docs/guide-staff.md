@@ -725,3 +725,15 @@ node scripts/analyze-404-log.mjs access.log --map dist/v1/legacy-map.json --migr
 ---
 
 欄位定義與規則細節見 [governance-model.md](governance-model.md)；部署與本機預覽見 [deploy.md](deploy.md)；舊站移轉的完整策略見 [migration-playbook.md](migration-playbook.md)。
+
+## 16. 疫苗接種時程表維護 SOP
+
+**誰：** 急性傳染病組（預防接種）Steward。**內容：** `content/master/immunization-schedule.json`，一筆一個「劑次 × 對象」，是 `/vaccines/schedule/` 時程地圖與問答「幾歲能打哪些公費疫苗」共用的資料。疫苗頁的「公費對象」表仍是各疫苗的正本；時程表是跨疫苗的索引，兩邊要一致。
+
+1. **先看地圖有沒有「待承辦人確認」。** 首版 42 筆全部由現行兒童預防接種時程表（11401 版）、本站疫苗頁與 2026 年政策新聞整理，`verified` 都是 false。請逐筆對照疾管署正式公告，確認無誤就把 `verified` 改 true；數字不對就直接改 `ageMinMonths`／`ageMaxMonths`／`dose`／`group`，並把 `source` 換成正式公告網址。
+2. **年齡一律填月。** 滿 5 歲填 60、65 歲以上填 780 且 `ageMaxMonths: null`；「滿 5 歲至入國小前」填 60–83。地圖與問答都用月齡比對，不要寫「5 歲」。
+3. **公費／自費分三種。** `public` 看年齡就公費；`conditional` 還要看身分（原住民、高風險、醫事人員…），條件寫在 `group`；`self` 自費，部分縣市補助寫在 `note`。
+4. **政策改了怎麼改。** 例如 2026-01-15 成人肺炎鏈球菌改為 1 劑 PCV20／PCV21：先改疫苗頁 `content/vaccines/pneumococcal.json` 的 `publicFunded` 與內文（這是正本），再改時程表對應的 `sched.pcv-*` 三筆，兩邊 `startAt` 填同一天；舊的 Q&A（`faq.pcv-elderly`）也要改。送出後 CI 的驗證會擋住疫苗 id 打錯、年齡上限小於下限。
+5. **新增疫苗。** 先在 `content/master/vaccines.json` 加一筆（`hasPage: false` 也可以），再加時程表項目；有疫苗頁後把 `source.url` 指回該頁。
+6. **測試答案。** 改完在 `/ask/` 問「65 歲以上可以打哪些公費疫苗」「滿一歲的小孩要打什麼疫苗」，答案應一疫苗一句、每句有來源；評估集 VA011–VA014 在 CI 會自動跑。
+

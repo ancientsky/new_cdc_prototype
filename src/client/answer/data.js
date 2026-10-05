@@ -61,12 +61,14 @@ const enginePromise = new Map();
 export function loadEngine(view = 'public') {
   if (enginePromise.has(view)) return enginePromise.get(view);
   const p = (async () => {
-    const [index, indexPro, situation, clarifications, glossary, diseases, vaccines, countries, datasets, faq, units, aiStatus, travelAlerts, countryLevels, services, notifyTable, media] = await Promise.all([
+    const [index, indexPro, situation, clarifications, glossary, diseases, vaccines, countries, datasets, faq, units, aiStatus, travelAlerts, countryLevels, services, notifyTable, media, schedule] = await Promise.all([
       v1('search-index', []), view === 'pro' ? v1('search-index-pro', []) : Promise.resolve([]), v1('situation', null), v1('clarifications', []), v1('glossary', []),
       v1('diseases', []), v1('vaccines', []), v1('countries', []), v1('datasets', []), v1('faq', []), v1('units', []), v1('governance/ai-status', {}),
       v1('travel-alerts', []), v1('country-levels', []),
       // 第二輪（可選，404 容錯）：申請服務（actions）、通報時限表（病例定義與檢驗連結）、影音（來源卡海報）
       v1Optional('services', []), v1Optional('notify-table', null), v1Optional('media', []),
+      // 疫苗接種時程主檔（可選）：跨疫苗年齡查詢，「65 歲以上可以打哪些公費疫苗」
+      v1Optional('immunization-schedule', []),
     ]);
     const deps = {
       index: index ?? [], indexPro: indexPro ?? [], situation,
@@ -82,6 +84,7 @@ export function loadEngine(view = 'public') {
       travel: [...(Array.isArray(countryLevels) ? countryLevels : []), ...(Array.isArray(travelAlerts) ? travelAlerts : [])],
       services: (services ?? []).map((x) => ({ id: x.id, slug: x.slug, title: x.title, serviceType: x.serviceType, steps: x.steps, slaDays: x.slaDays, fee: x.fee, applyUrl: x.applyUrl, forms: x.forms ?? [] })),
       notifyTable,
+      schedule: Array.isArray(schedule) ? schedule : [],
       media: (media ?? []).map((x) => ({ id: x.id, mediaType: x.mediaType, poster: x.poster, producedAt: x.producedAt, basedOnVersionLabel: x.basedOnVersionLabel, durationSeconds: x.durationSeconds })),
     };
     return { engine: createEngine(deps), deps };

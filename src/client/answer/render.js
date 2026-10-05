@@ -25,7 +25,7 @@ const S = {
     media: { video: '影片', animation: '動畫', podcast: 'Podcast', short: '短影音' }, watchAt: '從 {t} 開始看', transcriptNote: '引用自官方影片逐字稿', basedOnLabel: '製作依據', producedAt: '製作日',
     steps: '步驟', stepsN: '{n} 個步驟', slaDays: '處理天數', days: '{n} 天', fee: '費用', applyPage: '前往申請頁', forms: '表單',
     specimen: '檢體', container: '容器', volume: '量', timing: '採檢時機', storage: '保存', transport: '運送', tests: '可做檢驗', turnaround: '週轉', sendWithin: '送驗時限', labs: '檢驗單位', hours: '{n} 小時',
-    masterBasis: '依傳染病防治法公告', masterNote: '主檔結構化欄位，非檢索摘錄', notifyH: '通報時限', notifyCategory: '法定傳染病類別', notifyWithin: '應於', notifyReport: '通報專區', caseDef: '病例定義', labtestLink: '檢驗項目', diseasePage: '疾病頁',
+    masterBasis: '依傳染病防治法公告', masterNote: '主檔結構化欄位，非檢索摘錄', scheduleBasis: '疫苗接種時程表（主檔）', scheduleNote: '由時程表欄位組句，非檢索摘錄；標「（待確認）」的項目尚待承辦人核對', notifyH: '通報時限', notifyCategory: '法定傳染病類別', notifyWithin: '應於', notifyReport: '通報專區', caseDef: '病例定義', labtestLink: '檢驗項目', diseasePage: '疾病頁',
     closed: '已截止', deadline: '截止日', notices: '全部公告', proOnlyNote: '專業內容',
   },
   en: {
@@ -49,7 +49,7 @@ const S = {
     media: { video: 'Video', animation: 'Animation', podcast: 'Podcast', short: 'Short video' }, watchAt: 'Watch from {t}', transcriptNote: 'Quoted from official video transcripts', basedOnLabel: 'Based on', producedAt: 'Produced',
     steps: 'Steps', stepsN: '{n} steps', slaDays: 'Processing time', days: '{n} days', fee: 'Fee', applyPage: 'Go to application page', forms: 'Forms',
     specimen: 'Specimen', container: 'Container', volume: 'Volume', timing: 'Timing', storage: 'Storage', transport: 'Transport', tests: 'Tests', turnaround: 'Turnaround', sendWithin: 'Send within', labs: 'Laboratories', hours: '{n} hours',
-    masterBasis: 'Communicable Disease Control Act announcement', masterNote: 'Structured master data, not a retrieved excerpt', notifyH: 'Notification deadline', notifyCategory: 'Notifiable disease category', notifyWithin: 'Report within', notifyReport: 'Reporting', caseDef: 'Case definition', labtestLink: 'Lab tests', diseasePage: 'Disease page',
+    masterBasis: 'Communicable Disease Control Act announcement', masterNote: 'Structured master data, not a retrieved excerpt', scheduleBasis: 'Immunization schedule (master data)', scheduleNote: 'Composed from schedule fields, not a retrieved excerpt; items marked “pending verification” await staff review', notifyH: 'Notification deadline', notifyCategory: 'Notifiable disease category', notifyWithin: 'Report within', notifyReport: 'Reporting', caseDef: 'Case definition', labtestLink: 'Lab tests', diseasePage: 'Disease page',
     closed: 'Closed', deadline: 'Deadline', notices: 'All notices', proOnlyNote: 'Professional content',
   },
   vi: {
@@ -89,6 +89,8 @@ export function sourceCardBody(src, { pro = false } = {}) {
     add(L('notifyH'), esc(src.hoursLabel ?? ''));
     add(L('masterBasis'), esc(L('masterNote')));
   }
+  // 第十四輪：疫苗接種時程表（主檔）來源卡
+  if (src.type === 'schedule') add(L('scheduleBasis'), esc(L('scheduleNote')));
   rows.push(...typeRows(src).map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${v}</dd></div>`));
   add(L('owner'), esc(src.ownerName ?? src.owner));
   add(L('reviewed'), src.reviewedAt ? `<time datetime="${esc(src.reviewedAt)}">${esc(src.reviewedAt)}</time>` : '');
@@ -144,6 +146,7 @@ export function typeRows(src) {
 /** 來源卡摘要列（summary 第二行）：依型別顯示「影片 · 章節 · mm:ss」「主檔 · 依法公告」等 */
 export function sourceMeta(s) {
   if (s.type === 'media') return `${L(`media.${s.mediaType ?? 'video'}`)}${s.chapter?.label ? ` · ${s.chapter.label}` : ''} · ${s.timeLabel ?? mmss(s.t)}${s.producedAt ? ` · ${L('producedAt')} ${s.producedAt}` : ''}`;
+  if (s.type === 'schedule') return `${s.ownerName ?? ''} · ${L('scheduleBasis')}`;
   if (s.type === 'master') return `${s.subject ?? ''}${s.legalCategory ? ` · ${catLabel(s.legalCategory)}` : ''}${s.hoursLabel ? ` · ${s.hoursLabel}` : ''}`;
   if (s.type === 'service') return `${s.ownerName ?? ''}${s.stepsCount ? ` · ${L('stepsN', { n: s.stepsCount })}` : ''}${s.slaDays != null ? ` · ${L('slaDays')} ${L('days', { n: s.slaDays })}` : ''}`;
   if (s.type === 'labtest') return `${s.ownerName ?? ''}${s.specimen?.name ? ` · ${s.specimen.name}` : ''}${s.sendWithinHours != null ? ` · ${L('sendWithin')} ${L('hours', { n: s.sendWithinHours })}` : ''}`;

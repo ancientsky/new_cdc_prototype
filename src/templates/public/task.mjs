@@ -41,6 +41,8 @@ export function render(ctx, { task }) {
       ${quickLookup(ctx)}</section>
       <section aria-labelledby="tt-ch-h">${sectionHead(ctx, { id: 'tt-ch-h', title: t('travel.chg.t', { days: cd?.days ?? 30 }), more: `${t('nav.travel')} →`, moreHref: url('/travel/') })}
       ${cd ? changeTiles(ctx, cd.counts) : html`<p class="muted">${t('travel.chg.none')}</p>`}</section></div>`;
+  } else if (k === 'vaccines') {
+    hero = html`<section class="vxs-entry" aria-labelledby="tv-map"><div><h2 id="tv-map">${t('vxs.entry.t')}</h2><p>${t('vxs.entry.d')}</p></div><a class="c-btn" href="${url('/vaccines/schedule/')}">${t('vxs.entry.cta')} →</a></section>`;
   } else if (k === 'rumor') {
     hero = html`<section><a class="c-btn" href="${url('/factcheck/')}">${t('factcheck.submit')} →</a></section>`;
   } else if (k === 'data') {

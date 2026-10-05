@@ -43,6 +43,8 @@ export function engineFromSite(site, extra = {}) {
     // 第二輪：申請服務（actions 用）、通報時限表（治理引擎 R13；不存在時引擎只用主檔）、影音（來源卡海報）
     services: (site.collections.services ?? []).filter((x) => x.status === 'published').map((x) => ({ id: x.id, slug: x.slug, title: x.title, serviceType: x.serviceType, steps: x.steps, slaDays: x.slaDays, fee: x.fee, applyUrl: x.applyUrl, forms: x.forms ?? [] })),
     notifyTable: site.gov?.notifyTable ?? null,
+    // 疫苗接種時程主檔：跨疫苗年齡查詢（「65 歲以上可以打哪些公費疫苗」）
+    schedule: site.master.immunizationSchedule ?? [],
     media: (site.collections.media ?? []).filter((x) => x.status === 'published').map((x) => ({ id: x.id, mediaType: x.mediaType, poster: x.poster, producedAt: x.producedAt, basedOnVersionLabel: x.basedOnVersionLabel, durationSeconds: x.durationSeconds })),
     aiStatus: { ...site.governance.aiStatus, paused: false, ...(extra.aiStatus ?? {}) },
     today: site.today,

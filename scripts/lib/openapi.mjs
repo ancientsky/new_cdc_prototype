@@ -143,6 +143,7 @@ export const ENDPOINTS = [
   ['/v1/diseases.json', 'content', '傳染病主檔（含疾病頁連結與治理摘要）', arr({ allOf: [ref('DiseaseMaster'), { type: 'object', properties: { page: { type: ['string', 'null'] }, api: { type: ['string', 'null'] }, governance: { oneOf: [ref('Governance'), { type: 'null' }] } } }] })],
   ['/v1/diseases/{slug}.json', 'content', '疾病頁（八區塊、一分鐘重點、治理摘要、相關內容）', withApi('Disease')],
   ['/v1/vaccines.json', 'content', '疫苗頁', arr(withApi('Vaccine'))],
+  ['/v1/immunization-schedule.json', 'content', '疫苗接種時程表（主檔）', arr({ type: 'object' })],
   ['/v1/faq.json', 'content', 'Q&A（每題含 reviewedAt、owner、whitelist）', arr(withApi('Faq'))],
   ['/v1/news.json', 'content', '新聞稿／通函（近 200 則；annotations 為自動加註）', arr(withApi('News'))],
   ['/v1/documents.json', 'content', '文件全部版本；families 為版本鏈與現行版', arr(withApi('Document')), { families: arr(ref('DocumentFamily')) }],

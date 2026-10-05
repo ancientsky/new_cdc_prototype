@@ -49,6 +49,7 @@ export function validateSite(site) {
   vMaster('diseaseMaster', site.master.diseases, 'content/master/diseases.json');
   vMaster('glossaryTerm', site.master.glossary, 'content/master/glossary.json');
   vMaster('country', site.master.countries, 'content/master/countries.json');
+  vMaster('scheduleItem', site.master.immunizationSchedule ?? [], 'content/master/immunization-schedule.json');
   for (const [def, obj, file] of [
     ['aiStatus', site.governance.aiStatus, 'content/governance/ai-status.json'],
     ['whitelistPolicy', site.governance.whitelist, 'content/governance/whitelist.json'],
@@ -65,6 +66,12 @@ export function validateSite(site) {
   const units = new Set(site.master.units.map((u) => u.id));
   const unitById = new Map((site.master.units ?? []).map((u) => [u.id, u]));
   const diseaseIds = new Set(site.master.diseases.map((d) => d.id));
+  // 疫苗接種時程表：疫苗 id 必須在疫苗主檔；年齡上限不得小於下限（ARCHITECTURE 18.1）
+  const vaccineIds = new Set((site.master.vaccines ?? []).map((v) => v.id));
+  for (const s of site.master.immunizationSchedule ?? []) {
+    if (!vaccineIds.has(s.vaccine)) push('content/master/immunization-schedule.json', `${s.id}：vaccine ${s.vaccine} 不在疫苗主檔`);
+    if (s.ageMaxMonths != null && s.ageMaxMonths < s.ageMinMonths) push('content/master/immunization-schedule.json', `${s.id}：ageMaxMonths 小於 ageMinMonths`);
+  }
   for (const item of site.all) {
     if (!units.has(item.owner)) push(item.__file, `owner ${item.owner} 不在 units 主檔`);
     else if (unitById.get(item.owner)?.publishes === false) push(item.__file, `owner ${item.owner}（${unitById.get(item.owner).name}）不上架內容，請改為實際承辦單位`);

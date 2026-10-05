@@ -485,6 +485,185 @@ function isOutdated(item) {
   return annotationsOf(item).some((a) => a.kind === 'based-on-revised' || a.kind === 'superseded');
 }
 
+// ───────────────────────── 年齡／身分解析與疫苗時程比對（跨疫苗彙整） ─────────────────────────
+// 「65 歲以上可以打哪些公費疫苗」「滿一歲的小孩要打什麼疫苗」這類問句沒有指定單一疫苗，
+// 檢索只會撈到某一支疫苗頁；改由疫苗接種時程主檔（immunization-schedule）依年齡區間結構化組句。
+
+const AGE_N = '(\\d{1,3}|[零〇一二兩两三四五六七八九十百]+|半)';
+const AGE_Y = '\\s*(?:歲|歳|周歲|週歲)';
+const STAGE_RANGES = [['infant', 0, 23], ['child', 24, 83], ['school', 84, 227], ['adult', 228, 779], ['older', 780, Infinity]];
+// 關鍵詞 → 年齡區間（月）與標籤；依序比對，同一問句可命中多個（取聯集）
+const AGE_KEYWORDS = [
+  { re: /(新生兒|剛出生|出生時|newborn|trẻ sơ sinh)/i, min: 0, max: 0, label: '新生兒' },
+  { re: /(嬰兒|寶寶|嬰幼兒|小嬰兒|\bbab(y|ies)\b|\binfants?\b|em bé)/i, min: 0, max: 23, label: '嬰幼兒' },
+  { re: /(學齡前|幼兒園|幼稚園|托兒所|preschool)/i, min: 24, max: 83, label: '學齡前兒童' },
+  { re: /(幼兒|幼童|\btoddlers?\b)/i, min: 0, max: 83, label: '幼兒' },
+  { re: /(國小|小學|primary school|elementary)/i, min: 72, max: 143, label: '國小學童' },
+  { re: /(國中|初中|junior high|middle school)/i, min: 144, max: 179, label: '國中生' },
+  { re: /(高中|高職|五專|senior high|high school)/i, min: 180, max: 227, label: '高中職學生' },
+  { re: /(青少年|\bteen(ager)?s?\b|adolescents?|thanh thiếu niên)/i, min: 120, max: 227, label: '青少年' },
+  { re: /(學生|\bstudents?\b|học sinh)/i, min: 72, max: 227, label: '學生' },
+  { re: /(兒童|小孩|孩子|小朋友|\bchild(ren)?\b|\bkids?\b|trẻ em|trẻ nhỏ)/i, min: 0, max: 143, label: '兒童' },
+  { re: /(長者|老人|銀髮|長輩|年長者|老年人|阿公|阿嬤|爺爺|奶奶|\belderly\b|\bseniors?\b|older adults|người cao tuổi|người già)/i, min: 780, max: null, label: '65 歲以上長者' },
+  { re: /(成人|成年人|大人|\badults?\b|người lớn|người trưởng thành)/i, min: 228, max: 779, label: '成人' },
+];
+const PREGNANCY_RE = /(孕婦|懷孕|孕期|準媽媽|妊娠|pregnan|mang thai|bà bầu|phụ nữ có thai)/i;
+const INDIGENOUS_RE = /(原住民|indigenous|người bản địa|dân tộc thiểu số)/i;
+
+function ageNum(s) { const n = parseChineseNumber(s); return Number.isFinite(n) ? n : null; }
+function stagesOf(min, max) {
+  const hi = max ?? Infinity;
+  return STAGE_RANGES.filter(([, a, b]) => min <= b && hi >= a).map(([s]) => s);
+}
+function yearsLabel(m) { return m % 12 === 0 ? `${m / 12} 歲` : m < 24 ? `${m} 個月` : `${Math.floor(m / 12)} 歲 ${m % 12} 個月`; }
+
+/** 問句裡的數字年齡 → { min, max, label }（月）；找不到回 null */
+function numericAge(q) {
+  const N = AGE_N, Y = AGE_Y;
+  let m;
+  // 區間：19 到 64 歲、6–12 歲
+  if ((m = q.match(new RegExp(`${N}\\s*(?:歲|歳)?\\s*(?:到|至|~|～|-|–|—)\\s*${N}${Y}`)))) {
+    const a = ageNum(m[1]), b = ageNum(m[2]);
+    if (a != null && b != null && b >= a) return { min: Math.round(a * 12), max: Math.round(b * 12) + 11, label: `${a}–${b} 歲` };
+  }
+  // 歲＋月：1 歲 3 個月
+  if ((m = q.match(new RegExp(`${N}${Y}\\s*(?:又|零)?\\s*${N}\\s*個?月`)))) {
+    const a = ageNum(m[1]), b = ageNum(m[2]);
+    if (a != null && b != null && b < 12) { const v = Math.round(a * 12 + b); return { min: v, max: v, label: yearsLabel(v) }; }
+  }
+  // 以上：65 歲以上、65 歲（含）以上、超過 65 歲、65+
+  if ((m = q.match(new RegExp(`${N}${Y}\\s*(?:（含）|\\(含\\))?\\s*(?:以上|及以上|或以上|\\+)`))) || (m = q.match(new RegExp(`(?:超過|大於|年滿)\\s*${N}${Y}`))) || (m = q.match(/(?<![\w-])(\d{1,3})\s*\+/))) {
+    const a = ageNum(m[1]);
+    if (a != null) { const v = Math.round(a * 12); return { min: v, max: null, label: `${a} 歲以上${a >= 65 ? '長者' : ''}` }; }
+  }
+  // 以下：6 歲以下、未滿 5 歲
+  if ((m = q.match(new RegExp(`(?:未滿|不到|小於)\\s*${N}${Y}`)))) {
+    const a = ageNum(m[1]);
+    if (a != null && a > 0) return { min: 0, max: Math.round(a * 12) - 1, label: `未滿 ${a} 歲` };
+  }
+  if ((m = q.match(new RegExp(`${N}${Y}\\s*(?:（含）|\\(含\\))?\\s*(?:以下|及以下|或以下)`)))) {
+    const a = ageNum(m[1]);
+    if (a != null) return { min: 0, max: Math.round(a * 12) + 11, label: `${a} 歲以下` };
+  }
+  // 月齡：6 個月大、滿 12 個月（「幾個月」不算）
+  if ((m = q.match(new RegExp(`(?:滿)?\\s*${N}\\s*個(?:多)?月(?:大)?`))) && !/(近|過去|最近|前|間隔|隔|每|內|後)\s*$/.test(q.slice(0, m.index))) {
+    const a = ageNum(m[1]);
+    if (a != null && a <= 72) { const v = Math.round(a); return { min: v, max: v, label: a >= 12 && a % 12 === 0 ? `滿 ${a / 12} 歲` : `出生滿 ${a} 個月` }; }
+  }
+  // 滿 N 歲：取該月齡一點（滿一歲＝12 個月）
+  if ((m = q.match(new RegExp(`滿\\s*${N}${Y}`)))) {
+    const a = ageNum(m[1]);
+    if (a != null) { const v = Math.round(a * 12); return { min: v, max: v, label: `滿 ${a} 歲` }; }
+  }
+  // 單純 N 歲：該歲整年
+  if ((m = q.match(new RegExp(`${N}${Y}`)))) {
+    const a = ageNum(m[1]);
+    if (a != null && a <= 120) { const v = Math.round(a * 12); return { min: v, max: a < 1 ? v : v + 11, label: `${a} 歲` }; }
+  }
+  // 英文
+  if ((m = q.match(/\b(\d{1,3})\s*(?:years?|yrs?)?(?:[\s-]*old)?\s*(?:and|or)\s*(?:older|over|above|up)\b/i)) || (m = q.match(/\b(?:over|above|older than|aged)\s*(\d{1,3})\s*(?:\+|years?|yrs?|and over|and older)?/i))) {
+    const a = Number(m[1]); return { min: a * 12, max: null, label: `${a} 歲以上${a >= 65 ? '長者' : ''}` };
+  }
+  if ((m = q.match(/\bunder\s*(\d{1,3})\b/i))) { const a = Number(m[1]); if (a > 0) return { min: 0, max: a * 12 - 1, label: `未滿 ${a} 歲` }; }
+  if ((m = q.match(/\b(\d{1,3})[\s-]*(?:months?|mos?)\b/i))) { const a = Number(m[1]); if (a <= 72) return { min: a, max: a, label: `出生滿 ${a} 個月` }; }
+  if ((m = q.match(/\b(\d{1,3})[\s-]*(?:years?|yrs?|y\/o)\b/i))) { const a = Number(m[1]); if (a <= 120) return { min: a * 12, max: a * 12 + 11, label: `${a} 歲` }; }
+  // 越南文
+  if ((m = q.match(/(?:trên|từ)\s*(\d{1,3})\s*tuổi/i)) || (m = q.match(/(\d{1,3})\s*tuổi\s*trở lên/i))) { const a = Number(m[1]); return { min: a * 12, max: null, label: `${a} 歲以上${a >= 65 ? '長者' : ''}` }; }
+  if ((m = q.match(/dưới\s*(\d{1,3})\s*tuổi/i))) { const a = Number(m[1]); if (a > 0) return { min: 0, max: a * 12 - 1, label: `未滿 ${a} 歲` }; }
+  if ((m = q.match(/(\d{1,3})\s*tháng(?:\s*tuổi)?/i))) { const a = Number(m[1]); if (a <= 72) return { min: a, max: a, label: `出生滿 ${a} 個月` }; }
+  if ((m = q.match(/(\d{1,3})\s*tuổi/i))) { const a = Number(m[1]); if (a <= 120) return { min: a * 12, max: a * 12 + 11, label: `${a} 歲` }; }
+  return null;
+}
+
+/**
+ * 年齡／身分解析：問句 → { minMonths, maxMonths, stages[], groups[], label }；沒有任何年齡或身分線索回 null。
+ * minMonths／maxMonths：月齡區間（maxMonths null＝不設上限；只有孕婦／原住民等身分、沒有年齡時兩者皆 null）。
+ * stages：infant | child | school | adult | older | pregnancy；groups：'孕婦'、'原住民'。
+ * 數字年齡優先於關鍵詞（「滿一歲的小孩」取 12 個月，不取「兒童」整段）。
+ */
+export function ageProfileOf(rawQ) {
+  const q = String(rawQ ?? '').normalize('NFKC');
+  if (!q.trim()) return null;
+  const groups = [];
+  const pregnant = PREGNANCY_RE.test(q);
+  if (pregnant) groups.push('孕婦');
+  if (INDIGENOUS_RE.test(q)) groups.push('原住民');
+  let min = null, max = null, label = '';
+  const num = numericAge(q);
+  if (num) { ({ min, max, label } = num); }
+  else {
+    const hits = AGE_KEYWORDS.filter((k) => k.re.test(q));
+    // 「國中生」同時命中「學生」、「嬰幼兒」同時命中「幼兒」：較具體者在前，聯集只取第一組以外不重疊者
+    const used = [];
+    for (const k of hits) if (!used.some((u) => k.min >= u.min && (k.max ?? Infinity) <= (u.max ?? Infinity) || u.min >= k.min && (u.max ?? Infinity) <= (k.max ?? Infinity))) used.push(k);
+    if (used.length) {
+      min = Math.min(...used.map((k) => k.min));
+      max = used.some((k) => k.max == null) ? null : Math.max(...used.map((k) => k.max));
+      label = used.map((k) => k.label).join('、');
+    }
+  }
+  if (min == null && !groups.length) return null;
+  const stages = min == null ? [] : stagesOf(min, max);
+  if (pregnant) stages.push('pregnancy');
+  if (groups.includes('原住民')) label = `${label}原住民`;
+  if (pregnant && !label.includes('孕婦')) label = label ? `${label}孕婦` : '孕婦';
+  return { minMonths: min, maxMonths: min == null ? null : max, stages, groups, label };
+}
+
+/** 時程地圖網址的年齡參數：滿歲 → '65'；未滿 2 歲或非整歲 → 'm12' */
+export function ageHashOf(profile) {
+  if (!profile || profile.minMonths == null) return '';
+  const m = profile.minMonths;
+  return m >= 24 && m % 12 === 0 ? String(m / 12) : `m${m}`;
+}
+
+// 問「哪些／什麼疫苗」：即使問句帶了某疫苗名稱，也走跨疫苗彙整
+const WHICH_VACCINE_RE = /((哪些|哪幾|哪種|什麼|甚麼|那些)\s*(公費)?\s*(疫苗|預防針|針)|(要|可以|能|該)打(什麼|哪些|甚麼)|打哪些|which vaccines?|what vaccines?|vắc[\s-]?xin (nào|gì))/i;
+// 意圖未定但問句明顯在問疫苗（年齡／身分＋疫苗詞）
+const SCHEDULE_VACCINE_RE = /(疫苗|預防針|接種|打針|vaccin|vắc[\s-]?xin|tiêm)/i;
+
+const FUNDED_RANK = { public: 0, conditional: 1, self: 2 };
+const STAGE_ORDER = ['infant', 'child', 'school', 'adult', 'pregnancy', 'older', 'risk'];
+
+/**
+ * 依年齡／身分篩出時程項目：回傳 [{ ...item, effFunded }]，依 funded（public → conditional → self）、stage、月齡排序。
+ * - 已過 endAt 的不列；特殊情況（risk）與孕期（pregnancy）項目只在問句帶該身分時才列。
+ * - group 指名特定身分（原住民、孕婦）而問句沒有該身分 ⇒ 降為 conditional（符合條件才公費）。
+ * - ageLabel／group 寫「YYYY 年（含）以後出生」⇒ 以 today 換算年齡上限（65 歲長者不會被列入 1966 年以後出生的 MMR）。
+ */
+export function matchSchedule(items, profile, { today = null } = {}) {
+  if (!profile || !Array.isArray(items)) return [];
+  const hasRange = profile.minMonths != null;
+  const pMin = profile.minMonths ?? 0, pMax = profile.maxMonths ?? Infinity;
+  const year = today ? Number(String(today).slice(0, 4)) : null;
+  const out = [];
+  for (const it of items) {
+    if (!it || !it.vaccine) continue;
+    if (it.endAt && today && it.endAt < today) continue;
+    const stage = it.stage ?? '';
+    const text = `${it.group ?? ''} ${it.ageLabel ?? ''}`;
+    if (stage === 'risk' && !profile.stages.includes('risk')) continue;
+    if (stage === 'pregnancy' && !profile.stages.includes('pregnancy')) continue;
+    let aMax = it.ageMaxMonths ?? Infinity;
+    const born = text.match(/(\d{4})\s*年\s*(?:（含）|\(含\))?\s*以後出生/);
+    if (born && year) aMax = Math.min(aMax, (year - Number(born[1])) * 12 + 11);
+    const aMin = it.ageMinMonths ?? 0;
+    let ok;
+    if (hasRange) ok = aMin <= pMax && aMax >= pMin;
+    else ok = (profile.groups.includes('孕婦') && (stage === 'pregnancy' || /孕婦/.test(text))) || (profile.groups.includes('原住民') && /原住民/.test(text));
+    if (!ok) continue;
+    let effFunded = it.funded ?? 'self';
+    if (effFunded === 'public' && /原住民/.test(text) && !profile.groups.includes('原住民')) effFunded = 'conditional';
+    if (effFunded === 'public' && stage !== 'pregnancy' && /孕婦/.test(it.group ?? '') && !profile.groups.includes('孕婦')) effFunded = 'conditional';
+    // 主檔標「符合條件公費」而問句已自報該身分（原住民、孕婦）⇒ 對這個人就是公費
+    if (effFunded === 'conditional' && ((profile.groups.includes('原住民') && /原住民/.test(text)) || (profile.groups.includes('孕婦') && /孕婦/.test(text)))) effFunded = 'public';
+    out.push({ ...it, effFunded });
+  }
+  out.sort((a, b) => (FUNDED_RANK[a.effFunded] ?? 3) - (FUNDED_RANK[b.effFunded] ?? 3)
+    || STAGE_ORDER.indexOf(a.stage) - STAGE_ORDER.indexOf(b.stage) || (a.ageMinMonths ?? 0) - (b.ageMinMonths ?? 0));
+  return out;
+}
+
 // ───────────────────────── createEngine ─────────────────────────
 
 export function createEngine(rawDeps = {}) {
@@ -492,8 +671,10 @@ export function createEngine(rawDeps = {}) {
   const {
     index = [], indexPro = [], situation = null, clarifications = [], glossary = [], diseases = [], vaccines = [], countries = [],
     datasets = [], faq = [], units = [], aiStatus = {}, today, random = Math.random, now = () => new Date(), travel = [],
-    services = [], notifyTable = null, media = [],
+    services = [], notifyTable = null, media = [], schedule = [],
   } = deps;
+  // 疫苗接種時程主檔（site.master.immunizationSchedule／v1/immunization-schedule.json）：跨疫苗年齡查詢用
+  const scheduleItems = Array.isArray(schedule) ? schedule : [];
   // 第二輪 deps：services（申請頁 actions）、notifyTable（通報時限表，補病例定義與檢驗連結）、media（影片海報等，可選）
   const serviceById = new Map((Array.isArray(services) ? services : []).map((x) => [x.id, x]));
   const mediaById = new Map((Array.isArray(media) ? media : []).map((x) => [x.id, x]));
@@ -1239,6 +1420,120 @@ export function createEngine(rawDeps = {}) {
     return result;
   }
 
+  // ── 跨疫苗彙整（結構化回答，不走檢索）：疫苗接種時程主檔 × 年齡／身分 ──
+  // 句子由時程主檔欄位串接（dose、ageLabel、startAt、group），引用第一順位是「疫苗接種時程表」（grounding 比對對象），
+  // 疫苗有頁面時第二順位引用該頁的接種對象片段（pf-N，依 group／年齡數字對應；找不到用 #v），讓使用者可點進疫苗頁。
+  // verified=false：在句尾加「（待確認）」而不是只記 guards——時程數字直接出現在民眾看到的答案裡，
+  // 承辦人尚未確認的數字應與時程地圖頁一樣明示；確認後（verified=true）字樣自動消失。
+  const SCHED_ID = 'master.immunization-schedule';
+  const SCHED_OWNER = 'unit.acute-infectious';
+  function vaccineNameOf(vid, it) {
+    const v = vaccines.find((x) => x.id === vid);
+    if (v?.name || v?.title) return v.name ?? v.title;
+    const m = String(it?.label ?? '').match(/^(.*?(?:疫苗|卡介苗))/);
+    return m ? m[1].replace(/\s+$/, '') : (it?.label ?? vid);
+  }
+  function startPhrase(it, T) {
+    if (!it.startAt) return '';
+    const s = Date.parse(it.startAt), t = Date.parse(T);
+    if (!Number.isFinite(s) || !Number.isFinite(t)) return '';
+    // 只標示一年內（或尚未開始）的開打日；多年前開始的常規項目不再提起
+    if (t - s > 365 * 86400000) return '';
+    const [y, mo, d] = it.startAt.split('-').map(Number);
+    return `${y} 年 ${mo} 月 ${d} 日起`;
+  }
+  function schedulePageChunk(vid, it, pool) {
+    const pfs = pool.filter((c) => c.contentId === vid && /#pf-\d+$/.test(c.id));
+    const want = new Set(bigrams(`${it.group ?? ''}${it.ageLabel ?? ''}${it.dose ?? ''}`.replace(/\s+/g, '')));
+    const nums = (s) => new Set(String(s ?? '').match(/\d+/g) ?? []);
+    const itNums = nums(`${it.group ?? ''} ${it.ageLabel ?? ''}`);
+    let best = null, bestScore = 0;
+    for (const c of pfs) {
+      const have = new Set(bigrams(String(c.text ?? '').replace(/\s+/g, '')));
+      let n = 0; for (const b of want) if (have.has(b)) n++;
+      let s = n / Math.max(1, want.size);
+      if (c.group && it.group && c.group === it.group) s += 1;
+      const cNums = nums(c.group ?? c.text);
+      if (itNums.size && [...itNums].every((x) => cNums.has(x))) s += 0.3;
+      if (s > bestScore) { best = c; bestScore = s; }
+    }
+    if (best && bestScore >= 0.2) return best;
+    return pool.find((c) => c.id === `${vid}#v`) ?? null;
+  }
+  function scheduleAnswer(q, result, entities, profile) {
+    if (!scheduleItems.length) return null;
+    const LL = result.lang;
+    const T = todayRt();
+    const matched = matchSchedule(scheduleItems, profile, { today: T });
+    const pool = poolFor('public', 'zh-TW').chunks;
+    const P = profile.label || tr('zh-TW', '此年齡', '');
+    const unv = (its) => (its.some((i) => i.verified === false) ? '（待確認）' : '');
+    const uniq = (xs) => [...new Set(xs.filter(Boolean))];
+    // 一疫苗一組：第一個項目的 effFunded 即該疫苗的最佳公費等級（matchSchedule 已依 funded 排序）
+    const groups = new Map();
+    for (const it of matched) {
+      if (!groups.has(it.vaccine)) groups.set(it.vaccine, { vid: it.vaccine, funded: it.effFunded, items: [] });
+      const g = groups.get(it.vaccine);
+      if (it.effFunded === g.funded) g.items.push(it);
+    }
+    const all = [...groups.values()];
+    const pub = all.filter((g) => g.funded === 'public');
+    const cond = all.filter((g) => g.funded === 'conditional');
+    const self = all.filter((g) => g.funded === 'self');
+    const picked = []; const pages = new Map();
+    const pushFor = (g, text) => {
+      const page = schedulePageChunk(g.vid, g.items[0], pool);
+      if (page) pages.set(page.id, page);
+      picked.push({ text, cite: [SCHED_ID, ...(page ? [page.id] : [])], scheduleIds: g.items.map((i) => i.id), href: page ? null : `/vaccines/schedule/#${g.items[0].id}` });
+    };
+    const details = (it) => [it.dose, it.ageLabel, startPhrase(it, T)].filter(Boolean).join('，');
+    const PUB_MAX = 8;
+    for (const g of pub.slice(0, PUB_MAX)) pushFor(g, `${P}公費疫苗：${vaccineNameOf(g.vid, g.items[0])}（${g.items.map(details).join('；')}）${unv(g.items)}。`);
+    if (pub.length > PUB_MAX) picked.push({ text: `另有 ${pub.length - PUB_MAX} 種公費疫苗，請看完整疫苗時程地圖。`, cite: [SCHED_ID] });
+    if (!pub.length) {
+      // 沒有任何公費項目：明說，並提示下一次公費接種的時間點（只看不限身分的常規公費項目）
+      const nextPub = profile.maxMonths == null ? [] : scheduleItems
+        .filter((i) => i.funded === 'public' && !['pregnancy', 'risk'].includes(i.stage) && !/(原住民|孕婦)/.test(i.group ?? '') && (i.ageMinMonths ?? 0) > profile.maxMonths && !(i.endAt && i.endAt < T))
+        .sort((a, b) => a.ageMinMonths - b.ageMinMonths);
+      const nexts = nextPub.filter((i) => i.ageMinMonths === nextPub[0]?.ageMinMonths);
+      const nextTxt = nexts.length ? `；下一次公費接種為${nexts[0].ageLabel}（${uniq(nexts.map((i) => vaccineNameOf(i.vaccine, i))).join('、')}）` : '';
+      picked.push({ text: `${P}目前沒有常規公費疫苗${nextTxt}${unv(nexts)}。`, cite: [SCHED_ID], scheduleIds: nexts.map((i) => i.id) });
+    }
+    for (const g of cond.slice(0, 3)) pushFor(g, `符合條件者公費：${vaccineNameOf(g.vid, g.items[0])}（${uniq(g.items.map((i) => i.group || i.ageLabel)).join('；')}；${g.items[0].dose}）${unv(g.items)}。`);
+    if (self.length) {
+      const list = self.slice(0, 4).map((g) => `${vaccineNameOf(g.vid, g.items[0])}（${[g.items[0].dose, g.items[0].ageLabel].filter(Boolean).join('，')}）`);
+      const its = self.slice(0, 4).flatMap((g) => g.items);
+      picked.push({ text: `自費可考慮：${list.join('、')}${unv(its)}。`, cite: [SCHED_ID], scheduleIds: its.map((i) => i.id) });
+    }
+    const schedSrc = {
+      id: SCHED_ID, contentId: SCHED_ID, type: 'schedule', lang: 'zh-TW', title: '疫苗接種時程表', subject: P, url: '/vaccines/schedule/',
+      owner: SCHED_OWNER, ownerName: units.find((u) => u.id === SCHED_OWNER)?.name ?? '急性傳染病組', reviewedAt: null, nextReviewAt: null, publishedAt: null,
+      isCurrent: true, license: 'OGDL-1.0', mdUrl: null, basis: '疫苗接種時程主檔', verified: matched.every((i) => i.verified !== false),
+    };
+    const sourceMap = new Map([[SCHED_ID, schedSrc], ...[...pages.values()].map((c) => [c.id, sourceOf(c)])]);
+    finalizeSentences(result, picked, sourceMap);
+    for (const s of result.sentences) {
+      const p = picked.find((x) => x.text === s.text);
+      if (p?.scheduleIds?.length) s.scheduleIds = p.scheduleIds;
+      if (p?.href) s.href = p.href;
+    }
+    // 結構化句放進 retrieved（第一順位引用），grounding 檢核可逐句比對；疫苗頁片段一併列出
+    const texts = picked.map((p) => p.text);
+    result.retrieved = [{ id: SCHED_ID, contentId: SCHED_ID, type: 'schedule', title: schedSrc.title, url: schedSrc.url, sentences: texts, text: texts.join(' ') }, ...pages.values()];
+    result.schedule = {
+      structured: true, source: SCHED_ID, profile, ageHash: ageHashOf(profile),
+      items: matched.map((i) => ({ id: i.id, vaccine: i.vaccine, label: i.label, funded: i.effFunded, verified: i.verified !== false })),
+      unverified: matched.filter((i) => i.verified === false).length,
+    };
+    if (LL !== 'zh-TW') result.translationNote = 'showing-source'; // 時程主檔只有中文正本
+    result.confidence = 0.9;
+    // 接種對象＝問句的年齡／身分本身（結構化比對），與通報時限回答相同視為完整
+    result.completeness = { required: ['who'], covered: ['who'], missing: [], score: 1 };
+    result.actions = actionsFor(result, entities, null);
+    result.related = relatedQuestions(result);
+    return result;
+  }
+
   // ── 第七輪：人才招募／採購公告（結構化回答：只讀索引中職缺／標案的結構化句與欄位，不走全文檢索） ──
   // 個資：職缺 chunk 不含 result／waitlistUpdates（index-builder 排除），問「誰錄取」只引用「甄選結果已於…公告，名單只公布報名編號與遮罩姓名」句並給結果頁連結。
   function overviewChunks(type, view) {
@@ -1380,6 +1675,8 @@ export function createEngine(rawDeps = {}) {
         if (ANTIVIRAL_RE.test(result.query ?? '')) a.push({ label: tr(LL, '查附近有流感抗病毒藥劑的院所', 'Find clinics with flu antivirals'), href: vaxmapHref('antiviral', LL), kind: 'external' });
         else if (vacc && !VAXMAP_GROUP_OF[vacc.id]) a.push({ label: tr(LL, '接種資訊（vaxmap）', 'Vaccination info (vaxmap)'), href: vaxmapHref(null, LL, { info: true, anchor: 'where' }), kind: 'external' });
         else a.push({ label: tr(LL, '查附近接種點', 'Find a vaccination site'), href: vaxmapHref(VAXMAP_GROUP_OF[vacc?.id] ?? VAXMAP_GROUP_OF_DISEASE[result.disease] ?? null, LL), kind: 'external' });
+        // 問句帶年齡／身分：接在「查附近接種點」之後，開啟疫苗接種時程地圖並帶入年齡（#age=65、#age=m12）
+        if (result.ageProfile) { const h = ageHashOf(result.ageProfile); a.push({ label: tr(LL, '看完整疫苗時程地圖', 'See the full immunization schedule'), href: `/vaccines/schedule/${h ? `#age=${h}` : ''}`, kind: 'link' }); }
         if (vacc?.slug) a.push({ label: tr(LL, `看${vacc.name ?? vacc.title}公費對象`, `Who is eligible: ${vacc.nameEn ?? vacc.name ?? vacc.title}`), href: `/vaccines/${vacc.slug}/`, kind: 'link' });
         else a.push({ label: tr(LL, '看疫苗與預防接種', 'Vaccines & immunization'), href: '/tasks/vaccines/', kind: 'link' });
         break;
@@ -1656,6 +1953,15 @@ export function createEngine(rawDeps = {}) {
     // 第七輪：人才招募／採購公告（結構化列表、「誰錄取」只給結果頁連結）；細節問句才走檢索
     if (result.intent === 'careers') { const ca = careersAnswer(q, result, view); if (ca) return ca; }
     if (result.intent === 'procurement') { const pa = procurementAnswer(q, result, view); if (pa) return pa; }
+
+    // 跨疫苗彙整：問句帶年齡／身分，且沒有指定單一疫苗（或明問「哪些／什麼疫苗」）⇒ 疫苗接種時程主檔結構化回答
+    const profile = ageProfileOf(q);
+    if (profile) result.ageProfile = profile;
+    if (profile && !forceIntent && result.intent === 'unknown' && SCHEDULE_VACCINE_RE.test(q)) { result.intent = 'vaccine'; result.intentReasons.push('vac.age-profile'); }
+    if (profile && result.intent === 'vaccine' && !ANTIVIRAL_RE.test(q) && (!entities.vaccines.length || WHICH_VACCINE_RE.test(q))) {
+      const sa = scheduleAnswer(q, result, entities, profile);
+      if (sa) return sa;
+    }
 
     // 4 檢索（同語言 reviewed 優先，否則中文）
     const k = view === 'pro' ? 10 : 8;

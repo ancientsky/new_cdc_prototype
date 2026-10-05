@@ -800,3 +800,45 @@ manualStatus?: enum[cancelled, failed（流標）], award?: { date, winner, amou
 - Z2：`scripts/import-legacy.mjs`、`scripts/lib/legacy-import/**`、`content/migration/_import-rules.json`、`data/legacy-export/tuberculosis/**`、`data/legacy-import/**`、`content/migration/tuberculosis.json`（只透過 --apply-migration）、`src/templates/admin/import.mjs`、`src/templates/admin/index.mjs`（加卡）、`tests/import-legacy.test.mjs`、截圖 `docs/screenshots/admin-import.png`。
 - Z3：`src/templates/admin/publish.mjs`、`src/client/admin/{publish,preprocess,editor}.js`（車道徽章、publishAt、urgent、模擬送出時間軸）、`src/styles/admin.css`、`docs/**`、`README.md`、截圖 `docs/screenshots/admin-lanes.png`。
 - 共同：不切分支、不 commit；`npm test` 與 `BUILD_TODAY=2026-10-01 LINK_CHECK=error npm run build` 全綠。CI YAML 無法在本機跑，Z1 要用 `node -e` 讀 YAML 做基本檢查（不要新增 yaml 套件；用簡單字串檢查即可），整合者會開真實 PR 驗證。
+
+---
+
+## 18. 第十四輪（2026-10-05）：疫苗接種時程地圖與「幾歲能打哪些公費疫苗」
+
+起因：答案引擎對「65 歲以上可以打哪些公費疫苗」只引用一種疫苗（新冠）的句子；「滿一歲的小孩要打什麼疫苗」答成孕婦 Tdap。問題不在檢索分數，而是**沒有一份把所有疫苗按年齡排好的資料**：公費對象散在 8 頁疫苗頁的 `publicFunded`，卡介苗、五合一、日本腦炎、A 肝連頁面都還沒有。所以這輪先補資料，再讓地圖與問答兩個消費者讀同一份。
+
+### 18.1 資料契約：疫苗接種時程表（主檔）
+
+`content/master/immunization-schedule.json`：一筆一個「劑次 × 對象」，schema `schemas/master.json#/$defs/scheduleItem`，`site.master.immunizationSchedule`，API `v1/immunization-schedule.json`。
+
+| 欄位 | 說明 |
+| --- | --- |
+| `id` `sched.*`、`vaccine` `vaccine.*` | 疫苗必須在 `content/master/vaccines.json`（validate 檢查）；疫苗沒有頁面也可以列（卡介苗、五合一、四合一、輪狀、Tdap、帶狀疱疹已補進主檔，`hasPage: false`） |
+| `ageMinMonths`／`ageMaxMonths` | 一律用**月**（成人＝歲 × 12；`null`＝不設上限），地圖與問答都用月齡比對，避免「6 個月」與「0.5 歲」兩種寫法 |
+| `ageLabel`、`dose`、`interval`、`recurring: yearly`、`startAt`／`endAt` | 人看的寫法與年度計畫期間（流感、新冠每年 10 月 1 日起） |
+| `stage` | 地圖分段：`infant`（0–2 歲）、`child`（學齡前）、`school`、`adult`、`pregnancy`、`older`（65+）、`risk`（暴露後、高風險） |
+| `funded` | `public` 公費、`conditional` 符合身分條件才公費（`group` 寫條件）、`self` 自費（含「部分縣市補助」） |
+| `source {title,url}` | 這筆數字從哪來（現行兒童預防接種時程表 11401 版、本站疫苗頁、政策新聞） |
+| `verified` | **承辦人核對過才改 true**；false 時地圖標「待承辦人確認」、問答句尾加註。首版 42 筆全部 false |
+
+為什麼是主檔而不是塞進疫苗頁：時程地圖要列「所有疫苗」，而疫苗頁只有一部分疫苗有；問答要跨疫苗彙整，不該靠 BM25 碰運氣撈到每一頁。疫苗頁的 `publicFunded` 仍是該頁的正本（句子抽取、來源卡），時程表則是「跨疫苗的索引」，兩邊同一件事以疫苗頁為準、時程表的 `source` 指回疫苗頁。
+
+### 18.2 呈現：`/vaccines/schedule/`（時程地圖）
+
+`src/templates/public/vaccine-schedule.mjs` ＋ `src/client/vaxschedule.js`：inline SVG，橫軸年齡分段非線性刻度（0–24 月逐月、2–6 歲、6–18 歲、19–49、50–64、65+），一列一疫苗、一筆一標記（點＝單一月齡、橫條＝區間；填色依 `funded`，`verified: false` 虛線框）；stage 頁籤；輸入年齡（`#age=65`、`#age=m12`）高亮「現在可打／即將／已過建議年齡」；點標記開詳情卡（劑次、對象、來源、疫苗頁、查附近接種點）。SVG 之外一定有同資料的表格（無障礙、列印、無 JS）；同頁 `.md` 機讀版。入口：`/vaccines/` 索引、各疫苗頁時程區（帶 `#vaccine=<id>`）、`/tasks/vaccines/`。
+
+### 18.3 答案引擎：年齡／身分 → 跨疫苗彙整
+
+`core.js`：問句解析出年齡或身分（N 歲／N 個月／新生兒／幼兒／國中／長者／孕婦…）、意圖是 vaccine、且沒有指定單一疫苗（或問「哪些疫苗」）⇒ 不走一般抽取式組句，改由時程表篩出符合月齡的項目，公費先、條件公費次、自費最後，**一疫苗一句**，每句引用該疫苗頁的 `pf-N` chunk；疫苗沒有頁面就引用時程表本身（來源「疫苗接種時程表」→ `/vaccines/schedule/#sched.id`）。行動鈕加「看完整疫苗時程地圖」帶 `#age=`。評估集 VA011–VA014。單一疫苗的問法（VA001–VA010）不變。
+
+實作細節：`core.js` 匯出 `ageProfileOf(q)`（→ `{ minMonths, maxMonths, stages, groups, label }`；數字年齡優先於身分詞、「近 12 個月」「間隔 6 個月」不算年齡）、`matchSchedule`、`ageHashOf`；引擎多吃 `deps.schedule`（`engineFromSite` 傳 `site.master.immunizationSchedule`，瀏覽器端 `data.js` 以 `v1Optional('immunization-schedule')` 載入，沒有就退回一般檢索）；結果多 `result.schedule`／`result.ageProfile`。每句第一個引用是共用來源 `master.immunization-schedule`（type `schedule`，grounding 逐字比對組句來源），有頁面的疫苗再加該頁 `pf-N` 作第二引用；`verified: false` 的項目句尾加「（待確認）」。孕期與暴露後／高風險項目只在問句帶該身分時列；`group` 指名原住民或孕婦而問句沒有該身分時降為「符合條件者公費」。`render.js` 對 type `schedule` 的來源卡顯示「疫苗接種時程表（主檔）」與組句說明。
+
+### 18.4 這輪順帶核對出的內容錯誤（已改）
+
+- 肺炎鏈球菌疫苗頁與 Q&A「長輩的肺炎鏈球菌疫苗」仍寫「1 劑 PCV，間隔 1 年再 PPV23」；2026-01-15 起成人公費已改為 **1 劑 PCV20／PCV21**，對象加 19–64 歲高風險。已更新，但依新聞整理，劑別銜接細節標待確認。
+- HPV 國一男生：補「自 113 學年度入學者起、2025 年 9 月開打」。
+- A 型肝炎第 1 劑月齡在不同版本時程表寫法不一（12–15 個月 vs 18 個月），時程表 note 請承辦人以現行公告為準。
+
+### 18.5 分工與邊界
+
+兩個模型分工，以檔案為邊界：一個做答案引擎（`src/client/answer/{core,data}.js`、`eval/run-eval.mjs`、評估集、`tests/answer.test.mjs`），一個做地圖頁（`vaccine-schedule.mjs`、`vaxschedule.js`、i18n 新 key、components.css 新區塊、入口連結、`tests/vaccine-schedule-ui.test.mjs`）；整合者負責主檔、schema、載入、API、疫苗頁修正與文件。
