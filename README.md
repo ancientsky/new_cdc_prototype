@@ -40,7 +40,7 @@
 - **內容型別（16 種）**：疾病、Q&A、新聞稿／通函／澄清、文件（版本鏈）、疫苗、資料集、Banner、一般頁，加上第二輪新增的**影音、專區、申請服務、出版品、檢驗項目、研究計畫**，以及第七輪獨立出的**人才招募（`job`）、採購公告（`tender`）**。
 - **民眾端**：一句話提問、六任務、疫情態勢、疾病與疫苗、旅遊、謠言查證、影音庫、專區、申請專區、公告、署長信箱。
 - **專業端**：版本異動對照、檢驗專區、通報專區（時限表自動產生）、研究計畫、出版品、訂閱。
-- **後台**：上架預處理（十五種型別，含發布車道徽章、排程與緊急發布、模擬送出）、複核、審閱到期、資料目錄（含影音、專區、申請、出版品、檢驗、研究）、**公告管理、影音管理、外部連結健康**、連動待辦（含影音過時、無逐字稿、連結失效、檢驗不一致）、態勢發布、AI 開關、評估、儀表板。
+- **後台**：上架預處理（十五種型別，含發布車道徽章、排程與緊急發布、模擬送出）、複核、審閱到期、資料目錄（含影音、專區、申請、出版品、檢驗、研究）、**公告管理、影音管理、外部連結健康**、連動待辦（含影音過時、無逐字稿、連結失效、檢驗不一致）、疫情發布、AI 開關、評估、儀表板。
 - **出國與入境（第四輪）**：以目的地為主：231 個國家／地區各有目的地頁（針對性等級、持續時間、長期建議標籤、旅程三階段建議由疾病主檔規則生成、該國近 30 天疫情資訊）；`/travel/` 依序為查目的地、近 30 天變化、世界地圖（三級三色、點國家進頁）、全球背景提醒、針對性等級表；API 新增 `/v1/country-changes.json`、`/v1/country-background.json`。
 - **新增的自動化**：公告截止自動標示並退出首頁；影片製作日早於正本現行版生效日自動標過時；逐字稿參與反向稽核；外部連結每日 `npm run fetch -- --check-links` 檢查，失效自動變待辦；通報時限表由主檔產生。
 
@@ -112,6 +112,11 @@
 
 > 限制：(1) 後台的「送出」是**展示**，原型不能代承辦人開 PR，交件仍是下載 ZIP；(2) GitHub 工作流程**無法在本機驗證**，是否如預期運作以開一個真實測試 PR 的結果為準（見 [docs/publishing-lanes.md](docs/publishing-lanes.md) 附錄 B）；(3) 排程發布受每 2 小時重建限制，延遲最多 2 小時；(4) 開發環境連不到舊站，結核病首批用的是**依既有內容反推的模擬匯出**，真實匯出的版型與品質可能不同，規則要用真實樣本校準。
 
+## 第十五輪：「疫情發布」改名、首頁疫情卡四種樣版
+
+- 後台「態勢發布」全站改稱**「疫情發布」**（選單、頁名、SOP、RSS 說明）；檔案與網址不變。
+- 首頁「現在的疫情」卡可選**四種樣版**：標準、趨勢圖（近週趨勢線）、行動優先（建議放最大）、精簡（一行指標）。樣版是 `situation/current.json` 每筆的 `cardStyle` 欄位，疫情中心在疫情發布表單勾選、即時預覽、可並排比較，隨發布 PR 一起進版，不必改程式。契約見 ARCHITECTURE.md §2.2，操作見 docs/guide-staff.md §4。
+
 ## 第十四輪：疫苗接種時程地圖、「幾歲能打哪些公費疫苗」
 
 起因：問答對「65 歲以上可以打哪些公費疫苗」只答到一種疫苗，因為沒有一份按年齡排好全部疫苗的資料。這輪
@@ -142,7 +147,7 @@ npm run dev       # 建置並啟動預覽 http://localhost:4173/new_cdc_prototyp
 | --- | --- | --- |
 | 民眾 | [首頁](https://ancientsky.github.io/new_cdc_prototype/)：一句話提問、現在的疫情、六個任務、謠言查證 | [docs/guide-public.md](docs/guide-public.md) |
 | 醫師、護理、感染管制、檢驗、地方衛生單位 | [專業人員專區](https://ancientsky.github.io/new_cdc_prototype/pro/)（或網址加 `?view=pro`）：版本異動對照、訂閱、專業問答、常用作業 | [docs/guide-professional.md](docs/guide-professional.md) |
-| 同事（Steward、公關室、資訊室、OASIS、疫情中心） | [後台](https://ancientsky.github.io/new_cdc_prototype/admin/)：上架預處理、待辦、審閱到期、態勢發布、AI 開關、評估 | [docs/guide-staff.md](docs/guide-staff.md) |
+| 同事（Steward、公關室、資訊室、OASIS、疫情中心） | [後台](https://ancientsky.github.io/new_cdc_prototype/admin/)：上架預處理、待辦、審閱到期、疫情發布、AI 開關、評估 | [docs/guide-staff.md](docs/guide-staff.md) |
 
 另有給開發者與研究者的 [開發者入口](https://ancientsky.github.io/new_cdc_prototype/developers/)（API、OpenAPI、`llms.txt`、JSON-LD、`cdc:` 詞彙）、[AI 透明報告](https://ancientsky.github.io/new_cdc_prototype/transparency/)與[使用指南](https://ancientsky.github.io/new_cdc_prototype/guide/)。
 

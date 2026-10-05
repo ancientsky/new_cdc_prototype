@@ -51,7 +51,7 @@ export const NAV = [
   { key: 'migration', href: '/admin/migration/', label: '移轉進度', count: 'migration' },
   { key: 'import', href: '/admin/import/', label: '舊站匯入' },
   { key: 'glossary', href: '/admin/glossary/', label: '詞彙主檔' },
-  { key: 'situation', href: '/admin/situation/', label: '態勢發布' },
+  { key: 'situation', href: '/admin/situation/', label: '疫情發布' },
   { key: 'todos', href: '/admin/todos/', label: '連動待辦', count: 'todos' },
   { key: 'ai-status', href: '/admin/ai-status/', label: 'AI 開關' },
   { key: 'reports', href: '/admin/reports/', label: '回報' },

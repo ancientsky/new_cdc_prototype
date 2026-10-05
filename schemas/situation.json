@@ -32,6 +32,7 @@
           "dataset": { "type": "string" },
           "pinned": { "type": "boolean" },
           "illustrative": { "type": "boolean", "description": "true＝數字為示意，非正式發布" },
+          "cardStyle": { "enum": ["standard", "chart", "advice", "minimal"], "description": "首頁卡樣版（疫情發布表單選擇）：standard 標準、chart 趨勢圖、advice 行動優先、minimal 精簡；沒填＝standard" },
           "i18n": { "type": "object" }
         }
       }

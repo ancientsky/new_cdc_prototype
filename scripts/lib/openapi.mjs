@@ -196,7 +196,7 @@ export const ENDPOINTS = [
 const FEEDS = [
   ['/feeds/news.xml', '新聞稿 RSS 2.0（guid＝內容 id）'],
   ['/feeds/documents.xml', '文件版本異動 RSS 2.0'],
-  ['/feeds/situation.xml', '疫情態勢發布 RSS 2.0'],
+  ['/feeds/situation.xml', '疫情發布 RSS 2.0'],
   ['/feeds/publications.xml', '出版品 RSS 2.0（疫情報導卷期、年報、手冊）'],
   ['/feeds/notices.xml', '機關公告 RSS 2.0（其他訊息；含截止日）'],
   ['/feeds/careers.xml', '人才招募 RSS 2.0（職缺公告、甄選結果 id#result、遞補 id#waitlist-N 各一筆；名單只在職缺頁）'],

@@ -152,6 +152,7 @@ dist/                      建置輸出（git ignore；Pages 由 Actions 上傳�
 }
 ```
 `status` 四級固定：`stable` `rising` `peak` `declining`，**由疫情中心人工填寫**；模型不得產生。
+`cardStyle`（選填）首頁卡樣版：`standard`（預設）`chart`（加近週趨勢線，需 `weekly` ≥ 2 筆，否則退回 standard）`advice`（建議為主句）`minimal`（只留一行指標）；由 `/admin/situation/` 疫情發布表單選擇，`sitCard()` 依此輸出 `c-sit-card--style-*`，四種樣版共用同一組欄位。
 
 ### 2.3 主檔（content/master/）
 
@@ -305,7 +306,7 @@ canonical、hreflang × 7 + x-default、meta description（= summary）、og:*�
 | `/admin/todos/` | 正本修訂連動待辦（MMR 案例會自然出現在這）、反向稽核命中、翻譯過期、資料集逾期、授權缺漏 |
 | `/admin/catalog/` | 資料目錄：五類資產、正本、授權、白名單狀態、篩選 |
 | `/admin/glossary/` | 詞彙主檔七語、鎖定詞、同義詞 |
-| `/admin/situation/` | 態勢發布表單：四級狀態、依據門檻、資料日、下次審閱 → 預覽首頁卡 → 匯出 JSON |
+| `/admin/situation/` | 疫情發布表單：四級狀態、依據門檻、資料日、下次審閱 → 預覽首頁卡 → 匯出 JSON |
 | `/admin/ai-status/` | 暫停／恢復開關、原因、生效時間；顯示前台效果 |
 | `/admin/reports/` | 錯答回報清單（來自 localStorage）、對應 Steward |
 | `/admin/eval/` | 在瀏覽器跑評估集，顯示六指標與版本題結果 |

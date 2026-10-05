@@ -1,5 +1,6 @@
 // 民眾端共用元件（partials）：12 個治理元件 + 常用區塊。底線開頭，不會被當成頁面。
 // 其他 agent（D 答案頁、E、F）可直接 import；class 名稱是跨 agent 契約，請勿更動。
+import { sparklineSvg } from '../../client/charts.js';
 import { html, raw, esc } from '../../../scripts/lib/render.mjs';
 import { config } from '../../../site.config.mjs';
 import * as JL from '../../../scripts/lib/jsonld.mjs';
@@ -219,16 +220,60 @@ export function statusTag(ctx, it, { label = null } = {}) {
 }
 
 /* ───────── 疫情態勢卡（首頁／態勢頁／任務頁共用） ───────── */
+/** 首頁卡樣版：由疫情中心在「疫情發布」表單逐病選擇，存在 situation item 的 `cardStyle`；沒填＝standard。
+ *  四種樣版用同一份欄位，只改排版重點，不新增要填的資料（chart 需要 weekly 才會出現趨勢線，沒有就退回 standard）。 */
+export const CARD_STYLES = {
+  standard: { label: '標準', desc: '大數字＋指標名稱＋一句話建議（預設）' },
+  chart: { label: '趨勢圖', desc: '多一條近週趨勢線；適合有連續週資料、想讓人看到走勢的疾病' },
+  advice: { label: '行動優先', desc: '建議放最大、數字退到小字；適合高峰期要民眾馬上做一件事' },
+  minimal: { label: '精簡', desc: '只有疾病、狀態與一行指標；適合平穩期、不想佔版面的疾病' },
+};
+export const cardStyleOf = (it) => (it?.cardStyle in CARD_STYLES ? it.cardStyle : 'standard');
+
 export function sitCard(ctx, it, { variant = 'compact' } = {}) {
   const { site, t } = ctx;
   const dm = site.diseaseMasterById.get(it.disease);
   const href = diseaseHref(ctx, it.disease);
   const name = diseaseName(ctx, dm) || it.disease;
-  return html`<article class="c-sit-card c-sit-card--${it.status} c-sit-card--${variant}">
-  <header class="c-sit-card__head"><h3>${href ? html`<a href="${href}">${name}</a>` : name}</h3>${statusTag(ctx, it)}</header>
-  <p class="c-sit-card__metric"><span class="c-sit-card__arrow c-sit-card__arrow--${it.trend}" aria-hidden="true">${trendArrow(it.trend)}</span><span class="c-sit-card__num">${sitField(ctx, it, 'metricValue')}</span><span class="sr-only">${t(`trend.${it.trend}`)}</span>${it.illustrative ? html`<span class="c-sit-card__demo">${t('illustrative')}</span>` : ''}</p>
-  <p class="c-sit-card__desc">${sitField(ctx, it, 'metricLabel')}${sitField(ctx, it, 'deltaText') ? html`<br><span class="c-sit-card__delta">${sitField(ctx, it, 'deltaText')}</span>` : ''}</p>
-  <p class="c-sit-card__advice"><b>${t('sit.advice')}</b>${sitField(ctx, it, 'advice')}</p>
+  let style = cardStyleOf(it);
+  if (style === 'chart' && !(it.weekly?.length > 1)) style = 'standard';
+  const head = html`<header class="c-sit-card__head"><h3>${href ? html`<a href="${href}">${name}</a>` : name}</h3>${statusTag(ctx, it)}</header>`;
+  const demo = it.illustrative ? html`<span class="c-sit-card__demo">${t('illustrative')}</span>` : '';
+  const arrow = html`<span class="c-sit-card__arrow c-sit-card__arrow--${it.trend}" aria-hidden="true">${trendArrow(it.trend)}</span>`;
+  const trendSr = html`<span class="sr-only">${t(`trend.${it.trend}`)}</span>`;
+  const metric = html`<p class="c-sit-card__metric">${arrow}<span class="c-sit-card__num">${sitField(ctx, it, 'metricValue')}</span>${trendSr}${demo}</p>`;
+  const desc = html`<p class="c-sit-card__desc">${sitField(ctx, it, 'metricLabel')}${sitField(ctx, it, 'deltaText') ? html`<br><span class="c-sit-card__delta">${sitField(ctx, it, 'deltaText')}</span>` : ''}</p>`;
+  const advice = html`<p class="c-sit-card__advice"><b>${t('sit.advice')}</b>${sitField(ctx, it, 'advice')}</p>`;
+  const open = () => html`<article class="c-sit-card c-sit-card--${it.status} c-sit-card--${variant} c-sit-card--style-${style}">`;
+  if (style === 'minimal') {
+    return html`${open()}
+  ${head}
+  <p class="c-sit-card__line">${arrow}<b class="c-sit-card__num">${sitField(ctx, it, 'metricValue')}</b>${trendSr} <span>${sitField(ctx, it, 'metricLabel')}</span>${demo}</p>
+</article>`;
+  }
+  if (style === 'advice') {
+    return html`${open()}
+  ${head}
+  <p class="c-sit-card__lead">${sitField(ctx, it, 'advice')}</p>
+  <p class="c-sit-card__line">${arrow}<b class="c-sit-card__num">${sitField(ctx, it, 'metricValue')}</b>${trendSr} <span>${sitField(ctx, it, 'metricLabel')}${sitField(ctx, it, 'deltaText') ? `，${sitField(ctx, it, 'deltaText')}` : ''}</span>${demo}</p>
+</article>`;
+  }
+  if (style === 'chart') {
+    const labels = it.weeklyLabels ?? [];
+    const title = `${name} · ${sitField(ctx, it, 'metricLabel')} · ${t('situation.weekly', { n: it.weekly.length })}：${it.weekly.join('、')}`;
+    return html`${open()}
+  ${head}
+  ${metric}
+  <figure class="c-sit-card__spark">${raw(sparklineSvg(it.weekly, { color: `var(--status-${it.status})`, width: 220, height: 44, title }))}<figcaption>${labels.length ? html`<span>${labels[0]}</span><span>${t('situation.weekly', { n: it.weekly.length })}</span><span>${labels[labels.length - 1]}</span>` : t('situation.weekly', { n: it.weekly.length })}</figcaption></figure>
+  ${desc}
+  ${advice}
+</article>`;
+  }
+  return html`${open()}
+  ${head}
+  ${metric}
+  ${desc}
+  ${advice}
 </article>`;
 }
 
