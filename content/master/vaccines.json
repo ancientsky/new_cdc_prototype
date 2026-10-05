@@ -144,5 +144,57 @@
     ],
     "hasPage": false,
     "publicFunded": "暴露後"
+  },
+  {
+    "id": "vaccine.dtap-ipv",
+    "slug": "dtap-ipv",
+    "name": "四合一疫苗",
+    "nameEn": "DTaP-IPV vaccine",
+    "diseases": [
+      "disease.diphtheria",
+      "disease.tetanus",
+      "disease.pertussis",
+      "disease.polio-afp"
+    ],
+    "hasPage": false
+  },
+  {
+    "id": "vaccine.rotavirus",
+    "slug": "rotavirus",
+    "name": "輪狀病毒疫苗",
+    "nameEn": "Rotavirus vaccine",
+    "diseases": [],
+    "hasPage": false,
+    "publicFunded": false
+  },
+  {
+    "id": "vaccine.tdap",
+    "slug": "tdap",
+    "name": "Tdap 疫苗",
+    "nameEn": "Tdap vaccine",
+    "aliases": [
+      "減量破傷風白喉非細胞性百日咳混合疫苗"
+    ],
+    "diseases": [
+      "disease.diphtheria",
+      "disease.tetanus",
+      "disease.pertussis"
+    ],
+    "hasPage": false,
+    "publicFunded": false
+  },
+  {
+    "id": "vaccine.zoster",
+    "slug": "zoster",
+    "name": "帶狀疱疹疫苗",
+    "nameEn": "Zoster vaccine",
+    "aliases": [
+      "皮蛇疫苗"
+    ],
+    "diseases": [
+      "disease.varicella"
+    ],
+    "hasPage": false,
+    "publicFunded": false
   }
 ]

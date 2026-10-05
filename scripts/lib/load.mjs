@@ -54,6 +54,8 @@ export function loadSite(config) {
     units: readJSON(path.join(CONTENT, 'master/units.json')),
     diseases: readJSON(path.join(CONTENT, 'master/diseases.json')),
     vaccines: readJSON(path.join(CONTENT, 'master/vaccines.json'), []),
+    // 疫苗接種時程表（時程地圖與答案引擎的年齡查詢用；ARCHITECTURE 18.1）
+    immunizationSchedule: readJSON(path.join(CONTENT, 'master/immunization-schedule.json'), []),
     countries: readJSON(path.join(CONTENT, 'master/countries.json'), []),
     glossary: readJSON(path.join(CONTENT, 'master/glossary.json'), []),
     reviewPeriods: readJSON(path.join(CONTENT, 'master/review-periods.json')),

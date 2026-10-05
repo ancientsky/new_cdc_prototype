@@ -51,6 +51,31 @@
         "note": { "type": "string" }
       }
     },
+    "scheduleItem": {
+      "type": "object",
+      "required": ["id", "vaccine", "label", "ageMinMonths", "stage", "funded"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^sched\\." },
+        "vaccine": { "type": "string", "pattern": "^vaccine\\." },
+        "label": { "type": "string" },
+        "labelEn": { "type": "string" },
+        "dose": { "type": "string", "description": "劑次文字，例「第 1 劑」「每年 1 劑」" },
+        "ageMinMonths": { "type": "number", "minimum": 0, "description": "建議年齡下限（月；成人以歲 × 12）" },
+        "ageMaxMonths": { "type": ["number", "null"], "description": "建議年齡上限（月）；null＝不設上限" },
+        "ageLabel": { "type": "string", "description": "人看的年齡寫法，例「出生滿 5 個月（建議 5–8 個月）」" },
+        "stage": { "enum": ["infant", "child", "school", "adult", "pregnancy", "older", "risk"], "description": "時程地圖的分段：嬰幼兒、學齡前、學齡、成人、孕婦、長者、特殊情況" },
+        "funded": { "enum": ["public", "self", "conditional"], "description": "公費／自費／符合條件公費" },
+        "group": { "type": "string", "description": "公費對象身分（條件）" },
+        "interval": { "type": "string" },
+        "recurring": { "enum": ["yearly"] },
+        "startAt": { "type": "string", "format": "date" },
+        "endAt": { "type": "string", "format": "date" },
+        "note": { "type": "string" },
+        "source": { "type": "object", "required": ["title", "url"], "properties": { "title": { "type": "string" }, "url": { "type": "string" } } },
+        "verified": { "type": "boolean", "description": "承辦人已核對過（false 時前台顯示「待確認」）" }
+      },
+      "additionalProperties": false
+    },
     "country": {
       "type": "object",
       "required": ["iso2", "name", "nameEn"],

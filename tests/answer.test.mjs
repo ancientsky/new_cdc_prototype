@@ -6,7 +6,7 @@ import { loadSite } from '../scripts/lib/load.mjs';
 import { applyGovernance } from '../scripts/lib/governance.mjs';
 import { buildSearchIndex, mdSentences, paragraphs, labtestSentences, serviceStepSentence, transcriptChunks } from '../scripts/lib/index-builder.mjs';
 import { engineFromSite, runEval } from '../eval/run-eval.mjs';
-import { createEngine, maskPII, detectInjection, bigrams, tokenize, parseChineseNumber, parseTimeRange, rocDate, INTENT_RULES, REFUSAL_RULES, classifyIntent, normalizeNotifyTable } from '../src/client/answer/core.js';
+import { createEngine, maskPII, detectInjection, bigrams, tokenize, parseChineseNumber, parseTimeRange, rocDate, INTENT_RULES, REFUSAL_RULES, classifyIntent, normalizeNotifyTable, ageProfileOf, ageHashOf, matchSchedule } from '../src/client/answer/core.js';
 import { judge, groundingOf } from '../src/client/answer/judge.js';
 import { groundingGuard, lockTerms, unlockTerms, llmAnswer } from '../src/client/answer/llm.js';
 
@@ -443,4 +443,111 @@ test('judge：intentAny、mustCiteType、notify、noClosed', () => {
   assert.ok(judge({ expect: { intentAny: ['apply'] } }, res).some((x) => x.includes('∉')));
   assert.ok(judge({ expect: { mustCiteType: ['service'] } }, res).some((x) => x.includes('未引用型別 service')));
   assert.ok(judge({ expect: { noClosed: true } }, { ...res, sources: [{ id: 'n', contentId: 'n', closed: true }] }).some((x) => x.includes('已截止')));
+});
+
+// ───────── 年齡／身分跨疫苗彙整（疫苗接種時程主檔） ─────────
+test('ageProfileOf：中文數字年齡、以上／以下、滿 N 歲、月齡、身分詞；英文與越南文數字年齡', () => {
+  const p = (q) => ageProfileOf(q);
+  assert.deepEqual([p('65歲以上可以打哪些公費疫苗').minMonths, p('65歲以上可以打哪些公費疫苗').maxMonths], [780, null]);
+  assert.deepEqual(p('65 歲（含）以上').stages, ['older']);
+  assert.equal(p('六十五歲以上').minMonths, 780);
+  assert.deepEqual([p('我 70 歲').minMonths, p('我 70 歲').maxMonths], [840, 851]);
+  assert.deepEqual([p('滿一歲的小孩').minMonths, p('滿一歲的小孩').maxMonths], [12, 12], '數字年齡優先於「小孩」');
+  assert.deepEqual([p('6 個月大的寶寶').minMonths, p('6 個月大的寶寶').maxMonths], [6, 6]);
+  assert.equal(p('1 歲 3 個月').minMonths, 15);
+  assert.deepEqual([p('未滿 5 歲').minMonths, p('未滿 5 歲').maxMonths], [0, 59]);
+  assert.deepEqual([p('19 到 64 歲').minMonths, p('19 到 64 歲').maxMonths], [228, 779]);
+  assert.deepEqual([p('新生兒').minMonths, p('新生兒').maxMonths], [0, 0]);
+  assert.equal(p('國中生有哪些公費疫苗').label, '國中生');
+  assert.deepEqual([p('國中生').minMonths, p('國中生').maxMonths], [144, 179]);
+  assert.deepEqual(p('學齡前').stages, ['child']);
+  assert.equal(p('長者').minMonths, 780); assert.equal(p('銀髮族').maxMonths, null);
+  assert.deepEqual(p('成人').stages, ['adult']);
+  const preg = p('孕婦可以打哪些疫苗');
+  assert.ok(preg.stages.includes('pregnancy')); assert.deepEqual(preg.groups, ['孕婦']); assert.equal(preg.minMonths, null);
+  assert.deepEqual(p('55 歲原住民').groups, ['原住民']);
+  assert.equal(p('What vaccines can a 65 years old get?').minMonths, 780);
+  assert.equal(p('vaccines for adults 65 and older').maxMonths, null);
+  assert.equal(p('my baby is 4 months old').minMonths, 4);
+  assert.equal(p('Người 65 tuổi được tiêm vắc xin gì').minMonths, 780);
+  assert.equal(p('trên 65 tuổi').maxMonths, null);
+  // 不是年齡：時間範圍、間隔、出生年、「幾個月」
+  for (const q of ['流感疫苗誰可以打公費？', '近 12 個月的登革熱病例', 'HPV 間隔 6 個月打第二劑', '1966 年以後出生', '幼兒 MMR 第一劑幾個月大打？'.replace('幼兒 ', '')]) assert.equal(p(q), null, q);
+  assert.equal(ageHashOf(p('65歲以上')), '65'); assert.equal(ageHashOf(p('滿一歲')), 'm12'); assert.equal(ageHashOf(p('國中生')), '12'); assert.equal(ageHashOf(preg), '');
+});
+
+test('matchSchedule：年齡區間重疊、孕期／特殊情況只在帶身分時列出、原住民限定降為符合條件、1966 年以後出生換算上限', () => {
+  const items = site().master.immunizationSchedule;
+  const ids = (q) => matchSchedule(items, ageProfileOf(q), { today: '2026-10-01' }).map((i) => i.id);
+  const older = ids('65 歲以上');
+  for (const id of ['sched.influenza-older', 'sched.pcv-older', 'sched.covid-older']) assert.ok(older.includes(id), id);
+  assert.ok(!older.includes('sched.mmr-adult'), '65 歲以上不是 1966 年以後出生');
+  assert.ok(!older.some((id) => ['sched.tdap-pregnancy', 'sched.rabies-pep', 'sched.mpox'].includes(id)));
+  const m60 = matchSchedule(items, ageProfileOf('60 歲'), { today: '2026-10-01' });
+  assert.equal(m60.find((i) => i.id === 'sched.pcv-indigenous')?.effFunded, 'conditional');
+  assert.equal(matchSchedule(items, ageProfileOf('60 歲原住民'), { today: '2026-10-01' }).find((i) => i.id === 'sched.pcv-indigenous')?.effFunded, 'public');
+  assert.ok(ids('孕婦').includes('sched.tdap-pregnancy'));
+  const order = m60.map((i) => i.effFunded);
+  assert.deepEqual(order, [...order].sort((a, b) => ['public', 'conditional', 'self'].indexOf(a) - ['public', 'conditional', 'self'].indexOf(b)), 'public → conditional → self');
+});
+
+test('跨疫苗彙整：65 歲以上 → 流感、肺炎鏈球菌、新冠三句，各引疫苗頁；行動含時程地圖 #age=65', () => {
+  for (const q of ['65歲以上可以打哪些公費疫苗', '我 70 歲有哪些公費疫苗']) {
+    const r = engine().answer(q);
+    assert.equal(r.intent, 'vaccine'); assert.equal(r.refused, false); assert.ok(r.schedule?.structured, q);
+    const cites = r.sources.map((s) => s.contentId);
+    for (const v of ['vaccine.influenza', 'vaccine.pneumococcal', 'vaccine.covid-19']) assert.ok(cites.includes(v), `${q} 缺 ${v}`);
+    assert.equal(r.sources[0].id, 'master.immunization-schedule'); assert.equal(r.sources[0].url, '/vaccines/schedule/');
+    const pub = r.sentences.filter((s) => s.text.includes('公費疫苗：'));
+    assert.equal(pub.length, 3, JSON.stringify(r.sentences.map((s) => s.text)));
+    assert.ok(pub.every((s) => s.cite[0] === 'master.immunization-schedule' && s.cite[1]?.startsWith('vaccine.')));
+    assert.ok(r.sentences.some((s) => s.text.startsWith('自費可考慮：')));
+    // verified=false 的時程：句尾標「（待確認）」
+    assert.ok(pub.every((s) => s.text.includes('（待確認）')));
+    const acts = r.actions.map((a) => a.href);
+    const iNear = r.actions.findIndex((a) => a.label === '查附近接種點');
+    const iMap = acts.findIndex((h) => h.startsWith('/vaccines/schedule/'));
+    assert.ok(iNear >= 0 && iMap === iNear + 1, JSON.stringify(acts));
+    assert.equal(groundingOf(r).bad.length, 0);
+  }
+  assert.ok(engine().answer('65歲以上可以打哪些公費疫苗').actions.some((a) => a.href === '/vaccines/schedule/#age=65'));
+});
+
+test('跨疫苗彙整：滿一歲（12 個月）→ MMR、水痘、A 型肝炎，不再答孕婦 Tdap；無頁面疫苗引時程表並帶錨點', () => {
+  const r = engine().answer('滿一歲的小孩要打什麼疫苗');
+  const text = r.sentences.map((s) => s.text).join(' ');
+  for (const k of ['MMR', '水痘', 'A 型肝炎', '肺炎鏈球菌']) assert.ok(text.includes(k), k);
+  assert.ok(!text.includes('Tdap'));
+  const hepA = r.sentences.find((s) => s.text.includes('A 型肝炎'));
+  assert.deepEqual(hepA.cite, ['master.immunization-schedule']); assert.equal(hepA.href, '/vaccines/schedule/#sched.hepatitis-a-1');
+  assert.ok(r.actions.some((a) => a.href === '/vaccines/schedule/#age=m12'));
+  assert.equal(groundingOf(r).bad.length, 0);
+});
+
+test('跨疫苗彙整：沒有公費項目時明說「目前沒有常規公費疫苗」並提示下一次公費接種', () => {
+  const r = engine().answer('3 個月大的寶寶要打什麼疫苗');
+  const first = r.sentences[0].text;
+  assert.ok(first.includes('目前沒有常規公費疫苗'), first);
+  assert.ok(first.includes('出生滿 4 個月') && first.includes('五合一疫苗'), first);
+  assert.ok(r.sentences.some((s) => s.text.startsWith('自費可考慮：') && s.text.includes('輪狀病毒疫苗')));
+  // 時程主檔為空（舊版 API）⇒ 退回一般檢索，不丟例外
+  const e0 = createEngine({ index: site().searchIndex.public, diseases: site().master.diseases, today: '2026-10-01' });
+  const r0 = e0.answer('3 個月大的寶寶要打什麼疫苗');
+  assert.equal(r0.schedule, undefined);
+});
+
+test('單一疫苗問法不受影響：流感疫苗誰可以打公費、65 歲以上長者可以打公費流感疫苗嗎（仍走檢索）', () => {
+  const r1 = engine().answer('流感疫苗誰可以打公費？');
+  assert.equal(r1.schedule, undefined); assert.equal(r1.ageProfile, undefined);
+  assert.ok(r1.sources.some((s) => s.contentId.startsWith('faq.flu-vaccine-who') || s.contentId === 'vaccine.influenza'));
+  assert.ok(!r1.actions.some((a) => a.href.startsWith('/vaccines/schedule/')));
+  const r2 = engine().answer('65 歲以上長者可以打公費流感疫苗嗎？');
+  assert.equal(r2.schedule, undefined);
+  assert.ok(r2.sentences.some((s) => s.text.includes('65 歲')));
+  assert.ok(r2.actions.some((a) => a.href === '/vaccines/schedule/#age=65'), '帶年齡的單一疫苗問句也給時程地圖');
+  // 明問「哪些疫苗」時即使帶疫苗名也彙整
+  assert.ok(engine().answer('65 歲除了流感疫苗還有哪些疫苗').schedule?.structured);
+  // 英文問句：數字年齡可解析，答案為中文正本並標示 showing-source
+  const en = engine().answer('What vaccines can a 65 years old get?', { lang: 'en' });
+  assert.ok(en.schedule?.structured); assert.equal(en.translationNote, 'showing-source');
 });

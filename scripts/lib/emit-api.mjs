@@ -353,6 +353,8 @@ export function emitApi(fullSite, write) {
     put(`v1/diseases/${d.slug}.json`, { ...strip(d), master: site.diseaseMasterById.get(d.id) ?? null, related: related.get(d.id) ?? null }, {}, {}, `疾病頁：${d.title}`);
   }
   put('v1/vaccines.json', published(c.vaccines).map(strip), {}, {}, '疫苗頁');
+  // 疫苗接種時程表（主檔；時程地圖與答案引擎的年齡查詢用）
+  put('v1/immunization-schedule.json', site.master.immunizationSchedule ?? [], {}, {}, '疫苗接種時程表');
   put('v1/faq.json', published(c.faq).map(strip), {}, {}, 'Q&A');
   put('v1/news.json', [...published(c.news)].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt) || a.id.localeCompare(b.id)).slice(0, 200).map(strip), {}, {}, '新聞稿／通函（近 200 則，含自動加註）');
   put('v1/documents.json', [...published(c.documents)].sort((a, b) => (a.family ?? '').localeCompare(b.family ?? '') || (a.effectiveAt ?? '').localeCompare(b.effectiveAt ?? '')).map(strip), {}, { families: site.gov.families }, '文件全部版本（isCurrent、supersedes、supersededBy）；families 為版本鏈');

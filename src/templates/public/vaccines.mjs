@@ -26,6 +26,7 @@ function index(ctx) {
   const mv = site.master.vaccines;
   const rows = pages_.flatMap((v) => (v.publicFunded ?? []).map((r) => ({ v, r })));
   return html`${pageHead(ctx, { trail: [{ label: t('nav.vaccines') }], h1: t('nav.vaccines'), lead: t('vaccines.lead') })}
+<section class="vxs-entry" aria-labelledby="vx-map"><div><h2 id="vx-map">${t('vxs.entry.t')}</h2><p>${t('vxs.entry.d')}</p></div><a class="c-btn" href="${url('/vaccines/schedule/')}">${t('vxs.entry.cta')} →</a></section>
 <section aria-labelledby="vx-list">${sectionHead(ctx, { id: 'vx-list', title: t('vaccines.list') })}
   <div class="c-cards3">${mv.map((m) => {
     const page = pages_.find((v) => v.id === m.id);
@@ -60,7 +61,7 @@ function detail(ctx, v) {
   <div class="c-askband"><div class="c-askband__t">${t('vaccines.ask', { name: title })}</div>${askBox(ctx, { id: 'vq', size: 'md', vaccine: v.id, placeholder: t('vaccines.ask.ph') })}<p class="c-askband__note">${t('disease.ask.note')}</p></div>
   <div class="c-cols c-cols--2">
     <div class="c-cols__main">
-      <section class="c-block" id="funded"><h2>${t('vaccines.funded')}</h2>${fundedTable(ctx, v)}</section>
+      <section class="c-block" id="funded"><h2>${t('vaccines.funded')}</h2>${fundedTable(ctx, v)}${site.master.immunizationSchedule?.some((i) => i.vaccine === v.id) ? html`<p class="c-linkrow"><a href="${url('/vaccines/schedule/')}#vaccine=${v.id}">${t('vxs.link.map')} →</a></p>` : ''}</section>
       ${v.bodyMarkdown ? html`<section class="c-block" id="schedule"><h2>${t('vaccines.schedule.t')}</h2>${raw(md(L(ctx, v, 'bodyMarkdown')))}</section>` : ''}
       ${v.precautions ? html`<section class="c-block" id="precautions"><h2>${t('vaccines.precautions')}</h2><div class="c-warning">${raw(md(L(ctx, v, 'precautions')))}</div></section>` : ''}
       <section class="c-block" id="where"><h2>${t('vaccines.where')}</h2>
