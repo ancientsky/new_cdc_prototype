@@ -5,7 +5,6 @@ import { siteOrigin } from '../../../site.config.mjs';
 import { proStyles } from '../pro/_styles.mjs';
 import { vaxmapLink } from './_partials.mjs';
 import { buildRedirects, buildLegacyMap } from '../../../scripts/lib/emit-api.mjs';
-import { intlTopic } from './_international.mjs';
 
 const ENDPOINTS = [
   { path: '/v1/diseases.json', desc: '傳染病主檔（法定類別、ICD-10、通報時限、別名）與是否已有疾病頁', pick: (s) => s.master.diseases },
@@ -120,11 +119,6 @@ for (const it of data.items) console.log(it.diseaseName, it.status, it.metricVal
 <div class="pf" id="top">
   <h1>開發者入口</h1>
   <p class="lead">內容只存一份；網頁、API、機讀版、AI 索引都是它的消費者。這裡說明怎麼取用、怎麼引用，以及每個欄位的意思。</p>
-  ${intlTopic(site) ? html`<aside class="pf-card pf-card--note" aria-labelledby="intl-card-h" id="intl-card">
-    <h2 id="intl-card-h">${ctx.t('international.title')} <span class="muted" lang="en">International Cooperation</span></h2>
-    <p>${ctx.t('international.lead')}</p>
-    <p><a class="pf-btn pf-btn--primary" href="${url('/international/')}">${ctx.t('international.title')} →</a> <a class="pf-btn" href="${url('/en/international/', { noLang: true })}" hreflang="en" lang="en">English</a></p>
-  </aside>` : ''}
   <nav aria-label="本頁目錄"><ul class="pf-pills">
     ${[['quick', '快速開始'], ['meta', 'meta 外殼'], ['endpoints', '端點'], ['openapi', 'OpenAPI'], ['limits', '限流與金鑰'], ['events', '變更事件'], ['machine', '機讀版'], ['vocab', 'cdc: 詞彙表'], ['license', '授權與引用'], ['embed', '嵌入範例'], ['vaxmap', '相關服務：接種點地圖'], ['redirects', '舊網址對照']].map(([id, label]) => html`<li><a class="pf-btn" href="#${id}">${label}</a></li>`)}
   </ul></nav>

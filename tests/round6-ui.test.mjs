@@ -173,9 +173,10 @@ test('導覽：en 主選單有 International Cooperation，zh-TW 主選單沒有
   assert.ok(!nav(zh).includes('/international/'), 'zh-TW 主選單不加（八項已滿）');
   assert.equal((nav(zh).match(/<a /g) ?? []).length, 9, '八項 + 專業');
   assert.equal((nav(en).match(/<a /g) ?? []).length, 10, 'en 多一項 International Cooperation');
-  const foot = (h) => h.match(/<nav aria-label="[^"]*" class="site-footer__links">[\s\S]*?<\/nav>/)[0];
-  assert.match(foot(zh), /<a href="\/new_cdc_prototype\/about\/">關於疾管署<\/a><a href="\/new_cdc_prototype\/international\/">國際合作<\/a>/);
-  assert.match(foot(en), /About Taiwan CDC<\/a><a href="\/new_cdc_prototype\/en\/international\/">International Cooperation<\/a>/);
+  // 第十七輪：頁尾改四欄分組；國際合作在「關於與政策」欄，緊接在「關於疾管署」之後
+  const foot = (h) => h.match(/<nav class="site-footer__col" aria-labelledby="ft-about">[\s\S]*?<\/nav>/)[0];
+  assert.match(foot(zh), /<a href="\/new_cdc_prototype\/about\/">關於疾管署<\/a><\/li><li><a href="\/new_cdc_prototype\/international\/">國際合作<\/a>/);
+  assert.match(foot(en), /About Taiwan CDC<\/a><\/li><li><a href="\/new_cdc_prototype\/en\/international\/">International Cooperation<\/a>/);
   // 日文頁尾也有（連到有頁的語言；沒有日文頁時 url() 退回中文路徑）
   const ja = fullPage(about, makeCtx(site, 'ja', { path: '/about/', alternates: ['zh-TW', 'ja'] }));
   assert.match(foot(ja), /国際協力/);
@@ -186,10 +187,9 @@ test('導覽：en 主選單有 International Cooperation，zh-TW 主選單沒有
   assert.match(ab, /href="#international"/);
   const abEn = str(about.render(makeCtx(site, 'en', { path: '/about/' })));
   assert.match(abEn, /href="\/new_cdc_prototype\/en\/international\/"/);
-  // /developers/（研究與媒體）
+  // /developers/（研究與媒體）：第十七輪起不再放國際合作卡（入口在頁尾與 /about/）
   const dv = str(developers.render(makeCtx(site, 'zh-TW', { path: '/developers/' })));
-  assert.match(dv, /id="intl-card"/);
-  assert.match(dv, /href="\/new_cdc_prototype\/international\/"/);
+  assert.ok(!dv.includes('id="intl-card"'));
 });
 
 test('導覽：沒有國際合作專區時，主選單、footer、about、developers 都不出現連結（避免死連結）', () => {
