@@ -1,6 +1,6 @@
 // /campaigns/：宣導 Banner 總覽。這就是 Banner 的「資料目錄」：進行中／即將開始／已結束，每則都有權責、上下架日與關聯內容。
 import { html, raw } from '../../../scripts/lib/render.mjs';
-import { ldFor, pageHead, hrefFor, isFallbackLink, L, unitName, publishedOf, isExternal, imgSrc, itemPath, campaignState } from './_partials.mjs';
+import { ldFor, pageHead, hrefFor, isFallbackLink, L, unitName, unitLink, publishedOf, isExternal, imgSrc, itemPath, campaignState } from './_partials.mjs';
 
 export function meta(ctx) {
   return { title: ctx.t('campaigns.title'), description: ctx.t('campaigns.lead'), jsonLd: ldFor(ctx, null, [{ label: ctx.t('campaigns.title') }]) };
@@ -29,7 +29,7 @@ function card(ctx, b, state) {
     <h3 class="c-campaign__t">${head}</h3>
     ${L(ctx, b, 'subline') ? html`<p class="c-campaign__sub">${L(ctx, b, 'subline')}</p>` : ''}
     <dl class="c-campaign__meta">
-      <div><dt>${t('prov.owner')}</dt><dd>${unitName(ctx, b.owner)}</dd></div>
+      <div><dt>${t('prov.owner')}</dt><dd>${unitLink(ctx, b.owner)}</dd></div>
       <div><dt>${t('campaigns.live')}</dt><dd><time datetime="${b.startAt}">${fmtDate(b.startAt)}</time> – <time datetime="${b.endAt}">${fmtDate(b.endAt)}</time>${left != null ? html` <span class="c-pill c-pill--${left <= 7 ? 'warn' : 'ok'}">${t('campaigns.daysleft', { n: left })}</span>` : ''}</dd></div>
       <div><dt>${t('prov.reviewed')}</dt><dd>${fmtDate(b.reviewedAt)}</dd></div>
       ${rel.length ? html`<div><dt>${t('campaigns.related')}</dt><dd>${rel.map((r, i) => html`${i ? '、' : ''}<a href="${hrefFor(ctx, r)}"${isFallbackLink(ctx, r) ? raw(' lang="zh-TW"') : ''}>${L(ctx, r, 'title')}</a>`)}</dd></div>` : ''}

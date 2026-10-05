@@ -2,7 +2,7 @@
 import { html, raw } from '../../../scripts/lib/render.mjs';
 import { md } from '../../../scripts/lib/markdown.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
-import { ldFor, breadcrumb, pageHead, sectionHead, provenance, alerts, alertBox, pageData, scopeTags, feedback, translationBadge, hrefFor, L, unitName, slugOf, itemPath, pill, diseasePage, askBox } from './_partials.mjs';
+import { ldFor, breadcrumb, pageHead, sectionHead, provenance, alerts, alertBox, pageData, scopeTags, feedback, translationBadge, hrefFor, L, unitName, unitLink, slugOf, itemPath, pill, diseasePage, askBox } from './_partials.mjs';
 
 export function familyOf(site, d) {
   const m = site.gov?.docsByFamily?.get(d.family);
@@ -33,7 +33,7 @@ function listPage(ctx) {
     const cur = vers.find((v) => v.isCurrent) ?? vers[0];
     return html`<section class="c-docfamily" aria-labelledby="f-${fam}">
       <h2 id="f-${fam}">${L(ctx, cur, 'title')}</h2>
-      <p class="muted">${t(`documents.type.${cur.docType}`)} · ${unitName(ctx, cur.owner)}</p>
+      <p class="muted">${t(`documents.type.${cur.docType}`)} · ${unitLink(ctx, cur.owner)}</p>
       <ul class="c-versions">${vers.map((v) => html`<li class="${v.isCurrent ? 'is-current' : 'is-old'}">
         <a href="${hrefFor(ctx, v)}">${v.version}</a>
         <span class="muted">${t('prov.effective')} ${fmtDate(v.effectiveAt)}</span>
@@ -68,7 +68,7 @@ function detail(ctx, d) {
       <div><dt>${t('prov.effective')}</dt><dd>${fmtDate(d.effectiveAt)}</dd></div>
       <div><dt>${t('prov.supersedes')}</dt><dd>${prev ? html`<a href="${hrefFor(ctx, prev)}">${prev.version}</a>` : '—'}</dd></div>
       <div><dt>${t('prov.next')}</dt><dd>${d.gov?.nextReviewAt ? fmtDate(d.gov.nextReviewAt) : t('prov.event')}</dd></div>
-      <div><dt>${t('prov.owner')}</dt><dd>${unitName(ctx, d.owner)}</dd></div>
+      <div><dt>${t('prov.owner')}</dt><dd>${unitLink(ctx, d.owner)}</dd></div>
       <div><dt>${t('prov.reviewed')}</dt><dd>${fmtDate(d.reviewedAt)}</dd></div>
     </dl>
     ${scopeTags(ctx, d)}

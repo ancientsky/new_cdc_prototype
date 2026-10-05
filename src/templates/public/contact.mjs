@@ -3,7 +3,7 @@
 import { html, raw } from '../../../scripts/lib/render.mjs';
 import { md } from '../../../scripts/lib/markdown.mjs';
 import { config } from '../../../site.config.mjs';
-import { ldFor, pageHead, L, unitName } from './_partials.mjs';
+import { ldFor, pageHead, L, unitName, unitLink, unitPath } from './_partials.mjs';
 
 export const MAILBOX_ADDR = 'mailbox@example.cdc.gov.tw';
 /** 分類 → 權責單位（正式環境由署內分文規則取代） */
@@ -34,7 +34,7 @@ function infoColumn(ctx) {
   <div class="c-callout c-callout--hotline"><p class="c-callout__big"><a href="tel:1922">1922</a></p><p>${t('contact.1922')}</p>
     <ul class="c-linklist"><li>${t('contact.toll')}：<a href="tel:0800001922">0800-001922</a></li><li>${t('contact.intl')}：<a href="tel:${config.hotlineIntl.replace(/[^+\d]/g, '')}">${config.hotlineIntl}</a></li></ul></div>
   ${body ? html`<div class="c-prose">${raw(md(body))}</div>` : ''}
-  ${p ? html`<p class="c-about__prov muted">${t('prov.owner')}：${unitName(ctx, p.owner)} · ${t('prov.reviewed')} ${ctx.fmtDate(p.reviewedAt)}</p>` : ''}
+  ${p ? html`<p class="c-about__prov muted">${t('prov.owner')}：${unitLink(ctx, p.owner)} · ${t('prov.reviewed')} ${ctx.fmtDate(p.reviewedAt)}</p>` : ''}
   <p class="muted">${t('contact.emergency')}</p>
   <h3 class="c-contact__sub">${t('contact.other')}</h3>
   <ul class="c-linklist"><li><a href="${ctx.url('/careers/')}">${t('careers.title')}</a> <span class="muted">${t('contact.careers.unit')}</span></li><li><a href="${ctx.url('/procurement/')}">${t('proc.title')}</a> <span class="muted">${t('contact.proc.unit')}</span></li></ul>
@@ -48,7 +48,7 @@ function unitsColumn(ctx) {
   return html`<section class="c-contact__col" aria-labelledby="ct-2"><h2 id="ct-2">${t('contact.units')}</h2>
   <p class="muted">${t('contact.units.note')}</p>
   <div class="c-tablewrap"><table class="c-table c-table--units"><thead><tr><th scope="col">${t('contact.units.name')}</th><th scope="col">${t('contact.units.kind')}</th></tr></thead>
-  <tbody>${units.map((u) => html`<tr><th scope="row"><a href="${ctx.url('/about/')}#${u.id.replace('unit.', 'u-')}">${lang === 'zh-TW' ? u.name : (u.nameEn ?? u.name)}</a>${lang === 'zh-TW' && u.nameEn ? html`<br><span class="muted" lang="en">${u.nameEn}</span>` : ''}</th><td>${t(`about.org.${u.kind}`)}</td></tr>`)}</tbody></table></div>
+  <tbody>${units.map((u) => html`<tr><th scope="row"><a href="${ctx.url(unitPath(u))}">${lang === 'zh-TW' ? u.name : (u.nameEn ?? u.name)}</a>${lang === 'zh-TW' && u.nameEn ? html`<br><span class="muted" lang="en">${u.nameEn}</span>` : ''}</th><td>${t(`about.org.${u.kind}`)}</td></tr>`)}</tbody></table></div>
 </section>`;
 }
 

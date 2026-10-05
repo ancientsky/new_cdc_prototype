@@ -3,7 +3,7 @@ import { html, raw } from '../../../scripts/lib/render.mjs';
 import { md } from '../../../scripts/lib/markdown.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
 import {
-  ldFor, breadcrumb, pageHead, provenance, alerts, pageData, scopeTags, feedback, translationBadge, hrefFor, isFallbackLink, L, unitName, publishedOf,
+  ldFor, breadcrumb, pageHead, provenance, alerts, pageData, scopeTags, feedback, translationBadge, hrefFor, isFallbackLink, L, unitName, unitLink, publishedOf,
   itemPath, isExternal, extLink, mdHeader, pill, inlineAsk, localized } from './_partials.mjs';
 
 const INLINE = ['/assets/js/answer/inline.js'];
@@ -86,7 +86,7 @@ function detail(ctx, sv) {
           <div><dt>${t('apply.who')}</dt><dd>${(sv.whoCanApply ?? []).join('、') || '—'}</dd></div>
           <div><dt>${t('apply.days')}</dt><dd>${sv.slaDays != null ? t('apply.sla', { n: sv.slaDays }) : (totalDays ? t('apply.sla', { n: totalDays }) : '—')}</dd></div>
           <div><dt>${t('apply.fee')}</dt><dd>${sv.fee ?? '—'}</dd></div>
-          <div><dt>${t('prov.owner')}</dt><dd>${unitName(ctx, sv.owner)}</dd></div>
+          <div><dt>${t('prov.owner')}</dt><dd>${unitLink(ctx, sv.owner)}</dd></div>
           ${sv.contact ? html`<div><dt>${t('apply.contact')}</dt><dd>${sv.contact}</dd></div>` : ''}
         </dl></section>
       ${sv.legalBasis?.length ? html`<section class="c-aside-card"><h2>${t('apply.legal')}</h2><ul class="c-linklist">${sv.legalBasis.map((l) => html`<li>${l}</li>`)}</ul></section>` : ''}
