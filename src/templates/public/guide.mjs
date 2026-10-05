@@ -118,7 +118,7 @@ export function render(ctx) {
     <p><code>content/</code> 改檔 → 開 Pull Request → CI 驗證（schema、治理規則、評估集）→ 合併即發布。後台是同一流程的操作面：產生可直接放進 <code>content/</code> 的 JSON，不直接寫入伺服器。</p>
     ${shot('後台儀表板：KPI 與待辦')}
     <p>後台入口：<a href="${url('/admin/', { noLang: true })}">/admin/</a> ·
-      ${A('/admin/publish/', '上架')} · ${A('/admin/review/', '複核')} · ${A('/admin/due/', '審閱到期')} · ${A('/admin/todos/', '待辦')} · ${A('/admin/situation/', '態勢發布')} · ${A('/admin/ai-status/', 'AI 開關')} · ${A('/admin/reports/', '錯答回報')} · ${A('/admin/eval/', '評估')}。
+      ${A('/admin/publish/', '上架')} · ${A('/admin/review/', '複核')} · ${A('/admin/due/', '審閱到期')} · ${A('/admin/todos/', '待辦')} · ${A('/admin/situation/', '疫情發布')} · ${A('/admin/ai-status/', 'AI 開關')} · ${A('/admin/reports/', '錯答回報')} · ${A('/admin/eval/', '評估')}。
       完整 SOP：<code>docs/guide-staff.md</code>、<code>docs/governance-model.md</code>。</p>
   </section>
   </div>

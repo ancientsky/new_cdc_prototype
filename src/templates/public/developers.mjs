@@ -183,7 +183,7 @@ for (const it of data.items) console.log(it.diseaseName, it.status, it.metricVal
     <p>不想輪詢整份 JSON，可以訂閱變更。</p>
     <ul>
       <li><strong>RSS / Atom</strong>：<a href="${url('/feeds/documents.xml', { noLang: true })}"><code>/feeds/documents.xml</code></a>。文件新版發布、現行版異動、舊版失效各產生一則，內容含 id、版次、生效日、取代關係與異動摘要。</li>
-      <li><strong>Webhook（規劃，第二階段）</strong>：訂閱者登錄回呼網址後，在文件新版發布、AI 暫停／恢復、態勢發布時收到下列 JSON。原型尚未提供，格式如下供介接預先設計。</li>
+      <li><strong>Webhook（規劃，第二階段）</strong>：訂閱者登錄回呼網址後，在文件新版發布、AI 暫停／恢復、疫情發布時收到下列 JSON。原型尚未提供，格式如下供介接預先設計。</li>
     </ul>
     <pre><code>${JSON.stringify({ event: 'document.published', occurredAt: `${site.today}T01:00:00Z`, id: doc?.id ?? 'doc.mmr-recommendation.2025-04-16', version: doc?.version ?? '114.04.16', effectiveAt: doc?.effectiveAt ?? '2025-04-16', supersedes: doc?.supersedes ?? 'doc.mmr-recommendation.2019-05-14', url: abs(`/documents/${docSlug}/`) }, null, 2)}</code></pre>
   </section>

@@ -7,7 +7,7 @@
 //   cdc.admin.reviewed      審閱到期「標記已審閱（示範）」紀錄
 //   cdc.admin.todoDone      連動待辦「完成（示範）」紀錄
 //   cdc.admin.reportStatus  回報處理狀態
-//   cdc.admin.situation     態勢發布表單草稿
+//   cdc.admin.situation     疫情發布表單草稿
 //   cdc.aiStatusOverride    AI 暫停覆寫（答案頁讀取）{paused, reason, updatedAt, updatedBy}
 //   cdc.reports             前台回報（唯讀）
 //   cdc.llmKey              BYOK（唯讀；有才會呼叫 LLM 多語初稿）

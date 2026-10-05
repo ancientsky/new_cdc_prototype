@@ -189,6 +189,11 @@ body.adm { background: var(--paper); color: var(--ink); min-height: 100vh; displ
 .adm-term-del { text-decoration: line-through; color: var(--ink-3); }
 .adm-preview { background: var(--paper); border: 1px dashed var(--ink-3); border-radius: var(--radius); padding: var(--sp-4); }
 .adm-preview .c-sit-card { max-width: 340px; }
+.adm-preview--grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-3); }
+.adm-preview--grid .c-sit-card { max-width: none; }
+.adm-compare__t { margin: 0 0 var(--sp-1); font-size: var(--fs-xs); color: var(--ink-3); }
+.adm-pills--col { flex-direction: column; align-items: stretch; }
+.adm-pill--desc span { display: flex; flex-direction: column; } .adm-pill--desc small { color: var(--ink-3); font-weight: 400; } .adm-pill--desc input:checked + span small { color: rgba(255,255,255,.88); }
 .adm-group-title { display: flex; align-items: center; gap: var(--sp-2); margin: var(--sp-5) 0 var(--sp-2); font-size: var(--fs-md); }
 .adm-group-title .adm-count { background: var(--green-700); color: #fff; border-radius: var(--radius-pill); padding: 0 8px; font-size: var(--fs-xs); }
 .adm-bigswitch { display: flex; align-items: center; gap: var(--sp-4); padding: var(--sp-4) var(--sp-5); border-radius: var(--radius); border: 2px solid var(--line); background: #fff; flex-wrap: wrap; }

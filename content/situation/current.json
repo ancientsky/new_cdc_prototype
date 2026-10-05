@@ -35,6 +35,7 @@
       "basis": "類流感門急診就診率連續 4 週上升且超過流行閾值",
       "dataset": "dataset.ili-weekly",
       "pinned": true,
+      "cardStyle": "chart",
       "illustrative": true,
       "i18n": {
         "en": {
@@ -95,6 +96,7 @@
       "basis": "就診人次連續 3 週上升，低於流行閾值 11,000 人次",
       "dataset": "dataset.ev-visits-weekly",
       "pinned": true,
+      "cardStyle": "standard",
       "illustrative": true,
       "i18n": {
         "en": {
@@ -155,6 +157,7 @@
       "basis": "本土病例連續 4 週增加",
       "dataset": "dataset.dengue-daily",
       "pinned": true,
+      "cardStyle": "advice",
       "illustrative": true,
       "i18n": {
         "en": {
@@ -215,6 +218,7 @@
       "basis": "併發重症通報數連續 3 週下降",
       "dataset": "dataset.covid-severe-weekly",
       "pinned": true,
+      "cardStyle": "minimal",
       "illustrative": true,
       "i18n": {
         "en": {
@@ -274,6 +278,7 @@
       "advice": "符合條件者完成 2 劑疫苗，不明皮疹請就醫",
       "basis": "近四週病例數與前四週相當，無群聚",
       "pinned": false,
+      "cardStyle": "minimal",
       "illustrative": true,
       "i18n": {
         "en": {
@@ -326,6 +331,7 @@
       "basis": "近四週無新增本土群聚",
       "dataset": "dataset.measles-yearly",
       "pinned": false,
+      "cardStyle": "minimal",
       "illustrative": true,
       "i18n": {
         "en": {
