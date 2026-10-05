@@ -1,0 +1,174 @@
+{
+  "id": "dataset.flu-express",
+  "type": "dataset",
+  "title": "流感速訊",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2015-10-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "流感速訊每週彙整流感門急診就診、重症與病毒型別監測結果。 更多流感資訊請見流感防疫專區。",
+  "category": "document-library",
+  "canonicalUrl": "https://antiflu.cdc.gov.tw/",
+  "updateFrequency": "weekly",
+  "lastUpdated": "2026-09-28",
+  "formats": [
+    "PDF"
+  ],
+  "resources": [
+    {
+      "label": "流感速訊 第 40 週",
+      "href": "/files/dataset.flu-express/flu-express-w40.pdf",
+      "format": "PDF"
+    },
+    {
+      "label": "流感速訊 第 39 週",
+      "href": "/files/dataset.flu-express/flu-express-w39.pdf",
+      "format": "PDF"
+    },
+    {
+      "label": "流感速訊 第 38 週",
+      "href": "/files/dataset.flu-express/flu-express-w38.pdf",
+      "format": "PDF"
+    },
+    {
+      "label": "流感速訊 第 37 週",
+      "href": "/files/dataset.flu-express/flu-express-w37.pdf",
+      "format": "PDF"
+    },
+    {
+      "label": "流感速訊 第 36 週",
+      "href": "/files/dataset.flu-express/flu-express-w36.pdf",
+      "format": "PDF"
+    },
+    {
+      "label": "流感速訊 第 35 週",
+      "href": "/files/dataset.flu-express/flu-express-w35.pdf",
+      "format": "PDF"
+    }
+  ],
+  "provenance": {
+    "mode": "snapshot",
+    "fetchedAt": "2026-10-03",
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/z6EmN04F9zPF9NDXivtXFB"
+  },
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/z6EmN04F9zPF9NDXivtXFB"
+  ],
+  "assets": [
+    {
+      "file": "flu-express-w35.pdf",
+      "kind": "attachment",
+      "label": "流感速訊 第 35 週",
+      "mime": "application/pdf",
+      "bytes": 732,
+      "sha256": "2b5fc24e6560e105758fb0548e98a9903337f29e13d9ea06f81ac9445aedb70e",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "flu-express-w36.pdf",
+      "kind": "attachment",
+      "label": "流感速訊 第 36 週",
+      "mime": "application/pdf",
+      "bytes": 732,
+      "sha256": "217740273abc0225c1b7acf183de4e96edbcdb55d92bc2c43397b3d06f1a82d8",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "flu-express-w37.pdf",
+      "kind": "attachment",
+      "label": "流感速訊 第 37 週",
+      "mime": "application/pdf",
+      "bytes": 732,
+      "sha256": "3f5643e0775da26a317d6a18b321495fe94a2382e5f3d1693cb876ffb0d938f2",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "flu-express-w38.pdf",
+      "kind": "attachment",
+      "label": "流感速訊 第 38 週",
+      "mime": "application/pdf",
+      "bytes": 732,
+      "sha256": "0e52b88b58fc9a88fa800859ceb53b3af5aaa5b162693f283a032d19437b6e5d",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "flu-express-w39.pdf",
+      "kind": "attachment",
+      "label": "流感速訊 第 39 週",
+      "mime": "application/pdf",
+      "bytes": 732,
+      "sha256": "b0953ea3d7907504c788b698c0c1d58d0c612c31b3cb705c4f77b087c0b3ee7c",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "flu-express-w40.pdf",
+      "kind": "attachment",
+      "label": "流感速訊 第 40 週",
+      "mime": "application/pdf",
+      "bytes": 732,
+      "sha256": "978dffa93359a926a73e891bcd0d7332d5521968ab239d1be339db44579e82bd",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站型別是 dataset（dataset.flu-express），草稿直接建成 dataset，看不出來的欄位以「（待補）」佔位"
+      },
+      {
+        "code": "periodical-issues",
+        "severity": "info",
+        "message": "6 期、最新 2026 年第 40 週；期別不是版次，建成一筆資料集逐期列 resources"
+      },
+      {
+        "code": "external-system",
+        "severity": "info",
+        "message": "舊頁主要連到外部系統（網域 antiflu.cdc.gov.tw）：新站以資料集入口呈現"
+      },
+      {
+        "code": "dataset-by-url",
+        "severity": "info",
+        "message": "依站外連結 host antiflu.cdc.gov.tw 對到既有資料集 dataset.flu-express"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/z6EmN04F9zPF9NDXivtXFB",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "dataset.flu-express"
+    ]
+  }
+}

@@ -38,7 +38,7 @@
       {
         "code": "external-system",
         "severity": "info",
-        "message": "舊頁主要連到外部系統（網域 e-learning.example.gov.tw）：新站以入口連結呈現，建議 /services/ 放入口或清單決定 dropped"
+        "message": "舊頁主要連到外部系統（網域 e-learning.example.gov.tw）：新站以入口連結呈現，建議 /services/ 放入口或清單填 newPath（例 /data/）"
       }
     ],
     "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/1ptYuzMUqvZ6J2QOzSLk6A",

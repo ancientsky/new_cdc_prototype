@@ -1,7 +1,7 @@
 {
   "id": "import-rules.legacy",
   "type": "import-rules",
-  "version": 9,
+  "version": 10,
   "title": "舊站匯出批次轉換規則（scripts/import-legacy.mjs 讀取）",
   "summary": "把舊站 CMS 匯出（每頁 .html＋.json 側檔）對應成新站內容草稿的規則：URL 模式→型別與目錄、類別→權責單位、疾病別名→疾病 id、標題關鍵字→疾病頁區塊、Bulletin typeid→newsType、信心計算權重與人工檢視門檻。規則是資料不是程式；正式批次先改這個檔再跑。",
   "owner": "unit.it",
@@ -160,6 +160,16 @@
       "dir": "pages",
       "typeClear": false,
       "label": "欄目清單頁（連結集合，通常不轉）"
+    },
+    {
+      "id": "category-list-en",
+      "match": "^/En/Category/(List|Fpage|NewsPage)",
+      "kind": "list",
+      "type": "page",
+      "dir": "pages",
+      "lang": "en",
+      "typeClear": false,
+      "label": "英文列表頁（新站 /en/… 由系統產生，不轉；第十一批）"
     }
   ],
   "bulletinTypes": {
@@ -308,6 +318,15 @@
       "match": "首頁／常見問答",
       "owner": "unit.oasis",
       "_comment": "第八批：常見問答欄目的總覽列表頁歸 OASIS；各主題頁由更長的規則或疾病主檔決定"
+    },
+    {
+      "match": "統計專區",
+      "owner": "unit.epidemic-intelligence",
+      "_comment": "第十一批：統計專區欄目（傳染病統計、週報、統計表、年報）歸疫情中心；「結核病／統計資料」等更具體的規則仍依最長命中優先"
+    },
+    {
+      "match": "Data & Statistics",
+      "owner": "unit.epidemic-intelligence"
     }
   ],
   "defaultOwner": "unit.oasis",
@@ -628,6 +647,11 @@
   "materialScopes": [
     "宣導素材",
     "多媒體"
+  ],
+  "statScopes": [
+    "統計專區",
+    "統計資料",
+    "Data & Statistics"
   ],
   "materialRules": [
     {

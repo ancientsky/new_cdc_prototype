@@ -1,0 +1,77 @@
+{
+  "id": "dataset.nidss",
+  "type": "dataset",
+  "title": "傳染病統計資料查詢系統",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2012-01-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "傳染病統計資料查詢系統提供法定傳染病通報病例、確定病例與死亡等統計的線上查詢與下載。",
+  "category": "open-dataset",
+  "canonicalUrl": "https://nidss.cdc.gov.tw/",
+  "updateFrequency": "irregular",
+  "lastUpdated": "2026-08-12",
+  "formats": [],
+  "portalUrl": "https://nidss.cdc.gov.tw/",
+  "resources": [],
+  "provenance": {
+    "mode": "snapshot",
+    "fetchedAt": "2026-10-03",
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/LiNW6PIOJsKKTzV9OoRoSg"
+  },
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/LiNW6PIOJsKKTzV9OoRoSg"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站型別是 dataset（dataset.nidss），草稿直接建成 dataset，看不出來的欄位以「（待補）」佔位"
+      },
+      {
+        "code": "external-system",
+        "severity": "info",
+        "message": "舊頁主要連到外部系統（網域 nidss.cdc.gov.tw）：新站以資料集入口呈現"
+      },
+      {
+        "code": "dataset-by-url",
+        "severity": "info",
+        "message": "依站外連結 host nidss.cdc.gov.tw 對到既有資料集 dataset.nidss"
+      },
+      {
+        "code": "field-guessed",
+        "severity": "info",
+        "message": "看不出更新頻率，updateFrequency 暫填 irregular"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/LiNW6PIOJsKKTzV9OoRoSg",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "dataset.nidss"
+    ]
+  }
+}

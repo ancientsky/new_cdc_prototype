@@ -1,0 +1,192 @@
+{
+  "id": "migration.statistics",
+  "type": "migration",
+  "title": "統計專區欄目（舊站）→ 新站資料集與統計年報",
+  "owner": "unit.epidemic-intelligence",
+  "steward": "疫情中心承辦人",
+  "publishedAt": "2026-10-05",
+  "reviewedAt": "2026-10-05",
+  "reviewPeriodMonths": 3,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "舊站「統計專區」欄目逐頁移轉對照：統計查詢系統、週報速訊、統計表對應新站資料集（dataset），統計年報對應既有出版品；列表頁（含英文 Data & Statistics）由系統產生，舊網址 301；新資料集與外部入口待決定。全部 verified:false，由疫情中心逐頁確認。",
+  "keywords": [
+    "移轉清單",
+    "統計專區",
+    "統計資料",
+    "資料集",
+    "舊網址"
+  ],
+  "scope": {
+    "kind": "category",
+    "name": "統計專區"
+  },
+  "legacyRoot": "https://www.cdc.gov.tw/Category/List/ZrvS2zJwZ03tl8CbKYdI8g",
+  "showLegacyUntil": "2027-12-31",
+  "sourceNote": "開發環境連不到 www.cdc.gov.tw，欄目子頁依舊站 URL 模式反推；統計專區根、英文 Data & Statistics、法定傳染病境外移入確定病例統計、防疫資料庫、疫情監測速訊的網址 ID 為真實，其餘 ID 與全部統計數字示意。與結核病批、登革熱批重複的兩頁「統計資料」不列，由轉換器依同網址判定已轉過。",
+  "items": [
+    {
+      "key": "annual-report",
+      "oldTitle": "傳染病統計暨監視年報",
+      "oldPath": "統計專區／傳染病統計暨監視年報",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/awMzKEQ9hVCtOWGFPHydj2",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "publication.statistics-annual-2025",
+      "owner": "unit.epidemic-intelligence",
+      "note": "傳染病統計暨監視年報：2020–2025 年六期 PDF，對應既有出版品 publication.statistics-annual-2025　【匯入 2026-10-03】草稿 publication.statistics-annual-2025（信心 1；既有內容已存在，供比對）"
+    },
+    {
+      "key": "covid-weekly",
+      "oldTitle": "COVID-19 週報",
+      "oldPath": "統計專區／COVID-19 週報",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/OyPQCu3iBWmljSol_qLalD",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "dataset.covid-severe-weekly",
+      "owner": "unit.epidemic-intelligence",
+      "note": "COVID-19 週報：4 期 PDF（第 39 週缺漏需確認），對應既有資料集 dataset.covid-severe-weekly　【匯入 2026-10-03】草稿 dataset.covid-severe-weekly（信心 1；既有內容已存在，供比對）"
+    },
+    {
+      "key": "death-stats",
+      "oldTitle": "法定傳染病死亡統計",
+      "oldPath": "統計專區／法定傳染病死亡統計",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/7QXqDvpfrx1OcONmVzC8Hi",
+      "oldType": "page",
+      "verified": false,
+      "status": "pending",
+      "owner": "unit.epidemic-intelligence",
+      "note": "法定傳染病死亡統計表：缺 2019 年且最新僅到 2022 年，須向承辦單位確認補齊或改連開放平臺　【匯入 2026-10-03】草稿 dataset.x-death-stats（信心 1）"
+    },
+    {
+      "key": "epidemic-database",
+      "oldTitle": "防疫資料庫",
+      "oldPath": "統計專區／防疫資料庫",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/i5N2W9G-FWJkh3agfLA-Kg",
+      "oldType": "external",
+      "verified": false,
+      "status": "migrated",
+      "owner": "unit.epidemic-intelligence",
+      "note": "防疫資料庫是入口頁，同時連統計查詢系統與資料開放平臺；新站 /data/ 是資料目錄，入口頁改成導向，不另建資料集　【匯入 2026-10-03】草稿 page.x-epidemic-database（信心 1）",
+      "newPath": "/data/"
+    },
+    {
+      "key": "ev-weekly",
+      "oldTitle": "腸病毒疫情週報",
+      "oldPath": "統計專區／腸病毒疫情週報",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/NYDMC1OCW393ioaTIE_-yc",
+      "oldType": "page",
+      "verified": false,
+      "status": "pending",
+      "owner": "unit.epidemic-intelligence",
+      "note": "腸病毒疫情週報：每週一期 PDF（民國年標示），建議建成新資料集逐期列檔案，待建立　【匯入 2026-10-03】草稿 dataset.enterovirus-ev-weekly（信心 1）"
+    },
+    {
+      "key": "flu-express",
+      "oldTitle": "流感速訊",
+      "oldPath": "統計專區／流感速訊",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/z6EmN04F9zPF9NDXivtXFB",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "dataset.flu-express",
+      "owner": "unit.epidemic-intelligence",
+      "note": "流感速訊：每週一期 PDF，對應既有資料集 dataset.flu-express；各期檔案供比對　【匯入 2026-10-03】草稿 dataset.flu-express（信心 1；既有內容已存在，供比對）"
+    },
+    {
+      "key": "imported-cases",
+      "oldTitle": "法定傳染病境外移入確定病例統計",
+      "oldPath": "統計專區／法定傳染病境外移入確定病例統計",
+      "oldUrl": "https://www.cdc.gov.tw/Category/Page/5Q6qrh5kM6TnpnRpy3XDfQ",
+      "oldType": "page",
+      "verified": false,
+      "status": "pending",
+      "owner": "unit.epidemic-intelligence",
+      "note": "境外移入確定病例歷年統計表（與 CSV），建議建成新結構化資料集，待建立　【匯入 2026-10-03】草稿 dataset.x-imported-cases（信心 1）"
+    },
+    {
+      "key": "list-statistics",
+      "oldTitle": "統計專區",
+      "oldPath": "統計專區",
+      "oldUrl": "https://www.cdc.gov.tw/Category/List/ZrvS2zJwZ03tl8CbKYdI8g",
+      "oldType": "list",
+      "verified": false,
+      "status": "migrated",
+      "newPath": "/data/",
+      "owner": "unit.epidemic-intelligence",
+      "note": "列表頁（欄目根「統計專區」）：新站由系統產生，舊網址 301 到 /data/（系統產生頁／功能頁，非內容 id）　【匯入 2026-10-03】草稿 page.x-list-statistics（信心 0.6）"
+    },
+    {
+      "key": "list-statistics-en",
+      "oldTitle": "Data & Statistics",
+      "oldPath": "Data & Statistics",
+      "oldUrl": "https://www.cdc.gov.tw/En/Category/List/gK4BJWe3qYlmNxYJBqEcxA",
+      "oldType": "list",
+      "verified": false,
+      "status": "migrated",
+      "newPath": "/en/data/",
+      "owner": "unit.epidemic-intelligence",
+      "note": "英文列表頁（Data & Statistics）：新站 /en/ 由系統產生，舊網址 301 到 /en/data/（系統產生頁／功能頁，非內容 id）　【匯入 2026-10-03】草稿 page.x-list-statistics-en（信心 0.6）"
+    },
+    {
+      "key": "nidss",
+      "oldTitle": "傳染病統計資料查詢系統",
+      "oldPath": "統計專區／傳染病統計資料查詢系統",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/LiNW6PIOJsKKTzV9OoRoSg",
+      "oldType": "external",
+      "verified": false,
+      "status": "migrated",
+      "target": "dataset.nidss",
+      "owner": "unit.epidemic-intelligence",
+      "note": "外部系統入口：連到傳染病統計資料查詢系統，對應既有資料集 dataset.nidss　【匯入 2026-10-03】草稿 dataset.nidss（信心 1；既有內容已存在，供比對）"
+    },
+    {
+      "key": "open-data-portal",
+      "oldTitle": "疾管署資料開放平臺",
+      "oldPath": "統計專區／疾管署資料開放平臺",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/2okLkU-L0iWbjwLrj2BaP7",
+      "oldType": "external",
+      "verified": false,
+      "status": "pending",
+      "owner": "unit.epidemic-intelligence",
+      "note": "外部系統入口：連到疾管署資料開放平臺；新站 /data/ 已是資料目錄，建議 newPath /data/，待決定　【匯入 2026-10-03】草稿 page.x-open-data-portal（信心 1）"
+    },
+    {
+      "key": "surveillance-express",
+      "oldTitle": "疫情監測速訊",
+      "oldPath": "統計專區／疫情監測速訊",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/94JVbJ2BFjR_3MTi-9s9Cg",
+      "oldType": "page",
+      "verified": false,
+      "status": "pending",
+      "owner": "unit.epidemic-intelligence",
+      "note": "疫情監測速訊：每週一期 PDF（8 期），期別不是版次，建議建成新資料集逐期列檔案，待建立　【匯入 2026-10-03】草稿 dataset.x-surveillance-express（信心 1）"
+    },
+    {
+      "key": "vaccine-coverage",
+      "oldTitle": "常規疫苗接種完成率",
+      "oldPath": "統計專區／常規疫苗接種完成率",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/Z3nsEXQ6Jne6A13aVu8Ra8",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "dataset.vaccine-coverage",
+      "owner": "unit.epidemic-intelligence",
+      "note": "常規疫苗接種完成率歷年表（民國年），對應既有資料集 dataset.vaccine-coverage　【匯入 2026-10-03】草稿 dataset.vaccine-coverage（信心 1；既有內容已存在，供比對）"
+    }
+  ]
+}

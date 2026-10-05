@@ -20,10 +20,11 @@ import { computeConfidence, needsReview, MARKDOWN_WARNING_CODES } from './confid
 import { validateDraft } from './validate.mjs';
 import { buildPatch, applyPatch, expandTemplateItems } from './migration.mjs';
 import { renderReportMd } from './report.mjs';
-import { STRUCTURED_TYPES, extractFields, serviceTypeFor, typeOfId } from './types.mjs';
+import { STRUCTURED_TYPES, extractFields, serviceTypeFor, typeOfId, mdLinks } from './types.mjs';
 import { faqItemsLoose, tasksFor, datedDeadlines, structuredFromText } from './qa.mjs';
 import { countryFor, dynamicForm, vaccineCandidates, referenceMd } from './travel.mjs';
 import { materialScope, materialKind, imageOnly, imageOnlyAbstract, imageGallery, langVariants, materialOutdated, externalSystemPage, SITE_LANGS } from './materials.mjs';
+import { statScope, periodicalIssues, periodLabel, tableSeries, seriesGaps, statsStale, datasetByUrl, systemEntryHosts } from './statistics.mjs';
 
 const h6 = (s) => createHash('sha1').update(String(s)).digest('hex').slice(0, 6);
 const DIRS = { disease: 'diseases', faq: 'faq', news: 'news', document: 'documents', page: 'pages', publication: 'publications', media: 'media', dataset: 'datasets', labtest: 'labtests', service: 'services', clarification: 'clarifications', topic: 'topics', vaccine: 'vaccines', letter: 'news' };
@@ -44,7 +45,9 @@ export function loadContentIndex(contentDir = CONTENT) {
       try {
         const j = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
         if (j?.id) {
-          byId.set(j.id, { type: j.type, title: j.title, owner: j.owner, file: `content/${d}/${f}`, status: j.status, diseases: [...(j.diseases ?? []), ...(j.basedOn ?? [])], docType: j.docType, family: j.family ?? null, version: j.version ?? null, effectiveAt: j.effectiveAt ?? null, pubType: j.pubType, mediaType: j.mediaType, family: j.family, effectiveAt: j.effectiveAt ?? j.publishedAt });
+          byId.set(j.id, { type: j.type, title: j.title, owner: j.owner, file: `content/${d}/${f}`, status: j.status, diseases: [...(j.diseases ?? []), ...(j.basedOn ?? [])], docType: j.docType, family: j.family ?? null, version: j.version ?? null, effectiveAt: j.effectiveAt ?? null, pubType: j.pubType, mediaType: j.mediaType, family: j.family, effectiveAt: j.effectiveAt ?? j.publishedAt,
+            // 第十一批：資料集的正本與入口網址（datasetByUrl 依站外連結 host 對既有資料集）
+            ...(j.type === 'dataset' ? { canonicalUrl: j.canonicalUrl ?? null, portalUrl: j.portalUrl ?? null } : {}) });
           if (j.type === 'faq') faqByTitle.set(normTitle(j.question ?? j.title), j.id);
           if (j.type === 'news' || j.type === 'letter' || j.type === 'clarification') newsByTitle.set(normTitle(j.title), j.id);
         }
@@ -253,6 +256,8 @@ export function runImport(opts) {
     // 第十批：素材頁（類別／麵包屑含 materialScopes）與它依標題／麵包屑看得出的素材型別（publication／media）
     const matScope = materialScope(rules, { category, breadcrumbs });
     const matKind0 = matScope ? materialKind(rules, { title, category, breadcrumbs }) : null;
+    // 第十一批：統計頁（類別／麵包屑含 statScopes：統計專區、統計資料、Data & Statistics）
+    const stScope = statScope(rules, { category, breadcrumbs });
     let owner = own?.owner ?? null;
     // 致醫界通函（第六批）：欄目雖歸公關室，通函的權責是該疾病的業務組（規則 categoryOwners.preferDiseaseFor: ["letter"]）
     const bt0 = bulletinType(rules, side.url);
@@ -284,12 +289,14 @@ export function runImport(opts) {
     // 第十批：宣導素材欄目會把疾病專題的素材頁（海報、影片）再匯一次 ⇒ materialKind 命中的素材頁（欄目內頁或清單頁網址）也比照：
     // 有疾病 ⇒ 家批＝疾病 slug；沒有疾病 ⇒ 家是本批（不讓）
     const matDup = !!matKind0 && ['page', 'list'].includes(pat?.kind);
-    if ((pat?.kind === 'faq' || matDup) && side.url) {
+    // 第十一批：統計專區會把疾病專題的「統計資料」頁再匯一次 ⇒ 有疾病的統計頁也比照（家批＝疾病 slug；沒有疾病 ⇒ 家是本批）
+    const statDup = stScope && !!ds[0] && ['page', 'list'].includes(pat?.kind);
+    if ((pat?.kind === 'faq' || matDup || statDup) && side.url) {
       const home = ds[0] ? diseaseById.get(ds[0].id)?.slug ?? null : pat.kind === 'faq' ? rules.homeBatches?.[pat.kind] ?? null : null;
       const prior = home && home !== slug ? (priorPages.get(normUrlKey(side.url)) ?? []).find((x) => x.batch === home) : null;
       if (prior) {
         pr.flags.convertedElsewhere = { batch: prior.batch, key: prior.key };
-        const dupType = pat.kind === 'faq' ? 'faq' : prior.outputs[0]?.type ?? matKind0.type;
+        const dupType = pat.kind === 'faq' ? 'faq' : prior.outputs[0]?.type ?? matKind0?.type ?? 'dataset';
         pr.kind = dupType; pr.type = dupType; pr.pattern = pat.id;
         issue('converted-elsewhere', 'info', `同網址的頁已在 ${prior.batch} 批（${prior.key}）轉過，草稿 ${prior.outputs.map((o) => o.id).join('、') || '（無）'}；本批不重複出草稿，內容若有更新請在該批重跑`);
         for (const o of prior.outputs) pr.outputs.push({ id: o.id, type: o.type, role: 'duplicate', duplicateOf: `${prior.batch}/${prior.key}` });
@@ -360,6 +367,12 @@ export function runImport(opts) {
       issue('country-unknown', 'warn', `資料產生頁（${pat.label ?? pat.id}），但網址 query 與標題、麵包屑都對不到國家主檔，退回一般 page 草稿；請人工判斷對應的 ${pat.newPath ?? '/travel/{ISO2}/'}`);
     }
 
+    // 側檔附件（第十一批移到型別判斷之前：統計頁依附件期別判斷是不是期刊）
+    const attList = (side.attachments ?? []).map((a) => ({ ...a, file: a.file ?? decodeURIComponent(path.basename(parseUrl(a.url, siteBase).rawPath)) }));
+    const attByPath = new Map();
+    for (const a of attList) { const pu = parseUrl(a.url, siteBase); attByPath.set(`${pu.path}${pu.search}`.toLowerCase(), a); attByPath.set(pu.path.toLowerCase(), a); }
+    pr.stats.attachments = attList.length;
+
     // 型別判斷
     const patKind = generatedFallback ? 'page' : pat?.kind ?? 'page';
     pr.pattern = pat?.id ?? null;
@@ -397,6 +410,23 @@ export function runImport(opts) {
       kind = matKind.type; pr.typeClear = true;
       issue('type-from-category', 'info', `素材頁的${matKind.via === 'title' ? '標題' : '麵包屑'}有「${matKind.hit}」，草稿建成 ${matKind.type}（${matKind.pubType ? `pubType ${matKind.pubType}` : `mediaType ${matKind.mediaType}`}）`);
     }
+    // 第十一批：統計頁（類別／麵包屑含 statScopes）——清單與模板都沒給型別時，依附件期別、表格時序、站外連結判斷是不是資料集
+    //   期刊（≥ 3 期 PDF）⇒ dataset document-library；表格時序 ⇒ dataset structured-table；外部系統入口且站外連結 host 對到既有資料集 ⇒ 該 dataset（compare-existing）
+    //   欄位（resources、series、lastUpdated…）在下面結構化型別那段補；清單給了 dataset target 的頁也一樣補
+    const defaultYear = Number(String(updatedAt ?? publishedAt ?? exportedAt).slice(0, 4)) || null;
+    const periodical = stScope || kind === 'dataset' || kind === 'publication' ? periodicalIssues(attList, { defaultYear }) : null;
+    let statById = null;
+    if (stScope && kind === 'page' && pat?.kind === 'page' && !generatedFallback && !wantType && !mergedInto && !pr.target && !mapType && !matKind) {
+      const preMd = toMd(ext.body.children).markdown; // 改寫前的預覽（不改節點）：只用來判型別
+      const ts = periodical ? null : tableSeries(preMd);
+      const hosts = periodical || ts ? [] : systemEntryHosts({ markdown: preMd, stat: {} });
+      const hit = hosts.length ? datasetByUrl(mdLinks(preMd), index) : null;
+      if (periodical || ts || (hit && !hit.ambiguous)) {
+        kind = 'dataset'; pr.typeClear = true;
+        if (hit && !hit.ambiguous) statById = hit.id;
+        issue('type-from-category', 'info', `統計頁${periodical ? `的附件是 ${periodical.issues.length} 期期刊` : ts ? '的表格是時序' : `連到外部系統（${hit.host}），對到既有資料集 ${hit.id}`}，草稿建成 dataset${periodical ? '（document-library）' : ts ? '（structured-table）' : ''}`);
+      }
+    }
     // 澄清稿：Bulletin typeid 是澄清 ⇒ clarification（claim／verdict），不再以 news 暫存
     if (kind === 'news' && bulletinType(rules, u)?.type === 'clarification') { kind = 'clarification'; issue('type-from-bulletin', 'info', '公告類別是澄清稿，草稿建成 clarification（claim／verdict 由標題與內文推斷）'); }
     // 服務型頁面：合約院所查詢、責任醫院名單等，依標題關鍵字建 service（查詢清單本身不轉成文章）
@@ -417,10 +447,6 @@ export function runImport(opts) {
     // 抽內容：先決定輸出單元的 id，再改寫圖片與連結
     const dis = primary ? diseaseById.get(primary) : null;
     const short = primary ? shortFor(rules, primary) : 'x';
-    const attList = (side.attachments ?? []).map((a) => ({ ...a, file: a.file ?? decodeURIComponent(path.basename(parseUrl(a.url, siteBase).rawPath)) }));
-    const attByPath = new Map();
-    for (const a of attList) { const pu = parseUrl(a.url, siteBase); attByPath.set(`${pu.path}${pu.search}`.toLowerCase(), a); attByPath.set(pu.path.toLowerCase(), a); }
-    pr.stats.attachments = attList.length;
 
     /** 為某 draftId 建改寫 ctx，並先把 sidecar 附件宣告進該 bag */
     const makeCtx = (draftId, stem, { withAttachments }) => {
@@ -482,6 +508,61 @@ export function runImport(opts) {
       const vc = vaccineCandidates(ext.body, knownVaccines);
       if (vc.length) issue('vaccine-not-in-master', 'info', `小節提到主檔沒有的疫苗：${vc.join('、')}；建議新增 vaccine 主檔與疫苗頁後，把這些小節改建成 vaccine`);
       return vc;
+    };
+    // 第十一批：dataset 草稿的統計欄位（期刊 resources、表格 series、外部系統入口的既有資料集）；覆蓋 extractFields 的 category／updateFrequency／lastUpdated／resources
+    const statDatasetFields = ({ ex, id, markdown, stat, periodical: per, stScope: sc }) => {
+      const f = ex.fields;
+      const dropNote = (re) => { ex.notes = ex.notes.filter((n) => !re.test(n)); };
+      if (per) {
+        const bag = bags.get(id);
+        f.category = 'document-library';
+        if (per.granularity !== 'issue') { f.updateFrequency = { week: 'weekly', month: 'monthly', year: 'yearly' }[per.granularity]; dropNote(/updateFrequency/); }
+        if (per.latest?.date) f.lastUpdated = per.latest.date;
+        f.resources = per.issues.map((x) => { const file = bag?.bySrc.get(`attachment:${x.file}`)?.file ?? x.file; return { label: x.label, href: `/files/${id}/${file}`, format: String(file.split('.').pop()).toUpperCase() }; });
+        f.formats = [...new Set([...(f.formats ?? []), ...f.resources.map((r) => r.format)])];
+        // 期別缺號只附在提示裡（週報偶有停刊或合刊，不當警告）
+        const miss = ['week', 'month', 'year'].includes(per.granularity) && per.issues.every((x) => x.year != null)
+          ? seriesGaps({ granularity: per.granularity, points: per.issues.map((x) => ({ t: per.granularity === 'week' ? `${x.year}-W${String(x.no).padStart(2, '0')}` : per.granularity === 'month' ? `${x.year}-${String(x.no).padStart(2, '0')}` : String(x.year), v: 0 })) }).filter((g) => g.startsWith('缺'))
+          : [];
+        issue('periodical-issues', 'info', `${per.issues.length} 期、最新 ${periodLabel({ ...per.latest, granularity: per.granularity })}${miss.length ? `（期間${miss.slice(0, 6).join('、')}${miss.length > 6 ? ` 等 ${miss.length} 期` : ''}）` : ''}；期別不是版次，建成一筆資料集逐期列 resources`);
+      }
+      const ts = tableSeries(markdown);
+      if (ts) {
+        if (!per) f.category = 'structured-table';
+        const { note, ...rest } = ts;
+        f.series = { ...rest, ...(note ? { note } : {}) };
+        const ys = ts.points.map((x) => x.t);
+        issue('series-extracted', 'info', `${ts.points.length} 點、${ys[0]}–${ys.at(-1)}、${ts.unit}（${ts.label}）${note ? `；${note}` : ''}`);
+        const gaps = seriesGaps(ts);
+        if (gaps.length) issue('series-gaps', 'warn', `時序有缺期或重複：${gaps.slice(0, 6).join('、')}${gaps.length > 6 ? ` 等 ${gaps.length} 項` : ''}`);
+        const st = statsStale(ts, exportedAt);
+        if (st) issue('stats-stale', 'warn', `最新一筆 ${st.latest}，資料可能已停更或開放平臺有新版（依匯出日應至少到 ${st.expected}）`);
+      }
+      // 外部系統入口：站外連結 host 對到既有資料集 ⇒ 記 dataset-by-url；canonicalUrl 以該資料集為準
+      const hosts = sc ? systemEntryHosts({ markdown, stat }) : [];
+      const hit = sc ? datasetByUrl(mdLinks(markdown), index) : null;
+      if (hosts.length) issue('external-system', 'info', `舊頁主要連到外部系統（網域 ${hosts.join('、')}）：新站以資料集入口呈現`);
+      if (hit && !hit.ambiguous && (hosts.length || ex.pending.includes('canonicalUrl'))) {
+        const x = index.byId.get(hit.id);
+        if (hosts.length) issue('dataset-by-url', 'info', `依站外連結 host ${hit.host} 對到既有資料集 ${hit.id}${id === hit.id ? '' : `（草稿 id 是 ${id}，請比對）`}`);
+        if (x?.canonicalUrl && (id === hit.id || ex.pending.includes('canonicalUrl'))) {
+          f.canonicalUrl = x.canonicalUrl;
+          if (x.portalUrl) f.portalUrl = x.portalUrl;
+          ex.pending = ex.pending.filter((k) => k !== 'canonicalUrl');
+          dropNote(/canonicalUrl/);
+        }
+      } else if (hit?.ambiguous && hosts.length) issue('dataset-by-url', 'info', `站外連結 host ${hit.host} 對到 ${hit.candidates} 筆既有資料集、沒有 canonicalUrl 完全相等者，無法判定是哪一筆`);
+      // 清單 target 指到既有資料集、舊頁本身沒有開放資料連結（例如只放 PDF 的疫苗接種率頁）⇒ canonicalUrl 沿用既有資料集，不留待補
+      if (ex.pending.includes('canonicalUrl')) {
+        const own = index.byId.get(id);
+        if (own?.canonicalUrl) {
+          f.canonicalUrl = own.canonicalUrl;
+          if (own.portalUrl) f.portalUrl = own.portalUrl;
+          ex.pending = ex.pending.filter((k) => k !== 'canonicalUrl');
+          dropNote(/canonicalUrl/);
+          issue('dataset-by-url', 'info', `canonicalUrl 沿用既有資料集 ${id}（清單 target 指定）`);
+        }
+      }
     };
     const shortKey = pr.manifestKey ?? h6(side.url || page.name);
     const slugStem = pr.manifestKey ? (pr.manifestKey.startsWith(`${short}-`) ? pr.manifestKey : `${short}-${pr.manifestKey}`) : `${short}-${shortKey}`;
@@ -668,7 +749,7 @@ export function runImport(opts) {
       const byTitleId = kind === 'clarification' ? index.newsByTitle.get(normTitle(stripTitlePrefix(rules, title))) : null;
       // 專區（相關連結）不沿用推導目標的 id：推導到的是「與此疾病相關的某個專區」，不是同一份內容，只列為比對對象；其他型別同 id 供逐欄比對
       const wanted = pr.target && typeOfId(pr.target) === kind && kind !== 'topic' ? pr.target
-        : (byTitleId && typeOfId(byTitleId) === 'clarification' ? byTitleId : null)
+        : statById ?? (byTitleId && typeOfId(byTitleId) === 'clarification' ? byTitleId : null)
         ?? (kind === 'clarification' ? `clar.${eff}-${short}-${h6(side.url)}` : kind === 'labtest' ? `labtest.${dis?.slug ?? short}` : kind === 'topic' && pr.manifestKey === 'links' ? `topic.${dis?.slug ?? short}-links` : `${prefix}.${slugStem}`);
       if (usedIds.has(wanted)) issue('target-shared', 'info', `與 ${usedIds.get(wanted)} 指向同一個對應 ${wanted}，另以新 id 列一份供人工刪一份`);
       // 既有新聞其實是澄清（newsType clarification）而新草稿是 clarification 型別 ⇒ 列為比對對象
@@ -693,6 +774,9 @@ export function runImport(opts) {
       // 第十批：素材早於依據正本（同疾病現行文件）的生效日 ⇒ 上線前確認內容；basedOn 加該文件
       const outdated = (kind === 'publication' || kind === 'media') && primary ? materialOutdated({ publishedAt: eff, diseaseId: primary, contentIndex: index }) : null;
       if (outdated) issue('material-outdated', 'warn', `素材製作日 ${eff} 時依據的 ${outdated.supersededId}（${outdated.supersededAt}）已於 ${outdated.effectiveAt} 被 ${outdated.docId} 取代；上線前請確認內容仍正確（治理 R9 影音過時的事前版）`);
+      // 第十一批：統計資料集的欄位——期刊逐期列 resources、表格時序進 series、外部系統入口對既有資料集補 canonicalUrl
+      if (kind === 'dataset') statDatasetFields({ ex, id, markdown, stat, periodical, stScope });
+      else if (kind === 'publication' && periodical && stScope) issue('periodical-issues', 'info', `附件是 ${periodical.issues.length} 期期刊、最新 ${periodLabel({ ...periodical.latest, granularity: periodical.granularity })}；期別不是版次，不拆版次鏈，各期附件留在本筆`);
       if (ex.pending.length) issue('fields-pending', 'warn', `${kind} 的欄位從舊頁看不出來，以「（待補）」佔位：${ex.pending.join('、')}`);
       for (const n of ex.notes) issue('field-guessed', 'info', n);
       // 模板位置的標題是通稱（「檢驗資訊」「統計資料」），草稿標題補上疾病名才能在列表裡分辨
@@ -718,9 +802,15 @@ export function runImport(opts) {
       const { markdown, dropped } = toMd(ext.body.children);
       checks(markdown, ext.body, stat, dropped);
       // 第十批：舊頁主要連到外部系統（字少、沒有站內連結、有站外連結）⇒ 提示以入口連結呈現；動作不變
-      const extHosts = kind === 'page' ? externalSystemPage({ markdown, stat }) : [];
-      if (extHosts.length) issue('external-system', 'info', `舊頁主要連到外部系統（網域 ${extHosts.join('、')}）：新站以入口連結呈現，建議 /services/ 放入口或清單決定 dropped`);
-      units.push({ pageKey: page.name, kind, type: 'page', draftId: id, title: stripTitlePrefix(rules, title), markdown, diseaseId: primary, publishedAt: publishedAt ?? exportedAt, conv, langPending });
+      // 第十一批：統計頁改用 systemEntryHosts（疾管署子網域系統也算外部系統）
+      const extHosts = kind === 'page' ? (stScope ? systemEntryHosts : externalSystemPage)({ markdown, stat }) : [];
+      if (extHosts.length) { pr.flags.externalSystem = { hosts: extHosts }; issue('external-system', 'info', `舊頁主要連到外部系統（網域 ${extHosts.join('、')}）：新站以入口連結呈現，建議 /services/ 放入口或清單填 newPath（例 /data/）`); }
+      // 第十一批：統計頁的外部系統入口，host 對到多筆既有資料集（資料開放平臺首頁）⇒ 無法判定，維持 page
+      const dsHit = extHosts.length && stScope ? datasetByUrl(mdLinks(markdown), index) : null;
+      if (dsHit?.ambiguous) issue('dataset-by-url', 'info', `站外連結 host ${dsHit.host} 對到 ${dsHit.candidates} 筆既有資料集、沒有 canonicalUrl 完全相等者，無法判定是哪一筆，維持 page`);
+      // 第十一批：英文列表頁（category-list-en）等 lang 不是中文的網址模式 ⇒ 草稿帶 sourceLang
+      const pageLang = pat?.lang && pat.lang !== 'zh-TW' ? pat.lang : null;
+      units.push({ pageKey: page.name, kind, type: 'page', draftId: id, title: stripTitlePrefix(rules, title), markdown, diseaseId: primary, publishedAt: publishedAt ?? exportedAt, conv, langPending, lang: pageLang });
       pr.outputs.push({ id, type: 'page', role: 'draft' });
       if (pr.targetExists && pr.targetType !== 'page' && !mergedInto) issue('target-type-differs', 'info', `對應的新站內容是 ${pr.target}（${pr.targetType}），草稿以 page 暫存，請比對後改建為 ${pr.targetType}`);
     }
@@ -851,6 +941,7 @@ export function runImport(opts) {
     } else {
       d = base(un.title, un.markdown, 'page');
       Object.assign(d, { slug: idRest(un.draftId), bodyMarkdown: un.markdown });
+      if (un.lang) d.sourceLang = un.lang;
     }
     // 第十批：附件有其他語言版本 ⇒ languages 標 pending（i18n 標題與摘要待補）
     for (const l of un.langPending ?? []) if (!d.languages[l]) d.languages[l] = { status: 'pending' };

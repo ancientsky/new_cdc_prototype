@@ -44,6 +44,34 @@
     "fetchedAt": "2026-10-03",
     "sourceUrl": "https://www.cdc.gov.tw/Category/List/24UnSJ76XgcjnNUGy3DMcd"
   },
+  "series": {
+    "label": "確定病例數（示意）",
+    "unit": "人",
+    "granularity": "year",
+    "points": [
+      {
+        "t": "2021",
+        "v": 217
+      },
+      {
+        "t": "2022",
+        "v": 556
+      },
+      {
+        "t": "2023",
+        "v": 895
+      },
+      {
+        "t": "2024",
+        "v": 334
+      },
+      {
+        "t": "2025",
+        "v": 673
+      }
+    ],
+    "note": "另有欄位：每十萬人口發生率（示意）"
+  },
   "legacyUrls": [
     "https://www.cdc.gov.tw/Category/List/24UnSJ76XgcjnNUGy3DMcd"
   ],
@@ -76,6 +104,11 @@
         "code": "type-from-manifest",
         "severity": "info",
         "message": "清單對應的新站型別是 dataset（dataset.dengue-local-weekly），草稿直接建成 dataset，看不出來的欄位以「（待補）」佔位"
+      },
+      {
+        "code": "series-extracted",
+        "severity": "info",
+        "message": "5 點、2021–2025、人（確定病例數（示意））；另有欄位：每十萬人口發生率（示意）"
       }
     ],
     "sourceUrl": "https://www.cdc.gov.tw/Category/List/24UnSJ76XgcjnNUGy3DMcd",

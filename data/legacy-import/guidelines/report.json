@@ -11,7 +11,7 @@
   },
   "rules": {
     "file": "content/migration/import/_import-rules.json",
-    "version": 9
+    "version": 10
   },
   "manifest": {
     "id": "migration.guidelines",

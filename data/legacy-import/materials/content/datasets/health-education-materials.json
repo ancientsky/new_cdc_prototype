@@ -41,7 +41,7 @@
   },
   "summary": "為服務在臺的新住民、移工與外籍旅客，本署提供多國語言衛教素材，涵蓋登革熱、結核病、流感疫苗、腸病毒、麻疹與 M痘等主題，歡迎下載使用。",
   "category": "content-page",
-  "canonicalUrl": "https://www.cdc.gov.tw/Category/MPage/Y_AH_Ka7q03cfN15CyI-nQ",
+  "canonicalUrl": "https://www.cdc.gov.tw/Advocacy",
   "updateFrequency": "irregular",
   "lastUpdated": "2026-09-18",
   "formats": [],
@@ -156,19 +156,14 @@
         "message": "附件含 6 種語言版本（en、vi、id、th、tl、ja）：一筆內容、多語檔案；languages 標 pending，請補 i18n 標題與摘要；zh-CN 不在站上七語，只保留附件、不列入 languages"
       },
       {
-        "code": "fields-pending",
-        "severity": "warn",
-        "message": "dataset 的欄位從舊頁看不出來，以「（待補）」佔位：canonicalUrl"
+        "code": "dataset-by-url",
+        "severity": "info",
+        "message": "canonicalUrl 沿用既有資料集 dataset.health-education-materials（清單 target 指定）"
       },
       {
         "code": "field-guessed",
         "severity": "info",
         "message": "看不出更新頻率，updateFrequency 暫填 irregular"
-      },
-      {
-        "code": "field-guessed",
-        "severity": "info",
-        "message": "舊頁沒有資料檔也沒有開放資料連結，canonicalUrl 暫填舊頁網址"
       }
     ],
     "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/Y_AH_Ka7q03cfN15CyI-nQ",

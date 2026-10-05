@@ -1,0 +1,43 @@
+{
+  "id": "page.x-list-statistics-en",
+  "type": "page",
+  "title": "Data & Statistics",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2026-10-03",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "Notifiable Disease Statistics (NIDSS) Open Data Portal Weekly Surveillance Express Influenza Express Annual Report of I…",
+  "slug": "x-list-statistics-en",
+  "bodyMarkdown": "- [Notifiable Disease Statistics (NIDSS)](https://www.cdc.gov.tw/Category/MPage/LiNW6PIOJsKKTzV9OoRoSg)\n- [Open Data Portal](https://www.cdc.gov.tw/Category/MPage/2okLkU-L0iWbjwLrj2BaP7)\n- [Weekly Surveillance Express](https://www.cdc.gov.tw/Category/MPage/94JVbJ2BFjR_3MTi-9s9Cg)\n- [Influenza Express](https://www.cdc.gov.tw/Category/MPage/z6EmN04F9zPF9NDXivtXFB)\n- [Annual Report of Infectious Disease Statistics](https://www.cdc.gov.tw/Category/MPage/awMzKEQ9hVCtOWGFPHydj2)",
+  "sourceLang": "en",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/En/Category/List/gK4BJWe3qYlmNxYJBqEcxA"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.6,
+    "issues": [
+      {
+        "code": "list-page",
+        "severity": "info",
+        "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/En/Category/List/gK4BJWe3qYlmNxYJBqEcxA",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

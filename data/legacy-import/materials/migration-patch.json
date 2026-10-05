@@ -7,7 +7,7 @@
     "statusChanges": [],
     "targetChanges": [],
     "newPathChanges": [],
-    "noteChanges": 21
+    "noteChanges": 0
   },
   "rule": "只改 status／target／newPath／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。",
   "items": [
@@ -19,7 +19,7 @@
         "status": "migrated",
         "target": "media.enterovirus-handwashing",
         "newPath": null,
-        "note": "動畫頁，動畫與文字稿對應既有媒體內容"
+        "note": "動畫頁，動畫與文字稿對應既有媒體內容　【匯入 2026-10-03】草稿 media.enterovirus-handwashing（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
@@ -40,7 +40,7 @@
         "status": false,
         "target": false,
         "newPath": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -51,7 +51,7 @@
         "status": "pending",
         "target": null,
         "newPath": null,
-        "note": "歷年商業媒體運用情形一覽表（大表與 CSV），待決定以資料集或文件呈現"
+        "note": "歷年商業媒體運用情形一覽表（大表與 CSV），待決定以資料集或文件呈現　【匯入 2026-10-03】草稿 page.x-commercial-media-table（信心 1）"
       },
       "proposed": {
         "status": "pending",
@@ -72,7 +72,7 @@
         "status": false,
         "target": false,
         "newPath": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -83,7 +83,7 @@
         "status": "pending",
         "target": null,
         "newPath": null,
-        "note": "外部系統入口：兩個站外數位學習平臺連結，建議放 /services/ 入口或決定 dropped"
+        "note": "外部系統入口：兩個站外數位學習平臺連結，建議放 /services/ 入口或決定 dropped　【匯入 2026-10-03】草稿 page.x-e-learning（信心 1）"
       },
       "proposed": {
         "status": "pending",
@@ -104,7 +104,7 @@
         "status": false,
         "target": false,
         "newPath": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -115,7 +115,7 @@
         "status": "pending",
         "target": null,
         "newPath": null,
-        "note": "外部系統入口：Facebook 與 LINE 社群連結，建議放 /services/ 入口或決定 dropped"
+        "note": "外部系統入口：Facebook 與 LINE 社群連結，建議放 /services/ 入口或決定 dropped　【匯入 2026-10-03】草稿 page.x-fb-1922（信心 1）"
       },
       "proposed": {
         "status": "pending",
@@ -136,7 +136,7 @@
         "status": false,
         "target": false,
         "newPath": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -147,7 +147,7 @@
         "status": "pending",
         "target": null,
         "newPath": null,
-        "note": "懶人包圖卡 4 張建成一筆出版品（pubType poster）"
+        "note": "懶人包圖卡 4 張建成一筆出版品（pubType poster）　【匯入 2026-10-03】草稿 publication.mpox-infographic-mpox（信心 1）"
       },
       "proposed": {
         "status": "pending",
@@ -168,7 +168,7 @@
         "status": false,
         "target": false,
         "newPath": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -179,7 +179,7 @@
         "status": "pending",
         "target": null,
         "newPath": null,
-        "note": "單張只有一張圖、沒有文字與替代文字；須補純文字版"
+        "note": "單張只有一張圖、沒有文字與替代文字；須補純文字版　【匯入 2026-10-03】草稿 publication.enterovirus-leaflet-ev-handwashing（信心 0.8）"
       },
       "proposed": {
         "status": "pending",
@@ -200,7 +200,7 @@
         "status": false,
         "target": false,
         "newPath": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -211,7 +211,7 @@
         "status": "migrated",
         "target": null,
         "newPath": "/publications/",
-        "note": "列表頁（單張）：新站由系統產生，舊網址 301 到 /publications/（系統產生頁／功能頁，非內容 id）"
+        "note": "列表頁（單張）：新站由系統產生，舊網址 301 到 /publications/（系統產生頁／功能頁，非內容 id）　【匯入 2026-10-03】草稿 page.x-list-leaflets（信心 0.4；需人工檢視）"
       },
       "proposed": {
         "status": "migrated",
@@ -232,7 +232,7 @@
         "status": false,
         "target": false,
         "newPath": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -243,7 +243,7 @@
         "status": "migrated",
         "target": null,
         "newPath": "/publications/",
-        "note": "列表頁（手冊）：新站由系統產生，舊網址 301 到 /publications/（系統產生頁／功能頁，非內容 id）"
+        "note": "列表頁（手冊）：新站由系統產生，舊網址 301 到 /publications/（系統產生頁／功能頁，非內容 id）　【匯入 2026-10-03】草稿 page.x-list-manuals（信心 0.4；需人工檢視）"
       },
       "proposed": {
         "status": "migrated",
@@ -264,7 +264,7 @@
         "status": false,
         "target": false,
         "newPath": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -275,7 +275,7 @@
         "status": "migrated",
         "target": null,
         "newPath": "/publications/",
-        "note": "列表頁（欄目根「宣導素材」）：新站由系統產生，舊網址 301 到 /publications/（系統產生頁／功能頁，非內容 id）"
+        "note": "列表頁（欄目根「宣導素材」）：新站由系統產生，舊網址 301 到 /publications/（系統產生頁／功能頁，非內容 id）　【匯入 2026-10-03】草稿 page.x-list-materials（信心 0.6）"
       },
       "proposed": {
         "status": "migrated",
@@ -296,7 +296,7 @@
         "status": false,
         "target": false,
         "newPath": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -307,7 +307,7 @@
         "status": "migrated",
         "target": null,
         "newPath": "/media/",
-        "note": "列表頁（多媒體）：新站由系統產生，舊網址 301 到 /media/（系統產生頁／功能頁，非內容 id）"
+        "note": "列表頁（多媒體）：新站由系統產生，舊網址 301 到 /media/（系統產生頁／功能頁，非內容 id）　【匯入 2026-10-03】草稿 page.x-list-multimedia（信心 0.6）"
       },
       "proposed": {
         "status": "migrated",
@@ -328,7 +328,7 @@
         "status": false,
         "target": false,
         "newPath": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -339,7 +339,7 @@
         "status": "migrated",
         "target": null,
         "newPath": "/publications/",
-        "note": "列表頁（海報）：新站由系統產生，舊網址 301 到 /publications/（系統產生頁／功能頁，非內容 id）"
+        "note": "列表頁（海報）：新站由系統產生，舊網址 301 到 /publications/（系統產生頁／功能頁，非內容 id）　【匯入 2026-10-03】草稿 page.x-list-posters（信心 0.6）"
       },
       "proposed": {
         "status": "migrated",
@@ -360,7 +360,7 @@
         "status": false,
         "target": false,
         "newPath": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -371,7 +371,7 @@
         "status": "migrated",
         "target": null,
         "newPath": "/media/",
-        "note": "列表頁（影片）：新站由系統產生，舊網址 301 到 /media/（系統產生頁／功能頁，非內容 id）"
+        "note": "列表頁（影片）：新站由系統產生，舊網址 301 到 /media/（系統產生頁／功能頁，非內容 id）　【匯入 2026-10-03】草稿 page.x-list-videos（信心 0.4；需人工檢視）"
       },
       "proposed": {
         "status": "migrated",
@@ -392,7 +392,7 @@
         "status": false,
         "target": false,
         "newPath": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -403,7 +403,7 @@
         "status": "migrated",
         "target": "publication.manual-ltc-infection-control-2026",
         "newPath": null,
-        "note": "宣導版手冊對應既有出版品，PDF 附件供比對"
+        "note": "宣導版手冊對應既有出版品，PDF 附件供比對　【匯入 2026-10-03】草稿 publication.manual-ltc-infection-control-2026（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
@@ -424,7 +424,7 @@
         "status": false,
         "target": false,
         "newPath": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -435,7 +435,7 @@
         "status": "migrated",
         "target": "dataset.health-education-materials",
         "newPath": null,
-        "note": "多國語言衛教素材（疾病×語言表與 8 個 PDF）對應既有資料集；附件各語言版本請對照資料集檔案清單"
+        "note": "多國語言衛教素材（疾病×語言表與 8 個 PDF）對應既有資料集；附件各語言版本請對照資料集檔案清單　【匯入 2026-10-03】草稿 dataset.health-education-materials（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
@@ -456,7 +456,7 @@
         "status": false,
         "target": false,
         "newPath": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -467,7 +467,7 @@
         "status": "migrated",
         "target": "media.amr-one-health-podcast",
         "newPath": null,
-        "note": "廣播頁，音訊與文字稿對應既有媒體內容"
+        "note": "廣播頁，音訊與文字稿對應既有媒體內容　【匯入 2026-10-03】草稿 media.amr-one-health-podcast（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
@@ -488,7 +488,7 @@
         "status": false,
         "target": false,
         "newPath": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -499,7 +499,7 @@
         "status": "pending",
         "target": null,
         "newPath": null,
-        "note": "2021 年新冠防疫海報，久遠，建議封存或 dropped，由權責單位決定"
+        "note": "2021 年新冠防疫海報，久遠，建議封存或 dropped，由權責單位決定　【匯入 2026-10-03】草稿 publication.covid-19-poster-covid-new-life-2021（信心 1）"
       },
       "proposed": {
         "status": "pending",
@@ -520,7 +520,7 @@
         "status": false,
         "target": false,
         "newPath": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -531,7 +531,7 @@
         "status": "pending",
         "target": null,
         "newPath": null,
-        "note": "海報系列（6 張圖建成一筆出版品）；圖片文字須另有純文字版與替代文字"
+        "note": "海報系列（6 張圖建成一筆出版品）；圖片文字須另有純文字版與替代文字　【匯入 2026-10-03】草稿 publication.dengue-poster-dengue-patrol-series（信心 0.8）"
       },
       "proposed": {
         "status": "pending",
@@ -552,7 +552,7 @@
         "status": false,
         "target": false,
         "newPath": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -563,7 +563,7 @@
         "status": "pending",
         "target": null,
         "newPath": null,
-        "note": "七語海報（中文與六種外語 PDF）；一筆出版品、多語檔案"
+        "note": "七語海報（中文與六種外語 PDF）；一筆出版品、多語檔案　【匯入 2026-10-03】草稿 publication.influenza-poster-flu-vaccine-7lang（信心 0.8）"
       },
       "proposed": {
         "status": "pending",
@@ -584,7 +584,7 @@
         "status": false,
         "target": false,
         "newPath": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -595,7 +595,7 @@
         "status": "pending",
         "target": null,
         "newPath": null,
-        "note": "2019 年版海報，久遠，建議封存或 dropped，由權責單位決定"
+        "note": "2019 年版海報，久遠，建議封存或 dropped，由權責單位決定　【匯入 2026-10-03】草稿 publication.measles-poster-measles-2019（信心 0.8）"
       },
       "proposed": {
         "status": "pending",
@@ -616,7 +616,7 @@
         "status": false,
         "target": false,
         "newPath": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -627,7 +627,7 @@
         "status": "migrated",
         "target": "media.dengue-village-chief",
         "newPath": null,
-        "note": "影片頁，影片與文字稿對應既有媒體內容"
+        "note": "影片頁，影片與文字稿對應既有媒體內容　【匯入 2026-10-03】草稿 media.dengue-village-chief（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
@@ -648,7 +648,7 @@
         "status": false,
         "target": false,
         "newPath": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -659,7 +659,7 @@
         "status": "pending",
         "target": null,
         "newPath": null,
-        "note": "影片頁沒有文字稿，須補逐字稿或摘要才能上線"
+        "note": "影片頁沒有文字稿，須補逐字稿或摘要才能上線　【匯入 2026-10-03】草稿 media.rabies-video-rabies-pets（信心 0.8）"
       },
       "proposed": {
         "status": "pending",
@@ -680,7 +680,7 @@
         "status": false,
         "target": false,
         "newPath": false,
-        "note": true
+        "note": false
       }
     }
   ],
@@ -741,7 +741,7 @@
     "pendingToMigrated": 0,
     "targetChanges": 0,
     "newPathChanges": 0,
-    "noteChanges": 21,
+    "noteChanges": 0,
     "stillPending": 10
   }
 }

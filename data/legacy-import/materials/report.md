@@ -14,8 +14,8 @@
 | 既有內容已存在（供比對） | 5 |
 | 附件與圖片 | 35（附件 19、內文圖片 15、資料檔 1；圖片待補 alt 4、PDF 無文字層 0） |
 | 草稿 schema 驗證 | 21 / 21 通過 |
-| 問題 | 錯誤 0、警告 27、提示 75 |
-| 移轉清單對應 | 對上 21 / 21 筆；status 變化 0；note 更新 21；仍待移轉 10；與清單判定不同 0 |
+| 問題 | 錯誤 0、警告 26、提示 75 |
+| 移轉清單對應 | 對上 21 / 21 筆；status 變化 0；note 更新 0；仍待移轉 10；與清單判定不同 0 |
 | 清單沒有的舊頁 | 3（migration-patch.json 的 unmatchedPages 有建議的 pending 項目） |
 
 處理原則：一級內容（疾病頁、指引、手冊）一律人工確認後才入庫；近年新聞信心 ≥ 0.8 可核對後自動上線；久遠與歷史版本封存；草稿放在本目錄，**不會**寫進 `content/`。
@@ -37,7 +37,7 @@
 | 11 | 海報<br><sub>www.cdc.gov.tw/Category/List/YV1yFFBI_B1Rhm6XDQvlgy</sub> | 清單頁 → `page.x-list-posters` | — | 0.6 | — | 清單頁，不轉換（新站由系統自動產生列表） |
 | 12 | 影片<br><sub>www.cdc.gov.tw/Category/ListMovie/DWSgB84e8MEvXgBqiQmR6A</sub> | 清單頁 → `page.x-list-videos` | — | 0.4 ⚠ | body-short | 清單頁，不轉換（新站由系統自動產生列表） |
 | 13 | 長照機構感染管制手冊（宣導版）<br><sub>www.cdc.gov.tw/Category/ListContent/DG4AoD4j09j2qW_YhrYAZ2?uaid=JaTSqWyasrqZpL-tvXo9BS</sub> | 出版品 → `publication.manual-ltc-infection-control-2026` | `publication.manual-ltc-infection-control-2026`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
-| 14 | 多國語言衛教素材<br><sub>www.cdc.gov.tw/Category/MPage/Y_AH_Ka7q03cfN15CyI-nQ</sub> | 資料集 → `dataset.health-education-materials` | `dataset.health-education-materials`（既有） | 1 | fields-pending | 既有內容已存在，供比對，不建議覆蓋 |
+| 14 | 多國語言衛教素材<br><sub>www.cdc.gov.tw/Category/MPage/Y_AH_Ka7q03cfN15CyI-nQ</sub> | 資料集 → `dataset.health-education-materials` | `dataset.health-education-materials`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 15 | Podcast｜抗生素不是萬靈丹：談抗藥性與防疫一體<br><sub>www.cdc.gov.tw/Category/ListContent/VujZUu3PXzEl4PjbFhh5D8?uaid=GEJHb3XRbbo3EPVrBVucx2</sub> | 影音 → `media.amr-one-health-podcast` | `media.amr-one-health-podcast`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 16 | 防疫新生活運動海報（COVID-19）<br><sub>www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=jqYodXZl8Ti6hySLNXVlBs</sub> | 出版品 → `publication.covid-19-poster-covid-new-life-2021` | — | 1 | image-only、fields-pending | 封存（歷史版本／久遠內容，舊版保留查閱） |
 | 17 | 登革熱「巡、倒、清、刷」海報系列<br><sub>www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=OW0GWvcK_N7x2_x6CcO_sV</sub> | 出版品 → `publication.dengue-poster-dengue-patrol-series` | — | 0.8 | image-no-alt、image-no-alt、image-no-alt、body-short、image-only、fields-pending | 核對後入庫（新站尚無對應內容） |

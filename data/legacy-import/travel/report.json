@@ -11,7 +11,7 @@
   },
   "rules": {
     "file": "content/migration/import/_import-rules.json",
-    "version": 9
+    "version": 10
   },
   "manifest": {
     "id": "migration.travel",
@@ -66,7 +66,7 @@
     },
     "issues": {
       "error": 0,
-      "warn": 4,
+      "warn": 3,
       "info": 35
     },
     "manifest": {
@@ -898,19 +898,14 @@
           "message": "清單對應的新站型別是 dataset（dataset.travel-alert-levels），草稿直接建成 dataset，看不出來的欄位以「（待補）」佔位"
         },
         {
-          "code": "fields-pending",
-          "severity": "warn",
-          "message": "dataset 的欄位從舊頁看不出來，以「（待補）」佔位：canonicalUrl"
+          "code": "dataset-by-url",
+          "severity": "info",
+          "message": "canonicalUrl 沿用既有資料集 dataset.travel-alert-levels（清單 target 指定）"
         },
         {
           "code": "field-guessed",
           "severity": "info",
           "message": "看不出更新頻率，updateFrequency 暫填 irregular"
-        },
-        {
-          "code": "field-guessed",
-          "severity": "info",
-          "message": "舊頁沒有資料檔也沒有開放資料連結，canonicalUrl 暫填舊頁網址"
         }
       ],
       "action": "compare-existing",

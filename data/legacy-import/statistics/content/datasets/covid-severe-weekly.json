@@ -1,0 +1,140 @@
+{
+  "id": "dataset.covid-severe-weekly",
+  "type": "dataset",
+  "title": "新冠併發重症COVID-19 週報",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2023-05-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.covid-19"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "COVID-19 週報彙整本土確定病例、重症與死亡、疫苗接種與病毒變異株監測。本頁僅列出部分期別。",
+  "category": "document-library",
+  "canonicalUrl": "https://data.cdc.gov.tw/dataset/covid19-severe-complications-weekly",
+  "updateFrequency": "weekly",
+  "lastUpdated": "2026-10-05",
+  "formats": [
+    "PDF"
+  ],
+  "resources": [
+    {
+      "label": "COVID-19 週報 2026 年第 41 週",
+      "href": "/files/dataset.covid-severe-weekly/covid-weekly-2026-w41.pdf",
+      "format": "PDF"
+    },
+    {
+      "label": "COVID-19 週報 2026 年第 40 週",
+      "href": "/files/dataset.covid-severe-weekly/covid-weekly-2026-w40.pdf",
+      "format": "PDF"
+    },
+    {
+      "label": "COVID-19 週報 2026 年第 38 週",
+      "href": "/files/dataset.covid-severe-weekly/covid-weekly-2026-w38.pdf",
+      "format": "PDF"
+    },
+    {
+      "label": "COVID-19 週報 2026 年第 37 週",
+      "href": "/files/dataset.covid-severe-weekly/covid-weekly-2026-w37.pdf",
+      "format": "PDF"
+    }
+  ],
+  "provenance": {
+    "mode": "snapshot",
+    "fetchedAt": "2026-10-03",
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/OyPQCu3iBWmljSol_qLalD"
+  },
+  "portalUrl": "https://data.cdc.gov.tw/dataset/covid19-severe-complications-weekly",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/OyPQCu3iBWmljSol_qLalD"
+  ],
+  "assets": [
+    {
+      "file": "covid-weekly-2026-w37.pdf",
+      "kind": "attachment",
+      "label": "COVID-19 週報 2026 年第 37 週",
+      "mime": "application/pdf",
+      "bytes": 742,
+      "sha256": "168cb4043c7e593f64cd128a829854dae06c112865b053a8f64c8392b241d283",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "covid-weekly-2026-w38.pdf",
+      "kind": "attachment",
+      "label": "COVID-19 週報 2026 年第 38 週",
+      "mime": "application/pdf",
+      "bytes": 742,
+      "sha256": "c0d621a4346772a66d35e275f3a9232e89251ce5450731b8639dd3fbe26272c3",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "covid-weekly-2026-w40.pdf",
+      "kind": "attachment",
+      "label": "COVID-19 週報 2026 年第 40 週",
+      "mime": "application/pdf",
+      "bytes": 742,
+      "sha256": "992d9916595fc6f594e9324615b1db52738f25060af15cb9cd6056d10547ec0d",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "covid-weekly-2026-w41.pdf",
+      "kind": "attachment",
+      "label": "COVID-19 週報 2026 年第 41 週",
+      "mime": "application/pdf",
+      "bytes": 742,
+      "sha256": "40b637dfff1739ceb875dc1fa59c93ef15caf143fa13568f55324ba34fee92d7",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站型別是 dataset（dataset.covid-severe-weekly），草稿直接建成 dataset，看不出來的欄位以「（待補）」佔位"
+      },
+      {
+        "code": "periodical-issues",
+        "severity": "info",
+        "message": "4 期、最新 2026 年第 41 週（期間缺 2026-W39）；期別不是版次，建成一筆資料集逐期列 resources"
+      },
+      {
+        "code": "dataset-by-url",
+        "severity": "info",
+        "message": "canonicalUrl 沿用既有資料集 dataset.covid-severe-weekly（清單 target 指定）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/OyPQCu3iBWmljSol_qLalD",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "dataset.covid-severe-weekly"
+    ]
+  }
+}

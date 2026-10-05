@@ -1,0 +1,10 @@
+{
+  "format": "cdc-legacy-export/1",
+  "simulated": true,
+  "exportedAt": "2026-10-03",
+  "site": "https://www.cdc.gov.tw",
+  "batch": "statistics",
+  "pages": 15,
+  "source": "模擬匯出：統計專區欄目。依既有新站內容（content/datasets、統計年報出版品）反推 13 頁：列表 2 頁（含英文 Data & Statistics）、外部系統入口 3 頁、期刊頁 4 頁（週速訊／週報，一頁列多期 PDF）、統計表頁 3 頁、統計年報 1 頁；另複製結核病批與登革熱批匯出的「統計資料」頁各 1 頁（同網址，含附件）。統計專區根、英文 Data & Statistics、法定傳染病境外移入確定病例統計、防疫資料庫、疫情監測速訊的網址 ID 為舊站真實 ID；其餘 ID、數字與連結皆為示意，不是舊站的真實資料。正式匯出取代整個目錄即可。",
+  "generator": "scripts/lib/legacy-import/sim-export-statistics.mjs"
+}

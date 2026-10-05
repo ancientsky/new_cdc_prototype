@@ -1,0 +1,134 @@
+{
+  "id": "dataset.x-imported-cases",
+  "type": "dataset",
+  "title": "法定傳染病境外移入確定病例統計",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2016-01-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "法定傳染病境外移入確定病例統計：歷年境外移入確定病例數及占全部確定病例之比率。數字為示意。",
+  "category": "structured-table",
+  "canonicalUrl": "https://www.cdc.gov.tw/Category/Page/5Q6qrh5kM6TnpnRpy3XDfQ",
+  "updateFrequency": "irregular",
+  "lastUpdated": "2026-09-10",
+  "formats": [
+    "CSV"
+  ],
+  "resources": [
+    {
+      "label": "法定傳染病境外移入確定病例統計（CSV，示意數字）",
+      "href": "/files/dataset.x-imported-cases/imported-cases-by-year.csv",
+      "format": "CSV"
+    }
+  ],
+  "provenance": {
+    "mode": "snapshot",
+    "fetchedAt": "2026-10-03",
+    "sourceUrl": "https://www.cdc.gov.tw/Category/Page/5Q6qrh5kM6TnpnRpy3XDfQ"
+  },
+  "series": {
+    "label": "境外移入確定病例數",
+    "unit": "人",
+    "granularity": "year",
+    "points": [
+      {
+        "t": "2016",
+        "v": 387
+      },
+      {
+        "t": "2017",
+        "v": 412
+      },
+      {
+        "t": "2018",
+        "v": 439
+      },
+      {
+        "t": "2019",
+        "v": 471
+      },
+      {
+        "t": "2020",
+        "v": 142
+      },
+      {
+        "t": "2021",
+        "v": 96
+      },
+      {
+        "t": "2022",
+        "v": 168
+      },
+      {
+        "t": "2023",
+        "v": 523
+      },
+      {
+        "t": "2024",
+        "v": 604
+      },
+      {
+        "t": "2025",
+        "v": 651
+      }
+    ],
+    "note": "另有欄位：占全部確定病例比率（%）"
+  },
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/Page/5Q6qrh5kM6TnpnRpy3XDfQ"
+  ],
+  "assets": [
+    {
+      "file": "imported-cases-by-year.csv",
+      "kind": "data",
+      "label": "法定傳染病境外移入確定病例統計（CSV，示意數字）",
+      "mime": "text/csv",
+      "bytes": 222,
+      "sha256": "9be8ed52d209df8c8eafaf91b69fbe703aa35c5a97707cf8499a1fb3f7dd8bdd",
+      "machineReadable": true
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 103 處（mso 樣式 35、Mso 類別 34、命名空間標籤 34）"
+      },
+      {
+        "code": "type-from-category",
+        "severity": "info",
+        "message": "統計頁的表格是時序，草稿建成 dataset（structured-table）"
+      },
+      {
+        "code": "series-extracted",
+        "severity": "info",
+        "message": "10 點、2016–2025、人（境外移入確定病例數）；另有欄位：占全部確定病例比率（%）"
+      },
+      {
+        "code": "field-guessed",
+        "severity": "info",
+        "message": "看不出更新頻率，updateFrequency 暫填 irregular"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/Page/5Q6qrh5kM6TnpnRpy3XDfQ",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}
