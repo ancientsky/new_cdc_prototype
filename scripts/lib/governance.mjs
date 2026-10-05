@@ -63,6 +63,7 @@
 import { createHash } from 'node:crypto';
 import { addMonths, daysBetween } from './render.mjs';
 import { jobPiiErrors } from './validate.mjs';
+import { jobStageOf, tenderStageOf } from '../../src/client/careers-rules.js';
 import { setAssetRegistry } from './markdown.mjs';
 import { assetRegistryOf, assetUrl, extOf, imageLicenseProblems, needsAccessibleVersion } from './assets.mjs';
 import { siteOrigin } from '../../site.config.mjs';
@@ -145,23 +146,7 @@ export const TENDER_AWARD_DAYS = 30;
 /** 本站模擬報名頁（只在 open 且 applyMethod online、無外部 applyUrl 時由模板輸出） */
 export const jobApplyPath = (job) => `${pathOf(job).replace(/\/$/, '')}/apply/`;
 
-/** 職缺階段（純函式；today 為 ISO 日期） */
-export function jobStageOf(job, today) {
-  if (job.manualStatus === 'cancelled' || job.manualStatus === 'filled') return job.manualStatus;
-  if (job.result) return 'result';
-  if (job.applyStart && today < job.applyStart) return 'upcoming';
-  if (!job.deadlineAt || today <= job.deadlineAt) return 'open';
-  if ((job.examPlan ?? []).some((e) => e.date && e.date <= today)) return 'screening';
-  return 'closed';
-}
-/** 採購階段（純函式） */
-export function tenderStageOf(tender, today) {
-  if (tender.manualStatus === 'failed' || tender.manualStatus === 'cancelled') return tender.manualStatus;
-  if (tender.award) return 'awarded';
-  if (!tender.deadlineAt || today <= tender.deadlineAt) return 'open';
-  if (tender.openingAt && today >= tender.openingAt) return 'opened';
-  return 'closed';
-}
+export { jobStageOf, tenderStageOf } from '../../src/client/careers-rules.js';
 
 /** 移轉清單狀態（ARCHITECTURE 13.1） */
 export const MIGRATION_STATUS_LABELS = { migrated: '已移轉', merged: '已併入', archived: '已封存', pending: '待移轉', dropped: '不移轉' };

@@ -6,10 +6,10 @@ import { md } from '../../../scripts/lib/markdown.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
 import {
   ldFor, breadcrumb, pageHead, provenance, alerts, pageData, feedback, translationBadge, hrefFor, isFallbackLink, L, unitName, extLink, isExternal,
-  pill, alertBox, mdHeader,
+  pill, alertBox, mdHeader, daysUntil,
 } from './_partials.mjs';
 import {
-  jobsOf, allJobs, jobPath, applyPath, applyOnSite, jobStage, jobTab, JOB_TABS, stagePill, jobCountdown, placeOf, safeName, jobSlug,
+  jobsOf, allJobs, jobPath, applyPath, applyOnSite, jobStage, jobTab, JOB_TABS, stagePill, jobCountdown, placeOf, safeName, jobSlug, jobIsHistory,
 } from './_careers.mjs';
 
 const STYLES = ['/assets/styles/careers.css'];
@@ -39,6 +39,30 @@ function applyButtons(ctx, j, stage, { size = 'lg' } = {}) {
   return html`<a class="c-btn c-btn--${size}" href="${url(applyPath(j))}" data-job-apply="sim">${t('job.apply.online')} →</a>`;
 }
 
+/* ───────── 公告異動（amendments；後台 /admin/jobs/edit/ 追加） ───────── */
+const AMEND_PILL = { extend: 'info', reschedule: 'warn', correction: 'neutral', cancel: 'warn', other: 'neutral' };
+/** 依日期倒序（同日：後加入者在前） */
+const amendsOf = (j) => (j.amendments ?? []).map((a, i) => ({ a, i })).sort((x, y) => String(y.a.date).localeCompare(String(x.a.date)) || y.i - x.i).map((x) => x.a);
+/** 最新一筆異動在 14 天內 ⇒ 頁首提示 */
+const AMEND_RECENT_DAYS = 14;
+function recentAmend(ctx, j) {
+  const a = amendsOf(j)[0];
+  if (!a) return null;
+  const d = daysUntil(a.date, ctx.site.today);
+  return d != null && d >= 0 && d <= AMEND_RECENT_DAYS ? a : null;
+}
+function amendBlock(ctx, j) {
+  const list = amendsOf(j);
+  if (!list.length) return '';
+  const { t, fmtDate } = ctx;
+  return html`<section class="c-block c-amend-sec" id="amendments" aria-labelledby="h-amend"><h2 id="h-amend">${t('job.amend.title')}</h2>
+  <p class="muted">${t('job.amend.note')}</p>
+  <ol class="c-amend-list">${list.map((a) => html`<li class="c-amend-item" data-kind="${a.kind}">
+    <p class="c-amend-head">${pill(t(`job.amend.kind.${a.kind}`), AMEND_PILL[a.kind] ?? 'neutral')} <time datetime="${a.date}">${fmtDate(a.date)}</time>${a.refNo ? html` <span class="c-amend-ref muted">${t('notice.refNo')}：${a.refNo}</span>` : ''}</p>
+    <p class="c-amend-text"${ctx.lang !== 'zh-TW' ? raw(' lang="zh-TW"') : ''}>${a.text}</p></li>`)}</ol>
+</section>`;
+}
+
 /* ───────── 列表 ───────── */
 function jobCard(ctx, j, tab) {
   const { t, fmtDate, site } = ctx;
@@ -46,9 +70,10 @@ function jobCard(ctx, j, tab) {
   const fb = isFallbackLink(ctx, j);
   const place = placeOf(j.workplace);
   const showStage = tab !== 'open' && tab !== 'upcoming';
+  const amended = (j.amendments ?? []).length > 0 && !jobIsHistory(site, j, stage);
   return html`<li class="c-job" data-jobtype="${j.jobType ?? ''}" data-place="${place}" data-unit="${j.hiringUnit ?? ''}" data-stage="${stage}">
   <div class="c-job__main">
-    <p class="c-job__meta">${j.jobType ? pill(L(ctx, j, 'jobType') ?? j.jobType, 'info') : ''}${showStage ? html` ${stagePill(ctx, stage)}` : ''}${j.applyUrl && stage === 'open' ? html` ${pill(t('job.method.external'), 'neutral')}` : ''}</p>
+    <p class="c-job__meta">${j.jobType ? pill(L(ctx, j, 'jobType') ?? j.jobType, 'info') : ''}${showStage ? html` ${stagePill(ctx, stage)}` : ''}${j.applyUrl && stage === 'open' ? html` ${pill(t('job.method.external'), 'neutral')}` : ''}${amended ? html` <span class="c-amend-flag" data-amended>${pill(t('job.amend.pill'), 'warn')}</span>` : ''}</p>
     <h3 class="c-job__t"><a href="${hrefFor(ctx, { ...j, type: 'job' })}"${fb ? raw(' lang="zh-TW"') : ''}>${fb ? j.title : L(ctx, j, 'title')}</a></h3>
     <dl class="c-job__facts">
       ${j.hiringUnit ? html`<div><dt>${t('job.unit')}</dt><dd>${unitName(ctx, j.hiringUnit)}</dd></div>` : ''}
@@ -210,11 +235,12 @@ function detail(ctx, j) {
     <h1>${L(ctx, j, 'title')}</h1>
     ${L(ctx, j, 'summary') ? html`<p class="lead">${L(ctx, j, 'summary')}</p>` : ''}
     ${langStatus && lang !== 'zh-TW' ? html`<p>${translationBadge(ctx, langStatus === 'reviewed' ? 'reviewed' : 'machine')}</p>` : ''}
-    ${alerts(ctx, j, { skip: ['closed'] })}${provenance(ctx, j)}
+    ${alerts(ctx, j, { skip: ['closed'] })}${(() => { const a = recentAmend(ctx, j); return a ? html`<div class="c-alert c-alert--info c-amend-recent" role="status" data-amend-recent>${t('job.amend.recent', { date: fmtDate(a.date), text: a.text })} <a href="#amendments">${t('job.amend.title')} →</a></div>` : ''; })()}${provenance(ctx, j)}
   </div></header>
   <div class="c-cols c-cols--2">
     <div class="c-cols__main">
       <section class="c-block" id="timeline" aria-labelledby="h-timeline"><h2 id="h-timeline">${t('job.timeline')}</h2>${timeline(ctx, j, stage)}</section>
+      ${amendBlock(ctx, j)}
       ${resultBlock(ctx, j)}
       <section class="c-block c-howto-sec" id="how" aria-labelledby="h-how"><h2 id="h-how">${t('job.s.how')}</h2>${howBody}</section>
       <span id="details" class="sr-only" aria-hidden="true"></span>
@@ -352,6 +378,10 @@ export function markdown(ctx, { item: j }) {
   if (j.qualifications?.length) lines.push('', '## 資格條件', '', ...j.qualifications.map((x) => `- ${x}`));
   if (j.requiredDocuments?.length) lines.push('', '## 應備文件', '', ...j.requiredDocuments.map((x) => `- ${x}`));
   if (j.examPlan?.length) lines.push('', '## 甄試方式與日期', '', ...j.examPlan.map((e) => `- ${e.stage}：${e.date ?? '另行通知'}${e.note ? `（${e.note}）` : ''}`));
+  if (j.amendments?.length) {
+    const KIND = { extend: '展延', reschedule: '改期', correction: '更正', cancel: '取消', other: '其他' };
+    lines.push('', '## 公告異動', '', ...amendsOf(j).map((a) => `- ${a.date}［${KIND[a.kind] ?? a.kind}］${a.text}${a.refNo ? `（${a.refNo}）` : ''}`));
+  }
   if (j.result) {
     lines.push('', `## 甄選結果（${j.result.publishedAt}）`, '', '> 只公布報名編號與遮罩姓名。', '', '### 正取', '', ...(j.result.admitted ?? []).map((a) => `- ${a.seq}. ${a.candidateNo} ${safeName(a.nameMasked)}`));
     lines.push('', '### 備取', '', ...(j.result.waitlist ?? []).filter((w) => !w.validUntil || String(w.validUntil) >= String(ctx.today)).map((a) => `- ${a.rank}. ${a.candidateNo} ${safeName(a.nameMasked)}${a.validUntil ? `（有效至 ${a.validUntil}）` : ''}`));

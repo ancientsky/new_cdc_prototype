@@ -190,7 +190,7 @@ ${pageHead({
           <div class="adm-field adm-field--wide" data-for="research"><label for="x-piunit">執行機構（機構名稱，不放個人姓名）</label><input type="text" id="x-piunit" placeholder="例：國立臺灣大學公共衛生學院"></div>
           <div class="adm-field adm-field--wide" data-for="research"><label for="x-ds-q">資料集（搜尋 dataset id）</label><input type="search" id="x-ds-q" role="combobox" aria-expanded="false" aria-controls="x-ds-list" aria-autocomplete="list" placeholder="例：dengue"><ul class="adm-search-results" id="x-ds-list" role="listbox" hidden></ul><ul class="adm-chips" id="x-ds-chips" aria-label="已選資料集"></ul></div>
 
-          <p class="adm-note" data-for="never">人才招募與採購公告已改為獨立型別 job／tender（content/jobs、content/tenders），請依《同事使用指南》第 16、17 節建檔；本示範表單不提供。</p>
+          <p class="adm-note" data-for="never">人才招募與採購公告是獨立型別 job／tender，各有自己的上架表單：<a href="${ctx.url('/admin/jobs/edit/', { noLang: true })}">人才招募上架與異動</a>、<a href="${ctx.url('/admin/tenders/edit/', { noLang: true })}">採購公告上架與異動</a>（《同事使用指南》第 16、17 節）。</p>
           <div class="adm-field" data-for="recruit procurement"><label for="x-deadline">截止日（必填）</label><input type="date" id="x-deadline"><span class="adm-hint">截止後系統自動標「已截止」並退出首頁，無須人工。</span></div>
           <div class="adm-field" data-for="recruit procurement"><label for="x-refno">字號／案號</label><input type="text" id="x-refno" placeholder="例：疾管人字第 1150000000 號"></div>
           <div class="adm-field" data-for="recruit procurement"><label for="x-napply">報名／投標網址</label><input type="text" id="x-napply" placeholder="https://…"></div>

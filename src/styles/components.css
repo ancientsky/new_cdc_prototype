@@ -1002,3 +1002,26 @@ html:not(.js) .vxs-form,html:not(.js) .vxs-msg,html:not(.js) .vxs-tabs,html:not(
   .vxs-entry{padding:var(--sp-4)}
 }
 @media print{.vxs-form,.vxs-tabs,.vxs-detail{display:none}.vxs-scroll{overflow:visible}}
+
+/* ── 採購公告異動（/procurement/{slug}/ #amendments；class 前綴 c-tamend-） ── */
+.c-tamend-list{list-style:none;margin:var(--sp-3) 0 0;padding:0;display:grid;gap:var(--sp-2)}
+.c-tamend-item{padding:var(--sp-3) var(--sp-4);border:1px solid var(--line);border-left:4px solid var(--info);border-radius:var(--radius-sm);overflow-wrap:anywhere}
+.c-tamend-item[data-kind="cancel"]{border-left-color:var(--warn)}
+.c-tamend-item p{margin:0}
+.c-tamend-head{display:flex;flex-wrap:wrap;gap:6px var(--sp-2);align-items:center;font-size:var(--fs-sm)}
+.c-tamend-head time{font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.c-tamend-text{margin-top:4px!important}
+.c-tamend-ref{font-size:var(--fs-sm);margin-top:2px!important}
+.c-tamend-recent{margin:var(--sp-3) 0}
+
+/* ── 職缺公告異動（/careers/{slug}/ #amendments；class 前綴 c-amend-） ── */
+.c-amend-list{list-style:none;margin:var(--sp-3) 0 0;padding:0;display:grid;gap:var(--sp-2)}
+.c-amend-item{padding:var(--sp-3) var(--sp-4);border:1px solid var(--line);border-left:4px solid var(--info);border-radius:var(--radius-sm);overflow-wrap:anywhere}
+.c-amend-item[data-kind="cancel"],.c-amend-item[data-kind="reschedule"]{border-left-color:var(--warn)}
+.c-amend-item p{margin:0}
+.c-amend-head{display:flex;flex-wrap:wrap;gap:6px var(--sp-2);align-items:center;font-size:var(--fs-sm)}
+.c-amend-head time{font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.c-amend-text{margin-top:4px!important}
+.c-amend-ref{font-size:var(--fs-sm)}
+.c-amend-recent{margin:var(--sp-3) 0}
+.c-amend-flag{display:inline}

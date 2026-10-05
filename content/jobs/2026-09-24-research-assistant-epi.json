@@ -5,7 +5,7 @@
   "owner": "unit.personnel",
   "steward": "人事室承辦人",
   "publishedAt": "2026-09-24",
-  "reviewedAt": "2026-09-24",
+  "reviewedAt": "2026-09-30",
   "reviewPeriodMonths": 0,
   "status": "published",
   "audience": [
@@ -43,7 +43,7 @@
       "status": "none"
     }
   },
-  "summary": "疫情中心徵求計畫助理 2 名，負責傳染病監測資料清理、統計分析與開放資料維護；2026 年 10 月 20 日前至行政院人事行政總處事求人網站報名。",
+  "summary": "疫情中心徵求計畫助理 2 名，負責傳染病監測資料清理、統計分析與開放資料維護；2026 年 10 月 27 日前（已展延）至行政院人事行政總處事求人網站報名。",
   "keywords": [
     "人才招募",
     "研究助理",
@@ -54,7 +54,7 @@
   "i18n": {
     "en": {
       "title": "Epidemic Intelligence Center: two project assistants (surveillance data analysis)",
-      "summary": "Two project assistants for surveillance data cleaning, statistical analysis and open data maintenance; apply via the government job portal by 20 October 2026."
+      "summary": "Two project assistants for surveillance data cleaning, statistical analysis and open data maintenance; apply via the government job portal by 27 October 2026 (extended)."
     }
   },
   "slug": "research-assistant-epi",
@@ -84,13 +84,13 @@
     "資料分析作品或報告（有者檢附）"
   ],
   "applyStart": "2026-09-24",
-  "deadlineAt": "2026-10-20",
+  "deadlineAt": "2026-10-27",
   "applyMethod": "online",
   "applyUrl": "https://web3.dgpa.gov.tw/",
   "examPlan": [
     {
       "stage": "書面審查",
-      "date": "2026-10-23"
+      "date": "2026-10-28"
     },
     {
       "stage": "實作",
@@ -110,6 +110,14 @@
       "url": "/pending/?ref=job.2026-09-24-research-assistant-epi&doc=甄選簡章",
       "format": "pdf",
       "machineReadable": false
+    }
+  ],
+  "amendments": [
+    {
+      "date": "2026-09-30",
+      "kind": "extend",
+      "text": "報名截止日由 2026-10-20 展延至 2026-10-27；書面審查由 2026-10-23 順延至 2026-10-28，實作與口試日期不變。",
+      "refNo": "疾管人字第 1150100262 號（示意）"
     }
   ],
   "note": "聯絡電話為疾管署總機，分機與報名信箱以正式簡章為準（本原型為示意，不放承辦人姓名）；薪資待遇為示意文字，實際依核定薪點折算。外部報名系統（事求人）深層網址待人事室確認。"

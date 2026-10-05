@@ -59,10 +59,14 @@ test('minimal：只有疾病、狀態與一行指標；沒有建議', () => {
   assert.match(h, /<span class="sr-only">上升<\/span>/, '趨勢仍有讀屏文字');
 });
 
-test('首頁：釘選疾病各依 current.json 的 cardStyle 渲染（示範資料涵蓋四種）', () => {
+test('首頁：釘選疾病各依 current.json 的 cardStyle 渲染；示範資料一律標準版，換成其他樣版就跟著變', () => {
   const h = str(home.render(ctx()));
-  const styles = new Set([...h.matchAll(/c-sit-card--style-(\w+)/g)].map((m) => m[1]));
-  for (const k of Object.keys(CARD_STYLES)) assert.ok(styles.has(k), `首頁缺 ${k}`);
+  const styles = [...h.matchAll(/c-sit-card--style-(\w+)/g)].map((m) => m[1]);
+  assert.ok(styles.length >= 4 && styles.every((s) => s === 'standard'), `示範資料應全為 standard：${styles}`);
+  const alt = structuredClone(site);
+  alt.situation.items.find((i) => i.pinned).cardStyle = 'advice';
+  const h2 = str(home.render(makeCtx(alt, 'zh-TW', { path: '/', alternates: ['zh-TW', 'en'] })));
+  assert.match(h2, /c-sit-card--style-advice/);
 });
 
 test('schema：cardStyle 只接受四個值', () => {
@@ -79,5 +83,5 @@ test('疫情發布表單：頁名已改、四個樣版單選、預覽與並排�
   assert.ok(!h.includes('態勢發布'));
   for (const k of Object.keys(CARD_STYLES)) assert.match(h, new RegExp(`name="s-style" value="${k}"`));
   for (const k of ['id="s-preview"', 'id="s-compare"', 'id="s-style-now"', '<th scope="col">樣版</th>']) assert.ok(h.includes(k), k);
-  assert.match(h, /<td>趨勢圖<\/td>/);
+  assert.match(h, /<td>標準<\/td>/);
 });

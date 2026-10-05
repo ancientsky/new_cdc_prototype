@@ -1469,6 +1469,28 @@ const ROWS_R7 = {
   "proc.award.pending": ["尚未決標。決標後會在此公布得標廠商與金額。", "Not awarded yet. The winner and amount will be shown here after award."],
   "proc.failed.note": ["本標案流標，未決標。", "This tender failed; no award was made."],
   "proc.cancelled.note": ["本標案已撤銷。", "This tender has been cancelled."],
+  // [jobs-edit i18n] 第十六輪：職缺公告異動（worker A 在此區塊內新增 job.amend.* 鍵）
+  "job.amend.title": ["公告異動", "Notice amendments"],
+  "job.amend.note": ["本公告的每次異動（展延、改期、更正、取消），由新到舊列出。", "Every change to this notice (extensions, rescheduling, corrections, cancellation), newest first."],
+  "job.amend.pill": ["有異動", "Amended"],
+  "job.amend.recent": ["本公告 {date} 有異動：{text}", "This notice was amended on {date}: {text}"],
+  "job.amend.kind.extend": ["展延", "Extended"],
+  "job.amend.kind.reschedule": ["改期", "Rescheduled"],
+  "job.amend.kind.correction": ["更正", "Correction"],
+  "job.amend.kind.cancel": ["取消", "Cancelled"],
+  "job.amend.kind.other": ["其他", "Other"],
+  // [tenders-edit i18n] 第十六輪：採購公告異動（worker B 在此區塊內新增 proc.amend.* 鍵）
+  "proc.amend.title": ["公告異動", "Notice amendments"],
+  "proc.amend.lead": ["本案公告曾更正、展延或改期，依公告日期由新到舊列出。內容以政府電子採購網的更正公告為準。", "This notice has been corrected, extended or rescheduled; changes are listed newest first. The Government e-Procurement System is authoritative."],
+  "proc.amend.kind.extend": ["展延", "Extended"],
+  "proc.amend.kind.reschedule": ["改期", "Rescheduled"],
+  "proc.amend.kind.correction": ["更正", "Corrected"],
+  "proc.amend.kind.cancel": ["流標／取消", "Failed / cancelled"],
+  "proc.amend.kind.other": ["其他", "Other"],
+  "proc.amend.ref": ["字號", "Ref."],
+  "proc.amend.badge": ["有異動", "Amended"],
+  "proc.amend.recent": ["本案於 {date} 公告異動：{text}", "Amended on {date}: {text}"],
+  "proc.amend.see": ["看全部異動", "See all amendments"],
 };
 for (const [key, vals] of Object.entries(ROWS_R7)) vals.forEach((v, i) => { if (v != null && v !== '') STRINGS[ORDER[i]][key] = v; });
 

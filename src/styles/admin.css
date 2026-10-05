@@ -370,3 +370,59 @@ body.adm { background: var(--paper); color: var(--ink); min-height: 100vh; displ
 @media (max-width: 760px) { .adm-tl__at { margin-left: 0; flex-basis: 100%; } }
 @media (prefers-reduced-motion: no-preference) { .adm-tl { animation: adm-tl-in .25s ease-out both; } .adm-tl:nth-child(2) { animation-delay: .04s; } .adm-tl:nth-child(3) { animation-delay: .08s; } .adm-tl:nth-child(4) { animation-delay: .12s; } .adm-tl:nth-child(5) { animation-delay: .16s; } .adm-tl:nth-child(n+6) { animation-delay: .2s; } }
 @keyframes adm-tl-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* ── jobs-edit（/admin/jobs/edit/ 人才招募上架與異動；class 前綴 adm-jf-） ── */
+.adm-jf-sec { display: grid; gap: var(--sp-3); }
+.adm-jf-sec > legend { font-size: var(--fs-md, 1rem); }
+.adm-jf-stack, .adm-jf-grid { display: grid; gap: var(--sp-3); }
+.adm-jf-sec .adm-field textarea { min-height: 96px; }
+.adm-jf-sec #jf-summary { min-height: 56px; }
+.adm-jf-rows { min-width: 520px; }
+.adm-jf-rows .adm-btn { white-space: nowrap; }
+.adm-jf-rows input[type="date"] { min-width: 9.5em; }
+.adm-jf-rows select.adm-input { min-width: 6.5em; }
+.adm-jf-rows input[data-k="text"], .adm-jf-rows input[data-k="note"] { min-width: 14em; }
+.adm-jf-rows td { padding: 4px 6px; }
+.adm-jf-rows .adm-input { width: 100%; min-width: 0; }
+.adm-jf-rows input[type="number"] { width: 4.5em; min-width: 4.5em; }
+.adm-jf-rows tr.adm-jf-bad td { background: #fdecec; }
+.adm-jf-rows tr.adm-jf-bad input[aria-invalid="true"] { border-color: var(--status-peak); outline: 1px solid var(--status-peak); }
+.adm-jf-why { margin: 4px 0 0; font-size: var(--fs-xs); color: var(--status-peak); line-height: 1.4; }
+.adm-jf-aside { position: sticky; top: var(--sp-3); max-height: calc(100vh - 2 * var(--sp-3)); overflow: auto; display: grid; gap: var(--sp-4); align-content: start; }
+.adm-jf-head { border-bottom: 1px solid var(--line); padding-bottom: var(--sp-2); margin-bottom: var(--sp-3); }
+.adm-jf-head p { margin: 0 0 4px; }
+.adm-jf-title { font-weight: 700; font-size: var(--fs-lg); }
+.adm-jf-h3 { font-size: var(--fs-sm); margin: var(--sp-3) 0 var(--sp-2); color: var(--ink-2, var(--ink)); }
+.adm-jf-dates, .adm-jf-diff { min-width: 0; }
+.adm-jf-dates th { width: 40%; font-weight: 600; }
+.adm-jf-changed td, .adm-jf-changed th { background: #fff6dc; }
+.adm-jf-diff del, .adm-jf-dates del { color: var(--ink-3); }
+.adm-jf-diff ins { text-decoration: none; font-weight: 700; color: var(--green-900); }
+.adm-jf-kind { margin: var(--sp-2) 0 0; font-size: var(--fs-sm); }
+.adm-jf-amends, .adm-jf-checks, .adm-jf-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: var(--fs-sm); }
+.adm-jf-list { list-style: disc; padding-left: 1.2em; }
+.adm-jf-checks .is-no { color: var(--status-peak); font-weight: 600; }
+.adm-jf-checks .is-ok { color: var(--green-700); }
+.adm-jf-steps { margin: var(--sp-3) 0; padding-left: 1.4em; font-size: var(--fs-sm); display: grid; gap: 4px; }
+@media (max-width: 1100px) { .adm-jf-aside { position: static; max-height: none; overflow: visible; } }
+@media (min-width: 761px) { .adm-jf-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ── tenders-edit（/admin/tenders/edit/ 採購公告上架與異動；class 前綴 adm-tf-） ── */
+.adm-tf-entry { display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-3); align-items: center; margin: 0 0 var(--sp-4); }
+.adm-tf-sec { display: grid; gap: var(--sp-3); }
+.adm-field textarea.adm-tf-area { min-height: 0; }
+.adm-tf-h3 { margin: var(--sp-2) 0 0; font-size: var(--fs-sm); }
+.adm-tf-diff { font-size: var(--fs-sm); }
+.adm-tf-difflist, .adm-tf-list { margin: 4px 0 0; padding-left: 1.2em; display: grid; gap: 2px; }
+.adm-tf-diff del, .adm-tf-dates del { color: var(--ink-3); }
+.adm-tf-diff ins, .adm-tf-dates ins { text-decoration: none; font-weight: 700; color: var(--status-declining); }
+.adm-tf-amends { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: var(--fs-sm); }
+.adm-tf-amend { padding: 6px 8px; border: 1px solid var(--line); border-radius: var(--radius-sm); overflow-wrap: anywhere; }
+.adm-tf-amend.is-new { border-style: dashed; background: var(--paper); }
+.adm-tf-amend time, .adm-tf-amends--pv time { font-variant-numeric: tabular-nums; color: var(--ink-2); }
+.adm-tf-head { display: flex; flex-wrap: wrap; gap: var(--sp-2); align-items: center; }
+.adm-tf-title { margin: var(--sp-2) 0 4px; font-size: var(--fs-md); overflow-wrap: anywhere; }
+.adm-tf-dates { margin: var(--sp-2) 0; }
+.adm-tf-dates th { width: 8em; white-space: nowrap; }
+.adm-tf-dates tr.adm-tf-changed { background: var(--status-declining-bg); }
+.adm-tf-pcc { margin: var(--sp-2) 0; }
