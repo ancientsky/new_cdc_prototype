@@ -1017,3 +1017,12 @@ html:not(.js) .vxs-form,html:not(.js) .vxs-msg,html:not(.js) .vxs-tabs,html:not(
 .c-amend-ref{font-size:var(--fs-sm)}
 .c-amend-recent{margin:var(--sp-3) 0}
 .c-amend-flag{display:inline}
+/* 第十八輪：權責單位連結與單位介紹頁 */
+.c-unitlink{color:inherit;text-decoration:underline;text-decoration-color:var(--green-600);text-underline-offset:2px}
+.c-unitlink:hover,.c-unitlink:focus-visible{color:var(--green-900);text-decoration-thickness:2px}
+.c-org__name a{color:inherit;text-decoration:none}.c-org__name a:hover,.c-org__name a:focus-visible{text-decoration:underline}
+.c-unitpage{display:grid;grid-template-columns:minmax(0,2fr) minmax(260px,1fr);gap:var(--sp-5);align-items:start}
+@media (max-width:860px){.c-unitpage{grid-template-columns:1fr}}
+.c-unitpage__duties{margin:0;padding-left:1.2em}.c-unitpage__duties li{margin:4px 0}
+.c-unitpage__unverified{border-left:3px solid var(--status-rising);padding-left:var(--sp-3);font-size:var(--fs-sm)}
+.c-unitpage .c-kv{display:grid;gap:var(--sp-2);margin:0}.c-unitpage .c-kv div{display:flex;gap:var(--sp-2);flex-wrap:wrap}.c-unitpage .c-kv dt{font-weight:700;color:var(--ink-2);min-width:7em}.c-unitpage .c-kv dd{margin:0}

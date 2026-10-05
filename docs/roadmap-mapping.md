@@ -33,6 +33,8 @@
 | 三層露出（預設／狀況／按需／專業） | 元件與 `data-view` 切換 | 已示範 | — |
 | 疫情態勢層（四級狀態人工發布） | `situation/current.json`、`/admin/situation/` | 已示範 | 與 nidss 資料管線自動帶入數字（狀態仍人工） |
 | 專業人員專區 | `/pro/`：角色、版本異動、訂閱、常用作業、專業問答 | 已示範 | 真實登入與個人化、電子郵件寄送 |
+| 後台登入與權限 | `/admin/login/` 模擬機關 SSO；角色×單位規則、鎖單位視角、拒絕存取卡、本機稽核（`auth-rules.js` 一份規則） | 已示範（前端模擬） | 真實 OIDC＋MFA、AD 群組同步、閘道 403、集中式稽核；見 [admin-auth.md](admin-auth.md) |
+| 權責單位可點 | 全站 `unitLink` → `/about/units/{slug}/` 單位介紹頁（簡介、業務、負責內容自動列） | 已示範 | 各單位確認簡介與現行官網介紹頁網址（`introVerified`／`officialUrlVerified`） |
 | 文件庫與異動對照 | `/documents/`、`changes` | 已示範 | 手冊與指引全量結構化、機讀版 |
 | 內容管理後台（上架預處理、複核、待辦、發布車道） | `/admin/*`（純前端）；第九輪起 `/admin/publish/` 型別一選就顯示**發布車道**徽章（快車道、一般車道、緊急發布）與一句說明、`publishAt` 排程與 `urgent` 緊急欄位與預檢、「**模擬送出**」時間軸（建立分支 → 開 PR → CI 檢查 → 車道判定 → 自動合併或等待審核 → 部署 → 預覽網址）；後台之後的流程在 GitHub Actions 上**真的會跑**：`content-pr.yml` 檢查與車道判定、快車道自動合併、PR 預覽網址 `…/preview/pr-{N}/`、`lane-sla.yml` 逾期提醒、`pages.yml` 每 2 小時重建讓排程到點上線；治理引擎自動開上線後複核待辦 `post-publish-review` | **已示範**（流程與規則；後台為純前端，送出為模擬） | 後端或表單服務代承辦人開 PR（原型只下載上架包）；機關可控的 Git 與 CI 平台；**預覽環境的存取控制**（原型公開）；團隊與分支保護；車道範圍、SLA 與審核人由委員會核定；精準排程與緊急發布通知管道；試行兩個月並以實測校正。見 [publishing-lanes.md](publishing-lanes.md) |
 | 舊內容匯入（批次轉換） | `scripts/import-legacy.mjs` 讀舊站匯出（每頁 `.html`＋`.json` 側檔，格式見 [legacy-import.md](legacy-import.md)）→ 依規則檔 `content/migration/import/_import-rules.json` 轉成內容**草稿**（`status: review`、信心 0–1、問題清單）、搬附件並宣告 `assets`、輸出批次報告與移轉清單更新建議；`/admin/import/` 看報告；結核病 40 個舊頁為第一批（模擬匯出） | **部分**（工具與流程已示範；匯出為依既有內容反推的**模擬**） | 資訊室實作真實匯出；規則與信心門檻用真實樣本校準；各欄目類別→單位對照；轉換品質抽樣檢視；久遠內容封存年限；PDF 的選擇性轉換 |

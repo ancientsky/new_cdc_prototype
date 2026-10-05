@@ -911,6 +911,20 @@ const ROWS_C2 = {
   'about.org.steward': ['Steward', 'Steward'], 'about.org.content': ['負責內容', 'Content'], 'about.org.wl': ['白名單', 'Whitelisted'], 'about.org.latest': ['最近審閱', 'Last review'],
   'about.org.office': ['署長室與幕僚室', 'Offices'], 'about.org.division': ['業務組', 'Divisions'], 'about.org.center': ['中心', 'Centers'], 'about.org.regional': ['區管制中心', 'Regional centers'], 'about.org.staff': ['幕僚', 'Staff units'], 'about.org.committee': ['委員會', 'Committees'],
   'about.org.note': ['原型：組織與數字僅示範資料治理的呈現，不代表署內實際編制。', 'Prototype: the organization and counts demonstrate data governance only and do not describe the real structure.'],
+  /* 第十八輪：單位介紹頁 /about/units/{slug}/ */
+  'unit.page.trail': ['組織架構', 'Organization'],
+  'unit.page.lead': ['本頁由單位主檔自動產生：單位簡介、主要業務、在本網站負責維護的內容，以及聯絡方式。', 'Generated from the unit master data: introduction, main duties, the content this unit maintains on this site, and how to contact it.'],
+  'unit.page.intro': ['單位簡介', 'About this unit'], 'unit.page.duties': ['主要業務', 'Main duties'], 'unit.page.content': ['在本網站負責維護的內容', 'Content maintained on this site'],
+  'unit.page.stats': ['負責內容 {content} 項，其中 {wl} 項已進 AI 白名單；最近一次審閱 {latest}。', '{content} content items, {wl} in the AI whitelist; last review {latest}.'],
+  'unit.page.nocontent': ['此單位目前沒有在本網站維護內容。', 'This unit does not currently maintain content on this site.'],
+  'unit.page.more': ['還有 {n} 項', '{n} more'],
+  'unit.page.official': ['官網（現行網站）介紹頁', 'Page on the current website'],
+  'unit.page.official.pending': ['現行網站的單位介紹頁網址待權責單位補上（原型開發環境無法連到 cdc.gov.tw 確認）。', 'The unit page URL on the current website is pending confirmation by the unit (the prototype environment cannot reach cdc.gov.tw).'],
+  'unit.page.unverified': ['簡介文字為原型依公開資訊撰寫，尚待該單位確認。', 'The introduction was drafted for the prototype from public information and awaits confirmation by the unit.'],
+  'unit.page.contact': ['聯絡', 'Contact'], 'unit.page.contact.text': ['各單位電話與署長信箱見聯絡頁；防疫專線 1922。', 'Phone numbers and the Director-General’s mailbox are on the contact page; hotline 1922.'],
+  'unit.page.steward': ['Data Steward 職稱', 'Data steward'], 'unit.page.kind': ['類別', 'Type'],
+  'unit.page.back': ['回組織架構圖', 'Back to the organization chart'], 'unit.page.all': ['所有單位', 'All units'],
+  'unit.link.title': ['看這個單位的介紹', 'About this unit'],
   'about.contact': ['防疫專線、各單位聯絡方式與署長信箱請見聯絡頁。', 'Hotline, unit contacts and the Director-General’s mailbox are on the contact page.'],
 
   /* 聯絡 */

@@ -3,7 +3,7 @@ import { html, raw } from '../../../scripts/lib/render.mjs';
 import { md } from '../../../scripts/lib/markdown.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
 import {
-  ldFor, breadcrumb, pageHead, provenance, alerts, pageData, scopeTags, feedback, translationBadge, hrefFor, isFallbackLink, L, unitName, publishedOf, slugOf,
+  ldFor, breadcrumb, pageHead, provenance, alerts, pageData, scopeTags, feedback, translationBadge, hrefFor, isFallbackLink, L, unitName, unitLink, publishedOf, slugOf,
   itemPath, extLink, mdHeader, proScope, pill, diseaseName, diseaseHref,
 } from './_partials.mjs';
 import { resolveDoc } from './lab.mjs';
@@ -63,7 +63,7 @@ function detail(ctx, r) {
     <aside class="c-cols__side">
       <section class="c-aside-card"><h2>${t('research.facts')}</h2><dl class="c-deflist c-deflist--sm">
         <div><dt>${t('research.col.pi')}</dt><dd>${r.piUnit ?? '—'}</dd></div>
-        <div><dt>${t('prov.owner')}</dt><dd>${unitName(ctx, r.owner)}</dd></div>
+        <div><dt>${t('prov.owner')}</dt><dd>${unitLink(ctx, r.owner)}</dd></div>
         ${r.fundingType ? html`<div><dt>${t('research.funding')}</dt><dd>${t(`research.funding.${r.fundingType}`)}</dd></div>` : ''}
         ${r.budgetNtd ? html`<div><dt>${t('notice.budget')}</dt><dd>NT$ ${Number(r.budgetNtd).toLocaleString('en-US')}</dd></div>` : ''}
         <div><dt>IRB</dt><dd>${r.irb?.required ? html`${t('research.irb.yes')}${r.irb.approvalNo ? html`<br>${r.irb.approvalNo}` : ''}${r.irb.committee ? html`<br><span class="muted">${r.irb.committee}</span>` : ''}` : t('research.irb.no')}</dd></div>

@@ -1,7 +1,7 @@
 // 民眾端共用元件（partials）：12 個治理元件 + 常用區塊。底線開頭，不會被當成頁面。
 // 其他 agent（D 答案頁、E、F）可直接 import；class 名稱是跨 agent 契約，請勿更動。
 import { sparklineSvg } from '../../client/charts.js';
-import { html, raw, esc } from '../../../scripts/lib/render.mjs';
+import { html, raw, esc, makeUrl } from '../../../scripts/lib/render.mjs';
 import { config } from '../../../site.config.mjs';
 import * as JL from '../../../scripts/lib/jsonld.mjs';
 
@@ -73,6 +73,17 @@ export function unitName(ctx, id) {
   if (!u) return id ?? '';
   return ctx.lang === 'zh-TW' ? u.name : (u.nameEn ?? u.name);
 }
+/** 第十八輪：單位介紹頁路徑 /about/units/{slug}/（slug 缺時由 id 推）。單位頁只出 zh-TW 與 en；其他語言連到英文頁（hrefFor 會處理） */
+export const unitPath = (u) => (u ? `/about/units/${u.slug ?? String(u.id).replace(/^unit\./, '')}/` : null);
+export const UNIT_PAGE_LANGS = ['zh-TW', 'en'];
+/** 權責單位名稱改為可點的連結（連到該單位介紹頁）；找不到單位時退回純文字。每個權責單位欄位都用這個，不要只放名字。 */
+export function unitLink(ctx, id, { cls = 'c-unitlink' } = {}) {
+  const u = unitOf(ctx, id);
+  if (!u) return unitName(ctx, id);
+  const lang = UNIT_PAGE_LANGS.includes(ctx.lang) ? ctx.lang : 'en';
+  const href = lang === ctx.lang ? ctx.url(unitPath(u)) : makeUrl(lang)(unitPath(u));
+  return html`<a class="${cls}" href="${href}" title="${ctx.t('unit.link.title')}"${lang !== ctx.lang ? raw(` hreflang="${lang}"`) : ''}>${unitName(ctx, id)}</a>`;
+}
 export function diseaseName(ctx, dm) {
   if (!dm) return '';
   if (ctx.lang === 'zh-TW') return dm.name;
@@ -127,7 +138,7 @@ export function provenance(ctx, item, { showAi = true, extra = null } = {}) {
   const supBy = g.supersededBy ? ctx.site.byId.get(g.supersededBy) : null;
   return html`<div class="c-provenance">
   <p class="c-provenance__line">
-    <span><span class="c-provenance__k">${t('prov.owner')}</span> ${unitName(ctx, item.owner)}</span>
+    <span><span class="c-provenance__k">${t('prov.owner')}</span> ${unitLink(ctx, item.owner)}</span>
     <span><span class="c-provenance__k">${t('prov.reviewed')}</span> <time datetime="${item.reviewedAt}">${fmtDate(item.reviewedAt)}</time></span>
     ${g.nextReviewAt ? html`<span><span class="c-provenance__k">${t('prov.next')}</span> <time datetime="${g.nextReviewAt}">${fmtDate(g.nextReviewAt)}</time></span>` : ''}
     ${showAi && g.whitelist?.effective ? html`<span class="c-provenance__ai">${t('prov.ai')}</span>` : ''}
@@ -213,7 +224,7 @@ export function statusTag(ctx, it, { label = null } = {}) {
   const id = uid('stp-');
   const pub = site.situation.publisher;
   return html`<span class="c-status"><span class="c-status-tag c-status-tag--${it.status}" tabindex="0" role="button" aria-describedby="${id}"${label ? raw(` aria-label="${esc(label)}"`) : ''}>${t(`status.${it.status}`)}</span><span class="c-status__pop" id="${id}" role="tooltip">
-  <span><b>${t('status.pop.publisher')}</b> ${unitName(ctx, pub)}</span>
+  <span><b>${t('status.pop.publisher')}</b> ${unitLink(ctx, pub)}</span>
   <span><b>${t('status.pop.effective')}</b> ${fmtDate(site.situation.publishedAt)}</span>
   <span><b>${t('status.pop.basis')}</b> ${it.basis}</span>
   <span class="c-status__pop-note">${t('status.pop.note')}</span></span></span>`;
@@ -555,7 +566,7 @@ export function noticeRow(ctx, n) {
   return html`<li class="c-notice${closed ? ' c-notice--closed' : ''}" data-type="${n.newsType}" data-state="${closed ? 'closed' : 'open'}">
   <div class="c-notice__main">
     <p class="c-notice__t"><span class="c-pill c-pill--${n.newsType === 'recruit' ? 'info' : n.newsType === 'procurement' ? 'warn' : 'neutral'}">${t(`news.type.${n.newsType}`)}</span> <a href="${href}"${fb ? raw(' lang="zh-TW"') : ''}>${fb ? n.title : L(ctx, n, 'title')}</a></p>
-    <p class="c-notice__meta muted">${n.refNo ? html`${t('notice.refNo')}：${n.refNo} · ` : ''}${t('news.published')} ${fmtDate(n.publishedAt)} · ${unitName(ctx, n.owner)}${n.positions ? ` · ${t('notice.positions')}：${n.positions}` : ''}${n.budgetNtd ? ` · ${t('notice.budget')}：${Number(n.budgetNtd).toLocaleString('en-US')}` : ''}</p>
+    <p class="c-notice__meta muted">${n.refNo ? html`${t('notice.refNo')}：${n.refNo} · ` : ''}${t('news.published')} ${fmtDate(n.publishedAt)} · ${unitLink(ctx, n.owner)}${n.positions ? ` · ${t('notice.positions')}：${n.positions}` : ''}${n.budgetNtd ? ` · ${t('notice.budget')}：${Number(n.budgetNtd).toLocaleString('en-US')}` : ''}</p>
   </div>
   <div class="c-notice__side">${deadlinePill(ctx, n)}${n.applyUrl && !closed ? html`<a class="c-btn c-btn--sm c-btn--ghost" href="${n.applyUrl}" rel="noopener">${n.newsType === 'procurement' ? t('notice.bid') : t('notice.apply')} ↗</a>` : ''}</div>
 </li>`;

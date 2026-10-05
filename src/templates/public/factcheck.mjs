@@ -1,7 +1,7 @@
 // 謠言查證：貼上訊息 → 判定（D 的 factcheck.js 掛到 #factcheck-result）；下方列出最近澄清（伺服器端 render）。
 import { html, raw } from '../../../scripts/lib/render.mjs';
 import { md } from '../../../scripts/lib/markdown.mjs';
-import { ldFor, pageHead, sectionHead, verdictPill, provenance, alerts, hrefFor, L, publishedOf, byDateDesc, unitName, isFallbackLink, translationBadge, langOk } from './_partials.mjs';
+import { ldFor, pageHead, sectionHead, verdictPill, provenance, alerts, hrefFor, L, publishedOf, byDateDesc, unitName, unitLink, isFallbackLink, translationBadge, langOk } from './_partials.mjs';
 
 export function meta(ctx) {
   return { title: ctx.t('nav.factcheck'), description: ctx.t('factcheck.desc'), styles: ['/assets/styles/answer.css'], scripts: ['/assets/js/answer/factcheck.js'], jsonLd: ldFor(ctx, null, [{ label: ctx.t('nav.factcheck') }]) };
@@ -21,7 +21,7 @@ export function clarificationCard(ctx, c) {
   ${alerts(ctx, c)}
   <div class="c-clarcard__body" ${fb ? raw('lang="zh-TW"') : ''}>${raw(md(body))}</div>
   ${share ? html`<div class="c-share"><p class="c-share__t">${t('factcheck.share')}</p><p class="c-share__text" id="sh-${c.id}">${share}</p><button type="button" class="c-btn c-btn--sm c-btn--ghost" data-copy-target="sh-${c.id}" data-done="${t('copied')}">${t('copy')}</button></div>` : ''}
-  <p class="muted">${t('factcheck.report')}：${c.reportChannel ?? '1922'} · ${t('prov.owner')} ${unitName(ctx, c.owner)} · ${t('prov.reviewed')} ${fmtDate(c.reviewedAt)}</p>
+  <p class="muted">${t('factcheck.report')}：${c.reportChannel ?? '1922'} · ${t('prov.owner')} ${unitLink(ctx, c.owner)} · ${t('prov.reviewed')} ${fmtDate(c.reviewedAt)}</p>
 </article>`;
 }
 

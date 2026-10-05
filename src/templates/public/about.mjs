@@ -3,7 +3,7 @@ import { html, raw } from '../../../scripts/lib/render.mjs';
 import { md } from '../../../scripts/lib/markdown.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
 import * as JL from '../../../scripts/lib/jsonld.mjs';
-import { ldFor, pageHead, translationBadge, feedback, L, unitName, ownerStats, hrefFor, PAGE_PATHS } from './_partials.mjs';
+import { ldFor, pageHead, translationBadge, feedback, L, unitName, unitLink, unitPath, ownerStats, hrefFor, PAGE_PATHS } from './_partials.mjs';
 import { standalonePath } from './page.mjs';
 import { intlTopic } from './_international.mjs';
 
@@ -25,7 +25,7 @@ export function meta(ctx) {
 const pg = (site, id) => { const p = site.byId.get(id); return p && p.status === 'published' ? p : null; };
 
 function provLine(ctx, p) {
-  return html`<p class="c-about__prov muted">${ctx.t('prov.owner')}：${unitName(ctx, p.owner)} · ${ctx.t('prov.reviewed')} ${ctx.fmtDate(p.reviewedAt)}</p>`;
+  return html`<p class="c-about__prov muted">${ctx.t('prov.owner')}：${unitLink(ctx, p.owner)} · ${ctx.t('prov.reviewed')} ${ctx.fmtDate(p.reviewedAt)}</p>`;
 }
 
 function pageSection(ctx, sec, { open = false, fallback = null } = {}) {
@@ -46,7 +46,7 @@ function unitCard(ctx, u) {
   const { t, lang } = ctx;
   const st = ownerStats(ctx.site, u.id);
   return html`<li class="c-org__unit c-org__unit--${u.kind}" id="${u.id.replace('unit.', 'u-')}">
-  <strong class="c-org__name">${lang === 'zh-TW' ? u.name : (u.nameEn ?? u.name)}</strong>
+  <strong class="c-org__name"><a href="${ctx.url(unitPath(u))}">${lang === 'zh-TW' ? u.name : (u.nameEn ?? u.name)}</a></strong>
   ${lang === 'zh-TW' && u.nameEn ? html`<span class="c-org__en" lang="en">${u.nameEn}</span>` : (lang !== 'zh-TW' ? html`<span class="c-org__en" lang="zh-TW">${u.name}</span>` : '')}
   ${u.stewardTitle ? html`<span class="c-org__steward">${t('about.org.steward')}：${u.stewardTitle}</span>` : ''}
   <span class="c-org__counts"><span>${t('about.org.content')} <b>${st.content}</b></span><span>${t('about.org.wl')} <b>${st.whitelist}</b></span></span>

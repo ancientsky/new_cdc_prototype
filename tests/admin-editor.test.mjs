@@ -17,6 +17,7 @@ import { marked } from 'marked';
 import { htmlToMd, mdToHtml, sanitizeHtml, parseHtml, safeUrl, fileRefs, plainTextToHtml } from '../src/client/admin/md-convert.js';
 import { createZip, crc32, zipPath } from '../src/client/admin/zip-store.js';
 import * as P from '../src/client/admin/preprocess.js';
+import { makeSession, DEMO_ACCOUNTS } from '../src/client/admin/auth-rules.js';
 const { scanSvg, sniffMismatch, svgSize } = P;
 import { config } from '../site.config.mjs';
 
@@ -492,6 +493,8 @@ test('端到端：所見即所得 → Markdown → 預覽 → 加 PNG 與 PDF �
     for (let i = 0; i < 50; i++) { try { if ((await fetch(`${base}/admin/publish/`)).ok) break; } catch { /* wait */ } await new Promise((r) => setTimeout(r, 100)); }
     const ctx = await browser.newContext({ viewport: { width: 1360, height: 1100 }, acceptDownloads: true });
     const page = await ctx.newPage();
+    // 第十八輪：後台需登入，先種一個示範工作階段（同 /admin/login/ 選帳號後的結果）
+    await ctx.addInitScript(({ s }) => { localStorage.setItem('cdc.admin.session', JSON.stringify(s)); }, { s: makeSession(DEMO_ACCOUNTS[0]) });
     page.on('pageerror', (e) => errors.push(e.message));
     page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
     await page.goto(`${base}/admin/publish/`);

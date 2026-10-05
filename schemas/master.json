@@ -12,7 +12,16 @@
         "nameEn": { "type": "string" },
         "kind": { "enum": ["division", "center", "office", "regional", "staff", "committee"] },
         "stewardTitle": { "type": "string" },
-        "contact": { "type": "string" }
+        "contact": { "type": "string" },
+        "publishes": { "type": "boolean" },
+        "note": { "type": "string" },
+        "slug": { "type": "string", "pattern": "^[a-z0-9-]+$", "description": "第十八輪：單位介紹頁路徑 /about/units/{slug}/" },
+        "intro": { "type": "string", "description": "單位簡介（中文）；introVerified=false 表示原型撰寫、待單位確認" },
+        "introEn": { "type": "string" },
+        "introVerified": { "type": "boolean" },
+        "duties": { "type": "array", "items": { "type": "string" } },
+        "officialUrl": { "type": ["string", "null"], "description": "cdc.gov.tw 上的單位介紹頁；開發環境無法確認，先留 null" },
+        "officialUrlVerified": { "type": "boolean" }
       }
     },
     "diseaseMaster": {

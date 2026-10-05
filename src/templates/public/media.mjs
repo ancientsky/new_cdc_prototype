@@ -4,7 +4,7 @@ import { md } from '../../../scripts/lib/markdown.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
 import { config } from '../../../site.config.mjs';
 import {
-  ldFor, breadcrumb, pageHead, provenance, alerts, alertBox, pageData, scopeTags, feedback, translationBadge, hrefFor, isFallbackLink, L, unitName,
+  ldFor, breadcrumb, pageHead, provenance, alerts, alertBox, pageData, scopeTags, feedback, translationBadge, hrefFor, isFallbackLink, L, unitName, unitLink,
   publishedOf, slugOf, diseasePage, diseaseName, itemPath, mediaCard, posterImg, fmtDur, isMediaOutdated, currentBasis, refItem, mdHeader, extLink,
 } from './_partials.mjs';
 
@@ -132,7 +132,7 @@ function detail(ctx, m) {
     <aside class="c-cols__side">
       ${diseases.length ? html`<section class="c-aside-card"><h2>${t('news.related')}</h2><ul class="c-linklist">${diseases.map((d) => html`<li>${d.page ? html`<a href="${hrefFor(ctx, d.page)}">${L(ctx, d.page, 'title')}</a>` : diseaseName(ctx, d.dm)}</li>`)}</ul></section>` : ''}
       <section class="c-aside-card"><h2>${t('media.info')}</h2><dl class="c-deflist c-deflist--sm">
-        <div><dt>${t('prov.owner')}</dt><dd>${unitName(ctx, m.owner)}</dd></div>
+        <div><dt>${t('prov.owner')}</dt><dd>${unitLink(ctx, m.owner)}</dd></div>
         ${m.captions?.length ? html`<div><dt>${t('media.captions')}</dt><dd>${m.captions.map(langLabel).join('、')}</dd></div>` : ''}
         ${m.targetGroups?.length ? html`<div><dt>${t('media.target')}</dt><dd>${m.targetGroups.join('、')}</dd></div>` : ''}
         ${m.series ? html`<div><dt>${t('media.series')}</dt><dd>${m.series}</dd></div>` : ''}

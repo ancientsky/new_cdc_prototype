@@ -5,7 +5,7 @@ import { html, raw } from '../../../scripts/lib/render.mjs';
 import { md } from '../../../scripts/lib/markdown.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
 import {
-  ldFor, breadcrumb, pageHead, provenance, alerts, pageData, feedback, translationBadge, hrefFor, isFallbackLink, L, unitName, extLink, isExternal,
+  ldFor, breadcrumb, pageHead, provenance, alerts, pageData, feedback, translationBadge, hrefFor, isFallbackLink, L, unitName, unitLink, extLink, isExternal,
   pill, alertBox, mdHeader, daysUntil,
 } from './_partials.mjs';
 import {
@@ -76,7 +76,7 @@ function jobCard(ctx, j, tab) {
     <p class="c-job__meta">${j.jobType ? pill(L(ctx, j, 'jobType') ?? j.jobType, 'info') : ''}${showStage ? html` ${stagePill(ctx, stage)}` : ''}${j.applyUrl && stage === 'open' ? html` ${pill(t('job.method.external'), 'neutral')}` : ''}${amended ? html` <span class="c-amend-flag" data-amended>${pill(t('job.amend.pill'), 'warn')}</span>` : ''}</p>
     <h3 class="c-job__t"><a href="${hrefFor(ctx, { ...j, type: 'job' })}"${fb ? raw(' lang="zh-TW"') : ''}>${fb ? j.title : L(ctx, j, 'title')}</a></h3>
     <dl class="c-job__facts">
-      ${j.hiringUnit ? html`<div><dt>${t('job.unit')}</dt><dd>${unitName(ctx, j.hiringUnit)}</dd></div>` : ''}
+      ${j.hiringUnit ? html`<div><dt>${t('job.unit')}</dt><dd>${unitLink(ctx, j.hiringUnit)}</dd></div>` : ''}
       ${j.positions != null ? html`<div><dt>${t('job.positions')}</dt><dd>${t('job.positions.n', { n: j.positions })}</dd></div>` : ''}
       ${j.workplace ? html`<div><dt>${t('job.workplace')}</dt><dd>${j.workplace}</dd></div>` : ''}
       ${j.applyMethod ? html`<div><dt>${t('job.method')}</dt><dd>${t(`job.method.${j.applyMethod}`)}</dd></div>` : ''}
@@ -231,7 +231,7 @@ function detail(ctx, j) {
   return html`${breadcrumb(ctx, trailOf(ctx, j))}
 <article class="c-article c-job-detail" data-job="${j.id}" data-stage="${stage}">
   <header class="c-pagehead"><div class="c-pagehead__main">
-    <p class="c-article__meta">${stagePill(ctx, stage)} ${j.jobType ? pill(L(ctx, j, 'jobType') ?? j.jobType, 'info') : ''} <span>${t('job.unit')}：${j.hiringUnit ? unitName(ctx, j.hiringUnit) : unitName(ctx, j.owner)}</span></p>
+    <p class="c-article__meta">${stagePill(ctx, stage)} ${j.jobType ? pill(L(ctx, j, 'jobType') ?? j.jobType, 'info') : ''} <span>${t('job.unit')}：${unitLink(ctx, j.hiringUnit || j.owner)}</span></p>
     <h1>${L(ctx, j, 'title')}</h1>
     ${L(ctx, j, 'summary') ? html`<p class="lead">${L(ctx, j, 'summary')}</p>` : ''}
     ${langStatus && lang !== 'zh-TW' ? html`<p>${translationBadge(ctx, langStatus === 'reviewed' ? 'reviewed' : 'machine')}</p>` : ''}
@@ -252,13 +252,13 @@ function detail(ctx, j) {
         <div class="c-tablewrap"><table class="c-table"><thead><tr><th scope="col">${t('job.col.stage')}</th><th scope="col">${t('job.col.date')}</th><th scope="col">${t('job.col.note')}</th></tr></thead>
         <tbody>${exams.map((e) => html`<tr><th scope="row">${e.stage}</th><td>${e.date ? html`<time datetime="${e.date}">${fmtDate(e.date)}</time>` : t('job.tl.tba')}</td><td>${e.note ?? ''}</td></tr>`)}</tbody></table></div></section>` : ''}
       ${j.attachments?.length ? html`<section class="c-block" id="attachments" aria-labelledby="h-att"><h2 id="h-att">${t('news.attach')}</h2><ul class="c-linklist">${j.attachments.map((a) => html`<li>${(isExternal(a.url) ? extLink(ctx, a.url, a.label) : html`<a href="${url(a.url)}">${a.label}</a>`)} ${a.machineReadable ? pill(t('news.attach.mr'), 'ok') : ''}</li>`)}</ul></section>` : ''}
-      ${j.contact ? html`<section class="c-block" id="contact" aria-labelledby="h-contact"><h2 id="h-contact">${t('job.s.contact')}</h2><p>${j.contact}</p><p class="muted">${unitName(ctx, j.owner)}</p></section>` : ''}
+      ${j.contact ? html`<section class="c-block" id="contact" aria-labelledby="h-contact"><h2 id="h-contact">${t('job.s.contact')}</h2><p>${j.contact}</p><p class="muted">${unitLink(ctx, j.owner)}</p></section>` : ''}
       ${feedback(ctx, { page: ctx.path })}
     </div>
     <aside class="c-cols__side">
       <section class="c-aside-card c-jobfacts"><h2>${t('job.facts')}</h2>
         <dl class="c-deflist c-deflist--sm">
-          ${j.hiringUnit ? html`<div><dt>${t('job.unit')}</dt><dd>${unitName(ctx, j.hiringUnit)}</dd></div>` : ''}
+          ${j.hiringUnit ? html`<div><dt>${t('job.unit')}</dt><dd>${unitLink(ctx, j.hiringUnit)}</dd></div>` : ''}
           ${j.jobType ? html`<div><dt>${t('job.type')}</dt><dd>${L(ctx, j, 'jobType') ?? j.jobType}</dd></div>` : ''}
           ${j.positions != null ? html`<div><dt>${t('job.positions')}</dt><dd>${t('job.positions.n', { n: j.positions })}</dd></div>` : ''}
           ${j.workplace ? html`<div><dt>${t('job.workplace')}</dt><dd>${j.workplace}</dd></div>` : ''}

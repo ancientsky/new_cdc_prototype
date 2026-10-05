@@ -426,3 +426,27 @@ body.adm { background: var(--paper); color: var(--ink); min-height: 100vh; displ
 .adm-tf-dates th { width: 8em; white-space: nowrap; }
 .adm-tf-dates tr.adm-tf-changed { background: var(--status-declining-bg); }
 .adm-tf-pcc { margin: var(--sp-2) 0; }
+
+/* 第十八輪：登入與身分列 */
+.adm-who__id { display: flex; flex-direction: column; line-height: 1.25; }
+.adm-who__role { font-size: var(--fs-xs); color: #cfe3d8; }
+.adm-who__lbl { font-size: var(--fs-xs); color: #cfe3d8; }
+.adm-who select[aria-readonly="true"] { background: #e5efe9; color: var(--ink-2); cursor: not-allowed; }
+.adm-who__logout { font: inherit; font-size: var(--fs-sm); padding: 4px 12px; border-radius: var(--radius-sm); border: 1px solid #5e8c76; background: transparent; color: #fff; cursor: pointer; }
+.adm-who__logout:hover { background: #5e8c76; }
+.adm-login__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: var(--sp-5); align-items: start; }
+.adm-login__sso { grid-column: 1 / -1; }
+.adm-login__steps { display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-4); margin: 0 0 var(--sp-4); padding-left: 1.2em; font-size: var(--fs-sm); color: var(--ink-2); }
+.adm-login__steps li { flex: 1 1 180px; }
+.adm-login__accounts .adm-fieldset { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--sp-2); }
+.adm-login__acct { display: flex; gap: var(--sp-2); align-items: flex-start; border: 1px solid var(--line); border-radius: var(--radius-sm); padding: var(--sp-2) var(--sp-3); background: #fff; cursor: pointer; }
+.adm-login__acct:has(input:checked) { border-color: var(--green-700); box-shadow: 0 0 0 2px var(--green-50); }
+.adm-login__acct input { margin-top: 4px; }
+.adm-login__acct-main { flex: 1; font-size: var(--fs-sm); }
+.adm-login__acct-roles { display: flex; flex-wrap: wrap; gap: 4px; max-width: 45%; justify-content: flex-end; }
+.adm-tag { display: inline-block; font-size: var(--fs-xs); padding: 1px 8px; border-radius: var(--radius-pill); background: var(--green-50); color: var(--green-900); border: 1px solid #cfe3d8; }
+.adm-login__actions { margin: var(--sp-4) 0 0; display: flex; gap: var(--sp-3); align-items: center; flex-wrap: wrap; }
+.adm-login__manual { display: grid; gap: var(--sp-3); }
+.adm-login__roledesc { margin: var(--sp-3) 0 0; padding-left: 1.2em; font-size: var(--fs-xs); color: var(--ink-3); }
+.adm-login__already { background: var(--green-50); border: 1px solid #cfe3d8; border-radius: var(--radius-sm); padding: var(--sp-3) var(--sp-4); display: flex; gap: var(--sp-3); align-items: center; flex-wrap: wrap; margin-bottom: var(--sp-4); }
+.adm-denied { border-left: 5px solid var(--status-peak); }

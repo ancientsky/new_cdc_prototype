@@ -1,6 +1,8 @@
 // 後台共用：單位切換、localStorage、v1 讀取、匯出工具。所有後台頁都載入（layout 在每頁加入）。
 // localStorage key 一覽：
-//   cdc.admin.unit          示範身分（單位 id 或 'all'）
+//   cdc.admin.session       登入工作階段（第十八輪；{sub,name,unit,roles,exp,lastSeen…}，見 auth-rules.js）
+//   cdc.admin.audit         登入稽核（append-only，最多 200 筆）
+//   cdc.admin.unit          單位視角（單位 id 或 'all'；只有跨單位角色能改）
 //   cdc.admin.draft         上架表單草稿
 //   cdc.admin.queue         已送複核的草稿佇列
 //   cdc.admin.reviewActions 複核區「通過／退回」紀錄
@@ -13,6 +15,8 @@
 //   cdc.aiStatusOverride    AI 暫停覆寫（答案頁讀取）{paused, reason, updatedAt, updatedBy}
 //   cdc.reports             前台回報（唯讀）
 //   cdc.llmKey              BYOK（唯讀；有才會呼叫 LLM 多語初稿）
+
+import { sessionProblem, canAccess, canCrossUnit, roleLabels, auditEntry, makeSession } from './auth-rules.js';
 
 const root = document.documentElement;
 export const base = (window.CDC && window.CDC.base) ?? root.dataset.base ?? '';
@@ -56,16 +60,94 @@ export function readEmbedded(id, fallback = null) {
   try { const el = document.getElementById(id); return el ? JSON.parse(el.textContent) : fallback; } catch { return fallback; }
 }
 
-// ---------- 單位（示範身分）----------
+// ---------- 登入工作階段與單位視角（第十八輪）----------
+// 流程：每個後台頁載入 → 讀 cdc.admin.session → 無效就導到 /admin/login/?next=… → 有效就檢查這頁的角色規則 → 不允許就把主內容換成「沒有權限」卡並寫稽核。
+// 這是前端示範；正式環境由閘道／後端在回應前就擋下（docs/admin-auth.md §4），前端只是把結果顯示出來。
+const PAGE_KEY = document.body.dataset.adminPage || '';
+const SESSION_KEY = 'cdc.admin.session';
+const AUDIT_KEY = 'cdc.admin.audit';
+const AUDIT_MAX = 200;
+export function audit(kind, s = getSession(), detail = '') {
+  const list = store.get(AUDIT_KEY, []) ?? [];
+  list.push(auditEntry(kind, s, detail));
+  store.set(AUDIT_KEY, list.slice(-AUDIT_MAX));
+  document.dispatchEvent(new CustomEvent('adm:audit'));
+}
+export const getAudit = () => store.get(AUDIT_KEY, []) ?? [];
+export const getSession = () => store.get(SESSION_KEY, null);
+export function setSession(s) { if (s) store.set(SESSION_KEY, s); else store.del(SESSION_KEY); }
+export const loginUrl = (next = `${location.pathname}${location.search}`) => url(`/admin/login/?next=${encodeURIComponent(next)}`);
+export function login(account, method = 'sso-demo') {
+  const s = makeSession(account, { method });
+  if (!s) return null;
+  setSession(s); store.set('cdc.admin.unit', s.unit); audit('login', s, method === 'sso-demo' ? '機關 SSO（模擬）' : '自訂示範身分');
+  return s;
+}
+export function logout(reason = '使用者登出') {
+  const s = getSession();
+  if (s) audit('logout', s, reason);
+  setSession(null);
+  location.href = loginUrl('/admin/');
+}
+/** 進頁檢查：回傳 true 表示可以繼續載入這頁的腳本 */
+function gate() {
+  if (PAGE_KEY === 'login') return true;
+  const s = getSession();
+  const problem = sessionProblem(s);
+  if (problem) {
+    if (s && problem !== 'none') { audit('expired', s, problem === 'idle' ? '閒置逾時' : problem === 'expired' ? '工作階段到期' : '工作階段格式不符'); setSession(null); }
+    location.replace(loginUrl());
+    return false;
+  }
+  s.lastSeen = Date.now(); setSession(s);
+  if (!canAccess(s, PAGE_KEY)) {
+    audit('denied', s, `頁面 ${PAGE_KEY}`);
+    const main = $('#main');
+    if (main) {
+      // 不動原本的主內容 DOM（只隱藏），頁面自己的腳本才不會因為找不到元素而報錯；正式環境根本不會回傳這頁的內容
+      main.hidden = true;
+      const card = document.createElement('section'); card.className = 'adm-main adm-denied-wrap';
+      card.innerHTML = `<section class="adm-card adm-denied" aria-labelledby="dn-h"><h2 id="dn-h">這一頁不在你的角色權限內</h2><p>你目前的角色：<strong>${esc(roleLabels(s).join('、'))}</strong>（${esc(unitLabel(s.unit))}）。這頁需要其他角色才能進入；若業務上需要，請由單位主管向資訊室申請調整 AD 群組，不是在後台自己改。</p><p>這次嘗試已寫入稽核紀錄。<a class="adm-btn adm-btn--ghost" href="${url('/admin/mine/')}">回我的內容</a></p></section>`;
+      main.before(card);
+    }
+    document.body.dataset.denied = '1';
+    return false;
+  }
+  return true;
+}
 const unitSel = $('#adm-unit');
 const whoName = $('#adm-who-name');
+const whoRole = $('#adm-who-role');
 const savedUnit = store.get('cdc.admin.unit');
-if (unitSel && savedUnit && [...unitSel.options].some((o) => o.value === savedUnit)) unitSel.value = savedUnit;
-export const getUnit = () => unitSel?.value || 'unit.acute-infectious';
+function restrictUnits() {
+  if (!unitSel) return;
+  const s = getSession();
+  if (!s) return;
+  if (!canCrossUnit(s)) {
+    for (const o of [...unitSel.options]) { o.disabled = o.value !== s.unit; o.hidden = o.value !== s.unit; }
+    unitSel.value = s.unit; unitSel.setAttribute('aria-readonly', 'true'); unitSel.title = '你的角色只能看自己的單位；跨單位視角限總編輯、治理幕僚與平台管理';
+    store.set('cdc.admin.unit', s.unit);
+  } else if (savedUnit && [...unitSel.options].some((o) => o.value === savedUnit)) unitSel.value = savedUnit;
+}
+export const getUnit = () => unitSel?.value || getSession()?.unit || 'unit.acute-infectious';
 export const unitLabel = (id = getUnit()) => (id === 'all' ? '全部單位' : unitSel?.querySelector(`option[value="${CSS.escape(id)}"]`)?.textContent ?? id);
-function paintWho() { if (whoName) whoName.textContent = getUnit() === 'all' ? '全部單位 · 資料治理幕僚' : `${unitLabel()} · 承辦人`; }
+/** 進頁檢查結果（在 unitLabel 定義之後才呼叫，gate 內會用到它） */
+export const gateOk = gate();
+restrictUnits();
+function paintWho() {
+  const s = getSession();
+  if (whoName) whoName.textContent = s ? `${s.name}${s.title ? ` · ${s.title}` : ''}` : (PAGE_KEY === 'login' ? '尚未登入' : (getUnit() === 'all' ? '全部單位 · 資料治理幕僚' : `${unitLabel()} · 承辦人`));
+  if (whoRole) whoRole.textContent = s ? `${unitLabel(s.unit)} · ${roleLabels(s).join('、')}${getUnit() !== s.unit ? `（視角：${unitLabel()}）` : ''}` : '';
+}
 paintWho();
-unitSel?.addEventListener('change', () => { store.set('cdc.admin.unit', getUnit()); paintWho(); document.dispatchEvent(new CustomEvent('adm:unit', { detail: getUnit() })); });
+unitSel?.addEventListener('change', () => {
+  const s = getSession();
+  if (s && !canCrossUnit(s) && unitSel.value !== s.unit) { unitSel.value = s.unit; return; }
+  store.set('cdc.admin.unit', getUnit()); paintWho();
+  if (s && getUnit() !== s.unit) audit('unit-switch', s, `切換視角到 ${unitLabel()}`);
+  document.dispatchEvent(new CustomEvent('adm:unit', { detail: getUnit() }));
+});
+$('#adm-logout')?.addEventListener('click', () => logout());
 /** 註冊單位變更回呼；立即呼叫一次。 */
 export function onUnit(cb) { cb(getUnit()); document.addEventListener('adm:unit', () => cb(getUnit())); }
 /** 讓某個「單位篩選下拉」跟著右上身分走（使用者仍可手動改成「全部」）。 */

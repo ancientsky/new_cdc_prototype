@@ -883,3 +883,20 @@ manualStatus?: enum[cancelled, failed（流標）], award?: { date, winner, amou
 | 頁尾單排連結 + 右側一小塊聯絡 | 四欄分組、每欄有標題與 `aria-labelledby` | 螢幕閱讀器可按區塊跳讀；搜尋引擎能讀到站點結構；1922 專線用大字獨立一欄，手機上一眼能撥 |
 | 開發者入口頁首放「國際合作」導引卡 | 移除，國際合作留在主選單與頁尾 | 外國 API 使用者的需求由 `/en/developers/` 本身滿足；導引卡放在頁首反而像走錯頁 |
 
+## 21. 第十八輪（2026-10-05）：後台登入與角色規則、權責單位介紹頁
+
+### 21.1 後台登入契約
+
+- **規則單一來源** `src/client/admin/auth-rules.js`（純函式，無 import）：`ROLES`（六角色）、`PAGE_RULES`（後台頁 key → 允許角色；沒列＝任何已登入角色）、`CROSS_UNIT_ROLES`（可切單位視角：chief-editor、governance、platform）、`DEMO_ACCOUNTS`（示範帳號，姓名遮罩）、`makeSession`／`sessionProblem`（8 小時到期、閒置 30 分鐘）、`canAccess`／`canActAsUnit`、`auditEntry`（事件：login、logout、denied、unit-switch、expired）。登入頁的「誰能進哪些頁」表、`common.js` 閘門、`tests/round18-ui.test.mjs` 都讀這一份；正式環境閘道應匯出同一份為設定。
+- **閘門** 在 `src/client/admin/common.js` 模組開頭執行（所有後台頁第一個載入的 script）：讀 `cdc.admin.session` → 無效（無、過期、閒置、格式不符）→ `location.replace('/admin/login/?next=…')`；有效 → 更新 `lastSeen`，檢查 `canAccess(session, document.body.dataset.adminPage)`，不允許就 `#main.hidden = true`、在前面插入 `.adm-denied` 卡並寫 `audit('denied')`。**不動原本 DOM**，頁面自己的腳本才不會因找不到元素而連環錯。`gateOk` 在 `unitLabel` 定義之後才呼叫（TDZ）。
+- **單位視角**：非跨單位角色的 `#adm-unit` 只留自己單位的 option、`aria-readonly="true"`；跨單位角色切換時寫 `audit('unit-switch')`。`getUnit()` 退路改為 session 的單位。
+- **登入頁** `/admin/login/`（`adminKey: 'login'`，`PUBLIC_ADMIN_PAGES`）：layout 不出導覽列與登出鈕；`login.js` 的 `?next=` 只接受站內 `^/admin/(?!login)` 路徑（防開放式轉址）；已登入者看到「繼續到後台／改用其他身分」。
+- **localStorage 新增** `cdc.admin.session`、`cdc.admin.audit`（append-only，最多 200 筆）。登出時清 session、寫 `logout`、導回登入頁。
+- 既有端到端測試（`tests/admin-editor.test.mjs`）以 `addInitScript` 先種 `makeSession(DEMO_ACCOUNTS[0])`。
+
+### 21.2 單位介紹頁與 `unitLink`
+
+- `content/master/units.json` 新欄位（schema `schemas/master.json`）：`slug`、`intro`、`introEn`、`introVerified`、`duties[]`、`officialUrl`（null 待補）、`officialUrlVerified`。原型撰寫的簡介一律 `introVerified: false`，頁面顯示「尚待該單位確認」。
+- `src/templates/public/units.mjs`：`pages()` 對每個單位出 zh-TW 與 en 兩頁（`UNIT_PAGE_LANGS`）＋ `.md`；`unitContent(site, unitId)` 列該單位 `owner` 或 `hiringUnit` 的已發布內容，依型別分組、每型最多 8 筆；JSON-LD `GovernmentOrganization`。
+- `_partials.mjs`：`unitPath(u)` → `/about/units/{slug}/`；`unitLink(ctx, id)` 輸出 `<a class="c-unitlink">`，非中英語言連英文版並加 `hreflang="en"`，找不到單位退回純文字。**所有權責單位欄位（provenance、publisher 提示、公告 meta、申請／宣導／影音／研究／文件 dl、招募用人單位、關於與聯絡頁）一律用 `unitLink`，不要只放 `unitName`**；`unitName` 保留給屬性值、`.md` 與 JSON-LD。組織圖單位卡的名稱也連到單位頁；聯絡頁單位表改連單位頁（原本連 `/about/#u-*` 錨點）。
+- CSS：`.c-unitlink`、`.c-unitpage*`（`components.css`）；`.adm-login__*`、`.adm-who__*`、`.adm-denied`（`admin.css`）。
