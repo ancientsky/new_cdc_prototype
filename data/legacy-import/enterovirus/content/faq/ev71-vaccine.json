@@ -1,0 +1,62 @@
+{
+  "id": "faq.ev71-vaccine",
+  "type": "faq",
+  "title": "腸病毒 71 型疫苗是公費的嗎？打了就不會得腸病毒嗎？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-09-24",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "目前腸病毒 71 型疫苗屬自費接種，適用年齡依各廠牌仿單，家長可與兒科醫師討論。",
+  "question": "腸病毒 71 型疫苗是公費的嗎？打了就不會得腸病毒嗎？",
+  "answerMarkdown": "目前腸病毒 71 型疫苗屬**自費**接種，適用年齡依各廠牌仿單，家長可與兒科醫師討論。\n\n疫苗**只能預防 71 型**，無法預防克沙奇病毒等其他型別，接種後仍要落實肥皂洗手與環境消毒，並留意重症前兆。",
+  "basedOn": [
+    "disease.enterovirus"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/zID4oBmzvgDWu3fb9-fOlP"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 67 處（mso 樣式 45、Mso 類別 17、命名空間標籤 11）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「腸病毒／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/zID4oBmzvgDWu3fb9-fOlP",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.ev71-vaccine"
+    ]
+  }
+}

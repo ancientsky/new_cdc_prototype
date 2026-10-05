@@ -21,10 +21,14 @@ export function expandTemplateItems({ manifest, contentDir, index, diseaseById }
   }
   if (!tpl) return [];
   const manual = new Set((manifest.items ?? []).map((i) => i.key));
+  const manualTargets = new Set((manifest.items ?? []).map((i) => i.target).filter(Boolean));
   const omit = new Set(manifest.omit ?? []);
   const page = index.byId.get(diseaseId);
   const hasPage = page?.type === 'disease' && page.status === 'published';
-  const related = (type, pred = () => true) => [...index.byId.entries()].filter(([, v]) => v.type === type && (v.diseases ?? []).includes(diseaseId) && pred(v)).map(([id]) => id).sort();
+  // 同型別多筆時取「現行且最新」：published 優先，再依生效日新到舊（否則會對到已封存的舊版次）
+  const rank = (v) => `${v.status === 'published' ? '0' : '1'}|${String(v.effectiveAt ?? '')}`;
+  const related = (type, pred = () => true) => [...index.byId.entries()].filter(([, v]) => v.type === type && (v.diseases ?? []).includes(diseaseId) && pred(v))
+    .sort((a, b) => { const ra = rank(a[1]), rb = rank(b[1]); return ra.slice(0, 1) !== rb.slice(0, 1) ? ra.localeCompare(rb) : rb.slice(2).localeCompare(ra.slice(2)) || a[0].localeCompare(b[0]); }).map(([id]) => id);
   const out = [];
   for (const t of tpl.items ?? []) {
     if (manual.has(t.key) || omit.has(t.key)) continue;
@@ -38,6 +42,8 @@ export function expandTemplateItems({ manifest, contentDir, index, diseaseById }
         if (hits.length) { status = 'migrated'; target = hits[0]; }
       }
     }
+    // 人工例外已經指向同一份新站內容（例如疫苗專區的作業手冊＝模板「工作手冊」位置）⇒ 模板位置視為已被例外涵蓋，不再推導，避免同一份文件出現兩筆
+    if (target && target !== diseaseId && manualTargets.has(target)) continue;
     out.push({
       key: t.key, oldTitle: t.oldTitle, oldPath: `${dm.name}／${t.oldPath ?? t.oldTitle}`, oldUrl: t.oldUrlPattern, oldType: t.oldType,
       verified: false, derived: true, status, target, mapTo: t.mapTo ?? null, templateId: tpl.id,
@@ -128,7 +134,7 @@ function conflictReason(it, pr, proposed) {
 
 function suggestItem(p) {
   return {
-    page: p.key, suggest: { key: `import-${p.key}`.replace(/[^a-z0-9-]/gi, '-').toLowerCase(), oldTitle: p.source.title, oldPath: p.source.breadcrumbs.filter((b) => b !== '首頁').join('／'), oldUrl: p.source.url, oldType: p.kind === 'faq' ? 'qa' : p.kind === 'list' ? 'list' : p.kind === 'document' ? 'pdf' : 'page', verified: false, status: 'pending', note: '匯入時清單沒有對應項目，請權責單位確認後加入' },
+    page: p.key, suggest: { key: `import-${p.key}`.replace(/[^a-z0-9-]/gi, '-').toLowerCase(), oldTitle: p.source.title, oldPath: p.source.breadcrumbs.filter((b) => b !== '首頁').join('／'), oldUrl: p.source.url, oldType: p.kind === 'faq' ? 'qa' : p.kind === 'list' ? 'list' : p.kind === 'document' ? 'pdf' : p.kind === 'media' ? 'media' : ['news', 'clarification'].includes(p.kind) ? 'news' : 'page', verified: false, status: 'pending', note: '匯入時清單沒有對應項目，請權責單位確認後加入' },
   };
 }
 

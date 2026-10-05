@@ -1,0 +1,62 @@
+{
+  "id": "faq.enterovirus-return-school",
+  "type": "faq",
+  "title": "孩子腸病毒好了，什麼時候可以回學校？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-09-24",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "確診手足口病或疱疹性咽峽炎的孩子，請在家休息至少 7 天。返校前，請確認孩子已退燒、可正常進食，口腔潰瘍與水泡明顯改善。",
+  "question": "孩子腸病毒好了，什麼時候可以回學校？",
+  "answerMarkdown": "確診手足口病或疱疹性咽峽炎的孩子，**請在家休息至少 7 天**。返校前，請確認孩子已退燒、可正常進食，口腔潰瘍與水泡明顯改善。\n\n腸病毒在痊癒後仍可能從腸道排出病毒達數週，因此返校後家長與老師仍要提醒孩子**如廁後、用餐前用肥皂洗手**，並避免共用杯子與玩具。若孩子回到學校後再度發燒或有重症前兆（嗜睡、肌躍型抽搐、持續嘔吐），請立即就醫。",
+  "basedOn": [
+    "disease.enterovirus"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/zID4oBmzvgDWu3fb9-fOlP"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 67 處（mso 樣式 45、Mso 類別 17、命名空間標籤 11）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「腸病毒／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/zID4oBmzvgDWu3fb9-fOlP",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.enterovirus-return-school"
+    ]
+  }
+}

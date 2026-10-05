@@ -1,0 +1,75 @@
+{
+  "id": "doc.mmr-recommendation.2019-05-14",
+  "type": "document",
+  "title": "國內 MMR 預防接種建議（108.05.14 版）",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2019-05-14",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.measles"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "舊版 MMR 接種建議：1981 年（含）以後出生之成人，前往流行地區前評估自費接種。本版已由 114.04.16 版取代。",
+  "family": "doc.mmr-recommendation",
+  "docType": "recommendation",
+  "version": "108.05.14",
+  "effectiveAt": "2019-05-14",
+  "machineReadableMarkdown": "舊版 MMR 接種建議：1981 年（含）以後出生之成人，前往流行地區前評估自費接種。本版已由 114.04.16 版取代。\n\n### 幼兒常規接種\n\n出生滿 12 個月接種第 1 劑，滿 5 歲至入國小前接種第 2 劑。\n\n### 成人建議\n\n1981 年（含）以後出生之成人，若計畫前往麻疹流行地區，建議出國前評估自費接種 1 劑 MMR 疫苗。醫療照護工作人員建議具有麻疹免疫力。\n\n### 流行地區\n\n以疾管署國際疫情資訊為準。\n\n| 項目 | 內容 |\n| --- | --- |\n| 文件名稱 | 國內現行 MMR 預防接種建議（108.5.14 版） |\n| 版次 | 108.05.14 |\n| 生效日 | 2019-05-14 |\n| 權責單位 | 急性傳染病組 |\n| 檔案格式 | PDF |\n\n完整內容請下載附件：\\<a href=\"https://www.cdc.gov.tw/File/Get/cTCUM_BSq6o_O9hCLVtrfF\">國內現行 MMR 預防接種建議（108.5.14 版）（PDF）\\</a>",
+  "pdfUrl": "/files/doc.mmr-recommendation.2019-05-14/mmr-recommendation.2019-05-14.pdf",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/File/Get/cTCUM_BSq6o_O9hCLVtrfF"
+  ],
+  "assets": [
+    {
+      "file": "mmr-recommendation.2019-05-14.pdf",
+      "kind": "attachment",
+      "label": "國內現行 MMR 預防接種建議（108.5.14 版）",
+      "mime": "application/pdf",
+      "bytes": 704,
+      "sha256": "ee27e5660fd85e15f594840537a34505063daab46e974807cefdf38604b49c83",
+      "machineReadable": false,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 52 處（mso 樣式 18、Mso 類別 17、命名空間標籤 17）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「麻疹／預防接種」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+      },
+      {
+        "code": "pdf-no-text-layer",
+        "severity": "warn",
+        "message": "PDF「mmr-recommendation.2019-05-14.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/File/Get/cTCUM_BSq6o_O9hCLVtrfF",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "doc.mmr-recommendation.2019-05-14"
+    ]
+  }
+}

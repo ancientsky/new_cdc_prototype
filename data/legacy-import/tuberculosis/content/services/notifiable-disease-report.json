@@ -1,0 +1,93 @@
+{
+  "id": "service.notifiable-disease-report",
+  "type": "service",
+  "title": "結核病通報方式與時限",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2019-01-15",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "結核病為第三類法定傳染病，醫師診斷後應依規定通報；多重抗藥性結核病為第二類。 通報請至「傳染病通報系統」或填寫通報單傳真至轄區管制中心。",
+  "slug": "notifiable-disease-report",
+  "serviceType": "other",
+  "whoCanApply": [
+    "醫療院所"
+  ],
+  "introMarkdown": "結核病為第三類法定傳染病，醫師診斷後應依規定通報；多重抗藥性結核病為第二類。\n\n| 類別 | 病名 | 通報時限 |\n| --- | --- | --- |\n| 第二類 | 多重抗藥性結核病 | 24 小時內 |\n| 第三類 | 結核病 | 一週內 |\n\n通報請至「傳染病通報系統」或填寫通報單傳真至轄區管制中心。",
+  "steps": [
+    {
+      "title": "（待補：舊頁是查詢清單，請補申辦或查詢步驟）"
+    }
+  ],
+  "forms": [
+    {
+      "label": "傳染病通報單（PDF）",
+      "href": "/files/service.notifiable-disease-report/tb-notify-form.pdf",
+      "format": "PDF",
+      "machineReadable": false
+    }
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/_5VNYfUzdaN4SoFJHvW42f"
+  ],
+  "assets": [
+    {
+      "file": "tb-notify-form.pdf",
+      "kind": "attachment",
+      "label": "傳染病通報單（PDF）",
+      "mime": "application/pdf",
+      "bytes": 727,
+      "sha256": "13ae8c1f6edc9ee5629c60ecf43904f06fa8bee477ba1eab4bc951fe6880012f",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 34 處（mso 樣式 12、Mso 類別 11、命名空間標籤 11）"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站型別是 service（service.notifiable-disease-report），草稿直接建成 service，看不出來的欄位以「（待補）」佔位"
+      },
+      {
+        "code": "fields-pending",
+        "severity": "warn",
+        "message": "service 的欄位從舊頁看不出來，以「（待補）」佔位：steps、whoCanApply"
+      },
+      {
+        "code": "field-guessed",
+        "severity": "info",
+        "message": "標題看不出服務種類，serviceType 暫填 other"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/_5VNYfUzdaN4SoFJHvW42f",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "service.notifiable-disease-report"
+    ]
+  }
+}

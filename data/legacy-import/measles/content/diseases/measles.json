@@ -1,0 +1,263 @@
+{
+  "id": "disease.measles",
+  "type": "disease",
+  "title": "麻疹",
+  "slug": "measles",
+  "nameEn": "Measles",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2018-03-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.measles"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "麻疹是傳染力極強的病毒性疾病，可經空氣傳播。完整接種 2 劑 MMR 疫苗可有效預防；1966 年（含）以後出生、不具免疫力者出國前應評估接種。",
+  "aliases": [
+    "Measles",
+    "Rubeola",
+    "痲疹"
+  ],
+  "legalCategory": 2,
+  "icd10": [
+    "B05"
+  ],
+  "notifyWithinHours": 24,
+  "transmission": [
+    "airborne",
+    "droplet"
+  ],
+  "keyFacts": {
+    "symptoms": "麻疹初期（前驅期）會出現高燒、咳嗽、流鼻水、結膜炎，口腔內頰黏膜可能出現白色的柯氏斑（Koplik spots）。",
+    "transmission": "麻疹可經由空氣、飛沫或直接接觸病人鼻咽分泌物傳染，傳染力極強：未具免疫力的人與病人共處一室，約九成會被感染。",
+    "prevention": "幼兒依時程接種 2 劑 MMR 疫苗：出生滿 12 個月接種第 1 劑，滿 5 歲至入國小前接種第 2 劑。"
+  },
+  "blocks": [
+    {
+      "key": "what-to-do",
+      "heading": "我該怎麼辦",
+      "markdown": "",
+      "status": "pending"
+    },
+    {
+      "key": "symptoms",
+      "heading": "症狀與警示徵象",
+      "markdown": "麻疹初期（前驅期）會出現**高燒、咳嗽、流鼻水、結膜炎**，口腔內頰黏膜可能出現白色的柯氏斑（Koplik spots）。\n\n發燒 3–4 天後開始出疹，紅色斑丘疹由耳後、髮際、臉部向下擴散到全身，約持續 4–7 天後逐漸消退並留下褐色色素沉著。\n\n**注意：**呼吸急促或困難、持續高燒、抽搐、意識改變、嚴重腹瀉脫水；嬰幼兒、孕婦與免疫低下者易併發肺炎、中耳炎、腦炎。"
+    },
+    {
+      "key": "transmission",
+      "heading": "怎麼傳染",
+      "markdown": "### 致病原\n\n麻疹可經由**空氣**、飛沫或直接接觸病人鼻咽分泌物傳染，傳染力極強：未具免疫力的人與病人共處一室，約九成會被感染。病毒在空氣中可存活約 2 小時。\n\n麻疹可經由**空氣**、飛沫或直接接觸病人鼻咽分泌物傳染，傳染力極強：未具免疫力的人與病人共處一室，約九成會被感染。病毒在空氣中可存活約 2 小時。\n\n麻疹可經由**空氣**、飛沫或直接接觸病人鼻咽分泌物傳染，傳染力極強：未具免疫力的人與病人共處一室，約九成會被感染。病毒在空氣中可存活約 2 小時。\n\n出疹前 4 天至出疹後 4 天具傳染力。\n\n麻疹的潛伏期為 **7–21 天（約 14 天出疹）**。\n\n| 項目 | 內容 |\n| --- | --- |\n| 潛伏期 | 7–21 天（約 14 天出疹） |\n| 可傳染期 | 病媒／接觸相關（空氣、飛沫、接觸） |"
+    },
+    {
+      "key": "prevention",
+      "heading": "如何預防",
+      "markdown": "- 幼兒依時程接種 **2 劑 MMR 疫苗**：出生滿 12 個月接種第 1 劑，滿 5 歲至入國小前接種第 2 劑。\n- **1966 年（含）以後出生**、不具麻疹免疫力的成人，若計畫前往麻疹流行地區，建議出國前 2–4 週至旅遊醫學門診評估自費接種 1 劑 MMR；醫護人員與經常接觸外國人的工作者亦建議評估。\n- 未滿 1 歲嬰兒尚未接種疫苗，非必要不建議帶往流行地區。\n- 流行地區以疾管署「旅遊疫情建議等級」為準。"
+    },
+    {
+      "key": "treatment",
+      "heading": "診斷與治療",
+      "markdown": "麻疹沒有特效藥，以支持性治療為主，包括退燒、補充水分與營養，並治療中耳炎、肺炎等併發症。病人需隔離至出疹後 4 天。\n\n未具免疫力的接觸者，可於暴露後 **72 小時內**接種 MMR 疫苗，或於 6 天內由醫師評估注射免疫球蛋白，以降低發病風險或減輕症狀。"
+    },
+    {
+      "key": "vaccine",
+      "heading": "疫苗",
+      "markdown": "MMR 疫苗（麻疹、腮腺炎、德國麻疹混合疫苗）為活性減毒疫苗，2 劑保護力約 97%。孕婦及嚴重免疫不全者不可接種；育齡女性接種後 4 週內應避免懷孕。成人接種建議依 2025 年 4 月 16 日修訂之「國內現行 MMR 預防接種建議」。\n\n| 對象 | 劑次 | 費用 |\n| --- | --- | --- |\n| 依接種建議 | — | 公費 |"
+    },
+    {
+      "key": "situation",
+      "heading": "目前疫情與統計",
+      "markdown": "近年境外移入及其引起的本土群聚多與東南亞、日本等地疫情相關。年度病例數見資料集。\n\n近年確定病例趨勢如下表與圖（**示意數字，非正式統計**，正式數字見統計資料）：\n\n| 年度 | 確定病例數（示意） | 每十萬人口發生率（示意） |\n| --- | --- | --- |\n| 2021 | 538 | 32.2 |\n| 2022 | 384 | 36.8 |\n| 2023 | 230 | 1.4 |\n| 2024 | 976 | 6 |\n| 2025 | 822 | 10.6 |\n\n![measles-trend](/files/disease.measles/measles-trend.png)"
+    },
+    {
+      "key": "faq",
+      "heading": "常見問題",
+      "markdown": "",
+      "status": "pending"
+    }
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Disease/SubIndex/ZUpcHZWi_S65WeehXQuC8v",
+    "https://www.cdc.gov.tw/Category/MPage/D7GS7y0HwfNsQP8xpY6sIX"
+  ],
+  "assets": [
+    {
+      "file": "measles-trend.png",
+      "kind": "image",
+      "alt": "measles-trend",
+      "license": "OGDL-1.0",
+      "needsAlt": true,
+      "mime": "image/png",
+      "bytes": 359,
+      "sha256": "5da3a4e98fdc80539a7542ee2e19aea774fc32d0efe990856a52ca52d1d53354",
+      "width": 160,
+      "height": 90
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.98,
+    "issues": [
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「麻疹／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-pathogen（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-epidemiology（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "image-no-alt",
+        "severity": "warn",
+        "message": "圖片「measles-trend.png」舊頁沒有替代文字，暫用檔名「measles-trend」，請補 alt（needsAlt）"
+      },
+      {
+        "code": "image-license-assumed",
+        "severity": "info",
+        "message": "圖片「measles-trend.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-transmission（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-incubation（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-symptoms（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-prevention（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-treatment（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「麻疹／預防接種」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 vaccine（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留共 192 處（8 個來源頁）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Disease/SubIndex/ZUpcHZWi_S65WeehXQuC8v",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "sourceUrls": [
+      "https://www.cdc.gov.tw/Disease/SubIndex/ZUpcHZWi_S65WeehXQuC8v",
+      "https://www.cdc.gov.tw/Category/MPage/D7GS7y0HwfNsQP8xpY6sIX"
+    ],
+    "existing": true,
+    "compareWith": [
+      "disease.measles"
+    ],
+    "mergedFrom": [
+      {
+        "page": "01-intro",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/ZUpcHZWi_S65WeehXQuC8v",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "02-intro-pathogen",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/ZUpcHZWi_S65WeehXQuC8v",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "03-intro-epidemiology",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/ZUpcHZWi_S65WeehXQuC8v",
+        "blocks": [
+          "situation"
+        ]
+      },
+      {
+        "page": "04-intro-transmission",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/ZUpcHZWi_S65WeehXQuC8v",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "05-intro-incubation",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/ZUpcHZWi_S65WeehXQuC8v",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "06-intro-symptoms",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/ZUpcHZWi_S65WeehXQuC8v",
+        "blocks": [
+          "symptoms"
+        ]
+      },
+      {
+        "page": "07-intro-prevention",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/ZUpcHZWi_S65WeehXQuC8v",
+        "blocks": [
+          "prevention"
+        ]
+      },
+      {
+        "page": "08-intro-treatment",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/ZUpcHZWi_S65WeehXQuC8v",
+        "blocks": [
+          "treatment"
+        ]
+      },
+      {
+        "page": "09-vaccine",
+        "url": "https://www.cdc.gov.tw/Category/MPage/D7GS7y0HwfNsQP8xpY6sIX",
+        "blocks": [
+          "vaccine"
+        ]
+      }
+    ],
+    "introMarkdown": "麻疹是傳染力極強的病毒性疾病，可經空氣傳播。完整接種 2 劑 MMR 疫苗可有效預防；1966 年（含）以後出生、不具免疫力者出國前應評估接種。\n\n| 項目 | 內容 |\n| --- | --- |\n| 法定傳染病類別 | 第二類 |\n| 通報時限 | 24 小時內 |\n| ICD-10 | B05 |\n| 主要傳染途徑 | 空氣、飛沫、接觸 |\n| 潛伏期 | 7–21 天（約 14 天出疹） |"
+  }
+}

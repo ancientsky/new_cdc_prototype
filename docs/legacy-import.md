@@ -115,6 +115,12 @@
 
 ---
 
+第四批（規則檔 version 3）新增：
+
+- `serviceRules`：標題關鍵字 → `service.serviceType`（`合約院所`／`院所查詢`／`責任醫院`／`醫院名單` → `clinic`，`群聚通報` → `notification`，`送驗申請` → `lab-request`…）。清單頁或欄目內頁命中就直接建 service。
+- `bulletinTypes.8772.type: "clarification"`：澄清稿直接建成 clarification 型別。
+- `audience.byType` 補六種結構化型別的預設讀者（labtest 專業、dataset 兩者、其餘民眾）。
+
 ## 4. 怎麼跑
 
 ```bash
@@ -154,7 +160,7 @@ node scripts/import-legacy.mjs <export-dir> --out <out-dir> [--apply-migration] 
 3. **HTML → Markdown**：用 `src/client/admin/md-convert.js`（與後台上架編輯器同一份轉換器，純函式、零依賴），所以「匯入的草稿」與「同事貼 Word 進編輯器」得到一樣的 Markdown。表格保留；複雜表格（合併儲存格、巢狀）無法轉成 Markdown 表格時記 `table-complex` 警告。
 4. **型別與目標**：URL 模式決定型別；疾病頁子頁依標題關鍵字**併入**疾病頁對應區塊（八個固定區塊）；Q&A 頁依 `.panel` 結構**每題一筆**；Bulletin 依 `typeid` 決定 `newsType`；檔案說明頁建文件草稿。對得到既有新站內容者（移轉清單的 `target`，或 Q&A／新聞依標題對到既有 id），草稿標「既有內容已存在，供比對」（`conversion.existing`、`compareWith`）。
 5. **權責單位與疾病**：標題與麵包屑→疾病 id（主檔全部疾病的名稱與別名，最長命中優先；一頁可有多個疾病，第一個是主要疾病；都認不出時依移轉清單的 `scope.disease`）；類別→單位，沒規則就用疾病主檔的 `owner`。
-5a. **移轉清單對應**：清單網址多半是 `{id}` 佔位，會命中同一模式下的**所有**舊頁，所以只有 fragment（＝側檔 `tab`）或標題也對得上才算對應；寫死 ID 的網址只剩一個候選時才直接採用。對不上的記 `manifest-ambiguous`（提示）與 `not-in-manifest`（警告）。清單只寫例外（`extends: migration-template.disease`）時，標準子頁由模板依該疾病展開成**推導項**一起比對（記 `manifest-derived`）；推導項只進報告與 `migration-patch.json` 的 `derivedItems`，不會寫回清單。模板的**文件項**（工作手冊、病例定義、治療指引）標題是通稱，對不上正式名稱時改以**文件種類**對（舊頁是文件型、標題看得出種類、與推導項 `mapTo.docType` 相同；記 `manifest-derived`）。清單目標是文件而舊頁是欄目內頁時，草稿直接建成 document（記 `type-from-manifest`）。
+5a. **移轉清單對應**：清單網址多半是 `{id}` 佔位，會命中同一模式下的**所有**舊頁，所以只有 fragment（＝側檔 `tab`）或標題也對得上才算對應；寫死 ID 的網址只剩一個候選時才直接採用。對不上的記 `manifest-ambiguous`（提示）與 `not-in-manifest`（警告）。清單只寫例外（`extends: migration-template.disease`）時，標準子頁由模板依該疾病展開成**推導項**一起比對（記 `manifest-derived`）；推導項只進報告與 `migration-patch.json` 的 `derivedItems`，不會寫回清單。模板的**文件項**（工作手冊、病例定義、治療指引）標題是通稱，對不上正式名稱時改以**文件種類**對（舊頁是文件型、標題看得出種類、與推導項 `mapTo.docType` 相同；記 `manifest-derived`）。清單目標是文件而舊頁是欄目內頁時，草稿直接建成 document（記 `type-from-manifest`）。第四批起模板項改以**舊站選單位置**對：模板的 oldTitle（「治療指引」「工作手冊」）就是舊站選單的名稱，舊頁最後一層麵包屑相同即對應，文件正式名稱長怎樣都無妨；人工例外已指向同一份新站內容的模板位置**不再推導**，同型別多筆時推導目標取**現行且最新**的一筆。
 6. **圖片與附件**：內文圖片改成 `/files/{id}/…` 並宣告為 `kind: image`；alt 先用圖片的 `alt`／`title`／檔名，並標 **`needsAlt`**（圖片 alt 與授權是建置閘門，必須人工補，見 [assets-policy.md](assets-policy.md)）；側檔 `attachments` 宣告為 `kind: attachment`，PDF 以文字層偵測決定 `machineReadable`。
 7. **治理欄位**：`status: 'review'`、`reviewedAt` ＝ 匯出日、`reviewPeriodMonths` 依型別預設、`legacyUrls`、`owner`、`audience`、`summary`（取前 120 字內的完整句）、`conversion`（`mode: 'auto'`、`confidence`、`issues[]`、`sourceUrl`、`convertedAt`）。
 8. **驗證**：每份草稿跑一次 schema 驗證，未通過者在報告標 `schema-invalid`（error）。
@@ -257,7 +263,13 @@ PDF 是**附件**，不是頁面。工具對 PDF 只做三件事：複製檔案�
 | `manifest-derived` | info | 對到的是模板推導的標準子頁，不是人工清單項 | 不用處理；結果見 `migration-patch.json` 的 `derivedItems` |
 | `owner-from-disease` | info | 類別沒有規則，權責單位依疾病主檔 | 確認即可；想固定就補 `categoryOwners` |
 | `disease-from-manifest` | info | 麵包屑與標題看不出疾病，依清單 `scope.disease` | 確認疾病對不對 |
-| `type-from-manifest` | info | 舊頁是欄目內頁（MPage／Page），但清單說它對應新站的一份文件，草稿依清單建成 document（id 就是清單 target） | 確認文件版次與生效日；不用再手動改型別 |
+| `type-from-manifest` | info | 清單目標或模板推導項說新站是 document／publication／media／dataset／labtest／service／clarification，草稿直接建成該型別（有 target 就用 target id） | 確認結構化欄位；不用再手動改型別 |
+| `type-from-bulletin` | info | 公告類別（typeid 8772）是澄清稿，草稿建成 clarification | 確認 claim 與 verdict |
+| `type-from-keywords` | info | 標題像查詢／申辦服務（合約院所、責任醫院名單…），草稿建成 service | 補申辦步驟；名單類資料改掛 dataset |
+| `type-upgrade` | info | 既有內容以 news 存放同一則澄清，新草稿是 clarification 型別 | 比對後擇一保留 |
+| `fields-pending` | warn | 結構化型別的必填欄位從舊頁看不出來，以「（待補：…）」佔位（檢體容器、送驗時限、申辦步驟、文字稿…） | 權責單位補欄位後才可上架 |
+| `field-guessed` | info | 欄位是推斷的（出版品種類、服務種類、更新頻率、verdict、labs） | 看一眼對不對 |
+| `merge-into-target` | info | 清單判定這頁「併入」某份文件或疫苗頁，草稿以 page 暫存、不搶目標 id | 人工把內容併進目標後刪草稿 |
 | `old-content`／`historical-version` | info | 久遠內容／歷史版本 | 依第 7 節三級封存 |
 
 **`migration-patch.json`**：把移轉清單對應項目的 `status`（`pending` → `migrated`／`merged`／`archived`／`dropped`）與 `target` 的更新建議列出來（對到的文件若同 family 已有較新版次，建議 `archived`）。加 `--apply-migration` 才寫回，**只改 `status`／`target`／`note`，不動 `verified`**：逐筆確認仍由權責單位在 `/admin/migration/` 完成，轉換成功不等於確認過。另有三個只供參考的區塊：`derivedItems`（模板推導項的對應結果）、`unmatchedPages`（匯出有、清單沒有的頁，附建議的 pending 項目）、`conflicts`（工具判定與人工清單不同，人工優先）。
@@ -298,6 +310,8 @@ PDF 是**附件**，不是頁面。工具對 PDF 只做三件事：複製檔案�
 
 ### 10.1 登革熱第二批結果
 
+> 以下數字是第二批當時的結果。第四批把五批全部用新轉換器重跑（模板位置被例外涵蓋的不再另產頁、結構化型別直接產），**現在的** `data/legacy-import/dengue/report.md` 是 31 頁、海報／影音／統計／檢驗已是 publication／media／dataset／labtest 草稿。
+
 > 第二批的目的：把工具從「結核病專用」變成「任何疾病都能跑」。模擬匯出改為**模板驅動**（`node scripts/lib/legacy-import/sim-export-disease.mjs disease.dengue`），依標準疾病頁模板 20 項＋登革熱人工例外清單 8 項＋近三年新聞 5 篇合成 33 頁，內容反推自既有登革熱內容（疾病頁、Q&A、文件、新聞、影音、檢驗、資料集）。輸出在 `data/legacy-import/dengue/`，草稿同樣不進 `content/`。**最終數字以 `data/legacy-import/dengue/report.md` 為準。**
 
 | 項目 | 數字 |
@@ -325,6 +339,8 @@ PDF 是**附件**，不是頁面。工具對 PDF 只做三件事：複製檔案�
 ---
 
 ### 10.2 流感第三批結果
+
+> 以下數字是第三批當時的結果；第四批重跑後 `data/legacy-import/influenza/report.md` 是 31 頁（作業手冊與治療指引位置不再另產）、合約院所查詢已是 service 草稿、澄清稿已是 clarification 草稿，見 10.3。
 
 > 第三批的目的：拿**疫苗與服務型別最多**的疾病，看工具在「舊頁型別 ≠ 新站型別」時怎麼辦。模擬匯出同樣模板驅動（`node scripts/lib/legacy-import/sim-export-disease.mjs disease.influenza data/legacy-export/influenza`）：模板 20 項＋流感人工例外 8 項（疫苗專區、接種計畫、作業手冊、合約院所查詢、抗病毒藥劑使用對象兩個版次、歷年計畫）＋近三年新聞 5 篇，共 33 頁。輸出在 `data/legacy-import/influenza/`，草稿不進 `content/`。**最終數字以 `data/legacy-import/influenza/report.md` 為準。**
 
@@ -368,9 +384,58 @@ PDF 是**附件**，不是頁面。工具對 PDF 只做三件事：複製檔案�
 
 **第三批驗證了什麼**：疫苗、藥劑這類「同一主題多個版次」的文件能對到正確版次並建議封存舊版（6 月版 → archived，與清單一致）；疾病頁九個分頁併成一份；10 題 Q&A 全部對到既有 faq id；平均信心 0.89 仍是模擬匯出的樂觀值。
 
+---
+
+### 10.3 麻疹＋腸病毒第四批結果（結構化型別直接產）
+
+> 第四批做三件事：把第三批留下的兩個決定做掉（「治療指引」怎麼對、要不要直接產 service 等型別，Yulun 2026-10-05 交由工具端決定並要求直接產），然後用麻疹與腸病毒兩個疾病各一份模擬匯出驗證。兩個疾病各跑一次（`sim-export-disease.mjs disease.measles` / `disease.enterovirus` → `data/legacy-import/measles/`、`data/legacy-import/enterovirus/`），同一個 PR 交付。**最終數字以兩個目錄的 `report.md` 為準。**
+
+| 項目 | 麻疹 | 腸病毒 |
+| --- | --- | --- |
+| 匯出頁數 | 28（模板 18、人工例外 7、近年新聞 3） | 31（模板 18、人工例外 8、近年新聞 5） |
+| 產出草稿數 | 29：Q&A 10、文件 4、頁面 6、新聞 4、**出版品 1、影音 1、資料集 1、檢驗 1**、疾病頁 1 | 27：Q&A 6、文件 4、頁面 6、新聞 5、**出版品 1、影音 1、資料集 1、檢驗 1、服務 1**、疾病頁 1 |
+| 平均信心／需人工檢視 | 0.94／0 | 0.93／0 |
+| 草稿 schema 驗證 | 29 / 29 | 27 / 27 |
+| 人工例外清單 | 7 / 7，衝突 0 | 8 / 8，衝突 0 |
+| 模板推導項 | 18 項對上 **18**（第二、三批是 19／20 對不上「治療指引」） | 18 項對上 18 |
+| `--apply-migration` | 只在 7 筆 `note` 加匯入標記；2 筆 pending（消除專區、接觸者活動場所公告）新站確實還沒有 | 只在 8 筆 `note` 加匯入標記；1 筆 pending（重症責任醫院名單：已有 service 草稿，等補步驟） |
+| 以 page 暫存且 `target-type-differs` 的 | 只剩新聞列表、相關連結（本來就不轉成型別） | 只剩新聞列表、專區首頁 |
+
+**第四批新增的處理經驗（原本怎樣 → 改成怎樣 → 為什麼比較好）**：
+
+1. **模板項改以「舊站選單位置」對應，不改模板、不改規則關鍵字。**
+   原本：模板「治療指引」項對不上舊頁標題「公費流感抗病毒藥劑使用對象」或「登革熱／屈公病防治工作指引」，三批都留一項對不上；第三批試過用文件種類（docType）語意對，但標題看不出種類時仍失敗。
+   改成：模板項的 oldTitle 其實是舊站**選單的名稱**，而匯出側檔的最後一層麵包屑就是這個選單位置；位置相同即對應（`byCrumb`），文件種類看不出來時也改從麵包屑推。
+   為什麼比較好：比對的是「這頁在舊站的哪個位置」而不是「標題長得像不像」，正是模板想表達的意思；模板與規則檔都不用為個別疾病改字，99 種疾病同一套。三個候選方案裡（改模板標題、加 docType 關鍵字、位置對應），只有位置對應不會隨疾病增加而一直補字。
+
+2. **人工例外已指向同一份新站內容的模板位置，不再推導、模擬匯出也不另產頁。**
+   原本：第三批作業手冊從模板「工作手冊」位置和疫苗專區例外各來一頁，兩頁對到同一份文件，第二份 id 加 `-2` 記 `target-shared`，要人工刪一份；建議用 `omit` 一筆筆排除。
+   改成：展開模板時，推導目標若已是某筆人工例外的 target，就視為該位置被例外涵蓋而跳過；模擬匯出用同一支展開函式決定要產哪些頁，因此五批重跑後每批少 2 頁（33 → 31），`target-shared` 歸零。
+   為什麼比較好：不必每個疾病手寫 `omit`，而且規則只有一處（`expandTemplateItems`），轉換器與模擬匯出不會各說各話。真實舊站若真的在兩個位置掛同一份檔，轉換器仍會以 `target-shared` 標出來，沒有漏接。
+
+3. **同型別多筆時，推導目標取「現行且最新」。**
+   原本：取字母序第一筆，流感「治療指引」位置因此被對到已封存的 6 月版，再把 9 月版擠成 `-2`。
+   改成：published 優先，再依生效日由新到舊。
+   為什麼比較好：模板位置掛的一定是現行版，舊版由 `superseded`／`archived` 規則處理；這也和治理引擎「現行版唯一」的原則一致。
+
+4. **六種結構化型別直接產，看不出的欄位以「（待補）」佔位並記 `fields-pending`。**
+   原本：海報、影片、統計、檢驗、服務、澄清稿草稿以 page／news 暫存並記 `target-type-differs`（第一批 17 條、第二批 8 條），人工要重建成正確型別再逐欄補。
+   改成：`types.mjs` 依型別抽欄位——出版品種類由標題關鍵字或模板 `pubType`；影片 id 從 YouTube 嵌入抓、文字稿取「影片文字稿」段；資料集的 canonicalUrl 取開放資料連結、更新頻率看「年度／每週」字眼、CSV 附件掛成 resources；檢驗的檢體名稱從「項目｜內容」表拆、送驗時限抓「N 小時」；服務的步驟取清單項、種類由 `serviceRules`；澄清的 claim 取引號內文字、verdict 看「不實／過時／部分正確」。抽不到的必填欄位填「（待補：原因）」並記 `fields-pending` 警告。
+   為什麼比較好：草稿先過 schema、落在正確的目錄與型別，報告才能跟既有的 `labtest.measles`、`dataset.measles-yearly` **逐欄比對**；人工的工作從「重建一筆」變成「補幾個欄位」。佔位字串刻意寫明原因，上架前的治理檢查（`fields-pending` 警告、「（待補」字樣）會擋住沒補完的草稿。`target-type-differs` 從每批 8–17 條降到 2–3 條，剩下的都是本來就不轉成型別的清單頁與專區首頁。
+
+5. **服務型頁面建 service，但名單不進內文。** 合約院所查詢、重症責任醫院名單依 `serviceRules` 建成 `service`（`serviceType: clinic`），步驟與適用對象佔位，並提示「名單屬時效資料，應掛 dataset 由系統更新」。為什麼：第三批已說明查詢頁轉成靜態文章會留下一份馬上過時的名單；建成 service 型別後，新站的查詢工具與資料集才有掛載點，清單也能從 pending 走到 migrated。
+
+6. **澄清稿建 clarification，與既有 news 比對。** typeid 8772 的公告直接建成 clarification（`clar.` id），既有以 news 存放的同標題澄清列為比對對象並記 `type-upgrade`。為什麼：澄清稿的價值在 claim／verdict 可被 AI 問答與搜尋直接引用，留在 news 型別就只是文章。
+
+7. **清單判定「併入」某份文件或疫苗頁的欄目內頁，以 page 暫存、不搶目標 id。** 麻疹群聚事件應變專區（併入接觸者追蹤指引）、腸病毒停課標準（併入教托育指引）記 `merge-into-target`；併入檢驗、資料集、服務等結構化型別則照目標型別建草稿供逐欄比對。為什麼：文件的 id 要留給文件本身那頁（PDF），否則兩頁搶同一個 id 又回到 `-2`；而結構化型別的「併入」其實就是「這頁就是那筆資料」，建同型別草稿才有比對價值。
+
+**第四批驗證了什麼**：模板位置全部對上（18/18，兩個疾病都是）；五批重跑後沒有任何 `target-shared`、衝突 0、schema 全過；結核病首批也因此多出 service 4、labtest 1、dataset 1、publication 1、media 2 的草稿（需人工檢視從 3 降到 1）。
+
+**還沒做的**：topic（相關連結）與 vaccine 專區頁仍以 page／疾病區塊處理；`fields-pending` 的欄位要靠權責單位補；`expandTemplateItems` 的「例外涵蓋」規則目前只在匯入工具這一側，治理引擎的推導清單（R15）尚未同步，兩邊的推導項數會差 2。
+
 ## 11. 正式批次的排程建議
 
-1. **一批一個欄目樹**，順序建議：**結核病（已示範）→ 登革熱（第二批，已示範）→ 流感（第三批，已示範）→ 麻疹＋腸病毒 → 其他第一、二類傳染病的疾病頁 → 新聞稿（近三年）→ 指引與手冊 → Q&A → 其他欄目**。每批對應一份移轉清單，批次結束時清單的 `pending` 應清零或決定 `dropped`。有疾病頁的疾病都能先用 `sim-export-disease.mjs` 產模擬匯出演練規則，再等正式匯出。
+1. **一批一個欄目樹**，順序建議：**結核病（已示範）→ 登革熱（第二批，已示範）→ 流感（第三批，已示範）→ 麻疹＋腸病毒（第四批，已示範）→ 其他第一、二類傳染病的疾病頁 → 新聞稿（近三年）→ 指引與手冊 → Q&A → 其他欄目**。每批對應一份移轉清單，批次結束時清單的 `pending` 應清零或決定 `dropped`。有疾病頁的疾病都能先用 `sim-export-disease.mjs` 產模擬匯出演練規則，再等正式匯出。
 2. **每批的節奏**（約 2–3 週）：匯出（資訊室，2–3 天）→ 規則調校與第一輪轉換（OASIS，2–3 天）→ 看報告、補規則、重跑（1–2 天）→ 人工確認（Steward，依量；建議每人每天不超過 10 頁）→ 上架 PR（走車道）→ 更新清單與確認 `verified`。
 3. **先小後大**：每批先用 20–30 頁試跑，確認規則沒問題再跑全部。
 4. **規則版本化**：規則檔的修改走 PR 並說明影響範圍；報告歸檔（`data/legacy-import/{slug}/`），作為品質稽核與回溯。
@@ -384,7 +449,7 @@ PDF 是**附件**，不是頁面。工具對 PDF 只做三件事：複製檔案�
 
 - **模擬匯出不等於真實舊站**：版型、Word 殘留的程度、表格複雜度、圖片與附件的命名，都以真實匯出為準；規則與信心門檻（0.6、0.8）要用真實樣本校準。
 - **不處理的內容**：影音嵌入（記 `embedded-media` 警告，影片請走 `media` 型別人工建檔）、表單（動態頁面）、站外內容、內部系統頁。英文站（`/En/…`）還沒有 URL 模式，會記 `type-unclear`。
-- **只產五種型別**：disease／faq／news／document／page。模板對到的出版品（海報）、影音、資料集、檢驗、服務、澄清稿、致醫界通函，草稿先以 page 或 news 暫存並記 `target-type-differs`，由人工改建成正確型別（清單目標是 document 的欄目內頁已會直接建成 document，見 10.2）；要直接產這些型別是下一步工作，**service（合約院所查詢等查詢頁）優先**。
+- **結構化型別的欄位是佔位，不是答案**：第四批起 publication／media／dataset／labtest／service／clarification 都直接產，但舊頁看不出來的必填欄位（檢體容器與保存、申辦步驟、影片文字稿、資料集更新頻率）以「（待補：…）」填入並記 `fields-pending`，這些草稿**過 schema 不等於可上架**，要由權責單位補齊。還不直接產的：topic（相關連結頁留 list）、vaccine（疫苗專區頁併入疾病頁疫苗區塊或以 page 暫存）、research、banner、job、tender。
 - **不判斷內容是否過時**：轉換只確認「搬得對不對」，不確認「內容還對不對」。過時的規定、數字，要靠 Steward 審閱與治理引擎的反向稽核。
 - **不處理個資**：匯出階段就要排除；若轉換後的草稿含個資，通報並從輸出刪除。
 - **多對一與一對多**：疾病頁子頁併成同一份疾病頁草稿（多對一）；一個舊頁不會轉成多個頁面，Q&A 頁例外（每題一筆）。

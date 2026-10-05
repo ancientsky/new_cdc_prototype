@@ -1,0 +1,74 @@
+{
+  "id": "service.influenza-flu-antiviral-contract-sites",
+  "type": "service",
+  "title": "流感公費抗病毒藥劑合約院所與藥局",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2017-10-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "公費抗病毒藥劑合約院所與藥局：相關資料清單。 長照機構住民與工作人員，一起打流感疫苗 北區：公費抗病毒藥劑合約院所與藥局 中區：公費抗病毒藥劑合約院所與藥局 南區：公費抗病毒藥劑合約院所與藥局 高屏區：公費抗病毒藥劑合約院所與藥局 東區：…",
+  "slug": "influenza-flu-antiviral-contract-sites",
+  "serviceType": "clinic",
+  "whoCanApply": [
+    "民眾"
+  ],
+  "introMarkdown": "公費抗病毒藥劑合約院所與藥局：相關資料清單。\n\n- [長照機構住民與工作人員，一起打流感疫苗](https://www.cdc.gov.tw/Category/MPage/E2xM0dxNQDSbAlPb2WSHFj)\n- [北區：公費抗病毒藥劑合約院所與藥局](#)\n- [中區：公費抗病毒藥劑合約院所與藥局](#)\n- [南區：公費抗病毒藥劑合約院所與藥局](#)\n- [高屏區：公費抗病毒藥劑合約院所與藥局](#)\n- [東區：公費抗病毒藥劑合約院所與藥局](#)\n\n| 年度 | 確定病例數（示意） | 每十萬人口發生率（示意） |\n| --- | --- | --- |\n| 2021 | 514 | 6.6 |\n| 2022 | 652 | 30.4 |\n| 2023 | 790 | 14.2 |\n| 2024 | 928 | 38 |\n| 2025 | 166 | 21.8 |",
+  "steps": [
+    {
+      "title": "（待補：舊頁是查詢清單，請補申辦或查詢步驟）"
+    }
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/Cf1DIbpAUq0ymjkxv1xC7U"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.6,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 58 處（mso 樣式 20、Mso 類別 19、命名空間標籤 19）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「流感／抗病毒藥劑專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+      },
+      {
+        "code": "type-from-keywords",
+        "severity": "info",
+        "message": "標題看起來是查詢／申辦服務（clinic），草稿建成 service；名單類資料請改掛 dataset"
+      },
+      {
+        "code": "fields-pending",
+        "severity": "warn",
+        "message": "service 的欄位從舊頁看不出來，以「（待補）」佔位：steps、whoCanApply"
+      },
+      {
+        "code": "field-guessed",
+        "severity": "info",
+        "message": "合約院所名單屬時效性資料，建議掛 dataset 由系統更新，不要把名單寫進內文"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/List/Cf1DIbpAUq0ymjkxv1xC7U",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

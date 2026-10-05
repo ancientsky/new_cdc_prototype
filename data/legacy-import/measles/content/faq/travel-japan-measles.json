@@ -1,0 +1,62 @@
+{
+  "id": "faq.travel-japan-measles",
+  "type": "faq",
+  "title": "去日本旅遊需要擔心麻疹嗎？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2025-05-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.measles"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "日本自 2026 年 5 月 11 日起被列為麻疹第一級旅遊疫情建議（注意），代表當地有麻疹疫情，請遵守一般預防措施。",
+  "question": "去日本旅遊需要擔心麻疹嗎？",
+  "answerMarkdown": "日本自 2026 年 5 月 11 日起被列為麻疹**第一級旅遊疫情建議（注意）**，代表當地有麻疹疫情，請遵守一般預防措施。\n\n出發前請確認自己是否具麻疹免疫力：**1966 年（含）以後出生**、未完成 2 劑接種或不確定者，建議出國前 2–4 週至旅遊醫學門診評估自費接種 1 劑 MMR。未滿 1 歲嬰兒非必要不建議前往。返國 18 天內若出現發燒、出疹，請戴口罩就醫並告知旅遊史。",
+  "basedOn": [
+    "disease.measles"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/s5OaifVY2y_Oh-5Zt4ecui"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 104 處（mso 樣式 62、Mso 類別 27、命名空間標籤 21）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「麻疹／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/s5OaifVY2y_Oh-5Zt4ecui",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.travel-japan-measles"
+    ]
+  }
+}

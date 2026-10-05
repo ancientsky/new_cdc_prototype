@@ -1,0 +1,74 @@
+{
+  "id": "service.enterovirus-ev-severe-referral",
+  "type": "service",
+  "title": "腸病毒重症責任醫院名單與轉診",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2017-04-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "腸病毒重症責任醫院名單與轉診：相關資料清單。 濕搓沖捧擦：腸病毒洗手五步驟動畫 北區：腸病毒重症責任醫院名單與轉診 中區：腸病毒重症責任醫院名單與轉診 南區：腸病毒重症責任醫院名單與轉診 高屏區：腸病毒重症責任醫院名單與轉診 東區：腸病毒…",
+  "slug": "enterovirus-ev-severe-referral",
+  "serviceType": "clinic",
+  "whoCanApply": [
+    "民眾"
+  ],
+  "introMarkdown": "腸病毒重症責任醫院名單與轉診：相關資料清單。\n\n- [濕搓沖捧擦：腸病毒洗手五步驟動畫](https://www.cdc.gov.tw/Category/MPage/n0iPh3-tDhitbRpzZWPdFS)\n- [北區：腸病毒重症責任醫院名單與轉診](#)\n- [中區：腸病毒重症責任醫院名單與轉診](#)\n- [南區：腸病毒重症責任醫院名單與轉診](#)\n- [高屏區：腸病毒重症責任醫院名單與轉診](#)\n- [東區：腸病毒重症責任醫院名單與轉診](#)\n\n| 年度 | 確定病例數（示意） | 每十萬人口發生率（示意） |\n| --- | --- | --- |\n| 2021 | 256 | 26.4 |\n| 2022 | 308 | 1.6 |\n| 2023 | 360 | 16.8 |\n| 2024 | 412 | 32 |\n| 2025 | 464 | 7.2 |",
+  "steps": [
+    {
+      "title": "（待補：舊頁是查詢清單，請補申辦或查詢步驟）"
+    }
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/iyz5F1b33RPU4U1vHHhEDZ"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.6,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 58 處（mso 樣式 20、Mso 類別 19、命名空間標籤 19）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「腸病毒／醫療專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+      },
+      {
+        "code": "type-from-keywords",
+        "severity": "info",
+        "message": "標題看起來是查詢／申辦服務（clinic），草稿建成 service；名單類資料請改掛 dataset"
+      },
+      {
+        "code": "fields-pending",
+        "severity": "warn",
+        "message": "service 的欄位從舊頁看不出來，以「（待補）」佔位：steps、whoCanApply"
+      },
+      {
+        "code": "field-guessed",
+        "severity": "info",
+        "message": "合約院所名單屬時效性資料，建議掛 dataset 由系統更新，不要把名單寫進內文"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/List/iyz5F1b33RPU4U1vHHhEDZ",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

@@ -6,18 +6,18 @@
   "applied": {
     "statusChanges": [],
     "targetChanges": [],
-    "noteChanges": 8
+    "noteChanges": 3
   },
   "rule": "只改 status／target／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。",
   "items": [
     {
       "key": "flu-vaccine-zone",
       "oldTitle": "流感疫苗專區（首頁）",
-      "page": "21-flu-vaccine-zone",
+      "page": "19-flu-vaccine-zone",
       "current": {
         "status": "merged",
         "target": "disease.influenza",
-        "note": "併入疾病頁「疫苗」區塊與專業版防治計畫；接種對象、地點分別連到計畫文件與疫苗頁。"
+        "note": "併入疾病頁「疫苗」區塊與專業版防治計畫；接種對象、地點分別連到計畫文件與疫苗頁。　【匯入 2026-10-03】草稿 page.influenza-flu-vaccine-zone（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "merged",
@@ -35,17 +35,17 @@
       "change": {
         "status": false,
         "target": false,
-        "note": true
+        "note": false
       }
     },
     {
       "key": "flu-vaccine-plan",
       "oldTitle": "公費流感疫苗接種計畫：實施對象與時程",
-      "page": "22-flu-vaccine-plan",
+      "page": "20-flu-vaccine-plan",
       "current": {
         "status": "migrated",
         "target": "doc.flu-vaccine-schedule.2026-09-15",
-        "note": "每年度另建一筆文件，舊年度自動失效；對象與時程是 AI 與民眾最常問的版本題。"
+        "note": "每年度另建一筆文件，舊年度自動失效；對象與時程是 AI 與民眾最常問的版本題。　【匯入 2026-10-03】草稿 doc.flu-vaccine-schedule.2026-09-15（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
@@ -63,29 +63,29 @@
       "change": {
         "status": false,
         "target": false,
-        "note": true
+        "note": false
       }
     },
     {
       "key": "flu-vaccine-manual",
       "oldTitle": "公費流感疫苗接種計畫作業手冊",
-      "page": "23-flu-vaccine-manual",
+      "page": "21-flu-vaccine-manual",
       "current": {
         "status": "migrated",
         "target": "doc.flu-vaccine-manual.2026-09-16",
-        "note": "給合約院所與衛生所的作業手冊，依據接種計畫文件，計畫修訂時自動加註。"
+        "note": "給合約院所與衛生所的作業手冊，依據接種計畫文件，計畫修訂時自動加註。　【匯入 2026-10-03】草稿 doc.flu-vaccine-manual.2026-09-16-2（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.flu-vaccine-manual.2026-09-16",
-        "note": "給合約院所與衛生所的作業手冊，依據接種計畫文件，計畫修訂時自動加註。　【匯入 2026-10-03】草稿 doc.flu-vaccine-manual.2026-09-16-2（信心 1；既有內容已存在，供比對）"
+        "note": "給合約院所與衛生所的作業手冊，依據接種計畫文件，計畫修訂時自動加註。　【匯入 2026-10-03】草稿 doc.flu-vaccine-manual.2026-09-16（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
         "target": "doc.flu-vaccine-manual.2026-09-16"
       },
       "draftIds": [
-        "doc.flu-vaccine-manual.2026-09-16-2"
+        "doc.flu-vaccine-manual.2026-09-16"
       ],
       "agree": true,
       "change": {
@@ -97,23 +97,23 @@
     {
       "key": "flu-vaccine-contract-sites",
       "oldTitle": "公費流感疫苗合約院所查詢",
-      "page": "24-flu-vaccine-contract-sites",
+      "page": "22-flu-vaccine-contract-sites",
       "current": {
         "status": "pending",
         "target": null,
-        "note": "原型不自己列院所，只做深連結到接種點查詢（vaxmap）；待與衛生局確認名單更新責任與深連結參數。"
+        "note": "原型不自己列院所，只做深連結到接種點查詢（vaxmap）；待與衛生局確認名單更新責任與深連結參數。　【匯入 2026-10-03】草稿 page.influenza-flu-vaccine-contract-sites（信心 0.6）"
       },
       "proposed": {
         "status": "pending",
         "target": null,
-        "note": "原型不自己列院所，只做深連結到接種點查詢（vaxmap）；待與衛生局確認名單更新責任與深連結參數。　【匯入 2026-10-03】草稿 page.influenza-flu-vaccine-contract-sites（信心 0.6）"
+        "note": "原型不自己列院所，只做深連結到接種點查詢（vaxmap）；待與衛生局確認名單更新責任與深連結參數。　【匯入 2026-10-03】草稿 service.influenza-flu-vaccine-contract-sites（信心 0.6）"
       },
       "suggestion": {
         "status": "pending",
         "target": null
       },
       "draftIds": [
-        "page.influenza-flu-vaccine-contract-sites"
+        "service.influenza-flu-vaccine-contract-sites"
       ],
       "agree": true,
       "change": {
@@ -125,11 +125,11 @@
     {
       "key": "flu-antiviral-eligibility",
       "oldTitle": "公費流感抗病毒藥劑使用對象",
-      "page": "25-flu-antiviral-eligibility",
+      "page": "23-flu-antiviral-eligibility",
       "current": {
         "status": "migrated",
         "target": "doc.flu-antiviral-eligibility.2026-09-21",
-        "note": "現行版與 2026 年 6 月版各為獨立文件；現行版第 3 條已放寬 65 歲以上高峰期免快篩。"
+        "note": "現行版與 2026 年 6 月版各為獨立文件；現行版第 3 條已放寬 65 歲以上高峰期免快篩。　【匯入 2026-10-03】草稿 doc.flu-antiviral-eligibility.2026-09-21（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
@@ -147,17 +147,17 @@
       "change": {
         "status": false,
         "target": false,
-        "note": true
+        "note": false
       }
     },
     {
       "key": "flu-antiviral-eligibility-2026-06",
       "oldTitle": "公費流感抗病毒藥劑使用對象（2026 年 6 月版）",
-      "page": "26-flu-antiviral-eligibility-2026-06",
+      "page": "24-flu-antiviral-eligibility-2026-06",
       "current": {
         "status": "archived",
         "target": "doc.flu-antiviral-eligibility.2026-06-01",
-        "note": "已由 9 月版取代，保留供查閱並加失效警示，舊連結 301 到現行版。"
+        "note": "已由 9 月版取代，保留供查閱並加失效警示，舊連結 301 到現行版。　【匯入 2026-10-03】草稿 doc.flu-antiviral-eligibility.2026-06-01（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "archived",
@@ -175,29 +175,29 @@
       "change": {
         "status": false,
         "target": false,
-        "note": true
+        "note": false
       }
     },
     {
       "key": "flu-antiviral-contract-sites",
       "oldTitle": "公費抗病毒藥劑合約院所與藥局",
-      "page": "27-flu-antiviral-contract-sites",
+      "page": "25-flu-antiviral-contract-sites",
       "current": {
         "status": "pending",
         "target": null,
-        "note": "合約名單依院所簽約狀態每週異動，需決定改為資料集（含更新頻率）或深連結；未決定前舊站唯讀保留。"
+        "note": "合約名單依院所簽約狀態每週異動，需決定改為資料集（含更新頻率）或深連結；未決定前舊站唯讀保留。　【匯入 2026-10-03】草稿 page.influenza-flu-antiviral-contract-sites（信心 0.6）"
       },
       "proposed": {
         "status": "pending",
         "target": null,
-        "note": "合約名單依院所簽約狀態每週異動，需決定改為資料集（含更新頻率）或深連結；未決定前舊站唯讀保留。　【匯入 2026-10-03】草稿 page.influenza-flu-antiviral-contract-sites（信心 0.6）"
+        "note": "合約名單依院所簽約狀態每週異動，需決定改為資料集（含更新頻率）或深連結；未決定前舊站唯讀保留。　【匯入 2026-10-03】草稿 service.influenza-flu-antiviral-contract-sites（信心 0.6）"
       },
       "suggestion": {
         "status": "pending",
         "target": null
       },
       "draftIds": [
-        "page.influenza-flu-antiviral-contract-sites"
+        "service.influenza-flu-antiviral-contract-sites"
       ],
       "agree": true,
       "change": {
@@ -209,11 +209,11 @@
     {
       "key": "flu-past-seasons",
       "oldTitle": "歷年流感疫苗接種計畫（2020–2024 年度）",
-      "page": "28-flu-past-seasons",
+      "page": "26-flu-past-seasons",
       "current": {
         "status": "dropped",
         "target": null,
-        "note": "逾 2 個年度的計畫已失效且無查閱需求，不移轉；舊網址回 410，如需查閱改洽署內檔案。"
+        "note": "逾 2 個年度的計畫已失效且無查閱需求，不移轉；舊網址回 410，如需查閱改洽署內檔案。　【匯入 2026-10-03】草稿 page.influenza-flu-past-seasons（信心 0.6）"
       },
       "proposed": {
         "status": "dropped",
@@ -231,85 +231,72 @@
       "change": {
         "status": false,
         "target": false,
-        "note": true
+        "note": false
       }
     }
   ],
   "missingPages": [],
   "unmatchedPages": [
     {
-      "page": "15-guideline",
+      "page": "27-news-2026-09-29-ili-weekly",
       "suggest": {
-        "key": "import-15-guideline",
-        "oldTitle": "公費流感抗病毒藥劑使用對象（2026 年 9 月版）",
-        "oldPath": "傳染病與防疫專題／流感／法規與指引／治療指引",
-        "oldUrl": "https://www.cdc.gov.tw/File/Get/IPFXeARGZRM-wffFgc1vJ5",
-        "oldType": "pdf",
-        "verified": false,
-        "status": "pending",
-        "note": "匯入時清單沒有對應項目，請權責單位確認後加入"
-      }
-    },
-    {
-      "page": "29-news-2026-09-29-ili-weekly",
-      "suggest": {
-        "key": "import-29-news-2026-09-29-ili-weekly",
+        "key": "import-27-news-2026-09-29-ili-weekly",
         "oldTitle": "流感疫情持續上升，10 月 1 日公費疫苗開打，長者幼兒請優先接種",
         "oldPath": "傳染病與防疫專題／流感／最新消息",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/8lZ1ophntJAgEqI_IgPLNQ?typeid=9",
-        "oldType": "page",
+        "oldType": "news",
         "verified": false,
         "status": "pending",
         "note": "匯入時清單沒有對應項目，請權責單位確認後加入"
       }
     },
     {
-      "page": "30-news-2026-09-21-flu-antiviral-revised",
+      "page": "28-news-2026-09-21-flu-antiviral-revised",
       "suggest": {
-        "key": "import-30-news-2026-09-21-flu-antiviral-revised",
+        "key": "import-28-news-2026-09-21-flu-antiviral-revised",
         "oldTitle": "類流感進入高峰期，65 歲以上有症狀者可直接使用公費抗病毒藥劑免快篩",
         "oldPath": "傳染病與防疫專題／流感／最新消息",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/PGF89OEzK1r1Z_C6VybzcY?typeid=9",
-        "oldType": "page",
+        "oldType": "news",
         "verified": false,
         "status": "pending",
         "note": "匯入時清單沒有對應項目，請權責單位確認後加入"
       }
     },
     {
-      "page": "31-news-2026-09-18-flu-vaccine-oct1",
+      "page": "29-news-2026-09-18-flu-vaccine-oct1",
       "suggest": {
-        "key": "import-31-news-2026-09-18-flu-vaccine-oct1",
+        "key": "import-29-news-2026-09-18-flu-vaccine-oct1",
         "oldTitle": "2026–2027 年度公費流感疫苗 10 月 1 日開打，新冠疫苗同步提供",
         "oldPath": "傳染病與防疫專題／流感／最新消息",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/YhMh5ap_Ft8C_2_Gy5z5J9?typeid=9",
-        "oldType": "page",
+        "oldType": "news",
         "verified": false,
         "status": "pending",
         "note": "匯入時清單沒有對應項目，請權責單位確認後加入"
       }
     },
     {
-      "page": "32-news-2026-09-10-clarify-flu-vaccine-death",
+      "page": "30-news-2026-09-10-clarify-flu-vaccine-death",
       "suggest": {
-        "key": "import-32-news-2026-09-10-clarify-flu-vaccine-death",
+        "key": "import-30-news-2026-09-10-clarify-flu-vaccine-death",
         "oldTitle": "澄清：網傳「打流感疫苗會得流感、長輩打完會死」並非事實",
         "oldPath": "傳染病與防疫專題／流感／最新消息",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/e_1DvbI5FdTnW6hLu35VWK?typeid=8772",
-        "oldType": "page",
+        "oldType": "news",
         "verified": false,
         "status": "pending",
         "note": "匯入時清單沒有對應項目，請權責單位確認後加入"
       }
     },
     {
-      "page": "33-news-2026-06-03-flu-antiviral-summer",
+      "page": "31-news-2026-06-03-flu-antiviral-summer",
       "suggest": {
-        "key": "import-33-news-2026-06-03-flu-antiviral-summer",
+        "key": "import-31-news-2026-06-03-flu-antiviral-summer",
         "oldTitle": "夏季流感疫情持續，公費抗病毒藥劑使用對象維持現行規定",
         "oldPath": "傳染病與防疫專題／流感／最新消息",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/A_1lDFgtPBFnJ0u06cQ18z?typeid=9",
-        "oldType": "page",
+        "oldType": "news",
         "verified": false,
         "status": "pending",
         "note": "匯入時清單沒有對應項目，請權責單位確認後加入"
@@ -497,9 +484,9 @@
       },
       "page": "11-materials-poster",
       "draftIds": [
-        "page.influenza-materials-poster"
+        "publication.influenza-materials-poster"
       ],
-      "confidence": 0.4,
+      "confidence": 0.8,
       "existing": false,
       "matched": true
     },
@@ -513,23 +500,7 @@
       },
       "page": "12-materials-video",
       "draftIds": [
-        "page.influenza-materials-video"
-      ],
-      "confidence": 0.8,
-      "existing": true,
-      "matched": true
-    },
-    {
-      "key": "manual",
-      "oldTitle": "工作手冊",
-      "oldUrl": "https://www.cdc.gov.tw/Category/DiseaseManual/{id}",
-      "template": {
-        "status": "migrated",
-        "target": "doc.flu-vaccine-manual.2026-09-16"
-      },
-      "page": "13-manual",
-      "draftIds": [
-        "doc.flu-vaccine-manual.2026-09-16"
+        "media.ltc-flu-vaccine"
       ],
       "confidence": 1,
       "existing": true,
@@ -543,7 +514,7 @@
         "status": "pending",
         "target": null
       },
-      "page": "14-case-definition",
+      "page": "13-case-definition",
       "draftIds": [
         "doc.influenza-case-definition.2017-10-01"
       ],
@@ -552,32 +523,18 @@
       "matched": true
     },
     {
-      "key": "guideline",
-      "oldTitle": "治療指引",
-      "oldUrl": "https://www.cdc.gov.tw/File/Get/{id}#guideline",
-      "template": {
-        "status": "migrated",
-        "target": "doc.flu-antiviral-eligibility.2026-06-01"
-      },
-      "page": null,
-      "draftIds": [],
-      "confidence": null,
-      "existing": null,
-      "matched": false
-    },
-    {
       "key": "stats",
       "oldTitle": "統計資料",
       "oldUrl": "https://www.cdc.gov.tw/Category/List/{id}#statistics",
       "template": {
         "status": "migrated",
-        "target": "dataset.flu-express"
+        "target": "dataset.flu-severe"
       },
-      "page": "16-stats",
+      "page": "14-stats",
       "draftIds": [
-        "page.influenza-stats"
+        "dataset.flu-severe"
       ],
-      "confidence": 0.6,
+      "confidence": 1,
       "existing": true,
       "matched": true
     },
@@ -589,9 +546,9 @@
         "status": "migrated",
         "target": "labtest.influenza"
       },
-      "page": "17-lab",
+      "page": "15-lab",
       "draftIds": [
-        "page.influenza-lab"
+        "labtest.influenza"
       ],
       "confidence": 1,
       "existing": true,
@@ -605,7 +562,7 @@
         "status": "pending",
         "target": null
       },
-      "page": "18-notify",
+      "page": "16-notify",
       "draftIds": [
         "page.influenza-notify"
       ],
@@ -621,7 +578,7 @@
         "status": "merged",
         "target": "disease.influenza"
       },
-      "page": "19-news-list",
+      "page": "17-news-list",
       "draftIds": [
         "page.influenza-news-list"
       ],
@@ -637,7 +594,7 @@
         "status": "migrated",
         "target": "topic.ltc-infection-control"
       },
-      "page": "20-links",
+      "page": "18-links",
       "draftIds": [
         "page.influenza-links"
       ],
@@ -647,18 +604,18 @@
     }
   ],
   "summary": {
-    "derivedItems": 20,
-    "derivedMatched": 19,
+    "derivedItems": 18,
+    "derivedMatched": 18,
     "items": 8,
     "matched": 8,
     "missingPages": 0,
-    "unmatchedPages": 6,
+    "unmatchedPages": 5,
     "agree": 8,
     "conflicts": 0,
     "statusChanges": 0,
     "pendingToMigrated": 0,
     "targetChanges": 0,
-    "noteChanges": 8,
+    "noteChanges": 3,
     "stillPending": 2
   }
 }

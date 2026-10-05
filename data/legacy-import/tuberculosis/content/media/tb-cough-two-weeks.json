@@ -1,0 +1,62 @@
+{
+  "id": "media.tb-cough-two-weeks",
+  "type": "media",
+  "title": "結核病咳嗽兩週快去照胸部 X 光（影片）",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2024-03-24",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "咳嗽超過兩週，快去照胸部 X 光 咳嗽超過兩週可能是結核病警訊，影片提醒及早就醫照胸部 X 光，說明結核病可以治癒，並介紹都治計畫陪伴完成六個月以上療程。",
+  "mediaType": "video",
+  "youtubeId": "SAMPLE000",
+  "producedAt": "2024-03-24",
+  "transcriptMarkdown": "**咳嗽超過兩週，快去照胸部 X 光**\n\n咳嗽超過兩週可能是結核病警訊，影片提醒及早就醫照胸部 X 光，說明結核病可以治癒，並介紹都治計畫陪伴完成六個月以上療程。\n\n影片長度約 1 分 35 秒，附中文字幕。",
+  "captions": [
+    "zh-TW"
+  ],
+  "basedOn": [
+    "disease.tuberculosis"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/dLJ7UFpx2F-K6hTsKuUoSK"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 10 處（mso 樣式 4、Mso 類別 3、命名空間標籤 3）"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站型別是 media（media.tb-cough-two-weeks），草稿直接建成 media，看不出來的欄位以「（待補）」佔位"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/dLJ7UFpx2F-K6hTsKuUoSK",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "media.tb-cough-two-weeks"
+    ]
+  }
+}

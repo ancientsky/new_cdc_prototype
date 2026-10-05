@@ -86,7 +86,7 @@
       "verified": false,
       "status": "migrated",
       "target": "doc.flu-vaccine-manual.2026-09-16",
-      "note": "給合約院所與衛生所的作業手冊，依據接種計畫文件，計畫修訂時自動加註。　【匯入 2026-10-03】草稿 doc.flu-vaccine-manual.2026-09-16-2（信心 1；既有內容已存在，供比對）",
+      "note": "給合約院所與衛生所的作業手冊，依據接種計畫文件，計畫修訂時自動加註。　【匯入 2026-10-03】草稿 doc.flu-vaccine-manual.2026-09-16（信心 1；既有內容已存在，供比對）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -104,7 +104,7 @@
       "verified": false,
       "status": "pending",
       "dueAt": "2026-12-15",
-      "note": "原型不自己列院所，只做深連結到接種點查詢（vaxmap）；待與衛生局確認名單更新責任與深連結參數。　【匯入 2026-10-03】草稿 page.influenza-flu-vaccine-contract-sites（信心 0.6）",
+      "note": "原型不自己列院所，只做深連結到接種點查詢（vaxmap）；待與衛生局確認名單更新責任與深連結參數。　【匯入 2026-10-03】草稿 service.influenza-flu-vaccine-contract-sites（信心 0.6）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -154,7 +154,7 @@
       "verified": false,
       "status": "pending",
       "dueAt": "2026-11-30",
-      "note": "合約名單依院所簽約狀態每週異動，需決定改為資料集（含更新頻率）或深連結；未決定前舊站唯讀保留。　【匯入 2026-10-03】草稿 page.influenza-flu-antiviral-contract-sites（信心 0.6）",
+      "note": "合約名單依院所簽約狀態每週異動，需決定改為資料集（含更新頻率）或深連結；未決定前舊站唯讀保留。　【匯入 2026-10-03】草稿 service.influenza-flu-antiviral-contract-sites（信心 0.6）",
       "newRequirements": [
         "owner",
         "reviewedAt",

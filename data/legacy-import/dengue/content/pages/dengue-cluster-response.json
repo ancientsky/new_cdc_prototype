@@ -56,13 +56,13 @@
         "message": "類別「登革熱／防治專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
       },
       {
-        "code": "target-type-differs",
+        "code": "merge-into-target",
         "severity": "info",
-        "message": "對應的新站內容是 doc.dengue-community-workplan.2026-09-10（document），草稿以 page 暫存，請比對後改建為 document"
+        "message": "清單判定併入 doc.dengue-community-workplan.2026-09-10（document），草稿以 page 暫存，請人工把內容併進目標後刪除草稿"
       }
     ],
     "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/j_J4tv6ANjXOs3PJQTPe8z",
-    "convertedAt": "2026-10-04T22:30:00Z",
+    "convertedAt": "2026-10-05T02:30:00Z",
     "existing": true,
     "compareWith": [
       "doc.dengue-community-workplan.2026-09-10"

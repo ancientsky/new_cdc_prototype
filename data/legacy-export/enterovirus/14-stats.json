@@ -1,0 +1,21 @@
+{
+  "url": "https://www.cdc.gov.tw/Category/List/Yb1FWIwSMecXeT6vLUmIMf",
+  "title": "統計資料",
+  "category": "腸病毒／統計資料",
+  "publishedAt": "2017-04-01",
+  "updatedAt": "2026-04-22",
+  "breadcrumbs": [
+    "首頁",
+    "傳染病與防疫專題",
+    "腸病毒",
+    "統計資料"
+  ],
+  "tab": "statistics",
+  "attachments": [
+    {
+      "url": "https://www.cdc.gov.tw/File/Get/7V6VRbjyWKpoIEbi57M4V2",
+      "label": "腸病毒年度統計（CSV，示意）",
+      "file": "enterovirus-stats.csv"
+    }
+  ]
+}

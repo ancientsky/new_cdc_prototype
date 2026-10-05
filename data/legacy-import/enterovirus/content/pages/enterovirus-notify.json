@@ -1,0 +1,50 @@
+{
+  "id": "page.enterovirus-notify",
+  "type": "page",
+  "title": "通報定義與時限",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2017-04-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "腸病毒為第三類法定傳染病，醫師診治病人或檢驗結果符合通報定義時，應於 7 日內 完成通報。",
+  "slug": "enterovirus-notify",
+  "bodyMarkdown": "腸病毒為第三類法定傳染病，醫師診治病人或檢驗結果符合通報定義時，應於 **7 日內** 完成通報。\n\n| 項目 | 內容 |\n| --- | --- |\n| 法定類別 | 第三類 |\n| 通報時限 | 7 日內 |\n| 通報方式 | 傳染病通報系統（NIDRS） |\n| 通報定義 | 見「腸病毒病例定義」 |\n\n「腸病毒感染併發重症」為第三類法定傳染病，應於一週內通報；新生兒腸病毒感染亦需留意並通報。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/Wo5A9PG4FAHfk5guqQMY4D"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 38 處（mso 樣式 14、Mso 類別 12、命名空間標籤 12）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 notify（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/Wo5A9PG4FAHfk5guqQMY4D",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

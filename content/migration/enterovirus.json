@@ -49,7 +49,7 @@
       "verified": false,
       "status": "migrated",
       "target": "disease.enterovirus",
-      "note": "舊專區首頁改為疾病頁：家長、教托育機構與醫療人員三種入口以專區導覽分流。",
+      "note": "舊專區首頁改為疾病頁：家長、教托育機構與醫療人員三種入口以專區導覽分流。　【匯入 2026-10-03】草稿 page.enterovirus-ev-zone（信心 1；既有內容已存在，供比對）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -67,7 +67,7 @@
       "verified": false,
       "status": "migrated",
       "target": "doc.ev-childcare-guideline.2026-09-10",
-      "note": "民眾與機構共讀；停課標準數字須與地方公告一致，指引修訂時 Q&A 自動加註。",
+      "note": "民眾與機構共讀；停課標準數字須與地方公告一致，指引修訂時 Q&A 自動加註。　【匯入 2026-10-03】草稿 doc.ev-childcare-guideline.2026-09-10（信心 1；既有內容已存在，供比對）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -85,7 +85,7 @@
       "verified": false,
       "status": "merged",
       "target": "doc.ev-childcare-guideline.2026-09-10",
-      "note": "併入教托育機構指引「停課標準」章節；通報窗口連到群聚通報服務頁。",
+      "note": "併入教托育機構指引「停課標準」章節；通報窗口連到群聚通報服務頁。　【匯入 2026-10-03】草稿 page.enterovirus-ev-closure-reporting（信心 1；既有內容已存在，供比對）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -102,7 +102,7 @@
       "verified": false,
       "status": "pending",
       "dueAt": "2026-12-15",
-      "note": "名單依年度公告更新；需先確認是否以結構化資料集提供（含更新頻率）並與疫情警示連動。",
+      "note": "名單依年度公告更新；需先確認是否以結構化資料集提供（含更新頻率）並與疫情警示連動。　【匯入 2026-10-03】草稿 service.enterovirus-ev-severe-referral（信心 0.6）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -119,7 +119,7 @@
       "verified": false,
       "status": "migrated",
       "target": "doc.ev-severe-guideline.2026-03-15",
-      "note": "臨床四期分期與轉診時機；通函 608 號為其公告，另以新聞型別上架。",
+      "note": "臨床四期分期與轉診時機；通函 608 號為其公告，另以新聞型別上架。　【匯入 2026-10-03】草稿 doc.ev-severe-guideline.2026-03-15（信心 1；既有內容已存在，供比對）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -136,7 +136,7 @@
       "verified": false,
       "status": "merged",
       "target": "vaccine.ev71",
-      "note": "併入疫苗頁（自費、適用年齡依仿單、只能預防 71 型）；審閱週期 6 個月。",
+      "note": "併入疫苗頁（自費、適用年齡依仿單、只能預防 71 型）；審閱週期 6 個月。　【匯入 2026-10-03】草稿 disease.enterovirus（信心 1；既有內容已存在，供比對；併入疾病頁）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -153,7 +153,7 @@
       "verified": false,
       "status": "migrated",
       "target": "media.enterovirus-handwashing",
-      "note": "影片須有逐字稿；教托育機構指引修訂時自動標過時。",
+      "note": "影片須有逐字稿；教托育機構指引修訂時自動標過時。　【匯入 2026-10-03】草稿 media.enterovirus-handwashing（信心 1；既有內容已存在，供比對）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -169,7 +169,7 @@
       "oldType": "list",
       "verified": false,
       "status": "dropped",
-      "note": "內容與現行建議不一致且無查閱需求，不移轉；舊網址回 410。現行海報在疾病頁素材區。"
+      "note": "內容與現行建議不一致且無查閱需求，不移轉；舊網址回 410。現行海報在疾病頁素材區。　【匯入 2026-10-03】草稿 page.enterovirus-ev-old-posters（信心 0.6）"
     }
   ]
 }

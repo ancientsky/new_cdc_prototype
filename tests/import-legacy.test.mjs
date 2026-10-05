@@ -13,7 +13,8 @@ import {
 } from '../scripts/lib/legacy-import/rules.mjs';
 import { computeConfidence, needsReview } from '../scripts/lib/legacy-import/confidence.mjs';
 import { validateDraft } from '../scripts/lib/legacy-import/validate.mjs';
-import { applyPatch } from '../scripts/lib/legacy-import/migration.mjs';
+import { applyPatch, expandTemplateItems } from '../scripts/lib/legacy-import/migration.mjs';
+import { mdTableRows, kvTable, listItems, clarificationClaim, verdictFor, pubTypeFor, serviceTypeFor, typeOfId } from '../scripts/lib/legacy-import/types.mjs';
 import { readJSON } from '../scripts/lib/load.mjs';
 import { sha256Of, pdfHasTextLayer } from '../scripts/lib/assets.mjs';
 import { makeCtx } from '../scripts/lib/pages.mjs';
@@ -406,7 +407,7 @@ test('結核病批次：40 頁全部有輸出且草稿通過 schema；既有內�
   // 附件與圖片
   assert.ok(s.assets.attachment >= 8 && s.assets.image >= 2 && s.assets.data >= 1, JSON.stringify(s.assets));
   assert.ok(s.assets.needsAlt >= 1 && s.assets.noTextLayer >= 3);
-  assert.ok(s.needsReview >= 2 && s.needsReview <= 8, `需人工檢視 ${s.needsReview}`);
+  assert.ok(s.needsReview <= 8, `需人工檢視 ${s.needsReview}`); // 第四批起海報、影片、統計、檢驗直接建成結構化型別，需人工檢視的頁數降到 1
   assert.ok(s.avgConfidence > 0.7 && s.avgConfidence <= 1);
   const tr = report.pages.find((p) => p.manifestKey === 'training-slides');
   assert.ok(tr.issues.some((i) => i.code === 'attachment-missing') && tr.issues.some((i) => i.code === 'owner-from-disease'), '類別沒規則 ⇒ 依疾病主檔取 owner');
@@ -540,10 +541,11 @@ test('移轉清單對應：{id} 佔位的網址只有 fragment 或標題也對�
   assert.ok(!patch.items.some((i) => i.key === 'intro-symptoms'));
 });
 
-test('登革熱模擬匯出（模板驅動）：20 模板項＋8 例外＋近年新聞；HTML 像舊站；任何有疾病頁的疾病都能產', () => {
+test('登革熱模擬匯出（模板驅動）：模板項（扣掉例外已涵蓋的位置）＋8 例外＋近年新聞；HTML 像舊站；任何有疾病頁的疾病都能產', () => {
   const dir = tmp('dengue-exp');
   const r = generateDisease('disease.dengue', dir);
-  assert.equal(r.template, 20); assert.equal(r.manual, 8); assert.ok(r.news >= 3 && r.news <= 5); assert.equal(r.pages, 20 + 8 + r.news);
+  // 模板 20 項，但人工例外已指向同一份新站內容的位置（登革熱：影片、治療指引）不另產一頁，所以是 18
+  assert.equal(r.template, 18); assert.equal(r.manual, 8); assert.ok(r.news >= 3 && r.news <= 5); assert.equal(r.pages, 18 + 8 + r.news);
   const htmls = fs.readdirSync(dir).filter((f) => f.endsWith('.html'));
   assert.equal(htmls.length, r.pages);
   let mso = 0, crumbs = 0, tables = 0, withAtt = 0, panels = 0;
@@ -562,7 +564,7 @@ test('登革熱模擬匯出（模板驅動）：20 模板項＋8 例外＋近年
   const meta = JSON.parse(fs.readFileSync(path.join(dir, '_export.json'), 'utf8'));
   assert.equal(meta.simulated, true); assert.equal(meta.disease, 'disease.dengue'); assert.match(fs.readFileSync(path.join(dir, 'README.md'), 'utf8'), /模擬匯出[\s\S]*正式匯出取代/);
   // 與已提交的匯出一致（可重現）
-  for (const f of ['01-intro.json', '10-qa-list.json', '26-dengue-guidance-v16-archive.json']) assert.deepEqual(JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')), JSON.parse(fs.readFileSync(path.join(EXPORT_DENGUE, f), 'utf8')), f);
+  for (const f of ['01-intro.json', '10-qa-list.json', fs.readdirSync(EXPORT_DENGUE).find((x) => x.endsWith('-dengue-guidance-v16-archive.json'))]) assert.deepEqual(JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')), JSON.parse(fs.readFileSync(path.join(EXPORT_DENGUE, f), 'utf8')), f);
   // 其他有疾病頁的疾病也能產（流感：有人工清單；麻疹：有人工清單；水痘：沒有人工清單，只有模板）
   for (const d of ['disease.influenza', 'disease.varicella']) {
     const rr = generateDisease(d, tmp(d));
@@ -578,7 +580,7 @@ test('登革熱批次：全部有輸出且通過 schema；疾病與 owner 不靠
   const out = path.join(dir, 'out');
   const { report, patch, drafts } = runImport({ exportDir: EXPORT_DENGUE, outDir: out, manifestPath: mf, slug: 'dengue', now: NOW });
   const s = report.summary;
-  assert.equal(s.pages, 33); assert.equal(s.pagesWithoutOutput, 0); assert.equal(s.schemaInvalid, 0);
+  assert.equal(s.pages, 31); assert.equal(s.pagesWithoutOutput, 0); assert.equal(s.schemaInvalid, 0);
   const env = { units: new Set(readJSON(path.join(CONTENT, 'master/units.json')).map((u) => u.id)), diseaseIds: new Set(master.map((d) => d.id)), assetsDir: path.join(out, 'content/assets'), licenses: ['OGDL-1.0', 'CC0-1.0', 'CC-BY-4.0'] };
   for (const d of drafts) assert.deepEqual(validateDraft(d, env), [], d.id);
   assert.ok(report.pages.every((p) => p.diseases.includes('disease.dengue')), '每頁都認出登革熱');
@@ -598,7 +600,7 @@ test('登革熱批次：全部有輸出且通過 schema；疾病與 owner 不靠
   assert.equal(patch.summary.conflicts, 0);
   // 人工例外 8/8、模板推導 20 項對上 ≥ 18、清單沒有的新聞列為 unmatchedPages（建議新增 pending）
   assert.equal(patch.summary.matched, 8); assert.equal(patch.summary.missingPages, 0);
-  assert.equal(patch.summary.derivedItems, 20); assert.ok(patch.summary.derivedMatched >= 18, `推導對上 ${patch.summary.derivedMatched}`);
+  assert.equal(patch.summary.derivedItems, 18); assert.equal(patch.summary.derivedMatched, 18, `推導對上 ${patch.summary.derivedMatched}`);
   assert.ok(patch.summary.unmatchedPages >= 4);
   assert.ok(patch.unmatchedPages.every((u) => u.suggest.status === 'pending' && u.suggest.verified === false));
   // 近年新聞依標題對到既有新聞 id，標 existing（供比對），不錯配到清單的通函項目
@@ -615,9 +617,9 @@ test('登革熱批次：全部有輸出且通過 schema；疾病與 owner 不靠
   assert.deepEqual(JSON.parse(fs.readFileSync(mf, 'utf8')), readJSON(path.join(CONTENT, 'migration/dengue.json')), '沒加 --apply-migration 不改清單');
 });
 
-test('已提交的登革熱批次輸出（data/legacy-import/dengue）：33 頁、schema 全過、清單只多 note、verified 全是 false', () => {
+test('已提交的登革熱批次輸出（data/legacy-import/dengue）：31 頁、schema 全過、清單只多 note、verified 全是 false', () => {
   const r = JSON.parse(fs.readFileSync(path.join(COMMITTED_DENGUE, 'report.json'), 'utf8'));
-  assert.equal(r.summary.pages, 33); assert.equal(r.summary.schemaInvalid, 0); assert.equal(r.migration.applied, true); assert.equal(r.manifest.extends, 'migration-template.disease');
+  assert.equal(r.summary.pages, 31); assert.equal(r.summary.schemaInvalid, 0); assert.equal(r.migration.applied, true); assert.equal(r.manifest.extends, 'migration-template.disease');
   for (const d of r.drafts) assert.ok(fs.existsSync(path.join(COMMITTED_DENGUE, d.file)), d.file);
   const manifest = readJSON(path.join(CONTENT, 'migration/dengue.json'));
   assert.equal(manifest.items.length, 8, '推導項沒有被寫進清單');
@@ -631,14 +633,14 @@ test('已提交的登革熱批次輸出（data/legacy-import/dengue）：33 頁�
 const EXPORT_FLU = path.join(ROOT, 'data/legacy-export/influenza');
 const COMMITTED_FLU = path.join(ROOT, 'data/legacy-import/influenza');
 
-test('流感批次：欄目內頁依清單目標建成 document；模板文件項以 docType 語意對；dropped／archived 與 pending 不算衝突；服務型頁面留 pending', () => {
+test('流感批次：欄目內頁依清單目標建成 document；例外涵蓋的模板位置不推導；dropped／archived 與 pending 不算衝突；合約院所建 service；澄清稿建 clarification', () => {
   const dir = tmp('flu');
   const mf = path.join(dir, 'influenza.json');
   fs.copyFileSync(path.join(CONTENT, 'migration/influenza.json'), mf);
   const out = path.join(dir, 'out');
   const { report, patch, drafts } = runImport({ exportDir: EXPORT_FLU, outDir: out, manifestPath: mf, slug: 'influenza', now: NOW });
   const s = report.summary;
-  assert.equal(s.pages, 33); assert.equal(s.pagesWithoutOutput, 0); assert.equal(s.schemaInvalid, 0);
+  assert.equal(s.pages, 31); assert.equal(s.pagesWithoutOutput, 0); assert.equal(s.schemaInvalid, 0);
   const env = { units: new Set(readJSON(path.join(CONTENT, 'master/units.json')).map((u) => u.id)), diseaseIds: new Set(master.map((d) => d.id)), assetsDir: path.join(out, 'content/assets'), licenses: ['OGDL-1.0', 'CC0-1.0', 'CC-BY-4.0'] };
   for (const d of drafts) assert.deepEqual(validateDraft(d, env), [], d.id);
   assert.ok(report.pages.every((p) => p.diseases.includes('disease.influenza')));
@@ -651,36 +653,41 @@ test('流感批次：欄目內頁依清單目標建成 document；模板文件�
   assert.equal(elig06.outputs[0].id, 'doc.flu-antiviral-eligibility.2026-06-01');
   // 清單頁（category-list）即使目標是文件也不改型別
   assert.ok(!report.pages.some((p) => p.kind === 'list' && p.issues.some((i) => i.code === 'type-from-manifest')));
-  // (2) 模板「工作手冊」項標題是通稱，舊頁標題是「公費流感疫苗接種計畫作業手冊」：靠 docType（manual）語意對上
-  const manual = report.pages.find((p) => p.key === '13-manual');
-  assert.equal(manual.manifestKey, 'manual'); assert.equal(manual.manifestDerived, true); assert.equal(manual.type, 'document'); assert.equal(manual.target, 'doc.flu-vaccine-manual.2026-09-16');
-  // 同一份手冊從兩個舊網址抵達：第二份 id 加 -2 並記 target-shared，供人工刪一份
+  // (2) 模板「工作手冊」「治療指引」位置：流感的人工例外（疫苗專區作業手冊、抗病毒藥劑使用對象）已指向同一份新站內容 ⇒ 不再推導、不另產頁，
+  //     同一份文件不會從兩個舊網址各來一份（第三批 -2／target-shared 的情況消失）
+  assert.equal(patch.summary.derivedItems, 18); assert.equal(patch.summary.derivedMatched, 18);
+  assert.ok(!patch.derivedItems.some((d) => d.key === 'manual' || d.key === 'guideline'), '被例外涵蓋的模板位置不推導');
   const manual2 = report.pages.find((p) => p.manifestKey === 'flu-vaccine-manual');
-  assert.equal(manual2.outputs[0].id, 'doc.flu-vaccine-manual.2026-09-16-2'); assert.ok(manual2.issues.some((i) => i.code === 'target-shared'));
-  // 「治療指引」模板項仍對不上「…防治工作指引」（待 Yulun 決定是否改模板），不會被 docType 誤對到別的文件項
-  const guide = report.pages.find((p) => p.key === '15-guideline');
-  assert.equal(guide.manifestKey, null); assert.ok(guide.issues.some((i) => i.code === 'not-in-manifest'));
-  assert.equal(patch.summary.derivedItems, 20); assert.equal(patch.summary.derivedMatched, 19);
-  assert.deepEqual(patch.derivedItems.filter((d) => !d.matched).map((d) => d.key), ['guideline']);
+  assert.equal(manual2.outputs[0].id, 'doc.flu-vaccine-manual.2026-09-16'); assert.ok(!manual2.issues.some((i) => i.code === 'target-shared'));
+  assert.ok(!report.pages.some((p) => p.key.endsWith('-manual') && p.manifestDerived), '沒有模板推導的工作手冊頁');
   // (3) 人工已判定 dropped 的歷年計畫，工具找不到新站去向（pending）⇒ 一致，不是衝突
   const past = patch.items.find((i) => i.key === 'flu-past-seasons');
   assert.equal(past.current.status, 'dropped'); assert.equal(past.suggestion.status, 'pending'); assert.equal(past.agree, true); assert.equal(past.proposed.status, 'dropped');
   assert.equal(patch.summary.conflicts, 0); assert.equal(patch.summary.matched, 8); assert.equal(patch.summary.statusChanges, 0);
-  // (4) 服務型頁面（合約院所查詢）：清單頁不轉、清單維持 pending，等 service 型別
+  // (4) 服務型頁面（合約院所查詢）：第四批起依標題關鍵字直接建成 service（clinic），步驟與對象以「（待補）」佔位；清單仍是 pending（新站還沒有這筆 service）
   for (const k of ['flu-vaccine-contract-sites', 'flu-antiviral-contract-sites']) {
     const p = report.pages.find((x) => x.manifestKey === k);
-    assert.equal(p.kind, 'list'); assert.equal(patch.items.find((i) => i.key === k).proposed.status, 'pending');
+    assert.equal(p.kind, 'service'); assert.equal(p.outputs[0].type, 'service'); assert.ok(p.issues.some((i) => i.code === 'type-from-keywords') && p.issues.some((i) => i.code === 'fields-pending'));
+    assert.equal(patch.items.find((i) => i.key === k).proposed.status, 'pending');
+    const d = drafts.find((x) => x.id === p.outputs[0].id);
+    assert.equal(d.serviceType, 'clinic'); assert.ok(d.steps.length >= 1 && d.whoCanApply.length >= 1 && d.introMarkdown.length > 20);
   }
   assert.equal(patch.summary.stillPending, 2);
-  assert.equal(s.byType.document, 7); assert.equal(s.byType.faq, 10); assert.equal(s.byType.disease, 1);
+  // (5) 澄清稿：Bulletin typeid 8772 ⇒ clarification（claim／verdict），既有同標題的 news 列為比對對象
+  const clar = report.pages.find((p) => p.kind === 'clarification');
+  assert.ok(clar && clar.outputs[0].id.startsWith('clar.') && clar.issues.some((i) => i.code === 'type-from-bulletin') && clar.issues.some((i) => i.code === 'type-upgrade'));
+  const cd = drafts.find((x) => x.id === clar.outputs[0].id);
+  assert.equal(cd.type, 'clarification'); assert.equal(cd.verdict, 'false'); assert.match(cd.claim, /流感疫苗/); assert.ok(cd.shareText.length > 10 && cd.clarificationMarkdown.length > 40);
+  assert.equal(clar.existing, true);
+  assert.deepEqual(s.byType, { faq: 10, publication: 1, media: 1, document: 5, dataset: 1, labtest: 1, page: 5, service: 2, news: 4, clarification: 1, disease: 1 });
   assert.ok(s.avgConfidence >= 0.8 && s.needsReview <= 3);
   assert.deepEqual(JSON.parse(fs.readFileSync(mf, 'utf8')), readJSON(path.join(CONTENT, 'migration/influenza.json')), '沒加 --apply-migration 不改清單');
 });
 
-test('已提交的流感批次輸出（data/legacy-import/influenza）：33 頁、schema 全過、清單只多 note、verified 全是 false、模擬匯出可重現', () => {
+test('已提交的流感批次輸出（data/legacy-import/influenza）：31 頁、schema 全過、清單只多 note、verified 全是 false、模擬匯出可重現', () => {
   const r = JSON.parse(fs.readFileSync(path.join(COMMITTED_FLU, 'report.json'), 'utf8'));
-  assert.equal(r.summary.pages, 33); assert.equal(r.summary.schemaInvalid, 0); assert.equal(r.migration.applied, true); assert.equal(r.manifest.extends, 'migration-template.disease');
-  assert.equal(r.summary.manifest.derivedMatched, 19);
+  assert.equal(r.summary.pages, 31); assert.equal(r.summary.schemaInvalid, 0); assert.equal(r.migration.applied, true); assert.equal(r.manifest.extends, 'migration-template.disease');
+  assert.equal(r.summary.manifest.derivedMatched, 18);
   for (const d of r.drafts) assert.ok(fs.existsSync(path.join(COMMITTED_FLU, d.file)), d.file);
   const manifest = readJSON(path.join(CONTENT, 'migration/influenza.json'));
   assert.equal(manifest.items.length, 8);
@@ -691,5 +698,110 @@ test('已提交的流感批次輸出（data/legacy-import/influenza）：33 頁�
   assert.equal(m.summary.conflicts, 0);
   const dir = tmp('flu-exp');
   generateDisease('disease.influenza', dir);
-  for (const f of ['13-manual.json', '25-flu-antiviral-eligibility.json', '28-flu-past-seasons.json']) assert.deepEqual(JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')), JSON.parse(fs.readFileSync(path.join(EXPORT_FLU, f), 'utf8')), f);
+  for (const f of ['21-flu-vaccine-manual.json', '23-flu-antiviral-eligibility.json', '26-flu-past-seasons.json']) assert.deepEqual(JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')), JSON.parse(fs.readFileSync(path.join(EXPORT_FLU, f), 'utf8')), f);
+});
+
+// ───────────────────────── 第四批：麻疹＋腸病毒；結構化型別直接產（第十一輪） ─────────────────────────
+const EXPORT_MEASLES = path.join(ROOT, 'data/legacy-export/measles');
+const EXPORT_EV = path.join(ROOT, 'data/legacy-export/enterovirus');
+
+test('結構化型別的欄位抽取：表格列、清單項、澄清 claim／verdict、出版品種類、服務種類、id 前綴', () => {
+  const md = '| 項目 | 內容 |\n| --- | --- |\n| 檢體 | 咽喉拭子、尿液／血清 |\n| 送驗時限 | 24 小時內 |\n\n- 第一步\n1. 第二步\n';
+  assert.equal(mdTableRows(md).length, 3); // 表頭＋兩列（分隔列跳過）
+  assert.equal(kvTable(md).get('送驗時限'), '24 小時內');
+  assert.deepEqual(listItems(md), ['第一步', '第二步']);
+  assert.equal(clarificationClaim('澄清：網傳「打流感疫苗會得流感」並非事實'), '打流感疫苗會得流感');
+  assert.equal(clarificationClaim('網傳燻白醋可殺死流感病毒沒有科學根據'), '燻白醋可殺死流感病毒');
+  assert.deepEqual(verdictFor('網傳 X 沒有科學根據', ''), { verdict: 'false', clear: true });
+  assert.deepEqual(verdictFor('MMR 建議已修訂，舊版說法過時', ''), { verdict: 'outdated', clear: true });
+  assert.equal(verdictFor('關於某事的說明', '').clear, false);
+  assert.deepEqual(pubTypeFor('結核病七語衛教海報', null), { pubType: 'poster', clear: true });
+  assert.deepEqual(pubTypeFor('某某', { pubType: 'manual' }), { pubType: 'manual', clear: true });
+  assert.equal(pubTypeFor('不知道是什麼', null).clear, false);
+  assert.deepEqual(serviceTypeFor(rules, '公費流感疫苗合約院所查詢'), { serviceType: 'clinic', clear: true });
+  assert.deepEqual(serviceTypeFor(rules, '腸病毒重症責任醫院名單與轉診'), { serviceType: 'clinic', clear: true });
+  assert.equal(serviceTypeFor(rules, '疾病介紹'), null);
+  assert.equal(typeOfId('clar.2026-01-x'), 'clarification'); assert.equal(typeOfId('doc.x.2026-01-01'), 'document'); assert.equal(typeOfId('labtest.dengue'), 'labtest');
+});
+
+test('模板展開：同型別多筆取現行最新；人工例外已指向同一份新站內容的位置不推導；模板文件項以選單位置（麵包屑）對應', () => {
+  const idx = loadContentIndex(CONTENT);
+  const dmap = new Map(master.map((d) => [d.id, d]));
+  const flu = expandTemplateItems({ manifest: readJSON(path.join(CONTENT, 'migration/influenza.json')), contentDir: CONTENT, index: idx, diseaseById: dmap });
+  assert.equal(flu.length, 18);
+  assert.ok(!flu.some((d) => d.key === 'manual' || d.key === 'guideline'), '作業手冊與抗病毒藥劑使用對象已由例外指向 ⇒ 不推導');
+  const bare = expandTemplateItems({ manifest: { extends: 'migration-template.disease', scope: { kind: 'disease', disease: 'disease.influenza' }, items: [] }, contentDir: CONTENT, index: idx, diseaseById: dmap });
+  assert.equal(bare.length, 20);
+  assert.equal(bare.find((d) => d.key === 'guideline').target, 'doc.flu-antiviral-eligibility.2026-09-21', '兩個版次取現行最新的，不是字母序第一個（6 月版）');
+  // 麵包屑位置對應：流感模擬匯出沒有治療指引頁了，用麻疹的病例定義頁驗證（標題是正式名稱，最後一層麵包屑是模板的「病例定義」）
+  const r = runImport({ exportDir: EXPORT_MEASLES, outDir: tmp('m-out'), manifestPath: path.join(CONTENT, 'migration/measles.json'), slug: 'measles', now: NOW }).report;
+  const cd = r.pages.find((p) => p.manifestKey === 'case-definition');
+  assert.ok(cd && cd.manifestDerived && cd.source.breadcrumbs.at(-1) === '病例定義' && cd.source.title !== '病例定義');
+});
+
+test('第四批：麻疹＋腸病毒各一份模擬匯出；出版品、影音、資料集、檢驗、服務直接建成結構化型別並通過 schema；看不出的欄位佔位並記 fields-pending', () => {
+  const env = (out) => ({ units: new Set(readJSON(path.join(CONTENT, 'master/units.json')).map((u) => u.id)), diseaseIds: new Set(master.map((d) => d.id)), assetsDir: path.join(out, 'content/assets'), licenses: ['OGDL-1.0', 'CC0-1.0', 'CC-BY-4.0'] });
+  const run = (slug, exp) => { const dir = tmp(slug); const mf = path.join(dir, `${slug}.json`); fs.copyFileSync(path.join(CONTENT, `migration/${slug}.json`), mf); const out = path.join(dir, 'out'); return { ...runImport({ exportDir: exp, outDir: out, manifestPath: mf, slug, now: NOW }), out, mf }; };
+  const M = run('measles', EXPORT_MEASLES);
+  const E = run('enterovirus', EXPORT_EV);
+  for (const { report, drafts, out, patch } of [M, E]) {
+    assert.equal(report.summary.pagesWithoutOutput, 0); assert.equal(report.summary.schemaInvalid, 0);
+    for (const d of drafts) assert.deepEqual(validateDraft(d, env(out)), [], d.id);
+    assert.equal(patch.summary.conflicts, 0); assert.equal(patch.summary.missingPages, 0); assert.equal(patch.summary.derivedItems, 18); assert.equal(patch.summary.derivedMatched, 18);
+    assert.ok(!report.pages.some((p) => p.issues.some((i) => i.code === 'target-shared')), '沒有同一份內容來兩次');
+    for (const t of ['publication', 'dataset', 'labtest', 'media']) assert.equal(report.summary.byType[t], 1, `${report.batch} ${t}`);
+    // 以 page 暫存＋target-type-differs 的只剩新聞列表、相關連結、專區首頁（本來就不轉成型別）
+    for (const p of report.pages.filter((p) => p.issues.some((i) => i.code === 'target-type-differs'))) assert.ok(/news-list|links|-zone$/.test(p.key), `${report.batch} ${p.key} 仍是 target-type-differs`);
+    // 清單判定「併入」某份文件的欄目內頁（麻疹群聚應變專區 → 接觸者追蹤指引；停課標準 → 教托育指引）：以 page 暫存、記 merge-into-target，不搶文件 id
+    const merged = report.pages.filter((p) => p.issues.some((i) => i.code === 'merge-into-target'));
+    assert.deepEqual(merged.map((p) => p.manifestKey), report.batch === 'measles' ? ['measles-cluster-response'] : ['ev-closure-reporting'], report.batch);
+    assert.equal(report.pages.find((p) => p.manifestKey === 'ev-ev71-vaccine')?.kind ?? 'disease-block', 'disease-block', '疫苗專區頁併入疾病頁的疫苗區塊，不記 merge-into-target');
+    for (const p of merged) { assert.equal(p.type, 'page'); assert.ok(p.outputs[0].id.startsWith('page.')); assert.ok(!p.issues.some((i) => i.code === 'target-type-differs')); }
+  }
+  // 麻疹
+  const ms = M.report.summary;
+  assert.equal(ms.pages, 28); assert.equal(M.patch.summary.matched, 7);
+  const lab = M.drafts.find((d) => d.type === 'labtest');
+  assert.equal(lab.id, 'labtest.measles'); assert.equal(lab.disease, 'disease.measles'); assert.deepEqual(lab.specimens.map((x) => x.name), ['咽喉拭子', '尿液', '血清']);
+  assert.ok(lab.specimens.every((x) => /待補/.test(x.container))); assert.equal(lab.sendWithinHours, 24); assert.equal(lab.biosafetyLevel, 'BSL-2'); assert.deepEqual(lab.audience, ['professional']); assert.equal(lab.owner, 'unit.lab');
+  assert.match(lab.title, /^麻疹/);
+  assert.ok(M.report.pages.find((p) => p.manifestKey === 'lab').issues.some((i) => i.code === 'fields-pending'));
+  const pub = M.drafts.find((d) => d.type === 'publication');
+  assert.equal(pub.pubType, 'poster'); assert.equal(pub.series, '麻疹宣導素材'); assert.match(pub.pdfUrl, /^\/files\/publication\.measles-materials-poster\/.*\.pdf$/); assert.ok(pub.abstractMarkdown.length > 20);
+  const ds = M.drafts.find((d) => d.type === 'dataset');
+  assert.equal(ds.id, 'dataset.measles-yearly'); assert.equal(ds.category, 'structured-table'); assert.equal(ds.updateFrequency, 'yearly'); assert.deepEqual(ds.formats, ['CSV']); assert.equal(ds.provenance.mode, 'snapshot'); assert.equal(ds.resources.length, 1);
+  const md = M.drafts.find((d) => d.type === 'media');
+  assert.equal(md.id, 'media.mmr-waiting-room-2026'); assert.equal(md.mediaType, 'animation'); assert.ok(md.transcriptMarkdown.length > 40); assert.equal(md.producedAt, md.publishedAt); assert.deepEqual(md.basedOn, ['disease.measles']);
+  assert.ok(!M.report.pages.find((p) => p.manifestKey === 'measles-mmr-video').issues.some((i) => i.code === 'embedded-media'), '影音型別的嵌入影片不算未轉入');
+  // 腸病毒
+  const es = E.report.summary;
+  assert.equal(es.pages, 31); assert.equal(E.patch.summary.matched, 8); assert.equal(E.patch.summary.stillPending, 1);
+  const sv = E.drafts.find((d) => d.type === 'service');
+  assert.equal(sv.id, 'service.enterovirus-ev-severe-referral'); assert.equal(sv.serviceType, 'clinic'); assert.equal(sv.slug, 'enterovirus-ev-severe-referral'); assert.ok(/待補/.test(sv.steps[0].title));
+  const svp = E.report.pages.find((p) => p.manifestKey === 'ev-severe-referral');
+  assert.equal(svp.kind, 'service'); assert.equal(E.patch.items.find((i) => i.key === 'ev-severe-referral').proposed.status, 'pending');
+  assert.ok(E.drafts.find((d) => d.id === 'media.enterovirus-handwashing' && d.mediaType === 'animation'));
+  assert.ok(E.drafts.find((d) => d.id === 'doc.ev-childcare-guideline.2026-09-10') && E.drafts.find((d) => d.id === 'doc.ev-severe-guideline.2026-03-15'));
+  assert.equal(E.report.pages.find((p) => p.manifestKey === 'ev-old-posters').action, 'skip-list');
+  assert.ok(ms.avgConfidence >= 0.85 && es.avgConfidence >= 0.85 && ms.needsReview <= 2 && es.needsReview <= 2);
+  for (const { mf } of [M, E]) assert.deepEqual(JSON.parse(fs.readFileSync(mf, 'utf8')), readJSON(path.join(CONTENT, `migration/${path.basename(mf)}`)), '沒加 --apply-migration 不改清單');
+});
+
+test('已提交的第四批輸出（measles、enterovirus）：schema 全過、清單只多 note、verified 全是 false、模擬匯出可重現；五批重跑後 TB／登革熱／流感的既有輸出也更新', () => {
+  for (const [slug, pages] of [['measles', 28], ['enterovirus', 31], ['tuberculosis', 40], ['dengue', 31], ['influenza', 31]]) {
+    const dir = path.join(ROOT, 'data/legacy-import', slug);
+    const r = JSON.parse(fs.readFileSync(path.join(dir, 'report.json'), 'utf8'));
+    assert.equal(r.summary.pages, pages, slug); assert.equal(r.summary.schemaInvalid, 0, slug); assert.equal(r.migration.applied, true, slug);
+    for (const d of r.drafts) assert.ok(fs.existsSync(path.join(dir, d.file)), d.file);
+    const manifest = readJSON(path.join(CONTENT, `migration/${slug}.json`));
+    assert.ok(manifest.items.every((i) => i.verified === false), slug);
+    assert.ok(manifest.items.every((i) => /【匯入 /.test(i.note ?? '')), `${slug} 每筆 note 有匯入標記`);
+    assert.equal(JSON.parse(fs.readFileSync(path.join(dir, 'migration-patch.json'), 'utf8')).summary.conflicts, 0, slug);
+    assert.ok(r.summary.byType.labtest === 1 && r.summary.byType.dataset === 1 && r.summary.byType.publication === 1, `${slug} 結構化型別有產出`);
+  }
+  for (const [id, exp] of [['disease.measles', EXPORT_MEASLES], ['disease.enterovirus', EXPORT_EV]]) {
+    const dir = tmp('exp4');
+    generateDisease(id, dir);
+    for (const f of fs.readdirSync(exp).filter((x) => x.endsWith('.json') && x !== '_export.json')) assert.deepEqual(JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')), JSON.parse(fs.readFileSync(path.join(exp, f), 'utf8')), `${id} ${f}`);
+  }
 });

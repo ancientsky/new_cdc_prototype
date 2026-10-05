@@ -1,0 +1,62 @@
+{
+  "id": "faq.measles-exposed-what-to-do",
+  "type": "faq",
+  "title": "我和麻疹病人接觸過，要怎麼辦？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2025-05-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.measles"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "請先確認自己是否具麻疹免疫力：完成 2 劑 MMR、曾確診麻疹或抗體陽性者，一般視為具免疫力。",
+  "question": "我和麻疹病人接觸過，要怎麼辦？",
+  "answerMarkdown": "請先確認自己是否**具麻疹免疫力**：完成 2 劑 MMR、曾確診麻疹或抗體陽性者，一般視為具免疫力。\n\n不確定或沒有免疫力的話：\n\n1. **盡快聯絡衛生所或撥打 1922**，說明接觸時間與場合。\n2. 暴露後 **72 小時內**接種 MMR 可降低發病風險；嬰兒、孕婦與免疫不全者不宜接種時，請衛生局評估免疫球蛋白。\n3. 自最後一次接觸起 **18 日內**自主健康管理，每日量體溫。出現發燒、咳嗽、結膜炎或出疹，請**先電話通知衛生單位**，戴口罩依指示就醫，不要直接坐在候診區。",
+  "basedOn": [
+    "disease.measles"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/s5OaifVY2y_Oh-5Zt4ecui"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 104 處（mso 樣式 62、Mso 類別 27、命名空間標籤 21）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「麻疹／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/s5OaifVY2y_Oh-5Zt4ecui",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.measles-exposed-what-to-do"
+    ]
+  }
+}
