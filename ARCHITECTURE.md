@@ -688,7 +688,7 @@ manualStatus?: enum[cancelled, failed（流標）], award?: { date, winner, amou
 
 ### 16.1 檔案資產（assets）資料契約（Y1 擁有）
 
-- **放哪裡**：每筆內容的檔案放 `content/assets/{content-id}/`（例：`content/assets/news.2026-09-21-flu-antiviral-revised/press-release.pdf`、`…/chart-ili.png`）。建置時原樣複製到 `dist/files/{content-id}/{filename}`，公開網址 `/files/{content-id}/{filename}`（不含語言前綴，七語共用）。檔名規則：小寫英數、連字號、底線與點；不可有空白與中文（validate 擋下，給出建議檔名）。
+- **放哪裡**：每筆內容的檔案放 `content/assets/{content-id}/`（例：`content/assets/news.2026-09-18-flu-antiviral-extended/press-release.pdf`、`…/chart-ili.png`）。建置時原樣複製到 `dist/files/{content-id}/{filename}`，公開網址 `/files/{content-id}/{filename}`（不含語言前綴，七語共用）。檔名規則：小寫英數、連字號、底線與點；不可有空白與中文（validate 擋下，給出建議檔名）。
 - **內容宣告**（`_common.json` 新增，所有型別可用）：
   ```
   assets: [{
@@ -779,6 +779,7 @@ manualStatus?: enum[cancelled, failed（流標）], award?: { date, winner, amou
 - **第四批：麻疹＋腸病毒**（第十一輪）。模板項改以舊站選單位置（最後一層麵包屑）對應，三批對不上的「治療指引」解決；人工例外已指向同一份新站內容的模板位置不再推導、模擬匯出不另產頁（五批重跑各少 2 頁，`target-shared` 歸零）；推導目標取現行最新。新增 `scripts/lib/legacy-import/types.mjs`：publication／media／dataset／labtest／service／clarification 直接產，抽不到的必填欄位以「（待補：…）」佔位並記 `fields-pending`；規則檔 version 3 加 `serviceRules`、澄清稿 `type: clarification`。清單判定「併入」文件／疫苗頁的欄目內頁以 page 暫存記 `merge-into-target`。結果見 `docs/legacy-import.md` 10.3。
 - **第五批：其他第一、二類傳染病（狂犬病、瘧疾、A 型肝炎、德國麻疹、屈公病、M 痘）**（第十二輪）。沒有人工清單的疾病由轉換器自組「合成清單」展開模板推導項（報告 `manifest.synthetic`，`--apply-migration` 拒絕寫回）；「例外涵蓋就不推導」改為保留項目並標 `coveredBy`，匯入、模擬匯出、治理引擎 R15 三處同步；相關連結頁建成 `topic`（`topic.{slug}-links`，連結 `unchecked`），清單標「已移轉」到疫苗頁的疫苗專區頁建成 `vaccine`（`publicFunded` 由「公費」表格列抽）；規則檔 version 4。同輪新增後台「修改已上架內容」：公開頁頁尾「同事修改這頁」→ `/admin/publish/?edit={id}` 以 v1 API 現行版預填表單（疾病頁 blocks ↔ `## 區塊標題` 內文往返），匯出時 `mergeEdit` 帶回表單沒有的欄位、發布日不變，上架包覆寫同一檔，PR 只顯示實際改動（`docs/guide-staff.md` 2.10）。結果見 `docs/legacy-import.md` 10.4。
 - **第六批：新聞與公告欄目**（第十二輪）。沒有移轉清單的批次：`sim-export-news.mjs` 把既有新聞／通函／澄清稿反推成 Bulletin 內頁並合成近年、久遠、英文稿與列表頁（60 頁）；報告以三級處理的建議動作決定去向，新增 `sampling`（auto-ok 依網址雜湊取 10%）與「二級抽樣檢視名單」段；致醫界通函（typeid 48 或標題正規式）建成 `letter`、`letterNo` 由標題抽、權責取疾病業務組（`categoryOwners.preferDiseaseFor`）；英文稿記 `needs-source-zh` 不自動上線；規則檔 version 5。結果見 `docs/legacy-import.md` 10.5。
+- **第七批：指引與手冊欄目**（第十二輪）。一級內容、重點是版次鏈：`sim-export-guidelines.mjs` 把既有 27 份文件（19 個家族）反推成欄目內頁（內文是現行版、附件列表放歷版 PDF；流感抗病毒藥劑三版各一頁），另合成狂犬病手冊兩版、純 PDF 指引、歷版掃描檔與列表頁（26 頁 → 32 份草稿）；轉換器新增：去版次同名 ⇒ 同 family、依 `effectiveAt` 串 `supersedes`（舊版建議封存）、附件列表的歷版 PDF 拆成純 PDF 舊版草稿（沿用新站既有 id）、純 PDF 頁以（待補）佔位記 `pdf-only`、生效日優先從標題／內文抽（民國年換算）；移轉清單 `content/migration/guidelines.json`（欄目範圍）；規則檔 version 6。結果見 `docs/legacy-import.md` 10.7。
 - 後台 `/admin/import/`：讀 `data/legacy-import/*/report.json`：批次摘要（頁數、型別分布、平均信心、需人工檢視數、附件數）、逐頁表（來源、型別、目標、信心、問題、動作）、下載草稿 JSON、對應移轉清單的連結；`/admin/` 加一張卡。
 - 測試 `tests/import-legacy.test.mjs`：規則比對、HTML→草稿（含 Word 樣式清理、表格、附件宣告、圖片 needsAlt）、信心計算、report 形狀、migration-patch 不動 verified、結核病批次 40 頁全部有輸出且草稿通過 schema 驗證（用 validate 的單檔驗證）。
 

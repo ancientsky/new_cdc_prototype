@@ -1,0 +1,478 @@
+{
+  "id": "migration.guidelines",
+  "type": "migration",
+  "title": "指引及手冊欄目（舊站）→ 新站文件型別（版次鏈）",
+  "owner": "unit.oasis",
+  "steward": "OASIS 承辦人（各文件權責單位逐筆確認）",
+  "publishedAt": "2026-10-05",
+  "reviewedAt": "2026-10-05",
+  "reviewPeriodMonths": 3,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "舊站「指引及手冊」欄目逐份文件家族移轉對照：每個家族一頁（現行版內文＋歷版附件），轉成新站 document 型別並串版次鏈；純 PDF 頁以（待補）佔位、歷版掃描檔建議封存、列表頁不轉。全部 verified:false，由各文件權責單位逐筆確認。",
+  "keywords": [
+    "移轉清單",
+    "指引",
+    "手冊",
+    "版次鏈",
+    "舊網址"
+  ],
+  "scope": {
+    "kind": "category",
+    "name": "指引及手冊"
+  },
+  "legacyRoot": "https://www.cdc.gov.tw/Category/List/{id}",
+  "showLegacyUntil": "2027-12-31",
+  "sourceNote": "開發環境連不到 www.cdc.gov.tw，欄目子頁依舊站 URL 模式（/Category/MPage、/Category/DiseaseManual|DiseaseTeach、/File/Get）與既有文件反推；舊網址 ID 不確定者以 {id} 佔位、同一模式以 #片段區分。文件是一級內容：不論信心分數，Steward 逐頁確認後才能上線。",
+  "items": [
+    {
+      "key": "case-definition-dengue",
+      "oldTitle": "傳染病病例定義：登革熱（2026 年版）",
+      "oldPath": "指引及手冊／登革熱",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#case-definition-dengue",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.case-definition-dengue.2026-01-01",
+      "owner": "unit.acute-infectious",
+      "note": "現行版；舊頁附件列表含歷版 PDF（2023-01），轉換時拆成同家族的失效版本草稿，不轉內文。　【匯入 2026-10-03】草稿 doc.case-definition-dengue.2026-01-01、doc.case-definition-dengue.2023-01-01（信心 1；既有內容已存在，供比對）",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "versionChain",
+        "machineReadable"
+      ]
+    },
+    {
+      "key": "case-definition-measles",
+      "oldTitle": "傳染病病例定義：麻疹",
+      "oldPath": "指引及手冊／麻疹",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#case-definition-measles",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.case-definition-measles.2024-01-01",
+      "owner": "unit.acute-infectious",
+      "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.case-definition-measles.2024-01-01（信心 1；既有內容已存在，供比對）",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "machineReadable"
+      ]
+    },
+    {
+      "key": "covid-vaccine-recommendation",
+      "oldTitle": "新冠疫苗接種建議（2026–2027 年度）",
+      "oldPath": "指引及手冊／新冠併發重症",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#covid-vaccine-recommendation",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.covid-vaccine-recommendation.2026-09-15",
+      "owner": "unit.acute-infectious",
+      "note": "現行版；舊頁附件列表含歷版 PDF（2025-26），轉換時拆成同家族的失效版本草稿，不轉內文。　【匯入 2026-10-03】草稿 doc.covid-vaccine-recommendation.2026-09-15、doc.covid-vaccine-recommendation.2025-09-15（信心 1；既有內容已存在，供比對）",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "versionChain",
+        "machineReadable"
+      ]
+    },
+    {
+      "key": "dengue-community-workplan",
+      "oldTitle": "登革熱社區防治工作指引：孳生源清除、病媒蚊監測與群聚應變",
+      "oldPath": "指引及手冊／登革熱",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#dengue-community-workplan",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.dengue-community-workplan.2026-09-10",
+      "owner": "unit.acute-infectious",
+      "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.dengue-community-workplan.2026-09-10（信心 1；既有內容已存在，供比對）",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "machineReadable"
+      ]
+    },
+    {
+      "key": "dots-manual",
+      "oldTitle": "結核病都治（DOTS）計畫作業手冊",
+      "oldPath": "指引及手冊／結核病",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#dots-manual",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.dots-manual.2025-01-01",
+      "owner": "unit.chronic-infectious",
+      "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.dots-manual.2025-01-01（信心 1；既有內容已存在，供比對）",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "machineReadable"
+      ]
+    },
+    {
+      "key": "ev-childcare-guideline",
+      "oldTitle": "教托育機構腸病毒防治指引",
+      "oldPath": "指引及手冊／腸病毒",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#ev-childcare-guideline",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.ev-childcare-guideline.2026-09-10",
+      "owner": "unit.acute-infectious",
+      "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.ev-childcare-guideline.2026-09-10（信心 1；既有內容已存在，供比對）",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "machineReadable"
+      ]
+    },
+    {
+      "key": "ev-severe-guideline",
+      "oldTitle": "腸病毒感染併發重症臨床處置建議",
+      "oldPath": "指引及手冊／腸病毒",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#ev-severe-guideline",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.ev-severe-guideline.2026-03-15",
+      "owner": "unit.acute-infectious",
+      "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.ev-severe-guideline.2026-03-15（信心 1；既有內容已存在，供比對）",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "machineReadable"
+      ]
+    },
+    {
+      "key": "flu-antiviral-eligibility",
+      "oldTitle": "公費流感抗病毒藥劑使用對象（2026 年 9 月延長版：高傳播族群延至 10 月 31 日）",
+      "oldPath": "指引及手冊／流感",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#flu-antiviral-eligibility",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.flu-antiviral-eligibility.2026-09-18",
+      "owner": "unit.acute-infectious",
+      "note": "現行版；歷版（2026-06、2026-08）在舊站各自一頁，另列。　【匯入 2026-10-03】草稿 doc.flu-antiviral-eligibility.2026-09-18（信心 1；既有內容已存在，供比對）",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "versionChain",
+        "machineReadable"
+      ]
+    },
+    {
+      "key": "flu-antiviral-eligibility-2026-06",
+      "oldTitle": "公費流感抗病毒藥劑使用對象（全年適用條件）",
+      "oldPath": "指引及手冊／流感／歷版",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#flu-antiviral-eligibility-2026-06",
+      "oldType": "page",
+      "verified": false,
+      "status": "archived",
+      "target": "doc.flu-antiviral-eligibility.2026-06-01",
+      "owner": "unit.acute-infectious",
+      "note": "已由 2026-09 版取代，保留供查閱並加失效警示，舊連結 301 到現行版。　【匯入 2026-10-03】草稿 doc.flu-antiviral-eligibility.2026-06-01（信心 1；既有內容已存在，供比對）",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "versionChain"
+      ]
+    },
+    {
+      "key": "flu-antiviral-eligibility-2026-08",
+      "oldTitle": "公費流感抗病毒藥劑使用對象（2026 年 8 月擴大版：高傳播族群，至 9 月 30 日）",
+      "oldPath": "指引及手冊／流感／歷版",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#flu-antiviral-eligibility-2026-08",
+      "oldType": "page",
+      "verified": false,
+      "status": "archived",
+      "target": "doc.flu-antiviral-eligibility.2026-08-24",
+      "owner": "unit.acute-infectious",
+      "note": "已由 2026-09 版取代，保留供查閱並加失效警示，舊連結 301 到現行版。　【匯入 2026-10-03】草稿 doc.flu-antiviral-eligibility.2026-08-24（信心 1；既有內容已存在，供比對）",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "versionChain"
+      ]
+    },
+    {
+      "key": "flu-vaccine-manual",
+      "oldTitle": "2026–2027 年度公費流感疫苗接種計畫作業手冊",
+      "oldPath": "指引及手冊／流感",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#flu-vaccine-manual",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.flu-vaccine-manual.2026-09-16",
+      "owner": "unit.acute-infectious",
+      "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.flu-vaccine-manual.2026-09-16（信心 1；既有內容已存在，供比對）",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "machineReadable"
+      ]
+    },
+    {
+      "key": "flu-vaccine-schedule",
+      "oldTitle": "2026–2027 年度公費流感疫苗接種計畫：實施對象與時程",
+      "oldPath": "指引及手冊／流感",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#flu-vaccine-schedule",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.flu-vaccine-schedule.2026-09-15",
+      "owner": "unit.acute-infectious",
+      "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.flu-vaccine-schedule.2026-09-15（信心 1；既有內容已存在，供比對）",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "machineReadable"
+      ]
+    },
+    {
+      "key": "guidance-dengue",
+      "oldTitle": "登革熱／屈公病防治工作指引（第 17 版）",
+      "oldPath": "指引及手冊／登革熱",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#guidance-dengue",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.guidance-dengue.v17",
+      "owner": "unit.acute-infectious",
+      "note": "現行版；舊頁附件列表含歷版 PDF（v15、v16），轉換時拆成同家族的失效版本草稿，不轉內文。　【匯入 2026-10-03】草稿 doc.guidance-dengue.v17、doc.guidance-dengue.v15、doc.guidance-dengue.v16（信心 1；既有內容已存在，供比對）",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "versionChain",
+        "machineReadable"
+      ]
+    },
+    {
+      "key": "infection-control-healthcare",
+      "oldTitle": "醫療機構感染管制措施指引",
+      "oldPath": "指引及手冊／感染管制",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#infection-control-healthcare",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.infection-control-healthcare.2026-03-01",
+      "owner": "unit.infection-control",
+      "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.infection-control-healthcare.2026-03-01（信心 1；既有內容已存在，供比對）",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "machineReadable"
+      ]
+    },
+    {
+      "key": "ltbi-guideline",
+      "oldTitle": "潛伏結核感染診治指引",
+      "oldPath": "指引及手冊／結核病",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#ltbi-guideline",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.ltbi-guideline.2024-01-01",
+      "owner": "unit.chronic-infectious",
+      "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.ltbi-guideline.2024-01-01（信心 1；既有內容已存在，供比對）",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "machineReadable"
+      ]
+    },
+    {
+      "key": "measles-contact-tracing",
+      "oldTitle": "麻疹接觸者追蹤作業指引",
+      "oldPath": "指引及手冊／麻疹",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#measles-contact-tracing",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.measles-contact-tracing.2026-09-12",
+      "owner": "unit.acute-infectious",
+      "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.measles-contact-tracing.2026-09-12（信心 1；既有內容已存在，供比對）",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "machineReadable"
+      ]
+    },
+    {
+      "key": "mmr-recommendation",
+      "oldTitle": "國內現行 MMR 預防接種建議（114.04.16 版）",
+      "oldPath": "指引及手冊／麻疹",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#mmr-recommendation",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.mmr-recommendation.2025-04-16",
+      "owner": "unit.acute-infectious",
+      "note": "現行版；舊頁附件列表含歷版 PDF（108.05.14），轉換時拆成同家族的失效版本草稿，不轉內文。　【匯入 2026-10-03】草稿 doc.mmr-recommendation.2025-04-16、doc.mmr-recommendation.2019-05-14（信心 1；既有內容已存在，供比對）",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "versionChain",
+        "machineReadable"
+      ]
+    },
+    {
+      "key": "tb-case-definition",
+      "oldTitle": "結核病病例定義與通報定義",
+      "oldPath": "指引及手冊／結核病",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#tb-case-definition",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.tb-case-definition.2024-01-01",
+      "owner": "unit.chronic-infectious",
+      "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.tb-case-definition.2024-01-01（信心 1；既有內容已存在，供比對）",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "machineReadable"
+      ]
+    },
+    {
+      "key": "tb-contact-investigation",
+      "oldTitle": "結核病接觸者檢查指引",
+      "oldPath": "指引及手冊／結核病",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#tb-contact-investigation",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.tb-contact-investigation.2025-01-01",
+      "owner": "unit.chronic-infectious",
+      "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.tb-contact-investigation.2025-01-01（信心 1；既有內容已存在，供比對）",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "machineReadable"
+      ]
+    },
+    {
+      "key": "tb-guideline",
+      "oldTitle": "結核病診治指引（第八版）",
+      "oldPath": "指引及手冊／結核病",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#tb-guideline",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.tb-guideline.2025-09-01",
+      "owner": "unit.chronic-infectious",
+      "note": "現行版；舊頁附件列表含歷版 PDF（第七版），轉換時拆成同家族的失效版本草稿，不轉內文。　【匯入 2026-10-03】草稿 doc.tb-guideline.2025-09-01、doc.tb-guideline.2022-03-01（信心 1；既有內容已存在，供比對）",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "versionChain",
+        "machineReadable"
+      ]
+    },
+    {
+      "key": "tb-manual",
+      "oldTitle": "結核病防治工作手冊",
+      "oldPath": "指引及手冊／結核病",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#tb-manual",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.tb-manual.2025-07-01",
+      "owner": "unit.chronic-infectious",
+      "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.tb-manual.2025-07-01（信心 1；既有內容已存在，供比對）",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "machineReadable"
+      ]
+    },
+    {
+      "key": "rabies-manual",
+      "oldTitle": "狂犬病防治工作手冊（113 年 12 月修訂版）",
+      "oldPath": "指引及手冊／狂犬病",
+      "oldUrl": "https://www.cdc.gov.tw/Category/DiseaseManual/{id}#rabies-manual",
+      "oldType": "page",
+      "verified": false,
+      "status": "pending",
+      "owner": "unit.acute-infectious",
+      "note": "新站尚無此文件；轉換草稿建成 manual，生效日取內文「113 年 12 月 20 日修訂生效」。　【匯入 2026-10-03】草稿 doc.rabies-6abd76.2024-12-20（信心 1）",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "versionChain",
+        "machineReadable"
+      ]
+    },
+    {
+      "key": "rabies-manual-2019",
+      "oldTitle": "狂犬病防治工作手冊（108 年版）",
+      "oldPath": "指引及手冊／狂犬病／歷版",
+      "oldUrl": "https://www.cdc.gov.tw/Category/DiseaseManual/{id}#rabies-manual-2019",
+      "oldType": "page",
+      "verified": false,
+      "status": "pending",
+      "owner": "unit.acute-infectious",
+      "note": "舊版；與 113 年修訂版同名（去版次），轉換時自動串成同一家族並建議封存。　【匯入 2026-10-03】草稿 doc.rabies-6abd76.2019-06-01（信心 1）",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "versionChain"
+      ]
+    },
+    {
+      "key": "crowded-ic-guideline",
+      "oldTitle": "人口密集機構感染管制措施指引",
+      "oldPath": "指引及手冊／感染管制",
+      "oldUrl": "https://www.cdc.gov.tw/Category/DiseaseTeach/{id}#crowded-ic-guideline",
+      "oldType": "pdf",
+      "verified": false,
+      "status": "pending",
+      "owner": "unit.infection-control",
+      "note": "舊頁只有下載連結、正本是 PDF；草稿以（待補）佔位，請感管組提供文字版（assets-policy 第 4 節）。　【匯入 2026-10-03】草稿 doc.x-crowded-ic-guideline.2025-06-30（信心 0.8）",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "machineReadable",
+        "accessibility"
+      ]
+    },
+    {
+      "key": "h7n9-guideline-2017",
+      "oldTitle": "H7N9 流感防治工作指引（2017 年版）",
+      "oldPath": "指引及手冊／流感／歷版",
+      "oldUrl": "https://www.cdc.gov.tw/Category/DiseaseTeach/{id}#h7n9-guideline-2017",
+      "oldType": "pdf",
+      "verified": false,
+      "status": "pending",
+      "owner": "unit.acute-infectious",
+      "note": "歷版掃描檔（PDF 無文字層）：建議封存供查閱，不上線；若要保留須附可及性文字版。　【匯入 2026-10-03】草稿 doc.influenza-h7n9-guideline-2017.2017-04-10（信心 0.8）",
+      "newRequirements": [
+        "accessibility"
+      ]
+    },
+    {
+      "key": "guidelines-list",
+      "oldTitle": "防疫指引與手冊總覽",
+      "oldPath": "指引及手冊",
+      "oldUrl": "https://www.cdc.gov.tw/Category/List/{id}#guidelines-list",
+      "oldType": "list",
+      "verified": false,
+      "status": "dropped",
+      "note": "列表頁：新站的文件列表由系統依文件型別自動產生（專業首頁與文件庫），舊網址 301 到 /documents/。　【匯入 2026-10-03】草稿 page.x-guidelines-list（信心 0.6）"
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "id": "doc.tb-guideline.2022-03-01",
+  "type": "document",
+  "title": "結核病診治指引（第七版）",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2022-03-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "（待補：本版次正本為 PDF「結核病診治指引（第七版，2022 年 3 月 1 日）（PDF）」，由舊頁「結核病診治指引（第八版）」的附件列表拆出，不轉內文；僅供查閱的失效版本。）",
+  "family": "doc.tb-guideline",
+  "docType": "guideline",
+  "version": "第七版",
+  "effectiveAt": "2022-03-01",
+  "machineReadableMarkdown": "（待補：本版次正本為 PDF「結核病診治指引（第七版，2022 年 3 月 1 日）（PDF）」，由舊頁「結核病診治指引（第八版）」的附件列表拆出，不轉內文；僅供查閱的失效版本。）",
+  "supersedes": null,
+  "pdfUrl": "/files/doc.tb-guideline.2022-03-01/tb-guideline-2022-03-01.pdf",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/LLQ48kI8Pnv_c6mNrfaHTT"
+  ],
+  "assets": [
+    {
+      "file": "tb-guideline-2022-03-01.pdf",
+      "kind": "attachment",
+      "label": "結核病診治指引（第七版，2022 年 3 月 1 日）（PDF）",
+      "mime": "application/pdf",
+      "bytes": 880,
+      "sha256": "cb9d8cdb6ca94ead3d110ab3de56a699d0944249d3681541592afe172da7d98f",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 54 處（mso 樣式 20、Mso 類別 17、命名空間標籤 17）"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站內容是文件 doc.tb-guideline.2025-09-01，草稿依清單建成 document（舊頁本身是欄目內頁）"
+      },
+      {
+        "code": "effective-from-text",
+        "severity": "info",
+        "message": "生效日 2025-09-01 取自內文（舊頁發布日 2022-03-01）"
+      },
+      {
+        "code": "version-from-attachment",
+        "severity": "info",
+        "message": "附件「結核病診治指引（第七版，2022 年 3 月 1 日）（PDF）」是另一版次（第七版），另建純 PDF 草稿 doc.tb-guideline.2022-03-01（同家族 doc.tb-guideline，不轉內文）"
+      },
+      {
+        "code": "version-chain",
+        "severity": "info",
+        "message": "版次鏈 doc.tb-guideline：第七版（2022-03-01） → 第八版（2025-09-01）；本版為現行版，supersedes doc.tb-guideline.2022-03-01"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/LLQ48kI8Pnv_c6mNrfaHTT",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "doc.tb-guideline.2022-03-01"
+    ],
+    "pdfOnly": true,
+    "fromAttachment": true,
+    "versionChain": {
+      "family": "doc.tb-guideline",
+      "position": 1,
+      "of": 2,
+      "current": false,
+      "supersededBy": "doc.tb-guideline.2025-09-01"
+    }
+  }
+}

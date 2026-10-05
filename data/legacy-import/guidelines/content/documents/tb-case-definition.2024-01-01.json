@@ -1,0 +1,75 @@
+{
+  "id": "doc.tb-case-definition.2024-01-01",
+  "type": "document",
+  "title": "結核病病例定義與通報定義",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2024-01-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "結核病臨床條件、檢驗條件（培養、分子檢測、塗片、病理）、通報定義與疾病分類；第三類法定傳染病一週內通報，多重抗藥性結核病 24 小時內。",
+  "family": "doc.tb-case-definition",
+  "docType": "case-definition",
+  "version": "2024-01-01",
+  "effectiveAt": "2024-01-01",
+  "machineReadableMarkdown": "結核病臨床條件、檢驗條件（培養、分子檢測、塗片、病理）、通報定義與疾病分類；第三類法定傳染病一週內通報，多重抗藥性結核病 24 小時內。\n\n### 一、臨床條件\n\n具下列任一項：\n\n1. 咳嗽、咳痰、發燒、體重減輕、夜間盜汗等疑似結核病症狀，且胸部 X 光或其他影像學檢查異常。\n2. 醫師臨床判斷為結核病，並開立 2 種以上抗結核藥物治療。\n\n### 二、檢驗條件\n\n具下列任一項：\n\n1. 臨床檢體培養出結核分枝桿菌複合群（MTBC）。\n2. 臨床檢體核酸增幅檢驗（分子檢測）結核分枝桿菌複合群陽性。\n3. 臨床檢體抗酸菌塗片陽性（須輔以培養或分子檢測確認菌種）。\n4. 病理組織切片具結核病典型病灶。\n\n### 三、通報定義與時限\n\n符合臨床條件或檢驗條件之任一項即應通報。結核病為**第三類法定傳染病，應於一週內通報**；多重抗藥性結核病為第二類法定傳染病，應於 24 小時內通報。\n\n本版自 2024 年 1 月 1 日 生效。\n\n| 項目 | 內容 |\n| --- | --- |\n| 文件名稱 | 結核病病例定義與通報定義 |\n| 版次 | 2024 年版 |\n| 生效日 | 2024-01-01 |\n| 權責單位 | 慢性傳染病組 |\n| 檔案格式 | PDF |",
+  "pdfUrl": "/files/doc.tb-case-definition.2024-01-01/tb-case-definition-2024-01-01.pdf",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/dCCFFfTlJhVsO0kICYVjVK"
+  ],
+  "assets": [
+    {
+      "file": "tb-case-definition-2024-01-01.pdf",
+      "kind": "attachment",
+      "label": "結核病病例定義與通報定義（PDF）",
+      "mime": "application/pdf",
+      "bytes": 836,
+      "sha256": "c785c5c71c4b42e8aa7fc841078ea40e979e0b845d0409d56129c606ca45cfbf",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 71 處（mso 樣式 37、Mso 類別 23、命名空間標籤 17）"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站內容是文件 doc.tb-case-definition.2024-01-01，草稿依清單建成 document（舊頁本身是欄目內頁）"
+      },
+      {
+        "code": "version-unknown",
+        "severity": "info",
+        "message": "標題看不出版次，version 暫填 2024-01-01"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/dCCFFfTlJhVsO0kICYVjVK",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "doc.tb-case-definition.2024-01-01"
+    ]
+  }
+}

@@ -14,7 +14,7 @@
 | 既有內容已存在（供比對） | 26 |
 | 附件與圖片 | 9（附件 6、內文圖片 2、資料檔 1；圖片待補 alt 2、PDF 無文字層 2） |
 | 草稿 schema 驗證 | 29 / 29 通過 |
-| 問題 | 錯誤 0、警告 12、提示 95 |
+| 問題 | 錯誤 0、警告 12、提示 96 |
 | 移轉清單對應 | 對上 8 / 8 筆；status 變化 0；note 更新 0；仍待移轉 2；與清單判定不同 0 |
 | 模板推導項（清單只寫例外） | 18 項，對上 18；只列在 migration-patch.json 的 derivedItems，不寫回清單 |
 | 清單沒有的舊頁 | 5（migration-patch.json 的 unmatchedPages 有建議的 pending 項目） |
@@ -36,7 +36,7 @@
 | 9 | 預防接種建議<br><sub>www.cdc.gov.tw/Category/MPage/w0zYM6B9tfqAm2A5O7xXt5</sub> | 併入疾病頁 → `disease.dengue`（併入：vaccine） | `disease.dengue`（既有） | 0.8 | body-short | 併入疾病頁區塊（與既有內容逐段比對） |
 | 10 | Q&A<br><sub>www.cdc.gov.tw/Category/QAPage/4kMzhnwTwPIrf_KETxhqzF</sub> | Q&A → `faq.dengue-community-mobilize`<br>`faq.dengue-container-check`<br>`faq.dengue-fever-when-to-see-doctor`<br>`faq.dengue-imported-return`<br>`faq.dengue-painkiller`<br>`faq.dengue-spraying-refuse`<br>`faq.travel-return-fever` | `disease.dengue`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 11 | 衛教宣導：單張海報<br><sub>www.cdc.gov.tw/Category/List/LUpyIsMuAB-KVgWh8d78i-</sub> | 出版品 → `publication.dengue-materials-poster` | — | 0.8 | pdf-no-text-layer、image-no-alt | 核對後入庫（新站尚無對應內容） |
-| 12 | 傳染病防治工作手冊（2026 年版）<br><sub>www.cdc.gov.tw/Category/DiseaseManual/QfdYJUGw2n5jaHqO-cy_Ce</sub> | 文件 → `doc.dengue-manual.2026-03-01` | — | 1 | — | 核對後入庫（新站尚無對應內容） |
+| 12 | 傳染病防治工作手冊（2026 年版）<br><sub>www.cdc.gov.tw/Category/DiseaseManual/QfdYJUGw2n5jaHqO-cy_Ce</sub> | 文件 → `doc.dengue-manual.2026-01-01` | — | 1 | — | 核對後入庫（新站尚無對應內容） |
 | 13 | 傳染病病例定義：登革熱（2026 年版）<br><sub>www.cdc.gov.tw/Category/DiseaseDefine/q7EpU6zgW8ZaV760caAnem</sub> | 文件 → `doc.case-definition-dengue.2026-01-01` | `doc.case-definition-dengue.2026-01-01`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 14 | 統計資料<br><sub>www.cdc.gov.tw/Category/List/24UnSJ76XgcjnNUGy3DMcd</sub> | 資料集 → `dataset.dengue-local-weekly` | `dataset.dengue-local-weekly`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 15 | 檢驗資訊<br><sub>www.cdc.gov.tw/Category/MPage/nBSoKp75tD_JsUcg-PolJx</sub> | 檢驗 → `labtest.dengue` | `labtest.dengue`（既有） | 1 | fields-pending | 既有內容已存在，供比對，不建議覆蓋 |
@@ -47,8 +47,8 @@
 | 20 | 病媒蚊密度調查結果<br><sub>www.cdc.gov.tw/Category/List/3ZwNd9eoMVqqi7PDTlqIyw</sub> | 清單頁 → `page.dengue-vector-density` | — | 0.6 | — | 清單頁，不轉換（新站由系統自動產生列表） |
 | 21 | 孳生源清除與社區動員（巡倒清刷）<br><sub>www.cdc.gov.tw/Category/MPage/rLPU3Gwbwg97BZ_2MG5efk</sub> | 頁面 → `page.dengue-source-reduction` | `doc.dengue-community-workplan.2026-09-10`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 22 | 群聚事件應變與緊急防治<br><sub>www.cdc.gov.tw/Category/MPage/j_J4tv6ANjXOs3PJQTPe8z</sub> | 頁面 → `page.dengue-cluster-response` | `doc.dengue-community-workplan.2026-09-10`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
-| 23 | NS1 抗原快篩試劑配置公告（致醫界通函）<br><sub>www.cdc.gov.tw/Bulletin/Detail/UTWPs0f26dqP75NLaqYOpg?typeid=11</sub> | 新聞 → `news.2026-09-15-letter-616-ns1` | `news.2026-09-15-letter-616-ns1`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
-| 24 | 登革熱／屈公病防治工作指引（第 16 版）<br><sub>www.cdc.gov.tw/File/Get/eisdR8ngYeiulZ08rD9J9A</sub> | 文件 → `doc.guidance-dengue.v16` | `doc.guidance-dengue.v16`（既有） | 1 | pdf-no-text-layer | 既有內容已存在，供比對，不建議覆蓋 |
+| 23 | NS1 抗原快篩試劑配置公告（致醫界通函）<br><sub>www.cdc.gov.tw/Bulletin/Detail/UTWPs0f26dqP75NLaqYOpg?typeid=11</sub> | 新聞 → `news.2026-09-15-letter-615-ns1` | `news.2026-09-15-letter-615-ns1`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
+| 24 | 登革熱／屈公病防治工作指引（第 16 版）<br><sub>www.cdc.gov.tw/File/Get/eisdR8ngYeiulZ08rD9J9A</sub> | 文件 → `doc.guidance-dengue.v16` | `doc.guidance-dengue.v16`（既有） | 1 | pdf-no-text-layer | 封存（歷史版本／久遠內容，舊版保留查閱） |
 | 25 | 影音：里長帶頭巡倒清刷<br><sub>www.cdc.gov.tw/Category/List/wcABV3owliF5_29uKba1VA</sub> | 影音 → `media.dengue-village-chief` | `media.dengue-village-chief`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 26 | 外籍勞工登革熱防治宣導（多語單張）<br><sub>www.cdc.gov.tw/Category/List/yNCv7fIZytqR8M72_3DGXS</sub> | 清單頁 → `page.dengue-migrant-worker-materials` | — | 0.4 ⚠ | embedded-media | 清單頁，不轉換（新站由系統自動產生列表） |
 | 27 | 流感疫情持續上升，10 月 1 日公費疫苗開打，長者幼兒請優先接種<br><sub>www.cdc.gov.tw/Bulletin/Detail/j9AyvNwbg3RF2utKUq6c6I?typeid=9</sub> | 新聞 → `news.2026-09-29-ili-weekly` | — | 1 | not-in-manifest | 既有內容已存在，供比對，不建議覆蓋 |

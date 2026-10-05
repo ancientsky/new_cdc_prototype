@@ -120,8 +120,8 @@
       "oldType": "news-list",
       "verified": false,
       "status": "migrated",
-      "target": "news.2026-09-15-letter-616-ns1",
-      "note": "通函另以新聞型別上架，依據正本為防治工作指引，指引修訂時自動加註。　【匯入 2026-10-03】草稿 news.2026-09-15-letter-616-ns1（信心 1；既有內容已存在，供比對）",
+      "target": "news.2026-09-15-letter-615-ns1",
+      "note": "通函另以新聞型別上架，依據正本為防治工作指引，指引修訂時自動加註。　【匯入 2026-10-03】草稿 news.2026-09-15-letter-615-ns1（信心 1；既有內容已存在，供比對）",
       "newRequirements": [
         "owner",
         "reviewedAt",

@@ -14,7 +14,7 @@
 | 既有內容已存在（供比對） | 16 |
 | 附件與圖片 | 6（附件 3、內文圖片 2、資料檔 1；圖片待補 alt 2、PDF 無文字層 1） |
 | 草稿 schema 驗證 | 15 / 15 通過 |
-| 問題 | 錯誤 0、警告 13、提示 78 |
+| 問題 | 錯誤 0、警告 14、提示 78 |
 | 移轉清單對應 | 對上 0 / 0 筆；status 變化 0（尚未套用）；note 更新 0；仍待移轉 0；與清單判定不同 0 |
 | 模板推導項（清單只寫例外） | 20 項，對上 20；只列在 migration-patch.json 的 derivedItems，不寫回清單 |
 | 清單沒有的舊頁 | 3（migration-patch.json 的 unmatchedPages 有建議的 pending 項目） |
@@ -37,7 +37,7 @@
 | 10 | Q&A<br><sub>www.cdc.gov.tw/Category/QAPage/3TeaG2bDJdZXc_HhjDLhUo</sub> | Q&A → `faq.chik-legacy-7f51c6` | `disease.chikungunya`（既有） | 0.8 | faq-structure-missing、body-short | 既有內容已存在，供比對，不建議覆蓋 |
 | 11 | 衛教宣導：單張海報<br><sub>www.cdc.gov.tw/Category/List/leuu0ZjU3Srsg0t0YuLRVJ</sub> | 出版品 → `publication.chik-materials-poster` | — | 0.8 | pdf-no-text-layer、image-no-alt | 核對後入庫（新站尚無對應內容） |
 | 12 | 衛教宣導：影片<br><sub>www.cdc.gov.tw/Category/MPage/lCdtrIiE2HSyGk8GmG8O-W</sub> | 影音 → `media.chik-materials-video` | — | 0.8 | body-short、fields-pending | 核對後入庫（新站尚無對應內容） |
-| 13 | 工作手冊<br><sub>www.cdc.gov.tw/Category/DiseaseManual/pb07QlV5AvIkdHfObDvQIh</sub> | 文件 → `doc.chik-manual.2018-03-01` | — | 0.8 | body-short | 核對後入庫（新站尚無對應內容） |
+| 13 | 工作手冊<br><sub>www.cdc.gov.tw/Category/DiseaseManual/pb07QlV5AvIkdHfObDvQIh</sub> | 文件 → `doc.chik-manual.2018-03-01` | — | 0.8 | body-short、pdf-only | 核對後入庫（新站尚無對應內容） |
 | 14 | 病例定義<br><sub>www.cdc.gov.tw/Category/DiseaseDefine/ef7hGQOobBHCZRVY-d6-hF</sub> | 文件 → `doc.chik-case-definition.2018-03-01` | — | 0.8 | body-short | 核對後入庫（新站尚無對應內容） |
 | 15 | 登革熱／屈公病防治工作指引（第 17 版）<br><sub>www.cdc.gov.tw/File/Get/hesqOx-ktN79jPvenM9EIq</sub> | 文件 → `doc.guidance-dengue.v17` | `doc.guidance-dengue.v17`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 16 | 統計資料<br><sub>www.cdc.gov.tw/Category/List/iq84oKkMOnZY9lbV-HK_xI</sub> | 資料集 → `dataset.chik-stats` | — | 1 | — | 核對後入庫（新站尚無對應內容） |

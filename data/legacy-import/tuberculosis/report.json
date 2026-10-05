@@ -11,7 +11,7 @@
   },
   "rules": {
     "file": "content/migration/import/_import-rules.json",
-    "version": 5
+    "version": 6
   },
   "manifest": {
     "id": "migration.tuberculosis",
@@ -82,7 +82,7 @@
     "issues": {
       "error": 1,
       "warn": 14,
-      "info": 87
+      "info": 90
     },
     "manifest": {
       "items": 40,
@@ -1086,6 +1086,11 @@
           "code": "word-cleaned",
           "severity": "info",
           "message": "清除 Word 貼上殘留 54 處（mso 樣式 20、Mso 類別 17、命名空間標籤 17）"
+        },
+        {
+          "code": "version-chain",
+          "severity": "info",
+          "message": "版次鏈 doc.tb-guideline：第七版（2022-03-01） → 第八版（2025-09-01）；本版為現行版，supersedes doc.tb-guideline.2022-03-01"
         }
       ],
       "action": "compare-existing",
@@ -1250,6 +1255,11 @@
           "code": "version-unknown",
           "severity": "info",
           "message": "標題看不出版次，version 暫填 2024-01-01"
+        },
+        {
+          "code": "version-chain",
+          "severity": "info",
+          "message": "版次鏈 doc.ltbi-guideline：2021-05-01（2021-05-01） → 2024-01-01（2024-01-01）；本版為現行版，supersedes doc.ltbi-guideline.2021-05-01"
         }
       ],
       "action": "compare-existing",
@@ -1567,6 +1577,11 @@
           "code": "version-unknown",
           "severity": "info",
           "message": "標題看不出版次，version 暫填 2025-07-01"
+        },
+        {
+          "code": "version-chain",
+          "severity": "info",
+          "message": "版次鏈 doc.tb-manual：2019 年版（2019-06-28） → 2025-07-01（2025-07-01）；本版為現行版，supersedes doc.tb-manual.2019-06-28"
         }
       ],
       "action": "compare-existing",

@@ -1,0 +1,42 @@
+{
+  "id": "page.x-guidelines-list",
+  "type": "page",
+  "title": "防疫指引與手冊總覽",
+  "owner": "unit.oasis",
+  "publishedAt": "2026-10-03",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "2026-01-01 傳染病病例定義：登革熱（2026 年版） 2026-01-15 傳染病病例定義：麻疹 2026-09-15 新冠疫苗接種建議（2026–2027 年度） 2026-09-10 登革熱社區防治工作指引：孳生源清除、病媒…",
+  "slug": "x-guidelines-list",
+  "bodyMarkdown": "- 2026-01-01 [傳染病病例定義：登革熱（2026 年版）](https://www.cdc.gov.tw/Category/MPage/tWFvK3bPGVcG4STNN7K0AJ)\n- 2026-01-15 [傳染病病例定義：麻疹](https://www.cdc.gov.tw/Category/MPage/TFUycDkXCfricFUt5j-XxJ)\n- 2026-09-15 [新冠疫苗接種建議（2026–2027 年度）](https://www.cdc.gov.tw/Category/MPage/2G_kk9OEXNAmMOsndOv0Tc)\n- 2026-09-10 [登革熱社區防治工作指引：孳生源清除、病媒蚊監測與群聚應變](https://www.cdc.gov.tw/Category/MPage/2hJk9W1XoDaTFEiv0r6x2o)\n- 2026-01-15 [結核病都治（DOTS）計畫作業手冊](https://www.cdc.gov.tw/Category/MPage/yNrS2lvYiqdFRi0xisvyGW)\n- 2026-09-10 [教托育機構腸病毒防治指引](https://www.cdc.gov.tw/Category/MPage/R-VAtCncWwVYC1rBBa5wpf)\n- 2026-03-15 [腸病毒感染併發重症臨床處置建議](https://www.cdc.gov.tw/Category/MPage/m70l0M3H8QLwZUchC8H0WU)\n- 2026-09-20 [公費流感抗病毒藥劑使用對象（2026 年 9 月延長版：高傳播族群延至 10 月 31 日）](https://www.cdc.gov.tw/Category/MPage/NbhcebQOefVm48u57Z4rVv)\n- 2026-06-01 [公費流感抗病毒藥劑使用對象（全年適用條件）](https://www.cdc.gov.tw/Category/MPage/XJrlXfbtWEd8E3uwbnfBg9)\n- 2026-08-24 [公費流感抗病毒藥劑使用對象（2026 年 8 月擴大版：高傳播族群，至 9 月 30 日）](https://www.cdc.gov.tw/Category/MPage/utHsvgoFhtVwsL26JL-6TM)\n- 2026-09-16 [2026–2027 年度公費流感疫苗接種計畫作業手冊](https://www.cdc.gov.tw/Category/MPage/CakZ4t4cZR0bYXTl_3xLDw)\n- 2026-09-15 [2026–2027 年度公費流感疫苗接種計畫：實施對象與時程](https://www.cdc.gov.tw/Category/MPage/PwkPHdhebK90v4YVz1uOnQ)\n- 2026-07-01 [登革熱／屈公病防治工作指引（第 17 版）](https://www.cdc.gov.tw/Category/MPage/QwHK502JzEL-7ojyp1B53w)\n- 2026-03-01 [醫療機構感染管制措施指引](https://www.cdc.gov.tw/Category/MPage/4SSpeIQdau_eeWKfkHRO75)\n- 2026-01-15 [潛伏結核感染診治指引](https://www.cdc.gov.tw/Category/MPage/8YOZTBVwbu5t_YzrVuqna3)\n- 2026-09-12 [麻疹接觸者追蹤作業指引](https://www.cdc.gov.tw/Category/MPage/rE14k7WXGhTM9KpMCIkRiH)\n- 2026-01-15 [國內現行 MMR 預防接種建議（114.04.16 版）](https://www.cdc.gov.tw/Category/MPage/l3AcSii0GQ0DFTwJAZv75P)\n- 2026-01-15 [結核病病例定義與通報定義](https://www.cdc.gov.tw/Category/MPage/dCCFFfTlJhVsO0kICYVjVK)\n- 2026-01-15 [結核病接觸者檢查指引](https://www.cdc.gov.tw/Category/MPage/ayyhfVi2o9zE_68-rGkqz2)\n- 2026-01-15 [結核病診治指引（第八版）](https://www.cdc.gov.tw/Category/MPage/LLQ48kI8Pnv_c6mNrfaHTT)\n- 2026-01-15 [結核病防治工作手冊](https://www.cdc.gov.tw/Category/MPage/pzNsf4bKBooWZOAeKz6kOr)",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/tW71wbu3bYJe5jK2HGn7P9"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.6,
+    "issues": [
+      {
+        "code": "list-page",
+        "severity": "info",
+        "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/List/tW71wbu3bYJe5jK2HGn7P9",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

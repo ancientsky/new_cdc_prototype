@@ -1,0 +1,79 @@
+{
+  "id": "doc.x-crowded-ic-guideline.2025-06-30",
+  "type": "document",
+  "title": "人口密集機構感染管制措施指引",
+  "owner": "unit.infection-control",
+  "publishedAt": "2025-06-30",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "（待補：本文件正本為 PDF「人口密集機構感染管制措施指引（2025 年 6 月版）（PDF）」，舊頁只有下載連結。上架前請權責單位提供文字版（assets-policy 第 4 節），或確認僅以附件提供。）",
+  "family": "doc.x-crowded-ic-guideline",
+  "docType": "guideline",
+  "version": "2025-06-30",
+  "effectiveAt": "2025-06-30",
+  "machineReadableMarkdown": "（待補：本文件正本為 PDF「人口密集機構感染管制措施指引（2025 年 6 月版）（PDF）」，舊頁只有下載連結。上架前請權責單位提供文字版（assets-policy 第 4 節），或確認僅以附件提供。）\n\n本指引全文請下載附件。",
+  "pdfUrl": "/files/doc.x-crowded-ic-guideline.2025-06-30/crowded-institution-ic-guideline.pdf",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/DiseaseTeach/nAusiBUYAdEsBLO31lifRN"
+  ],
+  "assets": [
+    {
+      "file": "crowded-institution-ic-guideline.pdf",
+      "kind": "attachment",
+      "label": "人口密集機構感染管制措施指引（2025 年 6 月版）（PDF）",
+      "mime": "application/pdf",
+      "bytes": 838,
+      "sha256": "54b87da4d5d945cf9e478765a175e57125ff5cb298eef3a8ce030d214490d156",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.8,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "body-short",
+        "severity": "warn",
+        "message": "內文過短（11 字，低於 40）"
+      },
+      {
+        "code": "version-unknown",
+        "severity": "info",
+        "message": "標題看不出版次，version 暫填 2025-06-30"
+      },
+      {
+        "code": "pdf-only",
+        "severity": "warn",
+        "message": "舊頁內文只有下載連結，正本是 PDF「人口密集機構感染管制措施指引（2025 年 6 月版）（PDF）」；machineReadableMarkdown 以（待補）佔位，PDF 不整批轉（第 8 節），上架前請提供文字版"
+      },
+      {
+        "code": "fields-pending",
+        "severity": "info",
+        "message": "待補欄位：machineReadableMarkdown（正本文字版）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/DiseaseTeach/nAusiBUYAdEsBLO31lifRN",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "pdfOnly": true
+  }
+}

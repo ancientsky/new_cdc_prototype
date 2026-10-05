@@ -7,14 +7,14 @@
 | 項目 | 數字 |
 | --- | --- |
 | 舊頁數 | 31 |
-| 產出草稿 | 32（Q&A 10、出版品 1、影音 1、文件 5、資料集 1、檢驗 1、頁面 4、專區 1、服務 2、新聞 4、澄清稿 1、疾病頁 1） |
+| 產出草稿 | 32（Q&A 10、出版品 1、影音 1、文件 5、資料集 1、檢驗 1、頁面 4、專區 1、服務 2、新聞 3、致醫界通函 1、澄清稿 1、疾病頁 1） |
 | 舊頁型別 | 併入疾病頁 9、Q&A 1、出版品 1、影音 1、文件 5、資料集 1、檢驗 1、頁面 2、清單頁 2、專區 1、服務 2、新聞 4、澄清稿 1 |
 | 平均信心 | 0.93 |
 | 需人工檢視（信心 < 0.6） | 0 |
 | 既有內容已存在（供比對） | 25 |
 | 附件與圖片 | 8（附件 5、內文圖片 2、資料檔 1；圖片待補 alt 2、PDF 無文字層 2） |
 | 草稿 schema 驗證 | 32 / 32 通過 |
-| 問題 | 錯誤 0、警告 13、提示 105 |
+| 問題 | 錯誤 0、警告 13、提示 109 |
 | 移轉清單對應 | 對上 8 / 8 筆；status 變化 0；note 更新 0；仍待移轉 2；與清單判定不同 0 |
 | 模板推導項（清單只寫例外） | 18 項，對上 18；只列在 migration-patch.json 的 derivedItems，不寫回清單 |
 | 清單沒有的舊頁 | 5（migration-patch.json 的 unmatchedPages 有建議的 pending 項目） |
@@ -47,15 +47,15 @@
 | 20 | 公費流感疫苗接種計畫：實施對象與時程<br><sub>www.cdc.gov.tw/File/Get/TRISN3J9An-J4lAzbB1EFN</sub> | 文件 → `doc.flu-vaccine-schedule.2026-09-15` | `doc.flu-vaccine-schedule.2026-09-15`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 21 | 公費流感疫苗接種計畫作業手冊<br><sub>www.cdc.gov.tw/File/Get/k6H6568EM4MUyLmxDp6yVF</sub> | 文件 → `doc.flu-vaccine-manual.2026-09-16` | `doc.flu-vaccine-manual.2026-09-16`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 22 | 公費流感疫苗合約院所查詢<br><sub>www.cdc.gov.tw/Category/List/4RgtNMNbqmGxb90C5PCRNH</sub> | 服務 → `service.influenza-flu-vaccine-contract-sites` | — | 0.6 | fields-pending | 核對後入庫（新站尚無對應內容） |
-| 23 | 公費流感抗病毒藥劑使用對象<br><sub>www.cdc.gov.tw/Category/Page/DcQhnxOUXS4BnGFxCjEXLb</sub> | 文件 → `doc.flu-antiviral-eligibility.2026-09-21` | `doc.flu-antiviral-eligibility.2026-09-21`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
-| 24 | 公費流感抗病毒藥劑使用對象（2026 年 6 月版）<br><sub>www.cdc.gov.tw/Category/Page/Tsy161Va94LybxcU8KHFRV</sub> | 文件 → `doc.flu-antiviral-eligibility.2026-06-01` | `doc.flu-antiviral-eligibility.2026-06-01`（既有） | 1 | pdf-no-text-layer | 既有內容已存在，供比對，不建議覆蓋 |
+| 23 | 公費流感抗病毒藥劑使用對象<br><sub>www.cdc.gov.tw/Category/Page/DcQhnxOUXS4BnGFxCjEXLb</sub> | 文件 → `doc.flu-antiviral-eligibility.2026-09-18` | `doc.flu-antiviral-eligibility.2026-09-18`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
+| 24 | 公費流感抗病毒藥劑使用對象（全年適用條件）<br><sub>www.cdc.gov.tw/Category/Page/Tsy161Va94LybxcU8KHFRV</sub> | 文件 → `doc.flu-antiviral-eligibility.2026-06-01` | `doc.flu-antiviral-eligibility.2026-06-01`（既有） | 1 | pdf-no-text-layer | 封存（歷史版本／久遠內容，舊版保留查閱） |
 | 25 | 公費抗病毒藥劑合約院所與藥局<br><sub>www.cdc.gov.tw/Category/List/Cf1DIbpAUq0ymjkxv1xC7U</sub> | 服務 → `service.influenza-flu-antiviral-contract-sites` | — | 0.6 | fields-pending | 核對後入庫（新站尚無對應內容） |
 | 26 | 歷年流感疫苗接種計畫（2020–2024 年度）<br><sub>www.cdc.gov.tw/Category/List/ewfWns-6XlMWzGdtpDFLK1</sub> | 清單頁 → `page.influenza-flu-past-seasons` | — | 0.6 | — | 清單頁，不轉換（新站由系統自動產生列表） |
 | 27 | 流感疫情持續上升，10 月 1 日公費疫苗開打，長者幼兒請優先接種<br><sub>www.cdc.gov.tw/Bulletin/Detail/8lZ1ophntJAgEqI_IgPLNQ?typeid=9</sub> | 新聞 → `news.2026-09-29-ili-weekly` | — | 1 | not-in-manifest | 既有內容已存在，供比對，不建議覆蓋 |
-| 28 | 類流感進入高峰期，未滿 5 歲及 65 歲以上有症狀者可直接使用公費抗病毒藥劑免快篩<br><sub>www.cdc.gov.tw/Bulletin/Detail/PGF89OEzK1r1Z_C6VybzcY?typeid=9</sub> | 新聞 → `news.2026-09-21-flu-antiviral-revised` | — | 1 | not-in-manifest | 既有內容已存在，供比對，不建議覆蓋 |
+| 28 | 流感疫情進入流行期且持續上升，疾管署延長擴大公費流感抗病毒藥劑使用條件至 10 月 31 日<br><sub>www.cdc.gov.tw/Bulletin/Detail/O_J0ATTIK9MciVwL4-h6Jg?typeid=9</sub> | 新聞 → `news.2026-09-18-flu-antiviral-extended` | — | 1 | not-in-manifest | 既有內容已存在，供比對，不建議覆蓋 |
 | 29 | 2026–2027 年度公費流感疫苗 10 月 1 日開打，新冠疫苗同步提供<br><sub>www.cdc.gov.tw/Bulletin/Detail/YhMh5ap_Ft8C_2_Gy5z5J9?typeid=9</sub> | 新聞 → `news.2026-09-18-flu-vaccine-oct1` | — | 1 | not-in-manifest | 既有內容已存在，供比對，不建議覆蓋 |
-| 30 | 澄清：網傳「打流感疫苗會得流感、長輩打完會死」並非事實<br><sub>www.cdc.gov.tw/Bulletin/Detail/e_1DvbI5FdTnW6hLu35VWK?typeid=8772</sub> | 澄清稿 → `clar.2026-09-10-influenza-324aad` | `news.2026-09-10-clarify-flu-vaccine-death`（既有） | 1 | not-in-manifest | 既有內容已存在，供比對，不建議覆蓋 |
-| 31 | 夏季流感疫情持續，公費抗病毒藥劑使用對象維持現行規定<br><sub>www.cdc.gov.tw/Bulletin/Detail/A_1lDFgtPBFnJ0u06cQ18z?typeid=9</sub> | 新聞 → `news.2026-06-03-flu-antiviral-summer` | — | 1 | not-in-manifest | 既有內容已存在，供比對，不建議覆蓋 |
+| 30 | 致醫界通函第 616 號：延長擴大公費流感抗病毒藥劑使用對象「有類流感症狀，且具下列身分之流感高傳播族群」之適用期限至 10 月 31 日<br><sub>www.cdc.gov.tw/Bulletin/Detail/B5hGsAn-lgn3yZOUXOX8Oh?typeid=11</sub> | 新聞 → `news.2026-09-18-letter-616-flu-antiviral-extended` | — | 1 | not-in-manifest | 既有內容已存在，供比對，不建議覆蓋 |
+| 31 | 澄清：網傳「打流感疫苗會得流感、長輩打完會死」並非事實<br><sub>www.cdc.gov.tw/Bulletin/Detail/e_1DvbI5FdTnW6hLu35VWK?typeid=8772</sub> | 澄清稿 → `clar.2026-09-10-influenza-324aad` | `news.2026-09-10-clarify-flu-vaccine-death`（既有） | 1 | not-in-manifest | 既有內容已存在，供比對，不建議覆蓋 |
 
 ## 需人工檢視（0 頁）
 
@@ -84,12 +84,12 @@
 - 流行病學：圖片「influenza-trend.png」舊頁沒有替代文字，暫用檔名「influenza-trend」，請補 alt（needsAlt）
 - 衛教宣導：單張海報：PDF「influenza-poster-7lang.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF
 - 衛教宣導：單張海報：圖片「influenza-poster.png」舊頁沒有替代文字，暫用檔名「influenza-poster」，請補 alt（needsAlt）
-- 公費流感抗病毒藥劑使用對象（2026 年 6 月版）：PDF「flu-antiviral-eligibility.2026-06-01.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF
+- 公費流感抗病毒藥劑使用對象（全年適用條件）：PDF「flu-antiviral-eligibility.2026-06-01.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF
 
 ## 與移轉清單的差異
 
 - 清單有、匯出沒有：無
-- 匯出有、清單沒有：27-news-2026-09-29-ili-weekly、28-news-2026-09-21-flu-antiviral-revised、29-news-2026-09-18-flu-vaccine-oct1、30-news-2026-09-10-clarify-flu-vaccine-death、31-news-2026-06-03-flu-antiviral-summer
+- 匯出有、清單沒有：27-news-2026-09-29-ili-weekly、28-news-2026-09-18-flu-antiviral-extended、29-news-2026-09-18-flu-vaccine-oct1、30-news-2026-09-18-letter-616-flu-antiviral-extended、31-news-2026-09-10-clarify-flu-vaccine-death
 - 與清單判定不同（不覆蓋，人工決定）：無
 - 套用規則：只改 status／target／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。
 

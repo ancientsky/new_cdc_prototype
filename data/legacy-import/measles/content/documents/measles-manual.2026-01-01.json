@@ -1,0 +1,76 @@
+{
+  "id": "doc.measles-manual.2026-01-01",
+  "type": "document",
+  "title": "傳染病防治工作手冊（2026 年版）",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-01-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.measles"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "供地方衛生局與醫療院所使用之各類法定傳染病防治工作手冊，含病例定義、通報、檢體採檢、疫調、接觸者追蹤與防治措施。",
+  "family": "doc.measles-manual",
+  "docType": "manual",
+  "version": "2026 年版",
+  "effectiveAt": "2026-01-01",
+  "machineReadableMarkdown": "供地方衛生局與醫療院所使用之各類法定傳染病防治工作手冊，含病例定義、通報、檢體採檢、疫調、接觸者追蹤與防治措施。\n\n本手冊依疾病分章，每章包含：疾病概述、致病原、流行病學、臨床表現、**病例定義**、**通報定義與時限**、檢體採檢送驗、疫情調查、防治措施與接觸者追蹤。2026 年版主要修訂：登革熱病例定義（2026-01-01 生效）、MMR 接種建議引用更新、腸病毒重症處置指引（2026-03-15）。\n\n各疾病之最新病例定義以「文件」區之現行版本為準。\n\n下載：\\<a href=\"https://www.cdc.gov.tw/File/Get/Kk2-5QEq9lJaO0mi9wgrIx\">傳染病防治工作手冊（2026 年版）（PDF）\\</a>",
+  "pdfUrl": "/files/doc.measles-manual.2026-01-01/manual-communicable-disease-control-2026.pdf",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/DiseaseManual/fKswAQpMktNyzXETPocXZ2"
+  ],
+  "assets": [
+    {
+      "file": "manual-communicable-disease-control-2026.pdf",
+      "kind": "attachment",
+      "label": "傳染病防治工作手冊（2026 年版）",
+      "mime": "application/pdf",
+      "bytes": 707,
+      "sha256": "d6b773a5b8c115788cb664042ba9403a669408541c3365c6def8fd148c5781a6",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 14 處（mso 樣式 6、Mso 類別 4、命名空間標籤 4）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「麻疹／法規與指引」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 manual（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "effective-from-text",
+        "severity": "info",
+        "message": "生效日 2026-01-01 取自內文（舊頁發布日 2026-03-01）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/DiseaseManual/fKswAQpMktNyzXETPocXZ2",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

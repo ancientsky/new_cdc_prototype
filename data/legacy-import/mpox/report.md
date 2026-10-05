@@ -14,7 +14,7 @@
 | 既有內容已存在（供比對） | 16 |
 | 附件與圖片 | 5（附件 2、內文圖片 2、資料檔 1；圖片待補 alt 2、PDF 無文字層 1） |
 | 草稿 schema 驗證 | 14 / 14 通過 |
-| 問題 | 錯誤 0、警告 9、提示 74 |
+| 問題 | 錯誤 0、警告 10、提示 75 |
 | 移轉清單對應 | 對上 0 / 0 筆；status 變化 0（尚未套用）；note 更新 0；仍待移轉 0；與清單判定不同 0 |
 | 模板推導項（清單只寫例外） | 20 項，對上 20；只列在 migration-patch.json 的 derivedItems，不寫回清單 |
 | 清單沒有的舊頁 | 2（migration-patch.json 的 unmatchedPages 有建議的 pending 項目） |
@@ -37,7 +37,7 @@
 | 10 | Q&A<br><sub>www.cdc.gov.tw/Category/QAPage/qmMaCThh1HmKBrk0zmkYw8</sub> | Q&A → `faq.mpox-who-vaccine` | `disease.mpox`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 11 | 衛教宣導：單張海報<br><sub>www.cdc.gov.tw/Category/List/xdmnb43pMif6QG4JK7Xdqe</sub> | 出版品 → `publication.mpox-materials-poster` | — | 0.8 | pdf-no-text-layer、image-no-alt | 核對後入庫（新站尚無對應內容） |
 | 12 | 衛教宣導：影片<br><sub>www.cdc.gov.tw/Category/MPage/cQcSwFkMT5XWnlxmb76aj-</sub> | 影音 → `media.mpox-vaccine` | `media.mpox-vaccine`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
-| 13 | 工作手冊<br><sub>www.cdc.gov.tw/Category/DiseaseManual/4ZWV5h25svHNXJKpXk95bk</sub> | 文件 → `doc.mpox-manual.2022-06-23` | — | 0.8 | body-short | 核對後入庫（新站尚無對應內容） |
+| 13 | 工作手冊<br><sub>www.cdc.gov.tw/Category/DiseaseManual/4ZWV5h25svHNXJKpXk95bk</sub> | 文件 → `doc.mpox-manual.2022-06-23` | — | 0.8 | body-short、pdf-only | 核對後入庫（新站尚無對應內容） |
 | 14 | 病例定義<br><sub>www.cdc.gov.tw/Category/DiseaseDefine/iWUpwd-A5TUuyR7YM_HFZZ</sub> | 文件 → `doc.mpox-case-definition.2022-06-23` | — | 0.8 | body-short | 核對後入庫（新站尚無對應內容） |
 | 15 | 治療指引<br><sub>www.cdc.gov.tw/File/Get/69RXxo_H2U7TyvYvMBHYoZ</sub> | 文件 → `doc.mpox-guideline.2022-06-23` | — | 0.8 | body-short | 核對後入庫（新站尚無對應內容） |
 | 16 | 統計資料<br><sub>www.cdc.gov.tw/Category/List/ZRw3IE-DsR69lDELfbz-rB</sub> | 資料集 → `dataset.mpox-stats` | — | 1 | — | 核對後入庫（新站尚無對應內容） |

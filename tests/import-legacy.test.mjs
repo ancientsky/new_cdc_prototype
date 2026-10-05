@@ -477,6 +477,8 @@ test('後台 /admin/import/：批次摘要、逐頁表、草稿下載連結；�
 import { shortFor } from '../scripts/lib/legacy-import/rules.mjs';
 import { generateDisease } from '../scripts/lib/legacy-import/sim-export-disease.mjs';
 import { generateNews } from '../scripts/lib/legacy-import/sim-export-news.mjs';
+import { generateGuidelines } from '../scripts/lib/legacy-import/sim-export-guidelines.mjs';
+import { versionFree, versionRank, dateFromText } from '../scripts/lib/legacy-import/index.mjs';
 
 const EXPORT_DENGUE = path.join(ROOT, 'data/legacy-export/dengue');
 const COMMITTED_DENGUE = path.join(ROOT, 'data/legacy-import/dengue');
@@ -516,7 +518,7 @@ test('移轉清單對應：{id} 佔位的網址只有 fragment 或標題也對�
   fs.writeFileSync(mf, JSON.stringify({
     id: 'migration.dengue-test', type: 'migration', title: '測試', extends: 'migration-template.disease', scope: { kind: 'disease', disease: 'disease.dengue' },
     items: [
-      { key: 'ns1', oldTitle: 'NS1 抗原快篩試劑配置公告（致醫界通函）', oldUrl: 'https://www.cdc.gov.tw/Bulletin/Detail/{id}#ns1', oldType: 'news', verified: false, status: 'migrated', target: 'news.2026-09-15-letter-616-ns1' },
+      { key: 'ns1', oldTitle: 'NS1 抗原快篩試劑配置公告（致醫界通函）', oldUrl: 'https://www.cdc.gov.tw/Bulletin/Detail/{id}#ns1', oldType: 'news', verified: false, status: 'migrated', target: 'news.2026-09-15-letter-615-ns1' },
       { key: 'fixed', oldTitle: '完全不同的標題', oldUrl: 'https://www.cdc.gov.tw/Category/Page/FIXED1', oldType: 'page', verified: false, status: 'pending' },
     ],
   }, null, 2));
@@ -527,7 +529,7 @@ test('移轉清單對應：{id} 佔位的網址只有 fragment 或標題也對�
   assert.ok(by('01-new-press').issues.some((i) => i.code === 'not-in-manifest'));
   assert.match(by('01-new-press').outputs[0].id, /^news\.2026-09-20-legacy-/, '拿到自己的 id，不是 ns1 通函的 id');
   assert.equal(by('02-ns1').manifestKey, 'ns1'); assert.equal(by('02-ns1').manifestDerived, false);
-  assert.equal(by('02-ns1').outputs[0].id, 'news.2026-09-15-letter-616-ns1');
+  assert.equal(by('02-ns1').outputs[0].id, 'news.2026-09-15-letter-615-ns1');
   assert.equal(by('03-fixed').manifestKey, 'fixed', '寫死 ID：唯一候選即可');
   assert.equal(by('04-tab').manifestKey, 'intro-symptoms'); assert.equal(by('04-tab').manifestDerived, true, '模板推導項靠 fragment＝tab 對上');
   assert.ok(by('04-tab').issues.some((i) => i.code === 'manifest-derived'));
@@ -608,7 +610,7 @@ test('登革熱批次：全部有輸出且通過 schema；疾病與 owner 不靠
   const press = report.pages.find((p) => p.key.includes('dengue-first-local'));
   assert.equal(press.manifestKey, null); assert.equal(press.outputs[0].id, 'news.2026-07-21-dengue-first-local'); assert.equal(press.existing, true);
   const ns1 = report.pages.find((p) => p.manifestKey === 'dengue-ns1-notice');
-  assert.equal(ns1.kind, 'news'); assert.equal(ns1.outputs[0].id, 'news.2026-09-15-letter-616-ns1');
+  assert.equal(ns1.kind, 'news'); assert.equal(ns1.outputs[0].id, 'news.2026-09-15-letter-615-ns1');
   // Q&A 每題對到既有 faq id
   const faqs = drafts.filter((d) => d.type === 'faq');
   assert.equal(faqs.length, 7); assert.ok(faqs.every((f) => /^faq\.(dengue-|travel-)/.test(f.id) && f.conversion.existing));
@@ -647,7 +649,7 @@ test('流感批次：欄目內頁依清單目標建成 document；例外涵蓋�
   assert.ok(report.pages.every((p) => p.diseases.includes('disease.influenza')));
   // (1) 舊站「公費流感抗病毒藥劑使用對象」是欄目內頁（MPage），清單說它對應新站的一份文件 ⇒ 草稿建成 document，id 就是清單 target
   const elig = report.pages.find((p) => p.manifestKey === 'flu-antiviral-eligibility');
-  assert.equal(elig.kind, 'document'); assert.equal(elig.type, 'document'); assert.equal(elig.outputs[0].id, 'doc.flu-antiviral-eligibility.2026-09-21'); assert.equal(elig.existing, true);
+  assert.equal(elig.kind, 'document'); assert.equal(elig.type, 'document'); assert.equal(elig.outputs[0].id, 'doc.flu-antiviral-eligibility.2026-09-18'); assert.equal(elig.existing, true);
   assert.ok(elig.issues.some((i) => i.code === 'type-from-manifest' && i.severity === 'info'));
   assert.ok(!elig.issues.some((i) => i.code === 'target-type-differs'), '型別已跟著清單，不再記 target-type-differs');
   const elig06 = report.pages.find((p) => p.manifestKey === 'flu-antiviral-eligibility-2026-06');
@@ -680,7 +682,7 @@ test('流感批次：欄目內頁依清單目標建成 document；例外涵蓋�
   const cd = drafts.find((x) => x.id === clar.outputs[0].id);
   assert.equal(cd.type, 'clarification'); assert.equal(cd.verdict, 'false'); assert.match(cd.claim, /流感疫苗/); assert.ok(cd.shareText.length > 10 && cd.clarificationMarkdown.length > 40);
   assert.equal(clar.existing, true);
-  assert.deepEqual(s.byType, { faq: 10, publication: 1, media: 1, document: 5, dataset: 1, labtest: 1, page: 4, service: 2, news: 4, clarification: 1, disease: 1, topic: 1 });
+  assert.deepEqual(s.byType, { faq: 10, publication: 1, media: 1, document: 5, dataset: 1, labtest: 1, page: 4, service: 2, news: 3, letter: 1, clarification: 1, disease: 1, topic: 1 });
   // (6) 第五批前置：模板「相關連結」位置（related topic）建成 topic 草稿，id 固定 topic.<slug>-links；推導到的既有專區只當比對對象，不搶它的 id；連結全 unchecked、站外標 external
   const links = report.pages.find((p) => p.manifestKey === 'links');
   assert.equal(links.type, 'topic'); assert.equal(links.outputs[0].id, 'topic.influenza-links'); assert.deepEqual(links.compareWith, ['topic.ltc-infection-control']);
@@ -740,7 +742,7 @@ test('模板展開：同型別多筆取現行最新；人工例外已指向同�
   assert.deepEqual(flu.filter((d) => d.coveredBy).map((d) => [d.key, d.coveredBy]), [['manual', 'flu-vaccine-manual'], ['guideline', 'flu-antiviral-eligibility']], '作業手冊與抗病毒藥劑使用對象已由例外指向 ⇒ 保留但標 coveredBy，匯入與模擬器都不處理');
   const bare = expandTemplateItems({ manifest: { extends: 'migration-template.disease', scope: { kind: 'disease', disease: 'disease.influenza' }, items: [] }, contentDir: CONTENT, index: idx, diseaseById: dmap });
   assert.equal(bare.length, 20);
-  assert.equal(bare.find((d) => d.key === 'guideline').target, 'doc.flu-antiviral-eligibility.2026-09-21', '兩個版次取現行最新的，不是字母序第一個（6 月版）');
+  assert.equal(bare.find((d) => d.key === 'guideline').target, 'doc.flu-antiviral-eligibility.2026-09-18', '兩個版次取現行最新的，不是字母序第一個（6 月版）');
   // 麵包屑位置對應：流感模擬匯出沒有治療指引頁了，用麻疹的病例定義頁驗證（標題是正式名稱，最後一層麵包屑是模板的「病例定義」）
   const r = runImport({ exportDir: EXPORT_MEASLES, outDir: tmp('m-out'), manifestPath: path.join(CONTENT, 'migration/measles.json'), slug: 'measles', now: NOW }).report;
   const cd = r.pages.find((p) => p.manifestKey === 'case-definition');
@@ -873,15 +875,15 @@ test('第六批（新聞與公告欄目，無移轉清單）：三級處理—�
   assert.equal(report.manifest, null, '新聞批次沒有清單，也不合成（主檔沒有 news 這種疾病）');
   assert.equal(s.pagesWithoutOutput, 0); assert.equal(s.schemaInvalid, 0); assert.equal(s.needsReview, 0);
   assert.ok(!report.pages.some((p) => p.issues.some((i) => i.code === 'not-in-manifest')), '沒有清單就不該有 not-in-manifest');
-  // 三級：既有 45 則比對；近年合成新聞 auto-ok；久遠封存；活動報名 drop；列表頁 skip
-  assert.equal(s.byAction['compare-existing'], 45); assert.equal(s.byAction['auto-ok'], 4); assert.equal(s.byAction.archive, 5); assert.equal(s.byAction.drop, 1); assert.equal(s.byAction['skip-list'], 1);
+  // 三級：既有 47 則比對；近年合成新聞 auto-ok；久遠封存；活動報名 drop；列表頁 skip
+  assert.equal(s.byAction['compare-existing'], 47); assert.equal(s.byAction['auto-ok'], 4); assert.equal(s.byAction.archive, 5); assert.equal(s.byAction.drop, 1); assert.equal(s.byAction['skip-list'], 1);
   for (const p of report.pages.filter((p) => p.action === 'archive')) assert.ok(p.flags.old && p.source.updatedAt < '2023-01-01', p.key);
   // 抽樣：ceil(4 × 0.1) = 1，依網址雜湊固定
   assert.equal(report.sampling.rate, 0.1); assert.equal(report.sampling.autoOk, 4); assert.equal(report.sampling.picked.length, 1);
   assert.ok(report.pages.find((p) => p.key === report.sampling.picked[0].key)?.action === 'auto-ok');
   // 通函：typeid 48 或標題「致醫界通函第 N 號」⇒ letter、letterNo、權責是疾病業務組而不是公關室
   const letters = drafts.filter((d) => d.type === 'letter');
-  assert.equal(letters.length, 4); assert.ok(letters.every((d) => Number.isInteger(d.letterNo) && d.newsType === 'letter' && d.audience.includes('professional')));
+  assert.equal(letters.length, 5); assert.ok(letters.every((d) => Number.isInteger(d.letterNo) && d.newsType === 'letter' && d.audience.includes('professional')));
   assert.ok(letters.every((d) => d.owner === 'unit.acute-infectious'), '通函權責依疾病主檔');
   assert.ok(report.pages.filter((p) => p.outputs.some((o) => letters.some((l) => l.id === o.id))).every((p) => p.issues.some((i) => i.code === 'owner-from-disease')));
   // 英文新聞稿（typeid 158）：sourceLang en、needs-source-zh 警告 ⇒ 不是 auto-ok
@@ -895,10 +897,10 @@ test('第六批（新聞與公告欄目，無移轉清單）：三級處理—�
   assert.ok(report.pages.filter((p) => p.kind === 'news' && p.type === 'news' && !p.outputs.some((o) => letters.some((l) => l.id === o.id))).every((p) => p.owner === 'unit.pr' || p.ownerRule === '新聞與公告' || p.ownerRule === 'News'));
 });
 
-test('已提交的第六批輸出（data/legacy-import/news）：60 頁、schema 全過、報告有抽樣名單、模擬匯出可重現；五批重跑後登革熱／腸病毒／屈公病的通函改為 letter', () => {
+test('已提交的第六批輸出（data/legacy-import/news）：62 頁、schema 全過、報告有抽樣名單、模擬匯出可重現；五批重跑後登革熱／腸病毒／屈公病的通函改為 letter', () => {
   const dir = path.join(ROOT, 'data/legacy-import/news');
   const r = readJSON(path.join(dir, 'report.json'));
-  assert.equal(r.summary.pages, 60); assert.equal(r.summary.schemaInvalid, 0); assert.equal(r.manifest, null); assert.equal(r.sampling.picked.length, 1);
+  assert.equal(r.summary.pages, 62); assert.equal(r.summary.schemaInvalid, 0); assert.equal(r.manifest, null); assert.equal(r.sampling.picked.length, 1);
   for (const d of r.drafts) assert.ok(fs.existsSync(path.join(dir, d.file)), d.file);
   assert.ok(fs.readFileSync(path.join(dir, 'report.md'), 'utf8').includes('## 二級抽樣檢視名單'));
   const exp = path.join(ROOT, 'data/legacy-export/news');
@@ -908,3 +910,83 @@ test('已提交的第六批輸出（data/legacy-import/news）：60 頁、schema
   for (const f of ['dengue/content/news/2026-07-01-letter-dengue-guidance-v17.json', 'enterovirus/content/news/2026-03-15-letter-ev-guideline.json']) { const d = readJSON(path.join(ROOT, 'data/legacy-import', f)); assert.equal(d.type, 'letter'); assert.ok(Number.isInteger(d.letterNo)); }
 });
 
+
+// ───────────────────────── 第七批：指引與手冊；文件版次鏈（第十二輪） ─────────────────────────
+test('版次工具：去版次同名、版次排序、民國年與西元日期抽取', () => {
+  assert.equal(versionFree('結核病診治指引（第八版）'), versionFree('結核病診治指引第七版（2022 年 3 月 1 日）'));
+  assert.equal(versionFree('狂犬病防治工作手冊（108 年版）'), versionFree('狂犬病防治工作手冊（113 年 12 月修訂版）'));
+  assert.equal(versionFree('國內現行 MMR 預防接種建議（114.04.16 版）'), versionFree('國內現行 MMR 預防接種建議（108.05.14 版，2019 年 5 月 14 日）'));
+  assert.notEqual(versionFree('結核病診治指引'), versionFree('結核病防治工作手冊'));
+  assert.equal(versionRank('第十七版'), 17); assert.equal(versionRank('v16'), 16); assert.equal(versionRank('2023 年版'), 2023); assert.ok(versionRank('114.04.16') > versionRank('108.05.14'));
+  assert.equal(dateFromText('114.04.16 修訂'), '2025-04-16'); assert.equal(dateFromText('本手冊自 113 年 12 月 20 日修訂生效'), '2024-12-20'); assert.equal(dateFromText('（第七版，2022 年 3 月 1 日）'), '2022-03-01'); assert.equal(dateFromText('2026-09-18 生效'), '2026-09-18'); assert.equal(dateFromText('沒有日期'), null);
+});
+
+test('第七批（指引與手冊，欄目清單）：一頁多版拆歷版並沿用既有 id、同名多頁串家族、純 PDF 佔位、歷版封存、生效日從文字抽；一級內容不 auto-ok', () => {
+  const dir = tmp('guidelines');
+  const mf = path.join(dir, 'guidelines.json');
+  fs.copyFileSync(path.join(CONTENT, 'migration/guidelines.json'), mf);
+  const exp = path.join(ROOT, 'data/legacy-export/guidelines');
+  const out = path.join(dir, 'out');
+  const { report, patch, drafts } = runImport({ exportDir: exp, outDir: out, manifestPath: mf, slug: 'guidelines', now: NOW });
+  const s = report.summary;
+  assert.equal(s.pages, 26); assert.equal(s.drafts, 32); assert.equal(s.schemaInvalid, 0); assert.equal(s.pagesWithoutOutput, 0);
+  assert.equal(report.manifest.extends, null); assert.equal(s.manifest.matched, 26); assert.equal(patch.summary.conflicts, 0);
+  const env = { units: new Set(readJSON(path.join(CONTENT, 'master/units.json')).map((u) => u.id)), diseaseIds: new Set(master.map((d) => d.id)), assetsDir: path.join(out, 'content/assets'), licenses: ['OGDL-1.0', 'CC0-1.0', 'CC-BY-4.0'] };
+  for (const d of drafts) assert.deepEqual(validateDraft(d, env), [], d.id);
+  assert.ok(!report.pages.some((p) => p.action === 'auto-ok'), '文件是一級內容，沒有 auto-ok');
+  const byKey = (k) => report.pages.find((p) => p.key.endsWith(`-${k}`));
+  const draft = (id) => drafts.find((d) => d.id === id);
+  // (1) 一頁多版：結核病診治指引頁的附件列表有第七版 PDF ⇒ 另建純 PDF 舊版草稿，id 沿用新站既有 doc.tb-guideline.2022-03-01，檔案歸舊版草稿；現行版 supersedes 舊版
+  const tb = byKey('tb-guideline');
+  assert.deepEqual(tb.outputs.map((o) => o.id), ['doc.tb-guideline.2025-09-01', 'doc.tb-guideline.2022-03-01']);
+  assert.ok(tb.issues.some((i) => i.code === 'version-from-attachment') && tb.issues.some((i) => i.code === 'version-chain'));
+  const tb7 = draft('doc.tb-guideline.2022-03-01'), tb8 = draft('doc.tb-guideline.2025-09-01');
+  assert.equal(tb7.version, '第七版'); assert.equal(tb7.effectiveAt, '2022-03-01'); assert.equal(tb7.supersedes, null); assert.match(tb7.machineReadableMarkdown, /^（待補：本版次正本為 PDF/);
+  assert.equal(tb7.pdfUrl, `/files/doc.tb-guideline.2022-03-01/${tb7.assets[0].file}`); assert.equal(tb7.conversion.pdfOnly, true); assert.equal(tb7.conversion.versionChain.supersededBy, 'doc.tb-guideline.2025-09-01'); assert.equal(tb7.conversion.existing, true);
+  assert.equal(tb8.supersedes, 'doc.tb-guideline.2022-03-01'); assert.equal(tb8.assets.length, 1, '歷版 PDF 不留在現行版草稿'); assert.equal(tb8.conversion.versionChain.current, true);
+  // 登革熱指引 v15／v16 的 id 由版次（vN）對到既有文件，不是 family.日期
+  assert.deepEqual(byKey('guidance-dengue').outputs.map((o) => o.id), ['doc.guidance-dengue.v17', 'doc.guidance-dengue.v15', 'doc.guidance-dengue.v16']);
+  assert.equal(draft('doc.guidance-dengue.v17').supersedes, 'doc.guidance-dengue.v16'); assert.equal(draft('doc.guidance-dengue.v16').supersedes, 'doc.guidance-dengue.v15');
+  // 附表之類不同名的附件不拆：所有拆出的草稿都與頁面去版次同名
+  for (const p of report.pages.filter((p) => p.issues.some((i) => i.code === 'version-from-attachment'))) for (const o of p.outputs.slice(1)) assert.equal(versionFree(draft(o.id).title), versionFree(p.source.title), o.id);
+  // (2) 歷版各一頁且清單各有 target：流感抗病毒藥劑三版同 family、依生效日串鏈，舊版那兩頁建議封存（historical-version）
+  const flu = ['flu-antiviral-eligibility-2026-06', 'flu-antiviral-eligibility-2026-08', 'flu-antiviral-eligibility'].map(byKey);
+  assert.deepEqual(flu.map((p) => p.action), ['archive', 'archive', 'compare-existing']);
+  assert.equal(draft('doc.flu-antiviral-eligibility.2026-09-18').supersedes, 'doc.flu-antiviral-eligibility.2026-08-24'); assert.equal(draft('doc.flu-antiviral-eligibility.2026-08-24').supersedes, 'doc.flu-antiviral-eligibility.2026-06-01');
+  // (3) 無清單目標、去版次同名的兩頁（狂犬病手冊 108 年版／113 年 12 月修訂版）⇒ 同 family（標題雜湊），新版生效日取內文「113 年 12 月 20 日修訂生效」，舊版封存
+  const r1 = byKey('rabies-manual'), r0 = byKey('rabies-manual-2019');
+  assert.ok(r1.issues.some((i) => i.code === 'version-family') && r0.issues.some((i) => i.code === 'version-family'));
+  const rNew = draft(r1.outputs[0].id), rOld = draft(r0.outputs[0].id);
+  assert.equal(rNew.family, rOld.family); assert.equal(rNew.effectiveAt, '2024-12-20'); assert.equal(rNew.supersedes, rOld.id); assert.equal(rNew.docType, 'manual');
+  assert.ok(r1.issues.some((i) => i.code === 'effective-from-text')); assert.equal(r0.action, 'archive'); assert.equal(r1.action, 'review-before-publish');
+  // (4) 純 PDF 頁：內文只有下載連結 ⇒ pdf-only 警告、正本以（待補）佔位、不 auto-ok；歸感管組（categoryOwners 感染管制）
+  const ic = byKey('crowded-ic-guideline');
+  assert.ok(ic.issues.some((i) => i.code === 'pdf-only' && i.severity === 'warn') && ic.issues.some((i) => i.code === 'fields-pending'));
+  assert.equal(ic.owner, 'unit.infection-control'); assert.equal(ic.action, 'review-before-publish');
+  assert.match(draft(ic.outputs[0].id).machineReadableMarkdown, /^（待補：本文件正本為 PDF「人口密集機構感染管制措施指引/);
+  // (5) 歷版掃描檔：麵包屑「歷版」⇒ 封存；PDF 無文字層
+  const h7 = byKey('h7n9-guideline-2017');
+  assert.equal(h7.action, 'archive'); assert.ok(h7.issues.some((i) => i.code === 'pdf-no-text-layer') && h7.issues.some((i) => i.code === 'pdf-only'));
+  // (6) 生效日從標題抽：MMR（114.04.16 版）⇒ 2025-04-16，不是頁面日期
+  const mmr = byKey('mmr-recommendation');
+  assert.ok(mmr.issues.some((i) => i.code === 'effective-from-text')); assert.equal(draft('doc.mmr-recommendation.2025-04-16').effectiveAt, '2025-04-16'); assert.equal(draft('doc.mmr-recommendation.2019-05-14').effectiveAt, '2019-05-14');
+  // (7) 總覽列表頁略過，權責 OASIS（首頁／指引及手冊）
+  const list = byKey('guidelines-list'); assert.equal(list.action, 'skip-list'); assert.equal(list.owner, 'unit.oasis'); assert.ok(!list.issues.some((i) => i.code === 'unmapped-category'));
+  assert.deepEqual(s.byAction, { 'compare-existing': 19, 'review-before-publish': 2, archive: 4, 'skip-list': 1 });
+  assert.deepEqual(JSON.parse(fs.readFileSync(mf, 'utf8')), readJSON(path.join(CONTENT, 'migration/guidelines.json')), '沒加 --apply-migration 不改清單');
+});
+
+test('已提交的第七批輸出（data/legacy-import/guidelines）：26 頁 32 份草稿、schema 全過、清單 26 筆 verified 全 false、模擬匯出可重現', () => {
+  const dir = path.join(ROOT, 'data/legacy-import/guidelines');
+  const r = readJSON(path.join(dir, 'report.json'));
+  assert.equal(r.summary.pages, 26); assert.equal(r.summary.drafts, 32); assert.equal(r.summary.schemaInvalid, 0); assert.equal(r.migration.applied, true); assert.equal(r.manifest.file, 'content/migration/guidelines.json');
+  for (const d of r.drafts) assert.ok(fs.existsSync(path.join(dir, d.file)), d.file);
+  assert.equal(r.drafts.filter((d) => d.existing).length, 27);
+  const manifest = readJSON(path.join(CONTENT, 'migration/guidelines.json'));
+  assert.equal(manifest.items.length, 26); assert.equal(manifest.scope.kind, 'category'); assert.ok(manifest.items.every((i) => i.verified === false));
+  assert.ok(manifest.items.every((i) => /【匯入 /.test(i.note ?? '')));
+  const tmpDir = tmp('exp7');
+  generateGuidelines(tmpDir);
+  const exp = path.join(ROOT, 'data/legacy-export/guidelines');
+  for (const f of fs.readdirSync(exp).filter((x) => x.endsWith('.json') && x !== '_export.json')) assert.deepEqual(readJSON(path.join(tmpDir, f)), readJSON(path.join(exp, f)), f);
+});

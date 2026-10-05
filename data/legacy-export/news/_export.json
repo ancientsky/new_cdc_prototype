@@ -4,7 +4,7 @@
   "exportedAt": "2026-10-03",
   "site": "https://www.cdc.gov.tw",
   "batch": "news",
-  "pages": 60,
-  "source": "模擬匯出：新聞與公告欄目（Bulletin）。由既有 content/news 37 則、content/clarifications 8 則反推，另合成近年新聞 6 則（新站沒有）、久遠新聞 6 則、英文新聞稿 2 則、列表頁 1 頁；不是舊站的真實資料（網址 ID、數字、PDF 內容皆為示意）。正式匯出取代整個目錄即可。",
+  "pages": 62,
+  "source": "模擬匯出：新聞與公告欄目（Bulletin）。由既有 content/news 39 則、content/clarifications 8 則反推，另合成近年新聞 6 則（新站沒有）、久遠新聞 6 則、英文新聞稿 2 則、列表頁 1 頁；不是舊站的真實資料（網址 ID、數字、PDF 內容皆為示意）。正式匯出取代整個目錄即可。",
   "generator": "scripts/lib/legacy-import/sim-export-news.mjs"
 }

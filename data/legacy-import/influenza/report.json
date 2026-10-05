@@ -11,7 +11,7 @@
   },
   "rules": {
     "file": "content/migration/import/_import-rules.json",
-    "version": 5
+    "version": 6
   },
   "manifest": {
     "id": "migration.influenza",
@@ -29,7 +29,7 @@
       {
         "key": "guideline",
         "coveredBy": "flu-antiviral-eligibility",
-        "target": "doc.flu-antiviral-eligibility.2026-09-21"
+        "target": "doc.flu-antiviral-eligibility.2026-09-18"
       }
     ],
     "disease": "disease.influenza"
@@ -48,7 +48,8 @@
       "page": 4,
       "topic": 1,
       "service": 2,
-      "news": 4,
+      "news": 3,
+      "letter": 1,
       "clarification": 1,
       "disease": 1
     },
@@ -69,9 +70,10 @@
     },
     "byAction": {
       "merge-into-disease": 9,
-      "compare-existing": 15,
+      "compare-existing": 14,
       "review-before-publish": 5,
-      "skip-list": 2
+      "skip-list": 2,
+      "archive": 1
     },
     "avgConfidence": 0.93,
     "needsReview": 0,
@@ -88,7 +90,7 @@
     "issues": {
       "error": 0,
       "warn": 13,
-      "info": 105
+      "info": 109
     },
     "manifest": {
       "items": 8,
@@ -966,7 +968,7 @@
         {
           "code": "word-cleaned",
           "severity": "info",
-          "message": "清除 Word 貼上殘留 121 處（mso 樣式 81、Mso 類別 29、命名空間標籤 20）"
+          "message": "清除 Word 貼上殘留 123 處（mso 樣式 81、Mso 類別 29、命名空間標籤 21）"
         },
         {
           "code": "owner-from-disease",
@@ -2013,7 +2015,7 @@
         "url": "https://www.cdc.gov.tw/Category/Page/DcQhnxOUXS4BnGFxCjEXLb",
         "title": "公費流感抗病毒藥劑使用對象",
         "category": "流感／抗病毒藥劑專區",
-        "publishedAt": "2026-09-21",
+        "publishedAt": "2026-09-18",
         "updatedAt": "2026-10-05",
         "breadcrumbs": [
           "首頁",
@@ -2028,11 +2030,11 @@
       "type": "document",
       "manifestKey": "flu-antiviral-eligibility",
       "manifestDerived": false,
-      "target": "doc.flu-antiviral-eligibility.2026-09-21",
+      "target": "doc.flu-antiviral-eligibility.2026-09-18",
       "targetExists": true,
       "existing": true,
       "compareWith": [
-        "doc.flu-antiviral-eligibility.2026-09-21"
+        "doc.flu-antiviral-eligibility.2026-09-18"
       ],
       "owner": "unit.acute-infectious",
       "ownerRule": "disease-fallback",
@@ -2041,10 +2043,10 @@
       ],
       "outputs": [
         {
-          "id": "doc.flu-antiviral-eligibility.2026-09-21",
+          "id": "doc.flu-antiviral-eligibility.2026-09-18",
           "type": "document",
           "role": "draft",
-          "file": "content/documents/flu-antiviral-eligibility.2026-09-21.json",
+          "file": "content/documents/flu-antiviral-eligibility.2026-09-18.json",
           "schemaValid": true
         }
       ],
@@ -2071,7 +2073,7 @@
         {
           "code": "type-from-manifest",
           "severity": "info",
-          "message": "清單對應的新站內容是文件 doc.flu-antiviral-eligibility.2026-09-21，草稿依清單建成 document（舊頁本身是欄目內頁）"
+          "message": "清單對應的新站內容是文件 doc.flu-antiviral-eligibility.2026-09-18，草稿依清單建成 document（舊頁本身是欄目內頁）"
         },
         {
           "code": "doctype-guessed",
@@ -2081,7 +2083,12 @@
         {
           "code": "version-unknown",
           "severity": "info",
-          "message": "標題看不出版次，version 暫填 2026-09-21"
+          "message": "標題看不出版次，version 暫填 2026-09-18"
+        },
+        {
+          "code": "version-chain",
+          "severity": "info",
+          "message": "版次鏈 doc.flu-antiviral-eligibility：2026-06-01（2026-06-01） → 2026-09-18（2026-09-18）；本版為現行版，supersedes doc.flu-antiviral-eligibility.2026-06-01"
         }
       ],
       "action": "compare-existing",
@@ -2100,7 +2107,7 @@
       "file": "24-flu-antiviral-eligibility-2026-06.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Category/Page/Tsy161Va94LybxcU8KHFRV",
-        "title": "公費流感抗病毒藥劑使用對象（2026 年 6 月版）",
+        "title": "公費流感抗病毒藥劑使用對象（全年適用條件）",
         "category": "流感／抗病毒藥劑專區",
         "publishedAt": "2026-06-01",
         "updatedAt": "2026-06-01",
@@ -2164,6 +2171,11 @@
           "message": "清單對應的新站內容是文件 doc.flu-antiviral-eligibility.2026-06-01，草稿依清單建成 document（舊頁本身是欄目內頁）"
         },
         {
+          "code": "historical-version",
+          "severity": "info",
+          "message": "歷史版本：建議封存（舊版保留查閱），不取代現行版"
+        },
+        {
           "code": "doctype-guessed",
           "severity": "info",
           "message": "標題與網址看不出文件種類，暫填 guideline"
@@ -2172,11 +2184,16 @@
           "code": "pdf-no-text-layer",
           "severity": "warn",
           "message": "PDF「flu-antiviral-eligibility.2026-06-01.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2026-06-01"
         }
       ],
-      "action": "compare-existing",
+      "action": "archive",
       "flags": {
-        "historical": false
+        "historical": true
       },
       "stats": {
         "images": 0,
@@ -2437,14 +2454,14 @@
       }
     },
     {
-      "key": "28-news-2026-09-21-flu-antiviral-revised",
-      "file": "28-news-2026-09-21-flu-antiviral-revised.html",
+      "key": "28-news-2026-09-18-flu-antiviral-extended",
+      "file": "28-news-2026-09-18-flu-antiviral-extended.html",
       "source": {
-        "url": "https://www.cdc.gov.tw/Bulletin/Detail/PGF89OEzK1r1Z_C6VybzcY?typeid=9",
-        "title": "類流感進入高峰期，未滿 5 歲及 65 歲以上有症狀者可直接使用公費抗病毒藥劑免快篩",
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/O_J0ATTIK9MciVwL4-h6Jg?typeid=9",
+        "title": "流感疫情進入流行期且持續上升，疾管署延長擴大公費流感抗病毒藥劑使用條件至 10 月 31 日",
         "category": "流感／最新消息",
-        "publishedAt": "2026-09-21",
-        "updatedAt": "2026-09-21",
+        "publishedAt": "2026-09-18",
+        "updatedAt": "2026-09-18",
         "breadcrumbs": [
           "首頁",
           "傳染病與防疫專題",
@@ -2462,7 +2479,7 @@
       "targetExists": false,
       "existing": true,
       "compareWith": [
-        "news.2026-09-21-flu-antiviral-revised"
+        "news.2026-09-18-flu-antiviral-extended"
       ],
       "owner": "unit.acute-infectious",
       "ownerRule": "disease-fallback",
@@ -2471,10 +2488,10 @@
       ],
       "outputs": [
         {
-          "id": "news.2026-09-21-flu-antiviral-revised",
+          "id": "news.2026-09-18-flu-antiviral-extended",
           "type": "news",
           "role": "draft",
-          "file": "content/news/2026-09-21-flu-antiviral-revised.json",
+          "file": "content/news/2026-09-18-flu-antiviral-extended.json",
           "schemaValid": true
         }
       ],
@@ -2491,7 +2508,7 @@
         {
           "code": "word-cleaned",
           "severity": "info",
-          "message": "清除 Word 貼上殘留 10 處（mso 樣式 4、Mso 類別 3、命名空間標籤 3）"
+          "message": "清除 Word 貼上殘留 14 處（mso 樣式 6、Mso 類別 4、命名空間標籤 4）"
         },
         {
           "code": "owner-from-disease",
@@ -2596,8 +2613,92 @@
       }
     },
     {
-      "key": "30-news-2026-09-10-clarify-flu-vaccine-death",
-      "file": "30-news-2026-09-10-clarify-flu-vaccine-death.html",
+      "key": "30-news-2026-09-18-letter-616-flu-antiviral-extended",
+      "file": "30-news-2026-09-18-letter-616-flu-antiviral-extended.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/B5hGsAn-lgn3yZOUXOX8Oh?typeid=11",
+        "title": "致醫界通函第 616 號：延長擴大公費流感抗病毒藥劑使用對象「有類流感症狀，且具下列身分之流感高傳播族群」之適用期限至 10 月 31 日",
+        "category": "流感／最新消息",
+        "publishedAt": "2026-09-18",
+        "updatedAt": "2026-09-18",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "最新消息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-18-letter-616-flu-antiviral-extended"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-09-18-letter-616-flu-antiviral-extended",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-09-18-letter-616-flu-antiviral-extended.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 8 處（mso 樣式 4、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「流感／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "not-in-manifest",
+          "severity": "warn",
+          "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
+        },
+        {
+          "code": "news-type-hint",
+          "severity": "info",
+          "message": "標題是致醫界通函，草稿建成 letter（typeid 不是通函類別）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "31-news-2026-09-10-clarify-flu-vaccine-death",
+      "file": "31-news-2026-09-10-clarify-flu-vaccine-death.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/e_1DvbI5FdTnW6hLu35VWK?typeid=8772",
         "title": "澄清：網傳「打流感疫苗會得流感、長輩打完會死」並非事實",
@@ -2671,85 +2772,6 @@
           "code": "type-upgrade",
           "severity": "info",
           "message": "既有內容 news.2026-09-10-clarify-flu-vaccine-death 以 news 存放同一則澄清，新草稿改為 clarification 型別，請比對後擇一"
-        }
-      ],
-      "action": "compare-existing",
-      "flags": {
-        "historical": false
-      },
-      "stats": {
-        "images": 0,
-        "links": 0,
-        "legacyLinks": 0,
-        "attachments": 0
-      }
-    },
-    {
-      "key": "31-news-2026-06-03-flu-antiviral-summer",
-      "file": "31-news-2026-06-03-flu-antiviral-summer.html",
-      "source": {
-        "url": "https://www.cdc.gov.tw/Bulletin/Detail/A_1lDFgtPBFnJ0u06cQ18z?typeid=9",
-        "title": "夏季流感疫情持續，公費抗病毒藥劑使用對象維持現行規定",
-        "category": "流感／最新消息",
-        "publishedAt": "2026-06-03",
-        "updatedAt": "2026-06-03",
-        "breadcrumbs": [
-          "首頁",
-          "傳染病與防疫專題",
-          "流感",
-          "最新消息"
-        ],
-        "tab": ""
-      },
-      "pattern": "bulletin-detail",
-      "kind": "news",
-      "type": "news",
-      "manifestKey": null,
-      "manifestDerived": false,
-      "target": null,
-      "targetExists": false,
-      "existing": true,
-      "compareWith": [
-        "news.2026-06-03-flu-antiviral-summer"
-      ],
-      "owner": "unit.acute-infectious",
-      "ownerRule": "disease-fallback",
-      "diseases": [
-        "disease.influenza"
-      ],
-      "outputs": [
-        {
-          "id": "news.2026-06-03-flu-antiviral-summer",
-          "type": "news",
-          "role": "draft",
-          "file": "content/news/2026-06-03-flu-antiviral-summer.json",
-          "schemaValid": true
-        }
-      ],
-      "confidence": 1,
-      "parts": {
-        "type": 0.4,
-        "owner": 0.2,
-        "markdown": 0.2,
-        "attachments": 0.1,
-        "unique": 0.1
-      },
-      "needsReview": false,
-      "issues": [
-        {
-          "code": "word-cleaned",
-          "severity": "info",
-          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
-        },
-        {
-          "code": "owner-from-disease",
-          "severity": "info",
-          "message": "類別「流感／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
-        },
-        {
-          "code": "not-in-manifest",
-          "severity": "warn",
-          "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
         }
       ],
       "action": "compare-existing",
@@ -3198,14 +3220,14 @@
       "merged": false
     },
     {
-      "id": "doc.flu-antiviral-eligibility.2026-09-21",
+      "id": "doc.flu-antiviral-eligibility.2026-09-18",
       "type": "document",
       "title": "公費流感抗病毒藥劑使用對象",
-      "file": "content/documents/flu-antiviral-eligibility.2026-09-21.json",
+      "file": "content/documents/flu-antiviral-eligibility.2026-09-18.json",
       "confidence": 1,
       "existing": true,
       "compareWith": [
-        "doc.flu-antiviral-eligibility.2026-09-21"
+        "doc.flu-antiviral-eligibility.2026-09-18"
       ],
       "status": "review",
       "owner": "unit.acute-infectious",
@@ -3220,7 +3242,7 @@
     {
       "id": "doc.flu-antiviral-eligibility.2026-06-01",
       "type": "document",
-      "title": "公費流感抗病毒藥劑使用對象（2026 年 6 月版）",
+      "title": "公費流感抗病毒藥劑使用對象（全年適用條件）",
       "file": "content/documents/flu-antiviral-eligibility.2026-06-01.json",
       "confidence": 1,
       "existing": true,
@@ -3294,14 +3316,14 @@
       "merged": false
     },
     {
-      "id": "news.2026-09-21-flu-antiviral-revised",
+      "id": "news.2026-09-18-flu-antiviral-extended",
       "type": "news",
-      "title": "類流感進入高峰期，未滿 5 歲及 65 歲以上有症狀者可直接使用公費抗病毒藥劑免快篩",
-      "file": "content/news/2026-09-21-flu-antiviral-revised.json",
+      "title": "流感疫情進入流行期且持續上升，疾管署延長擴大公費流感抗病毒藥劑使用條件至 10 月 31 日",
+      "file": "content/news/2026-09-18-flu-antiviral-extended.json",
       "confidence": 1,
       "existing": true,
       "compareWith": [
-        "news.2026-09-21-flu-antiviral-revised"
+        "news.2026-09-18-flu-antiviral-extended"
       ],
       "status": "review",
       "owner": "unit.acute-infectious",
@@ -3309,7 +3331,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "28-news-2026-09-21-flu-antiviral-revised"
+        "28-news-2026-09-18-flu-antiviral-extended"
       ],
       "merged": false
     },
@@ -3334,6 +3356,26 @@
       "merged": false
     },
     {
+      "id": "news.2026-09-18-letter-616-flu-antiviral-extended",
+      "type": "letter",
+      "title": "致醫界通函第 616 號：延長擴大公費流感抗病毒藥劑使用對象「有類流感症狀，且具下列身分之流感高傳播族群」之適用期限至 10 月 31 日",
+      "file": "content/news/2026-09-18-letter-616-flu-antiviral-extended.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-18-letter-616-flu-antiviral-extended"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "30-news-2026-09-18-letter-616-flu-antiviral-extended"
+      ],
+      "merged": false
+    },
+    {
       "id": "clar.2026-09-10-influenza-324aad",
       "type": "clarification",
       "title": "澄清：網傳「打流感疫苗會得流感、長輩打完會死」並非事實",
@@ -3349,27 +3391,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "30-news-2026-09-10-clarify-flu-vaccine-death"
-      ],
-      "merged": false
-    },
-    {
-      "id": "news.2026-06-03-flu-antiviral-summer",
-      "type": "news",
-      "title": "夏季流感疫情持續，公費抗病毒藥劑使用對象維持現行規定",
-      "file": "content/news/2026-06-03-flu-antiviral-summer.json",
-      "confidence": 1,
-      "existing": true,
-      "compareWith": [
-        "news.2026-06-03-flu-antiviral-summer"
-      ],
-      "status": "review",
-      "owner": "unit.acute-infectious",
-      "assets": 0,
-      "schemaValid": true,
-      "errors": [],
-      "sourcePages": [
-        "31-news-2026-06-03-flu-antiviral-summer"
+        "31-news-2026-09-10-clarify-flu-vaccine-death"
       ],
       "merged": false
     },

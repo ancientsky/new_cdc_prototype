@@ -1,0 +1,145 @@
+{
+  "id": "doc.flu-antiviral-eligibility.2026-09-18",
+  "type": "document",
+  "family": "doc.flu-antiviral-eligibility",
+  "docType": "guideline",
+  "title": "公費流感抗病毒藥劑使用對象（2026 年 9 月延長版：高傳播族群延至 10 月 31 日）",
+  "version": "2026-09",
+  "effectiveAt": "2026-09-18",
+  "supersedes": "doc.flu-antiviral-eligibility.2026-08-24",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-09-18",
+  "reviewedAt": "2026-10-05",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional",
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-18"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-24",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "pending"
+    },
+    "tl": {
+      "status": "pending"
+    },
+    "vi": {
+      "status": "pending"
+    },
+    "id": {
+      "status": "pending"
+    },
+    "th": {
+      "status": "pending"
+    }
+  },
+  "summary": "現行公費流感抗病毒藥劑使用對象：全年適用對象（含未滿 5 歲及 65 歲以上類流感患者）加上 7 類流感高傳播族群，後者適用期限依致醫界通函第 616 號延長至 2026 年 10 月 31 日；經醫師評估符合者一律不需快篩。",
+  "keywords": [
+    "公費抗病毒藥劑",
+    "克流感",
+    "使用對象",
+    "高傳播族群",
+    "不需快篩",
+    "致醫界通函第 616 號",
+    "10 月 31 日"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/3OyyJUUS0GduEm9t52Fnow?typeid=48",
+    "https://www.cdc.gov.tw/Category/Page/fHHHNV-HWyYD00tnKeXsLA"
+  ],
+  "note": "原型示意：條文依疾管署「公費流感抗病毒藥劑使用對象一覽表」（全年適用）與 2026 年 8 月 24 日、9 月 18 日新聞稿及致醫界通函第 616 號改寫，非正式公告文字；版次日期為原型整理日，正式內容以疾管署官網為準。",
+  "roles": [
+    "physician",
+    "nurse",
+    "local-health"
+  ],
+  "pdfUrl": "/pending/?ref=doc.flu-antiviral-eligibility.2026-09-18&doc=公費流感抗病毒藥劑使用對象（2026%20年%209%20月延長版）（PDF）",
+  "sections": [
+    {
+      "key": "art1",
+      "heading": "第 1 條",
+      "markdown": "經通報之「流感併發重症」病例。"
+    },
+    {
+      "key": "art2",
+      "heading": "第 2 條",
+      "markdown": "經通報之「新型 A 型流感」病例。"
+    },
+    {
+      "key": "art3",
+      "heading": "第 3 條",
+      "markdown": "孕婦經評估需及時用藥者。"
+    },
+    {
+      "key": "art4",
+      "heading": "第 4 條",
+      "markdown": "未滿 5 歲及 65 歲以上之類流感患者。"
+    },
+    {
+      "key": "art5",
+      "heading": "第 5 條",
+      "markdown": "確診或疑似罹患流感住院（含急診待床）之病患。"
+    },
+    {
+      "key": "art6",
+      "heading": "第 6 條",
+      "markdown": "具重大傷病、免疫不全（含使用免疫抑制劑者）或流感高風險慢性疾病之類流感患者。"
+    },
+    {
+      "key": "art7",
+      "heading": "第 7 條",
+      "markdown": "肥胖（BMI ≥ 30）之類流感患者。"
+    },
+    {
+      "key": "art8",
+      "heading": "第 8 條",
+      "markdown": "預防性用藥：類流感等群聚事件經疾管署各區管制中心防疫醫師認定需用藥者；「新型 A 型流感」極可能或確定病例之密切接觸者；動物流感發生場所之撲殺清場工作人員。"
+    },
+    {
+      "key": "art9",
+      "heading": "第 9 條",
+      "markdown": "擴大使用對象（2026 年 8 月 24 日至 10 月 31 日 止）：有類流感症狀，且具下列身分之流感高傳播族群：\n\n（一）醫事單位之防疫相關人員（含具執業登記醫事人員及醫療院所非醫事人員）\n（二）安養、長期照顧（服務）等機構之受照顧者及所屬工作人員\n（三）幼兒園托育人員、托育機構專業人員及居家托育人員（保母）\n（四）幼兒園、國小、國中、高中、高職、五專一至三年級學生\n（五）與流感重症高風險族群同住者或其照顧者\n（六）禽畜養殖等相關行業工作人員、動物園工作人員及動物防疫人員\n（七）其他人口密集機構（如軍營等）易發生群聚之人員\n\n經醫師評估符合者，不需流感快篩即可開立公費藥劑。"
+    },
+    {
+      "key": "note",
+      "heading": "說明",
+      "markdown": "以上對象經醫師診察研判符合者，**不需流感快篩**即可開立公費藥劑；用藥後請至「智慧防疫物資管理資訊系統（SMIS）」回報。類流感病人出現危險徵兆（呼吸急促、呼吸困難、發紺、血痰、胸痛、意識改變、低血壓等）應儘速就醫。"
+    }
+  ],
+  "changes": [
+    {
+      "section": "第 9 條",
+      "kind": "changed",
+      "before": "擴大使用對象適用期限至 2026 年 9 月 30 日止",
+      "after": "適用期限延長至 2026 年 10 月 31 日止（致醫界通函第 616 號，2026-09-18）；對象與免快篩原則不變"
+    }
+  ],
+  "i18n": {
+    "en": {
+      "title": "Eligibility for government-funded influenza antivirals (September 2026: high-transmission groups extended to 31 October)",
+      "summary": "Year-round criteria (including children under 5 and adults 65+ with influenza-like illness) plus seven high-transmission groups, now extended to 31 October 2026 under Letter to the Medical Community No. 616. No rapid test is required for anyone a physician judges eligible."
+    }
+  },
+  "machineReadableMarkdown": "# 公費流感抗病毒藥劑使用對象（2026 年 9 月延長版：高傳播族群延至 10 月 31 日）\n\n## 第 1 條\n經通報之「流感併發重症」病例。\n\n## 第 2 條\n經通報之「新型 A 型流感」病例。\n\n## 第 3 條\n孕婦經評估需及時用藥者。\n\n## 第 4 條\n未滿 5 歲及 65 歲以上之類流感患者。\n\n## 第 5 條\n確診或疑似罹患流感住院（含急診待床）之病患。\n\n## 第 6 條\n具重大傷病、免疫不全（含使用免疫抑制劑者）或流感高風險慢性疾病之類流感患者。\n\n## 第 7 條\n肥胖（BMI ≥ 30）之類流感患者。\n\n## 第 8 條\n預防性用藥：類流感等群聚事件經疾管署各區管制中心防疫醫師認定需用藥者；「新型 A 型流感」極可能或確定病例之密切接觸者；動物流感發生場所之撲殺清場工作人員。\n\n## 第 9 條\n擴大使用對象（2026 年 8 月 24 日至 10 月 31 日 止）：有類流感症狀，且具下列身分之流感高傳播族群：\n\n（一）醫事單位之防疫相關人員（含具執業登記醫事人員及醫療院所非醫事人員）\n（二）安養、長期照顧（服務）等機構之受照顧者及所屬工作人員\n（三）幼兒園托育人員、托育機構專業人員及居家托育人員（保母）\n（四）幼兒園、國小、國中、高中、高職、五專一至三年級學生\n（五）與流感重症高風險族群同住者或其照顧者\n（六）禽畜養殖等相關行業工作人員、動物園工作人員及動物防疫人員\n（七）其他人口密集機構（如軍營等）易發生群聚之人員\n\n經醫師評估符合者，不需流感快篩即可開立公費藥劑。\n\n## 說明\n以上對象經醫師診察研判符合者，**不需流感快篩**即可開立公費藥劑；用藥後請至「智慧防疫物資管理資訊系統（SMIS）」回報。類流感病人出現危險徵兆（呼吸急促、呼吸困難、發紺、血痰、胸痛、意識改變、低血壓等）應儘速就醫。"
+}

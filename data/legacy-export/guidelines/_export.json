@@ -1,0 +1,10 @@
+{
+  "format": "cdc-legacy-export/1",
+  "simulated": true,
+  "exportedAt": "2026-10-03",
+  "site": "https://www.cdc.gov.tw",
+  "batch": "guidelines",
+  "pages": 26,
+  "source": "模擬匯出：指引及手冊欄目。由既有 content/documents 27 份（19 個文件家族）反推成欄目內頁 21 頁（歷版多以同頁附件呈現，共 6 份歷版 PDF；流感抗病毒藥劑三版各一頁），另合成新站沒有的頁 4 頁與列表頁 1 頁；不是舊站的真實資料（網址 ID、數字、PDF 內容皆為示意）。正式匯出取代整個目錄即可。",
+  "generator": "scripts/lib/legacy-import/sim-export-guidelines.mjs"
+}

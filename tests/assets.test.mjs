@@ -78,10 +78,10 @@ test('repo 內容：檔案資產全部通過驗證；至少 6 筆內容有 asset
   assert.match(site.byId.get('publication.poster-tb-seven-languages').pdfUrl, /^\/files\/publication\.poster-tb-seven-languages\/.+\.pdf$/);
   assert.match(site.byId.get('service.ltbi-treatment').forms[0].href, /^\/files\/service\.ltbi-treatment\/.+\.pdf$/);
   // 新聞稿：PDF 附件＋內文 SVG；專區圖片有 source／license；資料集有 kind data
-  const news = site.byId.get('news.2026-09-21-flu-antiviral-revised');
+  const news = site.byId.get('news.2026-09-18-flu-antiviral-extended');
   assert.ok(news.assets.some((a) => a.kind === 'attachment' && a.file.endsWith('.pdf')));
   assert.ok(news.assets.some((a) => a.kind === 'image' && a.file.endsWith('.svg')));
-  assert.match(news.bodyMarkdown, /!\[[^\]]*\]\(\/files\/news\.2026-09-21-flu-antiviral-revised\/chart-ili\.svg\)/);
+  assert.match(news.bodyMarkdown, /!\[[^\]]*\]\(\/files\/news\.2026-09-18-flu-antiviral-extended\/chart-ili\.svg\)/);
   const img = site.byId.get('topic.tb-prevention').assets.find((a) => a.kind === 'image');
   assert.ok(img.source && img.license && img.width && img.height);
   assert.ok(site.byId.get('dataset.tb-new-cases').assets.some((a) => a.kind === 'data' && a.file.endsWith('.csv')));
@@ -368,17 +368,17 @@ test('md()：/files/ 圖片加 basePath、以 assets.alt 補空白 alt、加 wid
 
 test('新聞稿頁：內文圖片帶 assets.alt、lazy、尺寸；附件連結（含英文頁）正規化為 basePath + /files/（不含語言前綴）', () => {
   const site = govern('2026-10-01');
-  const n = site.byId.get('news.2026-09-21-flu-antiviral-revised');
-  const zh = String(newsTpl.render(makeCtx(site, 'zh-TW', { path: '/news/2026-09-21-flu-antiviral-revised/' }), { item: n }));
+  const n = site.byId.get('news.2026-09-18-flu-antiviral-extended');
+  const zh = String(newsTpl.render(makeCtx(site, 'zh-TW', { path: '/news/2026-09-18-flu-antiviral-extended/' }), { item: n }));
   const img = zh.match(/<img[^>]*chart-ili\.svg[^>]*>/)?.[0];
   assert.ok(img, '內文有圖');
   const alt = n.assets.find((a) => a.file === 'chart-ili.svg').alt;
   assert.ok(img.includes(`alt="${alt}"`), img);
   assert.ok(img.includes('loading="lazy"') && img.includes('width="640"') && img.includes('height="360"'));
-  assert.ok(img.includes(`src="${config.basePath}/files/news.2026-09-21-flu-antiviral-revised/chart-ili.svg"`));
-  const en = String(newsTpl.render(makeCtx(site, 'en', { path: '/news/2026-09-21-flu-antiviral-revised/' }), { item: n }));
+  assert.ok(img.includes(`src="${config.basePath}/files/news.2026-09-18-flu-antiviral-extended/chart-ili.svg"`));
+  const en = String(newsTpl.render(makeCtx(site, 'en', { path: '/news/2026-09-18-flu-antiviral-extended/' }), { item: n }));
   const fixed = normalizeFileLinks(en, { basePath: config.basePath, langs: config.langs, siteUrl: config.siteUrl });
-  assert.ok(fixed.includes(`href="${config.basePath}/files/news.2026-09-21-flu-antiviral-revised/press-release.pdf"`), '英文頁附件不帶 /en/');
+  assert.ok(fixed.includes(`href="${config.basePath}/files/news.2026-09-18-flu-antiviral-extended/press-release.pdf"`), '英文頁附件不帶 /en/');
   assert.ok(!/\/en\/files\//.test(fixed));
 });
 
@@ -402,10 +402,10 @@ test('catalog.json 每筆有 assets 摘要（file、kind、label、url、bytes�
   const cat = JSON.parse(files.get('v1/catalog.json')).data;
   assert.ok(cat.every((x) => Array.isArray(x.assets)), '每筆都有 assets 陣列');
   assert.ok(cat.every((x) => x.title), 'catalog 每筆有 title');
-  const news = cat.find((x) => x.id === 'news.2026-09-21-flu-antiviral-revised');
+  const news = cat.find((x) => x.id === 'news.2026-09-18-flu-antiviral-extended');
   const pdf = news.assets.find((a) => a.file === 'press-release.pdf');
   assert.deepEqual(Object.keys(pdf).slice(0, 7), ['file', 'kind', 'label', 'url', 'bytes', 'mime', 'machineReadable']);
-  assert.equal(pdf.url, `${config.siteUrl}${config.basePath}/files/news.2026-09-21-flu-antiviral-revised/press-release.pdf`);
+  assert.equal(pdf.url, `${config.siteUrl}${config.basePath}/files/news.2026-09-18-flu-antiviral-extended/press-release.pdf`);
   assert.equal(pdf.machineReadable, true);
   assert.ok(news.assets.find((a) => a.kind === 'image').alt);
   const doc = cat.find((x) => x.id === 'doc.tb-guideline.2025-09-01');

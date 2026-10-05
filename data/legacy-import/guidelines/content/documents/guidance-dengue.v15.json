@@ -1,0 +1,106 @@
+{
+  "id": "doc.guidance-dengue.v15",
+  "type": "document",
+  "title": "登革熱／屈公病防治工作指引（第 17 版）（v15）",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2023-05-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue",
+    "disease.chikungunya"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "（待補：本版次正本為 PDF「登革熱／屈公病防治工作指引（v15，2023 年 5 月 1 日）（PDF）」，由舊頁「登革熱／屈公病防治工作指引（第 17 版）」的附件列表拆出，不轉內文；僅供查閱的失效版本。）",
+  "family": "doc.guidance-dengue",
+  "docType": "guideline",
+  "version": "v15",
+  "effectiveAt": "2023-05-01",
+  "machineReadableMarkdown": "（待補：本版次正本為 PDF「登革熱／屈公病防治工作指引（v15，2023 年 5 月 1 日）（PDF）」，由舊頁「登革熱／屈公病防治工作指引（第 17 版）」的附件列表拆出，不轉內文；僅供查閱的失效版本。）",
+  "supersedes": null,
+  "pdfUrl": "/files/doc.guidance-dengue.v15/guidance-dengue-2023-05-01.pdf",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/QwHK502JzEL-7ojyp1B53w"
+  ],
+  "assets": [
+    {
+      "file": "guidance-dengue-2023-05-01.pdf",
+      "kind": "attachment",
+      "label": "登革熱／屈公病防治工作指引（v15，2023 年 5 月 1 日）（PDF）",
+      "mime": "application/pdf",
+      "bytes": 843,
+      "sha256": "12dff1dee382a18fa21683bc12b2ec953655ec4649c7d3fa368764040162a79a",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 64 處（mso 樣式 34、Mso 類別 21、命名空間標籤 15）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「傳染病介紹／登革熱／指引及手冊」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站內容是文件 doc.guidance-dengue.v17，草稿依清單建成 document（舊頁本身是欄目內頁）"
+      },
+      {
+        "code": "effective-from-text",
+        "severity": "info",
+        "message": "生效日 2026-07-01 取自內文（舊頁發布日 2023-05-01）"
+      },
+      {
+        "code": "version-from-attachment",
+        "severity": "info",
+        "message": "附件「登革熱／屈公病防治工作指引（v15，2023 年 5 月 1 日）（PDF）」是另一版次（v15），另建純 PDF 草稿 doc.guidance-dengue.v15（同家族 doc.guidance-dengue，不轉內文）"
+      },
+      {
+        "code": "version-from-attachment",
+        "severity": "info",
+        "message": "附件「登革熱／屈公病防治工作指引（v16，2025 年 11 月 1 日）（PDF）」是另一版次（v16），另建純 PDF 草稿 doc.guidance-dengue.v16（同家族 doc.guidance-dengue，不轉內文）"
+      },
+      {
+        "code": "version-chain",
+        "severity": "info",
+        "message": "版次鏈 doc.guidance-dengue：v15（2023-05-01） → v16（2025-11-01） → 第17版（2026-07-01）；本版為現行版，supersedes doc.guidance-dengue.v16"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/QwHK502JzEL-7ojyp1B53w",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "doc.guidance-dengue.v15"
+    ],
+    "pdfOnly": true,
+    "fromAttachment": true,
+    "versionChain": {
+      "family": "doc.guidance-dengue",
+      "position": 1,
+      "of": 3,
+      "current": false,
+      "supersededBy": "doc.guidance-dengue.v16"
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "id": "doc.ev-severe-guideline.2026-03-15",
+  "type": "document",
+  "title": "腸病毒感染併發重症臨床處置建議",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-03-15",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "腸病毒感染臨床四期分期、重症前兆辨識、各期處置原則與轉診重症責任醫院時機。 門診追蹤，衛教家長重症前兆；高危險群（3 歲以下、病程 3 日內、高燒持續）應安排 1–2 日內回診。",
+  "family": "doc.ev-severe-guideline",
+  "docType": "guideline",
+  "version": "2026-03-15",
+  "effectiveAt": "2026-03-15",
+  "machineReadableMarkdown": "腸病毒感染臨床四期分期、重症前兆辨識、各期處置原則與轉診重症責任醫院時機。\n\n### 第一期：手足口病或疱疹性咽峽炎\n\n門診追蹤，衛教家長重症前兆；高危險群（3 歲以下、病程 3 日內、高燒持續）應安排 1–2 日內回診。\n\n### 第二期：中樞神經系統感染\n\n出現肌躍型抽搐、嗜睡、嘔吐、肢體無力等，應住院密切監測生命徵象、血糖與心跳；必要時給予靜脈免疫球蛋白（IVIG）。\n\n### 第三期：自主神經失調與心肺衰竭\n\n心跳過速、高血壓、冒冷汗、呼吸急促為肺水腫前兆，應轉入加護病房，評估使用強心劑（milrinone）、插管與葉克膜。\n\n本版自 2026 年 3 月 15 日 生效。\n\n| 項目 | 內容 |\n| --- | --- |\n| 文件名稱 | 腸病毒感染併發重症臨床處置建議 |\n| 版次 | 2026-03 |\n| 生效日 | 2026-03-15 |\n| 權責單位 | 急性傳染病組 |\n| 檔案格式 | PDF |",
+  "pdfUrl": "/files/doc.ev-severe-guideline.2026-03-15/ev-severe-guideline-2026-03-15.pdf",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/m70l0M3H8QLwZUchC8H0WU"
+  ],
+  "assets": [
+    {
+      "file": "ev-severe-guideline-2026-03-15.pdf",
+      "kind": "attachment",
+      "label": "腸病毒感染併發重症臨床處置建議（PDF）",
+      "mime": "application/pdf",
+      "bytes": 839,
+      "sha256": "c509c4b5fe2273fcf71a98ffe49e52b29a1710ba19df784ac95718e20dde2737",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 52 處（mso 樣式 18、Mso 類別 17、命名空間標籤 17）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「傳染病介紹／腸病毒／指引及手冊」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站內容是文件 doc.ev-severe-guideline.2026-03-15，草稿依清單建成 document（舊頁本身是欄目內頁）"
+      },
+      {
+        "code": "doctype-guessed",
+        "severity": "info",
+        "message": "標題與網址看不出文件種類，暫填 guideline"
+      },
+      {
+        "code": "version-unknown",
+        "severity": "info",
+        "message": "標題看不出版次，version 暫填 2026-03-15"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/m70l0M3H8QLwZUchC8H0WU",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "doc.ev-severe-guideline.2026-03-15"
+    ]
+  }
+}

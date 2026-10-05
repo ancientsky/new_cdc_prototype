@@ -1,0 +1,93 @@
+{
+  "id": "doc.rabies-6abd76.2024-12-20",
+  "type": "document",
+  "title": "狂犬病防治工作手冊（113 年 12 月修訂版）",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2024-12-20",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.rabies"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "本手冊自 113 年 12 月 20 日修訂生效，取代 108 年版。 狂犬病防治工作手冊（113 年 12 月修訂版）供衛生局（所）、動物防疫機關與醫療院所執行狂犬病暴露後處置、動物咬傷通報與疫苗、免疫球蛋白申領使用。",
+  "family": "doc.rabies-6abd76",
+  "docType": "manual",
+  "version": "2024-12-20",
+  "effectiveAt": "2024-12-20",
+  "machineReadableMarkdown": "本手冊自 113 年 12 月 20 日修訂生效，取代 108 年版。\n\n狂犬病防治工作手冊（113 年 12 月修訂版）供衛生局（所）、動物防疫機關與醫療院所執行狂犬病暴露後處置、動物咬傷通報與疫苗、免疫球蛋白申領使用。\n\n### 一、暴露後處置\n\n依暴露等級（WHO 第一至三級）評估傷口處理、疫苗接種與免疫球蛋白使用；第三級暴露應於 24 小時內完成首劑接種並注射免疫球蛋白。\n\n### 二、通報與檢體\n\n疑似狂犬病病例與可疑動物咬傷依傳染病防治法通報，動物檢體送農業部獸醫研究所檢驗。",
+  "supersedes": "doc.rabies-6abd76.2019-06-01",
+  "pdfUrl": "/files/doc.rabies-6abd76.2024-12-20/rabies-manual-2024.pdf",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/DiseaseManual/j0SEy06cs2n4zoOgnCWVUp"
+  ],
+  "assets": [
+    {
+      "file": "rabies-manual-2024.pdf",
+      "kind": "attachment",
+      "label": "狂犬病防治工作手冊（113 年 12 月修訂版）（PDF）",
+      "mime": "application/pdf",
+      "bytes": 724,
+      "sha256": "299809e27935d3858a496fcff006ef17c24de88f0f4b8e0b3326c5f59edc0e98",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 12 處（mso 樣式 4、Mso 類別 4、命名空間標籤 4）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「傳染病介紹／狂犬病／指引及手冊」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（狂犬病）"
+      },
+      {
+        "code": "effective-from-text",
+        "severity": "info",
+        "message": "生效日 2024-12-20 取自標題（舊頁發布日 2025-02-03）"
+      },
+      {
+        "code": "version-family",
+        "severity": "info",
+        "message": "去掉版次後與另外 1 頁同名，視為同一文件家族 doc.rabies-6abd76；版次鏈依生效日串接，舊版建議封存"
+      },
+      {
+        "code": "version-unknown",
+        "severity": "info",
+        "message": "標題看不出版次，version 暫填 2024-12-20"
+      },
+      {
+        "code": "version-chain",
+        "severity": "info",
+        "message": "版次鏈 doc.rabies-6abd76：2019-06-01（2019-06-01） → 2024-12-20（2024-12-20）；本版為現行版，supersedes doc.rabies-6abd76.2019-06-01"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/DiseaseManual/j0SEy06cs2n4zoOgnCWVUp",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "versionChain": {
+      "family": "doc.rabies-6abd76",
+      "position": 2,
+      "of": 2,
+      "current": true
+    }
+  }
+}

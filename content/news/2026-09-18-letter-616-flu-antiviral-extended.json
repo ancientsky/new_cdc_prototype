@@ -1,0 +1,73 @@
+{
+  "id": "news.2026-09-18-letter-616-flu-antiviral-extended",
+  "type": "letter",
+  "newsType": "letter",
+  "title": "致醫界通函第 616 號：延長擴大公費流感抗病毒藥劑使用對象「有類流感症狀，且具下列身分之流感高傳播族群」之適用期限至 10 月 31 日",
+  "effectiveAt": "2026-09-18",
+  "letterNo": 616,
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-09-18",
+  "reviewedAt": "2026-10-05",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "tasks": [],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "doc.flu-antiviral-eligibility"
+  ],
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-18"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "pending"
+    },
+    "tl": {
+      "status": "pending"
+    },
+    "vi": {
+      "status": "pending"
+    },
+    "id": {
+      "status": "pending"
+    },
+    "th": {
+      "status": "pending"
+    }
+  },
+  "summary": "疾管署延長擴大公費流感抗病毒藥劑使用對象「有類流感症狀，且具 7 類流感高傳播族群身分者」之適用期限至 2026 年 10 月 31 日；經醫師評估符合者不需快篩即可開立，用藥後至 SMIS 回報。",
+  "keywords": [
+    "致醫界通函",
+    "第 616 號",
+    "公費抗病毒藥劑",
+    "高傳播族群",
+    "不需快篩",
+    "10 月 31 日"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/3OyyJUUS0GduEm9t52Fnow?typeid=48"
+  ],
+  "bodyMarkdown": "一、本署自 2026 年 8 月 24 日起擴大公費流感抗病毒藥劑使用對象「有類流感症狀，且具下列身分之流感高傳播族群」，原訂至 9 月 30 日止；考量國內流感疫情已進入流行期且持續上升，適用期限延長至 **2026 年 10 月 31 日止**。\n二、流感高傳播族群：（一）醫事單位之防疫相關人員（含具執業登記醫事人員及醫療院所非醫事人員）；（二）安養、長期照顧（服務）等機構之受照顧者及所屬工作人員；（三）幼兒園托育人員、托育機構專業人員及居家托育人員（保母）；（四）幼兒園、國小、國中、高中、高職、五專一至三年級學生；（五）與流感重症高風險族群同住者或其照顧者；（六）禽畜養殖等相關行業工作人員、動物園工作人員及動物防疫人員；（七）其他人口密集機構（如軍營等）易發生群聚之人員。\n三、經醫師評估符合公費藥劑用藥條件者，**不需流感快篩即可開立公費藥劑**，以把握用藥時機；用藥後請儘速至「智慧防疫物資管理資訊系統（SMIS）」回報。\n四、公費藥劑配置於各縣市衛生局規劃之全國約 4,000 家合約醫療機構，籲請醫師善用公費藥劑，共同防治流感。\n\n（原型示意：本文為通函摘述，正式內容以疾管署官網原件為準。）",
+  "attachments": [
+    {
+      "label": "公費流感抗病毒藥劑使用對象一覽表（擴大版）",
+      "url": "/pending/?ref=news.2026-09-18-letter-616-flu-antiviral-extended&doc=公費流感抗病毒藥劑使用對象一覽表（擴大版）",
+      "machineReadable": false
+    }
+  ]
+}

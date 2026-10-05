@@ -23,12 +23,12 @@
       "status": "source"
     }
   },
-  "summary": "工作手冊：本頁內容由舊站「德國麻疹」專區移入，請權責單位確認是否仍為現行版本。",
+  "summary": "（待補：本文件正本為 PDF「德國麻疹防治工作手冊」，舊頁只有下載連結。上架前請權責單位提供文字版（assets-policy 第 4 節），或確認僅以附件提供。）",
   "family": "doc.rubella-manual",
   "docType": "manual",
   "version": "2018-03-01",
   "effectiveAt": "2018-03-01",
-  "machineReadableMarkdown": "工作手冊：本頁內容由舊站「德國麻疹」專區移入，請權責單位確認是否仍為現行版本。",
+  "machineReadableMarkdown": "（待補：本文件正本為 PDF「德國麻疹防治工作手冊」，舊頁只有下載連結。上架前請權責單位提供文字版（assets-policy 第 4 節），或確認僅以附件提供。）\n\n工作手冊：本頁內容由舊站「德國麻疹」專區移入，請權責單位確認是否仍為現行版本。",
   "pdfUrl": "/files/doc.rubella-manual.2018-03-01/rubella-manual.pdf",
   "legacyUrls": [
     "https://www.cdc.gov.tw/Category/DiseaseManual/jcjOhZS0QVtF5jJYtaKwrL"
@@ -73,9 +73,20 @@
         "code": "version-unknown",
         "severity": "info",
         "message": "標題看不出版次，version 暫填 2018-03-01"
+      },
+      {
+        "code": "pdf-only",
+        "severity": "warn",
+        "message": "舊頁內文只有下載連結，正本是 PDF「德國麻疹防治工作手冊」；machineReadableMarkdown 以（待補）佔位，PDF 不整批轉（第 8 節），上架前請提供文字版"
+      },
+      {
+        "code": "fields-pending",
+        "severity": "info",
+        "message": "待補欄位：machineReadableMarkdown（正本文字版）"
       }
     ],
     "sourceUrl": "https://www.cdc.gov.tw/Category/DiseaseManual/jcjOhZS0QVtF5jJYtaKwrL",
-    "convertedAt": "2026-10-05T02:30:00Z"
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "pdfOnly": true
   }
 }

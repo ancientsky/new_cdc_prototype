@@ -14,7 +14,7 @@
 | 既有內容已存在（供比對） | 12 |
 | 附件與圖片 | 5（附件 2、內文圖片 2、資料檔 1；圖片待補 alt 2、PDF 無文字層 1） |
 | 草稿 schema 驗證 | 12 / 12 通過 |
-| 問題 | 錯誤 0、警告 13、提示 70 |
+| 問題 | 錯誤 0、警告 14、提示 71 |
 | 移轉清單對應 | 對上 0 / 0 筆；status 變化 0（尚未套用）；note 更新 0；仍待移轉 0；與清單判定不同 0 |
 | 模板推導項（清單只寫例外） | 20 項，對上 20；只列在 migration-patch.json 的 derivedItems，不寫回清單 |
 
@@ -36,7 +36,7 @@
 | 10 | Q&A<br><sub>www.cdc.gov.tw/Category/QAPage/I1sp4NJzbEAHpI1S9OaMd8</sub> | Q&A → `faq.rubella-legacy-7f51c6` | `disease.rubella`（既有） | 0.8 | faq-structure-missing、body-short | 既有內容已存在，供比對，不建議覆蓋 |
 | 11 | 衛教宣導：單張海報<br><sub>www.cdc.gov.tw/Category/List/STTakYaGzsFpVLfv4ezH_3</sub> | 出版品 → `publication.rubella-materials-poster` | — | 0.8 | pdf-no-text-layer、image-no-alt | 核對後入庫（新站尚無對應內容） |
 | 12 | 衛教宣導：影片<br><sub>www.cdc.gov.tw/Category/MPage/H6aKXiOv6zmhsMSFeBSlB8</sub> | 影音 → `media.rubella-materials-video` | — | 0.8 | body-short、fields-pending | 核對後入庫（新站尚無對應內容） |
-| 13 | 工作手冊<br><sub>www.cdc.gov.tw/Category/DiseaseManual/jcjOhZS0QVtF5jJYtaKwrL</sub> | 文件 → `doc.rubella-manual.2018-03-01` | — | 0.8 | body-short | 核對後入庫（新站尚無對應內容） |
+| 13 | 工作手冊<br><sub>www.cdc.gov.tw/Category/DiseaseManual/jcjOhZS0QVtF5jJYtaKwrL</sub> | 文件 → `doc.rubella-manual.2018-03-01` | — | 0.8 | body-short、pdf-only | 核對後入庫（新站尚無對應內容） |
 | 14 | 病例定義<br><sub>www.cdc.gov.tw/Category/DiseaseDefine/SJlBZ8x7SUWVq542LbfcVu</sub> | 文件 → `doc.rubella-case-definition.2018-03-01` | — | 0.8 | body-short | 核對後入庫（新站尚無對應內容） |
 | 15 | 治療指引<br><sub>www.cdc.gov.tw/File/Get/o-0uwqo6qRZTylYmxpHEQC</sub> | 文件 → `doc.rubella-guideline.2018-03-01` | — | 0.8 | body-short | 核對後入庫（新站尚無對應內容） |
 | 16 | 統計資料<br><sub>www.cdc.gov.tw/Category/List/7D-9ddKaIc59m_gAxyZAAQ</sub> | 資料集 → `dataset.rubella-stats` | — | 1 | — | 核對後入庫（新站尚無對應內容） |

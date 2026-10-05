@@ -1,0 +1,59 @@
+{
+  "id": "news.2026-09-18-flu-antiviral-extended",
+  "type": "news",
+  "title": "流感疫情進入流行期且持續上升，疾管署延長擴大公費流感抗病毒藥劑使用條件至 10 月 31 日",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-09-18",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "疾病管制署表示，國內流感疫情已進入流行期且持續上升，第 36 週（9 月 6 日至 12 日）類流感門急診就診計 136,796 人次，較前一週上升 16.5%；",
+  "newsType": "press",
+  "bodyMarkdown": "疾病管制署表示，國內流感疫情已進入流行期且持續上升，第 36 週（9 月 6 日至 12 日）類流感門急診就診計 136,796 人次，較前一週上升 16.5%；9 月 8 日至 14 日新增 92 例流感併發重症及 21 例死亡，預估疫情於中秋節前後達最高峰。為把握用藥時機，原訂至 9 月 30 日止的擴大公費流感抗病毒藥劑使用條件「有類流感症狀，且具下列身分之流感高傳播族群」，**延長至今（2026）年 10 月 31 日止**，並以致醫界通函第 616 號通知醫療院所。\n\n!\\[\\](/files/news.2026-09-18-flu-antiviral-extended/chart-ili.svg)\n\n7 類高傳播族群包括：醫療院所防疫相關人員；安養、長照等機構住民及工作人員；幼兒園、托育機構及居家托育人員；幼兒園至高中、高職及五專一至三年級學生；與流感重症高風險族群同住者或照顧者；禽畜養殖、動物園及動物防疫相關人員；軍營等人口密集機構人員。**上述對象及全年適用對象（含未滿 5 歲及 65 歲以上類流感患者）經醫師評估符合者，不需快篩即可開立公費藥劑**，藥劑配置於全國約 4,000 家合約醫療機構。\n\n疾管署提醒，抗病毒藥劑於發病 48 小時內使用效果最佳，出現發燒、咳嗽、全身痠痛等症狀請儘早就醫。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/O_J0ATTIK9MciVwL4-h6Jg?typeid=9"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 14 處（mso 樣式 6、Mso 類別 4、命名空間標籤 4）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「流感／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+      },
+      {
+        "code": "not-in-manifest",
+        "severity": "warn",
+        "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/O_J0ATTIK9MciVwL4-h6Jg?typeid=9",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "news.2026-09-18-flu-antiviral-extended"
+    ]
+  }
+}

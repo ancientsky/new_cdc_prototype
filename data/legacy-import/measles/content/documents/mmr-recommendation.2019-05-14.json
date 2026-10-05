@@ -60,6 +60,11 @@
         "message": "類別「麻疹／預防接種」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
       },
       {
+        "code": "historical-version",
+        "severity": "info",
+        "message": "歷史版本：建議封存（舊版保留查閱），不取代現行版"
+      },
+      {
         "code": "pdf-no-text-layer",
         "severity": "warn",
         "message": "PDF「mmr-recommendation.2019-05-14.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"

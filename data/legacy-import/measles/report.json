@@ -11,7 +11,7 @@
   },
   "rules": {
     "file": "content/migration/import/_import-rules.json",
-    "version": 5
+    "version": 6
   },
   "manifest": {
     "id": "migration.measles",
@@ -65,9 +65,10 @@
     },
     "byAction": {
       "merge-into-disease": 9,
-      "compare-existing": 13,
+      "compare-existing": 12,
       "review-before-publish": 4,
-      "skip-list": 2
+      "skip-list": 2,
+      "archive": 1
     },
     "avgConfidence": 0.96,
     "needsReview": 0,
@@ -84,7 +85,7 @@
     "issues": {
       "error": 0,
       "warn": 8,
-      "info": 84
+      "info": 86
     },
     "manifest": {
       "items": 7,
@@ -1118,10 +1119,10 @@
       ],
       "outputs": [
         {
-          "id": "doc.measles-manual.2026-03-01",
+          "id": "doc.measles-manual.2026-01-01",
           "type": "document",
           "role": "draft",
-          "file": "content/documents/measles-manual.2026-03-01.json",
+          "file": "content/documents/measles-manual.2026-01-01.json",
           "schemaValid": true
         }
       ],
@@ -1149,6 +1150,11 @@
           "code": "manifest-derived",
           "severity": "info",
           "message": "對到的是模板推導項 manual（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "effective-from-text",
+          "severity": "info",
+          "message": "生效日 2026-01-01 取自內文（舊頁發布日 2026-03-01）"
         }
       ],
       "action": "review-before-publish",
@@ -2024,14 +2030,19 @@
           "message": "類別「麻疹／預防接種」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
         },
         {
+          "code": "historical-version",
+          "severity": "info",
+          "message": "歷史版本：建議封存（舊版保留查閱），不取代現行版"
+        },
+        {
           "code": "pdf-no-text-layer",
           "severity": "warn",
           "message": "PDF「mmr-recommendation.2019-05-14.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
         }
       ],
-      "action": "compare-existing",
+      "action": "archive",
       "flags": {
-        "historical": false
+        "historical": true
       },
       "stats": {
         "images": 0,
@@ -2658,10 +2669,10 @@
       "merged": false
     },
     {
-      "id": "doc.measles-manual.2026-03-01",
+      "id": "doc.measles-manual.2026-01-01",
       "type": "document",
       "title": "傳染病防治工作手冊（2026 年版）",
-      "file": "content/documents/measles-manual.2026-03-01.json",
+      "file": "content/documents/measles-manual.2026-01-01.json",
       "confidence": 1,
       "existing": false,
       "compareWith": [],

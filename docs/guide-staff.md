@@ -95,7 +95,7 @@ CI 會跑三道關卡，任何一道不過就不能合併：（1）schema 與參
 
 1. 預處理結果最下面的 (g) 區按「產生上架包（.zip）」，下載 **ZIP**。內容是：
    ```
-   content/{型別資料夾}/{檔名}.json         內容 JSON（assets 欄位已填好 mime、bytes、sha256；檔名是內容 id 去掉「型別.」前綴，例：content/news/2026-09-21-flu-antiviral-revised.json）
+   content/{型別資料夾}/{檔名}.json         內容 JSON（assets 欄位已填好 mime、bytes、sha256；檔名是內容 id 去掉「型別.」前綴，例：content/news/2026-09-18-flu-antiviral-extended.json）
    content/assets/{id}/press-release.pdf    附件與圖片原檔
    content/assets/{id}/chart-ili.png
    ```

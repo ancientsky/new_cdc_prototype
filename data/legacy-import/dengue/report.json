@@ -11,7 +11,7 @@
   },
   "rules": {
     "file": "content/migration/import/_import-rules.json",
-    "version": 5
+    "version": 6
   },
   "manifest": {
     "id": "migration.dengue",
@@ -66,9 +66,10 @@
     },
     "byAction": {
       "merge-into-disease": 9,
-      "compare-existing": 16,
+      "compare-existing": 15,
       "review-before-publish": 3,
-      "skip-list": 3
+      "skip-list": 3,
+      "archive": 1
     },
     "avgConfidence": 0.94,
     "needsReview": 1,
@@ -85,7 +86,7 @@
     "issues": {
       "error": 0,
       "warn": 12,
-      "info": 95
+      "info": 96
     },
     "manifest": {
       "items": 8,
@@ -1100,10 +1101,10 @@
       ],
       "outputs": [
         {
-          "id": "doc.dengue-manual.2026-03-01",
+          "id": "doc.dengue-manual.2026-01-01",
           "type": "document",
           "role": "draft",
-          "file": "content/documents/dengue-manual.2026-03-01.json",
+          "file": "content/documents/dengue-manual.2026-01-01.json",
           "schemaValid": true
         }
       ],
@@ -1131,6 +1132,11 @@
           "code": "manifest-derived",
           "severity": "info",
           "message": "對到的是模板推導項 manual（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "effective-from-text",
+          "severity": "info",
+          "message": "生效日 2026-01-01 取自內文（舊頁發布日 2026-03-01）"
         }
       ],
       "action": "review-before-publish",
@@ -1972,11 +1978,11 @@
       "type": "news",
       "manifestKey": "dengue-ns1-notice",
       "manifestDerived": false,
-      "target": "news.2026-09-15-letter-616-ns1",
+      "target": "news.2026-09-15-letter-615-ns1",
       "targetExists": true,
       "existing": true,
       "compareWith": [
-        "news.2026-09-15-letter-616-ns1"
+        "news.2026-09-15-letter-615-ns1"
       ],
       "owner": "unit.acute-infectious",
       "ownerRule": "disease-fallback",
@@ -1985,10 +1991,10 @@
       ],
       "outputs": [
         {
-          "id": "news.2026-09-15-letter-616-ns1",
+          "id": "news.2026-09-15-letter-615-ns1",
           "type": "news",
           "role": "draft",
-          "file": "content/news/2026-09-15-letter-616-ns1.json",
+          "file": "content/news/2026-09-15-letter-615-ns1.json",
           "schemaValid": true
         }
       ],
@@ -2089,19 +2095,19 @@
           "message": "類別「登革熱／醫療專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
         },
         {
+          "code": "historical-version",
+          "severity": "info",
+          "message": "歷史版本：建議封存（舊版保留查閱），不取代現行版"
+        },
+        {
           "code": "pdf-no-text-layer",
           "severity": "warn",
           "message": "PDF「guidance-dengue.v16.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
-        },
-        {
-          "code": "version-unknown",
-          "severity": "info",
-          "message": "標題看不出版次，version 暫填 2025-11-01"
         }
       ],
-      "action": "compare-existing",
+      "action": "archive",
       "flags": {
-        "historical": false
+        "historical": true
       },
       "stats": {
         "images": 0,
@@ -2847,10 +2853,10 @@
       "merged": false
     },
     {
-      "id": "doc.dengue-manual.2026-03-01",
+      "id": "doc.dengue-manual.2026-01-01",
       "type": "document",
       "title": "傳染病防治工作手冊（2026 年版）",
-      "file": "content/documents/dengue-manual.2026-03-01.json",
+      "file": "content/documents/dengue-manual.2026-01-01.json",
       "confidence": 1,
       "existing": false,
       "compareWith": [],
@@ -3061,14 +3067,14 @@
       "merged": false
     },
     {
-      "id": "news.2026-09-15-letter-616-ns1",
+      "id": "news.2026-09-15-letter-615-ns1",
       "type": "news",
       "title": "NS1 抗原快篩試劑配置公告（致醫界通函）",
-      "file": "content/news/2026-09-15-letter-616-ns1.json",
+      "file": "content/news/2026-09-15-letter-615-ns1.json",
       "confidence": 1,
       "existing": true,
       "compareWith": [
-        "news.2026-09-15-letter-616-ns1"
+        "news.2026-09-15-letter-615-ns1"
       ],
       "status": "review",
       "owner": "unit.acute-infectious",

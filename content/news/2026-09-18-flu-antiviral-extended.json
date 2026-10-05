@@ -1,0 +1,108 @@
+{
+  "id": "news.2026-09-18-flu-antiviral-extended",
+  "type": "news",
+  "newsType": "press",
+  "title": "流感疫情進入流行期且持續上升，疾管署延長擴大公費流感抗病毒藥劑使用條件至 10 月 31 日",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-09-18",
+  "reviewedAt": "2026-10-05",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms",
+    "situation"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "basedOn": [
+    "doc.flu-antiviral-eligibility"
+  ],
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-09-18"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "reviewed",
+      "reviewedAt": "2026-09-18",
+      "reviewer": "內部英文審核人"
+    },
+    "ja": {
+      "status": "machine"
+    },
+    "tl": {
+      "status": "machine"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "machine"
+    }
+  },
+  "summary": "流感疫情進入流行期，疾管署宣布有類流感症狀的 7 類高傳播族群使用公費抗病毒藥劑的期限延長至 2026 年 10 月 31 日；經醫師評估符合者不需快篩即可開立。",
+  "keywords": [
+    "公費抗病毒藥劑",
+    "高傳播族群",
+    "延長至 10 月 31 日",
+    "不需快篩",
+    "流感流行期"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+  ],
+  "situationDeclaration": {
+    "disease": "disease.influenza",
+    "text": "流感疫情進入流行期且持續上升，預估中秋節前後達高峰"
+  },
+  "bodyMarkdown": "疾病管制署表示，國內流感疫情已進入流行期且持續上升，第 36 週（9 月 6 日至 12 日）類流感門急診就診計 136,796 人次，較前一週上升 16.5%；9 月 8 日至 14 日新增 92 例流感併發重症及 21 例死亡，預估疫情於中秋節前後達最高峰。為把握用藥時機，原訂至 9 月 30 日止的擴大公費流感抗病毒藥劑使用條件「有類流感症狀，且具下列身分之流感高傳播族群」，**延長至今（2026）年 10 月 31 日止**，並以致醫界通函第 616 號通知醫療院所。\n\n![](/files/news.2026-09-18-flu-antiviral-extended/chart-ili.svg)\n\n7 類高傳播族群包括：醫療院所防疫相關人員；安養、長照等機構住民及工作人員；幼兒園、托育機構及居家托育人員；幼兒園至高中、高職及五專一至三年級學生；與流感重症高風險族群同住者或照顧者；禽畜養殖、動物園及動物防疫相關人員；軍營等人口密集機構人員。**上述對象及全年適用對象（含未滿 5 歲及 65 歲以上類流感患者）經醫師評估符合者，不需快篩即可開立公費藥劑**，藥劑配置於全國約 4,000 家合約醫療機構。\n\n疾管署提醒，抗病毒藥劑於發病 48 小時內使用效果最佳，出現發燒、咳嗽、全身痠痛等症狀請儘早就醫。",
+  "i18n": {
+    "en": {
+      "title": "Influenza season under way: expanded eligibility for government-funded antivirals extended to 31 October",
+      "summary": "With influenza in its epidemic period and rising, Taiwan CDC extended government-funded antiviral eligibility for seven high-transmission groups with flu-like symptoms to 31 October 2026. No rapid test is needed for anyone a physician judges eligible."
+    }
+  },
+  "attachments": [
+    {
+      "label": "新聞稿全文（PDF，示意）",
+      "url": "/files/news.2026-09-18-flu-antiviral-extended/press-release.pdf",
+      "machineReadable": true
+    }
+  ],
+  "assets": [
+    {
+      "file": "press-release.pdf",
+      "kind": "attachment",
+      "label": "新聞稿全文（PDF，示意）",
+      "mime": "application/pdf",
+      "bytes": 4423,
+      "sha256": "50534111ca6d2ad9df93696fbc3e293bcbb812759e1f015e68266558821984d3",
+      "machineReadable": true
+    },
+    {
+      "file": "chart-ili.svg",
+      "kind": "image",
+      "alt": "類流感門急診就診率週趨勢圖（示意）：第 31 至 38 週由 5.2% 升至 12.0%，自第 34 週起超過流行閾值 7%，連續 4 週上升。",
+      "mime": "image/svg+xml",
+      "bytes": 3593,
+      "sha256": "0561eb9adbe6435276d41986aa450979e152a6b2103bb5176580d1fc538a2190",
+      "width": 640,
+      "height": 360,
+      "source": "疾管署急性傳染病組（原型示意圖）",
+      "license": "OGDL-1.0"
+    }
+  ]
+}

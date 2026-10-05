@@ -11,7 +11,7 @@
   },
   "rules": {
     "file": "content/migration/import/_import-rules.json",
-    "version": 5
+    "version": 6
   },
   "manifest": {
     "id": "migration.mpox",
@@ -72,8 +72,8 @@
     },
     "issues": {
       "error": 0,
-      "warn": 9,
-      "info": 74
+      "warn": 10,
+      "info": 75
     },
     "manifest": {
       "items": 0,
@@ -1166,6 +1166,16 @@
           "code": "version-unknown",
           "severity": "info",
           "message": "標題看不出版次，version 暫填 2022-06-23"
+        },
+        {
+          "code": "pdf-only",
+          "severity": "warn",
+          "message": "舊頁內文只有下載連結，正本是 PDF「M痘防治工作手冊」；machineReadableMarkdown 以（待補）佔位，PDF 不整批轉（第 8 節），上架前請提供文字版"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "info",
+          "message": "待補欄位：machineReadableMarkdown（正本文字版）"
         }
       ],
       "action": "review-before-publish",
