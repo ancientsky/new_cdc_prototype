@@ -1,0 +1,617 @@
+{
+  "format": "cdc-legacy-migration-patch/1",
+  "manifest": "migration.enterovirus",
+  "batch": "enterovirus",
+  "exportedAt": "2026-10-03",
+  "applied": {
+    "statusChanges": [],
+    "targetChanges": [],
+    "noteChanges": 8
+  },
+  "rule": "只改 status／target／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。",
+  "items": [
+    {
+      "key": "ev-zone",
+      "oldTitle": "腸病毒防治專區（首頁）",
+      "page": "19-ev-zone",
+      "current": {
+        "status": "migrated",
+        "target": "disease.enterovirus",
+        "note": "舊專區首頁改為疾病頁：家長、教托育機構與醫療人員三種入口以專區導覽分流。"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": "disease.enterovirus",
+        "note": "舊專區首頁改為疾病頁：家長、教托育機構與醫療人員三種入口以專區導覽分流。　【匯入 2026-10-03】草稿 page.enterovirus-ev-zone（信心 1；既有內容已存在，供比對）"
+      },
+      "suggestion": {
+        "status": "migrated",
+        "target": "disease.enterovirus"
+      },
+      "draftIds": [
+        "page.enterovirus-ev-zone"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "note": true
+      }
+    },
+    {
+      "key": "ev-childcare-guideline",
+      "oldTitle": "教托育機構腸病毒防治指引",
+      "page": "20-ev-childcare-guideline",
+      "current": {
+        "status": "migrated",
+        "target": "doc.ev-childcare-guideline.2026-09-10",
+        "note": "民眾與機構共讀；停課標準數字須與地方公告一致，指引修訂時 Q&A 自動加註。"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": "doc.ev-childcare-guideline.2026-09-10",
+        "note": "民眾與機構共讀；停課標準數字須與地方公告一致，指引修訂時 Q&A 自動加註。　【匯入 2026-10-03】草稿 doc.ev-childcare-guideline.2026-09-10（信心 1；既有內容已存在，供比對）"
+      },
+      "suggestion": {
+        "status": "migrated",
+        "target": "doc.ev-childcare-guideline.2026-09-10"
+      },
+      "draftIds": [
+        "doc.ev-childcare-guideline.2026-09-10"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "note": true
+      }
+    },
+    {
+      "key": "ev-closure-reporting",
+      "oldTitle": "停課標準與疫情通報",
+      "page": "21-ev-closure-reporting",
+      "current": {
+        "status": "merged",
+        "target": "doc.ev-childcare-guideline.2026-09-10",
+        "note": "併入教托育機構指引「停課標準」章節；通報窗口連到群聚通報服務頁。"
+      },
+      "proposed": {
+        "status": "merged",
+        "target": "doc.ev-childcare-guideline.2026-09-10",
+        "note": "併入教托育機構指引「停課標準」章節；通報窗口連到群聚通報服務頁。　【匯入 2026-10-03】草稿 page.enterovirus-ev-closure-reporting（信心 1；既有內容已存在，供比對）"
+      },
+      "suggestion": {
+        "status": "migrated",
+        "target": "doc.ev-childcare-guideline.2026-09-10"
+      },
+      "draftIds": [
+        "page.enterovirus-ev-closure-reporting"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "note": true
+      }
+    },
+    {
+      "key": "ev-severe-referral",
+      "oldTitle": "腸病毒重症責任醫院名單與轉診",
+      "page": "22-ev-severe-referral",
+      "current": {
+        "status": "pending",
+        "target": null,
+        "note": "名單依年度公告更新；需先確認是否以結構化資料集提供（含更新頻率）並與疫情警示連動。"
+      },
+      "proposed": {
+        "status": "pending",
+        "target": null,
+        "note": "名單依年度公告更新；需先確認是否以結構化資料集提供（含更新頻率）並與疫情警示連動。　【匯入 2026-10-03】草稿 service.enterovirus-ev-severe-referral（信心 0.6）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null
+      },
+      "draftIds": [
+        "service.enterovirus-ev-severe-referral"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "note": true
+      }
+    },
+    {
+      "key": "ev-severe-clinical",
+      "oldTitle": "腸病毒感染併發重症臨床處置建議",
+      "page": "23-ev-severe-clinical",
+      "current": {
+        "status": "migrated",
+        "target": "doc.ev-severe-guideline.2026-03-15",
+        "note": "臨床四期分期與轉診時機；通函 608 號為其公告，另以新聞型別上架。"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": "doc.ev-severe-guideline.2026-03-15",
+        "note": "臨床四期分期與轉診時機；通函 608 號為其公告，另以新聞型別上架。　【匯入 2026-10-03】草稿 doc.ev-severe-guideline.2026-03-15（信心 1；既有內容已存在，供比對）"
+      },
+      "suggestion": {
+        "status": "migrated",
+        "target": "doc.ev-severe-guideline.2026-03-15"
+      },
+      "draftIds": [
+        "doc.ev-severe-guideline.2026-03-15"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "note": true
+      }
+    },
+    {
+      "key": "ev-ev71-vaccine",
+      "oldTitle": "腸病毒 71 型疫苗專區",
+      "page": "24-ev-ev71-vaccine",
+      "current": {
+        "status": "merged",
+        "target": "vaccine.ev71",
+        "note": "併入疫苗頁（自費、適用年齡依仿單、只能預防 71 型）；審閱週期 6 個月。"
+      },
+      "proposed": {
+        "status": "merged",
+        "target": "vaccine.ev71",
+        "note": "併入疫苗頁（自費、適用年齡依仿單、只能預防 71 型）；審閱週期 6 個月。　【匯入 2026-10-03】草稿 disease.enterovirus（信心 1；既有內容已存在，供比對；併入疾病頁）"
+      },
+      "suggestion": {
+        "status": "merged",
+        "target": "vaccine.ev71"
+      },
+      "draftIds": [
+        "disease.enterovirus"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "note": true
+      }
+    },
+    {
+      "key": "ev-handwashing-video",
+      "oldTitle": "影音：濕搓沖捧擦洗手五步驟動畫",
+      "page": "25-ev-handwashing-video",
+      "current": {
+        "status": "migrated",
+        "target": "media.enterovirus-handwashing",
+        "note": "影片須有逐字稿；教托育機構指引修訂時自動標過時。"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": "media.enterovirus-handwashing",
+        "note": "影片須有逐字稿；教托育機構指引修訂時自動標過時。　【匯入 2026-10-03】草稿 media.enterovirus-handwashing（信心 1；既有內容已存在，供比對）"
+      },
+      "suggestion": {
+        "status": "migrated",
+        "target": "media.enterovirus-handwashing"
+      },
+      "draftIds": [
+        "media.enterovirus-handwashing"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "note": true
+      }
+    },
+    {
+      "key": "ev-old-posters",
+      "oldTitle": "歷年腸病毒宣導海報（2015–2020）",
+      "page": "26-ev-old-posters",
+      "current": {
+        "status": "dropped",
+        "target": null,
+        "note": "內容與現行建議不一致且無查閱需求，不移轉；舊網址回 410。現行海報在疾病頁素材區。"
+      },
+      "proposed": {
+        "status": "dropped",
+        "target": null,
+        "note": "內容與現行建議不一致且無查閱需求，不移轉；舊網址回 410。現行海報在疾病頁素材區。　【匯入 2026-10-03】草稿 page.enterovirus-ev-old-posters（信心 0.6）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null
+      },
+      "draftIds": [
+        "page.enterovirus-ev-old-posters"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "note": true
+      }
+    }
+  ],
+  "missingPages": [],
+  "unmatchedPages": [
+    {
+      "page": "27-news-2026-09-29-ili-weekly",
+      "suggest": {
+        "key": "import-27-news-2026-09-29-ili-weekly",
+        "oldTitle": "流感疫情持續上升，10 月 1 日公費疫苗開打，長者幼兒請優先接種",
+        "oldPath": "傳染病與防疫專題／腸病毒／最新消息",
+        "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/kJcoSqz2YA_c0mIGh5-Ljw?typeid=9",
+        "oldType": "news",
+        "verified": false,
+        "status": "pending",
+        "note": "匯入時清單沒有對應項目，請權責單位確認後加入"
+      }
+    },
+    {
+      "page": "28-news-2026-09-22-enterovirus-alert",
+      "suggest": {
+        "key": "import-28-news-2026-09-22-enterovirus-alert",
+        "oldTitle": "國內腸病毒疫情持續，籲請家長及教托育機構提高警覺",
+        "oldPath": "傳染病與防疫專題／腸病毒／最新消息",
+        "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/cIPa4RUZinjpiHBlwV9Gfp?typeid=9",
+        "oldType": "news",
+        "verified": false,
+        "status": "pending",
+        "note": "匯入時清單沒有對應項目，請權責單位確認後加入"
+      }
+    },
+    {
+      "page": "29-news-2026-04-14-enterovirus-rising",
+      "suggest": {
+        "key": "import-29-news-2026-04-14-enterovirus-rising",
+        "oldTitle": "腸病毒就診人次連續上升，近期社區以 EV71 為主，籲請提高警覺",
+        "oldPath": "傳染病與防疫專題／腸病毒／最新消息",
+        "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/kuSB3T4l2c-Tg6jlKwK0B8?typeid=9",
+        "oldType": "news",
+        "verified": false,
+        "status": "pending",
+        "note": "匯入時清單沒有對應項目，請權責單位確認後加入"
+      }
+    },
+    {
+      "page": "30-news-2026-03-15-letter-ev-guideline",
+      "suggest": {
+        "key": "import-30-news-2026-03-15-letter-ev-guideline",
+        "oldTitle": "致醫界通函第 608 號：腸病毒感染併發重症臨床處置建議更新",
+        "oldPath": "傳染病與防疫專題／腸病毒／最新消息",
+        "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/LDmeZqcbZuzmNJgOHhV9pm?typeid=11",
+        "oldType": "news",
+        "verified": false,
+        "status": "pending",
+        "note": "匯入時清單沒有對應項目，請權責單位確認後加入"
+      }
+    },
+    {
+      "page": "31-news-2025-05-06-enterovirus-season",
+      "suggest": {
+        "key": "import-31-news-2025-05-06-enterovirus-season",
+        "oldTitle": "腸病毒進入流行期，籲請家長落實肥皂洗手並留意重症前兆",
+        "oldPath": "傳染病與防疫專題／腸病毒／最新消息",
+        "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/u1nGI08LsIuXP_KlaNZZfl?typeid=9",
+        "oldType": "news",
+        "verified": false,
+        "status": "pending",
+        "note": "匯入時清單沒有對應項目，請權責單位確認後加入"
+      }
+    }
+  ],
+  "conflicts": [],
+  "derivedItems": [
+    {
+      "key": "intro",
+      "oldTitle": "疾病介紹",
+      "oldUrl": "https://www.cdc.gov.tw/Disease/SubIndex/{id}",
+      "template": {
+        "status": "migrated",
+        "target": "disease.enterovirus"
+      },
+      "page": "01-intro",
+      "draftIds": [
+        "disease.enterovirus"
+      ],
+      "confidence": 1,
+      "existing": true,
+      "matched": true
+    },
+    {
+      "key": "intro-pathogen",
+      "oldTitle": "致病原",
+      "oldUrl": "https://www.cdc.gov.tw/Disease/SubIndex/{id}#pathogen",
+      "template": {
+        "status": "merged",
+        "target": "disease.enterovirus"
+      },
+      "page": "02-intro-pathogen",
+      "draftIds": [
+        "disease.enterovirus"
+      ],
+      "confidence": 1,
+      "existing": true,
+      "matched": true
+    },
+    {
+      "key": "intro-epidemiology",
+      "oldTitle": "流行病學",
+      "oldUrl": "https://www.cdc.gov.tw/Disease/SubIndex/{id}#epidemiology",
+      "template": {
+        "status": "merged",
+        "target": "disease.enterovirus"
+      },
+      "page": "03-intro-epidemiology",
+      "draftIds": [
+        "disease.enterovirus"
+      ],
+      "confidence": 0.8,
+      "existing": true,
+      "matched": true
+    },
+    {
+      "key": "intro-transmission",
+      "oldTitle": "傳染方式",
+      "oldUrl": "https://www.cdc.gov.tw/Disease/SubIndex/{id}#transmission",
+      "template": {
+        "status": "merged",
+        "target": "disease.enterovirus"
+      },
+      "page": "04-intro-transmission",
+      "draftIds": [
+        "disease.enterovirus"
+      ],
+      "confidence": 1,
+      "existing": true,
+      "matched": true
+    },
+    {
+      "key": "intro-incubation",
+      "oldTitle": "潛伏期",
+      "oldUrl": "https://www.cdc.gov.tw/Disease/SubIndex/{id}#incubation",
+      "template": {
+        "status": "merged",
+        "target": "disease.enterovirus"
+      },
+      "page": "05-intro-incubation",
+      "draftIds": [
+        "disease.enterovirus"
+      ],
+      "confidence": 1,
+      "existing": true,
+      "matched": true
+    },
+    {
+      "key": "intro-symptoms",
+      "oldTitle": "發病症狀",
+      "oldUrl": "https://www.cdc.gov.tw/Disease/SubIndex/{id}#symptoms",
+      "template": {
+        "status": "merged",
+        "target": "disease.enterovirus"
+      },
+      "page": "06-intro-symptoms",
+      "draftIds": [
+        "disease.enterovirus"
+      ],
+      "confidence": 1,
+      "existing": true,
+      "matched": true
+    },
+    {
+      "key": "intro-prevention",
+      "oldTitle": "預防方法",
+      "oldUrl": "https://www.cdc.gov.tw/Disease/SubIndex/{id}#prevention",
+      "template": {
+        "status": "merged",
+        "target": "disease.enterovirus"
+      },
+      "page": "07-intro-prevention",
+      "draftIds": [
+        "disease.enterovirus"
+      ],
+      "confidence": 1,
+      "existing": true,
+      "matched": true
+    },
+    {
+      "key": "intro-treatment",
+      "oldTitle": "治療方法與就醫資訊",
+      "oldUrl": "https://www.cdc.gov.tw/Disease/SubIndex/{id}#treatment",
+      "template": {
+        "status": "merged",
+        "target": "disease.enterovirus"
+      },
+      "page": "08-intro-treatment",
+      "draftIds": [
+        "disease.enterovirus"
+      ],
+      "confidence": 1,
+      "existing": true,
+      "matched": true
+    },
+    {
+      "key": "vaccine",
+      "oldTitle": "預防接種建議",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#vaccine",
+      "template": {
+        "status": "merged",
+        "target": "disease.enterovirus"
+      },
+      "page": "09-vaccine",
+      "draftIds": [
+        "disease.enterovirus"
+      ],
+      "confidence": 1,
+      "existing": true,
+      "matched": true
+    },
+    {
+      "key": "qa-list",
+      "oldTitle": "Q&A",
+      "oldUrl": "https://www.cdc.gov.tw/Category/QAPage/{id}",
+      "template": {
+        "status": "merged",
+        "target": "disease.enterovirus"
+      },
+      "page": "10-qa-list",
+      "draftIds": [
+        "faq.enterovirus-childcare-disinfect",
+        "faq.enterovirus-class-suspension",
+        "faq.enterovirus-return-school",
+        "faq.ev-severe-signs",
+        "faq.ev-stay-home",
+        "faq.ev71-vaccine"
+      ],
+      "confidence": 1,
+      "existing": true,
+      "matched": true
+    },
+    {
+      "key": "materials-poster",
+      "oldTitle": "衛教宣導：單張海報",
+      "oldUrl": "https://www.cdc.gov.tw/Category/List/{id}#posters",
+      "template": {
+        "status": "pending",
+        "target": null
+      },
+      "page": "11-materials-poster",
+      "draftIds": [
+        "publication.enterovirus-materials-poster"
+      ],
+      "confidence": 0.8,
+      "existing": false,
+      "matched": true
+    },
+    {
+      "key": "manual",
+      "oldTitle": "工作手冊",
+      "oldUrl": "https://www.cdc.gov.tw/Category/DiseaseManual/{id}",
+      "template": {
+        "status": "pending",
+        "target": null
+      },
+      "page": "12-manual",
+      "draftIds": [
+        "doc.enterovirus-manual.2026-03-01"
+      ],
+      "confidence": 1,
+      "existing": false,
+      "matched": true
+    },
+    {
+      "key": "case-definition",
+      "oldTitle": "病例定義",
+      "oldUrl": "https://www.cdc.gov.tw/Category/DiseaseDefine/{id}",
+      "template": {
+        "status": "pending",
+        "target": null
+      },
+      "page": "13-case-definition",
+      "draftIds": [
+        "doc.enterovirus-case-definition.2017-04-01"
+      ],
+      "confidence": 0.8,
+      "existing": false,
+      "matched": true
+    },
+    {
+      "key": "stats",
+      "oldTitle": "統計資料",
+      "oldUrl": "https://www.cdc.gov.tw/Category/List/{id}#statistics",
+      "template": {
+        "status": "migrated",
+        "target": "dataset.ev-lab-types"
+      },
+      "page": "14-stats",
+      "draftIds": [
+        "dataset.ev-lab-types"
+      ],
+      "confidence": 1,
+      "existing": true,
+      "matched": true
+    },
+    {
+      "key": "lab",
+      "oldTitle": "檢驗資訊",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#lab",
+      "template": {
+        "status": "migrated",
+        "target": "labtest.enterovirus"
+      },
+      "page": "15-lab",
+      "draftIds": [
+        "labtest.enterovirus"
+      ],
+      "confidence": 1,
+      "existing": true,
+      "matched": true
+    },
+    {
+      "key": "notify",
+      "oldTitle": "通報定義與時限",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#notify",
+      "template": {
+        "status": "pending",
+        "target": null
+      },
+      "page": "16-notify",
+      "draftIds": [
+        "page.enterovirus-notify"
+      ],
+      "confidence": 1,
+      "existing": false,
+      "matched": true
+    },
+    {
+      "key": "news-list",
+      "oldTitle": "新聞稿列表",
+      "oldUrl": "https://www.cdc.gov.tw/Bulletin/List/{id}",
+      "template": {
+        "status": "merged",
+        "target": "disease.enterovirus"
+      },
+      "page": "17-news-list",
+      "draftIds": [
+        "page.enterovirus-news-list"
+      ],
+      "confidence": 0.6,
+      "existing": true,
+      "matched": true
+    },
+    {
+      "key": "links",
+      "oldTitle": "相關連結",
+      "oldUrl": "https://www.cdc.gov.tw/Category/List/{id}#links",
+      "template": {
+        "status": "pending",
+        "target": null
+      },
+      "page": "18-links",
+      "draftIds": [
+        "page.enterovirus-links"
+      ],
+      "confidence": 0.6,
+      "existing": false,
+      "matched": true
+    }
+  ],
+  "summary": {
+    "derivedItems": 18,
+    "derivedMatched": 18,
+    "items": 8,
+    "matched": 8,
+    "missingPages": 0,
+    "unmatchedPages": 5,
+    "agree": 8,
+    "conflicts": 0,
+    "statusChanges": 0,
+    "pendingToMigrated": 0,
+    "targetChanges": 0,
+    "noteChanges": 8,
+    "stillPending": 1
+  }
+}

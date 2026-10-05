@@ -40,13 +40,13 @@
         "message": "清除 Word 貼上殘留 12 處（mso 樣式 6、Mso 類別 3、命名空間標籤 3）"
       },
       {
-        "code": "target-type-differs",
+        "code": "merge-into-target",
         "severity": "info",
-        "message": "對應的新站內容是 topic.tb-prevention（topic），草稿以 page 暫存，請比對後改建為 topic"
+        "message": "清單判定併入 topic.tb-prevention（topic），草稿以 page 暫存，請人工把內容併進目標後刪除草稿"
       }
     ],
     "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/mdK6J8sUBWYkJgJXrH5hj2",
-    "convertedAt": "2026-10-04T14:04:24.484Z",
+    "convertedAt": "2026-10-05T02:30:00Z",
     "existing": true,
     "compareWith": [
       "topic.tb-prevention"

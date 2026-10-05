@@ -1,0 +1,62 @@
+{
+  "id": "faq.measles-health-dept-call",
+  "type": "faq",
+  "title": "衛生局打電話來做麻疹疫調，我要配合什麼？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2025-05-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.measles"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "麻疹傳染力強，衛生局會在通報後 24 小時內聯絡病例與接觸者，目的是找出可能被傳染的人並及早預防。",
+  "question": "衛生局打電話來做麻疹疫調，我要配合什麼？",
+  "answerMarkdown": "麻疹傳染力強，衛生局會在通報後 **24 小時內**聯絡病例與接觸者，目的是找出可能被傳染的人並及早預防。\n\n接到電話時，請協助說明：發病與出疹日期、出國史或接觸史、可傳染期（出疹前 4 日至出疹後 4 日）去過的地方與搭乘的交通工具、疫苗接種紀錄。若是接觸者，衛生局會說明暴露後預防與 **18 日**的健康管理方式。\n\n疫調資料僅作防疫使用。若擔心詐騙，可掛斷後撥打 1922 或衛生局電話確認；衛生人員不會要求轉帳或提供銀行資料。",
+  "basedOn": [
+    "disease.measles"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/s5OaifVY2y_Oh-5Zt4ecui"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 104 處（mso 樣式 62、Mso 類別 27、命名空間標籤 21）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「麻疹／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/s5OaifVY2y_Oh-5Zt4ecui",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.measles-health-dept-call"
+    ]
+  }
+}

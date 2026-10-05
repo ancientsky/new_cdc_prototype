@@ -1,0 +1,93 @@
+{
+  "id": "labtest.dengue",
+  "type": "labtest",
+  "title": "登革熱檢驗資訊",
+  "owner": "unit.lab",
+  "publishedAt": "2025-01-15",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "登革熱：急性期血清 2–5 mL（發病 7 日內），4°C 冷藏 24 小時內送達，可做 NS1 抗原、RT-PCR 與 IgM／IgG；恢復期血清於發病 14–40 日採檢。",
+  "disease": "disease.dengue",
+  "specimens": [
+    {
+      "name": "急性期血清",
+      "container": "（待補：舊頁未載明，依採檢手冊補）",
+      "volume": "（待補：舊頁未載明，依採檢手冊補）",
+      "storage": "（待補：舊頁未載明，依採檢手冊補）",
+      "transport": "（待補：舊頁未載明，依採檢手冊補）"
+    },
+    {
+      "name": "恢復期血清",
+      "container": "（待補：舊頁未載明，依採檢手冊補）",
+      "volume": "（待補：舊頁未載明，依採檢手冊補）",
+      "storage": "（待補：舊頁未載明，依採檢手冊補）",
+      "transport": "（待補：舊頁未載明，依採檢手冊補）"
+    }
+  ],
+  "labs": [
+    "cdc-lab"
+  ],
+  "notesMarkdown": "登革熱：急性期血清 2–5 mL（發病 7 日內），4°C 冷藏 24 小時內送達，可做 NS1 抗原、RT-PCR 與 IgM／IgG；恢復期血清於發病 14–40 日採檢。\n\n| 項目 | 內容 |\n| --- | --- |\n| 檢體 | 急性期血清、恢復期血清 |\n| 送驗時限 | 24 小時內 |\n| 生物安全等級 | BSL-2 |\n\n- 通報後即採檢；NS1 快篩陽性者仍須送驗確認（見致醫界通函第 616 號）。\n- 檢體溶血或脂血會影響結果。\n- 送驗單請註明發病日與旅遊史，以利研判境外移入或本土。",
+  "sendWithinHours": 24,
+  "biosafetyLevel": "BSL-2",
+  "basedOn": [
+    "disease.dengue"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/nBSoKp75tD_JsUcg-PolJx"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 40 處（mso 樣式 22、Mso 類別 12、命名空間標籤 9）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 lab（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站型別是 labtest（labtest.dengue），草稿直接建成 labtest，看不出來的欄位以「（待補）」佔位"
+      },
+      {
+        "code": "fields-pending",
+        "severity": "warn",
+        "message": "labtest 的欄位從舊頁看不出來，以「（待補）」佔位：specimens[].container/volume/storage/transport"
+      },
+      {
+        "code": "field-guessed",
+        "severity": "info",
+        "message": "labs 暫填 cdc-lab（署檢驗中心），合約與區域實驗室請檢驗中心確認"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/nBSoKp75tD_JsUcg-PolJx",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "labtest.dengue"
+    ]
+  }
+}

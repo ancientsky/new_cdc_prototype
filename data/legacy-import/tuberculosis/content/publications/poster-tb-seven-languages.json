@@ -1,0 +1,90 @@
+{
+  "id": "publication.poster-tb-seven-languages",
+  "type": "publication",
+  "title": "結核病咳嗽兩週要就醫（多國語言海報）",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2026-03-20",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "咳嗽超過兩週請就醫，結核病可以治癒，治療免費。海報提供繁中、英、日、越、印、泰、菲七種語言，歡迎下載張貼於移工宿舍與社區。",
+  "pubType": "poster",
+  "series": "結核病宣導素材",
+  "abstractMarkdown": "咳嗽超過兩週請就醫，結核病可以治癒，治療免費。海報提供繁中、英、日、越、印、泰、菲七種語言，歡迎下載張貼於移工宿舍與社區。\n\n![結核病七語衛教海報縮圖](/files/publication.poster-tb-seven-languages/tb-poster-7lang-thumb.png)\n\n檔案請見下方附件（A4 示意版）。",
+  "pdfUrl": "/files/publication.poster-tb-seven-languages/tb-poster-7lang.pdf",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/HFc75kGSabhKRWZ0sV_2Ii"
+  ],
+  "assets": [
+    {
+      "file": "tb-poster-7lang.pdf",
+      "kind": "attachment",
+      "label": "結核病七語衛教海報（PDF）",
+      "mime": "application/pdf",
+      "bytes": 912,
+      "sha256": "d4260ea2a4c0fd55a3028594eacaf8799d00eca0adda58b280653b191683466a",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "tb-poster-7lang-thumb.png",
+      "kind": "image",
+      "alt": "結核病七語衛教海報縮圖",
+      "license": "OGDL-1.0",
+      "needsAlt": true,
+      "mime": "image/png",
+      "bytes": 607,
+      "sha256": "ceeb683a62ade6c98c53cc14b83d5e0901101acf0949046d9ff8399a5182fa0a",
+      "width": 160,
+      "height": 100
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.8,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站型別是 publication（publication.poster-tb-seven-languages），草稿直接建成 publication，看不出來的欄位以「（待補）」佔位"
+      },
+      {
+        "code": "image-no-alt",
+        "severity": "warn",
+        "message": "圖片「tb-poster-7lang-thumb.png」舊頁沒有替代文字，暫用圖片標題「結核病七語衛教海報縮圖」，請補 alt（needsAlt）"
+      },
+      {
+        "code": "image-license-assumed",
+        "severity": "info",
+        "message": "圖片「tb-poster-7lang-thumb.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/List/HFc75kGSabhKRWZ0sV_2Ii",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "publication.poster-tb-seven-languages"
+    ]
+  }
+}

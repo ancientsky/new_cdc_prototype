@@ -10,7 +10,7 @@ import { sha256Of } from '../assets.mjs';
 const SCHEMAS = path.join(ROOT, 'schemas');
 const TYPE_TO_SCHEMA = {
   disease: 'disease.json', faq: 'faq.json', news: 'news.json', letter: 'news.json', clarification: 'clarification.json', document: 'document.json',
-  page: 'page.json', media: 'media.json', topic: 'topic.json', service: 'service.json', publication: 'publication.json', labtest: 'labtest.json', research: 'research.json',
+  page: 'page.json', media: 'media.json', dataset: 'dataset.json', topic: 'topic.json', service: 'service.json', publication: 'publication.json', labtest: 'labtest.json', research: 'research.json',
 };
 
 let ajvCache = null;

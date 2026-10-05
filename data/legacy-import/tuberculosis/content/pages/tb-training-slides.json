@@ -2,7 +2,7 @@
   "id": "page.tb-training-slides",
   "type": "page",
   "title": "結核病教育訓練教材（投影片）",
-  "owner": "unit.oasis",
+  "owner": "unit.chronic-infectious",
   "publishedAt": "2023-08-10",
   "reviewedAt": "2026-10-03",
   "reviewPeriodMonths": 12,
@@ -43,7 +43,7 @@
   ],
   "conversion": {
     "mode": "auto",
-    "confidence": 0.3,
+    "confidence": 0.5,
     "issues": [
       {
         "code": "word-cleaned",
@@ -51,9 +51,9 @@
         "message": "清除 Word 貼上殘留 11 處（mso 樣式 9、Mso 類別 3、命名空間標籤 1）"
       },
       {
-        "code": "unmapped-category",
-        "severity": "warn",
-        "message": "未對應類別「結核病／教育訓練」：規則檔 categoryOwners 沒有對應的權責單位，暫填 unit.oasis，請補規則或人工指定"
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「結核病／教育訓練」沒有對應規則，權責單位依疾病主檔取 unit.chronic-infectious（結核病）"
       },
       {
         "code": "list-page",
@@ -72,6 +72,6 @@
       }
     ],
     "sourceUrl": "https://www.cdc.gov.tw/Category/List/IAhbEkxy103_prlTA55Skx",
-    "convertedAt": "2026-10-04T14:04:24.484Z"
+    "convertedAt": "2026-10-05T02:30:00Z"
   }
 }

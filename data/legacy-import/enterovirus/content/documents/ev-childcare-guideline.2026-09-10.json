@@ -1,0 +1,75 @@
+{
+  "id": "doc.ev-childcare-guideline.2026-09-10",
+  "type": "document",
+  "title": "教托育機構腸病毒防治指引",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-09-10",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "幼兒園、托嬰中心與教保機構的腸病毒防治指引：日常清消與洗手、病童處理與居家休息、班級與機構停課標準、通報流程、重症前兆辨識與轉送。",
+  "family": "doc.ev-childcare-guideline",
+  "docType": "guideline",
+  "version": "2026-09-10",
+  "effectiveAt": "2026-09-10",
+  "machineReadableMarkdown": "幼兒園、托嬰中心與教保機構的腸病毒防治指引：日常清消與洗手、病童處理與居家休息、班級與機構停課標準、通報流程、重症前兆辨識與轉送。\n\n### 第一章 日常防護\n\n1. 以肥皂濕、搓、沖、捧、擦正確洗手，於如廁後、用餐前、換尿布後及入園時執行；乾洗手對腸病毒效果有限。\n2. 玩具、教具、桌面與門把以 **500 ppm 漂白水**（家用漂白水 1 份加 100 份清水）擦拭，每日至少 1 次，疫情期間增加次數。\n3. 保持教室通風，午睡寢具個人專用，避免集體共用毛巾與水杯。\n\n### 第二章 病童處理\n\n1. 晨間檢查口腔、手掌與腳底，發現發燒、口腔潰瘍或水泡者，通知家長帶回就醫。\n2. 確診手足口病或疱疹性咽峽炎的幼童，**在家休息至少 7 天**，期間不得到校或參加團體活動。\n3. 返校前以症狀緩解（退燒、可正常進食）為準，返校後仍須落實洗手；機構應提醒家長腸病毒痊癒後仍可能排毒數週。\n\n### 第三章 停課標準\n\n1. **班級停課**：同一班級 1 週內有 2 名（含）以上幼童確診腸病毒，該班級停課 **7 日**。\n2. **機構停課**：同一機構 1 週內有 2 個（含）以上班級停課，經衛生局評估後，機構得全面停課。\n3. 停課期間，機構應進行環境徹底清消、名單造冊與每日健康回報，家長須配合居家休息。\n4. 實際停課依各縣市衛生與教育主管機關公告為準；上述數字為原型示意。\n\n| 項目 | 內容 |\n| --- | --- |\n| 文件名稱 | 教托育機構腸病毒防治指引 |\n| 版次 | 2026-09 |\n| 生效日 | 2026-09-10 |\n| 權責單位 | 急性傳染病組 |\n| 檔案格式 | PDF |\n\n完整內容請下載附件：\\<a href=\"https://www.cdc.gov.tw/File/Get/fkUlQvd40ukJzqzUefwg9A\">教托育機構腸病毒防治指引（PDF）\\</a>",
+  "pdfUrl": "/files/doc.ev-childcare-guideline.2026-09-10/ev-childcare-guideline.2026-09-10.pdf",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/File/Get/fkUlQvd40ukJzqzUefwg9A"
+  ],
+  "assets": [
+    {
+      "file": "ev-childcare-guideline.2026-09-10.pdf",
+      "kind": "attachment",
+      "label": "教托育機構腸病毒防治指引",
+      "mime": "application/pdf",
+      "bytes": 892,
+      "sha256": "57d9b733977023bc1559fb32b1877db30de16bfc76be6d46e61ae97adb45a706",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 78 處（mso 樣式 50、Mso 類別 24、命名空間標籤 14）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「腸病毒／教托育機構」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+      },
+      {
+        "code": "version-unknown",
+        "severity": "info",
+        "message": "標題看不出版次，version 暫填 2026-09-10"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/File/Get/fkUlQvd40ukJzqzUefwg9A",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "doc.ev-childcare-guideline.2026-09-10"
+    ]
+  }
+}

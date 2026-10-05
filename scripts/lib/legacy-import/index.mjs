@@ -20,9 +20,10 @@ import { computeConfidence, needsReview, MARKDOWN_WARNING_CODES } from './confid
 import { validateDraft } from './validate.mjs';
 import { buildPatch, applyPatch, expandTemplateItems } from './migration.mjs';
 import { renderReportMd } from './report.mjs';
+import { STRUCTURED_TYPES, extractFields, serviceTypeFor, typeOfId } from './types.mjs';
 
 const h6 = (s) => createHash('sha1').update(String(s)).digest('hex').slice(0, 6);
-const DIRS = { disease: 'diseases', faq: 'faq', news: 'news', document: 'documents', page: 'pages' };
+const DIRS = { disease: 'diseases', faq: 'faq', news: 'news', document: 'documents', page: 'pages', publication: 'publications', media: 'media', dataset: 'datasets', labtest: 'labtests', service: 'services', clarification: 'clarifications' };
 const BLOCK_ORDER = ['what-to-do', 'symptoms', 'transmission', 'prevention', 'treatment', 'vaccine', 'situation', 'faq'];
 const CONTENT_DIRS = ['diseases', 'faq', 'news', 'documents', 'clarifications', 'vaccines', 'datasets', 'banners', 'pages', 'media', 'topics', 'services', 'publications', 'labtests', 'research', 'jobs', 'tenders'];
 const idRest = (id) => String(id).replace(/^[a-z]+\./, '');
@@ -191,9 +192,13 @@ export function runImport(opts) {
       const exact = cands.filter((m) => !m.pattern);
       // 模板推導的文件項（工作手冊、病例定義、治療指引）標題是通稱，舊頁標題是正式名稱（「…作業手冊」「…防治工作指引」），
       // 改用語意對：舊頁是文件型、標題看得出文件種類、且與推導項 mapTo.docType 相同
-      const dtHere = pat?.kind === 'document' ? docTypeFor(rules, title, pat, u) : null;
+      // 模板項的 oldTitle 其實是舊站選單的「位置」（治療指引、工作手冊…），舊頁的最後一層麵包屑就是這個位置 ⇒ 位置相同即對應
+      const crumbLast = normTitle(stripTitlePrefix(rules, breadcrumbs.at(-1) ?? ''));
+      const byCrumb = crumbLast.length >= 2 ? cands.filter((m) => m.derived && normTitle(stripTitlePrefix(rules, m.it.oldTitle)) === crumbLast) : [];
+      let dtHere = pat?.kind === 'document' ? docTypeFor(rules, title, pat, u) : null;
+      if (dtHere && !dtHere.clear && breadcrumbs.length) { const byC = docTypeFor(rules, breadcrumbs.slice(-2).join('／'), null, u); if (byC.clear) dtHere = byC; }
       const byDocType = dtHere?.clear ? cands.filter((m) => m.derived && m.it.mapTo?.kind === 'related' && m.it.mapTo.type === 'document' && m.it.mapTo.docType === dtHere.docType) : [];
-      const pick = byTab[0] ?? byTitle[0] ?? byTitleLoose[0] ?? (exact.length === 1 ? exact[0] : null) ?? byDocType[0] ?? null;
+      const pick = byTab[0] ?? byTitle[0] ?? byTitleLoose[0] ?? (exact.length === 1 ? exact[0] : null) ?? byCrumb[0] ?? byDocType[0] ?? null;
       mi = pick?.it ?? null;
       pr.manifestDerived = !!pick?.derived;
       if (pick) mUsed.add(`${pick.derived ? 'd:' : ''}${pick.it.key}`);
@@ -203,7 +208,7 @@ export function runImport(opts) {
     if (mi) {
       pr.manifestKey = mi.key; pr.target = mi.target ?? null;
       pr.manifestStatus = mi.status;
-      if (mi.target) { const t = index.byId.get(mi.target); pr.targetExists = !!t; pr.targetType = t?.type ?? mi.target.split('.')[0]; }
+      if (mi.target) { const t = index.byId.get(mi.target); pr.targetExists = !!t; pr.targetType = t?.type ?? typeOfId(mi.target); }
     } else if (manifest) issue('not-in-manifest', 'warn', `移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目${derivedItems.length ? '；模板推導的標準子頁也沒對上' : ''}）`);
     if (pr.manifestDerived) issue('manifest-derived', 'info', `對到的是模板推導項 ${mi.key}（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單`);
 
@@ -222,13 +227,27 @@ export function runImport(opts) {
     if (kind === 'disease-block' && !blockKey) blockKey = blockKeyFor(rules, title) ?? (tab ? blockKeyFor(rules, tab) : null);
     if (kind === 'disease-block' && !primary) { kind = 'page'; pr.typeClear = false; issue('type-unclear', 'warn', '疾病頁子頁，但從麵包屑與標題找不到疾病，改以 page 處理'); }
     // 欄目內頁（MPage／Page）但移轉清單說它對應的是新站的一份文件 ⇒ 草稿直接建成 document（同 target id），不再以 page 暫存
-    if (kind === 'page' && pr.targetExists && pr.targetType === 'document' && pat?.id !== 'category-list') {
+    // 清單判定「併入」某份文件或疫苗頁（文字要人工併進目標）⇒ 草稿以 page 暫存、不搶目標 id；併入結構化型別（檢驗、資料集、服務…）則照目標型別建草稿供逐欄比對
+    const mergedInto = pr.manifestStatus === 'merged' && pr.target && ['document', 'vaccine', 'topic', 'page'].includes(pr.targetType);
+    if (mergedInto && kind !== 'disease-block') issue('merge-into-target', 'info', `清單判定併入 ${pr.target}（${pr.targetType}），草稿以 page 暫存，請人工把內容併進目標後刪除草稿`);
+    if (kind === 'page' && !mergedInto && pr.targetExists && pr.targetType === 'document' && pat?.id !== 'category-list') {
       kind = 'document';
       issue('type-from-manifest', 'info', `清單對應的新站內容是文件 ${pr.target}，草稿依清單建成 document（舊頁本身是欄目內頁）`);
     }
+    // 結構化型別直接產（第四批）：清單目標或模板推導項說新站是 publication／media／dataset／labtest／service／clarification ⇒ 草稿就建成那個型別
+    const mapType = mi?.mapTo?.kind === 'related' ? mi.mapTo.type : null;
+    const wantType = STRUCTURED_TYPES.has(pr.targetType) ? pr.targetType : STRUCTURED_TYPES.has(mapType) ? mapType : null;
+    if (wantType && !mergedInto && ['page', 'list', 'document', 'news'].includes(kind) && !(kind === 'news' && wantType !== 'clarification')) {
+      kind = wantType; pr.typeClear = true;
+      issue('type-from-manifest', 'info', `清單對應的新站型別是 ${wantType}${pr.target ? `（${pr.target}）` : ''}，草稿直接建成 ${wantType}，看不出來的欄位以「（待補）」佔位`);
+    }
+    // 澄清稿：Bulletin typeid 是澄清 ⇒ clarification（claim／verdict），不再以 news 暫存
+    if (kind === 'news' && bulletinType(rules, u)?.type === 'clarification') { kind = 'clarification'; issue('type-from-bulletin', 'info', '公告類別是澄清稿，草稿建成 clarification（claim／verdict 由標題與內文推斷）'); }
+    // 服務型頁面：合約院所查詢、責任醫院名單等，依標題關鍵字建 service（查詢清單本身不轉成文章）
+    if ((kind === 'list' || kind === 'page') && !wantType && serviceTypeFor(rules, title)) { kind = 'service'; issue('type-from-keywords', 'info', `標題看起來是查詢／申辦服務（${serviceTypeFor(rules, title).serviceType}），草稿建成 service；名單類資料請改掛 dataset`); }
     if (kind === 'list') issue('list-page', 'info', '清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結');
     pr.kind = kind;
-    pr.type = kind === 'disease-block' ? 'disease' : kind === 'faq' ? 'faq' : kind === 'news' ? 'news' : kind === 'document' ? 'document' : 'page';
+    pr.type = kind === 'disease-block' ? 'disease' : kind === 'list' ? 'page' : kind;
 
     // 年代與處理旗標
     const hist = (rules.historicalKeywords ?? []).some((k) => breadcrumbs.join('／').includes(k) || title.includes(k));
@@ -388,6 +407,33 @@ export function runImport(opts) {
       if (!version) issue('version-unknown', 'info', `標題看不出版次，version 暫填 ${eff}`);
       units.push({ pageKey: page.name, kind, type: 'document', draftId: id, title: stripTitlePrefix(rules, title), markdown, docType: dt.docType, version: version ?? eff, effectiveAt: eff, family, diseaseId: primary, publishedAt: eff });
       pr.outputs.push({ id, type: 'document', role: 'draft' });
+    } else if (STRUCTURED_TYPES.has(kind)) {
+      const prefix = kind === 'clarification' ? 'clar' : kind;
+      const eff = publishedAt ?? exportedAt;
+      const byTitleId = kind === 'clarification' ? index.newsByTitle.get(normTitle(stripTitlePrefix(rules, title))) : null;
+      const wanted = pr.target && typeOfId(pr.target) === kind ? pr.target
+        : (byTitleId && typeOfId(byTitleId) === 'clarification' ? byTitleId : null)
+        ?? (kind === 'clarification' ? `clar.${eff}-${short}-${h6(side.url)}` : kind === 'labtest' ? `labtest.${dis?.slug ?? short}` : `${prefix}.${slugStem}`);
+      if (usedIds.has(wanted)) issue('target-shared', 'info', `與 ${usedIds.get(wanted)} 指向同一個對應 ${wanted}，另以新 id 列一份供人工刪一份`);
+      // 既有新聞其實是澄清（newsType clarification）而新草稿是 clarification 型別 ⇒ 列為比對對象
+      if (kind === 'clarification' && byTitleId && typeOfId(byTitleId) !== 'clarification' && !pr.target) { pr.target = byTitleId; pr.targetExists = true; pr.targetType = typeOfId(byTitleId); issue('type-upgrade', 'info', `既有內容 ${byTitleId} 以 news 存放同一則澄清，新草稿改為 clarification 型別，請比對後擇一`); }
+      const id = reserveId(wanted, `${prefix}.${slugStem}-${h6(side.url + page.name)}`);
+      const ctx = makeCtx(id, slugStem, { withAttachments: true });
+      const stat = rewriteBody(ext.body, ctx);
+      afterRewrite(stat);
+      const { markdown, dropped } = toMd(ext.body.children);
+      checks(markdown, ext.body, stat, dropped);
+      // 影音型別本來就是嵌入影片，不算「未轉入的媒體」
+      if (kind === 'media') pr.issues = pr.issues.filter((i) => i.code !== 'embedded-media');
+      const professional = (rules.audience?.professionalCategories ?? []).some((c) => (category + breadcrumbs.join('／')).includes(c));
+      const ex = extractFields(kind, { title: stripTitlePrefix(rules, title), markdown, mapTo: mi?.mapTo, dm: dis, pageUrl: side.url, publishedAt: eff, updatedAt, exportedAt, media: stat.media, assets: bags.get(id)?.assets ?? [], draftId: id, professional, short, rules, category, summary: summaryOf(markdown, '', 100) });
+      if (ex.pending.length) issue('fields-pending', 'warn', `${kind} 的欄位從舊頁看不出來，以「（待補）」佔位：${ex.pending.join('、')}`);
+      for (const n of ex.notes) issue('field-guessed', 'info', n);
+      // 模板位置的標題是通稱（「檢驗資訊」「統計資料」），草稿標題補上疾病名才能在列表裡分辨
+      const t0 = stripTitlePrefix(rules, title);
+      const utitle = kind !== 'clarification' && dis?.name && !t0.includes(dis.name) ? `${dis.name}${t0}` : t0;
+      units.push({ pageKey: page.name, kind, type: kind, draftId: id, title: utitle, markdown, fields: ex.fields, diseaseId: primary, publishedAt: eff });
+      pr.outputs.push({ id, type: kind, role: 'draft' });
     } else {
       // page（含清單頁）
       const wanted = pr.target?.startsWith('page.') ? pr.target : `page.${slugStem}`;
@@ -399,7 +445,7 @@ export function runImport(opts) {
       checks(markdown, ext.body, stat, dropped);
       units.push({ pageKey: page.name, kind, type: 'page', draftId: id, title: stripTitlePrefix(rules, title), markdown, diseaseId: primary, publishedAt: publishedAt ?? exportedAt });
       pr.outputs.push({ id, type: 'page', role: 'draft' });
-      if (pr.targetExists && pr.targetType !== 'page') issue('target-type-differs', 'info', `對應的新站內容是 ${pr.target}（${pr.targetType}），草稿以 page 暫存，請比對後改建為 ${pr.targetType}`);
+      if (pr.targetExists && pr.targetType !== 'page' && !mergedInto) issue('target-type-differs', 'info', `對應的新站內容是 ${pr.target}（${pr.targetType}），草稿以 page 暫存，請比對後改建為 ${pr.targetType}`);
     }
 
     // 重複標題（非 FAQ）
@@ -487,6 +533,12 @@ export function runImport(opts) {
       const bag = bags.get(un.draftId);
       const pdf = bag?.assets.find((a) => a.file.endsWith('.pdf') && a.kind === 'attachment');
       if (pdf) d.pdfUrl = `/files/${un.draftId}/${pdf.file}`;
+    } else if (STRUCTURED_TYPES.has(un.type)) {
+      d = base(un.title, un.markdown, un.type);
+      Object.assign(d, un.fields);
+      if (un.type === 'clarification') d.summary = un.fields.shareText;
+      if (un.type === 'publication' && !d.pdfUrl) { const pdf = bags.get(un.draftId)?.assets.find((a) => a.file.endsWith('.pdf') && a.kind === 'attachment'); if (pdf) d.pdfUrl = `/files/${un.draftId}/${pdf.file}`; }
+      if (un.diseaseId && ['labtest', 'media', 'clarification'].includes(un.type)) d.basedOn = [un.diseaseId];
     } else {
       d = base(un.title, un.markdown, 'page');
       Object.assign(d, { slug: idRest(un.draftId), bodyMarkdown: un.markdown });

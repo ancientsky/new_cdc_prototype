@@ -1,0 +1,51 @@
+{
+  "id": "page.measles-elimination-zone",
+  "type": "page",
+  "title": "麻疹及德國麻疹消除專區",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2018-03-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.measles",
+    "disease.rubella"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "麻疹是傳染力極強的病毒性疾病，可經空氣傳播。完整接種 2 劑 MMR 疫苗可有效預防；1966 年（含）以後出生、不具免疫力者出國前應評估接種。",
+  "slug": "measles-elimination-zone",
+  "bodyMarkdown": "麻疹是傳染力極強的病毒性疾病，可經空氣傳播。完整接種 2 劑 MMR 疫苗可有效預防；1966 年（含）以後出生、不具免疫力者出國前應評估接種。\n\n### 專區內容\n\n- [疾病介紹](https://www.cdc.gov.tw/Category/List/oy_sB9G-8Hut1VZ-MtHRlr)\n- [Q&A](https://www.cdc.gov.tw/Category/List/M3ZPmJ2BLHTYsEb47_7GbI)\n- [宣導素材](https://www.cdc.gov.tw/Category/List/0-Tdnx5UtJ0hyTuLY31m_O)\n- [指引及手冊](https://www.cdc.gov.tw/Category/List/R_agR6qTnG4uX6BBxL2suP)\n- [統計資料](https://www.cdc.gov.tw/Category/List/Wm8xJmtU3PugjVzdCF5GbY)\n- [最新消息](https://www.cdc.gov.tw/Category/List/9g6uN5dXtezR7VHQiGNjfr)\n\n| 項目 | 內容 |\n| --- | --- |\n| 法定傳染病類別 | 第二類 |\n| 通報時限 | 24 小時內 |\n| ICD-10 | B05 |\n| 主要傳染途徑 | 空氣、飛沫、接觸 |\n| 潛伏期 | 7–21 天（約 14 天出疹） |",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/Page/AeUKahagakiXHB2gVKjKC2"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 40 處（mso 樣式 14、Mso 類別 13、命名空間標籤 13）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「麻疹／消除專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/Page/AeUKahagakiXHB2gVKjKC2",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

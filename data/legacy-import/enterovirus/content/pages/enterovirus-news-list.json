@@ -1,0 +1,64 @@
+{
+  "id": "page.enterovirus-news-list",
+  "type": "page",
+  "title": "新聞稿列表",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2017-04-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "2025-05-06 腸病毒進入流行期，籲請家長落實肥皂洗手並留意重症前兆 2026-03-15 致醫界通函第 608 號：腸病毒感染併發重症臨床處置建議更新 2026-04-14 腸病毒就診人次連續上升，近期社區以 EV71 為主，籲請…",
+  "slug": "enterovirus-news-list",
+  "bodyMarkdown": "- 2025-05-06 [腸病毒進入流行期，籲請家長落實肥皂洗手並留意重症前兆](https://www.cdc.gov.tw/Bulletin/Detail/4iy0VoHgnkzEvNjndktm39?typeid=9)\n- 2026-03-15 [致醫界通函第 608 號：腸病毒感染併發重症臨床處置建議更新](https://www.cdc.gov.tw/Bulletin/Detail/e3MV3h7-E-lpBef5JgDozB?typeid=11)\n- 2026-04-14 [腸病毒就診人次連續上升，近期社區以 EV71 為主，籲請提高警覺](https://www.cdc.gov.tw/Bulletin/Detail/7L1s3FpNHjUlcQ9PHZmT3Z?typeid=9)\n- 2026-09-22 [國內腸病毒疫情持續，籲請家長及教托育機構提高警覺](https://www.cdc.gov.tw/Bulletin/Detail/wZJjZL7lvRH5bkL6baelc3?typeid=9)\n- 2026-09-29 [流感疫情持續上升，10 月 1 日公費疫苗開打，長者幼兒請優先接種](https://www.cdc.gov.tw/Bulletin/Detail/_nshugAHKduTLwrq7rzIk1?typeid=9)",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/List/vEuUWp4k0BNJpajvJT8uC8"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.6,
+    "issues": [
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「腸病毒／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 news-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "list-page",
+        "severity": "info",
+        "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+      },
+      {
+        "code": "target-type-differs",
+        "severity": "info",
+        "message": "對應的新站內容是 disease.enterovirus（disease），草稿以 page 暫存，請比對後改建為 disease"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/List/vEuUWp4k0BNJpajvJT8uC8",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "disease.enterovirus"
+    ]
+  }
+}

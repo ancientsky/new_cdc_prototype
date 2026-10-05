@@ -1,0 +1,62 @@
+{
+  "id": "faq.measles-symptoms",
+  "type": "faq",
+  "title": "麻疹有哪些症狀？會傳染多久？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2025-05-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.measles"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "麻疹初期有高燒、咳嗽、流鼻水、結膜炎，口腔內可能出現白色柯氏斑；約 3–4 天後從耳後、臉部開始出紅疹，再擴散到全身。",
+  "question": "麻疹有哪些症狀？會傳染多久？",
+  "answerMarkdown": "麻疹初期有**高燒、咳嗽、流鼻水、結膜炎**，口腔內可能出現白色柯氏斑；約 3–4 天後從耳後、臉部開始出紅疹，再擴散到全身。\n\n病人在**出疹前 4 天到出疹後 4 天**都具傳染力，可經空氣傳播。出現發燒合併紅疹時，請先打電話告知醫院，戴口罩就醫並說明旅遊史。",
+  "basedOn": [
+    "disease.measles"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/s5OaifVY2y_Oh-5Zt4ecui"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 104 處（mso 樣式 62、Mso 類別 27、命名空間標籤 21）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「麻疹／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/s5OaifVY2y_Oh-5Zt4ecui",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.measles-symptoms"
+    ]
+  }
+}

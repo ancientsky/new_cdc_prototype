@@ -1,0 +1,71 @@
+{
+  "id": "page.measles-cluster-response",
+  "type": "page",
+  "title": "麻疹群聚事件應變專區",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-09-12",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.measles"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "麻疹病例的接觸者追蹤作業：疫調時限、可傳染期與接觸者分級、暴露後預防（MMR 與免疫球蛋白）、健康監測、醫療院所處置與群聚應變。",
+  "slug": "measles-cluster-response",
+  "bodyMarkdown": "麻疹病例的接觸者追蹤作業：疫調時限、可傳染期與接觸者分級、暴露後預防（MMR 與免疫球蛋白）、健康監測、醫療院所處置與群聚應變。\n\n### 第一章 啟動與疫調時限\n\n1. 醫師通報疑似或確定麻疹病例後，衛生局應於 **24 小時內**完成病例疫調，並同步通知病例活動地點所屬之衛生局。\n2. 疫調內容：發病日、出疹日、疫苗接種史、出國或接觸史，以及可傳染期內（出疹前 4 日至出疹後 4 日）之活動場所與交通工具。\n\n### 第二章 接觸者界定與分級\n\n1. **密切接觸者**：同住家人、同班同事、同病房病人、與病例共處同一密閉空間者。\n2. **高風險接觸者**：未滿 12 個月嬰兒、孕婦、免疫不全者、未接種且無感染史者。\n3. 醫療院所及機構內的暴露，另列醫護人員與同院病人名單。\n4. 依 MMR 預防接種建議，已完成 2 劑、曾確診或抗體陽性者視為具免疫力。\n\n### 第三章 暴露後預防\n\n1. 不具免疫力且無禁忌的接觸者，於暴露後 **72 小時內**接種 1 劑 MMR 疫苗，可降低發病風險；超過 72 小時仍建議接種，供後續保護。\n2. 嬰兒、孕婦及免疫不全者不宜接種 MMR 時，於暴露後 **6 日內**評估使用免疫球蛋白。\n3. 接種及用藥紀錄應登錄並附於疫調表。\n\n| 項目 | 內容 |\n| --- | --- |\n| 文件名稱 | 麻疹接觸者追蹤作業指引 |\n| 版次 | 2026-09 |\n| 生效日 | 2026-09-12 |\n| 權責單位 | 急性傳染病組 |\n| 檔案格式 | PDF |\n\n完整內容請下載附件：\\<a href=\"https://www.cdc.gov.tw/File/Get/wLz88IhinFX5Yuf7qc5_xb\">麻疹接觸者追蹤作業指引（PDF）\\</a>",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/-_YEYLxc3bH82jAhp_t9c3"
+  ],
+  "assets": [
+    {
+      "file": "measles-contact-tracing.2026-09-12.pdf",
+      "kind": "attachment",
+      "label": "麻疹接觸者追蹤作業指引",
+      "mime": "application/pdf",
+      "bytes": 899,
+      "sha256": "69faebe4b81eb8220ad07a40b41fe76735085430a3ccda5a35848f4bd1bae47d",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 75 處（mso 樣式 47、Mso 類別 23、命名空間標籤 14）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「麻疹／醫療專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+      },
+      {
+        "code": "merge-into-target",
+        "severity": "info",
+        "message": "清單判定併入 doc.measles-contact-tracing.2026-09-12（document），草稿以 page 暫存，請人工把內容併進目標後刪除草稿"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/-_YEYLxc3bH82jAhp_t9c3",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "doc.measles-contact-tracing.2026-09-12"
+    ]
+  }
+}

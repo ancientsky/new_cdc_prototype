@@ -1,0 +1,88 @@
+{
+  "id": "dataset.flu-severe",
+  "type": "dataset",
+  "title": "流感統計資料",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2017-10-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "每週發布之流感監測綜合報告：類流感就診、病毒型別、併發重症與國際疫情。 資料檔：<a href=\"https://www.cdc.gov.tw/File/Get/WVZD0SFKfIOhdgtmT-SHc2\"流感年度統計（CSV）</a；",
+  "category": "structured-table",
+  "canonicalUrl": "https://www.cdc.gov.tw/Category/List/14Z7BcTsilzv0ni-tFHF80",
+  "updateFrequency": "weekly",
+  "lastUpdated": "2026-09-20",
+  "formats": [
+    "CSV"
+  ],
+  "resources": [
+    {
+      "label": "流感年度統計（CSV，示意）",
+      "href": "/files/dataset.flu-severe/influenza-stats.csv",
+      "format": "CSV"
+    }
+  ],
+  "provenance": {
+    "mode": "snapshot",
+    "fetchedAt": "2026-10-03",
+    "sourceUrl": "https://www.cdc.gov.tw/Category/List/14Z7BcTsilzv0ni-tFHF80"
+  },
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/14Z7BcTsilzv0ni-tFHF80"
+  ],
+  "assets": [
+    {
+      "file": "influenza-stats.csv",
+      "kind": "data",
+      "label": "流感年度統計（CSV，示意）",
+      "mime": "text/csv",
+      "bytes": 83,
+      "sha256": "bd962319d9e98197dd23f9d2a8023f3e7637a78141a7d30aa02da8dda98e6408",
+      "machineReadable": true
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 61 處（mso 樣式 21、Mso 類別 20、命名空間標籤 20）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 stats（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站型別是 dataset（dataset.flu-severe），草稿直接建成 dataset，看不出來的欄位以「（待補）」佔位"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/List/14Z7BcTsilzv0ni-tFHF80",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "dataset.flu-severe"
+    ]
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "id": "faq.ev-severe-signs",
+  "type": "faq",
+  "title": "腸病毒重症前兆有哪些？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-09-24",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "5 歲以下幼兒感染腸病毒後，若出現嗜睡、意識不清、活力不佳、手腳無力、肌躍型抽搐（無故驚嚇或突然全身肌肉收縮）、持續嘔吐、呼吸急促或心跳加快等重症前兆，請立即送到大醫院就醫。",
+  "question": "腸病毒重症前兆有哪些？",
+  "answerMarkdown": "5 歲以下幼兒感染腸病毒後，若出現**嗜睡、意識不清、活力不佳、手腳無力、肌躍型抽搐**（無故驚嚇或突然全身肌肉收縮）、**持續嘔吐、呼吸急促或心跳加快**等重症前兆，請立即送到大醫院就醫。\n\n重症多在發病後 2 至 7 天出現，這段期間家長要特別留意。",
+  "basedOn": [
+    "disease.enterovirus"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/zID4oBmzvgDWu3fb9-fOlP"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 67 處（mso 樣式 45、Mso 類別 17、命名空間標籤 11）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「腸病毒／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/zID4oBmzvgDWu3fb9-fOlP",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.ev-severe-signs"
+    ]
+  }
+}

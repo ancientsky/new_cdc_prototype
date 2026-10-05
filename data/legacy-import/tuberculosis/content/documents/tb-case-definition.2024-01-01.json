@@ -2,7 +2,7 @@
   "id": "doc.tb-case-definition.2024-01-01",
   "type": "document",
   "title": "結核病病例定義",
-  "owner": "unit.chronic-infectious",
+  "owner": "unit.epidemic-intelligence",
   "publishedAt": "2024-01-01",
   "reviewedAt": "2026-10-03",
   "reviewPeriodMonths": 12,
@@ -48,7 +48,7 @@
       }
     ],
     "sourceUrl": "https://www.cdc.gov.tw/Category/DiseaseDefine/u-4_D_c5j4hXi35nyiejt2",
-    "convertedAt": "2026-10-04T14:04:24.484Z",
+    "convertedAt": "2026-10-05T02:30:00Z",
     "existing": true,
     "compareWith": [
       "doc.tb-case-definition.2024-01-01"

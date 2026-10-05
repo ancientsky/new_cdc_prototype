@@ -8,6 +8,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { BASE, esc, fakeId, P, LI, H, A, mdHtml, TABLE, pdfText, pdfScan, png, shell, qaPanels } from './sim-export.mjs';
+import { expandTemplateItems } from './migration.mjs';
+import { loadContentIndex } from './index.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
 const CONTENT = path.join(ROOT, 'content');
@@ -202,10 +204,17 @@ export function generateDisease(diseaseRef, outDir) {
   const omit = new Set(manual?.omit ?? []);
   const legacyRootId = /\/Disease\/SubIndex\/([^/{#?]+)/.exec(manual?.legacyRoot ?? '')?.[1] ?? fakeId(`Disease/SubIndex/${dm.slug}`);
 
+  // 模板位置哪些要產，跟轉換器的推導規則同一套（expandTemplateItems）：人工例外已指向同一份新站內容的位置不再另產一頁，
+  // 否則同一份文件會從兩個舊網址各來一份（第三批作業手冊的情況）
+  const derivedKeys = new Set(expandTemplateItems({
+    manifest: manual ?? { extends: TEMPLATE_ID, scope: { kind: 'disease', disease: dm.id }, items: [] },
+    contentDir: CONTENT, index: loadContentIndex(CONTENT), diseaseById: new Map(master.map((d) => [d.id, d])),
+  }).map((d) => d.key));
   const items = [];
   for (const t of tpl.items) {
     if (omit.has(t.key)) continue;
     if (manualByKey.has(t.key)) { items.push({ ...manualByKey.get(t.key), mapTo: manualByKey.get(t.key).mapTo ?? t.mapTo, derived: false }); continue; }
+    if (!derivedKeys.has(t.key)) continue;
     items.push({ key: t.key, oldTitle: t.oldTitle, oldPath: `${dm.name}／${t.oldPath ?? t.oldTitle}`, oldUrl: t.oldUrlPattern, oldType: t.oldType, mapTo: t.mapTo, derived: true });
   }
   for (const it of manual?.items ?? []) if (!items.some((x) => x.key === it.key)) items.push({ ...it, derived: false });

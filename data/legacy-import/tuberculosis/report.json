@@ -1,7 +1,7 @@
 {
   "format": "cdc-legacy-import-report/1",
   "batch": "tuberculosis",
-  "generatedAt": "2026-10-04T14:04:24.484Z",
+  "generatedAt": "2026-10-05T02:30:00Z",
   "exportedAt": "2026-10-03",
   "simulated": true,
   "source": {
@@ -11,12 +11,15 @@
   },
   "rules": {
     "file": "content/migration/import/_import-rules.json",
-    "version": 1
+    "version": 3
   },
   "manifest": {
     "id": "migration.tuberculosis",
     "file": "content/migration/tuberculosis.json",
-    "items": 40
+    "items": 40,
+    "extends": null,
+    "derivedItems": 5,
+    "disease": "disease.tuberculosis"
   },
   "summary": {
     "pages": 40,
@@ -24,30 +27,40 @@
     "mergedPages": 6,
     "byType": {
       "faq": 8,
-      "page": 20,
+      "publication": 1,
+      "media": 2,
       "document": 10,
+      "service": 4,
+      "labtest": 1,
+      "dataset": 1,
+      "page": 11,
       "news": 1,
       "disease": 1
     },
     "byKind": {
       "disease-block": 6,
       "faq": 3,
-      "list": 5,
-      "page": 15,
+      "publication": 1,
+      "media": 2,
       "document": 10,
+      "service": 4,
+      "labtest": 1,
+      "dataset": 1,
+      "page": 8,
+      "list": 3,
       "news": 1
     },
     "byAction": {
       "merge-into-disease": 6,
-      "compare-existing": 24,
-      "manual-review": 2,
+      "compare-existing": 25,
       "archive": 3,
       "review-before-publish": 2,
+      "manual-review": 1,
       "skip-list": 2,
       "drop": 1
     },
-    "avgConfidence": 0.91,
-    "needsReview": 3,
+    "avgConfidence": 0.95,
+    "needsReview": 1,
     "existing": 36,
     "schemaInvalid": 0,
     "assets": {
@@ -61,12 +74,14 @@
     "issues": {
       "error": 1,
       "warn": 14,
-      "info": 79
+      "info": 87
     },
     "manifest": {
       "items": 40,
       "matched": 40,
-      "missingPages": 0
+      "missingPages": 0,
+      "derivedItems": 5,
+      "derivedMatched": 0
     },
     "exportedAt": "2026-10-03",
     "pagesWithoutOutput": 0
@@ -93,6 +108,7 @@
       "kind": "disease-block",
       "type": "disease",
       "manifestKey": "intro",
+      "manifestDerived": false,
       "target": "disease.tuberculosis",
       "targetExists": true,
       "existing": true,
@@ -163,6 +179,7 @@
       "kind": "disease-block",
       "type": "disease",
       "manifestKey": "intro-epidemiology",
+      "manifestDerived": false,
       "target": "disease.tuberculosis",
       "targetExists": true,
       "existing": true,
@@ -233,6 +250,7 @@
       "kind": "disease-block",
       "type": "disease",
       "manifestKey": "intro-transmission",
+      "manifestDerived": false,
       "target": "disease.tuberculosis",
       "targetExists": true,
       "existing": true,
@@ -303,6 +321,7 @@
       "kind": "disease-block",
       "type": "disease",
       "manifestKey": "intro-symptoms",
+      "manifestDerived": false,
       "target": "disease.tuberculosis",
       "targetExists": true,
       "existing": true,
@@ -373,6 +392,7 @@
       "kind": "disease-block",
       "type": "disease",
       "manifestKey": "intro-treatment",
+      "manifestDerived": false,
       "target": "disease.tuberculosis",
       "targetExists": true,
       "existing": true,
@@ -443,6 +463,7 @@
       "kind": "disease-block",
       "type": "disease",
       "manifestKey": "bcg",
+      "manifestDerived": false,
       "target": "disease.tuberculosis",
       "targetExists": true,
       "existing": true,
@@ -512,6 +533,7 @@
       "kind": "faq",
       "type": "faq",
       "manifestKey": "qa-list",
+      "manifestDerived": false,
       "target": "disease.tuberculosis",
       "targetExists": true,
       "existing": true,
@@ -637,6 +659,7 @@
       "kind": "faq",
       "type": "faq",
       "manifestKey": "qa-cough",
+      "manifestDerived": false,
       "target": "faq.tb-cough-two-weeks",
       "targetExists": true,
       "existing": true,
@@ -711,6 +734,7 @@
       "kind": "faq",
       "type": "faq",
       "manifestKey": "qa-ltbi",
+      "manifestDerived": false,
       "target": "faq.ltbi-treat-or-not",
       "targetExists": true,
       "existing": true,
@@ -782,9 +806,10 @@
         "tab": "posters"
       },
       "pattern": "category-list",
-      "kind": "list",
-      "type": "page",
+      "kind": "publication",
+      "type": "publication",
       "manifestKey": "materials-poster",
+      "manifestDerived": false,
       "target": "publication.poster-tb-seven-languages",
       "targetExists": true,
       "existing": true,
@@ -798,22 +823,22 @@
       ],
       "outputs": [
         {
-          "id": "page.tb-materials-poster",
-          "type": "page",
+          "id": "publication.poster-tb-seven-languages",
+          "type": "publication",
           "role": "draft",
-          "file": "content/pages/tb-materials-poster.json",
+          "file": "content/publications/poster-tb-seven-languages.json",
           "schemaValid": true
         }
       ],
-      "confidence": 0.4,
+      "confidence": 0.8,
       "parts": {
-        "type": 0,
+        "type": 0.4,
         "owner": 0.2,
         "markdown": 0,
         "attachments": 0.1,
         "unique": 0.1
       },
-      "needsReview": true,
+      "needsReview": false,
       "issues": [
         {
           "code": "word-cleaned",
@@ -821,9 +846,9 @@
           "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
         },
         {
-          "code": "list-page",
+          "code": "type-from-manifest",
           "severity": "info",
-          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+          "message": "清單對應的新站型別是 publication（publication.poster-tb-seven-languages），草稿直接建成 publication，看不出來的欄位以「（待補）」佔位"
         },
         {
           "code": "image-no-alt",
@@ -834,14 +859,9 @@
           "code": "image-license-assumed",
           "severity": "info",
           "message": "圖片「tb-poster-7lang-thumb.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
-        },
-        {
-          "code": "target-type-differs",
-          "severity": "info",
-          "message": "對應的新站內容是 publication.poster-tb-seven-languages（publication），草稿以 page 暫存，請比對後改建為 publication"
         }
       ],
-      "action": "manual-review",
+      "action": "compare-existing",
       "flags": {
         "historical": false
       },
@@ -871,9 +891,10 @@
         "tab": "video"
       },
       "pattern": "mpage",
-      "kind": "page",
-      "type": "page",
+      "kind": "media",
+      "type": "media",
       "manifestKey": "materials-video",
+      "manifestDerived": false,
       "target": "media.tb-cough-two-weeks",
       "targetExists": true,
       "existing": true,
@@ -887,18 +908,18 @@
       ],
       "outputs": [
         {
-          "id": "page.tb-materials-video",
-          "type": "page",
+          "id": "media.tb-cough-two-weeks",
+          "type": "media",
           "role": "draft",
-          "file": "content/pages/tb-materials-video.json",
+          "file": "content/media/tb-cough-two-weeks.json",
           "schemaValid": true
         }
       ],
-      "confidence": 0.8,
+      "confidence": 1,
       "parts": {
         "type": 0.4,
         "owner": 0.2,
-        "markdown": 0,
+        "markdown": 0.2,
         "attachments": 0.1,
         "unique": 0.1
       },
@@ -910,14 +931,9 @@
           "message": "清除 Word 貼上殘留 10 處（mso 樣式 4、Mso 類別 3、命名空間標籤 3）"
         },
         {
-          "code": "embedded-media",
-          "severity": "warn",
-          "message": "內文有嵌入媒體 1 個（iframe）未轉入；影音請另建 media 內容"
-        },
-        {
-          "code": "target-type-differs",
+          "code": "type-from-manifest",
           "severity": "info",
-          "message": "對應的新站內容是 media.tb-cough-two-weeks（media），草稿以 page 暫存，請比對後改建為 media"
+          "message": "清單對應的新站型別是 media（media.tb-cough-two-weeks），草稿直接建成 media，看不出來的欄位以「（待補）」佔位"
         }
       ],
       "action": "compare-existing",
@@ -950,9 +966,10 @@
         "tab": "migrant-video"
       },
       "pattern": "mpage",
-      "kind": "page",
-      "type": "page",
+      "kind": "media",
+      "type": "media",
       "manifestKey": "materials-migrant",
+      "manifestDerived": false,
       "target": "media.migrant-worker-health-check",
       "targetExists": true,
       "existing": true,
@@ -966,18 +983,18 @@
       ],
       "outputs": [
         {
-          "id": "page.tb-materials-migrant",
-          "type": "page",
+          "id": "media.migrant-worker-health-check",
+          "type": "media",
           "role": "draft",
-          "file": "content/pages/tb-materials-migrant.json",
+          "file": "content/media/migrant-worker-health-check.json",
           "schemaValid": true
         }
       ],
-      "confidence": 0.8,
+      "confidence": 1,
       "parts": {
         "type": 0.4,
         "owner": 0.2,
-        "markdown": 0,
+        "markdown": 0.2,
         "attachments": 0.1,
         "unique": 0.1
       },
@@ -989,14 +1006,9 @@
           "message": "清除 Word 貼上殘留 7 處（mso 樣式 3、Mso 類別 2、命名空間標籤 2）"
         },
         {
-          "code": "embedded-media",
-          "severity": "warn",
-          "message": "內文有嵌入媒體 1 個（iframe）未轉入；影音請另建 media 內容"
-        },
-        {
-          "code": "target-type-differs",
+          "code": "type-from-manifest",
           "severity": "info",
-          "message": "對應的新站內容是 media.migrant-worker-health-check（media），草稿以 page 暫存，請比對後改建為 media"
+          "message": "清單對應的新站型別是 media（media.migrant-worker-health-check），草稿直接建成 media，看不出來的欄位以「（待補）」佔位"
         }
       ],
       "action": "compare-existing",
@@ -1031,6 +1043,7 @@
       "kind": "document",
       "type": "document",
       "manifestKey": "guideline-current",
+      "manifestDerived": false,
       "target": "doc.tb-guideline.2025-09-01",
       "targetExists": true,
       "existing": true,
@@ -1100,6 +1113,7 @@
       "kind": "document",
       "type": "document",
       "manifestKey": "guideline-7th",
+      "manifestDerived": false,
       "target": "doc.tb-guideline.2022-03-01",
       "targetExists": true,
       "existing": true,
@@ -1183,6 +1197,7 @@
       "kind": "document",
       "type": "document",
       "manifestKey": "ltbi-guideline",
+      "manifestDerived": false,
       "target": "doc.ltbi-guideline.2024-01-01",
       "targetExists": true,
       "existing": true,
@@ -1262,6 +1277,7 @@
       "kind": "document",
       "type": "document",
       "manifestKey": "ltbi-guideline-old",
+      "manifestDerived": false,
       "target": "doc.ltbi-guideline.2024-01-01",
       "targetExists": true,
       "existing": true,
@@ -1355,6 +1371,7 @@
       "kind": "document",
       "type": "document",
       "manifestKey": "contact-guideline",
+      "manifestDerived": false,
       "target": "doc.tb-contact-investigation.2025-01-01",
       "targetExists": true,
       "existing": true,
@@ -1428,6 +1445,7 @@
       "kind": "document",
       "type": "document",
       "manifestKey": "dots-manual",
+      "manifestDerived": false,
       "target": "doc.dots-manual.2025-01-01",
       "targetExists": true,
       "existing": true,
@@ -1501,6 +1519,7 @@
       "kind": "document",
       "type": "document",
       "manifestKey": "tb-manual",
+      "manifestDerived": false,
       "target": "doc.tb-manual.2025-07-01",
       "targetExists": true,
       "existing": true,
@@ -1575,6 +1594,7 @@
       "kind": "document",
       "type": "document",
       "manifestKey": "tb-manual-2019",
+      "manifestDerived": false,
       "target": "doc.tb-manual.2025-07-01",
       "targetExists": true,
       "existing": true,
@@ -1663,14 +1683,15 @@
       "kind": "document",
       "type": "document",
       "manifestKey": "case-definition",
+      "manifestDerived": false,
       "target": "doc.tb-case-definition.2024-01-01",
       "targetExists": true,
       "existing": true,
       "compareWith": [
         "doc.tb-case-definition.2024-01-01"
       ],
-      "owner": "unit.chronic-infectious",
-      "ownerRule": "結核病／通報定義",
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "／通報",
       "diseases": [
         "disease.tuberculosis"
       ],
@@ -1733,9 +1754,10 @@
         "tab": "notify"
       },
       "pattern": "mpage",
-      "kind": "page",
-      "type": "page",
+      "kind": "service",
+      "type": "service",
       "manifestKey": "notify",
+      "manifestDerived": false,
       "target": "service.notifiable-disease-report",
       "targetExists": true,
       "existing": true,
@@ -1743,16 +1765,16 @@
         "service.notifiable-disease-report"
       ],
       "owner": "unit.epidemic-intelligence",
-      "ownerRule": "結核病／通報",
+      "ownerRule": "／通報",
       "diseases": [
         "disease.tuberculosis"
       ],
       "outputs": [
         {
-          "id": "page.tb-notify",
-          "type": "page",
+          "id": "service.notifiable-disease-report",
+          "type": "service",
           "role": "draft",
-          "file": "content/pages/tb-notify.json",
+          "file": "content/services/notifiable-disease-report.json",
           "schemaValid": true
         }
       ],
@@ -1772,9 +1794,19 @@
           "message": "清除 Word 貼上殘留 34 處（mso 樣式 12、Mso 類別 11、命名空間標籤 11）"
         },
         {
-          "code": "target-type-differs",
+          "code": "type-from-manifest",
           "severity": "info",
-          "message": "對應的新站內容是 service.notifiable-disease-report（service），草稿以 page 暫存，請比對後改建為 service"
+          "message": "清單對應的新站型別是 service（service.notifiable-disease-report），草稿直接建成 service，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "service 的欄位從舊頁看不出來，以「（待補）」佔位：steps、whoCanApply"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "標題看不出服務種類，serviceType 暫填 other"
         }
       ],
       "action": "compare-existing",
@@ -1806,9 +1838,10 @@
         "tab": "lab"
       },
       "pattern": "mpage",
-      "kind": "page",
-      "type": "page",
+      "kind": "labtest",
+      "type": "labtest",
       "manifestKey": "lab",
+      "manifestDerived": false,
       "target": "labtest.tuberculosis",
       "targetExists": true,
       "existing": true,
@@ -1816,16 +1849,16 @@
         "labtest.tuberculosis"
       ],
       "owner": "unit.lab",
-      "ownerRule": "結核病／檢驗",
+      "ownerRule": "／檢驗",
       "diseases": [
         "disease.tuberculosis"
       ],
       "outputs": [
         {
-          "id": "page.tb-lab",
-          "type": "page",
+          "id": "labtest.tuberculosis",
+          "type": "labtest",
           "role": "draft",
-          "file": "content/pages/tb-lab.json",
+          "file": "content/labtests/tuberculosis.json",
           "schemaValid": true
         }
       ],
@@ -1845,9 +1878,19 @@
           "message": "清除 Word 貼上殘留 57 處（mso 樣式 21、Mso 類別 18、命名空間標籤 18）"
         },
         {
-          "code": "target-type-differs",
+          "code": "type-from-manifest",
           "severity": "info",
-          "message": "對應的新站內容是 labtest.tuberculosis（labtest），草稿以 page 暫存，請比對後改建為 labtest"
+          "message": "清單對應的新站型別是 labtest（labtest.tuberculosis），草稿直接建成 labtest，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "labtest 的欄位從舊頁看不出來，以「（待補）」佔位：specimens[].container/volume/storage/transport、sendWithinHours"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "labs 暫填 cdc-lab（署檢驗中心），合約與區域實驗室請檢驗中心確認"
         }
       ],
       "action": "compare-existing",
@@ -1879,9 +1922,10 @@
         "tab": "statistics"
       },
       "pattern": "category-list",
-      "kind": "list",
-      "type": "page",
+      "kind": "dataset",
+      "type": "dataset",
       "manifestKey": "stats",
+      "manifestDerived": false,
       "target": "dataset.tb-new-cases",
       "targetExists": true,
       "existing": true,
@@ -1889,22 +1933,22 @@
         "dataset.tb-new-cases"
       ],
       "owner": "unit.epidemic-intelligence",
-      "ownerRule": "結核病／統計資料",
+      "ownerRule": "／統計",
       "diseases": [
         "disease.tuberculosis"
       ],
       "outputs": [
         {
-          "id": "page.tb-stats",
-          "type": "page",
+          "id": "dataset.tb-new-cases",
+          "type": "dataset",
           "role": "draft",
-          "file": "content/pages/tb-stats.json",
+          "file": "content/datasets/tb-new-cases.json",
           "schemaValid": true
         }
       ],
-      "confidence": 0.6,
+      "confidence": 1,
       "parts": {
-        "type": 0,
+        "type": 0.4,
         "owner": 0.2,
         "markdown": 0.2,
         "attachments": 0.1,
@@ -1918,9 +1962,9 @@
           "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
         },
         {
-          "code": "list-page",
+          "code": "type-from-manifest",
           "severity": "info",
-          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+          "message": "清單對應的新站型別是 dataset（dataset.tb-new-cases），草稿直接建成 dataset，看不出來的欄位以「（待補）」佔位"
         },
         {
           "code": "image-license-assumed",
@@ -1928,9 +1972,9 @@
           "message": "圖片「tb-new-cases-trend.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
         },
         {
-          "code": "target-type-differs",
+          "code": "field-guessed",
           "severity": "info",
-          "message": "對應的新站內容是 dataset.tb-new-cases（dataset），草稿以 page 暫存，請比對後改建為 dataset"
+          "message": "看不出更新頻率，updateFrequency 暫填 irregular"
         }
       ],
       "action": "compare-existing",
@@ -1966,12 +2010,13 @@
       "kind": "document",
       "type": "document",
       "manifestKey": "annual-report",
+      "manifestDerived": false,
       "target": null,
       "targetExists": false,
       "existing": false,
       "compareWith": [],
       "owner": "unit.epidemic-intelligence",
-      "ownerRule": "結核病／統計資料",
+      "ownerRule": "／統計",
       "diseases": [
         "disease.tuberculosis"
       ],
@@ -2043,6 +2088,7 @@
       "kind": "page",
       "type": "page",
       "manifestKey": "dots",
+      "manifestDerived": false,
       "target": "topic.tb-prevention",
       "targetExists": true,
       "existing": true,
@@ -2079,9 +2125,9 @@
           "message": "清除 Word 貼上殘留 19 處（mso 樣式 15、Mso 類別 5、命名空間標籤 2）"
         },
         {
-          "code": "target-type-differs",
+          "code": "merge-into-target",
           "severity": "info",
-          "message": "對應的新站內容是 topic.tb-prevention（topic），草稿以 page 暫存，請比對後改建為 topic"
+          "message": "清單判定併入 topic.tb-prevention（topic），草稿以 page 暫存，請人工把內容併進目標後刪除草稿"
         }
       ],
       "action": "compare-existing",
@@ -2114,9 +2160,10 @@
         "tab": "ltbi"
       },
       "pattern": "mpage",
-      "kind": "page",
-      "type": "page",
+      "kind": "service",
+      "type": "service",
       "manifestKey": "ltbi",
+      "manifestDerived": false,
       "target": "service.ltbi-treatment",
       "targetExists": true,
       "existing": true,
@@ -2130,10 +2177,10 @@
       ],
       "outputs": [
         {
-          "id": "page.tb-ltbi",
-          "type": "page",
+          "id": "service.ltbi-treatment",
+          "type": "service",
           "role": "draft",
-          "file": "content/pages/tb-ltbi.json",
+          "file": "content/services/ltbi-treatment.json",
           "schemaValid": true
         }
       ],
@@ -2153,9 +2200,19 @@
           "message": "清除 Word 貼上殘留 10 處（mso 樣式 4、Mso 類別 3、命名空間標籤 3）"
         },
         {
-          "code": "target-type-differs",
+          "code": "type-from-manifest",
           "severity": "info",
-          "message": "對應的新站內容是 service.ltbi-treatment（service），草稿以 page 暫存，請比對後改建為 service"
+          "message": "清單對應的新站型別是 service（service.ltbi-treatment），草稿直接建成 service，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "service 的欄位從舊頁看不出來，以「（待補）」佔位：steps、whoCanApply"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "標題看不出服務種類，serviceType 暫填 other"
         }
       ],
       "action": "compare-existing",
@@ -2191,6 +2248,7 @@
       "kind": "page",
       "type": "page",
       "manifestKey": "contact",
+      "manifestDerived": false,
       "target": "faq.tb-contact-screening",
       "targetExists": true,
       "existing": true,
@@ -2265,6 +2323,7 @@
       "kind": "page",
       "type": "page",
       "manifestKey": "mdr",
+      "manifestDerived": false,
       "target": "topic.tb-prevention",
       "targetExists": true,
       "existing": true,
@@ -2302,9 +2361,9 @@
           "message": "清除 Word 貼上殘留 12 處（mso 樣式 6、Mso 類別 3、命名空間標籤 3）"
         },
         {
-          "code": "target-type-differs",
+          "code": "merge-into-target",
           "severity": "info",
-          "message": "對應的新站內容是 topic.tb-prevention（topic），草稿以 page 暫存，請比對後改建為 topic"
+          "message": "清單判定併入 topic.tb-prevention（topic），草稿以 page 暫存，請人工把內容併進目標後刪除草稿"
         }
       ],
       "action": "compare-existing",
@@ -2338,9 +2397,10 @@
         "tab": ""
       },
       "pattern": "listcontent",
-      "kind": "page",
-      "type": "page",
+      "kind": "service",
+      "type": "service",
       "manifestKey": "mdr-hospitals",
+      "manifestDerived": false,
       "target": null,
       "targetExists": false,
       "existing": false,
@@ -2353,10 +2413,10 @@
       ],
       "outputs": [
         {
-          "id": "page.tb-mdr-hospitals",
-          "type": "page",
+          "id": "service.tb-mdr-hospitals",
+          "type": "service",
           "role": "draft",
-          "file": "content/pages/tb-mdr-hospitals.json",
+          "file": "content/services/tb-mdr-hospitals.json",
           "schemaValid": true
         }
       ],
@@ -2376,9 +2436,24 @@
           "message": "清除 Word 貼上殘留 53 處（mso 樣式 19、Mso 類別 17、命名空間標籤 17）"
         },
         {
+          "code": "type-from-keywords",
+          "severity": "info",
+          "message": "標題看起來是查詢／申辦服務（clinic），草稿建成 service；名單類資料請改掛 dataset"
+        },
+        {
           "code": "table-complex",
           "severity": "warn",
           "message": "表格複雜（合併儲存格 2 格）：Markdown 表格不支援合併儲存格，已攤平，請人工檢視"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "service 的欄位從舊頁看不出來，以「（待補）」佔位：steps、whoCanApply"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "合約院所名單屬時效性資料，建議掛 dataset 由系統更新，不要把名單寫進內文"
         }
       ],
       "action": "review-before-publish",
@@ -2414,6 +2489,7 @@
       "kind": "page",
       "type": "page",
       "manifestKey": "end-tb-2035",
+      "manifestDerived": false,
       "target": "topic.tb-prevention",
       "targetExists": true,
       "existing": true,
@@ -2450,9 +2526,9 @@
           "message": "清除 Word 貼上殘留 11 處（mso 樣式 5、Mso 類別 3、命名空間標籤 3）"
         },
         {
-          "code": "target-type-differs",
+          "code": "merge-into-target",
           "severity": "info",
-          "message": "對應的新站內容是 topic.tb-prevention（topic），草稿以 page 暫存，請比對後改建為 topic"
+          "message": "清單判定併入 topic.tb-prevention（topic），草稿以 page 暫存，請人工把內容併進目標後刪除草稿"
         }
       ],
       "action": "compare-existing",
@@ -2488,6 +2564,7 @@
       "kind": "page",
       "type": "page",
       "manifestKey": "high-risk",
+      "manifestDerived": false,
       "target": "topic.tb-prevention",
       "targetExists": true,
       "existing": true,
@@ -2524,9 +2601,9 @@
           "message": "清除 Word 貼上殘留 23 處（mso 樣式 21、Mso 類別 6、命名空間標籤 1）"
         },
         {
-          "code": "target-type-differs",
+          "code": "merge-into-target",
           "severity": "info",
-          "message": "對應的新站內容是 topic.tb-prevention（topic），草稿以 page 暫存，請比對後改建為 topic"
+          "message": "清單判定併入 topic.tb-prevention（topic），草稿以 page 暫存，請人工把內容併進目標後刪除草稿"
         }
       ],
       "action": "compare-existing",
@@ -2559,9 +2636,10 @@
         "tab": "subsidy"
       },
       "pattern": "mpage",
-      "kind": "page",
-      "type": "page",
+      "kind": "service",
+      "type": "service",
       "manifestKey": "subsidy",
+      "manifestDerived": false,
       "target": "service.tb-treatment-subsidy",
       "targetExists": true,
       "existing": true,
@@ -2575,10 +2653,10 @@
       ],
       "outputs": [
         {
-          "id": "page.tb-subsidy",
-          "type": "page",
+          "id": "service.tb-treatment-subsidy",
+          "type": "service",
           "role": "draft",
-          "file": "content/pages/tb-subsidy.json",
+          "file": "content/services/tb-treatment-subsidy.json",
           "schemaValid": true
         }
       ],
@@ -2598,9 +2676,19 @@
           "message": "清除 Word 貼上殘留 24 處（mso 樣式 18、Mso 類別 6、命名空間標籤 3）"
         },
         {
-          "code": "target-type-differs",
+          "code": "type-from-manifest",
           "severity": "info",
-          "message": "對應的新站內容是 service.tb-treatment-subsidy（service），草稿以 page 暫存，請比對後改建為 service"
+          "message": "清單對應的新站型別是 service（service.tb-treatment-subsidy），草稿直接建成 service，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "service 的欄位從舊頁看不出來，以「（待補）」佔位：whoCanApply"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "標題看不出服務種類，serviceType 暫填 other"
         }
       ],
       "action": "compare-existing",
@@ -2635,6 +2723,7 @@
       "kind": "page",
       "type": "page",
       "manifestKey": "foreigner",
+      "manifestDerived": false,
       "target": "faq.tb-foreigner-health-check",
       "targetExists": true,
       "existing": true,
@@ -2708,6 +2797,7 @@
       "kind": "page",
       "type": "page",
       "manifestKey": "research",
+      "manifestDerived": false,
       "target": "research.2025-migrant-tb-active-case-finding",
       "targetExists": true,
       "existing": true,
@@ -2781,12 +2871,13 @@
       "kind": "list",
       "type": "page",
       "manifestKey": "training-slides",
+      "manifestDerived": false,
       "target": null,
       "targetExists": false,
       "existing": false,
       "compareWith": [],
-      "owner": "unit.oasis",
-      "ownerRule": null,
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "disease-fallback",
       "diseases": [
         "disease.tuberculosis"
       ],
@@ -2799,10 +2890,10 @@
           "schemaValid": true
         }
       ],
-      "confidence": 0.3,
+      "confidence": 0.5,
       "parts": {
         "type": 0,
-        "owner": 0,
+        "owner": 0.2,
         "markdown": 0.2,
         "attachments": 0,
         "unique": 0.1
@@ -2815,9 +2906,9 @@
           "message": "清除 Word 貼上殘留 11 處（mso 樣式 9、Mso 類別 3、命名空間標籤 1）"
         },
         {
-          "code": "unmapped-category",
-          "severity": "warn",
-          "message": "未對應類別「結核病／教育訓練」：規則檔 categoryOwners 沒有對應的權責單位，暫填 unit.oasis，請補規則或人工指定"
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「結核病／教育訓練」沒有對應規則，權責單位依疾病主檔取 unit.chronic-infectious（結核病）"
         },
         {
           "code": "list-page",
@@ -2867,14 +2958,15 @@
       "kind": "list",
       "type": "page",
       "manifestKey": "links",
+      "manifestDerived": false,
       "target": "topic.tb-prevention",
       "targetExists": true,
       "existing": true,
       "compareWith": [
         "topic.tb-prevention"
       ],
-      "owner": "unit.oasis",
-      "ownerRule": null,
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "disease-fallback",
       "diseases": [
         "disease.tuberculosis"
       ],
@@ -2887,30 +2979,30 @@
           "schemaValid": true
         }
       ],
-      "confidence": 0.4,
+      "confidence": 0.6,
       "parts": {
         "type": 0,
-        "owner": 0,
+        "owner": 0.2,
         "markdown": 0.2,
         "attachments": 0.1,
         "unique": 0.1
       },
-      "needsReview": true,
+      "needsReview": false,
       "issues": [
         {
-          "code": "unmapped-category",
-          "severity": "warn",
-          "message": "未對應類別「結核病／相關連結」：規則檔 categoryOwners 沒有對應的權責單位，暫填 unit.oasis，請補規則或人工指定"
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「結核病／相關連結」沒有對應規則，權責單位依疾病主檔取 unit.chronic-infectious（結核病）"
+        },
+        {
+          "code": "merge-into-target",
+          "severity": "info",
+          "message": "清單判定併入 topic.tb-prevention（topic），草稿以 page 暫存，請人工把內容併進目標後刪除草稿"
         },
         {
           "code": "list-page",
           "severity": "info",
           "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
-        },
-        {
-          "code": "target-type-differs",
-          "severity": "info",
-          "message": "對應的新站內容是 topic.tb-prevention（topic），草稿以 page 暫存，請比對後改建為 topic"
         }
       ],
       "action": "skip-list",
@@ -2945,6 +3037,7 @@
       "kind": "list",
       "type": "page",
       "manifestKey": "news-list",
+      "manifestDerived": false,
       "target": "disease.tuberculosis",
       "targetExists": true,
       "existing": true,
@@ -3018,6 +3111,7 @@
       "kind": "news",
       "type": "news",
       "manifestKey": "news-world-tb-day-2025",
+      "manifestDerived": false,
       "target": "news.2025-03-24-world-tb-day",
       "targetExists": true,
       "existing": true,
@@ -3086,12 +3180,13 @@
       "kind": "page",
       "type": "page",
       "manifestKey": "event-2019",
+      "manifestDerived": false,
       "target": null,
       "targetExists": false,
       "existing": false,
       "compareWith": [],
-      "owner": "unit.oasis",
-      "ownerRule": null,
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "disease-fallback",
       "diseases": [
         "disease.tuberculosis"
       ],
@@ -3104,10 +3199,10 @@
           "schemaValid": true
         }
       ],
-      "confidence": 0.8,
+      "confidence": 1,
       "parts": {
         "type": 0.4,
-        "owner": 0,
+        "owner": 0.2,
         "markdown": 0.2,
         "attachments": 0.1,
         "unique": 0.1
@@ -3120,9 +3215,9 @@
           "message": "清除 Word 貼上殘留 11 處（mso 樣式 9、Mso 類別 3、命名空間標籤 1）"
         },
         {
-          "code": "unmapped-category",
-          "severity": "warn",
-          "message": "未對應類別「結核病／活動訊息」：規則檔 categoryOwners 沒有對應的權責單位，暫填 unit.oasis，請補規則或人工指定"
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「結核病／活動訊息」沒有對應規則，權責單位依疾病主檔取 unit.chronic-infectious（結核病）"
         },
         {
           "code": "old-content",
@@ -3305,11 +3400,11 @@
       "merged": false
     },
     {
-      "id": "page.tb-materials-poster",
-      "type": "page",
-      "title": "咳嗽兩週要就醫（多國語言海報）",
-      "file": "content/pages/tb-materials-poster.json",
-      "confidence": 0.4,
+      "id": "publication.poster-tb-seven-languages",
+      "type": "publication",
+      "title": "結核病咳嗽兩週要就醫（多國語言海報）",
+      "file": "content/publications/poster-tb-seven-languages.json",
+      "confidence": 0.8,
       "existing": true,
       "compareWith": [
         "publication.poster-tb-seven-languages"
@@ -3325,11 +3420,11 @@
       "merged": false
     },
     {
-      "id": "page.tb-materials-video",
-      "type": "page",
-      "title": "咳嗽兩週快去照胸部 X 光（影片）",
-      "file": "content/pages/tb-materials-video.json",
-      "confidence": 0.8,
+      "id": "media.tb-cough-two-weeks",
+      "type": "media",
+      "title": "結核病咳嗽兩週快去照胸部 X 光（影片）",
+      "file": "content/media/tb-cough-two-weeks.json",
+      "confidence": 1,
       "existing": true,
       "compareWith": [
         "media.tb-cough-two-weeks"
@@ -3345,11 +3440,11 @@
       "merged": false
     },
     {
-      "id": "page.tb-materials-migrant",
-      "type": "page",
-      "title": "移工健康檢查（影片）",
-      "file": "content/pages/tb-materials-migrant.json",
-      "confidence": 0.8,
+      "id": "media.migrant-worker-health-check",
+      "type": "media",
+      "title": "結核病移工健康檢查（影片）",
+      "file": "content/media/migrant-worker-health-check.json",
+      "confidence": 1,
       "existing": true,
       "compareWith": [
         "media.migrant-worker-health-check"
@@ -3535,7 +3630,7 @@
         "doc.tb-case-definition.2024-01-01"
       ],
       "status": "review",
-      "owner": "unit.chronic-infectious",
+      "owner": "unit.epidemic-intelligence",
       "assets": 0,
       "schemaValid": true,
       "errors": [],
@@ -3545,10 +3640,10 @@
       "merged": false
     },
     {
-      "id": "page.tb-notify",
-      "type": "page",
-      "title": "通報方式與時限",
-      "file": "content/pages/tb-notify.json",
+      "id": "service.notifiable-disease-report",
+      "type": "service",
+      "title": "結核病通報方式與時限",
+      "file": "content/services/notifiable-disease-report.json",
       "confidence": 1,
       "existing": true,
       "compareWith": [
@@ -3565,10 +3660,10 @@
       "merged": false
     },
     {
-      "id": "page.tb-lab",
-      "type": "page",
-      "title": "檢驗方法與送驗須知",
-      "file": "content/pages/tb-lab.json",
+      "id": "labtest.tuberculosis",
+      "type": "labtest",
+      "title": "結核病檢驗方法與送驗須知",
+      "file": "content/labtests/tuberculosis.json",
       "confidence": 1,
       "existing": true,
       "compareWith": [
@@ -3585,11 +3680,11 @@
       "merged": false
     },
     {
-      "id": "page.tb-stats",
-      "type": "page",
-      "title": "統計資料",
-      "file": "content/pages/tb-stats.json",
-      "confidence": 0.6,
+      "id": "dataset.tb-new-cases",
+      "type": "dataset",
+      "title": "結核病統計資料",
+      "file": "content/datasets/tb-new-cases.json",
+      "confidence": 1,
       "existing": true,
       "compareWith": [
         "dataset.tb-new-cases"
@@ -3643,10 +3738,10 @@
       "merged": false
     },
     {
-      "id": "page.tb-ltbi",
-      "type": "page",
-      "title": "潛伏結核感染治療",
-      "file": "content/pages/tb-ltbi.json",
+      "id": "service.ltbi-treatment",
+      "type": "service",
+      "title": "結核病潛伏結核感染治療",
+      "file": "content/services/ltbi-treatment.json",
       "confidence": 1,
       "existing": true,
       "compareWith": [
@@ -3703,10 +3798,10 @@
       "merged": false
     },
     {
-      "id": "page.tb-mdr-hospitals",
-      "type": "page",
+      "id": "service.tb-mdr-hospitals",
+      "type": "service",
       "title": "抗藥性結核病醫療照護團隊醫院名單",
-      "file": "content/pages/tb-mdr-hospitals.json",
+      "file": "content/services/tb-mdr-hospitals.json",
       "confidence": 0.8,
       "existing": false,
       "compareWith": [],
@@ -3761,10 +3856,10 @@
       "merged": false
     },
     {
-      "id": "page.tb-subsidy",
-      "type": "page",
+      "id": "service.tb-treatment-subsidy",
+      "type": "service",
       "title": "結核病醫療費用補助及隔離治療",
-      "file": "content/pages/tb-subsidy.json",
+      "file": "content/services/tb-treatment-subsidy.json",
       "confidence": 1,
       "existing": true,
       "compareWith": [
@@ -3825,11 +3920,11 @@
       "type": "page",
       "title": "結核病教育訓練教材（投影片）",
       "file": "content/pages/tb-training-slides.json",
-      "confidence": 0.3,
+      "confidence": 0.5,
       "existing": false,
       "compareWith": [],
       "status": "review",
-      "owner": "unit.oasis",
+      "owner": "unit.chronic-infectious",
       "assets": 1,
       "schemaValid": true,
       "errors": [],
@@ -3843,13 +3938,13 @@
       "type": "page",
       "title": "相關連結",
       "file": "content/pages/tb-links.json",
-      "confidence": 0.4,
+      "confidence": 0.6,
       "existing": true,
       "compareWith": [
         "topic.tb-prevention"
       ],
       "status": "review",
-      "owner": "unit.oasis",
+      "owner": "unit.chronic-infectious",
       "assets": 0,
       "schemaValid": true,
       "errors": [],
@@ -3903,11 +3998,11 @@
       "type": "page",
       "title": "2019 世界結核病日健走活動報名",
       "file": "content/pages/tb-event-2019.json",
-      "confidence": 0.8,
+      "confidence": 1,
       "existing": false,
       "compareWith": [],
       "status": "review",
-      "owner": "unit.oasis",
+      "owner": "unit.chronic-infectious",
       "assets": 0,
       "schemaValid": true,
       "errors": [],
@@ -3946,6 +4041,8 @@
     "patchFile": "migration-patch.json",
     "applied": true,
     "summary": {
+      "derivedItems": 5,
+      "derivedMatched": 0,
       "items": 40,
       "matched": 40,
       "missingPages": 0,
@@ -3955,12 +4052,12 @@
       "statusChanges": 0,
       "pendingToMigrated": 0,
       "targetChanges": 0,
-      "noteChanges": 40,
+      "noteChanges": 12,
       "stillPending": 3
     },
     "file": "content/migration/tuberculosis.json",
     "statusChanges": [],
     "targetChanges": [],
-    "noteChanges": 40
+    "noteChanges": 12
   }
 }

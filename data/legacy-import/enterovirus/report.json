@@ -1,0 +1,3225 @@
+{
+  "format": "cdc-legacy-import-report/1",
+  "batch": "enterovirus",
+  "generatedAt": "2026-10-05T02:30:00Z",
+  "exportedAt": "2026-10-03",
+  "simulated": true,
+  "source": {
+    "dir": "data/legacy-export/enterovirus",
+    "note": "模擬匯出：依 content/migration/_disease-template.json（標準子頁 18 項）＋ content/migration/enterovirus.json（人工例外 8 項）＋ 近 3 年新聞 5 篇合成，不是舊站的真實資料（網址 ID、數字、PDF 內容皆為示意）。正式匯出取代整個目錄即可。",
+    "site": "https://www.cdc.gov.tw"
+  },
+  "rules": {
+    "file": "content/migration/import/_import-rules.json",
+    "version": 3
+  },
+  "manifest": {
+    "id": "migration.enterovirus",
+    "file": "content/migration/enterovirus.json",
+    "items": 8,
+    "extends": "migration-template.disease",
+    "derivedItems": 18,
+    "disease": "disease.enterovirus"
+  },
+  "summary": {
+    "pages": 31,
+    "drafts": 27,
+    "mergedPages": 10,
+    "byType": {
+      "faq": 6,
+      "publication": 1,
+      "document": 4,
+      "dataset": 1,
+      "labtest": 1,
+      "page": 6,
+      "service": 1,
+      "media": 1,
+      "news": 5,
+      "disease": 1
+    },
+    "byKind": {
+      "disease-block": 10,
+      "faq": 1,
+      "publication": 1,
+      "document": 4,
+      "dataset": 1,
+      "labtest": 1,
+      "page": 3,
+      "list": 3,
+      "service": 1,
+      "media": 1,
+      "news": 5
+    },
+    "byAction": {
+      "merge-into-disease": 10,
+      "compare-existing": 13,
+      "review-before-publish": 5,
+      "skip-list": 3
+    },
+    "avgConfidence": 0.93,
+    "needsReview": 0,
+    "existing": 24,
+    "schemaInvalid": 0,
+    "assets": {
+      "total": 8,
+      "attachment": 5,
+      "image": 2,
+      "data": 1,
+      "needsAlt": 2,
+      "noTextLayer": 1
+    },
+    "issues": {
+      "error": 0,
+      "warn": 11,
+      "info": 96
+    },
+    "manifest": {
+      "items": 8,
+      "matched": 8,
+      "missingPages": 0,
+      "derivedItems": 18,
+      "derivedMatched": 18
+    },
+    "exportedAt": "2026-10-03",
+    "pagesWithoutOutput": 0
+  },
+  "pages": [
+    {
+      "key": "01-intro",
+      "file": "01-intro.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/Iu9YFpq5oVR8kXQibQB-Lt",
+        "title": "疾病介紹",
+        "category": "腸病毒／疾病介紹",
+        "publishedAt": "2017-04-01",
+        "updatedAt": "2026-04-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "腸病毒",
+          "疾病介紹"
+        ],
+        "tab": ""
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro",
+      "manifestDerived": true,
+      "target": "disease.enterovirus",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.enterovirus"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "disease.enterovirus",
+          "type": "disease",
+          "role": "merged",
+          "block": "transmission",
+          "file": "content/diseases/enterovirus.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 45 處（mso 樣式 17、Mso 類別 14、命名空間標籤 14）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「腸病毒／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "02-intro-pathogen",
+      "file": "02-intro-pathogen.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/Iu9YFpq5oVR8kXQibQB-Lt",
+        "title": "致病原",
+        "category": "腸病毒／疾病介紹",
+        "publishedAt": "2017-04-01",
+        "updatedAt": "2026-04-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "腸病毒",
+          "疾病介紹",
+          "致病原"
+        ],
+        "tab": "pathogen"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-pathogen",
+      "manifestDerived": true,
+      "target": "disease.enterovirus",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.enterovirus"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "disease.enterovirus",
+          "type": "disease",
+          "role": "merged",
+          "block": "transmission",
+          "file": "content/diseases/enterovirus.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 5 處（mso 樣式 3、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「腸病毒／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-pathogen（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "03-intro-epidemiology",
+      "file": "03-intro-epidemiology.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/Iu9YFpq5oVR8kXQibQB-Lt",
+        "title": "流行病學",
+        "category": "腸病毒／疾病介紹",
+        "publishedAt": "2017-04-01",
+        "updatedAt": "2026-04-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "腸病毒",
+          "疾病介紹",
+          "流行病學"
+        ],
+        "tab": "epidemiology"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-epidemiology",
+      "manifestDerived": true,
+      "target": "disease.enterovirus",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.enterovirus"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "disease.enterovirus",
+          "type": "disease",
+          "role": "merged",
+          "block": "situation",
+          "file": "content/diseases/enterovirus.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 63 處（mso 樣式 22、Mso 類別 21、命名空間標籤 20）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「腸病毒／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-epidemiology（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "image-no-alt",
+          "severity": "warn",
+          "message": "圖片「enterovirus-trend.png」舊頁沒有替代文字，暫用檔名「enterovirus-trend」，請補 alt（needsAlt）"
+        },
+        {
+          "code": "image-license-assumed",
+          "severity": "info",
+          "message": "圖片「enterovirus-trend.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 1,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "04-intro-transmission",
+      "file": "04-intro-transmission.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/Iu9YFpq5oVR8kXQibQB-Lt",
+        "title": "傳染方式",
+        "category": "腸病毒／疾病介紹",
+        "publishedAt": "2017-04-01",
+        "updatedAt": "2026-04-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "腸病毒",
+          "疾病介紹",
+          "傳染方式"
+        ],
+        "tab": "transmission"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-transmission",
+      "manifestDerived": true,
+      "target": "disease.enterovirus",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.enterovirus"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "disease.enterovirus",
+          "type": "disease",
+          "role": "merged",
+          "block": "transmission",
+          "file": "content/diseases/enterovirus.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 8 處（mso 樣式 4、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「腸病毒／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-transmission（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "05-intro-incubation",
+      "file": "05-intro-incubation.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/Iu9YFpq5oVR8kXQibQB-Lt",
+        "title": "潛伏期",
+        "category": "腸病毒／疾病介紹",
+        "publishedAt": "2017-04-01",
+        "updatedAt": "2026-04-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "腸病毒",
+          "疾病介紹",
+          "潛伏期"
+        ],
+        "tab": "incubation"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-incubation",
+      "manifestDerived": true,
+      "target": "disease.enterovirus",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.enterovirus"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "disease.enterovirus",
+          "type": "disease",
+          "role": "merged",
+          "block": "transmission",
+          "file": "content/diseases/enterovirus.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 23 處（mso 樣式 9、Mso 類別 7、命名空間標籤 7）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「腸病毒／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-incubation（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "06-intro-symptoms",
+      "file": "06-intro-symptoms.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/Iu9YFpq5oVR8kXQibQB-Lt",
+        "title": "發病症狀",
+        "category": "腸病毒／疾病介紹",
+        "publishedAt": "2017-04-01",
+        "updatedAt": "2026-04-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "腸病毒",
+          "疾病介紹",
+          "發病症狀"
+        ],
+        "tab": "symptoms"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-symptoms",
+      "manifestDerived": true,
+      "target": "disease.enterovirus",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.enterovirus"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "disease.enterovirus",
+          "type": "disease",
+          "role": "merged",
+          "block": "symptoms",
+          "file": "content/diseases/enterovirus.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 20 處（mso 樣式 14、Mso 類別 5、命名空間標籤 3）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「腸病毒／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-symptoms（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "07-intro-prevention",
+      "file": "07-intro-prevention.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/Iu9YFpq5oVR8kXQibQB-Lt",
+        "title": "預防方法",
+        "category": "腸病毒／疾病介紹",
+        "publishedAt": "2017-04-01",
+        "updatedAt": "2026-04-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "腸病毒",
+          "疾病介紹",
+          "預防方法"
+        ],
+        "tab": "prevention"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-prevention",
+      "manifestDerived": true,
+      "target": "disease.enterovirus",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.enterovirus"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "disease.enterovirus",
+          "type": "disease",
+          "role": "merged",
+          "block": "prevention",
+          "file": "content/diseases/enterovirus.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 18 處（mso 樣式 18、Mso 類別 4、命名空間標籤 0）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「腸病毒／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-prevention（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "08-intro-treatment",
+      "file": "08-intro-treatment.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/Iu9YFpq5oVR8kXQibQB-Lt",
+        "title": "治療方法與就醫資訊",
+        "category": "腸病毒／疾病介紹",
+        "publishedAt": "2017-04-01",
+        "updatedAt": "2026-04-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "腸病毒",
+          "疾病介紹",
+          "治療方法"
+        ],
+        "tab": "treatment"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-treatment",
+      "manifestDerived": true,
+      "target": "disease.enterovirus",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.enterovirus"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "disease.enterovirus",
+          "type": "disease",
+          "role": "merged",
+          "block": "treatment",
+          "file": "content/diseases/enterovirus.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 7 處（mso 樣式 3、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「腸病毒／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-treatment（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "09-vaccine",
+      "file": "09-vaccine.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/bdPocx77c0cRnTw5pV_G4Y",
+        "title": "預防接種建議",
+        "category": "腸病毒／預防接種",
+        "publishedAt": "2017-04-01",
+        "updatedAt": "2026-04-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "腸病毒",
+          "預防接種"
+        ],
+        "tab": "vaccine"
+      },
+      "pattern": "mpage",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "vaccine",
+      "manifestDerived": true,
+      "target": "disease.enterovirus",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.enterovirus"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "disease.enterovirus",
+          "type": "disease",
+          "role": "merged",
+          "block": "vaccine",
+          "file": "content/diseases/enterovirus.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 23 處（mso 樣式 9、Mso 類別 7、命名空間標籤 7）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「腸病毒／預防接種」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 vaccine（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "10-qa-list",
+      "file": "10-qa-list.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/QAPage/zID4oBmzvgDWu3fb9-fOlP",
+        "title": "Q&A",
+        "category": "腸病毒／Q&A",
+        "publishedAt": "2026-09-24",
+        "updatedAt": "2026-04-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "腸病毒",
+          "Q&A"
+        ],
+        "tab": ""
+      },
+      "pattern": "qa",
+      "kind": "faq",
+      "type": "faq",
+      "manifestKey": "qa-list",
+      "manifestDerived": true,
+      "target": "disease.enterovirus",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "faq.enterovirus-childcare-disinfect",
+        "faq.enterovirus-class-suspension",
+        "faq.enterovirus-return-school",
+        "faq.ev-severe-signs",
+        "faq.ev-stay-home",
+        "faq.ev71-vaccine",
+        "disease.enterovirus"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "faq.enterovirus-childcare-disinfect",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/enterovirus-childcare-disinfect.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.enterovirus-class-suspension",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/enterovirus-class-suspension.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.enterovirus-return-school",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/enterovirus-return-school.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.ev-severe-signs",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/ev-severe-signs.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.ev-stay-home",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/ev-stay-home.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.ev71-vaccine",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/ev71-vaccine.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 67 處（mso 樣式 45、Mso 類別 17、命名空間標籤 11）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「腸病毒／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "11-materials-poster",
+      "file": "11-materials-poster.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/56ss3snA1H2Mgxy9BNSOs3",
+        "title": "衛教宣導：單張海報",
+        "category": "腸病毒／衛教宣導",
+        "publishedAt": "2017-04-01",
+        "updatedAt": "2026-04-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "腸病毒",
+          "衛教宣導",
+          "單張海報"
+        ],
+        "tab": "posters"
+      },
+      "pattern": "category-list",
+      "kind": "publication",
+      "type": "publication",
+      "manifestKey": "materials-poster",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "publication.enterovirus-materials-poster",
+          "type": "publication",
+          "role": "draft",
+          "file": "content/publications/enterovirus-materials-poster.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 4 處（mso 樣式 1、Mso 類別 2、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「腸病毒／衛教宣導」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 materials-poster（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 publication，草稿直接建成 publication，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "pdf-no-text-layer",
+          "severity": "warn",
+          "message": "PDF「enterovirus-poster-7lang.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+        },
+        {
+          "code": "image-no-alt",
+          "severity": "warn",
+          "message": "圖片「enterovirus-poster.png」舊頁沒有替代文字，暫用檔名「enterovirus-poster」，請補 alt（needsAlt）"
+        },
+        {
+          "code": "image-license-assumed",
+          "severity": "info",
+          "message": "圖片「enterovirus-poster.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 1,
+        "links": 5,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "12-manual",
+      "file": "12-manual.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/DiseaseManual/6y1bSwV46VS9GwNJJXyRai",
+        "title": "傳染病防治工作手冊（2026 年版）",
+        "category": "腸病毒／法規與指引",
+        "publishedAt": "2026-03-01",
+        "updatedAt": "2026-03-01",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "腸病毒",
+          "法規與指引",
+          "工作手冊"
+        ],
+        "tab": ""
+      },
+      "pattern": "disease-docs",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "manual",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "doc.enterovirus-manual.2026-03-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/enterovirus-manual.2026-03-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 14 處（mso 樣式 6、Mso 類別 4、命名空間標籤 4）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「腸病毒／法規與指引」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 manual（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "13-case-definition",
+      "file": "13-case-definition.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/DiseaseDefine/ahqwMH4BvVvYe2hgDtm53l",
+        "title": "病例定義",
+        "category": "腸病毒／法規與指引",
+        "publishedAt": "2017-04-01",
+        "updatedAt": "2026-04-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "腸病毒",
+          "法規與指引",
+          "病例定義"
+        ],
+        "tab": ""
+      },
+      "pattern": "disease-docs",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "case-definition",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "doc.enterovirus-case-definition.2017-04-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/enterovirus-case-definition.2017-04-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「腸病毒／法規與指引」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 case-definition（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（38 字，低於 40）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2017-04-01"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "14-stats",
+      "file": "14-stats.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/Yb1FWIwSMecXeT6vLUmIMf",
+        "title": "統計資料",
+        "category": "腸病毒／統計資料",
+        "publishedAt": "2017-04-01",
+        "updatedAt": "2026-04-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "腸病毒",
+          "統計資料"
+        ],
+        "tab": "statistics"
+      },
+      "pattern": "category-list",
+      "kind": "dataset",
+      "type": "dataset",
+      "manifestKey": "stats",
+      "manifestDerived": true,
+      "target": "dataset.ev-lab-types",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "dataset.ev-lab-types"
+      ],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "／統計",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "dataset.ev-lab-types",
+          "type": "dataset",
+          "role": "draft",
+          "file": "content/datasets/ev-lab-types.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 61 處（mso 樣式 21、Mso 類別 20、命名空間標籤 20）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 stats（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 dataset（dataset.ev-lab-types），草稿直接建成 dataset，看不出來的欄位以「（待補）」佔位"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "15-lab",
+      "file": "15-lab.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/iudh9pwKq4SQ9Oqzy_UBOH",
+        "title": "檢驗資訊",
+        "category": "腸病毒／檢驗資訊",
+        "publishedAt": "2025-01-15",
+        "updatedAt": "2026-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "腸病毒",
+          "檢驗資訊"
+        ],
+        "tab": "lab"
+      },
+      "pattern": "mpage",
+      "kind": "labtest",
+      "type": "labtest",
+      "manifestKey": "lab",
+      "manifestDerived": true,
+      "target": "labtest.enterovirus",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "labtest.enterovirus"
+      ],
+      "owner": "unit.lab",
+      "ownerRule": "／檢驗",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "labtest.enterovirus",
+          "type": "labtest",
+          "role": "draft",
+          "file": "content/labtests/enterovirus.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 36 處（mso 樣式 18、Mso 類別 11、命名空間標籤 9）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 lab（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 labtest（labtest.enterovirus），草稿直接建成 labtest，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "labtest 的欄位從舊頁看不出來，以「（待補）」佔位：specimens[].container/volume/storage/transport"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "labs 暫填 cdc-lab（署檢驗中心），合約與區域實驗室請檢驗中心確認"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "16-notify",
+      "file": "16-notify.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/Wo5A9PG4FAHfk5guqQMY4D",
+        "title": "通報定義與時限",
+        "category": "腸病毒／通報定義",
+        "publishedAt": "2017-04-01",
+        "updatedAt": "2026-04-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "腸病毒",
+          "通報定義"
+        ],
+        "tab": "notify"
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "notify",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "／通報",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "page.enterovirus-notify",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/enterovirus-notify.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 38 處（mso 樣式 14、Mso 類別 12、命名空間標籤 12）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 notify（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "17-news-list",
+      "file": "17-news-list.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/List/vEuUWp4k0BNJpajvJT8uC8",
+        "title": "新聞稿列表",
+        "category": "腸病毒／最新消息",
+        "publishedAt": "2017-04-01",
+        "updatedAt": "2026-04-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "腸病毒",
+          "最新消息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "news-list",
+      "manifestDerived": true,
+      "target": "disease.enterovirus",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.enterovirus"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "page.enterovirus-news-list",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/enterovirus-news-list.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.6,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「腸病毒／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 news-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        },
+        {
+          "code": "target-type-differs",
+          "severity": "info",
+          "message": "對應的新站內容是 disease.enterovirus（disease），草稿以 page 暫存，請比對後改建為 disease"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 5,
+        "legacyLinks": 5,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "18-links",
+      "file": "18-links.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/-Eb5hH3dNxaSbt0ybYI10D",
+        "title": "相關連結",
+        "category": "腸病毒／相關連結",
+        "publishedAt": "2017-04-01",
+        "updatedAt": "2026-04-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "腸病毒",
+          "相關連結"
+        ],
+        "tab": "links"
+      },
+      "pattern": "category-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "links",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "page.enterovirus-links",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/enterovirus-links.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.6,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「腸病毒／相關連結」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 links（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 4,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "19-ev-zone",
+      "file": "19-ev-zone.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/Page/6QsvXrxmvoS6chnGweHl7I",
+        "title": "腸病毒防治專區（首頁）",
+        "category": "腸病毒／防治專區",
+        "publishedAt": "2017-04-01",
+        "updatedAt": "2026-04-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "腸病毒",
+          "防治專區"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "ev-zone",
+      "manifestDerived": false,
+      "target": "disease.enterovirus",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.enterovirus"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "page.enterovirus-ev-zone",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/enterovirus-ev-zone.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 40 處（mso 樣式 14、Mso 類別 13、命名空間標籤 13）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「腸病毒／防治專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+        },
+        {
+          "code": "target-type-differs",
+          "severity": "info",
+          "message": "對應的新站內容是 disease.enterovirus（disease），草稿以 page 暫存，請比對後改建為 disease"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 6,
+        "legacyLinks": 6,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "20-ev-childcare-guideline",
+      "file": "20-ev-childcare-guideline.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/File/Get/fkUlQvd40ukJzqzUefwg9A",
+        "title": "教托育機構腸病毒防治指引",
+        "category": "腸病毒／教托育機構",
+        "publishedAt": "2026-09-10",
+        "updatedAt": "2026-09-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "腸病毒",
+          "教托育機構",
+          "指引"
+        ],
+        "tab": ""
+      },
+      "pattern": "file",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "ev-childcare-guideline",
+      "manifestDerived": false,
+      "target": "doc.ev-childcare-guideline.2026-09-10",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.ev-childcare-guideline.2026-09-10"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "doc.ev-childcare-guideline.2026-09-10",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/ev-childcare-guideline.2026-09-10.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 78 處（mso 樣式 50、Mso 類別 24、命名空間標籤 14）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「腸病毒／教托育機構」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2026-09-10"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "21-ev-closure-reporting",
+      "file": "21-ev-closure-reporting.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/qsqJZnirkyFTBcEqWteQUP",
+        "title": "停課標準與疫情通報",
+        "category": "腸病毒／教托育機構",
+        "publishedAt": "2026-09-10",
+        "updatedAt": "2026-09-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "腸病毒",
+          "教托育機構",
+          "停課與通報"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "ev-closure-reporting",
+      "manifestDerived": false,
+      "target": "doc.ev-childcare-guideline.2026-09-10",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.ev-childcare-guideline.2026-09-10"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "page.enterovirus-ev-closure-reporting",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/enterovirus-ev-closure-reporting.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 78 處（mso 樣式 50、Mso 類別 24、命名空間標籤 14）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「腸病毒／教托育機構」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+        },
+        {
+          "code": "merge-into-target",
+          "severity": "info",
+          "message": "清單判定併入 doc.ev-childcare-guideline.2026-09-10（document），草稿以 page 暫存，請人工把內容併進目標後刪除草稿"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "22-ev-severe-referral",
+      "file": "22-ev-severe-referral.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/iyz5F1b33RPU4U1vHHhEDZ",
+        "title": "腸病毒重症責任醫院名單與轉診",
+        "category": "腸病毒／醫療專區",
+        "publishedAt": "2017-04-01",
+        "updatedAt": "2026-04-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "腸病毒",
+          "醫療專區",
+          "重症責任醫院"
+        ],
+        "tab": ""
+      },
+      "pattern": "category-list",
+      "kind": "service",
+      "type": "service",
+      "manifestKey": "ev-severe-referral",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "service.enterovirus-ev-severe-referral",
+          "type": "service",
+          "role": "draft",
+          "file": "content/services/enterovirus-ev-severe-referral.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.6,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 58 處（mso 樣式 20、Mso 類別 19、命名空間標籤 19）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「腸病毒／醫療專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+        },
+        {
+          "code": "type-from-keywords",
+          "severity": "info",
+          "message": "標題看起來是查詢／申辦服務（clinic），草稿建成 service；名單類資料請改掛 dataset"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "service 的欄位從舊頁看不出來，以「（待補）」佔位：steps、whoCanApply"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "合約院所名單屬時效性資料，建議掛 dataset 由系統更新，不要把名單寫進內文"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 1,
+        "legacyLinks": 1,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "23-ev-severe-clinical",
+      "file": "23-ev-severe-clinical.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/File/Get/oHnPdrO-w-2YIcCWeYTP3G",
+        "title": "腸病毒感染併發重症臨床處置建議",
+        "category": "腸病毒／醫療專區",
+        "publishedAt": "2026-03-15",
+        "updatedAt": "2026-03-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "腸病毒",
+          "醫療專區",
+          "指引"
+        ],
+        "tab": ""
+      },
+      "pattern": "file",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "ev-severe-clinical",
+      "manifestDerived": false,
+      "target": "doc.ev-severe-guideline.2026-03-15",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.ev-severe-guideline.2026-03-15"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "doc.ev-severe-guideline.2026-03-15",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/ev-severe-guideline.2026-03-15.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 52 處（mso 樣式 18、Mso 類別 17、命名空間標籤 17）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「腸病毒／醫療專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+        },
+        {
+          "code": "doctype-guessed",
+          "severity": "info",
+          "message": "標題與網址看不出文件種類，暫填 guideline"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2026-03-15"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "24-ev-ev71-vaccine",
+      "file": "24-ev-ev71-vaccine.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/Page/R2F77pt9zJJc5cEQmtZvK5",
+        "title": "腸病毒 71 型疫苗專區",
+        "category": "腸病毒／預防接種",
+        "publishedAt": "2017-04-01",
+        "updatedAt": "2026-04-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "腸病毒",
+          "預防接種",
+          "EV71 疫苗"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "ev-ev71-vaccine",
+      "manifestDerived": false,
+      "target": "vaccine.ev71",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.enterovirus",
+        "vaccine.ev71"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "disease.enterovirus",
+          "type": "disease",
+          "role": "merged",
+          "block": "vaccine",
+          "file": "content/diseases/enterovirus.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 40 處（mso 樣式 14、Mso 類別 13、命名空間標籤 13）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「腸病毒／預防接種」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 6,
+        "legacyLinks": 6,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "25-ev-handwashing-video",
+      "file": "25-ev-handwashing-video.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/JbY6pDjC4E4EqK3t6BqYbO",
+        "title": "影音：濕搓沖捧擦洗手五步驟動畫",
+        "category": "腸病毒／衛教宣導",
+        "publishedAt": "2026-04-15",
+        "updatedAt": "2026-04-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "腸病毒",
+          "衛教宣導",
+          "影音"
+        ],
+        "tab": ""
+      },
+      "pattern": "category-list",
+      "kind": "media",
+      "type": "media",
+      "manifestKey": "ev-handwashing-video",
+      "manifestDerived": false,
+      "target": "media.enterovirus-handwashing",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "media.enterovirus-handwashing"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "media.enterovirus-handwashing",
+          "type": "media",
+          "role": "draft",
+          "file": "content/media/enterovirus-handwashing.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「腸病毒／衛教宣導」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 media（media.enterovirus-handwashing），草稿直接建成 media，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "模擬匯出的影片 id 為示意值"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "26-ev-old-posters",
+      "file": "26-ev-old-posters.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/8IVdKC4pjZdeWmG6RDVZ3e",
+        "title": "歷年腸病毒宣導海報（2015–2020）",
+        "category": "腸病毒／衛教宣導",
+        "publishedAt": "2015-06-01",
+        "updatedAt": "2020-12-31",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "腸病毒",
+          "衛教宣導",
+          "歷年海報"
+        ],
+        "tab": ""
+      },
+      "pattern": "category-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "ev-old-posters",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "page.enterovirus-ev-old-posters",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/enterovirus-ev-old-posters.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.6,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「腸病毒／衛教宣導」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+        },
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        },
+        {
+          "code": "old-content",
+          "severity": "info",
+          "message": "最後更新於 2020-12-31（5.8 年前），建議走久遠封存而非上線"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false,
+        "old": true
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "27-news-2026-09-29-ili-weekly",
+      "file": "27-news-2026-09-29-ili-weekly.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/kJcoSqz2YA_c0mIGh5-Ljw?typeid=9",
+        "title": "流感疫情持續上升，10 月 1 日公費疫苗開打，長者幼兒請優先接種",
+        "category": "腸病毒／最新消息",
+        "publishedAt": "2026-09-29",
+        "updatedAt": "2026-09-29",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "腸病毒",
+          "最新消息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-29-ili-weekly"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.enterovirus",
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-09-29-ili-weekly",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-09-29-ili-weekly.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「腸病毒／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+        },
+        {
+          "code": "not-in-manifest",
+          "severity": "warn",
+          "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "28-news-2026-09-22-enterovirus-alert",
+      "file": "28-news-2026-09-22-enterovirus-alert.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/cIPa4RUZinjpiHBlwV9Gfp?typeid=9",
+        "title": "國內腸病毒疫情持續，籲請家長及教托育機構提高警覺",
+        "category": "腸病毒／最新消息",
+        "publishedAt": "2026-09-22",
+        "updatedAt": "2026-09-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "腸病毒",
+          "最新消息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-22-enterovirus-alert"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-09-22-enterovirus-alert",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-09-22-enterovirus-alert.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「腸病毒／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+        },
+        {
+          "code": "not-in-manifest",
+          "severity": "warn",
+          "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "29-news-2026-04-14-enterovirus-rising",
+      "file": "29-news-2026-04-14-enterovirus-rising.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/kuSB3T4l2c-Tg6jlKwK0B8?typeid=9",
+        "title": "腸病毒就診人次連續上升，近期社區以 EV71 為主，籲請提高警覺",
+        "category": "腸病毒／最新消息",
+        "publishedAt": "2026-04-14",
+        "updatedAt": "2026-04-14",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "腸病毒",
+          "最新消息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-04-14-enterovirus-rising"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-04-14-enterovirus-rising",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-04-14-enterovirus-rising.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「腸病毒／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+        },
+        {
+          "code": "not-in-manifest",
+          "severity": "warn",
+          "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "30-news-2026-03-15-letter-ev-guideline",
+      "file": "30-news-2026-03-15-letter-ev-guideline.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/LDmeZqcbZuzmNJgOHhV9pm?typeid=11",
+        "title": "致醫界通函第 608 號：腸病毒感染併發重症臨床處置建議更新",
+        "category": "腸病毒／最新消息",
+        "publishedAt": "2026-03-15",
+        "updatedAt": "2026-03-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "腸病毒",
+          "最新消息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-03-15-letter-ev-guideline"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-03-15-letter-ev-guideline",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-03-15-letter-ev-guideline.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「腸病毒／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+        },
+        {
+          "code": "not-in-manifest",
+          "severity": "warn",
+          "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "31-news-2025-05-06-enterovirus-season",
+      "file": "31-news-2025-05-06-enterovirus-season.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/u1nGI08LsIuXP_KlaNZZfl?typeid=9",
+        "title": "腸病毒進入流行期，籲請家長落實肥皂洗手並留意重症前兆",
+        "category": "腸病毒／最新消息",
+        "publishedAt": "2025-05-06",
+        "updatedAt": "2025-05-06",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "腸病毒",
+          "最新消息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2025-05-06-enterovirus-season"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "news.2025-05-06-enterovirus-season",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2025-05-06-enterovirus-season.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「腸病毒／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+        },
+        {
+          "code": "not-in-manifest",
+          "severity": "warn",
+          "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    }
+  ],
+  "drafts": [
+    {
+      "id": "faq.enterovirus-childcare-disinfect",
+      "type": "faq",
+      "title": "幼兒園怎麼消毒，才對腸病毒有效？",
+      "file": "content/faq/enterovirus-childcare-disinfect.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.enterovirus-childcare-disinfect"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.enterovirus-class-suspension",
+      "type": "faq",
+      "title": "班上有同學得腸病毒，幼兒園會停課嗎？",
+      "file": "content/faq/enterovirus-class-suspension.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.enterovirus-class-suspension"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.enterovirus-return-school",
+      "type": "faq",
+      "title": "孩子腸病毒好了，什麼時候可以回學校？",
+      "file": "content/faq/enterovirus-return-school.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.enterovirus-return-school"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.ev-severe-signs",
+      "type": "faq",
+      "title": "腸病毒重症前兆有哪些？",
+      "file": "content/faq/ev-severe-signs.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.ev-severe-signs"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.ev-stay-home",
+      "type": "faq",
+      "title": "孩子得了腸病毒，要在家休息幾天？",
+      "file": "content/faq/ev-stay-home.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.ev-stay-home"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.ev71-vaccine",
+      "type": "faq",
+      "title": "腸病毒 71 型疫苗是公費的嗎？打了就不會得腸病毒嗎？",
+      "file": "content/faq/ev71-vaccine.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.ev71-vaccine"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "publication.enterovirus-materials-poster",
+      "type": "publication",
+      "title": "腸病毒衛教宣導：單張海報",
+      "file": "content/publications/enterovirus-materials-poster.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 2,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "11-materials-poster"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.enterovirus-manual.2026-03-01",
+      "type": "document",
+      "title": "傳染病防治工作手冊（2026 年版）",
+      "file": "content/documents/enterovirus-manual.2026-03-01.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "12-manual"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.enterovirus-case-definition.2017-04-01",
+      "type": "document",
+      "title": "病例定義",
+      "file": "content/documents/enterovirus-case-definition.2017-04-01.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "13-case-definition"
+      ],
+      "merged": false
+    },
+    {
+      "id": "dataset.ev-lab-types",
+      "type": "dataset",
+      "title": "腸病毒統計資料",
+      "file": "content/datasets/ev-lab-types.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "dataset.ev-lab-types"
+      ],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "14-stats"
+      ],
+      "merged": false
+    },
+    {
+      "id": "labtest.enterovirus",
+      "type": "labtest",
+      "title": "腸病毒檢驗資訊",
+      "file": "content/labtests/enterovirus.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "labtest.enterovirus"
+      ],
+      "status": "review",
+      "owner": "unit.lab",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "15-lab"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.enterovirus-notify",
+      "type": "page",
+      "title": "通報定義與時限",
+      "file": "content/pages/enterovirus-notify.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "16-notify"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.enterovirus-news-list",
+      "type": "page",
+      "title": "新聞稿列表",
+      "file": "content/pages/enterovirus-news-list.json",
+      "confidence": 0.6,
+      "existing": true,
+      "compareWith": [
+        "disease.enterovirus"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "17-news-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.enterovirus-links",
+      "type": "page",
+      "title": "相關連結",
+      "file": "content/pages/enterovirus-links.json",
+      "confidence": 0.6,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "18-links"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.enterovirus-ev-zone",
+      "type": "page",
+      "title": "腸病毒防治專區（首頁）",
+      "file": "content/pages/enterovirus-ev-zone.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "disease.enterovirus"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "19-ev-zone"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.ev-childcare-guideline.2026-09-10",
+      "type": "document",
+      "title": "教托育機構腸病毒防治指引",
+      "file": "content/documents/ev-childcare-guideline.2026-09-10.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.ev-childcare-guideline.2026-09-10"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "20-ev-childcare-guideline"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.enterovirus-ev-closure-reporting",
+      "type": "page",
+      "title": "停課標準與疫情通報",
+      "file": "content/pages/enterovirus-ev-closure-reporting.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.ev-childcare-guideline.2026-09-10"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "21-ev-closure-reporting"
+      ],
+      "merged": false
+    },
+    {
+      "id": "service.enterovirus-ev-severe-referral",
+      "type": "service",
+      "title": "腸病毒重症責任醫院名單與轉診",
+      "file": "content/services/enterovirus-ev-severe-referral.json",
+      "confidence": 0.6,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "22-ev-severe-referral"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.ev-severe-guideline.2026-03-15",
+      "type": "document",
+      "title": "腸病毒感染併發重症臨床處置建議",
+      "file": "content/documents/ev-severe-guideline.2026-03-15.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.ev-severe-guideline.2026-03-15"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "23-ev-severe-clinical"
+      ],
+      "merged": false
+    },
+    {
+      "id": "media.enterovirus-handwashing",
+      "type": "media",
+      "title": "腸病毒影音：濕搓沖捧擦洗手五步驟動畫",
+      "file": "content/media/enterovirus-handwashing.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "media.enterovirus-handwashing"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "25-ev-handwashing-video"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.enterovirus-ev-old-posters",
+      "type": "page",
+      "title": "歷年腸病毒宣導海報（2015–2020）",
+      "file": "content/pages/enterovirus-ev-old-posters.json",
+      "confidence": 0.6,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "26-ev-old-posters"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-09-29-ili-weekly",
+      "type": "news",
+      "title": "流感疫情持續上升，10 月 1 日公費疫苗開打，長者幼兒請優先接種",
+      "file": "content/news/2026-09-29-ili-weekly.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-29-ili-weekly"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "27-news-2026-09-29-ili-weekly"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-09-22-enterovirus-alert",
+      "type": "news",
+      "title": "國內腸病毒疫情持續，籲請家長及教托育機構提高警覺",
+      "file": "content/news/2026-09-22-enterovirus-alert.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-22-enterovirus-alert"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "28-news-2026-09-22-enterovirus-alert"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-04-14-enterovirus-rising",
+      "type": "news",
+      "title": "腸病毒就診人次連續上升，近期社區以 EV71 為主，籲請提高警覺",
+      "file": "content/news/2026-04-14-enterovirus-rising.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-04-14-enterovirus-rising"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "29-news-2026-04-14-enterovirus-rising"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-03-15-letter-ev-guideline",
+      "type": "news",
+      "title": "致醫界通函第 608 號：腸病毒感染併發重症臨床處置建議更新",
+      "file": "content/news/2026-03-15-letter-ev-guideline.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-03-15-letter-ev-guideline"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "30-news-2026-03-15-letter-ev-guideline"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2025-05-06-enterovirus-season",
+      "type": "news",
+      "title": "腸病毒進入流行期，籲請家長落實肥皂洗手並留意重症前兆",
+      "file": "content/news/2025-05-06-enterovirus-season.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2025-05-06-enterovirus-season"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "31-news-2025-05-06-enterovirus-season"
+      ],
+      "merged": false
+    },
+    {
+      "id": "disease.enterovirus",
+      "type": "disease",
+      "title": "腸病毒",
+      "file": "content/diseases/enterovirus.json",
+      "confidence": 0.98,
+      "existing": true,
+      "compareWith": [
+        "disease.enterovirus",
+        "vaccine.ev71"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "01-intro",
+        "02-intro-pathogen",
+        "03-intro-epidemiology",
+        "04-intro-transmission",
+        "05-intro-incubation",
+        "06-intro-symptoms",
+        "07-intro-prevention",
+        "08-intro-treatment",
+        "09-vaccine",
+        "24-ev-ev71-vaccine"
+      ],
+      "merged": true
+    }
+  ],
+  "migration": {
+    "patchFile": "migration-patch.json",
+    "applied": true,
+    "summary": {
+      "derivedItems": 18,
+      "derivedMatched": 18,
+      "items": 8,
+      "matched": 8,
+      "missingPages": 0,
+      "unmatchedPages": 5,
+      "agree": 8,
+      "conflicts": 0,
+      "statusChanges": 0,
+      "pendingToMigrated": 0,
+      "targetChanges": 0,
+      "noteChanges": 8,
+      "stillPending": 1
+    },
+    "file": "content/migration/enterovirus.json",
+    "statusChanges": [],
+    "targetChanges": [],
+    "noteChanges": 8
+  }
+}

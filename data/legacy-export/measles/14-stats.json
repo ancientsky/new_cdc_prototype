@@ -1,0 +1,21 @@
+{
+  "url": "https://www.cdc.gov.tw/Category/List/SJd_VUKQ_blXx4LfMYrEyA",
+  "title": "統計資料",
+  "category": "麻疹／統計資料",
+  "publishedAt": "2018-03-01",
+  "updatedAt": "2026-05-14",
+  "breadcrumbs": [
+    "首頁",
+    "傳染病與防疫專題",
+    "麻疹",
+    "統計資料"
+  ],
+  "tab": "statistics",
+  "attachments": [
+    {
+      "url": "https://www.cdc.gov.tw/File/Get/hHK-ZOBzgNtY1_7JG-Kj3T",
+      "label": "麻疹年度統計（CSV，示意）",
+      "file": "measles-stats.csv"
+    }
+  ]
+}

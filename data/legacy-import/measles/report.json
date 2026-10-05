@@ -1,0 +1,3029 @@
+{
+  "format": "cdc-legacy-import-report/1",
+  "batch": "measles",
+  "generatedAt": "2026-10-05T02:30:00Z",
+  "exportedAt": "2026-10-03",
+  "simulated": true,
+  "source": {
+    "dir": "data/legacy-export/measles",
+    "note": "模擬匯出：依 content/migration/_disease-template.json（標準子頁 18 項）＋ content/migration/measles.json（人工例外 7 項）＋ 近 3 年新聞 3 篇合成，不是舊站的真實資料（網址 ID、數字、PDF 內容皆為示意）。正式匯出取代整個目錄即可。",
+    "site": "https://www.cdc.gov.tw"
+  },
+  "rules": {
+    "file": "content/migration/import/_import-rules.json",
+    "version": 3
+  },
+  "manifest": {
+    "id": "migration.measles",
+    "file": "content/migration/measles.json",
+    "items": 7,
+    "extends": "migration-template.disease",
+    "derivedItems": 18,
+    "disease": "disease.measles"
+  },
+  "summary": {
+    "pages": 28,
+    "drafts": 29,
+    "mergedPages": 9,
+    "byType": {
+      "faq": 10,
+      "publication": 1,
+      "document": 4,
+      "dataset": 1,
+      "labtest": 1,
+      "page": 6,
+      "media": 1,
+      "news": 4,
+      "disease": 1
+    },
+    "byKind": {
+      "disease-block": 9,
+      "faq": 1,
+      "publication": 1,
+      "document": 4,
+      "dataset": 1,
+      "labtest": 1,
+      "page": 3,
+      "list": 3,
+      "media": 1,
+      "news": 4
+    },
+    "byAction": {
+      "merge-into-disease": 9,
+      "compare-existing": 12,
+      "review-before-publish": 4,
+      "skip-list": 3
+    },
+    "avgConfidence": 0.94,
+    "needsReview": 0,
+    "existing": 23,
+    "schemaInvalid": 0,
+    "assets": {
+      "total": 9,
+      "attachment": 6,
+      "image": 2,
+      "data": 1,
+      "needsAlt": 2,
+      "noTextLayer": 2
+    },
+    "issues": {
+      "error": 0,
+      "warn": 8,
+      "info": 84
+    },
+    "manifest": {
+      "items": 7,
+      "matched": 7,
+      "missingPages": 0,
+      "derivedItems": 18,
+      "derivedMatched": 18
+    },
+    "exportedAt": "2026-10-03",
+    "pagesWithoutOutput": 0
+  },
+  "pages": [
+    {
+      "key": "01-intro",
+      "file": "01-intro.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/ZUpcHZWi_S65WeehXQuC8v",
+        "title": "疾病介紹",
+        "category": "麻疹／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-05-14",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "麻疹",
+          "疾病介紹"
+        ],
+        "tab": ""
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro",
+      "manifestDerived": true,
+      "target": "disease.measles",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.measles"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "disease.measles",
+          "type": "disease",
+          "role": "merged",
+          "block": "transmission",
+          "file": "content/diseases/measles.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 44 處（mso 樣式 16、Mso 類別 14、命名空間標籤 14）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「麻疹／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "02-intro-pathogen",
+      "file": "02-intro-pathogen.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/ZUpcHZWi_S65WeehXQuC8v",
+        "title": "致病原",
+        "category": "麻疹／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-05-14",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "麻疹",
+          "疾病介紹",
+          "致病原"
+        ],
+        "tab": "pathogen"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-pathogen",
+      "manifestDerived": true,
+      "target": "disease.measles",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.measles"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "disease.measles",
+          "type": "disease",
+          "role": "merged",
+          "block": "transmission",
+          "file": "content/diseases/measles.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 4 處（mso 樣式 2、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「麻疹／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-pathogen（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "03-intro-epidemiology",
+      "file": "03-intro-epidemiology.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/ZUpcHZWi_S65WeehXQuC8v",
+        "title": "流行病學",
+        "category": "麻疹／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-05-14",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "麻疹",
+          "疾病介紹",
+          "流行病學"
+        ],
+        "tab": "epidemiology"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-epidemiology",
+      "manifestDerived": true,
+      "target": "disease.measles",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.measles"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "disease.measles",
+          "type": "disease",
+          "role": "merged",
+          "block": "situation",
+          "file": "content/diseases/measles.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 63 處（mso 樣式 22、Mso 類別 21、命名空間標籤 20）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「麻疹／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-epidemiology（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "image-no-alt",
+          "severity": "warn",
+          "message": "圖片「measles-trend.png」舊頁沒有替代文字，暫用檔名「measles-trend」，請補 alt（needsAlt）"
+        },
+        {
+          "code": "image-license-assumed",
+          "severity": "info",
+          "message": "圖片「measles-trend.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 1,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "04-intro-transmission",
+      "file": "04-intro-transmission.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/ZUpcHZWi_S65WeehXQuC8v",
+        "title": "傳染方式",
+        "category": "麻疹／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-05-14",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "麻疹",
+          "疾病介紹",
+          "傳染方式"
+        ],
+        "tab": "transmission"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-transmission",
+      "manifestDerived": true,
+      "target": "disease.measles",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.measles"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "disease.measles",
+          "type": "disease",
+          "role": "merged",
+          "block": "transmission",
+          "file": "content/diseases/measles.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 7 處（mso 樣式 3、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「麻疹／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-transmission（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "05-intro-incubation",
+      "file": "05-intro-incubation.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/ZUpcHZWi_S65WeehXQuC8v",
+        "title": "潛伏期",
+        "category": "麻疹／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-05-14",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "麻疹",
+          "疾病介紹",
+          "潛伏期"
+        ],
+        "tab": "incubation"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-incubation",
+      "manifestDerived": true,
+      "target": "disease.measles",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.measles"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "disease.measles",
+          "type": "disease",
+          "role": "merged",
+          "block": "transmission",
+          "file": "content/diseases/measles.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 23 處（mso 樣式 9、Mso 類別 7、命名空間標籤 7）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「麻疹／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-incubation（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "06-intro-symptoms",
+      "file": "06-intro-symptoms.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/ZUpcHZWi_S65WeehXQuC8v",
+        "title": "發病症狀",
+        "category": "麻疹／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-05-14",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "麻疹",
+          "疾病介紹",
+          "發病症狀"
+        ],
+        "tab": "symptoms"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-symptoms",
+      "manifestDerived": true,
+      "target": "disease.measles",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.measles"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "disease.measles",
+          "type": "disease",
+          "role": "merged",
+          "block": "symptoms",
+          "file": "content/diseases/measles.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 11 處（mso 樣式 5、Mso 類別 3、命名空間標籤 3）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「麻疹／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-symptoms（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "07-intro-prevention",
+      "file": "07-intro-prevention.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/ZUpcHZWi_S65WeehXQuC8v",
+        "title": "預防方法",
+        "category": "麻疹／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-05-14",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "麻疹",
+          "疾病介紹",
+          "預防方法"
+        ],
+        "tab": "prevention"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-prevention",
+      "manifestDerived": true,
+      "target": "disease.measles",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.measles"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "disease.measles",
+          "type": "disease",
+          "role": "merged",
+          "block": "prevention",
+          "file": "content/diseases/measles.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 18 處（mso 樣式 18、Mso 類別 4、命名空間標籤 0）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「麻疹／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-prevention（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "08-intro-treatment",
+      "file": "08-intro-treatment.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/ZUpcHZWi_S65WeehXQuC8v",
+        "title": "治療方法與就醫資訊",
+        "category": "麻疹／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-05-14",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "麻疹",
+          "疾病介紹",
+          "治療方法"
+        ],
+        "tab": "treatment"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-treatment",
+      "manifestDerived": true,
+      "target": "disease.measles",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.measles"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "disease.measles",
+          "type": "disease",
+          "role": "merged",
+          "block": "treatment",
+          "file": "content/diseases/measles.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 7 處（mso 樣式 3、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「麻疹／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-treatment（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "09-vaccine",
+      "file": "09-vaccine.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/D7GS7y0HwfNsQP8xpY6sIX",
+        "title": "預防接種建議",
+        "category": "麻疹／預防接種",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-05-14",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "麻疹",
+          "預防接種"
+        ],
+        "tab": "vaccine"
+      },
+      "pattern": "mpage",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "vaccine",
+      "manifestDerived": true,
+      "target": "disease.measles",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.measles"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "disease.measles",
+          "type": "disease",
+          "role": "merged",
+          "block": "vaccine",
+          "file": "content/diseases/measles.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 22 處（mso 樣式 8、Mso 類別 7、命名空間標籤 7）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「麻疹／預防接種」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 vaccine（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "10-qa-list",
+      "file": "10-qa-list.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/QAPage/s5OaifVY2y_Oh-5Zt4ecui",
+        "title": "Q&A",
+        "category": "麻疹／Q&A",
+        "publishedAt": "2025-05-01",
+        "updatedAt": "2026-05-14",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "麻疹",
+          "Q&A"
+        ],
+        "tab": ""
+      },
+      "pattern": "qa",
+      "kind": "faq",
+      "type": "faq",
+      "manifestKey": "qa-list",
+      "manifestDerived": true,
+      "target": "disease.measles",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "faq.healthcare-workers-mmr",
+        "faq.measles-exposed-what-to-do",
+        "faq.measles-health-dept-call",
+        "faq.measles-mmr-adult-who",
+        "faq.measles-mmr-born-1970",
+        "faq.measles-mmr-check-record",
+        "faq.measles-symptoms",
+        "faq.rumor-mmr-autism",
+        "faq.travel-japan-measles",
+        "faq.travel-return-fever",
+        "disease.measles"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "faq.healthcare-workers-mmr",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/healthcare-workers-mmr.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.measles-exposed-what-to-do",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/measles-exposed-what-to-do.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.measles-health-dept-call",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/measles-health-dept-call.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.measles-mmr-adult-who",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/measles-mmr-adult-who.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.measles-mmr-born-1970",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/measles-mmr-born-1970.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.measles-mmr-check-record",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/measles-mmr-check-record.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.measles-symptoms",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/measles-symptoms.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.rumor-mmr-autism",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/rumor-mmr-autism.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.travel-japan-measles",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/travel-japan-measles.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.travel-return-fever",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/travel-return-fever.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 104 處（mso 樣式 62、Mso 類別 27、命名空間標籤 21）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「麻疹／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "11-materials-poster",
+      "file": "11-materials-poster.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/ndPddmtQlGVto1kLRIiu3S",
+        "title": "衛教宣導：單張海報",
+        "category": "麻疹／衛教宣導",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-05-14",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "麻疹",
+          "衛教宣導",
+          "單張海報"
+        ],
+        "tab": "posters"
+      },
+      "pattern": "category-list",
+      "kind": "publication",
+      "type": "publication",
+      "manifestKey": "materials-poster",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "publication.measles-materials-poster",
+          "type": "publication",
+          "role": "draft",
+          "file": "content/publications/measles-materials-poster.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 4 處（mso 樣式 1、Mso 類別 2、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「麻疹／衛教宣導」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 materials-poster（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 publication，草稿直接建成 publication，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "pdf-no-text-layer",
+          "severity": "warn",
+          "message": "PDF「measles-poster-7lang.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+        },
+        {
+          "code": "image-no-alt",
+          "severity": "warn",
+          "message": "圖片「measles-poster.png」舊頁沒有替代文字，暫用檔名「measles-poster」，請補 alt（needsAlt）"
+        },
+        {
+          "code": "image-license-assumed",
+          "severity": "info",
+          "message": "圖片「measles-poster.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 1,
+        "links": 5,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "12-manual",
+      "file": "12-manual.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/DiseaseManual/fKswAQpMktNyzXETPocXZ2",
+        "title": "傳染病防治工作手冊（2026 年版）",
+        "category": "麻疹／法規與指引",
+        "publishedAt": "2026-03-01",
+        "updatedAt": "2026-03-01",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "麻疹",
+          "法規與指引",
+          "工作手冊"
+        ],
+        "tab": ""
+      },
+      "pattern": "disease-docs",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "manual",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "doc.measles-manual.2026-03-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/measles-manual.2026-03-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 14 處（mso 樣式 6、Mso 類別 4、命名空間標籤 4）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「麻疹／法規與指引」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 manual（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "13-case-definition",
+      "file": "13-case-definition.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/DiseaseDefine/cMMH-s4zN4Dw12teXD11mn",
+        "title": "傳染病病例定義：麻疹",
+        "category": "麻疹／法規與指引",
+        "publishedAt": "2024-01-01",
+        "updatedAt": "2026-01-08",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "麻疹",
+          "法規與指引",
+          "病例定義"
+        ],
+        "tab": ""
+      },
+      "pattern": "disease-docs",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "case-definition",
+      "manifestDerived": true,
+      "target": "doc.case-definition-measles.2024-01-01",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.case-definition-measles.2024-01-01"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "doc.case-definition-measles.2024-01-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/case-definition-measles.2024-01-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 73 處（mso 樣式 39、Mso 類別 24、命名空間標籤 17）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「麻疹／法規與指引」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 case-definition（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2024-01-01"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "14-stats",
+      "file": "14-stats.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/SJd_VUKQ_blXx4LfMYrEyA",
+        "title": "統計資料",
+        "category": "麻疹／統計資料",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-05-14",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "麻疹",
+          "統計資料"
+        ],
+        "tab": "statistics"
+      },
+      "pattern": "category-list",
+      "kind": "dataset",
+      "type": "dataset",
+      "manifestKey": "stats",
+      "manifestDerived": true,
+      "target": "dataset.measles-yearly",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "dataset.measles-yearly"
+      ],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "／統計",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "dataset.measles-yearly",
+          "type": "dataset",
+          "role": "draft",
+          "file": "content/datasets/measles-yearly.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 61 處（mso 樣式 21、Mso 類別 20、命名空間標籤 20）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 stats（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 dataset（dataset.measles-yearly），草稿直接建成 dataset，看不出來的欄位以「（待補）」佔位"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "15-lab",
+      "file": "15-lab.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/T6DUjtV8a7bam_ZzaJUVy3",
+        "title": "檢驗資訊",
+        "category": "麻疹／檢驗資訊",
+        "publishedAt": "2025-01-15",
+        "updatedAt": "2026-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "麻疹",
+          "檢驗資訊"
+        ],
+        "tab": "lab"
+      },
+      "pattern": "mpage",
+      "kind": "labtest",
+      "type": "labtest",
+      "manifestKey": "lab",
+      "manifestDerived": true,
+      "target": "labtest.measles",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "labtest.measles"
+      ],
+      "owner": "unit.lab",
+      "ownerRule": "／檢驗",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "labtest.measles",
+          "type": "labtest",
+          "role": "draft",
+          "file": "content/labtests/measles.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 40 處（mso 樣式 22、Mso 類別 12、命名空間標籤 9）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 lab（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 labtest（labtest.measles），草稿直接建成 labtest，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "labtest 的欄位從舊頁看不出來，以「（待補）」佔位：specimens[].container/volume/storage/transport"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "labs 暫填 cdc-lab（署檢驗中心），合約與區域實驗室請檢驗中心確認"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "16-notify",
+      "file": "16-notify.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/2PEnc-pO02tBW5wCu7txIi",
+        "title": "通報定義與時限",
+        "category": "麻疹／通報定義",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-05-14",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "麻疹",
+          "通報定義"
+        ],
+        "tab": "notify"
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "notify",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "／通報",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "page.measles-notify",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/measles-notify.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 38 處（mso 樣式 14、Mso 類別 12、命名空間標籤 12）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 notify（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "17-news-list",
+      "file": "17-news-list.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/List/VGHfqWAr3L0AyabNY36p00",
+        "title": "新聞稿列表",
+        "category": "麻疹／最新消息",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-05-14",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "麻疹",
+          "最新消息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "news-list",
+      "manifestDerived": true,
+      "target": "disease.measles",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.measles"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "page.measles-news-list",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/measles-news-list.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.6,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「麻疹／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 news-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        },
+        {
+          "code": "target-type-differs",
+          "severity": "info",
+          "message": "對應的新站內容是 disease.measles（disease），草稿以 page 暫存，請比對後改建為 disease"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 4,
+        "legacyLinks": 4,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "18-links",
+      "file": "18-links.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/t0UFduaYLvcN0L199hzOhl",
+        "title": "相關連結",
+        "category": "麻疹／相關連結",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-05-14",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "麻疹",
+          "相關連結"
+        ],
+        "tab": "links"
+      },
+      "pattern": "category-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "links",
+      "manifestDerived": true,
+      "target": "topic.new-residents-migrant-health",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "topic.new-residents-migrant-health"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "page.measles-links",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/measles-links.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.6,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「麻疹／相關連結」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 links（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        },
+        {
+          "code": "target-type-differs",
+          "severity": "info",
+          "message": "對應的新站內容是 topic.new-residents-migrant-health（topic），草稿以 page 暫存，請比對後改建為 topic"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 4,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "19-measles-elimination-zone",
+      "file": "19-measles-elimination-zone.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/Page/AeUKahagakiXHB2gVKjKC2",
+        "title": "麻疹及德國麻疹消除專區",
+        "category": "麻疹／消除專區",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-05-14",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "麻疹",
+          "消除專區"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "measles-elimination-zone",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.measles",
+        "disease.rubella"
+      ],
+      "outputs": [
+        {
+          "id": "page.measles-elimination-zone",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/measles-elimination-zone.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 40 處（mso 樣式 14、Mso 類別 13、命名空間標籤 13）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「麻疹／消除專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 6,
+        "legacyLinks": 6,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "20-measles-cluster-response",
+      "file": "20-measles-cluster-response.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/-_YEYLxc3bH82jAhp_t9c3",
+        "title": "麻疹群聚事件應變專區",
+        "category": "麻疹／醫療專區",
+        "publishedAt": "2026-09-12",
+        "updatedAt": "2026-09-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "麻疹",
+          "醫療專區",
+          "群聚應變"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "measles-cluster-response",
+      "manifestDerived": false,
+      "target": "doc.measles-contact-tracing.2026-09-12",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.measles-contact-tracing.2026-09-12"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "page.measles-cluster-response",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/measles-cluster-response.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 75 處（mso 樣式 47、Mso 類別 23、命名空間標籤 14）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「麻疹／醫療專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+        },
+        {
+          "code": "merge-into-target",
+          "severity": "info",
+          "message": "清單判定併入 doc.measles-contact-tracing.2026-09-12（document），草稿以 page 暫存，請人工把內容併進目標後刪除草稿"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "21-measles-contact-tracing",
+      "file": "21-measles-contact-tracing.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/File/Get/uTI-ThoSeLurTG6lnklL3e",
+        "title": "麻疹接觸者追蹤作業指引",
+        "category": "麻疹／醫療專區",
+        "publishedAt": "2026-09-12",
+        "updatedAt": "2026-09-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "麻疹",
+          "醫療專區",
+          "指引"
+        ],
+        "tab": ""
+      },
+      "pattern": "file",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "measles-contact-tracing",
+      "manifestDerived": false,
+      "target": "doc.measles-contact-tracing.2026-09-12",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.measles-contact-tracing.2026-09-12"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "doc.measles-contact-tracing.2026-09-12",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/measles-contact-tracing.2026-09-12.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 75 處（mso 樣式 47、Mso 類別 23、命名空間標籤 14）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「麻疹／醫療專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2026-09-12"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "22-measles-exposure-notice",
+      "file": "22-measles-exposure-notice.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/List/6BjM8s3a1iKGa6nJ9OjFfl?page=1",
+        "title": "麻疹病例接觸者活動場所公告",
+        "category": "麻疹／疫情公告",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-05-14",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "麻疹",
+          "疫情公告"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "measles-exposure-notice",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "page.measles-exposure-notice",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/measles-exposure-notice.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.6,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「麻疹／疫情公告」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+        },
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 4,
+        "legacyLinks": 4,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "23-measles-mmr-2019",
+      "file": "23-measles-mmr-2019.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/File/Get/cTCUM_BSq6o_O9hCLVtrfF",
+        "title": "國內 MMR 預防接種建議（108.05.14 版）",
+        "category": "麻疹／預防接種",
+        "publishedAt": "2019-05-14",
+        "updatedAt": "2019-05-14",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "麻疹",
+          "預防接種",
+          "歷版建議"
+        ],
+        "tab": ""
+      },
+      "pattern": "file",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "measles-mmr-2019",
+      "manifestDerived": false,
+      "target": "doc.mmr-recommendation.2019-05-14",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.mmr-recommendation.2019-05-14"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "doc.mmr-recommendation.2019-05-14",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/mmr-recommendation.2019-05-14.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 52 處（mso 樣式 18、Mso 類別 17、命名空間標籤 17）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「麻疹／預防接種」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+        },
+        {
+          "code": "pdf-no-text-layer",
+          "severity": "warn",
+          "message": "PDF「mmr-recommendation.2019-05-14.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "24-measles-mmr-video",
+      "file": "24-measles-mmr-video.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/zqJsMSQMzdsSMSFci6k7Aj",
+        "title": "麻疹 MMR 疫苗候診衛教動畫",
+        "category": "麻疹／衛教宣導",
+        "publishedAt": "2026-10-01",
+        "updatedAt": "2026-05-14",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "麻疹",
+          "衛教宣導",
+          "影音"
+        ],
+        "tab": ""
+      },
+      "pattern": "category-list",
+      "kind": "media",
+      "type": "media",
+      "manifestKey": "measles-mmr-video",
+      "manifestDerived": false,
+      "target": "media.mmr-waiting-room-2026",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "media.mmr-waiting-room-2026"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "media.mmr-waiting-room-2026",
+          "type": "media",
+          "role": "draft",
+          "file": "content/media/mmr-waiting-room-2026.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「麻疹／衛教宣導」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 media（media.mmr-waiting-room-2026），草稿直接建成 media，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "模擬匯出的影片 id 為示意值"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "25-measles-japan-travel",
+      "file": "25-measles-japan-travel.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/76xmEQXxa2oFlWbwwCd1lv?typeid=9",
+        "title": "日本麻疹疫情旅遊提醒",
+        "category": "麻疹／國際旅遊",
+        "publishedAt": "2026-05-11",
+        "updatedAt": "2026-05-11",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "麻疹",
+          "國際旅遊",
+          "疫情提醒"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": "measles-japan-travel",
+      "manifestDerived": false,
+      "target": "news.2026-05-11-japan-measles-level1",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "news.2026-05-11-japan-measles-level1"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-05-11-japan-measles-level1",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-05-11-japan-measles-level1.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 8 處（mso 樣式 4、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「麻疹／國際旅遊」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "26-news-2026-06-02-measles-travel-mmr-1966",
+      "file": "26-news-2026-06-02-measles-travel-mmr-1966.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/gjtvo59pOflfbxnRphUP1p?typeid=9",
+        "title": "暑假出國前請評估麻疹免疫力：1966 年（含）以後出生者出國前 2 至 4 週評估接種 MMR",
+        "category": "麻疹／最新消息",
+        "publishedAt": "2026-06-02",
+        "updatedAt": "2026-06-02",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "麻疹",
+          "最新消息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-06-02-measles-travel-mmr-1966"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-06-02-measles-travel-mmr-1966",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-06-02-measles-travel-mmr-1966.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「麻疹／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+        },
+        {
+          "code": "not-in-manifest",
+          "severity": "warn",
+          "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "27-news-2025-04-16-mmr-recommendation-revised",
+      "file": "27-news-2025-04-16-mmr-recommendation-revised.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/98V23SiAAF1sIBqDHPE-Ov?typeid=9",
+        "title": "修訂國內 MMR 預防接種建議：成人評估對象擴大至 1966 年（含）以後出生者",
+        "category": "麻疹／最新消息",
+        "publishedAt": "2025-04-16",
+        "updatedAt": "2025-04-16",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "麻疹",
+          "最新消息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2025-04-16-mmr-recommendation-revised"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "news.2025-04-16-mmr-recommendation-revised",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2025-04-16-mmr-recommendation-revised.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 7 處（mso 樣式 3、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「麻疹／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+        },
+        {
+          "code": "not-in-manifest",
+          "severity": "warn",
+          "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "28-news-2025-01-09-mmr-adults-measles",
+      "file": "28-news-2025-01-09-mmr-adults-measles.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/jY8xIMIFeWec1yS8mXv11f?typeid=9",
+        "title": "國內新增麻疹病例，1981 年以後出生之醫護與赴流行區成人建議優先自費接種 MMR",
+        "category": "麻疹／最新消息",
+        "publishedAt": "2025-01-09",
+        "updatedAt": "2025-01-09",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "麻疹",
+          "最新消息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2025-01-09-mmr-adults-measles"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "news.2025-01-09-mmr-adults-measles",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2025-01-09-mmr-adults-measles.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「麻疹／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+        },
+        {
+          "code": "not-in-manifest",
+          "severity": "warn",
+          "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    }
+  ],
+  "drafts": [
+    {
+      "id": "faq.healthcare-workers-mmr",
+      "type": "faq",
+      "title": "醫護人員需要接種 MMR 疫苗嗎？",
+      "file": "content/faq/healthcare-workers-mmr.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.healthcare-workers-mmr"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.measles-exposed-what-to-do",
+      "type": "faq",
+      "title": "我和麻疹病人接觸過，要怎麼辦？",
+      "file": "content/faq/measles-exposed-what-to-do.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.measles-exposed-what-to-do"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.measles-health-dept-call",
+      "type": "faq",
+      "title": "衛生局打電話來做麻疹疫調，我要配合什麼？",
+      "file": "content/faq/measles-health-dept-call.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.measles-health-dept-call"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.measles-mmr-adult-who",
+      "type": "faq",
+      "title": "幾年次以後出生的成人需要評估接種 MMR 疫苗？",
+      "file": "content/faq/measles-mmr-adult-who.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.measles-mmr-adult-who"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.measles-mmr-born-1970",
+      "type": "faq",
+      "title": "我是 1970 年出生的，出國前需要打 MMR 疫苗嗎？",
+      "file": "content/faq/measles-mmr-born-1970.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.measles-mmr-born-1970"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.measles-mmr-check-record",
+      "type": "faq",
+      "title": "我不確定有沒有打過 MMR，要怎麼評估要不要補打？",
+      "file": "content/faq/measles-mmr-check-record.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.measles-mmr-check-record"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.measles-symptoms",
+      "type": "faq",
+      "title": "麻疹有哪些症狀？會傳染多久？",
+      "file": "content/faq/measles-symptoms.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.measles-symptoms"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.rumor-mmr-autism",
+      "type": "faq",
+      "title": "MMR 疫苗會造成自閉症嗎？",
+      "file": "content/faq/rumor-mmr-autism.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.rumor-mmr-autism"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.travel-japan-measles",
+      "type": "faq",
+      "title": "去日本旅遊需要擔心麻疹嗎？",
+      "file": "content/faq/travel-japan-measles.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.travel-japan-measles"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.travel-return-fever",
+      "type": "faq",
+      "title": "出國回來後發燒，應該怎麼辦？",
+      "file": "content/faq/travel-return-fever.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.travel-return-fever"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "publication.measles-materials-poster",
+      "type": "publication",
+      "title": "麻疹衛教宣導：單張海報",
+      "file": "content/publications/measles-materials-poster.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 2,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "11-materials-poster"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.measles-manual.2026-03-01",
+      "type": "document",
+      "title": "傳染病防治工作手冊（2026 年版）",
+      "file": "content/documents/measles-manual.2026-03-01.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "12-manual"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.case-definition-measles.2024-01-01",
+      "type": "document",
+      "title": "傳染病病例定義：麻疹",
+      "file": "content/documents/case-definition-measles.2024-01-01.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.case-definition-measles.2024-01-01"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "13-case-definition"
+      ],
+      "merged": false
+    },
+    {
+      "id": "dataset.measles-yearly",
+      "type": "dataset",
+      "title": "麻疹統計資料",
+      "file": "content/datasets/measles-yearly.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "dataset.measles-yearly"
+      ],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "14-stats"
+      ],
+      "merged": false
+    },
+    {
+      "id": "labtest.measles",
+      "type": "labtest",
+      "title": "麻疹檢驗資訊",
+      "file": "content/labtests/measles.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "labtest.measles"
+      ],
+      "status": "review",
+      "owner": "unit.lab",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "15-lab"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.measles-notify",
+      "type": "page",
+      "title": "通報定義與時限",
+      "file": "content/pages/measles-notify.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "16-notify"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.measles-news-list",
+      "type": "page",
+      "title": "新聞稿列表",
+      "file": "content/pages/measles-news-list.json",
+      "confidence": 0.6,
+      "existing": true,
+      "compareWith": [
+        "disease.measles"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "17-news-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.measles-links",
+      "type": "page",
+      "title": "相關連結",
+      "file": "content/pages/measles-links.json",
+      "confidence": 0.6,
+      "existing": true,
+      "compareWith": [
+        "topic.new-residents-migrant-health"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "18-links"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.measles-elimination-zone",
+      "type": "page",
+      "title": "麻疹及德國麻疹消除專區",
+      "file": "content/pages/measles-elimination-zone.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "19-measles-elimination-zone"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.measles-cluster-response",
+      "type": "page",
+      "title": "麻疹群聚事件應變專區",
+      "file": "content/pages/measles-cluster-response.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.measles-contact-tracing.2026-09-12"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "20-measles-cluster-response"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.measles-contact-tracing.2026-09-12",
+      "type": "document",
+      "title": "麻疹接觸者追蹤作業指引",
+      "file": "content/documents/measles-contact-tracing.2026-09-12.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.measles-contact-tracing.2026-09-12"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "21-measles-contact-tracing"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.measles-exposure-notice",
+      "type": "page",
+      "title": "麻疹病例接觸者活動場所公告",
+      "file": "content/pages/measles-exposure-notice.json",
+      "confidence": 0.6,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "22-measles-exposure-notice"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.mmr-recommendation.2019-05-14",
+      "type": "document",
+      "title": "國內 MMR 預防接種建議（108.05.14 版）",
+      "file": "content/documents/mmr-recommendation.2019-05-14.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.mmr-recommendation.2019-05-14"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "23-measles-mmr-2019"
+      ],
+      "merged": false
+    },
+    {
+      "id": "media.mmr-waiting-room-2026",
+      "type": "media",
+      "title": "麻疹 MMR 疫苗候診衛教動畫",
+      "file": "content/media/mmr-waiting-room-2026.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "media.mmr-waiting-room-2026"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "24-measles-mmr-video"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-05-11-japan-measles-level1",
+      "type": "news",
+      "title": "日本麻疹疫情旅遊提醒",
+      "file": "content/news/2026-05-11-japan-measles-level1.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-05-11-japan-measles-level1"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "25-measles-japan-travel"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-06-02-measles-travel-mmr-1966",
+      "type": "news",
+      "title": "暑假出國前請評估麻疹免疫力：1966 年（含）以後出生者出國前 2 至 4 週評估接種 MMR",
+      "file": "content/news/2026-06-02-measles-travel-mmr-1966.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-06-02-measles-travel-mmr-1966"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "26-news-2026-06-02-measles-travel-mmr-1966"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2025-04-16-mmr-recommendation-revised",
+      "type": "news",
+      "title": "修訂國內 MMR 預防接種建議：成人評估對象擴大至 1966 年（含）以後出生者",
+      "file": "content/news/2025-04-16-mmr-recommendation-revised.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2025-04-16-mmr-recommendation-revised"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "27-news-2025-04-16-mmr-recommendation-revised"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2025-01-09-mmr-adults-measles",
+      "type": "news",
+      "title": "國內新增麻疹病例，1981 年以後出生之醫護與赴流行區成人建議優先自費接種 MMR",
+      "file": "content/news/2025-01-09-mmr-adults-measles.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2025-01-09-mmr-adults-measles"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "28-news-2025-01-09-mmr-adults-measles"
+      ],
+      "merged": false
+    },
+    {
+      "id": "disease.measles",
+      "type": "disease",
+      "title": "麻疹",
+      "file": "content/diseases/measles.json",
+      "confidence": 0.98,
+      "existing": true,
+      "compareWith": [
+        "disease.measles"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "01-intro",
+        "02-intro-pathogen",
+        "03-intro-epidemiology",
+        "04-intro-transmission",
+        "05-intro-incubation",
+        "06-intro-symptoms",
+        "07-intro-prevention",
+        "08-intro-treatment",
+        "09-vaccine"
+      ],
+      "merged": true
+    }
+  ],
+  "migration": {
+    "patchFile": "migration-patch.json",
+    "applied": true,
+    "summary": {
+      "derivedItems": 18,
+      "derivedMatched": 18,
+      "items": 7,
+      "matched": 7,
+      "missingPages": 0,
+      "unmatchedPages": 3,
+      "agree": 7,
+      "conflicts": 0,
+      "statusChanges": 0,
+      "pendingToMigrated": 0,
+      "targetChanges": 0,
+      "noteChanges": 7,
+      "stillPending": 2
+    },
+    "file": "content/migration/measles.json",
+    "statusChanges": [],
+    "targetChanges": [],
+    "noteChanges": 7
+  }
+}

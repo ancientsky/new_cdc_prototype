@@ -1,0 +1,62 @@
+{
+  "id": "faq.enterovirus-class-suspension",
+  "type": "faq",
+  "title": "班上有同學得腸病毒，幼兒園會停課嗎？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-09-24",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "不一定。依教托育機構腸病毒防治指引的示意標準： 同一班級 1 週內有 2 名（含）以上幼童確診腸病毒，該班級停課 7 日； 同一機構 1 週內有 2 個以上班級停課，經衛生局評估後，機構得全面停課。",
+  "question": "班上有同學得腸病毒，幼兒園會停課嗎？",
+  "answerMarkdown": "不一定。依教托育機構腸病毒防治指引的**示意標準**：\n\n- 同一班級 **1 週內有 2 名（含）以上**幼童確診腸病毒，該班級停課 **7 日**；\n- 同一機構 1 週內有 **2 個以上班級**停課，經衛生局評估後，機構得全面停課。\n\n只有 1 名孩子確診時通常不停課，但園方會加強消毒並請家長留意孩子狀況。實際停課由園方與衛生局、教育主管機關決定，請以園方通知為準。停課期間請讓孩子在家休息，不要到其他場所聚集。",
+  "basedOn": [
+    "disease.enterovirus"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/zID4oBmzvgDWu3fb9-fOlP"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 67 處（mso 樣式 45、Mso 類別 17、命名空間標籤 11）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「腸病毒／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/zID4oBmzvgDWu3fb9-fOlP",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.enterovirus-class-suspension"
+    ]
+  }
+}

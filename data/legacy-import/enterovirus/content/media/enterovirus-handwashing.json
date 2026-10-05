@@ -1,0 +1,72 @@
+{
+  "id": "media.enterovirus-handwashing",
+  "type": "media",
+  "title": "腸病毒影音：濕搓沖捧擦洗手五步驟動畫",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-04-15",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "以動畫示範「濕、搓、沖、捧、擦」洗手五步驟，提醒大人回家先洗手換衣再抱孩子，並教家長辨識腸病毒重症前兆。",
+  "mediaType": "animation",
+  "youtubeId": "xxxxxxxxxxx",
+  "producedAt": "2026-04-15",
+  "transcriptMarkdown": "以動畫示範「濕、搓、沖、捧、擦」洗手五步驟，提醒大人回家先洗手換衣再抱孩子，並教家長辨識腸病毒重症前兆。",
+  "captions": [
+    "zh-TW"
+  ],
+  "basedOn": [
+    "disease.enterovirus"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/JbY6pDjC4E4EqK3t6BqYbO"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「腸病毒／衛教宣導」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站型別是 media（media.enterovirus-handwashing），草稿直接建成 media，看不出來的欄位以「（待補）」佔位"
+      },
+      {
+        "code": "field-guessed",
+        "severity": "info",
+        "message": "模擬匯出的影片 id 為示意值"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/List/JbY6pDjC4E4EqK3t6BqYbO",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "media.enterovirus-handwashing"
+    ]
+  }
+}

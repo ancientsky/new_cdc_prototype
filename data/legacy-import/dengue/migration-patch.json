@@ -6,18 +6,18 @@
   "applied": {
     "statusChanges": [],
     "targetChanges": [],
-    "noteChanges": 8
+    "noteChanges": 1
   },
   "rule": "只改 status／target／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。",
   "items": [
     {
       "key": "dengue-zone",
       "oldTitle": "登革熱防治專區（首頁）",
-      "page": "21-dengue-zone",
+      "page": "19-dengue-zone",
       "current": {
         "status": "migrated",
         "target": "disease.dengue",
-        "note": "舊防治專區首頁改為疾病頁：民眾版與專業版（防治計畫、指引、通報與檢驗）以專區導覽分流。"
+        "note": "舊防治專區首頁改為疾病頁：民眾版與專業版（防治計畫、指引、通報與檢驗）以專區導覽分流。　【匯入 2026-10-03】草稿 page.dengue-zone（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
@@ -35,17 +35,17 @@
       "change": {
         "status": false,
         "target": false,
-        "note": true
+        "note": false
       }
     },
     {
       "key": "dengue-vector-density",
       "oldTitle": "病媒蚊密度調查結果",
-      "page": "22-dengue-vector-density",
+      "page": "20-dengue-vector-density",
       "current": {
         "status": "pending",
         "target": null,
-        "note": "各縣市住宅指數、容器指數與布氏指數月報；新站尚未建立對應資料集，需先確認資料更新頻率與是否公開到區域別。"
+        "note": "各縣市住宅指數、容器指數與布氏指數月報；新站尚未建立對應資料集，需先確認資料更新頻率與是否公開到區域別。　【匯入 2026-10-03】草稿 page.dengue-vector-density（信心 0.6）"
       },
       "proposed": {
         "status": "pending",
@@ -63,17 +63,17 @@
       "change": {
         "status": false,
         "target": false,
-        "note": true
+        "note": false
       }
     },
     {
       "key": "dengue-source-reduction",
       "oldTitle": "孳生源清除與社區動員（巡倒清刷）",
-      "page": "23-dengue-source-reduction",
+      "page": "21-dengue-source-reduction",
       "current": {
         "status": "merged",
         "target": "doc.dengue-community-workplan.2026-09-10",
-        "note": "併入「登革熱社區防治工作指引」第二章；民眾版巡倒清刷說明見 Q&A。"
+        "note": "併入「登革熱社區防治工作指引」第二章；民眾版巡倒清刷說明見 Q&A。　【匯入 2026-10-03】草稿 page.dengue-source-reduction（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "merged",
@@ -91,17 +91,17 @@
       "change": {
         "status": false,
         "target": false,
-        "note": true
+        "note": false
       }
     },
     {
       "key": "dengue-cluster-response",
       "oldTitle": "群聚事件應變與緊急防治",
-      "page": "24-dengue-cluster-response",
+      "page": "22-dengue-cluster-response",
       "current": {
         "status": "merged",
         "target": "doc.dengue-community-workplan.2026-09-10",
-        "note": "併入工作指引第四章（群聚定義、分工、解除條件）；噴藥疑慮另見澄清與 Q&A。"
+        "note": "併入工作指引第四章（群聚定義、分工、解除條件）；噴藥疑慮另見澄清與 Q&A。　【匯入 2026-10-03】草稿 page.dengue-cluster-response（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "merged",
@@ -119,17 +119,17 @@
       "change": {
         "status": false,
         "target": false,
-        "note": true
+        "note": false
       }
     },
     {
       "key": "dengue-ns1-notice",
       "oldTitle": "NS1 抗原快篩試劑配置公告（致醫界通函）",
-      "page": "25-dengue-ns1-notice",
+      "page": "23-dengue-ns1-notice",
       "current": {
         "status": "migrated",
         "target": "news.2026-09-15-letter-616-ns1",
-        "note": "通函另以新聞型別上架，依據正本為防治工作指引，指引修訂時自動加註。"
+        "note": "通函另以新聞型別上架，依據正本為防治工作指引，指引修訂時自動加註。　【匯入 2026-10-03】草稿 news.2026-09-15-letter-616-ns1（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
@@ -147,17 +147,17 @@
       "change": {
         "status": false,
         "target": false,
-        "note": true
+        "note": false
       }
     },
     {
       "key": "dengue-guidance-v16-archive",
       "oldTitle": "登革熱／屈公病防治工作指引（第 16 版）",
-      "page": "26-dengue-guidance-v16-archive",
+      "page": "24-dengue-guidance-v16-archive",
       "current": {
         "status": "archived",
         "target": "doc.guidance-dengue.v16",
-        "note": "已由第 17 版取代，舊版保留供查閱（noindex、頁首紅色警示），外部舊連結 301 到現行版。"
+        "note": "已由第 17 版取代，舊版保留供查閱（noindex、頁首紅色警示），外部舊連結 301 到現行版。　【匯入 2026-10-03】草稿 doc.guidance-dengue.v16（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "archived",
@@ -175,29 +175,29 @@
       "change": {
         "status": false,
         "target": false,
-        "note": true
+        "note": false
       }
     },
     {
       "key": "dengue-village-chief-video",
       "oldTitle": "影音：里長帶頭巡倒清刷",
-      "page": "27-dengue-village-chief-video",
+      "page": "25-dengue-village-chief-video",
       "current": {
         "status": "migrated",
         "target": "media.dengue-village-chief",
-        "note": "影片改為影音型別，須有逐字稿與依據正本，正本修訂時自動標過時。"
+        "note": "影片改為影音型別，須有逐字稿與依據正本，正本修訂時自動標過時。　【匯入 2026-10-03】草稿 page.dengue-village-chief-video（信心 0.4；既有內容已存在，供比對；需人工檢視）"
       },
       "proposed": {
         "status": "migrated",
         "target": "media.dengue-village-chief",
-        "note": "影片改為影音型別，須有逐字稿與依據正本，正本修訂時自動標過時。　【匯入 2026-10-03】草稿 page.dengue-village-chief-video（信心 0.4；既有內容已存在，供比對；需人工檢視）"
+        "note": "影片改為影音型別，須有逐字稿與依據正本，正本修訂時自動標過時。　【匯入 2026-10-03】草稿 media.dengue-village-chief（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
         "target": "media.dengue-village-chief"
       },
       "draftIds": [
-        "page.dengue-village-chief-video"
+        "media.dengue-village-chief"
       ],
       "agree": true,
       "change": {
@@ -209,11 +209,11 @@
     {
       "key": "dengue-migrant-worker-materials",
       "oldTitle": "外籍勞工登革熱防治宣導（多語單張）",
-      "page": "28-dengue-migrant-worker-materials",
+      "page": "26-dengue-migrant-worker-materials",
       "current": {
         "status": "pending",
         "target": null,
-        "note": "越、印、泰、菲語單張尚未逐一核對版本與授權，核對後併入專區「新住民與移工健康」。"
+        "note": "越、印、泰、菲語單張尚未逐一核對版本與授權，核對後併入專區「新住民與移工健康」。　【匯入 2026-10-03】草稿 page.dengue-migrant-worker-materials（信心 0.4；需人工檢視）"
       },
       "proposed": {
         "status": "pending",
@@ -231,85 +231,72 @@
       "change": {
         "status": false,
         "target": false,
-        "note": true
+        "note": false
       }
     }
   ],
   "missingPages": [],
   "unmatchedPages": [
     {
-      "page": "15-guideline",
+      "page": "27-news-2026-09-29-ili-weekly",
       "suggest": {
-        "key": "import-15-guideline",
-        "oldTitle": "登革熱社區防治工作指引：孳生源清除、病媒蚊監測與群聚應變",
-        "oldPath": "傳染病與防疫專題／登革熱／法規與指引／治療指引",
-        "oldUrl": "https://www.cdc.gov.tw/File/Get/SSH7ZzPb8Df0AsqCjVeXnt",
-        "oldType": "pdf",
-        "verified": false,
-        "status": "pending",
-        "note": "匯入時清單沒有對應項目，請權責單位確認後加入"
-      }
-    },
-    {
-      "page": "29-news-2026-09-29-ili-weekly",
-      "suggest": {
-        "key": "import-29-news-2026-09-29-ili-weekly",
+        "key": "import-27-news-2026-09-29-ili-weekly",
         "oldTitle": "流感疫情持續上升，10 月 1 日公費疫苗開打，長者幼兒請優先接種",
         "oldPath": "傳染病與防疫專題／登革熱／最新消息",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/j9AyvNwbg3RF2utKUq6c6I?typeid=9",
-        "oldType": "page",
+        "oldType": "news",
         "verified": false,
         "status": "pending",
         "note": "匯入時清單沒有對應項目，請權責單位確認後加入"
       }
     },
     {
-      "page": "30-news-2026-08-18-dengue-rising-south",
+      "page": "28-news-2026-08-18-dengue-rising-south",
       "suggest": {
-        "key": "import-30-news-2026-08-18-dengue-rising-south",
+        "key": "import-28-news-2026-08-18-dengue-rising-south",
         "oldTitle": "南部登革熱本土疫情上升，籲請民眾配合孳生源清除與防治工作",
         "oldPath": "傳染病與防疫專題／登革熱／最新消息",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/x14hC_-aNBFlGE_fgPYXtG?typeid=9",
-        "oldType": "page",
+        "oldType": "news",
         "verified": false,
         "status": "pending",
         "note": "匯入時清單沒有對應項目，請權責單位確認後加入"
       }
     },
     {
-      "page": "31-news-2026-07-21-dengue-first-local",
+      "page": "29-news-2026-07-21-dengue-first-local",
       "suggest": {
-        "key": "import-31-news-2026-07-21-dengue-first-local",
+        "key": "import-29-news-2026-07-21-dengue-first-local",
         "oldTitle": "今年首例登革熱本土病例出現於高雄市，請民眾清除積水容器",
         "oldPath": "傳染病與防疫專題／登革熱／最新消息",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/9EfoEs8AvQebnkHbh47GM3?typeid=9",
-        "oldType": "page",
+        "oldType": "news",
         "verified": false,
         "status": "pending",
         "note": "匯入時清單沒有對應項目，請權責單位確認後加入"
       }
     },
     {
-      "page": "32-news-2026-07-01-letter-dengue-guidance-v17",
+      "page": "30-news-2026-07-01-letter-dengue-guidance-v17",
       "suggest": {
-        "key": "import-32-news-2026-07-01-letter-dengue-guidance-v17",
+        "key": "import-30-news-2026-07-01-letter-dengue-guidance-v17",
         "oldTitle": "致醫界通函第 612 號：登革熱／屈公病防治工作指引第 17 版自即日起適用",
         "oldPath": "傳染病與防疫專題／登革熱／最新消息",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/Ztstqjy7MJdl7pkQSReHpB?typeid=11",
-        "oldType": "page",
+        "oldType": "news",
         "verified": false,
         "status": "pending",
         "note": "匯入時清單沒有對應項目，請權責單位確認後加入"
       }
     },
     {
-      "page": "33-news-2025-11-11-letter-dengue-guidance-v16",
+      "page": "31-news-2025-11-11-letter-dengue-guidance-v16",
       "suggest": {
-        "key": "import-33-news-2025-11-11-letter-dengue-guidance-v16",
+        "key": "import-31-news-2025-11-11-letter-dengue-guidance-v16",
         "oldTitle": "致醫界通函第 603 號：登革熱／屈公病防治工作指引第 16 版公布",
         "oldPath": "傳染病與防疫專題／登革熱／最新消息",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/C3M3v5QNkdLxk3VSZVzpzv?typeid=11",
-        "oldType": "page",
+        "oldType": "news",
         "verified": false,
         "status": "pending",
         "note": "匯入時清單沒有對應項目，請權責單位確認後加入"
@@ -494,26 +481,10 @@
       },
       "page": "11-materials-poster",
       "draftIds": [
-        "page.dengue-materials-poster"
-      ],
-      "confidence": 0.4,
-      "existing": false,
-      "matched": true
-    },
-    {
-      "key": "materials-video",
-      "oldTitle": "衛教宣導：影片",
-      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#video",
-      "template": {
-        "status": "migrated",
-        "target": "media.dengue-village-chief"
-      },
-      "page": "12-materials-video",
-      "draftIds": [
-        "page.dengue-materials-video"
+        "publication.dengue-materials-poster"
       ],
       "confidence": 0.8,
-      "existing": true,
+      "existing": false,
       "matched": true
     },
     {
@@ -524,7 +495,7 @@
         "status": "pending",
         "target": null
       },
-      "page": "13-manual",
+      "page": "12-manual",
       "draftIds": [
         "doc.dengue-manual.2026-03-01"
       ],
@@ -538,29 +509,15 @@
       "oldUrl": "https://www.cdc.gov.tw/Category/DiseaseDefine/{id}",
       "template": {
         "status": "migrated",
-        "target": "doc.case-definition-dengue.2023-01-01"
+        "target": "doc.case-definition-dengue.2026-01-01"
       },
-      "page": "14-case-definition",
+      "page": "13-case-definition",
       "draftIds": [
-        "doc.case-definition-dengue.2023-01-01"
+        "doc.case-definition-dengue.2026-01-01"
       ],
       "confidence": 1,
       "existing": true,
       "matched": true
-    },
-    {
-      "key": "guideline",
-      "oldTitle": "治療指引",
-      "oldUrl": "https://www.cdc.gov.tw/File/Get/{id}#guideline",
-      "template": {
-        "status": "migrated",
-        "target": "doc.dengue-community-workplan.2026-09-10"
-      },
-      "page": null,
-      "draftIds": [],
-      "confidence": null,
-      "existing": null,
-      "matched": false
     },
     {
       "key": "stats",
@@ -568,13 +525,13 @@
       "oldUrl": "https://www.cdc.gov.tw/Category/List/{id}#statistics",
       "template": {
         "status": "migrated",
-        "target": "dataset.dengue-daily"
+        "target": "dataset.dengue-local-weekly"
       },
-      "page": "16-stats",
+      "page": "14-stats",
       "draftIds": [
-        "page.dengue-stats"
+        "dataset.dengue-local-weekly"
       ],
-      "confidence": 0.6,
+      "confidence": 1,
       "existing": true,
       "matched": true
     },
@@ -586,9 +543,9 @@
         "status": "migrated",
         "target": "labtest.dengue"
       },
-      "page": "17-lab",
+      "page": "15-lab",
       "draftIds": [
-        "page.dengue-lab"
+        "labtest.dengue"
       ],
       "confidence": 1,
       "existing": true,
@@ -602,7 +559,7 @@
         "status": "pending",
         "target": null
       },
-      "page": "18-notify",
+      "page": "16-notify",
       "draftIds": [
         "page.dengue-notify"
       ],
@@ -618,7 +575,7 @@
         "status": "merged",
         "target": "disease.dengue"
       },
-      "page": "19-news-list",
+      "page": "17-news-list",
       "draftIds": [
         "page.dengue-news-list"
       ],
@@ -634,7 +591,7 @@
         "status": "migrated",
         "target": "topic.disaster-evacuation"
       },
-      "page": "20-links",
+      "page": "18-links",
       "draftIds": [
         "page.dengue-links"
       ],
@@ -644,18 +601,18 @@
     }
   ],
   "summary": {
-    "derivedItems": 20,
-    "derivedMatched": 19,
+    "derivedItems": 18,
+    "derivedMatched": 18,
     "items": 8,
     "matched": 8,
     "missingPages": 0,
-    "unmatchedPages": 6,
+    "unmatchedPages": 5,
     "agree": 8,
     "conflicts": 0,
     "statusChanges": 0,
     "pendingToMigrated": 0,
     "targetChanges": 0,
-    "noteChanges": 8,
+    "noteChanges": 1,
     "stillPending": 2
   }
 }

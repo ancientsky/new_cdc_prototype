@@ -1,0 +1,72 @@
+{
+  "id": "media.mmr-waiting-room-2026",
+  "type": "media",
+  "title": "麻疹 MMR 疫苗候診衛教動畫",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-10-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.measles"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "依 114.04.16 版 MMR 建議重製：1966 年（含）以後出生、不具免疫力的成人，前往流行地區前 2–4 週評估自費接種；流行地區以旅遊疫情建議等級為準。",
+  "mediaType": "animation",
+  "youtubeId": "xxxxxxxxxxx",
+  "producedAt": "2026-10-01",
+  "transcriptMarkdown": "依 114.04.16 版 MMR 建議重製：1966 年（含）以後出生、不具免疫力的成人，前往流行地區前 2–4 週評估自費接種；流行地區以旅遊疫情建議等級為準。",
+  "captions": [
+    "zh-TW"
+  ],
+  "basedOn": [
+    "disease.measles"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/zqJsMSQMzdsSMSFci6k7Aj"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「麻疹／衛教宣導」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站型別是 media（media.mmr-waiting-room-2026），草稿直接建成 media，看不出來的欄位以「（待補）」佔位"
+      },
+      {
+        "code": "field-guessed",
+        "severity": "info",
+        "message": "模擬匯出的影片 id 為示意值"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/List/zqJsMSQMzdsSMSFci6k7Aj",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "media.mmr-waiting-room-2026"
+    ]
+  }
+}

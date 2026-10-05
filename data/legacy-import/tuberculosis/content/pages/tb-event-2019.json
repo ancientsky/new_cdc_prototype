@@ -2,7 +2,7 @@
   "id": "page.tb-event-2019",
   "type": "page",
   "title": "2019 世界結核病日健走活動報名",
-  "owner": "unit.oasis",
+  "owner": "unit.chronic-infectious",
   "publishedAt": "2019-03-01",
   "reviewedAt": "2026-10-03",
   "reviewPeriodMonths": 12,
@@ -31,7 +31,7 @@
   ],
   "conversion": {
     "mode": "auto",
-    "confidence": 0.8,
+    "confidence": 1,
     "issues": [
       {
         "code": "word-cleaned",
@@ -39,9 +39,9 @@
         "message": "清除 Word 貼上殘留 11 處（mso 樣式 9、Mso 類別 3、命名空間標籤 1）"
       },
       {
-        "code": "unmapped-category",
-        "severity": "warn",
-        "message": "未對應類別「結核病／活動訊息」：規則檔 categoryOwners 沒有對應的權責單位，暫填 unit.oasis，請補規則或人工指定"
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「結核病／活動訊息」沒有對應規則，權責單位依疾病主檔取 unit.chronic-infectious（結核病）"
       },
       {
         "code": "old-content",
@@ -50,6 +50,6 @@
       }
     ],
     "sourceUrl": "https://www.cdc.gov.tw/Category/Page/QQKO4J2F-vQx1ycSsRZ0nI",
-    "convertedAt": "2026-10-04T14:04:24.484Z"
+    "convertedAt": "2026-10-05T02:30:00Z"
   }
 }

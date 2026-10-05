@@ -1,0 +1,59 @@
+{
+  "id": "page.enterovirus-ev-zone",
+  "type": "page",
+  "title": "腸病毒防治專區（首頁）",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2017-04-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "腸病毒傳染力強，5 歲以下幼兒是重症高危險群。多數表現為手足口病或疱疹性咽峽炎，留意嗜睡、肌躍型抽搐等重症前兆，一出現就送大醫院。",
+  "slug": "enterovirus-ev-zone",
+  "bodyMarkdown": "腸病毒傳染力強，5 歲以下幼兒是重症高危險群。多數表現為手足口病或疱疹性咽峽炎，留意嗜睡、肌躍型抽搐等重症前兆，一出現就送大醫院。\n\n### 專區內容\n\n- [疾病介紹](https://www.cdc.gov.tw/Category/List/ABc6v_myTor_HAsNllzxxO)\n- [Q&A](https://www.cdc.gov.tw/Category/List/53yzYlKrrxt1aD91K6z_Lq)\n- [宣導素材](https://www.cdc.gov.tw/Category/List/tI5zfaqsfUK3Ny2Po6P-MU)\n- [指引及手冊](https://www.cdc.gov.tw/Category/List/GCYy_avyjuatCENxbNGbWs)\n- [統計資料](https://www.cdc.gov.tw/Category/List/5waAJW_dQQNttscP6_HSyN)\n- [最新消息](https://www.cdc.gov.tw/Category/List/RcdJv3jaWW4evnUok97W1p)\n\n| 項目 | 內容 |\n| --- | --- |\n| 法定傳染病類別 | 第三類 |\n| 通報時限 | 7 日內 |\n| ICD-10 | B34.1、B08.4、B08.5、A87.0 |\n| 主要傳染途徑 | 接觸、飛沫、糞口 |\n| 潛伏期 | 2–10 天（平均 3–5 天） |",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/Page/6QsvXrxmvoS6chnGweHl7I"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 40 處（mso 樣式 14、Mso 類別 13、命名空間標籤 13）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「腸病毒／防治專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+      },
+      {
+        "code": "target-type-differs",
+        "severity": "info",
+        "message": "對應的新站內容是 disease.enterovirus（disease），草稿以 page 暫存，請比對後改建為 disease"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/Page/6QsvXrxmvoS6chnGweHl7I",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "disease.enterovirus"
+    ]
+  }
+}
