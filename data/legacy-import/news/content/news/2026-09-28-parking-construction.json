@@ -1,0 +1,46 @@
+{
+  "id": "news.2026-09-28-parking-construction",
+  "type": "news",
+  "title": "林森南路辦公區停車場施工，10 月 5 日至 11 月 30 日暫停開放",
+  "owner": "unit.pr",
+  "publishedAt": "2026-09-28",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "林森南路辦公區（臺北市中正區林森南路 6 號）地下停車場進行防水與照明改善工程：",
+  "newsType": "other",
+  "bodyMarkdown": "林森南路辦公區（臺北市中正區林森南路 6 號）地下停車場進行防水與照明改善工程：\n\n- **施工期間**：2026 年 10 月 5 日至 11 月 30 日\n- **影響**：停車場暫停開放，身心障礙者專用車位改設於大門側臨時停車區（需事先來電預約）。\n- **建議**：搭乘捷運至臺大醫院站，步行約 5 分鐘。\n\n造成不便，敬請見諒。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/CaPi1oYIuPIPMzZ3cd_67A?typeid=11"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 21 處（mso 樣式 17、Mso 類別 5、命名空間標籤 2）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/CaPi1oYIuPIPMzZ3cd_67A?typeid=11",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "news.2026-09-28-parking-construction"
+    ]
+  }
+}

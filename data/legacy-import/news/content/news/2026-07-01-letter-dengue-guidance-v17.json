@@ -1,0 +1,73 @@
+{
+  "id": "news.2026-07-01-letter-dengue-guidance-v17",
+  "type": "letter",
+  "title": "致醫界通函第 612 號：登革熱／屈公病防治工作指引第 17 版自即日起適用",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-07-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue",
+    "disease.chikungunya"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "一、登革熱／屈公病防治工作指引第 17 版自 2026 年 7 月 1 日起適用，第 16 版同日停止適用。二、主要修訂：NS1 抗原快篩試劑配置擴大至全國基層診所及醫院；快篩陰性但臨床高度懷疑者仍應採檢送驗；",
+  "newsType": "letter",
+  "bodyMarkdown": "一、登革熱／屈公病防治工作指引第 17 版自 2026 年 7 月 1 日起適用，第 16 版同日停止適用。二、主要修訂：NS1 抗原快篩試劑配置擴大至全國基層診所及醫院；快篩陰性但臨床高度懷疑者仍應採檢送驗；境外移入病例返國後 14 日內每週追蹤防蚊情形；化學防治以針對性室內噴藥為優先。三、請醫師對發燒且有流行地區旅遊史之病人提高警覺，符合臨床條件或 NS1 快篩陽性者於 24 小時內通報。",
+  "letterNo": 612,
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/vPGiv9yS8N4qipZSchUD_n?typeid=48"
+  ],
+  "assets": [
+    {
+      "file": "2026-07-01-letter-dengue-guidance-v17-1.pdf",
+      "kind": "attachment",
+      "label": "登革熱／屈公病防治工作指引第 17 版",
+      "mime": "application/pdf",
+      "bytes": 762,
+      "sha256": "b097a2f546818682574c7bbea18aa9f92a7f1c1c42d451858364684c1a775993",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "致醫界通函的權責單位依疾病主檔取 unit.acute-infectious（登革熱），不歸新聞欄目的公關室"
+      },
+      {
+        "code": "news-type-hint",
+        "severity": "info",
+        "message": "致醫界通函建成 letter（letterNo 由標題「第 N 號」抽）；對象為醫療院所，audience professional"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/vPGiv9yS8N4qipZSchUD_n?typeid=48",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "news.2026-07-01-letter-dengue-guidance-v17"
+    ]
+  }
+}

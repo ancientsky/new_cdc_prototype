@@ -1,0 +1,46 @@
+{
+  "id": "news.2026-09-24-legacy-f7b345",
+  "type": "news",
+  "title": "疾管署公布第 38 週傳染病監測週報：類流感就診率續升，腸病毒疫情趨緩",
+  "owner": "unit.pr",
+  "publishedAt": "2026-09-24",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza",
+    "disease.enterovirus"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "類流感門急診就診率較前一週上升 8%，65 歲以上占比最高。 腸病毒門急診就診人次連續兩週下降，仍請家長留意重症前兆病徵。",
+  "newsType": "press",
+  "bodyMarkdown": "類流感門急診就診率較前一週上升 8%，65 歲以上占比最高。\n\n腸病毒門急診就診人次連續兩週下降，仍請家長留意重症前兆病徵。\n\n登革熱本土病例本週新增 3 例，均在南部。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/_1Whs2KInA7M1gXev3fuOr?typeid=9"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 9 處（mso 樣式 3、Mso 類別 3、命名空間標籤 3）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/_1Whs2KInA7M1gXev3fuOr?typeid=9",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

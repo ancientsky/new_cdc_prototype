@@ -1,0 +1,49 @@
+{
+  "id": "news.2026-02-24-flu-declining",
+  "type": "news",
+  "title": "流感疫情緩降，仍處流行期，請持續注意手部衛生與咳嗽禮節",
+  "owner": "unit.pr",
+  "publishedAt": "2026-02-24",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "疾病管制署表示，春節後類流感門急診就診人次連續兩週下降，疫情趨緩，但仍高於流行閾值，社區流感病毒仍持續活動。",
+  "newsType": "press",
+  "bodyMarkdown": "疾病管制署表示，春節後類流感門急診就診人次連續兩週下降，疫情趨緩，但仍高於流行閾值，社區流感病毒仍持續活動。\n\n疾管署提醒，開學後校園人潮聚集，學生有發燒、咳嗽症狀應在家休息；長者與慢性病人若出現類流感症狀，請儘早就醫，由醫師評估使用抗病毒藥劑。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/-zweEOnUpHiyAskD0pNoZo?typeid=9"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/-zweEOnUpHiyAskD0pNoZo?typeid=9",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "news.2026-02-24-flu-declining"
+    ]
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "id": "clar.2026-05-mmr-all-adults",
+  "type": "clarification",
+  "title": "網傳「所有成人都要再補打一劑 MMR」部分正確",
+  "owner": "unit.pr",
+  "publishedAt": "2026-05-12",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "網傳：日本麻疹大流行，所有大人出國前都一定要再補打一劑 MMR 查核結果：部分正確",
+  "claim": "所有成人都要再補打一劑 MMR",
+  "verdict": "partly-true",
+  "clarificationMarkdown": "網傳：日本麻疹大流行，所有大人出國前都一定要再補打一劑 MMR\n\n查核結果：部分正確\n\n日本確實自 2026 年 5 月 11 日起列為麻疹第一級旅遊疫情建議，但**不是所有成人都需要補打**。\n\n依現行 MMR 預防接種建議（2025 年 4 月 16 日修訂），建議評估的是 **1966 年（含）以後出生、不具麻疹免疫力**、計畫前往流行地區的成人，請於出國前 2–4 週至旅遊醫學門診評估自費接種 1 劑。曾完成 2 劑、抗體陽性或曾確診者已具免疫力；1966 年以前出生者多數已因自然感染具免疫力。\n\n【疾管署說明】不是所有大人都要補打 MMR。1966 年（含）以後出生、不具麻疹免疫力、要去流行地區（如日本）的人，請在出國前 2–4 週到旅遊醫學門診評估自費接種 1 劑。打過 2 劑或驗過抗體陽性就不用。",
+  "shareText": "網傳：日本麻疹大流行，所有大人出國前都一定要再補打一劑 MMR 查核結果：部分正確",
+  "reportChannel": "1922",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/vy2WAmm2rOtB8yrPEHV2HU?typeid=8772"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 17 處（mso 樣式 7、Mso 類別 5、命名空間標籤 5）"
+      },
+      {
+        "code": "type-from-bulletin",
+        "severity": "info",
+        "message": "公告類別是澄清稿，草稿建成 clarification（claim／verdict 由標題與內文推斷）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/vy2WAmm2rOtB8yrPEHV2HU?typeid=8772",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "clar.2026-05-mmr-all-adults"
+    ]
+  }
+}

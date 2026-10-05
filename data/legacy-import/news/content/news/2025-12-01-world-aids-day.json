@@ -1,0 +1,49 @@
+{
+  "id": "news.2025-12-01-world-aids-day",
+  "type": "news",
+  "title": "世界愛滋日：定期篩檢、PrEP 與 U=U，一起終結愛滋",
+  "owner": "unit.pr",
+  "publishedAt": "2025-12-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.hiv"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "12 月 1 日是世界愛滋日。疾病管制署表示，國內 HIV 新通報人數自 2017 年起逐年下降，持續朝聯合國 95-95-95 目標邁進。",
+  "newsType": "press",
+  "bodyMarkdown": "12 月 1 日是世界愛滋日。疾病管制署表示，國內 HIV 新通報人數自 2017 年起逐年下降，持續朝聯合國 95-95-95 目標邁進。\n\n疾管署呼籲，有感染風險者應定期篩檢，可使用匿名篩檢醫院、社區篩檢點或 HIV 自我篩檢試劑；並可諮詢暴露前預防性投藥（PrEP）。感染者確診後儘速服藥，病毒量持續測不到就不會經由性行為傳染給他人（U=U），也請社會大眾以友善態度支持感染者就醫。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/QkgmjdEJPXh042-RQFE5a5?typeid=9"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/QkgmjdEJPXh042-RQFE5a5?typeid=9",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "news.2025-12-01-world-aids-day"
+    ]
+  }
+}

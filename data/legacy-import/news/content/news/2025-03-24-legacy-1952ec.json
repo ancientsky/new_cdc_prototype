@@ -1,0 +1,56 @@
+{
+  "id": "news.2025-03-24-legacy-1952ec",
+  "type": "news",
+  "title": "World TB Day: see a doctor if you have coughed for two weeks; contact screening and latent TB treatment protect families",
+  "owner": "unit.pr",
+  "publishedAt": "2025-03-24",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "Taiwan CDC urges anyone coughing for more than two weeks to get a chest X-ray, and asks contacts of patients to join sc…",
+  "newsType": "press",
+  "bodyMarkdown": "Taiwan CDC urges anyone coughing for more than two weeks to get a chest X-ray, and asks contacts of patients to join screening; treating latent TB infection greatly lowers the risk of disease.\n\nTaiwan Centers for Disease Control (Taiwan CDC) press release. Full English text is a simulated export; Chinese source is the authoritative version.",
+  "sourceLang": "en",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/w943Hotl5t_Y2UM7cuysEG?typeid=158"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+      },
+      {
+        "code": "news-type-hint",
+        "severity": "info",
+        "message": "英文新聞稿以 sourceLang: en 建立，需補中文版"
+      },
+      {
+        "code": "needs-source-zh",
+        "severity": "warn",
+        "message": "來源語言 en：新站以中文為正本（治理規則 18），請補中文版後再上線；不列入 auto-ok"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/w943Hotl5t_Y2UM7cuysEG?typeid=158",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

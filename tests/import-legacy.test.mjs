@@ -476,6 +476,7 @@ test('後台 /admin/import/：批次摘要、逐頁表、草稿下載連結；�
 // ───────────────────────── 第十輪：跨疾病通用化與登革熱第二批 ─────────────────────────
 import { shortFor } from '../scripts/lib/legacy-import/rules.mjs';
 import { generateDisease } from '../scripts/lib/legacy-import/sim-export-disease.mjs';
+import { generateNews } from '../scripts/lib/legacy-import/sim-export-news.mjs';
 
 const EXPORT_DENGUE = path.join(ROOT, 'data/legacy-export/dengue');
 const COMMITTED_DENGUE = path.join(ROOT, 'data/legacy-import/dengue');
@@ -863,3 +864,47 @@ test('已提交的第五批輸出（狂犬病、瘧疾、A 型肝炎、德國麻
     for (const f of fs.readdirSync(exp).filter((x) => x.endsWith('.json') && x !== '_export.json')) assert.deepEqual(readJSON(path.join(dir, f)), readJSON(path.join(exp, f)), `${slug} ${f}`);
   }
 });
+
+test('第六批（新聞與公告欄目，無移轉清單）：三級處理——既有新聞比對、近年新聞 auto-ok ＋ 10% 抽樣名單、久遠封存與活動 drop；通函建 letter 且權責歸疾病組；英文稿不自動上線；澄清稿建 clarification', () => {
+  const dir = tmp('news');
+  const exp = path.join(ROOT, 'data/legacy-export/news');
+  const { report, drafts } = runImport({ exportDir: exp, outDir: path.join(dir, 'out'), manifestPath: path.join(dir, 'news.json'), slug: 'news', now: NOW });
+  const s = report.summary;
+  assert.equal(report.manifest, null, '新聞批次沒有清單，也不合成（主檔沒有 news 這種疾病）');
+  assert.equal(s.pagesWithoutOutput, 0); assert.equal(s.schemaInvalid, 0); assert.equal(s.needsReview, 0);
+  assert.ok(!report.pages.some((p) => p.issues.some((i) => i.code === 'not-in-manifest')), '沒有清單就不該有 not-in-manifest');
+  // 三級：既有 45 則比對；近年合成新聞 auto-ok；久遠封存；活動報名 drop；列表頁 skip
+  assert.equal(s.byAction['compare-existing'], 45); assert.equal(s.byAction['auto-ok'], 4); assert.equal(s.byAction.archive, 5); assert.equal(s.byAction.drop, 1); assert.equal(s.byAction['skip-list'], 1);
+  for (const p of report.pages.filter((p) => p.action === 'archive')) assert.ok(p.flags.old && p.source.updatedAt < '2023-01-01', p.key);
+  // 抽樣：ceil(4 × 0.1) = 1，依網址雜湊固定
+  assert.equal(report.sampling.rate, 0.1); assert.equal(report.sampling.autoOk, 4); assert.equal(report.sampling.picked.length, 1);
+  assert.ok(report.pages.find((p) => p.key === report.sampling.picked[0].key)?.action === 'auto-ok');
+  // 通函：typeid 48 或標題「致醫界通函第 N 號」⇒ letter、letterNo、權責是疾病業務組而不是公關室
+  const letters = drafts.filter((d) => d.type === 'letter');
+  assert.equal(letters.length, 4); assert.ok(letters.every((d) => Number.isInteger(d.letterNo) && d.newsType === 'letter' && d.audience.includes('professional')));
+  assert.ok(letters.every((d) => d.owner === 'unit.acute-infectious'), '通函權責依疾病主檔');
+  assert.ok(report.pages.filter((p) => p.outputs.some((o) => letters.some((l) => l.id === o.id))).every((p) => p.issues.some((i) => i.code === 'owner-from-disease')));
+  // 英文新聞稿（typeid 158）：sourceLang en、needs-source-zh 警告 ⇒ 不是 auto-ok
+  const en = drafts.filter((d) => d.sourceLang === 'en');
+  assert.equal(en.length, 2);
+  for (const p of report.pages.filter((p) => en.some((d) => p.outputs[0]?.id === d.id))) { assert.ok(p.issues.some((i) => i.code === 'needs-source-zh' && i.severity === 'warn')); assert.notEqual(p.action, 'auto-ok'); assert.equal(p.owner, 'unit.pr'); }
+  // 澄清稿：8 則 typeid 8772 ＋ 2 則既有 news（newsType clarification）type-upgrade
+  assert.equal(s.byType.clarification, 10); assert.equal(report.pages.filter((p) => p.issues.some((i) => i.code === 'type-upgrade')).length, 2);
+  assert.ok(drafts.filter((d) => d.type === 'clarification').every((d) => d.claim && d.verdict && d.shareText));
+  // 其他新聞的權責是公關室（新聞與公告欄目）
+  assert.ok(report.pages.filter((p) => p.kind === 'news' && p.type === 'news' && !p.outputs.some((o) => letters.some((l) => l.id === o.id))).every((p) => p.owner === 'unit.pr' || p.ownerRule === '新聞與公告' || p.ownerRule === 'News'));
+});
+
+test('已提交的第六批輸出（data/legacy-import/news）：60 頁、schema 全過、報告有抽樣名單、模擬匯出可重現；五批重跑後登革熱／腸病毒／屈公病的通函改為 letter', () => {
+  const dir = path.join(ROOT, 'data/legacy-import/news');
+  const r = readJSON(path.join(dir, 'report.json'));
+  assert.equal(r.summary.pages, 60); assert.equal(r.summary.schemaInvalid, 0); assert.equal(r.manifest, null); assert.equal(r.sampling.picked.length, 1);
+  for (const d of r.drafts) assert.ok(fs.existsSync(path.join(dir, d.file)), d.file);
+  assert.ok(fs.readFileSync(path.join(dir, 'report.md'), 'utf8').includes('## 二級抽樣檢視名單'));
+  const exp = path.join(ROOT, 'data/legacy-export/news');
+  const tmpDir = tmp('exp6');
+  generateNews(tmpDir);
+  for (const f of fs.readdirSync(exp).filter((x) => x.endsWith('.json') && x !== '_export.json')) assert.deepEqual(readJSON(path.join(tmpDir, f)), readJSON(path.join(exp, f)), f);
+  for (const f of ['dengue/content/news/2026-07-01-letter-dengue-guidance-v17.json', 'enterovirus/content/news/2026-03-15-letter-ev-guideline.json']) { const d = readJSON(path.join(ROOT, 'data/legacy-import', f)); assert.equal(d.type, 'letter'); assert.ok(Number.isInteger(d.letterNo)); }
+});
+

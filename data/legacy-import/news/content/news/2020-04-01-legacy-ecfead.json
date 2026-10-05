@@ -1,0 +1,72 @@
+{
+  "id": "news.2020-04-01-legacy-ecfead",
+  "type": "news",
+  "title": "COVID-19 疫情說明記者會（第 60 場）",
+  "owner": "unit.pr",
+  "publishedAt": "2020-04-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.covid-19"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "今日新增境外移入病例，入境者一律居家檢疫 14 天。",
+  "newsType": "press",
+  "bodyMarkdown": "今日新增境外移入病例，入境者一律居家檢疫 14 天。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/ZViXszMLWodRbAerhbHVjx?typeid=9"
+  ],
+  "assets": [
+    {
+      "file": "2020-04-01-old.pdf",
+      "kind": "attachment",
+      "label": "COVID-19 疫情說明記者會（第 60 場）（PDF）",
+      "mime": "application/pdf",
+      "bytes": 704,
+      "sha256": "59ecb295af9fd9151835edaf80bcd66483ceb332b22ce5c04d0816f340e6bbb4",
+      "machineReadable": false,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.8,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "old-content",
+        "severity": "info",
+        "message": "最後更新於 2020-04-01（6.5 年前），建議走久遠封存而非上線"
+      },
+      {
+        "code": "pdf-no-text-layer",
+        "severity": "warn",
+        "message": "PDF「2020-04-01-old.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+      },
+      {
+        "code": "body-short",
+        "severity": "warn",
+        "message": "內文過短（26 字，低於 40）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/ZViXszMLWodRbAerhbHVjx?typeid=9",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

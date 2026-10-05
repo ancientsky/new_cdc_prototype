@@ -1,0 +1,65 @@
+{
+  "id": "clar.2026-09-10-influenza-864a02",
+  "type": "clarification",
+  "title": "澄清：網傳「打流感疫苗會得流感、長輩打完會死」並非事實",
+  "owner": "unit.pr",
+  "publishedAt": "2026-09-10",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "針對社群流傳「打流感疫苗反而會得流感，長輩打完會死」的訊息，疾病管制署澄清，此說法並非事實。",
+  "claim": "打流感疫苗會得流感、長輩打完會死",
+  "verdict": "false",
+  "clarificationMarkdown": "針對社群流傳「打流感疫苗反而會得流感，長輩打完會死」的訊息，疾病管制署澄清，此說法並非事實。\n\n公費流感疫苗為**不活化疫苗**，不含活病毒，不會因接種而得到流感。接種後常見反應為注射部位疼痛、紅腫，少數人有輕微發燒、倦怠，通常 1–2 天內緩解。我國設有預防接種受害救濟制度，並持續監測疫苗安全；長者因流感併發重症與死亡的風險遠高於疫苗風險，請放心接種。",
+  "shareText": "針對社群流傳「打流感疫苗反而會得流感，長輩打完會死」的訊息，疾病管制署澄清，此說法並非事實。",
+  "reportChannel": "1922",
+  "basedOn": [
+    "disease.influenza"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/ghycdDd__NUQxVqr1Scgoi?typeid=8772"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 7 處（mso 樣式 3、Mso 類別 2、命名空間標籤 2）"
+      },
+      {
+        "code": "type-from-bulletin",
+        "severity": "info",
+        "message": "公告類別是澄清稿，草稿建成 clarification（claim／verdict 由標題與內文推斷）"
+      },
+      {
+        "code": "type-upgrade",
+        "severity": "info",
+        "message": "既有內容 news.2026-09-10-clarify-flu-vaccine-death 以 news 存放同一則澄清，新草稿改為 clarification 型別，請比對後擇一"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/ghycdDd__NUQxVqr1Scgoi?typeid=8772",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "news.2026-09-10-clarify-flu-vaccine-death"
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "id": "news.2022-10-01-legacy-2c1060",
+  "type": "news",
+  "title": "111 年度公費流感疫苗 10 月 1 日起分階段開打",
+  "owner": "unit.pr",
+  "publishedAt": "2022-10-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "公費流感疫苗分兩階段開打，第一階段對象為醫事人員、65 歲以上長者與學齡前幼兒。",
+  "newsType": "press",
+  "bodyMarkdown": "公費流感疫苗分兩階段開打，第一階段對象為醫事人員、65 歲以上長者與學齡前幼兒。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/JMEQfzC_ayKMkPQlHzdrf4?typeid=9"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "old-content",
+        "severity": "info",
+        "message": "最後更新於 2022-10-01（4.0 年前），建議走久遠封存而非上線"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/JMEQfzC_ayKMkPQlHzdrf4?typeid=9",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

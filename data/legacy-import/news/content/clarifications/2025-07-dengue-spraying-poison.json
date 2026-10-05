@@ -1,0 +1,60 @@
+{
+  "id": "clar.2025-07-dengue-spraying-poison",
+  "type": "clarification",
+  "title": "網傳「登革熱噴藥會毒死人、可以拒絕開門」為錯誤訊息",
+  "owner": "unit.pr",
+  "publishedAt": "2025-07-15",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "網傳：登革熱噴的藥會毒死人，衛生所來噴藥可以拒絕開門 查核結果：不實訊息",
+  "claim": "登革熱噴藥會毒死人、可以拒絕開門",
+  "verdict": "false",
+  "clarificationMarkdown": "網傳：登革熱噴的藥會毒死人，衛生所來噴藥可以拒絕開門\n\n查核結果：不實訊息\n\n登革熱緊急防治使用的環境衛生用藥均經主管機關核准，依規定濃度稀釋，由專業人員施作。噴藥前會通知住戶收妥食物、餐具、寵物並暫時離開，依指示通風後即可返回。\n\n依傳染病防治法，民眾應配合衛生單位的孳生源清除與防治措施。噴藥只能殺死成蚊，**每週清除積水容器才是根本**。\n\n【疾管署澄清】登革熱防治用藥經核准、依規定稀釋並由專業人員施作，噴藥前會通知收好食物並暫離，通風後即可返家。配合防治是法定義務，每週清除積水容器最重要。有疑問請撥 1922。",
+  "shareText": "網傳：登革熱噴的藥會毒死人，衛生所來噴藥可以拒絕開門 查核結果：不實訊息",
+  "reportChannel": "1922",
+  "basedOn": [
+    "disease.dengue"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/R1SLggitkGi0NAuncajZAY?typeid=8772"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 16 處（mso 樣式 6、Mso 類別 5、命名空間標籤 5）"
+      },
+      {
+        "code": "type-from-bulletin",
+        "severity": "info",
+        "message": "公告類別是澄清稿，草稿建成 clarification（claim／verdict 由標題與內文推斷）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/R1SLggitkGi0NAuncajZAY?typeid=8772",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "clar.2025-07-dengue-spraying-poison"
+    ]
+  }
+}

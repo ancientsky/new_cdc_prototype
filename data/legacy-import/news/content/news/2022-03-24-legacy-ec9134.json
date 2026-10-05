@@ -1,0 +1,55 @@
+{
+  "id": "news.2022-03-24-legacy-ec9134",
+  "type": "news",
+  "title": "世界結核病日：疾管署呼籲咳嗽超過兩週請就醫",
+  "owner": "unit.pr",
+  "publishedAt": "2022-03-24",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "結核病是可治癒的疾病，規則服藥六個月以上即可治癒。",
+  "newsType": "press",
+  "bodyMarkdown": "結核病是可治癒的疾病，規則服藥六個月以上即可治癒。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/85P41soNOAfNT4nIWsiq_U?typeid=9"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.8,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "old-content",
+        "severity": "info",
+        "message": "最後更新於 2022-03-24（4.5 年前），建議走久遠封存而非上線"
+      },
+      {
+        "code": "body-short",
+        "severity": "warn",
+        "message": "內文過短（25 字，低於 40）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/85P41soNOAfNT4nIWsiq_U?typeid=9",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

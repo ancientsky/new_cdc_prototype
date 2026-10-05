@@ -1,0 +1,72 @@
+{
+  "id": "news.2020-12-15-legacy-5b26a4",
+  "type": "news",
+  "title": "活動報名：2021 年世界結核病日健走活動開放報名",
+  "owner": "unit.pr",
+  "publishedAt": "2020-12-15",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "活動已於 2021 年 3 月舉辦完畢。",
+  "newsType": "other",
+  "bodyMarkdown": "活動已於 2021 年 3 月舉辦完畢。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/dDR5JeIC7EKd_Hpr3MO0g6?typeid=11"
+  ],
+  "assets": [
+    {
+      "file": "2020-12-15-old.pdf",
+      "kind": "attachment",
+      "label": "活動報名：2021 年世界結核病日健走活動開放報名（PDF）",
+      "mime": "application/pdf",
+      "bytes": 704,
+      "sha256": "1f4521ee0cb5a19ccc768e52a2af20cb87ce4b49f6907dac76c1774c128eb0ff",
+      "machineReadable": false,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.8,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "old-content",
+        "severity": "info",
+        "message": "久遠且已結束的活動訊息，建議不轉換（回 410）"
+      },
+      {
+        "code": "pdf-no-text-layer",
+        "severity": "warn",
+        "message": "PDF「2020-12-15-old.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+      },
+      {
+        "code": "body-short",
+        "severity": "warn",
+        "message": "內文過短（20 字，低於 40）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/dDR5JeIC7EKd_Hpr3MO0g6?typeid=11",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

@@ -11,7 +11,7 @@
   },
   "rules": {
     "file": "content/migration/import/_import-rules.json",
-    "version": 4
+    "version": 5
   },
   "manifest": {
     "id": "migration.dengue",
@@ -46,8 +46,9 @@
       "labtest": 1,
       "page": 7,
       "topic": 1,
-      "news": 6,
+      "news": 4,
       "media": 1,
+      "letter": 2,
       "disease": 1
     },
     "byKind": {
@@ -84,7 +85,7 @@
     "issues": {
       "error": 0,
       "warn": 12,
-      "info": 93
+      "info": 95
     },
     "manifest": {
       "items": 8,
@@ -2582,6 +2583,11 @@
           "code": "not-in-manifest",
           "severity": "warn",
           "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
+        },
+        {
+          "code": "news-type-hint",
+          "severity": "info",
+          "message": "標題是致醫界通函，草稿建成 letter（typeid 不是通函類別）"
         }
       ],
       "action": "compare-existing",
@@ -2662,6 +2668,11 @@
           "code": "not-in-manifest",
           "severity": "warn",
           "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
+        },
+        {
+          "code": "news-type-hint",
+          "severity": "info",
+          "message": "標題是致醫界通函，草稿建成 letter（typeid 不是通函類別）"
         }
       ],
       "action": "compare-existing",
@@ -3189,7 +3200,7 @@
     },
     {
       "id": "news.2026-07-01-letter-dengue-guidance-v17",
-      "type": "news",
+      "type": "letter",
       "title": "致醫界通函第 612 號：登革熱／屈公病防治工作指引第 17 版自即日起適用",
       "file": "content/news/2026-07-01-letter-dengue-guidance-v17.json",
       "confidence": 1,
@@ -3209,7 +3220,7 @@
     },
     {
       "id": "news.2025-11-11-letter-dengue-guidance-v16",
-      "type": "news",
+      "type": "letter",
       "title": "致醫界通函第 603 號：登革熱／屈公病防治工作指引第 16 版公布",
       "file": "content/news/2025-11-11-letter-dengue-guidance-v16.json",
       "confidence": 1,
@@ -3256,6 +3267,11 @@
       "merged": true
     }
   ],
+  "sampling": {
+    "rate": 0.1,
+    "autoOk": 0,
+    "picked": []
+  },
   "migration": {
     "patchFile": "migration-patch.json",
     "applied": true,

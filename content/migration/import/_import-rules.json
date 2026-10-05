@@ -1,7 +1,7 @@
 {
   "id": "import-rules.legacy",
   "type": "import-rules",
-  "version": 4,
+  "version": 5,
   "title": "舊站匯出批次轉換規則（scripts/import-legacy.mjs 讀取）",
   "summary": "把舊站 CMS 匯出（每頁 .html＋.json 側檔）對應成新站內容草稿的規則：URL 模式→型別與目錄、類別→權責單位、疾病別名→疾病 id、標題關鍵字→疾病頁區塊、Bulletin typeid→newsType、信心計算權重與人工檢視門檻。規則是資料不是程式；正式批次先改這個檔再跑。",
   "owner": "unit.it",
@@ -164,6 +164,12 @@
       "label": "英文新聞稿",
       "lang": "en",
       "hint": "英文新聞稿以 sourceLang: en 建立，需補中文版"
+    },
+    "48": {
+      "newsType": "letter",
+      "type": "letter",
+      "label": "致醫界通函",
+      "hint": "致醫界通函建成 letter（letterNo 由標題「第 N 號」抽）；對象為醫療院所，audience professional"
     }
   },
   "categoryOwners": [
@@ -235,6 +241,17 @@
     {
       "match": "／通報",
       "owner": "unit.epidemic-intelligence"
+    },
+    {
+      "match": "新聞與公告",
+      "owner": "unit.pr",
+      "preferDiseaseFor": [
+        "letter"
+      ]
+    },
+    {
+      "match": "News",
+      "owner": "unit.pr"
     }
   ],
   "defaultOwner": "unit.oasis",
@@ -488,6 +505,9 @@
       "vaccine": [
         "public",
         "professional"
+      ],
+      "letter": [
+        "professional"
       ]
     },
     "professionalCategories": [
@@ -527,7 +547,8 @@
     "reviewConfidence": 0.6,
     "autoConfidence": 0.8,
     "archiveAfterYears": 3,
-    "summaryChars": 120
+    "summaryChars": 120,
+    "sampleRate": 0.1
   },
   "confidence": {
     "_comment": "ARCHITECTURE 17.3：型別對應明確 +0.4、owner 對應 +0.2、Markdown 無轉換警告 +0.2、附件全部找到 +0.1、無重複 +0.1；< reviewConfidence ⇒ 建議人工檢視",
@@ -536,5 +557,6 @@
     "markdown": 0.2,
     "attachments": 0.1,
     "unique": 0.1
-  }
+  },
+  "letterTitle": "致醫界通函第\\s*(\\d+)\\s*號"
 }

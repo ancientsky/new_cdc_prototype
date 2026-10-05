@@ -1,0 +1,46 @@
+{
+  "id": "news.2026-05-22-international-wha-technical-exchange",
+  "type": "news",
+  "title": "Taiwan CDC experts hold technical exchanges during the World Health Assembly week",
+  "owner": "unit.pr",
+  "publishedAt": "2026-05-22",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "During the World Health Assembly (WHA) week in Geneva, Taiwan CDC experts held technical exchanges with health official…",
+  "newsType": "press",
+  "bodyMarkdown": "During the World Health Assembly (WHA) week in Geneva, Taiwan CDC experts held technical exchanges with health officials and experts from partner countries.\n\nTopics included event-based surveillance, implementation of the International Health Regulations (IHR 2005) and its 24/7 National Focal Point, preparedness for emerging infectious diseases and antimicrobial resistance.\n\nTaiwan CDC will continue to share its epidemic prevention experience and seek meaningful participation in WHO technical meetings.\n\nThis release is illustrative prototype content; the date and meeting details are examples.",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/nzlD95UZ0xuu5PG-CvvCWD?typeid=9"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 12 處（mso 樣式 4、Mso 類別 4、命名空間標籤 4）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/nzlD95UZ0xuu5PG-CvvCWD?typeid=9",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "news.2026-05-22-international-wha-technical-exchange"
+    ]
+  }
+}

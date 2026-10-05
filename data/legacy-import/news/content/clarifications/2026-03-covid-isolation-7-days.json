@@ -1,0 +1,60 @@
+{
+  "id": "clar.2026-03-covid-isolation-7-days",
+  "type": "clarification",
+  "title": "網傳「確診新冠要居家隔離 7 天，同住家人也要隔離」為舊規定",
+  "owner": "unit.pr",
+  "publishedAt": "2026-03-20",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.covid-19"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "網傳：確診新冠要居家隔離 7 天，同住家人也要一起隔離，不能上班上課 查核結果：已過時",
+  "claim": "確診新冠要居家隔離 7 天，同住家人也要隔離",
+  "verdict": "outdated",
+  "clarificationMarkdown": "網傳：確診新冠要居家隔離 7 天，同住家人也要一起隔離，不能上班上課\n\n查核結果：已過時\n\n居家隔離與同住家人居家檢疫是疫情期間的舊規定。自 **2023 年 3 月 20 日**起，新冠改列第四類法定傳染病「新冠併發重症」，輕症確診者**不需隔離**，同住家人也不需居家檢疫。\n\n現行建議為「有症狀戴口罩、生病在家休息」：輕症者採自主健康管理，症狀緩解前避免探視長者或出入醫院、長照機構；高風險者確診後應儘早就醫評估抗病毒藥物。\n\n【疾管署說明】新冠確診「隔離 7 天、家人也要隔離」是舊規定，2023 年 3 月 20 日起已取消。現在輕症不用隔離，有症狀請戴口罩、生病在家休息，避免探視長者；高風險者確診請儘早就醫。",
+  "shareText": "網傳：確診新冠要居家隔離 7 天，同住家人也要一起隔離，不能上班上課 查核結果：已過時",
+  "reportChannel": "1922",
+  "basedOn": [
+    "disease.covid-19"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/odHqEUP-ot2eDzawy1NfoE?typeid=8772"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 17 處（mso 樣式 7、Mso 類別 5、命名空間標籤 5）"
+      },
+      {
+        "code": "type-from-bulletin",
+        "severity": "info",
+        "message": "公告類別是澄清稿，草稿建成 clarification（claim／verdict 由標題與內文推斷）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/odHqEUP-ot2eDzawy1NfoE?typeid=8772",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "clar.2026-03-covid-isolation-7-days"
+    ]
+  }
+}

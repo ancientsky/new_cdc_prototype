@@ -1,0 +1,50 @@
+{
+  "id": "news.2026-08-05-legacy-0e5573",
+  "type": "news",
+  "title": "麻疹境外移入病例新增 1 例，疾管署公布接觸者活動史並呼籲 1966 年後出生者評估接種 MMR",
+  "owner": "unit.pr",
+  "publishedAt": "2026-08-05",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.measles"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "個案於潛伏期間曾搭乘國際航班，同班機旅客已掌握。 前往流行地區前請評估接種。",
+  "newsType": "press",
+  "bodyMarkdown": "個案於潛伏期間曾搭乘國際航班，同班機旅客已掌握。\n\n前往流行地區前請評估接種。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/aDxmeNfFzCZphM65ldsE8y?typeid=9"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.8,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+      },
+      {
+        "code": "body-short",
+        "severity": "warn",
+        "message": "內文過短（38 字，低於 40）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/aDxmeNfFzCZphM65ldsE8y?typeid=9",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

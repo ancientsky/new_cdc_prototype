@@ -1,0 +1,45 @@
+{
+  "id": "news.2026-08-28-legacy-d5275b",
+  "type": "news",
+  "title": "疾管署提醒：開學季腸病毒傳播風險升高，落實洗手與生病不上學",
+  "owner": "unit.pr",
+  "publishedAt": "2026-08-28",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "幼兒園與托育機構請加強環境清消。 出現嗜睡、持續嘔吐、肌躍型抽搐等重症前兆請立即就醫。",
+  "newsType": "press",
+  "bodyMarkdown": "幼兒園與托育機構請加強環境清消。\n\n出現嗜睡、持續嘔吐、肌躍型抽搐等重症前兆請立即就醫。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/hXen_WGNxzD6BAZm3Q-6D-?typeid=9"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/hXen_WGNxzD6BAZm3Q-6D-?typeid=9",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}
