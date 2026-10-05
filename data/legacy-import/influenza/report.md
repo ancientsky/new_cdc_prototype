@@ -52,7 +52,7 @@
 | 25 | 公費抗病毒藥劑合約院所與藥局<br><sub>www.cdc.gov.tw/Category/List/Cf1DIbpAUq0ymjkxv1xC7U</sub> | 服務 → `service.influenza-flu-antiviral-contract-sites` | — | 0.6 | fields-pending | 核對後入庫（新站尚無對應內容） |
 | 26 | 歷年流感疫苗接種計畫（2020–2024 年度）<br><sub>www.cdc.gov.tw/Category/List/ewfWns-6XlMWzGdtpDFLK1</sub> | 清單頁 → `page.influenza-flu-past-seasons` | — | 0.6 | — | 清單頁，不轉換（新站由系統自動產生列表） |
 | 27 | 流感疫情持續上升，10 月 1 日公費疫苗開打，長者幼兒請優先接種<br><sub>www.cdc.gov.tw/Bulletin/Detail/8lZ1ophntJAgEqI_IgPLNQ?typeid=9</sub> | 新聞 → `news.2026-09-29-ili-weekly` | — | 1 | not-in-manifest | 既有內容已存在，供比對，不建議覆蓋 |
-| 28 | 類流感進入高峰期，65 歲以上有症狀者可直接使用公費抗病毒藥劑免快篩<br><sub>www.cdc.gov.tw/Bulletin/Detail/PGF89OEzK1r1Z_C6VybzcY?typeid=9</sub> | 新聞 → `news.2026-09-21-flu-antiviral-revised` | — | 1 | not-in-manifest | 既有內容已存在，供比對，不建議覆蓋 |
+| 28 | 類流感進入高峰期，未滿 5 歲及 65 歲以上有症狀者可直接使用公費抗病毒藥劑免快篩<br><sub>www.cdc.gov.tw/Bulletin/Detail/PGF89OEzK1r1Z_C6VybzcY?typeid=9</sub> | 新聞 → `news.2026-09-21-flu-antiviral-revised` | — | 1 | not-in-manifest | 既有內容已存在，供比對，不建議覆蓋 |
 | 29 | 2026–2027 年度公費流感疫苗 10 月 1 日開打，新冠疫苗同步提供<br><sub>www.cdc.gov.tw/Bulletin/Detail/YhMh5ap_Ft8C_2_Gy5z5J9?typeid=9</sub> | 新聞 → `news.2026-09-18-flu-vaccine-oct1` | — | 1 | not-in-manifest | 既有內容已存在，供比對，不建議覆蓋 |
 | 30 | 澄清：網傳「打流感疫苗會得流感、長輩打完會死」並非事實<br><sub>www.cdc.gov.tw/Bulletin/Detail/e_1DvbI5FdTnW6hLu35VWK?typeid=8772</sub> | 澄清稿 → `clar.2026-09-10-influenza-324aad` | `news.2026-09-10-clarify-flu-vaccine-death`（既有） | 1 | not-in-manifest | 既有內容已存在，供比對，不建議覆蓋 |
 | 31 | 夏季流感疫情持續，公費抗病毒藥劑使用對象維持現行規定<br><sub>www.cdc.gov.tw/Bulletin/Detail/A_1lDFgtPBFnJ0u06cQ18z?typeid=9</sub> | 新聞 → `news.2026-06-03-flu-antiviral-summer` | — | 1 | not-in-manifest | 既有內容已存在，供比對，不建議覆蓋 |

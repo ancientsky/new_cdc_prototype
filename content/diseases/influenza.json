@@ -195,7 +195,7 @@
       {
         "key": "antiviral-eligibility",
         "title": "公費抗病毒藥劑使用對象",
-        "summary": "併發重症、孕婦、未滿 5 歲快篩陽性、住院、高風險慢性病與肺炎等對象可由醫師開立；類流感高峰期 65 歲以上有症狀者免快篩。",
+        "summary": "併發重症、孕婦、未滿 5 歲及 65 歲以上、住院、高風險慢性病與肺炎等類流感患者可由醫師直接開立，不需快篩陽性。",
         "documents": [
           "doc.flu-antiviral-eligibility"
         ],

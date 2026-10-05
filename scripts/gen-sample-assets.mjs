@@ -91,20 +91,20 @@ const FOOTER = [
 
 // 1) 新聞稿 PDF
 put('news.2026-09-21-flu-antiviral-revised', 'press-release.pdf', makePdf({
-  title: '示意文件：類流感進入高峰期，65 歲以上有症狀者可直接使用公費抗病毒藥劑免快篩（新聞稿全文）',
-  titleEn: 'Press release (sample): ILI peak declared; antivirals for people aged 65+ without a rapid test',
+  title: '示意文件：類流感進入高峰期，未滿 5 歲及 65 歲以上有症狀者可直接使用公費抗病毒藥劑免快篩（新聞稿全文）',
+  titleEn: 'Press release (sample): ILI peak declared; antivirals for under-5s and people aged 65+ without a rapid test',
   ops: layout({
     header: 'Taiwan CDC Press Release (SAMPLE)', headerSub: 'Released 2026-09-21  |  Division of Acute Infectious Diseases',
     lines: [
-      ['F2', 15, 'ILI peak declared: people aged 65+ with flu-like symptoms'],
+      ['F2', 15, 'ILI peak declared: children under 5 and people aged 65+ with flu-like symptoms'],
       ['F2', 15, 'can receive government-funded antivirals without a rapid test'],
       '',
       'Emergency and outpatient visits for influenza-like illness (ILI) have risen for 4 consecutive weeks',
       'and are above the epidemic threshold. The ILI peak period starts today (2026-09-21).',
       '',
       ['F2', 12, 'What changes (Article 3 of the eligibility criteria):'],
-      ['F1', 11, '- Aged 65 or older with ILI symptoms: physicians may prescribe directly; no positive rapid test needed.', 12],
-      ['F1', 11, '- Children under 5: a positive rapid test is still required.', 12],
+      ['F1', 11, '- Children under 5 and people aged 65 or older with ILI symptoms: physicians may', 12],
+      ['F1', 11, '  prescribe directly based on clinical judgement; no positive rapid test needed.', 12],
       '',
       ['F2', 12, 'Advice:'],
       ['F1', 11, '- Antivirals work best within 48 hours of symptom onset.', 12],

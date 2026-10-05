@@ -2014,7 +2014,7 @@
         "title": "公費流感抗病毒藥劑使用對象",
         "category": "流感／抗病毒藥劑專區",
         "publishedAt": "2026-09-21",
-        "updatedAt": "2026-09-21",
+        "updatedAt": "2026-10-05",
         "breadcrumbs": [
           "首頁",
           "傳染病與防疫專題",
@@ -2441,7 +2441,7 @@
       "file": "28-news-2026-09-21-flu-antiviral-revised.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/PGF89OEzK1r1Z_C6VybzcY?typeid=9",
-        "title": "類流感進入高峰期，65 歲以上有症狀者可直接使用公費抗病毒藥劑免快篩",
+        "title": "類流感進入高峰期，未滿 5 歲及 65 歲以上有症狀者可直接使用公費抗病毒藥劑免快篩",
         "category": "流感／最新消息",
         "publishedAt": "2026-09-21",
         "updatedAt": "2026-09-21",
@@ -3296,7 +3296,7 @@
     {
       "id": "news.2026-09-21-flu-antiviral-revised",
       "type": "news",
-      "title": "類流感進入高峰期，65 歲以上有症狀者可直接使用公費抗病毒藥劑免快篩",
+      "title": "類流感進入高峰期，未滿 5 歲及 65 歲以上有症狀者可直接使用公費抗病毒藥劑免快篩",
       "file": "content/news/2026-09-21-flu-antiviral-revised.json",
       "confidence": 1,
       "existing": true,
