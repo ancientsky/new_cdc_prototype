@@ -22,6 +22,7 @@ import { buildPatch, applyPatch, expandTemplateItems } from './migration.mjs';
 import { renderReportMd } from './report.mjs';
 import { STRUCTURED_TYPES, extractFields, serviceTypeFor, typeOfId } from './types.mjs';
 import { faqItemsLoose, tasksFor, datedDeadlines, structuredFromText } from './qa.mjs';
+import { countryFor, dynamicForm, vaccineCandidates, referenceMd } from './travel.mjs';
 
 const h6 = (s) => createHash('sha1').update(String(s)).digest('hex').slice(0, 6);
 const DIRS = { disease: 'diseases', faq: 'faq', news: 'news', document: 'documents', page: 'pages', publication: 'publications', media: 'media', dataset: 'datasets', labtest: 'labtests', service: 'services', clarification: 'clarifications', topic: 'topics', vaccine: 'vaccines', letter: 'news' };
@@ -165,10 +166,14 @@ export function runImport(opts) {
     units: readJSON(path.join(contentDir, 'master/units.json'), []),
     diseases: readJSON(path.join(contentDir, 'master/diseases.json'), []),
     periods: readJSON(path.join(contentDir, 'master/review-periods.json'), {}),
+    countries: readJSON(path.join(contentDir, 'master/countries.json'), []),
+    vaccines: readJSON(path.join(contentDir, 'master/vaccines.json'), []),
   };
   const unitIds = new Set(master.units.filter((u) => u.publishes !== false).map((u) => u.id));
   const diseaseById = new Map(master.diseases.map((d) => [d.id, d]));
   const index = loadContentIndex(contentDir);
+  // 第九批：已知疫苗名稱（主檔名稱＋別名＋content/vaccines/ 標題），小節提到主檔沒有的疫苗時提示另建 vaccine
+  const knownVaccines = [...master.vaccines.flatMap((v) => [v.name, ...(v.aliases ?? [])]), ...[...index.byId.values()].filter((v) => v.type === 'vaccine').map((v) => v.title)].filter(Boolean);
   // 第八批：其他批次已轉過的頁（同網址）。欄目匯出會把疾病專題的 Q&A 再匯一次，這些頁歸疾病批；這裡讀同一個輸出根目錄下其他批次的 report.json
   const priorPages = loadPriorPages(opts.priorBatchesDir ?? path.dirname(out), out);
 
@@ -190,6 +195,7 @@ export function runImport(opts) {
   const mUsed = new Set();
 
   fs.rmSync(path.join(out, 'content'), { recursive: true, force: true });
+  fs.rmSync(path.join(out, 'reference'), { recursive: true, force: true });
   fs.mkdirSync(out, { recursive: true });
 
   const bags = new Map(); // draftId → AssetBag
@@ -265,8 +271,10 @@ export function runImport(opts) {
     pr.ownerMapped = !!pr.ownerRule;
 
     // 第八批：疾病專題的 Q&A 頁在欄目匯出裡會再出現一次（同網址）；它的「家」是該疾病的批次，疾病批已轉過就不重複出草稿，也不參與本批的清單比對（免得搶走別的清單項目）
+    // 第九批：不綁疾病的主題頁（例如國際旅遊欄目裡複製的「國際旅遊常見問答」）的家由規則檔 homeBatches 依頁型決定（faq → qa 批）；本批永遠不讓給自己。
+    // 目前只對 faq 啟用：news／document 也有欄目重複匯出的情形，但比對方式（標題、版次）不同，留待之後再開
     if (pat?.kind === 'faq' && side.url) {
-      const home = ds[0] ? diseaseById.get(ds[0].id)?.slug ?? null : null;
+      const home = ds[0] ? diseaseById.get(ds[0].id)?.slug ?? null : rules.homeBatches?.[pat.kind] ?? null;
       const prior = home && home !== slug ? (priorPages.get(normUrlKey(side.url)) ?? []).find((x) => x.batch === home) : null;
       if (prior) {
         pr.flags.convertedElsewhere = { batch: prior.batch, key: prior.key };
@@ -315,13 +323,38 @@ export function runImport(opts) {
     } else if (manifest) issue('not-in-manifest', 'warn', `移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目${derivedItems.length ? '；模板推導的標準子頁也沒對上' : ''}）`);
     if (pr.manifestDerived) issue('manifest-derived', 'info', `對到的是模板推導項 ${mi.key}（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單`);
 
+    // 第九批：資料產生頁（國際旅遊處方箋國家頁）：新站 /travel/{ISO2}/ 由每日資料快照產生，不轉內文、不出草稿；
+    // 舊內文另存 reference/{pageKey}.md 供承辦人比對產生頁有沒有漏掉衛教文字。看不出國家 ⇒ 退回一般 page 草稿
+    let generatedFallback = false;
+    if (pat?.kind === 'generated') {
+      const c = countryFor(master.countries, { query: u.query, title, breadcrumbs });
+      if (c) {
+        const newPath = String(pat.newPath ?? '/travel/{ISO2}/').replace('{ISO2}', c.iso2);
+        pr.flags.generated = { iso2: c.iso2, newPath };
+        pr.kind = 'generated'; pr.type = pat.type ?? 'page'; pr.pattern = pat.id;
+        issue('generated-page', 'info', `新站 ${newPath} 由每日資料快照自動產生（國家 ${c.name}，${c.from === 'query' ? `網址 ${c.hit}` : `${c.from === 'title' ? '標題' : '麵包屑'}「${c.hit}」`}），不出草稿；舊網址請 301 到 ${newPath}，舊內文存 reference/${page.name}.md 供比對`);
+        // 舊內文轉 Markdown：連結與圖片改成舊站絕對網址（不宣告資產，對照檔不上架）
+        const pageUrl = u.origin ? `${u.origin}${u.rawPath}${u.search}` : siteBase;
+        rewriteBody(ext.body, { siteBase, pageUrl, onImage: ({ src, alt }) => ({ src: new URL(src, pageUrl).href, alt }), onLink: () => null });
+        const { markdown } = toMd(ext.body.children);
+        const rel = `reference/${page.name}.md`;
+        fs.mkdirSync(path.join(out, 'reference'), { recursive: true });
+        fs.writeFileSync(path.join(out, rel), referenceMd({ title, url: side.url, iso2: c.iso2, newPath, markdown, exportedAt }));
+        pr.reference = rel;
+        pr.issues = uniqIssues(pr.issues);
+        continue;
+      }
+      generatedFallback = true;
+      issue('country-unknown', 'warn', `資料產生頁（${pat.label ?? pat.id}），但網址 query 與標題、麵包屑都對不到國家主檔，退回一般 page 草稿；請人工判斷對應的 ${pat.newPath ?? '/travel/{ISO2}/'}`);
+    }
+
     // 型別判斷
-    const patKind = pat?.kind ?? 'page';
+    const patKind = generatedFallback ? 'page' : pat?.kind ?? 'page';
     pr.pattern = pat?.id ?? null;
     let kind = patKind;
     let blockKey = null;
     let primary = ds[0]?.id ?? null;
-    pr.typeClear = !!pat && pat.typeClear !== false;
+    pr.typeClear = !!pat && pat.typeClear !== false && !generatedFallback;
     if (!pat) issue('type-unclear', 'warn', `網址「${side.url || '（空）'}」不符任何 URL 模式，暫以 page 處理`);
     if (kind === 'page' && pat?.mergeable && primary) {
       const k = mergeBlockFor(rules, { title, breadcrumbs, category });
@@ -411,16 +444,23 @@ export function runImport(opts) {
       usedIds.set(id, page.name);
       return id;
     };
+    // 第九批：小節標題提到主檔沒有的疫苗（黃熱病、流行性腦脊髓膜炎、傷寒…）⇒ 一則提示，名稱記在草稿 conversion.vaccineCandidates（轉 Markdown 前掃 h2–h4）
+    const scanVaccines = () => {
+      const vc = vaccineCandidates(ext.body, knownVaccines);
+      if (vc.length) issue('vaccine-not-in-master', 'info', `小節提到主檔沒有的疫苗：${vc.join('、')}；建議新增 vaccine 主檔與疫苗頁後，把這些小節改建成 vaccine`);
+      return vc;
+    };
     const shortKey = pr.manifestKey ?? h6(side.url || page.name);
     const slugStem = pr.manifestKey ? (pr.manifestKey.startsWith(`${short}-`) ? pr.manifestKey : `${short}-${pr.manifestKey}`) : `${short}-${shortKey}`;
 
     if (kind === 'disease-block') {
       // 併入疾病頁：id＝disease.xxx（多頁共用一份草稿）
       const draftId = primary;
+      const vaccineCands = scanVaccines();
       const ctx = makeCtx(draftId, slugStem, { withAttachments: true });
       const stat = rewriteBody(ext.body, ctx);
       afterRewrite(stat);
-      const unitBase = { pageKey: page.name, kind, type: 'disease', draftId, diseaseId: primary };
+      const unitBase = { pageKey: page.name, kind, type: 'disease', draftId, diseaseId: primary, vaccineCandidates: vaccineCands };
       const heading = (rules.blockHeadings ?? {});
       if (blockKey) {
         const { markdown, dropped } = toMd(ext.body.children);
@@ -621,12 +661,20 @@ export function runImport(opts) {
       // page（含清單頁）
       const wanted = pr.target?.startsWith('page.') ? pr.target : `page.${slugStem}`;
       const id = reserveId(wanted, `page.${short}-${shortKey}-${h6(side.url + page.name)}`);
+      const conv = {};
+      if (kind === 'page') {
+        // 第九批：查詢表單頁（國家下拉選單之類）：新站以功能取代，表單控制項不轉入內文，草稿只留說明文字
+        const df = dynamicForm(ext.body);
+        if (df) { pr.flags.dynamicForm = { options: df.options }; issue('dynamic-form', 'warn', `舊頁是查詢表單（${df.options} 個選項），新站以功能取代（請在清單填寫去處）；表單控制項不轉入內文`); }
+        const vc = scanVaccines();
+        if (vc.length) conv.vaccineCandidates = vc;
+      }
       const ctx = makeCtx(id, slugStem, { withAttachments: true });
       const stat = rewriteBody(ext.body, ctx);
       afterRewrite(stat);
       const { markdown, dropped } = toMd(ext.body.children);
       checks(markdown, ext.body, stat, dropped);
-      units.push({ pageKey: page.name, kind, type: 'page', draftId: id, title: stripTitlePrefix(rules, title), markdown, diseaseId: primary, publishedAt: publishedAt ?? exportedAt });
+      units.push({ pageKey: page.name, kind, type: 'page', draftId: id, title: stripTitlePrefix(rules, title), markdown, diseaseId: primary, publishedAt: publishedAt ?? exportedAt, conv });
       pr.outputs.push({ id, type: 'page', role: 'draft' });
       if (pr.targetExists && pr.targetType !== 'page' && !mergedInto) issue('target-type-differs', 'info', `對應的新站內容是 ${pr.target}（${pr.targetType}），草稿以 page 暫存，請比對後改建為 ${pr.targetType}`);
     }
@@ -792,6 +840,8 @@ export function runImport(opts) {
     const extra = { mergedFrom: srcPrs.map((p) => ({ page: p.key, url: p.source.url, blocks: us.filter((x) => x.pageKey === p.key).flatMap((x) => x.blocks.map((b) => b.key)) })) };
     if (intro?.summaryMd) extra.introMarkdown = intro.summaryMd;
     if (unassigned.length) extra.unassigned = unassigned;
+    const vcs = [...new Set(us.flatMap((x) => x.vaccineCandidates ?? []))];
+    if (vcs.length) extra.vaccineCandidates = vcs;
     drafts.push(finish(d, srcPrs, extra));
   }
 
@@ -837,7 +887,7 @@ export function runImport(opts) {
       key: p.key, file: p.htmlFile, source: { url: p.source.url, title: p.source.title, category: p.source.category, publishedAt: p.source.publishedAt, updatedAt: p.source.updatedAt, breadcrumbs: p.source.breadcrumbs, tab: p.source.tab },
       pattern: p.pattern, kind: p.kind, type: p.type, manifestKey: p.manifestKey, manifestDerived: p.manifestDerived, target: p.target, targetExists: p.targetExists, existing: p.existing, compareWith: p.compareWith,
       owner: p.owner, ownerRule: p.ownerRule, diseases: p.diseases, outputs: p.outputs, confidence: p.confidence, parts: p.parts, needsReview: p.needsReview,
-      issues: p.issues, action: p.action, flags: p.flags, stats: p.stats,
+      issues: p.issues, action: p.action, flags: p.flags, stats: p.stats, ...(p.reference ? { reference: p.reference } : {}),
     })),
     drafts: draftRecs,
     sampling,
@@ -858,6 +908,8 @@ export function runImport(opts) {
 }
 
 export function decideAction(pr, rules) {
+  // 第九批：新站由資料產生的頁（/travel/{ISO2}/），不轉內文；舊網址 301 到產生頁
+  if (pr.flags.generated) return 'skip-generated';
   if (pr.flags.drop) return 'drop';
   if (pr.flags.historical) return 'archive';
   if (pr.flags.convertedElsewhere) return 'skip-duplicate';
@@ -888,7 +940,9 @@ function summarize({ prs, draftRecs, bags, patch, manifest, exp, exportedAt }) {
     existing: prs.filter((p) => p.existing).length, schemaInvalid: draftRecs.filter((d) => !d.schemaValid).length,
     assets: asset, issues: { error: prs.flatMap((p) => p.issues).filter((i) => i.severity === 'error').length, warn: prs.flatMap((p) => p.issues).filter((i) => i.severity === 'warn').length, info: prs.flatMap((p) => p.issues).filter((i) => i.severity === 'info').length },
     manifest: manifest ? { items: manifest.data.items.length, matched: patch.summary.matched, missingPages: patch.summary.missingPages, derivedItems: patch.summary.derivedItems ?? 0, derivedMatched: patch.summary.derivedMatched ?? 0 } : null,
-    exportedAt, pagesWithoutOutput: prs.filter((p) => !p.outputs.length).length,
+    // 資料產生頁本來就不出草稿（第九批），不算「沒有輸出」
+    generated: prs.filter((p) => p.flags.generated).length,
+    exportedAt, pagesWithoutOutput: prs.filter((p) => !p.outputs.length && !p.flags.generated).length,
   };
 }
 

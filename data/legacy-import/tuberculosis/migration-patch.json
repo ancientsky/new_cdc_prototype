@@ -6,9 +6,10 @@
   "applied": {
     "statusChanges": [],
     "targetChanges": [],
+    "newPathChanges": [],
     "noteChanges": 0
   },
-  "rule": "只改 status／target／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。",
+  "rule": "只改 status／target／newPath／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。",
   "items": [
     {
       "key": "intro",
@@ -17,16 +18,19 @@
       "current": {
         "status": "migrated",
         "target": "disease.tuberculosis",
+        "newPath": null,
         "note": "舊專區首頁（疾病介紹頁籤）改為疾病頁：八個固定區塊、一分鐘重點、民眾／專業分眾。　【匯入 2026-10-03】草稿 disease.tuberculosis（信心 1；既有內容已存在，供比對；併入疾病頁）"
       },
       "proposed": {
         "status": "migrated",
         "target": "disease.tuberculosis",
+        "newPath": null,
         "note": "舊專區首頁（疾病介紹頁籤）改為疾病頁：八個固定區塊、一分鐘重點、民眾／專業分眾。　【匯入 2026-10-03】草稿 disease.tuberculosis（信心 1；既有內容已存在，供比對；併入疾病頁）"
       },
       "suggestion": {
         "status": "merged",
-        "target": "disease.tuberculosis"
+        "target": "disease.tuberculosis",
+        "newPath": null
       },
       "draftIds": [
         "disease.tuberculosis"
@@ -35,6 +39,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -45,16 +50,19 @@
       "current": {
         "status": "merged",
         "target": "disease.tuberculosis",
+        "newPath": null,
         "note": "併入「目前疫情與統計」區塊；數字改連開放資料集，不再手抄在頁面。　【匯入 2026-10-03】草稿 disease.tuberculosis（信心 1；既有內容已存在，供比對；併入疾病頁）"
       },
       "proposed": {
         "status": "merged",
         "target": "disease.tuberculosis",
+        "newPath": null,
         "note": "併入「目前疫情與統計」區塊；數字改連開放資料集，不再手抄在頁面。　【匯入 2026-10-03】草稿 disease.tuberculosis（信心 1；既有內容已存在，供比對；併入疾病頁）"
       },
       "suggestion": {
         "status": "merged",
-        "target": "disease.tuberculosis"
+        "target": "disease.tuberculosis",
+        "newPath": null
       },
       "draftIds": [
         "disease.tuberculosis"
@@ -63,6 +71,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -73,16 +82,19 @@
       "current": {
         "status": "merged",
         "target": "disease.tuberculosis",
+        "newPath": null,
         "note": "致病原、傳染方式、潛伏期與可傳染期合併為「怎麼傳染」區塊，潛伏期抽成一分鐘重點。　【匯入 2026-10-03】草稿 disease.tuberculosis（信心 1；既有內容已存在，供比對；併入疾病頁）"
       },
       "proposed": {
         "status": "merged",
         "target": "disease.tuberculosis",
+        "newPath": null,
         "note": "致病原、傳染方式、潛伏期與可傳染期合併為「怎麼傳染」區塊，潛伏期抽成一分鐘重點。　【匯入 2026-10-03】草稿 disease.tuberculosis（信心 1；既有內容已存在，供比對；併入疾病頁）"
       },
       "suggestion": {
         "status": "merged",
-        "target": "disease.tuberculosis"
+        "target": "disease.tuberculosis",
+        "newPath": null
       },
       "draftIds": [
         "disease.tuberculosis"
@@ -91,6 +103,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -101,16 +114,19 @@
       "current": {
         "status": "merged",
         "target": "disease.tuberculosis",
+        "newPath": null,
         "note": "併入「症狀與警示徵象」區塊，新增警示徵象提示。　【匯入 2026-10-03】草稿 disease.tuberculosis（信心 1；既有內容已存在，供比對；併入疾病頁）"
       },
       "proposed": {
         "status": "merged",
         "target": "disease.tuberculosis",
+        "newPath": null,
         "note": "併入「症狀與警示徵象」區塊，新增警示徵象提示。　【匯入 2026-10-03】草稿 disease.tuberculosis（信心 1；既有內容已存在，供比對；併入疾病頁）"
       },
       "suggestion": {
         "status": "merged",
-        "target": "disease.tuberculosis"
+        "target": "disease.tuberculosis",
+        "newPath": null
       },
       "draftIds": [
         "disease.tuberculosis"
@@ -119,6 +135,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -129,16 +146,19 @@
       "current": {
         "status": "merged",
         "target": "disease.tuberculosis",
+        "newPath": null,
         "note": "併入「診斷與治療」區塊，加入都治與就醫費用說明。　【匯入 2026-10-03】草稿 disease.tuberculosis（信心 1；既有內容已存在，供比對；併入疾病頁）"
       },
       "proposed": {
         "status": "merged",
         "target": "disease.tuberculosis",
+        "newPath": null,
         "note": "併入「診斷與治療」區塊，加入都治與就醫費用說明。　【匯入 2026-10-03】草稿 disease.tuberculosis（信心 1；既有內容已存在，供比對；併入疾病頁）"
       },
       "suggestion": {
         "status": "merged",
-        "target": "disease.tuberculosis"
+        "target": "disease.tuberculosis",
+        "newPath": null
       },
       "draftIds": [
         "disease.tuberculosis"
@@ -147,6 +167,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -157,16 +178,19 @@
       "current": {
         "status": "merged",
         "target": "disease.tuberculosis",
+        "newPath": null,
         "note": "併入疾病頁「疫苗」區塊；常見疑問另立 Q&A。　【匯入 2026-10-03】草稿 disease.tuberculosis（信心 1；既有內容已存在，供比對；併入疾病頁）"
       },
       "proposed": {
         "status": "merged",
         "target": "disease.tuberculosis",
+        "newPath": null,
         "note": "併入疾病頁「疫苗」區塊；常見疑問另立 Q&A。　【匯入 2026-10-03】草稿 disease.tuberculosis（信心 1；既有內容已存在，供比對；併入疾病頁）"
       },
       "suggestion": {
         "status": "merged",
-        "target": "disease.tuberculosis"
+        "target": "disease.tuberculosis",
+        "newPath": null
       },
       "draftIds": [
         "disease.tuberculosis"
@@ -175,6 +199,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -185,16 +210,19 @@
       "current": {
         "status": "merged",
         "target": "disease.tuberculosis",
+        "newPath": null,
         "note": "舊站單頁長清單拆為 9 則獨立 Q&A：每題有權責單位、審閱週期、依據正本與 AI 白名單狀態。　【匯入 2026-10-03】草稿 faq.tb-cough-two-weeks、faq.ltbi-treat-or-not、faq.tb-dots-what、faq.tb-contact-screening、faq.mdr-tb、faq.tb-treatment-cost、faq.tb-foreigner-health-check、faq.tb-contagious-after-treatment（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "merged",
         "target": "disease.tuberculosis",
+        "newPath": null,
         "note": "舊站單頁長清單拆為 9 則獨立 Q&A：每題有權責單位、審閱週期、依據正本與 AI 白名單狀態。　【匯入 2026-10-03】草稿 faq.tb-cough-two-weeks、faq.ltbi-treat-or-not、faq.tb-dots-what、faq.tb-contact-screening、faq.mdr-tb、faq.tb-treatment-cost、faq.tb-foreigner-health-check、faq.tb-contagious-after-treatment（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "disease.tuberculosis"
+        "target": "disease.tuberculosis",
+        "newPath": null
       },
       "draftIds": [
         "faq.tb-cough-two-weeks",
@@ -210,6 +238,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -220,22 +249,26 @@
       "current": {
         "status": "migrated",
         "target": "faq.tb-cough-two-weeks",
+        "newPath": null,
         "note": "【匯入 2026-10-03】與 faq.tb-cough-two-weeks 重複，未另出草稿（信心 0.9；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "faq.tb-cough-two-weeks",
+        "newPath": null,
         "note": "【匯入 2026-10-03】與 faq.tb-cough-two-weeks 重複，未另出草稿（信心 0.9；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "faq.tb-cough-two-weeks"
+        "target": "faq.tb-cough-two-weeks",
+        "newPath": null
       },
       "draftIds": [],
       "agree": true,
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -246,22 +279,26 @@
       "current": {
         "status": "migrated",
         "target": "faq.ltbi-treat-or-not",
+        "newPath": null,
         "note": "依據正本改連潛伏結核感染診治指引；指引修訂時自動加註並開待辦。　【匯入 2026-10-03】與 faq.ltbi-treat-or-not 重複，未另出草稿（信心 0.9；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "faq.ltbi-treat-or-not",
+        "newPath": null,
         "note": "依據正本改連潛伏結核感染診治指引；指引修訂時自動加註並開待辦。　【匯入 2026-10-03】與 faq.ltbi-treat-or-not 重複，未另出草稿（信心 0.9；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "faq.ltbi-treat-or-not"
+        "target": "faq.ltbi-treat-or-not",
+        "newPath": null
       },
       "draftIds": [],
       "agree": true,
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -272,16 +309,19 @@
       "current": {
         "status": "migrated",
         "target": "publication.poster-tb-seven-languages",
+        "newPath": null,
         "note": "七語海報建立出版品書目，翻譯狀態逐語言標示。　【匯入 2026-10-03】草稿 publication.poster-tb-seven-languages（信心 0.8；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "publication.poster-tb-seven-languages",
+        "newPath": null,
         "note": "七語海報建立出版品書目，翻譯狀態逐語言標示。　【匯入 2026-10-03】草稿 publication.poster-tb-seven-languages（信心 0.8；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "publication.poster-tb-seven-languages"
+        "target": "publication.poster-tb-seven-languages",
+        "newPath": null
       },
       "draftIds": [
         "publication.poster-tb-seven-languages"
@@ -290,6 +330,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -300,16 +341,19 @@
       "current": {
         "status": "migrated",
         "target": "media.tb-cough-two-weeks",
+        "newPath": null,
         "note": "影片補逐字稿與章節，標示依據正本；正本修訂時自動判定是否過時。　【匯入 2026-10-03】草稿 media.tb-cough-two-weeks（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "media.tb-cough-two-weeks",
+        "newPath": null,
         "note": "影片補逐字稿與章節，標示依據正本；正本修訂時自動判定是否過時。　【匯入 2026-10-03】草稿 media.tb-cough-two-weeks（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "media.tb-cough-two-weeks"
+        "target": "media.tb-cough-two-weeks",
+        "newPath": null
       },
       "draftIds": [
         "media.tb-cough-two-weeks"
@@ -318,6 +362,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -328,16 +373,19 @@
       "current": {
         "status": "migrated",
         "target": "media.migrant-worker-health-check",
+        "newPath": null,
         "note": "【匯入 2026-10-03】草稿 media.migrant-worker-health-check（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "media.migrant-worker-health-check",
+        "newPath": null,
         "note": "【匯入 2026-10-03】草稿 media.migrant-worker-health-check（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "media.migrant-worker-health-check"
+        "target": "media.migrant-worker-health-check",
+        "newPath": null
       },
       "draftIds": [
         "media.migrant-worker-health-check"
@@ -346,6 +394,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -356,16 +405,19 @@
       "current": {
         "status": "migrated",
         "target": "doc.tb-guideline.2025-09-01",
+        "newPath": null,
         "note": "PDF 轉為機讀版本文，建立版本鏈與「異動對照」；舊版自動標示已取代。　【匯入 2026-10-03】草稿 doc.tb-guideline.2025-09-01（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.tb-guideline.2025-09-01",
+        "newPath": null,
         "note": "PDF 轉為機讀版本文，建立版本鏈與「異動對照」；舊版自動標示已取代。　【匯入 2026-10-03】草稿 doc.tb-guideline.2025-09-01（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.tb-guideline.2025-09-01"
+        "target": "doc.tb-guideline.2025-09-01",
+        "newPath": null
       },
       "draftIds": [
         "doc.tb-guideline.2025-09-01"
@@ -374,6 +426,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -384,16 +437,19 @@
       "current": {
         "status": "archived",
         "target": "doc.tb-guideline.2022-03-01",
+        "newPath": null,
         "note": "舊版保留查閱：頁首紅色警示、noindex、退出 AI 白名單；舊 PDF 網址 301 至現行版。　【匯入 2026-10-03】草稿 doc.tb-guideline.2022-03-01（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "archived",
         "target": "doc.tb-guideline.2022-03-01",
+        "newPath": null,
         "note": "舊版保留查閱：頁首紅色警示、noindex、退出 AI 白名單；舊 PDF 網址 301 至現行版。　【匯入 2026-10-03】草稿 doc.tb-guideline.2022-03-01（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "archived",
-        "target": "doc.tb-guideline.2022-03-01"
+        "target": "doc.tb-guideline.2022-03-01",
+        "newPath": null
       },
       "draftIds": [
         "doc.tb-guideline.2022-03-01"
@@ -402,6 +458,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -412,16 +469,19 @@
       "current": {
         "status": "migrated",
         "target": "doc.ltbi-guideline.2024-01-01",
+        "newPath": null,
         "note": "【匯入 2026-10-03】草稿 doc.ltbi-guideline.2024-01-01（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.ltbi-guideline.2024-01-01",
+        "newPath": null,
         "note": "【匯入 2026-10-03】草稿 doc.ltbi-guideline.2024-01-01（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.ltbi-guideline.2024-01-01"
+        "target": "doc.ltbi-guideline.2024-01-01",
+        "newPath": null
       },
       "draftIds": [
         "doc.ltbi-guideline.2024-01-01"
@@ -430,6 +490,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -440,16 +501,19 @@
       "current": {
         "status": "archived",
         "target": "doc.ltbi-guideline.2024-01-01",
+        "newPath": null,
         "note": "舊版內容已併入現行指引，不另建版本頁；原檔封存，舊網址 301 至現行版。　【匯入 2026-10-03】草稿 doc.ltbi-guideline.2021-05-01（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "archived",
         "target": "doc.ltbi-guideline.2024-01-01",
+        "newPath": null,
         "note": "舊版內容已併入現行指引，不另建版本頁；原檔封存，舊網址 301 至現行版。　【匯入 2026-10-03】草稿 doc.ltbi-guideline.2021-05-01（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "archived",
-        "target": "doc.ltbi-guideline.2024-01-01"
+        "target": "doc.ltbi-guideline.2024-01-01",
+        "newPath": null
       },
       "draftIds": [
         "doc.ltbi-guideline.2021-05-01"
@@ -458,6 +522,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -468,16 +533,19 @@
       "current": {
         "status": "migrated",
         "target": "doc.tb-contact-investigation.2025-01-01",
+        "newPath": null,
         "note": "【匯入 2026-10-03】草稿 doc.tb-contact-investigation.2025-01-01（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.tb-contact-investigation.2025-01-01",
+        "newPath": null,
         "note": "【匯入 2026-10-03】草稿 doc.tb-contact-investigation.2025-01-01（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.tb-contact-investigation.2025-01-01"
+        "target": "doc.tb-contact-investigation.2025-01-01",
+        "newPath": null
       },
       "draftIds": [
         "doc.tb-contact-investigation.2025-01-01"
@@ -486,6 +554,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -496,16 +565,19 @@
       "current": {
         "status": "migrated",
         "target": "doc.dots-manual.2025-01-01",
+        "newPath": null,
         "note": "【匯入 2026-10-03】草稿 doc.dots-manual.2025-01-01（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.dots-manual.2025-01-01",
+        "newPath": null,
         "note": "【匯入 2026-10-03】草稿 doc.dots-manual.2025-01-01（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.dots-manual.2025-01-01"
+        "target": "doc.dots-manual.2025-01-01",
+        "newPath": null
       },
       "draftIds": [
         "doc.dots-manual.2025-01-01"
@@ -514,6 +586,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -524,16 +597,19 @@
       "current": {
         "status": "migrated",
         "target": "doc.tb-manual.2025-07-01",
+        "newPath": null,
         "note": "【匯入 2026-10-03】草稿 doc.tb-manual.2025-07-01（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.tb-manual.2025-07-01",
+        "newPath": null,
         "note": "【匯入 2026-10-03】草稿 doc.tb-manual.2025-07-01（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.tb-manual.2025-07-01"
+        "target": "doc.tb-manual.2025-07-01",
+        "newPath": null
       },
       "draftIds": [
         "doc.tb-manual.2025-07-01"
@@ -542,6 +618,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -552,16 +629,19 @@
       "current": {
         "status": "archived",
         "target": "doc.tb-manual.2025-07-01",
+        "newPath": null,
         "note": "2019 年版未建版本頁；原檔封存，舊網址 301 至現行版。　【匯入 2026-10-03】草稿 doc.tb-manual.2019-06-28（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "archived",
         "target": "doc.tb-manual.2025-07-01",
+        "newPath": null,
         "note": "2019 年版未建版本頁；原檔封存，舊網址 301 至現行版。　【匯入 2026-10-03】草稿 doc.tb-manual.2019-06-28（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "archived",
-        "target": "doc.tb-manual.2025-07-01"
+        "target": "doc.tb-manual.2025-07-01",
+        "newPath": null
       },
       "draftIds": [
         "doc.tb-manual.2019-06-28"
@@ -570,6 +650,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -580,16 +661,19 @@
       "current": {
         "status": "migrated",
         "target": "doc.tb-case-definition.2024-01-01",
+        "newPath": null,
         "note": "病例定義改為文件版本鏈，通報時限表由傳染病主檔自動產生並連回本文件。　【匯入 2026-10-03】草稿 doc.tb-case-definition.2024-01-01（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.tb-case-definition.2024-01-01",
+        "newPath": null,
         "note": "病例定義改為文件版本鏈，通報時限表由傳染病主檔自動產生並連回本文件。　【匯入 2026-10-03】草稿 doc.tb-case-definition.2024-01-01（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.tb-case-definition.2024-01-01"
+        "target": "doc.tb-case-definition.2024-01-01",
+        "newPath": null
       },
       "draftIds": [
         "doc.tb-case-definition.2024-01-01"
@@ -598,6 +682,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -608,16 +693,19 @@
       "current": {
         "status": "merged",
         "target": "service.notifiable-disease-report",
+        "newPath": null,
         "note": "併入法定傳染病通報服務頁；時限不再手寫，由傳染病主檔自動產生。　【匯入 2026-10-03】草稿 service.notifiable-disease-report（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "merged",
         "target": "service.notifiable-disease-report",
+        "newPath": null,
         "note": "併入法定傳染病通報服務頁；時限不再手寫，由傳染病主檔自動產生。　【匯入 2026-10-03】草稿 service.notifiable-disease-report（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "service.notifiable-disease-report"
+        "target": "service.notifiable-disease-report",
+        "newPath": null
       },
       "draftIds": [
         "service.notifiable-disease-report"
@@ -626,6 +714,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -636,16 +725,19 @@
       "current": {
         "status": "merged",
         "target": "labtest.tuberculosis",
+        "newPath": null,
         "note": "檢體、容器、保存運送與時限改為結構化欄位，與通報時限自動比對一致性。　【匯入 2026-10-03】草稿 labtest.tuberculosis（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "merged",
         "target": "labtest.tuberculosis",
+        "newPath": null,
         "note": "檢體、容器、保存運送與時限改為結構化欄位，與通報時限自動比對一致性。　【匯入 2026-10-03】草稿 labtest.tuberculosis（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "labtest.tuberculosis"
+        "target": "labtest.tuberculosis",
+        "newPath": null
       },
       "draftIds": [
         "labtest.tuberculosis"
@@ -654,6 +746,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -664,16 +757,19 @@
       "current": {
         "status": "merged",
         "target": "dataset.tb-new-cases",
+        "newPath": null,
         "note": "網頁靜態表格改為開放資料集與 API，標示更新頻率與授權。　【匯入 2026-10-03】草稿 dataset.tb-new-cases（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "merged",
         "target": "dataset.tb-new-cases",
+        "newPath": null,
         "note": "網頁靜態表格改為開放資料集與 API，標示更新頻率與授權。　【匯入 2026-10-03】草稿 dataset.tb-new-cases（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "dataset.tb-new-cases"
+        "target": "dataset.tb-new-cases",
+        "newPath": null
       },
       "draftIds": [
         "dataset.tb-new-cases"
@@ -682,6 +778,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -692,16 +789,19 @@
       "current": {
         "status": "pending",
         "target": null,
+        "newPath": null,
         "note": "歷年年報 PDF 尚待逐年建立出版品書目（ISBN、GPN）與機讀摘要；完成前舊網址暫不轉址。　【匯入 2026-10-03】草稿 doc.tb-annual-report.2025-12-31（信心 1）"
       },
       "proposed": {
         "status": "pending",
         "target": null,
+        "newPath": null,
         "note": "歷年年報 PDF 尚待逐年建立出版品書目（ISBN、GPN）與機讀摘要；完成前舊網址暫不轉址。　【匯入 2026-10-03】草稿 doc.tb-annual-report.2025-12-31（信心 1）"
       },
       "suggestion": {
         "status": "pending",
-        "target": null
+        "target": null,
+        "newPath": null
       },
       "draftIds": [
         "doc.tb-annual-report.2025-12-31"
@@ -710,6 +810,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -720,16 +821,19 @@
       "current": {
         "status": "merged",
         "target": "topic.tb-prevention",
+        "newPath": null,
         "note": "併入結核病防治專區；作業細節改連都治計畫作業手冊，民眾版另立 Q&A。　【匯入 2026-10-03】草稿 page.tb-dots（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "merged",
         "target": "topic.tb-prevention",
+        "newPath": null,
         "note": "併入結核病防治專區；作業細節改連都治計畫作業手冊，民眾版另立 Q&A。　【匯入 2026-10-03】草稿 page.tb-dots（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "topic.tb-prevention"
+        "target": "topic.tb-prevention",
+        "newPath": null
       },
       "draftIds": [
         "page.tb-dots"
@@ -738,6 +842,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -748,16 +853,19 @@
       "current": {
         "status": "merged",
         "target": "service.ltbi-treatment",
+        "newPath": null,
         "note": "改為申請服務頁：對象、步驟、應備文件、處理天數。　【匯入 2026-10-03】草稿 service.ltbi-treatment（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "merged",
         "target": "service.ltbi-treatment",
+        "newPath": null,
         "note": "改為申請服務頁：對象、步驟、應備文件、處理天數。　【匯入 2026-10-03】草稿 service.ltbi-treatment（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "service.ltbi-treatment"
+        "target": "service.ltbi-treatment",
+        "newPath": null
       },
       "draftIds": [
         "service.ltbi-treatment"
@@ -766,6 +874,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -776,16 +885,19 @@
       "current": {
         "status": "merged",
         "target": "faq.tb-contact-screening",
+        "newPath": null,
         "note": "民眾版改為 Q&A；專業規定見接觸者檢查指引。　【匯入 2026-10-03】草稿 page.tb-contact（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "merged",
         "target": "faq.tb-contact-screening",
+        "newPath": null,
         "note": "民眾版改為 Q&A；專業規定見接觸者檢查指引。　【匯入 2026-10-03】草稿 page.tb-contact（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "faq.tb-contact-screening"
+        "target": "faq.tb-contact-screening",
+        "newPath": null
       },
       "draftIds": [
         "page.tb-contact"
@@ -794,6 +906,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -804,16 +917,19 @@
       "current": {
         "status": "merged",
         "target": "topic.tb-prevention",
+        "newPath": null,
         "note": "併入防治專區「抗藥性結核病醫療照護體系（TMTC）」段落與疾病頁專業版防治計畫。　【匯入 2026-10-03】草稿 page.tb-mdr（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "merged",
         "target": "topic.tb-prevention",
+        "newPath": null,
         "note": "併入防治專區「抗藥性結核病醫療照護體系（TMTC）」段落與疾病頁專業版防治計畫。　【匯入 2026-10-03】草稿 page.tb-mdr（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "topic.tb-prevention"
+        "target": "topic.tb-prevention",
+        "newPath": null
       },
       "draftIds": [
         "page.tb-mdr"
@@ -822,6 +938,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -832,16 +949,19 @@
       "current": {
         "status": "pending",
         "target": null,
+        "newPath": null,
         "note": "名單需轉為結構化資料集（院所代碼、地址、聯絡窗口）並建立更新頻率後上架；完成前保留舊頁。　【匯入 2026-10-03】草稿 service.tb-mdr-hospitals（信心 0.8）"
       },
       "proposed": {
         "status": "pending",
         "target": null,
+        "newPath": null,
         "note": "名單需轉為結構化資料集（院所代碼、地址、聯絡窗口）並建立更新頻率後上架；完成前保留舊頁。　【匯入 2026-10-03】草稿 service.tb-mdr-hospitals（信心 0.8）"
       },
       "suggestion": {
         "status": "pending",
-        "target": null
+        "target": null,
+        "newPath": null
       },
       "draftIds": [
         "service.tb-mdr-hospitals"
@@ -850,6 +970,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -860,16 +981,19 @@
       "current": {
         "status": "merged",
         "target": "topic.tb-prevention",
+        "newPath": null,
         "note": "計畫目標與策略併入防治專區；年度成果改由新聞稿與資料集呈現。　【匯入 2026-10-03】草稿 page.tb-end-tb-2035（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "merged",
         "target": "topic.tb-prevention",
+        "newPath": null,
         "note": "計畫目標與策略併入防治專區；年度成果改由新聞稿與資料集呈現。　【匯入 2026-10-03】草稿 page.tb-end-tb-2035（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "topic.tb-prevention"
+        "target": "topic.tb-prevention",
+        "newPath": null
       },
       "draftIds": [
         "page.tb-end-tb-2035"
@@ -878,6 +1002,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -888,16 +1013,19 @@
       "current": {
         "status": "merged",
         "target": "topic.tb-prevention",
+        "newPath": null,
         "note": "矯正機關、長照機構、移工、山地鄉等族群篩檢併入防治專區與疾病頁專業版。　【匯入 2026-10-03】草稿 page.tb-high-risk（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "merged",
         "target": "topic.tb-prevention",
+        "newPath": null,
         "note": "矯正機關、長照機構、移工、山地鄉等族群篩檢併入防治專區與疾病頁專業版。　【匯入 2026-10-03】草稿 page.tb-high-risk（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "topic.tb-prevention"
+        "target": "topic.tb-prevention",
+        "newPath": null
       },
       "draftIds": [
         "page.tb-high-risk"
@@ -906,6 +1034,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -916,16 +1045,19 @@
       "current": {
         "status": "migrated",
         "target": "service.tb-treatment-subsidy",
+        "newPath": null,
         "note": "改為申請服務頁，載明法源、步驟與聯絡窗口。　【匯入 2026-10-03】草稿 service.tb-treatment-subsidy（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "service.tb-treatment-subsidy",
+        "newPath": null,
         "note": "改為申請服務頁，載明法源、步驟與聯絡窗口。　【匯入 2026-10-03】草稿 service.tb-treatment-subsidy（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "service.tb-treatment-subsidy"
+        "target": "service.tb-treatment-subsidy",
+        "newPath": null
       },
       "draftIds": [
         "service.tb-treatment-subsidy"
@@ -934,6 +1066,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -944,16 +1077,19 @@
       "current": {
         "status": "merged",
         "target": "faq.tb-foreigner-health-check",
+        "newPath": null,
         "note": "併入 Q&A；移工多語素材見新住民與移工健康專區。　【匯入 2026-10-03】草稿 page.tb-foreigner（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "merged",
         "target": "faq.tb-foreigner-health-check",
+        "newPath": null,
         "note": "併入 Q&A；移工多語素材見新住民與移工健康專區。　【匯入 2026-10-03】草稿 page.tb-foreigner（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "faq.tb-foreigner-health-check"
+        "target": "faq.tb-foreigner-health-check",
+        "newPath": null
       },
       "draftIds": [
         "page.tb-foreigner"
@@ -962,6 +1098,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -972,16 +1109,19 @@
       "current": {
         "status": "migrated",
         "target": "research.2025-migrant-tb-active-case-finding",
+        "newPath": null,
         "note": "【匯入 2026-10-03】草稿 page.tb-research（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "research.2025-migrant-tb-active-case-finding",
+        "newPath": null,
         "note": "【匯入 2026-10-03】草稿 page.tb-research（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "research.2025-migrant-tb-active-case-finding"
+        "target": "research.2025-migrant-tb-active-case-finding",
+        "newPath": null
       },
       "draftIds": [
         "page.tb-research"
@@ -990,6 +1130,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -1000,16 +1141,19 @@
       "current": {
         "status": "pending",
         "target": null,
+        "newPath": null,
         "note": "投影片 40 餘份，待權責單位挑選現行版本、補講者備註與機讀摘要後上架；過期教材不移轉。　【匯入 2026-10-03】草稿 page.tb-training-slides（信心 0.5；需人工檢視）"
       },
       "proposed": {
         "status": "pending",
         "target": null,
+        "newPath": null,
         "note": "投影片 40 餘份，待權責單位挑選現行版本、補講者備註與機讀摘要後上架；過期教材不移轉。　【匯入 2026-10-03】草稿 page.tb-training-slides（信心 0.5；需人工檢視）"
       },
       "suggestion": {
         "status": "pending",
-        "target": null
+        "target": null,
+        "newPath": null
       },
       "draftIds": [
         "page.tb-training-slides"
@@ -1018,6 +1162,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -1028,16 +1173,19 @@
       "current": {
         "status": "merged",
         "target": "topic.tb-prevention",
+        "newPath": null,
         "note": "外部連結併入防治專區，納入每日連結健康檢查。　【匯入 2026-10-03】草稿 page.tb-links（信心 0.6；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "merged",
         "target": "topic.tb-prevention",
+        "newPath": null,
         "note": "外部連結併入防治專區，納入每日連結健康檢查。　【匯入 2026-10-03】草稿 page.tb-links（信心 0.6；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "topic.tb-prevention"
+        "target": "topic.tb-prevention",
+        "newPath": null
       },
       "draftIds": [
         "page.tb-links"
@@ -1046,6 +1194,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -1056,16 +1205,19 @@
       "current": {
         "status": "merged",
         "target": "disease.tuberculosis",
+        "newPath": null,
         "note": "疾病頁自動帶出關聯新聞；新聞稿依據正本修訂時自動加註。　【匯入 2026-10-03】草稿 page.tb-news-list（信心 0.6；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "merged",
         "target": "disease.tuberculosis",
+        "newPath": null,
         "note": "疾病頁自動帶出關聯新聞；新聞稿依據正本修訂時自動加註。　【匯入 2026-10-03】草稿 page.tb-news-list（信心 0.6；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "disease.tuberculosis"
+        "target": "disease.tuberculosis",
+        "newPath": null
       },
       "draftIds": [
         "page.tb-news-list"
@@ -1074,6 +1226,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -1084,16 +1237,19 @@
       "current": {
         "status": "migrated",
         "target": "news.2025-03-24-world-tb-day",
+        "newPath": null,
         "note": "【匯入 2026-10-03】草稿 news.2025-03-24-world-tb-day（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "news.2025-03-24-world-tb-day",
+        "newPath": null,
         "note": "【匯入 2026-10-03】草稿 news.2025-03-24-world-tb-day（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "news.2025-03-24-world-tb-day"
+        "target": "news.2025-03-24-world-tb-day",
+        "newPath": null
       },
       "draftIds": [
         "news.2025-03-24-world-tb-day"
@@ -1102,6 +1258,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -1112,16 +1269,19 @@
       "current": {
         "status": "dropped",
         "target": null,
+        "newPath": null,
         "note": "過期活動頁（報名已於 2019 年截止），無保存價值；不移轉、不轉址，伺服器回 410。　【匯入 2026-10-03】草稿 page.tb-event-2019（信心 1）"
       },
       "proposed": {
         "status": "dropped",
         "target": null,
+        "newPath": null,
         "note": "過期活動頁（報名已於 2019 年截止），無保存價值；不移轉、不轉址，伺服器回 410。　【匯入 2026-10-03】草稿 page.tb-event-2019（信心 1）"
       },
       "suggestion": {
         "status": "dropped",
-        "target": null
+        "target": null,
+        "newPath": null
       },
       "draftIds": [
         "page.tb-event-2019"
@@ -1130,6 +1290,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     }
@@ -1221,6 +1382,7 @@
     "statusChanges": 0,
     "pendingToMigrated": 0,
     "targetChanges": 0,
+    "newPathChanges": 0,
     "noteChanges": 0,
     "stillPending": 3
   },

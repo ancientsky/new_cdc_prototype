@@ -4,7 +4,7 @@ import { ACTION_LABEL } from './migration.mjs';
 const esc = (s) => String(s ?? '').replace(/\|/g, '\\|').replace(/\n/g, ' ');
 const EXTRA = { publication: '出版品', media: '影音', dataset: '資料集', labtest: '檢驗', service: '服務', clarification: '澄清稿', topic: '專區', vaccine: '疫苗', letter: '致醫界通函' };
 const TYPE_LABEL = { disease: '疾病頁', faq: 'Q&A', news: '新聞', document: '文件', page: '頁面', ...EXTRA };
-const KIND_LABEL = { 'disease-block': '併入疾病頁', faq: 'Q&A', news: '新聞', document: '文件', page: '頁面', list: '清單頁', ...EXTRA };
+const KIND_LABEL = { 'disease-block': '併入疾病頁', faq: 'Q&A', news: '新聞', document: '文件', page: '頁面', list: '清單頁', generated: '資料產生頁', ...EXTRA };
 
 export function renderReportMd(report, patch) {
   const s = report.summary;
@@ -41,7 +41,7 @@ export function renderReportMd(report, patch) {
   L.push('| --- | --- | --- | --- | --- | --- | --- |');
   report.pages.forEach((p, i) => {
     const outs = p.outputs.map((o) => `\`${o.id}\`${o.role === 'merged' ? `（併入${o.block ? `：${o.block}` : ''}）` : o.role === 'duplicate' ? '（重複，未輸出）' : ''}`).join('<br>') || '—';
-    const target = p.target ? `\`${p.target}\`${p.existing ? '（既有）' : ''}` : '—';
+    const target = p.target ? `\`${p.target}\`${p.existing ? '（既有）' : ''}` : p.flags?.generated ? `\`${p.flags.generated.newPath}\`（資料產生）` : '—';
     const iss = p.issues.filter((x) => x.severity !== 'info');
     const issues = iss.length ? iss.map((x) => `${x.code}`).join('、') : '—';
     L.push(`| ${i + 1} | ${esc(p.source.title)}<br><sub>${esc(p.source.url.replace(/^https?:\/\//, ''))}</sub> | ${KIND_LABEL[p.kind] ?? p.kind} → ${outs} | ${target} | ${p.confidence}${p.needsReview ? ' ⚠' : ''} | ${esc(issues)} | ${ACTION_LABEL[p.action] ?? p.action} |`);
@@ -60,6 +60,16 @@ export function renderReportMd(report, patch) {
   L.push('');
   for (const p of merged) L.push(`- 「${p.source.title}」→ \`${p.outputs[0]?.id}\` 區塊 ${p.outputs[0]?.block ?? '—'}${p.existing ? '（疾病頁既有內容已存在，供比對）' : ''}`);
   L.push('');
+  // 第九批：資料產生頁（新站由資料快照產生，不出草稿）；沒有就不列這一節
+  const gen = report.pages.filter((p) => p.flags?.generated);
+  if (gen.length) {
+    L.push(`## 資料產生頁（${gen.length} 頁）`);
+    L.push('');
+    L.push('新站這些頁由每日資料快照自動產生，不轉內文、不出草稿；舊網址 301 到產生頁。舊內文存在對照檔，請比對產生頁有沒有漏掉衛教文字。');
+    L.push('');
+    for (const p of gen) L.push(`- 「${p.source.title}」→ \`${p.flags.generated.newPath}\` → 對照檔 \`${p.reference ?? '—'}\``);
+    L.push('');
+  }
   if (report.sampling) {
     const sp = report.sampling;
     L.push(`## 二級抽樣檢視名單（近年新聞 auto-ok ${sp.autoOk} 頁，抽 ${Math.round(sp.rate * 100)}% ＝ ${sp.picked.length} 頁）`);

@@ -6,9 +6,10 @@
   "applied": {
     "statusChanges": [],
     "targetChanges": [],
+    "newPathChanges": [],
     "noteChanges": 0
   },
-  "rule": "只改 status／target／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。",
+  "rule": "只改 status／target／newPath／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。",
   "items": [
     {
       "key": "ev-zone",
@@ -17,16 +18,19 @@
       "current": {
         "status": "migrated",
         "target": "disease.enterovirus",
+        "newPath": null,
         "note": "舊專區首頁改為疾病頁：家長、教托育機構與醫療人員三種入口以專區導覽分流。　【匯入 2026-10-03】草稿 page.enterovirus-ev-zone（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "disease.enterovirus",
+        "newPath": null,
         "note": "舊專區首頁改為疾病頁：家長、教托育機構與醫療人員三種入口以專區導覽分流。　【匯入 2026-10-03】草稿 page.enterovirus-ev-zone（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "disease.enterovirus"
+        "target": "disease.enterovirus",
+        "newPath": null
       },
       "draftIds": [
         "page.enterovirus-ev-zone"
@@ -35,6 +39,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -45,16 +50,19 @@
       "current": {
         "status": "migrated",
         "target": "doc.ev-childcare-guideline.2026-09-10",
+        "newPath": null,
         "note": "民眾與機構共讀；停課標準數字須與地方公告一致，指引修訂時 Q&A 自動加註。　【匯入 2026-10-03】草稿 doc.ev-childcare-guideline.2026-09-10（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.ev-childcare-guideline.2026-09-10",
+        "newPath": null,
         "note": "民眾與機構共讀；停課標準數字須與地方公告一致，指引修訂時 Q&A 自動加註。　【匯入 2026-10-03】草稿 doc.ev-childcare-guideline.2026-09-10（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.ev-childcare-guideline.2026-09-10"
+        "target": "doc.ev-childcare-guideline.2026-09-10",
+        "newPath": null
       },
       "draftIds": [
         "doc.ev-childcare-guideline.2026-09-10"
@@ -63,6 +71,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -73,16 +82,19 @@
       "current": {
         "status": "merged",
         "target": "doc.ev-childcare-guideline.2026-09-10",
+        "newPath": null,
         "note": "併入教托育機構指引「停課標準」章節；通報窗口連到群聚通報服務頁。　【匯入 2026-10-03】草稿 page.enterovirus-ev-closure-reporting（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "merged",
         "target": "doc.ev-childcare-guideline.2026-09-10",
+        "newPath": null,
         "note": "併入教托育機構指引「停課標準」章節；通報窗口連到群聚通報服務頁。　【匯入 2026-10-03】草稿 page.enterovirus-ev-closure-reporting（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.ev-childcare-guideline.2026-09-10"
+        "target": "doc.ev-childcare-guideline.2026-09-10",
+        "newPath": null
       },
       "draftIds": [
         "page.enterovirus-ev-closure-reporting"
@@ -91,6 +103,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -101,16 +114,19 @@
       "current": {
         "status": "pending",
         "target": null,
+        "newPath": null,
         "note": "名單依年度公告更新；需先確認是否以結構化資料集提供（含更新頻率）並與疫情警示連動。　【匯入 2026-10-03】草稿 service.enterovirus-ev-severe-referral（信心 0.6）"
       },
       "proposed": {
         "status": "pending",
         "target": null,
+        "newPath": null,
         "note": "名單依年度公告更新；需先確認是否以結構化資料集提供（含更新頻率）並與疫情警示連動。　【匯入 2026-10-03】草稿 service.enterovirus-ev-severe-referral（信心 0.6）"
       },
       "suggestion": {
         "status": "pending",
-        "target": null
+        "target": null,
+        "newPath": null
       },
       "draftIds": [
         "service.enterovirus-ev-severe-referral"
@@ -119,6 +135,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -129,16 +146,19 @@
       "current": {
         "status": "migrated",
         "target": "doc.ev-severe-guideline.2026-03-15",
+        "newPath": null,
         "note": "臨床四期分期與轉診時機；通函 608 號為其公告，另以新聞型別上架。　【匯入 2026-10-03】草稿 doc.ev-severe-guideline.2026-03-15（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.ev-severe-guideline.2026-03-15",
+        "newPath": null,
         "note": "臨床四期分期與轉診時機；通函 608 號為其公告，另以新聞型別上架。　【匯入 2026-10-03】草稿 doc.ev-severe-guideline.2026-03-15（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.ev-severe-guideline.2026-03-15"
+        "target": "doc.ev-severe-guideline.2026-03-15",
+        "newPath": null
       },
       "draftIds": [
         "doc.ev-severe-guideline.2026-03-15"
@@ -147,6 +167,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -157,16 +178,19 @@
       "current": {
         "status": "merged",
         "target": "vaccine.ev71",
+        "newPath": null,
         "note": "併入疫苗頁（自費、適用年齡依仿單、只能預防 71 型）；審閱週期 6 個月。　【匯入 2026-10-03】草稿 disease.enterovirus（信心 1；既有內容已存在，供比對；併入疾病頁）"
       },
       "proposed": {
         "status": "merged",
         "target": "vaccine.ev71",
+        "newPath": null,
         "note": "併入疫苗頁（自費、適用年齡依仿單、只能預防 71 型）；審閱週期 6 個月。　【匯入 2026-10-03】草稿 disease.enterovirus（信心 1；既有內容已存在，供比對；併入疾病頁）"
       },
       "suggestion": {
         "status": "merged",
-        "target": "vaccine.ev71"
+        "target": "vaccine.ev71",
+        "newPath": null
       },
       "draftIds": [
         "disease.enterovirus"
@@ -175,6 +199,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -185,16 +210,19 @@
       "current": {
         "status": "migrated",
         "target": "media.enterovirus-handwashing",
+        "newPath": null,
         "note": "影片須有逐字稿；教托育機構指引修訂時自動標過時。　【匯入 2026-10-03】草稿 media.enterovirus-handwashing（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "media.enterovirus-handwashing",
+        "newPath": null,
         "note": "影片須有逐字稿；教托育機構指引修訂時自動標過時。　【匯入 2026-10-03】草稿 media.enterovirus-handwashing（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "media.enterovirus-handwashing"
+        "target": "media.enterovirus-handwashing",
+        "newPath": null
       },
       "draftIds": [
         "media.enterovirus-handwashing"
@@ -203,6 +231,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -213,16 +242,19 @@
       "current": {
         "status": "dropped",
         "target": null,
+        "newPath": null,
         "note": "內容與現行建議不一致且無查閱需求，不移轉；舊網址回 410。現行海報在疾病頁素材區。　【匯入 2026-10-03】草稿 page.enterovirus-ev-old-posters（信心 0.6）"
       },
       "proposed": {
         "status": "dropped",
         "target": null,
+        "newPath": null,
         "note": "內容與現行建議不一致且無查閱需求，不移轉；舊網址回 410。現行海報在疾病頁素材區。　【匯入 2026-10-03】草稿 page.enterovirus-ev-old-posters（信心 0.6）"
       },
       "suggestion": {
         "status": "pending",
-        "target": null
+        "target": null,
+        "newPath": null
       },
       "draftIds": [
         "page.enterovirus-ev-old-posters"
@@ -231,6 +263,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     }
@@ -611,6 +644,7 @@
     "statusChanges": 0,
     "pendingToMigrated": 0,
     "targetChanges": 0,
+    "newPathChanges": 0,
     "noteChanges": 0,
     "stillPending": 1
   },

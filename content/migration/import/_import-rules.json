@@ -1,7 +1,7 @@
 {
   "id": "import-rules.legacy",
   "type": "import-rules",
-  "version": 7,
+  "version": 8,
   "title": "舊站匯出批次轉換規則（scripts/import-legacy.mjs 讀取）",
   "summary": "把舊站 CMS 匯出（每頁 .html＋.json 側檔）對應成新站內容草稿的規則：URL 模式→型別與目錄、類別→權責單位、疾病別名→疾病 id、標題關鍵字→疾病頁區塊、Bulletin typeid→newsType、信心計算權重與人工檢視門檻。規則是資料不是程式；正式批次先改這個檔再跑。",
   "owner": "unit.it",
@@ -125,6 +125,15 @@
         "Teach": "guideline"
       },
       "label": "疾病 × 文件矩陣"
+    },
+    {
+      "id": "travel-prescription",
+      "match": "^/TravelEpidemic/Prescription/",
+      "kind": "generated",
+      "type": "page",
+      "dir": "pages",
+      "newPath": "/travel/{ISO2}/",
+      "label": "國際旅遊處方箋國家頁（新站 /travel/{ISO2}/ 由資料產生，不轉內文）"
     },
     {
       "id": "mpage",
@@ -405,7 +414,8 @@
   },
   "mergeScopes": [
     "疾病介紹",
-    "預防接種"
+    "預防接種",
+    "旅遊醫學"
   ],
   "docTypeKeywords": [
     {
@@ -460,7 +470,8 @@
         "責任醫院",
         "醫院名單",
         "合約藥局",
-        "接種地點查詢"
+        "接種地點查詢",
+        "旅遊醫學門診"
       ],
       "serviceType": "clinic"
     },
@@ -482,7 +493,8 @@
     {
       "keys": [
         "證明書申請",
-        "接種證明"
+        "接種證明",
+        "國際預防接種證明書"
       ],
       "serviceType": "certificate"
     },
@@ -592,6 +604,12 @@
     "unique": 0.1
   },
   "letterTitle": "致醫界通函第\\s*(\\d+)\\s*號",
+  "homeBatches": {
+    "_comment": "第九批：不綁疾病的主題頁在欄目匯出裡重複出現時，依頁型決定它的「家」批次（家批已轉過同網址就 skip-duplicate；本批永遠不讓給自己）。有疾病的頁一律以疾病主檔 slug 為家。目前只對 faq 啟用，news／document 的跨批重複留待之後。",
+    "faq": "qa",
+    "news": "news",
+    "document": "guidelines"
+  },
   "faqTasks": [
     {
       "_comment": "第八批：Q&A 的 tasks 依題目關鍵字給（題目沒命中才看答案，只取一個）；對應 schemas/_common.json tasks 枚舉",

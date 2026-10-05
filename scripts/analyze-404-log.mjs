@@ -118,7 +118,9 @@ export function analyze(entries, { map = {}, migrationLists = [], min = 1 } = {}
     const fromPath = legacyPathOf(it.oldUrl);
     const isPattern = /\{[^}]*\}/.test(fromPath);
     if (it.status === 'dropped') { if (!isPattern) dropped.set(legacyKey(fromPath), { listId: list.id, ...it }); continue; }
-    if (isPattern) patterns.push({ re: patternRegex(fromPath), listId: list.id, key: it.key, oldTitle: it.oldTitle, target: it.target ?? null, status: it.status, from: fromPath });
+    // newPath（系統產生頁／功能頁，不需解析內容 id）：無佔位者直接當 301 去處（legacy-map 尚未重建時也能建議）
+    if (!isPattern && it.newPath && !it.target && it.status !== 'pending' && !lookup.has(legacyKey(fromPath))) lookup.set(legacyKey(fromPath), it.newPath);
+    if (isPattern) patterns.push({ re: patternRegex(fromPath), listId: list.id, key: it.key, oldTitle: it.oldTitle, target: it.target ?? it.newPath ?? null, status: it.status, from: fromPath });
   }
   const notFound = entries.filter((e) => e.status === 404);
   const agg = new Map();
@@ -148,7 +150,7 @@ export function analyze(entries, { map = {}, migrationLists = [], min = 1 } = {}
     oldType: m.oldType,
     verified: false,
     status: 'pending',
-    note: `404 log 命中 ${m.count} 次（${m.first ?? '?'} ～ ${m.last ?? '?'}）${m.candidates.length ? `；可能對應：${[...new Set(m.candidates.map((c) => `${c.listId}／${c.key}（${c.oldTitle}${c.target ? ` → ${c.target}` : ''}）`))].slice(0, 3).join('、')}` : ''}；確認後填 target 並改 status`,
+    note: `404 log 命中 ${m.count} 次（${m.first ?? '?'} ～ ${m.last ?? '?'}）${m.candidates.length ? `；可能對應：${[...new Set(m.candidates.map((c) => `${c.listId}／${c.key}（${c.oldTitle}${c.target ? ` → ${c.target}` : ''}）`))].slice(0, 3).join('、')}` : ''}；確認後填 target（或 newPath）並改 status`,
   }));
   return { total: entries.length, notFound: notFound.length, unique: rows.length, categories, drafts };
 }

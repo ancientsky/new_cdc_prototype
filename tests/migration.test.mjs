@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url';
 import { govern, memWriter, config } from './helpers.mjs';
 import { loadSite } from '../scripts/lib/load.mjs';
 import { validateSite } from '../scripts/lib/validate.mjs';
-import { emitApi, buildRedirects, legacyKey, serverRedirects } from '../scripts/lib/emit-api.mjs';
+import { emitApi, buildRedirects, legacyKey, serverRedirects, goneEntries } from '../scripts/lib/emit-api.mjs';
 import { parseLog, detectFormat, analyze, toMarkdown, loadMigrationLists } from '../scripts/analyze-404-log.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -185,8 +185,15 @@ test('v1/redirects.json：含 migration 項（verified、pattern）；dropped／
   assert.ok(r.data.some((x) => x.kind === 'legacy' && x.itemId === 'disease.dengue' && x.to === '/diseases/dengue/'));
 });
 
-test('三種伺服器對照檔：由 redirects.json 轉出、不含 pattern 項、跳過歧義與根目錄', () => {
-  const { files, json } = emitted();
+// 伺服器檔測試用：在旅遊清單加一筆確定網址的 dropped（410 gone 行是設計，playbook 2.3），確保 gone 行的格式也被驗到
+const GONE_URL = 'https://www.cdc.gov.tw/Category/List/GoneTestOnly';
+const addGone = (site) => {
+  const list = site.migrationLists.find((l) => l.id === 'migration.travel');
+  list.items.push({ key: 'gone-test', oldTitle: '測試用已移除列表', oldUrl: GONE_URL, oldType: 'list', verified: false, status: 'dropped', note: '測試' });
+};
+
+test('三種伺服器對照檔：由 redirects.json 轉出、不含 pattern 項、跳過歧義與根目錄；dropped 確定網址輸出 410 gone 行', () => {
+  const { files, json, site } = emitted('2026-10-01', addGone);
   const redirects = json('v1/redirects.json').data;
   const nginx = files.get('redirects/nginx.map');
   const iis = files.get('redirects/web.config.rewritemap.xml');
@@ -201,26 +208,76 @@ test('三種伺服器對照檔：由 redirects.json 轉出、不含 pattern 項�
   }
   const { entries } = serverRedirects(redirects);
   assert.ok(entries.length > 0);
+  const gone = goneEntries(site).filter((g) => !g.pattern);
+  assert.ok(gone.some((g) => g.migrationKey === 'gone-test'), '確定網址的 dropped 進 gone');
   assert.ok(entries.every((e) => !redirects.find((r) => r.kind === 'migration' && r.pattern && legacyKey(r.from) === e.key)));
   // nginx：每筆一行、引號包住（值含 # 也安全）、case-insensitive
+  // gone（status: dropped、非 pattern）每筆一行 410（設計如此，見 docs/migration-playbook.md 2.3）
   const nginxRules = nginx.split('\n').filter((l) => l && !l.startsWith('#'));
-  assert.equal(nginxRules.length, entries.length);
-  assert.ok(nginxRules.every((l) => /^"~\*\^.+\$" "\/[^"]*";( # unverified)?$/.test(l)), nginxRules.find((l) => !/^"~\*/.test(l)));
+  assert.equal(nginxRules.length, entries.length + gone.length);
+  const nginxGone = nginxRules.filter((l) => / "410"; # gone: /.test(l));
+  assert.equal(nginxGone.length, gone.length);
+  assert.ok(nginxGone.some((l) => l.includes('GoneTestOnly') && l.endsWith('# gone: 測試用已移除列表')), nginxGone.join('\n'));
+  assert.ok(nginxRules.filter((l) => !nginxGone.includes(l)).every((l) => /^"~\*\^.+\$" "\/[^"]*";( # unverified)?$/.test(l)), nginxRules.find((l) => !/^"~\*/.test(l)));
   assert.ok(nginxRules.some((l) => l.endsWith('# unverified')), '移轉清單未核對者加註');
   // _redirects：from to 301
   const nfRules = nf.split('\n').filter((l) => l && !l.startsWith('#'));
-  assert.equal(nfRules.length, entries.length);
-  assert.ok(nfRules.every((l) => /^\/\S+( \S+=\S+)*  \/\S*  301$/.test(l)), nfRules.join('\n'));
+  assert.equal(nfRules.length, entries.length + gone.length);
+  const nfGone = nfRules.filter((l) => /  \/410\.html  410  # gone: /.test(l));
+  assert.equal(nfGone.length, gone.length);
+  assert.ok(nfRules.filter((l) => !nfGone.includes(l)).every((l) => /^\/\S+( \S+=\S+)*  \/\S*  301$/.test(l)), nfRules.join('\n'));
   assert.ok(nfRules.some((l) => / typeid=9  /.test(l)), 'query 以 Netlify 參數語法');
   // IIS：XML、rewriteMap、Permanent
   assert.match(iis, /^<\?xml version="1\.0" encoding="UTF-8"\?>/);
   assert.match(iis, /<rewriteMap name="CdcLegacyRedirects"/);
   assert.match(iis, /redirectType="Permanent"/);
-  assert.ok((iis.match(/<add key=/g) ?? []).length >= entries.length);
+  assert.ok((iis.match(/<add key=/g) ?? []).length >= entries.length + gone.length);
+  assert.equal((iis.match(/ value="410" \/> <!-- gone: /g) ?? []).length, gone.length);
   assert.ok(!/&(?!amp;|lt;|gt;|quot;)/.test(iis), 'XML 已跳脫');
   // 端點清單列出三個檔
   const idx = json('v1/index.json').data;
   for (const f of ['/redirects/nginx.map', '/redirects/web.config.rewritemap.xml', '/redirects/_redirects', '/v1/legacy-map.json']) assert.ok(idx.some((e) => e.path === f), f);
+});
+
+test('移轉清單 newPath：去處為系統產生頁／功能頁（非內容 id）⇒ 301 到該路徑、進伺服器檔與 legacy-map、不是 410；validate／schema 規則', () => {
+  const { files, json, site } = emitted();
+  const travel = site.migration.lists.find((l) => l.id === 'migration.travel');
+  const it = (k) => travel.items.find((i) => i.key === k);
+  // governance：to＝newPath，toId null，不掛 gov.legacy
+  assert.equal(it('travel-list').status, 'migrated'); assert.equal(it('travel-list').to, '/travel/'); assert.equal(it('travel-list').toId, null);
+  assert.equal(it('rx-jp').to, '/travel/JP/'); assert.equal(it('travel-news-list').to, '/news/');
+  assert.ok(!site.migration.byTarget.has(undefined) && ![...site.migration.byTarget.values()].flat().some((x) => x.newPath), 'newPath 項不進 byTarget');
+  // redirects.json：kind migration、itemId／targetId null、pattern 照舊
+  const redirects = json('v1/redirects.json').data;
+  const r = redirects.find((x) => x.kind === 'migration' && x.key === 'travel-list');
+  assert.equal(r.to, '/travel/'); assert.equal(r.status, 301); assert.equal(r.itemId, null); assert.equal(r.targetId, null); assert.equal(r.newPath, '/travel/'); assert.equal(r.pattern, false);
+  const jp = redirects.find((x) => x.kind === 'migration' && x.key === 'rx-jp');
+  assert.equal(jp.to, '/travel/JP/'); assert.equal(jp.pattern, true, '舊網址含 {id} ⇒ pattern，只進文件');
+  // 伺服器檔與 legacy-map：確定網址的列表頁 301 到 /travel/，不出 410
+  const nginx = files.get('redirects/nginx.map');
+  assert.match(nginx, /"~\*\^\/category\/list\/trbpxpzm7eo3-dkc4ryzuq[^"]*" "\/travel\/";/i);
+  assert.ok(!/category\/list\/trbpxpzm7eo3-dkc4ryzuq.*"410"/i.test(nginx), '不再是 410');
+  const lm = json('v1/legacy-map.json');
+  assert.equal(lm.data['/category/list/trbpxpzm7eo3-dkc4ryzuq'], '/travel/');
+  assert.ok(!lm.gone.some((g) => g.listId === 'migration.travel'), JSON.stringify(lm.gone));
+  // validate：newPath 取代 target；兩者並存、都沒填都擋
+  const s2 = loadSite(config);
+  s2.today = '2026-10-01';
+  assert.deepEqual(validateSite(s2).filter((e) => e.includes('migration')), []);
+  const bad = structuredClone(s2.migrationLists.find((l) => l.id === 'migration.travel'));
+  bad.__file = 'test/migration-np.json'; bad.id = 'migration.test-np';
+  bad.items = [
+    { key: 'a', oldTitle: 'A', oldUrl: 'https://www.cdc.gov.tw/X/1', oldType: 'list', verified: false, status: 'migrated', newPath: '/travel/' },
+    { key: 'b', oldTitle: 'B', oldUrl: 'https://www.cdc.gov.tw/X/2', oldType: 'list', verified: false, status: 'migrated', newPath: '/travel/', target: 'disease.malaria' },
+    { key: 'c', oldTitle: 'C', oldUrl: 'https://www.cdc.gov.tw/X/3', oldType: 'list', verified: false, status: 'archived' },
+    { key: 'd', oldTitle: 'D', oldUrl: 'https://www.cdc.gov.tw/X/4', oldType: 'list', verified: false, status: 'migrated', newPath: 'travel/JP/' },
+  ];
+  s2.migrationLists.push(bad);
+  const errs = validateSite(s2).filter((e) => e.startsWith('test/migration-np.json'));
+  assert.ok(!errs.some((e) => /items\/0/.test(e)), errs.join('\n'));
+  assert.ok(errs.some((e) => /items\/1.*(target 與 newPath 只能擇一|must NOT be valid)/.test(e)), errs.join('\n'));
+  assert.ok(errs.some((e) => /items\/2.*(必須填 target|must match a schema in anyOf|must have required)/.test(e)), errs.join('\n'));
+  assert.ok(errs.some((e) => /items\/3\/newPath/.test(e)), errs.join('\n'));
 });
 
 test('legacy-map key 正規化：去網域、去 hash、小寫、去尾斜線、去 page 參數；map 內容與伺服器檔一致', () => {

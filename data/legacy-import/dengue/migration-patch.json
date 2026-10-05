@@ -6,9 +6,10 @@
   "applied": {
     "statusChanges": [],
     "targetChanges": [],
+    "newPathChanges": [],
     "noteChanges": 0
   },
-  "rule": "只改 status／target／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。",
+  "rule": "只改 status／target／newPath／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。",
   "items": [
     {
       "key": "dengue-zone",
@@ -17,16 +18,19 @@
       "current": {
         "status": "migrated",
         "target": "disease.dengue",
+        "newPath": null,
         "note": "舊防治專區首頁改為疾病頁：民眾版與專業版（防治計畫、指引、通報與檢驗）以專區導覽分流。　【匯入 2026-10-03】草稿 page.dengue-zone（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "disease.dengue",
+        "newPath": null,
         "note": "舊防治專區首頁改為疾病頁：民眾版與專業版（防治計畫、指引、通報與檢驗）以專區導覽分流。　【匯入 2026-10-03】草稿 page.dengue-zone（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "disease.dengue"
+        "target": "disease.dengue",
+        "newPath": null
       },
       "draftIds": [
         "page.dengue-zone"
@@ -35,6 +39,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -45,16 +50,19 @@
       "current": {
         "status": "pending",
         "target": null,
+        "newPath": null,
         "note": "各縣市住宅指數、容器指數與布氏指數月報；新站尚未建立對應資料集，需先確認資料更新頻率與是否公開到區域別。　【匯入 2026-10-03】草稿 page.dengue-vector-density（信心 0.6）"
       },
       "proposed": {
         "status": "pending",
         "target": null,
+        "newPath": null,
         "note": "各縣市住宅指數、容器指數與布氏指數月報；新站尚未建立對應資料集，需先確認資料更新頻率與是否公開到區域別。　【匯入 2026-10-03】草稿 page.dengue-vector-density（信心 0.6）"
       },
       "suggestion": {
         "status": "pending",
-        "target": null
+        "target": null,
+        "newPath": null
       },
       "draftIds": [
         "page.dengue-vector-density"
@@ -63,6 +71,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -73,16 +82,19 @@
       "current": {
         "status": "merged",
         "target": "doc.dengue-community-workplan.2026-09-10",
+        "newPath": null,
         "note": "併入「登革熱社區防治工作指引」第二章；民眾版巡倒清刷說明見 Q&A。　【匯入 2026-10-03】草稿 page.dengue-source-reduction（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "merged",
         "target": "doc.dengue-community-workplan.2026-09-10",
+        "newPath": null,
         "note": "併入「登革熱社區防治工作指引」第二章；民眾版巡倒清刷說明見 Q&A。　【匯入 2026-10-03】草稿 page.dengue-source-reduction（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.dengue-community-workplan.2026-09-10"
+        "target": "doc.dengue-community-workplan.2026-09-10",
+        "newPath": null
       },
       "draftIds": [
         "page.dengue-source-reduction"
@@ -91,6 +103,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -101,16 +114,19 @@
       "current": {
         "status": "merged",
         "target": "doc.dengue-community-workplan.2026-09-10",
+        "newPath": null,
         "note": "併入工作指引第四章（群聚定義、分工、解除條件）；噴藥疑慮另見澄清與 Q&A。　【匯入 2026-10-03】草稿 page.dengue-cluster-response（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "merged",
         "target": "doc.dengue-community-workplan.2026-09-10",
+        "newPath": null,
         "note": "併入工作指引第四章（群聚定義、分工、解除條件）；噴藥疑慮另見澄清與 Q&A。　【匯入 2026-10-03】草稿 page.dengue-cluster-response（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.dengue-community-workplan.2026-09-10"
+        "target": "doc.dengue-community-workplan.2026-09-10",
+        "newPath": null
       },
       "draftIds": [
         "page.dengue-cluster-response"
@@ -119,6 +135,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -129,16 +146,19 @@
       "current": {
         "status": "migrated",
         "target": "news.2026-09-15-letter-615-ns1",
+        "newPath": null,
         "note": "通函另以新聞型別上架，依據正本為防治工作指引，指引修訂時自動加註。　【匯入 2026-10-03】草稿 news.2026-09-15-letter-615-ns1（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "news.2026-09-15-letter-615-ns1",
+        "newPath": null,
         "note": "通函另以新聞型別上架，依據正本為防治工作指引，指引修訂時自動加註。　【匯入 2026-10-03】草稿 news.2026-09-15-letter-615-ns1（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "news.2026-09-15-letter-615-ns1"
+        "target": "news.2026-09-15-letter-615-ns1",
+        "newPath": null
       },
       "draftIds": [
         "news.2026-09-15-letter-615-ns1"
@@ -147,6 +167,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -157,16 +178,19 @@
       "current": {
         "status": "archived",
         "target": "doc.guidance-dengue.v16",
+        "newPath": null,
         "note": "已由第 17 版取代，舊版保留供查閱（noindex、頁首紅色警示），外部舊連結 301 到現行版。　【匯入 2026-10-03】草稿 doc.guidance-dengue.v16（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "archived",
         "target": "doc.guidance-dengue.v16",
+        "newPath": null,
         "note": "已由第 17 版取代，舊版保留供查閱（noindex、頁首紅色警示），外部舊連結 301 到現行版。　【匯入 2026-10-03】草稿 doc.guidance-dengue.v16（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "archived",
-        "target": "doc.guidance-dengue.v16"
+        "target": "doc.guidance-dengue.v16",
+        "newPath": null
       },
       "draftIds": [
         "doc.guidance-dengue.v16"
@@ -175,6 +199,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -185,16 +210,19 @@
       "current": {
         "status": "migrated",
         "target": "media.dengue-village-chief",
+        "newPath": null,
         "note": "影片改為影音型別，須有逐字稿與依據正本，正本修訂時自動標過時。　【匯入 2026-10-03】草稿 media.dengue-village-chief（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "media.dengue-village-chief",
+        "newPath": null,
         "note": "影片改為影音型別，須有逐字稿與依據正本，正本修訂時自動標過時。　【匯入 2026-10-03】草稿 media.dengue-village-chief（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "media.dengue-village-chief"
+        "target": "media.dengue-village-chief",
+        "newPath": null
       },
       "draftIds": [
         "media.dengue-village-chief"
@@ -203,6 +231,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -213,16 +242,19 @@
       "current": {
         "status": "pending",
         "target": null,
+        "newPath": null,
         "note": "越、印、泰、菲語單張尚未逐一核對版本與授權，核對後併入專區「新住民與移工健康」。　【匯入 2026-10-03】草稿 page.dengue-migrant-worker-materials（信心 0.4；需人工檢視）"
       },
       "proposed": {
         "status": "pending",
         "target": null,
+        "newPath": null,
         "note": "越、印、泰、菲語單張尚未逐一核對版本與授權，核對後併入專區「新住民與移工健康」。　【匯入 2026-10-03】草稿 page.dengue-migrant-worker-materials（信心 0.4；需人工檢視）"
       },
       "suggestion": {
         "status": "pending",
-        "target": null
+        "target": null,
+        "newPath": null
       },
       "draftIds": [
         "page.dengue-migrant-worker-materials"
@@ -231,6 +263,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     }
@@ -612,6 +645,7 @@
     "statusChanges": 0,
     "pendingToMigrated": 0,
     "targetChanges": 0,
+    "newPathChanges": 0,
     "noteChanges": 0,
     "stillPending": 2
   },

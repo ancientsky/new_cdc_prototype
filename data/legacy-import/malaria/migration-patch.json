@@ -4,7 +4,7 @@
   "batch": "malaria",
   "exportedAt": "2026-10-03",
   "applied": null,
-  "rule": "只改 status／target／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。",
+  "rule": "只改 status／target／newPath／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。",
   "items": [],
   "missingPages": [],
   "unmatchedPages": [],
@@ -344,6 +344,7 @@
     "statusChanges": 0,
     "pendingToMigrated": 0,
     "targetChanges": 0,
+    "newPathChanges": 0,
     "noteChanges": 0,
     "stillPending": 0
   }

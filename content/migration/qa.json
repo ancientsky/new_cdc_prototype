@@ -182,7 +182,8 @@
       "oldUrl": "https://www.cdc.gov.tw/Category/List/{id}#qa-list",
       "oldType": "list",
       "verified": false,
-      "status": "dropped",
+      "status": "migrated",
+      "newPath": "/faq/",
       "note": "列表頁：新站的常見問題列表由系統依 faq 型別與 tasks 自動產生，舊網址 301 到 /faq/。　【匯入 2026-10-03】草稿 page.x-qa-list（信心 0.6）"
     }
   ]

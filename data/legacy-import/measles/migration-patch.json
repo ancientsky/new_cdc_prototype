@@ -6,9 +6,10 @@
   "applied": {
     "statusChanges": [],
     "targetChanges": [],
+    "newPathChanges": [],
     "noteChanges": 0
   },
-  "rule": "只改 status／target／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。",
+  "rule": "只改 status／target／newPath／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。",
   "items": [
     {
       "key": "measles-elimination-zone",
@@ -17,16 +18,19 @@
       "current": {
         "status": "pending",
         "target": null,
+        "newPath": null,
         "note": "含 WHO 區域查證委員會消除認證與歷年報告；新站尚缺對應內容，需由急性傳染病組決定放專區或文件並訂審閱週期。　【匯入 2026-10-03】草稿 page.measles-elimination-zone（信心 1）"
       },
       "proposed": {
         "status": "pending",
         "target": null,
+        "newPath": null,
         "note": "含 WHO 區域查證委員會消除認證與歷年報告；新站尚缺對應內容，需由急性傳染病組決定放專區或文件並訂審閱週期。　【匯入 2026-10-03】草稿 page.measles-elimination-zone（信心 1）"
       },
       "suggestion": {
         "status": "pending",
-        "target": null
+        "target": null,
+        "newPath": null
       },
       "draftIds": [
         "page.measles-elimination-zone"
@@ -35,6 +39,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -45,16 +50,19 @@
       "current": {
         "status": "merged",
         "target": "doc.measles-contact-tracing.2026-09-12",
+        "newPath": null,
         "note": "併入「麻疹接觸者追蹤作業指引」第五章（群聚定義、應變小組、解除條件）。　【匯入 2026-10-03】草稿 page.measles-cluster-response（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "merged",
         "target": "doc.measles-contact-tracing.2026-09-12",
+        "newPath": null,
         "note": "併入「麻疹接觸者追蹤作業指引」第五章（群聚定義、應變小組、解除條件）。　【匯入 2026-10-03】草稿 page.measles-cluster-response（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.measles-contact-tracing.2026-09-12"
+        "target": "doc.measles-contact-tracing.2026-09-12",
+        "newPath": null
       },
       "draftIds": [
         "page.measles-cluster-response"
@@ -63,6 +71,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -73,16 +82,19 @@
       "current": {
         "status": "migrated",
         "target": "doc.measles-contact-tracing.2026-09-12",
+        "newPath": null,
         "note": "依據 MMR 預防接種建議與病例定義；建議修訂時自動加註並開 7 日待辦。　【匯入 2026-10-03】草稿 doc.measles-contact-tracing.2026-09-12（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.measles-contact-tracing.2026-09-12",
+        "newPath": null,
         "note": "依據 MMR 預防接種建議與病例定義；建議修訂時自動加註並開 7 日待辦。　【匯入 2026-10-03】草稿 doc.measles-contact-tracing.2026-09-12（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.measles-contact-tracing.2026-09-12"
+        "target": "doc.measles-contact-tracing.2026-09-12",
+        "newPath": null
       },
       "draftIds": [
         "doc.measles-contact-tracing.2026-09-12"
@@ -91,6 +103,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -101,16 +114,19 @@
       "current": {
         "status": "pending",
         "target": null,
+        "newPath": null,
         "note": "事件型公告（場所、時段、需自主健康管理者）；需與公關室確認以新聞稿或專區何者承接，並訂事件結束後的退場規則。　【匯入 2026-10-03】草稿 page.measles-exposure-notice（信心 0.6）"
       },
       "proposed": {
         "status": "pending",
         "target": null,
+        "newPath": null,
         "note": "事件型公告（場所、時段、需自主健康管理者）；需與公關室確認以新聞稿或專區何者承接，並訂事件結束後的退場規則。　【匯入 2026-10-03】草稿 page.measles-exposure-notice（信心 0.6）"
       },
       "suggestion": {
         "status": "pending",
-        "target": null
+        "target": null,
+        "newPath": null
       },
       "draftIds": [
         "page.measles-exposure-notice"
@@ -119,6 +135,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -129,16 +146,19 @@
       "current": {
         "status": "archived",
         "target": "doc.mmr-recommendation.2019-05-14",
+        "newPath": null,
         "note": "已由 114.04.16 版取代；舊版內容與現行建議不同，保留供查閱，AI 與搜尋一律以現行版為準。　【匯入 2026-10-03】草稿 doc.mmr-recommendation.2019-05-14（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "archived",
         "target": "doc.mmr-recommendation.2019-05-14",
+        "newPath": null,
         "note": "已由 114.04.16 版取代；舊版內容與現行建議不同，保留供查閱，AI 與搜尋一律以現行版為準。　【匯入 2026-10-03】草稿 doc.mmr-recommendation.2019-05-14（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "archived",
-        "target": "doc.mmr-recommendation.2019-05-14"
+        "target": "doc.mmr-recommendation.2019-05-14",
+        "newPath": null
       },
       "draftIds": [
         "doc.mmr-recommendation.2019-05-14"
@@ -147,6 +167,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -157,16 +178,19 @@
       "current": {
         "status": "migrated",
         "target": "media.mmr-waiting-room-2026",
+        "newPath": null,
         "note": "2026 年重製版取代 2025 年版；影片須有逐字稿與依據正本。　【匯入 2026-10-03】草稿 media.mmr-waiting-room-2026（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "media.mmr-waiting-room-2026",
+        "newPath": null,
         "note": "2026 年重製版取代 2025 年版；影片須有逐字稿與依據正本。　【匯入 2026-10-03】草稿 media.mmr-waiting-room-2026（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "media.mmr-waiting-room-2026"
+        "target": "media.mmr-waiting-room-2026",
+        "newPath": null
       },
       "draftIds": [
         "media.mmr-waiting-room-2026"
@@ -175,6 +199,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -185,16 +210,19 @@
       "current": {
         "status": "migrated",
         "target": "news.2026-05-11-japan-measles-level1",
+        "newPath": null,
         "note": "旅遊疫情建議改由旅遊目的地頁依官方事件流自動產生；舊提醒新聞稿保留。　【匯入 2026-10-03】草稿 news.2026-05-11-japan-measles-level1（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "news.2026-05-11-japan-measles-level1",
+        "newPath": null,
         "note": "旅遊疫情建議改由旅遊目的地頁依官方事件流自動產生；舊提醒新聞稿保留。　【匯入 2026-10-03】草稿 news.2026-05-11-japan-measles-level1（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "news.2026-05-11-japan-measles-level1"
+        "target": "news.2026-05-11-japan-measles-level1",
+        "newPath": null
       },
       "draftIds": [
         "news.2026-05-11-japan-measles-level1"
@@ -203,6 +231,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     }
@@ -561,6 +590,7 @@
     "statusChanges": 0,
     "pendingToMigrated": 0,
     "targetChanges": 0,
+    "newPathChanges": 0,
     "noteChanges": 0,
     "stillPending": 2
   },

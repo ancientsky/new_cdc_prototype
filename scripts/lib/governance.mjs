@@ -1009,6 +1009,7 @@ export function tenderGov(td, today, published = td.status === 'published') {
  * lists[].items[] 擴充欄位：listId、owner、fromPath（去網域與 hash）、pattern（含 {id} 佔位）、statusLabel、
  *   targetType／targetTitle／targetPath、to（實際轉址目的地：target 路徑＋anchor；target 為失效版文件 ⇒ 現行版）、toId、show；
  *   第六輪：derived（此筆由模板推導）、mapTo、relatedIds（related 命中的全部內容 id）。
+ *   第九輪：newPath（去處為路徑而非內容 id；to＝newPath＋anchor，不掛 gov.legacy、不進 byTarget）。
  */
 export const MIGRATION_TEMPLATE_DISEASE = 'migration-template.disease';
 /** 待辦優先度依法定類別（14.1：第一、二類高） */
@@ -1177,14 +1178,15 @@ function buildMigration(site, { addTodo, unitName }) {
       const target = it.target ? site.byId.get(it.target) ?? null : null;
       const dest = target?.gov?.superseded ? site.byId.get(target.gov.currentId) ?? target : target;
       const anchor = it.anchor ? `#${it.anchor}` : '';
-      const to = dest ? (pathOf(dest).includes('#') ? pathOf(dest) : `${pathOf(dest)}${anchor}`) : it.toPath ? `${it.toPath}${anchor}` : null;
+      // newPath：去處不是內容 id，而是系統產生頁／功能頁（例：/travel/JP/）；target 優先
+      const to = dest ? (pathOf(dest).includes('#') ? pathOf(dest) : `${pathOf(dest)}${anchor}`) : it.toPath ? `${it.toPath}${anchor}` : it.newPath ? `${it.newPath}${anchor}` : null;
       const owner = it.owner ?? src.owner;
       const { toPath, ...rest } = it;
       return {
         ...rest, listId: src.id, owner, ownerName: unitName(owner),
         statusLabel: MIGRATION_STATUS_LABELS[it.status] ?? it.status,
         fromPath: legacyPathOf(it.oldUrl), pattern: isLegacyPattern(it.oldUrl),
-        targetType: target?.type ?? null, targetTitle: target?.title ?? null, targetPath: target ? pathOf(target) : toPath ?? null,
+        targetType: target?.type ?? null, targetTitle: target?.title ?? null, targetPath: target ? pathOf(target) : toPath ?? it.newPath ?? null,
         to, toId: dest?.id ?? null, redirectsToCurrent: !!(dest && target && dest !== target),
         show,
       };
