@@ -26,6 +26,9 @@
   "summary": "指每週健保門診與急診就診人次中，因類流感（發燒合併咳嗽或喉嚨痛等）就醫所占的比例。疾管署以此觀察流感活動的高低：連續上升並超過流行閾值時，代表進入流行期。",
   "question": "「類流感門急診就診率」是什麼意思？",
   "answerMarkdown": "指每週健保**門診與急診就診人次中，因類流感（發燒合併咳嗽或喉嚨痛等）就醫所占的比例**。疾管署以此觀察流感活動的高低：連續上升並超過流行閾值時，代表進入流行期。\n\n就診率是群體監測指標，不代表確診人數；個人是否感染流感，仍需由醫師診斷。",
+  "tasks": [
+    "data"
+  ],
   "basedOn": [
     "disease.influenza"
   ],
@@ -50,6 +53,16 @@
         "code": "manifest-derived",
         "severity": "info",
         "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「今年公費流感疫苗誰可以打？什麼時候開始？」從答案抽出結構化候選 {\"ageYears\":65,\"months\":6}，請確認後保留或刪除"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「65 歲以上長輩有類流感症狀，一定要快篩陽性才能用公費抗病毒藥嗎？」→ symptoms；「流感疫苗和新冠疫苗可以同一天打嗎？」→ vaccines；「得了流感，出現哪些狀況要馬上就醫？」→ symptoms；「流感疫苗去年打過了，今年還要再打嗎？」→ vaccines；「今年公費流感疫苗誰可以打？什麼時候開始？」→ vaccines；「流感和一般感冒要怎麼分辨？」→ symptoms；「哪些人可以使用公費流感抗病毒藥劑？」→ symptoms；「什麼是「流感併發重症」？」→ symptoms；「公費流感疫苗要去哪裡打？要帶什麼？」→ vaccines；「「類流感門急診就診率」是什麼意思？」→ data"
       }
     ],
     "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/Zfg30duS6fEOkNhHjVRix8",

@@ -60,6 +60,7 @@ export const ACTION_LABEL = {
   archive: '封存（歷史版本／久遠內容，舊版保留查閱）',
   drop: '不轉換（久遠且已結束，建議 410）',
   'skip-list': '清單頁，不轉換（新站由系統自動產生列表）',
+  'skip-duplicate': '已在其他批次轉過（同網址），本批不重複出草稿',
   'auto-ok': '近年新聞，核對後可自動上線',
   'review-before-publish': '核對後入庫（新站尚無對應內容）',
 };
@@ -89,6 +90,8 @@ export function buildPatch({ manifest, prs, index, exportedAt, slug, derivedItem
     let proposed;
     if (pr.flags.drop) proposed = 'dropped';
     else if ((pr.flags.historical || superseded) && dest) proposed = 'archived';
+    // 一頁多題（Q&A 每題一筆）且清單沒指定目標：沒有單一 target 可填，不提議 migrated 到第一題，維持 pending 由人決定 merged 到哪頁
+    else if (outs.length > 1 && !it.target && pr.kind === 'faq') proposed = 'pending';
     else if (dest) proposed = pr.kind === 'disease-block' ? 'merged' : 'migrated';
     else proposed = 'pending';
     const proposedTarget = it.target ?? (dest ? existOut?.id ?? null : null);

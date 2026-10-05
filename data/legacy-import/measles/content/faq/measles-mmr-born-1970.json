@@ -26,6 +26,10 @@
   "summary": "可能需要。依 2025 年 4 月 16 日修訂的「國內現行 MMR 預防接種建議」，1966 年（含）以後出生、不具麻疹免疫力的成人，若計畫前往麻疹流行地區，建議出國前 2 至 4 週至旅遊醫學門診評估自費接種 1 劑 MMR 疫苗。",
   "question": "我是 1970 年出生的，出國前需要打 MMR 疫苗嗎？",
   "answerMarkdown": "可能需要。依 2025 年 4 月 16 日修訂的「國內現行 MMR 預防接種建議」，**1966 年（含）以後出生**、不具麻疹免疫力的成人，若計畫前往麻疹流行地區，建議**出國前 2 至 4 週**至旅遊醫學門診評估自費接種 1 劑 MMR 疫苗。\n\n1970 年出生在評估範圍內。若您曾完成 2 劑接種、驗過抗體為陽性或曾經確診麻疹，則視為具免疫力。",
+  "tasks": [
+    "vaccines",
+    "travel"
+  ],
   "basedOn": [
     "disease.measles"
   ],
@@ -50,6 +54,16 @@
         "code": "manifest-derived",
         "severity": "info",
         "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「麻疹有哪些症狀？會傳染多久？」從答案抽出結構化候選 {\"daysMin\":3,\"daysMax\":4}，請確認後保留或刪除"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「醫護人員需要接種 MMR 疫苗嗎？」→ vaccines；「我和麻疹病人接觸過，要怎麼辦？」→ symptoms；「衛生局打電話來做麻疹疫調，我要配合什麼？」→ symptoms；「幾年次以後出生的成人需要評估接種 MMR 疫苗？」→ vaccines；「我是 1970 年出生的，出國前需要打 MMR 疫苗嗎？」→ vaccines、travel；「我不確定有沒有打過 MMR，要怎麼評估要不要補打？」→ vaccines；「麻疹有哪些症狀？會傳染多久？」→ symptoms；「MMR 疫苗會造成自閉症嗎？」→ vaccines；「去日本旅遊需要擔心麻疹嗎？」→ travel；「出國回來後發燒，應該怎麼辦？」→ travel、symptoms"
       }
     ],
     "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/s5OaifVY2y_Oh-5Zt4ecui",

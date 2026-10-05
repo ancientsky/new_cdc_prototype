@@ -1,0 +1,70 @@
+{
+  "id": "faq.covid-antiviral",
+  "type": "faq",
+  "title": "新冠確診後，誰可以使用公費口服抗病毒藥？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2023-05-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.covid-19"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "公費口服抗病毒藥主要提供給重症高風險族群，例如 65 歲以上長者、具慢性病（糖尿病、心血管疾病、慢性肺病、慢性腎病等）、免疫低下者、BMI ≥ 30 者與孕婦，由醫師評估後開立。",
+  "question": "新冠確診後，誰可以使用公費口服抗病毒藥？",
+  "answerMarkdown": "公費口服抗病毒藥主要提供給**重症高風險族群**，例如 65 歲以上長者、具慢性病（糖尿病、心血管疾病、慢性肺病、慢性腎病等）、免疫低下者、BMI ≥ 30 者與孕婦，由醫師評估後開立。\n\n藥物需在**發病 5 天內**開始使用，因此高風險者確診後應儘早就醫，並主動告知醫師目前服用的藥物，以避免交互作用。",
+  "tasks": [
+    "symptoms"
+  ],
+  "basedOn": [
+    "disease.covid-19"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/BvAeVrOkFy2tQv8lwkcQXM"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 31 處（mso 樣式 19、Mso 類別 8、命名空間標籤 6）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「新冠併發重症／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（新冠併發重症）"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「今年新冠疫苗誰可以打公費？要打幾劑？」從答案抽出結構化候選 {\"months\":6,\"doses\":1,\"weeks\":12,\"ageYears\":65}，請確認後保留或刪除"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「新冠確診後，誰可以使用公費口服抗病毒藥？」→ symptoms；「今年新冠疫苗誰可以打公費？要打幾劑？」→ vaccines；「流感疫苗和新冠疫苗可以同一天打嗎？」→ vaccines"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/BvAeVrOkFy2tQv8lwkcQXM",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.covid-antiviral"
+    ]
+  }
+}

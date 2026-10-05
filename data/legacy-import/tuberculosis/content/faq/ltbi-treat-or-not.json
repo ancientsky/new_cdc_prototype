@@ -26,6 +26,9 @@
   "summary": "潛伏結核感染是體內有結核菌、但菌還在「休眠」，沒有症狀、也不會傳染給別人。不過一生中約有 5–10% 會發病，多數在感染後 2 年內，幼童與免疫力較差的人風險更高。",
   "question": "驗出潛伏結核感染，一定要治療嗎？",
   "answerMarkdown": "潛伏結核感染是體內有結核菌、但菌還在「休眠」，**沒有症狀、也不會傳染給別人**。不過一生中約有 5–10% 會發病，多數在感染後 2 年內，幼童與免疫力較差的人風險更高。\n\n接受潛伏結核感染治療可降低 9 成以上的發病風險，因此**建議接受治療**，特別是結核病人的密切接觸者。目前有 3HP（每週 1 次、共 12 次）、1HP（每天 1 次、共 28 天）、3HR、4R、9H 等處方，由醫師依您的年齡、健康狀況與用藥評估選擇，治療期間有關懷員陪伴服藥，費用由公費支應。",
+  "tasks": [
+    "symptoms"
+  ],
   "basedOn": [
     "disease.tuberculosis"
   ],
@@ -40,6 +43,16 @@
         "code": "word-cleaned",
         "severity": "info",
         "message": "清除 Word 貼上殘留 85 處（mso 樣式 53、Mso 類別 22、命名空間標籤 16）"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「咳嗽多久要懷疑是結核病？」從答案抽出結構化候選 {\"weeks\":2,\"months\":6}，請確認後保留或刪除"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「咳嗽多久要懷疑是結核病？」→ symptoms；「驗出潛伏結核感染，一定要治療嗎？」→ symptoms；「什麼是都治（DOTS）？」→ symptoms；「家人得了結核病，我需要做什麼檢查？」→ symptoms；「什麼是抗藥性結核病？要怎麼治療？」→ symptoms；「結核病治療要花錢嗎？」→ symptoms；「外籍人士來臺工作或居留，需要做結核病檢查嗎？」→ symptoms；「結核病開始吃藥後，還會傳染給家人嗎？」→ symptoms"
       }
     ],
     "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/ZW0TrgKarQJWRWZrMIWzeq",

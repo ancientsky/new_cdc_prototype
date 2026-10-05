@@ -1,0 +1,42 @@
+{
+  "id": "page.x-qa-list",
+  "type": "page",
+  "title": "常見問答總覽",
+  "owner": "unit.oasis",
+  "publishedAt": "2026-10-03",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "2026-03-10 新冠併發重症 Q&A 2024-11-05 急性病毒性B型肝炎 Q&A 2026-06-18 人類免疫缺乏病毒感染 Q&A 2025-09-02 百日咳 Q&A 2025-01-20 水痘併發症 Q&A 2026-0…",
+  "slug": "x-qa-list",
+  "bodyMarkdown": "- 2026-03-10 [新冠併發重症 Q&A](https://www.cdc.gov.tw/Category/QAPage/BvAeVrOkFy2tQv8lwkcQXM)\n- 2024-11-05 [急性病毒性B型肝炎 Q&A](https://www.cdc.gov.tw/Category/QAPage/AOyssgHzaQZuuM8MdMmEDw)\n- 2026-06-18 [人類免疫缺乏病毒感染 Q&A](https://www.cdc.gov.tw/Category/QAPage/StC0qbIcZz2pDen8xIEI0x)\n- 2025-09-02 [百日咳 Q&A](https://www.cdc.gov.tw/Category/QAPage/brTyOBKZhav8nqkwfudS5x)\n- 2025-01-20 [水痘併發症 Q&A](https://www.cdc.gov.tw/Category/QAPage/y8nJ_XO0gNtPWKylGVhLGv)\n- 2026-08-30 [預防接種常見問答](https://www.cdc.gov.tw/Category/QAPage/5CWvlVkPteCHZwIes6tUPQ)\n- 2026-07-01 [國際旅遊常見問答](https://www.cdc.gov.tw/Category/QAPage/oDFvYopfPTouRB6a4gWcs5)\n- 2026-01-12 [統計資料常見問答](https://www.cdc.gov.tw/Category/QAPage/4VcQG32UMghZ8yHk42hUVQ)\n- 2026-09-05 [謠言澄清常見問答](https://www.cdc.gov.tw/Category/QAPage/Y6mjmeVxUGO8zXmBiXV284)\n- 2024-12-02 [113 年度公費流感疫苗接種 Q&A](https://www.cdc.gov.tw/Category/QAPage/zU9zOhcsoqjv8REH6XHH-Y)\n- 2026-07-15 [Dengue Fever FAQ](https://www.cdc.gov.tw/En/Category/QAPage/MZc3ZyAJNuiEZUIBNEvj4Z)\n- 2025-10-10 [被狗、貓或野生動物咬傷該怎麼辦？](https://www.cdc.gov.tw/Category/QAPage/OEo24-Y1ZChzoCUaupYf1K)",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/C9F0xuVE7Hy5VGtc-zHtDW"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.6,
+    "issues": [
+      {
+        "code": "list-page",
+        "severity": "info",
+        "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/List/C9F0xuVE7Hy5VGtc-zHtDW",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

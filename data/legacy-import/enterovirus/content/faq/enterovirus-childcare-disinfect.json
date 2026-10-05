@@ -26,6 +26,9 @@
   "summary": "腸病毒沒有套膜，酒精與一般乾洗手效果有限。有效的做法是： 500 ppm 漂白水（家用漂白水 1 份加 100 份清水）擦拭玩具、教具、桌面、門把與廁所，作用約 10 分鐘後再用清水擦拭； 每日至少消毒 1 次，疫情期間增加次數；",
   "question": "幼兒園怎麼消毒，才對腸病毒有效？",
   "answerMarkdown": "腸病毒沒有套膜，**酒精與一般乾洗手效果有限**。有效的做法是：\n\n1. **500 ppm 漂白水**（家用漂白水 1 份加 100 份清水）擦拭玩具、教具、桌面、門把與廁所，作用約 10 分鐘後再用清水擦拭；\n2. 每日至少消毒 1 次，疫情期間增加次數；\n3. 幼童與老師都用**肥皂洗手**（濕、搓、沖、捧、擦），尤其是如廁後、用餐前、換尿布後；\n4. 漂白水請現配現用，避開幼童並保持通風，勿與其他清潔劑混用。",
+  "tasks": [
+    "situation"
+  ],
   "basedOn": [
     "disease.enterovirus"
   ],
@@ -50,6 +53,21 @@
         "code": "manifest-derived",
         "severity": "info",
         "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「孩子腸病毒好了，什麼時候可以回學校？」從答案抽出結構化候選 {\"days\":7}，請確認後保留或刪除"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「孩子得了腸病毒，要在家休息幾天？」從答案抽出結構化候選 {\"days\":7}，請確認後保留或刪除"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「幼兒園怎麼消毒，才對腸病毒有效？」→ situation；「孩子腸病毒好了，什麼時候可以回學校？」→ symptoms；「腸病毒重症前兆有哪些？」→ symptoms；「腸病毒 71 型疫苗是公費的嗎？打了就不會得腸病毒嗎？」→ vaccines"
       }
     ],
     "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/zID4oBmzvgDWu3fb9-fOlP",

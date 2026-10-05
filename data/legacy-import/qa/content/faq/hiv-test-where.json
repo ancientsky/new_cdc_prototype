@@ -1,0 +1,65 @@
+{
+  "id": "faq.hiv-test-where",
+  "type": "faq",
+  "title": "哪裡可以做匿名 HIV 篩檢？",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2018-12-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.hiv"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "可以選擇： 匿名篩檢醫院：不需健保卡，提供諮詢與檢驗。 社區篩檢點：由民間團體與衛生局合作提供。 HIV 自我篩檢試劑：可於指定藥局、販賣機或網路通路取得，部分對象可申請公費試劑。",
+  "question": "哪裡可以做匿名 HIV 篩檢？",
+  "answerMarkdown": "可以選擇：\n\n- **匿名篩檢醫院**：不需健保卡，提供諮詢與檢驗。\n- **社區篩檢點**：由民間團體與衛生局合作提供。\n- **HIV 自我篩檢試劑**：可於指定藥局、販賣機或網路通路取得，部分對象可申請公費試劑。\n\n自我篩檢結果陽性時，需到醫院做確認檢驗；若距離可能感染不到 3 個月，結果陰性也建議之後再篩一次（空窗期）。",
+  "tasks": [
+    "symptoms"
+  ],
+  "basedOn": [
+    "disease.hiv"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/StC0qbIcZz2pDen8xIEI0x"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 30 處（mso 樣式 22、Mso 類別 7、命名空間標籤 4）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「人類免疫缺乏病毒感染／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.chronic-infectious（人類免疫缺乏病毒感染）"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「發生沒有保護的性行為後，72 小時內可以做什麼？」→ symptoms；「哪裡可以做匿名 HIV 篩檢？」→ symptoms"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/StC0qbIcZz2pDen8xIEI0x",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.hiv-test-where"
+    ]
+  }
+}

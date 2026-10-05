@@ -1,0 +1,61 @@
+{
+  "id": "faq.x-legacy-378f51",
+  "type": "faq",
+  "title": "傳染病統計多久更新一次？",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2016-09-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "法定傳染病通報與確定病例數每週更新（每週二）；年報於次年 6 月公布；資料開放平臺的資料集依各資料集的更新頻率同步。",
+  "question": "傳染病統計多久更新一次？",
+  "answerMarkdown": "法定傳染病通報與確定病例數每週更新（每週二）；年報於次年 6 月公布；資料開放平臺的資料集依各資料集的更新頻率同步。",
+  "tasks": [
+    "data",
+    "situation"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/4VcQG32UMghZ8yHk42hUVQ"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 31 處（mso 樣式 21、Mso 類別 8、命名空間標籤 5）"
+      },
+      {
+        "code": "faq-structure-loose",
+        "severity": "info",
+        "message": "沒有 .panel 結構，依「Q 開頭的標題／段落」拆成 3 題，請核對題目與答案的切分"
+      },
+      {
+        "code": "one-to-many",
+        "severity": "info",
+        "message": "一頁 3 題、清單沒有單一目標：status 維持 pending，請決定併入疾病頁（merged）或各題獨立（新站以 tasks 歸類）"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「「類流感門急診就診率」是什麼意思？」→ data；「疫情統計數字可以到哪裡查？」→ data、situation；「傳染病統計多久更新一次？」→ data、situation"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/4VcQG32UMghZ8yHk42hUVQ",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

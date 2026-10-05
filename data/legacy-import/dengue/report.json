@@ -11,7 +11,7 @@
   },
   "rules": {
     "file": "content/migration/import/_import-rules.json",
-    "version": 6
+    "version": 7
   },
   "manifest": {
     "id": "migration.dengue",
@@ -86,7 +86,7 @@
     "issues": {
       "error": 0,
       "warn": 12,
-      "info": 96
+      "info": 98
     },
     "manifest": {
       "items": 8,
@@ -956,6 +956,16 @@
           "code": "manifest-derived",
           "severity": "info",
           "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "structured-from-text",
+          "severity": "info",
+          "message": "「登革熱發燒後幾天內要就醫？」從答案抽出結構化候選 {\"daysMin\":3,\"daysMax\":14,\"hours\":24}，請確認後保留或刪除"
+        },
+        {
+          "code": "tasks-from-keywords",
+          "severity": "info",
+          "message": "tasks 依題目關鍵字給：「社區或里長要怎麼帶大家一起防登革熱？」→ situation；「登革熱發燒後幾天內要就醫？」→ symptoms；「從登革熱流行地區回國後，要注意什麼？」→ symptoms；「懷疑登革熱時，可以自己吃止痛藥嗎？」→ symptoms；「衛生單位說要進家裡噴藥，可以拒絕嗎？」→ symptoms；「出國回來後發燒，應該怎麼辦？」→ travel、symptoms"
         }
       ],
       "action": "compare-existing",

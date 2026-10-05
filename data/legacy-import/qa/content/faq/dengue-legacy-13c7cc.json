@@ -1,0 +1,64 @@
+{
+  "id": "faq.dengue-legacy-13c7cc",
+  "type": "faq",
+  "title": "What does \"inspect, empty, clean, scrub\" mean for dengue prevention?",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2022-06-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "These are four steps to remove mosquito breeding sites, done once a week:",
+  "question": "What does \"inspect, empty, clean, scrub\" mean for dengue prevention?",
+  "answerMarkdown": "These are four steps to remove mosquito breeding sites, done **once a week**:\n\n1. **Inspect** containers inside and outside the home that may hold water, such as plant saucers, buckets and old tyres.\n2. **Empty** the standing water.\n3. **Clean** away containers you do not need.\n4. **Scrub** the inside walls to remove mosquito eggs.\n\nAedes mosquitoes take about 7–10 days to develop from egg to adult, so weekly cleaning breaks the cycle.",
+  "basedOn": [
+    "disease.dengue"
+  ],
+  "sourceLang": "en",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/En/Category/QAPage/MZc3ZyAJNuiEZUIBNEvj4Z"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 30 處（mso 樣式 22、Mso 類別 8、命名空間標籤 4）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「Diseases／Dengue Fever／FAQ」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+      },
+      {
+        "code": "needs-source-zh",
+        "severity": "warn",
+        "message": "來源語言 en：新站以中文為正本（治理規則 18），請補中文版後再上線"
+      },
+      {
+        "code": "one-to-many",
+        "severity": "info",
+        "message": "一頁 3 題、清單沒有單一目標：status 維持 pending，請決定併入疾病頁（merged）或各題獨立（新站以 tasks 歸類）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/En/Category/QAPage/MZc3ZyAJNuiEZUIBNEvj4Z",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

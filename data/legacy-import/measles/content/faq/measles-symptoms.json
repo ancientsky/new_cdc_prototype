@@ -26,9 +26,16 @@
   "summary": "麻疹初期有高燒、咳嗽、流鼻水、結膜炎，口腔內可能出現白色柯氏斑；約 3–4 天後從耳後、臉部開始出紅疹，再擴散到全身。",
   "question": "麻疹有哪些症狀？會傳染多久？",
   "answerMarkdown": "麻疹初期有**高燒、咳嗽、流鼻水、結膜炎**，口腔內可能出現白色柯氏斑；約 3–4 天後從耳後、臉部開始出紅疹，再擴散到全身。\n\n病人在**出疹前 4 天到出疹後 4 天**都具傳染力，可經空氣傳播。出現發燒合併紅疹時，請先打電話告知醫院，戴口罩就醫並說明旅遊史。",
+  "tasks": [
+    "symptoms"
+  ],
   "basedOn": [
     "disease.measles"
   ],
+  "structured": {
+    "daysMin": 3,
+    "daysMax": 4
+  },
   "legacyUrls": [
     "https://www.cdc.gov.tw/Category/QAPage/s5OaifVY2y_Oh-5Zt4ecui"
   ],
@@ -50,6 +57,16 @@
         "code": "manifest-derived",
         "severity": "info",
         "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「麻疹有哪些症狀？會傳染多久？」從答案抽出結構化候選 {\"daysMin\":3,\"daysMax\":4}，請確認後保留或刪除"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「醫護人員需要接種 MMR 疫苗嗎？」→ vaccines；「我和麻疹病人接觸過，要怎麼辦？」→ symptoms；「衛生局打電話來做麻疹疫調，我要配合什麼？」→ symptoms；「幾年次以後出生的成人需要評估接種 MMR 疫苗？」→ vaccines；「我是 1970 年出生的，出國前需要打 MMR 疫苗嗎？」→ vaccines、travel；「我不確定有沒有打過 MMR，要怎麼評估要不要補打？」→ vaccines；「麻疹有哪些症狀？會傳染多久？」→ symptoms；「MMR 疫苗會造成自閉症嗎？」→ vaccines；「去日本旅遊需要擔心麻疹嗎？」→ travel；「出國回來後發燒，應該怎麼辦？」→ travel、symptoms"
       }
     ],
     "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/s5OaifVY2y_Oh-5Zt4ecui",
@@ -57,6 +74,7 @@
     "existing": true,
     "compareWith": [
       "faq.measles-symptoms"
-    ]
+    ],
+    "structuredFromText": true
   }
 }

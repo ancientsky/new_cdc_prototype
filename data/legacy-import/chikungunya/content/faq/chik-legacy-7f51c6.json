@@ -60,6 +60,11 @@
         "code": "body-short",
         "severity": "warn",
         "message": "內文過短（11 字，低於 40）"
+      },
+      {
+        "code": "tasks-unknown",
+        "severity": "info",
+        "message": "題目沒有命中 faqTasks 關鍵字，tasks 留空，請人工補"
       }
     ],
     "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/3TeaG2bDJdZXc_HhjDLhUo",

@@ -1,7 +1,7 @@
 {
   "id": "import-rules.legacy",
   "type": "import-rules",
-  "version": 6,
+  "version": 7,
   "title": "舊站匯出批次轉換規則（scripts/import-legacy.mjs 讀取）",
   "summary": "把舊站 CMS 匯出（每頁 .html＋.json 側檔）對應成新站內容草稿的規則：URL 模式→型別與目錄、類別→權責單位、疾病別名→疾病 id、標題關鍵字→疾病頁區塊、Bulletin typeid→newsType、信心計算權重與人工檢視門檻。規則是資料不是程式；正式批次先改這個檔再跑。",
   "owner": "unit.it",
@@ -68,6 +68,15 @@
       "type": "faq",
       "dir": "faq",
       "label": "Q&A（每題一筆）"
+    },
+    {
+      "id": "qa-en",
+      "match": "^/En/Category/QAPage/",
+      "kind": "faq",
+      "type": "faq",
+      "dir": "faq",
+      "lang": "en",
+      "label": "英文 Q&A（第八批：sourceLang en，需補中文版）"
     },
     {
       "id": "bulletin-detail",
@@ -149,15 +158,15 @@
       "newsType": "press",
       "label": "新聞稿"
     },
-    "8772": {
-      "newsType": "clarification",
-      "type": "clarification",
-      "label": "澄清稿",
-      "hint": "澄清稿直接建成 clarification（claim／verdict 由標題與內文推斷）"
-    },
     "11": {
       "newsType": "other",
       "label": "其他訊息"
+    },
+    "48": {
+      "newsType": "letter",
+      "type": "letter",
+      "label": "致醫界通函",
+      "hint": "致醫界通函建成 letter（letterNo 由標題「第 N 號」抽）；對象為醫療院所，audience professional"
     },
     "158": {
       "newsType": "press",
@@ -165,11 +174,11 @@
       "lang": "en",
       "hint": "英文新聞稿以 sourceLang: en 建立，需補中文版"
     },
-    "48": {
-      "newsType": "letter",
-      "type": "letter",
-      "label": "致醫界通函",
-      "hint": "致醫界通函建成 letter（letterNo 由標題「第 N 號」抽）；對象為醫療院所，audience professional"
+    "8772": {
+      "newsType": "clarification",
+      "type": "clarification",
+      "label": "澄清稿",
+      "hint": "澄清稿直接建成 clarification（claim／verdict 由標題與內文推斷）"
     }
   },
   "categoryOwners": [
@@ -261,6 +270,20 @@
     {
       "match": "News",
       "owner": "unit.pr"
+    },
+    {
+      "match": "預防接種／常見問答",
+      "owner": "unit.acute-infectious",
+      "_comment": "第八批：不綁疾病的預防接種問答歸急性組（預防接種業務）"
+    },
+    {
+      "match": "國際旅遊與健康",
+      "owner": "unit.quarantine"
+    },
+    {
+      "match": "首頁／常見問答",
+      "owner": "unit.oasis",
+      "_comment": "第八批：常見問答欄目的總覽列表頁歸 OASIS；各主題頁由更長的規則或疾病主檔決定"
     }
   ],
   "defaultOwner": "unit.oasis",
@@ -568,5 +591,81 @@
     "attachments": 0.1,
     "unique": 0.1
   },
-  "letterTitle": "致醫界通函第\\s*(\\d+)\\s*號"
+  "letterTitle": "致醫界通函第\\s*(\\d+)\\s*號",
+  "faqTasks": [
+    {
+      "_comment": "第八批：Q&A 的 tasks 依題目關鍵字給（題目沒命中才看答案，只取一個）；對應 schemas/_common.json tasks 枚舉",
+      "task": "vaccines",
+      "keys": [
+        "疫苗",
+        "接種",
+        "預防針",
+        "補打"
+      ]
+    },
+    {
+      "task": "travel",
+      "keys": [
+        "出國",
+        "旅遊",
+        "返國",
+        "入境",
+        "國外",
+        "旅行",
+        "旅客"
+      ]
+    },
+    {
+      "task": "rumor",
+      "keys": [
+        "謠言",
+        "網傳",
+        "是真的嗎",
+        "假訊息",
+        "詐騙",
+        "簡訊"
+      ]
+    },
+    {
+      "task": "data",
+      "keys": [
+        "統計",
+        "數據",
+        "下載",
+        "開放資料",
+        "資料集",
+        "就診率",
+        "病例數",
+        "年報",
+        "查到"
+      ]
+    },
+    {
+      "task": "situation",
+      "keys": [
+        "疫情",
+        "流行季",
+        "通報數",
+        "更新一次"
+      ]
+    },
+    {
+      "task": "symptoms",
+      "keys": [
+        "症狀",
+        "就醫",
+        "怎麼辦",
+        "治療",
+        "咬傷",
+        "藥",
+        "快篩",
+        "發燒",
+        "傳染",
+        "感染",
+        "檢查",
+        "篩檢",
+        "重症"
+      ]
+    }
+  ]
 }

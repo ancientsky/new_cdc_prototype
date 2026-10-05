@@ -1,0 +1,60 @@
+{
+  "id": "faq.x-legacy-74dfc3",
+  "type": "faq",
+  "title": "網傳多喝熱水、多曬太陽可以預防流感，是真的嗎？",
+  "owner": "unit.pr",
+  "publishedAt": "2021-02-08",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "沒有科學證據顯示喝熱水或曬太陽能預防流感。預防流感最有效的方法是每年接種流感疫苗、勤洗手、有症狀戴口罩並在家休息；網路傳言請先到疾管署澄清專區查證。",
+  "question": "網傳多喝熱水、多曬太陽可以預防流感，是真的嗎？",
+  "answerMarkdown": "沒有科學證據顯示喝熱水或曬太陽能預防流感。預防流感最有效的方法是**每年接種流感疫苗**、勤洗手、有症狀戴口罩並在家休息；網路傳言請先到疾管署澄清專區查證。",
+  "tasks": [
+    "rumor"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/Y6mjmeVxUGO8zXmBiXV284"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 21 處（mso 樣式 8、Mso 類別 8、命名空間標籤 5）"
+      },
+      {
+        "code": "faq-structure-loose",
+        "severity": "info",
+        "message": "沒有 .panel 結構，依「Q 開頭的標題／段落」拆成 3 題，請核對題目與答案的切分"
+      },
+      {
+        "code": "one-to-many",
+        "severity": "info",
+        "message": "一頁 3 題、清單沒有單一目標：status 維持 pending，請決定併入疾病頁（merged）或各題獨立（新站以 tasks 歸類）"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「MMR 疫苗會造成自閉症嗎？」→ vaccines；「收到自稱疾管署的簡訊要我點連結填資料，怎麼辦？」→ rumor、symptoms；「網傳多喝熱水、多曬太陽可以預防流感，是真的嗎？」→ rumor"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/Y6mjmeVxUGO8zXmBiXV284",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

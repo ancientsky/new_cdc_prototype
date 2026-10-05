@@ -11,7 +11,7 @@
   },
   "rules": {
     "file": "content/migration/import/_import-rules.json",
-    "version": 6
+    "version": 7
   },
   "manifest": {
     "id": "migration.mpox",
@@ -73,7 +73,7 @@
     "issues": {
       "error": 0,
       "warn": 10,
-      "info": 75
+      "info": 77
     },
     "manifest": {
       "items": 0,
@@ -890,6 +890,16 @@
           "code": "manifest-derived",
           "severity": "info",
           "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "structured-from-text",
+          "severity": "info",
+          "message": "「M痘疫苗誰可以打公費？要打幾劑？」從答案抽出結構化候選 {\"doses\":2,\"weeks\":4,\"days\":4}，請確認後保留或刪除"
+        },
+        {
+          "code": "tasks-from-keywords",
+          "severity": "info",
+          "message": "tasks 依題目關鍵字給：「M痘疫苗誰可以打公費？要打幾劑？」→ vaccines"
         }
       ],
       "action": "compare-existing",

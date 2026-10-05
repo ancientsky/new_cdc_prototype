@@ -1,0 +1,76 @@
+{
+  "id": "faq.hepb-newborn",
+  "type": "faq",
+  "title": "新生兒的 B 型肝炎疫苗什麼時候打？",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2019-08-12",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.hepatitis-b"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "公費 B 型肝炎疫苗共 3 劑：出生後 24 小時內儘速接種第 1 劑，出生滿 1 個月接種第 2 劑，滿 6 個月接種第 3 劑。",
+  "question": "新生兒的 B 型肝炎疫苗什麼時候打？",
+  "answerMarkdown": "公費 B 型肝炎疫苗共 3 劑：**出生後 24 小時內儘速接種第 1 劑**，出生滿 1 個月接種第 2 劑，滿 6 個月接種第 3 劑。\n\n母親為 B 型肝炎表面抗原（HBsAg）陽性者，新生兒除了疫苗，還要在出生後 24 小時內儘速注射 1 劑 B 型肝炎免疫球蛋白（HBIG），並於 12 個月大時追蹤抗體。",
+  "tasks": [
+    "vaccines"
+  ],
+  "basedOn": [
+    "disease.hepatitis-b"
+  ],
+  "structured": {
+    "doses": 3,
+    "hours": 24,
+    "months": 1
+  },
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/AOyssgHzaQZuuM8MdMmEDw"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 7 處（mso 樣式 3、Mso 類別 2、命名空間標籤 2）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「急性病毒性B型肝炎／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.chronic-infectious（急性病毒性B型肝炎）"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「新生兒的 B 型肝炎疫苗什麼時候打？」從答案抽出結構化候選 {\"doses\":3,\"hours\":24,\"months\":1}，請確認後保留或刪除"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「新生兒的 B 型肝炎疫苗什麼時候打？」→ vaccines"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/AOyssgHzaQZuuM8MdMmEDw",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.hepb-newborn"
+    ],
+    "structuredFromText": true
+  }
+}
