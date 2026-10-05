@@ -1,0 +1,75 @@
+{
+  "id": "page.influenza-stats",
+  "type": "page",
+  "title": "統計資料",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2017-10-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "每週發布之流感監測綜合報告：類流感就診、病毒型別、併發重症與國際疫情。 資料檔：<a href=\"https://www.cdc.gov.tw/File/Get/WVZD0SFKfIOhdgtmT-SHc2\"流感年度統計（CSV）</a；",
+  "slug": "influenza-stats",
+  "bodyMarkdown": "每週發布之流感監測綜合報告：類流感就診、病毒型別、併發重症與國際疫情。\n\n| 年度 | 確定病例數（示意） | 每十萬人口發生率（示意） |\n| --- | --- | --- |\n| 2021 | 514 | 6.6 |\n| 2022 | 652 | 30.4 |\n| 2023 | 790 | 14.2 |\n| 2024 | 928 | 38 |\n| 2025 | 166 | 21.8 |\n\n資料檔：\\<a href=\"https://www.cdc.gov.tw/File/Get/WVZD0SFKfIOhdgtmT-SHc2\">流感年度統計（CSV）\\</a>；更多資料見\\<a href=\"https://data.cdc.gov.tw/\">疾管署資料開放平臺\\</a>。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/14Z7BcTsilzv0ni-tFHF80"
+  ],
+  "assets": [
+    {
+      "file": "influenza-stats.csv",
+      "kind": "data",
+      "label": "流感年度統計（CSV，示意）",
+      "mime": "text/csv",
+      "bytes": 83,
+      "sha256": "bd962319d9e98197dd23f9d2a8023f3e7637a78141a7d30aa02da8dda98e6408",
+      "machineReadable": true
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.6,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 61 處（mso 樣式 21、Mso 類別 20、命名空間標籤 20）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 stats（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "list-page",
+        "severity": "info",
+        "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+      },
+      {
+        "code": "target-type-differs",
+        "severity": "info",
+        "message": "對應的新站內容是 dataset.flu-express（dataset），草稿以 page 暫存，請比對後改建為 dataset"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/List/14Z7BcTsilzv0ni-tFHF80",
+    "convertedAt": "2026-10-04T23:00:00Z",
+    "existing": true,
+    "compareWith": [
+      "dataset.flu-express"
+    ]
+  }
+}

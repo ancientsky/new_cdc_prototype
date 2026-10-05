@@ -6,7 +6,7 @@
 
 ## 0. 先搞懂運作方式
 
-正式環境沒有「另一套 CMS」。內容就是 `content/` 底下的 JSON 檔，流程是：
+正式環境沒有「另一套 CMS」（為什麼、和傳統後台差在哪，見 [git-as-cms.md](git-as-cms.md) 的比較表）。內容就是 `content/` 底下的 JSON 檔，流程是：
 
 **改檔 → 開 Pull Request → CI 自動驗證 → 複核者核准 → 合併即發布。**
 

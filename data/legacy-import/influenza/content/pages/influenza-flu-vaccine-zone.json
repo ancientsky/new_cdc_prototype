@@ -1,0 +1,59 @@
+{
+  "id": "page.influenza-flu-vaccine-zone",
+  "type": "page",
+  "title": "流感疫苗專區（首頁）",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2017-10-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "流感由流感病毒引起，經飛沫與接觸傳播，秋冬為流行期。長者、幼兒、孕婦與慢性病人易併發重症，每年接種疫苗是最有效的預防方法。",
+  "slug": "influenza-flu-vaccine-zone",
+  "bodyMarkdown": "流感由流感病毒引起，經飛沫與接觸傳播，秋冬為流行期。長者、幼兒、孕婦與慢性病人易併發重症，每年接種疫苗是最有效的預防方法。\n\n### 專區內容\n\n- [疾病介紹](https://www.cdc.gov.tw/Category/List/OF2PakpXLRtY16HCRkixFW)\n- [Q&A](https://www.cdc.gov.tw/Category/List/MMI39BeySElwMzM0uVxhpI)\n- [宣導素材](https://www.cdc.gov.tw/Category/List/Uf9hvEWETI9i-oWXbywwGD)\n- [指引及手冊](https://www.cdc.gov.tw/Category/List/GZfvh16IqxRTRll5kx4gv4)\n- [統計資料](https://www.cdc.gov.tw/Category/List/zZwbk3LvWU0VGbruHiruSh)\n- [最新消息](https://www.cdc.gov.tw/Category/List/dURh2WkKi4E_KPOrq3II_Y)\n\n| 項目 | 內容 |\n| --- | --- |\n| 法定傳染病類別 | 第四類 |\n| 通報時限 | 7 日內 |\n| ICD-10 | J09、J10、J11 |\n| 主要傳染途徑 | 飛沫、接觸病人分泌物 |\n| 潛伏期 | 1–4 天（平均 2 天） |",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/Page/-CgApFZQk-AhWIGG2NnkmA"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 40 處（mso 樣式 14、Mso 類別 13、命名空間標籤 13）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「流感／流感疫苗專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+      },
+      {
+        "code": "target-type-differs",
+        "severity": "info",
+        "message": "對應的新站內容是 disease.influenza（disease），草稿以 page 暫存，請比對後改建為 disease"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/Page/-CgApFZQk-AhWIGG2NnkmA",
+    "convertedAt": "2026-10-04T23:00:00Z",
+    "existing": true,
+    "compareWith": [
+      "disease.influenza"
+    ]
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "id": "faq.influenza-antiviral-who",
+  "type": "faq",
+  "title": "哪些人可以使用公費流感抗病毒藥劑？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2025-12-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "依 2026 年 9 月 21 日起適用的「公費流感抗病毒藥劑使用對象」，主要包括：",
+  "question": "哪些人可以使用公費流感抗病毒藥劑？",
+  "answerMarkdown": "依 2026 年 9 月 21 日起適用的「公費流感抗病毒藥劑使用對象」，主要包括：\n\n- 經通報的**流感併發重症**病例；\n- **孕婦**及產後 2 週內婦女經評估需及時用藥者；\n- **未滿 5 歲**的類流感患者（需快篩陽性）；\n- 確診或疑似流感而**住院**者；\n- 具重大傷病、免疫不全、慢性疾病高風險或 **BMI ≥ 30** 的類流感患者；\n- **肺炎**患者或出現**危險徵兆**者；\n- 人口密集機構發生群聚時，經衛生局研判的患者及接觸者。\n\n**65 歲以上**有類流感症狀者，在類流感高峰期（以疾管署公告為準）醫師可直接開立，不需快篩陽性。是否符合由醫師評估，請就醫時說明您的狀況。",
+  "basedOn": [
+    "disease.influenza"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/Zfg30duS6fEOkNhHjVRix8"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 121 處（mso 樣式 81、Mso 類別 29、命名空間標籤 20）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「流感／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/Zfg30duS6fEOkNhHjVRix8",
+    "convertedAt": "2026-10-04T23:00:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.influenza-antiviral-who"
+    ]
+  }
+}

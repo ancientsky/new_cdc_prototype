@@ -1,0 +1,64 @@
+{
+  "id": "page.influenza-links",
+  "type": "page",
+  "title": "相關連結",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2017-10-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "世界衛生組織（WHO） 美國疾病管制與預防中心（US CDC） 衛生福利部 疾管署資料開放平臺",
+  "slug": "influenza-links",
+  "bodyMarkdown": "- [世界衛生組織（WHO）](https://www.who.int/)\n- [美國疾病管制與預防中心（US CDC）](https://www.cdc.gov/)\n- [衛生福利部](https://www.mohw.gov.tw/)\n- [疾管署資料開放平臺](https://data.cdc.gov.tw/)",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/6TFWM0mSjy0cOE0UG2TWhz"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.6,
+    "issues": [
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「流感／相關連結」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 links（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "list-page",
+        "severity": "info",
+        "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+      },
+      {
+        "code": "target-type-differs",
+        "severity": "info",
+        "message": "對應的新站內容是 topic.ltc-infection-control（topic），草稿以 page 暫存，請比對後改建為 topic"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/List/6TFWM0mSjy0cOE0UG2TWhz",
+    "convertedAt": "2026-10-04T23:00:00Z",
+    "existing": true,
+    "compareWith": [
+      "topic.ltc-infection-control"
+    ]
+  }
+}

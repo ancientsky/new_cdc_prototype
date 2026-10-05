@@ -1,0 +1,62 @@
+{
+  "id": "faq.flu-vaccine-every-year",
+  "type": "faq",
+  "title": "流感疫苗去年打過了，今年還要再打嗎？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2025-12-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "要。流感病毒每年都可能變異，世界衛生組織每年會依監測結果更新疫苗株；而且接種後的保護力約在 6 個月後逐漸下降，所以每年都需要接種。",
+  "question": "流感疫苗去年打過了，今年還要再打嗎？",
+  "answerMarkdown": "要。流感病毒每年都可能變異，世界衛生組織每年會依監測結果更新疫苗株；而且接種後的保護力約在 6 個月後逐漸下降，**所以每年都需要接種**。\n\n接種後約 2 週產生保護力，建議在流行季前儘早完成。",
+  "basedOn": [
+    "disease.influenza"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/Zfg30duS6fEOkNhHjVRix8"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 121 處（mso 樣式 81、Mso 類別 29、命名空間標籤 20）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「流感／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/Zfg30duS6fEOkNhHjVRix8",
+    "convertedAt": "2026-10-04T23:00:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.flu-vaccine-every-year"
+    ]
+  }
+}

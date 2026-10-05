@@ -1,0 +1,62 @@
+{
+  "id": "faq.flu-vs-cold",
+  "type": "faq",
+  "title": "流感和一般感冒要怎麼分辨？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2025-12-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "流感通常突然發病，全身症狀明顯，例如發燒、頭痛、肌肉痠痛、極度疲倦；一般感冒多半是逐漸出現的流鼻水、打噴嚏、喉嚨痛，很少高燒或全身痠痛。",
+  "question": "流感和一般感冒要怎麼分辨？",
+  "answerMarkdown": "流感通常**突然發病**，全身症狀明顯，例如發燒、頭痛、肌肉痠痛、極度疲倦；一般感冒多半是逐漸出現的流鼻水、打噴嚏、喉嚨痛，很少高燒或全身痠痛。\n\n流感可能併發肺炎、腦炎、心肌炎等重症，長者、幼兒、孕婦與慢性病人若出現類流感症狀，建議儘早就醫。",
+  "basedOn": [
+    "disease.influenza"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/Zfg30duS6fEOkNhHjVRix8"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 121 處（mso 樣式 81、Mso 類別 29、命名空間標籤 20）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「流感／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/Zfg30duS6fEOkNhHjVRix8",
+    "convertedAt": "2026-10-04T23:00:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.flu-vs-cold"
+    ]
+  }
+}

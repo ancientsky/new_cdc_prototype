@@ -1,0 +1,62 @@
+{
+  "id": "faq.influenza-severe-what",
+  "type": "faq",
+  "title": "什麼是「流感併發重症」？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2025-12-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "「流感併發重症」是第四類法定傳染病：確定感染流感病毒，並因肺炎、腦炎、心肌炎、急性呼吸窘迫或其他嚴重併發症而需加護病房住院治療，或死亡的病例。醫師診斷符合時須於一週內通報。",
+  "question": "什麼是「流感併發重症」？",
+  "answerMarkdown": "「流感併發重症」是**第四類法定傳染病**：確定感染流感病毒，並因肺炎、腦炎、心肌炎、急性呼吸窘迫或其他嚴重併發症而需**加護病房住院治療**，或死亡的病例。醫師診斷符合時須於**一週內**通報。\n\n長者、幼兒、孕婦及慢性病人較容易發生。出現呼吸急促或困難、持續高燒、意識改變、胸痛、嘔吐無法進食等**危險徵兆**，請立即就醫。每年接種流感疫苗可降低併發重症風險。疫情統計請見「流感併發重症病例統計」資料集。",
+  "basedOn": [
+    "disease.influenza"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/Zfg30duS6fEOkNhHjVRix8"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 121 處（mso 樣式 81、Mso 類別 29、命名空間標籤 20）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「流感／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/Zfg30duS6fEOkNhHjVRix8",
+    "convertedAt": "2026-10-04T23:00:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.influenza-severe-what"
+    ]
+  }
+}

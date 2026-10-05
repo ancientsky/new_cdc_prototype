@@ -626,3 +626,70 @@ test('已提交的登革熱批次輸出（data/legacy-import/dengue）：33 頁�
   assert.ok(fs.existsSync(path.join(COMMITTED_DENGUE, 'report.md')) && fs.existsSync(path.join(COMMITTED_DENGUE, 'migration-patch.json')));
   assert.match(fs.readFileSync(path.join(COMMITTED_DENGUE, 'report.md'), 'utf8'), /模板推導項/);
 });
+
+// ───────────────────────── 第三批：流感（第十一輪） ─────────────────────────
+const EXPORT_FLU = path.join(ROOT, 'data/legacy-export/influenza');
+const COMMITTED_FLU = path.join(ROOT, 'data/legacy-import/influenza');
+
+test('流感批次：欄目內頁依清單目標建成 document；模板文件項以 docType 語意對；dropped／archived 與 pending 不算衝突；服務型頁面留 pending', () => {
+  const dir = tmp('flu');
+  const mf = path.join(dir, 'influenza.json');
+  fs.copyFileSync(path.join(CONTENT, 'migration/influenza.json'), mf);
+  const out = path.join(dir, 'out');
+  const { report, patch, drafts } = runImport({ exportDir: EXPORT_FLU, outDir: out, manifestPath: mf, slug: 'influenza', now: NOW });
+  const s = report.summary;
+  assert.equal(s.pages, 33); assert.equal(s.pagesWithoutOutput, 0); assert.equal(s.schemaInvalid, 0);
+  const env = { units: new Set(readJSON(path.join(CONTENT, 'master/units.json')).map((u) => u.id)), diseaseIds: new Set(master.map((d) => d.id)), assetsDir: path.join(out, 'content/assets'), licenses: ['OGDL-1.0', 'CC0-1.0', 'CC-BY-4.0'] };
+  for (const d of drafts) assert.deepEqual(validateDraft(d, env), [], d.id);
+  assert.ok(report.pages.every((p) => p.diseases.includes('disease.influenza')));
+  // (1) 舊站「公費流感抗病毒藥劑使用對象」是欄目內頁（MPage），清單說它對應新站的一份文件 ⇒ 草稿建成 document，id 就是清單 target
+  const elig = report.pages.find((p) => p.manifestKey === 'flu-antiviral-eligibility');
+  assert.equal(elig.kind, 'document'); assert.equal(elig.type, 'document'); assert.equal(elig.outputs[0].id, 'doc.flu-antiviral-eligibility.2026-09-21'); assert.equal(elig.existing, true);
+  assert.ok(elig.issues.some((i) => i.code === 'type-from-manifest' && i.severity === 'info'));
+  assert.ok(!elig.issues.some((i) => i.code === 'target-type-differs'), '型別已跟著清單，不再記 target-type-differs');
+  const elig06 = report.pages.find((p) => p.manifestKey === 'flu-antiviral-eligibility-2026-06');
+  assert.equal(elig06.outputs[0].id, 'doc.flu-antiviral-eligibility.2026-06-01');
+  // 清單頁（category-list）即使目標是文件也不改型別
+  assert.ok(!report.pages.some((p) => p.kind === 'list' && p.issues.some((i) => i.code === 'type-from-manifest')));
+  // (2) 模板「工作手冊」項標題是通稱，舊頁標題是「公費流感疫苗接種計畫作業手冊」：靠 docType（manual）語意對上
+  const manual = report.pages.find((p) => p.key === '13-manual');
+  assert.equal(manual.manifestKey, 'manual'); assert.equal(manual.manifestDerived, true); assert.equal(manual.type, 'document'); assert.equal(manual.target, 'doc.flu-vaccine-manual.2026-09-16');
+  // 同一份手冊從兩個舊網址抵達：第二份 id 加 -2 並記 target-shared，供人工刪一份
+  const manual2 = report.pages.find((p) => p.manifestKey === 'flu-vaccine-manual');
+  assert.equal(manual2.outputs[0].id, 'doc.flu-vaccine-manual.2026-09-16-2'); assert.ok(manual2.issues.some((i) => i.code === 'target-shared'));
+  // 「治療指引」模板項仍對不上「…防治工作指引」（待 Yulun 決定是否改模板），不會被 docType 誤對到別的文件項
+  const guide = report.pages.find((p) => p.key === '15-guideline');
+  assert.equal(guide.manifestKey, null); assert.ok(guide.issues.some((i) => i.code === 'not-in-manifest'));
+  assert.equal(patch.summary.derivedItems, 20); assert.equal(patch.summary.derivedMatched, 19);
+  assert.deepEqual(patch.derivedItems.filter((d) => !d.matched).map((d) => d.key), ['guideline']);
+  // (3) 人工已判定 dropped 的歷年計畫，工具找不到新站去向（pending）⇒ 一致，不是衝突
+  const past = patch.items.find((i) => i.key === 'flu-past-seasons');
+  assert.equal(past.current.status, 'dropped'); assert.equal(past.suggestion.status, 'pending'); assert.equal(past.agree, true); assert.equal(past.proposed.status, 'dropped');
+  assert.equal(patch.summary.conflicts, 0); assert.equal(patch.summary.matched, 8); assert.equal(patch.summary.statusChanges, 0);
+  // (4) 服務型頁面（合約院所查詢）：清單頁不轉、清單維持 pending，等 service 型別
+  for (const k of ['flu-vaccine-contract-sites', 'flu-antiviral-contract-sites']) {
+    const p = report.pages.find((x) => x.manifestKey === k);
+    assert.equal(p.kind, 'list'); assert.equal(patch.items.find((i) => i.key === k).proposed.status, 'pending');
+  }
+  assert.equal(patch.summary.stillPending, 2);
+  assert.equal(s.byType.document, 7); assert.equal(s.byType.faq, 10); assert.equal(s.byType.disease, 1);
+  assert.ok(s.avgConfidence >= 0.8 && s.needsReview <= 3);
+  assert.deepEqual(JSON.parse(fs.readFileSync(mf, 'utf8')), readJSON(path.join(CONTENT, 'migration/influenza.json')), '沒加 --apply-migration 不改清單');
+});
+
+test('已提交的流感批次輸出（data/legacy-import/influenza）：33 頁、schema 全過、清單只多 note、verified 全是 false、模擬匯出可重現', () => {
+  const r = JSON.parse(fs.readFileSync(path.join(COMMITTED_FLU, 'report.json'), 'utf8'));
+  assert.equal(r.summary.pages, 33); assert.equal(r.summary.schemaInvalid, 0); assert.equal(r.migration.applied, true); assert.equal(r.manifest.extends, 'migration-template.disease');
+  assert.equal(r.summary.manifest.derivedMatched, 19);
+  for (const d of r.drafts) assert.ok(fs.existsSync(path.join(COMMITTED_FLU, d.file)), d.file);
+  const manifest = readJSON(path.join(CONTENT, 'migration/influenza.json'));
+  assert.equal(manifest.items.length, 8);
+  assert.ok(manifest.items.every((i) => i.verified === false));
+  assert.ok(manifest.items.every((i) => /【匯入 /.test(i.note ?? '')));
+  assert.equal(manifest.items.find((i) => i.key === 'flu-past-seasons').status, 'dropped', '套用後 dropped 沒被改成 pending');
+  const m = JSON.parse(fs.readFileSync(path.join(COMMITTED_FLU, 'migration-patch.json'), 'utf8'));
+  assert.equal(m.summary.conflicts, 0);
+  const dir = tmp('flu-exp');
+  generateDisease('disease.influenza', dir);
+  for (const f of ['13-manual.json', '25-flu-antiviral-eligibility.json', '28-flu-past-seasons.json']) assert.deepEqual(JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')), JSON.parse(fs.readFileSync(path.join(EXPORT_FLU, f), 'utf8')), f);
+});

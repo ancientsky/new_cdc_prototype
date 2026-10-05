@@ -1,0 +1,62 @@
+{
+  "id": "faq.flu-vaccine-who",
+  "type": "faq",
+  "title": "今年公費流感疫苗誰可以打？什麼時候開始？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2025-12-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "依「2026–2027 年度公費流感疫苗接種計畫」： 2026 年 10 月 1 日起（第一階段）：65 歲以上長者、55 歲以上原住民、6 個月以上至國小入學前幼兒、孕婦及 6 個月內嬰兒之父母、19–64 歲高風險對象（慢性病、BMI…",
+  "question": "今年公費流感疫苗誰可以打？什麼時候開始？",
+  "answerMarkdown": "依「2026–2027 年度公費流感疫苗接種計畫」：\n\n- **2026 年 10 月 1 日起（第一階段）**：65 歲以上長者、55 歲以上原住民、6 個月以上至國小入學前幼兒、孕婦及 6 個月內嬰兒之父母、19–64 歲高風險對象（慢性病、BMI ≥ 30、罕見疾病、重大傷病）、國小至高中職與五專一至三年級學生、醫事防疫人員、長照機構住民與工作人員等。\n- **2026 年 11 月 1 日起（第二階段）**：50 至 64 歲無高風險慢性病成人。\n\n每年對象可能調整，請以當年度計畫為準。",
+  "basedOn": [
+    "disease.influenza"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/Zfg30duS6fEOkNhHjVRix8"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 121 處（mso 樣式 81、Mso 類別 29、命名空間標籤 20）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「流感／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/Zfg30duS6fEOkNhHjVRix8",
+    "convertedAt": "2026-10-04T23:00:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.flu-vaccine-who"
+    ]
+  }
+}
