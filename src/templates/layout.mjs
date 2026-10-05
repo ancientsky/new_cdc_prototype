@@ -13,10 +13,10 @@ const FAVICON = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' vi
 
 const EARLY_JS = `try{var d=document.documentElement;d.classList.add('js');var v=new URLSearchParams(location.search).get('view')||localStorage.getItem('cdc.view');if(v==='pro')d.dataset.view='pro'}catch(e){document.documentElement.classList.add('js')}`;
 
-// 頁尾「更多服務」連結（第二輪）：民眾主選單不放機關型入口，集中在這裡
+// 頁尾分組（第十七輪 fat footer）：服務／關於與政策／開發者與開放資料／聯絡。民眾主選單不放機關型入口，全站地圖集中在頁尾；首頁不再另放「更多服務」。
 const FOOT_SERVICES = [
   ['/publications/', 'more.publications'], ['/apply/', 'more.apply'], ['/lab/', 'more.lab'], ['/report/', 'more.report'], ['/research/', 'more.research'],
-  ['/careers/', 'more.careers'], ['/procurement/', 'more.procurement'], ['/notices/', 'more.notices'], ['/media/', 'services.media'], ['/campaigns/', 'campaigns.title'], ['/contact/', 'more.mailbox'], ['/services/', 'services.title'],
+  ['/careers/', 'more.careers'], ['/procurement/', 'more.procurement'], ['/notices/', 'more.notices'], ['/media/', 'services.media'], ['/campaigns/', 'campaigns.title'], ['/services/', 'services.title'],
 ];
 
 function translationBar(ctx, item, hide) {
@@ -132,10 +132,18 @@ ${pausedBanner(ctx)}
 <main id="main"${wide ? '' : raw(' class="wrap"')}>${raw(String(body))}</main>
 ${translationBar(ctx, item, hideTranslationBar)}
 <footer class="site-footer"><div class="wrap site-footer__in">
-  <nav aria-label="${t('footer.nav')}" class="site-footer__links"><a href="${url('/about/')}">${t('footer.about')}</a>${hasIntl ? html`<a href="${url('/international/')}">${t('international.title')}</a>` : ''}<a href="${url('/policy/privacy/')}">${t('footer.privacy')}</a><a href="${url('/policy/ai/')}">${t('footer.ai')}</a><a href="${url('/policy/open-data/')}">${t('footer.license')}</a><a href="${url('/developers/')}">${t('footer.api')}</a><a href="${url('/accessibility/')}">${t('footer.a11y')}</a></nav>
-  <nav aria-label="${t('footer.services')}" class="site-footer__svc"><strong class="site-footer__svc-t">${t('footer.services')}</strong>${FOOT_SERVICES.map(([p, k]) => html`<a href="${url(p)}">${t(k)}</a>`)}</nav>
-  <p class="site-footer__hot"><a href="tel:1922">1922</a> · <a href="tel:0800001922">0800-001922</a></p>
-  <p class="site-footer__more"><a href="${url('/transparency/')}">${t('footer.transparency')}</a><a href="${url('/guide/')}">${t('footer.guide')}</a><a href="${url('/sitemap-page/')}">${t('sitemap')}</a><a href="${url('/admin/', { noLang: true })}">${t('footer.admin')}</a></p>
+  <nav class="site-footer__col" aria-labelledby="ft-svc"><h2 class="site-footer__t" id="ft-svc">${t('footer.services')}</h2><ul>${FOOT_SERVICES.map(([p, k]) => html`<li><a href="${url(p)}">${t(k)}</a></li>`)}</ul></nav>
+  <nav class="site-footer__col" aria-labelledby="ft-about"><h2 class="site-footer__t" id="ft-about">${t('footer.group.about')}</h2><ul>
+    <li><a href="${url('/about/')}">${t('footer.about')}</a></li>${hasIntl ? html`<li><a href="${url('/international/')}">${t('international.title')}</a></li>` : ''}
+    <li><a href="${url('/policy/privacy/')}">${t('footer.privacy')}</a></li><li><a href="${url('/policy/ai/')}">${t('footer.ai')}</a></li><li><a href="${url('/accessibility/')}">${t('footer.a11y')}</a></li>
+    <li><a href="${url('/guide/')}">${t('footer.guide')}</a></li><li><a href="${url('/sitemap-page/')}">${t('sitemap')}</a></li></ul></nav>
+  <nav class="site-footer__col" aria-labelledby="ft-dev"><h2 class="site-footer__t" id="ft-dev">${t('footer.group.dev')}</h2><ul>
+    <li><a href="${url('/data/')}">${t('nav.data')}</a></li><li><a href="${url('/developers/')}">${t('footer.api')}</a></li><li><a href="${url('/policy/open-data/')}">${t('footer.license')}</a></li>
+    <li><a href="${url('/transparency/')}">${t('footer.transparency')}</a></li><li><a href="${url('/admin/', { noLang: true })}">${t('footer.admin')}</a></li></ul></nav>
+  <div class="site-footer__col site-footer__col--contact"><h2 class="site-footer__t" id="ft-contact">${t('footer.group.contact')}</h2>
+    <p class="site-footer__hot"><a href="tel:1922">1922</a><a class="site-footer__hot2" href="tel:0800001922">0800-001922</a></p>
+    <p class="site-footer__hotnote">${t('footer.hotline.note')}</p>
+    <ul aria-labelledby="ft-contact"><li><a href="${url('/contact/')}">${t('more.mailbox')}</a></li><li><a href="${url('/report/')}">${t('more.report')}</a></li></ul></div>
   <p class="site-footer__meta">${t('footer.proto', { date: site.today })}</p>
 </div></footer>
 <nav class="c-tabbar" aria-label="${t('nav.quick')}">

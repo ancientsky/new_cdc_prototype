@@ -170,8 +170,6 @@ export function render(ctx) {
     <div class="c-sechead"><h2 id="topics-h">${t('home.topics')}</h2><span class="c-sechead__note">${t('home.topics.note')}</span></div>
     <ul class="c-topicrow">${topics.map((x) => topicCard(ctx, x))}</ul>
   </section>` : '';
-  const more = [['/apply/', 'more.apply'], ['/publications/', 'more.publications'], ['/lab/', 'more.lab'], ['/report/', 'more.report'], ['/research/', 'more.research'], ['/careers/', 'more.careers'], ['/procurement/', 'more.procurement'], ['/notices/', 'more.notices'], ['/contact/', 'more.mailbox'], ['/about/', 'more.about']];
-  const moreSec = html`<nav class="c-moreservices" aria-labelledby="more-h"><h2 id="more-h">${t('home.more')}</h2><ul>${more.map(([p, k]) => html`<li><a href="${url(p)}">${t(k)}</a></li>`)}<li><a href="${url('/services/')}">${t('home.more.all')} →</a></li></ul></nav>`;
   return html`${previewBar(ctx, auto)}
 ${ver('A', heroA(ctx, banners, pinned, { eager: auto === 'A' }))}
 ${bSubject ? ver('B', heroB(ctx, bSubject, banners, { eager: auto === 'B' })) : ''}
@@ -196,7 +194,6 @@ ${bSubject ? ver('B', heroB(ctx, bSubject, banners, { eager: auto === 'B' })) : 
   </div>
   ${mediaSec}
   ${topicsSec}
-  ${moreSec}
 </div>`;
 }
 

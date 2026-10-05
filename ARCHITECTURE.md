@@ -865,3 +865,21 @@ manualStatus?: enum[cancelled, failed（流標）], award?: { date, winner, amou
 
 匯出後的流程與疫情發布相同：覆蓋或新增 `content/jobs/`、`content/tenders/` 的檔開 PR，依 `lanes` 走快車道；`/admin/publish/` 的型別說明改為指向這兩個表單。純函式拆在 `*-edit-core.js` 是為了測試（`tests/jobs-admin.test.mjs`、`tests/tenders-admin.test.mjs`）不必碰 DOM。
 
+## 20. 第十七輪（2026-10-05）：頁尾分組（fat footer）、首頁「更多服務」去重、開發者入口導引卡移除
+
+### 20.1 版面契約
+
+- `src/templates/layout.mjs` 頁尾改為四個 `<nav class="site-footer__col" aria-labelledby="ft-*">`：`ft-svc`（服務，來源 `FOOT_SERVICES` 清單，不再含 `/contact/`）、`ft-about`（關於與政策：about、international（有該語才出現）、privacy、AI 聲明、accessibility、guide、sitemap-page）、`ft-dev`（開放資料與開發者：data、developers、open-data 授權、transparency、admin 示範）、`ft-contact`（聯絡：`tel:1922`、`tel:0800001922` 大字、專線說明、署長信箱、通報專區）。最後一列 `.site-footer__meta` 橫跨四欄放原型建置日。
+- CSS：`.site-footer__in` 是 `grid` 四欄；`≤ 720px` 兩欄、`≤ 480px` 一欄（`src/styles/base.css`）。舊的 `.site-footer__svc*`、`.c-moreservices*` 規則刪除。
+- 首頁 `home.mjs` 不再輸出「更多服務」區塊；`home.more` 字串保留給 `/sitemap-page/` 用。
+- `developers.mjs` 不再輸出 `#intl-card` 導引卡；`tests/round6-ui.test.mjs` 改為斷言頁尾「關於與政策」欄含國際合作連結、開發者入口不含該卡。
+- i18n 新鍵（七語）：`footer.group.about`、`footer.group.dev`、`footer.group.contact`、`footer.hotline.note`；`footer.services` 改為「服務」。
+
+### 20.2 原本 → 改成 → 為什麼
+
+| 原本 | 改成 | 為什麼比較好 |
+|---|---|---|
+| 首頁底部「更多服務」卡片列 + 頁尾同一排連結 | 只留頁尾，分組呈現 | 同一組連結出現兩次會讓人懷疑是不是漏了什麼；頁尾本來就是「捲到底的第二導覽」，首頁主線可以更短 |
+| 頁尾單排連結 + 右側一小塊聯絡 | 四欄分組、每欄有標題與 `aria-labelledby` | 螢幕閱讀器可按區塊跳讀；搜尋引擎能讀到站點結構；1922 專線用大字獨立一欄，手機上一眼能撥 |
+| 開發者入口頁首放「國際合作」導引卡 | 移除，國際合作留在主選單與頁尾 | 外國 API 使用者的需求由 `/en/developers/` 本身滿足；導引卡放在頁首反而像走錯頁 |
+
