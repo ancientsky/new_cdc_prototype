@@ -540,12 +540,12 @@
     "funded": "conditional",
     "dose": "1 劑 PCV20 或 PCV21",
     "ageLabel": "19–64 歲",
-    "group": "侵襲性肺炎鏈球菌感染症高風險對象（如脾臟功能缺損、人工耳植入、免疫不全等）",
-    "note": "2026-01-15 起成人公費改為 1 劑結合型疫苗；曾接種 PCV13／PPV23 者的銜接依疾管署分階段公告",
+    "group": "侵襲性肺炎鏈球菌感染症高風險對象：脾臟功能缺損或脾臟切除、先天或後天免疫功能不全、人工耳植入、腦脊髓液滲漏、接受免疫抑制劑或放射治療的惡性腫瘤者、器官移植者",
+    "note": "2026-01-15 起 1 劑 PCV20，2026-08-10 起增加 PCV21；只打過 13／15 價者間隔至少 8 週可接種；完整接種 13／15 價＋23 價者，滿 65 歲且間隔 5 年以上可再接種 1 劑",
     "startAt": "2026-01-15",
     "source": {
-      "title": "成人公費肺炎鏈球菌疫苗升級（2026-01-15 起一劑 PCV20／PCV21，新聞報導）",
-      "url": "https://www.taiwannews.com.tw/zh/news/6409586"
+      "title": "疾管署：成人肺炎鏈球菌疫苗（正式資訊）",
+      "url": "https://www.cdc.gov.tw/Category/Page/U_hY1WCfa5BU6fuqW9FIXg"
     },
     "verified": false
   },
@@ -562,10 +562,11 @@
     "group": "55–64 歲原住民",
     "startAt": "2026-01-15",
     "source": {
-      "title": "成人公費肺炎鏈球菌疫苗升級（2026-01-15 起一劑 PCV20／PCV21，新聞報導）",
-      "url": "https://www.taiwannews.com.tw/zh/news/6409586"
+      "title": "疾管署：成人肺炎鏈球菌疫苗（正式資訊）",
+      "url": "https://www.cdc.gov.tw/Category/Page/U_hY1WCfa5BU6fuqW9FIXg"
     },
-    "verified": false
+    "verified": false,
+    "note": "2026-01-15 起 1 劑 PCV20，2026-08-10 起增加 PCV21；接種時出示原住民身分證明"
   },
   {
     "id": "sched.mmr-adult",
@@ -669,11 +670,11 @@
     "dose": "1 劑 PCV20 或 PCV21",
     "ageLabel": "65 歲以上",
     "group": "65 歲以上長者",
-    "note": "2026-01-15 起由「PCV13＋間隔 1 年 PPV23」改為 1 劑結合型疫苗；曾接種者的銜接依分階段公告",
+    "note": "2026-01-15 起以 1 劑 PCV20 取代「PCV13／15＋PPV23」兩劑，2026-08-10 起增加 PCV21；已接種 13／15 價＋23 價各 1 劑或已接種 20／21 價者不需再接種；只打過其中一種者間隔至少 1 年再接種 1 劑新疫苗",
     "startAt": "2026-01-15",
     "source": {
-      "title": "成人公費肺炎鏈球菌疫苗升級（2026-01-15 起一劑 PCV20／PCV21，新聞報導）",
-      "url": "https://www.taiwannews.com.tw/zh/news/6409586"
+      "title": "疾管署：成人肺炎鏈球菌疫苗（正式資訊）",
+      "url": "https://www.cdc.gov.tw/Category/Page/U_hY1WCfa5BU6fuqW9FIXg"
     },
     "verified": false
   },
