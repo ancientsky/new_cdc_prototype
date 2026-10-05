@@ -1,6 +1,6 @@
 // /procurement/（採購公告列表）與 /procurement/{slug}/（標案詳情）。ARCHITECTURE 15.2。
 // 分頁籤：招標中／已截止／已開標／已決標／流標（撤銷併入流標頁籤並加註）。
-import { html, raw } from '../../../scripts/lib/render.mjs';
+import { html, raw, daysBetween } from '../../../scripts/lib/render.mjs';
 import { md } from '../../../scripts/lib/markdown.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
 import {
@@ -17,6 +17,29 @@ export function meta(ctx, props = {}) {
   return { title: t('proc.title'), description: t('proc.lead'), styles: STYLES, jsonLd: ldFor(ctx, null, [{ label: t('proc.title') }]) };
 }
 
+/* ── 公告異動（第十六輪；amendments[] 由 /admin/tenders/edit/ 追加） ── */
+const AMEND_RECENT_DAYS = 14; // 最新一筆異動在 14 天內 ⇒ 頁首加提示
+const AMEND_PILL_STAGES = ['open', 'closed', 'opened']; // 列表卡只在還沒結案的階段標「有異動」
+/** 依日期倒序（同一天後加的在前） */
+export const amendsOf = (x) => (x.amendments ?? []).map((a, i) => ({ a, i })).sort((p, q) => String(q.a.date).localeCompare(String(p.a.date)) || q.i - p.i).map((v) => v.a);
+const amendPill = (ctx, kind) => pill(ctx.t(`proc.amend.kind.${kind}`), kind === 'cancel' ? 'warn' : kind === 'extend' ? 'info' : 'neutral');
+function amendSection(ctx, x) {
+  const list = amendsOf(x);
+  if (!list.length) return '';
+  const { t, fmtDate } = ctx;
+  return html`<section class="c-block c-tamend" id="amendments" aria-labelledby="h-amend"><h2 id="h-amend">${t('proc.amend.title')}</h2>
+  <p class="muted">${t('proc.amend.lead')}</p>
+  <ol class="c-tamend-list">${list.map((a) => html`<li class="c-tamend-item" data-kind="${a.kind}"><p class="c-tamend-head">${amendPill(ctx, a.kind)} <time datetime="${a.date}">${fmtDate(a.date)}</time></p>
+    <p class="c-tamend-text">${a.text}</p>${a.refNo ? html`<p class="c-tamend-ref muted">${t('proc.amend.ref')}：${a.refNo}</p>` : ''}</li>`)}</ol></section>`;
+}
+function amendRecent(ctx, x) {
+  const last = amendsOf(x)[0];
+  if (!last?.date) return '';
+  const d = daysBetween(last.date, ctx.site.today);
+  if (d < 0 || d > AMEND_RECENT_DAYS) return '';
+  return html`<p class="c-alert c-alert--info c-tamend-recent" role="note">${ctx.t('proc.amend.recent', { date: ctx.fmtDate(last.date), text: last.text })} <a class="c-alert__go" href="#amendments">${ctx.t('proc.amend.see')} ↓</a></p>`;
+}
+
 const pccLink = (ctx, x) => (x.pccUrl ? extLink(ctx, x.pccUrl, ctx.t('proc.pcc')) : '');
 
 function tenderCard(ctx, x) {
@@ -25,7 +48,7 @@ function tenderCard(ctx, x) {
   const fb = isFallbackLink(ctx, x);
   return html`<li class="c-job c-tender" data-stage="${stage}">
   <div class="c-job__main">
-    <p class="c-job__meta">${x.method ? pill(x.method, 'info') : ''} ${x.category ? pill(x.category, 'neutral') : ''}${stage === 'cancelled' ? html` ${stagePill(ctx, stage, 'tender')}` : ''}</p>
+    <p class="c-job__meta">${x.method ? pill(x.method, 'info') : ''} ${x.category ? pill(x.category, 'neutral') : ''}${stage === 'cancelled' ? html` ${stagePill(ctx, stage, 'tender')}` : ''}${x.amendments?.length && AMEND_PILL_STAGES.includes(stage) ? html` ${pill(t('proc.amend.badge'), 'warn')}` : ''}</p>
     <h3 class="c-job__t"><a href="${hrefFor(ctx, { ...x, type: 'tender' })}"${fb ? raw(' lang="zh-TW"') : ''}>${fb ? x.title : L(ctx, x, 'title')}</a></h3>
     <dl class="c-job__facts">
       <div><dt>${t('proc.tenderNo')}</dt><dd>${x.tenderNo ?? '—'}</dd></div>
@@ -105,7 +128,7 @@ function detail(ctx, x) {
     <h1>${L(ctx, x, 'title')}</h1>
     ${L(ctx, x, 'summary') ? html`<p class="lead">${L(ctx, x, 'summary')}</p>` : ''}
     ${langStatus && lang !== 'zh-TW' ? html`<p>${translationBadge(ctx, langStatus === 'reviewed' ? 'reviewed' : 'machine')}</p>` : ''}
-    ${alerts(ctx, x)}${provenance(ctx, x)}
+    ${alerts(ctx, x)}${amendRecent(ctx, x)}${provenance(ctx, x)}
   </div>${x.pccUrl ? html`<div class="c-pagehead__actions">${extLink(ctx, x.pccUrl, t('proc.pcc'), { cls: 'c-btn c-btn--ghost' })}</div>` : ''}</header>
   <div class="c-cols c-cols--2">
     <div class="c-cols__main">
@@ -118,6 +141,7 @@ function detail(ctx, x) {
       ${x.scope?.length ? html`<section class="c-block" id="scope" aria-labelledby="h-scope"><h2 id="h-scope">${t('proc.s.scope')}</h2><ul class="c-bullets">${x.scope.map((v) => html`<li>${v}</li>`)}</ul></section>` : ''}
       ${x.specialTerms?.length ? html`<section class="c-block" id="terms" aria-labelledby="h-terms"><h2 id="h-terms">${t('proc.s.terms')}</h2><ul class="c-bullets">${x.specialTerms.map((v) => html`<li>${v}</li>`)}</ul></section>` : ''}
       <section class="c-block" id="timeline" aria-labelledby="h-timeline"><h2 id="h-timeline">${t('proc.timeline')}</h2>${timeline(ctx, x, stage)}</section>
+      ${amendSection(ctx, x)}
       ${x.bodyMarkdown ? html`<div class="c-prose">${raw(md(L(ctx, x, 'bodyMarkdown') ?? x.bodyMarkdown))}</div>` : ''}
       <section class="c-block" id="award" aria-labelledby="h-award"><h2 id="h-award">${t('proc.s.award')}</h2>
         ${x.award ? html`<div class="c-tablewrap"><table class="c-table c-table--kv"><tbody>
@@ -149,6 +173,8 @@ export function markdown(ctx, { item: x }) {
   lines.push(`- 公告日：${x.announcedAt ?? ''}`, `- 投標截止：${x.deadlineAt ?? ''}`, `- 開標：${x.openingAt ?? '—'}`);
   if (x.pccUrl) lines.push(`- 政府電子採購網：${x.pccUrl}`);
   if (x.award) lines.push('', '## 決標資訊', '', `- 決標日：${x.award.date}`, `- 得標廠商：${x.award.winner}`, ...(x.award.amountNtd != null ? [`- 決標金額：${money(x.award.amountNtd)}`] : []), ...(x.award.note ? [`- 備註：${x.award.note}`] : []));
+  const am = amendsOf(x);
+  if (am.length) lines.push('', '## 公告異動', '', ...am.map((a) => `- ${a.date}［${ctx.t(`proc.amend.kind.${a.kind}`)}］${a.text}${a.refNo ? `（${a.refNo}）` : ''}`));
   if (x.contact) lines.push('', '## 聯絡', '', x.contact);
   for (const a of x.attachments ?? []) lines.push('', `- 附件：[${a.label}](${a.url})`);
   return lines.join('\n') + '\n';

@@ -42,6 +42,21 @@
     "resultPlannedAt": { "type": "string", "format": "date", "description": "預定公告結果日；today > resultPlannedAt + 7 且無 result ⇒ 待辦 job-result-overdue" },
     "contact": { "type": "string", "minLength": 1, "description": "聯絡窗口（單位與總機轉分機；不放承辦人姓名）" },
     "attachments": { "$ref": "#/$defs/jobAttachments" },
+    "amendments": {
+      "type": "array",
+      "description": "公告異動紀錄（展延、改期、更正、取消…），由後台異動表單追加；前台頁面「公告異動」區依日期倒序列出，RSS 不另發項目",
+      "items": {
+        "type": "object",
+        "required": ["date", "kind", "text"],
+        "additionalProperties": false,
+        "properties": {
+          "date": { "type": "string", "format": "date", "description": "異動公告日" },
+          "kind": { "enum": ["extend", "reschedule", "correction", "cancel", "other"], "description": "extend 展延截止、reschedule 改期（甄試日／開標日／結果公布日）、correction 更正、cancel 取消或停止、other 其他" },
+          "text": { "type": "string", "minLength": 1, "maxLength": 300, "description": "給民眾看的一句話（例：報名截止日由 2026-09-30 展延至 2026-10-07）" },
+          "refNo": { "type": "string", "description": "異動公告字號（選填）" }
+        }
+      }
+    },
     "manualStatus": { "enum": ["cancelled", "filled"], "description": "人工覆蓋：cancelled 停止甄選、filled 已補實（其餘階段一律由日期與 result 推導）" },
     "manualStatusNote": { "type": "string", "description": "人工覆蓋的理由（例：因員額調整停止甄選）" },
     "result": {

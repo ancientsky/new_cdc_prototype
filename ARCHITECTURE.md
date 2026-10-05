@@ -843,3 +843,25 @@ manualStatus?: enum[cancelled, failed（流標）], award?: { date, winner, amou
 ### 18.5 分工與邊界
 
 兩個模型分工，以檔案為邊界：一個做答案引擎（`src/client/answer/{core,data}.js`、`eval/run-eval.mjs`、評估集、`tests/answer.test.mjs`），一個做地圖頁（`vaccine-schedule.mjs`、`vaxschedule.js`、i18n 新 key、components.css 新區塊、入口連結、`tests/vaccine-schedule-ui.test.mjs`）；整合者負責主檔、schema、載入、API、疫苗頁修正與文件。
+
+## 19. 第十六輪（2026-10-05）：人才招募與採購公告的後台上架、異動與結果公告
+
+### 19.1 資料契約
+
+- `schemas/job.json`、`schemas/tender.json` 新增 `amendments[]`：`{ date, kind: extend | reschedule | correction | cancel | other, text(≤300), refNo? }`。異動是**追加**不是改寫：延長截止時 `deadlineAt` 改成新日期，同時 `amendments` 多一筆 kind `extend` 寫「由 A 展延至 B」。前台詳情頁「公告異動」區倒序列出；最新一筆在 14 天內則頁首提示；列表卡標「有異動」。RSS 不另發項目（階段變動已會反映）。
+- 取消／補實（job `manualStatus: cancelled | filled`）與流標／廢標（tender `manualStatus: failed | cancelled`）由表單寫入，並自動追加 kind `cancel` 的異動紀錄；已取消不得有 `result`，已決標不得再填 `manualStatus`（既有 validate 規則）。
+- 甄選結果 `result`、遞補 `waitlistUpdates` 與決標 `award` 的欄位不變；表單只是產生它們。
+
+### 19.2 共用規則（瀏覽器與 CI 同一份）
+
+`src/client/careers-rules.js`（純函式、無 import）：`maskedNameProblems`、`candidateNoProblems`、`jobPiiErrors`（原在 `scripts/lib/validate.mjs`）、`jobStageOf`、`tenderStageOf`（原在 `scripts/lib/governance.mjs`）。兩個建置腳本改為 import 並 re-export，既有測試不變；後台表單 import `../careers-rules.js` 做即時檢核與階段預覽。**原本**規則只在 Node 建置時跑，承辦人要送 PR 才知道名單遮罩有沒有過；**改成**表單輸入時就跑同一個函式；**為什麼比較好**：不會有「表單說可以、CI 說不行」兩套規則，也不必在瀏覽器端再抄一份。
+
+### 19.3 後台頁
+
+| 路徑 | 模板／腳本 | 內容 |
+| --- | --- | --- |
+| `/admin/jobs/edit/` | `src/templates/admin/jobs-edit.mjs`、`src/client/admin/jobs-edit.js`（DOM）、`jobs-edit-core.js`（純函式） | 選「新增」或既有職缺；A 公告內容、B 時程異動、C 取消／補實、D 甄選結果（正取、備取、遞補，即時個資檢核）；預覽階段與關鍵日期；匯出整份 job JSON 與檔名 |
+| `/admin/tenders/edit/` | `tenders-edit.mjs`、`tenders-edit.js`、`tenders-edit-core.js` | 同上：A 公告內容、B 時程異動（投標截止、開標、說明會）、C 流標／取消、D 決標公告；匯出整份 tender JSON |
+
+匯出後的流程與疫情發布相同：覆蓋或新增 `content/jobs/`、`content/tenders/` 的檔開 PR，依 `lanes` 走快車道；`/admin/publish/` 的型別說明改為指向這兩個表單。純函式拆在 `*-edit-core.js` 是為了測試（`tests/jobs-admin.test.mjs`、`tests/tenders-admin.test.mjs`）不必碰 DOM。
+

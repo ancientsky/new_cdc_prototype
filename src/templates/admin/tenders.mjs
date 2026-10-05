@@ -19,8 +19,9 @@ export function render(ctx) {
 ${pageHead({
     title: '採購公告管理',
     what: '秘書室的標案總覽：每件標案目前在哪個階段（招標中、已截止、已開標、已決標、流標）、預算、投標截止與開標日，以及決標逾期的提醒。',
-    flow: '標案是 content/tenders/ 的 tender 檔；新增、開標、決標、流標都是改檔開 PR。階段由日期與 award／manualStatus 推導；開標日後 30 日仍沒有決標資訊（且非流標、撤銷）會自動產生待辦給秘書室。',
+    flow: '上架新標案、展延投標截止或改開標日、流標／取消、公告決標，都在「採購公告上架與異動」表單填寫：即時預覽階段與檢核，匯出 content/tenders/ 的 tender 檔開 PR（快車道）。階段由日期與 award／manualStatus 推導；開標日後 30 日仍沒有決標資訊（且非流標、撤銷）會自動產生待辦給秘書室。',
   })}
+<div class="adm-actions adm-tf-entry"><a class="adm-btn" href="${url('/admin/tenders/edit/', { noLang: true })}">上架新標案／異動既有標案</a><span class="adm-muted">展延、流標、決標都在同一張表單，會自動留下前台看得到的「公告異動」紀錄。</span></div>
 <div class="adm-statrow">
   <div class="adm-stat adm-stat--info"><p class="adm-stat__label">招標中</p><p class="adm-stat__value">${n('open')}</p><p class="adm-stat__note">投標截止前</p></div>
   <div class="adm-stat"><p class="adm-stat__label">已截止</p><p class="adm-stat__value">${n('closed')}</p><p class="adm-stat__note">等開標</p></div>
@@ -35,7 +36,7 @@ ${pageHead({
   <div class="adm-tablewrap"><table class="adm-table"><caption>共 ${rows.length} 件標案（建置日 ${site.today}）</caption>
     <thead><tr><th scope="col">標案</th><th scope="col">階段</th><th scope="col">採購方式</th><th scope="col" class="num">預算（元）</th><th scope="col">投標截止</th><th scope="col">開標</th><th scope="col">決標</th><th scope="col">採購網</th></tr></thead>
     <tbody>${rows.map((r) => html`<tr data-id="${r.id}" data-stage="${r.stage}">
-      <td><a href="${url(r.front)}">${r.title}</a><div class="adm-muted"><code>${r.id}</code> · ${r.tenderNo} · ${r.requestingName}</div></td>
+      <td><a href="${url(r.front)}">${r.title}</a><div class="adm-muted"><code>${r.id}</code> · ${r.tenderNo} · ${r.requestingName} · <a href="${url('/admin/tenders/edit/', { noLang: true })}?id=${r.id}">異動</a></div></td>
       <td>${badge(r.stage)}${r.status !== 'published' ? html` <span class="adm-badge adm-badge--info">${r.status}</span>` : ''}</td>
       <td>${r.method}${r.category ? html`<div class="adm-muted">${r.category}</div>` : ''}</td>
       <td class="num">${r.budgetNtd != null ? r.budgetNtd.toLocaleString('en-US') : '—'}</td>

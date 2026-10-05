@@ -25,7 +25,7 @@ export function render(ctx) {
 ${pageHead({
     title: '人才招募管理',
     what: '人事室的招募職缺總覽：每則職缺目前在哪個階段、倒數、報名方式（站內模擬報名或外部系統）、待辦，以及甄選結果上架前的檢核。',
-    flow: '職缺是 content/jobs/ 的 job 檔；新增、公布結果與遞補都是改檔開 PR。階段由日期與 result 欄位推導，截止當天、甄試日到期都不需要任何人動手；結果上架時建置會強制檢查遮罩姓名。',
+    flow: '職缺是 content/jobs/ 的 job 檔。上架新職缺、延長報名或改期、取消／補實、公告錄取名單與遞補，都用「上架與異動」表單填寫並即時檢核，匯出 JSON 後開 PR（快車道，CI 過即自動合併）；改期與取消會留下異動紀錄給民眾看。階段由日期與 result 欄位推導，截止當天、甄試日到期都不需要任何人動手；結果上架時建置會強制檢查遮罩姓名。',
   })}
 <div class="adm-box adm-box--note" role="note"><strong>結果只公布報名編號與遮罩姓名</strong>
   <code>result.admitted／waitlist／waitlistUpdates</code> 的 <code>nameMasked</code> 必須含遮罩字（○◯〇＊），且不得出現完整中文姓名樣式；<code>candidateNo</code> 不得像身分證字號。違反時建置失敗，不能上線。AI 問答不會唸出名單，只給結果頁連結。</div>
@@ -38,12 +38,14 @@ ${pageHead({
   <div class="adm-stat ${bad || rows.some((r) => r.resultOverdue) ? 'adm-stat--bad' : 'adm-stat--ok'}"><p class="adm-stat__label">需處理</p><p class="adm-stat__value">${rows.filter((r) => r.attention).length}</p><p class="adm-stat__note">結果逾期或檢核未過</p></div>
 </div>
 
+<p class="adm-actions"><a class="adm-btn" href="${url('/admin/jobs/edit/', { noLang: true })}">上架新職缺／改期、取消、公布名單 →</a></p>
+
 <section class="adm-card" aria-labelledby="j-h"><h2 id="j-h">職缺與階段</h2>
   <p class="adm-card__sub">前台：<a href="${url('/careers/')}">/careers/</a>。依報名截止日排序；歷史＝結果公布滿 90 天、已額滿或已取消。</p>
   <div class="adm-tablewrap"><table class="adm-table"><caption>共 ${rows.length} 則職缺（建置日 ${site.today}）</caption>
     <thead><tr><th scope="col">職缺</th><th scope="col">階段</th><th scope="col">用人單位</th><th scope="col" class="num">名額</th><th scope="col">報名期間</th><th scope="col">倒數</th><th scope="col">報名方式</th><th scope="col">結果</th></tr></thead>
     <tbody>${rows.map((r) => html`<tr data-id="${r.id}" data-stage="${r.stage}">
-      <td><a href="${url(r.front)}">${r.title}</a><div class="adm-muted"><code>${r.id}</code> · ${r.jobType}</div></td>
+      <td><a href="${url(r.front)}">${r.title}</a><div class="adm-muted"><code>${r.id}</code> · ${r.jobType} · <a href="${url('/admin/jobs/edit/', { noLang: true })}?id=${encodeURIComponent(r.id)}">異動</a></div></td>
       <td>${badge(r.stage)}${r.history ? html` <span class="adm-badge adm-badge--gray">歷史</span>` : ''}${r.status !== 'published' ? html` <span class="adm-badge adm-badge--info">${r.status}</span>` : ''}</td>
       <td>${r.hiringName || '—'}</td>
       <td class="num">${r.positions ?? '—'}</td>
