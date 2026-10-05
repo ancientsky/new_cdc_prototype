@@ -58,9 +58,12 @@ export function lookupTables(ctx) {
       if (!it?.oldUrl) continue;
       const tg = (it.toId ?? it.target) ? site.byId.get(it.toId ?? it.target) : null; // toId：目標為失效版文件時直接指向現行版
       if (tg && !targets[tg.id]) targets[tg.id] = { title: L(ctx, tg, 'title') ?? tg.title, href: hrefFor(ctx, tg) };
+      // newPath：去處是系統產生頁／功能頁（例：/travel/JP/），不是內容 id ⇒ 以 path:{newPath} 當 targets 的 key，標題顯示路徑
+      const np = !tg && it.newPath ? `path:${it.newPath}` : null;
+      if (np && !targets[np]) targets[np] = { title: it.newPath, href: `${config.basePath}${it.newPath}` };
       const info = {
         t: it.oldTitle ?? '', p: it.oldPath ?? '', s: it.status ?? 'pending', v: it.verified !== false,
-        g: tg ? tg.id : null, a: it.anchor ?? '', n: it.note ?? '', r: it.newRequirements ?? [],
+        g: tg ? tg.id : np, a: it.anchor ?? '', n: it.note ?? '', r: it.newRequirements ?? [],
       };
       if (hasPlaceholder(it.oldUrl)) {
         const [noHash, hash = ''] = String(it.oldUrl).split('#');

@@ -6,9 +6,10 @@
   "applied": {
     "statusChanges": [],
     "targetChanges": [],
+    "newPathChanges": [],
     "noteChanges": 0
   },
-  "rule": "只改 status／target／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。",
+  "rule": "只改 status／target／newPath／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。",
   "items": [
     {
       "key": "flu-vaccine-zone",
@@ -17,16 +18,19 @@
       "current": {
         "status": "merged",
         "target": "disease.influenza",
+        "newPath": null,
         "note": "併入疾病頁「疫苗」區塊與專業版防治計畫；接種對象、地點分別連到計畫文件與疫苗頁。　【匯入 2026-10-03】草稿 page.influenza-flu-vaccine-zone（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "merged",
         "target": "disease.influenza",
+        "newPath": null,
         "note": "併入疾病頁「疫苗」區塊與專業版防治計畫；接種對象、地點分別連到計畫文件與疫苗頁。　【匯入 2026-10-03】草稿 page.influenza-flu-vaccine-zone（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "disease.influenza"
+        "target": "disease.influenza",
+        "newPath": null
       },
       "draftIds": [
         "page.influenza-flu-vaccine-zone"
@@ -35,6 +39,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -45,16 +50,19 @@
       "current": {
         "status": "migrated",
         "target": "doc.flu-vaccine-schedule.2026-09-15",
+        "newPath": null,
         "note": "每年度另建一筆文件，舊年度自動失效；對象與時程是 AI 與民眾最常問的版本題。　【匯入 2026-10-03】草稿 doc.flu-vaccine-schedule.2026-09-15（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.flu-vaccine-schedule.2026-09-15",
+        "newPath": null,
         "note": "每年度另建一筆文件，舊年度自動失效；對象與時程是 AI 與民眾最常問的版本題。　【匯入 2026-10-03】草稿 doc.flu-vaccine-schedule.2026-09-15（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.flu-vaccine-schedule.2026-09-15"
+        "target": "doc.flu-vaccine-schedule.2026-09-15",
+        "newPath": null
       },
       "draftIds": [
         "doc.flu-vaccine-schedule.2026-09-15"
@@ -63,6 +71,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -73,16 +82,19 @@
       "current": {
         "status": "migrated",
         "target": "doc.flu-vaccine-manual.2026-09-16",
+        "newPath": null,
         "note": "給合約院所與衛生所的作業手冊，依據接種計畫文件，計畫修訂時自動加註。　【匯入 2026-10-03】草稿 doc.flu-vaccine-manual.2026-09-16（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.flu-vaccine-manual.2026-09-16",
+        "newPath": null,
         "note": "給合約院所與衛生所的作業手冊，依據接種計畫文件，計畫修訂時自動加註。　【匯入 2026-10-03】草稿 doc.flu-vaccine-manual.2026-09-16（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.flu-vaccine-manual.2026-09-16"
+        "target": "doc.flu-vaccine-manual.2026-09-16",
+        "newPath": null
       },
       "draftIds": [
         "doc.flu-vaccine-manual.2026-09-16"
@@ -91,6 +103,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -101,16 +114,19 @@
       "current": {
         "status": "pending",
         "target": null,
+        "newPath": null,
         "note": "原型不自己列院所，只做深連結到接種點查詢（vaxmap）；待與衛生局確認名單更新責任與深連結參數。　【匯入 2026-10-03】草稿 service.influenza-flu-vaccine-contract-sites（信心 0.6）"
       },
       "proposed": {
         "status": "pending",
         "target": null,
+        "newPath": null,
         "note": "原型不自己列院所，只做深連結到接種點查詢（vaxmap）；待與衛生局確認名單更新責任與深連結參數。　【匯入 2026-10-03】草稿 service.influenza-flu-vaccine-contract-sites（信心 0.6）"
       },
       "suggestion": {
         "status": "pending",
-        "target": null
+        "target": null,
+        "newPath": null
       },
       "draftIds": [
         "service.influenza-flu-vaccine-contract-sites"
@@ -119,6 +135,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -129,16 +146,19 @@
       "current": {
         "status": "migrated",
         "target": "doc.flu-antiviral-eligibility.2026-09-18",
+        "newPath": null,
         "note": "版本鏈：全年適用版 → 2026-08-24 擴大版 → 2026-09-18 延長版（致醫界通函第 616 號，高傳播族群至 10/31）各為獨立文件；全部對象經醫師評估皆不需快篩。　【匯入 2026-10-03】草稿 doc.flu-antiviral-eligibility.2026-09-18（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.flu-antiviral-eligibility.2026-09-18",
+        "newPath": null,
         "note": "版本鏈：全年適用版 → 2026-08-24 擴大版 → 2026-09-18 延長版（致醫界通函第 616 號，高傳播族群至 10/31）各為獨立文件；全部對象經醫師評估皆不需快篩。　【匯入 2026-10-03】草稿 doc.flu-antiviral-eligibility.2026-09-18（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.flu-antiviral-eligibility.2026-09-18"
+        "target": "doc.flu-antiviral-eligibility.2026-09-18",
+        "newPath": null
       },
       "draftIds": [
         "doc.flu-antiviral-eligibility.2026-09-18"
@@ -147,6 +167,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -157,16 +178,19 @@
       "current": {
         "status": "archived",
         "target": "doc.flu-antiviral-eligibility.2026-06-01",
+        "newPath": null,
         "note": "全年適用版，已由 8 月擴大版與 9 月延長版取代，保留供查閱並加失效警示，舊連結 301 到現行版。　【匯入 2026-10-03】草稿 doc.flu-antiviral-eligibility.2026-06-01（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "archived",
         "target": "doc.flu-antiviral-eligibility.2026-06-01",
+        "newPath": null,
         "note": "全年適用版，已由 8 月擴大版與 9 月延長版取代，保留供查閱並加失效警示，舊連結 301 到現行版。　【匯入 2026-10-03】草稿 doc.flu-antiviral-eligibility.2026-06-01（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "archived",
-        "target": "doc.flu-antiviral-eligibility.2026-06-01"
+        "target": "doc.flu-antiviral-eligibility.2026-06-01",
+        "newPath": null
       },
       "draftIds": [
         "doc.flu-antiviral-eligibility.2026-06-01"
@@ -175,6 +199,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -185,16 +210,19 @@
       "current": {
         "status": "pending",
         "target": null,
+        "newPath": null,
         "note": "合約名單依院所簽約狀態每週異動，需決定改為資料集（含更新頻率）或深連結；未決定前舊站唯讀保留。　【匯入 2026-10-03】草稿 service.influenza-flu-antiviral-contract-sites（信心 0.6）"
       },
       "proposed": {
         "status": "pending",
         "target": null,
+        "newPath": null,
         "note": "合約名單依院所簽約狀態每週異動，需決定改為資料集（含更新頻率）或深連結；未決定前舊站唯讀保留。　【匯入 2026-10-03】草稿 service.influenza-flu-antiviral-contract-sites（信心 0.6）"
       },
       "suggestion": {
         "status": "pending",
-        "target": null
+        "target": null,
+        "newPath": null
       },
       "draftIds": [
         "service.influenza-flu-antiviral-contract-sites"
@@ -203,6 +231,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -213,16 +242,19 @@
       "current": {
         "status": "dropped",
         "target": null,
+        "newPath": null,
         "note": "逾 2 個年度的計畫已失效且無查閱需求，不移轉；舊網址回 410，如需查閱改洽署內檔案。　【匯入 2026-10-03】草稿 page.influenza-flu-past-seasons（信心 0.6）"
       },
       "proposed": {
         "status": "dropped",
         "target": null,
+        "newPath": null,
         "note": "逾 2 個年度的計畫已失效且無查閱需求，不移轉；舊網址回 410，如需查閱改洽署內檔案。　【匯入 2026-10-03】草稿 page.influenza-flu-past-seasons（信心 0.6）"
       },
       "suggestion": {
         "status": "pending",
-        "target": null
+        "target": null,
+        "newPath": null
       },
       "draftIds": [
         "page.influenza-flu-past-seasons"
@@ -231,6 +263,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     }
@@ -615,6 +648,7 @@
     "statusChanges": 0,
     "pendingToMigrated": 0,
     "targetChanges": 0,
+    "newPathChanges": 0,
     "noteChanges": 0,
     "stillPending": 2
   },

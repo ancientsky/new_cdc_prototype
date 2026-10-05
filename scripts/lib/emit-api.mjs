@@ -135,7 +135,7 @@ export function movedRedirects(site) {
 /** 301 對照表：失效版 → 現行版；family 穩定網址 → 現行版；現行官網 legacyUrls → 新路徑；移轉清單（kind: migration）舊頁 → 新頁；新站內部搬家（kind: moved） */
 export function buildRedirects(site) {
   const out = [];
-  // 移轉清單（ARCHITECTURE 13.1）：from＝舊網址去網域與 hash；to＝target 路徑＋anchor（target 為失效版 ⇒ 現行版）。
+  // 移轉清單（ARCHITECTURE 13.1）：from＝舊網址去網域與 hash；to＝target 路徑＋anchor（target 為失效版 ⇒ 現行版；無 target 有 newPath ⇒ newPath，itemId null）。
   // 含 {id} 佔位者 pattern:true（只是 URL 模式），不進伺服器對照檔與 legacy-map，只進文件。dropped／無 target 的 pending 不轉址。
   const migrationKeys = new Set();
   const migration = [];
@@ -144,7 +144,8 @@ export function buildRedirects(site) {
       if (!it.to || it.status === 'dropped') continue;
       const e = { from: it.fromPath, to: it.to, toUrl: absUrl(it.to), status: 301, kind: 'migration', itemId: it.toId, listId: list.id, key: it.key,
         oldUrl: it.oldUrl, oldTitle: it.oldTitle, migrationStatus: it.status, verified: !!it.verified, pattern: !!it.pattern,
-        ...(it.redirectsToCurrent ? { currentId: it.toId, archivedAt: it.targetPath, targetId: it.target } : {}) };
+        ...(it.redirectsToCurrent ? { currentId: it.toId, archivedAt: it.targetPath, targetId: it.target } : {}),
+        ...(it.newPath && !it.target ? { newPath: it.newPath, targetId: null } : {}) };
       migration.push(e);
       migrationKeys.add(legacyKey(e.from));
     }

@@ -49,7 +49,7 @@ try {
   if (report.manifest) {
     const ps = patch.summary;
     console.log(`移轉清單 ${report.manifest.id}：對上 ${ps.matched}/${ps.items}；建議 status 變化 ${ps.statusChanges}（pending→migrated ${ps.pendingToMigrated}）、note 更新 ${ps.noteChanges}、仍待移轉 ${ps.stillPending}、與清單判定不同 ${ps.conflicts}${ps.derivedItems ? `；模板推導 ${ps.derivedItems} 項對上 ${ps.derivedMatched}` : ''}${ps.unmatchedPages ? `；清單沒有的舊頁 ${ps.unmatchedPages}` : ''}`);
-    if (report.migration.applied) console.log(`  已套用 --apply-migration：status ${report.migration.statusChanges.length} 筆、target ${report.migration.targetChanges.length} 筆、note ${report.migration.noteChanges} 筆（verified 未動）→ ${report.migration.file}`);
+    if (report.migration.applied) console.log(`  已套用 --apply-migration：status ${report.migration.statusChanges.length} 筆、target ${report.migration.targetChanges.length} 筆、newPath ${report.migration.newPathChanges?.length ?? 0} 筆、note ${report.migration.noteChanges} 筆（verified 未動）→ ${report.migration.file}`);
     else console.log('  （未套用：加 --apply-migration 才會寫回移轉清單）');
   }
   console.log(`報告：${path.join(path.resolve(args.out), 'report.md')}`);

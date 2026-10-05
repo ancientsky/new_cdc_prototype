@@ -479,8 +479,9 @@ import { generateDisease } from '../scripts/lib/legacy-import/sim-export-disease
 import { generateNews } from '../scripts/lib/legacy-import/sim-export-news.mjs';
 import { generateGuidelines } from '../scripts/lib/legacy-import/sim-export-guidelines.mjs';
 import { generateQa } from '../scripts/lib/legacy-import/sim-export-qa.mjs';
+import { generateTravel } from '../scripts/lib/legacy-import/sim-export-travel.mjs';
 import { faqItemsLoose, tasksFor, datedDeadlines, structuredFromText } from '../scripts/lib/legacy-import/qa.mjs';
-import { parseHtml } from '../scripts/lib/legacy-import/html.mjs';
+import { parseHtml, textOf } from '../scripts/lib/legacy-import/html.mjs';
 import { versionFree, versionRank, dateFromText } from '../scripts/lib/legacy-import/index.mjs';
 
 const EXPORT_DENGUE = path.join(ROOT, 'data/legacy-export/dengue');
@@ -1106,4 +1107,173 @@ test('已提交的第八批輸出（data/legacy-import/qa）：15 頁 34 份草�
     for (const f of fs.readdirSync(fd)) { const ex = path.join(CONTENT, 'faq', f); if (!fs.existsSync(ex)) continue; total++; const t = readJSON(path.join(fd, f)).tasks?.[0]; if (t && readJSON(ex).tasks?.includes(t)) same++; }
   }
   assert.ok(total >= 60 && same / total >= 0.85, `第一個 task 與人工一致 ${same}/${total}`);
+});
+
+// ───────────────────────── 第九批：國際旅遊與健康欄目 ─────────────────────────
+import { countryFor, dynamicForm, vaccineCandidates } from '../scripts/lib/legacy-import/travel.mjs';
+import { decideAction } from '../scripts/lib/legacy-import/index.mjs';
+
+const travelShell = (title, crumbs, body) => `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${title} - 衛生福利部疾病管制署</title></head>
+<body><header class="navbar"><ul class="nav"><li>導覽</li></ul></header><ol class="breadcrumb">${crumbs.map((c) => `<li>${c}</li>`).join('')}</ol>
+<div id="CCMS_Content"><h2 class="title">${title}</h2><div class="content-body">${body}</div><div class="update">最後更新時間：2026/09/01</div></div><footer>頁尾</footer></body></html>`;
+
+/** 合成國際旅遊欄目的小匯出：處方箋國家頁（query 有 iso／只有標題／對不到國家）、查詢表單頁、疫苗小節頁、旅遊問答、門診與證明書服務、瘧疾預防用藥 */
+function synthTravel(dir) {
+  fs.mkdirSync(path.join(dir, 'files'), { recursive: true });
+  fs.writeFileSync(path.join(dir, '_export.json'), JSON.stringify({ exportedAt: '2026-10-03', simulated: true }));
+  const T = ['首頁', '國際旅遊與健康', '旅遊醫學'];
+  const put = (name, url, title, crumbs, body) => {
+    fs.writeFileSync(path.join(dir, `${name}.html`), travelShell(title, crumbs, body));
+    fs.writeFileSync(path.join(dir, `${name}.json`), JSON.stringify({ url: `https://www.cdc.gov.tw${url}`, title, category: crumbs.slice(1).join('／'), publishedAt: '2025-06-01', updatedAt: '2026-09-01', breadcrumbs: crumbs }));
+  };
+  const rx = (country) => `<h3>當地流行疾病</h3><table><tr><th>疾病</th><th>建議</th></tr><tr><td>麻疹</td><td>出國前確認 MMR 接種史</td></tr></table>
+<h3>建議疫苗</h3><ul><li>麻疹腮腺炎德國麻疹混合疫苗（MMR）</li></ul><h3>行前與返國注意</h3><p>前往${country}前請至旅遊醫學門診評估，返國後如有發燒請告知旅遊史。</p>`;
+  put('01-rx-jp', '/TravelEpidemic/Prescription/RX1?iso=JP', '國際旅遊處方箋：日本', [...T, '國際旅遊處方箋', '日本'], rx('日本'));
+  put('02-rx-th', '/TravelEpidemic/Prescription/RX1', '國際旅遊處方箋：泰國', [...T, '國際旅遊處方箋', '泰國'], rx('泰國'));
+  put('03-rx-zz', '/TravelEpidemic/Prescription/RX1?iso=ZZ', '國際旅遊處方箋：亞特蘭提斯', [...T, '國際旅遊處方箋', '亞特蘭提斯'], rx('亞特蘭提斯'));
+  const countries = readJSON(path.join(CONTENT, 'master/countries.json')).slice(0, 25);
+  put('04-query', '/Category/MPage/Q1', '國際旅遊處方箋', [...T, '國際旅遊處方箋'], `<p>選擇目的地，即可查詢當地流行疾病、建議疫苗與行前注意事項。</p>
+<form class="travel-rx" method="get" action="/TravelEpidemic/Prescription/RX1"><select name="iso">${countries.map((c) => `<option value="${c.iso2}">${c.name}</option>`).join('')}</select>
+<label><input type="checkbox" name="agree"> 我已閱讀說明</label><button type="submit">查詢</button></form><p>建議出國前 4 至 6 週查詢並至旅遊醫學門診評估。</p>`);
+  put('05-vaccines', '/Category/MPage/V1', '國際預防接種及藥物', [...T, '國際預防接種及藥物'], `<p>前往特定地區需要接種的疫苗與預防用藥，請於出國前 4 至 6 週至旅遊醫學門診評估。</p>
+<h3>黃熱病疫苗</h3><p>前往非洲與中南美洲流行地區須接種，接種 10 天後生效。</p><h3>流行性腦脊髓膜炎疫苗</h3><p>前往沙烏地阿拉伯朝覲者須接種。</p><h3>傷寒疫苗</h3><p>前往南亞衛生條件不佳地區建議接種。</p>
+<h3>日本腦炎疫苗</h3><p>前往流行地區郊區長住者可評估接種。</p><h3>瘧疾預防用藥</h3><p>依目的地抗藥性選擇用藥。</p><h3>其他建議疫苗</h3><p>A 型肝炎、狂犬病等依行程評估。</p><h3>建議疫苗</h3><p>見上。</p>`);
+  put('06-travel-faq', '/Category/QAPage/T1', '國際旅遊常見問答', ['首頁', '國際旅遊與健康', '常見問答'], `<div class="panel"><h4 class="panel-title">Q1. 出國前多久要去旅遊醫學門診？</h4><div class="panel-body"><p>建議出發前 4 至 6 週就診，讓疫苗有時間產生保護力。</p></div></div>`);
+  put('07-clinics', '/Category/Page/C1', '旅遊醫學門診', [...T, '旅遊醫學門診'], '<p>全國旅遊醫學門診提供出國前諮詢、疫苗接種與預防用藥處方，請先電話預約。</p><table><tr><th>醫院</th><th>電話</th></tr><tr><td>某醫院</td><td>02-1234-5678</td></tr></table>');
+  put('08-certificate', '/Category/MPage/Y1', '國際預防接種證明書（黃皮書）申請', [...T, '國際預防接種證明書（黃皮書）申請'], '<p>接種黃熱病疫苗後，由接種單位核發國際預防接種證明書，遺失可向原接種單位申請補發，請攜帶身分證件。</p>');
+  put('09-malaria', '/Category/MPage/M1', '瘧疾預防用藥', [...T, '瘧疾預防用藥'], '<p>前往瘧疾流行地區，請於出發前就醫評估是否需要服用預防用藥，並全程做好防蚊措施，返國後如有發燒請儘速就醫。</p>');
+  return dir;
+}
+
+test('第九批工具：國家（query → 標題 → 麵包屑，最長命中）、查詢表單偵測與移除、主檔沒有的疫苗小節', () => {
+  const countries = readJSON(path.join(CONTENT, 'master/countries.json'));
+  assert.equal(countryFor(countries, { query: new URLSearchParams('iso=jp'), title: '國際旅遊處方箋' }).iso2, 'JP');
+  assert.equal(countryFor(countries, { query: new URLSearchParams('ISO2=TH') }).from, 'query');
+  assert.equal(countryFor(countries, { query: new URLSearchParams('iso=ZZ'), title: '國際旅遊處方箋：泰國' }).iso2, 'TH', 'query 不在主檔 ⇒ 改看標題');
+  assert.equal(countryFor(countries, { title: '國際旅遊處方箋', breadcrumbs: ['首頁', '越南'] }).iso2, 'VN');
+  assert.equal(countryFor(countries, { title: 'Travel prescription: Kenya' }).iso2, 'KE');
+  assert.equal(countryFor(countries, { title: '國際旅遊處方箋：亞特蘭提斯' }), null);
+  const opts = (n) => Array.from({ length: n }, (_, i) => `<option value="${i}">選項${i}</option>`).join('');
+  const page = (n, extra = '') => parseHtml(`<div><p>選擇目的地查詢。</p><form><select name="iso">${opts(n)}</select><button>查詢</button></form>${extra}</div>`);
+  const b = page(30);
+  assert.deepEqual(dynamicForm(b), { options: 30, textChars: 8 });
+  assert.equal(textOf(b).includes('選項'), false, '表單與選項已移除');
+  assert.equal(dynamicForm(page(5)), null, '選項太少不算');
+  assert.equal(dynamicForm(page(30, `<p>${'長文'.repeat(250)}</p>`)), null, '說明文字很長的頁不算查詢頁');
+  const vb = parseHtml('<h3>黃熱病疫苗</h3><p>x</p><h4>傷寒疫苗接種須知</h4><h3>建議疫苗</h3><h3>其他建議疫苗</h3><h3>日本腦炎疫苗</h3><h3>A型肝炎疫苗</h3><h3>疫苗接種建議</h3><h2>黃熱病疫苗</h2>');
+  assert.deepEqual(vaccineCandidates(vb, ['日本腦炎疫苗', 'A 型肝炎疫苗']), ['黃熱病疫苗', '傷寒疫苗']);
+  assert.equal(decideAction({ flags: { generated: { iso2: 'JP' }, drop: true }, outputs: [], kind: 'generated', stats: {}, issues: [] }, rules), 'skip-generated', '資料產生頁優先於 drop');
+});
+
+test('第九批（國際旅遊與健康，合成匯出）：處方箋國家頁 skip-generated＋reference 對照檔、看不出國家退回 page、查詢表單不轉控制項、主檔沒有的疫苗提示、無疾病的旅遊問答歸 qa 批、門診與黃皮書建 service、瘧疾預防用藥併入疾病頁', () => {
+  const dir = tmp('travel');
+  const exp = synthTravel(path.join(dir, 'exp'));
+  const mf = path.join(dir, 'travel.json');
+  fs.writeFileSync(mf, JSON.stringify({
+    id: 'migration.travel-test', type: 'migration', title: '測試', scope: { kind: 'category' },
+    items: [
+      { key: 'rx-jp', oldTitle: '國際旅遊處方箋：日本', oldUrl: 'https://www.cdc.gov.tw/TravelEpidemic/Prescription/RX1?iso=JP', oldType: 'page', verified: false, status: 'pending' },
+      { key: 'clinics', oldTitle: '旅遊醫學門診', oldUrl: 'https://www.cdc.gov.tw/Category/Page/C1', oldType: 'page', verified: false, status: 'pending', target: 'service.travel-clinic-appointment' },
+      { key: 'query', oldTitle: '國際旅遊處方箋', oldUrl: 'https://www.cdc.gov.tw/Category/MPage/Q1', oldType: 'page', verified: true, status: 'migrated', newPath: '/travel/', note: '301 到 /travel/' },
+    ],
+  }, null, 2));
+  // 假的 qa 批報告：旅遊問答頁（同網址）已在 qa 批轉過
+  const prior = path.join(dir, 'prior');
+  fs.mkdirSync(path.join(prior, 'qa'), { recursive: true });
+  fs.writeFileSync(path.join(prior, 'qa/report.json'), JSON.stringify({ batch: 'qa', pages: [{ key: '11-travel-qa', source: { url: 'https://www.cdc.gov.tw/Category/QAPage/T1' }, outputs: [{ id: 'faq.x', type: 'faq', role: 'draft' }] }] }));
+  const out = path.join(dir, 'out');
+  const { report, patch, drafts } = runImport({ exportDir: exp, outDir: out, manifestPath: mf, slug: 'travel', now: NOW, priorBatchesDir: prior });
+  const by = (k) => report.pages.find((p) => p.key === k);
+  const draft = (id) => drafts.find((d) => d.id === id);
+  const has = (p, code) => p.issues.some((i) => i.code === code);
+  const s = report.summary;
+  assert.equal(s.pages, 9); assert.equal(s.schemaInvalid, 0);
+  // (a) query 有 iso ⇒ 資料產生頁：不出草稿、reference 對照檔、清單提議 migrated＋newPath（301 到產生頁）並註明對應的產生頁
+  const jp = by('01-rx-jp');
+  assert.equal(jp.kind, 'generated'); assert.equal(jp.action, 'skip-generated'); assert.deepEqual(jp.outputs, []);
+  assert.deepEqual(jp.flags.generated, { iso2: 'JP', newPath: '/travel/JP/' }); assert.ok(has(jp, 'generated-page'));
+  assert.equal(jp.reference, 'reference/01-rx-jp.md');
+  const ref = fs.readFileSync(path.join(out, jp.reference), 'utf8');
+  assert.match(ref, /\/travel\/JP\//); assert.match(ref, /### 當地流行疾病/); assert.match(ref, /前往日本前請至旅遊醫學門診評估/);
+  assert.ok(!drafts.some((d) => d.legacyUrls?.some((u) => /Prescription/.test(u) && /iso=JP/.test(u))), '國家頁沒有草稿');
+  const e = patch.items.find((x) => x.key === 'rx-jp');
+  assert.equal(e.proposed.status, 'migrated'); assert.equal(e.proposed.target, null); assert.equal(e.proposed.newPath, '/travel/JP/');
+  assert.deepEqual(e.suggestion, { status: 'migrated', target: null, newPath: '/travel/JP/' }); assert.equal(e.change.newPath, true); assert.equal(e.change.target, false);
+  assert.match(e.proposed.note, /對應新站 \/travel\/JP\/（資料產生頁），不出草稿/);
+  // 清單已標 migrated＋newPath 的查詢表單頁：工具找不到內容 id 也不算衝突
+  const qe = patch.items.find((x) => x.key === 'query');
+  assert.equal(qe.agree, true); assert.equal(qe.proposed.status, 'migrated'); assert.equal(qe.proposed.newPath, '/travel/'); assert.equal(qe.change.newPath, false);
+  assert.ok(!patch.conflicts.some((x) => x.key === 'query'), JSON.stringify(patch.conflicts));
+  // 套用：rx-jp 寫入 status migrated＋newPath（放在 status 後），verified 不動；query 原樣
+  applyPatch(mf, patch);
+  const applied = JSON.parse(fs.readFileSync(mf, 'utf8')).items;
+  const ajp = applied.find((i) => i.key === 'rx-jp');
+  assert.equal(ajp.status, 'migrated'); assert.equal(ajp.newPath, '/travel/JP/'); assert.equal(ajp.target, undefined); assert.equal(ajp.verified, false);
+  assert.deepEqual(Object.keys(ajp).slice(0, 7), ['key', 'oldTitle', 'oldUrl', 'oldType', 'verified', 'status', 'newPath']);
+  assert.deepEqual(applied.find((i) => i.key === 'query').newPath, '/travel/');
+  assert.equal(s.generated, 2); assert.equal(s.byKind.generated, 2); assert.equal(s.pagesWithoutOutput, 0, '資料產生頁不算沒有輸出');
+  const md = fs.readFileSync(path.join(out, 'report.md'), 'utf8');
+  assert.match(md, /## 資料產生頁（2 頁）/); assert.match(md, /「國際旅遊處方箋：日本」→ `\/travel\/JP\/` → 對照檔 `reference\/01-rx-jp\.md`/);
+  // (b) query 沒有國家碼 ⇒ 由標題對國家主檔
+  assert.deepEqual(by('02-rx-th').flags.generated, { iso2: 'TH', newPath: '/travel/TH/' }); assert.equal(by('02-rx-th').action, 'skip-generated');
+  // (c) 對不到國家 ⇒ country-unknown（warn）＋一般 page 草稿
+  const zz = by('03-rx-zz');
+  assert.ok(has(zz, 'country-unknown')); assert.equal(zz.kind, 'page'); assert.ok(!zz.flags.generated);
+  assert.equal(zz.outputs.length, 1); assert.equal(zz.outputs[0].type, 'page'); assert.ok(draft(zz.outputs[0].id));
+  // (d) 查詢表單頁：dynamic-form（warn），表單控制項與選項不進內文，只留說明文字
+  const q = by('04-query');
+  assert.ok(q.issues.some((i) => i.code === 'dynamic-form' && i.severity === 'warn' && /25 個選項/.test(i.message)));
+  assert.equal(q.kind, 'page');
+  const qd = draft(q.outputs[0].id);
+  assert.match(qd.bodyMarkdown, /選擇目的地/); assert.match(qd.bodyMarkdown, /4 至 6 週/);
+  assert.doesNotMatch(qd.bodyMarkdown, /日本|韓國|我已閱讀|查詢<|select|option/);
+  // (e) 小節提到主檔沒有的疫苗：一則提示列出名稱；通稱標題與主檔已有的（日本腦炎疫苗）不列
+  const v = by('05-vaccines');
+  const vi = v.issues.filter((i) => i.code === 'vaccine-not-in-master');
+  assert.equal(vi.length, 1); assert.equal(vi[0].severity, 'info');
+  assert.match(vi[0].message, /黃熱病疫苗、流行性腦脊髓膜炎疫苗、傷寒疫苗；/);
+  assert.doesNotMatch(vi[0].message, /日本腦炎疫苗|：建議疫苗|其他建議疫苗/);
+  assert.deepEqual(draft(v.outputs[0].id).conversion.vaccineCandidates, ['黃熱病疫苗', '流行性腦脊髓膜炎疫苗', '傷寒疫苗']);
+  // (f) 無疾病的旅遊問答：家是 qa 批（rules.homeBatches.faq），qa 批已轉過 ⇒ skip-duplicate
+  const faq = by('06-travel-faq');
+  assert.equal(faq.action, 'skip-duplicate'); assert.ok(has(faq, 'converted-elsewhere')); assert.deepEqual(faq.flags.convertedElsewhere, { batch: 'qa', key: '11-travel-qa' });
+  assert.deepEqual(faq.outputs.map((o) => [o.id, o.role]), [['faq.x', 'duplicate']]);
+  // (g) 服務：旅遊醫學門診（清單目標 service.travel-clinic-appointment 既有 ⇒ 同 id、compare-existing）、黃皮書申請（標題關鍵字 ⇒ certificate）
+  assert.equal(serviceTypeFor(rules, '旅遊醫學門診').serviceType, 'clinic');
+  assert.equal(serviceTypeFor(rules, '國際預防接種證明書（黃皮書）申請').serviceType, 'certificate');
+  const c = by('07-clinics');
+  assert.equal(c.kind, 'service'); assert.deepEqual(c.outputs.map((o) => o.id), ['service.travel-clinic-appointment']); assert.equal(c.action, 'compare-existing');
+  assert.equal(draft('service.travel-clinic-appointment').serviceType, 'clinic'); assert.ok(has(c, 'fields-pending'));
+  const y = by('08-certificate');
+  assert.equal(y.kind, 'service'); assert.ok(has(y, 'type-from-keywords')); assert.equal(draft(y.outputs[0].id).serviceType, 'certificate'); assert.match(y.outputs[0].id, /^service\./);
+  // 瘧疾預防用藥：麵包屑在「旅遊醫學」（mergeScopes）⇒ 併入 disease.malaria 的 prevention 區塊（預防性投藥屬預防，不是治療）
+  const m = by('09-malaria');
+  assert.equal(m.kind, 'disease-block'); assert.equal(m.action, 'merge-into-disease'); assert.deepEqual(m.outputs.map((o) => [o.id, o.block]), [['disease.malaria', 'prevention']]);
+  assert.equal(m.owner, 'unit.quarantine');
+  // 同一份匯出在 qa 批自己跑：不讓給自己，照常出草稿
+  const r2 = runImport({ exportDir: exp, outDir: path.join(dir, 'out-qa'), manifestPath: mf, slug: 'qa', now: NOW, priorBatchesDir: prior });
+  const faq2 = r2.report.pages.find((p) => p.key === '06-travel-faq');
+  assert.notEqual(faq2.action, 'skip-duplicate'); assert.ok(!faq2.flags.convertedElsewhere); assert.ok(faq2.outputs.some((o) => o.role === 'draft'));
+});
+
+test('已提交的第九批輸出（data/legacy-import/travel）：20 頁 13 份草稿、6 頁資料產生頁只留 reference、清單 19 筆 11 筆 newPath、模擬匯出可重現', () => {
+  const dir = path.join(ROOT, 'data/legacy-import/travel');
+  const r = readJSON(path.join(dir, 'report.json'));
+  assert.equal(r.summary.pages, 20); assert.equal(r.summary.drafts, 13); assert.equal(r.summary.schemaInvalid, 0); assert.equal(r.summary.generated, 6);
+  assert.equal(r.migration.applied, true); assert.equal(r.manifest.file, 'content/migration/travel.json');
+  for (const d of r.drafts) assert.ok(fs.existsSync(path.join(dir, d.file)), d.file);
+  assert.equal(r.summary.byAction['skip-generated'], 6); assert.equal(r.summary.byAction['skip-list'], 4); assert.equal(r.summary.byAction['skip-duplicate'], 1); assert.equal(r.summary.byAction['merge-into-disease'], 1);
+  // 資料產生頁不出草稿，舊內文存 reference/{key}.md
+  const refs = fs.readdirSync(path.join(dir, 'reference')).filter((f) => f.endsWith('.md')).sort();
+  assert.deepEqual(refs, ['05-rx-br.md', '06-rx-in.md', '07-rx-jp.md', '08-rx-ke.md', '09-rx-th.md', '10-rx-vn.md']);
+  for (const p of r.pages.filter((x) => x.action === 'skip-generated')) { assert.ok(!p.outputs.some((o) => o.role === 'draft'), p.key); assert.match(p.flags.generated.newPath, /^\/travel\/[A-Z]{2}\/$/); }
+  const manifest = readJSON(path.join(CONTENT, 'migration/travel.json'));
+  assert.equal(manifest.items.length, 19); assert.equal(manifest.scope.kind, 'category'); assert.ok(manifest.items.every((i) => i.verified === false));
+  assert.ok(manifest.items.every((i) => /【匯入 /.test(i.note ?? '')));
+  assert.equal(manifest.items.filter((i) => i.newPath).length, 11); assert.ok(manifest.items.every((i) => !(i.newPath && i.target)), 'newPath 與 target 二擇一');
+  assert.equal(manifest.items.filter((i) => i.status === 'pending').length, 3);
+  const tmpDir = tmp('exp9');
+  generateTravel(tmpDir);
+  const exp = path.join(ROOT, 'data/legacy-export/travel');
+  for (const f of fs.readdirSync(exp).filter((x) => x.endsWith('.json') && x !== '_export.json')) assert.deepEqual(readJSON(path.join(tmpDir, f)), readJSON(path.join(exp, f)), f);
 });

@@ -6,9 +6,10 @@
   "applied": {
     "statusChanges": [],
     "targetChanges": [],
+    "newPathChanges": [],
     "noteChanges": 0
   },
-  "rule": "只改 status／target／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。",
+  "rule": "只改 status／target／newPath／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。",
   "items": [
     {
       "key": "case-definition-dengue",
@@ -17,16 +18,19 @@
       "current": {
         "status": "migrated",
         "target": "doc.case-definition-dengue.2026-01-01",
+        "newPath": null,
         "note": "現行版；舊頁附件列表含歷版 PDF（2023-01），轉換時拆成同家族的失效版本草稿，不轉內文。　【匯入 2026-10-03】草稿 doc.case-definition-dengue.2026-01-01、doc.case-definition-dengue.2023-01-01（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.case-definition-dengue.2026-01-01",
+        "newPath": null,
         "note": "現行版；舊頁附件列表含歷版 PDF（2023-01），轉換時拆成同家族的失效版本草稿，不轉內文。　【匯入 2026-10-03】草稿 doc.case-definition-dengue.2026-01-01、doc.case-definition-dengue.2023-01-01（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.case-definition-dengue.2026-01-01"
+        "target": "doc.case-definition-dengue.2026-01-01",
+        "newPath": null
       },
       "draftIds": [
         "doc.case-definition-dengue.2026-01-01",
@@ -36,6 +40,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -46,16 +51,19 @@
       "current": {
         "status": "migrated",
         "target": "doc.case-definition-measles.2024-01-01",
+        "newPath": null,
         "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.case-definition-measles.2024-01-01（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.case-definition-measles.2024-01-01",
+        "newPath": null,
         "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.case-definition-measles.2024-01-01（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.case-definition-measles.2024-01-01"
+        "target": "doc.case-definition-measles.2024-01-01",
+        "newPath": null
       },
       "draftIds": [
         "doc.case-definition-measles.2024-01-01"
@@ -64,6 +72,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -74,16 +83,19 @@
       "current": {
         "status": "migrated",
         "target": "doc.covid-vaccine-recommendation.2026-09-15",
+        "newPath": null,
         "note": "現行版；舊頁附件列表含歷版 PDF（2025-26），轉換時拆成同家族的失效版本草稿，不轉內文。　【匯入 2026-10-03】草稿 doc.covid-vaccine-recommendation.2026-09-15、doc.covid-vaccine-recommendation.2025-09-15（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.covid-vaccine-recommendation.2026-09-15",
+        "newPath": null,
         "note": "現行版；舊頁附件列表含歷版 PDF（2025-26），轉換時拆成同家族的失效版本草稿，不轉內文。　【匯入 2026-10-03】草稿 doc.covid-vaccine-recommendation.2026-09-15、doc.covid-vaccine-recommendation.2025-09-15（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.covid-vaccine-recommendation.2026-09-15"
+        "target": "doc.covid-vaccine-recommendation.2026-09-15",
+        "newPath": null
       },
       "draftIds": [
         "doc.covid-vaccine-recommendation.2026-09-15",
@@ -93,6 +105,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -103,16 +116,19 @@
       "current": {
         "status": "migrated",
         "target": "doc.dengue-community-workplan.2026-09-10",
+        "newPath": null,
         "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.dengue-community-workplan.2026-09-10（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.dengue-community-workplan.2026-09-10",
+        "newPath": null,
         "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.dengue-community-workplan.2026-09-10（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.dengue-community-workplan.2026-09-10"
+        "target": "doc.dengue-community-workplan.2026-09-10",
+        "newPath": null
       },
       "draftIds": [
         "doc.dengue-community-workplan.2026-09-10"
@@ -121,6 +137,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -131,16 +148,19 @@
       "current": {
         "status": "migrated",
         "target": "doc.dots-manual.2025-01-01",
+        "newPath": null,
         "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.dots-manual.2025-01-01（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.dots-manual.2025-01-01",
+        "newPath": null,
         "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.dots-manual.2025-01-01（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.dots-manual.2025-01-01"
+        "target": "doc.dots-manual.2025-01-01",
+        "newPath": null
       },
       "draftIds": [
         "doc.dots-manual.2025-01-01"
@@ -149,6 +169,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -159,16 +180,19 @@
       "current": {
         "status": "migrated",
         "target": "doc.ev-childcare-guideline.2026-09-10",
+        "newPath": null,
         "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.ev-childcare-guideline.2026-09-10（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.ev-childcare-guideline.2026-09-10",
+        "newPath": null,
         "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.ev-childcare-guideline.2026-09-10（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.ev-childcare-guideline.2026-09-10"
+        "target": "doc.ev-childcare-guideline.2026-09-10",
+        "newPath": null
       },
       "draftIds": [
         "doc.ev-childcare-guideline.2026-09-10"
@@ -177,6 +201,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -187,16 +212,19 @@
       "current": {
         "status": "migrated",
         "target": "doc.ev-severe-guideline.2026-03-15",
+        "newPath": null,
         "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.ev-severe-guideline.2026-03-15（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.ev-severe-guideline.2026-03-15",
+        "newPath": null,
         "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.ev-severe-guideline.2026-03-15（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.ev-severe-guideline.2026-03-15"
+        "target": "doc.ev-severe-guideline.2026-03-15",
+        "newPath": null
       },
       "draftIds": [
         "doc.ev-severe-guideline.2026-03-15"
@@ -205,6 +233,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -215,16 +244,19 @@
       "current": {
         "status": "migrated",
         "target": "doc.flu-antiviral-eligibility.2026-09-18",
+        "newPath": null,
         "note": "現行版；歷版（2026-06、2026-08）在舊站各自一頁，另列。　【匯入 2026-10-03】草稿 doc.flu-antiviral-eligibility.2026-09-18（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.flu-antiviral-eligibility.2026-09-18",
+        "newPath": null,
         "note": "現行版；歷版（2026-06、2026-08）在舊站各自一頁，另列。　【匯入 2026-10-03】草稿 doc.flu-antiviral-eligibility.2026-09-18（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.flu-antiviral-eligibility.2026-09-18"
+        "target": "doc.flu-antiviral-eligibility.2026-09-18",
+        "newPath": null
       },
       "draftIds": [
         "doc.flu-antiviral-eligibility.2026-09-18"
@@ -233,6 +265,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -243,16 +276,19 @@
       "current": {
         "status": "archived",
         "target": "doc.flu-antiviral-eligibility.2026-06-01",
+        "newPath": null,
         "note": "已由 2026-09 版取代，保留供查閱並加失效警示，舊連結 301 到現行版。　【匯入 2026-10-03】草稿 doc.flu-antiviral-eligibility.2026-06-01（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "archived",
         "target": "doc.flu-antiviral-eligibility.2026-06-01",
+        "newPath": null,
         "note": "已由 2026-09 版取代，保留供查閱並加失效警示，舊連結 301 到現行版。　【匯入 2026-10-03】草稿 doc.flu-antiviral-eligibility.2026-06-01（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "archived",
-        "target": "doc.flu-antiviral-eligibility.2026-06-01"
+        "target": "doc.flu-antiviral-eligibility.2026-06-01",
+        "newPath": null
       },
       "draftIds": [
         "doc.flu-antiviral-eligibility.2026-06-01"
@@ -261,6 +297,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -271,16 +308,19 @@
       "current": {
         "status": "archived",
         "target": "doc.flu-antiviral-eligibility.2026-08-24",
+        "newPath": null,
         "note": "已由 2026-09 版取代，保留供查閱並加失效警示，舊連結 301 到現行版。　【匯入 2026-10-03】草稿 doc.flu-antiviral-eligibility.2026-08-24（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "archived",
         "target": "doc.flu-antiviral-eligibility.2026-08-24",
+        "newPath": null,
         "note": "已由 2026-09 版取代，保留供查閱並加失效警示，舊連結 301 到現行版。　【匯入 2026-10-03】草稿 doc.flu-antiviral-eligibility.2026-08-24（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "archived",
-        "target": "doc.flu-antiviral-eligibility.2026-08-24"
+        "target": "doc.flu-antiviral-eligibility.2026-08-24",
+        "newPath": null
       },
       "draftIds": [
         "doc.flu-antiviral-eligibility.2026-08-24"
@@ -289,6 +329,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -299,16 +340,19 @@
       "current": {
         "status": "migrated",
         "target": "doc.flu-vaccine-manual.2026-09-16",
+        "newPath": null,
         "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.flu-vaccine-manual.2026-09-16（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.flu-vaccine-manual.2026-09-16",
+        "newPath": null,
         "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.flu-vaccine-manual.2026-09-16（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.flu-vaccine-manual.2026-09-16"
+        "target": "doc.flu-vaccine-manual.2026-09-16",
+        "newPath": null
       },
       "draftIds": [
         "doc.flu-vaccine-manual.2026-09-16"
@@ -317,6 +361,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -327,16 +372,19 @@
       "current": {
         "status": "migrated",
         "target": "doc.flu-vaccine-schedule.2026-09-15",
+        "newPath": null,
         "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.flu-vaccine-schedule.2026-09-15（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.flu-vaccine-schedule.2026-09-15",
+        "newPath": null,
         "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.flu-vaccine-schedule.2026-09-15（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.flu-vaccine-schedule.2026-09-15"
+        "target": "doc.flu-vaccine-schedule.2026-09-15",
+        "newPath": null
       },
       "draftIds": [
         "doc.flu-vaccine-schedule.2026-09-15"
@@ -345,6 +393,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -355,16 +404,19 @@
       "current": {
         "status": "migrated",
         "target": "doc.guidance-dengue.v17",
+        "newPath": null,
         "note": "現行版；舊頁附件列表含歷版 PDF（v15、v16），轉換時拆成同家族的失效版本草稿，不轉內文。　【匯入 2026-10-03】草稿 doc.guidance-dengue.v17、doc.guidance-dengue.v15、doc.guidance-dengue.v16（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.guidance-dengue.v17",
+        "newPath": null,
         "note": "現行版；舊頁附件列表含歷版 PDF（v15、v16），轉換時拆成同家族的失效版本草稿，不轉內文。　【匯入 2026-10-03】草稿 doc.guidance-dengue.v17、doc.guidance-dengue.v15、doc.guidance-dengue.v16（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.guidance-dengue.v17"
+        "target": "doc.guidance-dengue.v17",
+        "newPath": null
       },
       "draftIds": [
         "doc.guidance-dengue.v17",
@@ -375,6 +427,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -385,16 +438,19 @@
       "current": {
         "status": "migrated",
         "target": "doc.infection-control-healthcare.2026-03-01",
+        "newPath": null,
         "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.infection-control-healthcare.2026-03-01（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.infection-control-healthcare.2026-03-01",
+        "newPath": null,
         "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.infection-control-healthcare.2026-03-01（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.infection-control-healthcare.2026-03-01"
+        "target": "doc.infection-control-healthcare.2026-03-01",
+        "newPath": null
       },
       "draftIds": [
         "doc.infection-control-healthcare.2026-03-01"
@@ -403,6 +459,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -413,16 +470,19 @@
       "current": {
         "status": "migrated",
         "target": "doc.ltbi-guideline.2024-01-01",
+        "newPath": null,
         "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.ltbi-guideline.2024-01-01（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.ltbi-guideline.2024-01-01",
+        "newPath": null,
         "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.ltbi-guideline.2024-01-01（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.ltbi-guideline.2024-01-01"
+        "target": "doc.ltbi-guideline.2024-01-01",
+        "newPath": null
       },
       "draftIds": [
         "doc.ltbi-guideline.2024-01-01"
@@ -431,6 +491,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -441,16 +502,19 @@
       "current": {
         "status": "migrated",
         "target": "doc.measles-contact-tracing.2026-09-12",
+        "newPath": null,
         "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.measles-contact-tracing.2026-09-12（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.measles-contact-tracing.2026-09-12",
+        "newPath": null,
         "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.measles-contact-tracing.2026-09-12（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.measles-contact-tracing.2026-09-12"
+        "target": "doc.measles-contact-tracing.2026-09-12",
+        "newPath": null
       },
       "draftIds": [
         "doc.measles-contact-tracing.2026-09-12"
@@ -459,6 +523,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -469,16 +534,19 @@
       "current": {
         "status": "migrated",
         "target": "doc.mmr-recommendation.2025-04-16",
+        "newPath": null,
         "note": "現行版；舊頁附件列表含歷版 PDF（108.05.14），轉換時拆成同家族的失效版本草稿，不轉內文。　【匯入 2026-10-03】草稿 doc.mmr-recommendation.2025-04-16、doc.mmr-recommendation.2019-05-14（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.mmr-recommendation.2025-04-16",
+        "newPath": null,
         "note": "現行版；舊頁附件列表含歷版 PDF（108.05.14），轉換時拆成同家族的失效版本草稿，不轉內文。　【匯入 2026-10-03】草稿 doc.mmr-recommendation.2025-04-16、doc.mmr-recommendation.2019-05-14（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.mmr-recommendation.2025-04-16"
+        "target": "doc.mmr-recommendation.2025-04-16",
+        "newPath": null
       },
       "draftIds": [
         "doc.mmr-recommendation.2025-04-16",
@@ -488,6 +556,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -498,16 +567,19 @@
       "current": {
         "status": "migrated",
         "target": "doc.tb-case-definition.2024-01-01",
+        "newPath": null,
         "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.tb-case-definition.2024-01-01（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.tb-case-definition.2024-01-01",
+        "newPath": null,
         "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.tb-case-definition.2024-01-01（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.tb-case-definition.2024-01-01"
+        "target": "doc.tb-case-definition.2024-01-01",
+        "newPath": null
       },
       "draftIds": [
         "doc.tb-case-definition.2024-01-01"
@@ -516,6 +588,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -526,16 +599,19 @@
       "current": {
         "status": "migrated",
         "target": "doc.tb-contact-investigation.2025-01-01",
+        "newPath": null,
         "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.tb-contact-investigation.2025-01-01（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.tb-contact-investigation.2025-01-01",
+        "newPath": null,
         "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.tb-contact-investigation.2025-01-01（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.tb-contact-investigation.2025-01-01"
+        "target": "doc.tb-contact-investigation.2025-01-01",
+        "newPath": null
       },
       "draftIds": [
         "doc.tb-contact-investigation.2025-01-01"
@@ -544,6 +620,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -554,16 +631,19 @@
       "current": {
         "status": "migrated",
         "target": "doc.tb-guideline.2025-09-01",
+        "newPath": null,
         "note": "現行版；舊頁附件列表含歷版 PDF（第七版），轉換時拆成同家族的失效版本草稿，不轉內文。　【匯入 2026-10-03】草稿 doc.tb-guideline.2025-09-01、doc.tb-guideline.2022-03-01（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.tb-guideline.2025-09-01",
+        "newPath": null,
         "note": "現行版；舊頁附件列表含歷版 PDF（第七版），轉換時拆成同家族的失效版本草稿，不轉內文。　【匯入 2026-10-03】草稿 doc.tb-guideline.2025-09-01、doc.tb-guideline.2022-03-01（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.tb-guideline.2025-09-01"
+        "target": "doc.tb-guideline.2025-09-01",
+        "newPath": null
       },
       "draftIds": [
         "doc.tb-guideline.2025-09-01",
@@ -573,6 +653,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -583,16 +664,19 @@
       "current": {
         "status": "migrated",
         "target": "doc.tb-manual.2025-07-01",
+        "newPath": null,
         "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.tb-manual.2025-07-01（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
         "target": "doc.tb-manual.2025-07-01",
+        "newPath": null,
         "note": "單一版次；新站以文件型別上架，版次鏈從此版開始。　【匯入 2026-10-03】草稿 doc.tb-manual.2025-07-01（信心 1；既有內容已存在，供比對）"
       },
       "suggestion": {
         "status": "migrated",
-        "target": "doc.tb-manual.2025-07-01"
+        "target": "doc.tb-manual.2025-07-01",
+        "newPath": null
       },
       "draftIds": [
         "doc.tb-manual.2025-07-01"
@@ -601,6 +685,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -611,16 +696,19 @@
       "current": {
         "status": "pending",
         "target": null,
+        "newPath": null,
         "note": "新站尚無此文件；轉換草稿建成 manual，生效日取內文「113 年 12 月 20 日修訂生效」。　【匯入 2026-10-03】草稿 doc.rabies-6abd76.2024-12-20（信心 1）"
       },
       "proposed": {
         "status": "pending",
         "target": null,
+        "newPath": null,
         "note": "新站尚無此文件；轉換草稿建成 manual，生效日取內文「113 年 12 月 20 日修訂生效」。　【匯入 2026-10-03】草稿 doc.rabies-6abd76.2024-12-20（信心 1）"
       },
       "suggestion": {
         "status": "pending",
-        "target": null
+        "target": null,
+        "newPath": null
       },
       "draftIds": [
         "doc.rabies-6abd76.2024-12-20"
@@ -629,6 +717,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -639,16 +728,19 @@
       "current": {
         "status": "pending",
         "target": null,
+        "newPath": null,
         "note": "舊版；與 113 年修訂版同名（去版次），轉換時自動串成同一家族並建議封存。　【匯入 2026-10-03】草稿 doc.rabies-6abd76.2019-06-01（信心 1）"
       },
       "proposed": {
         "status": "pending",
         "target": null,
+        "newPath": null,
         "note": "舊版；與 113 年修訂版同名（去版次），轉換時自動串成同一家族並建議封存。　【匯入 2026-10-03】草稿 doc.rabies-6abd76.2019-06-01（信心 1）"
       },
       "suggestion": {
         "status": "pending",
-        "target": null
+        "target": null,
+        "newPath": null
       },
       "draftIds": [
         "doc.rabies-6abd76.2019-06-01"
@@ -657,6 +749,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -667,16 +760,19 @@
       "current": {
         "status": "pending",
         "target": null,
+        "newPath": null,
         "note": "舊頁只有下載連結、正本是 PDF；草稿以（待補）佔位，請感管組提供文字版（assets-policy 第 4 節）。　【匯入 2026-10-03】草稿 doc.x-crowded-ic-guideline.2025-06-30（信心 0.8）"
       },
       "proposed": {
         "status": "pending",
         "target": null,
+        "newPath": null,
         "note": "舊頁只有下載連結、正本是 PDF；草稿以（待補）佔位，請感管組提供文字版（assets-policy 第 4 節）。　【匯入 2026-10-03】草稿 doc.x-crowded-ic-guideline.2025-06-30（信心 0.8）"
       },
       "suggestion": {
         "status": "pending",
-        "target": null
+        "target": null,
+        "newPath": null
       },
       "draftIds": [
         "doc.x-crowded-ic-guideline.2025-06-30"
@@ -685,6 +781,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -695,16 +792,19 @@
       "current": {
         "status": "pending",
         "target": null,
+        "newPath": null,
         "note": "歷版掃描檔（PDF 無文字層）：建議封存供查閱，不上線；若要保留須附可及性文字版。　【匯入 2026-10-03】草稿 doc.influenza-h7n9-guideline-2017.2017-04-10（信心 0.8）"
       },
       "proposed": {
         "status": "pending",
         "target": null,
+        "newPath": null,
         "note": "歷版掃描檔（PDF 無文字層）：建議封存供查閱，不上線；若要保留須附可及性文字版。　【匯入 2026-10-03】草稿 doc.influenza-h7n9-guideline-2017.2017-04-10（信心 0.8）"
       },
       "suggestion": {
         "status": "pending",
-        "target": null
+        "target": null,
+        "newPath": null
       },
       "draftIds": [
         "doc.influenza-h7n9-guideline-2017.2017-04-10"
@@ -713,6 +813,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     },
@@ -721,18 +822,21 @@
       "oldTitle": "防疫指引與手冊總覽",
       "page": "26-guidelines-list",
       "current": {
-        "status": "dropped",
+        "status": "migrated",
         "target": null,
+        "newPath": "/documents/",
         "note": "列表頁：新站的文件列表由系統依文件型別自動產生（專業首頁與文件庫），舊網址 301 到 /documents/。　【匯入 2026-10-03】草稿 page.x-guidelines-list（信心 0.6）"
       },
       "proposed": {
-        "status": "dropped",
+        "status": "migrated",
         "target": null,
+        "newPath": "/documents/",
         "note": "列表頁：新站的文件列表由系統依文件型別自動產生（專業首頁與文件庫），舊網址 301 到 /documents/。　【匯入 2026-10-03】草稿 page.x-guidelines-list（信心 0.6）"
       },
       "suggestion": {
         "status": "pending",
-        "target": null
+        "target": null,
+        "newPath": "/documents/"
       },
       "draftIds": [
         "page.x-guidelines-list"
@@ -741,6 +845,7 @@
       "change": {
         "status": false,
         "target": false,
+        "newPath": false,
         "note": false
       }
     }
@@ -761,6 +866,7 @@
     "statusChanges": 0,
     "pendingToMigrated": 0,
     "targetChanges": 0,
+    "newPathChanges": 0,
     "noteChanges": 0,
     "stillPending": 4
   }

@@ -1,0 +1,645 @@
+{
+  "format": "cdc-legacy-migration-patch/1",
+  "manifest": "migration.travel",
+  "batch": "travel",
+  "exportedAt": "2026-10-03",
+  "applied": {
+    "statusChanges": [],
+    "targetChanges": [],
+    "newPathChanges": [],
+    "noteChanges": 19
+  },
+  "rule": "只改 status／target／newPath／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。",
+  "items": [
+    {
+      "key": "after-return",
+      "oldTitle": "返國後注意事項",
+      "page": "01-after-return",
+      "current": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "內容對應新站目的地頁「旅程三階段」規則文字與出國與入境任務頁；待決定建 topic 或併入模板文字"
+      },
+      "proposed": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "內容對應新站目的地頁「旅程三階段」規則文字與出國與入境任務頁；待決定建 topic 或併入模板文字　【匯入 2026-10-03】草稿 page.x-after-return（信心 1）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null,
+        "newPath": null
+      },
+      "draftIds": [
+        "page.x-after-return"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "before-departure",
+      "oldTitle": "出國前注意事項",
+      "page": "02-before-departure",
+      "current": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "內容對應新站目的地頁「旅程三階段」規則文字與出國與入境任務頁；待決定建 topic 或併入模板文字"
+      },
+      "proposed": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "內容對應新站目的地頁「旅程三階段」規則文字與出國與入境任務頁；待決定建 topic 或併入模板文字　【匯入 2026-10-03】草稿 page.x-before-departure（信心 1）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null,
+        "newPath": null
+      },
+      "draftIds": [
+        "page.x-before-departure"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "malaria-prophylaxis",
+      "oldTitle": "瘧疾預防用藥",
+      "page": "03-malaria-prophylaxis",
+      "current": {
+        "status": "merged",
+        "target": "disease.malaria",
+        "newPath": null,
+        "note": "併入疾病頁預防區塊"
+      },
+      "proposed": {
+        "status": "merged",
+        "target": "disease.malaria",
+        "newPath": null,
+        "note": "併入疾病頁預防區塊　【匯入 2026-10-03】草稿 disease.malaria（信心 1；既有內容已存在，供比對；併入疾病頁）"
+      },
+      "suggestion": {
+        "status": "merged",
+        "target": "disease.malaria",
+        "newPath": null
+      },
+      "draftIds": [
+        "disease.malaria"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "prescription-query",
+      "oldTitle": "國際旅遊處方箋",
+      "page": "04-prescription-query",
+      "current": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/travel/",
+        "note": "查詢功能由新站 /travel/「查目的地」取代，舊網址 301 到 /travel/（系統產生頁／功能頁，非內容 id）"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/travel/",
+        "note": "查詢功能由新站 /travel/「查目的地」取代，舊網址 301 到 /travel/（系統產生頁／功能頁，非內容 id）　【匯入 2026-10-03】草稿 page.x-prescription-query（信心 1）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null,
+        "newPath": "/travel/"
+      },
+      "draftIds": [
+        "page.x-prescription-query"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "rx-br",
+      "oldTitle": "國際旅遊處方箋：巴西",
+      "page": "05-rx-br",
+      "current": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/travel/BR/",
+        "note": "國家頁由資料產生：新站 /travel/BR/（目的地頁，依每日快照自動產生），舊網址 301 到該路徑（系統產生頁／功能頁，非內容 id）；舊頁的衛教文字供比對"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/travel/BR/",
+        "note": "國家頁由資料產生：新站 /travel/BR/（目的地頁，依每日快照自動產生），舊網址 301 到該路徑（系統產生頁／功能頁，非內容 id）；舊頁的衛教文字供比對　【匯入 2026-10-03】對應新站 /travel/BR/（資料產生頁），不出草稿（信心 1）"
+      },
+      "suggestion": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/travel/BR/"
+      },
+      "draftIds": [],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "rx-in",
+      "oldTitle": "國際旅遊處方箋：印度",
+      "page": "06-rx-in",
+      "current": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/travel/IN/",
+        "note": "國家頁由資料產生：新站 /travel/IN/（目的地頁，依每日快照自動產生），舊網址 301 到該路徑（系統產生頁／功能頁，非內容 id）；舊頁的衛教文字供比對"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/travel/IN/",
+        "note": "國家頁由資料產生：新站 /travel/IN/（目的地頁，依每日快照自動產生），舊網址 301 到該路徑（系統產生頁／功能頁，非內容 id）；舊頁的衛教文字供比對　【匯入 2026-10-03】對應新站 /travel/IN/（資料產生頁），不出草稿（信心 1）"
+      },
+      "suggestion": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/travel/IN/"
+      },
+      "draftIds": [],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "rx-jp",
+      "oldTitle": "國際旅遊處方箋：日本",
+      "page": "07-rx-jp",
+      "current": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/travel/JP/",
+        "note": "國家頁由資料產生：新站 /travel/JP/（目的地頁，依每日快照自動產生），舊網址 301 到該路徑（系統產生頁／功能頁，非內容 id）；舊頁的衛教文字供比對"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/travel/JP/",
+        "note": "國家頁由資料產生：新站 /travel/JP/（目的地頁，依每日快照自動產生），舊網址 301 到該路徑（系統產生頁／功能頁，非內容 id）；舊頁的衛教文字供比對　【匯入 2026-10-03】對應新站 /travel/JP/（資料產生頁），不出草稿（信心 1）"
+      },
+      "suggestion": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/travel/JP/"
+      },
+      "draftIds": [],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "rx-ke",
+      "oldTitle": "國際旅遊處方箋：肯亞",
+      "page": "08-rx-ke",
+      "current": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/travel/KE/",
+        "note": "國家頁由資料產生：新站 /travel/KE/（目的地頁，依每日快照自動產生），舊網址 301 到該路徑（系統產生頁／功能頁，非內容 id）；舊頁的衛教文字供比對"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/travel/KE/",
+        "note": "國家頁由資料產生：新站 /travel/KE/（目的地頁，依每日快照自動產生），舊網址 301 到該路徑（系統產生頁／功能頁，非內容 id）；舊頁的衛教文字供比對　【匯入 2026-10-03】對應新站 /travel/KE/（資料產生頁），不出草稿（信心 1）"
+      },
+      "suggestion": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/travel/KE/"
+      },
+      "draftIds": [],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "rx-th",
+      "oldTitle": "國際旅遊處方箋：泰國",
+      "page": "09-rx-th",
+      "current": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/travel/TH/",
+        "note": "國家頁由資料產生：新站 /travel/TH/（目的地頁，依每日快照自動產生），舊網址 301 到該路徑（系統產生頁／功能頁，非內容 id）；舊頁的衛教文字供比對"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/travel/TH/",
+        "note": "國家頁由資料產生：新站 /travel/TH/（目的地頁，依每日快照自動產生），舊網址 301 到該路徑（系統產生頁／功能頁，非內容 id）；舊頁的衛教文字供比對　【匯入 2026-10-03】對應新站 /travel/TH/（資料產生頁），不出草稿（信心 1）"
+      },
+      "suggestion": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/travel/TH/"
+      },
+      "draftIds": [],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "rx-vn",
+      "oldTitle": "國際旅遊處方箋：越南",
+      "page": "10-rx-vn",
+      "current": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/travel/VN/",
+        "note": "國家頁由資料產生：新站 /travel/VN/（目的地頁，依每日快照自動產生），舊網址 301 到該路徑（系統產生頁／功能頁，非內容 id）；舊頁的衛教文字供比對"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/travel/VN/",
+        "note": "國家頁由資料產生：新站 /travel/VN/（目的地頁，依每日快照自動產生），舊網址 301 到該路徑（系統產生頁／功能頁，非內容 id）；舊頁的衛教文字供比對　【匯入 2026-10-03】對應新站 /travel/VN/（資料產生頁），不出草稿（信心 1）"
+      },
+      "suggestion": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/travel/VN/"
+      },
+      "draftIds": [],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "travel-clinics",
+      "oldTitle": "旅遊醫學門診",
+      "page": "11-travel-clinics",
+      "current": {
+        "status": "migrated",
+        "target": "service.travel-clinic-appointment",
+        "newPath": null,
+        "note": "合約院所名單是時效資料，建議掛資料集而非寫死在頁面"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": "service.travel-clinic-appointment",
+        "newPath": null,
+        "note": "合約院所名單是時效資料，建議掛資料集而非寫死在頁面　【匯入 2026-10-03】草稿 service.travel-clinic-appointment（信心 1；既有內容已存在，供比對）"
+      },
+      "suggestion": {
+        "status": "migrated",
+        "target": "service.travel-clinic-appointment",
+        "newPath": null
+      },
+      "draftIds": [
+        "service.travel-clinic-appointment"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "travel-epidemic-levels",
+      "oldTitle": "國際旅遊疫情建議等級表",
+      "page": "12-travel-epidemic-levels",
+      "current": {
+        "status": "migrated",
+        "target": "dataset.travel-alert-levels",
+        "newPath": null,
+        "note": "等級表是時效資料，由資料集取代；JSON／CSV 匯出連結對應資料集下載"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": "dataset.travel-alert-levels",
+        "newPath": null,
+        "note": "等級表是時效資料，由資料集取代；JSON／CSV 匯出連結對應資料集下載　【匯入 2026-10-03】草稿 dataset.travel-alert-levels（信心 1；既有內容已存在，供比對）"
+      },
+      "suggestion": {
+        "status": "migrated",
+        "target": "dataset.travel-alert-levels",
+        "newPath": null
+      },
+      "draftIds": [
+        "dataset.travel-alert-levels"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "travel-health-info-list",
+      "oldTitle": "國際旅遊保健資訊",
+      "page": "14-travel-health-info-list",
+      "current": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/travel/",
+        "note": "列表頁（旅遊健康資訊）：新站由系統產生，舊網址 301 到 /travel/（系統產生頁／功能頁，非內容 id）"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/travel/",
+        "note": "列表頁（旅遊健康資訊）：新站由系統產生，舊網址 301 到 /travel/（系統產生頁／功能頁，非內容 id）　【匯入 2026-10-03】草稿 page.x-travel-health-info-list（信心 0.6）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null,
+        "newPath": "/travel/"
+      },
+      "draftIds": [
+        "page.x-travel-health-info-list"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "travel-list",
+      "oldTitle": "國際旅遊與健康",
+      "page": "15-travel-list",
+      "current": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/travel/",
+        "note": "列表頁（欄目根「國際旅遊與健康」）：新站由系統產生，舊網址 301 到 /travel/（系統產生頁／功能頁，非內容 id）"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/travel/",
+        "note": "列表頁（欄目根「國際旅遊與健康」）：新站由系統產生，舊網址 301 到 /travel/（系統產生頁／功能頁，非內容 id）　【匯入 2026-10-03】草稿 page.x-travel-list（信心 0.6）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null,
+        "newPath": "/travel/"
+      },
+      "draftIds": [
+        "page.x-travel-list"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "travel-medicine-list",
+      "oldTitle": "旅遊醫學",
+      "page": "16-travel-medicine-list",
+      "current": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/travel/",
+        "note": "列表頁（旅遊醫學）：新站由系統產生，舊網址 301 到 /travel/（系統產生頁／功能頁，非內容 id）"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/travel/",
+        "note": "列表頁（旅遊醫學）：新站由系統產生，舊網址 301 到 /travel/（系統產生頁／功能頁，非內容 id）　【匯入 2026-10-03】草稿 page.x-travel-medicine-list（信心 0.6）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null,
+        "newPath": "/travel/"
+      },
+      "draftIds": [
+        "page.x-travel-medicine-list"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "travel-news-list",
+      "oldTitle": "國際疫情訊息",
+      "page": "17-travel-news-list",
+      "current": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/news/",
+        "note": "新聞列表頁：新站由系統產生，舊網址 301 到 /news/（系統產生頁／功能頁，非內容 id）"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/news/",
+        "note": "新聞列表頁：新站由系統產生，舊網址 301 到 /news/（系統產生頁／功能頁，非內容 id）　【匯入 2026-10-03】草稿 page.x-travel-news-list（信心 0.6）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null,
+        "newPath": "/news/"
+      },
+      "draftIds": [
+        "page.x-travel-news-list"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "travel-video",
+      "oldTitle": "出國前 4 到 6 週，先到旅遊醫學門診（宣導影片）",
+      "page": "18-travel-video",
+      "current": {
+        "status": "migrated",
+        "target": "media.travel-clinic-before-departure",
+        "newPath": null,
+        "note": "宣導影片頁，影片與文字稿摘要對應媒體內容"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": "media.travel-clinic-before-departure",
+        "newPath": null,
+        "note": "宣導影片頁，影片與文字稿摘要對應媒體內容　【匯入 2026-10-03】草稿 media.travel-clinic-before-departure（信心 1；既有內容已存在，供比對）"
+      },
+      "suggestion": {
+        "status": "migrated",
+        "target": "media.travel-clinic-before-departure",
+        "newPath": null
+      },
+      "draftIds": [
+        "media.travel-clinic-before-departure"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "vaccines-medications",
+      "oldTitle": "國際預防接種及藥物",
+      "page": "19-vaccines-medications",
+      "current": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "黃熱病、流腦、傷寒疫苗主檔尚無，待新增 vaccine 主檔與頁面；瘧疾用藥併入瘧疾頁"
+      },
+      "proposed": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "黃熱病、流腦、傷寒疫苗主檔尚無，待新增 vaccine 主檔與頁面；瘧疾用藥併入瘧疾頁　【匯入 2026-10-03】草稿 page.x-vaccines-medications（信心 1）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null,
+        "newPath": null
+      },
+      "draftIds": [
+        "page.x-vaccines-medications"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "yellow-fever-certificate",
+      "oldTitle": "國際預防接種證明書（黃皮書）申請",
+      "page": "20-yellow-fever-certificate",
+      "current": {
+        "status": "migrated",
+        "target": "service.international-vaccination-certificate",
+        "newPath": null,
+        "note": "黃皮書申請說明與申請書 PDF 併入服務頁"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": "service.international-vaccination-certificate",
+        "newPath": null,
+        "note": "黃皮書申請說明與申請書 PDF 併入服務頁　【匯入 2026-10-03】草稿 service.international-vaccination-certificate（信心 1；既有內容已存在，供比對）"
+      },
+      "suggestion": {
+        "status": "migrated",
+        "target": "service.international-vaccination-certificate",
+        "newPath": null
+      },
+      "draftIds": [
+        "service.international-vaccination-certificate"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    }
+  ],
+  "missingPages": [],
+  "unmatchedPages": [
+    {
+      "page": "13-travel-faq",
+      "suggest": {
+        "key": "import-13-travel-faq",
+        "oldTitle": "國際旅遊常見問答",
+        "oldPath": "國際旅遊與健康／常見問答",
+        "oldUrl": "https://www.cdc.gov.tw/Category/QAPage/oDFvYopfPTouRB6a4gWcs5",
+        "oldType": "qa",
+        "verified": false,
+        "status": "pending",
+        "note": "匯入時清單沒有對應項目，請權責單位確認後加入"
+      }
+    }
+  ],
+  "conflicts": [],
+  "derivedItems": [],
+  "summary": {
+    "derivedItems": 0,
+    "derivedMatched": 0,
+    "items": 19,
+    "matched": 19,
+    "missingPages": 0,
+    "unmatchedPages": 1,
+    "agree": 19,
+    "conflicts": 0,
+    "statusChanges": 0,
+    "pendingToMigrated": 0,
+    "targetChanges": 0,
+    "newPathChanges": 0,
+    "noteChanges": 19,
+    "stillPending": 3
+  }
+}

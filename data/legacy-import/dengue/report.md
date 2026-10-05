@@ -92,5 +92,5 @@
 - 清單有、匯出沒有：無
 - 匯出有、清單沒有：27-news-2026-09-29-ili-weekly、28-news-2026-08-18-dengue-rising-south、29-news-2026-07-21-dengue-first-local、30-news-2026-07-01-letter-dengue-guidance-v17、31-news-2025-11-11-letter-dengue-guidance-v16
 - 與清單判定不同（不覆蓋，人工決定）：無
-- 套用規則：只改 status／target／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。
+- 套用規則：只改 status／target／newPath／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。
 

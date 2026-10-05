@@ -61,18 +61,19 @@ export const ACTION_LABEL = {
   drop: '不轉換（久遠且已結束，建議 410）',
   'skip-list': '清單頁，不轉換（新站由系統自動產生列表）',
   'skip-duplicate': '已在其他批次轉過（同網址），本批不重複出草稿',
+  'skip-generated': '新站由資料自動產生此頁，不轉內文（舊網址 301 到產生頁；舊內文存 reference/ 供比對）',
   'auto-ok': '近年新聞，核對後可自動上線',
   'review-before-publish': '核對後入庫（新站尚無對應內容）',
 };
 
 const klass = (s) => (s === 'migrated' || s === 'merged' ? 'done' : s);
 const NOTE_RE = /\s*【匯入[^】]*】.*$/s;
-export const ALLOWED_KEYS = new Set(['status', 'target', 'note']);
+export const ALLOWED_KEYS = new Set(['status', 'target', 'newPath', 'note']);
 
 export function buildPatch({ manifest, prs, index, exportedAt, slug, derivedItems = [] }) {
   const patch = {
     format: 'cdc-legacy-migration-patch/1', manifest: manifest?.data.id ?? null, batch: slug, exportedAt, applied: null,
-    rule: '只改 status／target／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。',
+    rule: '只改 status／target／newPath／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。',
     items: [], missingPages: [], unmatchedPages: [], conflicts: [], derivedItems: [],
   };
   if (!manifest) { patch.summary = { items: 0, matched: 0, missingPages: 0, unmatchedPages: prs.length, agree: 0, conflicts: 0, statusChanges: 0, noteChanges: 0 }; patch.unmatchedPages = prs.map((p) => suggestItem(p)); return patch; }
@@ -88,25 +89,37 @@ export function buildPatch({ manifest, prs, index, exportedAt, slug, derivedItem
     const tgtId = it.target ?? existOut?.id ?? '';
     const superseded = !!(tgt?.family && [...index.byId.entries()].some(([vid, v]) => v.family === tgt.family && vid !== tgtId && String(v.effectiveAt ?? '') > String(tgt.effectiveAt ?? '')));
     let proposed;
-    if (pr.flags.drop) proposed = 'dropped';
+    // 資料產生頁（第九批）：新站頁由資料產生、沒有內容 id 可填 ⇒ 提議 migrated＋newPath（舊網址 301 到產生頁，例 /travel/JP/），不出草稿
+    const gen = pr.flags.generated;
+    if (gen) proposed = 'migrated';
+    else if (pr.flags.drop) proposed = 'dropped';
     else if ((pr.flags.historical || superseded) && dest) proposed = 'archived';
     // 一頁多題（Q&A 每題一筆）且清單沒指定目標：沒有單一 target 可填，不提議 migrated 到第一題，維持 pending 由人決定 merged 到哪頁
     else if (outs.length > 1 && !it.target && pr.kind === 'faq') proposed = 'pending';
     else if (dest) proposed = pr.kind === 'disease-block' ? 'merged' : 'migrated';
     else proposed = 'pending';
-    const proposedTarget = it.target ?? (dest ? existOut?.id ?? null : null);
+    const proposedTarget = it.target ?? (dest && !gen ? existOut?.id ?? null : null);
+    const proposedNewPath = it.target ? null : it.newPath ?? gen?.newPath ?? null;
     const ids = outs.map((o) => o.id);
-    const marker = `【匯入 ${exportedAt}】${ids.length ? `草稿 ${[...new Set(ids)].join('、')}` : dupOf.length ? `與 ${[...new Set(dupOf)].join('、')} 重複，未另出草稿` : '無草稿'}（信心 ${pr.confidence}${pr.existing ? '；既有內容已存在，供比對' : ''}${pr.kind === 'disease-block' ? '；併入疾病頁' : ''}${pr.needsReview ? '；需人工檢視' : ''}）`;
+    const marker = `【匯入 ${exportedAt}】${ids.length ? `草稿 ${[...new Set(ids)].join('、')}` : gen ? `對應新站 ${gen.newPath}（資料產生頁），不出草稿` : dupOf.length ? `與 ${[...new Set(dupOf)].join('、')} 重複，未另出草稿` : '無草稿'}（信心 ${pr.confidence}${pr.existing ? '；既有內容已存在，供比對' : ''}${pr.kind === 'disease-block' ? '；併入疾病頁' : ''}${pr.needsReview ? '；需人工檢視' : ''}）`;
     const base = String(it.note ?? '').replace(NOTE_RE, '').trim();
     const note = base ? `${base}　${marker}` : marker;
     const statusChange = it.status === 'pending' && proposed !== 'pending';
     const entry = {
-      key: it.key, oldTitle: it.oldTitle, page: pr.key, current: { status: it.status, target: it.target ?? null, note: it.note ?? null },
-      proposed: { status: statusChange ? proposed : it.status, target: statusChange && !it.target ? proposedTarget : it.target ?? null, note },
-      suggestion: { status: proposed, target: proposedTarget }, draftIds: ids,
-      // 人工已判定「不轉」或「封存」而工具也找不到新站去向 ⇒ 兩者一致（pending 的意思就是新站沒有對應）
-      agree: klass(proposed) === klass(it.status) || (proposed === 'pending' && (it.status === 'dropped' || it.status === 'archived')),
-      change: { status: statusChange, target: statusChange && !it.target && !!proposedTarget, note: note !== (it.note ?? null) },
+      key: it.key, oldTitle: it.oldTitle, page: pr.key, current: { status: it.status, target: it.target ?? null, newPath: it.newPath ?? null, note: it.note ?? null },
+      proposed: {
+        status: statusChange ? proposed : it.status, target: statusChange && !it.target ? proposedTarget : it.target ?? null,
+        newPath: statusChange && !it.target && !it.newPath && !proposedTarget ? proposedNewPath : it.newPath ?? null, note,
+      },
+      suggestion: { status: proposed, target: proposedTarget, newPath: proposedTarget ? null : proposedNewPath }, draftIds: ids,
+      // 人工已判定「不轉」或「封存」而工具也找不到新站去向 ⇒ 兩者一致（pending 的意思就是新站沒有對應）；
+      // 清單已填 newPath（去處為系統產生頁／功能頁）而本頁是清單頁、資料產生頁或查詢表單 ⇒ 工具本來就不會有內容 id 可對，視為一致
+      agree: klass(proposed) === klass(it.status) || (proposed === 'pending' && (it.status === 'dropped' || it.status === 'archived'))
+        || (!!it.newPath && !it.target && (pr.kind === 'list' || !!gen || !!pr.flags.dynamicForm) && ['pending', 'dropped', 'migrated'].includes(proposed)),
+      change: {
+        status: statusChange, target: statusChange && !it.target && !!proposedTarget,
+        newPath: statusChange && !it.target && !it.newPath && !proposedTarget && !!proposedNewPath, note: note !== (it.note ?? null),
+      },
     };
     if (!entry.agree && !statusChange) patch.conflicts.push({ key: it.key, current: it.status, suggestion: proposed, reason: conflictReason(it, pr, proposed) });
     patch.items.push(entry);
@@ -123,7 +136,7 @@ export function buildPatch({ manifest, prs, index, exportedAt, slug, derivedItem
     items: manifest.data.items.length, matched: patch.items.length, missingPages: patch.missingPages.length, unmatchedPages: patch.unmatchedPages.length,
     agree: patch.items.filter((i) => i.agree).length, conflicts: patch.conflicts.length,
     statusChanges: patch.items.filter((i) => i.change.status).length, pendingToMigrated: patch.items.filter((i) => i.change.status && i.proposed.status === 'migrated').length,
-    targetChanges: patch.items.filter((i) => i.change.target).length, noteChanges: patch.items.filter((i) => i.change.note).length,
+    targetChanges: patch.items.filter((i) => i.change.target).length, newPathChanges: patch.items.filter((i) => i.change.newPath).length, noteChanges: patch.items.filter((i) => i.change.note).length,
     stillPending: patch.items.filter((i) => i.proposed.status === 'pending').length,
   };
   return patch;
@@ -142,22 +155,31 @@ function suggestItem(p) {
   };
 }
 
-/** 套用到清單檔：只改 status／target／note；寫回前驗證其他欄位（含 verified）完全沒變 */
+/** 套用到清單檔：只改 status／target／newPath／note；寫回前驗證其他欄位（含 verified）完全沒變 */
 export function applyPatch(manifestPath, patch) {
   const before = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
   const data = JSON.parse(JSON.stringify(before));
-  const res = { statusChanges: [], targetChanges: [], noteChanges: 0 };
+  const res = { statusChanges: [], targetChanges: [], newPathChanges: [], noteChanges: 0 };
   for (const e of patch.items) {
     const it = data.items.find((x) => x.key === e.key);
     if (!it) continue;
     if (e.change.status) { res.statusChanges.push({ key: e.key, from: it.status, to: e.proposed.status }); it.status = e.proposed.status; }
     if (e.change.target) { res.targetChanges.push({ key: e.key, to: e.proposed.target }); it.target = e.proposed.target; }
+    if (e.change?.newPath && !it.target) {
+      res.newPathChanges.push({ key: e.key, to: e.proposed.newPath });
+      // 放在 status 後面（清單檔慣例：status → target／newPath → note），不打亂其他欄位
+      const entries = Object.entries(it).filter(([k]) => k !== 'newPath');
+      const at = entries.findIndex(([k]) => k === 'status') + 1;
+      entries.splice(at, 0, ['newPath', e.proposed.newPath]);
+      for (const k of Object.keys(it)) delete it[k];
+      Object.assign(it, Object.fromEntries(entries));
+    }
     if (e.change.note) { it.note = e.proposed.note; res.noteChanges++; }
   }
-  // 防呆：除了 items[].status／target／note，其餘不得有任何差異
+  // 防呆：除了 items[].status／target／newPath／note，其餘不得有任何差異
   const strip = (d) => ({ ...d, items: d.items.map((i) => Object.fromEntries(Object.entries(i).filter(([k]) => !ALLOWED_KEYS.has(k)))) });
-  if (JSON.stringify(strip(before)) !== JSON.stringify(strip(data))) throw new Error('migration apply 改到 status／target／note 以外的欄位，已中止');
+  if (JSON.stringify(strip(before)) !== JSON.stringify(strip(data))) throw new Error('migration apply 改到 status／target／newPath／note 以外的欄位，已中止');
   for (let i = 0; i < before.items.length; i++) if (before.items[i].verified !== data.items[i].verified) throw new Error('migration apply 不得改動 verified');
   fs.writeFileSync(manifestPath, `${JSON.stringify(data, null, 2)}\n`);
-  return { statusChanges: res.statusChanges, targetChanges: res.targetChanges, noteChanges: res.noteChanges };
+  return { statusChanges: res.statusChanges, targetChanges: res.targetChanges, newPathChanges: res.newPathChanges, noteChanges: res.noteChanges };
 }

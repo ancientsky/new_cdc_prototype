@@ -1,0 +1,266 @@
+{
+  "id": "migration.travel",
+  "type": "migration",
+  "title": "國際旅遊與健康欄目（舊站）→ 新站出國與入境專區",
+  "owner": "unit.quarantine",
+  "steward": "檢疫組承辦人",
+  "publishedAt": "2026-10-05",
+  "reviewedAt": "2026-10-05",
+  "reviewPeriodMonths": 3,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "舊站「國際旅遊與健康」欄目逐頁移轉對照：旅遊醫學門診、黃皮書、疫情建議等級表、宣導影片對應既有服務／資料集／媒體；瘧疾預防用藥併入疾病頁；國際旅遊處方箋與各國結果頁由新站 /travel/ 資料產生，舊網址 301；列表頁不轉；國際預防接種及藥物、出國前與返國後注意事項待決定。全部 verified:false，由檢疫組逐頁確認。",
+  "keywords": [
+    "移轉清單",
+    "國際旅遊與健康",
+    "旅遊醫學",
+    "黃皮書",
+    "舊網址"
+  ],
+  "scope": {
+    "kind": "category",
+    "name": "國際旅遊與健康"
+  },
+  "legacyRoot": "https://www.cdc.gov.tw/Category/List/tRbpXpZM7EO3-dkc4RYZuQ",
+  "showLegacyUntil": "2027-12-31",
+  "sourceNote": "開發環境連不到 www.cdc.gov.tw，欄目子頁依舊站 URL 模式（/Category/List、/Category/MPage、/Category/Page、/Bulletin/List）反推；國際旅遊處方箋國家頁的 /TravelEpidemic/Prescription/{id}?iso=XX 是推測的網址模式，正式匯出以真實為準；國家頁在新站為資料產生頁（/travel/{ISO2}/）。網址 ID 不確定者以 {id} 佔位、同一模式以 #片段區分。與 Q&A 批重複的「國際旅遊常見問答」頁不列，由轉換器依同網址判定已轉過。",
+  "items": [
+    {
+      "key": "after-return",
+      "oldTitle": "返國後注意事項",
+      "oldPath": "國際旅遊與健康／旅遊醫學／返國後注意事項",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#after-return",
+      "oldType": "page",
+      "verified": false,
+      "status": "pending",
+      "owner": "unit.quarantine",
+      "note": "內容對應新站目的地頁「旅程三階段」規則文字與出國與入境任務頁；待決定建 topic 或併入模板文字　【匯入 2026-10-03】草稿 page.x-after-return（信心 1）"
+    },
+    {
+      "key": "before-departure",
+      "oldTitle": "出國前注意事項",
+      "oldPath": "國際旅遊與健康／旅遊醫學／出國前注意事項",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/dD0xcwJor_qG8nlP5UiL4g",
+      "oldType": "page",
+      "verified": false,
+      "status": "pending",
+      "owner": "unit.quarantine",
+      "note": "內容對應新站目的地頁「旅程三階段」規則文字與出國與入境任務頁；待決定建 topic 或併入模板文字　【匯入 2026-10-03】草稿 page.x-before-departure（信心 1）"
+    },
+    {
+      "key": "malaria-prophylaxis",
+      "oldTitle": "瘧疾預防用藥",
+      "oldPath": "國際旅遊與健康／旅遊醫學／瘧疾預防用藥",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#malaria-prophylaxis",
+      "oldType": "page",
+      "verified": false,
+      "status": "merged",
+      "target": "disease.malaria",
+      "owner": "unit.acute-infectious",
+      "note": "併入疾病頁預防區塊　【匯入 2026-10-03】草稿 disease.malaria（信心 1；既有內容已存在，供比對；併入疾病頁）"
+    },
+    {
+      "key": "prescription-query",
+      "oldTitle": "國際旅遊處方箋",
+      "oldPath": "國際旅遊與健康／旅遊醫學／國際旅遊處方箋",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#prescription-query",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "newPath": "/travel/",
+      "owner": "unit.quarantine",
+      "note": "查詢功能由新站 /travel/「查目的地」取代，舊網址 301 到 /travel/（系統產生頁／功能頁，非內容 id）　【匯入 2026-10-03】草稿 page.x-prescription-query（信心 1）"
+    },
+    {
+      "key": "rx-br",
+      "oldTitle": "國際旅遊處方箋：巴西",
+      "oldPath": "國際旅遊與健康／旅遊醫學／國際旅遊處方箋／巴西",
+      "oldUrl": "https://www.cdc.gov.tw/TravelEpidemic/Prescription/{id}?iso=BR#rx-br",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "newPath": "/travel/BR/",
+      "owner": "unit.quarantine",
+      "note": "國家頁由資料產生：新站 /travel/BR/（目的地頁，依每日快照自動產生），舊網址 301 到該路徑（系統產生頁／功能頁，非內容 id）；舊頁的衛教文字供比對　【匯入 2026-10-03】對應新站 /travel/BR/（資料產生頁），不出草稿（信心 1）"
+    },
+    {
+      "key": "rx-in",
+      "oldTitle": "國際旅遊處方箋：印度",
+      "oldPath": "國際旅遊與健康／旅遊醫學／國際旅遊處方箋／印度",
+      "oldUrl": "https://www.cdc.gov.tw/TravelEpidemic/Prescription/{id}?iso=IN#rx-in",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "newPath": "/travel/IN/",
+      "owner": "unit.quarantine",
+      "note": "國家頁由資料產生：新站 /travel/IN/（目的地頁，依每日快照自動產生），舊網址 301 到該路徑（系統產生頁／功能頁，非內容 id）；舊頁的衛教文字供比對　【匯入 2026-10-03】對應新站 /travel/IN/（資料產生頁），不出草稿（信心 1）"
+    },
+    {
+      "key": "rx-jp",
+      "oldTitle": "國際旅遊處方箋：日本",
+      "oldPath": "國際旅遊與健康／旅遊醫學／國際旅遊處方箋／日本",
+      "oldUrl": "https://www.cdc.gov.tw/TravelEpidemic/Prescription/{id}?iso=JP#rx-jp",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "newPath": "/travel/JP/",
+      "owner": "unit.quarantine",
+      "note": "國家頁由資料產生：新站 /travel/JP/（目的地頁，依每日快照自動產生），舊網址 301 到該路徑（系統產生頁／功能頁，非內容 id）；舊頁的衛教文字供比對　【匯入 2026-10-03】對應新站 /travel/JP/（資料產生頁），不出草稿（信心 1）"
+    },
+    {
+      "key": "rx-ke",
+      "oldTitle": "國際旅遊處方箋：肯亞",
+      "oldPath": "國際旅遊與健康／旅遊醫學／國際旅遊處方箋／肯亞",
+      "oldUrl": "https://www.cdc.gov.tw/TravelEpidemic/Prescription/{id}?iso=KE#rx-ke",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "newPath": "/travel/KE/",
+      "owner": "unit.quarantine",
+      "note": "國家頁由資料產生：新站 /travel/KE/（目的地頁，依每日快照自動產生），舊網址 301 到該路徑（系統產生頁／功能頁，非內容 id）；舊頁的衛教文字供比對　【匯入 2026-10-03】對應新站 /travel/KE/（資料產生頁），不出草稿（信心 1）"
+    },
+    {
+      "key": "rx-th",
+      "oldTitle": "國際旅遊處方箋：泰國",
+      "oldPath": "國際旅遊與健康／旅遊醫學／國際旅遊處方箋／泰國",
+      "oldUrl": "https://www.cdc.gov.tw/TravelEpidemic/Prescription/{id}?iso=TH#rx-th",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "newPath": "/travel/TH/",
+      "owner": "unit.quarantine",
+      "note": "國家頁由資料產生：新站 /travel/TH/（目的地頁，依每日快照自動產生），舊網址 301 到該路徑（系統產生頁／功能頁，非內容 id）；舊頁的衛教文字供比對　【匯入 2026-10-03】對應新站 /travel/TH/（資料產生頁），不出草稿（信心 1）"
+    },
+    {
+      "key": "rx-vn",
+      "oldTitle": "國際旅遊處方箋：越南",
+      "oldPath": "國際旅遊與健康／旅遊醫學／國際旅遊處方箋／越南",
+      "oldUrl": "https://www.cdc.gov.tw/TravelEpidemic/Prescription/{id}?iso=VN#rx-vn",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "newPath": "/travel/VN/",
+      "owner": "unit.quarantine",
+      "note": "國家頁由資料產生：新站 /travel/VN/（目的地頁，依每日快照自動產生），舊網址 301 到該路徑（系統產生頁／功能頁，非內容 id）；舊頁的衛教文字供比對　【匯入 2026-10-03】對應新站 /travel/VN/（資料產生頁），不出草稿（信心 1）"
+    },
+    {
+      "key": "travel-clinics",
+      "oldTitle": "旅遊醫學門診",
+      "oldPath": "國際旅遊與健康／旅遊醫學／旅遊醫學門診",
+      "oldUrl": "https://www.cdc.gov.tw/Category/Page/ucmuQnzcJPue77qHt0IXeg",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "service.travel-clinic-appointment",
+      "owner": "unit.quarantine",
+      "note": "合約院所名單是時效資料，建議掛資料集而非寫死在頁面　【匯入 2026-10-03】草稿 service.travel-clinic-appointment（信心 1；既有內容已存在，供比對）"
+    },
+    {
+      "key": "travel-epidemic-levels",
+      "oldTitle": "國際旅遊疫情建議等級表",
+      "oldPath": "國際旅遊與健康／國際旅遊疫情建議等級",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#travel-epidemic-levels",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "dataset.travel-alert-levels",
+      "owner": "unit.quarantine",
+      "note": "等級表是時效資料，由資料集取代；JSON／CSV 匯出連結對應資料集下載　【匯入 2026-10-03】草稿 dataset.travel-alert-levels（信心 1；既有內容已存在，供比對）"
+    },
+    {
+      "key": "travel-health-info-list",
+      "oldTitle": "國際旅遊保健資訊",
+      "oldPath": "國際旅遊與健康／國際旅遊保健資訊",
+      "oldUrl": "https://www.cdc.gov.tw/Category/List/HJ0FrBEq15g18TFKowY7lg",
+      "oldType": "list",
+      "verified": false,
+      "status": "migrated",
+      "newPath": "/travel/",
+      "owner": "unit.quarantine",
+      "note": "列表頁（旅遊健康資訊）：新站由系統產生，舊網址 301 到 /travel/（系統產生頁／功能頁，非內容 id）　【匯入 2026-10-03】草稿 page.x-travel-health-info-list（信心 0.6）"
+    },
+    {
+      "key": "travel-list",
+      "oldTitle": "國際旅遊與健康",
+      "oldPath": "國際旅遊與健康",
+      "oldUrl": "https://www.cdc.gov.tw/Category/List/tRbpXpZM7EO3-dkc4RYZuQ",
+      "oldType": "list",
+      "verified": false,
+      "status": "migrated",
+      "newPath": "/travel/",
+      "owner": "unit.quarantine",
+      "note": "列表頁（欄目根「國際旅遊與健康」）：新站由系統產生，舊網址 301 到 /travel/（系統產生頁／功能頁，非內容 id）　【匯入 2026-10-03】草稿 page.x-travel-list（信心 0.6）"
+    },
+    {
+      "key": "travel-medicine-list",
+      "oldTitle": "旅遊醫學",
+      "oldPath": "國際旅遊與健康／旅遊醫學",
+      "oldUrl": "https://www.cdc.gov.tw/Category/List/3GJWZ0ETfmdGzIS7H0Jucg",
+      "oldType": "list",
+      "verified": false,
+      "status": "migrated",
+      "newPath": "/travel/",
+      "owner": "unit.quarantine",
+      "note": "列表頁（旅遊醫學）：新站由系統產生，舊網址 301 到 /travel/（系統產生頁／功能頁，非內容 id）　【匯入 2026-10-03】草稿 page.x-travel-medicine-list（信心 0.6）"
+    },
+    {
+      "key": "travel-news-list",
+      "oldTitle": "國際疫情訊息",
+      "oldPath": "國際旅遊與健康／國際疫情",
+      "oldUrl": "https://www.cdc.gov.tw/Bulletin/List/{id}#travel-news-list",
+      "oldType": "news-list",
+      "verified": false,
+      "status": "migrated",
+      "newPath": "/news/",
+      "owner": "unit.quarantine",
+      "note": "新聞列表頁：新站由系統產生，舊網址 301 到 /news/（系統產生頁／功能頁，非內容 id）　【匯入 2026-10-03】草稿 page.x-travel-news-list（信心 0.6）"
+    },
+    {
+      "key": "travel-video",
+      "oldTitle": "出國前 4 到 6 週，先到旅遊醫學門診（宣導影片）",
+      "oldPath": "國際旅遊與健康／宣導素材",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#travel-video",
+      "oldType": "media",
+      "verified": false,
+      "status": "migrated",
+      "target": "media.travel-clinic-before-departure",
+      "owner": "unit.quarantine",
+      "note": "宣導影片頁，影片與文字稿摘要對應媒體內容　【匯入 2026-10-03】草稿 media.travel-clinic-before-departure（信心 1；既有內容已存在，供比對）"
+    },
+    {
+      "key": "vaccines-medications",
+      "oldTitle": "國際預防接種及藥物",
+      "oldPath": "國際旅遊與健康／旅遊醫學／國際預防接種及藥物",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/6786",
+      "oldType": "page",
+      "verified": false,
+      "status": "pending",
+      "owner": "unit.quarantine",
+      "note": "黃熱病、流腦、傷寒疫苗主檔尚無，待新增 vaccine 主檔與頁面；瘧疾用藥併入瘧疾頁　【匯入 2026-10-03】草稿 page.x-vaccines-medications（信心 1）"
+    },
+    {
+      "key": "yellow-fever-certificate",
+      "oldTitle": "國際預防接種證明書（黃皮書）申請",
+      "oldPath": "國際旅遊與健康／旅遊醫學／國際預防接種證明書",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#yellow-fever-certificate",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "service.international-vaccination-certificate",
+      "owner": "unit.quarantine",
+      "note": "黃皮書申請說明與申請書 PDF 併入服務頁　【匯入 2026-10-03】草稿 service.international-vaccination-certificate（信心 1；既有內容已存在，供比對）"
+    }
+  ]
+}

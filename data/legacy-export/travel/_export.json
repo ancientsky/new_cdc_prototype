@@ -1,0 +1,10 @@
+{
+  "format": "cdc-legacy-export/1",
+  "simulated": true,
+  "exportedAt": "2026-10-03",
+  "site": "https://www.cdc.gov.tw",
+  "batch": "travel",
+  "pages": 20,
+  "source": "模擬匯出：國際旅遊與健康欄目。依既有新站內容（旅遊醫學門診、黃皮書、疫情建議等級、宣導影片、瘧疾）反推 19 頁：列表 4 頁、國際旅遊處方箋查詢頁（含 231 國下拉）1 頁、國家結果頁 6 頁、內容頁 8 頁；另複製 Q&A 批匯出的國際旅遊常見問答頁 1 頁。列表頁、旅遊醫學門診、國際預防接種及藥物、出國前注意事項的網址 ID 為舊站真實 ID，其餘網址 ID、國家結果頁路徑（/TravelEpidemic/Prescription/，推測的模式）、醫院名單、電話與數字皆為示意，不是舊站的真實資料。正式匯出取代整個目錄即可。",
+  "generator": "scripts/lib/legacy-import/sim-export-travel.mjs"
+}

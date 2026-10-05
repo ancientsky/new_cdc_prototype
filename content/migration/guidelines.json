@@ -471,7 +471,8 @@
       "oldUrl": "https://www.cdc.gov.tw/Category/List/{id}#guidelines-list",
       "oldType": "list",
       "verified": false,
-      "status": "dropped",
+      "status": "migrated",
+      "newPath": "/documents/",
       "note": "列表頁：新站的文件列表由系統依文件型別自動產生（專業首頁與文件庫），舊網址 301 到 /documents/。　【匯入 2026-10-03】草稿 page.x-guidelines-list（信心 0.6）"
     }
   ]

@@ -49,10 +49,10 @@ export function rowsOf(site, list, items = list.items ?? []) {
   for (const it of items) {
     const tg = (it.toId ?? it.target) ? site.byId.get(it.toId ?? it.target) : null;
     const owner = it.owner ?? tg?.owner ?? list.owner;
-    const front = tg ? frontPath(tg) : null;
+    const front = tg ? frontPath(tg) : it.newPath ?? null; // newPath：系統產生頁／功能頁路徑（非內容 id）
     rows.push({
       listId: list.id, listTitle: list.title, key: it.key, oldTitle: it.oldTitle ?? it.key, oldPath: it.oldPath ?? '', oldUrl: it.oldUrl ?? '', oldType: it.oldType ?? 'page',
-      status: MIG_STATUS.includes(it.status) ? it.status : 'pending', verified: it.verified === true, target: it.target ?? null, targetTitle: tg?.title ?? null,
+      status: MIG_STATUS.includes(it.status) ? it.status : 'pending', verified: it.verified === true, target: it.target ?? null, newPath: it.newPath ?? null, targetTitle: tg?.title ?? null,
       targetFront: front ? `${front}${it.anchor ? `#${it.anchor}` : ''}` : null, anchor: it.anchor ?? '', owner, ownerName: site.unitById.get(owner)?.name ?? owner ?? '—',
       note: it.note ?? '', reqs: it.newRequirements ?? [], placeholder: hasPh(it.oldUrl),
     });

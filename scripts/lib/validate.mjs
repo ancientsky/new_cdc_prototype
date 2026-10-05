@@ -130,7 +130,7 @@ export function validateSite(site) {
     for (const hit of findPlaceholderUrls(tpl)) push(file, `${hit.path} 含佔位／示意網址：${hit.value}`);
   }
 
-  // 4. 移轉清單（ARCHITECTURE 13.1）：schema、id 唯一、owner、target 存在（pending／dropped 除外）、key 唯一
+  // 4. 移轉清單（ARCHITECTURE 13.1）：schema、id 唯一、owner、target 存在或 newPath（pending／dropped 除外）、key 唯一
   //    第六輪（14.1）：同一疾病只能有一份人工清單；extends 指向的模板要存在；omit 的 key 要在模板內。
   const vMig = ajv.getSchema('https://cdc-prototype/schemas/migration.json');
   const migIds = new Set();
@@ -159,7 +159,8 @@ export function validateSite(site) {
       if (it.owner && !units.has(it.owner)) push(file, `${at} owner ${it.owner} 不在 units 主檔`);
       const needTarget = !['pending', 'dropped'].includes(it.status);
       if (it.target && !ids.has(it.target)) push(file, `${at} target ${it.target} 不存在`);
-      else if (needTarget && !it.target) push(file, `${at} status ${it.status} 必須填 target（新站內容 id）`);
+      else if (needTarget && !it.target && !it.newPath) push(file, `${at} status ${it.status} 必須填 target（新站內容 id）或 newPath（系統產生頁／功能頁路徑）`);
+      if (it.target && it.newPath) push(file, `${at} target 與 newPath 只能擇一`);
     });
     // 新站內部欄位仍檢查佔位網址；oldUrl／legacyRoot（舊站網址，可含 {id}）豁免
     for (const hit of findPlaceholderUrls(list)) push(file, `${hit.path} 含佔位／示意網址：${hit.value}`);

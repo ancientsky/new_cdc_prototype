@@ -11,7 +11,7 @@
   },
   "rules": {
     "file": "content/migration/import/_import-rules.json",
-    "version": 7
+    "version": 8
   },
   "manifest": null,
   "summary": {
@@ -55,6 +55,7 @@
       "info": 92
     },
     "manifest": null,
+    "generated": 0,
     "exportedAt": "2026-10-03",
     "pagesWithoutOutput": 0
   },

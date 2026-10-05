@@ -11,7 +11,7 @@
   },
   "rules": {
     "file": "content/migration/import/_import-rules.json",
-    "version": 7
+    "version": 8
   },
   "manifest": {
     "id": "migration.rubella",
@@ -80,6 +80,7 @@
       "derivedItems": 20,
       "derivedMatched": 20
     },
+    "generated": 0,
     "exportedAt": "2026-10-03",
     "pagesWithoutOutput": 0
   },
@@ -2054,6 +2055,7 @@
       "statusChanges": 0,
       "pendingToMigrated": 0,
       "targetChanges": 0,
+      "newPathChanges": 0,
       "noteChanges": 0,
       "stillPending": 0
     }

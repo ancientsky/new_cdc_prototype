@@ -1,0 +1,42 @@
+{
+  "id": "page.x-after-return",
+  "type": "page",
+  "title": "返國後注意事項",
+  "owner": "unit.quarantine",
+  "publishedAt": "2014-09-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "返國後 21 天內如出現發燒或出疹，請儘速就醫，並主動告知醫師旅遊史（國家、地區、停留日期與活動）。",
+  "slug": "x-after-return",
+  "bodyMarkdown": "返國後 21 天內如出現發燒或出疹，請儘速就醫，並主動告知醫師旅遊史（國家、地區、停留日期與活動）。\n\n如有疑問可撥打免付費防疫專線 1922（或 0800-001922）諮詢。入境時如被檢測出發燒，請配合機場檢疫人員的篩檢與後續追蹤。\n\n就醫時請戴口罩，避免搭乘大眾運輸工具，減少傳染給他人的機會。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/DryBWzb2sUmjb11OHdzvB1"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 9 處（mso 樣式 3、Mso 類別 3、命名空間標籤 3）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/DryBWzb2sUmjb11OHdzvB1",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

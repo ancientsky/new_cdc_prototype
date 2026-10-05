@@ -41,7 +41,7 @@ function itemsTable(ctx, r) {
       <td>${x.oldUrl ? (x.placeholder ? html`<code>${x.oldUrl.replace(/^https?:\/\//, '')}</code><div class="adm-muted">網址待補（{id} 佔位）</div>` : html`<a href="${x.oldUrl}" rel="nofollow noopener" data-old>${x.oldUrl.replace(/^https?:\/\//, '')}</a>`) : '—'}</td>
       <td data-st><span class="adm-badge adm-badge--${MIG_BADGE[x.status]}">${MIG_LABEL[x.status]}</span></td>
       <td>${x.verified ? html`<span class="adm-badge adm-badge--ok">已核對</span>` : html`<span class="adm-badge adm-badge--gray">未核對</span>`}</td>
-      <td>${x.target ? (x.targetFront ? html`<a href="${url(x.targetFront)}">${x.targetTitle ?? x.target}</a>` : (x.targetTitle ?? x.target)) : html`<span class="adm-muted">—</span>`}${x.target ? html`<div class="adm-muted"><code>${x.target}</code></div>` : ''}</td>
+      <td>${x.target ? (x.targetFront ? html`<a href="${url(x.targetFront)}">${x.targetTitle ?? x.target}</a>` : (x.targetTitle ?? x.target)) : x.newPath ? html`<a href="${url(x.targetFront)}"><code>${x.newPath}</code></a><div class="adm-muted">系統產生頁／功能頁（newPath）</div>` : html`<span class="adm-muted">—</span>`}${x.target ? html`<div class="adm-muted"><code>${x.target}</code></div>` : ''}</td>
       <td>${x.ownerName}</td>
       <td class="adm-muted">${x.reqs.length ? x.reqs.map((k) => REQ_LABEL[k] ?? k).join('、') : '—'}</td></tr>`)}</tbody></table></div>`;
 }

@@ -48,7 +48,8 @@
         "verifiedAt": { "type": "string", "format": "date" },
         "verifiedBy": { "type": "string", "description": "核對者職稱（不放真名）" },
         "status": { "enum": ["migrated", "merged", "archived", "pending", "dropped"], "description": "migrated 已移轉（一對一）／merged 已併入（多對一）／archived 已封存（舊版保留查閱）／pending 待移轉／dropped 不移轉（過期，建議 410）" },
-        "target": { "type": "string", "pattern": "^[a-z]+\\.[a-z0-9][a-z0-9.-]*$", "description": "新站內容 id（migrated／merged／archived 必填）" },
+        "target": { "type": "string", "pattern": "^[a-z]+\\.[a-z0-9][a-z0-9.-]*$", "description": "新站內容 id（migrated／merged／archived 必填，或改填 newPath）" },
+        "newPath": { "type": "string", "pattern": "^/[A-Za-z0-9._~!$&'()*+,;=:@%/-]*$", "description": "新站路徑（非內容 id 的去處：由系統產生的頁或功能，例如 /travel/JP/）；與 target 擇一" },
         "anchor": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$", "description": "新頁內錨點" },
         "owner": { "type": "string", "pattern": "^unit\\.", "description": "本筆權責單位（缺省沿用清單 owner）" },
         "dueAt": { "type": "string", "format": "date", "description": "pending 的預定完成日（缺省：清單 reviewedAt + 60 日）" },
@@ -63,8 +64,9 @@
       "allOf": [
         {
           "if": { "properties": { "status": { "enum": ["migrated", "merged", "archived"] } }, "required": ["status"] },
-          "then": { "required": ["target"] }
-        }
+          "then": { "anyOf": [{ "required": ["target"] }, { "required": ["newPath"] }] }
+        },
+        { "not": { "required": ["target", "newPath"] } }
       ]
     }
   }

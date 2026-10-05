@@ -11,7 +11,7 @@
   },
   "rules": {
     "file": "content/migration/import/_import-rules.json",
-    "version": 7
+    "version": 8
   },
   "manifest": {
     "id": "migration.dengue",
@@ -95,6 +95,7 @@
       "derivedItems": 18,
       "derivedMatched": 18
     },
+    "generated": 0,
     "exportedAt": "2026-10-03",
     "pagesWithoutOutput": 0
   },
@@ -3303,12 +3304,14 @@
       "statusChanges": 0,
       "pendingToMigrated": 0,
       "targetChanges": 0,
+      "newPathChanges": 0,
       "noteChanges": 0,
       "stillPending": 2
     },
     "file": "content/migration/dengue.json",
     "statusChanges": [],
     "targetChanges": [],
+    "newPathChanges": [],
     "noteChanges": 0
   }
 }
