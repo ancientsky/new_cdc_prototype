@@ -121,6 +121,10 @@
 - `bulletinTypes.8772.type: "clarification"`：澄清稿直接建成 clarification 型別。
 - `audience.byType` 補六種結構化型別的預設讀者（labtest 專業、dataset 兩者、其餘民眾）。
 
+第五批（規則檔 version 4）新增：
+
+- `audience.byType` 補 `topic`（民眾）與 `vaccine`（兩者）：相關連結頁直接建成 topic、清單標「已移轉」到疫苗頁的疫苗專區頁直接建成 vaccine（見 10.4）。沒有新的關鍵字規則——這兩種型別由模板 `mapTo` 與清單 `target` 決定，不靠標題猜。
+
 ## 4. 怎麼跑
 
 ```bash
@@ -133,7 +137,7 @@ node scripts/import-legacy.mjs <export-dir> --out <out-dir> [--apply-migration] 
 | `--out <out-dir>` | 輸出目錄。**不要指到 `content/`**：草稿會與既有內容重複 |
 | `--apply-migration` | 把 `migration-patch.json` 實際寫回 `content/migration/{slug}.json`（**只改 `status`／`target`／`note`，不動 `verified`**）。不加＝只產生建議，不改清單 |
 | `--rules <file>` | 指定規則檔；預設 `content/migration/import/_import-rules.json` |
-| `--manifest <file>` | 對照的移轉清單；預設 `content/migration/{slug}.json` |
+| `--manifest <file>` | 對照的移轉清單；預設 `content/migration/{slug}.json`。**檔案不存在但主檔有這個疾病時，工具自動用「合成清單」**（`extends: migration-template.disease`、沒有人工例外）展開模板推導項來比對，報告的 `manifest.synthetic: true`、`file: null`；此時 `--apply-migration` 會拒絕（沒有檔可寫），要寫回請先把 `v1/migration/{slug}.json` 存成人工清單 |
 | `--slug <name>` | 批次名稱（決定預設清單檔名）；預設為匯出目錄名，例：匯出目錄 `data/legacy-export/tuberculosis` ⇒ `tuberculosis` |
 | `--now <ISO>` | 轉換時間（`convertedAt`）；預設現在。要產生可重現的輸出（測試、比對）時固定它 |
 | `--content <dir>` | 以另一個 `content/` 目錄當既有內容與主檔（預設 repo 的 `content/`；測試用） |
@@ -160,7 +164,7 @@ node scripts/import-legacy.mjs <export-dir> --out <out-dir> [--apply-migration] 
 3. **HTML → Markdown**：用 `src/client/admin/md-convert.js`（與後台上架編輯器同一份轉換器，純函式、零依賴），所以「匯入的草稿」與「同事貼 Word 進編輯器」得到一樣的 Markdown。表格保留；複雜表格（合併儲存格、巢狀）無法轉成 Markdown 表格時記 `table-complex` 警告。
 4. **型別與目標**：URL 模式決定型別；疾病頁子頁依標題關鍵字**併入**疾病頁對應區塊（八個固定區塊）；Q&A 頁依 `.panel` 結構**每題一筆**；Bulletin 依 `typeid` 決定 `newsType`；檔案說明頁建文件草稿。對得到既有新站內容者（移轉清單的 `target`，或 Q&A／新聞依標題對到既有 id），草稿標「既有內容已存在，供比對」（`conversion.existing`、`compareWith`）。
 5. **權責單位與疾病**：標題與麵包屑→疾病 id（主檔全部疾病的名稱與別名，最長命中優先；一頁可有多個疾病，第一個是主要疾病；都認不出時依移轉清單的 `scope.disease`）；類別→單位，沒規則就用疾病主檔的 `owner`。
-5a. **移轉清單對應**：清單網址多半是 `{id}` 佔位，會命中同一模式下的**所有**舊頁，所以只有 fragment（＝側檔 `tab`）或標題也對得上才算對應；寫死 ID 的網址只剩一個候選時才直接採用。對不上的記 `manifest-ambiguous`（提示）與 `not-in-manifest`（警告）。清單只寫例外（`extends: migration-template.disease`）時，標準子頁由模板依該疾病展開成**推導項**一起比對（記 `manifest-derived`）；推導項只進報告與 `migration-patch.json` 的 `derivedItems`，不會寫回清單。模板的**文件項**（工作手冊、病例定義、治療指引）標題是通稱，對不上正式名稱時改以**文件種類**對（舊頁是文件型、標題看得出種類、與推導項 `mapTo.docType` 相同；記 `manifest-derived`）。清單目標是文件而舊頁是欄目內頁時，草稿直接建成 document（記 `type-from-manifest`）。第四批起模板項改以**舊站選單位置**對：模板的 oldTitle（「治療指引」「工作手冊」）就是舊站選單的名稱，舊頁最後一層麵包屑相同即對應，文件正式名稱長怎樣都無妨；人工例外已指向同一份新站內容的模板位置**不再推導**，同型別多筆時推導目標取**現行且最新**的一筆。
+5a. **移轉清單對應**：清單網址多半是 `{id}` 佔位，會命中同一模式下的**所有**舊頁，所以只有 fragment（＝側檔 `tab`）或標題也對得上才算對應；寫死 ID 的網址只剩一個候選時才直接採用。對不上的記 `manifest-ambiguous`（提示）與 `not-in-manifest`（警告）。清單只寫例外（`extends: migration-template.disease`）時，標準子頁由模板依該疾病展開成**推導項**一起比對（記 `manifest-derived`）；推導項只進報告與 `migration-patch.json` 的 `derivedItems`，不會寫回清單。模板的**文件項**（工作手冊、病例定義、治療指引）標題是通稱，對不上正式名稱時改以**文件種類**對（舊頁是文件型、標題看得出種類、與推導項 `mapTo.docType` 相同；記 `manifest-derived`）。清單目標是文件而舊頁是欄目內頁時，草稿直接建成 document（記 `type-from-manifest`）。第四批起模板項改以**舊站選單位置**對：模板的 oldTitle（「治療指引」「工作手冊」）就是舊站選單的名稱，舊頁最後一層麵包屑相同即對應，文件正式名稱長怎樣都無妨；人工例外已指向同一份新站內容的模板位置**不再推導**（第五批起：仍列在展開結果但標 `coveredBy: <例外 key>`，匯入、模擬匯出與治理引擎 R15 三處都看同一個標記，報告 `manifest.derivedCovered` 列出被涵蓋的位置），同型別多筆時推導目標取**現行且最新**的一筆。
 6. **圖片與附件**：內文圖片改成 `/files/{id}/…` 並宣告為 `kind: image`；alt 先用圖片的 `alt`／`title`／檔名，並標 **`needsAlt`**（圖片 alt 與授權是建置閘門，必須人工補，見 [assets-policy.md](assets-policy.md)）；側檔 `attachments` 宣告為 `kind: attachment`，PDF 以文字層偵測決定 `machineReadable`。
 7. **治理欄位**：`status: 'review'`、`reviewedAt` ＝ 匯出日、`reviewPeriodMonths` 依型別預設、`legacyUrls`、`owner`、`audience`、`summary`（取前 120 字內的完整句）、`conversion`（`mode: 'auto'`、`confidence`、`issues[]`、`sourceUrl`、`convertedAt`）。
 8. **驗證**：每份草稿跑一次 schema 驗證，未通過者在報告標 `schema-invalid`（error）。
@@ -263,7 +267,7 @@ PDF 是**附件**，不是頁面。工具對 PDF 只做三件事：複製檔案�
 | `manifest-derived` | info | 對到的是模板推導的標準子頁，不是人工清單項 | 不用處理；結果見 `migration-patch.json` 的 `derivedItems` |
 | `owner-from-disease` | info | 類別沒有規則，權責單位依疾病主檔 | 確認即可；想固定就補 `categoryOwners` |
 | `disease-from-manifest` | info | 麵包屑與標題看不出疾病，依清單 `scope.disease` | 確認疾病對不對 |
-| `type-from-manifest` | info | 清單目標或模板推導項說新站是 document／publication／media／dataset／labtest／service／clarification，草稿直接建成該型別（有 target 就用 target id） | 確認結構化欄位；不用再手動改型別 |
+| `type-from-manifest` | info | 清單目標或模板推導項說新站是 document／publication／media／dataset／labtest／service／clarification／topic／vaccine，草稿直接建成該型別（有 target 就用 target id；topic 例外，固定 `topic.{slug}-links`，推導到的既有專區只列 `compareWith`） | 確認結構化欄位；不用再手動改型別 |
 | `type-from-bulletin` | info | 公告類別（typeid 8772）是澄清稿，草稿建成 clarification | 確認 claim 與 verdict |
 | `type-from-keywords` | info | 標題像查詢／申辦服務（合約院所、責任醫院名單…），草稿建成 service | 補申辦步驟；名單類資料改掛 dataset |
 | `type-upgrade` | info | 既有內容以 news 存放同一則澄清，新草稿是 clarification 型別 | 比對後擇一保留 |
@@ -431,11 +435,54 @@ PDF 是**附件**，不是頁面。工具對 PDF 只做三件事：複製檔案�
 
 **第四批驗證了什麼**：模板位置全部對上（18/18，兩個疾病都是）；五批重跑後沒有任何 `target-shared`、衝突 0、schema 全過；結核病首批也因此多出 service 4、labtest 1、dataset 1、publication 1、media 2 的草稿（需人工檢視從 3 降到 1）。
 
-**還沒做的**：topic（相關連結）與 vaccine 專區頁仍以 page／疾病區塊處理；`fields-pending` 的欄位要靠權責單位補；`expandTemplateItems` 的「例外涵蓋」規則目前只在匯入工具這一側，治理引擎的推導清單（R15）尚未同步，兩邊的推導項數會差 2。
+**第四批結束時還沒做的**（已在第五批做掉，見 10.4）：topic（相關連結）與 vaccine 專區頁仍以 page／疾病區塊處理；`expandTemplateItems` 的「例外涵蓋」規則只在匯入工具這一側，治理引擎 R15 尚未同步。仍然要靠人的：`fields-pending` 的欄位由權責單位補。
+
+### 10.4 其他第一、二類傳染病第五批結果（沒有人工清單也能轉）
+
+> 第五批先做掉第四批留下的兩件小事（專區／疫苗型別、R15 同步），再把主檔裡**有疾病頁但沒有人工移轉清單**的第一、二類傳染病一次轉完：狂犬病、瘧疾、A 型肝炎、德國麻疹、屈公病、M 痘六種（第一、二類共 26 種，有疾病頁的 8 種裡登革熱與麻疹已在前幾批）。六個疾病各一份模擬匯出（`sim-export-disease.mjs disease.<slug>`）、各一個輸出目錄 `data/legacy-import/<slug>/`，都**沒有加 `--apply-migration`**——因為沒有清單檔可寫。
+
+| 項目 | 狂犬病 | 瘧疾 | A 型肝炎 | 德國麻疹 | 屈公病 | M 痘 |
+| --- | --- | --- | --- | --- | --- | --- |
+| 匯出頁數 | 20（模板 20） | 20 | 20 | 20 | 23（＋近年新聞 3） | 22（＋近年新聞 2） |
+| 產出草稿數 | 12 | 13 | 12 | 12 | 15 | 14 |
+| 其中結構化型別 | 出版品 1、影音 1、資料集 1、檢驗 1、**專區 1** | 同左 | 同左 | 同左 | 同左＋新聞 3 | 同左＋新聞 2 |
+| 平均信心／需人工檢視 | 0.91／1 | 0.92／1 | 0.93／1 | 0.89／1 | 0.93／0 | 0.94／0 |
+| 草稿 schema 驗證 | 全過 | 全過 | 全過 | 全過 | 全過 | 全過 |
+| 清單 | 合成（`synthetic: true`），模板 20 項對上 20 | 同左 | 同左 | 同左 | 同左 | 同左 |
+| 以 page 暫存且 `target-type-differs` 的 | 只剩新聞列表 | 同左 | 同左 | 同左 | 同左 | 同左 |
+
+「需人工檢視 1」的四個疾病都是同一種情況：模板「宣導海報」位置的 PDF 沒有文字層（`pdf-no-text-layer`）拉低信心，不是轉錯。
+
+**第五批新增的處理經驗（原本怎樣 → 改成怎樣 → 為什麼比較好）**：
+
+1. **沒有人工清單的疾病用「合成清單」轉，不先補一個空清單檔。**
+   原本：轉換器只有在 `content/migration/{slug}.json` 存在時才展開模板推導項；沒有清單檔的疾病所有頁都會記 `not-in-manifest`，要先手寫一個只有 `extends` 的空清單才轉得動。
+   改成：清單檔不存在但主檔有這個疾病時，工具自己組一份合成清單（`extends: migration-template.disease`、`items: []`）展開 20 個推導項比對，報告標 `manifest.synthetic: true`；`--apply-migration` 對合成清單直接拒絕並說明原因。
+   為什麼比較好：治理引擎 R15 本來就對主檔每一種疾病推導清單（`v1/migration/{slug}.json`），匯入工具跟它用同一條規則，99 種疾病不必各放一個空檔；而「拒絕寫回」讓人工清單只在真的有例外時才出現，維持「清單只寫例外」的原則。想寫回時，把 `v1/migration/{slug}.json` 存成人工清單再跑一次即可。
+
+2. **「例外涵蓋就不推導」三處同步：保留項目、加 `coveredBy` 標記，而不是刪掉。**
+   原本：第四批匯入工具在展開模板時直接**丟掉**被例外涵蓋的位置，治理引擎 R15 沒有這條規則，後台移轉頁與匯入報告的推導項數差 2（20 vs 18）。
+   改成：`expandTemplateItems`（匯入）與 `composeDiseaseList`（R15）都把被涵蓋的位置**留著**並標 `coveredBy: <例外 key>`、狀態跟例外走、`note` 寫明被哪筆涵蓋；匯入與模擬匯出只處理沒有 `coveredBy` 的，報告另列 `manifest.derivedCovered`。
+   為什麼比較好：兩邊項數一致（都是 20），後台看得到「這個位置為什麼不用做」，而不是憑空少兩筆；測試可以直接斷言被涵蓋的是哪兩個 key。刪掉是最省事的做法，但會讓清單的「涵蓋範圍」在不同畫面長得不一樣，同事會以為漏了。
+
+3. **相關連結頁直接建 topic，連結全部 `unchecked`。**
+   原本：模板「相關連結」位置（`mapTo: related topic`）以 page 暫存並記 `target-type-differs`，推導到的既有專區（例如登革熱 → 防災避難衛生須知）被當成目標。
+   改成：建成 `topic` 草稿（`kind: resource-hub`、id 固定 `topic.{slug}-links`），Markdown 裡的連結進 `links[]`：站外標 `external: true`、還是 `www.cdc.gov.tw` 的加 note「舊站網址，尚未對應到新站路徑」、一律 `status: unchecked`；推導到的既有專區只列 `compareWith`，不搶它的 id。
+   為什麼比較好：相關連結頁的價值是那串連結，而連結健康檢查（第 9 節 SOP、`/admin/links/`）只認 topic 的 `links[]`；以 page 暫存等於把連結埋在內文裡沒人檢查。不沿用推導目標 id 是因為「與此疾病相關的某個專區」不是「同一份內容」，直接覆寫會把防災專區改成登革熱連結頁。
+
+4. **疫苗專區頁：清單說「已移轉」到疫苗頁才建 vaccine，說「併入」就維持疾病頁疫苗區塊。**
+   原本：疫苗專區頁依標題關鍵字一律歸疾病頁 `vaccine` 區塊；腸病毒 71 型疫苗專區（清單 `merged` → `vaccine.ev71`）也是如此。
+   改成：清單 `status: migrated` 且 `target` 是疫苗頁時，草稿建成 `vaccine`（同 id、`existing` 供比對）：`publicFunded` 由表格有「公費」字樣的列抽（對象＝第一欄、劑次＝第二欄），`nameEn` 待補；`merged` 不變。沒有清單目標時不靠關鍵字猜型別。
+   為什麼比較好：第四批 Yulun 已決定 EV71 併入疾病頁，工具不該因為標題有「疫苗」就反過來建一頁；只有清單明說「這頁就是新站的疫苗頁」才建，判斷權留在清單。公費對象表是疫苗頁最有價值的結構化欄位，能抽就抽、抽不到就空陣列加 `fields-pending`，自費疫苗本來就該是空的。
+
+5. **結核病首批不受影響的檢查。** 五種既有批次重跑後只有相關連結頁從 page 變 topic（各少一個 page 草稿、多一個 topic 草稿），清單 `note` 完全相同（重跑後 `content/migration/*.json` 無差異）。為什麼要特別看：這批改了模板展開的回傳形狀（多了 `coveredBy` 項），最容易在不相干的批次出現數字變化；測試把 TB／登革熱／流感／麻疹／腸病毒的頁數與型別分布都釘死。
+
+**第五批驗證了什麼**：六個疾病 20 個模板位置全部對上、衝突 0、schema 全過、沒有寫回任何清單；R15 與匯入工具的推導項數一致。**還沒做的**：六個疾病的草稿全是「既有內容已存在，供比對」（主檔內容本來就有），正式匯出後才會出現真正的新內容；`fields-pending` 仍要權責單位補。
+
 
 ## 11. 正式批次的排程建議
 
-1. **一批一個欄目樹**，順序建議：**結核病（已示範）→ 登革熱（第二批，已示範）→ 流感（第三批，已示範）→ 麻疹＋腸病毒（第四批，已示範）→ 其他第一、二類傳染病的疾病頁 → 新聞稿（近三年）→ 指引與手冊 → Q&A → 其他欄目**。每批對應一份移轉清單，批次結束時清單的 `pending` 應清零或決定 `dropped`。有疾病頁的疾病都能先用 `sim-export-disease.mjs` 產模擬匯出演練規則，再等正式匯出。
+1. **一批一個欄目樹**，順序建議：**結核病（已示範）→ 登革熱（第二批，已示範）→ 流感（第三批，已示範）→ 麻疹＋腸病毒（第四批，已示範）→ 其他第一、二類傳染病的疾病頁（第五批：狂犬病、瘧疾、A 型肝炎、德國麻疹、屈公病、M 痘，已示範；其餘第一、二類疾病待建疾病頁後同法處理）→ 新聞稿（近三年）→ 指引與手冊 → Q&A → 其他欄目**。每批對應一份移轉清單，批次結束時清單的 `pending` 應清零或決定 `dropped`。有疾病頁的疾病都能先用 `sim-export-disease.mjs` 產模擬匯出演練規則，再等正式匯出。
 2. **每批的節奏**（約 2–3 週）：匯出（資訊室，2–3 天）→ 規則調校與第一輪轉換（OASIS，2–3 天）→ 看報告、補規則、重跑（1–2 天）→ 人工確認（Steward，依量；建議每人每天不超過 10 頁）→ 上架 PR（走車道）→ 更新清單與確認 `verified`。
 3. **先小後大**：每批先用 20–30 頁試跑，確認規則沒問題再跑全部。
 4. **規則版本化**：規則檔的修改走 PR 並說明影響範圍；報告歸檔（`data/legacy-import/{slug}/`），作為品質稽核與回溯。

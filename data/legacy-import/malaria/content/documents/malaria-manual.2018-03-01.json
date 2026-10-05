@@ -1,0 +1,81 @@
+{
+  "id": "doc.malaria-manual.2018-03-01",
+  "type": "document",
+  "title": "工作手冊",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2018-03-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.malaria"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "工作手冊：本頁內容由舊站「瘧疾」專區移入，請權責單位確認是否仍為現行版本。",
+  "family": "doc.malaria-manual",
+  "docType": "manual",
+  "version": "2018-03-01",
+  "effectiveAt": "2018-03-01",
+  "machineReadableMarkdown": "工作手冊：本頁內容由舊站「瘧疾」專區移入，請權責單位確認是否仍為現行版本。",
+  "pdfUrl": "/files/doc.malaria-manual.2018-03-01/malaria-manual.pdf",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/DiseaseManual/FRQyrVcdgDWNFmkV6h7TS-"
+  ],
+  "assets": [
+    {
+      "file": "malaria-manual.pdf",
+      "kind": "attachment",
+      "label": "瘧疾防治工作手冊",
+      "mime": "application/pdf",
+      "bytes": 666,
+      "sha256": "83acacfde63467f8410b61ebd34421e08e68d8969d376f234074236a332f70d5",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.8,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「瘧疾／法規與指引」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（瘧疾）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 manual（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "body-short",
+        "severity": "warn",
+        "message": "內文過短（37 字，低於 40）"
+      },
+      {
+        "code": "version-unknown",
+        "severity": "info",
+        "message": "標題看不出版次，version 暫填 2018-03-01"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/DiseaseManual/FRQyrVcdgDWNFmkV6h7TS-",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

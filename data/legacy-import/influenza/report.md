@@ -7,15 +7,15 @@
 | 項目 | 數字 |
 | --- | --- |
 | 舊頁數 | 31 |
-| 產出草稿 | 32（Q&A 10、出版品 1、影音 1、文件 5、資料集 1、檢驗 1、頁面 5、服務 2、新聞 4、澄清稿 1、疾病頁 1） |
-| 舊頁型別 | 併入疾病頁 9、Q&A 1、出版品 1、影音 1、文件 5、資料集 1、檢驗 1、頁面 2、清單頁 3、服務 2、新聞 4、澄清稿 1 |
-| 平均信心 | 0.92 |
+| 產出草稿 | 32（Q&A 10、出版品 1、影音 1、文件 5、資料集 1、檢驗 1、頁面 4、專區 1、服務 2、新聞 4、澄清稿 1、疾病頁 1） |
+| 舊頁型別 | 併入疾病頁 9、Q&A 1、出版品 1、影音 1、文件 5、資料集 1、檢驗 1、頁面 2、清單頁 2、專區 1、服務 2、新聞 4、澄清稿 1 |
+| 平均信心 | 0.93 |
 | 需人工檢視（信心 < 0.6） | 0 |
 | 既有內容已存在（供比對） | 25 |
 | 附件與圖片 | 8（附件 5、內文圖片 2、資料檔 1；圖片待補 alt 2、PDF 無文字層 2） |
 | 草稿 schema 驗證 | 32 / 32 通過 |
 | 問題 | 錯誤 0、警告 13、提示 105 |
-| 移轉清單對應 | 對上 8 / 8 筆；status 變化 0；note 更新 3；仍待移轉 2；與清單判定不同 0 |
+| 移轉清單對應 | 對上 8 / 8 筆；status 變化 0；note 更新 0；仍待移轉 2；與清單判定不同 0 |
 | 模板推導項（清單只寫例外） | 18 項，對上 18；只列在 migration-patch.json 的 derivedItems，不寫回清單 |
 | 清單沒有的舊頁 | 5（migration-patch.json 的 unmatchedPages 有建議的 pending 項目） |
 
@@ -42,7 +42,7 @@
 | 15 | 檢驗資訊<br><sub>www.cdc.gov.tw/Category/MPage/BXQ_3PvoU6VyCBHauEQKa6</sub> | 檢驗 → `labtest.influenza` | `labtest.influenza`（既有） | 1 | fields-pending | 既有內容已存在，供比對，不建議覆蓋 |
 | 16 | 通報定義與時限<br><sub>www.cdc.gov.tw/Category/MPage/gvY0i6-FEYc2VKEyu5ZRTR</sub> | 頁面 → `page.influenza-notify` | — | 1 | — | 核對後入庫（新站尚無對應內容） |
 | 17 | 新聞稿列表<br><sub>www.cdc.gov.tw/Bulletin/List/bIp1EzRH4-l_1Wf3-Xbhgv</sub> | 清單頁 → `page.influenza-news-list` | `disease.influenza`（既有） | 0.6 | — | 清單頁，不轉換（新站由系統自動產生列表） |
-| 18 | 相關連結<br><sub>www.cdc.gov.tw/Category/List/6TFWM0mSjy0cOE0UG2TWhz</sub> | 清單頁 → `page.influenza-links` | `topic.ltc-infection-control`（既有） | 0.6 | — | 清單頁，不轉換（新站由系統自動產生列表） |
+| 18 | 相關連結<br><sub>www.cdc.gov.tw/Category/List/6TFWM0mSjy0cOE0UG2TWhz</sub> | 專區 → `topic.influenza-links` | `topic.ltc-infection-control`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 19 | 流感疫苗專區（首頁）<br><sub>www.cdc.gov.tw/Category/Page/-CgApFZQk-AhWIGG2NnkmA</sub> | 頁面 → `page.influenza-flu-vaccine-zone` | `disease.influenza`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 20 | 公費流感疫苗接種計畫：實施對象與時程<br><sub>www.cdc.gov.tw/File/Get/TRISN3J9An-J4lAzbB1EFN</sub> | 文件 → `doc.flu-vaccine-schedule.2026-09-15` | `doc.flu-vaccine-schedule.2026-09-15`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 21 | 公費流感疫苗接種計畫作業手冊<br><sub>www.cdc.gov.tw/File/Get/k6H6568EM4MUyLmxDp6yVF</sub> | 文件 → `doc.flu-vaccine-manual.2026-09-16` | `doc.flu-vaccine-manual.2026-09-16`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |

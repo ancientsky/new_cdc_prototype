@@ -11,14 +11,27 @@
   },
   "rules": {
     "file": "content/migration/import/_import-rules.json",
-    "version": 3
+    "version": 4
   },
   "manifest": {
     "id": "migration.dengue",
     "file": "content/migration/dengue.json",
+    "synthetic": false,
     "items": 8,
     "extends": "migration-template.disease",
     "derivedItems": 18,
+    "derivedCovered": [
+      {
+        "key": "materials-video",
+        "coveredBy": "dengue-village-chief-video",
+        "target": "media.dengue-village-chief"
+      },
+      {
+        "key": "guideline",
+        "coveredBy": "dengue-cluster-response",
+        "target": "doc.dengue-community-workplan.2026-09-10"
+      }
+    ],
     "disease": "disease.dengue"
   },
   "summary": {
@@ -31,7 +44,8 @@
       "document": 3,
       "dataset": 1,
       "labtest": 1,
-      "page": 8,
+      "page": 7,
+      "topic": 1,
       "news": 6,
       "media": 1,
       "disease": 1
@@ -44,17 +58,18 @@
       "dataset": 1,
       "labtest": 1,
       "page": 4,
-      "list": 4,
+      "list": 3,
+      "topic": 1,
       "news": 6,
       "media": 1
     },
     "byAction": {
       "merge-into-disease": 9,
-      "compare-existing": 15,
+      "compare-existing": 16,
       "review-before-publish": 3,
-      "skip-list": 4
+      "skip-list": 3
     },
-    "avgConfidence": 0.92,
+    "avgConfidence": 0.94,
     "needsReview": 1,
     "existing": 26,
     "schemaInvalid": 0,
@@ -1550,8 +1565,8 @@
         "tab": "links"
       },
       "pattern": "category-list",
-      "kind": "list",
-      "type": "page",
+      "kind": "topic",
+      "type": "topic",
       "manifestKey": "links",
       "manifestDerived": true,
       "target": "topic.disaster-evacuation",
@@ -1567,16 +1582,16 @@
       ],
       "outputs": [
         {
-          "id": "page.dengue-links",
-          "type": "page",
+          "id": "topic.dengue-links",
+          "type": "topic",
           "role": "draft",
-          "file": "content/pages/dengue-links.json",
+          "file": "content/topics/dengue-links.json",
           "schemaValid": true
         }
       ],
-      "confidence": 0.6,
+      "confidence": 1,
       "parts": {
-        "type": 0,
+        "type": 0.4,
         "owner": 0.2,
         "markdown": 0.2,
         "attachments": 0.1,
@@ -1595,17 +1610,17 @@
           "message": "對到的是模板推導項 links（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
         },
         {
-          "code": "list-page",
+          "code": "type-from-manifest",
           "severity": "info",
-          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+          "message": "清單對應的新站型別是 topic（topic.disaster-evacuation），草稿直接建成 topic，看不出來的欄位以「（待補）」佔位"
         },
         {
-          "code": "target-type-differs",
+          "code": "field-guessed",
           "severity": "info",
-          "message": "對應的新站內容是 topic.disaster-evacuation（topic），草稿以 page 暫存，請比對後改建為 topic"
+          "message": "4 個連結 status 填 unchecked，由連結檢查更新；3 個站外"
         }
       ],
-      "action": "skip-list",
+      "action": "compare-existing",
       "flags": {
         "historical": false
       },
@@ -2937,11 +2952,11 @@
       "merged": false
     },
     {
-      "id": "page.dengue-links",
-      "type": "page",
-      "title": "相關連結",
-      "file": "content/pages/dengue-links.json",
-      "confidence": 0.6,
+      "id": "topic.dengue-links",
+      "type": "topic",
+      "title": "登革熱相關連結",
+      "file": "content/topics/dengue-links.json",
+      "confidence": 1,
       "existing": true,
       "compareWith": [
         "topic.disaster-evacuation"
@@ -3256,12 +3271,12 @@
       "statusChanges": 0,
       "pendingToMigrated": 0,
       "targetChanges": 0,
-      "noteChanges": 1,
+      "noteChanges": 0,
       "stillPending": 2
     },
     "file": "content/migration/dengue.json",
     "statusChanges": [],
     "targetChanges": [],
-    "noteChanges": 1
+    "noteChanges": 0
   }
 }

@@ -1,0 +1,21 @@
+{
+  "url": "https://www.cdc.gov.tw/Category/List/ZRw3IE-DsR69lDELfbz-rB",
+  "title": "統計資料",
+  "category": "M痘／統計資料",
+  "publishedAt": "2022-06-23",
+  "updatedAt": "2026-03-18",
+  "breadcrumbs": [
+    "首頁",
+    "傳染病與防疫專題",
+    "M痘",
+    "統計資料"
+  ],
+  "tab": "statistics",
+  "attachments": [
+    {
+      "url": "https://www.cdc.gov.tw/File/Get/vqT1pGFndzg2ZqezlAb3MI",
+      "label": "M痘年度統計（CSV，示意）",
+      "file": "mpox-stats.csv"
+    }
+  ]
+}

@@ -209,7 +209,7 @@ export function generateDisease(diseaseRef, outDir) {
   const derivedKeys = new Set(expandTemplateItems({
     manifest: manual ?? { extends: TEMPLATE_ID, scope: { kind: 'disease', disease: dm.id }, items: [] },
     contentDir: CONTENT, index: loadContentIndex(CONTENT), diseaseById: new Map(master.map((d) => [d.id, d])),
-  }).map((d) => d.key));
+  }).filter((d) => !d.coveredBy).map((d) => d.key));
   const items = [];
   for (const t of tpl.items) {
     if (omit.has(t.key)) continue;

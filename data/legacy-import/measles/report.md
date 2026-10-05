@@ -7,15 +7,15 @@
 | 項目 | 數字 |
 | --- | --- |
 | 舊頁數 | 28 |
-| 產出草稿 | 29（Q&A 10、出版品 1、文件 4、資料集 1、檢驗 1、頁面 6、影音 1、新聞 4、疾病頁 1） |
-| 舊頁型別 | 併入疾病頁 9、Q&A 1、出版品 1、文件 4、資料集 1、檢驗 1、頁面 3、清單頁 3、影音 1、新聞 4 |
-| 平均信心 | 0.94 |
+| 產出草稿 | 29（Q&A 10、出版品 1、文件 4、資料集 1、檢驗 1、頁面 5、專區 1、影音 1、新聞 4、疾病頁 1） |
+| 舊頁型別 | 併入疾病頁 9、Q&A 1、出版品 1、文件 4、資料集 1、檢驗 1、頁面 3、清單頁 2、專區 1、影音 1、新聞 4 |
+| 平均信心 | 0.96 |
 | 需人工檢視（信心 < 0.6） | 0 |
 | 既有內容已存在（供比對） | 23 |
 | 附件與圖片 | 9（附件 6、內文圖片 2、資料檔 1；圖片待補 alt 2、PDF 無文字層 2） |
 | 草稿 schema 驗證 | 29 / 29 通過 |
 | 問題 | 錯誤 0、警告 8、提示 84 |
-| 移轉清單對應 | 對上 7 / 7 筆；status 變化 0；note 更新 7；仍待移轉 2；與清單判定不同 0 |
+| 移轉清單對應 | 對上 7 / 7 筆；status 變化 0；note 更新 0；仍待移轉 2；與清單判定不同 0 |
 | 模板推導項（清單只寫例外） | 18 項，對上 18；只列在 migration-patch.json 的 derivedItems，不寫回清單 |
 | 清單沒有的舊頁 | 3（migration-patch.json 的 unmatchedPages 有建議的 pending 項目） |
 
@@ -42,7 +42,7 @@
 | 15 | 檢驗資訊<br><sub>www.cdc.gov.tw/Category/MPage/T6DUjtV8a7bam_ZzaJUVy3</sub> | 檢驗 → `labtest.measles` | `labtest.measles`（既有） | 1 | fields-pending | 既有內容已存在，供比對，不建議覆蓋 |
 | 16 | 通報定義與時限<br><sub>www.cdc.gov.tw/Category/MPage/2PEnc-pO02tBW5wCu7txIi</sub> | 頁面 → `page.measles-notify` | — | 1 | — | 核對後入庫（新站尚無對應內容） |
 | 17 | 新聞稿列表<br><sub>www.cdc.gov.tw/Bulletin/List/VGHfqWAr3L0AyabNY36p00</sub> | 清單頁 → `page.measles-news-list` | `disease.measles`（既有） | 0.6 | — | 清單頁，不轉換（新站由系統自動產生列表） |
-| 18 | 相關連結<br><sub>www.cdc.gov.tw/Category/List/t0UFduaYLvcN0L199hzOhl</sub> | 清單頁 → `page.measles-links` | `topic.new-residents-migrant-health`（既有） | 0.6 | — | 清單頁，不轉換（新站由系統自動產生列表） |
+| 18 | 相關連結<br><sub>www.cdc.gov.tw/Category/List/t0UFduaYLvcN0L199hzOhl</sub> | 專區 → `topic.measles-links` | `topic.new-residents-migrant-health`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 19 | 麻疹及德國麻疹消除專區<br><sub>www.cdc.gov.tw/Category/Page/AeUKahagakiXHB2gVKjKC2</sub> | 頁面 → `page.measles-elimination-zone` | — | 1 | — | 核對後入庫（新站尚無對應內容） |
 | 20 | 麻疹群聚事件應變專區<br><sub>www.cdc.gov.tw/Category/MPage/-_YEYLxc3bH82jAhp_t9c3</sub> | 頁面 → `page.measles-cluster-response` | `doc.measles-contact-tracing.2026-09-12`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 21 | 麻疹接觸者追蹤作業指引<br><sub>www.cdc.gov.tw/File/Get/uTI-ThoSeLurTG6lnklL3e</sub> | 文件 → `doc.measles-contact-tracing.2026-09-12` | `doc.measles-contact-tracing.2026-09-12`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |

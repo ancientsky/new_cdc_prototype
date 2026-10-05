@@ -21,7 +21,7 @@ export function expandTemplateItems({ manifest, contentDir, index, diseaseById }
   }
   if (!tpl) return [];
   const manual = new Set((manifest.items ?? []).map((i) => i.key));
-  const manualTargets = new Set((manifest.items ?? []).map((i) => i.target).filter(Boolean));
+  const manualTargets = new Map((manifest.items ?? []).filter((i) => i.target).map((i) => [i.target, i.key]));
   const omit = new Set(manifest.omit ?? []);
   const page = index.byId.get(diseaseId);
   const hasPage = page?.type === 'disease' && page.status === 'published';
@@ -42,11 +42,12 @@ export function expandTemplateItems({ manifest, contentDir, index, diseaseById }
         if (hits.length) { status = 'migrated'; target = hits[0]; }
       }
     }
-    // 人工例外已經指向同一份新站內容（例如疫苗專區的作業手冊＝模板「工作手冊」位置）⇒ 模板位置視為已被例外涵蓋，不再推導，避免同一份文件出現兩筆
-    if (target && target !== diseaseId && manualTargets.has(target)) continue;
+    // 人工例外已經指向同一份新站內容（例如疫苗專區的作業手冊＝模板「工作手冊」位置）⇒ 標 coveredBy（與治理引擎 R15 同一條規則）；
+    // 比對與模擬匯出都略過它，避免同一份文件出現兩筆
+    const coveredBy = target && target !== diseaseId ? manualTargets.get(target) ?? null : null;
     out.push({
       key: t.key, oldTitle: t.oldTitle, oldPath: `${dm.name}／${t.oldPath ?? t.oldTitle}`, oldUrl: t.oldUrlPattern, oldType: t.oldType,
-      verified: false, derived: true, status, target, mapTo: t.mapTo ?? null, templateId: tpl.id,
+      verified: false, derived: true, status, target, mapTo: t.mapTo ?? null, templateId: tpl.id, ...(coveredBy ? { coveredBy } : {}),
     });
   }
   return out;

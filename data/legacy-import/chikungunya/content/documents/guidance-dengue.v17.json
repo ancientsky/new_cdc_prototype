@@ -1,0 +1,81 @@
+{
+  "id": "doc.guidance-dengue.v17",
+  "type": "document",
+  "title": "登革熱／屈公病防治工作指引（第 17 版）",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-07-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.chikungunya",
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "現行第 17 版指引：NS1 快篩擴大配置至全國基層、新增境外移入病例返國 14 日防蚊追蹤、化學防治改以針對性室內噴藥為優先。",
+  "family": "doc.guidance-dengue.v17",
+  "docType": "guideline",
+  "version": "2026-07-01",
+  "effectiveAt": "2026-07-01",
+  "machineReadableMarkdown": "現行第 17 版指引：NS1 快篩擴大配置至全國基層、新增境外移入病例返國 14 日防蚊追蹤、化學防治改以針對性室內噴藥為優先。\n\n### 第一章 總則\n\n本指引適用於各級衛生主管機關辦理登革熱及屈公病之監測、疫情調查與緊急防治，並納入環保、民政、教育等單位之跨局處分工。地方政府應於每年 3 月底前完成年度防治計畫。\n\n### 第二章 疫情監測與通報\n\n1. 醫師診治符合登革熱臨床條件或 NS1 抗原快篩陽性之病人，應於 24 小時內通報。\n2. 衛生局接獲通報後，應於 24 小時內完成疫調，掌握病例發病前 2 週及發病後之活動地點。\n3. 境外移入病例應同步通知其入境後停留地點之衛生局，並於返國後 14 日內每週追蹤防蚊情形。\n\n### 第三章 病例處置\n\n1. 病例於發病後 5 日內（病毒血症期）應做好防蚊，住院者安排於有紗窗之病房。\n2. 醫療院所應衛教病人及家屬警示徵象，並安排退燒前後之追蹤。\n3. 重症登革熱病例應依臨床處置指引轉介至具處置能力之醫院。\n\n| 項目 | 內容 |\n| --- | --- |\n| 文件名稱 | 登革熱／屈公病防治工作指引（第 17 版） |\n| 版次 | v17 |\n| 生效日 | 2026-07-01 |\n| 權責單位 | 急性傳染病組 |\n| 檔案格式 | PDF |\n\n完整內容請下載附件：\\<a href=\"https://www.cdc.gov.tw/File/Get/hesqOx-ktN79jPvenM9EIq\">登革熱／屈公病防治工作指引（第 17 版）（PDF）\\</a>",
+  "pdfUrl": "/files/doc.guidance-dengue.v17/guidance-dengue.v17.pdf",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/File/Get/hesqOx-ktN79jPvenM9EIq"
+  ],
+  "assets": [
+    {
+      "file": "guidance-dengue.v17.pdf",
+      "kind": "attachment",
+      "label": "登革熱／屈公病防治工作指引（第 17 版）",
+      "mime": "application/pdf",
+      "bytes": 875,
+      "sha256": "10be395dbd22dab1cb9a78cc5c023e9ba19e8c81f2fe2ecb3510bae3dc723580",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 64 處（mso 樣式 34、Mso 類別 21、命名空間標籤 15）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「屈公病／法規與指引」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（屈公病）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 guideline（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "version-unknown",
+        "severity": "info",
+        "message": "標題看不出版次，version 暫填 2026-07-01"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/File/Get/hesqOx-ktN79jPvenM9EIq",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "doc.guidance-dengue.v17"
+    ]
+  }
+}

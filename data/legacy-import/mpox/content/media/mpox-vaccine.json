@@ -1,0 +1,77 @@
+{
+  "id": "media.mpox-vaccine",
+  "type": "media",
+  "title": "M痘衛教宣導：影片",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-09-05",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.mpox"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "短影音提醒 M痘疫苗需接種兩劑、間隔至少 4 週才有完整保護，說明公費接種對象與出現皮疹、發燒時應就醫並避免親密接觸。",
+  "mediaType": "video",
+  "youtubeId": "xxxxxxxxxxx",
+  "producedAt": "2026-09-05",
+  "transcriptMarkdown": "**\\[00:00\\] M痘怎麼傳染**\n\n旁白：M痘，過去稱為猴痘，主要透過親密接觸傳染，例如性行為、皮膚對皮膚的接觸，或接觸到患者的皮疹、體液，以及使用過的床單、毛巾。2026 年國際間仍有 I 型 M痘疫情，出國旅遊或參加大型活動時要特別留意。\n\n**\\[00:15\\] 疫苗打兩劑**\n\n旁白：M痘疫苗要打兩劑，兩劑間隔至少 4 週，才有完整的保護力。近一年有高風險性行為、曾經得過性病，或是即將前往流行地區且可能有高風險行為的人，都是公費接種對象。已經打過第一劑的人，別忘了回來打第二劑。全國有多家合約醫療院所提供接種，預約前請先查詢院所名單。\n\n**\\[00:32\\] 有症狀怎麼辦**\n\n旁白：如果出現發燒、淋巴結腫大，或是生殖器、肛門、口腔周圍出現皮疹、水泡，請戴口罩、穿長袖遮住皮疹，儘速就醫，並主動告知接觸史。在痊癒之前，請避免和他人有親密接觸，也不要共用毛巾與床單。兩劑疫苗，完整保護。詳情請撥 1922。",
+  "captions": [
+    "zh-TW"
+  ],
+  "basedOn": [
+    "disease.mpox"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/cQcSwFkMT5XWnlxmb76aj-"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 24 處（mso 樣式 10、Mso 類別 7、命名空間標籤 7）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「M痘／衛教宣導」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（M痘）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 materials-video（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站型別是 media（media.mpox-vaccine），草稿直接建成 media，看不出來的欄位以「（待補）」佔位"
+      },
+      {
+        "code": "field-guessed",
+        "severity": "info",
+        "message": "模擬匯出的影片 id 為示意值"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/cQcSwFkMT5XWnlxmb76aj-",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "media.mpox-vaccine"
+    ]
+  }
+}

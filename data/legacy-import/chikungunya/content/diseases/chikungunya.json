@@ -1,0 +1,261 @@
+{
+  "id": "disease.chikungunya",
+  "type": "disease",
+  "title": "屈公病",
+  "slug": "chikungunya",
+  "nameEn": "Chikungunya fever",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2018-03-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.chikungunya"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "屈公病與登革熱一樣由斑蚊傳播，特徵是發燒合併嚴重關節痛，部分人關節痛可持續數月。國內病例多為境外移入，出國防蚊是預防關鍵。",
+  "aliases": [
+    "Chikungunya",
+    "屈公熱"
+  ],
+  "legalCategory": 2,
+  "icd10": [
+    "A92.0"
+  ],
+  "notifyWithinHours": 24,
+  "transmission": [
+    "vector"
+  ],
+  "keyFacts": {
+    "symptoms": "典型症狀為突發高燒合併嚴重關節痛，多影響手腕、腳踝、手指等小關節，常伴隨頭痛、肌肉痛、噁心與皮疹。",
+    "transmission": "經由帶病毒的埃及斑蚊或白線斑蚊叮咬傳播，與登革熱相同。病人發病前 2 天至發病後 5 天為病毒血症期，被病媒蚊叮咬後可…",
+    "prevention": "前往流行地區時全程做好防蚊措施，穿淺色長袖、使用防蚊液。 返國後 2 週內，外出持續防蚊，避免成為本土傳染源。"
+  },
+  "blocks": [
+    {
+      "key": "what-to-do",
+      "heading": "我該怎麼辦",
+      "markdown": "",
+      "status": "pending"
+    },
+    {
+      "key": "symptoms",
+      "heading": "症狀與警示徵象",
+      "markdown": "典型症狀為**突發高燒合併嚴重關節痛**，多影響手腕、腳踝、手指等小關節，常伴隨頭痛、肌肉痛、噁心與皮疹。\n\n症狀與登革熱相似，但關節痛更明顯，多數人 1–2 週內好轉，部分人（尤其年長者）關節痛可持續數月。\n\n**注意：**新生兒、65 歲以上長者及慢性病人較可能出現神經、心臟等嚴重併發症，症狀加劇應立即就醫。"
+    },
+    {
+      "key": "transmission",
+      "heading": "怎麼傳染",
+      "markdown": "### 致病原\n\n經由帶病毒的**埃及斑蚊或白線斑蚊**叮咬傳播，與登革熱相同。病人發病前 2 天至發病後 5 天為病毒血症期，被病媒蚊叮咬後可能造成本土傳播。**不會人傳人**。\n\n經由帶病毒的**埃及斑蚊或白線斑蚊**叮咬傳播，與登革熱相同。病人發病前 2 天至發病後 5 天為病毒血症期，被病媒蚊叮咬後可能造成本土傳播。**不會人傳人**。\n\n經由帶病毒的**埃及斑蚊或白線斑蚊**叮咬傳播，與登革熱相同。病人發病前 2 天至發病後 5 天為病毒血症期，被病媒蚊叮咬後可能造成本土傳播。**不會人傳人**。\n\n屈公病的潛伏期為 **2–12 天（通常 3–7 天）**。\n\n| 項目 | 內容 |\n| --- | --- |\n| 潛伏期 | 2–12 天（通常 3–7 天） |\n| 可傳染期 | 病媒／接觸相關（病媒蚊叮咬（埃及斑蚊、白線斑蚊）） |"
+    },
+    {
+      "key": "prevention",
+      "heading": "如何預防",
+      "markdown": "- 前往流行地區時全程做好防蚊措施，穿淺色長袖、使用防蚊液。\n- 返國後 2 週內，外出持續防蚊，避免成為本土傳染源。\n- 居家定期巡查清除積水容器，落實「巡、倒、清、刷」。"
+    },
+    {
+      "key": "treatment",
+      "heading": "診斷與治療",
+      "markdown": "沒有特效藥，以症狀治療為主：休息、補充水分、以乙醯胺酚退燒止痛。在排除登革熱之前，應避免使用阿斯匹靈與非類固醇消炎止痛藥。"
+    },
+    {
+      "key": "vaccine",
+      "heading": "疫苗",
+      "markdown": "國內目前沒有公費屈公病疫苗。國外已有核准上市的疫苗，長期前往流行地區者可至旅遊醫學門診諮詢。"
+    },
+    {
+      "key": "situation",
+      "heading": "目前疫情與統計",
+      "markdown": "國內病例多為境外移入，主要來自南亞、東南亞與中國大陸南方等流行地區；國際疫情請見出國專區。\n\n近年確定病例趨勢如下表與圖（**示意數字，非正式統計**，正式數字見統計資料）：\n\n| 年度 | 確定病例數（示意） | 每十萬人口發生率（示意） |\n| --- | --- | --- |\n| 2021 | 121 | 4.9 |\n| 2022 | 128 | 5.6 |\n| 2023 | 135 | 6.3 |\n| 2024 | 142 | 7 |\n| 2025 | 149 | 7.7 |\n\n![chikungunya-trend](/files/disease.chikungunya/chikungunya-trend.png)"
+    },
+    {
+      "key": "faq",
+      "heading": "常見問題",
+      "markdown": "",
+      "status": "pending"
+    }
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Disease/SubIndex/GXrXiCys54g_QwXu-rFqo8",
+    "https://www.cdc.gov.tw/Category/MPage/f3lnBSeXfnWRIWkD7OkmyZ"
+  ],
+  "assets": [
+    {
+      "file": "chikungunya-trend.png",
+      "kind": "image",
+      "alt": "chikungunya-trend",
+      "license": "OGDL-1.0",
+      "needsAlt": true,
+      "mime": "image/png",
+      "bytes": 359,
+      "sha256": "5da3a4e98fdc80539a7542ee2e19aea774fc32d0efe990856a52ca52d1d53354",
+      "width": 160,
+      "height": 90
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.98,
+    "issues": [
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「屈公病／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（屈公病）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-pathogen（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-epidemiology（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "image-no-alt",
+        "severity": "warn",
+        "message": "圖片「chikungunya-trend.png」舊頁沒有替代文字，暫用檔名「chikungunya-trend」，請補 alt（needsAlt）"
+      },
+      {
+        "code": "image-license-assumed",
+        "severity": "info",
+        "message": "圖片「chikungunya-trend.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-transmission（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-incubation（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-symptoms（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-prevention（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-treatment（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「屈公病／預防接種」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（屈公病）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 vaccine（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留共 162 處（7 個來源頁）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Disease/SubIndex/GXrXiCys54g_QwXu-rFqo8",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "sourceUrls": [
+      "https://www.cdc.gov.tw/Disease/SubIndex/GXrXiCys54g_QwXu-rFqo8",
+      "https://www.cdc.gov.tw/Category/MPage/f3lnBSeXfnWRIWkD7OkmyZ"
+    ],
+    "existing": true,
+    "compareWith": [
+      "disease.chikungunya"
+    ],
+    "mergedFrom": [
+      {
+        "page": "01-intro",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/GXrXiCys54g_QwXu-rFqo8",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "02-intro-pathogen",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/GXrXiCys54g_QwXu-rFqo8",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "03-intro-epidemiology",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/GXrXiCys54g_QwXu-rFqo8",
+        "blocks": [
+          "situation"
+        ]
+      },
+      {
+        "page": "04-intro-transmission",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/GXrXiCys54g_QwXu-rFqo8",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "05-intro-incubation",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/GXrXiCys54g_QwXu-rFqo8",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "06-intro-symptoms",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/GXrXiCys54g_QwXu-rFqo8",
+        "blocks": [
+          "symptoms"
+        ]
+      },
+      {
+        "page": "07-intro-prevention",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/GXrXiCys54g_QwXu-rFqo8",
+        "blocks": [
+          "prevention"
+        ]
+      },
+      {
+        "page": "08-intro-treatment",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/GXrXiCys54g_QwXu-rFqo8",
+        "blocks": [
+          "treatment"
+        ]
+      },
+      {
+        "page": "09-vaccine",
+        "url": "https://www.cdc.gov.tw/Category/MPage/f3lnBSeXfnWRIWkD7OkmyZ",
+        "blocks": [
+          "vaccine"
+        ]
+      }
+    ],
+    "introMarkdown": "屈公病與登革熱一樣由斑蚊傳播，特徵是發燒合併嚴重關節痛，部分人關節痛可持續數月。國內病例多為境外移入，出國防蚊是預防關鍵。\n\n| 項目 | 內容 |\n| --- | --- |\n| 法定傳染病類別 | 第二類 |\n| 通報時限 | 24 小時內 |\n| ICD-10 | A92.0 |\n| 主要傳染途徑 | 病媒蚊叮咬（埃及斑蚊、白線斑蚊） |\n| 潛伏期 | 2–12 天（通常 3–7 天） |"
+  }
+}

@@ -26,6 +26,7 @@ let lastId = ''; // 內容 ID 變動時，內文裡的 /files/{舊id}/ 引用跟
 const LIMITS = P.normalizeLimits(window.CDC_ASSETS_LIMITS ?? D.assetsLimits);
 const LANES = P.normalizeLanes(D.lanes); // 發布車道（建置時內嵌 content/governance/lanes.json；缺檔用契約預設）
 let simShown = false; // 已按過「模擬送出」：重繪結果時一併重畫時間軸
+let editing = null; // 修改已上架內容：{ id, original }（?edit={id}；匯出時以 P.mergeEdit 帶回表單沒有的欄位）
 
 // ---------- 表單讀寫 ----------
 const val = (id) => $(id).value;
@@ -114,7 +115,7 @@ function writeForm(s) {
 // ---------- 型別連動 ----------
 function applyTypeUI(resetDefaults = true) {
   const type = val('#f-type');
-  $('[data-pub-title]').textContent = type === 'faq' ? '上架：疾病 Q&A' : `上架：${typeLabel(type)}`;
+  $('[data-pub-title]').textContent = `${editing ? '修改已上架：' : '上架：'}${type === 'faq' ? '疾病 Q&A' : typeLabel(type)}`;
   const role = P.BODY_ROLE[type];
   $('#f-body-label').textContent = role ? role.label : '內文（中文正本）';
   $('#f-based-req').hidden = type !== 'media';
@@ -344,12 +345,58 @@ function exportObj() {
   const dm = (D.diseaseMaster ?? []).find((d) => d.id === f.extra.disease);
   const vm = (D.vaccinesMaster ?? []).find((v) => v.id === f.extra.vaccine);
   const extra = { ...f.extra, ...(f.type === 'disease' && dm ? { slug: dm.slug, nameEn: dm.nameEn, legalCategory: dm.legalCategory } : {}), ...(f.type === 'vaccine' && vm ? { slug: vm.slug, nameEn: vm.nameEn } : {}) };
-  return P.buildExport({
-    type: f.type, id: f.id, title: f.title, body: f.body, owner: f.owner, steward: `${unitLabel(f.owner) || ''}承辦人`, reviewPeriodMonths: f.period === '' ? 0 : f.period,
+  const out = P.buildExport({
+    type: f.type, id: f.id, title: f.title, body: f.body, owner: f.owner, steward: editing?.original?.steward ?? `${unitLabel(f.owner) || ''}承辦人`, reviewPeriodMonths: f.period === '' ? 0 : f.period,
     audience: f.audience, tasks: f.tasks, basedOn: f.basedOn, langs: f.langs, summary: sel.summary, keywords: dv.keywords, diseases: dv.diseases, vaccines: dv.vaccines, countries: dv.countries,
     structured: dv.structured, extra, today: D.today, submitted: sel.stage === 'submitted', publishAt: f.publishAt, urgent: f.urgent && P.urgentAllowed(f.type, LANES),
     assets: P.buildAssetsJson(ASSETS?.exportList() ?? []),
   });
+  return editing?.original && editing.id === f.id ? P.mergeEdit(out, editing.original) : out;
+}
+
+// ---------- 修改已上架內容（?edit={id}）：公開頁頁尾「同事修改這頁」進來 ----------
+async function fetchForEdit(id) {
+  const coll = P.collectionOfId(id);
+  if (!coll) return null;
+  if (coll === 'diseases') {
+    const list = (await v1('diseases', [])) ?? [];
+    const slug = list.find((d) => d.id === id)?.path?.split('/').filter(Boolean).pop();
+    return slug ? (await v1(`diseases/${slug}`, null)) : null;
+  }
+  const list = (await v1(coll, [])) ?? [];
+  return list.find((x) => x.id === id) ?? null;
+}
+function paintEditBox() {
+  const box = $('#edit-box');
+  if (!box) return;
+  if (!editing) { box.hidden = true; box.innerHTML = ''; return; }
+  const o = editing.original;
+  const file = `content/${P.DIRS[o.type] ?? `${o.type}s`}/${String(o.id).replace(/^[a-z]+\./, '')}.json`;
+  box.hidden = false;
+  box.innerHTML = `<strong>修改已上架的內容</strong>${o.path ? `<a href="${esc(url(o.path))}" target="_blank" rel="noopener">${esc(o.title ?? o.id)}</a>` : esc(o.title ?? o.id)} <code>${esc(o.id)}</code>（發布 ${esc(o.publishedAt ?? '—')}，最後審閱 ${esc(o.reviewedAt ?? '—')}）。
+  表單已帶入現行版；改好後照一般流程「送出預處理」→「產生上架包」，上架包會<strong>覆寫同一個檔</strong> <code>${esc(file)}</code>，PR 只會顯示你改的那幾行。發布日不變、審閱日改為今天；白名單與舊站網址等表單沒有的欄位會原樣保留。
+  <span id="edit-diff" class="adm-muted"></span> <button type="button" class="adm-btn adm-btn--ghost" id="btn-edit-cancel">取消修改（清空）</button>`;
+}
+function paintEditDiff() {
+  const el = $('#edit-diff');
+  if (!el || !editing) return;
+  const changed = P.editDiff(exportObj(), editing.original).filter((k) => k !== 'assets');
+  el.textContent = changed.length ? `目前改動的欄位：${changed.join('、')}` : '目前與現行版相同。';
+}
+async function startEdit(id) {
+  statusEl.textContent = `正在載入 ${id} 的現行版…`;
+  const item = await fetchForEdit(id);
+  if (!item) { editing = null; statusEl.textContent = `找不到已上架內容 ${id}（只能修改已發布且在 API 裡的內容；新聞只含近 200 則）。`; writeForm({ type: 'faq', id, idTouched: true }); applyTypeUI(true); return; }
+  editing = { id: item.id, original: item };
+  const f = P.itemToForm(item);
+  contentIds = []; datasetIds = [];
+  writeForm(f);
+  idTouched = true;
+  applyTypeUI(false); fillSupersedes(); $('#x-supersedes').value = f.extra.supersedes ?? '';
+  paintEditBox();
+  statusEl.textContent = `已載入現行版 ${item.id}，請直接修改。`;
+  runPreprocess({ silent: true });
+  paintEditDiff();
 }
 function missAll(obj) {
   const gone = (ASSETS?.missingFiles() ?? []).map((f) => `檔案 ${f}：重新整理後需要重新選取`);
@@ -700,7 +747,9 @@ const repaintResultSoon = debounce(() => { if (A) paintResultKeepFocus(); }, 300
   fillSupersedes();
   const u = getUnit();
   const saved = store.get(KEY);
-  if (saved && (saved.title || saved.body)) {
+  const qe = new URLSearchParams(location.search).get('edit');
+  if (qe) { startEdit(qe.trim()); }
+  else if (saved && (saved.title || saved.body)) {
     if (saved.derived) sel = { ...sel, ...saved.derived };
     writeForm(saved);
     statusEl.textContent = `已還原上次草稿（${saved.savedAt ? new Date(saved.savedAt).toLocaleString('zh-TW', { hour12: false }) : ''}）`;
@@ -711,6 +760,8 @@ const repaintResultSoon = debounce(() => { if (A) paintResultKeepFocus(); }, 300
     applyTypeUI(true);
   }
   document.addEventListener('adm:unit', () => { if (!val('#f-title') && !val('#f-body') && getUnit() !== 'all') $('#f-owner').value = getUnit(); });
-  window.__admPublish = { runPreprocess, exportObj, buildPackage, get editor() { return ED; }, get assets() { return ASSETS; }, get state() { return { sel, A }; } }; // 供自動化測試
+  document.addEventListener('click', (e) => { if (e.target?.id === 'btn-edit-cancel') { editing = null; paintEditBox(); store.del(KEY); location.href = url('/admin/publish/'); } });
+  form.addEventListener('input', debounce(() => { if (editing) paintEditDiff(); }, 400));
+  window.__admPublish = { runPreprocess, exportObj, buildPackage, startEdit, get editing() { return editing; }, get editor() { return ED; }, get assets() { return ASSETS; }, get state() { return { sel, A }; } }; // 供自動化測試
 })();
 void normPath; void today;

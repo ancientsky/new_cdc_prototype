@@ -1,0 +1,11 @@
+{
+  "format": "cdc-legacy-export/1",
+  "simulated": true,
+  "exportedAt": "2026-10-03",
+  "site": "https://www.cdc.gov.tw",
+  "batch": "rubella",
+  "pages": 20,
+  "disease": "disease.rubella",
+  "source": "模擬匯出：依 content/migration/_disease-template.json（標準子頁 20 項）＋ 近 3 年新聞 0 篇合成，不是舊站的真實資料（網址 ID、數字、PDF 內容皆為示意）。正式匯出取代整個目錄即可。",
+  "generator": "scripts/lib/legacy-import/sim-export-disease.mjs"
+}

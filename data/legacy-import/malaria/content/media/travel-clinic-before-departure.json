@@ -1,0 +1,77 @@
+{
+  "id": "media.travel-clinic-before-departure",
+  "type": "media",
+  "title": "瘧疾衛教宣導：影片",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-06-12",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.malaria"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "提醒民眾出國前 4 到 6 週到旅遊醫學門診，依目的地旅遊疫情建議等級評估疫苗、預防瘧疾用藥與防蚊，並說明回國後發燒要告知旅遊史。",
+  "mediaType": "video",
+  "youtubeId": "xxxxxxxxxxx",
+  "producedAt": "2026-06-12",
+  "transcriptMarkdown": "**\\[00:00\\] 查目的地疫情等級**\n\n旁白：計畫出國了嗎？出發前，第一件事是上疾管署網站查詢「國際旅遊疫情建議等級」，確認目的地目前列有哪些疫情建議，以及對應的防護措施。等級會隨國際疫情調整，即使是常去的國家，每次出發前都要重新查一次。\n\n**\\[00:25\\] 旅遊醫學門診做什麼**\n\n旁白：建議在出國前 4 到 6 週，到全國的旅遊醫學合約門診諮詢。醫師會依照你的目的地、行程和健康狀況，評估需要的疫苗，例如 A 型肝炎、黃熱病、MMR 等；前往瘧疾流行地區，也會開立預防用藥，並說明怎麼服用。需要國際預防接種證明，也就是俗稱的「黃皮書」，同樣在旅遊醫學門診辦理。部分疫苗需要接種多劑或需要時間產生保護力，所以要提早安排。\n\n**\\[01:00\\] 行李裡的防疫用品**\n\n旁白：前往東南亞等蚊媒傳染病流行地區，防蚊最重要：行李裡準備含 DEET 或派卡瑞丁的防蚊液，穿著淺色長袖衣褲，住宿選擇有紗窗或冷氣的房間。另外帶上口罩和常備藥品；在外飲食注意衛生，避免生飲生食。\n\n**\\[01:20\\] 回國後發燒說旅遊史**\n\n旁白：入境時如果有發燒、腹瀉等症狀，請主動告知檢疫人員。回國後一段時間內出現發燒、出疹，請戴口罩就醫，並告訴醫師你去過哪裡。旅途平安，從行前準備開始。詳情請撥 1922。",
+  "captions": [
+    "zh-TW"
+  ],
+  "basedOn": [
+    "disease.malaria"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/ixp4ZCl5myaV2qJ7OTGnfW"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 31 處（mso 樣式 13、Mso 類別 9、命名空間標籤 9）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「瘧疾／衛教宣導」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（瘧疾）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 materials-video（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站型別是 media（media.travel-clinic-before-departure），草稿直接建成 media，看不出來的欄位以「（待補）」佔位"
+      },
+      {
+        "code": "field-guessed",
+        "severity": "info",
+        "message": "模擬匯出的影片 id 為示意值"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/ixp4ZCl5myaV2qJ7OTGnfW",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "media.travel-clinic-before-departure"
+    ]
+  }
+}

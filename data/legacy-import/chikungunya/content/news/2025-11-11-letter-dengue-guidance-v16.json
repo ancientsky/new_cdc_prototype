@@ -1,0 +1,60 @@
+{
+  "id": "news.2025-11-11-letter-dengue-guidance-v16",
+  "type": "news",
+  "title": "致醫界通函第 603 號：登革熱／屈公病防治工作指引第 16 版公布",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2025-11-11",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.chikungunya",
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "一、登革熱／屈公病防治工作指引第 16 版自 2025 年 11 月 1 日起適用。二、主要修訂：緊急防治核心區由固定半徑改依病例住家及活動地點之風險評估劃定；核心區孳生源查核每週至少 1 次，連續 2 個潛伏期無新增病例始得解除。",
+  "newsType": "other",
+  "bodyMarkdown": "一、登革熱／屈公病防治工作指引第 16 版自 2025 年 11 月 1 日起適用。二、主要修訂：緊急防治核心區由固定半徑改依病例住家及活動地點之風險評估劃定；核心區孳生源查核每週至少 1 次，連續 2 個潛伏期無新增病例始得解除。三、請醫師持續於 24 小時內通報符合臨床條件或 NS1 快篩陽性之病人。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/kxZkhD9I3KnyrtiysHBMJV?typeid=11"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「屈公病／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（屈公病）"
+      },
+      {
+        "code": "not-in-manifest",
+        "severity": "warn",
+        "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/kxZkhD9I3KnyrtiysHBMJV?typeid=11",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "news.2025-11-11-letter-dengue-guidance-v16"
+    ]
+  }
+}

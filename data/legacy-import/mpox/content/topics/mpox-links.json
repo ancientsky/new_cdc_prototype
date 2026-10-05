@@ -1,0 +1,90 @@
+{
+  "id": "topic.mpox-links",
+  "type": "topic",
+  "title": "M痘相關連結",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2022-06-23",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.mpox"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "世界衛生組織（WHO） 美國疾病管制與預防中心（US CDC） 衛生福利部 疾管署資料開放平臺",
+  "slug": "mpox-links",
+  "kind": "resource-hub",
+  "introMarkdown": "相關連結。",
+  "links": [
+    {
+      "label": "世界衛生組織（WHO）",
+      "href": "https://www.who.int/",
+      "external": true,
+      "status": "unchecked"
+    },
+    {
+      "label": "美國疾病管制與預防中心（US CDC）",
+      "href": "https://www.cdc.gov/",
+      "external": true,
+      "status": "unchecked"
+    },
+    {
+      "label": "衛生福利部",
+      "href": "https://www.mohw.gov.tw/",
+      "external": true,
+      "status": "unchecked"
+    },
+    {
+      "label": "疾管署資料開放平臺",
+      "href": "https://data.cdc.gov.tw/",
+      "status": "unchecked"
+    }
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/vd335REbDZXudlwc97M_2C"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「M痘／相關連結」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（M痘）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 links（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站型別是 topic（topic.sti-resources），草稿直接建成 topic，看不出來的欄位以「（待補）」佔位"
+      },
+      {
+        "code": "field-guessed",
+        "severity": "info",
+        "message": "4 個連結 status 填 unchecked，由連結檢查更新；3 個站外"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/List/vd335REbDZXudlwc97M_2C",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "topic.sti-resources"
+    ]
+  }
+}

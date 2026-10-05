@@ -1185,3 +1185,84 @@ export function submitTimeline(obj, opts = {}) {
   if (lane.id !== 'standard') steps.push({ key: 'review', title: '上線後複核', at: `上線後 ${lane.postPublishReviewHours} 小時內`, status: 'wait', system: sys, detail: [`${names['unit.pr'] ?? '公關室'}收到待辦 post-publish-review（逾期會升高優先度）；複核有問題可直接改或下架，改動仍走車道。`] });
   return { lane, steps, scheduled, previewUrl };
 }
+
+// ---------- 修改已上架內容（第十二輪／第五批）：公開頁頁尾「同事修改這頁」→ /admin/publish/?edit={id} ----------
+// 原則：表單仍是「產出一份完整 content JSON」，但修改時以 API 的現行版預填，匯出時把表單沒有的欄位（發布日、舊站網址、白名單核准、疾病頁 keyFacts…）
+// 從現行版帶回，所以上架包覆寫同一個檔案時 PR 只會顯示真正改動的幾行；發布日不變、審閱日更新。
+export const API_ONLY_KEYS = new Set(['url', 'path', 'md', 'governance', 'gov', '__file', 'master', 'related']);
+const PREFIX_COLLECTION = { faq: 'faq', news: 'news', doc: 'documents', disease: 'diseases', clar: 'clarifications', vaccine: 'vaccines', topic: 'topics', service: 'services', publication: 'publications', labtest: 'labtests', dataset: 'datasets', media: 'media', research: 'research', job: 'jobs', tender: 'tenders' };
+/** 內容 id → 要抓的 v1 集合名（diseases 另有每頁 JSON，由呼叫端依 slug 取） */
+export const collectionOfId = (id) => PREFIX_COLLECTION[String(id ?? '').split('.')[0]] ?? null;
+
+/** 疾病頁 blocks ↔ 一份內文（每區塊一個 `## 標題`），讓疾病頁也能在同一個內文欄修改 */
+export const joinSections = (blocks) => (blocks ?? []).map((b) => `## ${b.heading}\n\n${(b.markdown ?? '').trim()}`.trimEnd()).join('\n\n') + (blocks?.length ? '\n' : '');
+export function splitSections(md) {
+  const m = new Map(); let cur = null; const buf = [];
+  const flush = () => { if (cur != null) m.set(cur, buf.join('\n').trim()); buf.length = 0; };
+  for (const line of String(md ?? '').replace(/\r/g, '').split('\n')) { const h = /^##\s+(.+?)\s*$/.exec(line); if (h) { flush(); cur = h[1]; } else buf.push(line); }
+  flush();
+  return m;
+}
+
+const pipeJoin = (rows, cols) => (rows ?? []).map((r) => cols.map((c) => { const v = c(r); return v == null ? '' : String(v); }).join(' | ').replace(/(?: \|\s*)+$/, '')).join('\n');
+const s = (v) => (v == null ? '' : String(v));
+/** API 的一筆內容 → writeForm 的形狀（與 SAMPLES 同格） */
+export function itemToForm(item) {
+  const nt = item.newsType;
+  const type = item.type === 'letter' || (item.type === 'news' && nt === 'letter') ? 'letter' : item.type === 'news' && (nt === 'recruit' || nt === 'procurement') ? nt : item.type;
+  const langs = {};
+  for (const [c, v] of Object.entries(item.languages ?? {})) if (c !== 'zh-TW') langs[c] = { on: (v?.status ?? 'none') !== 'none', reason: s(v?.note).replace(/^不提供：/, '') };
+  const role = BODY_ROLE[type]?.field;
+  const body = type === 'faq' ? item.answerMarkdown : type === 'clarification' ? item.clarificationMarkdown : type === 'document' ? item.machineReadableMarkdown : type === 'disease' ? joinSections(item.blocks) : role ? item[role] : item.bodyMarkdown;
+  const extra = {
+    family: s(item.family), docType: s(item.docType), version: s(item.version), effectiveAt: s(item.effectiveAt), supersedes: s(item.supersedes),
+    letterNo: s(item.letterNo), claim: s(item.claim), verdict: s(item.verdict), shareText: s(item.shareText),
+    disease: type === 'disease' ? item.id : '', vaccine: type === 'vaccine' ? item.id : '',
+    mediaType: s(item.mediaType), youtube: s(item.youtubeId), producedAt: s(item.producedAt), versionLabel: s(item.basedOnVersionLabel), chapters: (item.chapters ?? []).map((c) => `${c.t} ${c.label}`).join('\n'), transcript: s(item.transcriptMarkdown), captions: item.captions ?? [],
+    topicKind: s(item.kind), startAt: s(item.startAt), endAt: s(item.endAt), links: pipeJoin(item.links, [(l) => l.label, (l) => l.href, (l) => l.note]), contentIds: item.contentIds ?? [],
+    serviceType: s(item.serviceType), who: item.whoCanApply ?? [], steps: pipeJoin(item.steps, [(x) => x.title, (x) => x.text, (x) => x.who, (x) => x.days]), docs: (item.requiredDocuments ?? []).join('\n'), slaDays: s(item.slaDays), fee: s(item.fee), legal: (item.legalBasis ?? []).join('\n'),
+    forms: pipeJoin(item.forms, [(f) => f.label, (f) => f.href, (f) => f.format]), applyUrl: type === 'service' ? s(item.applyUrl) : '', contact: s(item.contact),
+    pubType: s(item.pubType), series: s(item.series), volume: s(item.volume), issue: s(item.issue), edition: s(item.edition), isbn: s(item.isbn), issn: s(item.issn), gpn: s(item.gpn), articles: pipeJoin(item.articles, [(a) => a.title, (a) => (a.authors ?? []).join('、'), (a) => a.pages]),
+    labDisease: type === 'labtest' ? s(item.disease) : '', sendHours: s(item.sendWithinHours), labs: item.labs ?? [], specimens: pipeJoin(item.specimens, [(x) => x.name, (x) => x.container, (x) => x.volume, (x) => x.storage, (x) => x.transport, (x) => x.timing, (x) => (x.tests ?? []).join('、')]),
+    year: s(item.year), projectStatus: s(item.projectStatus), fundingType: s(item.fundingType), projectNo: s(item.projectNo), piUnit: s(item.piUnit), datasets: item.datasets ?? [],
+    deadlineAt: s(item.deadlineAt), refNo: s(item.refNo), newsApplyUrl: type === 'recruit' || type === 'procurement' ? s(item.applyUrl) : '', positions: s(item.positions), budgetNtd: s(item.budgetNtd),
+  };
+  return {
+    type, id: item.id, idTouched: true, title: type === 'faq' ? item.question ?? item.title ?? '' : item.title ?? '', body: body ?? '',
+    owner: item.owner, period: item.reviewPeriodMonths ?? '', audience: item.audience ?? ['public'], tasks: item.tasks ?? [], basedOn: item.basedOn ?? [], langs,
+    publishAtLocal: '', urgent: false, extra,
+  };
+}
+
+/** 表單匯出的 JSON ＋ 現行版 → 要寫回 repo 的 JSON（保留表單沒有的欄位；發布日不變） */
+export function mergeEdit(out, original) {
+  if (!original) return out;
+  const o = { ...out };
+  for (const [k, v] of Object.entries(original)) if (!API_ONLY_KEYS.has(k) && !(k in o)) o[k] = v;
+  for (const k of ['vaccines', 'countries', 'diseases', 'basedOn', 'tasks', 'keywords']) if (Array.isArray(o[k]) && !o[k].length && !(k in original)) delete o[k]; // 表單固定輸出的空陣列，現行版沒有就不加
+  if (original.publishedAt) o.publishedAt = original.publishedAt;
+  if (original.aiWhitelist) o.aiWhitelist = original.aiWhitelist; // 修改不重新申請白名單；核准狀態由治理規則判定
+  if (Array.isArray(original.assets) && !(out.assets?.length)) o.assets = original.assets.map(({ url, ...a }) => a); // 既有附件在 repo 裡，表單選不到檔，照舊宣告
+  if (original.type === 'disease') {
+    const sec = splitSections(out.blocks?.[0]?.markdown ?? '');
+    o.blocks = (original.blocks ?? []).map((b) => { const md = sec.get(b.heading); if (!md || md === (b.markdown ?? '').trim()) return b; const { status, ...rest } = b; return { ...rest, markdown: md }; }); // 區塊其他欄位（warning、datasets…）原樣保留；填了內文的區塊去掉 pending
+    o.slug = original.slug; o.nameEn = original.nameEn; o.legalCategory = original.legalCategory ?? o.legalCategory;
+    if (original.keyFacts) o.keyFacts = original.keyFacts;
+    if (original.notifyWithinHours != null) o.notifyWithinHours = original.notifyWithinHours;
+  }
+  if (original.type === 'vaccine') { o.slug = original.slug; o.nameEn = original.nameEn; if (Array.isArray(original.publicFunded)) o.publicFunded = original.publicFunded; }
+  if (original.type === 'document' && !out.supersedes) o.supersedes = original.supersedes ?? null;
+  return o;
+}
+
+/** 改了哪些欄位（給畫面與 PR 說明；Markdown 內文只報「內文」） */
+export function editDiff(out, original) {
+  if (!original) return [];
+  const keys = new Set([...Object.keys(out), ...Object.keys(original).filter((k) => !API_ONLY_KEYS.has(k))]);
+  const changed = [];
+  for (const k of keys) {
+    if (['reviewedAt', 'status', 'steward', 'keywords', 'summary', 'languages', 'structured', 'sensitivity'].includes(k)) continue;
+    if (JSON.stringify(out[k] ?? null) !== JSON.stringify(original[k] ?? null)) changed.push(k);
+  }
+  return changed.sort();
+}

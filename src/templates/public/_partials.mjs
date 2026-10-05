@@ -194,6 +194,7 @@ export function pageData(ctx, item, { schema = 'WebPage', api = null, mdPath = n
     <li>ID：<code>${item.id}</code></li>
     ${extra}
     <li><a href="${url('/policy/ai/')}">${t('pagedata.report')}</a></li>
+    <li class="c-page-data__staff"><a href="${url(`/admin/publish/?edit=${encodeURIComponent(item.id)}`, { noLang: true })}" rel="nofollow">${t('pagedata.edit')}</a></li>
   </ul>
 </details>`;
 }

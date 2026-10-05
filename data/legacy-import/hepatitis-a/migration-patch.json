@@ -1,0 +1,349 @@
+{
+  "format": "cdc-legacy-migration-patch/1",
+  "manifest": "migration.hepatitis-a",
+  "batch": "hepatitis-a",
+  "exportedAt": "2026-10-03",
+  "applied": null,
+  "rule": "只改 status／target／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。",
+  "items": [],
+  "missingPages": [],
+  "unmatchedPages": [],
+  "conflicts": [],
+  "derivedItems": [
+    {
+      "key": "intro",
+      "oldTitle": "疾病介紹",
+      "oldUrl": "https://www.cdc.gov.tw/Disease/SubIndex/{id}",
+      "template": {
+        "status": "migrated",
+        "target": "disease.hepatitis-a"
+      },
+      "page": "01-intro",
+      "draftIds": [
+        "disease.hepatitis-a"
+      ],
+      "confidence": 1,
+      "existing": true,
+      "matched": true
+    },
+    {
+      "key": "intro-pathogen",
+      "oldTitle": "致病原",
+      "oldUrl": "https://www.cdc.gov.tw/Disease/SubIndex/{id}#pathogen",
+      "template": {
+        "status": "merged",
+        "target": "disease.hepatitis-a"
+      },
+      "page": "02-intro-pathogen",
+      "draftIds": [
+        "disease.hepatitis-a"
+      ],
+      "confidence": 1,
+      "existing": true,
+      "matched": true
+    },
+    {
+      "key": "intro-epidemiology",
+      "oldTitle": "流行病學",
+      "oldUrl": "https://www.cdc.gov.tw/Disease/SubIndex/{id}#epidemiology",
+      "template": {
+        "status": "merged",
+        "target": "disease.hepatitis-a"
+      },
+      "page": "03-intro-epidemiology",
+      "draftIds": [
+        "disease.hepatitis-a"
+      ],
+      "confidence": 0.8,
+      "existing": true,
+      "matched": true
+    },
+    {
+      "key": "intro-transmission",
+      "oldTitle": "傳染方式",
+      "oldUrl": "https://www.cdc.gov.tw/Disease/SubIndex/{id}#transmission",
+      "template": {
+        "status": "merged",
+        "target": "disease.hepatitis-a"
+      },
+      "page": "04-intro-transmission",
+      "draftIds": [
+        "disease.hepatitis-a"
+      ],
+      "confidence": 1,
+      "existing": true,
+      "matched": true
+    },
+    {
+      "key": "intro-incubation",
+      "oldTitle": "潛伏期",
+      "oldUrl": "https://www.cdc.gov.tw/Disease/SubIndex/{id}#incubation",
+      "template": {
+        "status": "merged",
+        "target": "disease.hepatitis-a"
+      },
+      "page": "05-intro-incubation",
+      "draftIds": [
+        "disease.hepatitis-a"
+      ],
+      "confidence": 1,
+      "existing": true,
+      "matched": true
+    },
+    {
+      "key": "intro-symptoms",
+      "oldTitle": "發病症狀",
+      "oldUrl": "https://www.cdc.gov.tw/Disease/SubIndex/{id}#symptoms",
+      "template": {
+        "status": "merged",
+        "target": "disease.hepatitis-a"
+      },
+      "page": "06-intro-symptoms",
+      "draftIds": [
+        "disease.hepatitis-a"
+      ],
+      "confidence": 1,
+      "existing": true,
+      "matched": true
+    },
+    {
+      "key": "intro-prevention",
+      "oldTitle": "預防方法",
+      "oldUrl": "https://www.cdc.gov.tw/Disease/SubIndex/{id}#prevention",
+      "template": {
+        "status": "merged",
+        "target": "disease.hepatitis-a"
+      },
+      "page": "07-intro-prevention",
+      "draftIds": [
+        "disease.hepatitis-a"
+      ],
+      "confidence": 1,
+      "existing": true,
+      "matched": true
+    },
+    {
+      "key": "intro-treatment",
+      "oldTitle": "治療方法與就醫資訊",
+      "oldUrl": "https://www.cdc.gov.tw/Disease/SubIndex/{id}#treatment",
+      "template": {
+        "status": "merged",
+        "target": "disease.hepatitis-a"
+      },
+      "page": "08-intro-treatment",
+      "draftIds": [
+        "disease.hepatitis-a"
+      ],
+      "confidence": 1,
+      "existing": true,
+      "matched": true
+    },
+    {
+      "key": "vaccine",
+      "oldTitle": "預防接種建議",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#vaccine",
+      "template": {
+        "status": "merged",
+        "target": "disease.hepatitis-a"
+      },
+      "page": "09-vaccine",
+      "draftIds": [
+        "disease.hepatitis-a"
+      ],
+      "confidence": 1,
+      "existing": true,
+      "matched": true
+    },
+    {
+      "key": "qa-list",
+      "oldTitle": "Q&A",
+      "oldUrl": "https://www.cdc.gov.tw/Category/QAPage/{id}",
+      "template": {
+        "status": "merged",
+        "target": "disease.hepatitis-a"
+      },
+      "page": "10-qa-list",
+      "draftIds": [
+        "faq.hepatitis-a-legacy-7f51c6"
+      ],
+      "confidence": 0.8,
+      "existing": true,
+      "matched": true
+    },
+    {
+      "key": "materials-poster",
+      "oldTitle": "衛教宣導：單張海報",
+      "oldUrl": "https://www.cdc.gov.tw/Category/List/{id}#posters",
+      "template": {
+        "status": "pending",
+        "target": null
+      },
+      "page": "11-materials-poster",
+      "draftIds": [
+        "publication.hepatitis-a-materials-poster"
+      ],
+      "confidence": 0.8,
+      "existing": false,
+      "matched": true
+    },
+    {
+      "key": "materials-video",
+      "oldTitle": "衛教宣導：影片",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#video",
+      "template": {
+        "status": "pending",
+        "target": null
+      },
+      "page": "12-materials-video",
+      "draftIds": [
+        "media.hepatitis-a-materials-video"
+      ],
+      "confidence": 0.8,
+      "existing": false,
+      "matched": true
+    },
+    {
+      "key": "manual",
+      "oldTitle": "工作手冊",
+      "oldUrl": "https://www.cdc.gov.tw/Category/DiseaseManual/{id}",
+      "template": {
+        "status": "pending",
+        "target": null
+      },
+      "page": "13-manual",
+      "draftIds": [
+        "doc.hepatitis-a-manual.2018-03-01"
+      ],
+      "confidence": 1,
+      "existing": false,
+      "matched": true
+    },
+    {
+      "key": "case-definition",
+      "oldTitle": "病例定義",
+      "oldUrl": "https://www.cdc.gov.tw/Category/DiseaseDefine/{id}",
+      "template": {
+        "status": "pending",
+        "target": null
+      },
+      "page": "14-case-definition",
+      "draftIds": [
+        "doc.hepatitis-a-case-definition.2018-03-01"
+      ],
+      "confidence": 1,
+      "existing": false,
+      "matched": true
+    },
+    {
+      "key": "guideline",
+      "oldTitle": "治療指引",
+      "oldUrl": "https://www.cdc.gov.tw/File/Get/{id}#guideline",
+      "template": {
+        "status": "pending",
+        "target": null
+      },
+      "page": "15-guideline",
+      "draftIds": [
+        "doc.hepatitis-a-guideline.2018-03-01"
+      ],
+      "confidence": 1,
+      "existing": false,
+      "matched": true
+    },
+    {
+      "key": "stats",
+      "oldTitle": "統計資料",
+      "oldUrl": "https://www.cdc.gov.tw/Category/List/{id}#statistics",
+      "template": {
+        "status": "pending",
+        "target": null
+      },
+      "page": "16-stats",
+      "draftIds": [
+        "dataset.hepatitis-a-stats"
+      ],
+      "confidence": 1,
+      "existing": false,
+      "matched": true
+    },
+    {
+      "key": "lab",
+      "oldTitle": "檢驗資訊",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#lab",
+      "template": {
+        "status": "migrated",
+        "target": "labtest.hepatitis-a"
+      },
+      "page": "17-lab",
+      "draftIds": [
+        "labtest.hepatitis-a"
+      ],
+      "confidence": 1,
+      "existing": true,
+      "matched": true
+    },
+    {
+      "key": "notify",
+      "oldTitle": "通報定義與時限",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#notify",
+      "template": {
+        "status": "pending",
+        "target": null
+      },
+      "page": "18-notify",
+      "draftIds": [
+        "page.hepatitis-a-notify"
+      ],
+      "confidence": 1,
+      "existing": false,
+      "matched": true
+    },
+    {
+      "key": "news-list",
+      "oldTitle": "新聞稿列表",
+      "oldUrl": "https://www.cdc.gov.tw/Bulletin/List/{id}",
+      "template": {
+        "status": "merged",
+        "target": "disease.hepatitis-a"
+      },
+      "page": "19-news-list",
+      "draftIds": [
+        "page.hepatitis-a-news-list"
+      ],
+      "confidence": 0.4,
+      "existing": true,
+      "matched": true
+    },
+    {
+      "key": "links",
+      "oldTitle": "相關連結",
+      "oldUrl": "https://www.cdc.gov.tw/Category/List/{id}#links",
+      "template": {
+        "status": "migrated",
+        "target": "topic.disaster-evacuation"
+      },
+      "page": "20-links",
+      "draftIds": [
+        "topic.hepatitis-a-links"
+      ],
+      "confidence": 1,
+      "existing": true,
+      "matched": true
+    }
+  ],
+  "summary": {
+    "derivedItems": 20,
+    "derivedMatched": 20,
+    "items": 0,
+    "matched": 0,
+    "missingPages": 0,
+    "unmatchedPages": 0,
+    "agree": 0,
+    "conflicts": 0,
+    "statusChanges": 0,
+    "pendingToMigrated": 0,
+    "targetChanges": 0,
+    "noteChanges": 0,
+    "stillPending": 0
+  }
+}

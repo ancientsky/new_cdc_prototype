@@ -1,0 +1,2041 @@
+{
+  "format": "cdc-legacy-import-report/1",
+  "batch": "rubella",
+  "generatedAt": "2026-10-05T02:30:00Z",
+  "exportedAt": "2026-10-03",
+  "simulated": true,
+  "source": {
+    "dir": "data/legacy-export/rubella",
+    "note": "模擬匯出：依 content/migration/_disease-template.json（標準子頁 20 項）＋ 近 3 年新聞 0 篇合成，不是舊站的真實資料（網址 ID、數字、PDF 內容皆為示意）。正式匯出取代整個目錄即可。",
+    "site": "https://www.cdc.gov.tw"
+  },
+  "rules": {
+    "file": "content/migration/import/_import-rules.json",
+    "version": 4
+  },
+  "manifest": {
+    "id": "migration.rubella",
+    "file": null,
+    "synthetic": true,
+    "items": 0,
+    "extends": "migration-template.disease",
+    "derivedItems": 20,
+    "derivedCovered": [],
+    "disease": "disease.rubella"
+  },
+  "summary": {
+    "pages": 20,
+    "drafts": 12,
+    "mergedPages": 9,
+    "byType": {
+      "faq": 1,
+      "publication": 1,
+      "media": 1,
+      "document": 3,
+      "dataset": 1,
+      "labtest": 1,
+      "page": 2,
+      "topic": 1,
+      "disease": 1
+    },
+    "byKind": {
+      "disease-block": 9,
+      "faq": 1,
+      "publication": 1,
+      "media": 1,
+      "document": 3,
+      "dataset": 1,
+      "labtest": 1,
+      "page": 1,
+      "list": 1,
+      "topic": 1
+    },
+    "byAction": {
+      "merge-into-disease": 9,
+      "compare-existing": 2,
+      "review-before-publish": 8,
+      "skip-list": 1
+    },
+    "avgConfidence": 0.89,
+    "needsReview": 1,
+    "existing": 12,
+    "schemaInvalid": 0,
+    "assets": {
+      "total": 5,
+      "attachment": 2,
+      "image": 2,
+      "data": 1,
+      "needsAlt": 2,
+      "noTextLayer": 1
+    },
+    "issues": {
+      "error": 0,
+      "warn": 13,
+      "info": 70
+    },
+    "manifest": {
+      "items": 0,
+      "matched": 0,
+      "missingPages": 0,
+      "derivedItems": 20,
+      "derivedMatched": 20
+    },
+    "exportedAt": "2026-10-03",
+    "pagesWithoutOutput": 0
+  },
+  "pages": [
+    {
+      "key": "01-intro",
+      "file": "01-intro.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/WoECLH3aRYvgwkQ7MlhcO8",
+        "title": "疾病介紹",
+        "category": "德國麻疹／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2025-10-30",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "德國麻疹",
+          "疾病介紹"
+        ],
+        "tab": ""
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro",
+      "manifestDerived": true,
+      "target": "disease.rubella",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.rubella"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.rubella"
+      ],
+      "outputs": [
+        {
+          "id": "disease.rubella",
+          "type": "disease",
+          "role": "merged",
+          "block": "transmission",
+          "file": "content/diseases/rubella.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 45 處（mso 樣式 17、Mso 類別 14、命名空間標籤 14）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「德國麻疹／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（德國麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "02-intro-pathogen",
+      "file": "02-intro-pathogen.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/WoECLH3aRYvgwkQ7MlhcO8",
+        "title": "致病原",
+        "category": "德國麻疹／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2025-10-30",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "德國麻疹",
+          "疾病介紹",
+          "致病原"
+        ],
+        "tab": "pathogen"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-pathogen",
+      "manifestDerived": true,
+      "target": "disease.rubella",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.rubella"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.rubella"
+      ],
+      "outputs": [
+        {
+          "id": "disease.rubella",
+          "type": "disease",
+          "role": "merged",
+          "block": "transmission",
+          "file": "content/diseases/rubella.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 5 處（mso 樣式 3、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「德國麻疹／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（德國麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-pathogen（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "03-intro-epidemiology",
+      "file": "03-intro-epidemiology.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/WoECLH3aRYvgwkQ7MlhcO8",
+        "title": "流行病學",
+        "category": "德國麻疹／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2025-10-30",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "德國麻疹",
+          "疾病介紹",
+          "流行病學"
+        ],
+        "tab": "epidemiology"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-epidemiology",
+      "manifestDerived": true,
+      "target": "disease.rubella",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.rubella"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.rubella"
+      ],
+      "outputs": [
+        {
+          "id": "disease.rubella",
+          "type": "disease",
+          "role": "merged",
+          "block": "situation",
+          "file": "content/diseases/rubella.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 63 處（mso 樣式 22、Mso 類別 21、命名空間標籤 20）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「德國麻疹／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（德國麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-epidemiology（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "image-no-alt",
+          "severity": "warn",
+          "message": "圖片「rubella-trend.png」舊頁沒有替代文字，暫用檔名「rubella-trend」，請補 alt（needsAlt）"
+        },
+        {
+          "code": "image-license-assumed",
+          "severity": "info",
+          "message": "圖片「rubella-trend.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 1,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "04-intro-transmission",
+      "file": "04-intro-transmission.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/WoECLH3aRYvgwkQ7MlhcO8",
+        "title": "傳染方式",
+        "category": "德國麻疹／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2025-10-30",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "德國麻疹",
+          "疾病介紹",
+          "傳染方式"
+        ],
+        "tab": "transmission"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-transmission",
+      "manifestDerived": true,
+      "target": "disease.rubella",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.rubella"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.rubella"
+      ],
+      "outputs": [
+        {
+          "id": "disease.rubella",
+          "type": "disease",
+          "role": "merged",
+          "block": "transmission",
+          "file": "content/diseases/rubella.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 5 處（mso 樣式 3、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「德國麻疹／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（德國麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-transmission（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "05-intro-incubation",
+      "file": "05-intro-incubation.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/WoECLH3aRYvgwkQ7MlhcO8",
+        "title": "潛伏期",
+        "category": "德國麻疹／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2025-10-30",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "德國麻疹",
+          "疾病介紹",
+          "潛伏期"
+        ],
+        "tab": "incubation"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-incubation",
+      "manifestDerived": true,
+      "target": "disease.rubella",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.rubella"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.rubella"
+      ],
+      "outputs": [
+        {
+          "id": "disease.rubella",
+          "type": "disease",
+          "role": "merged",
+          "block": "transmission",
+          "file": "content/diseases/rubella.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 23 處（mso 樣式 9、Mso 類別 7、命名空間標籤 7）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「德國麻疹／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（德國麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-incubation（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "06-intro-symptoms",
+      "file": "06-intro-symptoms.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/WoECLH3aRYvgwkQ7MlhcO8",
+        "title": "發病症狀",
+        "category": "德國麻疹／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2025-10-30",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "德國麻疹",
+          "疾病介紹",
+          "發病症狀"
+        ],
+        "tab": "symptoms"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-symptoms",
+      "manifestDerived": true,
+      "target": "disease.rubella",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.rubella"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.rubella"
+      ],
+      "outputs": [
+        {
+          "id": "disease.rubella",
+          "type": "disease",
+          "role": "merged",
+          "block": "symptoms",
+          "file": "content/diseases/rubella.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 12 處（mso 樣式 6、Mso 類別 3、命名空間標籤 3）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「德國麻疹／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（德國麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-symptoms（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "07-intro-prevention",
+      "file": "07-intro-prevention.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/WoECLH3aRYvgwkQ7MlhcO8",
+        "title": "預防方法",
+        "category": "德國麻疹／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2025-10-30",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "德國麻疹",
+          "疾病介紹",
+          "預防方法"
+        ],
+        "tab": "prevention"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-prevention",
+      "manifestDerived": true,
+      "target": "disease.rubella",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.rubella"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.rubella"
+      ],
+      "outputs": [
+        {
+          "id": "disease.rubella",
+          "type": "disease",
+          "role": "merged",
+          "block": "prevention",
+          "file": "content/diseases/rubella.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 17 處（mso 樣式 17、Mso 類別 4、命名空間標籤 0）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「德國麻疹／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（德國麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-prevention（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "08-intro-treatment",
+      "file": "08-intro-treatment.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/WoECLH3aRYvgwkQ7MlhcO8",
+        "title": "治療方法與就醫資訊",
+        "category": "德國麻疹／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2025-10-30",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "德國麻疹",
+          "疾病介紹",
+          "治療方法"
+        ],
+        "tab": "treatment"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-treatment",
+      "manifestDerived": true,
+      "target": "disease.rubella",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.rubella"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.rubella"
+      ],
+      "outputs": [
+        {
+          "id": "disease.rubella",
+          "type": "disease",
+          "role": "merged",
+          "block": "treatment",
+          "file": "content/diseases/rubella.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「德國麻疹／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（德國麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-treatment（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（39 字，低於 40）"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "09-vaccine",
+      "file": "09-vaccine.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/rFKZl2HfND47srsNz_mC0a",
+        "title": "預防接種建議",
+        "category": "德國麻疹／預防接種",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2025-10-30",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "德國麻疹",
+          "預防接種"
+        ],
+        "tab": "vaccine"
+      },
+      "pattern": "mpage",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "vaccine",
+      "manifestDerived": true,
+      "target": "disease.rubella",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.rubella"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.rubella"
+      ],
+      "outputs": [
+        {
+          "id": "disease.rubella",
+          "type": "disease",
+          "role": "merged",
+          "block": "vaccine",
+          "file": "content/diseases/rubella.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 23 處（mso 樣式 9、Mso 類別 7、命名空間標籤 7）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「德國麻疹／預防接種」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（德國麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 vaccine（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "10-qa-list",
+      "file": "10-qa-list.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/QAPage/I1sp4NJzbEAHpI1S9OaMd8",
+        "title": "Q&A",
+        "category": "德國麻疹／Q&A",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2025-10-30",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "德國麻疹",
+          "Q&A"
+        ],
+        "tab": ""
+      },
+      "pattern": "qa",
+      "kind": "faq",
+      "type": "faq",
+      "manifestKey": "qa-list",
+      "manifestDerived": true,
+      "target": "disease.rubella",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.rubella"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.rubella"
+      ],
+      "outputs": [
+        {
+          "id": "faq.rubella-legacy-7f51c6",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/rubella-legacy-7f51c6.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「德國麻疹／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（德國麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "faq-structure-missing",
+          "severity": "warn",
+          "message": "找不到 Q&A 結構（.panel／.panel-title／.panel-body），整頁當作一題處理"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（12 字，低於 40）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "11-materials-poster",
+      "file": "11-materials-poster.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/STTakYaGzsFpVLfv4ezH_3",
+        "title": "衛教宣導：單張海報",
+        "category": "德國麻疹／衛教宣導",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2025-10-30",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "德國麻疹",
+          "衛教宣導",
+          "單張海報"
+        ],
+        "tab": "posters"
+      },
+      "pattern": "category-list",
+      "kind": "publication",
+      "type": "publication",
+      "manifestKey": "materials-poster",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.rubella"
+      ],
+      "outputs": [
+        {
+          "id": "publication.rubella-materials-poster",
+          "type": "publication",
+          "role": "draft",
+          "file": "content/publications/rubella-materials-poster.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 4 處（mso 樣式 1、Mso 類別 2、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「德國麻疹／衛教宣導」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（德國麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 materials-poster（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 publication，草稿直接建成 publication，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "pdf-no-text-layer",
+          "severity": "warn",
+          "message": "PDF「rubella-poster-7lang.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+        },
+        {
+          "code": "image-no-alt",
+          "severity": "warn",
+          "message": "圖片「rubella-poster.png」舊頁沒有替代文字，暫用檔名「rubella-poster」，請補 alt（needsAlt）"
+        },
+        {
+          "code": "image-license-assumed",
+          "severity": "info",
+          "message": "圖片「rubella-poster.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 1,
+        "links": 5,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "12-materials-video",
+      "file": "12-materials-video.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/H6aKXiOv6zmhsMSFeBSlB8",
+        "title": "衛教宣導：影片",
+        "category": "德國麻疹／衛教宣導",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2025-10-30",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "德國麻疹",
+          "衛教宣導",
+          "影音"
+        ],
+        "tab": "video"
+      },
+      "pattern": "mpage",
+      "kind": "media",
+      "type": "media",
+      "manifestKey": "materials-video",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.rubella"
+      ],
+      "outputs": [
+        {
+          "id": "media.rubella-materials-video",
+          "type": "media",
+          "role": "draft",
+          "file": "content/media/rubella-materials-video.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「德國麻疹／衛教宣導」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（德國麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 materials-video（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 media，草稿直接建成 media，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（9 字，低於 40）"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "media 的欄位從舊頁看不出來，以「（待補）」佔位：transcriptMarkdown"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "模擬匯出的影片 id 為示意值"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "13-manual",
+      "file": "13-manual.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/DiseaseManual/jcjOhZS0QVtF5jJYtaKwrL",
+        "title": "工作手冊",
+        "category": "德國麻疹／法規與指引",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2025-10-30",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "德國麻疹",
+          "法規與指引",
+          "工作手冊"
+        ],
+        "tab": ""
+      },
+      "pattern": "disease-docs",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "manual",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.rubella"
+      ],
+      "outputs": [
+        {
+          "id": "doc.rubella-manual.2018-03-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/rubella-manual.2018-03-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「德國麻疹／法規與指引」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（德國麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 manual（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（39 字，低於 40）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2018-03-01"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "14-case-definition",
+      "file": "14-case-definition.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/DiseaseDefine/SJlBZ8x7SUWVq542LbfcVu",
+        "title": "病例定義",
+        "category": "德國麻疹／法規與指引",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2025-10-30",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "德國麻疹",
+          "法規與指引",
+          "病例定義"
+        ],
+        "tab": ""
+      },
+      "pattern": "disease-docs",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "case-definition",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.rubella"
+      ],
+      "outputs": [
+        {
+          "id": "doc.rubella-case-definition.2018-03-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/rubella-case-definition.2018-03-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「德國麻疹／法規與指引」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（德國麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 case-definition（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（39 字，低於 40）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2018-03-01"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "15-guideline",
+      "file": "15-guideline.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/File/Get/o-0uwqo6qRZTylYmxpHEQC",
+        "title": "治療指引",
+        "category": "德國麻疹／法規與指引",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2025-10-30",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "德國麻疹",
+          "法規與指引",
+          "治療指引"
+        ],
+        "tab": ""
+      },
+      "pattern": "file",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "guideline",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.rubella"
+      ],
+      "outputs": [
+        {
+          "id": "doc.rubella-guideline.2018-03-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/rubella-guideline.2018-03-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「德國麻疹／法規與指引」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（德國麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 guideline（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（39 字，低於 40）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2018-03-01"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "16-stats",
+      "file": "16-stats.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/7D-9ddKaIc59m_gAxyZAAQ",
+        "title": "統計資料",
+        "category": "德國麻疹／統計資料",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2025-10-30",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "德國麻疹",
+          "統計資料"
+        ],
+        "tab": "statistics"
+      },
+      "pattern": "category-list",
+      "kind": "dataset",
+      "type": "dataset",
+      "manifestKey": "stats",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "／統計",
+      "diseases": [
+        "disease.rubella"
+      ],
+      "outputs": [
+        {
+          "id": "dataset.rubella-stats",
+          "type": "dataset",
+          "role": "draft",
+          "file": "content/datasets/rubella-stats.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 61 處（mso 樣式 21、Mso 類別 20、命名空間標籤 20）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 stats（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 dataset，草稿直接建成 dataset，看不出來的欄位以「（待補）」佔位"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "17-lab",
+      "file": "17-lab.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/fULFGwN7WoUNRoISxQhVk0",
+        "title": "檢驗資訊",
+        "category": "德國麻疹／檢驗資訊",
+        "publishedAt": "2025-01-15",
+        "updatedAt": "2026-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "德國麻疹",
+          "檢驗資訊"
+        ],
+        "tab": "lab"
+      },
+      "pattern": "mpage",
+      "kind": "labtest",
+      "type": "labtest",
+      "manifestKey": "lab",
+      "manifestDerived": true,
+      "target": "labtest.rubella",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "labtest.rubella"
+      ],
+      "owner": "unit.lab",
+      "ownerRule": "／檢驗",
+      "diseases": [
+        "disease.rubella"
+      ],
+      "outputs": [
+        {
+          "id": "labtest.rubella",
+          "type": "labtest",
+          "role": "draft",
+          "file": "content/labtests/rubella.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 36 處（mso 樣式 18、Mso 類別 11、命名空間標籤 9）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 lab（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 labtest（labtest.rubella），草稿直接建成 labtest，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "labtest 的欄位從舊頁看不出來，以「（待補）」佔位：specimens[].container/volume/storage/transport"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "labs 暫填 cdc-lab（署檢驗中心），合約與區域實驗室請檢驗中心確認"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "18-notify",
+      "file": "18-notify.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/ZXwNFEyeJ5-__9KgmjahKt",
+        "title": "通報定義與時限",
+        "category": "德國麻疹／通報定義",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2025-10-30",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "德國麻疹",
+          "通報定義"
+        ],
+        "tab": "notify"
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "notify",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "／通報",
+      "diseases": [
+        "disease.rubella"
+      ],
+      "outputs": [
+        {
+          "id": "page.rubella-notify",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/rubella-notify.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 38 處（mso 樣式 14、Mso 類別 12、命名空間標籤 12）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 notify（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "19-news-list",
+      "file": "19-news-list.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/List/SHhJTIoZh-GQ3j3F0DThV8",
+        "title": "新聞稿列表",
+        "category": "德國麻疹／最新消息",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2025-10-30",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "德國麻疹",
+          "最新消息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "news-list",
+      "manifestDerived": true,
+      "target": "disease.rubella",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.rubella"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.rubella"
+      ],
+      "outputs": [
+        {
+          "id": "page.rubella-news-list",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/rubella-news-list.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.4,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": true,
+      "issues": [
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「德國麻疹／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（德國麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 news-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（0 字，低於 40）"
+        },
+        {
+          "code": "target-type-differs",
+          "severity": "info",
+          "message": "對應的新站內容是 disease.rubella（disease），草稿以 page 暫存，請比對後改建為 disease"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "20-links",
+      "file": "20-links.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/hpAbJ6S_BkKy5zcJ_lUcQ5",
+        "title": "相關連結",
+        "category": "德國麻疹／相關連結",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2025-10-30",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "德國麻疹",
+          "相關連結"
+        ],
+        "tab": "links"
+      },
+      "pattern": "category-list",
+      "kind": "topic",
+      "type": "topic",
+      "manifestKey": "links",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.rubella"
+      ],
+      "outputs": [
+        {
+          "id": "topic.rubella-links",
+          "type": "topic",
+          "role": "draft",
+          "file": "content/topics/rubella-links.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「德國麻疹／相關連結」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（德國麻疹）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 links（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 topic，草稿直接建成 topic，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "4 個連結 status 填 unchecked，由連結檢查更新；3 個站外"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 4,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    }
+  ],
+  "drafts": [
+    {
+      "id": "faq.rubella-legacy-7f51c6",
+      "type": "faq",
+      "title": "Q&A",
+      "file": "content/faq/rubella-legacy-7f51c6.json",
+      "confidence": 0.8,
+      "existing": true,
+      "compareWith": [
+        "disease.rubella"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "publication.rubella-materials-poster",
+      "type": "publication",
+      "title": "德國麻疹衛教宣導：單張海報",
+      "file": "content/publications/rubella-materials-poster.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 2,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "11-materials-poster"
+      ],
+      "merged": false
+    },
+    {
+      "id": "media.rubella-materials-video",
+      "type": "media",
+      "title": "德國麻疹衛教宣導：影片",
+      "file": "content/media/rubella-materials-video.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "12-materials-video"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.rubella-manual.2018-03-01",
+      "type": "document",
+      "title": "工作手冊",
+      "file": "content/documents/rubella-manual.2018-03-01.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "13-manual"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.rubella-case-definition.2018-03-01",
+      "type": "document",
+      "title": "病例定義",
+      "file": "content/documents/rubella-case-definition.2018-03-01.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "14-case-definition"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.rubella-guideline.2018-03-01",
+      "type": "document",
+      "title": "治療指引",
+      "file": "content/documents/rubella-guideline.2018-03-01.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "15-guideline"
+      ],
+      "merged": false
+    },
+    {
+      "id": "dataset.rubella-stats",
+      "type": "dataset",
+      "title": "德國麻疹統計資料",
+      "file": "content/datasets/rubella-stats.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "16-stats"
+      ],
+      "merged": false
+    },
+    {
+      "id": "labtest.rubella",
+      "type": "labtest",
+      "title": "德國麻疹檢驗資訊",
+      "file": "content/labtests/rubella.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "labtest.rubella"
+      ],
+      "status": "review",
+      "owner": "unit.lab",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "17-lab"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.rubella-notify",
+      "type": "page",
+      "title": "通報定義與時限",
+      "file": "content/pages/rubella-notify.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "18-notify"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.rubella-news-list",
+      "type": "page",
+      "title": "新聞稿列表",
+      "file": "content/pages/rubella-news-list.json",
+      "confidence": 0.4,
+      "existing": true,
+      "compareWith": [
+        "disease.rubella"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "19-news-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "topic.rubella-links",
+      "type": "topic",
+      "title": "德國麻疹相關連結",
+      "file": "content/topics/rubella-links.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "20-links"
+      ],
+      "merged": false
+    },
+    {
+      "id": "disease.rubella",
+      "type": "disease",
+      "title": "德國麻疹",
+      "file": "content/diseases/rubella.json",
+      "confidence": 0.96,
+      "existing": true,
+      "compareWith": [
+        "disease.rubella"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "01-intro",
+        "02-intro-pathogen",
+        "03-intro-epidemiology",
+        "04-intro-transmission",
+        "05-intro-incubation",
+        "06-intro-symptoms",
+        "07-intro-prevention",
+        "08-intro-treatment",
+        "09-vaccine"
+      ],
+      "merged": true
+    }
+  ],
+  "migration": {
+    "patchFile": "migration-patch.json",
+    "applied": false,
+    "summary": {
+      "derivedItems": 20,
+      "derivedMatched": 20,
+      "items": 0,
+      "matched": 0,
+      "missingPages": 0,
+      "unmatchedPages": 0,
+      "agree": 0,
+      "conflicts": 0,
+      "statusChanges": 0,
+      "pendingToMigrated": 0,
+      "targetChanges": 0,
+      "noteChanges": 0,
+      "stillPending": 0
+    }
+  }
+}

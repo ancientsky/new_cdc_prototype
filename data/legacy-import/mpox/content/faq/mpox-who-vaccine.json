@@ -1,0 +1,63 @@
+{
+  "id": "faq.mpox-who-vaccine",
+  "type": "faq",
+  "title": "M痘疫苗誰可以打公費？要打幾劑？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2022-08-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.mpox"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "公費 M痘（舊稱猴痘）疫苗提供給近一年有高風險性行為者，例如有多重性伴侶、性交易服務者、曾於營業場所發生性行為者，以及經衛生單位評估的確診者密切接觸者。",
+  "question": "M痘疫苗誰可以打公費？要打幾劑？",
+  "answerMarkdown": "公費 M痘（舊稱猴痘）疫苗提供給**近一年有高風險性行為者**，例如有多重性伴侶、性交易服務者、曾於營業場所發生性行為者，以及經衛生單位評估的確診者密切接觸者。\n\n疫苗需接種 **2 劑，間隔至少 4 週**，完成 2 劑才有完整保護。接觸確診者後，最好在 4 天內、最遲 14 天內接種。",
+  "basedOn": [
+    "disease.mpox"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/qmMaCThh1HmKBrk0zmkYw8"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 8 處（mso 樣式 4、Mso 類別 2、命名空間標籤 2）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「M痘／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（M痘）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/qmMaCThh1HmKBrk0zmkYw8",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.mpox-who-vaccine",
+      "disease.mpox"
+    ]
+  }
+}

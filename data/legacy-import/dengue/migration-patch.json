@@ -6,7 +6,7 @@
   "applied": {
     "statusChanges": [],
     "targetChanges": [],
-    "noteChanges": 1
+    "noteChanges": 0
   },
   "rule": "只改 status／target／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。",
   "items": [
@@ -185,7 +185,7 @@
       "current": {
         "status": "migrated",
         "target": "media.dengue-village-chief",
-        "note": "影片改為影音型別，須有逐字稿與依據正本，正本修訂時自動標過時。　【匯入 2026-10-03】草稿 page.dengue-village-chief-video（信心 0.4；既有內容已存在，供比對；需人工檢視）"
+        "note": "影片改為影音型別，須有逐字稿與依據正本，正本修訂時自動標過時。　【匯入 2026-10-03】草稿 media.dengue-village-chief（信心 1；既有內容已存在，供比對）"
       },
       "proposed": {
         "status": "migrated",
@@ -203,7 +203,7 @@
       "change": {
         "status": false,
         "target": false,
-        "note": true
+        "note": false
       }
     },
     {
@@ -593,9 +593,9 @@
       },
       "page": "18-links",
       "draftIds": [
-        "page.dengue-links"
+        "topic.dengue-links"
       ],
-      "confidence": 0.6,
+      "confidence": 1,
       "existing": true,
       "matched": true
     }
@@ -612,7 +612,21 @@
     "statusChanges": 0,
     "pendingToMigrated": 0,
     "targetChanges": 0,
-    "noteChanges": 1,
+    "noteChanges": 0,
     "stillPending": 2
-  }
+  },
+  "derivedCovered": [
+    {
+      "key": "materials-video",
+      "oldTitle": "衛教宣導：影片",
+      "coveredBy": "dengue-village-chief-video",
+      "target": "media.dengue-village-chief"
+    },
+    {
+      "key": "guideline",
+      "oldTitle": "治療指引",
+      "coveredBy": "dengue-cluster-response",
+      "target": "doc.dengue-community-workplan.2026-09-10"
+    }
+  ]
 }
