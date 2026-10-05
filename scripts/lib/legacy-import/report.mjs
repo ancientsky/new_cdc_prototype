@@ -2,7 +2,7 @@
 import { ACTION_LABEL } from './migration.mjs';
 
 const esc = (s) => String(s ?? '').replace(/\|/g, '\\|').replace(/\n/g, ' ');
-const EXTRA = { publication: '出版品', media: '影音', dataset: '資料集', labtest: '檢驗', service: '服務', clarification: '澄清稿', topic: '專區', vaccine: '疫苗' };
+const EXTRA = { publication: '出版品', media: '影音', dataset: '資料集', labtest: '檢驗', service: '服務', clarification: '澄清稿', topic: '專區', vaccine: '疫苗', letter: '致醫界通函' };
 const TYPE_LABEL = { disease: '疾病頁', faq: 'Q&A', news: '新聞', document: '文件', page: '頁面', ...EXTRA };
 const KIND_LABEL = { 'disease-block': '併入疾病頁', faq: 'Q&A', news: '新聞', document: '文件', page: '頁面', list: '清單頁', ...EXTRA };
 
@@ -60,6 +60,17 @@ export function renderReportMd(report, patch) {
   L.push('');
   for (const p of merged) L.push(`- 「${p.source.title}」→ \`${p.outputs[0]?.id}\` 區塊 ${p.outputs[0]?.block ?? '—'}${p.existing ? '（疾病頁既有內容已存在，供比對）' : ''}`);
   L.push('');
+  if (report.sampling) {
+    const sp = report.sampling;
+    L.push(`## 二級抽樣檢視名單（近年新聞 auto-ok ${sp.autoOk} 頁，抽 ${Math.round(sp.rate * 100)}% ＝ ${sp.picked.length} 頁）`);
+    L.push('');
+    if (!sp.autoOk) L.push('本批沒有可自動上線的近年新聞。');
+    else if (!sp.picked.length) L.push('無。');
+    else for (const x of sp.picked) L.push(`- ${esc(x.title)} → \`${x.draftId}\`（${esc(x.url.replace(/^https?:\/\//, ''))}）`);
+    L.push('');
+    L.push('抽樣由網址雜湊排序決定，重跑不變；公關室看完名單沒有問題，整批 auto-ok 才改 `published` 開 PR（第 7 節二級）；發現率超過 10% 就暫停自動上線、回頭修規則。');
+    L.push('');
+  }
   L.push('## 附件與圖片需要處理的');
   L.push('');
   const attIssues = report.pages.flatMap((p) => p.issues.filter((x) => ['pdf-no-text-layer', 'image-no-alt', 'attachment-missing', 'image-missing', 'unlisted-file-link', 'asset-too-large'].includes(x.code)).map((x) => `- ${p.source.title}：${x.message}`));

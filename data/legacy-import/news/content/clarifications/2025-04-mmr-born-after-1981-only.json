@@ -1,0 +1,54 @@
+{
+  "id": "clar.2025-04-mmr-born-after-1981-only",
+  "type": "clarification",
+  "title": "網傳「MMR 只有 1981 年後出生的人要補打」",
+  "owner": "unit.pr",
+  "publishedAt": "2025-04-10",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "網傳：MMR 只有 1981 年後出生的人要補打，1966 到 1980 年出生的人都不用",
+  "claim": "MMR 只有 1981 年後出生的人要補打",
+  "verdict": "outdated",
+  "clarificationMarkdown": "網傳：MMR 只有 1981 年後出生的人要補打，1966 到 1980 年出生的人都不用\n\n查核結果：已過時\n\n此說法依據的是 108 年 5 月版「國內現行 MMR 預防接種建議」，當時成人評估對象以 1981 年為分界。\n\n疾管署已預告將於 2025 年 4 月 16 日修訂建議：屆時 **1966 年（含）以後出生**、不具麻疹免疫力的成人，計畫前往流行地區時也應評估接種。修訂公告後請以現行版建議為準。\n\n【疾管署說明】「只有 1981 年後出生才要打 MMR」是舊版建議。疾管署預告 2025 年 4 月 16 日起，1966 年（含）以後出生、不具免疫力者前往流行地區前也應評估接種，請以最新公告為準。",
+  "shareText": "網傳：MMR 只有 1981 年後出生的人要補打，1966 到 1980 年出生的人都不用",
+  "reportChannel": "1922",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/SE0WiE8vVquCNdRJPzEQ_s?typeid=8772"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 16 處（mso 樣式 6、Mso 類別 5、命名空間標籤 5）"
+      },
+      {
+        "code": "type-from-bulletin",
+        "severity": "info",
+        "message": "公告類別是澄清稿，草稿建成 clarification（claim／verdict 由標題與內文推斷）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/SE0WiE8vVquCNdRJPzEQ_s?typeid=8772",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "clar.2025-04-mmr-born-after-1981-only"
+    ]
+  }
+}

@@ -58,7 +58,7 @@ export function pages() {
 }
 
 const KIND = { 'disease-block': '併入疾病頁', faq: 'Q&A', news: '新聞', document: '文件', page: '頁面', list: '清單頁' };
-const TYPE = { disease: '疾病頁', faq: 'Q&A', news: '新聞', document: '文件', page: '一般頁面', publication: '出版品', media: '影音', dataset: '資料集', labtest: '檢驗', service: '服務', clarification: '澄清稿', topic: '專區', vaccine: '疫苗' };
+const TYPE = { disease: '疾病頁', faq: 'Q&A', news: '新聞', document: '文件', page: '一般頁面', publication: '出版品', media: '影音', dataset: '資料集', labtest: '檢驗', service: '服務', clarification: '澄清稿', topic: '專區', vaccine: '疫苗', letter: '致醫界通函' };
 const ACTION_TONE = { 'manual-review': 'bad', 'merge-into-disease': 'info', 'compare-existing': 'gray', archive: 'gray', drop: 'gray', 'skip-list': 'gray', 'auto-ok': 'ok', 'review-before-publish': 'warn' };
 const confTone = (c) => (c >= 0.8 ? 'ok' : c >= 0.6 ? 'warn' : 'bad');
 const SEV = { error: '錯誤', warn: '警告', info: '提示' };

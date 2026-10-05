@@ -11,7 +11,7 @@
   },
   "rules": {
     "file": "content/migration/import/_import-rules.json",
-    "version": 4
+    "version": 5
   },
   "manifest": {
     "id": "migration.rabies",
@@ -2006,6 +2006,11 @@
       "merged": true
     }
   ],
+  "sampling": {
+    "rate": 0.1,
+    "autoOk": 0,
+    "picked": []
+  },
   "migration": {
     "patchFile": "migration-patch.json",
     "applied": false,

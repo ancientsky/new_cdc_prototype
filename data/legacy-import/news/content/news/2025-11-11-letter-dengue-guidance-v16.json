@@ -1,0 +1,73 @@
+{
+  "id": "news.2025-11-11-letter-dengue-guidance-v16",
+  "type": "letter",
+  "title": "致醫界通函第 603 號：登革熱／屈公病防治工作指引第 16 版公布",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2025-11-11",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue",
+    "disease.chikungunya"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "一、登革熱／屈公病防治工作指引第 16 版自 2025 年 11 月 1 日起適用。二、主要修訂：緊急防治核心區由固定半徑改依病例住家及活動地點之風險評估劃定；核心區孳生源查核每週至少 1 次，連續 2 個潛伏期無新增病例始得解除。",
+  "newsType": "letter",
+  "bodyMarkdown": "一、登革熱／屈公病防治工作指引第 16 版自 2025 年 11 月 1 日起適用。二、主要修訂：緊急防治核心區由固定半徑改依病例住家及活動地點之風險評估劃定；核心區孳生源查核每週至少 1 次，連續 2 個潛伏期無新增病例始得解除。三、請醫師持續於 24 小時內通報符合臨床條件或 NS1 快篩陽性之病人。",
+  "letterNo": 603,
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/Zf9eK5LCN7oF44mSOfe290?typeid=48"
+  ],
+  "assets": [
+    {
+      "file": "2025-11-11-letter-dengue-guidance-v16-1.pdf",
+      "kind": "attachment",
+      "label": "登革熱／屈公病防治工作指引第 16 版",
+      "mime": "application/pdf",
+      "bytes": 762,
+      "sha256": "66c448311170c07729ee74cc51b29b13668521abedca299ca7a1b4fdffc80a9b",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "致醫界通函的權責單位依疾病主檔取 unit.acute-infectious（登革熱），不歸新聞欄目的公關室"
+      },
+      {
+        "code": "news-type-hint",
+        "severity": "info",
+        "message": "致醫界通函建成 letter（letterNo 由標題「第 N 號」抽）；對象為醫療院所，audience professional"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/Zf9eK5LCN7oF44mSOfe290?typeid=48",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "news.2025-11-11-letter-dengue-guidance-v16"
+    ]
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "news.2026-08-25-mpox-clade-i",
+  "type": "news",
+  "title": "非洲 M痘 clade I 疫情持續，前往當地請避免親密接觸與野生動物",
+  "owner": "unit.pr",
+  "publishedAt": "2026-08-25",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.mpox"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "疾病管制署表示，剛果民主共和國、烏干達等中非與東非國家 M痘 clade I 疫情持續，相關國家維持第二級：警示（Alert）旅遊疫情建議。",
+  "newsType": "press",
+  "bodyMarkdown": "疾病管制署表示，剛果民主共和國、烏干達等中非與東非國家 M痘 clade I 疫情持續，相關國家維持**第二級：警示（Alert）**旅遊疫情建議。\n\n疾管署提醒，前往當地應避免與不明對象親密接觸，不接觸野生動物及其屍體，並注意手部衛生；符合條件者可於出發前完成 2 劑 M痘疫苗。返國後 21 天內如出現發燒、淋巴結腫大或皮疹，請遮蓋病灶後就醫並告知旅遊史。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/qu6QBO4Jen5iRNtc4VWZhv?typeid=9"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 7 處（mso 樣式 3、Mso 類別 2、命名空間標籤 2）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/qu6QBO4Jen5iRNtc4VWZhv?typeid=9",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "news.2026-08-25-mpox-clade-i"
+    ]
+  }
+}

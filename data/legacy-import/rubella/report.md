@@ -62,6 +62,12 @@
 - 「治療方法與就醫資訊」→ `disease.rubella` 區塊 treatment（疾病頁既有內容已存在，供比對）
 - 「預防接種建議」→ `disease.rubella` 區塊 vaccine（疾病頁既有內容已存在，供比對）
 
+## 二級抽樣檢視名單（近年新聞 auto-ok 0 頁，抽 10% ＝ 0 頁）
+
+本批沒有可自動上線的近年新聞。
+
+抽樣由網址雜湊排序決定，重跑不變；公關室看完名單沒有問題，整批 auto-ok 才改 `published` 開 PR（第 7 節二級）；發現率超過 10% 就暫停自動上線、回頭修規則。
+
 ## 附件與圖片需要處理的
 
 - 流行病學：圖片「rubella-trend.png」舊頁沒有替代文字，暫用檔名「rubella-trend」，請補 alt（needsAlt）

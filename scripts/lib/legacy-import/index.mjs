@@ -23,7 +23,7 @@ import { renderReportMd } from './report.mjs';
 import { STRUCTURED_TYPES, extractFields, serviceTypeFor, typeOfId } from './types.mjs';
 
 const h6 = (s) => createHash('sha1').update(String(s)).digest('hex').slice(0, 6);
-const DIRS = { disease: 'diseases', faq: 'faq', news: 'news', document: 'documents', page: 'pages', publication: 'publications', media: 'media', dataset: 'datasets', labtest: 'labtests', service: 'services', clarification: 'clarifications', topic: 'topics', vaccine: 'vaccines' };
+const DIRS = { disease: 'diseases', faq: 'faq', news: 'news', document: 'documents', page: 'pages', publication: 'publications', media: 'media', dataset: 'datasets', labtest: 'labtests', service: 'services', clarification: 'clarifications', topic: 'topics', vaccine: 'vaccines', letter: 'news' };
 const BLOCK_ORDER = ['what-to-do', 'symptoms', 'transmission', 'prevention', 'treatment', 'vaccine', 'situation', 'faq'];
 const CONTENT_DIRS = ['diseases', 'faq', 'news', 'documents', 'clarifications', 'vaccines', 'datasets', 'banners', 'pages', 'media', 'topics', 'services', 'publications', 'labtests', 'research', 'jobs', 'tenders'];
 const idRest = (id) => String(id).replace(/^[a-z]+\./, '');
@@ -168,6 +168,14 @@ export function runImport(opts) {
     }
     pr.diseases = ds.map((d) => d.id);
     let owner = own?.owner ?? null;
+    // 致醫界通函（第六批）：欄目雖歸公關室，通函的權責是該疾病的業務組（規則 categoryOwners.preferDiseaseFor: ["letter"]）
+    const bt0 = bulletinType(rules, side.url);
+    const letterHit = bt0?.newsType === 'letter' || (rules.letterTitle ? new RegExp(rules.letterTitle).test(title) : false);
+    const ownRule = (rules.categoryOwners ?? []).find((c) => c.match === own?.rule);
+    if (owner && letterHit && ownRule?.preferDiseaseFor?.includes('letter') && ds[0] && diseaseById.get(ds[0].id)?.owner) {
+      owner = diseaseById.get(ds[0].id).owner;
+      issue('owner-from-disease', 'info', `致醫界通函的權責單位依疾病主檔取 ${owner}（${diseaseById.get(ds[0].id)?.name ?? ds[0].id}），不歸新聞欄目的公關室`);
+    }
     if (!owner && rules.ownerFallbackToDisease && ds[0]) {
       owner = diseaseById.get(ds[0].id)?.owner ?? null;
       if (owner) issue('owner-from-disease', 'info', `類別「${category || '（無）'}」沒有對應規則，權責單位依疾病主檔取 ${owner}（${diseaseById.get(ds[0].id)?.name ?? ds[0].id}）`);
@@ -383,6 +391,8 @@ export function runImport(opts) {
       const bt = bulletinType(rules, u);
       if (!bt || bt.unknown) { pr.typeClear = false; issue('type-unclear', 'warn', bt ? `Bulletin typeid=${bt.typeid} 不在規則檔 bulletinTypes，暫以其他訊息（other）處理` : '網址沒有 typeid，暫以其他訊息（other）處理'); }
       if (bt?.hint) issue('news-type-hint', 'info', bt.hint);
+      // 英文新聞稿（typeid 158）：來源語言是英文、新站以中文為正本 ⇒ 要補中文版才能上線，不走二級自動上線
+      if (bt?.lang && bt.lang !== 'zh-TW') issue('needs-source-zh', 'warn', `來源語言 ${bt.lang}：新站以中文為正本（治理規則 18），請補中文版後再上線；不列入 auto-ok`);
       // 既有新聞依標題對上 ⇒ 用既有 id（標 existing 供比對），否則新 id
       const byTitleId = index.newsByTitle.get(normTitle(stripTitlePrefix(rules, title)));
       const id = reserveId(pr.target?.startsWith('news.') ? pr.target : byTitleId ?? `news.${(publishedAt ?? exportedAt)}-legacy-${h6(side.url)}`, `news.${publishedAt ?? exportedAt}-legacy-${h6(side.url + page.name)}`);
@@ -391,7 +401,12 @@ export function runImport(opts) {
       afterRewrite(stat);
       const { markdown, dropped } = toMd(ext.body.children);
       checks(markdown, ext.body, stat, dropped);
-      units.push({ pageKey: page.name, kind, type: 'news', draftId: id, title: stripTitlePrefix(rules, title), markdown, newsType: bt?.newsType ?? 'other', lang: bt?.lang, diseaseId: primary, publishedAt: publishedAt ?? exportedAt });
+      // 致醫界通函（第六批）：Bulletin typeid 48 或標題「致醫界通函第 N 號」⇒ type letter、letterNo 由標題抽；對象醫療院所
+      const letterNo = rules.letterTitle ? new RegExp(rules.letterTitle).exec(title)?.[1] ?? null : null;
+      const isLetter = bt?.newsType === 'letter' || letterNo != null;
+      if (isLetter && bt?.newsType !== 'letter') issue('news-type-hint', 'info', '標題是致醫界通函，草稿建成 letter（typeid 不是通函類別）');
+      if (isLetter && letterNo == null) issue('field-guessed', 'info', '通函標題看不出號次，letterNo 待補');
+      units.push({ pageKey: page.name, kind, type: 'news', draftId: id, title: stripTitlePrefix(rules, title), markdown, newsType: isLetter ? 'letter' : bt?.newsType ?? 'other', letter: isLetter, letterNo, lang: bt?.lang, diseaseId: primary, publishedAt: publishedAt ?? exportedAt });
       pr.outputs.push({ id, type: 'news', role: 'draft' });
     } else if (kind === 'document') {
       const dt = docTypeFor(rules, title, pat, u);
@@ -531,9 +546,11 @@ export function runImport(opts) {
       Object.assign(d, { question: un.question, answerMarkdown: un.markdown });
       if (un.diseaseId) d.basedOn = [un.diseaseId];
     } else if (un.type === 'news') {
-      d = base(un.title, un.markdown, 'news');
+      d = base(un.title, un.markdown, un.letter ? 'letter' : 'news');
+      d.type = un.letter ? 'letter' : 'news';
       d.reviewPeriodMonths = master.periods.news ?? 0;
       Object.assign(d, { newsType: un.newsType, bodyMarkdown: un.markdown });
+      if (un.letter && un.letterNo != null) d.letterNo = Number(un.letterNo);
       if (un.lang && un.lang !== 'zh-TW') d.sourceLang = un.lang;
     } else if (un.type === 'document') {
       d = base(un.title, un.markdown, 'document');
@@ -616,6 +633,10 @@ export function runImport(opts) {
   const patch = buildPatch({ manifest, prs, units, index, exportedAt, slug, rules, derivedItems });
   if (patch && derivedCovered.length) patch.derivedCovered = derivedCovered.map((d) => ({ key: d.key, oldTitle: d.oldTitle, coveredBy: d.coveredBy, target: d.target }));
   const sum = summarize({ prs, draftRecs, bags, patch, manifest, exp, exportedAt });
+  // 二級（近年新聞 auto-ok）抽樣檢視名單（第六批）：依網址雜湊排序取前 ceil(n × sampleRate)，重跑結果固定，公關室照名單抽看
+  const autoOk = prs.filter((p) => p.action === 'auto-ok');
+  const sampleRate = rules.thresholds?.sampleRate ?? 0.1;
+  const sampling = { rate: sampleRate, autoOk: autoOk.length, picked: [...autoOk].sort((a, b) => h6(a.source.url).localeCompare(h6(b.source.url))).slice(0, Math.ceil(autoOk.length * sampleRate)).map((p) => ({ key: p.key, title: p.source.title, url: p.source.url, draftId: p.outputs[0]?.id ?? null })) };
   const report = {
     format: 'cdc-legacy-import-report/1',
     batch: slug, generatedAt: convertedAt, exportedAt, simulated: exp.meta.simulated === true,
@@ -630,6 +651,7 @@ export function runImport(opts) {
       issues: p.issues, action: p.action, flags: p.flags, stats: p.stats,
     })),
     drafts: draftRecs,
+    sampling,
     migration: { patchFile: 'migration-patch.json', applied: false, summary: patch.summary },
   };
   fs.writeFileSync(path.join(out, 'migration-patch.json'), `${JSON.stringify(patch, null, 2)}\n`);

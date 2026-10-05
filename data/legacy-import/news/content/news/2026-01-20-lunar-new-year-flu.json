@@ -1,0 +1,49 @@
+{
+  "id": "news.2026-01-20-lunar-new-year-flu",
+  "type": "news",
+  "title": "流感疫情處高峰，春節連假前請儘速接種疫苗並落實咳嗽禮節",
+  "owner": "unit.pr",
+  "publishedAt": "2026-01-20",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "疾病管制署表示，近一週類流感門急診就診人次持續處於高峰，社區以 A 型 H3N2 為主，流感併發重症病例亦增加。",
+  "newsType": "press",
+  "bodyMarkdown": "疾病管制署表示，近一週類流感門急診就診人次持續處於高峰，社區以 A 型 H3N2 為主，流感併發重症病例亦增加。\n\n春節連假人潮聚集，疾管署呼籲尚未接種公費流感疫苗的長者、幼兒及慢性病人儘速接種；有發燒、咳嗽等症狀應戴口罩、在家休息。如出現呼吸困難、胸痛、意識改變等危險徵兆，請立即就醫。連假期間可查詢各縣市開診院所。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/eiEtxrKNmuAax0vpnd5RYh?typeid=9"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/eiEtxrKNmuAax0vpnd5RYh?typeid=9",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "news.2026-01-20-lunar-new-year-flu"
+    ]
+  }
+}

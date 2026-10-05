@@ -1,6 +1,6 @@
 {
   "id": "news.2026-07-01-letter-dengue-guidance-v17",
-  "type": "news",
+  "type": "letter",
   "title": "致醫界通函第 612 號：登革熱／屈公病防治工作指引第 17 版自即日起適用",
   "owner": "unit.acute-infectious",
   "publishedAt": "2026-07-01",
@@ -8,7 +8,7 @@
   "reviewPeriodMonths": 0,
   "status": "review",
   "audience": [
-    "public"
+    "professional"
   ],
   "sensitivity": "public",
   "license": "OGDL-1.0",
@@ -25,8 +25,9 @@
     }
   },
   "summary": "一、登革熱／屈公病防治工作指引第 17 版自 2026 年 7 月 1 日起適用，第 16 版同日停止適用。二、主要修訂：NS1 抗原快篩試劑配置擴大至全國基層診所及醫院；快篩陰性但臨床高度懷疑者仍應採檢送驗；",
-  "newsType": "other",
+  "newsType": "letter",
   "bodyMarkdown": "一、登革熱／屈公病防治工作指引第 17 版自 2026 年 7 月 1 日起適用，第 16 版同日停止適用。二、主要修訂：NS1 抗原快篩試劑配置擴大至全國基層診所及醫院；快篩陰性但臨床高度懷疑者仍應採檢送驗；境外移入病例返國後 14 日內每週追蹤防蚊情形；化學防治以針對性室內噴藥為優先。三、請醫師對發燒且有流行地區旅遊史之病人提高警覺，符合臨床條件或 NS1 快篩陽性者於 24 小時內通報。",
+  "letterNo": 612,
   "legacyUrls": [
     "https://www.cdc.gov.tw/Bulletin/Detail/Ztstqjy7MJdl7pkQSReHpB?typeid=11"
   ],
@@ -48,6 +49,11 @@
         "code": "not-in-manifest",
         "severity": "warn",
         "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
+      },
+      {
+        "code": "news-type-hint",
+        "severity": "info",
+        "message": "標題是致醫界通函，草稿建成 letter（typeid 不是通函類別）"
       }
     ],
     "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/Ztstqjy7MJdl7pkQSReHpB?typeid=11",

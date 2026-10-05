@@ -1,0 +1,49 @@
+{
+  "id": "news.2025-02-18-dengue-imported-spring",
+  "type": "news",
+  "title": "春節後登革熱境外移入病例增加，出國返國請落實防蚊",
+  "owner": "unit.pr",
+  "publishedAt": "2025-02-18",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "疾病管制署表示，春節連假後國內登革熱境外移入病例增加，感染國家以印尼、越南、馬來西亞為多，東南亞多國疫情仍處高峰。",
+  "newsType": "press",
+  "bodyMarkdown": "疾病管制署表示，春節連假後國內登革熱境外移入病例增加，感染國家以印尼、越南、馬來西亞為多，東南亞多國疫情仍處高峰。\n\n疾管署提醒，前往流行地區應穿著淺色長袖衣褲並使用防蚊液；返國後兩週內外出持續防蚊，避免病媒蚊叮咬造成本土傳播。若出現發燒、頭痛、後眼窩痛、肌肉關節痛等症狀，請儘速就醫並主動告知旅遊史。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/BMWpfFWHjg3XxCaFghvXti?typeid=9"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/BMWpfFWHjg3XxCaFghvXti?typeid=9",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "news.2025-02-18-dengue-imported-spring"
+    ]
+  }
+}

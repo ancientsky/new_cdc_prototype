@@ -1,0 +1,46 @@
+{
+  "id": "news.2026-08-17-international-fetp-workshop",
+  "type": "news",
+  "title": "International field epidemiology workshop opens in Taipei",
+  "owner": "unit.pr",
+  "publishedAt": "2026-08-17",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "Taiwan CDC opened an international field epidemiology workshop in Taipei for public health officials and trainees from …",
+  "newsType": "press",
+  "bodyMarkdown": "Taiwan CDC opened an international field epidemiology workshop in Taipei for public health officials and trainees from partner countries.\n\nThe workshop combines Taiwan's Field Epidemiology Training Program (FETP) experience with practical sessions on outbreak investigation, dengue and vector control, laboratory diagnosis and risk communication. Participants also visit a local health bureau and a quarantine station.\n\nForeign health officials interested in future sessions can apply through the online international training service.\n\nThis release is illustrative prototype content; the date, number of participants and sessions are examples.",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/j6slN2h_XoK_nqIeC5ht4x?typeid=9"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 12 處（mso 樣式 4、Mso 類別 4、命名空間標籤 4）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/j6slN2h_XoK_nqIeC5ht4x?typeid=9",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "news.2026-08-17-international-fetp-workshop"
+    ]
+  }
+}

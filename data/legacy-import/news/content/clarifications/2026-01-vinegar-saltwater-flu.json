@@ -1,0 +1,60 @@
+{
+  "id": "clar.2026-01-vinegar-saltwater-flu",
+  "type": "clarification",
+  "title": "網傳「燻白醋、喝鹽水可以殺死流感病毒」沒有科學根據",
+  "owner": "unit.pr",
+  "publishedAt": "2026-01-15",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "網傳：在家燻白醋、每天喝溫鹽水就可以殺死流感病毒，不用打疫苗 查核結果：不實訊息",
+  "claim": "燻白醋、喝鹽水可以殺死流感病毒",
+  "verdict": "false",
+  "clarificationMarkdown": "網傳：在家燻白醋、每天喝溫鹽水就可以殺死流感病毒，不用打疫苗\n\n查核結果：不實訊息\n\n燻白醋無法有效殺死空氣中的流感病毒，濃度過高反而可能刺激呼吸道，引發氣喘或咳嗽；喝鹽水也不能殺死呼吸道內的病毒，過量攝取鹽分對高血壓與腎臟病人有害。\n\n預防流感最有效的方法是**每年接種流感疫苗**，並勤洗手、注意咳嗽禮節、保持室內通風。\n\n【疾管署澄清】燻白醋、喝鹽水不能殺死流感病毒，燻醋還可能刺激呼吸道。預防流感最有效的是每年接種流感疫苗，加上勤洗手、咳嗽戴口罩、室內通風。有疑問撥 1922。",
+  "shareText": "網傳：在家燻白醋、每天喝溫鹽水就可以殺死流感病毒，不用打疫苗 查核結果：不實訊息",
+  "reportChannel": "1922",
+  "basedOn": [
+    "disease.influenza"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/9kUSvU-rUr8mbe1nhEgGb5?typeid=8772"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 16 處（mso 樣式 6、Mso 類別 5、命名空間標籤 5）"
+      },
+      {
+        "code": "type-from-bulletin",
+        "severity": "info",
+        "message": "公告類別是澄清稿，草稿建成 clarification（claim／verdict 由標題與內文推斷）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/9kUSvU-rUr8mbe1nhEgGb5?typeid=8772",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "clar.2026-01-vinegar-saltwater-flu"
+    ]
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "id": "news.2019-11-20-legacy-07f31c",
+  "type": "news",
+  "title": "登革熱疫情趨緩，疾管署感謝地方政府與民眾共同努力",
+  "owner": "unit.pr",
+  "publishedAt": "2019-11-20",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "本年度本土登革熱疫情已趨緩，仍請持續清除孳生源。",
+  "newsType": "press",
+  "bodyMarkdown": "本年度本土登革熱疫情已趨緩，仍請持續清除孳生源。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/9A_rA2MYBsfgm7CTYrG_qI?typeid=9"
+  ],
+  "assets": [
+    {
+      "file": "2019-11-20-old.pdf",
+      "kind": "attachment",
+      "label": "登革熱疫情趨緩，疾管署感謝地方政府與民眾共同努力（PDF）",
+      "mime": "application/pdf",
+      "bytes": 704,
+      "sha256": "1f4521ee0cb5a19ccc768e52a2af20cb87ce4b49f6907dac76c1774c128eb0ff",
+      "machineReadable": false,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.8,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "old-content",
+        "severity": "info",
+        "message": "最後更新於 2019-11-20（6.9 年前），建議走久遠封存而非上線"
+      },
+      {
+        "code": "pdf-no-text-layer",
+        "severity": "warn",
+        "message": "PDF「2019-11-20-old.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+      },
+      {
+        "code": "body-short",
+        "severity": "warn",
+        "message": "內文過短（24 字，低於 40）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/9A_rA2MYBsfgm7CTYrG_qI?typeid=9",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

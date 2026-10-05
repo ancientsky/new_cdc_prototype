@@ -1,0 +1,50 @@
+{
+  "id": "news.2026-07-10-legacy-2ed983",
+  "type": "news",
+  "title": "疾管署公布 2025 年結核病防治成果：新案數續降，都治完治率達 9 成",
+  "owner": "unit.pr",
+  "publishedAt": "2026-07-10",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "2025 年新案發生率每十萬人口 27 例。 潛伏結核感染治療完治率 85%。",
+  "newsType": "press",
+  "bodyMarkdown": "2025 年新案發生率每十萬人口 27 例。\n\n潛伏結核感染治療完治率 85%。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/Y-t1hTiNTbjjrqiAHUTzjm?typeid=9"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.8,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+      },
+      {
+        "code": "body-short",
+        "severity": "warn",
+        "message": "內文過短（39 字，低於 40）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/Y-t1hTiNTbjjrqiAHUTzjm?typeid=9",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

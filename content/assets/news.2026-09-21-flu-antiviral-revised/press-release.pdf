@@ -16,20 +16,20 @@ endobj
 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
 endobj
 6 0 obj
-<< /Length 2114 >>
+<< /Length 2132 >>
 stream
 0 0.33 0.55 rg 0 746 595 96 re f
 BT /F2 20 Tf 1 1 1 rg 48 790 Td (Taiwan CDC Press Release \(SAMPLE\)) Tj ET
 BT /F1 11 Tf 1 1 1 rg 48 766 Td (Released 2026-09-21  |  Division of Acute Infectious Diseases) Tj ET
 0.80 0.10 0.10 rg 425 712 122 22 re f
 BT /F2 11 Tf 1 1 1 rg 433 719 Td (SAMPLE / DEMO ONLY) Tj ET
-BT /F2 15 Tf 0.12 0.12 0.12 rg 48 682 Td (ILI peak declared: people aged 65+ with flu-like symptoms) Tj ET
+BT /F2 15 Tf 0.12 0.12 0.12 rg 48 682 Td (ILI peak declared: children under 5 and people aged 65+ with flu-like symptoms) Tj ET
 BT /F2 15 Tf 0.12 0.12 0.12 rg 48 660 Td (can receive government-funded antivirals without a rapid test) Tj ET
 BT /F1 11 Tf 0.12 0.12 0.12 rg 48 628 Td (Emergency and outpatient visits for influenza-like illness \(ILI\) have risen for 4 consecutive weeks) Tj ET
 BT /F1 11 Tf 0.12 0.12 0.12 rg 48 610 Td (and are above the epidemic threshold. The ILI peak period starts today \(2026-09-21\).) Tj ET
 BT /F2 12 Tf 0.12 0.12 0.12 rg 48 582 Td (What changes \(Article 3 of the eligibility criteria\):) Tj ET
-BT /F1 11 Tf 0.12 0.12 0.12 rg 60 563 Td (- Aged 65 or older with ILI symptoms: physicians may prescribe directly; no positive rapid test needed.) Tj ET
-BT /F1 11 Tf 0.12 0.12 0.12 rg 60 545 Td (- Children under 5: a positive rapid test is still required.) Tj ET
+BT /F1 11 Tf 0.12 0.12 0.12 rg 60 563 Td (- Children under 5 and people aged 65 or older with ILI symptoms: physicians may) Tj ET
+BT /F1 11 Tf 0.12 0.12 0.12 rg 60 545 Td (  prescribe directly based on clinical judgement; no positive rapid test needed.) Tj ET
 BT /F2 12 Tf 0.12 0.12 0.12 rg 48 517 Td (Advice:) Tj ET
 BT /F1 11 Tf 0.12 0.12 0.12 rg 60 498 Td (- Antivirals work best within 48 hours of symptom onset.) Tj ET
 BT /F1 11 Tf 0.12 0.12 0.12 rg 60 480 Td (- Older adults with fever, cough or body aches should see a doctor early.) Tj ET
@@ -41,7 +41,7 @@ BT /F1 8 Tf 0.35 0.35 0.35 rg 48 39 Td (Not an official publication. Chinese tex
 endstream
 endobj
 7 0 obj
-<< /Title <FEFF793A610F65874EF6FF1A985E6D41611F903251659AD85CF0671FFF0C0036003500206B724EE54E0A670975C772C0800553EF76F463A54F7F7528516C8CBB629775C56BD285E55291514D5FEB7BE9FF0865B0805E7A3F51686587FF09> /Subject <FEFF00500072006500730073002000720065006C00650061007300650020002800730061006D0070006C00650029003A00200049004C00490020007000650061006B0020006400650063006C0061007200650064003B00200061006E007400690076006900720061006C007300200066006F0072002000700065006F0070006C006500200061006700650064002000360035002B00200077006900740068006F007500740020006100200072006100700069006400200074006500730074> /Author <FEFF885B751F798F522990E875BE75C57BA152367F72FF08539F578B793A610FFF09> /Keywords (sample; demonstration; prototype) /Creator (scripts/gen-sample-assets.mjs) /Producer (cdc prototype \(zero-dependency PDF writer\)) >>
+<< /Title <FEFF793A610F65874EF6FF1A985E6D41611F903251659AD85CF0671FFF0C672A6EFF0020003500206B7253CA00200036003500206B724EE54E0A670975C772C0800553EF76F463A54F7F7528516C8CBB629775C56BD285E55291514D5FEB7BE9FF0865B0805E7A3F51686587FF09> /Subject <FEFF00500072006500730073002000720065006C00650061007300650020002800730061006D0070006C00650029003A00200049004C00490020007000650061006B0020006400650063006C0061007200650064003B00200061006E007400690076006900720061006C007300200066006F007200200075006E006400650072002D0035007300200061006E0064002000700065006F0070006C006500200061006700650064002000360035002B00200077006900740068006F007500740020006100200072006100700069006400200074006500730074> /Author <FEFF885B751F798F522990E875BE75C57BA152367F72FF08539F578B793A610FFF09> /Keywords (sample; demonstration; prototype) /Creator (scripts/gen-sample-assets.mjs) /Producer (cdc prototype \(zero-dependency PDF writer\)) >>
 endobj
 xref
 0 8
@@ -52,9 +52,9 @@ xref
 0000000315 00000 n 
 0000000412 00000 n 
 0000000514 00000 n 
-0000002680 00000 n 
+0000002698 00000 n 
 trailer
 << /Size 8 /Root 1 0 R /Info 7 0 R >>
 startxref
-3513
+3615
 %%EOF

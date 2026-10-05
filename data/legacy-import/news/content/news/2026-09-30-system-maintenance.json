@@ -1,0 +1,46 @@
+{
+  "id": "news.2026-09-30-system-maintenance",
+  "type": "news",
+  "title": "10 月 3 日晚間官網與傳染病通報系統例行維護",
+  "owner": "unit.pr",
+  "publishedAt": "2026-09-30",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "2026 年 10 月 3 日（星期六）22:00 至 10 月 4 日（星期日）06:00",
+  "newsType": "other",
+  "bodyMarkdown": "2026 年 10 月 3 日（星期六）22:00 至 10 月 4 日（星期日）06:00\n\n- 疾管署官網、開放資料 API：可能短暫無法連線\n- 傳染病通報系統（NIDRS）：暫停服務\n\n請以電話或傳真通報轄區衛生局，系統恢復後補登。民眾防疫諮詢請撥 **1922**，不受影響。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/DaoU2_VYCU97SjvAr1XKY_?typeid=11"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 15 處（mso 樣式 11、Mso 類別 4、命名空間標籤 2）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/DaoU2_VYCU97SjvAr1XKY_?typeid=11",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "news.2026-09-30-system-maintenance"
+    ]
+  }
+}

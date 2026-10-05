@@ -1,0 +1,46 @@
+{
+  "id": "news.2026-09-15-international-health-mou",
+  "type": "news",
+  "title": "Taiwan CDC signs a public health cooperation MOU with a New Southbound partner",
+  "owner": "unit.pr",
+  "publishedAt": "2026-09-15",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "Taiwan CDC signed a memorandum of understanding (MOU) on public health cooperation with a partner institution in Southe…",
+  "newsType": "press",
+  "bodyMarkdown": "Taiwan CDC signed a memorandum of understanding (MOU) on public health cooperation with a partner institution in Southeast Asia under the New Southbound Policy.\n\nThe MOU covers tuberculosis and dengue control, laboratory training, migrant worker health and the timely exchange of information on cross-border events through IHR channels.\n\nThe cooperation will be reviewed each year, and its status is listed on the bilateral cooperation page.\n\nThis release is illustrative prototype content; the partner, date and scope are examples.",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/ac1-BUx7wJb5j4GLZggaOv?typeid=9"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 12 處（mso 樣式 4、Mso 類別 4、命名空間標籤 4）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/ac1-BUx7wJb5j4GLZggaOv?typeid=9",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "news.2026-09-15-international-health-mou"
+    ]
+  }
+}

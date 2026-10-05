@@ -1,0 +1,45 @@
+{
+  "id": "news.2026-09-12-legacy-16fe19",
+  "type": "news",
+  "title": "登革熱防治：疾管署與高雄市政府聯合孳生源清除，呼籲民眾巡倒清刷",
+  "owner": "unit.pr",
+  "publishedAt": "2026-09-12",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "9 月 12 日起一週為孳生源清除週，衛生局與里辦公處逐戶訪查。 民眾請每週檢查住家內外積水容器。",
+  "newsType": "press",
+  "bodyMarkdown": "9 月 12 日起一週為孳生源清除週，衛生局與里辦公處逐戶訪查。\n\n民眾請每週檢查住家內外積水容器。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/tVOO6DTH_ehRSk8H6crMnS?typeid=9"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/tVOO6DTH_ehRSk8H6crMnS?typeid=9",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

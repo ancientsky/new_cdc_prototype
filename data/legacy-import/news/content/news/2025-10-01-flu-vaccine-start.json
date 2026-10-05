@@ -1,0 +1,49 @@
+{
+  "id": "news.2025-10-01-flu-vaccine-start",
+  "type": "news",
+  "title": "114 年度公費流感疫苗今日開打，長者與幼兒請儘早接種",
+  "owner": "unit.pr",
+  "publishedAt": "2025-10-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "114 年度公費流感疫苗今（1）日起開打。疾病管制署呼籲，65 歲以上長者、6 個月以上至國小入學前幼兒、孕婦及高風險慢性病人等第一階段對象儘早接種；50 至 64 歲無高風險慢性病成人自 11 月 1 日起接種。",
+  "newsType": "press",
+  "bodyMarkdown": "114 年度公費流感疫苗今（1）日起開打。疾病管制署呼籲，65 歲以上長者、6 個月以上至國小入學前幼兒、孕婦及高風險慢性病人等第一階段對象儘早接種；50 至 64 歲無高風險慢性病成人自 11 月 1 日起接種。\n\n疫苗接種後約需 2 週產生保護力，民眾可至「流感防治一網通」查詢合約院所。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/i7x67klq3R1Dc2w8czhbO9?typeid=9"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/i7x67klq3R1Dc2w8czhbO9?typeid=9",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "news.2025-10-01-flu-vaccine-start"
+    ]
+  }
+}

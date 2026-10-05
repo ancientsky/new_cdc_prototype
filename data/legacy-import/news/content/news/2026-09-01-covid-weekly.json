@@ -1,0 +1,50 @@
+{
+  "id": "news.2026-09-01-covid-weekly",
+  "type": "news",
+  "title": "新冠疫情連續三週下降，10 月起新年度疫苗與流感疫苗同步開打",
+  "owner": "unit.pr",
+  "publishedAt": "2026-09-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.covid-19",
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "疾病管制署表示，近一週新冠門急診就診人次與新冠併發重症通報數連續三週下降，夏季疫情趨緩。",
+  "newsType": "press",
+  "bodyMarkdown": "疾病管制署表示，近一週新冠門急診就診人次與新冠併發重症通報數連續三週下降，夏季疫情趨緩。\n\n2026–2027 年度新冠疫苗將自 10 月 1 日起與流感疫苗同步開打，6 個月以上民眾皆可接種公費疫苗。疾管署提醒 65 歲以上長者及慢性病人確診後應儘早就醫，由醫師評估於發病 5 天內使用口服抗病毒藥物。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/aXeVzpSMDHPv5coJCwA9TH?typeid=9"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/aXeVzpSMDHPv5coJCwA9TH?typeid=9",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "news.2026-09-01-covid-weekly"
+    ]
+  }
+}
