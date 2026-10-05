@@ -1,0 +1,52 @@
+{
+  "id": "page.x-open-data-portal",
+  "type": "page",
+  "title": "疾管署資料開放平臺",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2018-05-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "疾管署資料開放平臺提供機器可讀的開放資料集，包括每週監測、病例統計與疫苗接種資料，依政府資料開放授權條款提供。",
+  "slug": "x-open-data-portal",
+  "bodyMarkdown": "疾管署資料開放平臺提供機器可讀的開放資料集，包括每週監測、病例統計與疫苗接種資料，依政府資料開放授權條款提供。\n\n- [疾管署資料開放平臺](https://data.cdc.gov.tw/)",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/2okLkU-L0iWbjwLrj2BaP7"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "external-system",
+        "severity": "info",
+        "message": "舊頁主要連到外部系統（網域 data.cdc.gov.tw）：新站以入口連結呈現，建議 /services/ 放入口或清單填 newPath（例 /data/）"
+      },
+      {
+        "code": "dataset-by-url",
+        "severity": "info",
+        "message": "站外連結 host data.cdc.gov.tw 對到 19 筆既有資料集、沒有 canonicalUrl 完全相等者，無法判定是哪一筆，維持 page"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/2okLkU-L0iWbjwLrj2BaP7",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

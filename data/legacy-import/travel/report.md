@@ -14,7 +14,7 @@
 | 既有內容已存在（供比對） | 5 |
 | 附件與圖片 | 1（附件 1、內文圖片 0、資料檔 0；圖片待補 alt 0、PDF 無文字層 0） |
 | 草稿 schema 驗證 | 13 / 13 通過 |
-| 問題 | 錯誤 0、警告 4、提示 35 |
+| 問題 | 錯誤 0、警告 3、提示 35 |
 | 移轉清單對應 | 對上 19 / 19 筆；status 變化 0；note 更新 0；仍待移轉 3；與清單判定不同 0 |
 | 清單沒有的舊頁 | 1（migration-patch.json 的 unmatchedPages 有建議的 pending 項目） |
 
@@ -35,7 +35,7 @@
 | 9 | 國際旅遊處方箋：泰國<br><sub>www.cdc.gov.tw/TravelEpidemic/Prescription/YZikHlPi2GkInV-mf0C0VR?iso=TH</sub> | 資料產生頁 → — | `/travel/TH/`（資料產生） | 1 | — | 新站由資料自動產生此頁，不轉內文（舊網址 301 到產生頁；舊內文存 reference/ 供比對） |
 | 10 | 國際旅遊處方箋：越南<br><sub>www.cdc.gov.tw/TravelEpidemic/Prescription/YZikHlPi2GkInV-mf0C0VR?iso=VN</sub> | 資料產生頁 → — | `/travel/VN/`（資料產生） | 1 | — | 新站由資料自動產生此頁，不轉內文（舊網址 301 到產生頁；舊內文存 reference/ 供比對） |
 | 11 | 旅遊醫學門診<br><sub>www.cdc.gov.tw/Category/Page/ucmuQnzcJPue77qHt0IXeg</sub> | 服務 → `service.travel-clinic-appointment` | `service.travel-clinic-appointment`（既有） | 1 | fields-pending | 既有內容已存在，供比對，不建議覆蓋 |
-| 12 | 國際旅遊疫情建議等級表<br><sub>www.cdc.gov.tw/Category/MPage/n-DGrcI1Yod3VzrY9JQHan</sub> | 資料集 → `dataset.travel-alert-levels` | `dataset.travel-alert-levels`（既有） | 1 | fields-pending | 既有內容已存在，供比對，不建議覆蓋 |
+| 12 | 國際旅遊疫情建議等級表<br><sub>www.cdc.gov.tw/Category/MPage/n-DGrcI1Yod3VzrY9JQHan</sub> | 資料集 → `dataset.travel-alert-levels` | `dataset.travel-alert-levels`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 13 | 國際旅遊常見問答<br><sub>www.cdc.gov.tw/Category/QAPage/oDFvYopfPTouRB6a4gWcs5</sub> | Q&A → `faq.travel-clinic`（重複，未輸出）<br>`faq.travel-japan-measles`（重複，未輸出）<br>`faq.travel-malaria-prevention`（重複，未輸出）<br>`faq.travel-return-fever`（重複，未輸出）<br>`faq.yellow-fever-certificate`（重複，未輸出）<br>`faq.x-legacy-3456c6`（重複，未輸出） | — | 1 | — | 已在其他批次轉過（同網址），本批不重複出草稿 |
 | 14 | 國際旅遊保健資訊<br><sub>www.cdc.gov.tw/Category/List/HJ0FrBEq15g18TFKowY7lg</sub> | 清單頁 → `page.x-travel-health-info-list` | — | 0.6 | — | 清單頁，不轉換（新站由系統自動產生列表） |
 | 15 | 國際旅遊與健康<br><sub>www.cdc.gov.tw/Category/List/tRbpXpZM7EO3-dkc4RYZuQ</sub> | 清單頁 → `page.x-travel-list` | — | 0.6 | — | 清單頁，不轉換（新站由系統自動產生列表） |

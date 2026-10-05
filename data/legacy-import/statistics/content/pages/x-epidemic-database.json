@@ -1,0 +1,52 @@
+{
+  "id": "page.x-epidemic-database",
+  "type": "page",
+  "title": "防疫資料庫",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2014-03-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "防疫資料庫彙整傳染病通報、監測與統計資料，供研究與防疫人員查詢。 法定傳染病統計請至傳染病統計資料查詢系統，開放資料請至資料開放平臺。",
+  "slug": "x-epidemic-database",
+  "bodyMarkdown": "防疫資料庫彙整傳染病通報、監測與統計資料，供研究與防疫人員查詢。\n\n法定傳染病統計請至傳染病統計資料查詢系統，開放資料請至資料開放平臺。\n\n- [疾管署資料開放平臺](https://data.cdc.gov.tw/)\n- [法定傳染病統計查詢](https://nidss.cdc.gov.tw/nndss/)",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/i5N2W9G-FWJkh3agfLA-Kg"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+      },
+      {
+        "code": "external-system",
+        "severity": "info",
+        "message": "舊頁主要連到外部系統（網域 data.cdc.gov.tw、nidss.cdc.gov.tw）：新站以入口連結呈現，建議 /services/ 放入口或清單填 newPath（例 /data/）"
+      },
+      {
+        "code": "dataset-by-url",
+        "severity": "info",
+        "message": "站外連結 host data.cdc.gov.tw 對到 19 筆既有資料集、沒有 canonicalUrl 完全相等者，無法判定是哪一筆，維持 page"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/i5N2W9G-FWJkh3agfLA-Kg",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

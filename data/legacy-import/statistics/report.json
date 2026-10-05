@@ -1,0 +1,1557 @@
+{
+  "format": "cdc-legacy-import-report/1",
+  "batch": "statistics",
+  "generatedAt": "2026-10-05T02:30:00Z",
+  "exportedAt": "2026-10-03",
+  "simulated": true,
+  "source": {
+    "dir": "data/legacy-export/statistics",
+    "note": "模擬匯出：統計專區欄目。依既有新站內容（content/datasets、統計年報出版品）反推 13 頁：列表 2 頁（含英文 Data & Statistics）、外部系統入口 3 頁、期刊頁 4 頁（週速訊／週報，一頁列多期 PDF）、統計表頁 3 頁、統計年報 1 頁；另複製結核病批與登革熱批匯出的「統計資料」頁各 1 頁（同網址，含附件）。統計專區根、英文 Data & Statistics、法定傳染病境外移入確定病例統計、防疫資料庫、疫情監測速訊的網址 ID 為舊站真實 ID；其餘 ID、數字與連結皆為示意，不是舊站的真實資料。正式匯出取代整個目錄即可。",
+    "site": "https://www.cdc.gov.tw"
+  },
+  "rules": {
+    "file": "content/migration/import/_import-rules.json",
+    "version": 10
+  },
+  "manifest": {
+    "id": "migration.statistics",
+    "file": "content/migration/statistics.json",
+    "synthetic": false,
+    "items": 13,
+    "extends": null,
+    "derivedItems": 0,
+    "derivedCovered": [],
+    "disease": null
+  },
+  "summary": {
+    "pages": 15,
+    "drafts": 13,
+    "mergedPages": 0,
+    "byType": {
+      "publication": 1,
+      "dataset": 8,
+      "page": 4
+    },
+    "byKind": {
+      "publication": 1,
+      "dataset": 10,
+      "page": 2,
+      "list": 2
+    },
+    "byAction": {
+      "compare-existing": 5,
+      "review-before-publish": 6,
+      "skip-duplicate": 2,
+      "skip-list": 2
+    },
+    "avgConfidence": 0.95,
+    "needsReview": 0,
+    "existing": 5,
+    "schemaInvalid": 0,
+    "assets": {
+      "total": 30,
+      "attachment": 29,
+      "image": 0,
+      "data": 1,
+      "needsAlt": 0,
+      "noTextLayer": 0
+    },
+    "issues": {
+      "error": 0,
+      "warn": 5,
+      "info": 51
+    },
+    "manifest": {
+      "items": 13,
+      "matched": 13,
+      "missingPages": 0,
+      "derivedItems": 0,
+      "derivedMatched": 0
+    },
+    "generated": 0,
+    "exportedAt": "2026-10-03",
+    "pagesWithoutOutput": 0
+  },
+  "pages": [
+    {
+      "key": "01-annual-report",
+      "file": "01-annual-report.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/awMzKEQ9hVCtOWGFPHydj2",
+        "title": "傳染病統計暨監視年報",
+        "category": "統計專區／傳染病統計暨監視年報",
+        "publishedAt": "2016-06-01",
+        "updatedAt": "2026-06-20",
+        "breadcrumbs": [
+          "首頁",
+          "統計專區",
+          "傳染病統計暨監視年報"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "publication",
+      "type": "publication",
+      "manifestKey": "annual-report",
+      "manifestDerived": false,
+      "target": "publication.statistics-annual-2025",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "publication.statistics-annual-2025"
+      ],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "統計專區",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "publication.statistics-annual-2025",
+          "type": "publication",
+          "role": "draft",
+          "file": "content/publications/statistics-annual-2025.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 publication（publication.statistics-annual-2025），草稿直接建成 publication，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "periodical-issues",
+          "severity": "info",
+          "message": "附件是 6 期期刊、最新 2025 年；期別不是版次，不拆版次鏈，各期附件留在本筆"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 6
+      }
+    },
+    {
+      "key": "02-covid-weekly",
+      "file": "02-covid-weekly.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/OyPQCu3iBWmljSol_qLalD",
+        "title": "COVID-19 週報",
+        "category": "統計專區／COVID-19 週報",
+        "publishedAt": "2023-05-01",
+        "updatedAt": "2026-10-02",
+        "breadcrumbs": [
+          "首頁",
+          "統計專區",
+          "COVID-19 週報"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "dataset",
+      "type": "dataset",
+      "manifestKey": "covid-weekly",
+      "manifestDerived": false,
+      "target": "dataset.covid-severe-weekly",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "dataset.covid-severe-weekly"
+      ],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "統計專區",
+      "diseases": [
+        "disease.covid-19"
+      ],
+      "outputs": [
+        {
+          "id": "dataset.covid-severe-weekly",
+          "type": "dataset",
+          "role": "draft",
+          "file": "content/datasets/covid-severe-weekly.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 dataset（dataset.covid-severe-weekly），草稿直接建成 dataset，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "periodical-issues",
+          "severity": "info",
+          "message": "4 期、最新 2026 年第 41 週（期間缺 2026-W39）；期別不是版次，建成一筆資料集逐期列 resources"
+        },
+        {
+          "code": "dataset-by-url",
+          "severity": "info",
+          "message": "canonicalUrl 沿用既有資料集 dataset.covid-severe-weekly（清單 target 指定）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 4
+      }
+    },
+    {
+      "key": "03-death-stats",
+      "file": "03-death-stats.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/7QXqDvpfrx1OcONmVzC8Hi",
+        "title": "法定傳染病死亡統計",
+        "category": "統計專區／法定傳染病死亡統計",
+        "publishedAt": "2016-01-01",
+        "updatedAt": "2024-03-15",
+        "breadcrumbs": [
+          "首頁",
+          "統計專區",
+          "法定傳染病死亡統計"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "dataset",
+      "type": "dataset",
+      "manifestKey": "death-stats",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "統計專區",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "dataset.x-death-stats",
+          "type": "dataset",
+          "role": "draft",
+          "file": "content/datasets/x-death-stats.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 52 處（mso 樣式 18、Mso 類別 17、命名空間標籤 17）"
+        },
+        {
+          "code": "type-from-category",
+          "severity": "info",
+          "message": "統計頁的表格是時序，草稿建成 dataset（structured-table）"
+        },
+        {
+          "code": "series-extracted",
+          "severity": "info",
+          "message": "7 點、2015–2022、人（死亡人數）"
+        },
+        {
+          "code": "series-gaps",
+          "severity": "warn",
+          "message": "時序有缺期或重複：缺 2019 年"
+        },
+        {
+          "code": "stats-stale",
+          "severity": "warn",
+          "message": "最新一筆 2022，資料可能已停更或開放平臺有新版（依匯出日應至少到 2025）"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "dataset 的欄位從舊頁看不出來，以「（待補）」佔位：canonicalUrl"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "看不出更新頻率，updateFrequency 暫填 irregular"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "舊頁沒有資料檔也沒有開放資料連結，canonicalUrl 暫填舊頁網址"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "04-dengue-stats",
+      "file": "04-dengue-stats.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/24UnSJ76XgcjnNUGy3DMcd",
+        "title": "統計資料",
+        "category": "登革熱／統計資料",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "登革熱",
+          "統計資料"
+        ],
+        "tab": "statistics"
+      },
+      "pattern": "category-list",
+      "kind": "dataset",
+      "type": "dataset",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [
+        "dataset.dengue-local-weekly"
+      ],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "／統計資料",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "dataset.dengue-local-weekly",
+          "type": "dataset",
+          "role": "duplicate",
+          "duplicateOf": "dengue/14-stats"
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 61 處（mso 樣式 21、Mso 類別 20、命名空間標籤 20）"
+        },
+        {
+          "code": "converted-elsewhere",
+          "severity": "info",
+          "message": "同網址的頁已在 dengue 批（14-stats）轉過，草稿 dataset.dengue-local-weekly；本批不重複出草稿，內容若有更新請在該批重跑"
+        }
+      ],
+      "action": "skip-duplicate",
+      "flags": {
+        "convertedElsewhere": {
+          "batch": "dengue",
+          "key": "14-stats"
+        }
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "05-epidemic-database",
+      "file": "05-epidemic-database.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/i5N2W9G-FWJkh3agfLA-Kg",
+        "title": "防疫資料庫",
+        "category": "統計專區／防疫資料庫",
+        "publishedAt": "2014-03-01",
+        "updatedAt": "2026-06-30",
+        "breadcrumbs": [
+          "首頁",
+          "統計專區",
+          "防疫資料庫"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "epidemic-database",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "統計專區",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "page.x-epidemic-database",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/x-epidemic-database.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "external-system",
+          "severity": "info",
+          "message": "舊頁主要連到外部系統（網域 data.cdc.gov.tw、nidss.cdc.gov.tw）：新站以入口連結呈現，建議 /services/ 放入口或清單填 newPath（例 /data/）"
+        },
+        {
+          "code": "dataset-by-url",
+          "severity": "info",
+          "message": "站外連結 host data.cdc.gov.tw 對到 19 筆既有資料集、沒有 canonicalUrl 完全相等者，無法判定是哪一筆，維持 page"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false,
+        "externalSystem": {
+          "hosts": [
+            "data.cdc.gov.tw",
+            "nidss.cdc.gov.tw"
+          ]
+        }
+      },
+      "stats": {
+        "images": 0,
+        "links": 2,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "06-ev-weekly",
+      "file": "06-ev-weekly.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/NYDMC1OCW393ioaTIE_-yc",
+        "title": "腸病毒疫情週報",
+        "category": "統計專區／腸病毒疫情週報",
+        "publishedAt": "2015-04-01",
+        "updatedAt": "2026-10-01",
+        "breadcrumbs": [
+          "首頁",
+          "統計專區",
+          "腸病毒疫情週報"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "dataset",
+      "type": "dataset",
+      "manifestKey": "ev-weekly",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "統計專區",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "dataset.enterovirus-ev-weekly",
+          "type": "dataset",
+          "role": "draft",
+          "file": "content/datasets/enterovirus-ev-weekly.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "type-from-category",
+          "severity": "info",
+          "message": "統計頁的附件是 5 期期刊，草稿建成 dataset（document-library）"
+        },
+        {
+          "code": "periodical-issues",
+          "severity": "info",
+          "message": "5 期、最新 2026 年第 40 週；期別不是版次，建成一筆資料集逐期列 resources"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "dataset 的欄位從舊頁看不出來，以「（待補）」佔位：canonicalUrl"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "舊頁沒有資料檔也沒有開放資料連結，canonicalUrl 暫填舊頁網址"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 5
+      }
+    },
+    {
+      "key": "07-flu-express",
+      "file": "07-flu-express.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/z6EmN04F9zPF9NDXivtXFB",
+        "title": "流感速訊",
+        "category": "統計專區／流感速訊",
+        "publishedAt": "2015-10-01",
+        "updatedAt": "2026-09-30",
+        "breadcrumbs": [
+          "首頁",
+          "統計專區",
+          "流感速訊"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "dataset",
+      "type": "dataset",
+      "manifestKey": "flu-express",
+      "manifestDerived": false,
+      "target": "dataset.flu-express",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "dataset.flu-express"
+      ],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "統計專區",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "dataset.flu-express",
+          "type": "dataset",
+          "role": "draft",
+          "file": "content/datasets/flu-express.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 dataset（dataset.flu-express），草稿直接建成 dataset，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "periodical-issues",
+          "severity": "info",
+          "message": "6 期、最新 2026 年第 40 週；期別不是版次，建成一筆資料集逐期列 resources"
+        },
+        {
+          "code": "external-system",
+          "severity": "info",
+          "message": "舊頁主要連到外部系統（網域 antiflu.cdc.gov.tw）：新站以資料集入口呈現"
+        },
+        {
+          "code": "dataset-by-url",
+          "severity": "info",
+          "message": "依站外連結 host antiflu.cdc.gov.tw 對到既有資料集 dataset.flu-express"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 1,
+        "legacyLinks": 0,
+        "attachments": 6
+      }
+    },
+    {
+      "key": "08-imported-cases",
+      "file": "08-imported-cases.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/Page/5Q6qrh5kM6TnpnRpy3XDfQ",
+        "title": "法定傳染病境外移入確定病例統計",
+        "category": "統計專區／法定傳染病境外移入確定病例統計",
+        "publishedAt": "2016-01-01",
+        "updatedAt": "2026-09-10",
+        "breadcrumbs": [
+          "首頁",
+          "統計專區",
+          "法定傳染病境外移入確定病例統計"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "dataset",
+      "type": "dataset",
+      "manifestKey": "imported-cases",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "統計專區",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "dataset.x-imported-cases",
+          "type": "dataset",
+          "role": "draft",
+          "file": "content/datasets/x-imported-cases.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 103 處（mso 樣式 35、Mso 類別 34、命名空間標籤 34）"
+        },
+        {
+          "code": "type-from-category",
+          "severity": "info",
+          "message": "統計頁的表格是時序，草稿建成 dataset（structured-table）"
+        },
+        {
+          "code": "series-extracted",
+          "severity": "info",
+          "message": "10 點、2016–2025、人（境外移入確定病例數）；另有欄位：占全部確定病例比率（%）"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "看不出更新頻率，updateFrequency 暫填 irregular"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "09-list-statistics",
+      "file": "09-list-statistics.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/ZrvS2zJwZ03tl8CbKYdI8g",
+        "title": "統計專區",
+        "category": "統計專區",
+        "publishedAt": "2026-10-03",
+        "updatedAt": "2026-10-03",
+        "breadcrumbs": [
+          "首頁",
+          "統計專區"
+        ],
+        "tab": ""
+      },
+      "pattern": "category-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "list-statistics",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "統計專區",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "page.x-list-statistics",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/x-list-statistics.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.6,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 11,
+        "legacyLinks": 11,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "10-list-statistics-en",
+      "file": "10-list-statistics-en.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/En/Category/List/gK4BJWe3qYlmNxYJBqEcxA",
+        "title": "Data & Statistics",
+        "category": "Data & Statistics",
+        "publishedAt": "2026-10-03",
+        "updatedAt": "2026-10-03",
+        "breadcrumbs": [
+          "Home",
+          "Data & Statistics"
+        ],
+        "tab": ""
+      },
+      "pattern": "category-list-en",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "list-statistics-en",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "Data & Statistics",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "page.x-list-statistics-en",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/x-list-statistics-en.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.6,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 5,
+        "legacyLinks": 5,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "11-nidss",
+      "file": "11-nidss.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/LiNW6PIOJsKKTzV9OoRoSg",
+        "title": "傳染病統計資料查詢系統",
+        "category": "統計專區／傳染病統計資料查詢系統",
+        "publishedAt": "2012-01-01",
+        "updatedAt": "2026-08-12",
+        "breadcrumbs": [
+          "首頁",
+          "統計專區",
+          "傳染病統計資料查詢系統"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "dataset",
+      "type": "dataset",
+      "manifestKey": "nidss",
+      "manifestDerived": false,
+      "target": "dataset.nidss",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "dataset.nidss"
+      ],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "統計專區",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "dataset.nidss",
+          "type": "dataset",
+          "role": "draft",
+          "file": "content/datasets/nidss.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 dataset（dataset.nidss），草稿直接建成 dataset，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "external-system",
+          "severity": "info",
+          "message": "舊頁主要連到外部系統（網域 nidss.cdc.gov.tw）：新站以資料集入口呈現"
+        },
+        {
+          "code": "dataset-by-url",
+          "severity": "info",
+          "message": "依站外連結 host nidss.cdc.gov.tw 對到既有資料集 dataset.nidss"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "看不出更新頻率，updateFrequency 暫填 irregular"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 1,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "12-open-data-portal",
+      "file": "12-open-data-portal.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/2okLkU-L0iWbjwLrj2BaP7",
+        "title": "疾管署資料開放平臺",
+        "category": "統計專區／疾管署資料開放平臺",
+        "publishedAt": "2018-05-01",
+        "updatedAt": "2026-07-20",
+        "breadcrumbs": [
+          "首頁",
+          "統計專區",
+          "疾管署資料開放平臺"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "open-data-portal",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "統計專區",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "page.x-open-data-portal",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/x-open-data-portal.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "external-system",
+          "severity": "info",
+          "message": "舊頁主要連到外部系統（網域 data.cdc.gov.tw）：新站以入口連結呈現，建議 /services/ 放入口或清單填 newPath（例 /data/）"
+        },
+        {
+          "code": "dataset-by-url",
+          "severity": "info",
+          "message": "站外連結 host data.cdc.gov.tw 對到 19 筆既有資料集、沒有 canonicalUrl 完全相等者，無法判定是哪一筆，維持 page"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false,
+        "externalSystem": {
+          "hosts": [
+            "data.cdc.gov.tw"
+          ]
+        }
+      },
+      "stats": {
+        "images": 0,
+        "links": 1,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "13-surveillance-express",
+      "file": "13-surveillance-express.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/94JVbJ2BFjR_3MTi-9s9Cg",
+        "title": "疫情監測速訊",
+        "category": "統計專區／疫情監測速訊",
+        "publishedAt": "2016-01-01",
+        "updatedAt": "2026-10-02",
+        "breadcrumbs": [
+          "首頁",
+          "統計專區",
+          "疫情監測速訊"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "dataset",
+      "type": "dataset",
+      "manifestKey": "surveillance-express",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "統計專區",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "dataset.x-surveillance-express",
+          "type": "dataset",
+          "role": "draft",
+          "file": "content/datasets/x-surveillance-express.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "type-from-category",
+          "severity": "info",
+          "message": "統計頁的附件是 8 期期刊，草稿建成 dataset（document-library）"
+        },
+        {
+          "code": "periodical-issues",
+          "severity": "info",
+          "message": "8 期、最新 2026 年第 40 週；期別不是版次，建成一筆資料集逐期列 resources"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "dataset 的欄位從舊頁看不出來，以「（待補）」佔位：canonicalUrl"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "舊頁沒有資料檔也沒有開放資料連結，canonicalUrl 暫填舊頁網址"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 8
+      }
+    },
+    {
+      "key": "14-tb-stats",
+      "file": "14-tb-stats.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/IR-4OsM3biF9t30fng00vq",
+        "title": "統計資料",
+        "category": "結核病／統計資料",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-09-20",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "統計資料"
+        ],
+        "tab": "statistics"
+      },
+      "pattern": "category-list",
+      "kind": "dataset",
+      "type": "dataset",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [
+        "dataset.tb-new-cases"
+      ],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "結核病／統計資料",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "dataset.tb-new-cases",
+          "type": "dataset",
+          "role": "duplicate",
+          "duplicateOf": "tuberculosis/24-stats"
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "converted-elsewhere",
+          "severity": "info",
+          "message": "同網址的頁已在 tuberculosis 批（24-stats）轉過，草稿 dataset.tb-new-cases；本批不重複出草稿，內容若有更新請在該批重跑"
+        }
+      ],
+      "action": "skip-duplicate",
+      "flags": {
+        "convertedElsewhere": {
+          "batch": "tuberculosis",
+          "key": "24-stats"
+        }
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "15-vaccine-coverage",
+      "file": "15-vaccine-coverage.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/Z3nsEXQ6Jne6A13aVu8Ra8",
+        "title": "常規疫苗接種完成率",
+        "category": "統計專區／常規疫苗接種完成率",
+        "publishedAt": "2016-01-01",
+        "updatedAt": "2026-09-15",
+        "breadcrumbs": [
+          "首頁",
+          "統計專區",
+          "常規疫苗接種完成率"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "dataset",
+      "type": "dataset",
+      "manifestKey": "vaccine-coverage",
+      "manifestDerived": false,
+      "target": "dataset.vaccine-coverage",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "dataset.vaccine-coverage"
+      ],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "統計專區",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "dataset.vaccine-coverage",
+          "type": "dataset",
+          "role": "draft",
+          "file": "content/datasets/vaccine-coverage.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 76 處（mso 樣式 26、Mso 類別 25、命名空間標籤 25）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 dataset（dataset.vaccine-coverage），草稿直接建成 dataset，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "series-extracted",
+          "severity": "info",
+          "message": "11 點、2015–2025、%（接種完成率（%））"
+        },
+        {
+          "code": "dataset-by-url",
+          "severity": "info",
+          "message": "canonicalUrl 沿用既有資料集 dataset.vaccine-coverage（清單 target 指定）"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "看不出更新頻率，updateFrequency 暫填 irregular"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    }
+  ],
+  "drafts": [
+    {
+      "id": "publication.statistics-annual-2025",
+      "type": "publication",
+      "title": "傳染病統計暨監視年報",
+      "file": "content/publications/statistics-annual-2025.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "publication.statistics-annual-2025"
+      ],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 6,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "01-annual-report"
+      ],
+      "merged": false
+    },
+    {
+      "id": "dataset.covid-severe-weekly",
+      "type": "dataset",
+      "title": "新冠併發重症COVID-19 週報",
+      "file": "content/datasets/covid-severe-weekly.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "dataset.covid-severe-weekly"
+      ],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 4,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "02-covid-weekly"
+      ],
+      "merged": false
+    },
+    {
+      "id": "dataset.x-death-stats",
+      "type": "dataset",
+      "title": "法定傳染病死亡統計",
+      "file": "content/datasets/x-death-stats.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "03-death-stats"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.x-epidemic-database",
+      "type": "page",
+      "title": "防疫資料庫",
+      "file": "content/pages/x-epidemic-database.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "05-epidemic-database"
+      ],
+      "merged": false
+    },
+    {
+      "id": "dataset.enterovirus-ev-weekly",
+      "type": "dataset",
+      "title": "腸病毒疫情週報",
+      "file": "content/datasets/enterovirus-ev-weekly.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 5,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "06-ev-weekly"
+      ],
+      "merged": false
+    },
+    {
+      "id": "dataset.flu-express",
+      "type": "dataset",
+      "title": "流感速訊",
+      "file": "content/datasets/flu-express.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "dataset.flu-express"
+      ],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 6,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "07-flu-express"
+      ],
+      "merged": false
+    },
+    {
+      "id": "dataset.x-imported-cases",
+      "type": "dataset",
+      "title": "法定傳染病境外移入確定病例統計",
+      "file": "content/datasets/x-imported-cases.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "08-imported-cases"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.x-list-statistics",
+      "type": "page",
+      "title": "統計專區",
+      "file": "content/pages/x-list-statistics.json",
+      "confidence": 0.6,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "09-list-statistics"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.x-list-statistics-en",
+      "type": "page",
+      "title": "Data & Statistics",
+      "file": "content/pages/x-list-statistics-en.json",
+      "confidence": 0.6,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-list-statistics-en"
+      ],
+      "merged": false
+    },
+    {
+      "id": "dataset.nidss",
+      "type": "dataset",
+      "title": "傳染病統計資料查詢系統",
+      "file": "content/datasets/nidss.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "dataset.nidss"
+      ],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "11-nidss"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.x-open-data-portal",
+      "type": "page",
+      "title": "疾管署資料開放平臺",
+      "file": "content/pages/x-open-data-portal.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "12-open-data-portal"
+      ],
+      "merged": false
+    },
+    {
+      "id": "dataset.x-surveillance-express",
+      "type": "dataset",
+      "title": "疫情監測速訊",
+      "file": "content/datasets/x-surveillance-express.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 8,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "13-surveillance-express"
+      ],
+      "merged": false
+    },
+    {
+      "id": "dataset.vaccine-coverage",
+      "type": "dataset",
+      "title": "常規疫苗接種完成率",
+      "file": "content/datasets/vaccine-coverage.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "dataset.vaccine-coverage"
+      ],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "15-vaccine-coverage"
+      ],
+      "merged": false
+    }
+  ],
+  "sampling": {
+    "rate": 0.1,
+    "autoOk": 0,
+    "picked": []
+  },
+  "migration": {
+    "patchFile": "migration-patch.json",
+    "applied": true,
+    "summary": {
+      "derivedItems": 0,
+      "derivedMatched": 0,
+      "items": 13,
+      "matched": 13,
+      "missingPages": 0,
+      "unmatchedPages": 2,
+      "agree": 13,
+      "conflicts": 0,
+      "statusChanges": 0,
+      "pendingToMigrated": 0,
+      "targetChanges": 0,
+      "newPathChanges": 0,
+      "noteChanges": 0,
+      "stillPending": 5
+    },
+    "file": "content/migration/statistics.json",
+    "statusChanges": [],
+    "targetChanges": [],
+    "newPathChanges": [],
+    "noteChanges": 0
+  }
+}

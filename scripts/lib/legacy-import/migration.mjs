@@ -113,9 +113,9 @@ export function buildPatch({ manifest, prs, index, exportedAt, slug, derivedItem
       },
       suggestion: { status: proposed, target: proposedTarget, newPath: proposedTarget ? null : proposedNewPath }, draftIds: ids,
       // 人工已判定「不轉」或「封存」而工具也找不到新站去向 ⇒ 兩者一致（pending 的意思就是新站沒有對應）；
-      // 清單已填 newPath（去處為系統產生頁／功能頁）而本頁是清單頁、資料產生頁或查詢表單 ⇒ 工具本來就不會有內容 id 可對，視為一致
+      // 清單已填 newPath（去處為系統產生頁／功能頁）而本頁是清單頁、資料產生頁、查詢表單或外部系統入口頁（第十一批） ⇒ 工具本來就不會有內容 id 可對，視為一致
       agree: klass(proposed) === klass(it.status) || (proposed === 'pending' && (it.status === 'dropped' || it.status === 'archived'))
-        || (!!it.newPath && !it.target && (pr.kind === 'list' || !!gen || !!pr.flags.dynamicForm) && ['pending', 'dropped', 'migrated'].includes(proposed)),
+        || (!!it.newPath && !it.target && (pr.kind === 'list' || !!gen || !!pr.flags.dynamicForm || !!pr.flags.externalSystem) && ['pending', 'dropped', 'migrated'].includes(proposed)),
       change: {
         status: statusChange, target: statusChange && !it.target && !!proposedTarget,
         newPath: statusChange && !it.target && !it.newPath && !proposedTarget && !!proposedNewPath, note: note !== (it.note ?? null),

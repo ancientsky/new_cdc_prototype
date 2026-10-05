@@ -141,6 +141,12 @@
 - `categoryOwners` 加「預防接種／常見問答」→ 急性組、「國際旅遊與健康」→ 檢疫組、「首頁／常見問答」→ OASIS（只對欄目總覽列表頁）。
 - 期限已過、數字＋單位抽結構化候選、鬆散結構拆題的判斷寫在轉換器 `scripts/lib/legacy-import/qa.mjs`（見 10.8），不靠規則檔。
 
+第十一批（規則檔 version 10）新增：
+
+- `statScopes`（`["統計專區", "統計資料", "Data & Statistics"]`）：統計樹下、清單沒給型別的頁，由**內容形狀**決定 dataset 的種類——附件是一期一期的週報／速訊 ⇒ `document-library`（逐期列 `resources`）；內文是年×數值的表 ⇒ `structured-table`（抽成 `series`）；只是連到 nidss／開放平臺的入口 ⇒ 依站外網址對到既有 dataset。判斷寫在 `scripts/lib/legacy-import/statistics.mjs`（見 10.11）。
+- `urlPatterns` 加 `category-list-en`（`^/En/Category/(List|Fpage|NewsPage)`，`kind: list`，`lang: en`）：英文站列表頁與中文列表一樣不轉（`skip-list`），清單以 `newPath` 指到 `/en/…`。
+- `categoryOwners` 加「統計專區」「Data & Statistics」→ 疫情中心（`unit.epidemic-intelligence`）。
+
 第十批（規則檔 version 9）新增：
 
 - `materialScopes`（`["宣導素材", "多媒體"]`）與 `materialRules`：麵包屑在宣導素材／多媒體樹下、而清單或模板沒有給型別的頁，**由欄目位置與標題字樣決定型別**——海報／單張／摺頁／貼紙／懶人包／圖卡 → `publication`（pubType `poster`）、手冊 → `publication`（`manual`）、動畫 → `media`（`animation`）、廣播／Podcast → `media`（`podcast`）、短片 → `media`（`short`）、影片／多媒體／影音 → `media`（`video`）。先比標題，再由麵包屑最後一層往前比；命中記 `type-from-category`（見 10.10）。清單 `target`／模板 `mapTo` 給的型別永遠優先。
@@ -333,6 +339,11 @@ PDF 是**附件**，不是頁面。工具對 PDF 只做三件事：複製檔案�
 | `lang-variants` | info | 附件含多語版本（英、日、越、印、泰、菲），一筆內容、多語檔案；`languages[lang]` 標 `pending` | 補 i18n 標題與摘要後把 `pending` 改成 `reviewed`／`machine`；簡體中文不在站上七語，只記在 note（第十批） |
 | `material-outdated` | warn | 素材發布時依據的文件版本之後被新版取代（同家族：舊版生效 ≤ 素材日 < 新版生效） | 上線前確認內容仍正確；治理 R9「影音依據已修訂」的事前版，上線後由治理引擎接手（第十批） |
 | `external-system` | info | 舊頁主要是連到外部系統（數位學習平台、社群）的入口，內文很短 | 新站以入口連結呈現（`/services/`）或清單決定 `dropped`；不需要一頁內容（第十批） |
+| `periodical-issues` | info | 附件是一期一期的週報／月報／年報（≥ 3 期）；期別不是版次，建成一筆 dataset（`document-library`）逐期列 `resources`，`lastUpdated` 取最新一期 | 確認期別日期；不要走文件版次鏈（第十一批） |
+| `series-extracted` | info | 內文的年×數值表抽成 dataset `series`（統計問答用）：點數、年份範圍、單位；民國年已轉西元 | 核對數字與單位；多個數值欄只取第一個，其餘在 note（第十一批） |
+| `series-gaps` | warn | 抽出的時序缺期或同期重複 | 補缺期或在 note 說明（例如該年無資料）（第十一批） |
+| `stats-stale` | warn | 時序最新一點比現在舊兩期以上（年：少於去年） | 確認是否停更；開放平臺若有新版，canonicalUrl 改指過去（第十一批） |
+| `dataset-by-url` | info | 入口頁的站外連結 host 對到既有 dataset 的 canonicalUrl／portalUrl，草稿直接用該 dataset id（既有 ⇒ 比對） | 確認對的是同一個系統；host 多筆命中取 canonicalUrl 完全相等者（第十一批） |
 
 **`migration-patch.json`**：把移轉清單對應項目的 `status`（`pending` → `migrated`／`merged`／`archived`／`dropped`）與 `target` 的更新建議列出來（對到的文件若同 family 已有較新版次，建議 `archived`）。加 `--apply-migration` 才寫回，**只改 `status`／`target`／`note`，不動 `verified`**：逐筆確認仍由權責單位在 `/admin/migration/` 完成，轉換成功不等於確認過。另有三個只供參考的區塊：`derivedItems`（模板推導項的對應結果）、`unmatchedPages`（匯出有、清單沒有的頁，附建議的 pending 項目）、`conflicts`（工具判定與人工清單不同，人工優先）。
 
@@ -786,9 +797,64 @@ PDF 是**附件**，不是頁面。工具對 PDF 只做三件事：複製檔案�
 
 **第十批驗證了什麼**：七頁沒有清單型別的素材全部由欄目位置判出 publication／media（海報、單張、懶人包、手冊 → poster／manual；影片、動畫、廣播 → video／animation／podcast）；五頁只有圖的海報與單張記 `image-only`、文字版佔位；七語流感海報一筆內容、六語 `pending`；兩筆素材早於依據正本（且正本確實修訂過）；結核病批的三頁判為已轉過；兩頁外部入口標出網域；有疾病的素材 owner 全部回到疾病業務組。重跑前九批 409 頁，kind／action／outputs 全部不變，只多出新 issue 與一頁 owner 修正（見第 7 點）。**還沒做的**：`/Category/ListContent/{id}?uaid=` 是推測的素材內頁網址模式，正式匯出以真實為準；圖裡的文字沒有 OCR，純文字版要由製作單位提供；多語附件只標 `pending`，i18n 標題與摘要要人翻；商業媒體運用一覽表留 `page`（是否建成 dataset 由公關室決定）；久遠海報（2019 麻疹、2021 防疫新生活）建議封存，清單狀態由權責單位決定。
 
+### 10.11 統計資料第十一批結果（期刊逐期、表格抽時序、入口頁對資料集）
+
+> 第十一批是**資料型欄目**：舊站「統計專區」底下幾乎沒有「內容」，只有三種東西——連到外部系統的入口（傳染病統計資料查詢系統、開放資料平臺、防疫資料庫）、一頁列很多期 PDF 的週報／速訊／年報、幾張年×數值的統計表。新站這些全部是 `dataset`（資料目錄五類資產），統計表還要變成 `series` 才能給統計問答用；統計年報是既有 `publication`；列表頁是 `/data/`。所以這批的問題是**沒有清單型別時，怎麼從內容形狀判出 dataset 的種類**，以及兩個以前沒碰過的形狀：「期別」（不是版次）和「表格裡的時序」。模擬匯出 `scripts/lib/legacy-import/sim-export-statistics.mjs` 反推 13 頁（列表 2（含英文站）、入口 3、期刊 4、統計表 3、年報 1；缺期與停更的缺陷樣本都在裡面），另原樣複製結核病批與登革熱批的「統計資料」頁（同網址，測跨批重複）。移轉清單 `content/migration/statistics.json`（欄目範圍）13 筆。仍由兩個模型分工，各自只碰自己的檔。
+
+| 項目 | 結果 |
+| --- | --- |
+| 匯出頁數／草稿 | 15 頁 → 13 份草稿（資料集 8、頁面 4、出版品 1）；2 頁是結核病批與登革熱批同網址的統計頁，`skip-duplicate` 不重複出 |
+| 建議動作 | compare-existing 5、review-before-publish 6、skip-list 2、skip-duplicate 2 |
+| 既有內容可比對 | 5（`dataset.nidss`、`dataset.flu-express`、`dataset.covid-severe-weekly`、`dataset.vaccine-coverage`、`publication.statistics-annual-2025`） |
+| 平均信心／需人工檢視 | 0.95／0（兩頁列表頁 0.6，其餘 1） |
+| 草稿 schema 驗證 | 13／13 通過 |
+| 移轉清單 | 對上 13／13；status 變化 0、與清單判定不同 0；仍待移轉 5（開放資料平臺入口、疫情監測速訊、腸病毒週報、境外移入統計、死亡統計）；清單沒有的舊頁 2（就是上面兩頁重複頁） |
+| 問題 | 錯誤 0、警告 5（`series-gaps` 1、`stats-stale` 1、`fields-pending` 3）、提示 51（`periodical-issues` 5、`series-extracted` 3、`dataset-by-url` 6、`external-system` 4、`type-from-category` 4…） |
+
+**第十一批新增的處理經驗（原本怎樣 → 改成怎樣 → 為什麼比較好）**：
+
+1. **期別不是版次：週報頁建成一筆資料集，逐期列檔。**
+   原本：第七批的文件版次鏈會把附件標籤裡的「2026 年」「第 N」當版次，一頁八期的「疫情監測速訊」會變成一份現行版加七份「失效版本」草稿；或者沒有清單型別時變成一頁 `page`，八個 PDF 只是附件。
+   改成：附件 label／檔名 ≥ 3 個符合期別寫法（YYYY 年第 N 週、第 N 期、YYYY 年 M 月、YYYY 年；民國年轉西元）⇒ `periodical-issues`，建成一筆 `dataset`（`document-library`），每期一筆 `resources`（降冪）、`updateFrequency` 由期別粒度、`lastUpdated` 取最新一期；**在版次鏈之前判掉**。
+   為什麼比較好：第 40 週不會「取代」第 39 週——每期都是紀錄，不是文件的新版本；用版次鏈會把歷史期數標成「失效」，搜尋與 AI 問答就找不到舊期。一筆資料集加逐期資源，正好是資料目錄「文件庫」這一類的定義。
+
+2. **表格裡的年×數值，抽成 `series`。**
+   原本：統計表轉成 Markdown 表格就結束；統計問答只認 `data/snapshots` 與人工填的 `series`，舊站幾十張統計表一張都用不到。
+   改成：第一欄是年（西元或民國）／年月／年週、有一欄全是數字 ⇒ `series`（`label`、`unit`（%／人／例）、`granularity`、`points[{t,v}]`），記 `series-extracted`；合計列略過；多個數值欄只取第一個、其餘寫在 `note`；缺期或重複 ⇒ `series-gaps`（warn）；最新一點比現在舊兩期以上 ⇒ `stats-stale`（warn）。
+   為什麼比較好：表格是給人看的，`series` 是給機器算的——同一份數字兩種形狀，統計問答才能回答「2024 年境外移入幾例」並附正本連結。缺期與過時的檢查是機械式的（日期比較），不判斷數字對不對，但能在上線前把「這張表三年沒更新」點出來。
+
+3. **入口頁對資料集，用網址對、不用標題對。**
+   原本：「傳染病統計資料查詢系統」「防疫資料庫」這類頁只有幾句話和一個站外連結，第十批會記 `external-system` 然後留成 `page`；要靠清單人工填 target。
+   改成：站外連結的 host 對到既有 dataset 的 `canonicalUrl`／`portalUrl` host ⇒ 草稿直接用該 dataset id（既有 ⇒ `compare-existing`），記 `dataset-by-url`；多筆命中取 canonicalUrl 完全相等者。開放資料平臺首頁對到幾十筆 open-dataset，取不到唯一 ⇒ 清單決定 `newPath: /data/`。
+   為什麼比較好：入口頁的「身分」就是它連到哪裡；標題會改、網址不會。資料目錄本來就以 canonicalUrl 為正本位置（唯一），拿它當鍵是順理成章的。
+
+4. **英文站的列表頁也不轉。**
+   原本：`/En/Category/List/…` 沒有 URL 模式，會記 `type-unclear`、變成 `page` 草稿。
+   改成：`category-list-en` 模式（`kind: list`、`lang: en`）⇒ `skip-list`，草稿帶 `sourceLang: en`；清單 `newPath` 指到 `/en/data/`。
+   為什麼比較好：新站七語的列表都由系統產生；英文列表跟中文列表是同一件事，差在路徑前綴。
+
+5. **幾個入口頁連到同一個系統：資料集只留一筆，其餘入口頁走 `newPath`。**
+   原本：「傳染病統計資料查詢系統」和「防疫資料庫」清單都填 `target: dataset.nidss`，第二頁會被判 `target-shared`、另出一筆 `dataset.x-nidss-…`，新站多一筆重複資料集。
+   改成：防疫資料庫是入口頁（同時連統計查詢系統與開放資料平臺），清單改成 `status: migrated` ＋ `newPath: /data/`、不填 target；轉換器把 `external-system` 記到 `pr.flags.externalSystem`，清單填了 `newPath` 的入口頁視為與工具判定一致（跟清單頁、資料產生頁、查詢表單同一條規則），不再列「與清單判定不同」。
+   為什麼比較好：一個系統在資料目錄只該有一筆；入口頁的去處是「資料目錄」這個頁面，不是某一筆資料集。這跟第九批列表頁用 `newPath` 的道理一樣：新站沒有對應「內容」、但有對應「去處」時，清單寫去處。
+
+6. **清單指到既有資料集時，`canonicalUrl` 沿用既有那筆。**
+   原本：「常規疫苗接種完成率」頁只放 PDF、沒有開放資料連結，草稿 `canonicalUrl` 留「（待補）」，雖然清單早已指到 `dataset.vaccine-coverage`。
+   改成：草稿 id 就是既有 dataset、且 `canonicalUrl` 待補 ⇒ 沿用既有那筆的 `canonicalUrl`／`portalUrl`，記 `dataset-by-url`「沿用既有資料集（清單 target 指定）」。
+   為什麼比較好：既有內容已經寫了正本位置，草稿再要人補一次是重複工；`compare-existing` 的比對也才看得到真正差的欄位（數字、期數），不是被「（待補）」干擾。
+
+7. **疾管署子網域也算「外部系統」，但只在統計頁。**
+   原本：第十批 `externalSystemPage` 把所有 `*.cdc.gov.tw` 當站內，所以「傳染病統計資料查詢系統」（nidss.cdc.gov.tw）會被當成一般內頁。
+   改成：統計頁用 `systemEntryHosts`：只有 `www.cdc.gov.tw` 與相對路徑算站內，`nidss.`／`data.`／`antiflu.` 等子網域算系統入口；宣導素材頁維持原判，第十批輸出一字不變。
+   為什麼比較好：舊站的「統計專區」本來就是一堆系統的門口；把子網域當站內會讓這些頁全部變成空 `page`。限定在統計頁是因為素材頁連到 `*.cdc.gov.tw` 多半是連到別的素材頁，兩種欄目的「站內」意思不同。
+
+**順帶的改變**：前十批已經轉成 `dataset` 的疾病統計頁（登革熱本土週報、麻疹年統計、各疾病 `*-stats`…共 13 筆）這次重跑都多了 `series`（表格裡的年×病例數），`series-extracted` 提示各一則；kind／action／owner／輸出 id 全部不變（433 頁回歸 0 差異）。
+
+**第十一批驗證了什麼**：期刊頁與版次鏈的先後順序（年報是 publication，期別只記提示不拆鏈；週報／速訊建一筆 dataset 逐期列）；表格抽 `series` 含民國年、合計列、多數值欄；缺期（死亡統計缺 2019、COVID 週報缺 W39 只記在提示）與停更（死亡統計到 2022 ⇒ `stats-stale`）；入口頁用 host 對到 `dataset.nidss`／`dataset.flu-express`、開放資料平臺首頁 19 筆命中判不出 ⇒ 維持 page；英文列表頁 `skip-list` ＋ `sourceLang: en`；兩頁跨批重複頁不重出；前十批 433 頁 kind／action／owner／輸出不變。**還沒做的**：PDF 裡的統計表不抽（正本是開放資料）；`series` 只取第一個數值欄，多指標的表要人工拆成多筆 dataset 或多個 series；期別的日期是依期號推的（ISO 週一），正式匯出若附件有發布日就用發布日；開放資料平臺首頁對不到唯一資料集，入口頁一律走清單 `newPath`。
+
 ## 11. 正式批次的排程建議
 
-1. **一批一個欄目樹**，順序建議：**結核病（已示範）→ 登革熱（第二批，已示範）→ 流感（第三批，已示範）→ 麻疹＋腸病毒（第四批，已示範）→ 其他第一、二類傳染病的疾病頁（第五批：狂犬病、瘧疾、A 型肝炎、德國麻疹、屈公病、M 痘，已示範；其餘第一、二類疾病待建疾病頁後同法處理）→ 新聞稿（近三年；第六批，已示範，無清單、三級處理＋抽樣）→ 指引與手冊（第七批，已示範，版次鏈）→ 常見問答（第八批，已示範，每題一筆＋跨批重複判定）→ 國際旅遊與健康（第九批，已示範，資料產生頁＋ `newPath`）→ 宣導素材（第十批，已示範，型別由欄目位置決定＋圖片承載內容＋多語附件）→ 其他欄目（統計資料…）**。每批對應一份移轉清單，批次結束時清單的 `pending` 應清零或決定 `dropped`。有疾病頁的疾病都能先用 `sim-export-disease.mjs` 產模擬匯出演練規則，再等正式匯出。
+1. **一批一個欄目樹**，順序建議：**結核病（已示範）→ 登革熱（第二批，已示範）→ 流感（第三批，已示範）→ 麻疹＋腸病毒（第四批，已示範）→ 其他第一、二類傳染病的疾病頁（第五批：狂犬病、瘧疾、A 型肝炎、德國麻疹、屈公病、M 痘，已示範；其餘第一、二類疾病待建疾病頁後同法處理）→ 新聞稿（近三年；第六批，已示範，無清單、三級處理＋抽樣）→ 指引與手冊（第七批，已示範，版次鏈）→ 常見問答（第八批，已示範，每題一筆＋跨批重複判定）→ 國際旅遊與健康（第九批，已示範，資料產生頁＋ `newPath`）→ 宣導素材（第十批，已示範，型別由欄目位置決定＋圖片承載內容＋多語附件）→ 統計資料（第十一批，已示範，期刊逐期＋表格抽時序＋入口頁對資料集）→ 其他欄目**。每批對應一份移轉清單，批次結束時清單的 `pending` 應清零或決定 `dropped`。有疾病頁的疾病都能先用 `sim-export-disease.mjs` 產模擬匯出演練規則，再等正式匯出。
 2. **每批的節奏**（約 2–3 週）：匯出（資訊室，2–3 天）→ 規則調校與第一輪轉換（OASIS，2–3 天）→ 看報告、補規則、重跑（1–2 天）→ 人工確認（Steward，依量；建議每人每天不超過 10 頁）→ 上架 PR（走車道）→ 更新清單與確認 `verified`。
 3. **先小後大**：每批先用 20–30 頁試跑，確認規則沒問題再跑全部。
 4. **規則版本化**：規則檔的修改走 PR 並說明影響範圍；報告歸檔（`data/legacy-import/{slug}/`），作為品質稽核與回溯。
@@ -803,7 +869,8 @@ PDF 是**附件**，不是頁面。工具對 PDF 只做三件事：複製檔案�
 - **模擬匯出不等於真實舊站**：版型、Word 殘留的程度、表格複雜度、圖片與附件的命名，都以真實匯出為準；規則與信心門檻（0.6、0.8）要用真實樣本校準。
 - **不處理的內容**：影音嵌入（記 `embedded-media` 警告，影片請走 `media` 型別人工建檔；第十批起宣導素材樹下的影片頁直接建成 `media` 草稿，但文字稿仍是（待補））、表單（動態頁面：第九批起會認出查詢表單並記 `dynamic-form`，但只轉說明文字，功能由新站取代）、站外內容、內部系統頁。英文站（`/En/…`）目前只有問答頁有 URL 模式（`qa-en`，第八批）與新聞稿（typeid 158），其他英文頁會記 `type-unclear`。
 - **結構化型別的欄位是佔位，不是答案**：第四批起 publication／media／dataset／labtest／service／clarification 都直接產，但舊頁看不出來的必填欄位（檢體容器與保存、申辦步驟、影片文字稿、資料集更新頻率）以「（待補：…）」填入並記 `fields-pending`，這些草稿**過 schema 不等於可上架**，要由權責單位補齊。還不直接產的：topic（相關連結頁留 list）、vaccine（疫苗專區頁併入疾病頁疫苗區塊或以 page 暫存）、research、banner、job、tender。
-- **不判斷內容是否過時**：轉換只確認「搬得對不對」，不確認「內容還對不對」。例外只有機械式可判的「答案寫的期限都已過」（`answer-dated`，第八批）與「素材製作日早於依據正本現行版」（`material-outdated`，第十批），其餘過時的規定、數字，要靠 Steward 審閱與治理引擎的反向稽核。
+- **不判斷內容是否過時**：轉換只確認「搬得對不對」，不確認「內容還對不對」。例外只有機械式可判的「答案寫的期限都已過」（`answer-dated`，第八批）、「素材製作日早於依據正本現行版」（`material-outdated`，第十批）與「統計時序最新一點比現在舊兩期以上」（`stats-stale`，第十一批），其餘過時的規定、數字，要靠 Steward 審閱與治理引擎的反向稽核。
+- **不讀 PDF 裡的數字**：週報、年報的 PDF 只列成 `resources`，表格數字只從 HTML 表抽成 `series`；PDF 內的統計表要靠正本（開放資料）而不是轉換器。
 - **不讀圖**：海報、單張的文字在圖裡，轉換器不做 OCR；只記 `image-only`、把 alt 當候選、以（待補）佔位。純文字版要由製作單位從原始設計稿提供，不是從圖片反推。
 - **不處理個資**：匯出階段就要排除；若轉換後的草稿含個資，通報並從輸出刪除。
 - **多對一與一對多**：疾病頁子頁併成同一份疾病頁草稿（多對一）；一個舊頁不會轉成多個頁面，Q&A 頁例外（每題一筆）。

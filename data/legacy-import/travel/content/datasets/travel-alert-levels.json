@@ -23,7 +23,7 @@
   },
   "summary": "國際旅遊疫情建議等級分為三級：第一級注意（Watch）、第二級警示（Alert）、第三級警告（Warning），依疫情嚴重度與傳播風險隨時調整。",
   "category": "content-page",
-  "canonicalUrl": "https://www.cdc.gov.tw/Category/MPage/n-DGrcI1Yod3VzrY9JQHan",
+  "canonicalUrl": "https://data.cdc.gov.tw/dataset/travel-health-notice-levels",
   "updateFrequency": "irregular",
   "lastUpdated": "2026-10-01",
   "formats": [],
@@ -33,6 +33,7 @@
     "fetchedAt": "2026-10-03",
     "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/n-DGrcI1Yod3VzrY9JQHan"
   },
+  "portalUrl": "https://data.cdc.gov.tw/dataset/travel-health-notice-levels",
   "legacyUrls": [
     "https://www.cdc.gov.tw/Category/MPage/n-DGrcI1Yod3VzrY9JQHan"
   ],
@@ -51,19 +52,14 @@
         "message": "清單對應的新站型別是 dataset（dataset.travel-alert-levels），草稿直接建成 dataset，看不出來的欄位以「（待補）」佔位"
       },
       {
-        "code": "fields-pending",
-        "severity": "warn",
-        "message": "dataset 的欄位從舊頁看不出來，以「（待補）」佔位：canonicalUrl"
+        "code": "dataset-by-url",
+        "severity": "info",
+        "message": "canonicalUrl 沿用既有資料集 dataset.travel-alert-levels（清單 target 指定）"
       },
       {
         "code": "field-guessed",
         "severity": "info",
         "message": "看不出更新頻率，updateFrequency 暫填 irregular"
-      },
-      {
-        "code": "field-guessed",
-        "severity": "info",
-        "message": "舊頁沒有資料檔也沒有開放資料連結，canonicalUrl 暫填舊頁網址"
       }
     ],
     "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/n-DGrcI1Yod3VzrY9JQHan",

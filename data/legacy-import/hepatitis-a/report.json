@@ -11,7 +11,7 @@
   },
   "rules": {
     "file": "content/migration/import/_import-rules.json",
-    "version": 9
+    "version": 10
   },
   "manifest": {
     "id": "migration.hepatitis-a",
@@ -71,7 +71,7 @@
     "issues": {
       "error": 0,
       "warn": 9,
-      "info": 71
+      "info": 72
     },
     "manifest": {
       "items": 0,
@@ -1425,6 +1425,11 @@
           "code": "type-from-manifest",
           "severity": "info",
           "message": "清單對應的新站型別是 dataset，草稿直接建成 dataset，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "series-extracted",
+          "severity": "info",
+          "message": "5 點、2021–2025、人（確定病例數（示意））；另有欄位：每十萬人口發生率（示意）"
         }
       ],
       "action": "review-before-publish",

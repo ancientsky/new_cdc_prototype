@@ -11,7 +11,7 @@
   },
   "rules": {
     "file": "content/migration/import/_import-rules.json",
-    "version": 9
+    "version": 10
   },
   "manifest": {
     "id": "migration.materials",
@@ -61,7 +61,7 @@
     },
     "issues": {
       "error": 0,
-      "warn": 27,
+      "warn": 26,
       "info": 75
     },
     "manifest": {
@@ -275,12 +275,17 @@
         {
           "code": "external-system",
           "severity": "info",
-          "message": "舊頁主要連到外部系統（網域 e-learning.example.gov.tw）：新站以入口連結呈現，建議 /services/ 放入口或清單決定 dropped"
+          "message": "舊頁主要連到外部系統（網域 e-learning.example.gov.tw）：新站以入口連結呈現，建議 /services/ 放入口或清單填 newPath（例 /data/）"
         }
       ],
       "action": "review-before-publish",
       "flags": {
-        "historical": false
+        "historical": false,
+        "externalSystem": {
+          "hosts": [
+            "e-learning.example.gov.tw"
+          ]
+        }
       },
       "stats": {
         "images": 0,
@@ -345,12 +350,18 @@
         {
           "code": "external-system",
           "severity": "info",
-          "message": "舊頁主要連到外部系統（網域 www.facebook.com、line.me）：新站以入口連結呈現，建議 /services/ 放入口或清單決定 dropped"
+          "message": "舊頁主要連到外部系統（網域 www.facebook.com、line.me）：新站以入口連結呈現，建議 /services/ 放入口或清單填 newPath（例 /data/）"
         }
       ],
       "action": "review-before-publish",
       "flags": {
-        "historical": false
+        "historical": false,
+        "externalSystem": {
+          "hosts": [
+            "www.facebook.com",
+            "line.me"
+          ]
+        }
       },
       "stats": {
         "images": 0,
@@ -1099,19 +1110,14 @@
           "message": "附件含 6 種語言版本（en、vi、id、th、tl、ja）：一筆內容、多語檔案；languages 標 pending，請補 i18n 標題與摘要；zh-CN 不在站上七語，只保留附件、不列入 languages"
         },
         {
-          "code": "fields-pending",
-          "severity": "warn",
-          "message": "dataset 的欄位從舊頁看不出來，以「（待補）」佔位：canonicalUrl"
+          "code": "dataset-by-url",
+          "severity": "info",
+          "message": "canonicalUrl 沿用既有資料集 dataset.health-education-materials（清單 target 指定）"
         },
         {
           "code": "field-guessed",
           "severity": "info",
           "message": "看不出更新頻率，updateFrequency 暫填 irregular"
-        },
-        {
-          "code": "field-guessed",
-          "severity": "info",
-          "message": "舊頁沒有資料檔也沒有開放資料連結，canonicalUrl 暫填舊頁網址"
         }
       ],
       "action": "compare-existing",
@@ -2483,13 +2489,13 @@
       "pendingToMigrated": 0,
       "targetChanges": 0,
       "newPathChanges": 0,
-      "noteChanges": 21,
+      "noteChanges": 0,
       "stillPending": 10
     },
     "file": "content/migration/materials.json",
     "statusChanges": [],
     "targetChanges": [],
     "newPathChanges": [],
-    "noteChanges": 21
+    "noteChanges": 0
   }
 }

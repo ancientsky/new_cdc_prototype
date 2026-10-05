@@ -1,0 +1,21 @@
+{
+  "url": "https://www.cdc.gov.tw/Category/List/24UnSJ76XgcjnNUGy3DMcd",
+  "title": "統計資料",
+  "category": "登革熱／統計資料",
+  "publishedAt": "2018-03-01",
+  "updatedAt": "2026-07-15",
+  "breadcrumbs": [
+    "首頁",
+    "傳染病與防疫專題",
+    "登革熱",
+    "統計資料"
+  ],
+  "tab": "statistics",
+  "attachments": [
+    {
+      "url": "https://www.cdc.gov.tw/File/Get/PJxBb2ziclorOJLBN-HcW3",
+      "label": "登革熱年度統計（CSV，示意）",
+      "file": "dengue-stats.csv"
+    }
+  ]
+}

@@ -481,6 +481,7 @@ import { generateGuidelines } from '../scripts/lib/legacy-import/sim-export-guid
 import { generateQa } from '../scripts/lib/legacy-import/sim-export-qa.mjs';
 import { generateTravel } from '../scripts/lib/legacy-import/sim-export-travel.mjs';
 import { generateMaterials } from '../scripts/lib/legacy-import/sim-export-materials.mjs';
+import { generateStatistics } from '../scripts/lib/legacy-import/sim-export-statistics.mjs';
 import { faqItemsLoose, tasksFor, datedDeadlines, structuredFromText } from '../scripts/lib/legacy-import/qa.mjs';
 import { parseHtml, textOf } from '../scripts/lib/legacy-import/html.mjs';
 import { versionFree, versionRank, dateFromText } from '../scripts/lib/legacy-import/index.mjs';
@@ -1284,7 +1285,7 @@ import { materialScope, materialKind, imageOnly, imageGallery, langVariants, mat
 import { png, pdfText } from '../scripts/lib/legacy-import/sim-export.mjs';
 
 test('第十批工具：素材型別（標題優先於麵包屑、非素材欄目不生效）、圖片承載、圖庫、附件語言版本、素材早於正本、外部系統頁', () => {
-  assert.equal(rules.version, 9);
+  assert.ok(rules.version >= 9); // 第十一批升 10
   const M = ['首頁', '宣導素材'];
   assert.ok(materialScope(rules, { breadcrumbs: [...M, '海報'] })); assert.ok(materialScope(rules, { category: '結核病／宣導素材' })); assert.ok(!materialScope(rules, { breadcrumbs: ['首頁', '傳染病與防疫專題', '登革熱'] }));
   assert.deepEqual(materialKind(rules, { title: '登革熱「巡、倒、清、刷」海報系列', breadcrumbs: [...M, '海報'] }), { type: 'publication', pubType: 'poster', via: 'title', rule: '海報|單張|摺頁|貼紙|懶人包|圖卡', hit: '海報' });
@@ -1450,5 +1451,215 @@ test('已提交的第十批輸出（data/legacy-import/materials）：24 頁 21 
   const tmpDir = tmp('exp10');
   generateMaterials(tmpDir);
   const exp = path.join(ROOT, 'data/legacy-export/materials');
+  for (const f of fs.readdirSync(exp).filter((x) => x.endsWith('.json') && x !== '_export.json')) assert.deepEqual(readJSON(path.join(tmpDir, f)), readJSON(path.join(exp, f)), f);
+});
+
+// ───────────────────────── 第十一批：統計專區欄目 ─────────────────────────
+import { statScope, periodicalIssues, tableSeries, seriesGaps, statsStale, datasetByUrl, systemEntryHosts, isoWeekMonday } from '../scripts/lib/legacy-import/statistics.mjs';
+
+test('第十一批工具：統計頁範圍、期刊期別（週／月／年、民國年、無年份、< 3 期）、表格時序（西元、民國、%、千分位、合計列、多值欄）、缺期與重複、過時、站外連結對既有資料集', () => {
+  assert.equal(rules.version, 10);
+  assert.deepEqual(rules.statScopes, ['統計專區', '統計資料', 'Data & Statistics']);
+  assert.equal(matchUrlPattern(rules, '/En/Category/List/gK4BJWe3qYlmNxYJBqEcxA').id, 'category-list-en');
+  assert.equal(matchUrlPattern(rules, '/Category/List/ZrvS2zJwZ03tl8CbKYdI8g').id, 'category-list');
+  assert.equal(ownerForCategory(rules, '統計專區／疫情監測速訊').owner, 'unit.epidemic-intelligence');
+  assert.equal(ownerForCategory(rules, '', ['Home', 'Data & Statistics']).owner, 'unit.epidemic-intelligence');
+  assert.equal(ownerForCategory(rules, '結核病／統計資料').rule, '結核病／統計資料', '最長命中優先，既有規則照舊');
+  assert.ok(statScope(rules, { breadcrumbs: ['首頁', '統計專區', '疫情監測速訊'] })); assert.ok(statScope(rules, { category: '結核病／統計資料' }));
+  assert.ok(statScope(rules, { breadcrumbs: ['Home', 'Data & Statistics'] })); assert.ok(!statScope(rules, { breadcrumbs: ['首頁', '宣導素材', '海報'] }));
+  const att = (labels) => labels.map((label, i) => ({ label, file: `f${i}.pdf` }));
+  // 週：ISO 週一、降冪、latest
+  assert.equal(isoWeekMonday(2026, 40), '2026-09-28'); assert.equal(isoWeekMonday(2020, 53), '2020-12-28');
+  const w = periodicalIssues(att(['疫情監測速訊 2026 年第 33 週', '疫情監測速訊 2026 年第 40 週', '疫情監測速訊 2026 年第 39 週']));
+  assert.equal(w.granularity, 'week'); assert.deepEqual(w.issues.map((x) => x.no), [40, 39, 33]);
+  assert.deepEqual(w.latest, { label: '疫情監測速訊 2026 年第 40 週', file: 'f1.pdf', year: 2026, no: 40, date: '2026-09-28' });
+  // 民國年 ⇒ 西元；無年份 ⇒ defaultYear
+  assert.equal(periodicalIssues(att(['115 年第 36 週', '115 年第 40 週', '115 年第 38 週'])).latest.date, '2026-09-28');
+  const nf = periodicalIssues(att(['流感速訊第 35 週', '流感速訊第 40 週', '流感速訊第 36 週']), { defaultYear: 2026 });
+  assert.equal(nf.latest.year, 2026); assert.equal(nf.latest.date, '2026-09-28');
+  // 月、年（年報）；檔名也可
+  const m = periodicalIssues(att(['2026 年 1 月', '2026 年 3 月', '114 年 12 月']));
+  assert.equal(m.granularity, 'month'); assert.deepEqual(m.issues.map((x) => x.date), ['2026-03-01', '2026-01-01', '2025-12-01']);
+  const y = periodicalIssues(att(['2020 年', '2025 年', '2024 年年報']));
+  assert.equal(y.granularity, 'year'); assert.equal(y.latest.date, '2025-01-01');
+  assert.equal(periodicalIssues([{ file: '2026-W38.pdf' }, { file: '2026-W39.pdf' }, { file: '2026-W40.pdf' }]).latest.no, 40);
+  assert.equal(periodicalIssues(att(['2026 年第 1 週', '2026 年第 2 週'])), null, '< 3 期');
+  assert.equal(periodicalIssues(att(['附表一', '申請書', '說明'])), null, '不是期別');
+  // 表格時序：西元、千分位、合計列略過、多值欄只取第一欄（note）、病例數 ⇒ 人
+  const md = '說明。\n\n| 年 | 境外移入確定病例數 | 占全部確定病例比率（%） |\n| --- | --- | --- |\n| 2017 | 1,234 | 12.5 |\n| 2016 | 300 | 10 |\n| 2018 | 400 | 9.1% |\n| 合計 | 1,934 | — |';
+  assert.deepEqual(tableSeries(md), { label: '境外移入確定病例數', unit: '人', granularity: 'year', points: [{ t: '2016', v: 300 }, { t: '2017', v: 1234 }, { t: '2018', v: 400 }], note: '另有欄位：占全部確定病例比率（%）' });
+  // 民國年（可帶「年」）＋率 ⇒ %
+  const v = tableSeries('| 年度 | 接種完成率（%） |\n|---|---|\n| 104年 | 96.1 |\n| 105年 | 96.5% |\n| 106 年 | 97 |');
+  assert.equal(v.unit, '%'); assert.deepEqual(v.points.map((p) => p.t), ['2015', '2016', '2017']); assert.equal(v.note, '');
+  assert.equal(tableSeries('| 年月 | 件數 |\n|---|---|\n| 2026-01 | 3 |\n| 2026-02 | 4 |\n| 2026-03 | 5 |').granularity, 'month');
+  assert.equal(tableSeries('| 年月 | 件數 |\n|---|---|\n| 2026-01 | 3 |\n| 2026-02 | 4 |\n| 2026-03 | 5 |').unit, '件');
+  assert.equal(tableSeries('| 年 | 例數 |\n|---|---|\n| 2024 | 1 |\n| 2025 | 2 |\n| 合計 | 3 |'), null, '< 3 點（合計列不算）');
+  assert.equal(tableSeries('| 項目 | 內容 |\n|---|---|\n| 檢體 | 血清 |\n| 時限 | 24 小時 |\n| 單位 | 檢驗中心 |'), null, '第一欄不是時間');
+  // 缺期與重複；遞減後回升不報
+  assert.deepEqual(seriesGaps({ granularity: 'year', points: [{ t: '2015', v: 9 }, { t: '2016', v: 3 }, { t: '2018', v: 8 }, { t: '2018', v: 8 }] }), ['缺 2017 年', '2018 年 重複 2 筆']);
+  assert.deepEqual(seriesGaps({ granularity: 'year', points: [{ t: '2020', v: 9 }, { t: '2021', v: 1 }, { t: '2022', v: 9 }] }), []);
+  assert.deepEqual(seriesGaps({ granularity: 'week', points: [{ t: '2025-W52', v: 1 }, { t: '2026-W01', v: 1 }, { t: '2026-W03', v: 1 }] }), ['缺 2026-W02']);
+  // 過時：年 ⇒ 最新 < 今年 − 1；月／週 ⇒ 落後超過 3 期
+  assert.deepEqual(statsStale({ granularity: 'year', points: [{ t: '2021', v: 1 }, { t: '2022', v: 1 }] }, '2026-10-05'), { latest: '2022', expected: '2025' });
+  assert.equal(statsStale({ granularity: 'year', points: [{ t: '2025', v: 1 }] }, '2026-10-05'), null);
+  assert.deepEqual(statsStale({ granularity: 'month', points: [{ t: '2026-05', v: 1 }] }, '2026-10-05'), { latest: '2026-05', expected: '2026-07' });
+  assert.equal(statsStale({ granularity: 'month', points: [{ t: '2026-07', v: 1 }] }, '2026-10-05'), null);
+  assert.deepEqual(statsStale({ granularity: 'week', points: [{ t: '2026-W30', v: 1 }] }, '2026-10-05'), { latest: '2026-W30', expected: '2026-W38' });
+  // 站外連結 → 既有資料集：nidss 精確；data.cdc.gov.tw 多筆 ⇒ 第一筆、ambiguous；host 去 www
+  const idx = loadContentIndex(CONTENT);
+  assert.equal(idx.byId.get('dataset.nidss').canonicalUrl, 'https://nidss.cdc.gov.tw/'); assert.equal(idx.byId.get('dataset.vaccine-coverage').portalUrl, 'https://data.cdc.gov.tw/dataset/routine-vaccination-coverage');
+  assert.deepEqual(datasetByUrl([{ href: 'https://nidss.cdc.gov.tw/' }], idx), { id: 'dataset.nidss', host: 'nidss.cdc.gov.tw', exact: true, candidates: 1, ambiguous: false });
+  assert.equal(datasetByUrl(['https://nidss.cdc.gov.tw/nndss/', 'https://data.cdc.gov.tw/'], idx).id, 'dataset.nidss', '防疫資料庫：第一個連結的 host 只有一筆');
+  const dp = datasetByUrl(['https://data.cdc.gov.tw/'], idx);
+  const firstData = [...idx.byId.entries()].find(([, x]) => x.type === 'dataset' && /data\.cdc\.gov\.tw/.test(x.canonicalUrl ?? ''))[0];
+  assert.equal(dp.id, firstData); assert.equal(dp.exact, false); assert.ok(dp.candidates > 1); assert.equal(dp.ambiguous, true);
+  assert.equal(datasetByUrl(['https://data.cdc.gov.tw/dataset/routine-vaccination-coverage'], idx).id, 'dataset.vaccine-coverage', 'canonicalUrl 完全相等者優先');
+  assert.equal(datasetByUrl(['https://www.antiflu.cdc.gov.tw/x'], idx).id, 'dataset.flu-express', 'host 去 www');
+  assert.equal(datasetByUrl(['https://example.org/'], idx), null);
+  // 統計頁版的外部系統入口：疾管署子網域系統算外部；舊站 www 與站內相對連結不算
+  assert.deepEqual(systemEntryHosts({ markdown: '請由下列入口查詢。\n\n- [NIDSS](https://nidss.cdc.gov.tw/)' }), ['nidss.cdc.gov.tw']);
+  assert.deepEqual(systemEntryHosts({ markdown: '入口。\n\n- [NIDSS](https://nidss.cdc.gov.tw/)\n- [首頁](https://www.cdc.gov.tw/)' }), []);
+  assert.deepEqual(externalSystemPage({ markdown: '請由下列入口查詢。\n\n- [NIDSS](https://nidss.cdc.gov.tw/)', stat: {} }), [], '第十批的判斷不變（cdc.gov.tw 子網域算站內）');
+});
+
+/** 合成統計專區的小匯出：期刊（週、民國週、無年份週）、統計表（西元多值欄、民國 %、缺年且舊）、NIDSS 入口、資料開放平臺入口、英文列表、TB 統計（同網址複製）、年報（清單 target 既有出版品） */
+function synthStatistics(dir) {
+  fs.mkdirSync(path.join(dir, 'files'), { recursive: true });
+  fs.writeFileSync(path.join(dir, '_export.json'), JSON.stringify({ exportedAt: '2026-10-05', simulated: true, batch: 'statistics' }));
+  const S = ['首頁', '統計專區'];
+  const pdf = (file, label) => { fs.writeFileSync(path.join(dir, 'files', file), pdfText('Issue', [label])); return { url: `https://www.cdc.gov.tw/File/Get/${file.replace(/\W/g, '')}`, label, file }; };
+  const put = (name, url, title, crumbs, body, { publishedAt = '2026-01-01', updatedAt = '2026-09-30', attachments = [] } = {}) => {
+    fs.writeFileSync(path.join(dir, `${name}.html`), travelShell(title, crumbs, body));
+    fs.writeFileSync(path.join(dir, `${name}.json`), JSON.stringify({ url: `https://www.cdc.gov.tw${url}`, title, category: crumbs.slice(1).join('／'), publishedAt, updatedAt, breadcrumbs: crumbs, attachments }));
+  };
+  const table = (head, rows) => `<table><thead><tr>${head.map((h) => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map((r) => `<tr>${r.map((c) => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+  const intro = '<p>本頁每週更新，提供國內重要傳染病監測摘要，歡迎下載各期 PDF 參考。</p>';
+  put('01-surveillance-express', '/Category/MPage/94JVbJ2BFjR_3MTi-9s9Cg', '疫情監測速訊', [...S, '疫情監測速訊'], intro,
+    { attachments: [33, 34, 35, 36, 37, 38, 39, 40].map((n) => pdf(`se-2026-w${n}.pdf`, `疫情監測速訊 2026 年第 ${n} 週`)) });
+  put('02-ev-weekly', '/Category/MPage/EVW1', '腸病毒疫情週報', [...S, '腸病毒疫情週報'], intro,
+    { attachments: [36, 37, 38, 39, 40].map((n) => pdf(`ev-115-w${n}.pdf`, `腸病毒疫情週報 115 年第 ${n} 週`)) });
+  put('03-flu-express', '/Category/MPage/FLU1', '流感速訊', [...S, '流感速訊'], `${intro}<p>即時資料請見<a href="https://antiflu.cdc.gov.tw/">流感資訊網</a>。</p>`,
+    { attachments: [35, 36, 37, 38, 39, 40].map((n) => pdf(`flu-w${n}.pdf`, `流感速訊第 ${n} 週`)) });
+  put('04-imported-cases', '/Category/Page/5Q6qrh5kM6TnpnRpy3XDfQ', '法定傳染病境外移入確定病例統計', [...S, '法定傳染病境外移入確定病例統計'],
+    `<p>下表為歷年法定傳染病境外移入確定病例數（示意數字）。</p>${table(['年', '境外移入確定病例數', '占全部確定病例比率（%）'], [...Array.from({ length: 10 }, (_, i) => [2016 + i, (1000 + i * 37).toLocaleString('en-US'), `${(10 + i / 2).toFixed(1)}`]), ['合計', '10,665', '—']])}`);
+  put('05-vaccine-coverage', '/Category/MPage/VAC1', '常規疫苗接種完成率', [...S, '常規疫苗接種完成率'],
+    `<p>各年度常規疫苗接種完成率（示意數字）。</p>${table(['年度', '接種完成率（%）'], Array.from({ length: 11 }, (_, i) => [`${104 + i}年`, `${(95 + i * 0.2).toFixed(1)}`]))}`);
+  put('06-death-stats', '/Category/MPage/DTH1', '法定傳染病死亡統計', [...S, '法定傳染病死亡統計'],
+    `<p>法定傳染病歷年死亡人數（示意數字）。</p>${table(['年', '死亡人數'], [2015, 2016, 2017, 2018, 2020, 2021, 2022].map((yr, i) => [yr, 50 - i]))}`);
+  put('07-nidss', '/Category/MPage/NIDSS1', '傳染病統計資料查詢系統', [...S, '傳染病統計資料查詢系統'], '<p>法定傳染病統計線上查詢。</p><ul><li><a href="https://nidss.cdc.gov.tw/">傳染病統計資料查詢系統（NIDSS）</a></li></ul>');
+  put('08-open-data-portal', '/Category/MPage/ODP1', '疾管署資料開放平臺', [...S, '疾管署資料開放平臺'], '<p>開放資料下載。</p><ul><li><a href="https://data.cdc.gov.tw/">疾管署資料開放平臺</a></li></ul>');
+  put('09-list-statistics-en', '/En/Category/List/gK4BJWe3qYlmNxYJBqEcxA', 'Data & Statistics', ['Home', 'Data & Statistics'], '<ul><li><a href="/En/Category/MPage/A1">NIDSS</a></li><li><a href="/En/Category/MPage/A2">Annual Report</a></li></ul>');
+  // 結核病批已轉過的統計資料頁（原樣複製）
+  const tb = path.join(ROOT, 'data/legacy-export/tuberculosis');
+  for (const ext of ['html', 'json']) fs.copyFileSync(path.join(tb, `24-stats.${ext}`), path.join(dir, `10-tb-stats.${ext}`));
+  for (const f of ['tb-new-cases-by-year.csv', 'tb-new-cases-trend.png']) if (fs.existsSync(path.join(tb, 'files', f))) fs.copyFileSync(path.join(tb, 'files', f), path.join(dir, 'files', f));
+  put('11-annual-report', '/Category/MPage/ANN1', '傳染病統計暨監視年報', [...S, '傳染病統計暨監視年報'], '<p>本署每年出版傳染病統計暨監視年報，彙整法定傳染病流行概況。</p>',
+    { attachments: [2020, 2021, 2022, 2023, 2024, 2025].map((yr) => pdf(`annual-${yr}.pdf`, `傳染病統計暨監視年報 ${yr} 年`)) });
+  return dir;
+}
+
+test('第十一批（統計專區欄目，合成匯出）：期刊建 dataset document-library（resources 降冪、不走版次鏈）、表格建 structured-table 與 series、缺年且舊 ⇒ series-gaps／stats-stale、NIDSS 入口 ⇒ dataset.nidss、資料開放平臺無法判定 ⇒ page、英文列表 skip-list、TB 同網址 skip-duplicate、清單 target 的頁也有 series／resources', () => {
+  const dir = tmp('statistics');
+  const exp = synthStatistics(path.join(dir, 'exp'));
+  const mf = path.join(dir, 'statistics.json');
+  fs.writeFileSync(mf, JSON.stringify({ id: 'migration.statistics-test', type: 'migration', title: '測試', scope: { kind: 'category', name: '統計專區' }, items: [
+    { key: 'flu-express', oldTitle: '流感速訊', oldUrl: 'https://www.cdc.gov.tw/Category/MPage/FLU1', oldType: 'page', verified: false, status: 'migrated', target: 'dataset.flu-express' },
+    { key: 'vaccine-coverage', oldTitle: '常規疫苗接種完成率', oldUrl: 'https://www.cdc.gov.tw/Category/MPage/VAC1', oldType: 'page', verified: false, status: 'migrated', target: 'dataset.vaccine-coverage' },
+    { key: 'annual-report', oldTitle: '傳染病統計暨監視年報', oldUrl: 'https://www.cdc.gov.tw/Category/MPage/ANN1', oldType: 'page', verified: false, status: 'migrated', target: 'publication.statistics-annual-2025' },
+  ] }, null, 2));
+  const out = path.join(dir, 'out');
+  const { report, drafts } = runImport({ exportDir: exp, outDir: out, manifestPath: mf, slug: 'statistics', now: NOW, priorBatchesDir: path.join(ROOT, 'data/legacy-import') });
+  const by = (k) => report.pages.find((p) => p.key === k);
+  const draft = (p) => drafts.find((d) => d.id === p.outputs[0]?.id);
+  const iss = (p, code) => p.issues.find((i) => i.code === code);
+  assert.equal(report.summary.pages, 11); assert.equal(report.summary.schemaInvalid, 0, JSON.stringify(report.drafts.filter((d) => !d.schemaValid).map((d) => d.errors)));
+  assert.ok(report.pages.every((p) => p.owner === 'unit.epidemic-intelligence'), '統計專區（含英文 Data & Statistics、結核病／統計資料）歸疫情中心');
+  // (a) 週期刊：dataset document-library、weekly、lastUpdated＝第 40 週週一、resources 依期別降冪；不是版次 ⇒ 沒有 version／family、只出一筆草稿
+  const se = by('01-surveillance-express');
+  assert.equal(se.kind, 'dataset'); assert.equal(se.action, 'review-before-publish'); assert.equal(se.outputs.length, 1);
+  assert.match(iss(se, 'type-from-category').message, /8 期期刊.*document-library/);
+  assert.equal(iss(se, 'periodical-issues').severity, 'info'); assert.match(iss(se, 'periodical-issues').message, /^8 期、最新 2026 年第 40 週；期別不是版次/);
+  const sd = draft(se);
+  assert.equal(sd.category, 'document-library'); assert.equal(sd.updateFrequency, 'weekly'); assert.equal(sd.lastUpdated, '2026-09-28');
+  assert.deepEqual(sd.resources.map((r) => r.label), [40, 39, 38, 37, 36, 35, 34, 33].map((n) => `疫情監測速訊 2026 年第 ${n} 週`));
+  assert.ok(sd.resources.every((r) => r.format === 'PDF' && r.href.startsWith(`/files/${sd.id}/`) && fs.existsSync(path.join(out, 'content/assets', r.href.replace(/^\/files\//, '')))));
+  assert.equal(sd.version, undefined); assert.equal(sd.family, undefined); assert.equal(sd.supersedes, undefined);
+  assert.ok(!se.issues.some((i) => /version/.test(i.code)));
+  // (b) 民國年週報 ⇒ 西元；(c) 無年份週 ＋ 清單 target 既有 dataset ⇒ type-from-manifest、compare-existing，但 resources／lastUpdated 照樣補；站外連結 antiflu ⇒ dataset-by-url
+  assert.equal(draft(by('02-ev-weekly')).lastUpdated, '2026-09-28'); assert.match(iss(by('02-ev-weekly'), 'periodical-issues').message, /最新 2026 年第 40 週/);
+  const fl = by('03-flu-express');
+  assert.equal(fl.kind, 'dataset'); assert.deepEqual(fl.outputs.map((o) => o.id), ['dataset.flu-express']); assert.equal(fl.action, 'compare-existing');
+  assert.ok(iss(fl, 'type-from-manifest')); assert.ok(!iss(fl, 'type-from-category'));
+  assert.equal(draft(fl).resources.length, 6); assert.equal(draft(fl).lastUpdated, '2026-09-28'); assert.equal(draft(fl).category, 'document-library');
+  // (d) 表格：structured-table、series 第一數值欄（人）、千分位、合計列略過、note 列另一欄
+  const ic = by('04-imported-cases');
+  assert.equal(ic.kind, 'dataset'); assert.match(iss(ic, 'series-extracted').message, /^10 點、2016–2025、人/);
+  const icd = draft(ic);
+  assert.equal(icd.category, 'structured-table'); assert.equal(icd.series.label, '境外移入確定病例數'); assert.equal(icd.series.unit, '人'); assert.equal(icd.series.granularity, 'year');
+  assert.equal(icd.series.points.length, 10); assert.deepEqual(icd.series.points[1], { t: '2017', v: 1037 }); assert.equal(icd.series.note, '另有欄位：占全部確定病例比率（%）');
+  assert.ok(!iss(ic, 'series-gaps') && !iss(ic, 'stats-stale'));
+  // (e) 清單 target 既有 dataset 的表格頁：型別來自清單，series 也補（民國 ⇒ 西元、%）
+  const vc = by('05-vaccine-coverage');
+  assert.deepEqual(vc.outputs.map((o) => o.id), ['dataset.vaccine-coverage']); assert.equal(vc.action, 'compare-existing'); assert.ok(iss(vc, 'type-from-manifest'));
+  const vcd = draft(vc);
+  assert.equal(vcd.series.unit, '%'); assert.equal(vcd.series.points[0].t, '2015'); assert.equal(vcd.series.points.at(-1).t, '2025'); assert.equal(vcd.series.note, undefined);
+  // (f) 缺 2019、最新 2022 ⇒ series-gaps、stats-stale（warn）；動作不受影響
+  const dt = by('06-death-stats');
+  assert.equal(iss(dt, 'series-gaps').severity, 'warn'); assert.match(iss(dt, 'series-gaps').message, /缺 2019 年/);
+  assert.equal(iss(dt, 'stats-stale').severity, 'warn'); assert.match(iss(dt, 'stats-stale').message, /最新一筆 2022，資料可能已停更或開放平臺有新版/);
+  assert.equal(dt.action, 'review-before-publish');
+  // (g) NIDSS 入口（清單沒給型別）：external-system ＋ dataset-by-url ⇒ dataset.nidss、compare-existing、canonicalUrl 取既有資料集
+  const nd = by('07-nidss');
+  assert.equal(nd.kind, 'dataset'); assert.deepEqual(nd.outputs.map((o) => o.id), ['dataset.nidss']); assert.equal(nd.action, 'compare-existing');
+  assert.match(iss(nd, 'external-system').message, /nidss\.cdc\.gov\.tw/); assert.match(iss(nd, 'dataset-by-url').message, /依站外連結 host nidss\.cdc\.gov\.tw 對到既有資料集 dataset\.nidss/);
+  assert.equal(draft(nd).canonicalUrl, 'https://nidss.cdc.gov.tw/'); assert.ok(!iss(nd, 'fields-pending'));
+  // (h) 資料開放平臺首頁：host 對到多筆、沒有完全相等 ⇒ 不改型別，維持 page（第十批行為）＋ 提示
+  const op = by('08-open-data-portal');
+  assert.equal(op.kind, 'page'); assert.match(iss(op, 'external-system').message, /data\.cdc\.gov\.tw/); assert.match(iss(op, 'dataset-by-url').message, /無法判定是哪一筆，維持 page/);
+  // (i) 英文列表：category-list-en ⇒ list、skip-list、sourceLang en、不記 type-unclear
+  const en = by('09-list-statistics-en');
+  assert.equal(en.pattern, 'category-list-en'); assert.equal(en.kind, 'list'); assert.equal(en.action, 'skip-list'); assert.ok(!iss(en, 'type-unclear'));
+  assert.equal(draft(en).sourceLang, 'en');
+  // (j) TB 統計資料（同網址，結核病批已轉過）⇒ skip-duplicate、不出草稿
+  const tb = by('10-tb-stats');
+  assert.equal(tb.action, 'skip-duplicate'); assert.deepEqual(tb.flags.convertedElsewhere, { batch: 'tuberculosis', key: '24-stats' });
+  assert.deepEqual(tb.outputs.map((o) => [o.id, o.role]), [['dataset.tb-new-cases', 'duplicate']]); assert.ok(!drafts.some((d) => d.id === 'dataset.tb-new-cases'));
+  // (k) 年報：清單 target 既有出版品 ⇒ publication、compare-existing；periodical-issues 只是 info，不拆版次
+  const an = by('11-annual-report');
+  assert.equal(an.kind, 'publication'); assert.deepEqual(an.outputs.map((o) => o.id), ['publication.statistics-annual-2025']); assert.equal(an.action, 'compare-existing');
+  assert.equal(iss(an, 'periodical-issues').severity, 'info'); assert.match(iss(an, 'periodical-issues').message, /6 期期刊、最新 2025 年/);
+  assert.equal(draft(an).assets.filter((a) => a.kind === 'attachment').length, 6);
+});
+
+test('已提交的第十一批輸出（data/legacy-import/statistics）：15 頁 13 份草稿、期刊 5 頁逐期 resources、表格 series 3 筆、入口頁對到既有資料集、兩頁跨批重複、清單 13 筆 3 筆 newPath、模擬匯出可重現', () => {
+  const dir = path.join(ROOT, 'data/legacy-import/statistics');
+  const r = readJSON(path.join(dir, 'report.json'));
+  assert.equal(r.summary.pages, 15); assert.equal(r.summary.drafts, 13); assert.equal(r.summary.schemaInvalid, 0);
+  assert.equal(r.migration.applied, true); assert.equal(r.manifest.file, 'content/migration/statistics.json');
+  for (const d of r.drafts) assert.ok(fs.existsSync(path.join(dir, d.file)), d.file);
+  assert.deepEqual(r.summary.byAction, { 'compare-existing': 5, 'review-before-publish': 6, 'skip-duplicate': 2, 'skip-list': 2 });
+  assert.deepEqual(r.summary.byType, { publication: 1, dataset: 8, page: 4 });
+  assert.equal(r.summary.issues.error, 0); assert.equal(r.migration.conflicts?.length ?? 0, 0);
+  const codes = (c) => r.pages.flatMap((p) => p.issues).filter((i) => i.code === c).length;
+  assert.equal(codes('periodical-issues'), 5); assert.equal(codes('series-extracted'), 3); assert.equal(codes('series-gaps'), 1); assert.equal(codes('stats-stale'), 1);
+  assert.equal(codes('external-system'), 4); assert.equal(codes('dataset-by-url'), 6);
+  // 入口頁：host 對到既有資料集；開放資料平臺首頁判不出 ⇒ 維持 page；防疫資料庫清單走 newPath，不列為與清單判定不同
+  const by = (k) => r.pages.find((p) => p.key === k);
+  assert.equal(by('11-nidss').outputs[0].id, 'dataset.nidss'); assert.equal(by('07-flu-express').outputs[0].id, 'dataset.flu-express');
+  assert.equal(by('12-open-data-portal').kind, 'page'); assert.equal(by('05-epidemic-database').kind, 'page');
+  for (const k of ['04-dengue-stats', '14-tb-stats']) assert.equal(by(k).action, 'skip-duplicate', k);
+  // 週報：一筆資料集逐期列 resources；疫苗接種率：series ＋ canonicalUrl 沿用既有資料集
+  const ev = readJSON(path.join(dir, 'content/datasets/enterovirus-ev-weekly.json'));
+  assert.equal(ev.category, 'document-library'); assert.equal(ev.updateFrequency, 'weekly'); assert.equal(ev.resources.length, 5);
+  const vc = readJSON(path.join(dir, 'content/datasets/vaccine-coverage.json'));
+  assert.equal(vc.series.points.length, 11); assert.equal(vc.series.unit, '%'); assert.match(vc.canonicalUrl, /^https:\/\/data\.cdc\.gov\.tw\//);
+  const manifest = readJSON(path.join(CONTENT, 'migration/statistics.json'));
+  assert.equal(manifest.items.length, 13); assert.equal(manifest.scope.kind, 'category'); assert.ok(manifest.items.every((i) => i.verified === false));
+  assert.ok(manifest.items.every((i) => /【匯入 /.test(i.note ?? '')));
+  assert.equal(manifest.items.filter((i) => i.newPath).length, 3); assert.equal(manifest.items.filter((i) => i.status === 'pending').length, 5);
+  assert.ok(manifest.items.every((i) => !(i.newPath && i.target)), 'newPath 與 target 互斥');
+  const tmpDir = tmp('exp11');
+  generateStatistics(tmpDir);
+  const exp = path.join(ROOT, 'data/legacy-export/statistics');
   for (const f of fs.readdirSync(exp).filter((x) => x.endsWith('.json') && x !== '_export.json')) assert.deepEqual(readJSON(path.join(tmpDir, f)), readJSON(path.join(exp, f)), f);
 });
