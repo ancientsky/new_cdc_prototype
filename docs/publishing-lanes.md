@@ -228,7 +228,7 @@
 **車道判定**（`scripts/lane.mjs`）：輸入變更檔案清單，輸出 JSON（`lane`、`autoMerge`、`requiredApprovals`、`reviewers`、`sla`、`files[]` 每檔的型別與車道、`reasons[]`）。多檔取最嚴格；`content/` 以外的檔案視為一般車道。單檔也可本機試：
 
 ```bash
-node scripts/lane.mjs content/news/news.2026-09-21-flu-antiviral-revised.json
+node scripts/lane.mjs content/news/2026-09-18-flu-antiviral-extended.json
 ```
 
 ## 附錄 B：原型驗證結果（2026-10-04 實測）

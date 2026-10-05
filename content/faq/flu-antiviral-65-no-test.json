@@ -52,25 +52,25 @@
       "status": "machine"
     }
   },
-  "summary": "未滿 5 歲及 65 歲以上有類流感症狀者，醫師可依臨床判斷直接開立公費抗病毒藥劑，不需快篩陽性（2026-09 版第 3 條）。",
+  "summary": "不需要。未滿 5 歲及 65 歲以上之類流感患者是公費抗病毒藥劑的全年適用對象，經醫師評估符合即可開立，不需流感快篩；2026-08-24 至 10-31 擴大的高傳播族群同樣免快篩。",
   "keywords": [
     "公費抗病毒藥劑",
     "65 歲以上",
     "不需快篩",
     "克流感",
-    "類流感高峰期"
+    "高傳播族群"
   ],
-  "answerMarkdown": "不需要。依 2026 年 9 月 21 日起適用的「公費流感抗病毒藥劑使用對象」第 3 條，**未滿 5 歲及 65 歲以上有類流感症狀者，醫師可依臨床判斷直接開立公費抗病毒藥劑，不需流感快篩陽性**。\n\n舊版（2026 年 6 月版）要求快篩陽性的規定已不適用；現行規定請以疾管署最新公告（致醫界通函）為準。",
+  "answerMarkdown": "不需要。依「公費流感抗病毒藥劑使用對象」（全年適用）第 4 條，**未滿 5 歲及 65 歲以上之類流感患者，經醫師診察研判符合即可開立公費抗病毒藥劑，不需流感快篩**；孕婦、住院、高風險慢性病等其他全年適用對象也一樣不需快篩。\n\n另外，2026 年 8 月 24 日至 10 月 31 日（依致醫界通函第 616 號延長），有類流感症狀且屬 7 類流感高傳播族群者（醫療防疫人員、長照機構、托育人員與學生、高風險同住者、禽畜業、人口密集機構）也可由醫師直接開立，同樣不需快篩。現行規定請以疾管署最新公告為準。",
   "structured": {
-    "article": "第 3 條",
+    "article": "第 4 條",
     "ageFrom": 65,
-    "rapidTestRequired": "否（高峰期）",
+    "rapidTestRequired": "否（全年適用）",
     "basisVersion": "2026-09"
   },
   "i18n": {
     "en": {
       "question": "Does someone aged 65+ with flu-like symptoms need a positive rapid test to get government-funded antivirals?",
-      "answerMarkdown": "Not necessarily. Under Article 3 of the eligibility rules for government-funded influenza antivirals effective 21 September 2026, **during the declared influenza-like illness peak, doctors may prescribe antivirals directly to people aged 65+ with flu-like symptoms without a positive rapid test**.\n\nChildren under 5 still need a positive rapid test. The earlier June 2026 version, which required a positive test for people 65+, no longer applies."
+      "answerMarkdown": "No. Under Article 4 of the year-round eligibility criteria for government-funded influenza antivirals, **children under 5 and adults aged 65 or older with influenza-like illness can be prescribed antivirals directly once a physician judges them eligible; no rapid test is required**. The same applies to the other year-round groups (pregnant women, hospitalised patients, people with high-risk chronic conditions).\n\nFrom 24 August to 31 October 2026 (extended by Letter to the Medical Community No. 616), people with flu-like symptoms in seven high-transmission groups are also eligible without a rapid test. Check Taiwan CDC's latest announcements for the current rules."
     }
   }
 }

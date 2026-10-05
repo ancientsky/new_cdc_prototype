@@ -6,8 +6,8 @@
 //       node scripts/gen-sample-assets.mjs --no-fix  只產生檔案、印出數值（由同事自行貼回）
 //
 // 產出（皆為示意檔，非正式公告；PDF 文字層只用 Helvetica 寫英文與 ASCII 說明，中文字型不嵌入，中文標題放在 PDF 文件資訊）：
-//   news.2026-09-21-flu-antiviral-revised/press-release.pdf   新聞稿全文（示意，單頁 PDF，含文字層）
-//   news.2026-09-21-flu-antiviral-revised/chart-ili.svg       類流感門急診就診率週趨勢（示意，SVG）
+//   news.2026-09-18-flu-antiviral-extended/press-release.pdf   新聞稿全文（示意，單頁 PDF，含文字層）
+//   news.2026-09-18-flu-antiviral-extended/chart-ili.svg       類流感門急診就診率週趨勢（示意，SVG）
 //   doc.tb-guideline.2025-09-01/tb-guideline-v8.pdf           結核病診治指引第八版（示意封面＋章節）
 //   doc.tb-guideline.2025-09-01/tb-guideline-v8.md            同上可及性版本（由內容檔 machineReadableMarkdown 產生）
 //   publication.poster-tb-seven-languages/poster-tb-seven-languages.pdf  七語衛教海報（示意）
@@ -90,25 +90,29 @@ const FOOTER = [
 ];
 
 // 1) 新聞稿 PDF
-put('news.2026-09-21-flu-antiviral-revised', 'press-release.pdf', makePdf({
-  title: '示意文件：類流感進入高峰期，未滿 5 歲及 65 歲以上有症狀者可直接使用公費抗病毒藥劑免快篩（新聞稿全文）',
-  titleEn: 'Press release (sample): ILI peak declared; antivirals for under-5s and people aged 65+ without a rapid test',
+put('news.2026-09-18-flu-antiviral-extended', 'press-release.pdf', makePdf({
+  title: '示意文件：流感疫情進入流行期且持續上升，疾管署延長擴大公費流感抗病毒藥劑使用條件至 10 月 31 日（新聞稿全文）',
+  titleEn: 'Press release (sample): influenza season under way; expanded antiviral eligibility extended to 31 October',
   ops: layout({
-    header: 'Taiwan CDC Press Release (SAMPLE)', headerSub: 'Released 2026-09-21  |  Division of Acute Infectious Diseases',
+    header: 'Taiwan CDC Press Release (SAMPLE)', headerSub: 'Released 2026-09-18  |  Division of Acute Infectious Diseases',
     lines: [
-      ['F2', 15, 'ILI peak declared: children under 5 and people aged 65+ with flu-like symptoms'],
-      ['F2', 15, 'can receive government-funded antivirals without a rapid test'],
+      ['F2', 15, 'Influenza season under way: expanded eligibility for government-funded'],
+      ['F2', 15, 'antivirals extended to 31 October 2026'],
       '',
-      'Emergency and outpatient visits for influenza-like illness (ILI) have risen for 4 consecutive weeks',
-      'and are above the epidemic threshold. The ILI peak period starts today (2026-09-21).',
+      'Influenza is in its epidemic period and rising: 136,796 ILI outpatient and emergency visits in week 36',
+      '(6-12 Sep, +16.5% week on week); 92 severe cases and 21 deaths were reported 8-14 Sep.',
+      'The peak is expected around the Mid-Autumn Festival.',
       '',
-      ['F2', 12, 'What changes (Article 3 of the eligibility criteria):'],
-      ['F1', 11, '- Children under 5 and people aged 65 or older with ILI symptoms: physicians may', 12],
-      ['F1', 11, '  prescribe directly based on clinical judgement; no positive rapid test needed.', 12],
+      ['F2', 12, 'What changes (Letter to the Medical Community No. 616):'],
+      ['F1', 11, '- Eligibility for people with ILI symptoms in seven high-transmission groups (health-care', 12],
+      ['F1', 11, '  and long-term-care staff and residents, childcare workers, students, cohabitants or carers of', 12],
+      ['F1', 11, '  high-risk people, livestock and animal workers, crowded institutions) runs to 31 Oct instead of 30 Sep.', 12],
+      ['F1', 11, '- No rapid test is required for anyone a physician judges eligible, including the year-round', 12],
+      ['F1', 11, '  groups (children under 5, adults 65+, pregnant women, hospitalised and high-risk patients).', 12],
       '',
       ['F2', 12, 'Advice:'],
       ['F1', 11, '- Antivirals work best within 48 hours of symptom onset.', 12],
-      ['F1', 11, '- Older adults with fever, cough or body aches should see a doctor early.', 12],
+      ['F1', 11, '- Government-funded antivirals are stocked at about 4,000 contracted institutions nationwide.', 12],
       ['F1', 11, '- Hotline: 1922 (from abroad +886-800-001922).', 12],
       '',
       ['F1', 10, 'Chart (sample): weekly ILI visit rate, see chart-ili.svg on the press release page.'],
@@ -315,7 +319,7 @@ put('service.ltbi-treatment', 'ltbi-consent-form.md', `<!-- 純文字可及性�
   <text x="${W - R}" y="${H - 8}" text-anchor="end" font-size="11" fill="#6b7280">資料：疾管署（示意數字，非正式統計）</text>
 </svg>
 `;
-  put('news.2026-09-21-flu-antiviral-revised', 'chart-ili.svg', svg);
+  put('news.2026-09-18-flu-antiviral-extended', 'chart-ili.svg', svg);
 }
 
 // ───────────────────────── PNG：2035 消除結核目標路徑（示意長條圖；手寫 PNG 編碼） ─────────────────────────

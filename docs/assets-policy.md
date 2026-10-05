@@ -12,8 +12,8 @@
 
 | 項目 | 規則 |
 | --- | --- |
-| 原始檔位置（repo） | `content/assets/{內容 id}/{檔名}`，例：`content/assets/news.2026-09-21-flu-antiviral-revised/press-release.pdf` |
-| 公開網址 | `/files/{內容 id}/{檔名}`（站台有 basePath 時自動加在前面），例：`/files/news.2026-09-21-flu-antiviral-revised/press-release.pdf` |
+| 原始檔位置（repo） | `content/assets/{內容 id}/{檔名}`，例：`content/assets/news.2026-09-18-flu-antiviral-extended/press-release.pdf` |
+| 公開網址 | `/files/{內容 id}/{檔名}`（站台有 basePath 時自動加在前面），例：`/files/news.2026-09-18-flu-antiviral-extended/press-release.pdf` |
 | 語言 | **不帶語言前綴，七語共用同一個檔案。** `/vi/news/…` 的頁面引用的也是同一個 `/files/…`。需要不同語言的檔案（例如越南文版海報），就是另一個檔、另一筆宣告，檔名帶語言碼（`poster-vi.pdf`） |
 | 一筆內容的檔案數 | 最多 30 個 |
 | 誰擁有 | 檔案屬於**一筆**內容（路徑裡的 id）。兩筆內容要用同一個檔時，各放一份並各自宣告，不要跨目錄引用，這樣任何一筆內容下架或改版都不會牽動另一筆 |

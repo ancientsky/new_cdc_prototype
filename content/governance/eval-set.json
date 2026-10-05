@@ -151,19 +151,21 @@
       "requires": [
         "doc.flu-antiviral-eligibility"
       ],
-      "q": "公費流感抗病毒藥劑使用對象第 3 條現在怎麼規定？",
+      "q": "公費流感抗病毒藥劑擴大使用對象（高傳播族群）適用到什麼時候？",
       "expect": {
         "refuse": false,
         "mustCite": [
-          "doc.flu-antiviral-eligibility.2026-09-21"
+          "doc.flu-antiviral-eligibility.2026-09-18"
         ],
         "citeLabel": true,
         "mustNotCite": [
           "doc.flu-antiviral-eligibility.2026-06-01"
         ],
         "mustIncludeAny": [
-          "不需快篩陽性",
-          "65 歲以上"
+          "10 月 31 日",
+          "2026-10-31",
+          "不需流感快篩",
+          "不需快篩"
         ]
       }
     },
@@ -184,8 +186,9 @@
         ],
         "mustIncludeAny": [
           "不需快篩",
-          "直接開立",
-          "不需要快篩"
+          "不需流感快篩",
+          "不需要快篩",
+          "直接開立"
         ]
       }
     },
@@ -283,10 +286,11 @@
         ],
         "mustIncludeAny": [
           "不需快篩",
+          "不需流感快篩",
           "直接開立"
         ]
       },
-      "note": "2026-09-21 第 3 條修訂：高峰期 65 歲以上不需快篩陽性"
+      "note": "致醫界通函第 616 號（2026-09-18）：全年對象與高傳播族群經醫師評估皆不需快篩；舊示意內容「未滿 5 歲仍需快篩陽性」已於 2026-10-05 修正"
     },
     {
       "id": "V015",
@@ -1911,7 +1915,7 @@
       "expect": {
         "intent": "professional",
         "mustCite": [
-          "doc.flu-antiviral-eligibility.2026-09-21"
+          "doc.flu-antiviral-eligibility.2026-09-18"
         ],
         "citeLabel": true,
         "mustNotCite": [

@@ -1,7 +1,7 @@
 {
   "id": "doc.flu-antiviral-eligibility.2026-06-01",
   "type": "document",
-  "title": "公費流感抗病毒藥劑使用對象（2026 年 6 月版）",
+  "title": "公費流感抗病毒藥劑使用對象（全年適用條件）",
   "owner": "unit.acute-infectious",
   "publishedAt": "2026-06-01",
   "reviewedAt": "2026-10-03",
@@ -23,12 +23,12 @@
       "status": "source"
     }
   },
-  "summary": "2026 年 6 月版公費流感抗病毒藥劑使用對象：重症、孕婦、未滿 5 歲及 65 歲以上經快篩陽性者、住院與高風險慢性病患等。已由 9 月版取代。",
+  "summary": "公費流感抗病毒藥劑全年適用對象：流感併發重症、新型 A 型流感、孕婦、未滿 5 歲及 65 歲以上、住院、高風險慢性病、BMI ≥ 30 之類流感患者與群聚預防性用藥；經醫師評估符合者不需快篩。2026 年 8 月起另有擴大版。",
   "family": "doc.flu-antiviral-eligibility",
   "docType": "guideline",
-  "version": "2026 年版",
+  "version": "2026-06-01",
   "effectiveAt": "2026-06-01",
-  "machineReadableMarkdown": "2026 年 6 月版公費流感抗病毒藥劑使用對象：重症、孕婦、未滿 5 歲及 65 歲以上經快篩陽性者、住院與高風險慢性病患等。已由 9 月版取代。\n\n### 第 1 條\n\n經通報之流感併發重症病例。\n\n### 第 2 條\n\n孕婦及產後 2 週內婦女經評估需及時用藥者。\n\n### 第 3 條\n\n未滿 5 歲及 65 歲以上之類流感患者，經流感快篩陽性者。\n\n| 項目 | 內容 |\n| --- | --- |\n| 文件名稱 | 公費流感抗病毒藥劑使用對象（2026 年 6 月版） |\n| 版次 | 2026-06 |\n| 生效日 | 2026-06-01 |\n| 權責單位 | 急性傳染病組 |\n| 檔案格式 | PDF |\n\n完整內容請下載附件：\\<a href=\"https://www.cdc.gov.tw/File/Get/pJVCfh-INcNIG0o5ngr34J\">公費流感抗病毒藥劑使用對象（2026 年 6 月版）（PDF）\\</a>",
+  "machineReadableMarkdown": "公費流感抗病毒藥劑全年適用對象：流感併發重症、新型 A 型流感、孕婦、未滿 5 歲及 65 歲以上、住院、高風險慢性病、BMI ≥ 30 之類流感患者與群聚預防性用藥；經醫師評估符合者不需快篩。2026 年 8 月起另有擴大版。\n\n### 第 1 條\n\n經通報之「流感併發重症」病例。\n\n### 第 2 條\n\n經通報之「新型 A 型流感」病例。\n\n### 第 3 條\n\n孕婦經評估需及時用藥者。\n\n| 項目 | 內容 |\n| --- | --- |\n| 文件名稱 | 公費流感抗病毒藥劑使用對象（全年適用條件） |\n| 版次 | 2026-06 |\n| 生效日 | 2026-06-01 |\n| 權責單位 | 急性傳染病組 |\n| 檔案格式 | PDF |\n\n完整內容請下載附件：\\<a href=\"https://www.cdc.gov.tw/File/Get/pJVCfh-INcNIG0o5ngr34J\">公費流感抗病毒藥劑使用對象（全年適用條件）（PDF）\\</a>",
   "pdfUrl": "/files/doc.flu-antiviral-eligibility.2026-06-01/flu-antiviral-eligibility.2026-06-01.pdf",
   "legacyUrls": [
     "https://www.cdc.gov.tw/Category/Page/Tsy161Va94LybxcU8KHFRV"
@@ -37,7 +37,7 @@
     {
       "file": "flu-antiviral-eligibility.2026-06-01.pdf",
       "kind": "attachment",
-      "label": "公費流感抗病毒藥劑使用對象（2026 年 6 月版）",
+      "label": "公費流感抗病毒藥劑使用對象（全年適用條件）",
       "mime": "application/pdf",
       "bytes": 704,
       "sha256": "ee27e5660fd85e15f594840537a34505063daab46e974807cefdf38604b49c83",
@@ -73,6 +73,11 @@
         "code": "pdf-no-text-layer",
         "severity": "warn",
         "message": "PDF「flu-antiviral-eligibility.2026-06-01.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+      },
+      {
+        "code": "version-unknown",
+        "severity": "info",
+        "message": "標題看不出版次，version 暫填 2026-06-01"
       }
     ],
     "sourceUrl": "https://www.cdc.gov.tw/Category/Page/Tsy161Va94LybxcU8KHFRV",

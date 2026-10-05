@@ -1972,11 +1972,11 @@
       "type": "news",
       "manifestKey": "dengue-ns1-notice",
       "manifestDerived": false,
-      "target": "news.2026-09-15-letter-616-ns1",
+      "target": "news.2026-09-15-letter-615-ns1",
       "targetExists": true,
       "existing": true,
       "compareWith": [
-        "news.2026-09-15-letter-616-ns1"
+        "news.2026-09-15-letter-615-ns1"
       ],
       "owner": "unit.acute-infectious",
       "ownerRule": "disease-fallback",
@@ -1985,10 +1985,10 @@
       ],
       "outputs": [
         {
-          "id": "news.2026-09-15-letter-616-ns1",
+          "id": "news.2026-09-15-letter-615-ns1",
           "type": "news",
           "role": "draft",
-          "file": "content/news/2026-09-15-letter-616-ns1.json",
+          "file": "content/news/2026-09-15-letter-615-ns1.json",
           "schemaValid": true
         }
       ],
@@ -3061,14 +3061,14 @@
       "merged": false
     },
     {
-      "id": "news.2026-09-15-letter-616-ns1",
+      "id": "news.2026-09-15-letter-615-ns1",
       "type": "news",
       "title": "NS1 抗原快篩試劑配置公告（致醫界通函）",
-      "file": "content/news/2026-09-15-letter-616-ns1.json",
+      "file": "content/news/2026-09-15-letter-615-ns1.json",
       "confidence": 1,
       "existing": true,
       "compareWith": [
-        "news.2026-09-15-letter-616-ns1"
+        "news.2026-09-15-letter-615-ns1"
       ],
       "status": "review",
       "owner": "unit.acute-infectious",

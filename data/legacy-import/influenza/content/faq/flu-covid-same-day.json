@@ -39,7 +39,7 @@
       {
         "code": "word-cleaned",
         "severity": "info",
-        "message": "清除 Word 貼上殘留 121 處（mso 樣式 81、Mso 類別 29、命名空間標籤 20）"
+        "message": "清除 Word 貼上殘留 123 處（mso 樣式 81、Mso 類別 29、命名空間標籤 21）"
       },
       {
         "code": "owner-from-disease",

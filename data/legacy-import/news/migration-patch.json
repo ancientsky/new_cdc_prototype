@@ -87,12 +87,12 @@
       }
     },
     {
-      "page": "007-2026-09-21-flu-antiviral-revised",
+      "page": "007-2026-09-18-flu-antiviral-extended",
       "suggest": {
-        "key": "import-007-2026-09-21-flu-antiviral-revised",
-        "oldTitle": "類流感進入高峰期，未滿 5 歲及 65 歲以上有症狀者可直接使用公費抗病毒藥劑免快篩",
+        "key": "import-007-2026-09-18-flu-antiviral-extended",
+        "oldTitle": "流感疫情進入流行期且持續上升，疾管署延長擴大公費流感抗病毒藥劑使用條件至 10 月 31 日",
         "oldPath": "新聞與公告／新聞稿",
-        "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/YG8JykIhAUKYkuuwJx0xGS?typeid=9",
+        "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/KNEie8q3qi8ARuMyKXV7pu?typeid=9",
         "oldType": "news",
         "verified": false,
         "status": "pending",
@@ -113,9 +113,22 @@
       }
     },
     {
-      "page": "009-2026-09-15-international-health-mou",
+      "page": "009-2026-09-18-letter-616-flu-antiviral-extended",
       "suggest": {
-        "key": "import-009-2026-09-15-international-health-mou",
+        "key": "import-009-2026-09-18-letter-616-flu-antiviral-extended",
+        "oldTitle": "致醫界通函第 616 號：延長擴大公費流感抗病毒藥劑使用對象「有類流感症狀，且具下列身分之流感高傳播族群」之適用期限至 10 月 31 日",
+        "oldPath": "新聞與公告／致醫界通函",
+        "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/bHJOIs9Jb2yoWeHdbDHWIM?typeid=48",
+        "oldType": "news",
+        "verified": false,
+        "status": "pending",
+        "note": "匯入時清單沒有對應項目，請權責單位確認後加入"
+      }
+    },
+    {
+      "page": "010-2026-09-15-international-health-mou",
+      "suggest": {
+        "key": "import-010-2026-09-15-international-health-mou",
         "oldTitle": "Taiwan CDC signs a public health cooperation MOU with a New Southbound partner",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/ac1-BUx7wJb5j4GLZggaOv?typeid=9",
@@ -126,12 +139,12 @@
       }
     },
     {
-      "page": "010-2026-09-15-letter-616-ns1",
+      "page": "011-2026-09-15-letter-615-ns1",
       "suggest": {
-        "key": "import-010-2026-09-15-letter-616-ns1",
-        "oldTitle": "致醫界通函第 616 號：登革熱 NS1 抗原快篩試劑配置更新",
+        "key": "import-011-2026-09-15-letter-615-ns1",
+        "oldTitle": "致醫界通函第 615 號：登革熱 NS1 抗原快篩試劑配置更新",
         "oldPath": "新聞與公告／致醫界通函",
-        "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/biICsHiYf-BLRABlKsEYap?typeid=48",
+        "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/R8Q3EU1daODSCTg2GAgKUn?typeid=48",
         "oldType": "news",
         "verified": false,
         "status": "pending",
@@ -139,9 +152,9 @@
       }
     },
     {
-      "page": "011-2026-09-anti-epidemic-team-scam",
+      "page": "012-2026-09-anti-epidemic-team-scam",
       "suggest": {
-        "key": "import-011-2026-09-anti-epidemic-team-scam",
+        "key": "import-012-2026-09-anti-epidemic-team-scam",
         "oldTitle": "網傳「防疫國家隊」投資群組為詐騙",
         "oldPath": "新聞與公告／澄清稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/7HBern14siglf3j_FN5W-i?typeid=8772",
@@ -152,9 +165,9 @@
       }
     },
     {
-      "page": "012-2026-09-12-synth",
+      "page": "013-2026-09-12-synth",
       "suggest": {
-        "key": "import-012-2026-09-12-synth",
+        "key": "import-013-2026-09-12-synth",
         "oldTitle": "登革熱防治：疾管署與高雄市政府聯合孳生源清除，呼籲民眾巡倒清刷",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/tVOO6DTH_ehRSk8H6crMnS?typeid=9",
@@ -165,9 +178,9 @@
       }
     },
     {
-      "page": "013-2026-09-10-clarify-flu-vaccine-death",
+      "page": "014-2026-09-10-clarify-flu-vaccine-death",
       "suggest": {
-        "key": "import-013-2026-09-10-clarify-flu-vaccine-death",
+        "key": "import-014-2026-09-10-clarify-flu-vaccine-death",
         "oldTitle": "澄清：網傳「打流感疫苗會得流感、長輩打完會死」並非事實",
         "oldPath": "新聞與公告／澄清稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/ghycdDd__NUQxVqr1Scgoi?typeid=8772",
@@ -178,9 +191,9 @@
       }
     },
     {
-      "page": "014-2026-09-flu-vaccine-causes-flu",
+      "page": "015-2026-09-flu-vaccine-causes-flu",
       "suggest": {
-        "key": "import-014-2026-09-flu-vaccine-causes-flu",
+        "key": "import-015-2026-09-flu-vaccine-causes-flu",
         "oldTitle": "網傳「打流感疫苗會得流感、長輩打完會死」並非事實",
         "oldPath": "新聞與公告／澄清稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/Dzynlz25x0lr3lnuqyz_ZL?typeid=8772",
@@ -191,9 +204,9 @@
       }
     },
     {
-      "page": "015-2026-09-01-covid-weekly",
+      "page": "016-2026-09-01-covid-weekly",
       "suggest": {
-        "key": "import-015-2026-09-01-covid-weekly",
+        "key": "import-016-2026-09-01-covid-weekly",
         "oldTitle": "新冠疫情連續三週下降，10 月起新年度疫苗與流感疫苗同步開打",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/aXeVzpSMDHPv5coJCwA9TH?typeid=9",
@@ -204,9 +217,9 @@
       }
     },
     {
-      "page": "016-2026-08-28-synth",
+      "page": "017-2026-08-28-synth",
       "suggest": {
-        "key": "import-016-2026-08-28-synth",
+        "key": "import-017-2026-08-28-synth",
         "oldTitle": "疾管署提醒：開學季腸病毒傳播風險升高，落實洗手與生病不上學",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/hXen_WGNxzD6BAZm3Q-6D-?typeid=9",
@@ -217,9 +230,9 @@
       }
     },
     {
-      "page": "017-2026-08-25-mpox-clade-i",
+      "page": "018-2026-08-25-mpox-clade-i",
       "suggest": {
-        "key": "import-017-2026-08-25-mpox-clade-i",
+        "key": "import-018-2026-08-25-mpox-clade-i",
         "oldTitle": "非洲 M痘 clade I 疫情持續，前往當地請避免親密接觸與野生動物",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/qu6QBO4Jen5iRNtc4VWZhv?typeid=9",
@@ -230,9 +243,22 @@
       }
     },
     {
-      "page": "018-2026-08-20-dots-outcomes",
+      "page": "019-2026-08-24-flu-antiviral-expanded",
       "suggest": {
-        "key": "import-018-2026-08-20-dots-outcomes",
+        "key": "import-019-2026-08-24-flu-antiviral-expanded",
+        "oldTitle": "國內外近期流感疫情緩升，疾管署自 8 月 24 日起至 9 月 30 日擴大公費流感抗病毒藥劑使用條件",
+        "oldPath": "新聞與公告／新聞稿",
+        "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/RKs5XgAWwbPXgR7gERMoGD?typeid=9",
+        "oldType": "news",
+        "verified": false,
+        "status": "pending",
+        "note": "匯入時清單沒有對應項目，請權責單位確認後加入"
+      }
+    },
+    {
+      "page": "020-2026-08-20-dots-outcomes",
+      "suggest": {
+        "key": "import-020-2026-08-20-dots-outcomes",
         "oldTitle": "都治 20 年：關懷員每日送藥到手，結核病完治率穩定提升",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/4Qs5n5XsyAbuTPUUJoJ1XA?typeid=9",
@@ -243,9 +269,9 @@
       }
     },
     {
-      "page": "019-2026-08-18-dengue-rising-south",
+      "page": "021-2026-08-18-dengue-rising-south",
       "suggest": {
-        "key": "import-019-2026-08-18-dengue-rising-south",
+        "key": "import-021-2026-08-18-dengue-rising-south",
         "oldTitle": "南部登革熱本土疫情上升，籲請民眾配合孳生源清除與防治工作",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/1VBVQuZiOzJEkifjLw-7gM?typeid=9",
@@ -256,9 +282,9 @@
       }
     },
     {
-      "page": "020-2026-08-17-international-fetp-workshop",
+      "page": "022-2026-08-17-international-fetp-workshop",
       "suggest": {
-        "key": "import-020-2026-08-17-international-fetp-workshop",
+        "key": "import-022-2026-08-17-international-fetp-workshop",
         "oldTitle": "International field epidemiology workshop opens in Taipei",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/j6slN2h_XoK_nqIeC5ht4x?typeid=9",
@@ -269,9 +295,9 @@
       }
     },
     {
-      "page": "021-2026-08-05-synth",
+      "page": "023-2026-08-05-synth",
       "suggest": {
-        "key": "import-021-2026-08-05-synth",
+        "key": "import-023-2026-08-05-synth",
         "oldTitle": "麻疹境外移入病例新增 1 例，疾管署公布接觸者活動史並呼籲 1966 年後出生者評估接種 MMR",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/aDxmeNfFzCZphM65ldsE8y?typeid=9",
@@ -282,9 +308,9 @@
       }
     },
     {
-      "page": "022-2026-07-21-dengue-first-local",
+      "page": "024-2026-07-21-dengue-first-local",
       "suggest": {
-        "key": "import-022-2026-07-21-dengue-first-local",
+        "key": "import-024-2026-07-21-dengue-first-local",
         "oldTitle": "今年首例登革熱本土病例出現於高雄市，請民眾清除積水容器",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/GEpsXBU9Dqh7eC0kYpES4g?typeid=9",
@@ -295,9 +321,9 @@
       }
     },
     {
-      "page": "023-2026-07-10-synth",
+      "page": "025-2026-07-10-synth",
       "suggest": {
-        "key": "import-023-2026-07-10-synth",
+        "key": "import-025-2026-07-10-synth",
         "oldTitle": "疾管署公布 2025 年結核病防治成果：新案數續降，都治完治率達 9 成",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/Y-t1hTiNTbjjrqiAHUTzjm?typeid=9",
@@ -308,9 +334,9 @@
       }
     },
     {
-      "page": "024-2026-07-01-letter-dengue-guidance-v17",
+      "page": "026-2026-07-01-letter-dengue-guidance-v17",
       "suggest": {
-        "key": "import-024-2026-07-01-letter-dengue-guidance-v17",
+        "key": "import-026-2026-07-01-letter-dengue-guidance-v17",
         "oldTitle": "致醫界通函第 612 號：登革熱／屈公病防治工作指引第 17 版自即日起適用",
         "oldPath": "新聞與公告／致醫界通函",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/vPGiv9yS8N4qipZSchUD_n?typeid=48",
@@ -321,9 +347,9 @@
       }
     },
     {
-      "page": "025-2026-06-20-synth",
+      "page": "027-2026-06-20-synth",
       "suggest": {
-        "key": "import-025-2026-06-20-synth",
+        "key": "import-027-2026-06-20-synth",
         "oldTitle": "夏季出國旅遊前請先查疫情：疾管署更新國際旅遊疫情建議等級",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/Zg1sEf1_dN9UqgbyCyAdmD?typeid=9",
@@ -334,9 +360,9 @@
       }
     },
     {
-      "page": "026-2026-06-03-flu-antiviral-summer",
+      "page": "028-2026-06-03-flu-antiviral-summer",
       "suggest": {
-        "key": "import-026-2026-06-03-flu-antiviral-summer",
+        "key": "import-028-2026-06-03-flu-antiviral-summer",
         "oldTitle": "夏季流感疫情持續，公費抗病毒藥劑使用對象維持現行規定",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/mDWl7IIU_wsF4S5AWAkkI_?typeid=9",
@@ -347,9 +373,9 @@
       }
     },
     {
-      "page": "027-2026-06-02-measles-travel-mmr-1966",
+      "page": "029-2026-06-02-measles-travel-mmr-1966",
       "suggest": {
-        "key": "import-027-2026-06-02-measles-travel-mmr-1966",
+        "key": "import-029-2026-06-02-measles-travel-mmr-1966",
         "oldTitle": "暑假出國前請評估麻疹免疫力：1966 年（含）以後出生者出國前 2 至 4 週評估接種 MMR",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/EOQ5VTspoKXsrS3jrB8tFv?typeid=9",
@@ -360,9 +386,9 @@
       }
     },
     {
-      "page": "028-2026-05-22-international-wha-technical-exchange",
+      "page": "030-2026-05-22-international-wha-technical-exchange",
       "suggest": {
-        "key": "import-028-2026-05-22-international-wha-technical-exchange",
+        "key": "import-030-2026-05-22-international-wha-technical-exchange",
         "oldTitle": "Taiwan CDC experts hold technical exchanges during the World Health Assembly week",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/nzlD95UZ0xuu5PG-CvvCWD?typeid=9",
@@ -373,9 +399,9 @@
       }
     },
     {
-      "page": "029-2026-05-mmr-all-adults",
+      "page": "031-2026-05-mmr-all-adults",
       "suggest": {
-        "key": "import-029-2026-05-mmr-all-adults",
+        "key": "import-031-2026-05-mmr-all-adults",
         "oldTitle": "網傳「所有成人都要再補打一劑 MMR」部分正確",
         "oldPath": "新聞與公告／澄清稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/vy2WAmm2rOtB8yrPEHV2HU?typeid=8772",
@@ -386,9 +412,9 @@
       }
     },
     {
-      "page": "030-2026-05-11-japan-measles-level1",
+      "page": "032-2026-05-11-japan-measles-level1",
       "suggest": {
-        "key": "import-030-2026-05-11-japan-measles-level1",
+        "key": "import-032-2026-05-11-japan-measles-level1",
         "oldTitle": "日本麻疹疫情升溫，列為第一級旅遊疫情建議；出國前請評估 MMR 接種",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/uHkheEnk9OnK55D2DsatrZ?typeid=9",
@@ -399,9 +425,9 @@
       }
     },
     {
-      "page": "031-2026-04-enterovirus-only-kids",
+      "page": "033-2026-04-enterovirus-only-kids",
       "suggest": {
-        "key": "import-031-2026-04-enterovirus-only-kids",
+        "key": "import-033-2026-04-enterovirus-only-kids",
         "oldTitle": "網傳「腸病毒只有小孩會得，大人不用擔心」部分正確",
         "oldPath": "新聞與公告／澄清稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/6zjetJzWqW6DijXlzQOztD?typeid=8772",
@@ -412,9 +438,9 @@
       }
     },
     {
-      "page": "032-2026-04-14-enterovirus-rising",
+      "page": "034-2026-04-14-enterovirus-rising",
       "suggest": {
-        "key": "import-032-2026-04-14-enterovirus-rising",
+        "key": "import-034-2026-04-14-enterovirus-rising",
         "oldTitle": "腸病毒就診人次連續上升，近期社區以 EV71 為主，籲請提高警覺",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/RhVyEWsJgTfNMJy5tBXSql?typeid=9",
@@ -425,9 +451,9 @@
       }
     },
     {
-      "page": "033-2026-03-24-world-tb-day-end-tb-2035",
+      "page": "035-2026-03-24-world-tb-day-end-tb-2035",
       "suggest": {
-        "key": "import-033-2026-03-24-world-tb-day-end-tb-2035",
+        "key": "import-035-2026-03-24-world-tb-day-end-tb-2035",
         "oldTitle": "世界結核病日：邁向 2035 消除結核，接觸者與高風險族群公費檢驗潛伏感染",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/Jiq_KGR34Qxvh8t2-byaEG?typeid=9",
@@ -438,9 +464,9 @@
       }
     },
     {
-      "page": "034-2026-03-covid-isolation-7-days",
+      "page": "036-2026-03-covid-isolation-7-days",
       "suggest": {
-        "key": "import-034-2026-03-covid-isolation-7-days",
+        "key": "import-036-2026-03-covid-isolation-7-days",
         "oldTitle": "網傳「確診新冠要居家隔離 7 天，同住家人也要隔離」為舊規定",
         "oldPath": "新聞與公告／澄清稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/odHqEUP-ot2eDzawy1NfoE?typeid=8772",
@@ -451,9 +477,9 @@
       }
     },
     {
-      "page": "035-2026-03-15-letter-ev-guideline",
+      "page": "037-2026-03-15-letter-ev-guideline",
       "suggest": {
-        "key": "import-035-2026-03-15-letter-ev-guideline",
+        "key": "import-037-2026-03-15-letter-ev-guideline",
         "oldTitle": "致醫界通函第 608 號：腸病毒感染併發重症臨床處置建議更新",
         "oldPath": "新聞與公告／致醫界通函",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/noOQoAefRFSOg4tS8GrJym?typeid=48",
@@ -464,9 +490,9 @@
       }
     },
     {
-      "page": "036-2026-02-24-flu-declining",
+      "page": "038-2026-02-24-flu-declining",
       "suggest": {
-        "key": "import-036-2026-02-24-flu-declining",
+        "key": "import-038-2026-02-24-flu-declining",
         "oldTitle": "流感疫情緩降，仍處流行期，請持續注意手部衛生與咳嗽禮節",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/-zweEOnUpHiyAskD0pNoZo?typeid=9",
@@ -477,9 +503,9 @@
       }
     },
     {
-      "page": "037-2026-01-20-lunar-new-year-flu",
+      "page": "039-2026-01-20-lunar-new-year-flu",
       "suggest": {
-        "key": "import-037-2026-01-20-lunar-new-year-flu",
+        "key": "import-039-2026-01-20-lunar-new-year-flu",
         "oldTitle": "流感疫情處高峰，春節連假前請儘速接種疫苗並落實咳嗽禮節",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/eiEtxrKNmuAax0vpnd5RYh?typeid=9",
@@ -490,9 +516,9 @@
       }
     },
     {
-      "page": "038-2026-01-vinegar-saltwater-flu",
+      "page": "040-2026-01-vinegar-saltwater-flu",
       "suggest": {
-        "key": "import-038-2026-01-vinegar-saltwater-flu",
+        "key": "import-040-2026-01-vinegar-saltwater-flu",
         "oldTitle": "網傳「燻白醋、喝鹽水可以殺死流感病毒」沒有科學根據",
         "oldPath": "新聞與公告／澄清稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/9kUSvU-rUr8mbe1nhEgGb5?typeid=8772",
@@ -503,9 +529,9 @@
       }
     },
     {
-      "page": "039-2025-12-01-world-aids-day",
+      "page": "041-2025-12-01-world-aids-day",
       "suggest": {
-        "key": "import-039-2025-12-01-world-aids-day",
+        "key": "import-041-2025-12-01-world-aids-day",
         "oldTitle": "世界愛滋日：定期篩檢、PrEP 與 U=U，一起終結愛滋",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/QkgmjdEJPXh042-RQFE5a5?typeid=9",
@@ -516,9 +542,9 @@
       }
     },
     {
-      "page": "040-2025-11-11-letter-dengue-guidance-v16",
+      "page": "042-2025-11-11-letter-dengue-guidance-v16",
       "suggest": {
-        "key": "import-040-2025-11-11-letter-dengue-guidance-v16",
+        "key": "import-042-2025-11-11-letter-dengue-guidance-v16",
         "oldTitle": "致醫界通函第 603 號：登革熱／屈公病防治工作指引第 16 版公布",
         "oldPath": "新聞與公告／致醫界通函",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/Zf9eK5LCN7oF44mSOfe290?typeid=48",
@@ -529,9 +555,9 @@
       }
     },
     {
-      "page": "041-2025-10-01-flu-vaccine-start",
+      "page": "043-2025-10-01-flu-vaccine-start",
       "suggest": {
-        "key": "import-041-2025-10-01-flu-vaccine-start",
+        "key": "import-043-2025-10-01-flu-vaccine-start",
         "oldTitle": "114 年度公費流感疫苗今日開打，長者與幼兒請儘早接種",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/i7x67klq3R1Dc2w8czhbO9?typeid=9",
@@ -542,9 +568,9 @@
       }
     },
     {
-      "page": "042-2025-08-05-chikungunya-guangdong",
+      "page": "044-2025-08-05-chikungunya-guangdong",
       "suggest": {
-        "key": "import-042-2025-08-05-chikungunya-guangdong",
+        "key": "import-044-2025-08-05-chikungunya-guangdong",
         "oldTitle": "中國大陸廣東省屈公病疫情升溫，提升旅遊疫情建議至第二級",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/B9VMZhQt--eUB_XTFlLKJ9?typeid=9",
@@ -555,9 +581,9 @@
       }
     },
     {
-      "page": "043-2025-07-15-clarify-dengue-spray",
+      "page": "045-2025-07-15-clarify-dengue-spray",
       "suggest": {
-        "key": "import-043-2025-07-15-clarify-dengue-spray",
+        "key": "import-045-2025-07-15-clarify-dengue-spray",
         "oldTitle": "澄清：網傳「登革熱噴藥會毒死人、可拒絕開門」為錯誤訊息",
         "oldPath": "新聞與公告／澄清稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/P4sMHvb5xxLR344ZUut7C7?typeid=8772",
@@ -568,9 +594,9 @@
       }
     },
     {
-      "page": "044-2025-07-dengue-spraying-poison",
+      "page": "046-2025-07-dengue-spraying-poison",
       "suggest": {
-        "key": "import-044-2025-07-dengue-spraying-poison",
+        "key": "import-046-2025-07-dengue-spraying-poison",
         "oldTitle": "網傳「登革熱噴藥會毒死人、可以拒絕開門」為錯誤訊息",
         "oldPath": "新聞與公告／澄清稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/R1SLggitkGi0NAuncajZAY?typeid=8772",
@@ -581,9 +607,9 @@
       }
     },
     {
-      "page": "045-2025-06-10-mpox-summer",
+      "page": "047-2025-06-10-mpox-summer",
       "suggest": {
-        "key": "import-045-2025-06-10-mpox-summer",
+        "key": "import-047-2025-06-10-mpox-summer",
         "oldTitle": "暑假出遊與大型活動將至，符合條件者請把握接種 2 劑 M痘疫苗",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/u7IBk8OIPlknZdqVvmiG9F?typeid=9",
@@ -594,9 +620,9 @@
       }
     },
     {
-      "page": "046-2025-05-06-enterovirus-season",
+      "page": "048-2025-05-06-enterovirus-season",
       "suggest": {
-        "key": "import-046-2025-05-06-enterovirus-season",
+        "key": "import-048-2025-05-06-enterovirus-season",
         "oldTitle": "腸病毒進入流行期，籲請家長落實肥皂洗手並留意重症前兆",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/QVLO-jKZ2FARVb-bSfRPlv?typeid=9",
@@ -607,9 +633,9 @@
       }
     },
     {
-      "page": "047-2025-04-16-mmr-recommendation-revised",
+      "page": "049-2025-04-16-mmr-recommendation-revised",
       "suggest": {
-        "key": "import-047-2025-04-16-mmr-recommendation-revised",
+        "key": "import-049-2025-04-16-mmr-recommendation-revised",
         "oldTitle": "修訂國內 MMR 預防接種建議：成人評估對象擴大至 1966 年（含）以後出生者",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/-HrKmE3J7qp6A-3--AMJmK?typeid=9",
@@ -620,9 +646,9 @@
       }
     },
     {
-      "page": "048-en-2025-04-16-mmr-recommendation-revised",
+      "page": "050-en-2025-04-16-mmr-recommendation-revised",
       "suggest": {
-        "key": "import-048-en-2025-04-16-mmr-recommendation-revised",
+        "key": "import-050-en-2025-04-16-mmr-recommendation-revised",
         "oldTitle": "MMR recommendations revised: adults born in 1966 or later now eligible for assessment",
         "oldPath": "Home／News／Press Releases",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/V9mW8f2b5lpfkdk4UEOkRX?typeid=158",
@@ -633,9 +659,9 @@
       }
     },
     {
-      "page": "049-2025-04-mmr-born-after-1981-only",
+      "page": "051-2025-04-mmr-born-after-1981-only",
       "suggest": {
-        "key": "import-049-2025-04-mmr-born-after-1981-only",
+        "key": "import-051-2025-04-mmr-born-after-1981-only",
         "oldTitle": "網傳「MMR 只有 1981 年後出生的人要補打」",
         "oldPath": "新聞與公告／澄清稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/SE0WiE8vVquCNdRJPzEQ_s?typeid=8772",
@@ -646,9 +672,9 @@
       }
     },
     {
-      "page": "050-2025-03-24-world-tb-day",
+      "page": "052-2025-03-24-world-tb-day",
       "suggest": {
-        "key": "import-050-2025-03-24-world-tb-day",
+        "key": "import-052-2025-03-24-world-tb-day",
         "oldTitle": "世界結核病日：咳嗽兩週請就醫，接觸者檢查與潛伏感染治療守護家人",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/Cr2nMmu7Ur-AtBx5QH4CzW?typeid=9",
@@ -659,9 +685,9 @@
       }
     },
     {
-      "page": "051-en-2025-03-24-world-tb-day",
+      "page": "053-en-2025-03-24-world-tb-day",
       "suggest": {
-        "key": "import-051-en-2025-03-24-world-tb-day",
+        "key": "import-053-en-2025-03-24-world-tb-day",
         "oldTitle": "World TB Day: see a doctor if you have coughed for two weeks; contact screening and latent TB treatment protect families",
         "oldPath": "Home／News／Press Releases",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/w943Hotl5t_Y2UM7cuysEG?typeid=158",
@@ -672,9 +698,9 @@
       }
     },
     {
-      "page": "052-2025-02-18-dengue-imported-spring",
+      "page": "054-2025-02-18-dengue-imported-spring",
       "suggest": {
-        "key": "import-052-2025-02-18-dengue-imported-spring",
+        "key": "import-054-2025-02-18-dengue-imported-spring",
         "oldTitle": "春節後登革熱境外移入病例增加，出國返國請落實防蚊",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/BMWpfFWHjg3XxCaFghvXti?typeid=9",
@@ -685,9 +711,9 @@
       }
     },
     {
-      "page": "053-2025-01-09-mmr-adults-measles",
+      "page": "055-2025-01-09-mmr-adults-measles",
       "suggest": {
-        "key": "import-053-2025-01-09-mmr-adults-measles",
+        "key": "import-055-2025-01-09-mmr-adults-measles",
         "oldTitle": "國內新增麻疹病例，1981 年以後出生之醫護與赴流行區成人建議優先自費接種 MMR",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/sLyeBG6AVEXUuxt1roWj88?typeid=9",
@@ -698,9 +724,9 @@
       }
     },
     {
-      "page": "054-2022-10-01-old",
+      "page": "056-2022-10-01-old",
       "suggest": {
-        "key": "import-054-2022-10-01-old",
+        "key": "import-056-2022-10-01-old",
         "oldTitle": "111 年度公費流感疫苗 10 月 1 日起分階段開打",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/JMEQfzC_ayKMkPQlHzdrf4?typeid=9",
@@ -711,9 +737,9 @@
       }
     },
     {
-      "page": "055-2022-03-24-old",
+      "page": "057-2022-03-24-old",
       "suggest": {
-        "key": "import-055-2022-03-24-old",
+        "key": "import-057-2022-03-24-old",
         "oldTitle": "世界結核病日：疾管署呼籲咳嗽超過兩週請就醫",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/85P41soNOAfNT4nIWsiq_U?typeid=9",
@@ -724,9 +750,9 @@
       }
     },
     {
-      "page": "056-2021-05-15-old",
+      "page": "058-2021-05-15-old",
       "suggest": {
-        "key": "import-056-2021-05-15-old",
+        "key": "import-058-2021-05-15-old",
         "oldTitle": "COVID-19 疫情說明記者會（第 120 場）",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/Tf45xxeAuvD4SVFkuvIeXM?typeid=9",
@@ -737,9 +763,9 @@
       }
     },
     {
-      "page": "057-2020-12-15-old",
+      "page": "059-2020-12-15-old",
       "suggest": {
-        "key": "import-057-2020-12-15-old",
+        "key": "import-059-2020-12-15-old",
         "oldTitle": "活動報名：2021 年世界結核病日健走活動開放報名",
         "oldPath": "新聞與公告／其他訊息",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/dDR5JeIC7EKd_Hpr3MO0g6?typeid=11",
@@ -750,9 +776,9 @@
       }
     },
     {
-      "page": "058-2020-04-01-old",
+      "page": "060-2020-04-01-old",
       "suggest": {
-        "key": "import-058-2020-04-01-old",
+        "key": "import-060-2020-04-01-old",
         "oldTitle": "COVID-19 疫情說明記者會（第 60 場）",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/ZViXszMLWodRbAerhbHVjx?typeid=9",
@@ -763,9 +789,9 @@
       }
     },
     {
-      "page": "059-2019-11-20-old",
+      "page": "061-2019-11-20-old",
       "suggest": {
-        "key": "import-059-2019-11-20-old",
+        "key": "import-061-2019-11-20-old",
         "oldTitle": "登革熱疫情趨緩，疾管署感謝地方政府與民眾共同努力",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/Detail/9A_rA2MYBsfgm7CTYrG_qI?typeid=9",
@@ -776,9 +802,9 @@
       }
     },
     {
-      "page": "060-news-list",
+      "page": "062-news-list",
       "suggest": {
-        "key": "import-060-news-list",
+        "key": "import-062-news-list",
         "oldTitle": "新聞稿",
         "oldPath": "新聞與公告／新聞稿",
         "oldUrl": "https://www.cdc.gov.tw/Bulletin/List/k6bmONJQYkScCR2X4MU1XB?typeid=9",
@@ -795,7 +821,7 @@
     "items": 0,
     "matched": 0,
     "missingPages": 0,
-    "unmatchedPages": 60,
+    "unmatchedPages": 62,
     "agree": 0,
     "conflicts": 0,
     "statusChanges": 0,

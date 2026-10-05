@@ -1,0 +1,72 @@
+{
+  "id": "news.2026-09-18-letter-616-flu-antiviral-extended",
+  "type": "letter",
+  "title": "致醫界通函第 616 號：延長擴大公費流感抗病毒藥劑使用對象「有類流感症狀，且具下列身分之流感高傳播族群」之適用期限至 10 月 31 日",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-09-18",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "一、本署自 2026 年 8 月 24 日起擴大公費流感抗病毒藥劑使用對象「有類流感症狀，且具下列身分之流感高傳播族群」，原訂至 9 月 30 日止；",
+  "newsType": "letter",
+  "bodyMarkdown": "一、本署自 2026 年 8 月 24 日起擴大公費流感抗病毒藥劑使用對象「有類流感症狀，且具下列身分之流感高傳播族群」，原訂至 9 月 30 日止；考量國內流感疫情已進入流行期且持續上升，適用期限延長至 **2026 年 10 月 31 日止**。二、流感高傳播族群：（一）醫事單位之防疫相關人員（含具執業登記醫事人員及醫療院所非醫事人員）；（二）安養、長期照顧（服務）等機構之受照顧者及所屬工作人員；（三）幼兒園托育人員、托育機構專業人員及居家托育人員（保母）；（四）幼兒園、國小、國中、高中、高職、五專一至三年級學生；（五）與流感重症高風險族群同住者或其照顧者；（六）禽畜養殖等相關行業工作人員、動物園工作人員及動物防疫人員；（七）其他人口密集機構（如軍營等）易發生群聚之人員。三、經醫師評估符合公費藥劑用藥條件者，**不需流感快篩即可開立公費藥劑**，以把握用藥時機；用藥後請儘速至「智慧防疫物資管理資訊系統（SMIS）」回報。四、公費藥劑配置於各縣市衛生局規劃之全國約 4,000 家合約醫療機構，籲請醫師善用公費藥劑，共同防治流感。\n\n（原型示意：本文為通函摘述，正式內容以疾管署官網原件為準。）",
+  "letterNo": 616,
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/bHJOIs9Jb2yoWeHdbDHWIM?typeid=48"
+  ],
+  "assets": [
+    {
+      "file": "2026-09-18-letter-616-flu-antiviral-extended-1.pdf",
+      "kind": "attachment",
+      "label": "公費流感抗病毒藥劑使用對象一覽表（擴大版）",
+      "mime": "application/pdf",
+      "bytes": 771,
+      "sha256": "3289dfc59c68a437648437caa960fe62f8508956d440ba3308d8e16440d06a0a",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 8 處（mso 樣式 4、Mso 類別 2、命名空間標籤 2）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "致醫界通函的權責單位依疾病主檔取 unit.acute-infectious（流感），不歸新聞欄目的公關室"
+      },
+      {
+        "code": "news-type-hint",
+        "severity": "info",
+        "message": "致醫界通函建成 letter（letterNo 由標題「第 N 號」抽）；對象為醫療院所，audience professional"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/bHJOIs9Jb2yoWeHdbDHWIM?typeid=48",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "news.2026-09-18-letter-616-flu-antiviral-extended"
+    ]
+  }
+}

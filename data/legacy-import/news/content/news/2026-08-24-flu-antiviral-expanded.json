@@ -1,0 +1,49 @@
+{
+  "id": "news.2026-08-24-flu-antiviral-expanded",
+  "type": "news",
+  "title": "國內外近期流感疫情緩升，疾管署自 8 月 24 日起至 9 月 30 日擴大公費流感抗病毒藥劑使用條件",
+  "owner": "unit.pr",
+  "publishedAt": "2026-08-24",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "疾病管制署表示，國內外近期流感疫情呈緩升趨勢，第 32 週（8 月 9 日至 15 日）類流感門急診就診計 95,011 人次，較前一週略升 1.2%。",
+  "newsType": "press",
+  "bodyMarkdown": "疾病管制署表示，國內外近期流感疫情呈緩升趨勢，第 32 週（8 月 9 日至 15 日）類流感門急診就診計 95,011 人次，較前一週略升 1.2%。為把握用藥時機、降低重症風險，自今（2026）年 8 月 24 日起至 9 月 30 日止，擴大公費流感抗病毒藥劑使用條件，新增「有類流感症狀，且具下列身分之流感高傳播族群」：\n\n1. 醫事單位之防疫相關人員（含具執業登記醫事人員及醫療院所非醫事人員）\n2. 安養、長期照顧（服務）等機構之受照顧者及所屬工作人員\n3. 幼兒園托育人員、托育機構專業人員及居家托育人員（保母）\n4. 幼兒園、國小、國中、高中、高職、五專一至三年級學生\n5. 與流感重症高風險族群同住者或其照顧者\n6. 禽畜養殖等相關行業工作人員、動物園工作人員及動物防疫人員\n7. 其他人口密集機構（如軍營等）易發生群聚之人員\n\n疾管署說明，上述對象及全年適用對象（流感併發重症、孕婦、未滿 5 歲及 65 歲以上、住院、高風險慢性病等類流感患者），**經醫師評估符合條件者不需流感快篩即可開立公費藥劑**。抗病毒藥劑於發病 48 小時內使用效果最佳，有症狀請儘早就醫。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/RKs5XgAWwbPXgR7gERMoGD?typeid=9"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 28 處（mso 樣式 24、Mso 類別 9、命名空間標籤 2）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/RKs5XgAWwbPXgR7gERMoGD?typeid=9",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "news.2026-08-24-flu-antiviral-expanded"
+    ]
+  }
+}

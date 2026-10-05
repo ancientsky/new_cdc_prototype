@@ -47,7 +47,7 @@
 | 20 | 病媒蚊密度調查結果<br><sub>www.cdc.gov.tw/Category/List/3ZwNd9eoMVqqi7PDTlqIyw</sub> | 清單頁 → `page.dengue-vector-density` | — | 0.6 | — | 清單頁，不轉換（新站由系統自動產生列表） |
 | 21 | 孳生源清除與社區動員（巡倒清刷）<br><sub>www.cdc.gov.tw/Category/MPage/rLPU3Gwbwg97BZ_2MG5efk</sub> | 頁面 → `page.dengue-source-reduction` | `doc.dengue-community-workplan.2026-09-10`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 22 | 群聚事件應變與緊急防治<br><sub>www.cdc.gov.tw/Category/MPage/j_J4tv6ANjXOs3PJQTPe8z</sub> | 頁面 → `page.dengue-cluster-response` | `doc.dengue-community-workplan.2026-09-10`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
-| 23 | NS1 抗原快篩試劑配置公告（致醫界通函）<br><sub>www.cdc.gov.tw/Bulletin/Detail/UTWPs0f26dqP75NLaqYOpg?typeid=11</sub> | 新聞 → `news.2026-09-15-letter-616-ns1` | `news.2026-09-15-letter-616-ns1`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
+| 23 | NS1 抗原快篩試劑配置公告（致醫界通函）<br><sub>www.cdc.gov.tw/Bulletin/Detail/UTWPs0f26dqP75NLaqYOpg?typeid=11</sub> | 新聞 → `news.2026-09-15-letter-615-ns1` | `news.2026-09-15-letter-615-ns1`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 24 | 登革熱／屈公病防治工作指引（第 16 版）<br><sub>www.cdc.gov.tw/File/Get/eisdR8ngYeiulZ08rD9J9A</sub> | 文件 → `doc.guidance-dengue.v16` | `doc.guidance-dengue.v16`（既有） | 1 | pdf-no-text-layer | 既有內容已存在，供比對，不建議覆蓋 |
 | 25 | 影音：里長帶頭巡倒清刷<br><sub>www.cdc.gov.tw/Category/List/wcABV3owliF5_29uKba1VA</sub> | 影音 → `media.dengue-village-chief` | `media.dengue-village-chief`（既有） | 1 | — | 既有內容已存在，供比對，不建議覆蓋 |
 | 26 | 外籍勞工登革熱防治宣導（多語單張）<br><sub>www.cdc.gov.tw/Category/List/yNCv7fIZytqR8M72_3DGXS</sub> | 清單頁 → `page.dengue-migrant-worker-materials` | — | 0.4 ⚠ | embedded-media | 清單頁，不轉換（新站由系統自動產生列表） |

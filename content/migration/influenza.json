@@ -119,8 +119,8 @@
       "oldType": "page",
       "verified": false,
       "status": "migrated",
-      "target": "doc.flu-antiviral-eligibility.2026-09-21",
-      "note": "現行版與 2026 年 6 月版各為獨立文件；現行版第 3 條已放寬 65 歲以上高峰期免快篩。　【匯入 2026-10-03】草稿 doc.flu-antiviral-eligibility.2026-09-21（信心 1；既有內容已存在，供比對）",
+      "target": "doc.flu-antiviral-eligibility.2026-09-18",
+      "note": "版本鏈：全年適用版 → 2026-08-24 擴大版 → 2026-09-18 延長版（致醫界通函第 616 號，高傳播族群至 10/31）各為獨立文件；全部對象經醫師評估皆不需快篩。　【匯入 2026-10-03】草稿 doc.flu-antiviral-eligibility.2026-09-18（信心 1；既有內容已存在，供比對）",
       "newRequirements": [
         "owner",
         "reviewedAt",
@@ -131,14 +131,14 @@
     },
     {
       "key": "flu-antiviral-eligibility-2026-06",
-      "oldTitle": "公費流感抗病毒藥劑使用對象（2026 年 6 月版）",
+      "oldTitle": "公費流感抗病毒藥劑使用對象（全年適用條件）",
       "oldPath": "流感／抗病毒藥劑專區／歷版",
       "oldUrl": "https://www.cdc.gov.tw/Category/Page/{id}#flu-antiviral-2026-06",
       "oldType": "pdf",
       "verified": false,
       "status": "archived",
       "target": "doc.flu-antiviral-eligibility.2026-06-01",
-      "note": "已由 9 月版取代，保留供查閱並加失效警示，舊連結 301 到現行版。　【匯入 2026-10-03】草稿 doc.flu-antiviral-eligibility.2026-06-01（信心 1；既有內容已存在，供比對）",
+      "note": "全年適用版，已由 8 月擴大版與 9 月延長版取代，保留供查閱並加失效警示，舊連結 301 到現行版。　【匯入 2026-10-03】草稿 doc.flu-antiviral-eligibility.2026-06-01（信心 1；既有內容已存在，供比對）",
       "newRequirements": [
         "owner",
         "reviewedAt",

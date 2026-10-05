@@ -6,7 +6,7 @@
   "simulated": true,
   "source": {
     "dir": "data/legacy-export/news",
-    "note": "模擬匯出：新聞與公告欄目（Bulletin）。由既有 content/news 37 則、content/clarifications 8 則反推，另合成近年新聞 6 則（新站沒有）、久遠新聞 6 則、英文新聞稿 2 則、列表頁 1 頁；不是舊站的真實資料（網址 ID、數字、PDF 內容皆為示意）。正式匯出取代整個目錄即可。",
+    "note": "模擬匯出：新聞與公告欄目（Bulletin）。由既有 content/news 39 則、content/clarifications 8 則反推，另合成近年新聞 6 則（新站沒有）、久遠新聞 6 則、英文新聞稿 2 則、列表頁 1 頁；不是舊站的真實資料（網址 ID、數字、PDF 內容皆為示意）。正式匯出取代整個目錄即可。",
     "site": "https://www.cdc.gov.tw"
   },
   "rules": {
@@ -15,22 +15,22 @@
   },
   "manifest": null,
   "summary": {
-    "pages": 60,
-    "drafts": 60,
+    "pages": 62,
+    "drafts": 62,
     "mergedPages": 0,
     "byType": {
-      "news": 45,
-      "letter": 4,
+      "news": 46,
+      "letter": 5,
       "clarification": 10,
       "page": 1
     },
     "byKind": {
-      "news": 49,
+      "news": 51,
       "clarification": 10,
       "list": 1
     },
     "byAction": {
-      "compare-existing": 45,
+      "compare-existing": 47,
       "auto-ok": 4,
       "review-before-publish": 4,
       "archive": 5,
@@ -39,11 +39,11 @@
     },
     "avgConfidence": 0.97,
     "needsReview": 0,
-    "existing": 45,
+    "existing": 47,
     "schemaInvalid": 0,
     "assets": {
-      "total": 10,
-      "attachment": 10,
+      "total": 11,
+      "attachment": 11,
       "image": 0,
       "data": 0,
       "needsAlt": 0,
@@ -52,7 +52,7 @@
     "issues": {
       "error": 0,
       "warn": 12,
-      "info": 88
+      "info": 92
     },
     "manifest": null,
     "exportedAt": "2026-10-03",
@@ -461,14 +461,14 @@
       }
     },
     {
-      "key": "007-2026-09-21-flu-antiviral-revised",
-      "file": "007-2026-09-21-flu-antiviral-revised.html",
+      "key": "007-2026-09-18-flu-antiviral-extended",
+      "file": "007-2026-09-18-flu-antiviral-extended.html",
       "source": {
-        "url": "https://www.cdc.gov.tw/Bulletin/Detail/YG8JykIhAUKYkuuwJx0xGS?typeid=9",
-        "title": "類流感進入高峰期，未滿 5 歲及 65 歲以上有症狀者可直接使用公費抗病毒藥劑免快篩",
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/KNEie8q3qi8ARuMyKXV7pu?typeid=9",
+        "title": "流感疫情進入流行期且持續上升，疾管署延長擴大公費流感抗病毒藥劑使用條件至 10 月 31 日",
         "category": "新聞與公告／新聞稿",
-        "publishedAt": "2026-09-21",
-        "updatedAt": "2026-09-21",
+        "publishedAt": "2026-09-18",
+        "updatedAt": "2026-09-18",
         "breadcrumbs": [
           "首頁",
           "新聞與公告",
@@ -485,7 +485,7 @@
       "targetExists": false,
       "existing": true,
       "compareWith": [
-        "news.2026-09-21-flu-antiviral-revised"
+        "news.2026-09-18-flu-antiviral-extended"
       ],
       "owner": "unit.pr",
       "ownerRule": "新聞與公告",
@@ -494,10 +494,10 @@
       ],
       "outputs": [
         {
-          "id": "news.2026-09-21-flu-antiviral-revised",
+          "id": "news.2026-09-18-flu-antiviral-extended",
           "type": "news",
           "role": "draft",
-          "file": "content/news/2026-09-21-flu-antiviral-revised.json",
+          "file": "content/news/2026-09-18-flu-antiviral-extended.json",
           "schemaValid": true
         }
       ],
@@ -514,7 +514,7 @@
         {
           "code": "word-cleaned",
           "severity": "info",
-          "message": "清除 Word 貼上殘留 7 處（mso 樣式 3、Mso 類別 2、命名空間標籤 2）"
+          "message": "清除 Word 貼上殘留 11 處（mso 樣式 5、Mso 類別 3、命名空間標籤 3）"
         }
       ],
       "action": "compare-existing",
@@ -598,8 +598,86 @@
       }
     },
     {
-      "key": "009-2026-09-15-international-health-mou",
-      "file": "009-2026-09-15-international-health-mou.html",
+      "key": "009-2026-09-18-letter-616-flu-antiviral-extended",
+      "file": "009-2026-09-18-letter-616-flu-antiviral-extended.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/bHJOIs9Jb2yoWeHdbDHWIM?typeid=48",
+        "title": "致醫界通函第 616 號：延長擴大公費流感抗病毒藥劑使用對象「有類流感症狀，且具下列身分之流感高傳播族群」之適用期限至 10 月 31 日",
+        "category": "新聞與公告／致醫界通函",
+        "publishedAt": "2026-09-18",
+        "updatedAt": "2026-09-18",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "致醫界通函"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-18-letter-616-flu-antiviral-extended"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-09-18-letter-616-flu-antiviral-extended",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-09-18-letter-616-flu-antiviral-extended.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 8 處（mso 樣式 4、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "致醫界通函的權責單位依疾病主檔取 unit.acute-infectious（流感），不歸新聞欄目的公關室"
+        },
+        {
+          "code": "news-type-hint",
+          "severity": "info",
+          "message": "致醫界通函建成 letter（letterNo 由標題「第 N 號」抽）；對象為醫療院所，audience professional"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "010-2026-09-15-international-health-mou",
+      "file": "010-2026-09-15-international-health-mou.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/ac1-BUx7wJb5j4GLZggaOv?typeid=9",
         "title": "Taiwan CDC signs a public health cooperation MOU with a New Southbound partner",
@@ -664,11 +742,11 @@
       }
     },
     {
-      "key": "010-2026-09-15-letter-616-ns1",
-      "file": "010-2026-09-15-letter-616-ns1.html",
+      "key": "011-2026-09-15-letter-615-ns1",
+      "file": "011-2026-09-15-letter-615-ns1.html",
       "source": {
-        "url": "https://www.cdc.gov.tw/Bulletin/Detail/biICsHiYf-BLRABlKsEYap?typeid=48",
-        "title": "致醫界通函第 616 號：登革熱 NS1 抗原快篩試劑配置更新",
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/R8Q3EU1daODSCTg2GAgKUn?typeid=48",
+        "title": "致醫界通函第 615 號：登革熱 NS1 抗原快篩試劑配置更新",
         "category": "新聞與公告／致醫界通函",
         "publishedAt": "2026-09-15",
         "updatedAt": "2026-09-15",
@@ -688,7 +766,7 @@
       "targetExists": false,
       "existing": true,
       "compareWith": [
-        "news.2026-09-15-letter-616-ns1"
+        "news.2026-09-15-letter-615-ns1"
       ],
       "owner": "unit.acute-infectious",
       "ownerRule": "新聞與公告",
@@ -697,10 +775,10 @@
       ],
       "outputs": [
         {
-          "id": "news.2026-09-15-letter-616-ns1",
+          "id": "news.2026-09-15-letter-615-ns1",
           "type": "news",
           "role": "draft",
-          "file": "content/news/2026-09-15-letter-616-ns1.json",
+          "file": "content/news/2026-09-15-letter-615-ns1.json",
           "schemaValid": true
         }
       ],
@@ -742,8 +820,8 @@
       }
     },
     {
-      "key": "011-2026-09-anti-epidemic-team-scam",
-      "file": "011-2026-09-anti-epidemic-team-scam.html",
+      "key": "012-2026-09-anti-epidemic-team-scam",
+      "file": "012-2026-09-anti-epidemic-team-scam.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/7HBern14siglf3j_FN5W-i?typeid=8772",
         "title": "網傳「防疫國家隊」投資群組為詐騙",
@@ -813,8 +891,8 @@
       }
     },
     {
-      "key": "012-2026-09-12-synth",
-      "file": "012-2026-09-12-synth.html",
+      "key": "013-2026-09-12-synth",
+      "file": "013-2026-09-12-synth.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/tVOO6DTH_ehRSk8H6crMnS?typeid=9",
         "title": "登革熱防治：疾管署與高雄市政府聯合孳生源清除，呼籲民眾巡倒清刷",
@@ -879,8 +957,8 @@
       }
     },
     {
-      "key": "013-2026-09-10-clarify-flu-vaccine-death",
-      "file": "013-2026-09-10-clarify-flu-vaccine-death.html",
+      "key": "014-2026-09-10-clarify-flu-vaccine-death",
+      "file": "014-2026-09-10-clarify-flu-vaccine-death.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/ghycdDd__NUQxVqr1Scgoi?typeid=8772",
         "title": "澄清：網傳「打流感疫苗會得流感、長輩打完會死」並非事實",
@@ -957,8 +1035,8 @@
       }
     },
     {
-      "key": "014-2026-09-flu-vaccine-causes-flu",
-      "file": "014-2026-09-flu-vaccine-causes-flu.html",
+      "key": "015-2026-09-flu-vaccine-causes-flu",
+      "file": "015-2026-09-flu-vaccine-causes-flu.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/Dzynlz25x0lr3lnuqyz_ZL?typeid=8772",
         "title": "網傳「打流感疫苗會得流感、長輩打完會死」並非事實",
@@ -1030,8 +1108,8 @@
       }
     },
     {
-      "key": "015-2026-09-01-covid-weekly",
-      "file": "015-2026-09-01-covid-weekly.html",
+      "key": "016-2026-09-01-covid-weekly",
+      "file": "016-2026-09-01-covid-weekly.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/aXeVzpSMDHPv5coJCwA9TH?typeid=9",
         "title": "新冠疫情連續三週下降，10 月起新年度疫苗與流感疫苗同步開打",
@@ -1099,8 +1177,8 @@
       }
     },
     {
-      "key": "016-2026-08-28-synth",
-      "file": "016-2026-08-28-synth.html",
+      "key": "017-2026-08-28-synth",
+      "file": "017-2026-08-28-synth.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/hXen_WGNxzD6BAZm3Q-6D-?typeid=9",
         "title": "疾管署提醒：開學季腸病毒傳播風險升高，落實洗手與生病不上學",
@@ -1165,8 +1243,8 @@
       }
     },
     {
-      "key": "017-2026-08-25-mpox-clade-i",
-      "file": "017-2026-08-25-mpox-clade-i.html",
+      "key": "018-2026-08-25-mpox-clade-i",
+      "file": "018-2026-08-25-mpox-clade-i.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/qu6QBO4Jen5iRNtc4VWZhv?typeid=9",
         "title": "非洲 M痘 clade I 疫情持續，前往當地請避免親密接觸與野生動物",
@@ -1233,8 +1311,76 @@
       }
     },
     {
-      "key": "018-2026-08-20-dots-outcomes",
-      "file": "018-2026-08-20-dots-outcomes.html",
+      "key": "019-2026-08-24-flu-antiviral-expanded",
+      "file": "019-2026-08-24-flu-antiviral-expanded.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/RKs5XgAWwbPXgR7gERMoGD?typeid=9",
+        "title": "國內外近期流感疫情緩升，疾管署自 8 月 24 日起至 9 月 30 日擴大公費流感抗病毒藥劑使用條件",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2026-08-24",
+        "updatedAt": "2026-08-24",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-08-24-flu-antiviral-expanded"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-08-24-flu-antiviral-expanded",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-08-24-flu-antiviral-expanded.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 28 處（mso 樣式 24、Mso 類別 9、命名空間標籤 2）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "020-2026-08-20-dots-outcomes",
+      "file": "020-2026-08-20-dots-outcomes.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/4Qs5n5XsyAbuTPUUJoJ1XA?typeid=9",
         "title": "都治 20 年：關懷員每日送藥到手，結核病完治率穩定提升",
@@ -1301,8 +1447,8 @@
       }
     },
     {
-      "key": "019-2026-08-18-dengue-rising-south",
-      "file": "019-2026-08-18-dengue-rising-south.html",
+      "key": "021-2026-08-18-dengue-rising-south",
+      "file": "021-2026-08-18-dengue-rising-south.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/1VBVQuZiOzJEkifjLw-7gM?typeid=9",
         "title": "南部登革熱本土疫情上升，籲請民眾配合孳生源清除與防治工作",
@@ -1369,8 +1515,8 @@
       }
     },
     {
-      "key": "020-2026-08-17-international-fetp-workshop",
-      "file": "020-2026-08-17-international-fetp-workshop.html",
+      "key": "022-2026-08-17-international-fetp-workshop",
+      "file": "022-2026-08-17-international-fetp-workshop.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/j6slN2h_XoK_nqIeC5ht4x?typeid=9",
         "title": "International field epidemiology workshop opens in Taipei",
@@ -1435,8 +1581,8 @@
       }
     },
     {
-      "key": "021-2026-08-05-synth",
-      "file": "021-2026-08-05-synth.html",
+      "key": "023-2026-08-05-synth",
+      "file": "023-2026-08-05-synth.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/aDxmeNfFzCZphM65ldsE8y?typeid=9",
         "title": "麻疹境外移入病例新增 1 例，疾管署公布接觸者活動史並呼籲 1966 年後出生者評估接種 MMR",
@@ -1506,8 +1652,8 @@
       }
     },
     {
-      "key": "022-2026-07-21-dengue-first-local",
-      "file": "022-2026-07-21-dengue-first-local.html",
+      "key": "024-2026-07-21-dengue-first-local",
+      "file": "024-2026-07-21-dengue-first-local.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/GEpsXBU9Dqh7eC0kYpES4g?typeid=9",
         "title": "今年首例登革熱本土病例出現於高雄市，請民眾清除積水容器",
@@ -1574,8 +1720,8 @@
       }
     },
     {
-      "key": "023-2026-07-10-synth",
-      "file": "023-2026-07-10-synth.html",
+      "key": "025-2026-07-10-synth",
+      "file": "025-2026-07-10-synth.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/Y-t1hTiNTbjjrqiAHUTzjm?typeid=9",
         "title": "疾管署公布 2025 年結核病防治成果：新案數續降，都治完治率達 9 成",
@@ -1645,8 +1791,8 @@
       }
     },
     {
-      "key": "024-2026-07-01-letter-dengue-guidance-v17",
-      "file": "024-2026-07-01-letter-dengue-guidance-v17.html",
+      "key": "026-2026-07-01-letter-dengue-guidance-v17",
+      "file": "026-2026-07-01-letter-dengue-guidance-v17.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/vPGiv9yS8N4qipZSchUD_n?typeid=48",
         "title": "致醫界通函第 612 號：登革熱／屈公病防治工作指引第 17 版自即日起適用",
@@ -1724,8 +1870,8 @@
       }
     },
     {
-      "key": "025-2026-06-20-synth",
-      "file": "025-2026-06-20-synth.html",
+      "key": "027-2026-06-20-synth",
+      "file": "027-2026-06-20-synth.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/Zg1sEf1_dN9UqgbyCyAdmD?typeid=9",
         "title": "夏季出國旅遊前請先查疫情：疾管署更新國際旅遊疫情建議等級",
@@ -1788,8 +1934,8 @@
       }
     },
     {
-      "key": "026-2026-06-03-flu-antiviral-summer",
-      "file": "026-2026-06-03-flu-antiviral-summer.html",
+      "key": "028-2026-06-03-flu-antiviral-summer",
+      "file": "028-2026-06-03-flu-antiviral-summer.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/mDWl7IIU_wsF4S5AWAkkI_?typeid=9",
         "title": "夏季流感疫情持續，公費抗病毒藥劑使用對象維持現行規定",
@@ -1856,8 +2002,8 @@
       }
     },
     {
-      "key": "027-2026-06-02-measles-travel-mmr-1966",
-      "file": "027-2026-06-02-measles-travel-mmr-1966.html",
+      "key": "029-2026-06-02-measles-travel-mmr-1966",
+      "file": "029-2026-06-02-measles-travel-mmr-1966.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/EOQ5VTspoKXsrS3jrB8tFv?typeid=9",
         "title": "暑假出國前請評估麻疹免疫力：1966 年（含）以後出生者出國前 2 至 4 週評估接種 MMR",
@@ -1924,8 +2070,8 @@
       }
     },
     {
-      "key": "028-2026-05-22-international-wha-technical-exchange",
-      "file": "028-2026-05-22-international-wha-technical-exchange.html",
+      "key": "030-2026-05-22-international-wha-technical-exchange",
+      "file": "030-2026-05-22-international-wha-technical-exchange.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/nzlD95UZ0xuu5PG-CvvCWD?typeid=9",
         "title": "Taiwan CDC experts hold technical exchanges during the World Health Assembly week",
@@ -1990,8 +2136,8 @@
       }
     },
     {
-      "key": "029-2026-05-mmr-all-adults",
-      "file": "029-2026-05-mmr-all-adults.html",
+      "key": "031-2026-05-mmr-all-adults",
+      "file": "031-2026-05-mmr-all-adults.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/vy2WAmm2rOtB8yrPEHV2HU?typeid=8772",
         "title": "網傳「所有成人都要再補打一劑 MMR」部分正確",
@@ -2061,8 +2207,8 @@
       }
     },
     {
-      "key": "030-2026-05-11-japan-measles-level1",
-      "file": "030-2026-05-11-japan-measles-level1.html",
+      "key": "032-2026-05-11-japan-measles-level1",
+      "file": "032-2026-05-11-japan-measles-level1.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/uHkheEnk9OnK55D2DsatrZ?typeid=9",
         "title": "日本麻疹疫情升溫，列為第一級旅遊疫情建議；出國前請評估 MMR 接種",
@@ -2129,8 +2275,8 @@
       }
     },
     {
-      "key": "031-2026-04-enterovirus-only-kids",
-      "file": "031-2026-04-enterovirus-only-kids.html",
+      "key": "033-2026-04-enterovirus-only-kids",
+      "file": "033-2026-04-enterovirus-only-kids.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/6zjetJzWqW6DijXlzQOztD?typeid=8772",
         "title": "網傳「腸病毒只有小孩會得，大人不用擔心」部分正確",
@@ -2202,8 +2348,8 @@
       }
     },
     {
-      "key": "032-2026-04-14-enterovirus-rising",
-      "file": "032-2026-04-14-enterovirus-rising.html",
+      "key": "034-2026-04-14-enterovirus-rising",
+      "file": "034-2026-04-14-enterovirus-rising.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/RhVyEWsJgTfNMJy5tBXSql?typeid=9",
         "title": "腸病毒就診人次連續上升，近期社區以 EV71 為主，籲請提高警覺",
@@ -2270,8 +2416,8 @@
       }
     },
     {
-      "key": "033-2026-03-24-world-tb-day-end-tb-2035",
-      "file": "033-2026-03-24-world-tb-day-end-tb-2035.html",
+      "key": "035-2026-03-24-world-tb-day-end-tb-2035",
+      "file": "035-2026-03-24-world-tb-day-end-tb-2035.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/Jiq_KGR34Qxvh8t2-byaEG?typeid=9",
         "title": "世界結核病日：邁向 2035 消除結核，接觸者與高風險族群公費檢驗潛伏感染",
@@ -2338,8 +2484,8 @@
       }
     },
     {
-      "key": "034-2026-03-covid-isolation-7-days",
-      "file": "034-2026-03-covid-isolation-7-days.html",
+      "key": "036-2026-03-covid-isolation-7-days",
+      "file": "036-2026-03-covid-isolation-7-days.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/odHqEUP-ot2eDzawy1NfoE?typeid=8772",
         "title": "網傳「確診新冠要居家隔離 7 天，同住家人也要隔離」為舊規定",
@@ -2411,8 +2557,8 @@
       }
     },
     {
-      "key": "035-2026-03-15-letter-ev-guideline",
-      "file": "035-2026-03-15-letter-ev-guideline.html",
+      "key": "037-2026-03-15-letter-ev-guideline",
+      "file": "037-2026-03-15-letter-ev-guideline.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/noOQoAefRFSOg4tS8GrJym?typeid=48",
         "title": "致醫界通函第 608 號：腸病毒感染併發重症臨床處置建議更新",
@@ -2489,8 +2635,8 @@
       }
     },
     {
-      "key": "036-2026-02-24-flu-declining",
-      "file": "036-2026-02-24-flu-declining.html",
+      "key": "038-2026-02-24-flu-declining",
+      "file": "038-2026-02-24-flu-declining.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/-zweEOnUpHiyAskD0pNoZo?typeid=9",
         "title": "流感疫情緩降，仍處流行期，請持續注意手部衛生與咳嗽禮節",
@@ -2557,8 +2703,8 @@
       }
     },
     {
-      "key": "037-2026-01-20-lunar-new-year-flu",
-      "file": "037-2026-01-20-lunar-new-year-flu.html",
+      "key": "039-2026-01-20-lunar-new-year-flu",
+      "file": "039-2026-01-20-lunar-new-year-flu.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/eiEtxrKNmuAax0vpnd5RYh?typeid=9",
         "title": "流感疫情處高峰，春節連假前請儘速接種疫苗並落實咳嗽禮節",
@@ -2625,8 +2771,8 @@
       }
     },
     {
-      "key": "038-2026-01-vinegar-saltwater-flu",
-      "file": "038-2026-01-vinegar-saltwater-flu.html",
+      "key": "040-2026-01-vinegar-saltwater-flu",
+      "file": "040-2026-01-vinegar-saltwater-flu.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/9kUSvU-rUr8mbe1nhEgGb5?typeid=8772",
         "title": "網傳「燻白醋、喝鹽水可以殺死流感病毒」沒有科學根據",
@@ -2698,8 +2844,8 @@
       }
     },
     {
-      "key": "039-2025-12-01-world-aids-day",
-      "file": "039-2025-12-01-world-aids-day.html",
+      "key": "041-2025-12-01-world-aids-day",
+      "file": "041-2025-12-01-world-aids-day.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/QkgmjdEJPXh042-RQFE5a5?typeid=9",
         "title": "世界愛滋日：定期篩檢、PrEP 與 U=U，一起終結愛滋",
@@ -2766,8 +2912,8 @@
       }
     },
     {
-      "key": "040-2025-11-11-letter-dengue-guidance-v16",
-      "file": "040-2025-11-11-letter-dengue-guidance-v16.html",
+      "key": "042-2025-11-11-letter-dengue-guidance-v16",
+      "file": "042-2025-11-11-letter-dengue-guidance-v16.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/Zf9eK5LCN7oF44mSOfe290?typeid=48",
         "title": "致醫界通函第 603 號：登革熱／屈公病防治工作指引第 16 版公布",
@@ -2845,8 +2991,8 @@
       }
     },
     {
-      "key": "041-2025-10-01-flu-vaccine-start",
-      "file": "041-2025-10-01-flu-vaccine-start.html",
+      "key": "043-2025-10-01-flu-vaccine-start",
+      "file": "043-2025-10-01-flu-vaccine-start.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/i7x67klq3R1Dc2w8czhbO9?typeid=9",
         "title": "114 年度公費流感疫苗今日開打，長者與幼兒請儘早接種",
@@ -2913,8 +3059,8 @@
       }
     },
     {
-      "key": "042-2025-08-05-chikungunya-guangdong",
-      "file": "042-2025-08-05-chikungunya-guangdong.html",
+      "key": "044-2025-08-05-chikungunya-guangdong",
+      "file": "044-2025-08-05-chikungunya-guangdong.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/B9VMZhQt--eUB_XTFlLKJ9?typeid=9",
         "title": "中國大陸廣東省屈公病疫情升溫，提升旅遊疫情建議至第二級",
@@ -2981,8 +3127,8 @@
       }
     },
     {
-      "key": "043-2025-07-15-clarify-dengue-spray",
-      "file": "043-2025-07-15-clarify-dengue-spray.html",
+      "key": "045-2025-07-15-clarify-dengue-spray",
+      "file": "045-2025-07-15-clarify-dengue-spray.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/P4sMHvb5xxLR344ZUut7C7?typeid=8772",
         "title": "澄清：網傳「登革熱噴藥會毒死人、可拒絕開門」為錯誤訊息",
@@ -3059,8 +3205,8 @@
       }
     },
     {
-      "key": "044-2025-07-dengue-spraying-poison",
-      "file": "044-2025-07-dengue-spraying-poison.html",
+      "key": "046-2025-07-dengue-spraying-poison",
+      "file": "046-2025-07-dengue-spraying-poison.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/R1SLggitkGi0NAuncajZAY?typeid=8772",
         "title": "網傳「登革熱噴藥會毒死人、可以拒絕開門」為錯誤訊息",
@@ -3132,8 +3278,8 @@
       }
     },
     {
-      "key": "045-2025-06-10-mpox-summer",
-      "file": "045-2025-06-10-mpox-summer.html",
+      "key": "047-2025-06-10-mpox-summer",
+      "file": "047-2025-06-10-mpox-summer.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/u7IBk8OIPlknZdqVvmiG9F?typeid=9",
         "title": "暑假出遊與大型活動將至，符合條件者請把握接種 2 劑 M痘疫苗",
@@ -3200,8 +3346,8 @@
       }
     },
     {
-      "key": "046-2025-05-06-enterovirus-season",
-      "file": "046-2025-05-06-enterovirus-season.html",
+      "key": "048-2025-05-06-enterovirus-season",
+      "file": "048-2025-05-06-enterovirus-season.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/QVLO-jKZ2FARVb-bSfRPlv?typeid=9",
         "title": "腸病毒進入流行期，籲請家長落實肥皂洗手並留意重症前兆",
@@ -3268,8 +3414,8 @@
       }
     },
     {
-      "key": "047-2025-04-16-mmr-recommendation-revised",
-      "file": "047-2025-04-16-mmr-recommendation-revised.html",
+      "key": "049-2025-04-16-mmr-recommendation-revised",
+      "file": "049-2025-04-16-mmr-recommendation-revised.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/-HrKmE3J7qp6A-3--AMJmK?typeid=9",
         "title": "修訂國內 MMR 預防接種建議：成人評估對象擴大至 1966 年（含）以後出生者",
@@ -3334,8 +3480,8 @@
       }
     },
     {
-      "key": "048-en-2025-04-16-mmr-recommendation-revised",
-      "file": "048-en-2025-04-16-mmr-recommendation-revised.html",
+      "key": "050-en-2025-04-16-mmr-recommendation-revised",
+      "file": "050-en-2025-04-16-mmr-recommendation-revised.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/V9mW8f2b5lpfkdk4UEOkRX?typeid=158",
         "title": "MMR recommendations revised: adults born in 1966 or later now eligible for assessment",
@@ -3408,8 +3554,8 @@
       }
     },
     {
-      "key": "049-2025-04-mmr-born-after-1981-only",
-      "file": "049-2025-04-mmr-born-after-1981-only.html",
+      "key": "051-2025-04-mmr-born-after-1981-only",
+      "file": "051-2025-04-mmr-born-after-1981-only.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/SE0WiE8vVquCNdRJPzEQ_s?typeid=8772",
         "title": "網傳「MMR 只有 1981 年後出生的人要補打」",
@@ -3479,8 +3625,8 @@
       }
     },
     {
-      "key": "050-2025-03-24-world-tb-day",
-      "file": "050-2025-03-24-world-tb-day.html",
+      "key": "052-2025-03-24-world-tb-day",
+      "file": "052-2025-03-24-world-tb-day.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/Cr2nMmu7Ur-AtBx5QH4CzW?typeid=9",
         "title": "世界結核病日：咳嗽兩週請就醫，接觸者檢查與潛伏感染治療守護家人",
@@ -3547,8 +3693,8 @@
       }
     },
     {
-      "key": "051-en-2025-03-24-world-tb-day",
-      "file": "051-en-2025-03-24-world-tb-day.html",
+      "key": "053-en-2025-03-24-world-tb-day",
+      "file": "053-en-2025-03-24-world-tb-day.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/w943Hotl5t_Y2UM7cuysEG?typeid=158",
         "title": "World TB Day: see a doctor if you have coughed for two weeks; contact screening and latent TB treatment protect families",
@@ -3623,8 +3769,8 @@
       }
     },
     {
-      "key": "052-2025-02-18-dengue-imported-spring",
-      "file": "052-2025-02-18-dengue-imported-spring.html",
+      "key": "054-2025-02-18-dengue-imported-spring",
+      "file": "054-2025-02-18-dengue-imported-spring.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/BMWpfFWHjg3XxCaFghvXti?typeid=9",
         "title": "春節後登革熱境外移入病例增加，出國返國請落實防蚊",
@@ -3691,8 +3837,8 @@
       }
     },
     {
-      "key": "053-2025-01-09-mmr-adults-measles",
-      "file": "053-2025-01-09-mmr-adults-measles.html",
+      "key": "055-2025-01-09-mmr-adults-measles",
+      "file": "055-2025-01-09-mmr-adults-measles.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/sLyeBG6AVEXUuxt1roWj88?typeid=9",
         "title": "國內新增麻疹病例，1981 年以後出生之醫護與赴流行區成人建議優先自費接種 MMR",
@@ -3759,8 +3905,8 @@
       }
     },
     {
-      "key": "054-2022-10-01-old",
-      "file": "054-2022-10-01-old.html",
+      "key": "056-2022-10-01-old",
+      "file": "056-2022-10-01-old.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/JMEQfzC_ayKMkPQlHzdrf4?typeid=9",
         "title": "111 年度公費流感疫苗 10 月 1 日起分階段開打",
@@ -3831,8 +3977,8 @@
       }
     },
     {
-      "key": "055-2022-03-24-old",
-      "file": "055-2022-03-24-old.html",
+      "key": "057-2022-03-24-old",
+      "file": "057-2022-03-24-old.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/85P41soNOAfNT4nIWsiq_U?typeid=9",
         "title": "世界結核病日：疾管署呼籲咳嗽超過兩週請就醫",
@@ -3908,8 +4054,8 @@
       }
     },
     {
-      "key": "056-2021-05-15-old",
-      "file": "056-2021-05-15-old.html",
+      "key": "058-2021-05-15-old",
+      "file": "058-2021-05-15-old.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/Tf45xxeAuvD4SVFkuvIeXM?typeid=9",
         "title": "COVID-19 疫情說明記者會（第 120 場）",
@@ -3985,8 +4131,8 @@
       }
     },
     {
-      "key": "057-2020-12-15-old",
-      "file": "057-2020-12-15-old.html",
+      "key": "059-2020-12-15-old",
+      "file": "059-2020-12-15-old.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/dDR5JeIC7EKd_Hpr3MO0g6?typeid=11",
         "title": "活動報名：2021 年世界結核病日健走活動開放報名",
@@ -4067,8 +4213,8 @@
       }
     },
     {
-      "key": "058-2020-04-01-old",
-      "file": "058-2020-04-01-old.html",
+      "key": "060-2020-04-01-old",
+      "file": "060-2020-04-01-old.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/ZViXszMLWodRbAerhbHVjx?typeid=9",
         "title": "COVID-19 疫情說明記者會（第 60 場）",
@@ -4149,8 +4295,8 @@
       }
     },
     {
-      "key": "059-2019-11-20-old",
-      "file": "059-2019-11-20-old.html",
+      "key": "061-2019-11-20-old",
+      "file": "061-2019-11-20-old.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/9A_rA2MYBsfgm7CTYrG_qI?typeid=9",
         "title": "登革熱疫情趨緩，疾管署感謝地方政府與民眾共同努力",
@@ -4231,8 +4377,8 @@
       }
     },
     {
-      "key": "060-news-list",
-      "file": "060-news-list.html",
+      "key": "062-news-list",
+      "file": "062-news-list.html",
       "source": {
         "url": "https://www.cdc.gov.tw/Bulletin/List/k6bmONJQYkScCR2X4MU1XB?typeid=9",
         "title": "新聞稿",
@@ -4415,14 +4561,14 @@
       "merged": false
     },
     {
-      "id": "news.2026-09-21-flu-antiviral-revised",
+      "id": "news.2026-09-18-flu-antiviral-extended",
       "type": "news",
-      "title": "類流感進入高峰期，未滿 5 歲及 65 歲以上有症狀者可直接使用公費抗病毒藥劑免快篩",
-      "file": "content/news/2026-09-21-flu-antiviral-revised.json",
+      "title": "流感疫情進入流行期且持續上升，疾管署延長擴大公費流感抗病毒藥劑使用條件至 10 月 31 日",
+      "file": "content/news/2026-09-18-flu-antiviral-extended.json",
       "confidence": 1,
       "existing": true,
       "compareWith": [
-        "news.2026-09-21-flu-antiviral-revised"
+        "news.2026-09-18-flu-antiviral-extended"
       ],
       "status": "review",
       "owner": "unit.pr",
@@ -4430,7 +4576,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "007-2026-09-21-flu-antiviral-revised"
+        "007-2026-09-18-flu-antiviral-extended"
       ],
       "merged": false
     },
@@ -4455,6 +4601,26 @@
       "merged": false
     },
     {
+      "id": "news.2026-09-18-letter-616-flu-antiviral-extended",
+      "type": "letter",
+      "title": "致醫界通函第 616 號：延長擴大公費流感抗病毒藥劑使用對象「有類流感症狀，且具下列身分之流感高傳播族群」之適用期限至 10 月 31 日",
+      "file": "content/news/2026-09-18-letter-616-flu-antiviral-extended.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-18-letter-616-flu-antiviral-extended"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "009-2026-09-18-letter-616-flu-antiviral-extended"
+      ],
+      "merged": false
+    },
+    {
       "id": "news.2026-09-15-international-health-mou",
       "type": "news",
       "title": "Taiwan CDC signs a public health cooperation MOU with a New Southbound partner",
@@ -4470,19 +4636,19 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "009-2026-09-15-international-health-mou"
+        "010-2026-09-15-international-health-mou"
       ],
       "merged": false
     },
     {
-      "id": "news.2026-09-15-letter-616-ns1",
+      "id": "news.2026-09-15-letter-615-ns1",
       "type": "letter",
-      "title": "致醫界通函第 616 號：登革熱 NS1 抗原快篩試劑配置更新",
-      "file": "content/news/2026-09-15-letter-616-ns1.json",
+      "title": "致醫界通函第 615 號：登革熱 NS1 抗原快篩試劑配置更新",
+      "file": "content/news/2026-09-15-letter-615-ns1.json",
       "confidence": 1,
       "existing": true,
       "compareWith": [
-        "news.2026-09-15-letter-616-ns1"
+        "news.2026-09-15-letter-615-ns1"
       ],
       "status": "review",
       "owner": "unit.acute-infectious",
@@ -4490,7 +4656,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "010-2026-09-15-letter-616-ns1"
+        "011-2026-09-15-letter-615-ns1"
       ],
       "merged": false
     },
@@ -4510,7 +4676,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "011-2026-09-anti-epidemic-team-scam"
+        "012-2026-09-anti-epidemic-team-scam"
       ],
       "merged": false
     },
@@ -4528,7 +4694,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "012-2026-09-12-synth"
+        "013-2026-09-12-synth"
       ],
       "merged": false
     },
@@ -4548,7 +4714,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "013-2026-09-10-clarify-flu-vaccine-death"
+        "014-2026-09-10-clarify-flu-vaccine-death"
       ],
       "merged": false
     },
@@ -4568,7 +4734,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "014-2026-09-flu-vaccine-causes-flu"
+        "015-2026-09-flu-vaccine-causes-flu"
       ],
       "merged": false
     },
@@ -4588,7 +4754,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "015-2026-09-01-covid-weekly"
+        "016-2026-09-01-covid-weekly"
       ],
       "merged": false
     },
@@ -4606,7 +4772,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "016-2026-08-28-synth"
+        "017-2026-08-28-synth"
       ],
       "merged": false
     },
@@ -4626,7 +4792,27 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "017-2026-08-25-mpox-clade-i"
+        "018-2026-08-25-mpox-clade-i"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-08-24-flu-antiviral-expanded",
+      "type": "news",
+      "title": "國內外近期流感疫情緩升，疾管署自 8 月 24 日起至 9 月 30 日擴大公費流感抗病毒藥劑使用條件",
+      "file": "content/news/2026-08-24-flu-antiviral-expanded.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-08-24-flu-antiviral-expanded"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "019-2026-08-24-flu-antiviral-expanded"
       ],
       "merged": false
     },
@@ -4646,7 +4832,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "018-2026-08-20-dots-outcomes"
+        "020-2026-08-20-dots-outcomes"
       ],
       "merged": false
     },
@@ -4666,7 +4852,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "019-2026-08-18-dengue-rising-south"
+        "021-2026-08-18-dengue-rising-south"
       ],
       "merged": false
     },
@@ -4686,7 +4872,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "020-2026-08-17-international-fetp-workshop"
+        "022-2026-08-17-international-fetp-workshop"
       ],
       "merged": false
     },
@@ -4704,7 +4890,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "021-2026-08-05-synth"
+        "023-2026-08-05-synth"
       ],
       "merged": false
     },
@@ -4724,7 +4910,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "022-2026-07-21-dengue-first-local"
+        "024-2026-07-21-dengue-first-local"
       ],
       "merged": false
     },
@@ -4742,7 +4928,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "023-2026-07-10-synth"
+        "025-2026-07-10-synth"
       ],
       "merged": false
     },
@@ -4762,7 +4948,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "024-2026-07-01-letter-dengue-guidance-v17"
+        "026-2026-07-01-letter-dengue-guidance-v17"
       ],
       "merged": false
     },
@@ -4780,7 +4966,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "025-2026-06-20-synth"
+        "027-2026-06-20-synth"
       ],
       "merged": false
     },
@@ -4800,7 +4986,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "026-2026-06-03-flu-antiviral-summer"
+        "028-2026-06-03-flu-antiviral-summer"
       ],
       "merged": false
     },
@@ -4820,7 +5006,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "027-2026-06-02-measles-travel-mmr-1966"
+        "029-2026-06-02-measles-travel-mmr-1966"
       ],
       "merged": false
     },
@@ -4840,7 +5026,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "028-2026-05-22-international-wha-technical-exchange"
+        "030-2026-05-22-international-wha-technical-exchange"
       ],
       "merged": false
     },
@@ -4860,7 +5046,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "029-2026-05-mmr-all-adults"
+        "031-2026-05-mmr-all-adults"
       ],
       "merged": false
     },
@@ -4880,7 +5066,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "030-2026-05-11-japan-measles-level1"
+        "032-2026-05-11-japan-measles-level1"
       ],
       "merged": false
     },
@@ -4900,7 +5086,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "031-2026-04-enterovirus-only-kids"
+        "033-2026-04-enterovirus-only-kids"
       ],
       "merged": false
     },
@@ -4920,7 +5106,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "032-2026-04-14-enterovirus-rising"
+        "034-2026-04-14-enterovirus-rising"
       ],
       "merged": false
     },
@@ -4940,7 +5126,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "033-2026-03-24-world-tb-day-end-tb-2035"
+        "035-2026-03-24-world-tb-day-end-tb-2035"
       ],
       "merged": false
     },
@@ -4960,7 +5146,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "034-2026-03-covid-isolation-7-days"
+        "036-2026-03-covid-isolation-7-days"
       ],
       "merged": false
     },
@@ -4980,7 +5166,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "035-2026-03-15-letter-ev-guideline"
+        "037-2026-03-15-letter-ev-guideline"
       ],
       "merged": false
     },
@@ -5000,7 +5186,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "036-2026-02-24-flu-declining"
+        "038-2026-02-24-flu-declining"
       ],
       "merged": false
     },
@@ -5020,7 +5206,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "037-2026-01-20-lunar-new-year-flu"
+        "039-2026-01-20-lunar-new-year-flu"
       ],
       "merged": false
     },
@@ -5040,7 +5226,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "038-2026-01-vinegar-saltwater-flu"
+        "040-2026-01-vinegar-saltwater-flu"
       ],
       "merged": false
     },
@@ -5060,7 +5246,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "039-2025-12-01-world-aids-day"
+        "041-2025-12-01-world-aids-day"
       ],
       "merged": false
     },
@@ -5080,7 +5266,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "040-2025-11-11-letter-dengue-guidance-v16"
+        "042-2025-11-11-letter-dengue-guidance-v16"
       ],
       "merged": false
     },
@@ -5100,7 +5286,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "041-2025-10-01-flu-vaccine-start"
+        "043-2025-10-01-flu-vaccine-start"
       ],
       "merged": false
     },
@@ -5120,7 +5306,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "042-2025-08-05-chikungunya-guangdong"
+        "044-2025-08-05-chikungunya-guangdong"
       ],
       "merged": false
     },
@@ -5140,7 +5326,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "043-2025-07-15-clarify-dengue-spray"
+        "045-2025-07-15-clarify-dengue-spray"
       ],
       "merged": false
     },
@@ -5160,7 +5346,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "044-2025-07-dengue-spraying-poison"
+        "046-2025-07-dengue-spraying-poison"
       ],
       "merged": false
     },
@@ -5180,7 +5366,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "045-2025-06-10-mpox-summer"
+        "047-2025-06-10-mpox-summer"
       ],
       "merged": false
     },
@@ -5200,7 +5386,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "046-2025-05-06-enterovirus-season"
+        "048-2025-05-06-enterovirus-season"
       ],
       "merged": false
     },
@@ -5220,7 +5406,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "047-2025-04-16-mmr-recommendation-revised"
+        "049-2025-04-16-mmr-recommendation-revised"
       ],
       "merged": false
     },
@@ -5238,7 +5424,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "048-en-2025-04-16-mmr-recommendation-revised"
+        "050-en-2025-04-16-mmr-recommendation-revised"
       ],
       "merged": false
     },
@@ -5258,7 +5444,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "049-2025-04-mmr-born-after-1981-only"
+        "051-2025-04-mmr-born-after-1981-only"
       ],
       "merged": false
     },
@@ -5278,7 +5464,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "050-2025-03-24-world-tb-day"
+        "052-2025-03-24-world-tb-day"
       ],
       "merged": false
     },
@@ -5296,7 +5482,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "051-en-2025-03-24-world-tb-day"
+        "053-en-2025-03-24-world-tb-day"
       ],
       "merged": false
     },
@@ -5316,7 +5502,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "052-2025-02-18-dengue-imported-spring"
+        "054-2025-02-18-dengue-imported-spring"
       ],
       "merged": false
     },
@@ -5336,7 +5522,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "053-2025-01-09-mmr-adults-measles"
+        "055-2025-01-09-mmr-adults-measles"
       ],
       "merged": false
     },
@@ -5354,7 +5540,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "054-2022-10-01-old"
+        "056-2022-10-01-old"
       ],
       "merged": false
     },
@@ -5372,7 +5558,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "055-2022-03-24-old"
+        "057-2022-03-24-old"
       ],
       "merged": false
     },
@@ -5390,7 +5576,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "056-2021-05-15-old"
+        "058-2021-05-15-old"
       ],
       "merged": false
     },
@@ -5408,7 +5594,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "057-2020-12-15-old"
+        "059-2020-12-15-old"
       ],
       "merged": false
     },
@@ -5426,7 +5612,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "058-2020-04-01-old"
+        "060-2020-04-01-old"
       ],
       "merged": false
     },
@@ -5444,7 +5630,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "059-2019-11-20-old"
+        "061-2019-11-20-old"
       ],
       "merged": false
     },
@@ -5462,7 +5648,7 @@
       "schemaValid": true,
       "errors": [],
       "sourcePages": [
-        "060-news-list"
+        "062-news-list"
       ],
       "merged": false
     }
@@ -5472,7 +5658,7 @@
     "autoOk": 4,
     "picked": [
       {
-        "key": "025-2026-06-20-synth",
+        "key": "027-2026-06-20-synth",
         "title": "夏季出國旅遊前請先查疫情：疾管署更新國際旅遊疫情建議等級",
         "url": "https://www.cdc.gov.tw/Bulletin/Detail/Zg1sEf1_dN9UqgbyCyAdmD?typeid=9",
         "draftId": "news.2026-06-20-legacy-02b775"
@@ -5486,7 +5672,7 @@
       "items": 0,
       "matched": 0,
       "missingPages": 0,
-      "unmatchedPages": 60,
+      "unmatchedPages": 62,
       "agree": 0,
       "conflicts": 0,
       "statusChanges": 0,
