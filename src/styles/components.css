@@ -1026,3 +1026,4 @@ html:not(.js) .vxs-form,html:not(.js) .vxs-msg,html:not(.js) .vxs-tabs,html:not(
 .c-unitpage__duties{margin:0;padding-left:1.2em}.c-unitpage__duties li{margin:4px 0}
 .c-unitpage__unverified{border-left:3px solid var(--status-rising);padding-left:var(--sp-3);font-size:var(--fs-sm)}
 .c-unitpage .c-kv{display:grid;gap:var(--sp-2);margin:0}.c-unitpage .c-kv div{display:flex;gap:var(--sp-2);flex-wrap:wrap}.c-unitpage .c-kv dt{font-weight:700;color:var(--ink-2);min-width:7em}.c-unitpage .c-kv dd{margin:0}
+.c-unitpage__src{font-size:var(--fs-xs);margin-top:var(--sp-2)}.c-org__official{margin:0;font-size:var(--fs-sm)}

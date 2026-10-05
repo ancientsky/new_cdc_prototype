@@ -5,6 +5,7 @@ import { langAvailable } from '../../../scripts/lib/pages.mjs';
 import * as JL from '../../../scripts/lib/jsonld.mjs';
 import { ldFor, pageHead, translationBadge, feedback, L, unitName, unitLink, unitPath, ownerStats, hrefFor, PAGE_PATHS } from './_partials.mjs';
 import { standalonePath } from './page.mjs';
+import { OFFICIAL_ORG_PAGES } from './units.mjs';
 import { intlTopic } from './_international.mjs';
 
 export const ORG_GROUPS = ['office', 'division', 'center', 'regional', 'staff', 'committee'];
@@ -66,6 +67,7 @@ export function orgChart(ctx) {
     return list.length ? html`<section class="c-org__group c-org__group--${k}" aria-labelledby="org-${k}"><h3 id="org-${k}">${t(`about.org.${k}`)} <span class="c-pill c-pill--neutral">${list.length}</span></h3><ul class="c-org__units">${list.map((u) => unitCard(ctx, u))}</ul></section>` : '';
   })}</div>
   <p class="muted c-org__note">${t('about.org.note')}</p>
+  <p class="c-org__official">${t('about.org.official')}${OFFICIAL_ORG_PAGES.map((p, i) => html`${i ? '、' : ''}<a href="${p.url}" rel="external noopener" lang="zh-TW">${t(`about.org.official.${p.key}`)}</a>`)}</p>
 </div>`;
 }
 

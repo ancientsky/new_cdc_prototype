@@ -112,6 +112,7 @@ test('每個單位都有介紹頁（zh-TW 與 en），路徑 /about/units/{slug}
   for (const u of site.master.units) {
     assert.ok(u.slug && u.intro && u.introEn && Array.isArray(u.duties), `${u.id} 缺 slug/intro/introEn/duties`);
     assert.equal(u.introVerified, false, '原型撰寫的簡介一律 unverified');
+    assert.match(u.officialUrl, /^https:\/\/www\.cdc\.gov\.tw\//, `${u.id} 缺現行官網網址`);
     assert.equal(unitPath(u), `/about/units/${u.slug}/`);
   }
   const u = site.unitById.get('unit.acute-infectious');
@@ -120,7 +121,9 @@ test('每個單位都有介紹頁（zh-TW 與 en），路徑 /about/units/{slug}
   assert.match(html, /id="h-duties"/);
   assert.match(html, /diseases\/dengue\//, '列出該單位維護的登革熱頁');
   assert.match(html, /尚待該單位確認/);
-  assert.match(html, /待權責單位補上/, '官網介紹頁網址待補');
+  assert.match(html, /CdcOrganization\/Index\/cBX61rWwT5TKpS7BbMzKag/, '連到現行官網組織與職掌頁');
+  assert.match(html, /b_NCRMZiFLmXGmwIIY334w/);
+  assert.match(html, /預防接種政策之規劃及推動/, '主要業務採處務規程用語');
   const en = str(units.render(ctxOf('en', unitPath(u)), { unit: u }));
   assert.match(en, /Division of Acute Infectious Diseases<\/h1>/);
   const md = units.markdown(ctxOf(), { unit: u });
@@ -128,6 +131,16 @@ test('每個單位都有介紹頁（zh-TW 與 en），路徑 /about/units/{slug}
   assert.match(md, /## 主要業務/);
   const m = units.meta(ctxOf(), { unit: u });
   assert.equal(m.jsonLd[0]['@type'], 'GovernmentOrganization');
+});
+
+test('單位名稱與官網一致：新興傳染病整備組（不是整備應變組）；有 AI 推動辦公室與預防醫學辦公室的實際職掌', () => {
+  const names = new Set(site.master.units.map((u) => u.name));
+  assert.ok(names.has('新興傳染病整備組'));
+  assert.ok(!names.has('整備應變組'));
+  assert.ok(names.has('AI 推動辦公室'));
+  assert.ok(site.unitById.get('unit.preventive-medicine').duties.some((d) => d.includes('防疫醫師')));
+  const org = str(about.orgChart(ctxOf()));
+  assert.match(org, /c-org__official/);
 });
 
 test('內容來歷條的權責單位是連結；組織圖單位卡與聯絡頁單位表都連到單位介紹頁；非中英語言連到英文版', () => {

@@ -924,6 +924,12 @@ const ROWS_C2 = {
   'unit.page.contact': ['聯絡', 'Contact'], 'unit.page.contact.text': ['各單位電話與署長信箱見聯絡頁；防疫專線 1922。', 'Phone numbers and the Director-General’s mailbox are on the contact page; hotline 1922.'],
   'unit.page.steward': ['Data Steward 職稱', 'Data steward'], 'unit.page.kind': ['類別', 'Type'],
   'unit.page.back': ['回組織架構圖', 'Back to the organization chart'], 'unit.page.all': ['所有單位', 'All units'],
+  'unit.page.facts': ['單位資料', 'Unit facts'],
+  'unit.page.official.org': ['組織與職掌（現行官網）', 'Organization and duties (current website)'],
+  'unit.page.official.more': ['單位介紹（現行官網另一頁）', 'Unit introduction (another page on the current website)'],
+  'unit.page.official.note': ['現行官網沒有各單位獨立的介紹網址，所有單位在同一頁。', 'The current website lists all units on one page; there is no separate URL per unit.'],
+  'unit.page.duties.src': ['出處：{src}', 'Source: {src}'],
+  'about.org.official': ['現行官網：', 'Current website: '], 'about.org.official.org': ['組織與職掌', 'Organization and duties'], 'about.org.official.more': ['單位介紹', 'Unit introduction'],
   'unit.link.title': ['看這個單位的介紹', 'About this unit'],
   'about.contact': ['防疫專線、各單位聯絡方式與署長信箱請見聯絡頁。', 'Hotline, unit contacts and the Director-General’s mailbox are on the contact page.'],
 
