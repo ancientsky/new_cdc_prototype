@@ -28,6 +28,9 @@
   "series": "屈公病宣導素材",
   "abstractMarkdown": "屈公病宣導單張與海報，歡迎下載運用（多國語言版本見附件）。\n\n- [屈公病防治海報（中文）](/files/publication.chik-materials-poster/chikungunya-poster-7lang.pdf)\n- [屈公病防治海報（英文）](/files/publication.chik-materials-poster/chikungunya-poster-7lang.pdf)\n- [屈公病防治海報（越南文）](/files/publication.chik-materials-poster/chikungunya-poster-7lang.pdf)\n- [屈公病防治海報（印尼文）](/files/publication.chik-materials-poster/chikungunya-poster-7lang.pdf)\n- [屈公病防治海報（泰文）](/files/publication.chik-materials-poster/chikungunya-poster-7lang.pdf)\n\n![chikungunya-poster](/files/publication.chik-materials-poster/chikungunya-poster.png)",
   "pdfUrl": "/files/publication.chik-materials-poster/chikungunya-poster-7lang.pdf",
+  "basedOn": [
+    "disease.chikungunya"
+  ],
   "legacyUrls": [
     "https://www.cdc.gov.tw/Category/List/leuu0ZjU3Srsg0t0YuLRVJ"
   ],

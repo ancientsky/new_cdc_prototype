@@ -1,0 +1,209 @@
+{
+  "id": "publication.dengue-poster-dengue-patrol-series",
+  "type": "publication",
+  "title": "登革熱「巡、倒、清、刷」海報系列",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-07-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "登革熱「巡、倒、清、刷」海報系列，提供各縣市衛生局與社區張貼。",
+  "pubType": "poster",
+  "series": "登革熱宣導素材",
+  "abstractMarkdown": "登革熱「巡、倒、清、刷」海報系列，提供各縣市衛生局與社區張貼。\n\n圖片內容（替代文字）：\n\n- 巡：巡視住家內外積水容器\n- 倒：把積水倒掉\n- 清：清除不要的容器\n- dengue-patrol-4（舊頁沒有替代文字，待補 alt）\n- dengue-patrol-5（舊頁沒有替代文字，待補 alt）\n- dengue-patrol-6（舊頁沒有替代文字，待補 alt）\n\n（待補：海報文字版）",
+  "pdfUrl": "/files/publication.dengue-poster-dengue-patrol-series/dengue-patrol-series.pdf",
+  "basedOn": [
+    "disease.dengue"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=OW0GWvcK_N7x2_x6CcO_sV"
+  ],
+  "assets": [
+    {
+      "file": "dengue-patrol-series.pdf",
+      "kind": "attachment",
+      "label": "海報系列（PDF）",
+      "mime": "application/pdf",
+      "bytes": 712,
+      "sha256": "547c851eaa7651c37aada81f2aadd0e4f03b9f8fb56442416cac087e1fcdb5bf",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "dengue-patrol-1.png",
+      "kind": "image",
+      "alt": "巡：巡視住家內外積水容器",
+      "license": "OGDL-1.0",
+      "needsAlt": false,
+      "mime": "image/png",
+      "bytes": 876,
+      "sha256": "82067ba72891ed97902e8674a3259bd60331962b618a9cab11e94b9946922f36",
+      "width": 240,
+      "height": 160
+    },
+    {
+      "file": "dengue-patrol-2.png",
+      "kind": "image",
+      "alt": "倒：把積水倒掉",
+      "license": "OGDL-1.0",
+      "needsAlt": false,
+      "mime": "image/png",
+      "bytes": 843,
+      "sha256": "ce8d5fb87b3e56ab6910a68636e1d3628a60e6be3941caa8db0ca5f07c92d614",
+      "width": 240,
+      "height": 160
+    },
+    {
+      "file": "dengue-patrol-3.png",
+      "kind": "image",
+      "alt": "清：清除不要的容器",
+      "license": "OGDL-1.0",
+      "needsAlt": false,
+      "mime": "image/png",
+      "bytes": 1132,
+      "sha256": "e039b64f2ddd2dc11c56ee865c752cc1cdafe84e6ded686fbdc2814469f68ad3",
+      "width": 240,
+      "height": 160
+    },
+    {
+      "file": "dengue-patrol-4.png",
+      "kind": "image",
+      "alt": "dengue-patrol-4",
+      "license": "OGDL-1.0",
+      "needsAlt": true,
+      "mime": "image/png",
+      "bytes": 861,
+      "sha256": "b00f252e45d9653baecacf5e8572004b79f338c38f9ea406e5ad0677e3d30833",
+      "width": 240,
+      "height": 160
+    },
+    {
+      "file": "dengue-patrol-5.png",
+      "kind": "image",
+      "alt": "dengue-patrol-5",
+      "license": "OGDL-1.0",
+      "needsAlt": true,
+      "mime": "image/png",
+      "bytes": 948,
+      "sha256": "78134a869a172c9edc7934b792348ecee1196c4b10b04b9b6556098156d045e6",
+      "width": 240,
+      "height": 160
+    },
+    {
+      "file": "dengue-patrol-6.png",
+      "kind": "image",
+      "alt": "dengue-patrol-6",
+      "license": "OGDL-1.0",
+      "needsAlt": true,
+      "mime": "image/png",
+      "bytes": 972,
+      "sha256": "56f0a0899d87ca81e0dd176169f77c968475494ae6fc19baba429c0ed9998755",
+      "width": 240,
+      "height": 160
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.8,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "素材的權責單位依疾病主檔取 unit.acute-infectious（登革熱），不歸宣導素材欄目的公關室"
+      },
+      {
+        "code": "type-from-category",
+        "severity": "info",
+        "message": "素材頁的標題有「海報」，草稿建成 publication（pubType poster）"
+      },
+      {
+        "code": "image-license-assumed",
+        "severity": "info",
+        "message": "圖片「dengue-patrol-1.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+      },
+      {
+        "code": "image-license-assumed",
+        "severity": "info",
+        "message": "圖片「dengue-patrol-2.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+      },
+      {
+        "code": "image-license-assumed",
+        "severity": "info",
+        "message": "圖片「dengue-patrol-3.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+      },
+      {
+        "code": "image-no-alt",
+        "severity": "warn",
+        "message": "圖片「dengue-patrol-4.png」舊頁沒有替代文字，暫用檔名「dengue-patrol-4」，請補 alt（needsAlt）"
+      },
+      {
+        "code": "image-license-assumed",
+        "severity": "info",
+        "message": "圖片「dengue-patrol-4.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+      },
+      {
+        "code": "image-no-alt",
+        "severity": "warn",
+        "message": "圖片「dengue-patrol-5.png」舊頁沒有替代文字，暫用檔名「dengue-patrol-5」，請補 alt（needsAlt）"
+      },
+      {
+        "code": "image-license-assumed",
+        "severity": "info",
+        "message": "圖片「dengue-patrol-5.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+      },
+      {
+        "code": "image-no-alt",
+        "severity": "warn",
+        "message": "圖片「dengue-patrol-6.png」舊頁沒有替代文字，暫用檔名「dengue-patrol-6」，請補 alt（needsAlt）"
+      },
+      {
+        "code": "image-license-assumed",
+        "severity": "info",
+        "message": "圖片「dengue-patrol-6.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+      },
+      {
+        "code": "image-gallery",
+        "severity": "info",
+        "message": "同頁 6 張圖建成一筆、多個 image 資產，不拆成 6 筆"
+      },
+      {
+        "code": "body-short",
+        "severity": "warn",
+        "message": "內文過短（31 字，低於 40）"
+      },
+      {
+        "code": "image-only",
+        "severity": "warn",
+        "message": "圖片承載唯一資訊：海報／單張的文字要另有純文字版（可及性），abstractMarkdown 以（待補）佔位"
+      },
+      {
+        "code": "fields-pending",
+        "severity": "warn",
+        "message": "publication 的欄位從舊頁看不出來，以「（待補）」佔位：abstractMarkdown"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=OW0GWvcK_N7x2_x6CcO_sV",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

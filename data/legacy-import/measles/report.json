@@ -11,7 +11,7 @@
   },
   "rules": {
     "file": "content/migration/import/_import-rules.json",
-    "version": 8
+    "version": 9
   },
   "manifest": {
     "id": "migration.measles",
@@ -1293,7 +1293,7 @@
         "dataset.measles-yearly"
       ],
       "owner": "unit.epidemic-intelligence",
-      "ownerRule": "／統計",
+      "ownerRule": "／統計資料",
       "diseases": [
         "disease.measles"
       ],

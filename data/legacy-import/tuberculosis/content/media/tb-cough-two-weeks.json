@@ -32,7 +32,8 @@
     "zh-TW"
   ],
   "basedOn": [
-    "disease.tuberculosis"
+    "disease.tuberculosis",
+    "doc.tb-guideline.2025-09-01"
   ],
   "legacyUrls": [
     "https://www.cdc.gov.tw/Category/MPage/dLJ7UFpx2F-K6hTsKuUoSK"
@@ -50,6 +51,11 @@
         "code": "type-from-manifest",
         "severity": "info",
         "message": "清單對應的新站型別是 media（media.tb-cough-two-weeks），草稿直接建成 media，看不出來的欄位以「（待補）」佔位"
+      },
+      {
+        "code": "material-outdated",
+        "severity": "warn",
+        "message": "素材製作日 2024-03-24 時依據的 doc.tb-guideline.2022-03-01（2022-03-01）已於 2025-09-01 被 doc.tb-guideline.2025-09-01 取代；上線前請確認內容仍正確（治理 R9 影音過時的事前版）"
       }
     ],
     "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/dLJ7UFpx2F-K6hTsKuUoSK",

@@ -28,6 +28,9 @@
   "series": "M痘宣導素材",
   "abstractMarkdown": "M痘宣導單張與海報，歡迎下載運用（多國語言版本見附件）。\n\n- [M痘防治海報（中文）](/files/publication.mpox-materials-poster/mpox-poster-7lang.pdf)\n- [M痘防治海報（英文）](/files/publication.mpox-materials-poster/mpox-poster-7lang.pdf)\n- [M痘防治海報（越南文）](/files/publication.mpox-materials-poster/mpox-poster-7lang.pdf)\n- [M痘防治海報（印尼文）](/files/publication.mpox-materials-poster/mpox-poster-7lang.pdf)\n- [M痘防治海報（泰文）](/files/publication.mpox-materials-poster/mpox-poster-7lang.pdf)\n\n![mpox-poster](/files/publication.mpox-materials-poster/mpox-poster.png)",
   "pdfUrl": "/files/publication.mpox-materials-poster/mpox-poster-7lang.pdf",
+  "basedOn": [
+    "disease.mpox"
+  ],
   "legacyUrls": [
     "https://www.cdc.gov.tw/Category/List/xdmnb43pMif6QG4JK7Xdqe"
   ],

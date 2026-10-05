@@ -11,7 +11,7 @@
   },
   "rules": {
     "file": "content/migration/import/_import-rules.json",
-    "version": 8
+    "version": 9
   },
   "manifest": {
     "id": "migration.dengue",
@@ -1270,7 +1270,7 @@
         "dataset.dengue-local-weekly"
       ],
       "owner": "unit.epidemic-intelligence",
-      "ownerRule": "／統計",
+      "ownerRule": "／統計資料",
       "diseases": [
         "disease.dengue"
       ],

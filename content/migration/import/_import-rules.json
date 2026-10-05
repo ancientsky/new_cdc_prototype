@@ -1,7 +1,7 @@
 {
   "id": "import-rules.legacy",
   "type": "import-rules",
-  "version": 8,
+  "version": 9,
   "title": "舊站匯出批次轉換規則（scripts/import-legacy.mjs 讀取）",
   "summary": "把舊站 CMS 匯出（每頁 .html＋.json 側檔）對應成新站內容草稿的規則：URL 模式→型別與目錄、類別→權責單位、疾病別名→疾病 id、標題關鍵字→疾病頁區塊、Bulletin typeid→newsType、信心計算權重與人工檢視門檻。規則是資料不是程式；正式批次先改這個檔再跑。",
   "owner": "unit.it",
@@ -191,6 +191,21 @@
     }
   },
   "categoryOwners": [
+    {
+      "match": "宣導素材",
+      "owner": "unit.pr",
+      "preferDiseaseFor": [
+        "material"
+      ],
+      "_comment": "第十批：宣導素材欄目與多媒體子類歸公關室；有疾病的素材（海報、影片）依 preferDiseaseFor 改取疾病主檔的業務組。ownerForCategory 取最長命中，所以「結核病／宣導素材」等更具體的規則仍優先"
+    },
+    {
+      "match": "多媒體",
+      "owner": "unit.pr",
+      "preferDiseaseFor": [
+        "material"
+      ]
+    },
     {
       "match": "結核病／檢驗",
       "owner": "unit.lab"
@@ -610,6 +625,43 @@
     "news": "news",
     "document": "guidelines"
   },
+  "materialScopes": [
+    "宣導素材",
+    "多媒體"
+  ],
+  "materialRules": [
+    {
+      "_comment": "第十批：類別／麵包屑含 materialScopes 的欄目內頁（mpage／listcontent），清單沒給型別時依標題（優先）或麵包屑（由最後一層往前）建成 publication／media；第一條命中為準",
+      "match": "海報|單張|摺頁|貼紙|懶人包|圖卡",
+      "type": "publication",
+      "pubType": "poster"
+    },
+    {
+      "match": "手冊",
+      "type": "publication",
+      "pubType": "manual"
+    },
+    {
+      "match": "動畫",
+      "type": "media",
+      "mediaType": "animation"
+    },
+    {
+      "match": "廣播|Podcast|播客",
+      "type": "media",
+      "mediaType": "podcast"
+    },
+    {
+      "match": "短片|短影音",
+      "type": "media",
+      "mediaType": "short"
+    },
+    {
+      "match": "影片|多媒體|影音",
+      "type": "media",
+      "mediaType": "video"
+    }
+  ],
   "faqTasks": [
     {
       "_comment": "第八批：Q&A 的 tasks 依題目關鍵字給（題目沒命中才看答案，只取一個）；對應 schemas/_common.json tasks 枚舉",

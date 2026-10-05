@@ -1,0 +1,42 @@
+{
+  "id": "page.x-list-multimedia",
+  "type": "page",
+  "title": "多媒體",
+  "owner": "unit.pr",
+  "publishedAt": "2026-10-03",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "寵物打狂犬病疫苗：守護家人也守護毛孩（影片） 里長帶頭巡倒清刷：社區防登革熱篇 濕搓沖捧擦：腸病毒洗手五步驟動畫 Podcast｜抗生素不是萬靈丹：談抗藥性與防疫一體",
+  "slug": "x-list-multimedia",
+  "bodyMarkdown": "- [寵物打狂犬病疫苗：守護家人也守護毛孩（影片）](https://www.cdc.gov.tw/Category/ListContent/44k4KHKf48A57gNpJRnnj3?uaid=laU0p6BaBsID7VGsQ3zBHj)\n- [里長帶頭巡倒清刷：社區防登革熱篇](https://www.cdc.gov.tw/Category/ListContent/44k4KHKf48A57gNpJRnnj3?uaid=VQRmxBAVBgtS5ytV4SMyZ0)\n- [濕搓沖捧擦：腸病毒洗手五步驟動畫](https://www.cdc.gov.tw/Category/ListContent/VujZUu3PXzEl4PjbFhh5D8?uaid=2J2WLQQVD-Okme7i011Cw5)\n- [Podcast｜抗生素不是萬靈丹：談抗藥性與防疫一體](https://www.cdc.gov.tw/Category/ListContent/VujZUu3PXzEl4PjbFhh5D8?uaid=GEJHb3XRbbo3EPVrBVucx2)",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/ListMovie/slfvh8DLgS6fkbLiuN-WHg"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.6,
+    "issues": [
+      {
+        "code": "list-page",
+        "severity": "info",
+        "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/ListMovie/slfvh8DLgS6fkbLiuN-WHg",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

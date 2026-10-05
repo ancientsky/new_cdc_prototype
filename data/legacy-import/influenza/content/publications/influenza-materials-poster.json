@@ -28,6 +28,9 @@
   "series": "流感宣導素材",
   "abstractMarkdown": "流感宣導單張與海報，歡迎下載運用（多國語言版本見附件）。\n\n- [流感防治海報（中文）](/files/publication.influenza-materials-poster/influenza-poster-7lang.pdf)\n- [流感防治海報（英文）](/files/publication.influenza-materials-poster/influenza-poster-7lang.pdf)\n- [流感防治海報（越南文）](/files/publication.influenza-materials-poster/influenza-poster-7lang.pdf)\n- [流感防治海報（印尼文）](/files/publication.influenza-materials-poster/influenza-poster-7lang.pdf)\n- [流感防治海報（泰文）](/files/publication.influenza-materials-poster/influenza-poster-7lang.pdf)\n\n![influenza-poster](/files/publication.influenza-materials-poster/influenza-poster.png)",
   "pdfUrl": "/files/publication.influenza-materials-poster/influenza-poster-7lang.pdf",
+  "basedOn": [
+    "disease.influenza"
+  ],
   "legacyUrls": [
     "https://www.cdc.gov.tw/Category/List/Dseef2nyUuF_ufJ_-HsVuH"
   ],

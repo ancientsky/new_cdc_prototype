@@ -1,0 +1,53 @@
+{
+  "id": "page.x-commercial-media-table",
+  "type": "page",
+  "title": "防疫衛教宣導之商業媒體運用情形一覽表",
+  "owner": "unit.pr",
+  "publishedAt": "2018-03-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "依預算法及政府機關政策文宣規定，揭露本署歷年防疫衛教宣導委託商業媒體（電視、廣播、網路、戶外、平面、社群）運用情形。經費為示意數字。",
+  "slug": "x-commercial-media-table",
+  "bodyMarkdown": "依預算法及政府機關政策文宣規定，揭露本署歷年防疫衛教宣導委託商業媒體（電視、廣播、網路、戶外、平面、社群）運用情形。經費為示意數字。\n\n| 年度 | 媒體類型 | 宣導主題 | 委託單位 | 經費 |\n| --- | --- | --- | --- | --- |\n| 2015 | 電視 | 登革熱宣導 | 疾管署 | 300 萬元（示意） |\n| 2016 | 廣播 | 腸病毒宣導 | 公關室 | 340 萬元（示意） |\n| 2017 | 網路 | 流感疫苗宣導 | 疾管署 | 380 萬元（示意） |\n| 2018 | 戶外 | 愛滋防治宣導 | 公關室 | 420 萬元（示意） |\n| 2019 | 平面 | 麻疹宣導 | 疾管署 | 460 萬元（示意） |\n| 2020 | 電視 | 新冠肺炎宣導 | 公關室 | 500 萬元（示意） |\n| 2021 | 網路 | 新冠疫苗宣導 | 疾管署 | 540 萬元（示意） |\n| 2022 | 廣播 | 洗手宣導 | 公關室 | 580 萬元（示意） |\n| 2023 | 社群 | 流感疫苗宣導 | 疾管署 | 620 萬元（示意） |\n| 2024 | 戶外 | 登革熱宣導 | 公關室 | 660 萬元（示意） |\n| 2025 | 網路 | 結核病宣導 | 疾管署 | 700 萬元（示意） |\n| 2026 | 社群 | M痘宣導 | 公關室 | 740 萬元（示意） |",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/-2qVuGOsbhtkGWlpYw1scA"
+  ],
+  "assets": [
+    {
+      "file": "commercial-media-usage.csv",
+      "kind": "data",
+      "label": "商業媒體運用情形一覽表（CSV，示意數字）",
+      "mime": "text/csv",
+      "bytes": 576,
+      "sha256": "1570833abfd8e8bb4a8dcf31876c996bc8fb0afa5c7b98c1fcb3e1f512bb3e43",
+      "machineReadable": true
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 199 處（mso 樣式 67、Mso 類別 66、命名空間標籤 66）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/-2qVuGOsbhtkGWlpYw1scA",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

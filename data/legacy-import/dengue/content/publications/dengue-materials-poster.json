@@ -28,6 +28,9 @@
   "series": "登革熱宣導素材",
   "abstractMarkdown": "登革熱宣導單張與海報，歡迎下載運用（多國語言版本見附件）。\n\n- [登革熱防治海報（中文）](/files/publication.dengue-materials-poster/dengue-poster-7lang.pdf)\n- [登革熱防治海報（英文）](/files/publication.dengue-materials-poster/dengue-poster-7lang.pdf)\n- [登革熱防治海報（越南文）](/files/publication.dengue-materials-poster/dengue-poster-7lang.pdf)\n- [登革熱防治海報（印尼文）](/files/publication.dengue-materials-poster/dengue-poster-7lang.pdf)\n- [登革熱防治海報（泰文）](/files/publication.dengue-materials-poster/dengue-poster-7lang.pdf)\n\n![dengue-poster](/files/publication.dengue-materials-poster/dengue-poster.png)",
   "pdfUrl": "/files/publication.dengue-materials-poster/dengue-poster-7lang.pdf",
+  "basedOn": [
+    "disease.dengue"
+  ],
   "legacyUrls": [
     "https://www.cdc.gov.tw/Category/List/LUpyIsMuAB-KVgWh8d78i-"
   ],

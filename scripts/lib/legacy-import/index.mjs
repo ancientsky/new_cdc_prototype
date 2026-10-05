@@ -23,6 +23,7 @@ import { renderReportMd } from './report.mjs';
 import { STRUCTURED_TYPES, extractFields, serviceTypeFor, typeOfId } from './types.mjs';
 import { faqItemsLoose, tasksFor, datedDeadlines, structuredFromText } from './qa.mjs';
 import { countryFor, dynamicForm, vaccineCandidates, referenceMd } from './travel.mjs';
+import { materialScope, materialKind, imageOnly, imageOnlyAbstract, imageGallery, langVariants, materialOutdated, externalSystemPage, SITE_LANGS } from './materials.mjs';
 
 const h6 = (s) => createHash('sha1').update(String(s)).digest('hex').slice(0, 6);
 const DIRS = { disease: 'diseases', faq: 'faq', news: 'news', document: 'documents', page: 'pages', publication: 'publications', media: 'media', dataset: 'datasets', labtest: 'labtests', service: 'services', clarification: 'clarifications', topic: 'topics', vaccine: 'vaccines', letter: 'news' };
@@ -249,6 +250,9 @@ export function runImport(opts) {
       issue('disease-from-manifest', 'info', `麵包屑與標題看不出疾病，依移轉清單 scope 視為 ${diseaseById.get(manifestDisease)?.name ?? manifestDisease}`);
     }
     pr.diseases = ds.map((d) => d.id);
+    // 第十批：素材頁（類別／麵包屑含 materialScopes）與它依標題／麵包屑看得出的素材型別（publication／media）
+    const matScope = materialScope(rules, { category, breadcrumbs });
+    const matKind0 = matScope ? materialKind(rules, { title, category, breadcrumbs }) : null;
     let owner = own?.owner ?? null;
     // 致醫界通函（第六批）：欄目雖歸公關室，通函的權責是該疾病的業務組（規則 categoryOwners.preferDiseaseFor: ["letter"]）
     const bt0 = bulletinType(rules, side.url);
@@ -257,6 +261,11 @@ export function runImport(opts) {
     if (owner && letterHit && ownRule?.preferDiseaseFor?.includes('letter') && ds[0] && diseaseById.get(ds[0].id)?.owner) {
       owner = diseaseById.get(ds[0].id).owner;
       issue('owner-from-disease', 'info', `致醫界通函的權責單位依疾病主檔取 ${owner}（${diseaseById.get(ds[0].id)?.name ?? ds[0].id}），不歸新聞欄目的公關室`);
+    }
+    // 第十批：宣導素材欄目歸公關室，但有疾病的素材（海報、影片）權責是該疾病的業務組（規則 categoryOwners.preferDiseaseFor: ["material"]）
+    if (owner && matKind0 && ownRule?.preferDiseaseFor?.includes('material') && ds[0] && diseaseById.get(ds[0].id)?.owner && diseaseById.get(ds[0].id).owner !== owner) {
+      owner = diseaseById.get(ds[0].id).owner;
+      issue('owner-from-disease', 'info', `素材的權責單位依疾病主檔取 ${owner}（${diseaseById.get(ds[0].id)?.name ?? ds[0].id}），不歸宣導素材欄目的公關室`);
     }
     if (!owner && rules.ownerFallbackToDisease && ds[0]) {
       owner = diseaseById.get(ds[0].id)?.owner ?? null;
@@ -269,16 +278,19 @@ export function runImport(opts) {
     }
     pr.owner = owner;
     pr.ownerMapped = !!pr.ownerRule;
-
     // 第八批：疾病專題的 Q&A 頁在欄目匯出裡會再出現一次（同網址）；它的「家」是該疾病的批次，疾病批已轉過就不重複出草稿，也不參與本批的清單比對（免得搶走別的清單項目）
     // 第九批：不綁疾病的主題頁（例如國際旅遊欄目裡複製的「國際旅遊常見問答」）的家由規則檔 homeBatches 依頁型決定（faq → qa 批）；本批永遠不讓給自己。
     // 目前只對 faq 啟用：news／document 也有欄目重複匯出的情形，但比對方式（標題、版次）不同，留待之後再開
-    if (pat?.kind === 'faq' && side.url) {
-      const home = ds[0] ? diseaseById.get(ds[0].id)?.slug ?? null : rules.homeBatches?.[pat.kind] ?? null;
+    // 第十批：宣導素材欄目會把疾病專題的素材頁（海報、影片）再匯一次 ⇒ materialKind 命中的素材頁（欄目內頁或清單頁網址）也比照：
+    // 有疾病 ⇒ 家批＝疾病 slug；沒有疾病 ⇒ 家是本批（不讓）
+    const matDup = !!matKind0 && ['page', 'list'].includes(pat?.kind);
+    if ((pat?.kind === 'faq' || matDup) && side.url) {
+      const home = ds[0] ? diseaseById.get(ds[0].id)?.slug ?? null : pat.kind === 'faq' ? rules.homeBatches?.[pat.kind] ?? null : null;
       const prior = home && home !== slug ? (priorPages.get(normUrlKey(side.url)) ?? []).find((x) => x.batch === home) : null;
       if (prior) {
         pr.flags.convertedElsewhere = { batch: prior.batch, key: prior.key };
-        pr.kind = 'faq'; pr.type = 'faq'; pr.pattern = pat.id;
+        const dupType = pat.kind === 'faq' ? 'faq' : prior.outputs[0]?.type ?? matKind0.type;
+        pr.kind = dupType; pr.type = dupType; pr.pattern = pat.id;
         issue('converted-elsewhere', 'info', `同網址的頁已在 ${prior.batch} 批（${prior.key}）轉過，草稿 ${prior.outputs.map((o) => o.id).join('、') || '（無）'}；本批不重複出草稿，內容若有更新請在該批重跑`);
         for (const o of prior.outputs) pr.outputs.push({ id: o.id, type: o.type, role: 'duplicate', duplicateOf: `${prior.batch}/${prior.key}` });
         pr.issues = uniqIssues(pr.issues);
@@ -379,6 +391,12 @@ export function runImport(opts) {
       kind = wantType; pr.typeClear = true;
       issue('type-from-manifest', 'info', `清單對應的新站型別是 ${wantType}${pr.target ? `（${pr.target}）` : ''}，草稿直接建成 ${wantType}，看不出來的欄位以「（待補）」佔位`);
     }
+    // 第十批：素材頁（欄目內頁網址、清單與模板都沒給型別）依標題或麵包屑建成 publication／media；清單 target／mapTo 優先
+    const matKind = kind === 'page' && pat?.kind === 'page' && !generatedFallback && !wantType && !mergedInto && !pr.target && !mapType ? matKind0 : null;
+    if (matKind) {
+      kind = matKind.type; pr.typeClear = true;
+      issue('type-from-category', 'info', `素材頁的${matKind.via === 'title' ? '標題' : '麵包屑'}有「${matKind.hit}」，草稿建成 ${matKind.type}（${matKind.pubType ? `pubType ${matKind.pubType}` : `mediaType ${matKind.mediaType}`}）`);
+    }
     // 澄清稿：Bulletin typeid 是澄清 ⇒ clarification（claim／verdict），不再以 news 暫存
     if (kind === 'news' && bulletinType(rules, u)?.type === 'clarification') { kind = 'clarification'; issue('type-from-bulletin', 'info', '公告類別是澄清稿，草稿建成 clarification（claim／verdict 由標題與內文推斷）'); }
     // 服務型頁面：合約院所查詢、責任醫院名單等，依標題關鍵字建 service（查詢清單本身不轉成文章）
@@ -436,7 +454,22 @@ export function runImport(opts) {
       pr.stats.images += stat.images; pr.stats.links += stat.links; pr.stats.legacyLinks += stat.legacyLinks;
       for (const l of stat.unlistedFileLinks) { pr.attachmentsOk = false; issue('unlisted-file-link', 'warn', `內文有檔案連結 ${l} 不在側檔 attachments，未轉成附件`); }
       for (const m of stat.missingImages) issue('image-missing', 'error', `圖片 ${m} 找不到檔案`);
+      // 第十批：素材頁或出版品／影音同頁多張圖 ⇒ 建成一筆、多個 image 資產
+      const g = (matScope || kind === 'publication' || kind === 'media') && kind !== 'faq' ? imageGallery(stat.images) : 0;
+      if (g) issue('image-gallery', 'info', `同頁 ${g} 張圖建成一筆、多個 image 資產，不拆成 ${g} 筆`);
     };
+    // 第十批：附件 label／檔名看得出語言版本 ⇒ 一筆內容、多語檔案；站上七語以外的（簡體）只留附件
+    const langPending = [];
+    if ((matScope || kind === 'publication' || kind === 'media') && (STRUCTURED_TYPES.has(kind) || kind === 'page')) {
+      const lv = langVariants(attList);
+      const others = [...lv.keys()].filter((l) => l !== 'zh-TW');
+      if (others.length) {
+        const site = others.filter((l) => SITE_LANGS.has(l));
+        langPending.push(...site);
+        const off = others.filter((l) => !SITE_LANGS.has(l));
+        issue('lang-variants', 'info', `附件含 ${site.length} 種語言版本（${site.join('、') || '無'}）：一筆內容、多語檔案；languages 標 pending，請補 i18n 標題與摘要${off.length ? `；${off.join('、')} 不在站上七語，只保留附件、不列入 languages` : ''}`);
+      }
+    }
     const checks = (markdown, nodeForTables, stat, dropped) => addIssues(bodyChecks({ markdown, dropped, tables: tableProblems(nodeForTables), media: stat.media, minChars: rules.thresholds?.minBodyChars ?? 40 }));
     const reserveId = (wanted, fallback) => {
       let id = wanted;
@@ -649,13 +682,23 @@ export function runImport(opts) {
       // 影音型別本來就是嵌入影片，不算「未轉入的媒體」
       if (kind === 'media') pr.issues = pr.issues.filter((i) => i.code !== 'embedded-media');
       const professional = (rules.audience?.professionalCategories ?? []).some((c) => (category + breadcrumbs.join('／')).includes(c));
-      const ex = extractFields(kind, { title: stripTitlePrefix(rules, title), markdown, mapTo: mi?.mapTo, dm: dis, pageUrl: side.url, publishedAt: eff, updatedAt, exportedAt, media: stat.media, assets: bags.get(id)?.assets ?? [], draftId: id, professional, short, rules, category, summary: summaryOf(markdown, '', 100) });
+      const mapTo = matKind ? { ...(mi?.mapTo ?? {}), ...(matKind.pubType ? { pubType: matKind.pubType } : {}), ...(matKind.mediaType ? { mediaType: matKind.mediaType } : {}) } : mi?.mapTo;
+      const ex = extractFields(kind, { title: stripTitlePrefix(rules, title), markdown, mapTo, dm: dis, pageUrl: side.url, publishedAt: eff, updatedAt, exportedAt, media: stat.media, assets: bags.get(id)?.assets ?? [], draftId: id, professional, short, rules, category, summary: summaryOf(markdown, '', 100) });
+      // 第十批：海報／單張只有圖 ⇒ 文字版待補（可及性）；摘要放既有文字＋圖片 alt 條列＋佔位
+      if (kind === 'publication' && imageOnly({ markdown, images: stat.images, minChars: rules.thresholds?.minBodyChars ?? 40 })) {
+        issue('image-only', 'warn', '圖片承載唯一資訊：海報／單張的文字要另有純文字版（可及性），abstractMarkdown 以（待補）佔位');
+        ex.fields.abstractMarkdown = imageOnlyAbstract(markdown, (bags.get(id)?.assets ?? []).filter((a) => a.kind === 'image'));
+        ex.pending.push('abstractMarkdown');
+      }
+      // 第十批：素材早於依據正本（同疾病現行文件）的生效日 ⇒ 上線前確認內容；basedOn 加該文件
+      const outdated = (kind === 'publication' || kind === 'media') && primary ? materialOutdated({ publishedAt: eff, diseaseId: primary, contentIndex: index }) : null;
+      if (outdated) issue('material-outdated', 'warn', `素材製作日 ${eff} 時依據的 ${outdated.supersededId}（${outdated.supersededAt}）已於 ${outdated.effectiveAt} 被 ${outdated.docId} 取代；上線前請確認內容仍正確（治理 R9 影音過時的事前版）`);
       if (ex.pending.length) issue('fields-pending', 'warn', `${kind} 的欄位從舊頁看不出來，以「（待補）」佔位：${ex.pending.join('、')}`);
       for (const n of ex.notes) issue('field-guessed', 'info', n);
       // 模板位置的標題是通稱（「檢驗資訊」「統計資料」），草稿標題補上疾病名才能在列表裡分辨
       const t0 = stripTitlePrefix(rules, title);
       const utitle = kind !== 'clarification' && dis?.name && !t0.includes(dis.name) ? `${dis.name}${t0}` : t0;
-      units.push({ pageKey: page.name, kind, type: kind, draftId: id, title: utitle, markdown, fields: ex.fields, diseaseId: primary, publishedAt: eff });
+      units.push({ pageKey: page.name, kind, type: kind, draftId: id, title: utitle, markdown, fields: ex.fields, diseaseId: primary, publishedAt: eff, basedOnDoc: outdated?.docId ?? null, langPending });
       pr.outputs.push({ id, type: kind, role: 'draft' });
     } else {
       // page（含清單頁）
@@ -674,7 +717,10 @@ export function runImport(opts) {
       afterRewrite(stat);
       const { markdown, dropped } = toMd(ext.body.children);
       checks(markdown, ext.body, stat, dropped);
-      units.push({ pageKey: page.name, kind, type: 'page', draftId: id, title: stripTitlePrefix(rules, title), markdown, diseaseId: primary, publishedAt: publishedAt ?? exportedAt, conv });
+      // 第十批：舊頁主要連到外部系統（字少、沒有站內連結、有站外連結）⇒ 提示以入口連結呈現；動作不變
+      const extHosts = kind === 'page' ? externalSystemPage({ markdown, stat }) : [];
+      if (extHosts.length) issue('external-system', 'info', `舊頁主要連到外部系統（網域 ${extHosts.join('、')}）：新站以入口連結呈現，建議 /services/ 放入口或清單決定 dropped`);
+      units.push({ pageKey: page.name, kind, type: 'page', draftId: id, title: stripTitlePrefix(rules, title), markdown, diseaseId: primary, publishedAt: publishedAt ?? exportedAt, conv, langPending });
       pr.outputs.push({ id, type: 'page', role: 'draft' });
       if (pr.targetExists && pr.targetType !== 'page' && !mergedInto) issue('target-type-differs', 'info', `對應的新站內容是 ${pr.target}（${pr.targetType}），草稿以 page 暫存，請比對後改建為 ${pr.targetType}`);
     }
@@ -800,11 +846,14 @@ export function runImport(opts) {
       Object.assign(d, un.fields);
       if (un.type === 'clarification') d.summary = un.fields.shareText;
       if (un.type === 'publication' && !d.pdfUrl) { const pdf = bags.get(un.draftId)?.assets.find((a) => a.file.endsWith('.pdf') && a.kind === 'attachment'); if (pdf) d.pdfUrl = `/files/${un.draftId}/${pdf.file}`; }
-      if (un.diseaseId && ['labtest', 'media', 'clarification', 'vaccine'].includes(un.type)) d.basedOn = [un.diseaseId];
+      // 第十批：publication 也填 basedOn；素材早於依據正本時加上該文件
+      if (un.diseaseId && ['labtest', 'media', 'clarification', 'vaccine', 'publication'].includes(un.type)) d.basedOn = [un.diseaseId, ...(un.basedOnDoc ? [un.basedOnDoc] : [])];
     } else {
       d = base(un.title, un.markdown, 'page');
       Object.assign(d, { slug: idRest(un.draftId), bodyMarkdown: un.markdown });
     }
+    // 第十批：附件有其他語言版本 ⇒ languages 標 pending（i18n 標題與摘要待補）
+    for (const l of un.langPending ?? []) if (!d.languages[l]) d.languages[l] = { status: 'pending' };
     drafts.push(finish(d, [pr], un.conv ?? {}));
   }
 

@@ -1,0 +1,67 @@
+{
+  "id": "media.enterovirus-handwashing",
+  "type": "media",
+  "title": "濕搓沖捧擦：腸病毒洗手五步驟動畫",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-04-15",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "以動畫示範「濕、搓、沖、捧、擦」洗手五步驟，提醒大人回家先洗手換衣再抱孩子，並教家長辨識腸病毒重症前兆。",
+  "mediaType": "animation",
+  "youtubeId": "yyyyyyyyyyy",
+  "producedAt": "2026-04-15",
+  "transcriptMarkdown": "### \\[00:00\\] 腸病毒怎麼傳染\n\n小熊：媽媽，為什麼我又要洗手？\n\n媽媽：因為腸病毒很會躲！它會藏在玩具、門把和大家的手上，透過口水、鼻涕和糞便傳染。5 歲以下的小朋友最容易發生重症，所以洗手很重要。\n\n### \\[00:18\\] 洗手五步驟\n\n旁白：跟著小熊一起做——\n\n- 濕：雙手用水打濕。\n- 搓：抹上肥皂，手心、手背、指縫、指尖、手腕都要搓，至少 20 秒。\n- 沖：用清水把泡泡沖乾淨。\n- 捧：捧水把水龍頭沖一沖。\n- 擦：用乾淨的毛巾或紙巾把手擦乾。\n\n旁白：要用肥皂喔！酒精對腸病毒的效果有限。",
+  "captions": [
+    "zh-TW"
+  ],
+  "basedOn": [
+    "disease.enterovirus"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/ListContent/VujZUu3PXzEl4PjbFhh5D8?uaid=2J2WLQQVD-Okme7i011Cw5"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 35 處（mso 樣式 25、Mso 類別 10、命名空間標籤 5）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "素材的權責單位依疾病主檔取 unit.acute-infectious（腸病毒），不歸宣導素材欄目的公關室"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站型別是 media（media.enterovirus-handwashing），草稿直接建成 media，看不出來的欄位以「（待補）」佔位"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/ListContent/VujZUu3PXzEl4PjbFhh5D8?uaid=2J2WLQQVD-Okme7i011Cw5",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "media.enterovirus-handwashing"
+    ]
+  }
+}

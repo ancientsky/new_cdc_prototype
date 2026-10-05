@@ -11,7 +11,7 @@
   },
   "rules": {
     "file": "content/migration/import/_import-rules.json",
-    "version": 8
+    "version": 9
   },
   "manifest": {
     "id": "migration.travel",
@@ -1772,13 +1772,13 @@
       "pendingToMigrated": 0,
       "targetChanges": 0,
       "newPathChanges": 0,
-      "noteChanges": 19,
+      "noteChanges": 0,
       "stillPending": 3
     },
     "file": "content/migration/travel.json",
     "statusChanges": [],
     "targetChanges": [],
     "newPathChanges": [],
-    "noteChanges": 19
+    "noteChanges": 0
   }
 }

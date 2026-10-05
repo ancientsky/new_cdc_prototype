@@ -11,7 +11,7 @@
   },
   "rules": {
     "file": "content/migration/import/_import-rules.json",
-    "version": 8
+    "version": 9
   },
   "manifest": {
     "id": "migration.qa",
@@ -970,7 +970,7 @@
         "faq.stats-where-data"
       ],
       "owner": "unit.epidemic-intelligence",
-      "ownerRule": "／統計",
+      "ownerRule": "／統計資料",
       "diseases": [],
       "outputs": [
         {

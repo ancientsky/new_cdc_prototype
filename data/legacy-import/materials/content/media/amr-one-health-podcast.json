@@ -1,0 +1,61 @@
+{
+  "id": "media.amr-one-health-podcast",
+  "type": "media",
+  "title": "Podcast｜抗生素不是萬靈丹：談抗藥性與防疫一體",
+  "owner": "unit.pr",
+  "publishedAt": "2026-09-15",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "感管組與獸醫專家對談：抗生素對病毒性感冒無效、不要自行停藥或分藥，並說明人、動物、環境「防疫一體」如何一起減少抗藥性細菌。",
+  "mediaType": "podcast",
+  "youtubeId": null,
+  "producedAt": "2026-09-15",
+  "transcriptMarkdown": "### \\[00:00\\] 開場：什麼是抗藥性\n\n主持人：歡迎收聽疾管署 Podcast。今天要談一個看不見、但越來越重要的問題：抗生素抗藥性。\n\n感管組專員：細菌在長期接觸抗生素之後，會演化出不怕藥的能力，這就是抗藥性。當原本有效的藥物失效，一般的感染也可能變得難以治療。世界衛生組織把抗藥性列為全球重要的公共衛生威脅之一。\n\n### \\[03:00\\] 感冒要不要吃抗生素\n\n主持人：很多人感冒會跟醫師要抗生素，這樣對嗎？\n\n感管組專員：大部分感冒、流感是病毒引起的，抗生素只對細菌有效，吃了不會比較快好，反而增加副作用和抗藥性。如果醫師確實開了抗生素，就要依照醫囑吃完，不要症狀好了就停藥，也不要把剩下的藥留給家人吃。",
+  "captions": [
+    "zh-TW"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/ListContent/VujZUu3PXzEl4PjbFhh5D8?uaid=GEJHb3XRbbo3EPVrBVucx2"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 15 處（mso 樣式 5、Mso 類別 5、命名空間標籤 5）"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站型別是 media（media.amr-one-health-podcast），草稿直接建成 media，看不出來的欄位以「（待補）」佔位"
+      },
+      {
+        "code": "field-guessed",
+        "severity": "info",
+        "message": "舊頁沒有可辨識的 YouTube 嵌入，youtubeId 填 null"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/ListContent/VujZUu3PXzEl4PjbFhh5D8?uaid=GEJHb3XRbbo3EPVrBVucx2",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "media.amr-one-health-podcast"
+    ]
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "id": "publication.mpox-infographic-mpox",
+  "type": "publication",
+  "title": "M痘防治懶人包（社群圖卡）",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-05-15",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.mpox"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "M痘（原稱猴痘）主要透過密切接觸傳染，包括皮膚與病灶接觸、性接觸及飛沫。大多數患者症狀輕微，約二至四週自行痊癒，但免疫低下者可能較嚴重。",
+  "pubType": "poster",
+  "series": "M痘宣導素材",
+  "abstractMarkdown": "M痘（原稱猴痘）主要透過密切接觸傳染，包括皮膚與病灶接觸、性接觸及飛沫。大多數患者症狀輕微，約二至四週自行痊癒，但免疫低下者可能較嚴重。\n\n預防方式包括避免與疑似病例的皮膚病灶直接接觸、保持手部衛生、有高風險暴露者可評估接種疫苗。出現發燒、淋巴結腫大與皮疹時，請戴口罩就醫並主動告知接觸史。\n\n本懶人包整理為四張圖卡，適合在社群媒體分享，也可下載列印張貼於診所與社區據點。\n\n![M痘防治懶人包第 1 張：認識 M痘](/files/publication.mpox-infographic-mpox/mpox-card-1.png)\n\n![M痘防治懶人包第 2 張：如何傳染](/files/publication.mpox-infographic-mpox/mpox-card-2.png)\n\n![M痘防治懶人包第 3 張：如何預防](/files/publication.mpox-infographic-mpox/mpox-card-3.png)\n\n![M痘防治懶人包第 4 張：疫苗接種](/files/publication.mpox-infographic-mpox/mpox-card-4.png)",
+  "basedOn": [
+    "disease.mpox"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=9brwAIb5B5QVwyszmo6TZh"
+  ],
+  "assets": [
+    {
+      "file": "mpox-card-1.png",
+      "kind": "image",
+      "alt": "M痘防治懶人包第 1 張：認識 M痘",
+      "license": "OGDL-1.0",
+      "needsAlt": false,
+      "mime": "image/png",
+      "bytes": 1277,
+      "sha256": "84ac6363027a9e66d6fca2f297ec002a99d8a547ef4d2fb139e1e9f77b58da31",
+      "width": 240,
+      "height": 240
+    },
+    {
+      "file": "mpox-card-2.png",
+      "kind": "image",
+      "alt": "M痘防治懶人包第 2 張：如何傳染",
+      "license": "OGDL-1.0",
+      "needsAlt": false,
+      "mime": "image/png",
+      "bytes": 1201,
+      "sha256": "e162d74be20f2c088f976a42bb6bd3845facd0dc6a7513aca16f13f99b4109a7",
+      "width": 240,
+      "height": 240
+    },
+    {
+      "file": "mpox-card-3.png",
+      "kind": "image",
+      "alt": "M痘防治懶人包第 3 張：如何預防",
+      "license": "OGDL-1.0",
+      "needsAlt": false,
+      "mime": "image/png",
+      "bytes": 1115,
+      "sha256": "7b4e17c1463b2c57e7aa54f7229b666780077bc9a098afb49e3d8ed52ab85ae2",
+      "width": 240,
+      "height": 240
+    },
+    {
+      "file": "mpox-card-4.png",
+      "kind": "image",
+      "alt": "M痘防治懶人包第 4 張：疫苗接種",
+      "license": "OGDL-1.0",
+      "needsAlt": false,
+      "mime": "image/png",
+      "bytes": 1270,
+      "sha256": "65b92b13c6432f26c39ac995d1e6db0c836c3768113714cb00ab782d1820a801",
+      "width": 240,
+      "height": 240
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 9 處（mso 樣式 3、Mso 類別 3、命名空間標籤 3）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "素材的權責單位依疾病主檔取 unit.acute-infectious（M痘），不歸宣導素材欄目的公關室"
+      },
+      {
+        "code": "type-from-category",
+        "severity": "info",
+        "message": "素材頁的標題有「懶人包」，草稿建成 publication（pubType poster）"
+      },
+      {
+        "code": "image-license-assumed",
+        "severity": "info",
+        "message": "圖片「mpox-card-1.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+      },
+      {
+        "code": "image-license-assumed",
+        "severity": "info",
+        "message": "圖片「mpox-card-2.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+      },
+      {
+        "code": "image-license-assumed",
+        "severity": "info",
+        "message": "圖片「mpox-card-3.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+      },
+      {
+        "code": "image-license-assumed",
+        "severity": "info",
+        "message": "圖片「mpox-card-4.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+      },
+      {
+        "code": "image-gallery",
+        "severity": "info",
+        "message": "同頁 4 張圖建成一筆、多個 image 資產，不拆成 4 筆"
+      },
+      {
+        "code": "fields-pending",
+        "severity": "warn",
+        "message": "publication 的欄位從舊頁看不出來，以「（待補）」佔位：pdfUrl"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=9brwAIb5B5QVwyszmo6TZh",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

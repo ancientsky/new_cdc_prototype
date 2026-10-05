@@ -11,7 +11,7 @@
   },
   "rules": {
     "file": "content/migration/import/_import-rules.json",
-    "version": 8
+    "version": 9
   },
   "manifest": {
     "id": "migration.tuberculosis",
@@ -81,7 +81,7 @@
     },
     "issues": {
       "error": 1,
-      "warn": 14,
+      "warn": 18,
       "info": 92
     },
     "manifest": {
@@ -878,6 +878,16 @@
           "code": "image-license-assumed",
           "severity": "info",
           "message": "圖片「tb-poster-7lang-thumb.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        },
+        {
+          "code": "image-only",
+          "severity": "warn",
+          "message": "圖片承載唯一資訊：海報／單張的文字要另有純文字版（可及性），abstractMarkdown 以（待補）佔位"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "publication 的欄位從舊頁看不出來，以「（待補）」佔位：abstractMarkdown"
         }
       ],
       "action": "compare-existing",
@@ -953,6 +963,11 @@
           "code": "type-from-manifest",
           "severity": "info",
           "message": "清單對應的新站型別是 media（media.tb-cough-two-weeks），草稿直接建成 media，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "material-outdated",
+          "severity": "warn",
+          "message": "素材製作日 2024-03-24 時依據的 doc.tb-guideline.2022-03-01（2022-03-01）已於 2025-09-01 被 doc.tb-guideline.2025-09-01 取代；上線前請確認內容仍正確（治理 R9 影音過時的事前版）"
         }
       ],
       "action": "compare-existing",
@@ -1028,6 +1043,11 @@
           "code": "type-from-manifest",
           "severity": "info",
           "message": "清單對應的新站型別是 media（media.migrant-worker-health-check），草稿直接建成 media，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "material-outdated",
+          "severity": "warn",
+          "message": "素材製作日 2024-06-18 時依據的 doc.tb-guideline.2022-03-01（2022-03-01）已於 2025-09-01 被 doc.tb-guideline.2025-09-01 取代；上線前請確認內容仍正確（治理 R9 影音過時的事前版）"
         }
       ],
       "action": "compare-existing",
@@ -1724,8 +1744,8 @@
       "compareWith": [
         "doc.tb-case-definition.2024-01-01"
       ],
-      "owner": "unit.epidemic-intelligence",
-      "ownerRule": "／通報",
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／通報定義",
       "diseases": [
         "disease.tuberculosis"
       ],
@@ -1799,7 +1819,7 @@
         "service.notifiable-disease-report"
       ],
       "owner": "unit.epidemic-intelligence",
-      "ownerRule": "／通報",
+      "ownerRule": "結核病／通報",
       "diseases": [
         "disease.tuberculosis"
       ],
@@ -1883,7 +1903,7 @@
         "labtest.tuberculosis"
       ],
       "owner": "unit.lab",
-      "ownerRule": "／檢驗",
+      "ownerRule": "結核病／檢驗",
       "diseases": [
         "disease.tuberculosis"
       ],
@@ -1967,7 +1987,7 @@
         "dataset.tb-new-cases"
       ],
       "owner": "unit.epidemic-intelligence",
-      "ownerRule": "／統計",
+      "ownerRule": "結核病／統計資料",
       "diseases": [
         "disease.tuberculosis"
       ],
@@ -2050,7 +2070,7 @@
       "existing": false,
       "compareWith": [],
       "owner": "unit.epidemic-intelligence",
-      "ownerRule": "／統計",
+      "ownerRule": "結核病／統計資料",
       "diseases": [
         "disease.tuberculosis"
       ],
@@ -3664,7 +3684,7 @@
         "doc.tb-case-definition.2024-01-01"
       ],
       "status": "review",
-      "owner": "unit.epidemic-intelligence",
+      "owner": "unit.chronic-infectious",
       "assets": 0,
       "schemaValid": true,
       "errors": [],

@@ -28,6 +28,9 @@
   "series": "腸病毒宣導素材",
   "abstractMarkdown": "腸病毒宣導單張與海報，歡迎下載運用（多國語言版本見附件）。\n\n- [腸病毒防治海報（中文）](/files/publication.enterovirus-materials-poster/enterovirus-poster-7lang.pdf)\n- [腸病毒防治海報（英文）](/files/publication.enterovirus-materials-poster/enterovirus-poster-7lang.pdf)\n- [腸病毒防治海報（越南文）](/files/publication.enterovirus-materials-poster/enterovirus-poster-7lang.pdf)\n- [腸病毒防治海報（印尼文）](/files/publication.enterovirus-materials-poster/enterovirus-poster-7lang.pdf)\n- [腸病毒防治海報（泰文）](/files/publication.enterovirus-materials-poster/enterovirus-poster-7lang.pdf)\n\n![enterovirus-poster](/files/publication.enterovirus-materials-poster/enterovirus-poster.png)",
   "pdfUrl": "/files/publication.enterovirus-materials-poster/enterovirus-poster-7lang.pdf",
+  "basedOn": [
+    "disease.enterovirus"
+  ],
   "legacyUrls": [
     "https://www.cdc.gov.tw/Category/List/56ss3snA1H2Mgxy9BNSOs3"
   ],

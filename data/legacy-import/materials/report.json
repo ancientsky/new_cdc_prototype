@@ -1,0 +1,2495 @@
+{
+  "format": "cdc-legacy-import-report/1",
+  "batch": "materials",
+  "generatedAt": "2026-10-05T02:30:00Z",
+  "exportedAt": "2026-10-03",
+  "simulated": true,
+  "source": {
+    "dir": "data/legacy-export/materials",
+    "note": "模擬匯出：宣導素材欄目。依既有新站內容（content/media 三筆、多國語言衛教素材資料集、長照感管手冊）反推 21 頁：列表 6 頁、MPage 3 頁、素材內頁 9 頁、既有 media 反推 3 頁；另複製結核病批匯出的 3 頁宣導素材（同網址，含附件與圖檔）。宣導素材根、多媒體、影片、多國語言衛教素材、商業媒體運用一覽表、數位學習課程的網址 ID 為舊站真實 ID；其餘 ID、素材內頁路徑（/Category/ListContent/{listId}?uaid={id}，推測的模式）、經費、數字與連結皆為示意，不是舊站的真實資料。正式匯出取代整個目錄即可。",
+    "site": "https://www.cdc.gov.tw"
+  },
+  "rules": {
+    "file": "content/migration/import/_import-rules.json",
+    "version": 9
+  },
+  "manifest": {
+    "id": "migration.materials",
+    "file": "content/migration/materials.json",
+    "synthetic": false,
+    "items": 21,
+    "extends": null,
+    "derivedItems": 0,
+    "derivedCovered": [],
+    "disease": null
+  },
+  "summary": {
+    "pages": 24,
+    "drafts": 21,
+    "mergedPages": 0,
+    "byType": {
+      "media": 4,
+      "page": 9,
+      "publication": 7,
+      "dataset": 1
+    },
+    "byKind": {
+      "media": 6,
+      "page": 3,
+      "publication": 8,
+      "list": 6,
+      "dataset": 1
+    },
+    "byAction": {
+      "compare-existing": 5,
+      "review-before-publish": 8,
+      "skip-list": 6,
+      "archive": 2,
+      "skip-duplicate": 3
+    },
+    "avgConfidence": 0.83,
+    "needsReview": 3,
+    "existing": 5,
+    "schemaInvalid": 0,
+    "assets": {
+      "total": 35,
+      "attachment": 19,
+      "image": 15,
+      "data": 1,
+      "needsAlt": 4,
+      "noTextLayer": 0
+    },
+    "issues": {
+      "error": 0,
+      "warn": 27,
+      "info": 75
+    },
+    "manifest": {
+      "items": 21,
+      "matched": 21,
+      "missingPages": 0,
+      "derivedItems": 0,
+      "derivedMatched": 0
+    },
+    "generated": 0,
+    "exportedAt": "2026-10-03",
+    "pagesWithoutOutput": 0
+  },
+  "pages": [
+    {
+      "key": "01-animation-ev-handwashing",
+      "file": "01-animation-ev-handwashing.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/ListContent/VujZUu3PXzEl4PjbFhh5D8?uaid=2J2WLQQVD-Okme7i011Cw5",
+        "title": "濕搓沖捧擦：腸病毒洗手五步驟動畫",
+        "category": "宣導素材／多媒體／動畫／濕搓沖捧擦：腸病毒洗手五步驟動畫",
+        "publishedAt": "2026-04-15",
+        "updatedAt": "2026-04-15",
+        "breadcrumbs": [
+          "首頁",
+          "宣導素材",
+          "多媒體",
+          "動畫",
+          "濕搓沖捧擦：腸病毒洗手五步驟動畫"
+        ],
+        "tab": ""
+      },
+      "pattern": "listcontent",
+      "kind": "media",
+      "type": "media",
+      "manifestKey": "animation-ev-handwashing",
+      "manifestDerived": false,
+      "target": "media.enterovirus-handwashing",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "media.enterovirus-handwashing"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "宣導素材",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "media.enterovirus-handwashing",
+          "type": "media",
+          "role": "draft",
+          "file": "content/media/enterovirus-handwashing.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 35 處（mso 樣式 25、Mso 類別 10、命名空間標籤 5）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "素材的權責單位依疾病主檔取 unit.acute-infectious（腸病毒），不歸宣導素材欄目的公關室"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 media（media.enterovirus-handwashing），草稿直接建成 media，看不出來的欄位以「（待補）」佔位"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "02-commercial-media-table",
+      "file": "02-commercial-media-table.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/-2qVuGOsbhtkGWlpYw1scA",
+        "title": "防疫衛教宣導之商業媒體運用情形一覽表",
+        "category": "宣導素材／防疫衛教宣導之商業媒體運用情形一覽表",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-08-31",
+        "breadcrumbs": [
+          "首頁",
+          "宣導素材",
+          "防疫衛教宣導之商業媒體運用情形一覽表"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "commercial-media-table",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.pr",
+      "ownerRule": "宣導素材",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "page.x-commercial-media-table",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/x-commercial-media-table.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 199 處（mso 樣式 67、Mso 類別 66、命名空間標籤 66）"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "03-e-learning",
+      "file": "03-e-learning.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/1ptYuzMUqvZ6J2QOzSLk6A",
+        "title": "數位學習課程",
+        "category": "宣導素材／數位學習課程",
+        "publishedAt": "2017-06-01",
+        "updatedAt": "2026-05-05",
+        "breadcrumbs": [
+          "首頁",
+          "宣導素材",
+          "數位學習課程"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "e-learning",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.pr",
+      "ownerRule": "宣導素材",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "page.x-e-learning",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/x-e-learning.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "external-system",
+          "severity": "info",
+          "message": "舊頁主要連到外部系統（網域 e-learning.example.gov.tw）：新站以入口連結呈現，建議 /services/ 放入口或清單決定 dropped"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 2,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "04-fb-1922",
+      "file": "04-fb-1922.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/ListContent/T4NQf3E9zQFFjYKNWGBgTK?uaid=THu-Ah2wZaY7MEXWOAcXcp",
+        "title": "1922 防疫達人（Facebook／LINE）",
+        "category": "宣導素材／社群／1922 防疫達人（Facebook／LINE）",
+        "publishedAt": "2020-02-01",
+        "updatedAt": "2026-06-01",
+        "breadcrumbs": [
+          "首頁",
+          "宣導素材",
+          "社群",
+          "1922 防疫達人（Facebook／LINE）"
+        ],
+        "tab": ""
+      },
+      "pattern": "listcontent",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "fb-1922",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.pr",
+      "ownerRule": "宣導素材",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "page.x-fb-1922",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/x-fb-1922.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "external-system",
+          "severity": "info",
+          "message": "舊頁主要連到外部系統（網域 www.facebook.com、line.me）：新站以入口連結呈現，建議 /services/ 放入口或清單決定 dropped"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 2,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "05-infographic-mpox",
+      "file": "05-infographic-mpox.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=9brwAIb5B5QVwyszmo6TZh",
+        "title": "M痘防治懶人包（社群圖卡）",
+        "category": "宣導素材／海報／M痘防治懶人包（社群圖卡）",
+        "publishedAt": "2026-05-15",
+        "updatedAt": "2026-05-15",
+        "breadcrumbs": [
+          "首頁",
+          "宣導素材",
+          "海報",
+          "M痘防治懶人包（社群圖卡）"
+        ],
+        "tab": ""
+      },
+      "pattern": "listcontent",
+      "kind": "publication",
+      "type": "publication",
+      "manifestKey": "infographic-mpox",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "宣導素材",
+      "diseases": [
+        "disease.mpox"
+      ],
+      "outputs": [
+        {
+          "id": "publication.mpox-infographic-mpox",
+          "type": "publication",
+          "role": "draft",
+          "file": "content/publications/mpox-infographic-mpox.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 9 處（mso 樣式 3、Mso 類別 3、命名空間標籤 3）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "素材的權責單位依疾病主檔取 unit.acute-infectious（M痘），不歸宣導素材欄目的公關室"
+        },
+        {
+          "code": "type-from-category",
+          "severity": "info",
+          "message": "素材頁的標題有「懶人包」，草稿建成 publication（pubType poster）"
+        },
+        {
+          "code": "image-license-assumed",
+          "severity": "info",
+          "message": "圖片「mpox-card-1.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        },
+        {
+          "code": "image-license-assumed",
+          "severity": "info",
+          "message": "圖片「mpox-card-2.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        },
+        {
+          "code": "image-license-assumed",
+          "severity": "info",
+          "message": "圖片「mpox-card-3.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        },
+        {
+          "code": "image-license-assumed",
+          "severity": "info",
+          "message": "圖片「mpox-card-4.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        },
+        {
+          "code": "image-gallery",
+          "severity": "info",
+          "message": "同頁 4 張圖建成一筆、多個 image 資產，不拆成 4 筆"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "publication 的欄位從舊頁看不出來，以「（待補）」佔位：pdfUrl"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 4,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "06-leaflet-ev-handwashing",
+      "file": "06-leaflet-ev-handwashing.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/ListContent/Z5jlKeN6dG0jpwhf4TO0JV?uaid=RCqem2td9FR_uO2EXyBUul",
+        "title": "腸病毒洗手五步驟單張",
+        "category": "宣導素材／單張／腸病毒洗手五步驟單張",
+        "publishedAt": "2026-04-10",
+        "updatedAt": "2026-04-10",
+        "breadcrumbs": [
+          "首頁",
+          "宣導素材",
+          "單張",
+          "腸病毒洗手五步驟單張"
+        ],
+        "tab": ""
+      },
+      "pattern": "listcontent",
+      "kind": "publication",
+      "type": "publication",
+      "manifestKey": "leaflet-ev-handwashing",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "宣導素材",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "publication.enterovirus-leaflet-ev-handwashing",
+          "type": "publication",
+          "role": "draft",
+          "file": "content/publications/enterovirus-leaflet-ev-handwashing.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "素材的權責單位依疾病主檔取 unit.acute-infectious（腸病毒），不歸宣導素材欄目的公關室"
+        },
+        {
+          "code": "type-from-category",
+          "severity": "info",
+          "message": "素材頁的標題有「單張」，草稿建成 publication（pubType poster）"
+        },
+        {
+          "code": "image-no-alt",
+          "severity": "warn",
+          "message": "圖片「ev-handwashing-steps.png」舊頁沒有替代文字，暫用檔名「ev-handwashing-steps」，請補 alt（needsAlt）"
+        },
+        {
+          "code": "image-license-assumed",
+          "severity": "info",
+          "message": "圖片「ev-handwashing-steps.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（0 字，低於 40）"
+        },
+        {
+          "code": "image-only",
+          "severity": "warn",
+          "message": "圖片承載唯一資訊：海報／單張的文字要另有純文字版（可及性），abstractMarkdown 以（待補）佔位"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "publication 的欄位從舊頁看不出來，以「（待補）」佔位：pdfUrl、abstractMarkdown"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 1,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "07-list-leaflets",
+      "file": "07-list-leaflets.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/Z5jlKeN6dG0jpwhf4TO0JV",
+        "title": "單張",
+        "category": "宣導素材／單張",
+        "publishedAt": "2026-10-03",
+        "updatedAt": "2026-10-03",
+        "breadcrumbs": [
+          "首頁",
+          "宣導素材",
+          "單張"
+        ],
+        "tab": ""
+      },
+      "pattern": "category-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "list-leaflets",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.pr",
+      "ownerRule": "宣導素材",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "page.x-list-leaflets",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/x-list-leaflets.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.4,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": true,
+      "issues": [
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（10 字，低於 40）"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 1,
+        "legacyLinks": 1,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "08-list-manuals",
+      "file": "08-list-manuals.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/DG4AoD4j09j2qW_YhrYAZ2",
+        "title": "手冊",
+        "category": "宣導素材／手冊",
+        "publishedAt": "2026-10-03",
+        "updatedAt": "2026-10-03",
+        "breadcrumbs": [
+          "首頁",
+          "宣導素材",
+          "手冊"
+        ],
+        "tab": ""
+      },
+      "pattern": "category-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "list-manuals",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.pr",
+      "ownerRule": "宣導素材",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "page.x-list-manuals",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/x-list-manuals.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.4,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": true,
+      "issues": [
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（15 字，低於 40）"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 1,
+        "legacyLinks": 1,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "09-list-materials",
+      "file": "09-list-materials.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/VOFCg57Yk3iO3I_WxoXOIA",
+        "title": "宣導素材",
+        "category": "宣導素材",
+        "publishedAt": "2026-10-03",
+        "updatedAt": "2026-10-03",
+        "breadcrumbs": [
+          "首頁",
+          "宣導素材"
+        ],
+        "tab": ""
+      },
+      "pattern": "category-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "list-materials",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.pr",
+      "ownerRule": "宣導素材",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "page.x-list-materials",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/x-list-materials.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.6,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 15,
+        "legacyLinks": 15,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "10-list-multimedia",
+      "file": "10-list-multimedia.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/ListMovie/slfvh8DLgS6fkbLiuN-WHg",
+        "title": "多媒體",
+        "category": "宣導素材／多媒體",
+        "publishedAt": "2026-10-03",
+        "updatedAt": "2026-10-03",
+        "breadcrumbs": [
+          "首頁",
+          "宣導素材",
+          "多媒體"
+        ],
+        "tab": ""
+      },
+      "pattern": "category-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "list-multimedia",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.pr",
+      "ownerRule": "宣導素材",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "page.x-list-multimedia",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/x-list-multimedia.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.6,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 4,
+        "legacyLinks": 4,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "11-list-posters",
+      "file": "11-list-posters.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/YV1yFFBI_B1Rhm6XDQvlgy",
+        "title": "海報",
+        "category": "宣導素材／海報",
+        "publishedAt": "2026-10-03",
+        "updatedAt": "2026-10-03",
+        "breadcrumbs": [
+          "首頁",
+          "宣導素材",
+          "海報"
+        ],
+        "tab": ""
+      },
+      "pattern": "category-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "list-posters",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.pr",
+      "ownerRule": "宣導素材",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "page.x-list-posters",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/x-list-posters.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.6,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 5,
+        "legacyLinks": 5,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "12-list-videos",
+      "file": "12-list-videos.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/ListMovie/DWSgB84e8MEvXgBqiQmR6A",
+        "title": "影片",
+        "category": "宣導素材／多媒體／影片",
+        "publishedAt": "2026-10-03",
+        "updatedAt": "2026-10-03",
+        "breadcrumbs": [
+          "首頁",
+          "宣導素材",
+          "多媒體",
+          "影片"
+        ],
+        "tab": ""
+      },
+      "pattern": "category-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "list-videos",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.pr",
+      "ownerRule": "宣導素材",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "page.x-list-videos",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/x-list-videos.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.4,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": true,
+      "issues": [
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（39 字，低於 40）"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 2,
+        "legacyLinks": 2,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "13-manual-ltc-ic-public",
+      "file": "13-manual-ltc-ic-public.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/ListContent/DG4AoD4j09j2qW_YhrYAZ2?uaid=JaTSqWyasrqZpL-tvXo9BS",
+        "title": "長照機構感染管制手冊（宣導版）",
+        "category": "宣導素材／手冊／長照機構感染管制手冊（宣導版）",
+        "publishedAt": "2026-03-01",
+        "updatedAt": "2026-03-01",
+        "breadcrumbs": [
+          "首頁",
+          "宣導素材",
+          "手冊",
+          "長照機構感染管制手冊（宣導版）"
+        ],
+        "tab": ""
+      },
+      "pattern": "listcontent",
+      "kind": "publication",
+      "type": "publication",
+      "manifestKey": "manual-ltc-ic-public",
+      "manifestDerived": false,
+      "target": "publication.manual-ltc-infection-control-2026",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "publication.manual-ltc-infection-control-2026"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "宣導素材",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "publication.manual-ltc-infection-control-2026",
+          "type": "publication",
+          "role": "draft",
+          "file": "content/publications/manual-ltc-infection-control-2026.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 publication（publication.manual-ltc-infection-control-2026），草稿直接建成 publication，看不出來的欄位以「（待補）」佔位"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "14-multilingual-materials",
+      "file": "14-multilingual-materials.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/Y_AH_Ka7q03cfN15CyI-nQ",
+        "title": "多國語言衛教素材",
+        "category": "宣導素材／多國語言衛教素材",
+        "publishedAt": "2015-01-01",
+        "updatedAt": "2026-09-18",
+        "breadcrumbs": [
+          "首頁",
+          "宣導素材",
+          "多國語言衛教素材"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "dataset",
+      "type": "dataset",
+      "manifestKey": "multilingual-materials",
+      "manifestDerived": false,
+      "target": "dataset.health-education-materials",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "dataset.health-education-materials"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "宣導素材",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "dataset.health-education-materials",
+          "type": "dataset",
+          "role": "draft",
+          "file": "content/datasets/health-education-materials.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 dataset（dataset.health-education-materials），草稿直接建成 dataset，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "lang-variants",
+          "severity": "info",
+          "message": "附件含 6 種語言版本（en、vi、id、th、tl、ja）：一筆內容、多語檔案；languages 標 pending，請補 i18n 標題與摘要；zh-CN 不在站上七語，只保留附件、不列入 languages"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "dataset 的欄位從舊頁看不出來，以「（待補）」佔位：canonicalUrl"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "看不出更新頻率，updateFrequency 暫填 irregular"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "舊頁沒有資料檔也沒有開放資料連結，canonicalUrl 暫填舊頁網址"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 8,
+        "legacyLinks": 0,
+        "attachments": 8
+      }
+    },
+    {
+      "key": "15-podcast-amr",
+      "file": "15-podcast-amr.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/ListContent/VujZUu3PXzEl4PjbFhh5D8?uaid=GEJHb3XRbbo3EPVrBVucx2",
+        "title": "Podcast｜抗生素不是萬靈丹：談抗藥性與防疫一體",
+        "category": "宣導素材／多媒體／廣播／Podcast｜抗生素不是萬靈丹：談抗藥性與防疫一體",
+        "publishedAt": "2026-09-15",
+        "updatedAt": "2026-09-15",
+        "breadcrumbs": [
+          "首頁",
+          "宣導素材",
+          "多媒體",
+          "廣播",
+          "Podcast｜抗生素不是萬靈丹：談抗藥性與防疫一體"
+        ],
+        "tab": ""
+      },
+      "pattern": "listcontent",
+      "kind": "media",
+      "type": "media",
+      "manifestKey": "podcast-amr",
+      "manifestDerived": false,
+      "target": "media.amr-one-health-podcast",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "media.amr-one-health-podcast"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "宣導素材",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "media.amr-one-health-podcast",
+          "type": "media",
+          "role": "draft",
+          "file": "content/media/amr-one-health-podcast.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 15 處（mso 樣式 5、Mso 類別 5、命名空間標籤 5）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 media（media.amr-one-health-podcast），草稿直接建成 media，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "舊頁沒有可辨識的 YouTube 嵌入，youtubeId 填 null"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "16-poster-covid-new-life-2021",
+      "file": "16-poster-covid-new-life-2021.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=jqYodXZl8Ti6hySLNXVlBs",
+        "title": "防疫新生活運動海報（COVID-19）",
+        "category": "宣導素材／海報／防疫新生活運動海報（COVID-19）",
+        "publishedAt": "2021-05-20",
+        "updatedAt": "2021-05-20",
+        "breadcrumbs": [
+          "首頁",
+          "宣導素材",
+          "海報",
+          "防疫新生活運動海報（COVID-19）"
+        ],
+        "tab": ""
+      },
+      "pattern": "listcontent",
+      "kind": "publication",
+      "type": "publication",
+      "manifestKey": "poster-covid-new-life-2021",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "宣導素材",
+      "diseases": [
+        "disease.covid-19"
+      ],
+      "outputs": [
+        {
+          "id": "publication.covid-19-poster-covid-new-life-2021",
+          "type": "publication",
+          "role": "draft",
+          "file": "content/publications/covid-19-poster-covid-new-life-2021.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "素材的權責單位依疾病主檔取 unit.acute-infectious（新冠併發重症），不歸宣導素材欄目的公關室"
+        },
+        {
+          "code": "type-from-category",
+          "severity": "info",
+          "message": "素材頁的標題有「海報」，草稿建成 publication（pubType poster）"
+        },
+        {
+          "code": "old-content",
+          "severity": "info",
+          "message": "最後更新於 2021-05-20（5.4 年前），建議走久遠封存而非上線"
+        },
+        {
+          "code": "image-license-assumed",
+          "severity": "info",
+          "message": "圖片「covid-new-life-1.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        },
+        {
+          "code": "image-license-assumed",
+          "severity": "info",
+          "message": "圖片「covid-new-life-2.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        },
+        {
+          "code": "image-only",
+          "severity": "warn",
+          "message": "圖片承載唯一資訊：海報／單張的文字要另有純文字版（可及性），abstractMarkdown 以（待補）佔位"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "publication 的欄位從舊頁看不出來，以「（待補）」佔位：abstractMarkdown"
+        }
+      ],
+      "action": "archive",
+      "flags": {
+        "historical": false,
+        "old": true
+      },
+      "stats": {
+        "images": 2,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "17-poster-dengue-patrol-series",
+      "file": "17-poster-dengue-patrol-series.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=OW0GWvcK_N7x2_x6CcO_sV",
+        "title": "登革熱「巡、倒、清、刷」海報系列",
+        "category": "宣導素材／海報／登革熱「巡、倒、清、刷」海報系列",
+        "publishedAt": "2026-07-01",
+        "updatedAt": "2026-07-01",
+        "breadcrumbs": [
+          "首頁",
+          "宣導素材",
+          "海報",
+          "登革熱「巡、倒、清、刷」海報系列"
+        ],
+        "tab": ""
+      },
+      "pattern": "listcontent",
+      "kind": "publication",
+      "type": "publication",
+      "manifestKey": "poster-dengue-patrol-series",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "宣導素材",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "publication.dengue-poster-dengue-patrol-series",
+          "type": "publication",
+          "role": "draft",
+          "file": "content/publications/dengue-poster-dengue-patrol-series.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "素材的權責單位依疾病主檔取 unit.acute-infectious（登革熱），不歸宣導素材欄目的公關室"
+        },
+        {
+          "code": "type-from-category",
+          "severity": "info",
+          "message": "素材頁的標題有「海報」，草稿建成 publication（pubType poster）"
+        },
+        {
+          "code": "image-license-assumed",
+          "severity": "info",
+          "message": "圖片「dengue-patrol-1.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        },
+        {
+          "code": "image-license-assumed",
+          "severity": "info",
+          "message": "圖片「dengue-patrol-2.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        },
+        {
+          "code": "image-license-assumed",
+          "severity": "info",
+          "message": "圖片「dengue-patrol-3.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        },
+        {
+          "code": "image-no-alt",
+          "severity": "warn",
+          "message": "圖片「dengue-patrol-4.png」舊頁沒有替代文字，暫用檔名「dengue-patrol-4」，請補 alt（needsAlt）"
+        },
+        {
+          "code": "image-license-assumed",
+          "severity": "info",
+          "message": "圖片「dengue-patrol-4.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        },
+        {
+          "code": "image-no-alt",
+          "severity": "warn",
+          "message": "圖片「dengue-patrol-5.png」舊頁沒有替代文字，暫用檔名「dengue-patrol-5」，請補 alt（needsAlt）"
+        },
+        {
+          "code": "image-license-assumed",
+          "severity": "info",
+          "message": "圖片「dengue-patrol-5.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        },
+        {
+          "code": "image-no-alt",
+          "severity": "warn",
+          "message": "圖片「dengue-patrol-6.png」舊頁沒有替代文字，暫用檔名「dengue-patrol-6」，請補 alt（needsAlt）"
+        },
+        {
+          "code": "image-license-assumed",
+          "severity": "info",
+          "message": "圖片「dengue-patrol-6.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        },
+        {
+          "code": "image-gallery",
+          "severity": "info",
+          "message": "同頁 6 張圖建成一筆、多個 image 資產，不拆成 6 筆"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（31 字，低於 40）"
+        },
+        {
+          "code": "image-only",
+          "severity": "warn",
+          "message": "圖片承載唯一資訊：海報／單張的文字要另有純文字版（可及性），abstractMarkdown 以（待補）佔位"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "publication 的欄位從舊頁看不出來，以「（待補）」佔位：abstractMarkdown"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 6,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "18-poster-flu-vaccine-7lang",
+      "file": "18-poster-flu-vaccine-7lang.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=-XlC5SdLwgyfRsnIbvDA-R",
+        "title": "流感疫苗接種宣導海報（七語）",
+        "category": "宣導素材／海報／流感疫苗接種宣導海報（七語）",
+        "publishedAt": "2026-09-01",
+        "updatedAt": "2026-09-01",
+        "breadcrumbs": [
+          "首頁",
+          "宣導素材",
+          "海報",
+          "流感疫苗接種宣導海報（七語）"
+        ],
+        "tab": ""
+      },
+      "pattern": "listcontent",
+      "kind": "publication",
+      "type": "publication",
+      "manifestKey": "poster-flu-vaccine-7lang",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "宣導素材",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "publication.influenza-poster-flu-vaccine-7lang",
+          "type": "publication",
+          "role": "draft",
+          "file": "content/publications/influenza-poster-flu-vaccine-7lang.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "素材的權責單位依疾病主檔取 unit.acute-infectious（流感），不歸宣導素材欄目的公關室"
+        },
+        {
+          "code": "type-from-category",
+          "severity": "info",
+          "message": "素材頁的標題有「海報」，草稿建成 publication（pubType poster）"
+        },
+        {
+          "code": "lang-variants",
+          "severity": "info",
+          "message": "附件含 6 種語言版本（en、ja、vi、id、th、tl）：一筆內容、多語檔案；languages 標 pending，請補 i18n 標題與摘要"
+        },
+        {
+          "code": "image-license-assumed",
+          "severity": "info",
+          "message": "圖片「flu-vaccine-poster.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（29 字，低於 40）"
+        },
+        {
+          "code": "image-only",
+          "severity": "warn",
+          "message": "圖片承載唯一資訊：海報／單張的文字要另有純文字版（可及性），abstractMarkdown 以（待補）佔位"
+        },
+        {
+          "code": "material-outdated",
+          "severity": "warn",
+          "message": "素材製作日 2026-09-01 時依據的 doc.flu-antiviral-eligibility.2026-08-24（2026-08-24）已於 2026-09-18 被 doc.flu-antiviral-eligibility.2026-09-18 取代；上線前請確認內容仍正確（治理 R9 影音過時的事前版）"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "publication 的欄位從舊頁看不出來，以「（待補）」佔位：abstractMarkdown"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 1,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 7
+      }
+    },
+    {
+      "key": "19-poster-measles-2019",
+      "file": "19-poster-measles-2019.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=RYSFjWglrrDCumRjbTT1_t",
+        "title": "麻疹防治宣導海報（2019 年版）",
+        "category": "宣導素材／海報／麻疹防治宣導海報（2019 年版）",
+        "publishedAt": "2019-09-01",
+        "updatedAt": "2019-09-01",
+        "breadcrumbs": [
+          "首頁",
+          "宣導素材",
+          "海報",
+          "麻疹防治宣導海報（2019 年版）"
+        ],
+        "tab": ""
+      },
+      "pattern": "listcontent",
+      "kind": "publication",
+      "type": "publication",
+      "manifestKey": "poster-measles-2019",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "宣導素材",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "publication.measles-poster-measles-2019",
+          "type": "publication",
+          "role": "draft",
+          "file": "content/publications/measles-poster-measles-2019.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "素材的權責單位依疾病主檔取 unit.acute-infectious（麻疹），不歸宣導素材欄目的公關室"
+        },
+        {
+          "code": "type-from-category",
+          "severity": "info",
+          "message": "素材頁的標題有「海報」，草稿建成 publication（pubType poster）"
+        },
+        {
+          "code": "old-content",
+          "severity": "info",
+          "message": "最後更新於 2019-09-01（7.1 年前），建議走久遠封存而非上線"
+        },
+        {
+          "code": "image-license-assumed",
+          "severity": "info",
+          "message": "圖片「measles-2019-poster.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（31 字，低於 40）"
+        },
+        {
+          "code": "image-only",
+          "severity": "warn",
+          "message": "圖片承載唯一資訊：海報／單張的文字要另有純文字版（可及性），abstractMarkdown 以（待補）佔位"
+        },
+        {
+          "code": "material-outdated",
+          "severity": "warn",
+          "message": "素材製作日 2019-09-01 時依據的 doc.mmr-recommendation.2019-05-14（2019-05-14）已於 2025-04-16 被 doc.mmr-recommendation.2025-04-16 取代；上線前請確認內容仍正確（治理 R9 影音過時的事前版）"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "publication 的欄位從舊頁看不出來，以「（待補）」佔位：abstractMarkdown"
+        }
+      ],
+      "action": "archive",
+      "flags": {
+        "historical": false,
+        "old": true
+      },
+      "stats": {
+        "images": 1,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "20-poster-tb-7lang",
+      "file": "20-poster-tb-7lang.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/HFc75kGSabhKRWZ0sV_2Ii",
+        "title": "宣導素材：咳嗽兩週要就醫（多國語言海報）",
+        "category": "結核病／宣導素材",
+        "publishedAt": "2026-03-20",
+        "updatedAt": "2026-03-20",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "宣導素材"
+        ],
+        "tab": "posters"
+      },
+      "pattern": "category-list",
+      "kind": "publication",
+      "type": "publication",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [
+        "publication.poster-tb-seven-languages"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／宣導素材",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "publication.poster-tb-seven-languages",
+          "type": "publication",
+          "role": "duplicate",
+          "duplicateOf": "tuberculosis/10-materials-poster"
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "converted-elsewhere",
+          "severity": "info",
+          "message": "同網址的頁已在 tuberculosis 批（10-materials-poster）轉過，草稿 publication.poster-tb-seven-languages；本批不重複出草稿，內容若有更新請在該批重跑"
+        }
+      ],
+      "action": "skip-duplicate",
+      "flags": {
+        "convertedElsewhere": {
+          "batch": "tuberculosis",
+          "key": "10-materials-poster"
+        }
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "21-video-dengue-village-chief",
+      "file": "21-video-dengue-village-chief.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/ListContent/44k4KHKf48A57gNpJRnnj3?uaid=VQRmxBAVBgtS5ytV4SMyZ0",
+        "title": "里長帶頭巡倒清刷：社區防登革熱篇",
+        "category": "宣導素材／多媒體／影片／里長帶頭巡倒清刷：社區防登革熱篇",
+        "publishedAt": "2026-07-15",
+        "updatedAt": "2026-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "宣導素材",
+          "多媒體",
+          "影片",
+          "里長帶頭巡倒清刷：社區防登革熱篇"
+        ],
+        "tab": ""
+      },
+      "pattern": "listcontent",
+      "kind": "media",
+      "type": "media",
+      "manifestKey": "video-dengue-village-chief",
+      "manifestDerived": false,
+      "target": "media.dengue-village-chief",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "media.dengue-village-chief"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "宣導素材",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "media.dengue-village-chief",
+          "type": "media",
+          "role": "draft",
+          "file": "content/media/dengue-village-chief.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 12 處（mso 樣式 4、Mso 類別 4、命名空間標籤 4）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "素材的權責單位依疾病主檔取 unit.acute-infectious（登革熱），不歸宣導素材欄目的公關室"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 media（media.dengue-village-chief），草稿直接建成 media，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "模擬匯出的影片 id 為示意值"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "22-video-rabies-pets",
+      "file": "22-video-rabies-pets.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/ListContent/44k4KHKf48A57gNpJRnnj3?uaid=laU0p6BaBsID7VGsQ3zBHj",
+        "title": "寵物打狂犬病疫苗：守護家人也守護毛孩（影片）",
+        "category": "宣導素材／多媒體／影片／寵物打狂犬病疫苗：守護家人也守護毛孩（影片）",
+        "publishedAt": "2026-08-20",
+        "updatedAt": "2026-08-20",
+        "breadcrumbs": [
+          "首頁",
+          "宣導素材",
+          "多媒體",
+          "影片",
+          "寵物打狂犬病疫苗：守護家人也守護毛孩（影片）"
+        ],
+        "tab": ""
+      },
+      "pattern": "listcontent",
+      "kind": "media",
+      "type": "media",
+      "manifestKey": "video-rabies-pets",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "宣導素材",
+      "diseases": [
+        "disease.rabies"
+      ],
+      "outputs": [
+        {
+          "id": "media.rabies-video-rabies-pets",
+          "type": "media",
+          "role": "draft",
+          "file": "content/media/rabies-video-rabies-pets.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "素材的權責單位依疾病主檔取 unit.acute-infectious（狂犬病），不歸宣導素材欄目的公關室"
+        },
+        {
+          "code": "type-from-category",
+          "severity": "info",
+          "message": "素材頁的標題有「影片」，草稿建成 media（mediaType video）"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（27 字，低於 40）"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "media 的欄位從舊頁看不出來，以「（待補）」佔位：transcriptMarkdown"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "模擬匯出的影片 id 為示意值"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "23-video-tb-cough",
+      "file": "23-video-tb-cough.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/dLJ7UFpx2F-K6hTsKuUoSK",
+        "title": "宣導素材：咳嗽兩週快去照胸部 X 光（影片）",
+        "category": "結核病／宣導素材",
+        "publishedAt": "2024-03-24",
+        "updatedAt": "2026-03-24",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "宣導素材",
+          "影音"
+        ],
+        "tab": "video"
+      },
+      "pattern": "mpage",
+      "kind": "media",
+      "type": "media",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [
+        "media.tb-cough-two-weeks"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／宣導素材",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "media.tb-cough-two-weeks",
+          "type": "media",
+          "role": "duplicate",
+          "duplicateOf": "tuberculosis/11-materials-video"
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 10 處（mso 樣式 4、Mso 類別 3、命名空間標籤 3）"
+        },
+        {
+          "code": "converted-elsewhere",
+          "severity": "info",
+          "message": "同網址的頁已在 tuberculosis 批（11-materials-video）轉過，草稿 media.tb-cough-two-weeks；本批不重複出草稿，內容若有更新請在該批重跑"
+        }
+      ],
+      "action": "skip-duplicate",
+      "flags": {
+        "convertedElsewhere": {
+          "batch": "tuberculosis",
+          "key": "11-materials-video"
+        }
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "24-video-tb-migrant",
+      "file": "24-video-tb-migrant.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/vONM9MVB6T0IMaoT_2kYS6",
+        "title": "宣導素材：移工健康檢查（影片）",
+        "category": "結核病／宣導素材",
+        "publishedAt": "2024-06-18",
+        "updatedAt": "2026-03-24",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "宣導素材",
+          "影音"
+        ],
+        "tab": "migrant-video"
+      },
+      "pattern": "mpage",
+      "kind": "media",
+      "type": "media",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [
+        "media.migrant-worker-health-check"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／宣導素材",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "media.migrant-worker-health-check",
+          "type": "media",
+          "role": "duplicate",
+          "duplicateOf": "tuberculosis/12-materials-migrant"
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 7 處（mso 樣式 3、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "converted-elsewhere",
+          "severity": "info",
+          "message": "同網址的頁已在 tuberculosis 批（12-materials-migrant）轉過，草稿 media.migrant-worker-health-check；本批不重複出草稿，內容若有更新請在該批重跑"
+        }
+      ],
+      "action": "skip-duplicate",
+      "flags": {
+        "convertedElsewhere": {
+          "batch": "tuberculosis",
+          "key": "12-materials-migrant"
+        }
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    }
+  ],
+  "drafts": [
+    {
+      "id": "media.enterovirus-handwashing",
+      "type": "media",
+      "title": "濕搓沖捧擦：腸病毒洗手五步驟動畫",
+      "file": "content/media/enterovirus-handwashing.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "media.enterovirus-handwashing"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "01-animation-ev-handwashing"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.x-commercial-media-table",
+      "type": "page",
+      "title": "防疫衛教宣導之商業媒體運用情形一覽表",
+      "file": "content/pages/x-commercial-media-table.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "02-commercial-media-table"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.x-e-learning",
+      "type": "page",
+      "title": "數位學習課程",
+      "file": "content/pages/x-e-learning.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "03-e-learning"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.x-fb-1922",
+      "type": "page",
+      "title": "1922 防疫達人（Facebook／LINE）",
+      "file": "content/pages/x-fb-1922.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "04-fb-1922"
+      ],
+      "merged": false
+    },
+    {
+      "id": "publication.mpox-infographic-mpox",
+      "type": "publication",
+      "title": "M痘防治懶人包（社群圖卡）",
+      "file": "content/publications/mpox-infographic-mpox.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 4,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "05-infographic-mpox"
+      ],
+      "merged": false
+    },
+    {
+      "id": "publication.enterovirus-leaflet-ev-handwashing",
+      "type": "publication",
+      "title": "腸病毒洗手五步驟單張",
+      "file": "content/publications/enterovirus-leaflet-ev-handwashing.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "06-leaflet-ev-handwashing"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.x-list-leaflets",
+      "type": "page",
+      "title": "單張",
+      "file": "content/pages/x-list-leaflets.json",
+      "confidence": 0.4,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "07-list-leaflets"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.x-list-manuals",
+      "type": "page",
+      "title": "手冊",
+      "file": "content/pages/x-list-manuals.json",
+      "confidence": 0.4,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "08-list-manuals"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.x-list-materials",
+      "type": "page",
+      "title": "宣導素材",
+      "file": "content/pages/x-list-materials.json",
+      "confidence": 0.6,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "09-list-materials"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.x-list-multimedia",
+      "type": "page",
+      "title": "多媒體",
+      "file": "content/pages/x-list-multimedia.json",
+      "confidence": 0.6,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-list-multimedia"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.x-list-posters",
+      "type": "page",
+      "title": "海報",
+      "file": "content/pages/x-list-posters.json",
+      "confidence": 0.6,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "11-list-posters"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.x-list-videos",
+      "type": "page",
+      "title": "影片",
+      "file": "content/pages/x-list-videos.json",
+      "confidence": 0.4,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "12-list-videos"
+      ],
+      "merged": false
+    },
+    {
+      "id": "publication.manual-ltc-infection-control-2026",
+      "type": "publication",
+      "title": "長照機構感染管制手冊（宣導版）",
+      "file": "content/publications/manual-ltc-infection-control-2026.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "publication.manual-ltc-infection-control-2026"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "13-manual-ltc-ic-public"
+      ],
+      "merged": false
+    },
+    {
+      "id": "dataset.health-education-materials",
+      "type": "dataset",
+      "title": "多國語言衛教素材",
+      "file": "content/datasets/health-education-materials.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "dataset.health-education-materials"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 8,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "14-multilingual-materials"
+      ],
+      "merged": false
+    },
+    {
+      "id": "media.amr-one-health-podcast",
+      "type": "media",
+      "title": "Podcast｜抗生素不是萬靈丹：談抗藥性與防疫一體",
+      "file": "content/media/amr-one-health-podcast.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "media.amr-one-health-podcast"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "15-podcast-amr"
+      ],
+      "merged": false
+    },
+    {
+      "id": "publication.covid-19-poster-covid-new-life-2021",
+      "type": "publication",
+      "title": "新冠併發重症防疫新生活運動海報（COVID-19）",
+      "file": "content/publications/covid-19-poster-covid-new-life-2021.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 3,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "16-poster-covid-new-life-2021"
+      ],
+      "merged": false
+    },
+    {
+      "id": "publication.dengue-poster-dengue-patrol-series",
+      "type": "publication",
+      "title": "登革熱「巡、倒、清、刷」海報系列",
+      "file": "content/publications/dengue-poster-dengue-patrol-series.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 7,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "17-poster-dengue-patrol-series"
+      ],
+      "merged": false
+    },
+    {
+      "id": "publication.influenza-poster-flu-vaccine-7lang",
+      "type": "publication",
+      "title": "流感疫苗接種宣導海報（七語）",
+      "file": "content/publications/influenza-poster-flu-vaccine-7lang.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 8,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "18-poster-flu-vaccine-7lang"
+      ],
+      "merged": false
+    },
+    {
+      "id": "publication.measles-poster-measles-2019",
+      "type": "publication",
+      "title": "麻疹防治宣導海報（2019 年版）",
+      "file": "content/publications/measles-poster-measles-2019.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 2,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "19-poster-measles-2019"
+      ],
+      "merged": false
+    },
+    {
+      "id": "media.dengue-village-chief",
+      "type": "media",
+      "title": "里長帶頭巡倒清刷：社區防登革熱篇",
+      "file": "content/media/dengue-village-chief.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "media.dengue-village-chief"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "21-video-dengue-village-chief"
+      ],
+      "merged": false
+    },
+    {
+      "id": "media.rabies-video-rabies-pets",
+      "type": "media",
+      "title": "寵物打狂犬病疫苗：守護家人也守護毛孩（影片）",
+      "file": "content/media/rabies-video-rabies-pets.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "22-video-rabies-pets"
+      ],
+      "merged": false
+    }
+  ],
+  "sampling": {
+    "rate": 0.1,
+    "autoOk": 0,
+    "picked": []
+  },
+  "migration": {
+    "patchFile": "migration-patch.json",
+    "applied": true,
+    "summary": {
+      "derivedItems": 0,
+      "derivedMatched": 0,
+      "items": 21,
+      "matched": 21,
+      "missingPages": 0,
+      "unmatchedPages": 3,
+      "agree": 21,
+      "conflicts": 0,
+      "statusChanges": 0,
+      "pendingToMigrated": 0,
+      "targetChanges": 0,
+      "newPathChanges": 0,
+      "noteChanges": 21,
+      "stillPending": 10
+    },
+    "file": "content/migration/materials.json",
+    "statusChanges": [],
+    "targetChanges": [],
+    "newPathChanges": [],
+    "noteChanges": 21
+  }
+}
