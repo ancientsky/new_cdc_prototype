@@ -873,6 +873,7 @@ node scripts/analyze-404-log.mjs access.log --map dist/v1/legacy-map.json --migr
 ### 19.5 單位介紹頁（權責單位可點）
 
 - 全站每個「權責單位」現在都是連結，連到 `/about/units/{單位}/`：簡介、主要業務、該單位在本站維護的全部內容、聯絡。
-- 簡介是原型撰寫、標「尚待該單位確認」；「官網（現行網站）介紹頁」網址待補。各單位 Steward 確認後，在 `content/master/units.json` 把 `intro`／`officialUrl` 改正確、`introVerified`／`officialUrlVerified` 改 `true`（走 PR；內容清單是自動算的，不必改）。
+- 簡介是原型撰寫、標「尚待該單位確認」；主要業務依處務規程整理（待逐字核對）。右側連到現行官網的「組織與職掌」與另一頁單位介紹（現行官網沒有各單位獨立網址）。各單位 Steward 確認後，在 `content/master/units.json` 把 `intro` 改正確、`introVerified` 改 `true`（走 PR；內容清單是自動算的，不必改）。
+- 單位改名（例如組織調整）只改 `units.json` 的 `name`，全站自動跟著改，因為內容檔只存單位 id。
 
 **資訊室備忘：** 角色、頁面規則、示範帳號與 session 規則在 `src/client/admin/auth-rules.js`（純函式，Node 與瀏覽器共用）；進頁閘門在 `src/client/admin/common.js` 開頭；登入頁 `src/templates/admin/login.mjs` ＋ `src/client/admin/login.js`；單位頁模板 `src/templates/public/units.mjs`，連結元件 `unitLink`（`src/templates/public/_partials.mjs`）。測試 `tests/round18-ui.test.mjs`。

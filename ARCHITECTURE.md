@@ -899,4 +899,6 @@ manualStatus?: enum[cancelled, failed（流標）], award?: { date, winner, amou
 - `content/master/units.json` 新欄位（schema `schemas/master.json`）：`slug`、`intro`、`introEn`、`introVerified`、`duties[]`、`officialUrl`（null 待補）、`officialUrlVerified`。原型撰寫的簡介一律 `introVerified: false`，頁面顯示「尚待該單位確認」。
 - `src/templates/public/units.mjs`：`pages()` 對每個單位出 zh-TW 與 en 兩頁（`UNIT_PAGE_LANGS`）＋ `.md`；`unitContent(site, unitId)` 列該單位 `owner` 或 `hiringUnit` 的已發布內容，依型別分組、每型最多 8 筆；JSON-LD `GovernmentOrganization`。
 - `_partials.mjs`：`unitPath(u)` → `/about/units/{slug}/`；`unitLink(ctx, id)` 輸出 `<a class="c-unitlink">`，非中英語言連英文版並加 `hreflang="en"`，找不到單位退回純文字。**所有權責單位欄位（provenance、publisher 提示、公告 meta、申請／宣導／影音／研究／文件 dl、招募用人單位、關於與聯絡頁）一律用 `unitLink`，不要只放 `unitName`**；`unitName` 保留給屬性值、`.md` 與 JSON-LD。組織圖單位卡的名稱也連到單位頁；聯絡頁單位表改連單位頁（原本連 `/about/#u-*` 錨點）。
+- 現行官網：`units.mjs` 的 `OFFICIAL_ORG_PAGES`（組織與職掌、另一頁單位介紹，Yulun 提供）。現行官網沒有各單位獨立網址，所有單位 `officialUrl` 指向組織與職掌頁、`officialUrlVerified: true`；單位頁側欄與 `/about/` 組織圖下方（`.c-org__official`）列出兩頁。`duties` 依處務規程，`dutiesSource` 註明出處。
+- 主檔修正：`unit.preparedness` 名稱改為「新興傳染病整備組」；新增 `unit.ai-office`（AI 推動辦公室，任務編組，`publishes: false`）。
 - CSS：`.c-unitlink`、`.c-unitpage*`（`components.css`）；`.adm-login__*`、`.adm-who__*`、`.adm-denied`（`admin.css`）。

@@ -2,6 +2,11 @@
 // 全站每個「權責單位」欄位（_partials.unitLink）都連到這裡，讀者點一下就知道這一頁是誰在維護、該單位還管哪些事。
 // 只出 zh-TW 與 en（主檔只有中英文簡介）；其他語言的頁面以 hreflang 連到英文版。
 import { html } from '../../../scripts/lib/render.mjs';
+/** 現行官網的組織介紹頁（Yulun 提供，2026-10-05）。官網沒有各單位獨立網址，全署單位同一頁 */
+export const OFFICIAL_ORG_PAGES = [
+  { key: 'org', url: 'https://www.cdc.gov.tw/CdcOrganization/Index/cBX61rWwT5TKpS7BbMzKag' },
+  { key: 'more', url: 'https://www.cdc.gov.tw/Category/Page/b_NCRMZiFLmXGmwIIY334w' },
+];
 import { pageHead, feedback, breadcrumbLd, hrefFor, isFallbackLink, L, unitPath, UNIT_PAGE_LANGS, ownerStats, pill } from './_partials.mjs';
 
 const CONTENT_TYPES = ['disease', 'vaccine', 'faq', 'news', 'letter', 'clarification', 'document', 'dataset', 'media', 'topic', 'service', 'publication', 'labtest', 'research', 'job', 'tender', 'banner', 'page'];
@@ -44,7 +49,7 @@ export function render(ctx, { unit: u }) {
     <p>${uIntro(ctx, u) ?? ''}</p>
     ${u.introVerified === false ? html`<p class="c-unitpage__unverified muted">${t('unit.page.unverified')}</p>` : ''}
   </section>
-  ${u.duties?.length ? html`<section class="c-block" id="duties" aria-labelledby="h-duties"><h2 id="h-duties">${t('unit.page.duties')}</h2><ul class="c-unitpage__duties">${u.duties.map((d) => html`<li>${d}</li>`)}</ul></section>` : ''}
+  ${u.duties?.length ? html`<section class="c-block" id="duties" aria-labelledby="h-duties"><h2 id="h-duties">${t('unit.page.duties')}</h2><ul class="c-unitpage__duties">${u.duties.map((d) => html`<li>${d}</li>`)}</ul>${u.dutiesSource ? html`<p class="muted c-unitpage__src">${t('unit.page.duties.src', { src: u.dutiesSource })}</p>` : ''}</section>` : ''}
   <section class="c-block" id="content" aria-labelledby="h-content"><h2 id="h-content">${t('unit.page.content')}</h2>
     ${groups.length ? html`<p class="muted">${t('unit.page.stats', { content: st.content, wl: st.whitelist, latest: st.latest ? fmtDate(st.latest) : '—' })}</p>
     ${groups.map((g) => html`<h3>${t(`type.${g.type}`)} <span class="c-pill c-pill--neutral">${g.items.length}</span></h3>
@@ -53,12 +58,13 @@ export function render(ctx, { unit: u }) {
   </section>
 </article>
 <aside class="c-unitpage__aside">
-  <section class="c-aside-card"><h2>${t('unit.page.kind')}</h2>
+  <section class="c-aside-card"><h2>${t('unit.page.facts')}</h2>
     <dl class="c-kv"><div><dt>${t('unit.page.kind')}</dt><dd>${t(`about.org.${u.kind}`)}</dd></div>
     ${u.stewardTitle ? html`<div><dt>${t('unit.page.steward')}</dt><dd>${u.stewardTitle}</dd></div>` : ''}
     <div><dt>ID</dt><dd><code>${u.id}</code></dd></div></dl></section>
   <section class="c-aside-card"><h2>${t('unit.page.official')}</h2>
-    ${u.officialUrl ? html`<p><a href="${u.officialUrl}" rel="external noopener">${u.officialUrl}</a>${u.officialUrlVerified === false ? html` <span class="c-pill c-pill--warn">unverified</span>` : ''}</p>` : html`<p class="muted">${t('unit.page.official.pending')}</p>`}</section>
+    ${u.officialUrl ? html`<ul class="c-linklist">${OFFICIAL_ORG_PAGES.map((p) => html`<li><a href="${p.url === OFFICIAL_ORG_PAGES[0].url ? u.officialUrl : p.url}" rel="external noopener" lang="zh-TW">${t(`unit.page.official.${p.key}`)}</a>${p.key === 'org' && u.officialUrlVerified === false ? html` <span class="c-pill c-pill--warn">unverified</span>` : ''}</li>`)}</ul>
+    <p class="muted c-unitpage__src">${t('unit.page.official.note')}</p>` : html`<p class="muted">${t('unit.page.official.pending')}</p>`}</section>
   <section class="c-aside-card"><h2>${t('unit.page.contact')}</h2><p>${t('unit.page.contact.text')}</p><p><a class="c-btn c-btn--sm c-btn--ghost" href="${url('/contact/')}">${t('contact.title')} →</a></p></section>
   <p><a href="${url('/about/')}#${u.id.replace('unit.', 'u-')}">← ${t('unit.page.back')}</a></p>
 </aside>
@@ -71,10 +77,10 @@ export function markdown(ctx, { unit: u }) {
   const lines = [`# ${u.name}${u.nameEn ? `（${u.nameEn}）` : ''}`, '', `> ID：${u.id} · 類別：${ctx.t(`about.org.${u.kind}`)}${u.stewardTitle ? ` · Steward：${u.stewardTitle}` : ''} · 負責內容 ${st.content} 項、白名單 ${st.whitelist} 項`, ''];
   if (u.intro) lines.push(u.intro, '');
   if (u.introVerified === false) lines.push('> 簡介為原型撰寫，尚待該單位確認。', '');
-  if (u.duties?.length) lines.push('## 主要業務', '', ...u.duties.map((d) => `- ${d}`), '');
+  if (u.duties?.length) lines.push('## 主要業務', '', ...u.duties.map((d) => `- ${d}`), ...(u.dutiesSource ? ['', `出處：${u.dutiesSource}`] : []), '');
   const groups = unitContent(ctx.site, u.id);
   if (groups.length) { lines.push('## 在本網站負責維護的內容', ''); for (const g of groups) lines.push(`### ${ctx.t(`type.${g.type}`)}（${g.items.length}）`, '', ...g.items.map((i) => `- ${i.title}（${i.id}）`), ''); }
-  lines.push('## 官網介紹頁', '', u.officialUrl ? `${u.officialUrl}${u.officialUrlVerified === false ? '（未驗證）' : ''}` : '待權責單位補上（原型開發環境無法連到 cdc.gov.tw 確認）。', '');
+  lines.push('## 現行官網', '', ...(u.officialUrl ? [`- 組織與職掌：${u.officialUrl}`, `- 單位介紹（另一頁）：${OFFICIAL_ORG_PAGES[1].url}`, '', '現行官網沒有各單位獨立的介紹網址，所有單位在同一頁。'] : ['待權責單位補上。']), '');
   return lines.join('\n');
 }
 

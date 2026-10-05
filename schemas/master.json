@@ -21,7 +21,9 @@
         "introVerified": { "type": "boolean" },
         "duties": { "type": "array", "items": { "type": "string" } },
         "officialUrl": { "type": ["string", "null"], "description": "cdc.gov.tw 上的單位介紹頁；開發環境無法確認，先留 null" },
-        "officialUrlVerified": { "type": "boolean" }
+        "officialUrlVerified": { "type": "boolean" },
+        "officialUrlNote": { "type": "string" },
+        "dutiesSource": { "type": "string", "description": "主要業務的出處（例：處務規程）" }
       }
     },
     "diseaseMaster": {
