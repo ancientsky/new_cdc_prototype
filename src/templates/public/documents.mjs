@@ -10,6 +10,16 @@ export function familyOf(site, d) {
   return [...list].filter((x) => x.status !== 'draft').sort((a, b) => String(b.effectiveAt).localeCompare(String(a.effectiveAt)));
 }
 const currentOf = (site, d) => familyOf(site, d).find((x) => x.isCurrent) ?? d;
+// 第十九輪：PDF 轉來的段落有獨立一行的頁碼標記 〔p.N〕→ 頁碼錨點 #page-N（答案引擎引用連到這裡）。
+// 同一頁跨兩個章節時只有第一次出現給 id，避免重複 id。
+function pageAnchors(markdown, seen) {
+  return String(markdown ?? '').replace(/^〔p\.(\d+)〕$/gm, (_, n) => {
+    const id = seen.has(n) ? '' : ` id="page-${n}"`;
+    seen.add(n);
+    return `<p class="c-pagemark"${id}><span>第 ${n} 頁</span></p>`;
+  });
+}
+
 const ROLES = ['physician', 'nurse', 'infection-control', 'lab', 'local-health'];
 
 export function meta(ctx, props = {}) {
@@ -56,6 +66,7 @@ function detail(ctx, d) {
   const langStatus = d.languages?.[lang]?.status;
   const changes = d.changes ?? [];
   const sections = d.sections ?? [];
+  const seenPages = new Set();
   return html`${breadcrumb(ctx, [{ label: t('nav.documents'), href: '/documents/' }, { label: L(ctx, d, 'title') }])}
 <article class="c-article" data-family="${d.family}">
   ${old ? alertBox('superseded', html`<strong class="c-alert__t">${t('alert.superseded.t')}</strong> ${t('doc.superseded', { v: d.version, cur: cur.version, date: fmtDate(cur.effectiveAt) })} <a class="c-alert__go" href="${hrefFor(ctx, cur)}">${t('doc.gocurrent')} →</a>`) : ''}
@@ -86,7 +97,7 @@ function detail(ctx, d) {
     <div class="c-cols__main">
       ${changes.length ? html`<section class="c-block" id="changes"><h2>${t('documents.changes')}</h2><div class="c-tablewrap"><table class="c-table c-table--changes"><caption class="sr-only">${t('documents.changes')}</caption><thead><tr><th scope="col">${t('documents.section')}</th><th scope="col">${t('documents.before')}</th><th scope="col">${t('documents.after')}</th></tr></thead><tbody>
         ${changes.map((c) => html`<tr class="c-change c-change--${c.kind ?? 'changed'}"><th scope="row">${c.section} <span class="c-change__kind">${t(`documents.kind.${c.kind ?? 'changed'}`)}</span></th><td>${c.before ? html`<del>${c.before}</del>` : html`<span class="muted">—</span>`}</td><td>${c.after ? html`<ins>${c.after}</ins>` : html`<span class="muted">—</span>`}</td></tr>`)}</tbody></table></div></section>` : ''}
-      ${sections.length ? sections.map((s) => html`<section class="c-block" id="s-${s.key}"><h2>${s.heading}</h2>${raw(md(s.markdown))}</section>`) : (d.machineReadableMarkdown ? html`<section class="c-block"><div class="c-prose">${raw(md(d.machineReadableMarkdown))}</div></section>` : '')}
+      ${sections.length ? sections.map((s) => html`<section class="c-block${s.level === 3 ? ' c-block--sub' : ''}" id="s-${s.key}">${s.level === 3 ? html`<h3>${s.heading}</h3>` : html`<h2>${s.heading}</h2>`}${raw(md(pageAnchors(s.markdown, seenPages)))}</section>`) : (d.machineReadableMarkdown ? html`<section class="c-block"><div class="c-prose">${raw(md(d.machineReadableMarkdown))}</div></section>` : '')}
       <section class="c-block" id="chain"><h2>${t('documents.chain')}</h2>
         <ol class="c-timeline c-timeline--chain">${chain.map((v) => html`<li class="${v.isCurrent ? 'is-current' : ''}${v.id === d.id ? ' is-here' : ''}"><time datetime="${v.effectiveAt}">${fmtDate(v.effectiveAt)}</time> <a href="${hrefFor(ctx, v)}">${v.version}</a> ${v.isCurrent ? pill(t('prov.current'), 'ok') : pill(t('documents.expired'), 'neutral')}${v.id === d.id ? html` <span class="muted">← ${t('documents.here')}</span>` : ''}${v.supersedes ? '' : html` <span class="muted">${t('documents.first')}</span>`}</li>`)}</ol>
       </section>

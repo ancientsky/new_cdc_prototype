@@ -17,7 +17,7 @@ const CATEGORY_LABEL = {
   fact: '事實題', version: '版本題', refusal: '拒答題', situation: '態勢題', rumor: '謠言查證', stats: '統計題', professional: '專業題', travel: '旅遊題', vaccine: '疫苗題', symptoms: '症狀題', multilingual: '多語題', 'prompt-injection': '提示注入', pii: '個資遮蔽', adversarial: '紅隊題',
 };
 const REASON_LABEL = {
-  'not-requested': '未申請進入白名單', 'not-published': '尚未發布', sensitivity: '敏感度非公開', 'type-not-allowed': '型別未獲准', overdue: '逾期未審閱', superseded: '已被新版取代', 'based-on-revised': '依據正本已修訂', 'reverse-audit': '反向稽核命中',
+  'not-requested': '未申請進入白名單', 'not-published': '尚未發布', sensitivity: '敏感度非公開', 'type-not-allowed': '型別未獲准', overdue: '逾期未審閱', superseded: '已被新版取代', 'based-on-revised': '依據正本已修訂', 'reverse-audit': '反向稽核命中', 'pdf-unreviewed': 'PDF 機讀版未校對',
 };
 
 const num = (v) => (typeof v === 'number' && Number.isFinite(v) ? v : null);

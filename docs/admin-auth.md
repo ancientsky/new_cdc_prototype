@@ -104,6 +104,6 @@ IdP 回傳 id_token（OIDC）：sub（員編）、name、groups（AD 群組）�
 - 主檔新欄位：`slug`、`intro`／`introEn`（簡介）、`duties`（主要業務）＋ `dutiesSource`（出處）、`officialUrl`（現行官網介紹頁）＋ `officialUrlNote`。簡介是原型撰寫，標 `introVerified: false`，頁面顯示「尚待該單位確認」；各單位確認後改 `true`（走 PR）。
 - **現行官網連結**：Yulun 提供兩個現行官網頁面（2026-10-05）：「組織與職掌」<https://www.cdc.gov.tw/CdcOrganization/Index/cBX61rWwT5TKpS7BbMzKag> 與另一頁單位介紹 <https://www.cdc.gov.tw/Category/Page/b_NCRMZiFLmXGmwIIY334w>。**現行官網沒有各單位獨立網址，所有單位在同一頁**，所以每個單位的 `officialUrl` 都指向「組織與職掌」頁，單位頁與組織圖下方同時列出兩頁（常數 `OFFICIAL_ORG_PAGES`，`units.mjs`）。新站則一個單位一頁，可以直接連結、被搜尋、被 AI 引用；這是新站比舊站好的地方之一。
 - **主要業務改用處務規程用語**：`duties` 依《衛生福利部疾病管制署處務規程》的掌理事項整理（開發環境連不到官網與全國法規資料庫，依搜尋摘錄，`dutiesSource` 註明待逐字核對）。這樣比原型自己寫的描述好：用語與法規一致，日後法規修正時有明確的比對依據。
-- **順帶修正的主檔錯誤**：「整備應變組」改為官網正式名稱「新興傳染病整備組」（id `unit.preparedness` 不變，所有內容自動跟著改名；內容檔中的文字也一併替換）；預防醫學辦公室的職掌改為實際的「防疫醫師與流行病學人才培訓、旅遊醫學諮詢、特殊傳染病調查與用藥審查」；新增官網列出、原型原本沒有的任務編組「AI 推動辦公室」（`unit.ai-office`，暫不擁有內容）。原型的 OASIS 是規劃文件的構想單位，和 AI 推動辦公室的實際分工待確認。
+- **順帶修正的主檔錯誤**：「整備應變組」改為官網正式名稱「新興傳染病整備組」（id `unit.preparedness` 不變，所有內容自動跟著改名；內容檔中的文字也一併替換）；預防醫學辦公室的職掌改為實際的「防疫醫師與流行病學人才培訓、旅遊醫學諮詢、特殊傳染病調查與用藥審查」；官網列出的任務編組「AI推動辦公室」就是原型的 OASIS（2026-10-06 Yulun 確認）：主檔沿用 `unit.oasis`，名稱改為「AI推動辦公室」、英文「Office of AI Strategy, Innovation, and Synergy (OASIS)」，第十八輪暫時加的 `unit.ai-office` 已刪除。本文件與後台說明裡的「OASIS」都指這個單位。**為什麼不另開新 id**：所有內容的 `owner`、AI 白名單的 `approvedBy`、測試都已用 `unit.oasis`；改名只動主檔一筆，換 id 會讓幾十個檔案的參照全部要改，又沒有帶來任何資訊。
 - **教訓**：主檔的單位名稱與職掌要以官網或法規為準，不要依印象撰寫；原型第一版把一個組名寫錯，所有頁面的權責單位就跟著錯。改名只改主檔一處，因為內容用的是 `unit.*` id，這正是「名稱放主檔、內容只存 id」的好處。
 - 非中英語言的頁面，權責單位連到英文版單位頁（`hreflang="en"`）。

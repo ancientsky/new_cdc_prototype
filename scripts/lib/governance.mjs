@@ -84,6 +84,7 @@ export const WHITELIST_REASON_LABELS = {
   'based-on-revised': '所依據的正本已修訂，衍生內容尚未更新',
   'predates-basis': '發布日早於現行正本生效日，不作為答案依據（僅保留加註）',
   'reverse-audit': '反向稽核命中與現行正本矛盾的敘述',
+  'pdf-unreviewed': 'PDF 機器轉出的文字尚未經權責單位校對（docs/pdf-ingest.md）',
 };
 
 export const LIFECYCLE_LABELS = {
@@ -120,6 +121,7 @@ export const TODO_KIND_LABELS = {
   'image-license-missing': '圖片授權或來源待確認',
   'asset-orphan': '未宣告的孤兒檔',
   'post-publish-review': '上線後複核',
+  'pdf-unreviewed': 'PDF 機讀版待校對',
 };
 /** 排程發布（publishAt 未到）的生命週期顯示文字（lifecycle 仍為 scheduled，與文件「尚未生效」共用代碼） */
 export const SCHEDULED_PUBLISH_LABEL = '排程中';
@@ -595,6 +597,16 @@ export function applyGovernance(site) {
     if (gov.stale.length) r.push('based-on-revised');
     if (gov.predatesBasis) r.push('predates-basis');
     if (gov.reverseAuditHits.length) r.push('reverse-audit');
+    // 第十九輪：PDF 機器轉出、尚未校對的文件不進白名單（專業版仍可檢索，但來源卡標「未校對，以 PDF 為準」）
+    if (item.derivedFrom && item.derivedFrom.reviewStatus !== 'reviewed') {
+      r.push('pdf-unreviewed');
+      if (item.status === 'published' && !gov.superseded) {
+        const df = item.derivedFrom;
+        const tables = [...(df.tablePages ?? []), ...(df.inlineTablePages ?? [])].sort((a, b) => a - b);
+        addTodo({ id: `pdf-unreviewed:${item.id}`, kind: 'pdf-unreviewed', item, dueAt: addDays(df.extractedAt ?? item.publishedAt ?? today, ASSET_FIX_DAYS), severity: 'medium',
+          text: `「${item.title}」的機讀版由 ${df.file} 機器轉出（${df.extractedAt ?? '日期不明'}），尚未校對：請對照 PDF 原頁抽查章節與條文${tables.length ? `，並把第 ${tables.join('、')} 頁的表格轉成 Markdown 表格` : ''}${df.redTextChanges === 'not-captured' ? '；紅字修訂處抽成文字後已無顏色，請填「本版異動」（changes）' : ''}；完成後把 derivedFrom.reviewStatus 改成 reviewed（guide-staff §20）` });
+      }
+    }
     gov.whitelist.effective = r.length === 0;
     gov.whitelist.reasonLabels = r.map((x) => WHITELIST_REASON_LABELS[x] ?? x);
     gov.whitelist.public = gov.whitelist.effective && gov.whitelist.tier === 'public' && (item.audience ?? []).includes('public');

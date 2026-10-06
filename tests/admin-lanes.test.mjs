@@ -3,7 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as P from '../src/client/admin/preprocess.js';
 
-const NAMES = { 'unit.pr': '公關室', 'unit.oasis': 'OASIS（資料與 AI 組幕僚）' };
+const NAMES = { 'unit.pr': '公關室', 'unit.oasis': 'AI推動辦公室' };
 const NOW = Date.parse('2026-10-04T12:00:00+08:00');
 
 test('normalizeLanes：缺檔或欄位缺漏時用契約預設，三條車道都在', () => {
@@ -28,10 +28,10 @@ test('laneOf：依型別與 urgent 判定車道；urgent 對不允許型別無�
   for (const t of P.TYPES.map((x) => x.value)) assert.ok(['fast', 'standard'].includes(P.laneOf(t).id), `${t} 每個上架型別都有車道`);
 });
 
-test('laneSentence：三句說明；一級內容的審核人含 OASIS', () => {
+test('laneSentence：三句說明；一級內容的審核人含 AI推動辦公室（OASIS）', () => {
   assert.match(P.laneSentence(P.laneOf('news'), 'news', NAMES), /^快車道：送出後約 3 分鐘上線，公關室 24 小時內複核$/);
   assert.match(P.laneSentence(P.laneOf('faq'), 'faq', NAMES), /^一般車道：需 1 位審核（公關室），SLA 2 個工作天$/);
-  assert.match(P.laneSentence(P.laneOf('disease'), 'disease', NAMES), /^一般車道：需 1 位審核（公關室、OASIS），SLA 2 個工作天$/);
+  assert.match(P.laneSentence(P.laneOf('disease'), 'disease', NAMES), /^一般車道：需 1 位審核（公關室、AI推動辦公室），SLA 2 個工作天$/);
   assert.match(P.laneSentence(P.laneOf('news', true), 'news', NAMES), /^緊急發布：立即上線並通知複核/);
 });
 
@@ -81,7 +81,7 @@ test('submitTimeline：快車道自動合併、一般車道等待審核、緊急
   assert.deepEqual(keys(std), ['branch', 'pr', 'ci', 'lane', 'merge', 'deploy', 'preview']);
   const m = std.steps.find((s) => s.key === 'merge');
   assert.equal(m.title, '等待審核'); assert.equal(m.status, 'wait');
-  assert.match(m.detail.join(''), /公關室、OASIS/);
+  assert.match(m.detail.join(''), /公關室、AI推動辦公室/);
   assert.match(std.steps.find((s) => s.key === 'lane').detail[0], /SLA 2 個工作天/);
 
   const em = P.submitTimeline({ ...o, urgent: true }, { names: NAMES, nowMs: NOW });

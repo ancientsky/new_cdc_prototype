@@ -133,11 +133,14 @@ test('每個單位都有介紹頁（zh-TW 與 en），路徑 /about/units/{slug}
   assert.equal(m.jsonLd[0]['@type'], 'GovernmentOrganization');
 });
 
-test('單位名稱與官網一致：新興傳染病整備組（不是整備應變組）；有 AI 推動辦公室與預防醫學辦公室的實際職掌', () => {
+test('單位名稱與官網一致：新興傳染病整備組（不是整備應變組）；AI推動辦公室（OASIS）是同一單位、正式名稱；預防醫學辦公室的實際職掌', () => {
   const names = new Set(site.master.units.map((u) => u.name));
   assert.ok(names.has('新興傳染病整備組'));
   assert.ok(!names.has('整備應變組'));
-  assert.ok(names.has('AI 推動辦公室'));
+  assert.ok(names.has('AI推動辦公室'));
+  assert.equal(site.unitById.get('unit.oasis').nameEn, 'Office of AI Strategy, Innovation, and Synergy (OASIS)');
+  assert.ok(!site.unitById.has('unit.ai-office'), '不再有重複的 AI 推動辦公室');
+  assert.ok(![...names].some((n) => n.includes('資料與 AI 組幕僚')));
   assert.ok(site.unitById.get('unit.preventive-medicine').duties.some((d) => d.includes('防疫醫師')));
   const org = str(about.orgChart(ctxOf()));
   assert.match(org, /c-org__official/);

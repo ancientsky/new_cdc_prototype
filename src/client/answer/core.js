@@ -789,6 +789,7 @@ export function createEngine(rawDeps = {}) {
     return w;
   }
 
+  const MACHINE_TEXT_WEIGHT = 0.7;
   const INTENT_TASK = { symptoms: 'symptoms', vaccine: 'vaccines', travel: 'travel', situation: 'situation', rumor: 'rumor', stats: 'data' };
 
   function poolFor(view, lang) {
@@ -838,6 +839,8 @@ export function createEngine(rawDeps = {}) {
       }
       if (task && (c.tasks ?? []).includes(task)) s *= 1.15;
       if (view === 'pro' && (c.type === 'document' || c.type === 'letter')) s *= 1.3;
+      // 第十九輪：PDF 機器轉出、尚未校對的段落排在已審內容之後（只有它講到時才會被引用；來源卡另標「以 PDF 為準」）
+      if (c.extraction?.reviewStatus === 'machine') s *= MACHINE_TEXT_WEIGHT;
       if (intent !== 'rumor' && c.type === 'clarification') s *= 0.5;
       // 第二輪：意圖 → 型別加權；問句線索（影片、哪一期）→ 型別加權
       if ((intent === 'apply' || intent === 'notify') && c.type === 'service') s = s * 1.8 + 2;
@@ -940,6 +943,7 @@ export function createEngine(rawDeps = {}) {
         if (sen.length > (sen.includes('： ') ? 200 : 140)) s -= 0.6; else if (sen.length < 10) s -= 0.6;
         if (si === 0 && c.type === 'faq') s += 0.3;
         if (view === 'pro' && (c.type === 'document' || c.type === 'letter')) s += 0.5;
+        if (c.extraction?.reviewStatus === 'machine') s -= 0.6; // 未校對的 PDF 文字：同樣講到時讓已審內容先
         if (cov <= 0.05 && covTitle < 0.3 && !(ci === 0 && si === 0)) return;
         // 問句除了病名還有其他關鍵詞時，句子（或其片段標題）至少要命中一個，避免「只因為同一種病」被選入
         if (neToks.length && !neToks.some((t) => toks.has(t) || titleToks.has(t)) && !(ci === 0 && si === 0)) return;
@@ -1015,6 +1019,7 @@ export function createEngine(rawDeps = {}) {
       reviewedAt: c.reviewedAt, nextReviewAt: c.nextReviewAt ?? null, publishedAt: c.publishedAt ?? null, version: c.version ?? null, effectiveAt: c.effectiveAt ?? null,
       isCurrent: c.isCurrent !== false, section: c.section ?? null, family: c.family ?? null, supersedes: c.supersedes ?? null, supersedesVersion: c.supersedesVersion ?? null,
       change: c.change ?? null, license: c.license ?? 'OGDL-1.0', docTitle: c.docTitle ?? null, mdUrl: c.mdUrl ?? null, legacyUrl: c.legacyUrl ?? null,
+      pdfPage: c.pdfPage ?? null, extraction: c.extraction ?? null,
       ...typeExtras(c),
     };
   }
@@ -1070,7 +1075,7 @@ export function createEngine(rawDeps = {}) {
     if (!src || !(src.type === 'document' || src.type === 'letter')) return null;
     const no = src.section?.no;
     const sec = no ? `第 ${no} 條` : src.section?.heading ? `〈${src.section.heading}〉` : '';
-    let s = `依「${src.docTitle ?? src.title}」${sec}`;
+    let s = `依「${src.docTitle ?? src.title}」${sec}${src.pdfPage ? `（第 ${src.pdfPage} 頁）` : ''}`;
     if (src.version || src.effectiveAt) s += `，${src.version ?? ''}${src.effectiveAt ? ` 生效 ${rocDate(src.effectiveAt)}` : ''}`;
     if (src.supersedes) {
       const before = src.change?.before ? `「${src.change.before}」` : '';
@@ -2137,6 +2142,17 @@ function normTravel(t) {
 
 
 /** 句切（中英標點、換行）；索引建置與前端共用 */
+/**
+ * PDF 正本連結：真的 .pdf 檔且已知「封面目錄佔幾頁」（derivedFrom.pdfPageOffset）才加 #page=N，
+ * 瀏覽器內建檢視器會跳到該頁。印刷頁碼 1 通常不是 PDF 第 1 頁，偏移量不明時寧可不跳頁，也不要跳錯頁。
+ */
+export function pdfHref(src) {
+  const u = src.extraction?.pdfUrl;
+  if (!u) return '';
+  const off = src.extraction.pageOffset;
+  return /\.pdf($|[?#])/i.test(u) && src.pdfPage && Number.isInteger(off) ? `${u.replace(/#.*$/, '')}#page=${src.pdfPage + off}` : u;
+}
+
 export function splitPlain(text) {
   return String(text ?? '')
     .split(/(?<=[。！？；])|(?<=[!?;])\s+|(?<=\.)\s+(?=[A-Z0-9(“"'])|\n+/)

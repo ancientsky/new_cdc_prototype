@@ -118,7 +118,7 @@ test('laneForFiles：單檔快車道自動合併；多檔取最嚴格；一級�
   assert.equal(mixed.tier1, true);
   assert.deepEqual(mixed.reviewers, ['unit.pr', 'unit.oasis']);
   assert.deepEqual(mixed.reviewerAccounts, ['ancientsky']);
-  assert.deepEqual(mixed.reviewerNames, ['公關室', 'OASIS（資料與 AI 組幕僚）']);
+  assert.deepEqual(mixed.reviewerNames, ['公關室', 'AI推動辦公室']);
   assert.deepEqual(mixed.files.map((f) => [f.file, f.type, f.lane]), [['content/news/x.json', 'news', 'fast'], ['content/diseases/dengue.json', 'disease', 'standard']]);
   assert.ok(mixed.reasons.some((r) => r.includes('多檔取最嚴格')));
   assert.equal(mixed.postPublishReview, null);

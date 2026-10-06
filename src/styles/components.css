@@ -252,6 +252,10 @@
 .c-toc__pro{margin-top:var(--sp-4);padding:var(--sp-3);background:var(--blue-50);border-radius:var(--radius-sm);font-size:var(--fs-xs);color:var(--ink-2)}
 .c-block{margin-bottom:var(--sp-6);scroll-margin-top:16px}
 .c-block h2{padding-bottom:var(--sp-2);border-bottom:2px solid var(--green-100);display:flex;gap:var(--sp-3);align-items:center;flex-wrap:wrap}
+/* 第十九輪：PDF 轉來的文件 — 小節標題與頁碼標記（#page-N 錨點） */
+.c-block--sub h3{margin-top:0}
+.c-pagemark{margin:var(--sp-3) 0;font-size:.8125rem;color:var(--ink-3);border-top:1px dashed var(--line);scroll-margin-top:16px}
+.c-pagemark span{display:inline-block;padding:0 var(--sp-2);background:var(--white);transform:translateY(-.7em)}
 .c-ifcards{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-3);margin-bottom:var(--sp-4)}
 .c-ifcard{border:1px solid var(--line);border-top:4px solid var(--green-600);border-radius:var(--radius);padding:var(--sp-4);background:#fff}
 .c-ifcard__if{display:block;font-size:var(--fs-xs);color:var(--ink-3)}

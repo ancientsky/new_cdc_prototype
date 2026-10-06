@@ -1,6 +1,7 @@
 // 答案頁元件的 HTML 產生器（字串），答案頁、謠言查證、統計問答共用。全部插值經 esc()。
 // 元件：4 AI 回答標示、5 拒答卡、6 回報與稽核編號、9 數字的來源卡；來源卡（三層露出）、態勢卡、判定 pill。
 import { esc, url, LANG, barChart } from './data.js';
+import { pdfHref } from './core.js';
 
 // ───────── UI 字串（zh-TW／en／vi；其他語言 fallback en） ─────────
 const S = {
@@ -10,7 +11,7 @@ const S = {
     modelExtractive: '模型：抽取式整理，未使用生成模型', modelLlm: '模型：{p} · {m}（BYOK，由你的瀏覽器直接呼叫）', report: '回報錯誤', helpful: '有幫助', auditId: '稽核編號',
     reportH: '回報這則回答', reportKind: '問題類型', reportKinds: ['內容錯誤', '已過時', '不完整', '引用來源不對', '其他'], reportText: '說明（請勿填寫個資）', send: '送出', reportDone: '已收到，承辦單位會依稽核編號查核。',
     owner: '權責單位', reviewed: '最後審閱', current: '現行版', currentYes: '是（現行有效）', currentNo: '否（已被取代）', license: '授權', openOriginal: '開啟原文', machine: '機讀版', version: '版次', effective: '生效日', supersedes: '取代',
-    cite: '引用本頁', cited: '已複製引用', subscribe: '訂閱異動', subscribed: '已訂閱', nextReview: '下次審閱', section: '條次／段落', change: '本段異動', before: '修訂前', after: '修訂後',
+    cite: '引用本頁', cited: '已複製引用', subscribe: '訂閱異動', subscribed: '已訂閱', nextReview: '下次審閱', section: '條次／段落', pdfPage: '頁碼（PDF 印刷頁碼）', extraction: '文字來源', extractionMachine: '由 PDF 機器轉出，尚未人工校對；請以 PDF 原頁為準', extractionReviewed: '由 PDF 轉出，權責單位已校對', openPdf: '開啟 PDF', change: '本段異動', before: '修訂前', after: '修訂後',
     sitH: '現在的疫情', dataDate: '資料日', publisher: '發布', illustrative: '示意資料', statusBasis: '判定依據', seeTrend: '看完整趨勢',
     refusalH: '這個問題我不能替你判斷', why: '為什麼', call1922: '撥打 1922', relatedPages: '相關官方頁面',
     paused: 'AI 問答暫停中，目前提供傳統搜尋結果與 1922 人工諮詢。', pausedReason: '原因', updated: '更新',
@@ -34,7 +35,7 @@ const S = {
     modelExtractive: 'Model: extractive (no generative model used)', modelLlm: 'Model: {p} · {m} (BYOK, called directly from your browser)', report: 'Report an error', helpful: 'Helpful', auditId: 'Audit ID',
     reportH: 'Report this answer', reportKind: 'Type', reportKinds: ['Incorrect', 'Outdated', 'Incomplete', 'Wrong source', 'Other'], reportText: 'Details (no personal data please)', send: 'Send', reportDone: 'Received. The responsible unit will review it using the audit ID.',
     owner: 'Responsible unit', reviewed: 'Last reviewed', current: 'Current version', currentYes: 'Yes', currentNo: 'No (superseded)', license: 'Licence', openOriginal: 'Open original', machine: 'Machine-readable', version: 'Version', effective: 'Effective', supersedes: 'Supersedes',
-    cite: 'Cite this page', cited: 'Citation copied', subscribe: 'Subscribe to changes', subscribed: 'Subscribed', nextReview: 'Next review', section: 'Section', change: 'Change in this section', before: 'Before', after: 'After',
+    cite: 'Cite this page', cited: 'Citation copied', subscribe: 'Subscribe to changes', subscribed: 'Subscribed', nextReview: 'Next review', section: 'Section', pdfPage: 'PDF page', extraction: 'Text source', extractionMachine: 'Machine-extracted from the PDF, not yet proofread; the PDF page prevails', extractionReviewed: 'Extracted from the PDF and proofread by the responsible unit', openPdf: 'Open PDF', change: 'Change in this section', before: 'Before', after: 'After',
     sitH: 'Current situation', dataDate: 'Data as of', publisher: 'Published by', illustrative: 'Illustrative data', statusBasis: 'Basis', seeTrend: 'See full trend',
     refusalH: "I can't make this judgement for you", why: 'Why', call1922: 'Call 1922', relatedPages: 'Related official pages',
     paused: 'AI answers are paused. Keyword search results and the 1922 hotline are available.', pausedReason: 'Reason', updated: 'Updated',
@@ -100,6 +101,8 @@ export function sourceCardBody(src, { pro = false } = {}) {
     add(L('version'), esc(src.version ?? ''));
     add(L('effective'), esc(src.effectiveAt ?? ''));
     if (src.section?.heading) add(L('section'), esc(src.section.no ? `第 ${src.section.no} 條 ${src.section.heading}` : src.section.heading));
+    if (src.pdfPage) add(L('pdfPage'), esc(String(src.pdfPage)));
+    if (src.extraction) add(L('extraction'), src.extraction.reviewStatus === 'reviewed' ? esc(L('extractionReviewed')) : `<span class="c-tag c-tag--warn">${esc(L('extractionMachine'))}</span>`);
     if (src.supersedes) add(L('supersedes'), `${esc(src.supersedesVersion ?? '')} ${link(`/documents/${String(src.supersedes).replace(/^doc\./, '')}/`, src.supersedes)}`);
     if (src.change?.before || src.change?.after) add(L('change'), `${src.change.before ? `<del>${esc(src.change.before)}</del> → ` : ''}<ins>${esc(src.change.after ?? '')}</ins>`);
     if (pro) add(L('nextReview'), esc(src.nextReviewAt ?? ''));
@@ -107,6 +110,7 @@ export function sourceCardBody(src, { pro = false } = {}) {
   const btns = [
     link(src.url, L('openOriginal'), 'c-btn c-btn--sm'),
     src.mdUrl ? link(src.mdUrl, L('machine'), 'c-btn c-btn--sm c-btn--ghost') : '',
+    src.extraction?.pdfUrl ? link(pdfHref(src), L('openPdf'), 'c-btn c-btn--sm c-btn--ghost') : '',
   ];
   if (pro) {
     btns.push(`<button type="button" class="c-btn c-btn--sm c-btn--ghost" data-answer-cite="${esc(src.id)}">${esc(L('cite'))}</button>`);
