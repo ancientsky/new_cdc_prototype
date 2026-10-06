@@ -252,9 +252,9 @@
       "oldType": "page",
       "verified": false,
       "status": "migrated",
-      "target": "doc.guidance-dengue.2026-02",
+      "target": "doc.guidance-dengue.v17",
       "owner": "unit.acute-infectious",
-      "note": "第二十輪：目標改為真的 2026 年 2 月版指引（原型虛構的第 15～17 版已移除，Yulun 2026-10-06 決定）。　現行版；舊頁附件列表含歷版 PDF（v15、v16），轉換時拆成同家族的失效版本草稿，不轉內文。　【匯入 2026-10-03】草稿 doc.guidance-dengue.v17、doc.guidance-dengue.v15、doc.guidance-dengue.v16（信心 1；既有內容已存在，供比對）",
+      "note": "現行版；舊頁附件列表含歷版 PDF（v15、v16），轉換時拆成同家族的失效版本草稿，不轉內文。　【匯入 2026-10-03】草稿 doc.guidance-dengue.v17、doc.guidance-dengue.v15、doc.guidance-dengue.v16（信心 1；既有內容已存在，供比對）",
       "newRequirements": [
         "owner",
         "reviewedAt",

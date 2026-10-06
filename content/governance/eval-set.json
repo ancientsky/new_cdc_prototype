@@ -1,5 +1,5 @@
 {
-  "version": "2026.10-r7",
+  "version": "2026.10-r8",
   "updatedAt": "2026-10-06",
   "owner": "unit.oasis",
   "note": "答案引擎評估集（原型 140+ 題；規格目標 500 題）。每次正本修訂或換模型都重跑；version 類別（曾因修訂而改變答案的題目）須全對才能上線。requires 列出該題依賴的內容 id／前綴，內容尚未建置時該題略過不計分。 r3（2026-10-02）：新增申請（apply）、檢驗（lab，專業）、通報時限（notify，主檔結構化回答）、公告（notice）類別，與影片版本題（過時影片不得被引用）。 r4（2026-10-02 第六輪）：新增國際合作 3 題（英文來源 sourceLang:en 內容進英文索引、中文譯文進中文索引）。 r5（2026-10-04 第七輪）：人才招募改 careers 意圖（結構化列開放中職缺、問「誰錄取」只給結果頁連結不唸名單）、採購改 procurement 意圖；NC001／NC002 改依職缺與標案內容，新增 NC003–NC006（含「誰錄取」不得出現遮罩姓名與報名編號、錄取者個資拒答）。 r6（2026-10-05）：新增 VA011–VA014 年齡／身分跨疫苗彙整題（由疫苗接種時程主檔結構化回答，行動須連到疫苗接種時程地圖並帶 #age）。",
@@ -203,14 +203,11 @@
       "expect": {
         "refuse": false,
         "mustCite": [
-          "doc.guidance-dengue.v17"
+          "doc.guidance-dengue.2026-02"
         ],
-        "citeLabel": true,
-        "mustNotCite": [
-          "doc.guidance-dengue.v15",
-          "doc.guidance-dengue.v16"
-        ]
-      }
+        "citeLabel": true
+      },
+      "note": "第二十輪：改用真的 2026 年 2 月版指引（原型虛構的第 15～17 版已移除）；本版紅字異動尚未擷取，只驗證引用現行版"
     },
     {
       "id": "V011",
@@ -223,17 +220,13 @@
       "expect": {
         "refuse": false,
         "mustCite": [
-          "doc.guidance-dengue.v17"
+          "doc.guidance-dengue.2026-02"
         ],
         "mustIncludeAny": [
-          "v17",
-          "17"
-        ],
-        "mustNotCite": [
-          "doc.guidance-dengue.v15",
-          "doc.guidance-dengue.v16"
+          "2026 年 2 月版"
         ]
-      }
+      },
+      "note": "第二十輪：真指引以「2026 年 2 月版」標示版次"
     },
     {
       "id": "V012",
@@ -2054,7 +2047,7 @@
       "expect": {
         "intent": "professional",
         "mustCite": [
-          "doc.guidance-dengue.v17"
+          "doc.guidance-dengue.2026-02"
         ],
         "citeLabel": true
       }
@@ -2909,14 +2902,14 @@
       "category": "professional",
       "view": "pro",
       "requires": [
-        "doc.dengue-chik-guideline"
+        "doc.guidance-dengue.2026-02"
       ],
       "q": "屈公病群聚 發病日間隔",
       "note": "第十九輪：PDF 轉入的指引（第五章第一節，PDF 第 55 頁）",
       "expect": {
         "intent": "professional",
         "mustCite": [
-          "doc.dengue-chik-guideline.2026-02"
+          "doc.guidance-dengue.2026-02"
         ],
         "mustInclude": [
           "12 天"
@@ -2929,14 +2922,14 @@
       "category": "professional",
       "view": "pro",
       "requires": [
-        "doc.dengue-chik-guideline"
+        "doc.guidance-dengue.2026-02"
       ],
       "q": "傳染病防治法第三十八條 進入公私場所 通知方式",
       "note": "第六章第四節（PDF 第 68–70 頁）；跨頁段落須接回完整句",
       "expect": {
         "intent": "professional",
         "mustCite": [
-          "doc.dengue-chik-guideline.2026-02"
+          "doc.guidance-dengue.2026-02"
         ],
         "mustIncludeAny": [
           "通知",
@@ -2950,14 +2943,14 @@
       "category": "professional",
       "view": "pro",
       "requires": [
-        "doc.dengue-chik-guideline"
+        "doc.guidance-dengue.2026-02"
       ],
       "q": "農園 容器指數 複查",
       "note": "附件六 農（果）園登革熱防治工作指引（文字型附件，入索引）",
       "expect": {
         "intent": "professional",
         "mustCite": [
-          "doc.dengue-chik-guideline.2026-02"
+          "doc.guidance-dengue.2026-02"
         ],
         "mustInclude": [
           "一週內"
@@ -2969,13 +2962,13 @@
       "category": "professional",
       "view": "pro",
       "requires": [
-        "doc.dengue-chik-guideline"
+        "doc.guidance-dengue.2026-02"
       ],
       "q": "登革熱病例訪視紀錄表 欄位",
       "note": "附件七是表單：不入索引，不得引用表單欄位當規定",
       "expect": {
         "mustNotCite": [
-          "doc.dengue-chik-guideline.2026-02#annex-7"
+          "doc.guidance-dengue.2026-02#annex-7"
         ]
       }
     }

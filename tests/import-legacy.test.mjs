@@ -27,6 +27,17 @@ const EXPORT_TB = path.join(ROOT, 'data/legacy-export/tuberculosis');
 const COMMITTED = path.join(ROOT, 'data/legacy-import/tuberculosis');
 const NOW = '2026-10-04T00:00:00.000Z';
 const tmp = (name) => fs.mkdtempSync(path.join(os.tmpdir(), `import-legacy-${name}-`));
+// 已提交批次（登革熱、第六批新聞、第七批指引）是 2026-10-03 對當時新站內容跑的：之後移除的內容（虛構的登革熱指引第 15～17 版與通函、
+// 當時的移轉清單）保留在 data/legacy-export/_retired/，PDF 轉入的新文件（derivedFrom）當時不存在。這裡組回當時的內容目錄，讓批次測試可重現。
+let SNAPSHOT = null;
+function snapshotContent() {
+  if (SNAPSHOT) return SNAPSHOT;
+  const d = path.join(tmp('snapshot'), 'content');
+  fs.cpSync(CONTENT, d, { recursive: true });
+  fs.cpSync(path.join(ROOT, 'data/legacy-export/_retired'), d, { recursive: true });
+  for (const f of fs.readdirSync(path.join(d, 'documents'))) if (JSON.parse(fs.readFileSync(path.join(d, 'documents', f), 'utf8')).derivedFrom) fs.rmSync(path.join(d, 'documents', f));
+  return (SNAPSHOT = d);
+}
 const rules = loadRules();
 const master = readJSON(path.join(CONTENT, 'master/diseases.json'));
 
@@ -585,9 +596,9 @@ test('登革熱模擬匯出（模板驅動）：模板項（扣掉例外已涵�
 test('登革熱批次：全部有輸出且通過 schema；疾病與 owner 不靠規則檔的結核病條目；模板推導項對上；人工例外 8/8；不錯配；清單不寫回推導項', () => {
   const dir = tmp('dengue');
   const mf = path.join(dir, 'dengue.json');
-  fs.copyFileSync(path.join(CONTENT, 'migration/dengue.json'), mf);
+  fs.copyFileSync(path.join(snapshotContent(), 'migration/dengue.json'), mf);
   const out = path.join(dir, 'out');
-  const { report, patch, drafts } = runImport({ exportDir: EXPORT_DENGUE, outDir: out, manifestPath: mf, slug: 'dengue', now: NOW });
+  const { report, patch, drafts } = runImport({ exportDir: EXPORT_DENGUE, outDir: out, manifestPath: mf, slug: 'dengue', now: NOW, contentDir: snapshotContent() });
   const s = report.summary;
   assert.equal(s.pages, 31); assert.equal(s.pagesWithoutOutput, 0); assert.equal(s.schemaInvalid, 0);
   const env = { units: new Set(readJSON(path.join(CONTENT, 'master/units.json')).map((u) => u.id)), diseaseIds: new Set(master.map((d) => d.id)), assetsDir: path.join(out, 'content/assets'), licenses: ['OGDL-1.0', 'CC0-1.0', 'CC-BY-4.0'] };
@@ -623,7 +634,7 @@ test('登革熱批次：全部有輸出且通過 schema；疾病與 owner 不靠
   // 新 id 的前綴是 dengue，不是 x
   assert.ok(!drafts.some((d) => /\.x-/.test(d.id)), '沒有 short 退成 x 的 id');
   assert.ok(s.avgConfidence >= 0.8 && s.needsReview <= 5);
-  assert.deepEqual(JSON.parse(fs.readFileSync(mf, 'utf8')), readJSON(path.join(CONTENT, 'migration/dengue.json')), '沒加 --apply-migration 不改清單');
+  assert.deepEqual(JSON.parse(fs.readFileSync(mf, 'utf8')), readJSON(path.join(snapshotContent(), 'migration/dengue.json')), '沒加 --apply-migration 不改清單');
 });
 
 test('已提交的登革熱批次輸出（data/legacy-import/dengue）：31 頁、schema 全過、清單只多 note、verified 全是 false', () => {
@@ -876,7 +887,7 @@ test('已提交的第五批輸出（狂犬病、瘧疾、A 型肝炎、德國麻
 test('第六批（新聞與公告欄目，無移轉清單）：三級處理——既有新聞比對、近年新聞 auto-ok ＋ 10% 抽樣名單、久遠封存與活動 drop；通函建 letter 且權責歸疾病組；英文稿不自動上線；澄清稿建 clarification', () => {
   const dir = tmp('news');
   const exp = path.join(ROOT, 'data/legacy-export/news');
-  const { report, drafts } = runImport({ exportDir: exp, outDir: path.join(dir, 'out'), manifestPath: path.join(dir, 'news.json'), slug: 'news', now: NOW });
+  const { report, drafts } = runImport({ exportDir: exp, outDir: path.join(dir, 'out'), manifestPath: path.join(dir, 'news.json'), slug: 'news', now: NOW, contentDir: snapshotContent() });
   const s = report.summary;
   assert.equal(report.manifest, null, '新聞批次沒有清單，也不合成（主檔沒有 news 這種疾病）');
   assert.equal(s.pagesWithoutOutput, 0); assert.equal(s.schemaInvalid, 0); assert.equal(s.needsReview, 0);
@@ -930,10 +941,10 @@ test('版次工具：去版次同名、版次排序、民國年與西元日期�
 test('第七批（指引與手冊，欄目清單）：一頁多版拆歷版並沿用既有 id、同名多頁串家族、純 PDF 佔位、歷版封存、生效日從文字抽；一級內容不 auto-ok', () => {
   const dir = tmp('guidelines');
   const mf = path.join(dir, 'guidelines.json');
-  fs.copyFileSync(path.join(CONTENT, 'migration/guidelines.json'), mf);
+  fs.copyFileSync(path.join(snapshotContent(), 'migration/guidelines.json'), mf);
   const exp = path.join(ROOT, 'data/legacy-export/guidelines');
   const out = path.join(dir, 'out');
-  const { report, patch, drafts } = runImport({ exportDir: exp, outDir: out, manifestPath: mf, slug: 'guidelines', now: NOW });
+  const { report, patch, drafts } = runImport({ exportDir: exp, outDir: out, manifestPath: mf, slug: 'guidelines', now: NOW, contentDir: snapshotContent() });
   const s = report.summary;
   assert.equal(s.pages, 26); assert.equal(s.drafts, 32); assert.equal(s.schemaInvalid, 0); assert.equal(s.pagesWithoutOutput, 0);
   assert.equal(report.manifest.extends, null); assert.equal(s.manifest.matched, 26); assert.equal(patch.summary.conflicts, 0);
@@ -979,7 +990,7 @@ test('第七批（指引與手冊，欄目清單）：一頁多版拆歷版並�
   // (7) 總覽列表頁略過，權責 OASIS（首頁／指引及手冊）
   const list = byKey('guidelines-list'); assert.equal(list.action, 'skip-list'); assert.equal(list.owner, 'unit.oasis'); assert.ok(!list.issues.some((i) => i.code === 'unmapped-category'));
   assert.deepEqual(s.byAction, { 'compare-existing': 19, 'review-before-publish': 2, archive: 4, 'skip-list': 1 });
-  assert.deepEqual(JSON.parse(fs.readFileSync(mf, 'utf8')), readJSON(path.join(CONTENT, 'migration/guidelines.json')), '沒加 --apply-migration 不改清單');
+  assert.deepEqual(JSON.parse(fs.readFileSync(mf, 'utf8')), readJSON(path.join(snapshotContent(), 'migration/guidelines.json')), '沒加 --apply-migration 不改清單');
 });
 
 test('已提交的第七批輸出（data/legacy-import/guidelines）：26 頁 32 份草稿、schema 全過、清單 26 筆 verified 全 false、模擬匯出可重現', () => {

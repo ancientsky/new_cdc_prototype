@@ -19,7 +19,12 @@ const NEWS_TYPEID = { press: '9', clarification: '8772', other: '11', letter: '1
 const RECENT_NEWS_MAX = 5;
 const RECENT_YEARS = 3;
 
-const readDir = (d) => (fs.existsSync(d) ? fs.readdirSync(d).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(fs.readFileSync(path.join(d, f), 'utf8'))) : []);
+// 模擬舊站快照（2026-10-03）：已自正式內容移除、但當時舊站上有的項目放在 data/legacy-export/_retired/（第二十輪：虛構的登革熱指引第 15～17 版與其通函）；
+// 快照之後由 PDF 轉入的文件（有 derivedFrom）不屬於舊站，排除
+const RETIRED = path.join(ROOT, 'data/legacy-export/_retired');
+const filesOf = (d) => (fs.existsSync(d) ? fs.readdirSync(d).filter((f) => f.endsWith('.json')).map((f) => [f, path.join(d, f)]) : []);
+const readDir = (d) => [...filesOf(d), ...(d.startsWith(CONTENT) ? filesOf(path.join(RETIRED, path.relative(CONTENT, d))) : [])]
+  .sort((a, b) => (a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0)).map(([, p]) => JSON.parse(fs.readFileSync(p, 'utf8'))).filter((j) => !j.derivedFrom);
 const seed = (s) => parseInt(fakeId(s).replace(/[^0-9]/g, '').slice(0, 6) || '7', 10);
 const firstPara = (md) => String(md ?? '').split(/\n{2,}/).map((x) => x.trim()).filter((x) => x && !/^#{1,6}\s/.test(x))[0] ?? '';
 const stripHeadings = (md) => String(md ?? '').split('\n').filter((l) => !/^#{1,6}\s/.test(l)).join('\n').trim();
@@ -198,7 +203,8 @@ export function generateDisease(diseaseRef, outDir) {
   const tplFile = path.join(CONTENT, 'migration/_disease-template.json');
   const tpl = JSON.parse(fs.readFileSync(tplFile, 'utf8'));
   if (tpl.id !== TEMPLATE_ID) throw new Error(`模板 id 不是 ${TEMPLATE_ID}`);
-  const mfFile = path.join(CONTENT, 'migration', `${dm.slug}.json`);
+  // 舊站快照當時的清單（之後改過目標的放在 _retired/migration/）
+  const mfFile = [path.join(RETIRED, 'migration', `${dm.slug}.json`), path.join(CONTENT, 'migration', `${dm.slug}.json`)].find((f) => fs.existsSync(f)) ?? path.join(CONTENT, 'migration', `${dm.slug}.json`);
   const manual = fs.existsSync(mfFile) ? JSON.parse(fs.readFileSync(mfFile, 'utf8')) : null;
   const manualByKey = new Map((manual?.items ?? []).map((i) => [i.key, i]));
   const omit = new Set(manual?.omit ?? []);

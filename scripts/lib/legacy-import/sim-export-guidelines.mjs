@@ -17,7 +17,11 @@ import { BASE, esc, fakeId, P, H, A, TABLE, mdHtml, pdfText, pdfScan, shell } fr
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
 const CONTENT = path.join(ROOT, 'content');
 export const EXPORTED_AT = '2026-10-03';
-const readAll = (dir) => fs.readdirSync(path.join(CONTENT, dir)).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(fs.readFileSync(path.join(CONTENT, dir, f), 'utf8')));
+// 模擬舊站快照（2026-10-03）：已自正式內容移除、但當時舊站上有的項目放在 data/legacy-export/_retired/（第二十輪：虛構的登革熱指引第 15～17 版與其通函）；
+// 快照之後由 PDF 轉入的文件（有 derivedFrom）不屬於舊站，排除
+const filesOf = (root, dir) => (fs.existsSync(path.join(root, dir)) ? fs.readdirSync(path.join(root, dir)).filter((f) => f.endsWith('.json')).map((f) => [f, path.join(root, dir, f)]) : []);
+const readAll = (dir) => [...filesOf(CONTENT, dir), ...filesOf(path.join(ROOT, 'data/legacy-export/_retired'), dir)]
+  .sort((a, b) => (a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0)).map(([, p]) => JSON.parse(fs.readFileSync(p, 'utf8'))).filter((j) => !j.derivedFrom);
 const UNIT_NAME = { 'unit.acute-infectious': '急性傳染病組', 'unit.chronic-infectious': '慢性傳染病組', 'unit.infection-control': '感染管制及生物安全組', 'unit.lab': '檢驗及疫苗研製中心' };
 const pdfName = (s) => `${String(s).replace(/[^a-z0-9.-]+/gi, '-').toLowerCase().replace(/^-+|-+$/g, '')}.pdf`;
 const seed = (s) => parseInt(fakeId(s).replace(/[^0-9]/g, '').slice(0, 6) || '7', 10);

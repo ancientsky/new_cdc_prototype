@@ -19,7 +19,11 @@ export const EXPORTED_AT = '2026-10-03';
 const TYPEID = { press: '9', letter: '48', clarification: '8772', other: '11', en: '158' };
 const LABEL = { 9: '新聞稿', 48: '致醫界通函', 8772: '澄清稿', 11: '其他訊息', 158: 'Press Releases' };
 
-const readAll = (dir) => fs.readdirSync(path.join(CONTENT, dir)).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(fs.readFileSync(path.join(CONTENT, dir, f), 'utf8')));
+// 模擬舊站快照（2026-10-03）：已自正式內容移除、但當時舊站上有的項目放在 data/legacy-export/_retired/（第二十輪：虛構的登革熱指引第 15～17 版與其通函）；
+// 快照之後由 PDF 轉入的文件（有 derivedFrom）不屬於舊站，排除
+const filesOf = (root, dir) => (fs.existsSync(path.join(root, dir)) ? fs.readdirSync(path.join(root, dir)).filter((f) => f.endsWith('.json')).map((f) => [f, path.join(root, dir, f)]) : []);
+const readAll = (dir) => [...filesOf(CONTENT, dir), ...filesOf(path.join(ROOT, 'data/legacy-export/_retired'), dir)]
+  .sort((a, b) => (a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0)).map(([, p]) => JSON.parse(fs.readFileSync(p, 'utf8'))).filter((j) => !j.derivedFrom);
 const stripImages = (md) => String(md ?? '').replace(/!\[[^\]]*\]\([^)]*\)\n?/g, '');
 const stripHeadings = (md) => String(md ?? '').replace(/^#{1,2}\s+.*$/gm, '').trim();
 const slugOf = (id) => String(id).replace(/^[a-z]+\./, '');

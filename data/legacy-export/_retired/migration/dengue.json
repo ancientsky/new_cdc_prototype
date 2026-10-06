@@ -136,9 +136,9 @@
       "oldUrl": "https://www.cdc.gov.tw/File/Get/{id}#dengue-guidance-v16",
       "oldType": "pdf",
       "verified": false,
-      "status": "merged",
-      "target": "doc.guidance-dengue.2026-02",
-      "note": "原型虛構的第 16 版已移除（第二十輪，Yulun 2026-10-06 決定改用真指引）；舊頁外部連結 301 到現行的 2026 年 2 月版指引。　已由第 17 版取代，舊版保留供查閱（noindex、頁首紅色警示），外部舊連結 301 到現行版。　【匯入 2026-10-03】草稿 doc.guidance-dengue.v16（信心 1；既有內容已存在，供比對）",
+      "status": "archived",
+      "target": "doc.guidance-dengue.v16",
+      "note": "已由第 17 版取代，舊版保留供查閱（noindex、頁首紅色警示），外部舊連結 301 到現行版。　【匯入 2026-10-03】草稿 doc.guidance-dengue.v16（信心 1；既有內容已存在，供比對）",
       "newRequirements": [
         "owner",
         "reviewedAt",
