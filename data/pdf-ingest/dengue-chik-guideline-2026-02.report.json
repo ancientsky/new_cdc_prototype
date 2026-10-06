@@ -1,0 +1,45 @@
+{
+  "input": "data/pdf-ingest/dengue-chik-guideline-2026-02.txt",
+  "sha256": "08c4666c05f13478d810dd7dcd8de68981d84b4c6cc628dee77cf093497b3974",
+  "tool": "text",
+  "pageCount": 114,
+  "sections": 45,
+  "indexedSections": 34,
+  "tablePages": [
+    9,
+    16,
+    17,
+    18,
+    27,
+    82,
+    93,
+    94,
+    98,
+    100,
+    111,
+    112,
+    114
+  ],
+  "inlineTablePages": [
+    4,
+    5
+  ],
+  "formSections": [
+    "annex-3",
+    "annex-4",
+    "annex-5",
+    "annex-7",
+    "annex-8",
+    "annex-9",
+    "annex-10",
+    "annex-11",
+    "annex-12"
+  ],
+  "figureSections": [
+    "annex-2"
+  ],
+  "joinedAcrossPages": 38,
+  "warnings": [
+    "表格頁 13 頁未納入索引：9、16、17、18、27、82、93、94、98、100、111、112、114"
+  ]
+}

@@ -32,7 +32,8 @@ const baseTitle = (t) => t.replace(/[（(][^）)]*(版|年度|修訂)[^）)]*[�
 export function generateGuidelines(outDir) {
   const master = JSON.parse(fs.readFileSync(path.join(CONTENT, 'master/diseases.json'), 'utf8'));
   const dName = (id) => master.find((d) => d.id === id)?.name ?? '';
-  const docs = readAll('documents').filter((d) => d.status === 'published');
+  // 第十九輪起由 PDF 轉入的文件（有 derivedFrom）不屬於第七批模擬匯出的舊站快照，排除以保持匯出可重現
+  const docs = readAll('documents').filter((d) => d.status === 'published' && !d.derivedFrom);
   const fams = new Map();
   for (const d of docs) { if (!fams.has(d.family)) fams.set(d.family, []); fams.get(d.family).push(d); }
   const items = [];

@@ -17,7 +17,34 @@
     "pdfUrl": { "type": "string" },
     "archiveUrl": { "type": "string" },
     "machineReadableMarkdown": { "type": "string" },
-    "sections": { "type": "array", "items": { "type": "object", "required": ["key", "heading", "markdown"], "properties": { "key": { "type": "string" }, "heading": { "type": "string" }, "markdown": { "type": "string" } } } },
+    "sections": { "type": "array", "items": { "type": "object", "required": ["key", "heading", "markdown"], "properties": {
+      "key": { "type": "string" }, "heading": { "type": "string" }, "markdown": { "type": "string", "description": "可含獨立一行的頁碼標記 〔p.N〕（PDF 印刷頁碼；docs/pdf-ingest.md）" },
+      "level": { "enum": [2, 3], "description": "2＝章／附件，3＝節" },
+      "pages": { "type": "array", "items": { "type": "integer", "minimum": 0 }, "minItems": 2, "maxItems": 2, "description": "本段落涵蓋的 PDF 印刷頁碼 [起, 迄]" },
+      "kind": { "enum": ["text", "form", "figure"], "description": "form／figure：表單、範例、地圖，只留標題與頁碼，不入索引" },
+      "index": { "type": "boolean", "description": "false＝不進答案引擎索引（表單、地圖、參考文獻）" }
+    } } },
+    "derivedFrom": {
+      "type": "object",
+      "description": "第十九輪：sections 由 PDF 機器轉出時的來源紀錄（scripts/pdf-to-md.mjs 產生）。reviewStatus＝machine 時不能進 AI 白名單",
+      "required": ["file", "sha256", "reviewStatus"],
+      "properties": {
+        "file": { "type": "string" },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$", "description": "轉換時讀到的檔案雜湊；PDF 換版但機讀版沒重轉時，建置會發現不一致" },
+        "sourceKind": { "enum": ["pdf", "extracted-text"] },
+        "tool": { "type": "string" },
+        "extractedAt": { "type": "string", "format": "date" },
+        "reviewStatus": { "enum": ["machine", "reviewed"] },
+        "reviewedBy": { "type": "string" },
+        "reviewedAt": { "type": "string", "format": "date" },
+        "pdfPageOffset": { "type": ["integer", "null"], "description": "PDF 實體頁＝印刷頁碼＋偏移（封面、目錄的頁數）；用來產生 #page=N 連結" },
+        "tablePages": { "type": "array", "items": { "type": "integer" } },
+        "inlineTablePages": { "type": "array", "items": { "type": "integer" } },
+        "excludedSections": { "type": "array", "items": { "type": "string" } },
+        "redTextChanges": { "enum": ["not-captured", "captured"], "description": "紅字（修訂處）抽成純文字後顏色會消失；captured＝已人工填入 changes[]" },
+        "note": { "type": "string" }
+      }
+    },
     "changes": {
       "type": "array",
       "description": "本版相對前版的異動（給專業專區「查看異動對照」）",

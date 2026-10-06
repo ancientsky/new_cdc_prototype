@@ -900,5 +900,19 @@ manualStatus?: enum[cancelled, failed（流標）], award?: { date, winner, amou
 - `src/templates/public/units.mjs`：`pages()` 對每個單位出 zh-TW 與 en 兩頁（`UNIT_PAGE_LANGS`）＋ `.md`；`unitContent(site, unitId)` 列該單位 `owner` 或 `hiringUnit` 的已發布內容，依型別分組、每型最多 8 筆；JSON-LD `GovernmentOrganization`。
 - `_partials.mjs`：`unitPath(u)` → `/about/units/{slug}/`；`unitLink(ctx, id)` 輸出 `<a class="c-unitlink">`，非中英語言連英文版並加 `hreflang="en"`，找不到單位退回純文字。**所有權責單位欄位（provenance、publisher 提示、公告 meta、申請／宣導／影音／研究／文件 dl、招募用人單位、關於與聯絡頁）一律用 `unitLink`，不要只放 `unitName`**；`unitName` 保留給屬性值、`.md` 與 JSON-LD。組織圖單位卡的名稱也連到單位頁；聯絡頁單位表改連單位頁（原本連 `/about/#u-*` 錨點）。
 - 現行官網：`units.mjs` 的 `OFFICIAL_ORG_PAGES`（組織與職掌、另一頁單位介紹，Yulun 提供）。現行官網沒有各單位獨立網址，所有單位 `officialUrl` 指向組織與職掌頁、`officialUrlVerified: true`；單位頁側欄與 `/about/` 組織圖下方（`.c-org__official`）列出兩頁。`duties` 依處務規程，`dutiesSource` 註明出處。
-- 主檔修正：`unit.preparedness` 名稱改為「新興傳染病整備組」；新增 `unit.ai-office`（AI 推動辦公室，任務編組，`publishes: false`）。
+- 主檔修正：`unit.preparedness` 名稱改為「新興傳染病整備組」；新增 `unit.ai-office`（AI 推動辦公室，任務編組，`publishes: false`）。**第十九輪更正**：AI推動辦公室與原型的 OASIS 是同一單位（Yulun 確認，2026-10-06）——`unit.ai-office` 已刪除，`unit.oasis` 改名「AI推動辦公室」、英文「Office of AI Strategy, Innovation, and Synergy (OASIS)」，id、slug、內容的 `owner` 都不變；文件與介面裡的「OASIS」是它的英文縮寫，照用。
 - CSS：`.c-unitlink`、`.c-unitpage*`（`components.css`）；`.adm-login__*`、`.adm-who__*`、`.adm-denied`（`admin.css`）。
+
+## 22. 第十九輪（2026-10-06）：PDF 機讀版、頁碼引用、AI推動辦公室更名
+
+- `scripts/lib/pdf-text.mjs`（無 import，Node／瀏覽器共用）：`splitPages`（頁碼行須連續、前一行空白或 ≤6 字；`\f` 視同換行）、`isTableLike`（≥15 行且多為 ≤10 字短行）、`isNumericFragment`（≥20 個數字 token 且 >60%）、`joinLines`（去目錄點線、斷行接回、≤10 字清單標籤自成一段）、`tocAnnexTitles`、`pdfTextToSections` → `{ sections, report }`、`splitByPage`、`sectionsToMarkdown`。頁碼標記是 Markdown 內獨立一行 `〔p.N〕`（印刷頁碼）。跨頁同段：上一頁最後一段無句末標點且下一段不是清單開頭時接回，算起始頁。附件編號必須遞增（附件內引用「附件一」不算新附件）。
+- `scripts/pdf-to-md.mjs`：輸入 PDF（`pdftotext -enc UTF-8`，不加 `-layout`）或 `.txt`，`--meta` 合併人工欄位，輸出 `sections`、`machineReadableMarkdown`、`pageCount`、`derivedFrom`。來源與 meta 放 `data/pdf-ingest/`（不進建置）。
+- `schemas/document.json`：`sections[]` 加 `level`（2/3）、`pages`［起, 迄］、`kind`（text/form/figure）、`index`；新增 `derivedFrom`（`file`、`sha256`、`sourceKind`、`tool`、`extractedAt`、`reviewStatus` machine|reviewed、`reviewedBy`、`reviewedAt`、`pdfPageOffset`、`tablePages`、`inlineTablePages`、`excludedSections`、`redTextChanges`、`note`）。
+- `index-builder.mjs` document：`index:false` 段落略過；含頁碼標記的段落經 `splitByPage` 每頁一塊，chunk id `{key}-p{N}`、url `#page-N`、欄位 `pdfPage`、`extraction { reviewStatus, pdfUrl, pageOffset }`；無頁碼標記的維持一段一塊，url 改為 `#s-{key}`（與 `documents.mjs` 的 id 一致）。
+- `core.js`：`sourceOf` 帶 `pdfPage`、`extraction`；`citeLabelOf` 加「（第 N 頁）」；`retrieve` 對 `extraction.reviewStatus === 'machine'` 乘 0.7，`composeSentences` 減 0.6；`pdfHref(src)`（僅 `.pdf` 且 `pageOffset` 為整數時加 `#page=`）。`render.js` 來源卡加頁碼、文字來源、開啟 PDF。
+- `governance.mjs`：白名單理由 `pdf-unreviewed`；待辦 `pdf-unreviewed`（30 天，列表格頁、紅字未擷取）。後台與透明度頁加標籤。
+- `documents.mjs`：`pageAnchors()` 把 `〔p.N〕` 換成 `<p class="c-pagemark" id="page-N">`（同頁只給第一次 id）；`level: 3` 段落用 `h3`。CSS `.c-pagemark`、`.c-block--sub`。
+- `sim-export-guidelines.mjs`：排除有 `derivedFrom` 的文件（不屬第七批舊站快照）。
+- 主檔：`unit.oasis` 名稱「AI推動辦公室」、英文「Office of AI Strategy, Innovation, and Synergy (OASIS)」；刪除 `unit.ai-office`。
+- 測試 `tests/pdf-ingest.test.mjs`：切頁、章節、表格與表單排除、跨頁接回、重跑轉換與已提交 JSON 一致、sha256、索引切塊與錨點、白名單與待辦、文件頁錨點、PDF 跳頁連結。評估集 `2026.10-r7` 新增 PDF001–004。
+
