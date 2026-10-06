@@ -1031,3 +1031,67 @@ html:not(.js) .vxs-form,html:not(.js) .vxs-msg,html:not(.js) .vxs-tabs,html:not(
 .c-unitpage__unverified{border-left:3px solid var(--status-rising);padding-left:var(--sp-3);font-size:var(--fs-sm)}
 .c-unitpage .c-kv{display:grid;gap:var(--sp-2);margin:0}.c-unitpage .c-kv div{display:flex;gap:var(--sp-2);flex-wrap:wrap}.c-unitpage .c-kv dt{font-weight:700;color:var(--ink-2);min-width:7em}.c-unitpage .c-kv dd{margin:0}
 .c-unitpage__src{font-size:var(--fs-xs);margin-top:var(--sp-2)}.c-org__official{margin:0;font-size:var(--fs-sm)}
+
+/* ───────── 第二十一輪：長文件閱讀版面（_longdoc.mjs；PDF 轉來的指引、手冊） ───────── */
+.c-ldmap{border:1px solid var(--line);border-radius:var(--radius);background:var(--green-50);padding:var(--sp-4);margin-bottom:var(--sp-6);scroll-margin-top:16px}
+.c-ldmap__t{font-size:var(--fs-lg);margin:0 0 var(--sp-3)}
+.c-ldmap__list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:var(--sp-2)}
+.c-ldmap__list a{display:flex;flex-direction:column;gap:2px;height:100%;padding:10px 12px;background:var(--white);border:1px solid var(--line);border-left:4px solid var(--green-600);border-radius:var(--radius-sm);color:var(--ink);text-decoration:none}
+.c-ldmap__list a:hover{border-color:var(--green-700);background:var(--white)}
+.c-ldmap__name{font-weight:700;line-height:1.4}
+.c-ldmap__meta{font-size:var(--fs-xs);color:var(--ink-3)}
+.c-ldmap__tools{display:flex;flex-wrap:wrap;gap:var(--sp-2);align-items:center;margin:var(--sp-3) 0 0;font-size:var(--fs-sm)}
+.c-ldmap__tools .muted{flex:1 1 260px}
+.c-ldch{margin-bottom:var(--sp-7,40px);scroll-margin-top:16px}
+.c-ldch>h2{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--sp-2) var(--sp-3);padding-bottom:var(--sp-2);border-bottom:2px solid var(--green-100);margin-bottom:var(--sp-3)}
+.c-ldch__p{font-size:var(--fs-sm);font-weight:400;color:var(--ink-3)}
+.c-ldch__top{margin-left:auto;font-size:var(--fs-xs);font-weight:400}
+.c-ldpart{font-size:var(--fs-md);color:var(--green-900);margin:var(--sp-4) 0 var(--sp-2);padding-left:var(--sp-2);border-left:4px solid var(--green-600)}
+.c-ldintro{margin-bottom:var(--sp-3);scroll-margin-top:16px}
+.c-ldsec{border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--white);margin-bottom:var(--sp-2);scroll-margin-top:16px}
+.c-ldsec>summary{display:flex;align-items:baseline;gap:var(--sp-3);padding:12px 14px;cursor:pointer;list-style:none;font-weight:700;line-height:1.5}
+.c-ldsec>summary::-webkit-details-marker{display:none}
+.c-ldsec>summary::before{content:"";flex:0 0 auto;width:.5em;height:.5em;border-right:2px solid var(--green-700);border-bottom:2px solid var(--green-700);transform:translateY(-.15em) rotate(-45deg);transition:transform .15s}
+.c-ldsec[open]>summary::before{transform:translateY(-.25em) rotate(45deg)}
+.c-ldsec>summary:hover{background:var(--green-50)}
+.c-ldsec[open]>summary{border-bottom:1px solid var(--line);background:var(--green-50)}
+.c-ldsec__t{flex:1 1 auto}
+.c-ldsec__p{flex:0 0 auto;font-size:var(--fs-xs);font-weight:400;color:var(--ink-3);white-space:nowrap}
+.c-ldsec__kind{flex:0 0 auto;font-size:var(--fs-xs);font-weight:400;padding:1px 8px;border-radius:var(--radius-pill);background:var(--line);color:var(--ink-2);white-space:nowrap}
+.c-ldsec--pdfonly>summary{font-weight:400;color:var(--ink-2)}
+.c-ldsec__body{padding:var(--sp-3) var(--sp-4) var(--sp-4);max-width:42em;line-height:1.85}
+/* 頁碼標記：長文件裡縮成右側小字，不再橫切版面；id="page-N" 不變 */
+.c-longdoc .c-pagemark{float:right;clear:right;margin:0 0 4px var(--sp-3);border:0;font-size:var(--fs-xs)}
+.c-longdoc .c-pagemark span{transform:none;padding:1px 8px;border:1px solid var(--line);border-radius:var(--radius-pill);background:var(--white)}
+.c-longdoc .c-pagemark:target span,.c-longdoc .c-pagemark.is-hit span{background:var(--green-100);border-color:var(--green-700);color:var(--green-900)}
+/* 公文條列：壹、→ 一、→（一）→ 1. →（1）依層級縮排，接續段落沿用該層內文位置 */
+.c-longdoc .c-ol0{font-weight:700;font-size:var(--fs-lg);margin-top:var(--sp-4)}
+.c-longdoc .c-ol1{margin-top:var(--sp-3)}
+.c-longdoc .c-olh{font-weight:700;color:var(--green-900)}
+.c-longdoc .c-ol2,.c-longdoc .c-olc1{padding-left:2em}
+.c-longdoc .c-ol3,.c-longdoc .c-olc2{padding-left:4em}
+.c-longdoc .c-ol4,.c-longdoc .c-olc3{padding-left:5.5em}
+.c-longdoc .c-olc4{padding-left:7em}
+.c-longdoc ol.c-olc1,.c-longdoc ol.c-olc2,.c-longdoc ol.c-olc3,.c-longdoc ol.c-olc4,.c-longdoc ul.c-olc1,.c-longdoc ul.c-olc2,.c-longdoc ul.c-olc3,.c-longdoc ul.c-olc4{margin-left:1.2em}
+.c-longdoc .c-ol2,.c-longdoc .c-ol3,.c-longdoc .c-ol4,.c-longdoc .c-olc1,.c-longdoc .c-olc2,.c-longdoc .c-olc3,.c-longdoc .c-olc4{margin-top:.35em;margin-bottom:.35em}
+/* 側欄目錄：章／節兩層，限高可捲 */
+.c-toc--long{max-height:calc(100vh - 2*var(--sp-4));overflow:auto}
+.c-toc--long ol ol{margin:0 0 var(--sp-2)}
+.c-toc--long ol ol a{padding:3px 10px 3px 22px;font-size:var(--fs-xs);border-left-color:var(--line)}
+.c-toc--long>ol>li>a{font-weight:700}
+@media (max-width:959px){
+  .c-toc--long{display:none} /* 手機改用頂端的章節導覽卡，避免 45 顆按鈕 */
+  .c-ldmap__list{grid-template-columns:1fr 1fr}
+}
+@media (max-width:520px){
+  .c-ldmap{padding:var(--sp-3)}
+  .c-ldmap__list a{padding:8px 10px;border-left-width:3px}
+  .c-ldmap__name{font-size:var(--fs-sm)}
+  .c-ldsec>summary{flex-wrap:wrap;row-gap:2px}
+  .c-ldsec__body{padding:var(--sp-3)}
+  .c-longdoc .c-ol3,.c-longdoc .c-olc2{padding-left:3em}
+  .c-longdoc .c-ol4,.c-longdoc .c-olc3,.c-longdoc .c-olc4{padding-left:4em}
+}
+@media print{.c-ldmap__tools,.c-ldch__top{display:none!important} .c-ldsec{border:0} .c-ldsec>summary::before{display:none}}
+/* 長文件的側欄拉滿整欄高度，目錄放最後才能一路黏在畫面上（放前面會蓋住後面的卡片） */
+.c-cols__side--longdoc{align-self:stretch}

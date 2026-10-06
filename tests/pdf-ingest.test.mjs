@@ -99,12 +99,12 @@ test('治理：未校對的 PDF 機讀版不進 AI 白名單，並產生「PDF �
   assert.ok(!s2.byId.get(ID).gov.whitelist.reasons.includes('pdf-unreviewed'));
 });
 
-test('文件頁：頁碼標記變成 #page-N 錨點（每頁只有一個 id），小節用 h3', () => {
+test('文件頁：頁碼標記變成 #page-N 錨點（每頁只有一個 id），小節是可摺疊的 details（第二十一輪）', () => {
   const d = site.byId.get(ID);
   const html = String(documents.render(makeCtx(site, 'zh-TW', { path: '/documents/x/' }), { item: d }));
   assert.equal((html.match(/id="page-55"/g) ?? []).length, 1);
   assert.equal((html.match(/id="page-4"/g) ?? []).length, 1, 'p.4 跨兩節，只給第一次');
-  assert.match(html, /<h3>第五章 群聚疫情防治措施 · 第一節 病例群聚定義<\/h3>/);
+  assert.match(html, /<details class="c-ldsec" id="s-ch5-s1">\s*<summary><span class="c-ldsec__t">第一節 病例群聚定義<\/span>/);
   assert.doesNotMatch(html, /〔p\.\d+〕/);
 });
 
