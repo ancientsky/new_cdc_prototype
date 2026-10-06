@@ -916,3 +916,11 @@ manualStatus?: enum[cancelled, failed（流標）], award?: { date, winner, amou
 - 主檔：`unit.oasis` 名稱「AI推動辦公室」、英文「Office of AI Strategy, Innovation, and Synergy (OASIS)」；刪除 `unit.ai-office`。
 - 測試 `tests/pdf-ingest.test.mjs`：切頁、章節、表格與表單排除、跨頁接回、重跑轉換與已提交 JSON 一致、sha256、索引切塊與錨點、白名單與待辦、文件頁錨點、PDF 跳頁連結。評估集 `2026.10-r7` 新增 PDF001–004。
 
+## 23. 第二十輪（2026-10-06）：真指引取代虛構版本鏈、_retired 快照
+
+- 內容：`content/documents/guidance-dengue.2026-02.json`（family `doc.guidance-dengue`，由 `data/pdf-ingest/dengue-chik-guideline-2026-02.meta.json` 轉出）取代 `guidance-dengue.v15–v17`；移除 `news/2025-11-11-letter-dengue-guidance-v16.json`、`news/2026-07-01-letter-dengue-guidance-v17.json`。`basedOn`／`manualDoc` 用家族 id 的內容不需改。
+- `data/legacy-export/_retired/{documents,news,migration}/`：已自 `content/` 移除、但模擬舊站快照（2026-10-03）當時存在的檔案與當時的移轉清單。`sim-export-disease／guidelines／news／qa.mjs` 讀 `content/`＋`_retired/`（依檔名排序、排除有 `derivedFrom` 的文件；疾病模擬優先用 `_retired/migration/{slug}.json`）。`tests/import-legacy.test.mjs` 的 `snapshotContent()` 組同樣的目錄傳給 `runImport({ contentDir })`。
+- 移轉清單：`dengue.json` 的 `dengue-guidance-v16-archive` 改 `merged` → `doc.guidance-dengue.2026-02`；`guidelines.json` 的 `guidance-dengue` 目標改為新文件。
+- 評估集 `2026.10-r8`：V010／V011／PR009 改引用 `doc.guidance-dengue.2026-02`。
+- 文件：guide-staff 第 23 節（圖片與影片進智慧查詢），legacy-import 10.12。
+

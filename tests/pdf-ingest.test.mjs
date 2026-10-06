@@ -12,8 +12,8 @@ import * as documents from '../src/templates/public/documents.mjs';
 import { pdfHref } from '../src/client/answer/core.js';
 
 const SRC = 'data/pdf-ingest/dengue-chik-guideline-2026-02.txt';
-const DOC = 'content/documents/dengue-chik-guideline.2026-02.json';
-const ID = 'doc.dengue-chik-guideline.2026-02';
+const DOC = 'content/documents/guidance-dengue.2026-02.json';
+const ID = 'doc.guidance-dengue.2026-02';
 const text = fs.readFileSync(SRC, 'utf8');
 const { sections, report } = P.pdfTextToSections(text);
 const byKey = new Map(sections.map((s) => [s.key, s]));
@@ -81,7 +81,7 @@ test('索引：每頁一塊、連到 #page-N、帶 pdfPage 與未校對標記；
   assert.ok(!chunks.some((c) => /#(annex-(3|7|11)|references)/.test(c.id)));
   assert.ok(!site.searchIndex.public.some((c) => c.contentId === ID));
   // 沒有頁碼標記的舊文件：一段一塊，網址錨點與文件頁的 id="s-…" 一致
-  const v17 = site.searchIndex.pro.find((c) => c.contentId === 'doc.guidance-dengue.v17');
+  const v17 = site.searchIndex.pro.find((c) => c.contentId === 'doc.case-definition-dengue.2026-01-01');
   assert.match(v17.url, /#s-[a-z]/);
   assert.equal(v17.pdfPage, undefined);
 });

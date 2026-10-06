@@ -1,7 +1,7 @@
 {
-  "id": "doc.dengue-chik-guideline.2026-02",
+  "id": "doc.guidance-dengue.2026-02",
   "type": "document",
-  "family": "doc.dengue-chik-guideline",
+  "family": "doc.guidance-dengue",
   "docType": "guideline",
   "title": "登革熱/屈公病防治工作指引（2026 年 2 月版）",
   "version": "2026 年 2 月版",
@@ -12,18 +12,46 @@
   "reviewedAt": "2026-02-01",
   "reviewPeriodMonths": 12,
   "status": "published",
-  "audience": ["professional"],
-  "tasks": ["situation"],
+  "audience": [
+    "professional"
+  ],
+  "tasks": [
+    "situation"
+  ],
   "sensitivity": "public",
   "license": "OGDL-1.0",
-  "diseases": ["disease.dengue", "disease.chikungunya"],
-  "aiWhitelist": { "requested": true },
-  "languages": { "zh-TW": { "status": "source" } },
+  "diseases": [
+    "disease.dengue",
+    "disease.chikungunya"
+  ],
+  "aiWhitelist": {
+    "requested": true
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
   "summary": "衛生福利部疾病管制署 2026 年 2 月版登革熱/屈公病防治工作指引：疾病介紹、病例與病媒監測、平時與散發疫情防治、群聚疫情防治、法令規定與附件表單。本頁機讀版由 PDF 機器轉出，尚未校對，以 PDF 原頁為準。",
-  "keywords": ["登革熱", "屈公病", "防治工作指引", "病例定義", "病媒蚊", "孳生源", "群聚", "NS1", "化學防治", "傳染病防治法"],
-  "roles": ["physician", "local-health", "lab"],
-  "pdfUrl": "/pending/?ref=doc.dengue-chik-guideline.2026-02&doc=登革熱屈公病防治工作指引（2026 年 2 月版，紅字掛網版）（PDF）",
-  "note": "第十九輪：章節文字由 Yulun 提供的 PDF 抽出文字（2026登革熱屈公病防治工作指引紅字掛網版）以 scripts/pdf-to-md.mjs 轉出，原文未改寫；封面只寫「2026 年 2 月版」，生效日暫填 2026-02-01 待權責單位確認；PDF 正本尚未上傳。",
+  "keywords": [
+    "登革熱",
+    "屈公病",
+    "防治工作指引",
+    "病例定義",
+    "病媒蚊",
+    "孳生源",
+    "群聚",
+    "NS1",
+    "化學防治",
+    "傳染病防治法"
+  ],
+  "roles": [
+    "physician",
+    "local-health",
+    "lab"
+  ],
+  "pdfUrl": "/pending/?ref=doc.guidance-dengue.2026-02&doc=登革熱屈公病防治工作指引（2026 年 2 月版，紅字掛網版）（PDF）",
+  "note": "第十九輪：章節文字由 Yulun 提供的 PDF 抽出文字（2026登革熱屈公病防治工作指引紅字掛網版）以 scripts/pdf-to-md.mjs 轉出，原文未改寫；第二十輪起取代原型虛構的第 15～17 版示意版本鏈（Yulun 2026-10-06 決定），沿用家族 doc.guidance-dengue；封面只寫「2026 年 2 月版」，生效日暫填 2026-02-01 待權責單位確認；PDF 正本尚未上傳。",
   "derivedFrom": {
     "pdfPageOffset": null,
     "redTextChanges": "not-captured",

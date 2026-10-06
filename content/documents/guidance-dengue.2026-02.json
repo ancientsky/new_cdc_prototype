@@ -1,7 +1,7 @@
 {
-  "id": "doc.dengue-chik-guideline.2026-02",
+  "id": "doc.guidance-dengue.2026-02",
   "type": "document",
-  "family": "doc.dengue-chik-guideline",
+  "family": "doc.guidance-dengue",
   "docType": "guideline",
   "title": "登革熱/屈公病防治工作指引（2026 年 2 月版）",
   "version": "2026 年 2 月版",
@@ -50,8 +50,8 @@
     "local-health",
     "lab"
   ],
-  "pdfUrl": "/pending/?ref=doc.dengue-chik-guideline.2026-02&doc=登革熱屈公病防治工作指引（2026 年 2 月版，紅字掛網版）（PDF）",
-  "note": "第十九輪：章節文字由 Yulun 提供的 PDF 抽出文字（2026登革熱屈公病防治工作指引紅字掛網版）以 scripts/pdf-to-md.mjs 轉出，原文未改寫；封面只寫「2026 年 2 月版」，生效日暫填 2026-02-01 待權責單位確認；PDF 正本尚未上傳。",
+  "pdfUrl": "/pending/?ref=doc.guidance-dengue.2026-02&doc=登革熱屈公病防治工作指引（2026 年 2 月版，紅字掛網版）（PDF）",
+  "note": "第十九輪：章節文字由 Yulun 提供的 PDF 抽出文字（2026登革熱屈公病防治工作指引紅字掛網版）以 scripts/pdf-to-md.mjs 轉出，原文未改寫；第二十輪起取代原型虛構的第 15～17 版示意版本鏈（Yulun 2026-10-06 決定），沿用家族 doc.guidance-dengue；封面只寫「2026 年 2 月版」，生效日暫填 2026-02-01 待權責單位確認；PDF 正本尚未上傳。",
   "derivedFrom": {
     "file": "dengue-chik-guideline-2026-02.txt",
     "sha256": "08c4666c05f13478d810dd7dcd8de68981d84b4c6cc628dee77cf093497b3974",
