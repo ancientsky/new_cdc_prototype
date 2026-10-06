@@ -924,3 +924,12 @@ manualStatus?: enum[cancelled, failed（流標）], award?: { date, winner, amou
 - 評估集 `2026.10-r8`：V010／V011／PR009 改引用 `doc.guidance-dengue.2026-02`。
 - 文件：guide-staff 第 23 節（圖片與影片進智慧查詢），legacy-import 10.12。
 
+## 24. 第二十一輪（2026-10-06）：長文件分章摺疊版面
+
+- `src/templates/public/_longdoc.mjs`：`isLongDoc(sections)`（任一段有 `pages` 或 ≥12 段）；`groupSections(sections, { annexTitle })` → `[{ id, kind: chapter|annex|single, title, pages, intro, items: [{ s, part, short }] }]`（key `^ch\d+` 同章，key 等於章代號者為導言；`annex-*` 併一組；標題以 ` · ` 切段，三段式的中段為 `part`，最後一段為 `short`）；`outline(html)` 對 `md()` 輸出的頂層 `<p>/<ol>/<ul>` 加 `c-ol{0-4}`／`c-olc{n}`／`c-olh`（已有 class 的段落不動）；`longDocMain(ctx, sections, body)`、`longDocToc(ctx, sections, { before, after })`。
+- `documents.mjs`：`long` 時主欄用 `longDocMain`（`body` 仍是 `md(pageAnchors(...))`，同一個 `seenPages`，錨點規則不變），側欄目錄移到最後並加 `c-cols__side--longdoc`（`align-self: stretch` 讓目錄黏住）。每節 `<details class="c-ldsec" id="s-{key}">`；章 `<section class="c-ldch" id="g-{id}">`；章節卡 `#ld-map`。
+- `ui.js`：`openTo(hash, scroll)`（載入、`hashchange`、點同一錨點時：打開祖先 `details`，捲到目標，頁碼標記加 `is-hit`）；`[data-ld-toggle]` 全部展開／收合；`beforeprint` 展開、`afterprint` 還原；目錄捲動標示時把 `.c-toc--long` 內的目前項目捲進可見範圍。
+- CSS（components.css 尾端）：`.c-ldmap*`、`.c-ldch*`、`.c-ldpart`、`.c-ldintro`、`.c-ldsec*`、`.c-longdoc .c-pagemark`（右浮動小標籤）、條列縮排、`.c-toc--long`（≤959px 隱藏）。
+- i18n `ld.*`（zh-TW、en）。
+- 測試 `tests/longdoc.test.mjs`：套用條件、分組（9 組、無掉段）、每段 id 與頁碼錨點唯一、索引每塊錨點都在頁面上、條列層級、ui.js 行為存在；`pdf-ingest.test.mjs` 文件頁斷言改為 `details`。
+

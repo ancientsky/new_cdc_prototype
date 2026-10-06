@@ -294,9 +294,46 @@ const tocLinks = qsa('.c-toc a[href^="#"]');
 if (tocLinks.length && 'IntersectionObserver' in window) {
   const map = new Map(tocLinks.map((a) => [a.getAttribute('href').slice(1), a]));
   const io = new IntersectionObserver((entries) => {
-    entries.forEach((en) => { if (en.isIntersecting) { tocLinks.forEach((a) => a.classList.remove('is-active')); map.get(en.target.id)?.classList.add('is-active'); } });
+    entries.forEach((en) => {
+      if (!en.isIntersecting) return;
+      tocLinks.forEach((a) => a.classList.remove('is-active'));
+      const a = map.get(en.target.id);
+      a?.classList.add('is-active');
+      // 長文件目錄可捲：把目前這一節捲進目錄可見範圍（只捲目錄，不動頁面）
+      const box = a?.closest('.c-toc--long');
+      if (box) { const r = a.offsetTop - box.offsetTop; if (r < box.scrollTop || r > box.scrollTop + box.clientHeight - 40) box.scrollTop = r - box.clientHeight / 3; }
+    });
   }, { rootMargin: '-10% 0px -75% 0px' });
   map.forEach((_, id) => { const s = document.getElementById(id); if (s) io.observe(s); });
+}
+
+/* ───────── 第二十一輪：長文件（分章摺疊）— 連到 #page-N／#s-key 時打開所在那一節；全部展開／收合；列印前全展開 ───────── */
+// 智慧查詢的引用連到 #page-55，那一頁可能在收合的 <details> 裡；不打開的話瀏覽器捲不到（Chrome 會自動開，其他瀏覽器不一定）。
+function openTo(hash, scroll) {
+  let el = null;
+  try { el = hash && hash.length > 1 ? document.getElementById(decodeURIComponent(hash.slice(1))) : null; } catch { el = null; }
+  if (!el || !el.closest('.c-longdoc')) return;
+  for (let d = el.closest('details'); d; d = d.parentElement?.closest('details')) d.open = true;
+  if (el instanceof HTMLDetailsElement) el.open = true;
+  qsa('.c-pagemark.is-hit').forEach((p) => p.classList.remove('is-hit'));
+  if (el.classList.contains('c-pagemark')) el.classList.add('is-hit');
+  if (scroll) el.scrollIntoView({ block: 'start' });
+}
+if (document.querySelector('.c-longdoc')) {
+  openTo(location.hash, true);
+  window.addEventListener('hashchange', () => openTo(location.hash, true));
+  // 點同一個錨點兩次不會觸發 hashchange：直接在點擊時處理
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest?.('a[href^="#"]');
+    if (a && a.getAttribute('href') === location.hash) openTo(location.hash, true);
+  });
+  qsa('[data-ld-toggle]').forEach((b) => b.addEventListener('click', () => {
+    const open = b.dataset.ldToggle === 'open';
+    qsa('.c-longdoc details.c-ldsec').forEach((d) => { d.open = open; });
+  }));
+  let reopen = [];
+  window.addEventListener('beforeprint', () => { reopen = qsa('.c-longdoc details:not([open])'); reopen.forEach((d) => { d.open = true; }); });
+  window.addEventListener('afterprint', () => { reopen.forEach((d) => { d.open = false; }); reopen = []; });
 }
 
 refreshHelpful();

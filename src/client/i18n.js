@@ -1606,6 +1606,22 @@ const ROWS_VXS = {
 };
 for (const [key, vals] of Object.entries(ROWS_VXS)) vals.forEach((v, i) => { if (v != null && v !== '') STRINGS[ORDER[i]][key] = v; });
 
+/* ───── 第二十一輪：長文件閱讀版面（src/templates/public/_longdoc.mjs）：zh-TW、en（其餘語言 fallback 英文）。 ───── */
+const ROWS_LD = {
+  'ld.map': ['章節導覽', 'Chapters'],
+  'ld.expand': ['全部展開', 'Expand all'],
+  'ld.collapse': ['全部收合', 'Collapse all'],
+  'ld.hint': ['各節預設收合，點標題展開；從智慧查詢的引用連過來會自動打開那一節。', 'Sections are collapsed; tap a title to open it. Links from Smart Search citations open the right section automatically.'],
+  'ld.page': ['第 {a} 頁', 'p. {a}'],
+  'ld.pages': ['第 {a}–{b} 頁', 'pp. {a}–{b}'],
+  'ld.count': ['{n} 節', '{n} sections'],
+  'ld.annex': ['附件', 'Annexes'],
+  'ld.form': ['表單・看 PDF', 'Form · see PDF'],
+  'ld.figure': ['圖・看 PDF', 'Figure · see PDF'],
+  'ld.top': ['回章節導覽', 'Back to chapters'],
+};
+for (const [key, vals] of Object.entries(ROWS_LD)) vals.forEach((v, i) => { if (v != null && v !== '') STRINGS[ORDER[i]][key] = v; });
+
 // translation.bar.reviewed 的 {lang} 佔位：zh 版用語言名稱
 STRINGS['zh-TW']['translation.bar.reviewed'] = STRINGS['zh-TW']['translation.bar.reviewed'].replace('{lang}', '翻譯');
 

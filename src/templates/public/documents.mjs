@@ -2,6 +2,7 @@
 import { html, raw } from '../../../scripts/lib/render.mjs';
 import { md } from '../../../scripts/lib/markdown.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
+import { isLongDoc, longDocMain, longDocToc } from './_longdoc.mjs';
 import { ldFor, breadcrumb, pageHead, sectionHead, provenance, alerts, alertBox, pageData, scopeTags, feedback, translationBadge, hrefFor, L, unitName, unitLink, slugOf, itemPath, pill, diseasePage, askBox } from './_partials.mjs';
 
 export function familyOf(site, d) {
@@ -67,6 +68,9 @@ function detail(ctx, d) {
   const changes = d.changes ?? [];
   const sections = d.sections ?? [];
   const seenPages = new Set();
+  const sectionHtml = (s) => md(pageAnchors(s.markdown, seenPages));
+  // 第二十一輪：PDF 轉來或段落很多的文件改用分章摺疊版面（_longdoc.mjs）；短文件維持原樣
+  const long = isLongDoc(sections);
   return html`${breadcrumb(ctx, [{ label: t('nav.documents'), href: '/documents/' }, { label: L(ctx, d, 'title') }])}
 <article class="c-article" data-family="${d.family}">
   ${old ? alertBox('superseded', html`<strong class="c-alert__t">${t('alert.superseded.t')}</strong> ${t('doc.superseded', { v: d.version, cur: cur.version, date: fmtDate(cur.effectiveAt) })} <a class="c-alert__go" href="${hrefFor(ctx, cur)}">${t('doc.gocurrent')} →</a>`) : ''}
@@ -97,16 +101,17 @@ function detail(ctx, d) {
     <div class="c-cols__main">
       ${changes.length ? html`<section class="c-block" id="changes"><h2>${t('documents.changes')}</h2><div class="c-tablewrap"><table class="c-table c-table--changes"><caption class="sr-only">${t('documents.changes')}</caption><thead><tr><th scope="col">${t('documents.section')}</th><th scope="col">${t('documents.before')}</th><th scope="col">${t('documents.after')}</th></tr></thead><tbody>
         ${changes.map((c) => html`<tr class="c-change c-change--${c.kind ?? 'changed'}"><th scope="row">${c.section} <span class="c-change__kind">${t(`documents.kind.${c.kind ?? 'changed'}`)}</span></th><td>${c.before ? html`<del>${c.before}</del>` : html`<span class="muted">—</span>`}</td><td>${c.after ? html`<ins>${c.after}</ins>` : html`<span class="muted">—</span>`}</td></tr>`)}</tbody></table></div></section>` : ''}
-      ${sections.length ? sections.map((s) => html`<section class="c-block${s.level === 3 ? ' c-block--sub' : ''}" id="s-${s.key}">${s.level === 3 ? html`<h3>${s.heading}</h3>` : html`<h2>${s.heading}</h2>`}${raw(md(pageAnchors(s.markdown, seenPages)))}</section>`) : (d.machineReadableMarkdown ? html`<section class="c-block"><div class="c-prose">${raw(md(d.machineReadableMarkdown))}</div></section>` : '')}
+      ${long ? longDocMain(ctx, sections, sectionHtml) : sections.length ? sections.map((s) => html`<section class="c-block${s.level === 3 ? ' c-block--sub' : ''}" id="s-${s.key}">${s.level === 3 ? html`<h3>${s.heading}</h3>` : html`<h2>${s.heading}</h2>`}${raw(sectionHtml(s))}</section>`) : (d.machineReadableMarkdown ? html`<section class="c-block"><div class="c-prose">${raw(md(d.machineReadableMarkdown))}</div></section>` : '')}
       <section class="c-block" id="chain"><h2>${t('documents.chain')}</h2>
         <ol class="c-timeline c-timeline--chain">${chain.map((v) => html`<li class="${v.isCurrent ? 'is-current' : ''}${v.id === d.id ? ' is-here' : ''}"><time datetime="${v.effectiveAt}">${fmtDate(v.effectiveAt)}</time> <a href="${hrefFor(ctx, v)}">${v.version}</a> ${v.isCurrent ? pill(t('prov.current'), 'ok') : pill(t('documents.expired'), 'neutral')}${v.id === d.id ? html` <span class="muted">← ${t('documents.here')}</span>` : ''}${v.supersedes ? '' : html` <span class="muted">${t('documents.first')}</span>`}</li>`)}</ol>
       </section>
       ${feedback(ctx, { page: ctx.path })}
     </div>
-    <aside class="c-cols__side">
-      ${sections.length ? html`<nav class="c-aside-card c-toc" aria-label="${t('disease.toc')}"><h2>${t('disease.toc')}</h2><ol>${changes.length ? html`<li><a href="#changes">${t('documents.changes')}</a></li>` : ''}${sections.map((s) => html`<li><a href="#s-${s.key}">${s.heading}</a></li>`)}<li><a href="#chain">${t('documents.chain')}</a></li></ol></nav>` : ''}
+    <aside class="c-cols__side${long ? ' c-cols__side--longdoc' : ''}">
+      ${long ? '' : sections.length ? html`<nav class="c-aside-card c-toc" aria-label="${t('disease.toc')}"><h2>${t('disease.toc')}</h2><ol>${changes.length ? html`<li><a href="#changes">${t('documents.changes')}</a></li>` : ''}${sections.map((s) => html`<li><a href="#s-${s.key}">${s.heading}</a></li>`)}<li><a href="#chain">${t('documents.chain')}</a></li></ol></nav>` : ''}
       ${dis.length ? html`<section class="c-aside-card"><h2>${t('news.related')}</h2><ul class="c-linklist">${dis.map((x) => html`<li><a href="${hrefFor(ctx, x)}">${L(ctx, x, 'title')}</a></li>`)}</ul></section>` : ''}
       ${pageData(ctx, d, { schema: 'DigitalDocument', api: '/v1/documents.json', mdPath: mdUrl })}
+      ${long ? longDocToc(ctx, sections, { before: changes.length ? html`<li><a href="#changes">${t('documents.changes')}</a></li>` : '', after: html`<li><a href="#chain">${t('documents.chain')}</a></li>` }) : ''}
     </aside>
   </div>
 </article>`;
