@@ -503,7 +503,7 @@ test('端到端：所見即所得 → Markdown → 預覽 → 加 PNG 與 PDF �
     assert.equal(await page.getAttribute('#f-wys', 'role'), 'textbox');
     assert.equal(await page.getAttribute('#f-wys', 'aria-multiline'), 'true');
     assert.ok(await page.getAttribute('#f-wys', 'aria-label'));
-    assert.equal(await page.locator('[role="tablist"] [role="tab"]').count(), 3);
+    assert.equal(await page.locator('.adm-tabs--editor [role="tab"]').count(), 3); // 第二十二輪：右欄另有「頁面預覽／預處理結果」頁籤
     assert.equal(await page.getAttribute('#et-wys', 'aria-selected'), 'true');
     for (const b of await page.locator('#ed-toolbar button').all()) assert.ok(await b.getAttribute('aria-label'), '工具列按鈕要有 aria-label');
     assert.ok(await page.evaluate(() => typeof window.marked?.parse === 'function'), 'vendor marked 要載入（含 basePath）');

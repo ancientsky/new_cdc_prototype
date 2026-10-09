@@ -192,6 +192,8 @@ const ROWS = {
   'pagedata.license': ['授權', 'Licence', 'ライセンス', 'Lisensya', 'Giấy phép', 'Lisensi', 'สัญญาอนุญาต'],
   'pagedata.whitelist': ['本頁可被 AI 引用（白名單）', 'This page may be cited by AI (whitelisted)', 'このページはAIが引用可能（ホワイトリスト）', 'Maaaring i-cite ng AI (whitelisted)', 'Trang có thể được AI trích dẫn (danh sách trắng)', 'Halaman dapat dikutip AI (daftar putih)', 'หน้านี้ AI อ้างอิงได้ (รายการอนุญาต)'],
   'pagedata.notwhitelist': ['本頁目前不在 AI 白名單', 'This page is currently not on the AI whitelist', 'このページは現在AIホワイトリスト外です', 'Wala sa AI whitelist ang pahinang ito ngayon', 'Trang hiện không nằm trong danh sách trắng AI', 'Halaman ini sedang tidak di daftar putih AI', 'หน้านี้ไม่อยู่ในรายการอนุญาตของ AI'],
+  'pagedata.editfab': ['編輯這頁', 'Edit this page', 'このページを編集', 'I-edit ang pahinang ito', 'Sửa trang này', 'Ubah halaman ini', 'แก้ไขหน้านี้'],
+  'pagedata.editfab.aria': ['同事：到後台修改這頁（需登入）', 'Staff: edit this page in the admin (login required)', '職員用：管理画面でこのページを編集（ログインが必要）', 'Staff: i-edit ang pahinang ito sa admin (kailangang mag-login)', 'Nhân viên: sửa trang này trong quản trị (cần đăng nhập)', 'Staf: ubah halaman ini di admin (perlu masuk)', 'เจ้าหน้าที่: แก้ไขหน้านี้ในระบบหลังบ้าน (ต้องเข้าสู่ระบบ)'],
   'pagedata.edit': ['同事修改這頁（後台，需登入）', 'Staff: edit this page (admin)', '職員用：このページを編集（管理画面）', 'Para sa staff: i-edit ang pahinang ito (admin)', 'Nhân viên: sửa trang này (quản trị)', 'Staf: ubah halaman ini (admin)', 'เจ้าหน้าที่: แก้ไขหน้านี้ (ผู้ดูแล)'],
   'pagedata.report': ['回報錯誤或建議', 'Report an error or suggestion', '誤りや提案を報告', 'Mag-ulat ng mali o mungkahi', 'Báo lỗi hoặc góp ý', 'Laporkan kesalahan atau saran', 'แจ้งข้อผิดพลาดหรือข้อเสนอแนะ'],
   'verdict.false': ['不實訊息', 'False', '虚偽', 'Mali', 'Sai sự thật', 'Palsu', 'เท็จ'],

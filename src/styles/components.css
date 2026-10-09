@@ -1095,3 +1095,10 @@ html:not(.js) .vxs-form,html:not(.js) .vxs-msg,html:not(.js) .vxs-tabs,html:not(
 @media print{.c-ldmap__tools,.c-ldch__top{display:none!important} .c-ldsec{border:0} .c-ldsec>summary::before{display:none}}
 /* 長文件的側欄拉滿整欄高度，目錄放最後才能一路黏在畫面上（放前面會蓋住後面的卡片） */
 .c-cols__side--longdoc{align-self:stretch}
+
+/* 同事的「編輯這頁」浮動按鈕（第二十二輪；只在有後台工作階段的瀏覽器出現，由 ui.js 插入） */
+.c-editfab{position:fixed;right:var(--sp-4);bottom:var(--sp-4);z-index:60;display:inline-flex;align-items:center;gap:6px;padding:10px 14px;border-radius:var(--radius-pill);background:var(--green-900);color:#fff;text-decoration:none;font-size:var(--fs-sm);font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.25);border:2px solid #ffbf47}
+.c-editfab:hover,.c-editfab:focus-visible{background:var(--green-700);color:#fff;outline:3px solid #ffbf47;outline-offset:2px}
+.c-editfab__ic{font-size:1.1em;line-height:1}
+@media (max-width:600px){.c-editfab__t{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)} .c-editfab{padding:10px 12px;bottom:var(--sp-5)}}
+@media print{.c-editfab{display:none}}

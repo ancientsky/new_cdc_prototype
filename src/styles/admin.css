@@ -450,3 +450,66 @@ body.adm { background: var(--paper); color: var(--ink); min-height: 100vh; displ
 .adm-login__roledesc { margin: var(--sp-3) 0 0; padding-left: 1.2em; font-size: var(--fs-xs); color: var(--ink-3); }
 .adm-login__already { background: var(--green-50); border: 1px solid #cfe3d8; border-radius: var(--radius-sm); padding: var(--sp-3) var(--sp-4); display: flex; gap: var(--sp-3); align-items: center; flex-wrap: wrap; margin-bottom: var(--sp-4); }
 .adm-denied { border-left: 5px solid var(--status-peak); }
+
+/* ---------- 第二十二輪：借 TinaCMS 的後台設計（右側即時頁面預覽、點區塊跳欄位、黏住的儲存列、欄位群組摺疊、結果過期提示） ---------- */
+.adm-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+/* 右欄黏在畫面上：表單再長，預覽與結果永遠看得到（桌機） */
+@media (min-width: 1101px) { .adm-result--sticky { position: sticky; top: var(--sp-3); max-height: calc(100vh - 2 * var(--sp-3)); overflow: auto; } }
+.adm-tabs--pane { position: sticky; top: 0; z-index: 3; background: #fff; margin: 0; padding: var(--sp-2) var(--sp-3) 0; border-bottom: 1px solid var(--line); }
+.adm-tabbadge { display: inline-block; min-width: 1.4em; padding: 0 7px; margin-left: 4px; border-radius: var(--radius-pill); background: var(--green-100, #dcefe4); color: var(--green-900); font-size: var(--fs-xs); font-weight: 700; }
+.adm-tabbadge--warn { background: #ffbf47; color: #3a2a00; }
+.adm-stale { margin: var(--sp-3) var(--sp-4) 0; display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2); }
+.adm-stale .adm-btn { margin-left: auto; }
+.adm-result__body--pv { padding: var(--sp-3) var(--sp-4) var(--sp-4); }
+.adm-pv__help { margin: 0 0 var(--sp-3); }
+/* 假瀏覽器外框＋頁面 */
+.adm-pv { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: #fff; }
+.adm-pv__chrome { display: flex; align-items: center; gap: 6px; padding: 8px 12px; background: var(--paper); border-bottom: 1px solid var(--line); }
+.adm-pv__chrome > span:not(.adm-pv__url) { width: 10px; height: 10px; border-radius: 50%; background: #cfd8d3; }
+.adm-pv__url { flex: 1; margin-left: 8px; padding: 3px 10px; border-radius: var(--radius-pill); background: #fff; border: 1px solid var(--line); font-size: var(--fs-xs); color: var(--ink-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.adm-pv__page { padding: var(--sp-4) var(--sp-5); display: grid; gap: var(--sp-2); }
+.adm-pv__crumb { margin: 0; font-size: var(--fs-xs); color: var(--ink-3); }
+.adm-pv__h1 { margin: 0; font-size: var(--fs-xl); line-height: 1.3; color: var(--green-900); }
+.adm-pv__h2 { margin: var(--sp-3) 0 4px; font-size: var(--fs-md); color: var(--green-900); border-left: 4px solid var(--green-600); padding-left: 8px; }
+.adm-pv__prov, .adm-pv__tags { margin: 0; font-size: var(--fs-sm); color: var(--ink-3); }
+.adm-pv__tag { display: inline-block; padding: 1px 8px; margin: 0 4px 2px 0; border-radius: var(--radius-pill); background: var(--green-50); color: var(--green-900); font-size: var(--fs-xs); }
+.adm-pv__summary { margin: 0; padding: var(--sp-2) var(--sp-3); background: var(--paper); border-left: 4px solid #ffbf47; font-size: var(--fs-sm); }
+.adm-pv__body { max-width: none; font-size: var(--fs-sm); }
+.adm-pv__body > :first-child { margin-top: 0; }
+.adm-pv__list { margin: 0; padding-left: 1.2em; font-size: var(--fs-sm); }
+.adm-pv__kind { display: inline-block; min-width: 3.2em; padding: 0 6px; border-radius: var(--radius-sm); background: var(--green-50); color: var(--green-900); font-size: var(--fs-xs); font-weight: 700; text-align: center; }
+.adm-pv__kv { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 4px var(--sp-3); margin: 0; font-size: var(--fs-sm); }
+.adm-pv__kv dt { font-size: var(--fs-xs); color: var(--ink-3); } .adm-pv__kv dd { margin: 0; font-weight: 600; }
+.adm-pv__video { padding: var(--sp-4); border-radius: var(--radius); background: #1f2d27; color: #fff; text-align: center; font-size: var(--fs-sm); }
+.adm-pv__verdict { padding: var(--sp-2) var(--sp-3); border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: var(--fs-sm); }
+.adm-pv__foot { margin-top: var(--sp-3); padding: var(--sp-2) var(--sp-3); background: var(--paper); border-radius: var(--radius-sm); font-size: var(--fs-xs); color: var(--ink-3); display: grid; gap: 2px; }
+.adm-pv__foot p { margin: 0; }
+.adm-pv__ph { color: var(--ink-3); font-style: italic; }
+/* 可點的區塊：hover／鍵盤焦點顯示「可編輯」外框；左側欄位有焦點時亮起 */
+.adm-pv__blk { position: relative; border-radius: var(--radius-sm); cursor: pointer; outline: 2px solid transparent; outline-offset: 4px; transition: outline-color .12s, background .12s; }
+.adm-pv__blk:hover, .adm-pv__blk:focus-visible { outline-color: var(--green-600); background: rgba(31, 122, 85, .04); }
+.adm-pv__blk:hover::after, .adm-pv__blk:focus-visible::after { content: '✎ 編輯'; position: absolute; right: -4px; top: -14px; padding: 1px 8px; border-radius: var(--radius-sm); background: var(--green-700); color: #fff; font-size: var(--fs-xs); font-weight: 700; line-height: 1.6; pointer-events: none; }
+.adm-pv__blk.is-active { outline-color: #ffbf47; background: rgba(255, 191, 71, .12); }
+.adm-pv__blk--body { padding: 2px 0; }
+/* 左側欄位被預覽點中時閃一下 */
+.adm-field--hit { animation: adm-hit 1.4s ease-out; border-radius: var(--radius-sm); }
+@keyframes adm-hit { 0% { box-shadow: 0 0 0 4px #ffbf47; } 100% { box-shadow: 0 0 0 4px transparent; } }
+/* 摺疊群組（TinaCMS group 欄位）：收起來也看得到目前值 */
+.adm-group { border: 1px solid var(--line); border-radius: var(--radius-sm); background: #fff; }
+.adm-group > summary { display: flex; align-items: center; gap: var(--sp-3); flex-wrap: wrap; padding: var(--sp-2) var(--sp-3); cursor: pointer; list-style: none; }
+.adm-group > summary::-webkit-details-marker { display: none; }
+.adm-group > summary::before { content: '▸'; color: var(--green-700); font-size: var(--fs-sm); transition: transform .12s; }
+.adm-group[open] > summary::before { transform: rotate(90deg); }
+.adm-group > summary:focus-visible { outline: 3px solid #ffbf47; outline-offset: -3px; }
+.adm-group__t { font-weight: 700; font-size: var(--fs-sm); }
+.adm-group__sum { font-size: var(--fs-sm); color: var(--ink-3); }
+.adm-group__sum.adm-red { font-weight: 700; }
+.adm-fieldset--ingroup { border: 0; border-top: 1px solid var(--line); border-radius: 0; padding: var(--sp-3); margin: 0; }
+/* 黏住的動作列：按鈕與儲存狀態永遠看得到 */
+.adm-actions--sticky { position: sticky; bottom: 0; z-index: 2; margin: 0 calc(-1 * var(--sp-5)); padding: var(--sp-3) var(--sp-5); background: rgba(255, 255, 255, .96); border-top: 1px solid var(--line); backdrop-filter: blur(2px); align-items: center; }
+.adm-actions__spacer { flex: 1 1 auto; }
+.adm-savestate { display: inline-flex; align-items: center; gap: 6px; font-size: var(--fs-xs); color: var(--ink-3); }
+.adm-savestate__dot { width: 8px; height: 8px; border-radius: 50%; background: #9aa9a2; }
+.adm-savestate[data-state="saved"] .adm-savestate__dot { background: var(--status-stable, #1f7a55); }
+.adm-savestate[data-state="dirty"] .adm-savestate__dot { background: #ffbf47; }
+@media (max-width: 760px) { .adm-actions--sticky { position: static; margin: 0; padding: var(--sp-3) 0 0; border-top: 0; background: transparent; backdrop-filter: none; } }
