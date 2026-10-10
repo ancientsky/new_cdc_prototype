@@ -6,6 +6,12 @@
 //   載入答案引擎的頁   ENGINE_JS_BUDGET_KB   預設 320 KB（ask／data／factcheck；answer/core.js 約 176 KB 是已知技術債，
 //                                             拆檔路線圖見 ARCHITECTURE 第 29 章，拆完後把這個預算降到與公開頁相同）
 //   /admin/ 頁        ADMIN_JS_BUDGET_KB    預設 0 = 只回報不擋
+//
+// 第二十八輪：/search/（Pagefind 全文搜尋）怎麼算——「立即載入」的 JS 才算：search.js＋search-query.js（約 12 KB）＋ui.js＋i18n，與其他公開頁同一個 120 KB 預算。
+// pagefind.js（約 45 KB）、pagefind-worker.js、WebAssembly 與索引分片是使用者第一次按搜尋時才由 import()／fetch 動態抓取，
+// 而本掃描只沿「靜態 import」追（動態 import() 不會被 IMPORT_RE 抓到），所以 dist/pagefind/ 不計入——這是刻意的：
+// 搜尋索引是資料不是每頁都要付的程式碼；它的成本改由 scripts/lib/pagefind.mjs 在建置 log 報告（執行期約 0.3 MB、第一次查詢實測約 0.33 MB），
+// 並由 tests/round28-search.test.mjs 擋住「有人在 HTML 直接 <script src> pagefind」這種繞過預算的寫法。
 import fs from 'node:fs';
 import path from 'node:path';
 

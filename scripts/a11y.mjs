@@ -21,6 +21,8 @@ export const PAGES = [
   '/', '/diseases/dengue/', '/diseases/', '/vaccines/', '/travel/', '/news/', '/faq/', '/ask/', '/situation/', '/data/', '/pro/',
   '/subscribe/', '/en/subscribe/', '/topics/antivenom/', '/admin/', '/admin/publish/', '/en/', '/vi/',
   '/documents/curriculum-dengue.2026-10-10/', // 第二十八輪：核心教材（長文件版面＋學習目標＋示範匯入警示）
+  // 第二十八輪：全文搜尋——空狀態與「已有查詢結果」兩種畫面都要掃（結果清單是動態產生的）
+  '/search/', '/search/?q=%E7%99%BB%E9%9D%A9%E7%86%B1&type=faq,news',
 ];
 export const VIEWPORTS = [{ name: '桌機 1280', width: 1280, height: 900 }, { name: '手機 320', width: 320, height: 700 }];
 const TAGS = ['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa', 'best-practice'];
@@ -53,7 +55,7 @@ function chromePath() {
   return undefined;
 }
 
-const exists = (p) => fs.existsSync(path.join(DIST, p.replace(/^\//, ''), 'index.html'));
+const exists = (p) => fs.existsSync(path.join(DIST, p.split('?')[0].replace(/^\//, ''), 'index.html'));
 const short = (s, n = 140) => (s.length > n ? `${s.slice(0, n)}…` : s).replace(/\s+/g, ' ');
 
 async function main() {
@@ -78,6 +80,7 @@ async function main() {
         const page = await ctx.newPage();
         try {
           await page.goto(`${origin}${p}`, { waitUntil: 'networkidle' });
+          if (p.includes('/search/?q=')) await page.waitForSelector('#search-results li', { timeout: 15000 }); // 全文搜尋：等 Pagefind 載入並畫出結果才掃（逾時 ⇒ 例外 ⇒ 整個檢測失敗，比掃到空畫面誠實）
           await page.waitForTimeout(300);
           const res = await new AxeBuilder({ page }).withTags(TAGS).analyze();
           runs++;

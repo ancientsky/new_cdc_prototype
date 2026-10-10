@@ -15,6 +15,7 @@ const S = {
     sitH: '現在的疫情', dataDate: '資料日', publisher: '發布', illustrative: '示意資料', statusBasis: '判定依據', seeTrend: '看完整趨勢',
     refusalH: '這個問題我不能替你判斷', why: '為什麼', call1922: '撥打 1922', relatedPages: '相關官方頁面',
     lowRelevance: '與你的問題相關程度較低', lowRelevanceSub: '以下是站內最接近的官方內容，不一定能直接回答你的問題；請點開原文確認，或撥打 1922。', relatedListH: '相關頁面',
+    fullSearch: '用全文搜尋找「{q}」', fullSearchNote: '全文搜尋會列出所有含這個關鍵字的頁面，可依類型、單位、年份篩選。',
     paused: 'AI 問答暫停中，目前提供傳統搜尋結果與 1922 人工諮詢。', pausedReason: '原因', updated: '更新',
     proLabel: '專業模式：引用手冊條次與生效日，不做白話化', translationSource: '此語言沒有經審核的譯文，以下為中文原文。', translationMachine: '以下為機器翻譯（鎖定官方譯名），以中文原文為準。',
     termNote: '「{from}」已改稱「{to}」，以下依現行名稱回答。', lowConf: '這個問題的意圖不夠明確，以下同時列出相關頁面。',
@@ -40,6 +41,7 @@ const S = {
     sitH: 'Current situation', dataDate: 'Data as of', publisher: 'Published by', illustrative: 'Illustrative data', statusBasis: 'Basis', seeTrend: 'See full trend',
     refusalH: "I can't make this judgement for you", why: 'Why', call1922: 'Call 1922', relatedPages: 'Related official pages',
     lowRelevance: 'Only loosely related to your question', lowRelevanceSub: 'These are the closest official passages on this site and may not answer your question directly. Please open the source, or call 1922.', relatedListH: 'Related pages',
+    fullSearch: 'Search all pages for “{q}”', fullSearchNote: 'Full-text search lists every page that contains the keyword; you can filter by type, unit and year.',
     paused: 'AI answers are paused. Keyword search results and the 1922 hotline are available.', pausedReason: 'Reason', updated: 'Updated',
     proLabel: 'Professional mode: cites manual sections and effective dates verbatim', translationSource: 'No reviewed translation is available; showing the Chinese original.', translationMachine: 'Machine translation (official terms locked). The Chinese original prevails.',
     termNote: '"{from}" is now called "{to}".', lowConf: 'Your question is ambiguous, so related pages are listed as well.',
@@ -305,6 +307,13 @@ export async function statsBlock(result) {
     <p class="c-answer__nopredict">${esc(L('noPredict'))}${st.notes?.length ? ` ${esc(st.notes.join('；'))}` : ''}</p>
     ${src ? numberSource(src) : ''}
   </section>`;
+}
+
+/** 第二十八輪：連到 /search/?q=（Pagefind 全文搜尋）。答案頁的關鍵字清單是「最接近的幾筆」，全文搜尋才是「所有含這個詞的頁面＋篩選」。 */
+export function fullTextLink(q) {
+  if (!q) return '';
+  const href = `${url('/search/')}?q=${encodeURIComponent(q)}`;
+  return `<p class="c-answer__fulltext"><a class="c-btn c-btn--ghost c-btn--sm" href="${esc(href)}" data-fulltext>${esc(L('fullSearch', { q }))}</a> <span class="muted">${esc(L('fullSearchNote'))}</span></p>`;
 }
 
 export function traditionalList(list, title = L('listH')) {

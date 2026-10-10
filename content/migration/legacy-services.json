@@ -101,9 +101,10 @@
       "oldUrl": "https://www.cdc.gov.tw/Search/{id}",
       "oldType": "page",
       "verified": false,
-      "status": "pending",
+      "status": "migrated",
+      "newPath": "/search/",
       "owner": "unit.it",
-      "note": "【待決策】兩條路：(A) 直接用 /ask/ 的答案頁，查無或依據不足時附「相關頁面」關鍵字結果清單（已於第二十五輪實作）；(B) 另外導入 Pagefind 之類的靜態全文搜尋，提供依型別、日期篩選的進階搜尋。建議先 A、觀察查無率（見透明報告）再決定是否做 B。",
+      "note": "【A、B 皆已完成（第二十八輪，Issue #38）】(A) /ask/ 答案頁查無或依據不足時附「相關頁面」關鍵字清單（第二十五輪），第二十八輪再於每個答案下方附「用全文搜尋找『…』」連到 /search/?q=；(B) /search/ 以 Pagefind 為全站建靜態全文索引（七語各一份，建置時產生），可依內容類型、對象、權責單位、發布年份篩選，並依相關度或日期排序，網址參數可分享。尚待：① 舊站 /Search/{id} 的真實網址與參數（承辦確認後改 verified: true，伺服器 301 到 /search/）；② 上線後依「搜尋無結果」的關鍵字補同義詞與別名；③ 泰文沒有斷詞，只能整串前綴比對（見 ARCHITECTURE 31.4）；④ 各語言的內容翻譯完成度決定該語言搜得到多少頁。",
       "newRequirements": [
         "owner",
         "reviewedAt",

@@ -22,6 +22,7 @@ import { emitHeaders } from './lib/emit-headers.mjs';
 import { renderAllPages } from './lib/pages.mjs';
 import { emitI18nBundles } from './lib/i18n-split.mjs';
 import { checkJsBudget } from './lib/js-budget.mjs';
+import { buildPagefindIndex } from './lib/pagefind.mjs';
 import { runEval } from '../eval/run-eval.mjs';
 import { todayISO } from './lib/render.mjs';
 import { checkInternalLinks, summarize as summarizeLinks } from './lib/check-internal-links.mjs';
@@ -116,6 +117,10 @@ async function main() {
     console.error(`❌ 有頁面的 JS 超過預算：${[...jsb.public.over, ...jsb.admin.over].slice(0, 10).map((r) => `${r.page} ${(r.bytes / 1024).toFixed(1)}KB`).join('；')}`);
     process.exit(1);
   }  log(`輸出 ${pageCount} 頁 → dist/（${Date.now() - t0} ms）`);
+
+  // 第二十八輪（ARCHITECTURE 31）：Pagefind 全文索引 → dist/pagefind/。必須在複製 PR 預覽之前（預覽各自有自己的索引，不能混進主站）
+  const pfi = await buildPagefindIndex(DIST, { log });
+  if (!pfi.skipped) log(`全文索引 → dist/pagefind/：${pfi.pages} 頁、語言 ${pfi.languages.join('／')}、${pfi.files} 檔 ${(pfi.bytes / 1024 / 1024).toFixed(1)} MB（執行期 ${(pfi.runtime / 1024).toFixed(0)} KB，第一次搜尋才載入）、${pfi.ms} ms`);
 
   // 全站連結完整性（站內連結必須指到存在的檔案；外部連結收集清單；佔位／示意網址 = error）
   // --check 或 CI 下有 error ⇒ exit 1；LINK_CHECK=warn 可暫時降為警告（整合期用），LINK_CHECK=off 略過。
