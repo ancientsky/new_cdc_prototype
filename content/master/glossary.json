@@ -752,6 +752,49 @@
     ]
   },
   {
+    "id": "term.sti",
+    "zh-TW": "性傳染病",
+    "aliases": [
+      "性病",
+      "性傳播疾病",
+      "性傳播感染",
+      "花柳病",
+      "STI",
+      "STD"
+    ],
+    "en": "Sexually transmitted infections (STI)",
+    "ja": "性感染症",
+    "tl": "Impeksyong naililipat sa pakikipagtalik (STI)",
+    "vi": "Bệnh lây truyền qua đường tình dục (STI)",
+    "id_": "Infeksi menular seksual (IMS)",
+    "th": "โรคติดต่อทางเพศสัมพันธ์ (STI)",
+    "domain": "general",
+    "locked": false,
+    "deprecated": [
+      "花柳病"
+    ],
+    "refs": [],
+    "note": "統稱，不是單一疾病：涵蓋梅毒、淋病、愛滋（HIV）、M痘、披衣菌等。第三十一輪新增：民眾常用「性病」查詢，詞彙主檔沒有這個詞時，字元 bigram 會打中「急性病毒性A型肝炎」裡的「性病」兩字而誤答。refs 留空，讓「性病」導向性傳染病專區，而不是指定某一種病。各語言譯名為 Claude 草擬，待詞彙負責人核對。"
+  },
+  {
+    "id": "term.chronic-disease",
+    "zh-TW": "慢性病",
+    "aliases": [
+      "慢性疾病",
+      "高風險慢性病"
+    ],
+    "en": "Chronic disease",
+    "ja": "慢性疾患",
+    "tl": "Malalang sakit (chronic disease)",
+    "vi": "Bệnh mạn tính",
+    "id_": "Penyakit kronis",
+    "th": "โรคเรื้อรัง",
+    "domain": "general",
+    "locked": false,
+    "refs": [],
+    "note": "第三十一輪新增：不是傳染病，收進詞彙主檔是為了詞典邊界——「慢性病」含「性病」兩字，沒有這個詞時，問「性病」會打中流感疫苗接種對象（高風險慢性病）。各語言譯名為 Claude 草擬，待核對。"
+  },
+  {
     "id": "term.syphilis",
     "zh-TW": "梅毒",
     "aliases": [
