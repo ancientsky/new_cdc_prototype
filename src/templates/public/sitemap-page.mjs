@@ -25,7 +25,7 @@ export function render(ctx) {
   ${group(t('nav.documents'), docs.map((d) => li(hrefFor(ctx, d), L(ctx, d, 'title'), `${d.version}${d.isCurrent ? '' : ` · ${t('documents.expired')}`}`)))}
   ${group(t('home.more'), [
     li(url('/services/'), t('services.title')), li(url('/apply/'), t('apply.title')), li(url('/publications/'), t('publications.title')), li(url('/lab/'), t('lab.title')), li(url('/report/'), t('report.title')),
-    li(url('/research/'), t('research.title')), li(url('/glossary/'), t('glossary.title')), li(url('/careers/'), t('careers.title')), li(url('/procurement/'), t('proc.title')), li(url('/notices/'), t('notices.title')), li(url('/media/'), t('media.title')), li(url('/campaigns/'), t('campaigns.title')), li(url('/contact/'), t('contact.title')), li(url('/about/'), t('footer.about')),
+    li(url('/research/'), t('research.title')), li(url('/glossary/'), t('glossary.title')), li(url('/subscribe/'), t('subscribe.title')), li(url('/careers/'), t('careers.title')), li(url('/procurement/'), t('proc.title')), li(url('/notices/'), t('notices.title')), li(url('/media/'), t('media.title')), li(url('/campaigns/'), t('campaigns.title')), li(url('/contact/'), t('contact.title')), li(url('/about/'), t('footer.about')),
   ])}
   ${group(t('home.media'), publishedOf(site, 'media').map((d) => li(hrefFor(ctx, d), L(ctx, d, 'title'), d.basedOnVersionLabel ?? '')))}
   ${group(t('home.topics'), publishedOf(site, 'topics').map((d) => li(hrefFor(ctx, d), L(ctx, d, 'title'))))}

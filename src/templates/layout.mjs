@@ -145,7 +145,8 @@ ${pausedBanner(ctx)}
 <main id="main"${wide ? '' : raw(' class="wrap"')}>${raw(String(body))}</main>
 ${translationBar(ctx, item, hideTranslationBar)}
 <footer class="site-footer"><div class="wrap site-footer__in">
-  <nav class="site-footer__col" aria-labelledby="ft-svc"><h2 class="site-footer__t" id="ft-svc">${t('footer.services')}</h2><ul>${FOOT_SERVICES.map(([p, k]) => html`<li><a href="${url(p)}">${t(k)}</a></li>`)}</ul></nav>
+  <nav class="site-footer__col" aria-labelledby="ft-svc"><h2 class="site-footer__t" id="ft-svc">${t('footer.services')}</h2><ul>${FOOT_SERVICES.map(([p, k]) => html`<li><a href="${url(p)}">${t(k)}</a></li>`)}
+    <li><a href="${url('/subscribe/')}">${t('footer.subscribe')}</a><br><span class="site-footer__hotnote">${t('footer.subscribe.note')}</span></li></ul></nav>
   <nav class="site-footer__col" aria-labelledby="ft-about"><h2 class="site-footer__t" id="ft-about">${t('footer.group.about')}</h2><ul>
     <li><a href="${url('/about/')}">${t('footer.about')}</a></li>${hasIntl ? html`<li><a href="${url('/international/')}">${t('international.title')}</a></li>` : ''}
     <li><a href="${url('/policy/privacy/')}">${t('footer.privacy')}</a></li><li><a href="${url('/policy/ai/')}">${t('footer.ai')}</a></li><li><a href="${url('/accessibility/')}">${t('footer.a11y')}</a></li>

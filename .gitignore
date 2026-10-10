@@ -7,3 +7,6 @@ dist/
 
 # Claude 工作者的 git worktree（本機用）
 .claude/worktrees/
+
+# 第二十八輪：本機模擬資料（訂閱名單、模擬寄出的 .eml）。含信箱，絕不進版控
+.local/
