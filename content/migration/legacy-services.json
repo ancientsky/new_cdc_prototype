@@ -36,7 +36,7 @@
   },
   "legacyRoot": "https://www.cdc.gov.tw/Category/MPage/{id}",
   "showLegacyUntil": "2027-12-31",
-  "sourceNote": "開發環境連不到 www.cdc.gov.tw。只有抗蛇毒血清的網址取自外部審查意見；電子報、核心教材、進階搜尋的舊網址以 {id} 佔位，待承辦補。標【必移轉】者新站一定要有；標【待決策】者需權責單位先拍板。全部 verified:false。",
+  "sourceNote": "開發環境連不到 www.cdc.gov.tw。只有抗蛇毒血清的網址取自外部審查意見（第二十八輪已移轉，內容待權責單位確認）；電子報、核心教材、進階搜尋的舊網址以 {id} 佔位，待承辦補。標【必移轉】者新站一定要有；標【待決策】者需權責單位先拍板。全部 verified:false。",
   "items": [
     {
       "key": "newsletter",
@@ -61,9 +61,10 @@
       "oldUrl": "https://www.cdc.gov.tw/Category/MPage/l_z6ZKErZJ063m6OV_8nXQ",
       "oldType": "page",
       "verified": false,
-      "status": "pending",
+      "status": "migrated",
+      "target": "topic.antivenom",
       "owner": "unit.lab",
-      "note": "【必移轉】屬緊急就醫資訊（毒蛇咬傷處理、抗蛇毒血清儲備與供應醫院），搜尋「抗蛇毒血清」目前站內查無答案（Issue #25）。移轉時須與權責單位確認內容正確與最新、補上 1922／119 就醫提醒，並列為一級內容（人工確認才上線）。",
+      "note": "【必移轉】第二十八輪已移轉為緊急就醫專區 /topics/antivenom/（五要五不、六種常見毒蛇與 4 種血清對照、哪裡有血清、醫療人員段落）與 4 則 Q&A（faq.snakebite-first-aid、faq.snakebite-dont、faq.antivenom-which-snake、faq.antivenom-where），智慧查詢可引用作答。內容依衛福部轉載的疾管署新聞稿與媒體報導整理（開發環境連不到 cdc.gov.tw／mohw.gov.tw，只看得到搜尋摘要），全部標 verification:pending，頁首顯示「內容待權責單位確認」。待檢驗及疫苗研製中心確認：五要五不逐字、止血帶與患肢固定的說法、儲備院所家數與查詢系統網址、毒藥物諮詢電話、血清正式品名、儲備調度是否由新興傳染病整備組協辦、專業版是否補臨床使用說明、外語版本；舊網址 verified 待核對（ARCHITECTURE §32、guide-staff §30）。",
       "newRequirements": [
         "owner",
         "reviewedAt",

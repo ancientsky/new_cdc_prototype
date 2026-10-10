@@ -29,6 +29,20 @@ function linkRow(ctx, l) {
 </li>`;
 }
 
+/** 第二十八輪：分段本文（#s-{key}）。翻譯取 i18n[lang].blocks 同 key 的段落，沒有就用來源語言。 */
+export function sectionOf(ctx, tp, sec) {
+  const tr = ctx.lang === (tp.sourceLang ?? 'zh-TW') ? null : (tp.i18n?.[ctx.lang]?.blocks ?? []).find((x) => x.key === sec.key);
+  return { ...sec, heading: tr?.heading ?? sec.heading, markdown: tr?.markdown ?? sec.markdown };
+}
+function sectionBlock(ctx, tp, sec0) {
+  const sec = sectionOf(ctx, tp, sec0);
+  const pro = sec.audience === 'professional';
+  return html`<section class="c-block c-topic__sec${pro ? ' c-topic__sec--pro' : ''}" id="s-${sec.key}" aria-labelledby="s-${sec.key}-h">
+  <h2 id="s-${sec.key}-h">${sec.heading}${pro ? html` <span class="c-pill c-pill--info">${ctx.t('topic.section.pro')}</span>` : ''}</h2>
+  <div class="c-prose">${raw(md(sec.markdown))}</div>
+</section>`;
+}
+
 export function render(ctx, { item: tp }) {
   const { site, t, fmtDate, lang } = ctx;
   const ended = isTopicEnded(site, tp);
@@ -53,6 +67,7 @@ export function render(ctx, { item: tp }) {
   <div class="c-cols c-cols--2">
     <div class="c-cols__main">
       ${body ? html`<div class="c-prose">${raw(md(body))}</div>` : ''}
+      ${(tp.blocks ?? []).map((sec) => sectionBlock(ctx, tp, sec))}
       <section class="c-block" aria-labelledby="tl-h"><h2 id="tl-h">${t('topic.links')}</h2>
         <ul class="c-toplinks">${tp.links.map((l) => linkRow(ctx, l))}</ul>
         <p class="muted">${t('topic.links.note')}</p>
@@ -74,7 +89,9 @@ export function markdown(ctx, { item: tp }) {
   const { site } = ctx;
   const lines = [`# ${L(ctx, tp, 'title')}`, '', ...mdHeader(ctx, tp, tp.endAt ? `專區期間：${tp.startAt ?? ''}～${tp.endAt}` : '')];
   if (isTopicEnded(site, tp)) lines.push(`> 本專區已於 ${tp.endAt} 結束，保留供查閱。`);
-  lines.push('', L(ctx, tp, 'introMarkdown') ?? tp.introMarkdown ?? '', '', '## 連結', '');
+  lines.push('', L(ctx, tp, 'introMarkdown') ?? tp.introMarkdown ?? '');
+  for (const sec0 of tp.blocks ?? []) { const sec = sectionOf(ctx, tp, sec0); lines.push('', `## ${sec.heading}${sec.audience === 'professional' ? `（${ctx.t('topic.section.pro')}）` : ''}`, '', sec.markdown); }
+  lines.push('', '## 連結', '');
   for (const l of tp.links) lines.push(`- [${L(ctx, l, 'label')}](${l.href.startsWith('/') ? ctx.url(l.href, { absolute: true, noLang: true }) : l.href})${l.note ? `：${l.note}` : ''}${l.status === 'broken' ? '（連結失效，已通知權責單位）' : ''}${l.lastCheckedAt ? `（最後檢查 ${l.lastCheckedAt}）` : ''}`);
   const rel = (tp.contentIds ?? []).map((id) => site.byId.get(id)).filter(Boolean);
   if (rel.length) lines.push('', '## 相關內容', '', ...rel.map((r) => `- ${r.title ?? r.question}：${ctx.url(itemPath(r), { absolute: true, noLang: true })}`));

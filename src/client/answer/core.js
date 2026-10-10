@@ -1059,7 +1059,7 @@ export function createEngine(rawDeps = {}) {
       reviewedAt: c.reviewedAt, nextReviewAt: c.nextReviewAt ?? null, publishedAt: c.publishedAt ?? null, version: c.version ?? null, effectiveAt: c.effectiveAt ?? null,
       isCurrent: c.isCurrent !== false, section: c.section ?? null, family: c.family ?? null, supersedes: c.supersedes ?? null, supersedesVersion: c.supersedesVersion ?? null,
       change: c.change ?? null, license: c.license ?? 'OGDL-1.0', docTitle: c.docTitle ?? null, mdUrl: c.mdUrl ?? null, legacyUrl: c.legacyUrl ?? null,
-      pdfPage: c.pdfPage ?? null, extraction: c.extraction ?? null,
+      pdfPage: c.pdfPage ?? null, extraction: c.extraction ?? null, verification: c.verification ?? null,
       ...typeExtras(c),
     };
   }

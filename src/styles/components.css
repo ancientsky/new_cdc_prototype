@@ -380,7 +380,7 @@ html:not(.js) .c-tabs__print{display:block}
 .c-alert{padding:var(--sp-3) var(--sp-4);border-radius:var(--radius-sm);margin:var(--sp-2) 0;border-left:5px solid;font-size:var(--fs-sm)}
 .c-alert__t{margin-right:6px}
 .c-alert__go{font-weight:700;white-space:nowrap}
-.c-alert--overdue{background:var(--alert-overdue-bg);color:var(--alert-overdue);border-color:#d9a400}
+.c-alert--overdue,.c-alert--unverified{background:var(--alert-overdue-bg);color:var(--alert-overdue);border-color:#d9a400}
 .c-alert--superseded{background:var(--alert-superseded-bg);color:var(--alert-superseded);border-color:var(--status-peak)}
 .c-alert--based-on-revised,.c-alert--revised{background:var(--alert-revised-bg);color:var(--alert-revised);border-color:#e07b00}
 .c-alert--info{background:var(--info-bg);color:var(--info);border-color:var(--info)}

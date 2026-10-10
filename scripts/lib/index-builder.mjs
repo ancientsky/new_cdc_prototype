@@ -323,6 +323,7 @@ export function buildSearchIndex(site) {
       mdUrl: url.startsWith('/factcheck') ? null : `${url.replace(/#.*$/, '').replace(/\/$/, '')}.md`,
       legacyUrl: (item.legacyUrls ?? []).find((u) => !/[{}]/.test(String(u))) ?? null, // 略過 {id} 佔位的舊網址
       terms,
+      ...(item.gov?.unverified ? { verification: 'pending' } : {}), // 第二十八輪：來源卡標「內容待權責單位確認」
       ...extra,
     };
   }
@@ -473,6 +474,15 @@ export function buildSearchIndex(site) {
           const title = src.title ?? item.title;
           const intro = mdSentences(src.introMarkdown ?? '');
           add(make(item, 'intro', title, intro.length ? intro : splitPlain(src.summary ?? item.summary ?? ''), base, { ...L, kind: item.kind ?? null, extraTerms: zh ? ['專區'] : ['topic', 'hub'] }));
+          // 第二十八輪：分段本文每段一塊（#s-{key}）；audience:professional 只進專業版
+          for (const sec of item.blocks ?? []) {
+            const tr = isSource ? sec : (src.blocks ?? []).find((x) => x.key === sec.key);
+            if (!tr?.markdown) continue;
+            const pro = sec.audience === 'professional';
+            add(make(item, `s-${sec.key}`, `${title} · ${tr.heading ?? sec.heading}`, mdSentences(tr.markdown), `${base}#s-${sec.key}`, {
+              ...L, kind: item.kind ?? null, block: sec.key, ...(pro ? { audience: ['professional'] } : {}), extraTerms: [...(sec.keywords ?? [])],
+            }), { proOnly: pro });
+          }
           const linkLabel = (l) => String((isSource ? l.label : l.i18n?.[lang]?.label) ?? '').trim();
           const labels = (item.links ?? []).map(linkLabel).filter(Boolean);
           if (labels.length) add(make(item, 'links', zh ? `${title} · 專區連結` : `${title} · Links`, [zh ? `${title}專區提供：${labels.join('、')}。` : `${title} provides: ${labels.join('; ')}.`], `${base}#links`, { ...L, links: (item.links ?? []).map((l) => ({ label: linkLabel(l) || l.label, href: l.href, external: !!l.external, status: l.status ?? null })), extraTerms: [...(zh ? ['專區'] : []), ...labels] }));

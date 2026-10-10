@@ -1,0 +1,93 @@
+{
+  "id": "faq.snakebite-dont",
+  "type": "faq",
+  "title": "被蛇咬後能不能冰敷、綁止血帶或用嘴把毒吸出來？",
+  "question": "被蛇咬後能不能冰敷、綁止血帶或用嘴把毒吸出來？",
+  "owner": "unit.lab",
+  "steward": "檢驗及疫苗研製中心承辦人（待指派）",
+  "publishedAt": "2026-10-10",
+  "reviewedAt": "2026-10-10",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-10-10"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "none"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "都不建議。疾管署「五不」：不割開傷口、不用嘴吸毒液、不冰敷、不喝酒或刺激性飲料、不延誤就醫；醫師另提醒不綁止血帶。",
+  "keywords": [
+    "冰敷",
+    "止血帶",
+    "吸毒",
+    "割開傷口",
+    "五不",
+    "蛇咬",
+    "被蛇咬"
+  ],
+  "answerMarkdown": "都不建議。疾管署提醒被蛇咬傷的「五不」：\n\n1. 被蛇咬傷不割開傷口，以免感染。\n2. 被蛇咬傷不用嘴吸傷口的毒液，以免感染。\n3. 被蛇咬傷不冰敷，以免組織壞死。\n4. 被蛇咬傷不喝酒或刺激性飲料，以免加速毒液作用。\n5. 被蛇咬傷不延誤就醫，以免耽誤治療時機。\n\n醫師也常提醒：被蛇咬傷不綁止血帶或橡皮筋，阻斷血流可能造成肢體缺血壞死；被咬的手腳儘量固定、減少活動（此項待權責單位確認是否納入官方建議）。最重要的是儘速就醫，緊急請撥 119。",
+  "verification": {
+    "status": "pending",
+    "note": "緊急狀況請撥 119；用藥與處置以醫師判斷為準",
+    "pendingItems": [
+      "逐字核對疾管署現行「五不」文字",
+      "「不綁止血帶、固定患肢」來自醫師受訪的媒體報導，確認是否納入官方建議"
+    ],
+    "sources": [
+      {
+        "label": "衛福部轉載疾管署新聞稿（毒蛇咬傷「五要五不」、儲備點查詢系統、1922）",
+        "url": "https://mohw.gov.tw/cp-16-40357-1.html",
+        "accessedAt": "2026-10-10",
+        "official": true,
+        "verified": false,
+        "note": "搜尋摘要；開發環境連不到 mohw.gov.tw"
+      },
+      {
+        "label": "康健雜誌：醫師說明冰敷、止血帶影響血液循環",
+        "url": "https://www.commonhealth.com.tw/article/88335",
+        "accessedAt": "2026-10-10",
+        "official": false,
+        "verified": false,
+        "note": "第二手資料"
+      },
+      {
+        "label": "TVBS 新聞：醫師說明蛇咬傷處置",
+        "url": "https://news.tvbs.com.tw/health/4024917",
+        "accessedAt": "2026-10-10",
+        "official": false,
+        "verified": false,
+        "note": "第二手資料"
+      }
+    ]
+  }
+}

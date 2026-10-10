@@ -1,0 +1,91 @@
+{
+  "id": "faq.antivenom-which-snake",
+  "type": "faq",
+  "title": "被龜殼花或其他毒蛇咬到要打哪種血清？認不出是哪種蛇怎麼辦？",
+  "question": "被龜殼花或其他毒蛇咬到要打哪種血清？認不出是哪種蛇怎麼辦？",
+  "owner": "unit.lab",
+  "steward": "檢驗及疫苗研製中心承辦人（待指派）",
+  "publishedAt": "2026-10-10",
+  "reviewedAt": "2026-10-10",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-10-10"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "none"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "龜殼花與赤尾鮐用抗龜殼花及赤尾鮐蛇毒血清；雨傘節與飯匙倩（眼鏡蛇）用抗雨傘節及飯匙倩蛇毒血清；百步蛇、鎖鏈蛇各有專用血清。認不出蛇也要立即就醫，由醫師判斷。",
+  "keywords": [
+    "哪種血清",
+    "打哪種血清",
+    "龜殼花",
+    "赤尾鮐",
+    "赤尾青竹絲",
+    "青竹絲",
+    "百步蛇",
+    "雨傘節",
+    "飯匙倩",
+    "眼鏡蛇",
+    "鎖鏈蛇",
+    "認不出蛇",
+    "抗蛇毒血清"
+  ],
+  "answerMarkdown": "疾管署供應 4 種抗蛇毒血清，依蛇種對應如下：\n\n- 被龜殼花咬傷：龜殼花屬出血性蛇毒，對應的血清是抗龜殼花及赤尾鮐蛇毒血清。\n- 被赤尾鮐（赤尾青竹絲）咬傷：對應的血清是抗龜殼花及赤尾鮐蛇毒血清。\n- 被百步蛇咬傷：百步蛇屬出血性蛇毒，對應的血清是抗百步蛇毒血清。\n- 被雨傘節或飯匙倩（眼鏡蛇）咬傷：兩者屬神經性蛇毒，對應的血清是抗雨傘節及飯匙倩蛇毒血清。\n- 被鎖鏈蛇咬傷：鎖鏈蛇兼具出血性與神經性蛇毒，對應的血清是抗鎖鏈蛇毒血清。\n\n要不要使用、使用哪一種與用多少，由醫師依傷口與症狀判斷。認不出是哪一種蛇也不要延誤就醫，把記得的顏色、花紋、頭形告訴醫護人員即可，緊急請撥 119。",
+  "verification": {
+    "status": "pending",
+    "note": "緊急狀況請撥 119；用藥與處置以醫師判斷為準",
+    "pendingItems": [
+      "4 種血清的正式品名寫法以藥品許可證為準",
+      "蛇種與血清對應、蛇毒分類逐字核對"
+    ],
+    "sources": [
+      {
+        "label": "衛福部轉載疾管署新聞稿（4 種抗蛇毒血清、蛇毒分類、2022–2024 年供應量）",
+        "url": "https://mohw.gov.tw/cp-16-82064-1.html",
+        "accessedAt": "2026-10-10",
+        "official": true,
+        "verified": false,
+        "note": "搜尋摘要"
+      },
+      {
+        "label": "衛福部轉載疾管署新聞稿（毒蛇咬傷「五要五不」、儲備點查詢系統、1922）",
+        "url": "https://mohw.gov.tw/cp-16-40357-1.html",
+        "accessedAt": "2026-10-10",
+        "official": true,
+        "verified": false,
+        "note": "搜尋摘要；開發環境連不到 mohw.gov.tw"
+      }
+    ]
+  }
+}

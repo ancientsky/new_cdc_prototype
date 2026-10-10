@@ -288,6 +288,37 @@
         "type": "string"
       }
     },
+    "verification": {
+      "type": "object",
+      "required": ["status"],
+      "additionalProperties": false,
+      "description": "第二十八輪（ARCHITECTURE 32）：內容事實確認狀態。依公開資料整理、尚待權責單位逐項確認的內容填 status:pending ⇒ 頁首顯示「內容待權責單位確認」、答案引擎來源卡加註、治理待辦 content-unverified；權責單位確認後改 confirmed 並填 confirmedBy／confirmedAt。不填＝沿用一般審閱流程（reviewedAt）。",
+      "properties": {
+        "status": { "enum": ["pending", "confirmed"] },
+        "note": { "type": "string", "description": "給讀者看的一句話（顯示在頁首警示內）" },
+        "pendingItems": { "type": "array", "items": { "type": "string" }, "description": "還要權責單位確認的事項（給承辦人看，列在待辦）" },
+        "confirmedBy": { "type": "string", "description": "確認者職稱（不放真名）" },
+        "confirmedAt": { "type": "string", "format": "date" },
+        "sources": {
+          "type": "array",
+          "description": "整理時依據的來源（網址、存取日、是否已逐字核對）",
+          "items": {
+            "type": "object",
+            "required": ["label", "url"],
+            "additionalProperties": false,
+            "properties": {
+              "label": { "type": "string" },
+              "url": { "type": "string", "pattern": "^https?://" },
+              "accessedAt": { "type": "string", "format": "date" },
+              "official": { "type": "boolean", "description": "true＝政府機關正式發布（新聞稿、公告）；false＝媒體或醫院衛教等第二手資料" },
+              "verified": { "type": "boolean", "description": "true＝已開啟原文逐字核對；false＝只看過搜尋摘要或轉載" },
+              "note": { "type": "string" }
+            }
+          }
+        }
+      },
+      "allOf": [{ "if": { "properties": { "status": { "const": "confirmed" } } }, "then": { "required": ["confirmedBy", "confirmedAt"] } }]
+    },
     "legacyUrls": {
       "type": "array",
       "description": "現行官網對應網址（301 對照與來源連結）。舊網址 ID 不確定者以 URI Template 佔位（例：https://www.cdc.gov.tw/Disease/SubIndex/{id}），轉址時標 pattern、不進伺服器對照檔（ARCHITECTURE 13.1）",

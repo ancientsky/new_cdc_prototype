@@ -122,7 +122,10 @@ export const TODO_KIND_LABELS = {
   'asset-orphan': '未宣告的孤兒檔',
   'post-publish-review': '上線後複核',
   'pdf-unreviewed': 'PDF 機讀版待校對',
+  'content-unverified': '內容待權責單位確認',
 };
+/** 第二十八輪：verification.status:pending 的待辦期限（自 reviewedAt 起算，日）。一級緊急就醫內容不宜長期掛「待確認」 */
+export const UNVERIFIED_FIX_DAYS = 14;
 /** 排程發布（publishAt 未到）的生命週期顯示文字（lifecycle 仍為 scheduled，與文件「尚未生效」共用代碼） */
 export const SCHEDULED_PUBLISH_LABEL = '排程中';
 /** 檔案資產待辦期限（日） */
@@ -501,6 +504,19 @@ export function applyGovernance(site) {
       });
     }
     if (item.status === 'archived' && !gov.superseded) gov.annotations.push({ kind: 'archived', level: 'info', text: '本內容已封存，僅供查閱。', href: null, path: null });
+
+    // 第二十八輪（ARCHITECTURE 32）：內容待權責單位確認（verification.status:pending）
+    // 頁首警示＋答案來源卡加註＋待辦。不擋白名單：一級緊急就醫資訊「有依據來源的整理」比「站內查無」安全，
+    // 但讀者必須看得到「尚未確認」，權責單位也必須有一筆會逾期的待辦。
+    gov.unverified = item.verification?.status === 'pending';
+    if (gov.unverified && published && !gov.superseded) {
+      const note = item.verification.note ? `${String(item.verification.note).replace(/[。]$/, '')}。` : '';
+      gov.annotations.push({ kind: 'unverified', level: 'warning', text: `本頁依公開資料整理，尚待權責單位（${unitName(item.owner)}）逐項確認。${note}`, href: null, path: null });
+      const pend = item.verification.pendingItems ?? [];
+      addTodo({ id: `content-unverified:${item.id}`, kind: 'content-unverified', item, dueAt: addDays(item.reviewedAt ?? today, UNVERIFIED_FIX_DAYS),
+        severity: (item.audience ?? []).includes('public') ? 'high' : 'medium', pendingItems: pend,
+        text: `「${item.title}」內容待確認${pend.length ? `（${pend.length} 項：${pend.slice(0, 3).join('；')}${pend.length > 3 ? '…' : ''}）` : ''}；確認後把 verification.status 改成 confirmed 並填 confirmedBy／confirmedAt（guide-staff §30）` });
+    }
 
     // R5 翻譯與可渲染語言（R16：以來源語言為準；sourceLang≠zh-TW 時 zh-TW 也是譯文）
     const srcLang = sourceLangOf(item);
