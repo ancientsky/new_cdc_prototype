@@ -933,3 +933,14 @@ manualStatus?: enum[cancelled, failed（流標）], award?: { date, winner, amou
 - i18n `ld.*`（zh-TW、en）。
 - 測試 `tests/longdoc.test.mjs`：套用條件、分組（9 組、無掉段）、每段 id 與頁碼錨點唯一、索引每塊錨點都在頁面上、條列層級、ui.js 行為存在；`pdf-ingest.test.mjs` 文件頁斷言改為 `details`。
 
+## 25. 第二十二輪（2026-10-09）：借 TinaCMS 的後台設計（右側即時預覽、點區塊跳欄位、群組摺疊、黏住的儲存列、前台編輯鈕）
+
+- 不引入 TinaCMS（理由：docs/architecture-decisions.md §14）。只借四個設計：編輯時看得到頁面、點頁面區塊跳欄位、群組欄位摺疊且 summary 顯示值、存檔狀態永遠看得到。
+- `src/client/admin/page-preview.js`：`renderPreviewHtml(f, h)` 純函式（f＝`readForm()` 結果，h＝`{ md, typeLabel, unitName, laneLabel, today, siteBase, basedTitle, langLabel, taskLabel, assets, summary }`），每個區塊 `.adm-pv__blk[data-field][role=button][tabindex=0]`；`FIELD_MAP[field] = { focus, within, label }`（focus＝點了要聚焦的選擇器，within＝反向亮起時「游標在這裡面」的選擇器）。`initPagePreview({ root, form, getState, helpers })` → `{ repaint, repaintSoon, focusField }`；`focusField` 會打開祖先 `<details>`、`scrollIntoView`、聚焦、在最近的 `.adm-field/.adm-fieldset/.adm-assets/.adm-editor/details` 上加 `adm-field--hit` 1.4 秒；`form` 的 `focusin` 把對應區塊加 `is-active`。
+- 內文圖片：已選檔 → blob URL；`/files/…` 還沒選檔 → 1×1 SVG data URI 佔位（**不發網路請求**），repaint 後去掉 `src`、加 `adm-img-missing`（與編輯器一致）。
+- `publish.mjs`：右欄 `.adm-result--sticky` 兩頁籤 `#pt-prev/#pp-prev`（`#page-preview`）、`#pt-res/#pp-res`（原 `#pre-result`、`#pre-sec` id 不變；新增 `#pre-stale` 黃框與 `#btn-rerun`、頁籤徽章 `#pt-res-badge`）。「提供語言」「發布時間」包進 `<details class="adm-group" id="g-langs|g-timing">`，summary 內 `#g-langs-sum/#g-timing-sum`；fieldset 加 `adm-fieldset--ingroup`、legend 改 `adm-sr-only`。動作列 `#pub-actions.adm-actions--sticky` 內 `#f-savestate[data-state=dirty|saved]`。內容 ID 與動作列不摺疊（Playwright 測試會直接 fill `#f-id`）。
+- `publish.js`：`paintGroups()`（語言數、缺理由數、排程／緊急／立即；有錯自動 `open` 並標 `adm-red`）、`paintStale()`（`A.text !== analysisText(readForm())` ⇒ 顯示黃框、徽章「需重跑」）、`paneTab('prev'|'res')`（存 `cdc.admin.paneTab`；`runPreprocess` 非 silent 一律切到 `res`，silent 還原上次頁籤）、`paintSaveState()`／`markDirty()`、`pvHelpers()`；表單 `input/change`、編輯器與附件面板 `onChange`、`paintBased`、`applyTypeUI` 都會 `PV.repaintSoon()`（250 ms debounce）。`Ctrl/⌘+S` ＝ `saveDraft(true)`。`window.__admPublish` 多 `preview`、`paneTab`。
+- 前台：`ui.js` `staffEditFab()`——有未過期的 `cdc.admin.session` 且頁面有 `.c-page-data__staff a` 時，在 `<body>` 末插入 `<a class="c-editfab">`，href 同頁尾連結；i18n `pagedata.editfab`、`pagedata.editfab.aria`（七語）。列印隱藏；≤600px 只顯示圖示。這只是捷徑，權限仍由後台頁與正式環境閘道判定。
+- CSS：admin.css 尾端 `.adm-result--sticky`（≥1101px 黏住）、`.adm-tabs--pane`、`.adm-tabbadge*`、`.adm-stale`、`.adm-pv*`、`.adm-field--hit`、`.adm-group*`、`.adm-fieldset--ingroup`、`.adm-actions--sticky`（≤760px 改 static）、`.adm-savestate*`；components.css 尾端 `.c-editfab*`。
+- 測試 `tests/round22-ui.test.mjs`（模板結構、純函式渲染與跳脫、FIELD_MAP 對得到頁面 id、七語字串）；`admin-editor.test.mjs` 端到端的頁籤計數改成只數 `.adm-tabs--editor`。
+

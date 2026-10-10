@@ -4,6 +4,8 @@ import * as P from './preprocess.js';
 import { initEditor } from './editor.js';
 import { initAssets } from './assets-panel.js';
 import { zipBlob } from './zip-store.js';
+import { initPagePreview } from './page-preview.js';
+import { mdToHtml } from './md-convert.js';
 
 const D = readEmbedded('adm-publish-data', {});
 const KEY = 'cdc.admin.draft';
@@ -22,6 +24,7 @@ let sel = { chips: {}, manual: [], summary: '', st: {}, ack: false, stage: 'edit
 let llmDrafts = {};
 let ED = null; // 內文編輯器（editor.js）
 let ASSETS = null; // 附件與圖片面板（assets-panel.js）
+let PV = null; // 右側「頁面預覽」（page-preview.js，第二十二輪）
 let lastId = ''; // 內容 ID 變動時，內文裡的 /files/{舊id}/ 引用跟著改
 const LIMITS = P.normalizeLimits(window.CDC_ASSETS_LIMITS ?? D.assetsLimits);
 const LANES = P.normalizeLanes(D.lanes); // 發布車道（建置時內嵌 content/governance/lanes.json；缺檔用契約預設）
@@ -137,6 +140,7 @@ function applyTypeUI(resetDefaults = true) {
   if (!ua && $('#f-urgent').checked) { $('#f-urgent').checked = false; statusEl.textContent = '已取消「緊急發布」：只有新聞稿、致醫界通函、澄清可以用。'; }
   paintLane();
   if (resetDefaults) autoId();
+  paintGroups(); PV?.repaintSoon();
 }
 /** 車道徽章與一句說明（隨型別、urgent、publishAt 即時更新），並顯示 urgent／publishAt 的預檢。 */
 function paintLane() {
@@ -200,6 +204,7 @@ function autoId() {
 // ---------- 依據正本 ----------
 function paintBased() {
   $('#f-based-chips').innerHTML = basedOn.map((id, i) => `<li class="adm-chip">${esc(id)}<button type="button" data-rm="${i}" aria-label="移除 ${esc(id)}">×</button></li>`).join('');
+  PV?.repaintSoon();
 }
 function searchBased(q) {
   const list = $('#f-based-list'), input = $('#f-based-q');
@@ -244,9 +249,66 @@ function fillVersionLabel() {
 function saveDraft(msg) {
   const d = { ...readForm(), derived: sel, savedAt: new Date().toISOString() };
   store.set(KEY, d);
-  if (msg) { statusEl.textContent = `已儲存草稿（${new Date().toLocaleTimeString('zh-TW', { hour12: false })}，僅存本機瀏覽器）`; }
+  const hm = new Date().toLocaleTimeString('zh-TW', { hour12: false, hour: '2-digit', minute: '2-digit' });
+  if (msg) { statusEl.textContent = `已儲存草稿（${hm}，僅存本機瀏覽器）`; }
+  paintSaveState('saved', `草稿已存在這台電腦 · ${hm}`);
 }
 const autosave = debounce(() => saveDraft(false), 400);
+/** 黏住的動作列右側：dirty（剛改、還沒自動存）／saved（已存）。借 TinaCMS 的「存檔按鈕永遠看得到、狀態一眼看出」。 */
+function paintSaveState(state, text) {
+  const el = $('#f-savestate'); if (!el) return;
+  el.dataset.state = state; $('#f-savestate-text').textContent = text;
+}
+const markDirty = () => paintSaveState('dirty', '有變更，自動儲存中…');
+
+// ---------- 第二十二輪：欄位群組摘要、結果過期、右側頁籤 ----------
+/** 摺疊群組的 summary 顯示目前值，收起來也看得到設定（TinaCMS group 欄位的做法）。 */
+function paintGroups() {
+  const f = readForm();
+  const on = Object.values(f.langs).filter((l) => l.on).length + 1;
+  const off = P.LANGS.length - on;
+  const noReason = langIssues().length;
+  const ls = $('#g-langs-sum'); if (ls) { ls.textContent = `${on === P.LANGS.length ? '七語' : `${on} 語`}${off ? `，${off} 語不提供` : ''}${noReason ? `，${noReason} 語缺理由` : ''}`; ls.classList.toggle('adm-red', !!noReason); if (noReason) $('#g-langs').open = true; }
+  const ts = $('#g-timing-sum'); if (ts) {
+    const at = P.publishAtMs(f.publishAt);
+    ts.textContent = f.urgent ? '緊急發布：立即上線' : Number.isFinite(at) ? `排程 ${P.fmtTaipei(at)}` : '合併後立即上線';
+    const bad = P.laneChecks(f, Date.now(), LANES).some((c) => c.level === 'error');
+    ts.classList.toggle('adm-red', bad); if (bad) $('#g-timing').open = true;
+  }
+}
+/** 送出預處理後又改了標題／內文／型別文字欄：實體與一致性檢查已過時，提醒重跑（結果頁籤加徽章）。 */
+function paintStale() {
+  const box = $('#pre-stale'), badge = $('#pt-res-badge');
+  if (!box) return;
+  const stale = !!A && analysisText(readForm()) !== A.text;
+  box.hidden = !stale;
+  if (badge) { badge.hidden = !A; badge.textContent = stale ? '需重跑' : '已完成'; badge.classList.toggle('adm-tabbadge--warn', stale); }
+}
+/** 右側頁籤：prev＝頁面預覽、res＝預處理結果 */
+function paneTab(name) {
+  for (const k of ['prev', 'res']) {
+    const on = k === name;
+    const t = $(`#pt-${k}`), p = $(`#pp-${k}`);
+    if (!t || !p) return;
+    t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; p.hidden = !on;
+  }
+  store.set('cdc.admin.paneTab', name);
+}
+const afterChange = debounce(() => { paintGroups(); paintStale(); }, 150);
+function pvHelpers() {
+  const f = readForm();
+  const lane = P.laneOf(f.type, f.urgent, LANES);
+  return {
+    // 內文圖片：已選檔用 blob URL；/files/ 路徑還沒選檔的用空白佔位（不發網路請求），repaint 後標成「尚未選取檔案」
+    md: (m) => mdToHtml(m, { marked: window.marked, imgSrc: (src) => { const u = ASSETS?.resolveImg(src); return u ? { src: u, orig: src } : /^\/files\//.test(src) ? { src: 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%221%22 height=%221%22/%3E', orig: src } : null; } }),
+    typeLabel, unitName: (id) => D.unitNames?.[id] ?? id, laneLabel: lane?.label, today: today(), siteBase: D.siteBase,
+    basedTitle: (id) => D.catalog.find((c) => c.id === id)?.title ?? D.families?.find((x) => x.family === id)?.title ?? id,
+    langLabel: (c) => P.LANGS.find((l) => l.code === c)?.label ?? c,
+    taskLabel: (t) => ({ symptoms: '有症狀怎麼辦', vaccines: '疫苗與預防接種', travel: '出國與入境', situation: '現在的疫情', rumor: '謠言查證', data: '開放資料與統計' })[t] ?? t,
+    assets: (ASSETS?.items?.() ?? []).map((a) => ({ file: a.file, kind: a.kind, alt: a.alt, title: a.title })),
+    summary: A ? sel.summary : '',
+  };
+}
 
 // ---------- 型別專屬：預處理文字與檢查 ----------
 /** 送進實體抽取／一致性檢查的文字：標題＋內文＋該型別的文字欄位（影音＝逐字稿）。 */
@@ -316,6 +378,8 @@ async function runPreprocess({ silent = false } = {}) {
   paintResult();
   resultEl.setAttribute('aria-busy', 'false');
   saveDraft(false);
+  paintStale(); PV?.repaintSoon();
+  paneTab(silent ? (store.get('cdc.admin.paneTab') ?? 'res') : 'res');
   if (!silent) resultEl.focus?.();
 }
 const chipKey = (m) => `${m.kind}:${m.id ?? m.label}`;
@@ -543,6 +607,7 @@ $('#btn-clear').addEventListener('click', () => {
   simShown = false; store.del(KEY); sel = { chips: {}, manual: [], summary: '', st: {}, ack: false, stage: 'edit' }; A = null; llmDrafts = {}; idTouched = false; lastId = ''; ASSETS?.clear();
   writeForm({ type: 'faq', owner: getUnit() === 'all' ? undefined : getUnit(), audience: ['public'] }); applyTypeUI(true);
   resultEl.innerHTML = '<p class="adm-muted">已清空。</p>'; secEl.textContent = '尚未送出'; statusEl.textContent = '已清空草稿。';
+  paintStale(); paintGroups(); paneTab('prev'); PV?.repaint();
 });
 const SAMPLES = {
   media: {
@@ -602,7 +667,7 @@ form.addEventListener('input', (e) => {
   if (e.target.id === 'x-family') fillSupersedes();
   if (e.target.id === 'f-publish-at') paintLane();
   if (['f-title', 'x-family', 'x-effective', 'x-disease', 'x-vaccine', 'x-labdisease'].includes(e.target.id)) autoId();
-  autosave();
+  markDirty(); autosave(); afterChange(); PV?.repaintSoon();
 });
 form.addEventListener('change', (e) => {
   if (e.target.id === 'f-type') applyTypeUI(true);
@@ -610,9 +675,15 @@ form.addEventListener('change', (e) => {
   if (e.target.name === 'lang') paintLangReasons();
   if (e.target.id === 'x-labdisease') { const d = D.diseaseMaster.find((x) => x.id === e.target.value); $('#x-sendhours-hint').textContent = d?.notifyWithinHours != null ? `${d.name}主檔通報時限 ${d.notifyWithinHours} 小時；送驗時限超過會警告。` : '超過主檔通報時限時會警告。'; autoId(); if (d && !val('#f-title')) $('#f-title').value = `${d.name}檢驗項目`; }
   if (e.target.id === 'x-disease' && e.target.value) { const d = D.diseaseMaster.find((x) => x.id === e.target.value); if (d && !val('#f-title')) $('#f-title').value = d.name; }
-  autosave();
+  markDirty(); autosave(); afterChange(); PV?.repaintSoon();
   if (A) paintResultKeepFocus();
 });
+// 右側頁籤、重跑、Ctrl+S（TinaCMS 的 ⌘S 存檔）
+$('#pt-prev')?.addEventListener('click', () => paneTab('prev'));
+$('#pt-res')?.addEventListener('click', () => paneTab('res'));
+$$('.adm-tabs--pane [role="tab"]').forEach((t) => t.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); const other = t.id === 'pt-prev' ? 'res' : 'prev'; paneTab(other); $(`#pt-${other}`).focus(); } }));
+$('#btn-rerun')?.addEventListener('click', () => { runPreprocess(); });
+document.addEventListener('keydown', (e) => { if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && e.key.toLowerCase() === 's') { e.preventDefault(); ED?.flush(); saveDraft(true); } });
 function paintResultKeepFocus() { const id = document.activeElement?.id; paintResult(); if (id) document.getElementById(id)?.focus?.(); }
 $('#f-based-q').addEventListener('input', (e) => searchBased(e.target.value));
 $('#f-based-q').addEventListener('keydown', (e) => { if (e.key === 'Escape') { $('#f-based-list').hidden = true; } if (e.key === 'ArrowDown') $('#f-based-list button')?.focus(); });
@@ -731,15 +802,17 @@ function mountEditor() {
   ASSETS = initAssets({
     root: $('#asset-panel'), limits: LIMITS, licenses: D.licenses,
     getContentId: () => $('#f-id').value.trim(), getBody: () => { ED?.flush(); return ta.value; },
-    onChange: ({ structural } = {}) => { autosave(); if (structural) ED?.repaint(); repaintResultSoon(); },
+    onChange: ({ structural } = {}) => { markDirty(); autosave(); if (structural) ED?.repaint(); repaintResultSoon(); PV?.repaintSoon(); },
     insertImage: (im) => ED?.insertImage(im),
     renameRefs: (from, to) => rewriteBody((b) => b.split(from).join(to)),
   });
   ED = initEditor({
     textarea: ta, resolveImg: (p) => ASSETS?.resolveImg(p),
     getImages: () => ASSETS?.images() ?? [], requestImage: () => ASSETS?.requestImage(), onFiles: (fs) => ASSETS?.addFiles(fs),
-    onChange: () => { ASSETS?.refreshIssues(); },
+    onChange: () => { ASSETS?.refreshIssues(); markDirty(); afterChange(); PV?.repaintSoon(); },
   });
+  const pvRoot = $('#page-preview');
+  if (pvRoot) PV = initPagePreview({ root: pvRoot, form, getState: readForm, helpers: pvHelpers, onFocusField: () => { /* 聚焦後預覽區塊由 focusin 亮起 */ } });
 }
 const repaintResultSoon = debounce(() => { if (A) paintResultKeepFocus(); }, 300);
 (function init() {
@@ -759,9 +832,11 @@ const repaintResultSoon = debounce(() => { if (A) paintResultKeepFocus(); }, 300
     writeForm({ type: P.TYPES.some((t) => t.value === qt) ? qt : 'faq', owner: u !== 'all' ? u : undefined, audience: ['public'] });
     applyTypeUI(true);
   }
-  document.addEventListener('adm:unit', () => { if (!val('#f-title') && !val('#f-body') && getUnit() !== 'all') $('#f-owner').value = getUnit(); });
+  paintGroups(); PV?.repaint();
+  paneTab('prev');
+  document.addEventListener('adm:unit', () => { if (!val('#f-title') && !val('#f-body') && getUnit() !== 'all') $('#f-owner').value = getUnit(); PV?.repaintSoon(); });
   document.addEventListener('click', (e) => { if (e.target?.id === 'btn-edit-cancel') { editing = null; paintEditBox(); store.del(KEY); location.href = url('/admin/publish/'); } });
   form.addEventListener('input', debounce(() => { if (editing) paintEditDiff(); }, 400));
-  window.__admPublish = { runPreprocess, exportObj, buildPackage, startEdit, get editing() { return editing; }, get editor() { return ED; }, get assets() { return ASSETS; }, get state() { return { sel, A }; } }; // 供自動化測試
+  window.__admPublish = { runPreprocess, exportObj, buildPackage, startEdit, get editing() { return editing; }, get editor() { return ED; }, get assets() { return ASSETS; }, get state() { return { sel, A }; }, get preview() { return PV; }, paneTab }; // 供自動化測試
 })();
 void normPath; void today;

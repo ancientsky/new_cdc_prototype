@@ -4,6 +4,7 @@
 //   cdc.admin.audit         登入稽核（append-only，最多 200 筆）
 //   cdc.admin.unit          單位視角（單位 id 或 'all'；只有跨單位角色能改）
 //   cdc.admin.draft         上架表單草稿
+//   cdc.admin.paneTab       上架頁右側頁籤（prev＝頁面預覽、res＝預處理結果；第二十二輪）
 //   cdc.admin.queue         已送複核的草稿佇列
 //   cdc.admin.reviewActions 複核區「通過／退回」紀錄
 //   cdc.admin.reviewed      審閱到期「標記已審閱（示範）」紀錄

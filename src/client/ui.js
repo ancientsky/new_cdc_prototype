@@ -503,3 +503,20 @@ qsa('[data-mailbox]').forEach((root) => {
     root.querySelector('[data-mb-mailto]').focus();
   });
 });
+
+/* ───────── 同事的「編輯這頁」浮動按鈕（第二十二輪，借 TinaCMS 的鉛筆按鈕） ─────────
+   只有這台瀏覽器有後台工作階段（cdc.admin.session，未過期）時才出現；目標與頁尾「同事修改這頁」同一條連結（/admin/publish/?edit={id}）。
+   公開讀者永遠看不到；session 真偽由後台頁自己再驗一次，這裡只是捷徑。 */
+export function staffEditFab(doc = document) {
+  const link = doc.querySelector('.c-page-data__staff a');
+  if (!link || doc.querySelector('.c-editfab')) return null;
+  const s = store.get('cdc.admin.session');
+  if (!s || typeof s.exp !== 'number' || Date.now() >= s.exp) return null;
+  const a = doc.createElement('a');
+  a.className = 'c-editfab'; a.href = link.getAttribute('href'); a.rel = 'nofollow';
+  a.setAttribute('aria-label', T('pagedata.editfab.aria'));
+  a.innerHTML = `<span class="c-editfab__ic" aria-hidden="true">✎</span><span class="c-editfab__t">${T('pagedata.editfab')}</span>`;
+  doc.body.appendChild(a);
+  return a;
+}
+try { staffEditFab(); } catch { /* 任何情況都不能影響公開頁 */ }

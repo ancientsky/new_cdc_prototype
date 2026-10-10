@@ -197,31 +197,46 @@ ${pageHead({
           <div class="adm-field" data-for="recruit"><label for="x-positions">名額</label><input type="number" id="x-positions" min="0"></div>
           <div class="adm-field" data-for="procurement"><label for="x-budget">預算（新臺幣元）</label><input type="number" id="x-budget" min="0"></div>
         </div></fieldset>
-      <fieldset class="adm-fieldset"><legend>提供語言</legend>
+      <details class="adm-group" id="g-langs"><summary><span class="adm-group__t">提供語言</span><span class="adm-group__sum" id="g-langs-sum" aria-live="polite"></span></summary>
+      <fieldset class="adm-fieldset adm-fieldset--ingroup"><legend class="adm-sr-only">提供語言</legend>
         <div class="adm-langs" id="f-langs">${LANGS.map((l) => html`<div class="adm-lang"><label><input type="checkbox" name="lang" value="${l.code}" ${l.code === 'zh-TW' ? raw('checked disabled') : ''}> ${l.label}${l.code === 'zh-TW' ? '（正本）' : ''}</label>${l.code === 'zh-TW' ? '' : html`<input type="text" data-reason="${l.code}" hidden placeholder="取消理由（必填）" aria-label="${l.label} 取消提供的理由">`}</div>`)}</div>
-        <span class="adm-hint" id="f-langs-hint">依型別預設勾選；取消勾選須填理由。</span></fieldset>
-      <fieldset class="adm-fieldset" id="f-timing"><legend>發布時間</legend>
+        <span class="adm-hint" id="f-langs-hint">依型別預設勾選；取消勾選須填理由。</span></fieldset></details>
+      <details class="adm-group" id="g-timing"><summary><span class="adm-group__t">發布時間</span><span class="adm-group__sum" id="g-timing-sum" aria-live="polite"></span></summary>
+      <fieldset class="adm-fieldset adm-fieldset--ingroup" id="f-timing"><legend class="adm-sr-only">發布時間</legend>
         <div class="adm-grid adm-grid--2">
           <div class="adm-field"><label for="f-publish-at">排程發布（選填）</label><input type="datetime-local" id="f-publish-at" name="publishAt" aria-describedby="f-publish-at-hint f-timing-msgs"><span class="adm-hint" id="f-publish-at-hint">臺北時間。留空＝合併後立即上線；填了就到點才上線，未到點網站、索引、sitemap、API 都看不到，狀態標為「排程中」。</span></div>
           <div class="adm-field" id="f-urgent-wrap" hidden><label class="adm-check" for="f-urgent"><input type="checkbox" id="f-urgent" name="urgent"> 緊急發布：立即上線並通知複核</label><span class="adm-hint">只限新聞稿、致醫界通函、澄清。走緊急車道（${EM.slaMinutes} 分鐘內上線），上線後公關室 ${EM.postPublishReviewHours} 小時內複核；不要用在不趕時間的內容。</span></div>
         </div>
         <ul class="adm-lanemsgs" id="f-timing-msgs" role="status" aria-live="polite"></ul>
-      </fieldset>
+      </fieldset></details>
       <div class="adm-field"><label for="f-id">內容 ID（自動產生，可修改）</label><input type="text" id="f-id" placeholder="faq.xxx"></div>
-      <div class="adm-actions">
+      <div class="adm-actions adm-actions--sticky" id="pub-actions">
         <button type="submit" class="adm-btn" id="btn-submit">送出預處理</button>
-        <button type="button" class="adm-btn adm-btn--ghost" id="btn-save">儲存草稿</button>
+        <button type="button" class="adm-btn adm-btn--ghost" id="btn-save" title="Ctrl+S">儲存草稿</button>
         <button type="button" class="adm-btn adm-btn--ghost" id="btn-sample">載入範例</button>
         <button type="button" class="adm-btn adm-btn--ghost" id="btn-clear">清空表單</button>
+        <span class="adm-actions__spacer"></span>
+        <span class="adm-savestate" id="f-savestate" aria-live="polite"><span class="adm-savestate__dot" aria-hidden="true"></span><span id="f-savestate-text">草稿會自動存在這台電腦</span></span>
       </div>
       <p class="adm-muted" id="f-status" role="status" aria-live="polite"></p>
     </form>
   </section>
 
-  <section class="adm-result" aria-labelledby="pre-h">
-    <div class="adm-result__head"><h2 id="pre-h" style="margin:0;font-size:var(--fs-md)">自動預處理結果 · <span id="pre-sec">尚未送出</span> · 全部需人工確認</h2></div>
-    <div class="adm-result__body" id="pre-result" tabindex="-1" aria-live="polite" aria-busy="false">
-      <p class="adm-muted">在左側填寫內文後按「送出預處理」。預處理在你的瀏覽器內執行，不會把內文送到任何伺服器；只有啟用 LLM 模式（BYOK）的多語初稿才會呼叫你自己的 API key。</p>
+  <section class="adm-result adm-result--sticky" aria-label="右側面板：頁面預覽與預處理結果">
+    <div class="adm-tabs adm-tabs--pane" role="tablist" aria-label="右側面板">
+      <button type="button" role="tab" id="pt-prev" aria-controls="pp-prev" aria-selected="true">頁面預覽</button>
+      <button type="button" role="tab" id="pt-res" aria-controls="pp-res" aria-selected="false" tabindex="-1">預處理結果 <span class="adm-tabbadge" id="pt-res-badge" hidden></span></button>
+    </div>
+    <div role="tabpanel" id="pp-prev" aria-labelledby="pt-prev" class="adm-result__body adm-result__body--pv">
+      <p class="adm-hint adm-pv__help">上線後頁面的即時預覽，左邊一邊打、這裡跟著變。<strong>點預覽裡任一區塊，就跳到左側對應欄位</strong>；游標在哪個欄位，對應區塊會亮起。只是示意版面，正式樣式以建置結果為準。</p>
+      <div id="page-preview" tabindex="-1" aria-live="off"></div>
+    </div>
+    <div role="tabpanel" id="pp-res" aria-labelledby="pt-res" hidden>
+      <div class="adm-result__head"><h2 id="pre-h" style="margin:0;font-size:var(--fs-md)">自動預處理結果 · <span id="pre-sec">尚未送出</span> · 全部需人工確認</h2></div>
+      <div class="adm-box adm-box--warn adm-stale" id="pre-stale" role="status" hidden><strong>表單在送出預處理後改過</strong>實體、摘要與一致性檢查是依上一版內文算的；確認前請<button type="button" class="adm-btn adm-btn--sm" id="btn-rerun">重新送出預處理</button></div>
+      <div class="adm-result__body" id="pre-result" tabindex="-1" aria-live="polite" aria-busy="false">
+        <p class="adm-muted">在左側填寫內文後按「送出預處理」。預處理在你的瀏覽器內執行，不會把內文送到任何伺服器；只有啟用 LLM 模式（BYOK）的多語初稿才會呼叫你自己的 API key。</p>
+      </div>
     </div>
   </section>
 </div>
