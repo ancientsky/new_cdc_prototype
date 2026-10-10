@@ -296,7 +296,7 @@ test('開發者頁列出 legacy-map.json 與 redirects/ 三檔；有移轉清單
 test('i18n：本輪新增的介面字七語齊備（長說明文字允許只有 zh-TW／en）', () => {
   const keys = Object.keys(STRINGS['zh-TW']).filter((k) => /^(hub\.|legacy\.|404\.(moved|legacy|search|noscript))/.test(k));
   assert.ok(keys.length >= 80, `新增 key 數 ${keys.length}`);
-  const twoLang = /^hub\.pro\.(docs\.lead|docs\.none|report\.lead|programs\.(lead|docs|services|links)|services\.lead|stats\.(lead|situation|updated)|research\.(lead|year))$/;
+  const twoLang = /^hub\.pro\.(docs\.lead|docs\.none|report\.lead|programs\.(lead|docs|services|links)|services\.lead|curriculum\.lead|stats\.(lead|situation|updated)|research\.(lead|year))$/;
   for (const k of keys) {
     for (const lang of twoLang.test(k) ? ['zh-TW', 'en'] : LANGS) assert.ok(STRINGS[lang][k], `${lang} 缺 ${k}`);
   }

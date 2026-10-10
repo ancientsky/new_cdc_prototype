@@ -118,6 +118,7 @@ export function governanceExt(ctx, item) {
     'cdc:isCurrent': g.isCurrent ?? true,
     'cdc:supersededBy': g.supersededBy ?? null,
     'cdc:aiWhitelist': !!g.whitelist?.effective,
+    ...(item.verification ? { 'cdc:contentVerification': item.verification.status } : {}), // 第二十八輪：pending＝內容待權責單位確認
     'cdc:sensitivity': item.sensitivity,
     'cdc:license': item.license,
     'cdc:basedOn': item.basedOn ?? [],
@@ -240,7 +241,10 @@ export function jsonLdFor(ctx, item) {
       return [clean({ ...baseOf(ctx, item, 'CollectionPage'), name, description, lastReviewed: item.reviewedAt, reviewedBy: unitOrg(ctx, item.owner),
         about: (item.diseases ?? []).map((d) => diseaseRef(ctx, d)),
         mainEntity: links.length ? { '@type': 'ItemList', numberOfItems: links.length, itemListElement: links.map((l, i) => clean({ '@type': 'ListItem', position: i + 1, name: l.label, url: /^https?:/.test(l.href) ? l.href : abs(ctx, l.href) })) } : undefined,
-        hasPart: (item.contentIds ?? []).map((id) => ctx?.site?.byId?.get(id)).filter(Boolean).map((x) => ({ '@type': 'WebPage', name: x.title, url: abs(ctx, pathOf(x)) })),
+        hasPart: [
+          ...(item.type === 'topic' ? item.blocks ?? [] : []).map((sec) => ({ '@type': 'WebPageElement', name: sec.heading, cssSelector: `#s-${sec.key}`, url: `${abs(ctx, pathOf(item))}#s-${sec.key}`, ...(sec.audience === 'professional' ? { audience: { '@type': 'MedicalAudience', audienceType: 'Clinician' } } : {}) })),
+          ...(item.contentIds ?? []).map((id) => ctx?.site?.byId?.get(id)).filter(Boolean).map((x) => ({ '@type': 'WebPage', name: x.title, url: abs(ctx, pathOf(x)) })),
+        ],
         expires: item.endAt, 'cdc:startAt': item.startAt ?? null, 'cdc:endAt': item.endAt ?? null, 'cdc:ended': !!item.gov?.ended, 'cdc:kind': item.kind ?? null })];
     }
     case 'service': {

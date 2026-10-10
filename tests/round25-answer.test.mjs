@@ -17,7 +17,7 @@ function engine() {
 
 test('站內沒有的主題：no-match，不產生句子、不引用來源', () => {
   const e = engine();
-  for (const q of ['抗蛇毒血清', '量子電腦是什麼', '採購 透析膜', '股票怎麼買', '蛇咬怎麼辦', 'xyzzy foo']) {
+  for (const q of ['被虎頭蜂螫傷怎麼辦', '量子電腦是什麼', '採購 透析膜', '股票怎麼買', '被水母螫傷怎麼辦', 'xyzzy foo']) { // 第二十八輪：抗蛇毒血清已有內容，改測其他咬螫傷
     const r = e.answer(q);
     assert.equal(r.refused, true, q);
     assert.equal(r.refusal.kind, 'no-match', q);

@@ -1,0 +1,195 @@
+{
+  "format": "cdc-legacy-migration-patch/1",
+  "manifest": "migration.core-curriculum",
+  "batch": "core-curriculum",
+  "exportedAt": "2026-10-10",
+  "applied": {
+    "statusChanges": [],
+    "targetChanges": [],
+    "newPathChanges": [],
+    "noteChanges": 5
+  },
+  "rule": "只改 status／target／newPath／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。",
+  "items": [
+    {
+      "key": "core-curriculum-list",
+      "oldTitle": "傳染病核心教材",
+      "page": "05-core-curriculum-list",
+      "current": {
+        "status": "merged",
+        "target": null,
+        "newPath": "/pro/curriculum/",
+        "note": "列表頁不轉內文：新站 /pro/curriculum/ 由 docType curriculum 的現行版自動產生，並列出本清單 pending 的教材。舊站入口在 legacy-services.json 記為 MPage，實際網址模式待資訊室確認。"
+      },
+      "proposed": {
+        "status": "merged",
+        "target": null,
+        "newPath": "/pro/curriculum/",
+        "note": "列表頁不轉內文：新站 /pro/curriculum/ 由 docType curriculum 的現行版自動產生，並列出本清單 pending 的教材。舊站入口在 legacy-services.json 記為 MPage，實際網址模式待資訊室確認。　【匯入 2026-10-10】草稿 page.x-core-curriculum-list（信心 0.4；需人工檢視）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null,
+        "newPath": "/pro/curriculum/"
+      },
+      "draftIds": [
+        "page.x-core-curriculum-list"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "dengue",
+      "oldTitle": "登革熱核心教材",
+      "page": "01-curriculum-dengue",
+      "current": {
+        "status": "migrated",
+        "target": "doc.curriculum-dengue.2026-10-10",
+        "newPath": null,
+        "note": "新站目前是示範匯入版（重建版，未查證）：教材 PDF（搜尋摘錄：2025-04-登革熱防治核心教材.pdf，2025/4/18）尚未取得。取得後以 scripts/pdf-to-md.mjs 轉出同家族 doc.curriculum-dengue，並刪除重建版（guide-staff §31）。"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": "doc.curriculum-dengue.2026-10-10",
+        "newPath": null,
+        "note": "新站目前是示範匯入版（重建版，未查證）：教材 PDF（搜尋摘錄：2025-04-登革熱防治核心教材.pdf，2025/4/18）尚未取得。取得後以 scripts/pdf-to-md.mjs 轉出同家族 doc.curriculum-dengue，並刪除重建版（guide-staff §31）。　【匯入 2026-10-10】草稿 doc.curriculum-dengue.2026-10-10（信心 0.8；既有內容已存在，供比對）"
+      },
+      "suggestion": {
+        "status": "migrated",
+        "target": "doc.curriculum-dengue.2026-10-10",
+        "newPath": null
+      },
+      "draftIds": [
+        "doc.curriculum-dengue.2026-10-10"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "measles",
+      "oldTitle": "麻疹核心教材",
+      "page": "02-curriculum-measles",
+      "current": {
+        "status": "migrated",
+        "target": "doc.curriculum-measles.2026-10-10",
+        "newPath": null,
+        "note": "新站目前是示範匯入版（重建版，未查證）。教材 PDF 在舊站的網址（搜尋結果）：https://www.cdc.gov.tw/File/Get/eH0KllYdi__tvUdV8al0lA，版次與日期不明。取得後以 scripts/pdf-to-md.mjs 轉出同家族 doc.curriculum-measles，並刪除重建版。"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": "doc.curriculum-measles.2026-10-10",
+        "newPath": null,
+        "note": "新站目前是示範匯入版（重建版，未查證）。教材 PDF 在舊站的網址（搜尋結果）：https://www.cdc.gov.tw/File/Get/eH0KllYdi__tvUdV8al0lA，版次與日期不明。取得後以 scripts/pdf-to-md.mjs 轉出同家族 doc.curriculum-measles，並刪除重建版。　【匯入 2026-10-10】草稿 doc.curriculum-measles.2026-10-10（信心 0.8；既有內容已存在，供比對）"
+      },
+      "suggestion": {
+        "status": "migrated",
+        "target": "doc.curriculum-measles.2026-10-10",
+        "newPath": null
+      },
+      "draftIds": [
+        "doc.curriculum-measles.2026-10-10"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "novel-influenza-a",
+      "oldTitle": "新型A型流感核心教材",
+      "page": "03-curriculum-novel-influenza-a",
+      "current": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "搜尋摘錄出現檔名「新型A型流感_核心教材-11401版.pdf」（未查證）。新站尚無內容；由新興傳染病整備組提供 PDF 正本後轉檔上架。"
+      },
+      "proposed": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "搜尋摘錄出現檔名「新型A型流感_核心教材-11401版.pdf」（未查證）。新站尚無內容；由新興傳染病整備組提供 PDF 正本後轉檔上架。　【匯入 2026-10-10】草稿 doc.curriculum-novel-influenza-a.2025-01-15（信心 0.8）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null,
+        "newPath": null
+      },
+      "draftIds": [
+        "doc.curriculum-novel-influenza-a.2025-01-15"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    },
+    {
+      "key": "plague",
+      "oldTitle": "鼠疫核心教材",
+      "page": "04-curriculum-plague",
+      "current": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "搜尋摘錄出現檔名「鼠疫核心教材_1140318.pdf」（未查證）。新站尚無內容；由新興傳染病整備組提供 PDF 正本後轉檔上架。"
+      },
+      "proposed": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "搜尋摘錄出現檔名「鼠疫核心教材_1140318.pdf」（未查證）。新站尚無內容；由新興傳染病整備組提供 PDF 正本後轉檔上架。　【匯入 2026-10-10】草稿 doc.curriculum-plague.2025-03-18（信心 0.8）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null,
+        "newPath": null
+      },
+      "draftIds": [
+        "doc.curriculum-plague.2025-03-18"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": true
+      }
+    }
+  ],
+  "missingPages": [],
+  "unmatchedPages": [],
+  "conflicts": [],
+  "derivedItems": [],
+  "summary": {
+    "derivedItems": 0,
+    "derivedMatched": 0,
+    "items": 5,
+    "matched": 5,
+    "missingPages": 0,
+    "unmatchedPages": 0,
+    "agree": 5,
+    "conflicts": 0,
+    "statusChanges": 0,
+    "pendingToMigrated": 0,
+    "targetChanges": 0,
+    "newPathChanges": 0,
+    "noteChanges": 5,
+    "stillPending": 2
+  }
+}

@@ -74,6 +74,8 @@ jobs:
         continue-on-error: true
         run: npx playwright install --with-deps chromium
 
+      # build.mjs 在輸出 HTML 後會跑 Pagefind 全文索引（約 20 秒，第二十八輪），所以這份 dist 有 /pagefind/，
+      # axe 才掃得到 /search/ 的結果列。--check 不索引（上一步），驗證不付這個時間。
       - name: Build for a11y check (BASE_PATH='')
         id: a11y_build
         if: steps.a11y_browser.outcome == 'success'
@@ -122,6 +124,7 @@ jobs:
           # 預覽要讓審核人看得到排程中（publishAt 未到）的內容；主站照真實時間
           PREVIEW_SCHEDULED: '1'
           DIST_DIR: ${{ runner.temp }}/preview-dist
+        # 預覽站也含 dist/pagefind/（build.mjs 內建），所以 /pr-N/search/ 能直接搜這個 PR 的內容
         run: npm run build
 
       - name: Push preview to previews branch (pr-N/)

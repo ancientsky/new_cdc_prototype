@@ -18,6 +18,22 @@
       "minItems": 1,
       "items": { "type": "object", "required": ["label", "href"], "properties": { "label": { "type": "string" }, "href": { "type": "string" }, "external": { "type": "boolean" }, "note": { "type": "string" }, "lastCheckedAt": { "type": "string", "format": "date" }, "status": { "enum": ["ok", "broken", "unchecked"] } } }
     },
+    "blocks": {
+      "type": "array",
+      "description": "第二十八輪：分段本文（欄位名沿用疾病頁 blocks；topic.sections 已被國際合作專區用作子頁 id 清單）（簡介之後依序呈現，每段一個錨點 #s-{key}，答案引擎每段一個片段）。audience:professional 的段落只進專業版索引，頁面上標「醫療人員」。",
+      "items": {
+        "type": "object",
+        "required": ["key", "heading", "markdown"],
+        "additionalProperties": false,
+        "properties": {
+          "key": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+          "heading": { "type": "string", "minLength": 1 },
+          "markdown": { "type": "string", "minLength": 1 },
+          "audience": { "enum": ["public", "professional"] },
+          "keywords": { "type": "array", "items": { "type": "string" }, "description": "本段專屬檢索詞（例：蛇名、血清名）" }
+        }
+      }
+    },
     "contentIds": { "type": "array", "items": { "type": "string" }, "description": "站內相關內容 id（疾病、FAQ、文件、影片…）" },
     "priority": { "type": "integer" }
   }

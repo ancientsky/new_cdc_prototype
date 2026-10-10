@@ -1,0 +1,30 @@
+/* 全文搜尋 /search/（第二十八輪）。只用 tokens.css 變數；320px 不得橫向捲動，所有格線用 minmax(min(N,100%),1fr)。 */
+.c-search{max-width:56rem}
+.c-search__label{display:block;font-weight:700;margin-bottom:var(--sp-2)}
+.c-search__row{display:flex;gap:var(--sp-2);flex-wrap:wrap}
+.c-search__q{flex:1 1 14rem;min-width:0;font-size:var(--fs-lg)}
+.c-search__go{flex:none;min-width:6rem;min-height:44px}
+.c-search__adv{margin-top:var(--sp-4);border:1px solid var(--line);border-radius:var(--radius);background:var(--white)}
+.c-search__adv>summary{cursor:pointer;padding:var(--sp-3) var(--sp-4);font-weight:700;min-height:44px;display:flex;align-items:center}
+.c-search__filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(14rem,100%),1fr));gap:var(--sp-4);padding:0 var(--sp-4) var(--sp-4);align-items:start}
+.c-search__fs{border:1px solid var(--line-2);border-radius:var(--radius-sm);margin:0;padding:var(--sp-2) var(--sp-3);min-width:0}
+.c-search__fs[data-filter="type"]{grid-column:1/-1}
+.c-search__fs legend{font-weight:700;padding:0 var(--sp-1)}
+.c-search__opts{display:flex;flex-wrap:wrap;gap:var(--sp-1) var(--sp-4)}
+.c-search__opt{display:inline-flex;align-items:center;gap:var(--sp-2);min-height:44px;cursor:pointer}
+.c-search__opt input{width:20px;height:20px;flex:none;accent-color:var(--green-700)}
+.c-search__n{color:var(--ink-3);font-size:var(--fs-sm)}
+.c-search__sel label{display:block;font-weight:700;margin-bottom:var(--sp-1)}
+.c-search__sel select{min-height:44px}
+.c-search__clear{margin:0;align-self:end}
+.c-search__langnote{margin:var(--sp-3) 0 0}
+.c-search__status{margin:var(--sp-4) 0 var(--sp-2);font-weight:700;color:var(--ink-2)}
+.c-search__results{list-style:none;margin:0;padding:0}
+.c-search__item{padding:var(--sp-4) 0;border-bottom:1px solid var(--line)}
+.c-search__title{margin:0;font-size:var(--fs-lg);overflow-wrap:anywhere}
+.c-search__meta{margin:var(--sp-1) 0 0;font-size:var(--fs-sm);color:var(--ink-3);display:flex;flex-wrap:wrap;gap:var(--sp-1) var(--sp-3);align-items:center}
+.c-search__excerpt{margin:var(--sp-2) 0 0;overflow-wrap:anywhere}
+.c-search__excerpt mark{background:#fff0b3;color:var(--ink);padding:0 2px;border-radius:2px}
+.c-search__morewrap{margin:var(--sp-4) 0}
+.c-search__empty{margin-top:var(--sp-3)}
+.c-search__empty .c-btn{margin-right:var(--sp-2);margin-bottom:var(--sp-2)}

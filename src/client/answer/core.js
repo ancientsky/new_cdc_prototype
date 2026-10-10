@@ -1059,7 +1059,7 @@ export function createEngine(rawDeps = {}) {
       reviewedAt: c.reviewedAt, nextReviewAt: c.nextReviewAt ?? null, publishedAt: c.publishedAt ?? null, version: c.version ?? null, effectiveAt: c.effectiveAt ?? null,
       isCurrent: c.isCurrent !== false, section: c.section ?? null, family: c.family ?? null, supersedes: c.supersedes ?? null, supersedesVersion: c.supersedesVersion ?? null,
       change: c.change ?? null, license: c.license ?? 'OGDL-1.0', docTitle: c.docTitle ?? null, mdUrl: c.mdUrl ?? null, legacyUrl: c.legacyUrl ?? null,
-      pdfPage: c.pdfPage ?? null, extraction: c.extraction ?? null,
+      pdfPage: c.pdfPage ?? null, extraction: c.extraction ?? null, verification: c.verification ?? null,
       ...typeExtras(c),
     };
   }
@@ -2100,7 +2100,7 @@ export function createEngine(rawDeps = {}) {
       const rel = relevanceOf(q, chunks, chunks.model, !!(entities.diseases.length || entities.vaccines.length || entities.countries.length));
       result.relevance = rel.relevance; result.relevanceInfo = { coverage: rel.coverage, top: rel.top, matchedIdf: rel.matchedIdf, reason: rel.reason };
       const structured = (result.intent === 'situation' && situationFor(entities, result.intent)) || (result.intent === 'travel' && (entities.countries.length || TRAVEL_CHANGE_RE.test(q)));
-      if (rel.reason && !structured && !process.env.NO_GATE) {
+      if (rel.reason && !structured && !(typeof process !== 'undefined' && process.env?.NO_GATE)) { // 瀏覽器沒有 process 物件，直接讀會 ReferenceError、no-match 的答案頁就卡在載入中（第二十八輪修正）
         result.guards.push({ kind: 'no-match', reason: rel.reason, relevance: rel.relevance });
         // 相關度太低時連關鍵字清單也不附（附了又是「抗蛇毒血清 → 登革熱傳染途徑」那種不相關頁面）
         result.list = rel.relevance >= 0.4 ? traditionalList(q, view, lang, 8) : [];

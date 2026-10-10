@@ -13,7 +13,7 @@ export function render(ctx) {
   return html`${pageHead(ctx, { trail: [{ label: t('sitemap') }], h1: t('sitemap'), lead: t('sitemap.lead') })}
 <div class="c-sitemap">
   ${group(t('sitemap.main'), [
-    li(url('/'), t('tab.home')), li(url('/ask/'), t('ask.title')), li(url('/situation/'), t('nav.situation')), li(url('/diseases/'), t('nav.diseases')), li(url('/vaccines/'), t('nav.vaccines')),
+    li(url('/'), t('tab.home')), li(url('/ask/'), t('ask.title')), li(url('/search/'), t('search.title')), li(url('/situation/'), t('nav.situation')), li(url('/diseases/'), t('nav.diseases')), li(url('/vaccines/'), t('nav.vaccines')),
     li(url('/travel/'), t('nav.travel')), li(url('/factcheck/'), t('nav.factcheck')), li(url('/data/'), t('nav.data')), li(url('/news/'), t('nav.news')), li(url('/faq/'), t('nav.faq')), li(url('/documents/'), t('nav.documents')),
   ])}
   ${group(t('home.tasks'), config.tasks.map((k) => li(url(`/tasks/${k.key}/`), t(`task.${k.key}.label`))))}
@@ -25,7 +25,7 @@ export function render(ctx) {
   ${group(t('nav.documents'), docs.map((d) => li(hrefFor(ctx, d), L(ctx, d, 'title'), `${d.version}${d.isCurrent ? '' : ` · ${t('documents.expired')}`}`)))}
   ${group(t('home.more'), [
     li(url('/services/'), t('services.title')), li(url('/apply/'), t('apply.title')), li(url('/publications/'), t('publications.title')), li(url('/lab/'), t('lab.title')), li(url('/report/'), t('report.title')),
-    li(url('/research/'), t('research.title')), li(url('/glossary/'), t('glossary.title')), li(url('/careers/'), t('careers.title')), li(url('/procurement/'), t('proc.title')), li(url('/notices/'), t('notices.title')), li(url('/media/'), t('media.title')), li(url('/campaigns/'), t('campaigns.title')), li(url('/contact/'), t('contact.title')), li(url('/about/'), t('footer.about')),
+    li(url('/research/'), t('research.title')), li(url('/glossary/'), t('glossary.title')), li(url('/subscribe/'), t('subscribe.title')), li(url('/careers/'), t('careers.title')), li(url('/procurement/'), t('proc.title')), li(url('/notices/'), t('notices.title')), li(url('/media/'), t('media.title')), li(url('/campaigns/'), t('campaigns.title')), li(url('/contact/'), t('contact.title')), li(url('/about/'), t('footer.about')),
   ])}
   ${group(t('home.media'), publishedOf(site, 'media').map((d) => li(hrefFor(ctx, d), L(ctx, d, 'title'), d.basedOnVersionLabel ?? '')))}
   ${group(t('home.topics'), publishedOf(site, 'topics').map((d) => li(hrefFor(ctx, d), L(ctx, d, 'title'))))}

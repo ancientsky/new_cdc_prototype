@@ -1,11 +1,11 @@
 {
   "id": "import-rules.legacy",
   "type": "import-rules",
-  "version": 10,
+  "version": 11,
   "title": "舊站匯出批次轉換規則（scripts/import-legacy.mjs 讀取）",
   "summary": "把舊站 CMS 匯出（每頁 .html＋.json 側檔）對應成新站內容草稿的規則：URL 模式→型別與目錄、類別→權責單位、疾病別名→疾病 id、標題關鍵字→疾病頁區塊、Bulletin typeid→newsType、信心計算權重與人工檢視門檻。規則是資料不是程式；正式批次先改這個檔再跑。",
   "owner": "unit.it",
-  "reviewedAt": "2026-10-05",
+  "reviewedAt": "2026-10-10",
   "siteBase": "https://www.cdc.gov.tw",
   "extraction": {
     "_comment": "舊站版型外殼（導覽列、麵包屑、側欄、頁尾）一律不轉；只取內容區。選擇器語法：#id、.class、tag、tag.class，可用逗號列多個，取第一個命中者。",
@@ -295,6 +295,11 @@
       "_comment": "第七批：指引及手冊欄目的總覽列表頁歸 OASIS（文件庫）；各文件頁的麵包屑是「傳染病介紹／某疾病／指引及手冊」，對不到這條，權責依疾病主檔（ownerFallbackToDisease）"
     },
     {
+      "match": "專業人員／傳染病核心教材",
+      "owner": "unit.oasis",
+      "_comment": "第十二批（第二十八輪）：核心教材總覽列表頁歸 OASIS（新站 /pro/curriculum/ 自動產生）；各教材頁的麵包屑是「傳染病介紹／某疾病／傳染病核心教材」，權責依疾病主檔"
+    },
+    {
       "match": "新聞與公告",
       "owner": "unit.pr",
       "preferDiseaseFor": [
@@ -451,6 +456,24 @@
     "預防接種",
     "旅遊醫學"
   ],
+  "docTypeStrongKeywords": [
+    {
+      "_comment": "第十二批（第二十八輪）：標題寫明「核心教材」⇒ curriculum，優先於網址模式（/Category/DiseaseTeach/ 同時放指引與教材，只看路徑會判成 guideline）。只放不會誤中的長詞",
+      "docType": "curriculum",
+      "keys": [
+        "核心教材"
+      ]
+    }
+  ],
+  "curriculum": {
+    "_comment": "第十二批（第二十八輪）：curriculum 草稿的預設欄位。schema 要求 learningObjectives、roles、diseases；舊頁看不出來的以（待補）佔位並記 fields-pending，roles 先填這組預設、由權責單位確認",
+    "series": "傳染病核心教材",
+    "defaultRoles": [
+      "physician",
+      "nurse",
+      "local-health"
+    ]
+  },
   "docTypeKeywords": [
     {
       "docType": "case-definition",

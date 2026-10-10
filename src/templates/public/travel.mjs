@@ -356,7 +356,7 @@ export function meta(ctx, props = {}) {
     const c = props.country;
     const jl = ldFor(ctx, null, [{ label: t('nav.travel'), href: '/travel/' }, { label: cname(ctx, c) }]);
     try { if (typeof JL.travelJsonLd === 'function') jl.push(JL.travelJsonLd(ctx, c, targetedOf(travelModel(ctx.site).adv.get(c.iso2)).map((e) => ({ disease: e.disease, level: e.code, levelLabel: ctx.t(`travel.level.${e.code}`), advice: e.summary, publishedAt: e.start ?? undefined })))); } catch { /* optional */ }
-    return { ...extra, title: `${cname(ctx, c)} · ${t('nav.travel')}`, description: t('travel.country.desc', { name: cname(ctx, c) }), jsonLd: jl };
+    return { ...extra, title: `${cname(ctx, c)} · ${t('nav.travel')}`, description: t('travel.country.desc', { name: cname(ctx, c) }), jsonLd: jl, pagefind: { type: 'travel', audience: ['public'] } };
   }
   return { ...extra, title: t('nav.travel'), description: t('travel.desc'), jsonLd: ldFor(ctx, null, [{ label: t('nav.travel') }]) };
 }

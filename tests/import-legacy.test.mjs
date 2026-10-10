@@ -1469,7 +1469,7 @@ test('已提交的第十批輸出（data/legacy-import/materials）：24 頁 21 
 import { statScope, periodicalIssues, tableSeries, seriesGaps, statsStale, datasetByUrl, systemEntryHosts, isoWeekMonday } from '../scripts/lib/legacy-import/statistics.mjs';
 
 test('第十一批工具：統計頁範圍、期刊期別（週／月／年、民國年、無年份、< 3 期）、表格時序（西元、民國、%、千分位、合計列、多值欄）、缺期與重複、過時、站外連結對既有資料集', () => {
-  assert.equal(rules.version, 10);
+  assert.ok(rules.version >= 10); // 第十二批（第二十八輪）升 11：docTypeStrongKeywords、curriculum
   assert.deepEqual(rules.statScopes, ['統計專區', '統計資料', 'Data & Statistics']);
   assert.equal(matchUrlPattern(rules, '/En/Category/List/gK4BJWe3qYlmNxYJBqEcxA').id, 'category-list-en');
   assert.equal(matchUrlPattern(rules, '/Category/List/ZrvS2zJwZ03tl8CbKYdI8g').id, 'category-list');

@@ -213,13 +213,15 @@ CI 任一項失敗即不部署：JSON Schema 與跨檔參照（`owner`、`basedO
 
 | 標頭 | 值 | 為什麼 |
 | --- | --- | --- |
-| `Content-Security-Policy` | `default-src 'self'; script-src 'self' 'sha256-…'（建置掃出的每段 inline script）; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://i.ytimg.com; font-src 'self'; connect-src 'self' https://api.anthropic.com; frame-src <疫苗地圖網域> https://www.youtube-nocookie.com https://www.youtube.com; frame-ancestors 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests` | 第三方腳本注入、點擊劫持的主要防線。inline script 用雜湊而不是 `'unsafe-inline'`：雜湊由建置掃 `dist/**/*.html` 自動算，模板多一段 inline script 重建就會更新，不會漏。`connect-src` 的 `api.anthropic.com` 只因同事示範 BYOK，正式站拿掉。 |
+| `Content-Security-Policy` | `default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-…'（建置掃出的每段 inline script）; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://i.ytimg.com; font-src 'self'; connect-src 'self' https://api.anthropic.com; frame-src <疫苗地圖網域> https://www.youtube-nocookie.com https://www.youtube.com; frame-ancestors 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests` | 第三方腳本注入、點擊劫持的主要防線。inline script 用雜湊而不是 `'unsafe-inline'`：雜湊由建置掃 `dist/**/*.html` 自動算，模板多一段 inline script 重建就會更新，不會漏。`connect-src` 的 `api.anthropic.com` 只因同事示範 BYOK，正式站拿掉。 `'wasm-unsafe-eval'` 是第二十八輪為 `/search/` 加的（見下）。 |
 | `Strict-Transport-Security` | `max-age=31536000; includeSubDomains` | 一年 HTTPS-only。確定全部子網域都走 HTTPS 再加 `preload`。 |
 | `X-Content-Type-Options` | `nosniff` | 不讓瀏覽器猜 MIME（本站有 `.md`、`.json` 直出）。 |
 | `X-Frame-Options` | `SAMEORIGIN` | 舊瀏覽器備援，新瀏覽器以 `frame-ancestors` 為準。現行官網是 `frame-ancestors 'self' *.cdc.gov.tw`，正式站若要給子網域嵌入在這裡加。 |
 | `Referrer-Policy` | `strict-origin-when-cross-origin` | 外連只送網域，不送完整網址（網址可能含查詢字串）。 |
 | `Permissions-Policy` | 關閉 camera／microphone／geolocation／payment／usb／interest-cohort | 本站都不用。 |
 | `Cross-Origin-Opener-Policy` | `same-origin` | 防跨來源視窗引用。 |
+
+**`'wasm-unsafe-eval'`（第二十八輪，全文搜尋）**：Pagefind 在 Web Worker 內用 WebAssembly 搜尋，Chromium 系瀏覽器要求 CSP 明確允許 wasm 編譯，就是這個關鍵字。它**只放行 WebAssembly 編譯，不放行 JavaScript 的 `eval()`／`new Function()`**，所以跟 `'unsafe-eval'` 是兩回事，**不要**因為「搜尋壞了」就改成 `'unsafe-eval'` 或 `'unsafe-inline'`。Worker 腳本是同源的 `/pagefind/pagefind-worker.js`，用 `script-src 'self'` 就夠，不需要 `worker-src` 或 `blob:`。`tests/round23-security.test.mjs` 斷言有 `'wasm-unsafe-eval'`、沒有 `'unsafe-eval'`、`script-src` 沒有 `'unsafe-inline'`。若在某個瀏覽器發現搜尋無法啟動，先看 Console 的 CSP 訊息確認原因，不要先放寬。
 
 `style-src` 暫留 `'unsafe-inline'`：後台頁有少量 `style=""` 屬性（清單在 `dist/headers/README.md`）。清掉後改成 `'self'`。
 
@@ -235,3 +237,107 @@ CI 任一項失敗即不部署：JSON Schema 與跨檔參照（`owner`、`basedO
 
 GitHub Pages 不能自訂回應標頭，所以原型站只有 `<meta name="robots">` 與 `robots.txt`，沒有 CSP／HSTS；這也是原型模式用 meta 擋索引、不用 `X-Robots-Tag` 的原因。`dist/headers/` 要到機關自己的主機或 CDN 才生效。
 
+
+## 11. 電子報寄信服務（第二十八輪）
+
+原型的 Email 訂閱（`/subscribe/`）後面是模擬；正式站要換成真的寄信服務。**前端、驗證規則、信件內容與狀態機都不必改**，只實作下面的端點契約並接上寄信。背景與理由見 [architecture-decisions.md 第 19 節](architecture-decisions.md)、[ARCHITECTURE 第 30 章](../ARCHITECTURE.md)。
+
+### 11.1 端點契約（與 `scripts/lib/subscribe-mock.mjs` 一致，測試 `tests/round28-newsletter.test.mjs` 可當驗收清單）
+
+| 端點 | 說明 |
+| --- | --- |
+| `GET /api/health` → `{ok:true, service:'cdc-prototype-subscriptions'}` | 前端偵測用。正式版可保留同樣的 `service` 值，或在 `src/client/subscribe.js` 的 `HEALTH_SERVICE` 改成新值並同步後端 |
+| `POST /api/subscriptions` | `{email, topics[], frequency, lang, consent:true}` → `202 {status:'pending'}`。**一律回 202**（含已訂閱者），驗證失敗 `400 {error:'invalid', fields}`，過頻 `429`＋`Retry-After`。寄確認信（48 小時有效）；已確認者只寄「管理／退訂」信、不改設定 |
+| `GET /api/subscriptions/confirm?token=` | 冪等；成功 `200 {status:'confirmed', manageToken}` 並寄歡迎信；逾期 `410 {error:'expired'}`；未知 `404` |
+| `GET /api/subscriptions/status?token=` | token＝manageToken，回遮罩信箱與偏好 |
+| `POST /api/subscriptions/update` | `{token, topics[], frequency, lang}`；不可改信箱 |
+| `POST /api/subscriptions/unsubscribe` | token 可在 JSON、form 或網址 `?token=`；**必須接受 RFC 8058 一鍵退訂**（`Content-Type: application/x-www-form-urlencoded`、本體 `List-Unsubscribe=One-Click`、不需 Cookie／登入、不需同源 `Origin`）；冪等；只保留「信箱＋已退訂」 |
+| `POST /api/subscriptions/manage-link` | `{email}`；一律 `202` |
+
+主題 id 只有 `news`、`documents`、`situation`、`publications`、`notices`、`careers`、`procurement`（＝RSS 頻道，見 `src/client/subscribe-rules.js` 的 `TOPIC_IDS`，測試保證與 `feeds/*.xml` 一致）。
+
+**正式版與模擬版的差異，必須處理：** token 只存雜湊（模擬為了好看明碼存檔）、token 有過期與輪替（`manageToken` 可考慮定期換新並在信中帶新連結）、資料庫與備份、節流改在 WAF／閘道也做一層（模擬的是單機記憶體）、`Origin` 檢查以正式網域為準、`PUBLIC_ORIGIN` 固定（不要信任 `Host`）、每封寄出的信留紀錄（誰、何時、哪種信）供客服追查「我沒收到」。
+
+### 11.2 寄件網域與郵件規範（資訊室）
+
+| 項目 | 要求 | 為什麼 |
+| --- | --- | --- |
+| SPF | 寄件網域的 SPF 授權寄信服務的出口 IP／include | 不通過容易被收件方當成偽造 |
+| DKIM | 寄信服務以網域金鑰簽章（2048 bit），並定期換金鑰 | 證明信件沒被改、來自授權寄信者 |
+| DMARC | 先 `p=none` 觀察報告一到兩個月，再 `quarantine`／`reject`；寄報告到機關信箱 | 防止他人冒用 `@gov.tw` 類網域寄釣魚信；Gmail／Yahoo 對大量寄件者已要求 |
+| 寄件地址 | 專用子網域（如 `mail.` 開頭）、獨立於一般公務信箱 | 電子報若被檢舉，不會連累一般公文往來的信譽 |
+| `List-Unsubscribe` ＋ `List-Unsubscribe-Post: List-Unsubscribe=One-Click` | **每一封**寄給訂閱者的信都要有（模擬版連確認信也有），網址為 HTTPS | RFC 2369／8058；Gmail、Yahoo 對每日大量寄件者的要求；信件頂部「退訂」按鈕就是它 |
+| 信件本體退訂連結 | 同樣每封都有，且不需登入 | 法律與使用者預期；與標頭互為備援 |
+| 多部份內容 | `text/plain`＋`text/html` | 純文字閱讀器、無障礙工具與部分收件方的垃圾信評分 |
+| 退信（bounce）與投訴（complaint） | 寄信服務回報 webhook／報表 → 硬退信（信箱不存在）立即停寄並標記；投訴（按「檢舉垃圾信」）視同退訂；軟退信連續多次後停寄 | 持續寄給不存在的信箱會傷害網域信譽 |
+| 退訂與抑制清單 | 退訂與硬退信者進抑制清單，**不論之後何人再用該信箱申請，都要再走一次雙重確認** | 防止被濫用於騷擾 |
+| 寄送速率 | 暖機（新網域逐步提高量）；即時通知與週摘要錯開 | 新網域一次大量寄信容易被限流 |
+| 測試 | 用 `.local/outbox/` 產生的 `.eml` 當樣本，丟進寄信服務的測試工具或 mail-tester 類工具檢查標頭與評分 | 原型的 `.eml` 就是依上表組出來的 |
+
+### 11.3 個資與隱私
+
+蒐集的欄位只有信箱、主題、頻率、語言、同意時間（見 `content/pages/privacy.json`）。正式上線前要定：保存期限（建議：已確認者在退訂後只留抑制紀錄；未確認者 7 天內刪除，與原型一致）、寄信服務商是否境內、委外個資保護約定與稽核方式、資料外洩通報流程。這些寫進隱私權政策的正式版文字，原型版已區分「正式站規劃」與「原型現況」。
+
+### 11.4 CSP 與前端設定
+
+寄信服務若與網站同源（反向代理 `/api/*`）則 CSP 不用改；若另一個網域，要在 `scripts/lib/emit-headers.mjs` 的 `securityHeaders()` 的 `connect-src` 加該來源，並在 §10.1 說明；`src/client/subscribe.js` 的 `createHttpBackend({ base })` 帶 API 根網址。`/api/dev/outbox` 與 `.local/` 是開發輔助，**正式環境不得啟用**（`createSubscriptionApi({ devOutbox:false })` 或根本不掛載 `subscribe-mock.mjs`）。
+
+### 11.5 驗收
+
+1. 依 §11.1 逐一以 `curl` 驗證狀態碼與「回應不洩漏」（已訂閱與未訂閱信箱的 `POST /api/subscriptions` 回應位元組相同）。
+2. 寄一封確認信到 Gmail、Outlook、Yahoo 與一個機關信箱：看「顯示原始郵件」中 SPF／DKIM／DMARC 皆 pass，並在 Gmail 出現「退訂」按鈕、按下後 `POST /api/subscriptions/unsubscribe` 收到 `List-Unsubscribe=One-Click`。
+3. 跑 `node scripts/newsletter-digest.mjs --today=<日期>`，把範本交給寄信服務，確認 `{{manage_url}}`、`{{unsubscribe_url}}` 被替換、沒有殘留的雙大括號。
+4. 在 `/subscribe/` 走完：訂閱 → 收信 → 確認 → 管理 → 退訂 → 再訂閱，且 `npm run a11y` 對 `/subscribe/` 0 違規。
+
+## 12. 全文搜尋索引（Pagefind，第二十八輪）
+
+`/search/`（七種語言各一頁）用 [Pagefind](https://pagefind.app/) 在瀏覽器端搜尋建置時產生的靜態索引。**沒有後端、沒有搜尋服務要維運**；索引就是 `dist/pagefind/` 底下的一堆靜態檔。設計理由見 ARCHITECTURE.md 第 31 節與 docs/architecture-decisions.md 第 20 節，這裡只講部署。
+
+### 12.1 索引在 CI 哪裡產生
+
+索引由 `scripts/build.mjs` 在輸出 HTML 之後直接產生（`scripts/lib/pagefind.mjs`，約 18–20 秒，3102 輸出頁中的 2330 頁進索引）。**沒有獨立的 workflow 步驟**，因為每一種建置都已經跑 `build.mjs`：
+
+| 場合 | 有索引嗎 |
+| --- | --- |
+| `pages.yml` 的 `npm run build`（正式發布到 Pages） | 有。索引失敗或收不到任何頁會 `exit 1`，不會發布沒有索引的 `/search/` |
+| `content-pr.yml` 的 a11y 建置（`DIST_DIR=…/a11y-dist`） | 有（axe 要掃 `/search/` 的結果列） |
+| `content-pr.yml` 的預覽站建置（發到 `previews` 分支） | 有，PR 預覽站 `/pr-N/search/` 搜得到該 PR 的內容 |
+| `node scripts/build.mjs --check`（治理閘門） | **沒有**（在輸出前就結束，不付 20 秒） |
+| 本機 `npm run build` | 有；只想看版面可加 `PAGEFIND=off` 跳過 |
+
+部署到其他環境（nginx／IIS／CDN）：整個 `dist/` 照搬，`dist/pagefind/` 一起；**不需要在伺服器上安裝 Node 或 Pagefind**。建置機需要 `npm ci`（`pagefind` 是 devDependency，內含各平台的原生二進位，`npm ci` 會依平台自動選；建置機若是離線環境，要先準備好 npm 鏡像）。
+
+### 12.2 快取標頭
+
+`dist/pagefind/` 的檔案分兩類：
+
+| 檔案 | 檔名 | 建議 `Cache-Control` |
+| --- | --- | --- |
+| `index/*.pf_index`、`fragment/*.pf_fragment`、`filter/*.pf_filter`、`pagefind.<語言>_<雜湊>.pf_meta` | 含內容雜湊，內容變檔名就變 | `public, max-age=31536000, immutable` |
+| `pagefind.js`、`pagefind-worker.js`、`pagefind-entry.json`、`wasm.*.pagefind` | 固定檔名 | 短快取或每次驗證（如 `max-age=300` 或 `no-cache`）；`pagefind-entry.json` 是入口，指向最新的雜湊檔，**不能被長快取**，否則使用者會一直拿到舊索引 |
+
+這些快取標頭**不在** `dist/headers/` 輸出內（目前只輸出安全標頭）；要靠伺服器／CDN 設定，例如 nginx：
+
+```
+location ^~ /pagefind/ { add_header Cache-Control "no-cache"; }
+location ~ ^/pagefind/(index|fragment|filter)/ { add_header Cache-Control "public, max-age=31536000, immutable"; }
+location ~ ^/pagefind/pagefind\..*\.pf_meta$ { add_header Cache-Control "public, max-age=31536000, immutable"; }
+```
+
+（注意 10.2 的提醒：子 `location` 若有自己的 `add_header`，上層的安全標頭不會繼承，要在同一層一起放。）GitHub Pages 無法自訂標頭，預設 10 分鐘快取，直接可用。
+
+### 12.3 MIME 與壓縮
+
+- 索引檔副檔名是 Pagefind 自訂的（`.pf_index`、`.pf_meta`、`.pf_fragment`、`.pf_filter`、`.pagefind`）。伺服器不認得時會回 `application/octet-stream`，**搜尋照常運作**，不需要特別設定 MIME。
+- `index/`、`fragment/`、`filter/`、`*.pf_meta` 的內容本身就是 gzip 位元組（開頭 `1f 8b`，Pagefind 自己壓好的），伺服器端再壓縮幾乎沒有收益（可以關掉省 CPU）；`pagefind.js`、`pagefind-worker.js` 與 `wasm.*.pagefind` 可照一般 JS／二進位壓縮。實測使用者單次搜尋下載約 180–270 KB（gzip 後），都在第一次搜尋時才載入。
+- 要用的 CSP 變更見 10.1（`'wasm-unsafe-eval'`）。
+
+### 12.4 疑難排解
+
+| 現象 | 原因與處理 |
+| --- | --- |
+| `/search/` 顯示「全文搜尋無法載入，請稍後再試，或改用智慧查詢。」 | 看瀏覽器 Console／Network：`/pagefind/pagefind.js` 404 ⇒ 部署時漏了 `dist/pagefind/`；`Refused to compile or instantiate WebAssembly` ⇒ CSP 沒有 `'wasm-unsafe-eval'`（標頭沒隨新版重佈，見 10.2 第 4 點） |
+| 搜尋得到舊內容 | `pagefind-entry.json` 被長快取，改成 `no-cache`（11.2） |
+| PR 預覽站搜不到 | 預覽站的 `BASE_PATH` 是 `/pr-N/`，索引內網址已帶前綴（由 e2e 測過）；若仍錯，確認預覽是用新版 `build.mjs` 建的 |
+| 想排除某頁不被搜到 | 該頁設 `noindex`；或在 `src/templates/public/_pagefind.mjs` 的 `pagefindFor()` 調整規則。見 docs/guide-staff.md 第 29 節 |
+| 想暫時關掉索引 | `PAGEFIND=off npm run build`（`/search/` 頁仍在，但會無法載入索引；僅限本機看版面用） |

@@ -380,7 +380,7 @@ html:not(.js) .c-tabs__print{display:block}
 .c-alert{padding:var(--sp-3) var(--sp-4);border-radius:var(--radius-sm);margin:var(--sp-2) 0;border-left:5px solid;font-size:var(--fs-sm)}
 .c-alert__t{margin-right:6px}
 .c-alert__go{font-weight:700;white-space:nowrap}
-.c-alert--overdue{background:var(--alert-overdue-bg);color:var(--alert-overdue);border-color:#d9a400}
+.c-alert--overdue,.c-alert--unverified{background:var(--alert-overdue-bg);color:var(--alert-overdue);border-color:#d9a400}
 .c-alert--superseded{background:var(--alert-superseded-bg);color:var(--alert-superseded);border-color:var(--status-peak)}
 .c-alert--based-on-revised,.c-alert--revised{background:var(--alert-revised-bg);color:var(--alert-revised);border-color:#e07b00}
 .c-alert--info{background:var(--info-bg);color:var(--info);border-color:var(--info)}
@@ -1110,3 +1110,14 @@ html:not(.js) .vxs-form,html:not(.js) .vxs-msg,html:not(.js) .vxs-tabs,html:not(
 .c-editfab__ic{font-size:1.1em;line-height:1}
 @media (max-width:600px){.c-editfab__t{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)} .c-editfab{padding:10px 12px;bottom:var(--sp-5)}}
 @media print{.c-editfab{display:none}}
+
+/* 第二十八輪：傳染病核心教材（_curriculum.mjs）——教材卡、學習目標 */
+.c-currcards{list-style:none;margin:0 0 var(--sp-3);padding:0;display:grid;gap:var(--sp-3)}
+.c-currcard{border:1px solid var(--line);border-left:4px solid var(--green-700);border-radius:var(--radius-sm);padding:var(--sp-3) var(--sp-4);background:#fff;min-width:0}
+.c-currcard p{margin:0 0 var(--sp-1);overflow-wrap:anywhere}
+.c-currcard__t{font-weight:700}
+.c-currcard__obj summary{cursor:pointer;min-height:24px}
+.c-currcard__obj ol{margin:var(--sp-2) 0 0;padding-left:1.5em}
+.c-curr-obj ol{padding-left:1.5em}
+.c-curr-obj li{margin-bottom:var(--sp-1)}
+.c-curr-meta{margin-top:var(--sp-3)}

@@ -11,10 +11,11 @@ const S = {
     modelExtractive: '模型：抽取式整理，未使用生成模型', modelLlm: '模型：{p} · {m}（BYOK，由你的瀏覽器直接呼叫）', report: '回報錯誤', helpful: '有幫助', auditId: '稽核編號',
     reportH: '回報這則回答', reportKind: '問題類型', reportKinds: ['內容錯誤', '已過時', '不完整', '引用來源不對', '其他'], reportText: '說明（請勿填寫個資）', send: '送出', reportDone: '已收到，承辦單位會依稽核編號查核。',
     owner: '權責單位', reviewed: '最後審閱', current: '現行版', currentYes: '是（現行有效）', currentNo: '否（已被取代）', license: '授權', openOriginal: '開啟原文', machine: '機讀版', version: '版次', effective: '生效日', supersedes: '取代',
-    cite: '引用本頁', cited: '已複製引用', subscribe: '訂閱異動', subscribed: '已訂閱', nextReview: '下次審閱', section: '條次／段落', pdfPage: '頁碼（PDF 印刷頁碼）', extraction: '文字來源', extractionMachine: '由 PDF 機器轉出，尚未人工校對；請以 PDF 原頁為準', extractionReviewed: '由 PDF 轉出，權責單位已校對', openPdf: '開啟 PDF', change: '本段異動', before: '修訂前', after: '修訂後',
+    cite: '引用本頁', cited: '已複製引用', subscribe: '訂閱異動', subscribed: '已訂閱', nextReview: '下次審閱', section: '條次／段落', pdfPage: '頁碼（PDF 印刷頁碼）', extraction: '文字來源', extractionMachine: '由 PDF 機器轉出，尚未人工校對；請以 PDF 原頁為準', extractionReviewed: '由 PDF 轉出，權責單位已校對', verification: '內容確認', verificationPending: '依公開資料整理，內容待權責單位確認', extractionReconstructed: '尚未取得 PDF 正本：依公開摘錄與站內內容重建的示範版，未經權責單位查證；請以疾管署 PDF 正本為準', openPdf: '開啟 PDF', change: '本段異動', before: '修訂前', after: '修訂後',
     sitH: '現在的疫情', dataDate: '資料日', publisher: '發布', illustrative: '示意資料', statusBasis: '判定依據', seeTrend: '看完整趨勢',
     refusalH: '這個問題我不能替你判斷', why: '為什麼', call1922: '撥打 1922', relatedPages: '相關官方頁面',
     lowRelevance: '與你的問題相關程度較低', lowRelevanceSub: '以下是站內最接近的官方內容，不一定能直接回答你的問題；請點開原文確認，或撥打 1922。', relatedListH: '相關頁面',
+    fullSearch: '用全文搜尋找「{q}」', fullSearchNote: '全文搜尋會列出所有含這個關鍵字的頁面，可依類型、單位、年份篩選。',
     paused: 'AI 問答暫停中，目前提供傳統搜尋結果與 1922 人工諮詢。', pausedReason: '原因', updated: '更新',
     proLabel: '專業模式：引用手冊條次與生效日，不做白話化', translationSource: '此語言沒有經審核的譯文，以下為中文原文。', translationMachine: '以下為機器翻譯（鎖定官方譯名），以中文原文為準。',
     termNote: '「{from}」已改稱「{to}」，以下依現行名稱回答。', lowConf: '這個問題的意圖不夠明確，以下同時列出相關頁面。',
@@ -36,10 +37,11 @@ const S = {
     modelExtractive: 'Model: extractive (no generative model used)', modelLlm: 'Model: {p} · {m} (BYOK, called directly from your browser)', report: 'Report an error', helpful: 'Helpful', auditId: 'Audit ID',
     reportH: 'Report this answer', reportKind: 'Type', reportKinds: ['Incorrect', 'Outdated', 'Incomplete', 'Wrong source', 'Other'], reportText: 'Details (no personal data please)', send: 'Send', reportDone: 'Received. The responsible unit will review it using the audit ID.',
     owner: 'Responsible unit', reviewed: 'Last reviewed', current: 'Current version', currentYes: 'Yes', currentNo: 'No (superseded)', license: 'Licence', openOriginal: 'Open original', machine: 'Machine-readable', version: 'Version', effective: 'Effective', supersedes: 'Supersedes',
-    cite: 'Cite this page', cited: 'Citation copied', subscribe: 'Subscribe to changes', subscribed: 'Subscribed', nextReview: 'Next review', section: 'Section', pdfPage: 'PDF page', extraction: 'Text source', extractionMachine: 'Machine-extracted from the PDF, not yet proofread; the PDF page prevails', extractionReviewed: 'Extracted from the PDF and proofread by the responsible unit', openPdf: 'Open PDF', change: 'Change in this section', before: 'Before', after: 'After',
+    cite: 'Cite this page', cited: 'Citation copied', subscribe: 'Subscribe to changes', subscribed: 'Subscribed', nextReview: 'Next review', section: 'Section', pdfPage: 'PDF page', extraction: 'Text source', extractionMachine: 'Machine-extracted from the PDF, not yet proofread; the PDF page prevails', extractionReviewed: 'Extracted from the PDF and proofread by the responsible unit', verification: 'Confirmation', verificationPending: 'Compiled from public sources; pending confirmation by the responsible unit', extractionReconstructed: 'No original PDF yet: demonstration version rebuilt from public excerpts and site content, not verified by the responsible unit; the official PDF prevails', openPdf: 'Open PDF', change: 'Change in this section', before: 'Before', after: 'After',
     sitH: 'Current situation', dataDate: 'Data as of', publisher: 'Published by', illustrative: 'Illustrative data', statusBasis: 'Basis', seeTrend: 'See full trend',
     refusalH: "I can't make this judgement for you", why: 'Why', call1922: 'Call 1922', relatedPages: 'Related official pages',
     lowRelevance: 'Only loosely related to your question', lowRelevanceSub: 'These are the closest official passages on this site and may not answer your question directly. Please open the source, or call 1922.', relatedListH: 'Related pages',
+    fullSearch: 'Search all pages for “{q}”', fullSearchNote: 'Full-text search lists every page that contains the keyword; you can filter by type, unit and year.',
     paused: 'AI answers are paused. Keyword search results and the 1922 hotline are available.', pausedReason: 'Reason', updated: 'Updated',
     proLabel: 'Professional mode: cites manual sections and effective dates verbatim', translationSource: 'No reviewed translation is available; showing the Chinese original.', translationMachine: 'Machine translation (official terms locked). The Chinese original prevails.',
     termNote: '"{from}" is now called "{to}".', lowConf: 'Your question is ambiguous, so related pages are listed as well.',
@@ -97,6 +99,7 @@ export function sourceCardBody(src, { pro = false } = {}) {
   rows.push(...typeRows(src).map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${v}</dd></div>`));
   add(L('owner'), esc(src.ownerName ?? src.owner));
   add(L('reviewed'), src.reviewedAt ? `<time datetime="${esc(src.reviewedAt)}">${esc(src.reviewedAt)}</time>` : '');
+  if (src.verification === 'pending') add(L('verification'), `<span class="c-tag c-tag--warn">${esc(L('verificationPending'))}</span>`);
   add(L('current'), src.isCurrent === false ? `<span class="c-tag c-tag--warn">${esc(L('currentNo'))}</span>` : esc(L('currentYes')));
   add(L('license'), esc(LICENSE_LABEL[src.license] ?? src.license ?? 'OGDL-1.0'));
   if (pro || src.version) {
@@ -104,7 +107,7 @@ export function sourceCardBody(src, { pro = false } = {}) {
     add(L('effective'), esc(src.effectiveAt ?? ''));
     if (src.section?.heading) add(L('section'), esc(src.section.no ? `第 ${src.section.no} 條 ${src.section.heading}` : src.section.heading));
     if (src.pdfPage) add(L('pdfPage'), esc(String(src.pdfPage)));
-    if (src.extraction) add(L('extraction'), src.extraction.reviewStatus === 'reviewed' ? esc(L('extractionReviewed')) : `<span class="c-tag c-tag--warn">${esc(L('extractionMachine'))}</span>`);
+    if (src.extraction) add(L('extraction'), src.extraction.reviewStatus === 'reviewed' ? esc(L('extractionReviewed')) : `<span class="c-tag c-tag--warn">${esc(L(src.extraction.sourceKind === 'reconstructed' ? 'extractionReconstructed' : 'extractionMachine'))}</span>`);
     if (src.supersedes) add(L('supersedes'), `${esc(src.supersedesVersion ?? '')} ${link(`/documents/${String(src.supersedes).replace(/^doc\./, '')}/`, src.supersedes)}`);
     if (src.change?.before || src.change?.after) add(L('change'), `${src.change.before ? `<del>${esc(src.change.before)}</del> → ` : ''}<ins>${esc(src.change.after ?? '')}</ins>`);
     if (pro) add(L('nextReview'), esc(src.nextReviewAt ?? ''));
@@ -304,6 +307,13 @@ export async function statsBlock(result) {
     <p class="c-answer__nopredict">${esc(L('noPredict'))}${st.notes?.length ? ` ${esc(st.notes.join('；'))}` : ''}</p>
     ${src ? numberSource(src) : ''}
   </section>`;
+}
+
+/** 第二十八輪：連到 /search/?q=（Pagefind 全文搜尋）。答案頁的關鍵字清單是「最接近的幾筆」，全文搜尋才是「所有含這個詞的頁面＋篩選」。 */
+export function fullTextLink(q) {
+  if (!q) return '';
+  const href = `${url('/search/')}?q=${encodeURIComponent(q)}`;
+  return `<p class="c-answer__fulltext"><a class="c-btn c-btn--ghost c-btn--sm" href="${esc(href)}" data-fulltext>${esc(L('fullSearch', { q }))}</a> <span class="muted">${esc(L('fullSearchNote'))}</span></p>`;
 }
 
 export function traditionalList(list, title = L('listH')) {

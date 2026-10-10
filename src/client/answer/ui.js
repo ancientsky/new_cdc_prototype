@@ -1,7 +1,7 @@
 // 搜尋即答案頁（/ask/）：掛到 C 的殼 #ask-form／#ask-q、#answer、#answer-side、#ask-advanced、#llm-key。
 // 流程：讀 ?q= → core（抽取式）→ 依意圖渲染 wireframe 第 3 頁區塊 →（有 key 且啟用）LLM 重組或翻譯 → 後檢 → 重新渲染。
 import { loadEngine, currentView, url, esc, v1, LANG } from './data.js';
-import { L, link, isLowRelevance, sentenceList, sourceList, disclosureRow, refusalCard, situationCards, verdictBlock, statsBlock, traditionalList, wireInteractions, ensureStyles, notifyBlock } from './render.js';
+import { L, link, isLowRelevance, sentenceList, sourceList, disclosureRow, refusalCard, situationCards, verdictBlock, statsBlock, traditionalList, fullTextLink, wireInteractions, ensureStyles, notifyBlock } from './render.js';
 import './inline.js'; // 頁內問題框（#ask-inline／[data-ask-inline]）→ /ask/
 import { getKey, setKey, getModel, setModel, llmModels, llmAnswer, llmTranslate, purgeLegacyKey, staffSessionActive } from './llm.js';
 
@@ -15,6 +15,7 @@ const view = currentView();
 const pro = view === 'pro';
 let current = null;
 let runId = 0;
+let lastQ = ''; // 目前這題的問句（全文搜尋連結用）
 
 const LLM_ON_KEY = 'cdc.llmEnabled';
 // 第二十三輪：LLM 模式只在「同事後台工作階段有效 ＋ 本分頁有 key」時啟用；開關也存 sessionStorage（跟 key 同生命週期）
@@ -45,6 +46,7 @@ function busy(on, text = L('loading')) {
 
 async function run(q) {
   const my = ++runId;
+  lastQ = q;
   if (!q) {
     answerEl.setAttribute('aria-busy', 'false');
     answerEl.innerHTML = `<p class="muted">${esc(L('empty'))}</p>`;
@@ -126,6 +128,7 @@ async function render(r, deps) {
 }
 
 function paint(parts, r) {
+  parts.push(fullTextLink(lastQ)); // 第二十八輪：每個答案最後都附「用全文搜尋找『…』」（相關頁面清單之後；查無時尤其重要）
   answerEl.innerHTML = `<div class="c-answer__inner" data-intent="${esc(r.intent)}" data-mode="${esc(r.disclosure?.mode ?? 'extractive')}">${parts.join('\n')}</div>`;
   answerEl.setAttribute('aria-busy', 'false');
   window.CDC?.subscriptions?.refresh?.();

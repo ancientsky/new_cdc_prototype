@@ -1,0 +1,47 @@
+{
+  "id": "page.x-core-curriculum-list",
+  "type": "page",
+  "title": "傳染病核心教材",
+  "owner": "unit.oasis",
+  "publishedAt": "2026-10-10",
+  "reviewedAt": "2026-10-10",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "登革熱核心教材 麻疹核心教材 新型A型流感核心教材 鼠疫核心教材",
+  "slug": "x-core-curriculum-list",
+  "bodyMarkdown": "- [登革熱核心教材](https://www.cdc.gov.tw/Category/DiseaseTeach/VfpjOuRgDbAh6fzpmiZuVO)\n- [麻疹核心教材](https://www.cdc.gov.tw/Category/DiseaseTeach/T9FhoMUb6iFhUy1QUsJrFy)\n- [新型A型流感核心教材](https://www.cdc.gov.tw/Category/DiseaseTeach/b3svOY0jxlOxkEKfknvwED)\n- [鼠疫核心教材](https://www.cdc.gov.tw/Category/DiseaseTeach/xeRIJXoPAmAxHAV71GUim1)",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/PM9-kmbijh-Ftkeb_TIF06"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.4,
+    "issues": [
+      {
+        "code": "list-page",
+        "severity": "info",
+        "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+      },
+      {
+        "code": "body-short",
+        "severity": "warn",
+        "message": "內文過短（32 字，低於 40）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/List/PM9-kmbijh-Ftkeb_TIF06",
+    "convertedAt": "2026-10-10T03:00:00Z"
+  }
+}

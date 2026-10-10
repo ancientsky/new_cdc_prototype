@@ -1,6 +1,6 @@
 // /glossary/ 的前端篩選（漸進增強）：沒有 JS 時整份詞彙表照常顯示，篩選框維持 hidden。
 // 搜尋範圍：中文正名、英文、別名、舊稱（伺服器端已把它們放進每列的 data-q，小寫）。
-import './i18n.js';
+import './i18n.runtime.js'; // 第二十六輪起 dist 不再有完整 i18n.js，改用 runtime（第二十八輪修正）
 
 const T = (k, v) => (window.CDC?.t ? window.CDC.t(k, v) : k);
 const form = document.querySelector('[data-glossary-filter]');

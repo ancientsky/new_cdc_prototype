@@ -3,6 +3,7 @@
 import { html, raw } from '../../../scripts/lib/render.mjs';
 import { proStyles } from './_styles.mjs';
 import { servicesGrid, hrefFor, L } from '../public/_partials.mjs';
+import { curricula, curriculumList } from '../public/_curriculum.mjs';
 
 const ROLES = [
   { key: 'physician', zh: '醫師', en: 'Physician' },
@@ -33,6 +34,7 @@ const TXT = {
     copyRss: '複製 RSS/Atom 網址', copied: '已複製', ics: '下載 .ics 提醒', icsNote: '.ics 示範：把「下次審閱日」加進你的行事曆，提前 7 天提醒。',
     chain: '版本鏈', chainBody: '每份文件都記錄「取代誰、被誰取代、生效日」。舊版會自動標示失效、加上 noindex 並 301 導向現行版，但仍可在版本鏈中查閱。AI 回答若引用到失效版本，視為嚴重缺陷，評估集的版本題必須全對才能上線。',
     chainLink: '看版本鏈範例', status: '狀態', metric: '指標', illus: '示意數字', owner: '權責', reviewed: '審閱',
+    curr: '傳染病核心教材', currSub: '給醫事與防疫人員的教學用教材；目前為示範匯入版，未查證，以 PDF 正本為準。', currAll: '全部核心教材與待匯入清單 →',
     svc: '應用專區', notices: '最新公告（人才／採購）', noticesAll: '全部公告 →', noticesNone: '目前沒有進行中的人才招募或採購公告。',
   },
   en: {
@@ -47,6 +49,7 @@ const TXT = {
     copyRss: 'Copy RSS/Atom URL', copied: 'Copied', ics: 'Download .ics reminder', icsNote: '.ics demo: adds the next review date to your calendar with a 7-day reminder.',
     chain: 'Version chain', chainBody: 'Every document records what it supersedes, what supersedes it and its effective date. Old versions are flagged, set to noindex and redirected (301) to the current one, yet remain readable. An AI answer that cites a superseded version is a critical defect.',
     chainLink: 'See an example chain', status: 'Status', metric: 'Metric', illus: 'illustrative', owner: 'Owner', reviewed: 'Reviewed',
+    curr: 'Core curriculum', currSub: 'Teaching material for health and public-health staff; current items are unverified demonstration imports, the official PDF prevails.', currAll: 'All core curricula and the import backlog →',
     svc: 'Applications and services', notices: 'Latest notices (recruitment / procurement)', noticesAll: 'All notices →', noticesNone: 'No open recruitment or procurement notices right now.',
   },
 };
@@ -63,6 +66,7 @@ function documentRows(site) {
     const current = sorted.find((v) => v.isCurrent) ?? sorted[0];
     if (!current) continue;
     if (!(current.audience ?? []).includes('professional')) continue;
+    if (current.docType === 'curriculum') continue; // 第二十八輪：核心教材另列一張卡
     rows.push({ family, current, older: sorted.filter((v) => v !== current) });
   }
   return rows.sort((a, b) => (b.current.effectiveAt ?? '').localeCompare(a.current.effectiveAt ?? ''));
@@ -101,6 +105,7 @@ export function render(ctx) {
     { href: 'https://nidrs.cdc.gov.tw/', ext: true, title: '法定傳染病通報', title_en: 'Notifiable disease reporting', sub: '連結現行通報系統（NIDRS）', sub_en: 'Opens the current NIDRS reporting system', roles: 'physician infection-control local-health' },
     { href: askUrl('檢體送驗規定 容器 時限 表單'), title: '檢體送驗規定', title_en: 'Specimen submission rules', sub: '容器 · 時限 · 表單', sub_en: 'Containers · time limits · forms', roles: 'lab physician local-health' },
     { href: url('/diseases/'), title: '臨床處置指引', title_en: 'Clinical management guidance', sub: '依病別查詢', sub_en: 'Look up by disease', roles: 'physician nurse' },
+    { href: url('/topics/antivenom/#s-professional'), title: '抗蛇毒血清', title_en: 'Antivenom', sub: '血清種類 · 儲備點 · 調度', sub_en: 'Products · stock points · transfers', roles: 'physician nurse' },
     { href: askUrl('感染管制查核 醫院 長照機構'), title: '感染管制查核', title_en: 'Infection-control audits', sub: '醫院 · 長照機構', sub_en: 'Hospitals · long-term care', roles: 'infection-control nurse local-health' },
   ];
 
@@ -173,6 +178,13 @@ export function render(ctx) {
             </li>`;
           })}
         </ul>` : html`<p class="muted">${T.none}</p>`}
+      </section>
+
+      <section class="pf-card" aria-labelledby="curr-h">
+        <h2 id="curr-h" style="font-size:var(--fs-lg);margin:0">${T.curr}</h2>
+        <p class="pf-hint">${T.currSub}</p>
+        ${curriculumList(ctx, curricula(site), { showDisease: true })}
+        <p class="pf-hint"><a href="${url('/pro/curriculum/')}">${T.currAll}</a></p>
       </section>
 
       <section class="pf-card" aria-labelledby="svc-h">

@@ -51,7 +51,7 @@ test('移轉清單：institutional 對到兩頁、legacy-services 四項（電�
   const svc = site.migrationLists.find((m) => m.id === 'migration.legacy-services');
   assert.deepEqual(svc.items.map((i) => i.key), ['newsletter', 'antivenom', 'core-curriculum', 'advanced-search']);
   assert.ok(svc.items.find((i) => i.key === 'antivenom').oldUrl.endsWith('l_z6ZKErZJ063m6OV_8nXQ'));
-  assert.ok(svc.items.find((i) => i.key === 'newsletter').note.includes('待決策'));
+  assert.ok(svc.items.find((i) => i.key === 'newsletter').note.includes('已決策'));
   assert.ok(svc.items.find((i) => i.key === 'antivenom').note.includes('必移轉'));
 });
 

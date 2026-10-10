@@ -59,7 +59,8 @@ export function collectInlineHashes(dist) {
 export function securityHeaders({ hashes = [], llmOrigin = 'https://api.anthropic.com', vaxmapOrigin = new URL(config.vaxmapUrl).origin, frameAncestors = "'self'" } = {}) {
   const csp = [
     "default-src 'self'",
-    `script-src 'self' ${hashes.join(' ')}`.trim(),
+    // 'wasm-unsafe-eval'（第二十八輪）：Pagefind 全文搜尋用 WebAssembly；它只允許編譯 .wasm，不允許 eval() 與 new Function()，所以不等於 'unsafe-eval'
+    `script-src 'self' 'wasm-unsafe-eval' ${hashes.join(' ')}`.trim(),
     "style-src 'self' 'unsafe-inline'", // 後台少量 style="" 屬性；正式站可改成 nonce／class 後拿掉 'unsafe-inline'（README 有清單）
     "img-src 'self' data: https://i.ytimg.com",
     "font-src 'self'",
@@ -129,7 +130,7 @@ export function renderReadme(h, info) {
 
 ## 為什麼是這些值
 
-- **CSP**：\`default-src 'self'\` 擋掉第三方腳本注入；inline script 用雜湊而不是 \`'unsafe-inline'\`；\`frame-src\` 只放疫苗地圖與 YouTube；\`frame-ancestors 'self'\` 防點擊劫持（現行官網是 \`'self' *.cdc.gov.tw\`，正式站換網域時依需要加子網域）；\`connect-src\` 多 \`api.anthropic.com\` 只因示範用 BYOK，正式站拿掉。
+- **CSP**：\`default-src 'self'\` 擋掉第三方腳本注入；inline script 用雜湊而不是 \`'unsafe-inline'\`；\`'wasm-unsafe-eval'\` 只為了全文搜尋（Pagefind）載入 WebAssembly，不開放 \`eval()\`；\`frame-src\` 只放疫苗地圖與 YouTube；\`frame-ancestors 'self'\` 防點擊劫持（現行官網是 \`'self' *.cdc.gov.tw\`，正式站換網域時依需要加子網域）；\`connect-src\` 多 \`api.anthropic.com\` 只因示範用 BYOK，正式站拿掉。
 - **HSTS** 一年含子網域；**nosniff**、**Referrer-Policy**、**Permissions-Policy** 為 OWASP Secure Headers 建議值。
 - \`style-src\` 暫留 \`'unsafe-inline'\`：後台頁有少量 \`style=""\` 屬性；清掉後可改為 \`'self'\`。
 

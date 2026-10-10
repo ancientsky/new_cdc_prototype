@@ -1065,11 +1065,11 @@ manualStatus?: enum[cancelled, failed（流標）], award?: { date, winner, amou
 - `src/templates/public/glossary.mjs`（`pages()` 回 `lang: '*'`，七語各一頁）：詞彙主檔公開版，依英文首字母分組（非字母歸 `#`），每筆含中文正名、English、定義（`definition ?? note`；`definition` 為新增的選填欄位，目前 83 筆中只有 2 筆有 `note`，其餘待單位補）、別名、舊稱、領域、相關疾病頁。每列的 `data-q`（小寫的中文、英文、別名、舊稱）供篩選。
 - `src/client/glossary.js`：有 JS 才把 `hidden` 的篩選框打開並即時過濾，同步隱藏沒有符合項目的字母群；沒有 JS 就是完整清單（漸進增強）。
 - 連結：頁尾「開放資料與開發者」欄、網站導覽「更多服務」、`STATIC_PATHS`。
-- `content/migration/legacy-services.json`：電子報（待決策：Email 訂閱需要後端或寄信服務，建議先 RSS＋LINE 官方帳號）、抗蛇毒血清資訊（必移轉：緊急就醫資訊，舊網址取自審查意見）、傳染病核心教材（必移轉）、進階搜尋（待決策：用 `/ask/` 答案頁加「相關頁面」清單，或另做 Pagefind；本輪不做 Pagefind）。
+- `content/migration/legacy-services.json`：電子報（待決策：Email 訂閱需要後端或寄信服務，建議先 RSS＋LINE 官方帳號）、抗蛇毒血清資訊（必移轉：緊急就醫資訊，舊網址取自審查意見）、傳染病核心教材（必移轉）、進階搜尋（本輪當時待決策；**第二十八輪已決定兩者並存並完成**：答案頁加相關頁面清單＋Pagefind 全文搜尋，見第 31 節）。
 
 ### 28.7 沒做、留給權責單位決定
 
-電子報走哪個管道、進階搜尋走哪條路、抗蛇毒血清與核心教材的內容匯入、FOIA 頁中標「待建置」的項目、資訊安全政策正式文字、各頁權責單位確認、英文版人工審核、詞彙定義文字。
+電子報走哪個管道、（進階搜尋已於第二十八輪完成，見第 31 節）、抗蛇毒血清與核心教材的內容匯入、FOIA 頁中標「待建置」的項目、資訊安全政策正式文字、各頁權責單位確認、英文版人工審核、詞彙定義文字。
 
 ## 29. 第二十六輪（2026-10-10）：介面字串依語言拆檔與 JS 預算、Lint／型別檢查、CMS 路線決策紀錄
 
@@ -1129,3 +1129,348 @@ manualStatus?: enum[cancelled, failed（流標）], award?: { date, winner, amou
 ### 29.6 CMS 路線決策紀錄（#28）
 
 見 [docs/architecture-decisions.md](docs/architecture-decisions.md) 第 18 節：自建後台、Keystatic、TinaCMS 三案比較、Keystatic（faq 型別）兩週試點計畫與成功標準、內容格式建議（結構化 JSON，長文維持 JSON 內的 Markdown 欄位）。**建議為試點 Keystatic，最後選擇待長官決定**；issue #28 保持 OPEN。
+
+## 30. 第二十八輪（2026-10-10）：電子報訂閱（RSS、LINE、Email 模擬後端）
+
+Issue #38 的決議（Yulun）：**先 RSS＋LINE 官方帳號並在頁尾說明；也實做 Email 訂閱，需與模擬後端或寄信服務。** 為什麼這樣排：RSS 不需要任何個人資料也不需要伺服器，LINE 是民眾本來就在用的管道，兩者今天就能上線；Email 要有寄信服務、退訂機制與個資保存，是正式站才能落地的東西，所以原型把它做成「介面與契約都是真的、後面接模擬後端」，讓資訊室選定寄信服務時只換最底層、前端與規則不重寫。決策理由見 [docs/architecture-decisions.md](docs/architecture-decisions.md) 第 19 節。
+
+### 30.1 檔案與分層
+
+| 檔案 | 角色 | 為什麼這樣分 |
+| --- | --- | --- |
+| `src/templates/public/subscribe.mjs` | `/subscribe/`（七語，`lang:'*'`，同詞彙頁做法）：RSS、LINE、Email 三區 | 頻道清單從 `feedCatalog()` 讀，不手抄；`checkTopics()` 在建置時比對主題與頻道，不一致就失敗 |
+| `scripts/lib/feed-catalog.mjs` | 把 `emit-seo.mjs` 的 `buildFeeds()` 輸出讀回成目錄（id、絕對網址、標題、說明、項目） | 訂閱頁、Email 主題、週摘要三處共用同一份事實；新增 `feeds/xxx.xml` 就自動出現在頁面，不會忘記 |
+| `src/client/subscribe-rules.js` | 純函式：信箱／主題／頻率／語言／同意驗證、token 形狀、**信件內容（確認信、歡迎信、退訂信、週摘要，中英）** | 瀏覽器即時檢核、伺服器再驗一次、摘要產生器三處共用；正式寄信服務上線後，這份就是「前後端要對齊的契約」 |
+| `src/client/subscribe-service.js` | **狀態機**：`subscribe`／`confirm`／`status`／`update`／`unsubscribe`／`manageLink`，只認 `load`／`save`／`mail` 三個注入函式 | 兩種模擬後端共用同一份邏輯，行為不會分岔（例如一邊洩漏信箱是否已訂閱、另一邊不會）；正式版換掉三個函式即可 |
+| `src/client/subscribe.js` | 瀏覽器端：`backend` 介面、`createBrowserBackend`、`createHttpBackend`、`detectBackend`、畫面 | 畫面只認介面，不知道後面是誰 |
+| `scripts/lib/subscribe-mock.mjs` | HTTP 模擬後端（`createSubscriptionApi`），由 `scripts/serve.mjs` 掛載 | 只負責 HTTP、JSON 檔儲存、寫 `.eml`；規則在 service |
+| `scripts/lib/mail-outbox.mjs` | 組 `.eml`（RFC 5322／MIME／RFC 2047）、寫入 outbox、解析回來（測試與開發列表用） | 資訊室看到的是「收件人實際會收到的那封信」 |
+| `scripts/newsletter-digest.mjs` | 週摘要產生器（範本版與逐位訂閱者版） | 正式寄信服務只負責「寄」，不必也不該自己去撈內容與排版 |
+| `.local/`（git 忽略） | `subscriptions.json`、`outbox/*.eml` | 含信箱，絕不進版控；`.gitignore` 與測試都檢查 |
+
+### 30.2 `backend` 介面（前端與後端的縫）
+
+```
+backend.kind                         'mock-browser' | 'mock-http'
+backend.subscribe({email, topics, frequency, lang, consent, website})  → Result   // 第一步：寄確認信
+backend.confirm(token)               → Result {status:'confirmed', manageToken, …}  // 第二步：點信裡連結（雙重確認）
+backend.status(manageToken)          → Result {status, email(遮罩), topics, frequency, lang}
+backend.update(manageToken, prefs)   → Result
+backend.unsubscribe(manageToken)     → Result {status:'unsubscribed'}
+backend.manageLink(email)            → Result   // 忘了管理連結
+Result = {ok:true, …body} | {ok:false, error:'invalid'|'rate'|'expired'|'notfound'|'unsubscribed'|'full'|'network'|'server', fields?, retryAfter?}
+```
+
+兩種實作：
+
+- **`createBrowserBackend`（GitHub Pages 與沒有後端時）**：資料與「模擬收件匣」只存 `localStorage`（鍵 `cdc.subscribe.mock.v1`；讀寫失敗退回記憶體，私密視窗也能示範一整輪）。確認信不會寄出，而是出現在頁面上的「模擬收件匣」，點信裡的連結走完整流程。橫幅固定顯示「原型示範：資料只存在你的瀏覽器，不會寄出」（沿用 `/careers/{slug}/apply/` 的 `.c-demo-banner` 樣式與「資料只存本機」做法）。
+- **`createHttpBackend`（跑 `node scripts/serve.mjs` 時）**：呼叫下節的 `/api/subscriptions*`，信件寫成 `.local/outbox/*.eml`。正式寄信服務也走同一組端點，前端不用改。
+- **偵測 `detectBackend`**：先 `GET /api/health`（1.5 秒逾時，回應必須是 `{service:'cdc-prototype-subscriptions'}`），符合才用 HTTP；404（GitHub Pages）、格式不符、連線失敗、逾時、或網址帶 `?backend=browser` 一律退回瀏覽器模擬。為什麼要驗 `service` 名稱：避免某個主機剛好對所有 `/api/*` 回 200 HTML 就被誤判成有後端。已知的小代價：靜態主機上瀏覽器 Console 會多一行 `/api/health` 404。
+
+### 30.3 HTTP 模擬後端的契約（正式版照這份實作，見 deploy.md §11）
+
+| 端點 | 請求 | 成功回應 | 要點 |
+| --- | --- | --- | --- |
+| `GET /api/health` | — | `200 {ok:true, service:'cdc-prototype-subscriptions', mode:'mock-http'}` | 前端偵測用 |
+| `POST /api/subscriptions` | JSON `{email, topics[], frequency:'instant'\|'weekly', lang:'zh-TW'\|'en', consent:true, website?}` | `202 {status:'pending'}` | 不論信箱是否已存在，回應完全相同（不洩漏誰訂閱了）；已確認者不會被改設定，只收到「管理／退訂」信；蜜罐 `website` 有值就假裝成功；驗證失敗 `400 {error:'invalid', fields}`（不回顯輸入）；節流 `429` ＋ `Retry-After` |
+| `GET /api/subscriptions/confirm?token=` | 確認 token（UUID） | `200 {status:'confirmed', manageToken, …}` | **冪等**（郵件安全掃描器會預先打開連結）；逾 48 小時 `410 expired`；寄歡迎信（含管理與退訂連結） |
+| `GET /api/subscriptions/status?token=` | manageToken | `200 {status, email(遮罩), topics, frequency, lang}` | 管理頁用 |
+| `POST /api/subscriptions/update` | `{token, topics[], frequency, lang}` | `200` | 不能改信箱：換信箱＝退訂後重新訂閱，才會再做一次雙重確認 |
+| `POST /api/subscriptions/unsubscribe` | token 放 JSON、form 或 `?token=` | `200 {status:'unsubscribed'}` | 支援 RFC 8058 一鍵退訂（本體 `List-Unsubscribe=One-Click`，token 在網址）；冪等；只留「信箱＋已退訂」抑制紀錄 |
+| `POST /api/subscriptions/manage-link` | `{email}` | `202` | 已訂閱者收到 manage 信；其餘同樣 202 不寄信 |
+| `GET /api/dev/outbox[/檔名]` | — | 列出／讀取 `.eml` | 只給 loopback；開發輔助，正式版沒有 |
+
+防護：同源檢查（POST 帶 `Origin` 必須等於 `Host`）、本體 ≤ 8 KB、`Content-Type` 只收 JSON／form、儲存筆數（2000）與 outbox 檔數（5000）上限、節流（每信箱 10 分鐘 3 次、每來源 10 次）、未確認超過 7 天自動清除、token 一律 `crypto.randomUUID()` 且只接受 UUID 形狀才查表、連結的主機名稱只取通過字元檢查的 `Host`（可用 `PUBLIC_ORIGIN` 固定）。注意這是模擬：token 以明碼存檔方便檢視，**正式版只存雜湊**。
+
+### 30.4 `.eml` 長什麼樣子
+
+`From`（RFC 2047 編碼的中文顯示名，位址 `no-reply@cdc-prototype.invalid`——`.invalid` 是 RFC 6761 保留網域，永遠不會被解析，誤餵給 SMTP 也寄不出去）、`To`、`Subject`、`Date`、`Message-ID`、`MIME-Version`、`List-Unsubscribe: <https://…/api/subscriptions/unsubscribe?token=…>, <mailto:unsubscribe@…>`、`List-Unsubscribe-Post: List-Unsubscribe=One-Click`、`List-Id`、`Auto-Submitted`、`X-CDC-Prototype`，本體 `multipart/alternative`（`text/plain` 在前、`text/html` 在後，皆 base64 UTF-8）。信的頂端有「原型示範」提示。任何郵件程式雙擊即可打開；`GET /api/dev/outbox` 可列出所有信的解碼內容。
+
+### 30.5 週摘要
+
+`node scripts/newsletter-digest.mjs [--today=YYYY-MM-DD] [--days=7] [--lang=zh-TW|en] [--topics=news,situation] [--out=資料夾]`：讀 `feedCatalog()`（與網站 RSS 同一份），取期間內項目、依主題分組、每主題最多 8 則，輸出主旨與純文字／HTML 範本（含 `{{manage_url}}`、`{{unsubscribe_url}}` 合併欄位，交給寄信服務逐人替換）。加 `--subscribers` 則讀 `.local/subscriptions.json`，對每位「已確認＋每週摘要」者依其主題與語言各寫一封 `.eml`（含各自的退訂 token 與標頭）；沒有新內容就不寄空信。日期以台灣日期計（RSS 的 `pubDate` 是 UTC，日期型內容是台灣當日 00:00＝UTC 前一日 16:00，讀回時加 8 小時）。
+
+### 30.6 其他連動
+
+- **頁尾**：`layout.mjs` 的「服務」欄最後加「訂閱與通知」連結與一行說明（`footer.subscribe`、`footer.subscribe.note`，七語）。
+- **sitemap**：`STATIC_PATHS` 加 `/subscribe/`；網站導覽頁加連結；`scripts/a11y.mjs` 的頁面清單加 `/subscribe/`、`/en/subscribe/`。
+- **字串**：`i18n.js` 新增 `ROWS_R28`（118 個 key，七語；非中文為機器翻譯，與全站其他介面字相同待審核）。**信件內文不放 i18n.js**：信件語言是訂閱者選的（zh-TW／en），不是網頁語言，而 i18n 的瀏覽器版每頁只載入一種語言，放在 `subscribe-rules.js` 才能在任何頁面語言下顯示正確語言的信。
+- **LINE「疾管家」`@taiwancdc`**：開發環境連不到 cdc.gov.tw，帳號 ID 與 `https://page.line.me/taiwancdc` 取自 2018–2020 年的媒體與衛福部說明，**未核對**，頁面顯示「待確認」標記，`legacy-services.json` 的 `sourceNote` 同步註記。公關室核對官網首頁後把 `LINE_ACCOUNT.verified` 改 `true`（標記與提示自動消失）。
+- **隱私權政策**：`content/pages/privacy.json` §二新增第 6 項，分開寫「正式站規劃」與「原型現況」。
+- **移轉清單**：`legacy-services.json` 的 `newsletter` 加 `newPath:'/subscribe/'`，`note` 改寫成已做／待辦，狀態仍是 `pending`（因為真的寄信服務還沒選）。
+- **CSP**：沒有新增 inline script、第三方腳本或來源；HTTP 後端與頁面同源，`connect-src 'self'` 已涵蓋。**正式寄信服務若在別的網域，要在 `securityHeaders()` 的 `connect-src` 加該來源**並在 deploy.md §10 說明。
+
+### 30.7 踩到的坑
+
+- 頁面第一版用 `data-subscribe` 當根節點屬性，與 `ui.js` 既有的「專業人員訂閱」`[data-subscribe]` 撞名，`document.querySelector` 先找到別的元素，整個 Email 區塊靜默失效。改名 `data-sub-app`。教訓：新增 `data-*` 掛載點前先 `grep` 全站，頁面模組的根屬性用有前綴的專屬名稱。
+- 可捲動表格 `.c-tablewrap` 要有 `role="region" tabindex="0" aria-label`（`tests/round24-a11y.test.mjs` 會掃全站擋下）。
+- 驗證錯誤後 `focus()` 錯誤摘要會觸發捲動，自動化測試要等一下再點下一個控制項，否則點擊落在捲動中的位置。
+- `Origin` 檢查：沒有 `Origin` 標頭的 POST（curl、郵件程式的一鍵退訂）要放行，否則 RFC 8058 一鍵退訂會失敗；有 `Origin` 且不同源才拒絕。
+
+### 30.8 測試
+
+`tests/round28-newsletter.test.mjs`（21 項）：頻道目錄＝`buildFeeds`、頁面列出全部頻道與網址、LINE 待確認標記、無第三方腳本／`innerHTML`、頁尾連結與七語字串、驗證規則（含標頭注入）、信件轉義與 `.eml` 往返、狀態機（雙重確認、冪等、逾期、不洩漏、節流、蜜罐、7 天清除）、HTTP 後端（真的起 server：`.eml` 標頭、RFC 8058 form POST、Origin／大小／型別、本機限定的 dev outbox）、`serve.mjs` 掛載、瀏覽器後端與偵測（含逾時）、週摘要與 CLI。a11y：`/subscribe/`、`/en/subscribe/` 加入 `npm run a11y`；另以 axe 掃過錯誤、已寄出（含模擬收件匣）、確認結果、管理四個畫面（桌機 1280／手機 320）皆 0 違規、無橫向捲動。
+
+## 31. 第二十八輪（2026-10-10）：Pagefind 靜態全文搜尋與進階篩選
+
+Issue #38「進階搜尋」。決策（Yulun）：**答案頁的「相關頁面清單」與 Pagefind 全文搜尋並存**，不是二選一（理由見 [docs/architecture-decisions.md](docs/architecture-decisions.md) 第 20 節）。這一節記錄實作、量測數字、中文斷詞的實測結果與限制，以及這輪踩到的坑。同事怎麼讓頁面搜得到、篩得到，見 [docs/guide-staff.md](docs/guide-staff.md) 第 29 節；CI／標頭／快取見 [docs/deploy.md](docs/deploy.md) 第 10、11 節。
+
+### 31.1 兩條路各做什麼（為什麼並存）
+
+| | `/ask/` 答案頁（既有） | `/search/` Pagefind（新） |
+| --- | --- | --- |
+| 回答的問題 | 「我該怎麼辦？」給一個抽取式答案＋引用＋相關頁面 | 「站上哪些頁面提到 X？」給排序過的頁面清單 |
+| 範圍 | 站內 FAQ／疾病／文件等結構化片段（有相關度門檻，寧可查無） | 全站公開頁的**全文**，含新聞稿、旅遊目的地、詞彙頁、長文件 |
+| 篩選 | 無 | 內容類型、對象、業務單位、年份；可依日期排序 |
+| 失敗時 | 查無 → 引導改問法、熱線 | 零結果 → 清除篩選、改用 /ask/ |
+
+兩邊互相導流：答案頁與「查無」都會多一行「用全文搜尋找『{q}』」（`src/client/answer/render.js` 的 `fullTextLink`，連到 `/search/?q=…`）；`/search/` 零結果時有「改用智慧查詢」連到 `/ask/?q=…`。
+
+### 31.2 建置流程與實測
+
+- `pagefind@1.5.2` 加進 `devDependencies`（`package-lock.json` 鎖版；Dependabot 會開升版 PR）。
+- 索引**在 `scripts/build.mjs` 內做**（輸出 HTML 之後、連結檢查之前），用 Pagefind 的 Node API（`createIndex` → `addHTMLFile` → `writeFiles`），實作在 `scripts/lib/pagefind.mjs`。不另外寫成 workflow 步驟，是因為：`pages.yml`、`content-pr.yml`（a11y 用的建置、預覽站建置）、本機 `npm run build` 都已經跑 `build.mjs`，放在這裡**每一種建置自然都有 `dist/pagefind/`**；預覽站的複製也在索引之後，PR 預覽直接能搜。`node scripts/build.mjs --check` 在輸出前就 return，不索引（驗證不用付 20 秒）。`PAGEFIND=off` 可跳過（只想看版面時）。
+- **實測**（本機，3102 個輸出頁；其中 2330 頁進索引）：輸出 HTML 約 30 秒；全文索引 **約 18–19 秒**；`dist/pagefind/` 共 2499 檔、約 6.9 MB（單一檔案加總；磁碟 `du` 因每檔區塊取整會顯示約 13 MB，兩個數字都不是下載量，下載量見下一點）。語言：zh-tw 487 頁、en 416、其餘 ja／tl／vi／th／id 各約 285。
+- 建置後會刪掉用不到的 Pagefind 內建 UI（`pagefind-ui.*`、`pagefind-modular-ui.*`、`pagefind-component-ui.*`、`pagefind-highlight.js`）：我們用自己的介面，這些檔每個數百 KB，留著只會變成「部署了卻沒人用」的檔案與攻擊面。
+- **使用者實際下載量**（Chromium、無快取，gzip 後；`pagefind-worker.js`＋`pagefind.js`＋wasm＋索引分片）：「登革熱」約 268 KB、「結核」約 184 KB、「麻疹疫苗」約 223 KB、「抗病毒藥劑」約 241 KB。**第一次搜尋才載入**，沒搜尋的使用者零成本。
+
+### 31.3 收什麼：正面表列，不是排除表列
+
+Pagefind 有個行為：**只要站上有一頁出現 `data-pagefind-body`，沒有這個屬性的頁就整頁不收**。我們順著用它：
+
+- `layout()` 只有在 `pagefindFor(meta)`（`src/templates/public/_pagefind.mjs`）回傳非 null 時，才在 `<main>` 加 `data-pagefind-body`。內容型別在 `PF_TYPES` 表內（disease、vaccine、news、letter、clarification、document、faq、service、publication、labtest、research、media、topic、page、job、tender），再加兩種非內容項目但值得搜的頁：旅遊目的地（`travel`）、詞彙頁（`glossary`，模板在 `meta.pagefind` 自己宣告）。
+- `noindex` 的頁一律不收：失效版文件（`_retired`）、模擬報名頁、404、`/ask/`、`/search/` 自己。
+- 後台、預覽、舊站轉址頁、機讀版（`.md`／`.json`／`/v1/`）不是人要看的頁；`scripts/lib/pagefind.mjs` 的 `isIndexable()` 還多一道「路徑黑名單」擋在最前面（admin、preview、legacy、pagefind、assets、files、v1、headers、redirects、search、ask、pending 與 `404.html`）。**兩層都要過才收**：黑名單是保險，白名單是主要機制。
+- 為什麼不是「全收再排除」：新增一種版面、工具頁，預設**不會**進索引。漏標的後果是「搜不到」（補一行就好），而不是「不該公開的東西被索引出去」（難收回）。
+
+每頁在 `<main>` 尾端附一組 hidden 空標籤（不影響畫面、朗讀，也不混進正文被搜到）：
+
+| 標籤 | 值（穩定代碼，非各語言顯示字） | 用途 |
+| --- | --- | --- |
+| `data-pagefind-filter="type:…"` | `disease`、`news`、`faq`…（`PF_ALL_TYPES`） | 「內容類型」篩選 |
+| `data-pagefind-filter="audience:…"` | `public`、`professional`（可多值） | 「對象」篩選 |
+| `data-pagefind-filter="unit:…"` | 業務單位代碼，如 `acute-infectious`（取自 `owner`） | 「業務單位」篩選 |
+| `data-pagefind-filter="year:…"` | `2026`（取自 `publishedAt`／`date`） | 「年份」篩選 |
+| `data-pagefind-sort="date:YYYY-MM-DD"` | 發布日 | 「依日期排序」 |
+| `data-pagefind-meta="title:…"`、`kind:…`、`unit:…`、`date:…` | 該頁語言的顯示字 | 結果列直接顯示，不必再取頁面 |
+| `data-pagefind-weight="10"` | 加在主體第一個 `<h1>` | 標題加權（理由見 31.5） |
+
+**篩選值用代碼、不用顯示字**：`?type=disease` 在七種語言都一樣，可分享、可書籤；顯示字由 `/search/` 頁依該語言的字串表對照。若直接用中文顯示字當篩選值，英文頁的網址會長成 `?type=疾病`，換語言就失效。
+
+### 31.4 中文（CJK）斷詞：實測、問題、解法、限制
+
+**問題**：Pagefind 內建的中文分詞對台灣用語不可靠。實測（zh-TW 且有 `data-pagefind-body` 的 487 頁，拿「主體文字含該子字串」當基準答案）：
+
+| 查詢 | 基準（含該字串的頁數） | 內建分詞：回傳／召回 | 本站做法：回傳／召回／精準 |
+| --- | --- | --- | --- |
+| 登革熱 | 72 | 5 頁／**7%** | 72 頁／**100%**／100% |
+| 結核 | 45 | 11 頁／**24%** | 45 頁／**100%**／100% |
+| 抗病毒藥劑 | 14 | 67 頁／召回 100%／精準 21%（多是只含「病毒」「藥」的頁） | 14 頁／**100%**／100% |
+| 麻疹疫苗 | 0（沒有任何頁連著寫「麻疹疫苗」） | 2 頁（誤中，都不含該字串） | 完整字串 0 筆 → 走「寬鬆」退路，列出 76 頁同時含「麻疹」與「疫苗」的頁（疾病頁 `/diseases/measles/` 在前三） |
+
+（重跑：建置後在 `dist` 上以 Playwright 載入 `/pagefind/pagefind.js`，與子字串基準比對；`tests/round28-search.test.mjs` 把「登革熱」「結核」的召回等於基準寫成測試。）
+
+**解法（索引端＋查詢端對稱）**：
+
+1. **索引端**：`scripts/lib/pagefind.mjs` 的 `spaceCjkInMain()` 在餵給 Pagefind 之前，對 `<main>` 內的**副本**把相鄰 CJK 字之間補空白（「登革熱」→「登 革 熱」，範圍 `぀-ヿ㐀-䶿一-鿿豈-﫿`，含日文假名）。磁碟上的 HTML 完全不動。每個字變成一個詞，Pagefind 的倒排索引就等於字元索引。
+2. **查詢端**：`src/client/search-query.js` 的 `parseQuery()` 把查詢裡連續的 CJK 字串轉成**精確片語**（「"登 革 熱"」），Pagefind 的片語比對要求字相鄰且順序一致，等於子字串搜尋。
+3. **多個片語**：Pagefind 一個查詢只允許一個引號片語，所以「登革熱 結核」這種多片語查詢拆成多次搜尋，結果 id **取交集**。
+4. **排序**：片語查詢的結果分數一律為 1（無排序可言），所以再做一次**不加引號**的查詢（每個字都出現）取得 Pagefind 的相關度順序，用來排片語結果；`ranking.pageLength` 設 0.25，讓長頁（旅遊目的地、長文件）不要靠字數贏過短而精準的頁。
+5. **「寬鬆」退路**：完整字串零筆、且連續 CJK ≥ 4 字時，把字串切成前後兩半各自成片語（兩半都要出現）重查，並在狀態列說明「找不到完整的『麻疹疫苗』，改列同時含『麻疹』與『疫苗』的頁面」。使用者看得到系統做了什麼，不會被默默換成別的結果。
+6. **顯示端**：摘錄裡 `<mark>登 </mark><mark>革 </mark>…` 在 `despaceExcerpt()` 去掉 CJK 字間空白並合併相鄰 `<mark>`；結果標題用 `data-pagefind-meta="title:…"` 明指（否則 `<h1>` 被補空白後會顯示成「登 革 熱」）。摘錄用 DOM 建構（只放行 `<mark>`），不用 `innerHTML` 灌 Pagefind 回傳的字串。
+
+**這個做法的限制（請維運同仁知道）**：
+
+- 是**字面子字串比對**，不是語意：不會認得同義詞（「登革熱」≠「骨痛熱病」），也不處理簡繁轉換。同義詞靠內容本身（`glossary`、頁面別名）或日後依「零結果查詢」補。
+- 單一 CJK 字（如「痘」）走一般詞比對，會很多結果；排序有 `pageLength` 與標題加權，但沒有語意相關度。
+- **泰文沒有斷詞**（泰文詞之間不留空白，Pagefind 也沒有泰文分詞）：泰文搜尋只能比對以空白或標點分隔的整段，召回很低。這是**已知限制**；每個非中文版的 `/search/` 都有「搜尋範圍是這個語言版本的頁面」的提示與連到中文搜尋的連結，泰文版沒有額外的專屬提示。越南文、印尼文、菲律賓文（空白分詞）與英文（Pagefind 內建 stemming）沒有這個問題。
+- 每個 CJK 字是一個詞，索引會比「正確分詞」的索引大；實際下載量已量過（31.2），單次搜尋約 180–270 KB（gzip）。
+- 每種語言只搜**自己語言的索引**（Pagefind 依 `<html lang>` 分索引）。英文版搜不到只有中文的頁；`/search/` 在非中文版有一行連到中文搜尋的提示（`data-search-zh`）。內容翻譯覆蓋率各語言不同（zh-TW 487 頁、en 416、其餘約 285），這是內容問題，不是搜尋問題。
+
+### 31.5 `/search/` 頁的設計
+
+- **七種語言各一頁**（`src/templates/public/search.mjs`，`lang: '*'`），`noindex`；表單 `role="search"`、單一文字欄＋「進階篩選」`<details>`（預設收合；網址帶篩選或排序時展開）。內容類型與對象是 `<fieldset>`＋核取方塊，業務單位／年份／排序是原生 `<select>`。**全部原生控制項**，鍵盤與讀屏免費可用；320 px 下欄位直排、無橫向捲動（e2e 在 320 px 驗過）。
+- **不用 Pagefind 內建 UI**：它的版面、字串與無障礙行為我們控制不了，也沒有七語介面；自建約 400 行（`src/client/search.js`＋`search-query.js`），字串走既有 `i18n.js`（`search.*`、`search.type.*`，建置時依語言拆檔）。
+- **狀態 ↔ 網址**：`?q=…&type=a,b&audience=…&unit=…&year=…&sort=date`，載入時還原、變更時 `history.pushState`、`popstate` 還原；因此搜尋結果可分享、上一頁可用。`?q=` 也是 /ask/ 連過來的入口。
+- **多選篩選是 OR**：Pagefind 的陣列值是 AND，所以多選時改用 `{ any: [...] }`。
+- **選項顯示筆數**：從 `pagefind.filters()` 取全站數量（無查詢時）或單次查詢的數量（多片語查詢無法由單次查詢得出，不顯示）。
+- **可及性**：結果數與狀態寫入 `role="status"` `aria-live="polite"` 的 `#search-status`；結果是 `<ol>`；「顯示更多」之後把焦點移到第一筆新結果。`scripts/a11y.mjs` 的 `PAGES` 加了 `/search/` 與 `/search/?q=登革熱&type=faq,news`（後者等結果出現才掃，涵蓋結果列與篩選展開狀態）。
+- **競態**：快速改篩選時，舊請求的結果不能蓋掉新請求（e2e 實際抓到過「已篩選的清單混入舊結果」）。`renderMore` 以 run id 比對，過期的結果直接丟棄；翻頁中不允許重入（`busyRun`）。
+- **標題加權**：`layout` 對主體第一個 `<h1>` 補 `data-pagefind-weight="10"`。理由：Pagefind 預設所有字等權，「登革熱」在 231 個旅遊目的地頁各出現數次，沒加權時疾病頁會被淹沒；統一在 layout 補而不是逐模板改，新模板不用記得。
+
+### 31.6 與 /ask/ 的整合、頁首入口
+
+- **/ask/**：答案、拒答、暫停三種狀態的結尾都有「用全文搜尋找『{q}』」連結（含 `fullSearchNote`，說明這是找頁面而不是回答問題），查無時尤其重要——它把死路變成出路。
+- **頁首入口**：加在頁首導覽（站內地圖連結之後）、頁尾「服務」欄、站內地圖頁。**判斷**：頁首導覽在 ≤ 720 px 時，CSS 本來就把非熱線連結收起來（避免導覽列換行），所以手機上入口是頁尾與 /ask/ 連結；桌機寬度（721、760、900、1280 px）逐一量過沒有溢位。如果要手機也有，應做成漢堡選單，那是版面層級的改動，不在這一輪。
+
+### 31.7 安全與效能
+
+- **CSP**：`script-src 'self' 'wasm-unsafe-eval' <inline 雜湊>`。Pagefind 在 Web Worker 內用 WebAssembly 跑搜尋，瀏覽器（Chromium 系）要求 CSP 明確允許 wasm 編譯，指令就是 `'wasm-unsafe-eval'`。**它只放行 WebAssembly 編譯，不放行 JavaScript 的 `eval()`／`new Function()`**，所以不是 `'unsafe-eval'`。Worker 是同源的 `pagefind-worker.js`，不需要 `worker-src` 或 `blob:`。`scripts/lib/emit-headers.mjs` 產生，`tests/round23-security.test.mjs` 同時斷言「有 `'wasm-unsafe-eval'`」「沒有 `'unsafe-eval'`」「`script-src` 沒有 `'unsafe-inline'`」，以後有人為了方便放寬會被擋。詳見 [docs/deploy.md](docs/deploy.md) 第 10.1 節。
+- **JS 預算**：Pagefind 以**動態 `import()`** 在使用者第一次搜尋時才載入，`scripts/lib/js-budget.mjs` 只沿**靜態** `import` 計算，所以 Pagefind（約 291 KB 執行期）**不算**進頁面預算——這是刻意的：預算量的是「每個頁面一打開就付的成本」，延遲載入的搜尋引擎不是。`/search/` 自己的腳本（`search.js`＋`search-query.js`＋i18n 語言檔）算進公開頁預算：最大 56 KB（`th/search/`，預算 120 KB）。`tests/round28-search.test.mjs` 斷言七語 `/search/` 的 HTML 不直接載入 `pagefind.js`、`/search/` 立即載入的 JS < 80 KB，且全站預算通過。
+- **快取**：`dist/pagefind/` 底下 `index/`、`fragment/`、`filter/` 與 `*.pf_meta` 的檔名含內容雜湊，可長快取（immutable）；`pagefind.js`、`pagefind-worker.js`、`pagefind-entry.json`、`wasm.*.pagefind` 檔名固定，要短快取或每次驗證。見 docs/deploy.md 第 12 節。
+- **非標準副檔名**（`.pagefind`、`.pf_meta`、`.pf_index`、`.pf_filter`、`.pf_fragment`）：伺服器沒有對應 MIME 時會以 `application/octet-stream` 回應；實測（簡易伺服器對未知副檔名回 `application/octet-stream`）搜尋正常，不需要為它們設定 MIME。
+
+### 31.8 這輪順手修的 bug
+
+- **`/ask/` 在瀏覽器查無時丟 `ReferenceError: process is not defined`**（`src/client/answer/core.js` 約 2103 行，`process.env?.NO_GATE` 直接取值）：測試在 Node 跑所以一直沒人發現。改成 `typeof process !== 'undefined' && …`，並在 `tests/round28-search.test.mjs` 加一條靜態測試：`src/client/**` 的 JS 不得裸用 `process.env`。
+- **已修（整合時）**：`src/client/glossary.js` 原本 `import './i18n.js'`，而第二十六輪拆檔後 dist 已沒有完整 `i18n.js`，瀏覽器載入模組失敗，詞彙頁篩選框整個不出現。改 import `i18n.runtime.js`，並在 `tests/round26-i18n.test.mjs` 加測試：`src/client/` 底下任何模組都不得再 import 完整的 `./i18n.js`。**教訓**：拆檔時只靠 Node 端測試看不到瀏覽器 404，要有端到端檢查或靜態規則把關。
+
+### 31.9 測試與 CI
+
+- `tests/round28-search.test.mjs`（23 項）：
+  - 單元：`parseQuery`（片語、混合、引號、寬鬆）、`despaceExcerpt`、`spaceCjkInMain`、`isIndexable`、`pagefindFor`／`pagefindMarks`、i18n 鍵齊全（七語）、CSP 指令、client JS 無裸 `process.env`。
+  - dist 檢查：`dist/pagefind/` 存在、排除項（admin、preview、legacy、404、ask、search）不在索引、篩選標籤正確、七語 `/search/` 在 JS 預算內。
+  - 端到端（Playwright，用 `dist/headers/headers.json` 的 CSP 起伺服器，所以 CSP 會真的生效）：`?q=登革熱` 直連且疾病頁在前三、結果 `href` 帶 `basePath`、CJK 召回等於子字串基準、寬鬆退路、篩選／排序／清除、只有篩選沒有關鍵字的瀏覽與「顯示更多」焦點、鍵盤操作、英文 320 px、/ask/ 的全文搜尋連結。
+- `tests/round23-security.test.mjs` 更新 CSP 斷言。`scripts/a11y.mjs` 加 `/search/`。
+- 需要 `dist/` 的測試在 dist 不存在時 skip（與第二十六輪的測試一致）；端到端另需 Playwright／Chromium，沒有時也 skip。**注意 CI 的順序**：`pages.yml` 與 `content-pr.yml` 都是先 `npm test`、後建置，所以 CI 裡 dist 相關的測試（標籤、七語頁、端到端）是 skip，真正把關的是：(1) 建置本身——索引失敗或收不到任何頁就 `exit 1`、JS 預算超標就 `exit 1`；(2) `content-pr.yml` 的 a11y 步驟（先建置再掃 `/search/`）；(3) 單元測試（`parseQuery`、`isIndexable`、CSP 斷言等不需要 dist）。完整的 23 項請在本機建置後跑 `npm test`（Playwright 在 `/opt/pw-browsers`）。若要讓 CI 也跑端到端，需把建置移到測試之前，是另一個工作流程調整，這輪沒有動。
+
+### 31.10 遺留與下一步
+
+- 舊站 `/Search/{id}` 的真實網址格式尚未確認（`content/migration/legacy-services.json` 的 `advanced-search` 已改為 `migrated → /search/`，備註列出剩餘項目）；確認後在 `redirects` 補轉址。
+- 同義詞／別名：上線後從「零結果查詢」紀錄（需另外決定是否以及如何蒐集，涉及隱私）補，不要預先猜。
+- 泰文斷詞：需要在索引端導入斷詞器（如 ICU 的 `Intl.Segmenter('th')`，Node 22 內建），做法與 CJK 補空白相同；本輪不做，因為泰文版內容量最小、且需要母語者驗證。
+- 手機版頁首入口：見 31.6。
+
+## 32. 第二十八輪（2026-10-10）：抗蛇毒血清（一級緊急就醫內容）
+
+對應 Issue #38（owner Yulun）「抗蛇毒血清的內容請實做」。第二十五輪把「抗蛇毒血清」「蛇咬怎麼辦」列為站內查無（eval NM001、NM005），移轉清單 `legacy-services.json` 的 `antivenom` 標【必移轉】。這輪把內容做出來，並補一個通用機制：**依公開資料整理、尚待權責單位確認的內容，要能上線作答，但讀者與承辦人都看得到「還沒確認」**。
+
+### 32.1 內容與型別選擇
+
+| 內容 | id／路徑 | 型別 | 為什麼用這個型別 |
+| --- | --- | --- | --- |
+| 抗蛇毒血清與毒蛇咬傷急救 | `topic.antivenom` → `/topics/antivenom/` | `topic`（`kind: emergency`、`priority: 1`） | `page` 不在 AI 白名單政策（`whitelist.json` 的 `allowedTypes`），答案引擎讀不到；`topic` 在白名單內、有外部連結健康檢查（儲備點查詢系統）、首頁專區列依 `priority` 排序 |
+| 被蛇咬怎麼辦？ | `faq.snakebite-first-aid` | `faq` | 民眾最常問的句型直接當問題；Q&A 是最精準的檢索單元 |
+| 被蛇咬後能不能冰敷、綁止血帶或用嘴把毒吸出來？ | `faq.snakebite-dont` | `faq` | 安全題獨立一則，答案只寫「不」的版本 |
+| 被龜殼花或其他毒蛇咬到要打哪種血清？認不出是哪種蛇怎麼辦？ | `faq.antivenom-which-snake` | `faq` | 蛇種 → 血清對照 |
+| 哪裡有抗蛇毒血清？ | `faq.antivenom-where` | `faq` | 取得方式；**不列醫院名單**，連官方儲備點查詢系統 |
+
+- **權責單位 `unit.lab`（檢驗及疫苗研製中心）**：處務規程掌理事項有「血清疫苗之製造、銷售」（`content/master/units.json`）；新聞稿稱疾管署為國內唯一產製並持有抗蛇毒血清凍晶注射劑藥證者。儲備點與院際調度（防疫物資管理資訊系統）是否由新興傳染病整備組（防疫物資整備）協辦，列為待確認。
+- **審閱週期 6 個月**（`reviewPeriodMonths: 6`）：一級緊急就醫資訊、夏季與清明前後是蛇傷高峰，每年至少兩次對照最新新聞稿。
+- **專區分段 `blocks[]`**（`schemas/topic.json` 新增）：`{ key, heading, markdown, audience?, keywords? }`，頁面每段 `<section id="s-{key}">`，答案引擎每段一個片段（`topic.antivenom#s-first-aid` 等），`audience: professional` 的段落只進專業版索引、頁面標「醫療人員」。欄位叫 `blocks` 而不是 `sections`，因為 `topic.sections` 已被國際合作專區用作子頁 id 清單（`_international.mjs`）。沒有 `blocks` 的既有專區行為不變。
+- **句子要能單獨被引用**：抽取式答案一次只取一句，所以每句都帶主詞與否定詞（「被蛇咬傷不冰敷，以免組織壞死。」），不寫「不要：冰敷、切開…」這種拆開就變成肯定句的清單；119 與「儘速就醫」放在同一句，避免被分號切開後只剩一半。蛇種對照不用表格（表格列會被斷成沒有主詞的片段），改成「被龜殼花咬傷：…對應的血清是…」。
+- **不捏造**：儲備院所家數各年新聞稿 190～250 家不一，頁面寫範圍並以查詢系統為準；毒藥物防治諮詢中心搜到兩個不同號碼，**不列電話**，只連該院首頁；沒有醫院名單，不做示範資料表（緊急情境下示範資料可能被當真）。劑量、皮膚試驗等臨床用法查不到可引用的官方來源，**不寫**，專業段明寫「依仿單與臨床判斷，本頁不提供劑量建議」。
+- **入口**：首頁專區列（`priority: 1`）、`/services/#topics`、網站導覽、sitemap（topic 自動帶出）；專業人員專區「常用作業」加一張「抗蛇毒血清」卡連到 `#s-professional`（`src/templates/pro/home.mjs`）；舊網址 `https://www.cdc.gov.tw/Category/MPage/l_z6ZKErZJ063m6OV_8nXQ` 由移轉清單 301 到 `/topics/antivenom/`（`legacyUrls` 同步）。
+
+### 32.2 `verification`：內容待權責單位確認（通用欄位，`schemas/_common.json`）
+
+```json
+"verification": {
+  "status": "pending",            // pending | confirmed
+  "note": "給讀者的一句話（接在頁首警示後）",
+  "pendingItems": ["還要確認的事…"],
+  "confirmedBy": "職稱", "confirmedAt": "YYYY-MM-DD",   // confirmed 時必填（schema if/then）
+  "sources": [{ "label", "url", "accessedAt", "official": true|false, "verified": true|false, "note" }]
+}
+```
+
+| 消費者 | `status: pending` 時的行為 | 檔案 |
+| --- | --- | --- |
+| 治理引擎 | `gov.unverified = true`；annotation `kind: 'unverified'`（level warning，文字含權責單位名稱與 `note`）；待辦 `content-unverified`（民眾內容 severity high，期限 `reviewedAt + UNVERIFIED_FIX_DAYS`＝14 天） | `scripts/lib/governance.mjs` |
+| 頁面 | `alerts()` 多認 `unverified`：黃色 `c-alert--unverified`、標題「內容待權責單位確認」（i18n `alert.unverified.t`、`alert.unverified`）；`.md` 機讀版頁首同一句（`mdHeader` 本來就輸出所有 annotation） | `src/templates/public/_partials.mjs`、`src/styles/components.css`、`src/client/i18n.js` |
+| 答案引擎 | 該筆內容的每個片段帶 `verification: 'pending'`（只有 pending 才加欄位，索引不膨脹）；`sourceOf()` 帶到來源物件；來源卡多一列「內容確認：依公開資料整理，內容待權責單位確認」（黃色 tag） | `scripts/lib/index-builder.mjs`、`src/client/answer/core.js`、`render.js` |
+| JSON-LD | `cdc:contentVerification: "pending"`（有填才輸出） | `scripts/lib/jsonld.mjs` |
+| 後台 | 待辦種類「內容待權責單位確認」（`KIND_LABEL`、`KIND_ORDER`、`TODO_KIND_LABELS`） | `src/templates/admin/_partials.mjs` |
+
+**為什麼不擋白名單：** PDF 未校對（`pdf-unreviewed`）會退出白名單，因為機器轉出的文字可能錯字錯頁；這裡的內容是人工整理、每句有來源，退出白名單的結果是智慧查詢回「站內查無」，民眾被蛇咬時反而拿不到「儘速就醫、撥 119、不冰敷」。所以選擇「可以作答，但頁首與來源卡都標示待確認，權責單位有一筆 14 天就逾期的高優先待辦」。正式上線前若政策要求一級內容一律人工確認才可作答，把 `governance.mjs` 這段加一行 `gov.whitelist.reasons.push('unverified')` 即可（評估集 AV 題會隨之失敗，提醒要先確認內容）。
+
+### 32.3 答案引擎與評估集（r10）
+
+- 「抗蛇毒血清」「被蛇咬怎麼辦」「龜殼花咬到要打哪種血清」現在都引用 `topic.antivenom`／`faq.*` 作答；第二十五輪的相關度門檻（§28.1）不必調整，新內容的涵蓋率與 BM25 分數都遠高於門檻（relevance 1.0）。
+- 「打哪種血清」不會被用藥拒答規則 `ref.med.which`（`(打)(哪種)(藥|…)`）擋下，因為「血清」不在藥名清單；劑量問句（「抗蛇毒血清要打幾 cc」）仍由 `ref.med.dose` 拒答，這是刻意的。
+- 評估集 `2026.10-r10`（213 題）：NM001 改「被虎頭蜂螫傷怎麼辦」、NM005 改「被水母螫傷怎麼辦」（同屬咬螫傷但站內沒有，並加 `mustNotCite` 蛇傷內容與 `faq.rabies-bite`，確認新內容不會被拿去充數）；新增 AV001–AV005（`fact`）：答案須引用蛇傷內容、含 119／血清名／「不冰敷」／「儲備點查詢系統」，且 `mustNotInclude` 錯誤處置的**肯定說法**（要冰敷、可以冰敷、要綁止血帶、切開傷口、吸出毒液、抬高患肢…）。肯定說法清單刻意避開否定句的子字串（「不冰敷」不含「要冰敷」），所以內容一律用「不 X」的寫法，**不要寫「不要冰敷」**（含「要冰敷」會讓評估失敗）。
+- `tests/round25-answer.test.mjs` 的查無清單同步改為虎頭蜂、水母。
+
+### 32.4 移轉清單
+
+`content/migration/legacy-services.json` 的 `antivenom`：`status: migrated`、`target: topic.antivenom`、`verified: false`（舊網址取自審查意見，待承辦核對），`note` 保留【必移轉】並列出待確認事項。
+
+### 32.5 測試與檢查
+
+`tests/round28-antivenom.test.mjs`（17 項）：內容與治理欄位、不捏造（無市話號碼、無醫院名單）、全部新內容無錯誤處置的肯定說法、警示與待辦、confirmed 不出警示且缺 `confirmedBy` 驗證失敗、專區頁四段錨點與醫療人員標籤、JSON-LD、Q&A 頁警示、專業段只進專業索引、六個問句皆引用蛇傷內容且不含錯誤處置、專業模式引用 `#s-professional`、虎頭蜂與水母仍 no-match 且「被狗咬」仍由狂犬病 Q&A 回答、評估集 r10、移轉清單、專業專區入口與 a11y 代表頁、問劑量仍拒答與「我被蛇咬了呼吸困難」仍走個人急症（119）。`scripts/a11y.mjs` 代表頁加 `/topics/antivenom/`（第一個有代表性的 topic 頁）。
+
+### 32.6 留給權責單位
+
+逐字核對五要五不（尤其「包紮傷口上緣」的鬆緊）、「不綁止血帶、患肢固定、不必抬高」（目前出自醫師受訪的媒體報導）是否納入官方建議、儲備院所家數與查詢系統網址、毒藥物防治諮詢中心電話、4 種血清的藥證品名寫法、儲備調度的分工、專業版是否補臨床使用說明、英文與東南亞語版本（`languages` 目前只有中文）。全部確認後把 5 筆內容的 `verification.status` 改 `confirmed` 並填 `confirmedBy`／`confirmedAt`，頁首警示與待辦自動消失。
+
+## 33. 第二十八輪（2026-10-10）：傳染病核心教材示範匯入
+
+Issue #38（Yulun）：舊站「首頁／專業人員／傳染病核心教材」是必移轉項目，要示範幾種疾病的教材怎麼進新站、怎麼在疾病頁與專業版呈現、怎麼讓專業版智慧查詢引用到章節。**限制**：開發環境連不到 www.cdc.gov.tw，教材 PDF 一份都沒有取得；搜尋只看得到零星摘錄。所以本輪的重點是「模型與流程」，內容是可查證的示範，不是教材原文。
+
+### 33.1 選了哪兩種病、為什麼
+
+| 疾病 | 為什麼選 | 內容從哪裡來 |
+| --- | --- | --- |
+| 登革熱 | 站內已匯入**真的**《登革熱/屈公病防治工作指引》2026 年 2 月版（第十九輪 PDF 轉檔），教材七章中六章能找到逐頁出處；舊站頁面與檔名（「2025-04-登革熱防治核心教材.pdf」）有搜尋摘錄 | 29 句有出處（多數是工作指引第 3、4、5、19、21–22、24、36、43、55 頁），6 處待補（治療整章待補：指引沒有治療章節） |
+| 麻疹 | 搜尋找到教材 PDF 的**真網址**（`/File/Get/eH0KllYdi__tvUdV8al0lA`）；站內麻疹內容最多（疾病頁、病例定義、接觸者追蹤、檢驗項目），可以示範「出處是原型示意內容」時怎麼標 | 22 句有出處，7 處待補（致病原整章待補）；出處多為原型內容，來源表逐條標「原型示意」 |
+
+沒選新型A型流感、鼠疫：搜尋只看到教材檔名（「新型A型流感_核心教材-11401版.pdf」「鼠疫核心教材_1140318.pdf」），站內也沒有可引用的句子，硬做只會變成空殼。它們列在移轉清單 `content/migration/core-curriculum.json` 為 pending（權責單位新興傳染病整備組），`/pro/curriculum/` 會顯示「舊站其他核心教材（尚未匯入）」。
+
+### 33.2 內容模型：document 的一種（`docType: curriculum`），不是新型別
+
+**決定**：教材是 `document` 型別、`docType: "curriculum"`。
+**為什麼不另開型別**：教材需要的東西——版本鏈（`family`／`effectiveAt`／`isCurrent`）、權責單位與審閱週期、PDF 轉檔與 `derivedFrom`、長文件版面、分章答案單元、引用標籤——document 全部都有；另開型別要把這些複製一份，治理規則也要各寫一遍。
+
+`schemas/document.json` 新增（其他型別不受影響）：
+
+| 欄位 | 用途 |
+| --- | --- |
+| `learningObjectives[]` | 學習目標（一條一句）；文件頁頂端列出、答案引擎另成一個單元 |
+| `curriculum.series`／`edition`／`chapterPlan` | 系列（傳染病核心教材）、教材自己的版次寫法（檔名上的「11401版」，`version` 仍是新站版本鏈用的）、章節架構是否已與原文核對（`provisional`／`confirmed`） |
+| `docType: curriculum` 的條件 | 必填 `learningObjectives`、`roles`、`diseases`（至少 1）；`audience` 必含 `professional` |
+| `derivedFrom.sourceKind: reconstructed` | 沒有 PDF、由有出處的句子重建；**`reviewStatus` 只能是 `machine`**、`sources[]` 必填（每個來源：label、url 或站內 `ref`、kind、status、accessedAt、note） |
+
+既有欄位的用法：`owner` 依疾病主檔（登革熱、麻疹都是 `unit.acute-infectious`，已對 `content/master/units.json` 與 `diseases.json` 核對）；`roles` 是對象（醫師、護理、檢驗、感管、地方衛生）；`license` OGDL-1.0 加 `licenseNote`（教材內第三方圖表以 PDF 標示為準，待確認）；`reviewPeriodMonths` 12；`basedOn` 指向出處文件的家族（登革熱 → `doc.guidance-dengue`）或疾病（麻疹 → `disease.measles`），出處改版時本頁會被標「依據正本已修訂」。
+
+**版次怎麼寫（踩過的坑）**：一開始把登革熱教材建成「2025 年 4 月版、發布 2025-04-18」（舊站檔名的版次），結果治理的 `predatesBasis`（發布日早於依據正本生效日）把它整份排除在專業索引外——而且這樣寫也不誠實：內容引的是 2026 年 2 月版指引，不是 2025 年 4 月的教材。改成 `version: "示範匯入版"`、`effectiveAt`／`publishedAt`／`reviewedAt` 都是示範匯入日 2026-10-10，舊站版次寫進 `curriculum.edition` 並註明「本頁不是該版內容」。
+
+### 33.3 重建版產生器
+
+`scripts/curriculum-to-doc.mjs`（CLI）＋ `scripts/lib/curriculum.mjs`（純函式，無 import）：`data/curriculum/{疾病}.source.json` → `content/documents/curriculum-{疾病}.2026-10-10.json`。每句 `{ text, src: 來源代號, at: 頁碼 }`；`pending` 輸出「（待補：…）」；`see` 輸出「對照：[…](…)」導覽行；文末「資料來源與查證狀態」表（`index: false`）。輸出與 PDF 轉檔同形狀（`ch{N}`／`ch{N}-s{M}` 段落、`machineReadableMarkdown`、`derivedFrom`），`sha256` 是來源檔的雜湊，測試會重跑比對。詳見 docs/pdf-ingest.md 第 9 節。
+
+**正本來了怎麼辦**：`pdf-to-md.mjs` 轉出同家族正式版，**刪除**重建版（不用 `supersedes` 串：重建版不是教材真的某一版，串進鏈會產生假的「前版／本版異動」）。治理待辦（`pdf-unreviewed`，`scripts/lib/governance.mjs`）對重建版改寫文字為「提供 PDF 正本、轉檔、刪除重建版」，不是「校對完改 reviewed」（schema 也不允許）。
+
+### 33.4 呈現
+
+- **文件頁**（`src/templates/public/documents.mjs`＋新 `_curriculum.mjs`）：`isLongDoc` 對 curriculum 一律套長文件版面；頂端是重建版警示框（連到 `#s-sources`）、系列／教材版次／對象、`section#objectives` 學習目標；目錄多一個「學習目標」。
+- **疾病頁專業區**（`disease.mjs`）：新區塊 `#pro-curriculum`（`hub.pro.curriculum`），列該病教材卡（章數、待補處數、未查證標記），連到 `/pro/curriculum/`；一般文件清單排除教材，避免重複。
+- **/pro/**（`pro/home.mjs`）：教材卡；文件清單排除教材。
+- **/pro/curriculum/**（新 `src/templates/pro/curriculum.mjs`，zh-TW／en）：全部教材＋移轉清單 pending 的教材與權責單位＋承辦人怎麼上架（指向 guide-staff §31）。
+- 字串：`_curriculum.mjs` 自帶 zh-TW／en（教材只給專業人員）；共用的 `i18n.js` 只加 3 個 key（`documents.type.curriculum`、`hub.pro.curriculum` 七語、`hub.pro.curriculum.lead` 中英）。
+
+### 33.5 答案單元與引用
+
+`scripts/lib/index-builder.mjs`：
+
+- 教材只進**專業索引**（document 本來就是）；重建版的單元帶 `extraction.sourceKind: reconstructed`，來源卡（`src/client/answer/render.js`）顯示「尚未取得 PDF 正本：…請以疾管署 PDF 正本為準」。白名單外、排序 ×0.7、組句 −0.6 沿用第十九輪 machine 的處理。
+- 學習目標另成一塊 `{id}#objectives`（「學習目標 1：…」），連到文件頁 `#objectives`。
+- 每一節一塊（`#s-ch3-s2`）；`index: false` 的來源表不入索引。
+- 「（待補：…）」與「對照：…」行**不進答案單元**（`PENDING_TEST`）——佔位不是內容；導覽行全是別份文件的名字（見 33.6）。
+- 引用標籤：教材的「第三章」是章不是條，`section.no` 不推算，標籤寫〈第三章 流行病學 · 潛伏期與可感染期〉。**順帶發現、未修**：PDF 轉入的工作指引也被同一個 `sectionNo` 把「第六章」標成「第 6 條」；改成只認「條／點」後，標題裡引用的法條（「傳染病防治法第三十八條」）又會被當成指引自己的條次。兩種都不對，需要依文件類型決定條次來源，留給 OASIS 另案處理。
+
+### 33.6 評估集與 V011 的教訓
+
+評估集升 `2026.10-r10`（說明「r10 第二十八輪 核心教材」）：CUR001–CUR005（學習目標、可感染期、麻疹檢體、群聚解除、治療章待補不得被當答案）。評估器只比對**內容 id**（`judge.js` 的 `mustCite` 是 `contentId` 前綴），章節層級的引用在 `tests/round28-curriculum.test.mjs` 驗。
+
+**教訓**：加入登革熱教材後，不相干的版本題 V011「登革熱防治工作指引現行版是第幾版？」失敗（`build --check` 擋下）。查到的原因：教材原標題「登革熱**防治**核心教材」讓「熱防」這個詞在專業索引從 15 個單元變 28 個，IDF 下降，工作指引的段落掉出前 10 名；教材裡的出處全名與「對照」行也替「工作指引」這個詞灌水。這題的基準本來就薄（加教材前，工作指引也只是第 4 個來源）。處理：標題改用舊站頁面寫法「登革熱核心教材」、出處只寫代號、對照行不入索引；**沒有**改題目或降低標準。**給 OASIS**：「指名某份文件問版次」需要引擎層的處理（例如問句含文件名與「版」時優先該文件家族），否則每加一份大量引用別份文件的內容都可能再撞到。
+
+### 33.7 舊站匯入（第十二批）
+
+規則檔第 11 版新增 `docTypeStrongKeywords`（標題「核心教材」→ `curriculum`，蓋過 `/Category/DiseaseTeach/` 預設的 `guideline`）與 `curriculum` 預設欄位；匯入器替教材草稿補 `learningObjectives`（待補）、`roles`（預設）、`curriculum`（provisional）並記 `fields-pending`，家族統一 `doc.curriculum-{疾病}`。模擬匯出、清單、結果與教訓見 docs/legacy-import.md 10.13；`legacy-services.json` 的 `core-curriculum` 改 `merged` → `/pro/curriculum/`。
+
+### 33.8 來源與查證狀態（全部未查證）
+
+| 來源 | 狀態 |
+| --- | --- |
+| 站內 `doc.guidance-dengue.2026-02`（真指引，PDF 機器轉出、未校對） | 登革熱教材的主要出處 |
+| https://www.cdc.gov.tw/Category/MPage/O5l65bHP7CwFNJOsF7wXbA（重要指引及教材，登革熱） | 連不到；搜尋摘錄列「登革熱核心教材」、檔名與 2025/4/18，未能重現 |
+| https://www.cdc.gov.tw/Category/DiseaseTeach/R2tEUCtZUlRpUFJUbmRyT0gxSVlpZz09 | 連不到；推測 DiseaseTeach 是教材頁的網址模式 |
+| https://www.cdc.gov.tw/Category/MPage/mOqwmo-IyKx0ouTNWjuSgA（傳染病防治工作手冊） | 連不到 |
+| https://www.cdc.gov.tw/Uploads/files/201302/bf8b5d4a-6896-4115-8c20-adfe4b7914bb.pdf（2013 舊版登革熱教材） | 連不到；只用一句搜尋摘錄（標「搜尋摘錄未查證」） |
+| https://www.cdc.gov.tw/File/Get/eH0KllYdi__tvUdV8al0lA（麻疹核心教材.pdf） | 連不到；本頁沒有引用它的任何內容 |
+| https://www.cdc.gov.tw/File/Get/3TrzNnd9x6LiPghMDkRnyw（麻疹防治工作手冊.pdf） | 連不到 |
+| https://www.cdc.gov.tw/Disease/SubIndex/PZZIpHAC-pjbSdEdboTBCw（麻疹疾病頁） | 連不到；搜尋摘錄 |
+| 站內 `disease.measles`、`doc.case-definition-measles.2024-01-01`、`doc.measles-contact-tracing.2026-09-12`、`labtest.measles` | 原型內容／示意，數字未經權責單位確認 |
+
+**權責單位待辦**：提供兩份教材 PDF 正本（取得後依 guide-staff §31 轉檔、刪除重建版）；確認學習目標與章節架構；確認授權（第三方圖表）；回答系列統籌單位與舊站還有哪些疾病有教材。
+
