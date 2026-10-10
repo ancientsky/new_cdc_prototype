@@ -58,7 +58,9 @@ function contentExists(site, ref) {
   if (ref.startsWith('dataset-series:')) return (site.collections.datasets ?? []).some((d) => d.id === ref.slice(15) && d.series);
   // 'newsType:recruit'：至少一則該類公告已進 AI 白名單；'newsType:recruit:open'：且未截止
   if (ref.startsWith('newsType:')) { const [, t, open] = ref.split(':'); return (site.collections.news ?? []).some((n) => n.status === 'published' && n.newsType === t && n.gov?.whitelist?.effective && (!open || !(n.gov?.closed ?? (n.deadlineAt && n.deadlineAt < site.today)))); }
-  if (site.byId?.has(ref)) return true;
+  // 尚未生效的版本（effectiveAt 晚於建置日）還不在答案索引裡，視同「內容尚未建置」→ 該題略過。
+  // 第三十輪修正：CI 固定 BUILD_TODAY=2026-10-01，2026-10-10 生效的核心教材讓 CUR001–CUR004 在 CI 誤判為失敗。
+  if (site.byId?.has(ref)) { const it = site.byId.get(ref); return !(it?.effectiveAt && site.today && it.effectiveAt > site.today); }
   for (const item of site.all ?? []) if (item.status === 'published' && (item.id.startsWith(ref) || item.family === ref)) return true;
   return false;
 }
