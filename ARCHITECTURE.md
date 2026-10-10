@@ -1743,3 +1743,26 @@ Yulun 在專業模式問「性病」，答案是急性病毒性 A 型肝炎的�
 
 - 單元測試 `tests/round31-boundary.test.mjs`（詞典規則、索引術語、問句行為、回歸）。
 - 評估集新增 `boundary` 類 BD001–BD008（含專業模式、功能詞、反向案例「急性傳染病組」、回歸「A型肝炎會怎麼傳染」）；全部 227 題通過，原有 219 題無變動。
+
+## 38. 第三十二輪（2026-10-10）：智慧問答與全文搜尋的技術對照、LLM 接入位置（只有設計，沒有改程式）
+
+Yulun 問「智慧問答和全文搜尋使用的技術請整理比較；加上 LLM 的 API 要怎麼搭配？還需要做 RAG 嗎？」完整說明在 [docs/ask-search-llm.md](docs/ask-search-llm.md)，決策理由在 [docs/architecture-decisions.md §25](docs/architecture-decisions.md)。這一節只放契約層會用到的三件事。
+
+### 38.1 兩套索引都是建置產物
+
+| | 答案單元索引（`/ask/`） | Pagefind 索引（`/search/`） |
+| --- | --- | --- |
+| 產生 | `scripts/lib/emit-api.mjs` → `v1/search-index.json`（民眾，白名單）、`v1/search-index-pro.json`（專業，含 isCurrent 版本） | `scripts/lib/pagefind.mjs` → `dist/pagefind/`（§31） |
+| 單位 | 答案單元（FAQ 一題、疾病頁一區塊、文件一章節…），帶治理欄位 | 有 `data-pagefind-body` 的整頁 `<main>` |
+| 實測（本輪，`PAGEFIND=off` 建置） | 民眾 730 塊、gzip 約 195 KB；專業 1,070 塊、gzip 約 325 KB；第一次提問才載入 | 約 2,300 頁，單次搜尋下載 180–270 KB gzip（§31.2） |
+| 瀏規器端 | `core.js` `bm25For` 在記憶體建 BM25；同一份程式在 Node 跑評估集 | Pagefind WebAssembly（Web Worker） |
+
+### 38.2 現有 LLM 模式就是 RAG，環節對照
+
+`llm.js` `llmAnswer`：抽取式結果（`engine.answer`，已完成個資遮蔽、拒答、檢索、相關度門檻）→ 前 8 塊片段以 `<sources id=…>` 進提示詞 → `SYSTEM_PROMPT` 七條規則＋`ANSWER_SCHEMA`（JSON schema 強制 `{sentences:[{text,cite}],confidence,followUps}`）→ `groundingGuard`（無 cite／cite 不在片段、詞彙重疊不足、數字不在片段、個人用藥語 → 刪）→ 0 句或任何錯誤退回抽取式（`fallback:'extractive'`）。`ui.js` 第 65 行起：被拒答、暫停、統計／通報結構化回答、謠言意圖**不叫模型**。這個順序是契約：**LLM 只接在相關度門檻之後，拿不到被拒答或查無的問題。**
+
+### 38.3 預留的接點（本輪未實作）
+
+- `site.config.mjs` `ai.proxyEndpoint`（預定）：有值時 `callClaude` 改打機關代理，請求為結構化 `{question, lang, view, chunkIds}`，提示詞與金鑰在代理端；無值維持 BYOK 直連（同事示範）或純抽取式。與第三十輪 `forms` 端點同一種「可設定的最底層連線」做法。
+- `retrieve` 候選重排 hook（預定）：混合檢索（BM25 候選 → 向量重排）只在有代理時啟用；沒有代理時 hook 為空、行為不變。詞典詞界（§37）與實體／意圖加權維持硬規則，不交給向量。
+- 評估集預定新增 `paraphrase` 類（口語改寫），用來分辨「補詞彙主檔就能解」與「真的需要向量」的差距；`judge.js` 預留 LLM 裁判選項（離線、需金鑰）。
