@@ -1022,8 +1022,8 @@ manualStatus?: enum[cancelled, failed（流標）], award?: { date, winner, amou
 
 | 類別 | 預設預算 | 環境變數 | 現況（最大） |
 | --- | --- | --- | --- |
-| 公開頁 | 120 KB | `JS_BUDGET_KB` | 約 52 KB（求職報名頁） |
-| 含答案引擎 `answer/core.js` 的頁（`/ask/`、`/data/`、`/factcheck/`） | 320 KB | `ENGINE_JS_BUDGET_KB` | 約 287 KB |
+| 公開頁 | 120 KB | `JS_BUDGET_KB` | 約 52 KB（時程地圖頁） |
+| 含答案引擎 `answer/core.js` 的頁（`/ask/`、`/data/`、`/factcheck/`） | 320 KB | `ENGINE_JS_BUDGET_KB` | 約 281 KB |
 | `/admin/*` | 只回報不擋 | `ADMIN_JS_BUDGET_KB`（設值才擋） | 約 270 KB |
 
 調整方式：`JS_BUDGET_KB=150 npm run build` 暫時放寬；要改預設值請改 `js-budget.mjs` 的 `DEFAULT_*` 常數，並在 PR 說明理由。引擎頁預算是「已知技術債」：`core.js` 約 176 KB，拆檔後（見 29.5）應把引擎預算降到與公開頁相同。
