@@ -9,7 +9,7 @@ export const DEFAULT_UNIT = 'unit.acute-infectious';
 export const TYPE_LABEL = {
   disease: '疾病頁', faq: 'Q&A', news: '新聞稿', letter: '致醫界通函', clarification: '澄清', document: '文件', vaccine: '疫苗頁',
   dataset: '資料集', banner: '宣導 Banner', page: '一般頁面',
-  media: '影音', topic: '專區', service: '申請服務', publication: '出版品', labtest: '檢驗項目', research: '研究計畫', job: '招募職缺', tender: '採購公告',
+  media: '影音', topic: '專區', service: '申請服務', publication: '出版品', labtest: '檢驗項目', research: '研究計畫', job: '招募職缺', tender: '採購公告', article: '疫情報導文章',
 };
 /** news 型別的 newsType（含人才招募、採購公告）。 */
 export const NEWS_SUBTYPE_LABEL = { press: '新聞稿', letter: '致醫界通函', clarification: '澄清稿', other: '其他訊息', recruit: '人才招募', procurement: '採購公告' };
@@ -52,6 +52,7 @@ export const NAV = [
   { key: 'import', href: '/admin/import/', label: '舊站匯入' },
   { key: 'glossary', href: '/admin/glossary/', label: '詞彙主檔' },
   { key: 'situation', href: '/admin/situation/', label: '疫情發布' },
+  { key: 'bulletin', href: '/admin/bulletin/edit/', label: '疫情報導' },
   { key: 'todos', href: '/admin/todos/', label: '連動待辦', count: 'todos' },
   { key: 'ai-status', href: '/admin/ai-status/', label: 'AI 開關' },
   { key: 'reports', href: '/admin/reports/', label: '回報' },

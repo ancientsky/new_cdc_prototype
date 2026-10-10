@@ -513,3 +513,36 @@ body.adm { background: var(--paper); color: var(--ink); min-height: 100vh; displ
 .adm-savestate[data-state="saved"] .adm-savestate__dot { background: var(--status-stable, #1f7a55); }
 .adm-savestate[data-state="dirty"] .adm-savestate__dot { background: #ffbf47; }
 @media (max-width: 760px) { .adm-actions--sticky { position: static; margin: 0; padding: var(--sp-3) 0 0; border-top: 0; background: transparent; backdrop-filter: none; } }
+
+/* ── bulletin-edit（/admin/bulletin/edit/ 疫情報導文章上架；class 前綴 adm-te-；第二十九輪） ── */
+.adm-te-sec { display: grid; gap: var(--sp-3); }
+.adm-te-sec > legend { font-size: var(--fs-md, 1rem); }
+.adm-te-hl { display: grid; gap: var(--sp-2); padding: var(--sp-3); border: 2px solid var(--green-700); border-radius: var(--radius-sm); }
+.adm-te-hl .adm-label { margin: 0; font-weight: 700; }
+.adm-te-rows { display: grid; gap: var(--sp-3); }
+.adm-te-row { border: 1px solid var(--line); border-radius: var(--radius-sm); padding: var(--sp-2) var(--sp-3) var(--sp-3); background: #fff; display: grid; gap: var(--sp-2); }
+.adm-te-row__head { display: flex; gap: var(--sp-2); align-items: center; flex-wrap: wrap; }
+.adm-te-row__no { display: inline-flex; width: 1.8em; height: 1.8em; align-items: center; justify-content: center; border-radius: 50%; background: var(--green-50); color: var(--green-900); font-weight: 700; font-size: var(--fs-xs); flex: none; }
+.adm-te-row__h { flex: 1 1 200px; font-weight: 700; }
+.adm-te-row__lv { font-size: var(--fs-xs); white-space: nowrap; }
+.adm-te-row__tools { display: flex; gap: 4px; margin-left: auto; }
+.adm-te-row__body { width: 100%; font-family: inherit; }
+.adm-te-fig__no { width: 5em; }
+.adm-te-un { white-space: pre-wrap; font-size: var(--fs-xs); max-height: 160px; overflow: auto; margin: var(--sp-2) 0 0; }
+/* 預覽：文章頁的摘要框、重點框、圖表、目錄 */
+.adm-pv__titleen { margin: 0; font-style: italic; color: var(--ink-2); font-size: var(--fs-sm); }
+.adm-pv__authors { margin: 0; font-size: var(--fs-sm); }
+.adm-pv__actions { display: flex; gap: 6px; flex-wrap: wrap; margin: 4px 0; }
+.adm-pv__actions .adm-btn { pointer-events: none; }
+.adm-pv__abstract { padding: var(--sp-2) var(--sp-3); background: var(--paper); border-left: 4px solid var(--green-700); }
+.adm-pv__abstract .adm-pv__h2, .adm-pv__hl .adm-pv__h2 { margin-top: 0; border-left: 0; padding-left: 0; }
+.adm-pv__hl { padding: var(--sp-2) var(--sp-3); border: 2px solid var(--green-700); border-radius: var(--radius-sm); }
+.adm-pv__hl dl { margin: 0; display: grid; gap: 6px; font-size: var(--fs-sm); } .adm-pv__hl dt { font-weight: 700; font-size: var(--fs-xs); } .adm-pv__hl dd { margin: 0; }
+.adm-pv__sec .c-prose { font-size: var(--fs-sm); }
+.adm-pv__fig { margin: var(--sp-2) 0; padding: var(--sp-2) var(--sp-3); border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: var(--fs-sm); }
+.adm-pv__fig figcaption { color: var(--ink-2); margin-bottom: 4px; }
+.adm-pv__toc { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--sp-2); }
+.adm-pv__toc li { display: flex; gap: var(--sp-2); align-items: flex-start; padding: var(--sp-2) 0; border-bottom: 1px solid var(--line); font-size: var(--fs-sm); }
+.adm-pv__toc li.is-current { background: rgba(255, 191, 71, .12); }
+.adm-pv__toc p { margin: 0; }
+.adm-pv__tocno { display: inline-flex; width: 1.8em; height: 1.8em; align-items: center; justify-content: center; border-radius: 50%; background: var(--green-50); color: var(--green-900); font-weight: 700; font-size: var(--fs-xs); flex: none; }

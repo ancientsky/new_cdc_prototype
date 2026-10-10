@@ -100,12 +100,15 @@ function extraHtml(f, h) {
 export function initPagePreview(opts) {
   const root = opts.root;
   const form = opts.form;
+  // 第二十九輪：其他後台表單（疫情報導文章）可帶自己的欄位對照表與渲染函式；沒帶就是 /admin/publish/ 的預設
+  const MAP = opts.fieldMap ?? FIELD_MAP;
+  const render = opts.render ?? renderPreviewHtml;
   let timer = 0;
   let active = null;
 
   function repaint() {
     const f = opts.getState();
-    root.innerHTML = renderPreviewHtml(f, opts.helpers());
+    root.innerHTML = render(f, opts.helpers());
     root.querySelectorAll('img[data-md-src][src^="data:"]').forEach((im) => { im.alt = `${im.alt || '圖片'}（尚未選取檔案，上線後顯示）`; im.classList.add('adm-img-missing'); im.removeAttribute('src'); });
     if (active) root.querySelector(`[data-field="${active}"]`)?.classList.add('is-active');
   }
@@ -113,7 +116,7 @@ export function initPagePreview(opts) {
 
   /** 從預覽跳到欄位：打開摺疊群組、捲到看得見、聚焦、閃一下。 */
   function focusField(field) {
-    const m = FIELD_MAP[field]; if (!m) return;
+    const m = MAP[field]; if (!m) return;
     const target = m.focus.split(',').map((s) => form.querySelector(s.trim())).find((el) => el && !el.hidden && !el.closest('[hidden]'));
     const wrap = m.within.split(',').map((s) => form.querySelector(s.trim())).find(Boolean);
     const el = target ?? wrap; if (!el) return;
@@ -132,7 +135,7 @@ export function initPagePreview(opts) {
 
   // 反向：游標在哪個欄位，預覽對應區塊亮起
   function fieldOf(el) {
-    for (const [field, m] of Object.entries(FIELD_MAP)) if (el.closest(m.within)) return field;
+    for (const [field, m] of Object.entries(MAP)) if (el.closest(m.within)) return field;
     return null;
   }
   form.addEventListener('focusin', (e) => {

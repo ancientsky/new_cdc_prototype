@@ -52,7 +52,7 @@ export function derivePages(fullSite) {
   for (const t of config.tasks) add(`/tasks/${t.key}/`, LANGS(), latest, 'pages');
   for (const ctry of site.master.countries ?? []) if (ctry.iso2) add(`/travel/${ctry.iso2.toUpperCase()}/`, LANGS(), site.snapshots?.travelAlerts?.meta?.fetchedAt?.slice?.(0, 10) ?? latest, 'pages');
   const contentGroups = [['diseases', c.diseases], ['vaccines', c.vaccines], ['faq', c.faq], ['news', c.news], ['documents', c.documents],
-    ['media', c.media], ['publications', c.publications], ['pages', c.topics], ['pages', c.services], ['pages', c.labtests], ['pages', c.research], ['pages', c.jobs], ['pages', c.tenders]];
+    ['media', c.media], ['publications', c.publications], ['publications', c.articles], ['pages', c.topics], ['pages', c.services], ['pages', c.labtests], ['pages', c.research], ['pages', c.jobs], ['pages', c.tenders]];
   for (const [group, arr] of contentGroups) for (const i of pub(arr)) add(pathOf(i), i.gov?.renderableLangs ?? ['zh-TW'], i.reviewedAt, group === 'vaccines' ? 'pages' : group);
   for (const pg of pub(c.pages)) add(pathOf(pg), pg.gov?.renderableLangs ?? ['zh-TW'], pg.reviewedAt, 'pages');
   // 去重（content/pages 可能與靜態頁重疊）
@@ -77,7 +77,7 @@ export async function collectPages(fullSite) {
 }
 
 function groupOf(path) {
-  const m = path.match(/^\/(diseases|news|documents|faq|media|publications)\/[^/]+\/$/);
+  const m = path.match(/^\/(diseases|news|documents|faq|media|publications)\/[^/]+\/(?:\d+\/)?$/);
   return m ? m[1] : 'pages';
 }
 
@@ -313,13 +313,16 @@ export function buildFeeds(fullSite) {
   }));
   const sitXml = rss({ title: `${config.name} 疫情態勢`, link: absUrl('/situation/'), self: apiUrl('/feeds/situation.xml'), description: '疫情中心人工發布的各疾病態勢（四級）。', lastBuild: sit.publishedAt ?? site.today, items: sitItems });
   // 出版品
-  const pubList = (c.publications ?? []).filter(live).sort((a, b) => b.publishedAt.localeCompare(a.publishedAt) || a.id.localeCompare(b.id)).slice(0, 50);
+  // 第二十九輪：出版品 RSS 同時列出疫情報導的每一篇全文文章（訂閱者看得到篇名與摘要，不必等整本 PDF）
+  const artList = (c.articles ?? []).filter(live).map((a) => ({ ...a, _issue: site.byId.get(a.issueId) }));
+  const pubList = [...(c.publications ?? []).filter(live), ...artList].sort((a, b) => String(b.publishedAt).localeCompare(String(a.publishedAt)) || a.id.localeCompare(b.id)).slice(0, 60);
   const pubXml = rss({
     title: `${config.name} 出版品`, link: absUrl('/publications/'), self: apiUrl('/feeds/publications.xml'), description: '疫情報導卷期、年報、手冊、海報等出版品（guid＝出版品 id）。',
     lastBuild: maxDate(pubList.map((p) => p.publishedAt)) ?? site.today,
     items: pubList.map((p) => ({
-      title: p.title, link: absUrl(pathOf(p)), guid: p.id, date: p.publishedAt, categories: [p.series, p.pubType].filter(Boolean),
-      description: [p.summary, bibOf(p), ...(p.articles ?? []).slice(0, 10).map((a) => `・${a.title}`)].filter(Boolean).join(' '),
+      title: p.type === 'article' ? `${p.title}（${p._issue?.title ?? '疫情報導'}）` : p.title, link: absUrl(pathOf(p)), guid: p.id, date: p.publishedAt,
+      categories: p.type === 'article' ? ['疫情報導', 'article', p.articleType].filter(Boolean) : [p.series, p.pubType].filter(Boolean),
+      description: p.type === 'article' ? [(p.authors ?? []).map((a) => a.name).join('、'), p.summary, p.pages ? `頁 ${p.pages}` : ''].filter(Boolean).join(' · ') : [p.summary, bibOf(p), ...(p.articles ?? []).slice(0, 10).map((a) => `・${a.title}`)].filter(Boolean).join(' '),
     })),
   });
   // 機關公告

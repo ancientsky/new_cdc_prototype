@@ -65,6 +65,7 @@ import { addMonths, daysBetween } from './render.mjs';
 import { jobPiiErrors } from './validate.mjs';
 import { jobStageOf, tenderStageOf } from '../../src/client/careers-rules.js';
 import { setAssetRegistry } from './markdown.mjs';
+import { articlePath } from '../../src/client/bulletin-rules.js';
 import { assetRegistryOf, assetUrl, extOf, imageLicenseProblems, needsAccessibleVersion } from './assets.mjs';
 import { siteOrigin } from '../../site.config.mjs';
 import { loadLanes, laneOfItem, isScheduled, isPublic, nowOf, publishAtMs, taipeiDate, taipeiTime } from './lanes.mjs';
@@ -182,7 +183,7 @@ export const TRANSLATION_DUE_DAYS = 14;
 /** 審閱到期提醒（30 日內黃） */
 export const DUE_SOON_DAYS = 30;
 /** 對外內容頁（KPI「有更新日與權責」分母） */
-export const PUBLIC_PAGE_TYPES = new Set(['disease', 'vaccine', 'faq', 'clarification', 'news', 'letter', 'document', 'dataset', 'page', 'media', 'topic', 'service', 'publication', 'labtest', 'research', 'job', 'tender']);
+export const PUBLIC_PAGE_TYPES = new Set(['disease', 'vaccine', 'faq', 'clarification', 'news', 'letter', 'document', 'dataset', 'page', 'media', 'topic', 'service', 'publication', 'labtest', 'research', 'job', 'tender', 'article']);
 const NEWS_TYPES = new Set(['news', 'letter']);
 /**
  * 機關公告（/notices/）：news 中的其他訊息。第七輪起人才招募改 job、採購公告改 tender 型別；
@@ -271,6 +272,7 @@ export function pathOf(item) {
     case 'publication': return `/publications/${slugOf(item)}/`;
     case 'labtest': return `/lab/${slugOf(item)}/`;
     case 'research': return `/research/${slugOf(item)}/`;
+    case 'article': return articlePath(item);
     // 第七輪：id job.{yyyy-mm-dd}-{slug} → /careers/{slug}/；tender 同理 → /procurement/{slug}/
     case 'job': return `/careers/${item.slug ?? slugOf(item).replace(/^\d{4}-\d{2}-\d{2}-/, '')}/`;
     case 'tender': return `/procurement/${item.slug ?? slugOf(item).replace(/^\d{4}-\d{2}-\d{2}-/, '')}/`;

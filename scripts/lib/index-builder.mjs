@@ -27,6 +27,7 @@
 // 多語：i18n[lang] 有 reviewed（且譯文未過期）者另出同語 chunk；machine 一律不出。
 // 來源語言（ARCHITECTURE 14.2）：頂層欄位以 item.sourceLang（預設 zh-TW）出 chunk（英文來源 ⇒ 進英文索引）；
 //   sourceLang≠zh-TW 時 i18n['zh-TW']（reviewed）另出中文 chunk（進中文索引）。topic／service 的譯文 chunk 需 i18n 有本文欄位才出。
+import { articlePath } from '../../src/client/bulletin-rules.js';
 import { splitPlain, parseChineseNumber } from '../../src/client/answer/core.js';
 import { splitByPage } from './pdf-text.mjs';
 import { tagRelativeDate } from './dates.mjs';
@@ -99,6 +100,7 @@ function pathOf(item) {
     case 'publication': return `/publications/${slug}/`;
     case 'labtest': return `/lab/${slug}/`;
     case 'research': return `/research/${slug}/`;
+    case 'article': return articlePath(item);
     case 'job': return `/careers/${item.slug ?? slug.replace(/^\d{4}-\d{2}-\d{2}-/, '')}/`;
     case 'tender': return `/procurement/${item.slug ?? slug.replace(/^\d{4}-\d{2}-\d{2}-/, '')}/`;
     default: return '/';
@@ -541,6 +543,27 @@ export function buildSearchIndex(site) {
           });
           break;
         }
+        case 'article': {
+          // 第二十九輪：疫情報導文章——摘要一塊、重點三句一塊、每個章節一塊（引用連到 #s-{key}）、每個圖表說明一塊。只收中文正本。
+          if (!isSource) break;
+          const issue = site.byId.get(item.issueId);
+          const vol = issue ? `第 ${issue.volume} 卷第 ${issue.issue} 期` : '';
+          const artExtra = { issueId: item.issueId, volume: issue?.volume ?? null, issue: issue?.issue ?? null, articleNo: item.articleNo, pages: item.pages ?? null, articleType: item.articleType ?? null, authors: (item.authors ?? []).map((a) => a.name) };
+          const aterms = ['疫情報導', vol, issue?.volume != null ? `${issue.volume}卷` : null, issue?.issue != null ? `${issue.issue}期` : null, ...(item.authors ?? []).map((a) => a.unit).filter(Boolean)].filter(Boolean);
+          const abs = mdSentences(item.abstractMarkdown ?? '');
+          add(make(item, 'abstract', `${item.title} · 摘要`, abs.length ? abs : splitPlain(item.summary ?? ''), `${base}#abstract`, { ...L, ...artExtra, block: 'abstract', extraTerms: aterms }));
+          if (item.highlights) {
+            const h = item.highlights;
+            const hs = [h.known ? `已知：${h.known}` : null, h.added ? `本文新增：${h.added}` : null, h.implications ? `對防疫實務的意義：${h.implications}` : null].filter(Boolean);
+            if (hs.length) add(make(item, 'highlights', `${item.title} · 重點`, hs, `${base}#highlights`, { ...L, ...artExtra, block: 'highlights', extraTerms: aterms }));
+          }
+          for (const s of item.sections ?? []) add(make(item, `s-${s.key}`, `${item.title} · ${s.heading}`, mdSentences(s.markdown ?? ''), `${base}#s-${s.key}`, { ...L, ...artExtra, block: s.key, extraTerms: [...aterms, s.heading] }));
+          for (const f of item.figures ?? []) {
+            const label = `${f.kind === 'table' ? '表' : '圖'} ${f.no}`;
+            add(make(item, `${f.kind}-${f.no}`, `${item.title} · ${label}`, [`${label}：${f.caption}`, ...(f.markdown ? mdSentences(f.markdown) : [])], `${base}#${f.kind}-${f.no}`, { ...L, ...artExtra, block: `${f.kind}-${f.no}`, extraTerms: [...aterms, label] }));
+          }
+          break;
+        }
         case 'labtest': {
           if (!isSource) break;
           const dz = [item.disease, ...(item.diseases ?? [])].filter((x, i, a) => x && a.indexOf(x) === i);
@@ -613,7 +636,7 @@ export function buildSearchIndex(site) {
   const dedupe = (arr) => { const seen = new Set(); return arr.filter((c) => (seen.has(c.id) ? false : seen.add(c.id))); };
   const P = dedupe(pub), R = dedupe(pro);
   // byType：民眾索引各型別塊數（新型別即使 0 也列出，方便儀表板看出「內容尚未進來」）；byTypePro：專業索引
-  const TYPES = ['disease', 'faq', 'news', 'clarification', 'vaccine', 'media', 'topic', 'service', 'publication', 'job', 'tender'];
+  const TYPES = ['disease', 'faq', 'news', 'clarification', 'vaccine', 'media', 'topic', 'service', 'publication', 'article', 'job', 'tender'];
   const TYPES_PRO = [...TYPES, 'document', 'letter', 'labtest', 'research'];
   const byType = Object.fromEntries(TYPES.map((t) => [t, 0]));
   for (const c of P) byType[c.type] = (byType[c.type] ?? 0) + 1;

@@ -2,6 +2,7 @@
 // JSON Schema 驗證 + 跨檔參照檢查。任何一項失敗 → build 失敗（治理門檻）。
 // 檔案資產（assets[]、/files/ 引用、content/assets/ 實體檔）的檢查在 scripts/lib/assets.mjs 的 validateAssets()，
 // build.mjs 在本檢查後呼叫並把錯誤併入同一份失敗清單（ARCHITECTURE 16.1）。
+import { articleProblems } from '../../src/client/bulletin-rules.js';
 import fs from 'node:fs';
 import path from 'node:path';
 import { hasRelativeDate } from './dates.mjs';
@@ -32,7 +33,7 @@ function loadSchemas() {
 const typeToSchema = {
   disease: 'disease.json', faq: 'faq.json', news: 'news.json', letter: 'news.json', clarification: 'clarification.json',
   document: 'document.json', vaccine: 'vaccine.json', dataset: 'dataset.json', banner: 'banner.json', page: 'page.json',
-  media: 'media.json', topic: 'topic.json', service: 'service.json', publication: 'publication.json', labtest: 'labtest.json', research: 'research.json',
+  media: 'media.json', topic: 'topic.json', service: 'service.json', publication: 'publication.json', labtest: 'labtest.json', research: 'research.json', article: 'article.json',
   migration: 'migration.json', job: 'job.json', tender: 'tender.json',
 };
 
@@ -124,6 +125,11 @@ export function validateSite(site) {
     if (item.type === 'disease' && !diseaseIds.has(item.id)) push(item.__file, `疾病頁 ${item.id} 不在傳染病主檔`);
     if (item.type === 'labtest' && !diseaseIds.has(item.disease)) push(item.__file, `labtest.disease ${item.disease} 不在傳染病主檔`);
     if (item.type === 'media' && !(item.basedOn?.length)) push(item.__file, `影音素材必須填 basedOn（依據正本），見規劃 7.7`);
+    // 第二十九輪（ARCHITECTURE 34）：疫情報導文章——所屬卷期要存在且是 bulletin、同期篇次不重複、頁碼不重疊。規則與後台同一份（bulletin-rules.js）。
+    if (item.type === 'article') {
+      const siblings = (site.collections.articles ?? []).filter((x) => x !== item && x.issueId === item.issueId && x.status !== 'draft');
+      for (const pr of articleProblems(item, { issue: site.byId.get(item.issueId) ?? null, siblings })) if (pr.level === 'error') push(item.__file, `[疫情報導] ${pr.msg}`);
+    }
     for (const ref of item.contentIds ?? []) if (!ids.has(ref)) push(item.__file, `contentIds ${ref} 不存在`);
   }
   // 2a. 第七輪（ARCHITECTURE 15.1）：職缺與採購公告

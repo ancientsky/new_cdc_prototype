@@ -278,6 +278,17 @@ export function jsonLdFor(ctx, item) {
       return [clean({ ...baseOf(ctx, item, 'Book'), ...common, isbn: item.isbn, bookEdition: item.edition, issn: item.issn,
         isPartOf: item.series ? clean({ '@type': 'CreativeWorkSeries', name: item.series, alternateName: item.seriesEn }) : undefined, offers: item.price ? { '@type': 'Offer', price: item.price, priceCurrency: 'TWD' } : undefined })];
     }
+    case 'article': {
+      // 第二十九輪：疫情報導文章 → ScholarlyArticle，isPartOf 指向卷期（PublicationIssue），作者帶服務單位
+      const issue = ctx?.site?.byId?.get(item.issueId);
+      return [clean({ ...baseOf(ctx, item, 'ScholarlyArticle'), headline: name, name, description,
+        abstract: mdToText(item.abstractMarkdown ?? '') || undefined, pagination: item.pages, pageStart: item.pages?.split('-')[0], pageEnd: item.pages?.split('-')[1],
+        author: (item.authors ?? []).map((a) => clean({ '@type': 'Person', name: a.name, affiliation: a.unit ? { '@type': 'Organization', name: a.unit } : undefined })),
+        sameAs: item.doi ? `https://doi.org/${item.doi}` : undefined,
+        isPartOf: issue ? clean({ '@type': 'PublicationIssue', issueNumber: issue.issue, datePublished: dt(issue.publishedAt), url: abs(ctx, pathOf(issue)), isPartOf: { '@type': 'PublicationVolume', volumeNumber: issue.volume, isPartOf: { '@type': 'Periodical', name: issue.series, issn: issue.issn } } }) : undefined,
+        encoding: (item.pdfUrl || issue?.pdfUrl) ? [{ '@type': 'MediaObject', encodingFormat: 'application/pdf', contentUrl: linkAbs(ctx, item.pdfUrl || issue.pdfUrl) }] : undefined,
+        about: (item.diseases ?? []).map((d) => diseaseRef(ctx, d)), 'cdc:articleType': item.articleType, 'cdc:articleNo': item.articleNo })];
+    }
     case 'labtest': {
       const specimens = item.specimens ?? [];
       return [clean({ ...baseOf(ctx, item, 'MedicalTest'), name, description, audience: audienceOf(item),

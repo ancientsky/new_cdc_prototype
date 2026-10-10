@@ -1474,3 +1474,44 @@ Issue #38（Yulun）：舊站「首頁／專業人員／傳染病核心教材」
 
 **權責單位待辦**：提供兩份教材 PDF 正本（取得後依 guide-staff §31 轉檔、刪除重建版）；確認學習目標與章節架構；確認授權（第三方圖表）；回答系列統籌單位與舊站還有哪些疾病有教材。
 
+
+## 34. 第二十九輪（2026-10-10）：《疫情報導》文章型別、MMWR 式閱讀版面、文章上架後台
+
+背景與設計說明見 [docs/bulletin.md](docs/bulletin.md)；決策理由見 architecture-decisions §21；同事 SOP 見 guide-staff §32。這一節只寫契約。
+
+### 34.1 型別 `article`（`schemas/article.json`，`content/articles/`）
+
+| 欄位 | 必填 | 說明 |
+| --- | --- | --- |
+| `issueId` | ✔ | 所屬卷期的 `publication` id；該卷期必須存在且 `pubType: bulletin`（validate 擋） |
+| `articleNo` | ✔ | 本期第幾篇，≥ 1；同期不可重複（validate 擋）。網址 `/publications/{issueId 去前綴}/{articleNo}/` |
+| `articleType` | | `original`／`outbreak-report`／`surveillance`／`review`／`brief`／`erratum`／`other`；標籤在 `bulletin-rules.js` `ARTICLE_TYPES` |
+| `authors[]` | ✔ | `{ name, unit?, corresponding? }`；至少一位 |
+| `pages` | | `^\d+(-\d+)?$`；與同期其他篇重疊 ⇒ validate 擋 |
+| `abstractMarkdown`、`highlights{known,added,implications}` | | 摘要框與重點三句 |
+| `sections[]` | ✔ | `{ key, heading, markdown, level? }`；`key` 唯一，文章頁 `id="s-{key}"`，索引引用連到這裡 |
+| `figures[]` | | `{ kind: figure\|table, no, caption, markdown?, file?, alt? }`；同類同號不可重複；文章頁 `id="{kind}-{no}"`，放在正文第一次提到「圖 N／表 N」的段落之後，沒提到的集中到 `#figures` |
+| `references[]`、`acknowledgementsMarkdown`、`pdfUrl`、`doi`、`titleEn`、`receivedAt`、`acceptedAt` | | 同名用途；`pdfUrl` 缺時文章頁退回卷期 `pdfUrl`，再缺就只有列印鈕 |
+
+共同欄位（owner、reviewedAt、aiWhitelist、verification…）照 `_common.json`。`sourceHashOf` 把 `highlights`、`figures`、`references`、`authors` 一併納入雜湊（翻譯過期偵測）。
+
+### 34.2 共用規則模組 `src/client/bulletin-rules.js`
+
+建置（Node）與後台（瀏覽器）同一份：`articlePath`、`issueToc(issue, articles)`（全文文章取代同篇次的 `articles[]` 書目篇目，其餘照列）、`citationOf`／`citationEnOf`、`splitManuscript(text)`（稿件切段；認不得的放 `unassigned`，不猜）、`articleProblems(a, { issue, siblings })`（error 擋建置、warn 只提醒）、`suggestNextIssue`。**規則只能改這裡**，不要在 validate.mjs 或後台另寫一份。
+
+### 34.3 版面與輸出
+
+- `src/templates/public/articles.mjs`（文章頁）＋ `_bulletin.mjs`（片段）：`#abstract`、`#highlights`、`#s-{key}`、`#{kind}-{no}`、`#references`／`#ref-N`、`#cite`；`data-print` 鈕由 `ui.js` 呼叫 `window.print()`；列印樣式藏側欄、按鈕、上下篇，展開圖表文字版。`.md` 機讀版含摘要、重點、各段（圖表就地）、參考文獻、引用。
+- `publications.mjs`：`pubType === 'bulletin'` 走 `issueDetail()`（本期目錄、摘要、書目、側欄刊頭與其他卷期）；其他出版品版面不變。列表頁卷期表多一欄「全文 HTML」篇數。
+- 索引（`index-builder.mjs` case `article`）：`abstract`、`highlights`、`s-{key}`、`{kind}-{no}` 各一塊，附 `volume`／`issue`／`articleNo`／`pages`／`authors`；只收中文正本。白名單政策 `allowedTypes` 加 `article`（民眾＋專業）。
+- `/v1/articles.json`：每篇＋`issue{ id, volume, issue, publishedAt, pdfUrl }`＋`citation`／`citationEn`；OpenAPI 已描述。RSS `feeds/publications.xml` 混列卷期與文章（文章標題帶卷期）。sitemap 歸 `publications` 群（`groupOf` 允許 `/publications/x/N/`）。JSON-LD：`ScholarlyArticle` → `isPartOf: PublicationIssue → PublicationVolume → Periodical(issn)`，作者帶 `affiliation`。
+- Pagefind `PF_TYPES`、`search.js` `TYPE_ORDER`、i18n `search.type.article`、後台 `TYPE_LABEL`、`lanes.json`（一般車道）、`tests/helpers.mjs` 都加了 `article`。新型別的清單見 deploy.md「新增內容型別」。
+- 文章頁 `pageData()` 的「同事修改這頁」用新參數 `editPath: '/admin/bulletin/edit/'`（預設仍是 `/admin/publish/`）。
+
+### 34.4 後台 `/admin/bulletin/edit/`
+
+- 骨架 `src/templates/admin/bulletin-edit.mjs`；DOM `src/client/admin/bulletin-edit.js`；純函式 `bulletin-edit-core.js`（`emptyState`／`stateFromArticle`／`applyManuscript`／`buildArticle`／`resolveIssue`／`problemsOf`／`packageEntries`／`renderArticlePreview`／`renderTocPreview`／`TE_FIELD_MAP`）。
+- 右側預覽沿用 `page-preview.js` 的 `initPagePreview`，本輪新增選項 `fieldMap` 與 `render`（預設值不變，`/admin/publish/` 行為不受影響）。預覽區塊的 `data-field` 必須在 `TE_FIELD_MAP` 裡（測試鎖住）。
+- 上架包：`content/articles/{slug}.json`、新卷期時 `content/publications/bulletin-{v}-{n}.json`、單篇 PDF `content/assets/{article id}/{file}`（上限沿用 `site.config.assets.maxBytes.pdf`）。
+- 草稿 localStorage `cdc.admin.bulletin-edit`；`?edit={article id}` 帶入既有文章，匯出保留表單沒有的欄位。
+- 檢核有 error 時「產生上架包」停用；warn 只提醒（沒頁碼、沒摘要、沒關鍵字、重點缺句、圖表正文沒提到）。

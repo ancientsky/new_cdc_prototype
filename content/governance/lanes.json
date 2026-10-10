@@ -58,7 +58,8 @@
         "research",
         "dataset",
         "media",
-        "migration"
+        "migration",
+        "article"
       ],
       "autoMerge": false,
       "requiredApprovals": 1,

@@ -1695,6 +1695,7 @@ const ROWS_SEARCH = {
   'search.type.faq': ['問答', 'Q&A', 'Q&A', 'Q&A', 'Hỏi đáp', 'Tanya jawab', 'ถาม-ตอบ'],
   'search.type.service': ['申請服務', 'Services', '申請サービス', 'Mga serbisyo', 'Dịch vụ', 'Layanan', 'บริการ'],
   'search.type.publication': ['出版品', 'Publications', '出版物', 'Mga publikasyon', 'Ấn phẩm', 'Publikasi', 'สิ่งพิมพ์'],
+  'search.type.article': ['疫情報導文章', 'Epidemiology Bulletin articles', '疫情報導論文', 'Mga artikulo ng Epidemiology Bulletin', 'Bài viết Epidemiology Bulletin', 'Artikel Epidemiology Bulletin', 'บทความ Epidemiology Bulletin'],
   'search.type.labtest': ['檢驗項目', 'Lab tests', '検査項目', 'Mga lab test', 'Xét nghiệm', 'Pemeriksaan lab', 'รายการตรวจ'],
   'search.type.research': ['研究計畫', 'Research projects', '研究計画', 'Mga proyektong pananaliksik', 'Đề tài nghiên cứu', 'Proyek penelitian', 'โครงการวิจัย'],
   'search.type.media': ['影音', 'Video & audio', '動画・音声', 'Video at audio', 'Video & âm thanh', 'Video & audio', 'วิดีโอและเสียง'],
@@ -1847,6 +1848,45 @@ const ROWS_R28 = {
   "subscribe.err.full": ["目前名額已滿（原型限制），請稍後再試。", "The prototype is full right now. Please try again later.", "プロトタイプの上限に達しています。後でお試しください。", "Puno na ang prototype ngayon. Subukan muli mamaya.", "Bản mẫu hiện đã đầy. Vui lòng thử lại sau.", "Prototipe sedang penuh. Coba lagi nanti.", "ต้นแบบเต็มในขณะนี้ โปรดลองใหม่ภายหลัง"],
 };
 for (const [key, vals] of Object.entries(ROWS_R28)) vals.forEach((v, i) => { if (v != null && v !== '') STRINGS[ORDER[i]][key] = v; });
+// 第二十九輪：疫情報導文章頁與卷期目錄（zh／en；其他語言回退英文）
+const ROWS_R29 = {
+  'teb.volissue': ['第 {v} 卷第 {n} 期', 'Vol. {v} No. {n}'],
+  'teb.toc': ['本期目錄', 'In this issue'],
+  'teb.fulltext': ['全文 HTML', 'Full text (HTML)'],
+  'teb.bibonly': ['僅書目', 'Bibliographic record only'],
+  'teb.pdf.article': ['下載本篇 PDF', 'Download article PDF'],
+  'teb.pdf.issue': ['下載本期 PDF', 'Download issue PDF'],
+  'teb.print': ['列印／另存 PDF', 'Print / save as PDF'],
+  'teb.abstract': ['摘要', 'Abstract'],
+  'teb.highlights': ['重點', 'Summary'],
+  'teb.known': ['已知', 'What is already known'],
+  'teb.added': ['本文新增', 'What is added by this report'],
+  'teb.implications': ['對防疫實務的意義', 'Implications for public health practice'],
+  'teb.references': ['參考文獻', 'References'],
+  'teb.ack': ['誌謝', 'Acknowledgements'],
+  'teb.figures': ['圖表', 'Figures and tables'],
+  'teb.figure': ['圖 {n}', 'Figure {n}'],
+  'teb.table': ['表 {n}', 'Table {n}'],
+  'teb.textver': ['文字版（資料）', 'Text version (data)'],
+  'teb.cite': ['引用本文', 'Cite this article'],
+  'teb.cite.zh': ['中文格式', 'Chinese'],
+  'teb.cite.en': ['英文格式', 'English'],
+  'teb.copy': ['複製', 'Copy'],
+  'teb.prev': ['上一篇', 'Previous article'],
+  'teb.next': ['下一篇', 'Next article'],
+  'teb.inissue': ['本期文章', 'Articles in this issue'],
+  'teb.article.n': ['第 {n} 篇', 'Article {n}'],
+  'teb.pages': ['頁 {p}', 'pp. {p}'],
+  'teb.authors': ['作者', 'Authors'],
+  'teb.corresponding': ['通訊作者', 'Corresponding author'],
+  'teb.received': ['收稿', 'Received'],
+  'teb.accepted': ['接受', 'Accepted'],
+  'teb.issues': ['其他卷期', 'Other issues'],
+  'teb.about': ['《疫情報導》為疾管署發行之期刊，每月出刊 2 期；每篇文章都可直接閱讀全文、下載 PDF 與複製引用格式。', 'The Taiwan Epidemiology Bulletin is published twice a month by Taiwan CDC. Every article can be read in full online, downloaded as PDF and cited.'],
+  'teb.issn': ['ISSN', 'ISSN'],
+};
+for (const [key, vals] of Object.entries(ROWS_R29)) vals.forEach((v, i) => { if (v != null && v !== '') STRINGS[ORDER[i]][key] = v; });
+
 
 // translation.bar.reviewed 的 {lang} 佔位：zh 版用語言名稱
 STRINGS['zh-TW']['translation.bar.reviewed'] = STRINGS['zh-TW']['translation.bar.reviewed'].replace('{lang}', '翻譯');
