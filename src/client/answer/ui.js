@@ -3,7 +3,7 @@
 import { loadEngine, currentView, url, esc, v1, LANG } from './data.js';
 import { L, link, sentenceList, sourceList, disclosureRow, refusalCard, situationCards, verdictBlock, statsBlock, traditionalList, wireInteractions, ensureStyles, notifyBlock } from './render.js';
 import './inline.js'; // 頁內問題框（#ask-inline／[data-ask-inline]）→ /ask/
-import { getKey, setKey, getModel, setModel, LLM_MODELS, llmAnswer, llmTranslate } from './llm.js';
+import { getKey, setKey, getModel, setModel, llmModels, llmAnswer, llmTranslate, purgeLegacyKey, staffSessionActive } from './llm.js';
 
 ensureStyles();
 const answerEl = document.getElementById('answer');
@@ -17,7 +17,8 @@ let current = null;
 let runId = 0;
 
 const LLM_ON_KEY = 'cdc.llmEnabled';
-const llmEnabled = () => { try { return !!getKey() && localStorage.getItem(LLM_ON_KEY) !== '0'; } catch { return false; } };
+// 第二十三輪：LLM 模式只在「同事後台工作階段有效 ＋ 本分頁有 key」時啟用；開關也存 sessionStorage（跟 key 同生命週期）
+const llmEnabled = () => { try { return staffSessionActive() && !!getKey() && sessionStorage.getItem(LLM_ON_KEY) !== '0'; } catch { return false; } };
 
 if (answerEl) {
   answerEl.classList.add('ask-page');
@@ -174,6 +175,11 @@ function setupAdvanced() {
   const adv = document.getElementById('ask-advanced');
   let keyInput = document.getElementById('llm-key');
   if (!adv) return;
+  purgeLegacyKey();
+  // 第二十三輪（26.4）：金鑰欄位只給已登入後台的同事；一般讀者看不到「進階」裡的金鑰區（揭露表仍顯示）
+  const keyBlock = adv.querySelector('[data-llm-staff]');
+  if (!staffSessionActive()) { if (keyBlock) keyBlock.remove(); setKey(''); return; }
+  if (keyBlock) keyBlock.hidden = false;
   const body = adv.querySelector('.c-advanced__body') ?? adv;
   if (!keyInput) {
     body.insertAdjacentHTML('afterbegin', '<p><label for="llm-key"><b>Anthropic API key</b></label><br><input id="llm-key" type="password" autocomplete="off" spellcheck="false" placeholder="sk-ant-…" class="c-input"></p>');
@@ -185,23 +191,23 @@ function setupAdvanced() {
     <span class="c-llm-ctl">
       <button type="button" class="c-btn c-btn--sm" data-llm="save">儲存</button>
       <button type="button" class="c-btn c-btn--sm c-btn--ghost" data-llm="clear">清除</button>
-      <label>模型 <select data-llm="model">${LLM_MODELS.map((m) => `<option value="${m}"${m === getModel() ? ' selected' : ''}>${m}</option>`).join('')}</select></label>
+      <label>模型 <select data-llm="model">${llmModels().map((m) => `<option value="${m}"${m === getModel() ? ' selected' : ''}>${m}</option>`).join('')}</select></label>
       <label><input type="checkbox" data-llm="enabled"${llmEnabled() ? ' checked' : ''}> 使用 LLM 模式</label>
     </span>
-    <span class="c-llm-note muted" role="status">${has ? '已設定 key（只存在此瀏覽器）' : '未設定：使用抽取式整理（不呼叫任何模型）'}</span>
-    <small class="c-llm-privacy">key 只存在你的瀏覽器（localStorage <code>cdc.llmKey</code>），由瀏覽器直接呼叫 api.anthropic.com，不經過本站伺服器；送出前問題已遮蔽個資，只送出官方片段。共用電腦請用完按「清除」。</small>`);
+    <span class="c-llm-note muted" role="status">${has ? '已設定 key（只存在這個分頁，關閉即清除）' : '未設定：使用抽取式整理（不呼叫任何模型）'}</span>
+    <small class="c-llm-privacy">同事示範用。key 只存在這個分頁的工作階段（sessionStorage <code>cdc.llmKey</code>），關閉分頁即清除；由瀏覽器直接呼叫 api.anthropic.com，不經過本站伺服器；送出前問題已遮蔽個資，只送出官方片段。用完請按「清除」。</small>`);
   const note = adv.querySelector('.c-llm-note');
   adv.addEventListener('click', (e) => {
     const b = e.target.closest('[data-llm]'); if (!b) return;
     if (b.dataset.llm === 'save') {
       const v = keyInput.value.trim();
-      if (v && !v.startsWith('••')) { setKey(v); try { localStorage.setItem(LLM_ON_KEY, '1'); } catch { /* ignore */ } keyInput.value = '••••••••••••'; note.textContent = '已儲存。重新提問即使用 LLM 模式。'; adv.querySelector('[data-llm="enabled"]').checked = true; }
+      if (v && !v.startsWith('••')) { setKey(v); try { sessionStorage.setItem(LLM_ON_KEY, '1'); } catch { /* ignore */ } keyInput.value = '••••••••••••'; note.textContent = '已儲存。重新提問即使用 LLM 模式。'; adv.querySelector('[data-llm="enabled"]').checked = true; }
     }
     if (b.dataset.llm === 'clear') { setKey(''); keyInput.value = ''; note.textContent = '已清除 key，回到抽取式整理。'; adv.querySelector('[data-llm="enabled"]').checked = false; }
   });
   adv.addEventListener('change', (e) => {
     const t = e.target;
     if (t.dataset?.llm === 'model') setModel(t.value);
-    if (t.dataset?.llm === 'enabled') { try { localStorage.setItem(LLM_ON_KEY, t.checked ? '1' : '0'); } catch { /* ignore */ } }
+    if (t.dataset?.llm === 'enabled') { try { sessionStorage.setItem(LLM_ON_KEY, t.checked ? '1' : '0'); } catch { /* ignore */ } }
   });
 }

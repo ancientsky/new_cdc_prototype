@@ -12,11 +12,10 @@ on:
   pull_request_review:
     types: [submitted]
 
+# 第二十三輪（26.5）：工作流程層級只給唯讀；寫入權限下放到需要的 job（目前只有 lane 一個 job，它要推預覽、留言、合併、觸發部署）。
+# 第三方 action 一律固定 commit SHA（註解標版本），升級由 Dependabot（.github/dependabot.yml）開 PR。
 permissions:
-  contents: write # 推 previews 分支、合併 PR
-  pull-requests: write # 留言、標籤、合併
-  issues: write # 建立標籤、編輯留言（PR 留言走 issues API）
-  actions: write # gh workflow run pages.yml
+  contents: read
 
 concurrency:
   group: content-pr-${{ github.event.pull_request.number }}
@@ -25,6 +24,11 @@ concurrency:
 jobs:
   lane:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # 推 previews 分支、合併 PR
+      pull-requests: write # 留言、標籤、合併
+      issues: write # 建立標籤、編輯留言（PR 留言走 issues API）
+      actions: write # gh workflow run pages.yml
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       REPO: ${{ github.repository }}
@@ -32,13 +36,15 @@ jobs:
       PR_CREATED_AT: ${{ github.event.pull_request.created_at }}
       # 分叉來的 PR 拿不到寫入權杖：只跑檢查，不推預覽、不留言、不合併
       SAME_REPO: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+      # 第二十三輪（26.3）：PR 作者；lanes.json 的 allowedAuthors 決定能不能走自動合併車道
+      PR_AUTHOR: ${{ github.event.pull_request.user.login }}
       PREVIEW_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/preview/pr-${{ github.event.pull_request.number }}/
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 22
           cache: npm
@@ -60,7 +66,11 @@ jobs:
         id: lane
         run: |
           git diff --name-only origin/main...HEAD
-          node scripts/lane.mjs --since="$PR_CREATED_AT" $(git diff --name-only origin/main...HEAD) < /dev/null > "$RUNNER_TEMP/lane.json"
+          # 作者所屬 team（名單可寫 team:<org>/<slug>）：個人帳號下的 repo 沒有 team，查不到就留空
+          TEAMS=$(gh api "orgs/${GITHUB_REPOSITORY_OWNER}/teams" --paginate --jq '.[].slug' 2>/dev/null | while read -r slug; do
+            if gh api "orgs/${GITHUB_REPOSITORY_OWNER}/teams/$slug/memberships/$PR_AUTHOR" --silent 2>/dev/null; then printf '%s/%s,' "$GITHUB_REPOSITORY_OWNER" "$slug"; fi
+          done || true)
+          node scripts/lane.mjs --since="$PR_CREATED_AT" --author="$PR_AUTHOR" --teams="$TEAMS" $(git diff --name-only origin/main...HEAD) < /dev/null > "$RUNNER_TEMP/lane.json"
           cat "$RUNNER_TEMP/lane.json"
           echo "lane=$(jq -r .lane "$RUNNER_TEMP/lane.json")" >> "$GITHUB_OUTPUT"
           echo "label=$(jq -r .ghLabel "$RUNNER_TEMP/lane.json")" >> "$GITHUB_OUTPUT"
@@ -182,6 +192,7 @@ jobs:
               "| 預覽建置 | " + icon(e.PREVIEW_BUILD) + " |",
               "| 預覽網址 | " + (previewOk ? "[" + e.PREVIEW_URL + "](" + e.PREVIEW_URL + ")（主站重新部署後約 2–3 分鐘可開；含排程中內容）" : "未產生") + " |",
               "| 自動合併 | " + (L.autoMerge ? "是（不需人工核准）" : "否（需 " + L.requiredApprovals + " 位核准）") + " |",
+              "| 作者授權 | " + (L.authorGate ? (L.authorGate.allowed ? "✅ " + L.authorGate.reason : "⚠ " + L.authorGate.reason + "，降為一般車道") : "—（本車道本來就需人審）") + " |",
               "| 審核人 | " + (L.reviewers.length ? L.reviewerNames.join("、") + "（" + L.reviewerAccounts.map((a) => "@" + a).join(" ") + "）" : "無（CI 即審核者）") + " |",
               "| 上線後複核 | " + (L.postPublishReview ? L.postPublishReview.ownerName + " 於上線後 " + L.postPublishReview.hours + " 小時內" : "—") + " |",
               "| SLA | " + L.sla.label + "，到期 " + L.sla.dueAtLocal + "（台灣時間） |",

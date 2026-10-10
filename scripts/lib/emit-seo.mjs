@@ -383,10 +383,24 @@ export function buildFeeds(fullSite) {
   return { 'feeds/news.xml': newsXml, 'feeds/documents.xml': docsXml, 'feeds/situation.xml': sitXml, 'feeds/publications.xml': pubXml, 'feeds/notices.xml': noticeXml, 'feeds/careers.xml': careersXml, 'feeds/procurement.xml': procXml };
 }
 
+/** 第二十三輪（ARCHITECTURE 26.1）：原型模式的 robots.txt——全擋。正式版（AI 政策版）另存 robots.production.txt 供對照與部署時替換。 */
+export function buildPrototypeRobots() {
+  return [
+    `# ${config.name}（${config.nameEn}）新官網原型：非官方網站，內容為示意，不開放索引。`,
+    '# 正式站請改以 SITE_MODE=production 建置，會輸出 AI 政策版 robots.txt（本目錄的 robots.production.txt 即為該版本）。',
+    '# 每頁另有 <meta name="robots" content="noindex, nofollow">；GitHub Pages 無法加 X-Robots-Tag 標頭，正式環境見 docs/deploy.md §10。',
+    '',
+    'User-agent: *',
+    'Disallow: /',
+    '',
+  ].join('\n');
+}
+
 export function emitSeo(site, write, opts = {}) {
   const maps = buildSitemaps(site, opts.pages);
   for (const [name, xml] of Object.entries(maps)) write(name, xml);
-  write('robots.txt', buildRobots(site));
+  if (config.isPrototype) { write('robots.txt', buildPrototypeRobots()); write('robots.production.txt', buildRobots(site)); }
+  else write('robots.txt', buildRobots(site));
   for (const l of config.langs) write(`${l.path.replace(/^\//, '')}${l.path ? '/' : ''}llms.txt`, buildLlms(site, l.code));
   for (const [name, xml] of Object.entries(buildFeeds(site))) write(name, xml);
   return Object.keys(maps);

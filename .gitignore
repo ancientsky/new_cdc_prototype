@@ -4,3 +4,6 @@ dist/
 *.log
 .playwright/
 !tests/fixtures/*.log
+
+# Claude 工作者的 git worktree（本機用）
+.claude/worktrees/

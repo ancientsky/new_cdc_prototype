@@ -11,7 +11,7 @@ const UI_TRANSLATION = { en: { status: 'reviewed', date: '2026-09-10' } };
 
 const FAVICON = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231b5e3f'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='%23fff'/%3E%3C/svg%3E";
 
-const EARLY_JS = `try{var d=document.documentElement;d.classList.add('js');var v=new URLSearchParams(location.search).get('view')||localStorage.getItem('cdc.view');if(v==='pro')d.dataset.view='pro'}catch(e){document.documentElement.classList.add('js')}`;
+export const EARLY_JS = `try{var d=document.documentElement;d.classList.add('js');var v=new URLSearchParams(location.search).get('view')||localStorage.getItem('cdc.view');if(v==='pro')d.dataset.view='pro'}catch(e){document.documentElement.classList.add('js')}`;
 
 // 頁尾分組（第十七輪 fat footer）：服務／關於與政策／開發者與開放資料／聯絡。民眾主選單不放機關型入口，全站地圖集中在頁尾；首頁不再另放「更多服務」。
 const FOOT_SERVICES = [
@@ -49,6 +49,13 @@ function translationBar(ctx, item, hide) {
   <span class="c-translation-bar__text">${text}${stale ? html` <b>${t('translation.stale')}</b>` : ''}</span>
   <a href="${zhHref}" hreflang="${origCode}" lang="${origCode}" class="c-translation-bar__orig">${origLabel}</a>
 </div></aside>`;
+}
+
+/** 第二十三輪：原型模式每頁頂端的「非官方原型」橫幅（SITE_MODE=production 不輸出）。role=region＋aria-label 成為具名地標（axe region 規則）；不可關閉，避免截圖被當成官網。 */
+function protoBanner(ctx) {
+  if (!config.isPrototype) return '';
+  const { t } = ctx;
+  return html`<div class="c-proto-banner" role="region" aria-label="${t('proto.banner.tag')}" data-proto-banner><div class="wrap c-proto-banner__in"><strong>${t('proto.banner.tag')}</strong> <span>${t('proto.banner.text')}</span> <a href="${config.officialUrl}" rel="external noopener">${t('proto.banner.cta')}</a></div></div>`;
 }
 
 const ICONS = {
@@ -102,7 +109,7 @@ export function layout(ctx, { styles = [], title, description, body, jsonLd = []
 <link rel="canonical" href="${canonical}">
 ${alternates}
 <link rel="alternate" hreflang="x-default" href="${origin}${path}">
-${noindex ? raw('<meta name="robots" content="noindex">') : ''}
+${config.isPrototype ? raw('<meta name="robots" content="noindex, nofollow">') : noindex ? raw('<meta name="robots" content="noindex">') : ''}
 <meta property="og:title" content="${fullTitle}"><meta property="og:description" content="${description ?? ''}"><meta property="og:type" content="website"><meta property="og:site_name" content="${t('site.name')}"><meta property="og:url" content="${canonical}"><meta property="og:locale" content="${lang.replace('-', '_')}">
 <script>${raw(EARLY_JS)}</script>
 <link rel="stylesheet" href="${url('/assets/styles/tokens.css', { noLang: true })}">
@@ -113,6 +120,7 @@ ${ld.map((j) => raw(`<script type="application/ld+json">${jsonScript(j)}</script
 </head>
 <body class="${bodyClass}">
 <a class="skip-link" href="#main">${t('skip')}</a>
+${protoBanner(ctx)}
 <div class="topbar"><div class="wrap topbar__in">
   <nav class="langs" aria-label="${t('lang.label')}">${langLinks}</nav>
   <div class="topbar__links"><a href="${url('/accessibility/')}">${t('a11y')}</a><a href="${url('/sitemap-page/')}">${t('sitemap')}</a><a class="hotline" href="tel:1922">${t('hotline')}</a></div>

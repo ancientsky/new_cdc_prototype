@@ -143,7 +143,7 @@ test('apply（open）：橫幅、三步驟、即時驗證所需屬性、localSto
   const ctx = ctxOf('zh-TW', '/careers/open-online/apply/');
   const h = full(careers, ctx, { item: j, apply: true, open: true });
   assert.match(h, /原型示範：資料只存在你的瀏覽器，不會送出/);
-  assert.match(h, /<meta name="robots" content="noindex">/);
+  assert.match(h, /<meta name="robots" content="noindex(, nofollow)?">/);
   assert.equal((h.match(/data-step-ind="/g) ?? []).length, 3);
   assert.equal((h.match(/<fieldset class="c-apply__step" data-step="/g) ?? []).length, 3);
   for (const t of ['基本資料與聯絡方式', '學經歷與應備文件', '聲明與確認']) assert.ok(h.includes(t), t);

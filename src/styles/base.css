@@ -28,6 +28,11 @@ main.wrap{padding-top:var(--sp-5);padding-bottom:var(--sp-8)}
 html[data-view="public"] .c-pro-only{display:none!important}
 html[data-view="pro"] .c-public-only{display:none!important}
 
+/* 原型橫幅（第二十三輪）：SITE_MODE=production 不輸出；列印也保留，避免截圖被當官網 */
+.c-proto-banner{background:#fff4d6;border-bottom:2px solid #7a4100;color:#4a2d00;font-size:var(--fs-sm)}
+.c-proto-banner__in{padding:6px 0;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline}
+.c-proto-banner strong{background:#7a4100;color:#fff;padding:1px 8px;border-radius:999px;font-size:var(--fs-xs,12px)}
+.c-proto-banner a{color:inherit;font-weight:700}
 /* topbar */
 .topbar{background:var(--paper);border-bottom:1px solid var(--line);font-size:var(--fs-sm)}
 .topbar__in{display:flex;justify-content:space-between;align-items:center;min-height:38px;gap:var(--sp-3)}

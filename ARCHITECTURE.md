@@ -944,3 +944,29 @@ manualStatus?: enum[cancelled, failed（流標）], award?: { date, winner, amou
 - CSS：admin.css 尾端 `.adm-result--sticky`（≥1101px 黏住）、`.adm-tabs--pane`、`.adm-tabbadge*`、`.adm-stale`、`.adm-pv*`、`.adm-field--hit`、`.adm-group*`、`.adm-fieldset--ingroup`、`.adm-actions--sticky`（≤760px 改 static）、`.adm-savestate*`；components.css 尾端 `.c-editfab*`。
 - 測試 `tests/round22-ui.test.mjs`（模板結構、純函式渲染與跳脫、FIELD_MAP 對得到頁面 id、七語字串）；`admin-editor.test.mjs` 端到端的頁籤計數改成只數 `.adm-tabs--editor`。
 
+## 26. 第二十三輪（2026-10-10）：資安修正（原型模式、安全標頭、車道授權名單、BYOK、Actions）
+
+### 26.1 站台模式（`config.mode`）
+- `site.config.mjs`：`mode = process.env.SITE_MODE === 'production' ? 'production' : 'prototype'`，`isPrototype` getter，`officialUrl`。
+- prototype：`layout()` 每頁 `<meta name="robots" content="noindex, nofollow">`（取代原本只有部分頁的 `noindex`）；`<body>` 內 skip-link 之後、topbar 之前輸出 `<div class="c-proto-banner" role="note" data-proto-banner>`（i18n `proto.banner.tag|text|cta`，七語）；`emitSeo` 寫 `robots.txt`＝`buildPrototypeRobots()`（`User-agent: *` / `Disallow: /`，不列 Sitemap）並把政策版寫到 `robots.production.txt`。sitemap、llms.txt、feeds 照常輸出（部署正式站時不必重建這些）。
+- production：行為同第二十二輪以前。測試以 `config.isPrototype` 決定讀哪一份 robots。
+
+### 26.2 安全標頭（`scripts/lib/emit-headers.mjs`）
+- `emitHeaders(dist, write)` 在所有頁面與靜態資源寫出後執行：`collectInlineHashes(dist)` 掃 `**/*.html`（略過 `preview/`），`inlineScripts(html)` 只取會執行的 `<script>`（無 `src`；`type` 缺省、`module`、`text/javascript`、`application/javascript`），`sha256()` 回 `'sha256-<base64>'`。
+- `securityHeaders({ hashes })` → 七個標頭；CSP：`default-src 'self'; script-src 'self' <hashes>; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://i.ytimg.com; font-src 'self'; connect-src 'self' https://api.anthropic.com; frame-src <vaxmap origin> https://www.youtube-nocookie.com https://www.youtube.com; frame-ancestors 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests`。
+- 輸出 `dist/headers/{headers.json,nginx.conf,web.config.headers.xml,_headers,README.md}`。建置 log 印雜湊段數，>40 段警告（代表有模板把每頁資料塞進 inline script；資料請放 `type="application/json"` 或 data 屬性）。
+- 規則：新增 inline script 不必手動改 CSP，重建即可；新增第三方來源（iframe、API）要改 `securityHeaders()` 並在 deploy.md §10 說明。
+
+### 26.3 車道授權名單（`lanes.json`、`scripts/lib/lanes.mjs`）
+- `lanes.<lane>.allowedAuthors: string[]`（GitHub 帳號不分大小寫，或 `team:<org>/<slug>`）；`rules.urgentAllowedAuthors`。`validateLanes`：`autoMerge` 車道缺名單 ⇒ 錯誤。
+- `authorAllowed(author, list, { teams })` → `{ allowed, reason }`。`laneForFiles(files, { author, teams, … })`：判定車道後，若該車道 `autoMerge`，作者不在名單（含未提供作者）⇒ `lane = 'standard'`、`reasons` 加「… ⇒ 降為一般車道（需人審）」；輸出多 `authorGate: { author, allowed, reason, requestedLane } | null`（非自動合併車道為 null）。`files[].lane` 維持檔案本身的分類。
+- `scripts/lane.mjs --author= --teams=org/slug,…`；`content-pr.yml` 以 `github.event.pull_request.user.login` 傳入，並用 `gh api orgs/<owner>/teams/<slug>/memberships/<login>` 收集作者所屬 team（個人帳號 repo 查不到就留空）。PR 留言表多「作者授權」列。
+
+### 26.4 BYOK（`src/client/answer/llm.js`、`ui.js`、`ask.mjs`）
+- 金鑰與模型選擇存 `sessionStorage`（`cdc.llmKey`、`cdc.llmModel`）、LLM 開關 `cdc.llmEnabled` 亦在 sessionStorage；`purgeLegacyKey()` 載入時移除 localStorage 舊鍵。`staffSessionActive()` 讀 `localStorage.cdc.admin.session` 的 `exp`；`setupAdvanced()` 無工作階段 ⇒ 移除 `[data-llm-staff]` 區塊並清鍵；`llmEnabled()` 同時要求工作階段有效。
+- `ask.mjs`：`#ask-advanced[data-llm-model][data-llm-models]`（來自 `config.ai.llmModel/llmModels`）、金鑰欄位包在 `<div data-llm-staff hidden>`；`llm.js` 的 `llmDefaultModel()/llmModels()` 讀 data 屬性，`LLM_DEFAULT_MODEL/LLM_MODELS` 僅為備援常數。後台 `publish.js` 多語初稿改讀 sessionStorage 鍵。
+
+### 26.5 GitHub Actions
+- 所有 `uses:` 釘 40 字元 commit SHA，行尾註解 `# vX.Y.Z`；`.github/dependabot.yml`（github-actions、npm 每週）。
+- `content-pr.yml`、`pages.yml` 工作流程層級 `permissions: contents: read`；寫入權限在 job 層（`lane` job：contents/pull-requests/issues/actions write；`build` job：contents write；`deploy` job：pages/id-token write）。測試 `tests/round23-security.test.mjs` 檢查 SHA 格式、註解、層級。
+

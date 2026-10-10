@@ -230,8 +230,11 @@ const ROWS = {
   'ask.title': ['問答', 'Ask', '質問', 'Magtanong', 'Hỏi đáp', 'Tanya jawab', 'ถามตอบ'],
   'ask.desc': ['用一句話提問，得到附來源的整理答案。', 'Ask in one sentence and get an organized answer with sources.'],
   'ask.advanced': ['進階', 'Advanced', '詳細設定', 'Advanced', 'Nâng cao', 'Lanjutan', 'ขั้นสูง'],
-  'ask.key.label': ['自備 API 金鑰（選填，啟用 LLM 模式）', 'Bring your own API key (optional, enables LLM mode)'],
-  'ask.key.note': ['金鑰只存在你的瀏覽器（localStorage），由瀏覽器直接呼叫供應商；本站伺服器不會收到。', 'The key stays in your browser (localStorage) and is sent directly to the provider; this site never receives it.'],
+  'ask.key.label': ['示範用 API 金鑰（限已登入後台的同事）', 'Demo API key (staff signed in to the back office only)'],
+  'ask.key.note': ['這是給同事示範生成式答案的功能，正式站不會請民眾貼金鑰。金鑰只存在這個分頁的工作階段（sessionStorage），關閉分頁即清除，由瀏覽器直接呼叫供應商，本站伺服器不會收到。', 'A staff-only demo of generated answers; the public site will never ask visitors for a key. The key lives only in this tab\'s session (sessionStorage), is cleared when the tab closes, and goes straight to the provider; this site never receives it.'],
+  'proto.banner.tag': ['非官方原型', 'Unofficial prototype', '非公式の試作', 'Hindi opisyal na prototype', 'Bản thử nghiệm không chính thức', 'Prototipe tidak resmi', 'ต้นแบบ ไม่ใช่เว็บไซต์ทางการ'],
+  'proto.banner.text': ['這是新官網的設計原型，疫情數字與內容為示意，不是衛生福利部疾病管制署的正式網站。', 'This is a design prototype for a new website; outbreak figures and content are illustrative. It is not the official Taiwan CDC site.', '新ウェブサイトの設計試作です。数値や内容は例示であり、台湾CDCの公式サイトではありません。', 'Prototype ito ng bagong website; halimbawa lamang ang mga numero at nilalaman. Hindi ito ang opisyal na site ng Taiwan CDC.', 'Đây là bản thử nghiệm thiết kế trang web mới; số liệu và nội dung chỉ mang tính minh họa, không phải trang chính thức của CDC Đài Loan.', 'Ini prototipe desain situs baru; angka dan konten hanya ilustrasi, bukan situs resmi CDC Taiwan.', 'นี่คือต้นแบบการออกแบบเว็บไซต์ใหม่ ตัวเลขและเนื้อหาเป็นเพียงตัวอย่าง ไม่ใช่เว็บไซต์ทางการของ CDC ไต้หวัน'],
+  'proto.banner.cta': ['前往正式官網 www.cdc.gov.tw', 'Go to the official site www.cdc.gov.tw', '公式サイト www.cdc.gov.tw へ', 'Pumunta sa opisyal na site www.cdc.gov.tw', 'Đến trang chính thức www.cdc.gov.tw', 'Ke situs resmi www.cdc.gov.tw', 'ไปยังเว็บไซต์ทางการ www.cdc.gov.tw'],
   'ask.mode': ['目前模式', 'Current mode'],
   'ask.mode.extractive': ['抽取式整理（每句都是本署內容原文，附來源編號）', 'Extractive (every sentence is original CDC text with a source number)'],
   'ask.mode.llm': ['LLM 模式（輸出每句須對應檢索片段）', 'LLM mode (every sentence must map to a retrieved passage)'],
@@ -542,8 +545,8 @@ for (const [key, vals] of Object.entries(ROWS)) vals.forEach((v, i) => { if (v !
 
 const EXTRA = {
   // [ja, tl, vi, id, th]
-  'ask.key.label': ['自分のAPIキー（任意・LLMモードを有効化）', 'Sariling API key (opsyonal, para sa LLM mode)', 'Khóa API của riêng bạn (tùy chọn, bật chế độ LLM)', 'Kunci API sendiri (opsional, mengaktifkan mode LLM)', 'API key ของคุณเอง (ไม่บังคับ เปิดโหมด LLM)'],
-  'ask.key.note': ['キーはブラウザ内（localStorage）にのみ保存され、提供元へ直接送信されます。当サイトには届きません。', 'Nasa browser mo lang ang key (localStorage) at direktang ipinapadala sa provider; hindi ito natatanggap ng site na ito.', 'Khóa chỉ lưu trong trình duyệt của bạn và gửi thẳng đến nhà cung cấp; trang này không nhận được.', 'Kunci hanya disimpan di peramban Anda dan dikirim langsung ke penyedia; situs ini tidak menerimanya.', 'คีย์เก็บในเบราว์เซอร์ของคุณเท่านั้นและส่งตรงถึงผู้ให้บริการ เว็บไซต์นี้ไม่ได้รับคีย์'],
+  'ask.key.label': ['デモ用APIキー（管理画面にログインした職員のみ）', 'Demo API key (para sa staff na naka-login sa back office)', 'Khóa API demo (chỉ nhân viên đã đăng nhập hậu trường)', 'Kunci API demo (hanya staf yang masuk ke back office)', 'API key สำหรับสาธิต (เฉพาะเจ้าหน้าที่ที่ล็อกอินหลังบ้าน)'],
+  'ask.key.note': ['職員向けのデモ機能です。キーはこのタブのセッション（sessionStorage）にのみ保存され、タブを閉じると消えます。提供元へ直接送信され、当サイトには届きません。', 'Demo para sa staff. Nasa session ng tab na ito lang ang key (sessionStorage) at nabubura kapag isinara; direktang ipinapadala sa provider.', 'Tính năng demo cho nhân viên. Khóa chỉ lưu trong phiên của thẻ này (sessionStorage), xóa khi đóng thẻ; gửi thẳng đến nhà cung cấp.', 'Demo untuk staf. Kunci hanya disimpan di sesi tab ini (sessionStorage), terhapus saat tab ditutup; dikirim langsung ke penyedia.', 'ฟีเจอร์สาธิตสำหรับเจ้าหน้าที่ คีย์เก็บเฉพาะในเซสชันของแท็บนี้ (sessionStorage) และถูกลบเมื่อปิดแท็บ ส่งตรงถึงผู้ให้บริการ'],
   'ask.mode': ['現在のモード', 'Kasalukuyang mode', 'Chế độ hiện tại', 'Mode saat ini', 'โหมดปัจจุบัน'],
   'ask.mode.extractive': ['抽出型（すべての文は当署の原文で出典番号付き）', 'Extractive (bawat pangungusap ay orihinal na teksto ng CDC na may numero ng pinagmulan)', 'Trích xuất (mỗi câu là nguyên văn của CDC, kèm số nguồn)', 'Ekstraktif (setiap kalimat adalah teks asli CDC dengan nomor sumber)', 'แบบสกัด (ทุกประโยคเป็นข้อความต้นฉบับของ CDC พร้อมหมายเลขแหล่งที่มา)'],
   'ask.provider': ['提供元とモデル', 'Provider at modelo', 'Nhà cung cấp và mô hình', 'Penyedia dan model', 'ผู้ให้บริการและโมเดล'],

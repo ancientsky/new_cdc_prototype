@@ -112,6 +112,19 @@
 
 > 限制：(1) 後台的「送出」是**展示**，原型不能代承辦人開 PR，交件仍是下載 ZIP；(2) GitHub 工作流程**無法在本機驗證**，是否如預期運作以開一個真實測試 PR 的結果為準（見 [docs/publishing-lanes.md](docs/publishing-lanes.md) 附錄 B）；(3) 排程發布受每 2 小時重建限制，延遲最多 2 小時；(4) 開發環境連不到舊站，結核病首批用的是**依既有內容反推的模擬匯出**，真實匯出的版型與品質可能不同，規則要用真實樣本校準。
 
+## 第二十三輪：資安優先——原型不給索引、安全標頭基準、快車道看「誰」送、BYOK 收斂、Actions 固定版本
+
+起因：Yulun 請 grokbot 檢視網站並開了 19 個 issues，要求標 `security` 的先處理。這輪處理 #24、#26、#35、#36、#41 五個資安項目；其餘分三個 PR（無障礙、內容與智慧查詢、效能與架構）。
+
+- **原型不給搜尋引擎與 AI 爬蟲索引（#24）**：新增站台模式 `SITE_MODE`（預設 `prototype`）。原型模式下每頁 `<meta name="robots" content="noindex, nofollow">`、`robots.txt` 全擋、每頁頂端一條不可關閉的「非官方原型」橫幅（七語）連到正式官網。AI 政策版 robots（附錄 H 的三類爬蟲）改輸出成 `robots.production.txt` 供對照；正式站以 `SITE_MODE=production` 建置就回到原設計。為什麼：原型用「衛生福利部疾病管制署」名義公開，又有示意的疫情數字，被搜尋或被 AI 引用都會造成誤導。
+- **HTTP 安全標頭基準（#35）**：建置多輸出 `dist/headers/`（`headers.json`、`nginx.conf`、`web.config.headers.xml`、`_headers`、`README.md`）。CSP 的 `script-src` 用**建置時掃描 dist 所有會執行的 inline script 算出的 sha256 雜湊**，不用 `'unsafe-inline'`；`frame-src` 只放疫苗地圖與 YouTube、`frame-ancestors 'self'`、`object-src 'none'`；另有 HSTS、`nosniff`、`Referrer-Policy`、`Permissions-Policy`。為什麼由建置產生：雜湊只有建置端知道，手抄一定會漏；資訊室部署時直接 include 即可（[docs/deploy.md](docs/deploy.md) §10）。
+- **快車道／緊急發布要看「誰」送的（#26）**：`lanes.json` 的自動合併車道新增 `allowedAuthors`（帳號或 `team:<org>/<slug>`），`urgent` 另受 `rules.urgentAllowedAuthors` 限制；CI 把 PR 作者傳給 `scripts/lane.mjs --author=`，不在名單 ⇒ 自動降為一般車道（要 1 位核准），PR 留言多一列「作者授權」說明理由。`validateLanes` 會擋掉沒有名單的自動合併車道。為什麼：原本只看型別，等於把發布權交給所有有寫入權限的人。
+- **BYOK 收斂（#36）**：金鑰從 `localStorage` 改到 **`sessionStorage`**（關閉分頁即清除；載入時順手清掉舊的 localStorage 金鑰），金鑰欄位**只在這台瀏覽器有未過期後台工作階段時出現**（一般讀者看不到），模型名稱改由頁面 data 屬性從 `site.config.mjs` 帶入，不再寫死在程式。為什麼：GitHub Pages 專案站同帳號下所有專案共用同一 origin 的 localStorage；政府網站要民眾貼第三方金鑰也容易被仿冒詐騙。正式站不提供民眾端 BYOK（決策紀錄 §15）。
+- **GitHub Actions 固定 commit SHA、權限下放到 job（#41）**：五個第三方 action 全部釘到 40 字元 SHA 並註解版本；工作流程層級只剩 `contents: read`，寫入權限搬到真正需要的 job；新增 `.github/dependabot.yml` 每週升版。為什麼：CI 有權合併並部署官網，是供應鏈攻擊的高價值目標；可移動 tag 被改就等於別人在你的 CI 跑程式。
+- 文件：[docs/deploy.md](docs/deploy.md) §10 安全標頭基準、[docs/guide-staff.md](docs/guide-staff.md) §24（快車道誰能用、原型橫幅、同事示範 LLM 怎麼開）、[docs/architecture-decisions.md](docs/architecture-decisions.md) §15、[docs/publishing-lanes.md](docs/publishing-lanes.md) §3／§8、ARCHITECTURE §26。測試 `tests/round23-security.test.mjs`。
+
+> 限制：(1) GitHub Pages 無法送自訂標頭，`dist/headers/` 要到正式環境才生效；(2) 名單目前只有 repo 擁有者一人（示範），正式環境改填值班帳號與 team；(3) 新聞稿、澄清稿仍是 0 核准自動合併——grokbot 建議至少 1 位公關室核准，這是流程決策，留給 Yulun 與公關室定（見 #26 回覆）。
+
 ## 第二十二輪：借 TinaCMS 的後台設計——邊打邊看、點預覽跳欄位
 
 起因：Yulun 問「TinaCMS 聽說後台管理介面不錯，研究看看有沒有可以參考設計的地方帶進來」。TinaCMS 跟本原型一樣是 **Git 當正本**的 CMS（內容是 repo 裡的 Markdown／JSON，存檔就是 commit），它最被稱讚的不是功能多，而是「編輯時看得到頁面」：表單在旁邊、頁面在中間、點頁面上的區塊就跳到對應欄位。這輪把這些**設計**搬進既有後台，**沒有**把 TinaCMS 裝進來（理由見 [docs/architecture-decisions.md](docs/architecture-decisions.md) 第 14 節）。

@@ -21,12 +21,14 @@ export function render(ctx) {
       <input type="hidden" name="disease" value="" data-fill-param="disease">
       <button type="submit" class="c-askbox__btn">${t('home.ask')}</button>
     </form>
-    <details id="ask-advanced" class="c-advanced" data-group="ondemand">
+    <details id="ask-advanced" class="c-advanced" data-group="ondemand" data-llm-model="${ai.llmModel}" data-llm-models="${(ai.llmModels ?? [ai.llmModel]).join(',')}">
       <summary>${t('ask.advanced')}</summary>
       <div class="c-advanced__body">
+        <div data-llm-staff hidden>
         <p><label for="llm-key"><b>${t('ask.key.label')}</b></label><br>
           <input id="llm-key" type="password" autocomplete="off" spellcheck="false" placeholder="sk-ant-…" class="c-input"></p>
         <p class="muted">${t('ask.key.note')}</p>
+        </div>
         <dl class="c-deflist c-deflist--sm" id="ask-disclosure">
           <div><dt>${t('ask.mode')}</dt><dd>${ai.defaultMode === 'extractive' ? t('ask.mode.extractive') : t('ask.mode.llm')}</dd></div>
           <div><dt>${t('ask.provider')}</dt><dd>${ai.llmProvider} · <code>${ai.llmModel}</code></dd></div>

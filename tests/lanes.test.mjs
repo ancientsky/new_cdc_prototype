@@ -104,7 +104,7 @@ test('laneOfItem：依型別；urgent:true（允許型別）⇒ 緊急發布；�
 
 test('laneForFiles：單檔快車道自動合併；多檔取最嚴格；一級內容加 OASIS；程式／文件變更一律一般車道', () => {
   const since = '2026-10-05T01:00:00Z';
-  const fast = laneForFiles(['content/news/2026-10-05-x.json'], { since });
+  const fast = laneForFiles(['content/news/2026-10-05-x.json'], { since, author: 'ancientsky' });
   assert.equal(fast.lane, 'fast'); assert.equal(fast.label, '快車道'); assert.equal(fast.ghLabel, 'lane:fast');
   assert.equal(fast.autoMerge, true); assert.equal(fast.requiredApprovals, 0); assert.deepEqual(fast.reviewers, []);
   assert.deepEqual(fast.postPublishReview, { owner: 'unit.pr', ownerName: '公關室', hours: 24 });
@@ -130,8 +130,8 @@ test('laneForFiles：單檔快車道自動合併；多檔取最嚴格；一級�
 
   const faq = laneForFiles(['content/faq/x.json'], { since });
   assert.equal(faq.lane, 'standard'); assert.equal(faq.tier1, false);
-  assert.equal(laneForFiles(['content/situation/current.json'], { since }).lane, 'emergency');
-  assert.equal(laneForFiles(['content/situation/current.json', 'content/jobs/x.json'], { since }).lane, 'fast');
+  assert.equal(laneForFiles(['content/situation/current.json'], { since, author: 'ancientsky' }).lane, 'emergency');
+  assert.equal(laneForFiles(['content/situation/current.json', 'content/jobs/x.json'], { since, author: 'ancientsky' }).lane, 'fast');
   assert.equal(laneForFiles(['content/master/diseases.json'], { since }).lane, 'standard');
   assert.equal(laneForFiles(['content/governance/lanes.json'], { since }).lane, 'standard');
   const none = laneForFiles([], { since });
@@ -146,12 +146,12 @@ test('laneForFiles：讀檔判斷 urgent 與型別；檔案資產隨所屬內容
     fs.mkdirSync(path.join(root, 'content/assets/faq.orphan-owner'), { recursive: true });
     fs.writeFileSync(path.join(root, 'content/news/2026-10-05-urgent.json'), JSON.stringify({ id: 'news.2026-10-05-urgent', type: 'news', urgent: true }));
     fs.writeFileSync(path.join(root, 'content/news/2026-10-05-letter.json'), JSON.stringify({ id: 'news.2026-10-05-letter', type: 'letter' }));
-    const urgent = laneForFiles(['content/news/2026-10-05-urgent.json'], { root });
+    const urgent = laneForFiles(['content/news/2026-10-05-urgent.json'], { root, author: 'ancientsky' });
     assert.equal(urgent.lane, 'emergency'); assert.equal(urgent.label, '緊急發布'); assert.equal(urgent.sla.minutes, 10);
-    assert.equal(laneForFiles(['content/news/2026-10-05-urgent.json', 'content/news/2026-10-05-letter.json'], { root }).lane, 'fast');
+    assert.equal(laneForFiles(['content/news/2026-10-05-urgent.json', 'content/news/2026-10-05-letter.json'], { root, author: 'ancientsky' }).lane, 'fast');
     const letter = classifyFile('content/news/2026-10-05-letter.json', { root });
     assert.equal(letter.type, 'letter'); assert.equal(letter.lane, 'fast');
-    const asset = laneForFiles(['content/assets/news.2026-10-05-urgent/a.pdf'], { root });
+    const asset = laneForFiles(['content/assets/news.2026-10-05-urgent/a.pdf'], { root, author: 'ancientsky' });
     assert.equal(asset.lane, 'emergency'); assert.equal(asset.files[0].type, 'news');
     assert.equal(laneForFiles(['content/assets/faq.orphan-owner/a.pdf'], { root }).lane, 'standard');
     assert.ok(classifyFile('content/news/gone.json', { root }).reason.includes('依目錄推定'));
@@ -175,7 +175,7 @@ test('scripts/lane.mjs CLI：參數或 stdin，輸出 JSON', () => {
   assert.equal(a.status, 0, a.stderr);
   const ja = JSON.parse(a.stdout);
   assert.equal(ja.lane, 'standard'); assert.equal(ja.files.length, 2); assert.equal(ja.requiredApprovals, 1);
-  const b = spawnSync(process.execPath, [cli, '--since=2026-10-05T01:00:00Z'], { encoding: 'utf8', cwd: ROOT, input: 'content/news/x.json\ncontent/jobs/y.json\n' });
+  const b = spawnSync(process.execPath, [cli, '--since=2026-10-05T01:00:00Z', '--author=ancientsky'], { encoding: 'utf8', cwd: ROOT, input: 'content/news/x.json\ncontent/jobs/y.json\n' });
   assert.equal(b.status, 0, b.stderr);
   const jb = JSON.parse(b.stdout);
   assert.equal(jb.lane, 'fast'); assert.equal(jb.autoMerge, true); assert.equal(jb.files.length, 2);
@@ -357,9 +357,9 @@ test('content-pr.yml：觸發、權限、併發、檢查、車道、預覽、留
   assert.deepEqual(problems, []);
   has(text, [
     'pull_request:', 'types: [opened, synchronize, reopened]',
-    'contents: write', 'pull-requests: write', 'actions: write',
+    'permissions:\n  contents: read', 'contents: write', 'pull-requests: write', 'actions: write', '--author="$PR_AUTHOR"',
     'concurrency:', 'content-pr-${{ github.event.pull_request.number }}',
-    'actions/checkout@v4', 'fetch-depth: 0', 'actions/setup-node@v4', 'node-version: 22', 'npm ci', 'npm test',
+    'actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0', 'fetch-depth: 0', 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0', 'node-version: 22', 'npm ci', 'npm test',
     'BUILD_TODAY=2026-10-01 node scripts/build.mjs --check',
     'node scripts/lane.mjs', 'git diff --name-only origin/main...HEAD',
     'preview/pr-${{ github.event.pull_request.number }}', 'BUILD_TODAY: 2026-10-01', 'SITE_URL: https://', 'LINK_CHECK: warn', 'npm run build',
@@ -393,7 +393,7 @@ test('pages.yml：每 2 小時建置；fetch 只在手動或 02 UTC；previews �
     "cron: '0 */2 * * *'", 'workflow_dispatch:', 'refresh:', 'date -u +%H', '"02"',
     "steps.refresh.outputs.refresh == 'true'", 'npm run fetch', 'git push origin HEAD:main',
     'git fetch --depth 1 origin', 'origin/previews', 'PREVIEWS_DIR', 'previews 分支不存在', 'dist/preview',
-    'path: dist', 'actions/deploy-pages@v4', 'npm test', 'npm run build',
+    'path: dist', 'actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5', 'permissions:\n  contents: read', 'pages: write', 'id-token: write', 'npm test', 'npm run build',
   ], rel);
   assert.ok(!text.includes("cron: '0 3 * * *'"));
   assert.ok(!/if: github.event_name != 'push'/.test(text), '快照回寫不再以 push 與否判斷');
