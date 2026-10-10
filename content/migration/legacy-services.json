@@ -36,7 +36,7 @@
   },
   "legacyRoot": "https://www.cdc.gov.tw/Category/MPage/{id}",
   "showLegacyUntil": "2027-12-31",
-  "sourceNote": "開發環境連不到 www.cdc.gov.tw。只有抗蛇毒血清的網址取自外部審查意見；電子報、核心教材、進階搜尋的舊網址以 {id} 佔位，待承辦補。標【必移轉】者新站一定要有；標【待決策】者需權責單位先拍板。全部 verified:false。",
+  "sourceNote": "開發環境連不到 www.cdc.gov.tw。只有抗蛇毒血清的網址取自外部審查意見；電子報、核心教材、進階搜尋的舊網址以 {id} 佔位，待承辦補。標【必移轉】者新站一定要有；標【待決策】者需權責單位先拍板。全部 verified:false。電子報項（第二十八輪）：LINE 官方帳號「疾管家」ID @taiwancdc 與連結 page.line.me/taiwancdc 取自公開報導（2018–2020 年媒體與衛福部說明），無法連到 cdc.gov.tw 核對，標【待確認】，頁面上同步顯示「待確認」標記。",
   "items": [
     {
       "key": "newsletter",
@@ -46,8 +46,9 @@
       "oldType": "page",
       "verified": false,
       "status": "pending",
+      "newPath": "/subscribe/",
       "owner": "unit.pr",
-      "note": "【待決策】Email 訂閱需要後端或第三方寄信服務，原型是靜態網站做不到。建議：先以 RSS（新聞稿、致醫界通函）加 LINE 官方帳號取代，並在頁尾說明訂閱方式；若仍要 Email 電子報，需資訊室評估寄信服務、退訂機制與個資保存（見隱私權政策）。",
+      "note": "【已決策（Issue #38，Yulun）：先 RSS＋LINE 官方帳號並在頁尾說明，也實做 Email 訂閱】第二十八輪原型已做：/subscribe/（七語）列出全部 7 個 RSS 頻道（由 emit-seo 的 feeds 自動產生）、LINE 官方帳號「疾管家」（@taiwancdc，【待確認】：取自公開報導，尚未與公關室核對）、Email 訂閱（雙重確認、一鍵退訂、管理訂閱；瀏覽器模擬與本機 HTTP 模擬後端，信件寫成 .eml，沒有真的寄出）、週摘要產生器 scripts/newsletter-digest.mjs、頁尾連結。仍待資訊室／公關室：(1) 選定真的寄信服務（自建 SMTP 或政府雲／商用寄信 API），並依 docs/deploy.md〈電子報寄信服務〉實作三個端點；(2) 寄件網域的 SPF、DKIM、DMARC 與 List-Unsubscribe（RFC 8058 一鍵退訂）、退信（bounce）與申訴處理；(3) 訂閱資料的保存期限、委外個資保護約定與隱私權政策（content/pages/privacy.json）正式版文字；(4) 核對 LINE 官方帳號 ID 與加入連結後，把 src/templates/public/subscribe.mjs 的 LINE_ACCOUNT.verified 改 true；(5) 決定週摘要的寄送日與負責人（公關室）。",
       "newRequirements": [
         "owner",
         "reviewedAt",

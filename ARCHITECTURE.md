@@ -1129,3 +1129,84 @@ manualStatus?: enum[cancelled, failed（流標）], award?: { date, winner, amou
 ### 29.6 CMS 路線決策紀錄（#28）
 
 見 [docs/architecture-decisions.md](docs/architecture-decisions.md) 第 18 節：自建後台、Keystatic、TinaCMS 三案比較、Keystatic（faq 型別）兩週試點計畫與成功標準、內容格式建議（結構化 JSON，長文維持 JSON 內的 Markdown 欄位）。**建議為試點 Keystatic，最後選擇待長官決定**；issue #28 保持 OPEN。
+
+## 30. 第二十八輪（2026-10-10）：電子報訂閱（RSS、LINE、Email 模擬後端）
+
+Issue #38 的決議（Yulun）：**先 RSS＋LINE 官方帳號並在頁尾說明；也實做 Email 訂閱，需與模擬後端或寄信服務。** 為什麼這樣排：RSS 不需要任何個人資料也不需要伺服器，LINE 是民眾本來就在用的管道，兩者今天就能上線；Email 要有寄信服務、退訂機制與個資保存，是正式站才能落地的東西，所以原型把它做成「介面與契約都是真的、後面接模擬後端」，讓資訊室選定寄信服務時只換最底層、前端與規則不重寫。決策理由見 [docs/architecture-decisions.md](docs/architecture-decisions.md) 第 19 節。
+
+### 30.1 檔案與分層
+
+| 檔案 | 角色 | 為什麼這樣分 |
+| --- | --- | --- |
+| `src/templates/public/subscribe.mjs` | `/subscribe/`（七語，`lang:'*'`，同詞彙頁做法）：RSS、LINE、Email 三區 | 頻道清單從 `feedCatalog()` 讀，不手抄；`checkTopics()` 在建置時比對主題與頻道，不一致就失敗 |
+| `scripts/lib/feed-catalog.mjs` | 把 `emit-seo.mjs` 的 `buildFeeds()` 輸出讀回成目錄（id、絕對網址、標題、說明、項目） | 訂閱頁、Email 主題、週摘要三處共用同一份事實；新增 `feeds/xxx.xml` 就自動出現在頁面，不會忘記 |
+| `src/client/subscribe-rules.js` | 純函式：信箱／主題／頻率／語言／同意驗證、token 形狀、**信件內容（確認信、歡迎信、退訂信、週摘要，中英）** | 瀏覽器即時檢核、伺服器再驗一次、摘要產生器三處共用；正式寄信服務上線後，這份就是「前後端要對齊的契約」 |
+| `src/client/subscribe-service.js` | **狀態機**：`subscribe`／`confirm`／`status`／`update`／`unsubscribe`／`manageLink`，只認 `load`／`save`／`mail` 三個注入函式 | 兩種模擬後端共用同一份邏輯，行為不會分岔（例如一邊洩漏信箱是否已訂閱、另一邊不會）；正式版換掉三個函式即可 |
+| `src/client/subscribe.js` | 瀏覽器端：`backend` 介面、`createBrowserBackend`、`createHttpBackend`、`detectBackend`、畫面 | 畫面只認介面，不知道後面是誰 |
+| `scripts/lib/subscribe-mock.mjs` | HTTP 模擬後端（`createSubscriptionApi`），由 `scripts/serve.mjs` 掛載 | 只負責 HTTP、JSON 檔儲存、寫 `.eml`；規則在 service |
+| `scripts/lib/mail-outbox.mjs` | 組 `.eml`（RFC 5322／MIME／RFC 2047）、寫入 outbox、解析回來（測試與開發列表用） | 資訊室看到的是「收件人實際會收到的那封信」 |
+| `scripts/newsletter-digest.mjs` | 週摘要產生器（範本版與逐位訂閱者版） | 正式寄信服務只負責「寄」，不必也不該自己去撈內容與排版 |
+| `.local/`（git 忽略） | `subscriptions.json`、`outbox/*.eml` | 含信箱，絕不進版控；`.gitignore` 與測試都檢查 |
+
+### 30.2 `backend` 介面（前端與後端的縫）
+
+```
+backend.kind                         'mock-browser' | 'mock-http'
+backend.subscribe({email, topics, frequency, lang, consent, website})  → Result   // 第一步：寄確認信
+backend.confirm(token)               → Result {status:'confirmed', manageToken, …}  // 第二步：點信裡連結（雙重確認）
+backend.status(manageToken)          → Result {status, email(遮罩), topics, frequency, lang}
+backend.update(manageToken, prefs)   → Result
+backend.unsubscribe(manageToken)     → Result {status:'unsubscribed'}
+backend.manageLink(email)            → Result   // 忘了管理連結
+Result = {ok:true, …body} | {ok:false, error:'invalid'|'rate'|'expired'|'notfound'|'unsubscribed'|'full'|'network'|'server', fields?, retryAfter?}
+```
+
+兩種實作：
+
+- **`createBrowserBackend`（GitHub Pages 與沒有後端時）**：資料與「模擬收件匣」只存 `localStorage`（鍵 `cdc.subscribe.mock.v1`；讀寫失敗退回記憶體，私密視窗也能示範一整輪）。確認信不會寄出，而是出現在頁面上的「模擬收件匣」，點信裡的連結走完整流程。橫幅固定顯示「原型示範：資料只存在你的瀏覽器，不會寄出」（沿用 `/careers/{slug}/apply/` 的 `.c-demo-banner` 樣式與「資料只存本機」做法）。
+- **`createHttpBackend`（跑 `node scripts/serve.mjs` 時）**：呼叫下節的 `/api/subscriptions*`，信件寫成 `.local/outbox/*.eml`。正式寄信服務也走同一組端點，前端不用改。
+- **偵測 `detectBackend`**：先 `GET /api/health`（1.5 秒逾時，回應必須是 `{service:'cdc-prototype-subscriptions'}`），符合才用 HTTP；404（GitHub Pages）、格式不符、連線失敗、逾時、或網址帶 `?backend=browser` 一律退回瀏覽器模擬。為什麼要驗 `service` 名稱：避免某個主機剛好對所有 `/api/*` 回 200 HTML 就被誤判成有後端。已知的小代價：靜態主機上瀏覽器 Console 會多一行 `/api/health` 404。
+
+### 30.3 HTTP 模擬後端的契約（正式版照這份實作，見 deploy.md §11）
+
+| 端點 | 請求 | 成功回應 | 要點 |
+| --- | --- | --- | --- |
+| `GET /api/health` | — | `200 {ok:true, service:'cdc-prototype-subscriptions', mode:'mock-http'}` | 前端偵測用 |
+| `POST /api/subscriptions` | JSON `{email, topics[], frequency:'instant'\|'weekly', lang:'zh-TW'\|'en', consent:true, website?}` | `202 {status:'pending'}` | 不論信箱是否已存在，回應完全相同（不洩漏誰訂閱了）；已確認者不會被改設定，只收到「管理／退訂」信；蜜罐 `website` 有值就假裝成功；驗證失敗 `400 {error:'invalid', fields}`（不回顯輸入）；節流 `429` ＋ `Retry-After` |
+| `GET /api/subscriptions/confirm?token=` | 確認 token（UUID） | `200 {status:'confirmed', manageToken, …}` | **冪等**（郵件安全掃描器會預先打開連結）；逾 48 小時 `410 expired`；寄歡迎信（含管理與退訂連結） |
+| `GET /api/subscriptions/status?token=` | manageToken | `200 {status, email(遮罩), topics, frequency, lang}` | 管理頁用 |
+| `POST /api/subscriptions/update` | `{token, topics[], frequency, lang}` | `200` | 不能改信箱：換信箱＝退訂後重新訂閱，才會再做一次雙重確認 |
+| `POST /api/subscriptions/unsubscribe` | token 放 JSON、form 或 `?token=` | `200 {status:'unsubscribed'}` | 支援 RFC 8058 一鍵退訂（本體 `List-Unsubscribe=One-Click`，token 在網址）；冪等；只留「信箱＋已退訂」抑制紀錄 |
+| `POST /api/subscriptions/manage-link` | `{email}` | `202` | 已訂閱者收到 manage 信；其餘同樣 202 不寄信 |
+| `GET /api/dev/outbox[/檔名]` | — | 列出／讀取 `.eml` | 只給 loopback；開發輔助，正式版沒有 |
+
+防護：同源檢查（POST 帶 `Origin` 必須等於 `Host`）、本體 ≤ 8 KB、`Content-Type` 只收 JSON／form、儲存筆數（2000）與 outbox 檔數（5000）上限、節流（每信箱 10 分鐘 3 次、每來源 10 次）、未確認超過 7 天自動清除、token 一律 `crypto.randomUUID()` 且只接受 UUID 形狀才查表、連結的主機名稱只取通過字元檢查的 `Host`（可用 `PUBLIC_ORIGIN` 固定）。注意這是模擬：token 以明碼存檔方便檢視，**正式版只存雜湊**。
+
+### 30.4 `.eml` 長什麼樣子
+
+`From`（RFC 2047 編碼的中文顯示名，位址 `no-reply@cdc-prototype.invalid`——`.invalid` 是 RFC 6761 保留網域，永遠不會被解析，誤餵給 SMTP 也寄不出去）、`To`、`Subject`、`Date`、`Message-ID`、`MIME-Version`、`List-Unsubscribe: <https://…/api/subscriptions/unsubscribe?token=…>, <mailto:unsubscribe@…>`、`List-Unsubscribe-Post: List-Unsubscribe=One-Click`、`List-Id`、`Auto-Submitted`、`X-CDC-Prototype`，本體 `multipart/alternative`（`text/plain` 在前、`text/html` 在後，皆 base64 UTF-8）。信的頂端有「原型示範」提示。任何郵件程式雙擊即可打開；`GET /api/dev/outbox` 可列出所有信的解碼內容。
+
+### 30.5 週摘要
+
+`node scripts/newsletter-digest.mjs [--today=YYYY-MM-DD] [--days=7] [--lang=zh-TW|en] [--topics=news,situation] [--out=資料夾]`：讀 `feedCatalog()`（與網站 RSS 同一份），取期間內項目、依主題分組、每主題最多 8 則，輸出主旨與純文字／HTML 範本（含 `{{manage_url}}`、`{{unsubscribe_url}}` 合併欄位，交給寄信服務逐人替換）。加 `--subscribers` 則讀 `.local/subscriptions.json`，對每位「已確認＋每週摘要」者依其主題與語言各寫一封 `.eml`（含各自的退訂 token 與標頭）；沒有新內容就不寄空信。日期以台灣日期計（RSS 的 `pubDate` 是 UTC，日期型內容是台灣當日 00:00＝UTC 前一日 16:00，讀回時加 8 小時）。
+
+### 30.6 其他連動
+
+- **頁尾**：`layout.mjs` 的「服務」欄最後加「訂閱與通知」連結與一行說明（`footer.subscribe`、`footer.subscribe.note`，七語）。
+- **sitemap**：`STATIC_PATHS` 加 `/subscribe/`；網站導覽頁加連結；`scripts/a11y.mjs` 的頁面清單加 `/subscribe/`、`/en/subscribe/`。
+- **字串**：`i18n.js` 新增 `ROWS_R28`（118 個 key，七語；非中文為機器翻譯，與全站其他介面字相同待審核）。**信件內文不放 i18n.js**：信件語言是訂閱者選的（zh-TW／en），不是網頁語言，而 i18n 的瀏覽器版每頁只載入一種語言，放在 `subscribe-rules.js` 才能在任何頁面語言下顯示正確語言的信。
+- **LINE「疾管家」`@taiwancdc`**：開發環境連不到 cdc.gov.tw，帳號 ID 與 `https://page.line.me/taiwancdc` 取自 2018–2020 年的媒體與衛福部說明，**未核對**，頁面顯示「待確認」標記，`legacy-services.json` 的 `sourceNote` 同步註記。公關室核對官網首頁後把 `LINE_ACCOUNT.verified` 改 `true`（標記與提示自動消失）。
+- **隱私權政策**：`content/pages/privacy.json` §二新增第 6 項，分開寫「正式站規劃」與「原型現況」。
+- **移轉清單**：`legacy-services.json` 的 `newsletter` 加 `newPath:'/subscribe/'`，`note` 改寫成已做／待辦，狀態仍是 `pending`（因為真的寄信服務還沒選）。
+- **CSP**：沒有新增 inline script、第三方腳本或來源；HTTP 後端與頁面同源，`connect-src 'self'` 已涵蓋。**正式寄信服務若在別的網域，要在 `securityHeaders()` 的 `connect-src` 加該來源**並在 deploy.md §10 說明。
+
+### 30.7 踩到的坑
+
+- 頁面第一版用 `data-subscribe` 當根節點屬性，與 `ui.js` 既有的「專業人員訂閱」`[data-subscribe]` 撞名，`document.querySelector` 先找到別的元素，整個 Email 區塊靜默失效。改名 `data-sub-app`。教訓：新增 `data-*` 掛載點前先 `grep` 全站，頁面模組的根屬性用有前綴的專屬名稱。
+- 可捲動表格 `.c-tablewrap` 要有 `role="region" tabindex="0" aria-label`（`tests/round24-a11y.test.mjs` 會掃全站擋下）。
+- 驗證錯誤後 `focus()` 錯誤摘要會觸發捲動，自動化測試要等一下再點下一個控制項，否則點擊落在捲動中的位置。
+- `Origin` 檢查：沒有 `Origin` 標頭的 POST（curl、郵件程式的一鍵退訂）要放行，否則 RFC 8058 一鍵退訂會失敗；有 `Origin` 且不同源才拒絕。
+
+### 30.8 測試
+
+`tests/round28-newsletter.test.mjs`（21 項）：頻道目錄＝`buildFeeds`、頁面列出全部頻道與網址、LINE 待確認標記、無第三方腳本／`innerHTML`、頁尾連結與七語字串、驗證規則（含標頭注入）、信件轉義與 `.eml` 往返、狀態機（雙重確認、冪等、逾期、不洩漏、節流、蜜罐、7 天清除）、HTTP 後端（真的起 server：`.eml` 標頭、RFC 8058 form POST、Origin／大小／型別、本機限定的 dev outbox）、`serve.mjs` 掛載、瀏覽器後端與偵測（含逾時）、週摘要與 CLI。a11y：`/subscribe/`、`/en/subscribe/` 加入 `npm run a11y`；另以 axe 掃過錯誤、已寄出（含模擬收件匣）、確認結果、管理四個畫面（桌機 1280／手機 320）皆 0 違規、無橫向捲動。

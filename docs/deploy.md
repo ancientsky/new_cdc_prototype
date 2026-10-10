@@ -235,3 +235,54 @@ CI 任一項失敗即不部署：JSON Schema 與跨檔參照（`owner`、`basedO
 
 GitHub Pages 不能自訂回應標頭，所以原型站只有 `<meta name="robots">` 與 `robots.txt`，沒有 CSP／HSTS；這也是原型模式用 meta 擋索引、不用 `X-Robots-Tag` 的原因。`dist/headers/` 要到機關自己的主機或 CDN 才生效。
 
+
+## 11. 電子報寄信服務（第二十八輪）
+
+原型的 Email 訂閱（`/subscribe/`）後面是模擬；正式站要換成真的寄信服務。**前端、驗證規則、信件內容與狀態機都不必改**，只實作下面的端點契約並接上寄信。背景與理由見 [architecture-decisions.md 第 19 節](architecture-decisions.md)、[ARCHITECTURE 第 30 章](../ARCHITECTURE.md)。
+
+### 11.1 端點契約（與 `scripts/lib/subscribe-mock.mjs` 一致，測試 `tests/round28-newsletter.test.mjs` 可當驗收清單）
+
+| 端點 | 說明 |
+| --- | --- |
+| `GET /api/health` → `{ok:true, service:'cdc-prototype-subscriptions'}` | 前端偵測用。正式版可保留同樣的 `service` 值，或在 `src/client/subscribe.js` 的 `HEALTH_SERVICE` 改成新值並同步後端 |
+| `POST /api/subscriptions` | `{email, topics[], frequency, lang, consent:true}` → `202 {status:'pending'}`。**一律回 202**（含已訂閱者），驗證失敗 `400 {error:'invalid', fields}`，過頻 `429`＋`Retry-After`。寄確認信（48 小時有效）；已確認者只寄「管理／退訂」信、不改設定 |
+| `GET /api/subscriptions/confirm?token=` | 冪等；成功 `200 {status:'confirmed', manageToken}` 並寄歡迎信；逾期 `410 {error:'expired'}`；未知 `404` |
+| `GET /api/subscriptions/status?token=` | token＝manageToken，回遮罩信箱與偏好 |
+| `POST /api/subscriptions/update` | `{token, topics[], frequency, lang}`；不可改信箱 |
+| `POST /api/subscriptions/unsubscribe` | token 可在 JSON、form 或網址 `?token=`；**必須接受 RFC 8058 一鍵退訂**（`Content-Type: application/x-www-form-urlencoded`、本體 `List-Unsubscribe=One-Click`、不需 Cookie／登入、不需同源 `Origin`）；冪等；只保留「信箱＋已退訂」 |
+| `POST /api/subscriptions/manage-link` | `{email}`；一律 `202` |
+
+主題 id 只有 `news`、`documents`、`situation`、`publications`、`notices`、`careers`、`procurement`（＝RSS 頻道，見 `src/client/subscribe-rules.js` 的 `TOPIC_IDS`，測試保證與 `feeds/*.xml` 一致）。
+
+**正式版與模擬版的差異，必須處理：** token 只存雜湊（模擬為了好看明碼存檔）、token 有過期與輪替（`manageToken` 可考慮定期換新並在信中帶新連結）、資料庫與備份、節流改在 WAF／閘道也做一層（模擬的是單機記憶體）、`Origin` 檢查以正式網域為準、`PUBLIC_ORIGIN` 固定（不要信任 `Host`）、每封寄出的信留紀錄（誰、何時、哪種信）供客服追查「我沒收到」。
+
+### 11.2 寄件網域與郵件規範（資訊室）
+
+| 項目 | 要求 | 為什麼 |
+| --- | --- | --- |
+| SPF | 寄件網域的 SPF 授權寄信服務的出口 IP／include | 不通過容易被收件方當成偽造 |
+| DKIM | 寄信服務以網域金鑰簽章（2048 bit），並定期換金鑰 | 證明信件沒被改、來自授權寄信者 |
+| DMARC | 先 `p=none` 觀察報告一到兩個月，再 `quarantine`／`reject`；寄報告到機關信箱 | 防止他人冒用 `@gov.tw` 類網域寄釣魚信；Gmail／Yahoo 對大量寄件者已要求 |
+| 寄件地址 | 專用子網域（如 `mail.` 開頭）、獨立於一般公務信箱 | 電子報若被檢舉，不會連累一般公文往來的信譽 |
+| `List-Unsubscribe` ＋ `List-Unsubscribe-Post: List-Unsubscribe=One-Click` | **每一封**寄給訂閱者的信都要有（模擬版連確認信也有），網址為 HTTPS | RFC 2369／8058；Gmail、Yahoo 對每日大量寄件者的要求；信件頂部「退訂」按鈕就是它 |
+| 信件本體退訂連結 | 同樣每封都有，且不需登入 | 法律與使用者預期；與標頭互為備援 |
+| 多部份內容 | `text/plain`＋`text/html` | 純文字閱讀器、無障礙工具與部分收件方的垃圾信評分 |
+| 退信（bounce）與投訴（complaint） | 寄信服務回報 webhook／報表 → 硬退信（信箱不存在）立即停寄並標記；投訴（按「檢舉垃圾信」）視同退訂；軟退信連續多次後停寄 | 持續寄給不存在的信箱會傷害網域信譽 |
+| 退訂與抑制清單 | 退訂與硬退信者進抑制清單，**不論之後何人再用該信箱申請，都要再走一次雙重確認** | 防止被濫用於騷擾 |
+| 寄送速率 | 暖機（新網域逐步提高量）；即時通知與週摘要錯開 | 新網域一次大量寄信容易被限流 |
+| 測試 | 用 `.local/outbox/` 產生的 `.eml` 當樣本，丟進寄信服務的測試工具或 mail-tester 類工具檢查標頭與評分 | 原型的 `.eml` 就是依上表組出來的 |
+
+### 11.3 個資與隱私
+
+蒐集的欄位只有信箱、主題、頻率、語言、同意時間（見 `content/pages/privacy.json`）。正式上線前要定：保存期限（建議：已確認者在退訂後只留抑制紀錄；未確認者 7 天內刪除，與原型一致）、寄信服務商是否境內、委外個資保護約定與稽核方式、資料外洩通報流程。這些寫進隱私權政策的正式版文字，原型版已區分「正式站規劃」與「原型現況」。
+
+### 11.4 CSP 與前端設定
+
+寄信服務若與網站同源（反向代理 `/api/*`）則 CSP 不用改；若另一個網域，要在 `scripts/lib/emit-headers.mjs` 的 `securityHeaders()` 的 `connect-src` 加該來源，並在 §10.1 說明；`src/client/subscribe.js` 的 `createHttpBackend({ base })` 帶 API 根網址。`/api/dev/outbox` 與 `.local/` 是開發輔助，**正式環境不得啟用**（`createSubscriptionApi({ devOutbox:false })` 或根本不掛載 `subscribe-mock.mjs`）。
+
+### 11.5 驗收
+
+1. 依 §11.1 逐一以 `curl` 驗證狀態碼與「回應不洩漏」（已訂閱與未訂閱信箱的 `POST /api/subscriptions` 回應位元組相同）。
+2. 寄一封確認信到 Gmail、Outlook、Yahoo 與一個機關信箱：看「顯示原始郵件」中 SPF／DKIM／DMARC 皆 pass，並在 Gmail 出現「退訂」按鈕、按下後 `POST /api/subscriptions/unsubscribe` 收到 `List-Unsubscribe=One-Click`。
+3. 跑 `node scripts/newsletter-digest.mjs --today=<日期>`，把範本交給寄信服務，確認 `{{manage_url}}`、`{{unsubscribe_url}}` 被替換、沒有殘留的雙大括號。
+4. 在 `/subscribe/` 走完：訂閱 → 收信 → 確認 → 管理 → 退訂 → 再訂閱，且 `npm run a11y` 對 `/subscribe/` 0 違規。

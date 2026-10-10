@@ -1,0 +1,31 @@
+/* /subscribe/（第二十八輪）：訂閱與通知。橫幅、錯誤摘要與必填記號沿用 careers.css 的 .c-demo-banner、.c-field__err、.c-req，這裡只補本頁專屬的部分。 */
+.c-subscribe nav ul{margin-bottom:var(--sp-4)}
+.c-sub__sec{margin:0 0 var(--sp-6)}
+.c-sub__steps{margin:0 0 var(--sp-4);padding-left:1.4em;display:grid;gap:6px}
+.c-sub__feeds code{font-size:var(--fs-xs);overflow-wrap:anywhere;word-break:break-all}
+.c-sub__feeds td:last-child{min-width:14em}
+/* 複製鈕需要 JS 才有作用：沒有 JS 時不顯示（網址本身仍是可點的連結） */
+.c-sub__copy{display:none;margin-top:4px}
+.js .c-sub__copy{display:inline-flex}
+.c-sub__line{margin:0 0 var(--sp-3);max-width:32em}
+.c-sub__form{max-width:720px}
+.c-sub__set{border:1px solid var(--line);border-radius:var(--radius);padding:var(--sp-3) var(--sp-4);margin:0 0 var(--sp-4);background:#fff;min-width:0}
+.c-sub__set legend{font-weight:700;padding:0 var(--sp-2);color:var(--green-900)}
+.c-sub__set .c-checkrow{margin:6px 0}
+.c-sub__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(14em,1fr));gap:0 var(--sp-4)}
+.c-sub__errors{margin:0 0 var(--sp-4)}
+.c-sub__errors ul{margin:var(--sp-2) 0 0;padding-left:1.3em}
+.c-sub__errors a{color:inherit;font-weight:700}
+.c-sub__errors:focus{outline:var(--focus);outline-offset:2px}
+.c-sub .c-input[aria-invalid="true"]{border:2px solid var(--status-peak);background:#fff8f8}
+/* 蜜罐：人看不到也跳不到，機器人會填 */
+.c-sub__hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.c-sub [data-sub-view]:focus,.c-sub [data-sub-focus]:focus{outline:var(--focus);outline-offset:3px}
+.c-sub__inbox{margin:0 0 var(--sp-4);padding:var(--sp-3) var(--sp-4);border:2px dashed #d9a400;border-radius:var(--radius);background:#fffdf5}
+.c-sub__mail{margin:0 0 var(--sp-3);border:1px solid var(--line);border-radius:var(--radius-sm);background:#fff}
+.c-sub__mail>summary{cursor:pointer;padding:var(--sp-2) var(--sp-3);font-weight:700}
+.c-sub__mail>*:not(summary){margin-left:var(--sp-3);margin-right:var(--sp-3)}
+.c-sub__mailtext{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;font-size:var(--fs-sm);background:var(--paper);padding:var(--sp-2) var(--sp-3);border-radius:var(--radius-sm)}
+.c-sub__mailacts{margin-bottom:var(--sp-3)}
+.c-sub__acts{display:flex;flex-wrap:wrap;gap:var(--sp-2)}
+@media print{.c-sub,[data-sub-app]{display:none!important}}
