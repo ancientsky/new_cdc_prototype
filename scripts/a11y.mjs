@@ -20,6 +20,7 @@ const BASE = (process.env.BASE_PATH ?? process.env.A11Y_BASE_PATH ?? '').replace
 export const PAGES = [
   '/', '/diseases/dengue/', '/diseases/', '/vaccines/', '/travel/', '/news/', '/faq/', '/ask/', '/situation/', '/data/', '/pro/',
   '/admin/', '/admin/publish/', '/en/', '/vi/',
+  '/documents/curriculum-dengue.2026-10-10/', // 第二十八輪：核心教材（長文件版面＋學習目標＋示範匯入警示）
 ];
 export const VIEWPORTS = [{ name: '桌機 1280', width: 1280, height: 900 }, { name: '手機 320', width: 320, height: 700 }];
 const TAGS = ['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa', 'best-practice'];
