@@ -136,30 +136,6 @@
 
 **什麼時候重新考慮：** 掃描時間過長（可改只掃有改動的樣板）；axe 誤報造成同事困擾（針對單一規則加例外並寫下原因，不整體關閉）；取得人工稽核或第三方檢測報告後，用報告取代「待人工稽核」欄位。
 
-## 與規劃文件的對照
-
-| 規劃文件主題 | 原型位置 |
-| --- | --- |
-| 11 頁 wireframe：首頁、答案頁、專業專區、上架表單、疾病頁等 | `src/templates/public/*`、`src/templates/pro/home.mjs`、`/admin/publish/` |
-| 第 7.5 節 KPI | `site.gov.kpi`、`/v1/governance/kpi.json`、`/admin/` |
-| 6.1 第 6 點／元件 12／GOV.UK 六指標 | `/transparency/`、`eval/run-eval.mjs` |
-| 三層露出（預設層、狀況層、按需層、專業層） | ARCHITECTURE.md 第 8 節、`layout.mjs`、`pro.js` |
-| 治理欄位與規則 | `schemas/_common.json`、`scripts/lib/governance.mjs` |
-| 附錄 H：llms.txt／robots 政策 | `scripts/lib/emit-seo.mjs`、`/developers/#machine` |
-| 影音、專區、申請、出版品、檢驗、研究、公告（第二輪） | `schemas/{media,topic,service,publication,labtest,research}.json`、ARCHITECTURE.md 第 11 節、`/admin/{media,notices,links}/` |
-| 版本鏈、正本修訂連動（MMR 案例） | `content/documents/`、[guide-staff.md](guide-staff.md) 第 3 節 |
-| 第一／二／三階段路線圖 | [roadmap-mapping.md](roadmap-mapping.md) |
-
-## 哪些是示意資料、哪些是真實結構
-
-**真實結構（可直接沿用到正式環境）：** 內容模型與 JSON Schema、治理規則與測試、API 外殼與路徑、URL 結構、三層露出元件、答案引擎流程、評估集格式、GitHub Actions 流程、`cdc:` 詞彙。
-
-**來自官方來源的資料：** `data/snapshots/` 內的旅遊疫情、國家等級與 CKAN 資料目錄（每檔有 provenance 標示是即時抓取或快照）。
-
-**示意資料（不可當真）：** 疫情態勢的狀態與數字（標「示意」）、致醫界通函第 616 號卡片（語料庫無通函時的版面示範）、「○○醫院 感染管制室」登入畫面、白名單核准日期與核准人、評估集題目與通過率、審閱日與承辦職稱、`pdfUrl` 中的占位網址。部分文字內容（如 MMR 建議、登革熱頁）依公開資訊撰寫，用來示範版本與連動，**正式上線前須由權責單位逐字審閱**。
-
-**尚未實作：** 登入與真實的電子郵件通知、Webhook、伺服器端對話紀錄、API 金鑰與限流、LLM-as-judge 評估與人工抽樣工具。
-
 ## 18. 編輯介面路線：自建後台、Keystatic、TinaCMS 三案比較與試點計畫
 
 > 狀態：**待長官決定**（第二十六輪，對應 issue #28）。本節是決策紀錄與試點計畫，不改任何程式；結論欄寫的是「建議」，不是已決定。
@@ -250,3 +226,27 @@
 - 維持自建的代價：編輯器、預覽、無障礙與權限都要自己維護；人力集中在一兩個人身上。
 - 採 Keystatic 的代價：schema 要維護兩份（或寫轉換）；0.x 版本需鎖版本並追蹤變更；SSO 與 GitHub 依賴需機關另行核定。
 - 重新考慮的時機：Keystatic 發布 1.0 或停止更新；機關決定採用 GitHub Enterprise／機關內 Git；非技術編輯者超過約 10 位；或試點結果推翻上述判斷。
+
+## 與規劃文件的對照
+
+| 規劃文件主題 | 原型位置 |
+| --- | --- |
+| 11 頁 wireframe：首頁、答案頁、專業專區、上架表單、疾病頁等 | `src/templates/public/*`、`src/templates/pro/home.mjs`、`/admin/publish/` |
+| 第 7.5 節 KPI | `site.gov.kpi`、`/v1/governance/kpi.json`、`/admin/` |
+| 6.1 第 6 點／元件 12／GOV.UK 六指標 | `/transparency/`、`eval/run-eval.mjs` |
+| 三層露出（預設層、狀況層、按需層、專業層） | ARCHITECTURE.md 第 8 節、`layout.mjs`、`pro.js` |
+| 治理欄位與規則 | `schemas/_common.json`、`scripts/lib/governance.mjs` |
+| 附錄 H：llms.txt／robots 政策 | `scripts/lib/emit-seo.mjs`、`/developers/#machine` |
+| 影音、專區、申請、出版品、檢驗、研究、公告（第二輪） | `schemas/{media,topic,service,publication,labtest,research}.json`、ARCHITECTURE.md 第 11 節、`/admin/{media,notices,links}/` |
+| 版本鏈、正本修訂連動（MMR 案例） | `content/documents/`、[guide-staff.md](guide-staff.md) 第 3 節 |
+| 第一／二／三階段路線圖 | [roadmap-mapping.md](roadmap-mapping.md) |
+
+## 哪些是示意資料、哪些是真實結構
+
+**真實結構（可直接沿用到正式環境）：** 內容模型與 JSON Schema、治理規則與測試、API 外殼與路徑、URL 結構、三層露出元件、答案引擎流程、評估集格式、GitHub Actions 流程、`cdc:` 詞彙。
+
+**來自官方來源的資料：** `data/snapshots/` 內的旅遊疫情、國家等級與 CKAN 資料目錄（每檔有 provenance 標示是即時抓取或快照）。
+
+**示意資料（不可當真）：** 疫情態勢的狀態與數字（標「示意」）、致醫界通函第 616 號卡片（語料庫無通函時的版面示範）、「○○醫院 感染管制室」登入畫面、白名單核准日期與核准人、評估集題目與通過率、審閱日與承辦職稱、`pdfUrl` 中的占位網址。部分文字內容（如 MMR 建議、登革熱頁）依公開資訊撰寫，用來示範版本與連動，**正式上線前須由權責單位逐字審閱**。
+
+**尚未實作：** 登入與真實的電子郵件通知、Webhook、伺服器端對話紀錄、API 金鑰與限流、LLM-as-judge 評估與人工抽樣工具。
