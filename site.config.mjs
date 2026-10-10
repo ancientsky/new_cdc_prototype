@@ -1,4 +1,9 @@
 // 站台設定。所有 agent 從這裡取語言、basePath、網址；不要在其他地方硬編。
+/** 表單端點的環境變數覆寫（第三十輪）：FORM_{KEY}_ENDPOINT、FORM_{KEY}_MODE；沒設 mode 時有 endpoint ＝ post、沒有 ＝ mock */
+function formEnv(key) {
+  const endpoint = (process.env[`FORM_${key}_ENDPOINT`] ?? '').trim();
+  return { endpoint, mode: (process.env[`FORM_${key}_MODE`] ?? '').trim() || (endpoint ? 'post' : 'mock') };
+}
 export const config = {
   name: '衛生福利部疾病管制署',
   nameShort: '疾管署',
@@ -62,6 +67,16 @@ export const config = {
     allowedExt: ['pdf', 'png', 'jpg', 'jpeg', 'webp', 'svg', 'csv', 'json', 'xlsx', 'docx', 'odt', 'md', 'ics'],
     maxFiles: 30, // 一筆內容最多幾個檔
     altMaxLength: 150,
+  },
+  // 第三十輪（#55）：表單端點。報名、署長信箱、電子報訂閱的個資不進 Git、也不進本站：endpoint 有值且 mode 為 post ⇒ 頁面直接 POST 到機關的個資表單系統；
+  // endpoint 空字串 ⇒ 沿用原型模擬（報名存瀏覽器、署長信箱 mailto／複製、電子報瀏覽器或本機模擬後端）。
+  // 署長信箱另有 mode:'link'＋petitionUrl：直接連到機關既有的陳情系統（建議做法，不必另建收件系統）。
+  // 建置時可用環境變數覆寫（FORM_CAREERS_APPLY_ENDPOINT／_MODE 等）；端點的來源會自動加進 CSP 的 connect-src 與 form-action（scripts/lib/forms.mjs、emit-headers.mjs）。
+  // receiver＝收件單位（頁面的個資蒐集告知會寫出來）。契約、保存期限與誰要確認什麼：docs/deploy.md 第 13 節。
+  forms: {
+    careersApply: { ...formEnv('CAREERS_APPLY'), receiver: 'unit.personnel' },
+    directorMailbox: { ...formEnv('DIRECTOR_MAILBOX'), receiver: 'unit.secretariat', petitionUrl: process.env.FORM_DIRECTOR_MAILBOX_PETITION_URL ?? '' },
+    newsletter: { ...formEnv('NEWSLETTER'), receiver: 'unit.pr' },
   },
   licenses: {
     allowed: ['OGDL-1.0', 'CC0-1.0', 'CC-BY-4.0'],

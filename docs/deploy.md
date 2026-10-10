@@ -341,3 +341,65 @@ location ~ ^/pagefind/pagefind\..*\.pf_meta$ { add_header Cache-Control "public,
 | PR 預覽站搜不到 | 預覽站的 `BASE_PATH` 是 `/pr-N/`，索引內網址已帶前綴（由 e2e 測過）；若仍錯，確認預覽是用新版 `build.mjs` 建的 |
 | 想排除某頁不被搜到 | 該頁設 `noindex`；或在 `src/templates/public/_pagefind.mjs` 的 `pagefindFor()` 調整規則。見 docs/guide-staff.md 第 29 節 |
 | 想暫時關掉索引 | `PAGEFIND=off npm run build`（`/search/` 頁仍在，但會無法載入索引；僅限本機看版面用） |
+
+## 13. 個資表單系統與表單端點（第三十輪）
+
+網站是公開、靜態的；**報名表、署長信箱、電子報訂閱的資料不進網站、不進 Git**。正式站由機關的個資表單系統收件，網站只設定「送到哪裡」。原型預設全部是模擬（`mock`）。理由見 [architecture-decisions.md](architecture-decisions.md) §22，程式契約見 ARCHITECTURE 第 35.3 節。
+
+### 13.1 設定（建置時）
+
+| 表單 | 設定 `site.config.mjs` | 環境變數 | 模式 |
+| --- | --- | --- | --- |
+| 線上報名 | `forms.careersApply` | `FORM_CAREERS_APPLY_ENDPOINT`、`FORM_CAREERS_APPLY_MODE` | `mock`｜`post` |
+| 署長信箱 | `forms.directorMailbox` | `FORM_DIRECTOR_MAILBOX_ENDPOINT`、`_MODE`、`FORM_DIRECTOR_MAILBOX_PETITION_URL` | `mock`｜`post`｜`link`（建議） |
+| 電子報 | `forms.newsletter` | `FORM_NEWSLETTER_ENDPOINT`、`FORM_NEWSLETTER_MODE` | `mock`｜`post` |
+
+- 只給 `ENDPOINT`、不給 `MODE` ⇒ 自動為 `post`。端點必須是 `https://`（本機測試可用 `http://localhost`）。設定矛盾（`post` 沒端點、`link` 沒陳情系統網址、有端點卻設 `mock`）會讓建置失敗，不會默默退回模擬。
+- 例：`FORM_DIRECTOR_MAILBOX_MODE=link FORM_DIRECTOR_MAILBOX_PETITION_URL=https://（陳情系統） npm run build`。
+- 設定後頁面的變化：報名頁送到端點並顯示收件編號（不再顯示「模擬」）；署長信箱 `post` 送到端點、`link` 只顯示「前往陳情系統」按鈕；訂閱頁直接用端點，不再探測本機模擬後端。每個表單上方都有收件單位與個資蒐集告知。
+
+### 13.2 端點契約（收件系統要做到）
+
+**線上報名、署長信箱**（`src/client/form-post.js`）：
+
+| 項目 | 內容 |
+| --- | --- |
+| 方法 | `POST {endpoint}`，`Accept: application/json` |
+| 本文（沒有附件） | `Content-Type: application/json`：`{ form, submissionId, submittedAt, lang, page, fields: { 欄位名: 值 } }`，報名另有 `jobId`、`jobTitle`。`form` 為 `careers-apply` 或 `director-mailbox` |
+| 本文（有附件） | `multipart/form-data`：表單原欄位與檔案，另有 `_meta` 欄位放上面的 JSON |
+| 成功 | `2xx` ＋ `{ ok: true, receiptNo?: string, message?: string }`；`receiptNo` 會顯示給使用者 |
+| 驗證失敗 | `4xx` ＋ `{ ok: false, message }`；頁面顯示訊息、保留填寫內容，**不會自動重送** |
+| 去重 | `submissionId`（UUID）是冪等鍵，同一 id 只能收一次——瀏覽器送不出 fetch（網路錯誤、CORS 尚未設定）時會改用一般表單 POST 帶同一個 id 再送 |
+| 一般表單 POST | 欄位同上加 `submissionId`；端點回自己的 HTML 收件頁（沒有 JS 的瀏覽器也走這條） |
+| CORS | 允許本站來源、`POST`、`Content-Type` 標頭；不需要 cookie（前端 `credentials: 'omit'`） |
+
+**電子報**：沿用第 11 節的 `/api/subscriptions*` 契約，`endpoint` 是這些路徑的前綴（例：`https://mail.cdc.gov.tw/newsletter` ⇒ `https://mail.cdc.gov.tw/newsletter/api/subscriptions`），另需 CORS。
+
+### 13.3 CSP
+
+建置時自動把**生效中的 post 端點來源**加進 `connect-src`（fetch 送出）與 `form-action`（一般表單 POST），其他指令不動；`link` 模式只是超連結，不開 CSP。`dist/headers/README.md` 會列出目前加了哪些來源。收件系統換網域只要改設定重建、重新套 `dist/headers/`。
+
+### 13.4 收件系統的要求
+
+| 項目 | 要求 | 為什麼 |
+| --- | --- | --- |
+| 存取控管 | 以 AD 群組控管：例如「人事室報名承辦」只看報名、「秘書室信箱承辦」只看信箱、「公關室電子報」只看訂閱；系統管理者與資料讀者分開；每次查看與匯出留紀錄 | 個資只給需要的人看，出事查得到是誰 |
+| 保存期限 | 報名資料依人事資料保存規定（甄選結束後多久刪除）；信箱來信依檔案法與陳情處理規定；訂閱者退訂後多久刪除。到期自動刪除並留紀錄，備份一併處理 | 頁面上的「保存期限」要寫得出具體數字 |
+| 防濫用 | CAPTCHA 或等效機制（建議用無障礙、免圖形辨識的方案，例如隱形挑戰或工作量證明）；以 IP 與 email 做速率限制（例：同一來源每分鐘 5 次）；附件限制類型與大小並做病毒掃描 | 公開表單一定會被灌；附件是最常見的惡意程式入口 |
+| 傳輸與儲存 | 全程 HTTPS；靜態加密；不把個資寫進系統日誌 | 日誌常被忽略，也常被大量存取 |
+| 通知 | 收件後寄回執（含收件編號）；不在信裡重複敏感欄位 | 讓民眾知道送到了，又不擴大個資流動 |
+| 事故 | 依機關個資事故通報流程 | — |
+
+### 13.5 誰要確認什麼（上線前）
+
+| 單位 | 要確認 |
+| --- | --- |
+| 資訊室 | 現有系統能不能直接用（人事報名系統、陳情系統、電子報服務）或要另建；部署位置（機關機房、政府雲、委外）；端點網址、CORS、CAPTCHA 與速率限制方案；AD 群組；建置時設定環境變數並重新套 CSP |
+| 人事室 | 報名資料保存期限；報名系統能否提供結果查詢頁（`result.externalUrl`）；甄選結果下架期間（預設公告日＋3 個月，見 guide-staff §33）；個資告知事項正式文字 |
+| 秘書室 | 署長信箱是否直接連既有陳情系統（建議）及其網址；若要表單 `post`，收件系統與保存期限 |
+| 公關室 | 電子報寄信服務（第 11 節）與訂閱資料保存期限 |
+| 個資窗口、法務 | 各表單的蒐集目的（特定目的代號）、告知事項文字（`form.notice.*` i18n 字串）、隱私權政策對應段落 |
+
+### 13.6 個資掃描（CI 與建置）
+
+`content/`、`data/snapshots/` 與會複製到網站的內容附件，PR 合併前（`content-pr.yml` 的「PII scan」步驟，只掃 PR 改到的檔）與建置時（全部）都會掃身分證／居留證號（檢查碼）、手機、個人信箱、名單語境姓名。白名單 `content/governance/pii-allowlist.json`（每筆要寫理由）。手動：`npm run pii`。**Git 歷史不會被掃、也不會被清**；若有個資誤入歷史，要不要改寫歷史（`git filter-repo`＋請 GitHub 清快取）由資訊室與個資窗口評估。

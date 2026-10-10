@@ -28,6 +28,8 @@ import { todayISO } from './lib/render.mjs';
 import { checkInternalLinks, summarize as summarizeLinks } from './lib/check-internal-links.mjs';
 import { validateAssets, fixAssets, copyAssets, normalizeFileLinks } from './lib/assets.mjs';
 import { publicView, scheduledItems, taipeiTime, publishAtMs } from './lib/lanes.mjs';
+import { piiErrors } from './lib/pii-scan.mjs';
+import { formErrors } from './lib/forms.mjs';
 
 const args = Object.fromEntries(process.argv.slice(2).map((a) => { const [k, v] = a.replace(/^--/, '').split('='); return [k, v ?? true]; }));
 const DIST = process.env.DIST_DIR ? path.resolve(process.env.DIST_DIR) : path.join(ROOT, 'dist');
@@ -63,7 +65,8 @@ async function main() {
   const assetReport = validateAssets(site, config);
   for (const w of assetReport.warnings) console.warn('  ⚠ [assets]', w);
   for (const w of contentWarnings(site)) console.warn('  ⚠ [內容]', w);
-  const errors = [...validateSite(site), ...assetReport.errors.map((e) => `[assets] ${e}`)];
+  // 第三十輪（#55）：個資掃描（content/、data/snapshots/、會複製到 dist 的內容附件）。命中就是治理門檻錯誤，--check 與正式建置都會失敗；表單端點設定矛盾（post 沒端點等）也一樣
+  const errors = [...validateSite(site), ...assetReport.errors.map((e) => `[assets] ${e}`), ...piiErrors(ROOT), ...formErrors(config)];
   if (errors.length) {
     console.error(`\n❌ 治理門檻未通過（${errors.length} 項）：`);
     for (const e of errors) console.error('  -', e);

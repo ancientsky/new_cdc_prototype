@@ -97,7 +97,7 @@
     - `job-waitlist-expiring`：階段為 `result`，備取 `validUntil` 在 14 日內且該備取尚未遞補（低優先）；
     - `job-apply-url-dead`：外部報名網址 `applyUrl` 失效（沿用規則 13 的外部連結健康，`broken` 才開，取代 `link-broken`）；階段為 `open`／`upcoming` 時為高優先、期限 1 日，其他階段為中優先。
     `unchecked` 不產生待辦。另有 validate 一致性檢查（失敗即建置失敗）：`slug` 與 id 一致且唯一、`hiringUnit` 存在、`applyStart` ≤ `deadlineAt`、`examPlan` 日期不早於 `deadlineAt`、`cancelled` 的職缺不得有 `result`、`legacyIds` 不得仍是現存 id。
-20. **甄選結果個資遮罩是建置閘門；AI 不唸名單**：`result.admitted[]`、`result.waitlist[]`、`waitlistUpdates[]` 的每一筆，`validate` 強制：`nameMasked` 必須含遮罩字（`○` `◯` `〇` `＊` 任一），且不得含 3 個以上連續中文字的完整姓名樣式（「王○明」可、「王小明」不可）；`candidateNo`（報名編號，3–24 個英數字與連字號）不得像身分證字號或居留證號（任何位置出現 `[A-Z][1289]\d{8}` 樣式都擋）；`result.note` 與遞補 `note` 同樣掃描身分證字號樣式；同一職缺報名編號不得重複；`admitted` 筆數不得超過 `positions`。**違反即建置失敗，不能發布，不是警告**；後台 `/admin/jobs/` 的「結果上架檢核」逐項顯示（`gov.resultCheck`）。AI 白名單：職缺與採購公告屬第四批核准範圍（民眾版），但**排除 `result` 與 `waitlistUpdates`**，不進答案索引與反向稽核文字：職缺公告內容（職稱、資格、日期、報名方式）可被引用，名單不可；答案引擎遇「誰錄取」類問題只回結果頁連結，並說明本站只公布報名編號與遮罩姓名（評估集有對應題）。報名資料本身不進 repo、不進 Git，見 [careers-privacy.md](careers-privacy.md)。
+20. **甄選結果只公布報名編號、到期下架，都是建置閘門；AI 不唸名單**（第三十輪 #55 修訂）：`result.admitted[]`、`result.waitlist[]`、`waitlistUpdates[]` 的每一筆**不得有任何姓名欄**（`nameMasked`、`name`、`姓名`…，連遮罩姓名也不行；schema 的 `propertyNames` 與 validate 雙重擋，錯誤訊息不回印姓名）；`result.unpublishAt`（下架日）必填：預設公告日＋3 個月、晚於最後一位備取有效期，至少 30 日、至多 12 個月；到期當天起治理引擎把名單從頁面、API、RSS、JSON-LD、`.md`、全文搜尋與答案索引拿掉，頁面改顯示「甄選結果已於 YYYY-MM-DD 下架」與人事室聯絡；下架前 14 日與下架後原始檔仍有名單各開一筆 `job-result-unpublish` 待辦。建議做法是 `result.externalUrl`（名單留在人事系統，本站只放連結，與名單擇一）。另外，`result.note` 與遞補 `note` 掃描身分證字號與遮罩姓名樣式；`candidateNo`（報名編號，3–24 個英數字與連字號）不得像身分證字號或居留證號（任何位置出現 `[A-Z][1289]\d{8}` 樣式都擋）；`result.note` 與遞補 `note` 同樣掃描身分證字號樣式；同一職缺報名編號不得重複；`admitted` 筆數不得超過 `positions`。**違反即建置失敗，不能發布，不是警告**；後台 `/admin/jobs/` 的「結果上架檢核」逐項顯示（`gov.resultCheck`）。AI 白名單：職缺與採購公告屬第四批核准範圍（民眾版），但**排除 `result` 與 `waitlistUpdates`**，不進答案索引與反向稽核文字：職缺公告內容（職稱、資格、日期、報名方式）可被引用，名單不可；答案引擎遇「誰錄取」類問題只回結果頁連結，並說明本站只公布報名編號、不公布姓名（評估集 NC003、NC006、NC007）。報名資料本身不進 repo、不進 Git，見 [careers-privacy.md](careers-privacy.md)；全庫另有個資掃描（`scripts/pii-scan.mjs`，PR 合併前與建置時都跑），見 ARCHITECTURE 第 35 節。
 21. **採購階段推導與決標逾期（`gov.tenderStage`）**：優先順序：`manualStatus`（`failed` 流標、`cancelled` 取消）＞ 有 `award`（`awarded`）＞ 今天 ≤ `deadlineAt`（`open`）＞ 今天 ≥ `openingAt`（`opened`）＞ 其餘（`closed`）。頁籤：招標中、已截止、已開標、已決標、流標（取消併入流標頁籤）。待辦 `tender-award-overdue`：階段為 `opened`（已開標、無 `award`、非流標取消）且今天 > `openingAt` + 30 日（owner 秘書室、抄送 `requestingUnit`，中優先）；**沒填 `openingAt` 不會有這個待辦**。`pccUrl` 失效沿用規則 13。validate：`slug` 與 id 一致、`requestingUnit` 存在、`announcedAt` ≤ `deadlineAt` ≤ `openingAt` ≤ `award.date`，且已有 `award` 不得再填 `manualStatus`。**本站只做入口與狀態，正式公告以政府電子採購網為準。**
 
 第八輪新增規則（檔案資產：附件、圖片、資料檔）：
@@ -145,8 +145,8 @@
 - **原型不保存提問**：沒有後端，答案在瀏覽器內組出；回報寫在使用者自己的 localStorage（`cdc.reports`）。
 - **BYOK**（自備金鑰）：金鑰只存在使用者瀏覽器，直接連供應商，不經本站；介面標示供應商與模型。
 - **正式環境建議（待委員會議定）**：對話紀錄只留稽核編號、意圖、引用來源 id、是否拒答、回報狀態，不留原始輸入全文；保存期限與去識別化方式需符合個資法與機關規定；回報若含個資，先遮蔽再轉給 Steward。
-- **人才招募**：報名資料不進 repo、不進 Git；本站只公布報名編號與遮罩姓名，遮罩由建置閘門強制（規則 20）；模擬報名資料只存使用者自己的瀏覽器。原則、保存期限與刪除見 [careers-privacy.md](careers-privacy.md)。
-- **檔案中的個資**：含個資的檔案（附件、圖片、資料檔）不得上架；PDF 塗黑不等於刪除，圖片要移除 EXIF。正式站上傳前須經病毒掃描並留日誌；原型的建置檢查**不做**個資與病毒偵測，靠流程把關。要刪檔的理由與流程見 [assets-policy.md](assets-policy.md) 第 9、10 節。
+- **人才招募**：報名資料不進 repo、不進 Git；本站只公布報名編號（不公布姓名）、到期下架，由建置閘門強制（規則 20）；模擬報名資料只存使用者自己的瀏覽器；設了表單端點後直接送到報名系統（[deploy.md](deploy.md) 第 13 節）。原則、保存期限與刪除見 [careers-privacy.md](careers-privacy.md)。
+- **檔案中的個資**：含個資的檔案（附件、圖片、資料檔）不得上架；PDF 塗黑不等於刪除，圖片要移除 EXIF。正式站上傳前須經病毒掃描並留日誌；第三十輪起建置與 PR 都會跑**個資掃描**（身分證／居留證檢查碼、手機、個人信箱、名單語境姓名；PDF 只掃未壓縮的文字層、圖片不做 OCR），病毒偵測仍靠流程把關。要刪檔的理由與流程見 [assets-policy.md](assets-policy.md) 第 9、10 節。
 - 內容與範例一律不放真人姓名，承辦人以職稱表示。
 
 ## 6. KPI（每次建置重算，`/v1/governance/kpi.json`）

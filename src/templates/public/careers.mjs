@@ -1,6 +1,8 @@
 // /careers/（人才招募列表）、/careers/{slug}/（職缺詳情）、/careers/{slug}/apply/（模擬線上報名；noindex）。ARCHITECTURE 15.2。
 // 列表：開放中／即將開放／審查與甄試中／錄取結果／歷史 五個分頁籤；職類／地點／單位篩選由 careers-list.js 處理。
 // 模擬報名：只在 open 且沒有外部 applyUrl 的職缺輸出完整表單（careers-apply.js；資料只存瀏覽器，不送出）；其他階段輸出「已截止／尚未開放」頁。
+// 第三十輪（#55）：site.config.mjs forms.careersApply 設了 post 端點 ⇒ 同一張表單直接送到人事室的報名系統（form-post.js；沒有 JS 時是一般表單 POST），
+// 不再顯示「模擬」橫幅；每張報名表都有收件單位與個資蒐集告知（_forms.mjs）。
 import { html, raw } from '../../../scripts/lib/render.mjs';
 import { md } from '../../../scripts/lib/markdown.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
@@ -12,6 +14,7 @@ import {
   jobsOf, allJobs, jobPath, applyPath, applyOnSite, jobStage, jobTab, JOB_TABS, stagePill, jobCountdown, placeOf, jobSlug, jobIsHistory,
 } from './_careers.mjs';
 import { resultTakenDown } from '../../client/careers-rules.js';
+import { formOf, formNotice } from './_forms.mjs';
 
 const STYLES = ['/assets/styles/careers.css'];
 const LIST_JS = ['/assets/js/careers-list.js'];
@@ -309,11 +312,16 @@ function applyForm(ctx, j) {
   const docs = j.requiredDocuments ?? [];
   const exams = (j.examPlan ?? []).filter((e) => e.date).map((e) => ({ stage: e.stage, date: e.date, note: e.note ?? '' }));
   const steps = [t('japply.step1'), t('japply.step2'), t('japply.step3')];
-  return html`<div class="c-apply" data-apply-root>
-  <div class="c-demo-banner" role="note" data-demo-banner><span class="c-demo-banner__ic" aria-hidden="true">!</span><div><strong>${t('japply.banner')}</strong> <span>${t('japply.banner.sub')}</span></div></div>
+  const fm = formOf(ctx, 'careersApply');
+  const live = fm.active === 'post';
+  return html`<div class="c-apply" data-apply-root data-form-mode="${fm.active}">
+  ${live
+    ? html`<div class="c-alert c-alert--info" role="note" data-live-banner><strong class="c-alert__t">${t('japply.live.banner')}</strong> ${t('japply.live.banner.sub')}</div>`
+    : html`<div class="c-demo-banner" role="note" data-demo-banner><span class="c-demo-banner__ic" aria-hidden="true">!</span><div><strong>${t('japply.banner')}</strong> <span>${t('japply.banner.sub')}</span></div></div>`}
+  ${formNotice(ctx, 'careersApply')}
   <ol class="c-apply__steps" aria-label="${t('japply.steps')}" data-apply-steps>${steps.map((s, i) => html`<li data-step-ind="${i + 1}" ${i === 0 ? raw('aria-current="step"') : ''}><span class="c-apply__stepn" aria-hidden="true">${i + 1}</span><span>${s}</span></li>`)}</ol>
   <p class="c-apply__draftmsg muted" role="status" aria-live="polite" data-draft-msg></p>
-  <form class="c-apply__form" data-apply data-job="${j.id}" data-slug="${jobSlug(j)}" data-title="${j.title}" data-today="${site.today}" data-exams="${JSON.stringify(exams)}" data-docs="${JSON.stringify(docs)}" novalidate>
+  <form class="c-apply__form" data-apply data-job="${j.id}" data-slug="${jobSlug(j)}" data-title="${j.title}" data-today="${site.today}" data-exams="${JSON.stringify(exams)}" data-docs="${JSON.stringify(docs)}" ${live ? html`data-endpoint="${fm.endpoint}" action="${fm.endpoint}" method="post" enctype="multipart/form-data"` : ''} novalidate>
     <div class="c-apply__errors c-alert c-alert--overdue" data-apply-errors tabindex="-1" role="alert" aria-live="assertive" hidden></div>
     <fieldset class="c-apply__step" data-step="1"><legend>${t('japply.step1')}</legend>
       <p class="muted">${t('japply.step1.note')}</p>
@@ -351,12 +359,12 @@ function applyForm(ctx, j) {
     </div>
   </form>
   <section class="c-receipt" data-apply-receipt tabindex="-1" aria-labelledby="rc-h" hidden>
-    <h2 id="rc-h">${t('japply.receipt.t')}</h2>
+    <h2 id="rc-h">${live ? t('japply.live.receipt.t') : t('japply.receipt.t')}</h2>
     <p class="c-receipt__lead">${t('japply.receipt.no')}</p>
     <p class="c-receipt__no" data-r-no aria-live="polite"></p>
     <dl class="c-deflist c-receipt__dl" data-r-dl></dl>
-    <div class="c-demo-banner c-demo-banner--strong" role="note"><span class="c-demo-banner__ic" aria-hidden="true">!</span><div><strong>${t('japply.receipt.notofficial')}</strong> ${t('japply.receipt.notofficial.sub')}</div></div>
-    <p class="c-receipt__acts"><button type="button" class="c-btn" data-r-print>${t('japply.receipt.print')}</button> <button type="button" class="c-btn c-btn--ghost" data-r-json>${t('japply.receipt.json')}</button> <button type="button" class="c-btn c-btn--ghost" data-r-ics ${exams.length ? '' : raw('disabled aria-disabled="true"')}>${t('japply.receipt.ics')}</button> <button type="button" class="c-btn c-btn--ghost c-btn--sm" data-r-again>${t('japply.receipt.again')}</button></p>
+    ${live ? '' : html`<div class="c-demo-banner c-demo-banner--strong" role="note"><span class="c-demo-banner__ic" aria-hidden="true">!</span><div><strong>${t('japply.receipt.notofficial')}</strong> ${t('japply.receipt.notofficial.sub')}</div></div>`}
+    <p class="c-receipt__acts"><button type="button" class="c-btn" data-r-print>${t('japply.receipt.print')}</button> ${live ? '' : html`<button type="button" class="c-btn c-btn--ghost" data-r-json>${t('japply.receipt.json')}</button>`} <button type="button" class="c-btn c-btn--ghost" data-r-ics ${exams.length ? '' : raw('disabled aria-disabled="true"')}>${t('japply.receipt.ics')}</button> <button type="button" class="c-btn c-btn--ghost c-btn--sm" data-r-again>${t('japply.receipt.again')}</button></p>
     ${exams.length ? '' : html`<p class="muted">${t('japply.receipt.ics.none')}</p>`}
   </section>
   <noscript><p class="c-alert c-alert--overdue">${t('japply.noscript')}</p></noscript>

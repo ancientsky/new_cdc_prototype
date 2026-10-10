@@ -6,6 +6,9 @@ import { html, raw } from '../../../scripts/lib/render.mjs';
 import { ldFor, pageHead, sectionHead } from './_partials.mjs';
 import { feedCatalog } from '../../../scripts/lib/feed-catalog.mjs';
 import { TOPIC_IDS, MAIL_LANGS } from '../../client/subscribe-rules.js';
+// 第三十輪（#55）：site.config.mjs forms.newsletter 設了 post 端點 ⇒ subscribe.js 直接用 createHttpBackend({ base: 端點 })（同一份 /api/subscriptions* 契約），
+// 不再偵測本機模擬後端；Email 區塊上方一律顯示收件單位與個資蒐集告知。
+import { formOf, formNotice } from './_forms.mjs';
 
 /**
  * 疾管署 LINE 官方帳號「疾管家」。
@@ -84,9 +87,12 @@ function emailSection(ctx) {
   return html`<section class="c-sub__sec" id="email" aria-labelledby="h-email">
   ${sectionHead(ctx, { id: 'h-email', title: t('subscribe.email.h') })}
   <p>${t('subscribe.email.lead')}</p>
-  <p class="muted">${t('subscribe.proto.note')}</p>
+  ${formOf(ctx, 'newsletter').active === 'post' ? '' : html`<p class="muted">${t('subscribe.proto.note')}</p>`}
+  ${formNotice(ctx, 'newsletter')}
   <noscript><p class="c-alert c-alert--info">${t('subscribe.noscript')}</p></noscript>
-  <div class="c-sub" data-sub-app data-backend="auto" hidden>
+  ${formOf(ctx, 'newsletter').active === 'post'
+    ? html`<div class="c-sub" data-sub-app data-backend="live" data-endpoint="${formOf(ctx, 'newsletter').endpoint}" hidden>`
+    : raw('<div class="c-sub" data-sub-app data-backend="auto" hidden>')}
     <div class="c-demo-banner" role="note" data-demo-banner><span class="c-demo-banner__ic" aria-hidden="true">!</span><div><strong data-sub-banner-text>${t('subscribe.banner')}</strong> <span data-sub-backend-note>${t('subscribe.banner.sub')}</span></div></div>
     <p class="sr-only" role="status" aria-live="polite" data-sub-live></p>
 

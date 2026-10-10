@@ -1,0 +1,25 @@
+{
+  "$comment": "第三十輪（#55）個資掃描白名單（scripts/lib/pii-scan.mjs）。只放『看起來像個資、但其實是機關公開資訊或刻意的測試樣本』的東西，每一筆都要寫 reason；寫不出理由就不該放行。本檔本身不會被掃描。新增時請在 PR 說明為什麼，審核人要看得懂。",
+  "numbers": [
+    { "value": "1922", "label": "防疫專線", "reason": "機關對外公開的免付費防疫專線，不是個人電話" },
+    { "value": "0800-001922", "label": "防疫專線（市話撥打）", "reason": "1922 的完整免付費號碼，機關公開資訊" },
+    { "value": "+886-800-001922", "label": "防疫專線（國外撥打）", "reason": "1922 的國際撥打寫法，機關公開資訊" },
+    { "value": "0800-655955", "label": "聽語障人士傳真", "reason": "機關公開的無障礙傳真專線" },
+    { "value": "02-2395-9825", "label": "疾管署總機", "reason": "機關總機，聯絡窗口一律寫總機或專線，不寫承辦人手機" },
+    { "value": "02-2871-7121", "label": "臺北榮總總機（研究案聯絡）", "reason": "醫院總機，機構公開電話" },
+    { "value": "02-2875-7525", "label": "臺北榮總感染科（研究案聯絡）", "reason": "醫院科室公開電話，非個人" }
+  ],
+  "domains": [
+    { "domain": "gov.tw", "reason": "政府機關網域：機關信箱（服務信箱、單位信箱）是公開聯絡管道；承辦人個人信箱也是公務信箱，但仍建議改寫單位信箱" },
+    { "domain": "ancientsky.github.io", "reason": "本站（原型）自己的網域" },
+    { "domain": "example.com", "reason": "RFC 2606 保留給範例的網域，不會有真人" },
+    { "domain": "example.org", "reason": "RFC 2606 保留給範例的網域" },
+    { "domain": "example.gov.tw", "reason": "範例網域（測試用職缺外部報名網址等）" },
+    { "domain": "invalid", "reason": "RFC 2606 保留的 .invalid 頂級網域，永遠無法寄達，原型的模擬信箱用這個" },
+    { "domain": "test", "reason": "RFC 2606 保留的 .test 頂級網域" }
+  ],
+  "entries": [
+    { "kind": "national-id", "value": "A123456789", "files": ["content/governance/eval-set.json"], "reason": "評測題 AD007：刻意放的範例身分證（公開流傳的示範號碼），用來測答案引擎會遮蔽個資並拒答；不是任何人的號碼" },
+    { "kind": "mobile", "value": "0912-345-678", "files": ["content/governance/eval-set.json"], "reason": "評測題 AD007：刻意放的範例手機號碼，測答案引擎不回印個資" }
+  ]
+}
