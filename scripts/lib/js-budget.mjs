@@ -3,8 +3,12 @@
 // 近似值，不含內嵌 <script>、CSS、圖片；目的是擋住「不小心把大檔加進每一頁」。
 // 三種預算（皆可用環境變數調整，例：JS_BUDGET_KB=150 npm run build；要改預設值請改本檔常數並在 PR 說明理由）：
 //   公開頁            JS_BUDGET_KB          預設 120 KB
-//   載入答案引擎的頁   ENGINE_JS_BUDGET_KB   預設 320 KB（ask／data／factcheck；answer/core.js 約 176 KB 是已知技術債，
-//                                             拆檔路線圖見 ARCHITECTURE 第 29 章，拆完後把這個預算降到與公開頁相同）
+//   載入答案引擎的頁   ENGINE_JS_BUDGET_KB   預設 240 KB（ask／data／factcheck）
+//     第三十四輪（ARCHITECTURE 第 40 章）：core.js 拆成五個模組、生成式模式（llm.js）改成用到才載入、建置時逐檔壓縮（scripts/lib/minify.mjs），
+//     引擎頁從 319 KB 降到約 208 KB，預算由 320 KB 降為 240 KB（留約 15% 餘裕擋「不小心變大」）。
+//     為什麼還不能降到與公開頁相同的 120 KB：剩下的大宗是規則表、七語拒答文案與答案畫面的多語字串（是資料，不是可再壓的程式），
+//     要再降得把這些依語言拆檔（同 i18n 的做法）或把引擎搬到伺服器端；做法與取捨見 ARCHITECTURE 40.4。
+//   注意：計算的是「壓縮後、實際上線」的位元組；MINIFY=off 建置時 build.mjs 只回報不擋。
 //   /admin/ 頁        ADMIN_JS_BUDGET_KB    預設 0 = 只回報不擋
 //
 // 第二十八輪：/search/（Pagefind 全文搜尋）怎麼算——「立即載入」的 JS 才算：search.js＋search-query.js（約 12 KB）＋ui.js＋i18n，與其他公開頁同一個 120 KB 預算。
@@ -16,7 +20,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 export const DEFAULT_PUBLIC_KB = 120;
-export const DEFAULT_ENGINE_KB = 320;
+export const DEFAULT_ENGINE_KB = 240;
 const SRC_RE = /<script\b[^>]*\bsrc="([^"]+\.js)"/g;
 const IMPORT_RE = /(?:^|[;\n}])\s*(?:import|export)\s*(?:[^'"()]*?\bfrom\s*)?['"](\.{1,2}\/[^'"]+)['"]/g;
 
