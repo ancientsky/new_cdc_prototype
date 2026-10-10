@@ -555,6 +555,36 @@ test('HTTP：同源＋CSRF token 才能寫；Content-Type、大小上限、未�
   } finally { srv.close(); }
 });
 
+test('HTTP：超過大小上限回 413 後，同一條連線還能繼續用（不會卡住或被重設）', { timeout: 20000 }, async () => {
+  // 第三十輪 CI：原本超過上限就中途 break，請求串流被毀、連線跟著關掉；用 keep-alive 的 fetch 下一個請求
+  // 卡在沒人讀的連線上，最後只看到「fetch failed」（本機的 socket 緩衝夠大，600 KB 剛好躲過；GitHub runner 躲不過）。
+  // 這裡用一條原始 TCP 連線送兩個請求：第一個 16 MB（緩衝裝不下）、第二個是健康檢查，兩個都要拿到回應。
+  const { api } = makeApi({ authAdapter: createHeaderAuth({ trustedProxies: ['127.0.0.1'] }) });
+  const { srv, base } = await serveApi(api);
+  const u = new URL(base);
+  const who = { 'X-Remote-User': 'CDC\\demo-001', 'X-Remote-Groups': 'CDC-WEB-acute-infectious-editor' };
+  try {
+    const { csrfToken } = await (await fetch(`${base}/api/gateway/session`, { headers: who })).json();
+    const body = Buffer.concat([Buffer.from('{"pad":"'), Buffer.alloc(16 * 1024 * 1024, 0x20), Buffer.from('"}')]);
+    const hdr = (h) => Object.entries(h).map(([k, v]) => `${k}: ${v}\r\n`).join('');
+    const req1 = `POST /api/gateway/drafts HTTP/1.1\r\nHost: ${u.host}\r\nConnection: keep-alive\r\nContent-Type: application/json\r\nOrigin: ${base}\r\nX-CSRF-Token: ${csrfToken}\r\n${hdr(who)}Content-Length: ${body.length}\r\n\r\n`;
+    const req2 = `GET /api/gateway/health HTTP/1.1\r\nHost: ${u.host}\r\nConnection: close\r\n\r\n`;
+    const out = await new Promise((resolve, reject) => {
+      const sock = net.connect(Number(u.port), u.hostname);
+      let buf = '', second = false;
+      sock.on('data', (d) => {
+        buf += d.toString('latin1');
+        if (!second && /^HTTP\/1\.1 \d+/.test(buf) && buf.includes('\r\n\r\n')) { second = true; setTimeout(() => sock.write(req2), 20); }
+      });
+      sock.on('error', reject);
+      sock.on('close', () => resolve(buf));
+      sock.write(req1); sock.write(body);
+    });
+    const statuses = [...out.matchAll(/HTTP\/1\.1 (\d{3})/g)].map((m) => Number(m[1]));
+    assert.deepEqual(statuses, [413, 200], out.slice(0, 300));
+  } finally { srv.close(); }
+});
+
 // ───────────────────────── 端到端（Playwright）─────────────────────────
 const CHROME = process.env.CHROME_BIN || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
 const DIST = process.env.DIST_DIR ? path.resolve(process.env.DIST_DIR) : path.join(ROOT, 'dist');

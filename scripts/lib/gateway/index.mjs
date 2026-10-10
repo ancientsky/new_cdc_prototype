@@ -110,9 +110,12 @@ export function createGatewayApi(opts = {}) {
   };
   const err = (res, status, code, message, fields) => send(res, status, { error: code, message, ...(fields ? { fields } : {}) });
 
+  // 超過上限時不能中途 break：那會毀掉請求串流，連線被重設，客戶端只看到「fetch failed」而收不到 413
+  // （第三十輪 CI 實測：本機常常剛好收得到，GitHub runner 上收不到）。所以超過後只丟棄、讀完再回 413。
   async function readBody(req) {
     const chunks = []; let size = 0;
-    for await (const c of req) { size += c.length; if (size > MAX_BODY) throw new GatewayError(413, 'too_large', '內容太大（上限 512 KB）；附件請另外處理'); chunks.push(c); }
+    for await (const c of req) { size += c.length; if (size <= MAX_BODY) chunks.push(c); }
+    if (size > MAX_BODY) throw new GatewayError(413, 'too_large', '內容太大（上限 512 KB）；附件請另外處理');
     const text = Buffer.concat(chunks).toString('utf8');
     if (!text) return {};
     try { const j = JSON.parse(text); if (j && typeof j === 'object' && !Array.isArray(j)) return j; } catch { /* 落到下面 */ }

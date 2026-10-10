@@ -1645,7 +1645,7 @@ forms: {
 - **同源**：檢查 `Origin`；有 `Sec-Fetch-Site` 時須為 `same-origin`；設了 `PUBLIC_ORIGIN` 時只認它。
 - **`X-CSRF-Token`**：HMAC(secret, `authMode|account`)。
 - **`Content-Type: application/json`**。
-- **本文 ≤ 512 KB**，超過回 413。
+- **本文 ≤ 512 KB**，超過回 413。超過後**照樣把本文讀完再丟掉**，不要中途停止讀取：停讀會讓 keep-alive 連線卡住，客戶端下一個請求要等伺服器逾時（約 5 秒）被重設，只看到「fetch failed」。本機 socket 緩衝大，600 KB 測不出來；第三十輪 CI 才踩到，回歸測試改送 16 MB（`tests/round30-gateway.test.mjs`「同一條連線還能繼續用」）。前面的反向代理（IIS 的 `maxAllowedContentLength`、nginx 的 `client_max_body_size`）應該設同一個上限，在進閘道前就擋掉大檔。
 
 所有回應都帶 `Cache-Control: no-store` 與 `X-Content-Type-Options: nosniff`。
 
