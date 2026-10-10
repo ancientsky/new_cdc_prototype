@@ -61,12 +61,12 @@ ${pageHead({ title: '疫情發布', what: '疫情中心在這裡發布首頁的�
 
 <section class="adm-card" aria-labelledby="sc-h"><h2 id="sc-h">目前 current.json</h2>
   <p class="adm-card__sub">發布者：${site.unitById.get(sit.publisher)?.name ?? sit.publisher}；核定：${sit.approvedBy ?? '—'}；來源：${sit.source}${sit.note ? ` · ${sit.note}` : ''}</p>
-  <div class="adm-tablewrap"><table class="adm-table"><thead><tr><th scope="col">疾病</th><th scope="col">狀態</th><th scope="col">趨勢</th><th scope="col">指標</th><th scope="col">近週</th><th scope="col">建議</th><th scope="col">樣版</th><th scope="col">依據門檻</th></tr></thead>
+  <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><thead><tr><th scope="col">疾病</th><th scope="col">狀態</th><th scope="col">趨勢</th><th scope="col">指標</th><th scope="col">近週</th><th scope="col">建議</th><th scope="col">樣版</th><th scope="col">依據門檻</th></tr></thead>
   <tbody>${sit.items.map((it) => html`<tr><td><strong>${dn(it.disease)}</strong>${it.pinned ? html` <span class="adm-badge adm-badge--gray">首頁</span>` : ''}${it.illustrative ? html` <span class="adm-badge adm-badge--warn">示意</span>` : ''}</td>
     <td><span class="c-status-tag c-status-tag--${it.status}">${STATUS[it.status]}</span></td><td>${TREND[it.trend]}</td><td>${it.metricLabel}<div><strong>${it.metricValue}</strong>${it.deltaText ? ` · ${it.deltaText}` : ''}</div></td>
     <td>${(it.weekly ?? []).join('、')}</td><td>${it.advice}</td><td>${CARD_STYLES[it.cardStyle ?? 'standard']?.label ?? it.cardStyle}</td><td class="adm-muted">${it.basis}</td></tr>`)}</tbody></table></div>
   <h3>歷次發布</h3>
-  ${hist.length ? html`<div class="adm-tablewrap"><table class="adm-table"><thead><tr><th scope="col">發布日</th><th scope="col">資料日</th><th scope="col">筆數</th><th scope="col">檔案</th></tr></thead><tbody>${hist.map((h) => html`<tr><td>${h.publishedAt}</td><td>${h.dataDate}</td><td>${(h.items ?? []).length}</td><td><code>${h.__file ?? ''}</code></td></tr>`)}</tbody></table></div>` : html`<p class="adm-muted">尚無歷次發布紀錄（content/situation/history/ 為空）。上一份正式檔案會在下次發布時移入。</p>`}
+  ${hist.length ? html`<div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><thead><tr><th scope="col">發布日</th><th scope="col">資料日</th><th scope="col">筆數</th><th scope="col">檔案</th></tr></thead><tbody>${hist.map((h) => html`<tr><td>${h.publishedAt}</td><td>${h.dataDate}</td><td>${(h.items ?? []).length}</td><td><code>${h.__file ?? ''}</code></td></tr>`)}</tbody></table></div>` : html`<p class="adm-muted">尚無歷次發布紀錄（content/situation/history/ 為空）。上一份正式檔案會在下次發布時移入。</p>`}
   <p class="adm-muted">前台：<a href="${url('/situation/')}">/situation/</a> · API：<a href="${url('/v1/situation.json', { noLang: true })}">/v1/situation.json</a></p></section>
 ${dataScript('adm-sit-data', data)}`;
 }

@@ -122,19 +122,24 @@ ${ld.map((j) => raw(`<script type="application/ld+json">${jsonScript(j)}</script
 <a class="skip-link" href="#main">${t('skip')}</a>
 ${protoBanner(ctx)}
 <div class="topbar"><div class="wrap topbar__in">
-  <nav class="langs" aria-label="${t('lang.label')}">${langLinks}</nav>
-  <div class="topbar__links"><a href="${url('/accessibility/')}">${t('a11y')}</a><a href="${url('/sitemap-page/')}">${t('sitemap')}</a><a class="hotline" href="tel:1922">${t('hotline')}</a></div>
+  <nav class="langs langs--inline" aria-label="${t('lang.label')}">${langLinks}</nav>
+  <details class="langmenu">
+    <summary class="langmenu__btn">${t('lang.menu')}</summary>
+    <nav class="langmenu__list" aria-label="${t('lang.label')}">${langLinks}</nav>
+  </details>
+  <nav class="topbar__links" aria-label="${t('nav.tools')}"><a href="${url('/accessibility/')}">${t('a11y')}</a><a href="${url('/sitemap-page/')}">${t('sitemap')}</a><a class="hotline" href="tel:1922">${t('hotline')}</a></nav>
 </div></div>
 <header class="site-header"><div class="wrap site-header__in">
   <a class="brand" href="${url('/')}"><span class="brand__mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="40" height="40"><rect width="32" height="32" rx="8" fill="currentColor"/><path d="M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z" fill="#fff"/></svg></span><span class="brand__text"><span class="brand__name">${t('site.name')}</span><span class="brand__sub">${lang === 'zh-TW' ? config.nameEn : t('site.parent')}</span></span></a>
   <div class="audience" role="group" aria-label="${t('nav.audience')}">
-    <button type="button" class="audience__btn" data-view-set="public" aria-pressed="${forcePro ? 'false' : 'true'}">${t('nav.public')}</button>
-    <a class="audience__btn" href="${url('/pro/')}?view=pro" data-view-set="pro" aria-pressed="${forcePro ? 'true' : 'false'}" ${forcePro ? raw('aria-current="page"') : ''}>${t('nav.pro')}</a>
+    <a class="audience__btn" href="${url('/')}?view=public" data-view-set="public" ${forcePro ? '' : raw('aria-current="page"')}>${t('nav.public')}</a>
+    <a class="audience__btn" href="${url('/pro/')}?view=pro" data-view-set="pro" ${forcePro ? raw('aria-current="page"') : ''}>${t('nav.pro')}</a>
     <a class="audience__btn" href="${url('/developers/')}">${t('nav.research')}</a>
   </div>
   <button type="button" class="c-nav__toggle" aria-expanded="false" aria-controls="main-nav">${t('nav.menu')}</button>
 </div>
-<nav id="main-nav" class="c-nav" aria-label="${t('nav.main')}"><div class="wrap c-nav__in">${navItems.map(([p, k]) => html`<a href="${url(p)}" ${path.startsWith(p) ? raw('aria-current="page"') : ''}>${t(k)}</a>`)}<a class="c-nav__pro c-pro-only" href="${url('/pro/')}">${t('nav.pro')}</a></div></nav>
+<nav id="main-nav" class="c-nav" aria-label="${t('nav.main')}"><div class="wrap c-nav__in">${navItems.map(([p, k]) => html`<a href="${url(p)}" ${path.startsWith(p) ? raw('aria-current="page"') : ''}>${t(k)}</a>`)}<a class="c-nav__pro c-pro-only" href="${url('/pro/')}">${t('nav.pro')}</a></div>
+  <div class="wrap c-nav__langs"><p class="c-nav__langs-t" id="nav-langs-t">${t('lang.menu')}</p><div class="c-nav__langs-l" role="group" aria-labelledby="nav-langs-t">${langLinks}</div></div></nav>
 </header>
 ${pausedBanner(ctx)}
 <main id="main"${wide ? '' : raw(' class="wrap"')}>${raw(String(body))}</main>

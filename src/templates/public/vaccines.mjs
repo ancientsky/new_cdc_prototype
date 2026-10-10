@@ -16,7 +16,7 @@ function fundedTable(ctx, v) {
   const { t, fmtDate } = ctx;
   const f = v.publicFunded ?? [];
   if (!f.length) return html`<p class="muted">${t('vaccines.nofunded')}</p>`;
-  return html`<div class="c-tablewrap"><table class="c-table"><caption class="sr-only">${t('vaccines.funded')}</caption><thead><tr><th scope="col">${t('vaccines.group')}</th><th scope="col">${t('vaccines.schedule')}</th><th scope="col">${t('vaccines.period')}</th><th scope="col">${t('vaccines.note')}</th></tr></thead><tbody>
+  return html`<div class="c-tablewrap" role="region" tabindex="0" aria-label="${t('a11y.scrollTable')}"><table class="c-table"><caption class="sr-only">${t('vaccines.funded')}</caption><thead><tr><th scope="col">${t('vaccines.group')}</th><th scope="col">${t('vaccines.schedule')}</th><th scope="col">${t('vaccines.period')}</th><th scope="col">${t('vaccines.note')}</th></tr></thead><tbody>
     ${f.map((r) => html`<tr><th scope="row">${r.group}</th><td>${r.schedule}</td><td>${r.startAt ? html`${fmtDate(r.startAt)}${r.endAt ? ` – ${fmtDate(r.endAt)}` : ''}` : '—'}</td><td>${r.note ?? ''}</td></tr>`)}</tbody></table></div>`;
 }
 
@@ -37,7 +37,7 @@ function index(ctx) {
       ${dis.length ? html`<p class="c-linkrow">${dis.map((d) => html`<a href="${hrefFor(ctx, d)}">${L(ctx, d, 'title')}</a> `)}</p>` : ''}
       ${page && isFallbackLink(ctx, page) ? translationBadge(ctx, 'none') : ''}</article>`;
   })}</div></section>
-${rows.length ? html`<section aria-labelledby="vx-funded">${sectionHead(ctx, { id: 'vx-funded', title: t('vaccines.funded.all') })}<div class="c-tablewrap"><table class="c-table"><thead><tr><th scope="col">${t('nav.vaccines')}</th><th scope="col">${t('vaccines.group')}</th><th scope="col">${t('vaccines.schedule')}</th><th scope="col">${t('vaccines.note')}</th></tr></thead><tbody>${rows.map(({ v, r }) => html`<tr><th scope="row"><a href="${hrefFor(ctx, v)}">${L(ctx, v, 'title')}</a></th><td>${r.group}</td><td>${r.schedule}</td><td>${r.note ?? ''}</td></tr>`)}</tbody></table></div></section>` : ''}
+${rows.length ? html`<section aria-labelledby="vx-funded">${sectionHead(ctx, { id: 'vx-funded', title: t('vaccines.funded.all') })}<div class="c-tablewrap" role="region" tabindex="0" aria-label="${t('a11y.scrollTable')}"><table class="c-table"><thead><tr><th scope="col">${t('nav.vaccines')}</th><th scope="col">${t('vaccines.group')}</th><th scope="col">${t('vaccines.schedule')}</th><th scope="col">${t('vaccines.note')}</th></tr></thead><tbody>${rows.map(({ v, r }) => html`<tr><th scope="row"><a href="${hrefFor(ctx, v)}">${L(ctx, v, 'title')}</a></th><td>${r.group}</td><td>${r.schedule}</td><td>${r.note ?? ''}</td></tr>`)}</tbody></table></div></section>` : ''}
 <section class="c-ask-inline">${askBox(ctx, { id: 'vq', size: 'md', task: 'vaccines', placeholder: t('vaccines.ask.ph') })}</section>
 ${feedback(ctx, { page: ctx.path })}`;
 }

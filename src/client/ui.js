@@ -25,6 +25,8 @@ const params = new URLSearchParams(location.search);
 function applyView(v) {
   root.dataset.view = v;
   qsa('[data-view-set][aria-pressed]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.viewSet === v)));
+  // 頂端「民眾／醫事人員」是連結，連結不可用 aria-pressed（ARIA 規範），改以 aria-current 表示目前身分
+  qsa('a.audience__btn[data-view-set]').forEach((a) => { if (a.dataset.viewSet === v) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
   // 專業層：來源卡預設展開
   qsa('.c-source-card').forEach((d) => { if (v === 'pro') d.open = true; else if (d.dataset.autoOpened) { d.open = false; } if (v === 'pro') d.dataset.autoOpened = '1'; else delete d.dataset.autoOpened; });
 }
@@ -37,7 +39,9 @@ document.addEventListener('click', (e) => {
   const el = e.target.closest('[data-view-set]');
   if (!el) return;
   CDC.setView(el.dataset.viewSet);
-  if (el.tagName === 'BUTTON' || (el.getAttribute('href') || '').startsWith('?')) e.preventDefault();
+  // 「民眾」連結：不在專業層固定頁時就地切換不換頁；在 /pro/ 上則放行，讓連結帶使用者回首頁
+  const inPlace = el.classList.contains('audience__btn') && el.dataset.viewSet === 'public' && !root.dataset.forceView;
+  if (el.tagName === 'BUTTON' || inPlace || (el.getAttribute('href') || '').startsWith('?')) e.preventDefault();
 });
 
 /* ───────── 稽核編號與回報（元件 6） ───────── */
@@ -141,7 +145,7 @@ document.addEventListener('click', async (e) => {
 });
 
 /* ───────── 語言切換保留目前路徑（含 ?q= 與 #hash）；填入 ?q= ───────── */
-qsa('.langs a[data-same="1"]').forEach((a) => { a.setAttribute('href', a.getAttribute('href') + location.search + location.hash); });
+qsa('a[data-lang-path][data-same="1"]').forEach((a) => { a.setAttribute('href', a.getAttribute('href') + location.search + location.hash); });
 qsa('[data-fill-q]').forEach((i) => { const q = params.get('q'); if (q && !i.value) i.value = q; });
 qsa('[data-fill-param]').forEach((i) => { const v = params.get(i.dataset.fillParam); if (v) i.value = v; });
 

@@ -113,7 +113,7 @@ function batchSection(ctx, b) {
     <label class="adm-check"><input type="checkbox" data-f="warn"> 只看有警告</label>
     <span class="adm-count-note" data-note aria-live="polite"></span>
   </div>
-  <div class="adm-tablewrap"><table class="adm-table imp-table" aria-label="${b.batch} 逐頁轉換結果">
+  <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table imp-table" aria-label="${b.batch} 逐頁轉換結果">
     <caption>每列一個舊頁；信心＝型別對應 .4 + 單位對應 .2 + Markdown 無轉換警告 .2 + 附件全找到 .1 + 無重複 .1。</caption>
     <thead><tr><th scope="col">#</th><th scope="col">來源</th><th scope="col">型別 → 草稿</th><th scope="col">目標（新站）</th><th scope="col" class="num">信心</th><th scope="col">問題</th><th scope="col">建議動作</th></tr></thead>
     <tbody>${r.pages.map((p, i) => {

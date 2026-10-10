@@ -120,7 +120,7 @@ function swatch(kind, unverified = false) {
 function table(ctx, rows) {
   const { t } = ctx; const z = zhAttr(ctx);
   const cols = ['vaccine', 'dose', 'age', 'stage', 'funded', 'group', 'interval', 'note', 'source'];
-  return html`<div class="c-tablewrap"><table class="c-table vxs-table"><caption class="sr-only">${t('vxs.table.t')}</caption><thead><tr>${cols.map((c) => html`<th scope="col">${t(`vxs.col.${c}`)}</th>`)}<th scope="col" class="vxs-jsonly">${t('vxs.col.status')}</th></tr></thead><tbody>
+  return html`<div class="c-tablewrap" role="region" tabindex="0" aria-label="${t('a11y.scrollTable')}"><table class="c-table vxs-table"><caption class="sr-only">${t('vxs.table.t')}</caption><thead><tr>${cols.map((c) => html`<th scope="col">${t(`vxs.col.${c}`)}</th>`)}<th scope="col" class="vxs-jsonly">${t('vxs.col.status')}</th></tr></thead><tbody>
 ${rows.flatMap(({ m, items }) => items.map((i) => html`<tr id="${i.id}" data-sched="${i.id}" data-vaccine="${m.id}">
 <th scope="row">${nameOf(ctx, m)}</th><td${z}>${i.dose ?? labelOf(ctx, i)}</td><td>${ctx.lang === 'zh-TW' ? i.ageLabel : ageRangeLabel(i, t)}</td><td>${t(`vxs.stage.${i.stage}`)}</td>
 <td><span class="c-pill c-pill--${i.funded === 'public' ? 'ok' : i.funded === 'conditional' ? 'info' : 'neutral'}">${t(`vxs.funded.${i.funded}`)}</span>${i.verified === false ? html` <span class="c-pill c-pill--warn">${t('vxs.unverified.badge')}</span>` : ''}</td>

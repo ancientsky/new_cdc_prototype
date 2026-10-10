@@ -209,7 +209,7 @@ vaxmap 現有 `legend.note` 與「實際接種前務必先電洽院所」語意�
 
 ### 4.4 無障礙與多語
 
-- 兩站都以 WCAG 2.1 AA 為目標；vaxmap 有 Playwright 與無障礙測試，本站有無障礙說明頁。深連結按鈕統一標示「開新視窗」：視覺箭頭 ↗＋螢幕閱讀器文字＋`title`（已在 `vaxmapButton()` 實作，七語）。
+- 兩站都以 WCAG 2.2 AA（新版網站無障礙規範）為目標；vaxmap 有 Playwright 與無障礙測試，本站有無障礙說明頁。深連結按鈕統一標示「開新視窗」：視覺箭頭 ↗＋螢幕閱讀器文字＋`title`（已在 `vaxmapButton()` 實作，七語）。
 - 語言：vaxmap 八語（zh-Hant、en、ja、ko、id、vi、th、tl），本站七語（zh-TW、en、ja、tl、vi、id、th）。差一個：**ko**。處理：本站沒有 ko 頁，vaxmap 反向連結 ko 使用者到 `/en/`（見 1.3）；是否增設 ko 由急性傳染病組與公關室依僑外生人數決定。**tl 兩邊都有**。
 - 翻譯狀態標示：本站分「已審核」與「機器翻譯 · 待審核」；vaxmap 的翻譯也是 AI 初稿（`draft`），建議使用同樣的兩段標示用語。
 - 詞彙一致：疫苗與廠牌名稱以本站 `glossary.json`（locked 詞）為準，vaxmap 的 `translate-info.mjs` 詞彙表應由它輸出，避免「肺鏈」「肺炎鏈球菌疫苗」「PCV」各說各話。

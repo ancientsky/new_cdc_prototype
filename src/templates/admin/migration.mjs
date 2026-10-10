@@ -34,7 +34,7 @@ function itemsTable(ctx, r) {
   const { site, url } = ctx;
   const items = [...(r.list.items ?? [])].sort((a, b) => (a.status === 'pending' ? 0 : 1) - (b.status === 'pending' ? 0 : 1));
   const rows = rowsOf(site, r.list, items);
-  return html`<div class="adm-tablewrap"><table class="adm-table mg-items" aria-label="${r.name}的逐筆對照"><caption>每列一個舊頁；狀態為待確認者排在最前面。</caption>
+  return html`<div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table mg-items" aria-label="${r.name}的逐筆對照"><caption>每列一個舊頁；狀態為待確認者排在最前面。</caption>
     <thead><tr><th scope="col">舊標題</th><th scope="col">舊網址</th><th scope="col">狀態</th><th scope="col">核對</th><th scope="col">對應新頁</th><th scope="col">權責單位</th><th scope="col">新增治理要求</th></tr></thead>
     <tbody>${rows.map((x) => html`<tr data-status="${x.status}" data-verified="${x.verified ? 1 : 0}">
       <td><strong>${x.oldTitle}</strong>${x.oldPath ? html`<div class="adm-muted">${x.oldPath}</div>` : ''}<div class="adm-muted">${MIG_TYPE_LABEL[x.oldType] ?? x.oldType}${x.note ? ` · ${x.note}` : ''}</div></td>
@@ -101,7 +101,7 @@ export function render(ctx) {
     <button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" id="mg-expand">全部展開／收合</button>
     <span class="adm-count-note" id="mg-note" aria-live="polite"></span>
   </div>
-  <div class="adm-tablewrap"><table class="adm-table mg-sum" id="mg-table"><caption>每列一份清單（每種傳染病一份）；「方式」：人工＝有人寫過的清單，推導＝由標準疾病頁模板自動產生。</caption>
+  <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table mg-sum" id="mg-table"><caption>每列一份清單（每種傳染病一份）；「方式」：人工＝有人寫過的清單，推導＝由標準疾病頁模板自動產生。</caption>
     <thead><tr><th scope="col">疾病</th><th scope="col">法定類別</th><th scope="col">疾病頁</th><th scope="col" class="num">已移轉</th><th scope="col" class="num">已併入</th><th scope="col" class="num">待移轉</th><th scope="col">進度</th><th scope="col">方式</th><th scope="col">權責單位</th><th scope="col">下載</th></tr></thead>
     ${m.listRows.map((r, i) => html`<tbody class="mg-list" data-list-row="${r.id}" data-has="${r.hasPage == null ? '-' : r.hasPage ? '1' : '0'}" data-mode="${r.derived ? 'derived' : 'curated'}" data-owner="${r.owner ?? ''}" data-pending="${r.c.pending}" data-total="${r.c.total}" data-pct="${r.donePct}" data-name="${r.name}" data-cat="${r.legalCategory ?? 9}" data-order="${i}" data-q="${`${r.name} ${r.nameEn} ${r.slug} ${r.ownerName} ${r.id}`.toLowerCase()}">
       <tr class="mg-list__row">

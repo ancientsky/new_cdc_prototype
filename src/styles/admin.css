@@ -434,11 +434,11 @@ body.adm { background: var(--paper); color: var(--ink); min-height: 100vh; displ
 .adm-who select[aria-readonly="true"] { background: #e5efe9; color: var(--ink-2); cursor: not-allowed; }
 .adm-who__logout { font: inherit; font-size: var(--fs-sm); padding: 4px 12px; border-radius: var(--radius-sm); border: 1px solid #5e8c76; background: transparent; color: #fff; cursor: pointer; }
 .adm-who__logout:hover { background: #5e8c76; }
-.adm-login__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: var(--sp-5); align-items: start; }
+.adm-login__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: var(--sp-5); align-items: start; } /* min(…,100%)：320px 手機不再撐出橫向捲動（WCAG 1.4.10） */
 .adm-login__sso { grid-column: 1 / -1; }
 .adm-login__steps { display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-4); margin: 0 0 var(--sp-4); padding-left: 1.2em; font-size: var(--fs-sm); color: var(--ink-2); }
 .adm-login__steps li { flex: 1 1 180px; }
-.adm-login__accounts .adm-fieldset { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--sp-2); }
+.adm-login__accounts .adm-fieldset { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr)); gap: var(--sp-2); }
 .adm-login__acct { display: flex; gap: var(--sp-2); align-items: flex-start; border: 1px solid var(--line); border-radius: var(--radius-sm); padding: var(--sp-2) var(--sp-3); background: #fff; cursor: pointer; }
 .adm-login__acct:has(input:checked) { border-color: var(--green-700); box-shadow: 0 0 0 2px var(--green-50); }
 .adm-login__acct input { margin-top: 4px; }

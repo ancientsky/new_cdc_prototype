@@ -67,7 +67,7 @@ ${mmrCard(site, url) ?? html`<div class="adm-box adm-box--info"><strong>MMR 事�
   ${['job-result-overdue', 'job-waitlist-expiring', 'job-apply-url-dead', 'tender-award-overdue'].map((k) => html`<span id="${k}" aria-hidden="true"></span>`)}<!-- 招募／採購後台頁的深連結錨點 -->
   <div class="adm-tabs" role="tablist" aria-label="待辦類型">${kinds.map((k, i) => html`<button type="button" role="tab" id="tab-${k}" aria-controls="panel-${k}" aria-selected="${i === 0 ? 'true' : 'false'}" tabindex="${i === 0 ? '0' : '-1'}" data-kind="${k}">${kindName(k)}<span class="adm-count" data-kcount="${k}">${todos.filter((t) => t.kind === k).length}</span></button>`)}</div>
   ${kinds.map((k, i) => { const list = todos.filter((t) => t.kind === k); return html`<div role="tabpanel" id="panel-${k}" aria-labelledby="tab-${k}" data-panel="${k}" ${i === 0 ? '' : 'hidden'}>
-    <div class="adm-tablewrap"><table class="adm-table"><thead><tr><th scope="col">單位</th><th scope="col">內容</th><th scope="col">期限</th><th scope="col">狀態</th><th scope="col">前往</th><th scope="col">處理</th></tr></thead><tbody>${list.map(rowOf)}</tbody></table></div>
+    <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><thead><tr><th scope="col">單位</th><th scope="col">內容</th><th scope="col">期限</th><th scope="col">狀態</th><th scope="col">前往</th><th scope="col">處理</th></tr></thead><tbody>${list.map(rowOf)}</tbody></table></div>
     <p class="adm-empty" data-empty ${list.length ? 'hidden' : ''}>這一類目前沒有待辦。</p></div>`; })}
 </section>`;
 }

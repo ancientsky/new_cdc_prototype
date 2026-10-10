@@ -41,7 +41,7 @@ ${pageHead({
     <button type="button" class="adm-btn adm-btn--ghost" id="l-csv">匯出 CSV</button>
     <span class="adm-count-note" id="l-note" aria-live="polite"></span>
   </div>
-  <div class="adm-tablewrap"><table class="adm-table" id="l-table"><caption>每列一條外部連結；來源內容可點進前台頁面。</caption>
+  <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table" id="l-table"><caption>每列一條外部連結；來源內容可點進前台頁面。</caption>
     <thead><tr><th scope="col">來源內容</th><th scope="col">欄位</th><th scope="col">連結標籤</th><th scope="col">網址</th><th scope="col">最後檢查</th><th scope="col">狀態</th></tr></thead>
     <tbody>${rows.map((r) => html`<tr data-owner="${r.owner}" data-state="${r.status}" data-type="${r.itemType}" data-href="${r.href}" data-key="${r.itemId}|${r.field}" data-q="${`${r.itemId} ${r.itemTitle} ${r.label} ${r.href}`.toLowerCase()}">
       <td>${r.front ? html`<a href="${url(r.front)}">${r.itemTitle}</a>` : r.itemTitle}<div class="adm-muted"><code>${r.itemId}</code> · ${r.ownerName}</div></td>

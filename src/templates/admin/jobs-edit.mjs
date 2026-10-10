@@ -62,7 +62,7 @@ ${pageHead({
         ${text('jf-applyurl', '外部報名網址（選填）', { ph: 'https://…', hint: '留空＝本站（模擬）報名頁；正式站請填外部報名系統。' })}
       </div>
       <div class="adm-field"><span class="adm-label" id="jf-exam-l">甄試方式與日期</span>
-        <div class="adm-tablewrap"><table class="adm-table adm-jf-rows" aria-labelledby="jf-exam-l"><thead><tr><th scope="col">階段</th><th scope="col">日期</th><th scope="col">備註</th><th scope="col"><span class="sr-only">刪除</span></th></tr></thead><tbody id="jf-exam"></tbody></table></div>
+        <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table adm-jf-rows" aria-labelledby="jf-exam-l"><thead><tr><th scope="col">階段</th><th scope="col">日期</th><th scope="col">備註</th><th scope="col"><span class="sr-only">刪除</span></th></tr></thead><tbody id="jf-exam"></tbody></table></div>
         <p><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" id="jf-exam-add">＋ 加一個階段</button></p>
         <span class="adm-hint">甄試日期不得早於報名截止日；日期未定可留空（前台顯示「日期另行公告」）。</span></div>
       <div class="adm-grid adm-grid--2 adm-jf-grid">
@@ -81,7 +81,7 @@ ${pageHead({
       </div>
       <p><button type="button" class="adm-btn adm-btn--sm" id="jf-am-add">加入異動紀錄</button> <span class="adm-muted" id="jf-am-msg" role="status" aria-live="polite"></span></p>
       <div class="adm-field"><span class="adm-label" id="jf-am-l">異動紀錄（amendments，依加入順序；前台依日期新到舊顯示）</span>
-        <div class="adm-tablewrap"><table class="adm-table adm-jf-rows" aria-labelledby="jf-am-l"><thead><tr><th scope="col">日期</th><th scope="col">類型</th><th scope="col">說明</th><th scope="col">字號</th><th scope="col"><span class="sr-only">刪除</span></th></tr></thead><tbody id="jf-am-list"></tbody></table></div>
+        <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table adm-jf-rows" aria-labelledby="jf-am-l"><thead><tr><th scope="col">日期</th><th scope="col">類型</th><th scope="col">說明</th><th scope="col">字號</th><th scope="col"><span class="sr-only">刪除</span></th></tr></thead><tbody id="jf-am-list"></tbody></table></div>
         <span class="adm-hint">已上線的紀錄請不要刪除；寫錯就加一筆「更正」。</span></div>
     </fieldset>
 
@@ -100,14 +100,14 @@ ${pageHead({
         </div>
         <div class="adm-box adm-box--note" role="note"><strong>只公布報名編號與遮罩姓名</strong>姓名只留姓與最後一字，中間以 ○ 遮罩（例：王○明、林○）；報名編號不得是身分證字號。檢核規則與建置完全相同。</div>
         <div class="adm-field"><span class="adm-label" id="jf-adm-l">正取</span>
-          <div class="adm-tablewrap"><table class="adm-table adm-jf-rows" aria-labelledby="jf-adm-l"><thead><tr><th scope="col">序號</th><th scope="col">報名編號</th><th scope="col">遮罩姓名</th><th scope="col"><span class="sr-only">刪除</span></th></tr></thead><tbody id="jf-admitted"></tbody></table></div>
+          <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table adm-jf-rows" aria-labelledby="jf-adm-l"><thead><tr><th scope="col">序號</th><th scope="col">報名編號</th><th scope="col">遮罩姓名</th><th scope="col"><span class="sr-only">刪除</span></th></tr></thead><tbody id="jf-admitted"></tbody></table></div>
           <p><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" id="jf-admitted-add">＋ 正取一列</button> <span class="adm-muted" id="jf-cap" aria-live="polite"></span></p></div>
         <div class="adm-field"><span class="adm-label" id="jf-wl-l">備取</span>
-          <div class="adm-tablewrap"><table class="adm-table adm-jf-rows" aria-labelledby="jf-wl-l"><thead><tr><th scope="col">順位</th><th scope="col">報名編號</th><th scope="col">遮罩姓名</th><th scope="col">有效至</th><th scope="col"><span class="sr-only">刪除</span></th></tr></thead><tbody id="jf-waitlist"></tbody></table></div>
+          <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table adm-jf-rows" aria-labelledby="jf-wl-l"><thead><tr><th scope="col">順位</th><th scope="col">報名編號</th><th scope="col">遮罩姓名</th><th scope="col">有效至</th><th scope="col"><span class="sr-only">刪除</span></th></tr></thead><tbody id="jf-waitlist"></tbody></table></div>
           <p><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" id="jf-waitlist-add">＋ 備取一列</button></p></div>
         ${area('jf-r-note', '報到須知（選填）', '不得含姓名或身分證字號。')}
         <div class="adm-field"><span class="adm-label" id="jf-wlu-l">遞補公告（waitlistUpdates）</span>
-          <div class="adm-tablewrap"><table class="adm-table adm-jf-rows" aria-labelledby="jf-wlu-l"><thead><tr><th scope="col">日期</th><th scope="col">報名編號</th><th scope="col">遮罩姓名</th><th scope="col">說明</th><th scope="col"><span class="sr-only">刪除</span></th></tr></thead><tbody id="jf-wlu"></tbody></table></div>
+          <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table adm-jf-rows" aria-labelledby="jf-wlu-l"><thead><tr><th scope="col">日期</th><th scope="col">報名編號</th><th scope="col">遮罩姓名</th><th scope="col">說明</th><th scope="col"><span class="sr-only">刪除</span></th></tr></thead><tbody id="jf-wlu"></tbody></table></div>
           <p><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" id="jf-wlu-add">＋ 新增遞補公告</button></p>
           <span class="adm-hint">正取放棄時加一筆；不要改動原有正取名單，以保留公告歷程。</span></div>
         <div id="jf-pii" aria-live="polite"></div>

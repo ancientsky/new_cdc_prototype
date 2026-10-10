@@ -33,7 +33,7 @@ ${pageHead({
 
 <section class="adm-card" aria-labelledby="p-h"><h2 id="p-h">標案與階段</h2>
   <p class="adm-card__sub">前台：<a href="${url('/procurement/')}">/procurement/</a>。正式投標一律在政府電子採購網，本站只彙整公告與決標資訊。</p>
-  <div class="adm-tablewrap"><table class="adm-table"><caption>共 ${rows.length} 件標案（建置日 ${site.today}）</caption>
+  <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><caption>共 ${rows.length} 件標案（建置日 ${site.today}）</caption>
     <thead><tr><th scope="col">標案</th><th scope="col">階段</th><th scope="col">採購方式</th><th scope="col" class="num">預算（元）</th><th scope="col">投標截止</th><th scope="col">開標</th><th scope="col">決標</th><th scope="col">採購網</th></tr></thead>
     <tbody>${rows.map((r) => html`<tr data-id="${r.id}" data-stage="${r.stage}">
       <td><a href="${url(r.front)}">${r.title}</a><div class="adm-muted"><code>${r.id}</code> · ${r.tenderNo} · ${r.requestingName} · <a href="${url('/admin/tenders/edit/', { noLang: true })}?id=${r.id}">異動</a></div></td>
@@ -49,7 +49,7 @@ ${pageHead({
 
 <section class="adm-card" aria-labelledby="t-h"><h2 id="t-h">決標逾期待辦（秘書室）</h2>
   <p class="adm-card__sub">開標日起 30 日仍無決標資訊，且標案不是流標或撤銷。完整清單見 <a href="${url('/admin/todos/', { noLang: true })}#tender-award-overdue">連動待辦</a>。</p>
-  ${todos.length ? html`<div class="adm-tablewrap"><table class="adm-table"><thead><tr><th scope="col">標案</th><th scope="col">說明</th><th scope="col">期限</th></tr></thead>
+  ${todos.length ? html`<div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><thead><tr><th scope="col">標案</th><th scope="col">說明</th><th scope="col">期限</th></tr></thead>
     <tbody>${todos.map((t) => html`<tr><td>${t.itemTitle}<div class="adm-muted"><code>${t.itemId}</code></div></td><td>${t.text ?? ''}</td><td>${t.dueAt ?? '—'}${t.dueAt && t.dueAt < site.today ? html` <span class="adm-badge adm-badge--bad">逾期 ${-daysBetween(site.today, t.dueAt)} 日</span>` : ''}</td></tr>`)}</tbody></table></div>`
     : html`<div class="adm-box adm-box--ok"><strong>目前沒有決標逾期</strong>已開標的標案都在 30 日內，或已有決標資訊。</div>`}
 </section>`;

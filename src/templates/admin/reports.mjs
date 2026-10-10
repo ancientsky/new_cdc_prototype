@@ -21,7 +21,7 @@ ${pageHead({ title: '回報', what: '民眾在前台答案頁或內容頁按「�
     <div class="adm-field"><label for="r-scope">範圍</label><select id="r-scope"><option value="unit">我的單位</option><option value="all">全部單位</option></select></div>
     <button type="button" class="adm-btn adm-btn--ghost" id="r-csv">匯出 CSV</button><button type="button" class="adm-btn adm-btn--ghost" id="r-json">匯出 JSON</button><button type="button" class="adm-btn adm-btn--ghost" id="r-demo">加入 1 筆示範回報</button>
     <span class="adm-count-note" id="r-count" aria-live="polite"></span></div>
-  <div class="adm-tablewrap"><table class="adm-table"><thead><tr><th scope="col">時間</th><th scope="col">稽核編號</th><th scope="col">頁面</th><th scope="col">問題／回報內容</th><th scope="col">對應 Steward</th><th scope="col">狀態</th></tr></thead><tbody id="r-body"></tbody></table></div>
+  <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><thead><tr><th scope="col">時間</th><th scope="col">稽核編號</th><th scope="col">頁面</th><th scope="col">問題／回報內容</th><th scope="col">對應 Steward</th><th scope="col">狀態</th></tr></thead><tbody id="r-body"></tbody></table></div>
   <p class="adm-empty" id="r-empty" hidden>目前這個瀏覽器沒有回報紀錄。到前台答案頁（/ask/）或內容頁按「回報錯誤」送出一筆，或按上方「加入 1 筆示範回報」。</p>
 </section>
 ${dataScript('adm-report-data', { pages: pageMap, fallbackOwner: { owner: 'unit.oasis', ownerName: unitName('unit.oasis') } })}`;

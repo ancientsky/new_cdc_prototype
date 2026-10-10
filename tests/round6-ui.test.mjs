@@ -166,7 +166,7 @@ test('國際合作子頁：沿用 page 模板，加同系列子頁導覽、上�
 /* ───────── 導覽：主選單、footer、about、developers ───────── */
 test('導覽：en 主選單有 International Cooperation，zh-TW 主選單沒有；footer 與 /about/、/developers/ 都連到 /international/', () => {
   const site = mkIntlSite();
-  const nav = (h) => h.match(/<nav id="main-nav"[\s\S]*?<\/nav>/)[0];
+  const nav = (h) => h.match(/<nav id="main-nav"[\s\S]*?<\/nav>/)[0].replace(/<div class="wrap c-nav__langs">[\s\S]*$/, '');
   const en = fullPage(intl, ictx(site, 'en'));
   const zh = fullPage(intl, ictx(site, 'zh-TW'));
   assert.match(nav(en), /<a href="\/new_cdc_prototype\/en\/international\/"[^>]*>International Cooperation<\/a>/);

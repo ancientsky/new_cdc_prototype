@@ -64,7 +64,8 @@ export function enhanceImages(htmlStr, opts = {}) {
  */
 export function md(markdown, opts = {}) {
   if (!markdown) return '';
-  const html = enhanceImages(sanitize(marked.parse(cjkStrong(markdown))), opts);
+  // 無障礙：程式碼區塊可能橫向溢出，鍵盤使用者要能 Tab 進去捲動（WCAG 2.1.1；axe scrollable-region-focusable）
+  const html = enhanceImages(sanitize(marked.parse(cjkStrong(markdown))), opts).replace(/<pre>/g, '<pre tabindex="0">');
   return config.basePath ? html.replace(/(\s(?:href|src)=")\/(?!\/)/g, `$1${config.basePath}/`) : html;
 }
 

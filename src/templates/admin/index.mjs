@@ -80,7 +80,7 @@ ${pageHead({ title: '治理儀表板', what: '署內治理的一頁總覽：品�
 
 <section class="adm-card" aria-labelledby="kpi-h"><h2 id="kpi-h">品質指標（規劃 7.5）</h2>
   <p class="adm-card__sub">目前值由引擎計算；條的深色刻度＝第一年目標。第一年／第三年目標為規劃文件設定值。</p>
-  <div class="adm-tablewrap"><table class="adm-table"><caption>資料來源：/v1/governance/kpi.json（建置日 ${site.today}）</caption>
+  <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><caption>資料來源：/v1/governance/kpi.json（建置日 ${site.today}）</caption>
     <thead><tr><th scope="col">指標</th><th scope="col" class="num">目前</th><th scope="col" class="num">第一年目標</th><th scope="col" class="num">第三年目標</th><th scope="col">進度</th><th scope="col">說明</th></tr></thead>
     <tbody>${kpi.map((k) => {
       const pr = kpiProgress(k);
@@ -97,7 +97,7 @@ ${pageHead({ title: '治理儀表板', what: '署內治理的一頁總覽：品�
 <div class="adm-split adm-split--even">
 <section class="adm-card" aria-labelledby="td-h"><h2 id="td-h">待辦：依類型與單位</h2>
   <p class="adm-card__sub">待辦由引擎依欄位產生，不靠人記得。完成後（示範）只在本機標記，正式環境以 PR 更新欄位後待辦自然消失。 <span id="dash-done"></span></p>
-  ${todos.length ? html`<div class="adm-tablewrap"><table class="adm-table"><thead><tr><th scope="col">單位</th>${kinds.map((k) => html`<th scope="col" class="num">${kindName(k)}</th>`)}<th scope="col" class="num">合計</th></tr></thead>
+  ${todos.length ? html`<div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><thead><tr><th scope="col">單位</th>${kinds.map((k) => html`<th scope="col" class="num">${kindName(k)}</th>`)}<th scope="col" class="num">合計</th></tr></thead>
     <tbody>${[...new Set(todos.map((t) => t.owner))].map((o) => html`<tr><th scope="row" style="font-weight:600">${todos.find((t) => t.owner === o).ownerName}</th>${kinds.map((k) => { const n = todos.filter((t) => t.owner === o && t.kind === k).length; return html`<td class="num">${n || html`<span class="adm-muted">0</span>`}</td>`; })}<td class="num"><strong>${todos.filter((t) => t.owner === o).length}</strong></td></tr>`)}
     <tr><th scope="row">合計</th>${kinds.map((k) => html`<td class="num"><strong>${todos.filter((t) => t.kind === k).length}</strong></td>`)}<td class="num"><strong>${todos.length}</strong></td></tr></tbody></table></div>
     <p><a class="adm-btn adm-btn--ghost adm-btn--sm" href="${url('/admin/todos/', { noLang: true })}">處理待辦 →</a></p>` : html`<div class="adm-box adm-box--ok"><strong>目前沒有系統待辦</strong>所有內容都在審閱期內、沒有失效或依據已修訂。</div>`}

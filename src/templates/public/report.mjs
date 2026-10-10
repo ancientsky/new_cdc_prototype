@@ -66,7 +66,7 @@ export function render(ctx) {
   <nav class="c-chips-wrap" aria-label="${t('report.table.t')}"><ul class="c-chips c-chips--wrap">${table.map((g) => html`<li><a class="c-chip" href="#category-${g.category}">${t('disease.cat', { n: g.category })} (${g.diseases.length})</a></li>`)}</ul></nav>
   ${table.map((g) => html`<section class="c-notifycat" id="category-${g.category}" aria-labelledby="h-category-${g.category}">
     <h3 id="h-category-${g.category}">${t('disease.cat', { n: g.category })} <span class="c-pill c-pill--info">${g.hours.length ? g.hours.map((h) => hoursText(ctx, h)).join(' / ') : t('report.within.rule')}</span></h3>
-    <div class="c-tablewrap"><table class="c-table c-notifytable"><caption class="sr-only">${t('disease.cat', { n: g.category })}</caption>
+    <div class="c-tablewrap" role="region" tabindex="0" aria-label="${t('a11y.scrollTable')}"><table class="c-table c-notifytable"><caption class="sr-only">${t('disease.cat', { n: g.category })}</caption>
       <thead><tr><th scope="col">${t('report.col.name')}</th><th scope="col">${t('report.col.en')}</th><th scope="col">${t('report.col.within')}</th><th scope="col">${t('report.col.page')}</th><th scope="col">${t('report.col.casedef')}</th><th scope="col">${t('report.col.lab')}</th></tr></thead>
       <tbody>${g.diseases.map((d) => {
     const page = diseasePage(ctx, d.id);

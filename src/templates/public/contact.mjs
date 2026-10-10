@@ -47,7 +47,7 @@ function unitsColumn(ctx) {
   const units = (site.master.units ?? []).filter((u) => u.kind !== 'committee');
   return html`<section class="c-contact__col" aria-labelledby="ct-2"><h2 id="ct-2">${t('contact.units')}</h2>
   <p class="muted">${t('contact.units.note')}</p>
-  <div class="c-tablewrap"><table class="c-table c-table--units"><thead><tr><th scope="col">${t('contact.units.name')}</th><th scope="col">${t('contact.units.kind')}</th></tr></thead>
+  <div class="c-tablewrap" role="region" tabindex="0" aria-label="${t('a11y.scrollTable')}"><table class="c-table c-table--units"><thead><tr><th scope="col">${t('contact.units.name')}</th><th scope="col">${t('contact.units.kind')}</th></tr></thead>
   <tbody>${units.map((u) => html`<tr><th scope="row"><a href="${ctx.url(unitPath(u))}">${lang === 'zh-TW' ? u.name : (u.nameEn ?? u.name)}</a>${lang === 'zh-TW' && u.nameEn ? html`<br><span class="muted" lang="en">${u.nameEn}</span>` : ''}</th><td>${t(`about.org.${u.kind}`)}</td></tr>`)}</tbody></table></div>
 </section>`;
 }

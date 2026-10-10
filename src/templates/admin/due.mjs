@@ -27,7 +27,7 @@ ${pageHead({ title: '審閱到期', what: '依「最後審閱日 + 審閱週期�
   ${GROUPS.map((g) => {
     const list = rows.filter((r) => g.test(r.daysToReview));
     return html`<div data-group="${g.key}"><h3 class="adm-group-title"><span class="adm-badge adm-badge--${g.tone}">${g.title}</span><span class="adm-count" data-gcount>${list.length}</span><span class="adm-muted">${g.hint}</span></h3>
-    <div class="adm-tablewrap"><table class="adm-table"><thead><tr><th scope="col">內容</th><th scope="col">權責單位</th><th scope="col">最後審閱</th><th scope="col">到期日</th><th scope="col">週期</th><th scope="col">動作</th></tr></thead><tbody>
+    <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><thead><tr><th scope="col">內容</th><th scope="col">權責單位</th><th scope="col">最後審閱</th><th scope="col">到期日</th><th scope="col">週期</th><th scope="col">動作</th></tr></thead><tbody>
     ${list.length ? list.map((r) => html`<tr data-id="${r.id}" data-owner="${r.owner}" data-q="${`${r.id} ${r.title}`.toLowerCase()}">
       <td><span class="adm-title">${r.front ? html`<a href="${url(r.front)}">${r.title}</a>` : r.title}</span><div class="adm-muted"><code>${r.id}</code> · ${TYPE_LABEL[r.type] ?? r.type}</div></td>
       <td>${r.ownerName}</td><td>${r.reviewedAt}</td>

@@ -41,6 +41,16 @@ html[data-view="pro"] .c-public-only{display:none!important}
 .langs a{color:var(--ink-2);text-decoration:none;padding:6px 10px;white-space:nowrap;border-radius:var(--radius-sm)}
 .langs a:hover{background:var(--line-2)}
 .langs a[aria-current="true"]{color:var(--green-900);font-weight:700;background:var(--green-100)}
+/* 第二十四輪：手機語言選單（<details>，不需 JS）。桌機維持橫排；手機換成單一按鈕，展開後七語全列 */
+.langmenu{display:none;position:relative}
+.langmenu__btn{list-style:none;cursor:pointer;padding:6px 10px;border:1px solid var(--line);border-radius:var(--radius-sm);background:#fff;color:var(--ink);min-height:36px;display:inline-flex;align-items:center}
+.langmenu__btn::-webkit-details-marker{display:none}
+.langmenu[open] .langmenu__btn{background:var(--green-50);border-color:var(--green-700)}
+.langmenu__list{position:absolute;left:0;top:calc(100% + 4px);z-index:120;min-width:12rem;background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 6px 20px rgba(0,0,0,.12);padding:var(--sp-1);display:flex;flex-direction:column}
+.langmenu__list a,.c-nav__langs-l a{color:var(--ink-2);text-decoration:none;padding:10px 12px;min-height:44px;box-sizing:border-box;display:flex;align-items:center;border-radius:var(--radius-sm)}
+.langmenu__list a:hover,.c-nav__langs-l a:hover{background:var(--line-2)}
+.langmenu__list a[aria-current="true"],.c-nav__langs-l a[aria-current="true"]{color:var(--green-900);font-weight:700;background:var(--green-100)}
+.c-nav__langs{display:none}
 .topbar__links{display:flex;gap:var(--sp-4);white-space:nowrap}
 .topbar__links a{color:var(--ink-2);text-decoration:none}
 .topbar__links a:hover{text-decoration:underline}
@@ -57,7 +67,7 @@ html[data-view="pro"] .c-public-only{display:none!important}
 .audience{display:flex;background:var(--paper);border-radius:var(--radius-pill);padding:4px;gap:2px}
 .audience__btn{border:0;background:transparent;padding:8px 16px;border-radius:var(--radius-pill);font:inherit;font-size:var(--fs-sm);color:var(--ink);text-decoration:none;cursor:pointer;white-space:nowrap}
 .audience__btn:hover{background:var(--line-2)}
-.audience__btn[aria-pressed="true"]{background:var(--green-700);color:#fff;font-weight:700}
+.audience__btn[aria-current="page"],.audience__btn[aria-pressed="true"]{background:var(--green-700);color:#fff;font-weight:700}
 .c-nav__toggle{display:none;border:1px solid var(--line);background:#fff;border-radius:var(--radius-sm);padding:8px 14px;font:inherit;cursor:pointer}
 .c-nav{border-top:1px solid var(--line-2);background:#fff}
 .c-nav__in{display:flex;gap:var(--sp-1);overflow-x:auto;scrollbar-width:none}
@@ -94,12 +104,20 @@ html[data-view="pro"] .c-public-only{display:none!important}
   .c-nav a{border-bottom:1px solid var(--line-2);border-left:3px solid transparent}
   .c-nav a[aria-current="page"]{border-bottom-color:var(--line-2);border-left-color:var(--green-700)}
   .c-nav__toggle{display:inline-block}
+  .c-nav__langs{display:block;padding-top:var(--sp-3);padding-bottom:var(--sp-3);border-top:1px solid var(--line-2)}
+  .c-nav__langs-t{margin:0 0 var(--sp-2);font-weight:700;color:var(--ink-2);font-size:var(--fs-sm)}
+  .c-nav__langs-l{display:flex;flex-direction:column}
+  .c-nav .c-nav__langs-l a{border-bottom:0;border-left:0;white-space:normal}
   .site-header__in{min-height:64px}
 }
 @media (max-width:720px){
   .wrap{padding:0 var(--sp-4)}
   h1{font-size:var(--fs-xl)} h2{font-size:var(--fs-lg)}
   .topbar__links a:not(.hotline){display:none}
+  .topbar__in{flex-wrap:wrap}
+  .topbar__links{white-space:normal;min-width:0}
+  .langs--inline{display:none}
+  .langmenu{display:block}
   .audience{order:3;width:100%;justify-content:space-between}
   .audience__btn{flex:1 1 0;min-width:0;white-space:normal;line-height:1.25;text-align:center;padding:8px 6px;font-size:var(--fs-xs);display:flex;align-items:center;justify-content:center}
   .site-header__in{padding-top:var(--sp-2);padding-bottom:var(--sp-2)}

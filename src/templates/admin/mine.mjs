@@ -18,7 +18,7 @@ ${pageHead({ title: '我的內容', what: '右上切換單位後，這裡列出�
     <div class="adm-field"><label for="m-status">狀態</label><select id="m-status"><option value="">全部</option>${Object.entries(STATUS_LABEL).map(([k, v]) => html`<option value="${k}">${v}</option>`)}<option value="attn">需處理（逾期／失效／依據已修訂／稽核）</option></select></div>
     <span class="adm-count-note" id="m-count" aria-live="polite"></span>
   </div>
-  <div class="adm-tablewrap"><table class="adm-table" id="m-table"><thead><tr><th scope="col">識別碼</th><th scope="col">型別</th><th scope="col">標題</th><th scope="col">生命週期</th><th scope="col">下次審閱</th><th scope="col">AI 白名單</th></tr></thead>
+  <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table" id="m-table"><thead><tr><th scope="col">識別碼</th><th scope="col">型別</th><th scope="col">標題</th><th scope="col">生命週期</th><th scope="col">下次審閱</th><th scope="col">AI 白名單</th></tr></thead>
   <tbody>${rows.map((r) => html`<tr data-owner="${r.owner}" data-status="${r.status}" data-attn="${r.overdue || r.superseded || r.stale || r.audit ? 1 : 0}" data-q="${`${r.id} ${r.title}`.toLowerCase()}">
     <td><code>${r.id}</code></td><td>${TYPE_LABEL[r.type] ?? r.type}</td>
     <td>${r.front ? html`<a href="${url(r.front)}">${r.title}</a>` : r.title}</td>

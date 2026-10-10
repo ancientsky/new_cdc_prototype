@@ -33,7 +33,7 @@ ${pageHead({ title: '資料目錄', what: '全站資產一張表（含新聞稿�
     <button type="button" class="adm-btn adm-btn--ghost" id="c-csv">匯出 CSV</button>
     <span class="adm-count-note" id="c-count" aria-live="polite"></span>
   </div>
-  <div class="adm-tablewrap"><table class="adm-table" id="c-table"><caption>目錄本身就是開放資料：<a href="${url('/v1/catalog.json', { noLang: true })}">/v1/catalog.json</a>、<a href="${url('/v1/datasets.json', { noLang: true })}">/v1/datasets.json</a>（OGDL-1.0）</caption>
+  <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table" id="c-table"><caption>目錄本身就是開放資料：<a href="${url('/v1/catalog.json', { noLang: true })}">/v1/catalog.json</a>、<a href="${url('/v1/datasets.json', { noLang: true })}">/v1/datasets.json</a>（OGDL-1.0）</caption>
     <thead><tr><th scope="col">識別碼</th><th scope="col">名稱</th><th scope="col">類別</th><th scope="col">Owner／Steward</th><th scope="col">正本位置</th><th scope="col">更新頻率／上次更新</th><th scope="col">型別專屬狀態</th><th scope="col">授權</th><th scope="col">敏感等級</th><th scope="col">AI 白名單</th></tr></thead>
     <tbody>${rows.map((r) => {
       const isDs = r.type === 'dataset';
