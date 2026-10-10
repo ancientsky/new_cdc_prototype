@@ -3,7 +3,7 @@
 // 計數朗讀與 320px 排版都要另外驗；自刻只有約 8 KB，全部用原生 form 控制項（checkbox／select），鍵盤與讀屏行為由瀏覽器負責。
 // 載入策略：本檔很小（隨 /search/ 頁載入）；pagefind.js（含 WebAssembly）與索引分片在第一次搜尋時才由 import() 動態抓取，
 // 所以不計入 js-budget（budget 只沿靜態 import 追，見 scripts/lib/js-budget.mjs 檔頭）。
-// 網址參數：q、type（逗號分隔）、audience（逗號分隔）、unit、year、sort（new|old|空＝相關度）；/ask/ 的「用全文搜尋找…」連到 ?q=。
+// 網址參數：q、type（逗號分隔）、audience（逗號分隔）、unit、year、current（1＝只看現行內容，第三十三輪）、sort（new|old|空＝相關度）；/ask/ 的「用全文搜尋找…」連到 ?q=。
 import { rankedSearch, despaceExcerpt, hasLongCjk } from './search-query.js';
 
 const root = typeof document !== 'undefined' ? document.querySelector('[data-search]') : null;
@@ -30,6 +30,7 @@ function init() {
   const sortSel = root.querySelector('#search-sort');
   const unitSel = root.querySelector('#search-unit');
   const yearSel = root.querySelector('#search-year');
+  const currentCb = root.querySelector('#search-current');
   const fsType = root.querySelector('[data-filter="type"]');
   const fsAud = root.querySelector('[data-filter="audience"]');
 
@@ -44,11 +45,11 @@ function init() {
   const csv = (s) => (s ? s.split(',').filter(Boolean) : []);
   function readUrl() {
     const p = new URLSearchParams(location.search);
-    return { q: (p.get('q') ?? '').trim(), type: csv(p.get('type')), audience: csv(p.get('audience')), unit: p.get('unit') ?? '', year: p.get('year') ?? '', sort: ['new', 'old'].includes(p.get('sort')) ? p.get('sort') : '' };
+    return { q: (p.get('q') ?? '').trim(), type: csv(p.get('type')), audience: csv(p.get('audience')), unit: p.get('unit') ?? '', year: p.get('year') ?? '', current: p.get('current') === '1', sort: ['new', 'old'].includes(p.get('sort')) ? p.get('sort') : '' };
   }
   function readForm() {
     const checked = (name) => [...root.querySelectorAll(`input[type=checkbox][name="${name}"]:checked`)].map((c) => c.value);
-    return { q: input.value.trim(), type: checked('type'), audience: checked('audience'), unit: unitSel.value, year: yearSel.value, sort: sortSel.value };
+    return { q: input.value.trim(), type: checked('type'), audience: checked('audience'), unit: unitSel.value, year: yearSel.value, current: !!currentCb?.checked, sort: sortSel.value };
   }
   function writeUrl(st, push) {
     const p = new URLSearchParams();
@@ -57,6 +58,7 @@ function init() {
     if (st.audience.length) p.set('audience', st.audience.join(','));
     if (st.unit) p.set('unit', st.unit);
     if (st.year) p.set('year', st.year);
+    if (st.current) p.set('current', '1');
     if (st.sort) p.set('sort', st.sort);
     const qs = p.toString();
     const href = `${location.pathname}${qs ? `?${qs}` : ''}`;
@@ -72,9 +74,10 @@ function init() {
     for (const c of root.querySelectorAll('input[type=checkbox][name="audience"]')) c.checked = st.audience.includes(c.value);
     unitSel.value = st.unit;
     yearSel.value = st.year;
+    if (currentCb) currentCb.checked = !!st.current;
     sortSel.value = st.sort;
   }
-  const hasFilter = (st) => !!(st.type.length || st.audience.length || st.unit || st.year);
+  const hasFilter = (st) => !!(st.type.length || st.audience.length || st.unit || st.year || st.current);
 
   /* ───────── Pagefind 載入（第一次搜尋才抓） ───────── */
   function load() {
@@ -166,6 +169,8 @@ function init() {
     if (kind) { const pill = document.createElement('span'); pill.className = 'c-pill c-pill--neutral'; pill.textContent = kind; meta.append(pill); }
     if (d.meta?.unit) meta.append(' ', Object.assign(document.createElement('span'), { textContent: `${T('search.meta.unit')}：${d.meta.unit}` }));
     if (d.meta?.date) { meta.append(' '); const tm = document.createElement('time'); tm.dateTime = d.meta.date; tm.textContent = d.meta.date; meta.append(tm); }
+    // 第三十三輪：歷史新聞稿／依據已修訂 ⇒ 結果列標示（頁面本身也有頁首加註）
+    if (d.meta?.currency) { const b = document.createElement('span'); b.className = 'c-pill c-pill--warn'; b.textContent = d.meta.currency; meta.append(' ', b); }
     const ex = document.createElement('p');
     ex.className = 'c-search__excerpt';
     ex.append(...excerptNodes(d.excerpt ?? ''));
@@ -207,6 +212,7 @@ function init() {
       if (st.audience.length) filters.audience = { any: st.audience };
       if (st.unit) filters.unit = st.unit;
       if (st.year) filters.year = st.year;
+      if (st.current) filters.currency = 'current';
       const opts = { filters };
       if (st.sort) opts.sort = { date: st.sort === 'new' ? 'desc' : 'asc' };
       await ensureOptions();
@@ -241,7 +247,7 @@ function init() {
   const onFilter = () => { const st = readForm(); writeUrl(st, false); run(st); };
   form.addEventListener('change', (e) => { if (e.target !== input) onFilter(); });
   root.querySelector('#search-clear').addEventListener('click', () => {
-    const st = { ...readForm(), type: [], audience: [], unit: '', year: '', sort: '' };
+    const st = { ...readForm(), type: [], audience: [], unit: '', year: '', current: false, sort: '' };
     applyToForm(st); writeUrl(st, false); run(st);
     input.focus();
   });

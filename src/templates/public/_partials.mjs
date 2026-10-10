@@ -175,8 +175,8 @@ export function alerts(ctx, item, { skip = [] } = {}) {
   const zh = ctx.lang === 'zh-TW';
   const out = [];
   for (const a of g.annotations ?? []) {
-    if (!['superseded', 'overdue', 'based-on-revised', 'scheduled', 'archived', 'closed', 'ended', 'unverified'].includes(a.kind) || skip.includes(a.kind)) continue;
-    const cls = a.kind === 'scheduled' || a.kind === 'archived' ? 'info' : a.kind;
+    if (!['superseded', 'overdue', 'based-on-revised', 'scheduled', 'archived', 'closed', 'ended', 'unverified', 'historical'].includes(a.kind) || skip.includes(a.kind)) continue;
+    const cls = a.kind === 'scheduled' || a.kind === 'archived' || a.kind === 'historical' ? 'info' : a.kind;
     let href = null;
     if (a.path) href = ctx.url(a.path);
     else if (a.targetId || a.href) { const tg = site.byId.get(a.targetId ?? a.href); if (tg) href = hrefFor(ctx, tg); }
@@ -188,6 +188,7 @@ export function alerts(ctx, item, { skip = [] } = {}) {
       if (a.kind === 'closed') text = t('notice.closed.msg', { date: fmtDate(a.deadlineAt ?? item.deadlineAt) });
       if (a.kind === 'ended') text = t('topic.ended', { date: fmtDate(a.endAt ?? item.endAt) });
       if (a.kind === 'unverified') text = t('alert.unverified');
+      if (a.kind === 'historical') text = t('alert.historical', { date: fmtDate(a.publishedAt ?? item.publishedAt) });
     }
     out.push(alertBox(cls, html`<strong class="c-alert__t">${t(`alert.${cls}.t`)}</strong> ${text} ${href ? html`<a class="c-alert__go" href="${href}">${t('alert.go')} →</a>` : ''}`));
   }

@@ -56,6 +56,10 @@ export const config = {
     llmModel: 'claude-sonnet-5-5',
     llmModels: ['claude-sonnet-5-5', 'claude-opus-5-5'], // 答案頁下拉可選；第二十三輪起由頁面 data 屬性帶給 llm.js，不在程式寫死
   },
+  // 第三十三輪（ARCHITECTURE §39、guide-staff §37）：新聞稿／通函發布超過幾個月視為「歷史資料」（頁首加註、答案降權、搜尋可排除）
+  consistency: {
+    newsHistoricalMonths: 12,
+  },
   // 第八輪（ARCHITECTURE 16.1）：檔案資產（content/assets/{content-id}/ → dist/files/{content-id}/，公開網址 /files/{content-id}/{file}）
   // 超限、副檔名不在清單、檔數超過 maxFiles ⇒ 建置失敗（scripts/lib/assets.mjs）。後台上架包預檢也讀這裡（site.config.assets）。
   assets: {

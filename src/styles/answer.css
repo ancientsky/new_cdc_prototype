@@ -42,6 +42,7 @@
 .c-cite-pop__t{margin:0 0 var(--sp-2);font-weight:700;color:var(--green-900)}
 .c-translation-badge{display:inline-block;background:var(--warn-bg);color:var(--warn);border-radius:var(--radius-sm);padding:2px var(--sp-3);font-size:var(--fs-sm)}
 .c-answer__termnote,.c-answer__lowconf,.c-answer__lowrel{background:var(--info-bg);color:var(--info);border-radius:var(--radius-sm);padding:var(--sp-2) var(--sp-3);font-size:var(--fs-sm)}
+.c-answer__conflict{margin:var(--sp-2) 0;font-size:var(--fs-sm)}.c-answer__conflict p{margin:0 0 var(--sp-1)}
 .c-answer__llm-status{font-size:var(--fs-sm);color:var(--ink-2)}
 
 /* 元件 4／6：AI 揭露列＋回報 */

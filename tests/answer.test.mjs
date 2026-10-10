@@ -6,6 +6,7 @@ import { loadSite } from '../scripts/lib/load.mjs';
 import { applyGovernance } from '../scripts/lib/governance.mjs';
 import { buildSearchIndex, mdSentences, paragraphs, labtestSentences, serviceStepSentence, transcriptChunks } from '../scripts/lib/index-builder.mjs';
 import { engineFromSite, runEval } from '../eval/run-eval.mjs';
+import { applyConsistency } from '../scripts/lib/consistency.mjs';
 import { createEngine, maskPII, detectInjection, bigrams, tokenize, parseChineseNumber, parseTimeRange, rocDate, INTENT_RULES, REFUSAL_RULES, classifyIntent, normalizeNotifyTable, ageProfileOf, ageHashOf, matchSchedule } from '../src/client/answer/core.js';
 import { judge, groundingOf } from '../src/client/answer/judge.js';
 import { groundingGuard, lockTerms, unlockTerms, llmAnswer } from '../src/client/answer/llm.js';
@@ -14,7 +15,7 @@ let SITE = null;
 function site() {
   if (SITE) return SITE;
   SITE = loadSite(config); SITE.today = '2026-10-01';
-  applyGovernance(SITE); SITE.searchIndex = buildSearchIndex(SITE);
+  applyGovernance(SITE); SITE.searchIndex = buildSearchIndex(SITE); applyConsistency(SITE); // 與 build.mjs 同順序（第三十三輪）
   return SITE;
 }
 const engine = (extra) => engineFromSite(site(), extra);

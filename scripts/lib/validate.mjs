@@ -97,6 +97,7 @@ export function validateSite(site) {
     ['aiStatus', site.governance.aiStatus, 'content/governance/ai-status.json'],
     ['whitelistPolicy', site.governance.whitelist, 'content/governance/whitelist.json'],
     ['evalSet', site.governance.evalSet, 'content/governance/eval-set.json'],
+    ['consistency', site.governance.consistency ?? { version: 1, decisions: [] }, 'content/governance/consistency.json'],
   ]) {
     const v = ajv.compile({ $ref: `https://cdc-prototype/schemas/governance.json#/$defs/${def}` });
     if (!v(obj)) for (const e of v.errors) push(file, `${e.instancePath} ${e.message}`);
@@ -104,6 +105,12 @@ export function validateSite(site) {
 
   // 2. 跨檔參照
   const ids = new Set(site.all.map((i) => i.id));
+  // 第三十三輪：說法一致性判定要指到存在的內容；confirmed 必須指定 prefer 且是兩者之一
+  for (const [i, d] of (site.governance.consistency?.decisions ?? []).entries()) {
+    const f = 'content/governance/consistency.json';
+    for (const k of ['a', 'b']) if (!ids.has(d[k])) push(f, `/decisions/${i}/${k} 指到不存在的內容：${d[k]}`);
+    if (d.decision === 'confirmed' && ![d.a, d.b].includes(d.prefer)) push(f, `/decisions/${i} decision 為 confirmed 時 prefer 必須是 a 或 b`);
+  }
   const dup = site.all.map((i) => i.id).filter((id, i, a) => a.indexOf(id) !== i);
   for (const d of new Set(dup)) errors.push(`重複 id：${d}`);
   const units = new Set(site.master.units.map((u) => u.id));

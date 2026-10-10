@@ -1766,3 +1766,53 @@ Yulun 問「智慧問答和全文搜尋使用的技術請整理比較；加上 L
 - `site.config.mjs` `ai.proxyEndpoint`（預定）：有值時 `callClaude` 改打機關代理，請求為結構化 `{question, lang, view, chunkIds}`，提示詞與金鑰在代理端；無值維持 BYOK 直連（同事示範）或純抽取式。與第三十輪 `forms` 端點同一種「可設定的最底層連線」做法。
 - `retrieve` 候選重排 hook（預定）：混合檢索（BM25 候選 → 向量重排）只在有代理時啟用；沒有代理時 hook 為空、行為不變。詞典詞界（§37）與實體／意圖加權維持硬規則，不交給向量。
 - 評估集預定新增 `paraphrase` 類（口語改寫），用來分辨「補詞彙主檔就能解」與「真的需要向量」的差距；`judge.js` 預留 LLM 裁判選項（離線、需金鑰）。
+
+## 39. 第三十三輪（2026-10-10）：跨內容說法不一致、歷史新聞稿（治理不完整時的安全網）
+
+Yulun 問：資料治理還沒辦法很全面，不同組室上架類似答案、新聞稿有新舊不同的政策建議，智慧問答／全文搜尋／LLM 要怎麼確保使用者拿到最正確的資訊。R2（版本鏈）、R3（`basedOn`）、R4（反向稽核）只管得到**有宣告關係**的內容；這一輪補的是沒宣告的那一塊。同事 SOP 見 [docs/guide-staff.md](docs/guide-staff.md) §37，決策理由見 [docs/architecture-decisions.md](docs/architecture-decisions.md) §26。
+
+### 39.1 建置流程中的位置
+
+`load → validate → applyGovernance（含 R33）→ buildSearchIndex → **applyConsistency** → render → emit → eval`。一致性檢查在答案索引之後，因為比對對象就是答案可能引用的句子；它新增的待辦以 `addLateTodos()` 併入 `site.gov.todos` 並重算 `byOwner`／`summary`。`eval/run-eval.mjs` 的 CLI 與 `tests/answer.test.mjs` 用同樣順序。
+
+### 39.2 R33 歷史新聞稿（`scripts/lib/governance.mjs`）
+
+- 條件：`type ∈ {news, letter}`、`newsType ∉ NOTICE_TYPES`（recruit／procurement／other）、`published`、`publishedAt + consistency.newsHistoricalMonths（預設 12）≤ today`。
+- 結果：`gov.historical = true`、`gov.historicalSince`；R3 已判定 `predatesBasis` 的不重複加註，否則加 `annotations[{kind:'historical', level:'info', publishedAt, path: 疾病頁}]`（`alerts()` 以 info 樣式顯示，非中文用 `alert.historical`）。**不影響白名單**。
+- 答案單元：`historical: true`；`responsible: true`＝作者是該疾病主檔 `owner`。
+
+### 39.3 一致性檢查（`scripts/lib/consistency.mjs`；只有 `numbersByUnit` 放在 `core.js`，因為 LLM 後檢也要用）
+
+- `numbersByUnit(text)`（`core.js`）：去掉完整日期後抽「數字（或範圍）＋單位」，單位正規化（周→週、日→天）。比對與優先序（`conflictBetween`、`preferredOf`、`authorityOf`）只在建置時用，放在 `consistency.mjs`，不增加答案頁 JS（第二十六輪預算 320 KB）。
+- `conflictBetween(a, b)`：bigram（去數字）重疊係數 ≥ `CONSISTENCY.minOverlap`（0.6）、長短比 ≥ 0.5、較短者 ≥ 6 個 bigram，且某個共同單位的數值集合不相交 ⇒ `{unit, a, b, overlap}`。
+- 範圍：同 `diseases`（兩邊都有時取交集）或同 `vaccines`；排除同 `contentId`、同 `family`（版本鏈處理）、句子各自點名不同疾病。候選以 bigram 倒排索引找（df > 400 的 bigram 不用來找候選）。實測 3,521 句、毫秒到秒級。
+- 優先序 `preferredOf(a, b)`：一方日期晚於另一方 `reviewedAt` 且非歷史 ⇒ 較新者（`newer-than-other-review`）；否則 `authorityOf()`（型別基準 `AUTHORITY_BY_TYPE`，權責單位 +8，歷史 −15，未校對 PDF −5）；平手取較新。
+- 判定 `content/governance/consistency.json`（schema `governance.json#/$defs/consistency`；validate 檢查 id 存在、`confirmed` 需 `prefer ∈ {a,b}`）：
+  - `not-conflict` ⇒ 略過（計入 `dismissed`）；
+  - `confirmed` ⇒ 敗方句子從所有答案單元移除（空單元刪除），開 `content-conflict-fix` 待辦；
+  - 無判定 ⇒ 候選：兩邊答案單元加 `conflicts[{id, sentence, unit, prefer:'self'|'other', self, other}]`（`self`／`other`＝`{contentId,title,url,type,owner,ownerName,date,historical,sentence,values}`），兩邊各開一則 `content-conflict` 待辦（`conflictId`）。
+- 輸出：`site.gov.consistency = {candidates, confirmed, dismissed, sentencesCompared, list[]}` → `v1/governance/consistency.json`（OpenAPI 已描述）；建置 log 一行摘要。
+
+### 39.4 答案端（`core.js`）
+
+- `retrieve`：`c.historical && !NEWS_CUE.test(q)` ⇒ 分數 × `HISTORICAL_WEIGHT`（0.4）。`NEWS_CUE`：新聞、記者會、宣布、公布、當時、去年、前年、歷年、歷史、西元／民國年份（後面 6 字內不是「出生」）。
+- `noteConflicts(picked, result)`（`finalizeSentences` 之前）：被選句子命中 `chunk.conflicts[].sentence` ⇒ `result.conflicts[{id, unit, prefer, other, bothShown}]`、`guards` 加 `conflict-noted`；兩句都被選時優先者移到前面。**不刪句**（候選未判定）。
+- `sourceOf()` 帶 `historical`；`render.js` `sourceMeta()` 對歷史來源顯示「歷史新聞稿 · 發布日」；`conflictNotes(result)` 在答案句子上方顯示加註與兩邊連結。
+- 評估集 `conflict` 類（CF001–CF003）；`judge.js` 新增 `expect.conflict`（true／false）與 `expect.noHistoricalFirst`。
+
+### 39.5 LLM 模式（`llm.js`）
+
+- `<source>` 多帶 `type`、`published`、`historical="true"`；新增 `<conflicts><conflict unit prefer prefer_values other other_values/></conflicts>`。
+- `SYSTEM_PROMPT` 第 8 條（歷史新聞稿只在問過去時用、要寫日期）、第 9 條（只用 prefer 的數字、不混用、不自行判定）。
+- `groundingGuard(..., { conflicts })`：句子的同單位數字含敗方值且不含優先值 ⇒ 刪（`conflict-nonpreferred`）。`result.conflicts` 由 `...base` 保留，答案頁照樣加註。
+
+### 39.6 全文搜尋（`_pagefind.mjs`、`search.js`）
+
+- `pagefindFor()` 多回 `currency`：`revised`（`predatesBasis` 或 `stale`）＞ `historical` ＞ `current`；每頁 `data-pagefind-filter="currency:…"`，非 current 另有 `meta currency:<顯示字>`。
+- `/search/` 新增「只看現行內容」核取方塊（網址 `current=1` ⇒ `filters.currency = 'current'`），結果列顯示「歷史資料／依據已修訂」標籤。
+
+### 39.7 測試
+
+`tests/round33-consistency.test.mjs`（共用函式、優先序、repo 內容的候選與判定、confirmed 移句、validate、R33、答案加註與排序、LLM 後檢、Pagefind currency）；`tests/round28-search.test.mjs` 的 `pagefindFor` 期望值加 `currency`。
+
+**JS 預算注意（給資訊室）：** 這輪把比對與優先序放在建置端，答案頁只多了 `numbersByUnit`、`noteConflicts` 與加註字串；含答案引擎的頁最大由 314.1 KB 變成 319.0 KB（預算 320 KB）。下一次要在答案頁加功能，請先處理 `core.js` 未壓縮的技術債（第二十六輪記錄），不要直接調高預算。

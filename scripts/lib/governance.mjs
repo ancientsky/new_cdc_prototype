@@ -128,6 +128,8 @@ export const TODO_KIND_LABELS = {
   'asset-orphan': '未宣告的孤兒檔',
   'post-publish-review': '上線後複核',
   'pdf-unreviewed': 'PDF 機讀版待校對',
+  'content-conflict': '跨內容說法不一致（待權責單位判定）',
+  'content-conflict-fix': '說法不一致已判定，待修正內容',
   'content-unverified': '內容待權責單位確認',
 };
 /** 第二十八輪：verification.status:pending 的待辦期限（自 reviewedAt 起算，日）。一級緊急就醫內容不宜長期掛「待確認」 */
@@ -553,6 +555,21 @@ export function applyGovernance(site) {
           : null,
       };
     }
+
+    // R33 歷史新聞稿（第三十三輪，ARCHITECTURE §39）：新聞稿／通函是「某一天的說法」，超過 newsHistoricalMonths（預設 12 個月）
+    //   且沒有更強的加註（已被 R3 判定早於正本）⇒ gov.historical：頁首藍色「歷史資料」加註、答案端降權並在來源卡標發布日、
+    //   全文搜尋標「歷史資料」並可排除。不退出白名單：「去年說了什麼」仍是合理問題，只是不該被當成現行建議。
+    //   招募／採購／其他公告（NOTICE_TYPES）有自己的截止邏輯（R8），不適用。
+    if (NEWS_TYPES.has(item.type) && !NOTICE_TYPES.has(item.newsType) && item.status === 'published' && item.publishedAt) {
+      const months = cfg.consistency?.newsHistoricalMonths ?? 12;
+      const until = addMonths(String(item.publishedAt).slice(0, 10), months);
+      gov.historical = until <= today;
+      gov.historicalSince = gov.historical ? until : null;
+      if (gov.historical && !gov.predatesBasis) {
+        const dz = (item.diseases ?? []).map((id) => (site.collections.diseases ?? []).find((d) => d.status === 'published' && (d.diseases ?? []).includes(id))).find(Boolean);
+        gov.annotations.push({ kind: 'historical', level: 'info', publishedAt: item.publishedAt, text: `本${item.type === 'letter' ? '通函' : '新聞稿'}發布於 ${String(item.publishedAt).slice(0, 10)}，內容是當時的資訊；現行建議請以${dz ? `「${dz.title}」頁與` : ''}現行文件為準。`, href: null, path: dz ? pathOf(dz) : null });
+      }
+    } else gov.historical = false;
 
     // 白名單（反向稽核後再定案）
     gov.whitelist.tier = allowedPublic.has(item.type) ? 'public' : allowedPro.has(item.type) ? 'pro' : null;
@@ -1409,6 +1426,21 @@ function computeByOwner(site) {
     r.todos++; if (t.overdue) r.todosOverdue++; if (t.severity === 'high') r.todosHigh++;
   }
   return [...map.values()].sort((a, b) => b.todosOverdue - a.todosOverdue || b.todos - a.todos || b.content - a.content || a.unit.localeCompare(b.unit));
+}
+
+/**
+ * 建置後段（答案索引建好之後）才產生的待辦（第三十三輪：scripts/lib/consistency.mjs）用：重新排序待辦、重算各單位與儀表板數字。
+ * todo 物件格式與 addTodo 相同（kindLabel、ownerName、overdue 由這裡補）。
+ */
+export function addLateTodos(site, list) {
+  const unitName = (id) => site.unitById?.get(id)?.name ?? id;
+  const today = site.today;
+  for (const t of list) {
+    site.gov.todos.push({ kindLabel: TODO_KIND_LABELS[t.kind] ?? t.kind, ownerName: unitName(t.owner), overdue: !!t.dueAt && t.dueAt < today, severity: 'medium', ...t });
+  }
+  site.gov.todos.sort((a, b) => (b.overdue - a.overdue) || (a.dueAt ?? '').localeCompare(b.dueAt ?? '') || SEVERITY_RANK[a.severity] - SEVERITY_RANK[b.severity] || a.id.localeCompare(b.id));
+  site.gov.byOwner = computeByOwner(site);
+  site.gov.summary = computeSummary(site);
 }
 
 function computeSummary(site) {

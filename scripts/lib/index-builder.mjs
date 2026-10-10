@@ -84,6 +84,12 @@ function glossaryHits(site, text) {
   return hits;
 }
 
+const ownerCache = new WeakMap();
+function diseaseOwner(site, id) {
+  let m = ownerCache.get(site);
+  if (!m) { m = new Map((site.master?.diseases ?? []).map((d) => [d.id, d.owner])); ownerCache.set(site, m); }
+  return m.get(id) ?? null;
+}
 function diseaseNames(site, ids) {
   const out = [];
   for (const id of ids ?? []) { const d = site.diseaseMasterById.get(id); if (d) out.push(d.name, ...(d.aliases ?? []).filter((a) => a.length >= 2)); }
@@ -338,6 +344,9 @@ export function buildSearchIndex(site) {
       legacyUrl: (item.legacyUrls ?? []).find((u) => !/[{}]/.test(String(u))) ?? null, // 略過 {id} 佔位的舊網址
       terms,
       ...(item.gov?.unverified ? { verification: 'pending' } : {}), // 第二十八輪：來源卡標「內容待權責單位確認」
+      // 第三十三輪（ARCHITECTURE §39）：權威順序用。historical＝超過期限的新聞稿／通函（R33）；responsible＝作者是該疾病主檔的權責單位
+      ...(item.gov?.historical ? { historical: true } : {}),
+      ...((item.diseases ?? []).some((d) => diseaseOwner(site, d) === item.owner) ? { responsible: true } : {}),
       ...extra,
     };
   }

@@ -1,7 +1,7 @@
 // 搜尋即答案頁（/ask/）：掛到 C 的殼 #ask-form／#ask-q、#answer、#answer-side、#ask-advanced、#llm-key。
 // 流程：讀 ?q= → core（抽取式）→ 依意圖渲染 wireframe 第 3 頁區塊 →（有 key 且啟用）LLM 重組或翻譯 → 後檢 → 重新渲染。
 import { loadEngine, currentView, url, esc, v1, LANG } from './data.js';
-import { L, link, isLowRelevance, sentenceList, sourceList, disclosureRow, refusalCard, situationCards, verdictBlock, statsBlock, traditionalList, fullTextLink, wireInteractions, ensureStyles, notifyBlock } from './render.js';
+import { L, link, isLowRelevance, sentenceList, sourceList, disclosureRow, refusalCard, situationCards, verdictBlock, statsBlock, traditionalList, fullTextLink, wireInteractions, ensureStyles, notifyBlock, conflictNotes } from './render.js';
 import './inline.js'; // 頁內問題框（#ask-inline／[data-ask-inline]）→ /ask/
 import { getKey, setKey, getModel, setModel, llmModels, llmAnswer, llmTranslate, purgeLegacyKey, staffSessionActive } from './llm.js';
 
@@ -109,6 +109,7 @@ async function render(r, deps) {
       <h2 id="ans-h">${esc(L('answerH'))} <span class="c-answer__sub">· ${esc(lowRel ? L('lowRelevanceSub') : L('answerSub'))}</span> <span class="c-ai-badge">${esc(L('aiBadge'))}</span></h2>
       ${lowRel ? `<p class="c-answer__lowrel" role="note">${esc(L('lowRelevance'))}</p>` : ''}
       ${tnote ? `<p class="c-translation-badge">${esc(tnote)}</p>` : ''}
+      ${conflictNotes(r)}
       <div${r.translationNote === 'showing-source' ? ' lang="zh-TW"' : ''}>${sentenceList(r, { pro })}</div>
       ${r.llm?.dropped?.length ? `<p class="muted">${esc(L('llmDropped', { n: r.llm.dropped.length }))}</p>` : ''}
     </section>`);

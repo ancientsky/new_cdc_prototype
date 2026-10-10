@@ -16,6 +16,7 @@ import { loadSite, ROOT } from './lib/load.mjs';
 import { validateSite, contentWarnings } from './lib/validate.mjs';
 import { applyGovernance } from './lib/governance.mjs';
 import { buildSearchIndex } from './lib/index-builder.mjs';
+import { applyConsistency } from './lib/consistency.mjs';
 import { emitApi } from './lib/emit-api.mjs';
 import { emitSeo } from './lib/emit-seo.mjs';
 import { emitHeaders } from './lib/emit-headers.mjs';
@@ -81,6 +82,9 @@ async function main() {
 
   // 答案索引只收已上線內容（排程中不進索引）
   site.searchIndex = buildSearchIndex(publicView(site));
+  // 第三十三輪：跨內容說法一致性（ARCHITECTURE §39）。在答案索引上比對，候選寫成待辦並標在答案單元上；已判定的錯句移出索引
+  applyConsistency(site);
+  log(`說法一致性：比對 ${site.gov.consistency.sentencesCompared} 句，待判定 ${site.gov.consistency.candidates} 組、已判定待修正 ${site.gov.consistency.confirmed} 組、判定非矛盾 ${site.gov.consistency.dismissed} 組`);
   log(`答案單元：民眾 ${site.searchIndex.public.length}、專業 ${site.searchIndex.pro.length}`);
 
   const evalReport = await runEval(site);
