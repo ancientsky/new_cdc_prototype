@@ -50,7 +50,7 @@ ${pageHead({
     <a class="adm-btn adm-btn--ghost" href="${url('/admin/publish/?type=media', { noLang: true })}">上架新影音</a>
     <span class="adm-count-note" id="m-note" aria-live="polite"></span>
   </div>
-  <div class="adm-tablewrap"><table class="adm-table" id="m-table"><caption>逐字稿字數不含空白；「過時」＝製作日早於依據正本現行版生效日（優先採引擎的 gov.mediaOutdated，無則由欄位推算）。</caption>
+  <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table" id="m-table"><caption>逐字稿字數不含空白；「過時」＝製作日早於依據正本現行版生效日（優先採引擎的 gov.mediaOutdated，無則由欄位推算）。</caption>
     <thead><tr><th scope="col">影片</th><th scope="col">依據正本</th><th scope="col">製作日</th><th scope="col">是否過時</th><th scope="col">逐字稿</th><th scope="col">字幕</th><th scope="col">反向稽核</th><th scope="col">說明欄</th></tr></thead>
     <tbody>${rows.map((r) => html`<tr data-id="${r.id}" data-owner="${r.owner}" data-q="${`${r.id} ${r.title}`.toLowerCase()}" data-outdated="${r.outdated ? 1 : 0}" data-notr="${r.hasTranscript ? 0 : 1}" data-audit="${r.audit.length ? 1 : 0}" data-nobasis="${r.noBasis ? 1 : 0}">
       <td>${r.front ? html`<a href="${url(r.front)}">${r.title}</a>` : r.title}<div class="adm-muted"><code>${r.id}</code> · ${MTYPE[r.mediaType] ?? r.mediaType}${r.youtubeId ? ` · YouTube ${r.youtubeId}` : ' · 示意海報'}${r.status !== 'published' ? ` · ${r.status}` : ''}</div></td>

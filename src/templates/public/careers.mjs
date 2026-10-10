@@ -191,7 +191,7 @@ function resultBlock(ctx, j) {
   // 備取有效期已過者不再顯示（個資最小化；docs/careers-privacy.md 第 6 節）
   const waitlist = [...(r.waitlist ?? [])].filter((w) => !w.validUntil || String(w.validUntil) >= String(ctx.today)).sort((a, b) => (a.rank ?? 0) - (b.rank ?? 0));
   const updates = j.waitlistUpdates ?? [];
-  const tbl = (cap, head, rows) => html`<div class="c-tablewrap"><table class="c-table c-table--result"><caption class="sr-only">${cap}</caption><thead><tr>${head.map((h) => html`<th scope="col">${h}</th>`)}</tr></thead><tbody>${rows}</tbody></table></div>`;
+  const tbl = (cap, head, rows) => html`<div class="c-tablewrap" role="region" tabindex="0" aria-label="${t('a11y.scrollTable')}"><table class="c-table c-table--result"><caption class="sr-only">${cap}</caption><thead><tr>${head.map((h) => html`<th scope="col">${h}</th>`)}</tr></thead><tbody>${rows}</tbody></table></div>`;
   return html`<section class="c-block c-jobresult" id="result" aria-labelledby="h-result"><h2 id="h-result">${t('job.s.result')}</h2>
   <p class="c-jobresult__meta"><span>${t('job.result.on')} <time datetime="${r.publishedAt}">${fmtDate(r.publishedAt)}</time></span>${r.refNo ? html` · <span>${t('notice.refNo')}：${r.refNo}</span>` : ''}</p>
   <div class="c-alert c-alert--info" role="note"><strong class="c-alert__t">${t('job.result.privacy.t')}</strong> ${t('job.result.privacy')}</div>
@@ -249,7 +249,7 @@ function detail(ctx, j) {
       ${j.salaryNote ? html`<section class="c-block" id="salary" aria-labelledby="h-salary"><h2 id="h-salary">${t('job.s.salary')}</h2><p>${j.salaryNote}</p></section>` : ''}
       ${listBlock(t('job.s.docs'), 'documents', j.requiredDocuments)}
       ${exams.length ? html`<section class="c-block" id="exam" aria-labelledby="h-exam"><h2 id="h-exam">${t('job.s.exam')}</h2>
-        <div class="c-tablewrap"><table class="c-table"><thead><tr><th scope="col">${t('job.col.stage')}</th><th scope="col">${t('job.col.date')}</th><th scope="col">${t('job.col.note')}</th></tr></thead>
+        <div class="c-tablewrap" role="region" tabindex="0" aria-label="${t('a11y.scrollTable')}"><table class="c-table"><thead><tr><th scope="col">${t('job.col.stage')}</th><th scope="col">${t('job.col.date')}</th><th scope="col">${t('job.col.note')}</th></tr></thead>
         <tbody>${exams.map((e) => html`<tr><th scope="row">${e.stage}</th><td>${e.date ? html`<time datetime="${e.date}">${fmtDate(e.date)}</time>` : t('job.tl.tba')}</td><td>${e.note ?? ''}</td></tr>`)}</tbody></table></div></section>` : ''}
       ${j.attachments?.length ? html`<section class="c-block" id="attachments" aria-labelledby="h-att"><h2 id="h-att">${t('news.attach')}</h2><ul class="c-linklist">${j.attachments.map((a) => html`<li>${(isExternal(a.url) ? extLink(ctx, a.url, a.label) : html`<a href="${url(a.url)}">${a.label}</a>`)} ${a.machineReadable ? pill(t('news.attach.mr'), 'ok') : ''}</li>`)}</ul></section>` : ''}
       ${j.contact ? html`<section class="c-block" id="contact" aria-labelledby="h-contact"><h2 id="h-contact">${t('job.s.contact')}</h2><p>${j.contact}</p><p class="muted">${unitLink(ctx, j.owner)}</p></section>` : ''}

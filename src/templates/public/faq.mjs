@@ -29,10 +29,10 @@ ${askBox(ctx, { id: 'fq', size: 'md', placeholder: t('faq.ask.ph') })}
     <button type="button" role="tab" id="tab-ft" aria-controls="panel-ft" aria-selected="false" tabindex="-1">${t('faq.by.task')}</button>
   </div>
   <div class="c-tabs__panel" role="tabpanel" id="panel-fd" aria-labelledby="tab-fd">
-    ${[...byDisease.entries()].map(([d, list]) => { const dm = site.diseaseMasterById.get(d); const page = diseasePage(ctx, d); return html`<section class="c-dis-group"><h3>${page ? html`<a href="${hrefFor(ctx, page)}">${diseaseName(ctx, dm)}</a>` : (dm ? diseaseName(ctx, dm) : t('faq.other'))} <span class="muted">(${list.length})</span></h3><ul class="c-linklist c-linklist--q">${list.map((f) => qLink(ctx, f))}</ul></section>`; })}
+    ${[...byDisease.entries()].map(([d, list]) => { const dm = site.diseaseMasterById.get(d); const page = diseasePage(ctx, d); return html`<section class="c-dis-group"><h2 class="c-dis-group__t">${page ? html`<a href="${hrefFor(ctx, page)}">${diseaseName(ctx, dm)}</a>` : (dm ? diseaseName(ctx, dm) : t('faq.other'))} <span class="muted">(${list.length})</span></h2><ul class="c-linklist c-linklist--q">${list.map((f) => qLink(ctx, f))}</ul></section>`; })}
   </div>
   <div class="c-tabs__panel" role="tabpanel" id="panel-ft" aria-labelledby="tab-ft" data-initial-hidden>
-    ${byTask.map(([task, list]) => html`<section class="c-dis-group"><h3><a href="${ctx.url(`/tasks/${task.key}/`)}">${t(`task.${task.key}.label`)}</a> <span class="muted">(${list.length})</span></h3><ul class="c-linklist c-linklist--q">${list.map((f) => qLink(ctx, f))}</ul></section>`)}
+    ${byTask.map(([task, list]) => html`<section class="c-dis-group"><h2 class="c-dis-group__t"><a href="${ctx.url(`/tasks/${task.key}/`)}">${t(`task.${task.key}.label`)}</a> <span class="muted">(${list.length})</span></h2><ul class="c-linklist c-linklist--q">${list.map((f) => qLink(ctx, f))}</ul></section>`)}
   </div>
 </div>
 ${faqs.length ? '' : html`<p class="c-empty">${t('none')}</p>`}`;

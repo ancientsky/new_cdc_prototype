@@ -507,7 +507,7 @@ const datalist = (ctx, id, countries) => html`<datalist id="${id}">${countries.m
 export function quickLookup(ctx, { id = 'tq' } = {}) {
   const { site, t, url } = ctx;
   const countries = site.master.countries ?? [];
-  return html`<form class="tv-quick" action="${url('/travel/')}" method="get" role="search" data-tv-quick>
+  return html`<form class="tv-quick" action="${url('/travel/')}" method="get" role="search" aria-label="${t('travel.lookup.label')}" data-tv-quick>
   <label for="${id}-q" class="sr-only">${t('travel.lookup.label')}</label>
   <input id="${id}-q" name="q" class="c-input" type="search" list="${id}-list" autocomplete="off" placeholder="${t('travel.lookup.ph')}">
   ${datalist(ctx, `${id}-list`, countries)}
@@ -534,7 +534,7 @@ function lookupSection(ctx, model) {
   return html`<section class="tv-lookup tv-lookup--hero" id="tv-lookup" aria-labelledby="tv-lk-h" data-tv-lookup>
   <h2 id="tv-lk-h">${t('travel.lookup.t')}</h2>
   <p class="tv-lookup__sub">${t('travel.lookup.sub')}</p>
-  <form class="tv-lookup__form" action="${url('/travel/')}" method="get" role="search">
+  <form class="tv-lookup__form" action="${url('/travel/')}" method="get" role="search" aria-label="${t('travel.lookup.t')}">
     <label for="tv-q" class="sr-only">${t('travel.lookup.label')}</label>
     <input id="tv-q" class="c-input" type="search" list="tv-list" autocomplete="off" placeholder="${t('travel.lookup.ph')}" aria-describedby="tv-lk-msg">
     ${datalist(ctx, 'tv-list', countries)}

@@ -56,7 +56,7 @@ export function render(ctx) {
     <div class="c-tabs__list" role="tablist" aria-label="${t('diseases.by')}">${tabs.map((tb, i) => html`<button type="button" role="tab" id="tab-${tb.id}" aria-controls="panel-${tb.id}" aria-selected="${i === 0 ? 'true' : 'false'}" tabindex="${i === 0 ? '0' : '-1'}">${tb.label}</button>`)}</div>
     <div id="dis-lists">${tabs.map((tb, i) => html`<div class="c-tabs__panel" role="tabpanel" id="panel-${tb.id}" aria-labelledby="tab-${tb.id}" ${i ? raw('data-initial-hidden') : ''}>
       <h2 class="c-tabs__print">${tb.label}</h2>
-      ${tb.groups.map(([k, list]) => html`<section class="c-dis-group" data-filter-group><h3>${k} <span class="muted">(${list.length})</span></h3><ul class="c-dis-list">${list.map((d) => row(ctx, d))}</ul></section>`)}
+      ${tb.groups.map(([k, list]) => html`<section class="c-dis-group" data-filter-group><h2 class="c-dis-group__t">${k} <span class="muted">(${list.length})</span></h2><ul class="c-dis-list">${list.map((d) => row(ctx, d))}</ul></section>`)}
     </div>`)}</div>
   </div>
 </div>`;

@@ -40,7 +40,7 @@ function listPage(ctx) {
       const sorted = [...vols.entries()].sort((a, b) => num(b[0]) - num(a[0]));
       return html`<section class="c-block" id="${id}" aria-labelledby="h-${id}"><h2 id="h-${id}">${series} <span class="c-pill c-pill--neutral">${list.length}</span></h2>
         ${sorted.map(([v, ps]) => html`<h3 class="c-pubvol">${t('publications.volume', { n: v })}</h3>
-        <div class="c-tablewrap"><table class="c-table c-table--pub"><caption class="sr-only">${series} ${t('publications.volume', { n: v })}</caption><thead><tr><th scope="col">${t('publications.issue')}</th><th scope="col">${t('publications.date')}</th><th scope="col">${t('publications.articles')}</th><th scope="col">${t('publications.pdf')}</th></tr></thead>
+        <div class="c-tablewrap" role="region" tabindex="0" aria-label="${t('a11y.scrollTable')}"><table class="c-table c-table--pub"><caption class="sr-only">${series} ${t('publications.volume', { n: v })}</caption><thead><tr><th scope="col">${t('publications.issue')}</th><th scope="col">${t('publications.date')}</th><th scope="col">${t('publications.articles')}</th><th scope="col">${t('publications.pdf')}</th></tr></thead>
         <tbody>${ps.sort((a, b) => num(b.issue) - num(a.issue)).map((p) => html`<tr><th scope="row"><a href="${hrefFor(ctx, p)}"${isFallbackLink(ctx, p) ? raw(' lang="zh-TW"') : ''}>${volIssue(p)}</a></th><td>${fmtDate(p.publishedAt)}</td><td>${p.articles?.length ?? '—'}</td><td>${p.pdfUrl ? extLink(ctx, /^https?:/.test(p.pdfUrl) ? p.pdfUrl : ctx.url(p.pdfUrl), 'PDF') : '—'}</td></tr>`)}</tbody></table></div>`)}
       </section>`;
     }
@@ -80,7 +80,7 @@ function detail(ctx, p) {
   <div class="c-cols c-cols--2">
     <div class="c-cols__main">
       <section class="c-block" aria-labelledby="bib-h"><h2 id="bib-h">${t('publications.bib')}</h2>
-        <div class="c-tablewrap"><table class="c-table c-table--bib"><tbody>${rows.map(([k, v]) => html`<tr><th scope="row">${k}</th><td>${v}</td></tr>`)}</tbody></table></div>
+        <div class="c-tablewrap" role="region" tabindex="0" aria-label="${t('a11y.scrollTable')}"><table class="c-table c-table--bib"><tbody>${rows.map(([k, v]) => html`<tr><th scope="row">${k}</th><td>${v}</td></tr>`)}</tbody></table></div>
         <p class="c-cite-text muted"><span class="sr-only">${t('publications.cite')}：</span><code>${cite}</code></p>
       </section>
       ${abs ? html`<section class="c-block" aria-labelledby="abs-h"><h2 id="abs-h">${t('publications.abstract')}</h2><div class="c-prose">${raw(md(abs))}</div></section>` : ''}

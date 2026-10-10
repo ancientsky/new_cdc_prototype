@@ -50,7 +50,7 @@ ${pageHead({
   </div>
   <div class="adm-tabs" role="tablist" aria-label="公告類型">${TABS.map(([k, l], i) => html`<button type="button" role="tab" id="ntab-${k}" aria-controls="npanel-${k}" aria-selected="${i === 0 ? 'true' : 'false'}" tabindex="${i === 0 ? '0' : '-1'}" data-kind="${k}">${l}<span class="adm-count" data-kcount="${k}">${rows.filter((r) => r.newsType === k).length}</span></button>`)}</div>
   ${TABS.map(([k, l], i) => { const list = rows.filter((r) => r.newsType === k); return html`<div role="tabpanel" id="npanel-${k}" aria-labelledby="ntab-${k}" data-panel="${k}" ${i === 0 ? '' : 'hidden'}>
-    <div class="adm-tablewrap"><table class="adm-table"><caption>${NEWS_SUBTYPE_LABEL[k]}；前台頁面 <a href="${url('/notices/')}">/notices/</a></caption>
+    <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><caption>${NEWS_SUBTYPE_LABEL[k]}；前台頁面 <a href="${url('/notices/')}">/notices/</a></caption>
       <thead><tr><th scope="col">標題／字號</th><th scope="col">截止日</th><th scope="col">倒數</th><th scope="col">${k === 'procurement' ? '預算' : k === 'recruit' ? '名額' : '備註'}</th><th scope="col">報名／投標</th><th scope="col">狀態</th><th scope="col">處理</th></tr></thead>
       <tbody>${list.map((n) => html`<tr data-id="${n.id}" data-owner="${n.owner}" data-closed="${n.closed ? 1 : 0}" data-archived="${n.archived ? 1 : 0}" data-soon="${n.closingSoon && !n.closed ? 1 : 0}" data-open="${n.open ? 1 : 0}">
         <td>${n.front ? html`<a href="${url(n.front)}">${n.title}</a>` : n.title}<div class="adm-muted"><code>${n.id}</code>${n.refNo ? html` · ${n.refNo}` : ''}</div></td>

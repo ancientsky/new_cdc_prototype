@@ -118,9 +118,11 @@
 .c-carousel__ctl{display:flex;align-items:center;gap:var(--sp-2);flex-wrap:wrap;margin-left:auto}
 .c-carousel__btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:20px;line-height:1;cursor:pointer;color:var(--ink)}
 .c-carousel__btn:hover{background:var(--green-50);border-color:var(--green-700)}
-.c-carousel__dots{display:flex;gap:6px}
-.c-carousel__dot{width:12px;height:12px;border-radius:50%;border:2px solid var(--green-700);background:#fff;padding:0;cursor:pointer}
-.c-carousel__dot[aria-current="true"]{background:var(--green-700)}
+/* 無障礙（WCAG 2.2 SC 2.5.8 目標尺寸）：點擊區 24×24 px、相鄰間距 8px；視覺上仍是 12px 圓點，由 ::before 畫 */
+.c-carousel__dots{display:flex;gap:8px;align-items:center}
+.c-carousel__dot{box-sizing:border-box;width:24px;height:24px;min-width:24px;border-radius:50%;border:0;background:transparent;padding:0;cursor:pointer;position:relative}
+.c-carousel__dot::before{content:"";position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;box-sizing:border-box;border-radius:50%;border:2px solid var(--green-700);background:#fff}
+.c-carousel__dot[aria-current="true"]::before{background:var(--green-700)}
 .c-carousel__play{border:1px solid var(--line);background:#fff;border-radius:var(--radius-pill);padding:4px 12px;font:inherit;font-size:var(--fs-xs);cursor:pointer}
 .c-carousel__play[aria-pressed="true"]{background:var(--green-100);border-color:var(--green-700)}
 .c-carousel__count{font-size:var(--fs-xs);color:var(--ink-3)}
@@ -269,7 +271,8 @@
 .c-chartbox__src{margin:var(--sp-2) 0 0;font-size:var(--fs-sm);color:var(--ink-3)}
 .c-vaccine .c-askband{margin-top:0}
 .c-answerbox{background:var(--green-50);border:1px solid #bfd6c8;border-radius:var(--radius);padding:var(--sp-4) var(--sp-5);margin-bottom:var(--sp-5)}
-.c-dis-group{margin-bottom:var(--sp-5)} .c-dis-group h3{padding-bottom:6px;border-bottom:2px solid var(--green-100)}
+/* 第二十四輪：群組標題由 h3 升為 h2（h1 後不可直接跳 h3，WCAG 1.3.1）；視覺維持原本 h3 的大小，所以用 class 而非標籤選擇器 */
+.c-dis-group{margin-bottom:var(--sp-5)} .c-dis-group__t{font-size:var(--fs-lg);padding-bottom:6px;border-bottom:2px solid var(--green-100)}
 .c-dis-list{list-style:none;padding:0;margin:0}
 .c-dis{display:flex;justify-content:space-between;gap:var(--sp-3);flex-wrap:wrap;padding:var(--sp-3) 0;border-bottom:1px solid var(--line-2)}
 .c-dis__name{font-weight:700} .c-dis__en{color:var(--ink-3);font-size:var(--fs-sm)}
@@ -334,6 +337,7 @@ html:not(.js) .c-tabs__print{display:block}
 .c-catalog__res ul{margin:6px 0;padding-left:1.2em}
 .c-catalog__name{font-weight:700}
 .c-v1list{columns:2;list-style:none;padding:0;margin:0 0 var(--sp-3)}
+.c-v1list a{display:inline-block;min-height:24px;padding:2px 0;line-height:1.5} /* 2.5.8：連結列至少 24px 高 */
 .c-apicard{margin-top:var(--sp-6)}
 .c-sitemap{columns:3 280px;column-gap:var(--sp-6)} .c-sitemap__g{break-inside:avoid;margin-bottom:var(--sp-5)} .c-sitemap__g h2{font-size:var(--fs-lg)}
 .c-notfound{text-align:center;max-width:640px;margin:var(--sp-7) auto}

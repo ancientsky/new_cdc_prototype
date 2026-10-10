@@ -126,7 +126,7 @@ for (const it of data.items) console.log(it.diseaseName, it.status, it.metricVal
   <section id="quick" aria-labelledby="quick-h">
     <h2 id="quick-h">快速開始</h2>
     <p>所有端點都是靜態 JSON，直接 GET 即可；原型部署在 GitHub Pages，免註冊、免金鑰。</p>
-    <pre><code>${curl}</code></pre>
+    <pre tabindex="0"><code>${curl}</code></pre>
     <p>Base URL：<code>${origin}/v1/</code>。完整描述檔：<a href="${url('/openapi.json', { noLang: true })}">openapi.json</a>。</p>
   </section>
 
@@ -152,7 +152,7 @@ for (const it of data.items) console.log(it.diseaseName, it.status, it.metricVal
       const link = ep.example ?? ep.path;
       return html`<details class="pf-ep"><summary><span class="pf-get">GET</span> <code>${ep.path}</code> <span class="muted">${ep.desc}</span></summary><div>
         <p><a href="${url(link, { noLang: true })}">開啟 ${link}</a></p>
-        ${sample ? html`<pre><code>${sample}</code></pre>` : html`<p class="muted">${ep.raw ? 'OpenAPI 3.1 JSON，欄位定義請直接開啟。' : '建置時依內容產生；目前沒有可顯示的範例資料。'}</p>`}
+        ${sample ? html`<pre tabindex="0"><code>${sample}</code></pre>` : html`<p class="muted">${ep.raw ? 'OpenAPI 3.1 JSON，欄位定義請直接開啟。' : '建置時依內容產生；目前沒有可顯示的範例資料。'}</p>`}
       </div></details>`;
     })}
   </section>
@@ -179,7 +179,7 @@ for (const it of data.items) console.log(it.diseaseName, it.status, it.metricVal
       <li><strong>RSS / Atom</strong>：<a href="${url('/feeds/documents.xml', { noLang: true })}"><code>/feeds/documents.xml</code></a>。文件新版發布、現行版異動、舊版失效各產生一則，內容含 id、版次、生效日、取代關係與異動摘要。</li>
       <li><strong>Webhook（規劃，第二階段）</strong>：訂閱者登錄回呼網址後，在文件新版發布、AI 暫停／恢復、疫情發布時收到下列 JSON。原型尚未提供，格式如下供介接預先設計。</li>
     </ul>
-    <pre><code>${JSON.stringify({ event: 'document.published', occurredAt: `${site.today}T01:00:00Z`, id: doc?.id ?? 'doc.mmr-recommendation.2025-04-16', version: doc?.version ?? '114.04.16', effectiveAt: doc?.effectiveAt ?? '2025-04-16', supersedes: doc?.supersedes ?? 'doc.mmr-recommendation.2019-05-14', url: abs(`/documents/${docSlug}/`) }, null, 2)}</code></pre>
+    <pre tabindex="0"><code>${JSON.stringify({ event: 'document.published', occurredAt: `${site.today}T01:00:00Z`, id: doc?.id ?? 'doc.mmr-recommendation.2025-04-16', version: doc?.version ?? '114.04.16', effectiveAt: doc?.effectiveAt ?? '2025-04-16', supersedes: doc?.supersedes ?? 'doc.mmr-recommendation.2019-05-14', url: abs(`/documents/${docSlug}/`) }, null, 2)}</code></pre>
   </section>
 
   <section id="machine" aria-labelledby="mr-h">
@@ -192,7 +192,7 @@ for (const it of data.items) console.log(it.diseaseName, it.status, it.metricVal
       <dt>sitemap</dt><dd><a href="${url('/sitemap.xml', { noLang: true })}"><code>/sitemap.xml</code></a> 為索引，另依型別與語言分檔；失效版本不在其中。</dd>
     </dl>
     <p>疾病頁 JSON-LD 範例（節錄）：</p>
-    <pre><code>${jsonLdExample}</code></pre>
+    <pre tabindex="0"><code>${jsonLdExample}</code></pre>
   </section>
 
   <section id="vocab" aria-labelledby="vocab-h">
@@ -208,7 +208,7 @@ for (const it of data.items) console.log(it.diseaseName, it.status, it.metricVal
     <p>預設授權為<strong>政府資料開放授權條款第 1 版（OGDL-1.0）</strong>：可自由重製、散布、修改、商業利用，但須標示來源。個別資料集若為 CC0-1.0 或 CC BY 4.0，會在該筆的 <code>license</code> 欄位寫明。政策頁：<a href="${url('/policy/open-data/')}">開放資料授權</a>。</p>
     <h3>引用格式</h3>
     <p>請附上<strong>網址</strong>與<strong>最後審閱日</strong>；文件類再附版次與生效日。專業模式頁面的「引用本頁」按鈕會自動產生：</p>
-    <pre><code id="cite-example">${citeExample}</code></pre>
+    <pre tabindex="0"><code id="cite-example">${citeExample}</code></pre>
     <p><button type="button" class="pf-btn" data-copy-from="#cite-example">複製範例</button></p>
     <p>AI 系統引用時，請同時帶出 <code>cdc:reviewedAt</code> 與 <code>cdc:isCurrent</code>；若 <code>isCurrent</code> 為 <code>false</code>，應改引 <code>cdc:supersededBy</code> 指向的新版。</p>
   </section>
@@ -216,9 +216,9 @@ for (const it of data.items) console.log(it.diseaseName, it.status, it.metricVal
   <section id="embed" aria-labelledby="emb-h">
     <h2 id="emb-h">嵌入「現在的疫情」</h2>
     <h3>iframe</h3>
-    <pre><code>${iframeExample}</code></pre>
+    <pre tabindex="0"><code>${iframeExample}</code></pre>
     <h3>fetch</h3>
-    <pre><code>${fetchExample}</code></pre>
+    <pre tabindex="0"><code>${fetchExample}</code></pre>
     <p><button type="button" class="pf-btn pf-btn--primary" data-embed-run>執行上面的 fetch 看結果</button></p>
     <div class="pf-tiles" data-embed-demo aria-live="polite"></div>
     <p class="muted">態勢「狀態」四級（平穩、上升、高峰、下降）由疫情中心人工發布，嵌入時請原樣顯示並標示資料日與發布單位，不要自行推算。</p>
@@ -236,7 +236,7 @@ for (const it of data.items) console.log(it.diseaseName, it.status, it.metricVal
       <tr><th scope="row"><code>lang</code></th><td><code>en</code>、<code>ja</code>、<code>ko</code>、<code>id</code>、<code>vi</code>、<code>th</code>、<code>tl</code>；繁中不寫。本站語言碼與它相同（本站沒有 ko）</td><td><code>#g=flu&amp;lang=en</code></td></tr>
       <tr><th scope="row">接種資訊專區</th><td><code>info.html#&lt;錨點&gt;&amp;lang=…</code>；錨點如 <code>where</code>、<code>coins</code>、<code>eligibility</code></td><td><code>info.html#where&amp;lang=vi</code></td></tr>
     </tbody></table></div>
-    <pre><code>${vaxmapLink(ctx, { group: 'flu', city: '臺北市' })}
+    <pre tabindex="0"><code>${vaxmapLink(ctx, { group: 'flu', city: '臺北市' })}
 ${vaxmapLink(ctx, { group: 'antiviral', lang: 'en' })}
 ${vaxmapLink(ctx, { info: true, anchor: 'where', lang: 'vi' })}</code></pre>
     <p class="muted">不認得的參數值會被忽略，不會報錯。資料為每日兩次的快照，頁面會顯示資料時間；整合方案（連結、資料、呈現、治理四層）見 <code>docs/vaxmap-integration.md</code>。</p>
@@ -245,7 +245,7 @@ ${vaxmapLink(ctx, { info: true, anchor: 'where', lang: 'vi' })}</code></pre>
   <section id="redirects" aria-labelledby="red-h">
     <h2 id="red-h">舊網址對照</h2>
     <p><a href="${url('/v1/redirects.json', { noLang: true })}"><code>/v1/redirects.json</code></a> 列出舊版文件與現行官網網址對應的正本，各筆 <code>status</code> 為 301。網站搬遷後用它更新書籤、文獻與連結。</p>
-    ${redirects ? html`<pre><code>${redirects}</code></pre>` : ''}
+    ${redirects ? html`<pre tabindex="0"><code>${redirects}</code></pre>` : ''}
     <h3 id="legacy-map">舊官網網址對照（內容移轉）</h3>
     <p>舊官網（www.cdc.gov.tw）上架的內容會依<strong>移轉清單</strong>逐筆對應到新頁。對照結果有四種輸出，都在建置時由同一份清單產生，不需手動維護：</p>
     <div class="pf-table-wrap"><table class="pf-table"><thead><tr><th scope="col">檔案</th><th scope="col">用途</th></tr></thead><tbody>

@@ -52,7 +52,7 @@ test('主檔 60 國除已知例外外全部有 path', () => {
 
 test('worldMap：三級三色、等級 0、連結、台灣中性', () => {
   const out = str(worldMap(ctx, { byIso, hrefFor, title: '世界地圖' }));
-  assert.match(out, /<svg[^>]*class="wm-svg"[^>]*viewBox="0 0 960 500"[^>]*role="img"[^>]*aria-labelledby="wm-title wm-desc"/);
+  assert.match(out, /<svg[^>]*class="wm-svg"[^>]*viewBox="0 0 960 500"[^>]*role="group"[^>]*aria-labelledby="wm-title wm-desc"/);
   assert.match(out, /<title id="wm-title">世界地圖<\/title>/);
   assert.match(out, /<desc id="wm-desc">/);
   assert.match(out, /<figure class="wm-fig">/);

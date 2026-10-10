@@ -60,7 +60,7 @@ ${sit.note ? html`<p class="c-alert c-alert--overdue" role="note">${sit.note}</p
 
 <section aria-labelledby="sit-def">
   ${sectionHead(ctx, { id: 'sit-def', title: t('situation.def.t'), note: t('situation.def.sub') })}
-  <div class="c-tablewrap"><table class="c-table">
+  <div class="c-tablewrap" role="region" tabindex="0" aria-label="${t('a11y.scrollTable')}"><table class="c-table">
     <caption class="sr-only">${t('situation.def.t')}</caption>
     <thead><tr><th scope="col">${t('situation.def.level')}</th><th scope="col">${t('situation.def.meaning')}</th><th scope="col">${t('situation.def.basis')}</th></tr></thead>
     <tbody>${STATUSES.map((s) => html`<tr><th scope="row"><span class="c-status-tag c-status-tag--${s}">${t(`status.${s}`)}</span></th><td>${t(`status.def.${s}`)}</td><td>${t(`status.basis.${s}`)}</td></tr>`)}</tbody>
@@ -75,7 +75,7 @@ ${sit.note ? html`<p class="c-alert c-alert--overdue" role="note">${sit.note}</p
 <section aria-labelledby="sit-api">
   ${sectionHead(ctx, { id: 'sit-api', title: t('situation.api.t') })}
   <p>${t('situation.api.d')}</p>
-  <pre class="c-code"><code>curl ${apiUrl}
+  <pre class="c-code" role="region" tabindex="0" aria-label="${t('a11y.scrollCode')}"><code>curl ${apiUrl}
 
 fetch('${apiUrl}')
   .then(r =&gt; r.json())

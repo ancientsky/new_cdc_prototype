@@ -24,7 +24,7 @@ ${pageHead({ title: '詞彙主檔', what: '七語詞彙主檔：同一個概念�
 <section class="adm-card" aria-labelledby="g-h"><h2 id="g-h">詞彙表（${gl.length} 筆）</h2>
   <div class="adm-filters"><div class="adm-field adm-field--grow"><label for="g-q">搜尋（任何語言、別名、舊名）</label><input type="search" id="g-q"></div>
     <label class="adm-pill" style="align-self:end"><input type="checkbox" id="g-locked"><span>只看鎖定詞</span></label><span class="adm-count-note" id="g-count" aria-live="polite"></span></div>
-  <div class="adm-tablewrap"><table class="adm-table" id="g-table"><thead><tr><th scope="col">繁中正名</th><th scope="col">別名／舊名</th>${cols.map((l) => html`<th scope="col" lang="${l.code}">${l.label}</th>`)}<th scope="col">鎖定</th><th scope="col">引用內容</th></tr></thead>
+  <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table" id="g-table"><thead><tr><th scope="col">繁中正名</th><th scope="col">別名／舊名</th>${cols.map((l) => html`<th scope="col" lang="${l.code}">${l.label}</th>`)}<th scope="col">鎖定</th><th scope="col">引用內容</th></tr></thead>
   <tbody>${gl.map((g) => { const u = usage(g); return html`<tr data-locked="${g.locked ? 1 : 0}" data-q="${[g['zh-TW'], ...(g.aliases ?? []), ...(g.deprecated ?? []), ...LANGS.map((l) => tr(g, l.code)), g.id].join(' ').toLowerCase()}">
     <td><strong>${g['zh-TW']}</strong><div class="adm-muted"><code>${g.id}</code>${g.domain ? ` · ${g.domain}` : ''}</div>${g.note ? html`<div class="adm-muted">${g.note}</div>` : ''}</td>
     <td>${(g.aliases ?? []).map((a) => html`<span class="adm-chip adm-chip--plain">${a}</span> `)}${(g.deprecated ?? []).map((a) => html`<span class="adm-chip adm-chip--warn" title="舊名，不再使用"><span class="adm-term-del">${a}</span>（停用）</span> `)}</td>

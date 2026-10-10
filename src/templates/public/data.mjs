@@ -35,7 +35,7 @@ export function render(ctx) {
     <button type="button" data-v="" aria-pressed="true">${t('all')} (${ds.length})</button>
     ${cats.map((c) => html`<button type="button" data-v="${c}" aria-pressed="false">${t(`data.cat.${c}`)} (${ds.filter((d) => d.category === c).length})</button>`)}
   </div>
-  <div class="c-tablewrap"><table class="c-table c-table--catalog" id="catalog-table">
+  <div class="c-tablewrap" role="region" tabindex="0" aria-label="${t('a11y.scrollTable')}"><table class="c-table c-table--catalog" id="catalog-table">
     <caption class="sr-only">${t('data.catalog.t')}</caption>
     <thead><tr><th scope="col">${t('data.col.name')}</th><th scope="col">${t('data.col.owner')}</th><th scope="col">${t('data.col.freq')}</th><th scope="col">${t('data.col.updated')}</th><th scope="col">${t('data.col.license')}</th><th scope="col">${t('data.col.wl')}</th><th scope="col">${t('data.col.canon')}</th></tr></thead>
     <tbody>${ds.map((d) => html`<tr id="${d.id}" data-cat="${d.category}">

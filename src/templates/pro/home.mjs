@@ -122,9 +122,9 @@ export function render(ctx) {
 
   <section class="pf-card" aria-labelledby="role-h">
     <h2 id="role-h" style="font-size:var(--fs-lg);margin:0">${T.role}</h2>
-    <ul class="pf-pills" role="group" aria-label="${T.role}">
+    <div role="group" aria-label="${T.role}"><ul class="pf-pills">
       ${ROLES.map((r) => html`<li><button type="button" class="pf-pill" data-role="${r.key}" aria-pressed="false">${en ? r.en : r.zh}</button></li>`)}
-    </ul>
+    </ul></div>
     <p class="pf-hint" data-role-hint>${T.roleHint}</p>
   </section>
 
@@ -215,9 +215,9 @@ export function render(ctx) {
 
       <section class="pf-card" aria-labelledby="subs-h">
         <h2 id="subs-h" style="font-size:var(--fs-lg);margin:0">${T.subs}</h2>
-        <ul class="pf-pills" role="group" aria-label="${T.subs}">
+        <div role="group" aria-label="${T.subs}"><ul class="pf-pills">
           ${SUBS.map((s) => html`<li><button type="button" class="pf-chip" data-sub="${s.key}" data-sub-topics="${s.topics.join(' ')}" data-sub-default="${s.on ? '1' : '0'}" aria-pressed="${s.on ? 'true' : 'false'}">${en ? s.en : s.zh}</button></li>`)}
-        </ul>
+        </ul></div>
         <p class="pf-hint">${T.subsNote}</p>
         <p style="display:flex;flex-wrap:wrap;gap:var(--sp-2);margin:var(--sp-3) 0 0">
           <button type="button" class="pf-btn" data-copy="${rssUrl}" data-copied="${T.copied}">${T.copyRss}</button>

@@ -133,7 +133,7 @@ function detail(ctx, x) {
   <div class="c-cols c-cols--2">
     <div class="c-cols__main">
       <section class="c-block" id="info" aria-labelledby="h-info"><h2 id="h-info">${t('proc.s.info')}</h2>
-        <div class="c-tablewrap"><table class="c-table c-table--kv"><tbody>
+        <div class="c-tablewrap" role="region" tabindex="0" aria-label="${t('a11y.scrollTable')}"><table class="c-table c-table--kv"><tbody>
           ${row(t('proc.tenderNo'), x.tenderNo)}${row(t('proc.method'), x.method)}${row(t('proc.category'), x.category)}${row(t('proc.budget'), x.budgetNtd != null ? money(x.budgetNtd) : '')}${row(t('proc.unit'), x.requestingUnit ? unitName(ctx, x.requestingUnit) : '')}
           ${row(t('proc.announced'), x.announcedAt ? html`<time datetime="${x.announcedAt}">${fmtDate(x.announcedAt)}</time>` : '')}${row(t('proc.deadline'), x.deadlineAt ? html`<time datetime="${x.deadlineAt}">${fmtDate(x.deadlineAt)}</time> ${tenderCountdown(ctx, x, stage)}` : '')}${row(t('proc.briefing'), x.briefingAt ? html`<time datetime="${x.briefingAt}">${fmtDate(x.briefingAt)}</time>` : '')}${row(t('proc.opening'), x.openingAt ? html`<time datetime="${x.openingAt}">${fmtDate(x.openingAt)}</time>` : '')}${row(t('proc.awardRule'), x.awardRule)}${row(t('proc.contract'), x.contractPeriod)}
           ${x.pccUrl ? row(t('proc.pcc'), extLink(ctx, x.pccUrl, x.pccUrl.replace(/^https?:\/\//, '').slice(0, 48))) : ''}
@@ -144,7 +144,7 @@ function detail(ctx, x) {
       ${amendSection(ctx, x)}
       ${x.bodyMarkdown ? html`<div class="c-prose">${raw(md(L(ctx, x, 'bodyMarkdown') ?? x.bodyMarkdown))}</div>` : ''}
       <section class="c-block" id="award" aria-labelledby="h-award"><h2 id="h-award">${t('proc.s.award')}</h2>
-        ${x.award ? html`<div class="c-tablewrap"><table class="c-table c-table--kv"><tbody>
+        ${x.award ? html`<div class="c-tablewrap" role="region" tabindex="0" aria-label="${t('a11y.scrollTable')}"><table class="c-table c-table--kv"><tbody>
           ${row(t('proc.award.date'), html`<time datetime="${x.award.date}">${fmtDate(x.award.date)}</time>`)}${row(t('proc.award.winner'), x.award.winner)}${row(t('proc.award.amount'), x.award.amountNtd != null ? money(x.award.amountNtd) : '')}${row(t('job.col.note'), x.award.note)}</tbody></table></div>`
     : stage === 'failed' ? html`<p>${t('proc.failed.note')}</p>` : stage === 'cancelled' ? html`<p>${t('proc.cancelled.note')}</p>`
       : html`<p class="muted">${t('proc.award.pending')}</p>`}</section>

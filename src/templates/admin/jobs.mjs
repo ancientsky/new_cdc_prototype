@@ -42,7 +42,7 @@ ${pageHead({
 
 <section class="adm-card" aria-labelledby="j-h"><h2 id="j-h">職缺與階段</h2>
   <p class="adm-card__sub">前台：<a href="${url('/careers/')}">/careers/</a>。依報名截止日排序；歷史＝結果公布滿 90 天、已額滿或已取消。</p>
-  <div class="adm-tablewrap"><table class="adm-table"><caption>共 ${rows.length} 則職缺（建置日 ${site.today}）</caption>
+  <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><caption>共 ${rows.length} 則職缺（建置日 ${site.today}）</caption>
     <thead><tr><th scope="col">職缺</th><th scope="col">階段</th><th scope="col">用人單位</th><th scope="col" class="num">名額</th><th scope="col">報名期間</th><th scope="col">倒數</th><th scope="col">報名方式</th><th scope="col">結果</th></tr></thead>
     <tbody>${rows.map((r) => html`<tr data-id="${r.id}" data-stage="${r.stage}">
       <td><a href="${url(r.front)}">${r.title}</a><div class="adm-muted"><code>${r.id}</code> · ${r.jobType} · <a href="${url('/admin/jobs/edit/', { noLang: true })}?id=${encodeURIComponent(r.id)}">異動</a></div></td>
@@ -58,7 +58,7 @@ ${pageHead({
 
 <section class="adm-card" aria-labelledby="c-h"><h2 id="c-h">結果上架檢核</h2>
   <p class="adm-card__sub">只檢查已有 <code>result</code> 的職缺。三項都通過才算可上架；「遮罩」未過時建置本來就會失敗，這裡是上架前的提早提醒。</p>
-  ${withResult.length ? html`<div class="adm-tablewrap"><table class="adm-table"><caption>${withResult.length} 則職缺有甄選結果；${bad ? `${bad} 則未通過` : '全部通過'}</caption>
+  ${withResult.length ? html`<div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><caption>${withResult.length} 則職缺有甄選結果；${bad ? `${bad} 則未通過` : '全部通過'}</caption>
     <thead><tr><th scope="col">職缺</th><th scope="col">遮罩檢核</th><th scope="col">正取數 ≤ 名額</th><th scope="col">備取有效期</th><th scope="col">結果</th></tr></thead>
     <tbody>${withResult.map((r) => html`<tr data-id="${r.id}"><td><a href="${url(r.front)}#result">${r.title}</a><div class="adm-muted"><code>${r.id}</code></div></td>
       <td data-check="mask">${mark(r.checks.mask)}</td><td data-check="capacity">${mark(r.checks.capacity)}</td><td data-check="waitlist">${mark(r.checks.waitlist)}</td>
@@ -67,7 +67,7 @@ ${pageHead({
 
 <section class="adm-card" aria-labelledby="t-h"><h2 id="t-h">待辦（人事室）</h2>
   <p class="adm-card__sub">由引擎依欄位產生：結果逾期（預計公布日 + 7 日仍無結果）、備取 14 日內到期、外部報名網址失效。完整清單見 <a href="${url('/admin/todos/', { noLang: true })}#job-result-overdue">連動待辦</a>。</p>
-  ${todos.length ? html`<div class="adm-tablewrap"><table class="adm-table"><thead><tr><th scope="col">類型</th><th scope="col">職缺</th><th scope="col">說明</th><th scope="col">期限</th></tr></thead>
+  ${todos.length ? html`<div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><thead><tr><th scope="col">類型</th><th scope="col">職缺</th><th scope="col">說明</th><th scope="col">期限</th></tr></thead>
     <tbody>${todos.map((t) => html`<tr><td><span class="adm-badge adm-badge--warn">${{ 'job-result-overdue': '結果逾期', 'job-waitlist-expiring': '備取將到期', 'job-apply-url-dead': '報名網址失效' }[t.kind]}</span></td><td>${t.itemTitle}<div class="adm-muted"><code>${t.itemId}</code></div></td><td>${t.text ?? ''}</td><td>${t.dueAt ?? '—'}${t.dueAt && t.dueAt < site.today ? html` <span class="adm-badge adm-badge--bad">逾期 ${-daysBetween(site.today, t.dueAt)} 日</span>` : ''}</td></tr>`)}</tbody></table></div>`
     : html`<div class="adm-box adm-box--ok"><strong>目前沒有招募待辦</strong>結果都按時上架，備取也都在有效期內。</div>`}
 </section>`;

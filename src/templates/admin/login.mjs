@@ -40,13 +40,13 @@ export function render(ctx) {
 </section>
 <section class="adm-card" aria-labelledby="lg-rules"><h2 id="lg-rules">誰能進哪些頁</h2>
   <p class="adm-card__sub">最小權限：只有會改到全站行為或牽涉治理判斷的頁才限制角色；其餘頁任何已登入同事都能看，但<strong>只看得到自己單位</strong>的內容。能切換到別的單位或全部單位的角色：${CROSS_UNIT_ROLES.map((r) => ROLES[r].label).join('、')}。</p>
-  <div class="adm-tablewrap"><table class="adm-table"><thead><tr><th scope="col">後台頁</th><th scope="col">允許的角色</th></tr></thead><tbody>
+  <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><thead><tr><th scope="col">後台頁</th><th scope="col">允許的角色</th></tr></thead><tbody>
   ${Object.entries(PAGE_RULES).map(([k, roles]) => html`<tr><td>${PAGE_NAMES[k] ?? k}</td><td>${roles.map((r) => ROLES[r]?.label ?? r).join('、')}</td></tr>`)}
   <tr><td>其他後台頁</td><td>任何已登入角色（限自己單位）</td></tr></tbody></table></div>
 </section>
 <section class="adm-card" aria-labelledby="lg-audit"><h2 id="lg-audit">最近的登入稽核（本機示範）</h2>
   <p class="adm-card__sub">正式環境：登入、登出、被拒絕的存取、切換單位視角，都寫到集中式稽核日誌（資訊室保管，使用者不能刪），保存至少一年。這裡只存在你的瀏覽器，最多 200 筆。</p>
-  <div class="adm-tablewrap"><table class="adm-table" id="lg-audit-table"><thead><tr><th scope="col">時間</th><th scope="col">事件</th><th scope="col">誰</th><th scope="col">單位</th><th scope="col">說明</th></tr></thead><tbody></tbody></table></div>
+  <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table" id="lg-audit-table"><thead><tr><th scope="col">時間</th><th scope="col">事件</th><th scope="col">誰</th><th scope="col">單位</th><th scope="col">說明</th></tr></thead><tbody></tbody></table></div>
   <p class="adm-empty" id="lg-audit-empty">尚無紀錄。</p>
   <p><button type="button" class="adm-btn adm-btn--ghost" id="lg-audit-clear">清除本機稽核（示範）</button></p>
 </section>

@@ -257,7 +257,7 @@ ${bilateral && mapOpts?.isoCount ? raw(`<style>${TravelMap.styles}</style>`) : '
     ${bi ? html`<div class="c-intl__sub" id="bilateral"><h3>${t('international.sec.bi')}</h3>
       ${L(ctx, bi, 'summary') ? html`<p>${L(ctx, bi, 'summary')}</p>` : ''}
       ${bilateral && mapOpts?.isoCount ? html`<div class="c-intl__map">${TravelMap.worldMap(ctx, { title: t('international.map.title'), desc: t('international.map.desc'), classOf: mapOpts.classOf, labelOf: mapOpts.labelOf, legend: mapOpts.legend })}</div>` : ''}
-      ${bilateral ? html`<div class="c-tablewrap"><table class="c-table c-table--mou" id="mou-table"><caption class="sr-only">${t('international.bi.caption')}</caption>
+      ${bilateral ? html`<div class="c-tablewrap" role="region" tabindex="0" aria-label="${t('a11y.scrollTable')}"><table class="c-table c-table--mou" id="mou-table"><caption class="sr-only">${t('international.bi.caption')}</caption>
         <thead><tr>${bilateral.header.map((h) => html`<th scope="col">${h}</th>`)}</tr></thead>
         <tbody>${bilateral.rows.map((r) => html`<tr data-iso="${r.isos.join(' ')}">${r.cells.map((c, i) => (i === 0 ? html`<th scope="row">${c}</th>` : html`<td>${c}</td>`))}</tr>`)}</tbody></table></div>` : ''}
       ${more(bi)}</div>` : ''}

@@ -75,7 +75,7 @@ export function worldMap(ctx, { byIso, hrefFor, title, desc, legend, classOf, la
   });
 
   return html`<figure class="wm-fig">
-  <svg class="wm-svg" viewBox="${WORLD.viewBox}" role="img" aria-labelledby="wm-title wm-desc" focusable="false">
+  <svg class="wm-svg" viewBox="${WORLD.viewBox}" role="group" aria-labelledby="wm-title wm-desc" focusable="false">
     <title id="wm-title">${title || D.title}</title>
     <desc id="wm-desc">${desc || D.desc}</desc>
     ${raw(shapes.map(String).join(''))}
