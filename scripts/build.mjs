@@ -13,7 +13,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { config } from '../site.config.mjs';
 import { loadSite, ROOT } from './lib/load.mjs';
-import { validateSite } from './lib/validate.mjs';
+import { validateSite, contentWarnings } from './lib/validate.mjs';
 import { applyGovernance } from './lib/governance.mjs';
 import { buildSearchIndex } from './lib/index-builder.mjs';
 import { emitApi } from './lib/emit-api.mjs';
@@ -61,6 +61,7 @@ async function main() {
   }
   const assetReport = validateAssets(site, config);
   for (const w of assetReport.warnings) console.warn('  ⚠ [assets]', w);
+  for (const w of contentWarnings(site)) console.warn('  ⚠ [內容]', w);
   const errors = [...validateSite(site), ...assetReport.errors.map((e) => `[assets] ${e}`)];
   if (errors.length) {
     console.error(`\n❌ 治理門檻未通過（${errors.length} 項）：`);

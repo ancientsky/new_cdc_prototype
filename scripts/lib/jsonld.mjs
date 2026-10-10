@@ -17,6 +17,7 @@
 import { config, siteOrigin } from '../../site.config.mjs';
 import { mdToText } from './markdown.mjs';
 import { pathOf, mdPathOf } from './governance.mjs';
+import { toIsoDateTimeTW as dt } from './dates.mjs';
 
 /** cdc: 詞彙前綴；說明在 /developers/#vocab-<term> */
 export const CDC_VOCAB = () => `${siteOrigin()}/developers/#vocab-`;
@@ -129,7 +130,7 @@ function baseOf(ctx, item, type) {
   return clean({
     '@context': CONTEXT(), '@type': type, '@id': `${url}#main`, url,
     inLanguage: ctx?.lang ?? 'zh-TW',
-    datePublished: item.publishedAt, dateModified: item.reviewedAt,
+    datePublished: dt(item.publishedAt), dateModified: dt(item.reviewedAt ?? item.updatedAt),
     license: licenseUrl(item.license), isAccessibleForFree: true,
     publisher: { '@id': ORG_ID(), '@type': 'GovernmentOrganization', name: config.name },
     keywords: item.keywords?.length ? item.keywords.join(', ') : undefined,
@@ -267,7 +268,7 @@ export function jsonLdFor(ctx, item) {
         hasPart: (item.articles ?? []).map((a) => clean({ '@type': 'ScholarlyArticle', headline: a.title, name: a.title, pagination: a.pages, author: (a.authors ?? []).map(authorOf), sameAs: a.doi ? `https://doi.org/${a.doi}` : undefined, abstract: a.abstract })),
         'cdc:series': item.series, 'cdc:pubType': item.pubType };
       if (isIssue) {
-        return [clean({ ...baseOf(ctx, item, 'PublicationIssue'), ...common, issueNumber: item.issue != null ? String(item.issue) : undefined, datePublished: item.publishedAt,
+        return [clean({ ...baseOf(ctx, item, 'PublicationIssue'), ...common, issueNumber: item.issue != null ? String(item.issue) : undefined, datePublished: dt(item.publishedAt),
           isPartOf: clean({ '@type': ['PublicationVolume', 'Periodical'], name: item.series, alternateName: item.seriesEn, volumeNumber: item.volume != null ? String(item.volume) : undefined, issn: item.issn, publisher: { '@id': ORG_ID() } }) })];
       }
       return [clean({ ...baseOf(ctx, item, 'Book'), ...common, isbn: item.isbn, bookEdition: item.edition, issn: item.issn,
@@ -329,13 +330,13 @@ export function jsonLdFor(ctx, item) {
       const q = tr(ctx, item, 'question') ?? name;
       const a = mdToText(tr(ctx, item, 'answerMarkdown'));
       return [clean({ ...baseOf(ctx, item, 'FAQPage'), name: q, description, lastReviewed: item.reviewedAt, reviewedBy: unitOrg(ctx, item.owner),
-        mainEntity: [{ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a, dateModified: item.reviewedAt, author: unitOrg(ctx, item.owner) } }] })];
+        mainEntity: [{ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a, dateModified: dt(item.reviewedAt), author: unitOrg(ctx, item.owner) } }] })];
     }
     case 'document': {
       const g = item.gov ?? {};
       const successor = g.supersededBy ? ctx?.site?.byId?.get(g.supersededBy) : null;
       const current = g.currentId && g.currentId !== item.id ? ctx?.site?.byId?.get(g.currentId) : null;
-      return [clean({ ...baseOf(ctx, item, 'DigitalDocument'), name, description, version: item.version, datePublished: item.effectiveAt ?? item.publishedAt,
+      return [clean({ ...baseOf(ctx, item, 'DigitalDocument'), name, description, version: item.version, datePublished: dt(item.effectiveAt ?? item.publishedAt),
         author: unitOrg(ctx, item.owner), genre: item.docType,
         expires: successor?.effectiveAt, // 失效版：新版生效日起不再適用
         encoding: item.pdfUrl ? [{ '@type': 'MediaObject', encodingFormat: 'application/pdf', contentUrl: linkAbs(ctx, item.pdfUrl) }] : undefined,
@@ -375,7 +376,7 @@ export function datasetJsonLd(ctx, item) {
     identifier: [item.id, item.ckanName].filter(Boolean),
     keywords: item.keywords ?? [],
     spatialCoverage: TAIWAN, temporalCoverage: temporal,
-    dateModified: item.lastUpdated ?? item.reviewedAt,
+    dateModified: dt(item.lastUpdated ?? item.reviewedAt),
     creator: unitOrg(ctx, item.owner), isAccessibleForFree: true,
     sameAs: item.mirrors ?? [], distribution: dists,
     includedInDataCatalog: { '@type': 'DataCatalog', name: '疾病管制署資料開放平臺', url: config.openDataOrigin },
@@ -392,7 +393,7 @@ export function situationJsonLd(ctx, situation) {
     '@context': CONTEXT(), '@type': 'Dataset', '@id': `${abs(ctx, '/situation/')}#situation`, url: abs(ctx, '/situation/'),
     name: '疫情態勢層', alternateName: 'Taiwan CDC epidemic situation', inLanguage: ctx?.lang ?? 'zh-TW',
     description: '疫情中心依既有監測門檻人工發布的各疾病態勢（stable／rising／peak／declining），不由模型推論。',
-    datePublished: s.publishedAt, dateModified: s.publishedAt, temporalCoverage: s.dataDate, spatialCoverage: TAIWAN,
+    datePublished: dt(s.publishedAt), dateModified: dt(s.publishedAt), temporalCoverage: s.dataDate, spatialCoverage: TAIWAN,
     creator: clean({ '@type': 'GovernmentOrganization', name: unit?.name ?? s.publisher, identifier: s.publisher }),
     publisher: { '@id': ORG_ID(), '@type': 'GovernmentOrganization', name: config.name },
     license: licenseUrl('OGDL-1.0'), isAccessibleForFree: true,

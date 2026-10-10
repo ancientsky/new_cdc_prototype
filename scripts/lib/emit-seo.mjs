@@ -7,6 +7,7 @@
 // 失效版本：不進 sitemap、頁面 noindex，但 robots.txt 不擋（要讓爬蟲讀得到 noindex，見 7.7(3)）。
 import { config } from '../../site.config.mjs';
 import { makeUrl } from './render.mjs';
+import { toRfc822 } from './dates.mjs';
 import { pathOf, mdPathOf, NOTICE_TYPES } from './governance.mjs';
 // 第九輪（ARCHITECTURE 17.1）：排程中（publishAt 未到）內容不進 sitemap／llms.txt／RSS：各輸出函式先換成 publicView，再以 isPublic() 過濾
 import { isPublic, nowOf, publicView } from './lanes.mjs';
@@ -19,7 +20,7 @@ export const absUrl = (path, lang = 'zh-TW') => urlFor(lang)(path, { absolute: t
 const apiUrl = (p) => absUrl(p, 'zh-TW');
 export const xmlEsc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
 const maxDate = (arr) => arr.filter(Boolean).sort().at(-1) ?? null;
-const rfc822 = (iso) => new Date(`${String(iso).slice(0, 10)}T00:00:00+08:00`).toUTCString();
+const rfc822 = toRfc822; // 第二十五輪：日期輸出一律經 dates.mjs
 
 /** 靜態頁（zh-TW；其他語言是否存在依模板而定，推算模式只確定首頁為七語） */
 export const STATIC_PATHS = ['/', '/situation/', '/diseases/', '/vaccines/', '/travel/', '/factcheck/', '/data/', '/news/', '/faq/', '/documents/', '/pro/', '/developers/', '/policy/ai/', '/policy/privacy/', '/policy/open-data/', '/accessibility/', '/about/', '/transparency/', '/guide/',
