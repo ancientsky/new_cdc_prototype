@@ -51,11 +51,11 @@ function translationBar(ctx, item, hide) {
 </div></aside>`;
 }
 
-/** 第二十三輪：原型模式每頁頂端的「非官方原型」橫幅（SITE_MODE=production 不輸出）。role=note 讓讀屏唸出來；不可關閉，避免截圖被當成官網。 */
+/** 第二十三輪：原型模式每頁頂端的「非官方原型」橫幅（SITE_MODE=production 不輸出）。role=region＋aria-label 成為具名地標（axe region 規則）；不可關閉，避免截圖被當成官網。 */
 function protoBanner(ctx) {
   if (!config.isPrototype) return '';
   const { t } = ctx;
-  return html`<div class="c-proto-banner" role="note" data-proto-banner><div class="wrap c-proto-banner__in"><strong>${t('proto.banner.tag')}</strong> <span>${t('proto.banner.text')}</span> <a href="${config.officialUrl}" rel="external noopener">${t('proto.banner.cta')}</a></div></div>`;
+  return html`<div class="c-proto-banner" role="region" aria-label="${t('proto.banner.tag')}" data-proto-banner><div class="wrap c-proto-banner__in"><strong>${t('proto.banner.tag')}</strong> <span>${t('proto.banner.text')}</span> <a href="${config.officialUrl}" rel="external noopener">${t('proto.banner.cta')}</a></div></div>`;
 }
 
 const ICONS = {

@@ -27,7 +27,7 @@ test('站台模式：預設 prototype；每頁 noindex,nofollow；每頁頂端�
   for (const l of config.langs) {
     const h = page(l.code);
     assert.match(h, /<meta name="robots" content="noindex, nofollow">/, l.code);
-    assert.match(h, /class="c-proto-banner" role="note" data-proto-banner/, l.code);
+    assert.match(h, /class="c-proto-banner" role="region" aria-label="[^"]*" data-proto-banner/, l.code);
     assert.ok(h.includes(T(l.code, 'proto.banner.tag')) && h.includes(T(l.code, 'proto.banner.text')), `${l.code} 橫幅文字`);
     assert.ok(h.includes(`href="${config.officialUrl}"`), '導向正式官網');
     // 橫幅在 skip-link 之後、topbar 之前（讀屏第一個聽到的是跳到主要內容，再來是原型聲明）
