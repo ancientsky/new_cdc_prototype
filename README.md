@@ -112,6 +112,20 @@
 
 > 限制：(1) 後台的「送出」是**展示**，原型不能代承辦人開 PR，交件仍是下載 ZIP；(2) GitHub 工作流程**無法在本機驗證**，是否如預期運作以開一個真實測試 PR 的結果為準（見 [docs/publishing-lanes.md](docs/publishing-lanes.md) 附錄 B）；(3) 排程發布受每 2 小時重建限制，延遲最多 2 小時；(4) 開發環境連不到舊站，結核病首批用的是**依既有內容反推的模擬匯出**，真實匯出的版型與品質可能不同，規則要用真實樣本校準。
 
+## 第三十輪：個資不進 Git（Issue #55）、寫入閘道讓同事不碰 Git（Issue #28）
+
+Yulun 的決定：#55 完全同意；#28 正式站的版本庫放機關自架的 GitLab，由「寫入閘道」把寫進哪一套 Git 抽象掉，而且**沒用過 Git 的同事不必學 Git**。機關同時有 Windows AD 與 Google Workspace（每位同事都有公司 Gmail），所以登入也做了 Google 這條路。契約在 ARCHITECTURE §35–36，同事 SOP 在手冊 §33–34，決策理由在決策紀錄 §22–23（§18 開頭加了「已決定」的更新），部署與資訊室待答事項在 deploy.md §13–14。
+
+- **甄選結果只公布報名編號**：錄取／備取名單不再有遮罩姓名，只剩 `candidateNo`；`result.unpublishAt` 必填（預設公布後 3 個月，或最後一位備取有效期限的隔天，介於 30 天到 12 個月），到期後頁面自動改成「已下架」說明；也可以只放 `result.externalUrl` 連到人事系統。**為什麼**：遮罩姓名加上職缺與日期仍可能認出人，而 Git 會永久保存每個版本，放進去就收不回來。
+- **全庫個資掃描**：`npm run pii` 掃內容、快照與附件中的身分證／居留證號（含檢查碼）、手機、個人信箱、名單語境姓名；公開的機關號碼列在 `content/governance/pii-allowlist.json`（每筆寫理由）。建置時全掃，內容 PR 只掃改到的檔，在檢核表多一列「個資掃描」。目前 361 個檔零命中。
+- **表單送到機關自己的系統**：報名、署長信箱、電子報訂閱的送出位址集中在 `site.config.mjs` 的 `forms`，可用 `FORM_*` 環境變數改成內網人事或陳情系統；CSP 的 `connect-src`、`form-action` 自動跟著放行。署長信箱沿用既有人民陳情系統。
+- **寫入閘道（`scripts/lib/gateway/`，`npm run dev` 時自動啟動）**：後台 `/admin/publish/` 與 `/admin/review/` 偵測到閘道就切成「儲存草稿／送審／退回（必填意見）／核准上線」按鈕，背後對應分支、合併請求與合併；畫面上沒有任何 Git 字眼，審核人看到的是逐欄位的白話差異與沙箱預覽。四眼原則（改過這筆的人不能核准）、車道規則沿用 `lanes.json`，第一級內容加會 AI推動辦公室（OASIS）。送出前用建置同一份檢核程式驗證，錯誤以欄位白話回報。通知（退回、核准）先寫到 `.local/outbox`。原型的 Git 是本機 bare repo（`.local/gateway-repo/`）；正式站換成 GitLab 供應者（REST v4、服務帳號），合併提交帶 `Edited-by:`／`Approved-by:`，稽核檔為只能附加的雜湊鏈。GitHub Pages 上沒有閘道，後台照舊是瀏覽器示範。
+- **三條登入路**：Google Workspace（OIDC＋PKCE，檢查 `hd` 與 `email_verified`，群組從 Admin SDK 或對照檔取得）、IIS Windows 驗證反向代理（傳使用者名稱的標頭）、通用 OIDC（AD FS、Entra ID 或 Keycloak）。**建議試行先用 Google**：不用等資訊室確認 AD FS／Entra ID，每位同事已有帳號；正式站若資安政策不允許雲端身分來源，改用自架 Keycloak 同時接 AD 與 Google。沒有新增任何相依套件，JWT 與簽章都用 Node 內建 `crypto`。
+- **順手修**：評估集在 CI 固定日期 2026-10-01 時，把 2026-10-10 才生效的核心教材題目誤判為失敗；現在尚未生效的必要內容視同未建置，該題略過（214/214；今天 219/219）。
+- **待權責單位**：人事室（下架期限、有無外部結果頁、保存年限）、秘書室（陳情系統網址）、公關室（寄信服務）、法務（告知文字）、資訊室（deploy.md §14.8 的 7 題：AD FS／Entra ID、能否自架 Keycloak、Google Workspace 有無 GCDS 同步與強制兩步驟驗證、閘道主機網段、GitLab 版本與服務帳號、通知管道、稽核日誌）。
+
+> 限制：(1) 閘道目前核准後立即合併，GitLab 若開「Pipelines must succeed」需改成等 CI 通過再合併；(2) IIS 路線只拿得到使用者名稱，群組要再加一層中介或 LDAP 查詢；(3) `content-pr.yml` 還沒移植成 `.gitlab-ci.yml`；(4) 附件尚未經閘道上傳；(5) 第三十輪以前 Git 歷史裡的遮罩姓名沒有清除，要不要改寫歷史由資訊室與個資窗口評估。
+
 ## 第二十九輪：《疫情報導》像 MMWR 一樣讀全文、文章一篇一篇上架
 
 同事提了兩件事：疫情報導能不能像美國 MMWR 直接看全文 HTML、也能下載 PDF；還有文章上架太麻煩。設計說明與來源在 [docs/bulletin.md](docs/bulletin.md)，契約在 ARCHITECTURE §34，同事 SOP 在手冊 §32，決策理由在決策紀錄 §21。
