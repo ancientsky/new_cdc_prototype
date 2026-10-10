@@ -62,6 +62,33 @@ jobs:
         continue-on-error: true
         run: BUILD_TODAY=2026-10-01 node scripts/build.mjs --check
 
+      # 第二十四輪（ARCHITECTURE 27）：無障礙檢測。用 BASE_PATH='' 另建一份到暫存目錄（靜態伺服器不用處理子路徑），
+      # 再用 Playwright＋axe-core 掃代表頁（桌機 1280／手機 320）；serious／critical 或 320px 橫向捲動 → 失敗並擋合併。
+      - name: Install Chromium for a11y check
+        id: a11y_browser
+        continue-on-error: true
+        run: npx playwright install --with-deps chromium
+
+      - name: Build for a11y check (BASE_PATH='')
+        id: a11y_build
+        if: steps.a11y_browser.outcome == 'success'
+        continue-on-error: true
+        env:
+          BASE_PATH: ''
+          BUILD_TODAY: 2026-10-01
+          LINK_CHECK: warn
+          DIST_DIR: ${{ runner.temp }}/a11y-dist
+        run: node scripts/build.mjs
+
+      - name: Accessibility check (axe-core)
+        id: a11y
+        if: steps.a11y_build.outcome == 'success'
+        continue-on-error: true
+        env:
+          DIST_DIR: ${{ runner.temp }}/a11y-dist
+          A11Y_REPORT: ${{ runner.temp }}/a11y-report.md
+        run: npm run a11y
+
       - name: Lane (changed files → lane, reviewers, SLA)
         id: lane
         run: |
@@ -137,6 +164,7 @@ jobs:
         env:
           TEST: ${{ steps.test.outcome }}
           CHECK: ${{ steps.check.outcome }}
+          A11Y: ${{ steps.a11y.outcome }}
           AUTO: ${{ steps.lane.outputs.auto }}
           NEED: ${{ steps.lane.outputs.need }}
           STATE: ${{ github.event.pull_request.state }}
@@ -146,7 +174,7 @@ jobs:
           APPROVALS=$(gh pr view "$PR" -R "$REPO" --json reviews --jq '[.reviews[] | select(.state != "COMMENTED")] | group_by(.author.login) | map(max_by(.submittedAt)) | map(select(.state == "APPROVED")) | length')
           echo "approvals=$APPROVALS" >> "$GITHUB_OUTPUT"
           if [ "$STATE" != "open" ]; then ACTION=closed
-          elif [ "$TEST" != "success" ] || [ "$CHECK" != "success" ]; then ACTION=blocked
+          elif [ "$TEST" != "success" ] || [ "$CHECK" != "success" ] || [ "$A11Y" != "success" ]; then ACTION=blocked
           elif [ "$DRAFT" = "true" ]; then ACTION=draft
           elif [ "$AUTO" = "true" ]; then ACTION=merge
           elif [ "$APPROVALS" -ge "$NEED" ]; then ACTION=merge
@@ -160,6 +188,7 @@ jobs:
         env:
           TEST: ${{ steps.test.outcome }}
           CHECK: ${{ steps.check.outcome }}
+          A11Y: ${{ steps.a11y.outcome }}
           PREVIEW_BUILD: ${{ steps.preview_build.outcome }}
           PREVIEW_PUSH: ${{ steps.preview_push.outcome }}
           ACTION: ${{ steps.decide.outputs.action }}
@@ -189,6 +218,7 @@ jobs:
               "| --- | --- |",
               "| 測試（npm test） | " + icon(e.TEST) + " |",
               "| 治理閘門（schema、參照、評估集版本題） | " + icon(e.CHECK) + " |",
+              "| 無障礙檢測（axe） | " + icon(e.A11Y) + " |",
               "| 預覽建置 | " + icon(e.PREVIEW_BUILD) + " |",
               "| 預覽網址 | " + (previewOk ? "[" + e.PREVIEW_URL + "](" + e.PREVIEW_URL + ")（主站重新部署後約 2–3 分鐘可開；含排程中內容）" : "未產生") + " |",
               "| 自動合併 | " + (L.autoMerge ? "是（不需人工核准）" : "否（需 " + L.requiredApprovals + " 位核准）") + " |",
@@ -247,7 +277,7 @@ jobs:
         run: gh workflow run pages.yml --ref main -R "$REPO" -f refresh=false
 
       - name: Fail when checks failed
-        if: steps.test.outcome != 'success' || steps.check.outcome != 'success'
+        if: steps.test.outcome != 'success' || steps.check.outcome != 'success' || steps.a11y.outcome != 'success'
         run: |
-          echo "測試：${{ steps.test.outcome }}；治理閘門：${{ steps.check.outcome }}"
+          echo "測試：${{ steps.test.outcome }}；治理閘門：${{ steps.check.outcome }}；無障礙檢測：${{ steps.a11y.outcome }}"
           exit 1
