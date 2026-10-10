@@ -6,7 +6,7 @@ export { layout } from './_layout.mjs';
 export function pages() { return [{ path: '/admin/eval/', props: {}, noindex: true }]; }
 export function meta() { return adminMeta('評估', 'eval', ['/assets/js/admin/eval.js']); }
 
-const CATEGORY_LABEL = { fact: '事實題', refusal: '拒答題', version: '版本題', situation: '態勢題', travel: '旅遊題', vaccine: '疫苗題', stats: '統計題', rumor: '謠言題', professional: '專業題', multilingual: '多語題', adversarial: '對抗題', peak: '尖峰題' };
+const CATEGORY_LABEL = { fact: '事實題', refusal: '拒答題', version: '版本題', situation: '態勢題', travel: '旅遊題', vaccine: '疫苗題', stats: '統計題', rumor: '謠言題', professional: '專業題', multilingual: '多語題', adversarial: '對抗題', peak: '尖峰題', nomatch: '站內沒有的主題' };
 // 規劃附錄 D 的六指標；門檻預設值與 D 的 eval/run-eval.mjs THRESHOLDS 一致（報告帶 thresholds 時以報告為準）
 const METRICS = [
   { key: 'grounding', label: 'Grounding：句句有來源', min: 95, hint: '每個答案句都對應到白名單片段' },

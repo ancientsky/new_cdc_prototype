@@ -121,7 +121,8 @@
                   "lab",
                   "notify",
                   "notice",
-                  "media"
+                  "media",
+                  "nomatch"
                 ]
               },
               "expect": {
