@@ -24,5 +24,6 @@ eval/**/*.mjs
 !scripts/lib/js-budget.mjs
 !src/client/i18n.runtime.js
 !tests/round26-i18n.test.mjs
+!tests/round28-antivenom.test.mjs
 **/*.css
 **/*.html

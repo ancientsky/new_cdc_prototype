@@ -1,0 +1,77 @@
+{
+  "id": "faq.snakebite-first-aid",
+  "type": "faq",
+  "title": "被蛇咬怎麼辦？",
+  "question": "被蛇咬怎麼辦？",
+  "owner": "unit.lab",
+  "steward": "檢驗及疫苗研製中心承辦人（待指派）",
+  "publishedAt": "2026-10-10",
+  "reviewedAt": "2026-10-10",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-10-10"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "none"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "被蛇咬傷一律當作毒蛇咬傷處理：保持冷靜、記住蛇的特徵、脫下飾品、傷口上緣寬鬆包紮，儘速就醫；緊急請撥 119。",
+  "keywords": [
+    "被蛇咬",
+    "蛇咬",
+    "毒蛇咬傷",
+    "五要五不",
+    "急救",
+    "119",
+    "抗蛇毒血清"
+  ],
+  "answerMarkdown": "被蛇咬傷時，一律先當作毒蛇咬傷處理，保持冷靜並儘速就醫，緊急時請撥打 119。出現呼吸困難、意識改變或大量出血，請立即撥打 119。\n\n請記住疾管署的「五要」：\n\n1. 要視為毒蛇咬傷處理。\n2. 要記住蛇的外觀特徵（顏色、花紋、頭形），方便醫護人員判斷。\n3. 要儘快脫下戒指、手錶、手環等飾品，避免肢體腫脹後受到壓迫。\n4. 要在傷口上緣做寬鬆包紮，減緩毒液擴散，包紮不可緊到阻斷血流。\n5. 要保持冷靜，儘速就醫。\n\n抗蛇毒血清是治療毒蛇咬傷最有效的方法，由醫師在醫療院所判斷與使用。",
+  "verification": {
+    "status": "pending",
+    "note": "緊急狀況請撥 119；用藥與處置以醫師判斷為準",
+    "pendingItems": [
+      "逐字核對疾管署現行「五要五不」文字",
+      "「包紮不可緊到阻斷血流」的說法是否納入官方建議"
+    ],
+    "sources": [
+      {
+        "label": "衛福部轉載疾管署新聞稿（毒蛇咬傷「五要五不」、儲備點查詢系統、1922）",
+        "url": "https://mohw.gov.tw/cp-16-40357-1.html",
+        "accessedAt": "2026-10-10",
+        "official": true,
+        "verified": false,
+        "note": "搜尋摘要；開發環境連不到 mohw.gov.tw"
+      }
+    ]
+  }
+}

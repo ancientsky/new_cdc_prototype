@@ -807,6 +807,9 @@ const ROWS_C2 = {
   /* 宣導 */
   'alert.closed.t': ['已截止', 'Closed', '締切済み', 'Sarado na', 'Đã hết hạn', 'Ditutup', 'ปิดรับแล้ว'],
   'alert.ended.t': ['已結束', 'Ended', '終了', 'Tapos na', 'Đã kết thúc', 'Berakhir', 'สิ้นสุดแล้ว'],
+  'topic.section.pro': ['醫療人員', 'For clinicians', '医療従事者向け', 'Para sa mga clinician', 'Dành cho nhân viên y tế', 'Untuk tenaga medis', 'สำหรับบุคลากรทางการแพทย์'],
+  'alert.unverified.t': ['內容待權責單位確認', 'Pending confirmation by the responsible unit', '担当部署の確認待ち', 'Naghihintay ng kumpirmasyon ng responsableng yunit', 'Chờ đơn vị phụ trách xác nhận', 'Menunggu konfirmasi unit penanggung jawab', 'รอหน่วยงานรับผิดชอบยืนยัน'],
+  'alert.unverified': ['本頁依公開資料整理，尚待權責單位逐項確認；緊急狀況請撥 119，用藥與處置以醫師判斷為準。', 'This page was compiled from public sources and is still being checked by the responsible unit. In an emergency call 119; treatment decisions rest with the doctor.'],
   'campaigns.lead': ['首頁「本期宣導」的所有 Banner 都在這裡：進行中、即將開始、已結束，每則都有權責單位與上下架日。', 'Every banner behind the home page “Featured campaign” is listed here: live, upcoming and ended, each with an owner and live dates.'],
   'campaigns.rule.t': ['治理規則', 'Governance rule'],
   'campaigns.rule': ['Banner 到期自動下架，與其他內容一樣有權責單位與審閱日；圖片只當氛圍，文字都在頁面上。', 'Banners come down automatically when they expire and, like any other content, have an owner and a review date. Images are decoration only; all text is on the page.'],

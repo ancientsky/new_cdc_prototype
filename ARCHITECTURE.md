@@ -1210,3 +1210,65 @@ Result = {ok:true, …body} | {ok:false, error:'invalid'|'rate'|'expired'|'notfo
 ### 30.8 測試
 
 `tests/round28-newsletter.test.mjs`（21 項）：頻道目錄＝`buildFeeds`、頁面列出全部頻道與網址、LINE 待確認標記、無第三方腳本／`innerHTML`、頁尾連結與七語字串、驗證規則（含標頭注入）、信件轉義與 `.eml` 往返、狀態機（雙重確認、冪等、逾期、不洩漏、節流、蜜罐、7 天清除）、HTTP 後端（真的起 server：`.eml` 標頭、RFC 8058 form POST、Origin／大小／型別、本機限定的 dev outbox）、`serve.mjs` 掛載、瀏覽器後端與偵測（含逾時）、週摘要與 CLI。a11y：`/subscribe/`、`/en/subscribe/` 加入 `npm run a11y`；另以 axe 掃過錯誤、已寄出（含模擬收件匣）、確認結果、管理四個畫面（桌機 1280／手機 320）皆 0 違規、無橫向捲動。
+
+## 32. 第二十八輪（2026-10-10）：抗蛇毒血清（一級緊急就醫內容）
+
+對應 Issue #38（owner Yulun）「抗蛇毒血清的內容請實做」。第二十五輪把「抗蛇毒血清」「蛇咬怎麼辦」列為站內查無（eval NM001、NM005），移轉清單 `legacy-services.json` 的 `antivenom` 標【必移轉】。這輪把內容做出來，並補一個通用機制：**依公開資料整理、尚待權責單位確認的內容，要能上線作答，但讀者與承辦人都看得到「還沒確認」**。
+
+### 32.1 內容與型別選擇
+
+| 內容 | id／路徑 | 型別 | 為什麼用這個型別 |
+| --- | --- | --- | --- |
+| 抗蛇毒血清與毒蛇咬傷急救 | `topic.antivenom` → `/topics/antivenom/` | `topic`（`kind: emergency`、`priority: 1`） | `page` 不在 AI 白名單政策（`whitelist.json` 的 `allowedTypes`），答案引擎讀不到；`topic` 在白名單內、有外部連結健康檢查（儲備點查詢系統）、首頁專區列依 `priority` 排序 |
+| 被蛇咬怎麼辦？ | `faq.snakebite-first-aid` | `faq` | 民眾最常問的句型直接當問題；Q&A 是最精準的檢索單元 |
+| 被蛇咬後能不能冰敷、綁止血帶或用嘴把毒吸出來？ | `faq.snakebite-dont` | `faq` | 安全題獨立一則，答案只寫「不」的版本 |
+| 被龜殼花或其他毒蛇咬到要打哪種血清？認不出是哪種蛇怎麼辦？ | `faq.antivenom-which-snake` | `faq` | 蛇種 → 血清對照 |
+| 哪裡有抗蛇毒血清？ | `faq.antivenom-where` | `faq` | 取得方式；**不列醫院名單**，連官方儲備點查詢系統 |
+
+- **權責單位 `unit.lab`（檢驗及疫苗研製中心）**：處務規程掌理事項有「血清疫苗之製造、銷售」（`content/master/units.json`）；新聞稿稱疾管署為國內唯一產製並持有抗蛇毒血清凍晶注射劑藥證者。儲備點與院際調度（防疫物資管理資訊系統）是否由新興傳染病整備組（防疫物資整備）協辦，列為待確認。
+- **審閱週期 6 個月**（`reviewPeriodMonths: 6`）：一級緊急就醫資訊、夏季與清明前後是蛇傷高峰，每年至少兩次對照最新新聞稿。
+- **專區分段 `blocks[]`**（`schemas/topic.json` 新增）：`{ key, heading, markdown, audience?, keywords? }`，頁面每段 `<section id="s-{key}">`，答案引擎每段一個片段（`topic.antivenom#s-first-aid` 等），`audience: professional` 的段落只進專業版索引、頁面標「醫療人員」。欄位叫 `blocks` 而不是 `sections`，因為 `topic.sections` 已被國際合作專區用作子頁 id 清單（`_international.mjs`）。沒有 `blocks` 的既有專區行為不變。
+- **句子要能單獨被引用**：抽取式答案一次只取一句，所以每句都帶主詞與否定詞（「被蛇咬傷不冰敷，以免組織壞死。」），不寫「不要：冰敷、切開…」這種拆開就變成肯定句的清單；119 與「儘速就醫」放在同一句，避免被分號切開後只剩一半。蛇種對照不用表格（表格列會被斷成沒有主詞的片段），改成「被龜殼花咬傷：…對應的血清是…」。
+- **不捏造**：儲備院所家數各年新聞稿 190～250 家不一，頁面寫範圍並以查詢系統為準；毒藥物防治諮詢中心搜到兩個不同號碼，**不列電話**，只連該院首頁；沒有醫院名單，不做示範資料表（緊急情境下示範資料可能被當真）。劑量、皮膚試驗等臨床用法查不到可引用的官方來源，**不寫**，專業段明寫「依仿單與臨床判斷，本頁不提供劑量建議」。
+- **入口**：首頁專區列（`priority: 1`）、`/services/#topics`、網站導覽、sitemap（topic 自動帶出）；專業人員專區「常用作業」加一張「抗蛇毒血清」卡連到 `#s-professional`（`src/templates/pro/home.mjs`）；舊網址 `https://www.cdc.gov.tw/Category/MPage/l_z6ZKErZJ063m6OV_8nXQ` 由移轉清單 301 到 `/topics/antivenom/`（`legacyUrls` 同步）。
+
+### 32.2 `verification`：內容待權責單位確認（通用欄位，`schemas/_common.json`）
+
+```json
+"verification": {
+  "status": "pending",            // pending | confirmed
+  "note": "給讀者的一句話（接在頁首警示後）",
+  "pendingItems": ["還要確認的事…"],
+  "confirmedBy": "職稱", "confirmedAt": "YYYY-MM-DD",   // confirmed 時必填（schema if/then）
+  "sources": [{ "label", "url", "accessedAt", "official": true|false, "verified": true|false, "note" }]
+}
+```
+
+| 消費者 | `status: pending` 時的行為 | 檔案 |
+| --- | --- | --- |
+| 治理引擎 | `gov.unverified = true`；annotation `kind: 'unverified'`（level warning，文字含權責單位名稱與 `note`）；待辦 `content-unverified`（民眾內容 severity high，期限 `reviewedAt + UNVERIFIED_FIX_DAYS`＝14 天） | `scripts/lib/governance.mjs` |
+| 頁面 | `alerts()` 多認 `unverified`：黃色 `c-alert--unverified`、標題「內容待權責單位確認」（i18n `alert.unverified.t`、`alert.unverified`）；`.md` 機讀版頁首同一句（`mdHeader` 本來就輸出所有 annotation） | `src/templates/public/_partials.mjs`、`src/styles/components.css`、`src/client/i18n.js` |
+| 答案引擎 | 該筆內容的每個片段帶 `verification: 'pending'`（只有 pending 才加欄位，索引不膨脹）；`sourceOf()` 帶到來源物件；來源卡多一列「內容確認：依公開資料整理，內容待權責單位確認」（黃色 tag） | `scripts/lib/index-builder.mjs`、`src/client/answer/core.js`、`render.js` |
+| JSON-LD | `cdc:contentVerification: "pending"`（有填才輸出） | `scripts/lib/jsonld.mjs` |
+| 後台 | 待辦種類「內容待權責單位確認」（`KIND_LABEL`、`KIND_ORDER`、`TODO_KIND_LABELS`） | `src/templates/admin/_partials.mjs` |
+
+**為什麼不擋白名單：** PDF 未校對（`pdf-unreviewed`）會退出白名單，因為機器轉出的文字可能錯字錯頁；這裡的內容是人工整理、每句有來源，退出白名單的結果是智慧查詢回「站內查無」，民眾被蛇咬時反而拿不到「儘速就醫、撥 119、不冰敷」。所以選擇「可以作答，但頁首與來源卡都標示待確認，權責單位有一筆 14 天就逾期的高優先待辦」。正式上線前若政策要求一級內容一律人工確認才可作答，把 `governance.mjs` 這段加一行 `gov.whitelist.reasons.push('unverified')` 即可（評估集 AV 題會隨之失敗，提醒要先確認內容）。
+
+### 32.3 答案引擎與評估集（r10）
+
+- 「抗蛇毒血清」「被蛇咬怎麼辦」「龜殼花咬到要打哪種血清」現在都引用 `topic.antivenom`／`faq.*` 作答；第二十五輪的相關度門檻（§28.1）不必調整，新內容的涵蓋率與 BM25 分數都遠高於門檻（relevance 1.0）。
+- 「打哪種血清」不會被用藥拒答規則 `ref.med.which`（`(打)(哪種)(藥|…)`）擋下，因為「血清」不在藥名清單；劑量問句（「抗蛇毒血清要打幾 cc」）仍由 `ref.med.dose` 拒答，這是刻意的。
+- 評估集 `2026.10-r10`（213 題）：NM001 改「被虎頭蜂螫傷怎麼辦」、NM005 改「被水母螫傷怎麼辦」（同屬咬螫傷但站內沒有，並加 `mustNotCite` 蛇傷內容與 `faq.rabies-bite`，確認新內容不會被拿去充數）；新增 AV001–AV005（`fact`）：答案須引用蛇傷內容、含 119／血清名／「不冰敷」／「儲備點查詢系統」，且 `mustNotInclude` 錯誤處置的**肯定說法**（要冰敷、可以冰敷、要綁止血帶、切開傷口、吸出毒液、抬高患肢…）。肯定說法清單刻意避開否定句的子字串（「不冰敷」不含「要冰敷」），所以內容一律用「不 X」的寫法，**不要寫「不要冰敷」**（含「要冰敷」會讓評估失敗）。
+- `tests/round25-answer.test.mjs` 的查無清單同步改為虎頭蜂、水母。
+
+### 32.4 移轉清單
+
+`content/migration/legacy-services.json` 的 `antivenom`：`status: migrated`、`target: topic.antivenom`、`verified: false`（舊網址取自審查意見，待承辦核對），`note` 保留【必移轉】並列出待確認事項。
+
+### 32.5 測試與檢查
+
+`tests/round28-antivenom.test.mjs`（17 項）：內容與治理欄位、不捏造（無市話號碼、無醫院名單）、全部新內容無錯誤處置的肯定說法、警示與待辦、confirmed 不出警示且缺 `confirmedBy` 驗證失敗、專區頁四段錨點與醫療人員標籤、JSON-LD、Q&A 頁警示、專業段只進專業索引、六個問句皆引用蛇傷內容且不含錯誤處置、專業模式引用 `#s-professional`、虎頭蜂與水母仍 no-match 且「被狗咬」仍由狂犬病 Q&A 回答、評估集 r10、移轉清單、專業專區入口與 a11y 代表頁、問劑量仍拒答與「我被蛇咬了呼吸困難」仍走個人急症（119）。`scripts/a11y.mjs` 代表頁加 `/topics/antivenom/`（第一個有代表性的 topic 頁）。
+
+### 32.6 留給權責單位
+
+逐字核對五要五不（尤其「包紮傷口上緣」的鬆緊）、「不綁止血帶、患肢固定、不必抬高」（目前出自醫師受訪的媒體報導）是否納入官方建議、儲備院所家數與查詢系統網址、毒藥物防治諮詢中心電話、4 種血清的藥證品名寫法、儲備調度的分工、專業版是否補臨床使用說明、英文與東南亞語版本（`languages` 目前只有中文）。全部確認後把 5 筆內容的 `verification.status` 改 `confirmed` 並填 `confirmedBy`／`confirmedAt`，頁首警示與待辦自動消失。

@@ -22,11 +22,11 @@ export const KIND_LABEL = {
   'based-on-revised': '依據正本已修訂', 'reverse-audit': '反向稽核命中', overdue: '逾期', 'translation-stale': '翻譯過期',
   'dataset-overdue': '資料集逾期', 'license-missing': '授權缺漏', 'superseded-still-linked': '失效版仍被連結', 'situation-overdue': '態勢層逾期',
   'media-outdated': '影音過時', 'media-no-transcript': '無逐字稿', 'link-broken': '連結失效', 'labtest-inconsistent': '檢驗不一致',
-  'post-publish-review': '上線後複核', 'attachment-no-accessible-version': 'PDF 附件缺可及性版本', 'image-license-missing': '圖片授權或來源待確認', 'asset-orphan': '未宣告的孤兒檔', 'pdf-unreviewed': 'PDF 機讀版待校對',
+  'post-publish-review': '上線後複核', 'attachment-no-accessible-version': 'PDF 附件缺可及性版本', 'image-license-missing': '圖片授權或來源待確認', 'asset-orphan': '未宣告的孤兒檔', 'pdf-unreviewed': 'PDF 機讀版待校對', 'content-unverified': '內容待權責單位確認',
   'migration-pending': '舊頁待移轉',
   'job-result-overdue': '招募結果逾期', 'job-waitlist-expiring': '備取將到期', 'job-apply-url-dead': '報名網址失效', 'tender-award-overdue': '決標逾期',
 };
-export const KIND_ORDER = ['based-on-revised', 'reverse-audit', 'overdue', 'translation-stale', 'dataset-overdue', 'license-missing', 'superseded-still-linked', 'situation-overdue', 'media-outdated', 'media-no-transcript', 'link-broken', 'labtest-inconsistent', 'migration-pending', 'job-result-overdue', 'job-waitlist-expiring', 'job-apply-url-dead', 'tender-award-overdue', 'post-publish-review', 'attachment-no-accessible-version', 'image-license-missing', 'asset-orphan', 'pdf-unreviewed'];
+export const KIND_ORDER = ['based-on-revised', 'reverse-audit', 'overdue', 'translation-stale', 'dataset-overdue', 'license-missing', 'superseded-still-linked', 'situation-overdue', 'media-outdated', 'media-no-transcript', 'link-broken', 'labtest-inconsistent', 'migration-pending', 'job-result-overdue', 'job-waitlist-expiring', 'job-apply-url-dead', 'tender-award-overdue', 'post-publish-review', 'attachment-no-accessible-version', 'image-license-missing', 'asset-orphan', 'pdf-unreviewed', 'content-unverified'];
 export const WL_REASON_LABEL = {
   'not-published': '尚未發布', overdue: '逾期未審閱', superseded: '已被新版取代', sensitivity: '敏感等級非公開',
   'based-on-revised': '依據正本已修訂', 'not-requested': '未申請進白名單', 'type-not-allowed': '型別不在白名單政策', 'reverse-audit': '反向稽核命中', 'pdf-unreviewed': 'PDF 機讀版未校對',

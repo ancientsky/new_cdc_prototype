@@ -101,6 +101,7 @@ export function render(ctx) {
     { href: 'https://nidrs.cdc.gov.tw/', ext: true, title: '法定傳染病通報', title_en: 'Notifiable disease reporting', sub: '連結現行通報系統（NIDRS）', sub_en: 'Opens the current NIDRS reporting system', roles: 'physician infection-control local-health' },
     { href: askUrl('檢體送驗規定 容器 時限 表單'), title: '檢體送驗規定', title_en: 'Specimen submission rules', sub: '容器 · 時限 · 表單', sub_en: 'Containers · time limits · forms', roles: 'lab physician local-health' },
     { href: url('/diseases/'), title: '臨床處置指引', title_en: 'Clinical management guidance', sub: '依病別查詢', sub_en: 'Look up by disease', roles: 'physician nurse' },
+    { href: url('/topics/antivenom/#s-professional'), title: '抗蛇毒血清', title_en: 'Antivenom', sub: '血清種類 · 儲備點 · 調度', sub_en: 'Products · stock points · transfers', roles: 'physician nurse' },
     { href: askUrl('感染管制查核 醫院 長照機構'), title: '感染管制查核', title_en: 'Infection-control audits', sub: '醫院 · 長照機構', sub_en: 'Hospitals · long-term care', roles: 'infection-control nurse local-health' },
   ];
 

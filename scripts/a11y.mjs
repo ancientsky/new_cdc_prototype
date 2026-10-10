@@ -19,7 +19,7 @@ const BASE = (process.env.BASE_PATH ?? process.env.A11Y_BASE_PATH ?? '').replace
 /** 代表頁：每種樣板一頁；dist 內不存在的路徑會被略過並列警告 */
 export const PAGES = [
   '/', '/diseases/dengue/', '/diseases/', '/vaccines/', '/travel/', '/news/', '/faq/', '/ask/', '/situation/', '/data/', '/pro/',
-  '/subscribe/', '/en/subscribe/', '/admin/', '/admin/publish/', '/en/', '/vi/',
+  '/subscribe/', '/en/subscribe/', '/topics/antivenom/', '/admin/', '/admin/publish/', '/en/', '/vi/',
 ];
 export const VIEWPORTS = [{ name: '桌機 1280', width: 1280, height: 900 }, { name: '手機 320', width: 320, height: 700 }];
 const TAGS = ['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa', 'best-practice'];
