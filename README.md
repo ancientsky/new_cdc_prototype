@@ -342,3 +342,11 @@ docs/                使用說明與治理文件
 ## 貢獻方式
 
 內容改動走 Pull Request：改 `content/` → CI 驗證（schema、治理規則、評估集）→ 複核者核准 → 合併即發布。程式改動請先讀 ARCHITECTURE.md 第 7、10 節的約定（連結一律用 `ctx.url()`、插值一律跳脫、治理邏輯只放在引擎）。
+
+## 第二十六輪：介面字串依語言拆檔、JS 預算、Lint／型別檢查、CMS 路線決策紀錄
+
+回應三個外部審查意見（詳見 [ARCHITECTURE.md 第 29 章](ARCHITECTURE.md)）：
+
+- **#34 效能**：七語介面字串原本整包（291 KB）上線、每頁都載入。現在建置時依語言拆成 `assets/js/i18n.<lang>.js`（約 4–5 KB，只含瀏覽器會用到的字串，fallback 已預先解析），瀏覽器端改用小的 `i18n.runtime.js`；Node 端模板與測試的 `t()` 不變。建置新增「每頁 JS 預算」（公開頁 120 KB，含答案引擎的頁 320 KB，可用 `JS_BUDGET_KB` 調整），超過即失敗。為什麼：行動網路與舊手機上，多載 290 KB 不會被內容審查看到，卻是使用者每次都付的成本。
+- **#42 工程品質**：加入 ESLint（`npm run lint`）、Prettier 設定（只強制新檔）、型別檢查試點（`npm run typecheck`，只含 `lanes.mjs`、`validate.mjs`），並接進 CI（`content-pr.yml` 的 Lint 步驟與 PR 留言表、`pages.yml`）。大檔（`answer/core.js` 2193 行、`governance.mjs` 1475 行）的拆分只寫成路線圖，沒有動。為什麼：先用最小成本擋住會出錯的寫法，而不是一次大改。
+- **#28 CMS 路線**：在 [docs/architecture-decisions.md 第 18 節](docs/architecture-decisions.md) 比較自建後台、Keystatic、TinaCMS 三案，建議以 Keystatic 對 `faq` 型別做兩週試點，內容格式維持 JSON（長文維持 JSON 內的 Markdown 欄位）。**最後選擇待長官決定**，issue 保持開啟。

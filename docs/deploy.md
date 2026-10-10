@@ -152,6 +152,11 @@ CI 任一項失敗即不部署：JSON Schema 與跨檔參照（`owner`、`basedO
 - 每日：Actions 排程是否綠燈。
 - 每週：`/admin/` 儀表板待辦數是否收斂、KPI 有無下降。
 - 每季：依賴更新（`npm outdated`）、安全性掃描、備援演練（確認任何一個 commit 都能在乾淨環境重建）。
+- 程式碼檢查（第二十六輪；失敗時怎麼看見 [guide-staff.md](guide-staff.md) 第 27 節）：
+  - `npm run lint`：ESLint，PR 的 `content-pr.yml` 與 `pages.yml` 都會跑；0 errors 才算過（warnings 不擋，逐步清）。
+  - `npm run typecheck`：`tsc` 型別檢查試點（`lanes.mjs`、`validate.mjs`）。
+  - `npm run format:check`：Prettier，只強制新檔，不進 CI。
+  - `npm run build`：最後會印「JS 預算」一行（公開頁 120 KB、含答案引擎的頁 320 KB）；超過即失敗，可用 `JS_BUDGET_KB`／`ENGINE_JS_BUDGET_KB` 暫時調整。每季看一次最大值有沒有往上爬。
 
 ## 7. 部署到其他環境
 

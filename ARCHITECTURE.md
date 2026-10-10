@@ -1000,3 +1000,62 @@ manualStatus?: enum[cancelled, failed（流標）], award?: { date, winner, amou
 ### 27.4 延後
 
 依 `Accept-Language` 自動提示切換語言：未做（原型並非每頁都有七語，容易導到不存在的頁；也牽涉記住選擇的 cookie 告知）。
+
+## 29. 第二十六輪（2026-10-10）：介面字串依語言拆檔與 JS 預算、Lint／型別檢查、CMS 路線決策紀錄
+
+三個外部審查意見（issue #34 效能、#42 工程品質、#28 CMS 路線）的合約。為什麼這樣做：每頁多載 290 KB 的七語字串、沒有任何自動擋「寫壞但還能跑」的程式、編輯介面的長期路線沒有書面比較。
+
+### 29.1 介面字串依語言拆檔（#34）
+
+- **來源不變**：`src/client/i18n.js` 仍是唯一來源（七語一個檔，`t(lang, key, vars)`、`STRINGS` 照舊給 Node 模板與測試 import，API 零變動）。
+- **建置時拆檔**：`scripts/lib/i18n-split.mjs` 在 `copyDir(src/client → dist/assets/js)` 之後，產出 `dist/assets/js/i18n.<lang>.js`（`zh-TW`、`en`、`ja`、`tl`、`vi`、`id`、`th` 七個），並**刪除** `dist/assets/js/i18n.js`——完整七語檔不再上線。
+- **只收 client 會用到的 key**：掃描 `src/client/**/*.js`（不含 i18n 自己）：原始碼出現的完整 key，加上動態組字的前綴（`` `vxs.status.${s}` `` 產生前綴 `vxs.status.`，該前綴下所有 key 都收）。純伺服器端模板用的 key（佔大宗）不上線。**新增動態組 key 的寫法時，前綴必須以「xxx.」字面量出現在 client 原始碼**，否則該 key 在瀏覽器會顯示成 key 本身。
+- **每個 key 只存已解析的一筆**：依 `t()` 的規則「該語言 → 英文 → 中文」在建置時算好，檔內沒有 fallback 邏輯。
+- **模組格式**：`const S={…}; (window.CDC=window.CDC||{}).I18N={lang,S}; export default S;`
+- **瀏覽器端 `t()`**：`src/client/i18n.runtime.js`（`ui.js`、`vaxschedule.js`、`careers-list.js`、`careers-apply.js` 改 import 它）。它讀 `window.CDC.I18N`，並提供 `window.CDC.t(key, vars)`；頁面語言與載入的語言檔不同時回傳 key 本身。Node 端 import 時不碰 `window`。
+- **載入順序**：`src/templates/layout.mjs` 在 `ui.js` **之前**放 `<script type="module" src="…/assets/js/i18n.<lang>.js">`（module 依文件順序執行）。後台頁（`admin/_layout.mjs`）不載入 `ui.js`，也不用 i18n，所以不需要語言檔；沒有「admin 專用字串」要另拆。
+- **大小**（原始位元組）：before：每頁 `ui.js` 28.8 KB ＋ 完整 `i18n.js` 290.99 KB（gzip 約 104 KB）＝ 約 320 KB；after：`i18n.zh-TW.js` 4.2 KB、en 4.3、ja 4.4、tl 4.4、id 4.3、vi 4.5、th 4.7 KB，首頁 JS 合計約 34 KB。
+
+### 29.2 每頁 JS 預算（#34）
+
+`scripts/lib/js-budget.mjs`，於 `scripts/build.mjs` 輸出資產後執行，超過即 `exit 1`。做法：掃 dist 每個 HTML 的 `<script src>`，沿靜態 `import` 追到底，加總原始位元組（不含內嵌 script、CSS、圖片）。
+
+| 類別 | 預設預算 | 環境變數 | 現況（最大） |
+| --- | --- | --- | --- |
+| 公開頁 | 120 KB | `JS_BUDGET_KB` | 約 52 KB（求職報名頁） |
+| 含答案引擎 `answer/core.js` 的頁（`/ask/`、`/data/`、`/factcheck/`） | 320 KB | `ENGINE_JS_BUDGET_KB` | 約 287 KB |
+| `/admin/*` | 只回報不擋 | `ADMIN_JS_BUDGET_KB`（設值才擋） | 約 270 KB |
+
+調整方式：`JS_BUDGET_KB=150 npm run build` 暫時放寬；要改預設值請改 `js-budget.mjs` 的 `DEFAULT_*` 常數，並在 PR 說明理由。引擎頁預算是「已知技術債」：`core.js` 約 176 KB，拆檔後（見 29.5）應把引擎預算降到與公開頁相同。
+
+### 29.3 Lint、格式、型別檢查（#42）
+
+| 指令 | 內容 | CI |
+| --- | --- | --- |
+| `npm run lint` | ESLint flat config（`eslint.config.mjs`）：`@eslint/js` recommended，browser＋node globals；刻意關掉幾條對既有程式碼噪音大的規則（見檔內註解）。目前 0 errors、35 warnings（未使用的變數／import，之後逐步清） | `content-pr.yml`：步驟 `lint`（`continue-on-error`），PR 留言表「Lint（eslint）」，列入「合併決策」與最後失敗閘門；`pages.yml`：測試前執行 |
+| `npm run typecheck` | `tsc --noEmit -p tsconfig.json`；`checkJs` 只涵蓋 `scripts/lib/lanes.mjs`、`scripts/lib/validate.mjs`（檔首 `// @ts-check` ＋最少量 JSDoc）。**試點**，要擴大就加進 `tsconfig.json` 的 `include` | `pages.yml`（lint 之後） |
+| `npm run format:check` | Prettier（`.prettierrc`：單引號、2 空白、printWidth 160）。**只強制新檔**：`.prettierignore` 忽略既有檔，新檔要在檔尾加 `!路徑` 放行。不整批重排（避免 diff 洗版、保留 blame）；既有檔靠編輯器儲存時格式化 | 不進 CI |
+
+### 29.4 CI 閘門總表
+
+`npm test`（含 `tests/round26-i18n.test.mjs`：語言檔大小 ≤ 60 KB、與 Node `t()` 一致、Playwright 端到端）；`npm run lint`；`npm run typecheck`（pages.yml）；`npm run build`（含 JS 預算、連結檢查、評估集版本題）。
+
+### 29.5 路線圖：大檔拆分提案（不在本輪實作）
+
+**`src/client/answer/core.js`（2193 行，`createEngine` 一個函式約 1450 行）** 建議拆成：
+
+| 新模組 | 內容（現有位置） | 備註 |
+| --- | --- | --- |
+| `answer/retrieve.js` 檢索 | 斷詞／bigram（`tokenize`、`bigrams`）、實體與同義詞、索引查詢與計分（`createEngine` 內的 search） | 純函式、可單測 |
+| `answer/select.js` 選句 | 句子挑選、去重、引用編號、版本鏈處理 | 依賴 retrieve |
+| `answer/refusal.js` 拒答規則 | 輸入防護（`maskPII`、`detectInjection`）、意圖規則與拒答（原 1、2、3 節） | 規則表可獨立審閱，治理人員最常看這份 |
+| `answer/format.js` 輸出格式 | 答案物件組裝、多語、疫苗年齡／時程（`matchSchedule`）、民國日期、連結 | 與 `render.js` 的邊界 |
+| `answer/core.js` | 只留 `createEngine` 組裝與對外 API（維持 re-export，避免改動呼叫端） | |
+
+好處：`stats.js`／`factcheck.js` 只需載入 `retrieve`＋`format`，ask 以外頁面的 JS 可從約 250 KB 降到約 100 KB；拒答規則可單獨 code review。步驟：先加 re-export 與特徵測試（評估集 203 題為保護網）→ 一次搬一個模組 → 每次都跑評估集與 JS 預算。
+
+**`scripts/lib/governance.mjs`（1475 行，`applyGovernance` 約 600 行）** 建議拆成：`governance/paths.mjs`（`pathOf`、`slugOf`、`mdPathOf`，現第 246–310 行）、`governance/rules.mjs`（白名單、逾期、版本鏈等規則，`applyGovernance` 主體）、`governance/jobs-tenders.mjs`（`jobGov`、`tenderGov`）、`governance/mapping.mjs`（`resolveMapTo`）、`governance/kpi.mjs`（`computeKpi`、`textOf`）；`governance.mjs` 保留為彙整出口。
+
+### 29.6 CMS 路線決策紀錄（#28）
+
+見 [docs/architecture-decisions.md](docs/architecture-decisions.md) 第 18 節：自建後台、Keystatic、TinaCMS 三案比較、Keystatic（faq 型別）兩週試點計畫與成功標準、內容格式建議（結構化 JSON，長文維持 JSON 內的 Markdown 欄位）。**建議為試點 Keystatic，最後選擇待長官決定**；issue #28 保持 OPEN。
