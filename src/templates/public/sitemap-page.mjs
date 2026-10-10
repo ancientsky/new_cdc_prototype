@@ -13,7 +13,7 @@ export function render(ctx) {
   return html`${pageHead(ctx, { trail: [{ label: t('sitemap') }], h1: t('sitemap'), lead: t('sitemap.lead') })}
 <div class="c-sitemap">
   ${group(t('sitemap.main'), [
-    li(url('/'), t('tab.home')), li(url('/ask/'), t('ask.title')), li(url('/situation/'), t('nav.situation')), li(url('/diseases/'), t('nav.diseases')), li(url('/vaccines/'), t('nav.vaccines')),
+    li(url('/'), t('tab.home')), li(url('/ask/'), t('ask.title')), li(url('/search/'), t('search.title')), li(url('/situation/'), t('nav.situation')), li(url('/diseases/'), t('nav.diseases')), li(url('/vaccines/'), t('nav.vaccines')),
     li(url('/travel/'), t('nav.travel')), li(url('/factcheck/'), t('nav.factcheck')), li(url('/data/'), t('nav.data')), li(url('/news/'), t('nav.news')), li(url('/faq/'), t('nav.faq')), li(url('/documents/'), t('nav.documents')),
   ])}
   ${group(t('home.tasks'), config.tasks.map((k) => li(url(`/tasks/${k.key}/`), t(`task.${k.key}.label`))))}

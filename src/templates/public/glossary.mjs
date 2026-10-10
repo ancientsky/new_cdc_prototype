@@ -7,7 +7,7 @@ import { ldFor, pageHead, diseasePage, hrefFor } from './_partials.mjs';
 export function pages() { return [{ path: '/glossary/', lang: '*', props: {} }]; }
 
 export function meta(ctx) {
-  return { title: ctx.t('glossary.title'), description: ctx.t('glossary.desc'), scripts: ['/assets/js/glossary.js'], jsonLd: ldFor(ctx, null, [{ label: ctx.t('glossary.title') }]) };
+  return { title: ctx.t('glossary.title'), description: ctx.t('glossary.desc'), scripts: ['/assets/js/glossary.js'], pagefind: { type: 'glossary', audience: ['public', 'professional'] }, jsonLd: ldFor(ctx, null, [{ label: ctx.t('glossary.title') }]) };
 }
 
 /** 英文首字母分組：A–Z；數字、符號與沒有英文名者歸「#」 */

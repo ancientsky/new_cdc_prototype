@@ -57,7 +57,9 @@ test('inline script 掃描：只算會執行的 inline script（略過 src=、ld
 test('安全標頭基準：CSP（self＋雜湊、frame-src 只有 vaxmap 與 YouTube、frame-ancestors self、object-src none）、HSTS、nosniff、Referrer、Permissions；三種伺服器格式都含全部標頭', () => {
   const H = securityHeaders({ hashes: [sha256(EARLY_JS)] });
   const csp = H['Content-Security-Policy'];
-  assert.match(csp, /default-src 'self'/); assert.ok(csp.includes(`script-src 'self' ${sha256(EARLY_JS)}`)); assert.ok(!csp.includes("script-src 'self' 'unsafe-inline'"));
+  assert.match(csp, /default-src 'self'/); assert.ok(csp.includes(`script-src 'self' 'wasm-unsafe-eval' ${sha256(EARLY_JS)}`)); assert.ok(!csp.includes("script-src 'self' 'unsafe-inline'"));
+  // 第二十八輪：Pagefind 需要 WebAssembly ⇒ 只加 'wasm-unsafe-eval'；絕不能出現 'unsafe-eval'（會開放 eval()／new Function()）或 script-src 的 'unsafe-inline'
+  assert.ok(!/'unsafe-eval'/.test(csp), 'CSP 不得含 unsafe-eval'); assert.ok(!/script-src[^;]*'unsafe-inline'/.test(csp), 'script-src 不得含 unsafe-inline');
   assert.match(csp, /frame-src https:\/\/ancientsky\.github\.io https:\/\/www\.youtube-nocookie\.com https:\/\/www\.youtube\.com/);
   assert.match(csp, /frame-ancestors 'self'/); assert.match(csp, /object-src 'none'/); assert.match(csp, /base-uri 'self'/); assert.match(csp, /connect-src 'self' https:\/\/api\.anthropic\.com/);
   assert.equal(H['Strict-Transport-Security'], 'max-age=31536000; includeSubDomains');

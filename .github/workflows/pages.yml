@@ -76,7 +76,9 @@ jobs:
           else
             echo "previews 分支不存在，略過 PR 預覽"
           fi
-      - name: Build (schema gate + eval gate + static site)
+      # 建置同時產生 Pagefind 全文索引 dist/pagefind/（第二十八輪，約 20 秒；build.mjs 內建，沒有另外的步驟）。
+      # 索引失敗或收不到任何頁時 build 會 exit 1，不會把沒有索引的 /search/ 發布出去。
+      - name: Build (schema gate + eval gate + static site + full-text index)
         env:
           BASE_PATH: /${{ github.event.repository.name }}
           # 原型凍結「今天」在 2026-10-01：示意內容的審閱日與態勢資料日以此為基準，

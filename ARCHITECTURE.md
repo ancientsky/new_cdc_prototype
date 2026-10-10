@@ -1065,11 +1065,11 @@ manualStatus?: enum[cancelled, failed（流標）], award?: { date, winner, amou
 - `src/templates/public/glossary.mjs`（`pages()` 回 `lang: '*'`，七語各一頁）：詞彙主檔公開版，依英文首字母分組（非字母歸 `#`），每筆含中文正名、English、定義（`definition ?? note`；`definition` 為新增的選填欄位，目前 83 筆中只有 2 筆有 `note`，其餘待單位補）、別名、舊稱、領域、相關疾病頁。每列的 `data-q`（小寫的中文、英文、別名、舊稱）供篩選。
 - `src/client/glossary.js`：有 JS 才把 `hidden` 的篩選框打開並即時過濾，同步隱藏沒有符合項目的字母群；沒有 JS 就是完整清單（漸進增強）。
 - 連結：頁尾「開放資料與開發者」欄、網站導覽「更多服務」、`STATIC_PATHS`。
-- `content/migration/legacy-services.json`：電子報（待決策：Email 訂閱需要後端或寄信服務，建議先 RSS＋LINE 官方帳號）、抗蛇毒血清資訊（必移轉：緊急就醫資訊，舊網址取自審查意見）、傳染病核心教材（必移轉）、進階搜尋（待決策：用 `/ask/` 答案頁加「相關頁面」清單，或另做 Pagefind；本輪不做 Pagefind）。
+- `content/migration/legacy-services.json`：電子報（待決策：Email 訂閱需要後端或寄信服務，建議先 RSS＋LINE 官方帳號）、抗蛇毒血清資訊（必移轉：緊急就醫資訊，舊網址取自審查意見）、傳染病核心教材（必移轉）、進階搜尋（本輪當時待決策；**第二十八輪已決定兩者並存並完成**：答案頁加相關頁面清單＋Pagefind 全文搜尋，見第 31 節）。
 
 ### 28.7 沒做、留給權責單位決定
 
-電子報走哪個管道、進階搜尋走哪條路、抗蛇毒血清與核心教材的內容匯入、FOIA 頁中標「待建置」的項目、資訊安全政策正式文字、各頁權責單位確認、英文版人工審核、詞彙定義文字。
+電子報走哪個管道、（進階搜尋已於第二十八輪完成，見第 31 節）、抗蛇毒血清與核心教材的內容匯入、FOIA 頁中標「待建置」的項目、資訊安全政策正式文字、各頁權責單位確認、英文版人工審核、詞彙定義文字。
 
 ## 29. 第二十六輪（2026-10-10）：介面字串依語言拆檔與 JS 預算、Lint／型別檢查、CMS 路線決策紀錄
 
@@ -1129,3 +1129,123 @@ manualStatus?: enum[cancelled, failed（流標）], award?: { date, winner, amou
 ### 29.6 CMS 路線決策紀錄（#28）
 
 見 [docs/architecture-decisions.md](docs/architecture-decisions.md) 第 18 節：自建後台、Keystatic、TinaCMS 三案比較、Keystatic（faq 型別）兩週試點計畫與成功標準、內容格式建議（結構化 JSON，長文維持 JSON 內的 Markdown 欄位）。**建議為試點 Keystatic，最後選擇待長官決定**；issue #28 保持 OPEN。
+
+## 31. 第二十八輪（2026-10-10）：Pagefind 靜態全文搜尋與進階篩選
+
+Issue #38「進階搜尋」。決策（Yulun）：**答案頁的「相關頁面清單」與 Pagefind 全文搜尋並存**，不是二選一（理由見 [docs/architecture-decisions.md](docs/architecture-decisions.md) 第 20 節）。這一節記錄實作、量測數字、中文斷詞的實測結果與限制，以及這輪踩到的坑。同事怎麼讓頁面搜得到、篩得到，見 [docs/guide-staff.md](docs/guide-staff.md) 第 29 節；CI／標頭／快取見 [docs/deploy.md](docs/deploy.md) 第 10、11 節。
+
+### 31.1 兩條路各做什麼（為什麼並存）
+
+| | `/ask/` 答案頁（既有） | `/search/` Pagefind（新） |
+| --- | --- | --- |
+| 回答的問題 | 「我該怎麼辦？」給一個抽取式答案＋引用＋相關頁面 | 「站上哪些頁面提到 X？」給排序過的頁面清單 |
+| 範圍 | 站內 FAQ／疾病／文件等結構化片段（有相關度門檻，寧可查無） | 全站公開頁的**全文**，含新聞稿、旅遊目的地、詞彙頁、長文件 |
+| 篩選 | 無 | 內容類型、對象、業務單位、年份；可依日期排序 |
+| 失敗時 | 查無 → 引導改問法、熱線 | 零結果 → 清除篩選、改用 /ask/ |
+
+兩邊互相導流：答案頁與「查無」都會多一行「用全文搜尋找『{q}』」（`src/client/answer/render.js` 的 `fullTextLink`，連到 `/search/?q=…`）；`/search/` 零結果時有「改用智慧查詢」連到 `/ask/?q=…`。
+
+### 31.2 建置流程與實測
+
+- `pagefind@1.5.2` 加進 `devDependencies`（`package-lock.json` 鎖版；Dependabot 會開升版 PR）。
+- 索引**在 `scripts/build.mjs` 內做**（輸出 HTML 之後、連結檢查之前），用 Pagefind 的 Node API（`createIndex` → `addHTMLFile` → `writeFiles`），實作在 `scripts/lib/pagefind.mjs`。不另外寫成 workflow 步驟，是因為：`pages.yml`、`content-pr.yml`（a11y 用的建置、預覽站建置）、本機 `npm run build` 都已經跑 `build.mjs`，放在這裡**每一種建置自然都有 `dist/pagefind/`**；預覽站的複製也在索引之後，PR 預覽直接能搜。`node scripts/build.mjs --check` 在輸出前就 return，不索引（驗證不用付 20 秒）。`PAGEFIND=off` 可跳過（只想看版面時）。
+- **實測**（本機，3102 個輸出頁；其中 2330 頁進索引）：輸出 HTML 約 30 秒；全文索引 **約 18–19 秒**；`dist/pagefind/` 共 2499 檔、約 6.9 MB（單一檔案加總；磁碟 `du` 因每檔區塊取整會顯示約 13 MB，兩個數字都不是下載量，下載量見下一點）。語言：zh-tw 487 頁、en 416、其餘 ja／tl／vi／th／id 各約 285。
+- 建置後會刪掉用不到的 Pagefind 內建 UI（`pagefind-ui.*`、`pagefind-modular-ui.*`、`pagefind-component-ui.*`、`pagefind-highlight.js`）：我們用自己的介面，這些檔每個數百 KB，留著只會變成「部署了卻沒人用」的檔案與攻擊面。
+- **使用者實際下載量**（Chromium、無快取，gzip 後；`pagefind-worker.js`＋`pagefind.js`＋wasm＋索引分片）：「登革熱」約 268 KB、「結核」約 184 KB、「麻疹疫苗」約 223 KB、「抗病毒藥劑」約 241 KB。**第一次搜尋才載入**，沒搜尋的使用者零成本。
+
+### 31.3 收什麼：正面表列，不是排除表列
+
+Pagefind 有個行為：**只要站上有一頁出現 `data-pagefind-body`，沒有這個屬性的頁就整頁不收**。我們順著用它：
+
+- `layout()` 只有在 `pagefindFor(meta)`（`src/templates/public/_pagefind.mjs`）回傳非 null 時，才在 `<main>` 加 `data-pagefind-body`。內容型別在 `PF_TYPES` 表內（disease、vaccine、news、letter、clarification、document、faq、service、publication、labtest、research、media、topic、page、job、tender），再加兩種非內容項目但值得搜的頁：旅遊目的地（`travel`）、詞彙頁（`glossary`，模板在 `meta.pagefind` 自己宣告）。
+- `noindex` 的頁一律不收：失效版文件（`_retired`）、模擬報名頁、404、`/ask/`、`/search/` 自己。
+- 後台、預覽、舊站轉址頁、機讀版（`.md`／`.json`／`/v1/`）不是人要看的頁；`scripts/lib/pagefind.mjs` 的 `isIndexable()` 還多一道「路徑黑名單」擋在最前面（admin、preview、legacy、pagefind、assets、files、v1、headers、redirects、search、ask、pending 與 `404.html`）。**兩層都要過才收**：黑名單是保險，白名單是主要機制。
+- 為什麼不是「全收再排除」：新增一種版面、工具頁，預設**不會**進索引。漏標的後果是「搜不到」（補一行就好），而不是「不該公開的東西被索引出去」（難收回）。
+
+每頁在 `<main>` 尾端附一組 hidden 空標籤（不影響畫面、朗讀，也不混進正文被搜到）：
+
+| 標籤 | 值（穩定代碼，非各語言顯示字） | 用途 |
+| --- | --- | --- |
+| `data-pagefind-filter="type:…"` | `disease`、`news`、`faq`…（`PF_ALL_TYPES`） | 「內容類型」篩選 |
+| `data-pagefind-filter="audience:…"` | `public`、`professional`（可多值） | 「對象」篩選 |
+| `data-pagefind-filter="unit:…"` | 業務單位代碼，如 `acute-infectious`（取自 `owner`） | 「業務單位」篩選 |
+| `data-pagefind-filter="year:…"` | `2026`（取自 `publishedAt`／`date`） | 「年份」篩選 |
+| `data-pagefind-sort="date:YYYY-MM-DD"` | 發布日 | 「依日期排序」 |
+| `data-pagefind-meta="title:…"`、`kind:…`、`unit:…`、`date:…` | 該頁語言的顯示字 | 結果列直接顯示，不必再取頁面 |
+| `data-pagefind-weight="10"` | 加在主體第一個 `<h1>` | 標題加權（理由見 31.5） |
+
+**篩選值用代碼、不用顯示字**：`?type=disease` 在七種語言都一樣，可分享、可書籤；顯示字由 `/search/` 頁依該語言的字串表對照。若直接用中文顯示字當篩選值，英文頁的網址會長成 `?type=疾病`，換語言就失效。
+
+### 31.4 中文（CJK）斷詞：實測、問題、解法、限制
+
+**問題**：Pagefind 內建的中文分詞對台灣用語不可靠。實測（zh-TW 且有 `data-pagefind-body` 的 487 頁，拿「主體文字含該子字串」當基準答案）：
+
+| 查詢 | 基準（含該字串的頁數） | 內建分詞：回傳／召回 | 本站做法：回傳／召回／精準 |
+| --- | --- | --- | --- |
+| 登革熱 | 72 | 5 頁／**7%** | 72 頁／**100%**／100% |
+| 結核 | 45 | 11 頁／**24%** | 45 頁／**100%**／100% |
+| 抗病毒藥劑 | 14 | 67 頁／召回 100%／精準 21%（多是只含「病毒」「藥」的頁） | 14 頁／**100%**／100% |
+| 麻疹疫苗 | 0（沒有任何頁連著寫「麻疹疫苗」） | 2 頁（誤中，都不含該字串） | 完整字串 0 筆 → 走「寬鬆」退路，列出 76 頁同時含「麻疹」與「疫苗」的頁（疾病頁 `/diseases/measles/` 在前三） |
+
+（重跑：建置後在 `dist` 上以 Playwright 載入 `/pagefind/pagefind.js`，與子字串基準比對；`tests/round28-search.test.mjs` 把「登革熱」「結核」的召回等於基準寫成測試。）
+
+**解法（索引端＋查詢端對稱）**：
+
+1. **索引端**：`scripts/lib/pagefind.mjs` 的 `spaceCjkInMain()` 在餵給 Pagefind 之前，對 `<main>` 內的**副本**把相鄰 CJK 字之間補空白（「登革熱」→「登 革 熱」，範圍 `぀-ヿ㐀-䶿一-鿿豈-﫿`，含日文假名）。磁碟上的 HTML 完全不動。每個字變成一個詞，Pagefind 的倒排索引就等於字元索引。
+2. **查詢端**：`src/client/search-query.js` 的 `parseQuery()` 把查詢裡連續的 CJK 字串轉成**精確片語**（「"登 革 熱"」），Pagefind 的片語比對要求字相鄰且順序一致，等於子字串搜尋。
+3. **多個片語**：Pagefind 一個查詢只允許一個引號片語，所以「登革熱 結核」這種多片語查詢拆成多次搜尋，結果 id **取交集**。
+4. **排序**：片語查詢的結果分數一律為 1（無排序可言），所以再做一次**不加引號**的查詢（每個字都出現）取得 Pagefind 的相關度順序，用來排片語結果；`ranking.pageLength` 設 0.25，讓長頁（旅遊目的地、長文件）不要靠字數贏過短而精準的頁。
+5. **「寬鬆」退路**：完整字串零筆、且連續 CJK ≥ 4 字時，把字串切成前後兩半各自成片語（兩半都要出現）重查，並在狀態列說明「找不到完整的『麻疹疫苗』，改列同時含『麻疹』與『疫苗』的頁面」。使用者看得到系統做了什麼，不會被默默換成別的結果。
+6. **顯示端**：摘錄裡 `<mark>登 </mark><mark>革 </mark>…` 在 `despaceExcerpt()` 去掉 CJK 字間空白並合併相鄰 `<mark>`；結果標題用 `data-pagefind-meta="title:…"` 明指（否則 `<h1>` 被補空白後會顯示成「登 革 熱」）。摘錄用 DOM 建構（只放行 `<mark>`），不用 `innerHTML` 灌 Pagefind 回傳的字串。
+
+**這個做法的限制（請維運同仁知道）**：
+
+- 是**字面子字串比對**，不是語意：不會認得同義詞（「登革熱」≠「骨痛熱病」），也不處理簡繁轉換。同義詞靠內容本身（`glossary`、頁面別名）或日後依「零結果查詢」補。
+- 單一 CJK 字（如「痘」）走一般詞比對，會很多結果；排序有 `pageLength` 與標題加權，但沒有語意相關度。
+- **泰文沒有斷詞**（泰文詞之間不留空白，Pagefind 也沒有泰文分詞）：泰文搜尋只能比對以空白或標點分隔的整段，召回很低。這是**已知限制**；每個非中文版的 `/search/` 都有「搜尋範圍是這個語言版本的頁面」的提示與連到中文搜尋的連結，泰文版沒有額外的專屬提示。越南文、印尼文、菲律賓文（空白分詞）與英文（Pagefind 內建 stemming）沒有這個問題。
+- 每個 CJK 字是一個詞，索引會比「正確分詞」的索引大；實際下載量已量過（31.2），單次搜尋約 180–270 KB（gzip）。
+- 每種語言只搜**自己語言的索引**（Pagefind 依 `<html lang>` 分索引）。英文版搜不到只有中文的頁；`/search/` 在非中文版有一行連到中文搜尋的提示（`data-search-zh`）。內容翻譯覆蓋率各語言不同（zh-TW 487 頁、en 416、其餘約 285），這是內容問題，不是搜尋問題。
+
+### 31.5 `/search/` 頁的設計
+
+- **七種語言各一頁**（`src/templates/public/search.mjs`，`lang: '*'`），`noindex`；表單 `role="search"`、單一文字欄＋「進階篩選」`<details>`（預設收合；網址帶篩選或排序時展開）。內容類型與對象是 `<fieldset>`＋核取方塊，業務單位／年份／排序是原生 `<select>`。**全部原生控制項**，鍵盤與讀屏免費可用；320 px 下欄位直排、無橫向捲動（e2e 在 320 px 驗過）。
+- **不用 Pagefind 內建 UI**：它的版面、字串與無障礙行為我們控制不了，也沒有七語介面；自建約 400 行（`src/client/search.js`＋`search-query.js`），字串走既有 `i18n.js`（`search.*`、`search.type.*`，建置時依語言拆檔）。
+- **狀態 ↔ 網址**：`?q=…&type=a,b&audience=…&unit=…&year=…&sort=date`，載入時還原、變更時 `history.pushState`、`popstate` 還原；因此搜尋結果可分享、上一頁可用。`?q=` 也是 /ask/ 連過來的入口。
+- **多選篩選是 OR**：Pagefind 的陣列值是 AND，所以多選時改用 `{ any: [...] }`。
+- **選項顯示筆數**：從 `pagefind.filters()` 取全站數量（無查詢時）或單次查詢的數量（多片語查詢無法由單次查詢得出，不顯示）。
+- **可及性**：結果數與狀態寫入 `role="status"` `aria-live="polite"` 的 `#search-status`；結果是 `<ol>`；「顯示更多」之後把焦點移到第一筆新結果。`scripts/a11y.mjs` 的 `PAGES` 加了 `/search/` 與 `/search/?q=登革熱&type=faq,news`（後者等結果出現才掃，涵蓋結果列與篩選展開狀態）。
+- **競態**：快速改篩選時，舊請求的結果不能蓋掉新請求（e2e 實際抓到過「已篩選的清單混入舊結果」）。`renderMore` 以 run id 比對，過期的結果直接丟棄；翻頁中不允許重入（`busyRun`）。
+- **標題加權**：`layout` 對主體第一個 `<h1>` 補 `data-pagefind-weight="10"`。理由：Pagefind 預設所有字等權，「登革熱」在 231 個旅遊目的地頁各出現數次，沒加權時疾病頁會被淹沒；統一在 layout 補而不是逐模板改，新模板不用記得。
+
+### 31.6 與 /ask/ 的整合、頁首入口
+
+- **/ask/**：答案、拒答、暫停三種狀態的結尾都有「用全文搜尋找『{q}』」連結（含 `fullSearchNote`，說明這是找頁面而不是回答問題），查無時尤其重要——它把死路變成出路。
+- **頁首入口**：加在頁首導覽（站內地圖連結之後）、頁尾「服務」欄、站內地圖頁。**判斷**：頁首導覽在 ≤ 720 px 時，CSS 本來就把非熱線連結收起來（避免導覽列換行），所以手機上入口是頁尾與 /ask/ 連結；桌機寬度（721、760、900、1280 px）逐一量過沒有溢位。如果要手機也有，應做成漢堡選單，那是版面層級的改動，不在這一輪。
+
+### 31.7 安全與效能
+
+- **CSP**：`script-src 'self' 'wasm-unsafe-eval' <inline 雜湊>`。Pagefind 在 Web Worker 內用 WebAssembly 跑搜尋，瀏覽器（Chromium 系）要求 CSP 明確允許 wasm 編譯，指令就是 `'wasm-unsafe-eval'`。**它只放行 WebAssembly 編譯，不放行 JavaScript 的 `eval()`／`new Function()`**，所以不是 `'unsafe-eval'`。Worker 是同源的 `pagefind-worker.js`，不需要 `worker-src` 或 `blob:`。`scripts/lib/emit-headers.mjs` 產生，`tests/round23-security.test.mjs` 同時斷言「有 `'wasm-unsafe-eval'`」「沒有 `'unsafe-eval'`」「`script-src` 沒有 `'unsafe-inline'`」，以後有人為了方便放寬會被擋。詳見 [docs/deploy.md](docs/deploy.md) 第 10.1 節。
+- **JS 預算**：Pagefind 以**動態 `import()`** 在使用者第一次搜尋時才載入，`scripts/lib/js-budget.mjs` 只沿**靜態** `import` 計算，所以 Pagefind（約 291 KB 執行期）**不算**進頁面預算——這是刻意的：預算量的是「每個頁面一打開就付的成本」，延遲載入的搜尋引擎不是。`/search/` 自己的腳本（`search.js`＋`search-query.js`＋i18n 語言檔）算進公開頁預算：最大 56 KB（`th/search/`，預算 120 KB）。`tests/round28-search.test.mjs` 斷言七語 `/search/` 的 HTML 不直接載入 `pagefind.js`、`/search/` 立即載入的 JS < 80 KB，且全站預算通過。
+- **快取**：`dist/pagefind/` 底下 `index/`、`fragment/`、`filter/` 與 `*.pf_meta` 的檔名含內容雜湊，可長快取（immutable）；`pagefind.js`、`pagefind-worker.js`、`pagefind-entry.json`、`wasm.*.pagefind` 檔名固定，要短快取或每次驗證。見 docs/deploy.md 第 11 節。
+- **非標準副檔名**（`.pagefind`、`.pf_meta`、`.pf_index`、`.pf_filter`、`.pf_fragment`）：伺服器沒有對應 MIME 時會以 `application/octet-stream` 回應；實測（簡易伺服器對未知副檔名回 `application/octet-stream`）搜尋正常，不需要為它們設定 MIME。
+
+### 31.8 這輪順手修的 bug
+
+- **`/ask/` 在瀏覽器查無時丟 `ReferenceError: process is not defined`**（`src/client/answer/core.js` 約 2103 行，`process.env?.NO_GATE` 直接取值）：測試在 Node 跑所以一直沒人發現。改成 `typeof process !== 'undefined' && …`，並在 `tests/round28-search.test.mjs` 加一條靜態測試：`src/client/**` 的 JS 不得裸用 `process.env`。
+- **已觀察、未修**：`src/client/glossary.js` 仍 `import './i18n.js'`，而第二十六輪拆檔後 `dist/assets/js/i18n.js` 已不在 dist（只剩 `i18n.<lang>.js`）。詞彙頁的篩選功能是否因此壞掉**未驗證**，建議另開 issue 查（應改 import `i18n.runtime.js`）。
+
+### 31.9 測試與 CI
+
+- `tests/round28-search.test.mjs`（23 項）：
+  - 單元：`parseQuery`（片語、混合、引號、寬鬆）、`despaceExcerpt`、`spaceCjkInMain`、`isIndexable`、`pagefindFor`／`pagefindMarks`、i18n 鍵齊全（七語）、CSP 指令、client JS 無裸 `process.env`。
+  - dist 檢查：`dist/pagefind/` 存在、排除項（admin、preview、legacy、404、ask、search）不在索引、篩選標籤正確、七語 `/search/` 在 JS 預算內。
+  - 端到端（Playwright，用 `dist/headers/headers.json` 的 CSP 起伺服器，所以 CSP 會真的生效）：`?q=登革熱` 直連且疾病頁在前三、結果 `href` 帶 `basePath`、CJK 召回等於子字串基準、寬鬆退路、篩選／排序／清除、只有篩選沒有關鍵字的瀏覽與「顯示更多」焦點、鍵盤操作、英文 320 px、/ask/ 的全文搜尋連結。
+- `tests/round23-security.test.mjs` 更新 CSP 斷言。`scripts/a11y.mjs` 加 `/search/`。
+- 需要 `dist/` 的測試在 dist 不存在時 skip（與第二十六輪的測試一致）；端到端另需 Playwright／Chromium，沒有時也 skip。**注意 CI 的順序**：`pages.yml` 與 `content-pr.yml` 都是先 `npm test`、後建置，所以 CI 裡 dist 相關的測試（標籤、七語頁、端到端）是 skip，真正把關的是：(1) 建置本身——索引失敗或收不到任何頁就 `exit 1`、JS 預算超標就 `exit 1`；(2) `content-pr.yml` 的 a11y 步驟（先建置再掃 `/search/`）；(3) 單元測試（`parseQuery`、`isIndexable`、CSP 斷言等不需要 dist）。完整的 23 項請在本機建置後跑 `npm test`（Playwright 在 `/opt/pw-browsers`）。若要讓 CI 也跑端到端，需把建置移到測試之前，是另一個工作流程調整，這輪沒有動。
+
+### 31.10 遺留與下一步
+
+- 舊站 `/Search/{id}` 的真實網址格式尚未確認（`content/migration/legacy-services.json` 的 `advanced-search` 已改為 `migrated → /search/`，備註列出剩餘項目）；確認後在 `redirects` 補轉址。
+- 同義詞／別名：上線後從「零結果查詢」紀錄（需另外決定是否以及如何蒐集，涉及隱私）補，不要預先猜。
+- 泰文斷詞：需要在索引端導入斷詞器（如 ICU 的 `Intl.Segmenter('th')`，Node 22 內建），做法與 CJK 補空白相同；本輪不做，因為泰文版內容量最小、且需要母語者驗證。
+- 手機版頁首入口：見 31.6。

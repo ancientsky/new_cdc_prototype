@@ -168,3 +168,4 @@ html[data-view="pro"] .ask-page .c-source-card{border-color:var(--navy-700)}
 .c-source-card .c-labtest-mini th{white-space:nowrap;color:var(--ink-2);font-weight:400;width:6em}
 .c-ai-disclosure__transcript{display:inline-block;margin-left:var(--sp-2);font-size:var(--fs-xs);color:var(--ink-2);border:1px solid var(--line);border-radius:var(--radius-pill);padding:0 8px}
 .c-answer__sent--closed{border-left-color:var(--line-2);color:var(--ink-2)}
+.c-answer__fulltext{margin:var(--sp-4) 0 0;display:flex;flex-wrap:wrap;gap:var(--sp-2) var(--sp-3);align-items:center}

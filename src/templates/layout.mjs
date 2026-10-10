@@ -3,7 +3,8 @@
 import { html, raw, jsonScript } from '../../scripts/lib/render.mjs';
 import { config } from '../../site.config.mjs';
 import * as JL from '../../scripts/lib/jsonld.mjs';
-import { pausedBanner, translationBadge } from './public/_partials.mjs';
+import { pausedBanner, translationBadge, unitName } from './public/_partials.mjs';
+import { pagefindFor, pagefindMarks } from './public/_pagefind.mjs';
 import { intlTopic } from './public/_international.mjs';
 
 // 介面（UI 字串）本身的翻譯審核狀態；內容頁則看 item.languages[lang]
@@ -16,6 +17,7 @@ export const EARLY_JS = `try{var d=document.documentElement;d.classList.add('js'
 // 頁尾分組（第十七輪 fat footer）：服務／關於與政策／開發者與開放資料／聯絡。民眾主選單不放機關型入口，全站地圖集中在頁尾；首頁不再另放「更多服務」。
 const FOOT_SERVICES = [
   ['/publications/', 'more.publications'], ['/apply/', 'more.apply'], ['/lab/', 'more.lab'], ['/report/', 'more.report'], ['/research/', 'more.research'],
+  ['/search/', 'footer.search'],
   ['/careers/', 'more.careers'], ['/procurement/', 'more.procurement'], ['/notices/', 'more.notices'], ['/media/', 'services.media'], ['/campaigns/', 'campaigns.title'], ['/services/', 'services.title'],
 ];
 
@@ -66,8 +68,10 @@ const ICONS = {
 };
 const icon = (n) => raw(`<svg class="c-tabbar__ic" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[n]}</svg>`);
 
-export function layout(ctx, { styles = [], title, description, body, jsonLd = [], noindex = false, bodyClass = '', scripts = [], item = null, canonicalPath = null, hideTranslationBar = false }) {
+export function layout(ctx, { styles = [], title, description, body, jsonLd = [], noindex = false, bodyClass = '', scripts = [], item = null, canonicalPath = null, hideTranslationBar = false, pagefind = undefined }) {
   const { site, lang, url, t } = ctx;
+  // 第二十八輪：Pagefind 全文索引。只有 pagefindFor() 認得的頁才加 data-pagefind-body（正面表列，見 public/_pagefind.mjs）
+  const pf = pagefindMarks(ctx, pagefindFor({ item, noindex, pagefind }), { unitName: (id) => unitName(ctx, id), title });
   const langDef = config.langs.find((l) => l.code === lang);
   const path = ctx.path ?? '/';
   const fullTitle = title ? `${title} · ${t('site.short')}` : t('site.name');
@@ -127,7 +131,7 @@ ${protoBanner(ctx)}
     <summary class="langmenu__btn">${t('lang.menu')}</summary>
     <nav class="langmenu__list" aria-label="${t('lang.label')}">${langLinks}</nav>
   </details>
-  <nav class="topbar__links" aria-label="${t('nav.tools')}"><a href="${url('/accessibility/')}">${t('a11y')}</a><a href="${url('/sitemap-page/')}">${t('sitemap')}</a><a class="hotline" href="tel:1922">${t('hotline')}</a></nav>
+  <nav class="topbar__links" aria-label="${t('nav.tools')}"><a href="${url('/accessibility/')}">${t('a11y')}</a><a href="${url('/sitemap-page/')}">${t('sitemap')}</a><a href="${url('/search/')}">${t('search.title')}</a><a class="hotline" href="tel:1922">${t('hotline')}</a></nav>
 </div></div>
 <header class="site-header"><div class="wrap site-header__in">
   <a class="brand" href="${url('/')}"><span class="brand__mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="40" height="40"><rect width="32" height="32" rx="8" fill="currentColor"/><path d="M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z" fill="#fff"/></svg></span><span class="brand__text"><span class="brand__name">${t('site.name')}</span><span class="brand__sub">${lang === 'zh-TW' ? config.nameEn : t('site.parent')}</span></span></a>
@@ -142,7 +146,7 @@ ${protoBanner(ctx)}
   <div class="wrap c-nav__langs"><p class="c-nav__langs-t" id="nav-langs-t">${t('lang.menu')}</p><div class="c-nav__langs-l" role="group" aria-labelledby="nav-langs-t">${langLinks}</div></div></nav>
 </header>
 ${pausedBanner(ctx)}
-<main id="main"${wide ? '' : raw(' class="wrap"')}>${raw(String(body))}</main>
+<main id="main"${wide ? '' : raw(' class="wrap"')}${raw(pf.bodyAttr)}>${raw(pf.weigh(body))}${pf.tail}</main>
 ${translationBar(ctx, item, hideTranslationBar)}
 <footer class="site-footer"><div class="wrap site-footer__in">
   <nav class="site-footer__col" aria-labelledby="ft-svc"><h2 class="site-footer__t" id="ft-svc">${t('footer.services')}</h2><ul>${FOOT_SERVICES.map(([p, k]) => html`<li><a href="${url(p)}">${t(k)}</a></li>`)}</ul></nav>
