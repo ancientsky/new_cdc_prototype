@@ -1313,7 +1313,7 @@ Pagefind 有個行為：**只要站上有一頁出現 `data-pagefind-body`，沒
 ### 31.8 這輪順手修的 bug
 
 - **`/ask/` 在瀏覽器查無時丟 `ReferenceError: process is not defined`**（`src/client/answer/core.js` 約 2103 行，`process.env?.NO_GATE` 直接取值）：測試在 Node 跑所以一直沒人發現。改成 `typeof process !== 'undefined' && …`，並在 `tests/round28-search.test.mjs` 加一條靜態測試：`src/client/**` 的 JS 不得裸用 `process.env`。
-- **已觀察、未修**：`src/client/glossary.js` 仍 `import './i18n.js'`，而第二十六輪拆檔後 `dist/assets/js/i18n.js` 已不在 dist（只剩 `i18n.<lang>.js`）。詞彙頁的篩選功能是否因此壞掉**未驗證**，建議另開 issue 查（應改 import `i18n.runtime.js`）。
+- **已修（整合時）**：`src/client/glossary.js` 原本 `import './i18n.js'`，而第二十六輪拆檔後 dist 已沒有完整 `i18n.js`，瀏覽器載入模組失敗，詞彙頁篩選框整個不出現。改 import `i18n.runtime.js`，並在 `tests/round26-i18n.test.mjs` 加測試：`src/client/` 底下任何模組都不得再 import 完整的 `./i18n.js`。**教訓**：拆檔時只靠 Node 端測試看不到瀏覽器 404，要有端到端檢查或靜態規則把關。
 
 ### 31.9 測試與 CI
 

@@ -148,3 +148,11 @@ test('端到端：/、/vi/、/admin/、/ask/ 無 console 錯誤，client JS 渲�
     srv.kill();
   }
 });
+
+// 第二十八輪：glossary.js 仍 import './i18n.js'，拆檔後 dist 沒有這個檔，整支模組載入失敗、詞彙篩選失效。
+test('瀏覽器端模組不得 import 完整的 ./i18n.js（dist 只有 i18n.<lang>.js 與 i18n.runtime.js）', () => {
+  const dir = new URL('../src/client/', import.meta.url);
+  const walk = (d) => fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(new URL(`${e.name}/`, d)) : e.name.endsWith('.js') ? [new URL(e.name, d)] : []));
+  const bad = walk(dir).filter((f) => !f.pathname.endsWith('/i18n.js') && /import\s+(?:[^'"]*from\s+)?['"](?:\.\.?\/)+i18n\.js['"]/.test(fs.readFileSync(f, 'utf8')));
+  assert.deepEqual(bad.map((f) => f.pathname.split('/src/client/')[1]), []);
+});
