@@ -603,8 +603,11 @@ export function applyGovernance(site) {
       if (item.status === 'published' && !gov.superseded) {
         const df = item.derivedFrom;
         const tables = [...(df.tablePages ?? []), ...(df.inlineTablePages ?? [])].sort((a, b) => a - b);
-        addTodo({ id: `pdf-unreviewed:${item.id}`, kind: 'pdf-unreviewed', item, dueAt: addDays(df.extractedAt ?? item.publishedAt ?? today, ASSET_FIX_DAYS), severity: 'medium',
-          text: `「${item.title}」的機讀版由 ${df.file} 機器轉出（${df.extractedAt ?? '日期不明'}），尚未校對：請對照 PDF 原頁抽查章節與條文${tables.length ? `，並把第 ${tables.join('、')} 頁的表格轉成 Markdown 表格` : ''}${df.redTextChanges === 'not-captured' ? '；紅字修訂處抽成文字後已無顏色，請填「本版異動」（changes）' : ''}；完成後把 derivedFrom.reviewStatus 改成 reviewed（guide-staff §20）` });
+        // 第二十八輪：重建版（沒有 PDF 正本、由有出處的句子拼成）不能「校對完改 reviewed」，要做的是取得正本、重新轉檔、刪掉重建版
+        const text = df.sourceKind === 'reconstructed'
+          ? `「${item.title}」是沒有 PDF 正本時的重建版（${df.extractedAt ?? '日期不明'}，來源見文末「資料來源與查證狀態」），不是教材原文：請提供 PDF 正本，以 scripts/pdf-to-md.mjs 轉出同家族（${item.family ?? item.id}）的正式版本後刪除本重建版；在那之前請逐條核對來源表並補上「（待補）」處（guide-staff §31）`
+          : `「${item.title}」的機讀版由 ${df.file} 機器轉出（${df.extractedAt ?? '日期不明'}），尚未校對：請對照 PDF 原頁抽查章節與條文${tables.length ? `，並把第 ${tables.join('、')} 頁的表格轉成 Markdown 表格` : ''}${df.redTextChanges === 'not-captured' ? '；紅字修訂處抽成文字後已無顏色，請填「本版異動」（changes）' : ''}；完成後把 derivedFrom.reviewStatus 改成 reviewed（guide-staff §20）`;
+        addTodo({ id: `pdf-unreviewed:${item.id}`, kind: 'pdf-unreviewed', item, dueAt: addDays(df.extractedAt ?? item.publishedAt ?? today, ASSET_FIX_DAYS), severity: 'medium', text });
       }
     }
     gov.whitelist.effective = r.length === 0;

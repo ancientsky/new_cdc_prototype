@@ -2,13 +2,23 @@
   "$id": "https://cdc-prototype/schemas/document.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "文件（手冊、指引、病例定義、接種建議）— 每個版本一檔，family 串成版本鏈",
-  "allOf": [{ "$ref": "_common.json" }],
+  "allOf": [
+    { "$ref": "_common.json" },
+    {
+      "if": { "properties": { "docType": { "const": "curriculum" } }, "required": ["docType"] },
+      "then": { "required": ["learningObjectives", "diseases", "roles"], "properties": { "diseases": { "minItems": 1 }, "audience": { "contains": { "const": "professional" } } } }
+    },
+    {
+      "if": { "properties": { "derivedFrom": { "properties": { "sourceKind": { "const": "reconstructed" } }, "required": ["sourceKind"] } }, "required": ["derivedFrom"] },
+      "then": { "properties": { "derivedFrom": { "properties": { "reviewStatus": { "const": "machine" } }, "required": ["sources"] } } }
+    }
+  ],
   "type": "object",
   "required": ["family", "docType", "version", "effectiveAt", "machineReadableMarkdown"],
   "properties": {
     "type": { "const": "document" },
     "family": { "type": "string", "pattern": "^doc\\." },
-    "docType": { "enum": ["manual", "guideline", "case-definition", "form", "recommendation", "report", "letter"] },
+    "docType": { "enum": ["manual", "guideline", "case-definition", "form", "recommendation", "report", "letter", "curriculum"], "description": "curriculum＝傳染病核心教材（第二十八輪）：給醫事與防疫人員的教學用教材，必填 learningObjectives、diseases、roles（見下方 allOf）" },
     "version": { "type": "string" },
     "effectiveAt": { "type": "string", "format": "date" },
     "supersedes": { "type": ["string", "null"] },
@@ -31,7 +41,20 @@
       "properties": {
         "file": { "type": "string" },
         "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$", "description": "轉換時讀到的檔案雜湊；PDF 換版但機讀版沒重轉時，建置會發現不一致" },
-        "sourceKind": { "enum": ["pdf", "extracted-text"] },
+        "sourceKind": { "enum": ["pdf", "extracted-text", "reconstructed"], "description": "reconstructed＝沒有取得 PDF，依公開摘錄與站內內容重建的示範版（第二十八輪）；reviewStatus 只能是 machine，正本取得後須以 pdf-to-md 重新轉出" },
+        "sources": {
+          "type": "array",
+          "description": "第二十八輪：重建版逐條記錄依據（網址、取得方式、查證狀態）；供權責單位查核",
+          "items": { "type": "object", "required": ["label", "kind", "status"], "properties": {
+            "label": { "type": "string" },
+            "url": { "type": "string" },
+            "ref": { "type": "string", "description": "站內內容 id（kind=site-content 時）" },
+            "kind": { "enum": ["official-page", "official-file", "search-excerpt", "site-content", "mirror"] },
+            "status": { "enum": ["unverified", "verified", "unreachable"], "description": "unreachable＝開發環境連不到，只看過搜尋摘錄" },
+            "accessedAt": { "type": "string", "format": "date" },
+            "note": { "type": "string" }
+          } }
+        },
         "tool": { "type": "string" },
         "extractedAt": { "type": "string", "format": "date" },
         "reviewStatus": { "enum": ["machine", "reviewed"] },
@@ -51,6 +74,16 @@
       "items": { "type": "object", "required": ["section", "after"], "properties": { "section": { "type": "string" }, "before": { "type": "string" }, "after": { "type": "string" }, "kind": { "enum": ["added", "changed", "removed"] } } }
     },
     "roles": { "type": "array", "items": { "enum": ["physician", "nurse", "infection-control", "lab", "local-health"] } },
+    "learningObjectives": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 4 }, "description": "第二十八輪：教材的學習目標（docType=curriculum 必填）；文件頁頂端列出，並單獨成一個答案單元" },
+    "curriculum": {
+      "type": "object",
+      "description": "第二十八輪：核心教材的教學欄位",
+      "properties": {
+        "edition": { "type": "string", "description": "教材自己的版次寫法（例如檔名上的「11401版」），version 是新站版本鏈用的版次" },
+        "chapterPlan": { "enum": ["confirmed", "provisional"], "description": "provisional＝章節架構是示範擬定、尚未與教材原文核對" },
+        "series": { "type": "string", "description": "所屬系列（傳染病核心教材）" }
+      }
+    },
     "pageCount": { "type": "integer" },
     "isbn": { "type": "string" },
     "gpn": { "type": "string" }

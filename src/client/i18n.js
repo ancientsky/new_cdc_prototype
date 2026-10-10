@@ -516,6 +516,7 @@ const ROWS = {
   'documents.type.recommendation': ['接種建議', 'Recommendation'],
   'documents.type.report': ['報告', 'Report'],
   'documents.type.letter': ['函', 'Letter'],
+  'documents.type.curriculum': ['核心教材', 'Core curriculum'],
   'doc.superseded': ['此為第 {v} 版，已由第 {cur} 版取代（{date} 生效）。', 'This is version {v}. It has been replaced by version {cur} (effective {date}).'],
   'doc.gocurrent': ['前往現行版', 'Go to the current version'],
   'role.physician': ['醫師', 'Physician'],
@@ -1118,6 +1119,7 @@ const ROWS_MIGRATION = {
   'hub.pro.services': ['補助與服務', 'Subsidies and services', '補助・サービス', 'Subsidiya at serbisyo', 'Hỗ trợ và dịch vụ', 'Subsidi dan layanan', 'เงินอุดหนุนและบริการ'],
   'hub.pro.stats': ['統計', 'Statistics', '統計', 'Estadistika', 'Thống kê', 'Statistik', 'สถิติ'],
   'hub.pro.research': ['研究', 'Research', '研究', 'Pananaliksik', 'Nghiên cứu', 'Penelitian', 'งานวิจัย'],
+  'hub.pro.curriculum': ['核心教材', 'Core curriculum', 'コア教材', 'Pangunahing kurikulum', 'Giáo trình cốt lõi', 'Kurikulum inti', 'หลักสูตรแกนกลาง'],
   'hub.pro.also': ['專業版另有：', 'Professional view also has: ', '専門家向けには：', 'May dagdag sa propesyonal na bersyon: ', 'Bản chuyên môn còn có: ', 'Versi profesional juga memiliki: ', 'มุมมองผู้เชี่ยวชาญยังมี: '],
   'hub.pro.docs.old': ['有 {n} 個舊版', '{n} earlier version(s)', '旧版 {n} 件', '{n} lumang bersyon', '{n} phiên bản cũ', '{n} versi lama', 'มี {n} ฉบับเก่า'],
   'hub.pro.docs.lead': ['每份文件只列現行版；舊版已標示失效，可從文件頁查閱。', 'Only the current version of each document is listed; older versions are marked superseded and remain available on the document page.'],
@@ -1132,6 +1134,7 @@ const ROWS_MIGRATION = {
   'hub.pro.stats.situation': ['目前疫情與趨勢', 'Current situation and trend'],
   'hub.pro.stats.updated': ['更新 {date}', 'Updated {date}'],
   'hub.pro.research.lead': ['疾管署的相關研究計畫。', 'Research projects related to this disease.'],
+  'hub.pro.curriculum.lead': ['給醫事與防疫人員的傳染病核心教材：學習目標、章節與出處；示範匯入版尚未查證，以 PDF 正本為準。', 'Core curriculum for health and public-health staff: learning objectives, chapters and sources. Demonstration imports are unverified; the official PDF prevails.'],
   'hub.pro.research.year': ['{year} 年', '{year}'],
   /* 舊網址對應（三層露出：一句 → details → /legacy/） */
   'legacy.line': ['本頁取代舊網站的 {n} 個頁面', 'This page replaces {n} pages of the previous website', 'このページは旧サイトの {n} ページを置き換えます', 'Pinapalitan ng pahinang ito ang {n} pahina ng dating website', 'Trang này thay thế {n} trang của website cũ', 'Halaman ini menggantikan {n} halaman di situs lama', 'หน้านี้แทนที่ {n} หน้าของเว็บไซต์เดิม'],

@@ -1,0 +1,246 @@
+{
+  "id": "doc.curriculum-measles.2026-10-10",
+  "type": "document",
+  "family": "doc.curriculum-measles",
+  "docType": "curriculum",
+  "title": "麻疹核心教材（示範匯入版）",
+  "version": "示範匯入版",
+  "effectiveAt": "2026-10-10",
+  "supersedes": null,
+  "owner": "unit.acute-infectious",
+  "steward": "急性傳染病組承辦人",
+  "publishedAt": "2026-10-10",
+  "reviewedAt": "2026-10-10",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "tasks": [
+    "symptoms",
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "licenseNote": "教材內若有引用第三方的圖表或照片，授權以教材 PDF 的標示為準（待權責單位確認）。",
+  "diseases": [
+    "disease.measles"
+  ],
+  "vaccines": [
+    "vaccine.mmr"
+  ],
+  "basedOn": [
+    "disease.measles"
+  ],
+  "aiWhitelist": {
+    "requested": true
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "傳染病核心教材（麻疹）的示範匯入：章節架構、學習目標與可查證的重點句。舊站有「麻疹核心教材.pdf」，但本次取不到檔案內容；本頁依本站麻疹內容與疾管署麻疹頁的搜尋摘錄重建，每句標出處，未查證，以疾管署 PDF 正本為準。",
+  "keywords": [
+    "核心教材",
+    "傳染病核心教材",
+    "教材",
+    "麻疹",
+    "教學",
+    "學習目標",
+    "致病原",
+    "流行病學",
+    "臨床表現",
+    "檢驗",
+    "治療",
+    "通報",
+    "防治措施"
+  ],
+  "roles": [
+    "physician",
+    "nurse",
+    "infection-control",
+    "lab",
+    "local-health"
+  ],
+  "learningObjectives": [
+    "說明麻疹的傳播途徑、傳染力與可傳染期，理解為何需要空氣隔離。",
+    "辨識麻疹前驅期症狀、柯氏斑與出疹的順序，以及常見併發症。",
+    "依病例定義判斷通報時機，正確採集咽喉拭子、尿液與血清檢體。",
+    "說明支持性治療原則，以及接觸者暴露後預防（MMR、免疫球蛋白）的時機。",
+    "了解接觸者追蹤、健康監測與群聚應變的分工。"
+  ],
+  "curriculum": {
+    "series": "傳染病核心教材",
+    "edition": "未標版次（舊站檔名「麻疹核心教材.pdf」）",
+    "chapterPlan": "provisional"
+  },
+  "pdfUrl": "https://www.cdc.gov.tw/File/Get/eH0KllYdi__tvUdV8al0lA",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/DiseaseTeach/{id}#measles",
+    "https://www.cdc.gov.tw/File/Get/eH0KllYdi__tvUdV8al0lA"
+  ],
+  "note": "第二十八輪示範匯入（Issue #38）。教材 PDF 正本未取得：pdfUrl 是搜尋結果裡標題為「麻疹核心教材.pdf」的舊站檔案網址，開發環境連不到，內容與版次未查證。本頁不是教材原文：章節架構與學習目標由本站擬定（chapterPlan: provisional），內文只收有出處的句子，主要取自本站麻疹內容（原型內容，數字未經權責單位確認），找不到出處的地方以（待補）佔位。舊站檔名沒有版次與日期，所以版次寫「示範匯入版」、生效日與審閱日是示範匯入日 2026-10-10，basedOn 指向本站麻疹疾病頁：疾病頁改版時本頁會被標「依據正本已修訂」。取得 PDF 正本後請以 scripts/pdf-to-md.mjs 轉出、沿用家族 doc.curriculum-measles，並刪除本重建版（它不是真的版次，不要用 supersedes 串鏈；guide-staff §31）。",
+  "sections": [
+    {
+      "key": "ch1",
+      "heading": "第一章 疾病概述",
+      "level": 2,
+      "markdown": "（待補：本章教材原文。取得 PDF 正本後以 pdf-to-md 轉出取代）",
+      "index": false
+    },
+    {
+      "key": "ch1-s1",
+      "heading": "第一章 疾病概述 · 疾病簡介",
+      "level": 3,
+      "markdown": "- 麻疹是傳染力極強的病毒性疾病，可經空氣傳播（出處 D，摘要）。\n- 麻疹在法定分類上曾列為第三類傳染病（甲種），之後修正為第二類傳染病（出處 C，搜尋摘錄未查證）。\n\n（待補：疾病歷史、全球與國內消除麻疹的進程）",
+      "index": true
+    },
+    {
+      "key": "ch2",
+      "heading": "第二章 致病原",
+      "level": 2,
+      "markdown": "（待補：致病原（病毒分類、基因型）的教材原文。本站內容沒有可查證的致病原分類句子，不自行撰寫）",
+      "index": false
+    },
+    {
+      "key": "ch3-s1",
+      "heading": "第三章 流行病學 · 傳染方式與傳染力",
+      "level": 3,
+      "markdown": "- 麻疹可經由空氣、飛沫或直接接觸病人鼻咽分泌物傳染，未具免疫力的人與病人共處一室，約九成會被感染（出處 D，「怎麼傳染」）。\n- 病毒在空氣中可存活約 2 小時（出處 D，「怎麼傳染」）。\n- 麻疹病人自出疹前 4 天至出疹後 4 天具傳染力（出處 D，「怎麼傳染」）。",
+      "index": true
+    },
+    {
+      "key": "ch3-s2",
+      "heading": "第三章 流行病學 · 潛伏期與國內流行情形",
+      "level": 3,
+      "markdown": "- 麻疹潛伏期 7–21 天，約 14 天出疹（出處 D，一分鐘重點）。\n- 近年境外移入及其引起的本土群聚多與東南亞、日本等地疫情相關（出處 D，「目前疫情與統計」）。\n\n（待補：教材原文的歷年病例數與年齡分布）\n\n對照：[麻疹年度病例資料集](/data/#dataset.measles-yearly)",
+      "index": true
+    },
+    {
+      "key": "ch4-s1",
+      "heading": "第四章 臨床表現 · 前驅期與出疹",
+      "level": 3,
+      "markdown": "- 麻疹前驅期會出現高燒、咳嗽、流鼻水、結膜炎，口腔內頰黏膜可能出現白色的柯氏斑（Koplik spots）（出處 D，「症狀與警示徵象」）。\n- 發燒 3–4 天後開始出疹，紅色斑丘疹由耳後、髮際、臉部向下擴散到全身，約持續 4–7 天後逐漸消退並留下褐色色素沉著（出處 D，「症狀與警示徵象」）。",
+      "index": true
+    },
+    {
+      "key": "ch4-s2",
+      "heading": "第四章 臨床表現 · 併發症",
+      "level": 3,
+      "markdown": "- 麻疹較嚴重者可能併發中耳炎、肺炎或腦炎（出處 C，搜尋摘錄未查證）。\n- 嬰幼兒、孕婦與免疫低下者易併發肺炎、中耳炎、腦炎（出處 D，警示徵象）。\n\n（待補：亞急性硬化性全腦炎（SSPE）等晚期併發症與鑑別診斷的教材原文）",
+      "index": true
+    },
+    {
+      "key": "ch5-s1",
+      "heading": "第五章 檢驗 · 檢體採集",
+      "level": 3,
+      "markdown": "- 麻疹疑似病例請同時採集咽喉拭子、尿液與血清三種檢體（出處 G）。\n- 咽喉拭子與尿液於出疹日起 5 日內採集做 RT-PCR，血清做 IgM／IgG 抗體檢驗（出處 G）。\n- 採檢人員應具麻疹免疫力並配戴 N95 口罩（出處 G）。\n\n對照：[麻疹檢驗項目與送驗規定](/lab/measles/)",
+      "index": true
+    },
+    {
+      "key": "ch5-s2",
+      "heading": "第五章 檢驗 · 檢驗條件",
+      "level": 3,
+      "markdown": "- 麻疹檢驗條件包括臨床檢體分離並鑑定出麻疹病毒、核酸檢測陽性、血清麻疹 IgM 抗體陽性（排除近期接種疫苗者），或成對血清 IgG 陽轉或抗體效價 4 倍以上上升（出處 E）。\n- 近期接種 MMR 者需基因定型區分疫苗株（出處 G）。",
+      "index": true
+    },
+    {
+      "key": "ch6-s1",
+      "heading": "第六章 治療 · 支持性治療與暴露後預防",
+      "level": 3,
+      "markdown": "- 麻疹沒有特效藥，以支持性治療為主，包括退燒、補充水分與營養，並治療中耳炎、肺炎等併發症（出處 D，「診斷與治療」）。\n- 未具免疫力的接觸者，可於暴露後 72 小時內接種 MMR 疫苗，或於 6 天內由醫師評估注射免疫球蛋白（出處 D，「診斷與治療」）。\n\n（待補：維生素 A 等輔助治療的教材原文（本站沒有可查證的句子，不自行撰寫）",
+      "index": true
+    },
+    {
+      "key": "ch7-s1",
+      "heading": "第七章 通報與防治措施 · 通報與隔離",
+      "level": 3,
+      "markdown": "- 麻疹為第二類法定傳染病，臨床符合即應於 24 小時內通報，並立即實施空氣隔離（出處 D，專業版「通報與檢驗」）。\n- 麻疹病人需隔離至出疹後 4 天（出處 D，「診斷與治療」）。\n\n對照：[通報時限表](/report/)",
+      "index": true
+    },
+    {
+      "key": "ch7-s2",
+      "heading": "第七章 通報與防治措施 · 接觸者追蹤與群聚應變",
+      "level": 3,
+      "markdown": "- 接觸者自最後一次暴露後起進行 18 日自主健康管理，期間每日量體溫並留意發燒、咳嗽、結膜炎與出疹（出處 F，第四章）。\n- 群聚定義為同一場域或社區 21 日內出現 2 例以上有流行病學關聯之確定病例（出處 F，第五章）。\n\n（待補：教材原文的接觸者分級與醫療院所感染管制重點）\n\n對照：[麻疹接觸者追蹤作業指引](/documents/measles-contact-tracing.2026-09-12/)",
+      "index": true
+    },
+    {
+      "key": "sources",
+      "heading": "資料來源與查證狀態",
+      "level": 2,
+      "markdown": "| 代號 | 來源 | 類型 | 查證狀態 | 說明 |\n| --- | --- | --- | --- | --- |\n| A | [麻疹核心教材.pdf（舊站檔案）](https://www.cdc.gov.tw/File/Get/eH0KllYdi__tvUdV8al0lA) | 官網檔案 | 開發環境連不到，只看過搜尋摘錄（2026-10-10） | 搜尋結果標題「麻疹核心教材.pdf」；版次、日期、頁數與章節都看不到。本頁沒有引用它的任何內容。 |\n| B | [麻疹防治工作手冊.pdf（舊站檔案）](https://www.cdc.gov.tw/File/Get/3TrzNnd9x6LiPghMDkRnyw) | 官網檔案 | 開發環境連不到，只看過搜尋摘錄（2026-10-10） | 搜尋結果標題「麻疹防治工作手冊.pdf」。工作手冊與核心教材在舊站並列。 |\n| C | [疾管署麻疹疾病頁](https://www.cdc.gov.tw/Disease/SubIndex/PZZIpHAC-pjbSdEdboTBCw) | 搜尋摘錄 | 開發環境連不到，只看過搜尋摘錄（2026-10-10） | 只看過搜尋工具整理的摘錄（可能經改寫）：列有麻疹核心教材、麻疹鑑別診斷與防治工作手冊；常見症狀與併發症。 |\n| D | 本站麻疹疾病頁 disease.measles（disease.measles） | 本站內容 | 未查證 | 原型內容（最後審閱 2026-05-14），數字未經權責單位確認。 |\n| E | 本站傳染病病例定義：麻疹 doc.case-definition-measles（doc.case-definition-measles.2024-01-01） | 本站內容 | 未查證 | 原型示意：條文依疾管署公開文件架構改寫，非正式公告文字。 |\n| F | 本站麻疹接觸者追蹤作業指引 doc.measles-contact-tracing（doc.measles-contact-tracing.2026-09-12） | 本站內容 | 未查證 | 原型示意：數字、期限與版次為示意。 |\n| G | 本站麻疹檢驗項目 labtest.measles（labtest.measles） | 本站內容 | 未查證 | 檢體量、保存與時效為原型示意，以「傳染病檢體採檢手冊」現行版為準。 |",
+      "index": false
+    }
+  ],
+  "machineReadableMarkdown": "# 麻疹核心教材（示範匯入版）\n\n## 學習目標\n\n1. 說明麻疹的傳播途徑、傳染力與可傳染期，理解為何需要空氣隔離。\n2. 辨識麻疹前驅期症狀、柯氏斑與出疹的順序，以及常見併發症。\n3. 依病例定義判斷通報時機，正確採集咽喉拭子、尿液與血清檢體。\n4. 說明支持性治療原則，以及接觸者暴露後預防（MMR、免疫球蛋白）的時機。\n5. 了解接觸者追蹤、健康監測與群聚應變的分工。\n\n## 第一章 疾病概述\n\n（待補：本章教材原文。取得 PDF 正本後以 pdf-to-md 轉出取代）\n\n### 第一章 疾病概述 · 疾病簡介\n\n- 麻疹是傳染力極強的病毒性疾病，可經空氣傳播（出處 D，摘要）。\n- 麻疹在法定分類上曾列為第三類傳染病（甲種），之後修正為第二類傳染病（出處 C，搜尋摘錄未查證）。\n\n（待補：疾病歷史、全球與國內消除麻疹的進程）\n\n## 第二章 致病原\n\n（待補：致病原（病毒分類、基因型）的教材原文。本站內容沒有可查證的致病原分類句子，不自行撰寫）\n\n### 第三章 流行病學 · 傳染方式與傳染力\n\n- 麻疹可經由空氣、飛沫或直接接觸病人鼻咽分泌物傳染，未具免疫力的人與病人共處一室，約九成會被感染（出處 D，「怎麼傳染」）。\n- 病毒在空氣中可存活約 2 小時（出處 D，「怎麼傳染」）。\n- 麻疹病人自出疹前 4 天至出疹後 4 天具傳染力（出處 D，「怎麼傳染」）。\n\n### 第三章 流行病學 · 潛伏期與國內流行情形\n\n- 麻疹潛伏期 7–21 天，約 14 天出疹（出處 D，一分鐘重點）。\n- 近年境外移入及其引起的本土群聚多與東南亞、日本等地疫情相關（出處 D，「目前疫情與統計」）。\n\n（待補：教材原文的歷年病例數與年齡分布）\n\n對照：[麻疹年度病例資料集](/data/#dataset.measles-yearly)\n\n### 第四章 臨床表現 · 前驅期與出疹\n\n- 麻疹前驅期會出現高燒、咳嗽、流鼻水、結膜炎，口腔內頰黏膜可能出現白色的柯氏斑（Koplik spots）（出處 D，「症狀與警示徵象」）。\n- 發燒 3–4 天後開始出疹，紅色斑丘疹由耳後、髮際、臉部向下擴散到全身，約持續 4–7 天後逐漸消退並留下褐色色素沉著（出處 D，「症狀與警示徵象」）。\n\n### 第四章 臨床表現 · 併發症\n\n- 麻疹較嚴重者可能併發中耳炎、肺炎或腦炎（出處 C，搜尋摘錄未查證）。\n- 嬰幼兒、孕婦與免疫低下者易併發肺炎、中耳炎、腦炎（出處 D，警示徵象）。\n\n（待補：亞急性硬化性全腦炎（SSPE）等晚期併發症與鑑別診斷的教材原文）\n\n### 第五章 檢驗 · 檢體採集\n\n- 麻疹疑似病例請同時採集咽喉拭子、尿液與血清三種檢體（出處 G）。\n- 咽喉拭子與尿液於出疹日起 5 日內採集做 RT-PCR，血清做 IgM／IgG 抗體檢驗（出處 G）。\n- 採檢人員應具麻疹免疫力並配戴 N95 口罩（出處 G）。\n\n對照：[麻疹檢驗項目與送驗規定](/lab/measles/)\n\n### 第五章 檢驗 · 檢驗條件\n\n- 麻疹檢驗條件包括臨床檢體分離並鑑定出麻疹病毒、核酸檢測陽性、血清麻疹 IgM 抗體陽性（排除近期接種疫苗者），或成對血清 IgG 陽轉或抗體效價 4 倍以上上升（出處 E）。\n- 近期接種 MMR 者需基因定型區分疫苗株（出處 G）。\n\n### 第六章 治療 · 支持性治療與暴露後預防\n\n- 麻疹沒有特效藥，以支持性治療為主，包括退燒、補充水分與營養，並治療中耳炎、肺炎等併發症（出處 D，「診斷與治療」）。\n- 未具免疫力的接觸者，可於暴露後 72 小時內接種 MMR 疫苗，或於 6 天內由醫師評估注射免疫球蛋白（出處 D，「診斷與治療」）。\n\n（待補：維生素 A 等輔助治療的教材原文（本站沒有可查證的句子，不自行撰寫）\n\n### 第七章 通報與防治措施 · 通報與隔離\n\n- 麻疹為第二類法定傳染病，臨床符合即應於 24 小時內通報，並立即實施空氣隔離（出處 D，專業版「通報與檢驗」）。\n- 麻疹病人需隔離至出疹後 4 天（出處 D，「診斷與治療」）。\n\n對照：[通報時限表](/report/)\n\n### 第七章 通報與防治措施 · 接觸者追蹤與群聚應變\n\n- 接觸者自最後一次暴露後起進行 18 日自主健康管理，期間每日量體溫並留意發燒、咳嗽、結膜炎與出疹（出處 F，第四章）。\n- 群聚定義為同一場域或社區 21 日內出現 2 例以上有流行病學關聯之確定病例（出處 F，第五章）。\n\n（待補：教材原文的接觸者分級與醫療院所感染管制重點）\n\n對照：[麻疹接觸者追蹤作業指引](/documents/measles-contact-tracing.2026-09-12/)\n\n## 資料來源與查證狀態\n\n| 代號 | 來源 | 類型 | 查證狀態 | 說明 |\n| --- | --- | --- | --- | --- |\n| A | [麻疹核心教材.pdf（舊站檔案）](https://www.cdc.gov.tw/File/Get/eH0KllYdi__tvUdV8al0lA) | 官網檔案 | 開發環境連不到，只看過搜尋摘錄（2026-10-10） | 搜尋結果標題「麻疹核心教材.pdf」；版次、日期、頁數與章節都看不到。本頁沒有引用它的任何內容。 |\n| B | [麻疹防治工作手冊.pdf（舊站檔案）](https://www.cdc.gov.tw/File/Get/3TrzNnd9x6LiPghMDkRnyw) | 官網檔案 | 開發環境連不到，只看過搜尋摘錄（2026-10-10） | 搜尋結果標題「麻疹防治工作手冊.pdf」。工作手冊與核心教材在舊站並列。 |\n| C | [疾管署麻疹疾病頁](https://www.cdc.gov.tw/Disease/SubIndex/PZZIpHAC-pjbSdEdboTBCw) | 搜尋摘錄 | 開發環境連不到，只看過搜尋摘錄（2026-10-10） | 只看過搜尋工具整理的摘錄（可能經改寫）：列有麻疹核心教材、麻疹鑑別診斷與防治工作手冊；常見症狀與併發症。 |\n| D | 本站麻疹疾病頁 disease.measles（disease.measles） | 本站內容 | 未查證 | 原型內容（最後審閱 2026-05-14），數字未經權責單位確認。 |\n| E | 本站傳染病病例定義：麻疹 doc.case-definition-measles（doc.case-definition-measles.2024-01-01） | 本站內容 | 未查證 | 原型示意：條文依疾管署公開文件架構改寫，非正式公告文字。 |\n| F | 本站麻疹接觸者追蹤作業指引 doc.measles-contact-tracing（doc.measles-contact-tracing.2026-09-12） | 本站內容 | 未查證 | 原型示意：數字、期限與版次為示意。 |\n| G | 本站麻疹檢驗項目 labtest.measles（labtest.measles） | 本站內容 | 未查證 | 檢體量、保存與時效為原型示意，以「傳染病檢體採檢手冊」現行版為準。 |\n",
+  "derivedFrom": {
+    "file": "measles.source.json",
+    "sha256": "71f2a4db883cfc5f533168098c2da6dd47127daa265b1ed5bec52c3c4a75896e",
+    "sourceKind": "reconstructed",
+    "tool": "scripts/curriculum-to-doc.mjs",
+    "extractedAt": "2026-10-10",
+    "reviewStatus": "machine",
+    "sources": [
+      {
+        "label": "A｜麻疹核心教材.pdf（舊站檔案）",
+        "url": "https://www.cdc.gov.tw/File/Get/eH0KllYdi__tvUdV8al0lA",
+        "kind": "official-file",
+        "status": "unreachable",
+        "accessedAt": "2026-10-10",
+        "note": "搜尋結果標題「麻疹核心教材.pdf」；版次、日期、頁數與章節都看不到。本頁沒有引用它的任何內容。"
+      },
+      {
+        "label": "B｜麻疹防治工作手冊.pdf（舊站檔案）",
+        "url": "https://www.cdc.gov.tw/File/Get/3TrzNnd9x6LiPghMDkRnyw",
+        "kind": "official-file",
+        "status": "unreachable",
+        "accessedAt": "2026-10-10",
+        "note": "搜尋結果標題「麻疹防治工作手冊.pdf」。工作手冊與核心教材在舊站並列。"
+      },
+      {
+        "label": "C｜疾管署麻疹疾病頁",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/PZZIpHAC-pjbSdEdboTBCw",
+        "kind": "search-excerpt",
+        "status": "unreachable",
+        "accessedAt": "2026-10-10",
+        "note": "只看過搜尋工具整理的摘錄（可能經改寫）：列有麻疹核心教材、麻疹鑑別診斷與防治工作手冊；常見症狀與併發症。"
+      },
+      {
+        "label": "D｜本站麻疹疾病頁 disease.measles",
+        "ref": "disease.measles",
+        "kind": "site-content",
+        "status": "unverified",
+        "note": "原型內容（最後審閱 2026-05-14），數字未經權責單位確認。"
+      },
+      {
+        "label": "E｜本站傳染病病例定義：麻疹 doc.case-definition-measles",
+        "ref": "doc.case-definition-measles.2024-01-01",
+        "kind": "site-content",
+        "status": "unverified",
+        "note": "原型示意：條文依疾管署公開文件架構改寫，非正式公告文字。"
+      },
+      {
+        "label": "F｜本站麻疹接觸者追蹤作業指引 doc.measles-contact-tracing",
+        "ref": "doc.measles-contact-tracing.2026-09-12",
+        "kind": "site-content",
+        "status": "unverified",
+        "note": "原型示意：數字、期限與版次為示意。"
+      },
+      {
+        "label": "G｜本站麻疹檢驗項目 labtest.measles",
+        "ref": "labtest.measles",
+        "kind": "site-content",
+        "status": "unverified",
+        "note": "檢體量、保存與時效為原型示意，以「傳染病檢體採檢手冊」現行版為準。"
+      }
+    ],
+    "excludedSections": [
+      "ch1",
+      "ch2",
+      "sources"
+    ],
+    "note": "沒有 PDF 原檔：sha256 是本來源檔（data/curriculum/measles.source.json）的雜湊。來源 A、B、C 是開發環境連不到、只看過搜尋摘錄的舊站網址；D–G 是本站內容（原型內容，數字未經權責單位確認）。"
+  }
+}
