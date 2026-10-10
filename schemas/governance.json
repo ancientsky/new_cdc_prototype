@@ -122,7 +122,8 @@
                   "notify",
                   "notice",
                   "media",
-                  "nomatch"
+                  "nomatch",
+                  "boundary"
                 ]
               },
               "expect": {

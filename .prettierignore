@@ -27,3 +27,4 @@ eval/**/*.mjs
 !tests/round28-antivenom.test.mjs
 **/*.css
 **/*.html
+!tests/round31-boundary.test.mjs

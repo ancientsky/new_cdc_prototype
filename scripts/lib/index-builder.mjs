@@ -28,7 +28,7 @@
 // 來源語言（ARCHITECTURE 14.2）：頂層欄位以 item.sourceLang（預設 zh-TW）出 chunk（英文來源 ⇒ 進英文索引）；
 //   sourceLang≠zh-TW 時 i18n['zh-TW']（reviewed）另出中文 chunk（進中文索引）。topic／service 的譯文 chunk 需 i18n 有本文欄位才出。
 import { articlePath } from '../../src/client/bulletin-rules.js';
-import { splitPlain, parseChineseNumber } from '../../src/client/answer/core.js';
+import { splitPlain, parseChineseNumber, buildLexicon } from '../../src/client/answer/core.js';
 import { splitByPage } from './pdf-text.mjs';
 import { tagRelativeDate } from './dates.mjs';
 
@@ -70,10 +70,16 @@ export function paragraphs(markdown, max = MAX_PARA) {
   return out;
 }
 
+// 第三十一輪：詞彙命中要過詞典邊界——「性病」只出現在「急性病毒性A型肝炎」裡時，不能把 A 肝片段標成「性傳染病」
+const lexCache = new WeakMap();
+function lexiconOf(site) {
+  if (!lexCache.has(site)) lexCache.set(site, buildLexicon({ diseases: site.master.diseases ?? [], glossary: site.master.glossary ?? [], vaccines: site.master.vaccines ?? [], units: site.master.units ?? [] }));
+  return lexCache.get(site);
+}
 function glossaryHits(site, text) {
-  const hits = [];
+  const hits = []; const lex = lexiconOf(site); const hay = String(text).toLowerCase();
   for (const g of site.master.glossary ?? []) {
-    for (const w of [g['zh-TW'], ...(g.aliases ?? [])].filter(Boolean)) if (w.length >= 2 && text.includes(w)) { hits.push(g['zh-TW'], w); break; }
+    for (const w of [g['zh-TW'], ...(g.aliases ?? [])].filter(Boolean)) if (w.length >= 2 && text.includes(w) && (!/[\u4e00-\u9fff]/.test(w) || lex.wholeHit(hay, w))) { hits.push(g['zh-TW'], w, ...(g.aliases ?? []).filter((a) => a !== w && a.length >= 2 && a.length <= 8)); break; } // 第三十一輪：別名一併進索引，民眾用別名問（性病）也能直接命中
   }
   return hits;
 }

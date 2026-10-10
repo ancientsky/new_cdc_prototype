@@ -20,7 +20,8 @@
     "lab": "檢驗（專業）：檢體、容器、保存運送、送驗時限；須引用 labtest 結構化句；民眾模式導向專業模式／檢驗專區",
     "notify": "通報時限：由傳染病主檔直接組句（不走檢索），類別與時限須與主檔一致",
     "notice": "機關公告：人才招募（careers 意圖，job 型別）與採購公告（procurement 意圖，tender 型別）；須含截止日，問「現在」時不得引用已截止職缺；問錄取名單只給結果頁連結，不得唸出遮罩姓名或報名編號",
-    "nomatch": "站內沒有的主題：官網內容確實沒有涵蓋的問題（量子電腦、股票、無關標案、虎頭蜂與水母螫傷）；須拒答為 no-match，不得拿同字根的不相關片段充數（第二十五輪，Issue #25；第二十八輪抗蛇毒血清已有內容，改測其他咬螫傷）"
+    "nomatch": "站內沒有的主題：官網內容確實沒有涵蓋的問題（量子電腦、股票、無關標案、虎頭蜂與水母螫傷）；須拒答為 no-match，不得拿同字根的不相關片段充數（第二十五輪，Issue #25；第二十八輪抗蛇毒血清已有內容，改測其他咬螫傷）",
+    "boundary": "詞典邊界（第三十一輪）：問句裡的已知名詞不能靠「藏在別的更長名詞裡」的字元 bigram 命中（性病 ≠ 急性病毒性A型肝炎、性傳染病 ≠ 慢性傳染病組）；別名要導到正名的內容"
   },
   "questions": [
     {
@@ -3342,6 +3343,150 @@
           "吸出毒液",
           "喝酒消毒",
           "抬高患肢"
+        ]
+      }
+    },
+    {
+      "id": "BD001",
+      "category": "boundary",
+      "q": "性病",
+      "note": "Yulun 2026-10-10 回報：專業模式問「性病」答出急性病毒性A型肝炎。字元 bigram「性病」藏在「急性病毒性」裡；修正後要導到性傳染病專區，不得引用任何肝炎片段",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "topic.sti-resources",
+          "topic.anonymous-testing"
+        ],
+        "mustNotCite": [
+          "disease.hepatitis-a",
+          "disease.hepatitis-b",
+          "disease.hepatitis-c",
+          "labtest.hepatitis-a",
+          "vaccine.hepatitis",
+          "faq.hepb",
+          "job."
+        ],
+        "mustNotInclude": [
+          "A型肝炎",
+          "B型肝炎",
+          "慢性病"
+        ]
+      }
+    },
+    {
+      "id": "BD002",
+      "category": "boundary",
+      "view": "pro",
+      "q": "性病",
+      "note": "同 BD001，專業模式（回報的截圖就是這個模式）：也不得拿檢驗送驗規定的肝炎片段充數",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "topic.sti-resources",
+          "research.2024-prep-adherence-sti",
+          "topic.anonymous-testing"
+        ],
+        "mustNotCite": [
+          "disease.hepatitis-a",
+          "labtest.hepatitis-a",
+          "disease.hepatitis-b",
+          "job."
+        ],
+        "mustNotInclude": [
+          "A型肝炎",
+          "慢性病"
+        ]
+      }
+    },
+    {
+      "id": "BD003",
+      "category": "boundary",
+      "q": "性病有哪些",
+      "note": "加上功能詞也要能答；曾因「有哪些」稀釋涵蓋率而 no-match",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "topic.sti-resources",
+          "topic.anonymous-testing"
+        ],
+        "mustNotCite": [
+          "disease.hepatitis-a",
+          "job."
+        ]
+      }
+    },
+    {
+      "id": "BD004",
+      "category": "boundary",
+      "q": "性傳染病",
+      "note": "「慢性傳染病組」的職缺含「性傳染病」四字，但那是單位名，不是在講性病",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "topic.sti-resources"
+        ],
+        "mustNotCite": [
+          "job.",
+          "disease.hepatitis-a"
+        ]
+      }
+    },
+    {
+      "id": "BD005",
+      "category": "boundary",
+      "q": "性病症狀",
+      "note": "「性病症狀」會切出假 bigram「病症」；它不該算進涵蓋率分母害答案被擋",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "topic.sti-resources",
+          "disease.mpox",
+          "disease.hiv"
+        ],
+        "mustNotCite": [
+          "disease.hepatitis-a"
+        ]
+      }
+    },
+    {
+      "id": "BD006",
+      "category": "boundary",
+      "q": "急性傳染病組負責什麼",
+      "note": "反向：單位名裡的「性傳染病」不可被當成性病的同義詞展開，答案不得跑去性傳染病專區",
+      "expect": {
+        "refuse": false,
+        "mustNotCite": [
+          "topic.sti-resources",
+          "topic.anonymous-testing",
+          "topic.prep"
+        ]
+      }
+    },
+    {
+      "id": "BD007",
+      "category": "boundary",
+      "q": "A型肝炎會怎麼傳染",
+      "note": "回歸：A 肝本身的問題不受影響（A 肝確實列有性接觸途徑）",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "disease.hepatitis-a"
+        ]
+      }
+    },
+    {
+      "id": "BD008",
+      "category": "boundary",
+      "q": "STD",
+      "note": "英文縮寫別名也要導到性傳染病專區",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "topic.sti-resources",
+          "topic.anonymous-testing"
+        ],
+        "mustNotCite": [
+          "disease.hepatitis-a"
         ]
       }
     }

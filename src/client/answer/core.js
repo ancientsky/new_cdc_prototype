@@ -6,7 +6,7 @@
 //   1 輸入防護：個資遮蔽 → 提示注入偵測
 //   2 意圖判斷：可解釋規則集（INTENT_RULES，每條 id + 權重）
 //   3 拒答邊界：REFUSAL_RULES（個人診斷、用藥劑量、法律、未發布、媒體、預測、注入、隱私…）
-//   4 檢索：BM25（字元 bigram + 英文詞）＋ 詞彙主檔同義詞／別名／deprecated 展開 ＋ 實體加權 ＋ 任務加權；
+//   4 檢索：BM25（字元 bigram + 英文詞）＋ 詞彙主檔同義詞／別名／deprecated 展開 ＋ 詞典邊界（已知名詞只出現在別的更長名詞裡不算命中）＋ 實體加權 ＋ 任務加權；
 //          民眾只取 whitelist、專業只取 isCurrent；輸出側再檢一次（失效版、逾期）並記 guards
 //   5 組句（抽取式）：句子評分、去重、依意圖排序、每句 cite、completeness
 //   6 統計問答：資料集 series（加總／最高／最低／平均），不推論不預測
@@ -473,6 +473,91 @@ export function vaxmapHref(group, lang, { info = false, anchor = '' } = {}) {
 }
 function escapeRe(s) { return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
 function isLatin(s) { return /^[\x00-\x7fÀ-ɏḀ-ỿ\s.\-']+$/.test(s); }
+/**
+ * 第三十一輪：詞典邊界。檢索用的是字元 bigram，所以「性病」會打中「急性病毒性A型肝炎」、「性傳染病」會打中「慢性傳染病組」。
+ * 中文沒有空白可當詞界，但站上有詞典（疾病名、別名、詞彙主檔、疫苗、單位）：
+ * 已知名詞 P 若在一段文字裡只出現在另一個「指不同東西」的更長已知名詞 L 裡面，就不算出現。
+ * 同一個東西的長短形式（愛滋／愛滋病）不互相遮蔽。索引端（index-builder 的 glossaryHits）與查詢端（retrieve／relevanceOf）共用。
+ */
+export function buildLexicon({ diseases = [], glossary = [], vaccines = [], units = [] } = {}) {
+  const lexicon = new Map(); // 小寫名稱 → { canon, kind }；kind：disease／vaccine／unit／term
+  const termCanon = new Map(); // 小寫名稱 → 詞彙主檔正名（同義形式查詢用）
+  const canonForms = new Map(); // 正名 → 所有中文形式（小寫）
+  const addLex = (name, canon, kind) => { const n = lc(String(name ?? '').trim()); if (n.length >= 2 && /[一-鿿]/.test(n) && !lexicon.has(n)) lexicon.set(n, { canon, kind }); };
+  for (const d of diseases) for (const n of [d.name, ...(d.aliases ?? [])]) addLex(n, d.id, 'disease');
+  for (const g of glossary) {
+    const canon = (g.refs ?? []).find((r) => String(r).startsWith('disease.')) ?? g.id ?? g['zh-TW'];
+    const forms = [g['zh-TW'], ...(g.aliases ?? []), ...(g.deprecated ?? [])].filter(Boolean);
+    for (const n of forms) { addLex(n, canon, g.domain === 'vaccine' ? 'vaccine' : g.domain === 'org' ? 'unit' : String(canon).startsWith('disease.') ? 'disease' : 'term'); if (g['zh-TW']) termCanon.set(lc(n), g['zh-TW']); }
+    if (g['zh-TW']) canonForms.set(g['zh-TW'], new Set(forms.map(lc)));
+  }
+  for (const v of vaccines) for (const n of [v.name, v.title, ...(v.aliases ?? [])]) addLex(n, v.id, 'vaccine');
+  for (const u of Array.isArray(units) ? units : []) addLex(u.name, u.id, 'unit');
+  const names = [...lexicon.keys()].sort((a, b) => b.length - a.length);
+  // 「遮蔽」關係：更長的名詞 L 指的是別的東西（不同疾病、單位、一般名詞）才會遮住 P；疫苗名不遮它所對應的疾病（新冠疫苗、B型肝炎疫苗仍是在講那個病）
+  const masks = (L, P) => { const a = lexicon.get(L), b = lexicon.get(P); return a.canon !== b.canon && a.kind !== 'vaccine'; };
+  const superOf = new Map(); // 名稱 → 包含它、且會遮蔽它的更長名稱
+  for (const n of names) { const sup = names.filter((m) => m.length > n.length && m.includes(n) && masks(m, n)); if (sup.length) superOf.set(n, sup); }
+  const positions = (h, w) => { const out = []; for (let i = h.indexOf(w); i >= 0; i = h.indexOf(w, i + 1)) out.push(i); return out; };
+  /** 文字 hay（小寫）裡，name 是否有至少一次「不是躲在別的更長名詞裡」的出現 */
+  function wholeHit(hay, name) {
+    const n = lc(name); const pos = positions(hay, n);
+    if (!pos.length) return false;
+    const sup = superOf.get(n); if (!sup) return true;
+    const covered = []; for (const L of sup) for (const i of positions(hay, L)) covered.push([i, i + L.length]);
+    return pos.some((i) => !covered.some(([s, e]) => i >= s && i + n.length <= e));
+  }
+  /** 問句裡的已知名詞（取最長、不重疊）：[{ name, canon, supers, forms, tokens }] */
+  function phrasesIn(q) {
+    const lq = lc(q); const out = []; const taken = [];
+    for (const n of names) {
+      const free = positions(lq, n).filter((i) => !taken.some(([s, e]) => i < e && i + n.length > s));
+      if (!free.length) continue;
+      taken.push([free[0], free[0] + n.length]);
+      const forms = canonForms.get(termCanon.get(n));
+      out.push({ name: n, canon: lexicon.get(n).canon, supers: superOf.get(n) ?? [], forms: forms ? [...forms].filter((f) => f !== n) : [], tokens: tokenize(n) });
+    }
+    return out;
+  }
+  const chunkHay = (c) => lc(`${c.title ?? ''} ${c.text ?? ''} ${(c.terms ?? []).join(' ')}`);
+  /**
+   * 片段裡只躲在「別的更長名詞」裡的問句名詞（含它的同義形式，例如問「性病」展開的「性傳染病」）→ 它的 token 不算命中。
+   * 只拿掉片段其他地方沒再出現的 token（把遮蔽它的長名詞挖掉後重新斷詞比對），不會誤傷片段裡本來就有的詞。回傳 Set；空 Set＝沒有。
+   */
+  function falseTokensFor(c, phrases) {
+    const out = new Set(); let hay = null;
+    for (const p of phrases) {
+      if ((c.diseases ?? []).includes(p.canon) || (c.vaccines ?? []).includes(p.canon)) continue; // 片段本來就標了這個疾病／疫苗
+      for (const w of [p.name, ...p.forms]) {
+        const sup = superOf.get(w); if (!sup) continue;
+        hay ??= chunkHay(c);
+        if (!hay.includes(w) || wholeHit(hay, w)) continue;
+        let masked = hay; for (const L of sup) masked = masked.split(L).join(' ');
+        const rest = new Set(tokenize(masked));
+        for (const t of tokenize(w)) if (!rest.has(t)) out.add(t);
+      }
+    }
+    return out;
+  }
+  /** 問句裡的別名可不可以拿來做同義詞展開：躲在「別的疾病／單位」名稱裡的不行（急性傳染病組 ≠ 性傳染病）；疫苗名不遮蔽，所以 B型肝炎疫苗 → B型肝炎 照常展開 */
+  function expandable(q, alias) {
+    const lq = lc(q); const n = lc(alias); const pos = positions(lq, n);
+    if (!pos.length) return true; // 非中文別名走原本的字界正則
+    const sup = superOf.get(n); if (!sup) return true;
+    const covered = []; for (const L of sup) for (const i of positions(lq, L)) covered.push([i, i + L.length]);
+    return pos.some((i) => !covered.some(([s, e]) => i >= s && i + n.length <= e));
+  }
+  /** 詞典斷詞：在問句裡的已知名詞前後補空白，bigram 就不會跨過詞界（「性病症狀」→「性病 症狀」，不再產生「病症」這個假詞） */
+  function segment(q) {
+    const str = String(q ?? ''); const lq = lc(str); const cuts = new Set(); const taken = [];
+    for (const n of names) for (const i of positions(lq, n)) { if (taken.some(([s, e]) => i < e && i + n.length > s)) continue; taken.push([i, i + n.length]); cuts.add(i); cuts.add(i + n.length); }
+    if (!cuts.size) return str;
+    let out = ''; for (let i = 0; i < str.length; i++) { if (cuts.has(i)) out += ' '; out += str[i]; }
+    return out.replace(/\s+/g, ' ').trim();
+  }
+  return { names, wholeHit, phrasesIn, falseTokensFor, expandable, segment, chunkHay, size: lexicon.size };
+}
+
 function matcherFor(name) {
   if (!name) return null;
   const n = String(name).trim();
@@ -724,6 +809,9 @@ export function createEngine(rawDeps = {}) {
   for (const c of countries) for (const n of [c.name, c.nameEn, ...(c.aliases ?? [])]) addEntity('country', c.iso2 ?? c.id, n);
   entityMatchers.sort((a, b) => b.name.length - a.name.length);
 
+  const lex = buildLexicon({ diseases, glossary, vaccines, units });
+  const { phrasesIn: lexiconPhrasesIn, falseTokensFor, chunkHay } = lex;
+
   function detectEntities(q) {
     const found = { diseases: [], vaccines: [], countries: [] };
     const taken = [];
@@ -750,6 +838,7 @@ export function createEngine(rawDeps = {}) {
     const added = new Set(); const notes = [];
     for (const t of termMatchers) {
       if (!t.re.test(q)) continue;
+      if (!lex.expandable(q, t.alias)) continue; // 第三十一輪：「急性傳染病組」裡的「性傳染病」不是在問性病
       const forms = canonToAll.get(t.canon);
       const wanted = forms ? [...forms.zh, ...(lang !== 'zh-TW' && forms.byLang[lang] ? [forms.byLang[lang]] : [])] : [t.canon];
       for (const a of wanted) if (!lc(q).includes(lc(a))) added.add(a);
@@ -837,11 +926,22 @@ export function createEngine(rawDeps = {}) {
     const wantOpen = OPEN_CUE.test(q);
     const noticeType = RECRUIT_CUE.test(q) && !PROCUREMENT_CUE.test(q) ? 'recruit' : PROCUREMENT_CUE.test(q) && !RECRUIT_CUE.test(q) ? 'procurement' : null;
     const labPublic = view !== 'pro' && LAB_PUBLIC_RE.test(q);
+    const phrases = lexiconPhrasesIn(q);
+    const boundaryPhrases = phrases.filter((p) => p.supers.length);
     const scored = [];
     for (const d of model.docs) {
       let s = bm25Score(model, d, qw);
       if (s <= 0) continue;
       const c = d.c;
+      let falseToks = null;
+      if (boundaryPhrases.length) {
+        falseToks = falseTokensFor(c, boundaryPhrases);
+        if (falseToks.size) {
+          const qw2 = new Map([...qw].filter(([t]) => !falseToks.has(t)));
+          s = bm25Score(model, d, qw2);
+          if (s <= 0) { guards.push({ kind: 'boundary-dropped', id: c.id }); continue; }
+        }
+      }
       for (const t of c.terms ?? []) if (t && String(t).length >= 2 && !ent.names.has(lc(t)) && qLower.includes(lc(t))) s += 0.6;
       if (dIds.size) {
         if ((c.diseases ?? []).some((x) => dIds.has(x))) s = s * 1.6 + 2;
@@ -878,7 +978,7 @@ export function createEngine(rawDeps = {}) {
       if (c.type === 'publication' && PUB_CUE.test(q)) s = s * 1.6 + 1.5;
       if (c.type === 'research' && RESEARCH_CUE.test(q)) s = s * 1.6 + 1.5;
       if (labPublic && c.block === 'treatment') s = s * 1.5 + 1;
-      scored.push({ ...c, _score: Math.round(s * 1000) / 1000 });
+      scored.push({ ...c, _score: Math.round(s * 1000) / 1000, ...(falseToks?.size ? { _falseTokens: falseToks } : {}) });
     }
     scored.sort((a, b) => b._score - a._score);
     const top = scored[0]?._score ?? 0;
@@ -891,7 +991,7 @@ export function createEngine(rawDeps = {}) {
       out.push(c);
       if (out.length >= k) break;
     }
-    out.qWeights = qw; out.model = model;
+    out.qWeights = qw; out.model = model; out.phrases = phrases;
     return out;
   }
 
@@ -901,9 +1001,13 @@ export function createEngine(rawDeps = {}) {
    */
   function relevanceOf(q, chunks, model, hasEntity = false) {
     const top = chunks[0]?._score ?? 0;
-    const toks = [...new Set(tokenize(String(q).replace(QUERY_FUNC_RE, ' '), { query: true }))].filter((t) => t.length >= 2 || /[a-z0-9]/.test(t));
+    // 第三十一輪：跨過詞界的假 bigram（「性病症狀」裡的「病症」）不列入涵蓋率分母——只保留「原句斷詞」與「詞典斷詞」都有的 token
+    const segToks = new Set(tokenize(lex.segment(String(q)).replace(QUERY_FUNC_RE, ' '), { query: true }));
+    const toks = [...new Set(tokenize(String(q).replace(QUERY_FUNC_RE, ' '), { query: true }))].filter((t) => (t.length >= 2 || /[a-z0-9]/.test(t)) && segToks.has(t));
     if (!chunks.length) return { relevance: 0, coverage: 0, top, matchedIdf: 0, reason: 'no-chunk', tokens: toks };
-    const have = new Set(); for (const c of chunks.slice(0, 3)) for (const t of tokenize(`${c.title} ${c.text} ${(c.terms ?? []).join(' ')}`)) have.add(t);
+    const have = new Set(); for (const c of chunks.slice(0, 3)) for (const t of tokenize(`${c.title} ${c.text} ${(c.terms ?? []).join(' ')}`)) if (!c._falseTokens?.has(t)) have.add(t);
+    // 第三十一輪：問句用的是別名（性病），片段用的是正名（性傳染病）⇒ 同義詞的任一形式出現就算涵蓋
+    for (const p of chunks.phrases ?? []) if (p.forms.length && chunks.slice(0, 3).some((c) => { const h = chunkHay(c); return p.forms.some((f) => h.includes(f)); })) for (const t of p.tokens) have.add(t);
     let tot = 0, cov = 0, matchedIdf = 0;
     for (const t of toks) { const idf = model.idf(t); tot += idf; if (have.has(t)) { cov += idf; matchedIdf = Math.max(matchedIdf, idf); } }
     const coverage = tot ? cov / tot : 0;
