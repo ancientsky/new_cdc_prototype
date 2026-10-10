@@ -1,6 +1,6 @@
 // 共用互動：身分切換、details 單開、回報表單（元件 6）、訂閱、語言切換保留路徑、Banner 輪播、
 // 態勢標籤浮層（元件 8）、tab、篩選、導覽收合、目錄捲動標示。全部用事件委派，動態插入的內容（答案頁）也適用。
-import './i18n.js';
+import './i18n.runtime.js';
 
 const root = document.documentElement;
 const CDC = (window.CDC = window.CDC || {});

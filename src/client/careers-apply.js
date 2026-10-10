@@ -1,7 +1,7 @@
 // /careers/{slug}/apply/ 的「模擬線上報名」（ARCHITECTURE 15.2）。三步驟：基本資料 → 學經歷與應備文件（檔案只記檔名）→ 聲明與確認。
 // 全部資料只存在這個瀏覽器的 localStorage（草稿 cdc.apply.draft.{slug}、收執 cdc.apply.receipts），不送出任何請求，也不讀取檔案內容。
 // 純函式（makeApplyNo、buildIcs、validateField）與 DOM 無關，可在 Node 測試。
-import { t as i18nT } from './i18n.js';
+import { t as i18nT } from './i18n.runtime.js';
 
 const DRAFT_KEY = (slug) => `cdc.apply.draft.${slug}`;
 const RECEIPTS_KEY = 'cdc.apply.receipts';

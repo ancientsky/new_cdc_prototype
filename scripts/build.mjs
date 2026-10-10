@@ -20,6 +20,8 @@ import { emitApi } from './lib/emit-api.mjs';
 import { emitSeo } from './lib/emit-seo.mjs';
 import { emitHeaders } from './lib/emit-headers.mjs';
 import { renderAllPages } from './lib/pages.mjs';
+import { emitI18nBundles } from './lib/i18n-split.mjs';
+import { checkJsBudget } from './lib/js-budget.mjs';
 import { runEval } from '../eval/run-eval.mjs';
 import { todayISO } from './lib/render.mjs';
 import { checkInternalLinks, summarize as summarizeLinks } from './lib/check-internal-links.mjs';
@@ -94,6 +96,9 @@ async function main() {
   // 靜態資源
   copyDir(path.join(ROOT, 'src/styles'), path.join(DIST, 'assets/styles'));
   copyDir(path.join(ROOT, 'src/client'), path.join(DIST, 'assets/js'));
+  // 介面字串依語言拆檔（issue #34）：i18n.<lang>.js 取代完整 i18n.js
+  const i18nSizes = emitI18nBundles(DIST);
+  log(`i18n 拆檔 → assets/js/i18n.<lang>.js：${Object.entries(i18nSizes).map(([l, b]) => `${l} ${(b / 1024).toFixed(0)}KB`).join('、')}`);
   if (fs.existsSync(path.join(ROOT, 'src/public'))) copyDir(path.join(ROOT, 'src/public'), DIST);
   // 檔案資產：只複製 published／archived 內容有宣告的檔 → dist/files/{id}/{file}
   const copied = copyAssets(publicView(site), DIST);
@@ -102,7 +107,14 @@ async function main() {
   // 第二十三輪（26.2）：掃 dist 的 inline script 算雜湊 → 安全標頭設定檔（dist/headers/）。超過 40 段代表有模板把每頁資料塞進 inline script，要改成 data 屬性或 application/json。
   const hdr = emitHeaders(DIST, writeOut);
   log(`安全標頭 → dist/headers/（inline script 雜湊 ${hdr.info.count} 段）${hdr.info.count > 40 ? '  ⚠ inline script 過多，請檢查' : ''}`);
-  log(`輸出 ${pageCount} 頁 → dist/（${Date.now() - t0} ms）`);
+
+  // 每頁 JS 預算（issue #34）：公開頁超過預算 ⇒ 建置失敗。調整方式見 scripts/lib/js-budget.mjs（JS_BUDGET_KB）
+  const jsb = checkJsBudget(DIST, { basePath: config.basePath });
+  log(`JS 預算：公開頁最大 ${(jsb.public.max / 1024).toFixed(1)} KB（${jsb.public.maxPage}，預算 ${jsb.public.budgetKb} KB，${jsb.public.count} 頁）；含答案引擎的頁最大 ${(jsb.engine.max / 1024).toFixed(1)} KB（${jsb.engine.maxPage}，預算 ${jsb.engine.budgetKb} KB，${jsb.engine.count} 頁）；後台頁最大 ${(jsb.admin.max / 1024).toFixed(1)} KB（${jsb.admin.maxPage}）`);
+  if (!jsb.ok) {
+    console.error(`❌ 有頁面的 JS 超過預算：${[...jsb.public.over, ...jsb.admin.over].slice(0, 10).map((r) => `${r.page} ${(r.bytes / 1024).toFixed(1)}KB`).join('；')}`);
+    process.exit(1);
+  }  log(`輸出 ${pageCount} 頁 → dist/（${Date.now() - t0} ms）`);
 
   // 全站連結完整性（站內連結必須指到存在的檔案；外部連結收集清單；佔位／示意網址 = error）
   // --check 或 CI 下有 error ⇒ exit 1；LINK_CHECK=warn 可暫時降為警告（整合期用），LINK_CHECK=off 略過。
