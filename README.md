@@ -112,6 +112,14 @@
 
 > 限制：(1) 後台的「送出」是**展示**，原型不能代承辦人開 PR，交件仍是下載 ZIP；(2) GitHub 工作流程**無法在本機驗證**，是否如預期運作以開一個真實測試 PR 的結果為準（見 [docs/publishing-lanes.md](docs/publishing-lanes.md) 附錄 B）；(3) 排程發布受每 2 小時重建限制，延遲最多 2 小時；(4) 開發環境連不到舊站，結核病首批用的是**依既有內容反推的模擬匯出**，真實匯出的版型與品質可能不同，規則要用真實樣本校準。
 
+## 第二十六輪：介面字串依語言拆檔、JS 預算、Lint／型別檢查、CMS 路線決策紀錄
+
+回應三個外部審查意見（詳見 [ARCHITECTURE.md 第 29 章](ARCHITECTURE.md)）：
+
+- **#34 效能**：七語介面字串原本整包（291 KB）上線、每頁都載入。現在建置時依語言拆成 `assets/js/i18n.<lang>.js`（約 4–5 KB，只含瀏覽器會用到的字串，fallback 已預先解析），瀏覽器端改用小的 `i18n.runtime.js`；Node 端模板與測試的 `t()` 不變。建置新增「每頁 JS 預算」（公開頁 120 KB，含答案引擎的頁 320 KB，可用 `JS_BUDGET_KB` 調整），超過即失敗。為什麼：行動網路與舊手機上，多載 290 KB 不會被內容審查看到，卻是使用者每次都付的成本。
+- **#42 工程品質**：加入 ESLint（`npm run lint`）、Prettier 設定（只強制新檔）、型別檢查試點（`npm run typecheck`，只含 `lanes.mjs`、`validate.mjs`），並接進 CI（`content-pr.yml` 的 Lint 步驟與 PR 留言表、`pages.yml`）。大檔（`answer/core.js` 2193 行、`governance.mjs` 1475 行）的拆分只寫成路線圖，沒有動。為什麼：先用最小成本擋住會出錯的寫法，而不是一次大改。
+- **#28 CMS 路線**：在 [docs/architecture-decisions.md 第 18 節](docs/architecture-decisions.md) 比較自建後台、Keystatic、TinaCMS 三案，建議以 Keystatic 對 `faq` 型別做兩週試點，內容格式維持 JSON（長文維持 JSON 內的 Markdown 欄位）。**最後選擇待長官決定**，issue 保持開啟。
+
 ## 第二十四輪：無障礙修正與 CI 檢測閘門
 
 起因：外部稽核者用 axe 掃過全站，開了 #29～#33、#39。這一輪把「真的有問題」的全修了，並讓之後的 PR 不能再退步。

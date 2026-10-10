@@ -1,3 +1,4 @@
+// @ts-check
 // 發布車道與排程發布（ARCHITECTURE 17.1）
 //
 // 一、車道：content/governance/lanes.json 定義 emergency／fast／standard 三條車道。
@@ -213,7 +214,11 @@ function contentIndex(root) {
   return idx;
 }
 
-/** 單一變更檔案 → { file, type, lane, reason } */
+/**
+ * 單一變更檔案 → { file, type, lane, reason }
+ * @param {string} file
+ * @param {{ root?: string, cfg?: any, index?: () => any }} [opts]
+ */
 export function classifyFile(file, { root = ROOT, cfg = loadLanes(), index } = {}) {
   const f = String(file).trim().replace(/\\/g, '/').replace(/^\.\//, '');
   const std = (reason, type = null) => ({ file: f, type, lane: 'standard', reason });

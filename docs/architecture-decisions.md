@@ -136,6 +136,97 @@
 
 **什麼時候重新考慮：** 掃描時間過長（可改只掃有改動的樣板）；axe 誤報造成同事困擾（針對單一規則加例外並寫下原因，不整體關閉）；取得人工稽核或第三方檢測報告後，用報告取代「待人工稽核」欄位。
 
+## 18. 編輯介面路線：自建後台、Keystatic、TinaCMS 三案比較與試點計畫
+
+> 狀態：**待長官決定**（第二十六輪，對應 issue #28）。本節是決策紀錄與試點計畫，不改任何程式；結論欄寫的是「建議」，不是已決定。
+> 查證日期：2026-10-10。查證方式與限制見「事實查證」。
+
+### 18.1 背景
+
+- 規劃文件曾寫「TinaCMS 為主、Keystatic 為替代」；原型實際做的是**自建 `/admin/`**（純前端，內容仍是 `content/*.json`，由 AJV 依 `schemas/*.json` 驗證，送出走 Git＋Pull Request＋`content-pr.yml` 發布車道）。
+- 第二十二輪（另一個 PR 的 §14）已「借用 TinaCMS 的設計模式」但**不引進** TinaCMS：它需要 GraphQL 後端（或 Tina Cloud）、React、自己的認證。
+- 外部審查（issue #28）的問題是：自建後台長期要自己維護編輯器、預覽、權限與無障礙，值不值得？有沒有現成方案？這一節把三條路放在同一把尺上比較，並設計一個便宜的試點去取得「真人編輯」的證據，而不是靠文件辯論。
+
+### 18.2 事實查證（附來源）
+
+| 項目 | 查到的事實 | 來源 |
+| --- | --- | --- |
+| Keystatic 授權 | MIT；由 Thinkmill（Thinkmill Labs Pty Ltd）維護 | [GitHub: Thinkmill/keystatic](https://github.com/Thinkmill/keystatic) |
+| Keystatic 版本與活躍度 | npm `@keystatic/core` 最新 0.6.9，發布於 2026-08-26，8 月內連續發了 0.6.7／0.6.8／0.6.9；仍是 **0.x（未到 1.0）**；GitHub 約 167 個 open issues | [npm registry](https://registry.npmjs.org/@keystatic/core) 、 [GitHub](https://github.com/Thinkmill/keystatic) |
+| Keystatic 儲存模式 | `storage.kind` 有 `local`、`github`、`cloud` 三種（讀 0.6.9 套件的型別宣告確認） | 套件 `@keystatic/core@0.6.9` 的 `dist/declarations`；[官方設定文件](https://keystatic.com/docs/configuration) |
+| Keystatic 資料格式 | 集合（collection）的 `format.data` 型別為 `'json' \| 'yaml'`，所以**可以存 JSON**（內容欄位則可用 Markdoc／MDX／純文字） | 同上（型別宣告）；[內容組織文件](https://keystatic.com/docs/content-organisation) |
+| Keystatic GitHub 模式 | 需要一個既有的 GitHub repo、協作者要有寫入權；後台登入透過**安裝一個 GitHub App**（OAuth）；第三方整理指出它走 GitHub API，所以能跑在邊緣執行環境，且需要框架提供 `/api/keystatic/*` 路由 | [官方 GitHub mode 文件](https://keystatic.com/docs/github-mode)；第三方：[Makerkit 指南](https://makerkit.dev/docs/next-supabase-turbo/content/keystatic)、[egghead 教學](https://egghead.io/lessons/react-manually-connect-a-keystatic-project-to-a-github-repo) |
+| Keystatic local 模式 | 直接讀寫本機檔案，不需要 GitHub App，但只在開發機上跑（沒有多人線上編輯） | 官方設定文件（同上） |
+| TinaCMS 授權 | 核心套件 `tinacms` 3.14.2（2026-10-01）、`@tinacms/cli` 4.0.1（2026-10-07），npm 授權欄皆 **Apache-2.0**；2023-11 宣布自架後端開源 | [npm: tinacms](https://registry.npmjs.org/tinacms)、[npm: @tinacms/cli](https://registry.npmjs.org/@tinacms/cli)、[官方部落格](https://tina.io/blog/Tinacms-is-now-fully-open-source/) |
+| TinaCMS 自架條件 | 需要自己跑**後端 API（GraphQL 與認證端點）**、一個資料層資料庫（官方範例用 Vercel KV）與認證（範例用 Auth.js）；2023 年時自架版尚不支援 repo 內媒體（現況未能查到） | [itsfoss 報導](https://itsfoss.com/news/tinacms-open-source/)（第二手）、官方部落格 |
+
+**查證的限制（請讀者知道）：** 本次執行環境連不上 `keystatic.com` 與 `tina.io` 兩個官網（DNS 失敗），所以官方文件的內文是靠搜尋摘要、npm 套件本身與第二手整理交叉確認，不是逐頁閱讀。下列幾點**試點第 1 天要先驗證**：(1) Keystatic 在純靜態站（本專案無框架）如何掛載——官方整合以 Next.js／Astro／Remix 等為主，GitHub／cloud 模式需要一個伺服器端路由，本專案需要另起一個小服務或獨立子站；(2) `format.data: 'json'` 對本專案「`allOf` 加 `_common.json`」這類巢狀 schema 的欄位對應；(3) 機關 SSO 是否能取代「GitHub App 登入」。
+
+### 18.3 三案比較
+
+| 準則 | (a) 繼續自建 `/admin/` | (b) Keystatic | (c) TinaCMS |
+| --- | --- | --- | --- |
+| 機關 SSO 整合 | 自己做。目前是模擬登入（`auth-rules.js`），真正要接 OIDC＋MFA 閘道；做法最自由、也最費工 | 登入綁 GitHub（GitHub App）或 Keystatic Cloud。機關 SSO 要靠 GitHub Enterprise（SAML）或在反向代理前面擋一層；**不能直接換成機關 IdP** | 自架時可換認證（官方範例是 Auth.js，可寫 OIDC provider），彈性高於 Keystatic，但要自己維護 |
+| 是否需常駐伺服器 | 不需要（純前端＋Git 流程）；真正送出要有「代開 PR」的小後端（見 publishing-lanes.md） | local 模式不需要；github／cloud 模式需要一個承載 `/api/keystatic` 的伺服器路由（Next.js／Astro SSR 等，可 serverless） | 需要（GraphQL 後端＋資料庫＋認證），或付費 Tina Cloud |
+| 能否直接用現有 JSON Schema（AJV） | **能**，這就是現況；後台與 CI 用同一份 schema | **不能直接用**。要把 `schemas/*.json` 手工改寫成 Keystatic 的 TypeScript `fields` 定義（兩份 schema 要同步）；可寫轉換腳本或讓 CI 的 AJV 當最後防線 | 同 Keystatic：schema 要改寫成 Tina 的 collections 定義，且產生 GraphQL schema |
+| 巢狀 blocks 編輯體驗 | 要自己做。現況可編輯常見型別，複雜 blocks 仍較粗糙 | `fields.blocks`／`array`／`conditional` 內建，體驗不錯；是它的強項之一 | `rich-text` 模板與 blocks 欄位成熟，**側邊欄即時編輯**體驗最好 |
+| 即時預覽 | 已有 Markdown 預覽與 PR 預覽網址（`pr-{N}/`） | 無內建站內即時預覽（有預覽 URL 可串接）；PR 預覽可沿用現有流程 | **內建視覺編輯／即時預覽**（需把前台掛成 React 才完整） |
+| 境內部署可行性 | 完全可以（純靜態＋機關內 Git） | local 可以；github 模式依賴 GitHub.com（資料出境需評估），可搭配 GitHub Enterprise Server；cloud 模式資料在境外 | 自架可境內；若用 Tina Cloud 則在境外。要自管資料庫 |
+| 授權與維護風險 | 風險在**人**：維護者離職就停。無外部授權風險 | MIT；但是 0.x、主要由單一公司維護，API 可能破壞性變更；鎖定風險小（內容仍是你的 JSON／Markdown 檔） | Apache-2.0；產品方向與雲端服務綁得較緊；元件多（React、GraphQL、資料層），升級面較大 |
+| 與 Git＋CI 發布車道相容性 | **完全相容**（本來就是為車道設計） | **很好**：寫入就是 commit／PR，`content-pr.yml` 照常攔；內容檔格式維持 JSON 時完全不用改 CI | 可相容（也是寫 Git），但經過資料層／GraphQL 多一層，出錯時較難除錯；索引需要重建 |
+
+### 18.4 建議（待長官決定）
+
+- **試點選 Keystatic（local 模式先行，再試 github 模式），不選 TinaCMS。** 理由：(1) 內容仍是 Git 內的 JSON，與現有 AJV＋CI 車道零衝突，最差只是退回自建，沒有資料遷移；(2) 比 TinaCMS 少一整層後端與資料庫，資訊室維運負擔小；(3) MIT、檔案即資料，鎖定風險最低；(4) 它的欄位／blocks 編輯體驗已能回答「非技術同仁是否用得順」這個真正的問題。
+- **不建議現在就把自建後台整個換掉。** 它已經與車道、預處理、稽核綁在一起；試點的目的是量測「換了是否更好」，不是預設要換。
+- **最後的選擇是 (a)(b)(c) 哪一條、是否採 GitHub.com 或機關內 Git、SSO 怎麼接，屬機關決策，待長官決定。**
+
+### 18.5 內容格式：維持 JSON，還是長文改 Markdown＋frontmatter？
+
+建議：**結構化欄位維持 JSON；長文本維持「JSON 內的 Markdown 字串欄位」（現有的 `bodyMarkdown`、faq 的 `answerMarkdown`），不改成整份 Markdown＋frontmatter。**
+
+- RAG 切塊與引用（第十九輪的頁碼引用、答案單元）是以 JSON 欄位為單位建索引；治理欄位（`gov`、版本鏈、`i18n` 七語）與內文放在同一個物件，一次驗證、一次 diff。改成 frontmatter 要新增一套「解析 → 還原成現有物件」的轉換，並重新校驗約 700 筆答案單元與評估集。
+- 長文編輯體驗的問題可由編輯器解決（Keystatic 的 Markdoc／文字欄位可直接編輯 Markdown 字串），不必改儲存格式。
+- 例外：若之後出現「幾千字、多章節、純敘事」的文件（如長指引），可以只對那一個型別改用 `.md`＋frontmatter，並在 loader 轉成同樣的物件；這是型別層級的選擇，不是全站遷移。
+
+### 18.6 兩週試點計畫（型別：`faq`）
+
+**範圍：** `schemas/faq.json` 目前必填欄位為 `question`、`answerMarkdown`，另有 `_common.json` 的共通欄位與 `structured`。
+
+| 時間 | 工作 |
+| --- | --- |
+| 第 1–2 天 | 驗證 18.2 的三個待驗事項；把 `schemas/faq.json` 對應成 Keystatic collection：`question`→`fields.text`、`answerMarkdown`→`fields.text({ multiline: true })`（或 Markdoc）、`_common` 欄位（id、title、owner、狀態、日期等）→對應欄位、`structured`→`fields.object`；`format: { data: 'json' }`、`path: 'content/faq/*'`。產出對應表，並寫一支小腳本比對「Keystatic 輸出的 JSON」是否通過 AJV。 |
+| 第 3–4 天 | 在測試分支跑通：Keystatic 編輯 → commit → `content-pr.yml`（schema、治理、評估集）→ PR 預覽。確認舊 JSON 開得起來、存回去不改動無關欄位（鍵順序、換行）。 |
+| 第 5–9 天 | 2–3 位非技術同仁（建議含公關室、一位承辦人）各用 Keystatic **真的上架** 3–5 則 faq（走正常審核，不是演練），資訊室只在旁觀察、不代操作。同時記錄對照組：同期以自建 `/admin/publish/` 上架的 faq。 |
+| 第 10–12 天 | 問卷與訪談；整理 CI 被攔下的原因；資訊室估算正式導入的工（SSO、部署位置、備援）。 |
+| 第 13–14 天 | 彙整成一頁結論＋本節更新，交長官決定。 |
+
+**量測指標**
+
+| 指標 | 怎麼量 |
+| --- | --- |
+| 撰寫到上線時間 | 從開始編輯到合併上線的分鐘數（commit 時間與 PR 合併時間，扣除等待審核時間另記） |
+| CI 攔下的錯誤數 | 每則內容在 PR 階段被 `content-pr.yml` 攔下的次數與類型 |
+| 上線後錯誤數 | 上線後兩週內被回報／被複核退回／需要緊急修正的次數 |
+| 編輯滿意度 | 5 分量表（易學、易用、信任存檔結果）加開放題 |
+| 培訓時數 | 從零到能獨立上架第一則的累計小時 |
+
+**成功標準（全部符合才建議採用）：**
+
+1. 非技術同仁在 ≤ 2 小時培訓後，能獨立完成 faq 上架，且「撰寫到上線時間」不比自建後台長 20% 以上。
+2. 上線後錯誤數不高於對照組；CI 攔下的錯誤中，「欄位格式錯」的比例低於對照組（代表編輯器本身就擋掉了一些）。
+3. 滿意度平均 ≥ 4／5，且無人表示「不敢按存檔」。
+4. 資訊室評估正式導入的新增維運工作 ≤ 現在維護自建編輯器的工時，且 SSO／境內部署有可行路徑。
+5. 內容檔仍是 `content/faq/*.json`，退出成本為零（隨時可退回自建後台）。
+
+**失敗時的處理：** 任何一項不達標就維持自建後台，把試點中發現的易用性問題回補到 `/admin/`（本身就是成果）。
+
+### 18.7 代價與重新考慮的時機
+
+- 維持自建的代價：編輯器、預覽、無障礙與權限都要自己維護；人力集中在一兩個人身上。
+- 採 Keystatic 的代價：schema 要維護兩份（或寫轉換）；0.x 版本需鎖版本並追蹤變更；SSO 與 GitHub 依賴需機關另行核定。
+- 重新考慮的時機：Keystatic 發布 1.0 或停止更新；機關決定採用 GitHub Enterprise／機關內 Git；非技術編輯者超過約 10 位；或試點結果推翻上述判斷。
+
 ## 與規劃文件的對照
 
 | 規劃文件主題 | 原型位置 |

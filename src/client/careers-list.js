@@ -1,6 +1,6 @@
 // /careers/ 列表的前端篩選：職類／地點／單位三個下拉，同時作用在五個分頁籤的職缺卡，並更新各分頁籤的計數與空狀態。
 // 沒有 JS 時篩選列整個隱藏，列表仍完整可讀。
-import './i18n.js';
+import './i18n.runtime.js';
 
 const T = (k, v) => (window.CDC?.t ? window.CDC.t(k, v) : k);
 const root = document.querySelector('[data-job-filters]');

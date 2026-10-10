@@ -165,6 +165,7 @@ ${translationBar(ctx, item, hideTranslationBar)}
   <a href="${url('/situation/')}" ${path.startsWith('/situation/') ? raw('aria-current="page"') : ''}>${icon('chart')}<span>${t('tab.situation')}</span></a>
   <a href="tel:1922">${icon('phone')}<span>1922</span></a>
 </nav>
+<script type="module" src="${url(`/assets/js/i18n.${lang}.js`, { noLang: true })}"></script>
 <script type="module" src="${url('/assets/js/ui.js', { noLang: true })}"></script>
 ${scripts.map((s) => html`<script type="module" src="${url(s, { noLang: true })}"></script>`)}
 </body>

@@ -45,6 +45,7 @@ export function loadContentIndex(contentDir = CONTENT) {
       try {
         const j = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
         if (j?.id) {
+          // eslint-disable-next-line no-dupe-keys -- family／effectiveAt 重複宣告，後者生效；為保持輸出鍵順序不變暫不刪前者
           byId.set(j.id, { type: j.type, title: j.title, owner: j.owner, file: `content/${d}/${f}`, status: j.status, diseases: [...(j.diseases ?? []), ...(j.basedOn ?? [])], docType: j.docType, family: j.family ?? null, version: j.version ?? null, effectiveAt: j.effectiveAt ?? null, pubType: j.pubType, mediaType: j.mediaType, family: j.family, effectiveAt: j.effectiveAt ?? j.publishedAt,
             // 第十一批：資料集的正本與入口網址（datasetByUrl 依站外連結 host 對既有資料集）
             ...(j.type === 'dataset' ? { canonicalUrl: j.canonicalUrl ?? null, portalUrl: j.portalUrl ?? null } : {}) });

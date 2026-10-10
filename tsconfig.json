@@ -1,0 +1,16 @@
+{
+  "//": "第二十六輪（issue #42）型別檢查試點：只檢查下面 include 的檔案（JS + JSDoc，不改成 TypeScript）。要擴大範圍就把檔案加進 include 並在檔首加 // @ts-check。",
+  "compilerOptions": {
+    "target": "ES2023",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "strict": false,
+    "noImplicitAny": false,
+    "skipLibCheck": true,
+    "types": ["node"]
+  },
+  "include": ["scripts/lib/lanes.mjs", "scripts/lib/validate.mjs"]
+}

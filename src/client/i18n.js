@@ -1,6 +1,6 @@
 // 七語 UI 字串（Node 與瀏覽器共用）。內容翻譯在 content/*.json 的 i18n；這裡只有介面字。
 // 欄位順序：zh-TW, en, ja, tl, vi, id, th。後面的語言省略 = 該語言 fallback 英文，再 fallback 中文。
-// 用法：t(lang, 'key', { var }) ；瀏覽器端 window.CDC.t('key', vars)。
+// 用法：t(lang, 'key', { var }) ；瀏覽器端 window.CDC.t('key', vars)（由 i18n.runtime.js 提供，字串來自建置時拆出的 i18n.<lang>.js）。
 const ORDER = ['zh-TW', 'en', 'ja', 'tl', 'vi', 'id', 'th'];
 
 const ROWS = {
@@ -1639,4 +1639,4 @@ export function t(lang, key, vars = {}) {
   return s.replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? '');
 }
 
-if (typeof window !== 'undefined') { window.CDC = window.CDC || {}; window.CDC.t = (k, v) => t(document.documentElement.lang, k, v); window.CDC.STRINGS = STRINGS; }
+// 瀏覽器不再載入本檔（第二十六輪）：改用建置時拆出的 i18n.<lang>.js + i18n.runtime.js，見 scripts/lib/i18n-split.mjs。

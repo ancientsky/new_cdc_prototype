@@ -1,10 +1,18 @@
+// @ts-check
 // JSON Schema 驗證 + 跨檔參照檢查。任何一項失敗 → build 失敗（治理門檻）。
 // 檔案資產（assets[]、/files/ 引用、content/assets/ 實體檔）的檢查在 scripts/lib/assets.mjs 的 validateAssets()，
 // build.mjs 在本檢查後呼叫並把錯誤併入同一份失敗清單（ARCHITECTURE 16.1）。
 import fs from 'node:fs';
 import path from 'node:path';
-import Ajv2020 from 'ajv/dist/2020.js';
-import addFormats from 'ajv-formats';
+// ajv／ajv-formats 的 CJS 預設匯出在 NodeNext 下型別會變成 module 物件，這裡以 JSDoc 指回真正的建構函式／函式
+import Ajv2020Module from 'ajv/dist/2020.js';
+import addFormatsModule from 'ajv-formats';
+/** @type {typeof import('ajv/dist/2020.js').default} */
+// @ts-ignore CJS interop
+const Ajv2020 = Ajv2020Module.default ?? Ajv2020Module;
+/** @type {typeof import('ajv-formats').default} */
+// @ts-ignore CJS interop
+const addFormats = addFormatsModule.default ?? addFormatsModule;
 import { ROOT } from './load.mjs';
 import { jobPiiErrors } from '../../src/client/careers-rules.js';
 
