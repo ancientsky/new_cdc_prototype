@@ -970,3 +970,33 @@ manualStatus?: enum[cancelled, failed（流標）], award?: { date, winner, amou
 - 所有 `uses:` 釘 40 字元 commit SHA，行尾註解 `# vX.Y.Z`；`.github/dependabot.yml`（github-actions、npm 每週）。
 - `content-pr.yml`、`pages.yml` 工作流程層級 `permissions: contents: read`；寫入權限在 job 層（`lane` job：contents/pull-requests/issues/actions write；`build` job：contents write；`deploy` job：pages/id-token write）。測試 `tests/round23-security.test.mjs` 檢查 SHA 格式、註解、層級。
 
+## 27. 第二十四輪（2026-10-10）：無障礙修正與 CI 檢測閘門
+
+**目標：** 新版網站無障礙規範 AA（WCAG 2.2 AA，2026-11-30 施行）；機器可判定的部分由 CI 把關，其餘列「待人工稽核」（[docs/a11y.md](docs/a11y.md)）。
+
+### 27.1 檢測腳本與閘門政策
+
+- `npm run a11y` ＝ `node scripts/a11y.mjs`。**不建置**，只讀 `dist/`（或 `DIST_DIR`），沒有就以 exit 2 與明確訊息結束；行程內自帶靜態伺服器（認得 `BASE_PATH`），建議建置時用 `BASE_PATH=''`。
+- 以 Playwright 的 Chromium 對代表頁（`PAGES`：首頁、疾病頁、疾病列表、疫苗、旅遊、新聞、Q&A、智慧查詢、疫情、資料、專業版、後台首頁、後台上架、/en/、/vi/；dist 沒有的略過並列出）在 1280px 與 320px 各跑 `@axe-core/playwright`，標籤 `wcag2a, wcag2aa, wcag21aa, wcag22aa, best-practice`。
+- **政策：** `serious`／`critical` 或 320px 出現橫向捲動（`scrollWidth > clientWidth`）→ exit 1；`moderate`／`minor` 只印警告。輸出 Markdown 摘要（`A11Y_REPORT`、`GITHUB_STEP_SUMMARY`）。
+- 瀏覽器選擇順序：`CHROME_BIN` → `PLAYWRIGHT_BROWSERS_PATH`（預設 `/opt/pw-browsers`）下最新的 `chromium-*` → Playwright 內建。
+- `content-pr.yml`：測試與治理閘門之後，`npx playwright install --with-deps chromium`、`BASE_PATH='' node scripts/build.mjs`（`DIST_DIR` 暫存目錄）、`npm run a11y`（`continue-on-error`，id `a11y`）。`decide` 步驟與最後的「Fail when checks failed」都要求 `steps.a11y.outcome == 'success'`；PR 留言表多一列「無障礙檢測（axe）」。
+
+### 27.2 版面契約
+
+- **身分切換**（`layout.mjs`）：`.audience` 內全是 `<a class="audience__btn" data-view-set>`，**不可**有 `aria-pressed`（ARIA 不允許用在連結）；目前身分用 `aria-current="page"`。`ui.js` `applyView()` 同步改寫 `aria-current`；「民眾」連結在非 `/pro/` 頁就地切換（`preventDefault`），在 `/pro/` 放行導覽回首頁。真正的 toggle button（`.c-viewtoggle`、篩選鈕等）仍用 `aria-pressed`。
+- **手機語言選單**：`.topbar` 內三塊：`nav.langs.langs--inline`（桌機橫排）、`details.langmenu`（`summary.langmenu__btn` ＝ i18n `lang.menu`，內含 `nav.langmenu__list`）、`nav.topbar__links`（`aria-label` ＝ `nav.tools`）。≤720px 隱藏 `.langs--inline`、顯示 `.langmenu`；`#main-nav` 底部 `.c-nav__langs`（≤959px 顯示）重複同一組語言連結。語言連結一律 `a[data-lang-path]`，`ui.js` 以此選擇器補上 `location.search/hash`，不要改回 `.langs a`。
+- **目標尺寸**：任何自訂的小型可點元件（圓點、圖示鈕）點擊區至少 24×24 px，間距至少 8px；視覺縮小用 `::before`，不要縮 button 本身。輪播圓點：`.c-carousel__dot` 24×24、`::before` 12px。
+- **可捲動區塊**：`.c-code`、`.c-tablewrap`、`.adm-tablewrap` 一律輸出 `role="region" tabindex="0" aria-label`（i18n `a11y.scrollCode`／`a11y.scrollTable`；後台用中文固定字串）；Markdown 的 `<pre>` 由 `md()` 加 `tabindex="0"`。新增可橫向捲動的容器時同樣處理，否則 axe 的 `scrollable-region-focusable` 會擋。
+- **含連結的 svg**（世界地圖）用 `role="group"` ＋ `aria-labelledby`，不可 `role="img"`（`nested-interactive`）。
+- **群組標題**：`.c-dis-group__t`（h2，視覺 `--fs-lg`）；標題層級不跳級，視覺大小用 class，不靠換標籤。
+- **`ul` 不加 `role="group"`**：群組語意放外層 `<div role="group" aria-label>`。
+- **320px 不得橫向捲動**：格線 `minmax(N,1fr)` 要寫成 `minmax(min(N,100%),1fr)`。
+
+### 27.3 測試
+
+`tests/round24-a11y.test.mjs`：對渲染後的 HTML 做結構斷言（無 `aria-pressed` 的 `a.audience__btn`、圓點 CSS 24px、`wm-svg` role、兩個搜尋表單 aria-label 不重複、`pf-pills` 無 role、`.c-code` tabindex、七語語言選單、標題不跳級、CI 步驟存在）。不需瀏覽器；真正的 axe 掃描由 `npm run a11y` 負責。
+
+### 27.4 延後
+
+依 `Accept-Language` 自動提示切換語言：未做（原型並非每頁都有七語，容易導到不存在的頁；也牽涉記住選擇的 cookie 告知）。
