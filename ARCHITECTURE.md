@@ -1515,3 +1515,105 @@ Issue #38（Yulun）：舊站「首頁／專業人員／傳染病核心教材」
 - 上架包：`content/articles/{slug}.json`、新卷期時 `content/publications/bulletin-{v}-{n}.json`、單篇 PDF `content/assets/{article id}/{file}`（上限沿用 `site.config.assets.maxBytes.pdf`）。
 - 草稿 localStorage `cdc.admin.bulletin-edit`；`?edit={article id}` 帶入既有文章，匯出保留表單沒有的欄位。
 - 檢核有 error 時「產生上架包」停用；warn 只提醒（沒頁碼、沒摘要、沒關鍵字、重點缺句、圖表正文沒提到）。
+
+## 36. 第三十輪（2026-10-10）：寫入閘道（#28）
+
+決策理由見 architecture-decisions §23（與 §18 開頭的更新）；部署與資訊室待答事項見 [docs/deploy.md §14](docs/deploy.md)；同事操作見 guide-staff §34。這一節只寫契約。
+
+### 36.1 模組（`scripts/lib/gateway/`，只用 Node 內建模組，沒有新相依套件）
+
+| 檔案 | 職責 |
+| --- | --- |
+| `index.mjs` | `configFromEnv(env)`、`createGitProvider`、`createGatewayApi(opts)` → `{ handle(req, res, pathname, searchParams), workflow, git, audit, store, notifier, config, csrfFor }`；`handle` 遇到不是 `/api/gateway/*` 的路徑回 `false` |
+| `auth.mjs` | 轉接器 `dev`／`header`／`oidc`；`principalFrom()` → `{ account, name, email, authMode, groups, memberships, units, primaryUnit, adminRoles, roles: ['編輯'|'審核'|'管理'], crossUnit }`（只認 `CDC-WEB-` 開頭的群組） |
+| `google.mjs` | `google` 轉接器：`verifyGoogleIdToken`（iss、aud、exp、nonce、`email_verified`、`hd`、email 網域）、`loginRedirect`（PKCE S256＋state＋nonce，放在簽章 cookie，10 分鐘）、`callback`、簽章的工作階段 cookie `cdc_gw_session`（HttpOnly、SameSite=Lax、8 小時、每 15 分鐘重查群組）；`createDirectoryLookup`（Admin SDK Directory API，服務帳號 JWT-bearer，scope `admin.directory.group.readonly`）、`createRoleMapLookup`（email → 群組陣列的 JSON 對照檔） |
+| `jwt.mjs` | `verifyJwt`（RS256／PS256／ES256；拒絕 none 與 HS*；JWKS 依 kid 取金鑰；iss／aud／exp／nbf，時鐘誤差 60 秒） |
+| `git-local.mjs` | `local` 供應者：`.local/gateway-repo/`（bare repo，只用 plumbing 指令、不 checkout；`update-ref` 帶舊值，防止並行覆寫；`merge-tree --write-tree` 判斷衝突；合併請求以 `gateway-reviews.json` 模擬） |
+| `git-gitlab.mjs` | `gitlab` 供應者：REST v4，標頭 `PRIVATE-TOKEN`。建分支用 `POST /repository/branches`；提交用 `POST /repository/commits`，actions 是 create 還是 update 依 `HEAD /repository/files/:path` 判斷；另有 `POST /merge_requests`、`/notes`、`/approve`，以及 `PUT /merge_requests/:iid/merge`（帶 `sha` 防並行，`should_remove_source_branch`） |
+| `validate-item.mjs` | `contentPathOf(item)`：路徑只由 `TYPE_DIR[type]`＋id 推出，`ID_RE` 不允許 `..`、斜線或大寫。另有 `assertContentPath`。`createValidator().validate(item)` 跑 `validateSite`＋`validateAssets`，只回這一筆的錯誤，AJV 訊息翻成白話中文，回傳 `{ ok, path, errors: [{ field, label, message }] }` |
+| `field-diff.mjs` | `fieldDiff(before, after)` → `{ isNew, changes: [{ field, label, type, summary, before[], after[] }] }`；文字欄位以句子為單位做 LCS 比對，改過的句子再逐字標出 `ch` |
+| `workflow.mjs` | `createWorkflow()`：`saveDraft`、`submit`、`returnForChanges`、`approve`、`list`、`detail`、`content`、`diff`；`GatewayError(status, code, message, fields)` |
+| `notify.mjs` | 寫 `.local/outbox/gateway-<kind>-*.eml` 與 `.local/outbox/teams/*.json`（Adaptive Card）。kind：`submitted`（給審核人）、`returned`／`approved`（給承辦）、`partial`、`post-publish` |
+| `store.mjs` | 狀態檔 `.local/gateway-state.json`（原子寫入）；稽核 `.local/gateway-audit.jsonl`，只增不改，每筆帶 `seq`、`prev`、`hash`，前後串成雜湊鏈；`verifyAudit()` 驗證整條鏈 |
+
+`src/client/admin/auth-rules.js` 新增：
+- `AD_GROUP_PREFIX`、`adGroupName`、`adGroupsOf`。
+- `parseAdGroup`：去掉 `DOMAIN\`、不分大小寫、角色從尾端比對。
+- `GATEWAY_ROLE_OF`：editor／situation-publisher → 編輯；reviewer／chief-editor／governance → 審核；platform → 管理。
+
+前端與閘道共用同一份。
+
+### 36.2 HTTP 介面（`/api/gateway`，前綴依 `config.basePath`）
+
+| 方法 路徑 | 說明 |
+| --- | --- |
+| `GET /health` | `{ ok, service: 'cdc-web-gateway', auth }`；後台用它判斷要不要切到閘道模式 |
+| `GET /login`、`GET /login/callback`、`POST /logout` | 只有 `google` 模式有 |
+| `GET /session` | `{ user: { account, name, unit, units, roles }, csrfToken }` |
+| `GET /items?view=mine\|queue\|all&contentId=` | 送審件清單，不含任何 Git 欄位 |
+| `GET /items/:sid`、`/diff`、`/content`、`/preview` | 單件；`sid` 格式 `gw-YYYYMMDD-xxxxxx`；`/preview` 回 HTML，`Content-Security-Policy: sandbox; default-src 'none'; …` |
+| `POST /drafts` `{ item, submissionId? }` | 儲存草稿 |
+| `POST /submit` `{ item?, submissionId? }` | 送審；自動上線車道且送審人在授權名單時直接上線 |
+| `POST /items/:sid/return` `{ comment }` | 退回修改，`comment` 必填（≤ 2000 字） |
+| `POST /items/:sid/approve` `{ comment? }` | 核准；核准數達到車道要求就上線 |
+
+錯誤一律回 `{ error: code, message, fields? }`，其中 `fields` 是 `[{ field, label, message }]`。
+
+寫入請求必須同時符合：
+- **同源**：檢查 `Origin`；有 `Sec-Fetch-Site` 時須為 `same-origin`；設了 `PUBLIC_ORIGIN` 時只認它。
+- **`X-CSRF-Token`**：HMAC(secret, `authMode|account`)。
+- **`Content-Type: application/json`**。
+- **本文 ≤ 512 KB**，超過回 413。
+
+所有回應都帶 `Cache-Control: no-store` 與 `X-Content-Type-Options: nosniff`。
+
+狀態（`status` → `statusLabel`）：
+
+| `status` | 畫面顯示 |
+| --- | --- |
+| `draft` | 草稿 |
+| `in_review` | 審核中 |
+| `returned` | 退回 |
+| `approved` | 已核准（`publishAt` 在未來） |
+| `published` | 已上線 |
+
+### 36.3 對到 Git 的方式
+
+- **分支與標籤：** 分支名 `cms/<id 正規化>-<sid 後 6 碼>`；合併請求標籤為 `網站內容::審核中`／`網站內容::退回`／`網站內容::已核准`。
+- **提交者固定為服務帳號**（`SERVICE_IDENTITY`：`CDC Web Gateway`）。
+- **提交訊息的 trailer：**
+  - 每次提交：`Edited-by: 姓名 (AD: 帳號)`、`Content-Owner:`、`Gateway-Submission:`、`Gateway-Actor:`、`Gateway-Auth:`。
+  - 上線時另加 `Lane:`，以及 `Approved-by:`：每位核准者一行；授權名單內的人自動上線時寫 `自動（…）`。
+- **上線版：** 閘道再提交一次並重新驗證：`status: 'published'`、`reviewedAt` 設為今天、新內容加上 `publishedAt`。
+- **衝突：** 若審核期間 `main` 上同一檔已被改過，合併失敗並回 409，訊息請承辦重新開啟最新版；`main` 不會被改動。
+- **四眼原則：**
+  - `editors`（存過任一版本的人）不能核准或退回。
+  - 只有角色含「審核」或「管理」的人能核准或退回。
+  - 非跨單位角色只能處理自己單位的內容。
+
+### 36.4 後台（漸進式）
+
+- **`src/client/admin/gateway-client.js`：**
+  - `detectGateway()`：2 秒逾時；`?gateway=off` 強制關閉；`dev` 模式把模擬登入放進 `X-CDC-Dev-Session` 標頭送出。
+  - `el()`：建立元素時只用 `textContent`。
+- **`/admin/publish/`：**
+  - `publish-gateway.js` 顯示 `#gw-panel`：儲存草稿、送審、狀態、核准進度、退回意見、紀錄，以及欄位錯誤（點一下跳到該欄位）。
+  - `?gw=<sid>` 帶回送審件。
+  - `body.adm-gw` 時隱藏 `[data-gw-hide]` 與頁首的 PR 說明。
+- **`/admin/review/`：**
+  - `review-gateway.js` 顯示 `#gw-review`（待審核清單）與 `#gw-detail`（白話差異、預覽、意見、核准上線／退回修改）。
+  - `?item=<sid>` 直接開啟該件。
+  - 預覽是動態建立的 `<iframe sandbox="">`（srcdoc），關閉時移除。
+- **文案：** 「排程上線」的說明改為「核准後立即上線」（`publish.mjs`、`publish.js`、`page-preview.js`、`preprocess.js`；`tests/round22-ui.test.mjs` 同步）。
+
+### 36.5 本機與測試
+
+- `npm run dev`（`scripts/serve.mjs`）預設啟用閘道，身分 `dev`、供應者 `local`；`GATEWAY=off` 可關閉。所有狀態都在 `.local/`（已 git-ignore）。
+- `tsconfig.json` 的 `include` 加入 `scripts/lib/gateway/*.mjs`；`scripts/a11y.mjs` 加掃 `/admin/review/`。
+- `tests/round30-gateway.test.mjs` 共 15 項，涵蓋：
+  - AD 群組與三種轉接器。
+  - Google：hd／email_verified／email 網域／iss／aud／nonce 檢查，以及 PKCE 登入、目錄 API、對照檔、工作階段重查。
+  - 驗證錯誤白話化、路徑穿越、白話差異。
+  - local Git、GitLab 請求形狀（假 fetch）。
+  - 完整流程與四眼原則、車道、HTTP 安全（含 `PUBLIC_ORIGIN`）。
+  - Playwright 端到端：存草稿 → 送審 → 退回 → 修改再送審 → 核准 → 本機版本庫 `main` 的檔案改了。同時檢查畫面沒有 Git 字眼、axe 無違規、`?gateway=off` 會退回瀏覽器示範。

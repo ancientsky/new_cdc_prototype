@@ -2,6 +2,16 @@
 
 > 給資訊室、OASIS 與各單位主管看。一句話：**不要再做一套帳號密碼。後台登入用機關既有的單一簽入（SSO），角色由人事／AD 群組帶入，每個動作綁個人帳號並留稽核。** 原型（`/admin/login/`）用「選一個示範帳號」模擬 SSO 回傳的身分，其餘流程（角色規則、單位視角、拒絕存取、稽核）都照正式設計跑。
 
+> **更新（2026-10-10 第三十輪）：登入改由「寫入閘道」接，三條路徑都已實作。** 正式環境放在機關自架 GitLab，同事在後台按「儲存草稿／送審／核准上線」，由閘道（`scripts/lib/gateway/`）確認身分與 AD 群組後，用服務帳號寫進 GitLab。**同事不需要 GitLab 帳號**，所以下面第 1 節的做法 C（直接用 Git 平台帳號）只留給資訊室與想查紀錄的人。閘道只需要知道「是誰、在哪些 AD 群組」，登入方式三選一：
+>
+> | 路徑 | 怎麼接 | 設定 |
+> | --- | --- | --- |
+> | A. Keycloak＋LDAP 聯合 AD（可加 Kerberos） | 閘道驗 Keycloak 簽的 JWT（`oidc` 轉接器） | [deploy.md §14.3 路徑 A](deploy.md) |
+> | B. IIS 反向代理＋Windows 驗證 | 閘道只信設定的代理 IP 送來的 `X-Remote-User`／`X-Remote-Groups`（`header` 轉接器） | [deploy.md §14.3 路徑 B](deploy.md) |
+> | C. Google Workspace | 授權碼＋PKCE；`hd`、`email_verified`、email 網域都要是機關；群組來自 Google 群組（GCDS 同步 AD）或對照檔（`google` 轉接器） | [deploy.md §14.3 路徑 C](deploy.md) |
+>
+> 建議試點用 C（已在用、有 2 步驟驗證），正式環境依資安政策決定 C 或 A；比較表與理由見 [architecture-decisions.md §23](architecture-decisions.md)。群組命名（第 2 節的 `CDC-WEB-<unitId>-<role>`）與角色表（第 3 節）不變，閘道把角色歸成同事看得懂的三種：編輯、審核、管理。第 4 節表格「沒做」那一列的「真的 OIDC 流程、後端 403、群組同步」，對**寫入動作**已由閘道做到（閘道 API 沒身分回 401、角色不符回 403）；後台靜態頁本身仍要由反向代理擋在登入之後（第 5 節第 3 點）。第 5 節第 4 點的「代承辦人送出」服務就是寫入閘道。
+
 ---
 
 ## 0. 先回答三個問題

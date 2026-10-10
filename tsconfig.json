@@ -12,5 +12,5 @@
     "skipLibCheck": true,
     "types": ["node"]
   },
-  "include": ["scripts/lib/lanes.mjs", "scripts/lib/validate.mjs"]
+  "include": ["scripts/lib/lanes.mjs", "scripts/lib/validate.mjs", "scripts/lib/gateway/*.mjs"]
 }

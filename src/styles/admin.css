@@ -546,3 +546,30 @@ body.adm { background: var(--paper); color: var(--ink); min-height: 100vh; displ
 .adm-pv__toc li.is-current { background: rgba(255, 191, 71, .12); }
 .adm-pv__toc p { margin: 0; }
 .adm-pv__tocno { display: inline-flex; width: 1.8em; height: 1.8em; align-items: center; justify-content: center; border-radius: 50%; background: var(--green-50); color: var(--green-900); font-weight: 700; font-size: var(--fs-xs); flex: none; }
+
+/* ───────── 第三十輪：寫入閘道（送審與上線、線上審核）。.adm-gw 由閘道偵測成功後加在 body ───────── */
+.adm-gw [data-gw-hide], .adm-gw .adm-pagehead__flow { display: none !important; }
+.adm-gwpanel { border-top: 3px solid var(--green-700, #1b5e3f); margin-top: var(--sp-5); padding-top: var(--sp-4); }
+.adm-gwpanel h2 { font-size: var(--fs-md); margin: 0 0 var(--sp-2); }
+.gw-statusline { display: flex; flex-wrap: wrap; gap: var(--sp-2); align-items: center; margin: var(--sp-2) 0; }
+.gw-errors { border: 2px solid var(--status-peak); border-radius: var(--radius); padding: var(--sp-3); margin: var(--sp-3) 0; }
+.gw-errors ul { margin: var(--sp-2) 0 0; padding-left: 1.2em; }
+.adm-linkbtn { background: none; border: 0; padding: 0; color: var(--link, #0b5cad); text-decoration: underline; cursor: pointer; font: inherit; text-align: left; }
+.gw-comment { white-space: pre-wrap; margin: var(--sp-1) 0 0; }
+.gw-history { margin: var(--sp-2) 0 0; padding-left: 1.2em; font-size: var(--fs-sm); }
+.gw-meta { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: var(--sp-1) var(--sp-3); margin: var(--sp-3) 0; }
+.gw-meta dt { font-weight: 700; } .gw-meta dd { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.gw-change { border: 1px solid var(--line); border-radius: var(--radius); padding: var(--sp-3); margin: var(--sp-3) 0; }
+.gw-change h4 { margin: 0 0 var(--sp-2); font-size: var(--fs-base); }
+.gw-change__sum { font-weight: 400; }
+.gw-cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--sp-3); }
+@media (max-width: 760px) { .gw-cols { grid-template-columns: minmax(0, 1fr); } .gw-meta { grid-template-columns: minmax(0, 1fr); } }
+.gw-col__h { font-size: var(--fs-sm); font-weight: 700; margin: 0 0 var(--sp-1); }
+.gw-sents { margin: 0; padding-left: 1.6em; overflow-wrap: anywhere; }
+.gw-sents li { margin: 2px 0; }
+.gw-sents ins, .gw-plain ins { background: #d7f5dd; color: #0b4a1c; text-decoration: underline; }
+.gw-sents del { background: #fde2e1; color: #8a1c14; text-decoration: line-through; }
+.gw-s--changed, .gw-s--added, .gw-s--removed { background: rgba(255, 191, 71, .12); }
+.gw-plain { white-space: pre-wrap; margin: 0; overflow-wrap: anywhere; }
+#gw-preview-frame { width: 100%; min-height: 420px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
+.adm-gw-only { display: none; } .adm-gw .adm-gw-only { display: inline; }

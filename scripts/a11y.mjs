@@ -19,7 +19,7 @@ const BASE = (process.env.BASE_PATH ?? process.env.A11Y_BASE_PATH ?? '').replace
 /** 代表頁：每種樣板一頁；dist 內不存在的路徑會被略過並列警告 */
 export const PAGES = [
   '/', '/diseases/dengue/', '/diseases/', '/vaccines/', '/travel/', '/news/', '/faq/', '/ask/', '/situation/', '/data/', '/pro/',
-  '/subscribe/', '/en/subscribe/', '/topics/antivenom/', '/admin/', '/admin/publish/', '/en/', '/vi/',
+  '/subscribe/', '/en/subscribe/', '/topics/antivenom/', '/admin/', '/admin/publish/', '/admin/review/', '/en/', '/vi/', // 第三十輪：複核區（線上審核區塊要有閘道才顯示，另在 tests/round30-gateway.test.mjs 的端到端跑 axe）
   '/documents/curriculum-dengue.2026-10-10/', // 第二十八輪：核心教材（長文件版面＋學習目標＋示範匯入警示）
   // 第二十八輪：全文搜尋——空狀態與「已有查詢結果」兩種畫面都要掃（結果清單是動態產生的）
   '/search/', '/search/?q=%E7%99%BB%E9%9D%A9%E7%86%B1&type=faq,news',
