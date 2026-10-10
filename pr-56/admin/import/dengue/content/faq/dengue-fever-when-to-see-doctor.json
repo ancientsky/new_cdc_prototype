@@ -1,0 +1,81 @@
+{
+  "id": "faq.dengue-fever-when-to-see-doctor",
+  "type": "faq",
+  "title": "登革熱發燒後幾天內要就醫？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-09-24",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "感染登革病毒後潛伏期約 3 至 14 天。出現發燒且有登革熱流行地區旅遊史或居住史者，應於 24 小時內就醫並主動告知醫師。退燒後 1 至 2 天是出現警示徵象的高風險期，若有持續嘔吐、腹痛、出血、嗜睡等情形應立即回診。",
+  "question": "登革熱發燒後幾天內要就醫？",
+  "answerMarkdown": "感染登革病毒後潛伏期約 3 至 14 天。出現發燒且有登革熱流行地區旅遊史或居住史者，應於 24 小時內就醫並主動告知醫師。退燒後 1 至 2 天是出現警示徵象的高風險期，若有持續嘔吐、腹痛、出血、嗜睡等情形應立即回診。",
+  "tasks": [
+    "symptoms"
+  ],
+  "basedOn": [
+    "disease.dengue"
+  ],
+  "structured": {
+    "daysMin": 3,
+    "daysMax": 14,
+    "hours": 24
+  },
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/4kMzhnwTwPIrf_KETxhqzF"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 74 處（mso 樣式 48、Mso 類別 20、命名空間標籤 13）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「登革熱／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「登革熱發燒後幾天內要就醫？」從答案抽出結構化候選 {\"daysMin\":3,\"daysMax\":14,\"hours\":24}，請確認後保留或刪除"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「社區或里長要怎麼帶大家一起防登革熱？」→ situation；「登革熱發燒後幾天內要就醫？」→ symptoms；「從登革熱流行地區回國後，要注意什麼？」→ symptoms；「懷疑登革熱時，可以自己吃止痛藥嗎？」→ symptoms；「衛生單位說要進家裡噴藥，可以拒絕嗎？」→ symptoms；「出國回來後發燒，應該怎麼辦？」→ travel、symptoms"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/4kMzhnwTwPIrf_KETxhqzF",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.dengue-fever-when-to-see-doctor"
+    ],
+    "structuredFromText": true
+  }
+}

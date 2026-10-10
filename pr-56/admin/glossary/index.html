@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="zh-TW" dir="ltr" data-base="/new_cdc_prototype/preview/pr-56" data-lang-path="" data-view="admin">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>詞彙主檔（內容管理後台）</title>
+<meta name="description" content="詞彙主檔：疾管署 AI-ready 新官網原型之內容管理後台示範頁">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/tokens.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/base.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/components.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/admin.css">
+</head>
+<body class="adm " data-today="2026-10-01" data-admin-page="glossary">
+<a class="skip-link" href="#main">跳到主要內容</a>
+<header class="adm-top"><div class="adm-top__in">
+  <a class="adm-brand" href="/new_cdc_prototype/preview/pr-56/admin/"><strong>內容管理後台</strong><span>疾管署 AI-ready 新官網原型 · 示範</span></a>
+  <div class="adm-who" id="adm-who">
+    <span class="adm-who__id"><span class="adm-who__name" id="adm-who-name">急性傳染病組 · 承辦人</span><span class="adm-who__role" id="adm-who-role"></span></span>
+    <label for="adm-unit"><span class="adm-who__lbl">單位視角</span>
+      <select id="adm-unit" aria-describedby="adm-who-name"><option value="unit.pr" >公關室</option><option value="unit.it" >資訊室</option><option value="unit.oasis" >AI推動辦公室</option><option value="unit.epidemic-intelligence" >疫情中心</option><option value="unit.acute-infectious" selected>急性傳染病組</option><option value="unit.chronic-infectious" >慢性傳染病組</option><option value="unit.preparedness" >新興傳染病整備組</option><option value="unit.infection-control" >感染管制及生物安全組</option><option value="unit.quarantine" >檢疫組</option><option value="unit.lab" >檢驗及疫苗研製中心</option><option value="unit.planning" >企劃組</option><option value="unit.secretariat" >秘書室</option><option value="unit.personnel" >人事室</option><option value="unit.ethics" >政風室</option><option value="unit.preventive-medicine" >預防醫學辦公室</option><option value="unit.accounting" >主計室</option><option value="unit.regional-taipei" >臺北區管制中心</option><option value="unit.regional-northern" >北區管制中心</option><option value="unit.regional-central" >中區管制中心</option><option value="unit.regional-southern" >南區管制中心</option><option value="unit.regional-kaoping" >高屏區管制中心</option><option value="unit.regional-eastern" >東區管制中心</option><option value="unit.governance-committee" >資料治理委員會</option><option value="all">全部單位（總覽）</option></select>
+    </label>
+    <button type="button" class="adm-who__logout" id="adm-logout">登出</button>
+  </div>
+</div></header>
+<nav class="adm-nav" aria-label="後台導覽"><ul><li><a href="/new_cdc_prototype/preview/pr-56/admin/mine/" >我的內容</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/publish/" >上架新內容</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/review/" >複核區<span class="adm-count" data-count="review" aria-label="0 項">0</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/due/" >審閱到期<span class="adm-count" data-count="due" aria-label="18 項">18</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/catalog/" >資料目錄</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/notices/" >公告</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/jobs/" >人才招募<span class="adm-count" data-count="jobs" aria-label="1 項">1</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/tenders/" >採購<span class="adm-count" data-count="tenders" aria-label="1 項">1</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/media/" >影音<span class="adm-count" data-count="media" aria-label="1 項">1</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/links/" >連結</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/migration/" >移轉進度<span class="adm-count" data-count="migration" aria-label="1248 項">1248</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/import/" >舊站匯入</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/glossary/" aria-current="page">詞彙主檔</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/situation/" >疫情發布</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/bulletin/edit/" >疫情報導</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/todos/" >連動待辦<span class="adm-count" data-count="todos" aria-label="112 項">112</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/ai-status/" >AI 開關</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/reports/" >回報</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/eval/" >評估</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/" >儀表板</a></li></ul></nav>
+<div class="adm-demo" role="note">示範原型：此後台不連接任何正式系統；登入與所有操作只存在你的瀏覽器（localStorage），正式環境以機關 SSO 登入、一律走 Git Pull Request。</div>
+<main id="main" class="adm-main" tabindex="-1">
+<header class="adm-pagehead"><h1>詞彙主檔</h1><p class="adm-pagehead__what">七語詞彙主檔：同一個概念只有一個正名。標「鎖定」的詞，機器翻譯時不得自由翻譯，一律替換成這裡的譯名；deprecated 是不再使用的舊名，預處理遇到會提醒改用正名。</p><p class="adm-pagehead__flow"><strong>正式環境：</strong>content/master/glossary.json（Git 管理）→ 建置輸出 /v1/glossary.json → 上架預處理與答案引擎共用。新增或修改詞彙＝開 PR，由 OASIS 與多語審核人複核。</p></header>
+<section class="adm-card" aria-labelledby="g-h"><h2 id="g-h">詞彙表（83 筆）</h2>
+  <div class="adm-filters"><div class="adm-field adm-field--grow"><label for="g-q">搜尋（任何語言、別名、舊名）</label><input type="search" id="g-q"></div>
+    <label class="adm-pill" style="align-self:end"><input type="checkbox" id="g-locked"><span>只看鎖定詞</span></label><span class="adm-count-note" id="g-count" aria-live="polite"></span></div>
+  <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table" id="g-table"><thead><tr><th scope="col">繁中正名</th><th scope="col">別名／舊名</th><th scope="col" lang="en">English</th><th scope="col" lang="ja">日本語</th><th scope="col" lang="tl">Tagalog</th><th scope="col" lang="vi">Tiếng Việt</th><th scope="col" lang="id">Bahasa Indonesia</th><th scope="col" lang="th">ไทย</th><th scope="col">鎖定</th><th scope="col">引用內容</th></tr></thead>
+  <tbody><tr data-locked="1" data-q="m痘 猴痘 monkeypox 猴痘 m痘 mpox エムポックス mpox đậu mùa khỉ (mpox) mpox ฝีดาษวานร (mpox) term.mpox">
+    <td><strong>M痘</strong><div class="adm-muted"><code>term.mpox</code> · disease</div><div class="adm-muted">2023 年起官方名稱改為 M痘</div></td>
+    <td><span class="adm-chip adm-chip--plain">猴痘</span> <span class="adm-chip adm-chip--plain">Monkeypox</span> <span class="adm-chip adm-chip--warn" title="舊名，不再使用"><span class="adm-term-del">猴痘</span>（停用）</span> </td>
+    <td lang="en">Mpox</td><td lang="ja">エムポックス</td><td lang="tl">Mpox</td><td lang="vi">Đậu mùa khỉ (Mpox)</td><td lang="id">Mpox</td><td lang="th">ฝีดาษวานร (Mpox)</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>10 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/hiv/">disease.hiv</a> <a href="/new_cdc_prototype/preview/pr-56/diseases/mpox/">disease.mpox</a> <a href="/new_cdc_prototype/preview/pr-56/faq/mpox-who-vaccine/">faq.mpox-who-vaccine</a> …</div></td></tr><tr data-locked="1" data-q="新冠併發重症 新冠肺炎 covid-19 新冠 武漢肺炎 嚴重特殊傳染性肺炎 新冠併發重症 covid-19 covid-19 covid-19 covid-19 covid-19 โควิด-19 term.covid-19">
+    <td><strong>新冠併發重症</strong><div class="adm-muted"><code>term.covid-19</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">新冠肺炎</span> <span class="adm-chip adm-chip--plain">COVID-19</span> <span class="adm-chip adm-chip--plain">新冠</span> <span class="adm-chip adm-chip--warn" title="舊名，不再使用"><span class="adm-term-del">武漢肺炎</span>（停用）</span> <span class="adm-chip adm-chip--warn" title="舊名，不再使用"><span class="adm-term-del">嚴重特殊傳染性肺炎</span>（停用）</span> </td>
+    <td lang="en">COVID-19</td><td lang="ja">COVID-19</td><td lang="tl">COVID-19</td><td lang="vi">COVID-19</td><td lang="id">COVID-19</td><td lang="th">โควิด-19</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>22 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/covid-19/">disease.covid-19</a> <a href="/new_cdc_prototype/preview/pr-56/faq/covid-antiviral/">faq.covid-antiviral</a> <a href="/new_cdc_prototype/preview/pr-56/faq/covid-vaccine-who/">faq.covid-vaccine-who</a> …</div></td></tr><tr data-locked="1" data-q="登革熱 登革出血熱 天狗熱 登革熱 dengue fever デング熱 dengue sốt xuất huyết dengue demam berdarah dengue ไข้เลือดออก term.dengue">
+    <td><strong>登革熱</strong><div class="adm-muted"><code>term.dengue</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">登革出血熱</span> <span class="adm-chip adm-chip--plain">天狗熱</span> </td>
+    <td lang="en">Dengue fever</td><td lang="ja">デング熱</td><td lang="tl">Dengue</td><td lang="vi">Sốt xuất huyết Dengue</td><td lang="id">Demam berdarah dengue</td><td lang="th">ไข้เลือดออก</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>40 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/chikungunya/">disease.chikungunya</a> <a href="/new_cdc_prototype/preview/pr-56/diseases/dengue/">disease.dengue</a> <a href="/new_cdc_prototype/preview/pr-56/faq/dengue-community-mobilize/">faq.dengue-community-mobilize</a> …</div></td></tr><tr data-locked="1" data-q="流感 季節性流感 流行性感冒 流感 influenza インフルエンザ trangkaso cúm mùa influenza ไข้หวัดใหญ่ term.influenza">
+    <td><strong>流感</strong><div class="adm-muted"><code>term.influenza</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">季節性流感</span> <span class="adm-chip adm-chip--plain">流行性感冒</span> </td>
+    <td lang="en">Influenza</td><td lang="ja">インフルエンザ</td><td lang="tl">Trangkaso</td><td lang="vi">Cúm mùa</td><td lang="id">Influenza</td><td lang="th">ไข้หวัดใหญ่</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>60 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/covid-19/">disease.covid-19</a> <a href="/new_cdc_prototype/preview/pr-56/diseases/influenza/">disease.influenza</a> <a href="/new_cdc_prototype/preview/pr-56/diseases/malaria/">disease.malaria</a> …</div></td></tr><tr data-locked="1" data-q="類流感 ili 類流感 influenza-like illness (ili) インフルエンザ様疾患 sakit na tulad ng trangkaso hội chứng giống cúm penyakit mirip influenza อาการคล้ายไข้หวัดใหญ่ term.ili">
+    <td><strong>類流感</strong><div class="adm-muted"><code>term.ili</code> · general</div></td>
+    <td><span class="adm-chip adm-chip--plain">ILI</span> </td>
+    <td lang="en">Influenza-like illness (ILI)</td><td lang="ja">インフルエンザ様疾患</td><td lang="tl">Sakit na tulad ng trangkaso</td><td lang="vi">Hội chứng giống cúm</td><td lang="id">Penyakit mirip influenza</td><td lang="th">อาการคล้ายไข้หวัดใหญ่</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>22 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/influenza/">disease.influenza</a> <a href="/new_cdc_prototype/preview/pr-56/faq/flu-antiviral-65-no-test/">faq.flu-antiviral-65-no-test</a> <a href="/new_cdc_prototype/preview/pr-56/faq/flu-vs-cold/">faq.flu-vs-cold</a> …</div></td></tr><tr data-locked="1" data-q="腸病毒 手足口病 疱疹性咽峽炎 腸病毒 enterovirus エンテロウイルス enterovirus enterovirus enterovirus เอนเทอโรไวรัส term.enterovirus">
+    <td><strong>腸病毒</strong><div class="adm-muted"><code>term.enterovirus</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">手足口病</span> <span class="adm-chip adm-chip--plain">疱疹性咽峽炎</span> </td>
+    <td lang="en">Enterovirus</td><td lang="ja">エンテロウイルス</td><td lang="tl">Enterovirus</td><td lang="vi">Enterovirus</td><td lang="id">Enterovirus</td><td lang="th">เอนเทอโรไวรัส</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>29 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/enterovirus/">disease.enterovirus</a> <a href="/new_cdc_prototype/preview/pr-56/faq/enterovirus-childcare-disinfect/">faq.enterovirus-childcare-disinfect</a> <a href="/new_cdc_prototype/preview/pr-56/faq/enterovirus-class-suspension/">faq.enterovirus-class-suspension</a> …</div></td></tr><tr data-locked="1" data-q="麻疹 麻疹 measles 麻しん tigdas sởi campak โรคหัด term.measles">
+    <td><strong>麻疹</strong><div class="adm-muted"><code>term.measles</code> · disease</div></td>
+    <td></td>
+    <td lang="en">Measles</td><td lang="ja">麻しん</td><td lang="tl">Tigdas</td><td lang="vi">Sởi</td><td lang="id">Campak</td><td lang="th">โรคหัด</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>32 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/measles/">disease.measles</a> <a href="/new_cdc_prototype/preview/pr-56/diseases/rubella/">disease.rubella</a> <a href="/new_cdc_prototype/preview/pr-56/faq/healthcare-workers-mmr/">faq.healthcare-workers-mmr</a> …</div></td></tr><tr data-locked="1" data-q="mmr 疫苗 麻疹腮腺炎德國麻疹混合疫苗 mmr mmr 疫苗 mmr vaccine mmrワクチン bakunang mmr vắc-xin mmr vaksin mmr วัคซีน mmr term.mmr">
+    <td><strong>MMR 疫苗</strong><div class="adm-muted"><code>term.mmr</code> · vaccine</div></td>
+    <td><span class="adm-chip adm-chip--plain">麻疹腮腺炎德國麻疹混合疫苗</span> <span class="adm-chip adm-chip--plain">MMR</span> </td>
+    <td lang="en">MMR vaccine</td><td lang="ja">MMRワクチン</td><td lang="tl">Bakunang MMR</td><td lang="vi">Vắc-xin MMR</td><td lang="id">Vaksin MMR</td><td lang="th">วัคซีน MMR</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>24 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/measles/">disease.measles</a> <a href="/new_cdc_prototype/preview/pr-56/diseases/rubella/">disease.rubella</a> <a href="/new_cdc_prototype/preview/pr-56/faq/healthcare-workers-mmr/">faq.healthcare-workers-mmr</a> …</div></td></tr><tr data-locked="1" data-q="公費流感疫苗 流感疫苗 公費流感疫苗 government-funded influenza vaccine 公費インフルエンザワクチン libreng bakuna sa trangkaso vắc-xin cúm miễn phí vaksin influenza gratis วัคซีนไข้หวัดใหญ่ฟรี term.flu-vaccine">
+    <td><strong>公費流感疫苗</strong><div class="adm-muted"><code>term.flu-vaccine</code> · vaccine</div></td>
+    <td><span class="adm-chip adm-chip--plain">流感疫苗</span> </td>
+    <td lang="en">Government-funded influenza vaccine</td><td lang="ja">公費インフルエンザワクチン</td><td lang="tl">Libreng bakuna sa trangkaso</td><td lang="vi">Vắc-xin cúm miễn phí</td><td lang="id">Vaksin influenza gratis</td><td lang="th">วัคซีนไข้หวัดใหญ่ฟรี</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>30 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/covid-19/">disease.covid-19</a> <a href="/new_cdc_prototype/preview/pr-56/diseases/influenza/">disease.influenza</a> <a href="/new_cdc_prototype/preview/pr-56/faq/flu-covid-same-day/">faq.flu-covid-same-day</a> …</div></td></tr><tr data-locked="1" data-q="疾病管制署 疾管署 cdc 疾病管制署 taiwan centers for disease control 台湾疾病管制署 taiwan cdc trung tâm kiểm soát dịch bệnh đài loan pusat pengendalian penyakit taiwan ศูนย์ควบคุมโรคไต้หวัน term.cdc">
+    <td><strong>疾病管制署</strong><div class="adm-muted"><code>term.cdc</code> · org</div></td>
+    <td><span class="adm-chip adm-chip--plain">疾管署</span> <span class="adm-chip adm-chip--plain">CDC</span> </td>
+    <td lang="en">Taiwan Centers for Disease Control</td><td lang="ja">台湾疾病管制署</td><td lang="tl">Taiwan CDC</td><td lang="vi">Trung tâm Kiểm soát Dịch bệnh Đài Loan</td><td lang="id">Pusat Pengendalian Penyakit Taiwan</td><td lang="th">ศูนย์ควบคุมโรคไต้หวัน</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>109 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/dengue/">disease.dengue</a> <a href="/new_cdc_prototype/preview/pr-56/diseases/influenza/">disease.influenza</a> <a href="/new_cdc_prototype/preview/pr-56/diseases/japanese-encephalitis/">disease.japanese-encephalitis</a> …</div></td></tr><tr data-locked="1" data-q="防疫專線 1922 1922 防疫專線 1922 1922 hotline 防疫ホットライン 1922 hotline 1922 đường dây phòng dịch 1922 hotline 1922 สายด่วน 1922 term.1922">
+    <td><strong>防疫專線 1922</strong><div class="adm-muted"><code>term.1922</code> · org</div></td>
+    <td><span class="adm-chip adm-chip--plain">1922</span> </td>
+    <td lang="en">1922 hotline</td><td lang="ja">防疫ホットライン 1922</td><td lang="tl">Hotline 1922</td><td lang="vi">Đường dây phòng dịch 1922</td><td lang="id">Hotline 1922</td><td lang="th">สายด่วน 1922</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>22 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/rabies/">disease.rabies</a> <a href="/new_cdc_prototype/preview/pr-56/faq/antivenom-where/">faq.antivenom-where</a> <a href="/new_cdc_prototype/preview/pr-56/faq/measles-exposed-what-to-do/">faq.measles-exposed-what-to-do</a> …</div></td></tr><tr data-locked="1" data-q="法定傳染病 法定傳染病 notifiable infectious disease 法定感染症 sakit na dapat iulat bệnh truyền nhiễm phải khai báo penyakit menular wajib lapor โรคติดต่อที่ต้องแจ้ง term.notifiable">
+    <td><strong>法定傳染病</strong><div class="adm-muted"><code>term.notifiable</code> · procedure</div></td>
+    <td></td>
+    <td lang="en">Notifiable infectious disease</td><td lang="ja">法定感染症</td><td lang="tl">Sakit na dapat iulat</td><td lang="vi">Bệnh truyền nhiễm phải khai báo</td><td lang="id">Penyakit menular wajib lapor</td><td lang="th">โรคติดต่อที่ต้องแจ้ง</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>17 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/mpox/">disease.mpox</a> <a href="/new_cdc_prototype/preview/pr-56/faq/influenza-severe-what/">faq.influenza-severe-what</a> <a href="/new_cdc_prototype/preview/pr-56/faq/mdr-tb/">faq.mdr-tb</a> …</div></td></tr><tr data-locked="0" data-q="警示徵象 危險徵兆 警示徵象 warning signs 警告症状 mga babala dấu hiệu cảnh báo tanda bahaya สัญญาณเตือน term.warning-signs">
+    <td><strong>警示徵象</strong><div class="adm-muted"><code>term.warning-signs</code> · general</div></td>
+    <td><span class="adm-chip adm-chip--plain">危險徵兆</span> </td>
+    <td lang="en">Warning signs</td><td lang="ja">警告症状</td><td lang="tl">Mga babala</td><td lang="vi">Dấu hiệu cảnh báo</td><td lang="id">Tanda bahaya</td><td lang="th">สัญญาณเตือน</td>
+    <td><span class="adm-muted">否</span></td>
+    <td>14 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/dengue/">disease.dengue</a> <a href="/new_cdc_prototype/preview/pr-56/diseases/influenza/">disease.influenza</a> <a href="/new_cdc_prototype/preview/pr-56/faq/dengue-fever-when-to-see-doctor/">faq.dengue-fever-when-to-see-doctor</a> …</div></td></tr><tr data-locked="1" data-q="ns1 抗原快速診斷試劑 ns1 快篩 ns1 ns1 抗原快速診斷試劑 ns1 antigen rapid test ns1抗原迅速検査 ns1 rapid test xét nghiệm nhanh kháng nguyên ns1 tes cepat antigen ns1 ชุดตรวจแอนติเจน ns1 term.ns1">
+    <td><strong>NS1 抗原快速診斷試劑</strong><div class="adm-muted"><code>term.ns1</code> · procedure</div></td>
+    <td><span class="adm-chip adm-chip--plain">NS1 快篩</span> <span class="adm-chip adm-chip--plain">NS1</span> </td>
+    <td lang="en">NS1 antigen rapid test</td><td lang="ja">NS1抗原迅速検査</td><td lang="tl">NS1 rapid test</td><td lang="vi">Xét nghiệm nhanh kháng nguyên NS1</td><td lang="id">Tes cepat antigen NS1</td><td lang="th">ชุดตรวจแอนติเจน NS1</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>11 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/dengue/">disease.dengue</a> <a href="/new_cdc_prototype/preview/pr-56/faq/dengue-imported-return/">faq.dengue-imported-return</a> <a href="/new_cdc_prototype/preview/pr-56/news/2026-08-18-dengue-rising-south/">news.2026-08-18-dengue-rising-south</a> …</div></td></tr><tr data-locked="0" data-q="潛伏期 潛伏期 incubation period 潜伏期間 panahon ng incubation thời gian ủ bệnh masa inkubasi ระยะฟักตัว term.incubation">
+    <td><strong>潛伏期</strong><div class="adm-muted"><code>term.incubation</code> · general</div></td>
+    <td></td>
+    <td lang="en">Incubation period</td><td lang="ja">潜伏期間</td><td lang="tl">Panahon ng incubation</td><td lang="vi">Thời gian ủ bệnh</td><td lang="id">Masa inkubasi</td><td lang="th">ระยะฟักตัว</td>
+    <td><span class="adm-muted">否</span></td>
+    <td>7 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/tuberculosis/">disease.tuberculosis</a> <a href="/new_cdc_prototype/preview/pr-56/faq/dengue-fever-when-to-see-doctor/">faq.dengue-fever-when-to-see-doctor</a> <a href="/new_cdc_prototype/preview/pr-56/documents/curriculum-dengue.2026-10-10/">doc.curriculum-dengue.2026-10-10</a> …</div></td></tr><tr data-locked="1" data-q="結核病 肺結核 tb 肺癆 結核病 tuberculosis (tb) 結核 tuberkulosis (tb) bệnh lao tuberkulosis (tbc) วัณโรค term.tuberculosis">
+    <td><strong>結核病</strong><div class="adm-muted"><code>term.tuberculosis</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">肺結核</span> <span class="adm-chip adm-chip--plain">TB</span> <span class="adm-chip adm-chip--plain">肺癆</span> </td>
+    <td lang="en">Tuberculosis (TB)</td><td lang="ja">結核</td><td lang="tl">Tuberkulosis (TB)</td><td lang="vi">Bệnh lao</td><td lang="id">Tuberkulosis (TBC)</td><td lang="th">วัณโรค</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>39 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/tuberculosis/">disease.tuberculosis</a> <a href="/new_cdc_prototype/preview/pr-56/faq/bcg-when/">faq.bcg-when</a> <a href="/new_cdc_prototype/preview/pr-56/faq/ltbi-treat-or-not/">faq.ltbi-treat-or-not</a> …</div></td></tr><tr data-locked="1" data-q="多重抗藥性結核病 mdr-tb 抗藥性結核 多重抗藥性結核病 multidrug-resistant tuberculosis (mdr-tb) 多剤耐性結核 mdr-tb lao đa kháng thuốc tbc resistan obat (mdr-tb) วัณโรคดื้อยาหลายขนาน term.mdr-tb">
+    <td><strong>多重抗藥性結核病</strong><div class="adm-muted"><code>term.mdr-tb</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">MDR-TB</span> <span class="adm-chip adm-chip--plain">抗藥性結核</span> </td>
+    <td lang="en">Multidrug-resistant tuberculosis (MDR-TB)</td><td lang="ja">多剤耐性結核</td><td lang="tl">MDR-TB</td><td lang="vi">Lao đa kháng thuốc</td><td lang="id">TBC resistan obat (MDR-TB)</td><td lang="th">วัณโรคดื้อยาหลายขนาน</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>10 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/tuberculosis/">disease.tuberculosis</a> <a href="/new_cdc_prototype/preview/pr-56/faq/mdr-tb/">faq.mdr-tb</a> <a href="/new_cdc_prototype/preview/pr-56/faq/tb-treatment-cost/">faq.tb-treatment-cost</a> …</div></td></tr><tr data-locked="1" data-q="人類免疫缺乏病毒感染 愛滋 hiv 愛滋病毒 人類免疫缺乏病毒感染 hiv infection hiv感染症 impeksyon ng hiv nhiễm hiv infeksi hiv การติดเชื้อเอชไอวี term.hiv">
+    <td><strong>人類免疫缺乏病毒感染</strong><div class="adm-muted"><code>term.hiv</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">愛滋</span> <span class="adm-chip adm-chip--plain">HIV</span> <span class="adm-chip adm-chip--plain">愛滋病毒</span> </td>
+    <td lang="en">HIV infection</td><td lang="ja">HIV感染症</td><td lang="tl">Impeksyon ng HIV</td><td lang="vi">Nhiễm HIV</td><td lang="id">Infeksi HIV</td><td lang="th">การติดเชื้อเอชไอวี</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>21 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/hiv/">disease.hiv</a> <a href="/new_cdc_prototype/preview/pr-56/diseases/tuberculosis/">disease.tuberculosis</a> <a href="/new_cdc_prototype/preview/pr-56/faq/hiv-pep/">faq.hiv-pep</a> …</div></td></tr><tr data-locked="1" data-q="後天免疫缺乏症候群 aids 愛滋病 後天免疫缺乏症候群 aids エイズ（後天性免疫不全症候群） aids aids (hội chứng suy giảm miễn dịch mắc phải) aids โรคเอดส์ term.aids">
+    <td><strong>後天免疫缺乏症候群</strong><div class="adm-muted"><code>term.aids</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">AIDS</span> <span class="adm-chip adm-chip--plain">愛滋病</span> </td>
+    <td lang="en">AIDS</td><td lang="ja">エイズ（後天性免疫不全症候群）</td><td lang="tl">AIDS</td><td lang="vi">AIDS (Hội chứng suy giảm miễn dịch mắc phải)</td><td lang="id">AIDS</td><td lang="th">โรคเอดส์</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>3 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/hiv/">disease.hiv</a> <a href="/new_cdc_prototype/preview/pr-56/media/prep-intro/">media.prep-intro</a> <a href="/new_cdc_prototype/preview/pr-56/topics/prep/">topic.prep</a> </div></td></tr><tr data-locked="1" data-q="日本腦炎 je 日腦 日本腦炎 japanese encephalitis 日本脳炎 japanese encephalitis viêm não nhật bản ensefalitis jepang ไข้สมองอักเสบเจอี term.japanese-encephalitis">
+    <td><strong>日本腦炎</strong><div class="adm-muted"><code>term.japanese-encephalitis</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">JE</span> <span class="adm-chip adm-chip--plain">日腦</span> </td>
+    <td lang="en">Japanese encephalitis</td><td lang="ja">日本脳炎</td><td lang="tl">Japanese encephalitis</td><td lang="vi">Viêm não Nhật Bản</td><td lang="id">Ensefalitis Jepang</td><td lang="th">ไข้สมองอักเสบเจอี</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>4 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/japanese-encephalitis/">disease.japanese-encephalitis</a> <a href="/new_cdc_prototype/preview/pr-56/faq/travel-clinic/">faq.travel-clinic</a> <a href="/new_cdc_prototype/preview/pr-56/publications/bulletin-42-16/">publication.bulletin-42-16</a> …</div></td></tr><tr data-locked="1" data-q="屈公病 屈公熱 chikungunya 屈公病 chikungunya チクングニア熱 chikungunya sốt chikungunya chikungunya โรคชิคุนกุนยา term.chikungunya">
+    <td><strong>屈公病</strong><div class="adm-muted"><code>term.chikungunya</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">屈公熱</span> <span class="adm-chip adm-chip--plain">Chikungunya</span> </td>
+    <td lang="en">Chikungunya</td><td lang="ja">チクングニア熱</td><td lang="tl">Chikungunya</td><td lang="vi">Sốt Chikungunya</td><td lang="id">Chikungunya</td><td lang="th">โรคชิคุนกุนยา</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>7 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/chikungunya/">disease.chikungunya</a> <a href="/new_cdc_prototype/preview/pr-56/news/2025-08-05-chikungunya-guangdong/">news.2025-08-05-chikungunya-guangdong</a> <a href="/new_cdc_prototype/preview/pr-56/news/2026-09-15-letter-615-ns1/">news.2026-09-15-letter-615-ns1</a> …</div></td></tr><tr data-locked="1" data-q="百日咳 whooping cough 百日咳 pertussis (whooping cough) 百日咳 pertussis (whooping cough) ho gà pertusis (batuk rejan) โรคไอกรน term.pertussis">
+    <td><strong>百日咳</strong><div class="adm-muted"><code>term.pertussis</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">Whooping cough</span> </td>
+    <td lang="en">Pertussis (whooping cough)</td><td lang="ja">百日咳</td><td lang="tl">Pertussis (whooping cough)</td><td lang="vi">Ho gà</td><td lang="id">Pertusis (batuk rejan)</td><td lang="th">โรคไอกรน</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>4 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/pertussis/">disease.pertussis</a> <a href="/new_cdc_prototype/preview/pr-56/faq/pregnant-tdap/">faq.pregnant-tdap</a> <a href="/new_cdc_prototype/preview/pr-56/documents/infection-control-healthcare.2026-03-01/">doc.infection-control-healthcare.2026-03-01</a> …</div></td></tr><tr data-locked="1" data-q="a型肝炎 a肝 急性病毒性a型肝炎 hav a型肝炎 hepatitis a a型肝炎 hepatitis a viêm gan a hepatitis a ไวรัสตับอักเสบเอ term.hepatitis-a">
+    <td><strong>A型肝炎</strong><div class="adm-muted"><code>term.hepatitis-a</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">A肝</span> <span class="adm-chip adm-chip--plain">急性病毒性A型肝炎</span> <span class="adm-chip adm-chip--plain">HAV</span> </td>
+    <td lang="en">Hepatitis A</td><td lang="ja">A型肝炎</td><td lang="tl">Hepatitis A</td><td lang="vi">Viêm gan A</td><td lang="id">Hepatitis A</td><td lang="th">ไวรัสตับอักเสบเอ</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>2 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/hepatitis-a/">disease.hepatitis-a</a> <a href="/new_cdc_prototype/preview/pr-56/lab/hepatitis-a/">labtest.hepatitis-a</a> </div></td></tr><tr data-locked="1" data-q="b型肝炎 b肝 急性病毒性b型肝炎 hbv b型肝炎 hepatitis b b型肝炎 hepatitis b viêm gan b hepatitis b ไวรัสตับอักเสบบี term.hepatitis-b">
+    <td><strong>B型肝炎</strong><div class="adm-muted"><code>term.hepatitis-b</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">B肝</span> <span class="adm-chip adm-chip--plain">急性病毒性B型肝炎</span> <span class="adm-chip adm-chip--plain">HBV</span> </td>
+    <td lang="en">Hepatitis B</td><td lang="ja">B型肝炎</td><td lang="tl">Hepatitis B</td><td lang="vi">Viêm gan B</td><td lang="id">Hepatitis B</td><td lang="th">ไวรัสตับอักเสบบี</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>2 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/faq/hepb-newborn/">faq.hepb-newborn</a> <a href="/new_cdc_prototype/preview/pr-56/vaccines/hepatitis-b/">vaccine.hepatitis-b</a> </div></td></tr><tr data-locked="1" data-q="c型肝炎 c肝 急性病毒性c型肝炎 hcv c型肝炎 hepatitis c c型肝炎 hepatitis c viêm gan c hepatitis c ไวรัสตับอักเสบซี term.hepatitis-c">
+    <td><strong>C型肝炎</strong><div class="adm-muted"><code>term.hepatitis-c</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">C肝</span> <span class="adm-chip adm-chip--plain">急性病毒性C型肝炎</span> <span class="adm-chip adm-chip--plain">HCV</span> </td>
+    <td lang="en">Hepatitis C</td><td lang="ja">C型肝炎</td><td lang="tl">Hepatitis C</td><td lang="vi">Viêm gan C</td><td lang="id">Hepatitis C</td><td lang="th">ไวรัสตับอักเสบซี</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td><span class="adm-muted">0</span></td></tr><tr data-locked="1" data-q="水痘 出水痘 水痘併發症 chickenpox 水痘 chickenpox (varicella) 水痘（水ぼうそう） bulutong-tubig thủy đậu cacar air โรคอีสุกอีใส term.varicella">
+    <td><strong>水痘</strong><div class="adm-muted"><code>term.varicella</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">出水痘</span> <span class="adm-chip adm-chip--plain">水痘併發症</span> <span class="adm-chip adm-chip--plain">Chickenpox</span> </td>
+    <td lang="en">Chickenpox (varicella)</td><td lang="ja">水痘（水ぼうそう）</td><td lang="tl">Bulutong-tubig</td><td lang="vi">Thủy đậu</td><td lang="id">Cacar air</td><td lang="th">โรคอีสุกอีใส</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>5 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/varicella/">disease.varicella</a> <a href="/new_cdc_prototype/preview/pr-56/faq/healthcare-workers-mmr/">faq.healthcare-workers-mmr</a> <a href="/new_cdc_prototype/preview/pr-56/faq/varicella-vaccine-doses/">faq.varicella-vaccine-doses</a> …</div></td></tr><tr data-locked="1" data-q="德國麻疹 風疹 rubella 德國麻疹 rubella 風しん rubella (tigdas-hangin) rubella (sởi đức) rubela (campak jerman) โรคหัดเยอรมัน term.rubella">
+    <td><strong>德國麻疹</strong><div class="adm-muted"><code>term.rubella</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">風疹</span> <span class="adm-chip adm-chip--plain">Rubella</span> </td>
+    <td lang="en">Rubella</td><td lang="ja">風しん</td><td lang="tl">Rubella (tigdas-hangin)</td><td lang="vi">Rubella (sởi Đức)</td><td lang="id">Rubela (campak Jerman)</td><td lang="th">โรคหัดเยอรมัน</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>6 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/measles/">disease.measles</a> <a href="/new_cdc_prototype/preview/pr-56/diseases/rubella/">disease.rubella</a> <a href="/new_cdc_prototype/preview/pr-56/faq/healthcare-workers-mmr/">faq.healthcare-workers-mmr</a> …</div></td></tr><tr data-locked="1" data-q="瘧疾 malaria 瘧疾 malaria マラリア malarya sốt rét malaria มาลาเรีย term.malaria">
+    <td><strong>瘧疾</strong><div class="adm-muted"><code>term.malaria</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">Malaria</span> </td>
+    <td lang="en">Malaria</td><td lang="ja">マラリア</td><td lang="tl">Malarya</td><td lang="vi">Sốt rét</td><td lang="id">Malaria</td><td lang="th">มาลาเรีย</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>8 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/malaria/">disease.malaria</a> <a href="/new_cdc_prototype/preview/pr-56/faq/travel-clinic/">faq.travel-clinic</a> <a href="/new_cdc_prototype/preview/pr-56/faq/travel-malaria-prevention/">faq.travel-malaria-prevention</a> …</div></td></tr><tr data-locked="1" data-q="狂犬病 恐水病 rabies 狂犬病 rabies 狂犬病 rabis bệnh dại rabies โรคพิษสุนัขบ้า term.rabies">
+    <td><strong>狂犬病</strong><div class="adm-muted"><code>term.rabies</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">恐水病</span> <span class="adm-chip adm-chip--plain">Rabies</span> </td>
+    <td lang="en">Rabies</td><td lang="ja">狂犬病</td><td lang="tl">Rabis</td><td lang="vi">Bệnh dại</td><td lang="id">Rabies</td><td lang="th">โรคพิษสุนัขบ้า</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>4 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/rabies/">disease.rabies</a> <a href="/new_cdc_prototype/preview/pr-56/faq/rabies-bite/">faq.rabies-bite</a> <a href="/new_cdc_prototype/preview/pr-56/faq/travel-clinic/">faq.travel-clinic</a> …</div></td></tr><tr data-locked="1" data-q="茲卡病毒感染症 茲卡 zika 茲卡病毒感染症 zika virus infection ジカウイルス感染症 zika nhiễm vi-rút zika infeksi virus zika โรคติดเชื้อไวรัสซิกา term.zika">
+    <td><strong>茲卡病毒感染症</strong><div class="adm-muted"><code>term.zika</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">茲卡</span> <span class="adm-chip adm-chip--plain">Zika</span> </td>
+    <td lang="en">Zika virus infection</td><td lang="ja">ジカウイルス感染症</td><td lang="tl">Zika</td><td lang="vi">Nhiễm vi-rút Zika</td><td lang="id">Infeksi virus Zika</td><td lang="th">โรคติดเชื้อไวรัสซิกา</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>1 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/documents/guidance-dengue.2026-02/">doc.guidance-dengue.2026-02</a> </div></td></tr><tr data-locked="1" data-q="霍亂 cholera 霍亂 cholera コレラ kolera bệnh tả kolera อหิวาตกโรค term.cholera">
+    <td><strong>霍亂</strong><div class="adm-muted"><code>term.cholera</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">Cholera</span> </td>
+    <td lang="en">Cholera</td><td lang="ja">コレラ</td><td lang="tl">Kolera</td><td lang="vi">Bệnh tả</td><td lang="id">Kolera</td><td lang="th">อหิวาตกโรค</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td><span class="adm-muted">0</span></td></tr><tr data-locked="1" data-q="傷寒 typhoid 傷寒 typhoid fever 腸チフス tipus (typhoid fever) thương hàn demam tifoid ไข้ไทฟอยด์ term.typhoid">
+    <td><strong>傷寒</strong><div class="adm-muted"><code>term.typhoid</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">Typhoid</span> </td>
+    <td lang="en">Typhoid fever</td><td lang="ja">腸チフス</td><td lang="tl">Tipus (typhoid fever)</td><td lang="vi">Thương hàn</td><td lang="id">Demam tifoid</td><td lang="th">ไข้ไทฟอยด์</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>1 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/documents/guidance-dengue.2026-02/">doc.guidance-dengue.2026-02</a> </div></td></tr><tr data-locked="1" data-q="桿菌性痢疾 細菌性痢疾 志賀氏桿菌 桿菌性痢疾 shigellosis 細菌性赤痢 shigellosis (disenterya) lỵ trực khuẩn disentri basiler (shigelosis) โรคบิดชิเกลลา term.shigellosis">
+    <td><strong>桿菌性痢疾</strong><div class="adm-muted"><code>term.shigellosis</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">細菌性痢疾</span> <span class="adm-chip adm-chip--plain">志賀氏桿菌</span> </td>
+    <td lang="en">Shigellosis</td><td lang="ja">細菌性赤痢</td><td lang="tl">Shigellosis (disenterya)</td><td lang="vi">Lỵ trực khuẩn</td><td lang="id">Disentri basiler (shigelosis)</td><td lang="th">โรคบิดชิเกลลา</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>1 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/lab/shigellosis/">labtest.shigellosis</a> </div></td></tr><tr data-locked="1" data-q="白喉 diphtheria 白喉 diphtheria ジフテリア dipterya bạch hầu difteri โรคคอตีบ term.diphtheria">
+    <td><strong>白喉</strong><div class="adm-muted"><code>term.diphtheria</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">Diphtheria</span> </td>
+    <td lang="en">Diphtheria</td><td lang="ja">ジフテリア</td><td lang="tl">Dipterya</td><td lang="vi">Bạch hầu</td><td lang="id">Difteri</td><td lang="th">โรคคอตีบ</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>3 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/pertussis/">disease.pertussis</a> <a href="/new_cdc_prototype/preview/pr-56/faq/pregnant-tdap/">faq.pregnant-tdap</a> <a href="/new_cdc_prototype/preview/pr-56/documents/guidance-dengue.2026-02/">doc.guidance-dengue.2026-02</a> </div></td></tr><tr data-locked="1" data-q="破傷風 tetanus 破傷風 tetanus 破傷風 tetano uốn ván tetanus โรคบาดทะยัก term.tetanus">
+    <td><strong>破傷風</strong><div class="adm-muted"><code>term.tetanus</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">Tetanus</span> </td>
+    <td lang="en">Tetanus</td><td lang="ja">破傷風</td><td lang="tl">Tetano</td><td lang="vi">Uốn ván</td><td lang="id">Tetanus</td><td lang="th">โรคบาดทะยัก</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>2 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/pertussis/">disease.pertussis</a> <a href="/new_cdc_prototype/preview/pr-56/faq/pregnant-tdap/">faq.pregnant-tdap</a> </div></td></tr><tr data-locked="1" data-q="小兒麻痺症 小兒麻痺 脊髓灰質炎 polio 小兒麻痺症 polio ポリオ（急性灰白髄炎） polyo bại liệt polio โรคโปลิโอ term.polio">
+    <td><strong>小兒麻痺症</strong><div class="adm-muted"><code>term.polio</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">小兒麻痺</span> <span class="adm-chip adm-chip--plain">脊髓灰質炎</span> <span class="adm-chip adm-chip--plain">Polio</span> </td>
+    <td lang="en">Polio</td><td lang="ja">ポリオ（急性灰白髄炎）</td><td lang="tl">Polyo</td><td lang="vi">Bại liệt</td><td lang="id">Polio</td><td lang="th">โรคโปลิโอ</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>1 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/pertussis/">disease.pertussis</a> </div></td></tr><tr data-locked="1" data-q="流行性腮腺炎 腮腺炎 豬頭皮 流行性腮腺炎 mumps おたふくかぜ（流行性耳下腺炎） beke (mumps) quai bị gondongan (parotitis) โรคคางทูม term.mumps">
+    <td><strong>流行性腮腺炎</strong><div class="adm-muted"><code>term.mumps</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">腮腺炎</span> <span class="adm-chip adm-chip--plain">豬頭皮</span> </td>
+    <td lang="en">Mumps</td><td lang="ja">おたふくかぜ（流行性耳下腺炎）</td><td lang="tl">Beke (mumps)</td><td lang="vi">Quai bị</td><td lang="id">Gondongan (parotitis)</td><td lang="th">โรคคางทูม</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>3 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/measles/">disease.measles</a> <a href="/new_cdc_prototype/preview/pr-56/diseases/rubella/">disease.rubella</a> <a href="/new_cdc_prototype/preview/pr-56/vaccines/mmr/">vaccine.mmr</a> </div></td></tr><tr data-locked="1" data-q="恙蟲病 叢林斑疹傷寒 恙蟲病 scrub typhus ツツガムシ病 scrub typhus sốt mò tifus semak (scrub typhus) โรคสครับไทฟัส term.scrub-typhus">
+    <td><strong>恙蟲病</strong><div class="adm-muted"><code>term.scrub-typhus</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">叢林斑疹傷寒</span> </td>
+    <td lang="en">Scrub typhus</td><td lang="ja">ツツガムシ病</td><td lang="tl">Scrub typhus</td><td lang="vi">Sốt mò</td><td lang="id">Tifus semak (scrub typhus)</td><td lang="th">โรคสครับไทฟัส</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td><span class="adm-muted">0</span></td></tr><tr data-locked="1" data-q="鉤端螺旋體病 威爾氏病 鉤端螺旋體病 leptospirosis レプトスピラ症 leptospirosis bệnh xoắn khuẩn vàng da (leptospirosis) leptospirosis โรคเลปโตสไปโรซิส (ฉี่หนู) term.leptospirosis">
+    <td><strong>鉤端螺旋體病</strong><div class="adm-muted"><code>term.leptospirosis</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">威爾氏病</span> </td>
+    <td lang="en">Leptospirosis</td><td lang="ja">レプトスピラ症</td><td lang="tl">Leptospirosis</td><td lang="vi">Bệnh xoắn khuẩn vàng da (Leptospirosis)</td><td lang="id">Leptospirosis</td><td lang="th">โรคเลปโตสไปโรซิส (ฉี่หนู)</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td><span class="adm-muted">0</span></td></tr><tr data-locked="1" data-q="類鼻疽 melioidosis 類鼻疽 melioidosis 類鼻疽 melioidosis bệnh whitmore (melioidosis) melioidosis โรคเมลิออยโดสิส term.melioidosis">
+    <td><strong>類鼻疽</strong><div class="adm-muted"><code>term.melioidosis</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">Melioidosis</span> </td>
+    <td lang="en">Melioidosis</td><td lang="ja">類鼻疽</td><td lang="tl">Melioidosis</td><td lang="vi">Bệnh Whitmore (Melioidosis)</td><td lang="id">Melioidosis</td><td lang="th">โรคเมลิออยโดสิส</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td><span class="adm-muted">0</span></td></tr><tr data-locked="1" data-q="退伍軍人病 退伍軍人症 軍團菌 退伍軍人病 legionnaires&#39; disease レジオネラ症 legionnaires&#39; disease bệnh legionella penyakit legionnaires โรคลีเจียนแนร์ term.legionellosis">
+    <td><strong>退伍軍人病</strong><div class="adm-muted"><code>term.legionellosis</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">退伍軍人症</span> <span class="adm-chip adm-chip--plain">軍團菌</span> </td>
+    <td lang="en">Legionnaires&#39; disease</td><td lang="ja">レジオネラ症</td><td lang="tl">Legionnaires&#39; disease</td><td lang="vi">Bệnh Legionella</td><td lang="id">Penyakit Legionnaires</td><td lang="th">โรคลีเจียนแนร์</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td><span class="adm-muted">0</span></td></tr><tr data-locked="1" data-q="梅毒 syphilis 梅毒 syphilis 梅毒 sipilis giang mai sifilis ซิฟิลิส term.syphilis">
+    <td><strong>梅毒</strong><div class="adm-muted"><code>term.syphilis</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">Syphilis</span> </td>
+    <td lang="en">Syphilis</td><td lang="ja">梅毒</td><td lang="tl">Sipilis</td><td lang="vi">Giang mai</td><td lang="id">Sifilis</td><td lang="th">ซิฟิลิส</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>3 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/topics/anonymous-testing/">topic.anonymous-testing</a> <a href="/new_cdc_prototype/preview/pr-56/topics/sti-resources/">topic.sti-resources</a> <a href="/new_cdc_prototype/preview/pr-56/research/2024-prep-adherence-sti/">research.2024-prep-adherence-sti</a> </div></td></tr><tr data-locked="1" data-q="淋病 gonorrhea 淋病 gonorrhoea 淋菌感染症 gonorea (tulo) bệnh lậu gonore (kencing nanah) หนองใน term.gonorrhea">
+    <td><strong>淋病</strong><div class="adm-muted"><code>term.gonorrhea</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">Gonorrhea</span> </td>
+    <td lang="en">Gonorrhoea</td><td lang="ja">淋菌感染症</td><td lang="tl">Gonorea (tulo)</td><td lang="vi">Bệnh lậu</td><td lang="id">Gonore (kencing nanah)</td><td lang="th">หนองใน</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>1 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/topics/sti-resources/">topic.sti-resources</a> </div></td></tr><tr data-locked="1" data-q="漢生病 leprosy 痲瘋病 漢生病 hansen&#39;s disease (leprosy) ハンセン病 ketong (hansen&#39;s disease) bệnh phong (hansen) kusta โรคเรื้อน term.leprosy">
+    <td><strong>漢生病</strong><div class="adm-muted"><code>term.leprosy</code> · disease</div><div class="adm-muted">官方用語為漢生病，避免使用帶有歧視意涵之舊稱</div></td>
+    <td><span class="adm-chip adm-chip--plain">Leprosy</span> <span class="adm-chip adm-chip--warn" title="舊名，不再使用"><span class="adm-term-del">痲瘋病</span>（停用）</span> </td>
+    <td lang="en">Hansen&#39;s disease (leprosy)</td><td lang="ja">ハンセン病</td><td lang="tl">Ketong (Hansen&#39;s disease)</td><td lang="vi">Bệnh phong (Hansen)</td><td lang="id">Kusta</td><td lang="th">โรคเรื้อน</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td><span class="adm-muted">0</span></td></tr><tr data-locked="1" data-q="中東呼吸症候群冠狀病毒感染症 mers 中東呼吸症候群 中東呼吸症候群冠狀病毒感染症 middle east respiratory syndrome (mers) 中東呼吸器症候群（mers） mers hội chứng hô hấp trung đông (mers) mers โรคทางเดินหายใจตะวันออกกลาง (mers) term.mers">
+    <td><strong>中東呼吸症候群冠狀病毒感染症</strong><div class="adm-muted"><code>term.mers</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">MERS</span> <span class="adm-chip adm-chip--plain">中東呼吸症候群</span> </td>
+    <td lang="en">Middle East respiratory syndrome (MERS)</td><td lang="ja">中東呼吸器症候群（MERS）</td><td lang="tl">MERS</td><td lang="vi">Hội chứng hô hấp Trung Đông (MERS)</td><td lang="id">MERS</td><td lang="th">โรคทางเดินหายใจตะวันออกกลาง (MERS)</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td><span class="adm-muted">0</span></td></tr><tr data-locked="1" data-q="新型a型流感 禽流感 h5n1 h7n9 新型a型流感 novel influenza a (avian influenza) 新型インフルエンザ（鳥インフルエンザ） bagong influenza a (bird flu) cúm a chủng mới (cúm gia cầm) influenza a baru (flu burung) ไข้หวัดใหญ่สายพันธุ์ใหม่ชนิดเอ (ไข้หวัดนก) term.novel-influenza-a">
+    <td><strong>新型A型流感</strong><div class="adm-muted"><code>term.novel-influenza-a</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">禽流感</span> <span class="adm-chip adm-chip--plain">H5N1</span> <span class="adm-chip adm-chip--plain">H7N9</span> </td>
+    <td lang="en">Novel influenza A (avian influenza)</td><td lang="ja">新型インフルエンザ（鳥インフルエンザ）</td><td lang="tl">Bagong influenza A (bird flu)</td><td lang="vi">Cúm A chủng mới (cúm gia cầm)</td><td lang="id">Influenza A baru (flu burung)</td><td lang="th">ไข้หวัดใหญ่สายพันธุ์ใหม่ชนิดเอ (ไข้หวัดนก)</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td><span class="adm-muted">0</span></td></tr><tr data-locked="1" data-q="伊波拉病毒感染 伊波拉 ebola 伊波拉病毒感染 ebola virus disease エボラ出血熱 ebola bệnh do vi-rút ebola penyakit virus ebola โรคติดเชื้อไวรัสอีโบลา term.ebola">
+    <td><strong>伊波拉病毒感染</strong><div class="adm-muted"><code>term.ebola</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">伊波拉</span> <span class="adm-chip adm-chip--plain">Ebola</span> </td>
+    <td lang="en">Ebola virus disease</td><td lang="ja">エボラ出血熱</td><td lang="tl">Ebola</td><td lang="vi">Bệnh do vi-rút Ebola</td><td lang="id">Penyakit virus Ebola</td><td lang="th">โรคติดเชื้อไวรัสอีโบลา</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td><span class="adm-muted">0</span></td></tr><tr data-locked="1" data-q="黃熱病 yellow fever 黃熱病 yellow fever 黄熱 yellow fever sốt vàng demam kuning ไข้เหลือง term.yellow-fever">
+    <td><strong>黃熱病</strong><div class="adm-muted"><code>term.yellow-fever</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">Yellow fever</span> </td>
+    <td lang="en">Yellow fever</td><td lang="ja">黄熱</td><td lang="tl">Yellow fever</td><td lang="vi">Sốt vàng</td><td lang="id">Demam kuning</td><td lang="th">ไข้เหลือง</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>4 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/faq/travel-clinic/">faq.travel-clinic</a> <a href="/new_cdc_prototype/preview/pr-56/faq/yellow-fever-certificate/">faq.yellow-fever-certificate</a> <a href="/new_cdc_prototype/preview/pr-56/documents/guidance-dengue.2026-02/">doc.guidance-dengue.2026-02</a> …</div></td></tr><tr data-locked="1" data-q="鼠疫 黑死病 鼠疫 plague ペスト salot (plague) bệnh dịch hạch pes กาฬโรค term.plague">
+    <td><strong>鼠疫</strong><div class="adm-muted"><code>term.plague</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">黑死病</span> </td>
+    <td lang="en">Plague</td><td lang="ja">ペスト</td><td lang="tl">Salot (plague)</td><td lang="vi">Bệnh dịch hạch</td><td lang="id">Pes</td><td lang="th">กาฬโรค</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td><span class="adm-muted">0</span></td></tr><tr data-locked="1" data-q="嚴重急性呼吸道症候群 sars 嚴重急性呼吸道症候群 severe acute respiratory syndrome (sars) 重症急性呼吸器症候群（sars） sars sars sars โรคซาร์ส term.sars">
+    <td><strong>嚴重急性呼吸道症候群</strong><div class="adm-muted"><code>term.sars</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">SARS</span> </td>
+    <td lang="en">Severe acute respiratory syndrome (SARS)</td><td lang="ja">重症急性呼吸器症候群（SARS）</td><td lang="tl">SARS</td><td lang="vi">SARS</td><td lang="id">SARS</td><td lang="th">โรคซาร์ส</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>1 筆<div class="adm-muted">page.history </div></td></tr><tr data-locked="1" data-q="腸道出血性大腸桿菌感染症 o157 ehec 腸道出血性大腸桿菌感染症 enterohaemorrhagic e. coli (ehec) infection 腸管出血性大腸菌感染症 impeksyon ng ehec nhiễm e. coli gây xuất huyết đường ruột infeksi e. coli enterohemoragik การติดเชื้ออีโคไลชนิดก่อโรคลำไส้อักเสบมีเลือดออก term.ehec">
+    <td><strong>腸道出血性大腸桿菌感染症</strong><div class="adm-muted"><code>term.ehec</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">O157</span> <span class="adm-chip adm-chip--plain">EHEC</span> </td>
+    <td lang="en">Enterohaemorrhagic E. coli (EHEC) infection</td><td lang="ja">腸管出血性大腸菌感染症</td><td lang="tl">Impeksyon ng EHEC</td><td lang="vi">Nhiễm E. coli gây xuất huyết đường ruột</td><td lang="id">Infeksi E. coli enterohemoragik</td><td lang="th">การติดเชื้ออีโคไลชนิดก่อโรคลำไส้อักเสบมีเลือดออก</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td><span class="adm-muted">0</span></td></tr><tr data-locked="1" data-q="漢他病毒症候群 漢他病毒 漢他病毒症候群 hantavirus syndrome ハンタウイルス感染症 hantavirus hội chứng do vi-rút hanta sindrom hantavirus กลุ่มอาการจากไวรัสฮันตา term.hantavirus">
+    <td><strong>漢他病毒症候群</strong><div class="adm-muted"><code>term.hantavirus</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">漢他病毒</span> </td>
+    <td lang="en">Hantavirus syndrome</td><td lang="ja">ハンタウイルス感染症</td><td lang="tl">Hantavirus</td><td lang="vi">Hội chứng do vi-rút Hanta</td><td lang="id">Sindrom hantavirus</td><td lang="th">กลุ่มอาการจากไวรัสฮันตา</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td><span class="adm-muted">0</span></td></tr><tr data-locked="1" data-q="西尼羅熱 西尼羅病毒 西尼羅熱 west nile fever ウエストナイル熱 west nile fever sốt tây sông nile demam west nile ไข้เวสต์ไนล์ term.west-nile">
+    <td><strong>西尼羅熱</strong><div class="adm-muted"><code>term.west-nile</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">西尼羅病毒</span> </td>
+    <td lang="en">West Nile fever</td><td lang="ja">ウエストナイル熱</td><td lang="tl">West Nile fever</td><td lang="vi">Sốt Tây sông Nile</td><td lang="id">Demam West Nile</td><td lang="th">ไข้เวสต์ไนล์</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>1 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/documents/guidance-dengue.2026-02/">doc.guidance-dengue.2026-02</a> </div></td></tr><tr data-locked="1" data-q="侵襲性肺炎鏈球菌感染症 ipd 肺炎鏈球菌 侵襲性肺炎鏈球菌感染症 invasive pneumococcal disease 侵襲性肺炎球菌感染症 invasive pneumococcal disease bệnh phế cầu khuẩn xâm lấn penyakit pneumokokus invasif โรคติดเชื้อนิวโมคอคคัสชนิดรุกราน term.ipd">
+    <td><strong>侵襲性肺炎鏈球菌感染症</strong><div class="adm-muted"><code>term.ipd</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">IPD</span> <span class="adm-chip adm-chip--plain">肺炎鏈球菌</span> </td>
+    <td lang="en">Invasive pneumococcal disease</td><td lang="ja">侵襲性肺炎球菌感染症</td><td lang="tl">Invasive pneumococcal disease</td><td lang="vi">Bệnh phế cầu khuẩn xâm lấn</td><td lang="id">Penyakit pneumokokus invasif</td><td lang="th">โรคติดเชื้อนิวโมคอคคัสชนิดรุกราน</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>4 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/hiv/">disease.hiv</a> <a href="/new_cdc_prototype/preview/pr-56/faq/pcv-elderly/">faq.pcv-elderly</a> <a href="/new_cdc_prototype/preview/pr-56/vaccines/influenza/">vaccine.influenza</a> …</div></td></tr><tr data-locked="1" data-q="肉毒桿菌中毒 botulism 肉毒桿菌中毒 botulism ボツリヌス症 botulismo ngộ độc botulinum botulisme โรคโบทูลิซึม term.botulism">
+    <td><strong>肉毒桿菌中毒</strong><div class="adm-muted"><code>term.botulism</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">Botulism</span> </td>
+    <td lang="en">Botulism</td><td lang="ja">ボツリヌス症</td><td lang="tl">Botulismo</td><td lang="vi">Ngộ độc botulinum</td><td lang="id">Botulisme</td><td lang="th">โรคโบทูลิซึม</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td><span class="adm-muted">0</span></td></tr><tr data-locked="1" data-q="庫賈氏病 cjd 庫賈氏病 creutzfeldt-jakob disease クロイツフェルト・ヤコブ病 creutzfeldt-jakob disease bệnh creutzfeldt-jakob penyakit creutzfeldt-jakob โรคครอยต์ซเฟลดต์-จาค็อบ term.cjd">
+    <td><strong>庫賈氏病</strong><div class="adm-muted"><code>term.cjd</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">CJD</span> </td>
+    <td lang="en">Creutzfeldt-Jakob disease</td><td lang="ja">クロイツフェルト・ヤコブ病</td><td lang="tl">Creutzfeldt-Jakob disease</td><td lang="vi">Bệnh Creutzfeldt-Jakob</td><td lang="id">Penyakit Creutzfeldt-Jakob</td><td lang="th">โรคครอยต์ซเฟลดต์-จาค็อบ</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td><span class="adm-muted">0</span></td></tr><tr data-locked="1" data-q="李斯特菌症 listeria 李斯特菌症 listeriosis リステリア症 listeriosis bệnh do listeria listeriosis โรคลิสทีเรีย term.listeriosis">
+    <td><strong>李斯特菌症</strong><div class="adm-muted"><code>term.listeriosis</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">Listeria</span> </td>
+    <td lang="en">Listeriosis</td><td lang="ja">リステリア症</td><td lang="tl">Listeriosis</td><td lang="vi">Bệnh do Listeria</td><td lang="id">Listeriosis</td><td lang="th">โรคลิสทีเรีย</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td><span class="adm-muted">0</span></td></tr><tr data-locked="1" data-q="q熱 q fever q熱 q fever q熱 q fever sốt q demam q ไข้คิว term.q-fever">
+    <td><strong>Q熱</strong><div class="adm-muted"><code>term.q-fever</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">Q fever</span> </td>
+    <td lang="en">Q fever</td><td lang="ja">Q熱</td><td lang="tl">Q fever</td><td lang="vi">Sốt Q</td><td lang="id">Demam Q</td><td lang="th">ไข้คิว</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td><span class="adm-muted">0</span></td></tr><tr data-locked="1" data-q="萊姆病 lyme 萊姆病 lyme disease ライム病 lyme disease bệnh lyme penyakit lyme โรคไลม์ term.lyme">
+    <td><strong>萊姆病</strong><div class="adm-muted"><code>term.lyme</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">Lyme</span> </td>
+    <td lang="en">Lyme disease</td><td lang="ja">ライム病</td><td lang="tl">Lyme disease</td><td lang="vi">Bệnh Lyme</td><td lang="id">Penyakit Lyme</td><td lang="th">โรคไลม์</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td><span class="adm-muted">0</span></td></tr><tr data-locked="1" data-q="弓形蟲感染症 弓漿蟲 弓形蟲感染症 toxoplasmosis トキソプラズマ症 toxoplasmosis bệnh do toxoplasma toksoplasmosis โรคท็อกโซพลาสโมซิส term.toxoplasmosis">
+    <td><strong>弓形蟲感染症</strong><div class="adm-muted"><code>term.toxoplasmosis</code> · disease</div></td>
+    <td><span class="adm-chip adm-chip--plain">弓漿蟲</span> </td>
+    <td lang="en">Toxoplasmosis</td><td lang="ja">トキソプラズマ症</td><td lang="tl">Toxoplasmosis</td><td lang="vi">Bệnh do Toxoplasma</td><td lang="id">Toksoplasmosis</td><td lang="th">โรคท็อกโซพลาสโมซิส</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td><span class="adm-muted">0</span></td></tr><tr data-locked="1" data-q="新冠疫苗 covid-19 疫苗 新冠疫苗 covid-19 vaccine 新型コロナワクチン bakuna sa covid-19 vắc-xin covid-19 vaksin covid-19 วัคซีนโควิด-19 term.covid-vaccine">
+    <td><strong>新冠疫苗</strong><div class="adm-muted"><code>term.covid-vaccine</code> · vaccine</div></td>
+    <td><span class="adm-chip adm-chip--plain">COVID-19 疫苗</span> </td>
+    <td lang="en">COVID-19 vaccine</td><td lang="ja">新型コロナワクチン</td><td lang="tl">Bakuna sa COVID-19</td><td lang="vi">Vắc-xin COVID-19</td><td lang="id">Vaksin COVID-19</td><td lang="th">วัคซีนโควิด-19</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>14 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/covid-19/">disease.covid-19</a> <a href="/new_cdc_prototype/preview/pr-56/faq/covid-vaccine-who/">faq.covid-vaccine-who</a> <a href="/new_cdc_prototype/preview/pr-56/faq/flu-covid-same-day/">faq.flu-covid-same-day</a> …</div></td></tr><tr data-locked="1" data-q="腸病毒 71 型疫苗 ev71 疫苗 腸病毒 71 型疫苗 ev71 vaccine ev71ワクチン bakuna sa ev71 vắc-xin ev71 vaksin ev71 วัคซีน ev71 term.ev71-vaccine">
+    <td><strong>腸病毒 71 型疫苗</strong><div class="adm-muted"><code>term.ev71-vaccine</code> · vaccine</div></td>
+    <td><span class="adm-chip adm-chip--plain">EV71 疫苗</span> </td>
+    <td lang="en">EV71 vaccine</td><td lang="ja">EV71ワクチン</td><td lang="tl">Bakuna sa EV71</td><td lang="vi">Vắc-xin EV71</td><td lang="id">Vaksin EV71</td><td lang="th">วัคซีน EV71</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>3 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/enterovirus/">disease.enterovirus</a> <a href="/new_cdc_prototype/preview/pr-56/faq/ev71-vaccine/">faq.ev71-vaccine</a> <a href="/new_cdc_prototype/preview/pr-56/vaccines/ev71/">vaccine.ev71</a> </div></td></tr><tr data-locked="1" data-q="hpv 疫苗 人類乳突病毒疫苗 子宮頸癌疫苗 hpv 疫苗 hpv vaccine hpvワクチン bakuna sa hpv vắc-xin hpv vaksin hpv วัคซีนเอชพีวี term.hpv-vaccine">
+    <td><strong>HPV 疫苗</strong><div class="adm-muted"><code>term.hpv-vaccine</code> · vaccine</div></td>
+    <td><span class="adm-chip adm-chip--plain">人類乳突病毒疫苗</span> <span class="adm-chip adm-chip--plain">子宮頸癌疫苗</span> </td>
+    <td lang="en">HPV vaccine</td><td lang="ja">HPVワクチン</td><td lang="tl">Bakuna sa HPV</td><td lang="vi">Vắc-xin HPV</td><td lang="id">Vaksin HPV</td><td lang="th">วัคซีนเอชพีวี</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>2 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/faq/hpv-vaccine-who/">faq.hpv-vaccine-who</a> <a href="/new_cdc_prototype/preview/pr-56/vaccines/hpv/">vaccine.hpv</a> </div></td></tr><tr data-locked="1" data-q="肺炎鏈球菌疫苗 pcv ppv23 肺炎疫苗 肺炎鏈球菌疫苗 pneumococcal vaccine 肺炎球菌ワクチン bakuna sa pneumococcus vắc-xin phế cầu vaksin pneumokokus วัคซีนนิวโมคอคคัส term.pneumococcal-vaccine">
+    <td><strong>肺炎鏈球菌疫苗</strong><div class="adm-muted"><code>term.pneumococcal-vaccine</code> · vaccine</div></td>
+    <td><span class="adm-chip adm-chip--plain">PCV</span> <span class="adm-chip adm-chip--plain">PPV23</span> <span class="adm-chip adm-chip--plain">肺炎疫苗</span> </td>
+    <td lang="en">Pneumococcal vaccine</td><td lang="ja">肺炎球菌ワクチン</td><td lang="tl">Bakuna sa pneumococcus</td><td lang="vi">Vắc-xin phế cầu</td><td lang="id">Vaksin pneumokokus</td><td lang="th">วัคซีนนิวโมคอคคัส</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>3 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/faq/pcv-elderly/">faq.pcv-elderly</a> <a href="/new_cdc_prototype/preview/pr-56/vaccines/influenza/">vaccine.influenza</a> <a href="/new_cdc_prototype/preview/pr-56/vaccines/pneumococcal/">vaccine.pneumococcal</a> </div></td></tr><tr data-locked="1" data-q="b 型肝炎疫苗 b肝疫苗 b 型肝炎疫苗 hepatitis b vaccine b型肝炎ワクチン bakuna sa hepatitis b vắc-xin viêm gan b vaksin hepatitis b วัคซีนไวรัสตับอักเสบบี term.hepb-vaccine">
+    <td><strong>B 型肝炎疫苗</strong><div class="adm-muted"><code>term.hepb-vaccine</code> · vaccine</div></td>
+    <td><span class="adm-chip adm-chip--plain">B肝疫苗</span> </td>
+    <td lang="en">Hepatitis B vaccine</td><td lang="ja">B型肝炎ワクチン</td><td lang="tl">Bakuna sa Hepatitis B</td><td lang="vi">Vắc-xin viêm gan B</td><td lang="id">Vaksin hepatitis B</td><td lang="th">วัคซีนไวรัสตับอักเสบบี</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>2 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/faq/hepb-newborn/">faq.hepb-newborn</a> <a href="/new_cdc_prototype/preview/pr-56/vaccines/hepatitis-b/">vaccine.hepatitis-b</a> </div></td></tr><tr data-locked="1" data-q="水痘疫苗 水痘疫苗 varicella vaccine 水痘ワクチン bakuna sa bulutong-tubig vắc-xin thủy đậu vaksin cacar air วัคซีนอีสุกอีใส term.varicella-vaccine">
+    <td><strong>水痘疫苗</strong><div class="adm-muted"><code>term.varicella-vaccine</code> · vaccine</div></td>
+    <td></td>
+    <td lang="en">Varicella vaccine</td><td lang="ja">水痘ワクチン</td><td lang="tl">Bakuna sa bulutong-tubig</td><td lang="vi">Vắc-xin thủy đậu</td><td lang="id">Vaksin cacar air</td><td lang="th">วัคซีนอีสุกอีใส</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>3 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/varicella/">disease.varicella</a> <a href="/new_cdc_prototype/preview/pr-56/faq/varicella-vaccine-doses/">faq.varicella-vaccine-doses</a> <a href="/new_cdc_prototype/preview/pr-56/vaccines/varicella/">vaccine.varicella</a> </div></td></tr><tr data-locked="1" data-q="卡介苗 bcg 卡介苗 bcg vaccine bcgワクチン bakunang bcg vắc-xin bcg vaksin bcg วัคซีนบีซีจี term.bcg">
+    <td><strong>卡介苗</strong><div class="adm-muted"><code>term.bcg</code> · vaccine</div></td>
+    <td><span class="adm-chip adm-chip--plain">BCG</span> </td>
+    <td lang="en">BCG vaccine</td><td lang="ja">BCGワクチン</td><td lang="tl">Bakunang BCG</td><td lang="vi">Vắc-xin BCG</td><td lang="id">Vaksin BCG</td><td lang="th">วัคซีนบีซีจี</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>2 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/tuberculosis/">disease.tuberculosis</a> <a href="/new_cdc_prototype/preview/pr-56/faq/bcg-when/">faq.bcg-when</a> </div></td></tr><tr data-locked="1" data-q="日本腦炎疫苗 日腦疫苗 日本腦炎疫苗 japanese encephalitis vaccine 日本脳炎ワクチン bakuna sa japanese encephalitis vắc-xin viêm não nhật bản vaksin ensefalitis jepang วัคซีนไข้สมองอักเสบเจอี term.je-vaccine">
+    <td><strong>日本腦炎疫苗</strong><div class="adm-muted"><code>term.je-vaccine</code> · vaccine</div></td>
+    <td><span class="adm-chip adm-chip--plain">日腦疫苗</span> </td>
+    <td lang="en">Japanese encephalitis vaccine</td><td lang="ja">日本脳炎ワクチン</td><td lang="tl">Bakuna sa Japanese encephalitis</td><td lang="vi">Vắc-xin viêm não Nhật Bản</td><td lang="id">Vaksin ensefalitis Jepang</td><td lang="th">วัคซีนไข้สมองอักเสบเจอี</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>1 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/japanese-encephalitis/">disease.japanese-encephalitis</a> </div></td></tr><tr data-locked="1" data-q="五合一疫苗 dtap-hib-ipv 白喉破傷風非細胞性百日咳 b 型嗜血桿菌及不活化小兒麻痺五合一疫苗 五合一疫苗 dtap-hib-ipv (5-in-1) vaccine 五種混合ワクチン 5-in-1 na bakuna vắc-xin 5 trong 1 vaksin 5-in-1 (dtap-hib-ipv) วัคซีนรวม 5 โรค term.dtap-hib-ipv">
+    <td><strong>五合一疫苗</strong><div class="adm-muted"><code>term.dtap-hib-ipv</code> · vaccine</div></td>
+    <td><span class="adm-chip adm-chip--plain">DTaP-Hib-IPV</span> <span class="adm-chip adm-chip--plain">白喉破傷風非細胞性百日咳 b 型嗜血桿菌及不活化小兒麻痺五合一疫苗</span> </td>
+    <td lang="en">DTaP-Hib-IPV (5-in-1) vaccine</td><td lang="ja">五種混合ワクチン</td><td lang="tl">5-in-1 na bakuna</td><td lang="vi">Vắc-xin 5 trong 1</td><td lang="id">Vaksin 5-in-1 (DTaP-Hib-IPV)</td><td lang="th">วัคซีนรวม 5 โรค</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>1 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/pertussis/">disease.pertussis</a> </div></td></tr><tr data-locked="1" data-q="m痘疫苗 猴痘疫苗 jynneos 猴痘疫苗 m痘疫苗 mpox vaccine エムポックスワクチン bakuna sa mpox vắc-xin đậu mùa khỉ (mpox) vaksin mpox วัคซีนฝีดาษวานร term.mpox-vaccine">
+    <td><strong>M痘疫苗</strong><div class="adm-muted"><code>term.mpox-vaccine</code> · vaccine</div></td>
+    <td><span class="adm-chip adm-chip--plain">猴痘疫苗</span> <span class="adm-chip adm-chip--plain">JYNNEOS</span> <span class="adm-chip adm-chip--warn" title="舊名，不再使用"><span class="adm-term-del">猴痘疫苗</span>（停用）</span> </td>
+    <td lang="en">Mpox vaccine</td><td lang="ja">エムポックスワクチン</td><td lang="tl">Bakuna sa Mpox</td><td lang="vi">Vắc-xin đậu mùa khỉ (Mpox)</td><td lang="id">Vaksin Mpox</td><td lang="th">วัคซีนฝีดาษวานร</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>7 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/mpox/">disease.mpox</a> <a href="/new_cdc_prototype/preview/pr-56/faq/mpox-who-vaccine/">faq.mpox-who-vaccine</a> <a href="/new_cdc_prototype/preview/pr-56/news/2025-06-10-mpox-summer/">news.2025-06-10-mpox-summer</a> …</div></td></tr><tr data-locked="1" data-q="衛生局 縣市衛生局 衛生局 local health bureau 地方衛生局 lokal na kawanihan ng kalusugan sở y tế địa phương dinas kesehatan setempat สำนักงานสาธารณสุขท้องถิ่น term.health-bureau">
+    <td><strong>衛生局</strong><div class="adm-muted"><code>term.health-bureau</code> · org</div></td>
+    <td><span class="adm-chip adm-chip--plain">縣市衛生局</span> </td>
+    <td lang="en">Local health bureau</td><td lang="ja">地方衛生局</td><td lang="tl">Lokal na kawanihan ng kalusugan</td><td lang="vi">Sở Y tế địa phương</td><td lang="id">Dinas kesehatan setempat</td><td lang="th">สำนักงานสาธารณสุขท้องถิ่น</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>27 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/faq/enterovirus-class-suspension/">faq.enterovirus-class-suspension</a> <a href="/new_cdc_prototype/preview/pr-56/faq/hiv-test-where/">faq.hiv-test-where</a> <a href="/new_cdc_prototype/preview/pr-56/faq/influenza-vaccine-where/">faq.influenza-vaccine-where</a> …</div></td></tr><tr data-locked="1" data-q="衛生所 健康服務中心 衛生所 public health centre 保健所 health center trạm y tế puskesmas สถานีอนามัย term.health-center">
+    <td><strong>衛生所</strong><div class="adm-muted"><code>term.health-center</code> · org</div></td>
+    <td><span class="adm-chip adm-chip--plain">健康服務中心</span> </td>
+    <td lang="en">Public health centre</td><td lang="ja">保健所</td><td lang="tl">Health center</td><td lang="vi">Trạm y tế</td><td lang="id">Puskesmas</td><td lang="th">สถานีอนามัย</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>18 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/japanese-encephalitis/">disease.japanese-encephalitis</a> <a href="/new_cdc_prototype/preview/pr-56/diseases/tuberculosis/">disease.tuberculosis</a> <a href="/new_cdc_prototype/preview/pr-56/faq/dengue-community-mobilize/">faq.dengue-community-mobilize</a> …</div></td></tr><tr data-locked="1" data-q="旅遊醫學門診 旅遊門診 旅遊醫學門診 travel medicine clinic トラベルクリニック travel medicine clinic phòng khám y học du lịch klinik kedokteran perjalanan คลินิกเวชศาสตร์การเดินทาง term.travel-clinic">
+    <td><strong>旅遊醫學門診</strong><div class="adm-muted"><code>term.travel-clinic</code> · org</div></td>
+    <td><span class="adm-chip adm-chip--plain">旅遊門診</span> </td>
+    <td lang="en">Travel medicine clinic</td><td lang="ja">トラベルクリニック</td><td lang="tl">Travel medicine clinic</td><td lang="vi">Phòng khám y học du lịch</td><td lang="id">Klinik kedokteran perjalanan</td><td lang="th">คลินิกเวชศาสตร์การเดินทาง</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>21 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/chikungunya/">disease.chikungunya</a> <a href="/new_cdc_prototype/preview/pr-56/diseases/japanese-encephalitis/">disease.japanese-encephalitis</a> <a href="/new_cdc_prototype/preview/pr-56/diseases/malaria/">disease.malaria</a> …</div></td></tr><tr data-locked="1" data-q="165 反詐騙專線 165 165 反詐騙專線 165 anti-fraud hotline 詐欺防止ホットライン165 165 anti-fraud hotline đường dây chống lừa đảo 165 hotline anti-penipuan 165 สายด่วนป้องกันการฉ้อโกง 165 term.165">
+    <td><strong>165 反詐騙專線</strong><div class="adm-muted"><code>term.165</code> · org</div></td>
+    <td><span class="adm-chip adm-chip--plain">165</span> </td>
+    <td lang="en">165 anti-fraud hotline</td><td lang="ja">詐欺防止ホットライン165</td><td lang="tl">165 anti-fraud hotline</td><td lang="vi">Đường dây chống lừa đảo 165</td><td lang="id">Hotline anti-penipuan 165</td><td lang="th">สายด่วนป้องกันการฉ้อโกง 165</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>2 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/faq/rumor-sms-link/">faq.rumor-sms-link</a> <a href="/new_cdc_prototype/preview/pr-56/documents/guidance-dengue.2026-02/">doc.guidance-dengue.2026-02</a> </div></td></tr><tr data-locked="1" data-q="傳染病統計資料查詢系統 nidss 傳染病統計資料查詢系統 taiwan national infectious disease statistics system (nidss) 感染症統計データ照会システム（nidss） nidss hệ thống thống kê bệnh truyền nhiễm (nidss) sistem statistik penyakit menular (nidss) ระบบสถิติโรคติดต่อ (nidss) term.nidss">
+    <td><strong>傳染病統計資料查詢系統</strong><div class="adm-muted"><code>term.nidss</code> · org</div></td>
+    <td><span class="adm-chip adm-chip--plain">NIDSS</span> </td>
+    <td lang="en">Taiwan National Infectious Disease Statistics System (NIDSS)</td><td lang="ja">感染症統計データ照会システム（NIDSS）</td><td lang="tl">NIDSS</td><td lang="vi">Hệ thống thống kê bệnh truyền nhiễm (NIDSS)</td><td lang="id">Sistem statistik penyakit menular (NIDSS)</td><td lang="th">ระบบสถิติโรคติดต่อ (NIDSS)</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>7 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/faq/stats-where-data/">faq.stats-where-data</a> <a href="/new_cdc_prototype/preview/pr-56/news/2026-09-29-ili-weekly/">news.2026-09-29-ili-weekly</a> <a href="/new_cdc_prototype/preview/pr-56/data/">dataset.nidss-notifiable</a> …</div></td></tr><tr data-locked="1" data-q="疫情中心 疫情監測中心 疫情中心 epidemic intelligence center 疫情センター epidemic intelligence center trung tâm tình báo dịch tễ pusat intelijen epidemi ศูนย์ข่าวกรองการระบาด term.eic">
+    <td><strong>疫情中心</strong><div class="adm-muted"><code>term.eic</code> · org</div></td>
+    <td><span class="adm-chip adm-chip--plain">疫情監測中心</span> </td>
+    <td lang="en">Epidemic Intelligence Center</td><td lang="ja">疫情センター</td><td lang="tl">Epidemic Intelligence Center</td><td lang="vi">Trung tâm Tình báo Dịch tễ</td><td lang="id">Pusat Intelijen Epidemi</td><td lang="th">ศูนย์ข่าวกรองการระบาด</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>8 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/influenza/">disease.influenza</a> page.about page.ai-policy …</div></td></tr><tr data-locked="1" data-q="旅遊疫情建議等級 旅遊警示 第一級注意 第二級警示 第三級警告 旅遊疫情建議等級 travel health notice level 渡航疫情勧告レベル antas ng travel health notice mức cảnh báo dịch tễ du lịch tingkat peringatan kesehatan perjalanan ระดับคำเตือนด้านสุขภาพสำหรับการเดินทาง term.travel-notice">
+    <td><strong>旅遊疫情建議等級</strong><div class="adm-muted"><code>term.travel-notice</code> · procedure</div></td>
+    <td><span class="adm-chip adm-chip--plain">旅遊警示</span> <span class="adm-chip adm-chip--plain">第一級注意</span> <span class="adm-chip adm-chip--plain">第二級警示</span> <span class="adm-chip adm-chip--plain">第三級警告</span> </td>
+    <td lang="en">Travel health notice level</td><td lang="ja">渡航疫情勧告レベル</td><td lang="tl">Antas ng travel health notice</td><td lang="vi">Mức cảnh báo dịch tễ du lịch</td><td lang="id">Tingkat peringatan kesehatan perjalanan</td><td lang="th">ระดับคำเตือนด้านสุขภาพสำหรับการเดินทาง</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>8 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/measles/">disease.measles</a> <a href="/new_cdc_prototype/preview/pr-56/diseases/mpox/">disease.mpox</a> <a href="/new_cdc_prototype/preview/pr-56/news/2025-04-16-mmr-recommendation-revised/">news.2025-04-16-mmr-recommendation-revised</a> …</div></td></tr><tr data-locked="1" data-q="自主健康管理 自主健康管理 self-health monitoring 自主健康管理 sariling pagsubaybay sa kalusugan tự theo dõi sức khỏe pemantauan kesehatan mandiri การเฝ้าระวังสุขภาพตนเอง term.self-monitoring">
+    <td><strong>自主健康管理</strong><div class="adm-muted"><code>term.self-monitoring</code> · procedure</div></td>
+    <td></td>
+    <td lang="en">Self-health monitoring</td><td lang="ja">自主健康管理</td><td lang="tl">Sariling pagsubaybay sa kalusugan</td><td lang="vi">Tự theo dõi sức khỏe</td><td lang="id">Pemantauan kesehatan mandiri</td><td lang="th">การเฝ้าระวังสุขภาพตนเอง</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>6 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/measles/">disease.measles</a> <a href="/new_cdc_prototype/preview/pr-56/diseases/mpox/">disease.mpox</a> <a href="/new_cdc_prototype/preview/pr-56/faq/measles-exposed-what-to-do/">faq.measles-exposed-what-to-do</a> …</div></td></tr><tr data-locked="1" data-q="都治 dots 直接觀察治療 都治 directly observed treatment (dots) 直接服薬確認療法（dots） dots (direktang pinapanood na gamutan) điều trị có giám sát trực tiếp (dots) pengobatan dengan pengawasan langsung (dots) การรักษาแบบมีพี่เลี้ยงกำกับ (dots) term.dots">
+    <td><strong>都治</strong><div class="adm-muted"><code>term.dots</code> · procedure</div></td>
+    <td><span class="adm-chip adm-chip--plain">DOTS</span> <span class="adm-chip adm-chip--plain">直接觀察治療</span> </td>
+    <td lang="en">Directly observed treatment (DOTS)</td><td lang="ja">直接服薬確認療法（DOTS）</td><td lang="tl">DOTS (direktang pinapanood na gamutan)</td><td lang="vi">Điều trị có giám sát trực tiếp (DOTS)</td><td lang="id">Pengobatan dengan pengawasan langsung (DOTS)</td><td lang="th">การรักษาแบบมีพี่เลี้ยงกำกับ (DOTS)</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>19 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/tuberculosis/">disease.tuberculosis</a> <a href="/new_cdc_prototype/preview/pr-56/faq/mdr-tb/">faq.mdr-tb</a> <a href="/new_cdc_prototype/preview/pr-56/faq/tb-dots-what/">faq.tb-dots-what</a> …</div></td></tr><tr data-locked="1" data-q="暴露後預防性投藥 pep 暴露後預防性投藥 post-exposure prophylaxis (pep) 曝露後予防内服（pep） post-exposure prophylaxis (pep) dự phòng sau phơi nhiễm (pep) profilaksis pascapajanan (pep) การป้องกันหลังสัมผัส (pep) term.pep">
+    <td><strong>暴露後預防性投藥</strong><div class="adm-muted"><code>term.pep</code> · procedure</div></td>
+    <td><span class="adm-chip adm-chip--plain">PEP</span> </td>
+    <td lang="en">Post-exposure prophylaxis (PEP)</td><td lang="ja">曝露後予防内服（PEP）</td><td lang="tl">Post-exposure prophylaxis (PEP)</td><td lang="vi">Dự phòng sau phơi nhiễm (PEP)</td><td lang="id">Profilaksis pascapajanan (PEP)</td><td lang="th">การป้องกันหลังสัมผัส (PEP)</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>3 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/hiv/">disease.hiv</a> <a href="/new_cdc_prototype/preview/pr-56/faq/hiv-pep/">faq.hiv-pep</a> <a href="/new_cdc_prototype/preview/pr-56/media/prep-intro/">media.prep-intro</a> </div></td></tr><tr data-locked="1" data-q="暴露前預防性投藥 prep 暴露前預防性投藥 pre-exposure prophylaxis (prep) 曝露前予防内服（prep） pre-exposure prophylaxis (prep) dự phòng trước phơi nhiễm (prep) profilaksis prapajanan (prep) การป้องกันก่อนสัมผัส (prep) term.prep">
+    <td><strong>暴露前預防性投藥</strong><div class="adm-muted"><code>term.prep</code> · procedure</div></td>
+    <td><span class="adm-chip adm-chip--plain">PrEP</span> </td>
+    <td lang="en">Pre-exposure prophylaxis (PrEP)</td><td lang="ja">曝露前予防内服（PrEP）</td><td lang="tl">Pre-exposure prophylaxis (PrEP)</td><td lang="vi">Dự phòng trước phơi nhiễm (PrEP)</td><td lang="id">Profilaksis prapajanan (PrEP)</td><td lang="th">การป้องกันก่อนสัมผัส (PrEP)</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>8 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/hiv/">disease.hiv</a> <a href="/new_cdc_prototype/preview/pr-56/faq/hiv-pep/">faq.hiv-pep</a> <a href="/new_cdc_prototype/preview/pr-56/news/2025-12-01-world-aids-day/">news.2025-12-01-world-aids-day</a> …</div></td></tr><tr data-locked="1" data-q="接觸者檢查 接觸者追蹤 接觸者檢查 contact screening 接触者健診 pagsusuri sa mga nakasalamuha khám sàng lọc người tiếp xúc pemeriksaan kontak การตรวจคัดกรองผู้สัมผัส term.contact-screening">
+    <td><strong>接觸者檢查</strong><div class="adm-muted"><code>term.contact-screening</code> · procedure</div></td>
+    <td><span class="adm-chip adm-chip--plain">接觸者追蹤</span> </td>
+    <td lang="en">Contact screening</td><td lang="ja">接触者健診</td><td lang="tl">Pagsusuri sa mga nakasalamuha</td><td lang="vi">Khám sàng lọc người tiếp xúc</td><td lang="id">Pemeriksaan kontak</td><td lang="th">การตรวจคัดกรองผู้สัมผัส</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>13 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/tuberculosis/">disease.tuberculosis</a> <a href="/new_cdc_prototype/preview/pr-56/faq/measles-health-dept-call/">faq.measles-health-dept-call</a> <a href="/new_cdc_prototype/preview/pr-56/faq/tb-contact-screening/">faq.tb-contact-screening</a> …</div></td></tr><tr data-locked="1" data-q="巡倒清刷 巡、倒、清、刷 孳生源清除 巡倒清刷 inspect, empty, clean, scrub 点検・水捨て・除去・ブラシ洗い suriin, itapon, linisin, kuskusin kiểm tra, đổ, dọn, cọ rửa periksa, buang, bersihkan, sikat สำรวจ เท ทิ้ง ขัด term.container-check">
+    <td><strong>巡倒清刷</strong><div class="adm-muted"><code>term.container-check</code> · procedure</div></td>
+    <td><span class="adm-chip adm-chip--plain">巡、倒、清、刷</span> <span class="adm-chip adm-chip--plain">孳生源清除</span> </td>
+    <td lang="en">Inspect, empty, clean, scrub</td><td lang="ja">点検・水捨て・除去・ブラシ洗い</td><td lang="tl">Suriin, itapon, linisin, kuskusin</td><td lang="vi">Kiểm tra, đổ, dọn, cọ rửa</td><td lang="id">Periksa, buang, bersihkan, sikat</td><td lang="th">สำรวจ เท ทิ้ง ขัด</td>
+    <td><span class="adm-badge adm-badge--info">鎖定</span></td>
+    <td>16 筆<div class="adm-muted"><a href="/new_cdc_prototype/preview/pr-56/diseases/chikungunya/">disease.chikungunya</a> <a href="/new_cdc_prototype/preview/pr-56/diseases/dengue/">disease.dengue</a> <a href="/new_cdc_prototype/preview/pr-56/faq/dengue-community-mobilize/">faq.dengue-community-mobilize</a> …</div></td></tr></tbody></table></div></section>
+
+<section class="adm-card" aria-labelledby="gn-h" id="new-term"><h2 id="gn-h">新增詞彙（示範）</h2>
+  <p class="adm-card__sub">填完後輸出可貼進 <code>content/master/glossary.json</code> 的 JSON 片段，再開 Pull Request。不會真的寫入主檔。</p>
+  <form id="g-form" class="adm-form" novalidate>
+    <div class="adm-grid adm-grid--3">
+      <div class="adm-field"><label for="n-zh">繁中正名</label><input type="text" id="n-zh" required></div>
+      <div class="adm-field"><label for="n-id">詞彙 ID</label><input type="text" id="n-id" placeholder="term.chikungunya"><span class="adm-hint">小寫英文、數字、連字號</span></div>
+      <div class="adm-field"><label for="n-domain">領域</label><select id="n-domain"><option value="disease">disease</option><option value="vaccine">vaccine</option><option value="org">org</option><option value="procedure">procedure</option><option value="place">place</option><option value="general">general</option></select></div>
+      <div class="adm-field"><label for="n-aliases">別名（逗號分隔）</label><input type="text" id="n-aliases"></div>
+      <div class="adm-field"><label for="n-dep">停用舊名 deprecated（逗號分隔）</label><input type="text" id="n-dep"></div>
+      <div class="adm-field"><label for="n-refs">關聯內容 refs（逗號分隔）</label><input type="text" id="n-refs" placeholder="disease.chikungunya"></div>
+    </div>
+    <div class="adm-grid adm-grid--3"><div class="adm-field"><label for="n-lang-en" lang="en">English</label><input type="text" id="n-lang-en" data-lang="en" lang="en"></div><div class="adm-field"><label for="n-lang-ja" lang="ja">日本語</label><input type="text" id="n-lang-ja" data-lang="ja" lang="ja"></div><div class="adm-field"><label for="n-lang-tl" lang="tl">Tagalog</label><input type="text" id="n-lang-tl" data-lang="tl" lang="tl"></div><div class="adm-field"><label for="n-lang-vi" lang="vi">Tiếng Việt</label><input type="text" id="n-lang-vi" data-lang="vi" lang="vi"></div><div class="adm-field"><label for="n-lang-id" lang="id">Bahasa Indonesia</label><input type="text" id="n-lang-id" data-lang="id" lang="id"></div><div class="adm-field"><label for="n-lang-th" lang="th">ไทย</label><input type="text" id="n-lang-th" data-lang="th" lang="th"></div></div>
+    <div class="adm-field"><label for="n-note">備註</label><input type="text" id="n-note"></div>
+    <label class="adm-pill" style="width:fit-content"><input type="checkbox" id="n-locked" checked><span>鎖定（機器翻譯不得自由翻譯）</span></label>
+    <div id="n-warn" aria-live="polite"></div>
+    <pre class="adm-pre" id="n-out" tabindex="0">{ }</pre>
+    <div class="adm-actions"><button type="button" class="adm-btn" id="n-copy">複製 JSON</button><button type="button" class="adm-btn adm-btn--ghost" id="n-dl">下載 .json</button></div>
+  </form></section>
+<script type="application/json" id="adm-glossary-data">[{"id":"term.mpox","zh":"M痘","aliases":["猴痘","Monkeypox"],"deprecated":["猴痘"]},{"id":"term.covid-19","zh":"新冠併發重症","aliases":["新冠肺炎","COVID-19","新冠"],"deprecated":["武漢肺炎","嚴重特殊傳染性肺炎"]},{"id":"term.dengue","zh":"登革熱","aliases":["登革出血熱","天狗熱"],"deprecated":[]},{"id":"term.influenza","zh":"流感","aliases":["季節性流感","流行性感冒"],"deprecated":[]},{"id":"term.ili","zh":"類流感","aliases":["ILI"],"deprecated":[]},{"id":"term.enterovirus","zh":"腸病毒","aliases":["手足口病","疱疹性咽峽炎"],"deprecated":[]},{"id":"term.measles","zh":"麻疹","aliases":[],"deprecated":[]},{"id":"term.mmr","zh":"MMR 疫苗","aliases":["麻疹腮腺炎德國麻疹混合疫苗","MMR"],"deprecated":[]},{"id":"term.flu-vaccine","zh":"公費流感疫苗","aliases":["流感疫苗"],"deprecated":[]},{"id":"term.cdc","zh":"疾病管制署","aliases":["疾管署","CDC"],"deprecated":[]},{"id":"term.1922","zh":"防疫專線 1922","aliases":["1922"],"deprecated":[]},{"id":"term.notifiable","zh":"法定傳染病","aliases":[],"deprecated":[]},{"id":"term.warning-signs","zh":"警示徵象","aliases":["危險徵兆"],"deprecated":[]},{"id":"term.ns1","zh":"NS1 抗原快速診斷試劑","aliases":["NS1 快篩","NS1"],"deprecated":[]},{"id":"term.incubation","zh":"潛伏期","aliases":[],"deprecated":[]},{"id":"term.tuberculosis","zh":"結核病","aliases":["肺結核","TB","肺癆"],"deprecated":[]},{"id":"term.mdr-tb","zh":"多重抗藥性結核病","aliases":["MDR-TB","抗藥性結核"],"deprecated":[]},{"id":"term.hiv","zh":"人類免疫缺乏病毒感染","aliases":["愛滋","HIV","愛滋病毒"],"deprecated":[]},{"id":"term.aids","zh":"後天免疫缺乏症候群","aliases":["AIDS","愛滋病"],"deprecated":[]},{"id":"term.japanese-encephalitis","zh":"日本腦炎","aliases":["JE","日腦"],"deprecated":[]},{"id":"term.chikungunya","zh":"屈公病","aliases":["屈公熱","Chikungunya"],"deprecated":[]},{"id":"term.pertussis","zh":"百日咳","aliases":["Whooping cough"],"deprecated":[]},{"id":"term.hepatitis-a","zh":"A型肝炎","aliases":["A肝","急性病毒性A型肝炎","HAV"],"deprecated":[]},{"id":"term.hepatitis-b","zh":"B型肝炎","aliases":["B肝","急性病毒性B型肝炎","HBV"],"deprecated":[]},{"id":"term.hepatitis-c","zh":"C型肝炎","aliases":["C肝","急性病毒性C型肝炎","HCV"],"deprecated":[]},{"id":"term.varicella","zh":"水痘","aliases":["出水痘","水痘併發症","Chickenpox"],"deprecated":[]},{"id":"term.rubella","zh":"德國麻疹","aliases":["風疹","Rubella"],"deprecated":[]},{"id":"term.malaria","zh":"瘧疾","aliases":["Malaria"],"deprecated":[]},{"id":"term.rabies","zh":"狂犬病","aliases":["恐水病","Rabies"],"deprecated":[]},{"id":"term.zika","zh":"茲卡病毒感染症","aliases":["茲卡","Zika"],"deprecated":[]},{"id":"term.cholera","zh":"霍亂","aliases":["Cholera"],"deprecated":[]},{"id":"term.typhoid","zh":"傷寒","aliases":["Typhoid"],"deprecated":[]},{"id":"term.shigellosis","zh":"桿菌性痢疾","aliases":["細菌性痢疾","志賀氏桿菌"],"deprecated":[]},{"id":"term.diphtheria","zh":"白喉","aliases":["Diphtheria"],"deprecated":[]},{"id":"term.tetanus","zh":"破傷風","aliases":["Tetanus"],"deprecated":[]},{"id":"term.polio","zh":"小兒麻痺症","aliases":["小兒麻痺","脊髓灰質炎","Polio"],"deprecated":[]},{"id":"term.mumps","zh":"流行性腮腺炎","aliases":["腮腺炎","豬頭皮"],"deprecated":[]},{"id":"term.scrub-typhus","zh":"恙蟲病","aliases":["叢林斑疹傷寒"],"deprecated":[]},{"id":"term.leptospirosis","zh":"鉤端螺旋體病","aliases":["威爾氏病"],"deprecated":[]},{"id":"term.melioidosis","zh":"類鼻疽","aliases":["Melioidosis"],"deprecated":[]},{"id":"term.legionellosis","zh":"退伍軍人病","aliases":["退伍軍人症","軍團菌"],"deprecated":[]},{"id":"term.syphilis","zh":"梅毒","aliases":["Syphilis"],"deprecated":[]},{"id":"term.gonorrhea","zh":"淋病","aliases":["Gonorrhea"],"deprecated":[]},{"id":"term.leprosy","zh":"漢生病","aliases":["Leprosy"],"deprecated":["痲瘋病"]},{"id":"term.mers","zh":"中東呼吸症候群冠狀病毒感染症","aliases":["MERS","中東呼吸症候群"],"deprecated":[]},{"id":"term.novel-influenza-a","zh":"新型A型流感","aliases":["禽流感","H5N1","H7N9"],"deprecated":[]},{"id":"term.ebola","zh":"伊波拉病毒感染","aliases":["伊波拉","Ebola"],"deprecated":[]},{"id":"term.yellow-fever","zh":"黃熱病","aliases":["Yellow fever"],"deprecated":[]},{"id":"term.plague","zh":"鼠疫","aliases":["黑死病"],"deprecated":[]},{"id":"term.sars","zh":"嚴重急性呼吸道症候群","aliases":["SARS"],"deprecated":[]},{"id":"term.ehec","zh":"腸道出血性大腸桿菌感染症","aliases":["O157","EHEC"],"deprecated":[]},{"id":"term.hantavirus","zh":"漢他病毒症候群","aliases":["漢他病毒"],"deprecated":[]},{"id":"term.west-nile","zh":"西尼羅熱","aliases":["西尼羅病毒"],"deprecated":[]},{"id":"term.ipd","zh":"侵襲性肺炎鏈球菌感染症","aliases":["IPD","肺炎鏈球菌"],"deprecated":[]},{"id":"term.botulism","zh":"肉毒桿菌中毒","aliases":["Botulism"],"deprecated":[]},{"id":"term.cjd","zh":"庫賈氏病","aliases":["CJD"],"deprecated":[]},{"id":"term.listeriosis","zh":"李斯特菌症","aliases":["Listeria"],"deprecated":[]},{"id":"term.q-fever","zh":"Q熱","aliases":["Q fever"],"deprecated":[]},{"id":"term.lyme","zh":"萊姆病","aliases":["Lyme"],"deprecated":[]},{"id":"term.toxoplasmosis","zh":"弓形蟲感染症","aliases":["弓漿蟲"],"deprecated":[]},{"id":"term.covid-vaccine","zh":"新冠疫苗","aliases":["COVID-19 疫苗"],"deprecated":[]},{"id":"term.ev71-vaccine","zh":"腸病毒 71 型疫苗","aliases":["EV71 疫苗"],"deprecated":[]},{"id":"term.hpv-vaccine","zh":"HPV 疫苗","aliases":["人類乳突病毒疫苗","子宮頸癌疫苗"],"deprecated":[]},{"id":"term.pneumococcal-vaccine","zh":"肺炎鏈球菌疫苗","aliases":["PCV","PPV23","肺炎疫苗"],"deprecated":[]},{"id":"term.hepb-vaccine","zh":"B 型肝炎疫苗","aliases":["B肝疫苗"],"deprecated":[]},{"id":"term.varicella-vaccine","zh":"水痘疫苗","aliases":[],"deprecated":[]},{"id":"term.bcg","zh":"卡介苗","aliases":["BCG"],"deprecated":[]},{"id":"term.je-vaccine","zh":"日本腦炎疫苗","aliases":["日腦疫苗"],"deprecated":[]},{"id":"term.dtap-hib-ipv","zh":"五合一疫苗","aliases":["DTaP-Hib-IPV","白喉破傷風非細胞性百日咳 b 型嗜血桿菌及不活化小兒麻痺五合一疫苗"],"deprecated":[]},{"id":"term.mpox-vaccine","zh":"M痘疫苗","aliases":["猴痘疫苗","JYNNEOS"],"deprecated":["猴痘疫苗"]},{"id":"term.health-bureau","zh":"衛生局","aliases":["縣市衛生局"],"deprecated":[]},{"id":"term.health-center","zh":"衛生所","aliases":["健康服務中心"],"deprecated":[]},{"id":"term.travel-clinic","zh":"旅遊醫學門診","aliases":["旅遊門診"],"deprecated":[]},{"id":"term.165","zh":"165 反詐騙專線","aliases":["165"],"deprecated":[]},{"id":"term.nidss","zh":"傳染病統計資料查詢系統","aliases":["NIDSS"],"deprecated":[]},{"id":"term.eic","zh":"疫情中心","aliases":["疫情監測中心"],"deprecated":[]},{"id":"term.travel-notice","zh":"旅遊疫情建議等級","aliases":["旅遊警示","第一級注意","第二級警示","第三級警告"],"deprecated":[]},{"id":"term.self-monitoring","zh":"自主健康管理","aliases":[],"deprecated":[]},{"id":"term.dots","zh":"都治","aliases":["DOTS","直接觀察治療"],"deprecated":[]},{"id":"term.pep","zh":"暴露後預防性投藥","aliases":["PEP"],"deprecated":[]},{"id":"term.prep","zh":"暴露前預防性投藥","aliases":["PrEP"],"deprecated":[]},{"id":"term.contact-screening","zh":"接觸者檢查","aliases":["接觸者追蹤"],"deprecated":[]},{"id":"term.container-check","zh":"巡倒清刷","aliases":["巡、倒、清、刷","孳生源清除"],"deprecated":[]}]</script></main>
+<footer class="adm-foot"><a href="/new_cdc_prototype/preview/pr-56/">回前台首頁</a><a href="/new_cdc_prototype/preview/pr-56/v1/catalog.json">目錄 API（/v1/catalog.json）</a><a href="/new_cdc_prototype/preview/pr-56/guide/">使用說明</a><span>建置日 2026-10-01</span></footer>
+<script type="module" src="/new_cdc_prototype/preview/pr-56/assets/js/admin/common.js"></script>
+<script type="module" src="/new_cdc_prototype/preview/pr-56/assets/js/admin/glossary.js"></script>
+</body>
+</html>

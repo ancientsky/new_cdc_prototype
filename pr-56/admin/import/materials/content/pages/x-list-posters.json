@@ -1,0 +1,42 @@
+{
+  "id": "page.x-list-posters",
+  "type": "page",
+  "title": "海報",
+  "owner": "unit.pr",
+  "publishedAt": "2026-10-03",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "登革熱「巡、倒、清、刷」海報系列 流感疫苗接種宣導海報（七語） 麻疹防治宣導海報（2019 年版） 防疫新生活運動海報（COVID-19） M痘防治懶人包（社群圖卡）",
+  "slug": "x-list-posters",
+  "bodyMarkdown": "- [登革熱「巡、倒、清、刷」海報系列](https://www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=OW0GWvcK_N7x2_x6CcO_sV)\n- [流感疫苗接種宣導海報（七語）](https://www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=-XlC5SdLwgyfRsnIbvDA-R)\n- [麻疹防治宣導海報（2019 年版）](https://www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=RYSFjWglrrDCumRjbTT1_t)\n- [防疫新生活運動海報（COVID-19）](https://www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=jqYodXZl8Ti6hySLNXVlBs)\n- [M痘防治懶人包（社群圖卡）](https://www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=9brwAIb5B5QVwyszmo6TZh)",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/YV1yFFBI_B1Rhm6XDQvlgy"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.6,
+    "issues": [
+      {
+        "code": "list-page",
+        "severity": "info",
+        "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/List/YV1yFFBI_B1Rhm6XDQvlgy",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

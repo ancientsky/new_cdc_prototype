@@ -1,0 +1,65 @@
+{
+  "id": "faq.stats-where-data",
+  "type": "faq",
+  "title": "疫情統計數字可以到哪裡查？",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2016-09-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "可以利用： 傳染病統計資料查詢系統（NIDSS）：可依疾病、年份、縣市、年齡查詢法定傳染病病例數。 疾管署資料開放平台：提供 CSV、JSON 與 API，例如登革熱每日確定病例、類流感就診人次。",
+  "question": "疫情統計數字可以到哪裡查？",
+  "answerMarkdown": "可以利用：\n\n- **傳染病統計資料查詢系統（NIDSS）**：可依疾病、年份、縣市、年齡查詢法定傳染病病例數。\n- **疾管署資料開放平台**：提供 CSV、JSON 與 API，例如登革熱每日確定病例、類流感就診人次。\n- **流感速訊**與每週疫情報導：說明當週流感與腸病毒等監測重點。\n\n本站的「開放資料與統計」頁也整理了常用資料集，並標示資料日、權責單位與授權。",
+  "tasks": [
+    "data",
+    "situation"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/4VcQG32UMghZ8yHk42hUVQ"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 31 處（mso 樣式 21、Mso 類別 8、命名空間標籤 5）"
+      },
+      {
+        "code": "faq-structure-loose",
+        "severity": "info",
+        "message": "沒有 .panel 結構，依「Q 開頭的標題／段落」拆成 3 題，請核對題目與答案的切分"
+      },
+      {
+        "code": "one-to-many",
+        "severity": "info",
+        "message": "一頁 3 題、清單沒有單一目標：status 維持 pending，請決定併入疾病頁（merged）或各題獨立（新站以 tasks 歸類）"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「「類流感門急診就診率」是什麼意思？」→ data；「疫情統計數字可以到哪裡查？」→ data、situation；「傳染病統計多久更新一次？」→ data、situation"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/4VcQG32UMghZ8yHk42hUVQ",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.stats-where-data"
+    ]
+  }
+}

@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="zh-TW" dir="ltr" data-base="/new_cdc_prototype/preview/pr-56" data-lang-path="" data-view="admin">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>外部連結健康（內容管理後台）</title>
+<meta name="description" content="外部連結健康：疾管署 AI-ready 新官網原型之內容管理後台示範頁">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/tokens.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/base.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/components.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/admin.css">
+</head>
+<body class="adm " data-today="2026-10-01" data-admin-page="links">
+<a class="skip-link" href="#main">跳到主要內容</a>
+<header class="adm-top"><div class="adm-top__in">
+  <a class="adm-brand" href="/new_cdc_prototype/preview/pr-56/admin/"><strong>內容管理後台</strong><span>疾管署 AI-ready 新官網原型 · 示範</span></a>
+  <div class="adm-who" id="adm-who">
+    <span class="adm-who__id"><span class="adm-who__name" id="adm-who-name">急性傳染病組 · 承辦人</span><span class="adm-who__role" id="adm-who-role"></span></span>
+    <label for="adm-unit"><span class="adm-who__lbl">單位視角</span>
+      <select id="adm-unit" aria-describedby="adm-who-name"><option value="unit.pr" >公關室</option><option value="unit.it" >資訊室</option><option value="unit.oasis" >AI推動辦公室</option><option value="unit.epidemic-intelligence" >疫情中心</option><option value="unit.acute-infectious" selected>急性傳染病組</option><option value="unit.chronic-infectious" >慢性傳染病組</option><option value="unit.preparedness" >新興傳染病整備組</option><option value="unit.infection-control" >感染管制及生物安全組</option><option value="unit.quarantine" >檢疫組</option><option value="unit.lab" >檢驗及疫苗研製中心</option><option value="unit.planning" >企劃組</option><option value="unit.secretariat" >秘書室</option><option value="unit.personnel" >人事室</option><option value="unit.ethics" >政風室</option><option value="unit.preventive-medicine" >預防醫學辦公室</option><option value="unit.accounting" >主計室</option><option value="unit.regional-taipei" >臺北區管制中心</option><option value="unit.regional-northern" >北區管制中心</option><option value="unit.regional-central" >中區管制中心</option><option value="unit.regional-southern" >南區管制中心</option><option value="unit.regional-kaoping" >高屏區管制中心</option><option value="unit.regional-eastern" >東區管制中心</option><option value="unit.governance-committee" >資料治理委員會</option><option value="all">全部單位（總覽）</option></select>
+    </label>
+    <button type="button" class="adm-who__logout" id="adm-logout">登出</button>
+  </div>
+</div></header>
+<nav class="adm-nav" aria-label="後台導覽"><ul><li><a href="/new_cdc_prototype/preview/pr-56/admin/mine/" >我的內容</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/publish/" >上架新內容</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/review/" >複核區<span class="adm-count" data-count="review" aria-label="0 項">0</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/due/" >審閱到期<span class="adm-count" data-count="due" aria-label="18 項">18</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/catalog/" >資料目錄</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/notices/" >公告</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/jobs/" >人才招募<span class="adm-count" data-count="jobs" aria-label="1 項">1</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/tenders/" >採購<span class="adm-count" data-count="tenders" aria-label="1 項">1</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/media/" >影音<span class="adm-count" data-count="media" aria-label="1 項">1</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/links/" aria-current="page">連結</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/migration/" >移轉進度<span class="adm-count" data-count="migration" aria-label="1248 項">1248</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/import/" >舊站匯入</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/glossary/" >詞彙主檔</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/situation/" >疫情發布</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/bulletin/edit/" >疫情報導</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/todos/" >連動待辦<span class="adm-count" data-count="todos" aria-label="112 項">112</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/ai-status/" >AI 開關</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/reports/" >回報</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/eval/" >評估</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/" >儀表板</a></li></ul></nav>
+<div class="adm-demo" role="note">示範原型：此後台不連接任何正式系統；登入與所有操作只存在你的瀏覽器（localStorage），正式環境以機關 SSO 登入、一律走 Git Pull Request。</div>
+<main id="main" class="adm-main" tabindex="-1">
+<header class="adm-pagehead"><h1>外部連結健康</h1><p class="adm-pagehead__what">專區、申請服務、公告、出版品與影音所指向的外部網址一覽。政府網站最常見的失信，是「連過去是 404」；這裡讓每一條外部連結都有最後檢查日與狀態。</p><p class="adm-pagehead__flow"><strong>正式環境：</strong>外部連結由 CI 每日 HEAD 檢查，結果寫回該連結的 status（ok／broken）與 lastCheckedAt；status: broken 觸發待辦 link-broken 給承辦單位，修正網址並合併後待辦自動消失。</p></header>
+<div class="adm-box adm-box--note" role="note"><strong>怎麼檢查：<code>npm run fetch -- --check-links</code></strong>
+  <ul style="margin:var(--sp-2) 0 0;padding-left:1.3em">
+    <li>GitHub Actions 每日排程自動執行這個指令（與資料快照同一個工作），<strong>不需要人手動點</strong>。</li>
+    <li>對每條 <code>https://</code> 外部連結送 HEAD 請求（失敗再試 GET）；回應 2xx／3xx 記 <code>ok</code>，4xx／5xx／逾時記 <code>broken</code>；尚未檢查過者為 <code>unchecked</code>。</li>
+    <li>失效連結自動變成「連結失效」待辦（<a href="/new_cdc_prototype/preview/pr-56/admin/todos/#tab-link-broken">連動待辦</a>），期限 7 日；站內連結不在此檢查範圍，建置時由參照檢查保證。</li>
+    <li>本頁在建置時讀取內容檔上的狀態；若有 <code>/v1/governance/links.json</code>，載入後會即時覆蓋狀態與檢查日。</li>
+  </ul></div>
+<div class="adm-statrow" style="margin-top:var(--sp-4)">
+  <div class="adm-stat"><p class="adm-stat__label">外部連結</p><p class="adm-stat__value" id="l-total">29</p><p class="adm-stat__note">專區、服務、公告、出版品、影音</p></div>
+  <div class="adm-stat adm-stat--ok"><p class="adm-stat__label">ok</p><p class="adm-stat__value" id="l-ok">0</p><p class="adm-stat__note">最近一次檢查正常</p></div>
+  <div class="adm-stat adm-stat--ok"><p class="adm-stat__label">broken</p><p class="adm-stat__value" id="l-broken">0</p><p class="adm-stat__note">已產生待辦</p></div>
+  <div class="adm-stat adm-stat--warn"><p class="adm-stat__label">unchecked</p><p class="adm-stat__value" id="l-unchecked">29</p><p class="adm-stat__note">尚未執行檢查</p></div>
+</div>
+<section class="adm-card" aria-labelledby="l-h"><h2 id="l-h">全部外部連結</h2>
+  <div class="adm-filters">
+    <div class="adm-field adm-field--grow"><label for="l-q">搜尋（來源內容、標籤、網址）</label><input type="search" id="l-q"></div>
+    <div class="adm-field"><label for="l-state">狀態</label><select id="l-state"><option value="">全部</option><option value="broken">broken</option><option value="unchecked">unchecked</option><option value="ok">ok</option></select></div>
+    <div class="adm-field"><label for="l-type">來源型別</label><select id="l-type"><option value="">全部</option><option value="document">文件</option><option value="job">招募職缺</option><option value="service">申請服務</option><option value="tender">採購公告</option><option value="topic">專區</option></select></div>
+    <div class="adm-field"><label for="l-unit">單位</label><select id="l-unit"><option value="all">全部單位</option><option value="unit.pr" >公關室</option><option value="unit.it" >資訊室</option><option value="unit.oasis" >AI推動辦公室</option><option value="unit.epidemic-intelligence" >疫情中心</option><option value="unit.acute-infectious" >急性傳染病組</option><option value="unit.chronic-infectious" >慢性傳染病組</option><option value="unit.preparedness" >新興傳染病整備組</option><option value="unit.infection-control" >感染管制及生物安全組</option><option value="unit.quarantine" >檢疫組</option><option value="unit.lab" >檢驗及疫苗研製中心</option><option value="unit.planning" >企劃組</option><option value="unit.secretariat" >秘書室</option><option value="unit.personnel" >人事室</option><option value="unit.ethics" >政風室</option><option value="unit.preventive-medicine" >預防醫學辦公室</option><option value="unit.accounting" >主計室</option><option value="unit.regional-taipei" >臺北區管制中心</option><option value="unit.regional-northern" >北區管制中心</option><option value="unit.regional-central" >中區管制中心</option><option value="unit.regional-southern" >南區管制中心</option><option value="unit.regional-kaoping" >高屏區管制中心</option><option value="unit.regional-eastern" >東區管制中心</option><option value="unit.governance-committee" >資料治理委員會</option></select></div>
+    <button type="button" class="adm-btn adm-btn--ghost" id="l-csv">匯出 CSV</button>
+    <span class="adm-count-note" id="l-note" aria-live="polite"></span>
+  </div>
+  <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table" id="l-table"><caption>每列一條外部連結；來源內容可點進前台頁面。</caption>
+    <thead><tr><th scope="col">來源內容</th><th scope="col">欄位</th><th scope="col">連結標籤</th><th scope="col">網址</th><th scope="col">最後檢查</th><th scope="col">狀態</th></tr></thead>
+    <tbody><tr data-owner="unit.acute-infectious" data-state="unchecked" data-type="document" data-href="https://www.cdc.gov.tw/File/Get/eH0KllYdi__tvUdV8al0lA" data-key="doc.curriculum-measles.2026-10-10|pdfUrl" data-q="doc.curriculum-measles.2026-10-10 麻疹核心教材（示範匯入版）  https://www.cdc.gov.tw/file/get/eh0kllydi__tvudv8al0la">
+      <td><a href="/new_cdc_prototype/preview/pr-56/documents/curriculum-measles.2026-10-10/">麻疹核心教材（示範匯入版）</a><div class="adm-muted"><code>doc.curriculum-measles.2026-10-10</code> · 急性傳染病組</div></td>
+      <td><code>pdfUrl</code></td>
+      <td></td>
+      <td><a href="https://www.cdc.gov.tw/File/Get/eH0KllYdi__tvUdV8al0lA" rel="noopener noreferrer">www.cdc.gov.tw/File/Get/eH0KllYdi__tvUdV8al0lA</a></td>
+      <td data-checked><span class="adm-muted">未檢查</span></td>
+      <td data-status><span class="adm-badge adm-badge--gray">unchecked 未檢查</span></td></tr><tr data-owner="unit.personnel" data-state="unchecked" data-type="job" data-href="https://web3.dgpa.gov.tw/" data-key="job.2026-05-25-quarantine-officer-kaoping|applyUrl" data-q="job.2026-05-25-quarantine-officer-kaoping 高屏區管制中心徵求約聘港埠檢疫人員 4 名  https://web3.dgpa.gov.tw/">
+      <td><a href="/new_cdc_prototype/preview/pr-56/careers/quarantine-officer-kaoping/">高屏區管制中心徵求約聘港埠檢疫人員 4 名</a><div class="adm-muted"><code>job.2026-05-25-quarantine-officer-kaoping</code> · 人事室</div></td>
+      <td><code>applyUrl</code></td>
+      <td></td>
+      <td><a href="https://web3.dgpa.gov.tw/" rel="noopener noreferrer">web3.dgpa.gov.tw/</a></td>
+      <td data-checked><span class="adm-muted">未檢查</span></td>
+      <td data-status><span class="adm-badge adm-badge--gray">unchecked 未檢查</span></td></tr><tr data-owner="unit.personnel" data-state="unchecked" data-type="job" data-href="https://web3.dgpa.gov.tw/" data-key="job.2026-08-10-system-analyst|applyUrl" data-q="job.2026-08-10-system-analyst 資訊室徵求約聘系統分析師 1 名（官網與資料平台）  https://web3.dgpa.gov.tw/">
+      <td><a href="/new_cdc_prototype/preview/pr-56/careers/system-analyst/">資訊室徵求約聘系統分析師 1 名（官網與資料平台）</a><div class="adm-muted"><code>job.2026-08-10-system-analyst</code> · 人事室</div></td>
+      <td><code>applyUrl</code></td>
+      <td></td>
+      <td><a href="https://web3.dgpa.gov.tw/" rel="noopener noreferrer">web3.dgpa.gov.tw/</a></td>
+      <td data-checked><span class="adm-muted">未檢查</span></td>
+      <td data-status><span class="adm-badge adm-badge--gray">unchecked 未檢查</span></td></tr><tr data-owner="unit.personnel" data-state="unchecked" data-type="job" data-href="https://web3.dgpa.gov.tw/" data-key="job.2026-08-24-biosafety-researcher|applyUrl" data-q="job.2026-08-24-biosafety-researcher 感染管制及生物安全組徵求聘用研究員 1 名（生物安全）  https://web3.dgpa.gov.tw/">
+      <td><a href="/new_cdc_prototype/preview/pr-56/careers/biosafety-researcher/">感染管制及生物安全組徵求聘用研究員 1 名（生物安全）</a><div class="adm-muted"><code>job.2026-08-24-biosafety-researcher</code> · 人事室</div></td>
+      <td><code>applyUrl</code></td>
+      <td></td>
+      <td><a href="https://web3.dgpa.gov.tw/" rel="noopener noreferrer">web3.dgpa.gov.tw/</a></td>
+      <td data-checked><span class="adm-muted">未檢查</span></td>
+      <td data-status><span class="adm-badge adm-badge--gray">unchecked 未檢查</span></td></tr><tr data-owner="unit.personnel" data-state="unchecked" data-type="job" data-href="https://web3.dgpa.gov.tw/" data-key="job.2026-09-24-research-assistant-epi|applyUrl" data-q="job.2026-09-24-research-assistant-epi 疫情中心徵求計畫助理 2 名（監測資料分析）  https://web3.dgpa.gov.tw/">
+      <td><a href="/new_cdc_prototype/preview/pr-56/careers/research-assistant-epi/">疫情中心徵求計畫助理 2 名（監測資料分析）</a><div class="adm-muted"><code>job.2026-09-24-research-assistant-epi</code> · 人事室</div></td>
+      <td><code>applyUrl</code></td>
+      <td></td>
+      <td><a href="https://web3.dgpa.gov.tw/" rel="noopener noreferrer">web3.dgpa.gov.tw/</a></td>
+      <td data-checked><span class="adm-muted">未檢查</span></td>
+      <td data-status><span class="adm-badge adm-badge--gray">unchecked 未檢查</span></td></tr><tr data-owner="unit.lab" data-state="unchecked" data-type="service" data-href="https://nidrs.cdc.gov.tw/" data-key="service.lab-test-request|applyUrl" data-q="service.lab-test-request 傳染病檢驗委託（醫療院所送驗）  https://nidrs.cdc.gov.tw/">
+      <td><a href="/new_cdc_prototype/preview/pr-56/apply/lab-test-request/">傳染病檢驗委託（醫療院所送驗）</a><div class="adm-muted"><code>service.lab-test-request</code> · 檢驗及疫苗研製中心</div></td>
+      <td><code>applyUrl</code></td>
+      <td></td>
+      <td><a href="https://nidrs.cdc.gov.tw/" rel="noopener noreferrer">nidrs.cdc.gov.tw/</a></td>
+      <td data-checked><span class="adm-muted">未檢查</span></td>
+      <td data-status><span class="adm-badge adm-badge--gray">unchecked 未檢查</span></td></tr><tr data-owner="unit.epidemic-intelligence" data-state="unchecked" data-type="service" data-href="https://nidrs.cdc.gov.tw/" data-key="service.notifiable-disease-report|applyUrl" data-q="service.notifiable-disease-report 法定傳染病通報（醫師與醫療機構）  https://nidrs.cdc.gov.tw/">
+      <td><a href="/new_cdc_prototype/preview/pr-56/apply/notifiable-disease-report/">法定傳染病通報（醫師與醫療機構）</a><div class="adm-muted"><code>service.notifiable-disease-report</code> · 疫情中心</div></td>
+      <td><code>applyUrl</code></td>
+      <td></td>
+      <td><a href="https://nidrs.cdc.gov.tw/" rel="noopener noreferrer">nidrs.cdc.gov.tw/</a></td>
+      <td data-checked><span class="adm-muted">未檢查</span></td>
+      <td data-status><span class="adm-badge adm-badge--gray">unchecked 未檢查</span></td></tr><tr data-owner="unit.secretariat" data-state="unchecked" data-type="tender" data-href="https://web.pcc.gov.tw/" data-key="tender.2026-02-20-flu-vaccine-115|pccUrl" data-q="tender.2026-02-20-flu-vaccine-115 115 年度公費流感疫苗採購案  https://web.pcc.gov.tw/">
+      <td><a href="/new_cdc_prototype/preview/pr-56/procurement/flu-vaccine-115/">115 年度公費流感疫苗採購案</a><div class="adm-muted"><code>tender.2026-02-20-flu-vaccine-115</code> · 秘書室</div></td>
+      <td><code>pccUrl</code></td>
+      <td></td>
+      <td><a href="https://web.pcc.gov.tw/" rel="noopener noreferrer">web.pcc.gov.tw/</a></td>
+      <td data-checked><span class="adm-muted">未檢查</span></td>
+      <td data-status><span class="adm-badge adm-badge--gray">unchecked 未檢查</span></td></tr><tr data-owner="unit.secretariat" data-state="unchecked" data-type="tender" data-href="https://web.pcc.gov.tw/" data-key="tender.2026-06-10-lab-reagents-115|pccUrl" data-q="tender.2026-06-10-lab-reagents-115 115 年度傳染病檢驗試劑及耗材採購案  https://web.pcc.gov.tw/">
+      <td><a href="/new_cdc_prototype/preview/pr-56/procurement/lab-reagents-115/">115 年度傳染病檢驗試劑及耗材採購案</a><div class="adm-muted"><code>tender.2026-06-10-lab-reagents-115</code> · 秘書室</div></td>
+      <td><code>pccUrl</code></td>
+      <td></td>
+      <td><a href="https://web.pcc.gov.tw/" rel="noopener noreferrer">web.pcc.gov.tw/</a></td>
+      <td data-checked><span class="adm-muted">未檢查</span></td>
+      <td data-status><span class="adm-badge adm-badge--gray">unchecked 未檢查</span></td></tr><tr data-owner="unit.secretariat" data-state="unchecked" data-type="tender" data-href="https://web.pcc.gov.tw/" data-key="tender.2026-07-29-surveillance-system-expansion|pccUrl" data-q="tender.2026-07-29-surveillance-system-expansion 傳染病監測資料分析系統功能擴充案  https://web.pcc.gov.tw/">
+      <td><a href="/new_cdc_prototype/preview/pr-56/procurement/surveillance-system-expansion/">傳染病監測資料分析系統功能擴充案</a><div class="adm-muted"><code>tender.2026-07-29-surveillance-system-expansion</code> · 秘書室</div></td>
+      <td><code>pccUrl</code></td>
+      <td></td>
+      <td><a href="https://web.pcc.gov.tw/" rel="noopener noreferrer">web.pcc.gov.tw/</a></td>
+      <td data-checked><span class="adm-muted">未檢查</span></td>
+      <td data-status><span class="adm-badge adm-badge--gray">unchecked 未檢查</span></td></tr><tr data-owner="unit.secretariat" data-state="unchecked" data-type="tender" data-href="https://web.pcc.gov.tw/" data-key="tender.2026-08-18-cold-chain-monitor|pccUrl" data-q="tender.2026-08-18-cold-chain-monitor 疫苗冷運冷藏溫度監控設備採購案  https://web.pcc.gov.tw/">
+      <td><a href="/new_cdc_prototype/preview/pr-56/procurement/cold-chain-monitor/">疫苗冷運冷藏溫度監控設備採購案</a><div class="adm-muted"><code>tender.2026-08-18-cold-chain-monitor</code> · 秘書室</div></td>
+      <td><code>pccUrl</code></td>
+      <td></td>
+      <td><a href="https://web.pcc.gov.tw/" rel="noopener noreferrer">web.pcc.gov.tw/</a></td>
+      <td data-checked><span class="adm-muted">未檢查</span></td>
+      <td data-status><span class="adm-badge adm-badge--gray">unchecked 未檢查</span></td></tr><tr data-owner="unit.secretariat" data-state="unchecked" data-type="tender" data-href="https://web.pcc.gov.tw/" data-key="tender.2026-09-04-ppe-warehouse|pccUrl" data-q="tender.2026-09-04-ppe-warehouse 防疫物資儲備倉儲管理及配送勞務採購案  https://web.pcc.gov.tw/">
+      <td><a href="/new_cdc_prototype/preview/pr-56/procurement/ppe-warehouse/">防疫物資儲備倉儲管理及配送勞務採購案</a><div class="adm-muted"><code>tender.2026-09-04-ppe-warehouse</code> · 秘書室</div></td>
+      <td><code>pccUrl</code></td>
+      <td></td>
+      <td><a href="https://web.pcc.gov.tw/" rel="noopener noreferrer">web.pcc.gov.tw/</a></td>
+      <td data-checked><span class="adm-muted">未檢查</span></td>
+      <td data-status><span class="adm-badge adm-badge--gray">unchecked 未檢查</span></td></tr><tr data-owner="unit.secretariat" data-state="unchecked" data-type="tender" data-href="https://web.pcc.gov.tw/" data-key="tender.2026-09-15-antiviral-115|pccUrl" data-q="tender.2026-09-15-antiviral-115 「115 年度公費流感抗病毒藥劑採購案」招標公告  https://web.pcc.gov.tw/">
+      <td><a href="/new_cdc_prototype/preview/pr-56/procurement/antiviral-115/">「115 年度公費流感抗病毒藥劑採購案」招標公告</a><div class="adm-muted"><code>tender.2026-09-15-antiviral-115</code> · 秘書室</div></td>
+      <td><code>pccUrl</code></td>
+      <td></td>
+      <td><a href="https://web.pcc.gov.tw/" rel="noopener noreferrer">web.pcc.gov.tw/</a></td>
+      <td data-checked><span class="adm-muted">未檢查</span></td>
+      <td data-status><span class="adm-badge adm-badge--gray">unchecked 未檢查</span></td></tr><tr data-owner="unit.secretariat" data-state="unchecked" data-type="tender" data-href="https://web.pcc.gov.tw/" data-key="tender.2026-09-22-campaign-video|pccUrl" data-q="tender.2026-09-22-campaign-video 115 年度防疫宣導影片製作暨多語字幕案  https://web.pcc.gov.tw/">
+      <td><a href="/new_cdc_prototype/preview/pr-56/procurement/campaign-video/">115 年度防疫宣導影片製作暨多語字幕案</a><div class="adm-muted"><code>tender.2026-09-22-campaign-video</code> · 秘書室</div></td>
+      <td><code>pccUrl</code></td>
+      <td></td>
+      <td><a href="https://web.pcc.gov.tw/" rel="noopener noreferrer">web.pcc.gov.tw/</a></td>
+      <td data-checked><span class="adm-muted">未檢查</span></td>
+      <td data-status><span class="adm-badge adm-badge--gray">unchecked 未檢查</span></td></tr><tr data-owner="unit.secretariat" data-state="unchecked" data-type="tender" data-href="https://web.pcc.gov.tw/" data-key="tender.2026-09-29-datacenter-ops|pccUrl" data-q="tender.2026-09-29-datacenter-ops 資料中心機房維運暨資安監控服務案  https://web.pcc.gov.tw/">
+      <td><a href="/new_cdc_prototype/preview/pr-56/procurement/datacenter-ops/">資料中心機房維運暨資安監控服務案</a><div class="adm-muted"><code>tender.2026-09-29-datacenter-ops</code> · 秘書室</div></td>
+      <td><code>pccUrl</code></td>
+      <td></td>
+      <td><a href="https://web.pcc.gov.tw/" rel="noopener noreferrer">web.pcc.gov.tw/</a></td>
+      <td data-checked><span class="adm-muted">未檢查</span></td>
+      <td data-status><span class="adm-badge adm-badge--gray">unchecked 未檢查</span></td></tr><tr data-owner="unit.infection-control" data-state="unchecked" data-type="topic" data-href="https://www.who.int/" data-key="topic.amr-one-health|links[3]" data-q="topic.amr-one-health 抗生素抗藥性：防疫一體行動 who world amr awareness week https://www.who.int/">
+      <td><a href="/new_cdc_prototype/preview/pr-56/topics/amr-one-health/">抗生素抗藥性：防疫一體行動</a><div class="adm-muted"><code>topic.amr-one-health</code> · 感染管制及生物安全組</div></td>
+      <td><code>links[3]</code></td>
+      <td>WHO World AMR Awareness Week</td>
+      <td><a href="https://www.who.int/" rel="noopener noreferrer">www.who.int/</a></td>
+      <td data-checked><span class="adm-muted">未檢查</span></td>
+      <td data-status><span class="adm-badge adm-badge--gray">unchecked 未檢查</span></td></tr><tr data-owner="unit.infection-control" data-state="unchecked" data-type="topic" data-href="https://www.moa.gov.tw/" data-key="topic.amr-one-health|links[4]" data-q="topic.amr-one-health 抗生素抗藥性：防疫一體行動 農業部動物用藥資訊 https://www.moa.gov.tw/">
+      <td><a href="/new_cdc_prototype/preview/pr-56/topics/amr-one-health/">抗生素抗藥性：防疫一體行動</a><div class="adm-muted"><code>topic.amr-one-health</code> · 感染管制及生物安全組</div></td>
+      <td><code>links[4]</code></td>
+      <td>農業部動物用藥資訊</td>
+      <td><a href="https://www.moa.gov.tw/" rel="noopener noreferrer">www.moa.gov.tw/</a></td>
+      <td data-checked><span class="adm-muted">未檢查</span></td>
+      <td data-status><span class="adm-badge adm-badge--gray">unchecked 未檢查</span></td></tr><tr data-owner="unit.chronic-infectious" data-state="unchecked" data-type="topic" data-href="https://hiva.cdc.gov.tw/" data-key="topic.anonymous-testing|links[3]" data-q="topic.anonymous-testing 性傳染病匿名諮詢與篩檢 hiv 自我篩檢計畫網站 https://hiva.cdc.gov.tw/">
+      <td><a href="/new_cdc_prototype/preview/pr-56/topics/anonymous-testing/">性傳染病匿名諮詢與篩檢</a><div class="adm-muted"><code>topic.anonymous-testing</code> · 慢性傳染病組</div></td>
+      <td><code>links[3]</code></td>
+      <td>HIV 自我篩檢計畫網站</td>
+      <td><a href="https://hiva.cdc.gov.tw/" rel="noopener noreferrer">hiva.cdc.gov.tw/</a></td>
+      <td data-checked><span class="adm-muted">未檢查</span></td>
+      <td data-status><span class="adm-badge adm-badge--gray">unchecked 未檢查</span></td></tr><tr data-owner="unit.lab" data-state="unchecked" data-type="topic" data-href="https://mis.cdc.gov.tw/PLC/PLC_QR001.aspx" data-key="topic.antivenom|links[0]" data-q="topic.antivenom 抗蛇毒血清與毒蛇咬傷急救 抗蛇毒血清儲備點查詢系統（疾管署） https://mis.cdc.gov.tw/plc/plc_qr001.aspx">
+      <td><a href="/new_cdc_prototype/preview/pr-56/topics/antivenom/">抗蛇毒血清與毒蛇咬傷急救</a><div class="adm-muted"><code>topic.antivenom</code> · 檢驗及疫苗研製中心</div></td>
+      <td><code>links[0]</code></td>
+      <td>抗蛇毒血清儲備點查詢系統（疾管署）</td>
+      <td><a href="https://mis.cdc.gov.tw/PLC/PLC_QR001.aspx" rel="noopener noreferrer">mis.cdc.gov.tw/PLC/PLC_QR001.aspx</a></td>
+      <td data-checked><span class="adm-muted">未檢查</span></td>
+      <td data-status><span class="adm-badge adm-badge--gray">unchecked 未檢查</span></td></tr><tr data-owner="unit.lab" data-state="unchecked" data-type="topic" data-href="https://www.vghtpe.gov.tw/" data-key="topic.antivenom|links[2]" data-q="topic.antivenom 抗蛇毒血清與毒蛇咬傷急救 臺北榮民總醫院毒藥物防治諮詢中心（24 小時） https://www.vghtpe.gov.tw/">
+      <td><a href="/new_cdc_prototype/preview/pr-56/topics/antivenom/">抗蛇毒血清與毒蛇咬傷急救</a><div class="adm-muted"><code>topic.antivenom</code> · 檢驗及疫苗研製中心</div></td>
+      <td><code>links[2]</code></td>
+      <td>臺北榮民總醫院毒藥物防治諮詢中心（24 小時）</td>
+      <td><a href="https://www.vghtpe.gov.tw/" rel="noopener noreferrer">www.vghtpe.gov.tw/</a></td>
+      <td data-checked><span class="adm-muted">未檢查</span></td>
+      <td data-status><span class="adm-badge adm-badge--gray">unchecked 未檢查</span></td></tr><tr data-owner="unit.lab" data-state="unchecked" data-type="topic" data-href="https://mohw.gov.tw/cp-16-82064-1.html" data-key="topic.antivenom|links[3]" data-q="topic.antivenom 抗蛇毒血清與毒蛇咬傷急救 疾管署新聞稿：毒蛇咬傷「五要五不」與抗蛇毒血清供應（衛福部網站轉載） https://mohw.gov.tw/cp-16-82064-1.html">
+      <td><a href="/new_cdc_prototype/preview/pr-56/topics/antivenom/">抗蛇毒血清與毒蛇咬傷急救</a><div class="adm-muted"><code>topic.antivenom</code> · 檢驗及疫苗研製中心</div></td>
+      <td><code>links[3]</code></td>
+      <td>疾管署新聞稿：毒蛇咬傷「五要五不」與抗蛇毒血清供應（衛福部網站轉載）</td>
+      <td><a href="https://mohw.gov.tw/cp-16-82064-1.html" rel="noopener noreferrer">mohw.gov.tw/cp-16-82064-1.html</a></td>
+      <td data-checked><span class="adm-muted">未檢查</span></td>
+      <td data-status><span class="adm-badge adm-badge--gray">unchecked 未檢查</span></td></tr><tr data-owner="unit.preparedness" data-state="unchecked" data-type="topic" data-href="https://www.ey.gov.tw/" data-key="topic.disaster-evacuation|links[0]" data-q="topic.disaster-evacuation 防災避難須知：災後防疫與避難所衛生 全民安全指引（行政院） https://www.ey.gov.tw/">
+      <td><a href="/new_cdc_prototype/preview/pr-56/topics/disaster-evacuation/">防災避難須知：災後防疫與避難所衛生</a><div class="adm-muted"><code>topic.disaster-evacuation</code> · 新興傳染病整備組</div></td>
+      <td><code>links[0]</code></td>
+      <td>全民安全指引（行政院）</td>
+      <td><a href="https://www.ey.gov.tw/" rel="noopener noreferrer">www.ey.gov.tw/</a></td>
+      <td data-checked><span class="adm-muted">未檢查</span></td>
+      <td data-status><span class="adm-badge adm-badge--gray">unchecked 未檢查</span></td></tr><tr data-owner="unit.preparedness" data-state="unchecked" data-type="topic" data-href="https://www.nfa.gov.tw/" data-key="topic.disaster-evacuation|links[1]" data-q="topic.disaster-evacuation 防災避難須知：災後防疫與避難所衛生 消防署防災避難看板與避難處所查詢 https://www.nfa.gov.tw/">
+      <td><a href="/new_cdc_prototype/preview/pr-56/topics/disaster-evacuation/">防災避難須知：災後防疫與避難所衛生</a><div class="adm-muted"><code>topic.disaster-evacuation</code> · 新興傳染病整備組</div></td>
+      <td><code>links[1]</code></td>
+      <td>消防署防災避難看板與避難處所查詢</td>
+      <td><a href="https://www.nfa.gov.tw/" rel="noopener noreferrer">www.nfa.gov.tw/</a></td>
+      <td data-checked><span class="adm-muted">未檢查</span></td>
+      <td data-status><span class="adm-badge adm-badge--gray">unchecked 未檢查</span></td></tr><tr data-owner="unit.infection-control" data-state="unchecked" data-type="topic" data-href="https://1966.gov.tw/" data-key="topic.ltc-infection-control|links[4]" data-q="topic.ltc-infection-control 長照機構感染管制專區 衛福部長照專區 https://1966.gov.tw/">
+      <td><a href="/new_cdc_prototype/preview/pr-56/topics/ltc-infection-control/">長照機構感染管制專區</a><div class="adm-muted"><code>topic.ltc-infection-control</code> · 感染管制及生物安全組</div></td>
+      <td><code>links[4]</code></td>
+      <td>衛福部長照專區</td>
+      <td><a href="https://1966.gov.tw/" rel="noopener noreferrer">1966.gov.tw/</a></td>
+      <td data-checked><span class="adm-muted">未檢查</span></td>
+      <td data-status><span class="adm-badge adm-badge--gray">unchecked 未檢查</span></td></tr><tr data-owner="unit.pr" data-state="unchecked" data-type="topic" data-href="https://www.wda.gov.tw/" data-key="topic.new-residents-migrant-health|links[4]" data-q="topic.new-residents-migrant-health 新住民與移工健康：七語防疫資訊 勞動部勞動力發展署 1955 專線 https://www.wda.gov.tw/">
+      <td><a href="/new_cdc_prototype/preview/pr-56/topics/new-residents-migrant-health/">新住民與移工健康：七語防疫資訊</a><div class="adm-muted"><code>topic.new-residents-migrant-health</code> · 公關室</div></td>
+      <td><code>links[4]</code></td>
+      <td>勞動部勞動力發展署 1955 專線</td>
+      <td><a href="https://www.wda.gov.tw/" rel="noopener noreferrer">www.wda.gov.tw/</a></td>
+      <td data-checked><span class="adm-muted">未檢查</span></td>
+      <td data-status><span class="adm-badge adm-badge--gray">unchecked 未檢查</span></td></tr><tr data-owner="unit.pr" data-state="unchecked" data-type="topic" data-href="https://www.immigration.gov.tw/" data-key="topic.new-residents-migrant-health|links[5]" data-q="topic.new-residents-migrant-health 新住民與移工健康：七語防疫資訊 內政部移民署新住民資訊 https://www.immigration.gov.tw/">
+      <td><a href="/new_cdc_prototype/preview/pr-56/topics/new-residents-migrant-health/">新住民與移工健康：七語防疫資訊</a><div class="adm-muted"><code>topic.new-residents-migrant-health</code> · 公關室</div></td>
+      <td><code>links[5]</code></td>
+      <td>內政部移民署新住民資訊</td>
+      <td><a href="https://www.immigration.gov.tw/" rel="noopener noreferrer">www.immigration.gov.tw/</a></td>
+      <td data-checked><span class="adm-muted">未檢查</span></td>
+      <td data-status><span class="adm-badge adm-badge--gray">unchecked 未檢查</span></td></tr><tr data-owner="unit.chronic-infectious" data-state="unchecked" data-type="topic" data-href="https://www.gender.edu.tw/" data-key="topic.sti-resources|links[4]" data-q="topic.sti-resources 性傳染病衛教資源 教育部性別平等教育全球資訊網 https://www.gender.edu.tw/">
+      <td><a href="/new_cdc_prototype/preview/pr-56/topics/sti-resources/">性傳染病衛教資源</a><div class="adm-muted"><code>topic.sti-resources</code> · 慢性傳染病組</div></td>
+      <td><code>links[4]</code></td>
+      <td>教育部性別平等教育全球資訊網</td>
+      <td><a href="https://www.gender.edu.tw/" rel="noopener noreferrer">www.gender.edu.tw/</a></td>
+      <td data-checked><span class="adm-muted">未檢查</span></td>
+      <td data-status><span class="adm-badge adm-badge--gray">unchecked 未檢查</span></td></tr><tr data-owner="unit.chronic-infectious" data-state="unchecked" data-type="topic" data-href="https://www.who.int/health-topics/tuberculosis" data-key="topic.tb-prevention|links[12]" data-q="topic.tb-prevention 結核病防治專區 who 結核病主題頁 https://www.who.int/health-topics/tuberculosis">
+      <td><a href="/new_cdc_prototype/preview/pr-56/topics/tb-prevention/">結核病防治專區</a><div class="adm-muted"><code>topic.tb-prevention</code> · 慢性傳染病組</div></td>
+      <td><code>links[12]</code></td>
+      <td>WHO 結核病主題頁</td>
+      <td><a href="https://www.who.int/health-topics/tuberculosis" rel="noopener noreferrer">www.who.int/health-topics/tuberculosis</a></td>
+      <td data-checked><span class="adm-muted">未檢查</span></td>
+      <td data-status><span class="adm-badge adm-badge--gray">unchecked 未檢查</span></td></tr><tr data-owner="unit.chronic-infectious" data-state="unchecked" data-type="topic" data-href="https://www.unaids.org/" data-key="topic.world-aids-day-2025|links[2]" data-q="topic.world-aids-day-2025 2025 世界愛滋日：篩檢、治療、不歧視 unaids world aids day https://www.unaids.org/">
+      <td><a href="/new_cdc_prototype/preview/pr-56/topics/world-aids-day-2025/">2025 世界愛滋日：篩檢、治療、不歧視</a><div class="adm-muted"><code>topic.world-aids-day-2025</code> · 慢性傳染病組</div></td>
+      <td><code>links[2]</code></td>
+      <td>UNAIDS World AIDS Day</td>
+      <td><a href="https://www.unaids.org/" rel="noopener noreferrer">www.unaids.org/</a></td>
+      <td data-checked><span class="adm-muted">未檢查</span></td>
+      <td data-status><span class="adm-badge adm-badge--gray">unchecked 未檢查</span></td></tr></tbody></table></div>
+  <p class="adm-empty" hidden>目前沒有外部連結（專區、申請服務、公告等內容載入後會列在這裡）。</p>
+</section></main>
+<footer class="adm-foot"><a href="/new_cdc_prototype/preview/pr-56/">回前台首頁</a><a href="/new_cdc_prototype/preview/pr-56/v1/catalog.json">目錄 API（/v1/catalog.json）</a><a href="/new_cdc_prototype/preview/pr-56/guide/">使用說明</a><span>建置日 2026-10-01</span></footer>
+<script type="module" src="/new_cdc_prototype/preview/pr-56/assets/js/admin/common.js"></script>
+<script type="module" src="/new_cdc_prototype/preview/pr-56/assets/js/admin/links.js"></script>
+</body>
+</html>

@@ -1,0 +1,1018 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "5422e7aa90a7",
+    "lastModified": "2026-09-22"
+  },
+  "data": {
+    "id": "disease.tuberculosis",
+    "type": "disease",
+    "slug": "tuberculosis",
+    "title": "結核病",
+    "nameEn": "Tuberculosis",
+    "aliases": [
+      "肺結核",
+      "TB",
+      "肺癆",
+      "潛伏結核感染",
+      "LTBI"
+    ],
+    "legalCategory": 3,
+    "icd10": [
+      "A15",
+      "A16",
+      "A17",
+      "A18",
+      "A19"
+    ],
+    "notifyWithinHours": 168,
+    "incubation": {
+      "unit": "year",
+      "text": "感染後一生中約 5–10% 會發病，多在感染後 2 年內"
+    },
+    "transmission": [
+      "airborne"
+    ],
+    "owner": "unit.chronic-infectious",
+    "steward": "慢性傳染病組承辦人",
+    "publishedAt": "2018-03-01",
+    "reviewedAt": "2026-09-22",
+    "reviewPeriodMonths": 12,
+    "status": "published",
+    "audience": [
+      "public",
+      "professional"
+    ],
+    "tasks": [
+      "symptoms",
+      "situation"
+    ],
+    "sensitivity": "public",
+    "license": "OGDL-1.0",
+    "diseases": [
+      "disease.tuberculosis"
+    ],
+    "vaccines": [
+      "vaccine.bcg"
+    ],
+    "aiWhitelist": {
+      "requested": true,
+      "approvedBy": "unit.oasis",
+      "approvedAt": "2026-09-01"
+    },
+    "languages": {
+      "zh-TW": {
+        "status": "source"
+      },
+      "en": {
+        "status": "reviewed",
+        "reviewedAt": "2026-04-02",
+        "reviewer": "內部英文審核人"
+      },
+      "ja": {
+        "status": "machine"
+      },
+      "tl": {
+        "status": "machine"
+      },
+      "vi": {
+        "status": "reviewed",
+        "reviewedAt": "2026-04-08",
+        "reviewer": "簽約譯者（越南文）"
+      },
+      "id": {
+        "status": "machine"
+      },
+      "th": {
+        "status": "machine"
+      }
+    },
+    "summary": "結核病經空氣傳染，咳嗽超過 2 週應就醫檢查。只要規則服藥至少 6 個月幾乎都能治癒；接觸者檢查與潛伏結核感染治療可避免日後發病。",
+    "keywords": [
+      "結核病",
+      "肺結核",
+      "咳嗽兩週",
+      "都治",
+      "潛伏結核感染",
+      "接觸者檢查",
+      "卡介苗",
+      "多重抗藥性結核病",
+      "2035 消除結核"
+    ],
+    "legacyUrls": [
+      "https://www.cdc.gov.tw/Disease/Index",
+      "https://www.cdc.gov.tw/Disease/SubIndex/{id}",
+      "https://www.cdc.gov.tw/Category/MPage/{id}#bcg",
+      "https://www.cdc.gov.tw/Category/QAPage/{id}",
+      "https://www.cdc.gov.tw/Bulletin/List/{id}?page=1#tuberculosis"
+    ],
+    "keyFacts": {
+      "incubation": "感染後終生約 5–10% 發病，多在 2 年內；多數人為潛伏感染",
+      "symptoms": "咳嗽超過 2 週、有痰、體重減輕、發燒、夜間盜汗",
+      "transmission": "空氣傳染（開放性肺結核病人咳嗽、說話）",
+      "prevention": "早期發現、接觸者檢查、潛伏感染治療、嬰兒出生滿 5 個月接種卡介苗",
+      "notify": "第三類，一週內（多重抗藥性結核病第二類，24 小時內）"
+    },
+    "blocks": [
+      {
+        "key": "what-to-do",
+        "heading": "我該怎麼辦",
+        "cards": [
+          {
+            "if": "咳嗽超過 2 週",
+            "title": "到胸腔科照胸部 X 光",
+            "text": "咳嗽 2 週以上、有痰或體重減輕，請到醫院胸腔科就醫並照胸部 X 光、驗痰。"
+          },
+          {
+            "if": "確診結核病",
+            "title": "加入都治、規則服藥 6 個月以上",
+            "text": "由都治關懷員每天陪同服藥，完整服藥幾乎都能治癒，自行停藥可能產生抗藥性。就醫部分負擔由疾管署支應。"
+          },
+          {
+            "if": "家人確診結核病",
+            "title": "配合接觸者檢查",
+            "text": "衛生所會通知您做胸部 X 光與潛伏結核感染檢驗（IGRA），費用由公費支應。"
+          },
+          {
+            "if": "驗出潛伏結核感染",
+            "title": "接受短程預防性治療",
+            "text": "3HP、1HP 等處方可降低 9 成以上發病風險，治療期間有關懷員陪伴服藥。"
+          }
+        ]
+      },
+      {
+        "key": "symptoms",
+        "heading": "症狀與警示徵象",
+        "markdown": "肺結核早期症狀不明顯，常見**咳嗽超過 2 週**、有痰、胸痛、食慾不振、體重減輕、倦怠、午後發燒與夜間盜汗，嚴重時可能咳血。長者症狀常不典型，可能只有食慾變差或體重下降。\n\n結核菌也可能侵犯淋巴結、骨骼、腎臟、腦膜等肺外器官。**潛伏結核感染**者體內有結核菌但沒有症狀，也不會傳染給別人。",
+        "warning": "咳血、呼吸困難、持續高燒或體重快速下降，請儘速就醫。"
+      },
+      {
+        "key": "transmission",
+        "heading": "怎麼傳染",
+        "markdown": "### 致病原\n結核病由**結核分枝桿菌**（*Mycobacterium tuberculosis*）引起，菌體生長緩慢、耐乾燥，可侵犯全身各器官，以肺部最常見。\n\n### 傳染方式\n結核病經由**空氣**傳染。開放性肺結核病人咳嗽、打噴嚏、說話或唱歌時，含結核菌的微粒飄散在空氣中，被他人吸入而感染。與病人長時間在密閉空間相處（例如同住家人）的風險最高。結核病不會經由共用餐具、握手或衣物傳染。\n\n### 潛伏期與可傳染期\n感染後多數人為潛伏感染，一生中約 5–10% 會發病，其中約一半在感染後 2 年內。痰液可驗出結核菌期間具傳染力；病人規則服藥約 2 週後，傳染力會明顯下降。\n\n### 易感族群\n5 歲以下幼童、65 歲以上長者、HIV 感染者、糖尿病、洗腎、器官移植或使用免疫抑制藥物者，感染後較容易發病。"
+      },
+      {
+        "key": "prevention",
+        "heading": "如何預防",
+        "markdown": "- **早期發現、完整治療**是阻斷傳播的關鍵：咳嗽超過 2 週請就醫。\n- **接觸者檢查**：確診者的密切接觸者，於確診後 1 個月內照胸部 X 光並依年齡檢驗 IGRA，滿 12 個月再照一次胸部 X 光，費用由公費支應。\n- **潛伏結核感染治療**：檢出潛伏感染者，建議接受 3HP（每週 1 次共 12 次）、1HP（每天 1 次共 28 天）、3HR、4R 或 9H 治療，可降低 9 成以上的發病風險。\n- **卡介苗**：嬰兒出生滿 5 個月（建議 5–8 個月）接種，可預防幼兒結核性腦膜炎等嚴重型結核病。\n- 室內保持通風；咳嗽時戴口罩。\n- **高風險族群主動篩檢**：矯正機關、長期照護機構、外籍移工、山地鄉居民與糖尿病患者等，依計畫定期胸部 X 光篩檢。"
+      },
+      {
+        "key": "treatment",
+        "heading": "診斷與治療",
+        "markdown": "### 診斷\n醫師依症狀與胸部 X 光判斷，並收集 3 套痰液（至少 1 套晨痰）做抗酸菌塗片、培養與**分子快速檢測**（可同時偵測 rifampin 抗藥）。\n\n### 治療\n結核病需合併多種抗結核藥物，治療**至少 6 個月**（前 2 個月 4 種藥物，後 4 個月 2 種藥物）。多重抗藥性結核病由**抗藥性結核病醫療照護體系（TMTC）**專責團隊收治，優先採全口服短程處方。\n\n### 都治（DOTS）\n由關懷員每日**送藥到手、親眼看著病人服下**，提高完治率、避免抗藥性。所有確診個案均納入都治，服務免費。\n\n### 就醫與費用\n結核病個案就醫由健保給付，**部分負擔由疾管署支應**；多重抗藥性結核病治療與隔離治療費用由政府負擔。外籍人士入國、居留健檢均含胸部 X 光，發現疑似個案即轉介診治。"
+      },
+      {
+        "key": "vaccine",
+        "heading": "疫苗",
+        "markdown": "卡介苗（BCG）為公費常規疫苗，**出生滿 5 個月接種 1 劑**（建議 5–8 個月）。卡介苗主要預防幼兒結核性腦膜炎、粟粒性結核等嚴重型結核病，對成人肺結核保護力有限，成人不需補種。接種後 2–3 週局部出現紅腫或小膿包屬正常反應，保持乾燥清潔即可。"
+      },
+      {
+        "key": "situation",
+        "heading": "目前疫情與統計",
+        "markdown": "### 流行病學\n全球每年約有 1 千萬人發病，是單一病原致死人數最多的傳染病之一。臺灣結核病新案數自 2005 年以來持續下降，目前以 65 歲以上長者占多數，山地鄉、糖尿病與洗腎族群發生率較高。\n\n### 2035 消除結核\n臺灣以 **2035 年發生率降至每十萬人口 10 例以下**為目標，推動接觸者與高風險族群潛伏結核感染檢驗與治療、都治與抗藥性照護體系。年度新案數見資料集。",
+        "datasets": [
+          "dataset.tb-new-cases"
+        ]
+      },
+      {
+        "key": "faq",
+        "heading": "常見問題"
+      }
+    ],
+    "professional": {
+      "caseDefinitionDoc": "doc.tb-case-definition",
+      "manualDoc": "doc.tb-manual",
+      "specimen": "連續 3 套痰液（至少 1 套為晨痰），進行抗酸菌塗片、培養與分子快速檢測（含 rifampin 抗藥基因）；分子快速檢測為疑似個案第一線檢驗。",
+      "notifyNote": "第三類法定傳染病，應於一週內通報；多重抗藥性結核病屬第二類，應於 24 小時內通報。",
+      "programs": [
+        {
+          "key": "dots",
+          "title": "都治（DOTS）",
+          "summary": "關懷員每日送藥到手、親眼看服藥；所有確診個案納入，社區、機構與進階都治（DOTS-Plus）。",
+          "documents": [
+            "doc.dots-manual"
+          ],
+          "services": [
+            "service.tb-treatment-subsidy"
+          ],
+          "contentIds": [
+            "faq.tb-dots-what",
+            "news.2026-08-20-dots-outcomes"
+          ]
+        },
+        {
+          "key": "ltbi",
+          "title": "潛伏結核感染（LTBI）檢驗與治療",
+          "summary": "接觸者與高風險族群公費 IGRA 檢驗；3HP、1HP、3HR、4R、9H 處方並以 DOPT 陪伴服藥。",
+          "documents": [
+            "doc.ltbi-guideline"
+          ],
+          "services": [
+            "service.ltbi-treatment"
+          ],
+          "contentIds": [
+            "faq.ltbi-treat-or-not"
+          ]
+        },
+        {
+          "key": "contact-investigation",
+          "title": "接觸者檢查",
+          "summary": "密切接觸者（一天 8 小時或累計 40 小時）確診後 1 個月內胸部 X 光與 IGRA，滿 12 個月再照胸部 X 光。",
+          "documents": [
+            "doc.tb-contact-investigation"
+          ],
+          "services": [],
+          "contentIds": [
+            "faq.tb-contact-screening"
+          ]
+        },
+        {
+          "key": "mdr-tmtc",
+          "title": "抗藥性結核病醫療照護體系（TMTC）",
+          "summary": "多重抗藥性結核病由專責團隊收治，優先採全口服短程處方，結合進階都治，費用由公費支應。",
+          "documents": [
+            "doc.tb-guideline"
+          ],
+          "services": [
+            "service.tb-treatment-subsidy"
+          ],
+          "contentIds": [
+            "faq.mdr-tb"
+          ]
+        },
+        {
+          "key": "end-tb-2035",
+          "title": "2035 消除結核",
+          "summary": "2035 年發生率降至每十萬人口 10 例以下；策略為早期發現、完整治療、潛伏感染治療。",
+          "documents": [],
+          "services": [],
+          "contentIds": [
+            "news.2026-03-24-world-tb-day-end-tb-2035",
+            "dataset.tb-new-cases",
+            "topic.tb-prevention"
+          ],
+          "target": {
+            "metric": "發生率（每十萬人口）",
+            "value": 10,
+            "comparator": "<",
+            "year": 2035
+          }
+        },
+        {
+          "key": "high-risk-screening",
+          "title": "高風險族群主動篩檢",
+          "summary": "依計畫對高風險族群定期胸部 X 光篩檢，並推動潛伏結核感染檢驗與治療。",
+          "documents": [
+            "doc.tb-manual"
+          ],
+          "services": [
+            "service.ltbi-treatment"
+          ],
+          "contentIds": [
+            "research.2025-migrant-tb-active-case-finding",
+            "faq.tb-foreigner-health-check",
+            "topic.ltc-infection-control"
+          ],
+          "groups": [
+            "矯正機關收容人",
+            "長期照護機構住民與工作人員",
+            "外籍移工",
+            "山地鄉居民",
+            "糖尿病、洗腎等慢性病人"
+          ]
+        }
+      ]
+    },
+    "relatedDocuments": [
+      "doc.tb-guideline",
+      "doc.ltbi-guideline",
+      "doc.tb-contact-investigation",
+      "doc.dots-manual",
+      "doc.tb-case-definition",
+      "doc.tb-manual"
+    ],
+    "materials": [
+      {
+        "label": "結核病衛教單張（移工版：越、印、泰、菲）",
+        "url": "https://www.cdc.gov.tw/Advocacy",
+        "langs": [
+          "zh-TW",
+          "vi",
+          "id",
+          "th",
+          "tl",
+          "en"
+        ]
+      }
+    ],
+    "i18n": {
+      "en": {
+        "title": "Tuberculosis",
+        "summary": "Tuberculosis spreads through the air; see a doctor if you have coughed for more than 2 weeks. Taking medicine regularly for at least 6 months cures almost everyone; contact screening and latent TB treatment prevent future disease.",
+        "keyFacts": {
+          "incubation": "About 5–10% of infected people develop disease in their lifetime, mostly within 2 years",
+          "symptoms": "Cough for more than 2 weeks, sputum, weight loss, fever, night sweats",
+          "transmission": "Airborne (coughing or talking by people with infectious pulmonary TB)",
+          "prevention": "Early detection, contact screening, latent TB treatment, BCG for infants",
+          "notify": "Within one week"
+        },
+        "blocks": [
+          {
+            "key": "what-to-do",
+            "heading": "What to do",
+            "cards": [
+              {
+                "if": "have coughed for more than 2 weeks",
+                "title": "Get a chest X-ray at a chest clinic",
+                "text": "If you have coughed for 2 weeks or more, have sputum or are losing weight, see a chest physician for an X-ray and sputum test."
+              },
+              {
+                "if": "are diagnosed with TB",
+                "title": "Join DOTS and take medicine for at least 6 months",
+                "text": "A DOTS worker accompanies you to take medicine every day; completing treatment cures almost everyone, while stopping early can cause drug resistance."
+              },
+              {
+                "if": "a family member has TB",
+                "title": "Take part in contact screening",
+                "text": "The health centre will arrange a chest X-ray and latent TB test, paid for by the government."
+              }
+            ]
+          },
+          {
+            "key": "symptoms",
+            "heading": "Symptoms and warning signs",
+            "markdown": "Early pulmonary TB may cause few symptoms. Common signs are **a cough lasting more than 2 weeks**, sputum, chest pain, poor appetite, weight loss, fatigue, afternoon fever and night sweats; coughing blood may occur in severe cases.\n\nTB can also affect lymph nodes, bones, kidneys and the meninges. People with **latent TB infection** carry the bacteria without symptoms and cannot infect others.",
+            "warning": "Coughing blood, breathlessness, persistent high fever or rapid weight loss: seek care promptly."
+          },
+          {
+            "key": "transmission",
+            "heading": "How it spreads",
+            "markdown": "TB spreads through the **air**. When a person with infectious pulmonary TB coughs, sneezes, talks or sings, droplets containing bacteria float in the air and are inhaled by others. Risk is highest for people who spend long periods with the patient in enclosed spaces, such as household members.\n\nTB does not spread through shared utensils, handshakes or clothing. Infectiousness falls markedly after about 2 weeks of regular treatment."
+          },
+          {
+            "key": "prevention",
+            "heading": "Prevention",
+            "markdown": "- **Early detection and complete treatment** stop transmission.\n- Close contacts should take part in **contact screening**; those with latent TB infection are advised to take preventive treatment (such as 3HP, once weekly for 12 doses), which lowers the risk of disease by over 90%.\n- Infants receive **BCG** at 5 months (recommended 5–8 months) to prevent severe childhood TB such as TB meningitis.\n- Keep rooms ventilated and wear a mask when coughing."
+          },
+          {
+            "key": "treatment",
+            "heading": "Diagnosis and treatment",
+            "markdown": "TB is treated with a combination of drugs for **at least 6 months** (four drugs for 2 months, then two drugs for 4 months); drug-resistant TB takes longer.\n\nTaiwan runs **DOTS** (directly observed treatment): a worker brings the medicine daily and watches the patient take it, improving cure rates and preventing resistance. Treatment costs are covered by the government."
+          },
+          {
+            "key": "vaccine",
+            "heading": "Vaccine",
+            "markdown": "BCG is a routine government-funded vaccine given once at 5 months (recommended 5–8 months). It mainly prevents severe TB in young children and offers limited protection against adult pulmonary TB; adults do not need a booster."
+          },
+          {
+            "key": "situation",
+            "heading": "Current situation and statistics",
+            "markdown": "New TB cases in Taiwan have fallen steadily since 2005 towards the WHO 2035 elimination target; see the dataset for annual figures."
+          },
+          {
+            "key": "faq",
+            "heading": "FAQ"
+          }
+        ]
+      },
+      "vi": {
+        "title": "Bệnh lao",
+        "summary": "Bệnh lao lây qua không khí; ho trên 2 tuần cần đi khám. Uống thuốc đều đặn ít nhất 6 tháng hầu như đều khỏi bệnh; khám người tiếp xúc và điều trị lao tiềm ẩn giúp phòng phát bệnh.",
+        "keyFacts": {
+          "incubation": "Khoảng 5–10% người nhiễm sẽ phát bệnh, chủ yếu trong 2 năm đầu",
+          "symptoms": "Ho trên 2 tuần, có đờm, sụt cân, sốt, đổ mồ hôi đêm",
+          "transmission": "Lây qua không khí",
+          "prevention": "Phát hiện sớm, khám người tiếp xúc, điều trị lao tiềm ẩn, tiêm BCG cho trẻ",
+          "notify": "Trong vòng một tuần"
+        },
+        "blocks": [
+          {
+            "key": "what-to-do",
+            "heading": "Tôi nên làm gì",
+            "cards": [
+              {
+                "if": "ho trên 2 tuần",
+                "title": "Chụp X-quang phổi",
+                "text": "Ho từ 2 tuần trở lên, có đờm hoặc sụt cân, hãy đến khoa phổi để chụp X-quang và xét nghiệm đờm."
+              },
+              {
+                "if": "được chẩn đoán mắc lao",
+                "title": "Tham gia DOTS, uống thuốc ít nhất 6 tháng",
+                "text": "Nhân viên DOTS sẽ cùng bạn uống thuốc mỗi ngày; uống đủ thuốc hầu như đều khỏi, tự ý ngừng thuốc có thể gây kháng thuốc."
+              },
+              {
+                "if": "người nhà mắc lao",
+                "title": "Tham gia khám người tiếp xúc",
+                "text": "Trạm y tế sẽ hẹn chụp X-quang và xét nghiệm lao tiềm ẩn, chi phí do nhà nước chi trả."
+              }
+            ]
+          },
+          {
+            "key": "symptoms",
+            "heading": "Triệu chứng và dấu hiệu cảnh báo",
+            "markdown": "Triệu chứng thường gặp: **ho trên 2 tuần**, có đờm, đau ngực, chán ăn, sụt cân, mệt mỏi, sốt về chiều, đổ mồ hôi đêm. Người **nhiễm lao tiềm ẩn** không có triệu chứng và không lây cho người khác.",
+            "warning": "Ho ra máu, khó thở, sốt cao kéo dài hoặc sụt cân nhanh: cần đi khám ngay."
+          },
+          {
+            "key": "transmission",
+            "heading": "Lây truyền",
+            "markdown": "Bệnh lao lây qua **không khí** khi người mắc lao phổi ho, hắt hơi, nói chuyện. Lao không lây qua dùng chung bát đũa, bắt tay hay quần áo."
+          },
+          {
+            "key": "prevention",
+            "heading": "Phòng ngừa",
+            "markdown": "- Phát hiện sớm và điều trị đầy đủ.\n- Người tiếp xúc gần nên tham gia khám; nếu nhiễm lao tiềm ẩn nên điều trị dự phòng (ví dụ 3HP: mỗi tuần 1 lần, 12 liều).\n- Trẻ 5 tháng tuổi tiêm vắc-xin **BCG**."
+          },
+          {
+            "key": "treatment",
+            "heading": "Chẩn đoán và điều trị",
+            "markdown": "Điều trị phối hợp nhiều loại thuốc **ít nhất 6 tháng**. Đài Loan áp dụng **DOTS**: nhân viên mang thuốc đến và quan sát người bệnh uống mỗi ngày; chi phí điều trị do nhà nước chi trả."
+          },
+          {
+            "key": "vaccine",
+            "heading": "Vắc-xin",
+            "markdown": "BCG là vắc-xin miễn phí, tiêm 1 liều lúc 5 tháng tuổi (khuyến nghị 5–8 tháng). Người lớn không cần tiêm nhắc lại."
+          },
+          {
+            "key": "situation",
+            "heading": "Tình hình hiện nay và thống kê",
+            "markdown": "Số ca lao mới tại Đài Loan giảm liên tục từ năm 2005."
+          },
+          {
+            "key": "faq",
+            "heading": "Câu hỏi thường gặp"
+          }
+        ]
+      },
+      "id": {
+        "title": "Tuberkulosis (TBC)",
+        "summary": "TBC menular melalui udara; periksakan diri bila batuk lebih dari 2 minggu. Minum obat teratur minimal 6 bulan hampir selalu menyembuhkan; pemeriksaan kontak dan pengobatan TBC laten mencegah sakit di kemudian hari.",
+        "keyFacts": {
+          "incubation": "Sekitar 5–10% orang yang terinfeksi akan sakit, umumnya dalam 2 tahun",
+          "symptoms": "Batuk lebih dari 2 minggu, berdahak, berat badan turun, demam, keringat malam",
+          "transmission": "Melalui udara",
+          "prevention": "Deteksi dini, pemeriksaan kontak, pengobatan TBC laten, vaksin BCG untuk bayi",
+          "notify": "Dalam satu minggu"
+        }
+      }
+    },
+    "sourceHash": "2a6bc310b327",
+    "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/tuberculosis/",
+    "path": "/diseases/tuberculosis/",
+    "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/tuberculosis.md",
+    "governance": {
+      "owner": "unit.chronic-infectious",
+      "ownerName": "慢性傳染病組",
+      "steward": "慢性傳染病組承辦人",
+      "reviewedAt": "2026-09-22",
+      "reviewPeriodMonths": 12,
+      "nextReviewAt": "2027-09-22",
+      "daysToReview": 356,
+      "overdue": false,
+      "dueSoon": false,
+      "status": "published",
+      "lifecycle": "current",
+      "lifecycleLabel": "現行版",
+      "whitelist": true,
+      "whitelistTier": "public",
+      "whitelistPublic": true,
+      "whitelistReasons": [],
+      "whitelistReasonLabels": [],
+      "isCurrent": true,
+      "superseded": false,
+      "supersededBy": null,
+      "currentId": "disease.tuberculosis",
+      "noindex": false,
+      "stale": [],
+      "basisRevisions": [],
+      "predatesBasis": false,
+      "annotations": [],
+      "reverseAuditHits": 0,
+      "license": "OGDL-1.0",
+      "licenseNote": null,
+      "sensitivity": "public",
+      "sourceHash": "2a6bc310b327",
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-04-02",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "reviewed",
+          "reviewedAt": "2026-04-08",
+          "reviewer": "簽約譯者（越南文）"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "translationStale": {
+        "en": false,
+        "ja": false,
+        "tl": false,
+        "vi": false,
+        "id": false,
+        "th": false
+      },
+      "renderableLangs": [
+        "zh-TW",
+        "en",
+        "vi"
+      ]
+    },
+    "master": {
+      "id": "disease.tuberculosis",
+      "slug": "tuberculosis",
+      "name": "結核病",
+      "nameEn": "Tuberculosis",
+      "aliases": [
+        "肺結核",
+        "TB",
+        "肺癆"
+      ],
+      "legalCategory": 3,
+      "icd10": [
+        "A15",
+        "A16",
+        "A17",
+        "A18",
+        "A19"
+      ],
+      "notifyWithinHours": 168,
+      "transmission": [
+        "airborne"
+      ],
+      "hasPage": true,
+      "owner": "unit.chronic-infectious",
+      "datasets": [
+        "dataset.tb-new-cases"
+      ],
+      "zhuyin": "ㄐ",
+      "strokes": 12,
+      "note": "不含多重抗藥性結核病（第二類）",
+      "i18n": {
+        "en": {
+          "name": "Tuberculosis"
+        }
+      }
+    },
+    "related": {
+      "faq": [
+        {
+          "id": "faq.bcg-when",
+          "type": "faq",
+          "title": "卡介苗什麼時候打？大人需要補打嗎？",
+          "summary": "卡介苗為公費疫苗，嬰兒出生滿 5 個月接種 1 劑（建議 5–8 個月），保護幼童免於嚴重結核病；成人不需補種。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/bcg-when/",
+          "path": "/faq/bcg-when/",
+          "reviewedAt": "2026-09-22",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.ltbi-treat-or-not",
+          "type": "faq",
+          "title": "驗出潛伏結核感染，一定要治療嗎？",
+          "summary": "潛伏結核感染沒有症狀也不會傳染，但一生約 5–10% 會發病；接受 3HP、1HP 等治療可降低 9 成以上發病風險，建議治療，費用由公費支應。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/ltbi-treat-or-not/",
+          "path": "/faq/ltbi-treat-or-not/",
+          "reviewedAt": "2026-09-22",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.mdr-tb",
+          "type": "faq",
+          "title": "什麼是抗藥性結核病？要怎麼治療？",
+          "summary": "對 isoniazid 與 rifampin 都抗藥稱多重抗藥性結核病，由抗藥性結核病醫療照護體系（TMTC）收治並進階都治，優先採全口服短程處方，費用由公費支應。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/mdr-tb/",
+          "path": "/faq/mdr-tb/",
+          "reviewedAt": "2026-09-22",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.tb-contact-screening",
+          "type": "faq",
+          "title": "家人得了結核病，我需要做什麼檢查？",
+          "summary": "家人確診結核病，衛生所會安排接觸者檢查：確診後 1 個月內胸部 X 光與 IGRA，滿 12 個月再照一次 X 光；費用由公費支應。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/tb-contact-screening/",
+          "path": "/faq/tb-contact-screening/",
+          "reviewedAt": "2026-09-22",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.tb-contagious-after-treatment",
+          "type": "faq",
+          "title": "結核病開始吃藥後，還會傳染給家人嗎？",
+          "summary": "規則服藥約 2 週後傳染力明顯下降，但須完成至少 6 個月療程；治療初期戴口罩、保持通風，家人配合接觸者檢查，不需分開碗筷。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/tb-contagious-after-treatment/",
+          "path": "/faq/tb-contagious-after-treatment/",
+          "reviewedAt": "2026-09-22",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.tb-cough-two-weeks",
+          "type": "faq",
+          "title": "咳嗽多久要懷疑是結核病？",
+          "summary": "咳嗽超過 2 週，尤其合併有痰、體重減輕、夜間盜汗，應至胸腔科照胸部 X 光與驗痰；規則治療幾乎都能治癒。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/tb-cough-two-weeks/",
+          "path": "/faq/tb-cough-two-weeks/",
+          "reviewedAt": "2026-04-01",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.tb-dots-what",
+          "type": "faq",
+          "title": "什麼是都治（DOTS）？",
+          "summary": "都治（DOTS）由關懷員每天送藥到手、親眼看您服藥並關心副作用，確保 6 個月以上療程不中斷，服務免費。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/tb-dots-what/",
+          "path": "/faq/tb-dots-what/",
+          "reviewedAt": "2026-09-22",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.tb-foreigner-health-check",
+          "type": "faq",
+          "title": "外籍人士來臺工作或居留，需要做結核病檢查嗎？",
+          "summary": "外籍移工入國前、入國後 3 個工作日內與聘僱期間健檢都含胸部 X 光；居留、定居也須檢附含 X 光的健檢證明，疑似結核病轉介治療並納入都治。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/tb-foreigner-health-check/",
+          "path": "/faq/tb-foreigner-health-check/",
+          "reviewedAt": "2026-09-22",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.tb-treatment-cost",
+          "type": "faq",
+          "title": "結核病治療要花錢嗎？",
+          "summary": "結核病診治由健保給付、部分負擔由疾管署支應；都治、接觸者檢查與潛伏感染治療也由公費支應，隔離治療費用由政府負擔。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/tb-treatment-cost/",
+          "path": "/faq/tb-treatment-cost/",
+          "reviewedAt": "2026-09-22",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "news": [
+        {
+          "id": "news.2025-03-24-world-tb-day",
+          "type": "news",
+          "title": "世界結核病日：咳嗽兩週請就醫，接觸者檢查與潛伏感染治療守護家人",
+          "summary": "世界結核病日，疾管署呼籲咳嗽超過兩週應就醫照胸部 X 光；確診者家人配合接觸者檢查，潛伏結核感染者接受治療可大幅降低發病風險。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-03-24-world-tb-day/",
+          "path": "/news/2025-03-24-world-tb-day/",
+          "reviewedAt": "2025-03-24",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "news.2026-03-24-world-tb-day-end-tb-2035",
+          "type": "news",
+          "title": "世界結核病日：邁向 2035 消除結核，接觸者與高風險族群公費檢驗潛伏感染",
+          "summary": "世界結核病日，疾管署重申 2035 年消除結核目標（發生率每十萬人口 10 例以下），擴大接觸者與高風險族群潛伏結核感染公費檢驗與 3HP、1HP 短程治療。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-03-24-world-tb-day-end-tb-2035/",
+          "path": "/news/2026-03-24-world-tb-day-end-tb-2035/",
+          "reviewedAt": "2026-03-24",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "news.2026-08-20-dots-outcomes",
+          "type": "news",
+          "title": "都治 20 年：關懷員每日送藥到手，結核病完治率穩定提升",
+          "summary": "都治計畫推動 20 年，關懷員每日送藥到手、親眼看服藥，納入都治個案完治率高於未納入者；多重抗藥性結核病由 TMTC 團隊結合進階都治照護。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-08-20-dots-outcomes/",
+          "path": "/news/2026-08-20-dots-outcomes/",
+          "reviewedAt": "2026-08-20",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "documents": [
+        {
+          "id": "doc.dots-manual.2025-01-01",
+          "type": "document",
+          "title": "結核病都治（DOTS）計畫作業手冊",
+          "summary": "都治（DOTS）作業：關懷員每日送藥到手、親眼看服藥；社區、機構、進階都治與 DOPT 型態；中斷服藥 3 日以上通報個管師與後續處理。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/dots-manual.2025-01-01/",
+          "path": "/documents/dots-manual.2025-01-01/",
+          "reviewedAt": "2026-03-01",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "doc.infection-control-healthcare.2026-03-01",
+          "type": "document",
+          "title": "醫療機構感染管制措施指引",
+          "summary": "醫療機構標準防護與傳播途徑防護（接觸、飛沫、空氣）、呼吸道衛生、環境清消與工作人員健康管理之共通原則。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/infection-control-healthcare.2026-03-01/",
+          "path": "/documents/infection-control-healthcare.2026-03-01/",
+          "reviewedAt": "2026-03-01",
+          "owner": "unit.infection-control",
+          "ownerName": "感染管制及生物安全組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "doc.ltbi-guideline.2024-01-01",
+          "type": "document",
+          "title": "潛伏結核感染診治指引",
+          "summary": "潛伏結核感染的檢驗對象、IGRA 檢驗、五種治療處方（3HP、1HP、3HR、4R、9H）與都治（DOPT）追蹤原則；接觸者與計畫對象費用由公費支應。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/ltbi-guideline.2024-01-01/",
+          "path": "/documents/ltbi-guideline.2024-01-01/",
+          "reviewedAt": "2026-01-10",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "doc.tb-case-definition.2024-01-01",
+          "type": "document",
+          "title": "結核病病例定義與通報定義",
+          "summary": "結核病臨床條件、檢驗條件（培養、分子檢測、塗片、病理）、通報定義與疾病分類；第三類法定傳染病一週內通報，多重抗藥性結核病 24 小時內。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/tb-case-definition.2024-01-01/",
+          "path": "/documents/tb-case-definition.2024-01-01/",
+          "reviewedAt": "2026-01-15",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "doc.tb-contact-investigation.2025-01-01",
+          "type": "document",
+          "title": "結核病接觸者檢查指引",
+          "summary": "結核病接觸者檢查：指標個案定義、密切接觸者範圍（一天 8 小時或累計 40 小時）、確診後 1 個月內與第 12 個月胸部 X 光、IGRA 與潛伏感染治療轉介。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/tb-contact-investigation.2025-01-01/",
+          "path": "/documents/tb-contact-investigation.2025-01-01/",
+          "reviewedAt": "2026-02-01",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "doc.tb-guideline.2025-09-01",
+          "type": "document",
+          "title": "結核病診治指引（第八版）",
+          "summary": "現行結核病診治指引：分子快速檢測列為疑似個案第一線檢驗；多重抗藥性結核病優先採全口服短程處方；潛伏結核感染新增 1HP 處方。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/tb-guideline.2025-09-01/",
+          "path": "/documents/tb-guideline.2025-09-01/",
+          "reviewedAt": "2026-09-01",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "doc.tb-manual.2025-07-01",
+          "type": "document",
+          "title": "結核病防治工作手冊",
+          "summary": "結核病診斷、通報、治療（含都治）、接觸者檢查與潛伏結核感染治療之作業規定。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/tb-manual.2025-07-01/",
+          "path": "/documents/tb-manual.2025-07-01/",
+          "reviewedAt": "2026-03-24",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "vaccines": [],
+      "datasets": [
+        {
+          "id": "dataset.tb-new-cases",
+          "type": "dataset",
+          "title": "結核病新案統計",
+          "summary": "結核病新案數依年度、性別、年齡層與縣市統計，含發生率（每十萬人口）。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.tb-new-cases",
+          "path": "/data/#dataset.tb-new-cases",
+          "reviewedAt": "2026-03-24",
+          "owner": "unit.epidemic-intelligence",
+          "ownerName": "疫情中心",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "clarifications": [],
+      "media": [
+        {
+          "id": "media.migrant-worker-health-check",
+          "type": "media",
+          "title": "移工健康檢查：入境後三日內與聘僱期間的檢查項目",
+          "summary": "以越南語字幕說明移工入境後三日內及聘僱期間第 6、18、30 個月的健康檢查，包括胸部 X 光等項目，並提醒有咳嗽發燒可撥 1922 多語服務。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/migrant-worker-health-check/",
+          "path": "/media/migrant-worker-health-check/",
+          "reviewedAt": "2026-08-10",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "media.tb-cough-two-weeks",
+          "type": "media",
+          "title": "咳嗽超過兩週，快去照胸部 X 光",
+          "summary": "咳嗽超過兩週可能是結核病警訊，影片提醒及早就醫照胸部 X 光，說明結核病可以治癒，並介紹都治計畫陪伴完成六個月以上療程。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/tb-cough-two-weeks/",
+          "path": "/media/tb-cough-two-weeks/",
+          "reviewedAt": "2026-03-20",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "labtests": [
+        {
+          "id": "labtest.tuberculosis",
+          "type": "labtest",
+          "title": "結核病檢驗項目與送驗規定",
+          "summary": "結核病：連續 3 套痰液（至少 1 套晨痰）各 3–5 mL，冷藏 72 小時內送認可實驗室，做抗酸菌塗片、培養、分子檢測與藥物感受性試驗。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/tuberculosis/",
+          "path": "/lab/tuberculosis/",
+          "reviewedAt": "2026-07-15",
+          "owner": "unit.lab",
+          "ownerName": "檢驗及疫苗研製中心",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "services": [
+        {
+          "id": "service.ltbi-treatment",
+          "type": "service",
+          "title": "潛伏結核感染檢驗與治療",
+          "summary": "結核病接觸者與計畫對象可接受公費 IGRA 檢驗與潛伏結核感染治療（3HP、1HP、3HR、4R、9H），治療期間由關懷員陪伴服藥（DOPT）。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/ltbi-treatment/",
+          "path": "/apply/ltbi-treatment/",
+          "reviewedAt": "2026-09-22",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "service.tb-treatment-subsidy",
+          "type": "service",
+          "title": "結核病診治費用補助與隔離治療",
+          "summary": "結核病個案就醫由健保給付、部分負擔由疾管署支應；多重抗藥性結核病由 TMTC 收治並由公費支應；依法施行隔離治療者，費用由政府負擔。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/tb-treatment-subsidy/",
+          "path": "/apply/tb-treatment-subsidy/",
+          "reviewedAt": "2026-09-22",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "publications": [
+        {
+          "id": "publication.bulletin-42-14",
+          "type": "publication",
+          "title": "疫情報導 第 42 卷第 14 期",
+          "summary": "本期收錄 2 篇：結核病都治計畫完治率之區域差異分析等。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-14/",
+          "path": "/publications/bulletin-42-14/",
+          "reviewedAt": "2026-07-28",
+          "owner": "unit.epidemic-intelligence",
+          "ownerName": "疫情中心",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "publication.bulletin-42-18",
+          "type": "publication",
+          "title": "疫情報導 第 42 卷第 18 期",
+          "summary": "本期收錄 4 篇：秋冬腸病毒疫情回升之監測指標分析等。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-18/",
+          "path": "/publications/bulletin-42-18/",
+          "reviewedAt": "2026-09-22",
+          "owner": "unit.epidemic-intelligence",
+          "ownerName": "疫情中心",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "publication.manual-ltc-infection-control-2026",
+          "type": "publication",
+          "title": "長期照護機構感染管制手冊（2026 年版）",
+          "summary": "長期照護機構感染管制實務手冊：手部衛生、標準防護、群聚監測與通報、住民與工作人員疫苗接種、結核病篩檢與環境清消。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/manual-ltc-infection-control-2026/",
+          "path": "/publications/manual-ltc-infection-control-2026/",
+          "reviewedAt": "2026-05-15",
+          "owner": "unit.infection-control",
+          "ownerName": "感染管制及生物安全組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "publication.poster-tb-seven-languages",
+          "type": "publication",
+          "title": "咳嗽兩週要就醫：結核病七語衛教海報",
+          "summary": "結核病衛教海報，提供繁中、英、日、越、印、泰、菲七種語言，提醒咳嗽兩週就醫、治療免費與都治計畫，可下載張貼於移工宿舍與社區。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/poster-tb-seven-languages/",
+          "path": "/publications/poster-tb-seven-languages/",
+          "reviewedAt": "2026-03-20",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "topics": [
+        {
+          "id": "topic.ltc-infection-control",
+          "type": "topic",
+          "title": "長照機構感染管制專區",
+          "summary": "提供長期照護機構感染管制手冊、查核基準、群聚通報流程、住民與工作人員疫苗接種及教育訓練教材，協助機構預防呼吸道與腸胃道群聚。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/ltc-infection-control/",
+          "path": "/topics/ltc-infection-control/",
+          "reviewedAt": "2026-09-10",
+          "owner": "unit.infection-control",
+          "ownerName": "感染管制及生物安全組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "topic.new-residents-migrant-health",
+          "type": "topic",
+          "title": "新住民與移工健康：七語防疫資訊",
+          "summary": "彙整中、英、日、越、印、泰、菲七語的防疫資訊：移工健康檢查、結核病、登革熱、疫苗接種與 1922 多語服務，供新住民、移工、雇主與仲介使用。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/new-residents-migrant-health/",
+          "path": "/topics/new-residents-migrant-health/",
+          "reviewedAt": "2026-08-15",
+          "owner": "unit.pr",
+          "ownerName": "公關室",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "topic.tb-prevention",
+          "type": "topic",
+          "title": "結核病防治專區",
+          "summary": "給醫療人員與衛生局的結核病防治入口：診治指引、工作手冊、病例定義與通報、檢驗、都治、潛伏結核感染、接觸者檢查、抗藥性照護體系、高風險族群篩檢與統計。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/tb-prevention/",
+          "path": "/topics/tb-prevention/",
+          "reviewedAt": "2026-09-22",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ]
+    }
+  }
+}

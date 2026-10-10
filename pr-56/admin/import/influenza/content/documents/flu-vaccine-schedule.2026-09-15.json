@@ -1,0 +1,80 @@
+{
+  "id": "doc.flu-vaccine-schedule.2026-09-15",
+  "type": "document",
+  "title": "公費流感疫苗接種計畫：實施對象與時程",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-09-15",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "2026–2027 年度公費流感疫苗：10 月 1 日起第一階段開打（長者、幼兒、孕婦、高風險慢性病、學生等），11 月 1 日起 50–64 歲成人。",
+  "family": "doc.flu-vaccine-schedule",
+  "docType": "guideline",
+  "version": "2026-09-15",
+  "effectiveAt": "2026-09-15",
+  "machineReadableMarkdown": "2026–2027 年度公費流感疫苗：10 月 1 日起第一階段開打（長者、幼兒、孕婦、高風險慢性病、學生等），11 月 1 日起 50–64 歲成人。\n\n### 一、第一階段（2026 年 10 月 1 日起）\n\n1. 65 歲以上長者；55 歲以上原住民。\n2. 醫事及衛生等單位之防疫相關人員；禽畜養殖等相關行業工作人員、動物園工作人員及動物防疫人員。\n3. 孕婦及 6 個月內嬰兒之父母；幼兒園托育人員及托育機構專業人員。\n4. 安養、養護、長期照顧等機構之受照顧者及其工作人員。\n5. 6 個月以上至國小入學前幼兒。\n6. 具有潛在疾病之 19 至 64 歲高風險對象（含高風險慢性病人、BMI ≥ 30 者、罕見疾病患者、重大傷病患者）。\n7. 國小、國中、高中職、五專一至三年級學生（含境外臺校、自學學生）。\n\n### 二、第二階段（2026 年 11 月 1 日起）\n\n50 至 64 歲無高風險慢性病成人。\n\n### 三、劑次\n\n8 歲（含）以下兒童，若是第一次接種流感疫苗，應接種 2 劑，間隔 4 週以上；曾接種過者接種 1 劑。9 歲以上接種 1 劑。\n\n| 項目 | 內容 |\n| --- | --- |\n| 文件名稱 | 2026–2027 年度公費流感疫苗接種計畫：實施對象與時程 |\n| 版次 | 2026-27 |\n| 生效日 | 2026-09-15 |\n| 權責單位 | 急性傳染病組 |\n| 檔案格式 | PDF |\n\n完整內容請下載附件：\\<a href=\"https://www.cdc.gov.tw/File/Get/TRISN3J9An-J4lAzbB1EFN\">2026–2027 年度公費流感疫苗接種計畫：實施對象與時程（PDF）\\</a>",
+  "pdfUrl": "/files/doc.flu-vaccine-schedule.2026-09-15/flu-vaccine-schedule.2026-09-15.pdf",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/File/Get/TRISN3J9An-J4lAzbB1EFN"
+  ],
+  "assets": [
+    {
+      "file": "flu-vaccine-schedule.2026-09-15.pdf",
+      "kind": "attachment",
+      "label": "2026–2027 年度公費流感疫苗接種計畫：實施對象與時程",
+      "mime": "application/pdf",
+      "bytes": 908,
+      "sha256": "88d9ca5cc2ca75843b4e6ea10c4df951a59d3d7ee5c18b82431adb5c4621a8a1",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 70 處（mso 樣式 38、Mso 類別 23、命名空間標籤 16）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「流感／流感疫苗專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+      },
+      {
+        "code": "doctype-guessed",
+        "severity": "info",
+        "message": "標題與網址看不出文件種類，暫填 guideline"
+      },
+      {
+        "code": "version-unknown",
+        "severity": "info",
+        "message": "標題看不出版次，version 暫填 2026-09-15"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/File/Get/TRISN3J9An-J4lAzbB1EFN",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "doc.flu-vaccine-schedule.2026-09-15"
+    ]
+  }
+}

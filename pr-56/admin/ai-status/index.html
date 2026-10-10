@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-TW" dir="ltr" data-base="/new_cdc_prototype/preview/pr-56" data-lang-path="" data-view="admin">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 開關（內容管理後台）</title>
+<meta name="description" content="AI 開關：疾管署 AI-ready 新官網原型之內容管理後台示範頁">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/tokens.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/base.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/components.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/admin.css">
+</head>
+<body class="adm " data-today="2026-10-01" data-admin-page="ai-status">
+<a class="skip-link" href="#main">跳到主要內容</a>
+<header class="adm-top"><div class="adm-top__in">
+  <a class="adm-brand" href="/new_cdc_prototype/preview/pr-56/admin/"><strong>內容管理後台</strong><span>疾管署 AI-ready 新官網原型 · 示範</span></a>
+  <div class="adm-who" id="adm-who">
+    <span class="adm-who__id"><span class="adm-who__name" id="adm-who-name">急性傳染病組 · 承辦人</span><span class="adm-who__role" id="adm-who-role"></span></span>
+    <label for="adm-unit"><span class="adm-who__lbl">單位視角</span>
+      <select id="adm-unit" aria-describedby="adm-who-name"><option value="unit.pr" >公關室</option><option value="unit.it" >資訊室</option><option value="unit.oasis" >AI推動辦公室</option><option value="unit.epidemic-intelligence" >疫情中心</option><option value="unit.acute-infectious" selected>急性傳染病組</option><option value="unit.chronic-infectious" >慢性傳染病組</option><option value="unit.preparedness" >新興傳染病整備組</option><option value="unit.infection-control" >感染管制及生物安全組</option><option value="unit.quarantine" >檢疫組</option><option value="unit.lab" >檢驗及疫苗研製中心</option><option value="unit.planning" >企劃組</option><option value="unit.secretariat" >秘書室</option><option value="unit.personnel" >人事室</option><option value="unit.ethics" >政風室</option><option value="unit.preventive-medicine" >預防醫學辦公室</option><option value="unit.accounting" >主計室</option><option value="unit.regional-taipei" >臺北區管制中心</option><option value="unit.regional-northern" >北區管制中心</option><option value="unit.regional-central" >中區管制中心</option><option value="unit.regional-southern" >南區管制中心</option><option value="unit.regional-kaoping" >高屏區管制中心</option><option value="unit.regional-eastern" >東區管制中心</option><option value="unit.governance-committee" >資料治理委員會</option><option value="all">全部單位（總覽）</option></select>
+    </label>
+    <button type="button" class="adm-who__logout" id="adm-logout">登出</button>
+  </div>
+</div></header>
+<nav class="adm-nav" aria-label="後台導覽"><ul><li><a href="/new_cdc_prototype/preview/pr-56/admin/mine/" >我的內容</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/publish/" >上架新內容</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/review/" >複核區<span class="adm-count" data-count="review" aria-label="0 項">0</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/due/" >審閱到期<span class="adm-count" data-count="due" aria-label="18 項">18</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/catalog/" >資料目錄</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/notices/" >公告</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/jobs/" >人才招募<span class="adm-count" data-count="jobs" aria-label="1 項">1</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/tenders/" >採購<span class="adm-count" data-count="tenders" aria-label="1 項">1</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/media/" >影音<span class="adm-count" data-count="media" aria-label="1 項">1</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/links/" >連結</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/migration/" >移轉進度<span class="adm-count" data-count="migration" aria-label="1248 項">1248</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/import/" >舊站匯入</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/glossary/" >詞彙主檔</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/situation/" >疫情發布</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/bulletin/edit/" >疫情報導</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/todos/" >連動待辦<span class="adm-count" data-count="todos" aria-label="112 項">112</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/ai-status/" aria-current="page">AI 開關</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/reports/" >回報</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/eval/" >評估</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/" >儀表板</a></li></ul></nav>
+<div class="adm-demo" role="note">示範原型：此後台不連接任何正式系統；登入與所有操作只存在你的瀏覽器（localStorage），正式環境以機關 SSO 登入、一律走 Git Pull Request。</div>
+<main id="main" class="adm-main" tabindex="-1">
+<header class="adm-pagehead"><h1>AI 開關</h1><p class="adm-pagehead__what">暫停或恢復全站 AI 問答。暫停時答案頁自動退回傳統搜尋結果列表，不影響其他頁面與資料 API。</p><p class="adm-pagehead__flow"><strong>正式環境：</strong>正式環境：修改 content/governance/ai-status.json 並合併（緊急時由 OASIS／資訊室以最高優先權 PR 或部署參數切換，≤ 15 分鐘生效）。此頁的按鈕只寫入你的瀏覽器 cdc.aiStatusOverride，答案頁會讀它。</p></header>
+<section class="adm-card" aria-labelledby="as-h"><h2 id="as-h">目前狀態</h2>
+  <div class="adm-bigswitch" id="as-state"><div><p class="adm-bigswitch__state" id="as-label" role="status" aria-live="polite"></p><p class="adm-muted" id="as-detail" style="margin:0"></p></div></div>
+  <div class="adm-grid adm-grid--2" style="margin-top:var(--sp-4)">
+    <div class="adm-box adm-box--note" style="margin:0"><strong>建置版本（/v1/governance/ai-status.json）</strong>
+      <span id="as-base">運作；原因：—；更新：2026-09-22T09:00:00+08:00；操作：AI推動辦公室；模式：extractive</span></div>
+    <div class="adm-box adm-box--info" style="margin:0" id="as-override"><strong>本機覆寫（cdc.aiStatusOverride）</strong><span id="as-override-text">無</span></div>
+  </div>
+</section>
+<div class="adm-split adm-split--even">
+<section class="adm-card" aria-labelledby="af-h"><h2 id="af-h">切換</h2>
+  <form id="as-form" class="adm-form" novalidate>
+    <div class="adm-field"><label for="as-reason">原因（暫停時必填）</label><input type="text" id="as-reason" placeholder="例：發現版本題錯答，稽核編號 A-20261001-XXXX"></div>
+    <div class="adm-field"><label for="as-unit">操作單位</label><select id="as-unit"><option value="unit.pr" >公關室</option><option value="unit.it" >資訊室</option><option value="unit.oasis" selected>AI推動辦公室</option><option value="unit.epidemic-intelligence" >疫情中心</option><option value="unit.acute-infectious" >急性傳染病組</option><option value="unit.chronic-infectious" >慢性傳染病組</option><option value="unit.preparedness" >新興傳染病整備組</option><option value="unit.infection-control" >感染管制及生物安全組</option><option value="unit.quarantine" >檢疫組</option><option value="unit.lab" >檢驗及疫苗研製中心</option><option value="unit.planning" >企劃組</option><option value="unit.secretariat" >秘書室</option><option value="unit.personnel" >人事室</option><option value="unit.ethics" >政風室</option><option value="unit.preventive-medicine" >預防醫學辦公室</option><option value="unit.accounting" >主計室</option><option value="unit.regional-taipei" >臺北區管制中心</option><option value="unit.regional-northern" >北區管制中心</option><option value="unit.regional-central" >中區管制中心</option><option value="unit.regional-southern" >南區管制中心</option><option value="unit.regional-kaoping" >高屏區管制中心</option><option value="unit.regional-eastern" >東區管制中心</option><option value="unit.governance-committee" >資料治理委員會</option></select></div>
+    <div class="adm-actions"><button type="button" class="adm-btn adm-btn--danger adm-btn--big" id="as-pause">暫停 AI 問答（切回傳統搜尋）</button><button type="button" class="adm-btn adm-btn--big" id="as-resume">恢復 AI 問答</button></div>
+    <p class="adm-muted"><strong>生效時間 ≤ 15 分鐘（原型即時）。</strong>你的瀏覽器會立即套用；<a href="/new_cdc_prototype/preview/pr-56/ask/?q=登革熱">開啟答案頁</a>可驗證。</p>
+    <p class="adm-muted"><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" id="as-clear">清除本機覆寫（回到建置版本）</button></p>
+    <div id="as-msg" role="alert" aria-live="assertive"></div>
+  </form></section>
+<section class="adm-card" aria-labelledby="ao-h"><h2 id="ao-h">輸出 ai-status.json（供 PR）</h2>
+  <p class="adm-card__sub">正式環境：把這份內容貼進 content/governance/ai-status.json 並合併。</p>
+  <pre class="adm-pre" id="as-out" tabindex="0">{ }</pre>
+  <div class="adm-actions"><button type="button" class="adm-btn adm-btn--ghost" id="as-copy">複製</button><button type="button" class="adm-btn adm-btn--ghost" id="as-dl">下載 .json</button></div>
+  <h3>覆寫格式（給答案頁讀取）</h3>
+  <p class="adm-muted"><code>localStorage["cdc.aiStatusOverride"]</code> = <code>{"paused": boolean, "reason": string, "updatedAt": ISO 時間, "updatedBy": 單位 id}</code>。存在時優先於建置版本；清除則回到建置版本。為相容目前的答案頁，按鈕同時寫入 <code>cdc.aiStatus</code>（{paused, reason, until}）。</p></section>
+</div>
+<section class="adm-card" aria-labelledby="sop-h"><h2 id="sop-h">暫停 SOP（五步）</h2><ol class="adm-sop"><li><strong>發現與通報</strong>：承辦單位、公關室或民眾回報發現錯答（含稽核編號 A-…）；OASIS 值班確認是否為系統性問題。</li><li><strong>按下暫停</strong>：OASIS 或資訊室在本頁填寫原因與操作單位，按「暫停 AI 問答」。不需要簽核流程，暫停永遠比錯答便宜。</li><li><strong>全站切回傳統搜尋</strong>：生效時間 ≤ 15 分鐘（原型即時）：答案頁改為傳統結果列表（標題、摘要、更新日），全站出現深色狀況橫幅，並保留 1922 電話。</li><li><strong>修正與回歸</strong>：權責單位修內容或規則 → 把該題加進評估集 → 在「評估」頁確認六指標與版本題全數通過。</li><li><strong>恢復與揭露</strong>：資料治理委員會核可後按「恢復」；事件與處置寫入季度 AI 透明報告。</li></ol>
+  <h3>暫停後前台長這樣</h3><ul><li>答案頁 <code>/ask/</code>：不產生答案句，改列「標題、摘要、更新日」的傳統搜尋結果。</li><li>全站頁首：深色橫幅「AI 問答暫停中，已切回傳統搜尋」。</li><li>內容頁、資料 API、1922 專線資訊照常。</li></ul></section>
+<script type="application/json" id="adm-ai-data">{"base":{"paused":false,"reason":"","updatedAt":"2026-09-22T09:00:00+08:00","updatedBy":"unit.oasis","mode":"extractive","beta":true,"fallback":"關鍵字搜尋與 1922 人工諮詢"},"defaultUnit":"unit.acute-infectious"}</script></main>
+<footer class="adm-foot"><a href="/new_cdc_prototype/preview/pr-56/">回前台首頁</a><a href="/new_cdc_prototype/preview/pr-56/v1/catalog.json">目錄 API（/v1/catalog.json）</a><a href="/new_cdc_prototype/preview/pr-56/guide/">使用說明</a><span>建置日 2026-10-01</span></footer>
+<script type="module" src="/new_cdc_prototype/preview/pr-56/assets/js/admin/common.js"></script>
+<script type="module" src="/new_cdc_prototype/preview/pr-56/assets/js/admin/ai-status.js"></script>
+</body>
+</html>

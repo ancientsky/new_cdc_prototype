@@ -1,0 +1,197 @@
+{
+  "id": "dataset.x-surveillance-express",
+  "type": "dataset",
+  "title": "疫情監測速訊",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2016-01-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "疫情監測速訊每週發布國內外傳染病監測重點，包括法定傳染病通報趨勢與重要疫情摘要。下列為近期各期。",
+  "category": "document-library",
+  "canonicalUrl": "https://www.cdc.gov.tw/Category/MPage/94JVbJ2BFjR_3MTi-9s9Cg",
+  "updateFrequency": "weekly",
+  "lastUpdated": "2026-09-28",
+  "formats": [
+    "PDF"
+  ],
+  "resources": [
+    {
+      "label": "疫情監測速訊 2026 年第 40 週",
+      "href": "/files/dataset.x-surveillance-express/surveillance-express-2026-w40.pdf",
+      "format": "PDF"
+    },
+    {
+      "label": "疫情監測速訊 2026 年第 39 週",
+      "href": "/files/dataset.x-surveillance-express/surveillance-express-2026-w39.pdf",
+      "format": "PDF"
+    },
+    {
+      "label": "疫情監測速訊 2026 年第 38 週",
+      "href": "/files/dataset.x-surveillance-express/surveillance-express-2026-w38.pdf",
+      "format": "PDF"
+    },
+    {
+      "label": "疫情監測速訊 2026 年第 37 週",
+      "href": "/files/dataset.x-surveillance-express/surveillance-express-2026-w37.pdf",
+      "format": "PDF"
+    },
+    {
+      "label": "疫情監測速訊 2026 年第 36 週",
+      "href": "/files/dataset.x-surveillance-express/surveillance-express-2026-w36.pdf",
+      "format": "PDF"
+    },
+    {
+      "label": "疫情監測速訊 2026 年第 35 週",
+      "href": "/files/dataset.x-surveillance-express/surveillance-express-2026-w35.pdf",
+      "format": "PDF"
+    },
+    {
+      "label": "疫情監測速訊 2026 年第 34 週",
+      "href": "/files/dataset.x-surveillance-express/surveillance-express-2026-w34.pdf",
+      "format": "PDF"
+    },
+    {
+      "label": "疫情監測速訊 2026 年第 33 週",
+      "href": "/files/dataset.x-surveillance-express/surveillance-express-2026-w33.pdf",
+      "format": "PDF"
+    }
+  ],
+  "provenance": {
+    "mode": "snapshot",
+    "fetchedAt": "2026-10-03",
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/94JVbJ2BFjR_3MTi-9s9Cg"
+  },
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/94JVbJ2BFjR_3MTi-9s9Cg"
+  ],
+  "assets": [
+    {
+      "file": "surveillance-express-2026-w33.pdf",
+      "kind": "attachment",
+      "label": "疫情監測速訊 2026 年第 33 週",
+      "mime": "application/pdf",
+      "bytes": 740,
+      "sha256": "8044f42d9d91d94640ba948966b92d5537accd9ae7b9f639a021968d82e866c5",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "surveillance-express-2026-w34.pdf",
+      "kind": "attachment",
+      "label": "疫情監測速訊 2026 年第 34 週",
+      "mime": "application/pdf",
+      "bytes": 740,
+      "sha256": "88f63f20454f14e93fe492584d48419901d85e224fba2b2f4da0cda7d7bb9c62",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "surveillance-express-2026-w35.pdf",
+      "kind": "attachment",
+      "label": "疫情監測速訊 2026 年第 35 週",
+      "mime": "application/pdf",
+      "bytes": 740,
+      "sha256": "6559f9fac589ff52e71f0a75f6e8fa6a8ab8c9335d5f9e28b04857623cc7e1e8",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "surveillance-express-2026-w36.pdf",
+      "kind": "attachment",
+      "label": "疫情監測速訊 2026 年第 36 週",
+      "mime": "application/pdf",
+      "bytes": 740,
+      "sha256": "66c817b5d3bfc969155d96073915e4037ba155ce334a3080fbd341c40fa3b9fe",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "surveillance-express-2026-w37.pdf",
+      "kind": "attachment",
+      "label": "疫情監測速訊 2026 年第 37 週",
+      "mime": "application/pdf",
+      "bytes": 740,
+      "sha256": "a1220112c8b80fde288d3f4f2e6e28ca7ae72eb5ef1fbfd3d8b058add21d51a8",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "surveillance-express-2026-w38.pdf",
+      "kind": "attachment",
+      "label": "疫情監測速訊 2026 年第 38 週",
+      "mime": "application/pdf",
+      "bytes": 740,
+      "sha256": "96bfa1c1bc8ab14c403fa1c5273f25c797f91b73cb6aaecd827a18d694c1f355",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "surveillance-express-2026-w39.pdf",
+      "kind": "attachment",
+      "label": "疫情監測速訊 2026 年第 39 週",
+      "mime": "application/pdf",
+      "bytes": 740,
+      "sha256": "e9a53c3758422649dd7a1ca7c5424a7b88fda25daab74f435e2853558dfa9abd",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "surveillance-express-2026-w40.pdf",
+      "kind": "attachment",
+      "label": "疫情監測速訊 2026 年第 40 週",
+      "mime": "application/pdf",
+      "bytes": 740,
+      "sha256": "7ea29ba213cbfb8e0c2d25141e26b83fcc4d61a5f7e341c3de13eaa84f5e1c28",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "type-from-category",
+        "severity": "info",
+        "message": "統計頁的附件是 8 期期刊，草稿建成 dataset（document-library）"
+      },
+      {
+        "code": "periodical-issues",
+        "severity": "info",
+        "message": "8 期、最新 2026 年第 40 週；期別不是版次，建成一筆資料集逐期列 resources"
+      },
+      {
+        "code": "fields-pending",
+        "severity": "warn",
+        "message": "dataset 的欄位從舊頁看不出來，以「（待補）」佔位：canonicalUrl"
+      },
+      {
+        "code": "field-guessed",
+        "severity": "info",
+        "message": "舊頁沒有資料檔也沒有開放資料連結，canonicalUrl 暫填舊頁網址"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/94JVbJ2BFjR_3MTi-9s9Cg",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

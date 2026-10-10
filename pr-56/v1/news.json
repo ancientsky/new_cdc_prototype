@@ -1,0 +1,5455 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "1e89a3601f00",
+    "lastModified": "2026-10-05",
+    "count": 37
+  },
+  "data": [
+    {
+      "id": "news.2026-09-30-system-maintenance",
+      "type": "news",
+      "title": "10 月 3 日晚間官網與傳染病通報系統例行維護",
+      "owner": "unit.it",
+      "publishedAt": "2026-09-30",
+      "reviewedAt": "2026-09-30",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-30"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-30",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "2026 年 10 月 3 日 22:00 至 10 月 4 日 06:00 進行官網與傳染病通報系統（NIDRS）例行維護，期間服務可能中斷，緊急通報請以電話或傳真通知衛生局。",
+      "keywords": [
+        "系統維護",
+        "NIDRS",
+        "官網",
+        "服務中斷",
+        "資訊室"
+      ],
+      "newsType": "other",
+      "deadlineAt": "2026-10-04",
+      "bodyMarkdown": "## 維護時間\n2026 年 10 月 3 日（星期六）22:00 至 10 月 4 日（星期日）06:00\n\n## 影響範圍\n- 疾管署官網、開放資料 API：可能短暫無法連線\n- 傳染病通報系統（NIDRS）：暫停服務\n\n## 維護期間緊急通報\n請以電話或傳真通報轄區衛生局，系統恢復後補登。民眾防疫諮詢請撥 **1922**，不受影響。",
+      "i18n": {
+        "en": {
+          "title": "Scheduled maintenance of the website and NIDRS on 3 October",
+          "summary": "Website and NIDRS maintenance from 22:00 on 3 October to 06:00 on 4 October 2026; report urgent cases to local health bureaus by phone or fax."
+        }
+      },
+      "sourceHash": "c3bb4252e15b",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-30-system-maintenance/",
+      "path": "/news/2026-09-30-system-maintenance/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-30-system-maintenance.md",
+      "governance": {
+        "owner": "unit.it",
+        "ownerName": "資訊室",
+        "steward": null,
+        "reviewedAt": "2026-09-30",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2026-09-30-system-maintenance",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": "2026-10-04",
+        "daysToDeadline": 3,
+        "closed": false,
+        "closingSoon": true,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "c3bb4252e15b",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-30",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "news.2026-09-29-ili-weekly",
+      "type": "news",
+      "newsType": "press",
+      "title": "流感疫情持續上升，10 月 1 日公費疫苗開打，長者幼兒請優先接種",
+      "owner": "unit.epidemic-intelligence",
+      "publishedAt": "2026-09-29",
+      "reviewedAt": "2026-09-29",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "situation",
+        "vaccines"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.influenza",
+        "disease.enterovirus",
+        "disease.dengue"
+      ],
+      "vaccines": [
+        "vaccine.influenza"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-29"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "pending"
+        },
+        "tl": {
+          "status": "pending"
+        },
+        "vi": {
+          "status": "pending"
+        },
+        "id": {
+          "status": "pending"
+        },
+        "th": {
+          "status": "pending"
+        }
+      },
+      "summary": "類流感門急診就診率續升，腸病毒與登革熱本土疫情亦仍活躍。疾管署呼籲 10 月 1 日起長者與幼兒優先接種公費流感疫苗。",
+      "keywords": [
+        "疫情週報",
+        "流感",
+        "腸病毒",
+        "登革熱",
+        "公費疫苗"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+      ],
+      "situationDeclaration": {
+        "disease": "disease.influenza",
+        "text": "類流感門急診就診率續升，處流行高峰"
+      },
+      "bodyMarkdown": "疾病管制署於 2026 年 9 月 29 日（今日）發布疫情週報：上週（發布日前一週）類流感門急診就診率持續上升，社區以 A 型 H3N2 為主；腸病毒門急診就診人次開學後上升但仍低於流行閾值；南部登革熱本土病例仍持續出現。\n\n公費流感疫苗將於 10 月 1 日開打，疾管署呼籲長者、幼兒及慢性病人優先接種；65 歲以上有類流感症狀者，於高峰期就醫可由醫師直接開立公費抗病毒藥劑。各項數字以疫情態勢層及傳染病統計資料查詢系統公布為準。",
+      "sourceHash": "fdfaafb8a4a3",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-29-ili-weekly/",
+      "path": "/news/2026-09-29-ili-weekly/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-29-ili-weekly.md",
+      "governance": {
+        "owner": "unit.epidemic-intelligence",
+        "ownerName": "疫情中心",
+        "steward": null,
+        "reviewedAt": "2026-09-29",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2026-09-29-ili-weekly",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "fdfaafb8a4a3",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "pending"
+          },
+          "tl": {
+            "status": "pending"
+          },
+          "vi": {
+            "status": "pending"
+          },
+          "id": {
+            "status": "pending"
+          },
+          "th": {
+            "status": "pending"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "news.2026-09-28-parking-construction",
+      "type": "news",
+      "title": "林森南路辦公區停車場施工，10 月 5 日至 11 月 30 日暫停開放",
+      "owner": "unit.planning",
+      "publishedAt": "2026-09-28",
+      "reviewedAt": "2026-09-28",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-28"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "林森南路辦公區地下停車場因防水與照明工程，2026 年 10 月 5 日至 11 月 30 日暫停開放，洽公民眾請改搭大眾運輸或使用鄰近公有停車場。",
+      "keywords": [
+        "停車場",
+        "施工",
+        "洽公",
+        "林森南路",
+        "暫停開放"
+      ],
+      "note": "原型 units 主檔無秘書室，暫由企劃組為權責單位",
+      "newsType": "other",
+      "deadlineAt": "2026-11-30",
+      "bodyMarkdown": "林森南路辦公區（臺北市中正區林森南路 6 號）地下停車場進行防水與照明改善工程：\n\n- **施工期間**：2026 年 10 月 5 日至 11 月 30 日\n- **影響**：停車場暫停開放，身心障礙者專用車位改設於大門側臨時停車區（需事先來電預約）。\n- **建議**：搭乘捷運至臺大醫院站，步行約 5 分鐘。\n\n造成不便，敬請見諒。",
+      "sourceHash": "98ff69d362b8",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-28-parking-construction/",
+      "path": "/news/2026-09-28-parking-construction/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-28-parking-construction.md",
+      "governance": {
+        "owner": "unit.planning",
+        "ownerName": "企劃組",
+        "steward": null,
+        "reviewedAt": "2026-09-28",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2026-09-28-parking-construction",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": "2026-11-30",
+        "daysToDeadline": 60,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "98ff69d362b8",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "news.2026-09-26-open-house",
+      "type": "news",
+      "title": "署慶系列活動：防疫科學開放日 10 月 24 日登場",
+      "owner": "unit.pr",
+      "publishedAt": "2026-09-26",
+      "reviewedAt": "2026-09-26",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-26"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-26",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "疾管署署慶系列活動「防疫科學開放日」10 月 24 日舉行，開放親子參觀檢驗實驗室外部展區、防疫體驗關卡，即日起至 10 月 17 日線上報名。",
+      "keywords": [
+        "署慶",
+        "開放日",
+        "親子活動",
+        "防疫體驗",
+        "報名"
+      ],
+      "newsType": "other",
+      "deadlineAt": "2026-10-17",
+      "bodyMarkdown": "## 活動資訊\n- **日期**：2026 年 10 月 24 日（星期六）09:30–16:00\n- **地點**：疾管署昆陽辦公室（示意）\n- **內容**：檢驗實驗室外部展示區導覽、蚊子孳生源大搜查、正確洗手體驗、疫苗小學堂。\n\n## 報名\n即日起至 **2026 年 10 月 17 日**止線上報名，每場次名額有限。實驗室管制區不開放。\n\n本公告為原型示意資料。",
+      "i18n": {
+        "en": {
+          "title": "Open House: disease prevention science day on 24 October",
+          "summary": "Family-friendly open house with exhibits and hands-on activities on 24 October 2026; register online by 17 October."
+        }
+      },
+      "sourceHash": "c2f7349c1261",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-26-open-house/",
+      "path": "/news/2026-09-26-open-house/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-26-open-house.md",
+      "governance": {
+        "owner": "unit.pr",
+        "ownerName": "公關室",
+        "steward": null,
+        "reviewedAt": "2026-09-26",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2026-09-26-open-house",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": "2026-10-17",
+        "daysToDeadline": 16,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "c2f7349c1261",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-26",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "news.2026-09-22-enterovirus-alert",
+      "type": "news",
+      "newsType": "press",
+      "title": "國內腸病毒疫情持續，籲請家長及教托育機構提高警覺",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2026-09-22",
+      "reviewedAt": "2026-09-22",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "situation",
+        "symptoms"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        }
+      },
+      "summary": "開學後腸病毒門急診就診人次上升，疾管署籲請家長與教托育機構落實洗手與環境消毒，留意重症前兆。",
+      "keywords": [
+        "腸病毒",
+        "開學",
+        "重症前兆"
+      ],
+      "bodyMarkdown": "疾病管制署表示，開學後腸病毒門急診就診人次上升，尚未達流行閾值，但仍須提高警覺。籲請家長及教托育機構落實正確洗手、以漂白水稀釋液消毒環境，並留意幼兒是否出現嗜睡、意識不清、活力不佳、手腳無力、肌躍型抽搐、持續嘔吐、呼吸急促或心跳加快等重症前兆，一旦出現請立即送往大醫院。",
+      "situationDeclaration": {
+        "disease": "disease.enterovirus",
+        "text": "就診人次上升，未達流行閾值"
+      },
+      "sourceHash": "3d12fbbdf845",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-22-enterovirus-alert/",
+      "path": "/news/2026-09-22-enterovirus-alert/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-22-enterovirus-alert.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-09-22",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2026-09-22-enterovirus-alert",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "3d12fbbdf845",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "news.2026-09-18-flu-antiviral-extended",
+      "type": "news",
+      "newsType": "press",
+      "title": "流感疫情進入流行期且持續上升，疾管署延長擴大公費流感抗病毒藥劑使用條件至 10 月 31 日",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2026-09-18",
+      "reviewedAt": "2026-10-05",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "symptoms",
+        "situation"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "doc.flu-antiviral-eligibility"
+      ],
+      "diseases": [
+        "disease.influenza"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-18"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-18",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "machine"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "summary": "流感疫情進入流行期，疾管署宣布有類流感症狀的 7 類高傳播族群使用公費抗病毒藥劑的期限延長至 2026 年 10 月 31 日；經醫師評估符合者不需快篩即可開立。",
+      "keywords": [
+        "公費抗病毒藥劑",
+        "高傳播族群",
+        "延長至 10 月 31 日",
+        "不需快篩",
+        "流感流行期"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+      ],
+      "situationDeclaration": {
+        "disease": "disease.influenza",
+        "text": "流感疫情進入流行期且持續上升，預估中秋節前後達高峰"
+      },
+      "bodyMarkdown": "疾病管制署表示，國內流感疫情已進入流行期且持續上升，第 36 週（9 月 6 日至 12 日）類流感門急診就診計 136,796 人次，較前一週上升 16.5%；9 月 8 日至 14 日新增 92 例流感併發重症及 21 例死亡，預估疫情於中秋節前後達最高峰。為把握用藥時機，原訂至 9 月 30 日止的擴大公費流感抗病毒藥劑使用條件「有類流感症狀，且具下列身分之流感高傳播族群」，**延長至今（2026）年 10 月 31 日止**，並以致醫界通函第 616 號通知醫療院所。\n\n![](/files/news.2026-09-18-flu-antiviral-extended/chart-ili.svg)\n\n7 類高傳播族群包括：醫療院所防疫相關人員；安養、長照等機構住民及工作人員；幼兒園、托育機構及居家托育人員；幼兒園至高中、高職及五專一至三年級學生；與流感重症高風險族群同住者或照顧者；禽畜養殖、動物園及動物防疫相關人員；軍營等人口密集機構人員。**上述對象及全年適用對象（含未滿 5 歲及 65 歲以上類流感患者）經醫師評估符合者，不需快篩即可開立公費藥劑**，藥劑配置於全國約 4,000 家合約醫療機構。\n\n疾管署提醒，抗病毒藥劑於發病 48 小時內使用效果最佳，出現發燒、咳嗽、全身痠痛等症狀請儘早就醫。",
+      "i18n": {
+        "en": {
+          "title": "Influenza season under way: expanded eligibility for government-funded antivirals extended to 31 October",
+          "summary": "With influenza in its epidemic period and rising, Taiwan CDC extended government-funded antiviral eligibility for seven high-transmission groups with flu-like symptoms to 31 October 2026. No rapid test is needed for anyone a physician judges eligible."
+        }
+      },
+      "attachments": [
+        {
+          "label": "新聞稿全文（PDF，示意）",
+          "url": "/files/news.2026-09-18-flu-antiviral-extended/press-release.pdf",
+          "machineReadable": true
+        }
+      ],
+      "assets": [
+        {
+          "file": "press-release.pdf",
+          "kind": "attachment",
+          "label": "新聞稿全文（PDF，示意）",
+          "mime": "application/pdf",
+          "bytes": 4423,
+          "sha256": "50534111ca6d2ad9df93696fbc3e293bcbb812759e1f015e68266558821984d3",
+          "machineReadable": true,
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/files/news.2026-09-18-flu-antiviral-extended/press-release.pdf"
+        },
+        {
+          "file": "chart-ili.svg",
+          "kind": "image",
+          "alt": "類流感門急診就診率週趨勢圖（示意）：第 31 至 38 週由 5.2% 升至 12.0%，自第 34 週起超過流行閾值 7%，連續 4 週上升。",
+          "mime": "image/svg+xml",
+          "bytes": 3593,
+          "sha256": "0561eb9adbe6435276d41986aa450979e152a6b2103bb5176580d1fc538a2190",
+          "width": 640,
+          "height": 360,
+          "source": "疾管署急性傳染病組（原型示意圖）",
+          "license": "OGDL-1.0",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/files/news.2026-09-18-flu-antiviral-extended/chart-ili.svg"
+        }
+      ],
+      "sourceHash": "e079b96bdacd",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-18-flu-antiviral-extended/",
+      "path": "/news/2026-09-18-flu-antiviral-extended/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-18-flu-antiviral-extended.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-10-05",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2026-09-18-flu-antiviral-extended",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "e079b96bdacd",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-18",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "machine"
+          },
+          "tl": {
+            "status": "machine"
+          },
+          "vi": {
+            "status": "machine"
+          },
+          "id": {
+            "status": "machine"
+          },
+          "th": {
+            "status": "machine"
+          }
+        },
+        "translationStale": {
+          "en": false,
+          "ja": false,
+          "tl": false,
+          "vi": false,
+          "id": false,
+          "th": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en",
+          "ja",
+          "tl",
+          "vi",
+          "id",
+          "th"
+        ]
+      }
+    },
+    {
+      "id": "news.2026-09-18-flu-vaccine-oct1",
+      "type": "news",
+      "newsType": "press",
+      "title": "2026–2027 年度公費流感疫苗 10 月 1 日開打，新冠疫苗同步提供",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2026-09-18",
+      "reviewedAt": "2026-09-18",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "vaccines"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "doc.flu-vaccine-schedule",
+        "doc.covid-vaccine-recommendation"
+      ],
+      "diseases": [
+        "disease.influenza",
+        "disease.covid-19"
+      ],
+      "vaccines": [
+        "vaccine.influenza",
+        "vaccine.covid-19"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-18"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-18",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "machine"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "summary": "2026–2027 年度公費流感疫苗 10 月 1 日開打，第一階段長者、幼兒、孕婦、高風險者與學生等；11 月 1 日開放 50–64 歲，新冠疫苗同步。",
+      "keywords": [
+        "公費流感疫苗",
+        "10 月 1 日",
+        "新冠疫苗",
+        "接種對象"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+      ],
+      "bodyMarkdown": "疾病管制署宣布，2026–2027 年度公費流感疫苗將於 **10 月 1 日**開打。第一階段對象包括 65 歲以上長者、55 歲以上原住民、6 個月以上至國小入學前幼兒、孕婦及 6 個月內嬰兒之父母、19–64 歲高風險對象、國小至高中職與五專一至三年級學生、醫事防疫人員及長照機構住民與工作人員等；**11 月 1 日**起開放 50–64 歲無高風險慢性病成人。\n\n新年度新冠疫苗同日開打，6 個月以上民眾皆可接種，可與流感疫苗同時分開部位接種。接種地點請查詢「流感防治一網通」或疫苗接種地圖。",
+      "i18n": {
+        "en": {
+          "title": "2026–27 government-funded flu vaccination starts 1 October, with COVID-19 vaccine available at the same time",
+          "summary": "Phase 1 covers older adults, young children, pregnant women, high-risk groups and students from 1 October; adults aged 50–64 from 1 November. COVID-19 vaccine is offered from the same day.",
+          "bodyMarkdown": "Taiwan CDC announced that government-funded flu vaccination for 2026–27 starts on **1 October**. Phase 1 covers adults 65+, indigenous people 55+, children from 6 months to school entry, pregnant women and parents of infants under 6 months, high-risk adults aged 19–64, primary to senior high school students, health and public health workers, and long-term care residents and staff. Adults aged 50–64 without high-risk conditions are eligible from **1 November**.\n\nThe new-season COVID-19 vaccine starts the same day for everyone aged 6 months and over and can be given together with the flu vaccine. Find a clinic via the influenza portal or the vaccination map."
+        }
+      },
+      "sourceHash": "0da4dad4c429",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-18-flu-vaccine-oct1/",
+      "path": "/news/2026-09-18-flu-vaccine-oct1/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-18-flu-vaccine-oct1.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-09-18",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2026-09-18-flu-vaccine-oct1",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "0da4dad4c429",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-18",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "machine"
+          },
+          "tl": {
+            "status": "machine"
+          },
+          "vi": {
+            "status": "machine"
+          },
+          "id": {
+            "status": "machine"
+          },
+          "th": {
+            "status": "machine"
+          }
+        },
+        "translationStale": {
+          "en": false,
+          "ja": false,
+          "tl": false,
+          "vi": false,
+          "id": false,
+          "th": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en",
+          "ja",
+          "tl",
+          "vi",
+          "id",
+          "th"
+        ]
+      }
+    },
+    {
+      "id": "news.2026-09-18-letter-616-flu-antiviral-extended",
+      "type": "letter",
+      "newsType": "letter",
+      "title": "致醫界通函第 616 號：延長擴大公費流感抗病毒藥劑使用對象「有類流感症狀，且具下列身分之流感高傳播族群」之適用期限至 10 月 31 日",
+      "effectiveAt": "2026-09-18",
+      "letterNo": 616,
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2026-09-18",
+      "reviewedAt": "2026-10-05",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "professional"
+      ],
+      "tasks": [],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "doc.flu-antiviral-eligibility"
+      ],
+      "diseases": [
+        "disease.influenza"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-18"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "pending"
+        },
+        "tl": {
+          "status": "pending"
+        },
+        "vi": {
+          "status": "pending"
+        },
+        "id": {
+          "status": "pending"
+        },
+        "th": {
+          "status": "pending"
+        }
+      },
+      "summary": "疾管署延長擴大公費流感抗病毒藥劑使用對象「有類流感症狀，且具 7 類流感高傳播族群身分者」之適用期限至 2026 年 10 月 31 日；經醫師評估符合者不需快篩即可開立，用藥後至 SMIS 回報。",
+      "keywords": [
+        "致醫界通函",
+        "第 616 號",
+        "公費抗病毒藥劑",
+        "高傳播族群",
+        "不需快篩",
+        "10 月 31 日"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Bulletin/Detail/3OyyJUUS0GduEm9t52Fnow?typeid=48"
+      ],
+      "bodyMarkdown": "一、本署自 2026 年 8 月 24 日起擴大公費流感抗病毒藥劑使用對象「有類流感症狀，且具下列身分之流感高傳播族群」，原訂至 9 月 30 日止；考量國內流感疫情已進入流行期且持續上升，適用期限延長至 **2026 年 10 月 31 日止**。\n二、流感高傳播族群：（一）醫事單位之防疫相關人員（含具執業登記醫事人員及醫療院所非醫事人員）；（二）安養、長期照顧（服務）等機構之受照顧者及所屬工作人員；（三）幼兒園托育人員、托育機構專業人員及居家托育人員（保母）；（四）幼兒園、國小、國中、高中、高職、五專一至三年級學生；（五）與流感重症高風險族群同住者或其照顧者；（六）禽畜養殖等相關行業工作人員、動物園工作人員及動物防疫人員；（七）其他人口密集機構（如軍營等）易發生群聚之人員。\n三、經醫師評估符合公費藥劑用藥條件者，**不需流感快篩即可開立公費藥劑**，以把握用藥時機；用藥後請儘速至「智慧防疫物資管理資訊系統（SMIS）」回報。\n四、公費藥劑配置於各縣市衛生局規劃之全國約 4,000 家合約醫療機構，籲請醫師善用公費藥劑，共同防治流感。\n\n（原型示意：本文為通函摘述，正式內容以疾管署官網原件為準。）",
+      "attachments": [
+        {
+          "label": "公費流感抗病毒藥劑使用對象一覽表（擴大版）",
+          "url": "/pending/?ref=news.2026-09-18-letter-616-flu-antiviral-extended&doc=公費流感抗病毒藥劑使用對象一覽表（擴大版）",
+          "machineReadable": false
+        }
+      ],
+      "sourceHash": "c31f3e919ff5",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-18-letter-616-flu-antiviral-extended/",
+      "path": "/news/2026-09-18-letter-616-flu-antiviral-extended/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-18-letter-616-flu-antiviral-extended.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-10-05",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "pro",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2026-09-18-letter-616-flu-antiviral-extended",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "c31f3e919ff5",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "pending"
+          },
+          "tl": {
+            "status": "pending"
+          },
+          "vi": {
+            "status": "pending"
+          },
+          "id": {
+            "status": "pending"
+          },
+          "th": {
+            "status": "pending"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "news.2026-09-15-international-health-mou",
+      "type": "news",
+      "sourceLang": "en",
+      "title": "Taiwan CDC signs a public health cooperation MOU with a New Southbound partner",
+      "owner": "unit.planning",
+      "steward": "企劃組承辦人",
+      "publishedAt": "2026-09-15",
+      "reviewedAt": "2026-09-15",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-10-01"
+      },
+      "languages": {
+        "en": {
+          "status": "source"
+        },
+        "zh-TW": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-15",
+          "reviewer": "企劃組中文審核人",
+          "sourceHash": "12c402ea3e41"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "Taiwan CDC signed a memorandum of understanding with a partner institution in Southeast Asia on tuberculosis and dengue control, laboratory training and information exchange.",
+      "newsType": "press",
+      "keywords": [
+        "MOU",
+        "New Southbound",
+        "bilateral cooperation",
+        "tuberculosis",
+        "dengue"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/En/Bulletin/Detail/{id}#2026-09-15-international-health-mou"
+      ],
+      "bodyMarkdown": "Taiwan CDC signed a memorandum of understanding (MOU) on public health cooperation with a partner institution in Southeast Asia under the New Southbound Policy.\n\nThe MOU covers tuberculosis and dengue control, laboratory training, migrant worker health and the timely exchange of information on cross-border events through IHR channels.\n\nThe cooperation will be reviewed each year, and its status is listed on the bilateral cooperation page.\n\nThis release is illustrative prototype content; the partner, date and scope are examples.",
+      "i18n": {
+        "zh-TW": {
+          "title": "疾管署與新南向夥伴簽署公共衛生合作備忘錄",
+          "summary": "疾管署與東南亞夥伴機構簽署合作備忘錄，合作結核病與登革熱防治、實驗室訓練及資訊交換。",
+          "keywords": [
+            "合作備忘錄",
+            "新南向",
+            "雙邊合作",
+            "結核病",
+            "登革熱"
+          ],
+          "bodyMarkdown": "疾管署依新南向政策，與東南亞夥伴機構簽署公共衛生合作備忘錄（MOU）。\n\n合作範圍包括結核病與登革熱防治、實驗室訓練、移工健康，以及透過 IHR 管道即時交換跨境事件資訊。\n\n合作每年度檢討，狀態列於雙邊合作頁。\n\n本則為原型示意內容，夥伴、日期與範圍為示例。"
+        }
+      },
+      "sourceHash": "12c402ea3e41",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-15-international-health-mou/",
+      "path": "/news/2026-09-15-international-health-mou/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-15-international-health-mou.md",
+      "governance": {
+        "owner": "unit.planning",
+        "ownerName": "企劃組",
+        "steward": "企劃組承辦人",
+        "reviewedAt": "2026-09-15",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2026-09-15-international-health-mou",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "12c402ea3e41",
+        "languages": {
+          "en": {
+            "status": "source"
+          },
+          "zh-TW": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-15",
+            "reviewer": "企劃組中文審核人",
+            "sourceHash": "12c402ea3e41"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "zh-TW": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "news.2026-09-15-letter-615-ns1",
+      "type": "letter",
+      "newsType": "letter",
+      "title": "致醫界通函第 615 號：登革熱 NS1 抗原快篩試劑配置更新",
+      "effectiveAt": "2026-09-22",
+      "letterNo": 615,
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2026-09-15",
+      "reviewedAt": "2026-09-15",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "professional"
+      ],
+      "tasks": [],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "doc.guidance-dengue"
+      ],
+      "diseases": [
+        "disease.dengue"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-15"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "pending"
+        },
+        "tl": {
+          "status": "pending"
+        },
+        "vi": {
+          "status": "pending"
+        },
+        "id": {
+          "status": "pending"
+        },
+        "th": {
+          "status": "pending"
+        }
+      },
+      "summary": "自 2026-09-22 起更新登革熱 NS1 快篩試劑配置：南部疫區基層診所加量配置、改由線上系統申領，快篩陽性仍應 24 小時內通報。（原型示意通函，號次非真實）",
+      "keywords": [
+        "致醫界通函",
+        "第 615 號",
+        "登革熱",
+        "NS1 快篩",
+        "配置"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Bulletin/List/7tUXjTBf6paRvrhEl-mrPg"
+      ],
+      "bodyMarkdown": "一、因應南部登革熱本土疫情上升，疾管署自 2026 年 9 月 22 日起更新 NS1 抗原快速診斷試劑配置。\n二、高雄市、台南市、屏東縣疫情區之基層診所配置量提高為每院所 40 劑，其他縣市維持 20 劑；不足時得向轄區衛生局追加。\n三、申領方式改由「防疫物資管理資訊系統」線上申請，原紙本申請單停止使用。\n四、依「登革熱／屈公病防治工作指引」第五章，快篩陽性者應於 24 小時內通報；快篩陰性但臨床高度懷疑者，仍應採檢送驗。",
+      "attachments": [
+        {
+          "label": "NS1 快篩試劑配置表（2026-09-22 起）",
+          "url": "/pending/?ref=news.2026-09-15-letter-615-ns1&doc=NS1%20快篩試劑配置表（2026-09-22%20起）",
+          "machineReadable": false
+        }
+      ],
+      "sourceHash": "e1a93572e38a",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-15-letter-615-ns1/",
+      "path": "/news/2026-09-15-letter-615-ns1/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-15-letter-615-ns1.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-09-15",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "pro",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2026-09-15-letter-615-ns1",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "e1a93572e38a",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "pending"
+          },
+          "tl": {
+            "status": "pending"
+          },
+          "vi": {
+            "status": "pending"
+          },
+          "id": {
+            "status": "pending"
+          },
+          "th": {
+            "status": "pending"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "news.2026-09-10-clarify-flu-vaccine-death",
+      "type": "news",
+      "newsType": "clarification",
+      "title": "澄清：網傳「打流感疫苗會得流感、長輩打完會死」並非事實",
+      "owner": "unit.pr",
+      "publishedAt": "2026-09-10",
+      "reviewedAt": "2026-09-10",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "rumor",
+        "vaccines"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "vaccines": [
+        "vaccine.influenza"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-10"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-10",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "machine"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "summary": "網傳打流感疫苗會得流感、長輩打完會死並非事實。公費流感疫苗為不活化疫苗，不會引起流感；常見副作用為注射部位疼痛與輕微發燒。",
+      "keywords": [
+        "澄清",
+        "流感疫苗",
+        "謠言",
+        "疫苗安全"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+      ],
+      "relatedClarification": "clar.2026-09-flu-vaccine-causes-flu",
+      "bodyMarkdown": "針對社群流傳「打流感疫苗反而會得流感，長輩打完會死」的訊息，疾病管制署澄清，此說法並非事實。\n\n公費流感疫苗為**不活化疫苗**，不含活病毒，不會因接種而得到流感。接種後常見反應為注射部位疼痛、紅腫，少數人有輕微發燒、倦怠，通常 1–2 天內緩解。我國設有預防接種受害救濟制度，並持續監測疫苗安全；長者因流感併發重症與死亡的風險遠高於疫苗風險，請放心接種。",
+      "i18n": {
+        "en": {
+          "title": "Clarification: claims that flu vaccine causes flu or kills older people are untrue",
+          "summary": "The government-funded flu vaccine is inactivated and cannot cause influenza; common side effects are a sore arm and mild fever. Older adults face far greater risk from influenza itself."
+        }
+      },
+      "sourceHash": "fc25fe297f4b",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-10-clarify-flu-vaccine-death/",
+      "path": "/news/2026-09-10-clarify-flu-vaccine-death/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-10-clarify-flu-vaccine-death.md",
+      "governance": {
+        "owner": "unit.pr",
+        "ownerName": "公關室",
+        "steward": null,
+        "reviewedAt": "2026-09-10",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2026-09-10-clarify-flu-vaccine-death",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "fc25fe297f4b",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-10",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "machine"
+          },
+          "tl": {
+            "status": "machine"
+          },
+          "vi": {
+            "status": "machine"
+          },
+          "id": {
+            "status": "machine"
+          },
+          "th": {
+            "status": "machine"
+          }
+        },
+        "translationStale": {
+          "en": false,
+          "ja": false,
+          "tl": false,
+          "vi": false,
+          "id": false,
+          "th": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en",
+          "ja",
+          "tl",
+          "vi",
+          "id",
+          "th"
+        ]
+      }
+    },
+    {
+      "id": "news.2026-09-01-covid-weekly",
+      "type": "news",
+      "newsType": "press",
+      "title": "新冠疫情連續三週下降，10 月起新年度疫苗與流感疫苗同步開打",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2026-09-01",
+      "reviewedAt": "2026-09-01",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "situation",
+        "vaccines"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.covid-19"
+      ],
+      "vaccines": [
+        "vaccine.covid-19"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-01",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "machine"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "summary": "新冠門急診就診人次與併發重症通報數連續三週下降。2026–2027 年度新冠疫苗將於 10 月 1 日與流感疫苗同步開打。",
+      "keywords": [
+        "新冠",
+        "疫情下降",
+        "新冠疫苗",
+        "10 月 1 日"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+      ],
+      "situationDeclaration": {
+        "disease": "disease.covid-19",
+        "text": "就診人次與併發重症通報數連續三週下降"
+      },
+      "bodyMarkdown": "疾病管制署表示，近一週新冠門急診就診人次與新冠併發重症通報數連續三週下降，夏季疫情趨緩。\n\n2026–2027 年度新冠疫苗將自 10 月 1 日起與流感疫苗同步開打，6 個月以上民眾皆可接種公費疫苗。疾管署提醒 65 歲以上長者及慢性病人確診後應儘早就醫，由醫師評估於發病 5 天內使用口服抗病毒藥物。",
+      "i18n": {
+        "en": {
+          "title": "COVID-19 declining for three weeks; new-season vaccine starts 1 October with flu vaccine",
+          "summary": "COVID-19 visits and severe cases have fallen for three weeks. The 2026–27 COVID-19 vaccine will be offered from 1 October alongside the flu vaccine."
+        }
+      },
+      "sourceHash": "a2734f16359b",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-01-covid-weekly/",
+      "path": "/news/2026-09-01-covid-weekly/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-01-covid-weekly.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-09-01",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2026-09-01-covid-weekly",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "a2734f16359b",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-01",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "machine"
+          },
+          "tl": {
+            "status": "machine"
+          },
+          "vi": {
+            "status": "machine"
+          },
+          "id": {
+            "status": "machine"
+          },
+          "th": {
+            "status": "machine"
+          }
+        },
+        "translationStale": {
+          "en": false,
+          "ja": false,
+          "tl": false,
+          "vi": false,
+          "id": false,
+          "th": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en",
+          "ja",
+          "tl",
+          "vi",
+          "id",
+          "th"
+        ]
+      }
+    },
+    {
+      "id": "news.2026-08-25-mpox-clade-i",
+      "type": "news",
+      "newsType": "press",
+      "title": "非洲 M痘 clade I 疫情持續，前往當地請避免親密接觸與野生動物",
+      "owner": "unit.quarantine",
+      "publishedAt": "2026-08-25",
+      "reviewedAt": "2026-08-25",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "travel"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.mpox"
+      ],
+      "vaccines": [
+        "vaccine.mpox"
+      ],
+      "countries": [
+        "CD",
+        "UG",
+        "KE"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "pending"
+        },
+        "tl": {
+          "status": "pending"
+        },
+        "vi": {
+          "status": "pending"
+        },
+        "id": {
+          "status": "pending"
+        },
+        "th": {
+          "status": "pending"
+        }
+      },
+      "summary": "中非與東非 M痘 clade I 疫情持續，相關國家維持第二級旅遊疫情建議。前往民眾請避免親密接觸與接觸野生動物，返國有症狀應就醫。",
+      "keywords": [
+        "M痘",
+        "clade I",
+        "非洲",
+        "旅遊疫情建議"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+      ],
+      "bodyMarkdown": "疾病管制署表示，剛果民主共和國、烏干達等中非與東非國家 M痘 clade I 疫情持續，相關國家維持**第二級：警示（Alert）**旅遊疫情建議。\n\n疾管署提醒，前往當地應避免與不明對象親密接觸，不接觸野生動物及其屍體，並注意手部衛生；符合條件者可於出發前完成 2 劑 M痘疫苗。返國後 21 天內如出現發燒、淋巴結腫大或皮疹，請遮蓋病灶後就醫並告知旅遊史。",
+      "sourceHash": "1916c8a8a538",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-08-25-mpox-clade-i/",
+      "path": "/news/2026-08-25-mpox-clade-i/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-08-25-mpox-clade-i.md",
+      "governance": {
+        "owner": "unit.quarantine",
+        "ownerName": "檢疫組",
+        "steward": null,
+        "reviewedAt": "2026-08-25",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2026-08-25-mpox-clade-i",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "1916c8a8a538",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "pending"
+          },
+          "tl": {
+            "status": "pending"
+          },
+          "vi": {
+            "status": "pending"
+          },
+          "id": {
+            "status": "pending"
+          },
+          "th": {
+            "status": "pending"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "news.2026-08-24-flu-antiviral-expanded",
+      "type": "news",
+      "newsType": "press",
+      "title": "國內外近期流感疫情緩升，疾管署自 8 月 24 日起至 9 月 30 日擴大公費流感抗病毒藥劑使用條件",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2026-08-24",
+      "reviewedAt": "2026-08-24",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "symptoms",
+        "situation"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "doc.flu-antiviral-eligibility"
+      ],
+      "diseases": [
+        "disease.influenza"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-08-24"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "pending"
+        },
+        "tl": {
+          "status": "pending"
+        },
+        "vi": {
+          "status": "pending"
+        },
+        "id": {
+          "status": "pending"
+        },
+        "th": {
+          "status": "pending"
+        }
+      },
+      "summary": "流感疫情緩升，疾管署自 2026 年 8 月 24 日至 9 月 30 日擴大公費流感抗病毒藥劑使用對象至有類流感症狀的 7 類高傳播族群，經醫師評估不需快篩即可開立。",
+      "keywords": [
+        "流感",
+        "公費抗病毒藥劑",
+        "擴大使用條件",
+        "高傳播族群",
+        "不需快篩"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Bulletin/Detail/kMJD41yHUS0usXapeA0BGw?typeid=9"
+      ],
+      "bodyMarkdown": "疾病管制署表示，國內外近期流感疫情呈緩升趨勢，第 32 週（8 月 9 日至 15 日）類流感門急診就診計 95,011 人次，較前一週略升 1.2%。為把握用藥時機、降低重症風險，自今（2026）年 8 月 24 日起至 9 月 30 日止，擴大公費流感抗病毒藥劑使用條件，新增「有類流感症狀，且具下列身分之流感高傳播族群」：\n\n1. 醫事單位之防疫相關人員（含具執業登記醫事人員及醫療院所非醫事人員）\n2. 安養、長期照顧（服務）等機構之受照顧者及所屬工作人員\n3. 幼兒園托育人員、托育機構專業人員及居家托育人員（保母）\n4. 幼兒園、國小、國中、高中、高職、五專一至三年級學生\n5. 與流感重症高風險族群同住者或其照顧者\n6. 禽畜養殖等相關行業工作人員、動物園工作人員及動物防疫人員\n7. 其他人口密集機構（如軍營等）易發生群聚之人員\n\n疾管署說明，上述對象及全年適用對象（流感併發重症、孕婦、未滿 5 歲及 65 歲以上、住院、高風險慢性病等類流感患者），**經醫師評估符合條件者不需流感快篩即可開立公費藥劑**。抗病毒藥劑於發病 48 小時內使用效果最佳，有症狀請儘早就醫。",
+      "sourceHash": "e901a5a618b1",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-08-24-flu-antiviral-expanded/",
+      "path": "/news/2026-08-24-flu-antiviral-expanded/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-08-24-flu-antiviral-expanded.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-08-24",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "based-on-revised",
+        "lifecycleLabel": "依據已修訂",
+        "whitelist": false,
+        "whitelistTier": "public",
+        "whitelistPublic": false,
+        "whitelistReasons": [
+          "based-on-revised",
+          "predates-basis"
+        ],
+        "whitelistReasonLabels": [
+          "所依據的正本已修訂，衍生內容尚未更新",
+          "發布日早於現行正本生效日，不作為答案依據（僅保留加註）"
+        ],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2026-08-24-flu-antiviral-expanded",
+        "noindex": false,
+        "stale": [
+          {
+            "basedOn": "doc.flu-antiviral-eligibility",
+            "revisedAt": "2026-09-18",
+            "currentId": "doc.flu-antiviral-eligibility.2026-09-18",
+            "currentTitle": "公費流感抗病毒藥劑使用對象（2026 年 9 月延長版：高傳播族群延至 10 月 31 日）",
+            "currentVersion": "2026-09",
+            "currentHref": "/documents/flu-antiviral-eligibility.2026-09-18/",
+            "dueAt": "2026-09-25",
+            "resolved": false,
+            "resolvedAt": null
+          }
+        ],
+        "basisRevisions": [
+          {
+            "basedOn": "doc.flu-antiviral-eligibility",
+            "revisedAt": "2026-09-18",
+            "currentId": "doc.flu-antiviral-eligibility.2026-09-18",
+            "currentTitle": "公費流感抗病毒藥劑使用對象（2026 年 9 月延長版：高傳播族群延至 10 月 31 日）",
+            "currentVersion": "2026-09",
+            "currentHref": "/documents/flu-antiviral-eligibility.2026-09-18/",
+            "dueAt": "2026-09-25",
+            "resolved": false,
+            "resolvedAt": null
+          }
+        ],
+        "predatesBasis": true,
+        "annotations": [
+          {
+            "kind": "based-on-revised",
+            "level": "warning",
+            "text": "本新聞稿發布於 2026-08-24，相關建議已於 2026-09-18 修訂，現行版請見「公費流感抗病毒藥劑使用對象（2026 年 9 月延長版：高傳播族群延至 10 月 31 日）」。",
+            "href": "doc.flu-antiviral-eligibility.2026-09-18",
+            "targetId": "doc.flu-antiviral-eligibility.2026-09-18",
+            "path": "/documents/flu-antiviral-eligibility.2026-09-18/",
+            "revisedAt": "2026-09-18",
+            "currentTitle": "公費流感抗病毒藥劑使用對象（2026 年 9 月延長版：高傳播族群延至 10 月 31 日）"
+          }
+        ],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "e901a5a618b1",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "pending"
+          },
+          "tl": {
+            "status": "pending"
+          },
+          "vi": {
+            "status": "pending"
+          },
+          "id": {
+            "status": "pending"
+          },
+          "th": {
+            "status": "pending"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "news.2026-08-20-dots-outcomes",
+      "type": "news",
+      "newsType": "press",
+      "owner": "unit.chronic-infectious",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-30"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "pending"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "title": "都治 20 年：關懷員每日送藥到手，結核病完治率穩定提升",
+      "publishedAt": "2026-08-20",
+      "reviewedAt": "2026-08-20",
+      "tasks": [
+        "symptoms"
+      ],
+      "summary": "都治計畫推動 20 年，關懷員每日送藥到手、親眼看服藥，納入都治個案完治率高於未納入者；多重抗藥性結核病由 TMTC 團隊結合進階都治照護。",
+      "keywords": [
+        "都治",
+        "DOTS",
+        "關懷員",
+        "完治率",
+        "TMTC"
+      ],
+      "basedOn": [
+        "doc.dots-manual",
+        "doc.tb-guideline"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Bulletin/Detail/{id}?typeid=9#2026-dots-outcomes"
+      ],
+      "bodyMarkdown": "疾病管制署自 2006 年推動結核病「都治」（DOTS）計畫，2026 年（今年）邁入第 20 年。全國都治關懷員每天依病人方便的時間與地點**送藥到手、親眼看著服藥**，並關心副作用與生活需要，協助病人完成至少 6 個月的療程。\n\n疾管署表示，納入都治的個案完治率明顯高於未納入者，近年新案完治率約 7 成以上（示意，正式數字以結核病年報為準）；未完治的主要原因是高齡病人治療期間因其他疾病死亡，而非中斷服藥。多重抗藥性結核病則由抗藥性結核病醫療照護體系（TMTC）團隊收治，結合進階都治與全口服短程處方，治療成功率持續改善。\n\n疾管署提醒，結核病治療期間**千萬不要自行停藥**，以免復發或產生抗藥性；對服藥有疑問或出現副作用，請告訴關懷員或主治醫師。",
+      "sourceHash": "55548f8fa877",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-08-20-dots-outcomes/",
+      "path": "/news/2026-08-20-dots-outcomes/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-08-20-dots-outcomes.md",
+      "governance": {
+        "owner": "unit.chronic-infectious",
+        "ownerName": "慢性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-08-20",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2026-08-20-dots-outcomes",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "55548f8fa877",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "pending"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "news.2026-08-18-dengue-rising-south",
+      "type": "news",
+      "newsType": "press",
+      "title": "南部登革熱本土疫情上升，籲請民眾配合孳生源清除與防治工作",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2026-08-18",
+      "reviewedAt": "2026-08-18",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "situation"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-08-18",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "machine"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "summary": "南部縣市登革熱本土病例連續增加，疾管署籲請民眾配合衛生單位孳生源清除與噴藥，發燒就醫可由醫師進行 NS1 快篩。",
+      "keywords": [
+        "登革熱",
+        "本土疫情",
+        "南部",
+        "NS1 快篩"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+      ],
+      "situationDeclaration": {
+        "disease": "disease.dengue",
+        "text": "南部縣市本土病例連續增加"
+      },
+      "bodyMarkdown": "疾病管制署表示，近兩週南部縣市登革熱本土病例持續增加（示意），病例集中於高雄市與台南市部分行政區，疫情有擴散風險。\n\n疾管署籲請民眾配合衛生單位進行孳生源清除與噴藥，並提醒醫師對發燒病人提高警覺，可善用 NS1 快篩試劑及早診斷與通報。民眾外出請穿淺色長袖衣褲並使用防蚊液。",
+      "i18n": {
+        "en": {
+          "title": "Local dengue rising in southern Taiwan: please cooperate with breeding-site removal",
+          "summary": "Local dengue cases in southern cities have risen for two weeks. Taiwan CDC asks residents to cooperate with breeding-site removal and spraying; doctors can use NS1 rapid tests for early diagnosis."
+        }
+      },
+      "sourceHash": "9bf36f8fdb84",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-08-18-dengue-rising-south/",
+      "path": "/news/2026-08-18-dengue-rising-south/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-08-18-dengue-rising-south.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-08-18",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2026-08-18-dengue-rising-south",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "9bf36f8fdb84",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-08-18",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "machine"
+          },
+          "tl": {
+            "status": "machine"
+          },
+          "vi": {
+            "status": "machine"
+          },
+          "id": {
+            "status": "machine"
+          },
+          "th": {
+            "status": "machine"
+          }
+        },
+        "translationStale": {
+          "en": false,
+          "ja": false,
+          "tl": false,
+          "vi": false,
+          "id": false,
+          "th": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en",
+          "ja",
+          "tl",
+          "vi",
+          "id",
+          "th"
+        ]
+      }
+    },
+    {
+      "id": "news.2026-08-17-international-fetp-workshop",
+      "type": "news",
+      "sourceLang": "en",
+      "title": "International field epidemiology workshop opens in Taipei",
+      "owner": "unit.planning",
+      "steward": "企劃組承辦人",
+      "publishedAt": "2026-08-17",
+      "reviewedAt": "2026-08-17",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-10-01"
+      },
+      "languages": {
+        "en": {
+          "status": "source"
+        },
+        "zh-TW": {
+          "status": "reviewed",
+          "reviewedAt": "2026-08-17",
+          "reviewer": "企劃組中文審核人",
+          "sourceHash": "9a61f7da4e16"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "Taiwan CDC opened an international field epidemiology workshop for public health officials from partner countries, covering outbreak investigation, dengue control and laboratory diagnosis.",
+      "newsType": "press",
+      "keywords": [
+        "FETP",
+        "field epidemiology",
+        "workshop",
+        "international training",
+        "dengue"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/En/Bulletin/Detail/{id}#2026-08-17-international-fetp-workshop"
+      ],
+      "bodyMarkdown": "Taiwan CDC opened an international field epidemiology workshop in Taipei for public health officials and trainees from partner countries.\n\nThe workshop combines Taiwan's Field Epidemiology Training Program (FETP) experience with practical sessions on outbreak investigation, dengue and vector control, laboratory diagnosis and risk communication. Participants also visit a local health bureau and a quarantine station.\n\nForeign health officials interested in future sessions can apply through the online international training service.\n\nThis release is illustrative prototype content; the date, number of participants and sessions are examples.",
+      "i18n": {
+        "zh-TW": {
+          "title": "國際田野流行病學研習營於臺北開訓",
+          "summary": "疾管署為夥伴國家公共衛生官員舉辦國際田野流行病學研習營，內容涵蓋疫情調查、登革熱防治與實驗室診斷。",
+          "keywords": [
+            "FETP",
+            "田野流行病學",
+            "研習營",
+            "國際訓練",
+            "登革熱"
+          ],
+          "bodyMarkdown": "疾管署於臺北舉辦國際田野流行病學研習營，邀請夥伴國家公共衛生官員與學員參加。\n\n研習結合臺灣田野流行病學訓練計畫（FETP）經驗，安排疫情調查、登革熱與病媒防治、實驗室診斷及風險溝通實作，並參訪地方衛生局與檢疫站。\n\n有意參加後續梯次的外國衛生人員，可透過線上國際訓練申請服務申請。\n\n本則為原型示意內容，日期、學員人數與課程為示例。"
+        }
+      },
+      "sourceHash": "9a61f7da4e16",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-08-17-international-fetp-workshop/",
+      "path": "/news/2026-08-17-international-fetp-workshop/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-08-17-international-fetp-workshop.md",
+      "governance": {
+        "owner": "unit.planning",
+        "ownerName": "企劃組",
+        "steward": "企劃組承辦人",
+        "reviewedAt": "2026-08-17",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2026-08-17-international-fetp-workshop",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "9a61f7da4e16",
+        "languages": {
+          "en": {
+            "status": "source"
+          },
+          "zh-TW": {
+            "status": "reviewed",
+            "reviewedAt": "2026-08-17",
+            "reviewer": "企劃組中文審核人",
+            "sourceHash": "9a61f7da4e16"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "zh-TW": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "news.2026-07-21-dengue-first-local",
+      "type": "news",
+      "newsType": "press",
+      "title": "2026 年首例登革熱本土病例出現於高雄市，請民眾清除積水容器",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2026-07-21",
+      "reviewedAt": "2026-07-21",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "situation"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "pending"
+        },
+        "tl": {
+          "status": "pending"
+        },
+        "vi": {
+          "status": "pending"
+        },
+        "id": {
+          "status": "pending"
+        },
+        "th": {
+          "status": "pending"
+        }
+      },
+      "summary": "2026 年首例登革熱本土病例出現於高雄市，衛生單位已完成疫調與周邊孳生源清除。疾管署呼籲民眾每週落實「巡倒清刷」。",
+      "keywords": [
+        "登革熱",
+        "本土病例",
+        "高雄",
+        "巡倒清刷"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+      ],
+      "situationDeclaration": {
+        "disease": "disease.dengue",
+        "text": "出現今年首例本土病例（高雄市）"
+      },
+      "bodyMarkdown": "疾病管制署於 2026 年 7 月 21 日（今日）公布 2026 年（今年）首例登革熱本土病例（示意），個案居住於高雄市，發病前兩週無出國史。衛生局已完成疫情調查，並於個案住家及活動地點周邊進行孳生源清除與針對性室內噴藥。\n\n疾管署提醒，夏季高溫多雨，民眾應每週落實「巡、倒、清、刷」，清除住家內外積水容器；出現發燒、頭痛、後眼窩痛、肌肉關節痛等症狀，請儘速就醫。",
+      "sourceHash": "69da9789bc47",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-07-21-dengue-first-local/",
+      "path": "/news/2026-07-21-dengue-first-local/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-07-21-dengue-first-local.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-07-21",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2026-07-21-dengue-first-local",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "69da9789bc47",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "pending"
+          },
+          "tl": {
+            "status": "pending"
+          },
+          "vi": {
+            "status": "pending"
+          },
+          "id": {
+            "status": "pending"
+          },
+          "th": {
+            "status": "pending"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "news.2026-06-03-flu-antiviral-summer",
+      "type": "news",
+      "newsType": "press",
+      "title": "夏季流感疫情持續，公費抗病毒藥劑使用對象維持現行規定",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2026-06-03",
+      "reviewedAt": "2026-06-03",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "symptoms"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "doc.flu-antiviral-eligibility"
+      ],
+      "diseases": [
+        "disease.influenza"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "pending"
+        },
+        "tl": {
+          "status": "pending"
+        },
+        "vi": {
+          "status": "pending"
+        },
+        "id": {
+          "status": "pending"
+        },
+        "th": {
+          "status": "pending"
+        }
+      },
+      "summary": "夏季仍有流感病毒活動，疾管署說明公費抗病毒藥劑全年適用對象：未滿 5 歲及 65 歲以上、孕婦、高風險慢性病等類流感患者，經醫師評估不需快篩即可開立。",
+      "keywords": [
+        "流感",
+        "公費抗病毒藥劑",
+        "使用對象",
+        "不需快篩"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+      ],
+      "bodyMarkdown": "疾病管制署表示，2026 年（今年）入夏後仍有流感病毒活動，近期以 A 型 H1N1 為主。依「公費流感抗病毒藥劑使用對象」（全年適用），未滿 5 歲及 65 歲以上之類流感患者、孕婦、具高風險慢性病之類流感患者、流感併發重症及住院病患等，經醫師診察研判符合者，不需流感快篩即可使用公費抗病毒藥劑。\n\n疾管署提醒，抗病毒藥劑於發病 48 小時內使用效果最佳，有症狀請儘早就醫。",
+      "sourceHash": "2b2175731101",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-06-03-flu-antiviral-summer/",
+      "path": "/news/2026-06-03-flu-antiviral-summer/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-06-03-flu-antiviral-summer.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-06-03",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "based-on-revised",
+        "lifecycleLabel": "依據已修訂",
+        "whitelist": false,
+        "whitelistTier": "public",
+        "whitelistPublic": false,
+        "whitelistReasons": [
+          "based-on-revised",
+          "predates-basis"
+        ],
+        "whitelistReasonLabels": [
+          "所依據的正本已修訂，衍生內容尚未更新",
+          "發布日早於現行正本生效日，不作為答案依據（僅保留加註）"
+        ],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2026-06-03-flu-antiviral-summer",
+        "noindex": false,
+        "stale": [
+          {
+            "basedOn": "doc.flu-antiviral-eligibility",
+            "revisedAt": "2026-09-18",
+            "currentId": "doc.flu-antiviral-eligibility.2026-09-18",
+            "currentTitle": "公費流感抗病毒藥劑使用對象（2026 年 9 月延長版：高傳播族群延至 10 月 31 日）",
+            "currentVersion": "2026-09",
+            "currentHref": "/documents/flu-antiviral-eligibility.2026-09-18/",
+            "dueAt": "2026-09-25",
+            "resolved": false,
+            "resolvedAt": null
+          }
+        ],
+        "basisRevisions": [
+          {
+            "basedOn": "doc.flu-antiviral-eligibility",
+            "revisedAt": "2026-09-18",
+            "currentId": "doc.flu-antiviral-eligibility.2026-09-18",
+            "currentTitle": "公費流感抗病毒藥劑使用對象（2026 年 9 月延長版：高傳播族群延至 10 月 31 日）",
+            "currentVersion": "2026-09",
+            "currentHref": "/documents/flu-antiviral-eligibility.2026-09-18/",
+            "dueAt": "2026-09-25",
+            "resolved": false,
+            "resolvedAt": null
+          }
+        ],
+        "predatesBasis": true,
+        "annotations": [
+          {
+            "kind": "based-on-revised",
+            "level": "warning",
+            "text": "本新聞稿發布於 2026-06-03，相關建議已於 2026-09-18 修訂，現行版請見「公費流感抗病毒藥劑使用對象（2026 年 9 月延長版：高傳播族群延至 10 月 31 日）」。",
+            "href": "doc.flu-antiviral-eligibility.2026-09-18",
+            "targetId": "doc.flu-antiviral-eligibility.2026-09-18",
+            "path": "/documents/flu-antiviral-eligibility.2026-09-18/",
+            "revisedAt": "2026-09-18",
+            "currentTitle": "公費流感抗病毒藥劑使用對象（2026 年 9 月延長版：高傳播族群延至 10 月 31 日）"
+          }
+        ],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "2b2175731101",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "pending"
+          },
+          "tl": {
+            "status": "pending"
+          },
+          "vi": {
+            "status": "pending"
+          },
+          "id": {
+            "status": "pending"
+          },
+          "th": {
+            "status": "pending"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "news.2026-06-02-measles-travel-mmr-1966",
+      "type": "news",
+      "newsType": "press",
+      "title": "暑假出國前請評估麻疹免疫力：1966 年（含）以後出生者出國前 2 至 4 週評估接種 MMR",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2026-06-02",
+      "reviewedAt": "2026-06-02",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "vaccines",
+        "travel"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.measles"
+      ],
+      "vaccines": [
+        "vaccine.mmr"
+      ],
+      "basedOn": [
+        "doc.mmr-recommendation"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-06-03"
+        }
+      },
+      "summary": "疾管署重申 1966 年（含）以後出生、不具麻疹免疫力者，出國前 2 至 4 週至旅遊醫學門診評估接種 MMR 疫苗。",
+      "keywords": [
+        "麻疹",
+        "MMR",
+        "1966 年",
+        "出國"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Bulletin/Detail/RQMqkQ2-D6sOpVi8dnV75w?typeid=9"
+      ],
+      "bodyMarkdown": "暑假出國旺季將至，疾病管制署提醒，鄰近國家麻疹疫情持續，1966 年（含）以後出生、不具麻疹免疫力的民眾，若計畫前往麻疹流行地區，請於出國前 2 至 4 週至旅遊醫學門診評估自費接種 1 劑 MMR 疫苗。\n\n返國後若出現發燒、出疹等症狀，請戴口罩儘速就醫並告知旅遊史。",
+      "i18n": {
+        "en": {
+          "title": "Check your measles immunity before summer travel: people born in 1966 or later should be assessed for MMR 2–4 weeks before departure",
+          "summary": "Taiwan CDC reiterates that people born in 1966 or later who lack measles immunity should visit a travel clinic 2–4 weeks before travelling to affected areas."
+        }
+      },
+      "sourceHash": "2c387d21c16f",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-06-02-measles-travel-mmr-1966/",
+      "path": "/news/2026-06-02-measles-travel-mmr-1966/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-06-02-measles-travel-mmr-1966.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-06-02",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2026-06-02-measles-travel-mmr-1966",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "2c387d21c16f",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-06-03"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "news.2026-05-22-international-wha-technical-exchange",
+      "type": "news",
+      "sourceLang": "en",
+      "title": "Taiwan CDC experts hold technical exchanges during the World Health Assembly week",
+      "owner": "unit.planning",
+      "steward": "企劃組承辦人",
+      "publishedAt": "2026-05-22",
+      "reviewedAt": "2026-05-22",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-10-01"
+      },
+      "languages": {
+        "en": {
+          "status": "source"
+        },
+        "zh-TW": {
+          "status": "reviewed",
+          "reviewedAt": "2026-05-22",
+          "reviewer": "企劃組中文審核人",
+          "sourceHash": "f7e19729ddba"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "During the World Health Assembly week in Geneva, Taiwan CDC experts met health officials and experts from partner countries to exchange experience on surveillance, IHR implementation and preparedness.",
+      "newsType": "press",
+      "keywords": [
+        "WHA",
+        "World Health Assembly",
+        "WHO",
+        "IHR",
+        "technical exchange"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/En/Bulletin/Detail/{id}#2026-05-22-international-wha-technical-exchange"
+      ],
+      "bodyMarkdown": "During the World Health Assembly (WHA) week in Geneva, Taiwan CDC experts held technical exchanges with health officials and experts from partner countries.\n\nTopics included event-based surveillance, implementation of the International Health Regulations (IHR 2005) and its 24/7 National Focal Point, preparedness for emerging infectious diseases and antimicrobial resistance.\n\nTaiwan CDC will continue to share its epidemic prevention experience and seek meaningful participation in WHO technical meetings.\n\nThis release is illustrative prototype content; the date and meeting details are examples.",
+      "i18n": {
+        "zh-TW": {
+          "title": "疾管署專家於世界衛生大會期間進行技術交流",
+          "summary": "世界衛生大會（WHA）期間，疾管署專家於日內瓦與夥伴國家衛生官員及專家交流監測、IHR 實施與整備經驗。",
+          "keywords": [
+            "世界衛生大會",
+            "WHA",
+            "WHO",
+            "國際衛生條例",
+            "技術交流"
+          ],
+          "bodyMarkdown": "世界衛生大會（WHA）期間，疾管署專家於日內瓦與夥伴國家衛生官員及專家進行技術交流。\n\n交流主題包括事件型監測、國際衛生條例（IHR 2005）實施與 24 小時國家對口窗口、新興傳染病整備及抗藥性。\n\n疾管署將持續分享防疫經驗，爭取有意義參與 WHO 技術會議。\n\n本則為原型示意內容，日期與會議細節為示例。"
+        }
+      },
+      "sourceHash": "f7e19729ddba",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-05-22-international-wha-technical-exchange/",
+      "path": "/news/2026-05-22-international-wha-technical-exchange/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-05-22-international-wha-technical-exchange.md",
+      "governance": {
+        "owner": "unit.planning",
+        "ownerName": "企劃組",
+        "steward": "企劃組承辦人",
+        "reviewedAt": "2026-05-22",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2026-05-22-international-wha-technical-exchange",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "f7e19729ddba",
+        "languages": {
+          "en": {
+            "status": "source"
+          },
+          "zh-TW": {
+            "status": "reviewed",
+            "reviewedAt": "2026-05-22",
+            "reviewer": "企劃組中文審核人",
+            "sourceHash": "f7e19729ddba"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "zh-TW": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "news.2026-05-11-japan-measles-level1",
+      "type": "news",
+      "newsType": "press",
+      "title": "日本麻疹疫情升溫，列為第一級旅遊疫情建議；出國前請評估 MMR 接種",
+      "owner": "unit.quarantine",
+      "publishedAt": "2026-05-11",
+      "reviewedAt": "2026-05-11",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "travel",
+        "vaccines"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "doc.mmr-recommendation"
+      ],
+      "diseases": [
+        "disease.measles"
+      ],
+      "vaccines": [
+        "vaccine.mmr"
+      ],
+      "countries": [
+        "JP"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-05-11",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "machine"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "summary": "日本麻疹病例增加，疾管署於 2026 年 5 月 11 日將日本列為麻疹第一級旅遊疫情建議（注意）。1966 年（含）以後出生且不具免疫力者，出國前 2–4 週評估接種 MMR。",
+      "keywords": [
+        "日本",
+        "麻疹",
+        "旅遊疫情建議",
+        "第一級",
+        "MMR"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+      ],
+      "bodyMarkdown": "疾病管制署表示，日本 2026 年（今年）麻疹病例數較往年同期明顯增加，多個都道府縣出現群聚，即日起將日本列為麻疹**第一級：注意（Watch）**旅遊疫情建議，提醒前往民眾遵守當地一般預防措施。\n\n依現行 MMR 預防接種建議，**1966 年（含）以後出生**、不具麻疹免疫力的民眾，計畫前往日本等流行地區，請於出國前 2 至 4 週至旅遊醫學門診評估自費接種 1 劑 MMR 疫苗；未滿 1 歲嬰兒非必要不建議前往。返國後 18 天內如出現發燒、出疹，請戴口罩儘速就醫並告知旅遊史。",
+      "i18n": {
+        "en": {
+          "title": "Measles rising in Japan: Level 1 travel notice; assess MMR before departure",
+          "summary": "Taiwan CDC placed Japan at Level 1 (Watch) for measles. People born in 1966 or later without immunity should be assessed for MMR 2–4 weeks before travel.",
+          "bodyMarkdown": "Measles cases in Japan are markedly higher than in previous years, with clusters in several prefectures. Taiwan CDC has placed Japan at **Level 1: Watch** for measles; travellers should follow usual precautions.\n\nUnder the current MMR recommendations, people **born in 1966 or later** without measles immunity who plan to visit affected areas such as Japan should see a travel clinic 2 to 4 weeks before departure to be assessed for one self-paid MMR dose; infants under 1 should not travel there unless necessary. Anyone who develops fever or rash within 18 days of return should wear a mask, see a doctor promptly and mention their travel."
+        }
+      },
+      "sourceHash": "551b124620e9",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-05-11-japan-measles-level1/",
+      "path": "/news/2026-05-11-japan-measles-level1/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-05-11-japan-measles-level1.md",
+      "governance": {
+        "owner": "unit.quarantine",
+        "ownerName": "檢疫組",
+        "steward": null,
+        "reviewedAt": "2026-05-11",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2026-05-11-japan-measles-level1",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "551b124620e9",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-05-11",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "machine"
+          },
+          "tl": {
+            "status": "machine"
+          },
+          "vi": {
+            "status": "machine"
+          },
+          "id": {
+            "status": "machine"
+          },
+          "th": {
+            "status": "machine"
+          }
+        },
+        "translationStale": {
+          "en": false,
+          "ja": false,
+          "tl": false,
+          "vi": false,
+          "id": false,
+          "th": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en",
+          "ja",
+          "tl",
+          "vi",
+          "id",
+          "th"
+        ]
+      }
+    },
+    {
+      "id": "news.2026-04-14-enterovirus-rising",
+      "type": "news",
+      "newsType": "press",
+      "title": "腸病毒就診人次連續上升，近期社區以 EV71 為主，籲請提高警覺",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2026-04-14",
+      "reviewedAt": "2026-04-14",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "situation",
+        "symptoms"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "vaccines": [
+        "vaccine.ev71"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-04-14",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "machine"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "summary": "腸病毒門急診就診人次連續三週上升，社區檢出 EV71 比例增加。疾管署提醒 5 歲以下幼兒是重症高危險群，出現重症前兆請立即就醫。",
+      "keywords": [
+        "腸病毒",
+        "EV71",
+        "就診人次",
+        "重症前兆"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+      ],
+      "situationDeclaration": {
+        "disease": "disease.enterovirus",
+        "text": "就診人次連續三週上升，社區 EV71 比例增加"
+      },
+      "bodyMarkdown": "疾病管制署表示，腸病毒門急診就診人次連續三週上升，實驗室監測顯示近期社區腸病毒 71 型檢出比例增加。EV71 較容易引起重症，5 歲以下幼兒是高危險群。\n\n疾管署呼籲家長落實肥皂洗手，留意幼兒是否出現嗜睡、意識不清、活力不佳、手腳無力、肌躍型抽搐、持續嘔吐、呼吸急促或心跳加快等重症前兆，一旦出現請立即送往重症責任醫院。",
+      "i18n": {
+        "en": {
+          "title": "Enterovirus visits rising, EV71 predominant in the community",
+          "summary": "Enterovirus outpatient visits have risen for three weeks and EV71 detections are increasing. Children under 5 are at highest risk; seek care immediately if warning signs appear."
+        }
+      },
+      "sourceHash": "b25a2780d1f7",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-04-14-enterovirus-rising/",
+      "path": "/news/2026-04-14-enterovirus-rising/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-04-14-enterovirus-rising.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-04-14",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2026-04-14-enterovirus-rising",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "b25a2780d1f7",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-04-14",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "machine"
+          },
+          "tl": {
+            "status": "machine"
+          },
+          "vi": {
+            "status": "machine"
+          },
+          "id": {
+            "status": "machine"
+          },
+          "th": {
+            "status": "machine"
+          }
+        },
+        "translationStale": {
+          "en": false,
+          "ja": false,
+          "tl": false,
+          "vi": false,
+          "id": false,
+          "th": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en",
+          "ja",
+          "tl",
+          "vi",
+          "id",
+          "th"
+        ]
+      }
+    },
+    {
+      "id": "news.2026-03-24-world-tb-day-end-tb-2035",
+      "type": "news",
+      "newsType": "press",
+      "owner": "unit.chronic-infectious",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-30"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "pending"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "title": "世界結核病日：邁向 2035 消除結核，接觸者與高風險族群公費檢驗潛伏感染",
+      "publishedAt": "2026-03-24",
+      "reviewedAt": "2026-03-24",
+      "tasks": [
+        "symptoms"
+      ],
+      "summary": "世界結核病日，疾管署重申 2035 年消除結核目標（發生率每十萬人口 10 例以下），擴大接觸者與高風險族群潛伏結核感染公費檢驗與 3HP、1HP 短程治療。",
+      "keywords": [
+        "世界結核病日",
+        "2035 消除結核",
+        "潛伏結核感染",
+        "1HP",
+        "高風險族群"
+      ],
+      "basedOn": [
+        "doc.ltbi-guideline",
+        "doc.tb-guideline"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Bulletin/Detail/{id}?typeid=9#2026-world-tb-day"
+      ],
+      "bodyMarkdown": "3 月 24 日是世界結核病日。疾病管制署表示，臺灣以 **2035 年消除結核**為目標，也就是將結核病發生率降至每十萬人口 10 例以下。結核病新案數已較 2005 年下降超過六成，但仍以 65 歲以上長者占多數，糖尿病、洗腎等慢性病人與山地鄉居民的發生率也較高。\n\n疾管署說明，多數新案來自多年前感染、體內潛伏的結核菌「甦醒」發病，因此除了咳嗽兩週就醫的早期發現，更要**找出潛伏結核感染並及早治療**。今年持續擴大接觸者與高風險族群的公費丙型干擾素釋放試驗（IGRA）檢驗，檢出潛伏感染者可選擇 3HP（每週 1 次、共 12 次）或 1HP（每天 1 次、共 28 天）等短程處方，由關懷員陪伴服藥，可降低 9 成以上的發病風險。\n\n疾管署呼籲，咳嗽超過兩週、有痰、體重減輕或夜間盜汗者，應至胸腔科照胸部 X 光；接到衛生所接觸者檢查通知時，請務必配合。相關資訊可上疾管署網站結核病專區查詢，或撥打防疫專線 1922。",
+      "sourceHash": "fdaf06b187d9",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-03-24-world-tb-day-end-tb-2035/",
+      "path": "/news/2026-03-24-world-tb-day-end-tb-2035/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-03-24-world-tb-day-end-tb-2035.md",
+      "governance": {
+        "owner": "unit.chronic-infectious",
+        "ownerName": "慢性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-03-24",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2026-03-24-world-tb-day-end-tb-2035",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "fdaf06b187d9",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "pending"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "news.2026-03-15-letter-ev-guideline",
+      "type": "letter",
+      "newsType": "letter",
+      "title": "致醫界通函第 608 號：腸病毒感染併發重症臨床處置建議更新",
+      "effectiveAt": "2026-03-15",
+      "letterNo": 608,
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2026-03-15",
+      "reviewedAt": "2026-03-15",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "professional"
+      ],
+      "tasks": [],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "doc.ev-severe-guideline"
+      ],
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "pending"
+        },
+        "tl": {
+          "status": "pending"
+        },
+        "vi": {
+          "status": "pending"
+        },
+        "id": {
+          "status": "pending"
+        },
+        "th": {
+          "status": "pending"
+        }
+      },
+      "summary": "腸病毒感染併發重症臨床處置建議更新：重申四期分期、第二期以上轉診重症責任醫院，並提醒流行期前完成院內演練。",
+      "keywords": [
+        "致醫界通函",
+        "腸病毒",
+        "重症",
+        "臨床處置"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Bulletin/List/7tUXjTBf6paRvrhEl-mrPg"
+      ],
+      "bodyMarkdown": "一、腸病毒流行期將至，疾管署更新「腸病毒感染併發重症臨床處置建議」，自 2026 年 3 月 15 日起適用。\n二、請醫師衛教家長重症前兆，並對 3 歲以下、病程 3 日內之病童安排 1–2 日內回診。\n三、第二期（中樞神經系統感染）以上病童應儘速轉診至腸病毒重症責任醫院，轉送途中持續監測心跳與血氧。\n四、腸病毒感染併發重症請於一週內通報。",
+      "attachments": [
+        {
+          "label": "腸病毒感染併發重症臨床處置建議",
+          "url": "/documents/ev-severe-guideline.2026-03-15/",
+          "machineReadable": true
+        }
+      ],
+      "sourceHash": "43b23f178482",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-03-15-letter-ev-guideline/",
+      "path": "/news/2026-03-15-letter-ev-guideline/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-03-15-letter-ev-guideline.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-03-15",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "pro",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2026-03-15-letter-ev-guideline",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "43b23f178482",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "pending"
+          },
+          "tl": {
+            "status": "pending"
+          },
+          "vi": {
+            "status": "pending"
+          },
+          "id": {
+            "status": "pending"
+          },
+          "th": {
+            "status": "pending"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "news.2026-02-24-flu-declining",
+      "type": "news",
+      "newsType": "press",
+      "title": "流感疫情緩降，仍處流行期，請持續注意手部衛生與咳嗽禮節",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2026-02-24",
+      "reviewedAt": "2026-02-24",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "situation"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "pending"
+        },
+        "tl": {
+          "status": "pending"
+        },
+        "vi": {
+          "status": "pending"
+        },
+        "id": {
+          "status": "pending"
+        },
+        "th": {
+          "status": "pending"
+        }
+      },
+      "summary": "春節後類流感門急診就診人次連續兩週下降，但仍高於流行閾值，疾管署提醒持續落實手部衛生與咳嗽禮節。",
+      "keywords": [
+        "流感",
+        "疫情緩降",
+        "流行期",
+        "咳嗽禮節"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+      ],
+      "situationDeclaration": {
+        "disease": "disease.influenza",
+        "text": "就診人次連續兩週下降，仍高於流行閾值"
+      },
+      "bodyMarkdown": "疾病管制署表示，春節後類流感門急診就診人次連續兩週下降，疫情趨緩，但仍高於流行閾值，社區流感病毒仍持續活動。\n\n疾管署提醒，開學後校園人潮聚集，學生有發燒、咳嗽症狀應在家休息；長者與慢性病人若出現類流感症狀，請儘早就醫，由醫師評估使用抗病毒藥劑。",
+      "sourceHash": "de5ec0725ba5",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-02-24-flu-declining/",
+      "path": "/news/2026-02-24-flu-declining/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-02-24-flu-declining.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-02-24",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2026-02-24-flu-declining",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "de5ec0725ba5",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "pending"
+          },
+          "tl": {
+            "status": "pending"
+          },
+          "vi": {
+            "status": "pending"
+          },
+          "id": {
+            "status": "pending"
+          },
+          "th": {
+            "status": "pending"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "news.2026-01-20-lunar-new-year-flu",
+      "type": "news",
+      "newsType": "press",
+      "title": "流感疫情處高峰，春節連假前請儘速接種疫苗並落實咳嗽禮節",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2026-01-20",
+      "reviewedAt": "2026-01-20",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "situation",
+        "vaccines"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "vaccines": [
+        "vaccine.influenza"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "pending"
+        },
+        "tl": {
+          "status": "pending"
+        },
+        "vi": {
+          "status": "pending"
+        },
+        "id": {
+          "status": "pending"
+        },
+        "th": {
+          "status": "pending"
+        }
+      },
+      "summary": "類流感門急診就診人次處於高峰，春節連假將至，疾管署呼籲尚未接種的高風險族群儘速接種，並提醒連假期間就醫資源。",
+      "keywords": [
+        "流感",
+        "春節",
+        "高峰",
+        "疫苗",
+        "咳嗽禮節"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+      ],
+      "situationDeclaration": {
+        "disease": "disease.influenza",
+        "text": "類流感門急診就診人次處於流行高峰"
+      },
+      "bodyMarkdown": "疾病管制署表示，近一週類流感門急診就診人次持續處於高峰，社區以 A 型 H3N2 為主，流感併發重症病例亦增加。\n\n春節連假人潮聚集，疾管署呼籲尚未接種公費流感疫苗的長者、幼兒及慢性病人儘速接種；有發燒、咳嗽等症狀應戴口罩、在家休息。如出現呼吸困難、胸痛、意識改變等危險徵兆，請立即就醫。連假期間可查詢各縣市開診院所。",
+      "sourceHash": "20966a3dfcd8",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-01-20-lunar-new-year-flu/",
+      "path": "/news/2026-01-20-lunar-new-year-flu/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-01-20-lunar-new-year-flu.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-01-20",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2026-01-20-lunar-new-year-flu",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "20966a3dfcd8",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "pending"
+          },
+          "tl": {
+            "status": "pending"
+          },
+          "vi": {
+            "status": "pending"
+          },
+          "id": {
+            "status": "pending"
+          },
+          "th": {
+            "status": "pending"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "news.2025-12-01-world-aids-day",
+      "type": "news",
+      "newsType": "press",
+      "title": "世界愛滋日：定期篩檢、PrEP 與 U=U，一起終結愛滋",
+      "owner": "unit.chronic-infectious",
+      "publishedAt": "2025-12-01",
+      "reviewedAt": "2025-12-01",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "symptoms"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.hiv"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2025-12-01",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "machine"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "summary": "世界愛滋日，疾管署呼籲有感染風險者定期篩檢，善用 PrEP 與保險套；感染者規則服藥使病毒量測不到，就不會經性行為傳染（U=U）。",
+      "keywords": [
+        "世界愛滋日",
+        "HIV",
+        "篩檢",
+        "PrEP",
+        "U=U"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+      ],
+      "bodyMarkdown": "12 月 1 日是世界愛滋日。疾病管制署表示，國內 HIV 新通報人數自 2017 年起逐年下降，持續朝聯合國 95-95-95 目標邁進。\n\n疾管署呼籲，有感染風險者應定期篩檢，可使用匿名篩檢醫院、社區篩檢點或 HIV 自我篩檢試劑；並可諮詢暴露前預防性投藥（PrEP）。感染者確診後儘速服藥，病毒量持續測不到就不會經由性行為傳染給他人（U=U），也請社會大眾以友善態度支持感染者就醫。",
+      "i18n": {
+        "en": {
+          "title": "World AIDS Day: regular testing, PrEP and U=U to end AIDS",
+          "summary": "Taiwan CDC urges people at risk to test regularly and use PrEP and condoms; people living with HIV who keep their viral load undetectable do not transmit HIV sexually (U=U)."
+        }
+      },
+      "sourceHash": "db2f5f436f67",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-12-01-world-aids-day/",
+      "path": "/news/2025-12-01-world-aids-day/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-12-01-world-aids-day.md",
+      "governance": {
+        "owner": "unit.chronic-infectious",
+        "ownerName": "慢性傳染病組",
+        "steward": null,
+        "reviewedAt": "2025-12-01",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2025-12-01-world-aids-day",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "db2f5f436f67",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2025-12-01",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "machine"
+          },
+          "tl": {
+            "status": "machine"
+          },
+          "vi": {
+            "status": "machine"
+          },
+          "id": {
+            "status": "machine"
+          },
+          "th": {
+            "status": "machine"
+          }
+        },
+        "translationStale": {
+          "en": false,
+          "ja": false,
+          "tl": false,
+          "vi": false,
+          "id": false,
+          "th": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en",
+          "ja",
+          "tl",
+          "vi",
+          "id",
+          "th"
+        ]
+      }
+    },
+    {
+      "id": "news.2025-10-01-flu-vaccine-start",
+      "type": "news",
+      "newsType": "press",
+      "title": "114 年度公費流感疫苗 2025 年 10 月 1 日開打，長者與幼兒請儘早接種",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2025-10-01",
+      "reviewedAt": "2025-10-01",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "vaccines"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "vaccines": [
+        "vaccine.influenza"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "pending"
+        },
+        "tl": {
+          "status": "pending"
+        },
+        "vi": {
+          "status": "pending"
+        },
+        "id": {
+          "status": "pending"
+        },
+        "th": {
+          "status": "pending"
+        }
+      },
+      "summary": "114 年度公費流感疫苗 2025 年 10 月 1 日開打，第一階段包括長者、幼兒、孕婦、高風險慢性病人與學生等；50–64 歲成人自 11 月 1 日起接種。",
+      "keywords": [
+        "公費流感疫苗",
+        "開打",
+        "長者",
+        "幼兒"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+      ],
+      "bodyMarkdown": "114 年度公費流感疫苗自 2025 年 10 月 1 日（今日）起開打。疾病管制署呼籲，65 歲以上長者、6 個月以上至國小入學前幼兒、孕婦及高風險慢性病人等第一階段對象儘早接種；50 至 64 歲無高風險慢性病成人自 11 月 1 日起接種。\n\n疫苗接種後約需 2 週產生保護力，民眾可至「流感防治一網通」查詢合約院所。",
+      "sourceHash": "bf975026d8d5",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-10-01-flu-vaccine-start/",
+      "path": "/news/2025-10-01-flu-vaccine-start/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-10-01-flu-vaccine-start.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2025-10-01",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2025-10-01-flu-vaccine-start",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "bf975026d8d5",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "pending"
+          },
+          "tl": {
+            "status": "pending"
+          },
+          "vi": {
+            "status": "pending"
+          },
+          "id": {
+            "status": "pending"
+          },
+          "th": {
+            "status": "pending"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "news.2025-08-05-chikungunya-guangdong",
+      "type": "news",
+      "newsType": "press",
+      "title": "中國大陸廣東省屈公病疫情升溫，提升旅遊疫情建議至第二級",
+      "owner": "unit.quarantine",
+      "publishedAt": "2025-08-05",
+      "reviewedAt": "2025-08-05",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "travel"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.chikungunya"
+      ],
+      "countries": [
+        "CN"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2025-08-05",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "machine"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "summary": "中國大陸廣東省屈公病疫情升溫，疾管署將該地旅遊疫情建議提升至第二級（警示），前往民眾請加強防蚊，返國發燒、關節痛應就醫。",
+      "keywords": [
+        "屈公病",
+        "廣東",
+        "旅遊疫情建議",
+        "第二級",
+        "防蚊"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+      ],
+      "bodyMarkdown": "疾病管制署表示，中國大陸廣東省近期屈公病疫情升溫，已擴及多個城市，故將該省旅遊疫情建議提升至**第二級：警示（Alert）**，建議前往民眾加強防護。\n\n屈公病與登革熱同樣由斑蚊傳播，主要症狀為發燒與嚴重關節痛。疾管署提醒，前往當地請全程防蚊；返國後兩週內外出持續防蚊，若出現發燒、關節痛、出疹，請儘速就醫並告知旅遊史。",
+      "i18n": {
+        "en": {
+          "title": "Chikungunya rising in Guangdong, China: travel notice raised to Level 2",
+          "summary": "Taiwan CDC raised its travel health notice for Guangdong Province to Level 2 (Alert). Travellers should prevent mosquito bites and see a doctor for fever or joint pain after return."
+        }
+      },
+      "sourceHash": "618629ab0993",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-08-05-chikungunya-guangdong/",
+      "path": "/news/2025-08-05-chikungunya-guangdong/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-08-05-chikungunya-guangdong.md",
+      "governance": {
+        "owner": "unit.quarantine",
+        "ownerName": "檢疫組",
+        "steward": null,
+        "reviewedAt": "2025-08-05",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2025-08-05-chikungunya-guangdong",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "618629ab0993",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2025-08-05",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "machine"
+          },
+          "tl": {
+            "status": "machine"
+          },
+          "vi": {
+            "status": "machine"
+          },
+          "id": {
+            "status": "machine"
+          },
+          "th": {
+            "status": "machine"
+          }
+        },
+        "translationStale": {
+          "en": false,
+          "ja": false,
+          "tl": false,
+          "vi": false,
+          "id": false,
+          "th": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en",
+          "ja",
+          "tl",
+          "vi",
+          "id",
+          "th"
+        ]
+      }
+    },
+    {
+      "id": "news.2025-07-15-clarify-dengue-spray",
+      "type": "news",
+      "newsType": "clarification",
+      "title": "澄清：網傳「登革熱噴藥會毒死人、可拒絕開門」為錯誤訊息",
+      "owner": "unit.pr",
+      "publishedAt": "2025-07-15",
+      "reviewedAt": "2025-07-15",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "rumor"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "pending"
+        },
+        "tl": {
+          "status": "pending"
+        },
+        "vi": {
+          "status": "pending"
+        },
+        "id": {
+          "status": "pending"
+        },
+        "th": {
+          "status": "pending"
+        }
+      },
+      "summary": "網傳登革熱噴藥會毒死人、可拒絕開門配合為錯誤訊息。防治用藥經核准、依規定稀釋，配合孳生源清除與噴藥是傳染病防治法規定的義務。",
+      "keywords": [
+        "澄清",
+        "登革熱",
+        "噴藥",
+        "謠言"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+      ],
+      "relatedClarification": "clar.2025-07-dengue-spraying-poison",
+      "bodyMarkdown": "針對網路流傳「登革熱噴藥會毒死人，可以拒絕開門配合」的訊息，疾病管制署澄清，此為錯誤訊息。\n\n登革熱緊急防治使用的環境衛生用藥均經主管機關核准，並依規定稀釋、由專業人員施作；噴藥前會通知住戶收妥食物、餐具並暫時離開，依指示通風後即可返回。依傳染病防治法，民眾應配合衛生單位進行孳生源清除與防治措施。噴藥只能殺死成蚊，**清除積水容器才是根本**。",
+      "sourceHash": "93e2b78cbc96",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-07-15-clarify-dengue-spray/",
+      "path": "/news/2025-07-15-clarify-dengue-spray/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-07-15-clarify-dengue-spray.md",
+      "governance": {
+        "owner": "unit.pr",
+        "ownerName": "公關室",
+        "steward": null,
+        "reviewedAt": "2025-07-15",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2025-07-15-clarify-dengue-spray",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "93e2b78cbc96",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "pending"
+          },
+          "tl": {
+            "status": "pending"
+          },
+          "vi": {
+            "status": "pending"
+          },
+          "id": {
+            "status": "pending"
+          },
+          "th": {
+            "status": "pending"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "news.2025-06-10-mpox-summer",
+      "type": "news",
+      "newsType": "press",
+      "title": "暑假出遊與大型活動將至，符合條件者請把握接種 2 劑 M痘疫苗",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2025-06-10",
+      "reviewedAt": "2025-06-10",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "vaccines",
+        "travel"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.mpox"
+      ],
+      "vaccines": [
+        "vaccine.mpox"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2025-06-10",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "machine"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "summary": "暑假將至，疾管署提醒近一年有高風險性行為者把握接種公費 M痘疫苗，完成 2 劑才有完整保護；出現疑似症狀請遮蓋皮疹就醫。",
+      "keywords": [
+        "M痘",
+        "猴痘",
+        "疫苗",
+        "暑假"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+      ],
+      "bodyMarkdown": "暑假出遊旺季與大型活動將至，疾病管制署提醒，M痘主要經由親密接觸傳播，符合公費接種條件者請儘早完成 2 劑疫苗，兩劑間隔至少 4 週。\n\n若出現發燒、淋巴結腫大或皮疹、水泡，請戴口罩、穿著長袖遮蓋病灶後就醫，並主動告知接觸史；就醫前避免與他人親密接觸。",
+      "i18n": {
+        "en": {
+          "title": "Summer travel and events ahead: eligible people should complete two doses of mpox vaccine",
+          "summary": "Taiwan CDC reminds people with high-risk sexual behaviour in the past year to complete two government-funded mpox doses; anyone with symptoms should cover lesions and see a doctor."
+        }
+      },
+      "sourceHash": "6e052ecda7a7",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-06-10-mpox-summer/",
+      "path": "/news/2025-06-10-mpox-summer/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-06-10-mpox-summer.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2025-06-10",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2025-06-10-mpox-summer",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "6e052ecda7a7",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2025-06-10",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "machine"
+          },
+          "tl": {
+            "status": "machine"
+          },
+          "vi": {
+            "status": "machine"
+          },
+          "id": {
+            "status": "machine"
+          },
+          "th": {
+            "status": "machine"
+          }
+        },
+        "translationStale": {
+          "en": false,
+          "ja": false,
+          "tl": false,
+          "vi": false,
+          "id": false,
+          "th": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en",
+          "ja",
+          "tl",
+          "vi",
+          "id",
+          "th"
+        ]
+      }
+    },
+    {
+      "id": "news.2025-05-06-enterovirus-season",
+      "type": "news",
+      "newsType": "press",
+      "title": "腸病毒進入流行期，籲請家長落實肥皂洗手並留意重症前兆",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2025-05-06",
+      "reviewedAt": "2025-05-06",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "situation",
+        "symptoms"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "pending"
+        },
+        "tl": {
+          "status": "pending"
+        },
+        "vi": {
+          "status": "pending"
+        },
+        "id": {
+          "status": "pending"
+        },
+        "th": {
+          "status": "pending"
+        }
+      },
+      "summary": "腸病毒門急診就診人次超過流行閾值，進入流行期。疾管署籲請家長與教托育機構落實肥皂洗手、漂白水消毒，並留意重症前兆。",
+      "keywords": [
+        "腸病毒",
+        "流行期",
+        "重症前兆",
+        "洗手"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+      ],
+      "situationDeclaration": {
+        "disease": "disease.enterovirus",
+        "text": "門急診就診人次超過流行閾值，進入流行期"
+      },
+      "bodyMarkdown": "疾病管制署於 2025 年 5 月 6 日表示，上週（發布日前一週）腸病毒門急診就診人次已超過流行閾值，國內正式進入腸病毒流行期，近期社區以克沙奇 A 型病毒為主。\n\n疾管署提醒，腸病毒傳染力強，大人返家應先以肥皂洗手、更換衣物再接觸幼兒；教托育機構應以 500 ppm 漂白水消毒教室與玩具。5 歲以下幼兒若出現嗜睡、意識不清、肌躍型抽搐、持續嘔吐、呼吸急促或心跳加快等重症前兆，請立即送往大醫院。",
+      "sourceHash": "be81ea05a438",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-05-06-enterovirus-season/",
+      "path": "/news/2025-05-06-enterovirus-season/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-05-06-enterovirus-season.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2025-05-06",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2025-05-06-enterovirus-season",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "be81ea05a438",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "pending"
+          },
+          "tl": {
+            "status": "pending"
+          },
+          "vi": {
+            "status": "pending"
+          },
+          "id": {
+            "status": "pending"
+          },
+          "th": {
+            "status": "pending"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "news.2025-04-16-mmr-recommendation-revised",
+      "type": "news",
+      "newsType": "press",
+      "title": "修訂國內 MMR 預防接種建議：成人評估對象擴大至 1966 年（含）以後出生者",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2025-04-16",
+      "reviewedAt": "2025-04-16",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "vaccines",
+        "travel"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "doc.mmr-recommendation"
+      ],
+      "diseases": [
+        "disease.measles"
+      ],
+      "vaccines": [
+        "vaccine.mmr"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2025-04-16",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "machine"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "summary": "疾管署修訂 MMR 接種建議：1966 年（含）以後出生、不具麻疹免疫力的成人，出國前 2–4 週評估自費接種；新增經常接觸外國人者。",
+      "keywords": [
+        "MMR",
+        "麻疹",
+        "1966 年",
+        "接種建議",
+        "修訂"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+      ],
+      "bodyMarkdown": "因應國際麻疹疫情升溫，疾病管制署於 2025 年 4 月 16 日（今日）公布修訂「國內現行 MMR 預防接種建議」，自即日起適用。\n\n本次修訂重點：成人評估接種的出生年分界由原本的 1981 年提前至 **1966 年（含）以後出生**、不具麻疹免疫力者；建議出國前 2 至 4 週至旅遊醫學門診評估自費接種 1 劑；並新增「經常接觸外國人之工作者」（如機場、觀光、移工服務人員）為建議評估對象。流行地區以疾管署旅遊疫情建議等級為準。",
+      "i18n": {
+        "en": {
+          "title": "MMR recommendations revised: adults born in 1966 or later now eligible for assessment",
+          "summary": "Taiwan CDC revised its MMR recommendations: adults born in 1966 or later without measles immunity should be assessed for a self-paid dose 2–4 weeks before travel; workers in frequent contact with foreign nationals were added.",
+          "bodyMarkdown": "In response to rising measles activity worldwide, Taiwan CDC today (16 April) revised the \"Current MMR vaccination recommendations\", effective immediately.\n\nKey changes: the birth-year cut-off for adult assessment moved from 1981 to **1966 or later** for people without measles immunity; travellers should be assessed at a travel clinic 2 to 4 weeks before departure for one self-paid dose; and workers in frequent contact with foreign nationals (such as airport, tourism and migrant-worker services) were added. Affected areas follow Taiwan CDC travel health notice levels."
+        }
+      },
+      "sourceHash": "0151245f6394",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-04-16-mmr-recommendation-revised/",
+      "path": "/news/2025-04-16-mmr-recommendation-revised/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-04-16-mmr-recommendation-revised.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2025-04-16",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2025-04-16-mmr-recommendation-revised",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "0151245f6394",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2025-04-16",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "machine"
+          },
+          "tl": {
+            "status": "machine"
+          },
+          "vi": {
+            "status": "machine"
+          },
+          "id": {
+            "status": "machine"
+          },
+          "th": {
+            "status": "machine"
+          }
+        },
+        "translationStale": {
+          "en": false,
+          "ja": false,
+          "tl": false,
+          "vi": false,
+          "id": false,
+          "th": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en",
+          "ja",
+          "tl",
+          "vi",
+          "id",
+          "th"
+        ]
+      }
+    },
+    {
+      "id": "news.2025-03-24-world-tb-day",
+      "type": "news",
+      "newsType": "press",
+      "title": "世界結核病日：咳嗽兩週請就醫，接觸者檢查與潛伏感染治療守護家人",
+      "owner": "unit.chronic-infectious",
+      "publishedAt": "2025-03-24",
+      "reviewedAt": "2025-03-24",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "symptoms"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2025-03-24",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "machine"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "summary": "世界結核病日，疾管署呼籲咳嗽超過兩週應就醫照胸部 X 光；確診者家人配合接觸者檢查，潛伏結核感染者接受治療可大幅降低發病風險。",
+      "keywords": [
+        "結核病",
+        "世界結核病日",
+        "接觸者檢查",
+        "潛伏結核感染"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ",
+        "https://www.cdc.gov.tw/Bulletin/Detail/{id}?typeid=9#2025-world-tb-day"
+      ],
+      "bodyMarkdown": "3 月 24 日是世界結核病日。疾病管制署表示，台灣結核病新案數自 2005 年以來已下降超過六成，但仍有長者與糖尿病患者等高風險族群需持續關注。\n\n疾管署呼籲，咳嗽超過兩週、有痰、體重減輕或夜間盜汗者，應至胸腔科就醫照胸部 X 光。確診者的家人與密切接觸者請配合衛生所安排的接觸者檢查；檢出潛伏結核感染者，接受 3HP 等短程治療可降低九成以上的發病風險，相關費用由公費支應。",
+      "i18n": {
+        "en": {
+          "title": "World TB Day: see a doctor if you have coughed for two weeks; contact screening and latent TB treatment protect families",
+          "summary": "Taiwan CDC urges anyone coughing for more than two weeks to get a chest X-ray, and asks contacts of patients to join screening; treating latent TB infection greatly lowers the risk of disease."
+        }
+      },
+      "sourceHash": "2ca46183346e",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-03-24-world-tb-day/",
+      "path": "/news/2025-03-24-world-tb-day/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-03-24-world-tb-day.md",
+      "governance": {
+        "owner": "unit.chronic-infectious",
+        "ownerName": "慢性傳染病組",
+        "steward": null,
+        "reviewedAt": "2025-03-24",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2025-03-24-world-tb-day",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "2ca46183346e",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2025-03-24",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "machine"
+          },
+          "tl": {
+            "status": "machine"
+          },
+          "vi": {
+            "status": "machine"
+          },
+          "id": {
+            "status": "machine"
+          },
+          "th": {
+            "status": "machine"
+          }
+        },
+        "translationStale": {
+          "en": false,
+          "ja": false,
+          "tl": false,
+          "vi": false,
+          "id": false,
+          "th": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en",
+          "ja",
+          "tl",
+          "vi",
+          "id",
+          "th"
+        ]
+      }
+    },
+    {
+      "id": "news.2025-02-18-dengue-imported-spring",
+      "type": "news",
+      "newsType": "press",
+      "title": "春節後登革熱境外移入病例增加，出國返國請落實防蚊",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2025-02-18",
+      "reviewedAt": "2025-02-18",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "travel",
+        "situation"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "countries": [
+        "ID",
+        "VN",
+        "MY"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "pending"
+        },
+        "tl": {
+          "status": "pending"
+        },
+        "vi": {
+          "status": "pending"
+        },
+        "id": {
+          "status": "pending"
+        },
+        "th": {
+          "status": "pending"
+        }
+      },
+      "summary": "春節連假後登革熱境外移入病例增加，多自印尼、越南、馬來西亞移入。返國兩週內外出請防蚊，發燒就醫告知旅遊史。",
+      "keywords": [
+        "登革熱",
+        "境外移入",
+        "春節",
+        "防蚊"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+      ],
+      "bodyMarkdown": "疾病管制署表示，春節連假後國內登革熱境外移入病例增加，感染國家以印尼、越南、馬來西亞為多，東南亞多國疫情仍處高峰。\n\n疾管署提醒，前往流行地區應穿著淺色長袖衣褲並使用防蚊液；返國後兩週內外出持續防蚊，避免病媒蚊叮咬造成本土傳播。若出現發燒、頭痛、後眼窩痛、肌肉關節痛等症狀，請儘速就醫並主動告知旅遊史。",
+      "sourceHash": "7d255425adfe",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-02-18-dengue-imported-spring/",
+      "path": "/news/2025-02-18-dengue-imported-spring/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-02-18-dengue-imported-spring.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2025-02-18",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2025-02-18-dengue-imported-spring",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "7d255425adfe",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "pending"
+          },
+          "tl": {
+            "status": "pending"
+          },
+          "vi": {
+            "status": "pending"
+          },
+          "id": {
+            "status": "pending"
+          },
+          "th": {
+            "status": "pending"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "news.2025-01-09-mmr-adults-measles",
+      "type": "news",
+      "newsType": "press",
+      "title": "國內新增麻疹病例，1981 年以後出生之醫護與赴流行區成人建議優先自費接種 MMR",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2025-01-09",
+      "reviewedAt": "2025-01-09",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "vaccines",
+        "travel",
+        "situation"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.measles"
+      ],
+      "vaccines": [
+        "vaccine.mmr"
+      ],
+      "basedOn": [
+        "doc.mmr-recommendation"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        }
+      },
+      "summary": "疾管署公布國內新增麻疹病例，提醒 1981 年（含）以後出生之醫護人員與計畫前往流行地區的成人，優先評估自費接種 MMR 疫苗。",
+      "keywords": [
+        "麻疹",
+        "MMR",
+        "醫護人員"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Bulletin/Detail/YGzXK2IFXqeW1V_tY1TEvQ?typeid=9"
+      ],
+      "bodyMarkdown": "疾病管制署於 2025 年 1 月 9 日（今日）公布國內新增麻疹確定病例，呼籲醫療院所提高警覺。依據「國內現行 MMR 預防接種建議」，1981 年（含）以後出生之醫護人員及計畫前往麻疹流行地區之成人，建議優先評估自費接種 1 劑 MMR 疫苗。\n\n疾管署提醒，麻疹傳染力強，出現發燒、出疹、咳嗽、流鼻水、結膜炎等症狀應戴口罩儘速就醫，並主動告知旅遊史與接觸史。",
+      "attachments": [
+        {
+          "label": "致醫界通函第 559 號",
+          "url": "/pending/?ref=news.2025-01-09-mmr-adults-measles&doc=致醫界通函第%20559%20號",
+          "machineReadable": false
+        }
+      ],
+      "sourceHash": "4739416fb97e",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-01-09-mmr-adults-measles/",
+      "path": "/news/2025-01-09-mmr-adults-measles/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-01-09-mmr-adults-measles.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2025-01-09",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "based-on-revised",
+        "lifecycleLabel": "依據已修訂",
+        "whitelist": false,
+        "whitelistTier": "public",
+        "whitelistPublic": false,
+        "whitelistReasons": [
+          "based-on-revised",
+          "predates-basis",
+          "reverse-audit"
+        ],
+        "whitelistReasonLabels": [
+          "所依據的正本已修訂，衍生內容尚未更新",
+          "發布日早於現行正本生效日，不作為答案依據（僅保留加註）",
+          "反向稽核命中與現行正本矛盾的敘述"
+        ],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2025-01-09-mmr-adults-measles",
+        "noindex": false,
+        "stale": [
+          {
+            "basedOn": "doc.mmr-recommendation",
+            "revisedAt": "2025-04-16",
+            "currentId": "doc.mmr-recommendation.2025-04-16",
+            "currentTitle": "國內現行 MMR 預防接種建議（114.04.16 版）",
+            "currentVersion": "114.04.16",
+            "currentHref": "/documents/mmr-recommendation.2025-04-16/",
+            "dueAt": "2025-04-23",
+            "resolved": false,
+            "resolvedAt": null
+          }
+        ],
+        "basisRevisions": [
+          {
+            "basedOn": "doc.mmr-recommendation",
+            "revisedAt": "2025-04-16",
+            "currentId": "doc.mmr-recommendation.2025-04-16",
+            "currentTitle": "國內現行 MMR 預防接種建議（114.04.16 版）",
+            "currentVersion": "114.04.16",
+            "currentHref": "/documents/mmr-recommendation.2025-04-16/",
+            "dueAt": "2025-04-23",
+            "resolved": false,
+            "resolvedAt": null
+          }
+        ],
+        "predatesBasis": true,
+        "annotations": [
+          {
+            "kind": "based-on-revised",
+            "level": "warning",
+            "text": "本新聞稿發布於 2025-01-09，相關建議已於 2025-04-16 修訂，現行版請見「國內現行 MMR 預防接種建議（114.04.16 版）」。",
+            "href": "doc.mmr-recommendation.2025-04-16",
+            "targetId": "doc.mmr-recommendation.2025-04-16",
+            "path": "/documents/mmr-recommendation.2025-04-16/",
+            "revisedAt": "2025-04-16",
+            "currentTitle": "國內現行 MMR 預防接種建議（114.04.16 版）"
+          }
+        ],
+        "reverseAuditHits": 1,
+        "deadlineAt": null,
+        "daysToDeadline": null,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "4739416fb97e",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    }
+  ]
+}

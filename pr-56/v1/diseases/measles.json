@@ -1,0 +1,979 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "b661ee0472fd",
+    "lastModified": "2026-05-14"
+  },
+  "data": {
+    "id": "disease.measles",
+    "type": "disease",
+    "slug": "measles",
+    "title": "麻疹",
+    "nameEn": "Measles",
+    "aliases": [
+      "Measles",
+      "Rubeola",
+      "痲疹"
+    ],
+    "legalCategory": 2,
+    "icd10": [
+      "B05"
+    ],
+    "notifyWithinHours": 24,
+    "incubation": {
+      "min": 7,
+      "max": 21,
+      "typicalMin": 10,
+      "typicalMax": 14,
+      "unit": "day",
+      "text": "7–21 天（約 14 天出疹）"
+    },
+    "transmission": [
+      "airborne",
+      "droplet",
+      "contact"
+    ],
+    "owner": "unit.acute-infectious",
+    "steward": "急性傳染病組承辦人",
+    "publishedAt": "2018-03-01",
+    "reviewedAt": "2026-05-14",
+    "reviewPeriodMonths": 12,
+    "status": "published",
+    "audience": [
+      "public",
+      "professional"
+    ],
+    "tasks": [
+      "symptoms",
+      "vaccines",
+      "travel"
+    ],
+    "sensitivity": "public",
+    "license": "OGDL-1.0",
+    "basedOn": [
+      "doc.mmr-recommendation"
+    ],
+    "diseases": [
+      "disease.measles"
+    ],
+    "vaccines": [
+      "vaccine.mmr"
+    ],
+    "countries": [
+      "JP",
+      "VN",
+      "PH",
+      "ID"
+    ],
+    "aiWhitelist": {
+      "requested": true,
+      "approvedBy": "unit.oasis",
+      "approvedAt": "2026-09-01"
+    },
+    "languages": {
+      "zh-TW": {
+        "status": "source"
+      },
+      "en": {
+        "status": "reviewed",
+        "reviewedAt": "2026-05-20",
+        "reviewer": "內部英文審核人"
+      },
+      "ja": {
+        "status": "machine"
+      },
+      "tl": {
+        "status": "machine"
+      },
+      "vi": {
+        "status": "reviewed",
+        "reviewedAt": "2026-05-22",
+        "reviewer": "簽約譯者（越南文）"
+      },
+      "id": {
+        "status": "machine"
+      },
+      "th": {
+        "status": "machine"
+      }
+    },
+    "summary": "麻疹是傳染力極強的病毒性疾病，可經空氣傳播。完整接種 2 劑 MMR 疫苗可有效預防；1966 年（含）以後出生、不具免疫力者出國前應評估接種。",
+    "keywords": [
+      "麻疹",
+      "MMR",
+      "1966 年",
+      "柯氏斑",
+      "空氣傳播",
+      "出國"
+    ],
+    "legacyUrls": [
+      "https://www.cdc.gov.tw/Disease/Index",
+      "https://www.cdc.gov.tw/Disease/SubIndex/{id}#measles",
+      "https://www.cdc.gov.tw/Category/QAPage/{id}#measles",
+      "https://www.cdc.gov.tw/Category/List/{id}#measles-guidance",
+      "https://www.cdc.gov.tw/Bulletin/List/{id}?page=1#measles"
+    ],
+    "keyFacts": {
+      "incubation": "7–21 天（約 14 天出疹）",
+      "symptoms": "高燒、咳嗽、流鼻水、結膜炎，之後全身紅疹",
+      "transmission": "空氣、飛沫、接觸",
+      "prevention": "接種 2 劑 MMR 疫苗",
+      "notify": "24 小時內"
+    },
+    "blocks": [
+      {
+        "key": "what-to-do",
+        "heading": "我該怎麼辦",
+        "cards": [
+          {
+            "if": "出現發燒合併紅疹",
+            "title": "先電話告知再戴口罩就醫",
+            "text": "就醫前先打電話告知院所，戴口罩、避免搭乘大眾運輸，並主動說明旅遊史與接觸史。"
+          },
+          {
+            "if": "被通知曾與麻疹病例接觸",
+            "title": "自主健康管理 18 天",
+            "text": "自接觸日起自主健康管理 18 天，出現症狀前避免出入人潮場所；接觸 72 小時內可評估接種 MMR。"
+          },
+          {
+            "if": "1966 年（含）以後出生、計畫出國",
+            "title": "出國前 2–4 週評估接種",
+            "text": "若不確定是否具免疫力，出國前 2–4 週到旅遊醫學門診評估自費接種 1 劑 MMR。"
+          }
+        ]
+      },
+      {
+        "key": "symptoms",
+        "heading": "症狀與警示徵象",
+        "markdown": "麻疹初期（前驅期）會出現**高燒、咳嗽、流鼻水、結膜炎**，口腔內頰黏膜可能出現白色的柯氏斑（Koplik spots）。\n\n發燒 3–4 天後開始出疹，紅色斑丘疹由耳後、髮際、臉部向下擴散到全身，約持續 4–7 天後逐漸消退並留下褐色色素沉著。",
+        "warning": "呼吸急促或困難、持續高燒、抽搐、意識改變、嚴重腹瀉脫水；嬰幼兒、孕婦與免疫低下者易併發肺炎、中耳炎、腦炎。"
+      },
+      {
+        "key": "transmission",
+        "heading": "怎麼傳染",
+        "markdown": "麻疹可經由**空氣**、飛沫或直接接觸病人鼻咽分泌物傳染，傳染力極強：未具免疫力的人與病人共處一室，約九成會被感染。病毒在空氣中可存活約 2 小時。\n\n出疹前 4 天至出疹後 4 天具傳染力。"
+      },
+      {
+        "key": "prevention",
+        "heading": "如何預防",
+        "markdown": "- 幼兒依時程接種 **2 劑 MMR 疫苗**：出生滿 12 個月接種第 1 劑，滿 5 歲至入國小前接種第 2 劑。\n- **1966 年（含）以後出生**、不具麻疹免疫力的成人，若計畫前往麻疹流行地區，建議出國前 2–4 週至旅遊醫學門診評估自費接種 1 劑 MMR；醫護人員與經常接觸外國人的工作者亦建議評估。\n- 未滿 1 歲嬰兒尚未接種疫苗，非必要不建議帶往流行地區。\n- 流行地區以疾管署「旅遊疫情建議等級」為準。"
+      },
+      {
+        "key": "treatment",
+        "heading": "診斷與治療",
+        "markdown": "麻疹沒有特效藥，以支持性治療為主，包括退燒、補充水分與營養，並治療中耳炎、肺炎等併發症。病人需隔離至出疹後 4 天。\n\n未具免疫力的接觸者，可於暴露後 **72 小時內**接種 MMR 疫苗，或於 6 天內由醫師評估注射免疫球蛋白，以降低發病風險或減輕症狀。"
+      },
+      {
+        "key": "vaccine",
+        "heading": "疫苗",
+        "markdown": "MMR 疫苗（麻疹、腮腺炎、德國麻疹混合疫苗）為活性減毒疫苗，2 劑保護力約 97%。孕婦及嚴重免疫不全者不可接種；育齡女性接種後 4 週內應避免懷孕。成人接種建議依 2025 年 4 月 16 日修訂之「國內現行 MMR 預防接種建議」。"
+      },
+      {
+        "key": "situation",
+        "heading": "目前疫情與統計",
+        "markdown": "近年境外移入及其引起的本土群聚多與東南亞、日本等地疫情相關。年度病例數見資料集。",
+        "datasets": [
+          "dataset.measles-yearly"
+        ]
+      },
+      {
+        "key": "faq",
+        "heading": "常見問題"
+      }
+    ],
+    "professional": {
+      "caseDefinitionDoc": "doc.case-definition-measles",
+      "manualDoc": "doc.mmr-recommendation",
+      "specimen": "出疹 5 日內採咽喉擦拭液與尿液進行 RT-PCR；同時採急性期血清檢測 IgM，必要時於出疹後 10–14 日採恢復期血清。",
+      "notifyNote": "第二類法定傳染病，臨床符合即應於 24 小時內通報，並立即實施空氣隔離；接觸者追蹤由衛生局執行。",
+      "programs": [
+        {
+          "key": "contact-tracing",
+          "title": "接觸者追蹤與疫調",
+          "summary": "通報後 24 小時內疫調，界定可傳染期（出疹前 4 日至出疹後 4 日）的接觸者；暴露後 72 小時內接種 MMR，18 日自主健康管理。",
+          "documents": [
+            "doc.measles-contact-tracing",
+            "doc.case-definition-measles"
+          ],
+          "services": [
+            "service.notifiable-disease-report"
+          ],
+          "contentIds": [
+            "faq.measles-exposed-what-to-do",
+            "faq.measles-health-dept-call",
+            "labtest.measles"
+          ]
+        },
+        {
+          "key": "mmr-catch-up",
+          "title": "MMR 補接種與自費評估",
+          "summary": "幼兒依時程接種 2 劑；1966 年（含）以後出生、不具免疫力的成人，出國前或有風險時評估自費接種；醫護人員納入評估。",
+          "documents": [
+            "doc.mmr-recommendation"
+          ],
+          "services": [
+            "service.vaccination-record-reissue",
+            "service.travel-clinic-appointment"
+          ],
+          "contentIds": [
+            "faq.measles-mmr-check-record",
+            "faq.measles-mmr-adult-who",
+            "faq.measles-mmr-born-1970",
+            "faq.healthcare-workers-mmr",
+            "vaccine.mmr",
+            "dataset.vaccine-coverage"
+          ]
+        },
+        {
+          "key": "cluster-response",
+          "title": "群聚應變",
+          "summary": "21 日內 2 例以上有關聯之確定病例即啟動應變，擴大接觸者清查與疫苗接種；最後一例發病後 2 個最長潛伏期無新增始得解除。",
+          "documents": [
+            "doc.measles-contact-tracing"
+          ],
+          "services": [
+            "service.cluster-report-1922"
+          ],
+          "contentIds": [
+            "dataset.measles-yearly",
+            "news.2026-05-11-japan-measles-level1",
+            "clar.2026-05-mmr-all-adults"
+          ]
+        }
+      ]
+    },
+    "relatedDocuments": [
+      "doc.mmr-recommendation",
+      "doc.measles-contact-tracing",
+      "doc.case-definition-measles"
+    ],
+    "materials": [
+      {
+        "label": "麻疹防治衛教單張",
+        "url": "https://www.cdc.gov.tw/Advocacy",
+        "langs": [
+          "zh-TW",
+          "en",
+          "vi",
+          "id",
+          "th",
+          "tl",
+          "ja"
+        ]
+      }
+    ],
+    "i18n": {
+      "en": {
+        "title": "Measles",
+        "summary": "Measles is an extremely contagious viral disease that spreads through the air. Two doses of MMR vaccine prevent it effectively; people born in 1966 or later without immunity should be assessed before travelling.",
+        "keyFacts": {
+          "incubation": "7–21 days (rash around day 14)",
+          "symptoms": "High fever, cough, runny nose, conjunctivitis, then a full-body rash",
+          "transmission": "Airborne, droplets, contact",
+          "prevention": "Two doses of MMR vaccine",
+          "notify": "Within 24 hours"
+        },
+        "blocks": [
+          {
+            "key": "what-to-do",
+            "heading": "What to do",
+            "cards": [
+              {
+                "if": "have a fever with a rash",
+                "title": "Call ahead, wear a mask and see a doctor",
+                "text": "Phone the clinic first, wear a mask, avoid public transport and tell the doctor about your travel and contact history."
+              },
+              {
+                "if": "were told you had contact with a measles case",
+                "title": "Monitor your health for 18 days",
+                "text": "Self-monitor for 18 days from the contact; MMR within 72 hours of exposure may be considered."
+              },
+              {
+                "if": "were born in 1966 or later and plan to travel",
+                "title": "Get assessed 2–4 weeks before departure",
+                "text": "If unsure of your immunity, visit a travel clinic 2–4 weeks before departure to be assessed for one self-paid MMR dose."
+              }
+            ]
+          },
+          {
+            "key": "symptoms",
+            "heading": "Symptoms and warning signs",
+            "markdown": "Measles starts with **high fever, cough, runny nose and conjunctivitis**; white Koplik spots may appear inside the cheeks.\n\nAfter 3–4 days a red blotchy rash appears behind the ears and on the face and spreads downward over the body, fading after 4–7 days and leaving brown discolouration.",
+            "warning": "Rapid or difficult breathing, persistent high fever, seizures, altered consciousness, severe diarrhoea with dehydration; infants, pregnant women and immunocompromised people are prone to pneumonia, ear infection and encephalitis."
+          },
+          {
+            "key": "transmission",
+            "heading": "How it spreads",
+            "markdown": "Measles spreads through the **air**, droplets and direct contact with nose and throat secretions. About nine in ten non-immune people sharing a room with a patient will be infected; the virus can remain in the air for about 2 hours.\n\nPatients are infectious from 4 days before to 4 days after the rash appears."
+          },
+          {
+            "key": "prevention",
+            "heading": "Prevention",
+            "markdown": "- Children receive **two doses of MMR**: the first at 12 months and the second between age 5 and school entry.\n- Adults **born in 1966 or later** without measles immunity who plan to visit affected areas should see a travel clinic 2–4 weeks before departure to be assessed for one self-paid MMR dose; health workers and people in frequent contact with foreign nationals should also be assessed.\n- Infants under 1 year are not yet vaccinated; avoid taking them to affected areas unless necessary.\n- Affected areas follow Taiwan CDC travel health notice levels."
+          },
+          {
+            "key": "treatment",
+            "heading": "Diagnosis and treatment",
+            "markdown": "There is no specific treatment. Care is supportive (fever control, fluids and nutrition) with treatment of complications such as ear infection or pneumonia. Patients are isolated until 4 days after rash onset.\n\nNon-immune contacts can receive MMR within **72 hours** of exposure, or immunoglobulin within 6 days as assessed by a doctor, to lower the risk or severity of illness."
+          },
+          {
+            "key": "vaccine",
+            "heading": "Vaccine",
+            "markdown": "MMR (measles, mumps and rubella) is a live attenuated vaccine; two doses are about 97% effective. It must not be given during pregnancy or to severely immunocompromised people; women should avoid pregnancy for 4 weeks after vaccination. Adult recommendations follow the \"Current MMR vaccination recommendations\" revised on 16 April 2025."
+          },
+          {
+            "key": "situation",
+            "heading": "Current situation and statistics",
+            "markdown": "Recent imported cases and related local clusters have been linked to outbreaks in Southeast Asia and Japan. See the dataset for annual counts."
+          },
+          {
+            "key": "faq",
+            "heading": "FAQ"
+          }
+        ]
+      },
+      "vi": {
+        "title": "Bệnh sởi",
+        "summary": "Sởi là bệnh do vi-rút, lây rất mạnh qua không khí. Tiêm đủ 2 liều vắc-xin MMR giúp phòng bệnh hiệu quả; người sinh từ năm 1966 trở về sau chưa có miễn dịch nên được đánh giá tiêm trước khi ra nước ngoài.",
+        "keyFacts": {
+          "incubation": "7–21 ngày (phát ban khoảng ngày 14)",
+          "symptoms": "Sốt cao, ho, sổ mũi, viêm kết mạc, sau đó phát ban toàn thân",
+          "transmission": "Không khí, giọt bắn, tiếp xúc",
+          "prevention": "Tiêm 2 liều vắc-xin MMR",
+          "notify": "Trong vòng 24 giờ"
+        },
+        "blocks": [
+          {
+            "key": "what-to-do",
+            "heading": "Tôi nên làm gì",
+            "cards": [
+              {
+                "if": "bị sốt kèm phát ban",
+                "title": "Gọi điện báo trước, đeo khẩu trang đi khám",
+                "text": "Gọi điện cho cơ sở y tế trước, đeo khẩu trang, tránh đi phương tiện công cộng và khai báo lịch sử đi lại, tiếp xúc."
+              },
+              {
+                "if": "được thông báo đã tiếp xúc với ca bệnh sởi",
+                "title": "Tự theo dõi sức khỏe 18 ngày",
+                "text": "Tự theo dõi sức khỏe 18 ngày kể từ ngày tiếp xúc; có thể được đánh giá tiêm MMR trong vòng 72 giờ sau phơi nhiễm."
+              },
+              {
+                "if": "sinh từ năm 1966 trở về sau và sắp ra nước ngoài",
+                "title": "Đánh giá tiêm 2–4 tuần trước khi đi",
+                "text": "Nếu không chắc đã có miễn dịch, hãy đến phòng khám y học du lịch 2–4 tuần trước khi đi để được đánh giá tiêm 1 liều MMR (tự chi trả)."
+              }
+            ]
+          },
+          {
+            "key": "symptoms",
+            "heading": "Triệu chứng và dấu hiệu cảnh báo",
+            "markdown": "Giai đoạn đầu có **sốt cao, ho, sổ mũi, viêm kết mạc**; có thể thấy hạt Koplik màu trắng ở niêm mạc má.\n\nSau 3–4 ngày sốt bắt đầu phát ban đỏ từ sau tai, chân tóc, mặt rồi lan khắp người, kéo dài 4–7 ngày.",
+            "warning": "Thở nhanh hoặc khó thở, sốt cao kéo dài, co giật, thay đổi ý thức, tiêu chảy nặng mất nước."
+          },
+          {
+            "key": "transmission",
+            "heading": "Lây truyền",
+            "markdown": "Sởi lây qua **không khí**, giọt bắn và tiếp xúc trực tiếp với dịch tiết mũi họng. Khoảng 9/10 người chưa có miễn dịch ở chung phòng với người bệnh sẽ bị lây. Thời gian lây: 4 ngày trước đến 4 ngày sau khi phát ban."
+          },
+          {
+            "key": "prevention",
+            "heading": "Phòng ngừa",
+            "markdown": "- Trẻ em tiêm **2 liều MMR**: liều 1 lúc 12 tháng tuổi, liều 2 từ 5 tuổi đến trước khi vào tiểu học.\n- Người lớn **sinh từ năm 1966 trở về sau** chưa có miễn dịch, nếu đến vùng có dịch, nên đến phòng khám y học du lịch 2–4 tuần trước khi đi để được đánh giá tiêm 1 liều MMR.\n- Vùng có dịch căn cứ theo mức cảnh báo dịch tễ du lịch của CDC Đài Loan."
+          },
+          {
+            "key": "treatment",
+            "heading": "Chẩn đoán và điều trị",
+            "markdown": "Không có thuốc đặc trị; điều trị hỗ trợ và điều trị biến chứng. Người tiếp xúc chưa có miễn dịch có thể tiêm MMR trong vòng **72 giờ** sau phơi nhiễm."
+          },
+          {
+            "key": "vaccine",
+            "heading": "Vắc-xin",
+            "markdown": "MMR là vắc-xin sống giảm độc lực; 2 liều bảo vệ khoảng 97%. Phụ nữ mang thai không được tiêm; phụ nữ trong độ tuổi sinh đẻ nên tránh mang thai 4 tuần sau khi tiêm."
+          },
+          {
+            "key": "situation",
+            "heading": "Tình hình hiện nay và thống kê",
+            "markdown": "Các ca bệnh nhập cảnh gần đây liên quan đến dịch ở Đông Nam Á và Nhật Bản."
+          },
+          {
+            "key": "faq",
+            "heading": "Câu hỏi thường gặp"
+          }
+        ]
+      }
+    },
+    "sourceHash": "30fa3dabf524",
+    "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/measles/",
+    "path": "/diseases/measles/",
+    "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/measles.md",
+    "governance": {
+      "owner": "unit.acute-infectious",
+      "ownerName": "急性傳染病組",
+      "steward": "急性傳染病組承辦人",
+      "reviewedAt": "2026-05-14",
+      "reviewPeriodMonths": 12,
+      "nextReviewAt": "2027-05-14",
+      "daysToReview": 225,
+      "overdue": false,
+      "dueSoon": false,
+      "status": "published",
+      "lifecycle": "current",
+      "lifecycleLabel": "現行版",
+      "whitelist": true,
+      "whitelistTier": "public",
+      "whitelistPublic": true,
+      "whitelistReasons": [],
+      "whitelistReasonLabels": [],
+      "isCurrent": true,
+      "superseded": false,
+      "supersededBy": null,
+      "currentId": "disease.measles",
+      "noindex": false,
+      "stale": [],
+      "basisRevisions": [
+        {
+          "basedOn": "doc.mmr-recommendation",
+          "revisedAt": "2025-04-16",
+          "currentId": "doc.mmr-recommendation.2025-04-16",
+          "currentTitle": "國內現行 MMR 預防接種建議（114.04.16 版）",
+          "currentVersion": "114.04.16",
+          "currentHref": "/documents/mmr-recommendation.2025-04-16/",
+          "dueAt": "2025-04-23",
+          "resolved": true,
+          "resolvedAt": "2026-05-14"
+        }
+      ],
+      "predatesBasis": false,
+      "annotations": [],
+      "reverseAuditHits": 0,
+      "license": "OGDL-1.0",
+      "licenseNote": null,
+      "sensitivity": "public",
+      "sourceHash": "30fa3dabf524",
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-05-20",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "reviewed",
+          "reviewedAt": "2026-05-22",
+          "reviewer": "簽約譯者（越南文）"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "translationStale": {
+        "en": false,
+        "ja": false,
+        "tl": false,
+        "vi": false,
+        "id": false,
+        "th": false
+      },
+      "renderableLangs": [
+        "zh-TW",
+        "en",
+        "vi"
+      ]
+    },
+    "master": {
+      "id": "disease.measles",
+      "slug": "measles",
+      "name": "麻疹",
+      "nameEn": "Measles",
+      "aliases": [
+        "Measles",
+        "Rubeola",
+        "痲疹"
+      ],
+      "legalCategory": 2,
+      "icd10": [
+        "B05"
+      ],
+      "notifyWithinHours": 24,
+      "transmission": [
+        "airborne",
+        "droplet"
+      ],
+      "hasPage": true,
+      "owner": "unit.acute-infectious",
+      "datasets": [
+        "dataset.measles-yearly"
+      ],
+      "zhuyin": "ㄇ",
+      "strokes": 11,
+      "i18n": {
+        "en": {
+          "name": "Measles"
+        }
+      },
+      "auditRules": [
+        {
+          "scope": [
+            "disease.measles"
+          ],
+          "since": "2025-04-16",
+          "pattern": "1981\\s*年\\s*[（(]?含?[）)]?\\s*以後出生",
+          "message": "MMR 接種建議已於 2025-04-16 修訂：成人評估對象改為 1966 年（含）以後出生者；「1981 年」為失效條件"
+        },
+        {
+          "scope": [
+            "disease.measles"
+          ],
+          "since": "2026-05-11",
+          "pattern": "日[、,]?韓.{0,4}非流行區",
+          "message": "日本已於 2026-05-11 列為麻疹第一級旅遊疫情建議，「日韓非流行區」已不成立"
+        }
+      ]
+    },
+    "related": {
+      "faq": [
+        {
+          "id": "faq.healthcare-workers-mmr",
+          "type": "faq",
+          "title": "醫護人員需要接種 MMR 疫苗嗎？",
+          "summary": "醫護人員是麻疹暴露高風險族群，應具麻疹免疫力（2 劑 MMR、抗體陽性或曾確診）；不具免疫力者建議接種，並不應照護麻疹病人。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/healthcare-workers-mmr/",
+          "path": "/faq/healthcare-workers-mmr/",
+          "reviewedAt": "2026-05-14",
+          "owner": "unit.infection-control",
+          "ownerName": "感染管制及生物安全組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.measles-exposed-what-to-do",
+          "type": "faq",
+          "title": "我和麻疹病人接觸過，要怎麼辦？",
+          "summary": "接觸麻疹病人後請聯絡衛生所或 1922；沒有免疫力者暴露後 72 小時內可接種 MMR；18 日內自主健康管理，出現症狀先電話通知再就醫。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/measles-exposed-what-to-do/",
+          "path": "/faq/measles-exposed-what-to-do/",
+          "reviewedAt": "2026-09-24",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.measles-health-dept-call",
+          "type": "faq",
+          "title": "衛生局打電話來做麻疹疫調，我要配合什麼？",
+          "summary": "麻疹疫調會在通報後 24 小時內進行，請說明發病與出疹日期、活動地點、交通工具與疫苗史；衛生人員不會要求轉帳，有疑慮可撥 1922 確認。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/measles-health-dept-call/",
+          "path": "/faq/measles-health-dept-call/",
+          "reviewedAt": "2026-09-24",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.measles-mmr-adult-who",
+          "type": "faq",
+          "title": "幾年次以後出生的成人需要評估接種 MMR 疫苗？",
+          "summary": "1966 年（含）以後出生、不具麻疹免疫力的成人，出國前往流行地區前 2–4 週建議評估自費接種 MMR。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/measles-mmr-adult-who/",
+          "path": "/faq/measles-mmr-adult-who/",
+          "reviewedAt": "2026-06-05",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.measles-mmr-born-1970",
+          "type": "faq",
+          "title": "我是 1970 年出生的，出國前需要打 MMR 疫苗嗎？",
+          "summary": "1966 年（含）以後出生、不具麻疹免疫力者，前往流行地區前 2–4 週應評估自費接種 MMR；1970 年出生在評估範圍內。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/measles-mmr-born-1970/",
+          "path": "/faq/measles-mmr-born-1970/",
+          "reviewedAt": "2026-05-14",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.measles-mmr-check-record",
+          "type": "faq",
+          "title": "我不確定有沒有打過 MMR，要怎麼評估要不要補打？",
+          "summary": "不確定 MMR 接種史可查接種紀錄卡或向衛生所申請補發；1966 年（含）以後出生且不具免疫力者，出國前 2–4 週評估自費接種。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/measles-mmr-check-record/",
+          "path": "/faq/measles-mmr-check-record/",
+          "reviewedAt": "2026-09-24",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.measles-symptoms",
+          "type": "faq",
+          "title": "麻疹有哪些症狀？會傳染多久？",
+          "summary": "麻疹初期高燒、咳嗽、流鼻水、結膜炎，3–4 天後出紅疹；出疹前後各 4 天具傳染力，就醫前先電話告知並戴口罩。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/measles-symptoms/",
+          "path": "/faq/measles-symptoms/",
+          "reviewedAt": "2026-05-14",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.rumor-mmr-autism",
+          "type": "faq",
+          "title": "MMR 疫苗會造成自閉症嗎？",
+          "summary": "MMR 疫苗不會造成自閉症；該說法源自已撤稿的 1998 年論文，多國大型研究均證實兩者無關聯。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/rumor-mmr-autism/",
+          "path": "/faq/rumor-mmr-autism/",
+          "reviewedAt": "2026-05-14",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.travel-japan-measles",
+          "type": "faq",
+          "title": "去日本旅遊需要擔心麻疹嗎？",
+          "summary": "日本 2026-05-11 起列為麻疹第一級（注意）；1966 年（含）以後出生且不具免疫力者，出國前 2–4 週評估接種 MMR。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/travel-japan-measles/",
+          "path": "/faq/travel-japan-measles/",
+          "reviewedAt": "2026-05-14",
+          "owner": "unit.quarantine",
+          "ownerName": "檢疫組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.travel-return-fever",
+          "type": "faq",
+          "title": "出國回來後發燒，應該怎麼辦？",
+          "summary": "出國返國後發燒請戴口罩就醫，主動告知旅遊史與接觸史；去過登革熱流行區者兩週內持續防蚊。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/travel-return-fever/",
+          "path": "/faq/travel-return-fever/",
+          "reviewedAt": "2026-06-15",
+          "owner": "unit.quarantine",
+          "ownerName": "檢疫組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "news": [
+        {
+          "id": "news.2025-01-09-mmr-adults-measles",
+          "type": "news",
+          "title": "國內新增麻疹病例，1981 年以後出生之醫護與赴流行區成人建議優先自費接種 MMR",
+          "summary": "疾管署公布國內新增麻疹病例，提醒 1981 年（含）以後出生之醫護人員與計畫前往流行地區的成人，優先評估自費接種 MMR 疫苗。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-01-09-mmr-adults-measles/",
+          "path": "/news/2025-01-09-mmr-adults-measles/",
+          "reviewedAt": "2025-01-09",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "based-on-revised",
+          "whitelist": false
+        },
+        {
+          "id": "news.2025-04-16-mmr-recommendation-revised",
+          "type": "news",
+          "title": "修訂國內 MMR 預防接種建議：成人評估對象擴大至 1966 年（含）以後出生者",
+          "summary": "疾管署修訂 MMR 接種建議：1966 年（含）以後出生、不具麻疹免疫力的成人，出國前 2–4 週評估自費接種；新增經常接觸外國人者。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-04-16-mmr-recommendation-revised/",
+          "path": "/news/2025-04-16-mmr-recommendation-revised/",
+          "reviewedAt": "2025-04-16",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "news.2026-05-11-japan-measles-level1",
+          "type": "news",
+          "title": "日本麻疹疫情升溫，列為第一級旅遊疫情建議；出國前請評估 MMR 接種",
+          "summary": "日本麻疹病例增加，疾管署於 2026 年 5 月 11 日將日本列為麻疹第一級旅遊疫情建議（注意）。1966 年（含）以後出生且不具免疫力者，出國前 2–4 週評估接種 MMR。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-05-11-japan-measles-level1/",
+          "path": "/news/2026-05-11-japan-measles-level1/",
+          "reviewedAt": "2026-05-11",
+          "owner": "unit.quarantine",
+          "ownerName": "檢疫組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "news.2026-06-02-measles-travel-mmr-1966",
+          "type": "news",
+          "title": "暑假出國前請評估麻疹免疫力：1966 年（含）以後出生者出國前 2 至 4 週評估接種 MMR",
+          "summary": "疾管署重申 1966 年（含）以後出生、不具麻疹免疫力者，出國前 2 至 4 週至旅遊醫學門診評估接種 MMR 疫苗。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-06-02-measles-travel-mmr-1966/",
+          "path": "/news/2026-06-02-measles-travel-mmr-1966/",
+          "reviewedAt": "2026-06-02",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "documents": [
+        {
+          "id": "doc.case-definition-measles.2024-01-01",
+          "type": "document",
+          "title": "傳染病病例定義：麻疹",
+          "summary": "麻疹病例定義：發燒、出疹合併咳嗽、鼻炎或結膜炎之一者即應通報；咽喉擦拭液或尿液核酸陽性為確定病例。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/case-definition-measles.2024-01-01/",
+          "path": "/documents/case-definition-measles.2024-01-01/",
+          "reviewedAt": "2026-01-08",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "doc.curriculum-measles.2026-10-10",
+          "type": "document",
+          "title": "麻疹核心教材（示範匯入版）",
+          "summary": "傳染病核心教材（麻疹）的示範匯入：章節架構、學習目標與可查證的重點句。舊站有「麻疹核心教材.pdf」，但本次取不到檔案內容；本頁依本站麻疹內容與疾管署麻疹頁的搜尋摘錄重建，每句標出處，未查證，以疾管署 PDF 正本為準。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/curriculum-measles.2026-10-10/",
+          "path": "/documents/curriculum-measles.2026-10-10/",
+          "reviewedAt": "2026-10-10",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "scheduled",
+          "whitelist": false
+        },
+        {
+          "id": "doc.infection-control-healthcare.2026-03-01",
+          "type": "document",
+          "title": "醫療機構感染管制措施指引",
+          "summary": "醫療機構標準防護與傳播途徑防護（接觸、飛沫、空氣）、呼吸道衛生、環境清消與工作人員健康管理之共通原則。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/infection-control-healthcare.2026-03-01/",
+          "path": "/documents/infection-control-healthcare.2026-03-01/",
+          "reviewedAt": "2026-03-01",
+          "owner": "unit.infection-control",
+          "ownerName": "感染管制及生物安全組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "doc.measles-contact-tracing.2026-09-12",
+          "type": "document",
+          "title": "麻疹接觸者追蹤作業指引",
+          "summary": "麻疹病例的接觸者追蹤作業：疫調時限、可傳染期與接觸者分級、暴露後預防（MMR 與免疫球蛋白）、健康監測、醫療院所處置與群聚應變。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/measles-contact-tracing.2026-09-12/",
+          "path": "/documents/measles-contact-tracing.2026-09-12/",
+          "reviewedAt": "2026-09-22",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "doc.mmr-recommendation.2025-04-16",
+          "type": "document",
+          "title": "國內現行 MMR 預防接種建議（114.04.16 版）",
+          "summary": "現行 MMR 接種建議：1966 年（含）以後出生、不具免疫力的成人前往流行地區前 2–4 週評估自費接種；新增經常接觸外國人者。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/mmr-recommendation.2025-04-16/",
+          "path": "/documents/mmr-recommendation.2025-04-16/",
+          "reviewedAt": "2026-04-10",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "vaccines": [
+        {
+          "id": "vaccine.mmr",
+          "type": "vaccine",
+          "title": "MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）",
+          "summary": "MMR 疫苗預防麻疹、腮腺炎、德國麻疹。幼兒 12 個月與滿 5 歲至入國小前各 1 劑；1966 年（含）以後出生、不具免疫力的成人出國前評估自費接種。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/vaccines/mmr/",
+          "path": "/vaccines/mmr/",
+          "reviewedAt": "2026-05-14",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "datasets": [
+        {
+          "id": "dataset.measles-yearly",
+          "type": "dataset",
+          "title": "麻疹確定病例統計",
+          "summary": "麻疹確定病例依年度、境外移入／本土、感染國家與年齡層統計。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.measles-yearly",
+          "path": "/data/#dataset.measles-yearly",
+          "reviewedAt": "2026-05-14",
+          "owner": "unit.epidemic-intelligence",
+          "ownerName": "疫情中心",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "clarifications": [
+        {
+          "id": "clar.2025-04-mmr-born-after-1981-only",
+          "type": "clarification",
+          "title": "網傳「MMR 只有 1981 年後出生的人要補打」",
+          "summary": "「只有 1981 年後出生要補打 MMR」為舊版建議；2025-04-16 修訂後，1966 年（含）以後出生不具免疫力者亦應評估。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/factcheck/#clar.2025-04-mmr-born-after-1981-only",
+          "path": "/factcheck/#clar.2025-04-mmr-born-after-1981-only",
+          "reviewedAt": "2025-04-10",
+          "owner": "unit.pr",
+          "ownerName": "公關室",
+          "lifecycle": "overdue",
+          "whitelist": false
+        },
+        {
+          "id": "clar.2026-05-mmr-all-adults",
+          "type": "clarification",
+          "title": "網傳「所有成人都要再補打一劑 MMR」部分正確",
+          "summary": "並非所有成人都要補打 MMR；1966 年（含）以後出生、不具免疫力且前往流行地區者，出國前 2–4 週評估自費接種。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/factcheck/#clar.2026-05-mmr-all-adults",
+          "path": "/factcheck/#clar.2026-05-mmr-all-adults",
+          "reviewedAt": "2026-05-14",
+          "owner": "unit.pr",
+          "ownerName": "公關室",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "media": [
+        {
+          "id": "media.mmr-waiting-room-2025",
+          "type": "media",
+          "title": "麻疹 MMR 疫苗候診衛教動畫（2025 年版）",
+          "summary": "醫院候診區播放的 MMR 衛教動畫，依 108.05.14 版建議製作，內容寫 1981 年以後出生之成人出國前評估接種（已於 2025-04-16 修訂）。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/mmr-waiting-room-2025/",
+          "path": "/media/mmr-waiting-room-2025/",
+          "reviewedAt": "2025-01-14",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "overdue",
+          "whitelist": false
+        },
+        {
+          "id": "media.mmr-waiting-room-2026",
+          "type": "media",
+          "title": "麻疹 MMR 疫苗候診衛教動畫（2026 年重製版）",
+          "summary": "依 114.04.16 版 MMR 建議重製：1966 年（含）以後出生、不具免疫力的成人，前往流行地區前 2–4 週評估自費接種；流行地區以旅遊疫情建議等級為準。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/mmr-waiting-room-2026/",
+          "path": "/media/mmr-waiting-room-2026/",
+          "reviewedAt": "2026-10-01",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "media.travel-clinic-before-departure",
+          "type": "media",
+          "title": "出國前 4 到 6 週，先到旅遊醫學門診",
+          "summary": "提醒民眾出國前 4 到 6 週到旅遊醫學門診，依目的地旅遊疫情建議等級評估疫苗、預防瘧疾用藥與防蚊，並說明回國後發燒要告知旅遊史。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/travel-clinic-before-departure/",
+          "path": "/media/travel-clinic-before-departure/",
+          "reviewedAt": "2026-06-12",
+          "owner": "unit.quarantine",
+          "ownerName": "檢疫組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "labtests": [
+        {
+          "id": "labtest.measles",
+          "type": "labtest",
+          "title": "麻疹檢驗項目與送驗規定",
+          "summary": "麻疹：咽喉拭子與尿液（出疹 5 日內）做 RT-PCR，血清做 IgM／IgG，冷藏 24 小時內送疾管署；三種檢體應同時採集。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/measles/",
+          "path": "/lab/measles/",
+          "reviewedAt": "2026-07-15",
+          "owner": "unit.lab",
+          "ownerName": "檢驗及疫苗研製中心",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "services": [
+        {
+          "id": "service.travel-clinic-appointment",
+          "type": "service",
+          "title": "旅遊醫學門診預約",
+          "summary": "出國前 4 到 6 週向全國旅遊醫學合約門診預約，評估疫苗接種、瘧疾預防用藥與行前衛教；需要黃皮書者也在此辦理。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/travel-clinic-appointment/",
+          "path": "/apply/travel-clinic-appointment/",
+          "reviewedAt": "2026-06-15",
+          "owner": "unit.quarantine",
+          "ownerName": "檢疫組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "publications": [
+        {
+          "id": "publication.bulletin-42-12",
+          "type": "publication",
+          "title": "疫情報導 第 42 卷第 12 期",
+          "summary": "本期收錄 2 篇：2025–2026 年流感季重症病例流行病學分析等。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-12/",
+          "path": "/publications/bulletin-42-12/",
+          "reviewedAt": "2026-06-23",
+          "owner": "unit.epidemic-intelligence",
+          "ownerName": "疫情中心",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "publication.manual-communicable-disease-control-2026",
+          "type": "publication",
+          "title": "傳染病防治工作手冊（2026 年版）",
+          "summary": "供地方衛生局與醫療院所使用之各類法定傳染病防治工作手冊，含病例定義、通報、檢體採檢、疫調、接觸者追蹤與防治措施。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/manual-communicable-disease-control-2026/",
+          "path": "/publications/manual-communicable-disease-control-2026/",
+          "reviewedAt": "2026-03-01",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "topics": [
+        {
+          "id": "topic.new-residents-migrant-health",
+          "type": "topic",
+          "title": "新住民與移工健康：七語防疫資訊",
+          "summary": "彙整中、英、日、越、印、泰、菲七語的防疫資訊：移工健康檢查、結核病、登革熱、疫苗接種與 1922 多語服務，供新住民、移工、雇主與仲介使用。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/new-residents-migrant-health/",
+          "path": "/topics/new-residents-migrant-health/",
+          "reviewedAt": "2026-08-15",
+          "owner": "unit.pr",
+          "ownerName": "公關室",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ]
+    }
+  }
+}

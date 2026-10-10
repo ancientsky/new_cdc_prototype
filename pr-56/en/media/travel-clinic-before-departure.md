@@ -1,0 +1,35 @@
+# See a travel medicine clinic 4–6 weeks before you leave
+
+> 權責單位：Division of Quarantine · 最後審閱：2026-06-12 · 下次審閱：2027-06-12 · 授權：OGDL-1.0 · ID：media.travel-clinic-before-departure · 製作日：2026-06-05 · 依 旅遊醫學門診說明與 114.04.16 版 MMR 建議 製作
+
+Check travel health notices for your destination and visit a travel medicine clinic 4–6 weeks ahead for vaccines, malaria prophylaxis and advice; report your travel history if you fall ill after returning.
+
+## 依據正本
+
+- 旅遊醫學門診可以做什麼？要出國前多久去？：https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/travel-clinic/
+- 國內現行 MMR 預防接種建議（114.04.16 版）（114.04.16）：https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/mmr-recommendation.2025-04-16/
+
+## 章節
+
+- [0:00] 查目的地疫情等級
+- [0:25] 旅遊醫學門診做什麼
+- [1:00] 行李裡的防疫用品
+- [1:20] 回國後發燒說旅遊史
+
+## 逐字稿
+
+**[00:00] 查目的地疫情等級**
+
+旁白：計畫出國了嗎？出發前，第一件事是上疾管署網站查詢「國際旅遊疫情建議等級」，確認目的地目前列有哪些疫情建議，以及對應的防護措施。等級會隨國際疫情調整，即使是常去的國家，每次出發前都要重新查一次。
+
+**[00:25] 旅遊醫學門診做什麼**
+
+旁白：建議在出國前 4 到 6 週，到全國的旅遊醫學合約門診諮詢。醫師會依照你的目的地、行程和健康狀況，評估需要的疫苗，例如 A 型肝炎、黃熱病、MMR 等；前往瘧疾流行地區，也會開立預防用藥，並說明怎麼服用。需要國際預防接種證明，也就是俗稱的「黃皮書」，同樣在旅遊醫學門診辦理。部分疫苗需要接種多劑或需要時間產生保護力，所以要提早安排。
+
+**[01:00] 行李裡的防疫用品**
+
+旁白：前往東南亞等蚊媒傳染病流行地區，防蚊最重要：行李裡準備含 DEET 或派卡瑞丁的防蚊液，穿著淺色長袖衣褲，住宿選擇有紗窗或冷氣的房間。另外帶上口罩和常備藥品；在外飲食注意衛生，避免生飲生食。
+
+**[01:20] 回國後發燒說旅遊史**
+
+旁白：入境時如果有發燒、腹瀉等症狀，請主動告知檢疫人員。回國後一段時間內出現發燒、出疹，請戴口罩就醫，並告訴醫師你去過哪裡。旅途平安，從行前準備開始。詳情請撥 1922。

@@ -1,0 +1,49 @@
+{
+  "id": "news.2025-06-10-mpox-summer",
+  "type": "news",
+  "title": "暑假出遊與大型活動將至，符合條件者請把握接種 2 劑 M痘疫苗",
+  "owner": "unit.pr",
+  "publishedAt": "2025-06-10",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.mpox"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "暑假出遊旺季與大型活動將至，疾病管制署提醒，M痘主要經由親密接觸傳播，符合公費接種條件者請儘早完成 2 劑疫苗，兩劑間隔至少 4 週。",
+  "newsType": "press",
+  "bodyMarkdown": "暑假出遊旺季與大型活動將至，疾病管制署提醒，M痘主要經由親密接觸傳播，符合公費接種條件者請儘早完成 2 劑疫苗，兩劑間隔至少 4 週。\n\n若出現發燒、淋巴結腫大或皮疹、水泡，請戴口罩、穿著長袖遮蓋病灶後就醫，並主動告知接觸史；就醫前避免與他人親密接觸。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/u7IBk8OIPlknZdqVvmiG9F?typeid=9"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/u7IBk8OIPlknZdqVvmiG9F?typeid=9",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "news.2025-06-10-mpox-summer"
+    ]
+  }
+}

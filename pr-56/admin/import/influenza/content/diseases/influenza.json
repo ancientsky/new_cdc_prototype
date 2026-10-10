@@ -1,0 +1,268 @@
+{
+  "id": "disease.influenza",
+  "type": "disease",
+  "title": "流感",
+  "slug": "influenza",
+  "nameEn": "Influenza",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2017-10-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "流感由流感病毒引起，經飛沫與接觸傳播，秋冬為流行期。長者、幼兒、孕婦與慢性病人易併發重症，每年接種疫苗是最有效的預防方法。",
+  "aliases": [
+    "流感併發重症",
+    "季節性流感",
+    "類流感",
+    "流行性感冒",
+    "Flu",
+    "Influenza"
+  ],
+  "legalCategory": 4,
+  "icd10": [
+    "J09",
+    "J10",
+    "J11"
+  ],
+  "notifyWithinHours": 168,
+  "transmission": [
+    "droplet",
+    "contact"
+  ],
+  "keyFacts": {
+    "symptoms": "流感常見症狀為突然發燒、頭痛、肌肉痠痛、疲倦、流鼻水、喉嚨痛及咳嗽，部分兒童會有腹瀉、嘔吐。多數人約一週內可康復。",
+    "transmission": "流感主要透過病人咳嗽、打噴嚏產生的飛沫傳播，也可能因手接觸到病人的口鼻分泌物或被污染的物品，再碰觸自己的眼口鼻而感染。",
+    "prevention": "每年接種流感疫苗：病毒每年會變異，疫苗成分也每年更新，需每年接種。 勤洗手，咳嗽或打噴嚏時以衣袖或紙巾遮住口鼻。"
+  },
+  "blocks": [
+    {
+      "key": "what-to-do",
+      "heading": "我該怎麼辦",
+      "markdown": "",
+      "status": "pending"
+    },
+    {
+      "key": "symptoms",
+      "heading": "症狀與警示徵象",
+      "markdown": "流感常見症狀為**突然**發燒、頭痛、肌肉痠痛、疲倦、流鼻水、喉嚨痛及咳嗽，部分兒童會有腹瀉、嘔吐。多數人約一週內可康復。\n\n與一般感冒不同的是，流感發病急、全身症狀明顯，且可能併發肺炎、腦炎、心肌炎等嚴重併發症。\n\n**注意：**呼吸急促或困難、發紺（嘴唇發紫）、血痰或痰液變濃、胸痛、意識改變、低血壓；兒童另需留意持續高燒超過 3 天、抽搐、活力明顯變差。"
+    },
+    {
+      "key": "transmission",
+      "heading": "怎麼傳染",
+      "markdown": "### 致病原\n\n流感主要透過病人咳嗽、打噴嚏產生的**飛沫**傳播，也可能因手接觸到病人的口鼻分泌物或被污染的物品，再碰觸自己的眼口鼻而感染。\n\n流感主要透過病人咳嗽、打噴嚏產生的**飛沫**傳播，也可能因手接觸到病人的口鼻分泌物或被污染的物品，再碰觸自己的眼口鼻而感染。\n\n流感主要透過病人咳嗽、打噴嚏產生的**飛沫**傳播，也可能因手接觸到病人的口鼻分泌物或被污染的物品，再碰觸自己的眼口鼻而感染。\n\n病人在發病前 1 天至症狀出現後 3–7 天都可能具有傳染力，幼兒與免疫力低下者排毒時間可能更長。\n\n流感的潛伏期為 **1–4 天（平均 2 天）**。\n\n| 項目 | 內容 |\n| --- | --- |\n| 潛伏期 | 1–4 天（平均 2 天） |\n| 可傳染期 | 病媒／接觸相關（飛沫、接觸病人分泌物） |"
+    },
+    {
+      "key": "prevention",
+      "heading": "如何預防",
+      "markdown": "- **每年接種流感疫苗**：病毒每年會變異，疫苗成分也每年更新，需每年接種。\n- 勤洗手，咳嗽或打噴嚏時以衣袖或紙巾遮住口鼻。\n- 有呼吸道症狀時戴口罩，生病在家休息，避免出入人多擁擠的場所。\n- 流行期間探視長照機構或醫院時，請先確認自己沒有發燒或咳嗽。"
+    },
+    {
+      "key": "treatment",
+      "heading": "診斷與治療",
+      "markdown": "醫師可依臨床判斷開立抗病毒藥劑（如口服克流感、吸入型瑞樂沙、靜脈注射瑞貝塔、口服紓伏效）。**發病後 48 小時內**使用效果最好，但重症或高風險病人即使超過 48 小時仍可使用。\n\n符合公費使用對象者，由疾管署提供公費抗病毒藥劑，對象條件請見專業版「公費流感抗病毒藥劑使用對象」。退燒止痛以乙醯胺酚為主，18 歲以下避免使用阿斯匹靈。"
+    },
+    {
+      "key": "vaccine",
+      "heading": "疫苗",
+      "markdown": "公費流感疫苗每年 10 月 1 日起分階段開打，對象包括 65 歲以上長者、6 個月以上至國小入學前幼兒、孕婦、高風險慢性病人、醫事及防疫人員、國小至高中職學生等，50–64 歲成人於第二階段開放。\n\n8 歲（含）以下兒童若是第一次接種，需接種 2 劑，間隔 4 週以上。完整對象與時程請見「流感疫苗」頁。\n\n| 對象 | 劑次 | 費用 |\n| --- | --- | --- |\n| 依接種建議 | — | 公費 |"
+    },
+    {
+      "key": "situation",
+      "heading": "目前疫情與統計",
+      "markdown": "類流感門急診就診率、流感併發重症病例數每週由疫情中心更新；流行期間疫情態勢層會標示目前狀態。\n\n近年確定病例趨勢如下表與圖（**示意數字，非正式統計**，正式數字見統計資料）：\n\n| 年度 | 確定病例數（示意） | 每十萬人口發生率（示意） |\n| --- | --- | --- |\n| 2021 | 514 | 6.6 |\n| 2022 | 652 | 30.4 |\n| 2023 | 790 | 14.2 |\n| 2024 | 928 | 38 |\n| 2025 | 166 | 21.8 |\n\n![influenza-trend](/files/disease.influenza/influenza-trend.png)"
+    },
+    {
+      "key": "faq",
+      "heading": "常見問題",
+      "markdown": "",
+      "status": "pending"
+    }
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Disease/SubIndex/onsQVJBHAI493DBVEgcN_0",
+    "https://www.cdc.gov.tw/Category/MPage/L-P0gM1I3qTWG35LXVu7xA"
+  ],
+  "assets": [
+    {
+      "file": "influenza-trend.png",
+      "kind": "image",
+      "alt": "influenza-trend",
+      "license": "OGDL-1.0",
+      "needsAlt": true,
+      "mime": "image/png",
+      "bytes": 359,
+      "sha256": "5da3a4e98fdc80539a7542ee2e19aea774fc32d0efe990856a52ca52d1d53354",
+      "width": 160,
+      "height": 90
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.98,
+    "issues": [
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「流感／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-pathogen（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-epidemiology（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "image-no-alt",
+        "severity": "warn",
+        "message": "圖片「influenza-trend.png」舊頁沒有替代文字，暫用檔名「influenza-trend」，請補 alt（needsAlt）"
+      },
+      {
+        "code": "image-license-assumed",
+        "severity": "info",
+        "message": "圖片「influenza-trend.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-transmission（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-incubation（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-symptoms（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-prevention（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-treatment（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「流感／預防接種」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 vaccine（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留共 194 處（8 個來源頁）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Disease/SubIndex/onsQVJBHAI493DBVEgcN_0",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "sourceUrls": [
+      "https://www.cdc.gov.tw/Disease/SubIndex/onsQVJBHAI493DBVEgcN_0",
+      "https://www.cdc.gov.tw/Category/MPage/L-P0gM1I3qTWG35LXVu7xA"
+    ],
+    "existing": true,
+    "compareWith": [
+      "disease.influenza"
+    ],
+    "mergedFrom": [
+      {
+        "page": "01-intro",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/onsQVJBHAI493DBVEgcN_0",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "02-intro-pathogen",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/onsQVJBHAI493DBVEgcN_0",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "03-intro-epidemiology",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/onsQVJBHAI493DBVEgcN_0",
+        "blocks": [
+          "situation"
+        ]
+      },
+      {
+        "page": "04-intro-transmission",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/onsQVJBHAI493DBVEgcN_0",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "05-intro-incubation",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/onsQVJBHAI493DBVEgcN_0",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "06-intro-symptoms",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/onsQVJBHAI493DBVEgcN_0",
+        "blocks": [
+          "symptoms"
+        ]
+      },
+      {
+        "page": "07-intro-prevention",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/onsQVJBHAI493DBVEgcN_0",
+        "blocks": [
+          "prevention"
+        ]
+      },
+      {
+        "page": "08-intro-treatment",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/onsQVJBHAI493DBVEgcN_0",
+        "blocks": [
+          "treatment"
+        ]
+      },
+      {
+        "page": "09-vaccine",
+        "url": "https://www.cdc.gov.tw/Category/MPage/L-P0gM1I3qTWG35LXVu7xA",
+        "blocks": [
+          "vaccine"
+        ]
+      }
+    ],
+    "introMarkdown": "流感由流感病毒引起，經飛沫與接觸傳播，秋冬為流行期。長者、幼兒、孕婦與慢性病人易併發重症，每年接種疫苗是最有效的預防方法。\n\n| 項目 | 內容 |\n| --- | --- |\n| 法定傳染病類別 | 第四類 |\n| 通報時限 | 7 日內 |\n| ICD-10 | J09、J10、J11 |\n| 主要傳染途徑 | 飛沫、接觸病人分泌物 |\n| 潛伏期 | 1–4 天（平均 2 天） |"
+  }
+}

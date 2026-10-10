@@ -1,0 +1,75 @@
+{
+  "id": "faq.rumor-mmr-autism",
+  "type": "faq",
+  "title": "MMR 疫苗會造成自閉症嗎？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2025-05-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.measles"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "不會。「MMR 疫苗導致自閉症」源自 1998 年一篇已被撤稿的論文，作者也遭吊銷醫師執照。之後多國針對數百萬名兒童的大型研究都證實，接種 MMR 與自閉症沒有關聯。",
+  "question": "MMR 疫苗會造成自閉症嗎？",
+  "answerMarkdown": "**不會。**「MMR 疫苗導致自閉症」源自 1998 年一篇已被撤稿的論文，作者也遭吊銷醫師執照。之後多國針對數百萬名兒童的大型研究都證實，接種 MMR 與自閉症沒有關聯。\n\n不接種疫苗反而讓孩子暴露在麻疹的風險中，麻疹可能造成肺炎、腦炎甚至死亡。",
+  "tasks": [
+    "vaccines"
+  ],
+  "basedOn": [
+    "disease.measles"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/s5OaifVY2y_Oh-5Zt4ecui"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 104 處（mso 樣式 62、Mso 類別 27、命名空間標籤 21）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「麻疹／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「麻疹有哪些症狀？會傳染多久？」從答案抽出結構化候選 {\"daysMin\":3,\"daysMax\":4}，請確認後保留或刪除"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「醫護人員需要接種 MMR 疫苗嗎？」→ vaccines；「我和麻疹病人接觸過，要怎麼辦？」→ symptoms；「衛生局打電話來做麻疹疫調，我要配合什麼？」→ symptoms；「幾年次以後出生的成人需要評估接種 MMR 疫苗？」→ vaccines；「我是 1970 年出生的，出國前需要打 MMR 疫苗嗎？」→ vaccines、travel；「我不確定有沒有打過 MMR，要怎麼評估要不要補打？」→ vaccines；「麻疹有哪些症狀？會傳染多久？」→ symptoms；「MMR 疫苗會造成自閉症嗎？」→ vaccines；「去日本旅遊需要擔心麻疹嗎？」→ travel；「出國回來後發燒，應該怎麼辦？」→ travel、symptoms"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/s5OaifVY2y_Oh-5Zt4ecui",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.rumor-mmr-autism"
+    ]
+  }
+}

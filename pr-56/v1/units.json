@@ -1,0 +1,491 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "73f5876833f6",
+    "lastModified": "2026-10-01",
+    "count": 24
+  },
+  "data": [
+    {
+      "id": "unit.director",
+      "name": "署長室",
+      "nameEn": "Office of the Director-General",
+      "kind": "office",
+      "publishes": false,
+      "note": "署長室不上架內容；署長信箱、署長介紹由秘書室維護",
+      "slug": "director",
+      "intro": "署長、副署長與主任秘書所在，綜理全署業務。署長室本身不上架網站內容；署長介紹與署長信箱由秘書室維護。",
+      "introEn": "Office of the Director-General, Deputy Directors-General and the Chief Secretary. It does not publish website content itself; the Director-General page and mailbox are maintained by the Secretariat.",
+      "duties": [
+        "綜理全署業務與重大政策決定",
+        "對外代表機關"
+      ],
+      "officialUrl": "https://www.cdc.gov.tw/CdcOrganization/Index/cBX61rWwT5TKpS7BbMzKag",
+      "officialUrlVerified": true,
+      "introVerified": false,
+      "officialUrlNote": "現行官網「組織與職掌」頁（全署單位同一頁，無各單位獨立網址）；網址由 Yulun 提供（2026-10-05）"
+    },
+    {
+      "id": "unit.pr",
+      "name": "公關室",
+      "nameEn": "Public Relations Office",
+      "kind": "office",
+      "stewardTitle": "內容總編輯",
+      "slug": "pr",
+      "intro": "任務編組。負責新聞媒體溝通、傳染病防治衛教宣導、民眾回饋意見與機關形象行銷；在本網站擔任「內容總編輯」。",
+      "introEn": "Task-based unit: media relations, health education campaigns, public feedback and agency communications; acts as the website’s chief editor.",
+      "duties": [
+        "傳染病防治衛教宣導之規劃",
+        "新聞媒體溝通事項",
+        "蒐集及運用民眾回饋意見",
+        "本署形象行銷事宜",
+        "防疫衛生教育宣導之規劃及執行"
+      ],
+      "officialUrl": "https://www.cdc.gov.tw/CdcOrganization/Index/cBX61rWwT5TKpS7BbMzKag",
+      "officialUrlVerified": true,
+      "introVerified": false,
+      "dutiesSource": "衛生福利部疾病管制署處務規程（依公開法規摘錄整理，待逐字核對）",
+      "officialUrlNote": "現行官網「組織與職掌」頁（全署單位同一頁，無各單位獨立網址）；網址由 Yulun 提供（2026-10-05）"
+    },
+    {
+      "id": "unit.it",
+      "name": "資訊室",
+      "nameEn": "Information Management Office",
+      "kind": "office",
+      "stewardTitle": "平台與資安",
+      "slug": "it",
+      "intro": "維運網站平台、資訊安全與帳號權限。在新架構中負責 Git 代管平台、CI、靜態主機、後台登入（SSO）與稽核紀錄。",
+      "introEn": "Runs the web platform, information security and account permissions: the Git platform, CI, static hosting, admin sign-in (SSO) and audit logs.",
+      "duties": [
+        "網站平台與靜態主機維運",
+        "資訊安全、帳號與登入（SSO／MFA）",
+        "後台稽核紀錄保存與調閱"
+      ],
+      "officialUrl": "https://www.cdc.gov.tw/CdcOrganization/Index/cBX61rWwT5TKpS7BbMzKag",
+      "officialUrlVerified": true,
+      "introVerified": false,
+      "officialUrlNote": "現行官網「組織與職掌」頁（全署單位同一頁，無各單位獨立網址）；網址由 Yulun 提供（2026-10-05）"
+    },
+    {
+      "id": "unit.oasis",
+      "name": "AI推動辦公室",
+      "nameEn": "Office of AI Strategy, Innovation, and Synergy (OASIS)",
+      "kind": "office",
+      "stewardTitle": "目錄與詞彙標準",
+      "slug": "oasis",
+      "intro": "任務編組（英文縮寫 OASIS）。負責本署 AI 發展藍圖與策略、核心 AI 應用的研發與導入、AI 治理框架與跨單位數據整合。在本網站維護資料目錄、詞彙主檔與治理規則，審核 AI 白名單與評估集。",
+      "introEn": "Task-based unit (OASIS): the agency’s AI roadmap and strategy, core AI applications, the AI governance framework and cross-unit data integration. On this site it maintains the data catalogue, glossary and governance rules, and approves the AI whitelist and evaluation set.",
+      "duties": [
+        "本署 AI 發展藍圖與策略之規劃、推動及管考",
+        "協助傳染病監測、調查、應變與公眾溝通等核心 AI 應用之研發、驗證及導入",
+        "提供 AI 導入傳染病防治業務諮詢服務與評估",
+        "規劃本署 AI 治理框架，並協助數據資源整合及跨單位協調推動"
+      ],
+      "officialUrl": "https://www.cdc.gov.tw/CdcOrganization/Index/cBX61rWwT5TKpS7BbMzKag",
+      "officialUrlVerified": true,
+      "introVerified": false,
+      "officialUrlNote": "現行官網「組織與職掌」頁（全署單位同一頁，無各單位獨立網址）；網址由 Yulun 提供（2026-10-05）",
+      "note": "任務編組。英文縮寫 OASIS；原型早期稱「OASIS（資料與 AI 組幕僚）」，2026-10-06 依 Yulun 確認與官網「AI推動辦公室」為同一單位、改用正式名稱",
+      "dutiesSource": "衛生福利部疾病管制署處務規程（依公開法規摘錄整理，待逐字核對）"
+    },
+    {
+      "id": "unit.epidemic-intelligence",
+      "name": "疫情中心",
+      "nameEn": "Epidemic Intelligence Center",
+      "kind": "center",
+      "stewardTitle": "統計資料集與 nidss Owner",
+      "slug": "epidemic-intelligence",
+      "intro": "監測國內外疫情、維護傳染病統計資料集與疫情態勢發布。網站上的「現在的疫情」與統計資料由本中心負責。",
+      "introEn": "Monitors domestic and international outbreaks, maintains surveillance datasets and publishes the situation updates shown on the website.",
+      "duties": [
+        "國內外傳染病疫情之監測蒐集、分析研判、報告及警訊發布",
+        "傳染病通報系統之規劃、建置及執行",
+        "民意、輿情之監測及回應",
+        "疫情資料之加值應用",
+        "傳染病流行病學專業人員之培訓",
+        "疫情監測之研究發展"
+      ],
+      "officialUrl": "https://www.cdc.gov.tw/CdcOrganization/Index/cBX61rWwT5TKpS7BbMzKag",
+      "officialUrlVerified": true,
+      "introVerified": false,
+      "dutiesSource": "衛生福利部疾病管制署處務規程（依公開法規摘錄整理，待逐字核對）",
+      "officialUrlNote": "現行官網「組織與職掌」頁（全署單位同一頁，無各單位獨立網址）；網址由 Yulun 提供（2026-10-05）"
+    },
+    {
+      "id": "unit.acute-infectious",
+      "name": "急性傳染病組",
+      "nameEn": "Division of Acute Infectious Diseases",
+      "kind": "division",
+      "stewardTitle": "Data Steward（急性傳染病、預防接種）",
+      "slug": "acute-infectious",
+      "intro": "負責急性傳染病（如登革熱、流感、麻疹、腸病毒）的防治政策，以及預防接種業務與疫苗接種時程。",
+      "introEn": "Policy for acute infectious diseases (dengue, influenza, measles, enterovirus, etc.) and the national immunization programme.",
+      "duties": [
+        "腸道傳染病防治政策之規劃及推動",
+        "病媒傳染病防治政策之規劃及推動",
+        "急性呼吸道傳染病防治政策之規劃及推動",
+        "預防接種政策之規劃及推動",
+        "急性傳染病之研究發展"
+      ],
+      "officialUrl": "https://www.cdc.gov.tw/CdcOrganization/Index/cBX61rWwT5TKpS7BbMzKag",
+      "officialUrlVerified": true,
+      "introVerified": false,
+      "dutiesSource": "衛生福利部疾病管制署處務規程（依公開法規摘錄整理，待逐字核對）",
+      "officialUrlNote": "現行官網「組織與職掌」頁（全署單位同一頁，無各單位獨立網址）；網址由 Yulun 提供（2026-10-05）"
+    },
+    {
+      "id": "unit.chronic-infectious",
+      "name": "慢性傳染病組",
+      "nameEn": "Division of Chronic Infectious Diseases",
+      "kind": "division",
+      "stewardTitle": "Data Steward",
+      "slug": "chronic-infectious",
+      "intro": "負責結核病、愛滋病、病毒性肝炎等慢性傳染病的防治政策與服務（如潛伏結核感染治療、醫療補助）。",
+      "introEn": "Policy and services for chronic infectious diseases such as tuberculosis, HIV and viral hepatitis.",
+      "duties": [
+        "愛滋病與結核病防治政策之規劃及推動",
+        "愛滋病與結核病疫情之研判及處理",
+        "漢生病防治政策相關工作"
+      ],
+      "officialUrl": "https://www.cdc.gov.tw/CdcOrganization/Index/cBX61rWwT5TKpS7BbMzKag",
+      "officialUrlVerified": true,
+      "introVerified": false,
+      "dutiesSource": "衛生福利部疾病管制署處務規程（依公開法規摘錄整理，待逐字核對）",
+      "officialUrlNote": "現行官網「組織與職掌」頁（全署單位同一頁，無各單位獨立網址）；網址由 Yulun 提供（2026-10-05）"
+    },
+    {
+      "id": "unit.preparedness",
+      "name": "新興傳染病整備組",
+      "nameEn": "Division of Preparedness and Emerging Infectious Diseases",
+      "kind": "division",
+      "stewardTitle": "Data Steward",
+      "slug": "preparedness",
+      "intro": "負責新興傳染病防治、生物病原災害應變整備、防疫物資與傳染病防治醫療網的規劃與推動。",
+      "introEn": "Emerging infectious disease policy, biological-hazard preparedness, stockpiles and the communicable disease control medical network.",
+      "duties": [
+        "新興傳染病防治政策之規劃及推動",
+        "生物病原災害應變整備政策之規劃及推動",
+        "防疫物資整備政策之規劃及推動",
+        "傳染病防治醫療網之規劃及推動",
+        "新興傳染病之研究發展"
+      ],
+      "officialUrl": "https://www.cdc.gov.tw/CdcOrganization/Index/cBX61rWwT5TKpS7BbMzKag",
+      "officialUrlVerified": true,
+      "introVerified": false,
+      "dutiesSource": "衛生福利部疾病管制署處務規程（依公開法規摘錄整理，待逐字核對）",
+      "officialUrlNote": "現行官網「組織與職掌」頁（全署單位同一頁，無各單位獨立網址）；網址由 Yulun 提供（2026-10-05）"
+    },
+    {
+      "id": "unit.infection-control",
+      "name": "感染管制及生物安全組",
+      "nameEn": "Division of Infection Control and Biosafety",
+      "kind": "division",
+      "stewardTitle": "Data Steward",
+      "slug": "infection-control",
+      "intro": "負責醫療機構感染管制、抗生素抗藥性管理與生物安全（實驗室管理）。",
+      "introEn": "Infection control in healthcare facilities, antimicrobial resistance and laboratory biosafety.",
+      "duties": [
+        "醫療照護相關感染管制政策與通報系統之規劃、建置及執行",
+        "抗生素抗藥性管理政策與通報系統之規劃、建置及執行",
+        "傳染病實驗室生物安全政策與系統管理之規劃、建置及執行",
+        "感染管制及生物安全之研究發展"
+      ],
+      "officialUrl": "https://www.cdc.gov.tw/CdcOrganization/Index/cBX61rWwT5TKpS7BbMzKag",
+      "officialUrlVerified": true,
+      "introVerified": false,
+      "dutiesSource": "衛生福利部疾病管制署處務規程（依公開法規摘錄整理，待逐字核對）",
+      "officialUrlNote": "現行官網「組織與職掌」頁（全署單位同一頁，無各單位獨立網址）；網址由 Yulun 提供（2026-10-05）"
+    },
+    {
+      "id": "unit.quarantine",
+      "name": "檢疫組",
+      "nameEn": "Division of Quarantine",
+      "kind": "division",
+      "stewardTitle": "Data Steward",
+      "slug": "quarantine",
+      "intro": "負責國境檢疫、港埠衛生與出國入境旅遊健康建議。網站的「出國與入境」目的地頁由本組維護。",
+      "introEn": "Border quarantine, port health and travel health advice. Maintains the destination pages under Travel.",
+      "duties": [
+        "檢疫政策之規劃及推動",
+        "境外防疫與國際旅遊醫學之規劃及推動",
+        "外籍人士健康管理政策之規劃及推動",
+        "檢疫之研究發展"
+      ],
+      "officialUrl": "https://www.cdc.gov.tw/CdcOrganization/Index/cBX61rWwT5TKpS7BbMzKag",
+      "officialUrlVerified": true,
+      "introVerified": false,
+      "dutiesSource": "衛生福利部疾病管制署處務規程（依公開法規摘錄整理，待逐字核對）",
+      "officialUrlNote": "現行官網「組織與職掌」頁（全署單位同一頁，無各單位獨立網址）；網址由 Yulun 提供（2026-10-05）"
+    },
+    {
+      "id": "unit.lab",
+      "name": "檢驗及疫苗研製中心",
+      "nameEn": "Center for Diagnostics and Vaccine Development",
+      "kind": "center",
+      "stewardTitle": "Data Steward",
+      "slug": "lab",
+      "intro": "負責傳染病檢驗、檢驗項目表與疫苗研製。網站上的「檢驗專區」檢體送驗表由本中心維護。",
+      "introEn": "Laboratory diagnostics, the test catalogue and vaccine development. Maintains the lab specimen pages.",
+      "duties": [
+        "傳染病之檢驗、血清疫苗製造政策之規劃及執行",
+        "傳染病檢驗基準之訂定、檢驗人員之培訓、檢驗技術之研發及技術移轉",
+        "生物材料庫與病原體基因資料庫之建立、分析及應用",
+        "傳染病檢驗機構之指定、委託與認可、實驗室生物安全、品質保證規範之規劃及執行",
+        "血清疫苗之製造、銷售及廠房管理"
+      ],
+      "officialUrl": "https://www.cdc.gov.tw/CdcOrganization/Index/cBX61rWwT5TKpS7BbMzKag",
+      "officialUrlVerified": true,
+      "introVerified": false,
+      "dutiesSource": "衛生福利部疾病管制署處務規程（依公開法規摘錄整理，待逐字核對）",
+      "officialUrlNote": "現行官網「組織與職掌」頁（全署單位同一頁，無各單位獨立網址）；網址由 Yulun 提供（2026-10-05）"
+    },
+    {
+      "id": "unit.planning",
+      "name": "企劃組",
+      "nameEn": "Division of Planning and Coordination",
+      "kind": "division",
+      "stewardTitle": "Data Steward（企劃、國際合作、IHR 國家對口窗口）",
+      "slug": "planning",
+      "intro": "負責機關企劃、研究計畫、國際合作與 IHR 國家對口窗口。網站的「國際合作」區塊與研究計畫由本組維護。",
+      "introEn": "Planning, research programmes, international cooperation and the IHR national focal point. Maintains the International Cooperation section.",
+      "duties": [
+        "傳染病防治政策與科技發展之規劃、推動及相關法規之研擬",
+        "防疫人員教育訓練之規劃及推動",
+        "國際與兩岸防疫技術合作之規劃及推動",
+        "其他有關法制、企劃、研究考核、科技發展及國際合作事項"
+      ],
+      "officialUrl": "https://www.cdc.gov.tw/CdcOrganization/Index/cBX61rWwT5TKpS7BbMzKag",
+      "officialUrlVerified": true,
+      "introVerified": false,
+      "dutiesSource": "衛生福利部疾病管制署處務規程（依公開法規摘錄整理，待逐字核對）",
+      "officialUrlNote": "現行官網「組織與職掌」頁（全署單位同一頁，無各單位獨立網址）；網址由 Yulun 提供（2026-10-05）"
+    },
+    {
+      "id": "unit.secretariat",
+      "name": "秘書室",
+      "nameEn": "Secretariat Office",
+      "kind": "office",
+      "stewardTitle": "Data Steward（署長信箱、採購公告、綜合業務）",
+      "slug": "secretariat",
+      "intro": "綜合業務：署長信箱、採購公告、文書與庶務。網站的採購公告與署長信箱由本室維護。",
+      "introEn": "General affairs: the Director-General’s mailbox, procurement notices and administration.",
+      "duties": [
+        "署長信箱處理",
+        "採購公告",
+        "文書與庶務"
+      ],
+      "officialUrl": "https://www.cdc.gov.tw/CdcOrganization/Index/cBX61rWwT5TKpS7BbMzKag",
+      "officialUrlVerified": true,
+      "introVerified": false,
+      "officialUrlNote": "現行官網「組織與職掌」頁（全署單位同一頁，無各單位獨立網址）；網址由 Yulun 提供（2026-10-05）"
+    },
+    {
+      "id": "unit.personnel",
+      "name": "人事室",
+      "nameEn": "Personnel Office",
+      "kind": "office",
+      "stewardTitle": "Data Steward（人才招募、甄選結果）",
+      "slug": "personnel",
+      "intro": "負責人事業務與人才招募。網站的職缺公告、甄選結果（只公布報名編號、到期下架）由本室維護。",
+      "introEn": "Personnel matters and recruitment. Maintains job postings and selection results (application numbers only, taken down after a set date).",
+      "duties": [
+        "人才招募與甄選公告",
+        "甄選結果公布（只公布報名編號）",
+        "人事法規"
+      ],
+      "officialUrl": "https://www.cdc.gov.tw/CdcOrganization/Index/cBX61rWwT5TKpS7BbMzKag",
+      "officialUrlVerified": true,
+      "introVerified": false,
+      "officialUrlNote": "現行官網「組織與職掌」頁（全署單位同一頁，無各單位獨立網址）；網址由 Yulun 提供（2026-10-05）"
+    },
+    {
+      "id": "unit.ethics",
+      "name": "政風室",
+      "nameEn": "Civil Service Ethics Office",
+      "kind": "office",
+      "stewardTitle": "Data Steward（廉政宣導、檢舉管道）",
+      "slug": "ethics",
+      "intro": "負責政風業務：廉政宣導、檢舉管道與利益衝突迴避。",
+      "introEn": "Civil service ethics: integrity promotion, whistle-blowing channels and conflict-of-interest rules.",
+      "duties": [
+        "廉政宣導",
+        "檢舉管道",
+        "利益衝突迴避"
+      ],
+      "officialUrl": "https://www.cdc.gov.tw/CdcOrganization/Index/cBX61rWwT5TKpS7BbMzKag",
+      "officialUrlVerified": true,
+      "introVerified": false,
+      "officialUrlNote": "現行官網「組織與職掌」頁（全署單位同一頁，無各單位獨立網址）；網址由 Yulun 提供（2026-10-05）"
+    },
+    {
+      "id": "unit.preventive-medicine",
+      "name": "預防醫學辦公室",
+      "nameEn": "Office of Preventive Medicine",
+      "kind": "office",
+      "stewardTitle": "Data Steward（預防醫學、健康促進）",
+      "slug": "preventive-medicine",
+      "intro": "任務編組。負責防疫醫師與流行病學人才培訓、旅遊醫學等專業諮詢，以及特殊傳染病個案或群聚的調查分析與用藥審查。",
+      "introEn": "Task-based unit: trains epidemic physicians and epidemiologists, provides travel-medicine consultation, investigates special cases and clusters, and reviews special-drug applications.",
+      "duties": [
+        "防疫醫師及流行病學人才之培訓，並提供旅遊醫學等專業諮詢",
+        "特殊傳染病個案或群聚案件之調查分析",
+        "特殊傳染病病歷審查及申請用藥之審查"
+      ],
+      "officialUrl": "https://www.cdc.gov.tw/CdcOrganization/Index/cBX61rWwT5TKpS7BbMzKag",
+      "officialUrlVerified": true,
+      "introVerified": false,
+      "dutiesSource": "衛生福利部疾病管制署處務規程（依公開法規摘錄整理，待逐字核對）",
+      "officialUrlNote": "現行官網「組織與職掌」頁（全署單位同一頁，無各單位獨立網址）；網址由 Yulun 提供（2026-10-05）"
+    },
+    {
+      "id": "unit.accounting",
+      "name": "主計室",
+      "nameEn": "Accounting Office",
+      "kind": "office",
+      "slug": "accounting",
+      "intro": "負責預算、會計與決算。",
+      "introEn": "Budget, accounting and final accounts.",
+      "duties": [
+        "預算編列與執行",
+        "會計與決算"
+      ],
+      "officialUrl": "https://www.cdc.gov.tw/CdcOrganization/Index/cBX61rWwT5TKpS7BbMzKag",
+      "officialUrlVerified": true,
+      "introVerified": false,
+      "officialUrlNote": "現行官網「組織與職掌」頁（全署單位同一頁，無各單位獨立網址）；網址由 Yulun 提供（2026-10-05）"
+    },
+    {
+      "id": "unit.regional-taipei",
+      "name": "臺北區管制中心",
+      "nameEn": "Taipei Regional Center",
+      "kind": "regional",
+      "slug": "regional-taipei",
+      "intro": "轄區：臺北市、新北市、基隆市、宜蘭縣、金門縣、連江縣。負責轄區防疫業務的督導、疫情調查與地方協調。",
+      "introEn": "Covers Taipei, New Taipei, Keelung, Yilan, Kinmen and Lienchiang: supervision, outbreak investigation and local coordination.",
+      "duties": [
+        "轄區疫情調查與督導",
+        "地方衛生局協調",
+        "轄區防疫宣導"
+      ],
+      "officialUrl": "https://www.cdc.gov.tw/CdcOrganization/Index/cBX61rWwT5TKpS7BbMzKag",
+      "officialUrlVerified": true,
+      "introVerified": false,
+      "officialUrlNote": "現行官網「組織與職掌」頁（全署單位同一頁，無各單位獨立網址）；網址由 Yulun 提供（2026-10-05）"
+    },
+    {
+      "id": "unit.regional-northern",
+      "name": "北區管制中心",
+      "nameEn": "Northern Regional Center",
+      "kind": "regional",
+      "slug": "regional-northern",
+      "intro": "轄區：桃園市、新竹縣、新竹市、苗栗縣。負責轄區防疫業務的督導、疫情調查與地方協調。",
+      "introEn": "Covers Taoyuan, Hsinchu County, Hsinchu City and Miaoli.",
+      "duties": [
+        "轄區疫情調查與督導",
+        "地方衛生局協調",
+        "轄區防疫宣導"
+      ],
+      "officialUrl": "https://www.cdc.gov.tw/CdcOrganization/Index/cBX61rWwT5TKpS7BbMzKag",
+      "officialUrlVerified": true,
+      "introVerified": false,
+      "officialUrlNote": "現行官網「組織與職掌」頁（全署單位同一頁，無各單位獨立網址）；網址由 Yulun 提供（2026-10-05）"
+    },
+    {
+      "id": "unit.regional-central",
+      "name": "中區管制中心",
+      "nameEn": "Central Regional Center",
+      "kind": "regional",
+      "slug": "regional-central",
+      "intro": "轄區：臺中市、彰化縣、南投縣。負責轄區防疫業務的督導、疫情調查與地方協調。",
+      "introEn": "Covers Taichung, Changhua and Nantou.",
+      "duties": [
+        "轄區疫情調查與督導",
+        "地方衛生局協調",
+        "轄區防疫宣導"
+      ],
+      "officialUrl": "https://www.cdc.gov.tw/CdcOrganization/Index/cBX61rWwT5TKpS7BbMzKag",
+      "officialUrlVerified": true,
+      "introVerified": false,
+      "officialUrlNote": "現行官網「組織與職掌」頁（全署單位同一頁，無各單位獨立網址）；網址由 Yulun 提供（2026-10-05）"
+    },
+    {
+      "id": "unit.regional-southern",
+      "name": "南區管制中心",
+      "nameEn": "Southern Regional Center",
+      "kind": "regional",
+      "slug": "regional-southern",
+      "intro": "轄區：雲林縣、嘉義縣、嘉義市、臺南市。負責轄區防疫業務的督導、疫情調查與地方協調。",
+      "introEn": "Covers Yunlin, Chiayi County, Chiayi City and Tainan.",
+      "duties": [
+        "轄區疫情調查與督導",
+        "地方衛生局協調",
+        "轄區防疫宣導"
+      ],
+      "officialUrl": "https://www.cdc.gov.tw/CdcOrganization/Index/cBX61rWwT5TKpS7BbMzKag",
+      "officialUrlVerified": true,
+      "introVerified": false,
+      "officialUrlNote": "現行官網「組織與職掌」頁（全署單位同一頁，無各單位獨立網址）；網址由 Yulun 提供（2026-10-05）"
+    },
+    {
+      "id": "unit.regional-kaoping",
+      "name": "高屏區管制中心",
+      "nameEn": "Kaoping Regional Center",
+      "kind": "regional",
+      "slug": "regional-kaoping",
+      "intro": "轄區：高雄市、屏東縣、澎湖縣。負責轄區防疫業務的督導、疫情調查與地方協調。",
+      "introEn": "Covers Kaohsiung, Pingtung and Penghu.",
+      "duties": [
+        "轄區疫情調查與督導",
+        "地方衛生局協調",
+        "轄區防疫宣導"
+      ],
+      "officialUrl": "https://www.cdc.gov.tw/CdcOrganization/Index/cBX61rWwT5TKpS7BbMzKag",
+      "officialUrlVerified": true,
+      "introVerified": false,
+      "officialUrlNote": "現行官網「組織與職掌」頁（全署單位同一頁，無各單位獨立網址）；網址由 Yulun 提供（2026-10-05）"
+    },
+    {
+      "id": "unit.regional-eastern",
+      "name": "東區管制中心",
+      "nameEn": "Eastern Regional Center",
+      "kind": "regional",
+      "slug": "regional-eastern",
+      "intro": "轄區：花蓮縣、臺東縣。負責轄區防疫業務的督導、疫情調查與地方協調。",
+      "introEn": "Covers Hualien and Taitung.",
+      "duties": [
+        "轄區疫情調查與督導",
+        "地方衛生局協調",
+        "轄區防疫宣導"
+      ],
+      "officialUrl": "https://www.cdc.gov.tw/CdcOrganization/Index/cBX61rWwT5TKpS7BbMzKag",
+      "officialUrlVerified": true,
+      "introVerified": false,
+      "officialUrlNote": "現行官網「組織與職掌」頁（全署單位同一頁，無各單位獨立網址）；網址由 Yulun 提供（2026-10-05）"
+    },
+    {
+      "id": "unit.governance-committee",
+      "name": "資料治理委員會",
+      "nameEn": "Data Governance Committee",
+      "kind": "committee",
+      "slug": "governance-committee",
+      "intro": "跨單位的資料治理委員會：決定治理規則、審閱週期政策與 AI 使用政策，由 OASIS 擔任幕僚。",
+      "introEn": "Cross-unit data governance committee: sets governance rules, review-period policy and AI policy, with OASIS as its secretariat.",
+      "duties": [
+        "治理規則與政策決議",
+        "審閱週期政策",
+        "AI 使用政策"
+      ],
+      "officialUrl": "https://www.cdc.gov.tw/CdcOrganization/Index/cBX61rWwT5TKpS7BbMzKag",
+      "officialUrlVerified": true,
+      "introVerified": false,
+      "officialUrlNote": "現行官網「組織與職掌」頁（全署單位同一頁，無各單位獨立網址）；網址由 Yulun 提供（2026-10-05）"
+    }
+  ]
+}

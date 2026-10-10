@@ -1,0 +1,64 @@
+{
+  "id": "faq.rumor-mmr-autism",
+  "type": "faq",
+  "title": "MMR 疫苗會造成自閉症嗎？",
+  "owner": "unit.pr",
+  "publishedAt": "2021-02-08",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "不會。「MMR 疫苗導致自閉症」源自 1998 年一篇已被撤稿的論文，作者也遭吊銷醫師執照。之後多國針對數百萬名兒童的大型研究都證實，接種 MMR 與自閉症沒有關聯。",
+  "question": "MMR 疫苗會造成自閉症嗎？",
+  "answerMarkdown": "**不會。**「MMR 疫苗導致自閉症」源自 1998 年一篇已被撤稿的論文，作者也遭吊銷醫師執照。之後多國針對數百萬名兒童的大型研究都證實，接種 MMR 與自閉症沒有關聯。\n\n不接種疫苗反而讓孩子暴露在麻疹的風險中，麻疹可能造成肺炎、腦炎甚至死亡。",
+  "tasks": [
+    "vaccines"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/Y6mjmeVxUGO8zXmBiXV284"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 21 處（mso 樣式 8、Mso 類別 8、命名空間標籤 5）"
+      },
+      {
+        "code": "faq-structure-loose",
+        "severity": "info",
+        "message": "沒有 .panel 結構，依「Q 開頭的標題／段落」拆成 3 題，請核對題目與答案的切分"
+      },
+      {
+        "code": "one-to-many",
+        "severity": "info",
+        "message": "一頁 3 題、清單沒有單一目標：status 維持 pending，請決定併入疾病頁（merged）或各題獨立（新站以 tasks 歸類）"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「MMR 疫苗會造成自閉症嗎？」→ vaccines；「收到自稱疾管署的簡訊要我點連結填資料，怎麼辦？」→ rumor、symptoms；「網傳多喝熱水、多曬太陽可以預防流感，是真的嗎？」→ rumor"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/Y6mjmeVxUGO8zXmBiXV284",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.rumor-mmr-autism"
+    ]
+  }
+}

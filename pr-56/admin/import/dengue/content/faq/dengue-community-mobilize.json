@@ -1,0 +1,75 @@
+{
+  "id": "faq.dengue-community-mobilize",
+  "type": "faq",
+  "title": "社區或里長要怎麼帶大家一起防登革熱？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-09-24",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "可以從三件事開始： 指定聯絡人：里（村）指定一位窗口，與衛生所保持聯繫。 每週巡倒清刷：召集志工與住戶，每週一次巡視住家、公共空間與空地的積水容器，倒掉積水、清除不需要的容器、刷洗內壁。",
+  "question": "社區或里長要怎麼帶大家一起防登革熱？",
+  "answerMarkdown": "可以從三件事開始：\n\n1. **指定聯絡人**：里（村）指定一位窗口，與衛生所保持聯繫。\n2. **每週巡倒清刷**：召集志工與住戶，每週一次巡視住家、公共空間與空地的積水容器，倒掉積水、清除不需要的容器、刷洗內壁。\n3. **回報困難處**：發現廢棄容器堆置、空屋或工地積水，請通知衛生所或環保單位處理，管理人有責任限期改善。\n\n衛生所可提供海報、影音與外籍勞工多語教材，疫情升溫前也會辦說明會。",
+  "tasks": [
+    "situation"
+  ],
+  "basedOn": [
+    "disease.dengue"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/4kMzhnwTwPIrf_KETxhqzF"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 74 處（mso 樣式 48、Mso 類別 20、命名空間標籤 13）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「登革熱／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「登革熱發燒後幾天內要就醫？」從答案抽出結構化候選 {\"daysMin\":3,\"daysMax\":14,\"hours\":24}，請確認後保留或刪除"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「社區或里長要怎麼帶大家一起防登革熱？」→ situation；「登革熱發燒後幾天內要就醫？」→ symptoms；「從登革熱流行地區回國後，要注意什麼？」→ symptoms；「懷疑登革熱時，可以自己吃止痛藥嗎？」→ symptoms；「衛生單位說要進家裡噴藥，可以拒絕嗎？」→ symptoms；「出國回來後發燒，應該怎麼辦？」→ travel、symptoms"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/4kMzhnwTwPIrf_KETxhqzF",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.dengue-community-mobilize"
+    ]
+  }
+}

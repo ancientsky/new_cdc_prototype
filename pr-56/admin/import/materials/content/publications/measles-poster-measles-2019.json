@@ -1,0 +1,115 @@
+{
+  "id": "publication.measles-poster-measles-2019",
+  "type": "publication",
+  "title": "麻疹防治宣導海報（2019 年版）",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2019-09-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.measles"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "麻疹傳染力強，出國前確認疫苗接種史，出現發燒出疹請戴口罩就醫。",
+  "pubType": "poster",
+  "series": "麻疹宣導素材",
+  "abstractMarkdown": "麻疹傳染力強，出國前確認疫苗接種史，出現發燒出疹請戴口罩就醫。\n\n圖片內容（替代文字）：\n\n- 麻疹防治宣導海報縮圖\n\n（待補：海報文字版）",
+  "pdfUrl": "/files/publication.measles-poster-measles-2019/measles-poster-2019.pdf",
+  "basedOn": [
+    "disease.measles",
+    "doc.mmr-recommendation.2025-04-16"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=RYSFjWglrrDCumRjbTT1_t"
+  ],
+  "assets": [
+    {
+      "file": "measles-poster-2019.pdf",
+      "kind": "attachment",
+      "label": "麻疹防治海報（PDF）",
+      "mime": "application/pdf",
+      "bytes": 704,
+      "sha256": "e44225ac98e18810b2b3570ff339b24b339da1591ce24c601c5aa5dfd6823e89",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "measles-2019-poster.png",
+      "kind": "image",
+      "alt": "麻疹防治宣導海報縮圖",
+      "license": "OGDL-1.0",
+      "needsAlt": false,
+      "mime": "image/png",
+      "bytes": 912,
+      "sha256": "0a9c06baf3ad7680a939592fbcd355d2fd987ce5b7808e6a4508eff1ca24b6ae",
+      "width": 240,
+      "height": 160
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.8,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "素材的權責單位依疾病主檔取 unit.acute-infectious（麻疹），不歸宣導素材欄目的公關室"
+      },
+      {
+        "code": "type-from-category",
+        "severity": "info",
+        "message": "素材頁的標題有「海報」，草稿建成 publication（pubType poster）"
+      },
+      {
+        "code": "old-content",
+        "severity": "info",
+        "message": "最後更新於 2019-09-01（7.1 年前），建議走久遠封存而非上線"
+      },
+      {
+        "code": "image-license-assumed",
+        "severity": "info",
+        "message": "圖片「measles-2019-poster.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+      },
+      {
+        "code": "body-short",
+        "severity": "warn",
+        "message": "內文過短（31 字，低於 40）"
+      },
+      {
+        "code": "image-only",
+        "severity": "warn",
+        "message": "圖片承載唯一資訊：海報／單張的文字要另有純文字版（可及性），abstractMarkdown 以（待補）佔位"
+      },
+      {
+        "code": "material-outdated",
+        "severity": "warn",
+        "message": "素材製作日 2019-09-01 時依據的 doc.mmr-recommendation.2019-05-14（2019-05-14）已於 2025-04-16 被 doc.mmr-recommendation.2025-04-16 取代；上線前請確認內容仍正確（治理 R9 影音過時的事前版）"
+      },
+      {
+        "code": "fields-pending",
+        "severity": "warn",
+        "message": "publication 的欄位從舊頁看不出來，以「（待補）」佔位：abstractMarkdown"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=RYSFjWglrrDCumRjbTT1_t",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

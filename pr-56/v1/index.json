@@ -1,0 +1,443 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "4d557b96f068",
+    "lastModified": "2026-10-01",
+    "count": 71
+  },
+  "data": [
+    {
+      "path": "/v1/diseases.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/diseases.json",
+      "description": "傳染病主檔（含疾病頁連結與治理摘要）",
+      "count": 72
+    },
+    {
+      "path": "/v1/diseases/chikungunya.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/diseases/chikungunya.json",
+      "description": "疾病頁：屈公病",
+      "count": null
+    },
+    {
+      "path": "/v1/diseases/covid-19.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/diseases/covid-19.json",
+      "description": "疾病頁：新冠併發重症",
+      "count": null
+    },
+    {
+      "path": "/v1/diseases/dengue.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/diseases/dengue.json",
+      "description": "疾病頁：登革熱",
+      "count": null
+    },
+    {
+      "path": "/v1/diseases/enterovirus.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/diseases/enterovirus.json",
+      "description": "疾病頁：腸病毒",
+      "count": null
+    },
+    {
+      "path": "/v1/diseases/hepatitis-a.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/diseases/hepatitis-a.json",
+      "description": "疾病頁：急性病毒性A型肝炎",
+      "count": null
+    },
+    {
+      "path": "/v1/diseases/hiv.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/diseases/hiv.json",
+      "description": "疾病頁：人類免疫缺乏病毒感染（愛滋）",
+      "count": null
+    },
+    {
+      "path": "/v1/diseases/influenza.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/diseases/influenza.json",
+      "description": "疾病頁：流感",
+      "count": null
+    },
+    {
+      "path": "/v1/diseases/japanese-encephalitis.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/diseases/japanese-encephalitis.json",
+      "description": "疾病頁：日本腦炎",
+      "count": null
+    },
+    {
+      "path": "/v1/diseases/malaria.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/diseases/malaria.json",
+      "description": "疾病頁：瘧疾",
+      "count": null
+    },
+    {
+      "path": "/v1/diseases/measles.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/diseases/measles.json",
+      "description": "疾病頁：麻疹",
+      "count": null
+    },
+    {
+      "path": "/v1/diseases/mpox.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/diseases/mpox.json",
+      "description": "疾病頁：M痘",
+      "count": null
+    },
+    {
+      "path": "/v1/diseases/pertussis.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/diseases/pertussis.json",
+      "description": "疾病頁：百日咳",
+      "count": null
+    },
+    {
+      "path": "/v1/diseases/rabies.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/diseases/rabies.json",
+      "description": "疾病頁：狂犬病",
+      "count": null
+    },
+    {
+      "path": "/v1/diseases/rubella.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/diseases/rubella.json",
+      "description": "疾病頁：德國麻疹",
+      "count": null
+    },
+    {
+      "path": "/v1/diseases/tuberculosis.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/diseases/tuberculosis.json",
+      "description": "疾病頁：結核病",
+      "count": null
+    },
+    {
+      "path": "/v1/diseases/varicella.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/diseases/varicella.json",
+      "description": "疾病頁：水痘",
+      "count": null
+    },
+    {
+      "path": "/v1/vaccines.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/vaccines.json",
+      "description": "疫苗頁",
+      "count": 8
+    },
+    {
+      "path": "/v1/immunization-schedule.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/immunization-schedule.json",
+      "description": "疫苗接種時程表",
+      "count": 42
+    },
+    {
+      "path": "/v1/faq.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/faq.json",
+      "description": "Q&A",
+      "count": 61
+    },
+    {
+      "path": "/v1/news.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/news.json",
+      "description": "新聞稿／通函（近 200 則，含自動加註）",
+      "count": 37
+    },
+    {
+      "path": "/v1/documents.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/documents.json",
+      "description": "文件全部版本（isCurrent、supersedes、supersededBy）；families 為版本鏈",
+      "count": 27
+    },
+    {
+      "path": "/v1/clarifications.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/clarifications.json",
+      "description": "謠言澄清",
+      "count": 8
+    },
+    {
+      "path": "/v1/situation.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/situation.json",
+      "description": "疫情態勢層（疫情中心人工發布）",
+      "count": null
+    },
+    {
+      "path": "/v1/travel-alerts.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/travel-alerts.json",
+      "description": "國際旅遊疫情建議（快照或每日抓取）",
+      "count": 76
+    },
+    {
+      "path": "/v1/country-levels.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/country-levels.json",
+      "description": "各國疫情等級",
+      "count": 246
+    },
+    {
+      "path": "/v1/country-changes.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/country-changes.json",
+      "description": "旅遊疫情建議變化事件（新增、調升、調降、解除、重發；依日期降冪）",
+      "count": 364
+    },
+    {
+      "path": "/v1/country-background.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/country-background.json",
+      "description": "全球背景提醒（同一疾病同一等級涵蓋 ≥ 50% 國家者，不逐國列出）",
+      "count": 1
+    },
+    {
+      "path": "/v1/datasets.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/datasets.json",
+      "description": "資料目錄（CKAN 快照＋治理欄位）",
+      "count": 28
+    },
+    {
+      "path": "/v1/glossary.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/glossary.json",
+      "description": "七語詞彙主檔",
+      "count": 83
+    },
+    {
+      "path": "/v1/units.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/units.json",
+      "description": "權責單位",
+      "count": 24
+    },
+    {
+      "path": "/v1/countries.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/countries.json",
+      "description": "國家主檔",
+      "count": 231
+    },
+    {
+      "path": "/v1/media.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/media.json",
+      "description": "影音宣導素材（含逐字稿、章節、依據正本與是否過時）",
+      "count": 13
+    },
+    {
+      "path": "/v1/topics.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/topics.json",
+      "description": "專區／專題（ended＝已結束；links 含外部連結檢查狀態）",
+      "count": 12
+    },
+    {
+      "path": "/v1/services.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/services.json",
+      "description": "申請／服務（步驟、應備文件、處理天數、表單）",
+      "count": 15
+    },
+    {
+      "path": "/v1/publications.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/publications.json",
+      "description": "出版品（書目完整；series 為系列分組）",
+      "count": 15
+    },
+    {
+      "path": "/v1/articles.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/articles.json",
+      "description": "疫情報導文章（全文 sections、作者與單位、頁碼、圖表說明、引用格式；issue 為所屬卷期）",
+      "count": 3
+    },
+    {
+      "path": "/v1/labtests.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/labtests.json",
+      "description": "檢驗項目（疾病 × 檢體 × 容器 × 保存運送 × 時限；含與通報時限一致性）",
+      "count": 16
+    },
+    {
+      "path": "/v1/research.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/research.json",
+      "description": "研究計畫（年度、狀態、成果報告、資料集）",
+      "count": 10
+    },
+    {
+      "path": "/v1/notices.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/notices.json",
+      "description": "機關公告：其他訊息（closed＝已截止；進行中依截止日排序）；人才招募見 jobs.json、採購公告見 tenders.json",
+      "count": 3
+    },
+    {
+      "path": "/v1/jobs.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/jobs.json",
+      "description": "人才招募職缺（stage：upcoming／open／closed／screening／result／filled／cancelled；tab：open／upcoming／review／result／history）",
+      "count": 11
+    },
+    {
+      "path": "/v1/tenders.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/tenders.json",
+      "description": "採購公告（stage：open／closed／opened／awarded／failed／cancelled）",
+      "count": 8
+    },
+    {
+      "path": "/v1/notify-table.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/notify-table.json",
+      "description": "法定傳染病通報時限表（由傳染病主檔自動產生）",
+      "count": 5
+    },
+    {
+      "path": "/v1/campaigns.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/campaigns.json",
+      "description": "全部宣導 Banner（campaignStatus：active／upcoming／ended）",
+      "count": 6
+    },
+    {
+      "path": "/v1/banners.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/banners.json",
+      "description": "目前上架中的首頁 Banner",
+      "count": 3
+    },
+    {
+      "path": "/v1/catalog.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/catalog.json",
+      "description": "七類資產總目錄（開放資料集、統計查詢系統、結構化表格、文件庫、內容頁、新聞稿／公告、影音宣導素材）",
+      "count": 315
+    },
+    {
+      "path": "/v1/search-index.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/search-index.json",
+      "description": "答案單元索引（民眾，只含白名單）",
+      "count": 734
+    },
+    {
+      "path": "/v1/search-index-pro.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/search-index-pro.json",
+      "description": "答案單元索引（專業，只含現行版）",
+      "count": 1050
+    },
+    {
+      "path": "/v1/search.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/search.json",
+      "description": "搜尋端點說明（＝search-index 別名）",
+      "count": null
+    },
+    {
+      "path": "/v1/tasks/symptoms.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/tasks/symptoms.json",
+      "description": "任務入口：有症狀怎麼辦",
+      "count": null
+    },
+    {
+      "path": "/v1/tasks/vaccines.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/tasks/vaccines.json",
+      "description": "任務入口：疫苗與預防接種",
+      "count": null
+    },
+    {
+      "path": "/v1/tasks/travel.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/tasks/travel.json",
+      "description": "任務入口：出國與入境",
+      "count": null
+    },
+    {
+      "path": "/v1/tasks/situation.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/tasks/situation.json",
+      "description": "任務入口：現在的疫情",
+      "count": null
+    },
+    {
+      "path": "/v1/tasks/rumor.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/tasks/rumor.json",
+      "description": "任務入口：謠言查證",
+      "count": null
+    },
+    {
+      "path": "/v1/tasks/data.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/tasks/data.json",
+      "description": "任務入口：開放資料與統計",
+      "count": null
+    },
+    {
+      "path": "/v1/redirects.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/redirects.json",
+      "description": "舊版／舊網址 → 正本對照（301；kind：superseded／family-latest／legacy／migration／moved；pattern＝{id} 佔位的 URL 模式，不進伺服器對照檔；moved＝新站內部換型別搬家）",
+      "count": 481
+    },
+    {
+      "path": "/redirects/nginx.map",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/redirects/nginx.map",
+      "description": "Nginx map（$request_uri → 新網址；410 為已移除）：舊網址 → 新網址 301（由 redirects.json 產生，不含 pattern 項）",
+      "count": 45
+    },
+    {
+      "path": "/redirects/web.config.rewritemap.xml",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/redirects/web.config.rewritemap.xml",
+      "description": "IIS URL Rewrite rewriteMap＋301／410 規則：舊網址 → 新網址 301（由 redirects.json 產生，不含 pattern 項）",
+      "count": 45
+    },
+    {
+      "path": "/redirects/_redirects",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/redirects/_redirects",
+      "description": "Netlify／Cloudflare Pages _redirects（含 410）：舊網址 → 新網址 301（由 redirects.json 產生，不含 pattern 項）",
+      "count": 45
+    },
+    {
+      "path": "/v1/migration/index.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/migration/index.json",
+      "description": "移轉清單摘要：主檔每種疾病一份（derived＝模板推導、curated＝有人工清單；status no-page＝疾病頁尚未建立）＋欄目清單；stats 為全站統計",
+      "count": 83
+    },
+    {
+      "path": "/v1/migration/{slug}.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/migration/{slug}.json",
+      "description": "單一移轉清單完整內容（83 份；items[].derived＝由模板推導；可下載後改寫成 content/migration/{slug}.json 人工清單，只留例外）",
+      "count": 83
+    },
+    {
+      "path": "/v1/legacy-map.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/legacy-map.json",
+      "description": "舊網址精簡對照 { 正規化舊網址: 新路徑 }（404 頁與 /legacy/ 查詢用）；patterns 為 {id} 佔位的 URL 模式（不可自動轉址）、gone 為不移轉（建議 410）",
+      "count": null
+    },
+    {
+      "path": "/v1/governance/kpi.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/governance/kpi.json",
+      "description": "品質指標（7.5 全列）",
+      "count": 18
+    },
+    {
+      "path": "/v1/governance/todos.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/governance/todos.json",
+      "description": "治理待辦",
+      "count": 112
+    },
+    {
+      "path": "/v1/governance/summary.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/governance/summary.json",
+      "description": "治理儀表板數字",
+      "count": null
+    },
+    {
+      "path": "/v1/governance/by-owner.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/governance/by-owner.json",
+      "description": "各權責單位待辦／逾期／白名單／內容數",
+      "count": 24
+    },
+    {
+      "path": "/v1/governance/links.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/governance/links.json",
+      "description": "外部連結健康（status：ok／broken／unchecked）",
+      "count": 29
+    },
+    {
+      "path": "/v1/governance/ai-status.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/governance/ai-status.json",
+      "description": "AI 問答開關",
+      "count": null
+    },
+    {
+      "path": "/v1/governance/whitelist.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/governance/whitelist.json",
+      "description": "AI 白名單政策與每筆狀態",
+      "count": null
+    },
+    {
+      "path": "/v1/governance/eval-set.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/governance/eval-set.json",
+      "description": "評估集",
+      "count": null
+    },
+    {
+      "path": "/v1/governance/eval-report.json",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/governance/eval-report.json",
+      "description": "評估報告",
+      "count": null
+    }
+  ]
+}

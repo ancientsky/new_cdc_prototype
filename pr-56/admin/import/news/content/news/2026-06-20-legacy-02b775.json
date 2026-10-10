@@ -1,0 +1,42 @@
+{
+  "id": "news.2026-06-20-legacy-02b775",
+  "type": "news",
+  "title": "夏季出國旅遊前請先查疫情：疾管署更新國際旅遊疫情建議等級",
+  "owner": "unit.pr",
+  "publishedAt": "2026-06-20",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "東南亞多國登革熱流行，南亞與非洲部分地區屈公病疫情。 出國前 4 至 6 週至旅遊醫學門診評估。",
+  "newsType": "press",
+  "bodyMarkdown": "東南亞多國登革熱流行，南亞與非洲部分地區屈公病疫情。\n\n出國前 4 至 6 週至旅遊醫學門診評估。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/Zg1sEf1_dN9UqgbyCyAdmD?typeid=9"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/Zg1sEf1_dN9UqgbyCyAdmD?typeid=9",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

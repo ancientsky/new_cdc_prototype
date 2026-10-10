@@ -1,0 +1,71 @@
+{
+  "id": "faq.rabies-bite",
+  "type": "faq",
+  "title": "被狗、貓或野生動物咬傷該怎麼辦？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2013-08-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.rabies"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "請記住「一沖二認三送四觀察」： 沖：立即以肥皂及大量清水沖洗傷口 15 分鐘，再以優碘消毒。 認：記住動物的外觀特徵與出沒地點。 送：儘速就醫，由醫師評估是否需要接種狂犬病疫苗與免疫球蛋白。 觀察：若能安全留置動物，隔離觀察 10 天。",
+  "question": "被狗、貓或野生動物咬傷該怎麼辦？",
+  "answerMarkdown": "請記住「**一沖二認三送四觀察**」：\n\n1. **沖**：立即以肥皂及大量清水沖洗傷口 15 分鐘，再以優碘消毒。\n2. **認**：記住動物的外觀特徵與出沒地點。\n3. **送**：儘速就醫，由醫師評估是否需要接種狂犬病疫苗與免疫球蛋白。\n4. **觀察**：若能安全留置動物，隔離觀察 10 天。\n\n在台灣被野生鼬獾、白鼻心咬傷，或在國外被動物咬傷，都應就醫評估暴露後接種。",
+  "tasks": [
+    "symptoms"
+  ],
+  "basedOn": [
+    "disease.rabies"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/w8q-t_VbPbc0A648Kg2DkC"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 23 處（mso 樣式 19、Mso 類別 6、命名空間標籤 2）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「狂犬病／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（狂犬病）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「被狗、貓或野生動物咬傷該怎麼辦？」→ symptoms"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/w8q-t_VbPbc0A648Kg2DkC",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.rabies-bite",
+      "disease.rabies"
+    ]
+  }
+}

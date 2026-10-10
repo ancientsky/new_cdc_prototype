@@ -1,0 +1,14 @@
+{
+  "generatedAt": "2026-10-10T13:35:34.054Z",
+  "mode": "prototype",
+  "inlineScripts": 10,
+  "headers": {
+    "Content-Security-Policy": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-p5rAmtvaFNqn5qc5BKQjx1ph+itRW/4zVS+Xwuvucew=' 'sha256-6yctnoyIZjtZMDFyrBqkUA0M2WUaX+vg9uWGZ7u9ZqA=' 'sha256-e1uG94Iq45lN1B/Fkl7hV7SbzMpgvaNbcJSdI5x8aa0=' 'sha256-rQp4V1V7a9txrAZMmy8nF3b99eTeYScw0g1bvpYxNVY=' 'sha256-F55f8eDfkt0dmeP2PyrvD8sYxv7cqRkCcCrsPgSkjWI=' 'sha256-tQYwR5VoNbhWTeY5vYc+k8jKYDP7hGXSGWtgLUl9xjQ=' 'sha256-QAmLT4BQqbA3FJzsO8fm/Wzp90aaxAuMcvaE4NPMcIg=' 'sha256-+Ld0EbaxEGkXdPuOEcVakyv04txCizMak86upuaa9Yg=' 'sha256-JLWux06iTjsWwlLMjuohZSOhfeRppNcP2jpuaEMgT3E=' 'sha256-IAvs31ertpjo0iZNAxsFV0ksFUH1LueHHCg4l/x7iAY='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://i.ytimg.com; font-src 'self'; connect-src 'self' https://api.anthropic.com; frame-src https://ancientsky.github.io https://www.youtube-nocookie.com https://www.youtube.com; frame-ancestors 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "SAMEORIGIN",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()",
+    "Cross-Origin-Opener-Policy": "same-origin"
+  }
+}

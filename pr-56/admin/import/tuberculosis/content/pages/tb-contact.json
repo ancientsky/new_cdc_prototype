@@ -1,0 +1,54 @@
+{
+  "id": "page.tb-contact",
+  "type": "page",
+  "title": "接觸者檢查",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2019-01-15",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "密切接觸者（一天 8 小時或累計 40 小時）確診後 1 個月內胸部 X 光與 IGRA，滿 12 個月再照胸部 X 光。",
+  "slug": "tb-contact",
+  "bodyMarkdown": "密切接觸者（一天 8 小時或累計 40 小時）確診後 1 個月內胸部 X 光與 IGRA，滿 12 個月再照胸部 X 光。\n\n衛生所會主動聯絡與病人同住或密切接觸的人，安排**接觸者檢查**，費用由公費支應：\n\n1. 病人確診後 **1 個月內**照第一次胸部 X 光，並依年齡與接觸情形抽血做**丙型干擾素釋放試驗（IGRA）**，檢查有沒有潛伏結核感染。\n2. 第一次正常者，在病人確診滿 **12 個月**時再照一次胸部 X 光。\n3. 檢查期間若出現咳嗽超過 2 週等症狀，請不必等通知，直接就醫並告知接觸史。\n\nIGRA 陽性且排除發病者，建議接受潛伏結核感染治療。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/fUCzVjg4lAfhr5qje-Wbco"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 22 處（mso 樣式 16、Mso 類別 6、命名空間標籤 3）"
+      },
+      {
+        "code": "target-type-differs",
+        "severity": "info",
+        "message": "對應的新站內容是 faq.tb-contact-screening（faq），草稿以 page 暫存，請比對後改建為 faq"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/fUCzVjg4lAfhr5qje-Wbco",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.tb-contact-screening"
+    ]
+  }
+}

@@ -1,0 +1,932 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/report/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "1efac26bb4f8",
+    "lastModified": "2026-10-01",
+    "count": 5,
+    "diseases": 72
+  },
+  "data": [
+    {
+      "legalCategory": 1,
+      "label": "第一類",
+      "diseases": [
+        {
+          "id": "disease.smallpox",
+          "slug": "smallpox",
+          "name": "天花",
+          "nameEn": "Smallpox",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.rabies",
+          "slug": "rabies",
+          "name": "狂犬病",
+          "nameEn": "Rabies",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": true,
+          "path": "/diseases/rabies/",
+          "labtestId": "labtest.rabies",
+          "labtestPath": "/lab/rabies/",
+          "labtestIds": [
+            "labtest.rabies"
+          ]
+        },
+        {
+          "id": "disease.plague",
+          "slug": "plague",
+          "name": "鼠疫",
+          "nameEn": "Plague",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.sars",
+          "slug": "sars",
+          "name": "嚴重急性呼吸道症候群",
+          "nameEn": "Severe acute respiratory syndrome (SARS)",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": false,
+          "path": null
+        }
+      ]
+    },
+    {
+      "legalCategory": 2,
+      "label": "第二類",
+      "diseases": [
+        {
+          "id": "disease.polio-afp",
+          "slug": "polio-afp",
+          "name": "小兒麻痺症／急性無力肢體麻痺",
+          "nameEn": "Poliomyelitis / Acute flaccid paralysis",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.diphtheria",
+          "slug": "diphtheria",
+          "name": "白喉",
+          "nameEn": "Diphtheria",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.mdr-tb",
+          "slug": "mdr-tb",
+          "name": "多重抗藥性結核病",
+          "nameEn": "Multidrug-resistant tuberculosis",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.west-nile-fever",
+          "slug": "west-nile-fever",
+          "name": "西尼羅熱",
+          "nameEn": "West Nile fever",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.chikungunya",
+          "slug": "chikungunya",
+          "name": "屈公病",
+          "nameEn": "Chikungunya fever",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": true,
+          "path": "/diseases/chikungunya/",
+          "caseDefinitionDoc": "doc.case-definition-dengue",
+          "caseDefinitionCurrentId": "doc.case-definition-dengue.2026-01-01",
+          "caseDefinitionPath": "/documents/case-definition-dengue.2026-01-01/",
+          "labtestId": "labtest.chikungunya",
+          "labtestPath": "/lab/chikungunya/",
+          "labtestIds": [
+            "labtest.chikungunya"
+          ]
+        },
+        {
+          "id": "disease.amoebic-dysentery",
+          "slug": "amoebic-dysentery",
+          "name": "阿米巴性痢疾",
+          "nameEn": "Amoebic dysentery",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.hepatitis-a",
+          "slug": "hepatitis-a",
+          "name": "急性病毒性A型肝炎",
+          "nameEn": "Acute viral hepatitis A",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": true,
+          "path": "/diseases/hepatitis-a/",
+          "labtestId": "labtest.hepatitis-a",
+          "labtestPath": "/lab/hepatitis-a/",
+          "labtestIds": [
+            "labtest.hepatitis-a"
+          ]
+        },
+        {
+          "id": "disease.epidemic-typhus",
+          "slug": "epidemic-typhus",
+          "name": "流行性斑疹傷寒",
+          "nameEn": "Epidemic typhus",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.meningococcal-meningitis",
+          "slug": "meningococcal-meningitis",
+          "name": "流行性腦脊髓膜炎",
+          "nameEn": "Meningococcal meningitis",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.anthrax",
+          "slug": "anthrax",
+          "name": "炭疽病",
+          "nameEn": "Anthrax",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.zika",
+          "slug": "zika",
+          "name": "茲卡病毒感染症",
+          "nameEn": "Zika virus infection",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.paratyphoid-fever",
+          "slug": "paratyphoid-fever",
+          "name": "副傷寒",
+          "nameEn": "Paratyphoid fever",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.shigellosis",
+          "slug": "shigellosis",
+          "name": "桿菌性痢疾",
+          "nameEn": "Shigellosis",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": false,
+          "path": null,
+          "labtestId": "labtest.shigellosis",
+          "labtestPath": "/lab/shigellosis/",
+          "labtestIds": [
+            "labtest.shigellosis"
+          ]
+        },
+        {
+          "id": "disease.measles",
+          "slug": "measles",
+          "name": "麻疹",
+          "nameEn": "Measles",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": true,
+          "path": "/diseases/measles/",
+          "caseDefinitionDoc": "doc.case-definition-measles",
+          "caseDefinitionCurrentId": "doc.case-definition-measles.2024-01-01",
+          "caseDefinitionPath": "/documents/case-definition-measles.2024-01-01/",
+          "labtestId": "labtest.measles",
+          "labtestPath": "/lab/measles/",
+          "labtestIds": [
+            "labtest.measles"
+          ]
+        },
+        {
+          "id": "disease.dengue",
+          "slug": "dengue",
+          "name": "登革熱",
+          "nameEn": "Dengue fever",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": true,
+          "path": "/diseases/dengue/",
+          "caseDefinitionDoc": "doc.case-definition-dengue",
+          "caseDefinitionCurrentId": "doc.case-definition-dengue.2026-01-01",
+          "caseDefinitionPath": "/documents/case-definition-dengue.2026-01-01/",
+          "labtestId": "labtest.dengue",
+          "labtestPath": "/lab/dengue/",
+          "labtestIds": [
+            "labtest.dengue"
+          ]
+        },
+        {
+          "id": "disease.typhoid-fever",
+          "slug": "typhoid-fever",
+          "name": "傷寒",
+          "nameEn": "Typhoid fever",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.ehec",
+          "slug": "ehec",
+          "name": "腸道出血性大腸桿菌感染症",
+          "nameEn": "Enterohemorrhagic E. coli infection",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.hantavirus",
+          "slug": "hantavirus",
+          "name": "漢他病毒症候群",
+          "nameEn": "Hantavirus syndrome",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.malaria",
+          "slug": "malaria",
+          "name": "瘧疾",
+          "nameEn": "Malaria",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": true,
+          "path": "/diseases/malaria/",
+          "labtestId": "labtest.malaria",
+          "labtestPath": "/lab/malaria/",
+          "labtestIds": [
+            "labtest.malaria"
+          ]
+        },
+        {
+          "id": "disease.rubella",
+          "slug": "rubella",
+          "name": "德國麻疹",
+          "nameEn": "Rubella",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": true,
+          "path": "/diseases/rubella/",
+          "labtestId": "labtest.rubella",
+          "labtestPath": "/lab/rubella/",
+          "labtestIds": [
+            "labtest.rubella"
+          ]
+        },
+        {
+          "id": "disease.cholera",
+          "slug": "cholera",
+          "name": "霍亂",
+          "nameEn": "Cholera",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.mpox",
+          "slug": "mpox",
+          "name": "M痘",
+          "nameEn": "Mpox",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": true,
+          "path": "/diseases/mpox/",
+          "labtestId": "labtest.mpox",
+          "labtestPath": "/lab/mpox/",
+          "labtestIds": [
+            "labtest.mpox"
+          ]
+        }
+      ]
+    },
+    {
+      "legalCategory": 3,
+      "label": "第三類",
+      "diseases": [
+        {
+          "id": "disease.hiv",
+          "slug": "hiv",
+          "name": "人類免疫缺乏病毒感染",
+          "nameEn": "HIV infection",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": true,
+          "path": "/diseases/hiv/",
+          "labtestId": "labtest.hiv",
+          "labtestPath": "/lab/hiv/",
+          "labtestIds": [
+            "labtest.hiv"
+          ]
+        },
+        {
+          "id": "disease.japanese-encephalitis",
+          "slug": "japanese-encephalitis",
+          "name": "日本腦炎",
+          "nameEn": "Japanese encephalitis",
+          "legalName": null,
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": true,
+          "path": "/diseases/japanese-encephalitis/",
+          "labtestId": "labtest.japanese-encephalitis",
+          "labtestPath": "/lab/japanese-encephalitis/",
+          "labtestIds": [
+            "labtest.japanese-encephalitis"
+          ]
+        },
+        {
+          "id": "disease.congenital-syphilis",
+          "slug": "congenital-syphilis",
+          "name": "先天性梅毒",
+          "nameEn": "Congenital syphilis",
+          "legalName": null,
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.congenital-rubella-syndrome",
+          "slug": "congenital-rubella-syndrome",
+          "name": "先天性德國麻疹症候群",
+          "nameEn": "Congenital rubella syndrome",
+          "legalName": null,
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.pertussis",
+          "slug": "pertussis",
+          "name": "百日咳",
+          "nameEn": "Pertussis",
+          "legalName": null,
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": true,
+          "path": "/diseases/pertussis/",
+          "labtestId": "labtest.pertussis",
+          "labtestPath": "/lab/pertussis/",
+          "labtestIds": [
+            "labtest.pertussis"
+          ]
+        },
+        {
+          "id": "disease.hib",
+          "slug": "hib",
+          "name": "侵襲性b型嗜血桿菌感染症",
+          "nameEn": "Invasive Haemophilus influenzae type b infection",
+          "legalName": null,
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.aids",
+          "slug": "aids",
+          "name": "後天免疫缺乏症候群",
+          "nameEn": "Acquired immunodeficiency syndrome (AIDS)",
+          "legalName": null,
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.hepatitis-unspecified",
+          "slug": "hepatitis-unspecified",
+          "name": "急性病毒性肝炎未定型",
+          "nameEn": "Acute viral hepatitis, unspecified",
+          "legalName": null,
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.hepatitis-b",
+          "slug": "hepatitis-b",
+          "name": "急性病毒性B型肝炎",
+          "nameEn": "Acute viral hepatitis B",
+          "legalName": null,
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.hepatitis-c",
+          "slug": "hepatitis-c",
+          "name": "急性病毒性C型肝炎",
+          "nameEn": "Acute viral hepatitis C",
+          "legalName": null,
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.hepatitis-d",
+          "slug": "hepatitis-d",
+          "name": "急性病毒性D型肝炎",
+          "nameEn": "Acute viral hepatitis D",
+          "legalName": null,
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.hepatitis-e",
+          "slug": "hepatitis-e",
+          "name": "急性病毒性E型肝炎",
+          "nameEn": "Acute viral hepatitis E",
+          "legalName": null,
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.mumps",
+          "slug": "mumps",
+          "name": "流行性腮腺炎",
+          "nameEn": "Mumps",
+          "legalName": null,
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.tetanus",
+          "slug": "tetanus",
+          "name": "破傷風",
+          "nameEn": "Tetanus",
+          "legalName": null,
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.legionellosis",
+          "slug": "legionellosis",
+          "name": "退伍軍人病",
+          "nameEn": "Legionnaires' disease",
+          "legalName": null,
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.syphilis",
+          "slug": "syphilis",
+          "name": "梅毒",
+          "nameEn": "Syphilis",
+          "legalName": null,
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.gonorrhea",
+          "slug": "gonorrhea",
+          "name": "淋病",
+          "nameEn": "Gonorrhoea",
+          "legalName": null,
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.tuberculosis",
+          "slug": "tuberculosis",
+          "name": "結核病",
+          "nameEn": "Tuberculosis",
+          "legalName": null,
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": true,
+          "path": "/diseases/tuberculosis/",
+          "caseDefinitionDoc": "doc.tb-case-definition",
+          "caseDefinitionCurrentId": "doc.tb-case-definition.2024-01-01",
+          "caseDefinitionPath": "/documents/tb-case-definition.2024-01-01/",
+          "labtestId": "labtest.tuberculosis",
+          "labtestPath": "/lab/tuberculosis/",
+          "labtestIds": [
+            "labtest.tuberculosis"
+          ]
+        },
+        {
+          "id": "disease.neonatal-tetanus",
+          "slug": "neonatal-tetanus",
+          "name": "新生兒破傷風",
+          "nameEn": "Neonatal tetanus",
+          "legalName": null,
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.enterovirus",
+          "slug": "enterovirus",
+          "name": "腸病毒",
+          "nameEn": "Enterovirus infection",
+          "legalName": "腸病毒感染併發重症",
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": true,
+          "path": "/diseases/enterovirus/",
+          "labtestId": "labtest.enterovirus",
+          "labtestPath": "/lab/enterovirus/",
+          "labtestIds": [
+            "labtest.enterovirus"
+          ]
+        },
+        {
+          "id": "disease.leprosy",
+          "slug": "leprosy",
+          "name": "漢生病",
+          "nameEn": "Hansen's disease (leprosy)",
+          "legalName": null,
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": false,
+          "path": null
+        }
+      ]
+    },
+    {
+      "legalCategory": 4,
+      "label": "第四類",
+      "diseases": [
+        {
+          "id": "disease.botulism",
+          "slug": "botulism",
+          "name": "肉毒桿菌中毒",
+          "nameEn": "Botulism",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.herpes-b",
+          "slug": "herpes-b",
+          "name": "疱疹B病毒感染症",
+          "nameEn": "Herpes B virus infection",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.toxoplasmosis",
+          "slug": "toxoplasmosis",
+          "name": "弓形蟲感染症",
+          "nameEn": "Toxoplasmosis",
+          "legalName": null,
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.varicella",
+          "slug": "varicella",
+          "name": "水痘併發症",
+          "nameEn": "Varicella with complications",
+          "legalName": null,
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": true,
+          "path": "/diseases/varicella/"
+        },
+        {
+          "id": "disease.brucellosis",
+          "slug": "brucellosis",
+          "name": "布氏桿菌病",
+          "nameEn": "Brucellosis",
+          "legalName": null,
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.endemic-typhus",
+          "slug": "endemic-typhus",
+          "name": "地方性斑疹傷寒",
+          "nameEn": "Endemic (murine) typhus",
+          "legalName": null,
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.listeriosis",
+          "slug": "listeriosis",
+          "name": "李斯特菌症",
+          "nameEn": "Listeriosis",
+          "legalName": null,
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.tularemia",
+          "slug": "tularemia",
+          "name": "兔熱病",
+          "nameEn": "Tularaemia",
+          "legalName": null,
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.ipd",
+          "slug": "ipd",
+          "name": "侵襲性肺炎鏈球菌感染症",
+          "nameEn": "Invasive pneumococcal disease",
+          "legalName": null,
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.influenza",
+          "slug": "influenza",
+          "name": "流感",
+          "nameEn": "Influenza",
+          "legalName": "流感併發重症",
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": true,
+          "path": "/diseases/influenza/",
+          "labtestId": "labtest.influenza",
+          "labtestPath": "/lab/influenza/",
+          "labtestIds": [
+            "labtest.influenza"
+          ]
+        },
+        {
+          "id": "disease.scrub-typhus",
+          "slug": "scrub-typhus",
+          "name": "恙蟲病",
+          "nameEn": "Scrub typhus",
+          "legalName": null,
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.lyme-disease",
+          "slug": "lyme-disease",
+          "name": "萊姆病",
+          "nameEn": "Lyme disease",
+          "legalName": null,
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.covid-19",
+          "slug": "covid-19",
+          "name": "新冠併發重症",
+          "nameEn": "COVID-19 with severe complications",
+          "legalName": "新冠併發重症",
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": true,
+          "path": "/diseases/covid-19/",
+          "labtestId": "labtest.covid-19",
+          "labtestPath": "/lab/covid-19/",
+          "labtestIds": [
+            "labtest.covid-19"
+          ]
+        },
+        {
+          "id": "disease.leptospirosis",
+          "slug": "leptospirosis",
+          "name": "鉤端螺旋體病",
+          "nameEn": "Leptospirosis",
+          "legalName": null,
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.melioidosis",
+          "slug": "melioidosis",
+          "name": "類鼻疽",
+          "nameEn": "Melioidosis",
+          "legalName": null,
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.q-fever",
+          "slug": "q-fever",
+          "name": "Q熱",
+          "nameEn": "Q fever",
+          "legalName": null,
+          "notifyWithinHours": 168,
+          "notifyLabel": "一週內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.cjd",
+          "slug": "cjd",
+          "name": "庫賈氏病",
+          "nameEn": "Creutzfeldt-Jakob disease",
+          "legalName": null,
+          "notifyWithinHours": 720,
+          "notifyLabel": "一個月內",
+          "hasPage": false,
+          "path": null
+        }
+      ]
+    },
+    {
+      "legalCategory": 5,
+      "label": "第五類",
+      "diseases": [
+        {
+          "id": "disease.mers",
+          "slug": "mers",
+          "name": "中東呼吸症候群冠狀病毒感染症",
+          "nameEn": "Middle East respiratory syndrome (MERS)",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.nipah",
+          "slug": "nipah",
+          "name": "立百病毒感染症",
+          "nameEn": "Nipah virus infection",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.ebola",
+          "slug": "ebola",
+          "name": "伊波拉病毒感染",
+          "nameEn": "Ebola virus disease",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.lassa-fever",
+          "slug": "lassa-fever",
+          "name": "拉薩熱",
+          "nameEn": "Lassa fever",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.marburg",
+          "slug": "marburg",
+          "name": "馬堡病毒出血熱",
+          "nameEn": "Marburg virus disease",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.rift-valley-fever",
+          "slug": "rift-valley-fever",
+          "name": "裂谷熱",
+          "nameEn": "Rift Valley fever",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.yellow-fever",
+          "slug": "yellow-fever",
+          "name": "黃熱病",
+          "nameEn": "Yellow fever",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": false,
+          "path": null
+        },
+        {
+          "id": "disease.novel-influenza-a",
+          "slug": "novel-influenza-a",
+          "name": "新型A型流感",
+          "nameEn": "Novel influenza A virus infection",
+          "legalName": null,
+          "notifyWithinHours": 24,
+          "notifyLabel": "24 小時內",
+          "hasPage": false,
+          "path": null
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-TW" dir="ltr" data-base="/new_cdc_prototype/preview/pr-56" data-lang-path="" data-view="admin">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>公告管理（內容管理後台）</title>
+<meta name="description" content="公告管理：疾管署 AI-ready 新官網原型之內容管理後台示範頁">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/tokens.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/base.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/components.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/admin.css">
+</head>
+<body class="adm " data-today="2026-10-01" data-admin-page="notices">
+<a class="skip-link" href="#main">跳到主要內容</a>
+<header class="adm-top"><div class="adm-top__in">
+  <a class="adm-brand" href="/new_cdc_prototype/preview/pr-56/admin/"><strong>內容管理後台</strong><span>疾管署 AI-ready 新官網原型 · 示範</span></a>
+  <div class="adm-who" id="adm-who">
+    <span class="adm-who__id"><span class="adm-who__name" id="adm-who-name">急性傳染病組 · 承辦人</span><span class="adm-who__role" id="adm-who-role"></span></span>
+    <label for="adm-unit"><span class="adm-who__lbl">單位視角</span>
+      <select id="adm-unit" aria-describedby="adm-who-name"><option value="unit.pr" >公關室</option><option value="unit.it" >資訊室</option><option value="unit.oasis" >AI推動辦公室</option><option value="unit.epidemic-intelligence" >疫情中心</option><option value="unit.acute-infectious" selected>急性傳染病組</option><option value="unit.chronic-infectious" >慢性傳染病組</option><option value="unit.preparedness" >新興傳染病整備組</option><option value="unit.infection-control" >感染管制及生物安全組</option><option value="unit.quarantine" >檢疫組</option><option value="unit.lab" >檢驗及疫苗研製中心</option><option value="unit.planning" >企劃組</option><option value="unit.secretariat" >秘書室</option><option value="unit.personnel" >人事室</option><option value="unit.ethics" >政風室</option><option value="unit.preventive-medicine" >預防醫學辦公室</option><option value="unit.accounting" >主計室</option><option value="unit.regional-taipei" >臺北區管制中心</option><option value="unit.regional-northern" >北區管制中心</option><option value="unit.regional-central" >中區管制中心</option><option value="unit.regional-southern" >南區管制中心</option><option value="unit.regional-kaoping" >高屏區管制中心</option><option value="unit.regional-eastern" >東區管制中心</option><option value="unit.governance-committee" >資料治理委員會</option><option value="all">全部單位（總覽）</option></select>
+    </label>
+    <button type="button" class="adm-who__logout" id="adm-logout">登出</button>
+  </div>
+</div></header>
+<nav class="adm-nav" aria-label="後台導覽"><ul><li><a href="/new_cdc_prototype/preview/pr-56/admin/mine/" >我的內容</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/publish/" >上架新內容</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/review/" >複核區<span class="adm-count" data-count="review" aria-label="0 項">0</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/due/" >審閱到期<span class="adm-count" data-count="due" aria-label="18 項">18</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/catalog/" >資料目錄</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/notices/" aria-current="page">公告</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/jobs/" >人才招募<span class="adm-count" data-count="jobs" aria-label="1 項">1</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/tenders/" >採購<span class="adm-count" data-count="tenders" aria-label="1 項">1</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/media/" >影音<span class="adm-count" data-count="media" aria-label="1 項">1</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/links/" >連結</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/migration/" >移轉進度<span class="adm-count" data-count="migration" aria-label="1248 項">1248</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/import/" >舊站匯入</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/glossary/" >詞彙主檔</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/situation/" >疫情發布</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/bulletin/edit/" >疫情報導</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/todos/" >連動待辦<span class="adm-count" data-count="todos" aria-label="112 項">112</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/ai-status/" >AI 開關</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/reports/" >回報</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/eval/" >評估</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/" >儀表板</a></li></ul></nav>
+<div class="adm-demo" role="note">示範原型：此後台不連接任何正式系統；登入與所有操作只存在你的瀏覽器（localStorage），正式環境以機關 SSO 登入、一律走 Git Pull Request。</div>
+<main id="main" class="adm-main" tabindex="-1">
+<header class="adm-pagehead"><h1>公告管理</h1><p class="adm-pagehead__what">人才招募、採購公告與其他訊息的一頁總覽：每則的截止倒數、字號、名額或預算、報名網址。已截止而尚未封存的會被列出，建議封存。</p><p class="adm-pagehead__flow"><strong>正式環境：</strong>公告就是 news 型別（newsType 為 recruit／procurement／other）。新增＝在 content/news/ 加檔並開 PR；封存＝把 status 改成 archived 再開 PR。截止當天不需要任何人動手。</p></header>
+<div class="adm-box adm-box--note" role="note"><strong>截止後系統自動標「已截止」並退出首頁，無需人工</strong>
+  公告有 <code>deadlineAt</code>：建置時若 <code>deadlineAt &lt; 今日</code>，引擎自動設 <code>gov.closed</code>、生命週期標籤顯示「已截止」、從首頁與 <code>/notices/</code> 進行中列表移除（保留在「已截止」頁籤），也<strong>不會</strong>產生待辦。下方「建議封存」只是年度清理：久遠的已截止公告改 <code>status: archived</code>，讓目錄更乾淨。</div>
+
+<div class="adm-statrow" style="margin-top:var(--sp-4)">
+  <div class="adm-stat adm-stat--info"><p class="adm-stat__label">進行中</p><p class="adm-stat__value">3</p><p class="adm-stat__note">已發布且未截止</p></div>
+  <div class="adm-stat adm-stat--warn"><p class="adm-stat__label">7 日內截止</p><p class="adm-stat__value">1</p><p class="adm-stat__note">首頁倒數提醒</p></div>
+  <div class="adm-stat adm-stat--ok"><p class="adm-stat__label">已截止未封存</p><p class="adm-stat__value" id="n-closed-un">0</p><p class="adm-stat__note">建議封存（示範）</p></div>
+  <div class="adm-stat"><p class="adm-stat__label">合計</p><p class="adm-stat__value">3</p><p class="adm-stat__note">三類公告</p></div>
+</div>
+
+<section class="adm-card" aria-labelledby="n-h"><h2 id="n-h">公告列表</h2>
+  <div class="adm-filters">
+    <div class="adm-field"><label for="n-unit">單位</label><select id="n-unit"><option value="all">全部單位</option><option value="unit.pr" >公關室</option><option value="unit.it" >資訊室</option><option value="unit.oasis" >AI推動辦公室</option><option value="unit.epidemic-intelligence" >疫情中心</option><option value="unit.acute-infectious" >急性傳染病組</option><option value="unit.chronic-infectious" >慢性傳染病組</option><option value="unit.preparedness" >新興傳染病整備組</option><option value="unit.infection-control" >感染管制及生物安全組</option><option value="unit.quarantine" >檢疫組</option><option value="unit.lab" >檢驗及疫苗研製中心</option><option value="unit.planning" >企劃組</option><option value="unit.secretariat" >秘書室</option><option value="unit.personnel" >人事室</option><option value="unit.ethics" >政風室</option><option value="unit.preventive-medicine" >預防醫學辦公室</option><option value="unit.accounting" >主計室</option><option value="unit.regional-taipei" >臺北區管制中心</option><option value="unit.regional-northern" >北區管制中心</option><option value="unit.regional-central" >中區管制中心</option><option value="unit.regional-southern" >南區管制中心</option><option value="unit.regional-kaoping" >高屏區管制中心</option><option value="unit.regional-eastern" >東區管制中心</option><option value="unit.governance-committee" >資料治理委員會</option></select></div>
+    <div class="adm-field"><label for="n-state">狀態</label><select id="n-state"><option value="">全部</option><option value="open">進行中</option><option value="soon">7 日內截止</option><option value="closed">已截止</option><option value="closed-un">已截止未封存</option></select></div>
+    <a class="adm-btn adm-btn--ghost" href="/new_cdc_prototype/preview/pr-56/admin/publish/?type=recruit">新增人才招募</a>
+    <a class="adm-btn adm-btn--ghost" href="/new_cdc_prototype/preview/pr-56/admin/publish/?type=procurement">新增採購公告</a>
+    <button type="button" class="adm-btn adm-btn--ghost" id="n-csv">匯出 CSV</button>
+    <button type="button" class="adm-btn adm-btn--ghost" id="n-json">匯出封存建議 JSON</button>
+    <span class="adm-count-note" id="n-note" aria-live="polite"></span>
+  </div>
+  <div class="adm-tabs" role="tablist" aria-label="公告類型"><button type="button" role="tab" id="ntab-recruit" aria-controls="npanel-recruit" aria-selected="true" tabindex="0" data-kind="recruit">人才招募<span class="adm-count" data-kcount="recruit">0</span></button><button type="button" role="tab" id="ntab-procurement" aria-controls="npanel-procurement" aria-selected="false" tabindex="-1" data-kind="procurement">採購公告<span class="adm-count" data-kcount="procurement">0</span></button><button type="button" role="tab" id="ntab-other" aria-controls="npanel-other" aria-selected="false" tabindex="-1" data-kind="other">其他訊息<span class="adm-count" data-kcount="other">3</span></button></div>
+  <div role="tabpanel" id="npanel-recruit" aria-labelledby="ntab-recruit" data-panel="recruit" >
+    <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><caption>人才招募；前台頁面 <a href="/new_cdc_prototype/preview/pr-56/notices/">/notices/</a></caption>
+      <thead><tr><th scope="col">標題／字號</th><th scope="col">截止日</th><th scope="col">倒數</th><th scope="col">名額</th><th scope="col">報名／投標</th><th scope="col">狀態</th><th scope="col">處理</th></tr></thead>
+      <tbody></tbody></table></div>
+    <p class="adm-empty" data-empty >目前沒有「人才招募」公告。</p></div><div role="tabpanel" id="npanel-procurement" aria-labelledby="ntab-procurement" data-panel="procurement" hidden>
+    <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><caption>採購公告；前台頁面 <a href="/new_cdc_prototype/preview/pr-56/notices/">/notices/</a></caption>
+      <thead><tr><th scope="col">標題／字號</th><th scope="col">截止日</th><th scope="col">倒數</th><th scope="col">預算</th><th scope="col">報名／投標</th><th scope="col">狀態</th><th scope="col">處理</th></tr></thead>
+      <tbody></tbody></table></div>
+    <p class="adm-empty" data-empty >目前沒有「採購公告」公告。</p></div><div role="tabpanel" id="npanel-other" aria-labelledby="ntab-other" data-panel="other" hidden>
+    <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><caption>其他訊息；前台頁面 <a href="/new_cdc_prototype/preview/pr-56/notices/">/notices/</a></caption>
+      <thead><tr><th scope="col">標題／字號</th><th scope="col">截止日</th><th scope="col">倒數</th><th scope="col">備註</th><th scope="col">報名／投標</th><th scope="col">狀態</th><th scope="col">處理</th></tr></thead>
+      <tbody><tr data-id="news.2026-09-30-system-maintenance" data-owner="unit.it" data-closed="0" data-archived="0" data-soon="1" data-open="1">
+        <td><a href="/new_cdc_prototype/preview/pr-56/news/2026-09-30-system-maintenance/">10 月 3 日晚間官網與傳染病通報系統例行維護</a><div class="adm-muted"><code>news.2026-09-30-system-maintenance</code></div></td>
+        <td>2026-10-04</td>
+        <td><span class="adm-badge adm-badge--warn">剩 3 日</span></td>
+        <td>—</td>
+        <td><span class="adm-muted">—</span></td>
+        <td><span class="adm-badge adm-badge--ok">進行中</span></td>
+        <td data-act><span class="adm-muted">—</span></td></tr><tr data-id="news.2026-09-26-open-house" data-owner="unit.pr" data-closed="0" data-archived="0" data-soon="0" data-open="1">
+        <td><a href="/new_cdc_prototype/preview/pr-56/news/2026-09-26-open-house/">署慶系列活動：防疫科學開放日 10 月 24 日登場</a><div class="adm-muted"><code>news.2026-09-26-open-house</code></div></td>
+        <td>2026-10-17</td>
+        <td><span class="adm-badge adm-badge--ok">剩 16 日</span></td>
+        <td>—</td>
+        <td><span class="adm-muted">—</span></td>
+        <td><span class="adm-badge adm-badge--ok">進行中</span></td>
+        <td data-act><span class="adm-muted">—</span></td></tr><tr data-id="news.2026-09-28-parking-construction" data-owner="unit.planning" data-closed="0" data-archived="0" data-soon="0" data-open="1">
+        <td><a href="/new_cdc_prototype/preview/pr-56/news/2026-09-28-parking-construction/">林森南路辦公區停車場施工，10 月 5 日至 11 月 30 日暫停開放</a><div class="adm-muted"><code>news.2026-09-28-parking-construction</code></div></td>
+        <td>2026-11-30</td>
+        <td><span class="adm-badge adm-badge--ok">剩 60 日</span></td>
+        <td>—</td>
+        <td><span class="adm-muted">—</span></td>
+        <td><span class="adm-badge adm-badge--ok">進行中</span></td>
+        <td data-act><span class="adm-muted">—</span></td></tr></tbody></table></div>
+    <p class="adm-empty" data-empty hidden>目前沒有「其他訊息」公告。</p></div>
+</section>
+<script type="application/json" id="adm-notices-data">{"today":"2026-10-01","rows":[{"id":"news.2026-09-30-system-maintenance","title":"10 月 3 日晚間官網與傳染病通報系統例行維護","newsType":"other","deadlineAt":"2026-10-04","refNo":"","applyUrl":"","positions":null,"budgetNtd":null,"status":"published","closed":false,"days":3,"owner":"unit.it"},{"id":"news.2026-09-26-open-house","title":"署慶系列活動：防疫科學開放日 10 月 24 日登場","newsType":"other","deadlineAt":"2026-10-17","refNo":"","applyUrl":"","positions":null,"budgetNtd":null,"status":"published","closed":false,"days":16,"owner":"unit.pr"},{"id":"news.2026-09-28-parking-construction","title":"林森南路辦公區停車場施工，10 月 5 日至 11 月 30 日暫停開放","newsType":"other","deadlineAt":"2026-11-30","refNo":"","applyUrl":"","positions":null,"budgetNtd":null,"status":"published","closed":false,"days":60,"owner":"unit.planning"}]}</script></main>
+<footer class="adm-foot"><a href="/new_cdc_prototype/preview/pr-56/">回前台首頁</a><a href="/new_cdc_prototype/preview/pr-56/v1/catalog.json">目錄 API（/v1/catalog.json）</a><a href="/new_cdc_prototype/preview/pr-56/guide/">使用說明</a><span>建置日 2026-10-01</span></footer>
+<script type="module" src="/new_cdc_prototype/preview/pr-56/assets/js/admin/common.js"></script>
+<script type="module" src="/new_cdc_prototype/preview/pr-56/assets/js/admin/notices.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "856c9ffabe6f",
+    "lastModified": "2026-09-22"
+  },
+  "data": {
+    "paused": false,
+    "reason": "",
+    "updatedAt": "2026-09-22T09:00:00+08:00",
+    "updatedBy": "unit.oasis",
+    "mode": "extractive",
+    "beta": true,
+    "fallback": "關鍵字搜尋與 1922 人工諮詢"
+  }
+}

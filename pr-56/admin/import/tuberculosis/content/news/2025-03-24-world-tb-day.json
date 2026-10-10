@@ -1,0 +1,61 @@
+{
+  "id": "news.2025-03-24-world-tb-day",
+  "type": "news",
+  "title": "世界結核病日：咳嗽兩週請就醫，接觸者檢查與潛伏感染治療守護家人",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2025-03-24",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "3 月 24 日是世界結核病日。疾病管制署表示，台灣結核病新案數自 2005 年以來已下降超過六成，但仍有長者與糖尿病患者等高風險族群需持續關注。",
+  "newsType": "press",
+  "bodyMarkdown": "3 月 24 日是世界結核病日。疾病管制署表示，台灣結核病新案數自 2005 年以來已下降超過六成，但仍有長者與糖尿病患者等高風險族群需持續關注。\n\n疾管署呼籲，咳嗽超過兩週、有痰、體重減輕或夜間盜汗者，應至胸腔科就醫照胸部 X 光。確診者的家人與密切接觸者請配合衛生所安排的接觸者檢查；檢出潛伏結核感染者，接受 3HP 等短程治療可降低九成以上的發病風險，相關費用由公費支應。\n\n新聞稿全文：[新聞稿（PDF）](/files/news.2025-03-24-world-tb-day/world-tb-day-2025-press.pdf)",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/r-IuRzP7x9VBeDmGKGqejB?typeid=9"
+  ],
+  "assets": [
+    {
+      "file": "world-tb-day-2025-press.pdf",
+      "kind": "attachment",
+      "label": "新聞稿（PDF）",
+      "mime": "application/pdf",
+      "bytes": 730,
+      "sha256": "58e618fe607d7665dabb98345815e28b99e88ccbfcd124319dd10b1e636d9478",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 9 處（mso 樣式 3、Mso 類別 3、命名空間標籤 3）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/r-IuRzP7x9VBeDmGKGqejB?typeid=9",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "news.2025-03-24-world-tb-day"
+    ]
+  }
+}

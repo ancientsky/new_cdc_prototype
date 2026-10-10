@@ -1,0 +1,60 @@
+{
+  "id": "page.influenza-flu-past-seasons",
+  "type": "page",
+  "title": "歷年流感疫苗接種計畫（2020–2024 年度）",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2015-06-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "歷年流感疫苗接種計畫（2020–2024 年度）（歷年資料，僅供查閱）。 2015 年流感宣導海報 2016 年流感宣導海報 2017 年流感宣導海報 2018 年流感宣導海報 2019 年流感宣導海報 2020 年流感宣導海報",
+  "slug": "influenza-flu-past-seasons",
+  "bodyMarkdown": "歷年流感疫苗接種計畫（2020–2024 年度）（歷年資料，僅供查閱）。\n\n- [2015 年流感宣導海報](#)\n- [2016 年流感宣導海報](#)\n- [2017 年流感宣導海報](#)\n- [2018 年流感宣導海報](#)\n- [2019 年流感宣導海報](#)\n- [2020 年流感宣導海報](#)",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/ewfWns-6XlMWzGdtpDFLK1"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.6,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「流感／流感疫苗專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+      },
+      {
+        "code": "list-page",
+        "severity": "info",
+        "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+      },
+      {
+        "code": "old-content",
+        "severity": "info",
+        "message": "最後更新於 2020-12-31（5.8 年前），建議走久遠封存而非上線"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/List/ewfWns-6XlMWzGdtpDFLK1",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

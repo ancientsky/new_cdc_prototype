@@ -1,0 +1,423 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "24aad6de201f",
+    "lastModified": "2026-10-01",
+    "count": 3
+  },
+  "data": [
+    {
+      "id": "banner.2026-flu-vaccine",
+      "type": "banner",
+      "title": "公費流感疫苗 10 月 1 日開打",
+      "image": "/img/banners/2026-flu-vaccine.svg",
+      "imageWide": "/img/banners/2026-flu-vaccine-wide.svg",
+      "imageAlt": "診所裡的長者捲起袖子接種流感疫苗，護理師手持針筒，孫子站在一旁；窗外是秋天的樹與黃葉",
+      "headline": "公費流感疫苗 10 月 1 日開打",
+      "subline": "65 歲以上、幼兒與慢性病患第一階段",
+      "cta": {
+        "label": "查詢接種點",
+        "url": "https://ancientsky.github.io/vaxmap-next/#g=flu"
+      },
+      "startAt": "2026-09-18",
+      "endAt": "2026-11-30",
+      "priority": 1,
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2026-09-18",
+      "reviewedAt": "2026-09-18",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "vaccines"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "vaccines": [
+        "vaccine.influenza"
+      ],
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-18"
+        }
+      },
+      "summary": "公費流感疫苗第一階段 10 月 1 日開打。",
+      "i18n": {
+        "en": {
+          "headline": "Government-funded flu vaccination starts 1 October",
+          "subline": "Phase 1: 65+, young children, chronic conditions",
+          "cta": {
+            "label": "Find a clinic",
+            "url": "https://ancientsky.github.io/vaxmap-next/#g=flu&lang=en"
+          }
+        }
+      },
+      "sourceHash": "6a492567b9dc",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+      "path": "/",
+      "md": null,
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-09-18",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": false,
+        "whitelistTier": null,
+        "whitelistPublic": false,
+        "whitelistReasons": [
+          "not-requested",
+          "type-not-allowed"
+        ],
+        "whitelistReasonLabels": [
+          "未申請進入 AI 白名單",
+          "此內容型別不在白名單政策內"
+        ],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "banner.2026-flu-vaccine",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "campaignStatus": "active",
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "6a492567b9dc",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-18"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "banner.2026-10-enterovirus",
+      "type": "banner",
+      "title": "腸病毒防治：大人回家先洗手",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2026-09-30",
+      "reviewedAt": "2026-09-30",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "symptoms"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-30",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "腸病毒宣導 Banner（2026-10-01 至 2026-11-30）：大人回家先洗手換衣，留意重症前兆。",
+      "keywords": [
+        "腸病毒",
+        "洗手",
+        "宣導"
+      ],
+      "image": "/img/banners/2026-10-enterovirus.svg",
+      "imageWide": "/img/banners/2026-10-enterovirus-wide.svg",
+      "imageAlt": "幼兒園洗手台前，三位小朋友用肥皂搓洗雙手，老師在旁協助，空中飄著泡泡，背景有彩虹",
+      "headline": "家有幼兒，大人回家先洗手換衣",
+      "subline": "肥皂洗手防腸病毒，留意嗜睡、肌躍型抽搐等重症前兆",
+      "cta": {
+        "label": "認識重症前兆",
+        "url": "/diseases/enterovirus/#symptoms"
+      },
+      "startAt": "2026-10-01",
+      "endAt": "2026-11-30",
+      "priority": 2,
+      "i18n": {
+        "en": {
+          "headline": "Young children at home? Wash hands and change clothes first",
+          "subline": "Soap stops enterovirus; watch for drowsiness and myoclonic jerks",
+          "cta": {
+            "label": "Know the warning signs",
+            "url": "/diseases/enterovirus/#symptoms"
+          }
+        }
+      },
+      "sourceHash": "76f46c83bf08",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+      "path": "/",
+      "md": null,
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-09-30",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": false,
+        "whitelistTier": null,
+        "whitelistPublic": false,
+        "whitelistReasons": [
+          "not-requested",
+          "type-not-allowed"
+        ],
+        "whitelistReasonLabels": [
+          "未申請進入 AI 白名單",
+          "此內容型別不在白名單政策內"
+        ],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "banner.2026-10-enterovirus",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "campaignStatus": "active",
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "76f46c83bf08",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-30",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "banner.2026-10-hiv-self-test",
+      "type": "banner",
+      "title": "HIV 匿名篩檢與自我篩檢",
+      "owner": "unit.chronic-infectious",
+      "publishedAt": "2026-10-01",
+      "reviewedAt": "2026-10-01",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "symptoms"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "faq.hiv-test-where"
+      ],
+      "diseases": [
+        "disease.hiv"
+      ],
+      "aiWhitelist": {
+        "requested": false
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "HIV 篩檢宣導 Banner（2026-10-01 至 2026-12-31）：匿名篩檢不需健保卡，也可使用自我篩檢試劑，想知道就去篩。",
+      "keywords": [
+        "HIV",
+        "匿名篩檢",
+        "自我篩檢",
+        "宣導"
+      ],
+      "image": "/img/banners/2026-10-hiv-self-test.svg",
+      "imageWide": "/img/banners/2026-10-hiv-self-test-wide.svg",
+      "imageAlt": "溫暖的諮詢室裡，個管師與民眾在小圓桌兩側的扶手椅上面對面談話，牆上掛著紅絲帶畫框",
+      "headline": "想知道，就去篩",
+      "subline": "HIV 匿名篩檢不需健保卡；也可在家自我篩檢",
+      "cta": {
+        "label": "匿名篩檢在哪裡",
+        "url": "/topics/anonymous-testing/"
+      },
+      "startAt": "2026-10-01",
+      "endAt": "2026-12-31",
+      "priority": 4,
+      "sourceHash": "503409f90568",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+      "path": "/",
+      "md": null,
+      "governance": {
+        "owner": "unit.chronic-infectious",
+        "ownerName": "慢性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-10-01",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": false,
+        "whitelistTier": null,
+        "whitelistPublic": false,
+        "whitelistReasons": [
+          "not-requested",
+          "type-not-allowed"
+        ],
+        "whitelistReasonLabels": [
+          "未申請進入 AI 白名單",
+          "此內容型別不在白名單政策內"
+        ],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "banner.2026-10-hiv-self-test",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "campaignStatus": "active",
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "503409f90568",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    }
+  ]
+}

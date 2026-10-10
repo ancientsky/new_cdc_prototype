@@ -1,0 +1,23 @@
+# Evaluating accuracy, citability and public trust of AI-assisted health Q&A
+
+> 權責單位：Office of AI Strategy, Innovation, and Synergy (OASIS) · 最後審閱：2026-09-01 · 下次審閱：2027-09-01 · 授權：OGDL-1.0 · ID：research.2026-ai-health-qa-accuracy · 年度：2026 · 狀態：planned · 計畫編號：MOHW115-CDC-C-315-000101
+
+Planned 2026 commissioned study evaluating the accuracy, source citation and version correctness of AI health answers, and public trust.
+
+執行單位：某國立大學資訊管理學系暨公共衛生學院（合作）
+
+## 摘要
+
+新官網答案引擎僅引用白名單內容並逐句附來源。本計畫將以第三方角度驗證：
+
+1. 依附錄 D 六指標（Grounding、事實正確、完整、回答率、拒答精確、聲譽安全）重新抽樣評估；
+2. 比較抽取式與生成式模式在**版本題**（如 MMR 1966 年條件）之表現；
+3. 以線上問卷與可用性測試評估民眾對「附來源」答案的信任與理解。
+
+## 研究目標
+
+1. 建立獨立於開發團隊之評估集抽樣方法
+2. 量測版本題與過時內容之誤答率
+3. 提出民眾端來源呈現設計建議
+
+IRB： 受託機構人體研究倫理審查委員會（待送審）

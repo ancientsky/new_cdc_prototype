@@ -1,0 +1,65 @@
+{
+  "id": "faq.tb-dots-what",
+  "type": "faq",
+  "title": "什麼是都治（DOTS）？",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2020-03-24",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "都治（DOTS）是「直接觀察治療」：由經過訓練的都治關懷員每天把藥送到您手上，親眼看著您把藥吞下，並關心副作用與生活狀況，也就是「送藥到手、服藥入口、吞了再走」。",
+  "question": "什麼是都治（DOTS）？",
+  "answerMarkdown": "都治（DOTS）是「直接觀察治療」：由經過訓練的**都治關懷員每天把藥送到您手上，親眼看著您把藥吞下**，並關心副作用與生活狀況，也就是「送藥到手、服藥入口、吞了再走」。\n\n結核病至少要規則服藥 6 個月，中途自行停藥可能復發或產生抗藥性。都治讓病人不會漏藥，是提高治癒率的關鍵；關懷員可配合您的時間與地點送藥，服務免費。",
+  "tasks": [
+    "symptoms"
+  ],
+  "basedOn": [
+    "disease.tuberculosis"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/ZW0TrgKarQJWRWZrMIWzeq"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 85 處（mso 樣式 53、Mso 類別 22、命名空間標籤 16）"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「咳嗽多久要懷疑是結核病？」從答案抽出結構化候選 {\"weeks\":2,\"months\":6}，請確認後保留或刪除"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「咳嗽多久要懷疑是結核病？」→ symptoms；「驗出潛伏結核感染，一定要治療嗎？」→ symptoms；「什麼是都治（DOTS）？」→ symptoms；「家人得了結核病，我需要做什麼檢查？」→ symptoms；「什麼是抗藥性結核病？要怎麼治療？」→ symptoms；「結核病治療要花錢嗎？」→ symptoms；「外籍人士來臺工作或居留，需要做結核病檢查嗎？」→ symptoms；「結核病開始吃藥後，還會傳染給家人嗎？」→ symptoms"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/ZW0TrgKarQJWRWZrMIWzeq",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.tb-dots-what"
+    ]
+  }
+}

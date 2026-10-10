@@ -1,0 +1,1779 @@
+{
+  "format": "cdc-legacy-import-report/1",
+  "batch": "travel",
+  "generatedAt": "2026-10-05T02:30:00Z",
+  "exportedAt": "2026-10-03",
+  "simulated": true,
+  "source": {
+    "dir": "data/legacy-export/travel",
+    "note": "模擬匯出：國際旅遊與健康欄目。依既有新站內容（旅遊醫學門診、黃皮書、疫情建議等級、宣導影片、瘧疾）反推 19 頁：列表 4 頁、國際旅遊處方箋查詢頁（含 231 國下拉）1 頁、國家結果頁 6 頁、內容頁 8 頁；另複製 Q&A 批匯出的國際旅遊常見問答頁 1 頁。列表頁、旅遊醫學門診、國際預防接種及藥物、出國前注意事項的網址 ID 為舊站真實 ID，其餘網址 ID、國家結果頁路徑（/TravelEpidemic/Prescription/，推測的模式）、醫院名單、電話與數字皆為示意，不是舊站的真實資料。正式匯出取代整個目錄即可。",
+    "site": "https://www.cdc.gov.tw"
+  },
+  "rules": {
+    "file": "content/migration/import/_import-rules.json",
+    "version": 10
+  },
+  "manifest": {
+    "id": "migration.travel",
+    "file": "content/migration/travel.json",
+    "synthetic": false,
+    "items": 19,
+    "extends": null,
+    "derivedItems": 0,
+    "derivedCovered": [],
+    "disease": null
+  },
+  "summary": {
+    "pages": 20,
+    "drafts": 13,
+    "mergedPages": 1,
+    "byType": {
+      "page": 8,
+      "service": 2,
+      "dataset": 1,
+      "media": 1,
+      "disease": 1
+    },
+    "byKind": {
+      "page": 4,
+      "disease-block": 1,
+      "generated": 6,
+      "service": 2,
+      "dataset": 1,
+      "faq": 1,
+      "list": 4,
+      "media": 1
+    },
+    "byAction": {
+      "review-before-publish": 4,
+      "merge-into-disease": 1,
+      "skip-generated": 6,
+      "compare-existing": 4,
+      "skip-duplicate": 1,
+      "skip-list": 4
+    },
+    "avgConfidence": 0.92,
+    "needsReview": 0,
+    "existing": 5,
+    "schemaInvalid": 0,
+    "assets": {
+      "total": 1,
+      "attachment": 1,
+      "image": 0,
+      "data": 0,
+      "needsAlt": 0,
+      "noTextLayer": 0
+    },
+    "issues": {
+      "error": 0,
+      "warn": 3,
+      "info": 35
+    },
+    "manifest": {
+      "items": 19,
+      "matched": 19,
+      "missingPages": 0,
+      "derivedItems": 0,
+      "derivedMatched": 0
+    },
+    "generated": 6,
+    "exportedAt": "2026-10-03",
+    "pagesWithoutOutput": 0
+  },
+  "pages": [
+    {
+      "key": "01-after-return",
+      "file": "01-after-return.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/DryBWzb2sUmjb11OHdzvB1",
+        "title": "返國後注意事項",
+        "category": "國際旅遊與健康／旅遊醫學／返國後注意事項",
+        "publishedAt": "2014-09-01",
+        "updatedAt": "2025-12-01",
+        "breadcrumbs": [
+          "首頁",
+          "國際旅遊與健康",
+          "旅遊醫學",
+          "返國後注意事項"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "after-return",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.quarantine",
+      "ownerRule": "國際旅遊與健康",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "page.x-after-return",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/x-after-return.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 9 處（mso 樣式 3、Mso 類別 3、命名空間標籤 3）"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "02-before-departure",
+      "file": "02-before-departure.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/dD0xcwJor_qG8nlP5UiL4g",
+        "title": "出國前注意事項",
+        "category": "國際旅遊與健康／旅遊醫學／出國前注意事項",
+        "publishedAt": "2014-09-01",
+        "updatedAt": "2026-02-11",
+        "breadcrumbs": [
+          "首頁",
+          "國際旅遊與健康",
+          "旅遊醫學",
+          "出國前注意事項"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "before-departure",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.quarantine",
+      "ownerRule": "國際旅遊與健康",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "page.x-before-departure",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/x-before-departure.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 22 處（mso 樣式 18、Mso 類別 6、命名空間標籤 2）"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "03-malaria-prophylaxis",
+      "file": "03-malaria-prophylaxis.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/45jPQ86Qzod4o4BHSGpy8-",
+        "title": "瘧疾預防用藥",
+        "category": "國際旅遊與健康／旅遊醫學／瘧疾預防用藥",
+        "publishedAt": "2019-05-05",
+        "updatedAt": "2026-01-20",
+        "breadcrumbs": [
+          "首頁",
+          "國際旅遊與健康",
+          "旅遊醫學",
+          "瘧疾預防用藥"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "malaria-prophylaxis",
+      "manifestDerived": false,
+      "target": "disease.malaria",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.malaria"
+      ],
+      "owner": "unit.quarantine",
+      "ownerRule": "國際旅遊與健康",
+      "diseases": [
+        "disease.malaria"
+      ],
+      "outputs": [
+        {
+          "id": "disease.malaria",
+          "type": "disease",
+          "role": "merged",
+          "block": "prevention",
+          "file": "content/diseases/malaria.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 15 處（mso 樣式 13、Mso 類別 4、命名空間標籤 1）"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "04-prescription-query",
+      "file": "04-prescription-query.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/9xkojqhoiGk3fT2ih3LhkK",
+        "title": "國際旅遊處方箋",
+        "category": "國際旅遊與健康／旅遊醫學／國際旅遊處方箋",
+        "publishedAt": "2016-05-01",
+        "updatedAt": "2026-09-01",
+        "breadcrumbs": [
+          "首頁",
+          "國際旅遊與健康",
+          "旅遊醫學",
+          "國際旅遊處方箋"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "prescription-query",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.quarantine",
+      "ownerRule": "國際旅遊與健康",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "page.x-prescription-query",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/x-prescription-query.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "dynamic-form",
+          "severity": "warn",
+          "message": "舊頁是查詢表單（231 個選項），新站以功能取代（請在清單填寫去處）；表單控制項不轉入內文"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false,
+        "dynamicForm": {
+          "options": 231
+        }
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "05-rx-br",
+      "file": "05-rx-br.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/TravelEpidemic/Prescription/YZikHlPi2GkInV-mf0C0VR?iso=BR",
+        "title": "國際旅遊處方箋：巴西",
+        "category": "國際旅遊與健康／旅遊醫學／國際旅遊處方箋／巴西",
+        "publishedAt": "2024-01-15",
+        "updatedAt": "2026-06-30",
+        "breadcrumbs": [
+          "首頁",
+          "國際旅遊與健康",
+          "旅遊醫學",
+          "國際旅遊處方箋",
+          "巴西"
+        ],
+        "tab": ""
+      },
+      "pattern": "travel-prescription",
+      "kind": "generated",
+      "type": "page",
+      "manifestKey": "rx-br",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.quarantine",
+      "ownerRule": "國際旅遊與健康",
+      "diseases": [],
+      "outputs": [],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 55 處（mso 樣式 27、Mso 類別 17、命名空間標籤 14）"
+        },
+        {
+          "code": "generated-page",
+          "severity": "info",
+          "message": "新站 /travel/BR/ 由每日資料快照自動產生（國家 巴西，網址 iso=BR），不出草稿；舊網址請 301 到 /travel/BR/，舊內文存 reference/05-rx-br.md 供比對"
+        }
+      ],
+      "action": "skip-generated",
+      "flags": {
+        "generated": {
+          "iso2": "BR",
+          "newPath": "/travel/BR/"
+        }
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      },
+      "reference": "reference/05-rx-br.md"
+    },
+    {
+      "key": "06-rx-in",
+      "file": "06-rx-in.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/TravelEpidemic/Prescription/YZikHlPi2GkInV-mf0C0VR?iso=IN",
+        "title": "國際旅遊處方箋：印度",
+        "category": "國際旅遊與健康／旅遊醫學／國際旅遊處方箋／印度",
+        "publishedAt": "2024-01-15",
+        "updatedAt": "2026-06-30",
+        "breadcrumbs": [
+          "首頁",
+          "國際旅遊與健康",
+          "旅遊醫學",
+          "國際旅遊處方箋",
+          "印度"
+        ],
+        "tab": ""
+      },
+      "pattern": "travel-prescription",
+      "kind": "generated",
+      "type": "page",
+      "manifestKey": "rx-in",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.quarantine",
+      "ownerRule": "國際旅遊與健康",
+      "diseases": [],
+      "outputs": [],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 59 處（mso 樣式 31、Mso 類別 18、命名空間標籤 14）"
+        },
+        {
+          "code": "generated-page",
+          "severity": "info",
+          "message": "新站 /travel/IN/ 由每日資料快照自動產生（國家 印度，網址 iso=IN），不出草稿；舊網址請 301 到 /travel/IN/，舊內文存 reference/06-rx-in.md 供比對"
+        }
+      ],
+      "action": "skip-generated",
+      "flags": {
+        "generated": {
+          "iso2": "IN",
+          "newPath": "/travel/IN/"
+        }
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      },
+      "reference": "reference/06-rx-in.md"
+    },
+    {
+      "key": "07-rx-jp",
+      "file": "07-rx-jp.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/TravelEpidemic/Prescription/YZikHlPi2GkInV-mf0C0VR?iso=JP",
+        "title": "國際旅遊處方箋：日本",
+        "category": "國際旅遊與健康／旅遊醫學／國際旅遊處方箋／日本",
+        "publishedAt": "2024-01-15",
+        "updatedAt": "2026-06-30",
+        "breadcrumbs": [
+          "首頁",
+          "國際旅遊與健康",
+          "旅遊醫學",
+          "國際旅遊處方箋",
+          "日本"
+        ],
+        "tab": ""
+      },
+      "pattern": "travel-prescription",
+      "kind": "generated",
+      "type": "page",
+      "manifestKey": "rx-jp",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.quarantine",
+      "ownerRule": "國際旅遊與健康",
+      "diseases": [],
+      "outputs": [],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 51 處（mso 樣式 23、Mso 類別 16、命名空間標籤 14）"
+        },
+        {
+          "code": "generated-page",
+          "severity": "info",
+          "message": "新站 /travel/JP/ 由每日資料快照自動產生（國家 日本，網址 iso=JP），不出草稿；舊網址請 301 到 /travel/JP/，舊內文存 reference/07-rx-jp.md 供比對"
+        }
+      ],
+      "action": "skip-generated",
+      "flags": {
+        "generated": {
+          "iso2": "JP",
+          "newPath": "/travel/JP/"
+        }
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      },
+      "reference": "reference/07-rx-jp.md"
+    },
+    {
+      "key": "08-rx-ke",
+      "file": "08-rx-ke.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/TravelEpidemic/Prescription/YZikHlPi2GkInV-mf0C0VR?iso=KE",
+        "title": "國際旅遊處方箋：肯亞",
+        "category": "國際旅遊與健康／旅遊醫學／國際旅遊處方箋／肯亞",
+        "publishedAt": "2024-01-15",
+        "updatedAt": "2026-06-30",
+        "breadcrumbs": [
+          "首頁",
+          "國際旅遊與健康",
+          "旅遊醫學",
+          "國際旅遊處方箋",
+          "肯亞"
+        ],
+        "tab": ""
+      },
+      "pattern": "travel-prescription",
+      "kind": "generated",
+      "type": "page",
+      "manifestKey": "rx-ke",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.quarantine",
+      "ownerRule": "國際旅遊與健康",
+      "diseases": [],
+      "outputs": [],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 59 處（mso 樣式 31、Mso 類別 18、命名空間標籤 14）"
+        },
+        {
+          "code": "generated-page",
+          "severity": "info",
+          "message": "新站 /travel/KE/ 由每日資料快照自動產生（國家 肯亞，網址 iso=KE），不出草稿；舊網址請 301 到 /travel/KE/，舊內文存 reference/08-rx-ke.md 供比對"
+        }
+      ],
+      "action": "skip-generated",
+      "flags": {
+        "generated": {
+          "iso2": "KE",
+          "newPath": "/travel/KE/"
+        }
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      },
+      "reference": "reference/08-rx-ke.md"
+    },
+    {
+      "key": "09-rx-th",
+      "file": "09-rx-th.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/TravelEpidemic/Prescription/YZikHlPi2GkInV-mf0C0VR?iso=TH",
+        "title": "國際旅遊處方箋：泰國",
+        "category": "國際旅遊與健康／旅遊醫學／國際旅遊處方箋／泰國",
+        "publishedAt": "2024-01-15",
+        "updatedAt": "2026-06-30",
+        "breadcrumbs": [
+          "首頁",
+          "國際旅遊與健康",
+          "旅遊醫學",
+          "國際旅遊處方箋",
+          "泰國"
+        ],
+        "tab": ""
+      },
+      "pattern": "travel-prescription",
+      "kind": "generated",
+      "type": "page",
+      "manifestKey": "rx-th",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.quarantine",
+      "ownerRule": "國際旅遊與健康",
+      "diseases": [],
+      "outputs": [],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 55 處（mso 樣式 27、Mso 類別 17、命名空間標籤 14）"
+        },
+        {
+          "code": "generated-page",
+          "severity": "info",
+          "message": "新站 /travel/TH/ 由每日資料快照自動產生（國家 泰國，網址 iso=TH），不出草稿；舊網址請 301 到 /travel/TH/，舊內文存 reference/09-rx-th.md 供比對"
+        }
+      ],
+      "action": "skip-generated",
+      "flags": {
+        "generated": {
+          "iso2": "TH",
+          "newPath": "/travel/TH/"
+        }
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      },
+      "reference": "reference/09-rx-th.md"
+    },
+    {
+      "key": "10-rx-vn",
+      "file": "10-rx-vn.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/TravelEpidemic/Prescription/YZikHlPi2GkInV-mf0C0VR?iso=VN",
+        "title": "國際旅遊處方箋：越南",
+        "category": "國際旅遊與健康／旅遊醫學／國際旅遊處方箋／越南",
+        "publishedAt": "2024-01-15",
+        "updatedAt": "2026-06-30",
+        "breadcrumbs": [
+          "首頁",
+          "國際旅遊與健康",
+          "旅遊醫學",
+          "國際旅遊處方箋",
+          "越南"
+        ],
+        "tab": ""
+      },
+      "pattern": "travel-prescription",
+      "kind": "generated",
+      "type": "page",
+      "manifestKey": "rx-vn",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.quarantine",
+      "ownerRule": "國際旅遊與健康",
+      "diseases": [],
+      "outputs": [],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 55 處（mso 樣式 27、Mso 類別 17、命名空間標籤 14）"
+        },
+        {
+          "code": "generated-page",
+          "severity": "info",
+          "message": "新站 /travel/VN/ 由每日資料快照自動產生（國家 越南，網址 iso=VN），不出草稿；舊網址請 301 到 /travel/VN/，舊內文存 reference/10-rx-vn.md 供比對"
+        }
+      ],
+      "action": "skip-generated",
+      "flags": {
+        "generated": {
+          "iso2": "VN",
+          "newPath": "/travel/VN/"
+        }
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      },
+      "reference": "reference/10-rx-vn.md"
+    },
+    {
+      "key": "11-travel-clinics",
+      "file": "11-travel-clinics.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/Page/ucmuQnzcJPue77qHt0IXeg",
+        "title": "旅遊醫學門診",
+        "category": "國際旅遊與健康／旅遊醫學／旅遊醫學門診",
+        "publishedAt": "2015-06-01",
+        "updatedAt": "2026-05-20",
+        "breadcrumbs": [
+          "首頁",
+          "國際旅遊與健康",
+          "旅遊醫學",
+          "旅遊醫學門診"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "service",
+      "type": "service",
+      "manifestKey": "travel-clinics",
+      "manifestDerived": false,
+      "target": "service.travel-clinic-appointment",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "service.travel-clinic-appointment"
+      ],
+      "owner": "unit.quarantine",
+      "ownerRule": "國際旅遊與健康",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "service.travel-clinic-appointment",
+          "type": "service",
+          "role": "draft",
+          "file": "content/services/travel-clinic-appointment.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 202 處（mso 樣式 68、Mso 類別 67、命名空間標籤 67）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 service（service.travel-clinic-appointment），草稿直接建成 service，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "service 的欄位從舊頁看不出來，以「（待補）」佔位：steps、whoCanApply"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "合約院所名單屬時效性資料，建議掛 dataset 由系統更新，不要把名單寫進內文"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "12-travel-epidemic-levels",
+      "file": "12-travel-epidemic-levels.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/n-DGrcI1Yod3VzrY9JQHan",
+        "title": "國際旅遊疫情建議等級表",
+        "category": "國際旅遊與健康／國際旅遊疫情建議等級",
+        "publishedAt": "2012-01-01",
+        "updatedAt": "2026-10-01",
+        "breadcrumbs": [
+          "首頁",
+          "國際旅遊與健康",
+          "國際旅遊疫情建議等級"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "dataset",
+      "type": "dataset",
+      "manifestKey": "travel-epidemic-levels",
+      "manifestDerived": false,
+      "target": "dataset.travel-alert-levels",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "dataset.travel-alert-levels"
+      ],
+      "owner": "unit.quarantine",
+      "ownerRule": "國際旅遊與健康",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "dataset.travel-alert-levels",
+          "type": "dataset",
+          "role": "draft",
+          "file": "content/datasets/travel-alert-levels.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 136 處（mso 樣式 46、Mso 類別 45、命名空間標籤 45）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 dataset（dataset.travel-alert-levels），草稿直接建成 dataset，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "dataset-by-url",
+          "severity": "info",
+          "message": "canonicalUrl 沿用既有資料集 dataset.travel-alert-levels（清單 target 指定）"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "看不出更新頻率，updateFrequency 暫填 irregular"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 2,
+        "legacyLinks": 2,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "13-travel-faq",
+      "file": "13-travel-faq.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/QAPage/oDFvYopfPTouRB6a4gWcs5",
+        "title": "國際旅遊常見問答",
+        "category": "國際旅遊與健康／常見問答",
+        "publishedAt": "2017-11-20",
+        "updatedAt": "2026-07-01",
+        "breadcrumbs": [
+          "首頁",
+          "國際旅遊與健康",
+          "常見問答"
+        ],
+        "tab": ""
+      },
+      "pattern": "qa",
+      "kind": "faq",
+      "type": "faq",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [
+        "faq.travel-clinic",
+        "faq.travel-japan-measles",
+        "faq.travel-malaria-prevention",
+        "faq.travel-return-fever",
+        "faq.yellow-fever-certificate"
+      ],
+      "owner": "unit.quarantine",
+      "ownerRule": "國際旅遊與健康",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "faq.travel-clinic",
+          "type": "faq",
+          "role": "duplicate",
+          "duplicateOf": "qa/11-travel-qa"
+        },
+        {
+          "id": "faq.travel-japan-measles",
+          "type": "faq",
+          "role": "duplicate",
+          "duplicateOf": "qa/11-travel-qa"
+        },
+        {
+          "id": "faq.travel-malaria-prevention",
+          "type": "faq",
+          "role": "duplicate",
+          "duplicateOf": "qa/11-travel-qa"
+        },
+        {
+          "id": "faq.travel-return-fever",
+          "type": "faq",
+          "role": "duplicate",
+          "duplicateOf": "qa/11-travel-qa"
+        },
+        {
+          "id": "faq.yellow-fever-certificate",
+          "type": "faq",
+          "role": "duplicate",
+          "duplicateOf": "qa/11-travel-qa"
+        },
+        {
+          "id": "faq.x-legacy-3456c6",
+          "type": "faq",
+          "role": "duplicate",
+          "duplicateOf": "qa/11-travel-qa"
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 42 處（mso 樣式 20、Mso 類別 11、命名空間標籤 11）"
+        },
+        {
+          "code": "converted-elsewhere",
+          "severity": "info",
+          "message": "同網址的頁已在 qa 批（11-travel-qa）轉過，草稿 faq.travel-clinic、faq.travel-japan-measles、faq.travel-malaria-prevention、faq.travel-return-fever、faq.yellow-fever-certificate、faq.x-legacy-3456c6；本批不重複出草稿，內容若有更新請在該批重跑"
+        }
+      ],
+      "action": "skip-duplicate",
+      "flags": {
+        "convertedElsewhere": {
+          "batch": "qa",
+          "key": "11-travel-qa"
+        }
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "14-travel-health-info-list",
+      "file": "14-travel-health-info-list.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/HJ0FrBEq15g18TFKowY7lg",
+        "title": "國際旅遊保健資訊",
+        "category": "國際旅遊與健康／國際旅遊保健資訊",
+        "publishedAt": "2026-10-03",
+        "updatedAt": "2026-10-03",
+        "breadcrumbs": [
+          "首頁",
+          "國際旅遊與健康",
+          "國際旅遊保健資訊"
+        ],
+        "tab": ""
+      },
+      "pattern": "category-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "travel-health-info-list",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.quarantine",
+      "ownerRule": "國際旅遊與健康",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "page.x-travel-health-info-list",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/x-travel-health-info-list.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.6,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 4,
+        "legacyLinks": 4,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "15-travel-list",
+      "file": "15-travel-list.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/tRbpXpZM7EO3-dkc4RYZuQ",
+        "title": "國際旅遊與健康",
+        "category": "國際旅遊與健康",
+        "publishedAt": "2026-10-03",
+        "updatedAt": "2026-10-03",
+        "breadcrumbs": [
+          "首頁",
+          "國際旅遊與健康"
+        ],
+        "tab": ""
+      },
+      "pattern": "category-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "travel-list",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.quarantine",
+      "ownerRule": "國際旅遊與健康",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "page.x-travel-list",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/x-travel-list.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.6,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 9,
+        "legacyLinks": 9,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "16-travel-medicine-list",
+      "file": "16-travel-medicine-list.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/3GJWZ0ETfmdGzIS7H0Jucg",
+        "title": "旅遊醫學",
+        "category": "國際旅遊與健康／旅遊醫學",
+        "publishedAt": "2026-10-03",
+        "updatedAt": "2026-10-03",
+        "breadcrumbs": [
+          "首頁",
+          "國際旅遊與健康",
+          "旅遊醫學"
+        ],
+        "tab": ""
+      },
+      "pattern": "category-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "travel-medicine-list",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.quarantine",
+      "ownerRule": "國際旅遊與健康",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "page.x-travel-medicine-list",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/x-travel-medicine-list.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.6,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 7,
+        "legacyLinks": 7,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "17-travel-news-list",
+      "file": "17-travel-news-list.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/List/ZWd4Ziovle_L8qmx88_X46",
+        "title": "國際疫情訊息",
+        "category": "國際旅遊與健康／國際疫情",
+        "publishedAt": "2026-10-03",
+        "updatedAt": "2026-10-03",
+        "breadcrumbs": [
+          "首頁",
+          "國際旅遊與健康",
+          "國際疫情"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "travel-news-list",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.quarantine",
+      "ownerRule": "國際旅遊與健康",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "page.x-travel-news-list",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/x-travel-news-list.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.6,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 6,
+        "legacyLinks": 6,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "18-travel-video",
+      "file": "18-travel-video.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/Pn9O0INzKizskKf7qrqWMN",
+        "title": "出國前 4 到 6 週，先到旅遊醫學門診（宣導影片）",
+        "category": "國際旅遊與健康／宣導素材",
+        "publishedAt": "2025-03-01",
+        "updatedAt": "2025-03-01",
+        "breadcrumbs": [
+          "首頁",
+          "國際旅遊與健康",
+          "宣導素材"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "media",
+      "type": "media",
+      "manifestKey": "travel-video",
+      "manifestDerived": false,
+      "target": "media.travel-clinic-before-departure",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "media.travel-clinic-before-departure"
+      ],
+      "owner": "unit.quarantine",
+      "ownerRule": "國際旅遊與健康",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "media.travel-clinic-before-departure",
+          "type": "media",
+          "role": "draft",
+          "file": "content/media/travel-clinic-before-departure.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 media（media.travel-clinic-before-departure），草稿直接建成 media，看不出來的欄位以「（待補）」佔位"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "19-vaccines-medications",
+      "file": "19-vaccines-medications.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/6786",
+        "title": "國際預防接種及藥物",
+        "category": "國際旅遊與健康／旅遊醫學／國際預防接種及藥物",
+        "publishedAt": "2016-03-01",
+        "updatedAt": "2026-04-10",
+        "breadcrumbs": [
+          "首頁",
+          "國際旅遊與健康",
+          "旅遊醫學",
+          "國際預防接種及藥物"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "vaccines-medications",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.quarantine",
+      "ownerRule": "國際旅遊與健康",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "page.x-vaccines-medications",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/x-vaccines-medications.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 24 處（mso 樣式 8、Mso 類別 8、命名空間標籤 8）"
+        },
+        {
+          "code": "vaccine-not-in-master",
+          "severity": "info",
+          "message": "小節提到主檔沒有的疫苗：黃熱病疫苗、流行性腦脊髓膜炎疫苗、傷寒疫苗；建議新增 vaccine 主檔與疫苗頁後，把這些小節改建成 vaccine"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "20-yellow-fever-certificate",
+      "file": "20-yellow-fever-certificate.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/GFpHcjbt_Y7KsBbjE8Wx5U",
+        "title": "國際預防接種證明書（黃皮書）申請",
+        "category": "國際旅遊與健康／旅遊醫學／國際預防接種證明書",
+        "publishedAt": "2018-01-10",
+        "updatedAt": "2026-03-03",
+        "breadcrumbs": [
+          "首頁",
+          "國際旅遊與健康",
+          "旅遊醫學",
+          "國際預防接種證明書"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "service",
+      "type": "service",
+      "manifestKey": "yellow-fever-certificate",
+      "manifestDerived": false,
+      "target": "service.international-vaccination-certificate",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "service.international-vaccination-certificate"
+      ],
+      "owner": "unit.quarantine",
+      "ownerRule": "國際旅遊與健康",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "service.international-vaccination-certificate",
+          "type": "service",
+          "role": "draft",
+          "file": "content/services/international-vaccination-certificate.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 21 處（mso 樣式 15、Mso 類別 7、命名空間標籤 3）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 service（service.international-vaccination-certificate），草稿直接建成 service，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "service 的欄位從舊頁看不出來，以「（待補）」佔位：whoCanApply"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    }
+  ],
+  "drafts": [
+    {
+      "id": "page.x-after-return",
+      "type": "page",
+      "title": "返國後注意事項",
+      "file": "content/pages/x-after-return.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.quarantine",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "01-after-return"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.x-before-departure",
+      "type": "page",
+      "title": "出國前注意事項",
+      "file": "content/pages/x-before-departure.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.quarantine",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "02-before-departure"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.x-prescription-query",
+      "type": "page",
+      "title": "國際旅遊處方箋",
+      "file": "content/pages/x-prescription-query.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.quarantine",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "04-prescription-query"
+      ],
+      "merged": false
+    },
+    {
+      "id": "service.travel-clinic-appointment",
+      "type": "service",
+      "title": "旅遊醫學門診",
+      "file": "content/services/travel-clinic-appointment.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "service.travel-clinic-appointment"
+      ],
+      "status": "review",
+      "owner": "unit.quarantine",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "11-travel-clinics"
+      ],
+      "merged": false
+    },
+    {
+      "id": "dataset.travel-alert-levels",
+      "type": "dataset",
+      "title": "國際旅遊疫情建議等級表",
+      "file": "content/datasets/travel-alert-levels.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "dataset.travel-alert-levels"
+      ],
+      "status": "review",
+      "owner": "unit.quarantine",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "12-travel-epidemic-levels"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.x-travel-health-info-list",
+      "type": "page",
+      "title": "國際旅遊保健資訊",
+      "file": "content/pages/x-travel-health-info-list.json",
+      "confidence": 0.6,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.quarantine",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "14-travel-health-info-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.x-travel-list",
+      "type": "page",
+      "title": "國際旅遊與健康",
+      "file": "content/pages/x-travel-list.json",
+      "confidence": 0.6,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.quarantine",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "15-travel-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.x-travel-medicine-list",
+      "type": "page",
+      "title": "旅遊醫學",
+      "file": "content/pages/x-travel-medicine-list.json",
+      "confidence": 0.6,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.quarantine",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "16-travel-medicine-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.x-travel-news-list",
+      "type": "page",
+      "title": "國際疫情訊息",
+      "file": "content/pages/x-travel-news-list.json",
+      "confidence": 0.6,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.quarantine",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "17-travel-news-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "media.travel-clinic-before-departure",
+      "type": "media",
+      "title": "出國前 4 到 6 週，先到旅遊醫學門診（宣導影片）",
+      "file": "content/media/travel-clinic-before-departure.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "media.travel-clinic-before-departure"
+      ],
+      "status": "review",
+      "owner": "unit.quarantine",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "18-travel-video"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.x-vaccines-medications",
+      "type": "page",
+      "title": "國際預防接種及藥物",
+      "file": "content/pages/x-vaccines-medications.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.quarantine",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "19-vaccines-medications"
+      ],
+      "merged": false
+    },
+    {
+      "id": "service.international-vaccination-certificate",
+      "type": "service",
+      "title": "國際預防接種證明書（黃皮書）申請",
+      "file": "content/services/international-vaccination-certificate.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "service.international-vaccination-certificate"
+      ],
+      "status": "review",
+      "owner": "unit.quarantine",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "20-yellow-fever-certificate"
+      ],
+      "merged": false
+    },
+    {
+      "id": "disease.malaria",
+      "type": "disease",
+      "title": "瘧疾",
+      "file": "content/diseases/malaria.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "disease.malaria"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "03-malaria-prophylaxis"
+      ],
+      "merged": true
+    }
+  ],
+  "sampling": {
+    "rate": 0.1,
+    "autoOk": 0,
+    "picked": []
+  },
+  "migration": {
+    "patchFile": "migration-patch.json",
+    "applied": true,
+    "summary": {
+      "derivedItems": 0,
+      "derivedMatched": 0,
+      "items": 19,
+      "matched": 19,
+      "missingPages": 0,
+      "unmatchedPages": 1,
+      "agree": 19,
+      "conflicts": 0,
+      "statusChanges": 0,
+      "pendingToMigrated": 0,
+      "targetChanges": 0,
+      "newPathChanges": 0,
+      "noteChanges": 0,
+      "stillPending": 3
+    },
+    "file": "content/migration/travel.json",
+    "statusChanges": [],
+    "targetChanges": [],
+    "newPathChanges": [],
+    "noteChanges": 0
+  }
+}

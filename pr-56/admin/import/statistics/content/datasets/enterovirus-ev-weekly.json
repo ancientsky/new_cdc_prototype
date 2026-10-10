@@ -1,0 +1,155 @@
+{
+  "id": "dataset.enterovirus-ev-weekly",
+  "type": "dataset",
+  "title": "腸病毒疫情週報",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2015-04-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "腸病毒疫情週報每週彙整門急診就診人次、重症病例與病毒型別監測，提供各界掌握疫情趨勢。",
+  "category": "document-library",
+  "canonicalUrl": "https://www.cdc.gov.tw/Category/MPage/NYDMC1OCW393ioaTIE_-yc",
+  "updateFrequency": "weekly",
+  "lastUpdated": "2026-09-28",
+  "formats": [
+    "PDF"
+  ],
+  "resources": [
+    {
+      "label": "腸病毒疫情週報 115 年第 40 週",
+      "href": "/files/dataset.enterovirus-ev-weekly/ev-weekly-115-w40.pdf",
+      "format": "PDF"
+    },
+    {
+      "label": "腸病毒疫情週報 115 年第 39 週",
+      "href": "/files/dataset.enterovirus-ev-weekly/ev-weekly-115-w39.pdf",
+      "format": "PDF"
+    },
+    {
+      "label": "腸病毒疫情週報 115 年第 38 週",
+      "href": "/files/dataset.enterovirus-ev-weekly/ev-weekly-115-w38.pdf",
+      "format": "PDF"
+    },
+    {
+      "label": "腸病毒疫情週報 115 年第 37 週",
+      "href": "/files/dataset.enterovirus-ev-weekly/ev-weekly-115-w37.pdf",
+      "format": "PDF"
+    },
+    {
+      "label": "腸病毒疫情週報 115 年第 36 週",
+      "href": "/files/dataset.enterovirus-ev-weekly/ev-weekly-115-w36.pdf",
+      "format": "PDF"
+    }
+  ],
+  "provenance": {
+    "mode": "snapshot",
+    "fetchedAt": "2026-10-03",
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/NYDMC1OCW393ioaTIE_-yc"
+  },
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/NYDMC1OCW393ioaTIE_-yc"
+  ],
+  "assets": [
+    {
+      "file": "ev-weekly-115-w36.pdf",
+      "kind": "attachment",
+      "label": "腸病毒疫情週報 115 年第 36 週",
+      "mime": "application/pdf",
+      "bytes": 744,
+      "sha256": "7f324c6811ddeec729252a8bee3fe79f67aa71675abd6701de5096c96f58f323",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "ev-weekly-115-w37.pdf",
+      "kind": "attachment",
+      "label": "腸病毒疫情週報 115 年第 37 週",
+      "mime": "application/pdf",
+      "bytes": 744,
+      "sha256": "6663e84b382ea5e3ea3182d83693da8226d6a0de6590935f709d5be069f4a9e7",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "ev-weekly-115-w38.pdf",
+      "kind": "attachment",
+      "label": "腸病毒疫情週報 115 年第 38 週",
+      "mime": "application/pdf",
+      "bytes": 744,
+      "sha256": "92f5aa2334529c6cf0dab49aabeb5e1ddc25f4df97626d267bd0107fefec32d7",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "ev-weekly-115-w39.pdf",
+      "kind": "attachment",
+      "label": "腸病毒疫情週報 115 年第 39 週",
+      "mime": "application/pdf",
+      "bytes": 744,
+      "sha256": "085e519ab7617d473e888f7d1caa4ca65f461a62f1480efb84a9e7ca114f24d3",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "ev-weekly-115-w40.pdf",
+      "kind": "attachment",
+      "label": "腸病毒疫情週報 115 年第 40 週",
+      "mime": "application/pdf",
+      "bytes": 744,
+      "sha256": "3c25de1aaafc201b9842740edca3b513f4ce21592845203e481dd7fc369aa320",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "type-from-category",
+        "severity": "info",
+        "message": "統計頁的附件是 5 期期刊，草稿建成 dataset（document-library）"
+      },
+      {
+        "code": "periodical-issues",
+        "severity": "info",
+        "message": "5 期、最新 2026 年第 40 週；期別不是版次，建成一筆資料集逐期列 resources"
+      },
+      {
+        "code": "fields-pending",
+        "severity": "warn",
+        "message": "dataset 的欄位從舊頁看不出來，以「（待補）」佔位：canonicalUrl"
+      },
+      {
+        "code": "field-guessed",
+        "severity": "info",
+        "message": "舊頁沒有資料檔也沒有開放資料連結，canonicalUrl 暫填舊頁網址"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/NYDMC1OCW393ioaTIE_-yc",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

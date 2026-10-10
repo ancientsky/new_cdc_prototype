@@ -1,0 +1,72 @@
+{
+  "id": "faq.dengue-container-check",
+  "type": "faq",
+  "title": "防登革熱說的「巡、倒、清、刷」是什麼？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-09-24",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "「巡倒清刷」是清除病媒蚊孳生源的四個步驟，建議每週做一次： 巡：巡視住家室內外可能積水的容器，如花盆底盤、水桶、廢輪胎。 倒：倒掉積水。 清：清除不需要的容器。 刷：刷洗容器內壁，去除斑蚊蟲卵。",
+  "question": "防登革熱說的「巡、倒、清、刷」是什麼？",
+  "answerMarkdown": "「巡倒清刷」是清除病媒蚊孳生源的四個步驟，建議**每週做一次**：\n\n1. **巡**：巡視住家室內外可能積水的容器，如花盆底盤、水桶、廢輪胎。\n2. **倒**：倒掉積水。\n3. **清**：清除不需要的容器。\n4. **刷**：刷洗容器內壁，去除斑蚊蟲卵。\n\n斑蚊從卵到成蚊約 7–10 天，每週清一次就能中斷繁殖。",
+  "basedOn": [
+    "disease.dengue"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/4kMzhnwTwPIrf_KETxhqzF"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 74 處（mso 樣式 48、Mso 類別 20、命名空間標籤 13）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「登革熱／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「登革熱發燒後幾天內要就醫？」從答案抽出結構化候選 {\"daysMin\":3,\"daysMax\":14,\"hours\":24}，請確認後保留或刪除"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「社區或里長要怎麼帶大家一起防登革熱？」→ situation；「登革熱發燒後幾天內要就醫？」→ symptoms；「從登革熱流行地區回國後，要注意什麼？」→ symptoms；「懷疑登革熱時，可以自己吃止痛藥嗎？」→ symptoms；「衛生單位說要進家裡噴藥，可以拒絕嗎？」→ symptoms；「出國回來後發燒，應該怎麼辦？」→ travel、symptoms"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/4kMzhnwTwPIrf_KETxhqzF",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.dengue-container-check"
+    ]
+  }
+}

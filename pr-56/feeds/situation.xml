@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>衛生福利部疾病管制署 疫情態勢</title>
+  <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/situation/</link>
+  <atom:link href="https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/feeds/situation.xml" rel="self" type="application/rss+xml"/>
+  <description>疫情中心人工發布的各疾病態勢（四級）。</description>
+  <language>zh-TW</language>
+  <lastBuildDate>Sun, 20 Sep 2026 16:00:00 GMT</lastBuildDate>
+  <item>
+    <title>疫情態勢更新（資料日 2026-09-21）</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/situation/</link>
+    <guid isPermaLink="false">situation.2026-09-21</guid>
+    <pubDate>Sun, 20 Sep 2026 16:00:00 GMT</pubDate>
+    <category>situation</category>
+    <description>流感：高峰（近四週門急診類流感就診率 12%）；腸病毒：上升（腸病毒門急診就診人次（週） 8,700 人次）；登革熱：上升（本週新增本土病例 本土 23 例）；新冠併發重症：下降（新冠併發重症通報數（週） 45 例）；M痘：平穩（近四週 M痘病例數 8 例）；麻疹：平穩（今年累計麻疹病例 29 例（境外移入 21 例））</description>
+  </item>
+  <item>
+    <title>疫情態勢更新（資料日 2026-09-14）</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/situation/</link>
+    <guid isPermaLink="false">situation.2026-09-14</guid>
+    <pubDate>Sun, 13 Sep 2026 16:00:00 GMT</pubDate>
+    <category>situation</category>
+    <description>流感：上升（近四週門急診類流感就診率 11.2%）；腸病毒：上升（腸病毒門急診就診人次（週） 7,900 人次）；登革熱：上升（本週新增本土病例 本土 17 例）；新冠併發重症：下降（新冠併發重症通報數（週） 47 例）；M痘：平穩（近四週 M痘病例數 7 例）；麻疹：平穩（今年累計麻疹病例 28 例（境外移入 20 例））</description>
+  </item>
+  <item>
+    <title>疫情態勢更新（資料日 2026-09-07）</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/situation/</link>
+    <guid isPermaLink="false">situation.2026-09-07</guid>
+    <pubDate>Sun, 06 Sep 2026 16:00:00 GMT</pubDate>
+    <category>situation</category>
+    <description>流感：上升（近四週門急診類流感就診率 10.3%）；腸病毒：平穩（腸病毒門急診就診人次（週） 6,400 人次）；登革熱：上升（本週新增本土病例 本土 12 例）；新冠併發重症：平穩（新冠併發重症通報數（週） 50 例）；M痘：平穩（近四週 M痘病例數 8 例）；麻疹：平穩（今年累計麻疹病例 27 例（境外移入 19 例））</description>
+  </item>
+</channel>
+</rss>

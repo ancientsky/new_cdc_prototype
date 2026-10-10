@@ -1,0 +1,750 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "a24f142d3e04",
+    "lastModified": "2026-10-01",
+    "count": 42
+  },
+  "data": [
+    {
+      "id": "sched.hepatitis-b-1",
+      "vaccine": "vaccine.hepatitis-b",
+      "label": "B 型肝炎疫苗 第 1 劑",
+      "ageMinMonths": 0,
+      "ageMaxMonths": 0,
+      "stage": "infant",
+      "funded": "public",
+      "dose": "第 1 劑",
+      "ageLabel": "出生 24 小時內",
+      "note": "母親 HBsAg 陽性者另於 24 小時內注射 1 劑 HBIG",
+      "source": {
+        "title": "現行兒童預防接種時程表（11401 版，疾管署）",
+        "url": "https://www.cdc.gov.tw/uploads/files/bedb5e14-7448-4815-9218-44feb486b5d5.pdf"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.hepatitis-b-2",
+      "vaccine": "vaccine.hepatitis-b",
+      "label": "B 型肝炎疫苗 第 2 劑",
+      "ageMinMonths": 1,
+      "ageMaxMonths": 1,
+      "stage": "infant",
+      "funded": "public",
+      "dose": "第 2 劑",
+      "ageLabel": "出生滿 1 個月",
+      "source": {
+        "title": "現行兒童預防接種時程表（11401 版，疾管署）",
+        "url": "https://www.cdc.gov.tw/uploads/files/bedb5e14-7448-4815-9218-44feb486b5d5.pdf"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.hepatitis-b-3",
+      "vaccine": "vaccine.hepatitis-b",
+      "label": "B 型肝炎疫苗 第 3 劑",
+      "ageMinMonths": 6,
+      "ageMaxMonths": 6,
+      "stage": "infant",
+      "funded": "public",
+      "dose": "第 3 劑",
+      "ageLabel": "出生滿 6 個月",
+      "source": {
+        "title": "現行兒童預防接種時程表（11401 版，疾管署）",
+        "url": "https://www.cdc.gov.tw/uploads/files/bedb5e14-7448-4815-9218-44feb486b5d5.pdf"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.bcg-1",
+      "vaccine": "vaccine.bcg",
+      "label": "卡介苗 1 劑",
+      "ageMinMonths": 5,
+      "ageMaxMonths": 8,
+      "stage": "infant",
+      "funded": "public",
+      "dose": "1 劑",
+      "ageLabel": "出生滿 5 個月（建議 5–8 個月）",
+      "source": {
+        "title": "現行兒童預防接種時程表（11401 版，疾管署）",
+        "url": "https://www.cdc.gov.tw/uploads/files/bedb5e14-7448-4815-9218-44feb486b5d5.pdf"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.dtap-hib-ipv-1",
+      "vaccine": "vaccine.dtap-hib-ipv",
+      "label": "五合一疫苗 第 1 劑",
+      "ageMinMonths": 2,
+      "ageMaxMonths": 2,
+      "stage": "infant",
+      "funded": "public",
+      "dose": "第 1 劑",
+      "ageLabel": "出生滿 2 個月",
+      "source": {
+        "title": "現行兒童預防接種時程表（11401 版，疾管署）",
+        "url": "https://www.cdc.gov.tw/uploads/files/bedb5e14-7448-4815-9218-44feb486b5d5.pdf"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.dtap-hib-ipv-2",
+      "vaccine": "vaccine.dtap-hib-ipv",
+      "label": "五合一疫苗 第 2 劑",
+      "ageMinMonths": 4,
+      "ageMaxMonths": 4,
+      "stage": "infant",
+      "funded": "public",
+      "dose": "第 2 劑",
+      "ageLabel": "出生滿 4 個月",
+      "source": {
+        "title": "現行兒童預防接種時程表（11401 版，疾管署）",
+        "url": "https://www.cdc.gov.tw/uploads/files/bedb5e14-7448-4815-9218-44feb486b5d5.pdf"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.dtap-hib-ipv-3",
+      "vaccine": "vaccine.dtap-hib-ipv",
+      "label": "五合一疫苗 第 3 劑",
+      "ageMinMonths": 6,
+      "ageMaxMonths": 6,
+      "stage": "infant",
+      "funded": "public",
+      "dose": "第 3 劑",
+      "ageLabel": "出生滿 6 個月",
+      "source": {
+        "title": "現行兒童預防接種時程表（11401 版，疾管署）",
+        "url": "https://www.cdc.gov.tw/uploads/files/bedb5e14-7448-4815-9218-44feb486b5d5.pdf"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.dtap-hib-ipv-4",
+      "vaccine": "vaccine.dtap-hib-ipv",
+      "label": "五合一疫苗 第 4 劑",
+      "ageMinMonths": 18,
+      "ageMaxMonths": 18,
+      "stage": "infant",
+      "funded": "public",
+      "dose": "第 4 劑",
+      "ageLabel": "出生滿 18 個月",
+      "source": {
+        "title": "現行兒童預防接種時程表（11401 版，疾管署）",
+        "url": "https://www.cdc.gov.tw/uploads/files/bedb5e14-7448-4815-9218-44feb486b5d5.pdf"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.pcv-1",
+      "vaccine": "vaccine.pneumococcal",
+      "label": "結合型肺炎鏈球菌疫苗（PCV13）第 1 劑",
+      "ageMinMonths": 2,
+      "ageMaxMonths": 2,
+      "stage": "infant",
+      "funded": "public",
+      "dose": "第 1 劑",
+      "ageLabel": "出生滿 2 個月",
+      "source": {
+        "title": "現行兒童預防接種時程表（11401 版，疾管署）",
+        "url": "https://www.cdc.gov.tw/uploads/files/bedb5e14-7448-4815-9218-44feb486b5d5.pdf"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.pcv-2",
+      "vaccine": "vaccine.pneumococcal",
+      "label": "結合型肺炎鏈球菌疫苗（PCV13）第 2 劑",
+      "ageMinMonths": 4,
+      "ageMaxMonths": 4,
+      "stage": "infant",
+      "funded": "public",
+      "dose": "第 2 劑",
+      "ageLabel": "出生滿 4 個月",
+      "source": {
+        "title": "現行兒童預防接種時程表（11401 版，疾管署）",
+        "url": "https://www.cdc.gov.tw/uploads/files/bedb5e14-7448-4815-9218-44feb486b5d5.pdf"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.pcv-3",
+      "vaccine": "vaccine.pneumococcal",
+      "label": "結合型肺炎鏈球菌疫苗（PCV13）第 3 劑",
+      "ageMinMonths": 12,
+      "ageMaxMonths": 15,
+      "stage": "infant",
+      "funded": "public",
+      "dose": "第 3 劑",
+      "ageLabel": "出生滿 12–15 個月",
+      "source": {
+        "title": "現行兒童預防接種時程表（11401 版，疾管署）",
+        "url": "https://www.cdc.gov.tw/uploads/files/bedb5e14-7448-4815-9218-44feb486b5d5.pdf"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.rotavirus",
+      "vaccine": "vaccine.rotavirus",
+      "label": "輪狀病毒疫苗 2–3 劑",
+      "ageMinMonths": 2,
+      "ageMaxMonths": 8,
+      "stage": "infant",
+      "funded": "self",
+      "dose": "2 或 3 劑（依廠牌）",
+      "ageLabel": "出生滿 2 個月起，依仿單於 6–8 個月前完成",
+      "note": "非常規公費項目；部分縣市提供補助，請洽衛生所",
+      "source": {
+        "title": "現行兒童預防接種時程表（11401 版，疾管署）",
+        "url": "https://www.cdc.gov.tw/uploads/files/bedb5e14-7448-4815-9218-44feb486b5d5.pdf"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.mmr-1",
+      "vaccine": "vaccine.mmr",
+      "label": "MMR 疫苗 第 1 劑",
+      "ageMinMonths": 12,
+      "ageMaxMonths": 12,
+      "stage": "infant",
+      "funded": "public",
+      "dose": "第 1 劑",
+      "ageLabel": "出生滿 12 個月",
+      "source": {
+        "title": "現行兒童預防接種時程表（11401 版，疾管署）",
+        "url": "https://www.cdc.gov.tw/uploads/files/bedb5e14-7448-4815-9218-44feb486b5d5.pdf"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.varicella-1",
+      "vaccine": "vaccine.varicella",
+      "label": "水痘疫苗 1 劑",
+      "ageMinMonths": 12,
+      "ageMaxMonths": 12,
+      "stage": "infant",
+      "funded": "public",
+      "dose": "第 1 劑",
+      "ageLabel": "出生滿 12 個月",
+      "source": {
+        "title": "現行兒童預防接種時程表（11401 版，疾管署）",
+        "url": "https://www.cdc.gov.tw/uploads/files/bedb5e14-7448-4815-9218-44feb486b5d5.pdf"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.hepatitis-a-1",
+      "vaccine": "vaccine.hepatitis-a",
+      "label": "A 型肝炎疫苗 第 1 劑",
+      "ageMinMonths": 12,
+      "ageMaxMonths": 15,
+      "stage": "infant",
+      "funded": "public",
+      "dose": "第 1 劑",
+      "ageLabel": "出生滿 12–15 個月",
+      "note": "不同版本時程表的月齡寫法不一（12–15 個月或 18 個月），請承辦人以現行公告為準",
+      "source": {
+        "title": "現行兒童預防接種時程表（11401 版，疾管署）",
+        "url": "https://www.cdc.gov.tw/uploads/files/bedb5e14-7448-4815-9218-44feb486b5d5.pdf"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.hepatitis-a-2",
+      "vaccine": "vaccine.hepatitis-a",
+      "label": "A 型肝炎疫苗 第 2 劑",
+      "ageMinMonths": 18,
+      "ageMaxMonths": 21,
+      "stage": "infant",
+      "funded": "public",
+      "dose": "第 2 劑",
+      "ageLabel": "第 1 劑後間隔至少 6 個月",
+      "interval": "與第 1 劑間隔至少 6 個月",
+      "source": {
+        "title": "現行兒童預防接種時程表（11401 版，疾管署）",
+        "url": "https://www.cdc.gov.tw/uploads/files/bedb5e14-7448-4815-9218-44feb486b5d5.pdf"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.je-1",
+      "vaccine": "vaccine.je",
+      "label": "日本腦炎疫苗 第 1 劑",
+      "ageMinMonths": 15,
+      "ageMaxMonths": 15,
+      "stage": "infant",
+      "funded": "public",
+      "dose": "第 1 劑",
+      "ageLabel": "出生滿 15 個月",
+      "note": "活性減毒嵌合型疫苗",
+      "source": {
+        "title": "現行兒童預防接種時程表（11401 版，疾管署）",
+        "url": "https://www.cdc.gov.tw/uploads/files/bedb5e14-7448-4815-9218-44feb486b5d5.pdf"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.je-2",
+      "vaccine": "vaccine.je",
+      "label": "日本腦炎疫苗 第 2 劑",
+      "ageMinMonths": 27,
+      "ageMaxMonths": 27,
+      "stage": "infant",
+      "funded": "public",
+      "dose": "第 2 劑",
+      "ageLabel": "出生滿 2 歲 3 個月",
+      "interval": "與第 1 劑間隔 12 個月",
+      "source": {
+        "title": "現行兒童預防接種時程表（11401 版，疾管署）",
+        "url": "https://www.cdc.gov.tw/uploads/files/bedb5e14-7448-4815-9218-44feb486b5d5.pdf"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.ev71",
+      "vaccine": "vaccine.ev71",
+      "label": "腸病毒 71 型疫苗 2 劑",
+      "ageMinMonths": 2,
+      "ageMaxMonths": 71,
+      "stage": "infant",
+      "funded": "self",
+      "dose": "2 劑（依廠牌）",
+      "ageLabel": "出生滿 2 個月至 6 歲以下",
+      "note": "自費；劑次與適用年齡依各廠牌仿單",
+      "source": {
+        "title": "本站腸病毒 71 型疫苗頁",
+        "url": "/vaccines/ev71/"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.influenza-child",
+      "vaccine": "vaccine.influenza",
+      "label": "流感疫苗 每年 1 劑（幼兒）",
+      "ageMinMonths": 6,
+      "ageMaxMonths": 83,
+      "stage": "infant",
+      "funded": "public",
+      "dose": "每年 1 劑",
+      "ageLabel": "出生滿 6 個月至國小入學前",
+      "note": "8 歲（含）以下首次接種者 2 劑，間隔 4 週以上；每年 10 月 1 日起",
+      "recurring": "yearly",
+      "startAt": "2026-10-01",
+      "source": {
+        "title": "本站流感疫苗頁（2026–2027 年度計畫）",
+        "url": "/vaccines/influenza/"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.covid-child",
+      "vaccine": "vaccine.covid-19",
+      "label": "新冠疫苗 本年度 1 劑（幼兒）",
+      "ageMinMonths": 6,
+      "ageMaxMonths": 83,
+      "stage": "infant",
+      "funded": "public",
+      "dose": "本年度 1 劑",
+      "ageLabel": "出生滿 6 個月起",
+      "note": "未曾接種之 6 個月至 4 歲幼兒依仿單接種 2–3 劑基礎劑",
+      "recurring": "yearly",
+      "startAt": "2026-10-01",
+      "source": {
+        "title": "本站新冠疫苗頁（2026–2027 年度建議）",
+        "url": "/vaccines/covid-19/"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.mmr-2",
+      "vaccine": "vaccine.mmr",
+      "label": "MMR 疫苗 第 2 劑",
+      "ageMinMonths": 60,
+      "ageMaxMonths": 83,
+      "stage": "child",
+      "funded": "public",
+      "dose": "第 2 劑",
+      "ageLabel": "滿 5 歲至入國小前",
+      "source": {
+        "title": "現行兒童預防接種時程表（11401 版，疾管署）",
+        "url": "https://www.cdc.gov.tw/uploads/files/bedb5e14-7448-4815-9218-44feb486b5d5.pdf"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.dtap-ipv",
+      "vaccine": "vaccine.dtap-ipv",
+      "label": "四合一疫苗（DTaP-IPV）1 劑",
+      "ageMinMonths": 60,
+      "ageMaxMonths": 83,
+      "stage": "child",
+      "funded": "public",
+      "dose": "追加 1 劑",
+      "ageLabel": "滿 5 歲至入國小前",
+      "source": {
+        "title": "現行兒童預防接種時程表（11401 版，疾管署）",
+        "url": "https://www.cdc.gov.tw/uploads/files/bedb5e14-7448-4815-9218-44feb486b5d5.pdf"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.varicella-2",
+      "vaccine": "vaccine.varicella",
+      "label": "水痘疫苗 第 2 劑",
+      "ageMinMonths": 48,
+      "ageMaxMonths": 72,
+      "stage": "child",
+      "funded": "self",
+      "dose": "第 2 劑",
+      "ageLabel": "4–6 歲",
+      "note": "自費；可降低突破性感染",
+      "source": {
+        "title": "本站水痘疫苗頁",
+        "url": "/vaccines/varicella/"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.influenza-school",
+      "vaccine": "vaccine.influenza",
+      "label": "流感疫苗 每年 1 劑（學生）",
+      "ageMinMonths": 84,
+      "ageMaxMonths": 227,
+      "stage": "school",
+      "funded": "public",
+      "dose": "每年 1 劑",
+      "ageLabel": "國小、國中、高中職、五專一至三年級",
+      "note": "校園集中接種；每年 10 月 1 日起",
+      "recurring": "yearly",
+      "startAt": "2026-10-01",
+      "source": {
+        "title": "本站流感疫苗頁（2026–2027 年度計畫）",
+        "url": "/vaccines/influenza/"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.hpv",
+      "vaccine": "vaccine.hpv",
+      "label": "HPV 疫苗 2 劑",
+      "ageMinMonths": 144,
+      "ageMaxMonths": 167,
+      "stage": "school",
+      "funded": "public",
+      "dose": "2 劑，間隔 6 個月",
+      "ageLabel": "國中一年級",
+      "group": "國中一年級學生（男生自 113 學年度入學者起納入，2025 年 9 月開打）",
+      "note": "校園集中接種",
+      "startAt": "2025-09-01",
+      "source": {
+        "title": "公費 HPV 疫苗納入國中男生（2025-09 起）",
+        "url": "https://udn.com/news/story/7266/8935427"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.covid-school",
+      "vaccine": "vaccine.covid-19",
+      "label": "新冠疫苗 本年度 1 劑（學生）",
+      "ageMinMonths": 84,
+      "ageMaxMonths": 227,
+      "stage": "school",
+      "funded": "public",
+      "dose": "本年度 1 劑",
+      "ageLabel": "國小至高中職學生（6 個月以上皆可接種）",
+      "note": "與前一劑間隔至少 12 週；每年 10 月 1 日起",
+      "recurring": "yearly",
+      "startAt": "2026-10-01",
+      "source": {
+        "title": "本站新冠疫苗頁（2026–2027 年度建議）",
+        "url": "/vaccines/covid-19/"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.covid-adult",
+      "vaccine": "vaccine.covid-19",
+      "label": "新冠疫苗 本年度 1 劑（19–64 歲）",
+      "ageMinMonths": 228,
+      "ageMaxMonths": 779,
+      "stage": "adult",
+      "funded": "public",
+      "dose": "本年度 1 劑",
+      "ageLabel": "19–64 歲（6 個月以上皆可接種）",
+      "note": "與前一劑間隔至少 12 週；每年 10 月 1 日起",
+      "recurring": "yearly",
+      "startAt": "2026-10-01",
+      "source": {
+        "title": "本站新冠疫苗頁（2026–2027 年度建議）",
+        "url": "/vaccines/covid-19/"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.influenza-adult-risk",
+      "vaccine": "vaccine.influenza",
+      "label": "流感疫苗 每年 1 劑（19–64 歲高風險對象）",
+      "ageMinMonths": 228,
+      "ageMaxMonths": 779,
+      "stage": "adult",
+      "funded": "conditional",
+      "dose": "每年 1 劑",
+      "ageLabel": "19–64 歲",
+      "group": "具慢性病、BMI ≥ 30、罕見疾病、重大傷病者；孕婦及 6 個月內嬰兒之父母；醫事防疫人員、禽畜業、幼兒園托育人員、長照機構住民與工作人員",
+      "recurring": "yearly",
+      "startAt": "2026-10-01",
+      "source": {
+        "title": "本站流感疫苗頁（2026–2027 年度計畫）",
+        "url": "/vaccines/influenza/"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.influenza-adult-50",
+      "vaccine": "vaccine.influenza",
+      "label": "流感疫苗 每年 1 劑（50–64 歲）",
+      "ageMinMonths": 600,
+      "ageMaxMonths": 779,
+      "stage": "adult",
+      "funded": "public",
+      "dose": "每年 1 劑",
+      "ageLabel": "50–64 歲",
+      "group": "50–64 歲無高風險慢性病成人（第二階段，11 月 1 日起）",
+      "recurring": "yearly",
+      "startAt": "2026-11-01",
+      "source": {
+        "title": "本站流感疫苗頁（2026–2027 年度計畫）",
+        "url": "/vaccines/influenza/"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.influenza-indigenous",
+      "vaccine": "vaccine.influenza",
+      "label": "流感疫苗 每年 1 劑（55 歲以上原住民）",
+      "ageMinMonths": 660,
+      "ageMaxMonths": null,
+      "stage": "adult",
+      "funded": "conditional",
+      "dose": "每年 1 劑",
+      "ageLabel": "55 歲以上",
+      "group": "55 歲以上原住民",
+      "recurring": "yearly",
+      "startAt": "2026-10-01",
+      "source": {
+        "title": "本站流感疫苗頁（2026–2027 年度計畫）",
+        "url": "/vaccines/influenza/"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.pcv-adult-risk",
+      "vaccine": "vaccine.pneumococcal",
+      "label": "肺炎鏈球菌疫苗 1 劑（19–64 歲 IPD 高風險對象）",
+      "ageMinMonths": 228,
+      "ageMaxMonths": 779,
+      "stage": "adult",
+      "funded": "conditional",
+      "dose": "1 劑 PCV20 或 PCV21",
+      "ageLabel": "19–64 歲",
+      "group": "侵襲性肺炎鏈球菌感染症高風險對象：脾臟功能缺損或脾臟切除、先天或後天免疫功能不全、人工耳植入、腦脊髓液滲漏、接受免疫抑制劑或放射治療的惡性腫瘤者、器官移植者",
+      "note": "2026-01-15 起 1 劑 PCV20，2026-08-10 起增加 PCV21；只打過 13／15 價者間隔至少 8 週可接種；完整接種 13／15 價＋23 價者，滿 65 歲且間隔 5 年以上可再接種 1 劑",
+      "startAt": "2026-01-15",
+      "source": {
+        "title": "疾管署：成人肺炎鏈球菌疫苗（正式資訊）",
+        "url": "https://www.cdc.gov.tw/Category/Page/U_hY1WCfa5BU6fuqW9FIXg"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.pcv-indigenous",
+      "vaccine": "vaccine.pneumococcal",
+      "label": "肺炎鏈球菌疫苗 1 劑（55–64 歲原住民）",
+      "ageMinMonths": 660,
+      "ageMaxMonths": 779,
+      "stage": "adult",
+      "funded": "conditional",
+      "dose": "1 劑 PCV20 或 PCV21",
+      "ageLabel": "55–64 歲",
+      "group": "55–64 歲原住民",
+      "startAt": "2026-01-15",
+      "source": {
+        "title": "疾管署：成人肺炎鏈球菌疫苗（正式資訊）",
+        "url": "https://www.cdc.gov.tw/Category/Page/U_hY1WCfa5BU6fuqW9FIXg"
+      },
+      "verified": false,
+      "note": "2026-01-15 起 1 劑 PCV20，2026-08-10 起增加 PCV21；接種時出示原住民身分證明"
+    },
+    {
+      "id": "sched.mmr-adult",
+      "vaccine": "vaccine.mmr",
+      "label": "MMR 疫苗 1 劑（成人出國前）",
+      "ageMinMonths": 228,
+      "ageMaxMonths": null,
+      "stage": "adult",
+      "funded": "self",
+      "dose": "1 劑",
+      "ageLabel": "1966 年（含）以後出生之成人",
+      "group": "不具免疫力且前往流行地區者，出國前 2–4 週至旅遊醫學門診評估",
+      "note": "自費；產檢德國麻疹抗體陰性之產後婦女為公費",
+      "source": {
+        "title": "本站 MMR 疫苗頁",
+        "url": "/vaccines/mmr/"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.tdap-pregnancy",
+      "vaccine": "vaccine.tdap",
+      "label": "Tdap 疫苗 1 劑（孕婦）",
+      "ageMinMonths": 228,
+      "ageMaxMonths": null,
+      "stage": "pregnancy",
+      "funded": "self",
+      "dose": "每次懷孕 1 劑",
+      "ageLabel": "孕期第 28–36 週",
+      "group": "孕婦",
+      "note": "多為自費，部分縣市補助，請洽產檢院所或衛生所",
+      "source": {
+        "title": "本站 Q&A：孕婦接種 Tdap",
+        "url": "/faq/pregnant-tdap/"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.influenza-pregnancy",
+      "vaccine": "vaccine.influenza",
+      "label": "流感疫苗 每年 1 劑（孕婦）",
+      "ageMinMonths": 228,
+      "ageMaxMonths": null,
+      "stage": "pregnancy",
+      "funded": "public",
+      "dose": "每年 1 劑",
+      "ageLabel": "孕期任何階段",
+      "group": "孕婦及 6 個月內嬰兒之父母",
+      "recurring": "yearly",
+      "startAt": "2026-10-01",
+      "source": {
+        "title": "本站流感疫苗頁（2026–2027 年度計畫）",
+        "url": "/vaccines/influenza/"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.zoster",
+      "vaccine": "vaccine.zoster",
+      "label": "帶狀疱疹疫苗 2 劑",
+      "ageMinMonths": 600,
+      "ageMaxMonths": null,
+      "stage": "adult",
+      "funded": "self",
+      "dose": "2 劑（依廠牌）",
+      "ageLabel": "50 歲以上",
+      "note": "非全國公費項目；部分縣市對特定年齡長者提供補助，請洽衛生局",
+      "source": {
+        "title": "待補：各縣市衛生局公告",
+        "url": "/vaccines/"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.influenza-older",
+      "vaccine": "vaccine.influenza",
+      "label": "流感疫苗 每年 1 劑（65 歲以上）",
+      "ageMinMonths": 780,
+      "ageMaxMonths": null,
+      "stage": "older",
+      "funded": "public",
+      "dose": "每年 1 劑",
+      "ageLabel": "65 歲以上",
+      "group": "65 歲以上長者",
+      "recurring": "yearly",
+      "startAt": "2026-10-01",
+      "source": {
+        "title": "本站流感疫苗頁（2026–2027 年度計畫）",
+        "url": "/vaccines/influenza/"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.pcv-older",
+      "vaccine": "vaccine.pneumococcal",
+      "label": "肺炎鏈球菌疫苗 1 劑（65 歲以上）",
+      "ageMinMonths": 780,
+      "ageMaxMonths": null,
+      "stage": "older",
+      "funded": "public",
+      "dose": "1 劑 PCV20 或 PCV21",
+      "ageLabel": "65 歲以上",
+      "group": "65 歲以上長者",
+      "note": "2026-01-15 起以 1 劑 PCV20 取代「PCV13／15＋PPV23」兩劑，2026-08-10 起增加 PCV21；已接種 13／15 價＋23 價各 1 劑或已接種 20／21 價者不需再接種；只打過其中一種者間隔至少 1 年再接種 1 劑新疫苗",
+      "startAt": "2026-01-15",
+      "source": {
+        "title": "疾管署：成人肺炎鏈球菌疫苗（正式資訊）",
+        "url": "https://www.cdc.gov.tw/Category/Page/U_hY1WCfa5BU6fuqW9FIXg"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.covid-older",
+      "vaccine": "vaccine.covid-19",
+      "label": "新冠疫苗 本年度 1 劑＋間隔 6 個月可再 1 劑（65 歲以上）",
+      "ageMinMonths": 780,
+      "ageMaxMonths": null,
+      "stage": "older",
+      "funded": "public",
+      "dose": "本年度 1 劑；間隔 6 個月可再接種 1 劑",
+      "ageLabel": "65 歲以上",
+      "group": "65 歲以上長者、中重度免疫不全者",
+      "recurring": "yearly",
+      "startAt": "2026-10-01",
+      "source": {
+        "title": "本站新冠疫苗頁（2026–2027 年度建議）",
+        "url": "/vaccines/covid-19/"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.mpox",
+      "vaccine": "vaccine.mpox",
+      "label": "M痘疫苗 2 劑（高風險對象）",
+      "ageMinMonths": 228,
+      "ageMaxMonths": null,
+      "stage": "risk",
+      "funded": "conditional",
+      "dose": "2 劑，間隔至少 4 週",
+      "ageLabel": "18 歲以上高風險對象",
+      "group": "近 1 年有高風險性行為者、接觸者、實驗室人員等",
+      "source": {
+        "title": "本站 M 痘疾病頁",
+        "url": "/diseases/mpox/"
+      },
+      "verified": false
+    },
+    {
+      "id": "sched.rabies-pep",
+      "vaccine": "vaccine.rabies",
+      "label": "狂犬病疫苗（暴露後）",
+      "ageMinMonths": 0,
+      "ageMaxMonths": null,
+      "stage": "risk",
+      "funded": "conditional",
+      "dose": "暴露後 4–5 劑",
+      "ageLabel": "不限年齡",
+      "group": "遭動物咬傷且經評估需接種者",
+      "note": "暴露後預防為公費；暴露前預防為自費",
+      "source": {
+        "title": "本站狂犬病疾病頁",
+        "url": "/diseases/rabies/"
+      },
+      "verified": false
+    }
+  ]
+}

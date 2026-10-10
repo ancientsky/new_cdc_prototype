@@ -1,0 +1,64 @@
+{
+  "id": "faq.stats-ili-rate",
+  "type": "faq",
+  "title": "「類流感門急診就診率」是什麼意思？",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2016-09-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "指每週健保門診與急診就診人次中，因類流感（發燒合併咳嗽或喉嚨痛等）就醫所占的比例。疾管署以此觀察流感活動的高低：連續上升並超過流行閾值時，代表進入流行期。",
+  "question": "「類流感門急診就診率」是什麼意思？",
+  "answerMarkdown": "指每週健保**門診與急診就診人次中，因類流感（發燒合併咳嗽或喉嚨痛等）就醫所占的比例**。疾管署以此觀察流感活動的高低：連續上升並超過流行閾值時，代表進入流行期。\n\n就診率是群體監測指標，不代表確診人數；個人是否感染流感，仍需由醫師診斷。",
+  "tasks": [
+    "data"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/4VcQG32UMghZ8yHk42hUVQ"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 31 處（mso 樣式 21、Mso 類別 8、命名空間標籤 5）"
+      },
+      {
+        "code": "faq-structure-loose",
+        "severity": "info",
+        "message": "沒有 .panel 結構，依「Q 開頭的標題／段落」拆成 3 題，請核對題目與答案的切分"
+      },
+      {
+        "code": "one-to-many",
+        "severity": "info",
+        "message": "一頁 3 題、清單沒有單一目標：status 維持 pending，請決定併入疾病頁（merged）或各題獨立（新站以 tasks 歸類）"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「「類流感門急診就診率」是什麼意思？」→ data；「疫情統計數字可以到哪裡查？」→ data、situation；「傳染病統計多久更新一次？」→ data、situation"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/4VcQG32UMghZ8yHk42hUVQ",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.stats-ili-rate"
+    ]
+  }
+}

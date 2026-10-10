@@ -1,0 +1,53 @@
+{
+  "id": "news.2025-04-16-legacy-9688a5",
+  "type": "news",
+  "title": "MMR recommendations revised: adults born in 1966 or later now eligible for assessment",
+  "owner": "unit.pr",
+  "publishedAt": "2025-04-16",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "Taiwan CDC revised its MMR recommendations: adults born in 1966 or later without measles immunity should be assessed fo…",
+  "newsType": "press",
+  "bodyMarkdown": "Taiwan CDC revised its MMR recommendations: adults born in 1966 or later without measles immunity should be assessed for a self-paid dose 2–4 weeks before travel; workers in frequent contact with foreign nationals were added.\n\nTaiwan Centers for Disease Control (Taiwan CDC) press release. Full English text is a simulated export; Chinese source is the authoritative version.",
+  "sourceLang": "en",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/V9mW8f2b5lpfkdk4UEOkRX?typeid=158"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+      },
+      {
+        "code": "news-type-hint",
+        "severity": "info",
+        "message": "英文新聞稿以 sourceLang: en 建立，需補中文版"
+      },
+      {
+        "code": "needs-source-zh",
+        "severity": "warn",
+        "message": "來源語言 en：新站以中文為正本（治理規則 18），請補中文版後再上線；不列入 auto-ok"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/V9mW8f2b5lpfkdk4UEOkRX?typeid=158",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

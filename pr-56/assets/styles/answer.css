@@ -1,0 +1,171 @@
+/* 答案頁（搜尋即答案）、拒答卡、來源卡浮層、統計圖、謠言判定。
+   只用 tokens.css 變數；以 .ask-page 範圍加強 C 在 components.css 的基本版，不覆寫全站樣式。 */
+
+.ask-page{line-height:1.7}
+.ask-page h2{font-size:var(--fs-lg);margin:var(--sp-5) 0 var(--sp-3);display:flex;flex-wrap:wrap;align-items:center;gap:var(--sp-2)}
+.ask-page h3{font-size:var(--fs-md);margin:var(--sp-4) 0 var(--sp-2)}
+.ask-page .c-answer__inner>*:first-child{margin-top:0}
+.ask-page .muted,.c-answer-side .muted{color:var(--ink-3);font-size:var(--fs-sm)}
+
+/* 專業模式標示 */
+.c-answer__pro-label{display:flex;gap:var(--sp-2);align-items:center;background:var(--navy-100);color:var(--navy-900);border-radius:var(--radius-sm);padding:var(--sp-2) var(--sp-3);font-size:var(--fs-sm);margin:0 0 var(--sp-4)}
+.ask-page .c-tag{display:inline-block;border:1px solid var(--line);border-radius:var(--radius-pill);padding:0 10px;font-size:var(--fs-xs);color:var(--ink-2);background:var(--white)}
+.ask-page .c-tag--pro{background:var(--navy-700);border-color:var(--navy-700);color:var(--white);font-weight:700}
+.ask-page .c-tag--warn{background:var(--alert-superseded-bg);border-color:var(--alert-superseded);color:var(--alert-superseded)}
+
+/* 態勢卡 */
+.c-answer__situation{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--sp-4);margin-bottom:var(--sp-5)}
+.ask-page .c-answer-sit{border:1px solid var(--line);border-left:6px solid var(--status-stable);border-radius:var(--radius);padding:var(--sp-4);background:var(--white)}
+.ask-page .c-answer-sit.c-sit-card--rising{border-left-color:var(--status-rising)}
+.ask-page .c-answer-sit.c-sit-card--peak{border-left-color:var(--status-peak)}
+.ask-page .c-answer-sit.c-sit-card--declining{border-left-color:var(--status-declining)}
+.ask-page .c-answer-sit header{display:flex;align-items:center;gap:var(--sp-2);flex-wrap:wrap}
+.ask-page .c-answer-sit h3{margin:0;font-size:var(--fs-md)}
+.ask-page .c-sit-card__metric{margin:var(--sp-2) 0}
+.ask-page .c-sit-card__metric b{font-size:var(--fs-2xl);color:var(--ink);margin-right:var(--sp-1)}
+.ask-page .c-sit-card__chart svg{max-width:100%;height:auto;color:var(--status-peak)}
+.ask-page .c-sit-card__basis{font-size:var(--fs-sm);color:var(--ink-2);margin:var(--sp-2) 0}
+.ask-page .c-provenance{font-size:var(--fs-xs);color:var(--ink-3);margin:var(--sp-2) 0 0}
+
+/* 回答句 */
+.c-answer__body h2 .c-answer__sub{font-size:var(--fs-sm);font-weight:400;color:var(--ink-3)}
+.c-answer__sents{list-style:none;padding:0;margin:0}
+.c-answer__sent{margin:0 0 var(--sp-3);padding-left:var(--sp-3);border-left:3px solid var(--green-100)}
+.c-answer__sent>p{margin:0}
+.ask-page .c-cite{font:inherit;font-size:.72em;font-weight:700;line-height:1;vertical-align:super;min-width:1.6em;min-height:1.6em;padding:2px 5px;margin:0 2px;border:1px solid var(--info);border-radius:var(--radius-pill);background:var(--info-bg);color:var(--info);cursor:pointer}
+.ask-page .c-cite:hover,.ask-page .c-cite[aria-expanded="true"]{background:var(--info);color:var(--white)}
+.ask-page .c-cite:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.c-answer__citelabel{font-size:var(--fs-sm);color:var(--navy-700);margin:var(--sp-1) 0 0;font-family:var(--font)}
+.c-answer__original{font-size:var(--fs-xs);color:var(--ink-3);margin:var(--sp-1) 0 0}
+.ask-page .c-cite-pop{margin:var(--sp-2) 0 var(--sp-3);box-shadow:var(--shadow);padding:var(--sp-3) var(--sp-4)}
+.ask-page .c-cite-pop .c-deflist{margin-bottom:var(--sp-2)}
+.c-cite-pop__t{margin:0 0 var(--sp-2);font-weight:700;color:var(--green-900)}
+.c-translation-badge{display:inline-block;background:var(--warn-bg);color:var(--warn);border-radius:var(--radius-sm);padding:2px var(--sp-3);font-size:var(--fs-sm)}
+.c-answer__termnote,.c-answer__lowconf,.c-answer__lowrel{background:var(--info-bg);color:var(--info);border-radius:var(--radius-sm);padding:var(--sp-2) var(--sp-3);font-size:var(--fs-sm)}
+.c-answer__llm-status{font-size:var(--fs-sm);color:var(--ink-2)}
+
+/* 元件 4／6：AI 揭露列＋回報 */
+.ask-page .c-ai-disclosure{background:var(--neutral-bg);border-radius:var(--radius);padding:var(--sp-3) var(--sp-4);margin:var(--sp-5) 0;font-size:var(--fs-sm);color:var(--ink-2)}
+.ask-page .c-ai-disclosure p{margin:0 0 var(--sp-2)}
+.c-ai-disclosure__model{display:block;color:var(--ink-3);font-size:var(--fs-xs);margin-top:var(--sp-1)}
+.c-ai-disclosure__meta{display:flex;flex-wrap:wrap;gap:var(--sp-3);align-items:center}
+.c-ai-disclosure__meta code{font-family:var(--font-mono);background:var(--white);border:1px solid var(--line);border-radius:var(--radius-sm);padding:0 6px}
+.ask-page .c-answer-report>summary{list-style:none;display:inline-flex}
+.ask-page .c-answer-report>summary::-webkit-details-marker{display:none}
+.ask-page .c-feedback__form{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:var(--sp-3) var(--sp-4);margin-top:var(--sp-2)}
+.ask-page .c-feedback__form fieldset{border:0;padding:0;margin:0 0 var(--sp-2);display:flex;flex-wrap:wrap;gap:var(--sp-2) var(--sp-4)}
+.ask-page .c-feedback__form textarea{width:100%;font:inherit;border:1px solid var(--line);border-radius:var(--radius-sm);padding:var(--sp-2)}
+.ask-page .c-feedback__done{color:var(--ok);font-weight:700}
+
+/* 接下來可以 */
+.c-answer__actions{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:var(--sp-2)}
+.ask-page .c-btn--primary{background:var(--status-peak);border-color:var(--status-peak);color:var(--white)}
+.ask-page .c-btn--primary:hover{filter:brightness(.92);color:var(--white)}
+
+/* 答案來源 */
+.c-source-list{list-style:none;padding:0;margin:0;display:grid;gap:var(--sp-2)}
+.ask-page .c-source-list .c-source-card{margin:0}
+.ask-page .c-source-card>summary{display:grid;grid-template-columns:auto 1fr;gap:0 var(--sp-3);align-items:baseline;font-weight:400;color:var(--ink)}
+.c-source-card__n{grid-row:span 2;display:inline-flex;align-items:center;justify-content:center;min-width:1.8em;height:1.8em;border-radius:var(--radius-pill);background:var(--info-bg);color:var(--info);font-weight:700}
+.c-source-card__t{font-weight:700;color:var(--green-900)}
+.c-source-card__m{font-size:var(--fs-xs);color:var(--ink-3)}
+.c-source-card__body{padding:0 var(--sp-4) var(--sp-3)}
+.c-source-card__actions{display:flex;flex-wrap:wrap;gap:var(--sp-2);margin:var(--sp-2) 0 0}
+.ask-page .c-source-card ins{text-decoration:none;background:var(--ok-bg);color:var(--ok)}
+.ask-page .c-source-card del{color:var(--alert-superseded)}
+html[data-view="pro"] .ask-page .c-source-card{border-color:var(--navy-700)}
+
+/* 你可能也想知道、傳統列表 */
+.c-answer__related ul{padding-left:1.2em;margin:0}
+.c-result-list{list-style:none;padding:0;margin:0}
+.c-result-list>li{padding:var(--sp-3) 0;border-bottom:1px solid var(--line)}
+.c-result-list p{margin:var(--sp-1) 0 0}
+.c-result-list__t{font-weight:700;font-size:var(--fs-md)}
+.ask-page .c-answer__paused{border-radius:var(--radius);padding:var(--sp-3) var(--sp-4);margin-bottom:var(--sp-4)}
+.ask-page .c-answer__paused p{margin:0 0 var(--sp-2)}
+
+/* 元件 5：拒答卡 */
+.ask-page .c-refusal{margin:0 0 var(--sp-4)}
+.ask-page .c-refusal h2{margin-top:0;font-size:var(--fs-lg)}
+.ask-page .c-refusal--emergency{border-color:var(--status-peak);background:var(--status-peak-bg)}
+.ask-page .c-refusal--prompt-injection,.ask-page .c-refusal--impersonation,.ask-page .c-refusal--harmful{border-color:var(--navy-700);background:var(--navy-100)}
+.c-refusal__actions{display:flex;flex-wrap:wrap;gap:var(--sp-2)}
+.c-refusal__related ul{margin:0;padding-left:1.2em}
+
+/* 謠言判定 */
+.ask-page .c-verdict{display:inline-block;border-radius:var(--radius-pill);padding:2px 14px;font-size:var(--fs-sm);font-weight:800;border:2px solid currentColor}
+.ask-page .c-verdict--false{color:var(--verdict-false);background:var(--verdict-false-bg)}
+.ask-page .c-verdict--partly-true{color:var(--verdict-partly);background:var(--verdict-partly-bg)}
+.ask-page .c-verdict--outdated{color:var(--verdict-outdated);background:var(--verdict-outdated-bg)}
+.ask-page .c-verdict--true{color:var(--verdict-true);background:var(--verdict-true-bg)}
+.ask-page .c-verdict--unknown{color:var(--neutral);background:var(--neutral-bg)}
+.c-factcheck__claim{margin:var(--sp-3) 0;padding:var(--sp-2) var(--sp-4);border-left:4px solid var(--line-2);color:var(--ink-2);background:var(--neutral-bg)}
+.c-factcheck__share{background:var(--green-50);border:1px dashed var(--green-600);border-radius:var(--radius);padding:var(--sp-3) var(--sp-4);margin:var(--sp-3) 0}
+.c-factcheck__share p{margin:0 0 var(--sp-2)}
+.ask-page .c-alert--revised{background:var(--alert-revised-bg);color:var(--alert-revised);border-radius:var(--radius-sm);padding:var(--sp-2) var(--sp-3)}
+
+/* 統計 */
+.c-answer__stats-row{display:grid;grid-template-columns:minmax(160px,220px) 1fr;gap:var(--sp-4);align-items:center}
+.ask-page .c-stat-tile__num{font-size:var(--fs-3xl);font-weight:800;color:var(--green-900)}
+.c-answer__chart svg{width:100%;height:auto;color:var(--green-700)}
+.ask-page .c-table{border-collapse:collapse;margin:var(--sp-3) 0;font-size:var(--fs-sm)}
+.ask-page .c-table th,.ask-page .c-table td{border-bottom:1px solid var(--line);padding:4px var(--sp-3);text-align:right}
+.ask-page .c-table th[scope="row"],.ask-page .c-table thead th:first-child{text-align:left}
+.c-answer__nopredict{font-size:var(--fs-sm);color:var(--ink-2);font-weight:700}
+.ask-page .c-number-source{font-size:var(--fs-sm);color:var(--ink-2)}
+.ask-page .c-number-source>summary{padding:var(--sp-2) var(--sp-4)}
+.ask-page .c-number-source>dl{padding:0 var(--sp-4) var(--sp-2)}
+.ask-page .c-number-source>p{padding:0 var(--sp-4) var(--sp-3);margin:0}
+
+/* 右欄 */
+.c-answer-side .c-side-card{border:1px solid var(--line);border-radius:var(--radius);padding:var(--sp-3) var(--sp-4);margin-bottom:var(--sp-4);background:var(--white);font-size:var(--fs-sm)}
+.c-answer-side .c-side-card h2{font-size:var(--fs-md);margin:0 0 var(--sp-2)}
+.c-answer-side .c-side-card--disease{border-top:4px solid var(--green-700)}
+.c-side-list{list-style:none;padding:0;margin:0}
+.c-side-list>li{padding:var(--sp-1) 0;border-bottom:1px solid var(--line-2)}
+.c-side-list>li:last-child{border-bottom:0}
+
+/* 進階（BYOK） */
+.c-llm-ctl{display:flex;flex-wrap:wrap;gap:var(--sp-2);align-items:center;margin:var(--sp-2) 0}
+.c-llm-note{display:block;font-size:var(--fs-xs)}
+.c-llm-privacy{display:block;color:var(--ink-3);font-size:var(--fs-xs);margin-top:var(--sp-1)}
+
+@media (max-width: 860px){
+  .c-answer__stats-row{grid-template-columns:1fr}
+  .c-answer__situation{grid-template-columns:1fr}
+}
+@media print{
+  .ask-page .c-cite-pop[hidden]{display:block!important}
+  .c-answer-report,.c-answer__actions{display:none}
+}
+
+/* ── 第二輪：通報時限結構化卡、影片／申請／檢驗／主檔來源卡、已截止公告 ── */
+.c-answer__notify{margin:0 0 var(--sp-5)}
+.c-notify-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--sp-4)}
+.c-notify-card{border:1px solid var(--line);border-top:6px solid var(--navy-700);border-radius:var(--radius);padding:var(--sp-4);background:var(--white)}
+.c-notify-card--1,.c-notify-card--5{border-top-color:var(--status-peak)}
+.c-notify-card--2{border-top-color:var(--status-rising)}
+.c-notify-card--3{border-top-color:var(--status-declining)}
+.c-notify-card--4{border-top-color:var(--status-stable)}
+.c-notify-card header{display:flex;flex-wrap:wrap;align-items:center;gap:var(--sp-2)}
+.ask-page .c-notify-card h3{margin:0;font-size:var(--fs-md)}
+.c-notify-card__hours{margin:var(--sp-3) 0;line-height:1.2}
+.c-notify-card__hours b{font-size:var(--fs-2xl);color:var(--ink);display:inline-block}
+.c-notify-card__lead{font-size:var(--fs-sm);color:var(--ink-2)}
+.c-notify-card__links{display:flex;flex-wrap:wrap;gap:var(--sp-2);margin:0}
+.c-notify-pill{display:inline-block;border-radius:var(--radius-pill);padding:2px 12px;font-size:var(--fs-sm);font-weight:700;background:var(--navy-100);color:var(--navy-900);white-space:nowrap}
+.c-notify-pill--1,.c-notify-pill--5{background:var(--status-peak-bg);color:var(--status-peak)}
+.c-notify-pill--2{background:var(--status-rising-bg);color:var(--ink)}
+.c-notify-pill--3{background:var(--status-declining-bg);color:var(--status-declining)}
+.c-notify-pill--4{background:var(--status-stable-bg);color:var(--ink)}
+.c-answer__notify-note{margin:var(--sp-3) 0 0;padding:var(--sp-2) var(--sp-3);border-left:4px solid var(--info);background:var(--info-bg);font-size:var(--fs-sm);color:var(--ink)}
+
+.c-source-card__kind{color:var(--status-peak)}
+.c-source-card__poster{display:block;width:96px;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:var(--radius-sm);border:1px solid var(--line);margin:0 0 var(--sp-1);background:var(--paper)}
+.c-source-card--master .c-source-card__t{color:var(--navy-900)}
+.c-labtest-mini{width:100%;max-width:100%;font-size:var(--fs-xs);border-collapse:collapse;margin:var(--sp-1) 0}
+.c-source-card .c-labtest-mini th,.c-source-card .c-labtest-mini td{padding:2px var(--sp-2);border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-variant-numeric:normal}
+.c-source-card .c-labtest-mini th{white-space:nowrap;color:var(--ink-2);font-weight:400;width:6em}
+.c-ai-disclosure__transcript{display:inline-block;margin-left:var(--sp-2);font-size:var(--fs-xs);color:var(--ink-2);border:1px solid var(--line);border-radius:var(--radius-pill);padding:0 8px}
+.c-answer__sent--closed{border-left-color:var(--line-2);color:var(--ink-2)}
+.c-answer__fulltext{margin:var(--sp-4) 0 0;display:flex;flex-wrap:wrap;gap:var(--sp-2) var(--sp-3);align-items:center}

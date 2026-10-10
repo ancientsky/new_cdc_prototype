@@ -1,0 +1,1437 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "56d8f674e4c4",
+    "lastModified": "2026-09-15",
+    "count": 8
+  },
+  "data": [
+    {
+      "id": "clar.2025-04-mmr-born-after-1981-only",
+      "type": "clarification",
+      "title": "網傳「MMR 只有 1981 年後出生的人要補打」",
+      "owner": "unit.pr",
+      "publishedAt": "2025-04-10",
+      "reviewedAt": "2025-04-10",
+      "reviewPeriodMonths": 6,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "rumor"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "doc.mmr-recommendation"
+      ],
+      "diseases": [
+        "disease.measles"
+      ],
+      "vaccines": [
+        "vaccine.mmr"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2025-04-12",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "machine"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "summary": "「只有 1981 年後出生要補打 MMR」為舊版建議；2025-04-16 修訂後，1966 年（含）以後出生不具免疫力者亦應評估。",
+      "keywords": [
+        "MMR",
+        "麻疹",
+        "舊版建議",
+        "出生年"
+      ],
+      "claim": "MMR 只有 1981 年後出生的人要補打，1966 到 1980 年出生的人都不用",
+      "claimVariants": [
+        "民國70年後出生才要打麻疹疫苗",
+        "1981年前出生的人不用打MMR",
+        "只有七年級生要補打MMR"
+      ],
+      "verdict": "outdated",
+      "channels": [
+        "LINE",
+        "Facebook"
+      ],
+      "reportChannel": "1922 防疫專線",
+      "clarificationMarkdown": "此說法依據的是 108 年 5 月版「國內現行 MMR 預防接種建議」，當時成人評估對象以 1981 年為分界。\n\n疾管署已預告將於 2025 年 4 月 16 日修訂建議：屆時 **1966 年（含）以後出生**、不具麻疹免疫力的成人，計畫前往流行地區時也應評估接種。修訂公告後請以現行版建議為準。",
+      "shareText": "【疾管署說明】「只有 1981 年後出生才要打 MMR」是舊版建議。疾管署預告 2025 年 4 月 16 日起，1966 年（含）以後出生、不具免疫力者前往流行地區前也應評估接種，請以最新公告為準。",
+      "i18n": {
+        "en": {
+          "title": "Claim that only people born after 1981 need MMR",
+          "shareText": "Taiwan CDC: \"only people born after 1981 need MMR\" reflects the old recommendation. From 16 April 2025, adults born in 1966 or later without immunity should also be assessed before travelling to affected areas. Follow the latest announcement."
+        }
+      },
+      "sourceHash": "101e3657596c",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/factcheck/#clar.2025-04-mmr-born-after-1981-only",
+      "path": "/factcheck/#clar.2025-04-mmr-born-after-1981-only",
+      "md": null,
+      "governance": {
+        "owner": "unit.pr",
+        "ownerName": "公關室",
+        "steward": null,
+        "reviewedAt": "2025-04-10",
+        "reviewPeriodMonths": 6,
+        "nextReviewAt": "2025-10-10",
+        "daysToReview": -356,
+        "overdue": true,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "overdue",
+        "lifecycleLabel": "逾期待審",
+        "whitelist": false,
+        "whitelistTier": "public",
+        "whitelistPublic": false,
+        "whitelistReasons": [
+          "overdue",
+          "based-on-revised"
+        ],
+        "whitelistReasonLabels": [
+          "已超過審閱期限，待權責單位重新審閱",
+          "所依據的正本已修訂，衍生內容尚未更新"
+        ],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "clar.2025-04-mmr-born-after-1981-only",
+        "noindex": false,
+        "stale": [
+          {
+            "basedOn": "doc.mmr-recommendation",
+            "revisedAt": "2025-04-16",
+            "currentId": "doc.mmr-recommendation.2025-04-16",
+            "currentTitle": "國內現行 MMR 預防接種建議（114.04.16 版）",
+            "currentVersion": "114.04.16",
+            "currentHref": "/documents/mmr-recommendation.2025-04-16/",
+            "dueAt": "2025-04-23",
+            "resolved": false,
+            "resolvedAt": null
+          }
+        ],
+        "basisRevisions": [
+          {
+            "basedOn": "doc.mmr-recommendation",
+            "revisedAt": "2025-04-16",
+            "currentId": "doc.mmr-recommendation.2025-04-16",
+            "currentTitle": "國內現行 MMR 預防接種建議（114.04.16 版）",
+            "currentVersion": "114.04.16",
+            "currentHref": "/documents/mmr-recommendation.2025-04-16/",
+            "dueAt": "2025-04-23",
+            "resolved": false,
+            "resolvedAt": null
+          }
+        ],
+        "predatesBasis": false,
+        "annotations": [
+          {
+            "kind": "overdue",
+            "level": "warning",
+            "text": "本頁最後審閱於 2025-04-10，已超過審閱期限（2025-10-10），內容可能過時，請以權責單位最新公告為準。",
+            "href": null,
+            "path": null,
+            "reviewedAt": "2025-04-10",
+            "nextReviewAt": "2025-10-10"
+          },
+          {
+            "kind": "based-on-revised",
+            "level": "warning",
+            "text": "本內容發布於 2025-04-10，所依據的「國內現行 MMR 預防接種建議（114.04.16 版）」已於 2025-04-16 修訂；權責單位更新前，請以現行版為準。",
+            "href": "doc.mmr-recommendation.2025-04-16",
+            "targetId": "doc.mmr-recommendation.2025-04-16",
+            "path": "/documents/mmr-recommendation.2025-04-16/",
+            "revisedAt": "2025-04-16",
+            "currentTitle": "國內現行 MMR 預防接種建議（114.04.16 版）"
+          }
+        ],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "101e3657596c",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2025-04-12",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "machine"
+          },
+          "tl": {
+            "status": "machine"
+          },
+          "vi": {
+            "status": "machine"
+          },
+          "id": {
+            "status": "machine"
+          },
+          "th": {
+            "status": "machine"
+          }
+        },
+        "translationStale": {
+          "en": false,
+          "ja": false,
+          "tl": false,
+          "vi": false,
+          "id": false,
+          "th": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "clar.2025-07-dengue-spraying-poison",
+      "type": "clarification",
+      "title": "網傳「登革熱噴藥會毒死人、可以拒絕開門」為錯誤訊息",
+      "owner": "unit.pr",
+      "publishedAt": "2025-07-15",
+      "reviewedAt": "2026-07-10",
+      "reviewPeriodMonths": 6,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "rumor"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "disease.dengue"
+      ],
+      "diseases": [
+        "disease.dengue"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2025-07-20",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "reviewed",
+          "reviewedAt": "2025-07-25",
+          "reviewer": "簽約譯者（菲律賓文）"
+        },
+        "vi": {
+          "status": "reviewed",
+          "reviewedAt": "2025-07-25",
+          "reviewer": "簽約譯者（越南文）"
+        },
+        "id": {
+          "status": "reviewed",
+          "reviewedAt": "2025-07-25",
+          "reviewer": "簽約譯者（印尼文）"
+        },
+        "th": {
+          "status": "reviewed",
+          "reviewedAt": "2025-07-25",
+          "reviewer": "簽約譯者（泰文）"
+        }
+      },
+      "summary": "登革熱防治用藥經核准並依規定稀釋，噴藥前會通知住戶暫離；配合防治是法定義務，清除積水才是根本。",
+      "keywords": [
+        "登革熱",
+        "噴藥",
+        "謠言",
+        "孳生源"
+      ],
+      "claim": "登革熱噴的藥會毒死人，衛生所來噴藥可以拒絕開門",
+      "claimVariants": [
+        "登革熱噴藥有毒不要開門",
+        "噴藥比蚊子還毒會致癌",
+        "衛生局噴消毒藥可以拒絕"
+      ],
+      "verdict": "false",
+      "relatedNews": [
+        "news.2025-07-15-clarify-dengue-spray"
+      ],
+      "channels": [
+        "LINE",
+        "Facebook"
+      ],
+      "reportChannel": "1922 防疫專線、LINE 檢舉",
+      "clarificationMarkdown": "登革熱緊急防治使用的環境衛生用藥均經主管機關核准，依規定濃度稀釋，由專業人員施作。噴藥前會通知住戶收妥食物、餐具、寵物並暫時離開，依指示通風後即可返回。\n\n依傳染病防治法，民眾應配合衛生單位的孳生源清除與防治措施。噴藥只能殺死成蚊，**每週清除積水容器才是根本**。",
+      "shareText": "【疾管署澄清】登革熱防治用藥經核准、依規定稀釋並由專業人員施作，噴藥前會通知收好食物並暫離，通風後即可返家。配合防治是法定義務，每週清除積水容器最重要。有疑問請撥 1922。",
+      "i18n": {
+        "en": {
+          "title": "Claim that dengue spraying is deadly and can be refused is false",
+          "shareText": "Taiwan CDC: dengue control insecticides are approved, diluted to set standards and applied by professionals. You will be told to store food and leave briefly; return after ventilating. Cooperation is required by law, and removing standing water weekly matters most. Questions: call 1922."
+        },
+        "vi": {
+          "title": "Tin đồn \"phun thuốc chống sốt xuất huyết gây chết người, có thể từ chối mở cửa\" là sai",
+          "shareText": "CDC Đài Loan: thuốc phun chống muỗi đã được cấp phép, pha đúng nồng độ và do nhân viên chuyên môn phun. Trước khi phun sẽ thông báo cất thức ăn và tạm rời nhà, thông gió xong có thể về. Phối hợp là nghĩa vụ theo luật; quan trọng nhất là đổ nước đọng mỗi tuần. Hỏi thêm: gọi 1922."
+        },
+        "id": {
+          "title": "Kabar \"penyemprotan demam berdarah mematikan dan boleh menolak membuka pintu\" adalah salah",
+          "shareText": "CDC Taiwan: insektisida untuk pengendalian demam berdarah sudah disetujui, diencerkan sesuai standar dan disemprotkan oleh petugas profesional. Anda akan diminta menyimpan makanan dan keluar sebentar, lalu kembali setelah ventilasi. Bekerja sama wajib menurut hukum; yang terpenting buang genangan air setiap minggu. Tanya: hubungi 1922."
+        },
+        "th": {
+          "title": "ข่าวลือ \"การพ่นยากำจัดยุงไข้เลือดออกทำให้ตาย ปฏิเสธไม่เปิดประตูได้\" ไม่เป็นความจริง",
+          "shareText": "CDC ไต้หวัน: ยาที่ใช้พ่นป้องกันไข้เลือดออกผ่านการอนุมัติ ผสมตามความเข้มข้นที่กำหนด และพ่นโดยเจ้าหน้าที่ผู้เชี่ยวชาญ ก่อนพ่นจะแจ้งให้เก็บอาหารและออกจากบ้านชั่วคราว ระบายอากาศแล้วกลับเข้าบ้านได้ การให้ความร่วมมือเป็นหน้าที่ตามกฎหมาย สิ่งสำคัญที่สุดคือเทน้ำขังทุกสัปดาห์ สอบถามโทร 1922"
+        },
+        "tl": {
+          "title": "Mali ang balitang \"nakamamatay ang pag-spray laban sa dengue at puwedeng hindi magbukas ng pinto\"",
+          "shareText": "Taiwan CDC: aprubado ang mga insecticide laban sa dengue, tinitimpla ayon sa pamantayan at ini-spray ng mga propesyonal. Sasabihan kayong itago ang pagkain at lumabas sandali; makababalik matapos pahanginan. Obligasyon ayon sa batas ang pakikipagtulungan; pinakamahalaga ang pagtatapon ng naipong tubig linggu-linggo. Magtanong: tumawag sa 1922."
+        }
+      },
+      "sourceHash": "550b93fd02c4",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/factcheck/#clar.2025-07-dengue-spraying-poison",
+      "path": "/factcheck/#clar.2025-07-dengue-spraying-poison",
+      "md": null,
+      "governance": {
+        "owner": "unit.pr",
+        "ownerName": "公關室",
+        "steward": null,
+        "reviewedAt": "2026-07-10",
+        "reviewPeriodMonths": 6,
+        "nextReviewAt": "2027-01-10",
+        "daysToReview": 101,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "clar.2025-07-dengue-spraying-poison",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "550b93fd02c4",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2025-07-20",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "machine"
+          },
+          "tl": {
+            "status": "reviewed",
+            "reviewedAt": "2025-07-25",
+            "reviewer": "簽約譯者（菲律賓文）"
+          },
+          "vi": {
+            "status": "reviewed",
+            "reviewedAt": "2025-07-25",
+            "reviewer": "簽約譯者（越南文）"
+          },
+          "id": {
+            "status": "reviewed",
+            "reviewedAt": "2025-07-25",
+            "reviewer": "簽約譯者（印尼文）"
+          },
+          "th": {
+            "status": "reviewed",
+            "reviewedAt": "2025-07-25",
+            "reviewer": "簽約譯者（泰文）"
+          }
+        },
+        "translationStale": {
+          "en": false,
+          "ja": false,
+          "tl": false,
+          "vi": false,
+          "id": false,
+          "th": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en",
+          "tl",
+          "vi",
+          "id",
+          "th"
+        ]
+      }
+    },
+    {
+      "id": "clar.2026-01-vinegar-saltwater-flu",
+      "type": "clarification",
+      "title": "網傳「燻白醋、喝鹽水可以殺死流感病毒」沒有科學根據",
+      "owner": "unit.pr",
+      "publishedAt": "2026-01-15",
+      "reviewedAt": "2026-07-01",
+      "reviewPeriodMonths": 6,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "rumor"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "disease.influenza"
+      ],
+      "diseases": [
+        "disease.influenza"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-01-20",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "reviewed",
+          "reviewedAt": "2026-01-22",
+          "reviewer": "簽約譯者（越南文）"
+        },
+        "id": {
+          "status": "reviewed",
+          "reviewedAt": "2026-01-22",
+          "reviewer": "簽約譯者（印尼文）"
+        },
+        "th": {
+          "status": "reviewed",
+          "reviewedAt": "2026-01-22",
+          "reviewer": "簽約譯者（泰文）"
+        }
+      },
+      "summary": "燻白醋、喝鹽水無法殺死流感病毒，燻醋可能刺激呼吸道；預防流感最有效的是每年接種疫苗並勤洗手。",
+      "keywords": [
+        "流感",
+        "燻醋",
+        "鹽水",
+        "謠言"
+      ],
+      "claim": "在家燻白醋、每天喝溫鹽水就可以殺死流感病毒，不用打疫苗",
+      "claimVariants": [
+        "燻醋可以預防流感",
+        "喝鹽水殺病毒",
+        "煮醋消毒空氣防流感"
+      ],
+      "verdict": "false",
+      "channels": [
+        "LINE"
+      ],
+      "reportChannel": "1922 防疫專線、LINE 檢舉",
+      "clarificationMarkdown": "燻白醋無法有效殺死空氣中的流感病毒，濃度過高反而可能刺激呼吸道，引發氣喘或咳嗽；喝鹽水也不能殺死呼吸道內的病毒，過量攝取鹽分對高血壓與腎臟病人有害。\n\n預防流感最有效的方法是**每年接種流感疫苗**，並勤洗手、注意咳嗽禮節、保持室內通風。",
+      "shareText": "【疾管署澄清】燻白醋、喝鹽水不能殺死流感病毒，燻醋還可能刺激呼吸道。預防流感最有效的是每年接種流感疫苗，加上勤洗手、咳嗽戴口罩、室內通風。有疑問撥 1922。",
+      "i18n": {
+        "en": {
+          "title": "No evidence that vinegar fumes or salt water kill influenza viruses",
+          "shareText": "Taiwan CDC: vinegar fumes and salt water do not kill flu viruses, and vinegar fumes can irritate the airways. The best protection is an annual flu vaccine plus hand washing, masks when coughing and good ventilation. Questions: call 1922."
+        },
+        "vi": {
+          "title": "Xông giấm, uống nước muối không diệt được vi-rút cúm",
+          "shareText": "CDC Đài Loan: xông giấm, uống nước muối không diệt được vi-rút cúm, xông giấm còn có thể kích ứng đường hô hấp. Cách phòng cúm hiệu quả nhất là tiêm vắc-xin cúm hằng năm, rửa tay thường xuyên, đeo khẩu trang khi ho, thông gió trong nhà. Hỏi thêm: gọi 1922."
+        },
+        "id": {
+          "title": "Asap cuka atau minum air garam tidak membunuh virus influenza",
+          "shareText": "CDC Taiwan: asap cuka dan air garam tidak membunuh virus flu, asap cuka bahkan bisa mengiritasi saluran napas. Perlindungan terbaik adalah vaksin flu setiap tahun, rajin cuci tangan, pakai masker saat batuk dan ventilasi yang baik. Tanya: hubungi 1922."
+        },
+        "th": {
+          "title": "การรมควันน้ำส้มสายชูหรือดื่มน้ำเกลือไม่สามารถฆ่าเชื้อไข้หวัดใหญ่ได้",
+          "shareText": "CDC ไต้หวัน: การรมควันน้ำส้มสายชูและดื่มน้ำเกลือไม่สามารถฆ่าไวรัสไข้หวัดใหญ่ และควันน้ำส้มสายชูอาจระคายเคืองทางเดินหายใจ วิธีป้องกันที่ดีที่สุดคือฉีดวัคซีนไข้หวัดใหญ่ทุกปี ล้างมือบ่อย ๆ สวมหน้ากากเมื่อไอ และเปิดให้อากาศถ่ายเท สอบถามโทร 1922"
+        }
+      },
+      "sourceHash": "81bc310dd1f2",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/factcheck/#clar.2026-01-vinegar-saltwater-flu",
+      "path": "/factcheck/#clar.2026-01-vinegar-saltwater-flu",
+      "md": null,
+      "governance": {
+        "owner": "unit.pr",
+        "ownerName": "公關室",
+        "steward": null,
+        "reviewedAt": "2026-07-01",
+        "reviewPeriodMonths": 6,
+        "nextReviewAt": "2027-01-01",
+        "daysToReview": 92,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "clar.2026-01-vinegar-saltwater-flu",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "81bc310dd1f2",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-01-20",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "machine"
+          },
+          "tl": {
+            "status": "machine"
+          },
+          "vi": {
+            "status": "reviewed",
+            "reviewedAt": "2026-01-22",
+            "reviewer": "簽約譯者（越南文）"
+          },
+          "id": {
+            "status": "reviewed",
+            "reviewedAt": "2026-01-22",
+            "reviewer": "簽約譯者（印尼文）"
+          },
+          "th": {
+            "status": "reviewed",
+            "reviewedAt": "2026-01-22",
+            "reviewer": "簽約譯者（泰文）"
+          }
+        },
+        "translationStale": {
+          "en": false,
+          "ja": false,
+          "tl": false,
+          "vi": false,
+          "id": false,
+          "th": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en",
+          "vi",
+          "id",
+          "th"
+        ]
+      }
+    },
+    {
+      "id": "clar.2026-03-covid-isolation-7-days",
+      "type": "clarification",
+      "title": "網傳「確診新冠要居家隔離 7 天，同住家人也要隔離」為舊規定",
+      "owner": "unit.pr",
+      "publishedAt": "2026-03-20",
+      "reviewedAt": "2026-09-05",
+      "reviewPeriodMonths": 6,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "rumor"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "disease.covid-19"
+      ],
+      "diseases": [
+        "disease.covid-19"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-05"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-08",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "machine"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "summary": "新冠確診隔離與同住家人檢疫已於 2023-03-20 取消；現行為有症狀戴口罩、生病在家休息，高風險者儘早就醫。",
+      "keywords": [
+        "新冠",
+        "隔離",
+        "舊規定",
+        "自主健康管理"
+      ],
+      "claim": "確診新冠要居家隔離 7 天，同住家人也要一起隔離，不能上班上課",
+      "claimVariants": [
+        "新冠確診要隔離七天",
+        "同住家人要居家檢疫",
+        "確診不能出門要隔離"
+      ],
+      "verdict": "outdated",
+      "channels": [
+        "LINE",
+        "Facebook"
+      ],
+      "reportChannel": "1922 防疫專線",
+      "clarificationMarkdown": "居家隔離與同住家人居家檢疫是疫情期間的舊規定。自 **2023 年 3 月 20 日**起，新冠改列第四類法定傳染病「新冠併發重症」，輕症確診者**不需隔離**，同住家人也不需居家檢疫。\n\n現行建議為「有症狀戴口罩、生病在家休息」：輕症者採自主健康管理，症狀緩解前避免探視長者或出入醫院、長照機構；高風險者確診後應儘早就醫評估抗病毒藥物。",
+      "shareText": "【疾管署說明】新冠確診「隔離 7 天、家人也要隔離」是舊規定，2023 年 3 月 20 日起已取消。現在輕症不用隔離，有症狀請戴口罩、生病在家休息，避免探視長者；高風險者確診請儘早就醫。",
+      "i18n": {
+        "en": {
+          "title": "Claim that COVID-19 cases must isolate for 7 days with household members is outdated",
+          "shareText": "Taiwan CDC: mandatory 7-day isolation for cases and quarantine for household members ended on 20 March 2023. Mild cases no longer isolate; wear a mask if symptomatic, rest at home when ill and avoid visiting older people. High-risk people should see a doctor early."
+        }
+      },
+      "sourceHash": "2cf260543fc3",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/factcheck/#clar.2026-03-covid-isolation-7-days",
+      "path": "/factcheck/#clar.2026-03-covid-isolation-7-days",
+      "md": null,
+      "governance": {
+        "owner": "unit.pr",
+        "ownerName": "公關室",
+        "steward": null,
+        "reviewedAt": "2026-09-05",
+        "reviewPeriodMonths": 6,
+        "nextReviewAt": "2027-03-05",
+        "daysToReview": 155,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "clar.2026-03-covid-isolation-7-days",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "2cf260543fc3",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-08",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "machine"
+          },
+          "tl": {
+            "status": "machine"
+          },
+          "vi": {
+            "status": "machine"
+          },
+          "id": {
+            "status": "machine"
+          },
+          "th": {
+            "status": "machine"
+          }
+        },
+        "translationStale": {
+          "en": false,
+          "ja": false,
+          "tl": false,
+          "vi": false,
+          "id": false,
+          "th": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "clar.2026-04-enterovirus-only-kids",
+      "type": "clarification",
+      "title": "網傳「腸病毒只有小孩會得，大人不用擔心」部分正確",
+      "owner": "unit.pr",
+      "publishedAt": "2026-04-16",
+      "reviewedAt": "2026-04-22",
+      "reviewPeriodMonths": 6,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "rumor"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "disease.enterovirus"
+      ],
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-04-24",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "machine"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "summary": "腸病毒重症以 5 歲以下幼兒為主，但成人也會感染且常無症狀，可能傳給幼兒；大人回家應先洗手換衣。",
+      "keywords": [
+        "腸病毒",
+        "成人感染",
+        "洗手",
+        "幼兒"
+      ],
+      "claim": "腸病毒只有小孩會得，大人不會被傳染，所以大人不用洗手",
+      "claimVariants": [
+        "大人不會得腸病毒",
+        "腸病毒是小孩的病",
+        "成人不會感染腸病毒"
+      ],
+      "verdict": "partly-true",
+      "relatedNews": [
+        "news.2026-04-14-enterovirus-rising"
+      ],
+      "channels": [
+        "LINE"
+      ],
+      "reportChannel": "1922 防疫專線",
+      "clarificationMarkdown": "腸病毒**重症**確實以 5 歲以下幼兒為主，但**成人也會感染**，多數症狀輕微甚至沒有症狀，卻可能把病毒帶回家傳給幼兒。\n\n家有幼兒的大人回家後應先以肥皂洗手、更換衣物再抱小孩；照顧生病幼兒前後也要洗手。",
+      "shareText": "【疾管署說明】腸病毒重症多發生在 5 歲以下幼兒，但大人也會感染，常常沒症狀卻把病毒帶回家。家有幼兒，大人回家先用肥皂洗手、換衣服再抱小孩。",
+      "i18n": {
+        "en": {
+          "title": "Claim that only children get enterovirus is partly true",
+          "shareText": "Taiwan CDC: severe enterovirus mostly affects children under 5, but adults can be infected too, often without symptoms, and bring the virus home. Adults should wash hands with soap and change clothes before holding young children."
+        }
+      },
+      "sourceHash": "d179df834898",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/factcheck/#clar.2026-04-enterovirus-only-kids",
+      "path": "/factcheck/#clar.2026-04-enterovirus-only-kids",
+      "md": null,
+      "governance": {
+        "owner": "unit.pr",
+        "ownerName": "公關室",
+        "steward": null,
+        "reviewedAt": "2026-04-22",
+        "reviewPeriodMonths": 6,
+        "nextReviewAt": "2026-10-22",
+        "daysToReview": 21,
+        "overdue": false,
+        "dueSoon": true,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "clar.2026-04-enterovirus-only-kids",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "d179df834898",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-04-24",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "machine"
+          },
+          "tl": {
+            "status": "machine"
+          },
+          "vi": {
+            "status": "machine"
+          },
+          "id": {
+            "status": "machine"
+          },
+          "th": {
+            "status": "machine"
+          }
+        },
+        "translationStale": {
+          "en": false,
+          "ja": false,
+          "tl": false,
+          "vi": false,
+          "id": false,
+          "th": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "clar.2026-05-mmr-all-adults",
+      "type": "clarification",
+      "title": "網傳「所有成人都要再補打一劑 MMR」部分正確",
+      "owner": "unit.pr",
+      "publishedAt": "2026-05-12",
+      "reviewedAt": "2026-05-14",
+      "reviewPeriodMonths": 6,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "rumor"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "doc.mmr-recommendation"
+      ],
+      "diseases": [
+        "disease.measles"
+      ],
+      "vaccines": [
+        "vaccine.mmr"
+      ],
+      "countries": [
+        "JP"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-05-16",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "machine"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "summary": "並非所有成人都要補打 MMR；1966 年（含）以後出生、不具免疫力且前往流行地區者，出國前 2–4 週評估自費接種。",
+      "keywords": [
+        "MMR",
+        "麻疹",
+        "日本",
+        "成人接種",
+        "1966 年"
+      ],
+      "claim": "日本麻疹大流行，所有大人出國前都一定要再補打一劑 MMR",
+      "claimVariants": [
+        "成人都要補打麻疹疫苗",
+        "去日本一定要打MMR",
+        "每個大人都要再打一劑麻疹"
+      ],
+      "verdict": "partly-true",
+      "relatedNews": [
+        "news.2026-05-11-japan-measles-level1"
+      ],
+      "channels": [
+        "LINE",
+        "Facebook"
+      ],
+      "reportChannel": "1922 防疫專線",
+      "clarificationMarkdown": "日本確實自 2026 年 5 月 11 日起列為麻疹第一級旅遊疫情建議，但**不是所有成人都需要補打**。\n\n依現行 MMR 預防接種建議（2025 年 4 月 16 日修訂），建議評估的是 **1966 年（含）以後出生、不具麻疹免疫力**、計畫前往流行地區的成人，請於出國前 2–4 週至旅遊醫學門診評估自費接種 1 劑。曾完成 2 劑、抗體陽性或曾確診者已具免疫力；1966 年以前出生者多數已因自然感染具免疫力。",
+      "shareText": "【疾管署說明】不是所有大人都要補打 MMR。1966 年（含）以後出生、不具麻疹免疫力、要去流行地區（如日本）的人，請在出國前 2–4 週到旅遊醫學門診評估自費接種 1 劑。打過 2 劑或驗過抗體陽性就不用。",
+      "i18n": {
+        "en": {
+          "title": "Claim that all adults need another MMR dose is partly true",
+          "shareText": "Taiwan CDC: not every adult needs another MMR dose. People born in 1966 or later without measles immunity who are travelling to affected areas such as Japan should see a travel clinic 2–4 weeks before departure. If you have had 2 doses or a positive antibody test, you do not need it."
+        }
+      },
+      "sourceHash": "8f28fa76eec7",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/factcheck/#clar.2026-05-mmr-all-adults",
+      "path": "/factcheck/#clar.2026-05-mmr-all-adults",
+      "md": null,
+      "governance": {
+        "owner": "unit.pr",
+        "ownerName": "公關室",
+        "steward": null,
+        "reviewedAt": "2026-05-14",
+        "reviewPeriodMonths": 6,
+        "nextReviewAt": "2026-11-14",
+        "daysToReview": 44,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "clar.2026-05-mmr-all-adults",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "8f28fa76eec7",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-05-16",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "machine"
+          },
+          "tl": {
+            "status": "machine"
+          },
+          "vi": {
+            "status": "machine"
+          },
+          "id": {
+            "status": "machine"
+          },
+          "th": {
+            "status": "machine"
+          }
+        },
+        "translationStale": {
+          "en": false,
+          "ja": false,
+          "tl": false,
+          "vi": false,
+          "id": false,
+          "th": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "clar.2026-09-anti-epidemic-team-scam",
+      "type": "clarification",
+      "title": "網傳「防疫國家隊」投資群組為詐騙",
+      "claim": "加入疾管署「防疫國家隊」LINE 投資群組，跟單投資防疫概念股保證獲利",
+      "claimVariants": [
+        "防疫國家隊投資群",
+        "疾管署投資群組保證獲利",
+        "防疫概念股跟單"
+      ],
+      "verdict": "false",
+      "clarificationMarkdown": "疾病管制署未成立任何投資群組，也不會邀請民眾投資。此類訊息為詐騙，請勿加入、匯款或提供個資。",
+      "shareText": "【疾管署澄清】疾管署沒有「防疫國家隊」投資群組，不會邀請民眾投資，此為詐騙，請勿加入或匯款。檢舉請撥 165。",
+      "reportChannel": "165 反詐騙專線、LINE 檢舉",
+      "channels": [
+        "LINE",
+        "Facebook"
+      ],
+      "owner": "unit.pr",
+      "publishedAt": "2026-09-15",
+      "reviewedAt": "2026-09-15",
+      "reviewPeriodMonths": 6,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "rumor"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-16"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-16"
+        },
+        "vi": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-18"
+        },
+        "id": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-18"
+        },
+        "th": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-18"
+        },
+        "tl": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-18"
+        },
+        "ja": {
+          "status": "machine"
+        }
+      },
+      "summary": "疾管署未成立投資群組，「防疫國家隊」投資訊息為詐騙。",
+      "keywords": [
+        "詐騙",
+        "投資群組",
+        "防疫國家隊"
+      ],
+      "i18n": {
+        "en": {
+          "title": "'Anti-epidemic national team' investment groups are scams",
+          "shareText": "Taiwan CDC clarification: Taiwan CDC has no investment groups and never invites the public to invest. This is a scam. Do not join or transfer money. Report to 165."
+        },
+        "vi": {
+          "title": "Nhóm đầu tư 'Đội tuyển quốc gia phòng dịch' là lừa đảo",
+          "shareText": "CDC Đài Loan: không có nhóm đầu tư nào, đây là lừa đảo, không tham gia hay chuyển tiền. Báo 165."
+        }
+      },
+      "sourceHash": "3d9cab3c1a4b",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/factcheck/#clar.2026-09-anti-epidemic-team-scam",
+      "path": "/factcheck/#clar.2026-09-anti-epidemic-team-scam",
+      "md": null,
+      "governance": {
+        "owner": "unit.pr",
+        "ownerName": "公關室",
+        "steward": null,
+        "reviewedAt": "2026-09-15",
+        "reviewPeriodMonths": 6,
+        "nextReviewAt": "2027-03-15",
+        "daysToReview": 165,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "clar.2026-09-anti-epidemic-team-scam",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "3d9cab3c1a4b",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-16"
+          },
+          "vi": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-18"
+          },
+          "id": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-18"
+          },
+          "th": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-18"
+          },
+          "tl": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-18"
+          },
+          "ja": {
+            "status": "machine"
+          }
+        },
+        "translationStale": {
+          "en": false,
+          "ja": false,
+          "tl": false,
+          "vi": false,
+          "id": false,
+          "th": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en",
+          "tl",
+          "vi",
+          "id",
+          "th"
+        ]
+      }
+    },
+    {
+      "id": "clar.2026-09-flu-vaccine-causes-flu",
+      "type": "clarification",
+      "title": "網傳「打流感疫苗會得流感、長輩打完會死」並非事實",
+      "owner": "unit.pr",
+      "publishedAt": "2026-09-10",
+      "reviewedAt": "2026-09-10",
+      "reviewPeriodMonths": 6,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "rumor"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "vaccine.influenza"
+      ],
+      "diseases": [
+        "disease.influenza"
+      ],
+      "vaccines": [
+        "vaccine.influenza"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-10"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-12",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-14",
+          "reviewer": "簽約譯者（菲律賓文）"
+        },
+        "vi": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-14",
+          "reviewer": "簽約譯者（越南文）"
+        },
+        "id": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-14",
+          "reviewer": "簽約譯者（印尼文）"
+        },
+        "th": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-14",
+          "reviewer": "簽約譯者（泰文）"
+        }
+      },
+      "summary": "公費流感疫苗是不活化疫苗，不會因接種而得流感；常見反應為注射部位疼痛與輕微發燒，長者流感重症風險遠高於疫苗風險。",
+      "keywords": [
+        "流感疫苗",
+        "謠言",
+        "疫苗安全",
+        "長者"
+      ],
+      "claim": "打流感疫苗反而會得流感，長輩打完會死，不要讓爸媽去打",
+      "claimVariants": [
+        "流感疫苗打了會感冒",
+        "老人打流感疫苗會死掉",
+        "流感疫苗有活病毒會傳染"
+      ],
+      "verdict": "false",
+      "relatedNews": [
+        "news.2026-09-10-clarify-flu-vaccine-death"
+      ],
+      "channels": [
+        "LINE",
+        "Facebook",
+        "YouTube"
+      ],
+      "reportChannel": "1922 防疫專線、LINE 檢舉",
+      "clarificationMarkdown": "公費流感疫苗為**不活化疫苗**，不含活病毒，不會因接種而得到流感。接種後常見反應為注射部位疼痛、紅腫，少數人有輕微發燒或倦怠，通常 1–2 天內緩解。\n\n長者感染流感後併發肺炎、住院與死亡的風險，遠高於接種疫苗的風險。我國設有預防接種受害救濟制度並持續監測疫苗安全，請放心接種。",
+      "shareText": "【疾管署澄清】公費流感疫苗是不活化疫苗，不含活病毒，打了不會得流感。常見反應是手臂痠痛、輕微發燒，1–2 天會好。長輩得流感的重症風險遠高於疫苗風險，10 月 1 日起請放心接種。有疑問撥 1922。",
+      "i18n": {
+        "en": {
+          "title": "Claims that flu vaccine causes flu or kills older people are untrue",
+          "shareText": "Taiwan CDC: the government-funded flu vaccine is inactivated and contains no live virus, so it cannot give you flu. Common reactions are a sore arm or mild fever lasting 1–2 days. Influenza is far more dangerous for older people than the vaccine. Get vaccinated from 1 October. Questions: call 1922."
+        },
+        "vi": {
+          "title": "Tin đồn \"tiêm vắc-xin cúm sẽ bị cúm, người già tiêm xong sẽ chết\" là không đúng",
+          "shareText": "CDC Đài Loan: vắc-xin cúm miễn phí là vắc-xin bất hoạt, không chứa vi-rút sống nên không gây bệnh cúm. Phản ứng thường gặp là đau tay, sốt nhẹ, hết sau 1–2 ngày. Người cao tuổi mắc cúm nguy hiểm hơn nhiều so với tiêm vắc-xin. Từ 1/10 hãy yên tâm đi tiêm. Hỏi thêm: gọi 1922."
+        },
+        "id": {
+          "title": "Kabar \"vaksin flu bikin kena flu dan lansia bisa meninggal\" tidak benar",
+          "shareText": "CDC Taiwan: vaksin influenza gratis adalah vaksin inaktif tanpa virus hidup, jadi tidak bisa menyebabkan flu. Reaksi umum berupa nyeri di lengan atau demam ringan selama 1–2 hari. Flu jauh lebih berbahaya bagi lansia daripada vaksinnya. Mulai 1 Oktober silakan vaksin. Tanya: hubungi 1922."
+        },
+        "th": {
+          "title": "ข่าวลือ \"ฉีดวัคซีนไข้หวัดใหญ่แล้วจะเป็นไข้หวัดใหญ่ ผู้สูงอายุฉีดแล้วเสียชีวิต\" ไม่เป็นความจริง",
+          "shareText": "CDC ไต้หวัน: วัคซีนไข้หวัดใหญ่ฟรีเป็นวัคซีนชนิดเชื้อตาย ไม่มีไวรัสที่มีชีวิต จึงไม่ทำให้เป็นไข้หวัดใหญ่ อาการที่พบบ่อยคือปวดแขนหรือมีไข้ต่ำ 1–2 วัน ไข้หวัดใหญ่อันตรายต่อผู้สูงอายุมากกว่าวัคซีนมาก เริ่มฉีดได้ตั้งแต่ 1 ตุลาคม สอบถามโทร 1922"
+        },
+        "tl": {
+          "title": "Hindi totoo na \"nagkakatrangkaso dahil sa bakuna at namamatay ang matatanda pagkatapos magpabakuna\"",
+          "shareText": "Taiwan CDC: inactivated ang libreng bakuna sa trangkaso at walang buhay na virus, kaya hindi ito nagdudulot ng trangkaso. Karaniwang reaksyon ang masakit na braso o bahagyang lagnat nang 1–2 araw. Mas mapanganib ang trangkaso sa matatanda kaysa sa bakuna. Magpabakuna simula Oktubre 1. Magtanong: tumawag sa 1922."
+        }
+      },
+      "sourceHash": "f7d70b955620",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/factcheck/#clar.2026-09-flu-vaccine-causes-flu",
+      "path": "/factcheck/#clar.2026-09-flu-vaccine-causes-flu",
+      "md": null,
+      "governance": {
+        "owner": "unit.pr",
+        "ownerName": "公關室",
+        "steward": null,
+        "reviewedAt": "2026-09-10",
+        "reviewPeriodMonths": 6,
+        "nextReviewAt": "2027-03-10",
+        "daysToReview": 160,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "clar.2026-09-flu-vaccine-causes-flu",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "f7d70b955620",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-12",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "machine"
+          },
+          "tl": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-14",
+            "reviewer": "簽約譯者（菲律賓文）"
+          },
+          "vi": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-14",
+            "reviewer": "簽約譯者（越南文）"
+          },
+          "id": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-14",
+            "reviewer": "簽約譯者（印尼文）"
+          },
+          "th": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-14",
+            "reviewer": "簽約譯者（泰文）"
+          }
+        },
+        "translationStale": {
+          "en": false,
+          "ja": false,
+          "tl": false,
+          "vi": false,
+          "id": false,
+          "th": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en",
+          "tl",
+          "vi",
+          "id",
+          "th"
+        ]
+      }
+    }
+  ]
+}

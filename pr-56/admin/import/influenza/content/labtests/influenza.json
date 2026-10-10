@@ -1,0 +1,100 @@
+{
+  "id": "labtest.influenza",
+  "type": "labtest",
+  "title": "流感檢驗資訊",
+  "owner": "unit.lab",
+  "publishedAt": "2025-01-15",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "流感併發重症：咽喉或鼻咽拭子置於病毒運送培養基，4°C 冷藏 72 小時內送達，做 RT-PCR 與病毒分離；插管者加採下呼吸道檢體。",
+  "disease": "disease.influenza",
+  "specimens": [
+    {
+      "name": "咽喉拭子或鼻咽拭子",
+      "container": "（待補：舊頁未載明，依採檢手冊補）",
+      "volume": "（待補：舊頁未載明，依採檢手冊補）",
+      "storage": "（待補：舊頁未載明，依採檢手冊補）",
+      "transport": "（待補：舊頁未載明，依採檢手冊補）"
+    },
+    {
+      "name": "下呼吸道檢體（痰液",
+      "container": "（待補：舊頁未載明，依採檢手冊補）",
+      "volume": "（待補：舊頁未載明，依採檢手冊補）",
+      "storage": "（待補：舊頁未載明，依採檢手冊補）",
+      "transport": "（待補：舊頁未載明，依採檢手冊補）"
+    },
+    {
+      "name": "氣管抽取液）",
+      "container": "（待補：舊頁未載明，依採檢手冊補）",
+      "volume": "（待補：舊頁未載明，依採檢手冊補）",
+      "storage": "（待補：舊頁未載明，依採檢手冊補）",
+      "transport": "（待補：舊頁未載明，依採檢手冊補）"
+    }
+  ],
+  "labs": [
+    "cdc-lab"
+  ],
+  "notesMarkdown": "流感併發重症：咽喉或鼻咽拭子置於病毒運送培養基，4°C 冷藏 72 小時內送達，做 RT-PCR 與病毒分離；插管者加採下呼吸道檢體。\n\n| 項目 | 內容 |\n| --- | --- |\n| 檢體 | 咽喉拭子或鼻咽拭子、下呼吸道檢體（痰液、氣管抽取液） |\n| 送驗時限 | 72 小時內 |\n| 生物安全等級 | BSL-2（新型 A 型流感病毒分離 BSL-3） |\n\n- 流感併發重症為第四類法定傳染病，通報時限一週；為利治療與監測，建議通報後 72 小時內送達。\n- 疑似新型 A 型流感（第五類）應 24 小時內通報並依專案送驗。\n- 抗病毒藥劑使用不需等待檢驗結果。",
+  "sendWithinHours": 72,
+  "biosafetyLevel": "BSL-2（新型 A 型流感病毒分離 BSL-3）",
+  "basedOn": [
+    "disease.influenza"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/BXQ_3PvoU6VyCBHauEQKa6"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 40 處（mso 樣式 22、Mso 類別 12、命名空間標籤 9）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 lab（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站型別是 labtest（labtest.influenza），草稿直接建成 labtest，看不出來的欄位以「（待補）」佔位"
+      },
+      {
+        "code": "fields-pending",
+        "severity": "warn",
+        "message": "labtest 的欄位從舊頁看不出來，以「（待補）」佔位：specimens[].container/volume/storage/transport"
+      },
+      {
+        "code": "field-guessed",
+        "severity": "info",
+        "message": "labs 暫填 cdc-lab（署檢驗中心），合約與區域實驗室請檢驗中心確認"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/BXQ_3PvoU6VyCBHauEQKa6",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "labtest.influenza"
+    ]
+  }
+}

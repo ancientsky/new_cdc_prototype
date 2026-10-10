@@ -1,0 +1,1403 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "ffa36543a333",
+    "lastModified": "2026-10-01",
+    "count": 231
+  },
+  "data": [
+    {
+      "iso2": "JP",
+      "name": "日本",
+      "nameEn": "Japan",
+      "region": "東亞"
+    },
+    {
+      "iso2": "KR",
+      "name": "韓國",
+      "nameEn": "South Korea",
+      "region": "東亞"
+    },
+    {
+      "iso2": "CN",
+      "name": "中國大陸",
+      "nameEn": "China",
+      "region": "東亞"
+    },
+    {
+      "iso2": "HK",
+      "name": "香港",
+      "nameEn": "Hong Kong",
+      "region": "東亞"
+    },
+    {
+      "iso2": "MO",
+      "name": "澳門",
+      "nameEn": "Macao",
+      "region": "東亞"
+    },
+    {
+      "iso2": "MN",
+      "name": "蒙古",
+      "nameEn": "Mongolia",
+      "region": "東亞"
+    },
+    {
+      "iso2": "VN",
+      "name": "越南",
+      "nameEn": "Viet Nam",
+      "region": "東南亞"
+    },
+    {
+      "iso2": "TH",
+      "name": "泰國",
+      "nameEn": "Thailand",
+      "region": "東南亞"
+    },
+    {
+      "iso2": "ID",
+      "name": "印尼",
+      "nameEn": "Indonesia",
+      "region": "東南亞"
+    },
+    {
+      "iso2": "PH",
+      "name": "菲律賓",
+      "nameEn": "Philippines",
+      "region": "東南亞"
+    },
+    {
+      "iso2": "MY",
+      "name": "馬來西亞",
+      "nameEn": "Malaysia",
+      "region": "東南亞"
+    },
+    {
+      "iso2": "SG",
+      "name": "新加坡",
+      "nameEn": "Singapore",
+      "region": "東南亞"
+    },
+    {
+      "iso2": "KH",
+      "name": "柬埔寨",
+      "nameEn": "Cambodia",
+      "region": "東南亞"
+    },
+    {
+      "iso2": "LA",
+      "name": "寮國",
+      "nameEn": "Lao PDR",
+      "region": "東南亞"
+    },
+    {
+      "iso2": "MM",
+      "name": "緬甸",
+      "nameEn": "Myanmar",
+      "region": "東南亞"
+    },
+    {
+      "iso2": "BN",
+      "name": "汶萊",
+      "nameEn": "Brunei",
+      "region": "東南亞"
+    },
+    {
+      "iso2": "IN",
+      "name": "印度",
+      "nameEn": "India",
+      "region": "南亞"
+    },
+    {
+      "iso2": "NP",
+      "name": "尼泊爾",
+      "nameEn": "Nepal",
+      "region": "南亞"
+    },
+    {
+      "iso2": "BD",
+      "name": "孟加拉",
+      "nameEn": "Bangladesh",
+      "region": "南亞"
+    },
+    {
+      "iso2": "PK",
+      "name": "巴基斯坦",
+      "nameEn": "Pakistan",
+      "region": "南亞"
+    },
+    {
+      "iso2": "LK",
+      "name": "斯里蘭卡",
+      "nameEn": "Sri Lanka",
+      "region": "南亞"
+    },
+    {
+      "iso2": "MV",
+      "name": "馬爾地夫",
+      "nameEn": "Maldives",
+      "region": "南亞"
+    },
+    {
+      "iso2": "AF",
+      "name": "阿富汗",
+      "nameEn": "Afghanistan",
+      "region": "南亞"
+    },
+    {
+      "iso2": "KZ",
+      "name": "哈薩克",
+      "nameEn": "Kazakhstan",
+      "region": "中亞"
+    },
+    {
+      "iso2": "AU",
+      "name": "澳洲",
+      "nameEn": "Australia",
+      "region": "大洋洲"
+    },
+    {
+      "iso2": "NZ",
+      "name": "紐西蘭",
+      "nameEn": "New Zealand",
+      "region": "大洋洲"
+    },
+    {
+      "iso2": "PG",
+      "name": "巴布亞紐幾內亞",
+      "nameEn": "Papua New Guinea",
+      "region": "大洋洲"
+    },
+    {
+      "iso2": "FJ",
+      "name": "斐濟",
+      "nameEn": "Fiji",
+      "region": "大洋洲"
+    },
+    {
+      "iso2": "US",
+      "name": "美國",
+      "nameEn": "United States",
+      "region": "北美"
+    },
+    {
+      "iso2": "CA",
+      "name": "加拿大",
+      "nameEn": "Canada",
+      "region": "北美"
+    },
+    {
+      "iso2": "MX",
+      "name": "墨西哥",
+      "nameEn": "Mexico",
+      "region": "中南美"
+    },
+    {
+      "iso2": "BR",
+      "name": "巴西",
+      "nameEn": "Brazil",
+      "region": "中南美"
+    },
+    {
+      "iso2": "PE",
+      "name": "秘魯",
+      "nameEn": "Peru",
+      "region": "中南美"
+    },
+    {
+      "iso2": "CO",
+      "name": "哥倫比亞",
+      "nameEn": "Colombia",
+      "region": "中南美"
+    },
+    {
+      "iso2": "AR",
+      "name": "阿根廷",
+      "nameEn": "Argentina",
+      "region": "中南美"
+    },
+    {
+      "iso2": "GB",
+      "name": "英國",
+      "nameEn": "United Kingdom",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "FR",
+      "name": "法國",
+      "nameEn": "France",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "DE",
+      "name": "德國",
+      "nameEn": "Germany",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "IT",
+      "name": "義大利",
+      "nameEn": "Italy",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "ES",
+      "name": "西班牙",
+      "nameEn": "Spain",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "NL",
+      "name": "荷蘭",
+      "nameEn": "Netherlands",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "RO",
+      "name": "羅馬尼亞",
+      "nameEn": "Romania",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "CH",
+      "name": "瑞士",
+      "nameEn": "Switzerland",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "AT",
+      "name": "奧地利",
+      "nameEn": "Austria",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "CZ",
+      "name": "捷克",
+      "nameEn": "Czechia",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "PT",
+      "name": "葡萄牙",
+      "nameEn": "Portugal",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "GR",
+      "name": "希臘",
+      "nameEn": "Greece",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "SE",
+      "name": "瑞典",
+      "nameEn": "Sweden",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "SA",
+      "name": "沙烏地阿拉伯",
+      "nameEn": "Saudi Arabia",
+      "region": "中東"
+    },
+    {
+      "iso2": "AE",
+      "name": "阿拉伯聯合大公國",
+      "nameEn": "United Arab Emirates",
+      "region": "中東"
+    },
+    {
+      "iso2": "TR",
+      "name": "土耳其",
+      "nameEn": "Türkiye",
+      "region": "中東"
+    },
+    {
+      "iso2": "QA",
+      "name": "卡達",
+      "nameEn": "Qatar",
+      "region": "中東"
+    },
+    {
+      "iso2": "EG",
+      "name": "埃及",
+      "nameEn": "Egypt",
+      "region": "非洲"
+    },
+    {
+      "iso2": "NG",
+      "name": "奈及利亞",
+      "nameEn": "Nigeria",
+      "region": "非洲"
+    },
+    {
+      "iso2": "KE",
+      "name": "肯亞",
+      "nameEn": "Kenya",
+      "region": "非洲"
+    },
+    {
+      "iso2": "TZ",
+      "name": "坦尚尼亞",
+      "nameEn": "Tanzania",
+      "region": "非洲"
+    },
+    {
+      "iso2": "ZA",
+      "name": "南非",
+      "nameEn": "South Africa",
+      "region": "非洲"
+    },
+    {
+      "iso2": "CD",
+      "name": "剛果民主共和國",
+      "nameEn": "Democratic Republic of the Congo",
+      "region": "非洲"
+    },
+    {
+      "iso2": "UG",
+      "name": "烏干達",
+      "nameEn": "Uganda",
+      "region": "非洲"
+    },
+    {
+      "iso2": "ET",
+      "name": "衣索比亞",
+      "nameEn": "Ethiopia",
+      "region": "非洲"
+    },
+    {
+      "iso2": "AD",
+      "name": "安道爾",
+      "nameEn": "Andorra",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "AG",
+      "name": "安地卡及巴布達",
+      "nameEn": "Antigua and Barbuda",
+      "region": "中南美"
+    },
+    {
+      "iso2": "AI",
+      "name": "安吉拉(英國海外領地)",
+      "nameEn": "Anguilla",
+      "region": "中南美"
+    },
+    {
+      "iso2": "AL",
+      "name": "阿爾巴尼亞",
+      "nameEn": "Albania",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "AM",
+      "name": "亞美尼亞",
+      "nameEn": "Armenia",
+      "region": "中亞"
+    },
+    {
+      "iso2": "AO",
+      "name": "安哥拉",
+      "nameEn": "Angola",
+      "region": "非洲"
+    },
+    {
+      "iso2": "AS",
+      "name": "美屬薩摩亞",
+      "nameEn": "American Samoa",
+      "region": "大洋洲"
+    },
+    {
+      "iso2": "AW",
+      "name": "荷屬阿魯巴",
+      "nameEn": "Aruba",
+      "region": "中南美"
+    },
+    {
+      "iso2": "AZ",
+      "name": "亞塞拜然",
+      "nameEn": "Azerbaijan",
+      "region": "中亞"
+    },
+    {
+      "iso2": "BA",
+      "name": "波士尼亞與赫塞哥維納",
+      "nameEn": "Bosnia and Herzegovina",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "BB",
+      "name": "巴貝多",
+      "nameEn": "Barbados",
+      "region": "中南美"
+    },
+    {
+      "iso2": "BE",
+      "name": "比利時",
+      "nameEn": "Belgium",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "BF",
+      "name": "布吉納法索",
+      "nameEn": "Burkina Faso",
+      "region": "非洲"
+    },
+    {
+      "iso2": "BG",
+      "name": "保加利亞",
+      "nameEn": "Bulgaria",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "BH",
+      "name": "巴林王國",
+      "nameEn": "Bahrain",
+      "region": "中東"
+    },
+    {
+      "iso2": "BI",
+      "name": "蒲隆地",
+      "nameEn": "Burundi",
+      "region": "非洲"
+    },
+    {
+      "iso2": "BJ",
+      "name": "貝南共和國",
+      "nameEn": "Benin",
+      "region": "非洲"
+    },
+    {
+      "iso2": "BM",
+      "name": "百慕達(英國海外領地)",
+      "nameEn": "Bermuda",
+      "region": "北美"
+    },
+    {
+      "iso2": "BO",
+      "name": "玻利維亞",
+      "nameEn": "Bolivia",
+      "region": "中南美"
+    },
+    {
+      "iso2": "BS",
+      "name": "巴哈馬",
+      "nameEn": "Bahamas",
+      "region": "中南美"
+    },
+    {
+      "iso2": "BT",
+      "name": "不丹",
+      "nameEn": "Bhutan",
+      "region": "南亞"
+    },
+    {
+      "iso2": "BW",
+      "name": "波札那共和國",
+      "nameEn": "Botswana",
+      "region": "非洲"
+    },
+    {
+      "iso2": "BY",
+      "name": "白俄羅斯",
+      "nameEn": "Belarus",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "BZ",
+      "name": "貝里斯",
+      "nameEn": "Belize",
+      "region": "中南美"
+    },
+    {
+      "iso2": "CC",
+      "name": "可可斯群島（澳洲）",
+      "nameEn": "Cocos (Keeling) Islands",
+      "region": "大洋洲"
+    },
+    {
+      "iso2": "CF",
+      "name": "中非共和國",
+      "nameEn": "Central African Republic",
+      "region": "非洲"
+    },
+    {
+      "iso2": "CG",
+      "name": "剛果共和國",
+      "nameEn": "Republic of the Congo",
+      "region": "非洲"
+    },
+    {
+      "iso2": "CI",
+      "name": "象牙海岸",
+      "nameEn": "Côte d'Ivoire",
+      "region": "非洲"
+    },
+    {
+      "iso2": "CK",
+      "name": "庫克群島",
+      "nameEn": "Cook Islands",
+      "region": "大洋洲"
+    },
+    {
+      "iso2": "CL",
+      "name": "智利",
+      "nameEn": "Chile",
+      "region": "中南美"
+    },
+    {
+      "iso2": "CM",
+      "name": "喀麥隆",
+      "nameEn": "Cameroon",
+      "region": "非洲"
+    },
+    {
+      "iso2": "CR",
+      "name": "哥斯大黎加",
+      "nameEn": "Costa Rica",
+      "region": "中南美"
+    },
+    {
+      "iso2": "CU",
+      "name": "古巴",
+      "nameEn": "Cuba",
+      "region": "中南美"
+    },
+    {
+      "iso2": "CV",
+      "name": "維德角",
+      "nameEn": "Cabo Verde",
+      "region": "非洲"
+    },
+    {
+      "iso2": "CX",
+      "name": "聖誕島（澳洲）",
+      "nameEn": "Christmas Island",
+      "region": "大洋洲"
+    },
+    {
+      "iso2": "CY",
+      "name": "賽普勒斯",
+      "nameEn": "Cyprus",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "DJ",
+      "name": "吉布地共和國",
+      "nameEn": "Djibouti",
+      "region": "非洲"
+    },
+    {
+      "iso2": "DK",
+      "name": "丹麥",
+      "nameEn": "Denmark",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "DM",
+      "name": "多米尼克",
+      "nameEn": "Dominica",
+      "region": "中南美"
+    },
+    {
+      "iso2": "DO",
+      "name": "多明尼加",
+      "nameEn": "Dominican Republic",
+      "region": "中南美"
+    },
+    {
+      "iso2": "DZ",
+      "name": "阿爾及利亞",
+      "nameEn": "Algeria",
+      "region": "非洲"
+    },
+    {
+      "iso2": "EC",
+      "name": "厄瓜多",
+      "nameEn": "Ecuador",
+      "region": "中南美"
+    },
+    {
+      "iso2": "EE",
+      "name": "愛沙尼亞",
+      "nameEn": "Estonia",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "ER",
+      "name": "厄利垂亞",
+      "nameEn": "Eritrea",
+      "region": "非洲"
+    },
+    {
+      "iso2": "FI",
+      "name": "芬蘭",
+      "nameEn": "Finland",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "FK",
+      "name": "英屬福克蘭群島",
+      "nameEn": "Falkland Islands",
+      "region": "中南美"
+    },
+    {
+      "iso2": "FM",
+      "name": "密克羅尼西亞聯邦",
+      "nameEn": "Micronesia",
+      "region": "大洋洲"
+    },
+    {
+      "iso2": "FO",
+      "name": "丹麥 - 法羅群島",
+      "nameEn": "Faroe Islands",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "GA",
+      "name": "加彭",
+      "nameEn": "Gabon",
+      "region": "非洲"
+    },
+    {
+      "iso2": "GD",
+      "name": "格瑞那達",
+      "nameEn": "Grenada",
+      "region": "中南美"
+    },
+    {
+      "iso2": "GE",
+      "name": "喬治亞共和國",
+      "nameEn": "Georgia",
+      "region": "中亞"
+    },
+    {
+      "iso2": "GF",
+      "name": "法屬圭亞那",
+      "nameEn": "French Guiana",
+      "region": "中南美"
+    },
+    {
+      "iso2": "GH",
+      "name": "迦納共和國",
+      "nameEn": "Ghana",
+      "region": "非洲"
+    },
+    {
+      "iso2": "GI",
+      "name": "英屬直布羅陀",
+      "nameEn": "Gibraltar",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "GL",
+      "name": "丹麥 - 格陵蘭島",
+      "nameEn": "Greenland",
+      "region": "北美"
+    },
+    {
+      "iso2": "GM",
+      "name": "甘比亞伊斯蘭共和國",
+      "nameEn": "The Gambia",
+      "region": "非洲"
+    },
+    {
+      "iso2": "GN",
+      "name": "幾內亞",
+      "nameEn": "Guinea",
+      "region": "非洲"
+    },
+    {
+      "iso2": "GP",
+      "name": "法屬瓜地洛普島",
+      "nameEn": "Guadeloupe",
+      "region": "中南美"
+    },
+    {
+      "iso2": "GQ",
+      "name": "赤道幾內亞",
+      "nameEn": "Equatorial Guinea",
+      "region": "非洲"
+    },
+    {
+      "iso2": "GS",
+      "name": "英屬南喬治亞及南三明治群島",
+      "nameEn": "South Georgia and the South Sandwich Islands",
+      "region": "中南美"
+    },
+    {
+      "iso2": "GT",
+      "name": "瓜地馬拉",
+      "nameEn": "Guatemala",
+      "region": "中南美"
+    },
+    {
+      "iso2": "GU",
+      "name": "美屬關島",
+      "nameEn": "Guam",
+      "region": "大洋洲"
+    },
+    {
+      "iso2": "GW",
+      "name": "幾內亞比索",
+      "nameEn": "Guinea-Bissau",
+      "region": "非洲"
+    },
+    {
+      "iso2": "GY",
+      "name": "蓋亞那共和國",
+      "nameEn": "Guyana",
+      "region": "中南美"
+    },
+    {
+      "iso2": "HN",
+      "name": "宏都拉斯",
+      "nameEn": "Honduras",
+      "region": "中南美"
+    },
+    {
+      "iso2": "HR",
+      "name": "克羅埃西亞",
+      "nameEn": "Croatia",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "HT",
+      "name": "海地",
+      "nameEn": "Haiti",
+      "region": "中南美"
+    },
+    {
+      "iso2": "HU",
+      "name": "匈牙利",
+      "nameEn": "Hungary",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "IE",
+      "name": "愛爾蘭共和國",
+      "nameEn": "Ireland",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "IL",
+      "name": "以色列",
+      "nameEn": "Israel",
+      "region": "中東"
+    },
+    {
+      "iso2": "IO",
+      "name": "英屬印度洋群島",
+      "nameEn": "British Indian Ocean Territory",
+      "region": "南亞"
+    },
+    {
+      "iso2": "IQ",
+      "name": "伊拉克",
+      "nameEn": "Iraq",
+      "region": "中東"
+    },
+    {
+      "iso2": "IR",
+      "name": "伊朗",
+      "nameEn": "Iran",
+      "region": "中東"
+    },
+    {
+      "iso2": "IS",
+      "name": "冰島",
+      "nameEn": "Iceland",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "JM",
+      "name": "牙買加",
+      "nameEn": "Jamaica",
+      "region": "中南美"
+    },
+    {
+      "iso2": "JO",
+      "name": "約旦",
+      "nameEn": "Jordan",
+      "region": "中東"
+    },
+    {
+      "iso2": "KG",
+      "name": "吉爾吉斯",
+      "nameEn": "Kyrgyzstan",
+      "region": "中亞"
+    },
+    {
+      "iso2": "KI",
+      "name": "吉里巴斯",
+      "nameEn": "Kiribati",
+      "region": "大洋洲"
+    },
+    {
+      "iso2": "KM",
+      "name": "葛摩聯盟",
+      "nameEn": "Comoros",
+      "region": "非洲"
+    },
+    {
+      "iso2": "KN",
+      "name": "聖克里斯多福及尼維斯",
+      "nameEn": "Saint Kitts and Nevis",
+      "region": "中南美"
+    },
+    {
+      "iso2": "KP",
+      "name": "北韓",
+      "nameEn": "North Korea",
+      "region": "東亞"
+    },
+    {
+      "iso2": "KW",
+      "name": "科威特",
+      "nameEn": "Kuwait",
+      "region": "中東"
+    },
+    {
+      "iso2": "KY",
+      "name": "開曼群島(英國海外領地)",
+      "nameEn": "Cayman Islands",
+      "region": "中南美"
+    },
+    {
+      "iso2": "LB",
+      "name": "黎巴嫩",
+      "nameEn": "Lebanon",
+      "region": "中東"
+    },
+    {
+      "iso2": "LC",
+      "name": "聖露西亞",
+      "nameEn": "Saint Lucia",
+      "region": "中南美"
+    },
+    {
+      "iso2": "LI",
+      "name": "列支敦斯登",
+      "nameEn": "Liechtenstein",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "LR",
+      "name": "賴比瑞亞",
+      "nameEn": "Liberia",
+      "region": "非洲"
+    },
+    {
+      "iso2": "LS",
+      "name": "賴索托",
+      "nameEn": "Lesotho",
+      "region": "非洲"
+    },
+    {
+      "iso2": "LT",
+      "name": "立陶宛",
+      "nameEn": "Lithuania",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "LU",
+      "name": "盧森堡",
+      "nameEn": "Luxembourg",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "LV",
+      "name": "拉脫維亞",
+      "nameEn": "Latvia",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "LY",
+      "name": "利比亞",
+      "nameEn": "Libya",
+      "region": "非洲"
+    },
+    {
+      "iso2": "MA",
+      "name": "摩洛哥",
+      "nameEn": "Morocco",
+      "region": "非洲"
+    },
+    {
+      "iso2": "MC",
+      "name": "摩納哥",
+      "nameEn": "Monaco",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "MD",
+      "name": "摩爾多瓦",
+      "nameEn": "Moldova",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "ME",
+      "name": "蒙特內哥羅",
+      "nameEn": "Montenegro",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "MG",
+      "name": "馬達加斯加",
+      "nameEn": "Madagascar",
+      "region": "非洲"
+    },
+    {
+      "iso2": "MH",
+      "name": "馬紹爾群島共和國",
+      "nameEn": "Marshall Islands",
+      "region": "大洋洲"
+    },
+    {
+      "iso2": "MK",
+      "name": "北馬其頓共和國",
+      "nameEn": "North Macedonia",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "ML",
+      "name": "馬利",
+      "nameEn": "Mali",
+      "region": "非洲"
+    },
+    {
+      "iso2": "MP",
+      "name": "美屬北馬里亞納群島",
+      "nameEn": "Northern Mariana Islands",
+      "region": "大洋洲"
+    },
+    {
+      "iso2": "MQ",
+      "name": "法屬馬丁尼克島",
+      "nameEn": "Martinique",
+      "region": "中南美"
+    },
+    {
+      "iso2": "MR",
+      "name": "茅利塔尼亞",
+      "nameEn": "Mauritania",
+      "region": "非洲"
+    },
+    {
+      "iso2": "MS",
+      "name": "蒙哲臘(英國海外領地)",
+      "nameEn": "Montserrat",
+      "region": "中南美"
+    },
+    {
+      "iso2": "MT",
+      "name": "馬爾他",
+      "nameEn": "Malta",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "MU",
+      "name": "模里西斯",
+      "nameEn": "Mauritius",
+      "region": "非洲"
+    },
+    {
+      "iso2": "MW",
+      "name": "馬拉威",
+      "nameEn": "Malawi",
+      "region": "非洲"
+    },
+    {
+      "iso2": "MZ",
+      "name": "莫三比克",
+      "nameEn": "Mozambique",
+      "region": "非洲"
+    },
+    {
+      "iso2": "NA",
+      "name": "納米比亞",
+      "nameEn": "Namibia",
+      "region": "非洲"
+    },
+    {
+      "iso2": "NC",
+      "name": "新喀里多尼亞",
+      "nameEn": "New Caledonia",
+      "region": "大洋洲"
+    },
+    {
+      "iso2": "NE",
+      "name": "尼日",
+      "nameEn": "Niger",
+      "region": "非洲"
+    },
+    {
+      "iso2": "NF",
+      "name": "諾福克島（澳洲）",
+      "nameEn": "Norfolk Island",
+      "region": "大洋洲"
+    },
+    {
+      "iso2": "NI",
+      "name": "尼加拉瓜",
+      "nameEn": "Nicaragua",
+      "region": "中南美"
+    },
+    {
+      "iso2": "NO",
+      "name": "挪威",
+      "nameEn": "Norway",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "NR",
+      "name": "諾魯",
+      "nameEn": "Nauru",
+      "region": "大洋洲"
+    },
+    {
+      "iso2": "NU",
+      "name": "紐埃",
+      "nameEn": "Niue",
+      "region": "大洋洲"
+    },
+    {
+      "iso2": "OM",
+      "name": "阿曼",
+      "nameEn": "Oman",
+      "region": "中東"
+    },
+    {
+      "iso2": "PA",
+      "name": "巴拿馬共和國",
+      "nameEn": "Panama",
+      "region": "中南美"
+    },
+    {
+      "iso2": "PF",
+      "name": "法屬玻里尼西亞",
+      "nameEn": "French Polynesia",
+      "region": "大洋洲"
+    },
+    {
+      "iso2": "PL",
+      "name": "波蘭",
+      "nameEn": "Poland",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "PM",
+      "name": "法屬聖皮耶與秘克隆群島",
+      "nameEn": "Saint Pierre and Miquelon",
+      "region": "北美"
+    },
+    {
+      "iso2": "PN",
+      "name": "英屬皮特凱恩群島",
+      "nameEn": "Pitcairn Islands",
+      "region": "大洋洲"
+    },
+    {
+      "iso2": "PR",
+      "name": "美屬波多黎各",
+      "nameEn": "Puerto Rico",
+      "region": "中南美"
+    },
+    {
+      "iso2": "PW",
+      "name": "帛琉",
+      "nameEn": "Palau",
+      "region": "大洋洲"
+    },
+    {
+      "iso2": "PY",
+      "name": "巴拉圭共和國",
+      "nameEn": "Paraguay",
+      "region": "中南美"
+    },
+    {
+      "iso2": "RE",
+      "name": "法屬留尼旺島",
+      "nameEn": "Réunion",
+      "region": "非洲"
+    },
+    {
+      "iso2": "RS",
+      "name": "塞爾維亞共和國",
+      "nameEn": "Serbia",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "RU",
+      "name": "俄羅斯",
+      "nameEn": "Russia",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "RW",
+      "name": "盧安達",
+      "nameEn": "Rwanda",
+      "region": "非洲"
+    },
+    {
+      "iso2": "SB",
+      "name": "索羅門群島",
+      "nameEn": "Solomon Islands",
+      "region": "大洋洲"
+    },
+    {
+      "iso2": "SC",
+      "name": "塞席爾",
+      "nameEn": "Seychelles",
+      "region": "非洲"
+    },
+    {
+      "iso2": "SD",
+      "name": "蘇丹",
+      "nameEn": "Sudan",
+      "region": "非洲"
+    },
+    {
+      "iso2": "SI",
+      "name": "斯洛維尼亞",
+      "nameEn": "Slovenia",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "SK",
+      "name": "斯洛伐克",
+      "nameEn": "Slovakia",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "SL",
+      "name": "獅子山",
+      "nameEn": "Sierra Leone",
+      "region": "非洲"
+    },
+    {
+      "iso2": "SM",
+      "name": "聖馬利諾",
+      "nameEn": "San Marino",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "SN",
+      "name": "塞內加爾",
+      "nameEn": "Senegal",
+      "region": "非洲"
+    },
+    {
+      "iso2": "SO",
+      "name": "索馬利亞",
+      "nameEn": "Somalia",
+      "region": "非洲"
+    },
+    {
+      "iso2": "SR",
+      "name": "蘇利南",
+      "nameEn": "Suriname",
+      "region": "中南美"
+    },
+    {
+      "iso2": "SS",
+      "name": "南蘇丹共和國",
+      "nameEn": "South Sudan",
+      "region": "非洲"
+    },
+    {
+      "iso2": "ST",
+      "name": "聖多美普林西比",
+      "nameEn": "Sao Tome and Principe",
+      "region": "非洲"
+    },
+    {
+      "iso2": "SV",
+      "name": "薩爾瓦多",
+      "nameEn": "El Salvador",
+      "region": "中南美"
+    },
+    {
+      "iso2": "SY",
+      "name": "敘利亞",
+      "nameEn": "Syria",
+      "region": "中東"
+    },
+    {
+      "iso2": "SZ",
+      "name": "史瓦帝尼王國",
+      "nameEn": "Eswatini",
+      "region": "非洲"
+    },
+    {
+      "iso2": "TC",
+      "name": "英屬土克凱可群島",
+      "nameEn": "Turks and Caicos Islands",
+      "region": "中南美"
+    },
+    {
+      "iso2": "TD",
+      "name": "查德",
+      "nameEn": "Chad",
+      "region": "非洲"
+    },
+    {
+      "iso2": "TG",
+      "name": "多哥",
+      "nameEn": "Togo",
+      "region": "非洲"
+    },
+    {
+      "iso2": "TJ",
+      "name": "塔吉克",
+      "nameEn": "Tajikistan",
+      "region": "中亞"
+    },
+    {
+      "iso2": "TK",
+      "name": "托克勞（紐西蘭）",
+      "nameEn": "Tokelau",
+      "region": "大洋洲"
+    },
+    {
+      "iso2": "TL",
+      "name": "東帝汶",
+      "nameEn": "Timor-Leste",
+      "region": "東南亞"
+    },
+    {
+      "iso2": "TM",
+      "name": "土庫曼",
+      "nameEn": "Turkmenistan",
+      "region": "中亞"
+    },
+    {
+      "iso2": "TN",
+      "name": "突尼西亞",
+      "nameEn": "Tunisia",
+      "region": "非洲"
+    },
+    {
+      "iso2": "TO",
+      "name": "東加王國",
+      "nameEn": "Tonga",
+      "region": "大洋洲"
+    },
+    {
+      "iso2": "TT",
+      "name": "千里達及托巴哥",
+      "nameEn": "Trinidad and Tobago",
+      "region": "中南美"
+    },
+    {
+      "iso2": "TV",
+      "name": "吐瓦魯",
+      "nameEn": "Tuvalu",
+      "region": "大洋洲"
+    },
+    {
+      "iso2": "UA",
+      "name": "烏克蘭",
+      "nameEn": "Ukraine",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "UY",
+      "name": "烏拉圭",
+      "nameEn": "Uruguay",
+      "region": "中南美"
+    },
+    {
+      "iso2": "UZ",
+      "name": "烏茲別克",
+      "nameEn": "Uzbekistan",
+      "region": "中亞"
+    },
+    {
+      "iso2": "VA",
+      "name": "教廷",
+      "nameEn": "Holy See",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "VC",
+      "name": "聖文森及格瑞那丁",
+      "nameEn": "Saint Vincent and the Grenadines",
+      "region": "中南美"
+    },
+    {
+      "iso2": "VE",
+      "name": "委內瑞拉",
+      "nameEn": "Venezuela",
+      "region": "中南美"
+    },
+    {
+      "iso2": "VG",
+      "name": "英屬維京群島",
+      "nameEn": "British Virgin Islands",
+      "region": "中南美"
+    },
+    {
+      "iso2": "VI",
+      "name": "美屬維京群島",
+      "nameEn": "U.S. Virgin Islands",
+      "region": "中南美"
+    },
+    {
+      "iso2": "VU",
+      "name": "萬那杜",
+      "nameEn": "Vanuatu",
+      "region": "大洋洲"
+    },
+    {
+      "iso2": "WF",
+      "name": "瓦利斯群島和富圖那群島",
+      "nameEn": "Wallis and Futuna",
+      "region": "大洋洲"
+    },
+    {
+      "iso2": "WS",
+      "name": "薩摩亞",
+      "nameEn": "Samoa",
+      "region": "大洋洲"
+    },
+    {
+      "iso2": "XK",
+      "name": "科索沃共和國",
+      "nameEn": "Kosovo",
+      "region": "歐洲"
+    },
+    {
+      "iso2": "YE",
+      "name": "葉門",
+      "nameEn": "Yemen",
+      "region": "中東"
+    },
+    {
+      "iso2": "YT",
+      "name": "法屬馬約特島",
+      "nameEn": "Mayotte",
+      "region": "非洲"
+    },
+    {
+      "iso2": "ZM",
+      "name": "尚比亞",
+      "nameEn": "Zambia",
+      "region": "非洲"
+    },
+    {
+      "iso2": "ZW",
+      "name": "辛巴威",
+      "nameEn": "Zimbabwe",
+      "region": "非洲"
+    }
+  ]
+}

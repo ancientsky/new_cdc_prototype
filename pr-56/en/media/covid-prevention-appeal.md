@@ -1,0 +1,32 @@
+# Autumn and winter COVID-19 prevention: high-risk groups should get this season’s vaccine
+
+> 權責單位：Division of Acute Infectious Diseases · 最後審閱：2026-09-26 · 下次審閱：2027-09-26 · 授權：OGDL-1.0 · ID：media.covid-prevention-appeal · 製作日：2026-09-22 · 依 2026-09-15 新冠疫苗接種建議 製作
+
+Older adults and people with chronic conditions are urged to get the new-season COVID-19 vaccine; wear a mask when sick and seek care early for warning signs.
+
+## 依據正本
+
+- 新冠疫苗接種建議（2026–2027 年度）（2026-27）：https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/covid-vaccine-recommendation.2026-09-15/
+- 新冠併發重症：https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/covid-19/
+
+## 章節
+
+- [0:00] 秋冬為什麼要提高警覺
+- [0:25] 新一季疫苗誰該打
+- [0:55] 有症狀時怎麼做
+
+## 逐字稿
+
+**[00:00] 秋冬為什麼要提高警覺**
+
+旁白：天氣轉涼，大家待在室內的時間變長，新冠、流感等呼吸道病毒也更容易傳播。對多數年輕人來說，新冠可能像一場感冒；但對長輩、慢性病患者和免疫力較弱的人，仍可能引起肺炎、住院，甚至危及生命。
+
+**[00:25] 新一季疫苗誰該打**
+
+旁白：新一季新冠疫苗已經依照最新的接種建議開放。65 歲以上長者、有慢性病或免疫功能低下的人、住在長照機構的長輩，以及醫療照護人員，請優先接種。距離上一劑或上次感染已經超過一段時間的人，也可以向醫師詢問是否適合接種。新冠疫苗和流感疫苗可以同一天、在不同部位接種，一次完成更方便。
+
+**[00:55] 有症狀時怎麼做**
+
+旁白：如果出現發燒、咳嗽、喉嚨痛，請戴口罩、盡量在家休息，避免探視長輩或到人多的地方。高風險族群確診後，可以請醫師評估是否使用抗病毒藥物，越早使用效果越好。若出現呼吸急促、胸痛、意識不清或嘴唇發紫，請立即就醫。
+
+旁白：打疫苗、勤洗手、有症狀戴口罩，一起平安過秋冬。詳情請上疾管署網站，或撥打 1922。

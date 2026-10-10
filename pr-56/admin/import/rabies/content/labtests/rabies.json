@@ -1,0 +1,100 @@
+{
+  "id": "labtest.rabies",
+  "type": "labtest",
+  "title": "狂犬病檢驗資訊",
+  "owner": "unit.lab",
+  "publishedAt": "2025-01-15",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.rabies"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "狂犬病（人類疑似病例）：唾液、頸背部含毛囊皮膚切片與腦脊髓液，冷凍或冷藏 24 小時內送疾管署，做 RT-PCR、抗原與抗體檢驗。",
+  "disease": "disease.rabies",
+  "specimens": [
+    {
+      "name": "唾液",
+      "container": "（待補：舊頁未載明，依採檢手冊補）",
+      "volume": "（待補：舊頁未載明，依採檢手冊補）",
+      "storage": "（待補：舊頁未載明，依採檢手冊補）",
+      "transport": "（待補：舊頁未載明，依採檢手冊補）"
+    },
+    {
+      "name": "頸背部皮膚切片（含毛囊）",
+      "container": "（待補：舊頁未載明，依採檢手冊補）",
+      "volume": "（待補：舊頁未載明，依採檢手冊補）",
+      "storage": "（待補：舊頁未載明，依採檢手冊補）",
+      "transport": "（待補：舊頁未載明，依採檢手冊補）"
+    },
+    {
+      "name": "腦脊髓液與血清",
+      "container": "（待補：舊頁未載明，依採檢手冊補）",
+      "volume": "（待補：舊頁未載明，依採檢手冊補）",
+      "storage": "（待補：舊頁未載明，依採檢手冊補）",
+      "transport": "（待補：舊頁未載明，依採檢手冊補）"
+    }
+  ],
+  "labs": [
+    "cdc-lab"
+  ],
+  "notesMarkdown": "狂犬病（人類疑似病例）：唾液、頸背部含毛囊皮膚切片與腦脊髓液，冷凍或冷藏 24 小時內送疾管署，做 RT-PCR、抗原與抗體檢驗。\n\n| 項目 | 內容 |\n| --- | --- |\n| 檢體 | 唾液、頸背部皮膚切片（含毛囊）、腦脊髓液與血清 |\n| 送驗時限 | 24 小時內 |\n| 生物安全等級 | BSL-3 |\n\n- 第一類法定傳染病，24 小時內通報並聯繫區管中心安排送驗。\n- 動物檢體（咬人動物）依農業部動物防疫機關規定送驗。\n- 暴露後預防接種不需等待檢驗結果。",
+  "sendWithinHours": 24,
+  "biosafetyLevel": "BSL-3",
+  "basedOn": [
+    "disease.rabies"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/7bZg2Omh3ulQEzDuIbDKFg"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 40 處（mso 樣式 22、Mso 類別 12、命名空間標籤 9）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 lab（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站型別是 labtest（labtest.rabies），草稿直接建成 labtest，看不出來的欄位以「（待補）」佔位"
+      },
+      {
+        "code": "fields-pending",
+        "severity": "warn",
+        "message": "labtest 的欄位從舊頁看不出來，以「（待補）」佔位：specimens[].container/volume/storage/transport"
+      },
+      {
+        "code": "field-guessed",
+        "severity": "info",
+        "message": "labs 暫填 cdc-lab（署檢驗中心），合約與區域實驗室請檢驗中心確認"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/7bZg2Omh3ulQEzDuIbDKFg",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "labtest.rabies"
+    ]
+  }
+}

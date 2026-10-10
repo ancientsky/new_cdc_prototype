@@ -1,0 +1,364 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "7e7a58b45132",
+    "lastModified": "2026-04-25"
+  },
+  "data": {
+    "id": "disease.malaria",
+    "type": "disease",
+    "slug": "malaria",
+    "title": "瘧疾",
+    "nameEn": "Malaria",
+    "aliases": [
+      "Malaria",
+      "打擺子",
+      "惡性瘧",
+      "間日瘧"
+    ],
+    "legalCategory": 2,
+    "icd10": [
+      "B50",
+      "B51",
+      "B52",
+      "B53",
+      "B54"
+    ],
+    "notifyWithinHours": 24,
+    "incubation": {
+      "min": 7,
+      "max": 40,
+      "unit": "day",
+      "text": "惡性瘧 7–14 天；間日瘧、卵形瘧 12–18 天（可潛伏數月）；三日瘧 18–40 天"
+    },
+    "transmission": [
+      "vector",
+      "bloodborne"
+    ],
+    "owner": "unit.acute-infectious",
+    "steward": "急性傳染病組承辦人",
+    "publishedAt": "2018-03-01",
+    "reviewedAt": "2026-04-25",
+    "reviewPeriodMonths": 12,
+    "status": "published",
+    "audience": [
+      "public",
+      "professional"
+    ],
+    "tasks": [
+      "symptoms",
+      "travel"
+    ],
+    "sensitivity": "public",
+    "license": "OGDL-1.0",
+    "diseases": [
+      "disease.malaria"
+    ],
+    "countries": [
+      "NG",
+      "KE",
+      "TZ",
+      "IN",
+      "PG",
+      "ID"
+    ],
+    "aiWhitelist": {
+      "requested": true,
+      "approvedBy": "unit.oasis",
+      "approvedAt": "2026-09-01"
+    },
+    "languages": {
+      "zh-TW": {
+        "status": "source"
+      },
+      "en": {
+        "status": "machine"
+      },
+      "ja": {
+        "status": "pending"
+      },
+      "tl": {
+        "status": "pending"
+      },
+      "vi": {
+        "status": "machine"
+      },
+      "id": {
+        "status": "machine"
+      },
+      "th": {
+        "status": "machine"
+      }
+    },
+    "summary": "瘧疾由瘧蚊傳播，台灣已於 1965 年根除，現有病例均為境外移入。前往非洲、南亞等流行地區前應諮詢預防用藥，返國後發燒務必告知旅遊史。",
+    "keywords": [
+      "瘧疾",
+      "瘧蚊",
+      "預防用藥",
+      "旅遊醫學門診",
+      "非洲"
+    ],
+    "legacyUrls": [
+      "https://www.cdc.gov.tw/Disease/Index"
+    ],
+    "keyFacts": {
+      "incubation": "惡性瘧 7–14 天；其他型別可達數月",
+      "symptoms": "週期性發燒、畏寒、冒汗、頭痛、肌肉痛",
+      "transmission": "瘧蚊叮咬；輸血或共用針具",
+      "prevention": "出國前諮詢預防用藥、防蚊",
+      "notify": "24 小時內"
+    },
+    "blocks": [
+      {
+        "key": "what-to-do",
+        "heading": "我該怎麼辦",
+        "cards": [
+          {
+            "if": "從流行地區返國一年內發燒",
+            "title": "立即就醫並告知旅遊史",
+            "text": "惡性瘧可能在數天內惡化，請立即就醫並說明去過哪些國家。"
+          },
+          {
+            "if": "即將前往非洲、南亞或大洋洲流行區",
+            "title": "出發前 4–6 週到旅遊醫學門診",
+            "text": "醫師會依目的地與行程開立預防用藥，並說明出發前、旅途中與返國後的服藥方式。"
+          },
+          {
+            "if": "正在服用預防用藥",
+            "title": "返國後依指示服完",
+            "text": "多數藥物返國後仍需繼續服用 1–4 週，請勿自行停藥。"
+          }
+        ]
+      },
+      {
+        "key": "symptoms",
+        "heading": "症狀與警示徵象",
+        "markdown": "典型症狀為**發燒、畏寒、冒汗**交替出現，伴隨頭痛、肌肉痛、倦怠、噁心。初期症狀類似流感，容易被忽略。\n\n**惡性瘧**可能快速惡化，造成腦性瘧疾（意識障礙、抽搐）、嚴重貧血、腎衰竭、呼吸窘迫，未及時治療可能致命。間日瘧與卵形瘧可在肝臟潛伏，數月後復發。",
+        "warning": "意識不清、抽搐、呼吸困難、尿量減少、黃疸或出血，請立即就醫。"
+      },
+      {
+        "key": "transmission",
+        "heading": "怎麼傳染",
+        "markdown": "瘧疾經由帶有瘧原蟲的**瘧蚊**（Anopheles）叮咬傳播，瘧蚊多在夜間活動。也可能經由輸血、器官移植或共用針具傳染，孕婦可傳給胎兒。**不會經由一般接觸人傳人**。台灣已無本土瘧疾，但仍有矮小瘧蚊分布，因此境外移入病例需要及早診斷與治療。"
+      },
+      {
+        "key": "prevention",
+        "heading": "如何預防",
+        "markdown": "- 出發前 **4–6 週**至旅遊醫學門診，依目的地評估**預防用藥**（如 atovaquone-proguanil、doxycycline、mefloquine）。\n- 旅途中夜間做好防蚊：使用含 DEET 的防蚊液、睡覺使用蚊帳、選擇有紗窗或空調的住宿。\n- 預防用藥需依指示在出發前、旅途中與返國後持續服用。\n- 返國一年內發燒，就醫時務必告知旅遊史。"
+      },
+      {
+        "key": "treatment",
+        "heading": "診斷與治療",
+        "markdown": "確診後依瘧原蟲種類與嚴重度使用抗瘧藥物治療；重症瘧疾需住院以注射型 artesunate 治療。疾管署儲備部分抗瘧藥物，供醫療院所申請使用。間日瘧與卵形瘧需加上 primaquine 根除肝臟內的休眠體（使用前需檢查 G6PD）。"
+      },
+      {
+        "key": "vaccine",
+        "heading": "疫苗",
+        "markdown": "WHO 已建議在非洲流行地區兒童使用瘧疾疫苗，但不適用於一般旅客。旅客預防仍以防蚊與預防用藥為主。"
+      },
+      {
+        "key": "situation",
+        "heading": "目前疫情與統計",
+        "markdown": "國內每年境外移入病例約 10–20 例，以非洲感染的惡性瘧為主。"
+      },
+      {
+        "key": "faq",
+        "heading": "常見問題"
+      }
+    ],
+    "professional": {
+      "specimen": "全血（EDTA 抗凝）製作厚、薄血片鏡檢，必要時以 PCR 鑑定種別；首次陰性但臨床高度懷疑者，應每 12–24 小時重複採檢共 3 次。",
+      "notifyNote": "第二類法定傳染病，應於 24 小時內通報；疾管署抗瘧藥物可透過區管中心申請。"
+    },
+    "sourceHash": "419b4fb40365",
+    "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/malaria/",
+    "path": "/diseases/malaria/",
+    "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/malaria.md",
+    "governance": {
+      "owner": "unit.acute-infectious",
+      "ownerName": "急性傳染病組",
+      "steward": "急性傳染病組承辦人",
+      "reviewedAt": "2026-04-25",
+      "reviewPeriodMonths": 12,
+      "nextReviewAt": "2027-04-25",
+      "daysToReview": 206,
+      "overdue": false,
+      "dueSoon": false,
+      "status": "published",
+      "lifecycle": "current",
+      "lifecycleLabel": "現行版",
+      "whitelist": true,
+      "whitelistTier": "public",
+      "whitelistPublic": true,
+      "whitelistReasons": [],
+      "whitelistReasonLabels": [],
+      "isCurrent": true,
+      "superseded": false,
+      "supersededBy": null,
+      "currentId": "disease.malaria",
+      "noindex": false,
+      "stale": [],
+      "basisRevisions": [],
+      "predatesBasis": false,
+      "annotations": [],
+      "reverseAuditHits": 0,
+      "license": "OGDL-1.0",
+      "licenseNote": null,
+      "sensitivity": "public",
+      "sourceHash": "419b4fb40365",
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "pending"
+        },
+        "tl": {
+          "status": "pending"
+        },
+        "vi": {
+          "status": "machine"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "translationStale": {
+        "en": false,
+        "vi": false,
+        "id": false,
+        "th": false
+      },
+      "renderableLangs": [
+        "zh-TW"
+      ]
+    },
+    "master": {
+      "id": "disease.malaria",
+      "slug": "malaria",
+      "name": "瘧疾",
+      "nameEn": "Malaria",
+      "aliases": [
+        "Malaria",
+        "打擺子"
+      ],
+      "legalCategory": 2,
+      "icd10": [
+        "B50",
+        "B51",
+        "B52",
+        "B53",
+        "B54"
+      ],
+      "notifyWithinHours": 24,
+      "transmission": [
+        "vector",
+        "bloodborne"
+      ],
+      "hasPage": true,
+      "owner": "unit.acute-infectious",
+      "zhuyin": "ㄋ",
+      "strokes": 14,
+      "i18n": {
+        "en": {
+          "name": "Malaria"
+        }
+      }
+    },
+    "related": {
+      "faq": [
+        {
+          "id": "faq.travel-malaria-prevention",
+          "type": "faq",
+          "title": "去非洲需要吃瘧疾預防藥嗎？",
+          "summary": "前往非洲瘧疾流行地區多建議使用預防用藥，需由旅遊醫學門診評估開立，返國後仍需依指示服完並持續防蚊。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/travel-malaria-prevention/",
+          "path": "/faq/travel-malaria-prevention/",
+          "reviewedAt": "2026-04-25",
+          "owner": "unit.quarantine",
+          "ownerName": "檢疫組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.travel-return-fever",
+          "type": "faq",
+          "title": "出國回來後發燒，應該怎麼辦？",
+          "summary": "出國返國後發燒請戴口罩就醫，主動告知旅遊史與接觸史；去過登革熱流行區者兩週內持續防蚊。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/travel-return-fever/",
+          "path": "/faq/travel-return-fever/",
+          "reviewedAt": "2026-06-15",
+          "owner": "unit.quarantine",
+          "ownerName": "檢疫組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "news": [],
+      "documents": [],
+      "vaccines": [],
+      "datasets": [],
+      "clarifications": [],
+      "media": [
+        {
+          "id": "media.travel-clinic-before-departure",
+          "type": "media",
+          "title": "出國前 4 到 6 週，先到旅遊醫學門診",
+          "summary": "提醒民眾出國前 4 到 6 週到旅遊醫學門診，依目的地旅遊疫情建議等級評估疫苗、預防瘧疾用藥與防蚊，並說明回國後發燒要告知旅遊史。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/travel-clinic-before-departure/",
+          "path": "/media/travel-clinic-before-departure/",
+          "reviewedAt": "2026-06-12",
+          "owner": "unit.quarantine",
+          "ownerName": "檢疫組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "labtests": [
+        {
+          "id": "labtest.malaria",
+          "type": "labtest",
+          "title": "瘧疾檢驗項目與送驗規定",
+          "summary": "瘧疾：EDTA 全血 3 mL 及厚、薄血片各 2 片，室溫或冷藏 24 小時內送驗，做顯微鏡鏡檢與 PCR 蟲種鑑定；結果陰性但高度懷疑應重複採檢。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/malaria/",
+          "path": "/lab/malaria/",
+          "reviewedAt": "2026-07-15",
+          "owner": "unit.lab",
+          "ownerName": "檢驗及疫苗研製中心",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "services": [
+        {
+          "id": "service.travel-clinic-appointment",
+          "type": "service",
+          "title": "旅遊醫學門診預約",
+          "summary": "出國前 4 到 6 週向全國旅遊醫學合約門診預約，評估疫苗接種、瘧疾預防用藥與行前衛教；需要黃皮書者也在此辦理。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/travel-clinic-appointment/",
+          "path": "/apply/travel-clinic-appointment/",
+          "reviewedAt": "2026-06-15",
+          "owner": "unit.quarantine",
+          "ownerName": "檢疫組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "publications": [],
+      "topics": []
+    }
+  }
+}

@@ -1,0 +1,167 @@
+{
+  "id": "disease.tuberculosis",
+  "type": "disease",
+  "title": "結核病",
+  "slug": "tuberculosis",
+  "nameEn": "Tuberculosis",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2018-03-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "結核病經空氣傳染，咳嗽超過 2 週應就醫檢查。只要規則服藥至少 6 個月幾乎都能治癒；接觸者檢查與潛伏結核感染治療可避免日後發病。",
+  "aliases": [
+    "肺結核",
+    "TB",
+    "肺癆"
+  ],
+  "legalCategory": 3,
+  "icd10": [
+    "A15",
+    "A16",
+    "A17",
+    "A18",
+    "A19"
+  ],
+  "notifyWithinHours": 168,
+  "transmission": [
+    "airborne"
+  ],
+  "keyFacts": {
+    "symptoms": "肺結核早期症狀不明顯，常見咳嗽超過 2 週、有痰、胸痛、食慾不振、體重減輕、倦怠、午後發燒與夜間盜汗，嚴重時可能咳血。",
+    "transmission": "結核病由結核分枝桿菌（Mycobacterium tuberculosis）引起，菌體生長緩慢、耐乾燥，可侵犯全身各器…",
+    "prevention": "（待補：舊頁沒有對應段落）"
+  },
+  "blocks": [
+    {
+      "key": "what-to-do",
+      "heading": "我該怎麼辦",
+      "markdown": "",
+      "status": "pending"
+    },
+    {
+      "key": "symptoms",
+      "heading": "症狀與警示徵象",
+      "markdown": "肺結核早期症狀不明顯，常見**咳嗽超過 2 週**、有痰、胸痛、食慾不振、體重減輕、倦怠、午後發燒與夜間盜汗，嚴重時可能咳血。長者症狀常不典型，可能只有食慾變差或體重下降。\n\n結核菌也可能侵犯淋巴結、骨骼、腎臟、腦膜等肺外器官。**潛伏結核感染**者體內有結核菌但沒有症狀，也不會傳染給別人。\n\n**注意：**咳血、呼吸困難、持續高燒或體重快速下降，請儘速就醫。"
+    },
+    {
+      "key": "transmission",
+      "heading": "怎麼傳染",
+      "markdown": "### 致病原\n\n結核病由**結核分枝桿菌**（*Mycobacterium tuberculosis*）引起，菌體生長緩慢、耐乾燥，可侵犯全身各器官，以肺部最常見。\n\n### 傳染方式\n\n結核病經由**空氣**傳染。開放性肺結核病人咳嗽、打噴嚏、說話或唱歌時，含結核菌的微粒飄散在空氣中，被他人吸入而感染。與病人長時間在密閉空間相處（例如同住家人）的風險最高。結核病不會經由共用餐具、握手或衣物傳染。\n\n### 潛伏期與可傳染期\n\n感染後多數人為潛伏感染，一生中約 5–10% 會發病，其中約一半在感染後 2 年內。痰液可驗出結核菌期間具傳染力；病人規則服藥約 2 週後，傳染力會明顯下降。\n\n### 易感族群\n\n5 歲以下幼童、65 歲以上長者、HIV 感染者、糖尿病、洗腎、器官移植或使用免疫抑制藥物者，感染後較容易發病。"
+    },
+    {
+      "key": "prevention",
+      "heading": "如何預防",
+      "markdown": "",
+      "status": "pending"
+    },
+    {
+      "key": "treatment",
+      "heading": "診斷與治療",
+      "markdown": "### 診斷\n\n醫師依症狀與胸部 X 光判斷，並收集 3 套痰液（至少 1 套晨痰）做抗酸菌塗片、培養與**分子快速檢測**（可同時偵測 rifampin 抗藥）。\n\n### 治療\n\n結核病需合併多種抗結核藥物，治療**至少 6 個月**（前 2 個月 4 種藥物，後 4 個月 2 種藥物）。多重抗藥性結核病由**抗藥性結核病醫療照護體系（TMTC）**專責團隊收治，優先採全口服短程處方。\n\n### 都治（DOTS）\n\n由關懷員每日**送藥到手、親眼看著病人服下**，提高完治率、避免抗藥性。所有確診個案均納入都治，服務免費。\n\n### 就醫與費用\n\n結核病個案就醫由健保給付，**部分負擔由疾管署支應**；多重抗藥性結核病治療與隔離治療費用由政府負擔。外籍人士入國、居留健檢均含胸部 X 光，發現疑似個案即轉介診治。"
+    },
+    {
+      "key": "vaccine",
+      "heading": "疫苗",
+      "markdown": "卡介苗（BCG）為公費常規疫苗，**出生滿 5 個月接種 1 劑**（建議 5–8 個月）。卡介苗主要預防幼兒結核性腦膜炎、粟粒性結核等嚴重型結核病，對成人肺結核保護力有限，成人不需補種。接種後 2–3 週局部出現紅腫或小膿包屬正常反應，保持乾燥清潔即可。\n\n| 對象 | 接種時間 | 劑次 | 費用 |\n| --- | --- | --- | --- |\n| 嬰兒 | 出生滿 5 個月（建議 5–8 個月） | 1 劑 | 公費 |\n| 成人 | 不需補種 | — | — |"
+    },
+    {
+      "key": "situation",
+      "heading": "目前疫情與統計",
+      "markdown": "全球每年約有 1 千萬人發病，是單一病原致死人數最多的傳染病之一。臺灣結核病新案數自 2005 年以來持續下降，目前以 65 歲以上長者占多數，山地鄉、糖尿病與洗腎族群發生率較高。\n\n近年新案數趨勢如下表（**示意數字，非正式統計**，正式數字見統計資料）：\n\n| 年度 | 新案數（示意） | 發生率（每十萬人口，示意） |\n| --- | --- | --- |\n| 2005 | 16,472 | 72.5 |\n| 2010 | 14,267 | 61.7 |\n| 2015 | 9,776 | 41.7 |\n| 2020 | 7,333 | 31.0 |\n| 2024 | 5,100 | 22.0 |"
+    },
+    {
+      "key": "faq",
+      "heading": "常見問題",
+      "markdown": "",
+      "status": "pending"
+    }
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Disease/SubIndex/5lgwbqCTQl_W6r-4Tpylxq",
+    "https://www.cdc.gov.tw/Category/MPage/-yFBJL84K-ebVCy-5HNS32"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留共 187 處（6 個來源頁）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Disease/SubIndex/5lgwbqCTQl_W6r-4Tpylxq",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "sourceUrls": [
+      "https://www.cdc.gov.tw/Disease/SubIndex/5lgwbqCTQl_W6r-4Tpylxq",
+      "https://www.cdc.gov.tw/Category/MPage/-yFBJL84K-ebVCy-5HNS32"
+    ],
+    "existing": true,
+    "compareWith": [
+      "disease.tuberculosis"
+    ],
+    "mergedFrom": [
+      {
+        "page": "01-intro",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/5lgwbqCTQl_W6r-4Tpylxq",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "02-intro-epidemiology",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/5lgwbqCTQl_W6r-4Tpylxq",
+        "blocks": [
+          "situation"
+        ]
+      },
+      {
+        "page": "03-intro-transmission",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/5lgwbqCTQl_W6r-4Tpylxq",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "04-intro-symptoms",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/5lgwbqCTQl_W6r-4Tpylxq",
+        "blocks": [
+          "symptoms"
+        ]
+      },
+      {
+        "page": "05-intro-treatment",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/5lgwbqCTQl_W6r-4Tpylxq",
+        "blocks": [
+          "treatment"
+        ]
+      },
+      {
+        "page": "06-bcg",
+        "url": "https://www.cdc.gov.tw/Category/MPage/-yFBJL84K-ebVCy-5HNS32",
+        "blocks": [
+          "vaccine"
+        ]
+      }
+    ],
+    "introMarkdown": "結核病經空氣傳染，咳嗽超過 2 週應就醫檢查。只要規則服藥至少 6 個月幾乎都能治癒；接觸者檢查與潛伏結核感染治療可避免日後發病。\n\n| 項目 | 內容 |\n| --- | --- |\n| 法定傳染病類別 | 第三類（多重抗藥性結核病為第二類） |\n| 通報時限 | 一週內（多重抗藥性結核病 24 小時內） |\n| ICD-10 | A15–A19 |\n| 主要傳染途徑 | 空氣傳染（飛沫核） |\n| 好發族群 | 65 歲以上長者、糖尿病、洗腎、HIV 感染者 |"
+  }
+}

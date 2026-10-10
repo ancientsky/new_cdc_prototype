@@ -1,0 +1,46 @@
+{
+  "id": "news.2026-09-26-open-house",
+  "type": "news",
+  "title": "署慶系列活動：防疫科學開放日 10 月 24 日登場",
+  "owner": "unit.pr",
+  "publishedAt": "2026-09-26",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "日期：2026 年 10 月 24 日（星期六）09:30–16:00 地點：疾管署昆陽辦公室（示意） 內容：檢驗實驗室外部展示區導覽、蚊子孳生源大搜查、正確洗手體驗、疫苗小學堂。",
+  "newsType": "other",
+  "bodyMarkdown": "- **日期**：2026 年 10 月 24 日（星期六）09:30–16:00\n- **地點**：疾管署昆陽辦公室（示意）\n- **內容**：檢驗實驗室外部展示區導覽、蚊子孳生源大搜查、正確洗手體驗、疫苗小學堂。\n\n即日起至 **2026 年 10 月 17 日**止線上報名，每場次名額有限。實驗室管制區不開放。\n\n本公告為原型示意資料。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/NNo0rSkCihP4mgjpWQ3FDd?typeid=11"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 22 處（mso 樣式 18、Mso 類別 5、命名空間標籤 2）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/NNo0rSkCihP4mgjpWQ3FDd?typeid=11",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "news.2026-09-26-open-house"
+    ]
+  }
+}

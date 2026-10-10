@@ -1,0 +1,4525 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "89d2ef2eca0c",
+    "lastModified": "2026-09-01",
+    "count": 28
+  },
+  "data": [
+    {
+      "id": "dataset.antimicrobial-resistance",
+      "type": "dataset",
+      "category": "open-dataset",
+      "title": "院內感染抗藥性細菌監測年報資料",
+      "owner": "unit.lab",
+      "publishedAt": "2013-01-01",
+      "reviewedAt": "2026-06-30",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "CC-BY-3.0-TW",
+      "licenseNote": "待權責單位確認授權",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "醫院感染管制監測之重要抗藥性細菌（MRSA、VRE、CRE、CRAB）比率年度統計。",
+      "keywords": [
+        "抗藥性",
+        "CRE",
+        "醫院感染",
+        "年報"
+      ],
+      "portalUrl": "https://data.cdc.gov.tw/dataset/antimicrobial-resistance-annual",
+      "canonicalUrl": "https://data.cdc.gov.tw/dataset/antimicrobial-resistance-annual",
+      "schemaUrl": "https://data.cdc.gov.tw/dataset/antimicrobial-resistance-annual",
+      "resources": [
+        {
+          "name": "院內感染抗藥性細菌監測年報資料（XLSX）",
+          "format": "XLSX",
+          "url": "https://data.cdc.gov.tw/dataset/antimicrobial-resistance-annual"
+        },
+        {
+          "name": "院內感染抗藥性細菌監測年報資料（PDF）",
+          "format": "PDF",
+          "url": "https://data.cdc.gov.tw/dataset/antimicrobial-resistance-annual"
+        }
+      ],
+      "provenance": {
+        "fetchedAt": "2026-10-01",
+        "mode": "snapshot",
+        "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_show?id=antimicrobial-resistance-annual"
+      },
+      "ckanName": "antimicrobial-resistance-annual",
+      "updateFrequency": "yearly",
+      "lastUpdated": "2026-06-30",
+      "formats": [
+        "XLSX",
+        "PDF"
+      ],
+      "sourceHash": "60387a3b11fb",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.antimicrobial-resistance",
+      "path": "/data/#dataset.antimicrobial-resistance",
+      "md": null,
+      "governance": {
+        "owner": "unit.lab",
+        "ownerName": "檢驗及疫苗研製中心",
+        "steward": null,
+        "reviewedAt": "2026-06-30",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-06-30",
+        "daysToReview": 272,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "dataset.antimicrobial-resistance",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "CC-BY-3.0-TW",
+        "licenseNote": "待權責單位確認授權",
+        "sensitivity": "public",
+        "sourceHash": "60387a3b11fb",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "dataset.budget-final-accounts",
+      "type": "dataset",
+      "category": "open-dataset",
+      "title": "疾病管制署預算與決算書",
+      "owner": "unit.accounting",
+      "publishedAt": "2014-01-01",
+      "reviewedAt": "2026-01-31",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "未標示",
+      "licenseNote": "待權責單位確認授權",
+      "aiWhitelist": {
+        "requested": false
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "疾病管制署年度法定預算、決算書及附屬單位預算，依預算法公開。",
+      "keywords": [
+        "預算",
+        "決算",
+        "主計",
+        "公開資訊"
+      ],
+      "portalUrl": "https://data.cdc.gov.tw/dataset/cdc-budget-final-accounts",
+      "canonicalUrl": "https://data.cdc.gov.tw/dataset/cdc-budget-final-accounts",
+      "schemaUrl": "https://data.cdc.gov.tw/dataset/cdc-budget-final-accounts",
+      "resources": [
+        {
+          "name": "疾病管制署預算與決算書（PDF）",
+          "format": "PDF",
+          "url": "https://data.cdc.gov.tw/dataset/cdc-budget-final-accounts"
+        },
+        {
+          "name": "疾病管制署預算與決算書（ODS）",
+          "format": "ODS",
+          "url": "https://data.cdc.gov.tw/dataset/cdc-budget-final-accounts"
+        }
+      ],
+      "provenance": {
+        "fetchedAt": "2026-10-01",
+        "mode": "snapshot",
+        "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_show?id=cdc-budget-final-accounts"
+      },
+      "ckanName": "cdc-budget-final-accounts",
+      "updateFrequency": "yearly",
+      "lastUpdated": "2026-01-31",
+      "formats": [
+        "PDF",
+        "ODS"
+      ],
+      "sourceHash": "7591dd932810",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.budget-final-accounts",
+      "path": "/data/#dataset.budget-final-accounts",
+      "md": null,
+      "governance": {
+        "owner": "unit.accounting",
+        "ownerName": "主計室",
+        "steward": null,
+        "reviewedAt": "2026-01-31",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-01-31",
+        "daysToReview": 122,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": false,
+        "whitelistTier": "public",
+        "whitelistPublic": false,
+        "whitelistReasons": [
+          "not-requested"
+        ],
+        "whitelistReasonLabels": [
+          "未申請進入 AI 白名單"
+        ],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "dataset.budget-final-accounts",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "未標示",
+        "licenseNote": "待權責單位確認授權",
+        "sensitivity": "public",
+        "sourceHash": "7591dd932810",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "dataset.country-epid-level",
+      "type": "dataset",
+      "category": "structured-table",
+      "title": "各國旅遊疫情建議等級（CountryEpidLevel ExportJSON）",
+      "owner": "unit.quarantine",
+      "publishedAt": "2018-01-01",
+      "reviewedAt": "2026-05-11",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "data",
+        "travel"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-05-11",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "依國家彙整之各疾病旅遊疫情建議等級結構化匯出，供出國專區與答案引擎查詢。",
+      "keywords": [
+        "旅遊疫情建議等級",
+        "國家",
+        "ExportJSON",
+        "出國"
+      ],
+      "provenance": {
+        "fetchedAt": "2026-10-01",
+        "mode": "snapshot",
+        "sourceUrl": "https://www.cdc.gov.tw/"
+      },
+      "updateFrequency": "daily",
+      "lastUpdated": "2026-09-30",
+      "formats": [
+        "JSON"
+      ],
+      "canonicalUrl": "https://www.cdc.gov.tw/CountryEpidLevel/ExportJSON",
+      "resources": [
+        {
+          "name": "CountryEpidLevel ExportJSON",
+          "format": "JSON",
+          "url": "https://www.cdc.gov.tw/CountryEpidLevel/ExportJSON"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "title": "Travel health notice levels by country (CountryEpidLevel ExportJSON)",
+          "summary": "Structured export of travel health notice levels by country and disease, used by the travel section and answer engine."
+        }
+      },
+      "sourceHash": "f7fac090e913",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.country-epid-level",
+      "path": "/data/#dataset.country-epid-level",
+      "md": null,
+      "governance": {
+        "owner": "unit.quarantine",
+        "ownerName": "檢疫組",
+        "steward": null,
+        "reviewedAt": "2026-05-11",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-05-11",
+        "daysToReview": 222,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "dataset.country-epid-level",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "f7fac090e913",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-05-11",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "dataset.covid-severe-weekly",
+      "type": "dataset",
+      "category": "open-dataset",
+      "title": "新冠併發重症病例週統計",
+      "owner": "unit.epidemic-intelligence",
+      "publishedAt": "2023-03-20",
+      "reviewedAt": "2026-09-01",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "data",
+        "situation"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.covid-19"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-01",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "2023 年 3 月 20 日改列第四類後之新冠併發重症本土病例週統計，含年齡層與死亡數。",
+      "keywords": [
+        "新冠併發重症",
+        "週統計",
+        "病例",
+        "新冠"
+      ],
+      "portalUrl": "https://data.cdc.gov.tw/dataset/covid19-severe-complications-weekly",
+      "canonicalUrl": "https://data.cdc.gov.tw/dataset/covid19-severe-complications-weekly",
+      "schemaUrl": "https://data.cdc.gov.tw/dataset/covid19-severe-complications-weekly",
+      "resources": [
+        {
+          "name": "新冠併發重症病例週統計（CSV）",
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/covid19-severe-complications-weekly"
+        },
+        {
+          "name": "新冠併發重症病例週統計（JSON）",
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/covid19-severe-complications-weekly"
+        }
+      ],
+      "provenance": {
+        "fetchedAt": "2026-10-01",
+        "mode": "snapshot",
+        "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_show?id=covid19-severe-complications-weekly"
+      },
+      "ckanName": "covid19-severe-complications-weekly",
+      "updateFrequency": "weekly",
+      "lastUpdated": "2026-09-29",
+      "formats": [
+        "CSV",
+        "JSON"
+      ],
+      "series": {
+        "label": "新冠併發重症通報數（週）",
+        "unit": "例",
+        "granularity": "week",
+        "points": [
+          {
+            "t": "2026-W27",
+            "v": 98
+          },
+          {
+            "t": "2026-W28",
+            "v": 112
+          },
+          {
+            "t": "2026-W29",
+            "v": 105
+          },
+          {
+            "t": "2026-W30",
+            "v": 90
+          },
+          {
+            "t": "2026-W31",
+            "v": 78
+          },
+          {
+            "t": "2026-W32",
+            "v": 66
+          },
+          {
+            "t": "2026-W33",
+            "v": 60
+          },
+          {
+            "t": "2026-W34",
+            "v": 58
+          },
+          {
+            "t": "2026-W35",
+            "v": 55
+          },
+          {
+            "t": "2026-W36",
+            "v": 50
+          },
+          {
+            "t": "2026-W37",
+            "v": 47
+          },
+          {
+            "t": "2026-W38",
+            "v": 45
+          }
+        ],
+        "note": "示意：數值為原型示意，與疫情態勢層一致。"
+      },
+      "i18n": {
+        "en": {
+          "title": "Weekly COVID-19 with severe complications",
+          "summary": "Weekly locally acquired severe COVID-19 cases since the March 2023 reclassification, by age group, with deaths."
+        }
+      },
+      "sourceHash": "efaf48e8a055",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.covid-severe-weekly",
+      "path": "/data/#dataset.covid-severe-weekly",
+      "md": null,
+      "governance": {
+        "owner": "unit.epidemic-intelligence",
+        "ownerName": "疫情中心",
+        "steward": null,
+        "reviewedAt": "2026-09-01",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-09-01",
+        "daysToReview": 335,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "dataset.covid-severe-weekly",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "efaf48e8a055",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-01",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "dataset.dengue-daily",
+      "type": "dataset",
+      "category": "open-dataset",
+      "title": "登革熱每日確定病例統計",
+      "ckanName": "dengue-daily-determined-cases-1998",
+      "portalUrl": "https://data.cdc.gov.tw/dataset/dengue-daily-determined-cases-1998",
+      "canonicalUrl": "https://data.cdc.gov.tw/dataset/dengue-daily-determined-cases-1998",
+      "mirrors": [
+        "https://data.gov.tw/"
+      ],
+      "updateFrequency": "daily",
+      "lastUpdated": "2026-09-30",
+      "formats": [
+        "CSV",
+        "JSON"
+      ],
+      "schemaUrl": "https://data.cdc.gov.tw/dataset/dengue-daily-determined-cases-1998",
+      "owner": "unit.epidemic-intelligence",
+      "publishedAt": "2015-01-01",
+      "reviewedAt": "2026-09-01",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "data",
+        "situation"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-01"
+        }
+      },
+      "summary": "1998 年起登革熱每日確定病例（本土／境外移入），含縣市、性別、年齡層。",
+      "keywords": [
+        "登革熱",
+        "病例",
+        "每日"
+      ],
+      "series": {
+        "label": "登革熱本土病例（年）",
+        "unit": "例",
+        "granularity": "year",
+        "points": [
+          {
+            "t": "2019",
+            "v": 100
+          },
+          {
+            "t": "2020",
+            "v": 65
+          },
+          {
+            "t": "2021",
+            "v": 0
+          },
+          {
+            "t": "2022",
+            "v": 12
+          },
+          {
+            "t": "2023",
+            "v": 26703
+          },
+          {
+            "t": "2024",
+            "v": 462
+          },
+          {
+            "t": "2025",
+            "v": 180
+          }
+        ],
+        "note": "原型快照：2019–2024 依公開年度統計整理；2025 為暫定值。正式版由 CKAN 每日資料聚合。"
+      },
+      "provenance": {
+        "fetchedAt": "2026-10-01",
+        "mode": "snapshot",
+        "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_show?id=dengue-daily-determined-cases-1998"
+      },
+      "note": "連結待權責單位確認深層網址",
+      "sourceHash": "92c46bf32bbe",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.dengue-daily",
+      "path": "/data/#dataset.dengue-daily",
+      "md": null,
+      "governance": {
+        "owner": "unit.epidemic-intelligence",
+        "ownerName": "疫情中心",
+        "steward": null,
+        "reviewedAt": "2026-09-01",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-09-01",
+        "daysToReview": 335,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "dataset.dengue-daily",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "92c46bf32bbe",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-01"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "dataset.dengue-local-weekly",
+      "type": "dataset",
+      "category": "open-dataset",
+      "title": "登革熱本土病例週統計（縣市別）",
+      "owner": "unit.epidemic-intelligence",
+      "publishedAt": "2016-06-01",
+      "reviewedAt": "2026-06-30",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "data",
+        "situation"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "登革熱本土病例依發病週與縣市彙整之週統計，供疫情態勢判讀與地方防治規劃使用。",
+      "keywords": [
+        "登革熱",
+        "本土病例",
+        "週統計",
+        "縣市"
+      ],
+      "portalUrl": "https://data.cdc.gov.tw/dataset/dengue-local-cases-weekly",
+      "canonicalUrl": "https://data.cdc.gov.tw/dataset/dengue-local-cases-weekly",
+      "schemaUrl": "https://data.cdc.gov.tw/dataset/dengue-local-cases-weekly",
+      "resources": [
+        {
+          "name": "登革熱本土病例週統計（縣市別）（CSV）",
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/dengue-local-cases-weekly"
+        },
+        {
+          "name": "登革熱本土病例週統計（縣市別）（JSON）",
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/dengue-local-cases-weekly"
+        }
+      ],
+      "provenance": {
+        "fetchedAt": "2026-10-01",
+        "mode": "snapshot",
+        "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_show?id=dengue-local-cases-weekly"
+      },
+      "ckanName": "dengue-local-cases-weekly",
+      "updateFrequency": "weekly",
+      "lastUpdated": "2026-09-29",
+      "formats": [
+        "CSV",
+        "JSON"
+      ],
+      "sourceHash": "7f9f46324632",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.dengue-local-weekly",
+      "path": "/data/#dataset.dengue-local-weekly",
+      "md": null,
+      "governance": {
+        "owner": "unit.epidemic-intelligence",
+        "ownerName": "疫情中心",
+        "steward": null,
+        "reviewedAt": "2026-06-30",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-06-30",
+        "daysToReview": 272,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "dataset.dengue-local-weekly",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "7f9f46324632",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "dataset.disease-pages",
+      "type": "dataset",
+      "category": "content-page",
+      "title": "疾病介紹頁（八區塊結構化內容）",
+      "owner": "unit.pr",
+      "publishedAt": "2018-03-01",
+      "reviewedAt": "2026-09-01",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "data",
+        "symptoms"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "法定傳染病疾病介紹頁；本站以八區塊結構化並提供 v1/diseases API 與機讀版。",
+      "keywords": [
+        "疾病介紹",
+        "結構化內容",
+        "API",
+        "機讀版"
+      ],
+      "provenance": {
+        "fetchedAt": "2026-10-01",
+        "mode": "snapshot",
+        "sourceUrl": "https://www.cdc.gov.tw/"
+      },
+      "updateFrequency": "irregular",
+      "lastUpdated": "2026-09-28",
+      "formats": [
+        "HTML",
+        "MD",
+        "JSON"
+      ],
+      "canonicalUrl": "https://www.cdc.gov.tw/Disease/Index",
+      "sourceHash": "2c33126b5b84",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.disease-pages",
+      "path": "/data/#dataset.disease-pages",
+      "md": null,
+      "governance": {
+        "owner": "unit.pr",
+        "ownerName": "公關室",
+        "steward": null,
+        "reviewedAt": "2026-09-01",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-09-01",
+        "daysToReview": 335,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "dataset.disease-pages",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "2c33126b5b84",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "dataset.doc-library-guidelines",
+      "type": "dataset",
+      "category": "document-library",
+      "title": "防治工作手冊與指引文件庫",
+      "owner": "unit.oasis",
+      "publishedAt": "2018-01-01",
+      "reviewedAt": "2026-09-01",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "各疾病防治工作手冊、指引、病例定義與接種建議；本站以版本鏈管理並提供機讀版 Markdown。",
+      "keywords": [
+        "文件庫",
+        "手冊",
+        "指引",
+        "病例定義",
+        "版本鏈"
+      ],
+      "provenance": {
+        "fetchedAt": "2026-10-01",
+        "mode": "snapshot",
+        "sourceUrl": "https://www.cdc.gov.tw/"
+      },
+      "updateFrequency": "irregular",
+      "lastUpdated": "2026-09-21",
+      "formats": [
+        "PDF",
+        "MD"
+      ],
+      "canonicalUrl": "https://www.cdc.gov.tw/Disease/Index",
+      "sourceHash": "05ab3e5bb353",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.doc-library-guidelines",
+      "path": "/data/#dataset.doc-library-guidelines",
+      "md": null,
+      "governance": {
+        "owner": "unit.oasis",
+        "ownerName": "AI推動辦公室",
+        "steward": null,
+        "reviewedAt": "2026-09-01",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-09-01",
+        "daysToReview": 335,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "dataset.doc-library-guidelines",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "05ab3e5bb353",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "dataset.ev-lab-types",
+      "type": "dataset",
+      "category": "open-dataset",
+      "title": "腸病毒型別監測",
+      "owner": "unit.lab",
+      "publishedAt": "2015-01-01",
+      "reviewedAt": "2026-04-14",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "社區腸病毒分離株型別週統計（EV71、克沙奇 A 型、克沙奇 B 型、伊科病毒等）。",
+      "keywords": [
+        "腸病毒",
+        "型別",
+        "EV71",
+        "實驗室"
+      ],
+      "portalUrl": "https://data.cdc.gov.tw/dataset/enterovirus-typing",
+      "canonicalUrl": "https://data.cdc.gov.tw/dataset/enterovirus-typing",
+      "schemaUrl": "https://data.cdc.gov.tw/dataset/enterovirus-typing",
+      "resources": [
+        {
+          "name": "腸病毒型別監測（CSV）",
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/enterovirus-typing"
+        }
+      ],
+      "provenance": {
+        "fetchedAt": "2026-10-01",
+        "mode": "snapshot",
+        "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_show?id=enterovirus-typing"
+      },
+      "ckanName": "enterovirus-typing",
+      "updateFrequency": "weekly",
+      "lastUpdated": "2026-09-26",
+      "formats": [
+        "CSV"
+      ],
+      "sourceHash": "fe059d5b0495",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.ev-lab-types",
+      "path": "/data/#dataset.ev-lab-types",
+      "md": null,
+      "governance": {
+        "owner": "unit.lab",
+        "ownerName": "檢驗及疫苗研製中心",
+        "steward": null,
+        "reviewedAt": "2026-04-14",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-04-14",
+        "daysToReview": 195,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "dataset.ev-lab-types",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "fe059d5b0495",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "dataset.ev-visits-weekly",
+      "type": "dataset",
+      "category": "open-dataset",
+      "title": "腸病毒門急診就診統計（健保資料）",
+      "owner": "unit.epidemic-intelligence",
+      "publishedAt": "2015-01-01",
+      "reviewedAt": "2026-04-20",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "data",
+        "situation"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-04-20",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "依健保門診與急診申報資料，彙整每週腸病毒就診人次（年齡層、縣市別），並標示流行閾值。",
+      "keywords": [
+        "腸病毒",
+        "就診人次",
+        "健保",
+        "流行閾值"
+      ],
+      "portalUrl": "https://data.cdc.gov.tw/dataset/nhi-enterovirus-er-opd-visits",
+      "canonicalUrl": "https://data.cdc.gov.tw/dataset/nhi-enterovirus-er-opd-visits",
+      "schemaUrl": "https://data.cdc.gov.tw/dataset/nhi-enterovirus-er-opd-visits",
+      "resources": [
+        {
+          "name": "腸病毒門急診就診統計（健保資料）（CSV）",
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/nhi-enterovirus-er-opd-visits"
+        },
+        {
+          "name": "腸病毒門急診就診統計（健保資料）（JSON）",
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/nhi-enterovirus-er-opd-visits"
+        }
+      ],
+      "provenance": {
+        "fetchedAt": "2026-10-01",
+        "mode": "snapshot",
+        "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_show?id=nhi-enterovirus-er-opd-visits"
+      },
+      "ckanName": "nhi-enterovirus-er-opd-visits",
+      "updateFrequency": "weekly",
+      "lastUpdated": "2026-09-29",
+      "formats": [
+        "CSV",
+        "JSON"
+      ],
+      "series": {
+        "label": "腸病毒門急診就診人次（週）",
+        "unit": "人次",
+        "granularity": "week",
+        "points": [
+          {
+            "t": "2026-W27",
+            "v": 9800
+          },
+          {
+            "t": "2026-W28",
+            "v": 9200
+          },
+          {
+            "t": "2026-W29",
+            "v": 8100
+          },
+          {
+            "t": "2026-W30",
+            "v": 7300
+          },
+          {
+            "t": "2026-W31",
+            "v": 6200
+          },
+          {
+            "t": "2026-W32",
+            "v": 5600
+          },
+          {
+            "t": "2026-W33",
+            "v": 5100
+          },
+          {
+            "t": "2026-W34",
+            "v": 4800
+          },
+          {
+            "t": "2026-W35",
+            "v": 5300
+          },
+          {
+            "t": "2026-W36",
+            "v": 6400
+          },
+          {
+            "t": "2026-W37",
+            "v": 7900
+          },
+          {
+            "t": "2026-W38",
+            "v": 8700
+          }
+        ],
+        "note": "示意：數值為原型示意（流行閾值 11,000 人次）；正式值以 CKAN 資料集為準。"
+      },
+      "i18n": {
+        "en": {
+          "title": "Enterovirus outpatient and ER visits (NHI data)",
+          "summary": "Weekly enterovirus visits by age group and county from NHI claims, with the epidemic threshold."
+        }
+      },
+      "sourceHash": "97f6b27f2795",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.ev-visits-weekly",
+      "path": "/data/#dataset.ev-visits-weekly",
+      "md": null,
+      "governance": {
+        "owner": "unit.epidemic-intelligence",
+        "ownerName": "疫情中心",
+        "steward": null,
+        "reviewedAt": "2026-04-20",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-04-20",
+        "daysToReview": 201,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "dataset.ev-visits-weekly",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "97f6b27f2795",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-04-20",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "dataset.flu-express",
+      "type": "dataset",
+      "category": "stats-system",
+      "title": "流感速訊（每週流感監測報告）",
+      "owner": "unit.epidemic-intelligence",
+      "publishedAt": "2009-10-01",
+      "reviewedAt": "2026-09-01",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "data",
+        "situation"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "每週發布之流感監測綜合報告：類流感就診、病毒型別、併發重症與國際疫情。",
+      "keywords": [
+        "流感速訊",
+        "流感監測",
+        "週報",
+        "病毒型別"
+      ],
+      "provenance": {
+        "fetchedAt": "2026-10-01",
+        "mode": "snapshot",
+        "sourceUrl": "https://www.cdc.gov.tw/"
+      },
+      "updateFrequency": "weekly",
+      "lastUpdated": "2026-09-29",
+      "formats": [
+        "PDF",
+        "HTML"
+      ],
+      "canonicalUrl": "https://antiflu.cdc.gov.tw/",
+      "sourceHash": "a8227e9aff15",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.flu-express",
+      "path": "/data/#dataset.flu-express",
+      "md": null,
+      "governance": {
+        "owner": "unit.epidemic-intelligence",
+        "ownerName": "疫情中心",
+        "steward": null,
+        "reviewedAt": "2026-09-01",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-09-01",
+        "daysToReview": 335,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "dataset.flu-express",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "a8227e9aff15",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "dataset.flu-severe",
+      "type": "dataset",
+      "category": "open-dataset",
+      "title": "流感併發重症病例統計",
+      "owner": "unit.epidemic-intelligence",
+      "publishedAt": "2016-01-01",
+      "reviewedAt": "2026-09-01",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "data",
+        "situation"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "流感併發重症確定病例依發病週、年齡層、病毒型別與縣市之統計，含死亡病例數。",
+      "keywords": [
+        "流感併發重症",
+        "病例",
+        "病毒型別",
+        "週統計"
+      ],
+      "portalUrl": "https://data.cdc.gov.tw/dataset/influenza-severe-complications",
+      "canonicalUrl": "https://data.cdc.gov.tw/dataset/influenza-severe-complications",
+      "schemaUrl": "https://data.cdc.gov.tw/dataset/influenza-severe-complications",
+      "resources": [
+        {
+          "name": "流感併發重症病例統計（CSV）",
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/influenza-severe-complications"
+        },
+        {
+          "name": "流感併發重症病例統計（JSON）",
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/influenza-severe-complications"
+        }
+      ],
+      "provenance": {
+        "fetchedAt": "2026-10-01",
+        "mode": "snapshot",
+        "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_show?id=influenza-severe-complications"
+      },
+      "ckanName": "influenza-severe-complications",
+      "updateFrequency": "weekly",
+      "lastUpdated": "2026-09-29",
+      "formats": [
+        "CSV",
+        "JSON"
+      ],
+      "sourceHash": "30607d4cefa9",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.flu-severe",
+      "path": "/data/#dataset.flu-severe",
+      "md": null,
+      "governance": {
+        "owner": "unit.epidemic-intelligence",
+        "ownerName": "疫情中心",
+        "steward": null,
+        "reviewedAt": "2026-09-01",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-09-01",
+        "daysToReview": 335,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "dataset.flu-severe",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "30607d4cefa9",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "dataset.health-education-materials",
+      "type": "dataset",
+      "category": "media",
+      "title": "多語衛教素材（海報、單張、懶人包）",
+      "owner": "unit.pr",
+      "publishedAt": "2015-01-01",
+      "reviewedAt": "2026-03-01",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "七語衛教海報、單張與社群懶人包；每件素材應標示依據正本與版本，正本修訂時連動下架。",
+      "keywords": [
+        "衛教素材",
+        "多語",
+        "海報",
+        "懶人包"
+      ],
+      "provenance": {
+        "fetchedAt": "2026-10-01",
+        "mode": "snapshot",
+        "sourceUrl": "https://www.cdc.gov.tw/"
+      },
+      "updateFrequency": "irregular",
+      "lastUpdated": "2026-09-18",
+      "formats": [
+        "PDF",
+        "PNG",
+        "JPG"
+      ],
+      "canonicalUrl": "https://www.cdc.gov.tw/Advocacy",
+      "sourceHash": "65a4754c9cb8",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.health-education-materials",
+      "path": "/data/#dataset.health-education-materials",
+      "md": null,
+      "governance": {
+        "owner": "unit.pr",
+        "ownerName": "公關室",
+        "steward": null,
+        "reviewedAt": "2026-03-01",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-03-01",
+        "daysToReview": 151,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "dataset.health-education-materials",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "65a4754c9cb8",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "dataset.hiv-monthly",
+      "type": "dataset",
+      "category": "open-dataset",
+      "title": "人類免疫缺乏病毒感染（愛滋）通報統計",
+      "owner": "unit.epidemic-intelligence",
+      "publishedAt": "2015-01-01",
+      "reviewedAt": "2025-12-01",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.hiv",
+        "disease.aids"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2025-12-01",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "HIV 感染者與愛滋發病者通報數按月統計，含危險因子、年齡層與縣市分布。",
+      "keywords": [
+        "HIV",
+        "愛滋",
+        "通報統計",
+        "月統計"
+      ],
+      "portalUrl": "https://data.cdc.gov.tw/dataset/hiv-aids-monthly-statistics",
+      "canonicalUrl": "https://data.cdc.gov.tw/dataset/hiv-aids-monthly-statistics",
+      "schemaUrl": "https://data.cdc.gov.tw/dataset/hiv-aids-monthly-statistics",
+      "resources": [
+        {
+          "name": "人類免疫缺乏病毒感染（愛滋）通報統計（CSV）",
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/hiv-aids-monthly-statistics"
+        },
+        {
+          "name": "人類免疫缺乏病毒感染（愛滋）通報統計（JSON）",
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/hiv-aids-monthly-statistics"
+        }
+      ],
+      "provenance": {
+        "fetchedAt": "2026-10-01",
+        "mode": "snapshot",
+        "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_show?id=hiv-aids-monthly-statistics"
+      },
+      "ckanName": "hiv-aids-monthly-statistics",
+      "updateFrequency": "monthly",
+      "lastUpdated": "2026-09-10",
+      "formats": [
+        "CSV",
+        "JSON"
+      ],
+      "series": {
+        "label": "HIV 新通報（年）",
+        "unit": "人",
+        "granularity": "year",
+        "points": [
+          {
+            "t": "2015",
+            "v": 2327
+          },
+          {
+            "t": "2016",
+            "v": 2395
+          },
+          {
+            "t": "2017",
+            "v": 2503
+          },
+          {
+            "t": "2018",
+            "v": 1991
+          },
+          {
+            "t": "2019",
+            "v": 1755
+          },
+          {
+            "t": "2020",
+            "v": 1390
+          },
+          {
+            "t": "2021",
+            "v": 1247
+          },
+          {
+            "t": "2022",
+            "v": 951
+          },
+          {
+            "t": "2023",
+            "v": 939
+          },
+          {
+            "t": "2024",
+            "v": 820
+          },
+          {
+            "t": "2025",
+            "v": 760
+          }
+        ],
+        "note": "2015–2023 依公開年報概略整理；2024–2025 為示意值。"
+      },
+      "i18n": {
+        "en": {
+          "title": "HIV infection and AIDS notifications",
+          "summary": "Monthly HIV and AIDS notifications by risk factor, age group and county."
+        }
+      },
+      "sourceHash": "b01e11f73042",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.hiv-monthly",
+      "path": "/data/#dataset.hiv-monthly",
+      "md": null,
+      "governance": {
+        "owner": "unit.epidemic-intelligence",
+        "ownerName": "疫情中心",
+        "steward": null,
+        "reviewedAt": "2025-12-01",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2026-12-01",
+        "daysToReview": 61,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "dataset.hiv-monthly",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "b01e11f73042",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2025-12-01",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "dataset.ili-weekly",
+      "type": "dataset",
+      "category": "open-dataset",
+      "title": "類流感門急診就診統計（健保資料）",
+      "owner": "unit.epidemic-intelligence",
+      "publishedAt": "2015-01-01",
+      "reviewedAt": "2026-09-01",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "data",
+        "situation"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-01",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "依健保門診與急診申報資料，彙整每週類流感就診人次與就診率（年齡層、縣市別）。",
+      "keywords": [
+        "類流感",
+        "就診率",
+        "健保",
+        "週統計",
+        "流感"
+      ],
+      "portalUrl": "https://data.cdc.gov.tw/dataset/nhi-ili-er-opd-visits",
+      "canonicalUrl": "https://data.cdc.gov.tw/dataset/nhi-ili-er-opd-visits",
+      "schemaUrl": "https://data.cdc.gov.tw/dataset/nhi-ili-er-opd-visits",
+      "resources": [
+        {
+          "name": "類流感門急診就診統計（健保資料）（CSV）",
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/nhi-ili-er-opd-visits"
+        },
+        {
+          "name": "類流感門急診就診統計（健保資料）（JSON）",
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/nhi-ili-er-opd-visits"
+        }
+      ],
+      "provenance": {
+        "fetchedAt": "2026-10-01",
+        "mode": "snapshot",
+        "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_show?id=nhi-ili-er-opd-visits"
+      },
+      "ckanName": "nhi-ili-er-opd-visits",
+      "updateFrequency": "weekly",
+      "lastUpdated": "2026-09-29",
+      "formats": [
+        "CSV",
+        "JSON"
+      ],
+      "series": {
+        "label": "類流感門急診就診率（週）",
+        "unit": "%",
+        "granularity": "week",
+        "points": [
+          {
+            "t": "2026-W27",
+            "v": 5.6
+          },
+          {
+            "t": "2026-W28",
+            "v": 5.5
+          },
+          {
+            "t": "2026-W29",
+            "v": 5.7
+          },
+          {
+            "t": "2026-W30",
+            "v": 5.9
+          },
+          {
+            "t": "2026-W31",
+            "v": 6.4
+          },
+          {
+            "t": "2026-W32",
+            "v": 7
+          },
+          {
+            "t": "2026-W33",
+            "v": 7.8
+          },
+          {
+            "t": "2026-W34",
+            "v": 8.6
+          },
+          {
+            "t": "2026-W35",
+            "v": 9.4
+          },
+          {
+            "t": "2026-W36",
+            "v": 10.3
+          },
+          {
+            "t": "2026-W37",
+            "v": 11.2
+          },
+          {
+            "t": "2026-W38",
+            "v": 12
+          }
+        ],
+        "note": "示意：近 12 週數值為原型示意，與疫情態勢層一致；正式值以 CKAN 資料集為準。"
+      },
+      "i18n": {
+        "en": {
+          "title": "Influenza-like illness outpatient and ER visits (NHI data)",
+          "summary": "Weekly ILI visits and visit rates by age group and county from National Health Insurance claims."
+        }
+      },
+      "sourceHash": "a80ed0440b10",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.ili-weekly",
+      "path": "/data/#dataset.ili-weekly",
+      "md": null,
+      "governance": {
+        "owner": "unit.epidemic-intelligence",
+        "ownerName": "疫情中心",
+        "steward": null,
+        "reviewedAt": "2026-09-01",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-09-01",
+        "daysToReview": 335,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "dataset.ili-weekly",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "a80ed0440b10",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-01",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "dataset.international-epidemics",
+      "type": "dataset",
+      "category": "open-dataset",
+      "title": "國際重要疫情資訊",
+      "owner": "unit.epidemic-intelligence",
+      "publishedAt": "2016-01-01",
+      "reviewedAt": "2026-02-01",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "data",
+        "travel"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "疾管署彙整之國際重要疫情摘要（疾病、國家、發布日、摘要），每日更新。",
+      "keywords": [
+        "國際疫情",
+        "旅遊",
+        "每日更新",
+        "疫情摘要"
+      ],
+      "portalUrl": "https://data.cdc.gov.tw/dataset/international-major-epidemics",
+      "canonicalUrl": "https://data.cdc.gov.tw/dataset/international-major-epidemics",
+      "schemaUrl": "https://data.cdc.gov.tw/dataset/international-major-epidemics",
+      "resources": [
+        {
+          "name": "國際重要疫情資訊（JSON）",
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/international-major-epidemics"
+        },
+        {
+          "name": "國際重要疫情資訊（CSV）",
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/international-major-epidemics"
+        }
+      ],
+      "provenance": {
+        "fetchedAt": "2026-10-01",
+        "mode": "snapshot",
+        "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_show?id=international-major-epidemics"
+      },
+      "ckanName": "international-major-epidemics",
+      "updateFrequency": "daily",
+      "lastUpdated": "2026-08-28",
+      "formats": [
+        "JSON",
+        "CSV"
+      ],
+      "sourceHash": "5449e2a6ead0",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.international-epidemics",
+      "path": "/data/#dataset.international-epidemics",
+      "md": null,
+      "governance": {
+        "owner": "unit.epidemic-intelligence",
+        "ownerName": "疫情中心",
+        "steward": null,
+        "reviewedAt": "2026-02-01",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-02-01",
+        "daysToReview": 123,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "dataset.international-epidemics",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "5449e2a6ead0",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "dataset.lab-virus-surveillance",
+      "type": "dataset",
+      "category": "open-dataset",
+      "title": "病毒性感染症實驗室監測（呼吸道、腸道病毒檢出）",
+      "owner": "unit.lab",
+      "publishedAt": "2012-01-01",
+      "reviewedAt": "2026-01-20",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "data",
+        "situation"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.influenza",
+        "disease.enterovirus",
+        "disease.covid-19"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "合約實驗室每週呼吸道與腸道病毒檢出件數與型別分布（流感 A/B、腸病毒型別、RSV、新冠等）。",
+      "keywords": [
+        "實驗室監測",
+        "病毒型別",
+        "流感",
+        "腸病毒"
+      ],
+      "portalUrl": "https://data.cdc.gov.tw/dataset/lab-virus-surveillance-weekly",
+      "canonicalUrl": "https://data.cdc.gov.tw/dataset/lab-virus-surveillance-weekly",
+      "schemaUrl": "https://data.cdc.gov.tw/dataset/lab-virus-surveillance-weekly",
+      "resources": [
+        {
+          "name": "病毒性感染症實驗室監測（呼吸道、腸道病毒檢出）（CSV）",
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/lab-virus-surveillance-weekly"
+        }
+      ],
+      "provenance": {
+        "fetchedAt": "2026-10-01",
+        "mode": "snapshot",
+        "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_show?id=lab-virus-surveillance-weekly"
+      },
+      "ckanName": "lab-virus-surveillance-weekly",
+      "updateFrequency": "weekly",
+      "lastUpdated": "2026-09-26",
+      "formats": [
+        "CSV"
+      ],
+      "sourceHash": "67f76a0f7f7c",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.lab-virus-surveillance",
+      "path": "/data/#dataset.lab-virus-surveillance",
+      "md": null,
+      "governance": {
+        "owner": "unit.lab",
+        "ownerName": "檢驗及疫苗研製中心",
+        "steward": null,
+        "reviewedAt": "2026-01-20",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-01-20",
+        "daysToReview": 111,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "dataset.lab-virus-surveillance",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "67f76a0f7f7c",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "dataset.measles-yearly",
+      "type": "dataset",
+      "category": "open-dataset",
+      "title": "麻疹確定病例統計",
+      "owner": "unit.epidemic-intelligence",
+      "publishedAt": "2015-01-01",
+      "reviewedAt": "2026-05-14",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "data",
+        "travel"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.measles"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-05-14",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "麻疹確定病例依年度、境外移入／本土、感染國家與年齡層統計。",
+      "keywords": [
+        "麻疹",
+        "確定病例",
+        "境外移入",
+        "年統計"
+      ],
+      "portalUrl": "https://data.cdc.gov.tw/dataset/measles-confirmed-cases",
+      "canonicalUrl": "https://data.cdc.gov.tw/dataset/measles-confirmed-cases",
+      "schemaUrl": "https://data.cdc.gov.tw/dataset/measles-confirmed-cases",
+      "resources": [
+        {
+          "name": "麻疹確定病例統計（CSV）",
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/measles-confirmed-cases"
+        },
+        {
+          "name": "麻疹確定病例統計（JSON）",
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/measles-confirmed-cases"
+        }
+      ],
+      "provenance": {
+        "fetchedAt": "2026-10-01",
+        "mode": "snapshot",
+        "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_show?id=measles-confirmed-cases"
+      },
+      "ckanName": "measles-confirmed-cases",
+      "updateFrequency": "monthly",
+      "lastUpdated": "2026-09-05",
+      "formats": [
+        "CSV",
+        "JSON"
+      ],
+      "series": {
+        "label": "麻疹病例（年）",
+        "unit": "例",
+        "granularity": "year",
+        "points": [
+          {
+            "t": "2018",
+            "v": 40
+          },
+          {
+            "t": "2019",
+            "v": 134
+          },
+          {
+            "t": "2020",
+            "v": 9
+          },
+          {
+            "t": "2021",
+            "v": 0
+          },
+          {
+            "t": "2022",
+            "v": 0
+          },
+          {
+            "t": "2023",
+            "v": 10
+          },
+          {
+            "t": "2024",
+            "v": 21
+          },
+          {
+            "t": "2025",
+            "v": 33
+          }
+        ],
+        "note": "示意：2018–2020 量級依公開資料概略整理，2021 年後為示意值；正式值以傳染病統計資料查詢系統為準。"
+      },
+      "i18n": {
+        "en": {
+          "title": "Confirmed measles cases",
+          "summary": "Confirmed measles cases by year, imported or local, country of infection and age group."
+        }
+      },
+      "sourceHash": "fcd23b34ffb4",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.measles-yearly",
+      "path": "/data/#dataset.measles-yearly",
+      "md": null,
+      "governance": {
+        "owner": "unit.epidemic-intelligence",
+        "ownerName": "疫情中心",
+        "steward": null,
+        "reviewedAt": "2026-05-14",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-05-14",
+        "daysToReview": 225,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "dataset.measles-yearly",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "fcd23b34ffb4",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-05-14",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "dataset.nidss-notifiable",
+      "type": "dataset",
+      "category": "open-dataset",
+      "title": "傳染病統計資料查詢系統—法定傳染病病例數（週別、縣市、年齡）",
+      "owner": "unit.epidemic-intelligence",
+      "publishedAt": "2012-01-01",
+      "reviewedAt": "2026-01-10",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-01-10",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "全部法定傳染病確定病例數，依發病週、縣市、性別、年齡層與境外移入別彙整，為 NIDSS 之開放資料版本。",
+      "keywords": [
+        "法定傳染病",
+        "NIDSS",
+        "病例數",
+        "週別"
+      ],
+      "portalUrl": "https://data.cdc.gov.tw/dataset/nidss-notifiable-diseases-weekly",
+      "canonicalUrl": "https://data.cdc.gov.tw/dataset/nidss-notifiable-diseases-weekly",
+      "schemaUrl": "https://data.cdc.gov.tw/dataset/nidss-notifiable-diseases-weekly",
+      "resources": [
+        {
+          "name": "傳染病統計資料查詢系統—法定傳染病病例數（週別、縣市、年齡）（CSV）",
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/nidss-notifiable-diseases-weekly"
+        },
+        {
+          "name": "傳染病統計資料查詢系統—法定傳染病病例數（週別、縣市、年齡）（JSON）",
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/nidss-notifiable-diseases-weekly"
+        },
+        {
+          "name": "傳染病統計資料查詢系統—法定傳染病病例數（週別、縣市、年齡）（XML）",
+          "format": "XML",
+          "url": "https://data.cdc.gov.tw/dataset/nidss-notifiable-diseases-weekly"
+        }
+      ],
+      "provenance": {
+        "fetchedAt": "2026-10-01",
+        "mode": "snapshot",
+        "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_show?id=nidss-notifiable-diseases-weekly"
+      },
+      "ckanName": "nidss-notifiable-diseases-weekly",
+      "updateFrequency": "weekly",
+      "lastUpdated": "2026-09-29",
+      "formats": [
+        "CSV",
+        "JSON",
+        "XML"
+      ],
+      "i18n": {
+        "en": {
+          "title": "Notifiable disease cases (NIDSS open data)",
+          "summary": "Confirmed cases of all notifiable diseases by onset week, county, sex, age group and import status."
+        }
+      },
+      "sourceHash": "18550768993e",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.nidss-notifiable",
+      "path": "/data/#dataset.nidss-notifiable",
+      "md": null,
+      "governance": {
+        "owner": "unit.epidemic-intelligence",
+        "ownerName": "疫情中心",
+        "steward": null,
+        "reviewedAt": "2026-01-10",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-01-10",
+        "daysToReview": 101,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "dataset.nidss-notifiable",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "18550768993e",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-01-10",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "dataset.nidss",
+      "type": "dataset",
+      "category": "stats-system",
+      "title": "傳染病統計資料查詢系統（NIDSS）",
+      "owner": "unit.epidemic-intelligence",
+      "publishedAt": "2011-01-01",
+      "reviewedAt": "2026-01-10",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "data",
+        "situation"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-01-10",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "可依疾病、年度、週別、縣市、年齡查詢法定傳染病病例數與趨勢圖，並下載 CSV。",
+      "keywords": [
+        "NIDSS",
+        "統計查詢",
+        "法定傳染病",
+        "趨勢"
+      ],
+      "provenance": {
+        "fetchedAt": "2026-10-01",
+        "mode": "snapshot",
+        "sourceUrl": "https://www.cdc.gov.tw/"
+      },
+      "updateFrequency": "daily",
+      "lastUpdated": "2026-09-30",
+      "formats": [
+        "HTML",
+        "CSV"
+      ],
+      "canonicalUrl": "https://nidss.cdc.gov.tw/",
+      "portalUrl": "https://nidss.cdc.gov.tw/",
+      "i18n": {
+        "en": {
+          "title": "Taiwan National Infectious Disease Statistics System (NIDSS)",
+          "summary": "Query notifiable disease cases and trends by disease, year, week, county and age, with CSV download."
+        }
+      },
+      "sourceHash": "1a629b556af8",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.nidss",
+      "path": "/data/#dataset.nidss",
+      "md": null,
+      "governance": {
+        "owner": "unit.epidemic-intelligence",
+        "ownerName": "疫情中心",
+        "steward": null,
+        "reviewedAt": "2026-01-10",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-01-10",
+        "daysToReview": 101,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "dataset.nidss",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "1a629b556af8",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-01-10",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "dataset.population-reference",
+      "type": "dataset",
+      "category": "open-dataset",
+      "title": "疫情分析用人口統計（縣市、性別、年齡）",
+      "owner": "unit.accounting",
+      "publishedAt": "2014-01-01",
+      "reviewedAt": "2026-02-15",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "未標示",
+      "licenseNote": "待權責單位確認授權",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "疫情分析計算發生率使用之年中人口數（縣市、性別、五歲年齡組），轉載自內政部戶政統計。",
+      "keywords": [
+        "人口統計",
+        "發生率",
+        "分母",
+        "年中人口"
+      ],
+      "portalUrl": "https://data.cdc.gov.tw/dataset/population-reference-for-epidemiology",
+      "canonicalUrl": "https://data.cdc.gov.tw/dataset/population-reference-for-epidemiology",
+      "schemaUrl": "https://data.cdc.gov.tw/dataset/population-reference-for-epidemiology",
+      "resources": [
+        {
+          "name": "疫情分析用人口統計（縣市、性別、年齡）（CSV）",
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/population-reference-for-epidemiology"
+        },
+        {
+          "name": "疫情分析用人口統計（縣市、性別、年齡）（XLSX）",
+          "format": "XLSX",
+          "url": "https://data.cdc.gov.tw/dataset/population-reference-for-epidemiology"
+        }
+      ],
+      "provenance": {
+        "fetchedAt": "2026-10-01",
+        "mode": "snapshot",
+        "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_show?id=population-reference-for-epidemiology"
+      },
+      "ckanName": "population-reference-for-epidemiology",
+      "updateFrequency": "yearly",
+      "lastUpdated": "2026-02-15",
+      "formats": [
+        "CSV",
+        "XLSX"
+      ],
+      "sourceHash": "2544ae6addf6",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.population-reference",
+      "path": "/data/#dataset.population-reference",
+      "md": null,
+      "governance": {
+        "owner": "unit.accounting",
+        "ownerName": "主計室",
+        "steward": null,
+        "reviewedAt": "2026-02-15",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-02-15",
+        "daysToReview": 137,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "dataset.population-reference",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "未標示",
+        "licenseNote": "待權責單位確認授權",
+        "sensitivity": "public",
+        "sourceHash": "2544ae6addf6",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "dataset.press-rss",
+      "type": "dataset",
+      "category": "press",
+      "title": "新聞稿與致醫界通函（RSS）",
+      "owner": "unit.pr",
+      "publishedAt": "2012-01-01",
+      "reviewedAt": "2026-09-01",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "疾管署新聞稿、致醫界通函與澄清訊息之 RSS 訂閱來源；本站另提供 v1/news.json。",
+      "keywords": [
+        "新聞稿",
+        "RSS",
+        "致醫界通函",
+        "訂閱"
+      ],
+      "provenance": {
+        "fetchedAt": "2026-10-01",
+        "mode": "snapshot",
+        "sourceUrl": "https://www.cdc.gov.tw/"
+      },
+      "updateFrequency": "daily",
+      "lastUpdated": "2026-09-30",
+      "formats": [
+        "RSS",
+        "JSON"
+      ],
+      "canonicalUrl": "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ",
+      "sourceHash": "375da18b7210",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.press-rss",
+      "path": "/data/#dataset.press-rss",
+      "md": null,
+      "governance": {
+        "owner": "unit.pr",
+        "ownerName": "公關室",
+        "steward": null,
+        "reviewedAt": "2026-09-01",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-09-01",
+        "daysToReview": 335,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "dataset.press-rss",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "375da18b7210",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "dataset.sentinel-physician",
+      "type": "dataset",
+      "category": "open-dataset",
+      "title": "定點醫師監測資料（類流感、腹瀉、手足口病）",
+      "owner": "unit.epidemic-intelligence",
+      "publishedAt": "2010-01-01",
+      "reviewedAt": "2025-11-15",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "data",
+        "situation"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.influenza",
+        "disease.enterovirus"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "全國定點醫師每週通報之類流感、腹瀉、手足口病及疱疹性咽峽炎就診比例。",
+      "keywords": [
+        "定點醫師",
+        "監測",
+        "腹瀉",
+        "手足口病"
+      ],
+      "portalUrl": "https://data.cdc.gov.tw/dataset/sentinel-physician-surveillance",
+      "canonicalUrl": "https://data.cdc.gov.tw/dataset/sentinel-physician-surveillance",
+      "schemaUrl": "https://data.cdc.gov.tw/dataset/sentinel-physician-surveillance",
+      "resources": [
+        {
+          "name": "定點醫師監測資料（類流感、腹瀉、手足口病）（CSV）",
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/sentinel-physician-surveillance"
+        }
+      ],
+      "provenance": {
+        "fetchedAt": "2026-10-01",
+        "mode": "snapshot",
+        "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_show?id=sentinel-physician-surveillance"
+      },
+      "ckanName": "sentinel-physician-surveillance",
+      "updateFrequency": "weekly",
+      "lastUpdated": "2026-09-28",
+      "formats": [
+        "CSV"
+      ],
+      "sourceHash": "517c31367a95",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.sentinel-physician",
+      "path": "/data/#dataset.sentinel-physician",
+      "md": null,
+      "governance": {
+        "owner": "unit.epidemic-intelligence",
+        "ownerName": "疫情中心",
+        "steward": null,
+        "reviewedAt": "2025-11-15",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2026-11-15",
+        "daysToReview": 45,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "dataset.sentinel-physician",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "517c31367a95",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "dataset.tb-new-cases",
+      "type": "dataset",
+      "category": "open-dataset",
+      "title": "結核病新案統計",
+      "owner": "unit.epidemic-intelligence",
+      "publishedAt": "2015-03-24",
+      "reviewedAt": "2026-03-24",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-03-24",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "結核病新案數依年度、性別、年齡層與縣市統計，含發生率（每十萬人口）。",
+      "keywords": [
+        "結核病",
+        "新案",
+        "發生率",
+        "年統計"
+      ],
+      "portalUrl": "https://data.cdc.gov.tw/dataset/tuberculosis-new-cases",
+      "canonicalUrl": "https://data.cdc.gov.tw/dataset/tuberculosis-new-cases",
+      "schemaUrl": "https://data.cdc.gov.tw/dataset/tuberculosis-new-cases",
+      "resources": [
+        {
+          "name": "結核病新案統計（CSV）",
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/tuberculosis-new-cases"
+        },
+        {
+          "name": "結核病新案統計（JSON）",
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/tuberculosis-new-cases"
+        }
+      ],
+      "provenance": {
+        "fetchedAt": "2026-10-01",
+        "mode": "snapshot",
+        "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_show?id=tuberculosis-new-cases"
+      },
+      "ckanName": "tuberculosis-new-cases",
+      "updateFrequency": "yearly",
+      "lastUpdated": "2026-03-20",
+      "formats": [
+        "CSV",
+        "JSON"
+      ],
+      "series": {
+        "label": "結核病新案（年）",
+        "unit": "例",
+        "granularity": "year",
+        "points": [
+          {
+            "t": "2015",
+            "v": 10711
+          },
+          {
+            "t": "2016",
+            "v": 10328
+          },
+          {
+            "t": "2017",
+            "v": 9759
+          },
+          {
+            "t": "2018",
+            "v": 9179
+          },
+          {
+            "t": "2019",
+            "v": 8732
+          },
+          {
+            "t": "2020",
+            "v": 7823
+          },
+          {
+            "t": "2021",
+            "v": 7062
+          },
+          {
+            "t": "2022",
+            "v": 6631
+          },
+          {
+            "t": "2023",
+            "v": 6600
+          },
+          {
+            "t": "2024",
+            "v": 6300
+          },
+          {
+            "t": "2025",
+            "v": 6050
+          }
+        ],
+        "note": "2015–2022 依公開年報概略整理；2023–2025 為示意值，正式值以 CKAN 資料集為準。"
+      },
+      "i18n": {
+        "en": {
+          "title": "New tuberculosis cases",
+          "summary": "Annual new TB cases by sex, age group and county, with incidence per 100,000."
+        }
+      },
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Category/List/{id}#statistics"
+      ],
+      "assets": [
+        {
+          "file": "tb-new-cases-sample.csv",
+          "kind": "data",
+          "label": "結核病新案統計範例（CSV，示意數字；正式資料以資料開放平臺為準）",
+          "mime": "text/csv",
+          "bytes": 563,
+          "sha256": "31631cd7e20c22e788ce5f9304799f622f6b2bcf4b728800f9f1c13a6e3f0a82",
+          "machineReadable": true,
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/files/dataset.tb-new-cases/tb-new-cases-sample.csv"
+        }
+      ],
+      "sourceHash": "cd90264a8b3b",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.tb-new-cases",
+      "path": "/data/#dataset.tb-new-cases",
+      "md": null,
+      "governance": {
+        "owner": "unit.epidemic-intelligence",
+        "ownerName": "疫情中心",
+        "steward": null,
+        "reviewedAt": "2026-03-24",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-03-24",
+        "daysToReview": 174,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "dataset.tb-new-cases",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "cd90264a8b3b",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-03-24",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "dataset.travel-alert-levels",
+      "type": "dataset",
+      "category": "open-dataset",
+      "title": "國際旅遊疫情建議等級表",
+      "owner": "unit.quarantine",
+      "publishedAt": "2016-01-01",
+      "reviewedAt": "2026-05-11",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "data",
+        "travel"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-05-11",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "各國家地區之旅遊疫情建議等級（第一級注意、第二級警示、第三級警告）、疾病與生效日。",
+      "keywords": [
+        "旅遊疫情建議",
+        "等級",
+        "國家",
+        "出國"
+      ],
+      "portalUrl": "https://data.cdc.gov.tw/dataset/travel-health-notice-levels",
+      "canonicalUrl": "https://data.cdc.gov.tw/dataset/travel-health-notice-levels",
+      "schemaUrl": "https://data.cdc.gov.tw/dataset/travel-health-notice-levels",
+      "resources": [
+        {
+          "name": "國際旅遊疫情建議等級表（JSON）",
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/travel-health-notice-levels"
+        },
+        {
+          "name": "國際旅遊疫情建議等級表（CSV）",
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/travel-health-notice-levels"
+        },
+        {
+          "name": "國際旅遊疫情建議等級表（XML）",
+          "format": "XML",
+          "url": "https://data.cdc.gov.tw/dataset/travel-health-notice-levels"
+        }
+      ],
+      "provenance": {
+        "fetchedAt": "2026-10-01",
+        "mode": "snapshot",
+        "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_show?id=travel-health-notice-levels"
+      },
+      "ckanName": "travel-health-notice-levels",
+      "updateFrequency": "daily",
+      "lastUpdated": "2026-08-14",
+      "formats": [
+        "JSON",
+        "CSV",
+        "XML"
+      ],
+      "i18n": {
+        "en": {
+          "title": "Travel health notice levels",
+          "summary": "Travel health notice levels (Level 1 Watch, Level 2 Alert, Level 3 Warning) by country, disease and effective date."
+        }
+      },
+      "sourceHash": "150414c3c1ce",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.travel-alert-levels",
+      "path": "/data/#dataset.travel-alert-levels",
+      "md": null,
+      "governance": {
+        "owner": "unit.quarantine",
+        "ownerName": "檢疫組",
+        "steward": null,
+        "reviewedAt": "2026-05-11",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-05-11",
+        "daysToReview": 222,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "dataset.travel-alert-levels",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "150414c3c1ce",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-05-11",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "dataset.travel-epidemic-json",
+      "type": "dataset",
+      "category": "structured-table",
+      "title": "國際旅遊疫情（TravelEpidemic ExportJSON）",
+      "owner": "unit.quarantine",
+      "publishedAt": "2018-01-01",
+      "reviewedAt": "2026-05-11",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "data",
+        "travel"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "官網國際旅遊疫情頁的結構化匯出（疾病、國家、等級、起始日、摘要），本站每日抓取為快照。",
+      "keywords": [
+        "旅遊疫情",
+        "ExportJSON",
+        "結構化",
+        "每日"
+      ],
+      "provenance": {
+        "fetchedAt": "2026-10-01",
+        "mode": "snapshot",
+        "sourceUrl": "https://www.cdc.gov.tw/"
+      },
+      "updateFrequency": "daily",
+      "lastUpdated": "2026-09-30",
+      "formats": [
+        "JSON"
+      ],
+      "canonicalUrl": "https://www.cdc.gov.tw/TravelEpidemic/ExportJSON",
+      "mirrors": [
+        "https://www.cdc.gov.tw/CountryEpidLevel/Index"
+      ],
+      "resources": [
+        {
+          "name": "TravelEpidemic ExportJSON",
+          "format": "JSON",
+          "url": "https://www.cdc.gov.tw/TravelEpidemic/ExportJSON"
+        }
+      ],
+      "sourceHash": "3a8da433c814",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.travel-epidemic-json",
+      "path": "/data/#dataset.travel-epidemic-json",
+      "md": null,
+      "governance": {
+        "owner": "unit.quarantine",
+        "ownerName": "檢疫組",
+        "steward": null,
+        "reviewedAt": "2026-05-11",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-05-11",
+        "daysToReview": 222,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "dataset.travel-epidemic-json",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "3a8da433c814",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "dataset.vaccine-coverage",
+      "type": "dataset",
+      "category": "open-dataset",
+      "title": "常規疫苗接種完成率",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2015-01-01",
+      "reviewedAt": "2026-04-30",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "data",
+        "vaccines"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "vaccines": [
+        "vaccine.mmr",
+        "vaccine.hepatitis-b",
+        "vaccine.varicella"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-04-30",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "各項幼兒常規疫苗依出生世代、縣市之接種完成率，以及公費流感疫苗接種人數。",
+      "keywords": [
+        "疫苗接種率",
+        "常規疫苗",
+        "幼兒",
+        "縣市"
+      ],
+      "portalUrl": "https://data.cdc.gov.tw/dataset/routine-vaccination-coverage",
+      "canonicalUrl": "https://data.cdc.gov.tw/dataset/routine-vaccination-coverage",
+      "schemaUrl": "https://data.cdc.gov.tw/dataset/routine-vaccination-coverage",
+      "resources": [
+        {
+          "name": "常規疫苗接種完成率（CSV）",
+          "format": "CSV",
+          "url": "https://data.cdc.gov.tw/dataset/routine-vaccination-coverage"
+        },
+        {
+          "name": "常規疫苗接種完成率（JSON）",
+          "format": "JSON",
+          "url": "https://data.cdc.gov.tw/dataset/routine-vaccination-coverage"
+        }
+      ],
+      "provenance": {
+        "fetchedAt": "2026-10-01",
+        "mode": "snapshot",
+        "sourceUrl": "https://data.cdc.gov.tw/api/3/action/package_show?id=routine-vaccination-coverage"
+      },
+      "ckanName": "routine-vaccination-coverage",
+      "updateFrequency": "yearly",
+      "lastUpdated": "2026-04-30",
+      "formats": [
+        "CSV",
+        "JSON"
+      ],
+      "i18n": {
+        "en": {
+          "title": "Routine vaccination coverage",
+          "summary": "Completion rates of routine childhood vaccines by birth cohort and county, plus government-funded flu vaccine doses."
+        }
+      },
+      "sourceHash": "63c182c79d65",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.vaccine-coverage",
+      "path": "/data/#dataset.vaccine-coverage",
+      "md": null,
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-04-30",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-04-30",
+        "daysToReview": 211,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "dataset.vaccine-coverage",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "63c182c79d65",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-04-30",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "dataset.youtube-channel",
+      "type": "dataset",
+      "category": "media",
+      "title": "疾管署 YouTube 頻道影片",
+      "owner": "unit.pr",
+      "publishedAt": "2012-01-01",
+      "reviewedAt": "2026-03-01",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "CC-BY-4.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "衛教宣導影片、記者會直播與多語衛教短片；影片說明欄應標註依據正本與更新日。",
+      "keywords": [
+        "YouTube",
+        "影片",
+        "衛教",
+        "記者會"
+      ],
+      "provenance": {
+        "fetchedAt": "2026-10-01",
+        "mode": "snapshot",
+        "sourceUrl": "https://www.cdc.gov.tw/"
+      },
+      "updateFrequency": "weekly",
+      "lastUpdated": "2026-09-26",
+      "formats": [
+        "Video"
+      ],
+      "canonicalUrl": "https://www.youtube.com/results?search_query=%E7%96%BE%E7%97%85%E7%AE%A1%E5%88%B6%E7%BD%B2",
+      "note": "頻道 handle 待權責單位確認，原型暫以 YouTube 搜尋「疾病管制署」代替",
+      "sourceHash": "5b0c76808a05",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.youtube-channel",
+      "path": "/data/#dataset.youtube-channel",
+      "md": null,
+      "governance": {
+        "owner": "unit.pr",
+        "ownerName": "公關室",
+        "steward": null,
+        "reviewedAt": "2026-03-01",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-03-01",
+        "daysToReview": 151,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "dataset.youtube-channel",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "CC-BY-4.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "5b0c76808a05",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    }
+  ]
+}

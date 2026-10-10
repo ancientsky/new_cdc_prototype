@@ -1,0 +1,20 @@
+# 衛生福利部疾病管制署 2024 年報
+
+> 權責單位：Division of Planning and Coordination · 最後審閱：2025-06-30 · 授權：OGDL-1.0 · ID：publication.annual-report-2024 · 系列：疾病管制署年報
+
+彙整 2024 年疾管署施政成果與重要統計，包括新冠轉常規防治、M痘疫苗接種、登革熱防治與國際衛生合作，中英文對照。
+
+## 書目
+
+- ISBN：978-626-0000-24-3
+- GPN：1011400118
+- 版次：初版
+- 頁數：160
+- 作者：衛生福利部疾病管制署
+- 定價：新臺幣 350 元（電子版免費）
+- PDF：/pending/?ref=publication.annual-report-2024&doc=衛生福利部疾病管制署%202024%20年報（PDF）
+- 建議引用：衛生福利部疾病管制署（2025）。衛生福利部疾病管制署 2024 年報。疾病管制署年報，160 頁。Division of Planning and Coordination。ISBN 978-626-0000-24-3；GPN 1011400118。https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/annual-report-2024/
+
+## 摘要
+
+本年報以中英文對照呈現 2024 年度重點：新冠防治轉入常規、M痘高風險族群疫苗接種、登革熱南部疫情防治、結核病與愛滋防治成果、國際衛生合作，並附年度大事紀與統計。

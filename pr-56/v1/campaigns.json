@@ -1,0 +1,903 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "df693fd5b5e8",
+    "lastModified": "2026-10-01",
+    "count": 6,
+    "active": 3,
+    "upcoming": 2,
+    "ended": 1
+  },
+  "data": [
+    {
+      "id": "banner.2026-flu-vaccine",
+      "type": "banner",
+      "title": "公費流感疫苗 10 月 1 日開打",
+      "image": "/img/banners/2026-flu-vaccine.svg",
+      "imageWide": "/img/banners/2026-flu-vaccine-wide.svg",
+      "imageAlt": "診所裡的長者捲起袖子接種流感疫苗，護理師手持針筒，孫子站在一旁；窗外是秋天的樹與黃葉",
+      "headline": "公費流感疫苗 10 月 1 日開打",
+      "subline": "65 歲以上、幼兒與慢性病患第一階段",
+      "cta": {
+        "label": "查詢接種點",
+        "url": "https://ancientsky.github.io/vaxmap-next/#g=flu"
+      },
+      "startAt": "2026-09-18",
+      "endAt": "2026-11-30",
+      "priority": 1,
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2026-09-18",
+      "reviewedAt": "2026-09-18",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "vaccines"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "vaccines": [
+        "vaccine.influenza"
+      ],
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-18"
+        }
+      },
+      "summary": "公費流感疫苗第一階段 10 月 1 日開打。",
+      "i18n": {
+        "en": {
+          "headline": "Government-funded flu vaccination starts 1 October",
+          "subline": "Phase 1: 65+, young children, chronic conditions",
+          "cta": {
+            "label": "Find a clinic",
+            "url": "https://ancientsky.github.io/vaxmap-next/#g=flu&lang=en"
+          }
+        }
+      },
+      "sourceHash": "6a492567b9dc",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+      "path": "/",
+      "md": null,
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-09-18",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": false,
+        "whitelistTier": null,
+        "whitelistPublic": false,
+        "whitelistReasons": [
+          "not-requested",
+          "type-not-allowed"
+        ],
+        "whitelistReasonLabels": [
+          "未申請進入 AI 白名單",
+          "此內容型別不在白名單政策內"
+        ],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "banner.2026-flu-vaccine",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "campaignStatus": "active",
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "6a492567b9dc",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-18"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      },
+      "campaignStatus": "active"
+    },
+    {
+      "id": "banner.2026-10-enterovirus",
+      "type": "banner",
+      "title": "腸病毒防治：大人回家先洗手",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2026-09-30",
+      "reviewedAt": "2026-09-30",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "symptoms"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-30",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "腸病毒宣導 Banner（2026-10-01 至 2026-11-30）：大人回家先洗手換衣，留意重症前兆。",
+      "keywords": [
+        "腸病毒",
+        "洗手",
+        "宣導"
+      ],
+      "image": "/img/banners/2026-10-enterovirus.svg",
+      "imageWide": "/img/banners/2026-10-enterovirus-wide.svg",
+      "imageAlt": "幼兒園洗手台前，三位小朋友用肥皂搓洗雙手，老師在旁協助，空中飄著泡泡，背景有彩虹",
+      "headline": "家有幼兒，大人回家先洗手換衣",
+      "subline": "肥皂洗手防腸病毒，留意嗜睡、肌躍型抽搐等重症前兆",
+      "cta": {
+        "label": "認識重症前兆",
+        "url": "/diseases/enterovirus/#symptoms"
+      },
+      "startAt": "2026-10-01",
+      "endAt": "2026-11-30",
+      "priority": 2,
+      "i18n": {
+        "en": {
+          "headline": "Young children at home? Wash hands and change clothes first",
+          "subline": "Soap stops enterovirus; watch for drowsiness and myoclonic jerks",
+          "cta": {
+            "label": "Know the warning signs",
+            "url": "/diseases/enterovirus/#symptoms"
+          }
+        }
+      },
+      "sourceHash": "76f46c83bf08",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+      "path": "/",
+      "md": null,
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-09-30",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": false,
+        "whitelistTier": null,
+        "whitelistPublic": false,
+        "whitelistReasons": [
+          "not-requested",
+          "type-not-allowed"
+        ],
+        "whitelistReasonLabels": [
+          "未申請進入 AI 白名單",
+          "此內容型別不在白名單政策內"
+        ],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "banner.2026-10-enterovirus",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "campaignStatus": "active",
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "76f46c83bf08",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-30",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      },
+      "campaignStatus": "active"
+    },
+    {
+      "id": "banner.2026-10-hiv-self-test",
+      "type": "banner",
+      "title": "HIV 匿名篩檢與自我篩檢",
+      "owner": "unit.chronic-infectious",
+      "publishedAt": "2026-10-01",
+      "reviewedAt": "2026-10-01",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "symptoms"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "faq.hiv-test-where"
+      ],
+      "diseases": [
+        "disease.hiv"
+      ],
+      "aiWhitelist": {
+        "requested": false
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "HIV 篩檢宣導 Banner（2026-10-01 至 2026-12-31）：匿名篩檢不需健保卡，也可使用自我篩檢試劑，想知道就去篩。",
+      "keywords": [
+        "HIV",
+        "匿名篩檢",
+        "自我篩檢",
+        "宣導"
+      ],
+      "image": "/img/banners/2026-10-hiv-self-test.svg",
+      "imageWide": "/img/banners/2026-10-hiv-self-test-wide.svg",
+      "imageAlt": "溫暖的諮詢室裡，個管師與民眾在小圓桌兩側的扶手椅上面對面談話，牆上掛著紅絲帶畫框",
+      "headline": "想知道，就去篩",
+      "subline": "HIV 匿名篩檢不需健保卡；也可在家自我篩檢",
+      "cta": {
+        "label": "匿名篩檢在哪裡",
+        "url": "/topics/anonymous-testing/"
+      },
+      "startAt": "2026-10-01",
+      "endAt": "2026-12-31",
+      "priority": 4,
+      "sourceHash": "503409f90568",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+      "path": "/",
+      "md": null,
+      "governance": {
+        "owner": "unit.chronic-infectious",
+        "ownerName": "慢性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-10-01",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": false,
+        "whitelistTier": null,
+        "whitelistPublic": false,
+        "whitelistReasons": [
+          "not-requested",
+          "type-not-allowed"
+        ],
+        "whitelistReasonLabels": [
+          "未申請進入 AI 白名單",
+          "此內容型別不在白名單政策內"
+        ],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "banner.2026-10-hiv-self-test",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "campaignStatus": "active",
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "503409f90568",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      },
+      "campaignStatus": "active"
+    },
+    {
+      "id": "banner.2026-11-amr-awareness-week",
+      "type": "banner",
+      "title": "世界抗微生物製劑認知週：感冒不吵抗生素",
+      "owner": "unit.infection-control",
+      "publishedAt": "2026-10-01",
+      "reviewedAt": "2026-10-01",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "topic.amr-one-health"
+      ],
+      "aiWhitelist": {
+        "requested": false
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-10-01",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "抗生素抗藥性宣導 Banner（2026-11-11 至 2026-11-30，即將上架）：感冒多為病毒引起，不要向醫師要求抗生素，用藥依醫囑。",
+      "keywords": [
+        "抗生素",
+        "抗藥性",
+        "WAAW",
+        "宣導",
+        "即將上架"
+      ],
+      "note": "即將上架：上架日 2026-11-11，原型今日（2026-10-01）應出現在 /campaigns/「即將開始」",
+      "image": "/img/banners/2026-11-amr-awareness-week.svg",
+      "imageWide": "/img/banners/2026-11-amr-awareness-week-wide.svg",
+      "imageAlt": "人、動物、環境三個相扣的圓圈，中央是盾牌與膠囊，象徵防疫一體共同對抗抗藥性",
+      "headline": "感冒不吵抗生素，用藥依醫囑",
+      "subline": "抗藥性是看不見的疫情：人、動物、環境一起守護",
+      "cta": {
+        "label": "認識防疫一體",
+        "url": "/topics/amr-one-health/"
+      },
+      "startAt": "2026-11-11",
+      "endAt": "2026-11-30",
+      "priority": 3,
+      "i18n": {
+        "en": {
+          "title": "World AMR Awareness Week: no antibiotics for colds",
+          "summary": "Antimicrobial resistance campaign banner (11–30 Nov 2026, upcoming).",
+          "headline": "No antibiotics for colds; follow your prescription",
+          "subline": "Resistance is an invisible epidemic: people, animals and the environment together",
+          "cta": {
+            "label": "About One Health",
+            "url": "/topics/amr-one-health/"
+          }
+        }
+      },
+      "sourceHash": "dd87e3124c02",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+      "path": "/",
+      "md": null,
+      "governance": {
+        "owner": "unit.infection-control",
+        "ownerName": "感染管制及生物安全組",
+        "steward": null,
+        "reviewedAt": "2026-10-01",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": false,
+        "whitelistTier": null,
+        "whitelistPublic": false,
+        "whitelistReasons": [
+          "not-requested",
+          "type-not-allowed"
+        ],
+        "whitelistReasonLabels": [
+          "未申請進入 AI 白名單",
+          "此內容型別不在白名單政策內"
+        ],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "banner.2026-11-amr-awareness-week",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "campaignStatus": "upcoming",
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "dd87e3124c02",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-10-01",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      },
+      "campaignStatus": "upcoming"
+    },
+    {
+      "id": "banner.2026-10-mpox-vaccine",
+      "type": "banner",
+      "title": "M痘疫苗：兩劑完整保護",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2026-10-01",
+      "reviewedAt": "2026-10-01",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "vaccines"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "disease.mpox",
+        "faq.mpox-who-vaccine"
+      ],
+      "diseases": [
+        "disease.mpox"
+      ],
+      "vaccines": [
+        "vaccine.mpox"
+      ],
+      "aiWhitelist": {
+        "requested": false
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-10-01",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "M痘疫苗宣導 Banner（2026-10-05 至 2026-12-31）：高風險族群請接種兩劑、間隔至少 4 週，已打第一劑者別忘了第二劑。",
+      "keywords": [
+        "M痘",
+        "M痘疫苗",
+        "兩劑",
+        "宣導"
+      ],
+      "image": "/img/banners/2026-10-mpox-vaccine.svg",
+      "imageWide": "/img/banners/2026-10-mpox-vaccine-wide.svg",
+      "imageAlt": "日曆上標示第一劑與四週後的第二劑，旁邊是兩支疫苗瓶與貼著圓形繃帶的手臂",
+      "headline": "M痘疫苗打兩劑，保護才完整",
+      "subline": "高風險族群公費接種；第一劑後至少間隔 4 週接種第二劑",
+      "cta": {
+        "label": "我適合接種嗎？",
+        "url": "/faq/mpox-who-vaccine/"
+      },
+      "startAt": "2026-10-05",
+      "endAt": "2026-12-31",
+      "priority": 3,
+      "i18n": {
+        "en": {
+          "title": "Mpox vaccine: two doses for full protection",
+          "summary": "Mpox vaccine campaign banner (5 Oct–31 Dec 2026).",
+          "headline": "Two doses of mpox vaccine for full protection",
+          "subline": "Free for high-risk groups; second dose at least 4 weeks after the first",
+          "cta": {
+            "label": "Am I eligible?",
+            "url": "/faq/mpox-who-vaccine/"
+          }
+        }
+      },
+      "sourceHash": "cd67904ba598",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+      "path": "/",
+      "md": null,
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-10-01",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": false,
+        "whitelistTier": null,
+        "whitelistPublic": false,
+        "whitelistReasons": [
+          "not-requested",
+          "type-not-allowed"
+        ],
+        "whitelistReasonLabels": [
+          "未申請進入 AI 白名單",
+          "此內容型別不在白名單政策內"
+        ],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "banner.2026-10-mpox-vaccine",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "campaignStatus": "upcoming",
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "cd67904ba598",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-10-01",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      },
+      "campaignStatus": "upcoming"
+    },
+    {
+      "id": "banner.2026-summer-dengue",
+      "type": "banner",
+      "title": "夏季防登革熱：每週巡倒清刷",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2026-06-01",
+      "reviewedAt": "2026-06-01",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "symptoms"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-06-02",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "夏季登革熱宣導 Banner（2026-06-01 至 2026-09-15），到期自動下架。",
+      "keywords": [
+        "登革熱",
+        "巡倒清刷",
+        "宣導"
+      ],
+      "image": "/img/banners/2026-summer-dengue.svg",
+      "imageWide": "/img/banners/2026-summer-dengue-wide.svg",
+      "imageAlt": "里長拿著檢查表巡查，居民把水桶裡的積水倒掉；地上有輪胎與花盆底盤，右上角是被禁止圈圈住的斑蚊",
+      "headline": "夏天防登革熱，每週巡倒清刷",
+      "subline": "清除積水容器，發燒速就醫並告知旅遊史",
+      "cta": {
+        "label": "看防治重點",
+        "url": "/diseases/dengue/"
+      },
+      "startAt": "2026-06-01",
+      "endAt": "2026-09-15",
+      "priority": 2,
+      "i18n": {
+        "en": {
+          "headline": "Fight dengue this summer: check for standing water every week",
+          "subline": "Empty containers; see a doctor for fever and mention travel",
+          "cta": {
+            "label": "Key prevention steps",
+            "url": "/diseases/dengue/"
+          }
+        }
+      },
+      "sourceHash": "d85ebb5552ea",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+      "path": "/",
+      "md": null,
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-06-01",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": false,
+        "whitelistTier": null,
+        "whitelistPublic": false,
+        "whitelistReasons": [
+          "not-requested",
+          "type-not-allowed"
+        ],
+        "whitelistReasonLabels": [
+          "未申請進入 AI 白名單",
+          "此內容型別不在白名單政策內"
+        ],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "banner.2026-summer-dengue",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "campaignStatus": "ended",
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "d85ebb5552ea",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-06-02",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      },
+      "campaignStatus": "ended"
+    }
+  ]
+}

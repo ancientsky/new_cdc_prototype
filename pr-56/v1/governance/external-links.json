@@ -1,0 +1,1347 @@
+{
+  "note": "建置時收集的外部連結（不在建置時驗證；CI 以 scripts/fetch-data.mjs --check-links 做 HEAD 檢查）。sources 只列前幾個來源頁。",
+  "totalLinks": 8937,
+  "uniqueUrls": 132,
+  "domains": [
+    {
+      "domain": "www.cdc.gov.tw",
+      "count": 7954,
+      "urls": [
+        {
+          "url": "https://www.cdc.gov.tw/",
+          "count": 2641,
+          "sources": [
+            "/404.html",
+            "/about/director/index.html",
+            "/about/history/index.html",
+            "/about/index.html",
+            "/about/mission/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/CountryEpidLevel/ExportJSON",
+          "count": 1639,
+          "sources": [
+            "/admin/catalog/index.html",
+            "/data/index.html",
+            "/en/data/index.html",
+            "/en/travel/AD/index.html",
+            "/en/travel/AE/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/TravelEpidemic/ExportJSON",
+          "count": 1639,
+          "sources": [
+            "/admin/catalog/index.html",
+            "/data/index.html",
+            "/en/data/index.html",
+            "/en/travel/AD/index.html",
+            "/en/travel/AE/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
+          "count": 1624,
+          "sources": [
+            "/en/travel/AD/index.html",
+            "/en/travel/AE/index.html",
+            "/en/travel/AF/index.html",
+            "/en/travel/AG/index.html",
+            "/en/travel/AI/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/uploads/files/bedb5e14-7448-4815-9218-44feb486b5d5.pdf",
+          "count": 140,
+          "sources": [
+            "/en/vaccines/schedule/index.html",
+            "/id/vaccines/schedule/index.html",
+            "/ja/vaccines/schedule/index.html",
+            "/th/vaccines/schedule/index.html",
+            "/tl/vaccines/schedule/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/Page/b_NCRMZiFLmXGmwIIY334w",
+          "count": 55,
+          "sources": [
+            "/about/index.html",
+            "/about/units/accounting/index.html",
+            "/about/units/acute-infectious/index.html",
+            "/about/units/chronic-infectious/index.html",
+            "/about/units/director/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/CdcOrganization/Index/cBX61rWwT5TKpS7BbMzKag",
+          "count": 55,
+          "sources": [
+            "/about/index.html",
+            "/about/units/accounting/index.html",
+            "/about/units/acute-infectious/index.html",
+            "/about/units/chronic-infectious/index.html",
+            "/about/units/director/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/Page/U_hY1WCfa5BU6fuqW9FIXg",
+          "count": 29,
+          "sources": [
+            "/en/faq/pcv-elderly/index.html",
+            "/en/vaccines/schedule/index.html",
+            "/faq/pcv-elderly/index.html",
+            "/id/faq/pcv-elderly/index.html",
+            "/id/vaccines/schedule/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Advocacy",
+          "count": 23,
+          "sources": [
+            "/admin/catalog/index.html",
+            "/data/index.html",
+            "/diseases/dengue/index.html",
+            "/diseases/enterovirus/index.html",
+            "/diseases/hiv/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Disease/Index",
+          "count": 16,
+          "sources": [
+            "/admin/catalog/index.html",
+            "/data/index.html",
+            "/en/data/index.html",
+            "/id/data/index.html",
+            "/ja/data/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ",
+          "count": 8,
+          "sources": [
+            "/admin/catalog/index.html",
+            "/data/index.html",
+            "/en/data/index.html",
+            "/id/data/index.html",
+            "/ja/data/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/DiseaseManual",
+          "count": 7,
+          "sources": [
+            "/en/pending/index.html",
+            "/id/pending/index.html",
+            "/ja/pending/index.html",
+            "/pending/index.html",
+            "/th/pending/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/File/Get/eH0KllYdi__tvUdV8al0lA",
+          "count": 4,
+          "sources": [
+            "/admin/links/index.html",
+            "/documents/curriculum-measles.2026-10-10/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/List/3UATgJ9_kkHimGdkBKskPA",
+          "count": 3,
+          "sources": [
+            "/admin/migration/index.html",
+            "/en/policy/legal/index.html",
+            "/policy/legal/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/List/abYRVtgFiTeOpA1lsLeZWg",
+          "count": 3,
+          "sources": [
+            "/admin/migration/index.html",
+            "/en/policy/foia/index.html",
+            "/policy/foia/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/ListContent/44k4KHKf48A57gNpJRnnj3?uaid=VQRmxBAVBgtS5ytV4SMyZ0",
+          "count": 3,
+          "sources": [
+            "/admin/migration/index.html",
+            "/en/media/dengue-village-chief/index.html",
+            "/media/dengue-village-chief/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/ListContent/DG4AoD4j09j2qW_YhrYAZ2?uaid=JaTSqWyasrqZpL-tvXo9BS",
+          "count": 3,
+          "sources": [
+            "/admin/migration/index.html",
+            "/en/publications/manual-ltc-infection-control-2026/index.html",
+            "/publications/manual-ltc-infection-control-2026/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/ListContent/VujZUu3PXzEl4PjbFhh5D8?uaid=2J2WLQQVD-Okme7i011Cw5",
+          "count": 3,
+          "sources": [
+            "/admin/migration/index.html",
+            "/en/media/enterovirus-handwashing/index.html",
+            "/media/enterovirus-handwashing/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/ListContent/VujZUu3PXzEl4PjbFhh5D8?uaid=GEJHb3XRbbo3EPVrBVucx2",
+          "count": 3,
+          "sources": [
+            "/admin/migration/index.html",
+            "/en/media/amr-one-health-podcast/index.html",
+            "/media/amr-one-health-podcast/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/MPage/awMzKEQ9hVCtOWGFPHydj2",
+          "count": 3,
+          "sources": [
+            "/admin/migration/index.html",
+            "/en/publications/statistics-annual-2025/index.html",
+            "/publications/statistics-annual-2025/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/Page/ucmuQnzcJPue77qHt0IXeg",
+          "count": 3,
+          "sources": [
+            "/admin/migration/index.html",
+            "/apply/travel-clinic-appointment/index.html",
+            "/en/apply/travel-clinic-appointment/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw",
+          "count": 2,
+          "sources": [
+            "/documents/guidance-dengue.2026-02/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/MPage/l_z6ZKErZJ063m6OV_8nXQ",
+          "count": 2,
+          "sources": [
+            "/admin/migration/index.html",
+            "/topics/antivenom/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Uploads/archives/%E6%BD%9B%E4%BC%8F%E7%B5%90%E6%A0%B8%E6%84%9F%E6%9F%93%E6%B2%BB%E7%99%82%E6%8C%87%E5%BC%95.pdf",
+          "count": 2,
+          "sources": [
+            "/admin/migration/index.html",
+            "/documents/ltbi-guideline.2024-01-01/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Uploads/archives/%E7%B5%90%E6%A0%B8%E7%97%85%E8%A8%BA%E6%B2%BB%E6%8C%87%E5%BC%95%E7%AC%AC%E4%B8%83%E7%89%88.pdf",
+          "count": 2,
+          "sources": [
+            "/admin/migration/index.html",
+            "/documents/tb-guideline.2022-03-01/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Uploads/archives/%E7%B5%90%E6%A0%B8%E7%97%85%E9%98%B2%E6%B2%BB%E5%B7%A5%E4%BD%9C%E6%89%8B%E5%86%8A2019%E5%B9%B4%E7%89%88.pdf",
+          "count": 2,
+          "sources": [
+            "/admin/migration/index.html",
+            "/documents/tb-manual.2025-07-01/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/DiseaseTeach/R2tEUCtZUlRpUFJUbmRyT0gxSVlpZz09",
+          "count": 1,
+          "sources": [
+            "/documents/curriculum-dengue.2026-10-10/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/List/3GJWZ0ETfmdGzIS7H0Jucg",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/List/DG4AoD4j09j2qW_YhrYAZ2",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/List/HJ0FrBEq15g18TFKowY7lg",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/List/tRbpXpZM7EO3-dkc4RYZuQ",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/List/VOFCg57Yk3iO3I_WxoXOIA",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/List/YV1yFFBI_B1Rhm6XDQvlgy",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/List/Z5jlKeN6dG0jpwhf4TO0JV",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/List/ZrvS2zJwZ03tl8CbKYdI8g",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/ListContent/44k4KHKf48A57gNpJRnnj3?uaid=laU0p6BaBsID7VGsQ3zBHj",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/ListContent/T4NQf3E9zQFFjYKNWGBgTK?uaid=THu-Ah2wZaY7MEXWOAcXcp",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=-XlC5SdLwgyfRsnIbvDA-R",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=9brwAIb5B5QVwyszmo6TZh",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=jqYodXZl8Ti6hySLNXVlBs",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=OW0GWvcK_N7x2_x6CcO_sV",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/ListContent/YV1yFFBI_B1Rhm6XDQvlgy?uaid=RYSFjWglrrDCumRjbTT1_t",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/ListContent/Z5jlKeN6dG0jpwhf4TO0JV?uaid=RCqem2td9FR_uO2EXyBUul",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/ListMovie/DWSgB84e8MEvXgBqiQmR6A",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/ListMovie/slfvh8DLgS6fkbLiuN-WHg",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/MPage/-2qVuGOsbhtkGWlpYw1scA",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/MPage/1ptYuzMUqvZ6J2QOzSLk6A",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/MPage/2okLkU-L0iWbjwLrj2BaP7",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/MPage/6786",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/MPage/7QXqDvpfrx1OcONmVzC8Hi",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/MPage/94JVbJ2BFjR_3MTi-9s9Cg",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/MPage/dD0xcwJor_qG8nlP5UiL4g",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/MPage/i5N2W9G-FWJkh3agfLA-Kg",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/MPage/LiNW6PIOJsKKTzV9OoRoSg",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/MPage/mOqwmo-IyKx0ouTNWjuSgA",
+          "count": 1,
+          "sources": [
+            "/documents/curriculum-dengue.2026-10-10/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/MPage/NYDMC1OCW393ioaTIE_-yc",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/MPage/O5l65bHP7CwFNJOsF7wXbA",
+          "count": 1,
+          "sources": [
+            "/documents/curriculum-dengue.2026-10-10/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/MPage/OyPQCu3iBWmljSol_qLalD",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/MPage/Y_AH_Ka7q03cfN15CyI-nQ",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/MPage/Z3nsEXQ6Jne6A13aVu8Ra8",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/MPage/z6EmN04F9zPF9NDXivtXFB",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Category/Page/5Q6qrh5kM6TnpnRpy3XDfQ",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Disease/SubIndex/PZZIpHAC-pjbSdEdboTBCw",
+          "count": 1,
+          "sources": [
+            "/documents/curriculum-measles.2026-10-10/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/En/Category/List/gK4BJWe3qYlmNxYJBqEcxA",
+          "count": 1,
+          "sources": [
+            "/admin/migration/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/File/Get/3TrzNnd9x6LiPghMDkRnyw",
+          "count": 1,
+          "sources": [
+            "/documents/curriculum-measles.2026-10-10/index.html"
+          ]
+        },
+        {
+          "url": "https://www.cdc.gov.tw/Uploads/files/201302/bf8b5d4a-6896-4115-8c20-adfe4b7914bb.pdf",
+          "count": 1,
+          "sources": [
+            "/documents/curriculum-dengue.2026-10-10/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "data.cdc.gov.tw",
+      "count": 575,
+      "urls": [
+        {
+          "url": "https://data.cdc.gov.tw/dataset/measles-confirmed-cases",
+          "count": 52,
+          "sources": [
+            "/admin/catalog/index.html",
+            "/data/index.html",
+            "/diseases/measles/index.html",
+            "/en/data/index.html",
+            "/en/diseases/measles/index.html"
+          ]
+        },
+        {
+          "url": "https://data.cdc.gov.tw/dataset/covid19-severe-complications-weekly",
+          "count": 49,
+          "sources": [
+            "/admin/catalog/index.html",
+            "/data/index.html",
+            "/diseases/covid-19/index.html",
+            "/en/data/index.html",
+            "/en/diseases/covid-19/index.html"
+          ]
+        },
+        {
+          "url": "https://data.cdc.gov.tw/dataset/nhi-enterovirus-er-opd-visits",
+          "count": 49,
+          "sources": [
+            "/admin/catalog/index.html",
+            "/data/index.html",
+            "/diseases/enterovirus/index.html",
+            "/en/data/index.html",
+            "/en/diseases/enterovirus/index.html"
+          ]
+        },
+        {
+          "url": "https://data.cdc.gov.tw/dataset/nhi-ili-er-opd-visits",
+          "count": 49,
+          "sources": [
+            "/admin/catalog/index.html",
+            "/data/index.html",
+            "/diseases/influenza/index.html",
+            "/en/data/index.html",
+            "/en/diseases/influenza/index.html"
+          ]
+        },
+        {
+          "url": "https://data.cdc.gov.tw/dataset/dengue-daily-determined-cases-1998",
+          "count": 38,
+          "sources": [
+            "/admin/catalog/index.html",
+            "/data/index.html",
+            "/diseases/dengue/index.html",
+            "/en/data/index.html",
+            "/en/diseases/dengue/index.html"
+          ]
+        },
+        {
+          "url": "https://data.cdc.gov.tw/dataset/dengue-local-cases-weekly",
+          "count": 31,
+          "sources": [
+            "/admin/catalog/index.html",
+            "/data/index.html",
+            "/diseases/dengue/index.html",
+            "/en/data/index.html",
+            "/en/diseases/dengue/index.html"
+          ]
+        },
+        {
+          "url": "https://data.cdc.gov.tw/dataset/tuberculosis-new-cases",
+          "count": 31,
+          "sources": [
+            "/admin/catalog/index.html",
+            "/data/index.html",
+            "/diseases/tuberculosis/index.html",
+            "/en/data/index.html",
+            "/en/diseases/tuberculosis/index.html"
+          ]
+        },
+        {
+          "url": "https://data.cdc.gov.tw/dataset/nidss-notifiable-diseases-weekly",
+          "count": 29,
+          "sources": [
+            "/admin/catalog/index.html",
+            "/data/index.html",
+            "/en/data/index.html",
+            "/id/data/index.html",
+            "/ja/data/index.html"
+          ]
+        },
+        {
+          "url": "https://data.cdc.gov.tw/dataset/travel-health-notice-levels",
+          "count": 29,
+          "sources": [
+            "/admin/catalog/index.html",
+            "/data/index.html",
+            "/en/data/index.html",
+            "/id/data/index.html",
+            "/ja/data/index.html"
+          ]
+        },
+        {
+          "url": "https://data.cdc.gov.tw/dataset/hiv-aids-monthly-statistics",
+          "count": 28,
+          "sources": [
+            "/admin/catalog/index.html",
+            "/data/index.html",
+            "/diseases/hiv/index.html",
+            "/en/data/index.html",
+            "/en/diseases/hiv/index.html"
+          ]
+        },
+        {
+          "url": "https://data.cdc.gov.tw/dataset/influenza-severe-complications",
+          "count": 28,
+          "sources": [
+            "/admin/catalog/index.html",
+            "/data/index.html",
+            "/diseases/influenza/index.html",
+            "/en/data/index.html",
+            "/en/diseases/influenza/index.html"
+          ]
+        },
+        {
+          "url": "https://data.cdc.gov.tw/dataset/antimicrobial-resistance-annual",
+          "count": 22,
+          "sources": [
+            "/admin/catalog/index.html",
+            "/data/index.html",
+            "/en/data/index.html",
+            "/id/data/index.html",
+            "/ja/data/index.html"
+          ]
+        },
+        {
+          "url": "https://data.cdc.gov.tw/dataset/cdc-budget-final-accounts",
+          "count": 22,
+          "sources": [
+            "/admin/catalog/index.html",
+            "/data/index.html",
+            "/en/data/index.html",
+            "/id/data/index.html",
+            "/ja/data/index.html"
+          ]
+        },
+        {
+          "url": "https://data.cdc.gov.tw/dataset/international-major-epidemics",
+          "count": 22,
+          "sources": [
+            "/admin/catalog/index.html",
+            "/data/index.html",
+            "/en/data/index.html",
+            "/id/data/index.html",
+            "/ja/data/index.html"
+          ]
+        },
+        {
+          "url": "https://data.cdc.gov.tw/dataset/population-reference-for-epidemiology",
+          "count": 22,
+          "sources": [
+            "/admin/catalog/index.html",
+            "/data/index.html",
+            "/en/data/index.html",
+            "/id/data/index.html",
+            "/ja/data/index.html"
+          ]
+        },
+        {
+          "url": "https://data.cdc.gov.tw/dataset/routine-vaccination-coverage",
+          "count": 22,
+          "sources": [
+            "/admin/catalog/index.html",
+            "/data/index.html",
+            "/en/data/index.html",
+            "/id/data/index.html",
+            "/ja/data/index.html"
+          ]
+        },
+        {
+          "url": "https://data.cdc.gov.tw/dataset/enterovirus-typing",
+          "count": 15,
+          "sources": [
+            "/admin/catalog/index.html",
+            "/data/index.html",
+            "/en/data/index.html",
+            "/id/data/index.html",
+            "/ja/data/index.html"
+          ]
+        },
+        {
+          "url": "https://data.cdc.gov.tw/dataset/lab-virus-surveillance-weekly",
+          "count": 15,
+          "sources": [
+            "/admin/catalog/index.html",
+            "/data/index.html",
+            "/en/data/index.html",
+            "/id/data/index.html",
+            "/ja/data/index.html"
+          ]
+        },
+        {
+          "url": "https://data.cdc.gov.tw/dataset/sentinel-physician-surveillance",
+          "count": 15,
+          "sources": [
+            "/admin/catalog/index.html",
+            "/data/index.html",
+            "/en/data/index.html",
+            "/id/data/index.html",
+            "/ja/data/index.html"
+          ]
+        },
+        {
+          "url": "https://data.cdc.gov.tw",
+          "count": 7,
+          "sources": [
+            "/data/index.html",
+            "/en/data/index.html",
+            "/id/data/index.html",
+            "/ja/data/index.html",
+            "/th/data/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "web.pcc.gov.tw",
+      "count": 143,
+      "urls": [
+        {
+          "url": "https://web.pcc.gov.tw/",
+          "count": 143,
+          "sources": [
+            "/admin/links/index.html",
+            "/admin/tenders/index.html",
+            "/en/procurement/antiviral-115/index.html",
+            "/en/procurement/campaign-video/index.html",
+            "/en/procurement/cold-chain-monitor/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "ancientsky.github.io",
+      "count": 59,
+      "urls": [
+        {
+          "url": "https://ancientsky.github.io/vaxmap-next/#g=flu",
+          "count": 27,
+          "sources": [
+            "/campaigns/index.html",
+            "/guide/index.html",
+            "/id/campaigns/index.html",
+            "/id/index.html",
+            "/index.html"
+          ]
+        },
+        {
+          "url": "https://ancientsky.github.io/vaxmap-next/info.html#where",
+          "count": 10,
+          "sources": [
+            "/vaccines/ev71/index.html",
+            "/vaccines/hepatitis-b/index.html",
+            "/vaccines/hpv/index.html",
+            "/vaccines/mmr/index.html",
+            "/vaccines/varicella/index.html"
+          ]
+        },
+        {
+          "url": "https://ancientsky.github.io/vaxmap-next/#g=flu&lang=en",
+          "count": 6,
+          "sources": [
+            "/en/campaigns/index.html",
+            "/en/index.html",
+            "/en/vaccines/influenza/index.html"
+          ]
+        },
+        {
+          "url": "https://ancientsky.github.io/vaxmap-next/info.html#where&lang=en",
+          "count": 4,
+          "sources": [
+            "/en/vaccines/hpv/index.html",
+            "/en/vaccines/mmr/index.html"
+          ]
+        },
+        {
+          "url": "https://ancientsky.github.io/vaxmap-next/#g=covid",
+          "count": 3,
+          "sources": [
+            "/guide/index.html",
+            "/vaccines/covid-19/index.html"
+          ]
+        },
+        {
+          "url": "https://ancientsky.github.io/vaxmap-next/",
+          "count": 2,
+          "sources": [
+            "/developers/index.html",
+            "/guide/index.html"
+          ]
+        },
+        {
+          "url": "https://ancientsky.github.io/vaxmap-next/#g=covid&lang=en",
+          "count": 2,
+          "sources": [
+            "/en/vaccines/covid-19/index.html"
+          ]
+        },
+        {
+          "url": "https://ancientsky.github.io/vaxmap-next/#g=flu&lang=vi",
+          "count": 2,
+          "sources": [
+            "/vi/vaccines/influenza/index.html"
+          ]
+        },
+        {
+          "url": "https://ancientsky.github.io/vaxmap-next/#g=pcv",
+          "count": 2,
+          "sources": [
+            "/vaccines/pneumococcal/index.html"
+          ]
+        },
+        {
+          "url": "https://ancientsky.github.io/vaxmap-next/#g=antiviral",
+          "count": 1,
+          "sources": [
+            "/guide/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "www.youtube.com",
+      "count": 41,
+      "urls": [
+        {
+          "url": "https://www.youtube.com/results?search_query=%E7%96%BE%E7%97%85%E7%AE%A1%E5%88%B6%E7%BD%B2",
+          "count": 41,
+          "sources": [
+            "/admin/catalog/index.html",
+            "/data/index.html",
+            "/en/data/index.html",
+            "/en/media/amr-one-health-podcast/index.html",
+            "/en/media/covid-prevention-appeal/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "web3.dgpa.gov.tw",
+      "count": 19,
+      "urls": [
+        {
+          "url": "https://web3.dgpa.gov.tw/",
+          "count": 19,
+          "sources": [
+            "/admin/jobs/index.html",
+            "/admin/links/index.html",
+            "/careers/index.html",
+            "/careers/research-assistant-epi/index.html",
+            "/en/careers/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "www.immigration.gov.tw",
+      "count": 15,
+      "urls": [
+        {
+          "url": "https://www.immigration.gov.tw/",
+          "count": 15,
+          "sources": [
+            "/admin/links/index.html",
+            "/en/topics/new-residents-migrant-health/index.html",
+            "/id/topics/new-residents-migrant-health/index.html",
+            "/ja/topics/new-residents-migrant-health/index.html",
+            "/th/topics/new-residents-migrant-health/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "www.wda.gov.tw",
+      "count": 15,
+      "urls": [
+        {
+          "url": "https://www.wda.gov.tw/",
+          "count": 15,
+          "sources": [
+            "/admin/links/index.html",
+            "/en/topics/new-residents-migrant-health/index.html",
+            "/id/topics/new-residents-migrant-health/index.html",
+            "/ja/topics/new-residents-migrant-health/index.html",
+            "/th/topics/new-residents-migrant-health/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "law.moj.gov.tw",
+      "count": 14,
+      "urls": [
+        {
+          "url": "https://law.moj.gov.tw/",
+          "count": 4,
+          "sources": [
+            "/en/policy/security/index.html",
+            "/en/report/index.html",
+            "/policy/security/index.html",
+            "/report/index.html"
+          ]
+        },
+        {
+          "url": "https://law.moj.gov.tw/Law/LawSearchResult.aspx?ty=ONEBAR&kw=%E5%82%B3%E6%9F%93%E7%97%85%E9%98%B2%E6%B2%BB",
+          "count": 2,
+          "sources": [
+            "/en/policy/legal/index.html",
+            "/policy/legal/index.html"
+          ]
+        },
+        {
+          "url": "https://law.moj.gov.tw/Law/LawSearchResult.aspx?ty=ONEBAR&kw=%E9%A0%90%E9%98%B2%E6%8E%A5%E7%A8%AE",
+          "count": 2,
+          "sources": [
+            "/en/policy/legal/index.html",
+            "/policy/legal/index.html"
+          ]
+        },
+        {
+          "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=L0050001",
+          "count": 2,
+          "sources": [
+            "/en/policy/legal/index.html",
+            "/policy/legal/index.html"
+          ]
+        },
+        {
+          "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=L0050003",
+          "count": 2,
+          "sources": [
+            "/en/policy/legal/index.html",
+            "/policy/legal/index.html"
+          ]
+        },
+        {
+          "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=L0050008",
+          "count": 2,
+          "sources": [
+            "/en/policy/legal/index.html",
+            "/policy/legal/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "nidrs.cdc.gov.tw",
+      "count": 10,
+      "urls": [
+        {
+          "url": "https://nidrs.cdc.gov.tw/",
+          "count": 10,
+          "sources": [
+            "/admin/links/index.html",
+            "/apply/lab-test-request/index.html",
+            "/apply/notifiable-disease-report/index.html",
+            "/en/apply/lab-test-request/index.html",
+            "/en/apply/notifiable-disease-report/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "nidss.cdc.gov.tw",
+      "count": 10,
+      "urls": [
+        {
+          "url": "https://nidss.cdc.gov.tw/",
+          "count": 10,
+          "sources": [
+            "/admin/catalog/index.html",
+            "/data/index.html",
+            "/en/data/index.html",
+            "/en/pro/index.html",
+            "/id/data/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "www.who.int",
+      "count": 9,
+      "urls": [
+        {
+          "url": "https://www.who.int/",
+          "count": 5,
+          "sources": [
+            "/admin/links/index.html",
+            "/en/topics/amr-one-health/index.html",
+            "/topics/amr-one-health/index.html"
+          ]
+        },
+        {
+          "url": "https://www.who.int/health-topics/tuberculosis",
+          "count": 3,
+          "sources": [
+            "/admin/links/index.html",
+            "/topics/tb-prevention/index.html"
+          ]
+        },
+        {
+          "url": "http://www.who.int/mediacentre/factsheets/fs327/en/index.html%E5%82%B3%E6%9F%93%E7%97%85%E9%98%B2%E6%B2%BB%E5%B7%A5%E4%BD%9C%E6%89%8B%E5%86%8A",
+          "count": 1,
+          "sources": [
+            "/documents/guidance-dengue.2026-02/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "antiflu.cdc.gov.tw",
+      "count": 8,
+      "urls": [
+        {
+          "url": "https://antiflu.cdc.gov.tw/",
+          "count": 8,
+          "sources": [
+            "/admin/catalog/index.html",
+            "/data/index.html",
+            "/en/data/index.html",
+            "/id/data/index.html",
+            "/ja/data/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "page.line.me",
+      "count": 7,
+      "urls": [
+        {
+          "url": "https://page.line.me/taiwancdc",
+          "count": 7,
+          "sources": [
+            "/en/subscribe/index.html",
+            "/id/subscribe/index.html",
+            "/ja/subscribe/index.html",
+            "/subscribe/index.html",
+            "/th/subscribe/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "udn.com",
+      "count": 7,
+      "urls": [
+        {
+          "url": "https://udn.com/news/story/7266/8935427",
+          "count": 7,
+          "sources": [
+            "/en/vaccines/schedule/index.html",
+            "/id/vaccines/schedule/index.html",
+            "/ja/vaccines/schedule/index.html",
+            "/th/vaccines/schedule/index.html",
+            "/tl/vaccines/schedule/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "1966.gov.tw",
+      "count": 5,
+      "urls": [
+        {
+          "url": "https://1966.gov.tw/",
+          "count": 5,
+          "sources": [
+            "/admin/links/index.html",
+            "/en/topics/ltc-infection-control/index.html",
+            "/topics/ltc-infection-control/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "hiva.cdc.gov.tw",
+      "count": 5,
+      "urls": [
+        {
+          "url": "https://hiva.cdc.gov.tw/",
+          "count": 5,
+          "sources": [
+            "/admin/links/index.html",
+            "/en/topics/anonymous-testing/index.html",
+            "/topics/anonymous-testing/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "www.ey.gov.tw",
+      "count": 5,
+      "urls": [
+        {
+          "url": "https://www.ey.gov.tw/",
+          "count": 5,
+          "sources": [
+            "/admin/links/index.html",
+            "/en/topics/disaster-evacuation/index.html",
+            "/topics/disaster-evacuation/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "www.gender.edu.tw",
+      "count": 5,
+      "urls": [
+        {
+          "url": "https://www.gender.edu.tw/",
+          "count": 5,
+          "sources": [
+            "/admin/links/index.html",
+            "/en/topics/sti-resources/index.html",
+            "/topics/sti-resources/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "www.moa.gov.tw",
+      "count": 5,
+      "urls": [
+        {
+          "url": "https://www.moa.gov.tw/",
+          "count": 5,
+          "sources": [
+            "/admin/links/index.html",
+            "/en/topics/amr-one-health/index.html",
+            "/topics/amr-one-health/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "www.nfa.gov.tw",
+      "count": 5,
+      "urls": [
+        {
+          "url": "https://www.nfa.gov.tw/",
+          "count": 5,
+          "sources": [
+            "/admin/links/index.html",
+            "/en/topics/disaster-evacuation/index.html",
+            "/topics/disaster-evacuation/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "www.unaids.org",
+      "count": 5,
+      "urls": [
+        {
+          "url": "https://www.unaids.org/",
+          "count": 5,
+          "sources": [
+            "/admin/links/index.html",
+            "/en/topics/world-aids-day-2025/index.html",
+            "/topics/world-aids-day-2025/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "mis.cdc.gov.tw",
+      "count": 3,
+      "urls": [
+        {
+          "url": "https://mis.cdc.gov.tw/PLC/PLC_QR001.aspx",
+          "count": 3,
+          "sources": [
+            "/admin/links/index.html",
+            "/topics/antivenom/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "mohw.gov.tw",
+      "count": 3,
+      "urls": [
+        {
+          "url": "https://mohw.gov.tw/cp-16-82064-1.html",
+          "count": 3,
+          "sources": [
+            "/admin/links/index.html",
+            "/topics/antivenom/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "www.vghtpe.gov.tw",
+      "count": 3,
+      "urls": [
+        {
+          "url": "https://www.vghtpe.gov.tw/",
+          "count": 3,
+          "sources": [
+            "/admin/links/index.html",
+            "/topics/antivenom/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "www.wpro.who.int",
+      "count": 2,
+      "urls": [
+        {
+          "url": "http://www.wpro.who.int/emerging_diseases/annual.dengue.data.wpr/en/in",
+          "count": 1,
+          "sources": [
+            "/documents/guidance-dengue.2026-02/index.html"
+          ]
+        },
+        {
+          "url": "http://www.wpro.who.int/emerging_diseases/DengueSituationUpdates/en/in",
+          "count": 1,
+          "sources": [
+            "/documents/guidance-dengue.2026-02/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "gov.tw",
+      "count": 1,
+      "urls": [
+        {
+          "url": "https://gov.tw/grq",
+          "count": 1,
+          "sources": [
+            "/documents/guidance-dengue.2026-02/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "icp.cdc.gov.tw",
+      "count": 1,
+      "urls": [
+        {
+          "url": "https://icp.cdc.gov.tw/)%EF%BC%8C%E4%B8%A6%E5%8F%AF%E5%88%A9%E7%94%A8%E3%80%8C%E7%97%85%E5%AA%92%E8%9A%8A%E5%AD%B3%E7%94%9F%E6%BA%90%E5%88%97%E7%AE%A1%E9%BB%9E%E7%AE%A1%E7%90%86%E5%AD%90%E7%B3%BB%E7%B5%B1%E3%80%8D%E9%80%A3%E7%B5%90%E7%A2%BA%E5%AE%9A%E7%97%85%E4%BE%8B%E5%B1%85%E4%BD%8F%E5%9C%B0%E9%80%B2%E8%A1%8C%E5%88%86%E6%9E%90%E5%8F%8A%E7%99%BB%E9%8C%84%E5%85%B6%E8%A4%87%E6%9F%A5%E6%94%B9%E5%96%84%E6%83%85%E5%BD%A2%E5%8F%8A%E6%97%A5%E6%9C%9F%E8%B3%87%E6%96%99%EF%BC%8C%E4%BB%A5%E5%88%A9%E9%80%B2%E8%A1%8C%E5%BE%8C%E7%BA%8C%E4%B9%8B%E8%BF%BD%E8%B9%A4%E7%AE%A1%E8%80%83%E3%80%82",
+          "count": 1,
+          "sources": [
+            "/documents/guidance-dengue.2026-02/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "thejakartaglobe.beritasatu.com",
+      "count": 1,
+      "urls": [
+        {
+          "url": "http://thejakartaglobe.beritasatu.com/news/jakarta/ministry-almost-650-indonesians-killed-dengue-fever-year/Sudeep",
+          "count": 1,
+          "sources": [
+            "/documents/guidance-dengue.2026-02/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "www.searo.who.int",
+      "count": 1,
+      "urls": [
+        {
+          "url": "http://www.searo.who.int/entity/vector_borne_tropical_diseases/data/data_factsheet/en/index2.html",
+          "count": 1,
+          "sources": [
+            "/documents/guidance-dengue.2026-02/index.html"
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "zone.cdc.gov.tw",
+      "count": 1,
+      "urls": [
+        {
+          "url": "https://zone.cdc.gov.tw/%EF%BC%89%EF%BC%8C%E4%B8%A6%E8%87%AA",
+          "count": 1,
+          "sources": [
+            "/documents/guidance-dengue.2026-02/index.html"
+          ]
+        }
+      ]
+    }
+  ]
+}

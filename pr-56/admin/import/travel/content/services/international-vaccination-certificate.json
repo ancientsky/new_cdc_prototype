@@ -1,0 +1,94 @@
+{
+  "id": "service.international-vaccination-certificate",
+  "type": "service",
+  "title": "國際預防接種證明書（黃皮書）申請",
+  "owner": "unit.quarantine",
+  "publishedAt": "2018-01-10",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "前往要求黃熱病等接種證明的國家，或自黃熱病流行國家入境他國者，須持有國際預防接種證明書（俗稱黃皮書）。",
+  "slug": "international-vaccination-certificate",
+  "serviceType": "certificate",
+  "whoCanApply": [
+    "民眾"
+  ],
+  "introMarkdown": "### 誰需要\n\n前往要求黃熱病等接種證明的國家，或自黃熱病流行國家入境他國者，須持有國際預防接種證明書（俗稱黃皮書）。\n\n### 如何申請\n\n1. 先至旅遊醫學門診預約並接種疫苗。\n2. 攜帶護照與申請書至原接種單位或當地衛生所。\n3. 填寫申請書並繳交相片。\n4. 審核後核發證明書，通常可當場領取。\n\n### 費用\n\n證明書工本費新臺幣 100 元（示意）；疫苗費用另計，依各院所公告。\n\n### 補發\n\n證明書遺失或毀損，請攜帶護照與身分證明文件至原核發單位申請補發。",
+  "steps": [
+    {
+      "title": "先至旅遊醫學門診預約並接種疫苗。"
+    },
+    {
+      "title": "攜帶護照與申請書至原接種單位或當地衛生所。"
+    },
+    {
+      "title": "填寫申請書並繳交相片。"
+    },
+    {
+      "title": "審核後核發證明書，通常可當場領取。"
+    }
+  ],
+  "forms": [
+    {
+      "label": "國際預防接種證明書申請書（PDF）",
+      "href": "/files/service.international-vaccination-certificate/yellow-fever-certificate-application.pdf",
+      "format": "PDF",
+      "machineReadable": false
+    }
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/GFpHcjbt_Y7KsBbjE8Wx5U"
+  ],
+  "assets": [
+    {
+      "file": "yellow-fever-certificate-application.pdf",
+      "kind": "attachment",
+      "label": "國際預防接種證明書申請書（PDF）",
+      "mime": "application/pdf",
+      "bytes": 808,
+      "sha256": "578b5b54c2b8a3160f7d08bc129277cb0cee00c5e9860ed875bef53e3dcccc77",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 21 處（mso 樣式 15、Mso 類別 7、命名空間標籤 3）"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站型別是 service（service.international-vaccination-certificate），草稿直接建成 service，看不出來的欄位以「（待補）」佔位"
+      },
+      {
+        "code": "fields-pending",
+        "severity": "warn",
+        "message": "service 的欄位從舊頁看不出來，以「（待補）」佔位：whoCanApply"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/GFpHcjbt_Y7KsBbjE8Wx5U",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "service.international-vaccination-certificate"
+    ]
+  }
+}

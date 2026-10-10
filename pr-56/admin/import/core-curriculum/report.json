@@ -1,0 +1,685 @@
+{
+  "format": "cdc-legacy-import-report/1",
+  "batch": "core-curriculum",
+  "generatedAt": "2026-10-10T03:00:00Z",
+  "exportedAt": "2026-10-10",
+  "simulated": true,
+  "source": {
+    "dir": "data/legacy-export/core-curriculum",
+    "note": "模擬匯出：傳染病核心教材（列表頁 1 頁＋疾病教材頁 4 頁）。標題、附件檔名與日期取自公開搜尋摘錄、未查證；頁面網址 ID 是示意值（只有麻疹教材 PDF 的 /File/Get/ 網址是搜尋結果出現過的真網址）；附件 PDF 是示意檔，不是教材內容。正式匯出取代整個目錄即可。",
+    "site": "https://www.cdc.gov.tw"
+  },
+  "rules": {
+    "file": "content/migration/import/_import-rules.json",
+    "version": 11
+  },
+  "manifest": {
+    "id": "migration.core-curriculum",
+    "file": "content/migration/core-curriculum.json",
+    "synthetic": false,
+    "items": 5,
+    "extends": null,
+    "derivedItems": 0,
+    "derivedCovered": [],
+    "disease": null
+  },
+  "summary": {
+    "pages": 5,
+    "drafts": 5,
+    "mergedPages": 0,
+    "byType": {
+      "document": 4,
+      "page": 1
+    },
+    "byKind": {
+      "document": 4,
+      "list": 1
+    },
+    "byAction": {
+      "compare-existing": 2,
+      "review-before-publish": 2,
+      "skip-list": 1
+    },
+    "avgConfidence": 0.72,
+    "needsReview": 1,
+    "existing": 2,
+    "schemaInvalid": 0,
+    "assets": {
+      "total": 4,
+      "attachment": 4,
+      "image": 0,
+      "data": 0,
+      "needsAlt": 0,
+      "noTextLayer": 0
+    },
+    "issues": {
+      "error": 0,
+      "warn": 14,
+      "info": 21
+    },
+    "manifest": {
+      "items": 5,
+      "matched": 5,
+      "missingPages": 0,
+      "derivedItems": 0,
+      "derivedMatched": 0
+    },
+    "generated": 0,
+    "exportedAt": "2026-10-10",
+    "pagesWithoutOutput": 0
+  },
+  "pages": [
+    {
+      "key": "01-curriculum-dengue",
+      "file": "01-curriculum-dengue.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/DiseaseTeach/VfpjOuRgDbAh6fzpmiZuVO",
+        "title": "登革熱核心教材",
+        "category": "傳染病介紹／登革熱／傳染病核心教材",
+        "publishedAt": "2025-04-18",
+        "updatedAt": "2025-04-18",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病介紹",
+          "登革熱",
+          "傳染病核心教材"
+        ],
+        "tab": "dengue"
+      },
+      "pattern": "disease-docs",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "dengue",
+      "manifestDerived": false,
+      "target": "doc.curriculum-dengue.2026-10-10",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.curriculum-dengue.2026-10-10"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "doc.curriculum-dengue.2026-10-10",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/curriculum-dengue.2026-10-10.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「傳染病介紹／登革熱／傳染病核心教材」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "doctype-from-title",
+          "severity": "info",
+          "message": "標題含「核心教材」，文件種類判為 curriculum（網址模式 disease-docs 原本會判成 guideline）"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "curriculum 的教學欄位舊頁看不出來，以佔位填入：learningObjectives（待補）、roles（暫填規則檔預設 physician、nurse、local-health）、curriculum.chapterPlan provisional；請權責單位依教材 PDF 填寫（guide-staff §31）"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（8 字，低於 40）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2025-04-18"
+        },
+        {
+          "code": "pdf-only",
+          "severity": "warn",
+          "message": "舊頁內文只有下載連結，正本是 PDF「2025-04-登革熱防治核心教材.pdf」；machineReadableMarkdown 以（待補）佔位，PDF 不整批轉（第 8 節），上架前請提供文字版"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "info",
+          "message": "待補欄位：machineReadableMarkdown（正本文字版）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "02-curriculum-measles",
+      "file": "02-curriculum-measles.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/DiseaseTeach/T9FhoMUb6iFhUy1QUsJrFy",
+        "title": "麻疹核心教材",
+        "category": "傳染病介紹／麻疹／傳染病核心教材",
+        "publishedAt": "2026-10-10",
+        "updatedAt": null,
+        "breadcrumbs": [
+          "首頁",
+          "傳染病介紹",
+          "麻疹",
+          "傳染病核心教材"
+        ],
+        "tab": "measles"
+      },
+      "pattern": "disease-docs",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "measles",
+      "manifestDerived": false,
+      "target": "doc.curriculum-measles.2026-10-10",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.curriculum-measles.2026-10-10"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "doc.curriculum-measles.2026-10-10",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/curriculum-measles.2026-10-10.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "date-missing",
+          "severity": "warn",
+          "message": "缺發布日，暫用匯出日 2026-10-10"
+        },
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「傳染病介紹／麻疹／傳染病核心教材」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+        },
+        {
+          "code": "doctype-from-title",
+          "severity": "info",
+          "message": "標題含「核心教材」，文件種類判為 curriculum（網址模式 disease-docs 原本會判成 guideline）"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "curriculum 的教學欄位舊頁看不出來，以佔位填入：learningObjectives（待補）、roles（暫填規則檔預設 physician、nurse、local-health）、curriculum.chapterPlan provisional；請權責單位依教材 PDF 填寫（guide-staff §31）"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（8 字，低於 40）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2026-10-10"
+        },
+        {
+          "code": "pdf-only",
+          "severity": "warn",
+          "message": "舊頁內文只有下載連結，正本是 PDF「麻疹核心教材.pdf」；machineReadableMarkdown 以（待補）佔位，PDF 不整批轉（第 8 節），上架前請提供文字版"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "info",
+          "message": "待補欄位：machineReadableMarkdown（正本文字版）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "03-curriculum-novel-influenza-a",
+      "file": "03-curriculum-novel-influenza-a.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/DiseaseTeach/b3svOY0jxlOxkEKfknvwED",
+        "title": "新型A型流感核心教材",
+        "category": "傳染病介紹／新型A型流感／傳染病核心教材",
+        "publishedAt": "2025-01-15",
+        "updatedAt": "2025-01-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病介紹",
+          "新型A型流感",
+          "傳染病核心教材"
+        ],
+        "tab": "novel-influenza-a"
+      },
+      "pattern": "disease-docs",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "novel-influenza-a",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.preparedness",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.novel-influenza-a"
+      ],
+      "outputs": [
+        {
+          "id": "doc.curriculum-novel-influenza-a.2025-01-15",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/curriculum-novel-influenza-a.2025-01-15.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「傳染病介紹／新型A型流感／傳染病核心教材」沒有對應規則，權責單位依疾病主檔取 unit.preparedness（新型A型流感）"
+        },
+        {
+          "code": "doctype-from-title",
+          "severity": "info",
+          "message": "標題含「核心教材」，文件種類判為 curriculum（網址模式 disease-docs 原本會判成 guideline）"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "curriculum 的教學欄位舊頁看不出來，以佔位填入：learningObjectives（待補）、roles（暫填規則檔預設 physician、nurse、local-health）、curriculum.chapterPlan provisional；請權責單位依教材 PDF 填寫（guide-staff §31）"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（8 字，低於 40）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2025-01-15"
+        },
+        {
+          "code": "pdf-only",
+          "severity": "warn",
+          "message": "舊頁內文只有下載連結，正本是 PDF「新型A型流感_核心教材-11401版.pdf」；machineReadableMarkdown 以（待補）佔位，PDF 不整批轉（第 8 節），上架前請提供文字版"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "info",
+          "message": "待補欄位：machineReadableMarkdown（正本文字版）"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "04-curriculum-plague",
+      "file": "04-curriculum-plague.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/DiseaseTeach/xeRIJXoPAmAxHAV71GUim1",
+        "title": "鼠疫核心教材",
+        "category": "傳染病介紹／鼠疫／傳染病核心教材",
+        "publishedAt": "2025-03-18",
+        "updatedAt": "2025-03-18",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病介紹",
+          "鼠疫",
+          "傳染病核心教材"
+        ],
+        "tab": "plague"
+      },
+      "pattern": "disease-docs",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "plague",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.preparedness",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.plague"
+      ],
+      "outputs": [
+        {
+          "id": "doc.curriculum-plague.2025-03-18",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/curriculum-plague.2025-03-18.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「傳染病介紹／鼠疫／傳染病核心教材」沒有對應規則，權責單位依疾病主檔取 unit.preparedness（鼠疫）"
+        },
+        {
+          "code": "doctype-from-title",
+          "severity": "info",
+          "message": "標題含「核心教材」，文件種類判為 curriculum（網址模式 disease-docs 原本會判成 guideline）"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "curriculum 的教學欄位舊頁看不出來，以佔位填入：learningObjectives（待補）、roles（暫填規則檔預設 physician、nurse、local-health）、curriculum.chapterPlan provisional；請權責單位依教材 PDF 填寫（guide-staff §31）"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（8 字，低於 40）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2025-03-18"
+        },
+        {
+          "code": "pdf-only",
+          "severity": "warn",
+          "message": "舊頁內文只有下載連結，正本是 PDF「鼠疫核心教材_1140318.pdf」；machineReadableMarkdown 以（待補）佔位，PDF 不整批轉（第 8 節），上架前請提供文字版"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "info",
+          "message": "待補欄位：machineReadableMarkdown（正本文字版）"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "05-core-curriculum-list",
+      "file": "05-core-curriculum-list.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/PM9-kmbijh-Ftkeb_TIF06",
+        "title": "傳染病核心教材",
+        "category": "專業人員／傳染病核心教材",
+        "publishedAt": "2026-10-10",
+        "updatedAt": "2026-10-10",
+        "breadcrumbs": [
+          "首頁",
+          "專業人員",
+          "傳染病核心教材"
+        ],
+        "tab": "core-curriculum-list"
+      },
+      "pattern": "category-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "core-curriculum-list",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.oasis",
+      "ownerRule": "專業人員／傳染病核心教材",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "page.x-core-curriculum-list",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/x-core-curriculum-list.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.4,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": true,
+      "issues": [
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（32 字，低於 40）"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 4,
+        "legacyLinks": 4,
+        "attachments": 0
+      }
+    }
+  ],
+  "drafts": [
+    {
+      "id": "doc.curriculum-dengue.2026-10-10",
+      "type": "document",
+      "title": "登革熱核心教材",
+      "file": "content/documents/curriculum-dengue.2026-10-10.json",
+      "confidence": 0.8,
+      "existing": true,
+      "compareWith": [
+        "doc.curriculum-dengue.2026-10-10"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "01-curriculum-dengue"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.curriculum-measles.2026-10-10",
+      "type": "document",
+      "title": "麻疹核心教材",
+      "file": "content/documents/curriculum-measles.2026-10-10.json",
+      "confidence": 0.8,
+      "existing": true,
+      "compareWith": [
+        "doc.curriculum-measles.2026-10-10"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "02-curriculum-measles"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.curriculum-novel-influenza-a.2025-01-15",
+      "type": "document",
+      "title": "新型A型流感核心教材",
+      "file": "content/documents/curriculum-novel-influenza-a.2025-01-15.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.preparedness",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "03-curriculum-novel-influenza-a"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.curriculum-plague.2025-03-18",
+      "type": "document",
+      "title": "鼠疫核心教材",
+      "file": "content/documents/curriculum-plague.2025-03-18.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.preparedness",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "04-curriculum-plague"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.x-core-curriculum-list",
+      "type": "page",
+      "title": "傳染病核心教材",
+      "file": "content/pages/x-core-curriculum-list.json",
+      "confidence": 0.4,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.oasis",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "05-core-curriculum-list"
+      ],
+      "merged": false
+    }
+  ],
+  "sampling": {
+    "rate": 0.1,
+    "autoOk": 0,
+    "picked": []
+  },
+  "migration": {
+    "patchFile": "migration-patch.json",
+    "applied": true,
+    "summary": {
+      "derivedItems": 0,
+      "derivedMatched": 0,
+      "items": 5,
+      "matched": 5,
+      "missingPages": 0,
+      "unmatchedPages": 0,
+      "agree": 5,
+      "conflicts": 0,
+      "statusChanges": 0,
+      "pendingToMigrated": 0,
+      "targetChanges": 0,
+      "newPathChanges": 0,
+      "noteChanges": 5,
+      "stillPending": 2
+    },
+    "file": "content/migration/core-curriculum.json",
+    "statusChanges": [],
+    "targetChanges": [],
+    "newPathChanges": [],
+    "noteChanges": 5
+  }
+}

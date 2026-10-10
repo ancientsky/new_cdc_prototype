@@ -1,0 +1,100 @@
+{
+  "id": "doc.covid-vaccine-recommendation.2025-09-15",
+  "type": "document",
+  "title": "新冠疫苗接種建議（2026–2027 年度）（2025 年版）",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2025-09-15",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.covid-19"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "（待補：本版次正本為 PDF「新冠疫苗接種建議（2025 年版，2025 年 9 月 15 日）（PDF）」，由舊頁「新冠疫苗接種建議（2026–2027 年度）」的附件列表拆出，不轉內文；僅供查閱的失效版本。）",
+  "family": "doc.covid-vaccine-recommendation",
+  "docType": "recommendation",
+  "version": "2025 年版",
+  "effectiveAt": "2025-09-15",
+  "machineReadableMarkdown": "（待補：本版次正本為 PDF「新冠疫苗接種建議（2025 年版，2025 年 9 月 15 日）（PDF）」，由舊頁「新冠疫苗接種建議（2026–2027 年度）」的附件列表拆出，不轉內文；僅供查閱的失效版本。）",
+  "supersedes": null,
+  "pdfUrl": "/files/doc.covid-vaccine-recommendation.2025-09-15/covid-vaccine-recommendation-2025-09-15.pdf",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/2G_kk9OEXNAmMOsndOv0Tc"
+  ],
+  "assets": [
+    {
+      "file": "covid-vaccine-recommendation-2025-09-15.pdf",
+      "kind": "attachment",
+      "label": "新冠疫苗接種建議（2025 年版，2025 年 9 月 15 日）（PDF）",
+      "mime": "application/pdf",
+      "bytes": 852,
+      "sha256": "9bf26e6f02d36b68b8139291e2b372df3da472b040df8513c60b4a21a46afaeb",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 53 處（mso 樣式 19、Mso 類別 17、命名空間標籤 17）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「傳染病介紹／新冠併發重症／指引及手冊」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（新冠併發重症）"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站內容是文件 doc.covid-vaccine-recommendation.2026-09-15，草稿依清單建成 document（舊頁本身是欄目內頁）"
+      },
+      {
+        "code": "effective-from-text",
+        "severity": "info",
+        "message": "生效日 2026-09-15 取自內文（舊頁發布日 2025-09-15）"
+      },
+      {
+        "code": "version-from-attachment",
+        "severity": "info",
+        "message": "附件「新冠疫苗接種建議（2025 年版，2025 年 9 月 15 日）（PDF）」是另一版次（2025 年版），另建純 PDF 草稿 doc.covid-vaccine-recommendation.2025-09-15（同家族 doc.covid-vaccine-recommendation，不轉內文）"
+      },
+      {
+        "code": "version-chain",
+        "severity": "info",
+        "message": "版次鏈 doc.covid-vaccine-recommendation：2025 年版（2025-09-15） → 2027 年版（2026-09-15）；本版為現行版，supersedes doc.covid-vaccine-recommendation.2025-09-15"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/2G_kk9OEXNAmMOsndOv0Tc",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "doc.covid-vaccine-recommendation.2025-09-15"
+    ],
+    "pdfOnly": true,
+    "fromAttachment": true,
+    "versionChain": {
+      "family": "doc.covid-vaccine-recommendation",
+      "position": 1,
+      "of": 2,
+      "current": false,
+      "supersededBy": "doc.covid-vaccine-recommendation.2026-09-15"
+    }
+  }
+}

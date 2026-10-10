@@ -1,0 +1,498 @@
+{
+  "format": "cdc-legacy-migration-patch/1",
+  "manifest": "migration.qa",
+  "batch": "qa",
+  "exportedAt": "2026-10-03",
+  "applied": {
+    "statusChanges": [],
+    "targetChanges": [],
+    "newPathChanges": [],
+    "noteChanges": 0
+  },
+  "rule": "只改 status／target／newPath／note，不動 verified；僅「待確認(pending)且新站已有對應內容」的項目才改 status（人工已判定的項目不被覆蓋，差異列在 conflicts）。",
+  "items": [
+    {
+      "key": "covid-qa",
+      "oldTitle": "新冠併發重症 Q&A",
+      "page": "01-covid-qa",
+      "current": {
+        "status": "merged",
+        "target": "disease.covid-19",
+        "newPath": null,
+        "note": "疾病專題 Q&A 拆為每題一筆（3 題，新站已有），疾病頁常見問題區塊連到各題。　【匯入 2026-10-03】草稿 faq.covid-antiviral、faq.covid-vaccine-who、faq.flu-covid-same-day（信心 1；既有內容已存在，供比對）"
+      },
+      "proposed": {
+        "status": "merged",
+        "target": "disease.covid-19",
+        "newPath": null,
+        "note": "疾病專題 Q&A 拆為每題一筆（3 題，新站已有），疾病頁常見問題區塊連到各題。　【匯入 2026-10-03】草稿 faq.covid-antiviral、faq.covid-vaccine-who、faq.flu-covid-same-day（信心 1；既有內容已存在，供比對）"
+      },
+      "suggestion": {
+        "status": "migrated",
+        "target": "disease.covid-19",
+        "newPath": null
+      },
+      "draftIds": [
+        "faq.covid-antiviral",
+        "faq.covid-vaccine-who",
+        "faq.flu-covid-same-day"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": false
+      }
+    },
+    {
+      "key": "hepatitis-b-qa",
+      "oldTitle": "急性病毒性B型肝炎 Q&A",
+      "page": "05-hepatitis-b-qa",
+      "current": {
+        "status": "migrated",
+        "target": "faq.hepb-newborn",
+        "newPath": null,
+        "note": "B 型肝炎尚無疾病頁；題目新站已有（faq.hepb-newborn），待疾病頁建好後改 merged。　【匯入 2026-10-03】草稿 faq.hepb-newborn（信心 1；既有內容已存在，供比對）"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": "faq.hepb-newborn",
+        "newPath": null,
+        "note": "B 型肝炎尚無疾病頁；題目新站已有（faq.hepb-newborn），待疾病頁建好後改 merged。　【匯入 2026-10-03】草稿 faq.hepb-newborn（信心 1；既有內容已存在，供比對）"
+      },
+      "suggestion": {
+        "status": "migrated",
+        "target": "faq.hepb-newborn",
+        "newPath": null
+      },
+      "draftIds": [
+        "faq.hepb-newborn"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": false
+      }
+    },
+    {
+      "key": "hiv-qa",
+      "oldTitle": "人類免疫缺乏病毒感染 Q&A",
+      "page": "06-hiv-qa",
+      "current": {
+        "status": "merged",
+        "target": "disease.hiv",
+        "newPath": null,
+        "note": "2 題，新站已有。　【匯入 2026-10-03】草稿 faq.hiv-pep、faq.hiv-test-where（信心 1；既有內容已存在，供比對）"
+      },
+      "proposed": {
+        "status": "merged",
+        "target": "disease.hiv",
+        "newPath": null,
+        "note": "2 題，新站已有。　【匯入 2026-10-03】草稿 faq.hiv-pep、faq.hiv-test-where（信心 1；既有內容已存在，供比對）"
+      },
+      "suggestion": {
+        "status": "migrated",
+        "target": "disease.hiv",
+        "newPath": null
+      },
+      "draftIds": [
+        "faq.hiv-pep",
+        "faq.hiv-test-where"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": false
+      }
+    },
+    {
+      "key": "pertussis-qa",
+      "oldTitle": "百日咳 Q&A",
+      "page": "07-pertussis-qa",
+      "current": {
+        "status": "merged",
+        "target": "disease.pertussis",
+        "newPath": null,
+        "note": "1 題，新站已有。　【匯入 2026-10-03】草稿 faq.pregnant-tdap（信心 1；既有內容已存在，供比對）"
+      },
+      "proposed": {
+        "status": "merged",
+        "target": "disease.pertussis",
+        "newPath": null,
+        "note": "1 題，新站已有。　【匯入 2026-10-03】草稿 faq.pregnant-tdap（信心 1；既有內容已存在，供比對）"
+      },
+      "suggestion": {
+        "status": "migrated",
+        "target": "disease.pertussis",
+        "newPath": null
+      },
+      "draftIds": [
+        "faq.pregnant-tdap"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": false
+      }
+    },
+    {
+      "key": "varicella-qa",
+      "oldTitle": "水痘併發症 Q&A",
+      "page": "14-varicella-qa",
+      "current": {
+        "status": "merged",
+        "target": "disease.varicella",
+        "newPath": null,
+        "note": "1 題，與預防接種常見問答頁同題；轉換時以先出現的頁為準。　【匯入 2026-10-03】與 faq.varicella-vaccine-doses 重複，未另出草稿（信心 0.9；既有內容已存在，供比對）"
+      },
+      "proposed": {
+        "status": "merged",
+        "target": "disease.varicella",
+        "newPath": null,
+        "note": "1 題，與預防接種常見問答頁同題；轉換時以先出現的頁為準。　【匯入 2026-10-03】與 faq.varicella-vaccine-doses 重複，未另出草稿（信心 0.9；既有內容已存在，供比對）"
+      },
+      "suggestion": {
+        "status": "migrated",
+        "target": "disease.varicella",
+        "newPath": null
+      },
+      "draftIds": [],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": false
+      }
+    },
+    {
+      "key": "vaccination-qa",
+      "oldTitle": "預防接種常見問答",
+      "page": "13-vaccination-qa",
+      "current": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "不綁單一疾病的主題頁，一頁多題：5 題新站已有、2 題新題（成人補打、保護力多久）待權責單位確認後入庫；舊網址 301 到 /faq/?task=vaccines。　【匯入 2026-10-03】草稿 faq.hpv-vaccine-who、faq.pcv-elderly、faq.bcg-when、faq.flu-vaccine-every-year、faq.varicella-vaccine-doses、faq.x-legacy-fafc41、faq.x-legacy-be6f07（信心 1；既有內容已存在，供比對）"
+      },
+      "proposed": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "不綁單一疾病的主題頁，一頁多題：5 題新站已有、2 題新題（成人補打、保護力多久）待權責單位確認後入庫；舊網址 301 到 /faq/?task=vaccines。　【匯入 2026-10-03】草稿 faq.hpv-vaccine-who、faq.pcv-elderly、faq.bcg-when、faq.flu-vaccine-every-year、faq.varicella-vaccine-doses、faq.x-legacy-fafc41、faq.x-legacy-be6f07（信心 1；既有內容已存在，供比對）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": "faq.hpv-vaccine-who",
+        "newPath": null
+      },
+      "draftIds": [
+        "faq.hpv-vaccine-who",
+        "faq.pcv-elderly",
+        "faq.bcg-when",
+        "faq.flu-vaccine-every-year",
+        "faq.varicella-vaccine-doses",
+        "faq.x-legacy-fafc41",
+        "faq.x-legacy-be6f07"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": false
+      }
+    },
+    {
+      "key": "travel-qa",
+      "oldTitle": "國際旅遊常見問答",
+      "page": "11-travel-qa",
+      "current": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "主題頁，一頁多題：5 題新站已有、1 題新題；舊網址 301 到 /faq/?task=travel。　【匯入 2026-10-03】草稿 faq.travel-clinic、faq.travel-japan-measles、faq.travel-malaria-prevention、faq.travel-return-fever、faq.yellow-fever-certificate、faq.x-legacy-3456c6（信心 1；既有內容已存在，供比對）"
+      },
+      "proposed": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "主題頁，一頁多題：5 題新站已有、1 題新題；舊網址 301 到 /faq/?task=travel。　【匯入 2026-10-03】草稿 faq.travel-clinic、faq.travel-japan-measles、faq.travel-malaria-prevention、faq.travel-return-fever、faq.yellow-fever-certificate、faq.x-legacy-3456c6（信心 1；既有內容已存在，供比對）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": "faq.travel-clinic",
+        "newPath": null
+      },
+      "draftIds": [
+        "faq.travel-clinic",
+        "faq.travel-japan-measles",
+        "faq.travel-malaria-prevention",
+        "faq.travel-return-fever",
+        "faq.yellow-fever-certificate",
+        "faq.x-legacy-3456c6"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": false
+      }
+    },
+    {
+      "key": "stats-qa",
+      "oldTitle": "統計資料常見問答",
+      "page": "10-stats-qa",
+      "current": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "舊頁沒有手風琴元件、用 <h3> 排版；2 題新站已有、1 題新題。舊網址 301 到 /faq/?task=data。　【匯入 2026-10-03】草稿 faq.stats-ili-rate、faq.stats-where-data、faq.x-legacy-378f51（信心 1；既有內容已存在，供比對）"
+      },
+      "proposed": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "舊頁沒有手風琴元件、用 <h3> 排版；2 題新站已有、1 題新題。舊網址 301 到 /faq/?task=data。　【匯入 2026-10-03】草稿 faq.stats-ili-rate、faq.stats-where-data、faq.x-legacy-378f51（信心 1；既有內容已存在，供比對）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": "faq.stats-ili-rate",
+        "newPath": null
+      },
+      "draftIds": [
+        "faq.stats-ili-rate",
+        "faq.stats-where-data",
+        "faq.x-legacy-378f51"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": false
+      }
+    },
+    {
+      "key": "rumor-qa",
+      "oldTitle": "謠言澄清常見問答",
+      "page": "08-rumor-qa",
+      "current": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "舊頁以 Word 貼上的「Q：／A：」排版；2 題新站已有、1 題新題。舊網址 301 到 /faq/?task=rumor。　【匯入 2026-10-03】草稿 faq.rumor-mmr-autism、faq.rumor-sms-link、faq.x-legacy-74dfc3（信心 1；既有內容已存在，供比對）"
+      },
+      "proposed": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "舊頁以 Word 貼上的「Q：／A：」排版；2 題新站已有、1 題新題。舊網址 301 到 /faq/?task=rumor。　【匯入 2026-10-03】草稿 faq.rumor-mmr-autism、faq.rumor-sms-link、faq.x-legacy-74dfc3（信心 1；既有內容已存在，供比對）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": "faq.rumor-mmr-autism",
+        "newPath": null
+      },
+      "draftIds": [
+        "faq.rumor-mmr-autism",
+        "faq.rumor-sms-link",
+        "faq.x-legacy-74dfc3"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": false
+      }
+    },
+    {
+      "key": "flu-season-2024-qa",
+      "oldTitle": "113 年度公費流感疫苗接種 Q&A",
+      "page": "04-flu-season-2024-qa",
+      "current": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "年度 Q&A，答案的期限（113 年度、114 年 3 月 31 日）都已過：建議封存或由現行年度版取代，不直接上線。　【匯入 2026-10-03】草稿 faq.influenza-legacy-286a86、faq.influenza-legacy-d3274b、faq.influenza-legacy-28a4c0（信心 1）"
+      },
+      "proposed": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "年度 Q&A，答案的期限（113 年度、114 年 3 月 31 日）都已過：建議封存或由現行年度版取代，不直接上線。　【匯入 2026-10-03】草稿 faq.influenza-legacy-286a86、faq.influenza-legacy-d3274b、faq.influenza-legacy-28a4c0（信心 1）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null,
+        "newPath": null
+      },
+      "draftIds": [
+        "faq.influenza-legacy-286a86",
+        "faq.influenza-legacy-d3274b",
+        "faq.influenza-legacy-28a4c0"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": false
+      }
+    },
+    {
+      "key": "dengue-en-qa",
+      "oldTitle": "Dengue Fever FAQ",
+      "page": "02-dengue-en-qa",
+      "current": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "英文頁：新站以中文為正本，英文答案應掛在對應中文題的 i18n.en；3 題中 2 題新站已有中文題與英文翻譯。　【匯入 2026-10-03】草稿 faq.dengue-legacy-4db8ab、faq.dengue-legacy-13c7cc、faq.dengue-legacy-c72cba（信心 1）"
+      },
+      "proposed": {
+        "status": "pending",
+        "target": null,
+        "newPath": null,
+        "note": "英文頁：新站以中文為正本，英文答案應掛在對應中文題的 i18n.en；3 題中 2 題新站已有中文題與英文翻譯。　【匯入 2026-10-03】草稿 faq.dengue-legacy-4db8ab、faq.dengue-legacy-13c7cc、faq.dengue-legacy-c72cba（信心 1）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null,
+        "newPath": null
+      },
+      "draftIds": [
+        "faq.dengue-legacy-4db8ab",
+        "faq.dengue-legacy-13c7cc",
+        "faq.dengue-legacy-c72cba"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": false
+      }
+    },
+    {
+      "key": "single-qa",
+      "oldTitle": "被狗、貓或野生動物咬傷該怎麼辦？",
+      "page": "09-single-qa",
+      "current": {
+        "status": "migrated",
+        "target": "faq.rabies-bite",
+        "newPath": null,
+        "note": "整頁只有一題、標題就是問題（沒有手風琴結構），對到新站既有題。　【匯入 2026-10-03】草稿 faq.rabies-bite（信心 0.8；既有內容已存在，供比對）"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": "faq.rabies-bite",
+        "newPath": null,
+        "note": "整頁只有一題、標題就是問題（沒有手風琴結構），對到新站既有題。　【匯入 2026-10-03】草稿 faq.rabies-bite（信心 0.8；既有內容已存在，供比對）"
+      },
+      "suggestion": {
+        "status": "migrated",
+        "target": "faq.rabies-bite",
+        "newPath": null
+      },
+      "draftIds": [
+        "faq.rabies-bite"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": false
+      }
+    },
+    {
+      "key": "qa-list",
+      "oldTitle": "常見問答總覽",
+      "page": "15-qa-list",
+      "current": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/faq/",
+        "note": "列表頁：新站的常見問題列表由系統依 faq 型別與 tasks 自動產生，舊網址 301 到 /faq/。　【匯入 2026-10-03】草稿 page.x-qa-list（信心 0.6）"
+      },
+      "proposed": {
+        "status": "migrated",
+        "target": null,
+        "newPath": "/faq/",
+        "note": "列表頁：新站的常見問題列表由系統依 faq 型別與 tasks 自動產生，舊網址 301 到 /faq/。　【匯入 2026-10-03】草稿 page.x-qa-list（信心 0.6）"
+      },
+      "suggestion": {
+        "status": "pending",
+        "target": null,
+        "newPath": "/faq/"
+      },
+      "draftIds": [
+        "page.x-qa-list"
+      ],
+      "agree": true,
+      "change": {
+        "status": false,
+        "target": false,
+        "newPath": false,
+        "note": false
+      }
+    }
+  ],
+  "missingPages": [],
+  "unmatchedPages": [
+    {
+      "page": "03-dengue-qa",
+      "suggest": {
+        "key": "import-03-dengue-qa",
+        "oldTitle": "Q&A",
+        "oldPath": "傳染病與防疫專題／登革熱／Q&A",
+        "oldUrl": "https://www.cdc.gov.tw/Category/QAPage/4kMzhnwTwPIrf_KETxhqzF",
+        "oldType": "qa",
+        "verified": false,
+        "status": "pending",
+        "note": "匯入時清單沒有對應項目，請權責單位確認後加入"
+      }
+    },
+    {
+      "page": "12-tuberculosis-qa",
+      "suggest": {
+        "key": "import-12-tuberculosis-qa",
+        "oldTitle": "結核病 Q&A",
+        "oldPath": "傳染病與防疫專題／結核病／Q&A",
+        "oldUrl": "https://www.cdc.gov.tw/Category/QAPage/ZW0TrgKarQJWRWZrMIWzeq",
+        "oldType": "qa",
+        "verified": false,
+        "status": "pending",
+        "note": "匯入時清單沒有對應項目，請權責單位確認後加入"
+      }
+    }
+  ],
+  "conflicts": [],
+  "derivedItems": [],
+  "summary": {
+    "derivedItems": 0,
+    "derivedMatched": 0,
+    "items": 13,
+    "matched": 13,
+    "missingPages": 0,
+    "unmatchedPages": 2,
+    "agree": 13,
+    "conflicts": 0,
+    "statusChanges": 0,
+    "pendingToMigrated": 0,
+    "targetChanges": 0,
+    "newPathChanges": 0,
+    "noteChanges": 0,
+    "stillPending": 6
+  }
+}

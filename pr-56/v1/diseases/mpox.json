@@ -1,0 +1,467 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "5dfd67a52388",
+    "lastModified": "2026-03-18"
+  },
+  "data": {
+    "id": "disease.mpox",
+    "type": "disease",
+    "slug": "mpox",
+    "title": "M痘",
+    "nameEn": "Mpox",
+    "aliases": [
+      "猴痘",
+      "Monkeypox",
+      "Mpox",
+      "MPX"
+    ],
+    "legalCategory": 2,
+    "icd10": [
+      "B04"
+    ],
+    "notifyWithinHours": 24,
+    "incubation": {
+      "min": 5,
+      "max": 21,
+      "typicalMin": 6,
+      "typicalMax": 13,
+      "unit": "day",
+      "text": "5–21 天（通常 6–13 天）"
+    },
+    "transmission": [
+      "contact",
+      "sexual",
+      "droplet",
+      "vertical"
+    ],
+    "owner": "unit.acute-infectious",
+    "steward": "急性傳染病組承辦人",
+    "publishedAt": "2022-06-23",
+    "reviewedAt": "2026-03-18",
+    "reviewPeriodMonths": 12,
+    "status": "published",
+    "audience": [
+      "public",
+      "professional"
+    ],
+    "tasks": [
+      "symptoms",
+      "vaccines",
+      "travel"
+    ],
+    "sensitivity": "public",
+    "license": "OGDL-1.0",
+    "diseases": [
+      "disease.mpox"
+    ],
+    "vaccines": [
+      "vaccine.mpox"
+    ],
+    "aiWhitelist": {
+      "requested": true,
+      "approvedBy": "unit.oasis",
+      "approvedAt": "2026-09-01"
+    },
+    "languages": {
+      "zh-TW": {
+        "status": "source"
+      },
+      "en": {
+        "status": "reviewed",
+        "reviewedAt": "2026-03-30",
+        "reviewer": "內部英文審核人"
+      },
+      "ja": {
+        "status": "machine"
+      },
+      "tl": {
+        "status": "machine"
+      },
+      "vi": {
+        "status": "machine"
+      },
+      "id": {
+        "status": "machine"
+      },
+      "th": {
+        "status": "machine"
+      }
+    },
+    "summary": "M痘（舊稱猴痘）主要經親密接觸傳播，症狀為發燒、淋巴結腫大與皮疹。高風險族群可接種公費 M痘疫苗 2 劑，2023 年起列為第二類法定傳染病。",
+    "keywords": [
+      "M痘",
+      "猴痘",
+      "Mpox",
+      "疫苗",
+      "親密接觸",
+      "皮疹"
+    ],
+    "legacyUrls": [
+      "https://www.cdc.gov.tw/Disease/Index"
+    ],
+    "keyFacts": {
+      "incubation": "5–21 天（通常 6–13 天）",
+      "symptoms": "發燒、頭痛、淋巴結腫大，之後出現皮疹、水泡、膿疱",
+      "transmission": "親密接觸（含性接觸）、接觸病灶或污染物",
+      "prevention": "高風險族群接種 2 劑 M痘疫苗、避免與不明對象親密接觸",
+      "notify": "24 小時內"
+    },
+    "blocks": [
+      {
+        "key": "what-to-do",
+        "heading": "我該怎麼辦",
+        "cards": [
+          {
+            "if": "出現不明皮疹、水泡，且近 3 週有親密接觸",
+            "title": "遮蓋皮疹後就醫",
+            "text": "戴口罩、穿長袖遮蓋皮疹後就醫，主動告知接觸史；可至各縣市指定的友善醫療院所。"
+          },
+          {
+            "if": "與確診者有親密接觸",
+            "title": "4 天內評估接種疫苗",
+            "text": "暴露後 4 天內接種疫苗效果最好，最遲 14 天內；並自主健康管理 21 天。"
+          },
+          {
+            "if": "近一年有多重性伴侶等高風險行為",
+            "title": "接種 2 劑公費疫苗",
+            "text": "符合條件者可預約公費 M痘疫苗，2 劑間隔至少 4 週才有完整保護。"
+          }
+        ]
+      },
+      {
+        "key": "symptoms",
+        "heading": "症狀與警示徵象",
+        "markdown": "初期常見**發燒、頭痛、肌肉痠痛、背痛、倦怠與淋巴結腫大**。\n\n1–3 天後出現皮疹，依序由斑疹、丘疹、水泡、膿疱到結痂，可能集中在生殖器、肛門、口腔或臉部、手腳；病灶可能疼痛或發癢。病程約 2–4 週，多數可自行痊癒。",
+        "warning": "病灶大量擴散或出現在眼睛、直腸疼痛或出血、吞嚥困難、意識改變；免疫低下者（例如未控制的 HIV 感染者）較易發展為重症。"
+      },
+      {
+        "key": "transmission",
+        "heading": "怎麼傳染",
+        "markdown": "主要經由**直接接觸**病人的皮疹、結痂或體液傳播，近年疫情多與**性接觸等親密接觸**有關；也可能因長時間面對面接觸的飛沫，或接觸被污染的床單、衣物、毛巾而感染，孕婦可能傳給胎兒。\n\n從出現症狀到所有病灶結痂脫落、長出新皮膚為止都具傳染力。"
+      },
+      {
+        "key": "prevention",
+        "heading": "如何預防",
+        "markdown": "- 符合條件的高風險族群接種**公費 M痘疫苗 2 劑**。\n- 避免與不明對象發生親密接觸；性行為全程使用保險套雖不能完全預防，仍可降低其他性病風險。\n- 不共用毛巾、床單、衣物與餐具。\n- 前往疫情發生國家時，避免接觸野生動物（特別是囓齒類）。"
+      },
+      {
+        "key": "treatment",
+        "heading": "診斷與治療",
+        "markdown": "多數病人以支持性治療為主：緩解疼痛、保持病灶清潔乾燥、預防細菌感染。重症或高風險病人可由醫師評估使用抗病毒藥物 tecovirimat。\n\n病人應避免與他人密切接觸直到病灶全部結痂脫落。"
+      },
+      {
+        "key": "vaccine",
+        "heading": "疫苗",
+        "markdown": "國內使用非複製型活性減毒疫苗（JYNNEOS），**2 劑，間隔至少 4 週**。公費對象包括近一年有高風險性行為者（如多重性伴侶、性交易服務者、於營業場所發生性行為者），以及經衛生單位評估之暴露後接觸者。接種地點可查詢合作醫療院所名單。"
+      },
+      {
+        "key": "situation",
+        "heading": "目前疫情與統計",
+        "markdown": "國內病例多為零星發生；國際上 clade I 疫情集中於中非與東非部分國家，相關旅遊疫情建議等級請見出國專區。"
+      },
+      {
+        "key": "faq",
+        "heading": "常見問題"
+      }
+    ],
+    "professional": {
+      "specimen": "以無菌拭子採集水泡液或病灶表面、結痂，置於無菌容器或病毒保存輸送管，冷藏送驗，進行 PCR 與 clade 分型。",
+      "notifyNote": "自 2023-03-01 起為第二類法定傳染病，應於 24 小時內通報；疑似 clade I 病例請同步通知轄區衛生局。"
+    },
+    "i18n": {
+      "en": {
+        "title": "Mpox",
+        "summary": "Mpox (formerly monkeypox) spreads mainly through close contact and causes fever, swollen lymph nodes and rash. High-risk groups can get two government-funded doses of mpox vaccine. It has been a Category 2 notifiable disease since 2023.",
+        "keyFacts": {
+          "incubation": "5–21 days (usually 6–13)",
+          "symptoms": "Fever, headache, swollen lymph nodes, then rash, blisters and pustules",
+          "transmission": "Close contact including sexual contact; contact with lesions or contaminated items",
+          "prevention": "Two doses of mpox vaccine for high-risk groups; avoid close contact with unknown partners",
+          "notify": "Within 24 hours"
+        },
+        "blocks": [
+          {
+            "key": "what-to-do",
+            "heading": "What to do",
+            "cards": [
+              {
+                "if": "have an unexplained rash or blisters after close contact in the past 3 weeks",
+                "title": "Cover the rash and see a doctor",
+                "text": "Wear a mask and long sleeves, see a doctor and mention your contact history; designated friendly clinics are available in each city and county."
+              },
+              {
+                "if": "had close contact with a confirmed case",
+                "title": "Get assessed for vaccination within 4 days",
+                "text": "Vaccination works best within 4 days of exposure and no later than 14 days; monitor your health for 21 days."
+              },
+              {
+                "if": "have had multiple sexual partners or similar risks in the past year",
+                "title": "Get two government-funded doses",
+                "text": "Eligible people can book the government-funded vaccine; full protection requires two doses at least 4 weeks apart."
+              }
+            ]
+          },
+          {
+            "key": "symptoms",
+            "heading": "Symptoms and warning signs",
+            "markdown": "Early symptoms include **fever, headache, muscle and back aches, fatigue and swollen lymph nodes**.\n\nAfter 1–3 days a rash appears and progresses from spots to bumps, blisters, pustules and scabs. It may concentrate on the genitals, anus, mouth, face, hands or feet and can be painful or itchy. Illness lasts 2–4 weeks and most people recover on their own.",
+            "warning": "Widespread lesions or lesions in the eye, rectal pain or bleeding, difficulty swallowing, altered consciousness; people with weakened immunity (such as uncontrolled HIV) are at higher risk of severe disease."
+          },
+          {
+            "key": "transmission",
+            "heading": "How it spreads",
+            "markdown": "Mpox spreads mainly through **direct contact** with rash, scabs or body fluids; recent outbreaks are linked to **sexual and other intimate contact**. It can also spread through prolonged face-to-face droplets, contaminated bedding, clothing or towels, and from mother to fetus.\n\nPeople are infectious from symptom onset until all scabs have fallen off and new skin has formed."
+          },
+          {
+            "key": "prevention",
+            "heading": "Prevention",
+            "markdown": "- Eligible high-risk groups should get **two government-funded doses** of mpox vaccine.\n- Avoid intimate contact with unknown partners; condoms do not fully prevent mpox but reduce other STI risks.\n- Do not share towels, bedding, clothes or utensils.\n- When visiting affected countries, avoid contact with wild animals, especially rodents."
+          },
+          {
+            "key": "treatment",
+            "heading": "Diagnosis and treatment",
+            "markdown": "Most patients receive supportive care: pain relief, keeping lesions clean and dry and preventing bacterial infection. Severe or high-risk patients may be assessed for the antiviral tecovirimat.\n\nPatients should avoid close contact with others until all lesions have scabbed over and fallen off."
+          },
+          {
+            "key": "vaccine",
+            "heading": "Vaccine",
+            "markdown": "Taiwan uses a non-replicating live vaccine (JYNNEOS), **two doses at least 4 weeks apart**. Government-funded groups include people with high-risk sexual behaviour in the past year (such as multiple partners, sex workers, or sex at commercial venues) and contacts assessed by health authorities after exposure."
+          },
+          {
+            "key": "situation",
+            "heading": "Current situation and statistics",
+            "markdown": "Cases in Taiwan are sporadic. Clade I outbreaks are concentrated in parts of central and east Africa; see the travel section for notice levels."
+          },
+          {
+            "key": "faq",
+            "heading": "FAQ"
+          }
+        ]
+      }
+    },
+    "sourceHash": "8fd43b4ff949",
+    "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/mpox/",
+    "path": "/diseases/mpox/",
+    "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/mpox.md",
+    "governance": {
+      "owner": "unit.acute-infectious",
+      "ownerName": "急性傳染病組",
+      "steward": "急性傳染病組承辦人",
+      "reviewedAt": "2026-03-18",
+      "reviewPeriodMonths": 12,
+      "nextReviewAt": "2027-03-18",
+      "daysToReview": 168,
+      "overdue": false,
+      "dueSoon": false,
+      "status": "published",
+      "lifecycle": "current",
+      "lifecycleLabel": "現行版",
+      "whitelist": true,
+      "whitelistTier": "public",
+      "whitelistPublic": true,
+      "whitelistReasons": [],
+      "whitelistReasonLabels": [],
+      "isCurrent": true,
+      "superseded": false,
+      "supersededBy": null,
+      "currentId": "disease.mpox",
+      "noindex": false,
+      "stale": [],
+      "basisRevisions": [],
+      "predatesBasis": false,
+      "annotations": [],
+      "reverseAuditHits": 0,
+      "license": "OGDL-1.0",
+      "licenseNote": null,
+      "sensitivity": "public",
+      "sourceHash": "8fd43b4ff949",
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-03-30",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "machine"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "translationStale": {
+        "en": false,
+        "ja": false,
+        "tl": false,
+        "vi": false,
+        "id": false,
+        "th": false
+      },
+      "renderableLangs": [
+        "zh-TW",
+        "en"
+      ]
+    },
+    "master": {
+      "id": "disease.mpox",
+      "slug": "mpox",
+      "name": "M痘",
+      "nameEn": "Mpox",
+      "aliases": [
+        "猴痘",
+        "Monkeypox",
+        "Mpox",
+        "MPX"
+      ],
+      "legalCategory": 2,
+      "icd10": [
+        "B04"
+      ],
+      "notifyWithinHours": 24,
+      "transmission": [
+        "contact",
+        "sexual",
+        "droplet"
+      ],
+      "hasPage": true,
+      "owner": "unit.acute-infectious",
+      "zhuyin": "M",
+      "strokes": 0,
+      "note": "2023-03-01 由第五類改列第二類；2022 年中文名由「猴痘」更名為「M痘」",
+      "i18n": {
+        "en": {
+          "name": "Mpox"
+        }
+      }
+    },
+    "related": {
+      "faq": [
+        {
+          "id": "faq.mpox-who-vaccine",
+          "type": "faq",
+          "title": "M痘疫苗誰可以打公費？要打幾劑？",
+          "summary": "公費 M痘疫苗提供近一年有高風險性行為者及經評估的密切接觸者；共 2 劑、間隔至少 4 週，暴露後最好 4 天內接種。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/mpox-who-vaccine/",
+          "path": "/faq/mpox-who-vaccine/",
+          "reviewedAt": "2026-04-02",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "news": [
+        {
+          "id": "news.2025-06-10-mpox-summer",
+          "type": "news",
+          "title": "暑假出遊與大型活動將至，符合條件者請把握接種 2 劑 M痘疫苗",
+          "summary": "暑假將至，疾管署提醒近一年有高風險性行為者把握接種公費 M痘疫苗，完成 2 劑才有完整保護；出現疑似症狀請遮蓋皮疹就醫。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-06-10-mpox-summer/",
+          "path": "/news/2025-06-10-mpox-summer/",
+          "reviewedAt": "2025-06-10",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "news.2026-08-25-mpox-clade-i",
+          "type": "news",
+          "title": "非洲 M痘 clade I 疫情持續，前往當地請避免親密接觸與野生動物",
+          "summary": "中非與東非 M痘 clade I 疫情持續，相關國家維持第二級旅遊疫情建議。前往民眾請避免親密接觸與接觸野生動物，返國有症狀應就醫。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-08-25-mpox-clade-i/",
+          "path": "/news/2026-08-25-mpox-clade-i/",
+          "reviewedAt": "2026-08-25",
+          "owner": "unit.quarantine",
+          "ownerName": "檢疫組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "documents": [],
+      "vaccines": [],
+      "datasets": [],
+      "clarifications": [],
+      "media": [
+        {
+          "id": "media.mpox-vaccine",
+          "type": "media",
+          "title": "M痘疫苗兩劑完整保護，高風險族群請把握接種",
+          "summary": "短影音提醒 M痘疫苗需接種兩劑、間隔至少 4 週才有完整保護，說明公費接種對象與出現皮疹、發燒時應就醫並避免親密接觸。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/mpox-vaccine/",
+          "path": "/media/mpox-vaccine/",
+          "reviewedAt": "2026-09-05",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "labtests": [
+        {
+          "id": "labtest.mpox",
+          "type": "labtest",
+          "title": "M痘檢驗項目與送驗規定",
+          "summary": "M痘：以拭子用力擦拭 2 處以上皮疹病灶（水泡液或痂皮），置乾燥無菌管或 VTM，冷藏 24 小時內送驗做 PCR 與分支鑑定。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/mpox/",
+          "path": "/lab/mpox/",
+          "reviewedAt": "2026-07-15",
+          "owner": "unit.lab",
+          "ownerName": "檢驗及疫苗研製中心",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "services": [],
+      "publications": [
+        {
+          "id": "publication.bulletin-42-15",
+          "type": "publication",
+          "title": "疫情報導 第 42 卷第 15 期",
+          "summary": "本期收錄 3 篇：2026 年夏季登革熱本土疫情南部擴散分析等。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-15/",
+          "path": "/publications/bulletin-42-15/",
+          "reviewedAt": "2026-08-11",
+          "owner": "unit.epidemic-intelligence",
+          "ownerName": "疫情中心",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "topics": [
+        {
+          "id": "topic.sti-resources",
+          "type": "topic",
+          "title": "性傳染病衛教資源",
+          "summary": "彙整愛滋、梅毒、淋病、M痘等性傳染病的衛教單張、影片與校園教材，說明安全性行為、保險套與篩檢資訊，供民眾、學校與團體下載使用。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/sti-resources/",
+          "path": "/topics/sti-resources/",
+          "reviewedAt": "2026-07-01",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ]
+    }
+  }
+}

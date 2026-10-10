@@ -1,0 +1,92 @@
+{
+  "id": "doc.mpox-manual.2022-06-23",
+  "type": "document",
+  "title": "工作手冊",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2022-06-23",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.mpox"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "（待補：本文件正本為 PDF「M痘防治工作手冊」，舊頁只有下載連結。上架前請權責單位提供文字版（assets-policy 第 4 節），或確認僅以附件提供。）",
+  "family": "doc.mpox-manual",
+  "docType": "manual",
+  "version": "2022-06-23",
+  "effectiveAt": "2022-06-23",
+  "machineReadableMarkdown": "（待補：本文件正本為 PDF「M痘防治工作手冊」，舊頁只有下載連結。上架前請權責單位提供文字版（assets-policy 第 4 節），或確認僅以附件提供。）\n\n工作手冊：本頁內容由舊站「M痘」專區移入，請權責單位確認是否仍為現行版本。",
+  "pdfUrl": "/files/doc.mpox-manual.2022-06-23/mpox-manual.pdf",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/DiseaseManual/4ZWV5h25svHNXJKpXk95bk"
+  ],
+  "assets": [
+    {
+      "file": "mpox-manual.pdf",
+      "kind": "attachment",
+      "label": "M痘防治工作手冊",
+      "mime": "application/pdf",
+      "bytes": 663,
+      "sha256": "7d88463941af2c257bff8d7808c50d45473a8660d41df4db7f8557238a80c343",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.8,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「M痘／法規與指引」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（M痘）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 manual（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "body-short",
+        "severity": "warn",
+        "message": "內文過短（37 字，低於 40）"
+      },
+      {
+        "code": "version-unknown",
+        "severity": "info",
+        "message": "標題看不出版次，version 暫填 2022-06-23"
+      },
+      {
+        "code": "pdf-only",
+        "severity": "warn",
+        "message": "舊頁內文只有下載連結，正本是 PDF「M痘防治工作手冊」；machineReadableMarkdown 以（待補）佔位，PDF 不整批轉（第 8 節），上架前請提供文字版"
+      },
+      {
+        "code": "fields-pending",
+        "severity": "info",
+        "message": "待補欄位：machineReadableMarkdown（正本文字版）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/DiseaseManual/4ZWV5h25svHNXJKpXk95bk",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "pdfOnly": true
+  }
+}

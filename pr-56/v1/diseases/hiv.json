@@ -1,0 +1,552 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "6436ec49d3bd",
+    "lastModified": "2025-12-01"
+  },
+  "data": {
+    "id": "disease.hiv",
+    "type": "disease",
+    "slug": "hiv",
+    "title": "人類免疫缺乏病毒感染（愛滋）",
+    "nameEn": "HIV infection",
+    "aliases": [
+      "愛滋",
+      "愛滋病",
+      "愛滋病毒",
+      "HIV",
+      "AIDS",
+      "PrEP",
+      "U=U"
+    ],
+    "legalCategory": 3,
+    "icd10": [
+      "B20",
+      "B24",
+      "Z21"
+    ],
+    "notifyWithinHours": 24,
+    "incubation": {
+      "min": 2,
+      "max": 6,
+      "unit": "week",
+      "text": "急性期症狀多在感染後 2–6 週出現；空窗期依檢驗方法約 2 週至 3 個月"
+    },
+    "transmission": [
+      "sexual",
+      "bloodborne",
+      "vertical"
+    ],
+    "owner": "unit.chronic-infectious",
+    "steward": "慢性傳染病組承辦人",
+    "publishedAt": "2018-03-01",
+    "reviewedAt": "2025-12-01",
+    "reviewPeriodMonths": 12,
+    "status": "published",
+    "audience": [
+      "public",
+      "professional"
+    ],
+    "tasks": [
+      "symptoms",
+      "situation"
+    ],
+    "sensitivity": "public",
+    "license": "OGDL-1.0",
+    "diseases": [
+      "disease.hiv"
+    ],
+    "aiWhitelist": {
+      "requested": true,
+      "approvedBy": "unit.oasis",
+      "approvedAt": "2026-09-01"
+    },
+    "languages": {
+      "zh-TW": {
+        "status": "source"
+      },
+      "en": {
+        "status": "reviewed",
+        "reviewedAt": "2025-12-10",
+        "reviewer": "內部英文審核人"
+      },
+      "ja": {
+        "status": "machine"
+      },
+      "tl": {
+        "status": "machine"
+      },
+      "vi": {
+        "status": "machine"
+      },
+      "id": {
+        "status": "machine"
+      },
+      "th": {
+        "status": "machine"
+      }
+    },
+    "summary": "HIV 經由無套性行為、共用針具與母子垂直傳染。定期篩檢、PrEP 與保險套可有效預防；確診後立即服藥，病毒量測不到就不具傳染力（U=U）。",
+    "keywords": [
+      "HIV",
+      "愛滋",
+      "篩檢",
+      "PrEP",
+      "PEP",
+      "U=U"
+    ],
+    "legacyUrls": [
+      "https://www.cdc.gov.tw/Disease/Index"
+    ],
+    "keyFacts": {
+      "incubation": "急性期 2–6 週；空窗期約 2 週至 3 個月",
+      "symptoms": "急性期可能發燒、喉嚨痛、皮疹、淋巴結腫大；之後可多年無症狀",
+      "transmission": "無套性行為、共用針具、輸血、母子垂直",
+      "prevention": "保險套與水性潤滑液、PrEP、定期篩檢、不共用針具",
+      "notify": "24 小時內"
+    },
+    "blocks": [
+      {
+        "key": "what-to-do",
+        "heading": "我該怎麼辦",
+        "cards": [
+          {
+            "if": "72 小時內發生無保護性行為或針扎",
+            "title": "儘快就醫評估 PEP",
+            "text": "暴露後 72 小時內（越早越好）到 PEP 指定醫院評估暴露後預防性投藥，需連續服藥 28 天。"
+          },
+          {
+            "if": "有感染風險、想知道自己的狀態",
+            "title": "匿名篩檢或自我篩檢",
+            "text": "可到匿名篩檢醫院、社區篩檢點，或使用 HIV 自我篩檢試劑；陽性需到醫院確認。"
+          },
+          {
+            "if": "確診 HIV",
+            "title": "儘快開始服藥",
+            "text": "確診後儘快服用抗病毒藥物，持續服藥使病毒量測不到，就不會經性行為傳給伴侶（U=U）。"
+          }
+        ]
+      },
+      {
+        "key": "symptoms",
+        "heading": "症狀與警示徵象",
+        "markdown": "感染後 2–6 週，部分人會出現類似感冒的**急性期症狀**：發燒、喉嚨痛、倦怠、皮疹、淋巴結腫大，通常數週內自行消失。\n\n之後可能長達數年沒有症狀，但病毒持續破壞免疫系統。若未治療，免疫力下降後會出現伺機性感染，即進入「愛滋病（AIDS）」階段。**唯一能確定是否感染的方法是篩檢。**",
+        "warning": "長期不明發燒、體重快速下降、持續腹瀉、口腔白斑、反覆肺炎，請儘速就醫並告知醫師篩檢需求。"
+      },
+      {
+        "key": "transmission",
+        "heading": "怎麼傳染",
+        "markdown": "HIV 經由三種途徑傳染：\n\n1. **性行為**：無保護的肛交、陰道交、口交。\n2. **血液**：共用針具、稀釋液或輸入受污染血液。\n3. **母子垂直**：懷孕、生產或哺乳。\n\n一般生活接觸，例如握手、擁抱、共餐、共用馬桶、蚊蟲叮咬，**都不會**傳染 HIV。"
+      },
+      {
+        "key": "prevention",
+        "heading": "如何預防",
+        "markdown": "- 每次性行為**全程正確使用保險套**，搭配水性潤滑液。\n- 有感染風險者可諮詢**暴露前預防性投藥（PrEP）**，依規定服用可大幅降低感染風險；部分對象可申請公費 PrEP。\n- 定期篩檢，知道自己與伴侶的狀態。\n- 不共用針具與稀釋液；可利用清潔針具計畫。\n- 孕婦產檢均提供 HIV 篩檢，感染者孕期服藥可使母子垂直感染降到 1% 以下。"
+      },
+      {
+        "key": "treatment",
+        "heading": "診斷與治療",
+        "markdown": "目前雖無法根治，但**抗反轉錄病毒藥物（ART）**可有效控制病毒，感染者規則服藥可擁有接近一般人的壽命。國內鼓勵確診後**立即服藥**，藥費由公費支應。\n\n持續服藥使血中病毒量**測不到**（U=U，Undetectable = Untransmittable），就不會經由性行為傳染給他人。"
+      },
+      {
+        "key": "vaccine",
+        "heading": "疫苗",
+        "markdown": "目前沒有預防 HIV 的疫苗。預防方法以保險套、PrEP 與定期篩檢為主。感染者可依醫師建議接種 B 型肝炎、肺炎鏈球菌、M痘等疫苗。"
+      },
+      {
+        "key": "situation",
+        "heading": "目前疫情與統計",
+        "markdown": "台灣 HIV 新通報人數自 2017 年後逐年下降；按月統計見資料集。",
+        "datasets": [
+          "dataset.hiv-monthly"
+        ]
+      },
+      {
+        "key": "faq",
+        "heading": "常見問題"
+      }
+    ],
+    "professional": {
+      "specimen": "初篩陽性者以 HIV-1/2 抗體確認檢驗或核酸檢驗（NAT）確認；急性感染疑似者建議同時檢驗 HIV RNA。",
+      "notifyNote": "第三類法定傳染病，應於 24 小時內通報；通報資料依「人類免疫缺乏病毒傳染防治及感染者權益保障條例」保密，不得洩漏感染者個資。"
+    },
+    "materials": [
+      {
+        "label": "HIV 自我篩檢說明（多語）",
+        "url": "https://www.cdc.gov.tw/Advocacy",
+        "langs": [
+          "zh-TW",
+          "en",
+          "vi",
+          "id",
+          "th"
+        ]
+      }
+    ],
+    "i18n": {
+      "en": {
+        "title": "HIV infection",
+        "summary": "HIV spreads through condomless sex, shared needles and from mother to child. Regular testing, PrEP and condoms are effective prevention; start treatment right after diagnosis, and an undetectable viral load means HIV cannot be transmitted (U=U).",
+        "keyFacts": {
+          "incubation": "Acute phase 2–6 weeks; window period about 2 weeks to 3 months",
+          "symptoms": "Acute phase may cause fever, sore throat, rash, swollen glands; then often no symptoms for years",
+          "transmission": "Condomless sex, shared needles, blood transfusion, mother to child",
+          "prevention": "Condoms with water-based lubricant, PrEP, regular testing, no needle sharing",
+          "notify": "Within 24 hours"
+        },
+        "blocks": [
+          {
+            "key": "what-to-do",
+            "heading": "What to do",
+            "cards": [
+              {
+                "if": "had unprotected sex or a needle-stick injury in the past 72 hours",
+                "title": "See a doctor about PEP as soon as possible",
+                "text": "Within 72 hours (the sooner the better), visit a designated PEP hospital; PEP is taken for 28 days."
+              },
+              {
+                "if": "may be at risk and want to know your status",
+                "title": "Get an anonymous test or self-test",
+                "text": "Use anonymous testing hospitals, community testing sites or an HIV self-test kit; a positive result must be confirmed at a hospital."
+              },
+              {
+                "if": "are diagnosed with HIV",
+                "title": "Start treatment promptly",
+                "text": "Start antiretroviral treatment soon after diagnosis; keeping the virus undetectable means you will not pass it on through sex (U=U)."
+              }
+            ]
+          },
+          {
+            "key": "symptoms",
+            "heading": "Symptoms and warning signs",
+            "markdown": "Two to six weeks after infection, some people have flu-like **acute symptoms**: fever, sore throat, fatigue, rash and swollen lymph nodes, which usually pass within weeks.\n\nThere may then be no symptoms for years while the virus damages the immune system. Without treatment, opportunistic infections eventually occur (AIDS). **Testing is the only way to know.**",
+            "warning": "Prolonged unexplained fever, rapid weight loss, persistent diarrhoea, white patches in the mouth or repeated pneumonia: see a doctor and ask for an HIV test."
+          },
+          {
+            "key": "transmission",
+            "heading": "How it spreads",
+            "markdown": "HIV spreads in three ways:\n\n1. **Sex**: unprotected anal, vaginal or oral sex.\n2. **Blood**: sharing needles or diluents, or contaminated blood transfusion.\n3. **Mother to child**: during pregnancy, birth or breastfeeding.\n\nEveryday contact such as handshakes, hugs, sharing meals or toilets, or mosquito bites **does not** spread HIV."
+          },
+          {
+            "key": "prevention",
+            "heading": "Prevention",
+            "markdown": "- Use **condoms correctly every time**, with water-based lubricant.\n- People at risk can ask about **pre-exposure prophylaxis (PrEP)**, which greatly reduces infection risk when taken as directed; some groups can receive government-funded PrEP.\n- Test regularly and know your and your partners' status.\n- Do not share needles or diluents; use needle exchange programmes.\n- All pregnant women are offered HIV testing; treatment during pregnancy reduces mother-to-child transmission to below 1%."
+          },
+          {
+            "key": "treatment",
+            "heading": "Diagnosis and treatment",
+            "markdown": "HIV cannot yet be cured, but **antiretroviral therapy (ART)** controls the virus and people who take it regularly can expect a near-normal lifespan. Taiwan encourages **starting treatment immediately** after diagnosis, with drugs paid for by the government.\n\nWith an **undetectable** viral load (U=U, Undetectable = Untransmittable), HIV is not transmitted through sex."
+          },
+          {
+            "key": "vaccine",
+            "heading": "Vaccine",
+            "markdown": "There is no vaccine against HIV. Prevention relies on condoms, PrEP and regular testing. People living with HIV may be advised to receive hepatitis B, pneumococcal and mpox vaccines."
+          },
+          {
+            "key": "situation",
+            "heading": "Current situation and statistics",
+            "markdown": "New HIV notifications in Taiwan have fallen year on year since 2017; see the dataset for monthly figures."
+          },
+          {
+            "key": "faq",
+            "heading": "FAQ"
+          }
+        ]
+      }
+    },
+    "sourceHash": "f8040d8e8339",
+    "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/hiv/",
+    "path": "/diseases/hiv/",
+    "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/hiv.md",
+    "governance": {
+      "owner": "unit.chronic-infectious",
+      "ownerName": "慢性傳染病組",
+      "steward": "慢性傳染病組承辦人",
+      "reviewedAt": "2025-12-01",
+      "reviewPeriodMonths": 12,
+      "nextReviewAt": "2026-12-01",
+      "daysToReview": 61,
+      "overdue": false,
+      "dueSoon": false,
+      "status": "published",
+      "lifecycle": "current",
+      "lifecycleLabel": "現行版",
+      "whitelist": true,
+      "whitelistTier": "public",
+      "whitelistPublic": true,
+      "whitelistReasons": [],
+      "whitelistReasonLabels": [],
+      "isCurrent": true,
+      "superseded": false,
+      "supersededBy": null,
+      "currentId": "disease.hiv",
+      "noindex": false,
+      "stale": [],
+      "basisRevisions": [],
+      "predatesBasis": false,
+      "annotations": [],
+      "reverseAuditHits": 0,
+      "license": "OGDL-1.0",
+      "licenseNote": null,
+      "sensitivity": "public",
+      "sourceHash": "f8040d8e8339",
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2025-12-10",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "machine"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "translationStale": {
+        "en": false,
+        "ja": false,
+        "tl": false,
+        "vi": false,
+        "id": false,
+        "th": false
+      },
+      "renderableLangs": [
+        "zh-TW",
+        "en"
+      ]
+    },
+    "master": {
+      "id": "disease.hiv",
+      "slug": "hiv",
+      "name": "人類免疫缺乏病毒感染",
+      "nameEn": "HIV infection",
+      "aliases": [
+        "愛滋",
+        "愛滋病毒",
+        "HIV",
+        "AIDS",
+        "後天免疫缺乏症候群"
+      ],
+      "legalCategory": 3,
+      "icd10": [
+        "B20",
+        "B24",
+        "Z21"
+      ],
+      "notifyWithinHours": 24,
+      "transmission": [
+        "sexual",
+        "bloodborne",
+        "vertical"
+      ],
+      "hasPage": true,
+      "owner": "unit.chronic-infectious",
+      "datasets": [
+        "dataset.hiv-monthly"
+      ],
+      "zhuyin": "ㄖ",
+      "strokes": 2,
+      "i18n": {
+        "en": {
+          "name": "HIV infection"
+        }
+      }
+    },
+    "related": {
+      "faq": [
+        {
+          "id": "faq.hiv-pep",
+          "type": "faq",
+          "title": "發生沒有保護的性行為後，72 小時內可以做什麼？",
+          "summary": "擔心感染 HIV 時，72 小時內越早越好到 PEP 指定醫院評估暴露後預防性投藥，需連續服藥 28 天。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/hiv-pep/",
+          "path": "/faq/hiv-pep/",
+          "reviewedAt": "2026-06-10",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.hiv-test-where",
+          "type": "faq",
+          "title": "哪裡可以做匿名 HIV 篩檢？",
+          "summary": "HIV 匿名篩檢可至匿名篩檢醫院、社區篩檢點或使用自我篩檢試劑；陽性需到醫院確認，空窗期內陰性建議再篩。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/hiv-test-where/",
+          "path": "/faq/hiv-test-where/",
+          "reviewedAt": "2026-06-10",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "news": [
+        {
+          "id": "news.2025-12-01-world-aids-day",
+          "type": "news",
+          "title": "世界愛滋日：定期篩檢、PrEP 與 U=U，一起終結愛滋",
+          "summary": "世界愛滋日，疾管署呼籲有感染風險者定期篩檢，善用 PrEP 與保險套；感染者規則服藥使病毒量測不到，就不會經性行為傳染（U=U）。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-12-01-world-aids-day/",
+          "path": "/news/2025-12-01-world-aids-day/",
+          "reviewedAt": "2025-12-01",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "documents": [],
+      "vaccines": [],
+      "datasets": [
+        {
+          "id": "dataset.hiv-monthly",
+          "type": "dataset",
+          "title": "人類免疫缺乏病毒感染（愛滋）通報統計",
+          "summary": "HIV 感染者與愛滋發病者通報數按月統計，含危險因子、年齡層與縣市分布。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.hiv-monthly",
+          "path": "/data/#dataset.hiv-monthly",
+          "reviewedAt": "2025-12-01",
+          "owner": "unit.epidemic-intelligence",
+          "ownerName": "疫情中心",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "clarifications": [],
+      "media": [
+        {
+          "id": "media.hiv-anonymous-testing",
+          "type": "media",
+          "title": "想知道就去篩：HIV 匿名篩檢這樣做",
+          "summary": "說明 HIV 匿名篩檢不需健保卡、不用留真實姓名，介紹匿名篩檢醫院、自我篩檢與空窗期，並提醒篩檢陽性可立即銜接治療。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/hiv-anonymous-testing/",
+          "path": "/media/hiv-anonymous-testing/",
+          "reviewedAt": "2026-05-20",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "media.prep-intro",
+          "type": "media",
+          "title": "PrEP 是什麼？三分鐘認識暴露愛滋病毒前預防性投藥",
+          "summary": "以動畫說明 PrEP（暴露愛滋病毒前預防性投藥）的原理、每日服藥與事件型服藥兩種方式、服藥前後要做的檢查，以及與 PEP 的不同。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/prep-intro/",
+          "path": "/media/prep-intro/",
+          "reviewedAt": "2026-06-05",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "labtests": [
+        {
+          "id": "labtest.hiv",
+          "type": "labtest",
+          "title": "人類免疫缺乏病毒感染檢驗項目與送驗規定",
+          "summary": "HIV：初篩陽性者採 EDTA 全血或血清 5 mL，冷藏 24 小時內送 HIV 確認檢驗機構，做抗體確認與核酸檢測，確診前應完成確認檢驗。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/hiv/",
+          "path": "/lab/hiv/",
+          "reviewedAt": "2026-07-15",
+          "owner": "unit.lab",
+          "ownerName": "檢驗及疫苗研製中心",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "services": [],
+      "publications": [
+        {
+          "id": "publication.bulletin-42-11",
+          "type": "publication",
+          "title": "疫情報導 第 42 卷第 11 期",
+          "summary": "本期收錄 3 篇：2026 年第一季國內 HIV 新通報個案流行病學特徵分析等。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-11/",
+          "path": "/publications/bulletin-42-11/",
+          "reviewedAt": "2026-06-09",
+          "owner": "unit.epidemic-intelligence",
+          "ownerName": "疫情中心",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "topics": [
+        {
+          "id": "topic.anonymous-testing",
+          "type": "topic",
+          "title": "性傳染病匿名諮詢與篩檢",
+          "summary": "全國匿名篩檢醫院不需健保卡、以代號登記，提供 HIV 與梅毒篩檢及諮詢；也可索取或購買 HIV 自我篩檢試劑，陽性者由個管師協助轉介治療。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/anonymous-testing/",
+          "path": "/topics/anonymous-testing/",
+          "reviewedAt": "2026-06-10",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "topic.prep",
+          "type": "topic",
+          "title": "PrEP 暴露愛滋病毒前預防性投藥計畫",
+          "summary": "疾管署與合作醫院推動 PrEP 計畫：說明服藥方式、適用對象、服藥前後檢查與補助申請，並列出合作醫院查詢與諮詢管道。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/prep/",
+          "path": "/topics/prep/",
+          "reviewedAt": "2026-06-05",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "topic.sti-resources",
+          "type": "topic",
+          "title": "性傳染病衛教資源",
+          "summary": "彙整愛滋、梅毒、淋病、M痘等性傳染病的衛教單張、影片與校園教材，說明安全性行為、保險套與篩檢資訊，供民眾、學校與團體下載使用。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/sti-resources/",
+          "path": "/topics/sti-resources/",
+          "reviewedAt": "2026-07-01",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "topic.world-aids-day-2025",
+          "type": "topic",
+          "title": "2025 世界愛滋日：篩檢、治療、不歧視",
+          "summary": "2025 年世界愛滋日活動專區（2025-11-15 至 12-15）：推廣匿名篩檢、U=U 與反歧視，活動已結束，頁面保留作為紀錄。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/world-aids-day-2025/",
+          "path": "/topics/world-aids-day-2025/",
+          "reviewedAt": "2025-12-15",
+          "owner": "unit.chronic-infectious",
+          "ownerName": "慢性傳染病組",
+          "lifecycle": "ended",
+          "whitelist": true
+        }
+      ]
+    }
+  }
+}

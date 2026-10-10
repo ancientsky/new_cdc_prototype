@@ -1,0 +1,1430 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "789ed60b5309",
+    "lastModified": "2026-10-05",
+    "count": 8
+  },
+  "data": [
+    {
+      "id": "vaccine.covid-19",
+      "type": "vaccine",
+      "slug": "covid-19",
+      "title": "新冠疫苗",
+      "nameEn": "COVID-19 vaccine",
+      "aliases": [
+        "COVID-19 疫苗",
+        "新冠肺炎疫苗"
+      ],
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2021-03-22",
+      "reviewedAt": "2026-09-16",
+      "reviewPeriodMonths": 6,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "vaccines"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "doc.covid-vaccine-recommendation"
+      ],
+      "diseases": [
+        "disease.covid-19"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-16"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-18",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "machine"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "summary": "2026–2027 年度新冠疫苗 10 月 1 日起與流感疫苗同步開打，6 個月以上民眾公費 1 劑；65 歲以上與免疫不全者間隔 6 個月可再接種 1 劑。",
+      "keywords": [
+        "新冠疫苗",
+        "公費",
+        "接種對象",
+        "公費接種對象",
+        "6 個月以上",
+        "65 歲以上"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Category/List/V6unXI5CVl2Fjoap4WVQLw"
+      ],
+      "publicFunded": [
+        {
+          "group": "6 個月以上民眾",
+          "ageMin": 0.5,
+          "schedule": "本年度 1 劑，與前一劑間隔至少 12 週",
+          "startAt": "2026-10-01"
+        },
+        {
+          "group": "65 歲以上長者、中重度免疫不全者",
+          "ageMin": 65,
+          "schedule": "本年度第 1 劑後間隔 6 個月，可再接種 1 劑",
+          "note": "2026–2027 年度新增",
+          "startAt": "2026-10-01"
+        },
+        {
+          "group": "未曾接種之 6 個月至 4 歲幼兒",
+          "ageMin": 0.5,
+          "ageMax": 4,
+          "schedule": "依仿單接種 2–3 劑基礎劑",
+          "startAt": "2026-10-01"
+        }
+      ],
+      "bodyMarkdown": "新冠疫苗依病毒株變化每年更新成分。2026–2027 年度疫苗依 WHO 建議株，自 **10 月 1 日**起開打，6 個月以上民眾皆可接種公費疫苗；65 歲以上長者、55 歲以上原住民、醫事人員、長照機構住民與工作人員、高風險慢性病人與孕婦為優先對象。\n\n可與流感疫苗同時分開部位接種，或間隔任何時間接種。",
+      "precautions": "對疫苗成分曾發生嚴重過敏反應者不可接種。接種後少數人可能出現注射部位疼痛、疲倦、頭痛、發燒；若出現胸痛、心悸、呼吸急促，應立即就醫。",
+      "whereUrl": "https://ancientsky.github.io/vaxmap-next/#g=covid",
+      "i18n": {
+        "en": {
+          "title": "COVID-19 vaccine",
+          "summary": "The 2026–27 COVID-19 vaccine starts on 1 October alongside flu vaccine: one government-funded dose for everyone aged 6 months and over; people 65+ and the immunocompromised may get another dose 6 months later.",
+          "bodyMarkdown": "COVID-19 vaccines are updated each year as the virus changes. The 2026–27 vaccine follows WHO-recommended strains and is available from **1 October** for everyone aged 6 months and over; priority groups include adults 65+, indigenous people 55+, health workers, long-term care residents and staff, high-risk chronic patients and pregnant women.\n\nIt can be given with the flu vaccine in different sites, or at any interval."
+        }
+      },
+      "sourceHash": "c3508a805d06",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/vaccines/covid-19/",
+      "path": "/vaccines/covid-19/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/vaccines/covid-19.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-09-16",
+        "reviewPeriodMonths": 6,
+        "nextReviewAt": "2027-03-16",
+        "daysToReview": 166,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "vaccine.covid-19",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [
+          {
+            "basedOn": "doc.covid-vaccine-recommendation",
+            "revisedAt": "2026-09-15",
+            "currentId": "doc.covid-vaccine-recommendation.2026-09-15",
+            "currentTitle": "新冠疫苗接種建議（2026–2027 年度）",
+            "currentVersion": "2026-27",
+            "currentHref": "/documents/covid-vaccine-recommendation.2026-09-15/",
+            "dueAt": "2026-09-22",
+            "resolved": true,
+            "resolvedAt": "2026-09-16"
+          }
+        ],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "c3508a805d06",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-18",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "machine"
+          },
+          "tl": {
+            "status": "machine"
+          },
+          "vi": {
+            "status": "machine"
+          },
+          "id": {
+            "status": "machine"
+          },
+          "th": {
+            "status": "machine"
+          }
+        },
+        "translationStale": {
+          "en": false,
+          "ja": false,
+          "tl": false,
+          "vi": false,
+          "id": false,
+          "th": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "vaccine.ev71",
+      "type": "vaccine",
+      "slug": "ev71",
+      "title": "腸病毒 71 型疫苗",
+      "nameEn": "Enterovirus A71 (EV71) vaccine",
+      "aliases": [
+        "EV71 疫苗",
+        "腸病毒疫苗"
+      ],
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2023-06-01",
+      "reviewedAt": "2026-04-22",
+      "reviewPeriodMonths": 6,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "vaccines"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "machine"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "summary": "國內已核准上市的腸病毒 71 型疫苗屬自費接種，適用年齡依仿單；只能預防 EV71，接種後仍需落實洗手。",
+      "keywords": [
+        "腸病毒",
+        "EV71",
+        "疫苗",
+        "自費"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Category/List/V6unXI5CVl2Fjoap4WVQLw"
+      ],
+      "publicFunded": [
+        {
+          "group": "目前無公費對象",
+          "schedule": "自費接種，劑次與適用年齡依各廠牌仿單",
+          "note": "多為 2 個月以上至 6 歲以下幼兒"
+        }
+      ],
+      "bodyMarkdown": "腸病毒 71 型（EV71）是較容易引起重症的型別。國內已有核准上市的 EV71 不活化疫苗，屬**自費**接種，家長可與兒科醫師討論是否接種。\n\n疫苗**只能預防 71 型**，無法預防克沙奇病毒等其他型別，因此接種後仍要落實肥皂洗手、環境消毒，並留意重症前兆。",
+      "precautions": "對疫苗成分過敏者不可接種；發燒或急性疾病者宜延後接種。",
+      "whereUrl": "https://ancientsky.github.io/vaxmap-next/info.html#where",
+      "sourceHash": "10a93fcad5e9",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/vaccines/ev71/",
+      "path": "/vaccines/ev71/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/vaccines/ev71.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-04-22",
+        "reviewPeriodMonths": 6,
+        "nextReviewAt": "2026-10-22",
+        "daysToReview": 21,
+        "overdue": false,
+        "dueSoon": true,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "vaccine.ev71",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "10a93fcad5e9",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "machine"
+          },
+          "tl": {
+            "status": "machine"
+          },
+          "vi": {
+            "status": "machine"
+          },
+          "id": {
+            "status": "machine"
+          },
+          "th": {
+            "status": "machine"
+          }
+        },
+        "translationStale": {
+          "en": false,
+          "ja": false,
+          "tl": false,
+          "vi": false,
+          "id": false,
+          "th": false
+        },
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "vaccine.hepatitis-b",
+      "type": "vaccine",
+      "slug": "hepatitis-b",
+      "title": "B 型肝炎疫苗",
+      "nameEn": "Hepatitis B vaccine",
+      "aliases": [
+        "B肝疫苗",
+        "HBV 疫苗"
+      ],
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2018-03-01",
+      "reviewedAt": "2026-04-15",
+      "reviewPeriodMonths": 6,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "vaccines"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.hepatitis-b"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "machine"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "summary": "新生兒公費接種 3 劑 B 型肝炎疫苗：出生 24 小時內、滿 1 個月、滿 6 個月；母親 HBsAg 陽性者另於 24 小時內注射 HBIG。",
+      "keywords": [
+        "B型肝炎疫苗",
+        "新生兒",
+        "HBIG",
+        "公費"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Category/List/V6unXI5CVl2Fjoap4WVQLw"
+      ],
+      "publicFunded": [
+        {
+          "group": "新生兒",
+          "ageMin": 0,
+          "ageMax": 1,
+          "schedule": "出生 24 小時內、滿 1 個月、滿 6 個月各 1 劑"
+        },
+        {
+          "group": "HBsAg 陽性母親所生新生兒",
+          "ageMin": 0,
+          "schedule": "出生 24 小時內儘速注射 1 劑 HBIG，並完成 3 劑疫苗；12 個月大追蹤抗體"
+        }
+      ],
+      "bodyMarkdown": "台灣自 1984 年起全面推動新生兒 B 型肝炎疫苗接種，大幅降低兒童帶原率與肝癌發生率。\n\n新生兒**出生後 24 小時內儘速接種第 1 劑**，滿 1 個月、滿 6 個月各接種 1 劑。母親為 B 型肝炎表面抗原陽性者，新生兒另需在出生後 24 小時內注射 B 型肝炎免疫球蛋白（HBIG），並於 12 個月大時抽血追蹤。成人未具抗體者可自費接種。",
+      "precautions": "對疫苗成分過敏者不可接種。",
+      "whereUrl": "https://ancientsky.github.io/vaxmap-next/info.html#where",
+      "sourceHash": "5da56b05008b",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/vaccines/hepatitis-b/",
+      "path": "/vaccines/hepatitis-b/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/vaccines/hepatitis-b.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-04-15",
+        "reviewPeriodMonths": 6,
+        "nextReviewAt": "2026-10-15",
+        "daysToReview": 14,
+        "overdue": false,
+        "dueSoon": true,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "vaccine.hepatitis-b",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "5da56b05008b",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "machine"
+          },
+          "tl": {
+            "status": "machine"
+          },
+          "vi": {
+            "status": "machine"
+          },
+          "id": {
+            "status": "machine"
+          },
+          "th": {
+            "status": "machine"
+          }
+        },
+        "translationStale": {
+          "en": false,
+          "ja": false,
+          "tl": false,
+          "vi": false,
+          "id": false,
+          "th": false
+        },
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "vaccine.hpv",
+      "type": "vaccine",
+      "slug": "hpv",
+      "title": "人類乳突病毒（HPV）疫苗",
+      "nameEn": "Human papillomavirus (HPV) vaccine",
+      "aliases": [
+        "HPV 疫苗",
+        "子宮頸癌疫苗"
+      ],
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2018-12-01",
+      "reviewedAt": "2026-08-20",
+      "reviewPeriodMonths": 6,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "vaccines"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-08-25",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "machine"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "summary": "公費 HPV 疫苗提供國中一年級學生（男生自 113 學年度入學者起納入，2025 年 9 月開打），校園接種 2 劑、間隔 6 個月，可預防子宮頸癌與多種 HPV 相關癌症。",
+      "keywords": [
+        "HPV",
+        "子宮頸癌",
+        "國一",
+        "公費疫苗",
+        "男生"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Category/List/V6unXI5CVl2Fjoap4WVQLw"
+      ],
+      "publicFunded": [
+        {
+          "group": "國中一年級女生",
+          "ageMin": 12,
+          "ageMax": 13,
+          "schedule": "2 劑，間隔 6 個月，校園集中接種"
+        },
+        {
+          "group": "國中一年級男生",
+          "ageMin": 12,
+          "ageMax": 13,
+          "schedule": "2 劑，間隔 6 個月，校園集中接種",
+          "note": "自 113 學年度入學之國中生起納入，2025 年 9 月開打",
+          "startAt": "2025-09-01"
+        }
+      ],
+      "bodyMarkdown": "HPV 感染與子宮頸癌、肛門癌、口咽癌等多種癌症相關。在開始有性行為前接種，保護效果最好。\n\n公費 HPV 疫苗以**國中一年級學生**為對象，以校園集中接種為主，共 2 劑、間隔 6 個月；未在校內完成者可持通知至合約院所補接種。其他年齡層可自費接種，15 歲以上開始接種需 3 劑。",
+      "precautions": "對疫苗成分過敏者不可接種；孕婦暫不建議接種。接種後少數人可能暈厥，建議接種後坐著休息 15 分鐘。",
+      "whereUrl": "https://ancientsky.github.io/vaxmap-next/info.html#where",
+      "i18n": {
+        "en": {
+          "title": "Human papillomavirus (HPV) vaccine",
+          "summary": "Government-funded HPV vaccine is offered to first-year junior high students (boys included from the 2025 school year): two doses 6 months apart at school, protecting against cervical and other HPV-related cancers.",
+          "bodyMarkdown": "HPV infection is linked to cervical, anal and oropharyngeal cancers. Vaccination works best before sexual activity begins.\n\nThe government-funded programme covers **first-year junior high school students**, mainly at school: two doses 6 months apart; students who miss school sessions can catch up at contracted clinics. Others can pay for vaccination; those starting at 15 or older need 3 doses."
+        }
+      },
+      "sourceHash": "9dd9bbf30f8a",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/vaccines/hpv/",
+      "path": "/vaccines/hpv/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/vaccines/hpv.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-08-20",
+        "reviewPeriodMonths": 6,
+        "nextReviewAt": "2027-02-20",
+        "daysToReview": 142,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "vaccine.hpv",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "9dd9bbf30f8a",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-08-25",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "machine"
+          },
+          "tl": {
+            "status": "machine"
+          },
+          "vi": {
+            "status": "machine"
+          },
+          "id": {
+            "status": "machine"
+          },
+          "th": {
+            "status": "machine"
+          }
+        },
+        "translationStale": {
+          "en": false,
+          "ja": false,
+          "tl": false,
+          "vi": false,
+          "id": false,
+          "th": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "vaccine.influenza",
+      "type": "vaccine",
+      "slug": "influenza",
+      "title": "流感疫苗",
+      "nameEn": "Influenza vaccine",
+      "aliases": [
+        "公費流感疫苗",
+        "流感疫苗",
+        "Flu vaccine"
+      ],
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2017-09-01",
+      "reviewedAt": "2026-09-18",
+      "reviewPeriodMonths": 6,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "vaccines"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "doc.flu-vaccine-schedule"
+      ],
+      "diseases": [
+        "disease.influenza"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-18"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-20",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-22",
+          "reviewer": "簽約譯者（越南文）"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "summary": "2026–2027 年度公費流感疫苗 10 月 1 日開打，第一階段長者、幼兒、孕婦、高風險者與學生等；11 月 1 日起 50–64 歲成人。每年都需接種。",
+      "keywords": [
+        "流感疫苗",
+        "公費",
+        "公費流感疫苗",
+        "接種對象",
+        "10 月 1 日",
+        "每年接種"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Category/List/V6unXI5CVl2Fjoap4WVQLw"
+      ],
+      "publicFunded": [
+        {
+          "group": "65 歲以上長者",
+          "ageMin": 65,
+          "schedule": "每年 1 劑",
+          "startAt": "2026-10-01"
+        },
+        {
+          "group": "55 歲以上原住民",
+          "ageMin": 55,
+          "schedule": "每年 1 劑",
+          "startAt": "2026-10-01"
+        },
+        {
+          "group": "6 個月以上至國小入學前幼兒",
+          "ageMin": 0.5,
+          "ageMax": 7,
+          "schedule": "每年 1 劑；8 歲（含）以下首次接種者 2 劑，間隔 4 週以上",
+          "startAt": "2026-10-01"
+        },
+        {
+          "group": "孕婦及 6 個月內嬰兒之父母",
+          "schedule": "每年 1 劑",
+          "note": "孕期任何階段皆可接種",
+          "startAt": "2026-10-01"
+        },
+        {
+          "group": "19–64 歲高風險對象（慢性病、BMI ≥ 30、罕見疾病、重大傷病）",
+          "ageMin": 19,
+          "ageMax": 64,
+          "schedule": "每年 1 劑",
+          "startAt": "2026-10-01"
+        },
+        {
+          "group": "國小、國中、高中職、五專一至三年級學生",
+          "schedule": "每年 1 劑，校園集中接種",
+          "startAt": "2026-10-01"
+        },
+        {
+          "group": "醫事防疫人員、禽畜業與動物防疫人員、幼兒園托育人員、長照機構住民與工作人員",
+          "schedule": "每年 1 劑",
+          "startAt": "2026-10-01"
+        },
+        {
+          "group": "50–64 歲無高風險慢性病成人",
+          "ageMin": 50,
+          "ageMax": 64,
+          "schedule": "每年 1 劑",
+          "note": "第二階段",
+          "startAt": "2026-11-01"
+        }
+      ],
+      "bodyMarkdown": "流感病毒每年變異，世界衛生組織每年更新疫苗株，因此**每年都要接種**。本年度採購三價不活化疫苗，接種後約 2 週產生保護力，保護力約可維持 6 個月。\n\n公費疫苗自 **2026 年 10 月 1 日**起分階段開打，可至衛生所與合約院所接種；學生以校園集中接種為主。流感疫苗可與新冠疫苗、肺炎鏈球菌疫苗同時分開部位接種。",
+      "precautions": "對疫苗成分過敏或過去接種曾發生嚴重過敏反應者不可接種；發燒或急性疾病者宜延後接種。常見反應為注射部位疼痛紅腫，少數輕微發燒、倦怠，1–2 天內緩解。",
+      "whereUrl": "https://ancientsky.github.io/vaxmap-next/#g=flu",
+      "i18n": {
+        "en": {
+          "title": "Influenza vaccine",
+          "summary": "Government-funded flu vaccination for 2026–27 starts on 1 October for older adults, young children, pregnant women, high-risk groups and students; adults aged 50–64 from 1 November. Get vaccinated every year.",
+          "bodyMarkdown": "Influenza viruses change every year and the WHO updates vaccine strains annually, so **annual vaccination is needed**. This season uses a trivalent inactivated vaccine; protection develops about 2 weeks after vaccination and lasts about 6 months.\n\nGovernment-funded vaccination starts in phases from **1 October 2026** at health centres and contracted clinics; students are vaccinated at school. Flu vaccine can be given with COVID-19 or pneumococcal vaccines at the same visit in different sites."
+        },
+        "vi": {
+          "title": "Vắc-xin cúm",
+          "summary": "Vắc-xin cúm miễn phí mùa 2026–2027 bắt đầu từ 1/10 cho người cao tuổi, trẻ nhỏ, phụ nữ mang thai, nhóm nguy cơ cao và học sinh; người 50–64 tuổi từ 1/11. Cần tiêm mỗi năm.",
+          "bodyMarkdown": "Vi-rút cúm thay đổi hằng năm nên **cần tiêm vắc-xin mỗi năm**. Sau khi tiêm khoảng 2 tuần sẽ có miễn dịch. Từ **1/10/2026** có thể tiêm tại trạm y tế và cơ sở y tế ký hợp đồng."
+        }
+      },
+      "sourceHash": "238d62cb9d67",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/vaccines/influenza/",
+      "path": "/vaccines/influenza/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/vaccines/influenza.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-09-18",
+        "reviewPeriodMonths": 6,
+        "nextReviewAt": "2027-03-18",
+        "daysToReview": 168,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "vaccine.influenza",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [
+          {
+            "basedOn": "doc.flu-vaccine-schedule",
+            "revisedAt": "2026-09-15",
+            "currentId": "doc.flu-vaccine-schedule.2026-09-15",
+            "currentTitle": "2026–2027 年度公費流感疫苗接種計畫：實施對象與時程",
+            "currentVersion": "2026-27",
+            "currentHref": "/documents/flu-vaccine-schedule.2026-09-15/",
+            "dueAt": "2026-09-22",
+            "resolved": true,
+            "resolvedAt": "2026-09-18"
+          }
+        ],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "238d62cb9d67",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-20",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "machine"
+          },
+          "tl": {
+            "status": "machine"
+          },
+          "vi": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-22",
+            "reviewer": "簽約譯者（越南文）"
+          },
+          "id": {
+            "status": "machine"
+          },
+          "th": {
+            "status": "machine"
+          }
+        },
+        "translationStale": {
+          "en": false,
+          "ja": false,
+          "tl": false,
+          "vi": false,
+          "id": false,
+          "th": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en",
+          "vi"
+        ]
+      }
+    },
+    {
+      "id": "vaccine.mmr",
+      "type": "vaccine",
+      "slug": "mmr",
+      "title": "MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）",
+      "nameEn": "MMR vaccine",
+      "aliases": [
+        "MMR",
+        "麻疹疫苗",
+        "麻疹腮腺炎德國麻疹混合疫苗"
+      ],
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2018-03-01",
+      "reviewedAt": "2026-05-14",
+      "reviewPeriodMonths": 6,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "vaccines",
+        "travel"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "doc.mmr-recommendation"
+      ],
+      "diseases": [
+        "disease.measles",
+        "disease.rubella",
+        "disease.mumps"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-05-20",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "machine"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "summary": "MMR 疫苗預防麻疹、腮腺炎、德國麻疹。幼兒 12 個月與滿 5 歲至入國小前各 1 劑；1966 年（含）以後出生、不具免疫力的成人出國前評估自費接種。",
+      "keywords": [
+        "MMR",
+        "麻疹",
+        "德國麻疹",
+        "1966 年",
+        "出國"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Category/List/V6unXI5CVl2Fjoap4WVQLw"
+      ],
+      "publicFunded": [
+        {
+          "group": "幼兒第 1 劑",
+          "ageMin": 1,
+          "schedule": "出生滿 12 個月接種 1 劑"
+        },
+        {
+          "group": "幼兒第 2 劑",
+          "ageMin": 5,
+          "ageMax": 7,
+          "schedule": "滿 5 歲至入國小前接種 1 劑"
+        },
+        {
+          "group": "產後婦女（德國麻疹抗體陰性）",
+          "schedule": "產後儘速接種 1 劑",
+          "note": "產檢德國麻疹抗體陰性者"
+        },
+        {
+          "group": "1966 年（含）以後出生、不具免疫力且前往流行地區之成人",
+          "schedule": "出國前 2–4 週至旅遊醫學門診評估接種 1 劑",
+          "note": "自費；依 2025-04-16 修訂之接種建議"
+        }
+      ],
+      "bodyMarkdown": "MMR 為活性減毒疫苗，完成 2 劑對麻疹的保護力約 97%。\n\n依 2025 年 4 月 16 日修訂的「國內現行 MMR 預防接種建議」，**1966 年（含）以後出生**、不具麻疹免疫力的成人，若計畫前往麻疹流行地區，建議出國前 2 至 4 週至旅遊醫學門診評估自費接種 1 劑。\n\n**醫護人員**（醫療照護工作人員）及經常接觸外國人的工作者（如機場、觀光、移工服務人員），也建議確認麻疹免疫力並評估接種。",
+      "precautions": "孕婦及嚴重免疫不全者不可接種；育齡女性接種後 4 週內應避免懷孕。近期接受免疫球蛋白或輸血者需間隔一段時間再接種。",
+      "whereUrl": "https://ancientsky.github.io/vaxmap-next/info.html#where",
+      "i18n": {
+        "en": {
+          "title": "MMR vaccine (measles, mumps and rubella)",
+          "summary": "MMR protects against measles, mumps and rubella. Children get one dose at 12 months and one between age 5 and school entry; adults born in 1966 or later without immunity should be assessed before travel.",
+          "bodyMarkdown": "MMR is a live attenuated vaccine; two doses are about 97% effective against measles.\n\nUnder the recommendations revised on 16 April 2025, adults **born in 1966 or later** without measles immunity who plan to visit affected areas should see a travel clinic 2 to 4 weeks before departure to be assessed for one self-paid dose; health workers and people in frequent contact with foreign nationals should also be assessed."
+        }
+      },
+      "sourceHash": "98eec03a9b32",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/vaccines/mmr/",
+      "path": "/vaccines/mmr/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/vaccines/mmr.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-05-14",
+        "reviewPeriodMonths": 6,
+        "nextReviewAt": "2026-11-14",
+        "daysToReview": 44,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "vaccine.mmr",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [
+          {
+            "basedOn": "doc.mmr-recommendation",
+            "revisedAt": "2025-04-16",
+            "currentId": "doc.mmr-recommendation.2025-04-16",
+            "currentTitle": "國內現行 MMR 預防接種建議（114.04.16 版）",
+            "currentVersion": "114.04.16",
+            "currentHref": "/documents/mmr-recommendation.2025-04-16/",
+            "dueAt": "2025-04-23",
+            "resolved": true,
+            "resolvedAt": "2026-05-14"
+          }
+        ],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "98eec03a9b32",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-05-20",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "machine"
+          },
+          "tl": {
+            "status": "machine"
+          },
+          "vi": {
+            "status": "machine"
+          },
+          "id": {
+            "status": "machine"
+          },
+          "th": {
+            "status": "machine"
+          }
+        },
+        "translationStale": {
+          "en": false,
+          "ja": false,
+          "tl": false,
+          "vi": false,
+          "id": false,
+          "th": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "vaccine.pneumococcal",
+      "type": "vaccine",
+      "slug": "pneumococcal",
+      "title": "肺炎鏈球菌疫苗",
+      "nameEn": "Pneumococcal vaccine",
+      "aliases": [
+        "PCV",
+        "PCV13",
+        "PCV20",
+        "PCV21",
+        "PPV23",
+        "肺炎疫苗",
+        "肺炎鏈球菌疫苗"
+      ],
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2018-03-01",
+      "reviewedAt": "2026-10-05",
+      "reviewPeriodMonths": 6,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "vaccines"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.ipd"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "machine"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "summary": "幼兒 2、4、12–15 個月公費接種結合型疫苗；成人公費自 2026 年 1 月 15 日起改為 1 劑 20 價結合型疫苗（PCV20），8 月 10 日起增加 21 價（PCV21）可選，對象為 65 歲以上長者、55–64 歲原住民與 19–64 歲侵襲性肺炎鏈球菌感染症高風險對象。",
+      "keywords": [
+        "PCV",
+        "PCV20",
+        "PCV21",
+        "PPV23",
+        "一劑",
+        "幼兒",
+        "肺炎鏈球菌疫苗",
+        "長者"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Category/List/V6unXI5CVl2Fjoap4WVQLw"
+      ],
+      "publicFunded": [
+        {
+          "group": "幼兒",
+          "ageMin": 0.17,
+          "ageMax": 5,
+          "schedule": "結合型疫苗（PCV13）出生滿 2、4 個月及 12–15 個月各 1 劑"
+        },
+        {
+          "group": "65 歲以上長者",
+          "ageMin": 65,
+          "schedule": "1 劑 PCV20 或 PCV21",
+          "note": "2026-01-15 起以 1 劑 PCV20 取代「PCV13／15 加 PPV23」兩劑；2026-08-10 起增加 PCV21 可選。已接種 13 價（或 15 價）及 23 價各 1 劑、或已接種 20 價或 21 價者不需再接種",
+          "startAt": "2026-01-15"
+        },
+        {
+          "group": "55–64 歲原住民",
+          "ageMin": 55,
+          "ageMax": 64,
+          "schedule": "1 劑 PCV20 或 PCV21",
+          "note": "接種時出示戶籍資料等原住民身分證明",
+          "startAt": "2026-01-15"
+        },
+        {
+          "group": "19–64 歲侵襲性肺炎鏈球菌感染症（IPD）高風險對象",
+          "ageMin": 19,
+          "ageMax": 64,
+          "schedule": "1 劑 PCV20 或 PCV21",
+          "note": "高風險對象：脾臟功能缺損或脾臟切除、先天或後天免疫功能不全、人工耳植入、腦脊髓液滲漏、接受免疫抑制劑或放射治療的惡性腫瘤者、器官移植者（接受免疫抑制劑、放射治療或器官移植者以 1 年內為限）。完整接種 13／15 價＋23 價者，滿 65 歲且間隔 5 年以上可再接種 1 劑",
+          "startAt": "2026-01-15"
+        }
+      ],
+      "bodyMarkdown": "肺炎鏈球菌可引起肺炎、菌血症、腦膜炎等侵襲性感染，幼兒與長者是高風險族群。\n\n幼兒依時程接種 3 劑結合型疫苗（PCV13）。成人公費自 **2026 年 1 月 15 日**起以 1 劑 20 價結合型疫苗（PCV20）取代原本「先 1 劑 PCV13 或 PCV15、間隔至少 1 年再 1 劑 PPV23」的兩劑作法；**2026 年 8 月 10 日**起增加 21 價（PCV21）供選擇，接種 1 劑即完整獲得保護力。對象為 65 歲以上長者、55–64 歲原住民與 19–64 歲侵襲性肺炎鏈球菌感染症高風險對象（脾臟功能缺損或脾臟切除、先天或後天免疫功能不全、人工耳植入、腦脊髓液滲漏、接受免疫抑制劑或放射治療的惡性腫瘤者、器官移植者）。\n\n曾接種者：只打過 13 價或 15 價結合型疫苗者，間隔至少 1 年（IPD 高風險對象、65 歲以上機構住民與洗腎者至少 8 週）可接種 1 劑新疫苗；只打過 23 價多醣體疫苗者，間隔至少 1 年可接種 1 劑新疫苗；已接種「13 價（或 15 價）及 23 價各 1 劑」、或已接種 20 價或 21 價者，已完整接種，不需再接種（19–64 歲 IPD 高風險對象完整接種 13／15 價＋23 價者，滿 65 歲且與前劑間隔 5 年以上可再接種 1 劑）。\n\n可與流感、新冠疫苗同時分開部位接種，不需間隔。正式資訊：[疾管署成人肺炎鏈球菌疫苗](https://www.cdc.gov.tw/Category/Page/U_hY1WCfa5BU6fuqW9FIXg)。",
+      "precautions": "對疫苗成分過敏者不可接種；發燒或急性疾病者宜延後接種。",
+      "whereUrl": "https://ancientsky.github.io/vaxmap-next/#g=pcv",
+      "sourceHash": "137b1b284026",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/vaccines/pneumococcal/",
+      "path": "/vaccines/pneumococcal/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/vaccines/pneumococcal.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-10-05",
+        "reviewPeriodMonths": 6,
+        "nextReviewAt": "2027-04-05",
+        "daysToReview": 186,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "vaccine.pneumococcal",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "137b1b284026",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "machine"
+          },
+          "tl": {
+            "status": "machine"
+          },
+          "vi": {
+            "status": "machine"
+          },
+          "id": {
+            "status": "machine"
+          },
+          "th": {
+            "status": "machine"
+          }
+        },
+        "translationStale": {
+          "en": false,
+          "ja": false,
+          "tl": false,
+          "vi": false,
+          "id": false,
+          "th": false
+        },
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "vaccine.varicella",
+      "type": "vaccine",
+      "slug": "varicella",
+      "title": "水痘疫苗",
+      "nameEn": "Varicella vaccine",
+      "aliases": [
+        "水痘疫苗",
+        "Chickenpox vaccine"
+      ],
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2018-03-01",
+      "reviewedAt": "2026-04-15",
+      "reviewPeriodMonths": 6,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "vaccines"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.varicella"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "machine"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "summary": "幼兒出生滿 12 個月公費接種 1 劑水痘疫苗；4–6 歲可自費接種第 2 劑，未感染過的成人可自費 2 劑。",
+      "keywords": [
+        "水痘疫苗",
+        "公費",
+        "12 個月",
+        "第二劑"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Category/List/V6unXI5CVl2Fjoap4WVQLw"
+      ],
+      "publicFunded": [
+        {
+          "group": "幼兒",
+          "ageMin": 1,
+          "ageMax": 2,
+          "schedule": "出生滿 12 個月接種 1 劑"
+        }
+      ],
+      "bodyMarkdown": "水痘疫苗為活性減毒疫苗。公費對象為出生滿 12 個月的幼兒，接種 1 劑；為提升保護力，醫界建議 4–6 歲可自費接種第 2 劑。\n\n未曾得過水痘也沒有接種過的青少年與成人，可自費接種 2 劑，間隔 4–8 週。",
+      "precautions": "孕婦與嚴重免疫不全者不可接種；接種後 4 週內避免懷孕。18 歲以下接種後 6 週內避免使用阿斯匹靈。",
+      "whereUrl": "https://ancientsky.github.io/vaxmap-next/info.html#where",
+      "sourceHash": "ed229d53bba6",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/vaccines/varicella/",
+      "path": "/vaccines/varicella/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/vaccines/varicella.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-04-15",
+        "reviewPeriodMonths": 6,
+        "nextReviewAt": "2026-10-15",
+        "daysToReview": 14,
+        "overdue": false,
+        "dueSoon": true,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "vaccine.varicella",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "ed229d53bba6",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "machine"
+          },
+          "tl": {
+            "status": "machine"
+          },
+          "vi": {
+            "status": "machine"
+          },
+          "id": {
+            "status": "machine"
+          },
+          "th": {
+            "status": "machine"
+          }
+        },
+        "translationStale": {
+          "en": false,
+          "ja": false,
+          "tl": false,
+          "vi": false,
+          "id": false,
+          "th": false
+        },
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,5683 @@
+{
+  "format": "cdc-legacy-import-report/1",
+  "batch": "news",
+  "generatedAt": "2026-10-05T02:30:00Z",
+  "exportedAt": "2026-10-03",
+  "simulated": true,
+  "source": {
+    "dir": "data/legacy-export/news",
+    "note": "模擬匯出：新聞與公告欄目（Bulletin）。由既有 content/news 39 則、content/clarifications 8 則反推，另合成近年新聞 6 則（新站沒有）、久遠新聞 6 則、英文新聞稿 2 則、列表頁 1 頁；不是舊站的真實資料（網址 ID、數字、PDF 內容皆為示意）。正式匯出取代整個目錄即可。",
+    "site": "https://www.cdc.gov.tw"
+  },
+  "rules": {
+    "file": "content/migration/import/_import-rules.json",
+    "version": 10
+  },
+  "manifest": null,
+  "summary": {
+    "pages": 62,
+    "drafts": 62,
+    "mergedPages": 0,
+    "byType": {
+      "news": 46,
+      "letter": 5,
+      "clarification": 10,
+      "page": 1
+    },
+    "byKind": {
+      "news": 51,
+      "clarification": 10,
+      "list": 1
+    },
+    "byAction": {
+      "compare-existing": 47,
+      "auto-ok": 4,
+      "review-before-publish": 4,
+      "archive": 5,
+      "drop": 1,
+      "skip-list": 1
+    },
+    "avgConfidence": 0.97,
+    "needsReview": 0,
+    "existing": 47,
+    "schemaInvalid": 0,
+    "assets": {
+      "total": 11,
+      "attachment": 11,
+      "image": 0,
+      "data": 0,
+      "needsAlt": 0,
+      "noTextLayer": 3
+    },
+    "issues": {
+      "error": 0,
+      "warn": 12,
+      "info": 92
+    },
+    "manifest": null,
+    "generated": 0,
+    "exportedAt": "2026-10-03",
+    "pagesWithoutOutput": 0
+  },
+  "pages": [
+    {
+      "key": "001-2026-09-30-system-maintenance",
+      "file": "001-2026-09-30-system-maintenance.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/DaoU2_VYCU97SjvAr1XKY_?typeid=11",
+        "title": "10 月 3 日晚間官網與傳染病通報系統例行維護",
+        "category": "新聞與公告／其他訊息",
+        "publishedAt": "2026-09-30",
+        "updatedAt": "2026-09-30",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "其他訊息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-30-system-maintenance"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "news.2026-09-30-system-maintenance",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-09-30-system-maintenance.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 15 處（mso 樣式 11、Mso 類別 4、命名空間標籤 2）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "002-2026-09-29-ili-weekly",
+      "file": "002-2026-09-29-ili-weekly.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/yhS71H6AwbqsE3nQogBZ8U?typeid=9",
+        "title": "流感疫情持續上升，10 月 1 日公費疫苗開打，長者幼兒請優先接種",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2026-09-29",
+        "updatedAt": "2026-09-29",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-29-ili-weekly"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-09-29-ili-weekly",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-09-29-ili-weekly.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "003-2026-09-28-parking-construction",
+      "file": "003-2026-09-28-parking-construction.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/CaPi1oYIuPIPMzZ3cd_67A?typeid=11",
+        "title": "林森南路辦公區停車場施工，10 月 5 日至 11 月 30 日暫停開放",
+        "category": "新聞與公告／其他訊息",
+        "publishedAt": "2026-09-28",
+        "updatedAt": "2026-09-28",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "其他訊息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-28-parking-construction"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "news.2026-09-28-parking-construction",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-09-28-parking-construction.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 21 處（mso 樣式 17、Mso 類別 5、命名空間標籤 2）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "004-2026-09-26-open-house",
+      "file": "004-2026-09-26-open-house.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/NNo0rSkCihP4mgjpWQ3FDd?typeid=11",
+        "title": "署慶系列活動：防疫科學開放日 10 月 24 日登場",
+        "category": "新聞與公告／其他訊息",
+        "publishedAt": "2026-09-26",
+        "updatedAt": "2026-09-26",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "其他訊息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-26-open-house"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "news.2026-09-26-open-house",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-09-26-open-house.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 22 處（mso 樣式 18、Mso 類別 5、命名空間標籤 2）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "005-2026-09-24-synth",
+      "file": "005-2026-09-24-synth.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/_1Whs2KInA7M1gXev3fuOr?typeid=9",
+        "title": "疾管署公布第 38 週傳染病監測週報：類流感就診率續升，腸病毒疫情趨緩",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2026-09-24",
+        "updatedAt": "2026-09-24",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.influenza",
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-09-24-legacy-f7b345",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-09-24-legacy-f7b345.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 9 處（mso 樣式 3、Mso 類別 3、命名空間標籤 3）"
+        }
+      ],
+      "action": "auto-ok",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "006-2026-09-22-enterovirus-alert",
+      "file": "006-2026-09-22-enterovirus-alert.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/iu5ZQsbMqaS6hQvwC1hRAT?typeid=9",
+        "title": "國內腸病毒疫情持續，籲請家長及教托育機構提高警覺",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2026-09-22",
+        "updatedAt": "2026-09-22",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-22-enterovirus-alert"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-09-22-enterovirus-alert",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-09-22-enterovirus-alert.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "007-2026-09-18-flu-antiviral-extended",
+      "file": "007-2026-09-18-flu-antiviral-extended.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/KNEie8q3qi8ARuMyKXV7pu?typeid=9",
+        "title": "流感疫情進入流行期且持續上升，疾管署延長擴大公費流感抗病毒藥劑使用條件至 10 月 31 日",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2026-09-18",
+        "updatedAt": "2026-09-18",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-18-flu-antiviral-extended"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-09-18-flu-antiviral-extended",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-09-18-flu-antiviral-extended.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 11 處（mso 樣式 5、Mso 類別 3、命名空間標籤 3）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 2
+      }
+    },
+    {
+      "key": "008-2026-09-18-flu-vaccine-oct1",
+      "file": "008-2026-09-18-flu-vaccine-oct1.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/lYMJFMdaheSyPHiJkkKugt?typeid=9",
+        "title": "2026–2027 年度公費流感疫苗 10 月 1 日開打，新冠疫苗同步提供",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2026-09-18",
+        "updatedAt": "2026-09-18",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-18-flu-vaccine-oct1"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.influenza",
+        "disease.covid-19"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-09-18-flu-vaccine-oct1",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-09-18-flu-vaccine-oct1.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 8 處（mso 樣式 4、Mso 類別 2、命名空間標籤 2）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "009-2026-09-18-letter-616-flu-antiviral-extended",
+      "file": "009-2026-09-18-letter-616-flu-antiviral-extended.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/bHJOIs9Jb2yoWeHdbDHWIM?typeid=48",
+        "title": "致醫界通函第 616 號：延長擴大公費流感抗病毒藥劑使用對象「有類流感症狀，且具下列身分之流感高傳播族群」之適用期限至 10 月 31 日",
+        "category": "新聞與公告／致醫界通函",
+        "publishedAt": "2026-09-18",
+        "updatedAt": "2026-09-18",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "致醫界通函"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-18-letter-616-flu-antiviral-extended"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-09-18-letter-616-flu-antiviral-extended",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-09-18-letter-616-flu-antiviral-extended.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 8 處（mso 樣式 4、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "致醫界通函的權責單位依疾病主檔取 unit.acute-infectious（流感），不歸新聞欄目的公關室"
+        },
+        {
+          "code": "news-type-hint",
+          "severity": "info",
+          "message": "致醫界通函建成 letter（letterNo 由標題「第 N 號」抽）；對象為醫療院所，audience professional"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "010-2026-09-15-international-health-mou",
+      "file": "010-2026-09-15-international-health-mou.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/ac1-BUx7wJb5j4GLZggaOv?typeid=9",
+        "title": "Taiwan CDC signs a public health cooperation MOU with a New Southbound partner",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2026-09-15",
+        "updatedAt": "2026-09-15",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-15-international-health-mou"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "news.2026-09-15-international-health-mou",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-09-15-international-health-mou.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 12 處（mso 樣式 4、Mso 類別 4、命名空間標籤 4）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "011-2026-09-15-letter-615-ns1",
+      "file": "011-2026-09-15-letter-615-ns1.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/R8Q3EU1daODSCTg2GAgKUn?typeid=48",
+        "title": "致醫界通函第 615 號：登革熱 NS1 抗原快篩試劑配置更新",
+        "category": "新聞與公告／致醫界通函",
+        "publishedAt": "2026-09-15",
+        "updatedAt": "2026-09-15",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "致醫界通函"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-15-letter-615-ns1"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-09-15-letter-615-ns1",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-09-15-letter-615-ns1.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "致醫界通函的權責單位依疾病主檔取 unit.acute-infectious（登革熱），不歸新聞欄目的公關室"
+        },
+        {
+          "code": "news-type-hint",
+          "severity": "info",
+          "message": "致醫界通函建成 letter（letterNo 由標題「第 N 號」抽）；對象為醫療院所，audience professional"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "012-2026-09-anti-epidemic-team-scam",
+      "file": "012-2026-09-anti-epidemic-team-scam.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/7HBern14siglf3j_FN5W-i?typeid=8772",
+        "title": "網傳「防疫國家隊」投資群組為詐騙",
+        "category": "新聞與公告／澄清稿",
+        "publishedAt": "2026-09-15",
+        "updatedAt": "2026-09-15",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "澄清稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "clarification",
+      "type": "clarification",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "clar.2026-09-anti-epidemic-team-scam"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "clar.2026-09-anti-epidemic-team-scam",
+          "type": "clarification",
+          "role": "draft",
+          "file": "content/clarifications/2026-09-anti-epidemic-team-scam.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 12 處（mso 樣式 4、Mso 類別 4、命名空間標籤 4）"
+        },
+        {
+          "code": "type-from-bulletin",
+          "severity": "info",
+          "message": "公告類別是澄清稿，草稿建成 clarification（claim／verdict 由標題與內文推斷）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "013-2026-09-12-synth",
+      "file": "013-2026-09-12-synth.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/tVOO6DTH_ehRSk8H6crMnS?typeid=9",
+        "title": "登革熱防治：疾管署與高雄市政府聯合孳生源清除，呼籲民眾巡倒清刷",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2026-09-12",
+        "updatedAt": "2026-09-12",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-09-12-legacy-16fe19",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-09-12-legacy-16fe19.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        }
+      ],
+      "action": "auto-ok",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "014-2026-09-10-clarify-flu-vaccine-death",
+      "file": "014-2026-09-10-clarify-flu-vaccine-death.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/ghycdDd__NUQxVqr1Scgoi?typeid=8772",
+        "title": "澄清：網傳「打流感疫苗會得流感、長輩打完會死」並非事實",
+        "category": "新聞與公告／澄清稿",
+        "publishedAt": "2026-09-10",
+        "updatedAt": "2026-09-10",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "澄清稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "clarification",
+      "type": "clarification",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": "news.2026-09-10-clarify-flu-vaccine-death",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-10-clarify-flu-vaccine-death"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "clar.2026-09-10-influenza-864a02",
+          "type": "clarification",
+          "role": "draft",
+          "file": "content/clarifications/2026-09-10-influenza-864a02.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 7 處（mso 樣式 3、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "type-from-bulletin",
+          "severity": "info",
+          "message": "公告類別是澄清稿，草稿建成 clarification（claim／verdict 由標題與內文推斷）"
+        },
+        {
+          "code": "type-upgrade",
+          "severity": "info",
+          "message": "既有內容 news.2026-09-10-clarify-flu-vaccine-death 以 news 存放同一則澄清，新草稿改為 clarification 型別，請比對後擇一"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "015-2026-09-flu-vaccine-causes-flu",
+      "file": "015-2026-09-flu-vaccine-causes-flu.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/Dzynlz25x0lr3lnuqyz_ZL?typeid=8772",
+        "title": "網傳「打流感疫苗會得流感、長輩打完會死」並非事實",
+        "category": "新聞與公告／澄清稿",
+        "publishedAt": "2026-09-10",
+        "updatedAt": "2026-09-10",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "澄清稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "clarification",
+      "type": "clarification",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "clar.2026-09-flu-vaccine-causes-flu"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "clar.2026-09-flu-vaccine-causes-flu",
+          "type": "clarification",
+          "role": "draft",
+          "file": "content/clarifications/2026-09-flu-vaccine-causes-flu.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 16 處（mso 樣式 6、Mso 類別 5、命名空間標籤 5）"
+        },
+        {
+          "code": "type-from-bulletin",
+          "severity": "info",
+          "message": "公告類別是澄清稿，草稿建成 clarification（claim／verdict 由標題與內文推斷）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "016-2026-09-01-covid-weekly",
+      "file": "016-2026-09-01-covid-weekly.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/aXeVzpSMDHPv5coJCwA9TH?typeid=9",
+        "title": "新冠疫情連續三週下降，10 月起新年度疫苗與流感疫苗同步開打",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2026-09-01",
+        "updatedAt": "2026-09-01",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-01-covid-weekly"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.covid-19",
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-09-01-covid-weekly",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-09-01-covid-weekly.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "017-2026-08-28-synth",
+      "file": "017-2026-08-28-synth.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/hXen_WGNxzD6BAZm3Q-6D-?typeid=9",
+        "title": "疾管署提醒：開學季腸病毒傳播風險升高，落實洗手與生病不上學",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2026-08-28",
+        "updatedAt": "2026-08-28",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-08-28-legacy-d5275b",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-08-28-legacy-d5275b.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        }
+      ],
+      "action": "auto-ok",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "018-2026-08-25-mpox-clade-i",
+      "file": "018-2026-08-25-mpox-clade-i.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/qu6QBO4Jen5iRNtc4VWZhv?typeid=9",
+        "title": "非洲 M痘 clade I 疫情持續，前往當地請避免親密接觸與野生動物",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2026-08-25",
+        "updatedAt": "2026-08-25",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-08-25-mpox-clade-i"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.mpox"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-08-25-mpox-clade-i",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-08-25-mpox-clade-i.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 7 處（mso 樣式 3、Mso 類別 2、命名空間標籤 2）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "019-2026-08-24-flu-antiviral-expanded",
+      "file": "019-2026-08-24-flu-antiviral-expanded.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/RKs5XgAWwbPXgR7gERMoGD?typeid=9",
+        "title": "國內外近期流感疫情緩升，疾管署自 8 月 24 日起至 9 月 30 日擴大公費流感抗病毒藥劑使用條件",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2026-08-24",
+        "updatedAt": "2026-08-24",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-08-24-flu-antiviral-expanded"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-08-24-flu-antiviral-expanded",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-08-24-flu-antiviral-expanded.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 28 處（mso 樣式 24、Mso 類別 9、命名空間標籤 2）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "020-2026-08-20-dots-outcomes",
+      "file": "020-2026-08-20-dots-outcomes.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/4Qs5n5XsyAbuTPUUJoJ1XA?typeid=9",
+        "title": "都治 20 年：關懷員每日送藥到手，結核病完治率穩定提升",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2026-08-20",
+        "updatedAt": "2026-08-20",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-08-20-dots-outcomes"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-08-20-dots-outcomes",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-08-20-dots-outcomes.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 11 處（mso 樣式 5、Mso 類別 3、命名空間標籤 3）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "021-2026-08-18-dengue-rising-south",
+      "file": "021-2026-08-18-dengue-rising-south.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/1VBVQuZiOzJEkifjLw-7gM?typeid=9",
+        "title": "南部登革熱本土疫情上升，籲請民眾配合孳生源清除與防治工作",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2026-08-18",
+        "updatedAt": "2026-08-18",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-08-18-dengue-rising-south"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-08-18-dengue-rising-south",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-08-18-dengue-rising-south.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "022-2026-08-17-international-fetp-workshop",
+      "file": "022-2026-08-17-international-fetp-workshop.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/j6slN2h_XoK_nqIeC5ht4x?typeid=9",
+        "title": "International field epidemiology workshop opens in Taipei",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2026-08-17",
+        "updatedAt": "2026-08-17",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-08-17-international-fetp-workshop"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "news.2026-08-17-international-fetp-workshop",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-08-17-international-fetp-workshop.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 12 處（mso 樣式 4、Mso 類別 4、命名空間標籤 4）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "023-2026-08-05-synth",
+      "file": "023-2026-08-05-synth.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/aDxmeNfFzCZphM65ldsE8y?typeid=9",
+        "title": "麻疹境外移入病例新增 1 例，疾管署公布接觸者活動史並呼籲 1966 年後出生者評估接種 MMR",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2026-08-05",
+        "updatedAt": "2026-08-05",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-08-05-legacy-0e5573",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-08-05-legacy-0e5573.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（38 字，低於 40）"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "024-2026-07-21-dengue-first-local",
+      "file": "024-2026-07-21-dengue-first-local.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/GEpsXBU9Dqh7eC0kYpES4g?typeid=9",
+        "title": "今年首例登革熱本土病例出現於高雄市，請民眾清除積水容器",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2026-07-21",
+        "updatedAt": "2026-07-21",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-07-21-dengue-first-local"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-07-21-dengue-first-local",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-07-21-dengue-first-local.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "025-2026-07-10-synth",
+      "file": "025-2026-07-10-synth.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/Y-t1hTiNTbjjrqiAHUTzjm?typeid=9",
+        "title": "疾管署公布 2025 年結核病防治成果：新案數續降，都治完治率達 9 成",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2026-07-10",
+        "updatedAt": "2026-07-10",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-07-10-legacy-2ed983",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-07-10-legacy-2ed983.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（39 字，低於 40）"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "026-2026-07-01-letter-dengue-guidance-v17",
+      "file": "026-2026-07-01-letter-dengue-guidance-v17.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/vPGiv9yS8N4qipZSchUD_n?typeid=48",
+        "title": "致醫界通函第 612 號：登革熱／屈公病防治工作指引第 17 版自即日起適用",
+        "category": "新聞與公告／致醫界通函",
+        "publishedAt": "2026-07-01",
+        "updatedAt": "2026-07-01",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "致醫界通函"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-07-01-letter-dengue-guidance-v17"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.dengue",
+        "disease.chikungunya"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-07-01-letter-dengue-guidance-v17",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-07-01-letter-dengue-guidance-v17.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "致醫界通函的權責單位依疾病主檔取 unit.acute-infectious（登革熱），不歸新聞欄目的公關室"
+        },
+        {
+          "code": "news-type-hint",
+          "severity": "info",
+          "message": "致醫界通函建成 letter（letterNo 由標題「第 N 號」抽）；對象為醫療院所，audience professional"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "027-2026-06-20-synth",
+      "file": "027-2026-06-20-synth.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/Zg1sEf1_dN9UqgbyCyAdmD?typeid=9",
+        "title": "夏季出國旅遊前請先查疫情：疾管署更新國際旅遊疫情建議等級",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2026-06-20",
+        "updatedAt": "2026-06-20",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "news.2026-06-20-legacy-02b775",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-06-20-legacy-02b775.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        }
+      ],
+      "action": "auto-ok",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "028-2026-06-03-flu-antiviral-summer",
+      "file": "028-2026-06-03-flu-antiviral-summer.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/mDWl7IIU_wsF4S5AWAkkI_?typeid=9",
+        "title": "夏季流感疫情持續，公費抗病毒藥劑使用對象維持現行規定",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2026-06-03",
+        "updatedAt": "2026-06-03",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-06-03-flu-antiviral-summer"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-06-03-flu-antiviral-summer",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-06-03-flu-antiviral-summer.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "029-2026-06-02-measles-travel-mmr-1966",
+      "file": "029-2026-06-02-measles-travel-mmr-1966.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/EOQ5VTspoKXsrS3jrB8tFv?typeid=9",
+        "title": "暑假出國前請評估麻疹免疫力：1966 年（含）以後出生者出國前 2 至 4 週評估接種 MMR",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2026-06-02",
+        "updatedAt": "2026-06-02",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-06-02-measles-travel-mmr-1966"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-06-02-measles-travel-mmr-1966",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-06-02-measles-travel-mmr-1966.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "030-2026-05-22-international-wha-technical-exchange",
+      "file": "030-2026-05-22-international-wha-technical-exchange.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/nzlD95UZ0xuu5PG-CvvCWD?typeid=9",
+        "title": "Taiwan CDC experts hold technical exchanges during the World Health Assembly week",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2026-05-22",
+        "updatedAt": "2026-05-22",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-05-22-international-wha-technical-exchange"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "news.2026-05-22-international-wha-technical-exchange",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-05-22-international-wha-technical-exchange.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 12 處（mso 樣式 4、Mso 類別 4、命名空間標籤 4）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "031-2026-05-mmr-all-adults",
+      "file": "031-2026-05-mmr-all-adults.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/vy2WAmm2rOtB8yrPEHV2HU?typeid=8772",
+        "title": "網傳「所有成人都要再補打一劑 MMR」部分正確",
+        "category": "新聞與公告／澄清稿",
+        "publishedAt": "2026-05-12",
+        "updatedAt": "2026-05-12",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "澄清稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "clarification",
+      "type": "clarification",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "clar.2026-05-mmr-all-adults"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "clar.2026-05-mmr-all-adults",
+          "type": "clarification",
+          "role": "draft",
+          "file": "content/clarifications/2026-05-mmr-all-adults.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 17 處（mso 樣式 7、Mso 類別 5、命名空間標籤 5）"
+        },
+        {
+          "code": "type-from-bulletin",
+          "severity": "info",
+          "message": "公告類別是澄清稿，草稿建成 clarification（claim／verdict 由標題與內文推斷）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "032-2026-05-11-japan-measles-level1",
+      "file": "032-2026-05-11-japan-measles-level1.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/uHkheEnk9OnK55D2DsatrZ?typeid=9",
+        "title": "日本麻疹疫情升溫，列為第一級旅遊疫情建議；出國前請評估 MMR 接種",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2026-05-11",
+        "updatedAt": "2026-05-11",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-05-11-japan-measles-level1"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-05-11-japan-measles-level1",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-05-11-japan-measles-level1.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 8 處（mso 樣式 4、Mso 類別 2、命名空間標籤 2）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "033-2026-04-enterovirus-only-kids",
+      "file": "033-2026-04-enterovirus-only-kids.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/6zjetJzWqW6DijXlzQOztD?typeid=8772",
+        "title": "網傳「腸病毒只有小孩會得，大人不用擔心」部分正確",
+        "category": "新聞與公告／澄清稿",
+        "publishedAt": "2026-04-16",
+        "updatedAt": "2026-04-16",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "澄清稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "clarification",
+      "type": "clarification",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "clar.2026-04-enterovirus-only-kids"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "clar.2026-04-enterovirus-only-kids",
+          "type": "clarification",
+          "role": "draft",
+          "file": "content/clarifications/2026-04-enterovirus-only-kids.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 17 處（mso 樣式 7、Mso 類別 5、命名空間標籤 5）"
+        },
+        {
+          "code": "type-from-bulletin",
+          "severity": "info",
+          "message": "公告類別是澄清稿，草稿建成 clarification（claim／verdict 由標題與內文推斷）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "034-2026-04-14-enterovirus-rising",
+      "file": "034-2026-04-14-enterovirus-rising.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/RhVyEWsJgTfNMJy5tBXSql?typeid=9",
+        "title": "腸病毒就診人次連續上升，近期社區以 EV71 為主，籲請提高警覺",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2026-04-14",
+        "updatedAt": "2026-04-14",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-04-14-enterovirus-rising"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-04-14-enterovirus-rising",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-04-14-enterovirus-rising.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "035-2026-03-24-world-tb-day-end-tb-2035",
+      "file": "035-2026-03-24-world-tb-day-end-tb-2035.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/Jiq_KGR34Qxvh8t2-byaEG?typeid=9",
+        "title": "世界結核病日：邁向 2035 消除結核，接觸者與高風險族群公費檢驗潛伏感染",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2026-03-24",
+        "updatedAt": "2026-03-24",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-03-24-world-tb-day-end-tb-2035"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-03-24-world-tb-day-end-tb-2035",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-03-24-world-tb-day-end-tb-2035.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 11 處（mso 樣式 5、Mso 類別 3、命名空間標籤 3）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "036-2026-03-covid-isolation-7-days",
+      "file": "036-2026-03-covid-isolation-7-days.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/odHqEUP-ot2eDzawy1NfoE?typeid=8772",
+        "title": "網傳「確診新冠要居家隔離 7 天，同住家人也要隔離」為舊規定",
+        "category": "新聞與公告／澄清稿",
+        "publishedAt": "2026-03-20",
+        "updatedAt": "2026-03-20",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "澄清稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "clarification",
+      "type": "clarification",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "clar.2026-03-covid-isolation-7-days"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.covid-19"
+      ],
+      "outputs": [
+        {
+          "id": "clar.2026-03-covid-isolation-7-days",
+          "type": "clarification",
+          "role": "draft",
+          "file": "content/clarifications/2026-03-covid-isolation-7-days.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 17 處（mso 樣式 7、Mso 類別 5、命名空間標籤 5）"
+        },
+        {
+          "code": "type-from-bulletin",
+          "severity": "info",
+          "message": "公告類別是澄清稿，草稿建成 clarification（claim／verdict 由標題與內文推斷）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "037-2026-03-15-letter-ev-guideline",
+      "file": "037-2026-03-15-letter-ev-guideline.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/noOQoAefRFSOg4tS8GrJym?typeid=48",
+        "title": "致醫界通函第 608 號：腸病毒感染併發重症臨床處置建議更新",
+        "category": "新聞與公告／致醫界通函",
+        "publishedAt": "2026-03-15",
+        "updatedAt": "2026-03-15",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "致醫界通函"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-03-15-letter-ev-guideline"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-03-15-letter-ev-guideline",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-03-15-letter-ev-guideline.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "致醫界通函的權責單位依疾病主檔取 unit.acute-infectious（腸病毒），不歸新聞欄目的公關室"
+        },
+        {
+          "code": "news-type-hint",
+          "severity": "info",
+          "message": "致醫界通函建成 letter（letterNo 由標題「第 N 號」抽）；對象為醫療院所，audience professional"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "038-2026-02-24-flu-declining",
+      "file": "038-2026-02-24-flu-declining.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/-zweEOnUpHiyAskD0pNoZo?typeid=9",
+        "title": "流感疫情緩降，仍處流行期，請持續注意手部衛生與咳嗽禮節",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2026-02-24",
+        "updatedAt": "2026-02-24",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-02-24-flu-declining"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-02-24-flu-declining",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-02-24-flu-declining.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "039-2026-01-20-lunar-new-year-flu",
+      "file": "039-2026-01-20-lunar-new-year-flu.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/eiEtxrKNmuAax0vpnd5RYh?typeid=9",
+        "title": "流感疫情處高峰，春節連假前請儘速接種疫苗並落實咳嗽禮節",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2026-01-20",
+        "updatedAt": "2026-01-20",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-01-20-lunar-new-year-flu"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-01-20-lunar-new-year-flu",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-01-20-lunar-new-year-flu.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "040-2026-01-vinegar-saltwater-flu",
+      "file": "040-2026-01-vinegar-saltwater-flu.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/9kUSvU-rUr8mbe1nhEgGb5?typeid=8772",
+        "title": "網傳「燻白醋、喝鹽水可以殺死流感病毒」沒有科學根據",
+        "category": "新聞與公告／澄清稿",
+        "publishedAt": "2026-01-15",
+        "updatedAt": "2026-01-15",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "澄清稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "clarification",
+      "type": "clarification",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "clar.2026-01-vinegar-saltwater-flu"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "clar.2026-01-vinegar-saltwater-flu",
+          "type": "clarification",
+          "role": "draft",
+          "file": "content/clarifications/2026-01-vinegar-saltwater-flu.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 16 處（mso 樣式 6、Mso 類別 5、命名空間標籤 5）"
+        },
+        {
+          "code": "type-from-bulletin",
+          "severity": "info",
+          "message": "公告類別是澄清稿，草稿建成 clarification（claim／verdict 由標題與內文推斷）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "041-2025-12-01-world-aids-day",
+      "file": "041-2025-12-01-world-aids-day.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/QkgmjdEJPXh042-RQFE5a5?typeid=9",
+        "title": "世界愛滋日：定期篩檢、PrEP 與 U=U，一起終結愛滋",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2025-12-01",
+        "updatedAt": "2025-12-01",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2025-12-01-world-aids-day"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.hiv"
+      ],
+      "outputs": [
+        {
+          "id": "news.2025-12-01-world-aids-day",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2025-12-01-world-aids-day.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "042-2025-11-11-letter-dengue-guidance-v16",
+      "file": "042-2025-11-11-letter-dengue-guidance-v16.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/Zf9eK5LCN7oF44mSOfe290?typeid=48",
+        "title": "致醫界通函第 603 號：登革熱／屈公病防治工作指引第 16 版公布",
+        "category": "新聞與公告／致醫界通函",
+        "publishedAt": "2025-11-11",
+        "updatedAt": "2025-11-11",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "致醫界通函"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2025-11-11-letter-dengue-guidance-v16"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.dengue",
+        "disease.chikungunya"
+      ],
+      "outputs": [
+        {
+          "id": "news.2025-11-11-letter-dengue-guidance-v16",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2025-11-11-letter-dengue-guidance-v16.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "致醫界通函的權責單位依疾病主檔取 unit.acute-infectious（登革熱），不歸新聞欄目的公關室"
+        },
+        {
+          "code": "news-type-hint",
+          "severity": "info",
+          "message": "致醫界通函建成 letter（letterNo 由標題「第 N 號」抽）；對象為醫療院所，audience professional"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "043-2025-10-01-flu-vaccine-start",
+      "file": "043-2025-10-01-flu-vaccine-start.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/i7x67klq3R1Dc2w8czhbO9?typeid=9",
+        "title": "114 年度公費流感疫苗今日開打，長者與幼兒請儘早接種",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2025-10-01",
+        "updatedAt": "2025-10-01",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2025-10-01-flu-vaccine-start"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "news.2025-10-01-flu-vaccine-start",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2025-10-01-flu-vaccine-start.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "044-2025-08-05-chikungunya-guangdong",
+      "file": "044-2025-08-05-chikungunya-guangdong.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/B9VMZhQt--eUB_XTFlLKJ9?typeid=9",
+        "title": "中國大陸廣東省屈公病疫情升溫，提升旅遊疫情建議至第二級",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2025-08-05",
+        "updatedAt": "2025-08-05",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2025-08-05-chikungunya-guangdong"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.chikungunya"
+      ],
+      "outputs": [
+        {
+          "id": "news.2025-08-05-chikungunya-guangdong",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2025-08-05-chikungunya-guangdong.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 7 處（mso 樣式 3、Mso 類別 2、命名空間標籤 2）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "045-2025-07-15-clarify-dengue-spray",
+      "file": "045-2025-07-15-clarify-dengue-spray.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/P4sMHvb5xxLR344ZUut7C7?typeid=8772",
+        "title": "澄清：網傳「登革熱噴藥會毒死人、可拒絕開門」為錯誤訊息",
+        "category": "新聞與公告／澄清稿",
+        "publishedAt": "2025-07-15",
+        "updatedAt": "2025-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "澄清稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "clarification",
+      "type": "clarification",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": "news.2025-07-15-clarify-dengue-spray",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "news.2025-07-15-clarify-dengue-spray"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "clar.2025-07-15-dengue-c37363",
+          "type": "clarification",
+          "role": "draft",
+          "file": "content/clarifications/2025-07-15-dengue-c37363.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 7 處（mso 樣式 3、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "type-from-bulletin",
+          "severity": "info",
+          "message": "公告類別是澄清稿，草稿建成 clarification（claim／verdict 由標題與內文推斷）"
+        },
+        {
+          "code": "type-upgrade",
+          "severity": "info",
+          "message": "既有內容 news.2025-07-15-clarify-dengue-spray 以 news 存放同一則澄清，新草稿改為 clarification 型別，請比對後擇一"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "046-2025-07-dengue-spraying-poison",
+      "file": "046-2025-07-dengue-spraying-poison.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/R1SLggitkGi0NAuncajZAY?typeid=8772",
+        "title": "網傳「登革熱噴藥會毒死人、可以拒絕開門」為錯誤訊息",
+        "category": "新聞與公告／澄清稿",
+        "publishedAt": "2025-07-15",
+        "updatedAt": "2025-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "澄清稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "clarification",
+      "type": "clarification",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "clar.2025-07-dengue-spraying-poison"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "clar.2025-07-dengue-spraying-poison",
+          "type": "clarification",
+          "role": "draft",
+          "file": "content/clarifications/2025-07-dengue-spraying-poison.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 16 處（mso 樣式 6、Mso 類別 5、命名空間標籤 5）"
+        },
+        {
+          "code": "type-from-bulletin",
+          "severity": "info",
+          "message": "公告類別是澄清稿，草稿建成 clarification（claim／verdict 由標題與內文推斷）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "047-2025-06-10-mpox-summer",
+      "file": "047-2025-06-10-mpox-summer.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/u7IBk8OIPlknZdqVvmiG9F?typeid=9",
+        "title": "暑假出遊與大型活動將至，符合條件者請把握接種 2 劑 M痘疫苗",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2025-06-10",
+        "updatedAt": "2025-06-10",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2025-06-10-mpox-summer"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.mpox"
+      ],
+      "outputs": [
+        {
+          "id": "news.2025-06-10-mpox-summer",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2025-06-10-mpox-summer.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "048-2025-05-06-enterovirus-season",
+      "file": "048-2025-05-06-enterovirus-season.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/QVLO-jKZ2FARVb-bSfRPlv?typeid=9",
+        "title": "腸病毒進入流行期，籲請家長落實肥皂洗手並留意重症前兆",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2025-05-06",
+        "updatedAt": "2025-05-06",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2025-05-06-enterovirus-season"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "news.2025-05-06-enterovirus-season",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2025-05-06-enterovirus-season.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "049-2025-04-16-mmr-recommendation-revised",
+      "file": "049-2025-04-16-mmr-recommendation-revised.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/-HrKmE3J7qp6A-3--AMJmK?typeid=9",
+        "title": "修訂國內 MMR 預防接種建議：成人評估對象擴大至 1966 年（含）以後出生者",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2025-04-16",
+        "updatedAt": "2025-04-16",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2025-04-16-mmr-recommendation-revised"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "news.2025-04-16-mmr-recommendation-revised",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2025-04-16-mmr-recommendation-revised.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 7 處（mso 樣式 3、Mso 類別 2、命名空間標籤 2）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "050-en-2025-04-16-mmr-recommendation-revised",
+      "file": "050-en-2025-04-16-mmr-recommendation-revised.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/V9mW8f2b5lpfkdk4UEOkRX?typeid=158",
+        "title": "MMR recommendations revised: adults born in 1966 or later now eligible for assessment",
+        "category": "News／Press Releases",
+        "publishedAt": "2025-04-16",
+        "updatedAt": "2025-04-16",
+        "breadcrumbs": [
+          "Home",
+          "News",
+          "Press Releases"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.pr",
+      "ownerRule": "News",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "news.2025-04-16-legacy-9688a5",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2025-04-16-legacy-9688a5.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "news-type-hint",
+          "severity": "info",
+          "message": "英文新聞稿以 sourceLang: en 建立，需補中文版"
+        },
+        {
+          "code": "needs-source-zh",
+          "severity": "warn",
+          "message": "來源語言 en：新站以中文為正本（治理規則 18），請補中文版後再上線；不列入 auto-ok"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "051-2025-04-mmr-born-after-1981-only",
+      "file": "051-2025-04-mmr-born-after-1981-only.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/SE0WiE8vVquCNdRJPzEQ_s?typeid=8772",
+        "title": "網傳「MMR 只有 1981 年後出生的人要補打」",
+        "category": "新聞與公告／澄清稿",
+        "publishedAt": "2025-04-10",
+        "updatedAt": "2025-04-10",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "澄清稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "clarification",
+      "type": "clarification",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "clar.2025-04-mmr-born-after-1981-only"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "clar.2025-04-mmr-born-after-1981-only",
+          "type": "clarification",
+          "role": "draft",
+          "file": "content/clarifications/2025-04-mmr-born-after-1981-only.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 16 處（mso 樣式 6、Mso 類別 5、命名空間標籤 5）"
+        },
+        {
+          "code": "type-from-bulletin",
+          "severity": "info",
+          "message": "公告類別是澄清稿，草稿建成 clarification（claim／verdict 由標題與內文推斷）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "052-2025-03-24-world-tb-day",
+      "file": "052-2025-03-24-world-tb-day.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/Cr2nMmu7Ur-AtBx5QH4CzW?typeid=9",
+        "title": "世界結核病日：咳嗽兩週請就醫，接觸者檢查與潛伏感染治療守護家人",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2025-03-24",
+        "updatedAt": "2025-03-24",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2025-03-24-world-tb-day"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "news.2025-03-24-world-tb-day",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2025-03-24-world-tb-day.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "053-en-2025-03-24-world-tb-day",
+      "file": "053-en-2025-03-24-world-tb-day.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/w943Hotl5t_Y2UM7cuysEG?typeid=158",
+        "title": "World TB Day: see a doctor if you have coughed for two weeks; contact screening and latent TB treatment protect families",
+        "category": "News／Press Releases",
+        "publishedAt": "2025-03-24",
+        "updatedAt": "2025-03-24",
+        "breadcrumbs": [
+          "Home",
+          "News",
+          "Press Releases"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.pr",
+      "ownerRule": "News",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "news.2025-03-24-legacy-1952ec",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2025-03-24-legacy-1952ec.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "news-type-hint",
+          "severity": "info",
+          "message": "英文新聞稿以 sourceLang: en 建立，需補中文版"
+        },
+        {
+          "code": "needs-source-zh",
+          "severity": "warn",
+          "message": "來源語言 en：新站以中文為正本（治理規則 18），請補中文版後再上線；不列入 auto-ok"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "054-2025-02-18-dengue-imported-spring",
+      "file": "054-2025-02-18-dengue-imported-spring.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/BMWpfFWHjg3XxCaFghvXti?typeid=9",
+        "title": "春節後登革熱境外移入病例增加，出國返國請落實防蚊",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2025-02-18",
+        "updatedAt": "2025-02-18",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2025-02-18-dengue-imported-spring"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "news.2025-02-18-dengue-imported-spring",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2025-02-18-dengue-imported-spring.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "055-2025-01-09-mmr-adults-measles",
+      "file": "055-2025-01-09-mmr-adults-measles.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/sLyeBG6AVEXUuxt1roWj88?typeid=9",
+        "title": "國內新增麻疹病例，1981 年以後出生之醫護與赴流行區成人建議優先自費接種 MMR",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2025-01-09",
+        "updatedAt": "2025-01-09",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2025-01-09-mmr-adults-measles"
+      ],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "news.2025-01-09-mmr-adults-measles",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2025-01-09-mmr-adults-measles.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "056-2022-10-01-old",
+      "file": "056-2022-10-01-old.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/JMEQfzC_ayKMkPQlHzdrf4?typeid=9",
+        "title": "111 年度公費流感疫苗 10 月 1 日起分階段開打",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2022-10-01",
+        "updatedAt": "2022-10-01",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "news.2022-10-01-legacy-2c1060",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2022-10-01-legacy-2c1060.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "old-content",
+          "severity": "info",
+          "message": "最後更新於 2022-10-01（4.0 年前），建議走久遠封存而非上線"
+        }
+      ],
+      "action": "archive",
+      "flags": {
+        "historical": false,
+        "old": true
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "057-2022-03-24-old",
+      "file": "057-2022-03-24-old.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/85P41soNOAfNT4nIWsiq_U?typeid=9",
+        "title": "世界結核病日：疾管署呼籲咳嗽超過兩週請就醫",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2022-03-24",
+        "updatedAt": "2022-03-24",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "news.2022-03-24-legacy-ec9134",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2022-03-24-legacy-ec9134.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "old-content",
+          "severity": "info",
+          "message": "最後更新於 2022-03-24（4.5 年前），建議走久遠封存而非上線"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（25 字，低於 40）"
+        }
+      ],
+      "action": "archive",
+      "flags": {
+        "historical": false,
+        "old": true
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "058-2021-05-15-old",
+      "file": "058-2021-05-15-old.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/Tf45xxeAuvD4SVFkuvIeXM?typeid=9",
+        "title": "COVID-19 疫情說明記者會（第 120 場）",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2021-05-15",
+        "updatedAt": "2021-05-15",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.covid-19"
+      ],
+      "outputs": [
+        {
+          "id": "news.2021-05-15-legacy-c0b55c",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2021-05-15-legacy-c0b55c.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "old-content",
+          "severity": "info",
+          "message": "最後更新於 2021-05-15（5.4 年前），建議走久遠封存而非上線"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（22 字，低於 40）"
+        }
+      ],
+      "action": "archive",
+      "flags": {
+        "historical": false,
+        "old": true
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "059-2020-12-15-old",
+      "file": "059-2020-12-15-old.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/dDR5JeIC7EKd_Hpr3MO0g6?typeid=11",
+        "title": "活動報名：2021 年世界結核病日健走活動開放報名",
+        "category": "新聞與公告／其他訊息",
+        "publishedAt": "2020-12-15",
+        "updatedAt": "2020-12-15",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "其他訊息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "news.2020-12-15-legacy-5b26a4",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2020-12-15-legacy-5b26a4.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "old-content",
+          "severity": "info",
+          "message": "久遠且已結束的活動訊息，建議不轉換（回 410）"
+        },
+        {
+          "code": "pdf-no-text-layer",
+          "severity": "warn",
+          "message": "PDF「2020-12-15-old.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（20 字，低於 40）"
+        }
+      ],
+      "action": "drop",
+      "flags": {
+        "historical": false,
+        "drop": true
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "060-2020-04-01-old",
+      "file": "060-2020-04-01-old.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/ZViXszMLWodRbAerhbHVjx?typeid=9",
+        "title": "COVID-19 疫情說明記者會（第 60 場）",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2020-04-01",
+        "updatedAt": "2020-04-01",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.covid-19"
+      ],
+      "outputs": [
+        {
+          "id": "news.2020-04-01-legacy-ecfead",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2020-04-01-legacy-ecfead.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "old-content",
+          "severity": "info",
+          "message": "最後更新於 2020-04-01（6.5 年前），建議走久遠封存而非上線"
+        },
+        {
+          "code": "pdf-no-text-layer",
+          "severity": "warn",
+          "message": "PDF「2020-04-01-old.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（26 字，低於 40）"
+        }
+      ],
+      "action": "archive",
+      "flags": {
+        "historical": false,
+        "old": true
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "061-2019-11-20-old",
+      "file": "061-2019-11-20-old.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/9A_rA2MYBsfgm7CTYrG_qI?typeid=9",
+        "title": "登革熱疫情趨緩，疾管署感謝地方政府與民眾共同努力",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2019-11-20",
+        "updatedAt": "2019-11-20",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "news.2019-11-20-legacy-07f31c",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2019-11-20-legacy-07f31c.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "old-content",
+          "severity": "info",
+          "message": "最後更新於 2019-11-20（6.9 年前），建議走久遠封存而非上線"
+        },
+        {
+          "code": "pdf-no-text-layer",
+          "severity": "warn",
+          "message": "PDF「2019-11-20-old.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（24 字，低於 40）"
+        }
+      ],
+      "action": "archive",
+      "flags": {
+        "historical": false,
+        "old": true
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "062-news-list",
+      "file": "062-news-list.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/List/k6bmONJQYkScCR2X4MU1XB?typeid=9",
+        "title": "新聞稿",
+        "category": "新聞與公告／新聞稿",
+        "publishedAt": "2026-10-03",
+        "updatedAt": "2026-10-03",
+        "breadcrumbs": [
+          "首頁",
+          "新聞與公告",
+          "新聞稿"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.pr",
+      "ownerRule": "新聞與公告",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "page.x-8d05d9",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/x-8d05d9.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.6,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 10,
+        "legacyLinks": 10,
+        "attachments": 0
+      }
+    }
+  ],
+  "drafts": [
+    {
+      "id": "news.2026-09-30-system-maintenance",
+      "type": "news",
+      "title": "10 月 3 日晚間官網與傳染病通報系統例行維護",
+      "file": "content/news/2026-09-30-system-maintenance.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-30-system-maintenance"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "001-2026-09-30-system-maintenance"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-09-29-ili-weekly",
+      "type": "news",
+      "title": "流感疫情持續上升，10 月 1 日公費疫苗開打，長者幼兒請優先接種",
+      "file": "content/news/2026-09-29-ili-weekly.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-29-ili-weekly"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "002-2026-09-29-ili-weekly"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-09-28-parking-construction",
+      "type": "news",
+      "title": "林森南路辦公區停車場施工，10 月 5 日至 11 月 30 日暫停開放",
+      "file": "content/news/2026-09-28-parking-construction.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-28-parking-construction"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "003-2026-09-28-parking-construction"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-09-26-open-house",
+      "type": "news",
+      "title": "署慶系列活動：防疫科學開放日 10 月 24 日登場",
+      "file": "content/news/2026-09-26-open-house.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-26-open-house"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "004-2026-09-26-open-house"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-09-24-legacy-f7b345",
+      "type": "news",
+      "title": "疾管署公布第 38 週傳染病監測週報：類流感就診率續升，腸病毒疫情趨緩",
+      "file": "content/news/2026-09-24-legacy-f7b345.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "005-2026-09-24-synth"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-09-22-enterovirus-alert",
+      "type": "news",
+      "title": "國內腸病毒疫情持續，籲請家長及教托育機構提高警覺",
+      "file": "content/news/2026-09-22-enterovirus-alert.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-22-enterovirus-alert"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "006-2026-09-22-enterovirus-alert"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-09-18-flu-antiviral-extended",
+      "type": "news",
+      "title": "流感疫情進入流行期且持續上升，疾管署延長擴大公費流感抗病毒藥劑使用條件至 10 月 31 日",
+      "file": "content/news/2026-09-18-flu-antiviral-extended.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-18-flu-antiviral-extended"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 2,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "007-2026-09-18-flu-antiviral-extended"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-09-18-flu-vaccine-oct1",
+      "type": "news",
+      "title": "2026–2027 年度公費流感疫苗 10 月 1 日開打，新冠疫苗同步提供",
+      "file": "content/news/2026-09-18-flu-vaccine-oct1.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-18-flu-vaccine-oct1"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "008-2026-09-18-flu-vaccine-oct1"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-09-18-letter-616-flu-antiviral-extended",
+      "type": "letter",
+      "title": "致醫界通函第 616 號：延長擴大公費流感抗病毒藥劑使用對象「有類流感症狀，且具下列身分之流感高傳播族群」之適用期限至 10 月 31 日",
+      "file": "content/news/2026-09-18-letter-616-flu-antiviral-extended.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-18-letter-616-flu-antiviral-extended"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "009-2026-09-18-letter-616-flu-antiviral-extended"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-09-15-international-health-mou",
+      "type": "news",
+      "title": "Taiwan CDC signs a public health cooperation MOU with a New Southbound partner",
+      "file": "content/news/2026-09-15-international-health-mou.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-15-international-health-mou"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "010-2026-09-15-international-health-mou"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-09-15-letter-615-ns1",
+      "type": "letter",
+      "title": "致醫界通函第 615 號：登革熱 NS1 抗原快篩試劑配置更新",
+      "file": "content/news/2026-09-15-letter-615-ns1.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-15-letter-615-ns1"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "011-2026-09-15-letter-615-ns1"
+      ],
+      "merged": false
+    },
+    {
+      "id": "clar.2026-09-anti-epidemic-team-scam",
+      "type": "clarification",
+      "title": "網傳「防疫國家隊」投資群組為詐騙",
+      "file": "content/clarifications/2026-09-anti-epidemic-team-scam.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "clar.2026-09-anti-epidemic-team-scam"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "012-2026-09-anti-epidemic-team-scam"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-09-12-legacy-16fe19",
+      "type": "news",
+      "title": "登革熱防治：疾管署與高雄市政府聯合孳生源清除，呼籲民眾巡倒清刷",
+      "file": "content/news/2026-09-12-legacy-16fe19.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "013-2026-09-12-synth"
+      ],
+      "merged": false
+    },
+    {
+      "id": "clar.2026-09-10-influenza-864a02",
+      "type": "clarification",
+      "title": "澄清：網傳「打流感疫苗會得流感、長輩打完會死」並非事實",
+      "file": "content/clarifications/2026-09-10-influenza-864a02.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-10-clarify-flu-vaccine-death"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "014-2026-09-10-clarify-flu-vaccine-death"
+      ],
+      "merged": false
+    },
+    {
+      "id": "clar.2026-09-flu-vaccine-causes-flu",
+      "type": "clarification",
+      "title": "網傳「打流感疫苗會得流感、長輩打完會死」並非事實",
+      "file": "content/clarifications/2026-09-flu-vaccine-causes-flu.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "clar.2026-09-flu-vaccine-causes-flu"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "015-2026-09-flu-vaccine-causes-flu"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-09-01-covid-weekly",
+      "type": "news",
+      "title": "新冠疫情連續三週下降，10 月起新年度疫苗與流感疫苗同步開打",
+      "file": "content/news/2026-09-01-covid-weekly.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-01-covid-weekly"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "016-2026-09-01-covid-weekly"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-08-28-legacy-d5275b",
+      "type": "news",
+      "title": "疾管署提醒：開學季腸病毒傳播風險升高，落實洗手與生病不上學",
+      "file": "content/news/2026-08-28-legacy-d5275b.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "017-2026-08-28-synth"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-08-25-mpox-clade-i",
+      "type": "news",
+      "title": "非洲 M痘 clade I 疫情持續，前往當地請避免親密接觸與野生動物",
+      "file": "content/news/2026-08-25-mpox-clade-i.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-08-25-mpox-clade-i"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "018-2026-08-25-mpox-clade-i"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-08-24-flu-antiviral-expanded",
+      "type": "news",
+      "title": "國內外近期流感疫情緩升，疾管署自 8 月 24 日起至 9 月 30 日擴大公費流感抗病毒藥劑使用條件",
+      "file": "content/news/2026-08-24-flu-antiviral-expanded.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-08-24-flu-antiviral-expanded"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "019-2026-08-24-flu-antiviral-expanded"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-08-20-dots-outcomes",
+      "type": "news",
+      "title": "都治 20 年：關懷員每日送藥到手，結核病完治率穩定提升",
+      "file": "content/news/2026-08-20-dots-outcomes.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-08-20-dots-outcomes"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "020-2026-08-20-dots-outcomes"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-08-18-dengue-rising-south",
+      "type": "news",
+      "title": "南部登革熱本土疫情上升，籲請民眾配合孳生源清除與防治工作",
+      "file": "content/news/2026-08-18-dengue-rising-south.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-08-18-dengue-rising-south"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "021-2026-08-18-dengue-rising-south"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-08-17-international-fetp-workshop",
+      "type": "news",
+      "title": "International field epidemiology workshop opens in Taipei",
+      "file": "content/news/2026-08-17-international-fetp-workshop.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-08-17-international-fetp-workshop"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "022-2026-08-17-international-fetp-workshop"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-08-05-legacy-0e5573",
+      "type": "news",
+      "title": "麻疹境外移入病例新增 1 例，疾管署公布接觸者活動史並呼籲 1966 年後出生者評估接種 MMR",
+      "file": "content/news/2026-08-05-legacy-0e5573.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "023-2026-08-05-synth"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-07-21-dengue-first-local",
+      "type": "news",
+      "title": "今年首例登革熱本土病例出現於高雄市，請民眾清除積水容器",
+      "file": "content/news/2026-07-21-dengue-first-local.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-07-21-dengue-first-local"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "024-2026-07-21-dengue-first-local"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-07-10-legacy-2ed983",
+      "type": "news",
+      "title": "疾管署公布 2025 年結核病防治成果：新案數續降，都治完治率達 9 成",
+      "file": "content/news/2026-07-10-legacy-2ed983.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "025-2026-07-10-synth"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-07-01-letter-dengue-guidance-v17",
+      "type": "letter",
+      "title": "致醫界通函第 612 號：登革熱／屈公病防治工作指引第 17 版自即日起適用",
+      "file": "content/news/2026-07-01-letter-dengue-guidance-v17.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-07-01-letter-dengue-guidance-v17"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "026-2026-07-01-letter-dengue-guidance-v17"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-06-20-legacy-02b775",
+      "type": "news",
+      "title": "夏季出國旅遊前請先查疫情：疾管署更新國際旅遊疫情建議等級",
+      "file": "content/news/2026-06-20-legacy-02b775.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "027-2026-06-20-synth"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-06-03-flu-antiviral-summer",
+      "type": "news",
+      "title": "夏季流感疫情持續，公費抗病毒藥劑使用對象維持現行規定",
+      "file": "content/news/2026-06-03-flu-antiviral-summer.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-06-03-flu-antiviral-summer"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "028-2026-06-03-flu-antiviral-summer"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-06-02-measles-travel-mmr-1966",
+      "type": "news",
+      "title": "暑假出國前請評估麻疹免疫力：1966 年（含）以後出生者出國前 2 至 4 週評估接種 MMR",
+      "file": "content/news/2026-06-02-measles-travel-mmr-1966.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-06-02-measles-travel-mmr-1966"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "029-2026-06-02-measles-travel-mmr-1966"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-05-22-international-wha-technical-exchange",
+      "type": "news",
+      "title": "Taiwan CDC experts hold technical exchanges during the World Health Assembly week",
+      "file": "content/news/2026-05-22-international-wha-technical-exchange.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-05-22-international-wha-technical-exchange"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "030-2026-05-22-international-wha-technical-exchange"
+      ],
+      "merged": false
+    },
+    {
+      "id": "clar.2026-05-mmr-all-adults",
+      "type": "clarification",
+      "title": "網傳「所有成人都要再補打一劑 MMR」部分正確",
+      "file": "content/clarifications/2026-05-mmr-all-adults.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "clar.2026-05-mmr-all-adults"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "031-2026-05-mmr-all-adults"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-05-11-japan-measles-level1",
+      "type": "news",
+      "title": "日本麻疹疫情升溫，列為第一級旅遊疫情建議；出國前請評估 MMR 接種",
+      "file": "content/news/2026-05-11-japan-measles-level1.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-05-11-japan-measles-level1"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "032-2026-05-11-japan-measles-level1"
+      ],
+      "merged": false
+    },
+    {
+      "id": "clar.2026-04-enterovirus-only-kids",
+      "type": "clarification",
+      "title": "網傳「腸病毒只有小孩會得，大人不用擔心」部分正確",
+      "file": "content/clarifications/2026-04-enterovirus-only-kids.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "clar.2026-04-enterovirus-only-kids"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "033-2026-04-enterovirus-only-kids"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-04-14-enterovirus-rising",
+      "type": "news",
+      "title": "腸病毒就診人次連續上升，近期社區以 EV71 為主，籲請提高警覺",
+      "file": "content/news/2026-04-14-enterovirus-rising.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-04-14-enterovirus-rising"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "034-2026-04-14-enterovirus-rising"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-03-24-world-tb-day-end-tb-2035",
+      "type": "news",
+      "title": "世界結核病日：邁向 2035 消除結核，接觸者與高風險族群公費檢驗潛伏感染",
+      "file": "content/news/2026-03-24-world-tb-day-end-tb-2035.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-03-24-world-tb-day-end-tb-2035"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "035-2026-03-24-world-tb-day-end-tb-2035"
+      ],
+      "merged": false
+    },
+    {
+      "id": "clar.2026-03-covid-isolation-7-days",
+      "type": "clarification",
+      "title": "網傳「確診新冠要居家隔離 7 天，同住家人也要隔離」為舊規定",
+      "file": "content/clarifications/2026-03-covid-isolation-7-days.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "clar.2026-03-covid-isolation-7-days"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "036-2026-03-covid-isolation-7-days"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-03-15-letter-ev-guideline",
+      "type": "letter",
+      "title": "致醫界通函第 608 號：腸病毒感染併發重症臨床處置建議更新",
+      "file": "content/news/2026-03-15-letter-ev-guideline.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-03-15-letter-ev-guideline"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "037-2026-03-15-letter-ev-guideline"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-02-24-flu-declining",
+      "type": "news",
+      "title": "流感疫情緩降，仍處流行期，請持續注意手部衛生與咳嗽禮節",
+      "file": "content/news/2026-02-24-flu-declining.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-02-24-flu-declining"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "038-2026-02-24-flu-declining"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-01-20-lunar-new-year-flu",
+      "type": "news",
+      "title": "流感疫情處高峰，春節連假前請儘速接種疫苗並落實咳嗽禮節",
+      "file": "content/news/2026-01-20-lunar-new-year-flu.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-01-20-lunar-new-year-flu"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "039-2026-01-20-lunar-new-year-flu"
+      ],
+      "merged": false
+    },
+    {
+      "id": "clar.2026-01-vinegar-saltwater-flu",
+      "type": "clarification",
+      "title": "網傳「燻白醋、喝鹽水可以殺死流感病毒」沒有科學根據",
+      "file": "content/clarifications/2026-01-vinegar-saltwater-flu.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "clar.2026-01-vinegar-saltwater-flu"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "040-2026-01-vinegar-saltwater-flu"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2025-12-01-world-aids-day",
+      "type": "news",
+      "title": "世界愛滋日：定期篩檢、PrEP 與 U=U，一起終結愛滋",
+      "file": "content/news/2025-12-01-world-aids-day.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2025-12-01-world-aids-day"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "041-2025-12-01-world-aids-day"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2025-11-11-letter-dengue-guidance-v16",
+      "type": "letter",
+      "title": "致醫界通函第 603 號：登革熱／屈公病防治工作指引第 16 版公布",
+      "file": "content/news/2025-11-11-letter-dengue-guidance-v16.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2025-11-11-letter-dengue-guidance-v16"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "042-2025-11-11-letter-dengue-guidance-v16"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2025-10-01-flu-vaccine-start",
+      "type": "news",
+      "title": "114 年度公費流感疫苗今日開打，長者與幼兒請儘早接種",
+      "file": "content/news/2025-10-01-flu-vaccine-start.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2025-10-01-flu-vaccine-start"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "043-2025-10-01-flu-vaccine-start"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2025-08-05-chikungunya-guangdong",
+      "type": "news",
+      "title": "中國大陸廣東省屈公病疫情升溫，提升旅遊疫情建議至第二級",
+      "file": "content/news/2025-08-05-chikungunya-guangdong.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2025-08-05-chikungunya-guangdong"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "044-2025-08-05-chikungunya-guangdong"
+      ],
+      "merged": false
+    },
+    {
+      "id": "clar.2025-07-15-dengue-c37363",
+      "type": "clarification",
+      "title": "澄清：網傳「登革熱噴藥會毒死人、可拒絕開門」為錯誤訊息",
+      "file": "content/clarifications/2025-07-15-dengue-c37363.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2025-07-15-clarify-dengue-spray"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "045-2025-07-15-clarify-dengue-spray"
+      ],
+      "merged": false
+    },
+    {
+      "id": "clar.2025-07-dengue-spraying-poison",
+      "type": "clarification",
+      "title": "網傳「登革熱噴藥會毒死人、可以拒絕開門」為錯誤訊息",
+      "file": "content/clarifications/2025-07-dengue-spraying-poison.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "clar.2025-07-dengue-spraying-poison"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "046-2025-07-dengue-spraying-poison"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2025-06-10-mpox-summer",
+      "type": "news",
+      "title": "暑假出遊與大型活動將至，符合條件者請把握接種 2 劑 M痘疫苗",
+      "file": "content/news/2025-06-10-mpox-summer.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2025-06-10-mpox-summer"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "047-2025-06-10-mpox-summer"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2025-05-06-enterovirus-season",
+      "type": "news",
+      "title": "腸病毒進入流行期，籲請家長落實肥皂洗手並留意重症前兆",
+      "file": "content/news/2025-05-06-enterovirus-season.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2025-05-06-enterovirus-season"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "048-2025-05-06-enterovirus-season"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2025-04-16-mmr-recommendation-revised",
+      "type": "news",
+      "title": "修訂國內 MMR 預防接種建議：成人評估對象擴大至 1966 年（含）以後出生者",
+      "file": "content/news/2025-04-16-mmr-recommendation-revised.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2025-04-16-mmr-recommendation-revised"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "049-2025-04-16-mmr-recommendation-revised"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2025-04-16-legacy-9688a5",
+      "type": "news",
+      "title": "MMR recommendations revised: adults born in 1966 or later now eligible for assessment",
+      "file": "content/news/2025-04-16-legacy-9688a5.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "050-en-2025-04-16-mmr-recommendation-revised"
+      ],
+      "merged": false
+    },
+    {
+      "id": "clar.2025-04-mmr-born-after-1981-only",
+      "type": "clarification",
+      "title": "網傳「MMR 只有 1981 年後出生的人要補打」",
+      "file": "content/clarifications/2025-04-mmr-born-after-1981-only.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "clar.2025-04-mmr-born-after-1981-only"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "051-2025-04-mmr-born-after-1981-only"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2025-03-24-world-tb-day",
+      "type": "news",
+      "title": "世界結核病日：咳嗽兩週請就醫，接觸者檢查與潛伏感染治療守護家人",
+      "file": "content/news/2025-03-24-world-tb-day.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2025-03-24-world-tb-day"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "052-2025-03-24-world-tb-day"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2025-03-24-legacy-1952ec",
+      "type": "news",
+      "title": "World TB Day: see a doctor if you have coughed for two weeks; contact screening and latent TB treatment protect families",
+      "file": "content/news/2025-03-24-legacy-1952ec.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "053-en-2025-03-24-world-tb-day"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2025-02-18-dengue-imported-spring",
+      "type": "news",
+      "title": "春節後登革熱境外移入病例增加，出國返國請落實防蚊",
+      "file": "content/news/2025-02-18-dengue-imported-spring.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2025-02-18-dengue-imported-spring"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "054-2025-02-18-dengue-imported-spring"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2025-01-09-mmr-adults-measles",
+      "type": "news",
+      "title": "國內新增麻疹病例，1981 年以後出生之醫護與赴流行區成人建議優先自費接種 MMR",
+      "file": "content/news/2025-01-09-mmr-adults-measles.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2025-01-09-mmr-adults-measles"
+      ],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "055-2025-01-09-mmr-adults-measles"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2022-10-01-legacy-2c1060",
+      "type": "news",
+      "title": "111 年度公費流感疫苗 10 月 1 日起分階段開打",
+      "file": "content/news/2022-10-01-legacy-2c1060.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "056-2022-10-01-old"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2022-03-24-legacy-ec9134",
+      "type": "news",
+      "title": "世界結核病日：疾管署呼籲咳嗽超過兩週請就醫",
+      "file": "content/news/2022-03-24-legacy-ec9134.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "057-2022-03-24-old"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2021-05-15-legacy-c0b55c",
+      "type": "news",
+      "title": "COVID-19 疫情說明記者會（第 120 場）",
+      "file": "content/news/2021-05-15-legacy-c0b55c.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "058-2021-05-15-old"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2020-12-15-legacy-5b26a4",
+      "type": "news",
+      "title": "活動報名：2021 年世界結核病日健走活動開放報名",
+      "file": "content/news/2020-12-15-legacy-5b26a4.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "059-2020-12-15-old"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2020-04-01-legacy-ecfead",
+      "type": "news",
+      "title": "COVID-19 疫情說明記者會（第 60 場）",
+      "file": "content/news/2020-04-01-legacy-ecfead.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "060-2020-04-01-old"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2019-11-20-legacy-07f31c",
+      "type": "news",
+      "title": "登革熱疫情趨緩，疾管署感謝地方政府與民眾共同努力",
+      "file": "content/news/2019-11-20-legacy-07f31c.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "061-2019-11-20-old"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.x-8d05d9",
+      "type": "page",
+      "title": "新聞稿",
+      "file": "content/pages/x-8d05d9.json",
+      "confidence": 0.6,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.pr",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "062-news-list"
+      ],
+      "merged": false
+    }
+  ],
+  "sampling": {
+    "rate": 0.1,
+    "autoOk": 4,
+    "picked": [
+      {
+        "key": "027-2026-06-20-synth",
+        "title": "夏季出國旅遊前請先查疫情：疾管署更新國際旅遊疫情建議等級",
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/Zg1sEf1_dN9UqgbyCyAdmD?typeid=9",
+        "draftId": "news.2026-06-20-legacy-02b775"
+      }
+    ]
+  },
+  "migration": {
+    "patchFile": "migration-patch.json",
+    "applied": false,
+    "summary": {
+      "items": 0,
+      "matched": 0,
+      "missingPages": 0,
+      "unmatchedPages": 62,
+      "agree": 0,
+      "conflicts": 0,
+      "statusChanges": 0,
+      "noteChanges": 0
+    }
+  }
+}

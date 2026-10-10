@@ -1,0 +1,59 @@
+{
+  "id": "news.2025-05-06-enterovirus-season",
+  "type": "news",
+  "title": "腸病毒進入流行期，籲請家長落實肥皂洗手並留意重症前兆",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2025-05-06",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "疾病管制署表示，上週腸病毒門急診就診人次已超過流行閾值，國內正式進入腸病毒流行期，近期社區以克沙奇 A 型病毒為主。",
+  "newsType": "press",
+  "bodyMarkdown": "疾病管制署表示，上週腸病毒門急診就診人次已超過流行閾值，國內正式進入腸病毒流行期，近期社區以克沙奇 A 型病毒為主。\n\n疾管署提醒，腸病毒傳染力強，大人返家應先以肥皂洗手、更換衣物再接觸幼兒；教托育機構應以 500 ppm 漂白水消毒教室與玩具。5 歲以下幼兒若出現嗜睡、意識不清、肌躍型抽搐、持續嘔吐、呼吸急促或心跳加快等重症前兆，請立即送往大醫院。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/u1nGI08LsIuXP_KlaNZZfl?typeid=9"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「腸病毒／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+      },
+      {
+        "code": "not-in-manifest",
+        "severity": "warn",
+        "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/u1nGI08LsIuXP_KlaNZZfl?typeid=9",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "news.2025-05-06-enterovirus-season"
+    ]
+  }
+}

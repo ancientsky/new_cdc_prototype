@@ -1,0 +1,425 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "38ca8c95391d",
+    "lastModified": "2026-09-30",
+    "count": 3,
+    "open": 3,
+    "closed": 0
+  },
+  "data": [
+    {
+      "id": "news.2026-09-30-system-maintenance",
+      "type": "news",
+      "title": "10 月 3 日晚間官網與傳染病通報系統例行維護",
+      "owner": "unit.it",
+      "publishedAt": "2026-09-30",
+      "reviewedAt": "2026-09-30",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-30"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-30",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "2026 年 10 月 3 日 22:00 至 10 月 4 日 06:00 進行官網與傳染病通報系統（NIDRS）例行維護，期間服務可能中斷，緊急通報請以電話或傳真通知衛生局。",
+      "keywords": [
+        "系統維護",
+        "NIDRS",
+        "官網",
+        "服務中斷",
+        "資訊室"
+      ],
+      "newsType": "other",
+      "deadlineAt": "2026-10-04",
+      "bodyMarkdown": "## 維護時間\n2026 年 10 月 3 日（星期六）22:00 至 10 月 4 日（星期日）06:00\n\n## 影響範圍\n- 疾管署官網、開放資料 API：可能短暫無法連線\n- 傳染病通報系統（NIDRS）：暫停服務\n\n## 維護期間緊急通報\n請以電話或傳真通報轄區衛生局，系統恢復後補登。民眾防疫諮詢請撥 **1922**，不受影響。",
+      "i18n": {
+        "en": {
+          "title": "Scheduled maintenance of the website and NIDRS on 3 October",
+          "summary": "Website and NIDRS maintenance from 22:00 on 3 October to 06:00 on 4 October 2026; report urgent cases to local health bureaus by phone or fax."
+        }
+      },
+      "sourceHash": "c3bb4252e15b",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-30-system-maintenance/",
+      "path": "/news/2026-09-30-system-maintenance/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-30-system-maintenance.md",
+      "governance": {
+        "owner": "unit.it",
+        "ownerName": "資訊室",
+        "steward": null,
+        "reviewedAt": "2026-09-30",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2026-09-30-system-maintenance",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": "2026-10-04",
+        "daysToDeadline": 3,
+        "closed": false,
+        "closingSoon": true,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "c3bb4252e15b",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-30",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      },
+      "closed": false,
+      "closingSoon": true,
+      "daysToDeadline": 3
+    },
+    {
+      "id": "news.2026-09-26-open-house",
+      "type": "news",
+      "title": "署慶系列活動：防疫科學開放日 10 月 24 日登場",
+      "owner": "unit.pr",
+      "publishedAt": "2026-09-26",
+      "reviewedAt": "2026-09-26",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-26"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-26",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "疾管署署慶系列活動「防疫科學開放日」10 月 24 日舉行，開放親子參觀檢驗實驗室外部展區、防疫體驗關卡，即日起至 10 月 17 日線上報名。",
+      "keywords": [
+        "署慶",
+        "開放日",
+        "親子活動",
+        "防疫體驗",
+        "報名"
+      ],
+      "newsType": "other",
+      "deadlineAt": "2026-10-17",
+      "bodyMarkdown": "## 活動資訊\n- **日期**：2026 年 10 月 24 日（星期六）09:30–16:00\n- **地點**：疾管署昆陽辦公室（示意）\n- **內容**：檢驗實驗室外部展示區導覽、蚊子孳生源大搜查、正確洗手體驗、疫苗小學堂。\n\n## 報名\n即日起至 **2026 年 10 月 17 日**止線上報名，每場次名額有限。實驗室管制區不開放。\n\n本公告為原型示意資料。",
+      "i18n": {
+        "en": {
+          "title": "Open House: disease prevention science day on 24 October",
+          "summary": "Family-friendly open house with exhibits and hands-on activities on 24 October 2026; register online by 17 October."
+        }
+      },
+      "sourceHash": "c2f7349c1261",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-26-open-house/",
+      "path": "/news/2026-09-26-open-house/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-26-open-house.md",
+      "governance": {
+        "owner": "unit.pr",
+        "ownerName": "公關室",
+        "steward": null,
+        "reviewedAt": "2026-09-26",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2026-09-26-open-house",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": "2026-10-17",
+        "daysToDeadline": 16,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "c2f7349c1261",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-26",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      },
+      "closed": false,
+      "closingSoon": false,
+      "daysToDeadline": 16
+    },
+    {
+      "id": "news.2026-09-28-parking-construction",
+      "type": "news",
+      "title": "林森南路辦公區停車場施工，10 月 5 日至 11 月 30 日暫停開放",
+      "owner": "unit.planning",
+      "publishedAt": "2026-09-28",
+      "reviewedAt": "2026-09-28",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-28"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "林森南路辦公區地下停車場因防水與照明工程，2026 年 10 月 5 日至 11 月 30 日暫停開放，洽公民眾請改搭大眾運輸或使用鄰近公有停車場。",
+      "keywords": [
+        "停車場",
+        "施工",
+        "洽公",
+        "林森南路",
+        "暫停開放"
+      ],
+      "note": "原型 units 主檔無秘書室，暫由企劃組為權責單位",
+      "newsType": "other",
+      "deadlineAt": "2026-11-30",
+      "bodyMarkdown": "林森南路辦公區（臺北市中正區林森南路 6 號）地下停車場進行防水與照明改善工程：\n\n- **施工期間**：2026 年 10 月 5 日至 11 月 30 日\n- **影響**：停車場暫停開放，身心障礙者專用車位改設於大門側臨時停車區（需事先來電預約）。\n- **建議**：搭乘捷運至臺大醫院站，步行約 5 分鐘。\n\n造成不便，敬請見諒。",
+      "sourceHash": "98ff69d362b8",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-28-parking-construction/",
+      "path": "/news/2026-09-28-parking-construction/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-28-parking-construction.md",
+      "governance": {
+        "owner": "unit.planning",
+        "ownerName": "企劃組",
+        "steward": null,
+        "reviewedAt": "2026-09-28",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "news.2026-09-28-parking-construction",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "deadlineAt": "2026-11-30",
+        "daysToDeadline": 60,
+        "closed": false,
+        "closingSoon": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "98ff69d362b8",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      },
+      "closed": false,
+      "closingSoon": false,
+      "daysToDeadline": 60
+    }
+  ]
+}

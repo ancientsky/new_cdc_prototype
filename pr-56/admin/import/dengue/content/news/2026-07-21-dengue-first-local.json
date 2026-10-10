@@ -1,0 +1,59 @@
+{
+  "id": "news.2026-07-21-dengue-first-local",
+  "type": "news",
+  "title": "今年首例登革熱本土病例出現於高雄市，請民眾清除積水容器",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-07-21",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "疾病管制署今（21）日公布今年首例登革熱本土病例（示意），個案居住於高雄市，發病前兩週無出國史。衛生局已完成疫情調查，並於個案住家及活動地點周邊進行孳生源清除與針對性室內噴藥。",
+  "newsType": "press",
+  "bodyMarkdown": "疾病管制署今（21）日公布今年首例登革熱本土病例（示意），個案居住於高雄市，發病前兩週無出國史。衛生局已完成疫情調查，並於個案住家及活動地點周邊進行孳生源清除與針對性室內噴藥。\n\n疾管署提醒，夏季高溫多雨，民眾應每週落實「巡、倒、清、刷」，清除住家內外積水容器；出現發燒、頭痛、後眼窩痛、肌肉關節痛等症狀，請儘速就醫。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/9EfoEs8AvQebnkHbh47GM3?typeid=9"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「登革熱／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+      },
+      {
+        "code": "not-in-manifest",
+        "severity": "warn",
+        "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/9EfoEs8AvQebnkHbh47GM3?typeid=9",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "news.2026-07-21-dengue-first-local"
+    ]
+  }
+}

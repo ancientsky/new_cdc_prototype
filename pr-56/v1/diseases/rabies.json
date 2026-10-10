@@ -1,0 +1,325 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "2b4fb1841c86",
+    "lastModified": "2026-09-28"
+  },
+  "data": {
+    "id": "disease.rabies",
+    "type": "disease",
+    "slug": "rabies",
+    "title": "狂犬病",
+    "nameEn": "Rabies",
+    "aliases": [
+      "恐水病",
+      "Rabies",
+      "麗沙病毒"
+    ],
+    "legalCategory": 1,
+    "icd10": [
+      "A82"
+    ],
+    "notifyWithinHours": 24,
+    "incubation": {
+      "min": 1,
+      "max": 3,
+      "unit": "month",
+      "text": "通常 1–3 個月，短則數天，長可達數年"
+    },
+    "transmission": [
+      "zoonotic"
+    ],
+    "owner": "unit.acute-infectious",
+    "steward": "急性傳染病組承辦人",
+    "publishedAt": "2018-03-01",
+    "reviewedAt": "2026-09-28",
+    "reviewPeriodMonths": 12,
+    "status": "published",
+    "audience": [
+      "public",
+      "professional"
+    ],
+    "tasks": [
+      "symptoms",
+      "vaccines",
+      "travel"
+    ],
+    "sensitivity": "public",
+    "license": "OGDL-1.0",
+    "diseases": [
+      "disease.rabies"
+    ],
+    "vaccines": [
+      "vaccine.rabies"
+    ],
+    "aiWhitelist": {
+      "requested": true,
+      "approvedBy": "unit.oasis",
+      "approvedAt": "2026-09-28"
+    },
+    "languages": {
+      "zh-TW": {
+        "status": "source"
+      },
+      "en": {
+        "status": "machine"
+      },
+      "ja": {
+        "status": "machine"
+      },
+      "tl": {
+        "status": "machine"
+      },
+      "vi": {
+        "status": "machine"
+      },
+      "id": {
+        "status": "machine"
+      },
+      "th": {
+        "status": "machine"
+      }
+    },
+    "summary": "狂犬病一旦發病致死率幾乎 100%，但被動物咬傷後及時處理與接種疫苗可有效預防。記住「一沖二認三送四觀察」，不要觸摸野生動物。",
+    "keywords": [
+      "狂犬病",
+      "動物咬傷",
+      "鼬獾",
+      "暴露後預防",
+      "一沖二認三送四觀察"
+    ],
+    "legacyUrls": [
+      "https://www.cdc.gov.tw/Disease/Index"
+    ],
+    "keyFacts": {
+      "incubation": "通常 1–3 個月，可短至數天或長達數年",
+      "symptoms": "傷口異常感覺、發燒、焦慮、恐水、怕風、吞嚥困難、麻痺",
+      "transmission": "被帶病毒動物咬傷、抓傷或舔舐傷口",
+      "prevention": "不碰野生動物、寵物每年接種、咬傷後立即處理並就醫",
+      "notify": "24 小時內（第一類）"
+    },
+    "blocks": [
+      {
+        "key": "what-to-do",
+        "heading": "我該怎麼辦",
+        "cards": [
+          {
+            "if": "被動物咬傷或抓傷",
+            "title": "一沖二認三送四觀察",
+            "text": "立即以肥皂和大量清水沖洗傷口 15 分鐘，記住動物特徵，儘速就醫評估接種疫苗，並觀察動物 10 天。"
+          },
+          {
+            "if": "在山區遇到行為異常的野生動物",
+            "title": "不要靠近、通報動保單位",
+            "text": "不要觸摸或撿拾，請通報當地動物防疫機關或撥打 1922。"
+          },
+          {
+            "if": "前往狂犬病流行國家長期停留",
+            "title": "出發前評估暴露前接種",
+            "text": "從事戶外或動物相關工作者，可至旅遊醫學門診評估暴露前預防接種。"
+          }
+        ]
+      },
+      {
+        "key": "symptoms",
+        "heading": "症狀與警示徵象",
+        "markdown": "初期為發燒、頭痛、倦怠，以及**咬傷部位麻、癢、刺痛**等異常感覺。之後出現焦慮、躁動、幻覺，以及典型的**恐水**（看到水或喝水時喉嚨痙攣）、**怕風**，最後進展到麻痺、昏迷、死亡。\n\n一旦出現神經症狀，致死率幾乎 **100%**，因此暴露後的預防處置非常重要。",
+        "warning": "被動物咬傷後不論傷口大小，都應就醫評估；不要等到出現症狀。"
+      },
+      {
+        "key": "transmission",
+        "heading": "怎麼傳染",
+        "markdown": "狂犬病病毒存在於受感染動物的唾液中，經由**咬傷、抓傷**或舔舐人的傷口、黏膜傳染。台灣自 2013 年起在野生**鼬獾**、白鼻心及錢鼠等動物檢出狂犬病毒；國外以狗、蝙蝠、猴子、狐狸等為主。\n\n人與人之間一般不會傳染。"
+      },
+      {
+        "key": "prevention",
+        "heading": "如何預防",
+        "markdown": "- **不接觸、不撿拾、不餵食**野生動物。\n- 寵物犬貓每年接種動物狂犬病疫苗，外出繫鍊，不棄養。\n- 被動物咬傷後落實「**一沖二認三送四觀察**」：\n  1. 沖：以肥皂和大量清水沖洗傷口 15 分鐘，再以優碘消毒。\n  2. 認：記住動物的特徵，可能的話安全地留置觀察。\n  3. 送：儘速就醫，由醫師評估是否接種疫苗與免疫球蛋白。\n  4. 觀察：將動物隔離觀察 10 天。"
+      },
+      {
+        "key": "treatment",
+        "heading": "診斷與治療",
+        "markdown": "發病後沒有有效治療。**暴露後預防**包含傷口處理、依暴露等級接種**狂犬病疫苗**（一般為 4–5 劑）及必要時注射狂犬病免疫球蛋白。國內暴露後疫苗由疾管署提供，於指定的狂犬病疫苗接種醫院施打。"
+      },
+      {
+        "key": "vaccine",
+        "heading": "疫苗",
+        "markdown": "**暴露後接種**：經醫師評估後於指定醫院公費接種。**暴露前接種**：建議獸醫、動物防疫與捕捉人員、野生動物研究者，以及前往流行地區長期停留或無法及時取得醫療者，可評估自費接種 2–3 劑。"
+      },
+      {
+        "key": "situation",
+        "heading": "目前疫情與統計",
+        "markdown": "國內人類病例極為罕見，多為境外感染；野生動物監測持續檢出陽性鼬獾，請勿接觸野生動物。"
+      },
+      {
+        "key": "faq",
+        "heading": "常見問題"
+      }
+    ],
+    "professional": {
+      "specimen": "疑似病例採唾液、頸部皮膚切片、腦脊髓液及血清，送疾管署檢驗；動物檢體由農業部獸醫研究所檢驗。",
+      "notifyNote": "第一類法定傳染病，應於 24 小時內通報；動物咬傷個案依「疑似狂犬病動物抓咬傷」流程登錄並評估暴露後接種。"
+    },
+    "sourceHash": "6dfa62937992",
+    "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/rabies/",
+    "path": "/diseases/rabies/",
+    "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/rabies.md",
+    "governance": {
+      "owner": "unit.acute-infectious",
+      "ownerName": "急性傳染病組",
+      "steward": "急性傳染病組承辦人",
+      "reviewedAt": "2026-09-28",
+      "reviewPeriodMonths": 12,
+      "nextReviewAt": "2027-09-28",
+      "daysToReview": 362,
+      "overdue": false,
+      "dueSoon": false,
+      "status": "published",
+      "lifecycle": "current",
+      "lifecycleLabel": "現行版",
+      "whitelist": true,
+      "whitelistTier": "public",
+      "whitelistPublic": true,
+      "whitelistReasons": [],
+      "whitelistReasonLabels": [],
+      "isCurrent": true,
+      "superseded": false,
+      "supersededBy": null,
+      "currentId": "disease.rabies",
+      "noindex": false,
+      "stale": [],
+      "basisRevisions": [],
+      "predatesBasis": false,
+      "annotations": [],
+      "reverseAuditHits": 0,
+      "license": "OGDL-1.0",
+      "licenseNote": null,
+      "sensitivity": "public",
+      "sourceHash": "6dfa62937992",
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "machine"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "translationStale": {
+        "en": false,
+        "ja": false,
+        "tl": false,
+        "vi": false,
+        "id": false,
+        "th": false
+      },
+      "renderableLangs": [
+        "zh-TW"
+      ]
+    },
+    "master": {
+      "id": "disease.rabies",
+      "slug": "rabies",
+      "name": "狂犬病",
+      "nameEn": "Rabies",
+      "aliases": [
+        "恐水病",
+        "Rabies",
+        "麗沙病毒感染"
+      ],
+      "legalCategory": 1,
+      "icd10": [
+        "A82"
+      ],
+      "notifyWithinHours": 24,
+      "transmission": [
+        "zoonotic"
+      ],
+      "hasPage": true,
+      "owner": "unit.acute-infectious",
+      "zhuyin": "ㄎ",
+      "strokes": 7,
+      "i18n": {
+        "en": {
+          "name": "Rabies"
+        }
+      }
+    },
+    "related": {
+      "faq": [
+        {
+          "id": "faq.rabies-bite",
+          "type": "faq",
+          "title": "被狗、貓或野生動物咬傷該怎麼辦？",
+          "summary": "動物咬傷請「一沖二認三送四觀察」：肥皂清水沖洗 15 分鐘、記住動物特徵、儘速就醫評估狂犬病疫苗、觀察動物 10 天。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/rabies-bite/",
+          "path": "/faq/rabies-bite/",
+          "reviewedAt": "2026-09-28",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "news": [],
+      "documents": [],
+      "vaccines": [],
+      "datasets": [],
+      "clarifications": [],
+      "media": [],
+      "labtests": [
+        {
+          "id": "labtest.rabies",
+          "type": "labtest",
+          "title": "狂犬病檢驗項目與送驗規定",
+          "summary": "狂犬病（人類疑似病例）：唾液、頸背部含毛囊皮膚切片與腦脊髓液，冷凍或冷藏 24 小時內送疾管署，做 RT-PCR、抗原與抗體檢驗。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/rabies/",
+          "path": "/lab/rabies/",
+          "reviewedAt": "2026-07-15",
+          "owner": "unit.lab",
+          "ownerName": "檢驗及疫苗研製中心",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "services": [],
+      "publications": [
+        {
+          "id": "publication.bulletin-42-17",
+          "type": "publication",
+          "title": "疫情報導 第 42 卷第 17 期",
+          "summary": "本期收錄 3 篇：2026–2027 年流感疫苗株組成與接種策略等。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-17/",
+          "path": "/publications/bulletin-42-17/",
+          "reviewedAt": "2026-09-08",
+          "owner": "unit.epidemic-intelligence",
+          "ownerName": "疫情中心",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "topics": []
+    }
+  }
+}

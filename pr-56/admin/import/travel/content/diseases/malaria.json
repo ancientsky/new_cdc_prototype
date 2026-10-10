@@ -1,0 +1,130 @@
+{
+  "id": "disease.malaria",
+  "type": "disease",
+  "title": "瘧疾",
+  "slug": "malaria",
+  "nameEn": "Malaria",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2019-05-05",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.malaria"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "前往瘧疾流行地區前，請至旅遊醫學門診評估是否需要預防用藥，並同時做好防蚊措施。 藥物選擇：依目的地的瘧疾抗藥性由醫師處方。 服藥時程：出發前開始服用，停留期間持續，返國後依處方續服。",
+  "aliases": [
+    "Malaria",
+    "打擺子"
+  ],
+  "legalCategory": 2,
+  "icd10": [
+    "B50",
+    "B51",
+    "B52",
+    "B53",
+    "B54"
+  ],
+  "notifyWithinHours": 24,
+  "transmission": [
+    "vector",
+    "bloodborne"
+  ],
+  "keyFacts": {
+    "symptoms": "（待補：舊頁沒有對應段落）",
+    "transmission": "（待補：舊頁沒有對應段落）",
+    "prevention": "前往瘧疾流行地區前，請至旅遊醫學門診評估是否需要預防用藥，並同時做好防蚊措施。"
+  },
+  "blocks": [
+    {
+      "key": "what-to-do",
+      "heading": "我該怎麼辦",
+      "markdown": "",
+      "status": "pending"
+    },
+    {
+      "key": "symptoms",
+      "heading": "症狀與警示徵象",
+      "markdown": "",
+      "status": "pending"
+    },
+    {
+      "key": "transmission",
+      "heading": "怎麼傳染",
+      "markdown": "",
+      "status": "pending"
+    },
+    {
+      "key": "prevention",
+      "heading": "如何預防",
+      "markdown": "### 預防\n\n前往瘧疾流行地區前，請至旅遊醫學門診評估是否需要預防用藥，並同時做好防蚊措施。\n\n- 藥物選擇：依目的地的瘧疾抗藥性由醫師處方。\n- 服藥時程：出發前開始服用，停留期間持續，返國後依處方續服。\n- 防蚊：穿著長袖衣褲，使用含 DEET 的防蚊液，睡覺時使用蚊帳。"
+    },
+    {
+      "key": "treatment",
+      "heading": "診斷與治療",
+      "markdown": "",
+      "status": "pending"
+    },
+    {
+      "key": "vaccine",
+      "heading": "疫苗",
+      "markdown": "",
+      "status": "pending"
+    },
+    {
+      "key": "situation",
+      "heading": "目前疫情與統計",
+      "markdown": "",
+      "status": "pending"
+    },
+    {
+      "key": "faq",
+      "heading": "常見問題",
+      "markdown": "",
+      "status": "pending"
+    }
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/45jPQ86Qzod4o4BHSGpy8-"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 15 處（mso 樣式 13、Mso 類別 4、命名空間標籤 1）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/45jPQ86Qzod4o4BHSGpy8-",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "disease.malaria"
+    ],
+    "mergedFrom": [
+      {
+        "page": "03-malaria-prophylaxis",
+        "url": "https://www.cdc.gov.tw/Category/MPage/45jPQ86Qzod4o4BHSGpy8-",
+        "blocks": [
+          "prevention"
+        ]
+      }
+    ]
+  }
+}

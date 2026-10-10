@@ -1,0 +1,2076 @@
+{
+  "format": "cdc-legacy-import-report/1",
+  "batch": "malaria",
+  "generatedAt": "2026-10-05T02:30:00Z",
+  "exportedAt": "2026-10-03",
+  "simulated": true,
+  "source": {
+    "dir": "data/legacy-export/malaria",
+    "note": "模擬匯出：依 content/migration/_disease-template.json（標準子頁 20 項）＋ 近 3 年新聞 0 篇合成，不是舊站的真實資料（網址 ID、數字、PDF 內容皆為示意）。正式匯出取代整個目錄即可。",
+    "site": "https://www.cdc.gov.tw"
+  },
+  "rules": {
+    "file": "content/migration/import/_import-rules.json",
+    "version": 10
+  },
+  "manifest": {
+    "id": "migration.malaria",
+    "file": null,
+    "synthetic": true,
+    "items": 0,
+    "extends": "migration-template.disease",
+    "derivedItems": 20,
+    "derivedCovered": [],
+    "disease": "disease.malaria"
+  },
+  "summary": {
+    "pages": 20,
+    "drafts": 13,
+    "mergedPages": 9,
+    "byType": {
+      "faq": 2,
+      "publication": 1,
+      "media": 1,
+      "document": 3,
+      "dataset": 1,
+      "labtest": 1,
+      "page": 2,
+      "topic": 1,
+      "disease": 1
+    },
+    "byKind": {
+      "disease-block": 9,
+      "faq": 1,
+      "publication": 1,
+      "media": 1,
+      "document": 3,
+      "dataset": 1,
+      "labtest": 1,
+      "page": 1,
+      "list": 1,
+      "topic": 1
+    },
+    "byAction": {
+      "merge-into-disease": 9,
+      "compare-existing": 3,
+      "review-before-publish": 7,
+      "skip-list": 1
+    },
+    "avgConfidence": 0.92,
+    "needsReview": 1,
+    "existing": 13,
+    "schemaInvalid": 0,
+    "assets": {
+      "total": 5,
+      "attachment": 2,
+      "image": 2,
+      "data": 1,
+      "needsAlt": 2,
+      "noTextLayer": 1
+    },
+    "issues": {
+      "error": 0,
+      "warn": 9,
+      "info": 73
+    },
+    "manifest": {
+      "items": 0,
+      "matched": 0,
+      "missingPages": 0,
+      "derivedItems": 20,
+      "derivedMatched": 20
+    },
+    "generated": 0,
+    "exportedAt": "2026-10-03",
+    "pagesWithoutOutput": 0
+  },
+  "pages": [
+    {
+      "key": "01-intro",
+      "file": "01-intro.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/rHgtQdKhzVW9hGmLeapjuO",
+        "title": "疾病介紹",
+        "category": "瘧疾／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-04-25",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "瘧疾",
+          "疾病介紹"
+        ],
+        "tab": ""
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro",
+      "manifestDerived": true,
+      "target": "disease.malaria",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.malaria"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.malaria"
+      ],
+      "outputs": [
+        {
+          "id": "disease.malaria",
+          "type": "disease",
+          "role": "merged",
+          "block": "transmission",
+          "file": "content/diseases/malaria.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 45 處（mso 樣式 17、Mso 類別 14、命名空間標籤 14）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「瘧疾／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（瘧疾）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "02-intro-pathogen",
+      "file": "02-intro-pathogen.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/rHgtQdKhzVW9hGmLeapjuO",
+        "title": "致病原",
+        "category": "瘧疾／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-04-25",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "瘧疾",
+          "疾病介紹",
+          "致病原"
+        ],
+        "tab": "pathogen"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-pathogen",
+      "manifestDerived": true,
+      "target": "disease.malaria",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.malaria"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.malaria"
+      ],
+      "outputs": [
+        {
+          "id": "disease.malaria",
+          "type": "disease",
+          "role": "merged",
+          "block": "transmission",
+          "file": "content/diseases/malaria.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 5 處（mso 樣式 3、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「瘧疾／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（瘧疾）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-pathogen（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "03-intro-epidemiology",
+      "file": "03-intro-epidemiology.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/rHgtQdKhzVW9hGmLeapjuO",
+        "title": "流行病學",
+        "category": "瘧疾／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-04-25",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "瘧疾",
+          "疾病介紹",
+          "流行病學"
+        ],
+        "tab": "epidemiology"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-epidemiology",
+      "manifestDerived": true,
+      "target": "disease.malaria",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.malaria"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.malaria"
+      ],
+      "outputs": [
+        {
+          "id": "disease.malaria",
+          "type": "disease",
+          "role": "merged",
+          "block": "situation",
+          "file": "content/diseases/malaria.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 63 處（mso 樣式 22、Mso 類別 21、命名空間標籤 20）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「瘧疾／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（瘧疾）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-epidemiology（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "image-no-alt",
+          "severity": "warn",
+          "message": "圖片「malaria-trend.png」舊頁沒有替代文字，暫用檔名「malaria-trend」，請補 alt（needsAlt）"
+        },
+        {
+          "code": "image-license-assumed",
+          "severity": "info",
+          "message": "圖片「malaria-trend.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 1,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "04-intro-transmission",
+      "file": "04-intro-transmission.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/rHgtQdKhzVW9hGmLeapjuO",
+        "title": "傳染方式",
+        "category": "瘧疾／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-04-25",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "瘧疾",
+          "疾病介紹",
+          "傳染方式"
+        ],
+        "tab": "transmission"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-transmission",
+      "manifestDerived": true,
+      "target": "disease.malaria",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.malaria"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.malaria"
+      ],
+      "outputs": [
+        {
+          "id": "disease.malaria",
+          "type": "disease",
+          "role": "merged",
+          "block": "transmission",
+          "file": "content/diseases/malaria.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 5 處（mso 樣式 3、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「瘧疾／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（瘧疾）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-transmission（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "05-intro-incubation",
+      "file": "05-intro-incubation.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/rHgtQdKhzVW9hGmLeapjuO",
+        "title": "潛伏期",
+        "category": "瘧疾／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-04-25",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "瘧疾",
+          "疾病介紹",
+          "潛伏期"
+        ],
+        "tab": "incubation"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-incubation",
+      "manifestDerived": true,
+      "target": "disease.malaria",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.malaria"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.malaria"
+      ],
+      "outputs": [
+        {
+          "id": "disease.malaria",
+          "type": "disease",
+          "role": "merged",
+          "block": "transmission",
+          "file": "content/diseases/malaria.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 23 處（mso 樣式 9、Mso 類別 7、命名空間標籤 7）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「瘧疾／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（瘧疾）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-incubation（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "06-intro-symptoms",
+      "file": "06-intro-symptoms.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/rHgtQdKhzVW9hGmLeapjuO",
+        "title": "發病症狀",
+        "category": "瘧疾／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-04-25",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "瘧疾",
+          "疾病介紹",
+          "發病症狀"
+        ],
+        "tab": "symptoms"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-symptoms",
+      "manifestDerived": true,
+      "target": "disease.malaria",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.malaria"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.malaria"
+      ],
+      "outputs": [
+        {
+          "id": "disease.malaria",
+          "type": "disease",
+          "role": "merged",
+          "block": "symptoms",
+          "file": "content/diseases/malaria.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 12 處（mso 樣式 6、Mso 類別 3、命名空間標籤 3）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「瘧疾／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（瘧疾）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-symptoms（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "07-intro-prevention",
+      "file": "07-intro-prevention.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/rHgtQdKhzVW9hGmLeapjuO",
+        "title": "預防方法",
+        "category": "瘧疾／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-04-25",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "瘧疾",
+          "疾病介紹",
+          "預防方法"
+        ],
+        "tab": "prevention"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-prevention",
+      "manifestDerived": true,
+      "target": "disease.malaria",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.malaria"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.malaria"
+      ],
+      "outputs": [
+        {
+          "id": "disease.malaria",
+          "type": "disease",
+          "role": "merged",
+          "block": "prevention",
+          "file": "content/diseases/malaria.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 18 處（mso 樣式 18、Mso 類別 4、命名空間標籤 0）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「瘧疾／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（瘧疾）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-prevention（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "08-intro-treatment",
+      "file": "08-intro-treatment.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/rHgtQdKhzVW9hGmLeapjuO",
+        "title": "治療方法與就醫資訊",
+        "category": "瘧疾／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-04-25",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "瘧疾",
+          "疾病介紹",
+          "治療方法"
+        ],
+        "tab": "treatment"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-treatment",
+      "manifestDerived": true,
+      "target": "disease.malaria",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.malaria"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.malaria"
+      ],
+      "outputs": [
+        {
+          "id": "disease.malaria",
+          "type": "disease",
+          "role": "merged",
+          "block": "treatment",
+          "file": "content/diseases/malaria.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「瘧疾／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（瘧疾）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-treatment（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "09-vaccine",
+      "file": "09-vaccine.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/dg4uL74VvlYRLHUOQypG8J",
+        "title": "預防接種建議",
+        "category": "瘧疾／預防接種",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-04-25",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "瘧疾",
+          "預防接種"
+        ],
+        "tab": "vaccine"
+      },
+      "pattern": "mpage",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "vaccine",
+      "manifestDerived": true,
+      "target": "disease.malaria",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.malaria"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.malaria"
+      ],
+      "outputs": [
+        {
+          "id": "disease.malaria",
+          "type": "disease",
+          "role": "merged",
+          "block": "vaccine",
+          "file": "content/diseases/malaria.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「瘧疾／預防接種」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（瘧疾）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 vaccine（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "10-qa-list",
+      "file": "10-qa-list.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/QAPage/Fpb_HE3bigFTOpCIKFyaTC",
+        "title": "Q&A",
+        "category": "瘧疾／Q&A",
+        "publishedAt": "2018-06-01",
+        "updatedAt": "2026-04-25",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "瘧疾",
+          "Q&A"
+        ],
+        "tab": ""
+      },
+      "pattern": "qa",
+      "kind": "faq",
+      "type": "faq",
+      "manifestKey": "qa-list",
+      "manifestDerived": true,
+      "target": "disease.malaria",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "faq.travel-malaria-prevention",
+        "faq.travel-return-fever",
+        "disease.malaria"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.malaria"
+      ],
+      "outputs": [
+        {
+          "id": "faq.travel-malaria-prevention",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/travel-malaria-prevention.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.travel-return-fever",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/travel-return-fever.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 14 處（mso 樣式 6、Mso 類別 4、命名空間標籤 4）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「瘧疾／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（瘧疾）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "tasks-from-keywords",
+          "severity": "info",
+          "message": "tasks 依題目關鍵字給：「去非洲需要吃瘧疾預防藥嗎？」→ symptoms；「出國回來後發燒，應該怎麼辦？」→ travel、symptoms"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "11-materials-poster",
+      "file": "11-materials-poster.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/3K9OACAcjzyugn-ntFG-8q",
+        "title": "衛教宣導：單張海報",
+        "category": "瘧疾／衛教宣導",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-04-25",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "瘧疾",
+          "衛教宣導",
+          "單張海報"
+        ],
+        "tab": "posters"
+      },
+      "pattern": "category-list",
+      "kind": "publication",
+      "type": "publication",
+      "manifestKey": "materials-poster",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.malaria"
+      ],
+      "outputs": [
+        {
+          "id": "publication.malaria-materials-poster",
+          "type": "publication",
+          "role": "draft",
+          "file": "content/publications/malaria-materials-poster.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 4 處（mso 樣式 1、Mso 類別 2、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「瘧疾／衛教宣導」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（瘧疾）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 materials-poster（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 publication，草稿直接建成 publication，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "pdf-no-text-layer",
+          "severity": "warn",
+          "message": "PDF「malaria-poster-7lang.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+        },
+        {
+          "code": "image-no-alt",
+          "severity": "warn",
+          "message": "圖片「malaria-poster.png」舊頁沒有替代文字，暫用檔名「malaria-poster」，請補 alt（needsAlt）"
+        },
+        {
+          "code": "image-license-assumed",
+          "severity": "info",
+          "message": "圖片「malaria-poster.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 1,
+        "links": 5,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "12-materials-video",
+      "file": "12-materials-video.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/ixp4ZCl5myaV2qJ7OTGnfW",
+        "title": "衛教宣導：影片",
+        "category": "瘧疾／衛教宣導",
+        "publishedAt": "2026-06-12",
+        "updatedAt": "2026-04-25",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "瘧疾",
+          "衛教宣導",
+          "影音"
+        ],
+        "tab": "video"
+      },
+      "pattern": "mpage",
+      "kind": "media",
+      "type": "media",
+      "manifestKey": "materials-video",
+      "manifestDerived": true,
+      "target": "media.travel-clinic-before-departure",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "media.travel-clinic-before-departure"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.malaria"
+      ],
+      "outputs": [
+        {
+          "id": "media.travel-clinic-before-departure",
+          "type": "media",
+          "role": "draft",
+          "file": "content/media/travel-clinic-before-departure.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 31 處（mso 樣式 13、Mso 類別 9、命名空間標籤 9）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「瘧疾／衛教宣導」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（瘧疾）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 materials-video（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 media（media.travel-clinic-before-departure），草稿直接建成 media，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "模擬匯出的影片 id 為示意值"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "13-manual",
+      "file": "13-manual.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/DiseaseManual/FRQyrVcdgDWNFmkV6h7TS-",
+        "title": "工作手冊",
+        "category": "瘧疾／法規與指引",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-04-25",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "瘧疾",
+          "法規與指引",
+          "工作手冊"
+        ],
+        "tab": ""
+      },
+      "pattern": "disease-docs",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "manual",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.malaria"
+      ],
+      "outputs": [
+        {
+          "id": "doc.malaria-manual.2018-03-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/malaria-manual.2018-03-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「瘧疾／法規與指引」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（瘧疾）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 manual（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（37 字，低於 40）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2018-03-01"
+        },
+        {
+          "code": "pdf-only",
+          "severity": "warn",
+          "message": "舊頁內文只有下載連結，正本是 PDF「瘧疾防治工作手冊」；machineReadableMarkdown 以（待補）佔位，PDF 不整批轉（第 8 節），上架前請提供文字版"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "info",
+          "message": "待補欄位：machineReadableMarkdown（正本文字版）"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "14-case-definition",
+      "file": "14-case-definition.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/DiseaseDefine/p72ND-ToODW0L2bXjyoIno",
+        "title": "病例定義",
+        "category": "瘧疾／法規與指引",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-04-25",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "瘧疾",
+          "法規與指引",
+          "病例定義"
+        ],
+        "tab": ""
+      },
+      "pattern": "disease-docs",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "case-definition",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.malaria"
+      ],
+      "outputs": [
+        {
+          "id": "doc.malaria-case-definition.2018-03-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/malaria-case-definition.2018-03-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「瘧疾／法規與指引」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（瘧疾）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 case-definition（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（37 字，低於 40）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2018-03-01"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "15-guideline",
+      "file": "15-guideline.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/File/Get/dq8AOAR8DbFEQULkQBy7Fu",
+        "title": "治療指引",
+        "category": "瘧疾／法規與指引",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-04-25",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "瘧疾",
+          "法規與指引",
+          "治療指引"
+        ],
+        "tab": ""
+      },
+      "pattern": "file",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "guideline",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.malaria"
+      ],
+      "outputs": [
+        {
+          "id": "doc.malaria-guideline.2018-03-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/malaria-guideline.2018-03-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「瘧疾／法規與指引」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（瘧疾）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 guideline（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（37 字，低於 40）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2018-03-01"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "16-stats",
+      "file": "16-stats.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/65a9cxGB--xB7NQ4IsERQr",
+        "title": "統計資料",
+        "category": "瘧疾／統計資料",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-04-25",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "瘧疾",
+          "統計資料"
+        ],
+        "tab": "statistics"
+      },
+      "pattern": "category-list",
+      "kind": "dataset",
+      "type": "dataset",
+      "manifestKey": "stats",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "／統計資料",
+      "diseases": [
+        "disease.malaria"
+      ],
+      "outputs": [
+        {
+          "id": "dataset.malaria-stats",
+          "type": "dataset",
+          "role": "draft",
+          "file": "content/datasets/malaria-stats.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 61 處（mso 樣式 21、Mso 類別 20、命名空間標籤 20）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 stats（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 dataset，草稿直接建成 dataset，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "series-extracted",
+          "severity": "info",
+          "message": "5 點、2021–2025、人（確定病例數（示意））；另有欄位：每十萬人口發生率（示意）"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "17-lab",
+      "file": "17-lab.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/OuIJKtMV2X64PXwMLLYzyd",
+        "title": "檢驗資訊",
+        "category": "瘧疾／檢驗資訊",
+        "publishedAt": "2025-01-15",
+        "updatedAt": "2026-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "瘧疾",
+          "檢驗資訊"
+        ],
+        "tab": "lab"
+      },
+      "pattern": "mpage",
+      "kind": "labtest",
+      "type": "labtest",
+      "manifestKey": "lab",
+      "manifestDerived": true,
+      "target": "labtest.malaria",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "labtest.malaria"
+      ],
+      "owner": "unit.lab",
+      "ownerRule": "／檢驗",
+      "diseases": [
+        "disease.malaria"
+      ],
+      "outputs": [
+        {
+          "id": "labtest.malaria",
+          "type": "labtest",
+          "role": "draft",
+          "file": "content/labtests/malaria.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 40 處（mso 樣式 22、Mso 類別 12、命名空間標籤 9）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 lab（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 labtest（labtest.malaria），草稿直接建成 labtest，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "labtest 的欄位從舊頁看不出來，以「（待補）」佔位：specimens[].container/volume/storage/transport"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "labs 暫填 cdc-lab（署檢驗中心），合約與區域實驗室請檢驗中心確認"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "18-notify",
+      "file": "18-notify.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/FDBY5A3AUBd4Lp55-UYU11",
+        "title": "通報定義與時限",
+        "category": "瘧疾／通報定義",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-04-25",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "瘧疾",
+          "通報定義"
+        ],
+        "tab": "notify"
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "notify",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "／通報",
+      "diseases": [
+        "disease.malaria"
+      ],
+      "outputs": [
+        {
+          "id": "page.malaria-notify",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/malaria-notify.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 38 處（mso 樣式 14、Mso 類別 12、命名空間標籤 12）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 notify（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "19-news-list",
+      "file": "19-news-list.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/List/iqmTjxhPPDtazmciYK8Enh",
+        "title": "新聞稿列表",
+        "category": "瘧疾／最新消息",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-04-25",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "瘧疾",
+          "最新消息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "news-list",
+      "manifestDerived": true,
+      "target": "disease.malaria",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.malaria"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.malaria"
+      ],
+      "outputs": [
+        {
+          "id": "page.malaria-news-list",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/malaria-news-list.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.4,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": true,
+      "issues": [
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「瘧疾／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（瘧疾）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 news-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（0 字，低於 40）"
+        },
+        {
+          "code": "target-type-differs",
+          "severity": "info",
+          "message": "對應的新站內容是 disease.malaria（disease），草稿以 page 暫存，請比對後改建為 disease"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "20-links",
+      "file": "20-links.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/T80GFMPXnClEqkc78aDFWl",
+        "title": "相關連結",
+        "category": "瘧疾／相關連結",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-04-25",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "瘧疾",
+          "相關連結"
+        ],
+        "tab": "links"
+      },
+      "pattern": "category-list",
+      "kind": "topic",
+      "type": "topic",
+      "manifestKey": "links",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.malaria"
+      ],
+      "outputs": [
+        {
+          "id": "topic.malaria-links",
+          "type": "topic",
+          "role": "draft",
+          "file": "content/topics/malaria-links.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「瘧疾／相關連結」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（瘧疾）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 links（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 topic，草稿直接建成 topic，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "4 個連結 status 填 unchecked，由連結檢查更新；3 個站外"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 4,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    }
+  ],
+  "drafts": [
+    {
+      "id": "faq.travel-malaria-prevention",
+      "type": "faq",
+      "title": "去非洲需要吃瘧疾預防藥嗎？",
+      "file": "content/faq/travel-malaria-prevention.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.travel-malaria-prevention"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.travel-return-fever",
+      "type": "faq",
+      "title": "出國回來後發燒，應該怎麼辦？",
+      "file": "content/faq/travel-return-fever.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.travel-return-fever"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "publication.malaria-materials-poster",
+      "type": "publication",
+      "title": "瘧疾衛教宣導：單張海報",
+      "file": "content/publications/malaria-materials-poster.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 2,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "11-materials-poster"
+      ],
+      "merged": false
+    },
+    {
+      "id": "media.travel-clinic-before-departure",
+      "type": "media",
+      "title": "瘧疾衛教宣導：影片",
+      "file": "content/media/travel-clinic-before-departure.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "media.travel-clinic-before-departure"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "12-materials-video"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.malaria-manual.2018-03-01",
+      "type": "document",
+      "title": "工作手冊",
+      "file": "content/documents/malaria-manual.2018-03-01.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "13-manual"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.malaria-case-definition.2018-03-01",
+      "type": "document",
+      "title": "病例定義",
+      "file": "content/documents/malaria-case-definition.2018-03-01.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "14-case-definition"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.malaria-guideline.2018-03-01",
+      "type": "document",
+      "title": "治療指引",
+      "file": "content/documents/malaria-guideline.2018-03-01.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "15-guideline"
+      ],
+      "merged": false
+    },
+    {
+      "id": "dataset.malaria-stats",
+      "type": "dataset",
+      "title": "瘧疾統計資料",
+      "file": "content/datasets/malaria-stats.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "16-stats"
+      ],
+      "merged": false
+    },
+    {
+      "id": "labtest.malaria",
+      "type": "labtest",
+      "title": "瘧疾檢驗資訊",
+      "file": "content/labtests/malaria.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "labtest.malaria"
+      ],
+      "status": "review",
+      "owner": "unit.lab",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "17-lab"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.malaria-notify",
+      "type": "page",
+      "title": "通報定義與時限",
+      "file": "content/pages/malaria-notify.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "18-notify"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.malaria-news-list",
+      "type": "page",
+      "title": "新聞稿列表",
+      "file": "content/pages/malaria-news-list.json",
+      "confidence": 0.4,
+      "existing": true,
+      "compareWith": [
+        "disease.malaria"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "19-news-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "topic.malaria-links",
+      "type": "topic",
+      "title": "瘧疾相關連結",
+      "file": "content/topics/malaria-links.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "20-links"
+      ],
+      "merged": false
+    },
+    {
+      "id": "disease.malaria",
+      "type": "disease",
+      "title": "瘧疾",
+      "file": "content/diseases/malaria.json",
+      "confidence": 0.98,
+      "existing": true,
+      "compareWith": [
+        "disease.malaria"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "01-intro",
+        "02-intro-pathogen",
+        "03-intro-epidemiology",
+        "04-intro-transmission",
+        "05-intro-incubation",
+        "06-intro-symptoms",
+        "07-intro-prevention",
+        "08-intro-treatment",
+        "09-vaccine"
+      ],
+      "merged": true
+    }
+  ],
+  "sampling": {
+    "rate": 0.1,
+    "autoOk": 0,
+    "picked": []
+  },
+  "migration": {
+    "patchFile": "migration-patch.json",
+    "applied": false,
+    "summary": {
+      "derivedItems": 20,
+      "derivedMatched": 20,
+      "items": 0,
+      "matched": 0,
+      "missingPages": 0,
+      "unmatchedPages": 0,
+      "agree": 0,
+      "conflicts": 0,
+      "statusChanges": 0,
+      "pendingToMigrated": 0,
+      "targetChanges": 0,
+      "newPathChanges": 0,
+      "noteChanges": 0,
+      "stillPending": 0
+    }
+  }
+}

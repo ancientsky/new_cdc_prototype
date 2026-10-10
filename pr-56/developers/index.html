@@ -1,0 +1,1313 @@
+<!doctype html>
+<html lang="zh-TW" dir="ltr" data-base="/new_cdc_prototype/preview/pr-56" data-lang-path="" data-view="public">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>開發者入口 · API 與機讀版 · 疾管署</title>
+<meta name="description" content="疾管署 AI-ready 新官網的 JSON API、OpenAPI、llms.txt、每頁 .md 機讀版、JSON-LD 與 cdc: 治理詞彙表；授權為政府資料開放授權條款第 1 版。">
+<meta name="theme-color" content="#1b5e3f">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; viewBox=&#39;0 0 32 32&#39;%3E%3Crect width=&#39;32&#39; height=&#39;32&#39; rx=&#39;7&#39; fill=&#39;%231b5e3f&#39;/%3E%3Cpath d=&#39;M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z&#39; fill=&#39;%23fff&#39;/%3E%3C/svg%3E">
+<link rel="canonical" href="https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/">
+<link rel="alternate" hreflang="zh-TW" href="https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/">
+<link rel="alternate" hreflang="x-default" href="https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:title" content="開發者入口 · API 與機讀版 · 疾管署"><meta property="og:description" content="疾管署 AI-ready 新官網的 JSON API、OpenAPI、llms.txt、每頁 .md 機讀版、JSON-LD 與 cdc: 治理詞彙表；授權為政府資料開放授權條款第 1 版。"><meta property="og:type" content="website"><meta property="og:site_name" content="衛生福利部疾病管制署"><meta property="og:url" content="https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/"><meta property="og:locale" content="zh_TW">
+<script>try{var d=document.documentElement;d.classList.add('js');var v=new URLSearchParams(location.search).get('view')||localStorage.getItem('cdc.view');if(v==='pro')d.dataset.view='pro'}catch(e){document.documentElement.classList.add('js')}</script>
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/tokens.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/base.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/components.css">
+
+
+</head>
+<body class="">
+<a class="skip-link" href="#main">跳到主要內容</a>
+<div class="c-proto-banner" role="region" aria-label="非官方原型" data-proto-banner><div class="wrap c-proto-banner__in"><strong>非官方原型</strong> <span>這是新官網的設計原型，疫情數字與內容為示意，不是衛生福利部疾病管制署的正式網站。</span> <a href="https://www.cdc.gov.tw/" rel="external noopener">前往正式官網 www.cdc.gov.tw</a></div></div>
+<div class="topbar"><div class="wrap topbar__in">
+  <nav class="langs langs--inline" aria-label="語言"><a href="/new_cdc_prototype/preview/pr-56/developers/" data-lang-path="" data-same="1" hreflang="zh-TW" lang="zh-TW" aria-current="true">繁體中文</a><a href="/new_cdc_prototype/preview/pr-56/en/" data-lang-path="/en" data-same="0" hreflang="en" lang="en" >English</a><a href="/new_cdc_prototype/preview/pr-56/ja/" data-lang-path="/ja" data-same="0" hreflang="ja" lang="ja" >日本語</a><a href="/new_cdc_prototype/preview/pr-56/tl/" data-lang-path="/tl" data-same="0" hreflang="tl" lang="tl" >Tagalog</a><a href="/new_cdc_prototype/preview/pr-56/vi/" data-lang-path="/vi" data-same="0" hreflang="vi" lang="vi" >Tiếng Việt</a><a href="/new_cdc_prototype/preview/pr-56/id/" data-lang-path="/id" data-same="0" hreflang="id" lang="id" >Bahasa Indonesia</a><a href="/new_cdc_prototype/preview/pr-56/th/" data-lang-path="/th" data-same="0" hreflang="th" lang="th" >ไทย</a></nav>
+  <details class="langmenu">
+    <summary class="langmenu__btn">🌐 語言／Language</summary>
+    <nav class="langmenu__list" aria-label="語言"><a href="/new_cdc_prototype/preview/pr-56/developers/" data-lang-path="" data-same="1" hreflang="zh-TW" lang="zh-TW" aria-current="true">繁體中文</a><a href="/new_cdc_prototype/preview/pr-56/en/" data-lang-path="/en" data-same="0" hreflang="en" lang="en" >English</a><a href="/new_cdc_prototype/preview/pr-56/ja/" data-lang-path="/ja" data-same="0" hreflang="ja" lang="ja" >日本語</a><a href="/new_cdc_prototype/preview/pr-56/tl/" data-lang-path="/tl" data-same="0" hreflang="tl" lang="tl" >Tagalog</a><a href="/new_cdc_prototype/preview/pr-56/vi/" data-lang-path="/vi" data-same="0" hreflang="vi" lang="vi" >Tiếng Việt</a><a href="/new_cdc_prototype/preview/pr-56/id/" data-lang-path="/id" data-same="0" hreflang="id" lang="id" >Bahasa Indonesia</a><a href="/new_cdc_prototype/preview/pr-56/th/" data-lang-path="/th" data-same="0" hreflang="th" lang="th" >ไทย</a></nav>
+  </details>
+  <nav class="topbar__links" aria-label="工具列"><a href="/new_cdc_prototype/preview/pr-56/accessibility/">無障礙</a><a href="/new_cdc_prototype/preview/pr-56/sitemap-page/">網站導覽</a><a href="/new_cdc_prototype/preview/pr-56/search/">全文搜尋</a><a class="hotline" href="tel:1922">防疫專線 1922</a></nav>
+</div></div>
+<header class="site-header"><div class="wrap site-header__in">
+  <a class="brand" href="/new_cdc_prototype/preview/pr-56/"><span class="brand__mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="40" height="40"><rect width="32" height="32" rx="8" fill="currentColor"/><path d="M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z" fill="#fff"/></svg></span><span class="brand__text"><span class="brand__name">衛生福利部疾病管制署</span><span class="brand__sub">Taiwan Centers for Disease Control</span></span></a>
+  <div class="audience" role="group" aria-label="身分">
+    <a class="audience__btn" href="/new_cdc_prototype/preview/pr-56/?view=public" data-view-set="public" aria-current="page">民眾</a>
+    <a class="audience__btn" href="/new_cdc_prototype/preview/pr-56/pro/?view=pro" data-view-set="pro" >醫事與防疫人員</a>
+    <a class="audience__btn" href="/new_cdc_prototype/preview/pr-56/developers/">研究與媒體</a>
+  </div>
+  <button type="button" class="c-nav__toggle" aria-expanded="false" aria-controls="main-nav">選單</button>
+</div>
+<nav id="main-nav" class="c-nav" aria-label="主選單"><div class="wrap c-nav__in"><a href="/new_cdc_prototype/preview/pr-56/diseases/" >傳染病</a><a href="/new_cdc_prototype/preview/pr-56/vaccines/" >疫苗</a><a href="/new_cdc_prototype/preview/pr-56/travel/" >出國與入境</a><a href="/new_cdc_prototype/preview/pr-56/situation/" >現在的疫情</a><a href="/new_cdc_prototype/preview/pr-56/factcheck/" >謠言查證</a><a href="/new_cdc_prototype/preview/pr-56/data/" >開放資料與統計</a><a href="/new_cdc_prototype/preview/pr-56/news/" >新聞與公告</a><a href="/new_cdc_prototype/preview/pr-56/faq/" >常見問答</a><a class="c-nav__pro c-pro-only" href="/new_cdc_prototype/preview/pr-56/pro/">醫事與防疫人員</a></div>
+  <div class="wrap c-nav__langs"><p class="c-nav__langs-t" id="nav-langs-t">🌐 語言／Language</p><div class="c-nav__langs-l" role="group" aria-labelledby="nav-langs-t"><a href="/new_cdc_prototype/preview/pr-56/developers/" data-lang-path="" data-same="1" hreflang="zh-TW" lang="zh-TW" aria-current="true">繁體中文</a><a href="/new_cdc_prototype/preview/pr-56/en/" data-lang-path="/en" data-same="0" hreflang="en" lang="en" >English</a><a href="/new_cdc_prototype/preview/pr-56/ja/" data-lang-path="/ja" data-same="0" hreflang="ja" lang="ja" >日本語</a><a href="/new_cdc_prototype/preview/pr-56/tl/" data-lang-path="/tl" data-same="0" hreflang="tl" lang="tl" >Tagalog</a><a href="/new_cdc_prototype/preview/pr-56/vi/" data-lang-path="/vi" data-same="0" hreflang="vi" lang="vi" >Tiếng Việt</a><a href="/new_cdc_prototype/preview/pr-56/id/" data-lang-path="/id" data-same="0" hreflang="id" lang="id" >Bahasa Indonesia</a><a href="/new_cdc_prototype/preview/pr-56/th/" data-lang-path="/th" data-same="0" hreflang="th" lang="th" >ไทย</a></div></div></nav>
+</header>
+
+<main id="main" class="wrap"><style>
+.pf { padding-block: var(--sp-5) var(--sp-7); }
+.pf h1 { font-size: var(--fs-2xl); margin: 0 0 var(--sp-2); }
+.pf h2 { font-size: var(--fs-xl); margin: var(--sp-6) 0 var(--sp-3); }
+.pf h3 { font-size: var(--fs-lg); margin: var(--sp-5) 0 var(--sp-2); }
+.pf p, .pf li { line-height: 1.7; }
+.pf .muted, .pf small { color: var(--ink-3); }
+.pf a { color: var(--green-700); }
+.pf code { overflow-wrap: anywhere; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .92em; background: var(--green-50); padding: 1px 5px; border-radius: 4px; }
+.pf pre { background: var(--ink); color: #f1f3f5; padding: var(--sp-4); border-radius: var(--radius-sm); overflow-x: auto; font-size: var(--fs-sm); line-height: 1.55; }
+.pf pre code { background: none; padding: 0; color: inherit; }
+.pf .c-status-tag { white-space: nowrap; }
+.pf-bar { display: flex; flex-wrap: wrap; gap: var(--sp-3); justify-content: space-between; align-items: center; background: var(--navy-700); color: #fff; border-radius: var(--radius); padding: var(--sp-3) var(--sp-5); }
+.pf-bar strong { font-size: var(--fs-lg); }
+.pf-bar small { color: #cfd5e6; display: block; }
+.pf-grid { display: grid; gap: var(--sp-5); grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); align-items: start; margin-top: var(--sp-5); }
+.pf-grid > div { display: grid; gap: var(--sp-4); min-width: 0; }
+@media (max-width: 860px) { .pf-grid { grid-template-columns: 1fr; } }
+.pf-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--sp-4) var(--sp-5); box-shadow: var(--shadow); min-width: 0; }
+.pf-card > h2, .pf-card > h3 { margin-top: 0; }
+.pf-card--letter { background: #fff6d9; border-color: #e3c966; }
+.pf-card--note { background: var(--green-50); border-color: var(--green-100); }
+.pf-pills { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin: var(--sp-2) 0 0; padding: 0; list-style: none; }
+.pf-pill, .pf-chip { font: inherit; font-size: var(--fs-sm); border: 1px solid var(--line); background: var(--white); color: var(--ink); border-radius: var(--radius-pill); padding: 8px 16px; min-height: 40px; cursor: pointer; }
+.pf-pill[aria-pressed="true"], .pf-chip[aria-pressed="true"] { background: var(--green-700); border-color: var(--green-700); color: #fff; }
+.pf-chip[aria-pressed="true"]::before { content: "✓ "; }
+.pf-pill:focus-visible, .pf-chip:focus-visible, .pf-btn:focus-visible { outline: var(--focus); outline-offset: 2px; }
+.pf-ask { display: flex; gap: var(--sp-2); margin-top: var(--sp-2); }
+.pf-ask input[type="search"] { flex: 1; min-width: 0; font: inherit; padding: 12px 14px; border: 2px solid var(--navy-700); border-radius: var(--radius-sm); }
+.pf-btn { font: inherit; font-size: var(--fs-sm); border: 1px solid var(--line); background: var(--white); color: var(--ink); border-radius: var(--radius-sm); padding: 8px 14px; min-height: 40px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+.pf-btn--navy { background: var(--navy-700); border-color: var(--navy-700); color: #fff; padding-inline: var(--sp-5); font-size: var(--fs-md); }
+.pf-btn--primary { background: var(--green-700); border-color: var(--green-700); color: #fff; }
+.pf .pf-btn--navy, .pf .pf-btn--primary { color: #fff; }
+.pf-hint { font-size: var(--fs-sm); color: var(--ink-2); margin: var(--sp-2) 0 0; }
+.pf-badge { display: inline-block; font-size: var(--fs-xs); border-radius: var(--radius-pill); padding: 2px 10px; background: var(--navy-100); color: var(--navy-700); }
+.pf-badge--ok { background: var(--status-stable-bg); color: var(--status-stable); }
+.pf-badge--warn { background: var(--alert-overdue-bg); color: var(--alert-overdue); }
+.pf-badge--bad { background: var(--alert-superseded-bg); color: var(--alert-superseded); }
+.pf-rows { list-style: none; margin: var(--sp-3) 0 0; padding: 0; }
+.pf-rows > li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--sp-2) var(--sp-4); align-items: center; padding: var(--sp-3) 0; border-top: 1px solid var(--line); }
+.pf-rows > li.is-match { background: linear-gradient(90deg, var(--green-50), transparent); }
+.pf-rows .pf-row__title { font-weight: 600; }
+.pf-rows .pf-row__ver { color: var(--ink-2); font-size: var(--fs-sm); }
+.pf-rows .pf-row__old { color: var(--ink-3); font-size: var(--fs-xs); }
+.pf-rows [hidden] { display: none; }
+.pf-tasks { display: grid; gap: var(--sp-3); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 560px) { .pf-tasks { grid-template-columns: 1fr; } }
+.pf-task { display: block; border: 1px solid var(--line); border-radius: var(--radius); padding: var(--sp-4); background: var(--white); color: var(--ink); text-decoration: none; }
+.pf-task:hover { border-color: var(--green-700); }
+.pf-task.is-match { border-color: var(--green-700); box-shadow: inset 0 0 0 1px var(--green-700); }
+.pf-task strong { display: block; font-size: var(--fs-md); }
+.pf-task span { color: var(--ink-2); font-size: var(--fs-sm); }
+.pf-table { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); }
+.pf-table th, .pf-table td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+.pf-table th { background: var(--green-50); font-weight: 600; white-space: nowrap; }
+.pf-table-wrap { overflow-x: auto; }
+.pf-tiles { display: grid; gap: var(--sp-3); grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 760px) { .pf-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.pf-tile { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--sp-4); }
+.pf-tile b { display: block; font-size: var(--fs-2xl); line-height: 1.1; color: var(--green-900); }
+.pf-tile span { display: block; font-size: var(--fs-sm); color: var(--ink-2); margin-top: var(--sp-1); }
+.pf-tile small { display: block; margin-top: var(--sp-1); }
+.pf-bar-row { display: grid; grid-template-columns: 8em minmax(0, 1fr) 9.5em; gap: var(--sp-3); align-items: center; padding: 6px 0; font-size: var(--fs-sm); }
+.pf-bar-row i { display: block; height: 14px; border-radius: 7px; background: var(--line); overflow: hidden; }
+.pf-bar-row i > em { display: block; height: 100%; background: var(--status-stable); }
+.pf-bar-row i > em.is-low { background: var(--status-rising); }
+.pf-bar-row i > em.is-bad { background: var(--status-peak); }
+.pf-shot { border: 2px dashed var(--line); border-radius: var(--radius); background: var(--paper); color: var(--ink-3); padding: var(--sp-5); text-align: center; font-size: var(--fs-sm); margin: var(--sp-3) 0; }
+.pf-tabs { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin: var(--sp-4) 0; padding: 0; list-style: none; border-bottom: 2px solid var(--line); }
+.pf-tabs a { display: block; padding: 10px 18px; text-decoration: none; color: var(--ink-2); border-radius: var(--radius-sm) var(--radius-sm) 0 0; font-weight: 600; }
+.pf-tabs a[aria-current="true"] { background: var(--green-700); color: #fff; }
+.pf-steps { counter-reset: step; list-style: none; padding: 0; display: grid; gap: var(--sp-3); }
+.pf-steps > li { counter-increment: step; position: relative; padding-left: 44px; }
+.pf-steps > li::before { content: counter(step); position: absolute; left: 0; top: 0; width: 30px; height: 30px; border-radius: 50%; background: var(--green-700); color: #fff; display: grid; place-items: center; font-weight: 700; }
+[data-tabs="on"] > section[data-tab] { display: none; }
+[data-tabs="on"] > section[data-tab].is-active { display: block; }
+.pf dl.pf-dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: var(--sp-2) var(--sp-4); }
+.pf dl.pf-dl dt { font-weight: 600; }
+.pf dl.pf-dl dd { margin: 0; }
+@media (max-width: 560px) { .pf dl.pf-dl { grid-template-columns: 1fr; } }
+.pf details.pf-ep { border: 1px solid var(--line); border-radius: var(--radius-sm); margin: var(--sp-2) 0; background: var(--white); }
+.pf details.pf-ep > summary { cursor: pointer; padding: 10px 14px; display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-3); align-items: baseline; }
+.pf details.pf-ep > div { padding: 0 14px 14px; }
+.pf-get { font-size: var(--fs-xs); font-weight: 700; background: var(--status-stable-bg); color: var(--status-stable); padding: 1px 8px; border-radius: 4px; }
+@media print { .pf-bar { background: none; color: #000; border: 1px solid #000; } }
+</style>
+<div class="pf" id="top">
+  <h1>開發者入口</h1>
+  <p class="lead">內容只存一份；網頁、API、機讀版、AI 索引都是它的消費者。這裡說明怎麼取用、怎麼引用，以及每個欄位的意思。</p>
+  <nav aria-label="本頁目錄"><ul class="pf-pills">
+    <li><a class="pf-btn" href="#quick">快速開始</a></li><li><a class="pf-btn" href="#meta">meta 外殼</a></li><li><a class="pf-btn" href="#endpoints">端點</a></li><li><a class="pf-btn" href="#openapi">OpenAPI</a></li><li><a class="pf-btn" href="#limits">限流與金鑰</a></li><li><a class="pf-btn" href="#events">變更事件</a></li><li><a class="pf-btn" href="#machine">機讀版</a></li><li><a class="pf-btn" href="#vocab">cdc: 詞彙表</a></li><li><a class="pf-btn" href="#license">授權與引用</a></li><li><a class="pf-btn" href="#embed">嵌入範例</a></li><li><a class="pf-btn" href="#vaxmap">相關服務：接種點地圖</a></li><li><a class="pf-btn" href="#redirects">舊網址對照</a></li>
+  </ul></nav>
+
+  <section id="quick" aria-labelledby="quick-h">
+    <h2 id="quick-h">快速開始</h2>
+    <p>所有端點都是靜態 JSON，直接 GET 即可；原型部署在 GitHub Pages，免註冊、免金鑰。</p>
+    <pre tabindex="0"><code>curl -s https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/documents.json | jq &#39;.data[] | select(.isCurrent) | {id, version, effectiveAt, supersedes}&#39;</code></pre>
+    <p>Base URL：<code>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/</code>。完整描述檔：<a href="/new_cdc_prototype/preview/pr-56/openapi.json">openapi.json</a>。</p>
+  </section>
+
+  <section id="meta" aria-labelledby="meta-h">
+    <h2 id="meta-h">meta 外殼</h2>
+    <p>每個 <code>v1/*.json</code> 都長一樣：<code>{ "meta": {…}, "data": … }</code>。</p>
+    <div class="pf-table-wrap"><table class="pf-table"><thead><tr><th>欄位</th><th>意思</th></tr></thead><tbody>
+      <tr><th scope="row"><code>meta.api</code></th><td>API 版本，目前 <code>v1</code>。破壞性變更會開 <code>v2</code>，v1 至少並行一年。</td></tr>
+      <tr><th scope="row"><code>meta.generatedAt</code></th><td>這份檔案的產生時間（UTC）。每日排程重建，所以最久不超過一天。</td></tr>
+      <tr><th scope="row"><code>meta.license</code></th><td>授權代碼，預設 <code>OGDL-1.0</code>；個別資料集例外時在 data 內另有 <code>license</code>。</td></tr>
+      <tr><th scope="row"><code>meta.etag</code></th><td>內容雜湊。內容沒變就不變，可做條件式請求（<code>If-None-Match</code>）。</td></tr>
+      <tr><th scope="row"><code>meta.lastModified</code></th><td>資料內容最後變動時間，不等於產生時間。</td></tr>
+      <tr><th scope="row"><code>meta.source</code>、<code>meta.docs</code></th><td>正本網站與本文件的網址。</td></tr>
+    </tbody></table></div>
+    <p class="muted">原型現況：<code>generatedAt</code>、<code>license</code>、<code>source</code>、<code>docs</code> 已輸出；<code>etag</code>、<code>lastModified</code> 隨 API 輸出模組補齊（GitHub Pages 也會在 HTTP 標頭送出 ETag 與 Last-Modified）。下方範例的時間為建置日 2026-10-01，屬示意。</p>
+  </section>
+
+  <section id="endpoints" aria-labelledby="ep-h">
+    <h2 id="ep-h">端點與範例回應</h2>
+    <p>展開每個端點可看到說明與真實建置資料的前兩筆（欄位已縮減，長文字截斷）。</p>
+    <details class="pf-ep"><summary><span class="pf-get">GET</span> <code>/v1/diseases.json</code> <span class="muted">傳染病主檔（法定類別、ICD-10、通報時限、別名）與是否已有疾病頁</span></summary><div>
+        <p><a href="/new_cdc_prototype/preview/pr-56/v1/diseases.json">開啟 /v1/diseases.json</a></p>
+        <pre tabindex="0"><code>{
+  &quot;meta&quot;: {
+    &quot;api&quot;: &quot;v1&quot;,
+    &quot;generatedAt&quot;: &quot;2026-10-01T03:00:00Z&quot;,
+    &quot;license&quot;: &quot;OGDL-1.0&quot;,
+    &quot;source&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/&quot;,
+    &quot;docs&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/&quot;,
+    &quot;etag&quot;: &quot;\&quot;…\&quot;&quot;,
+    &quot;lastModified&quot;: &quot;2026-10-01T03:00:00Z&quot;
+  },
+  &quot;data&quot;: [
+    {
+      &quot;id&quot;: &quot;disease.smallpox&quot;,
+      &quot;slug&quot;: &quot;smallpox&quot;,
+      &quot;name&quot;: &quot;天花&quot;,
+      &quot;nameEn&quot;: &quot;Smallpox&quot;,
+      &quot;aliases&quot;: [
+        &quot;Variola&quot;,
+        &quot;痘瘡&quot;
+      ],
+      &quot;legalCategory&quot;: 1,
+      &quot;icd10&quot;: [
+        &quot;B03&quot;
+      ],
+      &quot;notifyWithinHours&quot;: 24,
+      &quot;transmission&quot;: [
+        &quot;droplet&quot;,
+        &quot;contact&quot;
+      ],
+      &quot;hasPage&quot;: false,
+      &quot;owner&quot;: &quot;unit.preparedness&quot;,
+      &quot;zhuyin&quot;: &quot;ㄊ&quot;,
+      &quot;…&quot;: &quot;其餘欄位省略&quot;
+    },
+    {
+      &quot;id&quot;: &quot;disease.plague&quot;,
+      &quot;slug&quot;: &quot;plague&quot;,
+      &quot;name&quot;: &quot;鼠疫&quot;,
+      &quot;nameEn&quot;: &quot;Plague&quot;,
+      &quot;aliases&quot;: [
+        &quot;黑死病&quot;,
+        &quot;Yersinia pestis&quot;
+      ],
+      &quot;legalCategory&quot;: 1,
+      &quot;icd10&quot;: [
+        &quot;A20&quot;
+      ],
+      &quot;notifyWithinHours&quot;: 24,
+      &quot;transmission&quot;: [
+        &quot;zoonotic&quot;,
+        &quot;vector&quot;
+      ],
+      &quot;hasPage&quot;: false,
+      &quot;owner&quot;: &quot;unit.preparedness&quot;,
+      &quot;zhuyin&quot;: &quot;ㄕ&quot;,
+      &quot;…&quot;: &quot;其餘欄位省略&quot;
+    }
+  ]
+}</code></pre>
+      </div></details><details class="pf-ep"><summary><span class="pf-get">GET</span> <code>/v1/diseases/{slug}.json</code> <span class="muted">單一疾病頁結構化欄位：八個區塊、一分鐘重點、專業欄位與 gov 摘要</span></summary><div>
+        <p><a href="/new_cdc_prototype/preview/pr-56/v1/diseases/dengue.json">開啟 /v1/diseases/dengue.json</a></p>
+        <pre tabindex="0"><code>{
+  &quot;meta&quot;: {
+    &quot;api&quot;: &quot;v1&quot;,
+    &quot;generatedAt&quot;: &quot;2026-10-01T03:00:00Z&quot;,
+    &quot;license&quot;: &quot;OGDL-1.0&quot;,
+    &quot;source&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/&quot;,
+    &quot;docs&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/&quot;,
+    &quot;etag&quot;: &quot;\&quot;…\&quot;&quot;,
+    &quot;lastModified&quot;: &quot;2026-10-01T03:00:00Z&quot;
+  },
+  &quot;data&quot;: {
+    &quot;id&quot;: &quot;disease.chikungunya&quot;,
+    &quot;type&quot;: &quot;disease&quot;,
+    &quot;slug&quot;: &quot;chikungunya&quot;,
+    &quot;title&quot;: &quot;屈公病&quot;,
+    &quot;nameEn&quot;: &quot;Chikungunya fever&quot;,
+    &quot;aliases&quot;: [
+      &quot;Chikungunya&quot;,
+      &quot;屈公熱&quot;
+    ],
+    &quot;legalCategory&quot;: 2,
+    &quot;icd10&quot;: [
+      &quot;A92.0&quot;
+    ],
+    &quot;notifyWithinHours&quot;: 24,
+    &quot;incubation&quot;: {
+      &quot;min&quot;: 2,
+      &quot;max&quot;: 12,
+      &quot;typicalMin&quot;: 3,
+      &quot;typicalMax&quot;: 7,
+      &quot;unit&quot;: &quot;day&quot;,
+      &quot;text&quot;: &quot;2–12 天（通常 3–7 天）&quot;
+    },
+    &quot;transmission&quot;: [
+      &quot;vector&quot;
+    ],
+    &quot;owner&quot;: &quot;unit.acute-infectious&quot;,
+    &quot;…&quot;: &quot;其餘欄位省略&quot;
+  }
+}</code></pre>
+      </div></details><details class="pf-ep"><summary><span class="pf-get">GET</span> <code>/v1/vaccines.json</code> <span class="muted">疫苗頁：公費對象、時程</span></summary><div>
+        <p><a href="/new_cdc_prototype/preview/pr-56/v1/vaccines.json">開啟 /v1/vaccines.json</a></p>
+        <pre tabindex="0"><code>{
+  &quot;meta&quot;: {
+    &quot;api&quot;: &quot;v1&quot;,
+    &quot;generatedAt&quot;: &quot;2026-10-01T03:00:00Z&quot;,
+    &quot;license&quot;: &quot;OGDL-1.0&quot;,
+    &quot;source&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/&quot;,
+    &quot;docs&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/&quot;,
+    &quot;etag&quot;: &quot;\&quot;…\&quot;&quot;,
+    &quot;lastModified&quot;: &quot;2026-10-01T03:00:00Z&quot;
+  },
+  &quot;data&quot;: [
+    {
+      &quot;id&quot;: &quot;vaccine.covid-19&quot;,
+      &quot;type&quot;: &quot;vaccine&quot;,
+      &quot;slug&quot;: &quot;covid-19&quot;,
+      &quot;title&quot;: &quot;新冠疫苗&quot;,
+      &quot;nameEn&quot;: &quot;COVID-19 vaccine&quot;,
+      &quot;aliases&quot;: [
+        &quot;COVID-19 疫苗&quot;,
+        &quot;新冠肺炎疫苗&quot;
+      ],
+      &quot;owner&quot;: &quot;unit.acute-infectious&quot;,
+      &quot;publishedAt&quot;: &quot;2021-03-22&quot;,
+      &quot;reviewedAt&quot;: &quot;2026-09-16&quot;,
+      &quot;reviewPeriodMonths&quot;: 6,
+      &quot;status&quot;: &quot;published&quot;,
+      &quot;audience&quot;: [
+        &quot;public&quot;,
+        &quot;professional&quot;
+      ],
+      &quot;…&quot;: &quot;其餘欄位省略&quot;
+    },
+    {
+      &quot;id&quot;: &quot;vaccine.ev71&quot;,
+      &quot;type&quot;: &quot;vaccine&quot;,
+      &quot;slug&quot;: &quot;ev71&quot;,
+      &quot;title&quot;: &quot;腸病毒 71 型疫苗&quot;,
+      &quot;nameEn&quot;: &quot;Enterovirus A71 (EV71) vaccine&quot;,
+      &quot;aliases&quot;: [
+        &quot;EV71 疫苗&quot;,
+        &quot;腸病毒疫苗&quot;
+      ],
+      &quot;owner&quot;: &quot;unit.acute-infectious&quot;,
+      &quot;publishedAt&quot;: &quot;2023-06-01&quot;,
+      &quot;reviewedAt&quot;: &quot;2026-04-22&quot;,
+      &quot;reviewPeriodMonths&quot;: 6,
+      &quot;status&quot;: &quot;published&quot;,
+      &quot;audience&quot;: [
+        &quot;public&quot;,
+        &quot;professional&quot;
+      ],
+      &quot;…&quot;: &quot;其餘欄位省略&quot;
+    }
+  ]
+}</code></pre>
+      </div></details><details class="pf-ep"><summary><span class="pf-get">GET</span> <code>/v1/faq.json</code> <span class="muted">Q&amp;A；每題含 reviewedAt、owner、白名單狀態</span></summary><div>
+        <p><a href="/new_cdc_prototype/preview/pr-56/v1/faq.json">開啟 /v1/faq.json</a></p>
+        <pre tabindex="0"><code>{
+  &quot;meta&quot;: {
+    &quot;api&quot;: &quot;v1&quot;,
+    &quot;generatedAt&quot;: &quot;2026-10-01T03:00:00Z&quot;,
+    &quot;license&quot;: &quot;OGDL-1.0&quot;,
+    &quot;source&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/&quot;,
+    &quot;docs&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/&quot;,
+    &quot;etag&quot;: &quot;\&quot;…\&quot;&quot;,
+    &quot;lastModified&quot;: &quot;2026-10-01T03:00:00Z&quot;
+  },
+  &quot;data&quot;: [
+    {
+      &quot;id&quot;: &quot;faq.antivenom-where&quot;,
+      &quot;type&quot;: &quot;faq&quot;,
+      &quot;title&quot;: &quot;哪裡有抗蛇毒血清？&quot;,
+      &quot;question&quot;: &quot;哪裡有抗蛇毒血清？&quot;,
+      &quot;owner&quot;: &quot;unit.lab&quot;,
+      &quot;steward&quot;: &quot;檢驗及疫苗研製中心承辦人（待指派）&quot;,
+      &quot;publishedAt&quot;: &quot;2026-10-10&quot;,
+      &quot;reviewedAt&quot;: &quot;2026-10-10&quot;,
+      &quot;reviewPeriodMonths&quot;: 6,
+      &quot;status&quot;: &quot;published&quot;,
+      &quot;audience&quot;: [
+        &quot;public&quot;
+      ],
+      &quot;tasks&quot;: [
+        &quot;symptoms&quot;
+      ],
+      &quot;…&quot;: &quot;其餘欄位省略&quot;
+    },
+    {
+      &quot;id&quot;: &quot;faq.antivenom-which-snake&quot;,
+      &quot;type&quot;: &quot;faq&quot;,
+      &quot;title&quot;: &quot;被龜殼花或其他毒蛇咬到要打哪種血清？認不出是哪種蛇怎麼辦？&quot;,
+      &quot;question&quot;: &quot;被龜殼花或其他毒蛇咬到要打哪種血清？認不出是哪種蛇怎麼辦？&quot;,
+      &quot;owner&quot;: &quot;unit.lab&quot;,
+      &quot;steward&quot;: &quot;檢驗及疫苗研製中心承辦人（待指派）&quot;,
+      &quot;publishedAt&quot;: &quot;2026-10-10&quot;,
+      &quot;reviewedAt&quot;: &quot;2026-10-10&quot;,
+      &quot;reviewPeriodMonths&quot;: 6,
+      &quot;status&quot;: &quot;published&quot;,
+      &quot;audience&quot;: [
+        &quot;public&quot;
+      ],
+      &quot;tasks&quot;: [
+        &quot;symptoms&quot;
+      ],
+      &quot;…&quot;: &quot;其餘欄位省略&quot;
+    }
+  ]
+}</code></pre>
+      </div></details><details class="pf-ep"><summary><span class="pf-get">GET</span> <code>/v1/news.json</code> <span class="muted">近 200 則新聞稿、致醫界通函、澄清；含自動加註 annotations</span></summary><div>
+        <p><a href="/new_cdc_prototype/preview/pr-56/v1/news.json">開啟 /v1/news.json</a></p>
+        <pre tabindex="0"><code>{
+  &quot;meta&quot;: {
+    &quot;api&quot;: &quot;v1&quot;,
+    &quot;generatedAt&quot;: &quot;2026-10-01T03:00:00Z&quot;,
+    &quot;license&quot;: &quot;OGDL-1.0&quot;,
+    &quot;source&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/&quot;,
+    &quot;docs&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/&quot;,
+    &quot;etag&quot;: &quot;\&quot;…\&quot;&quot;,
+    &quot;lastModified&quot;: &quot;2026-10-01T03:00:00Z&quot;
+  },
+  &quot;data&quot;: [
+    {
+      &quot;id&quot;: &quot;news.2025-01-09-mmr-adults-measles&quot;,
+      &quot;type&quot;: &quot;news&quot;,
+      &quot;newsType&quot;: &quot;press&quot;,
+      &quot;title&quot;: &quot;國內新增麻疹病例，1981 年以後出生之醫護與赴流行區成人建議優先自費接種 MMR&quot;,
+      &quot;owner&quot;: &quot;unit.acute-infectious&quot;,
+      &quot;publishedAt&quot;: &quot;2025-01-09&quot;,
+      &quot;reviewedAt&quot;: &quot;2025-01-09&quot;,
+      &quot;reviewPeriodMonths&quot;: 0,
+      &quot;status&quot;: &quot;published&quot;,
+      &quot;audience&quot;: [
+        &quot;public&quot;
+      ],
+      &quot;tasks&quot;: [
+        &quot;vaccines&quot;,
+        &quot;travel&quot;
+      ],
+      &quot;sensitivity&quot;: &quot;public&quot;,
+      &quot;…&quot;: &quot;其餘欄位省略&quot;
+    },
+    {
+      &quot;id&quot;: &quot;news.2025-02-18-dengue-imported-spring&quot;,
+      &quot;type&quot;: &quot;news&quot;,
+      &quot;newsType&quot;: &quot;press&quot;,
+      &quot;title&quot;: &quot;春節後登革熱境外移入病例增加，出國返國請落實防蚊&quot;,
+      &quot;owner&quot;: &quot;unit.acute-infectious&quot;,
+      &quot;publishedAt&quot;: &quot;2025-02-18&quot;,
+      &quot;reviewedAt&quot;: &quot;2025-02-18&quot;,
+      &quot;reviewPeriodMonths&quot;: 0,
+      &quot;status&quot;: &quot;published&quot;,
+      &quot;audience&quot;: [
+        &quot;public&quot;
+      ],
+      &quot;tasks&quot;: [
+        &quot;travel&quot;,
+        &quot;situation&quot;
+      ],
+      &quot;sensitivity&quot;: &quot;public&quot;,
+      &quot;…&quot;: &quot;其餘欄位省略&quot;
+    }
+  ]
+}</code></pre>
+      </div></details><details class="pf-ep"><summary><span class="pf-get">GET</span> <code>/v1/documents.json</code> <span class="muted">全部文件版本；isCurrent、supersedes、supersededBy、effectiveAt</span></summary><div>
+        <p><a href="/new_cdc_prototype/preview/pr-56/v1/documents.json">開啟 /v1/documents.json</a></p>
+        <pre tabindex="0"><code>{
+  &quot;meta&quot;: {
+    &quot;api&quot;: &quot;v1&quot;,
+    &quot;generatedAt&quot;: &quot;2026-10-01T03:00:00Z&quot;,
+    &quot;license&quot;: &quot;OGDL-1.0&quot;,
+    &quot;source&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/&quot;,
+    &quot;docs&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/&quot;,
+    &quot;etag&quot;: &quot;\&quot;…\&quot;&quot;,
+    &quot;lastModified&quot;: &quot;2026-10-01T03:00:00Z&quot;
+  },
+  &quot;data&quot;: [
+    {
+      &quot;id&quot;: &quot;doc.case-definition-dengue.2023-01-01&quot;,
+      &quot;type&quot;: &quot;document&quot;,
+      &quot;family&quot;: &quot;doc.case-definition-dengue&quot;,
+      &quot;docType&quot;: &quot;case-definition&quot;,
+      &quot;title&quot;: &quot;傳染病病例定義：登革熱（2023 年版）&quot;,
+      &quot;version&quot;: &quot;2023-01&quot;,
+      &quot;effectiveAt&quot;: &quot;2023-01-01&quot;,
+      &quot;supersedes&quot;: null,
+      &quot;owner&quot;: &quot;unit.acute-infectious&quot;,
+      &quot;publishedAt&quot;: &quot;2023-01-01&quot;,
+      &quot;reviewedAt&quot;: &quot;2024-01-10&quot;,
+      &quot;reviewPeriodMonths&quot;: 12,
+      &quot;…&quot;: &quot;其餘欄位省略&quot;
+    },
+    {
+      &quot;id&quot;: &quot;doc.case-definition-dengue.2026-01-01&quot;,
+      &quot;type&quot;: &quot;document&quot;,
+      &quot;family&quot;: &quot;doc.case-definition-dengue&quot;,
+      &quot;docType&quot;: &quot;case-definition&quot;,
+      &quot;title&quot;: &quot;傳染病病例定義：登革熱（2026 年版）&quot;,
+      &quot;version&quot;: &quot;2026-01&quot;,
+      &quot;effectiveAt&quot;: &quot;2026-01-01&quot;,
+      &quot;supersedes&quot;: &quot;doc.case-definition-dengue.2023-01-01&quot;,
+      &quot;owner&quot;: &quot;unit.acute-infectious&quot;,
+      &quot;publishedAt&quot;: &quot;2026-01-01&quot;,
+      &quot;reviewedAt&quot;: &quot;2026-01-05&quot;,
+      &quot;reviewPeriodMonths&quot;: 12,
+      &quot;…&quot;: &quot;其餘欄位省略&quot;
+    }
+  ]
+}</code></pre>
+      </div></details><details class="pf-ep"><summary><span class="pf-get">GET</span> <code>/v1/clarifications.json</code> <span class="muted">謠言查證用結構化澄清（claim、verdict、可轉傳短訊）</span></summary><div>
+        <p><a href="/new_cdc_prototype/preview/pr-56/v1/clarifications.json">開啟 /v1/clarifications.json</a></p>
+        <pre tabindex="0"><code>{
+  &quot;meta&quot;: {
+    &quot;api&quot;: &quot;v1&quot;,
+    &quot;generatedAt&quot;: &quot;2026-10-01T03:00:00Z&quot;,
+    &quot;license&quot;: &quot;OGDL-1.0&quot;,
+    &quot;source&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/&quot;,
+    &quot;docs&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/&quot;,
+    &quot;etag&quot;: &quot;\&quot;…\&quot;&quot;,
+    &quot;lastModified&quot;: &quot;2026-10-01T03:00:00Z&quot;
+  },
+  &quot;data&quot;: [
+    {
+      &quot;id&quot;: &quot;clar.2025-04-mmr-born-after-1981-only&quot;,
+      &quot;type&quot;: &quot;clarification&quot;,
+      &quot;title&quot;: &quot;網傳「MMR 只有 1981 年後出生的人要補打」&quot;,
+      &quot;owner&quot;: &quot;unit.pr&quot;,
+      &quot;publishedAt&quot;: &quot;2025-04-10&quot;,
+      &quot;reviewedAt&quot;: &quot;2025-04-10&quot;,
+      &quot;reviewPeriodMonths&quot;: 6,
+      &quot;status&quot;: &quot;published&quot;,
+      &quot;audience&quot;: [
+        &quot;public&quot;
+      ],
+      &quot;tasks&quot;: [
+        &quot;rumor&quot;
+      ],
+      &quot;sensitivity&quot;: &quot;public&quot;,
+      &quot;license&quot;: &quot;OGDL-1.0&quot;,
+      &quot;…&quot;: &quot;其餘欄位省略&quot;
+    },
+    {
+      &quot;id&quot;: &quot;clar.2025-07-dengue-spraying-poison&quot;,
+      &quot;type&quot;: &quot;clarification&quot;,
+      &quot;title&quot;: &quot;網傳「登革熱噴藥會毒死人、可以拒絕開門」為錯誤訊息&quot;,
+      &quot;owner&quot;: &quot;unit.pr&quot;,
+      &quot;publishedAt&quot;: &quot;2025-07-15&quot;,
+      &quot;reviewedAt&quot;: &quot;2026-07-10&quot;,
+      &quot;reviewPeriodMonths&quot;: 6,
+      &quot;status&quot;: &quot;published&quot;,
+      &quot;audience&quot;: [
+        &quot;public&quot;
+      ],
+      &quot;tasks&quot;: [
+        &quot;rumor&quot;
+      ],
+      &quot;sensitivity&quot;: &quot;public&quot;,
+      &quot;license&quot;: &quot;OGDL-1.0&quot;,
+      &quot;…&quot;: &quot;其餘欄位省略&quot;
+    }
+  ]
+}</code></pre>
+      </div></details><details class="pf-ep"><summary><span class="pf-get">GET</span> <code>/v1/situation.json</code> <span class="muted">疫情態勢層；items[]、publisher、dataDate；狀態由疫情中心人工發布</span></summary><div>
+        <p><a href="/new_cdc_prototype/preview/pr-56/v1/situation.json">開啟 /v1/situation.json</a></p>
+        <pre tabindex="0"><code>{
+  &quot;meta&quot;: {
+    &quot;api&quot;: &quot;v1&quot;,
+    &quot;generatedAt&quot;: &quot;2026-10-01T03:00:00Z&quot;,
+    &quot;license&quot;: &quot;OGDL-1.0&quot;,
+    &quot;source&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/&quot;,
+    &quot;docs&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/&quot;,
+    &quot;etag&quot;: &quot;\&quot;…\&quot;&quot;,
+    &quot;lastModified&quot;: &quot;2026-10-01T03:00:00Z&quot;
+  },
+  &quot;data&quot;: {
+    &quot;publishedAt&quot;: &quot;2026-09-21&quot;,
+    &quot;publisher&quot;: &quot;unit.epidemic-intelligence&quot;,
+    &quot;approvedBy&quot;: &quot;疫情中心狀態發布負責人&quot;,
+    &quot;dataDate&quot;: &quot;2026-09-21&quot;,
+    &quot;source&quot;: &quot;nidss&quot;,
+    &quot;nextReviewAt&quot;: &quot;2026-09-28&quot;,
+    &quot;note&quot;: &quot;原型資料：狀態與數字為示意，依規格由疫情中心依既有監測門檻人工發布，不由模型推論。&quot;,
+    &quot;items&quot;: [
+      &quot;…&quot;,
+      &quot;…&quot;
+    ]
+  }
+}</code></pre>
+      </div></details><details class="pf-ep"><summary><span class="pf-get">GET</span> <code>/v1/travel-alerts.json</code> <span class="muted">旅遊疫情建議（每日排程抓取，附 provenance）</span></summary><div>
+        <p><a href="/new_cdc_prototype/preview/pr-56/v1/travel-alerts.json">開啟 /v1/travel-alerts.json</a></p>
+        <pre tabindex="0"><code>{
+  &quot;meta&quot;: {
+    &quot;api&quot;: &quot;v1&quot;,
+    &quot;generatedAt&quot;: &quot;2026-10-01T03:00:00Z&quot;,
+    &quot;license&quot;: &quot;OGDL-1.0&quot;,
+    &quot;source&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/&quot;,
+    &quot;docs&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/&quot;,
+    &quot;etag&quot;: &quot;\&quot;…\&quot;&quot;,
+    &quot;lastModified&quot;: &quot;2026-10-01T03:00:00Z&quot;
+  },
+  &quot;data&quot;: [
+    {
+      &quot;sent&quot;: &quot;2026-10-02T07:48:32+08:00&quot;,
+      &quot;Source&quot;: &quot;CDC&quot;,
+      &quot;effective&quot;: &quot;2026-10-02T07:48:32+08:00&quot;,
+      &quot;expires&quot;: &quot;2027-01-02T07:48:32+08:00&quot;,
+      &quot;senderName&quot;: &quot;疾病管制署&quot;,
+      &quot;headline&quot;: &quot;孟加拉/尚⽐亞-炭疽病&quot;,
+      &quot;description&quot;: &quot;  \r孟加拉西北部朗布爾專區某衛生中心截⾄今年9/24，收治37例疑症狀患者。該疫情與屠宰病⽜後，⽜⾁分送約1…&quot;,
+      &quot;instruction&quot;: null,
+      &quot;web&quot;: &quot;https://www.cdc.gov.tw/TravelEpidemic/Detail/G3PSay_daf…&quot;,
+      &quot;alert_title&quot;: &quot;國際重要疫情資訊&quot;,
+      &quot;severity_level&quot;: null,
+      &quot;alert_disease&quot;: &quot;炭疽病&quot;,
+      &quot;…&quot;: &quot;其餘欄位省略&quot;
+    },
+    {
+      &quot;sent&quot;: &quot;2026-10-02T07:47:24+08:00&quot;,
+      &quot;Source&quot;: &quot;CDC&quot;,
+      &quot;effective&quot;: &quot;2026-10-02T07:47:24+08:00&quot;,
+      &quot;expires&quot;: &quot;2027-01-02T07:47:24+08:00&quot;,
+      &quot;senderName&quot;: &quot;疾病管制署&quot;,
+      &quot;headline&quot;: &quot;捷克-破傷⾵&quot;,
+      &quot;description&quot;: &quot; \r\r捷克今年9⽉通報1例48歲男性確定病例，因頭部撕裂傷接受治療，為⾃2022年來⾸例，該國近20年僅報告5…&quot;,
+      &quot;instruction&quot;: null,
+      &quot;web&quot;: &quot;https://www.cdc.gov.tw/TravelEpidemic/Detail/G3PSay_daf…&quot;,
+      &quot;alert_title&quot;: &quot;國際重要疫情資訊&quot;,
+      &quot;severity_level&quot;: null,
+      &quot;alert_disease&quot;: &quot;破傷風&quot;,
+      &quot;…&quot;: &quot;其餘欄位省略&quot;
+    }
+  ]
+}</code></pre>
+      </div></details><details class="pf-ep"><summary><span class="pf-get">GET</span> <code>/v1/country-levels.json</code> <span class="muted">各國旅遊疫情建議等級</span></summary><div>
+        <p><a href="/new_cdc_prototype/preview/pr-56/v1/country-levels.json">開啟 /v1/country-levels.json</a></p>
+        <pre tabindex="0"><code>{
+  &quot;meta&quot;: {
+    &quot;api&quot;: &quot;v1&quot;,
+    &quot;generatedAt&quot;: &quot;2026-10-01T03:00:00Z&quot;,
+    &quot;license&quot;: &quot;OGDL-1.0&quot;,
+    &quot;source&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/&quot;,
+    &quot;docs&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/&quot;,
+    &quot;etag&quot;: &quot;\&quot;…\&quot;&quot;,
+    &quot;lastModified&quot;: &quot;2026-10-01T03:00:00Z&quot;
+  },
+  &quot;data&quot;: [
+    {
+      &quot;ISO2&quot;: &quot;JP&quot;,
+      &quot;Country&quot;: &quot;日本&quot;,
+      &quot;CountryEn&quot;: &quot;Japan&quot;,
+      &quot;Region&quot;: &quot;東亞&quot;,
+      &quot;Level&quot;: &quot;第一級：注意(Watch)&quot;,
+      &quot;LevelCode&quot;: 1,
+      &quot;Disease&quot;: &quot;麻疹、新冠併發重症&quot;,
+      &quot;StartDate&quot;: &quot;2026-04-22&quot;,
+      &quot;TargetedLevelCode&quot;: 1,
+      &quot;TargetedLevel&quot;: &quot;第一級：注意(Watch)&quot;,
+      &quot;TargetedDisease&quot;: &quot;麻疹&quot;,
+      &quot;TargetedStartDate&quot;: &quot;2026-04-22&quot;,
+      &quot;…&quot;: &quot;其餘欄位省略&quot;
+    },
+    {
+      &quot;ISO2&quot;: &quot;KR&quot;,
+      &quot;Country&quot;: &quot;韓國&quot;,
+      &quot;CountryEn&quot;: &quot;Korea(South Korea)&quot;,
+      &quot;Region&quot;: &quot;東亞&quot;,
+      &quot;Level&quot;: &quot;第一級：注意(Watch)&quot;,
+      &quot;LevelCode&quot;: 1,
+      &quot;Disease&quot;: &quot;新冠併發重症&quot;,
+      &quot;StartDate&quot;: &quot;2023-11-01&quot;,
+      &quot;TargetedLevelCode&quot;: 0,
+      &quot;TargetedLevel&quot;: &quot;無針對性旅遊疫情建議&quot;,
+      &quot;TargetedDisease&quot;: null,
+      &quot;TargetedStartDate&quot;: null,
+      &quot;…&quot;: &quot;其餘欄位省略&quot;
+    }
+  ]
+}</code></pre>
+      </div></details><details class="pf-ep"><summary><span class="pf-get">GET</span> <code>/v1/country-changes.json</code> <span class="muted">旅遊疫情建議變化事件（近 400 天；kind：new 新增、raised 調升、lowered 調降、lifted 解除、renewed 重發）</span></summary><div>
+        <p><a href="/new_cdc_prototype/preview/pr-56/v1/country-changes.json">開啟 /v1/country-changes.json</a></p>
+        <pre tabindex="0"><code>{
+  &quot;meta&quot;: {
+    &quot;api&quot;: &quot;v1&quot;,
+    &quot;generatedAt&quot;: &quot;2026-10-01T03:00:00Z&quot;,
+    &quot;license&quot;: &quot;OGDL-1.0&quot;,
+    &quot;source&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/&quot;,
+    &quot;docs&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/&quot;,
+    &quot;etag&quot;: &quot;\&quot;…\&quot;&quot;,
+    &quot;lastModified&quot;: &quot;2026-10-01T03:00:00Z&quot;
+  },
+  &quot;data&quot;: [
+    {
+      &quot;date&quot;: &quot;2026-09-08&quot;,
+      &quot;ISO2&quot;: &quot;MY&quot;,
+      &quot;Country&quot;: &quot;馬來西亞&quot;,
+      &quot;CountryEn&quot;: &quot;Malaysia&quot;,
+      &quot;Disease&quot;: &quot;瘧疾&quot;,
+      &quot;Area&quot;: null,
+      &quot;LevelCode&quot;: 1,
+      &quot;Level&quot;: &quot;第一級：注意(Watch)&quot;,
+      &quot;Summary&quot;: &quot;提醒遵守當地的一般預防措施&quot;,
+      &quot;Url&quot;: &quot;https://www.cdc.gov.tw/InternationalEpidemicLevel/Index…&quot;,
+      &quot;kind&quot;: &quot;new&quot;,
+      &quot;from&quot;: null,
+      &quot;…&quot;: &quot;其餘欄位省略&quot;
+    },
+    {
+      &quot;date&quot;: &quot;2026-09-01&quot;,
+      &quot;ISO2&quot;: &quot;BZ&quot;,
+      &quot;Country&quot;: &quot;貝里斯&quot;,
+      &quot;CountryEn&quot;: &quot;Belize&quot;,
+      &quot;Disease&quot;: &quot;登革熱&quot;,
+      &quot;Area&quot;: null,
+      &quot;LevelCode&quot;: 1,
+      &quot;Level&quot;: &quot;第一級：注意(Watch)&quot;,
+      &quot;Summary&quot;: &quot;提醒遵守當地的一般預防措施&quot;,
+      &quot;Url&quot;: &quot;https://www.cdc.gov.tw/InternationalEpidemicLevel/Index…&quot;,
+      &quot;kind&quot;: &quot;new&quot;,
+      &quot;from&quot;: null,
+      &quot;…&quot;: &quot;其餘欄位省略&quot;
+    }
+  ]
+}</code></pre>
+      </div></details><details class="pf-ep"><summary><span class="pf-get">GET</span> <code>/v1/country-background.json</code> <span class="muted">全球背景提醒（同一疾病同一等級涵蓋 ≥ 50% 國家，如新冠併發重症第一級）；各國排序請用 TargetedLevelCode</span></summary><div>
+        <p><a href="/new_cdc_prototype/preview/pr-56/v1/country-background.json">開啟 /v1/country-background.json</a></p>
+        <pre tabindex="0"><code>{
+  &quot;meta&quot;: {
+    &quot;api&quot;: &quot;v1&quot;,
+    &quot;generatedAt&quot;: &quot;2026-10-01T03:00:00Z&quot;,
+    &quot;license&quot;: &quot;OGDL-1.0&quot;,
+    &quot;source&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/&quot;,
+    &quot;docs&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/&quot;,
+    &quot;etag&quot;: &quot;\&quot;…\&quot;&quot;,
+    &quot;lastModified&quot;: &quot;2026-10-01T03:00:00Z&quot;
+  },
+  &quot;data&quot;: [
+    {
+      &quot;Disease&quot;: &quot;新冠併發重症&quot;,
+      &quot;LevelCode&quot;: 1,
+      &quot;Level&quot;: &quot;第一級：注意(Watch)&quot;,
+      &quot;countries&quot;: 245,
+      &quot;share&quot;: 0.996,
+      &quot;since&quot;: &quot;2023-11-01&quot;,
+      &quot;latest&quot;: &quot;2023-11-01&quot;,
+      &quot;Summary&quot;: &quot;提醒遵守當地的一般預防措施&quot;
+    }
+  ]
+}</code></pre>
+      </div></details><details class="pf-ep"><summary><span class="pf-get">GET</span> <code>/v1/datasets.json</code> <span class="muted">資料目錄（CKAN 快照＋治理欄位：正本位置、授權、更新頻率）</span></summary><div>
+        <p><a href="/new_cdc_prototype/preview/pr-56/v1/datasets.json">開啟 /v1/datasets.json</a></p>
+        <pre tabindex="0"><code>{
+  &quot;meta&quot;: {
+    &quot;api&quot;: &quot;v1&quot;,
+    &quot;generatedAt&quot;: &quot;2026-10-01T03:00:00Z&quot;,
+    &quot;license&quot;: &quot;OGDL-1.0&quot;,
+    &quot;source&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/&quot;,
+    &quot;docs&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/&quot;,
+    &quot;etag&quot;: &quot;\&quot;…\&quot;&quot;,
+    &quot;lastModified&quot;: &quot;2026-10-01T03:00:00Z&quot;
+  },
+  &quot;data&quot;: [
+    {
+      &quot;id&quot;: &quot;dataset.antimicrobial-resistance&quot;,
+      &quot;type&quot;: &quot;dataset&quot;,
+      &quot;category&quot;: &quot;open-dataset&quot;,
+      &quot;title&quot;: &quot;院內感染抗藥性細菌監測年報資料&quot;,
+      &quot;owner&quot;: &quot;unit.lab&quot;,
+      &quot;publishedAt&quot;: &quot;2013-01-01&quot;,
+      &quot;reviewedAt&quot;: &quot;2026-06-30&quot;,
+      &quot;reviewPeriodMonths&quot;: 12,
+      &quot;status&quot;: &quot;published&quot;,
+      &quot;audience&quot;: [
+        &quot;public&quot;,
+        &quot;professional&quot;
+      ],
+      &quot;tasks&quot;: [
+        &quot;data&quot;
+      ],
+      &quot;sensitivity&quot;: &quot;public&quot;,
+      &quot;…&quot;: &quot;其餘欄位省略&quot;
+    },
+    {
+      &quot;id&quot;: &quot;dataset.budget-final-accounts&quot;,
+      &quot;type&quot;: &quot;dataset&quot;,
+      &quot;category&quot;: &quot;open-dataset&quot;,
+      &quot;title&quot;: &quot;疾病管制署預算與決算書&quot;,
+      &quot;owner&quot;: &quot;unit.accounting&quot;,
+      &quot;publishedAt&quot;: &quot;2014-01-01&quot;,
+      &quot;reviewedAt&quot;: &quot;2026-01-31&quot;,
+      &quot;reviewPeriodMonths&quot;: 12,
+      &quot;status&quot;: &quot;published&quot;,
+      &quot;audience&quot;: [
+        &quot;public&quot;,
+        &quot;professional&quot;
+      ],
+      &quot;tasks&quot;: [
+        &quot;data&quot;
+      ],
+      &quot;sensitivity&quot;: &quot;public&quot;,
+      &quot;…&quot;: &quot;其餘欄位省略&quot;
+    }
+  ]
+}</code></pre>
+      </div></details><details class="pf-ep"><summary><span class="pf-get">GET</span> <code>/v1/catalog.json</code> <span class="muted">五類資產總目錄（id、type、owner、canonicalUrl、license、sensitivity、whitelist、reviewedAt）</span></summary><div>
+        <p><a href="/new_cdc_prototype/preview/pr-56/v1/catalog.json">開啟 /v1/catalog.json</a></p>
+        <pre tabindex="0"><code>{
+  &quot;meta&quot;: {
+    &quot;api&quot;: &quot;v1&quot;,
+    &quot;generatedAt&quot;: &quot;2026-10-01T03:00:00Z&quot;,
+    &quot;license&quot;: &quot;OGDL-1.0&quot;,
+    &quot;source&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/&quot;,
+    &quot;docs&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/&quot;,
+    &quot;etag&quot;: &quot;\&quot;…\&quot;&quot;,
+    &quot;lastModified&quot;: &quot;2026-10-01T03:00:00Z&quot;
+  },
+  &quot;data&quot;: [
+    {
+      &quot;id&quot;: &quot;disease.chikungunya&quot;,
+      &quot;type&quot;: &quot;disease&quot;,
+      &quot;title&quot;: &quot;屈公病&quot;,
+      &quot;owner&quot;: &quot;unit.acute-infectious&quot;,
+      &quot;license&quot;: &quot;OGDL-1.0&quot;,
+      &quot;sensitivity&quot;: &quot;public&quot;,
+      &quot;reviewedAt&quot;: &quot;2025-07-28&quot;,
+      &quot;whitelist&quot;: false
+    },
+    {
+      &quot;id&quot;: &quot;disease.covid-19&quot;,
+      &quot;type&quot;: &quot;disease&quot;,
+      &quot;title&quot;: &quot;新冠併發重症&quot;,
+      &quot;owner&quot;: &quot;unit.acute-infectious&quot;,
+      &quot;license&quot;: &quot;OGDL-1.0&quot;,
+      &quot;sensitivity&quot;: &quot;public&quot;,
+      &quot;reviewedAt&quot;: &quot;2026-09-05&quot;,
+      &quot;whitelist&quot;: true
+    }
+  ]
+}</code></pre>
+      </div></details><details class="pf-ep"><summary><span class="pf-get">GET</span> <code>/v1/glossary.json</code> <span class="muted">七語詞彙主檔；locked 的詞機器翻譯時不得自由翻譯</span></summary><div>
+        <p><a href="/new_cdc_prototype/preview/pr-56/v1/glossary.json">開啟 /v1/glossary.json</a></p>
+        <pre tabindex="0"><code>{
+  &quot;meta&quot;: {
+    &quot;api&quot;: &quot;v1&quot;,
+    &quot;generatedAt&quot;: &quot;2026-10-01T03:00:00Z&quot;,
+    &quot;license&quot;: &quot;OGDL-1.0&quot;,
+    &quot;source&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/&quot;,
+    &quot;docs&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/&quot;,
+    &quot;etag&quot;: &quot;\&quot;…\&quot;&quot;,
+    &quot;lastModified&quot;: &quot;2026-10-01T03:00:00Z&quot;
+  },
+  &quot;data&quot;: [
+    {
+      &quot;id&quot;: &quot;term.mpox&quot;,
+      &quot;zh-TW&quot;: &quot;M痘&quot;,
+      &quot;aliases&quot;: [
+        &quot;猴痘&quot;,
+        &quot;Monkeypox&quot;
+      ],
+      &quot;en&quot;: &quot;Mpox&quot;,
+      &quot;ja&quot;: &quot;エムポックス&quot;,
+      &quot;tl&quot;: &quot;Mpox&quot;,
+      &quot;vi&quot;: &quot;Đậu mùa khỉ (Mpox)&quot;,
+      &quot;id_&quot;: &quot;Mpox&quot;,
+      &quot;th&quot;: &quot;ฝีดาษวานร (Mpox)&quot;,
+      &quot;domain&quot;: &quot;disease&quot;,
+      &quot;locked&quot;: true,
+      &quot;deprecated&quot;: [
+        &quot;猴痘&quot;
+      ],
+      &quot;…&quot;: &quot;其餘欄位省略&quot;
+    },
+    {
+      &quot;id&quot;: &quot;term.covid-19&quot;,
+      &quot;zh-TW&quot;: &quot;新冠併發重症&quot;,
+      &quot;aliases&quot;: [
+        &quot;新冠肺炎&quot;,
+        &quot;COVID-19&quot;
+      ],
+      &quot;en&quot;: &quot;COVID-19&quot;,
+      &quot;ja&quot;: &quot;COVID-19&quot;,
+      &quot;tl&quot;: &quot;COVID-19&quot;,
+      &quot;vi&quot;: &quot;COVID-19&quot;,
+      &quot;id_&quot;: &quot;COVID-19&quot;,
+      &quot;th&quot;: &quot;โควิด-19&quot;,
+      &quot;domain&quot;: &quot;disease&quot;,
+      &quot;locked&quot;: true,
+      &quot;deprecated&quot;: [
+        &quot;武漢肺炎&quot;,
+        &quot;嚴重特殊傳染性肺炎&quot;
+      ],
+      &quot;…&quot;: &quot;其餘欄位省略&quot;
+    }
+  ]
+}</code></pre>
+      </div></details><details class="pf-ep"><summary><span class="pf-get">GET</span> <code>/v1/search-index.json</code> <span class="muted">答案單元（chunk）；只含白名單內容，AI 檢索用</span></summary><div>
+        <p><a href="/new_cdc_prototype/preview/pr-56/v1/search-index.json">開啟 /v1/search-index.json</a></p>
+        <pre tabindex="0"><code>{
+  &quot;meta&quot;: {
+    &quot;api&quot;: &quot;v1&quot;,
+    &quot;generatedAt&quot;: &quot;2026-10-01T03:00:00Z&quot;,
+    &quot;license&quot;: &quot;OGDL-1.0&quot;,
+    &quot;source&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/&quot;,
+    &quot;docs&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/&quot;,
+    &quot;etag&quot;: &quot;\&quot;…\&quot;&quot;,
+    &quot;lastModified&quot;: &quot;2026-10-01T03:00:00Z&quot;
+  },
+  &quot;data&quot;: [
+    {
+      &quot;id&quot;: &quot;disease.covid-19#what-to-do#card-1&quot;,
+      &quot;contentId&quot;: &quot;disease.covid-19&quot;,
+      &quot;type&quot;: &quot;disease&quot;,
+      &quot;lang&quot;: &quot;zh-TW&quot;,
+      &quot;title&quot;: &quot;新冠併發重症 · 戴口罩、可自行快篩&quot;,
+      &quot;text&quot;: &quot;如果有發燒、喉嚨痛等症狀：戴口罩、可自行快篩。 外出戴口罩、避免探視長者，可使用家用快篩； 高風險族群儘早就醫…&quot;,
+      &quot;url&quot;: &quot;/diseases/covid-19/#what-to-do&quot;,
+      &quot;summary&quot;: &quot;新冠病毒感染多數為輕症，長者與高風險族群可能併發重症。2023 年 3 月起列為第四類「新冠併發重症」，接種最…&quot;,
+      &quot;owner&quot;: &quot;unit.acute-infectious&quot;,
+      &quot;ownerName&quot;: &quot;急性傳染病組&quot;,
+      &quot;reviewedAt&quot;: &quot;2026-09-05&quot;,
+      &quot;nextReviewAt&quot;: &quot;2027-09-05&quot;,
+      &quot;…&quot;: &quot;其餘欄位省略&quot;
+    },
+    {
+      &quot;id&quot;: &quot;disease.covid-19#what-to-do#card-2&quot;,
+      &quot;contentId&quot;: &quot;disease.covid-19&quot;,
+      &quot;type&quot;: &quot;disease&quot;,
+      &quot;lang&quot;: &quot;zh-TW&quot;,
+      &quot;title&quot;: &quot;新冠併發重症 · 發病 5 天內就醫&quot;,
+      &quot;text&quot;: &quot;如果65 歲以上或有慢性病且確診：發病 5 天內就醫。 發病 5 天內就醫，醫師可評估開立口服抗病毒藥物，降低…&quot;,
+      &quot;url&quot;: &quot;/diseases/covid-19/#what-to-do&quot;,
+      &quot;summary&quot;: &quot;新冠病毒感染多數為輕症，長者與高風險族群可能併發重症。2023 年 3 月起列為第四類「新冠併發重症」，接種最…&quot;,
+      &quot;owner&quot;: &quot;unit.acute-infectious&quot;,
+      &quot;ownerName&quot;: &quot;急性傳染病組&quot;,
+      &quot;reviewedAt&quot;: &quot;2026-09-05&quot;,
+      &quot;nextReviewAt&quot;: &quot;2027-09-05&quot;,
+      &quot;…&quot;: &quot;其餘欄位省略&quot;
+    }
+  ]
+}</code></pre>
+      </div></details><details class="pf-ep"><summary><span class="pf-get">GET</span> <code>/v1/governance/kpi.json</code> <span class="muted">治理 KPI（規劃文件 7.5 每一列：目前值、一年與三年目標）</span></summary><div>
+        <p><a href="/new_cdc_prototype/preview/pr-56/v1/governance/kpi.json">開啟 /v1/governance/kpi.json</a></p>
+        <pre tabindex="0"><code>{
+  &quot;meta&quot;: {
+    &quot;api&quot;: &quot;v1&quot;,
+    &quot;generatedAt&quot;: &quot;2026-10-01T03:00:00Z&quot;,
+    &quot;license&quot;: &quot;OGDL-1.0&quot;,
+    &quot;source&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/&quot;,
+    &quot;docs&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/&quot;,
+    &quot;etag&quot;: &quot;\&quot;…\&quot;&quot;,
+    &quot;lastModified&quot;: &quot;2026-10-01T03:00:00Z&quot;
+  },
+  &quot;data&quot;: [
+    {
+      &quot;key&quot;: &quot;provenance&quot;,
+      &quot;label&quot;: &quot;對外內容頁有更新日與權責單位&quot;,
+      &quot;current&quot;: 100,
+      &quot;numerator&quot;: 303,
+      &quot;denominator&quot;: 303,
+      &quot;target1y&quot;: 100,
+      &quot;target3y&quot;: 100,
+      &quot;unit&quot;: &quot;%&quot;,
+      &quot;direction&quot;: &quot;higher&quot;,
+      &quot;pct&quot;: 100,
+      &quot;status&quot;: &quot;ok&quot;
+    },
+    {
+      &quot;key&quot;: &quot;dataset-license&quot;,
+      &quot;label&quot;: &quot;開放資料集授權標示一致&quot;,
+      &quot;current&quot;: 89.3,
+      &quot;numerator&quot;: 25,
+      &quot;denominator&quot;: 28,
+      &quot;target1y&quot;: 100,
+      &quot;target3y&quot;: 100,
+      &quot;unit&quot;: &quot;%&quot;,
+      &quot;direction&quot;: &quot;higher&quot;,
+      &quot;pct&quot;: 89.3,
+      &quot;status&quot;: &quot;warn&quot;
+    }
+  ]
+}</code></pre>
+      </div></details><details class="pf-ep"><summary><span class="pf-get">GET</span> <code>/v1/governance/todos.json</code> <span class="muted">系統產生的待辦：正本修訂連動、逾期、翻譯過期、反向稽核、資料集時效</span></summary><div>
+        <p><a href="/new_cdc_prototype/preview/pr-56/v1/governance/todos.json">開啟 /v1/governance/todos.json</a></p>
+        <pre tabindex="0"><code>{
+  &quot;meta&quot;: {
+    &quot;api&quot;: &quot;v1&quot;,
+    &quot;generatedAt&quot;: &quot;2026-10-01T03:00:00Z&quot;,
+    &quot;license&quot;: &quot;OGDL-1.0&quot;,
+    &quot;source&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/&quot;,
+    &quot;docs&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/&quot;,
+    &quot;etag&quot;: &quot;\&quot;…\&quot;&quot;,
+    &quot;lastModified&quot;: &quot;2026-10-01T03:00:00Z&quot;
+  },
+  &quot;data&quot;: [
+    {
+      &quot;id&quot;: &quot;based-on-revised:clar.2025-04-mmr-born-after-1981-only:…&quot;,
+      &quot;kind&quot;: &quot;based-on-revised&quot;,
+      &quot;kindLabel&quot;: &quot;正本修訂連動&quot;,
+      &quot;itemId&quot;: &quot;clar.2025-04-mmr-born-after-1981-only&quot;,
+      &quot;itemType&quot;: &quot;clarification&quot;,
+      &quot;itemTitle&quot;: &quot;網傳「MMR 只有 1981 年後出生的人要補打」&quot;,
+      &quot;owner&quot;: &quot;unit.pr&quot;,
+      &quot;ownerName&quot;: &quot;公關室&quot;,
+      &quot;dueAt&quot;: &quot;2025-04-23&quot;,
+      &quot;overdue&quot;: true,
+      &quot;text&quot;: &quot;「網傳「MMR 只有 1981 年後出生的人要補打」」依據的「國內現行 MMR 預防接種建議（114.04.1…&quot;,
+      &quot;href&quot;: &quot;/factcheck/#clar.2025-04-mmr-born-after-1981-only&quot;,
+      &quot;…&quot;: &quot;其餘欄位省略&quot;
+    },
+    {
+      &quot;id&quot;: &quot;based-on-revised:news.2025-01-09-mmr-adults-measles:doc…&quot;,
+      &quot;kind&quot;: &quot;based-on-revised&quot;,
+      &quot;kindLabel&quot;: &quot;正本修訂連動&quot;,
+      &quot;itemId&quot;: &quot;news.2025-01-09-mmr-adults-measles&quot;,
+      &quot;itemType&quot;: &quot;news&quot;,
+      &quot;itemTitle&quot;: &quot;國內新增麻疹病例，1981 年以後出生之醫護與赴流行區成人建議優先自費接種 MMR&quot;,
+      &quot;owner&quot;: &quot;unit.acute-infectious&quot;,
+      &quot;ownerName&quot;: &quot;急性傳染病組&quot;,
+      &quot;dueAt&quot;: &quot;2025-04-23&quot;,
+      &quot;overdue&quot;: true,
+      &quot;text&quot;: &quot;「國內新增麻疹病例，1981 年以後出生之醫護與赴流行區成人建議優先自費接種 MMR」依據的「國內現行 MMR…&quot;,
+      &quot;href&quot;: &quot;/news/2025-01-09-mmr-adults-measles/&quot;,
+      &quot;…&quot;: &quot;其餘欄位省略&quot;
+    }
+  ]
+}</code></pre>
+      </div></details><details class="pf-ep"><summary><span class="pf-get">GET</span> <code>/v1/governance/ai-status.json</code> <span class="muted">AI 問答開關（運作／暫停、原因、生效時間）</span></summary><div>
+        <p><a href="/new_cdc_prototype/preview/pr-56/v1/governance/ai-status.json">開啟 /v1/governance/ai-status.json</a></p>
+        <pre tabindex="0"><code>{
+  &quot;meta&quot;: {
+    &quot;api&quot;: &quot;v1&quot;,
+    &quot;generatedAt&quot;: &quot;2026-10-01T03:00:00Z&quot;,
+    &quot;license&quot;: &quot;OGDL-1.0&quot;,
+    &quot;source&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/&quot;,
+    &quot;docs&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/&quot;,
+    &quot;etag&quot;: &quot;\&quot;…\&quot;&quot;,
+    &quot;lastModified&quot;: &quot;2026-10-01T03:00:00Z&quot;
+  },
+  &quot;data&quot;: {
+    &quot;paused&quot;: false,
+    &quot;reason&quot;: &quot;&quot;,
+    &quot;updatedAt&quot;: &quot;2026-09-22T09:00:00+08:00&quot;,
+    &quot;updatedBy&quot;: &quot;unit.oasis&quot;,
+    &quot;mode&quot;: &quot;extractive&quot;,
+    &quot;beta&quot;: true,
+    &quot;fallback&quot;: &quot;關鍵字搜尋與 1922 人工諮詢&quot;
+  }
+}</code></pre>
+      </div></details><details class="pf-ep"><summary><span class="pf-get">GET</span> <code>/v1/governance/eval-report.json</code> <span class="muted">評估報告：六指標、各類別通過率、版本題結果（透明報告頁的資料來源）</span></summary><div>
+        <p><a href="/new_cdc_prototype/preview/pr-56/v1/governance/eval-report.json">開啟 /v1/governance/eval-report.json</a></p>
+        <pre tabindex="0"><code>{
+  &quot;meta&quot;: {
+    &quot;api&quot;: &quot;v1&quot;,
+    &quot;generatedAt&quot;: &quot;2026-10-01T03:00:00Z&quot;,
+    &quot;license&quot;: &quot;OGDL-1.0&quot;,
+    &quot;source&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/&quot;,
+    &quot;docs&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/&quot;,
+    &quot;etag&quot;: &quot;\&quot;…\&quot;&quot;,
+    &quot;lastModified&quot;: &quot;2026-10-01T03:00:00Z&quot;
+  },
+  &quot;data&quot;: {
+    &quot;version&quot;: &quot;2026.10-r10&quot;,
+    &quot;total&quot;: 214,
+    &quot;passed&quot;: 214,
+    &quot;byCategory&quot;: {
+      &quot;version&quot;: &quot;…&quot;,
+      &quot;fact&quot;: &quot;…&quot;,
+      &quot;refusal&quot;: &quot;…&quot;,
+      &quot;situation&quot;: &quot;…&quot;,
+      &quot;peak&quot;: &quot;…&quot;,
+      &quot;travel&quot;: &quot;…&quot;,
+      &quot;vaccine&quot;: &quot;…&quot;,
+      &quot;stats&quot;: &quot;…&quot;,
+      &quot;rumor&quot;: &quot;…&quot;,
+      &quot;professional&quot;: &quot;…&quot;,
+      &quot;multilingual&quot;: &quot;…&quot;,
+      &quot;adversarial&quot;: &quot;…&quot;,
+      &quot;…&quot;: &quot;其餘欄位省略&quot;
+    },
+    &quot;metrics&quot;: {
+      &quot;grounding&quot;: 100,
+      &quot;factualAccuracy&quot;: 100,
+      &quot;completeness&quot;: 100,
+      &quot;answerRate&quot;: 100,
+      &quot;refusalPrecision&quot;: 100,
+      &quot;refusalRecall&quot;: 100,
+      &quot;reputationalSafety&quot;: 100,
+      &quot;versionAccuracy&quot;: 100,
+      &quot;counts&quot;: &quot;…&quot;,
+      &quot;thresholds&quot;: &quot;…&quot;,
+      &quot;pass&quot;: &quot;…&quot;
+    }
+  }
+}</code></pre>
+      </div></details><details class="pf-ep"><summary><span class="pf-get">GET</span> <code>/v1/redirects.json</code> <span class="muted">舊版文件與舊網址 → 正本的 301 對照表</span></summary><div>
+        <p><a href="/new_cdc_prototype/preview/pr-56/v1/redirects.json">開啟 /v1/redirects.json</a></p>
+        <pre tabindex="0"><code>{
+  &quot;meta&quot;: {
+    &quot;api&quot;: &quot;v1&quot;,
+    &quot;generatedAt&quot;: &quot;2026-10-01T03:00:00Z&quot;,
+    &quot;license&quot;: &quot;OGDL-1.0&quot;,
+    &quot;source&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/&quot;,
+    &quot;docs&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/&quot;,
+    &quot;etag&quot;: &quot;\&quot;…\&quot;&quot;,
+    &quot;lastModified&quot;: &quot;2026-10-01T03:00:00Z&quot;
+  },
+  &quot;data&quot;: [
+    {
+      &quot;from&quot;: &quot;/documents/case-definition-dengue.2023-01-01/&quot;,
+      &quot;to&quot;: &quot;/documents/case-definition-dengue.2026-01-01/&quot;,
+      &quot;status&quot;: 301,
+      &quot;legacy&quot;: [
+        &quot;https://www.cdc.gov.tw/Disease/Index&quot;
+      ]
+    },
+    {
+      &quot;from&quot;: &quot;/documents/covid-vaccine-recommendation.2025-09-15/&quot;,
+      &quot;to&quot;: &quot;/documents/covid-vaccine-recommendation.2026-09-15/&quot;,
+      &quot;status&quot;: 301,
+      &quot;legacy&quot;: [
+        &quot;https://www.cdc.gov.tw/Disease/Index&quot;
+      ]
+    }
+  ]
+}</code></pre>
+      </div></details><details class="pf-ep"><summary><span class="pf-get">GET</span> <code>/v1/legacy-map.json</code> <span class="muted">舊網址 → 新頁路徑的精簡對照（key 已正規化：小寫、無網域、無尾斜線、無 hash、去 page 參數）；另有 patterns（{id} 佔位的 URL 模式）與 gone（不移轉，建議 410）。給 404 頁與 /legacy/ 查詢頁用</span></summary><div>
+        <p><a href="/new_cdc_prototype/preview/pr-56/v1/legacy-map.json">開啟 /v1/legacy-map.json</a></p>
+        <pre tabindex="0"><code>{
+  &quot;meta&quot;: {
+    &quot;api&quot;: &quot;v1&quot;,
+    &quot;generatedAt&quot;: &quot;2026-10-01T03:00:00Z&quot;,
+    &quot;license&quot;: &quot;OGDL-1.0&quot;,
+    &quot;source&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/&quot;,
+    &quot;docs&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/&quot;,
+    &quot;etag&quot;: &quot;\&quot;…\&quot;&quot;,
+    &quot;lastModified&quot;: &quot;2026-10-01T03:00:00Z&quot;
+  },
+  &quot;data&quot;: {
+    &quot;/bulletin/detail/rqmqkq2-d6sopvi8dnv75w?typeid=9&quot;: &quot;/news/2026-06-02-measles-travel-mmr-1966/&quot;,
+    &quot;/bulletin/detail/ygzxk2ifxqew1v_ty1tevq?typeid=9&quot;: &quot;/news/2025-01-09-mmr-adults-measles/&quot;,
+    &quot;/category/list/3gjwz0etfmdgzis7h0jucg&quot;: &quot;/travel/&quot;,
+    &quot;/category/list/3uatgj9_kkhimgdkbkskpa&quot;: &quot;/policy/legal/&quot;,
+    &quot;/category/list/abyrvtgfiteopa1lslezwg&quot;: &quot;/policy/foia/&quot;,
+    &quot;/category/list/dg4aod4j09j2qw_yhryaz2&quot;: &quot;/publications/&quot;,
+    &quot;/category/list/hj0frbeq15g18tfkowy7lg&quot;: &quot;/travel/&quot;,
+    &quot;/category/list/trbpxpzm7eo3-dkc4ryzuq&quot;: &quot;/travel/&quot;,
+    &quot;/category/list/vofcg57yk3io3i_wxoxoia&quot;: &quot;/publications/&quot;,
+    &quot;/category/list/yv1yffbi_b1rhm6xdqvlgy&quot;: &quot;/publications/&quot;,
+    &quot;/category/list/z5jlken6dg0jpwhf4to0jv&quot;: &quot;/publications/&quot;,
+    &quot;/category/list/zrvs2zjwz03tl8cbkydi8g&quot;: &quot;/data/&quot;,
+    &quot;…&quot;: &quot;其餘欄位省略&quot;
+  }
+}</code></pre>
+      </div></details><details class="pf-ep"><summary><span class="pf-get">GET</span> <code>/openapi.json</code> <span class="muted">OpenAPI 3.1 描述檔（建置時由 scripts/lib/openapi.mjs 產生）</span></summary><div>
+        <p><a href="/new_cdc_prototype/preview/pr-56/openapi.json">開啟 /openapi.json</a></p>
+        <p class="muted">OpenAPI 3.1 JSON，欄位定義請直接開啟。</p>
+      </div></details>
+  </section>
+
+  <section id="openapi" aria-labelledby="oa-h">
+    <h2 id="oa-h">OpenAPI</h2>
+    <p>建置時由 <code>scripts/lib/openapi.mjs</code> 依同一份端點清單產生 <a href="/new_cdc_prototype/preview/pr-56/openapi.json"><code>/openapi.json</code></a>，可直接匯入 Swagger UI、Postman 或程式碼產生器。下表是瀏覽器即時讀取該檔的結果，用來確認上方清單與描述檔一致。</p>
+    <div data-openapi><p class="muted">讀取中…（需要 JavaScript）</p></div>
+  </section>
+
+  <section id="limits" aria-labelledby="lim-h">
+    <h2 id="lim-h">限流與金鑰</h2>
+    <dl class="pf-dl">
+      <dt>原型</dt><dd>免金鑰、免註冊。靜態檔案由 GitHub Pages 與 CDN 提供，沒有應用層限流；請善意使用，建議快取並以 <code>ETag</code> 做條件式請求，輪詢間隔不低於 1 小時（資料每日重建一次）。</dd>
+      <dt>正式環境（規劃）</dt><dd>匿名存取維持開放；大量取用者可申請 API 金鑰（<code>X-API-Key</code>），用於聯絡與通知破壞性變更，而不是設門檻。超量時回 <code>429</code> 並附 <code>Retry-After</code>。</dd>
+      <dt>穩定性承諾</dt><dd>已發布欄位不改名、不改型別；新增欄位視為相容變更。計畫下架的端點至少提前 90 天在此頁與變更 feed 公告。</dd>
+    </dl>
+  </section>
+
+  <section id="events" aria-labelledby="ev-h">
+    <h2 id="ev-h">變更事件</h2>
+    <p>不想輪詢整份 JSON，可以訂閱變更。</p>
+    <ul>
+      <li><strong>RSS / Atom</strong>：<a href="/new_cdc_prototype/preview/pr-56/feeds/documents.xml"><code>/feeds/documents.xml</code></a>。文件新版發布、現行版異動、舊版失效各產生一則，內容含 id、版次、生效日、取代關係與異動摘要。</li>
+      <li><strong>Webhook（規劃，第二階段）</strong>：訂閱者登錄回呼網址後，在文件新版發布、AI 暫停／恢復、疫情發布時收到下列 JSON。原型尚未提供，格式如下供介接預先設計。</li>
+    </ul>
+    <pre tabindex="0"><code>{
+  &quot;event&quot;: &quot;document.published&quot;,
+  &quot;occurredAt&quot;: &quot;2026-10-01T01:00:00Z&quot;,
+  &quot;id&quot;: &quot;doc.case-definition-dengue.2026-01-01&quot;,
+  &quot;version&quot;: &quot;2026-01&quot;,
+  &quot;effectiveAt&quot;: &quot;2026-01-01&quot;,
+  &quot;supersedes&quot;: &quot;doc.case-definition-dengue.2023-01-01&quot;,
+  &quot;url&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/case-definition-dengue.2026-01-01/&quot;
+}</code></pre>
+  </section>
+
+  <section id="machine" aria-labelledby="mr-h">
+    <h2 id="mr-h">機讀版：llms.txt、robots.txt、.md、JSON-LD</h2>
+    <dl class="pf-dl">
+      <dt><a href="/new_cdc_prototype/preview/pr-56/llms.txt"><code>/llms.txt</code></a></dt><dd>給 AI 系統的入口：列出可引用的正本內容與資料出口。各語言有 <code>/{lang}/llms.txt</code>。引用時請附頁面網址與「最後審閱日」。</dd>
+      <dt><a href="/new_cdc_prototype/preview/pr-56/robots.txt"><code>/robots.txt</code></a></dt><dd>只擋 <code>/ask/</code> 與 <code>/admin/</code>（動態查詢結果與後台）。失效版本<strong>不靠 robots 隱藏</strong>：爬蟲被擋就看不到頁面上的 noindex，改用頁面層級的 <code>&lt;meta name="robots" content="noindex"&gt;</code> 並以 301 導向現行版。</dd>
+      <dt><code>.md</code> 機讀版</dt><dd>每個內容頁都有同名 <code>.md</code>，例如 <a href="/new_cdc_prototype/preview/pr-56/diseases/chikungunya.md"><code>/diseases/chikungunya.md</code></a>。第一段是治理資訊（權責、審閱日、版本、授權、正本網址），之後是本文；失效或逾期時第一行就是警示。</dd>
+      <dt>JSON-LD</dt><dd>每頁 <code>&lt;head&gt;</code> 內嵌 schema.org 結構（MedicalCondition、FAQPage、NewsArticle、DigitalDocument、Dataset、GovernmentOrganization），並加上自訂 <code>cdc:</code> 治理欄位，詞彙見下節。</dd>
+      <dt>sitemap</dt><dd><a href="/new_cdc_prototype/preview/pr-56/sitemap.xml"><code>/sitemap.xml</code></a> 為索引，另依型別與語言分檔；失效版本不在其中。</dd>
+    </dl>
+    <p>疾病頁 JSON-LD 範例（節錄）：</p>
+    <pre tabindex="0"><code>{
+  &quot;@context&quot;: [
+    &quot;https://schema.org&quot;,
+    {
+      &quot;cdc&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/#vocab&quot;
+    }
+  ],
+  &quot;@type&quot;: &quot;MedicalCondition&quot;,
+  &quot;name&quot;: &quot;屈公病&quot;,
+  &quot;url&quot;: &quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/chikungunya/&quot;,
+  &quot;inLanguage&quot;: &quot;zh-TW&quot;,
+  &quot;dateModified&quot;: &quot;2025-07-28&quot;,
+  &quot;license&quot;: &quot;OGDL-1.0&quot;,
+  &quot;cdc:id&quot;: &quot;disease.chikungunya&quot;,
+  &quot;cdc:owner&quot;: &quot;急性傳染病組&quot;,
+  &quot;cdc:reviewedAt&quot;: &quot;2025-07-28&quot;,
+  &quot;cdc:nextReviewAt&quot;: &quot;2026-07-28&quot;,
+  &quot;cdc:version&quot;: null,
+  &quot;cdc:isCurrent&quot;: true,
+  &quot;cdc:supersededBy&quot;: null,
+  &quot;cdc:aiWhitelist&quot;: false,
+  &quot;cdc:license&quot;: &quot;OGDL-1.0&quot;
+}</code></pre>
+  </section>
+
+  <section id="vocab" aria-labelledby="vocab-h">
+    <h2 id="vocab-h">cdc: 自訂詞彙表</h2>
+    <p>命名空間 <code>cdc:</code> ＝ <code>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/#vocab</code>。這些欄位由治理引擎在建置時計算，頁面與 API 一致。</p>
+    <div class="pf-table-wrap"><table class="pf-table"><thead><tr><th scope="col">詞彙</th><th scope="col">型別</th><th scope="col">定義</th></tr></thead><tbody>
+      <tr id="cdc-id"><th scope="row"><code>cdc:id</code></th><td>string</td><td>內容的穩定識別碼，全站唯一，例如 disease.dengue、doc.mmr-recommendation.2025-04-16。引用時以它為準，不要用會變動的網址或加密 ID。</td></tr><tr id="cdc-owner"><th scope="row"><code>cdc:owner</code></th><td>string</td><td>權責單位名稱（對應 content/master/units.json）。這個單位對內容正確性負責，錯誤回報會轉給它。</td></tr><tr id="cdc-reviewedAt"><th scope="row"><code>cdc:reviewedAt</code></th><td>date (YYYY-MM-DD)</td><td>最後審閱日。由權責單位確認內容仍然正確的日期，不是編輯日。引用時應一併附上。</td></tr><tr id="cdc-nextReviewAt"><th scope="row"><code>cdc:nextReviewAt</code></th><td>date | null</td><td>下次審閱日，系統以 reviewedAt ＋ 審閱週期計算。事件觸發型內容（新聞稿、通函）為 null。</td></tr><tr id="cdc-version"><th scope="row"><code>cdc:version</code></th><td>string | null</td><td>文件版次（例如 114.04.16 或 v17）。非文件類內容為 null。</td></tr><tr id="cdc-isCurrent"><th scope="row"><code>cdc:isCurrent</code></th><td>boolean</td><td>是否為現行版。文件家族內生效日最新且已發布者為 true；false 代表已被取代，AI 不得引用。</td></tr><tr id="cdc-supersededBy"><th scope="row"><code>cdc:supersededBy</code></th><td>string | null</td><td>取代本版的新版 id；現行版為 null。由系統依 effectiveAt 計算，不手填。</td></tr><tr id="cdc-aiWhitelist"><th scope="row"><code>cdc:aiWhitelist</code></th><td>boolean</td><td>是否在 AI 白名單內（已發布、未逾期、未被取代、未落後於正本、敏感度為 public、型別獲准）。不是 true 的內容 AI 不會引用。</td></tr><tr id="cdc-license"><th scope="row"><code>cdc:license</code></th><td>string</td><td>授權代碼：OGDL-1.0（政府資料開放授權條款第 1 版）、CC0-1.0、CC-BY-4.0。</td></tr><tr id="cdc-status"><th scope="row"><code>cdc:status</code></th><td>string</td><td>生命週期狀態：draft、review、published、archived。</td></tr>
+    </tbody></table></div>
+  </section>
+
+  <section id="license" aria-labelledby="lic-h">
+    <h2 id="lic-h">授權與引用規範</h2>
+    <p>預設授權為<strong>政府資料開放授權條款第 1 版（OGDL-1.0）</strong>：可自由重製、散布、修改、商業利用，但須標示來源。個別資料集若為 CC0-1.0 或 CC BY 4.0，會在該筆的 <code>license</code> 欄位寫明。政策頁：<a href="/new_cdc_prototype/preview/pr-56/policy/open-data/">開放資料授權</a>。</p>
+    <h3>引用格式</h3>
+    <p>請附上<strong>網址</strong>與<strong>最後審閱日</strong>；文件類再附版次與生效日。專業模式頁面的「引用本頁」按鈕會自動產生：</p>
+    <pre tabindex="0"><code id="cite-example">衛生福利部疾病管制署（2026-01-05 審閱）。傳染病病例定義：登革熱（2026 年版）。https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/case-definition-dengue.2026-01-01/（2026-01，生效 2026-01-01）</code></pre>
+    <p><button type="button" class="pf-btn" data-copy-from="#cite-example">複製範例</button></p>
+    <p>AI 系統引用時，請同時帶出 <code>cdc:reviewedAt</code> 與 <code>cdc:isCurrent</code>；若 <code>isCurrent</code> 為 <code>false</code>，應改引 <code>cdc:supersededBy</code> 指向的新版。</p>
+  </section>
+
+  <section id="embed" aria-labelledby="emb-h">
+    <h2 id="emb-h">嵌入「現在的疫情」</h2>
+    <h3>iframe</h3>
+    <pre tabindex="0"><code>&lt;iframe src=&quot;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/situation/&quot; title=&quot;疾管署現在的疫情&quot; width=&quot;100%&quot; height=&quot;520&quot; loading=&quot;lazy&quot; referrerpolicy=&quot;no-referrer&quot;&gt;&lt;/iframe&gt;
+&lt;p&gt;資料來源：衛生福利部疾病管制署，政府資料開放授權條款第 1 版。&lt;/p&gt;</code></pre>
+    <h3>fetch</h3>
+    <pre tabindex="0"><code>// 讀取疫情態勢，不需金鑰
+const res = await fetch(&#39;https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/situation.json&#39;);
+const { meta, data } = await res.json();
+console.log(meta.license, data.dataDate, data.publisher);
+for (const it of data.items) console.log(it.diseaseName, it.status, it.metricValue);</code></pre>
+    <p><button type="button" class="pf-btn pf-btn--primary" data-embed-run>執行上面的 fetch 看結果</button></p>
+    <div class="pf-tiles" data-embed-demo aria-live="polite"></div>
+    <p class="muted">態勢「狀態」四級（平穩、上升、高峰、下降）由疫情中心人工發布，嵌入時請原樣顯示並標示資料日與發布單位，不要自行推算。</p>
+  </section>
+
+  <section id="vaxmap" aria-labelledby="vx-h">
+    <h2 id="vx-h">相關服務：疫苗及流感藥劑地圖（vaxmap-next）</h2>
+    <p>「哪裡可以打疫苗、哪裡有流感抗病毒藥劑」由獨立的改良版地圖網站提供：<a href="https://ancientsky.github.io/vaxmap-next/" target="_blank" rel="noopener">https://ancientsky.github.io/vaxmap-next/</a>（開新視窗）。本站不自行列出院所，因為庫存每天變動；請用深連結導向它。可分享網址的狀態全部放在 hash（<code>#</code> 後面），不需要金鑰：</p>
+    <div class="pf-table-wrap"><table class="pf-table"><thead><tr><th scope="col">參數</th><th scope="col">值</th><th scope="col">範例</th></tr></thead><tbody>
+      <tr><th scope="row"><code>g</code></th><td>群組，可多選（逗號）：<code>flu</code> 流感疫苗、<code>covid</code> COVID-19 疫苗、<code>pcv</code> 肺炎鏈球菌疫苗、<code>antiviral</code> 流感抗病毒藥劑</td><td><code>#g=flu,covid</code></td></tr>
+      <tr><th scope="row"><code>p</code></th><td>產品：<code>flu</code>、<code>mod_adult</code>、<code>mod_child</code>、<code>novavax</code>、<code>pcv20</code>、<code>pcv21</code>、<code>antiviral</code></td><td><code>#g=pcv&amp;p=pcv20</code></td></tr>
+      <tr><th scope="row"><code>today</code>、<code>stock</code></th><td><code>1</code>：只看今日有看診、只看有庫存</td><td><code>#g=flu&amp;today=1&amp;stock=1</code></td></tr>
+      <tr><th scope="row"><code>city</code>、<code>dist</code></th><td>縣市、鄉鎮市區（中文，須 URL 編碼；先有 city 才認 dist）</td><td><code>#g=flu&amp;city=臺北市&amp;dist=大安區</code></td></tr>
+      <tr><th scope="row"><code>q</code>、<code>id</code>、<code>map</code></th><td>關鍵字（最長 60 字）、院所 id、地圖視野 <code>緯度,經度,縮放</code></td><td><code>#id=2050&amp;map=22.65,120.29,15</code></td></tr>
+      <tr><th scope="row"><code>lang</code></th><td><code>en</code>、<code>ja</code>、<code>ko</code>、<code>id</code>、<code>vi</code>、<code>th</code>、<code>tl</code>；繁中不寫。本站語言碼與它相同（本站沒有 ko）</td><td><code>#g=flu&amp;lang=en</code></td></tr>
+      <tr><th scope="row">接種資訊專區</th><td><code>info.html#&lt;錨點&gt;&amp;lang=…</code>；錨點如 <code>where</code>、<code>coins</code>、<code>eligibility</code></td><td><code>info.html#where&amp;lang=vi</code></td></tr>
+    </tbody></table></div>
+    <pre tabindex="0"><code>https://ancientsky.github.io/vaxmap-next/#g=flu&amp;city=%E8%87%BA%E5%8C%97%E5%B8%82
+https://ancientsky.github.io/vaxmap-next/#g=antiviral&amp;lang=en
+https://ancientsky.github.io/vaxmap-next/info.html#where&amp;lang=vi</code></pre>
+    <p class="muted">不認得的參數值會被忽略，不會報錯。資料為每日兩次的快照，頁面會顯示資料時間；整合方案（連結、資料、呈現、治理四層）見 <code>docs/vaxmap-integration.md</code>。</p>
+  </section>
+
+  <section id="redirects" aria-labelledby="red-h">
+    <h2 id="red-h">舊網址對照</h2>
+    <p><a href="/new_cdc_prototype/preview/pr-56/v1/redirects.json"><code>/v1/redirects.json</code></a> 列出舊版文件與現行官網網址對應的正本，各筆 <code>status</code> 為 301。網站搬遷後用它更新書籤、文獻與連結。</p>
+    <pre tabindex="0"><code>{
+  &quot;meta&quot;: {
+    &quot;api&quot;: &quot;v1&quot;,
+    &quot;license&quot;: &quot;OGDL-1.0&quot;
+  },
+  &quot;data&quot;: [
+    {
+      &quot;from&quot;: &quot;/documents/case-definition-dengue.2023-01-01/&quot;,
+      &quot;to&quot;: &quot;/documents/case-definition-dengue.2026-01-01/&quot;,
+      &quot;status&quot;: 301,
+      &quot;legacy&quot;: [
+        &quot;https://www.cdc.gov.tw/Disease/Index&quot;
+      ]
+    },
+    {
+      &quot;from&quot;: &quot;/documents/covid-vaccine-recommendation.2025-09-15/&quot;,
+      &quot;to&quot;: &quot;/documents/covid-vaccine-recommendation.2026-09-15/&quot;,
+      &quot;status&quot;: 301,
+      &quot;legacy&quot;: [
+        &quot;https://www.cdc.gov.tw/Disease/Index&quot;
+      ]
+    }
+  ]
+}</code></pre>
+    <h3 id="legacy-map">舊官網網址對照（內容移轉）</h3>
+    <p>舊官網（www.cdc.gov.tw）上架的內容會依<strong>移轉清單</strong>逐筆對應到新頁。對照結果有四種輸出，都在建置時由同一份清單產生，不需手動維護：</p>
+    <div class="pf-table-wrap"><table class="pf-table"><thead><tr><th scope="col">檔案</th><th scope="col">用途</th></tr></thead><tbody>
+      <tr><th scope="row"><a href="/new_cdc_prototype/preview/pr-56/v1/legacy-map.json"><code>/v1/legacy-map.json</code></a></th><td>精簡對照，<code>data</code> 內為 <code>{ "/disease/subindex/…": "/diseases/dengue/" }</code>。key 已正規化（小寫、無網域、無尾斜線、無 hash、去掉 <code>page</code> 參數、百分比編碼統一）；另有 <code>patterns</code>（{id} 佔位的 URL 模式）與 <code>gone</code>（不移轉，建議回 410）。404 頁與 <a href="/new_cdc_prototype/preview/pr-56/legacy/">/legacy/ 查詢頁</a>即用它。</td></tr>
+      <tr><th scope="row"><a href="/new_cdc_prototype/preview/pr-56/redirects/nginx.map"><code>/redirects/nginx.map</code></a></th><td>Nginx <code>map $request_uri</code> 用，一行一筆正規表示式對新網址，用法寫在檔頭註解。</td></tr>
+      <tr><th scope="row"><a href="/new_cdc_prototype/preview/pr-56/redirects/web.config.rewritemap.xml"><code>/redirects/web.config.rewritemap.xml</code></a></th><td>IIS URL Rewrite 的 <code>rewriteMap</code>，貼進 <code>web.config</code>；署內現行官網若為 IIS 可直接用。</td></tr>
+      <tr><th scope="row"><a href="/new_cdc_prototype/preview/pr-56/redirects/_redirects"><code>/redirects/_redirects</code></a></th><td>Netlify／Cloudflare Pages 格式：<code>from to 301</code>。</td></tr>
+    </tbody></table></div>
+    <p class="muted">三個 <code>redirects/</code> 檔都只收網址完整、已有去向的項目：<code>{id}</code> 佔位的 URL 模式、已不再提供（410）、同一舊網址對到多個新頁的不輸出（寧可不轉，也不轉錯）；移轉清單尚未核對（<code>verified: false</code>）者照常輸出但檔內標註，上線前請權責單位確認。<code>/v1/redirects.json</code> 另含 <code>kind: "migration"</code> 項與每筆的 <code>verified</code> 欄位。政策與關閉日見 <a href="/new_cdc_prototype/preview/pr-56/legacy/">舊網址查詢頁</a>下方說明。</p>
+  </section>
+
+  <p class="muted"><a href="#top">回到頁首</a> · <a href="/new_cdc_prototype/preview/pr-56/guide/">使用指南</a> · <a href="/new_cdc_prototype/preview/pr-56/transparency/">AI 透明報告</a></p>
+</div></main>
+
+<footer class="site-footer"><div class="wrap site-footer__in">
+  <nav class="site-footer__col" aria-labelledby="ft-svc"><h2 class="site-footer__t" id="ft-svc">服務</h2><ul><li><a href="/new_cdc_prototype/preview/pr-56/publications/">出版品</a></li><li><a href="/new_cdc_prototype/preview/pr-56/apply/">申請專區</a></li><li><a href="/new_cdc_prototype/preview/pr-56/lab/">檢驗專區</a></li><li><a href="/new_cdc_prototype/preview/pr-56/report/">通報專區</a></li><li><a href="/new_cdc_prototype/preview/pr-56/research/">研究計畫</a></li><li><a href="/new_cdc_prototype/preview/pr-56/search/">全文搜尋</a></li><li><a href="/new_cdc_prototype/preview/pr-56/careers/">人才招募</a></li><li><a href="/new_cdc_prototype/preview/pr-56/procurement/">採購公告</a></li><li><a href="/new_cdc_prototype/preview/pr-56/notices/">其他公告</a></li><li><a href="/new_cdc_prototype/preview/pr-56/media/">宣導素材</a></li><li><a href="/new_cdc_prototype/preview/pr-56/campaigns/">宣導專區</a></li><li><a href="/new_cdc_prototype/preview/pr-56/services/">應用專區</a></li>
+    <li><a href="/new_cdc_prototype/preview/pr-56/subscribe/">訂閱與通知</a><br><span class="site-footer__hotnote">RSS、LINE、Email 三種方式</span></li></ul></nav>
+  <nav class="site-footer__col" aria-labelledby="ft-about"><h2 class="site-footer__t" id="ft-about">關於與政策</h2><ul>
+    <li><a href="/new_cdc_prototype/preview/pr-56/about/">關於疾管署</a></li><li><a href="/new_cdc_prototype/preview/pr-56/international/">國際合作</a></li>
+    <li><a href="/new_cdc_prototype/preview/pr-56/policy/privacy/">隱私權與資料保護</a></li><li><a href="/new_cdc_prototype/preview/pr-56/policy/ai/">AI 與資料使用聲明</a></li><li><a href="/new_cdc_prototype/preview/pr-56/accessibility/">無障礙 AA</a></li>
+    <li><a href="/new_cdc_prototype/preview/pr-56/policy/legal/">法令規章</a></li><li><a href="/new_cdc_prototype/preview/pr-56/policy/foia/">政府資訊公開</a></li><li><a href="/new_cdc_prototype/preview/pr-56/policy/security/">資訊安全政策</a></li><li><a href="/new_cdc_prototype/preview/pr-56/policy/copyright/">著作權聲明</a></li>
+    <li><a href="/new_cdc_prototype/preview/pr-56/guide/">使用說明</a></li><li><a href="/new_cdc_prototype/preview/pr-56/sitemap-page/">網站導覽</a></li></ul></nav>
+  <nav class="site-footer__col" aria-labelledby="ft-dev"><h2 class="site-footer__t" id="ft-dev">開放資料與開發者</h2><ul>
+    <li><a href="/new_cdc_prototype/preview/pr-56/data/">開放資料與統計</a></li><li><a href="/new_cdc_prototype/preview/pr-56/developers/">開發者 API</a></li><li><a href="/new_cdc_prototype/preview/pr-56/policy/open-data/">開放資料授權</a></li><li><a href="/new_cdc_prototype/preview/pr-56/glossary/">詞彙表</a></li>
+    <li><a href="/new_cdc_prototype/preview/pr-56/transparency/">AI 透明報告</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/">內容管理後台（示範）</a></li></ul></nav>
+  <div class="site-footer__col site-footer__col--contact"><h2 class="site-footer__t" id="ft-contact">聯絡</h2>
+    <p class="site-footer__hot"><a href="tel:1922">1922</a><a class="site-footer__hot2" href="tel:0800001922">0800-001922</a></p>
+    <p class="site-footer__hotnote">防疫專線，全年無休、可通譯</p>
+    <ul aria-labelledby="ft-contact"><li><a href="/new_cdc_prototype/preview/pr-56/contact/">署長信箱</a></li><li><a href="/new_cdc_prototype/preview/pr-56/report/">通報專區</a></li></ul></div>
+  <p class="site-footer__meta">原型建置日 2026-10-01 · 非官方網站，內容為示範</p>
+</div></footer>
+<nav class="c-tabbar" aria-label="快速選單">
+  <a href="/new_cdc_prototype/preview/pr-56/" ><svg class="c-tabbar__ic" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>首頁</span></a>
+  <a href="/new_cdc_prototype/preview/pr-56/ask/" ><svg class="c-tabbar__ic" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v12H8l-4 4z"/></svg><span>問答</span></a>
+  <a href="/new_cdc_prototype/preview/pr-56/situation/" ><svg class="c-tabbar__ic" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10m6 10V4m6 16v-7m4 7H2"/></svg><span>疫情</span></a>
+  <a href="tel:1922"><svg class="c-tabbar__ic" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg><span>1922</span></a>
+</nav>
+<script type="module" src="/new_cdc_prototype/preview/pr-56/assets/js/i18n.zh-TW.js"></script>
+<script type="module" src="/new_cdc_prototype/preview/pr-56/assets/js/ui.js"></script>
+<script type="module" src="/new_cdc_prototype/preview/pr-56/assets/js/pro.js"></script>
+</body>
+</html>

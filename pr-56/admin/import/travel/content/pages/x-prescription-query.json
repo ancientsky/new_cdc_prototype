@@ -1,0 +1,47 @@
+{
+  "id": "page.x-prescription-query",
+  "type": "page",
+  "title": "國際旅遊處方箋",
+  "owner": "unit.quarantine",
+  "publishedAt": "2016-05-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "選擇目的地，即可查詢當地流行疾病、建議疫苗與行前注意事項。 建議出國前 4 至 6 週查詢並至旅遊醫學門診評估。",
+  "slug": "x-prescription-query",
+  "bodyMarkdown": "選擇目的地，即可查詢當地流行疾病、建議疫苗與行前注意事項。\n\n建議出國前 4 至 6 週查詢並至旅遊醫學門診評估。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/9xkojqhoiGk3fT2ih3LhkK"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "dynamic-form",
+        "severity": "warn",
+        "message": "舊頁是查詢表單（231 個選項），新站以功能取代（請在清單填寫去處）；表單控制項不轉入內文"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/9xkojqhoiGk3fT2ih3LhkK",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

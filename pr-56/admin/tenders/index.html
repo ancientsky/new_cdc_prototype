@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-TW" dir="ltr" data-base="/new_cdc_prototype/preview/pr-56" data-lang-path="" data-view="admin">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>採購公告管理（內容管理後台）</title>
+<meta name="description" content="採購公告管理：疾管署 AI-ready 新官網原型之內容管理後台示範頁">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/tokens.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/base.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/components.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/admin.css">
+</head>
+<body class="adm " data-today="2026-10-01" data-admin-page="tenders">
+<a class="skip-link" href="#main">跳到主要內容</a>
+<header class="adm-top"><div class="adm-top__in">
+  <a class="adm-brand" href="/new_cdc_prototype/preview/pr-56/admin/"><strong>內容管理後台</strong><span>疾管署 AI-ready 新官網原型 · 示範</span></a>
+  <div class="adm-who" id="adm-who">
+    <span class="adm-who__id"><span class="adm-who__name" id="adm-who-name">急性傳染病組 · 承辦人</span><span class="adm-who__role" id="adm-who-role"></span></span>
+    <label for="adm-unit"><span class="adm-who__lbl">單位視角</span>
+      <select id="adm-unit" aria-describedby="adm-who-name"><option value="unit.pr" >公關室</option><option value="unit.it" >資訊室</option><option value="unit.oasis" >AI推動辦公室</option><option value="unit.epidemic-intelligence" >疫情中心</option><option value="unit.acute-infectious" selected>急性傳染病組</option><option value="unit.chronic-infectious" >慢性傳染病組</option><option value="unit.preparedness" >新興傳染病整備組</option><option value="unit.infection-control" >感染管制及生物安全組</option><option value="unit.quarantine" >檢疫組</option><option value="unit.lab" >檢驗及疫苗研製中心</option><option value="unit.planning" >企劃組</option><option value="unit.secretariat" >秘書室</option><option value="unit.personnel" >人事室</option><option value="unit.ethics" >政風室</option><option value="unit.preventive-medicine" >預防醫學辦公室</option><option value="unit.accounting" >主計室</option><option value="unit.regional-taipei" >臺北區管制中心</option><option value="unit.regional-northern" >北區管制中心</option><option value="unit.regional-central" >中區管制中心</option><option value="unit.regional-southern" >南區管制中心</option><option value="unit.regional-kaoping" >高屏區管制中心</option><option value="unit.regional-eastern" >東區管制中心</option><option value="unit.governance-committee" >資料治理委員會</option><option value="all">全部單位（總覽）</option></select>
+    </label>
+    <button type="button" class="adm-who__logout" id="adm-logout">登出</button>
+  </div>
+</div></header>
+<nav class="adm-nav" aria-label="後台導覽"><ul><li><a href="/new_cdc_prototype/preview/pr-56/admin/mine/" >我的內容</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/publish/" >上架新內容</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/review/" >複核區<span class="adm-count" data-count="review" aria-label="0 項">0</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/due/" >審閱到期<span class="adm-count" data-count="due" aria-label="18 項">18</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/catalog/" >資料目錄</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/notices/" >公告</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/jobs/" >人才招募<span class="adm-count" data-count="jobs" aria-label="1 項">1</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/tenders/" aria-current="page">採購<span class="adm-count" data-count="tenders" aria-label="1 項">1</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/media/" >影音<span class="adm-count" data-count="media" aria-label="1 項">1</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/links/" >連結</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/migration/" >移轉進度<span class="adm-count" data-count="migration" aria-label="1248 項">1248</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/import/" >舊站匯入</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/glossary/" >詞彙主檔</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/situation/" >疫情發布</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/bulletin/edit/" >疫情報導</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/todos/" >連動待辦<span class="adm-count" data-count="todos" aria-label="112 項">112</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/ai-status/" >AI 開關</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/reports/" >回報</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/eval/" >評估</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/" >儀表板</a></li></ul></nav>
+<div class="adm-demo" role="note">示範原型：此後台不連接任何正式系統；登入與所有操作只存在你的瀏覽器（localStorage），正式環境以機關 SSO 登入、一律走 Git Pull Request。</div>
+<main id="main" class="adm-main" tabindex="-1">
+<header class="adm-pagehead"><h1>採購公告管理</h1><p class="adm-pagehead__what">秘書室的標案總覽：每件標案目前在哪個階段（招標中、已截止、已開標、已決標、流標）、預算、投標截止與開標日，以及決標逾期的提醒。</p><p class="adm-pagehead__flow"><strong>正式環境：</strong>上架新標案、展延投標截止或改開標日、流標／取消、公告決標，都在「採購公告上架與異動」表單填寫：即時預覽階段與檢核，匯出 content/tenders/ 的 tender 檔開 PR（快車道）。階段由日期與 award／manualStatus 推導；開標日後 30 日仍沒有決標資訊（且非流標、撤銷）會自動產生待辦給秘書室。</p></header>
+<div class="adm-actions adm-tf-entry"><a class="adm-btn" href="/new_cdc_prototype/preview/pr-56/admin/tenders/edit/">上架新標案／異動既有標案</a><span class="adm-muted">展延、流標、決標都在同一張表單，會自動留下前台看得到的「公告異動」紀錄。</span></div>
+<div class="adm-statrow">
+  <div class="adm-stat adm-stat--info"><p class="adm-stat__label">招標中</p><p class="adm-stat__value">3</p><p class="adm-stat__note">投標截止前</p></div>
+  <div class="adm-stat"><p class="adm-stat__label">已截止</p><p class="adm-stat__value">1</p><p class="adm-stat__note">等開標</p></div>
+  <div class="adm-stat"><p class="adm-stat__label">已開標</p><p class="adm-stat__value">1</p><p class="adm-stat__note">等決標</p></div>
+  <div class="adm-stat adm-stat--ok"><p class="adm-stat__label">已決標</p><p class="adm-stat__value">2</p><p class="adm-stat__note">公布得標廠商</p></div>
+  <div class="adm-stat"><p class="adm-stat__label">流標／撤銷</p><p class="adm-stat__value">1</p><p class="adm-stat__note">不產生決標待辦</p></div>
+  <div class="adm-stat adm-stat--bad"><p class="adm-stat__label">決標逾期</p><p class="adm-stat__value">1</p><p class="adm-stat__note">開標後 30 日無決標</p></div>
+</div>
+
+<section class="adm-card" aria-labelledby="p-h"><h2 id="p-h">標案與階段</h2>
+  <p class="adm-card__sub">前台：<a href="/new_cdc_prototype/preview/pr-56/procurement/">/procurement/</a>。正式投標一律在政府電子採購網，本站只彙整公告與決標資訊。</p>
+  <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><caption>共 8 件標案（建置日 2026-10-01）</caption>
+    <thead><tr><th scope="col">標案</th><th scope="col">階段</th><th scope="col">採購方式</th><th scope="col" class="num">預算（元）</th><th scope="col">投標截止</th><th scope="col">開標</th><th scope="col">決標</th><th scope="col">採購網</th></tr></thead>
+    <tbody><tr data-id="tender.2026-02-20-flu-vaccine-115" data-stage="awarded">
+      <td><a href="/new_cdc_prototype/preview/pr-56/procurement/flu-vaccine-115/">115 年度公費流感疫苗採購案</a><div class="adm-muted"><code>tender.2026-02-20-flu-vaccine-115</code> · CDC-115-VAC-001 · 急性傳染病組 · <a href="/new_cdc_prototype/preview/pr-56/admin/tenders/edit/?id=tender.2026-02-20-flu-vaccine-115">異動</a></div></td>
+      <td><span class="adm-badge adm-badge--ok">已決標</span></td>
+      <td>公開招標<div class="adm-muted">財物</div></td>
+      <td class="num">2,100,000,000</td>
+      <td>2026-03-20</td>
+      <td>2026-03-23</td>
+      <td>2026-04-15<div class="adm-muted">甲生物科技股份有限公司（示意）</div></td>
+      <td><a href="https://web.pcc.gov.tw/" rel="noopener">外連</a></td></tr><tr data-id="tender.2026-06-10-lab-reagents-115" data-stage="awarded">
+      <td><a href="/new_cdc_prototype/preview/pr-56/procurement/lab-reagents-115/">115 年度傳染病檢驗試劑及耗材採購案</a><div class="adm-muted"><code>tender.2026-06-10-lab-reagents-115</code> · CDC-115-LAB-007 · 檢驗及疫苗研製中心 · <a href="/new_cdc_prototype/preview/pr-56/admin/tenders/edit/?id=tender.2026-06-10-lab-reagents-115">異動</a></div></td>
+      <td><span class="adm-badge adm-badge--ok">已決標</span></td>
+      <td>公開招標<div class="adm-muted">財物</div></td>
+      <td class="num">46,000,000</td>
+      <td>2026-07-10</td>
+      <td>2026-07-13</td>
+      <td>2026-08-05<div class="adm-muted">乙生醫股份有限公司等 3 家（示意）</div></td>
+      <td><a href="https://web.pcc.gov.tw/" rel="noopener">外連</a></td></tr><tr data-id="tender.2026-07-29-surveillance-system-expansion" data-stage="opened">
+      <td><a href="/new_cdc_prototype/preview/pr-56/procurement/surveillance-system-expansion/">傳染病監測資料分析系統功能擴充案</a><div class="adm-muted"><code>tender.2026-07-29-surveillance-system-expansion</code> · CDC-115-EPI-006 · 疫情中心 · <a href="/new_cdc_prototype/preview/pr-56/admin/tenders/edit/?id=tender.2026-07-29-surveillance-system-expansion">異動</a></div></td>
+      <td><span class="adm-badge adm-badge--info">已開標</span></td>
+      <td>限制性招標<div class="adm-muted">勞務</div></td>
+      <td class="num">3,800,000</td>
+      <td>2026-08-20</td>
+      <td>2026-08-26</td>
+      <td><span class="adm-badge adm-badge--bad">逾期 6 日</span></td>
+      <td><a href="https://web.pcc.gov.tw/" rel="noopener">外連</a></td></tr><tr data-id="tender.2026-08-18-cold-chain-monitor" data-stage="failed">
+      <td><a href="/new_cdc_prototype/preview/pr-56/procurement/cold-chain-monitor/">疫苗冷運冷藏溫度監控設備採購案</a><div class="adm-muted"><code>tender.2026-08-18-cold-chain-monitor</code> · CDC-115-VAC-005 · 急性傳染病組 · <a href="/new_cdc_prototype/preview/pr-56/admin/tenders/edit/?id=tender.2026-08-18-cold-chain-monitor">異動</a></div></td>
+      <td><span class="adm-badge adm-badge--warn">流標</span></td>
+      <td>公開取得報價或企劃書<div class="adm-muted">財物</div></td>
+      <td class="num">1,200,000</td>
+      <td>2026-09-01</td>
+      <td>2026-09-02</td>
+      <td>—</td>
+      <td><a href="https://web.pcc.gov.tw/" rel="noopener">外連</a></td></tr><tr data-id="tender.2026-09-04-ppe-warehouse" data-stage="closed">
+      <td><a href="/new_cdc_prototype/preview/pr-56/procurement/ppe-warehouse/">防疫物資儲備倉儲管理及配送勞務採購案</a><div class="adm-muted"><code>tender.2026-09-04-ppe-warehouse</code> · CDC-115-PRE-004 · 新興傳染病整備組 · <a href="/new_cdc_prototype/preview/pr-56/admin/tenders/edit/?id=tender.2026-09-04-ppe-warehouse">異動</a></div></td>
+      <td><span class="adm-badge adm-badge--gray">已截止</span></td>
+      <td>公開招標<div class="adm-muted">勞務</div></td>
+      <td class="num">4,200,000</td>
+      <td>2026-09-26</td>
+      <td>2026-10-05</td>
+      <td>—</td>
+      <td><a href="https://web.pcc.gov.tw/" rel="noopener">外連</a></td></tr><tr data-id="tender.2026-09-22-campaign-video" data-stage="open">
+      <td><a href="/new_cdc_prototype/preview/pr-56/procurement/campaign-video/">115 年度防疫宣導影片製作暨多語字幕案</a><div class="adm-muted"><code>tender.2026-09-22-campaign-video</code> · CDC-115-PR-009 · 公關室 · <a href="/new_cdc_prototype/preview/pr-56/admin/tenders/edit/?id=tender.2026-09-22-campaign-video">異動</a></div></td>
+      <td><span class="adm-badge adm-badge--ok">招標中</span></td>
+      <td>公開招標<div class="adm-muted">勞務</div></td>
+      <td class="num">6,500,000</td>
+      <td>2026-10-22 <span class="adm-badge adm-badge--ok">剩 21 日</span></td>
+      <td>2026-10-23</td>
+      <td>—</td>
+      <td><a href="https://web.pcc.gov.tw/" rel="noopener">外連</a></td></tr><tr data-id="tender.2026-09-15-antiviral-115" data-stage="open">
+      <td><a href="/new_cdc_prototype/preview/pr-56/procurement/antiviral-115/">「115 年度公費流感抗病毒藥劑採購案」招標公告</a><div class="adm-muted"><code>tender.2026-09-15-antiviral-115</code> · CDC-115-AC-031 · 急性傳染病組 · <a href="/new_cdc_prototype/preview/pr-56/admin/tenders/edit/?id=tender.2026-09-15-antiviral-115">異動</a></div></td>
+      <td><span class="adm-badge adm-badge--ok">招標中</span></td>
+      <td>公開招標<div class="adm-muted">財物</div></td>
+      <td class="num">96,000,000</td>
+      <td>2026-10-28 <span class="adm-badge adm-badge--ok">剩 27 日</span></td>
+      <td>2026-10-29</td>
+      <td>—</td>
+      <td><a href="https://web.pcc.gov.tw/" rel="noopener">外連</a></td></tr><tr data-id="tender.2026-09-29-datacenter-ops" data-stage="open">
+      <td><a href="/new_cdc_prototype/preview/pr-56/procurement/datacenter-ops/">資料中心機房維運暨資安監控服務案</a><div class="adm-muted"><code>tender.2026-09-29-datacenter-ops</code> · CDC-115-IT-015 · 資訊室 · <a href="/new_cdc_prototype/preview/pr-56/admin/tenders/edit/?id=tender.2026-09-29-datacenter-ops">異動</a></div></td>
+      <td><span class="adm-badge adm-badge--ok">招標中</span></td>
+      <td>公開招標<div class="adm-muted">勞務</div></td>
+      <td class="num">18,500,000</td>
+      <td>2026-11-12 <span class="adm-badge adm-badge--ok">剩 42 日</span></td>
+      <td>2026-11-13</td>
+      <td>—</td>
+      <td><a href="https://web.pcc.gov.tw/" rel="noopener">外連</a></td></tr></tbody></table></div>
+  
+</section>
+
+<section class="adm-card" aria-labelledby="t-h"><h2 id="t-h">決標逾期待辦（秘書室）</h2>
+  <p class="adm-card__sub">開標日起 30 日仍無決標資訊，且標案不是流標或撤銷。完整清單見 <a href="/new_cdc_prototype/preview/pr-56/admin/todos/#tender-award-overdue">連動待辦</a>。</p>
+  <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><thead><tr><th scope="col">標案</th><th scope="col">說明</th><th scope="col">期限</th></tr></thead>
+    <tbody><tr><td>傳染病監測資料分析系統功能擴充案<div class="adm-muted"><code>tender.2026-07-29-surveillance-system-expansion</code></div></td><td>標案「傳染病監測資料分析系統功能擴充案」（CDC-115-EPI-006）已於 2026-08-26 開標，逾 30 日仍無決標或流標紀錄：請秘書室會同疫情中心更新決標資訊（award）或標記流標／取消（manualStatus）</td><td>2026-09-25 <span class="adm-badge adm-badge--bad">逾期 6 日</span></td></tr></tbody></table></div>
+</section></main>
+<footer class="adm-foot"><a href="/new_cdc_prototype/preview/pr-56/">回前台首頁</a><a href="/new_cdc_prototype/preview/pr-56/v1/catalog.json">目錄 API（/v1/catalog.json）</a><a href="/new_cdc_prototype/preview/pr-56/guide/">使用說明</a><span>建置日 2026-10-01</span></footer>
+<script type="module" src="/new_cdc_prototype/preview/pr-56/assets/js/admin/common.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+# Dengue: laboratory tests and specimen requirements
+
+> 權責單位：Center for Diagnostics and Vaccine Development · 最後審閱：2026-07-15 · 下次審閱：2027-07-15 · 授權：OGDL-1.0 · ID：labtest.dengue · 疾病：disease.dengue · 送驗時限：24 小時
+
+Acute-phase serum 2–5 mL within 7 days of onset, refrigerated and delivered within 24 hours for NS1, RT-PCR and IgM/IgG; convalescent serum at 14–40 days.
+
+檢驗單位：Taiwan CDC laboratory、Certified laboratory、Regional center laboratory
+生物安全等級：BSL-2
+
+## 檢體
+
+### 急性期血清
+
+- dengue 急性期血清：血清 2–5 mL（全血 5–10 mL），發病 7 日內（以發病 1–5 日最佳），無菌血清分離管（紅頭或黃頭，無抗凝劑），2–8°C 冷藏，勿冷凍全血，2–8°C 冷藏運送（UN3373 三層包裝）；1 日內出報告
+- 可做檢驗：NS1 抗原、RT-PCR、IgM／IgG 抗體
+
+### 恢復期血清
+
+- dengue 恢復期血清：血清 2–5 mL，發病 14–40 日，無菌血清分離管（紅頭或黃頭，無抗凝劑），2–8°C 冷藏，2–8°C 冷藏運送（UN3373 三層包裝）；3 日內出報告
+- 可做檢驗：IgM／IgG 抗體（成對血清）
+- 注意：急性期陰性但臨床高度懷疑時採檢
+
+## 注意事項
+
+- 通報後即採檢；NS1 快篩陽性者仍須送驗確認（見致醫界通函第 615 號，示意）。
+- 檢體溶血或脂血會影響結果。
+- 送驗單請註明發病日與旅遊史，以利研判境外移入或本土。

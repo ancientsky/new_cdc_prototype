@@ -1,0 +1,1194 @@
+<!doctype html>
+<html lang="zh-TW" dir="ltr" data-base="/new_cdc_prototype/preview/pr-56" data-lang-path="" data-view="admin">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>審閱到期（內容管理後台）</title>
+<meta name="description" content="審閱到期：疾管署 AI-ready 新官網原型之內容管理後台示範頁">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/tokens.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/base.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/components.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/admin.css">
+</head>
+<body class="adm " data-today="2026-10-01" data-admin-page="due">
+<a class="skip-link" href="#main">跳到主要內容</a>
+<header class="adm-top"><div class="adm-top__in">
+  <a class="adm-brand" href="/new_cdc_prototype/preview/pr-56/admin/"><strong>內容管理後台</strong><span>疾管署 AI-ready 新官網原型 · 示範</span></a>
+  <div class="adm-who" id="adm-who">
+    <span class="adm-who__id"><span class="adm-who__name" id="adm-who-name">急性傳染病組 · 承辦人</span><span class="adm-who__role" id="adm-who-role"></span></span>
+    <label for="adm-unit"><span class="adm-who__lbl">單位視角</span>
+      <select id="adm-unit" aria-describedby="adm-who-name"><option value="unit.pr" >公關室</option><option value="unit.it" >資訊室</option><option value="unit.oasis" >AI推動辦公室</option><option value="unit.epidemic-intelligence" >疫情中心</option><option value="unit.acute-infectious" selected>急性傳染病組</option><option value="unit.chronic-infectious" >慢性傳染病組</option><option value="unit.preparedness" >新興傳染病整備組</option><option value="unit.infection-control" >感染管制及生物安全組</option><option value="unit.quarantine" >檢疫組</option><option value="unit.lab" >檢驗及疫苗研製中心</option><option value="unit.planning" >企劃組</option><option value="unit.secretariat" >秘書室</option><option value="unit.personnel" >人事室</option><option value="unit.ethics" >政風室</option><option value="unit.preventive-medicine" >預防醫學辦公室</option><option value="unit.accounting" >主計室</option><option value="unit.regional-taipei" >臺北區管制中心</option><option value="unit.regional-northern" >北區管制中心</option><option value="unit.regional-central" >中區管制中心</option><option value="unit.regional-southern" >南區管制中心</option><option value="unit.regional-kaoping" >高屏區管制中心</option><option value="unit.regional-eastern" >東區管制中心</option><option value="unit.governance-committee" >資料治理委員會</option><option value="all">全部單位（總覽）</option></select>
+    </label>
+    <button type="button" class="adm-who__logout" id="adm-logout">登出</button>
+  </div>
+</div></header>
+<nav class="adm-nav" aria-label="後台導覽"><ul><li><a href="/new_cdc_prototype/preview/pr-56/admin/mine/" >我的內容</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/publish/" >上架新內容</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/review/" >複核區<span class="adm-count" data-count="review" aria-label="0 項">0</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/due/" aria-current="page">審閱到期<span class="adm-count" data-count="due" aria-label="18 項">18</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/catalog/" >資料目錄</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/notices/" >公告</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/jobs/" >人才招募<span class="adm-count" data-count="jobs" aria-label="1 項">1</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/tenders/" >採購<span class="adm-count" data-count="tenders" aria-label="1 項">1</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/media/" >影音<span class="adm-count" data-count="media" aria-label="1 項">1</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/links/" >連結</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/migration/" >移轉進度<span class="adm-count" data-count="migration" aria-label="1248 項">1248</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/import/" >舊站匯入</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/glossary/" >詞彙主檔</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/situation/" >疫情發布</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/bulletin/edit/" >疫情報導</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/todos/" >連動待辦<span class="adm-count" data-count="todos" aria-label="112 項">112</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/ai-status/" >AI 開關</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/reports/" >回報</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/eval/" >評估</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/" >儀表板</a></li></ul></nav>
+<div class="adm-demo" role="note">示範原型：此後台不連接任何正式系統；登入與所有操作只存在你的瀏覽器（localStorage），正式環境以機關 SSO 登入、一律走 Git Pull Request。</div>
+<main id="main" class="adm-main" tabindex="-1">
+<header class="adm-pagehead"><h1>審閱到期</h1><p class="adm-pagehead__what">依「最後審閱日 + 審閱週期」算出的到期清單，分為已逾期、30 日內、90 日內與其他。這裡是待辦，不是監控。</p><p class="adm-pagehead__flow"><strong>正式環境：</strong>承辦人審閱內容後，在內容檔更新 reviewedAt 欄位並開 PR；合併後建置重算，到期與警示自動消失。</p></header>
+<div class="adm-box adm-box--note"><strong>逾期不需要人工處理前台</strong>逾期內容已自動退出 AI 白名單並在前台顯示警示，不需人工處理；此頁是待辦，不是監控。另有 81 筆事件觸發型內容（如新聞稿，審閱週期 0）不會出現在這裡，它們由「所依據正本修訂」自動產生待辦。</div>
+<section class="adm-card"><div class="adm-filters">
+  <div class="adm-field"><label for="d-unit">單位</label><select id="d-unit"><option value="all">全部單位</option><option value="unit.pr" >公關室</option><option value="unit.it" >資訊室</option><option value="unit.oasis" >AI推動辦公室</option><option value="unit.epidemic-intelligence" >疫情中心</option><option value="unit.acute-infectious" >急性傳染病組</option><option value="unit.chronic-infectious" >慢性傳染病組</option><option value="unit.preparedness" >新興傳染病整備組</option><option value="unit.infection-control" >感染管制及生物安全組</option><option value="unit.quarantine" >檢疫組</option><option value="unit.lab" >檢驗及疫苗研製中心</option><option value="unit.planning" >企劃組</option><option value="unit.secretariat" >秘書室</option><option value="unit.personnel" >人事室</option><option value="unit.ethics" >政風室</option><option value="unit.preventive-medicine" >預防醫學辦公室</option><option value="unit.accounting" >主計室</option><option value="unit.regional-taipei" >臺北區管制中心</option><option value="unit.regional-northern" >北區管制中心</option><option value="unit.regional-central" >中區管制中心</option><option value="unit.regional-southern" >南區管制中心</option><option value="unit.regional-kaoping" >高屏區管制中心</option><option value="unit.regional-eastern" >東區管制中心</option><option value="unit.governance-committee" >資料治理委員會</option></select></div>
+  <div class="adm-field adm-field--grow"><label for="d-q">搜尋</label><input type="search" id="d-q" placeholder="標題或識別碼"></div>
+  <span class="adm-count-note" id="d-note" aria-live="polite"></span></div>
+  <div data-group="overdue"><h3 class="adm-group-title"><span class="adm-badge adm-badge--bad">已逾期</span><span class="adm-count" data-gcount>4</span><span class="adm-muted">已自動退出 AI 白名單並顯示警示</span></h3>
+    <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><thead><tr><th scope="col">內容</th><th scope="col">權責單位</th><th scope="col">最後審閱</th><th scope="col">到期日</th><th scope="col">週期</th><th scope="col">動作</th></tr></thead><tbody>
+    <tr data-id="clar.2025-04-mmr-born-after-1981-only" data-owner="unit.pr" data-q="clar.2025-04-mmr-born-after-1981-only 網傳「mmr 只有 1981 年後出生的人要補打」">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/factcheck/">網傳「MMR 只有 1981 年後出生的人要補打」</a></span><div class="adm-muted"><code>clar.2025-04-mmr-born-after-1981-only</code> · 澄清</div></td>
+      <td>公關室</td><td>2025-04-10</td>
+      <td><span class="adm-red">2025-10-10</span><div class="adm-muted">已逾期 356 日</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="clar.2025-04-mmr-born-after-1981-only">標記已審閱（示範）</button></td></tr><tr data-id="media.mmr-waiting-room-2025" data-owner="unit.acute-infectious" data-q="media.mmr-waiting-room-2025 麻疹 mmr 疫苗候診衛教動畫（2025 年版）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/media/mmr-waiting-room-2025/">麻疹 MMR 疫苗候診衛教動畫（2025 年版）</a></span><div class="adm-muted"><code>media.mmr-waiting-room-2025</code> · 影音</div></td>
+      <td>急性傳染病組</td><td>2025-01-14</td>
+      <td><span class="adm-red">2026-01-14</span><div class="adm-muted">已逾期 260 日</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="media.mmr-waiting-room-2025">標記已審閱（示範）</button></td></tr><tr data-id="disease.chikungunya" data-owner="unit.acute-infectious" data-q="disease.chikungunya 屈公病">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/diseases/chikungunya/">屈公病</a></span><div class="adm-muted"><code>disease.chikungunya</code> · 疾病頁</div></td>
+      <td>急性傳染病組</td><td>2025-07-28</td>
+      <td><span class="adm-red">2026-07-28</span><div class="adm-muted">已逾期 65 日</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="disease.chikungunya">標記已審閱（示範）</button></td></tr><tr data-id="disease.japanese-encephalitis" data-owner="unit.acute-infectious" data-q="disease.japanese-encephalitis 日本腦炎">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/diseases/japanese-encephalitis/">日本腦炎</a></span><div class="adm-muted"><code>disease.japanese-encephalitis</code> · 疾病頁</div></td>
+      <td>急性傳染病組</td><td>2025-08-12</td>
+      <td><span class="adm-red">2026-08-12</span><div class="adm-muted">已逾期 50 日</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="disease.japanese-encephalitis">標記已審閱（示範）</button></td></tr>
+    </tbody></table></div></div><div data-group="d30"><h3 class="adm-group-title"><span class="adm-badge adm-badge--warn">30 日內到期</span><span class="adm-count" data-gcount>14</span><span class="adm-muted">建議本月內完成審閱</span></h3>
+    <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><thead><tr><th scope="col">內容</th><th scope="col">權責單位</th><th scope="col">最後審閱</th><th scope="col">到期日</th><th scope="col">週期</th><th scope="col">動作</th></tr></thead><tbody>
+    <tr data-id="faq.tb-cough-two-weeks" data-owner="unit.chronic-infectious" data-q="faq.tb-cough-two-weeks 咳嗽多久要懷疑是結核病？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/tb-cough-two-weeks/">咳嗽多久要懷疑是結核病？</a></span><div class="adm-muted"><code>faq.tb-cough-two-weeks</code> · Q&amp;A</div></td>
+      <td>慢性傳染病組</td><td>2026-04-01</td>
+      <td><span class="adm-yellow">2026-10-01</span><div class="adm-muted">今日到期</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.tb-cough-two-weeks">標記已審閱（示範）</button></td></tr><tr data-id="faq.mpox-who-vaccine" data-owner="unit.acute-infectious" data-q="faq.mpox-who-vaccine m痘疫苗誰可以打公費？要打幾劑？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/mpox-who-vaccine/">M痘疫苗誰可以打公費？要打幾劑？</a></span><div class="adm-muted"><code>faq.mpox-who-vaccine</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-04-02</td>
+      <td><span class="adm-yellow">2026-10-02</span><div class="adm-muted">1 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.mpox-who-vaccine">標記已審閱（示範）</button></td></tr><tr data-id="faq.hepb-newborn" data-owner="unit.acute-infectious" data-q="faq.hepb-newborn 新生兒的 b 型肝炎疫苗什麼時候打？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/hepb-newborn/">新生兒的 B 型肝炎疫苗什麼時候打？</a></span><div class="adm-muted"><code>faq.hepb-newborn</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-04-15</td>
+      <td><span class="adm-yellow">2026-10-15</span><div class="adm-muted">14 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.hepb-newborn">標記已審閱（示範）</button></td></tr><tr data-id="faq.pregnant-tdap" data-owner="unit.acute-infectious" data-q="faq.pregnant-tdap 孕婦需要打百日咳疫苗嗎？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/pregnant-tdap/">孕婦需要打百日咳疫苗嗎？</a></span><div class="adm-muted"><code>faq.pregnant-tdap</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-04-15</td>
+      <td><span class="adm-yellow">2026-10-15</span><div class="adm-muted">14 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.pregnant-tdap">標記已審閱（示範）</button></td></tr><tr data-id="faq.varicella-vaccine-doses" data-owner="unit.acute-infectious" data-q="faq.varicella-vaccine-doses 水痘疫苗公費打幾劑？需要打第二劑嗎？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/varicella-vaccine-doses/">水痘疫苗公費打幾劑？需要打第二劑嗎？</a></span><div class="adm-muted"><code>faq.varicella-vaccine-doses</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-04-15</td>
+      <td><span class="adm-yellow">2026-10-15</span><div class="adm-muted">14 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.varicella-vaccine-doses">標記已審閱（示範）</button></td></tr><tr data-id="vaccine.hepatitis-b" data-owner="unit.acute-infectious" data-q="vaccine.hepatitis-b b 型肝炎疫苗">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/vaccines/hepatitis-b/">B 型肝炎疫苗</a></span><div class="adm-muted"><code>vaccine.hepatitis-b</code> · 疫苗頁</div></td>
+      <td>急性傳染病組</td><td>2026-04-15</td>
+      <td><span class="adm-yellow">2026-10-15</span><div class="adm-muted">14 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="vaccine.hepatitis-b">標記已審閱（示範）</button></td></tr><tr data-id="vaccine.varicella" data-owner="unit.acute-infectious" data-q="vaccine.varicella 水痘疫苗">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/vaccines/varicella/">水痘疫苗</a></span><div class="adm-muted"><code>vaccine.varicella</code> · 疫苗頁</div></td>
+      <td>急性傳染病組</td><td>2026-04-15</td>
+      <td><span class="adm-yellow">2026-10-15</span><div class="adm-muted">14 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="vaccine.varicella">標記已審閱（示範）</button></td></tr><tr data-id="faq.ev-severe-signs" data-owner="unit.acute-infectious" data-q="faq.ev-severe-signs 腸病毒重症前兆有哪些？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/ev-severe-signs/">腸病毒重症前兆有哪些？</a></span><div class="adm-muted"><code>faq.ev-severe-signs</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-04-22</td>
+      <td><span class="adm-yellow">2026-10-22</span><div class="adm-muted">21 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.ev-severe-signs">標記已審閱（示範）</button></td></tr><tr data-id="faq.ev-stay-home" data-owner="unit.acute-infectious" data-q="faq.ev-stay-home 孩子得了腸病毒，要在家休息幾天？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/ev-stay-home/">孩子得了腸病毒，要在家休息幾天？</a></span><div class="adm-muted"><code>faq.ev-stay-home</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-04-22</td>
+      <td><span class="adm-yellow">2026-10-22</span><div class="adm-muted">21 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.ev-stay-home">標記已審閱（示範）</button></td></tr><tr data-id="faq.ev71-vaccine" data-owner="unit.acute-infectious" data-q="faq.ev71-vaccine 腸病毒 71 型疫苗是公費的嗎？打了就不會得腸病毒嗎？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/ev71-vaccine/">腸病毒 71 型疫苗是公費的嗎？打了就不會得腸病毒嗎？</a></span><div class="adm-muted"><code>faq.ev71-vaccine</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-04-22</td>
+      <td><span class="adm-yellow">2026-10-22</span><div class="adm-muted">21 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.ev71-vaccine">標記已審閱（示範）</button></td></tr><tr data-id="clar.2026-04-enterovirus-only-kids" data-owner="unit.pr" data-q="clar.2026-04-enterovirus-only-kids 網傳「腸病毒只有小孩會得，大人不用擔心」部分正確">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/factcheck/">網傳「腸病毒只有小孩會得，大人不用擔心」部分正確</a></span><div class="adm-muted"><code>clar.2026-04-enterovirus-only-kids</code> · 澄清</div></td>
+      <td>公關室</td><td>2026-04-22</td>
+      <td><span class="adm-yellow">2026-10-22</span><div class="adm-muted">21 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="clar.2026-04-enterovirus-only-kids">標記已審閱（示範）</button></td></tr><tr data-id="vaccine.ev71" data-owner="unit.acute-infectious" data-q="vaccine.ev71 腸病毒 71 型疫苗">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/vaccines/ev71/">腸病毒 71 型疫苗</a></span><div class="adm-muted"><code>vaccine.ev71</code> · 疫苗頁</div></td>
+      <td>急性傳染病組</td><td>2026-04-22</td>
+      <td><span class="adm-yellow">2026-10-22</span><div class="adm-muted">21 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="vaccine.ev71">標記已審閱（示範）</button></td></tr><tr data-id="faq.travel-malaria-prevention" data-owner="unit.quarantine" data-q="faq.travel-malaria-prevention 去非洲需要吃瘧疾預防藥嗎？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/travel-malaria-prevention/">去非洲需要吃瘧疾預防藥嗎？</a></span><div class="adm-muted"><code>faq.travel-malaria-prevention</code> · Q&amp;A</div></td>
+      <td>檢疫組</td><td>2026-04-25</td>
+      <td><span class="adm-yellow">2026-10-25</span><div class="adm-muted">24 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.travel-malaria-prevention">標記已審閱（示範）</button></td></tr><tr data-id="disease.rubella" data-owner="unit.acute-infectious" data-q="disease.rubella 德國麻疹">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/diseases/rubella/">德國麻疹</a></span><div class="adm-muted"><code>disease.rubella</code> · 疾病頁</div></td>
+      <td>急性傳染病組</td><td>2025-10-30</td>
+      <td><span class="adm-yellow">2026-10-30</span><div class="adm-muted">29 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="disease.rubella">標記已審閱（示範）</button></td></tr>
+    </tbody></table></div></div><div data-group="d90"><h3 class="adm-group-title"><span class="adm-badge adm-badge--info">90 日內到期</span><span class="adm-count" data-gcount>19</span><span class="adm-muted"></span></h3>
+    <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><thead><tr><th scope="col">內容</th><th scope="col">權責單位</th><th scope="col">最後審閱</th><th scope="col">到期日</th><th scope="col">週期</th><th scope="col">動作</th></tr></thead><tbody>
+    <tr data-id="faq.healthcare-workers-mmr" data-owner="unit.infection-control" data-q="faq.healthcare-workers-mmr 醫護人員需要接種 mmr 疫苗嗎？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/healthcare-workers-mmr/">醫護人員需要接種 MMR 疫苗嗎？</a></span><div class="adm-muted"><code>faq.healthcare-workers-mmr</code> · Q&amp;A</div></td>
+      <td>感染管制及生物安全組</td><td>2026-05-14</td>
+      <td><span class="">2026-11-14</span><div class="adm-muted">44 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.healthcare-workers-mmr">標記已審閱（示範）</button></td></tr><tr data-id="faq.measles-mmr-born-1970" data-owner="unit.acute-infectious" data-q="faq.measles-mmr-born-1970 我是 1970 年出生的，出國前需要打 mmr 疫苗嗎？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/measles-mmr-born-1970/">我是 1970 年出生的，出國前需要打 MMR 疫苗嗎？</a></span><div class="adm-muted"><code>faq.measles-mmr-born-1970</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-05-14</td>
+      <td><span class="">2026-11-14</span><div class="adm-muted">44 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.measles-mmr-born-1970">標記已審閱（示範）</button></td></tr><tr data-id="faq.measles-symptoms" data-owner="unit.acute-infectious" data-q="faq.measles-symptoms 麻疹有哪些症狀？會傳染多久？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/measles-symptoms/">麻疹有哪些症狀？會傳染多久？</a></span><div class="adm-muted"><code>faq.measles-symptoms</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-05-14</td>
+      <td><span class="">2026-11-14</span><div class="adm-muted">44 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.measles-symptoms">標記已審閱（示範）</button></td></tr><tr data-id="faq.rumor-mmr-autism" data-owner="unit.acute-infectious" data-q="faq.rumor-mmr-autism mmr 疫苗會造成自閉症嗎？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/rumor-mmr-autism/">MMR 疫苗會造成自閉症嗎？</a></span><div class="adm-muted"><code>faq.rumor-mmr-autism</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-05-14</td>
+      <td><span class="">2026-11-14</span><div class="adm-muted">44 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.rumor-mmr-autism">標記已審閱（示範）</button></td></tr><tr data-id="faq.travel-japan-measles" data-owner="unit.quarantine" data-q="faq.travel-japan-measles 去日本旅遊需要擔心麻疹嗎？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/travel-japan-measles/">去日本旅遊需要擔心麻疹嗎？</a></span><div class="adm-muted"><code>faq.travel-japan-measles</code> · Q&amp;A</div></td>
+      <td>檢疫組</td><td>2026-05-14</td>
+      <td><span class="">2026-11-14</span><div class="adm-muted">44 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.travel-japan-measles">標記已審閱（示範）</button></td></tr><tr data-id="clar.2026-05-mmr-all-adults" data-owner="unit.pr" data-q="clar.2026-05-mmr-all-adults 網傳「所有成人都要再補打一劑 mmr」部分正確">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/factcheck/">網傳「所有成人都要再補打一劑 MMR」部分正確</a></span><div class="adm-muted"><code>clar.2026-05-mmr-all-adults</code> · 澄清</div></td>
+      <td>公關室</td><td>2026-05-14</td>
+      <td><span class="">2026-11-14</span><div class="adm-muted">44 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="clar.2026-05-mmr-all-adults">標記已審閱（示範）</button></td></tr><tr data-id="vaccine.mmr" data-owner="unit.acute-infectious" data-q="vaccine.mmr mmr 疫苗（麻疹腮腺炎德國麻疹混合疫苗）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/vaccines/mmr/">MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）</a></span><div class="adm-muted"><code>vaccine.mmr</code> · 疫苗頁</div></td>
+      <td>急性傳染病組</td><td>2026-05-14</td>
+      <td><span class="">2026-11-14</span><div class="adm-muted">44 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="vaccine.mmr">標記已審閱（示範）</button></td></tr><tr data-id="dataset.sentinel-physician" data-owner="unit.epidemic-intelligence" data-q="dataset.sentinel-physician 定點醫師監測資料（類流感、腹瀉、手足口病）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/data/">定點醫師監測資料（類流感、腹瀉、手足口病）</a></span><div class="adm-muted"><code>dataset.sentinel-physician</code> · 資料集</div></td>
+      <td>疫情中心</td><td>2025-11-15</td>
+      <td><span class="">2026-11-15</span><div class="adm-muted">45 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="dataset.sentinel-physician">標記已審閱（示範）</button></td></tr><tr data-id="disease.hepatitis-a" data-owner="unit.acute-infectious" data-q="disease.hepatitis-a 急性病毒性a型肝炎">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/diseases/hepatitis-a/">急性病毒性A型肝炎</a></span><div class="adm-muted"><code>disease.hepatitis-a</code> · 疾病頁</div></td>
+      <td>急性傳染病組</td><td>2025-11-20</td>
+      <td><span class="">2026-11-20</span><div class="adm-muted">50 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="disease.hepatitis-a">標記已審閱（示範）</button></td></tr><tr data-id="disease.hiv" data-owner="unit.chronic-infectious" data-q="disease.hiv 人類免疫缺乏病毒感染（愛滋）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/diseases/hiv/">人類免疫缺乏病毒感染（愛滋）</a></span><div class="adm-muted"><code>disease.hiv</code> · 疾病頁</div></td>
+      <td>慢性傳染病組</td><td>2025-12-01</td>
+      <td><span class="">2026-12-01</span><div class="adm-muted">61 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="disease.hiv">標記已審閱（示範）</button></td></tr><tr data-id="dataset.hiv-monthly" data-owner="unit.epidemic-intelligence" data-q="dataset.hiv-monthly 人類免疫缺乏病毒感染（愛滋）通報統計">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/data/">人類免疫缺乏病毒感染（愛滋）通報統計</a></span><div class="adm-muted"><code>dataset.hiv-monthly</code> · 資料集</div></td>
+      <td>疫情中心</td><td>2025-12-01</td>
+      <td><span class="">2026-12-01</span><div class="adm-muted">61 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="dataset.hiv-monthly">標記已審閱（示範）</button></td></tr><tr data-id="faq.measles-mmr-adult-who" data-owner="unit.acute-infectious" data-q="faq.measles-mmr-adult-who 幾年次以後出生的成人需要評估接種 mmr 疫苗？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/measles-mmr-adult-who/">幾年次以後出生的成人需要評估接種 MMR 疫苗？</a></span><div class="adm-muted"><code>faq.measles-mmr-adult-who</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-06-05</td>
+      <td><span class="">2026-12-05</span><div class="adm-muted">65 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.measles-mmr-adult-who">標記已審閱（示範）</button></td></tr><tr data-id="topic.prep" data-owner="unit.chronic-infectious" data-q="topic.prep prep 暴露愛滋病毒前預防性投藥計畫">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/topics/prep/">PrEP 暴露愛滋病毒前預防性投藥計畫</a></span><div class="adm-muted"><code>topic.prep</code> · 專區</div></td>
+      <td>慢性傳染病組</td><td>2026-06-05</td>
+      <td><span class="">2026-12-05</span><div class="adm-muted">65 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="topic.prep">標記已審閱（示範）</button></td></tr><tr data-id="faq.hiv-pep" data-owner="unit.chronic-infectious" data-q="faq.hiv-pep 發生沒有保護的性行為後，72 小時內可以做什麼？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/hiv-pep/">發生沒有保護的性行為後，72 小時內可以做什麼？</a></span><div class="adm-muted"><code>faq.hiv-pep</code> · Q&amp;A</div></td>
+      <td>慢性傳染病組</td><td>2026-06-10</td>
+      <td><span class="">2026-12-10</span><div class="adm-muted">70 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.hiv-pep">標記已審閱（示範）</button></td></tr><tr data-id="faq.hiv-test-where" data-owner="unit.chronic-infectious" data-q="faq.hiv-test-where 哪裡可以做匿名 hiv 篩檢？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/hiv-test-where/">哪裡可以做匿名 HIV 篩檢？</a></span><div class="adm-muted"><code>faq.hiv-test-where</code> · Q&amp;A</div></td>
+      <td>慢性傳染病組</td><td>2026-06-10</td>
+      <td><span class="">2026-12-10</span><div class="adm-muted">70 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.hiv-test-where">標記已審閱（示範）</button></td></tr><tr data-id="topic.anonymous-testing" data-owner="unit.chronic-infectious" data-q="topic.anonymous-testing 性傳染病匿名諮詢與篩檢">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/topics/anonymous-testing/">性傳染病匿名諮詢與篩檢</a></span><div class="adm-muted"><code>topic.anonymous-testing</code> · 專區</div></td>
+      <td>慢性傳染病組</td><td>2026-06-10</td>
+      <td><span class="">2026-12-10</span><div class="adm-muted">70 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="topic.anonymous-testing">標記已審閱（示範）</button></td></tr><tr data-id="faq.travel-clinic" data-owner="unit.quarantine" data-q="faq.travel-clinic 旅遊醫學門診可以做什麼？要出國前多久去？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/travel-clinic/">旅遊醫學門診可以做什麼？要出國前多久去？</a></span><div class="adm-muted"><code>faq.travel-clinic</code> · Q&amp;A</div></td>
+      <td>檢疫組</td><td>2026-06-15</td>
+      <td><span class="">2026-12-15</span><div class="adm-muted">75 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.travel-clinic">標記已審閱（示範）</button></td></tr><tr data-id="faq.travel-return-fever" data-owner="unit.quarantine" data-q="faq.travel-return-fever 出國回來後發燒，應該怎麼辦？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/travel-return-fever/">出國回來後發燒，應該怎麼辦？</a></span><div class="adm-muted"><code>faq.travel-return-fever</code> · Q&amp;A</div></td>
+      <td>檢疫組</td><td>2026-06-15</td>
+      <td><span class="">2026-12-15</span><div class="adm-muted">75 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.travel-return-fever">標記已審閱（示範）</button></td></tr><tr data-id="faq.yellow-fever-certificate" data-owner="unit.quarantine" data-q="faq.yellow-fever-certificate 去哪些國家需要黃熱病疫苗證明？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/yellow-fever-certificate/">去哪些國家需要黃熱病疫苗證明？</a></span><div class="adm-muted"><code>faq.yellow-fever-certificate</code> · Q&amp;A</div></td>
+      <td>檢疫組</td><td>2026-06-15</td>
+      <td><span class="">2026-12-15</span><div class="adm-muted">75 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.yellow-fever-certificate">標記已審閱（示範）</button></td></tr>
+    </tbody></table></div></div><div data-group="other"><h3 class="adm-group-title"><span class="adm-badge adm-badge--gray">其他（90 日後）</span><span class="adm-count" data-gcount>191</span><span class="adm-muted"></span></h3>
+    <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><thead><tr><th scope="col">內容</th><th scope="col">權責單位</th><th scope="col">最後審閱</th><th scope="col">到期日</th><th scope="col">週期</th><th scope="col">動作</th></tr></thead><tbody>
+    <tr data-id="clar.2026-01-vinegar-saltwater-flu" data-owner="unit.pr" data-q="clar.2026-01-vinegar-saltwater-flu 網傳「燻白醋、喝鹽水可以殺死流感病毒」沒有科學根據">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/factcheck/">網傳「燻白醋、喝鹽水可以殺死流感病毒」沒有科學根據</a></span><div class="adm-muted"><code>clar.2026-01-vinegar-saltwater-flu</code> · 澄清</div></td>
+      <td>公關室</td><td>2026-07-01</td>
+      <td><span class="">2027-01-01</span><div class="adm-muted">92 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="clar.2026-01-vinegar-saltwater-flu">標記已審閱（示範）</button></td></tr><tr data-id="topic.sti-resources" data-owner="unit.chronic-infectious" data-q="topic.sti-resources 性傳染病衛教資源">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/topics/sti-resources/">性傳染病衛教資源</a></span><div class="adm-muted"><code>topic.sti-resources</code> · 專區</div></td>
+      <td>慢性傳染病組</td><td>2026-07-01</td>
+      <td><span class="">2027-01-01</span><div class="adm-muted">92 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="topic.sti-resources">標記已審閱（示範）</button></td></tr><tr data-id="topic.vaccine-fund-donation" data-owner="unit.acute-infectious" data-q="topic.vaccine-fund-donation 疫苗基金：您的捐款，守護下一代">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/topics/vaccine-fund-donation/">疫苗基金：您的捐款，守護下一代</a></span><div class="adm-muted"><code>topic.vaccine-fund-donation</code> · 專區</div></td>
+      <td>急性傳染病組</td><td>2026-07-01</td>
+      <td><span class="">2027-01-01</span><div class="adm-muted">92 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="topic.vaccine-fund-donation">標記已審閱（示範）</button></td></tr><tr data-id="doc.case-definition-dengue.2026-01-01" data-owner="unit.acute-infectious" data-q="doc.case-definition-dengue.2026-01-01 傳染病病例定義：登革熱（2026 年版）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/documents/case-definition-dengue.2026-01-01/">傳染病病例定義：登革熱（2026 年版）</a></span><div class="adm-muted"><code>doc.case-definition-dengue.2026-01-01</code> · 文件</div></td>
+      <td>急性傳染病組</td><td>2026-01-05</td>
+      <td><span class="">2027-01-05</span><div class="adm-muted">96 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="doc.case-definition-dengue.2026-01-01">標記已審閱（示範）</button></td></tr><tr data-id="doc.case-definition-measles.2024-01-01" data-owner="unit.acute-infectious" data-q="doc.case-definition-measles.2024-01-01 傳染病病例定義：麻疹">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/documents/case-definition-measles.2024-01-01/">傳染病病例定義：麻疹</a></span><div class="adm-muted"><code>doc.case-definition-measles.2024-01-01</code> · 文件</div></td>
+      <td>急性傳染病組</td><td>2026-01-08</td>
+      <td><span class="">2027-01-08</span><div class="adm-muted">99 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="doc.case-definition-measles.2024-01-01">標記已審閱（示範）</button></td></tr><tr data-id="doc.ltbi-guideline.2024-01-01" data-owner="unit.chronic-infectious" data-q="doc.ltbi-guideline.2024-01-01 潛伏結核感染診治指引">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/documents/ltbi-guideline.2024-01-01/">潛伏結核感染診治指引</a></span><div class="adm-muted"><code>doc.ltbi-guideline.2024-01-01</code> · 文件</div></td>
+      <td>慢性傳染病組</td><td>2026-01-10</td>
+      <td><span class="">2027-01-10</span><div class="adm-muted">101 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="doc.ltbi-guideline.2024-01-01">標記已審閱（示範）</button></td></tr><tr data-id="clar.2025-07-dengue-spraying-poison" data-owner="unit.pr" data-q="clar.2025-07-dengue-spraying-poison 網傳「登革熱噴藥會毒死人、可以拒絕開門」為錯誤訊息">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/factcheck/">網傳「登革熱噴藥會毒死人、可以拒絕開門」為錯誤訊息</a></span><div class="adm-muted"><code>clar.2025-07-dengue-spraying-poison</code> · 澄清</div></td>
+      <td>公關室</td><td>2026-07-10</td>
+      <td><span class="">2027-01-10</span><div class="adm-muted">101 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="clar.2025-07-dengue-spraying-poison">標記已審閱（示範）</button></td></tr><tr data-id="dataset.nidss-notifiable" data-owner="unit.epidemic-intelligence" data-q="dataset.nidss-notifiable 傳染病統計資料查詢系統—法定傳染病病例數（週別、縣市、年齡）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/data/">傳染病統計資料查詢系統—法定傳染病病例數（週別、縣市、年齡）</a></span><div class="adm-muted"><code>dataset.nidss-notifiable</code> · 資料集</div></td>
+      <td>疫情中心</td><td>2026-01-10</td>
+      <td><span class="">2027-01-10</span><div class="adm-muted">101 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="dataset.nidss-notifiable">標記已審閱（示範）</button></td></tr><tr data-id="dataset.nidss" data-owner="unit.epidemic-intelligence" data-q="dataset.nidss 傳染病統計資料查詢系統（nidss）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/data/">傳染病統計資料查詢系統（NIDSS）</a></span><div class="adm-muted"><code>dataset.nidss</code> · 資料集</div></td>
+      <td>疫情中心</td><td>2026-01-10</td>
+      <td><span class="">2027-01-10</span><div class="adm-muted">101 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="dataset.nidss">標記已審閱（示範）</button></td></tr><tr data-id="disease.varicella" data-owner="unit.acute-infectious" data-q="disease.varicella 水痘">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/diseases/varicella/">水痘</a></span><div class="adm-muted"><code>disease.varicella</code> · 疾病頁</div></td>
+      <td>急性傳染病組</td><td>2026-01-15</td>
+      <td><span class="">2027-01-15</span><div class="adm-muted">106 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="disease.varicella">標記已審閱（示範）</button></td></tr><tr data-id="doc.tb-case-definition.2024-01-01" data-owner="unit.chronic-infectious" data-q="doc.tb-case-definition.2024-01-01 結核病病例定義與通報定義">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/documents/tb-case-definition.2024-01-01/">結核病病例定義與通報定義</a></span><div class="adm-muted"><code>doc.tb-case-definition.2024-01-01</code> · 文件</div></td>
+      <td>慢性傳染病組</td><td>2026-01-15</td>
+      <td><span class="">2027-01-15</span><div class="adm-muted">106 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="doc.tb-case-definition.2024-01-01">標記已審閱（示範）</button></td></tr><tr data-id="faq.dengue-container-check" data-owner="unit.acute-infectious" data-q="faq.dengue-container-check 防登革熱說的「巡、倒、清、刷」是什麼？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/dengue-container-check/">防登革熱說的「巡、倒、清、刷」是什麼？</a></span><div class="adm-muted"><code>faq.dengue-container-check</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-07-20</td>
+      <td><span class="">2027-01-20</span><div class="adm-muted">111 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.dengue-container-check">標記已審閱（示範）</button></td></tr><tr data-id="faq.dengue-painkiller" data-owner="unit.acute-infectious" data-q="faq.dengue-painkiller 懷疑登革熱時，可以自己吃止痛藥嗎？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/dengue-painkiller/">懷疑登革熱時，可以自己吃止痛藥嗎？</a></span><div class="adm-muted"><code>faq.dengue-painkiller</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-07-20</td>
+      <td><span class="">2027-01-20</span><div class="adm-muted">111 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.dengue-painkiller">標記已審閱（示範）</button></td></tr><tr data-id="dataset.lab-virus-surveillance" data-owner="unit.lab" data-q="dataset.lab-virus-surveillance 病毒性感染症實驗室監測（呼吸道、腸道病毒檢出）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/data/">病毒性感染症實驗室監測（呼吸道、腸道病毒檢出）</a></span><div class="adm-muted"><code>dataset.lab-virus-surveillance</code> · 資料集</div></td>
+      <td>檢驗及疫苗研製中心</td><td>2026-01-20</td>
+      <td><span class="">2027-01-20</span><div class="adm-muted">111 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="dataset.lab-virus-surveillance">標記已審閱（示範）</button></td></tr><tr data-id="dataset.budget-final-accounts" data-owner="unit.accounting" data-q="dataset.budget-final-accounts 疾病管制署預算與決算書">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/data/">疾病管制署預算與決算書</a></span><div class="adm-muted"><code>dataset.budget-final-accounts</code> · 資料集</div></td>
+      <td>主計室</td><td>2026-01-31</td>
+      <td><span class="">2027-01-31</span><div class="adm-muted">122 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="dataset.budget-final-accounts">標記已審閱（示範）</button></td></tr><tr data-id="doc.guidance-dengue.2026-02" data-owner="unit.acute-infectious" data-q="doc.guidance-dengue.2026-02 登革熱/屈公病防治工作指引（2026 年 2 月版）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/documents/guidance-dengue.2026-02/">登革熱/屈公病防治工作指引（2026 年 2 月版）</a></span><div class="adm-muted"><code>doc.guidance-dengue.2026-02</code> · 文件</div></td>
+      <td>急性傳染病組</td><td>2026-02-01</td>
+      <td><span class="">2027-02-01</span><div class="adm-muted">123 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="doc.guidance-dengue.2026-02">標記已審閱（示範）</button></td></tr><tr data-id="doc.tb-contact-investigation.2025-01-01" data-owner="unit.chronic-infectious" data-q="doc.tb-contact-investigation.2025-01-01 結核病接觸者檢查指引">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/documents/tb-contact-investigation.2025-01-01/">結核病接觸者檢查指引</a></span><div class="adm-muted"><code>doc.tb-contact-investigation.2025-01-01</code> · 文件</div></td>
+      <td>慢性傳染病組</td><td>2026-02-01</td>
+      <td><span class="">2027-02-01</span><div class="adm-muted">123 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="doc.tb-contact-investigation.2025-01-01">標記已審閱（示範）</button></td></tr><tr data-id="dataset.international-epidemics" data-owner="unit.epidemic-intelligence" data-q="dataset.international-epidemics 國際重要疫情資訊">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/data/">國際重要疫情資訊</a></span><div class="adm-muted"><code>dataset.international-epidemics</code> · 資料集</div></td>
+      <td>疫情中心</td><td>2026-02-01</td>
+      <td><span class="">2027-02-01</span><div class="adm-muted">123 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="dataset.international-epidemics">標記已審閱（示範）</button></td></tr><tr data-id="faq.dengue-fever-when-to-see-doctor" data-owner="unit.acute-infectious" data-q="faq.dengue-fever-when-to-see-doctor 登革熱發燒後幾天內要就醫？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/dengue-fever-when-to-see-doctor/">登革熱發燒後幾天內要就醫？</a></span><div class="adm-muted"><code>faq.dengue-fever-when-to-see-doctor</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-08-02</td>
+      <td><span class="">2027-02-02</span><div class="adm-muted">124 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.dengue-fever-when-to-see-doctor">標記已審閱（示範）</button></td></tr><tr data-id="disease.pertussis" data-owner="unit.acute-infectious" data-q="disease.pertussis 百日咳">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/diseases/pertussis/">百日咳</a></span><div class="adm-muted"><code>disease.pertussis</code> · 疾病頁</div></td>
+      <td>急性傳染病組</td><td>2026-02-10</td>
+      <td><span class="">2027-02-10</span><div class="adm-muted">132 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="disease.pertussis">標記已審閱（示範）</button></td></tr><tr data-id="dataset.population-reference" data-owner="unit.accounting" data-q="dataset.population-reference 疫情分析用人口統計（縣市、性別、年齡）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/data/">疫情分析用人口統計（縣市、性別、年齡）</a></span><div class="adm-muted"><code>dataset.population-reference</code> · 資料集</div></td>
+      <td>主計室</td><td>2026-02-15</td>
+      <td><span class="">2027-02-15</span><div class="adm-muted">137 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="dataset.population-reference">標記已審閱（示範）</button></td></tr><tr data-id="topic.new-residents-migrant-health" data-owner="unit.pr" data-q="topic.new-residents-migrant-health 新住民與移工健康：七語防疫資訊">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/topics/new-residents-migrant-health/">新住民與移工健康：七語防疫資訊</a></span><div class="adm-muted"><code>topic.new-residents-migrant-health</code> · 專區</div></td>
+      <td>公關室</td><td>2026-08-15</td>
+      <td><span class="">2027-02-15</span><div class="adm-muted">137 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="topic.new-residents-migrant-health">標記已審閱（示範）</button></td></tr><tr data-id="vaccine.hpv" data-owner="unit.acute-infectious" data-q="vaccine.hpv 人類乳突病毒（hpv）疫苗">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/vaccines/hpv/">人類乳突病毒（HPV）疫苗</a></span><div class="adm-muted"><code>vaccine.hpv</code> · 疫苗頁</div></td>
+      <td>急性傳染病組</td><td>2026-08-20</td>
+      <td><span class="">2027-02-20</span><div class="adm-muted">142 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="vaccine.hpv">標記已審閱（示範）</button></td></tr><tr data-id="doc.dots-manual.2025-01-01" data-owner="unit.chronic-infectious" data-q="doc.dots-manual.2025-01-01 結核病都治（dots）計畫作業手冊">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/documents/dots-manual.2025-01-01/">結核病都治（DOTS）計畫作業手冊</a></span><div class="adm-muted"><code>doc.dots-manual.2025-01-01</code> · 文件</div></td>
+      <td>慢性傳染病組</td><td>2026-03-01</td>
+      <td><span class="">2027-03-01</span><div class="adm-muted">151 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="doc.dots-manual.2025-01-01">標記已審閱（示範）</button></td></tr><tr data-id="doc.infection-control-healthcare.2026-03-01" data-owner="unit.infection-control" data-q="doc.infection-control-healthcare.2026-03-01 醫療機構感染管制措施指引">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/documents/infection-control-healthcare.2026-03-01/">醫療機構感染管制措施指引</a></span><div class="adm-muted"><code>doc.infection-control-healthcare.2026-03-01</code> · 文件</div></td>
+      <td>感染管制及生物安全組</td><td>2026-03-01</td>
+      <td><span class="">2027-03-01</span><div class="adm-muted">151 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="doc.infection-control-healthcare.2026-03-01">標記已審閱（示範）</button></td></tr><tr data-id="dataset.health-education-materials" data-owner="unit.pr" data-q="dataset.health-education-materials 多語衛教素材（海報、單張、懶人包）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/data/">多語衛教素材（海報、單張、懶人包）</a></span><div class="adm-muted"><code>dataset.health-education-materials</code> · 資料集</div></td>
+      <td>公關室</td><td>2026-03-01</td>
+      <td><span class="">2027-03-01</span><div class="adm-muted">151 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="dataset.health-education-materials">標記已審閱（示範）</button></td></tr><tr data-id="dataset.youtube-channel" data-owner="unit.pr" data-q="dataset.youtube-channel 疾管署 youtube 頻道影片">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/data/">疾管署 YouTube 頻道影片</a></span><div class="adm-muted"><code>dataset.youtube-channel</code> · 資料集</div></td>
+      <td>公關室</td><td>2026-03-01</td>
+      <td><span class="">2027-03-01</span><div class="adm-muted">151 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="dataset.youtube-channel">標記已審閱（示範）</button></td></tr><tr data-id="topic.disaster-evacuation" data-owner="unit.preparedness" data-q="topic.disaster-evacuation 防災避難須知：災後防疫與避難所衛生">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/topics/disaster-evacuation/">防災避難須知：災後防疫與避難所衛生</a></span><div class="adm-muted"><code>topic.disaster-evacuation</code> · 專區</div></td>
+      <td>新興傳染病整備組</td><td>2026-09-01</td>
+      <td><span class="">2027-03-01</span><div class="adm-muted">151 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="topic.disaster-evacuation">標記已審閱（示範）</button></td></tr><tr data-id="service.response-hospital-designation" data-owner="unit.preparedness" data-q="service.response-hospital-designation 傳染病防治醫療網應變醫院指定與隔離病床申請">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/apply/response-hospital-designation/">傳染病防治醫療網應變醫院指定與隔離病床申請</a></span><div class="adm-muted"><code>service.response-hospital-designation</code> · 申請服務</div></td>
+      <td>新興傳染病整備組</td><td>2026-03-01</td>
+      <td><span class="">2027-03-01</span><div class="adm-muted">151 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="service.response-hospital-designation">標記已審閱（示範）</button></td></tr><tr data-id="research.2024-community-dengue-source-reduction" data-owner="unit.acute-infectious" data-q="research.2024-community-dengue-source-reduction 社區登革熱孳生源清除介入成效評估">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/research/2024-community-dengue-source-reduction/">社區登革熱孳生源清除介入成效評估</a></span><div class="adm-muted"><code>research.2024-community-dengue-source-reduction</code> · 研究計畫</div></td>
+      <td>急性傳染病組</td><td>2026-03-01</td>
+      <td><span class="">2027-03-01</span><div class="adm-muted">151 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="research.2024-community-dengue-source-reduction">標記已審閱（示範）</button></td></tr><tr data-id="faq.stats-where-data" data-owner="unit.epidemic-intelligence" data-q="faq.stats-where-data 疫情統計數字可以到哪裡查？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/stats-where-data/">疫情統計數字可以到哪裡查？</a></span><div class="adm-muted"><code>faq.stats-where-data</code> · Q&amp;A</div></td>
+      <td>疫情中心</td><td>2026-08-31</td>
+      <td><span class="">2027-03-03</span><div class="adm-muted">153 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.stats-where-data">標記已審閱（示範）</button></td></tr><tr data-id="faq.covid-antiviral" data-owner="unit.acute-infectious" data-q="faq.covid-antiviral 新冠確診後，誰可以使用公費口服抗病毒藥？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/covid-antiviral/">新冠確診後，誰可以使用公費口服抗病毒藥？</a></span><div class="adm-muted"><code>faq.covid-antiviral</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-09-05</td>
+      <td><span class="">2027-03-05</span><div class="adm-muted">155 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.covid-antiviral">標記已審閱（示範）</button></td></tr><tr data-id="clar.2026-03-covid-isolation-7-days" data-owner="unit.pr" data-q="clar.2026-03-covid-isolation-7-days 網傳「確診新冠要居家隔離 7 天，同住家人也要隔離」為舊規定">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/factcheck/">網傳「確診新冠要居家隔離 7 天，同住家人也要隔離」為舊規定</a></span><div class="adm-muted"><code>clar.2026-03-covid-isolation-7-days</code> · 澄清</div></td>
+      <td>公關室</td><td>2026-09-05</td>
+      <td><span class="">2027-03-05</span><div class="adm-muted">155 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="clar.2026-03-covid-isolation-7-days">標記已審閱（示範）</button></td></tr><tr data-id="clar.2026-09-flu-vaccine-causes-flu" data-owner="unit.pr" data-q="clar.2026-09-flu-vaccine-causes-flu 網傳「打流感疫苗會得流感、長輩打完會死」並非事實">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/factcheck/">網傳「打流感疫苗會得流感、長輩打完會死」並非事實</a></span><div class="adm-muted"><code>clar.2026-09-flu-vaccine-causes-flu</code> · 澄清</div></td>
+      <td>公關室</td><td>2026-09-10</td>
+      <td><span class="">2027-03-10</span><div class="adm-muted">160 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="clar.2026-09-flu-vaccine-causes-flu">標記已審閱（示範）</button></td></tr><tr data-id="topic.ltc-infection-control" data-owner="unit.infection-control" data-q="topic.ltc-infection-control 長照機構感染管制專區">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/topics/ltc-infection-control/">長照機構感染管制專區</a></span><div class="adm-muted"><code>topic.ltc-infection-control</code> · 專區</div></td>
+      <td>感染管制及生物安全組</td><td>2026-09-10</td>
+      <td><span class="">2027-03-10</span><div class="adm-muted">160 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="topic.ltc-infection-control">標記已審閱（示範）</button></td></tr><tr data-id="doc.ev-severe-guideline.2026-03-15" data-owner="unit.acute-infectious" data-q="doc.ev-severe-guideline.2026-03-15 腸病毒感染併發重症臨床處置建議">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/documents/ev-severe-guideline.2026-03-15/">腸病毒感染併發重症臨床處置建議</a></span><div class="adm-muted"><code>doc.ev-severe-guideline.2026-03-15</code> · 文件</div></td>
+      <td>急性傳染病組</td><td>2026-03-15</td>
+      <td><span class="">2027-03-15</span><div class="adm-muted">165 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="doc.ev-severe-guideline.2026-03-15">標記已審閱（示範）</button></td></tr><tr data-id="clar.2026-09-anti-epidemic-team-scam" data-owner="unit.pr" data-q="clar.2026-09-anti-epidemic-team-scam 網傳「防疫國家隊」投資群組為詐騙">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/factcheck/">網傳「防疫國家隊」投資群組為詐騙</a></span><div class="adm-muted"><code>clar.2026-09-anti-epidemic-team-scam</code> · 澄清</div></td>
+      <td>公關室</td><td>2026-09-15</td>
+      <td><span class="">2027-03-15</span><div class="adm-muted">165 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="clar.2026-09-anti-epidemic-team-scam">標記已審閱（示範）</button></td></tr><tr data-id="topic.amr-one-health" data-owner="unit.infection-control" data-q="topic.amr-one-health 抗生素抗藥性：防疫一體行動">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/topics/amr-one-health/">抗生素抗藥性：防疫一體行動</a></span><div class="adm-muted"><code>topic.amr-one-health</code> · 專區</div></td>
+      <td>感染管制及生物安全組</td><td>2026-09-15</td>
+      <td><span class="">2027-03-15</span><div class="adm-muted">165 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="topic.amr-one-health">標記已審閱（示範）</button></td></tr><tr data-id="faq.covid-vaccine-who" data-owner="unit.acute-infectious" data-q="faq.covid-vaccine-who 今年新冠疫苗誰可以打公費？要打幾劑？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/covid-vaccine-who/">今年新冠疫苗誰可以打公費？要打幾劑？</a></span><div class="adm-muted"><code>faq.covid-vaccine-who</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-09-16</td>
+      <td><span class="">2027-03-16</span><div class="adm-muted">166 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.covid-vaccine-who">標記已審閱（示範）</button></td></tr><tr data-id="faq.rumor-sms-link" data-owner="unit.pr" data-q="faq.rumor-sms-link 收到自稱疾管署的簡訊要我點連結填資料，怎麼辦？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/rumor-sms-link/">收到自稱疾管署的簡訊要我點連結填資料，怎麼辦？</a></span><div class="adm-muted"><code>faq.rumor-sms-link</code> · Q&amp;A</div></td>
+      <td>公關室</td><td>2026-09-16</td>
+      <td><span class="">2027-03-16</span><div class="adm-muted">166 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.rumor-sms-link">標記已審閱（示範）</button></td></tr><tr data-id="vaccine.covid-19" data-owner="unit.acute-infectious" data-q="vaccine.covid-19 新冠疫苗">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/vaccines/covid-19/">新冠疫苗</a></span><div class="adm-muted"><code>vaccine.covid-19</code> · 疫苗頁</div></td>
+      <td>急性傳染病組</td><td>2026-09-16</td>
+      <td><span class="">2027-03-16</span><div class="adm-muted">166 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="vaccine.covid-19">標記已審閱（示範）</button></td></tr><tr data-id="disease.mpox" data-owner="unit.acute-infectious" data-q="disease.mpox m痘">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/diseases/mpox/">M痘</a></span><div class="adm-muted"><code>disease.mpox</code> · 疾病頁</div></td>
+      <td>急性傳染病組</td><td>2026-03-18</td>
+      <td><span class="">2027-03-18</span><div class="adm-muted">168 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="disease.mpox">標記已審閱（示範）</button></td></tr><tr data-id="faq.flu-covid-same-day" data-owner="unit.acute-infectious" data-q="faq.flu-covid-same-day 流感疫苗和新冠疫苗可以同一天打嗎？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/flu-covid-same-day/">流感疫苗和新冠疫苗可以同一天打嗎？</a></span><div class="adm-muted"><code>faq.flu-covid-same-day</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-09-18</td>
+      <td><span class="">2027-03-18</span><div class="adm-muted">168 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.flu-covid-same-day">標記已審閱（示範）</button></td></tr><tr data-id="faq.flu-vaccine-every-year" data-owner="unit.acute-infectious" data-q="faq.flu-vaccine-every-year 流感疫苗去年打過了，今年還要再打嗎？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/flu-vaccine-every-year/">流感疫苗去年打過了，今年還要再打嗎？</a></span><div class="adm-muted"><code>faq.flu-vaccine-every-year</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-09-18</td>
+      <td><span class="">2027-03-18</span><div class="adm-muted">168 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.flu-vaccine-every-year">標記已審閱（示範）</button></td></tr><tr data-id="faq.flu-vaccine-who" data-owner="unit.acute-infectious" data-q="faq.flu-vaccine-who 今年公費流感疫苗誰可以打？什麼時候開始？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/flu-vaccine-who/">今年公費流感疫苗誰可以打？什麼時候開始？</a></span><div class="adm-muted"><code>faq.flu-vaccine-who</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-09-18</td>
+      <td><span class="">2027-03-18</span><div class="adm-muted">168 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.flu-vaccine-who">標記已審閱（示範）</button></td></tr><tr data-id="vaccine.influenza" data-owner="unit.acute-infectious" data-q="vaccine.influenza 流感疫苗">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/vaccines/influenza/">流感疫苗</a></span><div class="adm-muted"><code>vaccine.influenza</code> · 疫苗頁</div></td>
+      <td>急性傳染病組</td><td>2026-09-18</td>
+      <td><span class="">2027-03-18</span><div class="adm-muted">168 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="vaccine.influenza">標記已審閱（示範）</button></td></tr><tr data-id="faq.flu-danger-signs" data-owner="unit.acute-infectious" data-q="faq.flu-danger-signs 得了流感，出現哪些狀況要馬上就醫？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/flu-danger-signs/">得了流感，出現哪些狀況要馬上就醫？</a></span><div class="adm-muted"><code>faq.flu-danger-signs</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-09-20</td>
+      <td><span class="">2027-03-20</span><div class="adm-muted">170 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.flu-danger-signs">標記已審閱（示範）</button></td></tr><tr data-id="faq.flu-vs-cold" data-owner="unit.acute-infectious" data-q="faq.flu-vs-cold 流感和一般感冒要怎麼分辨？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/flu-vs-cold/">流感和一般感冒要怎麼分辨？</a></span><div class="adm-muted"><code>faq.flu-vs-cold</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-09-20</td>
+      <td><span class="">2027-03-20</span><div class="adm-muted">170 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.flu-vs-cold">標記已審閱（示範）</button></td></tr><tr data-id="faq.stats-ili-rate" data-owner="unit.epidemic-intelligence" data-q="faq.stats-ili-rate 「類流感門急診就診率」是什麼意思？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/stats-ili-rate/">「類流感門急診就診率」是什麼意思？</a></span><div class="adm-muted"><code>faq.stats-ili-rate</code> · Q&amp;A</div></td>
+      <td>疫情中心</td><td>2026-09-20</td>
+      <td><span class="">2027-03-20</span><div class="adm-muted">170 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.stats-ili-rate">標記已審閱（示範）</button></td></tr><tr data-id="media.tb-cough-two-weeks" data-owner="unit.chronic-infectious" data-q="media.tb-cough-two-weeks 咳嗽超過兩週，快去照胸部 x 光">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/media/tb-cough-two-weeks/">咳嗽超過兩週，快去照胸部 X 光</a></span><div class="adm-muted"><code>media.tb-cough-two-weeks</code> · 影音</div></td>
+      <td>慢性傳染病組</td><td>2026-03-20</td>
+      <td><span class="">2027-03-20</span><div class="adm-muted">170 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="media.tb-cough-two-weeks">標記已審閱（示範）</button></td></tr><tr data-id="faq.bcg-when" data-owner="unit.chronic-infectious" data-q="faq.bcg-when 卡介苗什麼時候打？大人需要補打嗎？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/bcg-when/">卡介苗什麼時候打？大人需要補打嗎？</a></span><div class="adm-muted"><code>faq.bcg-when</code> · Q&amp;A</div></td>
+      <td>慢性傳染病組</td><td>2026-09-22</td>
+      <td><span class="">2027-03-22</span><div class="adm-muted">172 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.bcg-when">標記已審閱（示範）</button></td></tr><tr data-id="faq.ltbi-treat-or-not" data-owner="unit.chronic-infectious" data-q="faq.ltbi-treat-or-not 驗出潛伏結核感染，一定要治療嗎？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/ltbi-treat-or-not/">驗出潛伏結核感染，一定要治療嗎？</a></span><div class="adm-muted"><code>faq.ltbi-treat-or-not</code> · Q&amp;A</div></td>
+      <td>慢性傳染病組</td><td>2026-09-22</td>
+      <td><span class="">2027-03-22</span><div class="adm-muted">172 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.ltbi-treat-or-not">標記已審閱（示範）</button></td></tr><tr data-id="faq.mdr-tb" data-owner="unit.chronic-infectious" data-q="faq.mdr-tb 什麼是抗藥性結核病？要怎麼治療？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/mdr-tb/">什麼是抗藥性結核病？要怎麼治療？</a></span><div class="adm-muted"><code>faq.mdr-tb</code> · Q&amp;A</div></td>
+      <td>慢性傳染病組</td><td>2026-09-22</td>
+      <td><span class="">2027-03-22</span><div class="adm-muted">172 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.mdr-tb">標記已審閱（示範）</button></td></tr><tr data-id="faq.tb-contact-screening" data-owner="unit.chronic-infectious" data-q="faq.tb-contact-screening 家人得了結核病，我需要做什麼檢查？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/tb-contact-screening/">家人得了結核病，我需要做什麼檢查？</a></span><div class="adm-muted"><code>faq.tb-contact-screening</code> · Q&amp;A</div></td>
+      <td>慢性傳染病組</td><td>2026-09-22</td>
+      <td><span class="">2027-03-22</span><div class="adm-muted">172 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.tb-contact-screening">標記已審閱（示範）</button></td></tr><tr data-id="faq.tb-contagious-after-treatment" data-owner="unit.chronic-infectious" data-q="faq.tb-contagious-after-treatment 結核病開始吃藥後，還會傳染給家人嗎？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/tb-contagious-after-treatment/">結核病開始吃藥後，還會傳染給家人嗎？</a></span><div class="adm-muted"><code>faq.tb-contagious-after-treatment</code> · Q&amp;A</div></td>
+      <td>慢性傳染病組</td><td>2026-09-22</td>
+      <td><span class="">2027-03-22</span><div class="adm-muted">172 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.tb-contagious-after-treatment">標記已審閱（示範）</button></td></tr><tr data-id="faq.tb-dots-what" data-owner="unit.chronic-infectious" data-q="faq.tb-dots-what 什麼是都治（dots）？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/tb-dots-what/">什麼是都治（DOTS）？</a></span><div class="adm-muted"><code>faq.tb-dots-what</code> · Q&amp;A</div></td>
+      <td>慢性傳染病組</td><td>2026-09-22</td>
+      <td><span class="">2027-03-22</span><div class="adm-muted">172 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.tb-dots-what">標記已審閱（示範）</button></td></tr><tr data-id="faq.tb-foreigner-health-check" data-owner="unit.chronic-infectious" data-q="faq.tb-foreigner-health-check 外籍人士來臺工作或居留，需要做結核病檢查嗎？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/tb-foreigner-health-check/">外籍人士來臺工作或居留，需要做結核病檢查嗎？</a></span><div class="adm-muted"><code>faq.tb-foreigner-health-check</code> · Q&amp;A</div></td>
+      <td>慢性傳染病組</td><td>2026-09-22</td>
+      <td><span class="">2027-03-22</span><div class="adm-muted">172 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.tb-foreigner-health-check">標記已審閱（示範）</button></td></tr><tr data-id="faq.tb-treatment-cost" data-owner="unit.chronic-infectious" data-q="faq.tb-treatment-cost 結核病治療要花錢嗎？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/tb-treatment-cost/">結核病治療要花錢嗎？</a></span><div class="adm-muted"><code>faq.tb-treatment-cost</code> · Q&amp;A</div></td>
+      <td>慢性傳染病組</td><td>2026-09-22</td>
+      <td><span class="">2027-03-22</span><div class="adm-muted">172 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.tb-treatment-cost">標記已審閱（示範）</button></td></tr><tr data-id="topic.tb-prevention" data-owner="unit.chronic-infectious" data-q="topic.tb-prevention 結核病防治專區">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/topics/tb-prevention/">結核病防治專區</a></span><div class="adm-muted"><code>topic.tb-prevention</code> · 專區</div></td>
+      <td>慢性傳染病組</td><td>2026-09-22</td>
+      <td><span class="">2027-03-22</span><div class="adm-muted">172 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="topic.tb-prevention">標記已審閱（示範）</button></td></tr><tr data-id="faq.dengue-community-mobilize" data-owner="unit.acute-infectious" data-q="faq.dengue-community-mobilize 社區或里長要怎麼帶大家一起防登革熱？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/dengue-community-mobilize/">社區或里長要怎麼帶大家一起防登革熱？</a></span><div class="adm-muted"><code>faq.dengue-community-mobilize</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-09-24</td>
+      <td><span class="">2027-03-24</span><div class="adm-muted">174 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.dengue-community-mobilize">標記已審閱（示範）</button></td></tr><tr data-id="faq.dengue-imported-return" data-owner="unit.acute-infectious" data-q="faq.dengue-imported-return 從登革熱流行地區回國後，要注意什麼？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/dengue-imported-return/">從登革熱流行地區回國後，要注意什麼？</a></span><div class="adm-muted"><code>faq.dengue-imported-return</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-09-24</td>
+      <td><span class="">2027-03-24</span><div class="adm-muted">174 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.dengue-imported-return">標記已審閱（示範）</button></td></tr><tr data-id="faq.dengue-spraying-refuse" data-owner="unit.acute-infectious" data-q="faq.dengue-spraying-refuse 衛生單位說要進家裡噴藥，可以拒絕嗎？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/dengue-spraying-refuse/">衛生單位說要進家裡噴藥，可以拒絕嗎？</a></span><div class="adm-muted"><code>faq.dengue-spraying-refuse</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-09-24</td>
+      <td><span class="">2027-03-24</span><div class="adm-muted">174 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.dengue-spraying-refuse">標記已審閱（示範）</button></td></tr><tr data-id="faq.enterovirus-childcare-disinfect" data-owner="unit.acute-infectious" data-q="faq.enterovirus-childcare-disinfect 幼兒園怎麼消毒，才對腸病毒有效？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/enterovirus-childcare-disinfect/">幼兒園怎麼消毒，才對腸病毒有效？</a></span><div class="adm-muted"><code>faq.enterovirus-childcare-disinfect</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-09-24</td>
+      <td><span class="">2027-03-24</span><div class="adm-muted">174 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.enterovirus-childcare-disinfect">標記已審閱（示範）</button></td></tr><tr data-id="faq.enterovirus-class-suspension" data-owner="unit.acute-infectious" data-q="faq.enterovirus-class-suspension 班上有同學得腸病毒，幼兒園會停課嗎？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/enterovirus-class-suspension/">班上有同學得腸病毒，幼兒園會停課嗎？</a></span><div class="adm-muted"><code>faq.enterovirus-class-suspension</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-09-24</td>
+      <td><span class="">2027-03-24</span><div class="adm-muted">174 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.enterovirus-class-suspension">標記已審閱（示範）</button></td></tr><tr data-id="faq.enterovirus-return-school" data-owner="unit.acute-infectious" data-q="faq.enterovirus-return-school 孩子腸病毒好了，什麼時候可以回學校？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/enterovirus-return-school/">孩子腸病毒好了，什麼時候可以回學校？</a></span><div class="adm-muted"><code>faq.enterovirus-return-school</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-09-24</td>
+      <td><span class="">2027-03-24</span><div class="adm-muted">174 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.enterovirus-return-school">標記已審閱（示範）</button></td></tr><tr data-id="faq.influenza-antiviral-who" data-owner="unit.acute-infectious" data-q="faq.influenza-antiviral-who 哪些人可以使用公費流感抗病毒藥劑？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/influenza-antiviral-who/">哪些人可以使用公費流感抗病毒藥劑？</a></span><div class="adm-muted"><code>faq.influenza-antiviral-who</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-09-24</td>
+      <td><span class="">2027-03-24</span><div class="adm-muted">174 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.influenza-antiviral-who">標記已審閱（示範）</button></td></tr><tr data-id="faq.influenza-severe-what" data-owner="unit.acute-infectious" data-q="faq.influenza-severe-what 什麼是「流感併發重症」？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/influenza-severe-what/">什麼是「流感併發重症」？</a></span><div class="adm-muted"><code>faq.influenza-severe-what</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-09-24</td>
+      <td><span class="">2027-03-24</span><div class="adm-muted">174 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.influenza-severe-what">標記已審閱（示範）</button></td></tr><tr data-id="faq.influenza-vaccine-where" data-owner="unit.acute-infectious" data-q="faq.influenza-vaccine-where 公費流感疫苗要去哪裡打？要帶什麼？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/influenza-vaccine-where/">公費流感疫苗要去哪裡打？要帶什麼？</a></span><div class="adm-muted"><code>faq.influenza-vaccine-where</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-09-24</td>
+      <td><span class="">2027-03-24</span><div class="adm-muted">174 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.influenza-vaccine-where">標記已審閱（示範）</button></td></tr><tr data-id="faq.measles-exposed-what-to-do" data-owner="unit.acute-infectious" data-q="faq.measles-exposed-what-to-do 我和麻疹病人接觸過，要怎麼辦？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/measles-exposed-what-to-do/">我和麻疹病人接觸過，要怎麼辦？</a></span><div class="adm-muted"><code>faq.measles-exposed-what-to-do</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-09-24</td>
+      <td><span class="">2027-03-24</span><div class="adm-muted">174 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.measles-exposed-what-to-do">標記已審閱（示範）</button></td></tr><tr data-id="faq.measles-health-dept-call" data-owner="unit.acute-infectious" data-q="faq.measles-health-dept-call 衛生局打電話來做麻疹疫調，我要配合什麼？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/measles-health-dept-call/">衛生局打電話來做麻疹疫調，我要配合什麼？</a></span><div class="adm-muted"><code>faq.measles-health-dept-call</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-09-24</td>
+      <td><span class="">2027-03-24</span><div class="adm-muted">174 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.measles-health-dept-call">標記已審閱（示範）</button></td></tr><tr data-id="faq.measles-mmr-check-record" data-owner="unit.acute-infectious" data-q="faq.measles-mmr-check-record 我不確定有沒有打過 mmr，要怎麼評估要不要補打？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/measles-mmr-check-record/">我不確定有沒有打過 MMR，要怎麼評估要不要補打？</a></span><div class="adm-muted"><code>faq.measles-mmr-check-record</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-09-24</td>
+      <td><span class="">2027-03-24</span><div class="adm-muted">174 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.measles-mmr-check-record">標記已審閱（示範）</button></td></tr><tr data-id="doc.tb-manual.2025-07-01" data-owner="unit.chronic-infectious" data-q="doc.tb-manual.2025-07-01 結核病防治工作手冊">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/documents/tb-manual.2025-07-01/">結核病防治工作手冊</a></span><div class="adm-muted"><code>doc.tb-manual.2025-07-01</code> · 文件</div></td>
+      <td>慢性傳染病組</td><td>2026-03-24</td>
+      <td><span class="">2027-03-24</span><div class="adm-muted">174 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="doc.tb-manual.2025-07-01">標記已審閱（示範）</button></td></tr><tr data-id="dataset.tb-new-cases" data-owner="unit.epidemic-intelligence" data-q="dataset.tb-new-cases 結核病新案統計">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/data/">結核病新案統計</a></span><div class="adm-muted"><code>dataset.tb-new-cases</code> · 資料集</div></td>
+      <td>疫情中心</td><td>2026-03-24</td>
+      <td><span class="">2027-03-24</span><div class="adm-muted">174 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="dataset.tb-new-cases">標記已審閱（示範）</button></td></tr><tr data-id="faq.rabies-bite" data-owner="unit.acute-infectious" data-q="faq.rabies-bite 被狗、貓或野生動物咬傷該怎麼辦？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/rabies-bite/">被狗、貓或野生動物咬傷該怎麼辦？</a></span><div class="adm-muted"><code>faq.rabies-bite</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-09-28</td>
+      <td><span class="">2027-03-28</span><div class="adm-muted">178 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.rabies-bite">標記已審閱（示範）</button></td></tr><tr data-id="service.media-interview-request" data-owner="unit.pr" data-q="service.media-interview-request 媒體採訪與拍攝申請">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/apply/media-interview-request/">媒體採訪與拍攝申請</a></span><div class="adm-muted"><code>service.media-interview-request</code> · 申請服務</div></td>
+      <td>公關室</td><td>2026-04-01</td>
+      <td><span class="">2027-04-01</span><div class="adm-muted">182 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="service.media-interview-request">標記已審閱（示範）</button></td></tr><tr data-id="faq.flu-antiviral-65-no-test" data-owner="unit.acute-infectious" data-q="faq.flu-antiviral-65-no-test 65 歲以上長輩有類流感症狀，一定要快篩陽性才能用公費抗病毒藥嗎？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/flu-antiviral-65-no-test/">65 歲以上長輩有類流感症狀，一定要快篩陽性才能用公費抗病毒藥嗎？</a></span><div class="adm-muted"><code>faq.flu-antiviral-65-no-test</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-10-05</td>
+      <td><span class="">2027-04-05</span><div class="adm-muted">186 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.flu-antiviral-65-no-test">標記已審閱（示範）</button></td></tr><tr data-id="faq.hpv-vaccine-who" data-owner="unit.acute-infectious" data-q="faq.hpv-vaccine-who 公費 hpv 疫苗誰可以打？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/hpv-vaccine-who/">公費 HPV 疫苗誰可以打？</a></span><div class="adm-muted"><code>faq.hpv-vaccine-who</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-10-05</td>
+      <td><span class="">2027-04-05</span><div class="adm-muted">186 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.hpv-vaccine-who">標記已審閱（示範）</button></td></tr><tr data-id="faq.pcv-elderly" data-owner="unit.acute-infectious" data-q="faq.pcv-elderly 長輩的肺炎鏈球菌疫苗要怎麼打？是公費嗎？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/pcv-elderly/">長輩的肺炎鏈球菌疫苗要怎麼打？是公費嗎？</a></span><div class="adm-muted"><code>faq.pcv-elderly</code> · Q&amp;A</div></td>
+      <td>急性傳染病組</td><td>2026-10-05</td>
+      <td><span class="">2027-04-05</span><div class="adm-muted">186 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.pcv-elderly">標記已審閱（示範）</button></td></tr><tr data-id="vaccine.pneumococcal" data-owner="unit.acute-infectious" data-q="vaccine.pneumococcal 肺炎鏈球菌疫苗">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/vaccines/pneumococcal/">肺炎鏈球菌疫苗</a></span><div class="adm-muted"><code>vaccine.pneumococcal</code> · 疫苗頁</div></td>
+      <td>急性傳染病組</td><td>2026-10-05</td>
+      <td><span class="">2027-04-05</span><div class="adm-muted">186 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="vaccine.pneumococcal">標記已審閱（示範）</button></td></tr><tr data-id="faq.antivenom-where" data-owner="unit.lab" data-q="faq.antivenom-where 哪裡有抗蛇毒血清？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/antivenom-where/">哪裡有抗蛇毒血清？</a></span><div class="adm-muted"><code>faq.antivenom-where</code> · Q&amp;A</div></td>
+      <td>檢驗及疫苗研製中心</td><td>2026-10-10</td>
+      <td><span class="">2027-04-10</span><div class="adm-muted">191 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.antivenom-where">標記已審閱（示範）</button></td></tr><tr data-id="faq.antivenom-which-snake" data-owner="unit.lab" data-q="faq.antivenom-which-snake 被龜殼花或其他毒蛇咬到要打哪種血清？認不出是哪種蛇怎麼辦？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/antivenom-which-snake/">被龜殼花或其他毒蛇咬到要打哪種血清？認不出是哪種蛇怎麼辦？</a></span><div class="adm-muted"><code>faq.antivenom-which-snake</code> · Q&amp;A</div></td>
+      <td>檢驗及疫苗研製中心</td><td>2026-10-10</td>
+      <td><span class="">2027-04-10</span><div class="adm-muted">191 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.antivenom-which-snake">標記已審閱（示範）</button></td></tr><tr data-id="faq.snakebite-dont" data-owner="unit.lab" data-q="faq.snakebite-dont 被蛇咬後能不能冰敷、綁止血帶或用嘴把毒吸出來？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/snakebite-dont/">被蛇咬後能不能冰敷、綁止血帶或用嘴把毒吸出來？</a></span><div class="adm-muted"><code>faq.snakebite-dont</code> · Q&amp;A</div></td>
+      <td>檢驗及疫苗研製中心</td><td>2026-10-10</td>
+      <td><span class="">2027-04-10</span><div class="adm-muted">191 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.snakebite-dont">標記已審閱（示範）</button></td></tr><tr data-id="faq.snakebite-first-aid" data-owner="unit.lab" data-q="faq.snakebite-first-aid 被蛇咬怎麼辦？">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/faq/snakebite-first-aid/">被蛇咬怎麼辦？</a></span><div class="adm-muted"><code>faq.snakebite-first-aid</code> · Q&amp;A</div></td>
+      <td>檢驗及疫苗研製中心</td><td>2026-10-10</td>
+      <td><span class="">2027-04-10</span><div class="adm-muted">191 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="faq.snakebite-first-aid">標記已審閱（示範）</button></td></tr><tr data-id="doc.mmr-recommendation.2025-04-16" data-owner="unit.acute-infectious" data-q="doc.mmr-recommendation.2025-04-16 國內現行 mmr 預防接種建議（114.04.16 版）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/documents/mmr-recommendation.2025-04-16/">國內現行 MMR 預防接種建議（114.04.16 版）</a></span><div class="adm-muted"><code>doc.mmr-recommendation.2025-04-16</code> · 文件</div></td>
+      <td>急性傳染病組</td><td>2026-04-10</td>
+      <td><span class="">2027-04-10</span><div class="adm-muted">191 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="doc.mmr-recommendation.2025-04-16">標記已審閱（示範）</button></td></tr><tr data-id="topic.antivenom" data-owner="unit.lab" data-q="topic.antivenom 抗蛇毒血清與毒蛇咬傷急救">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/topics/antivenom/">抗蛇毒血清與毒蛇咬傷急救</a></span><div class="adm-muted"><code>topic.antivenom</code> · 專區</div></td>
+      <td>檢驗及疫苗研製中心</td><td>2026-10-10</td>
+      <td><span class="">2027-04-10</span><div class="adm-muted">191 日後</div></td>
+      <td>6 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="topic.antivenom">標記已審閱（示範）</button></td></tr><tr data-id="dataset.ev-lab-types" data-owner="unit.lab" data-q="dataset.ev-lab-types 腸病毒型別監測">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/data/">腸病毒型別監測</a></span><div class="adm-muted"><code>dataset.ev-lab-types</code> · 資料集</div></td>
+      <td>檢驗及疫苗研製中心</td><td>2026-04-14</td>
+      <td><span class="">2027-04-14</span><div class="adm-muted">195 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="dataset.ev-lab-types">標記已審閱（示範）</button></td></tr><tr data-id="media.enterovirus-handwashing" data-owner="unit.acute-infectious" data-q="media.enterovirus-handwashing 濕搓沖捧擦：腸病毒洗手五步驟動畫">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/media/enterovirus-handwashing/">濕搓沖捧擦：腸病毒洗手五步驟動畫</a></span><div class="adm-muted"><code>media.enterovirus-handwashing</code> · 影音</div></td>
+      <td>急性傳染病組</td><td>2026-04-15</td>
+      <td><span class="">2027-04-15</span><div class="adm-muted">196 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="media.enterovirus-handwashing">標記已審閱（示範）</button></td></tr><tr data-id="research.2025-flu-vaccine-coverage-ili" data-owner="unit.acute-infectious" data-q="research.2025-flu-vaccine-coverage-ili 流感疫苗接種率與類流感就診率之區域分析">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/research/2025-flu-vaccine-coverage-ili/">流感疫苗接種率與類流感就診率之區域分析</a></span><div class="adm-muted"><code>research.2025-flu-vaccine-coverage-ili</code> · 研究計畫</div></td>
+      <td>急性傳染病組</td><td>2026-04-15</td>
+      <td><span class="">2027-04-15</span><div class="adm-muted">196 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="research.2025-flu-vaccine-coverage-ili">標記已審閱（示範）</button></td></tr><tr data-id="dataset.ev-visits-weekly" data-owner="unit.epidemic-intelligence" data-q="dataset.ev-visits-weekly 腸病毒門急診就診統計（健保資料）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/data/">腸病毒門急診就診統計（健保資料）</a></span><div class="adm-muted"><code>dataset.ev-visits-weekly</code> · 資料集</div></td>
+      <td>疫情中心</td><td>2026-04-20</td>
+      <td><span class="">2027-04-20</span><div class="adm-muted">201 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="dataset.ev-visits-weekly">標記已審閱（示範）</button></td></tr><tr data-id="disease.enterovirus" data-owner="unit.acute-infectious" data-q="disease.enterovirus 腸病毒">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/diseases/enterovirus/">腸病毒</a></span><div class="adm-muted"><code>disease.enterovirus</code> · 疾病頁</div></td>
+      <td>急性傳染病組</td><td>2026-04-22</td>
+      <td><span class="">2027-04-22</span><div class="adm-muted">203 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="disease.enterovirus">標記已審閱（示範）</button></td></tr><tr data-id="disease.malaria" data-owner="unit.acute-infectious" data-q="disease.malaria 瘧疾">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/diseases/malaria/">瘧疾</a></span><div class="adm-muted"><code>disease.malaria</code> · 疾病頁</div></td>
+      <td>急性傳染病組</td><td>2026-04-25</td>
+      <td><span class="">2027-04-25</span><div class="adm-muted">206 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="disease.malaria">標記已審閱（示範）</button></td></tr><tr data-id="dataset.vaccine-coverage" data-owner="unit.acute-infectious" data-q="dataset.vaccine-coverage 常規疫苗接種完成率">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/data/">常規疫苗接種完成率</a></span><div class="adm-muted"><code>dataset.vaccine-coverage</code> · 資料集</div></td>
+      <td>急性傳染病組</td><td>2026-04-30</td>
+      <td><span class="">2027-04-30</span><div class="adm-muted">211 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="dataset.vaccine-coverage">標記已審閱（示範）</button></td></tr><tr data-id="research.2024-prep-adherence-sti" data-owner="unit.chronic-infectious" data-q="research.2024-prep-adherence-sti prep 使用者服藥順從性與性傳染病發生率追蹤研究">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/research/2024-prep-adherence-sti/">PrEP 使用者服藥順從性與性傳染病發生率追蹤研究</a></span><div class="adm-muted"><code>research.2024-prep-adherence-sti</code> · 研究計畫</div></td>
+      <td>慢性傳染病組</td><td>2026-05-01</td>
+      <td><span class="">2027-05-01</span><div class="adm-muted">212 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="research.2024-prep-adherence-sti">標記已審閱（示範）</button></td></tr><tr data-id="dataset.country-epid-level" data-owner="unit.quarantine" data-q="dataset.country-epid-level 各國旅遊疫情建議等級（countryepidlevel exportjson）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/data/">各國旅遊疫情建議等級（CountryEpidLevel ExportJSON）</a></span><div class="adm-muted"><code>dataset.country-epid-level</code> · 資料集</div></td>
+      <td>檢疫組</td><td>2026-05-11</td>
+      <td><span class="">2027-05-11</span><div class="adm-muted">222 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="dataset.country-epid-level">標記已審閱（示範）</button></td></tr><tr data-id="dataset.travel-alert-levels" data-owner="unit.quarantine" data-q="dataset.travel-alert-levels 國際旅遊疫情建議等級表">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/data/">國際旅遊疫情建議等級表</a></span><div class="adm-muted"><code>dataset.travel-alert-levels</code> · 資料集</div></td>
+      <td>檢疫組</td><td>2026-05-11</td>
+      <td><span class="">2027-05-11</span><div class="adm-muted">222 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="dataset.travel-alert-levels">標記已審閱（示範）</button></td></tr><tr data-id="dataset.travel-epidemic-json" data-owner="unit.quarantine" data-q="dataset.travel-epidemic-json 國際旅遊疫情（travelepidemic exportjson）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/data/">國際旅遊疫情（TravelEpidemic ExportJSON）</a></span><div class="adm-muted"><code>dataset.travel-epidemic-json</code> · 資料集</div></td>
+      <td>檢疫組</td><td>2026-05-11</td>
+      <td><span class="">2027-05-11</span><div class="adm-muted">222 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="dataset.travel-epidemic-json">標記已審閱（示範）</button></td></tr><tr data-id="disease.measles" data-owner="unit.acute-infectious" data-q="disease.measles 麻疹">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/diseases/measles/">麻疹</a></span><div class="adm-muted"><code>disease.measles</code> · 疾病頁</div></td>
+      <td>急性傳染病組</td><td>2026-05-14</td>
+      <td><span class="">2027-05-14</span><div class="adm-muted">225 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="disease.measles">標記已審閱（示範）</button></td></tr><tr data-id="dataset.measles-yearly" data-owner="unit.epidemic-intelligence" data-q="dataset.measles-yearly 麻疹確定病例統計">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/data/">麻疹確定病例統計</a></span><div class="adm-muted"><code>dataset.measles-yearly</code> · 資料集</div></td>
+      <td>疫情中心</td><td>2026-05-14</td>
+      <td><span class="">2027-05-14</span><div class="adm-muted">225 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="dataset.measles-yearly">標記已審閱（示範）</button></td></tr><tr data-id="media.hiv-anonymous-testing" data-owner="unit.chronic-infectious" data-q="media.hiv-anonymous-testing 想知道就去篩：hiv 匿名篩檢這樣做">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/media/hiv-anonymous-testing/">想知道就去篩：HIV 匿名篩檢這樣做</a></span><div class="adm-muted"><code>media.hiv-anonymous-testing</code> · 影音</div></td>
+      <td>慢性傳染病組</td><td>2026-05-20</td>
+      <td><span class="">2027-05-20</span><div class="adm-muted">231 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="media.hiv-anonymous-testing">標記已審閱（示範）</button></td></tr><tr data-id="service.vaccination-record-reissue" data-owner="unit.acute-infectious" data-q="service.vaccination-record-reissue 預防接種紀錄與接種證明補發">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/apply/vaccination-record-reissue/">預防接種紀錄與接種證明補發</a></span><div class="adm-muted"><code>service.vaccination-record-reissue</code> · 申請服務</div></td>
+      <td>急性傳染病組</td><td>2026-05-20</td>
+      <td><span class="">2027-05-20</span><div class="adm-muted">231 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="service.vaccination-record-reissue">標記已審閱（示範）</button></td></tr><tr data-id="service.infection-control-audit-complaint" data-owner="unit.infection-control" data-q="service.infection-control-audit-complaint 醫療與長照機構感染管制查核申訴與諮詢">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/apply/infection-control-audit-complaint/">醫療與長照機構感染管制查核申訴與諮詢</a></span><div class="adm-muted"><code>service.infection-control-audit-complaint</code> · 申請服務</div></td>
+      <td>感染管制及生物安全組</td><td>2026-06-01</td>
+      <td><span class="">2027-06-01</span><div class="adm-muted">243 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="service.infection-control-audit-complaint">標記已審閱（示範）</button></td></tr><tr data-id="research.2025-migrant-tb-active-case-finding" data-owner="unit.chronic-infectious" data-q="research.2025-migrant-tb-active-case-finding 移工結核病主動發現與都治成效評估">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/research/2025-migrant-tb-active-case-finding/">移工結核病主動發現與都治成效評估</a></span><div class="adm-muted"><code>research.2025-migrant-tb-active-case-finding</code> · 研究計畫</div></td>
+      <td>慢性傳染病組</td><td>2026-06-01</td>
+      <td><span class="">2027-06-01</span><div class="adm-muted">243 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="research.2025-migrant-tb-active-case-finding">標記已審閱（示範）</button></td></tr><tr data-id="media.prep-intro" data-owner="unit.chronic-infectious" data-q="media.prep-intro prep 是什麼？三分鐘認識暴露愛滋病毒前預防性投藥">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/media/prep-intro/">PrEP 是什麼？三分鐘認識暴露愛滋病毒前預防性投藥</a></span><div class="adm-muted"><code>media.prep-intro</code> · 影音</div></td>
+      <td>慢性傳染病組</td><td>2026-06-05</td>
+      <td><span class="">2027-06-05</span><div class="adm-muted">247 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="media.prep-intro">標記已審閱（示範）</button></td></tr><tr data-id="media.travel-clinic-before-departure" data-owner="unit.quarantine" data-q="media.travel-clinic-before-departure 出國前 4 到 6 週，先到旅遊醫學門診">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/media/travel-clinic-before-departure/">出國前 4 到 6 週，先到旅遊醫學門診</a></span><div class="adm-muted"><code>media.travel-clinic-before-departure</code> · 影音</div></td>
+      <td>檢疫組</td><td>2026-06-12</td>
+      <td><span class="">2027-06-12</span><div class="adm-muted">254 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="media.travel-clinic-before-departure">標記已審閱（示範）</button></td></tr><tr data-id="service.international-vaccination-certificate" data-owner="unit.quarantine" data-q="service.international-vaccination-certificate 國際預防接種證明書（黃皮書）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/apply/international-vaccination-certificate/">國際預防接種證明書（黃皮書）</a></span><div class="adm-muted"><code>service.international-vaccination-certificate</code> · 申請服務</div></td>
+      <td>檢疫組</td><td>2026-06-15</td>
+      <td><span class="">2027-06-15</span><div class="adm-muted">257 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="service.international-vaccination-certificate">標記已審閱（示範）</button></td></tr><tr data-id="service.travel-clinic-appointment" data-owner="unit.quarantine" data-q="service.travel-clinic-appointment 旅遊醫學門診預約">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/apply/travel-clinic-appointment/">旅遊醫學門診預約</a></span><div class="adm-muted"><code>service.travel-clinic-appointment</code> · 申請服務</div></td>
+      <td>檢疫組</td><td>2026-06-15</td>
+      <td><span class="">2027-06-15</span><div class="adm-muted">257 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="service.travel-clinic-appointment">標記已審閱（示範）</button></td></tr><tr data-id="dataset.antimicrobial-resistance" data-owner="unit.lab" data-q="dataset.antimicrobial-resistance 院內感染抗藥性細菌監測年報資料">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/data/">院內感染抗藥性細菌監測年報資料</a></span><div class="adm-muted"><code>dataset.antimicrobial-resistance</code> · 資料集</div></td>
+      <td>檢驗及疫苗研製中心</td><td>2026-06-30</td>
+      <td><span class="">2027-06-30</span><div class="adm-muted">272 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="dataset.antimicrobial-resistance">標記已審閱（示範）</button></td></tr><tr data-id="dataset.dengue-local-weekly" data-owner="unit.epidemic-intelligence" data-q="dataset.dengue-local-weekly 登革熱本土病例週統計（縣市別）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/data/">登革熱本土病例週統計（縣市別）</a></span><div class="adm-muted"><code>dataset.dengue-local-weekly</code> · 資料集</div></td>
+      <td>疫情中心</td><td>2026-06-30</td>
+      <td><span class="">2027-06-30</span><div class="adm-muted">272 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="dataset.dengue-local-weekly">標記已審閱（示範）</button></td></tr><tr data-id="service.vaccine-fund-donation" data-owner="unit.acute-infectious" data-q="service.vaccine-fund-donation 疫苗基金捐款">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/apply/vaccine-fund-donation/">疫苗基金捐款</a></span><div class="adm-muted"><code>service.vaccine-fund-donation</code> · 申請服務</div></td>
+      <td>急性傳染病組</td><td>2026-07-01</td>
+      <td><span class="">2027-07-01</span><div class="adm-muted">273 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="service.vaccine-fund-donation">標記已審閱（示範）</button></td></tr><tr data-id="research.2025-ev-molecular-epidemiology" data-owner="unit.lab" data-q="research.2025-ev-molecular-epidemiology 腸病毒 71 型與 d68 型分子流行病學監測">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/research/2025-ev-molecular-epidemiology/">腸病毒 71 型與 D68 型分子流行病學監測</a></span><div class="adm-muted"><code>research.2025-ev-molecular-epidemiology</code> · 研究計畫</div></td>
+      <td>檢驗及疫苗研製中心</td><td>2026-07-01</td>
+      <td><span class="">2027-07-01</span><div class="adm-muted">273 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="research.2025-ev-molecular-epidemiology">標記已審閱（示範）</button></td></tr><tr data-id="disease.dengue" data-owner="unit.acute-infectious" data-q="disease.dengue 登革熱">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/diseases/dengue/">登革熱</a></span><div class="adm-muted"><code>disease.dengue</code> · 疾病頁</div></td>
+      <td>急性傳染病組</td><td>2026-07-15</td>
+      <td><span class="">2027-07-15</span><div class="adm-muted">287 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="disease.dengue">標記已審閱（示範）</button></td></tr><tr data-id="media.dengue-village-chief" data-owner="unit.acute-infectious" data-q="media.dengue-village-chief 里長帶頭巡倒清刷：社區防登革熱篇">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/media/dengue-village-chief/">里長帶頭巡倒清刷：社區防登革熱篇</a></span><div class="adm-muted"><code>media.dengue-village-chief</code> · 影音</div></td>
+      <td>急性傳染病組</td><td>2026-07-15</td>
+      <td><span class="">2027-07-15</span><div class="adm-muted">287 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="media.dengue-village-chief">標記已審閱（示範）</button></td></tr><tr data-id="service.lab-test-request" data-owner="unit.lab" data-q="service.lab-test-request 傳染病檢驗委託（醫療院所送驗）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/apply/lab-test-request/">傳染病檢驗委託（醫療院所送驗）</a></span><div class="adm-muted"><code>service.lab-test-request</code> · 申請服務</div></td>
+      <td>檢驗及疫苗研製中心</td><td>2026-07-15</td>
+      <td><span class="">2027-07-15</span><div class="adm-muted">287 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="service.lab-test-request">標記已審閱（示範）</button></td></tr><tr data-id="labtest.chikungunya" data-owner="unit.lab" data-q="labtest.chikungunya 屈公病檢驗項目與送驗規定">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/lab/chikungunya/">屈公病檢驗項目與送驗規定</a></span><div class="adm-muted"><code>labtest.chikungunya</code> · 檢驗項目</div></td>
+      <td>檢驗及疫苗研製中心</td><td>2026-07-15</td>
+      <td><span class="">2027-07-15</span><div class="adm-muted">287 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="labtest.chikungunya">標記已審閱（示範）</button></td></tr><tr data-id="labtest.covid-19" data-owner="unit.lab" data-q="labtest.covid-19 新冠併發重症檢驗項目與送驗規定">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/lab/covid-19/">新冠併發重症檢驗項目與送驗規定</a></span><div class="adm-muted"><code>labtest.covid-19</code> · 檢驗項目</div></td>
+      <td>檢驗及疫苗研製中心</td><td>2026-07-15</td>
+      <td><span class="">2027-07-15</span><div class="adm-muted">287 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="labtest.covid-19">標記已審閱（示範）</button></td></tr><tr data-id="labtest.dengue" data-owner="unit.lab" data-q="labtest.dengue 登革熱檢驗項目與送驗規定">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/lab/dengue/">登革熱檢驗項目與送驗規定</a></span><div class="adm-muted"><code>labtest.dengue</code> · 檢驗項目</div></td>
+      <td>檢驗及疫苗研製中心</td><td>2026-07-15</td>
+      <td><span class="">2027-07-15</span><div class="adm-muted">287 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="labtest.dengue">標記已審閱（示範）</button></td></tr><tr data-id="labtest.enterovirus" data-owner="unit.lab" data-q="labtest.enterovirus 腸病毒檢驗項目與送驗規定">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/lab/enterovirus/">腸病毒檢驗項目與送驗規定</a></span><div class="adm-muted"><code>labtest.enterovirus</code> · 檢驗項目</div></td>
+      <td>檢驗及疫苗研製中心</td><td>2026-07-15</td>
+      <td><span class="">2027-07-15</span><div class="adm-muted">287 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="labtest.enterovirus">標記已審閱（示範）</button></td></tr><tr data-id="labtest.hepatitis-a" data-owner="unit.lab" data-q="labtest.hepatitis-a 急性病毒性a型肝炎檢驗項目與送驗規定">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/lab/hepatitis-a/">急性病毒性A型肝炎檢驗項目與送驗規定</a></span><div class="adm-muted"><code>labtest.hepatitis-a</code> · 檢驗項目</div></td>
+      <td>檢驗及疫苗研製中心</td><td>2026-07-15</td>
+      <td><span class="">2027-07-15</span><div class="adm-muted">287 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="labtest.hepatitis-a">標記已審閱（示範）</button></td></tr><tr data-id="labtest.hiv" data-owner="unit.lab" data-q="labtest.hiv 人類免疫缺乏病毒感染檢驗項目與送驗規定">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/lab/hiv/">人類免疫缺乏病毒感染檢驗項目與送驗規定</a></span><div class="adm-muted"><code>labtest.hiv</code> · 檢驗項目</div></td>
+      <td>檢驗及疫苗研製中心</td><td>2026-07-15</td>
+      <td><span class="">2027-07-15</span><div class="adm-muted">287 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="labtest.hiv">標記已審閱（示範）</button></td></tr><tr data-id="labtest.influenza" data-owner="unit.lab" data-q="labtest.influenza 流感檢驗項目與送驗規定">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/lab/influenza/">流感檢驗項目與送驗規定</a></span><div class="adm-muted"><code>labtest.influenza</code> · 檢驗項目</div></td>
+      <td>檢驗及疫苗研製中心</td><td>2026-07-15</td>
+      <td><span class="">2027-07-15</span><div class="adm-muted">287 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="labtest.influenza">標記已審閱（示範）</button></td></tr><tr data-id="labtest.japanese-encephalitis" data-owner="unit.lab" data-q="labtest.japanese-encephalitis 日本腦炎檢驗項目與送驗規定">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/lab/japanese-encephalitis/">日本腦炎檢驗項目與送驗規定</a></span><div class="adm-muted"><code>labtest.japanese-encephalitis</code> · 檢驗項目</div></td>
+      <td>檢驗及疫苗研製中心</td><td>2026-07-15</td>
+      <td><span class="">2027-07-15</span><div class="adm-muted">287 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="labtest.japanese-encephalitis">標記已審閱（示範）</button></td></tr><tr data-id="labtest.malaria" data-owner="unit.lab" data-q="labtest.malaria 瘧疾檢驗項目與送驗規定">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/lab/malaria/">瘧疾檢驗項目與送驗規定</a></span><div class="adm-muted"><code>labtest.malaria</code> · 檢驗項目</div></td>
+      <td>檢驗及疫苗研製中心</td><td>2026-07-15</td>
+      <td><span class="">2027-07-15</span><div class="adm-muted">287 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="labtest.malaria">標記已審閱（示範）</button></td></tr><tr data-id="labtest.measles" data-owner="unit.lab" data-q="labtest.measles 麻疹檢驗項目與送驗規定">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/lab/measles/">麻疹檢驗項目與送驗規定</a></span><div class="adm-muted"><code>labtest.measles</code> · 檢驗項目</div></td>
+      <td>檢驗及疫苗研製中心</td><td>2026-07-15</td>
+      <td><span class="">2027-07-15</span><div class="adm-muted">287 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="labtest.measles">標記已審閱（示範）</button></td></tr><tr data-id="labtest.mpox" data-owner="unit.lab" data-q="labtest.mpox m痘檢驗項目與送驗規定">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/lab/mpox/">M痘檢驗項目與送驗規定</a></span><div class="adm-muted"><code>labtest.mpox</code> · 檢驗項目</div></td>
+      <td>檢驗及疫苗研製中心</td><td>2026-07-15</td>
+      <td><span class="">2027-07-15</span><div class="adm-muted">287 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="labtest.mpox">標記已審閱（示範）</button></td></tr><tr data-id="labtest.pertussis" data-owner="unit.lab" data-q="labtest.pertussis 百日咳檢驗項目與送驗規定">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/lab/pertussis/">百日咳檢驗項目與送驗規定</a></span><div class="adm-muted"><code>labtest.pertussis</code> · 檢驗項目</div></td>
+      <td>檢驗及疫苗研製中心</td><td>2026-07-15</td>
+      <td><span class="">2027-07-15</span><div class="adm-muted">287 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="labtest.pertussis">標記已審閱（示範）</button></td></tr><tr data-id="labtest.rabies" data-owner="unit.lab" data-q="labtest.rabies 狂犬病檢驗項目與送驗規定">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/lab/rabies/">狂犬病檢驗項目與送驗規定</a></span><div class="adm-muted"><code>labtest.rabies</code> · 檢驗項目</div></td>
+      <td>檢驗及疫苗研製中心</td><td>2026-07-15</td>
+      <td><span class="">2027-07-15</span><div class="adm-muted">287 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="labtest.rabies">標記已審閱（示範）</button></td></tr><tr data-id="labtest.rubella" data-owner="unit.lab" data-q="labtest.rubella 德國麻疹檢驗項目與送驗規定">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/lab/rubella/">德國麻疹檢驗項目與送驗規定</a></span><div class="adm-muted"><code>labtest.rubella</code> · 檢驗項目</div></td>
+      <td>檢驗及疫苗研製中心</td><td>2026-07-15</td>
+      <td><span class="">2027-07-15</span><div class="adm-muted">287 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="labtest.rubella">標記已審閱（示範）</button></td></tr><tr data-id="labtest.shigellosis" data-owner="unit.lab" data-q="labtest.shigellosis 桿菌性痢疾檢驗項目與送驗規定">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/lab/shigellosis/">桿菌性痢疾檢驗項目與送驗規定</a></span><div class="adm-muted"><code>labtest.shigellosis</code> · 檢驗項目</div></td>
+      <td>檢驗及疫苗研製中心</td><td>2026-07-15</td>
+      <td><span class="">2027-07-15</span><div class="adm-muted">287 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="labtest.shigellosis">標記已審閱（示範）</button></td></tr><tr data-id="labtest.tuberculosis" data-owner="unit.lab" data-q="labtest.tuberculosis 結核病檢驗項目與送驗規定">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/lab/tuberculosis/">結核病檢驗項目與送驗規定</a></span><div class="adm-muted"><code>labtest.tuberculosis</code> · 檢驗項目</div></td>
+      <td>檢驗及疫苗研製中心</td><td>2026-07-15</td>
+      <td><span class="">2027-07-15</span><div class="adm-muted">287 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="labtest.tuberculosis">標記已審閱（示範）</button></td></tr><tr data-id="research.2026-ltc-respiratory-early-warning" data-owner="unit.infection-control" data-q="research.2026-ltc-respiratory-early-warning 長照機構呼吸道群聚早期預警模式之建立與驗證">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/research/2026-ltc-respiratory-early-warning/">長照機構呼吸道群聚早期預警模式之建立與驗證</a></span><div class="adm-muted"><code>research.2026-ltc-respiratory-early-warning</code> · 研究計畫</div></td>
+      <td>感染管制及生物安全組</td><td>2026-08-01</td>
+      <td><span class="">2027-08-01</span><div class="adm-muted">304 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="research.2026-ltc-respiratory-early-warning">標記已審閱（示範）</button></td></tr><tr data-id="media.migrant-worker-health-check" data-owner="unit.chronic-infectious" data-q="media.migrant-worker-health-check 移工健康檢查：入境後三日內與聘僱期間的檢查項目">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/media/migrant-worker-health-check/">移工健康檢查：入境後三日內與聘僱期間的檢查項目</a></span><div class="adm-muted"><code>media.migrant-worker-health-check</code> · 影音</div></td>
+      <td>慢性傳染病組</td><td>2026-08-10</td>
+      <td><span class="">2027-08-10</span><div class="adm-muted">313 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="media.migrant-worker-health-check">標記已審閱（示範）</button></td></tr><tr data-id="research.2026-sea-dengue-genomic-surveillance" data-owner="unit.lab" data-q="research.2026-sea-dengue-genomic-surveillance 東南亞登革病毒跨國基因體監測合作計畫">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/research/2026-sea-dengue-genomic-surveillance/">東南亞登革病毒跨國基因體監測合作計畫</a></span><div class="adm-muted"><code>research.2026-sea-dengue-genomic-surveillance</code> · 研究計畫</div></td>
+      <td>檢驗及疫苗研製中心</td><td>2026-08-15</td>
+      <td><span class="">2027-08-15</span><div class="adm-muted">318 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="research.2026-sea-dengue-genomic-surveillance">標記已審閱（示範）</button></td></tr><tr data-id="service.case-data-request" data-owner="unit.epidemic-intelligence" data-q="service.case-data-request 傳染病個案資料申請（學術研究用）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/apply/case-data-request/">傳染病個案資料申請（學術研究用）</a></span><div class="adm-muted"><code>service.case-data-request</code> · 申請服務</div></td>
+      <td>疫情中心</td><td>2026-08-20</td>
+      <td><span class="">2027-08-20</span><div class="adm-muted">323 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="service.case-data-request">標記已審閱（示範）</button></td></tr><tr data-id="service.research-data-request" data-owner="unit.planning" data-q="service.research-data-request 研究計畫成果與研究資料申請">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/apply/research-data-request/">研究計畫成果與研究資料申請</a></span><div class="adm-muted"><code>service.research-data-request</code> · 申請服務</div></td>
+      <td>企劃組</td><td>2026-08-20</td>
+      <td><span class="">2027-08-20</span><div class="adm-muted">323 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="service.research-data-request">標記已審閱（示範）</button></td></tr><tr data-id="research.2026-adult-measles-seroprevalence" data-owner="unit.acute-infectious" data-q="research.2026-adult-measles-seroprevalence 成人麻疹抗體血清流行病學調查（1966–1990 年出生世代）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/research/2026-adult-measles-seroprevalence/">成人麻疹抗體血清流行病學調查（1966–1990 年出生世代）</a></span><div class="adm-muted"><code>research.2026-adult-measles-seroprevalence</code> · 研究計畫</div></td>
+      <td>急性傳染病組</td><td>2026-08-20</td>
+      <td><span class="">2027-08-20</span><div class="adm-muted">323 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="research.2026-adult-measles-seroprevalence">標記已審閱（示範）</button></td></tr><tr data-id="doc.tb-guideline.2025-09-01" data-owner="unit.chronic-infectious" data-q="doc.tb-guideline.2025-09-01 結核病診治指引（第八版）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/documents/tb-guideline.2025-09-01/">結核病診治指引（第八版）</a></span><div class="adm-muted"><code>doc.tb-guideline.2025-09-01</code> · 文件</div></td>
+      <td>慢性傳染病組</td><td>2026-09-01</td>
+      <td><span class="">2027-09-01</span><div class="adm-muted">335 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="doc.tb-guideline.2025-09-01">標記已審閱（示範）</button></td></tr><tr data-id="dataset.covid-severe-weekly" data-owner="unit.epidemic-intelligence" data-q="dataset.covid-severe-weekly 新冠併發重症病例週統計">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/data/">新冠併發重症病例週統計</a></span><div class="adm-muted"><code>dataset.covid-severe-weekly</code> · 資料集</div></td>
+      <td>疫情中心</td><td>2026-09-01</td>
+      <td><span class="">2027-09-01</span><div class="adm-muted">335 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="dataset.covid-severe-weekly">標記已審閱（示範）</button></td></tr><tr data-id="dataset.dengue-daily" data-owner="unit.epidemic-intelligence" data-q="dataset.dengue-daily 登革熱每日確定病例統計">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/data/">登革熱每日確定病例統計</a></span><div class="adm-muted"><code>dataset.dengue-daily</code> · 資料集</div></td>
+      <td>疫情中心</td><td>2026-09-01</td>
+      <td><span class="">2027-09-01</span><div class="adm-muted">335 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="dataset.dengue-daily">標記已審閱（示範）</button></td></tr><tr data-id="dataset.disease-pages" data-owner="unit.pr" data-q="dataset.disease-pages 疾病介紹頁（八區塊結構化內容）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/data/">疾病介紹頁（八區塊結構化內容）</a></span><div class="adm-muted"><code>dataset.disease-pages</code> · 資料集</div></td>
+      <td>公關室</td><td>2026-09-01</td>
+      <td><span class="">2027-09-01</span><div class="adm-muted">335 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="dataset.disease-pages">標記已審閱（示範）</button></td></tr><tr data-id="dataset.doc-library-guidelines" data-owner="unit.oasis" data-q="dataset.doc-library-guidelines 防治工作手冊與指引文件庫">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/data/">防治工作手冊與指引文件庫</a></span><div class="adm-muted"><code>dataset.doc-library-guidelines</code> · 資料集</div></td>
+      <td>AI推動辦公室</td><td>2026-09-01</td>
+      <td><span class="">2027-09-01</span><div class="adm-muted">335 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="dataset.doc-library-guidelines">標記已審閱（示範）</button></td></tr><tr data-id="dataset.flu-express" data-owner="unit.epidemic-intelligence" data-q="dataset.flu-express 流感速訊（每週流感監測報告）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/data/">流感速訊（每週流感監測報告）</a></span><div class="adm-muted"><code>dataset.flu-express</code> · 資料集</div></td>
+      <td>疫情中心</td><td>2026-09-01</td>
+      <td><span class="">2027-09-01</span><div class="adm-muted">335 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="dataset.flu-express">標記已審閱（示範）</button></td></tr><tr data-id="dataset.flu-severe" data-owner="unit.epidemic-intelligence" data-q="dataset.flu-severe 流感併發重症病例統計">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/data/">流感併發重症病例統計</a></span><div class="adm-muted"><code>dataset.flu-severe</code> · 資料集</div></td>
+      <td>疫情中心</td><td>2026-09-01</td>
+      <td><span class="">2027-09-01</span><div class="adm-muted">335 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="dataset.flu-severe">標記已審閱（示範）</button></td></tr><tr data-id="dataset.ili-weekly" data-owner="unit.epidemic-intelligence" data-q="dataset.ili-weekly 類流感門急診就診統計（健保資料）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/data/">類流感門急診就診統計（健保資料）</a></span><div class="adm-muted"><code>dataset.ili-weekly</code> · 資料集</div></td>
+      <td>疫情中心</td><td>2026-09-01</td>
+      <td><span class="">2027-09-01</span><div class="adm-muted">335 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="dataset.ili-weekly">標記已審閱（示範）</button></td></tr><tr data-id="dataset.press-rss" data-owner="unit.pr" data-q="dataset.press-rss 新聞稿與致醫界通函（rss）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/data/">新聞稿與致醫界通函（RSS）</a></span><div class="adm-muted"><code>dataset.press-rss</code> · 資料集</div></td>
+      <td>公關室</td><td>2026-09-01</td>
+      <td><span class="">2027-09-01</span><div class="adm-muted">335 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="dataset.press-rss">標記已審閱（示範）</button></td></tr><tr data-id="page.open-data" data-owner="unit.oasis" data-q="page.open-data 開放資料授權與使用說明">
+      <td><span class="adm-title">開放資料授權與使用說明</span><div class="adm-muted"><code>page.open-data</code> · 一般頁面</div></td>
+      <td>AI推動辦公室</td><td>2026-09-01</td>
+      <td><span class="">2027-09-01</span><div class="adm-muted">335 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="page.open-data">標記已審閱（示範）</button></td></tr><tr data-id="service.cluster-report-1922" data-owner="unit.epidemic-intelligence" data-q="service.cluster-report-1922 疑似傳染病群聚通報（民眾、學校、機構）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/apply/cluster-report-1922/">疑似傳染病群聚通報（民眾、學校、機構）</a></span><div class="adm-muted"><code>service.cluster-report-1922</code> · 申請服務</div></td>
+      <td>疫情中心</td><td>2026-09-01</td>
+      <td><span class="">2027-09-01</span><div class="adm-muted">335 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="service.cluster-report-1922">標記已審閱（示範）</button></td></tr><tr data-id="service.notifiable-disease-report" data-owner="unit.epidemic-intelligence" data-q="service.notifiable-disease-report 法定傳染病通報（醫師與醫療機構）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/apply/notifiable-disease-report/">法定傳染病通報（醫師與醫療機構）</a></span><div class="adm-muted"><code>service.notifiable-disease-report</code> · 申請服務</div></td>
+      <td>疫情中心</td><td>2026-09-01</td>
+      <td><span class="">2027-09-01</span><div class="adm-muted">335 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="service.notifiable-disease-report">標記已審閱（示範）</button></td></tr><tr data-id="research.2026-ai-health-qa-accuracy" data-owner="unit.oasis" data-q="research.2026-ai-health-qa-accuracy ai 輔助衛教問答之正確性、可引用性與民眾信任評估">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/research/2026-ai-health-qa-accuracy/">AI 輔助衛教問答之正確性、可引用性與民眾信任評估</a></span><div class="adm-muted"><code>research.2026-ai-health-qa-accuracy</code> · 研究計畫</div></td>
+      <td>AI推動辦公室</td><td>2026-09-01</td>
+      <td><span class="">2027-09-01</span><div class="adm-muted">335 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="research.2026-ai-health-qa-accuracy">標記已審閱（示範）</button></td></tr><tr data-id="disease.covid-19" data-owner="unit.acute-infectious" data-q="disease.covid-19 新冠併發重症">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/diseases/covid-19/">新冠併發重症</a></span><div class="adm-muted"><code>disease.covid-19</code> · 疾病頁</div></td>
+      <td>急性傳染病組</td><td>2026-09-05</td>
+      <td><span class="">2027-09-05</span><div class="adm-muted">339 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="disease.covid-19">標記已審閱（示範）</button></td></tr><tr data-id="media.mpox-vaccine" data-owner="unit.acute-infectious" data-q="media.mpox-vaccine m痘疫苗兩劑完整保護，高風險族群請把握接種">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/media/mpox-vaccine/">M痘疫苗兩劑完整保護，高風險族群請把握接種</a></span><div class="adm-muted"><code>media.mpox-vaccine</code> · 影音</div></td>
+      <td>急性傳染病組</td><td>2026-09-05</td>
+      <td><span class="">2027-09-05</span><div class="adm-muted">339 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="media.mpox-vaccine">標記已審閱（示範）</button></td></tr><tr data-id="research.2024-hospital-amr-trends" data-owner="unit.infection-control" data-q="research.2024-hospital-amr-trends 醫院抗藥性細菌監測趨勢分析（2015–2024）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/research/2024-hospital-amr-trends/">醫院抗藥性細菌監測趨勢分析（2015–2024）</a></span><div class="adm-muted"><code>research.2024-hospital-amr-trends</code> · 研究計畫</div></td>
+      <td>感染管制及生物安全組</td><td>2026-09-10</td>
+      <td><span class="">2027-09-10</span><div class="adm-muted">344 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="research.2024-hospital-amr-trends">標記已審閱（示範）</button></td></tr><tr data-id="doc.covid-vaccine-recommendation.2026-09-15" data-owner="unit.acute-infectious" data-q="doc.covid-vaccine-recommendation.2026-09-15 新冠疫苗接種建議（2026–2027 年度）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/documents/covid-vaccine-recommendation.2026-09-15/">新冠疫苗接種建議（2026–2027 年度）</a></span><div class="adm-muted"><code>doc.covid-vaccine-recommendation.2026-09-15</code> · 文件</div></td>
+      <td>急性傳染病組</td><td>2026-09-15</td>
+      <td><span class="">2027-09-15</span><div class="adm-muted">349 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="doc.covid-vaccine-recommendation.2026-09-15">標記已審閱（示範）</button></td></tr><tr data-id="doc.flu-vaccine-schedule.2026-09-15" data-owner="unit.acute-infectious" data-q="doc.flu-vaccine-schedule.2026-09-15 2026–2027 年度公費流感疫苗接種計畫：實施對象與時程">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/documents/flu-vaccine-schedule.2026-09-15/">2026–2027 年度公費流感疫苗接種計畫：實施對象與時程</a></span><div class="adm-muted"><code>doc.flu-vaccine-schedule.2026-09-15</code> · 文件</div></td>
+      <td>急性傳染病組</td><td>2026-09-15</td>
+      <td><span class="">2027-09-15</span><div class="adm-muted">349 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="doc.flu-vaccine-schedule.2026-09-15">標記已審閱（示範）</button></td></tr><tr data-id="page.accessibility" data-owner="unit.it" data-q="page.accessibility 無障礙聲明">
+      <td><span class="adm-title">無障礙聲明</span><div class="adm-muted"><code>page.accessibility</code> · 一般頁面</div></td>
+      <td>資訊室</td><td>2026-09-15</td>
+      <td><span class="">2027-09-15</span><div class="adm-muted">349 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="page.accessibility">標記已審閱（示範）</button></td></tr><tr data-id="media.amr-one-health-podcast" data-owner="unit.infection-control" data-q="media.amr-one-health-podcast podcast｜抗生素不是萬靈丹：談抗藥性與防疫一體">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/media/amr-one-health-podcast/">Podcast｜抗生素不是萬靈丹：談抗藥性與防疫一體</a></span><div class="adm-muted"><code>media.amr-one-health-podcast</code> · 影音</div></td>
+      <td>感染管制及生物安全組</td><td>2026-09-15</td>
+      <td><span class="">2027-09-15</span><div class="adm-muted">349 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="media.amr-one-health-podcast">標記已審閱（示範）</button></td></tr><tr data-id="disease.influenza" data-owner="unit.acute-infectious" data-q="disease.influenza 流感">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/diseases/influenza/">流感</a></span><div class="adm-muted"><code>disease.influenza</code> · 疾病頁</div></td>
+      <td>急性傳染病組</td><td>2026-09-20</td>
+      <td><span class="">2027-09-20</span><div class="adm-muted">354 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="disease.influenza">標記已審閱（示範）</button></td></tr><tr data-id="disease.tuberculosis" data-owner="unit.chronic-infectious" data-q="disease.tuberculosis 結核病">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/diseases/tuberculosis/">結核病</a></span><div class="adm-muted"><code>disease.tuberculosis</code> · 疾病頁</div></td>
+      <td>慢性傳染病組</td><td>2026-09-22</td>
+      <td><span class="">2027-09-22</span><div class="adm-muted">356 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="disease.tuberculosis">標記已審閱（示範）</button></td></tr><tr data-id="doc.dengue-community-workplan.2026-09-10" data-owner="unit.acute-infectious" data-q="doc.dengue-community-workplan.2026-09-10 登革熱社區防治工作指引：孳生源清除、病媒蚊監測與群聚應變">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/documents/dengue-community-workplan.2026-09-10/">登革熱社區防治工作指引：孳生源清除、病媒蚊監測與群聚應變</a></span><div class="adm-muted"><code>doc.dengue-community-workplan.2026-09-10</code> · 文件</div></td>
+      <td>急性傳染病組</td><td>2026-09-22</td>
+      <td><span class="">2027-09-22</span><div class="adm-muted">356 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="doc.dengue-community-workplan.2026-09-10">標記已審閱（示範）</button></td></tr><tr data-id="doc.ev-childcare-guideline.2026-09-10" data-owner="unit.acute-infectious" data-q="doc.ev-childcare-guideline.2026-09-10 教托育機構腸病毒防治指引">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/documents/ev-childcare-guideline.2026-09-10/">教托育機構腸病毒防治指引</a></span><div class="adm-muted"><code>doc.ev-childcare-guideline.2026-09-10</code> · 文件</div></td>
+      <td>急性傳染病組</td><td>2026-09-22</td>
+      <td><span class="">2027-09-22</span><div class="adm-muted">356 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="doc.ev-childcare-guideline.2026-09-10">標記已審閱（示範）</button></td></tr><tr data-id="doc.flu-vaccine-manual.2026-09-16" data-owner="unit.acute-infectious" data-q="doc.flu-vaccine-manual.2026-09-16 2026–2027 年度公費流感疫苗接種計畫作業手冊">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/documents/flu-vaccine-manual.2026-09-16/">2026–2027 年度公費流感疫苗接種計畫作業手冊</a></span><div class="adm-muted"><code>doc.flu-vaccine-manual.2026-09-16</code> · 文件</div></td>
+      <td>急性傳染病組</td><td>2026-09-22</td>
+      <td><span class="">2027-09-22</span><div class="adm-muted">356 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="doc.flu-vaccine-manual.2026-09-16">標記已審閱（示範）</button></td></tr><tr data-id="doc.measles-contact-tracing.2026-09-12" data-owner="unit.acute-infectious" data-q="doc.measles-contact-tracing.2026-09-12 麻疹接觸者追蹤作業指引">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/documents/measles-contact-tracing.2026-09-12/">麻疹接觸者追蹤作業指引</a></span><div class="adm-muted"><code>doc.measles-contact-tracing.2026-09-12</code> · 文件</div></td>
+      <td>急性傳染病組</td><td>2026-09-22</td>
+      <td><span class="">2027-09-22</span><div class="adm-muted">356 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="doc.measles-contact-tracing.2026-09-12">標記已審閱（示範）</button></td></tr><tr data-id="page.about" data-owner="unit.pr" data-q="page.about 關於新官網與改版小組">
+      <td><span class="adm-title">關於新官網與改版小組</span><div class="adm-muted"><code>page.about</code> · 一般頁面</div></td>
+      <td>公關室</td><td>2026-09-22</td>
+      <td><span class="">2027-09-22</span><div class="adm-muted">356 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="page.about">標記已審閱（示範）</button></td></tr><tr data-id="page.ai-policy" data-owner="unit.oasis" data-q="page.ai-policy ai 使用聲明與爬蟲政策">
+      <td><span class="adm-title">AI 使用聲明與爬蟲政策</span><div class="adm-muted"><code>page.ai-policy</code> · 一般頁面</div></td>
+      <td>AI推動辦公室</td><td>2026-09-22</td>
+      <td><span class="">2027-09-22</span><div class="adm-muted">356 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="page.ai-policy">標記已審閱（示範）</button></td></tr><tr data-id="service.ltbi-treatment" data-owner="unit.chronic-infectious" data-q="service.ltbi-treatment 潛伏結核感染檢驗與治療">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/apply/ltbi-treatment/">潛伏結核感染檢驗與治療</a></span><div class="adm-muted"><code>service.ltbi-treatment</code> · 申請服務</div></td>
+      <td>慢性傳染病組</td><td>2026-09-22</td>
+      <td><span class="">2027-09-22</span><div class="adm-muted">356 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="service.ltbi-treatment">標記已審閱（示範）</button></td></tr><tr data-id="service.tb-treatment-subsidy" data-owner="unit.chronic-infectious" data-q="service.tb-treatment-subsidy 結核病診治費用補助與隔離治療">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/apply/tb-treatment-subsidy/">結核病診治費用補助與隔離治療</a></span><div class="adm-muted"><code>service.tb-treatment-subsidy</code> · 申請服務</div></td>
+      <td>慢性傳染病組</td><td>2026-09-22</td>
+      <td><span class="">2027-09-22</span><div class="adm-muted">356 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="service.tb-treatment-subsidy">標記已審閱（示範）</button></td></tr><tr data-id="media.ltc-flu-vaccine" data-owner="unit.acute-infectious" data-q="media.ltc-flu-vaccine 長照機構住民與工作人員，一起打流感疫苗">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/media/ltc-flu-vaccine/">長照機構住民與工作人員，一起打流感疫苗</a></span><div class="adm-muted"><code>media.ltc-flu-vaccine</code> · 影音</div></td>
+      <td>急性傳染病組</td><td>2026-09-25</td>
+      <td><span class="">2027-09-25</span><div class="adm-muted">359 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="media.ltc-flu-vaccine">標記已審閱（示範）</button></td></tr><tr data-id="media.covid-prevention-appeal" data-owner="unit.acute-infectious" data-q="media.covid-prevention-appeal 秋冬預防新冠，高風險族群請接種新一季疫苗">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/media/covid-prevention-appeal/">秋冬預防新冠，高風險族群請接種新一季疫苗</a></span><div class="adm-muted"><code>media.covid-prevention-appeal</code> · 影音</div></td>
+      <td>急性傳染病組</td><td>2026-09-26</td>
+      <td><span class="">2027-09-26</span><div class="adm-muted">360 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="media.covid-prevention-appeal">標記已審閱（示範）</button></td></tr><tr data-id="disease.rabies" data-owner="unit.acute-infectious" data-q="disease.rabies 狂犬病">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/diseases/rabies/">狂犬病</a></span><div class="adm-muted"><code>disease.rabies</code> · 疾病頁</div></td>
+      <td>急性傳染病組</td><td>2026-09-28</td>
+      <td><span class="">2027-09-28</span><div class="adm-muted">362 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="disease.rabies">標記已審閱（示範）</button></td></tr><tr data-id="page.contact" data-owner="unit.pr" data-q="page.contact 聯絡我們">
+      <td><span class="adm-title">聯絡我們</span><div class="adm-muted"><code>page.contact</code> · 一般頁面</div></td>
+      <td>公關室</td><td>2026-10-01</td>
+      <td><span class="">2027-10-01</span><div class="adm-muted">365 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="page.contact">標記已審閱（示範）</button></td></tr><tr data-id="page.director-mailbox" data-owner="unit.secretariat" data-q="page.director-mailbox 署長信箱">
+      <td><span class="adm-title">署長信箱</span><div class="adm-muted"><code>page.director-mailbox</code> · 一般頁面</div></td>
+      <td>秘書室</td><td>2026-10-01</td>
+      <td><span class="">2027-10-01</span><div class="adm-muted">365 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="page.director-mailbox">標記已審閱（示範）</button></td></tr><tr data-id="page.director" data-owner="unit.secretariat" data-q="page.director 署長職掌與施政重點">
+      <td><span class="adm-title">署長職掌與施政重點</span><div class="adm-muted"><code>page.director</code> · 一般頁面</div></td>
+      <td>秘書室</td><td>2026-10-01</td>
+      <td><span class="">2027-10-01</span><div class="adm-muted">365 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="page.director">標記已審閱（示範）</button></td></tr><tr data-id="page.history" data-owner="unit.planning" data-q="page.history 歷史沿革">
+      <td><span class="adm-title">歷史沿革</span><div class="adm-muted"><code>page.history</code> · 一般頁面</div></td>
+      <td>企劃組</td><td>2026-10-01</td>
+      <td><span class="">2027-10-01</span><div class="adm-muted">365 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="page.history">標記已審閱（示範）</button></td></tr><tr data-id="page.international-bilateral" data-owner="unit.planning" data-q="page.international-bilateral bilateral cooperation and mous">
+      <td><span class="adm-title">Bilateral cooperation and MOUs</span><div class="adm-muted"><code>page.international-bilateral</code> · 一般頁面</div></td>
+      <td>企劃組</td><td>2026-10-01</td>
+      <td><span class="">2027-10-01</span><div class="adm-muted">365 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="page.international-bilateral">標記已審閱（示範）</button></td></tr><tr data-id="page.international-global-health-security" data-owner="unit.planning" data-q="page.international-global-health-security global health security: amr, vaccines and border quarantine">
+      <td><span class="adm-title">Global health security: AMR, vaccines and border quarantine</span><div class="adm-muted"><code>page.international-global-health-security</code> · 一般頁面</div></td>
+      <td>企劃組</td><td>2026-10-01</td>
+      <td><span class="">2027-10-01</span><div class="adm-muted">365 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="page.international-global-health-security">標記已審閱（示範）</button></td></tr><tr data-id="page.international-ihr-focal-point" data-owner="unit.planning" data-q="page.international-ihr-focal-point ihr national focal point (24/7)">
+      <td><span class="adm-title">IHR National Focal Point (24/7)</span><div class="adm-muted"><code>page.international-ihr-focal-point</code> · 一般頁面</div></td>
+      <td>企劃組</td><td>2026-10-01</td>
+      <td><span class="">2027-10-01</span><div class="adm-muted">365 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="page.international-ihr-focal-point">標記已審閱（示範）</button></td></tr><tr data-id="page.international-multilateral" data-owner="unit.planning" data-q="page.international-multilateral multilateral cooperation: who, wha, apec and ghsa">
+      <td><span class="adm-title">Multilateral cooperation: WHO, WHA, APEC and GHSA</span><div class="adm-muted"><code>page.international-multilateral</code> · 一般頁面</div></td>
+      <td>企劃組</td><td>2026-10-01</td>
+      <td><span class="">2027-10-01</span><div class="adm-muted">365 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="page.international-multilateral">標記已審閱（示範）</button></td></tr><tr data-id="page.international-publications-en" data-owner="unit.planning" data-q="page.international-publications-en english publications: taiwan epidemiology bulletin and annual report">
+      <td><span class="adm-title">English publications: Taiwan Epidemiology Bulletin and Annual Report</span><div class="adm-muted"><code>page.international-publications-en</code> · 一般頁面</div></td>
+      <td>企劃組</td><td>2026-10-01</td>
+      <td><span class="">2027-10-01</span><div class="adm-muted">365 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="page.international-publications-en">標記已審閱（示範）</button></td></tr><tr data-id="page.international-training" data-owner="unit.planning" data-q="page.international-training international training: fetp, workshops and laboratory training">
+      <td><span class="adm-title">International training: FETP, workshops and laboratory training</span><div class="adm-muted"><code>page.international-training</code> · 一般頁面</div></td>
+      <td>企劃組</td><td>2026-10-01</td>
+      <td><span class="">2027-10-01</span><div class="adm-muted">365 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="page.international-training">標記已審閱（示範）</button></td></tr><tr data-id="page.mission" data-owner="unit.planning" data-q="page.mission 使命與法定職掌">
+      <td><span class="adm-title">使命與法定職掌</span><div class="adm-muted"><code>page.mission</code> · 一般頁面</div></td>
+      <td>企劃組</td><td>2026-10-01</td>
+      <td><span class="">2027-10-01</span><div class="adm-muted">365 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="page.mission">標記已審閱（示範）</button></td></tr><tr data-id="page.regional-centers" data-owner="unit.planning" data-q="page.regional-centers 六區管制中心與轄區">
+      <td><span class="adm-title">六區管制中心與轄區</span><div class="adm-muted"><code>page.regional-centers</code> · 一般頁面</div></td>
+      <td>企劃組</td><td>2026-10-01</td>
+      <td><span class="">2027-10-01</span><div class="adm-muted">365 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="page.regional-centers">標記已審閱（示範）</button></td></tr><tr data-id="media.mmr-waiting-room-2026" data-owner="unit.acute-infectious" data-q="media.mmr-waiting-room-2026 麻疹 mmr 疫苗候診衛教動畫（2026 年重製版）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/media/mmr-waiting-room-2026/">麻疹 MMR 疫苗候診衛教動畫（2026 年重製版）</a></span><div class="adm-muted"><code>media.mmr-waiting-room-2026</code> · 影音</div></td>
+      <td>急性傳染病組</td><td>2026-10-01</td>
+      <td><span class="">2027-10-01</span><div class="adm-muted">365 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="media.mmr-waiting-room-2026">標記已審閱（示範）</button></td></tr><tr data-id="topic.international-cooperation" data-owner="unit.planning" data-q="topic.international-cooperation international cooperation">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/topics/international-cooperation/">International Cooperation</a></span><div class="adm-muted"><code>topic.international-cooperation</code> · 專區</div></td>
+      <td>企劃組</td><td>2026-10-01</td>
+      <td><span class="">2027-10-01</span><div class="adm-muted">365 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="topic.international-cooperation">標記已審閱（示範）</button></td></tr><tr data-id="service.international-training-application" data-owner="unit.planning" data-q="service.international-training-application apply for taiwan cdc international training">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/apply/international-training-application/">Apply for Taiwan CDC international training</a></span><div class="adm-muted"><code>service.international-training-application</code> · 申請服務</div></td>
+      <td>企劃組</td><td>2026-10-01</td>
+      <td><span class="">2027-10-01</span><div class="adm-muted">365 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="service.international-training-application">標記已審閱（示範）</button></td></tr><tr data-id="doc.flu-antiviral-eligibility.2026-09-18" data-owner="unit.acute-infectious" data-q="doc.flu-antiviral-eligibility.2026-09-18 公費流感抗病毒藥劑使用對象（2026 年 9 月延長版：高傳播族群延至 10 月 31 日）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/documents/flu-antiviral-eligibility.2026-09-18/">公費流感抗病毒藥劑使用對象（2026 年 9 月延長版：高傳播族群延至 10 月 31 日）</a></span><div class="adm-muted"><code>doc.flu-antiviral-eligibility.2026-09-18</code> · 文件</div></td>
+      <td>急性傳染病組</td><td>2026-10-05</td>
+      <td><span class="">2027-10-05</span><div class="adm-muted">369 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="doc.flu-antiviral-eligibility.2026-09-18">標記已審閱（示範）</button></td></tr><tr data-id="doc.curriculum-dengue.2026-10-10" data-owner="unit.acute-infectious" data-q="doc.curriculum-dengue.2026-10-10 登革熱核心教材（示範匯入版）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/documents/curriculum-dengue.2026-10-10/">登革熱核心教材（示範匯入版）</a></span><div class="adm-muted"><code>doc.curriculum-dengue.2026-10-10</code> · 文件</div></td>
+      <td>急性傳染病組</td><td>2026-10-10</td>
+      <td><span class="">2027-10-10</span><div class="adm-muted">374 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="doc.curriculum-dengue.2026-10-10">標記已審閱（示範）</button></td></tr><tr data-id="doc.curriculum-measles.2026-10-10" data-owner="unit.acute-infectious" data-q="doc.curriculum-measles.2026-10-10 麻疹核心教材（示範匯入版）">
+      <td><span class="adm-title"><a href="/new_cdc_prototype/preview/pr-56/documents/curriculum-measles.2026-10-10/">麻疹核心教材（示範匯入版）</a></span><div class="adm-muted"><code>doc.curriculum-measles.2026-10-10</code> · 文件</div></td>
+      <td>急性傳染病組</td><td>2026-10-10</td>
+      <td><span class="">2027-10-10</span><div class="adm-muted">374 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="doc.curriculum-measles.2026-10-10">標記已審閱（示範）</button></td></tr><tr data-id="page.copyright" data-owner="unit.pr" data-q="page.copyright 著作權聲明">
+      <td><span class="adm-title">著作權聲明</span><div class="adm-muted"><code>page.copyright</code> · 一般頁面</div></td>
+      <td>公關室</td><td>2026-10-10</td>
+      <td><span class="">2027-10-10</span><div class="adm-muted">374 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="page.copyright">標記已審閱（示範）</button></td></tr><tr data-id="page.foia" data-owner="unit.secretariat" data-q="page.foia 政府資訊公開">
+      <td><span class="adm-title">政府資訊公開</span><div class="adm-muted"><code>page.foia</code> · 一般頁面</div></td>
+      <td>秘書室</td><td>2026-10-10</td>
+      <td><span class="">2027-10-10</span><div class="adm-muted">374 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="page.foia">標記已審閱（示範）</button></td></tr><tr data-id="page.legal" data-owner="unit.planning" data-q="page.legal 法令規章">
+      <td><span class="adm-title">法令規章</span><div class="adm-muted"><code>page.legal</code> · 一般頁面</div></td>
+      <td>企劃組</td><td>2026-10-10</td>
+      <td><span class="">2027-10-10</span><div class="adm-muted">374 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="page.legal">標記已審閱（示範）</button></td></tr><tr data-id="page.privacy" data-owner="unit.it" data-q="page.privacy 隱私權政策（2026 年修訂）">
+      <td><span class="adm-title">隱私權政策（2026 年修訂）</span><div class="adm-muted"><code>page.privacy</code> · 一般頁面</div></td>
+      <td>資訊室</td><td>2026-10-10</td>
+      <td><span class="">2027-10-10</span><div class="adm-muted">374 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="page.privacy">標記已審閱（示範）</button></td></tr><tr data-id="page.security-policy" data-owner="unit.it" data-q="page.security-policy 資訊安全政策">
+      <td><span class="adm-title">資訊安全政策</span><div class="adm-muted"><code>page.security-policy</code> · 一般頁面</div></td>
+      <td>資訊室</td><td>2026-10-10</td>
+      <td><span class="">2027-10-10</span><div class="adm-muted">374 日後</div></td>
+      <td>12 個月</td>
+      <td data-act><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-mark="page.security-policy">標記已審閱（示範）</button></td></tr>
+    </tbody></table></div></div>
+</section></main>
+<footer class="adm-foot"><a href="/new_cdc_prototype/preview/pr-56/">回前台首頁</a><a href="/new_cdc_prototype/preview/pr-56/v1/catalog.json">目錄 API（/v1/catalog.json）</a><a href="/new_cdc_prototype/preview/pr-56/guide/">使用說明</a><span>建置日 2026-10-01</span></footer>
+<script type="module" src="/new_cdc_prototype/preview/pr-56/assets/js/admin/common.js"></script>
+<script type="module" src="/new_cdc_prototype/preview/pr-56/assets/js/admin/due.js"></script>
+</body>
+</html>

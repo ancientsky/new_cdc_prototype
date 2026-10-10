@@ -1,0 +1,42 @@
+{
+  "id": "page.x-travel-news-list",
+  "type": "page",
+  "title": "國際疫情訊息",
+  "owner": "unit.quarantine",
+  "publishedAt": "2026-10-03",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "2025-01-09 國內新增麻疹病例，1981 年以後出生之醫護與赴流行區成人建議優先自費接種 MMR 2025-02-18 春節後登革熱境外移入病例增加，出國返國請落實防蚊 2026-05-11 日本麻疹疫情升溫，列為第一級旅遊疫情建…",
+  "slug": "x-travel-news-list",
+  "bodyMarkdown": "- 2025-01-09 [國內新增麻疹病例，1981 年以後出生之醫護與赴流行區成人建議優先自費接種 MMR](https://www.cdc.gov.tw/Bulletin/Detail/wF2aymiMB-VWnAMrBhlBLR?typeid=9)\n- 2025-02-18 [春節後登革熱境外移入病例增加，出國返國請落實防蚊](https://www.cdc.gov.tw/Bulletin/Detail/2XdsPkgAJrW5OX9sqXZ0_8?typeid=9)\n- 2026-05-11 [日本麻疹疫情升溫，列為第一級旅遊疫情建議；出國前請評估 MMR 接種](https://www.cdc.gov.tw/Bulletin/Detail/cGIaEmA5Avqb-jRoD_eUlU?typeid=9)\n- 2026-06-02 [暑假出國前請評估麻疹免疫力：1966 年（含）以後出生者出國前 2 至 4 週評估接種 MMR](https://www.cdc.gov.tw/Bulletin/Detail/pMIIp8w8oTg2K7kPaBrs73?typeid=9)\n- 2026-07-21 [今年首例登革熱本土病例出現於高雄市，請民眾清除積水容器](https://www.cdc.gov.tw/Bulletin/Detail/smvLn7kTa7CHCQvtrqmuuh?typeid=9)\n- 2026-08-18 [南部登革熱本土疫情上升，籲請民眾配合孳生源清除與防治工作](https://www.cdc.gov.tw/Bulletin/Detail/-lva1dBo56-fDAiXCmd8v6?typeid=9)",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/List/ZWd4Ziovle_L8qmx88_X46"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.6,
+    "issues": [
+      {
+        "code": "list-page",
+        "severity": "info",
+        "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/List/ZWd4Ziovle_L8qmx88_X46",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

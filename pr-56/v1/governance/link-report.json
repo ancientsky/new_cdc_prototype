@@ -1,0 +1,51 @@
+{
+  "basePath": "/new_cdc_prototype/preview/pr-56",
+  "siteOrigin": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56",
+  "ok": true,
+  "counts": {
+    "pages": 2664,
+    "mdFiles": 0,
+    "links": 302311,
+    "internal": 278005,
+    "internalOk": 278005,
+    "external": 8937,
+    "skipped": 15369,
+    "anchorsChecked": 5175,
+    "errors": 0,
+    "warnings": 0,
+    "byKind": {},
+    "byLang": {
+      "default": 596,
+      "en": 481,
+      "id": 317,
+      "ja": 316,
+      "th": 317,
+      "tl": 316,
+      "vi": 321
+    },
+    "ms": 2540
+  },
+  "rules": {
+    "internal": "資料夾型需有 index.html、檔案型需存在；?query 忽略；#anchor 缺 id ⇒ warning；不在 basePath 底下 ⇒ error；404.html 不得用相對路徑",
+    "excluded": [
+      "/ask/?q=",
+      "mailto:",
+      "tel:",
+      "sms:",
+      "javascript:",
+      "data:",
+      "blob:"
+    ],
+    "blacklist": [
+      "/^https?:\\/\\/(?:[^/?#]*\\.)?example(?:\\.[^/?#:]*)?(?:[:/?#]|$)/i",
+      "/placeholder/i",
+      "/^https?:\\/\\/localhost(?:[:/?#]|$)/i",
+      "/^https?:\\/\\/127\\.0\\.0\\.1(?:[:/?#]|$)/i",
+      "/TODO/",
+      "/xxx/i"
+    ]
+  },
+  "errorsByTarget": [],
+  "errors": [],
+  "warnings": []
+}

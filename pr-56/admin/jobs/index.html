@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="zh-TW" dir="ltr" data-base="/new_cdc_prototype/preview/pr-56" data-lang-path="" data-view="admin">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>人才招募管理（內容管理後台）</title>
+<meta name="description" content="人才招募管理：疾管署 AI-ready 新官網原型之內容管理後台示範頁">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/tokens.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/base.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/components.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/admin.css">
+</head>
+<body class="adm " data-today="2026-10-01" data-admin-page="jobs">
+<a class="skip-link" href="#main">跳到主要內容</a>
+<header class="adm-top"><div class="adm-top__in">
+  <a class="adm-brand" href="/new_cdc_prototype/preview/pr-56/admin/"><strong>內容管理後台</strong><span>疾管署 AI-ready 新官網原型 · 示範</span></a>
+  <div class="adm-who" id="adm-who">
+    <span class="adm-who__id"><span class="adm-who__name" id="adm-who-name">急性傳染病組 · 承辦人</span><span class="adm-who__role" id="adm-who-role"></span></span>
+    <label for="adm-unit"><span class="adm-who__lbl">單位視角</span>
+      <select id="adm-unit" aria-describedby="adm-who-name"><option value="unit.pr" >公關室</option><option value="unit.it" >資訊室</option><option value="unit.oasis" >AI推動辦公室</option><option value="unit.epidemic-intelligence" >疫情中心</option><option value="unit.acute-infectious" selected>急性傳染病組</option><option value="unit.chronic-infectious" >慢性傳染病組</option><option value="unit.preparedness" >新興傳染病整備組</option><option value="unit.infection-control" >感染管制及生物安全組</option><option value="unit.quarantine" >檢疫組</option><option value="unit.lab" >檢驗及疫苗研製中心</option><option value="unit.planning" >企劃組</option><option value="unit.secretariat" >秘書室</option><option value="unit.personnel" >人事室</option><option value="unit.ethics" >政風室</option><option value="unit.preventive-medicine" >預防醫學辦公室</option><option value="unit.accounting" >主計室</option><option value="unit.regional-taipei" >臺北區管制中心</option><option value="unit.regional-northern" >北區管制中心</option><option value="unit.regional-central" >中區管制中心</option><option value="unit.regional-southern" >南區管制中心</option><option value="unit.regional-kaoping" >高屏區管制中心</option><option value="unit.regional-eastern" >東區管制中心</option><option value="unit.governance-committee" >資料治理委員會</option><option value="all">全部單位（總覽）</option></select>
+    </label>
+    <button type="button" class="adm-who__logout" id="adm-logout">登出</button>
+  </div>
+</div></header>
+<nav class="adm-nav" aria-label="後台導覽"><ul><li><a href="/new_cdc_prototype/preview/pr-56/admin/mine/" >我的內容</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/publish/" >上架新內容</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/review/" >複核區<span class="adm-count" data-count="review" aria-label="0 項">0</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/due/" >審閱到期<span class="adm-count" data-count="due" aria-label="18 項">18</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/catalog/" >資料目錄</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/notices/" >公告</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/jobs/" aria-current="page">人才招募<span class="adm-count" data-count="jobs" aria-label="1 項">1</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/tenders/" >採購<span class="adm-count" data-count="tenders" aria-label="1 項">1</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/media/" >影音<span class="adm-count" data-count="media" aria-label="1 項">1</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/links/" >連結</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/migration/" >移轉進度<span class="adm-count" data-count="migration" aria-label="1248 項">1248</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/import/" >舊站匯入</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/glossary/" >詞彙主檔</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/situation/" >疫情發布</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/bulletin/edit/" >疫情報導</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/todos/" >連動待辦<span class="adm-count" data-count="todos" aria-label="112 項">112</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/ai-status/" >AI 開關</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/reports/" >回報</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/eval/" >評估</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/" >儀表板</a></li></ul></nav>
+<div class="adm-demo" role="note">示範原型：此後台不連接任何正式系統；登入與所有操作只存在你的瀏覽器（localStorage），正式環境以機關 SSO 登入、一律走 Git Pull Request。</div>
+<main id="main" class="adm-main" tabindex="-1">
+<header class="adm-pagehead"><h1>人才招募管理</h1><p class="adm-pagehead__what">人事室的招募職缺總覽：每則職缺目前在哪個階段、倒數、報名方式（站內模擬報名或外部系統）、待辦，以及甄選結果上架前的檢核。</p><p class="adm-pagehead__flow"><strong>正式環境：</strong>職缺是 content/jobs/ 的 job 檔。上架新職缺、延長報名或改期、取消／補實、公告錄取名單與遞補，都用「上架與異動」表單填寫並即時檢核，匯出 JSON 後開 PR（快車道，CI 過即自動合併）；改期與取消會留下異動紀錄給民眾看。階段由日期與 result 欄位推導，截止當天、甄試日到期都不需要任何人動手；結果上架時建置會強制檢查遮罩姓名。</p></header>
+<div class="adm-box adm-box--note" role="note"><strong>結果只公布報名編號、到期下架；建議名單留在人事系統</strong>
+  第三十輪起 <code>result.admitted／waitlist／waitlistUpdates</code> 只能有序號／順位、<code>candidateNo</code>（不得像身分證字號）與備取有效期，<strong>不得有任何姓名欄（連遮罩姓名 nameMasked 也不行）</strong>；<code>result.unpublishAt</code>（下架日）必填，當天起網站、API、RSS 與搜尋自動停止顯示名單，下架前 14 日會開待辦。違反時建置失敗，不能上線。名單一旦進 Git 就永遠留在歷史裡，所以<strong>建議只填 <code>result.externalUrl</code></strong>（人事系統的結果頁或它託管的 PDF），JSON 不放名單。AI 問答不會唸出名單，只給結果頁連結。</div>
+
+<div class="adm-statrow" style="margin-top:var(--sp-4)">
+  <div class="adm-stat adm-stat--info"><p class="adm-stat__label">報名中</p><p class="adm-stat__value">3</p><p class="adm-stat__note">含外部報名系統 1 則</p></div>
+  <div class="adm-stat"><p class="adm-stat__label">即將開放</p><p class="adm-stat__value">1</p><p class="adm-stat__note">已公告、未開始報名</p></div>
+  <div class="adm-stat"><p class="adm-stat__label">審查與甄試中</p><p class="adm-stat__value">3</p><p class="adm-stat__note">已截止、等結果</p></div>
+  <div class="adm-stat adm-stat--ok"><p class="adm-stat__label">已公布結果</p><p class="adm-stat__value">3</p><p class="adm-stat__note">90 天後自動進歷史</p></div>
+  <div class="adm-stat adm-stat--bad"><p class="adm-stat__label">需處理</p><p class="adm-stat__value">1</p><p class="adm-stat__note">結果逾期或檢核未過</p></div>
+</div>
+
+<p class="adm-actions"><a class="adm-btn" href="/new_cdc_prototype/preview/pr-56/admin/jobs/edit/">上架新職缺／改期、取消、公布名單 →</a></p>
+
+<section class="adm-card" aria-labelledby="j-h"><h2 id="j-h">職缺與階段</h2>
+  <p class="adm-card__sub">前台：<a href="/new_cdc_prototype/preview/pr-56/careers/">/careers/</a>。依報名截止日排序；歷史＝結果公布滿 90 天、已額滿或已取消。</p>
+  <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><caption>共 11 則職缺（建置日 2026-10-01）</caption>
+    <thead><tr><th scope="col">職缺</th><th scope="col">階段</th><th scope="col">用人單位</th><th scope="col" class="num">名額</th><th scope="col">報名期間</th><th scope="col">倒數</th><th scope="col">報名方式</th><th scope="col">結果</th></tr></thead>
+    <tbody><tr data-id="job.2026-05-25-quarantine-officer-kaoping" data-stage="result">
+      <td><a href="/new_cdc_prototype/preview/pr-56/careers/quarantine-officer-kaoping/">高屏區管制中心徵求約聘港埠檢疫人員 4 名</a><div class="adm-muted"><code>job.2026-05-25-quarantine-officer-kaoping</code> · 約聘人員 · <a href="/new_cdc_prototype/preview/pr-56/admin/jobs/edit/?id=job.2026-05-25-quarantine-officer-kaoping">異動</a></div></td>
+      <td><span class="adm-badge adm-badge--ok">已公布結果</span> <span class="adm-badge adm-badge--gray">歷史</span></td>
+      <td>高屏區管制中心</td>
+      <td class="num">4</td>
+      <td>2026-05-25 ～ 2026-06-15</td>
+      <td>—</td>
+      <td><a href="https://web3.dgpa.gov.tw/" rel="noopener">外部系統</a></td>
+      <td>2026-06-30 <span class="adm-muted">（2026-10-11 下架）</span></td></tr><tr data-id="job.2026-06-22-admin-assistant-eastern" data-stage="result">
+      <td><a href="/new_cdc_prototype/preview/pr-56/careers/admin-assistant-eastern/">東區管制中心徵求約僱人員 1 名（行政及防疫物資管理）</a><div class="adm-muted"><code>job.2026-06-22-admin-assistant-eastern</code> · 約僱人員 · <a href="/new_cdc_prototype/preview/pr-56/admin/jobs/edit/?id=job.2026-06-22-admin-assistant-eastern">異動</a></div></td>
+      <td><span class="adm-badge adm-badge--ok">已公布結果</span></td>
+      <td>東區管制中心</td>
+      <td class="num">1</td>
+      <td>2026-06-22 ～ 2026-07-06</td>
+      <td>—</td>
+      <td><span class="adm-muted">郵寄</span></td>
+      <td>2026-07-31 <span class="adm-badge adm-badge--info">人事系統</span> <span class="adm-muted">（2026-10-31 下架）</span></td></tr><tr data-id="job.2026-08-03-technician-southern" data-stage="screening">
+      <td><a href="/new_cdc_prototype/preview/pr-56/careers/technician-southern/">南區管制中心徵求技工 1 名（公務車輛駕駛及防疫物資運送）</a><div class="adm-muted"><code>job.2026-08-03-technician-southern</code> · 技工工友駐衛警 · <a href="/new_cdc_prototype/preview/pr-56/admin/jobs/edit/?id=job.2026-08-03-technician-southern">異動</a></div></td>
+      <td><span class="adm-badge adm-badge--warn">審查與甄試中</span></td>
+      <td>南區管制中心</td>
+      <td class="num">1</td>
+      <td>2026-08-03 ～ 2026-08-20</td>
+      <td>—</td>
+      <td><span class="adm-muted">郵寄</span></td>
+      <td><span class="adm-badge adm-badge--bad">預計 2026-09-15，逾 16 日</span></td></tr><tr data-id="job.2026-08-10-system-analyst" data-stage="result">
+      <td><a href="/new_cdc_prototype/preview/pr-56/careers/system-analyst/">資訊室徵求約聘系統分析師 1 名（官網與資料平台）</a><div class="adm-muted"><code>job.2026-08-10-system-analyst</code> · 約聘人員 · <a href="/new_cdc_prototype/preview/pr-56/admin/jobs/edit/?id=job.2026-08-10-system-analyst">異動</a></div></td>
+      <td><span class="adm-badge adm-badge--ok">已公布結果</span></td>
+      <td>資訊室</td>
+      <td class="num">1</td>
+      <td>2026-08-10 ～ 2026-08-31</td>
+      <td>—</td>
+      <td><a href="https://web3.dgpa.gov.tw/" rel="noopener">外部系統</a></td>
+      <td>2026-09-22 <span class="adm-muted">（2026-12-22 下架）</span> <span class="adm-muted">（遞補 1 次）</span></td></tr><tr data-id="job.2026-08-24-biosafety-researcher" data-stage="screening">
+      <td><a href="/new_cdc_prototype/preview/pr-56/careers/biosafety-researcher/">感染管制及生物安全組徵求聘用研究員 1 名（生物安全）</a><div class="adm-muted"><code>job.2026-08-24-biosafety-researcher</code> · 聘用研究員 · <a href="/new_cdc_prototype/preview/pr-56/admin/jobs/edit/?id=job.2026-08-24-biosafety-researcher">異動</a></div></td>
+      <td><span class="adm-badge adm-badge--warn">審查與甄試中</span></td>
+      <td>感染管制及生物安全組</td>
+      <td class="num">1</td>
+      <td>2026-08-24 ～ 2026-09-10</td>
+      <td>—</td>
+      <td><a href="https://web3.dgpa.gov.tw/" rel="noopener">外部系統</a></td>
+      <td><span class="adm-muted">預計 2026-10-15</span></td></tr><tr data-id="job.2026-09-08-epi-staff-central" data-stage="closed">
+      <td><a href="/new_cdc_prototype/preview/pr-56/careers/epi-staff-central/">中區管制中心徵求約僱人員 1 名（防疫業務）</a><div class="adm-muted"><code>job.2026-09-08-epi-staff-central</code> · 約僱人員 · <a href="/new_cdc_prototype/preview/pr-56/admin/jobs/edit/?id=job.2026-09-08-epi-staff-central">異動</a></div></td>
+      <td><span class="adm-badge adm-badge--gray">已截止</span></td>
+      <td>中區管制中心</td>
+      <td class="num">1</td>
+      <td>2026-09-08 ～ 2026-09-25</td>
+      <td>—</td>
+      <td><span class="adm-muted">郵寄</span></td>
+      <td><span class="adm-muted">預計 2026-10-21</span></td></tr><tr data-id="job.2026-09-21-intl-affairs-assistant" data-stage="cancelled">
+      <td><a href="/new_cdc_prototype/preview/pr-56/careers/intl-affairs-assistant/">企劃組徵求約僱人員 1 名（國際事務）</a><div class="adm-muted"><code>job.2026-09-21-intl-affairs-assistant</code> · 約僱人員 · <a href="/new_cdc_prototype/preview/pr-56/admin/jobs/edit/?id=job.2026-09-21-intl-affairs-assistant">異動</a></div></td>
+      <td><span class="adm-badge adm-badge--gray">已取消</span> <span class="adm-badge adm-badge--gray">歷史</span></td>
+      <td>企劃組</td>
+      <td class="num">1</td>
+      <td>2026-09-21 ～ 2026-10-09</td>
+      <td>—</td>
+      <td><span class="adm-muted">站內模擬報名</span></td>
+      <td><span class="adm-muted">預計 2026-10-28</span></td></tr><tr data-id="job.2026-09-28-lab-technician-respiratory" data-stage="open">
+      <td><a href="/new_cdc_prototype/preview/pr-56/careers/lab-technician-respiratory/">檢驗及疫苗研製中心徵求約僱檢驗技術員 1 名（呼吸道病毒檢驗）</a><div class="adm-muted"><code>job.2026-09-28-lab-technician-respiratory</code> · 約僱人員 · <a href="/new_cdc_prototype/preview/pr-56/admin/jobs/edit/?id=job.2026-09-28-lab-technician-respiratory">異動</a></div></td>
+      <td><span class="adm-badge adm-badge--ok">報名中</span></td>
+      <td>檢驗及疫苗研製中心</td>
+      <td class="num">1</td>
+      <td>2026-09-28 ～ 2026-10-12</td>
+      <td><span class="adm-badge adm-badge--ok">剩 11 日</span></td>
+      <td><span class="adm-muted">站內模擬報名</span></td>
+      <td><span class="adm-muted">預計 2026-10-28</span></td></tr><tr data-id="job.2026-09-29-tb-case-manager" data-stage="upcoming">
+      <td><a href="/new_cdc_prototype/preview/pr-56/careers/tb-case-manager/">慢性傳染病組徵求約僱人員 1 名（結核病個案管理）</a><div class="adm-muted"><code>job.2026-09-29-tb-case-manager</code> · 約僱人員 · <a href="/new_cdc_prototype/preview/pr-56/admin/jobs/edit/?id=job.2026-09-29-tb-case-manager">異動</a></div></td>
+      <td><span class="adm-badge adm-badge--info">即將開放</span></td>
+      <td>慢性傳染病組</td>
+      <td class="num">1</td>
+      <td>2026-10-12 ～ 2026-10-26</td>
+      <td><span class="adm-muted">2026-10-12 開放</span></td>
+      <td><span class="adm-muted">電子郵件</span></td>
+      <td><span class="adm-muted">預計 2026-11-12</span></td></tr><tr data-id="job.2026-09-24-research-assistant-epi" data-stage="open">
+      <td><a href="/new_cdc_prototype/preview/pr-56/careers/research-assistant-epi/">疫情中心徵求計畫助理 2 名（監測資料分析）</a><div class="adm-muted"><code>job.2026-09-24-research-assistant-epi</code> · 計畫助理 · <a href="/new_cdc_prototype/preview/pr-56/admin/jobs/edit/?id=job.2026-09-24-research-assistant-epi">異動</a></div></td>
+      <td><span class="adm-badge adm-badge--ok">報名中</span></td>
+      <td>疫情中心</td>
+      <td class="num">2</td>
+      <td>2026-09-24 ～ 2026-10-27</td>
+      <td><span class="adm-badge adm-badge--ok">剩 26 日</span></td>
+      <td><a href="https://web3.dgpa.gov.tw/" rel="noopener">外部系統</a></td>
+      <td><span class="adm-muted">預計 2026-11-10</span></td></tr><tr data-id="job.2026-09-30-epidemic-physician" data-stage="open">
+      <td><a href="/new_cdc_prototype/preview/pr-56/careers/epidemic-physician/">徵求防疫醫師（公費醫師）3 名</a><div class="adm-muted"><code>job.2026-09-30-epidemic-physician</code> · 公費醫師 · <a href="/new_cdc_prototype/preview/pr-56/admin/jobs/edit/?id=job.2026-09-30-epidemic-physician">異動</a></div></td>
+      <td><span class="adm-badge adm-badge--ok">報名中</span></td>
+      <td>新興傳染病整備組</td>
+      <td class="num">3</td>
+      <td>2026-09-30 ～ 2026-11-05</td>
+      <td><span class="adm-badge adm-badge--ok">剩 35 日</span></td>
+      <td><span class="adm-muted">站內模擬報名</span></td>
+      <td><span class="adm-muted">預計 2026-11-24</span></td></tr></tbody></table></div>
+  
+</section>
+
+<section class="adm-card" aria-labelledby="c-h"><h2 id="c-h">結果上架檢核</h2>
+  <p class="adm-card__sub">只檢查已有 <code>result</code> 的職缺。四項都通過才算可上架；「不含姓名」與「下架日」未過時建置本來就會失敗，這裡是上架前的提早提醒。</p>
+  <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><caption>3 則職缺有甄選結果；全部通過</caption>
+    <thead><tr><th scope="col">職缺</th><th scope="col">不含姓名</th><th scope="col">正取數 ≤ 名額</th><th scope="col">備取有效期</th><th scope="col">下架日</th><th scope="col">結果</th></tr></thead>
+    <tbody><tr data-id="job.2026-05-25-quarantine-officer-kaoping"><td><a href="/new_cdc_prototype/preview/pr-56/careers/quarantine-officer-kaoping/#result">高屏區管制中心徵求約聘港埠檢疫人員 4 名</a><div class="adm-muted"><code>job.2026-05-25-quarantine-officer-kaoping</code></div></td>
+      <td data-check="names"><span class="adm-green" aria-label="通過">✓</span> 6 列只有報名編號（不含姓名）</td><td data-check="capacity"><span class="adm-green" aria-label="通過">✓</span> 正取 4 ／ 名額 4</td><td data-check="waitlist"><span class="adm-green" aria-label="通過">✓</span> 備取 2 位，有效至 2026-10-10</td><td data-check="unpublish"><span class="adm-green" aria-label="通過">✓</span> 2026-10-11 下架（剩 10 日）</td>
+      <td><span class="adm-badge adm-badge--ok">可上架</span></td></tr><tr data-id="job.2026-06-22-admin-assistant-eastern"><td><a href="/new_cdc_prototype/preview/pr-56/careers/admin-assistant-eastern/#result">東區管制中心徵求約僱人員 1 名（行政及防疫物資管理）</a><div class="adm-muted"><code>job.2026-06-22-admin-assistant-eastern</code></div></td>
+      <td data-check="names"><span class="adm-green" aria-label="通過">✓</span> 名單在人事系統，本站不存名單</td><td data-check="capacity"><span class="adm-green" aria-label="通過">✓</span> —（名單不在本站）</td><td data-check="waitlist"><span class="adm-green" aria-label="通過">✓</span> 無備取</td><td data-check="unpublish"><span class="adm-green" aria-label="通過">✓</span> 2026-10-31 下架（剩 30 日）</td>
+      <td><span class="adm-badge adm-badge--ok">可上架</span></td></tr><tr data-id="job.2026-08-10-system-analyst"><td><a href="/new_cdc_prototype/preview/pr-56/careers/system-analyst/#result">資訊室徵求約聘系統分析師 1 名（官網與資料平台）</a><div class="adm-muted"><code>job.2026-08-10-system-analyst</code></div></td>
+      <td data-check="names"><span class="adm-green" aria-label="通過">✓</span> 4 列只有報名編號（不含姓名）</td><td data-check="capacity"><span class="adm-green" aria-label="通過">✓</span> 正取 1 ／ 名額 1</td><td data-check="waitlist"><span class="adm-green" aria-label="通過">✓</span> 備取 2 位，有效至 2026-12-21</td><td data-check="unpublish"><span class="adm-green" aria-label="通過">✓</span> 2026-12-22 下架（剩 82 日）</td>
+      <td><span class="adm-badge adm-badge--ok">可上架</span></td></tr></tbody></table></div>
+</section>
+
+<section class="adm-card" aria-labelledby="t-h"><h2 id="t-h">待辦（人事室）</h2>
+  <p class="adm-card__sub">由引擎依欄位產生：結果逾期（預計公布日 + 7 日仍無結果）、備取 14 日內到期、外部報名網址失效、甄選結果 14 日內下架（下架後 JSON 仍留名單也會提醒刪除）。完整清單見 <a href="/new_cdc_prototype/preview/pr-56/admin/todos/#job-result-overdue">連動待辦</a>。</p>
+  <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><thead><tr><th scope="col">類型</th><th scope="col">職缺</th><th scope="col">說明</th><th scope="col">期限</th></tr></thead>
+    <tbody><tr><td><span class="adm-badge adm-badge--warn">結果逾期</span></td><td>南區管制中心徵求技工 1 名（公務車輛駕駛及防疫物資運送）<div class="adm-muted"><code>job.2026-08-03-technician-southern</code></div></td><td>職缺「南區管制中心徵求技工 1 名（公務車輛駕駛及防疫物資運送）」預定 2026-09-15 公告甄選結果，已逾 7 日仍未上架：請人事室會同南區管制中心公告結果（只公布報名編號，不公布姓名；建議由人事系統提供結果頁，JSON 只填 externalUrl），或更新預定日</td><td>2026-09-22 <span class="adm-badge adm-badge--bad">逾期 9 日</span></td></tr><tr><td><span class="adm-badge adm-badge--warn">備取將到期</span></td><td>高屏區管制中心徵求約聘港埠檢疫人員 4 名<div class="adm-muted"><code>job.2026-05-25-quarantine-officer-kaoping</code></div></td><td>職缺「高屏區管制中心徵求約聘港埠檢疫人員 4 名」備取第 1、2 名有效期將於 2026-10-10 屆滿（剩 9 日）：如需遞補請於期限前公告，屆滿後不再遞補</td><td>2026-10-10</td></tr><tr><td><span class="adm-badge adm-badge--warn">結果下架</span></td><td>高屏區管制中心徵求約聘港埠檢疫人員 4 名<div class="adm-muted"><code>job.2026-05-25-quarantine-officer-kaoping</code></div></td><td>職缺「高屏區管制中心徵求約聘港埠檢疫人員 4 名」的甄選結果將於 2026-10-11 下架（剩 10 日）：當天起網站、API、RSS 與搜尋自動停止顯示名單，不必手動操作；仍需公開（例如還在遞補）請改 result.unpublishAt（最長公告後 12 個月）。下架後請把名單從 content/jobs/ 的檔案刪除。</td><td>2026-10-11</td></tr></tbody></table></div>
+</section></main>
+<footer class="adm-foot"><a href="/new_cdc_prototype/preview/pr-56/">回前台首頁</a><a href="/new_cdc_prototype/preview/pr-56/v1/catalog.json">目錄 API（/v1/catalog.json）</a><a href="/new_cdc_prototype/preview/pr-56/guide/">使用說明</a><span>建置日 2026-10-01</span></footer>
+<script type="module" src="/new_cdc_prototype/preview/pr-56/assets/js/admin/common.js"></script>
+
+</body>
+</html>

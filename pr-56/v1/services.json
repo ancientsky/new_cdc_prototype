@@ -1,0 +1,3109 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "25d8822db84c",
+    "lastModified": "2026-10-01",
+    "count": 15
+  },
+  "data": [
+    {
+      "id": "service.case-data-request",
+      "type": "service",
+      "title": "傳染病個案資料申請（學術研究用）",
+      "owner": "unit.epidemic-intelligence",
+      "publishedAt": "2025-03-01",
+      "reviewedAt": "2026-08-20",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-08-20"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-08-20",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "研究者可申請去識別化之傳染病個案資料供學術研究，須檢附研究計畫書與 IRB 核准文件，經審查後於資料專區提供，處理期間約 30 日。",
+      "keywords": [
+        "個案資料",
+        "資料申請",
+        "學術研究",
+        "IRB",
+        "去識別化",
+        "傳染病防治法"
+      ],
+      "note": "處理流程與規費為示意，正式依疾管署資料申請作業規定",
+      "slug": "case-data-request",
+      "serviceType": "data-request",
+      "whoCanApply": [
+        "研究者",
+        "學研機構",
+        "醫療院所研究單位"
+      ],
+      "introMarkdown": "疾管署依《傳染病防治法》及《個人資料保護法》，提供**去識別化**之法定傳染病個案資料供學術研究使用。資料僅限於核准之研究目的，**於本署資料專區（或遠端分析環境）內使用**，攜出結果須經檢核，不得嘗試再識別個人。\n\n已公開的彙總統計請先查詢開放資料與 NIDSS，不需申請。",
+      "requiredDocuments": [
+        "申請書（載明研究題目、所需變項與年度）",
+        "研究計畫書",
+        "人體研究倫理審查委員會（IRB）核准證明",
+        "資料使用切結書",
+        "計畫主持人所屬機構同意函"
+      ],
+      "steps": [
+        {
+          "title": "確認公開資料是否足夠",
+          "text": "先查 NIDSS 與開放資料平臺，彙總統計不需申請。",
+          "who": "申請人",
+          "days": 0
+        },
+        {
+          "title": "線上送件",
+          "text": "填寫申請書並上傳應備文件。",
+          "who": "申請人",
+          "days": 1
+        },
+        {
+          "title": "形式審查",
+          "text": "檢查文件完整性，不全者通知補件（補件期間不計入處理天數）。",
+          "who": "疫情中心",
+          "days": 5
+        },
+        {
+          "title": "實質審查",
+          "text": "審查變項必要性與去識別化程度，必要時召開審查會議。",
+          "who": "資料審查小組",
+          "days": 20
+        },
+        {
+          "title": "核定與資料提供",
+          "text": "核定後簽署使用約定，於資料專區開通使用帳號。",
+          "who": "疫情中心",
+          "days": 5
+        }
+      ],
+      "slaDays": 30,
+      "fee": "依資料專區使用規費標準收費（示意）",
+      "legalBasis": [
+        "傳染病防治法",
+        "個人資料保護法第 16 條",
+        "政府資訊公開法"
+      ],
+      "forms": [
+        {
+          "label": "傳染病個案資料申請書",
+          "href": "/pending/?ref=service.case-data-request&doc=傳染病個案資料申請書",
+          "format": "PDF",
+          "machineReadable": false
+        },
+        {
+          "label": "資料使用切結書",
+          "href": "/pending/?ref=service.case-data-request&doc=資料使用切結書",
+          "format": "PDF",
+          "machineReadable": false
+        }
+      ],
+      "contact": "疾病管制署疫情中心（總機 02-2395-9825）；一般諮詢請撥防疫專線 1922（國外 +886-800-001922）",
+      "faq": [
+        {
+          "q": "可以拿到有姓名或身分證字號的資料嗎？",
+          "a": "不可以。研究用資料一律去識別化，且只提供研究必要之變項。"
+        },
+        {
+          "q": "學生可以申請嗎？",
+          "a": "可以，但須由指導教授擔任計畫主持人，並檢附 IRB 核准證明。"
+        },
+        {
+          "q": "30 日從什麼時候開始算？",
+          "a": "自文件齊備之日起算，補件期間不計入。"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "title": "Request for notifiable disease case data (research)",
+          "summary": "Researchers may request de-identified case data with a research protocol and IRB approval; review takes about 30 days."
+        }
+      },
+      "sourceHash": "0f2393cffac9",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/case-data-request/",
+      "path": "/apply/case-data-request/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/case-data-request.md",
+      "governance": {
+        "owner": "unit.epidemic-intelligence",
+        "ownerName": "疫情中心",
+        "steward": null,
+        "reviewedAt": "2026-08-20",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-08-20",
+        "daysToReview": 323,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "service.case-data-request",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "0f2393cffac9",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-08-20",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "service.cluster-report-1922",
+      "type": "service",
+      "title": "疑似傳染病群聚通報（民眾、學校、機構）",
+      "owner": "unit.epidemic-intelligence",
+      "publishedAt": "2024-01-01",
+      "reviewedAt": "2026-09-01",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "symptoms"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-01",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "學校、機構或團體短時間內多人出現腹瀉、發燒、咳嗽等相似症狀時，請撥 1922 或通報轄區衛生局，衛生單位將協助調查與採檢。",
+      "keywords": [
+        "群聚",
+        "通報",
+        "1922",
+        "腹瀉",
+        "學校",
+        "長照機構"
+      ],
+      "slug": "cluster-report-1922",
+      "serviceType": "notification",
+      "whoCanApply": [
+        "民眾",
+        "學校與托育機構",
+        "長照與安養機構",
+        "企業與團體"
+      ],
+      "introMarkdown": "短時間內（例如 3 天內）同一場所 **2 人以上**出現相似症狀，例如腹瀉嘔吐、發燒咳嗽、出疹，可能是傳染病群聚。\n\n- **民眾**：撥打防疫專線 **1922**（國外 +886-800-001922），客服會轉知衛生局。\n- **學校、托育、長照機構**：依各主管機關規定通報轄區衛生局，並啟動隔離、環境清消。\n- 若有人症狀嚴重，請先就醫或撥 119。",
+      "requiredDocuments": [
+        "場所名稱與地址",
+        "發病人數與症狀",
+        "首例發病日",
+        "聯絡人電話"
+      ],
+      "steps": [
+        {
+          "title": "撥打 1922 或通報衛生局",
+          "text": "說明場所、人數與症狀。",
+          "who": "民眾／機構",
+          "days": 0
+        },
+        {
+          "title": "衛生局聯繫與現場評估",
+          "text": "衛生局聯繫通報人，必要時到場。",
+          "who": "地方衛生局",
+          "days": 1
+        },
+        {
+          "title": "採檢與防治措施",
+          "text": "採集檢體、指導隔離與清消。",
+          "who": "地方衛生局／區管中心",
+          "days": 2
+        },
+        {
+          "title": "結果回覆與結案",
+          "text": "依檢驗結果研判並追蹤至無新增病例。",
+          "who": "地方衛生局",
+          "days": 14
+        }
+      ],
+      "slaDays": 1,
+      "fee": "免費",
+      "legalBasis": [
+        "傳染病防治法第 41 條",
+        "傳染病防治法第 43 條"
+      ],
+      "forms": [
+        {
+          "label": "人口密集機構群聚事件通報單",
+          "href": "/pending/?ref=service.cluster-report-1922&doc=人口密集機構群聚事件通報單",
+          "format": "PDF",
+          "machineReadable": false
+        }
+      ],
+      "contact": "防疫專線 1922（國外 +886-800-001922；免付費 0800-001922）；疾病管制署總機 02-2395-9825",
+      "faq": [
+        {
+          "q": "只有家人一起拉肚子，需要通報嗎？",
+          "a": "家庭內多為共同飲食，症狀輕微者先就醫即可；若懷疑來自餐廳或團膳，可撥 1922 或向衛生局反映。"
+        },
+        {
+          "q": "通報後會公開學校或機構名稱嗎？",
+          "a": "原則不公開，除非為防疫必要並依法定程序。"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "title": "Report a suspected outbreak (public, schools, facilities)",
+          "summary": "If several people at the same place fall ill with similar symptoms within a short time, call 1922 or the local health bureau for investigation and testing."
+        }
+      },
+      "sourceHash": "2ade7186d58e",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/cluster-report-1922/",
+      "path": "/apply/cluster-report-1922/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/cluster-report-1922.md",
+      "governance": {
+        "owner": "unit.epidemic-intelligence",
+        "ownerName": "疫情中心",
+        "steward": null,
+        "reviewedAt": "2026-09-01",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-09-01",
+        "daysToReview": 335,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "service.cluster-report-1922",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "2ade7186d58e",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-01",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "service.infection-control-audit-complaint",
+      "type": "service",
+      "title": "醫療與長照機構感染管制查核申訴與諮詢",
+      "owner": "unit.infection-control",
+      "publishedAt": "2024-06-01",
+      "reviewedAt": "2026-06-01",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional",
+        "public"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-06-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "機構對感染管制查核結果有異議可於收受通知後 30 日內申請複核；民眾發現機構感染管制疏失可向衛生局或疾管署陳情，處理期間約 30 日。",
+      "keywords": [
+        "感染管制",
+        "查核",
+        "申訴",
+        "複核",
+        "陳情",
+        "長照機構"
+      ],
+      "slug": "infection-control-audit-complaint",
+      "serviceType": "other",
+      "whoCanApply": [
+        "醫療機構",
+        "長照機構",
+        "民眾"
+      ],
+      "introMarkdown": "感染管制查核由地方衛生局會同疾管署辦理。\n\n- **機構申請複核**：對查核結果有異議者，請於收受結果通知之日起 **30 日內**檢具理由與佐證申請複核。\n- **民眾陳情**：對醫院或長照機構感染管制（例如未落實手部衛生、群聚未通報）有疑慮，可向轄區衛生局陳情，或透過署長信箱反映。\n\n本服務不處理醫療糾紛與個別醫療行為爭議，請洽衛生局醫政單位。",
+      "requiredDocuments": [
+        "機構複核：申請書、查核結果通知、佐證資料",
+        "民眾陳情：機構名稱、發生時間、具體事實（可匿名，但無法回覆）"
+      ],
+      "steps": [
+        {
+          "title": "提出申請或陳情",
+          "text": "機構以公文、民眾以信箱或電話提出。",
+          "who": "申請人",
+          "days": 0
+        },
+        {
+          "title": "分案",
+          "text": "依機構所在地分送衛生局與區管中心。",
+          "who": "感染管制及生物安全組",
+          "days": 3
+        },
+        {
+          "title": "調查或複核",
+          "text": "書面審查，必要時實地訪查。",
+          "who": "地方衛生局／區管中心",
+          "days": 20
+        },
+        {
+          "title": "回覆結果",
+          "text": "以書面回覆申請人。",
+          "who": "感染管制及生物安全組",
+          "days": 7
+        }
+      ],
+      "slaDays": 30,
+      "fee": "免費",
+      "legalBasis": [
+        "傳染病防治法第 32 條",
+        "醫療機構執行感染控制措施及查核辦法",
+        "行政程序法"
+      ],
+      "forms": [
+        {
+          "label": "感染管制查核結果複核申請書",
+          "href": "/pending/?ref=service.infection-control-audit-complaint&doc=感染管制查核結果複核申請書",
+          "format": "PDF",
+          "machineReadable": false
+        }
+      ],
+      "contact": "疾病管制署感染管制及生物安全組（總機 02-2395-9825）；一般諮詢請撥防疫專線 1922（國外 +886-800-001922）",
+      "faq": [
+        {
+          "q": "陳情會不會讓機構知道是我？",
+          "a": "陳情人身分依法保密，調查時不會揭露。"
+        },
+        {
+          "q": "複核期間需要先改善嗎？",
+          "a": "涉及病人安全之缺失仍須先行改善，複核結果另行通知。"
+        }
+      ],
+      "sourceHash": "c8fbfb946bbe",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/infection-control-audit-complaint/",
+      "path": "/apply/infection-control-audit-complaint/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/infection-control-audit-complaint.md",
+      "governance": {
+        "owner": "unit.infection-control",
+        "ownerName": "感染管制及生物安全組",
+        "steward": null,
+        "reviewedAt": "2026-06-01",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-06-01",
+        "daysToReview": 243,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "service.infection-control-audit-complaint",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "c8fbfb946bbe",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "service.international-training-application",
+      "type": "service",
+      "sourceLang": "en",
+      "title": "Apply for Taiwan CDC international training",
+      "owner": "unit.planning",
+      "steward": "企劃組承辦人",
+      "publishedAt": "2026-10-01",
+      "reviewedAt": "2026-10-01",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-10-01"
+      },
+      "languages": {
+        "en": {
+          "status": "source"
+        },
+        "zh-TW": {
+          "status": "reviewed",
+          "reviewedAt": "2026-10-01",
+          "reviewer": "企劃組中文審核人",
+          "sourceHash": "9f9f8cb91564"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "Foreign health officials and professionals can apply online for Taiwan CDC international training (FETP exchange, workshops, laboratory, TB-DOTS and dengue control); applications are reviewed within 30 days.",
+      "slug": "international-training-application",
+      "serviceType": "other",
+      "tasks": [],
+      "keywords": [
+        "international training",
+        "apply",
+        "foreign health officials",
+        "FETP",
+        "workshop",
+        "application form"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/En/Category/MPage/{id}#training-application"
+      ],
+      "whoCanApply": [
+        "Health officials of foreign governments",
+        "Public health and laboratory professionals nominated by their agency",
+        "Staff of partner institutions under a cooperation arrangement"
+      ],
+      "introMarkdown": "Taiwan CDC welcomes health officials and professionals from partner countries to its international training programs: FETP exchanges, international workshops (including GCTF), laboratory training, TB control and DOTS, and dengue control.\n\nApply online with the application form and a nomination letter from your agency or the partner representative office. The Division of International Cooperation reviews each application with the hosting division and replies within 30 days.",
+      "requiredDocuments": [
+        "Completed application form",
+        "Nomination or endorsement letter from your agency or representative office",
+        "Short CV (education and current duties)",
+        "Copy of passport identity page"
+      ],
+      "steps": [
+        {
+          "title": "Choose a program",
+          "text": "Check the program list and annual schedule on the International training page.",
+          "who": "Applicant",
+          "days": 0
+        },
+        {
+          "title": "Submit the application",
+          "text": "Submit the online form with the nomination letter, CV and passport copy.",
+          "who": "Applicant",
+          "days": 0
+        },
+        {
+          "title": "Review",
+          "text": "The Division of International Cooperation reviews the application with the hosting division.",
+          "who": "Taiwan CDC",
+          "days": 21
+        },
+        {
+          "title": "Notification and arrangements",
+          "text": "Accepted applicants receive an invitation letter and arrangement details; others are informed of the result.",
+          "who": "Taiwan CDC",
+          "days": 9
+        }
+      ],
+      "slaDays": 30,
+      "fee": "Training is free of charge; travel and accommodation arrangements depend on the program.",
+      "forms": [
+        {
+          "label": "International training application form",
+          "href": "/pending/?ref=service.international-training-application&doc=International training application form",
+          "format": "PDF",
+          "machineReadable": false
+        }
+      ],
+      "contact": "Division of International Cooperation, Taiwan CDC — switchboard +886-2-2395-9825 (office hours); 1922 hotline (from abroad +886-800-001922)",
+      "faq": [
+        {
+          "q": "Is there a fee for the training?",
+          "a": "Training is free of charge. Whether travel and accommodation are covered depends on the program and is stated in the invitation letter."
+        },
+        {
+          "q": "Can individuals apply without a nomination?",
+          "a": "Applications normally need a nomination or endorsement from the applicant’s agency or a partner representative office."
+        }
+      ],
+      "i18n": {
+        "zh-TW": {
+          "title": "外國衛生人員申請疾管署國際訓練",
+          "summary": "外國衛生官員與專業人員可線上申請疾管署國際訓練（FETP 交流、研習營、實驗室、結核病都治、登革熱防治），30 日內回覆審查結果。",
+          "keywords": [
+            "國際訓練",
+            "申請",
+            "外國衛生人員",
+            "FETP",
+            "研習營",
+            "申請表"
+          ],
+          "whoCanApply": [
+            "外國政府衛生官員",
+            "經所屬機關推薦之公共衛生與實驗室專業人員",
+            "合作協定下之夥伴機構人員"
+          ],
+          "introMarkdown": "疾管署歡迎夥伴國家衛生官員與專業人員參加國際訓練：FETP 交流、國際研習營（含 GCTF）、實驗室訓練、結核病防治與都治、登革熱防治。\n\n請線上填寫申請表，並附所屬機關或夥伴國駐臺代表機構推薦函。企劃組會同主辦單位審查，30 日內回覆。",
+          "requiredDocuments": [
+            "申請表",
+            "所屬機關或駐臺代表機構推薦函",
+            "簡歷（學經歷與現職）",
+            "護照基本資料頁影本"
+          ],
+          "steps": [
+            {
+              "title": "選擇訓練計畫",
+              "text": "於國際訓練頁查閱計畫與年度時程。",
+              "who": "申請人",
+              "days": 0
+            },
+            {
+              "title": "送出申請",
+              "text": "線上填寫申請表並上傳推薦函、簡歷與護照影本。",
+              "who": "申請人",
+              "days": 0
+            },
+            {
+              "title": "審查",
+              "text": "企劃組會同主辦單位審查。",
+              "who": "疾管署",
+              "days": 21
+            },
+            {
+              "title": "通知與安排",
+              "text": "錄取者收到邀請函與行程安排；未錄取者亦會收到通知。",
+              "who": "疾管署",
+              "days": 9
+            }
+          ],
+          "fee": "訓練免費；交通與住宿依各計畫規定。",
+          "contact": "疾管署企劃組：總機 +886-2-2395-9825（上班時間）；防疫專線 1922（國外 +886-800-001922）",
+          "faq": [
+            {
+              "q": "參加訓練需要付費嗎？",
+              "a": "訓練免費；交通與住宿是否補助依各計畫規定，並載明於邀請函。"
+            },
+            {
+              "q": "個人可以不經推薦直接申請嗎？",
+              "a": "申請通常需所屬機關或夥伴國駐臺代表機構推薦。"
+            }
+          ],
+          "forms": [
+            {
+              "label": "國際訓練申請表",
+              "href": "/pending/?ref=service.international-training-application&doc=International training application form",
+              "format": "PDF",
+              "machineReadable": false
+            }
+          ]
+        }
+      },
+      "sourceHash": "9f9f8cb91564",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/international-training-application/",
+      "path": "/apply/international-training-application/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/international-training-application.md",
+      "governance": {
+        "owner": "unit.planning",
+        "ownerName": "企劃組",
+        "steward": "企劃組承辦人",
+        "reviewedAt": "2026-10-01",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-10-01",
+        "daysToReview": 365,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "service.international-training-application",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "9f9f8cb91564",
+        "languages": {
+          "en": {
+            "status": "source"
+          },
+          "zh-TW": {
+            "status": "reviewed",
+            "reviewedAt": "2026-10-01",
+            "reviewer": "企劃組中文審核人",
+            "sourceHash": "9f9f8cb91564"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "zh-TW": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "service.international-vaccination-certificate",
+      "type": "service",
+      "title": "國際預防接種證明書（黃皮書）",
+      "owner": "unit.quarantine",
+      "publishedAt": "2024-06-01",
+      "reviewedAt": "2026-06-15",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "travel",
+        "vaccines"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "vaccines": [
+        "vaccine.mmr"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-06-15"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-06-15",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "前往要求黃熱病等疫苗證明的國家，須於旅遊醫學門診接種並核發國際預防接種證明書（俗稱黃皮書）；黃熱病疫苗接種 10 日後生效。",
+      "keywords": [
+        "黃皮書",
+        "國際預防接種證明書",
+        "黃熱病",
+        "旅遊醫學門診",
+        "出國"
+      ],
+      "slug": "international-vaccination-certificate",
+      "serviceType": "certificate",
+      "whoCanApply": [
+        "民眾",
+        "出國旅客",
+        "外籍人士"
+      ],
+      "introMarkdown": "**國際預防接種證明書**（International Certificate of Vaccination or Prophylaxis，俗稱黃皮書）依《國際衛生條例》格式核發，部分國家入境要求出示**黃熱病**疫苗接種證明。\n\n請於出國前至少 **10 日**（建議 4–6 週）至旅遊醫學合約門診評估接種；黃熱病疫苗接種後 10 日起生效，一劑終身有效。",
+      "requiredDocuments": [
+        "護照（姓名須與證明書一致）",
+        "身分證或居留證",
+        "既有之預防接種紀錄（如有）"
+      ],
+      "steps": [
+        {
+          "title": "查詢目的地規定",
+          "text": "確認目的地是否要求黃熱病疫苗證明。",
+          "who": "民眾",
+          "days": 0
+        },
+        {
+          "title": "預約旅遊醫學門診",
+          "text": "向全國旅遊醫學合約門診預約。",
+          "who": "民眾",
+          "days": 1
+        },
+        {
+          "title": "醫師評估與接種",
+          "text": "評估禁忌症後接種。",
+          "who": "旅遊醫學門診",
+          "days": 0
+        },
+        {
+          "title": "核發證明書",
+          "text": "當場核發並簽章，請核對護照英文姓名。",
+          "who": "旅遊醫學門診",
+          "days": 0
+        }
+      ],
+      "slaDays": 1,
+      "fee": "疫苗費、證明書工本費與掛號費依各院所公告（自費）",
+      "legalBasis": [
+        "國際衛生條例（2005）",
+        "傳染病防治法"
+      ],
+      "forms": [
+        {
+          "label": "國際預防接種證明書樣張",
+          "href": "/pending/?ref=service.international-vaccination-certificate&doc=國際預防接種證明書樣張",
+          "format": "PDF",
+          "machineReadable": false
+        }
+      ],
+      "contact": "疾病管制署檢疫組（總機 02-2395-9825）；一般諮詢請撥防疫專線 1922（國外 +886-800-001922）",
+      "faq": [
+        {
+          "q": "黃皮書遺失可以補發嗎？",
+          "a": "可以，請攜帶護照至原接種院所申請補發，院所依接種紀錄核發。"
+        },
+        {
+          "q": "不能打黃熱病疫苗怎麼辦？",
+          "a": "經醫師評估有禁忌症者，可開立豁免證明，但入境國是否接受依該國規定。"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "title": "International Certificate of Vaccination (yellow card)",
+          "summary": "Travellers to countries requiring yellow fever vaccination get vaccinated and receive the certificate at travel medicine clinics; it becomes valid 10 days after vaccination."
+        }
+      },
+      "sourceHash": "db9ddc51b37a",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/international-vaccination-certificate/",
+      "path": "/apply/international-vaccination-certificate/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/international-vaccination-certificate.md",
+      "governance": {
+        "owner": "unit.quarantine",
+        "ownerName": "檢疫組",
+        "steward": null,
+        "reviewedAt": "2026-06-15",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-06-15",
+        "daysToReview": 257,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "service.international-vaccination-certificate",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "db9ddc51b37a",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-06-15",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "service.lab-test-request",
+      "type": "service",
+      "title": "傳染病檢驗委託（醫療院所送驗）",
+      "owner": "unit.lab",
+      "publishedAt": "2025-01-15",
+      "reviewedAt": "2026-07-15",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-07-15"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-07-15",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "醫療院所通報法定傳染病後，依檢驗項目採檢並附送驗單，經衛生局或直接送疾管署檢驗及疫苗研製中心檢驗，結果於 NIDRS 回覆。",
+      "keywords": [
+        "檢驗委託",
+        "送驗",
+        "採檢",
+        "檢體",
+        "送驗單",
+        "NIDRS"
+      ],
+      "slug": "lab-test-request",
+      "serviceType": "lab-request",
+      "whoCanApply": [
+        "醫療院所",
+        "地方衛生局",
+        "認可檢驗機構"
+      ],
+      "introMarkdown": "法定傳染病及新興傳染病之**確認檢驗**由疾管署檢驗及疫苗研製中心或認可檢驗機構執行。醫療院所於**通報後**依「檢驗項目」頁所列檢體、容器、保存與運送條件採檢送驗；檢驗結果於傳染病通報系統（NIDRS）回覆。\n\n各疾病檢體規格請見檢驗專區（/lab/）。",
+      "requiredDocuments": [
+        "傳染病檢體送驗單（系統列印，含通報編號）",
+        "符合規格之檢體與三層包裝",
+        "必要時：臨床資料與旅遊史"
+      ],
+      "steps": [
+        {
+          "title": "完成通報",
+          "text": "於 NIDRS 完成個案通報並取得通報編號。",
+          "who": "醫療院所",
+          "days": 0
+        },
+        {
+          "title": "依規格採檢",
+          "text": "依檢驗專區所列檢體種類、時機與容器採檢。",
+          "who": "醫療院所",
+          "days": 0
+        },
+        {
+          "title": "包裝與運送",
+          "text": "以 UN3373 三層包裝，依保存條件於時限內送達衛生局或檢驗單位。",
+          "who": "醫療院所／衛生局",
+          "days": 1
+        },
+        {
+          "title": "檢驗",
+          "text": "實驗室收件、檢驗與品管。",
+          "who": "檢驗及疫苗研製中心",
+          "days": 3
+        },
+        {
+          "title": "回覆結果",
+          "text": "結果登錄 NIDRS，院所可即時查詢。",
+          "who": "檢驗及疫苗研製中心",
+          "days": 1
+        }
+      ],
+      "slaDays": 5,
+      "fee": "法定傳染病確認檢驗免費",
+      "legalBasis": [
+        "傳染病防治法第 46 條",
+        "傳染病檢驗及檢驗機構管理辦法",
+        "感染性生物材料管理辦法"
+      ],
+      "forms": [
+        {
+          "label": "傳染病檢體送驗單",
+          "href": "/pending/?ref=service.lab-test-request&doc=傳染病檢體送驗單",
+          "format": "PDF",
+          "machineReadable": false
+        },
+        {
+          "label": "檢體採檢手冊",
+          "href": "/pending/?ref=service.lab-test-request&doc=檢體採檢手冊",
+          "format": "PDF",
+          "machineReadable": false
+        }
+      ],
+      "applyUrl": "https://nidrs.cdc.gov.tw/",
+      "contact": "疾病管制署檢驗及疫苗研製中心（總機 02-2395-9825）；一般諮詢請撥防疫專線 1922（國外 +886-800-001922）",
+      "faq": [
+        {
+          "q": "檢體可以直接寄到疾管署嗎？",
+          "a": "原則由轄區衛生局收件後轉送；部分急件與特殊檢體依區管中心指示直送。"
+        },
+        {
+          "q": "結果多久出來？",
+          "a": "依疾病而異，多數 PCR 檢驗 1 至 3 個工作天；各項目見檢驗專區。"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "title": "Laboratory testing for notifiable diseases (specimens from healthcare facilities)",
+          "summary": "After notification, facilities collect specimens per lab specifications and send them with a requisition form; results are returned via NIDRS."
+        }
+      },
+      "sourceHash": "d89f2b94c226",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/lab-test-request/",
+      "path": "/apply/lab-test-request/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/lab-test-request.md",
+      "governance": {
+        "owner": "unit.lab",
+        "ownerName": "檢驗及疫苗研製中心",
+        "steward": null,
+        "reviewedAt": "2026-07-15",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-07-15",
+        "daysToReview": 287,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "service.lab-test-request",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "linkHealth": {
+          "total": 1,
+          "ok": 0,
+          "broken": 0,
+          "unchecked": 1
+        },
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "d89f2b94c226",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-07-15",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "service.ltbi-treatment",
+      "type": "service",
+      "owner": "unit.chronic-infectious",
+      "steward": "慢性傳染病組承辦人",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-30"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "pending"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "slug": "ltbi-treatment",
+      "title": "潛伏結核感染檢驗與治療",
+      "publishedAt": "2026-09-15",
+      "reviewedAt": "2026-09-22",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "symptoms",
+        "vaccines"
+      ],
+      "summary": "結核病接觸者與計畫對象可接受公費 IGRA 檢驗與潛伏結核感染治療（3HP、1HP、3HR、4R、9H），治療期間由關懷員陪伴服藥（DOPT）。",
+      "keywords": [
+        "潛伏結核感染",
+        "LTBI",
+        "IGRA",
+        "3HP",
+        "1HP",
+        "DOPT",
+        "公費"
+      ],
+      "basedOn": [
+        "doc.ltbi-guideline",
+        "doc.tb-contact-investigation"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Category/MPage/{id}#ltbi"
+      ],
+      "serviceType": "clinic",
+      "whoCanApply": [
+        "結核病個案之接觸者（由衛生所通知）",
+        "免疫功能低下或將接受免疫抑制治療者（透析、器官移植、生物製劑使用者等，經醫師轉介）",
+        "計畫篩檢對象：山地鄉居民、矯正機關收容人、長期照護機構住民與工作人員"
+      ],
+      "introMarkdown": "潛伏結核感染沒有症狀、不會傳染，但一生中約 5–10% 會發病。**完成潛伏結核感染治療可降低 9 成以上的發病風險。**\n\n檢驗以抽血的丙型干擾素釋放試驗（IGRA）為主，陽性者先照胸部 X 光排除發病，再由合作醫師評估處方；治療期間由關懷員陪伴服藥（DOPT）。檢驗、治療與關懷服務由公費支應。",
+      "requiredDocuments": [
+        "健保卡",
+        "衛生所通知單（接觸者）或醫師轉介單（計畫對象）"
+      ],
+      "steps": [
+        {
+          "title": "衛生所通知或醫師轉介",
+          "text": "接觸者由衛生所主動通知；其他對象由主治醫師評估轉介。",
+          "who": "衛生所／醫療院所",
+          "days": 0
+        },
+        {
+          "title": "IGRA 檢驗與胸部 X 光",
+          "text": "抽血檢驗 IGRA，陽性者照胸部 X 光並評估症狀，排除活動性結核病。",
+          "who": "合作醫療院所",
+          "days": 7
+        },
+        {
+          "title": "醫師評估與選擇處方",
+          "text": "依年齡、共病與用藥交互作用，選擇 3HP、1HP、3HR、4R 或 9H。",
+          "who": "潛伏結核感染治療合作醫師",
+          "days": 3
+        },
+        {
+          "title": "都治陪伴服藥",
+          "text": "關懷員目視服藥並追蹤副作用，每月回診評估。",
+          "who": "衛生所關懷員",
+          "days": 28
+        },
+        {
+          "title": "完成治療",
+          "text": "完成處方劑次即完治，衛生所登錄結果。",
+          "who": "衛生所"
+        }
+      ],
+      "slaDays": 14,
+      "fee": "免費（公費支應）",
+      "legalBasis": [
+        "傳染病防治法第 48 條",
+        "結核病防治工作手冊"
+      ],
+      "forms": [
+        {
+          "label": "潛伏結核感染治療同意書",
+          "href": "/files/service.ltbi-treatment/ltbi-consent-form.pdf",
+          "format": "PDF",
+          "machineReadable": false
+        },
+        {
+          "label": "潛伏結核感染治療同意書（純文字無障礙版）",
+          "href": "/files/service.ltbi-treatment/ltbi-consent-form.md",
+          "format": "Markdown",
+          "machineReadable": true
+        },
+        {
+          "label": "潛伏結核感染治療合作醫師名單",
+          "href": "/pending/?ref=service.ltbi-treatment&doc=潛伏結核感染治療合作醫師名單",
+          "format": "PDF",
+          "machineReadable": false
+        }
+      ],
+      "contact": "請洽戶籍或居住地衛生所；一般諮詢請撥防疫專線 1922（國外 +886-800-001922）",
+      "faq": [
+        {
+          "q": "治療期間可以喝酒嗎？",
+          "a": "治療藥物可能影響肝功能，治療期間請避免飲酒，並告知醫師正在使用的其他藥物。"
+        },
+        {
+          "q": "3HP 和 1HP 有什麼不同？",
+          "a": "3HP 每週服藥 1 次共 12 次；1HP 每天服藥共 28 天。兩者都由醫師依您的狀況評估選擇。"
+        }
+      ],
+      "assets": [
+        {
+          "file": "ltbi-consent-form.pdf",
+          "kind": "attachment",
+          "label": "潛伏結核感染治療同意書（PDF，示意表單）",
+          "mime": "application/pdf",
+          "bytes": 3540,
+          "sha256": "e939c093cf56d95142c719ea5c2f2b987202944573838a5cf2109167e822ae38",
+          "machineReadable": false,
+          "accessibleAlt": "ltbi-consent-form.md",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/files/service.ltbi-treatment/ltbi-consent-form.pdf"
+        },
+        {
+          "file": "ltbi-consent-form.md",
+          "kind": "attachment",
+          "label": "潛伏結核感染治療同意書（純文字無障礙版）",
+          "mime": "text/markdown",
+          "bytes": 1007,
+          "sha256": "cf82c2bade3bc4430c694a35632536e7def3204049b33c30b7925c40ae970ea4",
+          "machineReadable": true,
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/files/service.ltbi-treatment/ltbi-consent-form.md"
+        }
+      ],
+      "sourceHash": "7bf1f9b84785",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/ltbi-treatment/",
+      "path": "/apply/ltbi-treatment/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/ltbi-treatment.md",
+      "governance": {
+        "owner": "unit.chronic-infectious",
+        "ownerName": "慢性傳染病組",
+        "steward": "慢性傳染病組承辦人",
+        "reviewedAt": "2026-09-22",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-09-22",
+        "daysToReview": 356,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "service.ltbi-treatment",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "7bf1f9b84785",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "pending"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "service.media-interview-request",
+      "type": "service",
+      "title": "媒體採訪與拍攝申請",
+      "owner": "unit.pr",
+      "publishedAt": "2024-01-01",
+      "reviewedAt": "2026-04-01",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-04-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-04-01",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "媒體採訪疾管署業務、專家或拍攝影像，請提前 3 個工作日向公關室提出申請，載明主題、受訪對象需求與播出時間，由公關室協調安排。",
+      "keywords": [
+        "媒體採訪",
+        "拍攝",
+        "公關室",
+        "記者",
+        "新聞聯絡"
+      ],
+      "slug": "media-interview-request",
+      "serviceType": "other",
+      "whoCanApply": [
+        "新聞媒體",
+        "影音製作單位",
+        "學術與教育單位"
+      ],
+      "introMarkdown": "疾管署公關室受理媒體採訪、專訪與拍攝申請。**每週例行記者會**之資訊與直播連結公布於新聞稿頁；緊急疫情回應請以電話聯繫公關室。\n\n- 一般採訪請提前 **3 個工作日**申請。\n- 進入實驗室、檢疫站等管制區拍攝，須另經權責單位同意並遵守生物安全規定。\n- 本署新聞稿、圖片與影片依政府資料開放授權條款釋出，可直接引用並註明來源。",
+      "requiredDocuments": [
+        "媒體名稱與記者聯絡方式",
+        "採訪主題與題綱",
+        "希望受訪單位或專業領域",
+        "播出或刊登時間"
+      ],
+      "steps": [
+        {
+          "title": "提出申請",
+          "text": "以電子郵件或表單送公關室。",
+          "who": "媒體",
+          "days": 0
+        },
+        {
+          "title": "公關室協調權責單位",
+          "text": "依主題指派受訪單位。",
+          "who": "公關室",
+          "days": 1
+        },
+        {
+          "title": "確認時間與形式",
+          "text": "回覆受訪者職稱、時間與地點。",
+          "who": "公關室",
+          "days": 1
+        },
+        {
+          "title": "採訪與事後確認",
+          "text": "必要時提供專業內容確認。",
+          "who": "權責單位",
+          "days": 1
+        }
+      ],
+      "slaDays": 3,
+      "fee": "免費",
+      "legalBasis": [
+        "政府資訊公開法"
+      ],
+      "forms": [
+        {
+          "label": "媒體採訪申請表",
+          "href": "/pending/?ref=service.media-interview-request&doc=媒體採訪申請表",
+          "format": "DOCX",
+          "machineReadable": false
+        }
+      ],
+      "contact": "疾病管制署公關室（總機 02-2395-9825 轉公關室）",
+      "faq": [
+        {
+          "q": "可以指定由署長受訪嗎？",
+          "a": "可以提出，但由公關室依主題與行程安排最適合的受訪者（職稱）。"
+        },
+        {
+          "q": "可以使用疾管署的衛教影片片段嗎？",
+          "a": "可以，依政府資料開放授權條款引用並註明出處；但請使用依現行版本製作之影片。"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "title": "Media interview and filming requests",
+          "summary": "Media should apply to the Public Relations Office at least three working days in advance, stating the topic, desired expertise and publication date."
+        }
+      },
+      "sourceHash": "778ef142c10a",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/media-interview-request/",
+      "path": "/apply/media-interview-request/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/media-interview-request.md",
+      "governance": {
+        "owner": "unit.pr",
+        "ownerName": "公關室",
+        "steward": null,
+        "reviewedAt": "2026-04-01",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-04-01",
+        "daysToReview": 182,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "service.media-interview-request",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "778ef142c10a",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-04-01",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "service.notifiable-disease-report",
+      "type": "service",
+      "title": "法定傳染病通報（醫師與醫療機構）",
+      "owner": "unit.epidemic-intelligence",
+      "publishedAt": "2024-01-01",
+      "reviewedAt": "2026-09-01",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-01",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "醫師診治疑似法定傳染病病人，應依各類別時限（第一、二類 24 小時、第三類一週等）於傳染病通報系統（NIDRS）通報，並依規定採檢送驗。",
+      "keywords": [
+        "法定傳染病",
+        "通報",
+        "NIDRS",
+        "通報時限",
+        "傳染病防治法第39條"
+      ],
+      "slug": "notifiable-disease-report",
+      "serviceType": "notification",
+      "whoCanApply": [
+        "醫師",
+        "醫療機構",
+        "法醫師",
+        "檢驗機構"
+      ],
+      "introMarkdown": "依《傳染病防治法》第 39 條，醫師診治病人或法醫師檢驗屍體，發現傳染病或疑似傳染病時，應於規定期限內通報當地主管機關。\n\n- **通報時限**：依疾病類別而異，第一類、第二類及部分第三類為 24 小時內；多數第三類為一週內；第四、五類依個別規定。完整時限表由傳染病主檔自動產生，見通報專區（/report/）。\n- **通報管道**：傳染病通報系統（NIDRS）；系統異常時以電話或傳真通報衛生局。\n- **未依規定通報**：依法可處罰鍰。",
+      "requiredDocuments": [
+        "病人基本資料",
+        "臨床症狀與發病日",
+        "檢驗結果（如有）",
+        "旅遊史與接觸史"
+      ],
+      "steps": [
+        {
+          "title": "判斷是否符合通報定義",
+          "text": "參考各疾病病例定義。",
+          "who": "醫師",
+          "days": 0
+        },
+        {
+          "title": "登入 NIDRS 通報",
+          "text": "以醫事人員憑證登入，依時限完成通報。",
+          "who": "醫師／感管人員",
+          "days": 0
+        },
+        {
+          "title": "採檢送驗",
+          "text": "依檢驗專區規格採檢並列印送驗單。",
+          "who": "醫療機構",
+          "days": 0
+        },
+        {
+          "title": "衛生局疫調",
+          "text": "衛生局接獲通報後進行疫情調查與防治。",
+          "who": "地方衛生局",
+          "days": 1
+        },
+        {
+          "title": "研判與回覆",
+          "text": "依檢驗與疫調結果研判，結果登錄系統。",
+          "who": "疫情中心／區管中心",
+          "days": 3
+        }
+      ],
+      "slaDays": 1,
+      "fee": "免費",
+      "legalBasis": [
+        "傳染病防治法第 39 條",
+        "傳染病防治法第 64 條（罰則）",
+        "傳染病分類及第四類與第五類傳染病之防治措施"
+      ],
+      "forms": [
+        {
+          "label": "傳染病個案報告單（系統異常備用）",
+          "href": "/pending/?ref=service.notifiable-disease-report&doc=傳染病個案報告單（系統異常備用）",
+          "format": "PDF",
+          "machineReadable": false
+        }
+      ],
+      "applyUrl": "https://nidrs.cdc.gov.tw/",
+      "contact": "疾病管制署疫情中心（總機 02-2395-9825）；一般諮詢請撥防疫專線 1922（國外 +886-800-001922）；通報系統操作問題洽系統客服",
+      "faq": [
+        {
+          "q": "只是疑似，也要通報嗎？",
+          "a": "要。法定傳染病以「疑似」即應通報，由檢驗與疫調研判。"
+        },
+        {
+          "q": "NIDRS 當機怎麼辦？",
+          "a": "以電話或傳真通報轄區衛生局，系統恢復後補登。"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "title": "Notifiable disease reporting (physicians and facilities)",
+          "summary": "Physicians must report suspected notifiable diseases via NIDRS within category-specific deadlines (24 hours for categories 1–2, one week for most category 3)."
+        }
+      },
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Category/MPage/{id}#notify"
+      ],
+      "sourceHash": "e239199c27ec",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/notifiable-disease-report/",
+      "path": "/apply/notifiable-disease-report/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/notifiable-disease-report.md",
+      "governance": {
+        "owner": "unit.epidemic-intelligence",
+        "ownerName": "疫情中心",
+        "steward": null,
+        "reviewedAt": "2026-09-01",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-09-01",
+        "daysToReview": 335,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "service.notifiable-disease-report",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "linkHealth": {
+          "total": 1,
+          "ok": 0,
+          "broken": 0,
+          "unchecked": 1
+        },
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "e239199c27ec",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-01",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "service.research-data-request",
+      "type": "service",
+      "title": "研究計畫成果與研究資料申請",
+      "owner": "unit.planning",
+      "publishedAt": "2025-03-01",
+      "reviewedAt": "2026-08-20",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-08-20"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-08-20",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "申請疾管署委託或自行研究計畫之成果報告全文、研究資料集與分析程式，說明可提供範圍、應備文件與審查流程，處理期間約 20 日。",
+      "keywords": [
+        "研究計畫",
+        "研究資料",
+        "成果報告",
+        "資料申請",
+        "學術合作"
+      ],
+      "slug": "research-data-request",
+      "serviceType": "data-request",
+      "whoCanApply": [
+        "研究者",
+        "學研機構",
+        "政府機關"
+      ],
+      "introMarkdown": "疾管署委託及自行研究計畫之**成果報告摘要**公開於研究計畫專區；如需報告全文、研究資料集或分析程式，可提出申請。涉及個案層級資料者，另依「傳染病個案資料申請」辦理。",
+      "requiredDocuments": [
+        "申請書（載明計畫編號與用途）",
+        "使用目的說明",
+        "如涉個案資料：IRB 核准證明"
+      ],
+      "steps": [
+        {
+          "title": "查詢研究計畫專區",
+          "text": "確認計畫編號與是否已公開。",
+          "who": "申請人",
+          "days": 0
+        },
+        {
+          "title": "提出申請",
+          "text": "以申請書載明所需項目。",
+          "who": "申請人",
+          "days": 1
+        },
+        {
+          "title": "會辦計畫承辦單位",
+          "text": "確認資料可提供範圍與智慧財產權限制。",
+          "who": "企劃組",
+          "days": 10
+        },
+        {
+          "title": "回覆與提供",
+          "text": "以電子方式提供或說明不能提供之理由。",
+          "who": "企劃組",
+          "days": 9
+        }
+      ],
+      "slaDays": 20,
+      "fee": "免費",
+      "legalBasis": [
+        "政府資訊公開法",
+        "政府科研計畫成果相關規定（示意）"
+      ],
+      "forms": [
+        {
+          "label": "研究資料申請書",
+          "href": "/pending/?ref=service.research-data-request&doc=研究資料申請書",
+          "format": "PDF",
+          "machineReadable": false
+        }
+      ],
+      "contact": "疾病管制署企劃組（總機 02-2395-9825）；一般諮詢請撥防疫專線 1922（國外 +886-800-001922）",
+      "faq": [
+        {
+          "q": "研究計畫成果報告都會公開嗎？",
+          "a": "結案計畫原則公開摘要；全文依計畫性質與合約約定公開或提供申請。"
+        },
+        {
+          "q": "可以申請正在執行中的計畫資料嗎？",
+          "a": "執行中計畫尚未驗收，原則不提供，請於結案後申請。"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "title": "Request for research project reports and data",
+          "summary": "How to request full reports, datasets and code from commissioned or in-house research projects; processing takes about 20 days."
+        }
+      },
+      "sourceHash": "6f3cc336c886",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/research-data-request/",
+      "path": "/apply/research-data-request/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/research-data-request.md",
+      "governance": {
+        "owner": "unit.planning",
+        "ownerName": "企劃組",
+        "steward": null,
+        "reviewedAt": "2026-08-20",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-08-20",
+        "daysToReview": 323,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "service.research-data-request",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "6f3cc336c886",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-08-20",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "service.response-hospital-designation",
+      "type": "service",
+      "title": "傳染病防治醫療網應變醫院指定與隔離病床申請",
+      "owner": "unit.preparedness",
+      "publishedAt": "2024-03-01",
+      "reviewedAt": "2026-03-01",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-03-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "醫院申請成為傳染病防治醫療網應變醫院或設置負壓隔離病床，須符合設施、人員與感染管制基準，經區管中心實地審查與指定，處理期間約 60 日。",
+      "keywords": [
+        "傳染病防治醫療網",
+        "應變醫院",
+        "隔離病床",
+        "負壓病房",
+        "指定"
+      ],
+      "slug": "response-hospital-designation",
+      "serviceType": "license",
+      "whoCanApply": [
+        "醫院",
+        "地方衛生局"
+      ],
+      "introMarkdown": "依《傳染病防治法》第 14 條，中央主管機關得指定**傳染病防治醫療網**之應變醫院、隔離醫院與隔離病床，平時維持量能、疫情時收治傳染病病人。\n\n申請醫院須符合負壓隔離病房設施、感染管制人力、教育訓練與演習等基準，並接受定期查核與經費補助。",
+      "requiredDocuments": [
+        "申請書",
+        "負壓隔離病房設施規格與檢測報告",
+        "感染管制人力配置",
+        "年度教育訓練與演習計畫",
+        "地方衛生局推薦函"
+      ],
+      "steps": [
+        {
+          "title": "向衛生局提出申請",
+          "text": "檢附應備文件。",
+          "who": "醫院",
+          "days": 1
+        },
+        {
+          "title": "衛生局初審推薦",
+          "text": "確認區域需求與文件。",
+          "who": "地方衛生局",
+          "days": 14
+        },
+        {
+          "title": "區管中心實地審查",
+          "text": "查核設施、動線與人員訓練。",
+          "who": "區管制中心",
+          "days": 30
+        },
+        {
+          "title": "指定與公告",
+          "text": "核定後發函指定並納入醫療網名冊。",
+          "who": "新興傳染病整備組",
+          "days": 15
+        }
+      ],
+      "slaDays": 60,
+      "fee": "免費",
+      "legalBasis": [
+        "傳染病防治法第 14 條",
+        "傳染病防治醫療網作業辦法"
+      ],
+      "forms": [
+        {
+          "label": "傳染病防治醫療網醫院申請書",
+          "href": "/pending/?ref=service.response-hospital-designation&doc=傳染病防治醫療網醫院申請書",
+          "format": "PDF",
+          "machineReadable": false
+        },
+        {
+          "label": "負壓隔離病房查核表",
+          "href": "/pending/?ref=service.response-hospital-designation&doc=負壓隔離病房查核表",
+          "format": "PDF",
+          "machineReadable": false
+        }
+      ],
+      "contact": "疾病管制署新興傳染病整備組（總機 02-2395-9825）；一般諮詢請撥防疫專線 1922（國外 +886-800-001922）；或洽轄區區管制中心",
+      "faq": [
+        {
+          "q": "指定後有經費補助嗎？",
+          "a": "依年度預算補助隔離病房維運與演習費用，並於疫情時依規定支付收治費用。"
+        },
+        {
+          "q": "多久查核一次？",
+          "a": "原則每年由區管中心查核，未符基準者限期改善。"
+        }
+      ],
+      "sourceHash": "80583664f3ff",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/response-hospital-designation/",
+      "path": "/apply/response-hospital-designation/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/response-hospital-designation.md",
+      "governance": {
+        "owner": "unit.preparedness",
+        "ownerName": "新興傳染病整備組",
+        "steward": null,
+        "reviewedAt": "2026-03-01",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-03-01",
+        "daysToReview": 151,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "service.response-hospital-designation",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "80583664f3ff",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "service.tb-treatment-subsidy",
+      "type": "service",
+      "owner": "unit.chronic-infectious",
+      "steward": "慢性傳染病組承辦人",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-30"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "pending"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "slug": "tb-treatment-subsidy",
+      "title": "結核病診治費用補助與隔離治療",
+      "publishedAt": "2026-09-15",
+      "reviewedAt": "2026-09-22",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "symptoms"
+      ],
+      "summary": "結核病個案就醫由健保給付、部分負擔由疾管署支應；多重抗藥性結核病由 TMTC 收治並由公費支應；依法施行隔離治療者，費用由政府負擔。",
+      "keywords": [
+        "結核病",
+        "診治費用",
+        "部分負擔",
+        "隔離治療",
+        "多重抗藥性結核病",
+        "TMTC"
+      ],
+      "basedOn": [
+        "doc.tb-guideline",
+        "doc.dots-manual"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Category/MPage/{id}#subsidy"
+      ],
+      "serviceType": "other",
+      "whoCanApply": [
+        "經醫師通報並登記之結核病個案",
+        "多重抗藥性結核病個案",
+        "經衛生主管機關施行隔離治療者"
+      ],
+      "introMarkdown": "結核病只要完整治療幾乎都能治癒，為避免病人因費用中斷治療：\n\n- **就醫免部分負擔**：通報登記之結核病個案，結核病相關門診、住院與用藥之健保部分負擔由疾管署支應。\n- **多重抗藥性結核病**：由抗藥性結核病醫療照護體系（TMTC）團隊收治，治療與進階都治費用由公費支應。\n- **隔離治療**：具傳染性且拒絕治療或不遵從治療者，依《傳染病防治法》由衛生主管機關施行隔離治療，隔離期間費用由政府負擔。\n\n病人與家屬不需另外送件申請，由醫院與衛生局（所）於通報、登記後協助辦理。",
+      "requiredDocuments": [
+        "健保卡（就醫時出示）",
+        "醫師通報與個案登記（由醫院與衛生所辦理，病人免送件）",
+        "隔離治療通知書（施行隔離治療時由衛生局開立）"
+      ],
+      "steps": [
+        {
+          "title": "醫師診斷與通報",
+          "text": "醫師依病例定義於一週內通報（多重抗藥性結核病 24 小時內）。",
+          "who": "醫療院所",
+          "days": 0
+        },
+        {
+          "title": "個案登記與納入都治",
+          "text": "衛生所個案管理師建立個案資料，安排都治關懷員每日送藥。",
+          "who": "衛生所",
+          "days": 7
+        },
+        {
+          "title": "就醫免部分負擔",
+          "text": "個案登記後，結核病相關就醫之部分負擔由疾管署支應，醫院依規定申報。",
+          "who": "醫療院所",
+          "days": 0
+        },
+        {
+          "title": "必要時施行隔離治療",
+          "text": "經評估具傳染性且不遵從治療者，由衛生局開立隔離治療通知書，送指定隔離治療機構。",
+          "who": "衛生局",
+          "days": 1
+        }
+      ],
+      "slaDays": 7,
+      "fee": "免費（部分負擔由疾管署支應；隔離治療費用由政府負擔）",
+      "legalBasis": [
+        "傳染病防治法第 44 條",
+        "傳染病防治法第 45 條",
+        "傳染病防治法第 48 條"
+      ],
+      "forms": [
+        {
+          "label": "結核病隔離治療通知書（樣式）",
+          "href": "/pending/?ref=service.tb-treatment-subsidy&doc=結核病隔離治療通知書（樣式）",
+          "format": "PDF",
+          "machineReadable": false
+        }
+      ],
+      "contact": "請洽戶籍或居住地衛生所；一般諮詢請撥防疫專線 1922（國外 +886-800-001922）",
+      "faq": [
+        {
+          "q": "我需要自己申請補助嗎？",
+          "a": "不用。醫師通報、衛生所完成個案登記後，就醫時出示健保卡即可，部分負擔由疾管署支應。"
+        },
+        {
+          "q": "隔離治療要住多久？",
+          "a": "依病人傳染力與治療反應而定，經醫師評估痰檢查轉陰、不具傳染力後解除。"
+        }
+      ],
+      "sourceHash": "cc59fd5ef714",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/tb-treatment-subsidy/",
+      "path": "/apply/tb-treatment-subsidy/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/tb-treatment-subsidy.md",
+      "governance": {
+        "owner": "unit.chronic-infectious",
+        "ownerName": "慢性傳染病組",
+        "steward": "慢性傳染病組承辦人",
+        "reviewedAt": "2026-09-22",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-09-22",
+        "daysToReview": 356,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "service.tb-treatment-subsidy",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "cc59fd5ef714",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "pending"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "service.travel-clinic-appointment",
+      "type": "service",
+      "title": "旅遊醫學門診預約",
+      "owner": "unit.quarantine",
+      "publishedAt": "2024-06-01",
+      "reviewedAt": "2026-06-15",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "travel",
+        "vaccines"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.malaria",
+        "disease.measles"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-06-15"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-06-15",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "出國前 4 到 6 週向全國旅遊醫學合約門診預約，評估疫苗接種、瘧疾預防用藥與行前衛教；需要黃皮書者也在此辦理。",
+      "keywords": [
+        "旅遊醫學門診",
+        "預約",
+        "出國",
+        "瘧疾預防",
+        "疫苗"
+      ],
+      "slug": "travel-clinic-appointment",
+      "serviceType": "clinic",
+      "whoCanApply": [
+        "民眾",
+        "出國旅客",
+        "外派人員與留學生"
+      ],
+      "introMarkdown": "疾管署與全國醫院合作設置**旅遊醫學合約門診**，提供：\n\n- 依目的地與行程評估疫苗（A 型肝炎、黃熱病、MMR、狂犬病暴露前等）\n- 瘧疾預防用藥處方與用法說明\n- 國際預防接種證明書（黃皮書）\n- 慢性病患者、孕婦、兒童的行前健康諮詢\n\n請直接向各合約醫院預約，院所名單與聯絡電話見現行官網。",
+      "requiredDocuments": [
+        "健保卡",
+        "行程資料（國家、城市、停留天數、活動）",
+        "既有疫苗接種紀錄"
+      ],
+      "steps": [
+        {
+          "title": "查詢目的地疫情等級",
+          "text": "於旅遊疫情建議頁查詢。",
+          "who": "民眾",
+          "days": 0
+        },
+        {
+          "title": "向合約門診預約",
+          "text": "電話或網路預約，告知出國日期。",
+          "who": "民眾",
+          "days": 1
+        },
+        {
+          "title": "看診評估",
+          "text": "醫師依行程評估疫苗與用藥。",
+          "who": "旅遊醫學門診",
+          "days": 0
+        },
+        {
+          "title": "接種與取藥",
+          "text": "多劑疫苗依時程回診。",
+          "who": "旅遊醫學門診",
+          "days": 0
+        }
+      ],
+      "slaDays": 7,
+      "fee": "掛號費與自費疫苗、藥品費用依各院所公告",
+      "legalBasis": [
+        "傳染病防治法"
+      ],
+      "forms": [
+        {
+          "label": "旅遊醫學合約門診名單",
+          "href": "/pending/?ref=service.travel-clinic-appointment&doc=旅遊醫學合約門診名單",
+          "format": "PDF",
+          "machineReadable": false
+        }
+      ],
+      "contact": "疾病管制署檢疫組（總機 02-2395-9825）；一般諮詢請撥防疫專線 1922（國外 +886-800-001922）",
+      "faq": [
+        {
+          "q": "出國前一週才想到，還來得及嗎？",
+          "a": "仍建議就診，部分疫苗與預防用藥即使出發前才開始仍有幫助。"
+        },
+        {
+          "q": "旅遊醫學門診健保有給付嗎？",
+          "a": "一般預防性諮詢與自費疫苗健保不給付，費用依院所公告。"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "title": "Book a travel medicine clinic",
+          "summary": "Book a contracted travel medicine clinic 4–6 weeks before departure for vaccines, malaria prophylaxis, the yellow card and pre-travel advice."
+        }
+      },
+      "sourceHash": "5a59ac9e0d01",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/travel-clinic-appointment/",
+      "path": "/apply/travel-clinic-appointment/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/travel-clinic-appointment.md",
+      "governance": {
+        "owner": "unit.quarantine",
+        "ownerName": "檢疫組",
+        "steward": null,
+        "reviewedAt": "2026-06-15",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-06-15",
+        "daysToReview": 257,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "service.travel-clinic-appointment",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "5a59ac9e0d01",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-06-15",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "service.vaccination-record-reissue",
+      "type": "service",
+      "title": "預防接種紀錄與接種證明補發",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2024-06-01",
+      "reviewedAt": "2026-05-20",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "vaccines"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-05-20"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "兒童預防接種紀錄卡遺失或入學、出國需要接種證明時，可至衛生所或原接種院所申請補發，也可透過健康存摺查詢下載接種紀錄。",
+      "keywords": [
+        "接種紀錄",
+        "接種證明",
+        "補發",
+        "黃卡",
+        "健康存摺",
+        "衛生所"
+      ],
+      "slug": "vaccination-record-reissue",
+      "serviceType": "certificate",
+      "whoCanApply": [
+        "民眾",
+        "家長或法定代理人",
+        "學校"
+      ],
+      "introMarkdown": "國內接種紀錄登錄於全國性預防接種資訊管理系統（NIIS）。需要接種紀錄時：\n\n- **自行查詢**：透過健保快易通 APP「健康存摺」查詢與下載。\n- **兒童接種紀錄卡補發**：攜帶兒童健保卡與家長身分證件至戶籍地或居住地衛生所申請。\n- **英文接種證明**（留學、出國）：至衛生所或原接種院所申請，部分院所收取工本費。",
+      "requiredDocuments": [
+        "被接種者健保卡或身分證明",
+        "代理申請者身分證明與關係證明",
+        "英文證明需護照影本"
+      ],
+      "steps": [
+        {
+          "title": "先自行查詢",
+          "text": "以健康存摺查詢是否已有完整紀錄。",
+          "who": "民眾",
+          "days": 0
+        },
+        {
+          "title": "臨櫃申請",
+          "text": "攜帶證件至衛生所或原接種院所。",
+          "who": "民眾",
+          "days": 0
+        },
+        {
+          "title": "查核 NIIS 紀錄",
+          "text": "比對系統紀錄，缺漏者協助向原接種單位查證。",
+          "who": "衛生所",
+          "days": 3
+        },
+        {
+          "title": "核發",
+          "text": "當場或於查證後核發紀錄卡／證明。",
+          "who": "衛生所",
+          "days": 1
+        }
+      ],
+      "slaDays": 5,
+      "fee": "紀錄卡補發免費；英文證明工本費依各單位公告",
+      "legalBasis": [
+        "傳染病防治法",
+        "預防接種作業與兒童預防接種紀錄檢查辦法（示意）"
+      ],
+      "forms": [
+        {
+          "label": "預防接種紀錄補發申請書",
+          "href": "/pending/?ref=service.vaccination-record-reissue&doc=預防接種紀錄補發申請書",
+          "format": "PDF",
+          "machineReadable": false
+        }
+      ],
+      "contact": "疾病管制署急性傳染病組（總機 02-2395-9825）；一般諮詢請撥防疫專線 1922（國外 +886-800-001922）；補發請洽各地衛生所",
+      "faq": [
+        {
+          "q": "小時候的紀錄查不到怎麼辦？",
+          "a": "早年紀錄可能未電子化，可洽原戶籍地衛生所查詢紙本；確實無紀錄者，可由醫師評估補接種或抽血檢驗抗體。"
+        },
+        {
+          "q": "新冠疫苗接種證明怎麼取得？",
+          "a": "可透過健康存摺下載接種紀錄，或至接種院所申請紙本。"
+        }
+      ],
+      "sourceHash": "36dfbc78cf54",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/vaccination-record-reissue/",
+      "path": "/apply/vaccination-record-reissue/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/vaccination-record-reissue.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-05-20",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-05-20",
+        "daysToReview": 231,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "service.vaccination-record-reissue",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "36dfbc78cf54",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "service.vaccine-fund-donation",
+      "type": "service",
+      "title": "疫苗基金捐款",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2024-01-01",
+      "reviewedAt": "2026-07-01",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "vaccines"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-07-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-07-01",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "個人或企業可透過郵政劃撥、銀行匯款或臨櫃方式捐款至疫苗基金，專款採購公費疫苗；收據可作為綜合所得稅列舉扣除憑證。",
+      "keywords": [
+        "疫苗基金",
+        "捐款",
+        "收據",
+        "抵稅",
+        "郵政劃撥"
+      ],
+      "note": "劃撥帳號與銀行帳號原型不放，正式上線依主計室公告",
+      "slug": "vaccine-fund-donation",
+      "serviceType": "donation",
+      "whoCanApply": [
+        "民眾",
+        "企業與團體"
+      ],
+      "introMarkdown": "**疫苗基金**依《傳染病防治法》設置，捐款專款用於公費疫苗採購與新疫苗導入。捐款方式：\n\n- **郵政劃撥**：劃撥單通訊欄註明「疫苗基金捐款」與收據抬頭（帳號以公告為準）。\n- **銀行匯款**：匯款後請來電或來信告知匯款帳號末五碼與收據資料。\n- **臨櫃捐款**：至疾管署（臺北市中正區林森南路 6 號）出納辦理。\n\n**收據**：於款項入帳後約 2 週內寄發；可依《所得稅法》第 17 條列舉扣除。如需匿名或不寄收據請註明。",
+      "requiredDocuments": [
+        "收據抬頭（個人姓名或公司名稱）",
+        "身分證字號或統一編號（需抵稅者，供報稅資料上傳）",
+        "收據寄送地址"
+      ],
+      "steps": [
+        {
+          "title": "選擇捐款方式",
+          "text": "郵政劃撥、銀行匯款或臨櫃。",
+          "who": "捐款人",
+          "days": 0
+        },
+        {
+          "title": "完成捐款並提供收據資料",
+          "text": "匯款者請告知末五碼。",
+          "who": "捐款人",
+          "days": 0
+        },
+        {
+          "title": "入帳確認",
+          "text": "核對款項與捐款人資料。",
+          "who": "主計室",
+          "days": 7
+        },
+        {
+          "title": "開立並寄送收據",
+          "text": "寄送正式收據並上傳財政部報稅資料（示意）。",
+          "who": "急性傳染病組",
+          "days": 7
+        }
+      ],
+      "slaDays": 14,
+      "fee": "免手續費（劃撥／匯款手續費由捐款人自行負擔）",
+      "legalBasis": [
+        "傳染病防治法第 27 條",
+        "所得稅法第 17 條",
+        "疫苗基金收支保管及運用辦法"
+      ],
+      "forms": [
+        {
+          "label": "疫苗基金捐款單",
+          "href": "/pending/?ref=service.vaccine-fund-donation&doc=疫苗基金捐款單",
+          "format": "PDF",
+          "machineReadable": false
+        },
+        {
+          "label": "捐款收據資料更正申請",
+          "href": "/pending/?ref=service.vaccine-fund-donation&doc=捐款收據資料更正申請",
+          "format": "PDF",
+          "machineReadable": false
+        }
+      ],
+      "contact": "疾病管制署急性傳染病組（總機 02-2395-9825）；一般諮詢請撥防疫專線 1922（國外 +886-800-001922）",
+      "faq": [
+        {
+          "q": "可以指定捐給某一種疫苗嗎？",
+          "a": "基金依年度計畫統籌運用，無法指定單一疫苗，但收支與運用情形均公開。"
+        },
+        {
+          "q": "收據遺失可以補發嗎？",
+          "a": "可以申請補發證明，請提供捐款日期、金額與收據抬頭。"
+        },
+        {
+          "q": "捐款資料會公開嗎？",
+          "a": "僅公開捐款總額與筆數；個人姓名需經同意才會刊登於感謝名單。"
+        }
+      ],
+      "i18n": {
+        "en": {
+          "title": "Donate to the Vaccine Fund",
+          "summary": "Individuals and companies can donate by postal transfer, bank transfer or in person; donations fund publicly funded vaccines and receipts are tax-deductible."
+        }
+      },
+      "sourceHash": "908f38bc0500",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/vaccine-fund-donation/",
+      "path": "/apply/vaccine-fund-donation/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/vaccine-fund-donation.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-07-01",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-07-01",
+        "daysToReview": 273,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "service.vaccine-fund-donation",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "908f38bc0500",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-07-01",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    }
+  ]
+}

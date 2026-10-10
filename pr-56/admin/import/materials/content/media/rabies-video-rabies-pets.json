@@ -1,0 +1,78 @@
+{
+  "id": "media.rabies-video-rabies-pets",
+  "type": "media",
+  "title": "寵物打狂犬病疫苗：守護家人也守護毛孩（影片）",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-08-20",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.rabies"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "狂犬病疫苗不只保護寵物，也保護全家人，帶毛孩定期接種。",
+  "mediaType": "video",
+  "youtubeId": "xxxxxxxxxxx",
+  "producedAt": "2026-08-20",
+  "transcriptMarkdown": "（待補：舊頁沒有文字稿，請由影片字幕或腳本補入）",
+  "captions": [
+    "zh-TW"
+  ],
+  "basedOn": [
+    "disease.rabies"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/ListContent/44k4KHKf48A57gNpJRnnj3?uaid=laU0p6BaBsID7VGsQ3zBHj"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.8,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "素材的權責單位依疾病主檔取 unit.acute-infectious（狂犬病），不歸宣導素材欄目的公關室"
+      },
+      {
+        "code": "type-from-category",
+        "severity": "info",
+        "message": "素材頁的標題有「影片」，草稿建成 media（mediaType video）"
+      },
+      {
+        "code": "body-short",
+        "severity": "warn",
+        "message": "內文過短（27 字，低於 40）"
+      },
+      {
+        "code": "fields-pending",
+        "severity": "warn",
+        "message": "media 的欄位從舊頁看不出來，以「（待補）」佔位：transcriptMarkdown"
+      },
+      {
+        "code": "field-guessed",
+        "severity": "info",
+        "message": "模擬匯出的影片 id 為示意值"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/ListContent/44k4KHKf48A57gNpJRnnj3?uaid=laU0p6BaBsID7VGsQ3zBHj",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "id": "doc.flu-vaccine-manual.2026-09-16",
+  "type": "document",
+  "title": "公費流感疫苗接種計畫作業手冊",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-09-16",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "合約院所與衛生所執行公費流感疫苗接種計畫的作業細節：合約與接種點、疫苗訂撥與冷鏈、對象查核與登錄、接種後觀察與不良事件通報、剩餘疫苗處理。",
+  "family": "doc.flu-vaccine-manual",
+  "docType": "manual",
+  "version": "2026-09-16",
+  "effectiveAt": "2026-09-16",
+  "machineReadableMarkdown": "合約院所與衛生所執行公費流感疫苗接種計畫的作業細節：合約與接種點、疫苗訂撥與冷鏈、對象查核與登錄、接種後觀察與不良事件通報、剩餘疫苗處理。\n\n### 第一章 合約院所與接種點\n\n1. 公費流感疫苗由各縣市衛生所及與衛生局簽約之醫療院所接種；院所應於接種場所公告合約標示與接種對象。\n2. 合約院所名單於每年 9 月公布於「流感防治一網通」，異動（新增、停止）須於 3 個工作日內通知衛生局更新。\n3. 校園集中接種及機構到點接種，由衛生局排定時程並指派具資格之醫護人員。\n\n### 第二章 疫苗訂撥與冷鏈\n\n1. 院所依預估接種量向衛生局申請疫苗，衛生局分批撥發；領收時應核對品名、效期與批號。\n2. 疫苗全程 **2–8°C 冷藏，不可冷凍**；院所應有溫度紀錄，每日至少 2 次記錄冰箱溫度，異常時立即隔離疫苗並通報衛生局。\n3. 疫苗配送及外出接種須使用保冷設備並放置溫度監測器。\n\n### 第三章 對象查核與接種登錄\n\n1. 接種前核對健保卡及資格；第一階段（10 月 1 日起）與第二階段（11 月 1 日起）對象依「公費流感疫苗接種計畫：實施對象與時程」辦理。\n2. 8 歲（含）以下兒童首次接種應接種 2 劑，間隔 4 週以上。\n3. 接種後當日完成登錄；後送資料與實際接種數量須相符，登錄錯誤應於 7 日內更正。\n4. 可與新冠疫苗同日、分開部位接種，並於紀錄卡註明。\n\n| 項目 | 內容 |\n| --- | --- |\n| 文件名稱 | 2026–2027 年度公費流感疫苗接種計畫作業手冊 |\n| 版次 | 2026-27 |\n| 生效日 | 2026-09-16 |\n| 權責單位 | 急性傳染病組 |\n| 檔案格式 | PDF |\n\n完整內容請下載附件：\\<a href=\"https://www.cdc.gov.tw/File/Get/k6H6568EM4MUyLmxDp6yVF\">2026–2027 年度公費流感疫苗接種計畫作業手冊（PDF）\\</a>",
+  "pdfUrl": "/files/doc.flu-vaccine-manual.2026-09-16/flu-vaccine-manual.2026-09-16.pdf",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/File/Get/k6H6568EM4MUyLmxDp6yVF"
+  ],
+  "assets": [
+    {
+      "file": "flu-vaccine-manual.2026-09-16.pdf",
+      "kind": "attachment",
+      "label": "2026–2027 年度公費流感疫苗接種計畫作業手冊",
+      "mime": "application/pdf",
+      "bytes": 907,
+      "sha256": "c97663cd36b6b550730343087134830414cb1c7a72f9e08130a5bdf1425daf7a",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 74 處（mso 樣式 46、Mso 類別 24、命名空間標籤 14）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「流感／流感疫苗專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+      },
+      {
+        "code": "version-unknown",
+        "severity": "info",
+        "message": "標題看不出版次，version 暫填 2026-09-16"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/File/Get/k6H6568EM4MUyLmxDp6yVF",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "doc.flu-vaccine-manual.2026-09-16"
+    ]
+  }
+}

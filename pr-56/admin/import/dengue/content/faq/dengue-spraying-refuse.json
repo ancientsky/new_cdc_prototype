@@ -1,0 +1,75 @@
+{
+  "id": "faq.dengue-spraying-refuse",
+  "type": "faq",
+  "title": "衛生單位說要進家裡噴藥，可以拒絕嗎？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-09-24",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "建議配合。登革熱本土病例發生後，衛生單位依風險評估，才會在病例住家及周邊進行針對性室內噴藥，目的是快速降低帶病毒的成蚊數量。噴藥前會以書面或電話通知，並說明使用的藥劑與注意事項。",
+  "question": "衛生單位說要進家裡噴藥，可以拒絕嗎？",
+  "answerMarkdown": "建議配合。登革熱本土病例發生後，衛生單位依風險評估，才會在病例住家及周邊進行**針對性室內噴藥**，目的是快速降低帶病毒的成蚊數量。噴藥前會以書面或電話通知，並說明使用的藥劑與注意事項。\n\n若家中有嬰幼兒、孕婦、魚缸或寵物，請事先告知人員，他們會說明需要暫時離開的時間與遮蓋方式。噴藥只能壓低成蚊，**清除積水容器（巡、倒、清、刷）才是根本**，兩者要一起做。",
+  "tasks": [
+    "symptoms"
+  ],
+  "basedOn": [
+    "disease.dengue"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/4kMzhnwTwPIrf_KETxhqzF"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 74 處（mso 樣式 48、Mso 類別 20、命名空間標籤 13）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「登革熱／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「登革熱發燒後幾天內要就醫？」從答案抽出結構化候選 {\"daysMin\":3,\"daysMax\":14,\"hours\":24}，請確認後保留或刪除"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「社區或里長要怎麼帶大家一起防登革熱？」→ situation；「登革熱發燒後幾天內要就醫？」→ symptoms；「從登革熱流行地區回國後，要注意什麼？」→ symptoms；「懷疑登革熱時，可以自己吃止痛藥嗎？」→ symptoms；「衛生單位說要進家裡噴藥，可以拒絕嗎？」→ symptoms；「出國回來後發燒，應該怎麼辦？」→ travel、symptoms"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/4kMzhnwTwPIrf_KETxhqzF",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.dengue-spraying-refuse"
+    ]
+  }
+}

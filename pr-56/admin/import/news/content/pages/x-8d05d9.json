@@ -1,0 +1,42 @@
+{
+  "id": "page.x-8d05d9",
+  "type": "page",
+  "title": "新聞稿",
+  "owner": "unit.pr",
+  "publishedAt": "2026-10-03",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "2026-09-29 流感疫情持續上升，10 月 1 日公費疫苗開打，長者幼兒請優先接種 2026-09-24 疾管署公布第 38 週傳染病監測週報：類流感就診率續升，腸病毒疫情趨緩 2026-09-22 國內腸病毒疫情持續，籲請家長及教…",
+  "slug": "x-8d05d9",
+  "bodyMarkdown": "- 2026-09-29 [流感疫情持續上升，10 月 1 日公費疫苗開打，長者幼兒請優先接種](https://www.cdc.gov.tw/Bulletin/Detail/yhS71H6AwbqsE3nQogBZ8U?typeid=9)\n- 2026-09-24 [疾管署公布第 38 週傳染病監測週報：類流感就診率續升，腸病毒疫情趨緩](https://www.cdc.gov.tw/Bulletin/Detail/_1Whs2KInA7M1gXev3fuOr?typeid=9)\n- 2026-09-22 [國內腸病毒疫情持續，籲請家長及教托育機構提高警覺](https://www.cdc.gov.tw/Bulletin/Detail/iu5ZQsbMqaS6hQvwC1hRAT?typeid=9)\n- 2026-09-18 [流感疫情進入流行期且持續上升，疾管署延長擴大公費流感抗病毒藥劑使用條件至 10 月 31 日](https://www.cdc.gov.tw/Bulletin/Detail/KNEie8q3qi8ARuMyKXV7pu?typeid=9)\n- 2026-09-18 [2026–2027 年度公費流感疫苗 10 月 1 日開打，新冠疫苗同步提供](https://www.cdc.gov.tw/Bulletin/Detail/lYMJFMdaheSyPHiJkkKugt?typeid=9)\n- 2026-09-15 [Taiwan CDC signs a public health cooperation MOU with a New Southbound partner](https://www.cdc.gov.tw/Bulletin/Detail/ac1-BUx7wJb5j4GLZggaOv?typeid=9)\n- 2026-09-12 [登革熱防治：疾管署與高雄市政府聯合孳生源清除，呼籲民眾巡倒清刷](https://www.cdc.gov.tw/Bulletin/Detail/tVOO6DTH_ehRSk8H6crMnS?typeid=9)\n- 2026-09-01 [新冠疫情連續三週下降，10 月起新年度疫苗與流感疫苗同步開打](https://www.cdc.gov.tw/Bulletin/Detail/aXeVzpSMDHPv5coJCwA9TH?typeid=9)\n- 2026-08-28 [疾管署提醒：開學季腸病毒傳播風險升高，落實洗手與生病不上學](https://www.cdc.gov.tw/Bulletin/Detail/hXen_WGNxzD6BAZm3Q-6D-?typeid=9)\n- 2026-08-25 [非洲 M痘 clade I 疫情持續，前往當地請避免親密接觸與野生動物](https://www.cdc.gov.tw/Bulletin/Detail/qu6QBO4Jen5iRNtc4VWZhv?typeid=9)",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/List/k6bmONJQYkScCR2X4MU1XB?typeid=9"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.6,
+    "issues": [
+      {
+        "code": "list-page",
+        "severity": "info",
+        "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/List/k6bmONJQYkScCR2X4MU1XB?typeid=9",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

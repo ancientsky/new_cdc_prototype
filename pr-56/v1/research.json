@@ -1,0 +1,1563 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "2e0067d22292",
+    "lastModified": "2026-09-10",
+    "count": 10
+  },
+  "data": [
+    {
+      "id": "research.2026-adult-measles-seroprevalence",
+      "type": "research",
+      "title": "成人麻疹抗體血清流行病學調查（1966–1990 年出生世代）",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2026-01-15",
+      "reviewedAt": "2026-08-20",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional",
+        "public"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "doc.mmr-recommendation"
+      ],
+      "diseases": [
+        "disease.measles"
+      ],
+      "vaccines": [
+        "vaccine.mmr"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-08-20"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-08-20",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "2026 年合作研究（執行中）：抽樣檢測 1966 至 1990 年出生成人之麻疹抗體盛行率，作為 MMR 成人接種建議（114.04.16 版）成效評估與後續修訂依據。",
+      "keywords": [
+        "麻疹",
+        "MMR",
+        "血清流行病學",
+        "1966 年",
+        "成人免疫力"
+      ],
+      "note": "計畫編號、經費與 IRB 字號為示意；執行單位以機構名稱表示，不列個人姓名",
+      "projectNo": "MOHW115-CDC-J-315-000106",
+      "year": 2026,
+      "projectStatus": "ongoing",
+      "fundingType": "collaborative",
+      "piUnit": "某國立大學醫學院與疾管署急性傳染病組（合作）",
+      "budgetNtd": 3600000,
+      "abstractMarkdown": "MMR 接種建議於 2025-04-16 修訂，將成人評估對象擴大為 1966 年（含）以後出生者。本計畫以健檢剩餘血清抽樣，估計各出生世代之麻疹 IgG 抗體盛行率，評估免疫缺口，並分析自費接種政策之涵蓋情形。",
+      "objectives": [
+        "估計 1966–1990 年出生世代之麻疹抗體盛行率",
+        "辨識免疫缺口族群（職業、地區）",
+        "提供成人接種建議修訂之實證"
+      ],
+      "datasets": [
+        "dataset.measles-yearly",
+        "dataset.vaccine-coverage"
+      ],
+      "irb": {
+        "required": true,
+        "approvalNo": "202512345RINA（示意）",
+        "committee": "某國立大學醫學院附設醫院研究倫理委員會"
+      },
+      "i18n": {
+        "en": {
+          "title": "Measles seroprevalence among adults born 1966–1990",
+          "summary": "Ongoing 2026 collaborative study measuring measles antibody prevalence by birth cohort to evaluate the 2025 adult MMR recommendation."
+        }
+      },
+      "sourceHash": "adf9e87cee1f",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/research/2026-adult-measles-seroprevalence/",
+      "path": "/research/2026-adult-measles-seroprevalence/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/research/2026-adult-measles-seroprevalence.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-08-20",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-08-20",
+        "daysToReview": 323,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "pro",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "research.2026-adult-measles-seroprevalence",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "adf9e87cee1f",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-08-20",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "research.2026-ai-health-qa-accuracy",
+      "type": "research",
+      "title": "AI 輔助衛教問答之正確性、可引用性與民眾信任評估",
+      "owner": "unit.oasis",
+      "publishedAt": "2026-09-01",
+      "reviewedAt": "2026-09-01",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional",
+        "public"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-01",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "2026 年委託研究（規劃中）：以疾管署評估集與真實提問樣本，評估 AI 衛教問答的正確性、來源可引用性與版本正確率，並調查民眾信任度。",
+      "keywords": [
+        "AI",
+        "衛教問答",
+        "評估集",
+        "可信度",
+        "委託研究"
+      ],
+      "note": "計畫編號、經費與 IRB 字號為示意；執行單位以機構名稱表示，不列個人姓名",
+      "projectNo": "MOHW115-CDC-C-315-000101",
+      "year": 2026,
+      "projectStatus": "planned",
+      "fundingType": "commissioned",
+      "piUnit": "某國立大學資訊管理學系暨公共衛生學院（合作）",
+      "budgetNtd": 3200000,
+      "abstractMarkdown": "新官網答案引擎僅引用白名單內容並逐句附來源。本計畫將以第三方角度驗證：\n\n1. 依附錄 D 六指標（Grounding、事實正確、完整、回答率、拒答精確、聲譽安全）重新抽樣評估；\n2. 比較抽取式與生成式模式在**版本題**（如 MMR 1966 年條件）之表現；\n3. 以線上問卷與可用性測試評估民眾對「附來源」答案的信任與理解。",
+      "objectives": [
+        "建立獨立於開發團隊之評估集抽樣方法",
+        "量測版本題與過時內容之誤答率",
+        "提出民眾端來源呈現設計建議"
+      ],
+      "datasets": [
+        "dataset.disease-pages",
+        "dataset.press-rss"
+      ],
+      "irb": {
+        "required": true,
+        "committee": "受託機構人體研究倫理審查委員會（待送審）"
+      },
+      "i18n": {
+        "en": {
+          "title": "Evaluating accuracy, citability and public trust of AI-assisted health Q&A",
+          "summary": "Planned 2026 commissioned study evaluating the accuracy, source citation and version correctness of AI health answers, and public trust."
+        }
+      },
+      "sourceHash": "a6ca16760148",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/research/2026-ai-health-qa-accuracy/",
+      "path": "/research/2026-ai-health-qa-accuracy/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/research/2026-ai-health-qa-accuracy.md",
+      "governance": {
+        "owner": "unit.oasis",
+        "ownerName": "AI推動辦公室",
+        "steward": null,
+        "reviewedAt": "2026-09-01",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-09-01",
+        "daysToReview": 335,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "pro",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "research.2026-ai-health-qa-accuracy",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "a6ca16760148",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-01",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "research.2026-ltc-respiratory-early-warning",
+      "type": "research",
+      "title": "長照機構呼吸道群聚早期預警模式之建立與驗證",
+      "owner": "unit.infection-control",
+      "publishedAt": "2026-02-01",
+      "reviewedAt": "2026-08-01",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional",
+        "public"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.influenza",
+        "disease.covid-19"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-08-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-08-01",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "2026 年委託研究（執行中）：結合機構住民每日症狀紀錄與社區類流感監測，建立長照機構呼吸道群聚早期預警模式，並於試辦縣市驗證。",
+      "keywords": [
+        "長照機構",
+        "群聚",
+        "早期預警",
+        "類流感",
+        "委託研究"
+      ],
+      "note": "計畫編號、經費與 IRB 字號為示意；執行單位以機構名稱表示，不列個人姓名",
+      "projectNo": "MOHW115-CDC-C-315-000103",
+      "year": 2026,
+      "projectStatus": "ongoing",
+      "fundingType": "commissioned",
+      "piUnit": "某國立大學公共衛生學院",
+      "budgetNtd": 2800000,
+      "abstractMarkdown": "長照機構呼吸道群聚常於發現時已多人感染。本計畫蒐集試辦機構住民每日體溫與呼吸道症狀，結合社區類流感與流感重症監測資料，建立預警分數，並評估提早介入（採檢、隔離、抗病毒藥物）對群聚規模之影響。",
+      "objectives": [
+        "建立機構症狀監測最小資料集",
+        "開發並驗證群聚預警分數",
+        "評估預警後介入之成本效益"
+      ],
+      "datasets": [
+        "dataset.ili-weekly",
+        "dataset.flu-severe"
+      ],
+      "irb": {
+        "required": true,
+        "approvalNo": "IRB-2025-1234（示意）",
+        "committee": "某國立大學人體研究倫理審查委員會"
+      },
+      "i18n": {
+        "en": {
+          "title": "Early-warning model for respiratory outbreaks in long-term care facilities",
+          "summary": "Ongoing 2026 commissioned study combining daily resident symptoms with community surveillance to build and validate an outbreak early-warning score."
+        }
+      },
+      "sourceHash": "e160815bd4d9",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/research/2026-ltc-respiratory-early-warning/",
+      "path": "/research/2026-ltc-respiratory-early-warning/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/research/2026-ltc-respiratory-early-warning.md",
+      "governance": {
+        "owner": "unit.infection-control",
+        "ownerName": "感染管制及生物安全組",
+        "steward": null,
+        "reviewedAt": "2026-08-01",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-08-01",
+        "daysToReview": 304,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "pro",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "research.2026-ltc-respiratory-early-warning",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "e160815bd4d9",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-08-01",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "research.2026-sea-dengue-genomic-surveillance",
+      "type": "research",
+      "title": "東南亞登革病毒跨國基因體監測合作計畫",
+      "owner": "unit.lab",
+      "publishedAt": "2026-08-15",
+      "reviewedAt": "2026-08-15",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional",
+        "public"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-08-15"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "2026 年國際合作計畫（規劃中）：與東南亞夥伴國家交換登革病毒基因序列，追蹤血清型與基因型變化，及早預警境外移入引發的本土疫情。",
+      "keywords": [
+        "登革熱",
+        "基因體監測",
+        "國際合作",
+        "新南向",
+        "血清型"
+      ],
+      "note": "計畫編號、經費與 IRB 字號為示意；執行單位以機構名稱表示，不列個人姓名",
+      "projectNo": "MOHW115-CDC-N-315-000102",
+      "year": 2026,
+      "projectStatus": "planned",
+      "fundingType": "international",
+      "piUnit": "疾管署檢驗及疫苗研製中心與東南亞夥伴國家國家級衛生研究機構",
+      "budgetNtd": 5800000,
+      "abstractMarkdown": "我國本土登革熱多由境外移入引發。本計畫規劃與東南亞夥伴機構建立序列資料交換機制與共同分析平台，比對境外移入株與當地流行株，作為邊境檢疫與社區防治之預警依據。",
+      "objectives": [
+        "建立跨國登革病毒序列交換協議與資料格式",
+        "每季產出血清型／基因型分布報告",
+        "辦理夥伴國家實驗室訓練"
+      ],
+      "datasets": [
+        "dataset.dengue-daily",
+        "dataset.lab-virus-surveillance"
+      ],
+      "irb": {
+        "required": false
+      },
+      "sourceHash": "0cbfbfca71b4",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/research/2026-sea-dengue-genomic-surveillance/",
+      "path": "/research/2026-sea-dengue-genomic-surveillance/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/research/2026-sea-dengue-genomic-surveillance.md",
+      "governance": {
+        "owner": "unit.lab",
+        "ownerName": "檢驗及疫苗研製中心",
+        "steward": null,
+        "reviewedAt": "2026-08-15",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-08-15",
+        "daysToReview": 318,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "pro",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "research.2026-sea-dengue-genomic-surveillance",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "0cbfbfca71b4",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "research.2025-ev-molecular-epidemiology",
+      "type": "research",
+      "title": "腸病毒 71 型與 D68 型分子流行病學監測",
+      "owner": "unit.lab",
+      "publishedAt": "2025-02-01",
+      "reviewedAt": "2026-07-01",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional",
+        "public"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-07-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "自行研究（執行中，2025–2027）：以全基因體定序追蹤腸病毒 71 型與 D68 型基因型變化，分析與重症病例之關聯，作為疫苗株評估參考。",
+      "keywords": [
+        "腸病毒",
+        "EV71",
+        "D68",
+        "分子流行病學",
+        "基因定序"
+      ],
+      "note": "計畫編號、經費與 IRB 字號為示意；執行單位以機構名稱表示，不列個人姓名",
+      "projectNo": "MOHW114-CDC-I-315-000104",
+      "year": 2025,
+      "projectStatus": "ongoing",
+      "fundingType": "in-house",
+      "piUnit": "疾管署檢驗及疫苗研製中心",
+      "budgetNtd": 1500000,
+      "abstractMarkdown": "本計畫分析病毒實驗室監測網分離之腸病毒 71 型與 D68 型病毒株，進行全基因體定序與親緣分析，觀察基因型更替與重症病例之時間關聯，並提供腸病毒 71 型疫苗株代表性評估。",
+      "objectives": [
+        "每年完成至少 200 株全基因體定序",
+        "建立基因型與重症關聯分析",
+        "評估國產 EV71 疫苗株之代表性"
+      ],
+      "datasets": [
+        "dataset.ev-lab-types",
+        "dataset.lab-virus-surveillance"
+      ],
+      "irb": {
+        "required": false
+      },
+      "sourceHash": "1b855047be1c",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/research/2025-ev-molecular-epidemiology/",
+      "path": "/research/2025-ev-molecular-epidemiology/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/research/2025-ev-molecular-epidemiology.md",
+      "governance": {
+        "owner": "unit.lab",
+        "ownerName": "檢驗及疫苗研製中心",
+        "steward": null,
+        "reviewedAt": "2026-07-01",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-07-01",
+        "daysToReview": 273,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "pro",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "research.2025-ev-molecular-epidemiology",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "1b855047be1c",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "research.2025-flu-vaccine-coverage-ili",
+      "type": "research",
+      "title": "流感疫苗接種率與類流感就診率之區域分析",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2025-03-01",
+      "reviewedAt": "2026-04-15",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional",
+        "public"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "vaccines": [
+        "vaccine.influenza"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-04-15"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "2025 年自行研究（已結案）：分析各縣市 65 歲以上流感疫苗接種率與流感季類流感就診率、重症率之關聯，作為接種資源配置參考。",
+      "keywords": [
+        "流感疫苗",
+        "接種率",
+        "類流感",
+        "區域分析",
+        "長者"
+      ],
+      "note": "計畫編號、經費與 IRB 字號為示意；執行單位以機構名稱表示，不列個人姓名",
+      "projectNo": "MOHW114-CDC-I-315-000108",
+      "year": 2025,
+      "projectStatus": "completed",
+      "fundingType": "in-house",
+      "piUnit": "疾管署急性傳染病組與疫情中心",
+      "budgetNtd": 600000,
+      "reportDoc": "/pending/?ref=research.2025-flu-vaccine-coverage-ili&doc=流感疫苗接種率與類流感就診率之區域分析%20成果報告",
+      "abstractMarkdown": "以 2019–2025 年各縣市 65 歲以上接種率與健保類流感就診、流感併發重症資料，進行生態研究與時間序列分析。接種率較高之縣市，流感季長者重症發生率較低（示意），建議優先加強低接種率地區之長照機構與社區設站。",
+      "objectives": [
+        "描述縣市接種率差異",
+        "分析接種率與重症率之關聯",
+        "提出資源配置建議"
+      ],
+      "datasets": [
+        "dataset.vaccine-coverage",
+        "dataset.ili-weekly",
+        "dataset.flu-severe"
+      ],
+      "irb": {
+        "required": false
+      },
+      "sourceHash": "6c516133ac31",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/research/2025-flu-vaccine-coverage-ili/",
+      "path": "/research/2025-flu-vaccine-coverage-ili/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/research/2025-flu-vaccine-coverage-ili.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-04-15",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-04-15",
+        "daysToReview": 196,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "pro",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "research.2025-flu-vaccine-coverage-ili",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "6c516133ac31",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "research.2025-migrant-tb-active-case-finding",
+      "type": "research",
+      "title": "移工結核病主動發現與都治成效評估",
+      "owner": "unit.chronic-infectious",
+      "publishedAt": "2025-03-01",
+      "reviewedAt": "2026-06-01",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional",
+        "public"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-06-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-06-01",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "委託研究（執行中）：評估移工定期健康檢查與宿舍主動篩檢的結核病發現率，並比較多語都治關懷對完治率的影響。",
+      "keywords": [
+        "結核病",
+        "移工",
+        "主動發現",
+        "都治",
+        "多語"
+      ],
+      "note": "計畫編號、經費與 IRB 字號為示意；執行單位以機構名稱表示，不列個人姓名",
+      "projectNo": "MOHW114-CDC-C-315-000105",
+      "year": 2025,
+      "projectStatus": "ongoing",
+      "fundingType": "commissioned",
+      "piUnit": "某醫學大學公共衛生學系",
+      "budgetNtd": 2400000,
+      "abstractMarkdown": "本計畫以移工健康檢查與宿舍接觸者調查資料，估計主動發現策略之個案發現率與成本，並以越南語、印尼語、泰語關懷員介入，評估多語都治對完治率與失落率之影響。",
+      "objectives": [
+        "估計不同篩檢策略之個案發現率",
+        "評估多語都治關懷之完治率提升",
+        "提出移工結核病防治政策建議"
+      ],
+      "datasets": [
+        "dataset.tb-new-cases"
+      ],
+      "irb": {
+        "required": true,
+        "approvalNo": "N202502011（示意）",
+        "committee": "某醫學大學聯合人體研究倫理委員會"
+      },
+      "i18n": {
+        "en": {
+          "title": "Active TB case finding and DOTS outcomes among migrant workers",
+          "summary": "Ongoing commissioned study on TB detection through health checks and dormitory screening, and the effect of multilingual DOTS support on treatment completion."
+        }
+      },
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Category/ListContent/{id}?uaid={uaid}#migrant-tb-research"
+      ],
+      "sourceHash": "423c5ae9b205",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/research/2025-migrant-tb-active-case-finding/",
+      "path": "/research/2025-migrant-tb-active-case-finding/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/research/2025-migrant-tb-active-case-finding.md",
+      "governance": {
+        "owner": "unit.chronic-infectious",
+        "ownerName": "慢性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-06-01",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-06-01",
+        "daysToReview": 243,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "pro",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "research.2025-migrant-tb-active-case-finding",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "423c5ae9b205",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-06-01",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "research.2024-community-dengue-source-reduction",
+      "type": "research",
+      "title": "社區登革熱孳生源清除介入成效評估",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2024-02-01",
+      "reviewedAt": "2026-03-01",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional",
+        "public"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-03-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-03-01",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "2024 年委託研究（已結案）：比較里長帶領志工每週巡查與一般宣導的社區，布氏指數與本土病例數差異，結果顯示定期巡查可顯著降低指數。",
+      "keywords": [
+        "登革熱",
+        "孳生源",
+        "社區介入",
+        "布氏指數",
+        "里長"
+      ],
+      "note": "計畫編號、經費與 IRB 字號為示意；執行單位以機構名稱表示，不列個人姓名",
+      "projectNo": "MOHW113-CDC-C-315-000107",
+      "year": 2024,
+      "projectStatus": "completed",
+      "fundingType": "commissioned",
+      "piUnit": "某國立大學熱帶醫學研究所",
+      "budgetNtd": 2100000,
+      "reportDoc": "/pending/?ref=research.2024-community-dengue-source-reduction&doc=社區登革熱孳生源清除介入成效評估%20成果報告",
+      "abstractMarkdown": "本研究於南部 24 個里進行群集隨機試驗：介入里由里長帶領志工每週巡查「巡、倒、清、刷」，對照里維持一般宣導。結果顯示介入里之布氏指數平均下降約四成（示意），且噴藥需求減少。成果已作為「里長帶頭巡倒清刷」宣導影片之依據。",
+      "objectives": [
+        "評估社區動員對病媒蚊指數之效果",
+        "估計介入成本",
+        "提出可推廣之社區操作模式"
+      ],
+      "datasets": [
+        "dataset.dengue-local-weekly",
+        "dataset.dengue-daily"
+      ],
+      "irb": {
+        "required": true,
+        "approvalNo": "HREC-113-001（示意）",
+        "committee": "受託機構人類研究倫理審查委員會"
+      },
+      "i18n": {
+        "en": {
+          "title": "Effectiveness of community-led dengue source reduction",
+          "summary": "Completed 2024 commissioned trial: weekly inspections led by village chiefs significantly reduced Breteau index compared with routine campaigns."
+        }
+      },
+      "sourceHash": "fcd75bcb4245",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/research/2024-community-dengue-source-reduction/",
+      "path": "/research/2024-community-dengue-source-reduction/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/research/2024-community-dengue-source-reduction.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-03-01",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-03-01",
+        "daysToReview": 151,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "pro",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "research.2024-community-dengue-source-reduction",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "fcd75bcb4245",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-03-01",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "research.2024-hospital-amr-trends",
+      "type": "research",
+      "title": "醫院抗藥性細菌監測趨勢分析（2015–2024）",
+      "owner": "unit.infection-control",
+      "publishedAt": "2024-01-15",
+      "reviewedAt": "2026-09-10",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional",
+        "public"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-10"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-10",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "自行研究（成果已發表）：分析 2015–2024 年醫院抗藥性細菌監測資料，描述碳青黴烯類抗藥腸道菌等重要抗藥菌比率趨勢，摘要刊於疫情報導。",
+      "keywords": [
+        "抗藥性",
+        "AMR",
+        "醫院監測",
+        "CRE",
+        "感染管制"
+      ],
+      "note": "計畫編號、經費與 IRB 字號為示意；執行單位以機構名稱表示，不列個人姓名",
+      "projectNo": "MOHW113-CDC-I-315-000110",
+      "year": 2024,
+      "projectStatus": "published",
+      "fundingType": "in-house",
+      "piUnit": "疾管署感染管制及生物安全組",
+      "budgetNtd": 450000,
+      "reportDoc": "/pending/?ref=research.2024-hospital-amr-trends&doc=醫院抗藥性細菌監測趨勢分析（2015–2024）%20成果報告",
+      "publications": [
+        "publication.bulletin-42-18"
+      ],
+      "abstractMarkdown": "以台灣醫院感染管制與抗藥性監測管理系統資料，分析重要抗藥性細菌（如碳青黴烯類抗藥性腸道菌、MRSA）於醫學中心與區域醫院之比率趨勢。結果顯示部分抗藥菌比率仍持續上升（示意），支持推動抗生素管理計畫與「防疫一體」跨部門合作。",
+      "objectives": [
+        "描述十年抗藥性比率趨勢",
+        "比較不同層級醫院差異",
+        "評估抗生素管理計畫之成效"
+      ],
+      "datasets": [
+        "dataset.antimicrobial-resistance"
+      ],
+      "irb": {
+        "required": false
+      },
+      "i18n": {
+        "en": {
+          "title": "Trends in hospital antimicrobial resistance, 2015–2024",
+          "summary": "Published in-house analysis of ten years of hospital AMR surveillance, summarised in the Taiwan Epidemiology Bulletin."
+        }
+      },
+      "sourceHash": "100312a5b24c",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/research/2024-hospital-amr-trends/",
+      "path": "/research/2024-hospital-amr-trends/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/research/2024-hospital-amr-trends.md",
+      "governance": {
+        "owner": "unit.infection-control",
+        "ownerName": "感染管制及生物安全組",
+        "steward": null,
+        "reviewedAt": "2026-09-10",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-09-10",
+        "daysToReview": 344,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "pro",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "research.2024-hospital-amr-trends",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "100312a5b24c",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-10",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "research.2024-prep-adherence-sti",
+      "type": "research",
+      "title": "PrEP 使用者服藥順從性與性傳染病發生率追蹤研究",
+      "owner": "unit.chronic-infectious",
+      "publishedAt": "2024-03-01",
+      "reviewedAt": "2026-05-01",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional",
+        "public"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.hiv"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-05-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-05-01",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "2024 年委託研究（成果已發表）：追蹤 PrEP 計畫使用者 12 個月之服藥順從性、HIV 新感染與梅毒等性傳染病發生率，結果刊登於疫情報導。",
+      "keywords": [
+        "PrEP",
+        "HIV",
+        "服藥順從性",
+        "性傳染病",
+        "疫情報導"
+      ],
+      "note": "計畫編號、經費與 IRB 字號為示意；執行單位以機構名稱表示，不列個人姓名",
+      "projectNo": "MOHW113-CDC-C-315-000109",
+      "year": 2024,
+      "projectStatus": "published",
+      "fundingType": "commissioned",
+      "piUnit": "某醫學大學附設醫院感染科",
+      "budgetNtd": 2600000,
+      "reportDoc": "/pending/?ref=research.2024-prep-adherence-sti&doc=PrEP%20使用者服藥順從性與性傳染病發生率追蹤研究%20成果報告",
+      "publications": [
+        "publication.bulletin-42-11"
+      ],
+      "abstractMarkdown": "於 PrEP 合作醫院招募使用者進行 12 個月世代追蹤。每日服藥與事件型服藥者之順從性均良好，追蹤期間 HIV 新感染極少（示意），但梅毒與淋病發生率仍高，建議 PrEP 回診時常規篩檢性傳染病並加強保險套衛教。",
+      "objectives": [
+        "描述 PrEP 使用者服藥模式與順從性",
+        "估計 HIV 與性傳染病發生率",
+        "提出 PrEP 計畫服務模式建議"
+      ],
+      "datasets": [
+        "dataset.hiv-monthly"
+      ],
+      "irb": {
+        "required": true,
+        "approvalNo": "JIRB-N202403001（示意）",
+        "committee": "某醫學大學聯合人體研究倫理委員會"
+      },
+      "i18n": {
+        "en": {
+          "title": "Adherence and STI incidence among PrEP users",
+          "summary": "Published 2024 commissioned cohort study: good adherence and very few HIV infections among PrEP users, but high syphilis and gonorrhoea incidence."
+        }
+      },
+      "sourceHash": "d2270c171307",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/research/2024-prep-adherence-sti/",
+      "path": "/research/2024-prep-adherence-sti/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/research/2024-prep-adherence-sti.md",
+      "governance": {
+        "owner": "unit.chronic-infectious",
+        "ownerName": "慢性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-05-01",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-05-01",
+        "daysToReview": 212,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "pro",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "research.2024-prep-adherence-sti",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "d2270c171307",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-05-01",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    }
+  ]
+}

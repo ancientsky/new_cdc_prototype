@@ -1,0 +1,920 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "1a81e1466706",
+    "lastModified": "2026-07-15"
+  },
+  "data": {
+    "id": "disease.dengue",
+    "type": "disease",
+    "slug": "dengue",
+    "title": "登革熱",
+    "nameEn": "Dengue fever",
+    "aliases": [
+      "登革出血熱",
+      "天狗熱",
+      "斷骨熱"
+    ],
+    "legalCategory": 2,
+    "icd10": [
+      "A90",
+      "A91"
+    ],
+    "notifyWithinHours": 24,
+    "incubation": {
+      "min": 3,
+      "max": 14,
+      "typicalMin": 4,
+      "typicalMax": 7,
+      "unit": "day",
+      "text": "3–14 天（通常 4–7 天）"
+    },
+    "transmission": [
+      "vector"
+    ],
+    "owner": "unit.acute-infectious",
+    "steward": "急性傳染病組承辦人",
+    "publishedAt": "2018-03-01",
+    "reviewedAt": "2026-07-15",
+    "reviewPeriodMonths": 12,
+    "status": "published",
+    "audience": [
+      "public",
+      "professional"
+    ],
+    "tasks": [
+      "symptoms",
+      "travel",
+      "situation"
+    ],
+    "sensitivity": "public",
+    "license": "OGDL-1.0",
+    "diseases": [
+      "disease.dengue"
+    ],
+    "aiWhitelist": {
+      "requested": true,
+      "approvedBy": "unit.oasis",
+      "approvedAt": "2026-09-01"
+    },
+    "languages": {
+      "zh-TW": {
+        "status": "source"
+      },
+      "en": {
+        "status": "reviewed",
+        "reviewedAt": "2026-09-10",
+        "reviewer": "內部英文審核人"
+      },
+      "ja": {
+        "status": "machine"
+      },
+      "tl": {
+        "status": "machine"
+      },
+      "vi": {
+        "status": "reviewed",
+        "reviewedAt": "2026-09-12",
+        "reviewer": "簽約譯者（越南文）"
+      },
+      "id": {
+        "status": "machine"
+      },
+      "th": {
+        "status": "pending"
+      }
+    },
+    "summary": "由登革病毒引起，經埃及斑蚊與白線斑蚊叮咬傳播，不會人傳人。台灣為流行高風險地區，每年夏秋為高峰。",
+    "keywords": [
+      "登革熱",
+      "斑蚊",
+      "NS1",
+      "積水容器",
+      "警示徵象"
+    ],
+    "legacyUrls": [
+      "https://www.cdc.gov.tw/Disease/SubIndex/WYbKe3aE7LiY5gb-eA8PBw",
+      "https://www.cdc.gov.tw/Category/QAPage/{id}#dengue",
+      "https://www.cdc.gov.tw/Category/List/{id}#dengue-guidance",
+      "https://www.cdc.gov.tw/Bulletin/List/{id}?page=1#dengue"
+    ],
+    "keyFacts": {
+      "incubation": "3–14 天（通常 4–7 天）",
+      "symptoms": "突發高燒、頭痛、後眼窩痛、肌肉關節痛、出疹",
+      "transmission": "病媒蚊叮咬（埃及斑蚊、白線斑蚊）",
+      "prevention": "清除積水容器、防蚊",
+      "notify": "24 小時內"
+    },
+    "blocks": [
+      {
+        "key": "what-to-do",
+        "heading": "我該怎麼辦",
+        "cards": [
+          {
+            "if": "發燒且近兩週去過流行區",
+            "title": "24 小時內就醫",
+            "text": "24 小時內就醫，主動告知旅遊史，醫師可做 NS1 快篩。"
+          },
+          {
+            "if": "已確診在家休養",
+            "title": "退燒後 1–2 天最危險",
+            "text": "退燒後 1–2 天最危險，出現警示徵象立即回診。"
+          },
+          {
+            "if": "住在流行區",
+            "title": "每週巡查清除積水容器",
+            "text": "每週巡查清除積水容器，穿淺色長袖、使用防蚊液。"
+          }
+        ]
+      },
+      {
+        "key": "symptoms",
+        "heading": "症狀與警示徵象",
+        "markdown": "典型症狀為突發高燒（≥ 38°C）、頭痛、後眼窩痛、肌肉與關節痛、出疹。多數人可自行康復。\n\n少數人會發展為重症登革熱，常發生在**退燒前後**，再次感染不同型別病毒者風險較高。",
+        "warning": "持續嘔吐、腹痛、黏膜出血、嗜睡或躁動、肝腫大、血比容上升合併血小板下降。"
+      },
+      {
+        "key": "transmission",
+        "heading": "怎麼傳染",
+        "markdown": "登革熱經由帶有登革病毒的埃及斑蚊或白線斑蚊叮咬傳播，不會由人直接傳給人。病人在發病前一天至發病後五天為病毒血症期，此時被病媒蚊叮咬，病媒蚊即可能帶有病毒，再經 8–12 天即具傳播力。"
+      },
+      {
+        "key": "prevention",
+        "heading": "如何預防",
+        "markdown": "目前沒有廣泛使用的疫苗，預防重點是避免病媒蚊叮咬與清除孳生源：\n\n- 每週檢查住家內外積水容器，做到「巡、倒、清、刷」。\n- 戶外活動穿淺色長袖長褲，使用含 DEET、Picaridin 或 IR3535 的防蚊液。\n- 居家裝設紗窗紗門，必要時使用蚊帳。\n- 從流行地區返國後兩週內，外出仍應防蚊，避免成為傳染源。"
+      },
+      {
+        "key": "treatment",
+        "heading": "診斷與治療",
+        "markdown": "目前沒有特效抗病毒藥物，以支持性療法為主：補充水分、退燒以乙醯胺酚為主，避免使用阿斯匹靈與非類固醇消炎止痛藥以減少出血風險。發燒期可由醫師安排 NS1 抗原快速診斷試劑檢驗。"
+      },
+      {
+        "key": "vaccine",
+        "heading": "疫苗",
+        "markdown": "台灣目前未引進登革熱疫苗作為常規接種項目。相關評估以疾管署正式公告為準。"
+      },
+      {
+        "key": "situation",
+        "heading": "目前疫情與統計",
+        "markdown": "本土病例數與病媒蚊密度每日更新於疫情態勢層與 nidss。",
+        "datasets": [
+          "dataset.dengue-daily",
+          "dataset.dengue-local-weekly"
+        ]
+      },
+      {
+        "key": "faq",
+        "heading": "常見問題"
+      }
+    ],
+    "professional": {
+      "caseDefinitionDoc": "doc.case-definition-dengue",
+      "manualDoc": "doc.guidance-dengue",
+      "specimen": "急性期血清 2–5 mL，發病 7 日內可做 NS1 抗原、RT-PCR；發病 7 日後採恢復期血清檢測 IgM/IgG。",
+      "notifyNote": "第二類法定傳染病，應於 24 小時內通報；NS1 快篩陽性即應通報，不必等待確認結果。",
+      "programs": [
+        {
+          "key": "source-reduction",
+          "title": "孳生源清除與社區動員",
+          "summary": "推動「巡、倒、清、刷」：里（村）指定聯絡人、每週巡檢住家與公共空間積水容器；空地、工地等管理人限期改善，疫情升溫前辦理社區說明會。",
+          "documents": [
+            "doc.dengue-community-workplan",
+            "doc.guidance-dengue"
+          ],
+          "services": [],
+          "contentIds": [
+            "faq.dengue-container-check",
+            "faq.dengue-community-mobilize",
+            "media.dengue-village-chief",
+            "research.2024-community-dengue-source-reduction"
+          ]
+        },
+        {
+          "key": "vector-surveillance",
+          "title": "病媒蚊監測與密度調查",
+          "summary": "活動季每月調查住宅指數、容器指數與布氏指數，依級別調整查核頻率；本土病例周邊於 3 日內完成密度調查，作為擴大防治的依據。",
+          "documents": [
+            "doc.dengue-community-workplan"
+          ],
+          "services": [
+            "service.lab-test-request"
+          ],
+          "contentIds": [
+            "dataset.dengue-local-weekly",
+            "dataset.dengue-daily",
+            "labtest.dengue",
+            "research.2026-sea-dengue-genomic-surveillance"
+          ]
+        },
+        {
+          "key": "cluster-response",
+          "title": "群聚事件應變",
+          "summary": "同一村里 14 日內 2 例以上有關聯之本土病例即啟動應變：24 小時內疫調劃定風險範圍、針對性室內噴藥、連續 2 個潛伏期無新增才解除。",
+          "documents": [
+            "doc.guidance-dengue",
+            "doc.dengue-community-workplan"
+          ],
+          "services": [
+            "service.cluster-report-1922",
+            "service.notifiable-disease-report"
+          ],
+          "contentIds": [
+            "faq.dengue-spraying-refuse",
+            "clar.2025-07-dengue-spraying-poison",
+            "news.2026-08-18-dengue-rising-south",
+            "news.2026-09-15-letter-615-ns1"
+          ]
+        }
+      ]
+    },
+    "relatedDocuments": [
+      "doc.guidance-dengue",
+      "doc.case-definition-dengue",
+      "doc.dengue-community-workplan"
+    ],
+    "materials": [
+      {
+        "label": "登革熱防治海報（七語）",
+        "url": "https://www.cdc.gov.tw/Advocacy",
+        "langs": [
+          "zh-TW",
+          "en",
+          "vi",
+          "id",
+          "th",
+          "tl",
+          "ja"
+        ]
+      }
+    ],
+    "i18n": {
+      "en": {
+        "title": "Dengue fever",
+        "summary": "Dengue is caused by dengue viruses transmitted by Aedes aegypti and Aedes albopictus mosquitoes. It does not spread directly from person to person. Taiwan is a high-risk area, with peaks in summer and autumn.",
+        "keyFacts": {
+          "incubation": "3–14 days (usually 4–7)",
+          "symptoms": "Sudden high fever, headache, retro-orbital pain, muscle and joint pain, rash",
+          "transmission": "Bite of infected Aedes mosquitoes",
+          "prevention": "Remove standing water; avoid mosquito bites",
+          "notify": "Within 24 hours"
+        },
+        "blocks": [
+          {
+            "key": "what-to-do",
+            "heading": "What to do",
+            "cards": [
+              {
+                "if": "have a fever and travelled to an affected area in the last two weeks",
+                "title": "See a doctor within 24 hours",
+                "text": "See a doctor within 24 hours and mention your travel history; an NS1 rapid test may be done."
+              },
+              {
+                "if": "are confirmed and resting at home",
+                "title": "The 1–2 days after the fever breaks are the most dangerous",
+                "text": "Return immediately if any warning sign appears."
+              },
+              {
+                "if": "live in an affected area",
+                "title": "Check and empty standing water weekly",
+                "text": "Wear light-coloured long sleeves and use repellent."
+              }
+            ]
+          },
+          {
+            "key": "symptoms",
+            "heading": "Symptoms and warning signs",
+            "markdown": "Typical symptoms are sudden high fever (≥ 38°C), headache, pain behind the eyes, muscle and joint pain and rash. Most people recover on their own.\n\nA small number develop severe dengue, usually **around the time the fever subsides**. People infected a second time with a different serotype are at higher risk.",
+            "warning": "Persistent vomiting, abdominal pain, mucosal bleeding, lethargy or restlessness, liver enlargement, rising haematocrit with falling platelets."
+          },
+          {
+            "key": "transmission",
+            "heading": "How it spreads",
+            "markdown": "Dengue spreads through the bite of Aedes aegypti or Aedes albopictus mosquitoes carrying the virus. It is not transmitted directly between people. Patients are viraemic from one day before to five days after onset; a mosquito that bites them during this period can transmit the virus 8–12 days later."
+          },
+          {
+            "key": "prevention",
+            "heading": "Prevention",
+            "markdown": "There is no routine vaccine in Taiwan. Prevention focuses on avoiding bites and removing breeding sites:\n\n- Check containers inside and outside your home every week: inspect, empty, clean and scrub.\n- Wear light-coloured long sleeves and trousers and use DEET, Picaridin or IR3535 repellent.\n- Install window and door screens; use bed nets if needed.\n- For two weeks after returning from an affected area, keep avoiding bites so you do not become a source of infection."
+          },
+          {
+            "key": "treatment",
+            "heading": "Diagnosis and treatment",
+            "markdown": "There is no specific antiviral. Treatment is supportive: fluids and paracetamol for fever. Avoid aspirin and NSAIDs because of bleeding risk. During the febrile phase a doctor may order an NS1 antigen rapid test."
+          },
+          {
+            "key": "vaccine",
+            "heading": "Vaccine",
+            "markdown": "Dengue vaccine is not part of Taiwan's routine schedule. Any change will be announced officially by Taiwan CDC."
+          },
+          {
+            "key": "situation",
+            "heading": "Current situation and statistics",
+            "markdown": "Local case counts and vector density are updated daily on the situation layer and NIDSS."
+          },
+          {
+            "key": "faq",
+            "heading": "FAQ"
+          }
+        ]
+      },
+      "vi": {
+        "title": "Sốt xuất huyết Dengue",
+        "summary": "Sốt xuất huyết do vi-rút Dengue gây ra, lây qua vết đốt của muỗi Aedes aegypti và Aedes albopictus, không lây trực tiếp từ người sang người. Đài Loan là vùng nguy cơ cao, đỉnh dịch vào mùa hè và mùa thu.",
+        "keyFacts": {
+          "incubation": "3–14 ngày (thường 4–7 ngày)",
+          "symptoms": "Sốt cao đột ngột, đau đầu, đau sau hốc mắt, đau cơ khớp, phát ban",
+          "transmission": "Muỗi Aedes đốt",
+          "prevention": "Dọn sạch nước đọng, tránh muỗi đốt",
+          "notify": "Trong vòng 24 giờ"
+        },
+        "blocks": [
+          {
+            "key": "what-to-do",
+            "heading": "Tôi nên làm gì",
+            "cards": [
+              {
+                "if": "bị sốt và đã đến vùng dịch trong 2 tuần qua",
+                "title": "Đi khám trong 24 giờ",
+                "text": "Đi khám trong vòng 24 giờ, chủ động khai báo lịch sử đi lại; bác sĩ có thể làm xét nghiệm nhanh NS1."
+              },
+              {
+                "if": "đã được chẩn đoán và đang nghỉ tại nhà",
+                "title": "1–2 ngày sau khi hết sốt là nguy hiểm nhất",
+                "text": "Xuất hiện dấu hiệu cảnh báo phải tái khám ngay."
+              },
+              {
+                "if": "sống trong vùng dịch",
+                "title": "Kiểm tra và đổ nước đọng hằng tuần",
+                "text": "Mặc áo dài tay màu sáng, dùng thuốc chống muỗi."
+              }
+            ]
+          },
+          {
+            "key": "symptoms",
+            "heading": "Triệu chứng và dấu hiệu cảnh báo",
+            "markdown": "Triệu chứng điển hình: sốt cao đột ngột (≥ 38°C), đau đầu, đau sau hốc mắt, đau cơ khớp, phát ban. Đa số tự khỏi.\n\nMột số ít chuyển nặng, thường vào **khoảng thời gian hết sốt**.",
+            "warning": "Nôn liên tục, đau bụng, chảy máu niêm mạc, lừ đừ hoặc kích động, gan to, hematocrit tăng kèm tiểu cầu giảm."
+          },
+          {
+            "key": "transmission",
+            "heading": "Lây truyền",
+            "markdown": "Lây qua muỗi Aedes mang vi-rút đốt; không lây trực tiếp giữa người với người."
+          },
+          {
+            "key": "prevention",
+            "heading": "Phòng ngừa",
+            "markdown": "Chưa có vắc-xin thường quy tại Đài Loan. Phòng ngừa: dọn nước đọng hằng tuần, mặc áo dài tay, dùng thuốc chống muỗi chứa DEET, Picaridin hoặc IR3535, lắp lưới chống muỗi. Sau khi về từ vùng dịch, tiếp tục tránh muỗi đốt trong 2 tuần."
+          },
+          {
+            "key": "treatment",
+            "heading": "Chẩn đoán và điều trị",
+            "markdown": "Không có thuốc kháng vi-rút đặc hiệu; điều trị hỗ trợ, hạ sốt bằng paracetamol; tránh aspirin và NSAID."
+          },
+          {
+            "key": "vaccine",
+            "heading": "Vắc-xin",
+            "markdown": "Vắc-xin sốt xuất huyết chưa nằm trong lịch tiêm chủng thường quy của Đài Loan."
+          },
+          {
+            "key": "situation",
+            "heading": "Tình hình hiện nay và thống kê",
+            "markdown": "Số ca nội địa và mật độ muỗi cập nhật hằng ngày."
+          },
+          {
+            "key": "faq",
+            "heading": "Câu hỏi thường gặp"
+          }
+        ]
+      }
+    },
+    "sourceHash": "3b88a1a16904",
+    "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/dengue/",
+    "path": "/diseases/dengue/",
+    "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/dengue.md",
+    "governance": {
+      "owner": "unit.acute-infectious",
+      "ownerName": "急性傳染病組",
+      "steward": "急性傳染病組承辦人",
+      "reviewedAt": "2026-07-15",
+      "reviewPeriodMonths": 12,
+      "nextReviewAt": "2027-07-15",
+      "daysToReview": 287,
+      "overdue": false,
+      "dueSoon": false,
+      "status": "published",
+      "lifecycle": "current",
+      "lifecycleLabel": "現行版",
+      "whitelist": true,
+      "whitelistTier": "public",
+      "whitelistPublic": true,
+      "whitelistReasons": [],
+      "whitelistReasonLabels": [],
+      "isCurrent": true,
+      "superseded": false,
+      "supersededBy": null,
+      "currentId": "disease.dengue",
+      "noindex": false,
+      "stale": [],
+      "basisRevisions": [],
+      "predatesBasis": false,
+      "annotations": [],
+      "reverseAuditHits": 0,
+      "license": "OGDL-1.0",
+      "licenseNote": null,
+      "sensitivity": "public",
+      "sourceHash": "3b88a1a16904",
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-10",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-12",
+          "reviewer": "簽約譯者（越南文）"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "pending"
+        }
+      },
+      "translationStale": {
+        "en": false,
+        "ja": false,
+        "tl": false,
+        "vi": false,
+        "id": false
+      },
+      "renderableLangs": [
+        "zh-TW",
+        "en",
+        "vi"
+      ]
+    },
+    "master": {
+      "id": "disease.dengue",
+      "slug": "dengue",
+      "name": "登革熱",
+      "nameEn": "Dengue fever",
+      "aliases": [
+        "登革出血熱",
+        "天狗熱",
+        "斷骨熱",
+        "Dengue"
+      ],
+      "legalCategory": 2,
+      "icd10": [
+        "A90",
+        "A91"
+      ],
+      "notifyWithinHours": 24,
+      "transmission": [
+        "vector"
+      ],
+      "hasPage": true,
+      "owner": "unit.acute-infectious",
+      "datasets": [
+        "dataset.dengue-daily",
+        "dataset.dengue-local-weekly"
+      ],
+      "zhuyin": "ㄉ",
+      "strokes": 12,
+      "i18n": {
+        "en": {
+          "name": "Dengue fever"
+        }
+      }
+    },
+    "related": {
+      "faq": [
+        {
+          "id": "faq.dengue-community-mobilize",
+          "type": "faq",
+          "title": "社區或里長要怎麼帶大家一起防登革熱？",
+          "summary": "社區防登革熱可由里長指定聯絡人、每週組織巡倒清刷、回報空屋與工地積水；衛生所提供多語教材與說明會。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/dengue-community-mobilize/",
+          "path": "/faq/dengue-community-mobilize/",
+          "reviewedAt": "2026-09-24",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.dengue-container-check",
+          "type": "faq",
+          "title": "防登革熱說的「巡、倒、清、刷」是什麼？",
+          "summary": "「巡倒清刷」：巡視積水容器、倒掉積水、清除不需要的容器、刷洗內壁去除蟲卵，每週一次可中斷斑蚊繁殖。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/dengue-container-check/",
+          "path": "/faq/dengue-container-check/",
+          "reviewedAt": "2026-07-20",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.dengue-fever-when-to-see-doctor",
+          "type": "faq",
+          "title": "登革熱發燒後幾天內要就醫？",
+          "summary": "感染登革病毒潛伏期 3–14 天；有流行地區旅遊史且發燒，應於 24 小時內就醫並告知醫師。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/dengue-fever-when-to-see-doctor/",
+          "path": "/faq/dengue-fever-when-to-see-doctor/",
+          "reviewedAt": "2026-08-02",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.dengue-imported-return",
+          "type": "faq",
+          "title": "從登革熱流行地區回國後，要注意什麼？",
+          "summary": "從登革熱流行地區返國後 14 日內需做好防蚊；發燒、頭痛、後眼窩痛或出疹請就醫並告知旅遊史。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/dengue-imported-return/",
+          "path": "/faq/dengue-imported-return/",
+          "reviewedAt": "2026-09-24",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.dengue-painkiller",
+          "type": "faq",
+          "title": "懷疑登革熱時，可以自己吃止痛藥嗎？",
+          "summary": "懷疑登革熱請先就醫，避免自行服用阿斯匹靈或非類固醇消炎止痛藥，以免增加出血風險；用藥依醫師指示。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/dengue-painkiller/",
+          "path": "/faq/dengue-painkiller/",
+          "reviewedAt": "2026-07-20",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.dengue-spraying-refuse",
+          "type": "faq",
+          "title": "衛生單位說要進家裡噴藥，可以拒絕嗎？",
+          "summary": "登革熱本土病例周邊的室內噴藥是針對性防治，會事先通知並說明注意事項；有嬰幼兒、孕婦或寵物請事先告知，仍要持續清除積水容器。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/dengue-spraying-refuse/",
+          "path": "/faq/dengue-spraying-refuse/",
+          "reviewedAt": "2026-09-24",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.travel-return-fever",
+          "type": "faq",
+          "title": "出國回來後發燒，應該怎麼辦？",
+          "summary": "出國返國後發燒請戴口罩就醫，主動告知旅遊史與接觸史；去過登革熱流行區者兩週內持續防蚊。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/travel-return-fever/",
+          "path": "/faq/travel-return-fever/",
+          "reviewedAt": "2026-06-15",
+          "owner": "unit.quarantine",
+          "ownerName": "檢疫組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "news": [
+        {
+          "id": "news.2025-02-18-dengue-imported-spring",
+          "type": "news",
+          "title": "春節後登革熱境外移入病例增加，出國返國請落實防蚊",
+          "summary": "春節連假後登革熱境外移入病例增加，多自印尼、越南、馬來西亞移入。返國兩週內外出請防蚊，發燒就醫告知旅遊史。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-02-18-dengue-imported-spring/",
+          "path": "/news/2025-02-18-dengue-imported-spring/",
+          "reviewedAt": "2025-02-18",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "news.2025-07-15-clarify-dengue-spray",
+          "type": "news",
+          "title": "澄清：網傳「登革熱噴藥會毒死人、可拒絕開門」為錯誤訊息",
+          "summary": "網傳登革熱噴藥會毒死人、可拒絕開門配合為錯誤訊息。防治用藥經核准、依規定稀釋，配合孳生源清除與噴藥是傳染病防治法規定的義務。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-07-15-clarify-dengue-spray/",
+          "path": "/news/2025-07-15-clarify-dengue-spray/",
+          "reviewedAt": "2025-07-15",
+          "owner": "unit.pr",
+          "ownerName": "公關室",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "news.2026-07-21-dengue-first-local",
+          "type": "news",
+          "title": "2026 年首例登革熱本土病例出現於高雄市，請民眾清除積水容器",
+          "summary": "2026 年首例登革熱本土病例出現於高雄市，衛生單位已完成疫調與周邊孳生源清除。疾管署呼籲民眾每週落實「巡倒清刷」。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-07-21-dengue-first-local/",
+          "path": "/news/2026-07-21-dengue-first-local/",
+          "reviewedAt": "2026-07-21",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "news.2026-08-18-dengue-rising-south",
+          "type": "news",
+          "title": "南部登革熱本土疫情上升，籲請民眾配合孳生源清除與防治工作",
+          "summary": "南部縣市登革熱本土病例連續增加，疾管署籲請民眾配合衛生單位孳生源清除與噴藥，發燒就醫可由醫師進行 NS1 快篩。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-08-18-dengue-rising-south/",
+          "path": "/news/2026-08-18-dengue-rising-south/",
+          "reviewedAt": "2026-08-18",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "news.2026-09-15-letter-615-ns1",
+          "type": "letter",
+          "title": "致醫界通函第 615 號：登革熱 NS1 抗原快篩試劑配置更新",
+          "summary": "自 2026-09-22 起更新登革熱 NS1 快篩試劑配置：南部疫區基層診所加量配置、改由線上系統申領，快篩陽性仍應 24 小時內通報。（原型示意通函，號次非真實）",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-15-letter-615-ns1/",
+          "path": "/news/2026-09-15-letter-615-ns1/",
+          "reviewedAt": "2026-09-15",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "news.2026-09-29-ili-weekly",
+          "type": "news",
+          "title": "流感疫情持續上升，10 月 1 日公費疫苗開打，長者幼兒請優先接種",
+          "summary": "類流感門急診就診率續升，腸病毒與登革熱本土疫情亦仍活躍。疾管署呼籲 10 月 1 日起長者與幼兒優先接種公費流感疫苗。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-29-ili-weekly/",
+          "path": "/news/2026-09-29-ili-weekly/",
+          "reviewedAt": "2026-09-29",
+          "owner": "unit.epidemic-intelligence",
+          "ownerName": "疫情中心",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "documents": [
+        {
+          "id": "doc.case-definition-dengue.2026-01-01",
+          "type": "document",
+          "title": "傳染病病例定義：登革熱（2026 年版）",
+          "summary": "現行 2026 年版登革熱病例定義：NS1 快篩陽性且符合臨床條件者列為極可能病例；檢驗條件納入多重病原核酸檢測平台。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/case-definition-dengue.2026-01-01/",
+          "path": "/documents/case-definition-dengue.2026-01-01/",
+          "reviewedAt": "2026-01-05",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "doc.curriculum-dengue.2026-10-10",
+          "type": "document",
+          "title": "登革熱核心教材（示範匯入版）",
+          "summary": "傳染病核心教材（登革熱）的示範匯入：章節架構、學習目標與可查證的重點句。教材 PDF 正本尚未取得，本頁依已匯入的《登革熱/屈公病防治工作指引》2026 年 2 月版與公開搜尋摘錄重建，每句標出處，未查證，以疾管署 PDF 正本為準。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/curriculum-dengue.2026-10-10/",
+          "path": "/documents/curriculum-dengue.2026-10-10/",
+          "reviewedAt": "2026-10-10",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "scheduled",
+          "whitelist": false
+        },
+        {
+          "id": "doc.dengue-community-workplan.2026-09-10",
+          "type": "document",
+          "title": "登革熱社區防治工作指引：孳生源清除、病媒蚊監測與群聚應變",
+          "summary": "地方政府與社區推動登革熱防治的作業指引：孳生源清除與社區動員（巡倒清刷）、病媒蚊密度調查與風險分級、本土病例群聚的應變分工與解除條件。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/dengue-community-workplan.2026-09-10/",
+          "path": "/documents/dengue-community-workplan.2026-09-10/",
+          "reviewedAt": "2026-09-22",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "doc.guidance-dengue.2026-02",
+          "type": "document",
+          "title": "登革熱/屈公病防治工作指引（2026 年 2 月版）",
+          "summary": "衛生福利部疾病管制署 2026 年 2 月版登革熱/屈公病防治工作指引：疾病介紹、病例與病媒監測、平時與散發疫情防治、群聚疫情防治、法令規定與附件表單。本頁機讀版由 PDF 機器轉出，尚未校對，以 PDF 原頁為準。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/guidance-dengue.2026-02/",
+          "path": "/documents/guidance-dengue.2026-02/",
+          "reviewedAt": "2026-02-01",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": false
+        }
+      ],
+      "vaccines": [],
+      "datasets": [
+        {
+          "id": "dataset.dengue-daily",
+          "type": "dataset",
+          "title": "登革熱每日確定病例統計",
+          "summary": "1998 年起登革熱每日確定病例（本土／境外移入），含縣市、性別、年齡層。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.dengue-daily",
+          "path": "/data/#dataset.dengue-daily",
+          "reviewedAt": "2026-09-01",
+          "owner": "unit.epidemic-intelligence",
+          "ownerName": "疫情中心",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "dataset.dengue-local-weekly",
+          "type": "dataset",
+          "title": "登革熱本土病例週統計（縣市別）",
+          "summary": "登革熱本土病例依發病週與縣市彙整之週統計，供疫情態勢判讀與地方防治規劃使用。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.dengue-local-weekly",
+          "path": "/data/#dataset.dengue-local-weekly",
+          "reviewedAt": "2026-06-30",
+          "owner": "unit.epidemic-intelligence",
+          "ownerName": "疫情中心",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "clarifications": [
+        {
+          "id": "clar.2025-07-dengue-spraying-poison",
+          "type": "clarification",
+          "title": "網傳「登革熱噴藥會毒死人、可以拒絕開門」為錯誤訊息",
+          "summary": "登革熱防治用藥經核准並依規定稀釋，噴藥前會通知住戶暫離；配合防治是法定義務，清除積水才是根本。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/factcheck/#clar.2025-07-dengue-spraying-poison",
+          "path": "/factcheck/#clar.2025-07-dengue-spraying-poison",
+          "reviewedAt": "2026-07-10",
+          "owner": "unit.pr",
+          "ownerName": "公關室",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "media": [
+        {
+          "id": "media.dengue-village-chief",
+          "type": "media",
+          "title": "里長帶頭巡倒清刷：社區防登革熱篇",
+          "summary": "由里長示範帶領社區志工「巡、倒、清、刷」清除積水容器，說明孳生源清除比噴藥更重要，並提醒出現發燒、頭痛、骨頭痛應儘速就醫。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/dengue-village-chief/",
+          "path": "/media/dengue-village-chief/",
+          "reviewedAt": "2026-07-15",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "media.travel-clinic-before-departure",
+          "type": "media",
+          "title": "出國前 4 到 6 週，先到旅遊醫學門診",
+          "summary": "提醒民眾出國前 4 到 6 週到旅遊醫學門診，依目的地旅遊疫情建議等級評估疫苗、預防瘧疾用藥與防蚊，並說明回國後發燒要告知旅遊史。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/travel-clinic-before-departure/",
+          "path": "/media/travel-clinic-before-departure/",
+          "reviewedAt": "2026-06-12",
+          "owner": "unit.quarantine",
+          "ownerName": "檢疫組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "labtests": [
+        {
+          "id": "labtest.dengue",
+          "type": "labtest",
+          "title": "登革熱檢驗項目與送驗規定",
+          "summary": "登革熱：急性期血清 2–5 mL（發病 7 日內），4°C 冷藏 24 小時內送達，可做 NS1 抗原、RT-PCR 與 IgM／IgG；恢復期血清於發病 14–40 日採檢。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/dengue/",
+          "path": "/lab/dengue/",
+          "reviewedAt": "2026-07-15",
+          "owner": "unit.lab",
+          "ownerName": "檢驗及疫苗研製中心",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "services": [],
+      "publications": [
+        {
+          "id": "publication.bulletin-42-11",
+          "type": "publication",
+          "title": "疫情報導 第 42 卷第 11 期",
+          "summary": "本期收錄 3 篇：2026 年第一季國內 HIV 新通報個案流行病學特徵分析等。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-11/",
+          "path": "/publications/bulletin-42-11/",
+          "reviewedAt": "2026-06-09",
+          "owner": "unit.epidemic-intelligence",
+          "ownerName": "疫情中心",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "publication.bulletin-42-13",
+          "type": "publication",
+          "title": "疫情報導 第 42 卷第 13 期",
+          "summary": "本期收錄 3 篇：2026 年首例本土登革熱病例疫情調查與社區防治等。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-13/",
+          "path": "/publications/bulletin-42-13/",
+          "reviewedAt": "2026-07-14",
+          "owner": "unit.epidemic-intelligence",
+          "ownerName": "疫情中心",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "publication.bulletin-42-15",
+          "type": "publication",
+          "title": "疫情報導 第 42 卷第 15 期",
+          "summary": "本期收錄 3 篇：2026 年夏季登革熱本土疫情南部擴散分析等。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-15/",
+          "path": "/publications/bulletin-42-15/",
+          "reviewedAt": "2026-08-11",
+          "owner": "unit.epidemic-intelligence",
+          "ownerName": "疫情中心",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "publication.bulletin-42-16",
+          "type": "publication",
+          "title": "疫情報導 第 42 卷第 16 期",
+          "summary": "本期收錄 2 篇：日本腦炎病例之流行病學特徵：2020–2025 年等。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-16/",
+          "path": "/publications/bulletin-42-16/",
+          "reviewedAt": "2026-08-25",
+          "owner": "unit.epidemic-intelligence",
+          "ownerName": "疫情中心",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "publication.manual-communicable-disease-control-2026",
+          "type": "publication",
+          "title": "傳染病防治工作手冊（2026 年版）",
+          "summary": "供地方衛生局與醫療院所使用之各類法定傳染病防治工作手冊，含病例定義、通報、檢體採檢、疫調、接觸者追蹤與防治措施。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/manual-communicable-disease-control-2026/",
+          "path": "/publications/manual-communicable-disease-control-2026/",
+          "reviewedAt": "2026-03-01",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "topics": [
+        {
+          "id": "topic.disaster-evacuation",
+          "type": "topic",
+          "title": "防災避難須知：災後防疫與避難所衛生",
+          "summary": "颱風、地震、水災後的防疫重點：清除積水防登革熱、飲水與食物衛生防腸胃道傳染病、避難所防呼吸道群聚，並連結全民安全指引。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/disaster-evacuation/",
+          "path": "/topics/disaster-evacuation/",
+          "reviewedAt": "2026-09-01",
+          "owner": "unit.preparedness",
+          "ownerName": "新興傳染病整備組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "topic.new-residents-migrant-health",
+          "type": "topic",
+          "title": "新住民與移工健康：七語防疫資訊",
+          "summary": "彙整中、英、日、越、印、泰、菲七語的防疫資訊：移工健康檢查、結核病、登革熱、疫苗接種與 1922 多語服務，供新住民、移工、雇主與仲介使用。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/new-residents-migrant-health/",
+          "path": "/topics/new-residents-migrant-health/",
+          "reviewedAt": "2026-08-15",
+          "owner": "unit.pr",
+          "ownerName": "公關室",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ]
+    }
+  }
+}

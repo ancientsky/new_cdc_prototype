@@ -1,0 +1,28 @@
+# Taiwan Epidemiology Bulletin, Vol. 42, No. 18
+
+> 權責單位：Epidemic Intelligence Center · 最後審閱：2026-09-22 · 授權：OGDL-1.0 · ID：publication.bulletin-42-18 · 系列：疫情報導 42(18)
+
+This issue contains 4 articles on surveillance, outbreak investigations and control policy.
+
+## 書目
+
+- ISSN：1680-5739
+- 作者：疾病管制署
+- PDF：/pending/?ref=publication.bulletin-42-18&doc=疫情報導%20第%2042%20卷第%2018%20期（PDF）
+- 建議引用：疾病管制署（2026）。Taiwan Epidemiology Bulletin, Vol. 42, No. 18。疫情報導，42(18)。Epidemic Intelligence Center。ISSN 1680-5739。https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-18/
+
+## 摘要
+
+《疫情報導》為疾管署發行之同儕審查期刊，每月出刊 2 期，刊載疫情調查、監測分析與防治政策。本期（第 42 卷第 18 期，2026-09-22 出刊）收錄：
+
+1. 秋冬腸病毒疫情回升之監測指標分析
+2. 醫院抗藥性細菌監測：2025 年度報告摘要
+3. 流感抗病毒藥劑公費使用條件修訂之說明
+4. 一起移工宿舍結核病接觸者調查
+
+## 篇目
+
+1. 秋冬腸病毒疫情回升之監測指標分析（疫情中心） p.1-8
+2. 醫院抗藥性細菌監測：2025 年度報告摘要（感染管制及生物安全組） p.9-16
+3. 流感抗病毒藥劑公費使用條件修訂之說明（急性傳染病組） p.17-24
+4. 一起移工宿舍結核病接觸者調查（中區管制中心） p.25-32

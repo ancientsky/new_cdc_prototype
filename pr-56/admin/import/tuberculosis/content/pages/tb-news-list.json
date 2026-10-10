@@ -1,0 +1,54 @@
+{
+  "id": "page.tb-news-list",
+  "type": "page",
+  "title": "結核病最新消息",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2018-03-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "2026-08-20 都治成效公布：完治率持續提升 2026-03-24 2035 消除結核：世界結核病日呼籲 2025-03-24 世界結核病日：咳嗽兩週請就醫",
+  "slug": "tb-news-list",
+  "bodyMarkdown": "- 2026-08-20 [都治成效公布：完治率持續提升](https://www.cdc.gov.tw/Bulletin/Detail/gfAKrjUyqs1e1w8Vms1EK9?typeid=9)\n- 2026-03-24 [2035 消除結核：世界結核病日呼籲](https://www.cdc.gov.tw/Bulletin/Detail/5OcAe9f69JuVLpC_aMJY9N?typeid=9)\n- 2025-03-24 [世界結核病日：咳嗽兩週請就醫](https://www.cdc.gov.tw/Bulletin/Detail/7o3s_ypLZ2f0uD6ZEBnmrs?typeid=9)",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/List/8RWYNAmObrDrqgCST1ai3c?page=1"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.6,
+    "issues": [
+      {
+        "code": "list-page",
+        "severity": "info",
+        "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+      },
+      {
+        "code": "target-type-differs",
+        "severity": "info",
+        "message": "對應的新站內容是 disease.tuberculosis（disease），草稿以 page 暫存，請比對後改建為 disease"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/List/8RWYNAmObrDrqgCST1ai3c?page=1",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "disease.tuberculosis"
+    ]
+  }
+}

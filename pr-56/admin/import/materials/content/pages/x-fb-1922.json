@@ -1,0 +1,47 @@
+{
+  "id": "page.x-fb-1922",
+  "type": "page",
+  "title": "1922 防疫達人（Facebook／LINE）",
+  "owner": "unit.pr",
+  "publishedAt": "2020-02-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "加入 1922 防疫達人社群，第一時間取得防疫資訊。 請透過下列官方社群入口加入。",
+  "slug": "x-fb-1922",
+  "bodyMarkdown": "加入 1922 防疫達人社群，第一時間取得防疫資訊。\n\n請透過下列官方社群入口加入。\n\n- [1922 防疫達人 Facebook 粉絲專頁](https://www.facebook.com/1922.example)\n- [1922 防疫達人 LINE 官方帳號](https://line.me/R/ti/p/@1922example)",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/ListContent/T4NQf3E9zQFFjYKNWGBgTK?uaid=THu-Ah2wZaY7MEXWOAcXcp"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+      },
+      {
+        "code": "external-system",
+        "severity": "info",
+        "message": "舊頁主要連到外部系統（網域 www.facebook.com、line.me）：新站以入口連結呈現，建議 /services/ 放入口或清單填 newPath（例 /data/）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/ListContent/T4NQf3E9zQFFjYKNWGBgTK?uaid=THu-Ah2wZaY7MEXWOAcXcp",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

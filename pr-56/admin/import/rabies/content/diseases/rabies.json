@@ -1,0 +1,262 @@
+{
+  "id": "disease.rabies",
+  "type": "disease",
+  "title": "狂犬病",
+  "slug": "rabies",
+  "nameEn": "Rabies",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2018-03-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.rabies"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "狂犬病一旦發病致死率幾乎 100%，但被動物咬傷後及時處理與接種疫苗可有效預防。記住「一沖二認三送四觀察」，不要觸摸野生動物。",
+  "aliases": [
+    "恐水病",
+    "Rabies",
+    "麗沙病毒感染"
+  ],
+  "legalCategory": 1,
+  "icd10": [
+    "A82"
+  ],
+  "notifyWithinHours": 24,
+  "transmission": [
+    "zoonotic"
+  ],
+  "keyFacts": {
+    "symptoms": "初期為發燒、頭痛、倦怠，以及咬傷部位麻、癢、刺痛等異常感覺。之後出現焦慮、躁動、幻覺，以及典型的恐水（看到水或喝水時喉…",
+    "transmission": "狂犬病病毒存在於受感染動物的唾液中，經由咬傷、抓傷或舔舐人的傷口、黏膜傳染。",
+    "prevention": "不接觸、不撿拾、不餵食野生動物。 寵物犬貓每年接種動物狂犬病疫苗，外出繫鍊，不棄養。"
+  },
+  "blocks": [
+    {
+      "key": "what-to-do",
+      "heading": "我該怎麼辦",
+      "markdown": "",
+      "status": "pending"
+    },
+    {
+      "key": "symptoms",
+      "heading": "症狀與警示徵象",
+      "markdown": "初期為發燒、頭痛、倦怠，以及**咬傷部位麻、癢、刺痛**等異常感覺。之後出現焦慮、躁動、幻覺，以及典型的**恐水**（看到水或喝水時喉嚨痙攣）、**怕風**，最後進展到麻痺、昏迷、死亡。\n\n一旦出現神經症狀，致死率幾乎 **100%**，因此暴露後的預防處置非常重要。\n\n**注意：**被動物咬傷後不論傷口大小，都應就醫評估；不要等到出現症狀。"
+    },
+    {
+      "key": "transmission",
+      "heading": "怎麼傳染",
+      "markdown": "### 致病原\n\n狂犬病病毒存在於受感染動物的唾液中，經由**咬傷、抓傷**或舔舐人的傷口、黏膜傳染。台灣自 2013 年起在野生**鼬獾**、白鼻心及錢鼠等動物檢出狂犬病毒；國外以狗、蝙蝠、猴子、狐狸等為主。\n\n狂犬病病毒存在於受感染動物的唾液中，經由**咬傷、抓傷**或舔舐人的傷口、黏膜傳染。台灣自 2013 年起在野生**鼬獾**、白鼻心及錢鼠等動物檢出狂犬病毒；國外以狗、蝙蝠、猴子、狐狸等為主。\n\n狂犬病病毒存在於受感染動物的唾液中，經由**咬傷、抓傷**或舔舐人的傷口、黏膜傳染。台灣自 2013 年起在野生**鼬獾**、白鼻心及錢鼠等動物檢出狂犬病毒；國外以狗、蝙蝠、猴子、狐狸等為主。\n\n人與人之間一般不會傳染。\n\n狂犬病的潛伏期為 **通常 1–3 個月，可短至數天或長達數年**。\n\n| 項目 | 內容 |\n| --- | --- |\n| 潛伏期 | 通常 1–3 個月，可短至數天或長達數年 |\n| 可傳染期 | 病媒／接觸相關（被帶病毒動物咬傷、抓傷或舔舐傷口） |"
+    },
+    {
+      "key": "prevention",
+      "heading": "如何預防",
+      "markdown": "- **不接觸、不撿拾、不餵食**野生動物。\n- 寵物犬貓每年接種動物狂犬病疫苗，外出繫鍊，不棄養。\n- 被動物咬傷後落實「**一沖二認三送四觀察**」：\n\n1. 沖：以肥皂和大量清水沖洗傷口 15 分鐘，再以優碘消毒。\n2. 認：記住動物的特徵，可能的話安全地留置觀察。\n3. 送：儘速就醫，由醫師評估是否接種疫苗與免疫球蛋白。\n4. 觀察：將動物隔離觀察 10 天。"
+    },
+    {
+      "key": "treatment",
+      "heading": "診斷與治療",
+      "markdown": "發病後沒有有效治療。**暴露後預防**包含傷口處理、依暴露等級接種**狂犬病疫苗**（一般為 4–5 劑）及必要時注射狂犬病免疫球蛋白。國內暴露後疫苗由疾管署提供，於指定的狂犬病疫苗接種醫院施打。"
+    },
+    {
+      "key": "vaccine",
+      "heading": "疫苗",
+      "markdown": "**暴露後接種**：經醫師評估後於指定醫院公費接種。**暴露前接種**：建議獸醫、動物防疫與捕捉人員、野生動物研究者，以及前往流行地區長期停留或無法及時取得醫療者，可評估自費接種 2–3 劑。"
+    },
+    {
+      "key": "situation",
+      "heading": "目前疫情與統計",
+      "markdown": "國內人類病例極為罕見，多為境外感染；野生動物監測持續檢出陽性鼬獾，請勿接觸野生動物。\n\n近年確定病例趨勢如下表與圖（**示意數字，非正式統計**，正式數字見統計資料）：\n\n| 年度 | 確定病例數（示意） | 每十萬人口發生率（示意） |\n| --- | --- | --- |\n| 2021 | 814 | 16.6 |\n| 2022 | 452 | 30.4 |\n| 2023 | 990 | 4.2 |\n| 2024 | 628 | 18 |\n| 2025 | 266 | 31.8 |\n\n![rabies-trend](/files/disease.rabies/rabies-trend.png)"
+    },
+    {
+      "key": "faq",
+      "heading": "常見問題",
+      "markdown": "",
+      "status": "pending"
+    }
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Disease/SubIndex/1WOARA7Niw2jAcrCXFxPYp",
+    "https://www.cdc.gov.tw/Category/MPage/7xGZ1yWADA2Frj42YM8bP8"
+  ],
+  "assets": [
+    {
+      "file": "rabies-trend.png",
+      "kind": "image",
+      "alt": "rabies-trend",
+      "license": "OGDL-1.0",
+      "needsAlt": true,
+      "mime": "image/png",
+      "bytes": 359,
+      "sha256": "5da3a4e98fdc80539a7542ee2e19aea774fc32d0efe990856a52ca52d1d53354",
+      "width": 160,
+      "height": 90
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.98,
+    "issues": [
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「狂犬病／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（狂犬病）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-pathogen（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-epidemiology（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "image-no-alt",
+        "severity": "warn",
+        "message": "圖片「rabies-trend.png」舊頁沒有替代文字，暫用檔名「rabies-trend」，請補 alt（needsAlt）"
+      },
+      {
+        "code": "image-license-assumed",
+        "severity": "info",
+        "message": "圖片「rabies-trend.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-transmission（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-incubation（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-symptoms（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-prevention（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-treatment（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「狂犬病／預防接種」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（狂犬病）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 vaccine（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留共 184 處（7 個來源頁）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Disease/SubIndex/1WOARA7Niw2jAcrCXFxPYp",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "sourceUrls": [
+      "https://www.cdc.gov.tw/Disease/SubIndex/1WOARA7Niw2jAcrCXFxPYp",
+      "https://www.cdc.gov.tw/Category/MPage/7xGZ1yWADA2Frj42YM8bP8"
+    ],
+    "existing": true,
+    "compareWith": [
+      "disease.rabies"
+    ],
+    "mergedFrom": [
+      {
+        "page": "01-intro",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/1WOARA7Niw2jAcrCXFxPYp",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "02-intro-pathogen",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/1WOARA7Niw2jAcrCXFxPYp",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "03-intro-epidemiology",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/1WOARA7Niw2jAcrCXFxPYp",
+        "blocks": [
+          "situation"
+        ]
+      },
+      {
+        "page": "04-intro-transmission",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/1WOARA7Niw2jAcrCXFxPYp",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "05-intro-incubation",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/1WOARA7Niw2jAcrCXFxPYp",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "06-intro-symptoms",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/1WOARA7Niw2jAcrCXFxPYp",
+        "blocks": [
+          "symptoms"
+        ]
+      },
+      {
+        "page": "07-intro-prevention",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/1WOARA7Niw2jAcrCXFxPYp",
+        "blocks": [
+          "prevention"
+        ]
+      },
+      {
+        "page": "08-intro-treatment",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/1WOARA7Niw2jAcrCXFxPYp",
+        "blocks": [
+          "treatment"
+        ]
+      },
+      {
+        "page": "09-vaccine",
+        "url": "https://www.cdc.gov.tw/Category/MPage/7xGZ1yWADA2Frj42YM8bP8",
+        "blocks": [
+          "vaccine"
+        ]
+      }
+    ],
+    "introMarkdown": "狂犬病一旦發病致死率幾乎 100%，但被動物咬傷後及時處理與接種疫苗可有效預防。記住「一沖二認三送四觀察」，不要觸摸野生動物。\n\n| 項目 | 內容 |\n| --- | --- |\n| 法定傳染病類別 | 第一類 |\n| 通報時限 | 24 小時內 |\n| ICD-10 | A82 |\n| 主要傳染途徑 | 被帶病毒動物咬傷、抓傷或舔舐傷口 |\n| 潛伏期 | 通常 1–3 個月，可短至數天或長達數年 |"
+  }
+}

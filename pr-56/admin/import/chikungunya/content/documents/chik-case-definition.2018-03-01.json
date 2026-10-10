@@ -1,0 +1,68 @@
+{
+  "id": "doc.chik-case-definition.2018-03-01",
+  "type": "document",
+  "title": "病例定義",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2018-03-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.chikungunya"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "病例定義：本頁內容由舊站「屈公病」專區移入，請權責單位確認是否仍為現行版本。",
+  "family": "doc.chik-case-definition",
+  "docType": "case-definition",
+  "version": "2018-03-01",
+  "effectiveAt": "2018-03-01",
+  "machineReadableMarkdown": "病例定義：本頁內容由舊站「屈公病」專區移入，請權責單位確認是否仍為現行版本。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/DiseaseDefine/ef7hGQOobBHCZRVY-d6-hF"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.8,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「屈公病／法規與指引」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（屈公病）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 case-definition（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "body-short",
+        "severity": "warn",
+        "message": "內文過短（38 字，低於 40）"
+      },
+      {
+        "code": "version-unknown",
+        "severity": "info",
+        "message": "標題看不出版次，version 暫填 2018-03-01"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/DiseaseDefine/ef7hGQOobBHCZRVY-d6-hF",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-TW" dir="ltr" data-base="/new_cdc_prototype/preview/pr-56" data-lang-path="" data-view="admin">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>複核區（內容管理後台）</title>
+<meta name="description" content="複核區：疾管署 AI-ready 新官網原型之內容管理後台示範頁">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/tokens.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/base.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/components.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/admin.css">
+</head>
+<body class="adm " data-today="2026-10-01" data-admin-page="review">
+<a class="skip-link" href="#main">跳到主要內容</a>
+<header class="adm-top"><div class="adm-top__in">
+  <a class="adm-brand" href="/new_cdc_prototype/preview/pr-56/admin/"><strong>內容管理後台</strong><span>疾管署 AI-ready 新官網原型 · 示範</span></a>
+  <div class="adm-who" id="adm-who">
+    <span class="adm-who__id"><span class="adm-who__name" id="adm-who-name">急性傳染病組 · 承辦人</span><span class="adm-who__role" id="adm-who-role"></span></span>
+    <label for="adm-unit"><span class="adm-who__lbl">單位視角</span>
+      <select id="adm-unit" aria-describedby="adm-who-name"><option value="unit.pr" >公關室</option><option value="unit.it" >資訊室</option><option value="unit.oasis" >AI推動辦公室</option><option value="unit.epidemic-intelligence" >疫情中心</option><option value="unit.acute-infectious" selected>急性傳染病組</option><option value="unit.chronic-infectious" >慢性傳染病組</option><option value="unit.preparedness" >新興傳染病整備組</option><option value="unit.infection-control" >感染管制及生物安全組</option><option value="unit.quarantine" >檢疫組</option><option value="unit.lab" >檢驗及疫苗研製中心</option><option value="unit.planning" >企劃組</option><option value="unit.secretariat" >秘書室</option><option value="unit.personnel" >人事室</option><option value="unit.ethics" >政風室</option><option value="unit.preventive-medicine" >預防醫學辦公室</option><option value="unit.accounting" >主計室</option><option value="unit.regional-taipei" >臺北區管制中心</option><option value="unit.regional-northern" >北區管制中心</option><option value="unit.regional-central" >中區管制中心</option><option value="unit.regional-southern" >南區管制中心</option><option value="unit.regional-kaoping" >高屏區管制中心</option><option value="unit.regional-eastern" >東區管制中心</option><option value="unit.governance-committee" >資料治理委員會</option><option value="all">全部單位（總覽）</option></select>
+    </label>
+    <button type="button" class="adm-who__logout" id="adm-logout">登出</button>
+  </div>
+</div></header>
+<nav class="adm-nav" aria-label="後台導覽"><ul><li><a href="/new_cdc_prototype/preview/pr-56/admin/mine/" >我的內容</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/publish/" >上架新內容</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/review/" aria-current="page">複核區<span class="adm-count" data-count="review" aria-label="0 項">0</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/due/" >審閱到期<span class="adm-count" data-count="due" aria-label="18 項">18</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/catalog/" >資料目錄</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/notices/" >公告</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/jobs/" >人才招募<span class="adm-count" data-count="jobs" aria-label="1 項">1</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/tenders/" >採購<span class="adm-count" data-count="tenders" aria-label="1 項">1</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/media/" >影音<span class="adm-count" data-count="media" aria-label="1 項">1</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/links/" >連結</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/migration/" >移轉進度<span class="adm-count" data-count="migration" aria-label="1248 項">1248</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/import/" >舊站匯入</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/glossary/" >詞彙主檔</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/situation/" >疫情發布</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/bulletin/edit/" >疫情報導</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/todos/" >連動待辦<span class="adm-count" data-count="todos" aria-label="112 項">112</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/ai-status/" >AI 開關</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/reports/" >回報</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/eval/" >評估</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/" >儀表板</a></li></ul></nav>
+<div class="adm-demo" role="note">示範原型：此後台不連接任何正式系統；登入與所有操作只存在你的瀏覽器（localStorage），正式環境以機關 SSO 登入、一律走 Git Pull Request。</div>
+<main id="main" class="adm-main" tabindex="-1">
+<header class="adm-pagehead"><h1>複核區</h1><p class="adm-pagehead__what">送出預處理的內容在這裡排隊走四步：承辦人確認 → 公關室內容審核 → 多語審核 → 發布。每筆顯示目前步驟與各語言狀態；按「通過」進下一步，按「退回」填原因。</p><p class="adm-pagehead__flow"><strong>正式環境：</strong>正式環境的複核就是 Pull Request 審查：公關室以 PR review 核可內容，多語審核人核可 i18n 欄位，合併後 CI 自動發布七語頁面、索引與 API。這裡的通過／退回只存在你的瀏覽器。</p></header>
+<section class="adm-card" id="gw-review" aria-labelledby="gw-rv-h" hidden>
+  <h2 id="gw-rv-h">待審核 <span class="adm-muted" id="gw-rv-who"></span></h2>
+  <p class="adm-hint">承辦人按「送審」的內容會出現在這裡。點「審核」看改了什麼與預覽，再按「核准上線」或「退回修改」。你編輯過的內容不能自己審核（四眼原則）。</p>
+  <p class="adm-count-note" id="gw-rv-count" role="status" aria-live="polite"></p>
+  <div class="adm-tablewrap" role="region" tabindex="0" aria-label="待審核清單，可捲動"><table class="adm-table"><thead><tr><th scope="col">型別</th><th scope="col">標題</th><th scope="col">權責單位</th><th scope="col">承辦</th><th scope="col">送審時間</th><th scope="col">狀態</th><th scope="col">動作</th></tr></thead><tbody id="gw-queue"></tbody></table></div>
+  <p class="adm-empty" id="gw-empty" hidden>目前沒有待審核的內容。</p>
+</section>
+<section class="adm-card" id="gw-detail" aria-labelledby="gw-d-h" hidden>
+  <h2 id="gw-d-h" tabindex="-1">審核：<span id="gw-d-title"></span></h2>
+  <dl class="gw-meta" id="gw-d-meta"></dl>
+  <h3>改了什麼</h3>
+  <div id="gw-diff"></div>
+  <h3>預覽</h3>
+  <button type="button" class="adm-btn adm-btn--ghost" id="gw-preview-btn" aria-expanded="false" aria-controls="gw-preview-wrap">顯示送審版預覽</button>
+  <div id="gw-preview-wrap" hidden></div>
+  <div class="adm-field" style="margin-top:var(--sp-4)"><label for="gw-comment">意見（退回修改時必填）</label><textarea id="gw-comment" maxlength="2000" rows="3" aria-describedby="gw-comment-hint"></textarea><span class="adm-hint" id="gw-comment-hint">寫清楚要改哪裡；承辦人會收到 Email 與 Teams 通知。</span></div>
+  <div class="adm-actions"><button type="button" class="adm-btn" id="gw-approve">核准上線</button><button type="button" class="adm-btn adm-btn--danger" id="gw-return">退回修改</button></div>
+  <p class="adm-muted" id="gw-why"></p>
+  <p class="adm-muted" id="gw-act-msg" role="status" aria-live="polite"></p>
+</section>
+<div class="adm-box adm-box--note"><strong>多語複核規則</strong>一級內容（疾病、疫苗、澄清、態勢）：簽約審核、必審，未 reviewed 的語言頁不渲染。二級內容（Q&amp;A、新聞稿、通函等）：先發布並標示機器翻譯，每月抽審 10%。</div>
+<section class="adm-card" aria-labelledby="rv-h" data-gw-hide><h2 id="rv-h">複核佇列 <span class="adm-muted" id="rv-unit"></span></h2>
+  <div class="adm-filters"><div class="adm-field"><label for="rv-state">顯示</label><select id="rv-state"><option value="open">待處理</option><option value="all">全部（含已通過、已退回）</option></select></div><span class="adm-count-note" id="rv-count" aria-live="polite"></span></div>
+  <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><thead><tr><th scope="col">型別</th><th scope="col">標題</th><th scope="col">承辦單位</th><th scope="col">目前步驟</th><th scope="col">語言狀態</th><th scope="col">動作</th></tr></thead><tbody id="rv-body"></tbody></table></div>
+  <p class="adm-empty" id="rv-empty" hidden>目前沒有待複核內容。到「上架新內容」送出預處理並按「確認並送複核」，就會出現在這裡。</p>
+  <p class="adm-muted" id="rv-msg" role="status" aria-live="polite"></p>
+</section>
+<script type="application/json" id="adm-review-data">{"items":[],"today":"2026-10-01","demo":[{"id":"demo.faq-chikungunya-when-to-see-doctor","type":"faq","title":"屈公病出現關節痛要不要就醫？（示意）","owner":"unit.acute-infectious","ownerName":"急性傳染病組","languages":{"zh-TW":"source","en":"pending","ja":"pending","tl":"pending","vi":"pending","id":"pending","th":"pending"},"step":2,"demo":true},{"id":"demo.news-enterovirus-update","type":"news","title":"腸病毒疫情提醒新聞稿（示意）","owner":"unit.pr","ownerName":"公關室","languages":{"zh-TW":"source","en":"machine"},"step":3,"demo":true}]}</script></main>
+<footer class="adm-foot"><a href="/new_cdc_prototype/preview/pr-56/">回前台首頁</a><a href="/new_cdc_prototype/preview/pr-56/v1/catalog.json">目錄 API（/v1/catalog.json）</a><a href="/new_cdc_prototype/preview/pr-56/guide/">使用說明</a><span>建置日 2026-10-01</span></footer>
+<script type="module" src="/new_cdc_prototype/preview/pr-56/assets/js/admin/common.js"></script>
+<script type="module" src="/new_cdc_prototype/preview/pr-56/assets/js/admin/review.js"></script><script type="module" src="/new_cdc_prototype/preview/pr-56/assets/js/admin/review-gateway.js"></script>
+</body>
+</html>

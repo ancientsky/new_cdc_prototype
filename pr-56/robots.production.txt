@@ -1,0 +1,115 @@
+# 衛生福利部疾病管制署（Taiwan Centers for Disease Control）新官網原型 robots.txt
+# 政策依據：AI 與資料使用聲明 https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/policy/ai/
+# 機讀版：每個內容頁同路徑加 .md（例：https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/dengue.md）；AI 用索引：https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/llms.txt
+# 失效版本（已由新版取代）允許爬取，以頁面 <meta name="robots" content="noindex"> 退出索引，不在此封鎖。
+# 正式站本檔置於網域根目錄；原型位於 GitHub Pages 專案路徑，僅供示範。
+
+# 一般搜尋引擎
+User-agent: *
+Allow: /new_cdc_prototype/preview/pr-56/
+Disallow: /new_cdc_prototype/preview/pr-56/ask/
+Disallow: /new_cdc_prototype/preview/pr-56/admin/
+Disallow: /new_cdc_prototype/preview/pr-56/en/ask/
+Disallow: /new_cdc_prototype/preview/pr-56/en/admin/
+Disallow: /new_cdc_prototype/preview/pr-56/ja/ask/
+Disallow: /new_cdc_prototype/preview/pr-56/ja/admin/
+Disallow: /new_cdc_prototype/preview/pr-56/tl/ask/
+Disallow: /new_cdc_prototype/preview/pr-56/tl/admin/
+Disallow: /new_cdc_prototype/preview/pr-56/vi/ask/
+Disallow: /new_cdc_prototype/preview/pr-56/vi/admin/
+Disallow: /new_cdc_prototype/preview/pr-56/id/ask/
+Disallow: /new_cdc_prototype/preview/pr-56/id/admin/
+Disallow: /new_cdc_prototype/preview/pr-56/th/ask/
+Disallow: /new_cdc_prototype/preview/pr-56/th/admin/
+Disallow: /new_cdc_prototype/preview/pr-56/careers/*/apply/
+Disallow: /new_cdc_prototype/preview/pr-56/en/careers/*/apply/
+Disallow: /new_cdc_prototype/preview/pr-56/ja/careers/*/apply/
+Disallow: /new_cdc_prototype/preview/pr-56/tl/careers/*/apply/
+Disallow: /new_cdc_prototype/preview/pr-56/vi/careers/*/apply/
+Disallow: /new_cdc_prototype/preview/pr-56/id/careers/*/apply/
+Disallow: /new_cdc_prototype/preview/pr-56/th/careers/*/apply/
+Disallow: /new_cdc_prototype/preview/pr-56/preview/
+
+# 一、AI 搜尋與使用者即時查詢（回答時引用並附連結）：允許公開內容
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: DuckAssistBot
+Allow: /new_cdc_prototype/preview/pr-56/
+Disallow: /new_cdc_prototype/preview/pr-56/ask/
+Disallow: /new_cdc_prototype/preview/pr-56/admin/
+Disallow: /new_cdc_prototype/preview/pr-56/en/ask/
+Disallow: /new_cdc_prototype/preview/pr-56/en/admin/
+Disallow: /new_cdc_prototype/preview/pr-56/ja/ask/
+Disallow: /new_cdc_prototype/preview/pr-56/ja/admin/
+Disallow: /new_cdc_prototype/preview/pr-56/tl/ask/
+Disallow: /new_cdc_prototype/preview/pr-56/tl/admin/
+Disallow: /new_cdc_prototype/preview/pr-56/vi/ask/
+Disallow: /new_cdc_prototype/preview/pr-56/vi/admin/
+Disallow: /new_cdc_prototype/preview/pr-56/id/ask/
+Disallow: /new_cdc_prototype/preview/pr-56/id/admin/
+Disallow: /new_cdc_prototype/preview/pr-56/th/ask/
+Disallow: /new_cdc_prototype/preview/pr-56/th/admin/
+Disallow: /new_cdc_prototype/preview/pr-56/careers/*/apply/
+Disallow: /new_cdc_prototype/preview/pr-56/en/careers/*/apply/
+Disallow: /new_cdc_prototype/preview/pr-56/ja/careers/*/apply/
+Disallow: /new_cdc_prototype/preview/pr-56/tl/careers/*/apply/
+Disallow: /new_cdc_prototype/preview/pr-56/vi/careers/*/apply/
+Disallow: /new_cdc_prototype/preview/pr-56/id/careers/*/apply/
+Disallow: /new_cdc_prototype/preview/pr-56/th/careers/*/apply/
+Disallow: /new_cdc_prototype/preview/pr-56/preview/
+
+# 二、AI 模型訓練：允許公開正本內容（政府資料開放授權條款），排除後台與答案頁
+User-agent: GPTBot
+User-agent: ClaudeBot
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: CCBot
+User-agent: meta-externalagent
+User-agent: Amazonbot
+Allow: /new_cdc_prototype/preview/pr-56/
+Disallow: /new_cdc_prototype/preview/pr-56/ask/
+Disallow: /new_cdc_prototype/preview/pr-56/admin/
+Disallow: /new_cdc_prototype/preview/pr-56/en/ask/
+Disallow: /new_cdc_prototype/preview/pr-56/en/admin/
+Disallow: /new_cdc_prototype/preview/pr-56/ja/ask/
+Disallow: /new_cdc_prototype/preview/pr-56/ja/admin/
+Disallow: /new_cdc_prototype/preview/pr-56/tl/ask/
+Disallow: /new_cdc_prototype/preview/pr-56/tl/admin/
+Disallow: /new_cdc_prototype/preview/pr-56/vi/ask/
+Disallow: /new_cdc_prototype/preview/pr-56/vi/admin/
+Disallow: /new_cdc_prototype/preview/pr-56/id/ask/
+Disallow: /new_cdc_prototype/preview/pr-56/id/admin/
+Disallow: /new_cdc_prototype/preview/pr-56/th/ask/
+Disallow: /new_cdc_prototype/preview/pr-56/th/admin/
+Disallow: /new_cdc_prototype/preview/pr-56/careers/*/apply/
+Disallow: /new_cdc_prototype/preview/pr-56/en/careers/*/apply/
+Disallow: /new_cdc_prototype/preview/pr-56/ja/careers/*/apply/
+Disallow: /new_cdc_prototype/preview/pr-56/tl/careers/*/apply/
+Disallow: /new_cdc_prototype/preview/pr-56/vi/careers/*/apply/
+Disallow: /new_cdc_prototype/preview/pr-56/id/careers/*/apply/
+Disallow: /new_cdc_prototype/preview/pr-56/th/careers/*/apply/
+Disallow: /new_cdc_prototype/preview/pr-56/preview/
+
+# 三、未揭露用途或不遵守本站 AI 政策之爬蟲：不允許
+User-agent: Bytespider
+User-agent: img2dataset
+User-agent: omgili
+User-agent: Diffbot
+Disallow: /
+
+Sitemap: https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/sitemap.xml
+Sitemap: https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/sitemap-pages.xml
+Sitemap: https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/sitemap-diseases.xml
+Sitemap: https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/sitemap-news.xml
+Sitemap: https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/sitemap-documents.xml
+Sitemap: https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/sitemap-faq.xml
+Sitemap: https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/sitemap-en.xml
+Sitemap: https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/sitemap-ja.xml
+Sitemap: https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/sitemap-tl.xml
+Sitemap: https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/sitemap-vi.xml
+Sitemap: https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/sitemap-id.xml
+Sitemap: https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/sitemap-th.xml

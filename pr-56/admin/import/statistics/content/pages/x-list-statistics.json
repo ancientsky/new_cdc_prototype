@@ -1,0 +1,42 @@
+{
+  "id": "page.x-list-statistics",
+  "type": "page",
+  "title": "統計專區",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2026-10-03",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "傳染病統計資料查詢系統 疾管署資料開放平臺 防疫資料庫 疫情監測速訊 流感速訊 腸病毒疫情週報 COVID-19 週報 法定傳染病境外移入確定病例統計 常規疫苗接種完成率 法定傳染病死亡統計 傳染病統計暨監視年報",
+  "slug": "x-list-statistics",
+  "bodyMarkdown": "- [傳染病統計資料查詢系統](https://www.cdc.gov.tw/Category/MPage/LiNW6PIOJsKKTzV9OoRoSg)\n- [疾管署資料開放平臺](https://www.cdc.gov.tw/Category/MPage/2okLkU-L0iWbjwLrj2BaP7)\n- [防疫資料庫](https://www.cdc.gov.tw/Category/MPage/i5N2W9G-FWJkh3agfLA-Kg)\n- [疫情監測速訊](https://www.cdc.gov.tw/Category/MPage/94JVbJ2BFjR_3MTi-9s9Cg)\n- [流感速訊](https://www.cdc.gov.tw/Category/MPage/z6EmN04F9zPF9NDXivtXFB)\n- [腸病毒疫情週報](https://www.cdc.gov.tw/Category/MPage/NYDMC1OCW393ioaTIE_-yc)\n- [COVID-19 週報](https://www.cdc.gov.tw/Category/MPage/OyPQCu3iBWmljSol_qLalD)\n- [法定傳染病境外移入確定病例統計](https://www.cdc.gov.tw/Category/Page/5Q6qrh5kM6TnpnRpy3XDfQ)\n- [常規疫苗接種完成率](https://www.cdc.gov.tw/Category/MPage/Z3nsEXQ6Jne6A13aVu8Ra8)\n- [法定傳染病死亡統計](https://www.cdc.gov.tw/Category/MPage/7QXqDvpfrx1OcONmVzC8Hi)\n- [傳染病統計暨監視年報](https://www.cdc.gov.tw/Category/MPage/awMzKEQ9hVCtOWGFPHydj2)",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/ZrvS2zJwZ03tl8CbKYdI8g"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.6,
+    "issues": [
+      {
+        "code": "list-page",
+        "severity": "info",
+        "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/List/ZrvS2zJwZ03tl8CbKYdI8g",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

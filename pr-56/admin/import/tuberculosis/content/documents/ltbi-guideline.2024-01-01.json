@@ -1,0 +1,87 @@
+{
+  "id": "doc.ltbi-guideline.2024-01-01",
+  "type": "document",
+  "title": "潛伏結核感染診治指引",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2024-01-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "潛伏結核感染的檢驗對象、IGRA 檢驗、五種治療處方（3HP、1HP、3HR、4R、9H）與都治（DOPT）追蹤原則；接觸者與計畫對象費用由公費支應。",
+  "family": "doc.ltbi-guideline",
+  "docType": "guideline",
+  "version": "2024-01-01",
+  "effectiveAt": "2024-01-01",
+  "machineReadableMarkdown": "| 項目 | 內容 |\n| --- | --- |\n| 文件名稱 | 潛伏結核感染診治指引 |\n| 版次 | 2024 年版 |\n| 生效日 | 2024-01-01 |\n| 權責單位 | 慢性傳染病組 |\n| 檔案格式 | PDF |\n\n潛伏結核感染的檢驗對象、IGRA 檢驗、五種治療處方（3HP、1HP、3HR、4R、9H）與都治（DOPT）追蹤原則；接觸者與計畫對象費用由公費支應。\n\n### 一、檢驗與治療對象\n\n1. 結核病個案之密切接觸者，尤其 5 歲以下幼童與 HIV 感染者。\n2. 免疫功能低下或即將接受免疫抑制治療者：透析病人、器官移植、使用腫瘤壞死因子（TNF-α）抑制劑等生物製劑者。\n3. 依計畫執行主動篩檢之族群：山地鄉居民、矯正機關收容人、長期照護機構住民與工作人員等。\n\n### 二、檢驗方法\n\n以丙型干擾素釋放試驗（IGRA）為主要檢驗工具，幼童得以結核菌素皮膚測驗（TST）替代。檢驗陽性者須先照胸部 X 光並評估症狀，**排除活動性結核病後**才可開始潛伏感染治療。\n\n### 三、治療處方\n\n- **3HP**：rifapentine 加 isoniazid，每週 1 次，共 12 劑。\n- **1HP**：rifapentine 加 isoniazid，每日 1 次，共 28 劑（13 歲以上）。\n- **3HR**：isoniazid 加 rifampin，每日服用 3 個月。\n- **4R**：rifampin 每日服用 4 個月。\n- **9H**：isoniazid 每日服用 9 個月。\n\n處方由醫師依年齡、接觸者指標個案之藥物感受性、共病與藥物交互作用選擇；指標個案為多重抗藥性結核病者，另依專家建議處理。\n\n下載：[潛伏結核感染診治指引 PDF](/files/doc.ltbi-guideline.2024-01-01/ltbi-guideline-2024.pdf)",
+  "supersedes": "doc.ltbi-guideline.2021-05-01",
+  "pdfUrl": "/files/doc.ltbi-guideline.2024-01-01/ltbi-guideline-2024.pdf",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/File/Get/Ig7qjx7eTWrpnMXjfJgp_g"
+  ],
+  "assets": [
+    {
+      "file": "ltbi-guideline-2024.pdf",
+      "kind": "attachment",
+      "label": "潛伏結核感染診治指引 PDF",
+      "mime": "application/pdf",
+      "bytes": 799,
+      "sha256": "cf483c6fd5abbc4df5820b9be9a27cc538a63dcde7b6860bcdbd5a1361db5a69",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 84 處（mso 樣式 52、Mso 類別 24、命名空間標籤 16）"
+      },
+      {
+        "code": "file-renamed",
+        "severity": "info",
+        "message": "檔名「LTBI guideline 2024.pdf」不合規則，改為 ltbi-guideline-2024.pdf"
+      },
+      {
+        "code": "version-unknown",
+        "severity": "info",
+        "message": "標題看不出版次，version 暫填 2024-01-01"
+      },
+      {
+        "code": "version-chain",
+        "severity": "info",
+        "message": "版次鏈 doc.ltbi-guideline：2021-05-01（2021-05-01） → 2024-01-01（2024-01-01）；本版為現行版，supersedes doc.ltbi-guideline.2021-05-01"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/File/Get/Ig7qjx7eTWrpnMXjfJgp_g",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "doc.ltbi-guideline.2024-01-01"
+    ],
+    "versionChain": {
+      "family": "doc.ltbi-guideline",
+      "position": 2,
+      "of": 2,
+      "current": true
+    }
+  }
+}

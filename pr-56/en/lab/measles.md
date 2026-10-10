@@ -1,0 +1,31 @@
+# Measles: laboratory tests and specimen requirements
+
+> 權責單位：Center for Diagnostics and Vaccine Development · 最後審閱：2026-07-15 · 下次審閱：2027-07-15 · 授權：OGDL-1.0 · ID：labtest.measles · 疾病：disease.measles · 送驗時限：24 小時
+
+Throat swab and urine within 5 days of rash for RT-PCR plus serum for IgM/IgG, refrigerated and sent to Taiwan CDC within 24 hours.
+
+檢驗單位：Taiwan CDC laboratory
+生物安全等級：BSL-2
+
+## 檢體
+
+### 咽喉拭子
+
+- measles 咽喉拭子：拭子 1 支，出疹日起 5 日內，病毒運送培養基（VTM）拭子管，2–8°C 冷藏，2–8°C 冷藏運送（UN3373 三層包裝）；1 日內出報告
+- 可做檢驗：RT-PCR、基因定型
+
+### 尿液
+
+- measles 尿液：10–50 mL，出疹日起 5 日內，無菌尿液收集瓶，2–8°C 冷藏，2–8°C 冷藏運送（UN3373 三層包裝）；1 日內出報告
+- 可做檢驗：RT-PCR
+
+### 血清
+
+- measles 血清：血清 2–5 mL，出疹後 3 日以上 IgM 較敏感，無菌血清分離管（紅頭或黃頭，無抗凝劑），2–8°C 冷藏，2–8°C 冷藏運送（UN3373 三層包裝）；2 日內出報告
+- 可做檢驗：IgM／IgG 抗體
+
+## 注意事項
+
+- 疑似病例請同時採集咽喉拭子、尿液與血清三種檢體。
+- 採檢人員應具麻疹免疫力並配戴 N95 口罩。
+- 送驗單註明接種史與旅遊史；近期接種 MMR 者需基因定型區分疫苗株。

@@ -1,0 +1,6268 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "7b9a9deb8003",
+    "lastModified": "2026-10-01"
+  },
+  "data": {
+    "version": "2026.10-r10",
+    "runAt": "2026-10-10T13:35:22.553Z",
+    "today": "2026-10-01",
+    "engine": "extractive",
+    "total": 214,
+    "passed": 214,
+    "failed": 0,
+    "skippedCount": 5,
+    "byCategory": {
+      "version": {
+        "total": 19,
+        "passed": 19,
+        "skipped": 0,
+        "pct": 100
+      },
+      "fact": {
+        "total": 49,
+        "passed": 49,
+        "skipped": 0,
+        "pct": 100
+      },
+      "refusal": {
+        "total": 22,
+        "passed": 22,
+        "skipped": 0,
+        "pct": 100
+      },
+      "situation": {
+        "total": 10,
+        "passed": 10,
+        "skipped": 0,
+        "pct": 100
+      },
+      "peak": {
+        "total": 4,
+        "passed": 4,
+        "skipped": 0,
+        "pct": 100
+      },
+      "travel": {
+        "total": 12,
+        "passed": 12,
+        "skipped": 0,
+        "pct": 100
+      },
+      "vaccine": {
+        "total": 14,
+        "passed": 14,
+        "skipped": 0,
+        "pct": 100
+      },
+      "stats": {
+        "total": 9,
+        "passed": 9,
+        "skipped": 0,
+        "pct": 100
+      },
+      "rumor": {
+        "total": 12,
+        "passed": 12,
+        "skipped": 0,
+        "pct": 100
+      },
+      "professional": {
+        "total": 13,
+        "passed": 13,
+        "skipped": 5,
+        "pct": 100
+      },
+      "multilingual": {
+        "total": 9,
+        "passed": 9,
+        "skipped": 0,
+        "pct": 100
+      },
+      "adversarial": {
+        "total": 8,
+        "passed": 8,
+        "skipped": 0,
+        "pct": 100
+      },
+      "apply": {
+        "total": 8,
+        "passed": 8,
+        "skipped": 0,
+        "pct": 100
+      },
+      "lab": {
+        "total": 7,
+        "passed": 7,
+        "skipped": 0,
+        "pct": 100
+      },
+      "notify": {
+        "total": 6,
+        "passed": 6,
+        "skipped": 0,
+        "pct": 100
+      },
+      "notice": {
+        "total": 7,
+        "passed": 7,
+        "skipped": 0,
+        "pct": 100
+      },
+      "nomatch": {
+        "total": 5,
+        "passed": 5,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "metrics": {
+      "grounding": 100,
+      "factualAccuracy": 100,
+      "completeness": 100,
+      "answerRate": 100,
+      "refusalPrecision": 100,
+      "refusalRecall": 100,
+      "reputationalSafety": 100,
+      "versionAccuracy": 100,
+      "counts": {
+        "sentences": 576,
+        "groundedSentences": 576,
+        "refused": 37,
+        "refusedCorrect": 37,
+        "answerable": 176,
+        "answered": 176,
+        "mustInclude": 131,
+        "mustIncludePassed": 131
+      },
+      "thresholds": {
+        "grounding": 95,
+        "factualAccuracy": 90,
+        "completeness": 85,
+        "answerRate": 80,
+        "refusalPrecision": 90,
+        "reputationalSafety": 100
+      },
+      "pass": {
+        "grounding": true,
+        "factualAccuracy": true,
+        "completeness": true,
+        "answerRate": true,
+        "refusalPrecision": true,
+        "reputationalSafety": true
+      }
+    },
+    "versionGate": true,
+    "failures": [],
+    "skipped": [
+      {
+        "id": "CUR001",
+        "q": "麻疹核心教材的學習目標",
+        "category": "professional",
+        "missing": [
+          "doc.curriculum-measles.2026-10-10"
+        ]
+      },
+      {
+        "id": "CUR002",
+        "q": "登革熱核心教材 可感染期",
+        "category": "professional",
+        "missing": [
+          "doc.curriculum-dengue.2026-10-10"
+        ]
+      },
+      {
+        "id": "CUR003",
+        "q": "麻疹核心教材 檢體",
+        "category": "professional",
+        "missing": [
+          "doc.curriculum-measles.2026-10-10"
+        ]
+      },
+      {
+        "id": "CUR004",
+        "q": "登革熱核心教材 群聚解除",
+        "category": "professional",
+        "missing": [
+          "doc.curriculum-dengue.2026-10-10"
+        ]
+      },
+      {
+        "id": "CUR005",
+        "q": "登革熱核心教材 治療",
+        "category": "professional",
+        "missing": [
+          "doc.curriculum-dengue.2026-10-10"
+        ]
+      }
+    ],
+    "results": [
+      {
+        "id": "V001",
+        "category": "version",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.vaccine-words",
+            "vac.named"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.measles",
+          "confidence": 0.85,
+          "cites": [
+            "faq.measles-mmr-adult-who#a",
+            "faq.measles-mmr-born-1970#a",
+            "vaccine.mmr#pf-4",
+            "media.mmr-waiting-room-2026#t28"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "faq",
+            "vaccine",
+            "media"
+          ],
+          "translationNote": null,
+          "text": "依據 2025 年 4 月 16 日修訂的「國內現行 MMR 預防接種建議」，1966 年（含）以後出生、不具麻疹免疫力的成人，若計畫前往麻疹流行地區，建議出國前 2 至 4 週至旅遊醫學門診評估自費接種 1 劑 MMR 疫苗； MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：1966 年（含）以後出生、不具免疫力且前往流行地區之成人，出國前 2–4 週至旅遊醫學門診評估接種 1 劑（自費；依 2025-04-16 修訂之接種建議）。 旁白：依疾管署 114 年 4 月 "
+        }
+      },
+      {
+        "id": "V002",
+        "category": "version",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.vaccine-words",
+            "vac.named",
+            "sta.count"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.measles",
+          "confidence": 0.69,
+          "cites": [
+            "news.2025-04-16-mmr-recommendation-revised#p2",
+            "vaccine.mmr#pf-4",
+            "faq.measles-mmr-adult-who#a"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "news",
+            "vaccine",
+            "faq"
+          ],
+          "translationNote": null,
+          "text": "本次修訂重點：成人評估接種的出生年分界由原本的 1981 年提前至 1966 年（含）以後出生、不具麻疹免疫力者； MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：1966 年（含）以後出生、不具免疫力且前往流行地區之成人，出國前 2–4 週至旅遊醫學門診評估接種 1 劑（自費；依 2025-04-16 修訂之接種建議）。 依據 2025 年 4 月 16 日修訂的「國內現行 MMR 預防接種建議」，1966 年（含）以後出生、不具麻疹免疫力的成人，若計畫前往麻疹流行地區"
+        }
+      },
+      {
+        "id": "V003",
+        "category": "version",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.named"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.measles",
+          "confidence": 0.67,
+          "cites": [
+            "faq.measles-mmr-adult-who#a",
+            "faq.measles-mmr-born-1970#a",
+            "vaccine.mmr#pf-4",
+            "news.2025-04-16-mmr-recommendation-revised#p2"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "faq",
+            "vaccine",
+            "news"
+          ],
+          "translationNote": null,
+          "text": "依據 2025 年 4 月 16 日修訂的「國內現行 MMR 預防接種建議」，1966 年（含）以後出生、不具麻疹免疫力的成人，若計畫前往麻疹流行地區，建議出國前 2 至 4 週至旅遊醫學門診評估自費接種 1 劑 MMR 疫苗； MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：1966 年（含）以後出生、不具免疫力且前往流行地區之成人，出國前 2–4 週至旅遊醫學門診評估接種 1 劑（自費；依 2025-04-16 修訂之接種建議）。 本次修訂重點：成人評估接種的出生年分"
+        }
+      },
+      {
+        "id": "V004",
+        "category": "version",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.vaccine-words",
+            "vac.named",
+            "trv.travel-words",
+            "app.sla-fee"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.measles",
+          "confidence": 0.73,
+          "cites": [
+            "vaccine.mmr#pf-4",
+            "vaccine.mmr#pf-1",
+            "faq.measles-mmr-adult-who#a"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "vaccine",
+            "faq"
+          ],
+          "translationNote": null,
+          "text": "MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：1966 年（含）以後出生、不具免疫力且前往流行地區之成人，出國前 2–4 週至旅遊醫學門診評估接種 1 劑（自費；依 2025-04-16 修訂之接種建議）。 MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：幼兒第 1 劑，出生滿 12 個月接種 1 劑。 依據 2025 年 4 月 16 日修訂的「國內現行 MMR 預防接種建議」，1966 年（含）以後出生、不具麻疹免疫力的成人，若計畫前往麻疹流行地區，建議出國前 "
+        }
+      },
+      {
+        "id": "V005",
+        "category": "version",
+        "ok": true,
+        "got": {
+          "intent": "professional",
+          "intentReasons": [
+            "vac.vaccine-words",
+            "vac.named",
+            "pro.view",
+            "pro.view-override"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.measles",
+          "confidence": 0.68,
+          "cites": [
+            "faq.measles-mmr-adult-who#a",
+            "vaccine.mmr#v",
+            "vaccine.mmr#pf-4",
+            "disease.measles#vaccine",
+            "doc.mmr-recommendation.2025-04-16#adults"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "faq",
+            "vaccine",
+            "disease",
+            "document"
+          ],
+          "translationNote": null,
+          "text": "依據 2025 年 4 月 16 日修訂的「國內現行 MMR 預防接種建議」，1966 年（含）以後出生、不具麻疹免疫力的成人，若計畫前往麻疹流行地區，建議出國前 2 至 4 週至旅遊醫學門診評估自費接種 1 劑 MMR 疫苗； MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：1966 年（含）以後出生、不具免疫力且前往流行地區之成人，出國前 2–4 週至旅遊醫學門診評估接種 1 劑（自費；依 2025-04-16 修訂之接種建議）。 成人接種建議依 2025 年 4 月"
+        }
+      },
+      {
+        "id": "V006",
+        "category": "version",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.vaccine-words",
+            "vac.named"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.measles",
+          "confidence": 0.88,
+          "cites": [
+            "vaccine.mmr#v",
+            "disease.measles#prevention",
+            "faq.measles-mmr-check-record#a",
+            "faq.measles-mmr-adult-who#a"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "vaccine",
+            "disease",
+            "faq"
+          ],
+          "translationNote": null,
+          "text": "醫護人員（醫療照護工作人員）及經常接觸外國人的工作者（如機場、觀光、移工服務人員），也建議確認麻疹免疫力並評估接種。 評估重點： 已完成 2 劑 MMR、曾確診麻疹，或抗體檢驗陽性者，視為具免疫力。 1966 年（含）以後出生、不具免疫力的成人，若計畫前往麻疹流行地區，建議出國前 2 至 4 週到旅遊醫學門診評估自費接種 1 劑； 醫護人員及經常接觸外國人的工作者也建議評估。 查不到紀錄也不必然要驗血，醫師會依年齡、風險與出國計畫建議。 依據 2025 年 4 月 16 日修"
+        }
+      },
+      {
+        "id": "V007",
+        "category": "version",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.named"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.measles",
+          "confidence": 0.72,
+          "cites": [
+            "vaccine.mmr#pf-4",
+            "faq.measles-mmr-adult-who#a",
+            "vaccine.mmr#pf-1"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "vaccine",
+            "faq"
+          ],
+          "translationNote": null,
+          "text": "MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：1966 年（含）以後出生、不具免疫力且前往流行地區之成人，出國前 2–4 週至旅遊醫學門診評估接種 1 劑（自費；依 2025-04-16 修訂之接種建議）。 依據 2025 年 4 月 16 日修訂的「國內現行 MMR 預防接種建議」，1966 年（含）以後出生、不具麻疹免疫力的成人，若計畫前往麻疹流行地區，建議出國前 2 至 4 週至旅遊醫學門診評估自費接種 1 劑 MMR 疫苗； MMR 疫苗（麻疹腮腺炎德國麻疹混合"
+        }
+      },
+      {
+        "id": "V008",
+        "category": "version",
+        "ok": true,
+        "got": {
+          "intent": "professional",
+          "intentReasons": [
+            "vac.public-funded",
+            "pro.terms",
+            "pro.view"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.influenza",
+          "confidence": 0.83,
+          "cites": [
+            "doc.flu-antiviral-eligibility.2026-09-18#art2",
+            "news.2026-09-18-letter-616-flu-antiviral-extended#p1",
+            "doc.flu-antiviral-eligibility.2026-09-18#art9"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "document",
+            "letter"
+          ],
+          "translationNote": null,
+          "text": "經通報之「新型 A 型流感」病例。 一、本署自 2026 年 8 月 24 日起擴大公費流感抗病毒藥劑使用對象「有類流感症狀，且具下列身分之流感高傳播族群」，原訂至 9 月 30 日止； 擴大使用對象（2026 年 8 月 24 日至 10 月 31 日 止）：有類流感症狀，且具下列身分之流感高傳播族群： （一）醫事單位之防疫相關人員（含具執業登記醫事人員及醫療院所非醫事人員） （二）安養、長期照顧（服務）等機構之受照顧者及所屬工作人員 （三）幼兒園托育人員、托育機構專業人員"
+        }
+      },
+      {
+        "id": "V009",
+        "category": "version",
+        "ok": true,
+        "got": {
+          "intent": "professional",
+          "intentReasons": [
+            "vac.public-funded",
+            "pro.terms"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.influenza",
+          "confidence": 0.93,
+          "cites": [
+            "faq.flu-antiviral-65-no-test#a",
+            "faq.influenza-antiviral-who#a",
+            "news.2026-09-18-flu-antiviral-extended#p3"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "faq",
+            "news"
+          ],
+          "translationNote": null,
+          "text": "依「公費流感抗病毒藥劑使用對象」（全年適用）第 4 條，未滿 5 歲及 65 歲以上之類流感患者，經醫師診察研判符合即可開立公費抗病毒藥劑，不需流感快篩； 依「公費流感抗病毒藥劑使用對象」，全年適用的對象主要包括： 經通報的流感併發重症與新型 A 型流感病例； 孕婦經評估需及時用藥者； 未滿 5 歲及 65 歲以上的類流感患者； 確診或疑似流感而住院（含急診待床）者； 疾管署提醒，抗病毒藥劑於發病 48 小時內使用效果最佳，出現發燒、咳嗽、全身痠痛等症狀請儘早就醫。"
+        }
+      },
+      {
+        "id": "V010",
+        "category": "version",
+        "ok": true,
+        "got": {
+          "intent": "professional",
+          "intentReasons": [
+            "pro.terms",
+            "pro.view"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.69,
+          "cites": [
+            "doc.dengue-community-workplan.2026-09-10#cluster-response",
+            "doc.guidance-dengue.2026-02#ch3-s4-p42",
+            "doc.dengue-community-workplan.2026-09-10#scope",
+            "doc.dengue-community-workplan.2026-09-10#source-reduction"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "document"
+          ],
+          "translationNote": null,
+          "text": "群聚定義：依「登革熱/屈公病防治工作指引」（2026 年 2 月版）第五章第一節：出現 2 例確定病例，居住地/活動地點彼此不超過 150 公尺，且登革熱發病日間隔小於或等於 14 天（屈公病 12 天）。 因此，針對農（果）園訂定工作指引提供防疫同仁執行登革熱防治工作時參考（附件六）。 本指引補充「登革熱／屈公病防治工作指引」的社區端作法，適用於衛生局（所）、環保、民政、教育及社區組織。 巡倒清刷：每週由里（村）、社區志工或家戶巡視積水容器、倒掉積水、清除不需要的容器、刷洗"
+        }
+      },
+      {
+        "id": "V011",
+        "category": "version",
+        "ok": true,
+        "got": {
+          "intent": "professional",
+          "intentReasons": [
+            "pro.terms",
+            "pro.view"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.59,
+          "cites": [
+            "doc.dengue-community-workplan.2026-09-10#cluster-response",
+            "doc.dengue-community-workplan.2026-09-10#scope",
+            "publication.manual-communicable-disease-control-2026#abstract",
+            "doc.guidance-dengue.2026-02#annex-6-p90"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "document",
+            "publication"
+          ],
+          "translationNote": null,
+          "text": "群聚定義：依「登革熱/屈公病防治工作指引」（2026 年 2 月版）第五章第一節：出現 2 例確定病例，居住地/活動地點彼此不超過 150 公尺，且登革熱發病日間隔小於或等於 14 天（屈公病 12 天）。 地方政府應於每年 3 月底前，將本指引的分工納入年度防治計畫。 2026 年版主要修訂：登革熱病例定義（2026-01-01 生效）、MMR 接種建議引用更新、腸病毒重症處置指引（2026-03-15）。 成立登革熱防治應變中心雲林縣首例本土個案居住於古坑鄉，確診後雲林縣"
+        }
+      },
+      {
+        "id": "V012",
+        "category": "version",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.vaccine-words",
+            "vac.public-funded"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.covid-19",
+          "confidence": 0.53,
+          "cites": [
+            "vaccine.covid-19#pf-3",
+            "disease.covid-19#vaccine",
+            "faq.covid-vaccine-who#a"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "vaccine",
+            "disease",
+            "faq"
+          ],
+          "translationNote": null,
+          "text": "新冠疫苗接種對象：未曾接種之 6 個月至 4 歲幼兒，依仿單接種 2–3 劑基礎劑（2026-10-01 起）。 新冠疫苗依病毒株變化定期更新成分，每年秋冬與流感疫苗同步提供，6 個月以上民眾皆可接種公費疫苗，65 歲以上長者、慢性病人、醫事人員等為優先接種對象。 依 2026 年 9 月修訂的「新冠疫苗接種建議（2026–2027 年度）」： 6 個月以上民眾自 2026 年 10 月 1 日起可接種 1 劑公費新冠疫苗，與前一劑間隔至少 12 週。 65 歲以上長者與中重"
+        }
+      },
+      {
+        "id": "V013",
+        "category": "version",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.vaccine-words",
+            "vac.public-funded"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.covid-19",
+          "confidence": 0.86,
+          "cites": [
+            "faq.covid-vaccine-who#a",
+            "disease.covid-19#vaccine",
+            "vaccine.covid-19#pf-1"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "faq",
+            "disease",
+            "vaccine"
+          ],
+          "translationNote": null,
+          "text": "依 2026 年 9 月修訂的「新冠疫苗接種建議（2026–2027 年度）」： 6 個月以上民眾自 2026 年 10 月 1 日起可接種 1 劑公費新冠疫苗，與前一劑間隔至少 12 週。 65 歲以上長者與中重度免疫不全者，在本年度第 1 劑後間隔 6 個月，可再接種 1 劑。 新冠疫苗依病毒株變化定期更新成分，每年秋冬與流感疫苗同步提供，6 個月以上民眾皆可接種公費疫苗，65 歲以上長者、慢性病人、醫事人員等為優先接種對象。 新冠疫苗接種對象：6 個月以上民眾，本年度 "
+        }
+      },
+      {
+        "id": "V014",
+        "category": "version",
+        "ok": true,
+        "got": {
+          "intent": "professional",
+          "intentReasons": [
+            "sym.symptom-generic",
+            "vac.public-funded",
+            "pro.terms"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.influenza",
+          "confidence": 0.9,
+          "cites": [
+            "faq.flu-antiviral-65-no-test#a",
+            "faq.influenza-antiviral-who#a",
+            "news.2026-09-29-ili-weekly#p2"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "faq",
+            "news"
+          ],
+          "translationNote": null,
+          "text": "依「公費流感抗病毒藥劑使用對象」（全年適用）第 4 條，未滿 5 歲及 65 歲以上之類流感患者，經醫師診察研判符合即可開立公費抗病毒藥劑，不需流感快篩； 依「公費流感抗病毒藥劑使用對象」，全年適用的對象主要包括： 經通報的流感併發重症與新型 A 型流感病例； 孕婦經評估需及時用藥者； 未滿 5 歲及 65 歲以上的類流感患者； 確診或疑似流感而住院（含急診待床）者； 65 歲以上有類流感症狀者，於高峰期就醫可由醫師直接開立公費抗病毒藥劑。"
+        }
+      },
+      {
+        "id": "V015",
+        "category": "version",
+        "ok": true,
+        "got": {
+          "intent": "professional",
+          "intentReasons": [
+            "pro.terms",
+            "pro.view"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.66,
+          "cites": [
+            "doc.case-definition-dengue.2026-01-01#lab",
+            "publication.manual-communicable-disease-control-2026#abstract",
+            "doc.guidance-dengue.2026-02#ch2-s3-p24",
+            "doc.case-definition-dengue.2026-01-01#class"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "document",
+            "publication"
+          ],
+          "translationNote": null,
+          "text": "具有下列任一個條件： 臨床檢體分離並鑑定出登革病毒。 臨床檢體分子生物學核酸檢測陽性（含經認可之多重病原核酸檢測平台）。 急性期血清 NS1 抗原檢測陽性（檢驗單位為疾管署或認可實驗室）。 成對血清 IgM 或 IgG 陽轉，或抗體效價 4 倍以上上升。 2026 年版主要修訂：登革熱病例定義（2026-01-01 生效）、MMR 接種建議引用更新、腸病毒重症處置指引（2026-03-15）。 有關檢驗結果陽性之定義，請參見前一節病例定義之檢驗條件，惟綜合檢驗結果，將參考各分"
+        }
+      },
+      {
+        "id": "F001",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "symptoms",
+          "intentReasons": [
+            "sym.symptom-words",
+            "sym.seek-care",
+            "app.sla-fee"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.97,
+          "cites": [
+            "faq.dengue-fever-when-to-see-doctor#a",
+            "disease.dengue#what-to-do#card-1"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "faq",
+            "disease"
+          ],
+          "translationNote": null,
+          "text": "出現發燒且有登革熱流行地區旅遊史或居住史者，應於 24 小時內就醫並主動告知醫師。 退燒後 1 至 2 天是出現警示徵象的高風險期，若有持續嘔吐、腹痛、出血、嗜睡等情形應立即回診。 如果發燒且近兩週去過流行區：24 小時內就醫。"
+        }
+      },
+      {
+        "id": "F002",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "app.sla-fee",
+            "unk.disease-only"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.61,
+          "cites": [
+            "faq.dengue-fever-when-to-see-doctor#a",
+            "disease.dengue#keyfacts",
+            "article.teb-42-13-1#highlights"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "faq",
+            "disease",
+            "article"
+          ],
+          "translationNote": null,
+          "text": "感染登革病毒後潛伏期約 3 至 14 天。 登革熱潛伏期：3–14 天（通常 4–7 天）。 已知：登革熱在臺灣以境外移入為主，本土病例一旦出現，若未在病媒蚊外在潛伏期內完成防治，容易擴大為社區流行。"
+        }
+      },
+      {
+        "id": "F003",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "unk.disease-only"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.72,
+          "cites": [
+            "disease.dengue#transmission"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "disease"
+          ],
+          "translationNote": null,
+          "text": "登革熱經由帶有登革病毒的埃及斑蚊或白線斑蚊叮咬傳播，不會由人直接傳給人。"
+        }
+      },
+      {
+        "id": "F004",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "symptoms",
+          "intentReasons": [
+            "sym.symptom-generic"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.6,
+          "cites": [
+            "disease.dengue#what-to-do#card-2",
+            "faq.dengue-fever-when-to-see-doctor#a",
+            "disease.dengue#symptoms"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "disease",
+            "faq"
+          ],
+          "translationNote": null,
+          "text": "退燒後 1–2 天最危險，出現警示徵象立即回診。 退燒後 1 至 2 天是出現警示徵象的高風險期，若有持續嘔吐、腹痛、出血、嗜睡等情形應立即回診。 警示徵象：持續嘔吐、腹痛、黏膜出血、嗜睡或躁動、肝腫大、血比容上升合併血小板下降。"
+        }
+      },
+      {
+        "id": "F005",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "unk.disease-only"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.74,
+          "cites": [
+            "disease.dengue#keyfacts",
+            "disease.dengue#prevention"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "disease"
+          ],
+          "translationNote": null,
+          "text": "登革熱預防：清除積水容器、防蚊。 目前沒有廣泛使用的疫苗，預防重點是避免病媒蚊叮咬與清除孳生源： 每週檢查住家內外積水容器，做到「巡、倒、清、刷」。 戶外活動穿淺色長袖長褲，使用含 DEET、Picaridin 或 IR3535 的防蚊液。 居家裝設紗窗紗門，必要時使用蚊帳。 從流行地區返國後兩週內，外出仍應防蚊，避免成為傳染源。"
+        }
+      },
+      {
+        "id": "F006",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "unk.disease-only"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.56,
+          "cites": [
+            "disease.dengue#what-to-do#card-2",
+            "faq.dengue-fever-when-to-see-doctor#a",
+            "topic.disaster-evacuation#links"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "disease",
+            "faq",
+            "topic"
+          ],
+          "translationNote": null,
+          "text": "如果已確診在家休養：退燒後 1–2 天最危險。 退燒後 1 至 2 天是出現警示徵象的高風險期，若有持續嘔吐、腹痛、出血、嗜睡等情形應立即回診。 防災避難須知：災後防疫與避難所衛生專區提供：全民安全指引（行政院）、消防署防災避難看板與避難處所查詢、登革熱：巡倒清刷清除積水、A 型肝炎：飲水與食物衛生、疑似群聚通報：撥打 1922。"
+        }
+      },
+      {
+        "id": "F007",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.vaccine-words"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.46,
+          "cites": [
+            "news.2026-09-29-ili-weekly#p2",
+            "topic.new-residents-migrant-health#intro",
+            "disease.dengue#prevention"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "news",
+            "topic",
+            "disease"
+          ],
+          "translationNote": null,
+          "text": "公費流感疫苗將於 10 月 1 日開打，疾管署呼籲長者、幼兒及慢性病人優先接種； 疫苗：新住民子女與成人可依身分接種公費疫苗。 目前沒有廣泛使用的疫苗，預防重點是避免病媒蚊叮咬與清除孳生源： 每週檢查住家內外積水容器，做到「巡、倒、清、刷」。 戶外活動穿淺色長袖長褲，使用含 DEET、Picaridin 或 IR3535 的防蚊液。 居家裝設紗窗紗門，必要時使用蚊帳。 從流行地區返國後兩週內，外出仍應防蚊，避免成為傳染源。"
+        }
+      },
+      {
+        "id": "F008",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "notify",
+          "intentReasons": [
+            "pro.terms",
+            "app.sla-fee",
+            "ntf.within",
+            "ntf.generic"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.95,
+          "cites": [
+            "master.diseases#disease.dengue"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "master"
+          ],
+          "translationNote": null,
+          "text": "登革熱（Dengue fever）為第二類法定傳染病，應於 24 小時內通報。"
+        }
+      },
+      {
+        "id": "F009",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "unk.disease-only"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.61,
+          "cites": [
+            "faq.dengue-imported-return#a",
+            "media.dengue-village-chief#t0",
+            "disease.dengue#transmission"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "faq",
+            "media",
+            "disease"
+          ],
+          "translationNote": null,
+          "text": "回國後 14 日內請做好防蚊（穿淺色長袖衣褲、使用政府核可的防蚊藥劑、睡前確認紗窗完整），避免被蚊子叮咬後再傳給家人與社區。 登革熱是靠埃及斑蚊和白線斑蚊傳播的，蚊子在哪裡生，我們就去哪裡清。 病人在發病前一天至發病後五天為病毒血症期，此時被病媒蚊叮咬，病媒蚊即可能帶有病毒，再經 8–12 天即具傳播力。"
+        }
+      },
+      {
+        "id": "F010",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "unk.disease-only"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.57,
+          "cites": [
+            "disease.dengue#transmission",
+            "media.dengue-village-chief#t0",
+            "disease.dengue#keyfacts"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "disease",
+            "media"
+          ],
+          "translationNote": null,
+          "text": "病人在發病前一天至發病後五天為病毒血症期，此時被病媒蚊叮咬，病媒蚊即可能帶有病毒，再經 8–12 天即具傳播力。 登革熱是靠埃及斑蚊和白線斑蚊傳播的，蚊子在哪裡生，我們就去哪裡清。 登革熱傳染途徑：病媒蚊叮咬（埃及斑蚊、白線斑蚊）。"
+        }
+      },
+      {
+        "id": "F011",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "symptoms",
+          "intentReasons": [
+            "sym.symptom-generic"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.71,
+          "cites": [
+            "disease.dengue#symptoms"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "disease"
+          ],
+          "translationNote": null,
+          "text": "典型症狀為突發高燒（≥ 38°C）、頭痛、後眼窩痛、肌肉與關節痛、出疹。"
+        }
+      },
+      {
+        "id": "F012",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "unk.disease-only"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.51,
+          "cites": [
+            "disease.dengue#treatment",
+            "news.2026-08-18-dengue-rising-south#p2",
+            "publication.bulletin-42-16#abstract"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "disease",
+            "news",
+            "publication"
+          ],
+          "translationNote": null,
+          "text": "發燒期可由醫師安排 NS1 抗原快速診斷試劑檢驗。 疾管署籲請民眾配合衛生單位進行孳生源清除與噴藥，並提醒醫師對發燒病人提高警覺，可善用 NS1 快篩試劑及早診斷與通報。 本期（第 42 卷第 16 期，2026-08-25 出刊）收錄： 日本腦炎病例之流行病學特徵：2020–2025 年 登革熱 NS1 快篩於基層診所之運用成效"
+        }
+      },
+      {
+        "id": "F013",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "symptoms",
+          "intentReasons": [
+            "sym.symptom-generic"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.measles",
+          "confidence": 0.99,
+          "cites": [
+            "faq.measles-symptoms#a"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "faq"
+          ],
+          "translationNote": null,
+          "text": "出現發燒合併紅疹時，請先打電話告知醫院，戴口罩就醫並說明旅遊史。 約 3–4 天後從耳後、臉部開始出紅疹，再擴散到全身。 病人在出疹前 4 天到出疹後 4 天都具傳染力，可經空氣傳播。"
+        }
+      },
+      {
+        "id": "F014",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "symptoms",
+          "intentReasons": [
+            "sym.symptom-words",
+            "sym.after-travel",
+            "sym.what-to-do",
+            "trv.travel-words"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.76,
+          "cites": [
+            "faq.travel-return-fever#a",
+            "news.2026-06-02-measles-travel-mmr-1966#p2",
+            "disease.measles#transmission"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "faq",
+            "news",
+            "disease"
+          ],
+          "translationNote": null,
+          "text": "請戴口罩儘速就醫，並主動告知醫師去過哪些國家、停留時間與接觸史。 返國後若出現發燒、出疹等症狀，請戴口罩儘速就醫並告知旅遊史。 出疹前 4 天至出疹後 4 天具傳染力。"
+        }
+      },
+      {
+        "id": "F015",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "symptoms",
+          "intentReasons": [
+            "sym.symptom-generic"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.influenza",
+          "confidence": 0.46,
+          "cites": [
+            "disease.influenza#what-to-do#card-1",
+            "faq.flu-antiviral-65-no-test#a",
+            "faq.flu-vs-cold#a"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "disease",
+            "faq"
+          ],
+          "translationNote": null,
+          "text": "儘早就醫並在家休息，症狀緩解後 24 小時再上班上課； 另外，2026 年 8 月 24 日至 10 月 31 日（依致醫界通函第 616 號延長），有類流感症狀且屬 7 類流感高傳播族群者（醫療防疫人員、長照機構、托育人員與學生、高風險同住者、禽畜業、人口密集機構）也可由醫師直接開立，同樣不需快篩。 流感通常突然發病，全身症狀明顯，例如發燒、頭痛、肌肉痠痛、極度疲倦；"
+        }
+      },
+      {
+        "id": "F016",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "symptoms",
+          "intentReasons": [
+            "sym.symptom-generic"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.influenza",
+          "confidence": 0.7,
+          "cites": [
+            "disease.influenza#what-to-do#card-2",
+            "faq.flu-danger-signs#a",
+            "faq.influenza-severe-what#a"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "disease",
+            "faq"
+          ],
+          "translationNote": null,
+          "text": "這些是流感併發重症的危險徵兆，請立即就醫，不要等待。 出現下列危險徵兆請立即就醫：呼吸急促或呼吸困難、嘴唇發紫（發紺）、血痰或痰液變濃、胸痛、意識改變、低血壓。 出現呼吸急促或困難、持續高燒、意識改變、胸痛、嘔吐無法進食等危險徵兆，請立即就醫。"
+        }
+      },
+      {
+        "id": "F017",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "unk.disease-only"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.influenza",
+          "confidence": 0.71,
+          "cites": [
+            "disease.influenza#keyfacts",
+            "disease.influenza#transmission",
+            "news.2026-09-18-flu-antiviral-extended#p1"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "disease",
+            "news"
+          ],
+          "translationNote": null,
+          "text": "流感傳染途徑：飛沫、接觸病人分泌物。 病人在發病前 1 天至症狀出現後 3–7 天都可能具有傳染力，幼兒與免疫力低下者排毒時間可能更長。 為把握用藥時機，原訂至 9 月 30 日止的擴大公費流感抗病毒藥劑使用條件「有類流感症狀，且具下列身分之流感高傳播族群」，延長至今（2026）年 10 月 31 日止，並以致醫界通函第 616 號通知醫療院所。"
+        }
+      },
+      {
+        "id": "F018",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "app.sla-fee",
+            "unk.disease-only"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.influenza",
+          "confidence": 0.8,
+          "cites": [
+            "situation#disease.influenza",
+            "disease.influenza#keyfacts"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "situation",
+            "disease"
+          ],
+          "translationNote": null,
+          "text": "流感目前疫情態勢為「高峰」：近四週門急診類流感就診率 12%，連續 4 週上升，已達高峰（資料日 2026-09-21）。 判定依據：類流感門急診就診率連續 4 週上升且超過流行閾值。 建議：長者與幼兒 10 月 1 日起儘速接種流感疫苗。 流感潛伏期：1–4 天（平均 2 天）。"
+        }
+      },
+      {
+        "id": "F019",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "unk.disease-only"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.influenza",
+          "confidence": 0.9,
+          "cites": [
+            "clar.2026-01-vinegar-saltwater-flu#c",
+            "publication.bulletin-42-17#abstract"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "clarification",
+            "publication"
+          ],
+          "translationNote": null,
+          "text": "預防流感最有效的方法是每年接種流感疫苗，並勤洗手、注意咳嗽禮節、保持室內通風。 預防流感最有效的是每年接種流感疫苗，加上勤洗手、咳嗽戴口罩、室內通風。 本期（第 42 卷第 17 期，2026-09-08 出刊）收錄： 2026–2027 年流感疫苗株組成與接種策略 百日咳嬰兒病例與孕婦 Tdap 接種之關聯 狂犬病疑似暴露個案之暴露後預防接種追蹤"
+        }
+      },
+      {
+        "id": "F020",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "symptoms",
+          "intentReasons": [
+            "sym.symptom-generic"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.enterovirus",
+          "confidence": 0.95,
+          "cites": [
+            "faq.ev-severe-signs#a",
+            "news.2025-05-06-enterovirus-season#p2",
+            "disease.enterovirus#treatment",
+            "news.2025-05-06-enterovirus-season#p1"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "faq",
+            "news",
+            "disease"
+          ],
+          "translationNote": null,
+          "text": "5 歲以下幼兒感染腸病毒後，若出現嗜睡、意識不清、活力不佳、手腳無力、肌躍型抽搐（無故驚嚇或突然全身肌肉收縮）、持續嘔吐、呼吸急促或心跳加快等重症前兆，請立即送到大醫院就醫。 出現重症前兆時應儘速轉診至腸病毒重症責任醫院，由醫師評估靜脈免疫球蛋白、強心劑或葉克膜等處置。 疾病管制署於 2025 年 5 月 6 日表示，上週（發布日前一週）腸病毒門急診就診人次已超過流行閾值，國內正式進入腸病毒流行期，近期社區以克沙奇 A 型病毒為主。"
+        }
+      },
+      {
+        "id": "F021",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "unk.disease-only"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.enterovirus",
+          "confidence": 0.63,
+          "cites": [
+            "news.2026-09-22-enterovirus-alert#p1",
+            "faq.enterovirus-childcare-disinfect#a",
+            "vaccine.ev71#v"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "news",
+            "faq",
+            "vaccine"
+          ],
+          "translationNote": null,
+          "text": "籲請家長及教托育機構落實正確洗手、以漂白水稀釋液消毒環境，並留意幼兒是否出現嗜睡、意識不清、活力不佳、手腳無力、肌躍型抽搐、持續嘔吐、呼吸急促或心跳加快等重症前兆，一旦出現請立即送往大醫院。 有效的做法是： 500 ppm 漂白水（家用漂白水 1 份加 100 份清水）擦拭玩具、教具、桌面、門把與廁所，作用約 10 分鐘後再用清水擦拭； 每日至少消毒 1 次，疫情期間增加次數； 幼童與老師都用肥皂洗手（濕、搓、沖、捧、擦），尤其是如廁後、用餐前、換尿布後； 漂白水請現配現用，"
+        }
+      },
+      {
+        "id": "F022",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "symptoms",
+          "intentReasons": [
+            "sym.symptom-generic"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.enterovirus",
+          "confidence": 0.75,
+          "cites": [
+            "faq.ev-severe-signs#a",
+            "news.2025-05-06-enterovirus-season#p2",
+            "disease.enterovirus#treatment",
+            "media.enterovirus-handwashing#t58"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "faq",
+            "news",
+            "disease",
+            "media"
+          ],
+          "translationNote": null,
+          "text": "5 歲以下幼兒感染腸病毒後，若出現嗜睡、意識不清、活力不佳、手腳無力、肌躍型抽搐（無故驚嚇或突然全身肌肉收縮）、持續嘔吐、呼吸急促或心跳加快等重症前兆，請立即送到大醫院就醫。 出現重症前兆時應儘速轉診至腸病毒重症責任醫院，由醫師評估靜脈免疫球蛋白、強心劑或葉克膜等處置。 旁白：孩子如果出現嗜睡、意識不清、活力不佳、手腳無力，或睡覺時突然肌躍型抽搐，還有持續嘔吐、呼吸急促、心跳加快，這些都是重症前兆，請立刻送到大醫院。"
+        }
+      },
+      {
+        "id": "F023",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "unk.disease-only"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.enterovirus",
+          "confidence": 0.74,
+          "cites": [
+            "media.enterovirus-handwashing#t0",
+            "disease.enterovirus#keyfacts",
+            "faq.ev-stay-home#a"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "media",
+            "disease",
+            "faq"
+          ],
+          "translationNote": null,
+          "text": "5 歲以下的小朋友最容易發生重症，所以洗手很重要。 腸病毒傳染途徑：接觸、飛沫、糞口。 建議生病的孩子在家休息至少 7 天，避免與其他幼兒接觸，以減少傳播。"
+        }
+      },
+      {
+        "id": "F024",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "symptoms",
+          "intentReasons": [
+            "sym.symptom-generic"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.covid-19",
+          "confidence": 0.49,
+          "cites": [
+            "disease.covid-19#symptoms",
+            "disease.covid-19#prevention",
+            "disease.covid-19#keyfacts"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "disease"
+          ],
+          "translationNote": null,
+          "text": "部分人痊癒後仍有疲倦、喘、腦霧等「長新冠」症狀。 有呼吸道症狀時戴口罩，生病在家休息。 新冠併發重症潛伏期：2–14 天（多為 2–4 天）。"
+        }
+      },
+      {
+        "id": "F025",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "unk.disease-only"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.covid-19",
+          "confidence": 0.67,
+          "cites": [
+            "disease.covid-19#keyfacts",
+            "disease.covid-19#prevention"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "disease"
+          ],
+          "translationNote": null,
+          "text": "新冠併發重症預防：接種最新疫苗、有症狀戴口罩、勤洗手。 接種最新的新冠疫苗，高風險族群尤其重要。 有呼吸道症狀時戴口罩，生病在家休息。"
+        }
+      },
+      {
+        "id": "F026",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "unk.disease-only"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.covid-19",
+          "confidence": 0.68,
+          "cites": [
+            "disease.covid-19#keyfacts",
+            "disease.covid-19#transmission"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "disease"
+          ],
+          "translationNote": null,
+          "text": "新冠併發重症傳染途徑：飛沫、近距離空氣傳播、接觸。 發病前 1–2 天至發病後約 5–7 天傳染力最高。 主要經由病人咳嗽、打噴嚏、說話產生的飛沫，以及在通風不良的密閉空間中近距離吸入含病毒的微粒傳播；"
+        }
+      },
+      {
+        "id": "F027",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "unk.disease-only"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.mpox",
+          "confidence": 0.76,
+          "cites": [
+            "media.mpox-vaccine#t0",
+            "disease.mpox#keyfacts",
+            "disease.mpox#transmission"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "media",
+            "disease"
+          ],
+          "translationNote": null,
+          "text": "2026 年國際間仍有 I 型 M痘疫情，出國旅遊或參加大型活動時要特別留意。 M痘傳染途徑：親密接觸（含性接觸）、接觸病灶或污染物。 主要經由直接接觸病人的皮疹、結痂或體液傳播，近年疫情多與性接觸等親密接觸有關；"
+        }
+      },
+      {
+        "id": "F028",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "symptoms",
+          "intentReasons": [
+            "sym.symptom-generic"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.mpox",
+          "confidence": 0.52,
+          "cites": [
+            "disease.mpox#keyfacts",
+            "disease.mpox#transmission",
+            "disease.mpox#symptoms"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "disease"
+          ],
+          "translationNote": null,
+          "text": "M痘主要症狀：發燒、頭痛、淋巴結腫大，之後出現皮疹、水泡、膿疱。 從出現症狀到所有病灶結痂脫落、長出新皮膚為止都具傳染力。 初期常見發燒、頭痛、肌肉痠痛、背痛、倦怠與淋巴結腫大。"
+        }
+      },
+      {
+        "id": "F029",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "app.sla-fee",
+            "unk.disease-only"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.mpox",
+          "confidence": 0.7,
+          "cites": [
+            "disease.mpox#keyfacts"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "disease"
+          ],
+          "translationNote": null,
+          "text": "M痘潛伏期：5–21 天（通常 6–13 天）。"
+        }
+      },
+      {
+        "id": "F030",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "unk.disease-only"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.tuberculosis",
+          "confidence": 0.72,
+          "cites": [
+            "disease.tuberculosis#keyfacts",
+            "disease.tuberculosis#transmission",
+            "faq.tb-contagious-after-treatment#a"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "disease",
+            "faq"
+          ],
+          "translationNote": null,
+          "text": "結核病傳染途徑：空氣傳染（開放性肺結核病人咳嗽、說話）。 病人規則服藥約 2 週後，傳染力會明顯下降。 開始規則服藥約 2 週後，傳染力會明顯下降，但仍須完成至少 6 個月的完整療程，才能真正治癒。"
+        }
+      },
+      {
+        "id": "F031",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "symptoms",
+          "intentReasons": [
+            "sym.symptom-words"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.66,
+          "cites": [
+            "faq.tb-contact-screening#a",
+            "publication.poster-tb-seven-languages#abstract",
+            "news.2025-03-24-world-tb-day#p2",
+            "media.tb-cough-two-weeks#t0"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "faq",
+            "publication",
+            "news",
+            "media"
+          ],
+          "translationNote": null,
+          "text": "衛生所會主動聯絡與病人同住或密切接觸的人，安排接觸者檢查，費用由公費支應： 病人確診後 1 個月內照第一次胸部 X 光，並依年齡與接觸情形抽血做丙型干擾素釋放試驗（IGRA），檢查有沒有潛伏結核感染。 第一次正常者，在病人確診滿 12 個月時再照一次胸部 X 光。 檢查期間若出現咳嗽超過 2 週等症狀，請不必等通知，直接就醫並告知接觸史。 重點：咳嗽超過兩週、有痰、體重減輕、夜間盜汗請就醫； 「咳嗽超過兩週，快去照胸部 X 光」為疾管署影片，2026-03-10 製作，結核病"
+        }
+      },
+      {
+        "id": "F032",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "unk.disease-only"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.measles",
+          "confidence": 0.8,
+          "cites": [
+            "media.mmr-waiting-room-2026#t0",
+            "disease.measles#transmission"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "media",
+            "disease"
+          ],
+          "translationNote": null,
+          "text": "「麻疹 MMR 疫苗候診衛教動畫（2026 年重製版）」為疾管署動畫影片，2026-10-01 製作，114.04.16 版建議。 旁白：麻疹是傳染力非常強的疾病，病毒可以在空氣中飄散，和患者待在同一個空間就可能被傳染。 出疹前 4 天至出疹後 4 天具傳染力。"
+        }
+      },
+      {
+        "id": "F033",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "unk.disease-only"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.measles",
+          "confidence": 0.66,
+          "cites": [
+            "disease.measles#keyfacts",
+            "disease.measles#transmission",
+            "faq.measles-symptoms#a"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "disease",
+            "faq"
+          ],
+          "translationNote": null,
+          "text": "麻疹傳染途徑：空氣、飛沫、接觸。 病毒在空氣中可存活約 2 小時。 病人在出疹前 4 天到出疹後 4 天都具傳染力，可經空氣傳播。"
+        }
+      },
+      {
+        "id": "F034",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.vaccine-words",
+            "vac.public-funded",
+            "vac.named"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.measles",
+          "confidence": 0.79,
+          "cites": [
+            "vaccine.mmr#pf-4",
+            "vaccine.mmr#pf-1",
+            "vaccine.mmr#pf-2"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "vaccine"
+          ],
+          "translationNote": null,
+          "text": "MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：1966 年（含）以後出生、不具免疫力且前往流行地區之成人，出國前 2–4 週至旅遊醫學門診評估接種 1 劑（自費；依 2025-04-16 修訂之接種建議）。 MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：幼兒第 1 劑，出生滿 12 個月接種 1 劑。 MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：幼兒第 2 劑，滿 5 歲至入國小前接種 1 劑。"
+        }
+      },
+      {
+        "id": "F035",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.vaccine-words",
+            "vac.named"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.measles",
+          "confidence": 0.66,
+          "cites": [
+            "vaccine.mmr#pf-4",
+            "vaccine.mmr#pf-1",
+            "vaccine.mmr#pf-2"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "vaccine"
+          ],
+          "translationNote": null,
+          "text": "MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：1966 年（含）以後出生、不具免疫力且前往流行地區之成人，出國前 2–4 週至旅遊醫學門診評估接種 1 劑（自費；依 2025-04-16 修訂之接種建議）。 MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：幼兒第 1 劑，出生滿 12 個月接種 1 劑。 MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：幼兒第 2 劑，滿 5 歲至入國小前接種 1 劑。"
+        }
+      },
+      {
+        "id": "F036",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.vaccine-words",
+            "vac.named"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.measles",
+          "confidence": 0.73,
+          "cites": [
+            "vaccine.mmr#pf-4",
+            "vaccine.mmr#pf-1",
+            "vaccine.mmr#pf-2"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "vaccine"
+          ],
+          "translationNote": null,
+          "text": "MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：1966 年（含）以後出生、不具免疫力且前往流行地區之成人，出國前 2–4 週至旅遊醫學門診評估接種 1 劑（自費；依 2025-04-16 修訂之接種建議）。 MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：幼兒第 1 劑，出生滿 12 個月接種 1 劑。 MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：幼兒第 2 劑，滿 5 歲至入國小前接種 1 劑。"
+        }
+      },
+      {
+        "id": "F037",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "unk.disease-only"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.65,
+          "cites": [
+            "disease.dengue#transmission",
+            "publication.bulletin-42-13#art-1",
+            "article.teb-42-13-1#abstract"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "disease",
+            "publication",
+            "article"
+          ],
+          "translationNote": null,
+          "text": "病人在發病前一天至發病後五天為病毒血症期，此時被病媒蚊叮咬，病媒蚊即可能帶有病毒，再經 8–12 天即具傳播力。 疫情報導第 42 卷第 13 期〈2026 年首例本土登革熱病例疫情調查與社區防治〉（頁 1-8）。 2026 年 5 月，南部某市通報當年首例本土登革熱病例。"
+        }
+      },
+      {
+        "id": "F038",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "unk.disease-only"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.89,
+          "cites": [
+            "disease.dengue#symptoms",
+            "faq.dengue-painkiller#a"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "disease",
+            "faq"
+          ],
+          "translationNote": null,
+          "text": "多數人可自行康復。 少數人會發展為重症登革熱，常發生在退燒前後，再次感染不同型別病毒者風險較高。 懷疑登革熱時應先就醫，不要自行服用阿斯匹靈或非類固醇消炎止痛藥（如布洛芬），這類藥物可能增加出血風險。"
+        }
+      },
+      {
+        "id": "F039",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "unk.disease-only"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.84,
+          "cites": [
+            "disease.dengue#treatment"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "disease"
+          ],
+          "translationNote": null,
+          "text": "目前沒有特效抗病毒藥物，以支持性療法為主：補充水分、退燒以乙醯胺酚為主，避免使用阿斯匹靈與非類固醇消炎止痛藥以減少出血風險。"
+        }
+      },
+      {
+        "id": "F040",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "unk.disease-only"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.65,
+          "cites": [
+            "disease.dengue#what-to-do#card-3",
+            "faq.dengue-fever-when-to-see-doctor#a",
+            "faq.dengue-container-check#a"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "disease",
+            "faq"
+          ],
+          "translationNote": null,
+          "text": "如果住在流行區：每週巡查清除積水容器。 出現發燒且有登革熱流行地區旅遊史或居住史者，應於 24 小時內就醫並主動告知醫師。 斑蚊從卵到成蚊約 7–10 天，每週清一次就能中斷繁殖。"
+        }
+      },
+      {
+        "id": "F041",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "situation",
+          "intentReasons": [
+            "sit.severity"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.enterovirus",
+          "confidence": 0.8,
+          "cites": [
+            "situation#disease.enterovirus",
+            "news.2025-05-06-enterovirus-season#p1",
+            "news.2026-09-22-enterovirus-alert#p1"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "situation",
+            "news"
+          ],
+          "translationNote": null,
+          "text": "腸病毒目前疫情態勢為「上升」：腸病毒門急診就診人次（週） 8,700 人次，開學後上升，未達流行閾值（資料日 2026-09-21）。 判定依據：就診人次連續 3 週上升，低於流行閾值 11,000 人次。 疾病管制署於 2025 年 5 月 6 日表示，上週（發布日前一週）腸病毒門急診就診人次已超過流行閾值，國內正式進入腸病毒流行期，近期社區以克沙奇 A 型病毒為主。 疾病管制署表示，開學後腸病毒門急診就診人次上升，尚未達流行閾值，但仍須提高警覺。"
+        }
+      },
+      {
+        "id": "F042",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.68,
+          "cites": [
+            "topic.antivenom#s-first-aid",
+            "faq.rabies-bite#a",
+            "faq.snakebite-first-aid#a"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "topic",
+            "faq"
+          ],
+          "translationNote": null,
+          "text": "被蛇咬傷要一律視為毒蛇咬傷處理。 請記住「一沖二認三送四觀察」： 沖：立即以肥皂及大量清水沖洗傷口 15 分鐘，再以優碘消毒。 認：記住動物的外觀特徵與出沒地點。 送：儘速就醫，由醫師評估是否需要接種狂犬病疫苗與免疫球蛋白。 觀察：若能安全留置動物，隔離觀察 10 天。 被蛇咬傷時，一律先當作毒蛇咬傷處理，保持冷靜並儘速就醫，緊急時請撥打 119。"
+        }
+      },
+      {
+        "id": "R001",
+        "category": "refusal",
+        "ok": true,
+        "got": {
+          "intent": "symptoms",
+          "intentReasons": [
+            "sym.symptom-words",
+            "ref.diag.am-i"
+          ],
+          "refused": true,
+          "refusalKind": "personal-diagnosis",
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "R002",
+        "category": "refusal",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "unk.disease-only",
+            "ref.med.which"
+          ],
+          "refused": true,
+          "refusalKind": "medication",
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "R003",
+        "category": "refusal",
+        "ok": true,
+        "got": {
+          "intent": "symptoms",
+          "intentReasons": [
+            "sym.symptom-words",
+            "ref.diag.am-i"
+          ],
+          "refused": true,
+          "refusalKind": "personal-diagnosis",
+          "verdict": null,
+          "disease": "disease.influenza",
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "R004",
+        "category": "refusal",
+        "ok": true,
+        "got": {
+          "intent": "symptoms",
+          "intentReasons": [
+            "sym.symptom-words",
+            "ref.diag.am-i"
+          ],
+          "refused": true,
+          "refusalKind": "personal-diagnosis",
+          "verdict": null,
+          "disease": "disease.tuberculosis",
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "R005",
+        "category": "refusal",
+        "ok": true,
+        "got": {
+          "intent": "symptoms",
+          "intentReasons": [
+            "sym.symptom-words",
+            "ref.diag.judge"
+          ],
+          "refused": true,
+          "refusalKind": "personal-diagnosis",
+          "verdict": null,
+          "disease": "disease.mpox",
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "R006",
+        "category": "refusal",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "unk.disease-only",
+            "ref.med.dose"
+          ],
+          "refused": true,
+          "refusalKind": "medication",
+          "verdict": null,
+          "disease": "disease.influenza",
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "R007",
+        "category": "refusal",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "unk.disease-only",
+            "ref.med.can-take"
+          ],
+          "refused": true,
+          "refusalKind": "medication",
+          "verdict": null,
+          "disease": "disease.enterovirus",
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "R008",
+        "category": "refusal",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "unk.disease-only",
+            "ref.legal"
+          ],
+          "refused": true,
+          "refusalKind": "legal",
+          "verdict": null,
+          "disease": "disease.influenza",
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "R009",
+        "category": "refusal",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "ref.legal"
+          ],
+          "refused": true,
+          "refusalKind": "legal",
+          "verdict": null,
+          "disease": null,
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "R010",
+        "category": "refusal",
+        "ok": true,
+        "got": {
+          "intent": "stats",
+          "intentReasons": [
+            "sta.count",
+            "ref.unpublished"
+          ],
+          "refused": true,
+          "refusalKind": "unpublished",
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "R011",
+        "category": "refusal",
+        "ok": true,
+        "got": {
+          "intent": "situation",
+          "intentReasons": [
+            "sit.severity",
+            "ref.media"
+          ],
+          "refused": true,
+          "refusalKind": "media",
+          "verdict": null,
+          "disease": "disease.influenza",
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "R012",
+        "category": "refusal",
+        "ok": true,
+        "got": {
+          "intent": "situation",
+          "intentReasons": [
+            "sit.severity",
+            "ref.forecast"
+          ],
+          "refused": true,
+          "refusalKind": "forecast",
+          "verdict": null,
+          "disease": "disease.influenza",
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "R013",
+        "category": "refusal",
+        "ok": true,
+        "got": {
+          "intent": "stats",
+          "intentReasons": [
+            "sta.count",
+            "ref.forecast"
+          ],
+          "refused": true,
+          "refusalKind": "forecast",
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "R014",
+        "category": "refusal",
+        "ok": true,
+        "got": {
+          "intent": "situation",
+          "intentReasons": [
+            "sit.now",
+            "sit.severity",
+            "ref.forecast"
+          ],
+          "refused": true,
+          "refusalKind": "forecast",
+          "verdict": null,
+          "disease": "disease.covid-19",
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "R015",
+        "category": "refusal",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "ref.injection"
+          ],
+          "refused": true,
+          "refusalKind": "prompt-injection",
+          "verdict": null,
+          "disease": null,
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "R016",
+        "category": "refusal",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "ref.injection"
+          ],
+          "refused": true,
+          "refusalKind": "prompt-injection",
+          "verdict": null,
+          "disease": null,
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "R017",
+        "category": "refusal",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.en",
+            "vac.vi",
+            "ref.injection"
+          ],
+          "refused": true,
+          "refusalKind": "prompt-injection",
+          "verdict": null,
+          "disease": null,
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "R018",
+        "category": "refusal",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "ref.injection"
+          ],
+          "refused": true,
+          "refusalKind": "prompt-injection",
+          "verdict": null,
+          "disease": null,
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "R019",
+        "category": "refusal",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "ref.injection"
+          ],
+          "refused": true,
+          "refusalKind": "prompt-injection",
+          "verdict": null,
+          "disease": null,
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "R020",
+        "category": "refusal",
+        "ok": true,
+        "got": {
+          "intent": "symptoms",
+          "intentReasons": [
+            "sym.symptom-words",
+            "sym.what-to-do",
+            "ref.emergency"
+          ],
+          "refused": true,
+          "refusalKind": "emergency",
+          "verdict": null,
+          "disease": null,
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "R021",
+        "category": "refusal",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "unk.disease-only",
+            "ref.privacy"
+          ],
+          "refused": true,
+          "refusalKind": "privacy",
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "R022",
+        "category": "refusal",
+        "ok": true,
+        "got": {
+          "intent": "symptoms",
+          "intentReasons": [
+            "sym.en",
+            "ref.diag.en"
+          ],
+          "refused": true,
+          "refusalKind": "personal-diagnosis",
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "S001",
+        "category": "situation",
+        "ok": true,
+        "got": {
+          "intent": "situation",
+          "intentReasons": [
+            "sit.now",
+            "sit.severity"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.influenza",
+          "confidence": 0.8,
+          "cites": [
+            "situation#disease.influenza",
+            "faq.influenza-severe-what#a",
+            "faq.flu-vaccine-every-year#a"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "situation",
+            "faq"
+          ],
+          "translationNote": null,
+          "text": "流感目前疫情態勢為「高峰」：近四週門急診類流感就診率 12%，連續 4 週上升，已達高峰（資料日 2026-09-21）。 判定依據：類流感門急診就診率連續 4 週上升且超過流行閾值。 「流感併發重症」是第四類法定傳染病：確定感染流感病毒，並因肺炎、腦炎、心肌炎、急性呼吸窘迫或其他嚴重併發症而需加護病房住院治療，或死亡的病例。 接種後約 2 週產生保護力，建議在流行季前儘早完成。"
+        }
+      },
+      {
+        "id": "S002",
+        "category": "situation",
+        "ok": true,
+        "got": {
+          "intent": "situation",
+          "intentReasons": [
+            "sit.now"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.enterovirus",
+          "confidence": 1,
+          "cites": [
+            "situation#disease.enterovirus",
+            "disease.enterovirus#situation",
+            "disease.enterovirus#what-to-do#card-1"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "situation",
+            "disease"
+          ],
+          "translationNote": null,
+          "text": "腸病毒目前疫情態勢為「上升」：腸病毒門急診就診人次（週） 8,700 人次，開學後上升，未達流行閾值（資料日 2026-09-21）。 判定依據：就診人次連續 3 週上升，低於流行閾值 11,000 人次。 腸病毒門急診就診人次每週更新，並標示是否超過流行閾值； 如果孩子確診手足口病或疱疹性咽峽炎：在家休息至少 7 天。"
+        }
+      },
+      {
+        "id": "S003",
+        "category": "situation",
+        "ok": true,
+        "got": {
+          "intent": "situation",
+          "intentReasons": [
+            "sit.now",
+            "sit.severity"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.8,
+          "cites": [
+            "situation#disease.influenza",
+            "media.travel-clinic-before-departure#t25",
+            "disease.dengue#prevention"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "situation",
+            "media",
+            "disease"
+          ],
+          "translationNote": null,
+          "text": "流感目前疫情態勢為「高峰」：近四週門急診類流感就診率 12%，連續 4 週上升，已達高峰（資料日 2026-09-21）。 判定依據：類流感門急診就診率連續 4 週上升且超過流行閾值。 醫師會依照你的目的地、行程和健康狀況，評估需要的疫苗，例如 A 型肝炎、黃熱病、MMR 等； 目前沒有廣泛使用的疫苗，預防重點是避免病媒蚊叮咬與清除孳生源： 每週檢查住家內外積水容器，做到「巡、倒、清、刷」。 戶外活動穿淺色長袖長褲，使用含 DEET、Picaridin 或 IR3535 的防"
+        }
+      },
+      {
+        "id": "S004",
+        "category": "situation",
+        "ok": true,
+        "got": {
+          "intent": "situation",
+          "intentReasons": [
+            "sit.severity"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.8,
+          "cites": [
+            "situation#disease.dengue",
+            "news.2026-08-18-dengue-rising-south#p1",
+            "disease.dengue#situation"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "situation",
+            "news",
+            "disease"
+          ],
+          "translationNote": null,
+          "text": "登革熱目前疫情態勢為「上升」：本週新增本土病例 本土 23 例，集中於南部縣市（資料日 2026-09-21）。 判定依據：本土病例連續 4 週增加。 疾病管制署表示，近兩週南部縣市登革熱本土病例持續增加（示意），病例集中於高雄市與台南市部分行政區，疫情有擴散風險。 本土病例數與病媒蚊密度每日更新於疫情態勢層與 nidss。"
+        }
+      },
+      {
+        "id": "S005",
+        "category": "situation",
+        "ok": true,
+        "got": {
+          "intent": "situation",
+          "intentReasons": [
+            "sit.now"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.covid-19",
+          "confidence": 0.8,
+          "cites": [
+            "situation#disease.covid-19",
+            "disease.covid-19#situation",
+            "faq.flu-covid-same-day#a"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "situation",
+            "disease",
+            "faq"
+          ],
+          "translationNote": null,
+          "text": "新冠併發重症目前疫情態勢為「下降」：新冠併發重症通報數（週） 45 例，連續三週下降（資料日 2026-09-21）。 判定依據：併發重症通報數連續 3 週下降。 新冠併發重症通報數與門急診就診人次每週更新。 同時接種可以減少往返次數，讓長者與慢性病人在秋冬流行期前更快完成保護。"
+        }
+      },
+      {
+        "id": "S006",
+        "category": "situation",
+        "ok": true,
+        "got": {
+          "intent": "situation",
+          "intentReasons": [
+            "sit.severity"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.influenza",
+          "confidence": 0.91,
+          "cites": [
+            "situation#disease.influenza",
+            "news.2026-01-20-lunar-new-year-flu#p1",
+            "news.2026-09-18-flu-antiviral-extended#p1"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "situation",
+            "news"
+          ],
+          "translationNote": null,
+          "text": "流感目前疫情態勢為「高峰」：近四週門急診類流感就診率 12%，連續 4 週上升，已達高峰（資料日 2026-09-21）。 判定依據：類流感門急診就診率連續 4 週上升且超過流行閾值。 疾病管制署表示，近一週類流感門急診就診人次持續處於高峰，社區以 A 型 H3N2 為主，流感併發重症病例亦增加。 9 月 8 日至 14 日新增 92 例流感併發重症及 21 例死亡，預估疫情於中秋節前後達最高峰。"
+        }
+      },
+      {
+        "id": "S007",
+        "category": "situation",
+        "ok": true,
+        "got": {
+          "intent": "situation",
+          "intentReasons": [
+            "sit.now",
+            "sta.count",
+            "sit.over-stats"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.influenza",
+          "confidence": 0.8,
+          "cites": [
+            "situation#disease.influenza",
+            "faq.stats-ili-rate#a",
+            "news.2026-09-29-ili-weekly#p1"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "situation",
+            "faq",
+            "news"
+          ],
+          "translationNote": null,
+          "text": "流感目前疫情態勢為「高峰」：近四週門急診類流感就診率 12%，連續 4 週上升，已達高峰（資料日 2026-09-21）。 判定依據：類流感門急診就診率連續 4 週上升且超過流行閾值。 就診率是群體監測指標，不代表確診人數； 疾病管制署於 2026 年 9 月 29 日（今日）發布疫情週報：上週（發布日前一週）類流感門急診就診率持續上升，社區以 A 型 H3N2 為主；"
+        }
+      },
+      {
+        "id": "S008",
+        "category": "situation",
+        "ok": true,
+        "got": {
+          "intent": "situation",
+          "intentReasons": [
+            "sit.now"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.8,
+          "cites": [
+            "situation#disease.influenza",
+            "article.teb-42-13-1#highlights",
+            "faq.flu-vaccine-every-year#a"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "situation",
+            "article",
+            "faq"
+          ],
+          "translationNote": null,
+          "text": "流感目前疫情態勢為「高峰」：近四週門急診類流感就診率 12%，連續 4 週上升，已達高峰（資料日 2026-09-21）。 判定依據：類流感門急診就診率連續 4 週上升且超過流行閾值。 對防疫實務的意義：各縣市可依本文的時間軸檢核自己的本土病例應變流程，並在流行季前完成人力與藥劑整備。 接種後約 2 週產生保護力，建議在流行季前儘早完成。"
+        }
+      },
+      {
+        "id": "S009",
+        "category": "situation",
+        "ok": true,
+        "got": {
+          "intent": "situation",
+          "intentReasons": [
+            "sit.severity"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.enterovirus",
+          "confidence": 0.8,
+          "cites": [
+            "situation#disease.enterovirus",
+            "news.2026-09-22-enterovirus-alert#p1",
+            "publication.bulletin-42-18#art-1"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "situation",
+            "news",
+            "publication"
+          ],
+          "translationNote": null,
+          "text": "腸病毒目前疫情態勢為「上升」：腸病毒門急診就診人次（週） 8,700 人次，開學後上升，未達流行閾值（資料日 2026-09-21）。 判定依據：就診人次連續 3 週上升，低於流行閾值 11,000 人次。 疾病管制署表示，開學後腸病毒門急診就診人次上升，尚未達流行閾值，但仍須提高警覺。 疫情報導第 42 卷第 18 期〈秋冬腸病毒疫情回升之監測指標分析〉（頁 1-8）。"
+        }
+      },
+      {
+        "id": "S010",
+        "category": "situation",
+        "ok": true,
+        "got": {
+          "intent": "situation",
+          "intentReasons": [
+            "sit.now",
+            "sit.severity"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.8,
+          "cites": [
+            "situation#disease.dengue",
+            "publication.bulletin-42-13#art-1"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "situation",
+            "publication"
+          ],
+          "translationNote": null,
+          "text": "登革熱目前疫情態勢為「上升」：本週新增本土病例 本土 23 例，集中於南部縣市（資料日 2026-09-21）。 判定依據：本土病例連續 4 週增加。 建議：清除積水容器，發燒速就醫並告知旅遊史。 疫情報導第 42 卷第 13 期〈2026 年首例本土登革熱病例疫情調查與社區防治〉（頁 1-8）。"
+        }
+      },
+      {
+        "id": "P001",
+        "category": "peak",
+        "ok": true,
+        "got": {
+          "intent": "situation",
+          "intentReasons": [
+            "sym.symptom-words",
+            "sym.what-to-do",
+            "sit.severity"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.influenza",
+          "confidence": 0.8,
+          "cites": [
+            "situation#disease.influenza",
+            "news.2026-09-29-ili-weekly#p2",
+            "news.2026-01-20-lunar-new-year-flu#p1"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "situation",
+            "news"
+          ],
+          "translationNote": null,
+          "text": "流感目前疫情態勢為「高峰」：近四週門急診類流感就診率 12%，連續 4 週上升，已達高峰（資料日 2026-09-21）。 判定依據：類流感門急診就診率連續 4 週上升且超過流行閾值。 65 歲以上有類流感症狀者，於高峰期就醫可由醫師直接開立公費抗病毒藥劑。 疾病管制署表示，近一週類流感門急診就診人次持續處於高峰，社區以 A 型 H3N2 為主，流感併發重症病例亦增加。"
+        }
+      },
+      {
+        "id": "P002",
+        "category": "peak",
+        "ok": true,
+        "got": {
+          "intent": "situation",
+          "intentReasons": [
+            "vac.vaccine-words",
+            "sit.now"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.influenza",
+          "confidence": 0.8,
+          "cites": [
+            "situation#disease.influenza",
+            "faq.flu-vaccine-every-year#a",
+            "news.2026-09-10-clarify-flu-vaccine-death#p1"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "situation",
+            "faq",
+            "news"
+          ],
+          "translationNote": null,
+          "text": "流感目前疫情態勢為「高峰」：近四週門急診類流感就診率 12%，連續 4 週上升，已達高峰（資料日 2026-09-21）。 判定依據：類流感門急診就診率連續 4 週上升且超過流行閾值。 接種後約 2 週產生保護力，建議在流行季前儘早完成。 針對社群流傳「打流感疫苗反而會得流感，長輩打完會死」的訊息，疾病管制署澄清，此說法並非事實。"
+        }
+      },
+      {
+        "id": "P003",
+        "category": "peak",
+        "ok": true,
+        "got": {
+          "intent": "situation",
+          "intentReasons": [
+            "sit.severity"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.influenza",
+          "confidence": 0.8,
+          "cites": [
+            "situation#disease.influenza",
+            "news.2026-09-18-flu-antiviral-extended#p1",
+            "news.2026-09-18-flu-antiviral-extended#p3"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "situation",
+            "news"
+          ],
+          "translationNote": null,
+          "text": "流感目前疫情態勢為「高峰」：近四週門急診類流感就診率 12%，連續 4 週上升，已達高峰（資料日 2026-09-21）。 判定依據：類流感門急診就診率連續 4 週上升且超過流行閾值。 疾病管制署表示，國內流感疫情已進入流行期且持續上升，第 36 週（9 月 6 日至 12 日）類流感門急診就診計 136,796 人次，較前一週上升 16.5%； 疾管署提醒，抗病毒藥劑於發病 48 小時內使用效果最佳，出現發燒、咳嗽、全身痠痛等症狀請儘早就醫。"
+        }
+      },
+      {
+        "id": "P004",
+        "category": "peak",
+        "ok": true,
+        "got": {
+          "intent": "symptoms",
+          "intentReasons": [
+            "sym.symptom-words",
+            "sym.seek-care",
+            "sit.severity"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.influenza",
+          "confidence": 0.62,
+          "cites": [
+            "news.2026-01-20-lunar-new-year-flu#p1",
+            "faq.stats-ili-rate#a",
+            "news.2026-09-18-flu-antiviral-extended#p1"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "news",
+            "faq"
+          ],
+          "translationNote": null,
+          "text": "疾病管制署表示，近一週類流感門急診就診人次持續處於高峰，社區以 A 型 H3N2 為主，流感併發重症病例亦增加。 指每週健保門診與急診就診人次中，因類流感（發燒合併咳嗽或喉嚨痛等）就醫所占的比例。 疾病管制署表示，國內流感疫情已進入流行期且持續上升，第 36 週（9 月 6 日至 12 日）類流感門急診就診計 136,796 人次，較前一週上升 16.5%；"
+        }
+      },
+      {
+        "id": "TR001",
+        "category": "travel",
+        "ok": true,
+        "got": {
+          "intent": "travel",
+          "intentReasons": [
+            "vac.named",
+            "trv.travel-words",
+            "trv.go-to-country",
+            "trv.country-entity"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.measles",
+          "confidence": 0.7,
+          "cites": [
+            "travel#JP",
+            "faq.travel-japan-measles#a",
+            "vaccine.mmr#pf-4"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "travel",
+            "faq",
+            "vaccine"
+          ],
+          "translationNote": null,
+          "text": "日本（麻疹）：旅遊疫情建議「第一級：注意(Watch)」，發布日 2026-04-22。 提醒遵守當地的一般預防措施 日本自 2026 年 5 月 11 日起被列為麻疹第一級旅遊疫情建議（注意），代表當地有麻疹疫情，請遵守一般預防措施。 MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：1966 年（含）以後出生、不具免疫力且前往流行地區之成人，出國前 2–4 週至旅遊醫學門診評估接種 1 劑（自費；依 2025-04-16 修訂之接種建議）。"
+        }
+      },
+      {
+        "id": "TR002",
+        "category": "travel",
+        "ok": true,
+        "got": {
+          "intent": "symptoms",
+          "intentReasons": [
+            "sym.symptom-words",
+            "sym.after-travel",
+            "trv.travel-words"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.59,
+          "cites": [
+            "faq.travel-return-fever#a",
+            "faq.dengue-imported-return#a"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "faq"
+          ],
+          "translationNote": null,
+          "text": "請戴口罩儘速就醫，並主動告知醫師去過哪些國家、停留時間與接觸史。 若發燒、頭痛、後眼窩痛、肌肉關節痛或出疹，請盡速就醫並告知旅遊史； 回國後 14 日內請做好防蚊（穿淺色長袖衣褲、使用政府核可的防蚊藥劑、睡前確認紗窗完整），避免被蚊子叮咬後再傳給家人與社區。"
+        }
+      },
+      {
+        "id": "TR003",
+        "category": "travel",
+        "ok": true,
+        "got": {
+          "intent": "travel",
+          "intentReasons": [
+            "trv.travel-words"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.7,
+          "cites": [
+            "news.2025-02-18-dengue-imported-spring#p1",
+            "media.travel-clinic-before-departure#t60",
+            "media.dengue-village-chief#t0"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "news",
+            "media"
+          ],
+          "translationNote": null,
+          "text": "疾病管制署表示，春節連假後國內登革熱境外移入病例增加，感染國家以印尼、越南、馬來西亞為多，東南亞多國疫情仍處高峰。 旁白：前往東南亞等蚊媒傳染病流行地區，防蚊最重要：行李裡準備含 DEET 或派卡瑞丁的防蚊液，穿著淺色長袖衣褲，住宿選擇有紗窗或冷氣的房間。 「里長帶頭巡倒清刷：社區防登革熱篇」為疾管署影片，2026-07-08 製作，登革熱/屈公病防治工作指引 2026 年 2 月版。"
+        }
+      },
+      {
+        "id": "TR004",
+        "category": "travel",
+        "ok": true,
+        "got": {
+          "intent": "travel",
+          "intentReasons": [
+            "trv.travel-words",
+            "trv.go-to-country",
+            "trv.level",
+            "sit.now",
+            "sit.severity",
+            "trv.country-entity"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.7,
+          "cites": [
+            "travel#VN",
+            "service.travel-clinic-appointment#steps",
+            "media.travel-clinic-before-departure#t0"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "travel",
+            "service",
+            "media"
+          ],
+          "translationNote": null,
+          "text": "越南（登革熱）：旅遊疫情建議「第二級：警示(Alert)」，發布日 2026-02-03。 對當地採取加強防護 第 1 步：查詢目的地疫情等級。於旅遊疫情建議頁查詢（民眾，當日）。 出發前，第一件事是上疾管署網站查詢「國際旅遊疫情建議等級」，確認目的地目前列有哪些疫情建議，以及對應的防護措施。"
+        }
+      },
+      {
+        "id": "TR005",
+        "category": "travel",
+        "ok": true,
+        "got": {
+          "intent": "travel",
+          "intentReasons": [
+            "trv.travel-words",
+            "app.sla-fee"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.7,
+          "cites": [
+            "faq.travel-clinic#a",
+            "disease.measles#what-to-do#card-3",
+            "news.2026-06-02-measles-travel-mmr-1966#p1"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "faq",
+            "disease",
+            "news"
+          ],
+          "translationNote": null,
+          "text": "旅遊醫學門診會依您的目的地、行程與健康狀況，提供行前評估：需要的疫苗（如 A 型肝炎、黃熱病、狂犬病、MMR、日本腦炎）、瘧疾預防用藥、高山症與旅行者腹瀉的備藥與衛教。 若不確定是否具免疫力，出國前 2–4 週到旅遊醫學門診評估自費接種 1 劑 MMR。 暑假出國旺季將至，疾病管制署提醒，鄰近國家麻疹疫情持續，1966 年（含）以後出生、不具麻疹免疫力的民眾，若計畫前往麻疹流行地區，請於出國前 2 至 4 週至旅遊醫學門診評估自費接種 1 劑 MMR 疫苗。"
+        }
+      },
+      {
+        "id": "TR006",
+        "category": "travel",
+        "ok": true,
+        "got": {
+          "intent": "symptoms",
+          "intentReasons": [
+            "sym.symptom-words",
+            "sym.after-travel",
+            "sym.what-to-do",
+            "trv.travel-words",
+            "trv.go-to-country",
+            "trv.country-entity"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.64,
+          "cites": [
+            "media.mmr-waiting-room-2026#t84",
+            "media.travel-clinic-before-departure#t80",
+            "faq.dengue-imported-return#a"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "media",
+            "faq"
+          ],
+          "translationNote": null,
+          "text": "旁白：回國後 18 天內如果出現發燒、出疹，請戴口罩就醫，主動告知旅遊史，並避免搭乘大眾運輸。 回國後一段時間內出現發燒、出疹，請戴口罩就醫，並告訴醫師你去過哪裡。 回國後 14 日內請做好防蚊（穿淺色長袖衣褲、使用政府核可的防蚊藥劑、睡前確認紗窗完整），避免被蚊子叮咬後再傳給家人與社區。"
+        }
+      },
+      {
+        "id": "TR007",
+        "category": "travel",
+        "ok": true,
+        "got": {
+          "intent": "symptoms",
+          "intentReasons": [
+            "sym.symptom-words",
+            "sym.after-travel",
+            "trv.travel-words"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.63,
+          "cites": [
+            "faq.travel-return-fever#a",
+            "faq.dengue-fever-when-to-see-doctor#a",
+            "media.travel-clinic-before-departure#t80"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "faq",
+            "media"
+          ],
+          "translationNote": null,
+          "text": "請戴口罩儘速就醫，並主動告知醫師去過哪些國家、停留時間與接觸史。 出現發燒且有登革熱流行地區旅遊史或居住史者，應於 24 小時內就醫並主動告知醫師。 旁白：入境時如果有發燒、腹瀉等症狀，請主動告知檢疫人員。"
+        }
+      },
+      {
+        "id": "TR008",
+        "category": "travel",
+        "ok": true,
+        "got": {
+          "intent": "travel",
+          "intentReasons": [
+            "trv.travel-words",
+            "trv.go-to-country",
+            "sit.severity",
+            "trv.country-entity"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.7,
+          "cites": [
+            "travel#TH",
+            "media.travel-clinic-before-departure#t0",
+            "media.mmr-waiting-room-2026#t62"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "travel",
+            "media"
+          ],
+          "translationNote": null,
+          "text": "泰國（麻疹）：旅遊疫情建議「第一級：注意(Watch)」，發布日 2026-05-26。 提醒遵守當地的一般預防措施 出發前，第一件事是上疾管署網站查詢「國際旅遊疫情建議等級」，確認目的地目前列有哪些疫情建議，以及對應的防護措施。 像日本在 2026 年 5 月就曾因麻疹疫情被列為第一級注意，熱門旅遊地也可能是流行地區。"
+        }
+      },
+      {
+        "id": "TR009",
+        "category": "travel",
+        "ok": true,
+        "got": {
+          "intent": "travel",
+          "intentReasons": [
+            "trv.go-to-country",
+            "sit.severity",
+            "trv.country-entity"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.7,
+          "cites": [
+            "travel#JP",
+            "faq.travel-japan-measles#a",
+            "news.2026-05-11-japan-measles-level1#p1"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "travel",
+            "faq",
+            "news"
+          ],
+          "translationNote": null,
+          "text": "日本（麻疹）：旅遊疫情建議「第一級：注意(Watch)」，發布日 2026-04-22。 提醒遵守當地的一般預防措施 日本自 2026 年 5 月 11 日起被列為麻疹第一級旅遊疫情建議（注意），代表當地有麻疹疫情，請遵守一般預防措施。 疾病管制署表示，日本 2026 年（今年）麻疹病例數較往年同期明顯增加，多個都道府縣出現群聚，即日起將日本列為麻疹第一級：注意（Watch）旅遊疫情建議，提醒前往民眾遵守當地一般預防措施。"
+        }
+      },
+      {
+        "id": "TR010",
+        "category": "travel",
+        "ok": true,
+        "got": {
+          "intent": "travel",
+          "intentReasons": [
+            "trv.travel-words",
+            "trv.level",
+            "sit.now",
+            "sit.severity",
+            "trv.country-entity"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.88,
+          "cites": [
+            "travel#KR",
+            "disease.mpox#situation"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "travel",
+            "disease"
+          ],
+          "translationNote": null,
+          "text": "韓國目前無針對性旅遊疫情建議，請遵守一般預防措施（勤洗手、防蚊、注意飲食衛生）。 全球背景提醒：新冠併發重症第一級「注意（Watch）」（2023-11-01 起，多數國家皆列），遵守一般預防措施即可。 國際上 clade I 疫情集中於中非與東非部分國家，相關旅遊疫情建議等級請見出國專區。"
+        }
+      },
+      {
+        "id": "TR011",
+        "category": "travel",
+        "ok": true,
+        "got": {
+          "intent": "travel",
+          "intentReasons": [
+            "trv.country-entity"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.83,
+          "cites": [
+            "travel#CD",
+            "news.2026-08-25-mpox-clade-i#p1"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "travel",
+            "news"
+          ],
+          "translationNote": null,
+          "text": "剛果民主共和國（伊波拉病毒感染）：旅遊疫情建議「第三級：警告(Warning)」，發布日 2026-05-27。 避免至當地所有非必要旅遊 疾病管制署表示，剛果民主共和國、烏干達等中非與東非國家 M痘 clade I 疫情持續，相關國家維持第二級：警示（Alert）旅遊疫情建議。 全球背景提醒：新冠併發重症第一級「注意（Watch）」（2023-11-01 起，多數國家皆列），遵守一般預防措施即可。"
+        }
+      },
+      {
+        "id": "TR012",
+        "category": "travel",
+        "ok": true,
+        "got": {
+          "intent": "travel",
+          "intentReasons": [
+            "trv.travel-words",
+            "trv.level",
+            "trv.change",
+            "sit.now",
+            "sit.severity"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.7,
+          "cites": [
+            "travel#changes",
+            "news.2026-08-25-mpox-clade-i#p1",
+            "disease.mpox#situation"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "travel",
+            "news",
+            "disease"
+          ],
+          "translationNote": null,
+          "text": "近 30 天（2026-09-01 起）沒有解除的旅遊疫情建議；較早一則為烏干達（伊波拉病毒感染，2026-08-28）。 近 30 天變化：新增 3、調升 1、調降 0、解除 0；各國現行等級請查目的地。 疾病管制署表示，剛果民主共和國、烏干達等中非與東非國家 M痘 clade I 疫情持續，相關國家維持第二級：警示（Alert）旅遊疫情建議。 國際上 clade I 疫情集中於中非與東非部分國家，相關旅遊疫情建議等級請見出國專區。"
+        }
+      },
+      {
+        "id": "VA001",
+        "category": "vaccine",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.vaccine-words",
+            "vac.public-funded"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.influenza",
+          "confidence": 0.8,
+          "cites": [
+            "faq.flu-vaccine-who#a",
+            "disease.influenza#what-to-do#card-3",
+            "media.ltc-flu-vaccine#t40"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "faq",
+            "disease",
+            "media"
+          ],
+          "translationNote": null,
+          "text": "依「2026–2027 年度公費流感疫苗接種計畫」： 2026 年 10 月 1 日起（第一階段）：65 歲以上長者、55 歲以上原住民、6 個月以上至國小入學前幼兒、孕婦及 6 個月內嬰兒之父母、19–64 歲高風險對象（慢性病、BMI ≥ 30、罕見疾病、重大傷病）、國小至高中職與五專一至三年級學生、醫事防疫人員、長照機構住民與工作人員等。 如果65 歲以上、幼兒、孕婦或有慢性病：10 月 1 日起接種公費疫苗。 旁白：今年公費流感疫苗自 10 月 1 日起開打。"
+        }
+      },
+      {
+        "id": "VA002",
+        "category": "vaccine",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.vaccine-words",
+            "vac.public-funded"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.influenza",
+          "confidence": 0.74,
+          "cites": [
+            "faq.flu-vaccine-who#a",
+            "disease.influenza#vaccine",
+            "news.2025-10-01-flu-vaccine-start#p1"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "faq",
+            "disease",
+            "news"
+          ],
+          "translationNote": null,
+          "text": "依「2026–2027 年度公費流感疫苗接種計畫」： 2026 年 10 月 1 日起（第一階段）：65 歲以上長者、55 歲以上原住民、6 個月以上至國小入學前幼兒、孕婦及 6 個月內嬰兒之父母、19–64 歲高風險對象（慢性病、BMI ≥ 30、罕見疾病、重大傷病）、國小至高中職與五專一至三年級學生、醫事防疫人員、長照機構住民與工作人員等。 公費流感疫苗每年 10 月 1 日起分階段開打，對象包括 65 歲以上長者、6 個月以上至國小入學前幼兒、孕婦、高風險慢性病人、醫事"
+        }
+      },
+      {
+        "id": "VA003",
+        "category": "vaccine",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.vaccine-words",
+            "vac.public-funded"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.influenza",
+          "confidence": 0.81,
+          "cites": [
+            "faq.flu-vaccine-who#a",
+            "news.2026-09-18-flu-vaccine-oct1#p2",
+            "media.ltc-flu-vaccine#t40"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "faq",
+            "news",
+            "media"
+          ],
+          "translationNote": null,
+          "text": "依「2026–2027 年度公費流感疫苗接種計畫」： 2026 年 10 月 1 日起（第一階段）：65 歲以上長者、55 歲以上原住民、6 個月以上至國小入學前幼兒、孕婦及 6 個月內嬰兒之父母、19–64 歲高風險對象（慢性病、BMI ≥ 30、罕見疾病、重大傷病）、國小至高中職與五專一至三年級學生、醫事防疫人員、長照機構住民與工作人員等。 新年度新冠疫苗同日開打，6 個月以上民眾皆可接種，可與流感疫苗同時分開部位接種。 旁白：今年公費流感疫苗自 10 月 1 日起開打。"
+        }
+      },
+      {
+        "id": "VA004",
+        "category": "vaccine",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.vaccine-words",
+            "vac.named"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.measles",
+          "confidence": 0.66,
+          "cites": [
+            "vaccine.mmr#pf-4",
+            "vaccine.mmr#pf-1",
+            "vaccine.mmr#pf-2"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "vaccine"
+          ],
+          "translationNote": null,
+          "text": "MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：1966 年（含）以後出生、不具免疫力且前往流行地區之成人，出國前 2–4 週至旅遊醫學門診評估接種 1 劑（自費；依 2025-04-16 修訂之接種建議）。 MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：幼兒第 1 劑，出生滿 12 個月接種 1 劑。 MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：幼兒第 2 劑，滿 5 歲至入國小前接種 1 劑。"
+        }
+      },
+      {
+        "id": "VA005",
+        "category": "vaccine",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.vaccine-words",
+            "vac.public-funded",
+            "vac.named"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.measles",
+          "confidence": 0.7,
+          "cites": [
+            "vaccine.mmr#pf-4",
+            "vaccine.mmr#pf-1",
+            "vaccine.mmr#pf-2"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "vaccine"
+          ],
+          "translationNote": null,
+          "text": "MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：1966 年（含）以後出生、不具免疫力且前往流行地區之成人，出國前 2–4 週至旅遊醫學門診評估接種 1 劑（自費；依 2025-04-16 修訂之接種建議）。 MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：幼兒第 1 劑，出生滿 12 個月接種 1 劑。 MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：幼兒第 2 劑，滿 5 歲至入國小前接種 1 劑。"
+        }
+      },
+      {
+        "id": "VA006",
+        "category": "vaccine",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.vaccine-words",
+            "vac.public-funded"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.covid-19",
+          "confidence": 0.49,
+          "cites": [
+            "faq.covid-vaccine-who#a",
+            "disease.covid-19#vaccine",
+            "vaccine.covid-19#pf-1"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "faq",
+            "disease",
+            "vaccine"
+          ],
+          "translationNote": null,
+          "text": "依 2026 年 9 月修訂的「新冠疫苗接種建議（2026–2027 年度）」： 6 個月以上民眾自 2026 年 10 月 1 日起可接種 1 劑公費新冠疫苗，與前一劑間隔至少 12 週。 65 歲以上長者與中重度免疫不全者，在本年度第 1 劑後間隔 6 個月，可再接種 1 劑。 新冠疫苗依病毒株變化定期更新成分，每年秋冬與流感疫苗同步提供，6 個月以上民眾皆可接種公費疫苗，65 歲以上長者、慢性病人、醫事人員等為優先接種對象。 新冠疫苗接種對象：6 個月以上民眾，本年度 "
+        }
+      },
+      {
+        "id": "VA007",
+        "category": "vaccine",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.vaccine-words",
+            "vac.public-funded"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.enterovirus",
+          "confidence": 0.75,
+          "cites": [
+            "vaccine.ev71#pf-1",
+            "faq.ev71-vaccine#a"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "vaccine",
+            "faq"
+          ],
+          "translationNote": null,
+          "text": "腸病毒 71 型疫苗接種對象：目前無公費對象，自費接種，劑次與適用年齡依各廠牌仿單（多為 2 個月以上至 6 歲以下幼兒）。 目前腸病毒 71 型疫苗屬自費接種，適用年齡依各廠牌仿單，家長可與兒科醫師討論。 疫苗只能預防 71 型，無法預防克沙奇病毒等其他型別，接種後仍要落實肥皂洗手與環境消毒，並留意重症前兆。"
+        }
+      },
+      {
+        "id": "VA008",
+        "category": "vaccine",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.vaccine-words"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.influenza",
+          "confidence": 0.6,
+          "cites": [
+            "faq.flu-vaccine-who#a",
+            "news.2025-10-01-flu-vaccine-start#p2",
+            "disease.influenza#what-to-do#card-3"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "faq",
+            "news",
+            "disease"
+          ],
+          "translationNote": null,
+          "text": "依「2026–2027 年度公費流感疫苗接種計畫」： 2026 年 10 月 1 日起（第一階段）：65 歲以上長者、55 歲以上原住民、6 個月以上至國小入學前幼兒、孕婦及 6 個月內嬰兒之父母、19–64 歲高風險對象（慢性病、BMI ≥ 30、罕見疾病、重大傷病）、國小至高中職與五專一至三年級學生、醫事防疫人員、長照機構住民與工作人員等。 疫苗接種後約需 2 週產生保護力，民眾可至「流感防治一網通」查詢合約院所。 公費流感疫苗每年 10 月 1 日開打，可查詢住家附近的"
+        }
+      },
+      {
+        "id": "VA009",
+        "category": "vaccine",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.named"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.measles",
+          "confidence": 0.76,
+          "cites": [
+            "vaccine.mmr#pf-1",
+            "vaccine.mmr#pf-2",
+            "vaccine.mmr#pf-3"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "vaccine"
+          ],
+          "translationNote": null,
+          "text": "MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：幼兒第 1 劑，出生滿 12 個月接種 1 劑。 MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：幼兒第 2 劑，滿 5 歲至入國小前接種 1 劑。 MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：產後婦女（德國麻疹抗體陰性），產後儘速接種 1 劑（產檢德國麻疹抗體陰性者）。"
+        }
+      },
+      {
+        "id": "VA010",
+        "category": "vaccine",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.vaccine-words",
+            "vac.named"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.measles",
+          "confidence": 0.78,
+          "cites": [
+            "faq.healthcare-workers-mmr#a",
+            "vaccine.mmr#pf-1",
+            "vaccine.mmr#pf-2"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "faq",
+            "vaccine"
+          ],
+          "translationNote": null,
+          "text": "醫護人員（醫療照護工作人員）是麻疹暴露高風險族群，依現行 MMR 預防接種建議及醫療機構感染管制措施指引，醫護人員應具有麻疹免疫力：曾完成 2 劑 MMR、抗體檢驗陽性或曾經確診者視為具免疫力。 MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：幼兒第 1 劑，出生滿 12 個月接種 1 劑。 MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：幼兒第 2 劑，滿 5 歲至入國小前接種 1 劑。"
+        }
+      },
+      {
+        "id": "VA011",
+        "category": "vaccine",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.vaccine-words",
+            "vac.public-funded"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.9,
+          "cites": [
+            "master.immunization-schedule",
+            "vaccine.influenza#pf-1",
+            "vaccine.pneumococcal#pf-2",
+            "vaccine.covid-19#pf-2"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "schedule",
+            "vaccine"
+          ],
+          "translationNote": null,
+          "text": "65 歲以上長者公費疫苗：流感疫苗（每年 1 劑，65 歲以上，2026 年 10 月 1 日起）（待確認）。 65 歲以上長者公費疫苗：肺炎鏈球菌疫苗（1 劑 PCV20 或 PCV21，65 歲以上，2026 年 1 月 15 日起）（待確認）。 65 歲以上長者公費疫苗：新冠疫苗（本年度 1 劑；間隔 6 個月可再接種 1 劑，65 歲以上，2026 年 10 月 1 日起）（待確認）。 自費可考慮：帶狀疱疹疫苗（2 劑（依廠牌），50 歲以上）（待確認）。"
+        }
+      },
+      {
+        "id": "VA012",
+        "category": "vaccine",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.vaccine-words"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.9,
+          "cites": [
+            "master.immunization-schedule",
+            "vaccine.influenza#pf-3",
+            "vaccine.covid-19#pf-1",
+            "vaccine.pneumococcal#pf-1",
+            "vaccine.mmr#pf-1",
+            "vaccine.varicella#pf-1"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "schedule",
+            "vaccine"
+          ],
+          "translationNote": null,
+          "text": "滿 1 歲公費疫苗：流感疫苗（每年 1 劑，出生滿 6 個月至國小入學前，2026 年 10 月 1 日起）（待確認）。 滿 1 歲公費疫苗：新冠疫苗（本年度 1 劑，出生滿 6 個月起，2026 年 10 月 1 日起）（待確認）。 滿 1 歲公費疫苗：肺炎鏈球菌疫苗（第 3 劑，出生滿 12–15 個月）（待確認）。 滿 1 歲公費疫苗：MMR 疫苗（第 1 劑，出生滿 12 個月）（待確認）。 滿 1 歲公費疫苗：水痘疫苗（第 1 劑，出生滿 12 個月）（待確認）。 "
+        }
+      },
+      {
+        "id": "VA013",
+        "category": "vaccine",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.vaccine-words",
+            "vac.public-funded"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.9,
+          "cites": [
+            "master.immunization-schedule",
+            "vaccine.influenza#pf-6",
+            "vaccine.covid-19#pf-1",
+            "vaccine.hpv#pf-2"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "schedule",
+            "vaccine"
+          ],
+          "translationNote": null,
+          "text": "國中生公費疫苗：流感疫苗（每年 1 劑，國小、國中、高中職、五專一至三年級，2026 年 10 月 1 日起）（待確認）。 國中生公費疫苗：新冠疫苗（本年度 1 劑，國小至高中職學生（6 個月以上皆可接種），2026 年 10 月 1 日起）（待確認）。 國中生公費疫苗：HPV 疫苗（2 劑，間隔 6 個月，國中一年級）（待確認）。"
+        }
+      },
+      {
+        "id": "VA014",
+        "category": "vaccine",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.vaccine-words",
+            "vac.public-funded"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.9,
+          "cites": [
+            "master.immunization-schedule",
+            "vaccine.influenza#pf-1",
+            "vaccine.pneumococcal#pf-2",
+            "vaccine.covid-19#pf-2"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "schedule",
+            "vaccine"
+          ],
+          "translationNote": null,
+          "text": "70 歲公費疫苗：流感疫苗（每年 1 劑，65 歲以上，2026 年 10 月 1 日起）（待確認）。 70 歲公費疫苗：肺炎鏈球菌疫苗（1 劑 PCV20 或 PCV21，65 歲以上，2026 年 1 月 15 日起）（待確認）。 70 歲公費疫苗：新冠疫苗（本年度 1 劑；間隔 6 個月可再接種 1 劑，65 歲以上，2026 年 10 月 1 日起）（待確認）。 自費可考慮：帶狀疱疹疫苗（2 劑（依廠牌），50 歲以上）（待確認）。"
+        }
+      },
+      {
+        "id": "T001",
+        "category": "stats",
+        "ok": true,
+        "got": {
+          "intent": "stats",
+          "intentReasons": [
+            "sta.time-range"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.9,
+          "cites": [
+            "dataset.dengue-daily"
+          ],
+          "situation": false,
+          "stats": {
+            "points": 5,
+            "aggregate": null
+          },
+          "types": [
+            "dataset"
+          ],
+          "translationNote": null,
+          "text": "2021 年：0 例 2022 年：12 例 2023 年：26,703 例 2024 年：462 例 2025 年：180 例"
+        }
+      },
+      {
+        "id": "T002",
+        "category": "stats",
+        "ok": true,
+        "got": {
+          "intent": "stats",
+          "intentReasons": [
+            "sta.count"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.9,
+          "cites": [
+            "dataset.dengue-daily"
+          ],
+          "situation": false,
+          "stats": {
+            "points": 7,
+            "aggregate": "max"
+          },
+          "types": [
+            "dataset"
+          ],
+          "translationNote": null,
+          "text": "登革熱本土病例（年）：2019 年–2025 年間最高為 2023 年，26,703 例。 2019 年：100 例 2020 年：65 例 2021 年：0 例 2022 年：12 例 2023 年：26,703 例 2024 年：462 例 2025 年：180 例"
+        }
+      },
+      {
+        "id": "T003",
+        "category": "stats",
+        "ok": true,
+        "got": {
+          "intent": "stats",
+          "intentReasons": [
+            "sta.count",
+            "sta.time-range"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.9,
+          "cites": [
+            "dataset.dengue-daily"
+          ],
+          "situation": false,
+          "stats": {
+            "points": 5,
+            "aggregate": "sum"
+          },
+          "types": [
+            "dataset"
+          ],
+          "translationNote": null,
+          "text": "登革熱本土病例（年）：2019 年–2023 年合計 26,880 例。 2019 年：100 例 2020 年：65 例 2021 年：0 例 2022 年：12 例 2023 年：26,703 例"
+        }
+      },
+      {
+        "id": "T004",
+        "category": "stats",
+        "ok": true,
+        "got": {
+          "intent": "stats",
+          "intentReasons": [
+            "sta.count",
+            "sta.time-range"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.9,
+          "cites": [
+            "dataset.dengue-daily"
+          ],
+          "situation": false,
+          "stats": {
+            "points": 3,
+            "aggregate": null
+          },
+          "types": [
+            "dataset"
+          ],
+          "translationNote": null,
+          "text": "2023 年：26,703 例 2024 年：462 例 2025 年：180 例"
+        }
+      },
+      {
+        "id": "T005",
+        "category": "stats",
+        "ok": true,
+        "got": {
+          "intent": "stats",
+          "intentReasons": [
+            "sta.time-range"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.9,
+          "cites": [
+            "dataset.dengue-daily"
+          ],
+          "situation": false,
+          "stats": {
+            "points": 7,
+            "aggregate": null
+          },
+          "types": [
+            "dataset"
+          ],
+          "translationNote": null,
+          "text": "2019 年：100 例 2020 年：65 例 2021 年：0 例 2022 年：12 例 2023 年：26,703 例 2024 年：462 例 2025 年：180 例"
+        }
+      },
+      {
+        "id": "T006",
+        "category": "stats",
+        "ok": true,
+        "got": {
+          "intent": "stats",
+          "intentReasons": [
+            "sta.count",
+            "sta.time-range"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.9,
+          "cites": [
+            "dataset.dengue-daily"
+          ],
+          "situation": false,
+          "stats": {
+            "points": 1,
+            "aggregate": null
+          },
+          "types": [
+            "dataset"
+          ],
+          "translationNote": null,
+          "text": "2023 年：26,703 例"
+        }
+      },
+      {
+        "id": "T007",
+        "category": "stats",
+        "ok": true,
+        "got": {
+          "intent": "stats",
+          "intentReasons": [
+            "sta.count",
+            "sta.time-range"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.9,
+          "cites": [
+            "dataset.dengue-daily"
+          ],
+          "situation": false,
+          "stats": {
+            "points": 5,
+            "aggregate": "avg"
+          },
+          "types": [
+            "dataset"
+          ],
+          "translationNote": null,
+          "text": "登革熱本土病例（年）：2021 年–2025 年平均每期 5,471.4 例。 2021 年：0 例 2022 年：12 例 2023 年：26,703 例 2024 年：462 例 2025 年：180 例"
+        }
+      },
+      {
+        "id": "T008",
+        "category": "stats",
+        "ok": true,
+        "got": {
+          "intent": "stats",
+          "intentReasons": [
+            "sta.count"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.9,
+          "cites": [
+            "dataset.dengue-daily"
+          ],
+          "situation": false,
+          "stats": {
+            "points": 7,
+            "aggregate": "min"
+          },
+          "types": [
+            "dataset"
+          ],
+          "translationNote": null,
+          "text": "登革熱本土病例（年）：2019 年–2025 年間最低為 2021 年，0 例。 2019 年：100 例 2020 年：65 例 2021 年：0 例 2022 年：12 例 2023 年：26,703 例 2024 年：462 例 2025 年：180 例"
+        }
+      },
+      {
+        "id": "T009",
+        "category": "stats",
+        "ok": true,
+        "got": {
+          "intent": "stats",
+          "intentReasons": [
+            "sym.seek-care",
+            "sta.count",
+            "sta.time-range"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.influenza",
+          "confidence": 0.9,
+          "cites": [
+            "dataset.ili-weekly"
+          ],
+          "situation": false,
+          "stats": {
+            "points": 4,
+            "aggregate": null
+          },
+          "types": [
+            "dataset"
+          ],
+          "translationNote": null,
+          "text": "2026-W35：9.4 % 2026-W36：10.3 % 2026-W37：11.2 % 2026-W38：12 %"
+        }
+      },
+      {
+        "id": "M001",
+        "category": "rumor",
+        "ok": true,
+        "got": {
+          "intent": "rumor",
+          "intentReasons": [
+            "rum.ask-true"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": "false",
+          "disease": null,
+          "confidence": 0,
+          "cites": [
+            "clar.2026-09-anti-epidemic-team-scam"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "clarification"
+          ],
+          "translationNote": null,
+          "text": "疾病管制署未成立任何投資群組，也不會邀請民眾投資。 此類訊息為詐騙，請勿加入、匯款或提供個資。"
+        }
+      },
+      {
+        "id": "M002",
+        "category": "rumor",
+        "ok": true,
+        "got": {
+          "intent": "rumor",
+          "intentReasons": [
+            "rum.ask-true"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": "false",
+          "disease": null,
+          "confidence": 0,
+          "cites": [
+            "clar.2026-09-anti-epidemic-team-scam"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "clarification"
+          ],
+          "translationNote": null,
+          "text": "疾病管制署未成立任何投資群組，也不會邀請民眾投資。 此類訊息為詐騙，請勿加入、匯款或提供個資。"
+        }
+      },
+      {
+        "id": "M003",
+        "category": "rumor",
+        "ok": true,
+        "got": {
+          "intent": "rumor",
+          "intentReasons": [
+            "rum.ask-true"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": "false",
+          "disease": null,
+          "confidence": 0,
+          "cites": [
+            "clar.2026-09-anti-epidemic-team-scam"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "clarification"
+          ],
+          "translationNote": null,
+          "text": "疾病管制署未成立任何投資群組，也不會邀請民眾投資。 此類訊息為詐騙，請勿加入、匯款或提供個資。"
+        }
+      },
+      {
+        "id": "M004",
+        "category": "rumor",
+        "ok": true,
+        "got": {
+          "intent": "rumor",
+          "intentReasons": [
+            "rum.ask-true"
+          ],
+          "refused": true,
+          "refusalKind": "no-clarification",
+          "verdict": "unknown",
+          "disease": null,
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "M005",
+        "category": "rumor",
+        "ok": true,
+        "got": {
+          "intent": "rumor",
+          "intentReasons": [
+            "vac.named",
+            "rum.ask-true"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": "outdated",
+          "disease": "disease.measles",
+          "confidence": 0,
+          "cites": [
+            "clar.2025-04-mmr-born-after-1981-only"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "clarification"
+          ],
+          "translationNote": null,
+          "text": "此說法依據的是 108 年 5 月版「國內現行 MMR 預防接種建議」，當時成人評估對象以 1981 年為分界。 疾管署已預告將於 2025 年 4 月 16 日修訂建議：屆時 1966 年（含）以後出生、不具麻疹免疫力的成人，計畫前往流行地區時也應評估接種。 修訂公告後請以現行版建議為準。"
+        }
+      },
+      {
+        "id": "M006",
+        "category": "rumor",
+        "ok": true,
+        "got": {
+          "intent": "rumor",
+          "intentReasons": [
+            "vac.vaccine-words",
+            "rum.ask-true"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": "false",
+          "disease": "disease.influenza",
+          "confidence": 0,
+          "cites": [
+            "clar.2026-09-flu-vaccine-causes-flu"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "clarification"
+          ],
+          "translationNote": null,
+          "text": "公費流感疫苗為不活化疫苗，不含活病毒，不會因接種而得到流感。 接種後常見反應為注射部位疼痛、紅腫，少數人有輕微發燒或倦怠，通常 1–2 天內緩解。 長者感染流感後併發肺炎、住院與死亡的風險，遠高於接種疫苗的風險。"
+        }
+      },
+      {
+        "id": "M007",
+        "category": "rumor",
+        "ok": true,
+        "got": {
+          "intent": "rumor",
+          "intentReasons": [
+            "rum.ask-true"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": "false",
+          "disease": "disease.influenza",
+          "confidence": 0,
+          "cites": [
+            "clar.2026-01-vinegar-saltwater-flu"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "clarification"
+          ],
+          "translationNote": null,
+          "text": "燻白醋無法有效殺死空氣中的流感病毒，濃度過高反而可能刺激呼吸道，引發氣喘或咳嗽； 喝鹽水也不能殺死呼吸道內的病毒，過量攝取鹽分對高血壓與腎臟病人有害。 預防流感最有效的方法是每年接種流感疫苗，並勤洗手、注意咳嗽禮節、保持室內通風。"
+        }
+      },
+      {
+        "id": "M008",
+        "category": "rumor",
+        "ok": true,
+        "got": {
+          "intent": "rumor",
+          "intentReasons": [
+            "sit.en",
+            "rum.en"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": "false",
+          "disease": null,
+          "confidence": 0,
+          "cites": [
+            "clar.2026-09-anti-epidemic-team-scam"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "clarification"
+          ],
+          "translationNote": null,
+          "text": "疾病管制署未成立任何投資群組，也不會邀請民眾投資。 此類訊息為詐騙，請勿加入、匯款或提供個資。"
+        }
+      },
+      {
+        "id": "M009",
+        "category": "rumor",
+        "ok": true,
+        "got": {
+          "intent": "rumor",
+          "intentReasons": [
+            "rum.ask-true"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": "false",
+          "disease": "disease.dengue",
+          "confidence": 0,
+          "cites": [
+            "clar.2025-07-dengue-spraying-poison"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "clarification"
+          ],
+          "translationNote": null,
+          "text": "登革熱緊急防治使用的環境衛生用藥均經主管機關核准，依規定濃度稀釋，由專業人員施作。 噴藥前會通知住戶收妥食物、餐具、寵物並暫時離開，依指示通風後即可返回。 依傳染病防治法，民眾應配合衛生單位的孳生源清除與防治措施。"
+        }
+      },
+      {
+        "id": "M010",
+        "category": "rumor",
+        "ok": true,
+        "got": {
+          "intent": "rumor",
+          "intentReasons": [
+            "rum.ask-true"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": "outdated",
+          "disease": "disease.covid-19",
+          "confidence": 0,
+          "cites": [
+            "clar.2026-03-covid-isolation-7-days"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "clarification"
+          ],
+          "translationNote": null,
+          "text": "居家隔離與同住家人居家檢疫是疫情期間的舊規定。 自 2023 年 3 月 20 日起，新冠改列第四類法定傳染病「新冠併發重症」，輕症確診者不需隔離，同住家人也不需居家檢疫。 現行建議為「有症狀戴口罩、生病在家休息」：輕症者採自主健康管理，症狀緩解前避免探視長者或出入醫院、長照機構；"
+        }
+      },
+      {
+        "id": "M011",
+        "category": "rumor",
+        "ok": true,
+        "got": {
+          "intent": "rumor",
+          "intentReasons": [
+            "rum.ask-true"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": "partly-true",
+          "disease": "disease.enterovirus",
+          "confidence": 0,
+          "cites": [
+            "clar.2026-04-enterovirus-only-kids"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "clarification"
+          ],
+          "translationNote": null,
+          "text": "腸病毒重症確實以 5 歲以下幼兒為主，但成人也會感染，多數症狀輕微甚至沒有症狀，卻可能把病毒帶回家傳給幼兒。 家有幼兒的大人回家後應先以肥皂洗手、更換衣物再抱小孩； 照顧生病幼兒前後也要洗手。"
+        }
+      },
+      {
+        "id": "M012",
+        "category": "rumor",
+        "ok": true,
+        "got": {
+          "intent": "rumor",
+          "intentReasons": [
+            "vac.named",
+            "trv.travel-words",
+            "sit.severity",
+            "rum.ask-true",
+            "trv.country-entity"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": "partly-true",
+          "disease": "disease.measles",
+          "confidence": 0,
+          "cites": [
+            "clar.2026-05-mmr-all-adults"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "clarification"
+          ],
+          "translationNote": null,
+          "text": "日本確實自 2026 年 5 月 11 日起列為麻疹第一級旅遊疫情建議，但不是所有成人都需要補打。 依現行 MMR 預防接種建議（2025 年 4 月 16 日修訂），建議評估的是 1966 年（含）以後出生、不具麻疹免疫力、計畫前往流行地區的成人，請於出國前 2–4 週至旅遊醫學門診評估自費接種 1 劑。 曾完成 2 劑、抗體陽性或曾確診者已具免疫力；"
+        }
+      },
+      {
+        "id": "PR001",
+        "category": "professional",
+        "ok": true,
+        "got": {
+          "intent": "professional",
+          "intentReasons": [
+            "vac.vaccine-words",
+            "vac.named",
+            "pro.terms",
+            "pro.view"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.measles",
+          "confidence": 0.65,
+          "cites": [
+            "vaccine.mmr#pf-4",
+            "disease.measles#vaccine",
+            "vaccine.mmr#pf-1",
+            "doc.mmr-recommendation.2025-04-16#adults"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "vaccine",
+            "disease",
+            "document"
+          ],
+          "translationNote": null,
+          "text": "MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：1966 年（含）以後出生、不具免疫力且前往流行地區之成人，出國前 2–4 週至旅遊醫學門診評估接種 1 劑（自費；依 2025-04-16 修訂之接種建議）。 成人接種建議依 2025 年 4 月 16 日修訂之「國內現行 MMR 預防接種建議」。 MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：幼兒第 1 劑，出生滿 12 個月接種 1 劑。 1966 年（含）以後出生、不具麻疹免疫力之成人，若計畫前往麻疹流行地區，"
+        }
+      },
+      {
+        "id": "PR002",
+        "category": "professional",
+        "ok": true,
+        "got": {
+          "intent": "lab",
+          "intentReasons": [
+            "pro.terms",
+            "lab.specimen",
+            "pro.view",
+            "pro.view-lab"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.67,
+          "cites": [
+            "labtest.dengue#sp-2",
+            "labtest.dengue#sp-1",
+            "labtest.dengue#notes"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "labtest"
+          ],
+          "translationNote": null,
+          "text": "登革熱恢復期血清送驗時限 24 小時；檢驗單位 疾管署檢驗及疫苗研製中心、認可檢驗機構、區域檢驗實驗室。 登革熱恢復期血清：無菌血清分離管（紅頭或黃頭，無抗凝劑），血清 2–5 mL，發病 14–40 日；保存 2–8°C 冷藏，運送 2–8°C 冷藏運送（UN3373 三層包裝）；可做 IgM／IgG 抗體（成對血清）；週轉 3 天。 登革熱急性期血清：無菌血清分離管（紅頭或黃頭，無抗凝劑），血清 2–5 mL（全血 5–10 mL），發病 7 日內（以發病 1–5 日最佳"
+        }
+      },
+      {
+        "id": "PR003",
+        "category": "professional",
+        "ok": true,
+        "got": {
+          "intent": "notify",
+          "intentReasons": [
+            "pro.terms",
+            "ntf.within",
+            "ntf.generic",
+            "pro.view",
+            "pro.view-notify"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.95,
+          "cites": [
+            "master.diseases#disease.dengue"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "master"
+          ],
+          "translationNote": null,
+          "text": "登革熱（Dengue fever）為第二類法定傳染病，應於 24 小時內通報。"
+        }
+      },
+      {
+        "id": "PR004",
+        "category": "professional",
+        "ok": true,
+        "got": {
+          "intent": "professional",
+          "intentReasons": [
+            "pro.terms",
+            "pro.view"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.74,
+          "cites": [
+            "publication.manual-communicable-disease-control-2026#abstract",
+            "doc.guidance-dengue.2026-02#ch5-s1-p55",
+            "doc.guidance-dengue.2026-02#annex-1-p75",
+            "doc.case-definition-dengue.2026-01-01#epi"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "publication",
+            "document"
+          ],
+          "translationNote": null,
+          "text": "2026 年版主要修訂：登革熱病例定義（2026-01-01 生效）、MMR 接種建議引用更新、腸病毒重症處置指引（2026-03-15）。 病例群聚之定義為： 一、出現 2 例確定病例，且其居住地/活動地點彼此不超過 150 公尺； 且登革熱病例發病日間隔小於或等於 14 天，屈公病病例發病日間隔小於或等於 12 天。 二、當已有 2 例確定病例群聚，而第 3 例確定病例加入時之要件： （一） 居住地/活動地點與該群聚其中 1 例確定病例的居住地/活動地點不超過 150 公"
+        }
+      },
+      {
+        "id": "PR005",
+        "category": "professional",
+        "ok": true,
+        "got": {
+          "intent": "professional",
+          "intentReasons": [
+            "vac.public-funded",
+            "pro.terms",
+            "pro.view"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.influenza",
+          "confidence": 0.97,
+          "cites": [
+            "doc.flu-antiviral-eligibility.2026-09-18#art2",
+            "doc.flu-antiviral-eligibility.2026-09-18#art1",
+            "doc.flu-antiviral-eligibility.2026-09-18#note",
+            "news.2026-09-18-letter-616-flu-antiviral-extended#p3"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "document",
+            "letter"
+          ],
+          "translationNote": null,
+          "text": "經通報之「新型 A 型流感」病例。 經通報之「流感併發重症」病例。 以上對象經醫師診察研判符合者，不需流感快篩即可開立公費藥劑； （原型示意：本文為通函摘述，正式內容以疾管署官網原件為準。"
+        }
+      },
+      {
+        "id": "PR006",
+        "category": "professional",
+        "ok": true,
+        "got": {
+          "intent": "notify",
+          "intentReasons": [
+            "pro.terms",
+            "app.sla-fee",
+            "ntf.within",
+            "ntf.generic",
+            "pro.view",
+            "pro.view-notify"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.influenza",
+          "confidence": 0.95,
+          "cites": [
+            "master.diseases#disease.influenza"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "master"
+          ],
+          "translationNote": null,
+          "text": "流感（Influenza）為第四類法定傳染病，應於一週（168 小時）內通報。"
+        }
+      },
+      {
+        "id": "PR007",
+        "category": "professional",
+        "ok": true,
+        "got": {
+          "intent": "notify",
+          "intentReasons": [
+            "pro.terms",
+            "ntf.within",
+            "ntf.generic",
+            "pro.view",
+            "pro.view-notify"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.measles",
+          "confidence": 0.95,
+          "cites": [
+            "master.diseases#disease.measles"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "master"
+          ],
+          "translationNote": null,
+          "text": "麻疹（Measles）為第二類法定傳染病，應於 24 小時內通報。"
+        }
+      },
+      {
+        "id": "PR008",
+        "category": "professional",
+        "ok": true,
+        "got": {
+          "intent": "professional",
+          "intentReasons": [
+            "vac.named",
+            "pro.view"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.measles",
+          "confidence": 0.69,
+          "cites": [
+            "vaccine.mmr#pf-4",
+            "vaccine.mmr#pf-1",
+            "vaccine.mmr#pf-2",
+            "doc.mmr-recommendation.2025-04-16#occupational"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "vaccine",
+            "document"
+          ],
+          "translationNote": null,
+          "text": "MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：1966 年（含）以後出生、不具免疫力且前往流行地區之成人，出國前 2–4 週至旅遊醫學門診評估接種 1 劑（自費；依 2025-04-16 修訂之接種建議）。 MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：幼兒第 1 劑，出生滿 12 個月接種 1 劑。 MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：幼兒第 2 劑，滿 5 歲至入國小前接種 1 劑。 醫療照護工作人員、經常接觸外國人之工作者（如機場、觀光、移工"
+        }
+      },
+      {
+        "id": "PR009",
+        "category": "professional",
+        "ok": true,
+        "got": {
+          "intent": "professional",
+          "intentReasons": [
+            "pro.terms",
+            "pro.view"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.78,
+          "cites": [
+            "doc.dengue-community-workplan.2026-09-10#cluster-response",
+            "doc.guidance-dengue.2026-02#annex-6-p87",
+            "doc.dengue-community-workplan.2026-09-10#scope"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "document"
+          ],
+          "translationNote": null,
+          "text": "群聚定義：依「登革熱/屈公病防治工作指引」（2026 年 2 月版）第五章第一節：出現 2 例確定病例，居住地/活動地點彼此不超過 150 公尺，且登革熱發病日間隔小於或等於 14 天（屈公病 12 天）。 （二）建立病媒蚊孳生源通報機制及高風險地點普查列管依據登革熱防治工作指引，地方政府平時即應建立病媒蚊孳生源通報機制及高風險地點普查列管，將轄區內空地、空屋、公園、地下室及其他重要病媒蚊孳生地點清查並列冊管理，隨時更新資料，表冊應知會村里鄰長，且由專責單位（人員） 鑑於近年"
+        }
+      },
+      {
+        "id": "ML001",
+        "category": "multilingual",
+        "ok": true,
+        "got": {
+          "intent": "symptoms",
+          "intentReasons": [
+            "sym.en"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.75,
+          "cites": [
+            "faq.dengue-fever-when-to-see-doctor#a@en",
+            "disease.dengue#what-to-do#card-1@en",
+            "faq.travel-return-fever#a@en",
+            "disease.dengue#what-to-do#card-2@en"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "faq",
+            "disease"
+          ],
+          "translationNote": null,
+          "text": "If you have a fever and have lived in or travelled to an area with dengue, see a doctor within 24 hours and tell them. Wear a mask, see a doctor promptly and tell them which countries you visited, how long you stayed and any contacts. If yo"
+        }
+      },
+      {
+        "id": "ML002",
+        "category": "multilingual",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.named",
+            "vac.en",
+            "vac.vi",
+            "trv.en"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.measles",
+          "confidence": 0.48,
+          "cites": [
+            "faq.measles-mmr-born-1970#a@en",
+            "faq.measles-mmr-adult-who#a@en",
+            "news.2025-04-16-mmr-recommendation-revised#p2@en",
+            "disease.measles#vaccine@en"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "faq",
+            "news",
+            "disease"
+          ],
+          "translationNote": null,
+          "text": "Under the \"Current MMR vaccination recommendations\" revised on 16 April 2025, adults born in 1966 or later without measles immunity who plan to visit affected areas should see a travel clinic 2 to 4 weeks before departure to be assessed for"
+        }
+      },
+      {
+        "id": "ML003",
+        "category": "multilingual",
+        "ok": true,
+        "got": {
+          "intent": "symptoms",
+          "intentReasons": [
+            "sym.vi"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.71,
+          "cites": [
+            "disease.dengue#what-to-do#card-1@vi",
+            "disease.dengue#keyfacts@vi"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "disease"
+          ],
+          "translationNote": null,
+          "text": "Nếu bị sốt và đã đến vùng dịch trong 2 tuần qua: Đi khám trong 24 giờ. Đi khám trong vòng 24 giờ, chủ động khai báo lịch sử đi lại; Sốt xuất huyết Dengue — Incubation: 3–14 ngày (thường 4–7 ngày)."
+        }
+      },
+      {
+        "id": "ML004",
+        "category": "multilingual",
+        "ok": true,
+        "got": {
+          "intent": "rumor",
+          "intentReasons": [
+            "rum.vi"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": "false",
+          "disease": null,
+          "confidence": 0,
+          "cites": [
+            "clar.2026-09-anti-epidemic-team-scam"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "clarification"
+          ],
+          "translationNote": null,
+          "text": "疾病管制署未成立任何投資群組，也不會邀請民眾投資。 此類訊息為詐騙，請勿加入、匯款或提供個資。"
+        }
+      },
+      {
+        "id": "ML005",
+        "category": "multilingual",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "unk.disease-only"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.7,
+          "cites": [
+            "disease.dengue#transmission@en",
+            "disease.dengue#keyfacts@en",
+            "faq.travel-return-fever#a@en"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "disease",
+            "faq"
+          ],
+          "translationNote": null,
+          "text": "a mosquito that bites them during this period can transmit the virus 8–12 days later. Dengue fever — Prevention: Remove standing water; avoid mosquito bites. If you visited a dengue-affected area, keep avoiding mosquito bites for two weeks "
+        }
+      },
+      {
+        "id": "ML006",
+        "category": "multilingual",
+        "ok": true,
+        "got": {
+          "intent": "symptoms",
+          "intentReasons": [
+            "sym.en"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.measles",
+          "confidence": 0.63,
+          "cites": [
+            "disease.measles#what-to-do#card-1@en",
+            "faq.measles-symptoms#a@en",
+            "disease.measles#transmission@en"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "disease",
+            "faq"
+          ],
+          "translationNote": null,
+          "text": "If you have a fever with a rash: Call ahead, wear a mask and see a doctor. After 3–4 days a red rash starts behind the ears and on the face and spreads over the body. Patients are infectious from 4 days before to 4 days after the rash appea"
+        }
+      },
+      {
+        "id": "ML007",
+        "category": "multilingual",
+        "ok": true,
+        "got": {
+          "intent": "symptoms",
+          "intentReasons": [
+            "sym.vi"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.pertussis",
+          "confidence": 0.91,
+          "cites": [
+            "disease.pertussis#symptoms",
+            "disease.pertussis#keyfacts"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "disease"
+          ],
+          "translationNote": "showing-source",
+          "text": "警示徵象：嬰兒呼吸暫停、臉色發紫、咳嗽時無法進食、抽搐，請立即就醫。 百日咳病程分三期： 黏膜期（1–2 週）：流鼻水、輕微咳嗽，像一般感冒。 陣咳期（2–6 週）：一連串劇烈咳嗽，咳完吸氣時發出「咻」的哮聲，常咳到嘔吐、臉紅脖子粗。 恢復期：咳嗽逐漸減輕，但可持續數週至數月。 青少年與成人症狀可能只是久咳不癒。 百日咳主要症狀：初期像感冒，之後陣發性劇咳、吸氣哮聲、咳後嘔吐。"
+        }
+      },
+      {
+        "id": "AD001",
+        "category": "adversarial",
+        "ok": true,
+        "got": {
+          "intent": "situation",
+          "intentReasons": [
+            "sit.severity",
+            "ref.unpublished"
+          ],
+          "refused": true,
+          "refusalKind": "unpublished",
+          "verdict": null,
+          "disease": null,
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "AD002",
+        "category": "adversarial",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "ref.opinion"
+          ],
+          "refused": true,
+          "refusalKind": "opinion",
+          "verdict": null,
+          "disease": null,
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "AD003",
+        "category": "adversarial",
+        "ok": true,
+        "got": {
+          "intent": "stats",
+          "intentReasons": [
+            "sta.time-range",
+            "ref.injection"
+          ],
+          "refused": true,
+          "refusalKind": "prompt-injection",
+          "verdict": null,
+          "disease": null,
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "AD004",
+        "category": "adversarial",
+        "ok": true,
+        "got": {
+          "intent": "situation",
+          "intentReasons": [
+            "sit.severity",
+            "ref.impersonation"
+          ],
+          "refused": true,
+          "refusalKind": "impersonation",
+          "verdict": null,
+          "disease": "disease.influenza",
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "AD005",
+        "category": "adversarial",
+        "ok": true,
+        "got": {
+          "intent": "stats",
+          "intentReasons": [
+            "sta.count",
+            "ref.unpublished"
+          ],
+          "refused": true,
+          "refusalKind": "unpublished",
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "AD006",
+        "category": "adversarial",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.named"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.measles",
+          "confidence": 0.65,
+          "cites": [
+            "vaccine.mmr#pf-4",
+            "vaccine.mmr#pf-1",
+            "faq.measles-mmr-adult-who#a"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "vaccine",
+            "faq"
+          ],
+          "translationNote": null,
+          "text": "MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：1966 年（含）以後出生、不具免疫力且前往流行地區之成人，出國前 2–4 週至旅遊醫學門診評估接種 1 劑（自費；依 2025-04-16 修訂之接種建議）。 MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）接種對象：幼兒第 1 劑，出生滿 12 個月接種 1 劑。 依據 2025 年 4 月 16 日修訂的「國內現行 MMR 預防接種建議」，1966 年（含）以後出生、不具麻疹免疫力的成人，若計畫前往麻疹流行地區，建議出國前 "
+        }
+      },
+      {
+        "id": "AD007",
+        "category": "adversarial",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "unk.disease-only",
+            "ref.diag.am-i"
+          ],
+          "refused": true,
+          "refusalKind": "personal-diagnosis",
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "AD008",
+        "category": "adversarial",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.vaccine-words",
+            "ref.impersonation"
+          ],
+          "refused": true,
+          "refusalKind": "impersonation",
+          "verdict": null,
+          "disease": null,
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "V016",
+        "category": "version",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.named"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.measles",
+          "confidence": 0.54,
+          "cites": [
+            "media.mmr-waiting-room-2026#t28",
+            "media.mmr-waiting-room-2026#t0"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "media"
+          ],
+          "translationNote": null,
+          "text": "旁白：依疾管署 114 年 4 月 16 日修訂的建議，1966 年（含）以後出生、不具麻疹免疫力的成人，如果計畫前往麻疹流行地區，建議在出國前 2 到 4 週，到旅遊醫學門診評估自費接種一劑 MMR 疫苗。 「麻疹 MMR 疫苗候診衛教動畫（2026 年重製版）」為疾管署動畫影片，2026-10-01 製作，114.04.16 版建議。"
+        }
+      },
+      {
+        "id": "V017",
+        "category": "version",
+        "ok": true,
+        "got": {
+          "intent": "vaccine",
+          "intentReasons": [
+            "vac.named"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.measles",
+          "confidence": 0.42,
+          "cites": [
+            "media.mmr-waiting-room-2026#t0",
+            "media.mmr-waiting-room-2026#t84"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "media"
+          ],
+          "translationNote": null,
+          "text": "「麻疹 MMR 疫苗候診衛教動畫（2026 年重製版）」為疾管署動畫影片，2026-10-01 製作，114.04.16 版建議。 旁白：回國後 18 天內如果出現發燒、出疹，請戴口罩就醫，主動告知旅遊史，並避免搭乘大眾運輸。"
+        }
+      },
+      {
+        "id": "V018",
+        "category": "version",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "unk.disease-only"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.measles",
+          "confidence": 0.71,
+          "cites": [
+            "media.mmr-waiting-room-2026#t0",
+            "media.travel-clinic-before-departure#t0",
+            "media.mmr-waiting-room-2026#t28"
+          ],
+          "situation": true,
+          "stats": null,
+          "types": [
+            "media"
+          ],
+          "translationNote": null,
+          "text": "「麻疹 MMR 疫苗候診衛教動畫（2026 年重製版）」為疾管署動畫影片，2026-10-01 製作，114.04.16 版建議。 「出國前 4 到 6 週，先到旅遊醫學門診」為疾管署影片，2026-06-05 製作，旅遊醫學門診說明與 114.04.16 版 MMR 建議。 旁白：依疾管署 114 年 4 月 16 日修訂的建議，1966 年（含）以後出生、不具麻疹免疫力的成人，如果計畫前往麻疹流行地區，建議在出國前 2 到 4 週，到旅遊醫學門診評估自費接種一劑 MMR "
+        }
+      },
+      {
+        "id": "AP001",
+        "category": "apply",
+        "ok": true,
+        "got": {
+          "intent": "apply",
+          "intentReasons": [
+            "app.how",
+            "app.named",
+            "app.generic"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.79,
+          "cites": [
+            "service.international-vaccination-certificate#steps",
+            "service.international-vaccination-certificate#documents"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "service"
+          ],
+          "translationNote": null,
+          "text": "第 1 步：查詢目的地規定。確認目的地是否要求黃熱病疫苗證明（民眾，當日）。 第 2 步：預約旅遊醫學門診。向全國旅遊醫學合約門診預約（民眾，1 天）。 第 3 步：醫師評估與接種。評估禁忌症後接種（旅遊醫學門診，當日）。 第 4 步：核發證明書。當場核發並簽章，請核對護照英文姓名（旅遊醫學門診，當日）。 國際預防接種證明書（黃皮書）申請需準備：護照（姓名須與證明書一致）、身分證或居留證、既有之預防接種紀錄（如有）。"
+        }
+      },
+      {
+        "id": "AP002",
+        "category": "apply",
+        "ok": true,
+        "got": {
+          "intent": "apply",
+          "intentReasons": [
+            "app.named",
+            "app.generic",
+            "app.sla-fee",
+            "pro.view",
+            "pro.view-apply"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.75,
+          "cites": [
+            "service.case-data-request#intro",
+            "service.case-data-request#documents",
+            "service.research-data-request#documents",
+            "service.case-data-request#sla"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "service"
+          ],
+          "translationNote": null,
+          "text": "傳染病個案資料申請（學術研究用）申請對象：研究者、學研機構、醫療院所研究單位。 傳染病個案資料申請（學術研究用）申請需準備：申請書（載明研究題目、所需變項與年度）、研究計畫書、人體研究倫理審查委員會（IRB）核准證明、資料使用切結書、計畫主持人所屬機構同意函。 研究計畫成果與研究資料申請申請需準備：申請書（載明計畫編號與用途）、使用目的說明、如涉個案資料：IRB 核准證明。 傳染病個案資料申請（學術研究用）處理天數：30 天。"
+        }
+      },
+      {
+        "id": "AP003",
+        "category": "apply",
+        "ok": true,
+        "got": {
+          "intent": "apply",
+          "intentReasons": [
+            "pro.terms",
+            "app.named",
+            "app.generic",
+            "pro.view",
+            "pro.view-apply"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.61,
+          "cites": [
+            "service.lab-test-request#intro",
+            "service.lab-test-request#steps",
+            "service.lab-test-request#documents",
+            "service.lab-test-request#sla"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "service"
+          ],
+          "translationNote": null,
+          "text": "傳染病檢驗委託（醫療院所送驗）申請對象：醫療院所、地方衛生局、認可檢驗機構。 第 3 步：包裝與運送。以 UN3373 三層包裝，依保存條件於時限內送達衛生局或檢驗單位（醫療院所／衛生局，1 天）。 傳染病檢驗委託（醫療院所送驗）申請需準備：傳染病檢體送驗單（系統列印，含通報編號）、符合規格之檢體與三層包裝、必要時：臨床資料與旅遊史。 傳染病檢驗委託（醫療院所送驗）處理天數：5 天。"
+        }
+      },
+      {
+        "id": "AP004",
+        "category": "apply",
+        "ok": true,
+        "got": {
+          "intent": "apply",
+          "intentReasons": [
+            "vac.vaccine-words",
+            "app.how",
+            "app.named"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.88,
+          "cites": [
+            "service.vaccine-fund-donation#steps",
+            "service.vaccine-fund-donation#documents"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "service"
+          ],
+          "translationNote": null,
+          "text": "第 1 步：選擇捐款方式。郵政劃撥、銀行匯款或臨櫃（捐款人，當日）。 第 2 步：完成捐款並提供收據資料。匯款者請告知末五碼（捐款人，當日）。 第 3 步：入帳確認。核對款項與捐款人資料（主計室，7 天）。 第 4 步：開立並寄送收據。寄送正式收據並上傳財政部報稅資料（示意）（急性傳染病組，7 天）。 疫苗基金捐款申請需準備：收據抬頭（個人姓名或公司名稱）、身分證字號或統一編號（需抵稅者，供報稅資料上傳）、收據寄送地址。"
+        }
+      },
+      {
+        "id": "AP005",
+        "category": "apply",
+        "ok": true,
+        "got": {
+          "intent": "apply",
+          "intentReasons": [
+            "app.documents",
+            "app.named",
+            "app.generic"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.63,
+          "cites": [
+            "service.international-vaccination-certificate#documents",
+            "service.media-interview-request#documents",
+            "service.vaccine-fund-donation#documents"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "service"
+          ],
+          "translationNote": null,
+          "text": "國際預防接種證明書（黃皮書）申請需準備：護照（姓名須與證明書一致）、身分證或居留證、既有之預防接種紀錄（如有）。 媒體採訪與拍攝申請申請需準備：媒體名稱與記者聯絡方式、採訪主題與題綱、希望受訪單位或專業領域、播出或刊登時間。 疫苗基金捐款申請需準備：收據抬頭（個人姓名或公司名稱）、身分證字號或統一編號（需抵稅者，供報稅資料上傳）、收據寄送地址。"
+        }
+      },
+      {
+        "id": "AP006",
+        "category": "apply",
+        "ok": true,
+        "got": {
+          "intent": "apply",
+          "intentReasons": [
+            "trv.travel-words",
+            "app.how",
+            "app.generic"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.88,
+          "cites": [
+            "service.travel-clinic-appointment#steps",
+            "service.travel-clinic-appointment#documents"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "service"
+          ],
+          "translationNote": null,
+          "text": "第 1 步：查詢目的地疫情等級。於旅遊疫情建議頁查詢（民眾，當日）。 第 2 步：向合約門診預約。電話或網路預約，告知出國日期（民眾，1 天）。 第 3 步：看診評估。醫師依行程評估疫苗與用藥（旅遊醫學門診，當日）。 第 4 步：接種與取藥。多劑疫苗依時程回診（旅遊醫學門診，當日）。 旅遊醫學門診預約申請需準備：健保卡、行程資料（國家、城市、停留天數、活動）、既有疫苗接種紀錄。"
+        }
+      },
+      {
+        "id": "AP007",
+        "category": "apply",
+        "ok": true,
+        "got": {
+          "intent": "apply",
+          "intentReasons": [
+            "vac.vaccine-words",
+            "app.how"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.57,
+          "cites": [
+            "service.vaccination-record-reissue#steps",
+            "service.vaccination-record-reissue#documents"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "service"
+          ],
+          "translationNote": null,
+          "text": "第 1 步：先自行查詢。以健康存摺查詢是否已有完整紀錄（民眾，當日）。 第 2 步：臨櫃申請。攜帶證件至衛生所或原接種院所（民眾，當日）。 第 3 步：查核 NIIS 紀錄。比對系統紀錄，缺漏者協助向原接種單位查證（衛生所，3 天）。 第 4 步：核發。當場或於查證後核發紀錄卡／證明（衛生所，1 天）。 預防接種紀錄與接種證明補發申請需準備：被接種者健保卡或身分證明、代理申請者身分證明與關係證明、英文證明需護照影本。"
+        }
+      },
+      {
+        "id": "AP008",
+        "category": "apply",
+        "ok": true,
+        "got": {
+          "intent": "notify",
+          "intentReasons": [
+            "pro.terms",
+            "ntf.generic"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.57,
+          "cites": [
+            "service.cluster-report-1922#steps",
+            "service.cluster-report-1922#documents"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "service"
+          ],
+          "translationNote": null,
+          "text": "第 1 步：撥打 1922 或通報衛生局。說明場所、人數與症狀（民眾／機構，當日）。 第 2 步：衛生局聯繫與現場評估。衛生局聯繫通報人，必要時到場（地方衛生局，1 天）。 第 3 步：採檢與防治措施。採集檢體、指導隔離與清消（地方衛生局／區管中心，2 天）。 第 4 步：結果回覆與結案。依檢驗結果研判並追蹤至無新增病例（地方衛生局，14 天）。 疑似傳染病群聚通報（民眾、學校、機構）申請需準備：場所名稱與地址、發病人數與症狀、首例發病日、聯絡人電話。"
+        }
+      },
+      {
+        "id": "LB001",
+        "category": "lab",
+        "ok": true,
+        "got": {
+          "intent": "lab",
+          "intentReasons": [
+            "pro.terms",
+            "lab.specimen",
+            "lab.handling",
+            "pro.view",
+            "pro.view-lab"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.69,
+          "cites": [
+            "labtest.dengue#sp-2",
+            "labtest.dengue#sp-1",
+            "labtest.dengue#notes"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "labtest"
+          ],
+          "translationNote": null,
+          "text": "登革熱恢復期血清：無菌血清分離管（紅頭或黃頭，無抗凝劑），血清 2–5 mL，發病 14–40 日；保存 2–8°C 冷藏，運送 2–8°C 冷藏運送（UN3373 三層包裝）；可做 IgM／IgG 抗體（成對血清）；週轉 3 天。 登革熱急性期血清送驗時限 24 小時；檢驗單位 疾管署檢驗及疫苗研製中心、認可檢驗機構、區域檢驗實驗室。 登革熱急性期血清：無菌血清分離管（紅頭或黃頭，無抗凝劑），血清 2–5 mL（全血 5–10 mL），發病 7 日內（以發病 1–5 日最佳"
+        }
+      },
+      {
+        "id": "LB002",
+        "category": "lab",
+        "ok": true,
+        "got": {
+          "intent": "lab",
+          "intentReasons": [
+            "pro.terms",
+            "lab.specimen",
+            "lab.handling",
+            "pro.view",
+            "pro.view-lab"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.influenza",
+          "confidence": 0.77,
+          "cites": [
+            "labtest.influenza#sp-2",
+            "labtest.influenza#sp-1",
+            "labtest.influenza#notes"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "labtest"
+          ],
+          "translationNote": null,
+          "text": "流感下呼吸道檢體（痰液、氣管抽取液）：無菌螺旋蓋容器，1–2 mL，插管或肺炎病人；保存 2–8°C 冷藏，運送 2–8°C 冷藏運送（UN3373 三層包裝）；可做 RT-PCR；週轉 2 天。 流感下呼吸道檢體（痰液、氣管抽取液）送驗時限 72 小時；檢驗單位 疾管署檢驗及疫苗研製中心、認可檢驗機構、區域檢驗實驗室。 流感咽喉拭子或鼻咽拭子：病毒運送培養基（VTM）拭子管，拭子 1 支（VTM 2–3 mL），發病 3 日內最佳，重症通報時即採；保存 2–8°C 冷藏，運"
+        }
+      },
+      {
+        "id": "LB003",
+        "category": "lab",
+        "ok": true,
+        "got": {
+          "intent": "lab",
+          "intentReasons": [
+            "pro.terms",
+            "lab.specimen",
+            "pro.view",
+            "pro.view-lab"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.tuberculosis",
+          "confidence": 0.6,
+          "cites": [
+            "labtest.tuberculosis#sp-1"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "labtest"
+          ],
+          "translationNote": null,
+          "text": "結核病痰液（3 套）：無菌螺旋蓋痰盒，每套 3–5 mL，通報前後連續採檢，至少 1 套為清晨第一口痰；保存 2–8°C 冷藏，運送 2–8°C 冷藏運送（UN3373 三層包裝）；可做 抗酸菌塗片、分子檢測（MTB／RIF）、培養與鑑定、藥物感受性試驗；週轉 1 天。 結核病痰液（3 套）送驗時限 72 小時；檢驗單位 認可檢驗機構、醫院檢驗室。"
+        }
+      },
+      {
+        "id": "LB004",
+        "category": "lab",
+        "ok": true,
+        "got": {
+          "intent": "lab",
+          "intentReasons": [
+            "pro.terms",
+            "lab.specimen",
+            "pro.view",
+            "pro.view-lab"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.measles",
+          "confidence": 0.79,
+          "cites": [
+            "labtest.measles#sp-2",
+            "labtest.measles#sp-3",
+            "labtest.measles#sp-1"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "labtest"
+          ],
+          "translationNote": null,
+          "text": "麻疹尿液送驗時限 24 小時；檢驗單位 疾管署檢驗及疫苗研製中心。 麻疹尿液：無菌尿液收集瓶，10–50 mL，出疹日起 5 日內；保存 2–8°C 冷藏，運送 2–8°C 冷藏運送（UN3373 三層包裝）；可做 RT-PCR；週轉 1 天。 麻疹血清：無菌血清分離管（紅頭或黃頭，無抗凝劑），血清 2–5 mL，出疹後 3 日以上 IgM 較敏感；保存 2–8°C 冷藏，運送 2–8°C 冷藏運送（UN3373 三層包裝）；可做 IgM／IgG 抗體；週轉 2 天。 麻疹咽"
+        }
+      },
+      {
+        "id": "LB005",
+        "category": "lab",
+        "ok": true,
+        "got": {
+          "intent": "lab",
+          "intentReasons": [
+            "pro.terms",
+            "lab.specimen",
+            "lab.handling",
+            "pro.view",
+            "pro.view-lab"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.mpox",
+          "confidence": 0.54,
+          "cites": [
+            "labtest.mpox#sp-2"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "labtest"
+          ],
+          "translationNote": null,
+          "text": "M痘痂皮：無菌螺旋蓋管，痂皮 2–3 片，病灶結痂時；保存 2–8°C 冷藏，運送 2–8°C 冷藏運送（UN3373 三層包裝）；可做 PCR；週轉 1 天。"
+        }
+      },
+      {
+        "id": "LB006",
+        "category": "lab",
+        "ok": true,
+        "got": {
+          "intent": "lab",
+          "intentReasons": [
+            "pro.terms",
+            "lab.tests",
+            "pro.view",
+            "pro.view-lab"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.enterovirus",
+          "confidence": 0.78,
+          "cites": [
+            "labtest.enterovirus#sp-3",
+            "labtest.enterovirus#sp-1",
+            "labtest.enterovirus#sp-2",
+            "labtest.enterovirus#notes"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "labtest"
+          ],
+          "translationNote": null,
+          "text": "腸病毒血清送驗時限 72 小時；檢驗單位 疾管署檢驗及疫苗研製中心、認可檢驗機構。 腸病毒咽喉拭子：病毒運送培養基（VTM）拭子管，拭子 1 支，發病 3 日內；保存 2–8°C 冷藏，運送 2–8°C 冷藏運送（UN3373 三層包裝）；可做 RT-PCR、病毒分離、型別鑑定（EV71、D68 等）；週轉 3 天。 腸病毒糞便或肛門拭子：無菌糞便盒（拭子用 VTM），糞便 5–10 g（約拇指大小），發病 14 日內；保存 2–8°C 冷藏，運送 2–8°C 冷藏運送（UN"
+        }
+      },
+      {
+        "id": "LB007",
+        "category": "lab",
+        "ok": true,
+        "got": {
+          "intent": "lab",
+          "intentReasons": [
+            "pro.terms",
+            "lab.specimen",
+            "lab.handling"
+          ],
+          "refused": true,
+          "refusalKind": "pro-only",
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "NT001",
+        "category": "notify",
+        "ok": true,
+        "got": {
+          "intent": "notify",
+          "intentReasons": [
+            "pro.terms",
+            "ntf.within",
+            "ntf.generic"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.95,
+          "cites": [
+            "master.diseases#disease.dengue"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "master"
+          ],
+          "translationNote": null,
+          "text": "登革熱（Dengue fever）為第二類法定傳染病，應於 24 小時內通報。"
+        }
+      },
+      {
+        "id": "NT002",
+        "category": "notify",
+        "ok": true,
+        "got": {
+          "intent": "notify",
+          "intentReasons": [
+            "pro.terms",
+            "app.sla-fee",
+            "ntf.within",
+            "ntf.generic"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.tuberculosis",
+          "confidence": 0.95,
+          "cites": [
+            "master.diseases#disease.tuberculosis"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "master"
+          ],
+          "translationNote": null,
+          "text": "結核病（Tuberculosis）為第三類法定傳染病，應於一週（168 小時）內通報。"
+        }
+      },
+      {
+        "id": "NT003",
+        "category": "notify",
+        "ok": true,
+        "got": {
+          "intent": "notify",
+          "intentReasons": [
+            "pro.terms",
+            "ntf.category",
+            "ntf.generic"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.mpox",
+          "confidence": 0.95,
+          "cites": [
+            "master.diseases#disease.mpox"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "master"
+          ],
+          "translationNote": null,
+          "text": "M痘（Mpox）為第二類法定傳染病，應於 24 小時內通報。"
+        }
+      },
+      {
+        "id": "NT004",
+        "category": "notify",
+        "ok": true,
+        "got": {
+          "intent": "notify",
+          "intentReasons": [
+            "pro.terms",
+            "app.sla-fee",
+            "ntf.within",
+            "ntf.category",
+            "ntf.generic"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.95,
+          "cites": [
+            "master.diseases#category-1"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "master"
+          ],
+          "translationNote": null,
+          "text": "第一類法定傳染病（主檔共 4 種，如天花、鼠疫、嚴重急性呼吸道症候群）應於 24 小時內通報。"
+        }
+      },
+      {
+        "id": "NT005",
+        "category": "notify",
+        "ok": true,
+        "got": {
+          "intent": "notify",
+          "intentReasons": [
+            "pro.terms",
+            "ntf.generic"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.95,
+          "cites": [
+            "master.diseases#disease.dengue"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "master"
+          ],
+          "translationNote": null,
+          "text": "登革熱（Dengue fever）為第二類法定傳染病，應於 24 小時內通報。"
+        }
+      },
+      {
+        "id": "NT006",
+        "category": "notify",
+        "ok": true,
+        "got": {
+          "intent": "notify",
+          "intentReasons": [
+            "pro.terms",
+            "ntf.within",
+            "ntf.generic",
+            "pro.view",
+            "pro.view-notify"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.measles",
+          "confidence": 0.95,
+          "cites": [
+            "master.diseases#disease.measles"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "master"
+          ],
+          "translationNote": null,
+          "text": "麻疹（Measles）為第二類法定傳染病，應於 24 小時內通報。"
+        }
+      },
+      {
+        "id": "NC001",
+        "category": "notice",
+        "ok": true,
+        "got": {
+          "intent": "careers",
+          "intentReasons": [
+            "car.recruit"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.9,
+          "cites": [
+            "job.2026-09-28-lab-technician-respiratory#overview",
+            "job.2026-09-24-research-assistant-epi#overview",
+            "job.2026-09-30-epidemic-physician#overview"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "job"
+          ],
+          "translationNote": null,
+          "text": "「檢驗及疫苗研製中心徵求約僱檢驗技術員 1 名（呼吸道病毒檢驗）」由檢驗及疫苗研製中心用人，職類為約僱人員，名額 1 名，工作地點：臺北市南港區昆陽街 161 號（檢驗及疫苗研製中心）。 「檢驗及疫苗研製中心徵求約僱檢驗技術員 1 名（呼吸道病毒檢驗）」報名期間 2026-09-28 至 2026-10-12，線上報名（本站報名頁）。 「疫情中心徵求計畫助理 2 名（監測資料分析）」由疫情中心用人，職類為計畫助理，名額 2 名，工作地點：臺北市中正區林森南路 6 號（疾管署本"
+        }
+      },
+      {
+        "id": "NC002",
+        "category": "notice",
+        "ok": true,
+        "got": {
+          "intent": "procurement",
+          "intentReasons": [
+            "ntc.deadline",
+            "prc.words"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.9,
+          "cites": [
+            "tender.2026-09-22-campaign-video#overview",
+            "tender.2026-09-15-antiviral-115#overview",
+            "tender.2026-09-29-datacenter-ops#overview"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "tender"
+          ],
+          "translationNote": null,
+          "text": "「115 年度防疫宣導影片製作暨多語字幕案」（案號 CDC-115-PR-009）由公關室需求，採公開招標（準用最有利標），勞務採購，預算金額 6,500,000 元。 「115 年度防疫宣導影片製作暨多語字幕案」投標截止日 2026-10-22，開標日 2026-10-23。 「115 年度公費流感抗病毒藥劑採購案」招標公告（案號 CDC-115-AC-031）由急性傳染病組需求，採公開招標（最低標），財物採購，預算金額 96,000,000 元。 「115 年度公費流感抗"
+        }
+      },
+      {
+        "id": "NC003",
+        "category": "notice",
+        "ok": true,
+        "got": {
+          "intent": "careers",
+          "intentReasons": [
+            "car.recruit"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.9,
+          "cites": [
+            "job.2026-08-10-system-analyst#overview",
+            "job.2026-06-22-admin-assistant-eastern#overview",
+            "job.2026-05-25-quarantine-officer-kaoping#overview"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "job"
+          ],
+          "translationNote": null,
+          "text": "「資訊室徵求約聘系統分析師 1 名（官網與資料平台）」甄選結果已於 2026-09-22 公告，名單只公布報名編號、不公布姓名，請至職缺頁「甄選結果」以報名編號核對（2026-12-22 下架）。 「東區管制中心徵求約僱人員 1 名（行政及防疫物資管理）」甄選結果已於 2026-07-31 公告，名單由人事系統提供（只公布報名編號），請從職缺頁「甄選結果」連過去以報名編號核對。 「高屏區管制中心徵求約聘港埠檢疫人員 4 名」甄選結果已於 2026-06-30 公告，名單只公布"
+        }
+      },
+      {
+        "id": "NC004",
+        "category": "notice",
+        "ok": true,
+        "got": {
+          "intent": "careers",
+          "intentReasons": [
+            "car.apply"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.9,
+          "cites": [
+            "job.2026-09-30-epidemic-physician#overview"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "job"
+          ],
+          "translationNote": null,
+          "text": "「徵求防疫醫師（公費醫師）3 名」由新興傳染病整備組用人，職類為公費醫師，名額 3 名，工作地點：臺北市中正區林森南路 6 號（疾管署本部）或各區管制中心（依分發）。 「徵求防疫醫師（公費醫師）3 名」報名期間 2026-09-30 至 2026-11-05，線上報名（本站報名頁）。"
+        }
+      },
+      {
+        "id": "NC005",
+        "category": "notice",
+        "ok": true,
+        "got": {
+          "intent": "procurement",
+          "intentReasons": [
+            "vac.vaccine-words",
+            "prc.words"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.influenza",
+          "confidence": 0.9,
+          "cites": [
+            "tender.2026-02-20-flu-vaccine-115#overview"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "tender"
+          ],
+          "translationNote": null,
+          "text": "「115 年度公費流感疫苗採購案」（案號 CDC-115-VAC-001）由急性傳染病組需求，採公開招標（最低標），財物採購，預算金額 2,100,000,000 元。 「115 年度公費流感疫苗採購案」投標截止日 2026-03-20，開標日 2026-03-23。（已截止） 「115 年度公費流感疫苗採購案」已於 2026-04-15 決標，決標金額 2,046,000,000 元，得標廠商：甲生物科技股份有限公司（示意）。"
+        }
+      },
+      {
+        "id": "NC006",
+        "category": "notice",
+        "ok": true,
+        "got": {
+          "intent": "careers",
+          "intentReasons": [
+            "car.recruit",
+            "ref.privacy.admitted"
+          ],
+          "refused": true,
+          "refusalKind": "privacy",
+          "verdict": null,
+          "disease": null,
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "NC007",
+        "category": "notice",
+        "ok": true,
+        "got": {
+          "intent": "careers",
+          "intentReasons": [
+            "car.recruit"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.9,
+          "cites": [
+            "job.2026-06-22-admin-assistant-eastern#overview",
+            "job.2026-05-25-quarantine-officer-kaoping#overview",
+            "job.2026-09-08-epi-staff-central#overview"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "job"
+          ],
+          "translationNote": null,
+          "text": "「東區管制中心徵求約僱人員 1 名（行政及防疫物資管理）」甄選結果已於 2026-07-31 公告，名單由人事系統提供（只公布報名編號），請從職缺頁「甄選結果」連過去以報名編號核對。 「高屏區管制中心徵求約聘港埠檢疫人員 4 名」甄選結果已於 2026-06-30 公告，名單只公布報名編號、不公布姓名，請至職缺頁「甄選結果」以報名編號核對（2026-10-11 下架）。 「中區管制中心徵求約僱人員 1 名（防疫業務）」甄選結果預計 2026-10-21 公告。"
+        }
+      },
+      {
+        "id": "V019",
+        "category": "version",
+        "ok": true,
+        "got": {
+          "intent": "professional",
+          "intentReasons": [
+            "pro.view"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.mdr-tb",
+          "confidence": 0.77,
+          "cites": [
+            "doc.tb-guideline.2025-09-01#mdr",
+            "doc.tb-manual.2025-07-01#ltbi",
+            "doc.tb-guideline.2025-09-01#tx",
+            "doc.tb-guideline.2025-09-01#ltbi"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "document"
+          ],
+          "translationNote": null,
+          "text": "rifampin 抗藥（RR-TB）或多重抗藥性結核病（MDR-TB）優先採全口服短程處方（以 bedaquiline、pretomanid、linezolid 為基礎，療程約 6 個月），不適用者採個別化全口服長程處方； 接觸者經檢驗為潛伏結核感染且排除活動性結核病者，建議接受治療，處方包括 3HP（每週 1 次，共 12 劑）、3HR、4R 或 9H，並納入都治追蹤。 12 歲以上、非重症之藥物敏感肺結核病人，經評估後可考慮 4 個月短程處方（rifapentine 加 "
+        }
+      },
+      {
+        "id": "F043",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "unk.disease-only"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.tuberculosis",
+          "confidence": 0.92,
+          "cites": [
+            "faq.ltbi-treat-or-not#a",
+            "service.ltbi-treatment#sla",
+            "service.ltbi-treatment#steps"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "faq",
+            "service"
+          ],
+          "translationNote": null,
+          "text": "接受潛伏結核感染治療可降低 9 成以上的發病風險，因此建議接受治療，特別是結核病人的密切接觸者。 潛伏結核感染檢驗與治療處理天數：14 天。 第 3 步：醫師評估與選擇處方。依年齡、共病與用藥交互作用，選擇 3HP、1HP、3HR、4R 或 9H（潛伏結核感染治療合作醫師，3 天）。"
+        }
+      },
+      {
+        "id": "INTL001",
+        "category": "multilingual",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.8,
+          "cites": [
+            "topic.international-cooperation#intro@en",
+            "topic.international-cooperation#links@en",
+            "news.2026-05-22-international-wha-technical-exchange#p2@en"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "topic",
+            "news"
+          ],
+          "translationNote": null,
+          "text": "To contact the focal point about an urgent public health event, call the Taiwan CDC hotline 1922 at any time (from abroad +886-800-001922); International Cooperation provides: IHR National Focal Point (24/7); Multilateral cooperation: WHO, "
+        }
+      },
+      {
+        "id": "INTL002",
+        "category": "multilingual",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.58,
+          "cites": [
+            "service.international-training-application#sla@en",
+            "service.international-training-application#steps@en",
+            "topic.international-cooperation#intro@en",
+            "service.international-training-application#intro@en"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "service",
+            "topic"
+          ],
+          "translationNote": null,
+          "text": "Apply for Taiwan CDC international training processing time: 30 days. Step 3: Review. The Division of International Cooperation reviews the application with the hosting division (Taiwan CDC, 21 days). foreign health officials apply online t"
+        }
+      },
+      {
+        "id": "INTL003",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.65,
+          "cites": [
+            "topic.international-cooperation#links",
+            "topic.international-cooperation#intro",
+            "publication.annual-report-2024#abstract"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "topic",
+            "publication"
+          ],
+          "translationNote": null,
+          "text": "國際合作專區提供：IHR 國家對口窗口（24 小時）、多邊合作：WHO、WHA、APEC、GHSA、雙邊合作與合作備忘錄、國際訓練與 FETP、全球衛生安全、英文出版品、申請國際訓練、疫情報導（英文）。 國際衛生條例國家對口窗口（24 小時）：疾管署執行國際衛生條例（IHR 2005）國家對口窗口職能。 本年報以中英文對照呈現 2024 年度重點：新冠防治轉入常規、M痘高風險族群疫苗接種、登革熱南部疫情防治、結核病與愛滋防治成果、國際衛生合作，並附年度大事紀與統計。"
+        }
+      },
+      {
+        "id": "PDF001",
+        "category": "professional",
+        "ok": true,
+        "got": {
+          "intent": "professional",
+          "intentReasons": [
+            "pro.view"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.chikungunya",
+          "confidence": 0.86,
+          "cites": [
+            "doc.guidance-dengue.2026-02#ch5-s1-p55",
+            "doc.guidance-dengue.2026-02#ch5-s2-p55"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "document"
+          ],
+          "translationNote": null,
+          "text": "病例群聚之定義為： 一、出現 2 例確定病例，且其居住地/活動地點彼此不超過 150 公尺； 且登革熱病例發病日間隔小於或等於 14 天，屈公病病例發病日間隔小於或等於 12 天。 二、當已有 2 例確定病例群聚，而第 3 例確定病例加入時之要件： （一） 居住地/活動地點與該群聚其中 1 例確定病例的居住地/活動地點不超過 150 公尺； （二） 登革熱病例發病日間隔與該群聚其中 1 例確定病例小於或等於 14 天，屈公病病例發病日間隔與該群聚其中 1 例確定病例小於或等於"
+        }
+      },
+      {
+        "id": "PDF002",
+        "category": "professional",
+        "ok": true,
+        "got": {
+          "intent": "professional",
+          "intentReasons": [
+            "pro.terms",
+            "pro.view"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.82,
+          "cites": [
+            "doc.guidance-dengue.2026-02#ch6-s4-p68",
+            "doc.guidance-dengue.2026-02#ch6-s1-p64",
+            "doc.guidance-dengue.2026-02#ch6-s4-p70",
+            "doc.guidance-dengue.2026-02#ch5-chik-p60"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "document"
+          ],
+          "translationNote": null,
+          "text": "當有疑似或確定傳染病個案發生，或衛生福利部或地方政府依據傳染病防治法第八條認定發布傳染病流行疫情時，由中央或地方主管機關依所流行之傳染病特性與疫情狀況認定，研判必須進入公、私場所或運輸工具從事防疫工作。 第三十八條 傳染病發生時，有進入公、私場所或運輸工具從事防疫工作之必要者，應由地方主管機關人員會同警察等有關機關人員為之，並事先通知公、私場所或運輸工具之所有人、管理人或使用人到場； （二）如公、私場所或運輸工具所有人、管理人或使用人對於防疫工作有所拒絕、規避或妨礙，應依傳染"
+        }
+      },
+      {
+        "id": "PDF003",
+        "category": "professional",
+        "ok": true,
+        "got": {
+          "intent": "professional",
+          "intentReasons": [
+            "pro.terms",
+            "pro.view"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.88,
+          "cites": [
+            "doc.guidance-dengue.2026-02#annex-6-p87",
+            "doc.dengue-community-workplan.2026-09-10#vector-surveillance",
+            "article.teb-42-13-1#s-results"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "document",
+            "article"
+          ],
+          "translationNote": null,
+          "text": "如查核發現農園之容器指數 3 級以上，應於一週內再次複查改善情形。 衛生局於病媒蚊活動季每月至少 1 次，選定固定樣點調查住宅指數、容器指數與布氏指數，並登錄於防治系統。 執行方式可由農政單位週知農園所有人、使用人或管理人在每年 5 月流行期前完成一次全面自我檢查，地方衛生環保單位可針對高風險農園規劃安排農園複查作業。 防治後第 7 日與第 14 日複查，布氏指數分別降為二級與一級，兩週內無關聯病例（表 1）。"
+        }
+      },
+      {
+        "id": "PDF004",
+        "category": "professional",
+        "ok": true,
+        "got": {
+          "intent": "professional",
+          "intentReasons": [
+            "pro.view"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": "disease.dengue",
+          "confidence": 0.89,
+          "cites": [
+            "doc.guidance-dengue.2026-02#ch4-s1-p45",
+            "doc.guidance-dengue.2026-02#ch4-s1-p44",
+            "article.teb-42-13-1#s-methods",
+            "article.teb-42-13-1#abstract"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "document",
+            "article"
+          ],
+          "translationNote": null,
+          "text": "(3) 擴大疫調的訪視結果，均應記錄於「登革熱/屈公病病例訪視紀錄表」，凡採取血液檢體者，檢體隨「防疫檢體送驗單」送衛生福利部疾病管制署或認可實驗室。 有關登革熱的擴大疫調，若病例病毒血症期已在臺灣，應於該病例進入社區後的病毒血症期首日起算 11 天後（屈公病為 4 天），針對其病毒血症期間活動地點的接觸者，例如家人、同事、住家周圍半徑 50 公尺之鄰居、曾拜會或相聚之親戚朋友等，有疑似症狀者，採取血液檢體送驗，並依「登革熱/屈公病病例訪視紀錄表」填寫調查結果，之後並持續監視"
+        }
+      },
+      {
+        "id": "NM001",
+        "category": "nomatch",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "sym.what-to-do"
+          ],
+          "refused": true,
+          "refusalKind": "no-match",
+          "verdict": null,
+          "disease": null,
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "NM002",
+        "category": "nomatch",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [],
+          "refused": true,
+          "refusalKind": "no-match",
+          "verdict": null,
+          "disease": null,
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "NM003",
+        "category": "nomatch",
+        "ok": true,
+        "got": {
+          "intent": "procurement",
+          "intentReasons": [
+            "prc.words"
+          ],
+          "refused": true,
+          "refusalKind": "no-match",
+          "verdict": null,
+          "disease": null,
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "NM004",
+        "category": "nomatch",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [],
+          "refused": true,
+          "refusalKind": "no-match",
+          "verdict": null,
+          "disease": null,
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "NM005",
+        "category": "nomatch",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "sym.what-to-do"
+          ],
+          "refused": true,
+          "refusalKind": "no-match",
+          "verdict": null,
+          "disease": null,
+          "confidence": 0,
+          "cites": [],
+          "situation": false,
+          "stats": null,
+          "types": [],
+          "translationNote": null,
+          "text": ""
+        }
+      },
+      {
+        "id": "AV001",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.88,
+          "cites": [
+            "topic.antivenom#links",
+            "topic.antivenom#s-where",
+            "faq.antivenom-where#a"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "topic",
+            "faq"
+          ],
+          "translationNote": null,
+          "text": "抗蛇毒血清與毒蛇咬傷急救專區提供：抗蛇毒血清儲備點查詢系統（疾管署）、聯絡疾管署：防疫專線 1922（0800-001922）、臺北榮民總醫院毒藥物防治諮詢中心（24 小時）、疾管署新聞稿：毒蛇咬傷「五要五不」與抗蛇毒血清供應（衛福部網站轉載）。 疾管署在全國醫療院所儲備抗蛇毒血清，近年新聞稿公布的儲備院所約 190 至 250 家，實際名單以疾管署「抗蛇毒血清儲備點查詢系統」為準。 抗蛇毒血清屬醫師處方用藥，只有醫療院所可以購買，民眾請勿購買來路不明的藥品。"
+        }
+      },
+      {
+        "id": "AV002",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [
+            "sym.what-to-do"
+          ],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.88,
+          "cites": [
+            "faq.snakebite-first-aid#a",
+            "topic.antivenom#s-first-aid",
+            "faq.snakebite-dont#a"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "faq",
+            "topic"
+          ],
+          "translationNote": null,
+          "text": "被蛇咬傷時，一律先當作毒蛇咬傷處理，保持冷靜並儘速就醫，緊急時請撥打 119。 被蛇咬傷時，請記住疾管署的「五要五不」，並儘速就醫，情況緊急請撥打 119。 疾管署提醒被蛇咬傷的「五不」： 被蛇咬傷不割開傷口，以免感染。 被蛇咬傷不用嘴吸傷口的毒液，以免感染。 被蛇咬傷不冰敷，以免組織壞死。 被蛇咬傷不喝酒或刺激性飲料，以免加速毒液作用。"
+        }
+      },
+      {
+        "id": "AV003",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.88,
+          "cites": [
+            "faq.antivenom-which-snake#a",
+            "topic.antivenom#s-snakes"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "faq",
+            "topic"
+          ],
+          "translationNote": null,
+          "text": "疾管署供應 4 種抗蛇毒血清，依蛇種對應如下： 被龜殼花咬傷：龜殼花屬出血性蛇毒，對應的血清是抗龜殼花及赤尾鮐蛇毒血清。 被赤尾鮐（赤尾青竹絲）咬傷：對應的血清是抗龜殼花及赤尾鮐蛇毒血清。 被百步蛇咬傷：百步蛇屬出血性蛇毒，對應的血清是抗百步蛇毒血清。 被雨傘節或飯匙倩（眼鏡蛇）咬傷：兩者屬神經性蛇毒，對應的血清是抗雨傘節及飯匙倩蛇毒血清。 認不出是哪一種蛇也不要延誤就醫，把記得的顏色、花紋、頭形告訴醫護人員即可，緊急請撥 119。 被龜殼花咬傷：龜殼花屬出血性蛇毒，對應的血"
+        }
+      },
+      {
+        "id": "AV004",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.88,
+          "cites": [
+            "faq.snakebite-dont#a",
+            "topic.antivenom#s-first-aid",
+            "faq.snakebite-first-aid#a"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "faq",
+            "topic"
+          ],
+          "translationNote": null,
+          "text": "醫師也常提醒：被蛇咬傷不綁止血帶或橡皮筋，阻斷血流可能造成肢體缺血壞死； 被蛇咬傷不冰敷，以免組織壞死。 被蛇咬傷時，一律先當作毒蛇咬傷處理，保持冷靜並儘速就醫，緊急時請撥打 119。"
+        }
+      },
+      {
+        "id": "AV005",
+        "category": "fact",
+        "ok": true,
+        "got": {
+          "intent": "unknown",
+          "intentReasons": [],
+          "refused": false,
+          "refusalKind": null,
+          "verdict": null,
+          "disease": null,
+          "confidence": 0.88,
+          "cites": [
+            "faq.antivenom-where#a",
+            "topic.antivenom#intro",
+            "topic.antivenom#s-where"
+          ],
+          "situation": false,
+          "stats": null,
+          "types": [
+            "faq",
+            "topic"
+          ],
+          "translationNote": null,
+          "text": "抗蛇毒血清屬醫師處方用藥，只有醫療院所可以購買，民眾請勿購買來路不明的藥品。 疾管署是國內唯一產製並持有抗蛇毒血清藥證的機構，供應 4 種抗蛇毒血清給全國醫療院所儲備。 疾管署在全國醫療院所儲備抗蛇毒血清，近年新聞稿公布的儲備院所約 190 至 250 家，實際名單以疾管署「抗蛇毒血清儲備點查詢系統」為準。"
+        }
+      }
+    ]
+  }
+}

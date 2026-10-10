@@ -1,0 +1,64 @@
+{
+  "id": "page.influenza-news-list",
+  "type": "page",
+  "title": "新聞稿列表",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2017-10-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "2025-10-01 114 年度公費流感疫苗今日開打，長者與幼兒請儘早接種 2026-01-20 流感疫情處高峰，春節連假前請儘速接種疫苗並落實咳嗽禮節 2026-02-24 流感疫情緩降，仍處流行期，請持續注意手部衛生與咳嗽禮節 20…",
+  "slug": "influenza-news-list",
+  "bodyMarkdown": "- 2025-10-01 [114 年度公費流感疫苗今日開打，長者與幼兒請儘早接種](https://www.cdc.gov.tw/Bulletin/Detail/6N0SWBtrTTDXLGOCcDfb8y?typeid=9)\n- 2026-01-20 [流感疫情處高峰，春節連假前請儘速接種疫苗並落實咳嗽禮節](https://www.cdc.gov.tw/Bulletin/Detail/xcFPMo-rLnUvQgxJZ6lSLI?typeid=9)\n- 2026-02-24 [流感疫情緩降，仍處流行期，請持續注意手部衛生與咳嗽禮節](https://www.cdc.gov.tw/Bulletin/Detail/S_6Pn0il4Z75A4P1lIeJVE?typeid=9)\n- 2026-06-03 [夏季流感疫情持續，公費抗病毒藥劑使用對象維持現行規定](https://www.cdc.gov.tw/Bulletin/Detail/-CCWNr4RM-TuU46m8Y4LD6?typeid=9)\n- 2026-08-24 [國內外近期流感疫情緩升，疾管署自 8 月 24 日起至 9 月 30 日擴大公費流感抗病毒藥劑使用條件](https://www.cdc.gov.tw/Bulletin/Detail/24s3rCvCw9wt1tBrCKlPyz?typeid=9)\n- 2026-09-10 [澄清：網傳「打流感疫苗會得流感、長輩打完會死」並非事實](https://www.cdc.gov.tw/Bulletin/Detail/qW2JvbbazH4BpO4cewhoXs?typeid=8772)\n- 2026-09-18 [流感疫情進入流行期且持續上升，疾管署延長擴大公費流感抗病毒藥劑使用條件至 10 月 31 日](https://www.cdc.gov.tw/Bulletin/Detail/vcMb1nAvnDQPldFZ9-yMp0?typeid=9)\n- 2026-09-18 [2026–2027 年度公費流感疫苗 10 月 1 日開打，新冠疫苗同步提供](https://www.cdc.gov.tw/Bulletin/Detail/KW-o3bKXdF3Xa1ho7TtAtL?typeid=9)",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/List/bIp1EzRH4-l_1Wf3-Xbhgv"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.6,
+    "issues": [
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「流感／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 news-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "list-page",
+        "severity": "info",
+        "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+      },
+      {
+        "code": "target-type-differs",
+        "severity": "info",
+        "message": "對應的新站內容是 disease.influenza（disease），草稿以 page 暫存，請比對後改建為 disease"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/List/bIp1EzRH4-l_1Wf3-Xbhgv",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "disease.influenza"
+    ]
+  }
+}

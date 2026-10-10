@@ -1,0 +1,54 @@
+{
+  "id": "clar.2026-09-anti-epidemic-team-scam",
+  "type": "clarification",
+  "title": "網傳「防疫國家隊」投資群組為詐騙",
+  "owner": "unit.pr",
+  "publishedAt": "2026-09-15",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "網傳：加入疾管署「防疫國家隊」LINE 投資群組，跟單投資防疫概念股保證獲利 查核結果：不實訊息",
+  "claim": "防疫國家隊",
+  "verdict": "false",
+  "clarificationMarkdown": "網傳：加入疾管署「防疫國家隊」LINE 投資群組，跟單投資防疫概念股保證獲利\n\n查核結果：不實訊息\n\n疾病管制署未成立任何投資群組，也不會邀請民眾投資。此類訊息為詐騙，請勿加入、匯款或提供個資。\n\n【疾管署澄清】疾管署沒有「防疫國家隊」投資群組，不會邀請民眾投資，此為詐騙，請勿加入或匯款。檢舉請撥 165。",
+  "shareText": "網傳：加入疾管署「防疫國家隊」LINE 投資群組，跟單投資防疫概念股保證獲利 查核結果：不實訊息",
+  "reportChannel": "1922",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/7HBern14siglf3j_FN5W-i?typeid=8772"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 12 處（mso 樣式 4、Mso 類別 4、命名空間標籤 4）"
+      },
+      {
+        "code": "type-from-bulletin",
+        "severity": "info",
+        "message": "公告類別是澄清稿，草稿建成 clarification（claim／verdict 由標題與內文推斷）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/7HBern14siglf3j_FN5W-i?typeid=8772",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "clar.2026-09-anti-epidemic-team-scam"
+    ]
+  }
+}

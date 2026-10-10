@@ -1,0 +1,72 @@
+{
+  "id": "dataset.travel-alert-levels",
+  "type": "dataset",
+  "title": "國際旅遊疫情建議等級表",
+  "owner": "unit.quarantine",
+  "publishedAt": "2012-01-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "國際旅遊疫情建議等級分為三級：第一級注意（Watch）、第二級警示（Alert）、第三級警告（Warning），依疫情嚴重度與傳播風險隨時調整。",
+  "category": "content-page",
+  "canonicalUrl": "https://data.cdc.gov.tw/dataset/travel-health-notice-levels",
+  "updateFrequency": "irregular",
+  "lastUpdated": "2026-10-01",
+  "formats": [],
+  "resources": [],
+  "provenance": {
+    "mode": "snapshot",
+    "fetchedAt": "2026-10-03",
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/n-DGrcI1Yod3VzrY9JQHan"
+  },
+  "portalUrl": "https://data.cdc.gov.tw/dataset/travel-health-notice-levels",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/n-DGrcI1Yod3VzrY9JQHan"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 136 處（mso 樣式 46、Mso 類別 45、命名空間標籤 45）"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站型別是 dataset（dataset.travel-alert-levels），草稿直接建成 dataset，看不出來的欄位以「（待補）」佔位"
+      },
+      {
+        "code": "dataset-by-url",
+        "severity": "info",
+        "message": "canonicalUrl 沿用既有資料集 dataset.travel-alert-levels（清單 target 指定）"
+      },
+      {
+        "code": "field-guessed",
+        "severity": "info",
+        "message": "看不出更新頻率，updateFrequency 暫填 irregular"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/n-DGrcI1Yod3VzrY9JQHan",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "dataset.travel-alert-levels"
+    ]
+  }
+}

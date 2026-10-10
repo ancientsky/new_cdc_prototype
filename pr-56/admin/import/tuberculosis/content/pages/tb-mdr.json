@@ -1,0 +1,55 @@
+{
+  "id": "page.tb-mdr",
+  "type": "page",
+  "title": "多重抗藥性結核病醫療照護體系",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2019-01-15",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis",
+    "disease.mdr-tb"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "多重抗藥性結核病由專責團隊收治，優先採全口服短程處方，結合進階都治，費用由公費支應。",
+  "slug": "tb-mdr",
+  "bodyMarkdown": "多重抗藥性結核病由專責團隊收治，優先採全口服短程處方，結合進階都治，費用由公費支應。\n\n結核菌對治療藥物產生抗藥性，稱為抗藥性結核病；同時對 isoniazid 與 rifampin 兩種最重要的藥物抗藥，稱為**多重抗藥性結核病（MDR-TB）**，屬第二類法定傳染病。抗藥性多因過去治療不完整、自行停藥，或被抗藥性病人傳染。\n\n疾管署建立**抗藥性結核病醫療照護體系（TMTC）**，由專責醫療團隊收治，搭配進階都治每日送藥。目前優先採用全口服短程處方，療程約 6 個月，治療費用由公費支應。預防抗藥性最好的方法，就是確診後**規則服藥、不自行停藥**。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/mdK6J8sUBWYkJgJXrH5hj2"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 12 處（mso 樣式 6、Mso 類別 3、命名空間標籤 3）"
+      },
+      {
+        "code": "merge-into-target",
+        "severity": "info",
+        "message": "清單判定併入 topic.tb-prevention（topic），草稿以 page 暫存，請人工把內容併進目標後刪除草稿"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/mdK6J8sUBWYkJgJXrH5hj2",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "topic.tb-prevention"
+    ]
+  }
+}

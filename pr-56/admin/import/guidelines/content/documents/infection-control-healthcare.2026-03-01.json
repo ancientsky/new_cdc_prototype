@@ -1,0 +1,72 @@
+{
+  "id": "doc.infection-control-healthcare.2026-03-01",
+  "type": "document",
+  "title": "醫療機構感染管制措施指引",
+  "owner": "unit.infection-control",
+  "publishedAt": "2026-03-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "醫療機構標準防護與傳播途徑防護（接觸、飛沫、空氣）、呼吸道衛生、環境清消與工作人員健康管理之共通原則。",
+  "family": "doc.infection-control-healthcare",
+  "docType": "guideline",
+  "version": "2026-03-01",
+  "effectiveAt": "2026-03-01",
+  "machineReadableMarkdown": "醫療機構標準防護與傳播途徑防護（接觸、飛沫、空氣）、呼吸道衛生、環境清消與工作人員健康管理之共通原則。\n\n### 一、標準防護措施\n\n所有病人照護均應落實標準防護措施：手部衛生五時機（接觸病人前、執行清潔／無菌技術前、暴觸病人體液風險後、接觸病人後、接觸病人周遭環境後）、依暴露風險選用個人防護裝備、安全注射與尖銳物品處理。\n\n### 二、接觸傳染防護\n\n適用於多重抗藥性菌、疥瘡、腸病毒等。病人宜安置單人房或集中照護；進入病室穿戴手套及隔離衣，醫療用品專人專用。\n\n### 三、飛沫傳染防護\n\n適用於流感、百日咳、流行性腦脊髓膜炎等。病床間距至少 1 公尺並拉上隔簾；照護人員進入 1 公尺內應佩戴外科口罩；病人離開病室應戴口罩。\n\n本版自 2026 年 3 月 1 日 生效。\n\n| 項目 | 內容 |\n| --- | --- |\n| 文件名稱 | 醫療機構感染管制措施指引 |\n| 版次 | 2026-03 |\n| 生效日 | 2026-03-01 |\n| 權責單位 | 感染管制及生物安全組 |\n| 檔案格式 | PDF |",
+  "pdfUrl": "/files/doc.infection-control-healthcare.2026-03-01/infection-control-healthcare-2026-03-01.pdf",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/4SSpeIQdau_eeWKfkHRO75"
+  ],
+  "assets": [
+    {
+      "file": "infection-control-healthcare-2026-03-01.pdf",
+      "kind": "attachment",
+      "label": "醫療機構感染管制措施指引（PDF）",
+      "mime": "application/pdf",
+      "bytes": 812,
+      "sha256": "6b7be9bbab24211f50427b3936091a5278dc4581086352a204d03a4268550e80",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 52 處（mso 樣式 18、Mso 類別 17、命名空間標籤 17）"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站內容是文件 doc.infection-control-healthcare.2026-03-01，草稿依清單建成 document（舊頁本身是欄目內頁）"
+      },
+      {
+        "code": "version-unknown",
+        "severity": "info",
+        "message": "標題看不出版次，version 暫填 2026-03-01"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/4SSpeIQdau_eeWKfkHRO75",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "doc.infection-control-healthcare.2026-03-01"
+    ]
+  }
+}

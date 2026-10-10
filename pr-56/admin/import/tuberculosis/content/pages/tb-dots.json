@@ -1,0 +1,54 @@
+{
+  "id": "page.tb-dots",
+  "type": "page",
+  "title": "都治（DOTS）",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2019-01-15",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "關懷員每日送藥到手、親眼看服藥；所有確診個案納入，社區、機構與進階都治（DOTS-Plus）。",
+  "slug": "tb-dots",
+  "bodyMarkdown": "關懷員每日送藥到手、親眼看服藥；所有確診個案納入，社區、機構與進階都治（DOTS-Plus）。\n\n- 社區都治：關懷員每日到府或約定地點送藥到手、親眼看服藥\n- 機構都治：矯正機關、長照機構由機構人員執行\n- 進階都治（DOTS-Plus）：多重抗藥性結核病，由專責團隊執行\n\n都治（DOTS）是「直接觀察治療」：由經過訓練的**都治關懷員每天把藥送到您手上，親眼看著您把藥吞下**，並關心副作用與生活狀況，也就是「送藥到手、服藥入口、吞了再走」。 結核病至少要規則服藥 6 個月，中途自行停藥可能復發或產生抗藥性。都治讓病人不會漏藥，是提高治癒率的關鍵；關懷員可配合您的時間與地點送藥，服務免費。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/y1AAQLAWnwCkChJ47vLGQu"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 19 處（mso 樣式 15、Mso 類別 5、命名空間標籤 2）"
+      },
+      {
+        "code": "merge-into-target",
+        "severity": "info",
+        "message": "清單判定併入 topic.tb-prevention（topic），草稿以 page 暫存，請人工把內容併進目標後刪除草稿"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/y1AAQLAWnwCkChJ47vLGQu",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "topic.tb-prevention"
+    ]
+  }
+}

@@ -1,0 +1,48 @@
+# Epidemic Intelligence Center: two project assistants (surveillance data analysis)
+
+> 權責單位：Personnel Office · 最後審閱：2026-09-30 · 授權：OGDL-1.0 · ID：job.2026-09-24-research-assistant-epi · 階段：open
+
+Two project assistants for surveillance data cleaning, statistical analysis and open data maintenance; apply via the government job portal by 27 October 2026 (extended).
+
+- 用人單位：Epidemic Intelligence Center
+- 職類：計畫助理
+- 名額：2
+- 工作地點：臺北市中正區林森南路 6 號（疾管署本部）
+- 報名期間：2026-09-24 ～ 2026-10-27
+- 報名方式：online（https://web3.dgpa.gov.tw/）
+- 薪資待遇：比照國家科學及技術委員會補助專題研究計畫助理人員工作酬金支給基準，碩士級專任助理第一級起敘（依年資核定，示意）；計畫期間至 2027 年 12 月 31 日
+
+## 工作內容
+
+- 傳染病監測資料清理與統計分析
+- 開放資料集維護與資料字典更新
+- 週報圖表與疫情摘要產製
+
+## 資格條件
+
+- 國內外大學公共衛生、統計、資訊或相關系所碩士以上
+- 熟悉 R 或 Python 資料處理與統計分析
+- 具傳染病監測或流行病學資料分析經驗者優先
+
+## 應備文件
+
+- 履歷表（含自傳）
+- 最高學歷畢業證書影本
+- 歷年成績單（應屆畢業者）
+- 資料分析作品或報告（有者檢附）
+
+## 甄試方式與日期
+
+- 書面審查：2026-10-28
+- 實作：2026-10-30（R 或 Python 資料處理實作（自備筆電））
+- 口試：2026-11-03
+
+## 公告異動
+
+- 2026-09-30［展延］報名截止日由 2026-10-20 展延至 2026-10-27；書面審查由 2026-10-23 順延至 2026-10-28，實作與口試日期不變。（疾管人字第 1150100262 號（示意））
+
+## 聯絡
+
+疾管署人事室：（02）2395-9825 轉人事室分機（示意）；職務內容洽詢：疫情中心（同總機轉接）
+
+- 附件：[甄選簡章（PDF）](/pending/?ref=job.2026-09-24-research-assistant-epi&doc=甄選簡章)

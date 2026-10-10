@@ -1,0 +1,6 @@
+# 衛生福利部疾病管制署（Taiwan Centers for Disease Control）新官網原型：非官方網站，內容為示意，不開放索引。
+# 正式站請改以 SITE_MODE=production 建置，會輸出 AI 政策版 robots.txt（本目錄的 robots.production.txt 即為該版本）。
+# 每頁另有 <meta name="robots" content="noindex, nofollow">；GitHub Pages 無法加 X-Robots-Tag 標頭，正式環境見 docs/deploy.md §10。
+
+User-agent: *
+Disallow: /

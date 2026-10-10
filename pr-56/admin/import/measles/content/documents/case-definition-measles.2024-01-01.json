@@ -1,0 +1,80 @@
+{
+  "id": "doc.case-definition-measles.2024-01-01",
+  "type": "document",
+  "title": "傳染病病例定義：麻疹",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2024-01-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.measles"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "麻疹病例定義：發燒、出疹合併咳嗽、鼻炎或結膜炎之一者即應通報；咽喉擦拭液或尿液核酸陽性為確定病例。",
+  "family": "doc.case-definition-measles",
+  "docType": "case-definition",
+  "version": "2024-01-01",
+  "effectiveAt": "2024-01-01",
+  "machineReadableMarkdown": "麻疹病例定義：發燒、出疹合併咳嗽、鼻炎或結膜炎之一者即應通報；咽喉擦拭液或尿液核酸陽性為確定病例。\n\n### 臨床條件\n\n同時具有下列三項：\n\n1. 發燒（≥ 38°C）。\n2. 全身性斑丘疹。\n3. 咳嗽、鼻炎或結膜炎三者之一。\n\n### 檢驗條件\n\n具有下列任一個條件：\n\n1. 臨床檢體（咽喉擦拭液、尿液或血液）分離並鑑定出麻疹病毒。\n2. 臨床檢體分子生物學核酸檢測陽性。\n3. 血清麻疹 IgM 抗體陽性（排除近期接種疫苗者）。\n4. 成對血清 IgG 陽轉或抗體效價 4 倍以上上升。\n\n### 流行病學條件\n\n出疹前 7 至 18 日內，曾與確定病例有接觸，或曾至麻疹流行地區。\n\n| 項目 | 內容 |\n| --- | --- |\n| 文件名稱 | 傳染病病例定義：麻疹 |\n| 版次 | 2024-01 |\n| 生效日 | 2024-01-01 |\n| 權責單位 | 急性傳染病組 |\n| 檔案格式 | PDF |\n\n完整內容請下載附件：\\<a href=\"https://www.cdc.gov.tw/File/Get/oHcwOKFhxhSQtuRpLaA3pU\">傳染病病例定義：麻疹（PDF）\\</a>",
+  "pdfUrl": "/files/doc.case-definition-measles.2024-01-01/case-definition-measles.2024-01-01.pdf",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/DiseaseDefine/cMMH-s4zN4Dw12teXD11mn"
+  ],
+  "assets": [
+    {
+      "file": "case-definition-measles.2024-01-01.pdf",
+      "kind": "attachment",
+      "label": "傳染病病例定義：麻疹",
+      "mime": "application/pdf",
+      "bytes": 871,
+      "sha256": "ab5ab5b5b92e93844abd443741edd0fd58a9d7da22dacd3ef2784bb65ac5bbf5",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 73 處（mso 樣式 39、Mso 類別 24、命名空間標籤 17）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「麻疹／法規與指引」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 case-definition（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "version-unknown",
+        "severity": "info",
+        "message": "標題看不出版次，version 暫填 2024-01-01"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/DiseaseDefine/cMMH-s4zN4Dw12teXD11mn",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "doc.case-definition-measles.2024-01-01"
+    ]
+  }
+}

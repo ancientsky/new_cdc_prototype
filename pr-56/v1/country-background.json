@@ -1,0 +1,38 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "61768525e375",
+    "lastModified": "2026-10-04",
+    "count": 1,
+    "backgroundRule": {
+      "share": 0.5,
+      "minCountries": 20,
+      "note": "同一疾病同一等級涵蓋 50% 以上國家／地區者視為全球背景提醒（遵守一般預防措施），不逐國列出；各國排序、卡片、地圖與等級表改用排除背景提醒後的針對性等級（Targeted*）。"
+    },
+    "provenance": {
+      "mode": "live",
+      "fetchedAt": "2026-10-04T09:11:44.151Z",
+      "dataDate": "2026-10-04",
+      "sourceUrl": "https://www.cdc.gov.tw/CountryEpidLevel/ExportJSON"
+    }
+  },
+  "data": [
+    {
+      "Disease": "新冠併發重症",
+      "LevelCode": 1,
+      "Level": "第一級：注意(Watch)",
+      "countries": 245,
+      "share": 0.996,
+      "since": "2023-11-01",
+      "latest": "2023-11-01",
+      "Summary": "提醒遵守當地的一般預防措施"
+    }
+  ]
+}

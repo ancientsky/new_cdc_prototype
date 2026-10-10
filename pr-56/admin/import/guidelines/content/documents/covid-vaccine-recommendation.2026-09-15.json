@@ -1,0 +1,97 @@
+{
+  "id": "doc.covid-vaccine-recommendation.2026-09-15",
+  "type": "document",
+  "title": "新冠疫苗接種建議（2026–2027 年度）",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-09-15",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.covid-19"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "現行 2026–2027 年度新冠疫苗：10 月 1 日起 6 個月以上民眾公費 1 劑；65 歲以上與免疫不全者間隔 6 個月可再接種 1 劑。",
+  "family": "doc.covid-vaccine-recommendation",
+  "docType": "recommendation",
+  "version": "2027 年版",
+  "effectiveAt": "2026-09-15",
+  "machineReadableMarkdown": "現行 2026–2027 年度新冠疫苗：10 月 1 日起 6 個月以上民眾公費 1 劑；65 歲以上與免疫不全者間隔 6 個月可再接種 1 劑。\n\n### 一、接種對象\n\n6 個月以上民眾，自 2026 年 10 月 1 日起與流感疫苗同步開打。優先對象：65 歲以上長者、55 歲以上原住民、醫事人員、長照機構住民與工作人員、高風險慢性病人、孕婦。\n\n### 二、劑次與間隔\n\n每人接種 1 劑本年度新冠疫苗（成分依 WHO 2026 年建議株），與前一劑間隔至少 12 週。**65 歲以上長者及中重度免疫不全者**，於本年度第 1 劑後間隔 6 個月，可再接種 1 劑。\n\n### 三、與其他疫苗同時接種\n\n可與流感疫苗或其他疫苗同時分開部位接種，或間隔任何時間接種。\n\n本版自 2026 年 9 月 15 日 生效，取代前一版（2025-26）。歷版請見下方附件（2025-26），僅供查閱。\n\n| 項目 | 內容 |\n| --- | --- |\n| 文件名稱 | 新冠疫苗接種建議（2026–2027 年度） |\n| 版次 | 2026-27 |\n| 生效日 | 2026-09-15 |\n| 權責單位 | 急性傳染病組 |\n| 檔案格式 | PDF |",
+  "supersedes": "doc.covid-vaccine-recommendation.2025-09-15",
+  "pdfUrl": "/files/doc.covid-vaccine-recommendation.2026-09-15/covid-vaccine-recommendation-2026-09-15.pdf",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/2G_kk9OEXNAmMOsndOv0Tc"
+  ],
+  "assets": [
+    {
+      "file": "covid-vaccine-recommendation-2026-09-15.pdf",
+      "kind": "attachment",
+      "label": "新冠疫苗接種建議（2026–2027 年度）（PDF）",
+      "mime": "application/pdf",
+      "bytes": 873,
+      "sha256": "0a98955d91070a750a40dcf15790b848f80f9017edce757f70d537b70e89abc1",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 53 處（mso 樣式 19、Mso 類別 17、命名空間標籤 17）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「傳染病介紹／新冠併發重症／指引及手冊」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（新冠併發重症）"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站內容是文件 doc.covid-vaccine-recommendation.2026-09-15，草稿依清單建成 document（舊頁本身是欄目內頁）"
+      },
+      {
+        "code": "effective-from-text",
+        "severity": "info",
+        "message": "生效日 2026-09-15 取自內文（舊頁發布日 2025-09-15）"
+      },
+      {
+        "code": "version-from-attachment",
+        "severity": "info",
+        "message": "附件「新冠疫苗接種建議（2025 年版，2025 年 9 月 15 日）（PDF）」是另一版次（2025 年版），另建純 PDF 草稿 doc.covid-vaccine-recommendation.2025-09-15（同家族 doc.covid-vaccine-recommendation，不轉內文）"
+      },
+      {
+        "code": "version-chain",
+        "severity": "info",
+        "message": "版次鏈 doc.covid-vaccine-recommendation：2025 年版（2025-09-15） → 2027 年版（2026-09-15）；本版為現行版，supersedes doc.covid-vaccine-recommendation.2025-09-15"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/2G_kk9OEXNAmMOsndOv0Tc",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "doc.covid-vaccine-recommendation.2026-09-15"
+    ],
+    "versionChain": {
+      "family": "doc.covid-vaccine-recommendation",
+      "position": 2,
+      "of": 2,
+      "current": true
+    }
+  }
+}

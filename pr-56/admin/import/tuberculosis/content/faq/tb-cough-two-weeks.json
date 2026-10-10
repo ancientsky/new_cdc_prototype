@@ -1,0 +1,70 @@
+{
+  "id": "faq.tb-cough-two-weeks",
+  "type": "faq",
+  "title": "咳嗽多久要懷疑是結核病？",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2020-03-24",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "咳嗽超過 2 週，特別是合併有痰、胸痛、體重減輕、食慾不振、午後發燒或夜間盜汗，就應到醫院胸腔科就醫，接受胸部 X 光與驗痰檢查。",
+  "question": "咳嗽多久要懷疑是結核病？",
+  "answerMarkdown": "**咳嗽超過 2 週**，特別是合併有痰、胸痛、體重減輕、食慾不振、午後發燒或夜間盜汗，就應到醫院胸腔科就醫，接受胸部 X 光與驗痰檢查。\n\n結核病只要規則服藥至少 6 個月，幾乎都能治癒，早期發現也能避免傳染給家人。",
+  "tasks": [
+    "symptoms"
+  ],
+  "basedOn": [
+    "disease.tuberculosis"
+  ],
+  "structured": {
+    "weeks": 2,
+    "months": 6
+  },
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/ZW0TrgKarQJWRWZrMIWzeq"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 85 處（mso 樣式 53、Mso 類別 22、命名空間標籤 16）"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「咳嗽多久要懷疑是結核病？」從答案抽出結構化候選 {\"weeks\":2,\"months\":6}，請確認後保留或刪除"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「咳嗽多久要懷疑是結核病？」→ symptoms；「驗出潛伏結核感染，一定要治療嗎？」→ symptoms；「什麼是都治（DOTS）？」→ symptoms；「家人得了結核病，我需要做什麼檢查？」→ symptoms；「什麼是抗藥性結核病？要怎麼治療？」→ symptoms；「結核病治療要花錢嗎？」→ symptoms；「外籍人士來臺工作或居留，需要做結核病檢查嗎？」→ symptoms；「結核病開始吃藥後，還會傳染給家人嗎？」→ symptoms"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/ZW0TrgKarQJWRWZrMIWzeq",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.tb-cough-two-weeks"
+    ],
+    "structuredFromText": true
+  }
+}

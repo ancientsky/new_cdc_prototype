@@ -1,0 +1,75 @@
+{
+  "id": "faq.flu-vaccine-every-year",
+  "type": "faq",
+  "title": "流感疫苗去年打過了，今年還要再打嗎？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2025-12-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "要。流感病毒每年都可能變異，世界衛生組織每年會依監測結果更新疫苗株；而且接種後的保護力約在 6 個月後逐漸下降，所以每年都需要接種。",
+  "question": "流感疫苗去年打過了，今年還要再打嗎？",
+  "answerMarkdown": "要。流感病毒每年都可能變異，世界衛生組織每年會依監測結果更新疫苗株；而且接種後的保護力約在 6 個月後逐漸下降，**所以每年都需要接種**。\n\n接種後約 2 週產生保護力，建議在流行季前儘早完成。",
+  "tasks": [
+    "vaccines"
+  ],
+  "basedOn": [
+    "disease.influenza"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/Zfg30duS6fEOkNhHjVRix8"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 123 處（mso 樣式 81、Mso 類別 29、命名空間標籤 21）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「流感／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「今年公費流感疫苗誰可以打？什麼時候開始？」從答案抽出結構化候選 {\"ageYears\":65,\"months\":6}，請確認後保留或刪除"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「65 歲以上長輩有類流感症狀，一定要快篩陽性才能用公費抗病毒藥嗎？」→ symptoms；「流感疫苗和新冠疫苗可以同一天打嗎？」→ vaccines；「得了流感，出現哪些狀況要馬上就醫？」→ symptoms；「流感疫苗去年打過了，今年還要再打嗎？」→ vaccines；「今年公費流感疫苗誰可以打？什麼時候開始？」→ vaccines；「流感和一般感冒要怎麼分辨？」→ symptoms；「哪些人可以使用公費流感抗病毒藥劑？」→ symptoms；「什麼是「流感併發重症」？」→ symptoms；「公費流感疫苗要去哪裡打？要帶什麼？」→ vaccines；「「類流感門急診就診率」是什麼意思？」→ data"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/Zfg30duS6fEOkNhHjVRix8",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.flu-vaccine-every-year"
+    ]
+  }
+}

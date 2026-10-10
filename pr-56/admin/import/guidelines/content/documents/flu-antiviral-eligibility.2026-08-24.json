@@ -1,0 +1,103 @@
+{
+  "id": "doc.flu-antiviral-eligibility.2026-08-24",
+  "type": "document",
+  "title": "公費流感抗病毒藥劑使用對象（2026 年 8 月擴大版：高傳播族群，至 9 月 30 日）",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-08-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "2026 年 8 月 24 日至 9 月 30 日擴大公費流感抗病毒藥劑使用對象：有類流感症狀且屬 7 類流感高傳播族群者（醫療防疫人員、長照機構、托育人員與學生、高風險同住者、禽畜業、人口密集機構），經醫師評估不需快篩即可開立；",
+  "family": "doc.flu-antiviral-eligibility",
+  "docType": "guideline",
+  "version": "2026-08-01",
+  "effectiveAt": "2026-08-01",
+  "machineReadableMarkdown": "2026 年 8 月 24 日至 9 月 30 日擴大公費流感抗病毒藥劑使用對象：有類流感症狀且屬 7 類流感高傳播族群者（醫療防疫人員、長照機構、托育人員與學生、高風險同住者、禽畜業、人口密集機構），經醫師評估不需快篩即可開立；全年適用對象不變。已由 9 月延長版取代。\n\n### 第 1 條\n\n經通報之「流感併發重症」病例。\n\n### 第 2 條\n\n經通報之「新型 A 型流感」病例。\n\n### 第 3 條\n\n孕婦經評估需及時用藥者。\n\n本版自 2026 年 8 月 24 日 生效，取代前一版（2026-06）。\n\n| 項目 | 內容 |\n| --- | --- |\n| 文件名稱 | 公費流感抗病毒藥劑使用對象（2026 年 8 月擴大版：高傳播族群，至 9 月 30 日） |\n| 版次 | 2026-08 |\n| 生效日 | 2026-08-24 |\n| 權責單位 | 急性傳染病組 |\n| 檔案格式 | PDF |",
+  "supersedes": "doc.flu-antiviral-eligibility.2026-06-01",
+  "pdfUrl": "/files/doc.flu-antiviral-eligibility.2026-08-24/flu-antiviral-eligibility-2026-08-24.pdf",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/utHsvgoFhtVwsL26JL-6TM"
+  ],
+  "assets": [
+    {
+      "file": "flu-antiviral-eligibility-2026-08-24.pdf",
+      "kind": "attachment",
+      "label": "公費流感抗病毒藥劑使用對象（2026 年 8 月擴大版：高傳播族群，至 9 月 30 日）（PDF）",
+      "mime": "application/pdf",
+      "bytes": 842,
+      "sha256": "7a28172b58cd8c6b1ad945e8149e8a410a4561587c0060db446dd30f64d25ff9",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 52 處（mso 樣式 18、Mso 類別 17、命名空間標籤 17）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「傳染病介紹／流感／指引及手冊／歷版」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站內容是文件 doc.flu-antiviral-eligibility.2026-08-24，草稿依清單建成 document（舊頁本身是欄目內頁）"
+      },
+      {
+        "code": "historical-version",
+        "severity": "info",
+        "message": "歷史版本：建議封存（舊版保留查閱），不取代現行版"
+      },
+      {
+        "code": "doctype-guessed",
+        "severity": "info",
+        "message": "標題與網址看不出文件種類，暫填 guideline"
+      },
+      {
+        "code": "effective-from-text",
+        "severity": "info",
+        "message": "生效日 2026-08-01 取自標題（舊頁發布日 2026-08-24）"
+      },
+      {
+        "code": "version-unknown",
+        "severity": "info",
+        "message": "標題看不出版次，version 暫填 2026-08-01"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/utHsvgoFhtVwsL26JL-6TM",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "doc.flu-antiviral-eligibility.2026-08-24"
+    ],
+    "versionChain": {
+      "family": "doc.flu-antiviral-eligibility",
+      "position": 2,
+      "of": 3,
+      "current": false,
+      "supersededBy": "doc.flu-antiviral-eligibility.2026-09-18"
+    }
+  }
+}

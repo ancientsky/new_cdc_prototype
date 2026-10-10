@@ -1,0 +1,121 @@
+{
+  "id": "dataset.dengue-local-weekly",
+  "type": "dataset",
+  "title": "登革熱統計資料",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2018-03-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "1998 年起登革熱每日確定病例（本土／境外移入），含縣市、性別、年齡層。",
+  "category": "structured-table",
+  "canonicalUrl": "https://www.cdc.gov.tw/Category/List/24UnSJ76XgcjnNUGy3DMcd",
+  "updateFrequency": "daily",
+  "lastUpdated": "2026-07-15",
+  "formats": [
+    "CSV"
+  ],
+  "resources": [
+    {
+      "label": "登革熱年度統計（CSV，示意）",
+      "href": "/files/dataset.dengue-local-weekly/dengue-stats.csv",
+      "format": "CSV"
+    }
+  ],
+  "provenance": {
+    "mode": "snapshot",
+    "fetchedAt": "2026-10-03",
+    "sourceUrl": "https://www.cdc.gov.tw/Category/List/24UnSJ76XgcjnNUGy3DMcd"
+  },
+  "series": {
+    "label": "確定病例數（示意）",
+    "unit": "人",
+    "granularity": "year",
+    "points": [
+      {
+        "t": "2021",
+        "v": 217
+      },
+      {
+        "t": "2022",
+        "v": 556
+      },
+      {
+        "t": "2023",
+        "v": 895
+      },
+      {
+        "t": "2024",
+        "v": 334
+      },
+      {
+        "t": "2025",
+        "v": 673
+      }
+    ],
+    "note": "另有欄位：每十萬人口發生率（示意）"
+  },
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/24UnSJ76XgcjnNUGy3DMcd"
+  ],
+  "assets": [
+    {
+      "file": "dengue-stats.csv",
+      "kind": "data",
+      "label": "登革熱年度統計（CSV，示意）",
+      "mime": "text/csv",
+      "bytes": 84,
+      "sha256": "9c37c1e8745c2784e3edd556c394618c281d1a063b7b287fcf0b190fa917a3df",
+      "machineReadable": true
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 61 處（mso 樣式 21、Mso 類別 20、命名空間標籤 20）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 stats（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站型別是 dataset（dataset.dengue-local-weekly），草稿直接建成 dataset，看不出來的欄位以「（待補）」佔位"
+      },
+      {
+        "code": "series-extracted",
+        "severity": "info",
+        "message": "5 點、2021–2025、人（確定病例數（示意））；另有欄位：每十萬人口發生率（示意）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/List/24UnSJ76XgcjnNUGy3DMcd",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "dataset.dengue-local-weekly"
+    ]
+  }
+}

@@ -1,0 +1,280 @@
+{
+  "id": "disease.enterovirus",
+  "type": "disease",
+  "title": "腸病毒",
+  "slug": "enterovirus",
+  "nameEn": "Enterovirus infection",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2017-04-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "腸病毒傳染力強，5 歲以下幼兒是重症高危險群。多數表現為手足口病或疱疹性咽峽炎，留意嗜睡、肌躍型抽搐等重症前兆，一出現就送大醫院。",
+  "aliases": [
+    "腸病毒感染併發重症",
+    "手足口病",
+    "疱疹性咽峽炎",
+    "EV71",
+    "腸病毒71型",
+    "克沙奇病毒"
+  ],
+  "legalCategory": 3,
+  "icd10": [
+    "B34.1",
+    "B08.4",
+    "B08.5",
+    "A87.0"
+  ],
+  "notifyWithinHours": 168,
+  "transmission": [
+    "droplet",
+    "contact",
+    "foodborne"
+  ],
+  "keyFacts": {
+    "symptoms": "大多數感染者症狀輕微，常見兩種表現： 手足口病：發燒，口腔、舌頭出現潰瘍，手掌、腳掌、膝蓋、臀部出現紅疹或小水泡。",
+    "transmission": "腸病毒可經由接觸病人口鼻分泌物、水泡液、糞便，或吸入病人咳嗽打噴嚏的飛沫而感染，也可經由被污染的手、玩具、食物傳播。",
+    "prevention": "以肥皂濕、搓、沖、捧、擦正確洗手；乾洗手酒精對腸病毒效果有限。"
+  },
+  "blocks": [
+    {
+      "key": "what-to-do",
+      "heading": "我該怎麼辦",
+      "markdown": "",
+      "status": "pending"
+    },
+    {
+      "key": "symptoms",
+      "heading": "症狀與警示徵象",
+      "markdown": "大多數感染者症狀輕微，常見兩種表現：\n\n- **手足口病**：發燒，口腔、舌頭出現潰瘍，手掌、腳掌、膝蓋、臀部出現紅疹或小水泡。\n- **疱疹性咽峽炎**：突發高燒，喉嚨後方出現小水泡或潰瘍，因疼痛而不吃東西、流口水。\n\n多數 7–10 天內痊癒，但少數會併發腦炎、心肌炎、急性肢體麻痺等重症，以 5 歲以下幼兒風險最高。\n\n**注意：**重症前兆：嗜睡、意識不清、活力不佳、手腳無力、肌躍型抽搐（無故驚嚇或突然全身肌肉收縮）、持續嘔吐、呼吸急促或心跳加快。"
+    },
+    {
+      "key": "transmission",
+      "heading": "怎麼傳染",
+      "markdown": "### 致病原\n\n腸病毒可經由**接觸**病人口鼻分泌物、水泡液、糞便，或吸入病人咳嗽打噴嚏的**飛沫**而感染，也可經由被污染的手、玩具、食物傳播。\n\n腸病毒可經由**接觸**病人口鼻分泌物、水泡液、糞便，或吸入病人咳嗽打噴嚏的**飛沫**而感染，也可經由被污染的手、玩具、食物傳播。\n\n腸病毒可經由**接觸**病人口鼻分泌物、水泡液、糞便，或吸入病人咳嗽打噴嚏的**飛沫**而感染，也可經由被污染的手、玩具、食物傳播。\n\n發病前數天至發病後一週傳染力最強；病毒可在腸道持續排出數週，因此痊癒後仍要注意如廁後洗手。\n\n腸病毒的潛伏期為 **2–10 天（平均 3–5 天）**。\n\n| 項目 | 內容 |\n| --- | --- |\n| 潛伏期 | 2–10 天（平均 3–5 天） |\n| 可傳染期 | 病媒／接觸相關（接觸、飛沫、糞口） |"
+    },
+    {
+      "key": "prevention",
+      "heading": "如何預防",
+      "markdown": "- **以肥皂濕、搓、沖、捧、擦正確洗手**；乾洗手酒精對腸病毒效果有限。\n- 環境與玩具以 **500 ppm 漂白水**（家用漂白水 1 份加 100 份清水）擦拭消毒。\n- 孩子生病時在家休息，避免與其他幼兒接觸。\n- 教托育機構發現病例應通知家長並加強清消；同一班級一週內 2 名以上幼兒發病時，依地方規定停課。"
+    },
+    {
+      "key": "treatment",
+      "heading": "診斷與治療",
+      "markdown": "腸病毒沒有特效藥，以支持性治療為主：補充水分、退燒、緩解口腔疼痛，可給予冰涼、軟質的飲食。\n\n出現重症前兆時應儘速轉診至**腸病毒重症責任醫院**，由醫師評估靜脈免疫球蛋白、強心劑或葉克膜等處置。"
+    },
+    {
+      "key": "vaccine",
+      "heading": "疫苗",
+      "markdown": "國內已有核准上市的**腸病毒 71 型疫苗**，屬自費接種，適用年齡依各廠牌仿單（多為 2 個月以上至 6 歲以下幼兒）。疫苗只能預防 71 型，無法預防其他型別，接種後仍須落實洗手。\n\n| 對象 | 劑次 | 費用 |\n| --- | --- | --- |\n| 依接種建議 | — | 公費 |\n\n腸病毒傳染力強，5 歲以下幼兒是重症高危險群。多數表現為手足口病或疱疹性咽峽炎，留意嗜睡、肌躍型抽搐等重症前兆，一出現就送大醫院。\n\n### 專區內容\n\n- [疾病介紹](https://www.cdc.gov.tw/Category/List/ABc6v_myTor_HAsNllzxxO)\n- [Q&A](https://www.cdc.gov.tw/Category/List/53yzYlKrrxt1aD91K6z_Lq)\n- [宣導素材](https://www.cdc.gov.tw/Category/List/tI5zfaqsfUK3Ny2Po6P-MU)\n- [指引及手冊](https://www.cdc.gov.tw/Category/List/GCYy_avyjuatCENxbNGbWs)\n- [統計資料](https://www.cdc.gov.tw/Category/List/5waAJW_dQQNttscP6_HSyN)\n- [最新消息](https://www.cdc.gov.tw/Category/List/RcdJv3jaWW4evnUok97W1p)\n\n| 項目 | 內容 |\n| --- | --- |\n| 法定傳染病類別 | 第三類 |\n| 通報時限 | 7 日內 |\n| ICD-10 | B34.1、B08.4、B08.5、A87.0 |\n| 主要傳染途徑 | 接觸、飛沫、糞口 |\n| 潛伏期 | 2–10 天（平均 3–5 天） |"
+    },
+    {
+      "key": "situation",
+      "heading": "目前疫情與統計",
+      "markdown": "腸病毒門急診就診人次每週更新，並標示是否超過流行閾值；開學後與每年 4–6 月為好發期。\n\n近年確定病例趨勢如下表與圖（**示意數字，非正式統計**，正式數字見統計資料）：\n\n| 年度 | 確定病例數（示意） | 每十萬人口發生率（示意） |\n| --- | --- | --- |\n| 2021 | 256 | 26.4 |\n| 2022 | 308 | 1.6 |\n| 2023 | 360 | 16.8 |\n| 2024 | 412 | 32 |\n| 2025 | 464 | 7.2 |\n\n![enterovirus-trend](/files/disease.enterovirus/enterovirus-trend.png)"
+    },
+    {
+      "key": "faq",
+      "heading": "常見問題",
+      "markdown": "",
+      "status": "pending"
+    }
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Disease/SubIndex/Iu9YFpq5oVR8kXQibQB-Lt",
+    "https://www.cdc.gov.tw/Category/MPage/bdPocx77c0cRnTw5pV_G4Y",
+    "https://www.cdc.gov.tw/Category/Page/R2F77pt9zJJc5cEQmtZvK5"
+  ],
+  "assets": [
+    {
+      "file": "enterovirus-trend.png",
+      "kind": "image",
+      "alt": "enterovirus-trend",
+      "license": "OGDL-1.0",
+      "needsAlt": true,
+      "mime": "image/png",
+      "bytes": 359,
+      "sha256": "5da3a4e98fdc80539a7542ee2e19aea774fc32d0efe990856a52ca52d1d53354",
+      "width": 160,
+      "height": 90
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.98,
+    "issues": [
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「腸病毒／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-pathogen（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-epidemiology（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "image-no-alt",
+        "severity": "warn",
+        "message": "圖片「enterovirus-trend.png」舊頁沒有替代文字，暫用檔名「enterovirus-trend」，請補 alt（needsAlt）"
+      },
+      {
+        "code": "image-license-assumed",
+        "severity": "info",
+        "message": "圖片「enterovirus-trend.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-transmission（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-incubation（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-symptoms（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-prevention（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 intro-treatment（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「腸病毒／預防接種」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 vaccine（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留共 229 處（9 個來源頁）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Disease/SubIndex/Iu9YFpq5oVR8kXQibQB-Lt",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "sourceUrls": [
+      "https://www.cdc.gov.tw/Disease/SubIndex/Iu9YFpq5oVR8kXQibQB-Lt",
+      "https://www.cdc.gov.tw/Category/MPage/bdPocx77c0cRnTw5pV_G4Y",
+      "https://www.cdc.gov.tw/Category/Page/R2F77pt9zJJc5cEQmtZvK5"
+    ],
+    "existing": true,
+    "compareWith": [
+      "disease.enterovirus",
+      "vaccine.ev71"
+    ],
+    "mergedFrom": [
+      {
+        "page": "01-intro",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/Iu9YFpq5oVR8kXQibQB-Lt",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "02-intro-pathogen",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/Iu9YFpq5oVR8kXQibQB-Lt",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "03-intro-epidemiology",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/Iu9YFpq5oVR8kXQibQB-Lt",
+        "blocks": [
+          "situation"
+        ]
+      },
+      {
+        "page": "04-intro-transmission",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/Iu9YFpq5oVR8kXQibQB-Lt",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "05-intro-incubation",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/Iu9YFpq5oVR8kXQibQB-Lt",
+        "blocks": [
+          "transmission"
+        ]
+      },
+      {
+        "page": "06-intro-symptoms",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/Iu9YFpq5oVR8kXQibQB-Lt",
+        "blocks": [
+          "symptoms"
+        ]
+      },
+      {
+        "page": "07-intro-prevention",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/Iu9YFpq5oVR8kXQibQB-Lt",
+        "blocks": [
+          "prevention"
+        ]
+      },
+      {
+        "page": "08-intro-treatment",
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/Iu9YFpq5oVR8kXQibQB-Lt",
+        "blocks": [
+          "treatment"
+        ]
+      },
+      {
+        "page": "09-vaccine",
+        "url": "https://www.cdc.gov.tw/Category/MPage/bdPocx77c0cRnTw5pV_G4Y",
+        "blocks": [
+          "vaccine"
+        ]
+      },
+      {
+        "page": "24-ev-ev71-vaccine",
+        "url": "https://www.cdc.gov.tw/Category/Page/R2F77pt9zJJc5cEQmtZvK5",
+        "blocks": [
+          "vaccine"
+        ]
+      }
+    ],
+    "introMarkdown": "腸病毒傳染力強，5 歲以下幼兒是重症高危險群。多數表現為手足口病或疱疹性咽峽炎，留意嗜睡、肌躍型抽搐等重症前兆，一出現就送大醫院。\n\n| 項目 | 內容 |\n| --- | --- |\n| 法定傳染病類別 | 第三類 |\n| 通報時限 | 7 日內 |\n| ICD-10 | B34.1、B08.4、B08.5、A87.0 |\n| 主要傳染途徑 | 接觸、飛沫、糞口 |\n| 潛伏期 | 2–10 天（平均 3–5 天） |"
+  }
+}

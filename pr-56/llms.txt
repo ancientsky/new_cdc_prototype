@@ -1,0 +1,284 @@
+# 衛生福利部疾病管制署（Taiwan CDC）
+
+> 本檔列出可供 AI 系統引用的正本內容與資料出口。內容與資料只存一份，頁面、API、機讀版（.md）皆由同一份正本產生。
+
+- 引用時請附頁面 URL 與「最後審閱日」；每個 .md 首段即為權責單位、審閱日、版本與授權。
+- 文件有版本鏈：只引用現行版（`/v1/documents.json` 的 `isCurrent:true`）。失效版頁面保留查閱但標示 noindex 與頁首警示，.md 第一行註明已被取代。
+- 新聞稿若發布早於所依據正本的修訂日，頁首會自動加註；請以現行正本為準，不以舊新聞稿作答案依據。
+- 疫情態勢四級（stable／rising／peak／declining）由疫情中心人工發布，請直接引用 `/v1/situation.json`，勿自行推論。
+- 授權：政府資料開放授權條款第 1 版（OGDL-1.0）。
+
+## 疾病
+
+- [屈公病](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/chikungunya.md): 屈公病與登革熱一樣由斑蚊傳播，特徵是發燒合併嚴重關節痛，部分人關節痛可持續數月。國內病例多為境外移入，出國防蚊是預防關鍵。 [逾期待審]（2025-07-28）
+- [新冠併發重症](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/covid-19.md): 新冠病毒感染多數為輕症，長者與高風險族群可能併發重症。2023 年 3 月起列為第四類「新冠併發重症」，接種最新疫苗與及早使用抗病毒藥物可降低重症。（2026-09-05）
+- [登革熱](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/dengue.md): 由登革病毒引起，經埃及斑蚊與白線斑蚊叮咬傳播，不會人傳人。台灣為流行高風險地區，每年夏秋為高峰。（2026-07-15）
+- [腸病毒](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/enterovirus.md): 腸病毒傳染力強，5 歲以下幼兒是重症高危險群。多數表現為手足口病或疱疹性咽峽炎，留意嗜睡、肌躍型抽搐等重症前兆，一出現就送大醫院。（2026-04-22）
+- [急性病毒性A型肝炎](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/hepatitis-a.md): A 型肝炎經由受污染的食物、飲水或口肛性行為傳播，成人感染常出現黃疸。注意飲食衛生、接種疫苗可有效預防；2017 年起出生的幼兒為公費接種對象。（2025-11-20）
+- [人類免疫缺乏病毒感染（愛滋）](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/hiv.md): HIV 經由無套性行為、共用針具與母子垂直傳染。定期篩檢、PrEP 與保險套可有效預防；確診後立即服藥，病毒量測不到就不具傳染力（U=U）。（2025-12-01）
+- [流感](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/influenza.md): 流感由流感病毒引起，經飛沫與接觸傳播，秋冬為流行期。長者、幼兒、孕婦與慢性病人易併發重症，每年接種疫苗是最有效的預防方法。（2026-09-20）
+- [日本腦炎](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/japanese-encephalitis.md): 日本腦炎由病媒蚊（三斑家蚊等）傳播，每年 5 至 10 月流行、6–7 月高峰。多數感染者無症狀，少數發展為腦炎；幼兒依時程接種 2 劑疫苗可有效預防。 [逾期待審]（2025-08-12）
+- [瘧疾](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/malaria.md): 瘧疾由瘧蚊傳播，台灣已於 1965 年根除，現有病例均為境外移入。前往非洲、南亞等流行地區前應諮詢預防用藥，返國後發燒務必告知旅遊史。（2026-04-25）
+- [麻疹](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/measles.md): 麻疹是傳染力極強的病毒性疾病，可經空氣傳播。完整接種 2 劑 MMR 疫苗可有效預防；1966 年（含）以後出生、不具免疫力者出國前應評估接種。（2026-05-14）
+- [M痘](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/mpox.md): M痘（舊稱猴痘）主要經親密接觸傳播，症狀為發燒、淋巴結腫大與皮疹。高風險族群可接種公費 M痘疫苗 2 劑，2023 年起列為第二類法定傳染病。（2026-03-18）
+- [百日咳](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/pertussis.md): 百日咳經飛沫傳播，典型症狀為陣發性劇咳與吸氣時的哮聲。未滿 6 個月嬰兒最容易重症，按時接種疫苗、孕婦懷孕後期接種 Tdap 可保護新生兒。（2026-02-10）
+- [狂犬病](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/rabies.md): 狂犬病一旦發病致死率幾乎 100%，但被動物咬傷後及時處理與接種疫苗可有效預防。記住「一沖二認三送四觀察」，不要觸摸野生動物。（2026-09-28）
+- [德國麻疹](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/rubella.md): 德國麻疹症狀輕微，但孕婦在懷孕早期感染可能導致胎兒先天性德國麻疹症候群。育齡女性應確認具有免疫力，必要時於懷孕前接種 MMR 疫苗。（2025-10-30）
+- [結核病](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/tuberculosis.md): 結核病經空氣傳染，咳嗽超過 2 週應就醫檢查。只要規則服藥至少 6 個月幾乎都能治癒；接觸者檢查與潛伏結核感染治療可避免日後發病。（2026-09-22）
+- [水痘](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/varicella.md): 水痘傳染力強，典型表現是發燒與分批出現、同時有不同時期的癢疹水泡。幼兒滿 12 個月接種 1 劑公費疫苗；法定通報項目為「水痘併發症」。（2026-01-15）
+
+## 疫苗
+
+- [新冠疫苗](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/vaccines/covid-19.md): 2026–2027 年度新冠疫苗 10 月 1 日起與流感疫苗同步開打，6 個月以上民眾公費 1 劑；65 歲以上與免疫不全者間隔 6 個月可再接種 1 劑。（2026-09-16）
+- [腸病毒 71 型疫苗](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/vaccines/ev71.md): 國內已核准上市的腸病毒 71 型疫苗屬自費接種，適用年齡依仿單；只能預防 EV71，接種後仍需落實洗手。（2026-04-22）
+- [B 型肝炎疫苗](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/vaccines/hepatitis-b.md): 新生兒公費接種 3 劑 B 型肝炎疫苗：出生 24 小時內、滿 1 個月、滿 6 個月；母親 HBsAg 陽性者另於 24 小時內注射 HBIG。（2026-04-15）
+- [人類乳突病毒（HPV）疫苗](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/vaccines/hpv.md): 公費 HPV 疫苗提供國中一年級學生（男生自 113 學年度入學者起納入，2025 年 9 月開打），校園接種 2 劑、間隔 6 個月，可預防子宮頸癌與多種 HPV 相關癌症。（2026-08-20）
+- [流感疫苗](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/vaccines/influenza.md): 2026–2027 年度公費流感疫苗 10 月 1 日開打，第一階段長者、幼兒、孕婦、高風險者與學生等；11 月 1 日起 50–64 歲成人。每年都需接種。（2026-09-18）
+- [MMR 疫苗（麻疹腮腺炎德國麻疹混合疫苗）](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/vaccines/mmr.md): MMR 疫苗預防麻疹、腮腺炎、德國麻疹。幼兒 12 個月與滿 5 歲至入國小前各 1 劑；1966 年（含）以後出生、不具免疫力的成人出國前評估自費接種。（2026-05-14）
+- [肺炎鏈球菌疫苗](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/vaccines/pneumococcal.md): 幼兒 2、4、12–15 個月公費接種結合型疫苗；成人公費自 2026 年 1 月 15 日起改為 1 劑 20 價結合型疫苗（PCV20），8 月 10 日起增加 21 價（PCV21）可選，對象為 65 歲以上長者、55–64 歲原住民與 19–64 歲侵襲性肺炎鏈球菌感染症高風險對象。（2026-10-05）
+- [水痘疫苗](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/vaccines/varicella.md): 幼兒出生滿 12 個月公費接種 1 劑水痘疫苗；4–6 歲可自費接種第 2 劑，未感染過的成人可自費 2 劑。（2026-04-15）
+
+## 常見問答
+
+- [哪裡有抗蛇毒血清？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/antivenom-where.md): 抗蛇毒血清是醫師處方用藥，儲備在全國醫療院所，可用疾管署「抗蛇毒血清儲備點查詢系統」依縣市與血清種類查詢；緊急請直接撥 119 或到最近的急診。（2026-10-10）
+- [被龜殼花或其他毒蛇咬到要打哪種血清？認不出是哪種蛇怎麼辦？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/antivenom-which-snake.md): 龜殼花與赤尾鮐用抗龜殼花及赤尾鮐蛇毒血清；雨傘節與飯匙倩（眼鏡蛇）用抗雨傘節及飯匙倩蛇毒血清；百步蛇、鎖鏈蛇各有專用血清。認不出蛇也要立即就醫，由醫師判斷。（2026-10-10）
+- [卡介苗什麼時候打？大人需要補打嗎？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/bcg-when.md): 卡介苗為公費疫苗，嬰兒出生滿 5 個月接種 1 劑（建議 5–8 個月），保護幼童免於嚴重結核病；成人不需補種。（2026-09-22）
+- [新冠確診後，誰可以使用公費口服抗病毒藥？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/covid-antiviral.md): 新冠公費口服抗病毒藥提供給 65 歲以上、慢性病、免疫低下等高風險者，須於發病 5 天內由醫師評估開立。（2026-09-05）
+- [今年新冠疫苗誰可以打公費？要打幾劑？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/covid-vaccine-who.md): 2026–2027 年度新冠疫苗：6 個月以上民眾 10 月 1 日起公費 1 劑；65 歲以上與免疫不全者間隔 6 個月可再接種 1 劑。（2026-09-16）
+- [社區或里長要怎麼帶大家一起防登革熱？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/dengue-community-mobilize.md): 社區防登革熱可由里長指定聯絡人、每週組織巡倒清刷、回報空屋與工地積水；衛生所提供多語教材與說明會。（2026-09-24）
+- [防登革熱說的「巡、倒、清、刷」是什麼？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/dengue-container-check.md): 「巡倒清刷」：巡視積水容器、倒掉積水、清除不需要的容器、刷洗內壁去除蟲卵，每週一次可中斷斑蚊繁殖。（2026-07-20）
+- [登革熱發燒後幾天內要就醫？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/dengue-fever-when-to-see-doctor.md): 感染登革病毒潛伏期 3–14 天；有流行地區旅遊史且發燒，應於 24 小時內就醫並告知醫師。（2026-08-02）
+- [從登革熱流行地區回國後，要注意什麼？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/dengue-imported-return.md): 從登革熱流行地區返國後 14 日內需做好防蚊；發燒、頭痛、後眼窩痛或出疹請就醫並告知旅遊史。（2026-09-24）
+- [懷疑登革熱時，可以自己吃止痛藥嗎？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/dengue-painkiller.md): 懷疑登革熱請先就醫，避免自行服用阿斯匹靈或非類固醇消炎止痛藥，以免增加出血風險；用藥依醫師指示。（2026-07-20）
+- [衛生單位說要進家裡噴藥，可以拒絕嗎？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/dengue-spraying-refuse.md): 登革熱本土病例周邊的室內噴藥是針對性防治，會事先通知並說明注意事項；有嬰幼兒、孕婦或寵物請事先告知，仍要持續清除積水容器。（2026-09-24）
+- [幼兒園怎麼消毒，才對腸病毒有效？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/enterovirus-childcare-disinfect.md): 腸病毒清消以 500 ppm 漂白水（1 份家用漂白水加 100 份清水）擦拭，並以肥皂洗手；酒精與乾洗手效果有限。（2026-09-24）
+- [班上有同學得腸病毒，幼兒園會停課嗎？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/enterovirus-class-suspension.md): 同班 1 週內 2 名以上幼童確診腸病毒，班級停課 7 日；2 個以上班級停課時機構可全面停課；實際以園方與衛生局公告為準。（2026-09-24）
+- [孩子腸病毒好了，什麼時候可以回學校？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/enterovirus-return-school.md): 腸病毒確診的孩子應在家休息至少 7 天，退燒、能進食且症狀改善後再返校，返校後仍須落實洗手。（2026-09-24）
+- [腸病毒重症前兆有哪些？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/ev-severe-signs.md): 腸病毒重症前兆：嗜睡、意識不清、活力不佳、手腳無力、肌躍型抽搐、持續嘔吐、呼吸急促或心跳加快，出現就立即送大醫院。（2026-04-22）
+- [孩子得了腸病毒，要在家休息幾天？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/ev-stay-home.md): 腸病毒病童建議在家休息至少 7 天；痊癒後腸道仍可能排出病毒數週，回校後仍需落實肥皂洗手。（2026-04-22）
+- [腸病毒 71 型疫苗是公費的嗎？打了就不會得腸病毒嗎？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/ev71-vaccine.md): 腸病毒 71 型疫苗目前為自費，只能預防 71 型，接種後仍需落實洗手與留意重症前兆。（2026-04-22）
+- [65 歲以上長輩有類流感症狀，一定要快篩陽性才能用公費抗病毒藥嗎？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/flu-antiviral-65-no-test.md): 不需要。未滿 5 歲及 65 歲以上之類流感患者是公費抗病毒藥劑的全年適用對象，經醫師評估符合即可開立，不需流感快篩；2026-08-24 至 10-31 擴大的高傳播族群同樣免快篩。（2026-10-05）
+- [流感疫苗和新冠疫苗可以同一天打嗎？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/flu-covid-same-day.md): 流感疫苗與新冠疫苗可同時分開部位接種，或間隔任何時間接種，不影響保護力。（2026-09-18）
+- [得了流感，出現哪些狀況要馬上就醫？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/flu-danger-signs.md): 流感危險徵兆：呼吸困難、發紺、血痰、胸痛、意識改變、低血壓；兒童高燒超過 3 天、抽搐或活力差，都應立即就醫。（2026-09-20）
+- [流感疫苗去年打過了，今年還要再打嗎？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/flu-vaccine-every-year.md): 流感病毒每年變異、疫苗株每年更新，保護力約 6 個月後下降，因此每年都要接種；接種後約 2 週產生保護力。（2026-09-18）
+- [今年公費流感疫苗誰可以打？什麼時候開始？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/flu-vaccine-who.md): 2026–2027 年度公費流感疫苗 10 月 1 日起第一階段（長者、幼兒、孕婦、高風險者、學生等），11 月 1 日起開放 50–64 歲成人。（2026-09-18）
+- [流感和一般感冒要怎麼分辨？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/flu-vs-cold.md): 流感突然發病、全身症狀明顯（發燒、肌肉痠痛、倦怠）；感冒多為逐漸出現的上呼吸道症狀。高風險族群有症狀應儘早就醫。（2026-09-20）
+- [醫護人員需要接種 MMR 疫苗嗎？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/healthcare-workers-mmr.md): 醫護人員是麻疹暴露高風險族群，應具麻疹免疫力（2 劑 MMR、抗體陽性或曾確診）；不具免疫力者建議接種，並不應照護麻疹病人。（2026-05-14）
+- [新生兒的 B 型肝炎疫苗什麼時候打？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/hepb-newborn.md): 新生兒 B 肝疫苗 3 劑：出生 24 小時內、滿 1 個月、滿 6 個月；母親 HBsAg 陽性者另於 24 小時內注射 HBIG。（2026-04-15）
+- [發生沒有保護的性行為後，72 小時內可以做什麼？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/hiv-pep.md): 擔心感染 HIV 時，72 小時內越早越好到 PEP 指定醫院評估暴露後預防性投藥，需連續服藥 28 天。（2026-06-10）
+- [哪裡可以做匿名 HIV 篩檢？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/hiv-test-where.md): HIV 匿名篩檢可至匿名篩檢醫院、社區篩檢點或使用自我篩檢試劑；陽性需到醫院確認，空窗期內陰性建議再篩。（2026-06-10）
+- [公費 HPV 疫苗誰可以打？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/hpv-vaccine-who.md): 公費 HPV 疫苗提供國一學生（男生自 113 學年度入學者起納入，2025 年 9 月開打），校園接種 2 劑、間隔 6 個月；其他年齡可自費。（2026-10-05）
+- [哪些人可以使用公費流感抗病毒藥劑？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/influenza-antiviral-who.md): 公費流感抗病毒藥劑全年適用對象：流感併發重症、新型 A 型流感、孕婦、未滿 5 歲及 65 歲以上、住院、高風險慢性病、BMI ≥ 30 之類流感患者與群聚預防性用藥；2026-08-24 至 10-31 另擴大至 7 類高傳播族群。經醫師評估符合者皆不需快篩。（2026-09-24）
+- [什麼是「流感併發重症」？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/influenza-severe-what.md): 流感併發重症是第四類法定傳染病，指流感併發嚴重症狀並需加護病房治療或死亡者，醫師須一週內通報；出現危險徵兆應立即就醫。（2026-09-24）
+- [公費流感疫苗要去哪裡打？要帶什麼？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/influenza-vaccine-where.md): 公費流感疫苗可至衛生所或合約院所接種，帶健保卡；10 月 1 日起第一階段，11 月 1 日起 50–64 歲成人；接種後留觀 15 分鐘。（2026-09-24）
+- [驗出潛伏結核感染，一定要治療嗎？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/ltbi-treat-or-not.md): 潛伏結核感染沒有症狀也不會傳染，但一生約 5–10% 會發病；接受 3HP、1HP 等治療可降低 9 成以上發病風險，建議治療，費用由公費支應。（2026-09-22）
+- [什麼是抗藥性結核病？要怎麼治療？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/mdr-tb.md): 對 isoniazid 與 rifampin 都抗藥稱多重抗藥性結核病，由抗藥性結核病醫療照護體系（TMTC）收治並進階都治，優先採全口服短程處方，費用由公費支應。（2026-09-22）
+- [我和麻疹病人接觸過，要怎麼辦？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/measles-exposed-what-to-do.md): 接觸麻疹病人後請聯絡衛生所或 1922；沒有免疫力者暴露後 72 小時內可接種 MMR；18 日內自主健康管理，出現症狀先電話通知再就醫。（2026-09-24）
+- [衛生局打電話來做麻疹疫調，我要配合什麼？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/measles-health-dept-call.md): 麻疹疫調會在通報後 24 小時內進行，請說明發病與出疹日期、活動地點、交通工具與疫苗史；衛生人員不會要求轉帳，有疑慮可撥 1922 確認。（2026-09-24）
+- [幾年次以後出生的成人需要評估接種 MMR 疫苗？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/measles-mmr-adult-who.md): 1966 年（含）以後出生、不具麻疹免疫力的成人，出國前往流行地區前 2–4 週建議評估自費接種 MMR。（2026-06-05）
+- [我是 1970 年出生的，出國前需要打 MMR 疫苗嗎？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/measles-mmr-born-1970.md): 1966 年（含）以後出生、不具麻疹免疫力者，前往流行地區前 2–4 週應評估自費接種 MMR；1970 年出生在評估範圍內。（2026-05-14）
+- [我不確定有沒有打過 MMR，要怎麼評估要不要補打？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/measles-mmr-check-record.md): 不確定 MMR 接種史可查接種紀錄卡或向衛生所申請補發；1966 年（含）以後出生且不具免疫力者，出國前 2–4 週評估自費接種。（2026-09-24）
+- [麻疹有哪些症狀？會傳染多久？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/measles-symptoms.md): 麻疹初期高燒、咳嗽、流鼻水、結膜炎，3–4 天後出紅疹；出疹前後各 4 天具傳染力，就醫前先電話告知並戴口罩。（2026-05-14）
+- [M痘疫苗誰可以打公費？要打幾劑？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/mpox-who-vaccine.md): 公費 M痘疫苗提供近一年有高風險性行為者及經評估的密切接觸者；共 2 劑、間隔至少 4 週，暴露後最好 4 天內接種。（2026-04-02）
+- [長輩的肺炎鏈球菌疫苗要怎麼打？是公費嗎？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/pcv-elderly.md): 65 歲以上長者與 55–64 歲原住民可公費接種肺炎鏈球菌疫苗：先 1 劑 PCV，間隔 1 年再 1 劑 PPV23。（2026-10-05）
+- [孕婦需要打百日咳疫苗嗎？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/pregnant-tdap.md): 孕婦每次懷孕於第 28–36 週接種 1 劑 Tdap，抗體經胎盤保護新生兒；多為自費，部分縣市有補助。（2026-04-15）
+- [被狗、貓或野生動物咬傷該怎麼辦？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/rabies-bite.md): 動物咬傷請「一沖二認三送四觀察」：肥皂清水沖洗 15 分鐘、記住動物特徵、儘速就醫評估狂犬病疫苗、觀察動物 10 天。（2026-09-28）
+- [MMR 疫苗會造成自閉症嗎？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/rumor-mmr-autism.md): MMR 疫苗不會造成自閉症；該說法源自已撤稿的 1998 年論文，多國大型研究均證實兩者無關聯。（2026-05-14）
+- [收到自稱疾管署的簡訊要我點連結填資料，怎麼辦？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/rumor-sms-link.md): 疾管署不會以簡訊要求點連結填個資或匯款；收到可疑訊息請勿點擊，撥 165 查證或 1922 詢問。（2026-09-16）
+- [被蛇咬後能不能冰敷、綁止血帶或用嘴把毒吸出來？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/snakebite-dont.md): 都不建議。疾管署「五不」：不割開傷口、不用嘴吸毒液、不冰敷、不喝酒或刺激性飲料、不延誤就醫；醫師另提醒不綁止血帶。（2026-10-10）
+- [被蛇咬怎麼辦？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/snakebite-first-aid.md): 被蛇咬傷一律當作毒蛇咬傷處理：保持冷靜、記住蛇的特徵、脫下飾品、傷口上緣寬鬆包紮，儘速就醫；緊急請撥 119。（2026-10-10）
+- [「類流感門急診就診率」是什麼意思？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/stats-ili-rate.md): 類流感門急診就診率是每週門急診就診人次中因類流感就醫的比例，用來判斷流感是否進入流行期，不等於確診數。（2026-09-20）
+- [疫情統計數字可以到哪裡查？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/stats-where-data.md): 疫情統計可查傳染病統計資料查詢系統（NIDSS）、疾管署資料開放平台（CSV／JSON／API）與流感速訊。（2026-08-31）
+- [家人得了結核病，我需要做什麼檢查？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/tb-contact-screening.md): 家人確診結核病，衛生所會安排接觸者檢查：確診後 1 個月內胸部 X 光與 IGRA，滿 12 個月再照一次 X 光；費用由公費支應。（2026-09-22）
+- [結核病開始吃藥後，還會傳染給家人嗎？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/tb-contagious-after-treatment.md): 規則服藥約 2 週後傳染力明顯下降，但須完成至少 6 個月療程；治療初期戴口罩、保持通風，家人配合接觸者檢查，不需分開碗筷。（2026-09-22）
+- [咳嗽多久要懷疑是結核病？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/tb-cough-two-weeks.md): 咳嗽超過 2 週，尤其合併有痰、體重減輕、夜間盜汗，應至胸腔科照胸部 X 光與驗痰；規則治療幾乎都能治癒。（2026-04-01）
+- [什麼是都治（DOTS）？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/tb-dots-what.md): 都治（DOTS）由關懷員每天送藥到手、親眼看您服藥並關心副作用，確保 6 個月以上療程不中斷，服務免費。（2026-09-22）
+- [外籍人士來臺工作或居留，需要做結核病檢查嗎？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/tb-foreigner-health-check.md): 外籍移工入國前、入國後 3 個工作日內與聘僱期間健檢都含胸部 X 光；居留、定居也須檢附含 X 光的健檢證明，疑似結核病轉介治療並納入都治。（2026-09-22）
+- [結核病治療要花錢嗎？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/tb-treatment-cost.md): 結核病診治由健保給付、部分負擔由疾管署支應；都治、接觸者檢查與潛伏感染治療也由公費支應，隔離治療費用由政府負擔。（2026-09-22）
+- [旅遊醫學門診可以做什麼？要出國前多久去？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/travel-clinic.md): 旅遊醫學門診依目的地提供疫苗、瘧疾預防用藥與衛教建議，建議出國前 4–6 週就診。（2026-06-15）
+- [去日本旅遊需要擔心麻疹嗎？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/travel-japan-measles.md): 日本 2026-05-11 起列為麻疹第一級（注意）；1966 年（含）以後出生且不具免疫力者，出國前 2–4 週評估接種 MMR。（2026-05-14）
+- [去非洲需要吃瘧疾預防藥嗎？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/travel-malaria-prevention.md): 前往非洲瘧疾流行地區多建議使用預防用藥，需由旅遊醫學門診評估開立，返國後仍需依指示服完並持續防蚊。（2026-04-25）
+- [出國回來後發燒，應該怎麼辦？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/travel-return-fever.md): 出國返國後發燒請戴口罩就醫，主動告知旅遊史與接觸史；去過登革熱流行區者兩週內持續防蚊。（2026-06-15）
+- [水痘疫苗公費打幾劑？需要打第二劑嗎？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/varicella-vaccine-doses.md): 公費水痘疫苗出生滿 12 個月接種 1 劑；4–6 歲可自費接種第 2 劑提升保護力，成人未感染者可自費 2 劑。（2026-04-15）
+- [去哪些國家需要黃熱病疫苗證明？](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/yellow-fever-certificate.md): 部分非洲與中南美洲國家要求黃熱病疫苗證明（黃皮書）；需出發前至少 10 天接種，證明終身有效。（2026-06-15）
+
+## 文件與指引（現行版）
+
+- [傳染病病例定義：登革熱（2026 年版）](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/case-definition-dengue.2026-01-01.md): 現行 2026 年版登革熱病例定義：NS1 快篩陽性且符合臨床條件者列為極可能病例；檢驗條件納入多重病原核酸檢測平台。（2026-01-05）
+- [傳染病病例定義：麻疹](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/case-definition-measles.2024-01-01.md): 麻疹病例定義：發燒、出疹合併咳嗽、鼻炎或結膜炎之一者即應通報；咽喉擦拭液或尿液核酸陽性為確定病例。（2026-01-08）
+- [新冠疫苗接種建議（2026–2027 年度）](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/covid-vaccine-recommendation.2026-09-15.md): 現行 2026–2027 年度新冠疫苗：10 月 1 日起 6 個月以上民眾公費 1 劑；65 歲以上與免疫不全者間隔 6 個月可再接種 1 劑。（2026-09-15）
+- [登革熱社區防治工作指引：孳生源清除、病媒蚊監測與群聚應變](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/dengue-community-workplan.2026-09-10.md): 地方政府與社區推動登革熱防治的作業指引：孳生源清除與社區動員（巡倒清刷）、病媒蚊密度調查與風險分級、本土病例群聚的應變分工與解除條件。（2026-09-22）
+- [結核病都治（DOTS）計畫作業手冊](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/dots-manual.2025-01-01.md): 都治（DOTS）作業：關懷員每日送藥到手、親眼看服藥；社區、機構、進階都治與 DOPT 型態；中斷服藥 3 日以上通報個管師與後續處理。（2026-03-01）
+- [教托育機構腸病毒防治指引](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/ev-childcare-guideline.2026-09-10.md): 幼兒園、托嬰中心與教保機構的腸病毒防治指引：日常清消與洗手、病童處理與居家休息、班級與機構停課標準、通報流程、重症前兆辨識與轉送。（2026-09-22）
+- [腸病毒感染併發重症臨床處置建議](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/ev-severe-guideline.2026-03-15.md): 腸病毒感染臨床四期分期、重症前兆辨識、各期處置原則與轉診重症責任醫院時機。（2026-03-15）
+- [公費流感抗病毒藥劑使用對象（2026 年 9 月延長版：高傳播族群延至 10 月 31 日）](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/flu-antiviral-eligibility.2026-09-18.md): 現行公費流感抗病毒藥劑使用對象：全年適用對象（含未滿 5 歲及 65 歲以上類流感患者）加上 7 類流感高傳播族群，後者適用期限依致醫界通函第 616 號延長至 2026 年 10 月 31 日；經醫師評估符合者一律不需快篩。（2026-10-05）
+- [2026–2027 年度公費流感疫苗接種計畫作業手冊](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/flu-vaccine-manual.2026-09-16.md): 合約院所與衛生所執行公費流感疫苗接種計畫的作業細節：合約與接種點、疫苗訂撥與冷鏈、對象查核與登錄、接種後觀察與不良事件通報、剩餘疫苗處理。（2026-09-22）
+- [2026–2027 年度公費流感疫苗接種計畫：實施對象與時程](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/flu-vaccine-schedule.2026-09-15.md): 2026–2027 年度公費流感疫苗：10 月 1 日起第一階段開打（長者、幼兒、孕婦、高風險慢性病、學生等），11 月 1 日起 50–64 歲成人。（2026-09-15）
+- [登革熱/屈公病防治工作指引（2026 年 2 月版）](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/guidance-dengue.2026-02.md): 衛生福利部疾病管制署 2026 年 2 月版登革熱/屈公病防治工作指引：疾病介紹、病例與病媒監測、平時與散發疫情防治、群聚疫情防治、法令規定與附件表單。本頁機讀版由 PDF 機器轉出，尚未校對，以 PDF 原頁為準。（2026-02-01）
+- [醫療機構感染管制措施指引](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/infection-control-healthcare.2026-03-01.md): 醫療機構標準防護與傳播途徑防護（接觸、飛沫、空氣）、呼吸道衛生、環境清消與工作人員健康管理之共通原則。（2026-03-01）
+- [潛伏結核感染診治指引](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/ltbi-guideline.2024-01-01.md): 潛伏結核感染的檢驗對象、IGRA 檢驗、五種治療處方（3HP、1HP、3HR、4R、9H）與都治（DOPT）追蹤原則；接觸者與計畫對象費用由公費支應。（2026-01-10）
+- [麻疹接觸者追蹤作業指引](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/measles-contact-tracing.2026-09-12.md): 麻疹病例的接觸者追蹤作業：疫調時限、可傳染期與接觸者分級、暴露後預防（MMR 與免疫球蛋白）、健康監測、醫療院所處置與群聚應變。（2026-09-22）
+- [國內現行 MMR 預防接種建議（114.04.16 版）](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/mmr-recommendation.2025-04-16.md): 現行 MMR 接種建議：1966 年（含）以後出生、不具免疫力的成人前往流行地區前 2–4 週評估自費接種；新增經常接觸外國人者。（2026-04-10）
+- [結核病病例定義與通報定義](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/tb-case-definition.2024-01-01.md): 結核病臨床條件、檢驗條件（培養、分子檢測、塗片、病理）、通報定義與疾病分類；第三類法定傳染病一週內通報，多重抗藥性結核病 24 小時內。（2026-01-15）
+- [結核病接觸者檢查指引](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/tb-contact-investigation.2025-01-01.md): 結核病接觸者檢查：指標個案定義、密切接觸者範圍（一天 8 小時或累計 40 小時）、確診後 1 個月內與第 12 個月胸部 X 光、IGRA 與潛伏感染治療轉介。（2026-02-01）
+- [結核病診治指引（第八版）](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/tb-guideline.2025-09-01.md): 現行結核病診治指引：分子快速檢測列為疑似個案第一線檢驗；多重抗藥性結核病優先採全口服短程處方；潛伏結核感染新增 1HP 處方。（2026-09-01）
+- [結核病防治工作手冊](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/tb-manual.2025-07-01.md): 結核病診斷、通報、治療（含都治）、接觸者檢查與潛伏結核感染治療之作業規定。（2026-03-24）
+
+## 新聞稿（近 30 則）
+
+- [流感疫情持續上升，10 月 1 日公費疫苗開打，長者幼兒請優先接種](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-29-ili-weekly.md): 類流感門急診就診率續升，腸病毒與登革熱本土疫情亦仍活躍。疾管署呼籲 10 月 1 日起長者與幼兒優先接種公費流感疫苗。（2026-09-29）
+- [國內腸病毒疫情持續，籲請家長及教托育機構提高警覺](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-22-enterovirus-alert.md): 開學後腸病毒門急診就診人次上升，疾管署籲請家長與教托育機構落實洗手與環境消毒，留意重症前兆。（2026-09-22）
+- [流感疫情進入流行期且持續上升，疾管署延長擴大公費流感抗病毒藥劑使用條件至 10 月 31 日](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-18-flu-antiviral-extended.md): 流感疫情進入流行期，疾管署宣布有類流感症狀的 7 類高傳播族群使用公費抗病毒藥劑的期限延長至 2026 年 10 月 31 日；經醫師評估符合者不需快篩即可開立。（2026-10-05）
+- [2026–2027 年度公費流感疫苗 10 月 1 日開打，新冠疫苗同步提供](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-18-flu-vaccine-oct1.md): 2026–2027 年度公費流感疫苗 10 月 1 日開打，第一階段長者、幼兒、孕婦、高風險者與學生等；11 月 1 日開放 50–64 歲，新冠疫苗同步。（2026-09-18）
+- [致醫界通函第 616 號：延長擴大公費流感抗病毒藥劑使用對象「有類流感症狀，且具下列身分之流感高傳播族群」之適用期限至 10 月 31 日](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-18-letter-616-flu-antiviral-extended.md): 疾管署延長擴大公費流感抗病毒藥劑使用對象「有類流感症狀，且具 7 類流感高傳播族群身分者」之適用期限至 2026 年 10 月 31 日；經醫師評估符合者不需快篩即可開立，用藥後至 SMIS 回報。（2026-10-05）
+- [Taiwan CDC signs a public health cooperation MOU with a New Southbound partner](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-15-international-health-mou.md): Taiwan CDC signed a memorandum of understanding with a partner institution in Southeast Asia on tuberculosis and dengue control, laboratory training and information exchange.（2026-09-15）
+- [致醫界通函第 615 號：登革熱 NS1 抗原快篩試劑配置更新](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-15-letter-615-ns1.md): 自 2026-09-22 起更新登革熱 NS1 快篩試劑配置：南部疫區基層診所加量配置、改由線上系統申領，快篩陽性仍應 24 小時內通報。（原型示意通函，號次非真實）（2026-09-15）
+- [澄清：網傳「打流感疫苗會得流感、長輩打完會死」並非事實](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-10-clarify-flu-vaccine-death.md): 網傳打流感疫苗會得流感、長輩打完會死並非事實。公費流感疫苗為不活化疫苗，不會引起流感；常見副作用為注射部位疼痛與輕微發燒。（2026-09-10）
+- [新冠疫情連續三週下降，10 月起新年度疫苗與流感疫苗同步開打](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-01-covid-weekly.md): 新冠門急診就診人次與併發重症通報數連續三週下降。2026–2027 年度新冠疫苗將於 10 月 1 日與流感疫苗同步開打。（2026-09-01）
+- [非洲 M痘 clade I 疫情持續，前往當地請避免親密接觸與野生動物](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-08-25-mpox-clade-i.md): 中非與東非 M痘 clade I 疫情持續，相關國家維持第二級旅遊疫情建議。前往民眾請避免親密接觸與接觸野生動物，返國有症狀應就醫。（2026-08-25）
+- [國內外近期流感疫情緩升，疾管署自 8 月 24 日起至 9 月 30 日擴大公費流感抗病毒藥劑使用條件](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-08-24-flu-antiviral-expanded.md): 流感疫情緩升，疾管署自 2026 年 8 月 24 日至 9 月 30 日擴大公費流感抗病毒藥劑使用對象至有類流感症狀的 7 類高傳播族群，經醫師評估不需快篩即可開立。 [依據已修訂]（2026-08-24）
+- [都治 20 年：關懷員每日送藥到手，結核病完治率穩定提升](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-08-20-dots-outcomes.md): 都治計畫推動 20 年，關懷員每日送藥到手、親眼看服藥，納入都治個案完治率高於未納入者；多重抗藥性結核病由 TMTC 團隊結合進階都治照護。（2026-08-20）
+- [南部登革熱本土疫情上升，籲請民眾配合孳生源清除與防治工作](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-08-18-dengue-rising-south.md): 南部縣市登革熱本土病例連續增加，疾管署籲請民眾配合衛生單位孳生源清除與噴藥，發燒就醫可由醫師進行 NS1 快篩。（2026-08-18）
+- [International field epidemiology workshop opens in Taipei](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-08-17-international-fetp-workshop.md): Taiwan CDC opened an international field epidemiology workshop for public health officials from partner countries, covering outbreak investigation, dengue control and laboratory diagnosis.（2026-08-17）
+- [2026 年首例登革熱本土病例出現於高雄市，請民眾清除積水容器](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-07-21-dengue-first-local.md): 2026 年首例登革熱本土病例出現於高雄市，衛生單位已完成疫調與周邊孳生源清除。疾管署呼籲民眾每週落實「巡倒清刷」。（2026-07-21）
+- [夏季流感疫情持續，公費抗病毒藥劑使用對象維持現行規定](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-06-03-flu-antiviral-summer.md): 夏季仍有流感病毒活動，疾管署說明公費抗病毒藥劑全年適用對象：未滿 5 歲及 65 歲以上、孕婦、高風險慢性病等類流感患者，經醫師評估不需快篩即可開立。 [依據已修訂]（2026-06-03）
+- [暑假出國前請評估麻疹免疫力：1966 年（含）以後出生者出國前 2 至 4 週評估接種 MMR](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-06-02-measles-travel-mmr-1966.md): 疾管署重申 1966 年（含）以後出生、不具麻疹免疫力者，出國前 2 至 4 週至旅遊醫學門診評估接種 MMR 疫苗。（2026-06-02）
+- [Taiwan CDC experts hold technical exchanges during the World Health Assembly week](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-05-22-international-wha-technical-exchange.md): During the World Health Assembly week in Geneva, Taiwan CDC experts met health officials and experts from partner countries to exchange experience on surveillance, IHR implementation and preparedness.（2026-05-22）
+- [日本麻疹疫情升溫，列為第一級旅遊疫情建議；出國前請評估 MMR 接種](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-05-11-japan-measles-level1.md): 日本麻疹病例增加，疾管署於 2026 年 5 月 11 日將日本列為麻疹第一級旅遊疫情建議（注意）。1966 年（含）以後出生且不具免疫力者，出國前 2–4 週評估接種 MMR。（2026-05-11）
+- [腸病毒就診人次連續上升，近期社區以 EV71 為主，籲請提高警覺](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-04-14-enterovirus-rising.md): 腸病毒門急診就診人次連續三週上升，社區檢出 EV71 比例增加。疾管署提醒 5 歲以下幼兒是重症高危險群，出現重症前兆請立即就醫。（2026-04-14）
+- [世界結核病日：邁向 2035 消除結核，接觸者與高風險族群公費檢驗潛伏感染](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-03-24-world-tb-day-end-tb-2035.md): 世界結核病日，疾管署重申 2035 年消除結核目標（發生率每十萬人口 10 例以下），擴大接觸者與高風險族群潛伏結核感染公費檢驗與 3HP、1HP 短程治療。（2026-03-24）
+- [致醫界通函第 608 號：腸病毒感染併發重症臨床處置建議更新](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-03-15-letter-ev-guideline.md): 腸病毒感染併發重症臨床處置建議更新：重申四期分期、第二期以上轉診重症責任醫院，並提醒流行期前完成院內演練。（2026-03-15）
+- [流感疫情緩降，仍處流行期，請持續注意手部衛生與咳嗽禮節](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-02-24-flu-declining.md): 春節後類流感門急診就診人次連續兩週下降，但仍高於流行閾值，疾管署提醒持續落實手部衛生與咳嗽禮節。（2026-02-24）
+- [流感疫情處高峰，春節連假前請儘速接種疫苗並落實咳嗽禮節](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-01-20-lunar-new-year-flu.md): 類流感門急診就診人次處於高峰，春節連假將至，疾管署呼籲尚未接種的高風險族群儘速接種，並提醒連假期間就醫資源。（2026-01-20）
+- [世界愛滋日：定期篩檢、PrEP 與 U=U，一起終結愛滋](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-12-01-world-aids-day.md): 世界愛滋日，疾管署呼籲有感染風險者定期篩檢，善用 PrEP 與保險套；感染者規則服藥使病毒量測不到，就不會經性行為傳染（U=U）。（2025-12-01）
+- [114 年度公費流感疫苗 2025 年 10 月 1 日開打，長者與幼兒請儘早接種](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-10-01-flu-vaccine-start.md): 114 年度公費流感疫苗 2025 年 10 月 1 日開打，第一階段包括長者、幼兒、孕婦、高風險慢性病人與學生等；50–64 歲成人自 11 月 1 日起接種。（2025-10-01）
+- [中國大陸廣東省屈公病疫情升溫，提升旅遊疫情建議至第二級](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-08-05-chikungunya-guangdong.md): 中國大陸廣東省屈公病疫情升溫，疾管署將該地旅遊疫情建議提升至第二級（警示），前往民眾請加強防蚊，返國發燒、關節痛應就醫。（2025-08-05）
+- [澄清：網傳「登革熱噴藥會毒死人、可拒絕開門」為錯誤訊息](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-07-15-clarify-dengue-spray.md): 網傳登革熱噴藥會毒死人、可拒絕開門配合為錯誤訊息。防治用藥經核准、依規定稀釋，配合孳生源清除與噴藥是傳染病防治法規定的義務。（2025-07-15）
+- [暑假出遊與大型活動將至，符合條件者請把握接種 2 劑 M痘疫苗](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-06-10-mpox-summer.md): 暑假將至，疾管署提醒近一年有高風險性行為者把握接種公費 M痘疫苗，完成 2 劑才有完整保護；出現疑似症狀請遮蓋皮疹就醫。（2025-06-10）
+- [腸病毒進入流行期，籲請家長落實肥皂洗手並留意重症前兆](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-05-06-enterovirus-season.md): 腸病毒門急診就診人次超過流行閾值，進入流行期。疾管署籲請家長與教托育機構落實肥皂洗手、漂白水消毒，並留意重症前兆。（2025-05-06）
+
+## 影音逐字稿
+
+> 影片內容以逐字稿為準；標示「依據已修訂」者製作早於現行正本，請改引現行版。
+
+- [麻疹 MMR 疫苗候診衛教動畫（2026 年重製版）](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/mmr-waiting-room-2026.md): 依 114.04.16 版 MMR 建議重製：1966 年（含）以後出生、不具免疫力的成人，前往流行地區前 2–4 週評估自費接種；流行地區以旅遊疫情建議等級為準。（2026-10-01）
+- [秋冬預防新冠，高風險族群請接種新一季疫苗](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/covid-prevention-appeal.md): 秋冬呼吸道疾病好發，影片呼籲 65 歲以上長者與慢性病患者接種新一季新冠疫苗，並提醒有症狀戴口罩、在家休息，出現重症徵兆及早就醫。（2026-09-26）
+- [長照機構住民與工作人員，一起打流感疫苗](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/ltc-flu-vaccine.md): 長照機構住民為流感重症高風險族群，影片說明 10 月 1 日起公費流感疫苗開打，住民與工作人員應同步接種，並示範機構內集中接種流程。（2026-09-25）
+- [Podcast｜抗生素不是萬靈丹：談抗藥性與防疫一體](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/amr-one-health-podcast.md): 感管組與獸醫專家對談：抗生素對病毒性感冒無效、不要自行停藥或分藥，並說明人、動物、環境「防疫一體」如何一起減少抗藥性細菌。（2026-09-15）
+- [M痘疫苗兩劑完整保護，高風險族群請把握接種](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/mpox-vaccine.md): 短影音提醒 M痘疫苗需接種兩劑、間隔至少 4 週才有完整保護，說明公費接種對象與出現皮疹、發燒時應就醫並避免親密接觸。（2026-09-05）
+- [移工健康檢查：入境後三日內與聘僱期間的檢查項目](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/migrant-worker-health-check.md): 以越南語字幕說明移工入境後三日內及聘僱期間第 6、18、30 個月的健康檢查，包括胸部 X 光等項目，並提醒有咳嗽發燒可撥 1922 多語服務。（2026-08-10）
+- [里長帶頭巡倒清刷：社區防登革熱篇](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/dengue-village-chief.md): 由里長示範帶領社區志工「巡、倒、清、刷」清除積水容器，說明孳生源清除比噴藥更重要，並提醒出現發燒、頭痛、骨頭痛應儘速就醫。（2026-07-15）
+- [出國前 4 到 6 週，先到旅遊醫學門診](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/travel-clinic-before-departure.md): 提醒民眾出國前 4 到 6 週到旅遊醫學門診，依目的地旅遊疫情建議等級評估疫苗、預防瘧疾用藥與防蚊，並說明回國後發燒要告知旅遊史。（2026-06-12）
+- [PrEP 是什麼？三分鐘認識暴露愛滋病毒前預防性投藥](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/prep-intro.md): 以動畫說明 PrEP（暴露愛滋病毒前預防性投藥）的原理、每日服藥與事件型服藥兩種方式、服藥前後要做的檢查，以及與 PEP 的不同。（2026-06-05）
+- [想知道就去篩：HIV 匿名篩檢這樣做](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/hiv-anonymous-testing.md): 說明 HIV 匿名篩檢不需健保卡、不用留真實姓名，介紹匿名篩檢醫院、自我篩檢與空窗期，並提醒篩檢陽性可立即銜接治療。（2026-05-20）
+- [濕搓沖捧擦：腸病毒洗手五步驟動畫](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/enterovirus-handwashing.md): 以動畫示範「濕、搓、沖、捧、擦」洗手五步驟，提醒大人回家先洗手換衣再抱孩子，並教家長辨識腸病毒重症前兆。（2026-04-15）
+- [咳嗽超過兩週，快去照胸部 X 光](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/tb-cough-two-weeks.md): 咳嗽超過兩週可能是結核病警訊，影片提醒及早就醫照胸部 X 光，說明結核病可以治癒，並介紹都治計畫陪伴完成六個月以上療程。（2026-03-20）
+- [麻疹 MMR 疫苗候診衛教動畫（2025 年版）](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/mmr-waiting-room-2025.md): 醫院候診區播放的 MMR 衛教動畫，依 108.05.14 版建議製作，內容寫 1981 年以後出生之成人出國前評估接種（已於 2025-04-16 修訂）。 [逾期待審]（2025-01-14）
+
+## 申請服務
+
+- [傳染病個案資料申請（學術研究用）](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/case-data-request.md): 研究者可申請去識別化之傳染病個案資料供學術研究，須檢附研究計畫書與 IRB 核准文件，經審查後於資料專區提供，處理期間約 30 日。（2026-08-20）
+- [疑似傳染病群聚通報（民眾、學校、機構）](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/cluster-report-1922.md): 學校、機構或團體短時間內多人出現腹瀉、發燒、咳嗽等相似症狀時，請撥 1922 或通報轄區衛生局，衛生單位將協助調查與採檢。（2026-09-01）
+- [醫療與長照機構感染管制查核申訴與諮詢](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/infection-control-audit-complaint.md): 機構對感染管制查核結果有異議可於收受通知後 30 日內申請複核；民眾發現機構感染管制疏失可向衛生局或疾管署陳情，處理期間約 30 日。（2026-06-01）
+- [Apply for Taiwan CDC international training](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/international-training-application.md): Foreign health officials and professionals can apply online for Taiwan CDC international training (FETP exchange, workshops, laboratory, TB-DOTS and dengue control); applications are reviewed within 30 days.（2026-10-01）
+- [國際預防接種證明書（黃皮書）](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/international-vaccination-certificate.md): 前往要求黃熱病等疫苗證明的國家，須於旅遊醫學門診接種並核發國際預防接種證明書（俗稱黃皮書）；黃熱病疫苗接種 10 日後生效。（2026-06-15）
+- [傳染病檢驗委託（醫療院所送驗）](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/lab-test-request.md): 醫療院所通報法定傳染病後，依檢驗項目採檢並附送驗單，經衛生局或直接送疾管署檢驗及疫苗研製中心檢驗，結果於 NIDRS 回覆。（2026-07-15）
+- [潛伏結核感染檢驗與治療](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/ltbi-treatment.md): 結核病接觸者與計畫對象可接受公費 IGRA 檢驗與潛伏結核感染治療（3HP、1HP、3HR、4R、9H），治療期間由關懷員陪伴服藥（DOPT）。（2026-09-22）
+- [媒體採訪與拍攝申請](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/media-interview-request.md): 媒體採訪疾管署業務、專家或拍攝影像，請提前 3 個工作日向公關室提出申請，載明主題、受訪對象需求與播出時間，由公關室協調安排。（2026-04-01）
+- [法定傳染病通報（醫師與醫療機構）](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/notifiable-disease-report.md): 醫師診治疑似法定傳染病病人，應依各類別時限（第一、二類 24 小時、第三類一週等）於傳染病通報系統（NIDRS）通報，並依規定採檢送驗。（2026-09-01）
+- [研究計畫成果與研究資料申請](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/research-data-request.md): 申請疾管署委託或自行研究計畫之成果報告全文、研究資料集與分析程式，說明可提供範圍、應備文件與審查流程，處理期間約 20 日。（2026-08-20）
+- [傳染病防治醫療網應變醫院指定與隔離病床申請](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/response-hospital-designation.md): 醫院申請成為傳染病防治醫療網應變醫院或設置負壓隔離病床，須符合設施、人員與感染管制基準，經區管中心實地審查與指定，處理期間約 60 日。（2026-03-01）
+- [結核病診治費用補助與隔離治療](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/tb-treatment-subsidy.md): 結核病個案就醫由健保給付、部分負擔由疾管署支應；多重抗藥性結核病由 TMTC 收治並由公費支應；依法施行隔離治療者，費用由政府負擔。（2026-09-22）
+- [旅遊醫學門診預約](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/travel-clinic-appointment.md): 出國前 4 到 6 週向全國旅遊醫學合約門診預約，評估疫苗接種、瘧疾預防用藥與行前衛教；需要黃皮書者也在此辦理。（2026-06-15）
+- [預防接種紀錄與接種證明補發](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/vaccination-record-reissue.md): 兒童預防接種紀錄卡遺失或入學、出國需要接種證明時，可至衛生所或原接種院所申請補發，也可透過健康存摺查詢下載接種紀錄。（2026-05-20）
+- [疫苗基金捐款](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/apply/vaccine-fund-donation.md): 個人或企業可透過郵政劃撥、銀行匯款或臨櫃方式捐款至疫苗基金，專款採購公費疫苗；收據可作為綜合所得稅列舉扣除憑證。（2026-07-01）
+
+## 出版品
+
+- [疫情報導 第 42 卷第 18 期](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-18.md): 本期收錄 4 篇：秋冬腸病毒疫情回升之監測指標分析等。（2026-09-22）
+- [疫情報導 第 42 卷第 17 期](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-17.md): 本期收錄 3 篇：2026–2027 年流感疫苗株組成與接種策略等。（2026-09-08）
+- [傳染病統計暨監視年報（2025 年）](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/statistics-annual-2025.md): 2025 年各類法定傳染病確定病例數、發生率、年齡性別與縣市分布，以及症狀與實驗室監測統計；表格同步以開放資料提供。（2026-08-31）
+- [疫情報導 第 42 卷第 16 期](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-16.md): 本期收錄 2 篇：日本腦炎病例之流行病學特徵：2020–2025 年等。（2026-08-25）
+- [疫情報導 第 42 卷第 15 期](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-15.md): 本期收錄 3 篇：2026 年夏季登革熱本土疫情南部擴散分析等。（2026-08-11）
+- [疫情報導 第 42 卷第 14 期](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-14.md): 本期收錄 2 篇：結核病都治計畫完治率之區域差異分析等。（2026-07-28）
+- [疫情報導 第 42 卷第 13 期](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-13.md): 本期收錄 3 篇：2026 年首例本土登革熱病例疫情調查與社區防治等。（2026-07-14）
+- [衛生福利部疾病管制署 2025 年報](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/annual-report-2025.md): 彙整 2025 年疾管署施政成果：傳染病監測、預防接種、邊境檢疫、國際合作與數位轉型，並附重要統計與大事紀，中英文對照。（2026-06-30）
+- [疫情報導 第 42 卷第 12 期](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-12.md): 本期收錄 2 篇：2025–2026 年流感季重症病例流行病學分析等。（2026-06-23）
+- [疫情報導 第 42 卷第 11 期](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-11.md): 本期收錄 3 篇：2026 年第一季國內 HIV 新通報個案流行病學特徵分析等。（2026-06-09）
+- [長期照護機構感染管制手冊（2026 年版）](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/manual-ltc-infection-control-2026.md): 長期照護機構感染管制實務手冊：手部衛生、標準防護、群聚監測與通報、住民與工作人員疫苗接種、結核病篩檢與環境清消。（2026-05-15）
+- [咳嗽兩週要就醫：結核病七語衛教海報](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/poster-tb-seven-languages.md): 結核病衛教海報，提供繁中、英、日、越、印、泰、菲七種語言，提醒咳嗽兩週就醫、治療免費與都治計畫，可下載張貼於移工宿舍與社區。（2026-03-20）
+- [傳染病防治工作手冊（2026 年版）](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/manual-communicable-disease-control-2026.md): 供地方衛生局與醫療院所使用之各類法定傳染病防治工作手冊，含病例定義、通報、檢體採檢、疫調、接觸者追蹤與防治措施。（2026-03-01）
+- [疫情報導 第 42 卷第 2 期](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-2.md): 本期收錄「2024 年屏東縣某餐廳諾羅病毒食品中毒事件」等文章；全文請見各篇文章頁。（2026-01-20）
+- [衛生福利部疾病管制署 2024 年報](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/annual-report-2024.md): 彙整 2024 年疾管署施政成果與重要統計，包括新冠轉常規防治、M痘疫苗接種、登革熱防治與國際衛生合作，中英文對照。（2025-06-30）
+
+## 檢驗項目（專業）
+
+- [屈公病檢驗項目與送驗規定](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/chikungunya.md): 屈公病：急性期血清 2–5 mL（發病 7 日內）冷藏 24 小時內送驗，做 RT-PCR 與 IgM；恢復期血清於發病 14 日後採檢以確認抗體陽轉。（2026-07-15）
+- [新冠併發重症檢驗項目與送驗規定](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/covid-19.md): 新冠併發重症：鼻咽拭子置於病毒運送培養基，4°C 冷藏 72 小時內送驗，由認可實驗室做 RT-PCR，必要時送疾管署做基因定序。（2026-07-15）
+- [登革熱檢驗項目與送驗規定](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/dengue.md): 登革熱：急性期血清 2–5 mL（發病 7 日內），4°C 冷藏 24 小時內送達，可做 NS1 抗原、RT-PCR 與 IgM／IgG；恢復期血清於發病 14–40 日採檢。（2026-07-15）
+- [腸病毒檢驗項目與送驗規定](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/enterovirus.md): 腸病毒感染併發重症：咽喉拭子、糞便或肛門拭子及血清，4°C 冷藏 72 小時內送驗，做 RT-PCR 型別鑑定與病毒分離。（2026-07-15）
+- [急性病毒性A型肝炎檢驗項目與送驗規定](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/hepatitis-a.md): 急性病毒性 A 型肝炎：血清 2 mL 做 anti-HAV IgM，冷藏 24 小時內送驗；群聚或境外移入個案加採糞便做 RT-PCR 基因定型。（2026-07-15）
+- [人類免疫缺乏病毒感染檢驗項目與送驗規定](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/hiv.md): HIV：初篩陽性者採 EDTA 全血或血清 5 mL，冷藏 24 小時內送 HIV 確認檢驗機構，做抗體確認與核酸檢測，確診前應完成確認檢驗。（2026-07-15）
+- [流感檢驗項目與送驗規定](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/influenza.md): 流感併發重症：咽喉或鼻咽拭子置於病毒運送培養基，4°C 冷藏 72 小時內送達，做 RT-PCR 與病毒分離；插管者加採下呼吸道檢體。（2026-07-15）
+- [日本腦炎檢驗項目與送驗規定](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/japanese-encephalitis.md): 日本腦炎：急性期與恢復期成對血清及腦脊髓液，冷藏 72 小時內送疾管署，做 IgM 捕捉 ELISA 與 RT-PCR；恢復期血清於發病 14 日後採。（2026-07-15）
+- [瘧疾檢驗項目與送驗規定](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/malaria.md): 瘧疾：EDTA 全血 3 mL 及厚、薄血片各 2 片，室溫或冷藏 24 小時內送驗，做顯微鏡鏡檢與 PCR 蟲種鑑定；結果陰性但高度懷疑應重複採檢。（2026-07-15）
+- [麻疹檢驗項目與送驗規定](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/measles.md): 麻疹：咽喉拭子與尿液（出疹 5 日內）做 RT-PCR，血清做 IgM／IgG，冷藏 24 小時內送疾管署；三種檢體應同時採集。（2026-07-15）
+- [M痘檢驗項目與送驗規定](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/mpox.md): M痘：以拭子用力擦拭 2 處以上皮疹病灶（水泡液或痂皮），置乾燥無菌管或 VTM，冷藏 24 小時內送驗做 PCR 與分支鑑定。（2026-07-15）
+- [百日咳檢驗項目與送驗規定](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/pertussis.md): 百日咳：以細軟拭子採鼻咽檢體（咳嗽 3 週內），PCR 用冷藏、培養用 Regan-Lowe 運送培養基室溫保存，72 小時內送驗。（2026-07-15）
+- [狂犬病檢驗項目與送驗規定](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/rabies.md): 狂犬病（人類疑似病例）：唾液、頸背部含毛囊皮膚切片與腦脊髓液，冷凍或冷藏 24 小時內送疾管署，做 RT-PCR、抗原與抗體檢驗。（2026-07-15）
+- [德國麻疹檢驗項目與送驗規定](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/rubella.md): 德國麻疹：咽喉拭子（出疹 7 日內）做 RT-PCR，血清做 IgM／IgG，冷藏 24 小時內送疾管署；孕婦接觸者需追蹤抗體。（2026-07-15）
+- [桿菌性痢疾檢驗項目與送驗規定](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/shigellosis.md): 桿菌性痢疾：糞便或肛門拭子置 Cary-Blair 運送培養基，冷藏 24 小時內送驗，做細菌培養、血清分型與抗藥性監測。（2026-07-15）
+- [結核病檢驗項目與送驗規定](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/tuberculosis.md): 結核病：連續 3 套痰液（至少 1 套晨痰）各 3–5 mL，冷藏 72 小時內送認可實驗室，做抗酸菌塗片、培養、分子檢測與藥物感受性試驗。（2026-07-15）
+
+## 機關公告（人才招募、採購）
+
+- [10 月 3 日晚間官網與傳染病通報系統例行維護](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-30-system-maintenance.md): 2026 年 10 月 3 日 22:00 至 10 月 4 日 06:00 進行官網與傳染病通報系統（NIDRS）例行維護，期間服務可能中斷，緊急通報請以電話或傳真通知衛生局。（2026-09-30）
+- [林森南路辦公區停車場施工，10 月 5 日至 11 月 30 日暫停開放](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-28-parking-construction.md): 林森南路辦公區地下停車場因防水與照明工程，2026 年 10 月 5 日至 11 月 30 日暫停開放，洽公民眾請改搭大眾運輸或使用鄰近公有停車場。（2026-09-28）
+- [署慶系列活動：防疫科學開放日 10 月 24 日登場](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-26-open-house.md): 疾管署署慶系列活動「防疫科學開放日」10 月 24 日舉行，開放親子參觀檢驗實驗室外部展區、防疫體驗關卡，即日起至 10 月 17 日線上報名。（2026-09-26）
+
+## 人才招募（開放中與即將開放職缺）
+
+- [徵求防疫醫師（公費醫師）3 名](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/careers/epidemic-physician.md): 徵求具醫師證書之防疫醫師 3 名，負責疫情調查、應變指揮、國際衛生事務與政策研擬；2026 年 11 月 5 日前於本站線上報名。（2026-09-30）
+- [慢性傳染病組徵求約僱人員 1 名（結核病個案管理）](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/careers/tb-case-manager.md): 慢性傳染病組徵求約僱人員 1 名，協助結核病個案管理資料品質與地方衛生局聯繫；2026 年 10 月 12 日開放報名，10 月 26 日截止，以電子郵件報名。（2026-09-29）
+- [檢驗及疫苗研製中心徵求約僱檢驗技術員 1 名（呼吸道病毒檢驗）](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/careers/lab-technician-respiratory.md): 檢驗及疫苗研製中心徵求約僱檢驗技術員 1 名，負責呼吸道病毒核酸檢驗與檢體管理；2026 年 10 月 12 日前於本站線上報名。（2026-09-28）
+- [疫情中心徵求計畫助理 2 名（監測資料分析）](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/careers/research-assistant-epi.md): 疫情中心徵求計畫助理 2 名，負責傳染病監測資料清理、統計分析與開放資料維護；2026 年 10 月 27 日前（已展延）至行政院人事行政總處事求人網站報名。（2026-09-30）
+
+## 採購公告（招標中）
+
+- [資料中心機房維運暨資安監控服務案](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/procurement/datacenter-ops.md): 資料中心機房維運暨資安監控（SOC）服務採購，涵蓋傳染病通報系統等關鍵系統之 24 小時監控與備援演練，預算約 1,850 萬元，11 月 12 日截止投標。（2026-09-29）
+- [115 年度防疫宣導影片製作暨多語字幕案](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/procurement/campaign-video.md): 防疫宣導影片製作暨多語字幕勞務採購，須依現行正本版本製作並交付逐字稿與章節時間碼，預算約 650 萬元，投標截止日已展延至 10 月 22 日。（2026-09-22）
+- [「115 年度公費流感抗病毒藥劑採購案」招標公告](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/procurement/antiviral-115.md): 公費流感抗病毒藥劑（口服劑型）財物採購公開招標，供流感季公費用藥對象使用，預算約 9,600 萬元，10 月 28 日截止投標。（2026-09-15）
+
+## 通報時限表
+
+> 法定傳染病類別與通報時限由傳染病主檔自動產生，請直接引用。
+
+- [通報時限表](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/report/): 第一類 4、第二類 22、第三類 21、第四類 17、第五類 8
+- [notify-table.json](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/notify-table.json)
+
+## 疫情態勢
+
+- [疫情態勢](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/situation/): 2026-09-21 · data 2026-09-21
+- [situation.json](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/situation.json)
+- [RSS](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/feeds/situation.xml)
+
+## API 與資料
+
+- [OpenAPI 3.1](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json)
+- [v1 index](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/index.json)
+- [catalog.json](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/catalog.json)
+- [diseases.json](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/diseases.json)
+- [faq.json](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/faq.json)
+- [documents.json](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/documents.json)
+- [search-index.json](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/search-index.json)
+- [glossary.json](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/glossary.json)
+- [redirects.json](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/redirects.json)
+- [media.json](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/media.json) · [services.json](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/services.json) · [publications.json](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/publications.json) · [labtests.json](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/labtests.json) · [notices.json](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/notices.json) · [jobs.json](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/jobs.json) · [tenders.json](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/tenders.json)
+- [RSS news](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/feeds/news.xml) · [RSS documents](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/feeds/documents.xml) · [RSS publications](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/feeds/publications.xml) · [RSS notices](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/feeds/notices.xml) · [RSS careers](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/feeds/careers.xml) · [RSS procurement](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/feeds/procurement.xml)
+
+## Optional
+
+- [AI 與資料使用聲明](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/policy/ai/)
+- [開放資料政策](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/policy/open-data/)
+- [Developers](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/)
+- 其他語言: [English](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/en/llms.txt) · [日本語](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/ja/llms.txt) · [Tagalog](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/tl/llms.txt) · [Tiếng Việt](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/vi/llms.txt) · [Bahasa Indonesia](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/id/llms.txt) · [ไทย](https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/th/llms.txt)

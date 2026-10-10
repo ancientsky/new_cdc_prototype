@@ -1,0 +1,42 @@
+{
+  "id": "page.x-before-departure",
+  "type": "page",
+  "title": "出國前注意事項",
+  "owner": "unit.quarantine",
+  "publishedAt": "2014-09-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "出發前請至疾管署網站查詢目的地的旅遊疫情建議等級，依等級提高警覺並採取相應防護措施。",
+  "slug": "x-before-departure",
+  "bodyMarkdown": "### 查詢疫情等級\n\n出發前請至疾管署網站查詢目的地的旅遊疫情建議等級，依等級提高警覺並採取相應防護措施。\n\n### 旅遊醫學門診\n\n建議出國前 4 至 6 週到旅遊醫學門診諮詢，評估是否需要疫苗或預防用藥。\n\n### 準備物品\n\n- 個人慢性病藥物與處方（隨身攜帶）\n- 防蚊液、口罩、乾洗手\n- 國際預防接種證明書（黃皮書）與護照影本\n- 旅遊平安險與緊急聯絡資訊",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/dD0xcwJor_qG8nlP5UiL4g"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 22 處（mso 樣式 18、Mso 類別 6、命名空間標籤 2）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/dD0xcwJor_qG8nlP5UiL4g",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

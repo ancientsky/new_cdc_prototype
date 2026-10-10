@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  舊網址 → 新網址 301 對照（由 v1/redirects.json 自動產生，請勿手改；ARCHITECTURE 13.1）
+  產生日：2026-10-01；45 筆（其中移轉清單未核對 verified:false 29 筆，上線前請權責單位確認）
+  不含：{id} 佔位的 URL 模式、失效版文件頁（原頁保留）、版本族穩定網址（302）；同一舊網址對到多個新頁者 6 筆不輸出
+  目標路徑不含 basePath（正式站部署於網域根）；比對不分大小寫
+  用法：把 <rewrite> 內容併入 web.config 的 <system.webServer>；rewriteMap 比對 {REQUEST_URI}（含 query）。
+  value 為 410 者＝已移除、回 410 不轉址，共 0 筆
+-->
+<rewrite>
+  <rewriteMaps>
+    <rewriteMap name="CdcLegacyRedirects" defaultValue="" ignoreCase="true">
+      <add key="/Bulletin/Detail/RQMqkQ2-D6sOpVi8dnV75w?typeid=9" value="/news/2026-06-02-measles-travel-mmr-1966/" />
+      <add key="/Bulletin/Detail/RQMqkQ2-D6sOpVi8dnV75w/?typeid=9" value="/news/2026-06-02-measles-travel-mmr-1966/" />
+      <add key="/Bulletin/Detail/YGzXK2IFXqeW1V_tY1TEvQ?typeid=9" value="/news/2025-01-09-mmr-adults-measles/" />
+      <add key="/Bulletin/Detail/YGzXK2IFXqeW1V_tY1TEvQ/?typeid=9" value="/news/2025-01-09-mmr-adults-measles/" />
+      <add key="/Category/List/3GJWZ0ETfmdGzIS7H0Jucg" value="/travel/" /> <!-- unverified -->
+      <add key="/Category/List/3GJWZ0ETfmdGzIS7H0Jucg/" value="/travel/" /> <!-- unverified -->
+      <add key="/Category/List/3UATgJ9_kkHimGdkBKskPA" value="/policy/legal/" /> <!-- unverified -->
+      <add key="/Category/List/3UATgJ9_kkHimGdkBKskPA/" value="/policy/legal/" /> <!-- unverified -->
+      <add key="/Category/List/abYRVtgFiTeOpA1lsLeZWg" value="/policy/foia/" /> <!-- unverified -->
+      <add key="/Category/List/abYRVtgFiTeOpA1lsLeZWg/" value="/policy/foia/" /> <!-- unverified -->
+      <add key="/Category/List/DG4AoD4j09j2qW_YhrYAZ2" value="/publications/" /> <!-- unverified -->
+      <add key="/Category/List/DG4AoD4j09j2qW_YhrYAZ2/" value="/publications/" /> <!-- unverified -->
+      <add key="/Category/List/HJ0FrBEq15g18TFKowY7lg" value="/travel/" /> <!-- unverified -->
+      <add key="/Category/List/HJ0FrBEq15g18TFKowY7lg/" value="/travel/" /> <!-- unverified -->
+      <add key="/Category/List/tRbpXpZM7EO3-dkc4RYZuQ" value="/travel/" /> <!-- unverified -->
+      <add key="/Category/List/tRbpXpZM7EO3-dkc4RYZuQ/" value="/travel/" /> <!-- unverified -->
+      <add key="/Category/List/VOFCg57Yk3iO3I_WxoXOIA" value="/publications/" /> <!-- unverified -->
+      <add key="/Category/List/VOFCg57Yk3iO3I_WxoXOIA/" value="/publications/" /> <!-- unverified -->
+      <add key="/Category/List/YV1yFFBI_B1Rhm6XDQvlgy" value="/publications/" /> <!-- unverified -->
+      <add key="/Category/List/YV1yFFBI_B1Rhm6XDQvlgy/" value="/publications/" /> <!-- unverified -->
+      <add key="/Category/List/Z5jlKeN6dG0jpwhf4TO0JV" value="/publications/" /> <!-- unverified -->
+      <add key="/Category/List/Z5jlKeN6dG0jpwhf4TO0JV/" value="/publications/" /> <!-- unverified -->
+      <add key="/Category/List/ZrvS2zJwZ03tl8CbKYdI8g" value="/data/" /> <!-- unverified -->
+      <add key="/Category/List/ZrvS2zJwZ03tl8CbKYdI8g/" value="/data/" /> <!-- unverified -->
+      <add key="/Category/ListContent/44k4KHKf48A57gNpJRnnj3?uaid=VQRmxBAVBgtS5ytV4SMyZ0" value="/media/dengue-village-chief/" /> <!-- unverified -->
+      <add key="/Category/ListContent/44k4KHKf48A57gNpJRnnj3/?uaid=VQRmxBAVBgtS5ytV4SMyZ0" value="/media/dengue-village-chief/" /> <!-- unverified -->
+      <add key="/Category/ListContent/DG4AoD4j09j2qW_YhrYAZ2?uaid=JaTSqWyasrqZpL-tvXo9BS" value="/publications/manual-ltc-infection-control-2026/" /> <!-- unverified -->
+      <add key="/Category/ListContent/DG4AoD4j09j2qW_YhrYAZ2/?uaid=JaTSqWyasrqZpL-tvXo9BS" value="/publications/manual-ltc-infection-control-2026/" /> <!-- unverified -->
+      <add key="/Category/ListContent/VujZUu3PXzEl4PjbFhh5D8?uaid=2J2WLQQVD-Okme7i011Cw5" value="/media/enterovirus-handwashing/" /> <!-- unverified -->
+      <add key="/Category/ListContent/VujZUu3PXzEl4PjbFhh5D8/?uaid=2J2WLQQVD-Okme7i011Cw5" value="/media/enterovirus-handwashing/" /> <!-- unverified -->
+      <add key="/Category/ListContent/VujZUu3PXzEl4PjbFhh5D8?uaid=GEJHb3XRbbo3EPVrBVucx2" value="/media/amr-one-health-podcast/" /> <!-- unverified -->
+      <add key="/Category/ListContent/VujZUu3PXzEl4PjbFhh5D8/?uaid=GEJHb3XRbbo3EPVrBVucx2" value="/media/amr-one-health-podcast/" /> <!-- unverified -->
+      <add key="/Category/ListMovie/DWSgB84e8MEvXgBqiQmR6A" value="/media/" /> <!-- unverified -->
+      <add key="/Category/ListMovie/DWSgB84e8MEvXgBqiQmR6A/" value="/media/" /> <!-- unverified -->
+      <add key="/Category/ListMovie/slfvh8DLgS6fkbLiuN-WHg" value="/media/" /> <!-- unverified -->
+      <add key="/Category/ListMovie/slfvh8DLgS6fkbLiuN-WHg/" value="/media/" /> <!-- unverified -->
+      <add key="/Category/MPage/awMzKEQ9hVCtOWGFPHydj2" value="/publications/statistics-annual-2025/" /> <!-- unverified -->
+      <add key="/Category/MPage/awMzKEQ9hVCtOWGFPHydj2/" value="/publications/statistics-annual-2025/" /> <!-- unverified -->
+      <add key="/Category/MPage/i5N2W9G-FWJkh3agfLA-Kg" value="/data/" /> <!-- unverified -->
+      <add key="/Category/MPage/i5N2W9G-FWJkh3agfLA-Kg/" value="/data/" /> <!-- unverified -->
+      <add key="/Category/MPage/l_z6ZKErZJ063m6OV_8nXQ" value="/topics/antivenom/" /> <!-- unverified -->
+      <add key="/Category/MPage/l_z6ZKErZJ063m6OV_8nXQ/" value="/topics/antivenom/" /> <!-- unverified -->
+      <add key="/Category/MPage/LiNW6PIOJsKKTzV9OoRoSg" value="/data/#dataset.nidss" /> <!-- unverified -->
+      <add key="/Category/MPage/LiNW6PIOJsKKTzV9OoRoSg/" value="/data/#dataset.nidss" /> <!-- unverified -->
+      <add key="/Category/MPage/OyPQCu3iBWmljSol_qLalD" value="/data/#dataset.covid-severe-weekly" /> <!-- unverified -->
+      <add key="/Category/MPage/OyPQCu3iBWmljSol_qLalD/" value="/data/#dataset.covid-severe-weekly" /> <!-- unverified -->
+      <add key="/Category/MPage/Y_AH_Ka7q03cfN15CyI-nQ" value="/data/#dataset.health-education-materials" /> <!-- unverified -->
+      <add key="/Category/MPage/Y_AH_Ka7q03cfN15CyI-nQ/" value="/data/#dataset.health-education-materials" /> <!-- unverified -->
+      <add key="/Category/MPage/Z3nsEXQ6Jne6A13aVu8Ra8" value="/data/#dataset.vaccine-coverage" /> <!-- unverified -->
+      <add key="/Category/MPage/Z3nsEXQ6Jne6A13aVu8Ra8/" value="/data/#dataset.vaccine-coverage" /> <!-- unverified -->
+      <add key="/Category/MPage/z6EmN04F9zPF9NDXivtXFB" value="/data/#dataset.flu-express" /> <!-- unverified -->
+      <add key="/Category/MPage/z6EmN04F9zPF9NDXivtXFB/" value="/data/#dataset.flu-express" /> <!-- unverified -->
+      <add key="/Category/Page/fHHHNV-HWyYD00tnKeXsLA" value="/documents/flu-antiviral-eligibility.2026-09-18/" />
+      <add key="/Category/Page/fHHHNV-HWyYD00tnKeXsLA/" value="/documents/flu-antiviral-eligibility.2026-09-18/" />
+      <add key="/Category/Page/ucmuQnzcJPue77qHt0IXeg" value="/apply/travel-clinic-appointment/" /> <!-- unverified -->
+      <add key="/Category/Page/ucmuQnzcJPue77qHt0IXeg/" value="/apply/travel-clinic-appointment/" /> <!-- unverified -->
+      <add key="/Category/QAPage/9WWkS28Y2GGBPTpSSxmkZg" value="/faq/dengue-fever-when-to-see-doctor/" />
+      <add key="/Category/QAPage/9WWkS28Y2GGBPTpSSxmkZg/" value="/faq/dengue-fever-when-to-see-doctor/" />
+      <add key="/Category/QAPage/tXlXJpy4M3fAbZIPwgLO9Q" value="/faq/measles-mmr-adult-who/" />
+      <add key="/Category/QAPage/tXlXJpy4M3fAbZIPwgLO9Q/" value="/faq/measles-mmr-adult-who/" />
+      <add key="/Disease/SubIndex/WYbKe3aE7LiY5gb-eA8PBw" value="/diseases/dengue/" />
+      <add key="/Disease/SubIndex/WYbKe3aE7LiY5gb-eA8PBw/" value="/diseases/dengue/" />
+      <add key="/En/Category/List/gK4BJWe3qYlmNxYJBqEcxA" value="/en/data/" /> <!-- unverified -->
+      <add key="/En/Category/List/gK4BJWe3qYlmNxYJBqEcxA/" value="/en/data/" /> <!-- unverified -->
+      <add key="/File/Get/eH0KllYdi__tvUdV8al0lA" value="/documents/curriculum-measles.2026-10-10/" />
+      <add key="/File/Get/eH0KllYdi__tvUdV8al0lA/" value="/documents/curriculum-measles.2026-10-10/" />
+      <add key="/news/2026-02-20-procurement-flu-vaccine/" value="/procurement/flu-vaccine-115/" />
+      <add key="/news/2026-02-20-procurement-flu-vaccine" value="/procurement/flu-vaccine-115/" />
+      <add key="/news/2026-05-25-recruit-quarantine-officer/" value="/careers/quarantine-officer-kaoping/" />
+      <add key="/news/2026-05-25-recruit-quarantine-officer" value="/careers/quarantine-officer-kaoping/" />
+      <add key="/news/2026-06-10-procurement-lab-reagents/" value="/procurement/lab-reagents-115/" />
+      <add key="/news/2026-06-10-procurement-lab-reagents" value="/procurement/lab-reagents-115/" />
+      <add key="/news/2026-08-10-recruit-system-analyst/" value="/careers/system-analyst/" />
+      <add key="/news/2026-08-10-recruit-system-analyst" value="/careers/system-analyst/" />
+      <add key="/news/2026-09-22-procurement-campaign-video/" value="/procurement/campaign-video/" />
+      <add key="/news/2026-09-22-procurement-campaign-video" value="/procurement/campaign-video/" />
+      <add key="/news/2026-09-24-recruit-research-assistant/" value="/careers/research-assistant-epi/" />
+      <add key="/news/2026-09-24-recruit-research-assistant" value="/careers/research-assistant-epi/" />
+      <add key="/news/2026-09-29-procurement-datacenter-ops/" value="/procurement/datacenter-ops/" />
+      <add key="/news/2026-09-29-procurement-datacenter-ops" value="/procurement/datacenter-ops/" />
+      <add key="/news/2026-09-30-recruit-epidemic-physician/" value="/careers/epidemic-physician/" />
+      <add key="/news/2026-09-30-recruit-epidemic-physician" value="/careers/epidemic-physician/" />
+      <add key="/Uploads/archives/%E6%BD%9B%E4%BC%8F%E7%B5%90%E6%A0%B8%E6%84%9F%E6%9F%93%E6%B2%BB%E7%99%82%E6%8C%87%E5%BC%95.pdf" value="/documents/ltbi-guideline.2024-01-01/" /> <!-- unverified -->
+      <add key="/Uploads/archives/%E6%BD%9B%E4%BC%8F%E7%B5%90%E6%A0%B8%E6%84%9F%E6%9F%93%E6%B2%BB%E7%99%82%E6%8C%87%E5%BC%95.pdf/" value="/documents/ltbi-guideline.2024-01-01/" /> <!-- unverified -->
+      <add key="/Uploads/archives/%E7%B5%90%E6%A0%B8%E7%97%85%E8%A8%BA%E6%B2%BB%E6%8C%87%E5%BC%95%E7%AC%AC%E4%B8%83%E7%89%88.pdf" value="/documents/tb-guideline.2025-09-01/" /> <!-- unverified -->
+      <add key="/Uploads/archives/%E7%B5%90%E6%A0%B8%E7%97%85%E8%A8%BA%E6%B2%BB%E6%8C%87%E5%BC%95%E7%AC%AC%E4%B8%83%E7%89%88.pdf/" value="/documents/tb-guideline.2025-09-01/" /> <!-- unverified -->
+      <add key="/Uploads/archives/%E7%B5%90%E6%A0%B8%E7%97%85%E9%98%B2%E6%B2%BB%E5%B7%A5%E4%BD%9C%E6%89%8B%E5%86%8A2019%E5%B9%B4%E7%89%88.pdf" value="/documents/tb-manual.2025-07-01/" /> <!-- unverified -->
+      <add key="/Uploads/archives/%E7%B5%90%E6%A0%B8%E7%97%85%E9%98%B2%E6%B2%BB%E5%B7%A5%E4%BD%9C%E6%89%8B%E5%86%8A2019%E5%B9%B4%E7%89%88.pdf/" value="/documents/tb-manual.2025-07-01/" /> <!-- unverified -->
+      <add key="/Uploads/archives/MMR%E7%96%AB%E8%8B%97%E6%8E%A5%E7%A8%AE%E5%BB%BA%E8%AD%B0.pdf" value="/documents/mmr-recommendation.2025-04-16/" />
+      <add key="/Uploads/archives/MMR%E7%96%AB%E8%8B%97%E6%8E%A5%E7%A8%AE%E5%BB%BA%E8%AD%B0.pdf/" value="/documents/mmr-recommendation.2025-04-16/" />
+    </rewriteMap>
+  </rewriteMaps>
+  <rules>
+    <rule name="CdcLegacyGone" stopProcessing="true">
+      <match url=".*" />
+      <conditions><add input="{CdcLegacyRedirects:{REQUEST_URI}}" pattern="^410$" /></conditions>
+      <action type="CustomResponse" statusCode="410" statusReason="Gone" statusDescription="此內容已移除" />
+    </rule>
+    <rule name="CdcLegacyRedirect" stopProcessing="true">
+      <match url=".*" />
+      <conditions><add input="{CdcLegacyRedirects:{REQUEST_URI}}" pattern="(.+)" /></conditions>
+      <action type="Redirect" url="{C:1}" redirectType="Permanent" appendQueryString="false" />
+    </rule>
+  </rules>
+</rewrite>

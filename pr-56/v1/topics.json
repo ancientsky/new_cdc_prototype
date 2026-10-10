@@ -1,0 +1,2475 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "361aa7129ab6",
+    "lastModified": "2026-10-10",
+    "count": 12
+  },
+  "data": [
+    {
+      "id": "topic.antivenom",
+      "type": "topic",
+      "title": "抗蛇毒血清與毒蛇咬傷急救",
+      "owner": "unit.lab",
+      "steward": "檢驗及疫苗研製中心承辦人（待指派）",
+      "publishedAt": "2026-10-10",
+      "reviewedAt": "2026-10-10",
+      "reviewPeriodMonths": 6,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "symptoms"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-10-10"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "被蛇咬傷請當作毒蛇咬傷處理、保持冷靜、儘速就醫，緊急請撥 119。臺灣六種常見毒蛇與疾管署供應的 4 種抗蛇毒血清對照、哪裡有血清、給醫療人員的取得與調度方式。",
+      "keywords": [
+        "抗蛇毒血清",
+        "蛇毒血清",
+        "毒蛇咬傷",
+        "蛇咬",
+        "被蛇咬",
+        "蛇咬傷",
+        "五要五不",
+        "龜殼花",
+        "赤尾鮐",
+        "赤尾青竹絲",
+        "青竹絲",
+        "百步蛇",
+        "雨傘節",
+        "飯匙倩",
+        "眼鏡蛇",
+        "鎖鏈蛇",
+        "儲備點",
+        "抗蛇毒血清儲備點查詢系統"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Category/MPage/l_z6ZKErZJ063m6OV_8nXQ"
+      ],
+      "slug": "antivenom",
+      "kind": "emergency",
+      "priority": 1,
+      "introMarkdown": "**被蛇咬傷後出現呼吸困難、意識改變或大量出血，請立即撥打 119。**\n\n被蛇咬傷時，一律先當作毒蛇咬傷處理，保持冷靜並儘速就醫。抗蛇毒血清是目前治療毒蛇咬傷最有效的方法，屬醫師處方用藥，由醫療院所使用。疾管署是國內唯一產製並持有抗蛇毒血清藥證的機構，供應 4 種抗蛇毒血清給全國醫療院所儲備。一般詢問請撥疾管署免付費防疫專線 1922（0800-001922）。",
+      "blocks": [
+        {
+          "key": "first-aid",
+          "heading": "被蛇咬了怎麼辦：五要五不",
+          "audience": "public",
+          "keywords": [
+            "被蛇咬怎麼辦",
+            "蛇咬急救",
+            "五要五不",
+            "冰敷",
+            "止血帶",
+            "急救"
+          ],
+          "markdown": "被蛇咬傷時，請記住疾管署的「五要五不」，並儘速就醫，情況緊急請撥打 119。\n\n**五要**\n\n- 被蛇咬傷要一律視為毒蛇咬傷處理。\n- 被蛇咬傷要記住蛇的外觀特徵（顏色、花紋、頭形），方便醫護人員判斷蛇種。\n- 被蛇咬傷要儘快脫下戒指、手錶、手環等飾品，避免肢體腫脹後受到壓迫。\n- 被蛇咬傷要在傷口上緣（靠近心臟的一側）做寬鬆包紮，減緩毒液擴散；包紮不可緊到阻斷血流。\n- 被蛇咬傷要保持冷靜，儘速就醫。\n\n**五不**\n\n- 被蛇咬傷不割開傷口，以免感染。\n- 被蛇咬傷不用嘴吸傷口的毒液，以免感染。\n- 被蛇咬傷不冰敷，以免組織壞死。\n- 被蛇咬傷不喝酒或刺激性飲料，以免加速毒液作用。\n- 被蛇咬傷不延誤就醫，以免耽誤治療時機。\n\n**醫師常見的補充提醒（待權責單位確認是否納入官方建議）**\n\n- 被蛇咬傷不綁止血帶或橡皮筋，阻斷血流可能造成肢體缺血壞死。\n- 被咬的手腳儘量用夾板或硬物固定、減少活動，患肢不必抬高。\n- 遇到蛇不要主動靠近、碰觸或追捕；不要為了拍照或抓蛇而延誤就醫。"
+        },
+        {
+          "key": "snakes",
+          "heading": "臺灣常見毒蛇與對應的抗蛇毒血清",
+          "audience": "public",
+          "keywords": [
+            "哪種血清",
+            "打哪種血清",
+            "認不出蛇",
+            "出血性",
+            "神經性",
+            "龜殼花",
+            "赤尾鮐",
+            "赤尾青竹絲",
+            "百步蛇",
+            "雨傘節",
+            "飯匙倩",
+            "眼鏡蛇",
+            "鎖鏈蛇"
+          ],
+          "markdown": "臺灣常見的毒蛇有龜殼花、赤尾鮐（俗稱赤尾青竹絲）、百步蛇、雨傘節、飯匙倩（俗稱眼鏡蛇）與鎖鏈蛇；依蛇毒作用可分為出血性、神經性與兼具兩者的混合型。\n\n- 被龜殼花咬傷：龜殼花屬出血性蛇毒，對應的血清是抗龜殼花及赤尾鮐蛇毒血清。\n- 被赤尾鮐（赤尾青竹絲）咬傷：赤尾鮐屬出血性蛇毒，對應的血清是抗龜殼花及赤尾鮐蛇毒血清。\n- 被百步蛇咬傷：百步蛇屬出血性蛇毒，對應的血清是抗百步蛇毒血清。\n- 被雨傘節咬傷：雨傘節屬神經性蛇毒，對應的血清是抗雨傘節及飯匙倩蛇毒血清。\n- 被飯匙倩（眼鏡蛇）咬傷：飯匙倩屬神經性蛇毒，對應的血清是抗雨傘節及飯匙倩蛇毒血清。\n- 被鎖鏈蛇咬傷：鎖鏈蛇兼具出血性與神經性蛇毒，對應的血清是抗鎖鏈蛇毒血清。\n\n要不要使用抗蛇毒血清、使用哪一種與用多少，由醫師依傷口與病人症狀判斷，民眾不需要也不應該自行決定。認不出是哪一種蛇也不要延誤就醫，把記得的外觀特徵告訴醫護人員即可。"
+        },
+        {
+          "key": "where",
+          "heading": "哪裡有抗蛇毒血清",
+          "audience": "public",
+          "keywords": [
+            "哪裡有抗蛇毒血清",
+            "哪家醫院有",
+            "儲備點",
+            "儲備醫院",
+            "查詢系統",
+            "1922"
+          ],
+          "markdown": "抗蛇毒血清屬醫師處方用藥，只有醫療院所可以購買，民眾請勿購買來路不明的藥品。\n\n疾管署在全國醫療院所儲備抗蛇毒血清，近年新聞稿公布的儲備院所約 190 至 250 家，實際名單以疾管署「抗蛇毒血清儲備點查詢系統」為準。\n\n抗蛇毒血清儲備點查詢系統可依所在縣市與血清種類，查詢鄰近醫療院所的聯絡方式與儲備情形。\n\n情況緊急時請直接撥打 119 或前往最近的急診，不要因為查詢儲備點而延誤就醫。一般詢問可撥打疾管署免付費防疫專線 1922（0800-001922）。"
+        },
+        {
+          "key": "professional",
+          "heading": "給醫療人員：血清種類、來源與調度",
+          "audience": "professional",
+          "keywords": [
+            "凍晶注射劑",
+            "雙價",
+            "單價",
+            "調度",
+            "防疫物資管理資訊系統",
+            "供應量",
+            "馬血清",
+            "毒藥物諮詢"
+          ],
+          "markdown": "疾管署是國內唯一產製並持有抗蛇毒血清凍晶注射劑藥證者，供應 4 種抗蛇毒血清。\n\n雙價型抗蛇毒血清有 2 種：抗龜殼花及赤尾鮐蛇毒血清、抗雨傘節及飯匙倩蛇毒血清。\n\n單價型抗蛇毒血清有 2 種：抗百步蛇毒血清、抗鎖鏈蛇毒血清。\n\n抗蛇毒血清以臺灣本地毒蛇蛇毒免疫馬匹，再抽取馬血漿純化製成；屬馬血漿來源的生物製劑，使用時須留意過敏反應。\n\n2022 至 2024 年平均每年供應抗龜殼花及赤尾鮐蛇毒血清約 2,457 劑、抗雨傘節及飯匙倩蛇毒血清約 784 劑、抗百步蛇毒血清約 107 劑、抗鎖鏈蛇毒血清約 36 劑。\n\n醫療院所之間的抗蛇毒血清調度，透過疾管署「防疫物資管理資訊系統」線上控管；民眾查詢則使用抗蛇毒血清儲備點查詢系統。\n\n劑量、給藥方式與不良反應處置依藥品仿單與臨床判斷；本頁不提供劑量建議。臨床中毒諮詢可洽臺北榮民總醫院毒藥物防治諮詢中心（24 小時），電話以該院公告為準。"
+        }
+      ],
+      "links": [
+        {
+          "label": "抗蛇毒血清儲備點查詢系統（疾管署）",
+          "href": "https://mis.cdc.gov.tw/PLC/PLC_QR001.aspx",
+          "external": true,
+          "status": "unchecked",
+          "note": "依縣市與血清種類查詢鄰近儲備院所。網址取自衛福部轉載的疾管署新聞稿；開發環境無法連線，待權責單位確認仍有效"
+        },
+        {
+          "label": "聯絡疾管署：防疫專線 1922（0800-001922）",
+          "href": "/contact/"
+        },
+        {
+          "label": "臺北榮民總醫院毒藥物防治諮詢中心（24 小時）",
+          "href": "https://www.vghtpe.gov.tw/",
+          "external": true,
+          "status": "unchecked",
+          "note": "供醫療人員臨床中毒諮詢。現行專線電話無法在開發環境查證，本站暫不列號碼，連到該院首頁，待權責單位提供"
+        },
+        {
+          "label": "疾管署新聞稿：毒蛇咬傷「五要五不」與抗蛇毒血清供應（衛福部網站轉載）",
+          "href": "https://mohw.gov.tw/cp-16-82064-1.html",
+          "external": true,
+          "status": "unchecked",
+          "note": "本頁主要依據之一（2022–2024 年供應量、4 種血清）"
+        }
+      ],
+      "contentIds": [
+        "faq.snakebite-first-aid",
+        "faq.snakebite-dont",
+        "faq.antivenom-which-snake",
+        "faq.antivenom-where",
+        "faq.rabies-bite"
+      ],
+      "verification": {
+        "status": "pending",
+        "note": "緊急狀況請撥 119；用藥與處置以醫師判斷為準",
+        "pendingItems": [
+          "逐字核對疾管署現行「五要五不」文字（尤其「包紮傷口上緣」的鬆緊說明）",
+          "「不綁止血帶、患肢以夾板固定、不必抬高」來自醫師受訪的媒體報導，確認是否納入官方建議",
+          "儲備院所家數（各年新聞稿 190 至 250 家不一）與儲備點查詢系統網址是否仍有效",
+          "臺北榮總毒藥物防治諮詢中心現行電話（本頁暫不列號碼）",
+          "4 種血清的正式品名寫法以藥品許可證為準（例：抗百步蛇毒血清／抗百步蛇蛇毒血清；抗雨傘節及飯匙倩／抗飯匙倩及雨傘節）",
+          "權責分工：製造與供應屬檢驗及疫苗研製中心；儲備點與調度是否由新興傳染病整備組（防疫物資）協辦",
+          "專業版是否補上臨床使用說明（劑量原則、過敏反應處置、是否需皮膚試驗）：本頁目前不提供，需依仿單由權責單位撰寫",
+          "英文與東南亞語版本（外籍移工、登山客）"
+        ],
+        "sources": [
+          {
+            "label": "衛福部轉載疾管署新聞稿（清明連假前提醒；2022–2024 年供應量、4 種血清雙價與單價、唯一產製與持有藥證、出血性／神經性／混合型分類）",
+            "url": "https://mohw.gov.tw/cp-16-82064-1.html",
+            "accessedAt": "2026-10-10",
+            "official": true,
+            "verified": false,
+            "note": "開發環境連不到 mohw.gov.tw；內容取自搜尋摘要，發布日期未能確認（數據涵蓋至 2024 年，推估為 2025 年清明前）"
+          },
+          {
+            "label": "衛福部轉載疾管署新聞稿（毒蛇咬傷「五要五不」、約 250 家醫療院所儲備、儲備點查詢系統、1922）",
+            "url": "https://mohw.gov.tw/cp-16-40357-1.html",
+            "accessedAt": "2026-10-10",
+            "official": true,
+            "verified": false,
+            "note": "搜尋摘要；五要五不在多則新聞稿中文字一致"
+          },
+          {
+            "label": "衛福部轉載疾管署新聞稿（儲備點查詢系統網址 mis.cdc.gov.tw/PLC/PLC_QR001.aspx、依縣市與血清種類篩選、醫療院所以防疫物資管理資訊系統線上調度）",
+            "url": "https://mohw.gov.tw/cp-16-46777-1.html",
+            "accessedAt": "2026-10-10",
+            "official": true,
+            "verified": false,
+            "note": "搜尋摘要"
+          },
+          {
+            "label": "衛福部轉載疾管署新聞稿（約 190 多家、194 家醫療院所儲備；飯匙倩俗稱眼鏡蛇、赤尾鮐俗稱赤尾青竹絲）",
+            "url": "https://mohw.gov.tw/cp-16-78155-1.html",
+            "accessedAt": "2026-10-10",
+            "official": true,
+            "verified": false,
+            "note": "搜尋摘要；家數與哪一則新聞稿的對應未能逐一確認"
+          },
+          {
+            "label": "衛福部轉載疾管署新聞稿（抗蛇毒血清以本地毒蛇免疫馬匹、抽取馬血漿純化製成；生物製劑留意過敏反應）",
+            "url": "https://mohw.gov.tw/cp-16-22031-1.html",
+            "accessedAt": "2026-10-10",
+            "official": true,
+            "verified": false,
+            "note": "搜尋摘要，屬較早期（2014 年前後）新聞稿；製程描述待權責單位確認現況"
+          },
+          {
+            "label": "疾管署文件（抗蛇毒血清普遍供應前毒蛇咬傷死亡率約 6%、充足供應後約 0.18%；疾管署為唯一產製並持有藥證者）",
+            "url": "https://www.cdc.gov.tw/En/File/Get/M2TpHNnBcWt7xWT20loe4w",
+            "accessedAt": "2026-10-10",
+            "official": true,
+            "verified": false,
+            "note": "搜尋摘要；本頁未引用死亡率數字"
+          },
+          {
+            "label": "康健雜誌：醫師說明冰敷、止血帶影響血液循環，增加肢體缺血風險",
+            "url": "https://www.commonhealth.com.tw/article/88335",
+            "accessedAt": "2026-10-10",
+            "official": false,
+            "verified": false,
+            "note": "第二手資料（媒體報導醫師說法），只用於「醫師常見的補充提醒」段，並標示待確認"
+          },
+          {
+            "label": "TVBS 新聞：醫師說明蛇咬傷處置（不用嘴吸毒、不用橡皮筋或止血帶、夾板固定）",
+            "url": "https://news.tvbs.com.tw/health/4024917",
+            "accessedAt": "2026-10-10",
+            "official": false,
+            "verified": false,
+            "note": "第二手資料"
+          },
+          {
+            "label": "關鍵評論網：毒蛇咬傷處置（抬高患肢會加速毒液回流）",
+            "url": "https://www.thenewslens.com/article/164931",
+            "accessedAt": "2026-10-10",
+            "official": false,
+            "verified": false,
+            "note": "第二手資料；搜尋摘要未明確標示此說法出自哪一篇，一併列出"
+          },
+          {
+            "label": "臺北榮民總醫院：毒藥物防治諮詢中心（提供 24 小時電話諮詢）",
+            "url": "https://www.vghtpe.gov.tw/vghtpe/files/PDF/sp/14-%E6%AF%92%E8%97%A5%E7%89%A9%E9%98%B2%E6%B2%BB%E8%AB%AE%E8%A9%A2%E4%B8%AD%E5%BF%83(%E8%81%B7%E6%A5%AD%E9%86%AB%E5%AD%B8%E5%8F%8A%E8%87%A8%E5%BA%8A%E6%AF%92%E7%89%A9%E9%83%A8).pdf",
+            "accessedAt": "2026-10-10",
+            "official": true,
+            "verified": false,
+            "note": "搜尋結果出現兩個不同號碼（02-2871-7121、02-2875-7525），無法確認現行專線，故本頁不列號碼"
+          }
+        ]
+      },
+      "sourceHash": "8aa858d6b0c7",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/antivenom/",
+      "path": "/topics/antivenom/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/antivenom.md",
+      "governance": {
+        "owner": "unit.lab",
+        "ownerName": "檢驗及疫苗研製中心",
+        "steward": "檢驗及疫苗研製中心承辦人（待指派）",
+        "reviewedAt": "2026-10-10",
+        "reviewPeriodMonths": 6,
+        "nextReviewAt": "2027-04-10",
+        "daysToReview": 191,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "topic.antivenom",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [
+          {
+            "kind": "unverified",
+            "level": "warning",
+            "text": "本頁依公開資料整理，尚待權責單位（檢驗及疫苗研製中心）逐項確認。緊急狀況請撥 119；用藥與處置以醫師判斷為準。",
+            "href": null,
+            "path": null
+          }
+        ],
+        "reverseAuditHits": 0,
+        "ended": false,
+        "upcoming": false,
+        "linkHealth": {
+          "total": 3,
+          "ok": 0,
+          "broken": 0,
+          "unchecked": 3
+        },
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "8aa858d6b0c7",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "topic.disaster-evacuation",
+      "type": "topic",
+      "title": "防災避難須知：災後防疫與避難所衛生",
+      "owner": "unit.preparedness",
+      "publishedAt": "2026-06-01",
+      "reviewedAt": "2026-09-01",
+      "reviewPeriodMonths": 6,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "symptoms"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.dengue",
+        "disease.hepatitis-a",
+        "disease.shigellosis"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-01",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "颱風、地震、水災後的防疫重點：清除積水防登革熱、飲水與食物衛生防腸胃道傳染病、避難所防呼吸道群聚，並連結全民安全指引。",
+      "keywords": [
+        "防災",
+        "避難",
+        "災後防疫",
+        "全民安全指引",
+        "避難所",
+        "颱風"
+      ],
+      "image": "/img/topics/disaster-evacuation.svg",
+      "slug": "disaster-evacuation",
+      "kind": "emergency",
+      "priority": 1,
+      "introMarkdown": "天然災害或緊急狀況發生時，請先依中央與地方政府指示**確保人身安全**。災後最常見的傳染病風險來自**積水孳生病媒蚊**、**飲水與食物受污染**，以及**避難所人群密集**。\n\n- 清理家園時穿長袖、雨鞋與手套，傷口避免接觸污水，有傷口泡到污水後出現發燒請就醫。\n- 只喝煮沸水或包裝水；食物泡過水就丟棄。\n- 避難所內有發燒、咳嗽、腹瀉者請告知管理人員，戴口罩並與他人保持距離。\n- 災後兩週內住家周圍容器要「巡、倒、清、刷」。\n\n全民應變準備（避難包、避難處所、空襲警報應變等）請參考行政院發布之**全民安全指引**。",
+      "links": [
+        {
+          "label": "全民安全指引（行政院）",
+          "href": "https://www.ey.gov.tw/",
+          "external": true,
+          "status": "unchecked",
+          "note": "指引正式網址待新興傳染病整備組確認；原型暫連行政院首頁"
+        },
+        {
+          "label": "消防署防災避難看板與避難處所查詢",
+          "href": "https://www.nfa.gov.tw/",
+          "external": true,
+          "status": "unchecked",
+          "note": "網址待確認"
+        },
+        {
+          "label": "登革熱：巡倒清刷清除積水",
+          "href": "/diseases/dengue/#prevention"
+        },
+        {
+          "label": "A 型肝炎：飲水與食物衛生",
+          "href": "/diseases/hepatitis-a/#prevention"
+        },
+        {
+          "label": "疑似群聚通報：撥打 1922",
+          "href": "/apply/cluster-report-1922/"
+        }
+      ],
+      "contentIds": [
+        "disease.dengue",
+        "faq.dengue-container-check",
+        "disease.hepatitis-a",
+        "media.dengue-village-chief"
+      ],
+      "i18n": {
+        "en": {
+          "title": "Disaster and evacuation: disease prevention after disasters",
+          "summary": "Key steps after typhoons, earthquakes and floods: remove standing water, keep drinking water and food safe, prevent outbreaks in shelters, and follow the national civil defence guide."
+        }
+      },
+      "sourceHash": "0c53f6190621",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/disaster-evacuation/",
+      "path": "/topics/disaster-evacuation/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/disaster-evacuation.md",
+      "governance": {
+        "owner": "unit.preparedness",
+        "ownerName": "新興傳染病整備組",
+        "steward": null,
+        "reviewedAt": "2026-09-01",
+        "reviewPeriodMonths": 6,
+        "nextReviewAt": "2027-03-01",
+        "daysToReview": 151,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "topic.disaster-evacuation",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "ended": false,
+        "upcoming": false,
+        "linkHealth": {
+          "total": 2,
+          "ok": 0,
+          "broken": 0,
+          "unchecked": 2
+        },
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "0c53f6190621",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-01",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "topic.amr-one-health",
+      "type": "topic",
+      "title": "抗生素抗藥性：防疫一體行動",
+      "owner": "unit.infection-control",
+      "publishedAt": "2026-09-01",
+      "reviewedAt": "2026-09-15",
+      "reviewPeriodMonths": 6,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-15"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-15",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "響應世界抗微生物製劑認知週，推動人、動物、環境「防疫一體」減少抗藥性：感冒不吵抗生素、依醫囑服藥，並公開抗藥性監測資料。",
+      "keywords": [
+        "抗生素",
+        "抗藥性",
+        "AMR",
+        "防疫一體",
+        "One Health",
+        "世界抗微生物製劑認知週"
+      ],
+      "image": "/img/topics/amr-one-health.svg",
+      "slug": "amr-one-health",
+      "kind": "campaign",
+      "startAt": "2026-09-01",
+      "endAt": "2026-11-30",
+      "priority": 3,
+      "introMarkdown": "抗生素抗藥性（AMR）讓原本容易治療的感染變得棘手。今年秋季，疾管署與農業、環境部門共同推動**防疫一體（One Health）**行動，活動期間至 **2026 年 11 月 30 日**，並配合 11 月世界抗微生物製劑認知週（WAAW）。\n\n**民眾可以做的三件事**\n1. 感冒多為病毒引起，不要向醫師要求抗生素。\n2. 醫師開立的抗生素依醫囑服完，不自行停藥、不分給他人。\n3. 勤洗手、按時接種疫苗，減少感染就是減少用藥。\n\n醫療機構請參考感染管制指引與抗生素管理計畫；抗藥性監測統計以開放資料公開。",
+      "links": [
+        {
+          "label": "Podcast：抗生素不是萬靈丹",
+          "href": "/media/amr-one-health-podcast/"
+        },
+        {
+          "label": "醫療機構感染管制指引",
+          "href": "/documents/infection-control-healthcare.2026-03-01/"
+        },
+        {
+          "label": "抗藥性監測開放資料",
+          "href": "/data/#dataset.antimicrobial-resistance"
+        },
+        {
+          "label": "WHO World AMR Awareness Week",
+          "href": "https://www.who.int/",
+          "external": true,
+          "status": "unchecked"
+        },
+        {
+          "label": "農業部動物用藥資訊",
+          "href": "https://www.moa.gov.tw/",
+          "external": true,
+          "status": "unchecked",
+          "note": "網址待確認"
+        }
+      ],
+      "contentIds": [
+        "media.amr-one-health-podcast",
+        "doc.infection-control-healthcare.2026-03-01",
+        "dataset.antimicrobial-resistance"
+      ],
+      "i18n": {
+        "en": {
+          "title": "Antimicrobial resistance: One Health action",
+          "summary": "A One Health campaign running until 30 November 2026 alongside World AMR Awareness Week: no antibiotics for colds, finish prescribed courses, and open AMR surveillance data."
+        }
+      },
+      "note": "連結待權責單位確認深層網址",
+      "sourceHash": "906381804d33",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/amr-one-health/",
+      "path": "/topics/amr-one-health/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/amr-one-health.md",
+      "governance": {
+        "owner": "unit.infection-control",
+        "ownerName": "感染管制及生物安全組",
+        "steward": null,
+        "reviewedAt": "2026-09-15",
+        "reviewPeriodMonths": 6,
+        "nextReviewAt": "2027-03-15",
+        "daysToReview": 165,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "topic.amr-one-health",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "ended": false,
+        "upcoming": false,
+        "linkHealth": {
+          "total": 2,
+          "ok": 0,
+          "broken": 0,
+          "unchecked": 2
+        },
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "906381804d33",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-15",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "topic.anonymous-testing",
+      "type": "topic",
+      "title": "性傳染病匿名諮詢與篩檢",
+      "owner": "unit.chronic-infectious",
+      "publishedAt": "2025-06-01",
+      "reviewedAt": "2026-06-10",
+      "reviewPeriodMonths": 6,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "symptoms"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.hiv"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-06-10"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-06-10",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "全國匿名篩檢醫院不需健保卡、以代號登記，提供 HIV 與梅毒篩檢及諮詢；也可索取或購買 HIV 自我篩檢試劑，陽性者由個管師協助轉介治療。",
+      "keywords": [
+        "匿名篩檢",
+        "HIV",
+        "梅毒",
+        "自我篩檢",
+        "個案管理師"
+      ],
+      "image": "/img/topics/anonymous-testing.svg",
+      "slug": "anonymous-testing",
+      "kind": "program",
+      "priority": 4,
+      "introMarkdown": "**匿名篩檢**：全國指定醫院提供 HIV 匿名篩檢與諮詢服務，不需健保卡、不留真實姓名，以代號登記；同時可詢問梅毒篩檢與 PrEP。\n\n**自我篩檢**：可透過自動服務機、合作藥局或網路購買 HIV 自我篩檢試劑，部分族群符合條件可享優惠。結果陽性請至醫院做確認檢驗。\n\n**空窗期提醒**：距離危險行為時間太短，陰性結果不代表沒有感染，請依說明再次篩檢。\n\n**陽性怎麼辦**：個案管理師會協助轉介愛滋指定醫院，及早治療可達到病毒量測不到（U=U）。",
+      "links": [
+        {
+          "label": "哪裡可以做匿名 HIV 篩檢？",
+          "href": "/faq/hiv-test-where/"
+        },
+        {
+          "label": "影片：HIV 匿名篩檢這樣做",
+          "href": "/media/hiv-anonymous-testing/"
+        },
+        {
+          "label": "暴露後預防性投藥 PEP",
+          "href": "/faq/hiv-pep/"
+        },
+        {
+          "label": "HIV 自我篩檢計畫網站",
+          "href": "https://hiva.cdc.gov.tw/",
+          "external": true,
+          "status": "unchecked",
+          "note": "網址待慢性組確認"
+        }
+      ],
+      "contentIds": [
+        "faq.hiv-test-where",
+        "faq.hiv-pep",
+        "disease.hiv",
+        "media.hiv-anonymous-testing"
+      ],
+      "i18n": {
+        "en": {
+          "title": "Anonymous counselling and testing for sexually transmitted infections",
+          "summary": "Designated hospitals offer anonymous HIV and syphilis testing without an NHI card; HIV self-test kits are also available, and case managers link positive results to care."
+        }
+      },
+      "sourceHash": "e9e75c65765d",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/anonymous-testing/",
+      "path": "/topics/anonymous-testing/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/anonymous-testing.md",
+      "governance": {
+        "owner": "unit.chronic-infectious",
+        "ownerName": "慢性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-06-10",
+        "reviewPeriodMonths": 6,
+        "nextReviewAt": "2026-12-10",
+        "daysToReview": 70,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "topic.anonymous-testing",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "ended": false,
+        "upcoming": false,
+        "linkHealth": {
+          "total": 1,
+          "ok": 0,
+          "broken": 0,
+          "unchecked": 1
+        },
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "e9e75c65765d",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-06-10",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "topic.prep",
+      "type": "topic",
+      "title": "PrEP 暴露愛滋病毒前預防性投藥計畫",
+      "owner": "unit.chronic-infectious",
+      "publishedAt": "2025-06-01",
+      "reviewedAt": "2026-06-05",
+      "reviewPeriodMonths": 6,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "symptoms"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.hiv"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-06-05"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-06-05",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "疾管署與合作醫院推動 PrEP 計畫：說明服藥方式、適用對象、服藥前後檢查與補助申請，並列出合作醫院查詢與諮詢管道。",
+      "keywords": [
+        "PrEP",
+        "預防性投藥",
+        "HIV",
+        "合作醫院",
+        "補助"
+      ],
+      "image": "/img/topics/prep.svg",
+      "slug": "prep",
+      "kind": "program",
+      "priority": 4,
+      "introMarkdown": "PrEP 是在可能暴露 HIV **之前**服用抗病毒藥物，正確使用可大幅降低經性行為感染的風險。\n\n**誰適合**：近期有無套性行為、伴侶為未穩定治療之感染者、曾罹患性傳染病或曾使用 PEP 者，可與 PrEP 合作醫院醫師討論。\n\n**怎麼開始**：預約合作醫院 → 抽血確認 HIV 陰性、腎功能與 B 型肝炎 → 醫師評估每日或事件型服藥 → 每 3 個月回診追蹤。\n\n**補助**：符合計畫條件者可獲藥費或檢驗費補助，名額與條件以當年度公告為準（示意）。",
+      "links": [
+        {
+          "label": "影片：三分鐘認識 PrEP",
+          "href": "/media/prep-intro/"
+        },
+        {
+          "label": "HIV 疾病介紹",
+          "href": "/diseases/hiv/"
+        },
+        {
+          "label": "暴露後預防性投藥 PEP",
+          "href": "/faq/hiv-pep/"
+        },
+        {
+          "label": "PrEP 合作醫院名單（現行官網）",
+          "href": "/pending/?ref=topic.prep&doc=PrEP%20合作醫院名單",
+          "external": false,
+          "status": "unchecked",
+          "note": "名單尚未遷移到新站；原型期間請洽 1922 或至現行官網查詢"
+        }
+      ],
+      "contentIds": [
+        "media.prep-intro",
+        "disease.hiv",
+        "faq.hiv-pep"
+      ],
+      "i18n": {
+        "en": {
+          "title": "PrEP programme",
+          "summary": "How to start pre-exposure prophylaxis with partner hospitals: eligibility, dosing options, tests before and during PrEP, and subsidies."
+        }
+      },
+      "sourceHash": "8075de7e151f",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/prep/",
+      "path": "/topics/prep/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/prep.md",
+      "governance": {
+        "owner": "unit.chronic-infectious",
+        "ownerName": "慢性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-06-05",
+        "reviewPeriodMonths": 6,
+        "nextReviewAt": "2026-12-05",
+        "daysToReview": 65,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "topic.prep",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "ended": false,
+        "upcoming": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "8075de7e151f",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-06-05",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "topic.tb-prevention",
+      "type": "topic",
+      "title": "結核病防治專區",
+      "owner": "unit.chronic-infectious",
+      "steward": "慢性傳染病組承辦人",
+      "publishedAt": "2026-09-15",
+      "reviewedAt": "2026-09-22",
+      "reviewPeriodMonths": 6,
+      "status": "published",
+      "audience": [
+        "professional",
+        "public"
+      ],
+      "tasks": [
+        "symptoms",
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "doc.tb-guideline",
+        "doc.tb-manual"
+      ],
+      "diseases": [
+        "disease.tuberculosis",
+        "disease.mdr-tb"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-30"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "pending"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "給醫療人員與衛生局的結核病防治入口：診治指引、工作手冊、病例定義與通報、檢驗、都治、潛伏結核感染、接觸者檢查、抗藥性照護體系、高風險族群篩檢與統計。",
+      "keywords": [
+        "結核病防治",
+        "都治",
+        "潛伏結核感染",
+        "接觸者檢查",
+        "TMTC",
+        "2035 消除結核",
+        "高風險族群篩檢"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Disease/SubIndex/{id}#tb-prevention",
+        "https://www.cdc.gov.tw/Category/MPage/{id}#dots",
+        "https://www.cdc.gov.tw/Category/MPage/{id}#mdr",
+        "https://www.cdc.gov.tw/Category/MPage/{id}#end-tb-2035",
+        "https://www.cdc.gov.tw/Category/MPage/{id}#high-risk",
+        "https://www.cdc.gov.tw/Category/List/{id}#links"
+      ],
+      "slug": "tb-prevention",
+      "kind": "program",
+      "priority": 4,
+      "introMarkdown": "臺灣以 **2035 年消除結核**為目標（發生率降至每十萬人口 10 例以下），策略是「早期發現、完整治療、預防發病」：\n\n- **指引與手冊**：結核病診治指引（第八版）、潛伏結核感染診治指引、接觸者檢查指引、都治計畫作業手冊、結核病防治工作手冊。\n- **通報與檢驗**：第三類法定傳染病一週內通報（多重抗藥性結核病為第二類，24 小時內）；疑似個案 3 套痰液並以分子快速檢測為第一線檢驗。\n- **都治（DOTS）**：關懷員每日送藥到手、親眼看服藥，所有確診個案均納入。\n- **潛伏結核感染（LTBI）**：接觸者與高風險族群公費 IGRA 檢驗及 3HP／1HP 等短程治療。\n- **抗藥性結核病醫療照護體系（TMTC）**：專責團隊收治、全口服短程處方、進階都治。\n- **高風險族群主動篩檢**：矯正機關、長期照護機構、移工、山地鄉與糖尿病等族群。\n\n![結核病發生率目標路徑示意圖](/files/topic.tb-prevention/end-tb-2035.png)\n\n圖：結核病發生率目標路徑（每十萬人口；深色為歷年、淺色為目標路徑、紅色虛線為 2035 年目標 10 例；數字為示意）。",
+      "links": [
+        {
+          "label": "結核病診治指引（第八版）",
+          "href": "/documents/tb-guideline.2025-09-01/"
+        },
+        {
+          "label": "潛伏結核感染診治指引",
+          "href": "/documents/ltbi-guideline.2024-01-01/"
+        },
+        {
+          "label": "結核病接觸者檢查指引",
+          "href": "/documents/tb-contact-investigation.2025-01-01/"
+        },
+        {
+          "label": "結核病都治（DOTS）計畫作業手冊",
+          "href": "/documents/dots-manual.2025-01-01/"
+        },
+        {
+          "label": "結核病防治工作手冊",
+          "href": "/documents/tb-manual.2025-07-01/"
+        },
+        {
+          "label": "結核病病例定義與通報定義",
+          "href": "/documents/tb-case-definition.2024-01-01/"
+        },
+        {
+          "label": "法定傳染病通報",
+          "href": "/apply/notifiable-disease-report/"
+        },
+        {
+          "label": "結核病檢驗項目與送驗規定",
+          "href": "/lab/tuberculosis/"
+        },
+        {
+          "label": "潛伏結核感染檢驗與治療",
+          "href": "/apply/ltbi-treatment/"
+        },
+        {
+          "label": "結核病診治費用補助與隔離治療",
+          "href": "/apply/tb-treatment-subsidy/"
+        },
+        {
+          "label": "結核病新案統計（資料集）",
+          "href": "/data/#dataset.tb-new-cases"
+        },
+        {
+          "label": "研究：移工結核病主動發現與都治成效評估",
+          "href": "/research/2025-migrant-tb-active-case-finding/"
+        },
+        {
+          "label": "WHO 結核病主題頁",
+          "href": "https://www.who.int/health-topics/tuberculosis",
+          "external": true,
+          "status": "unchecked"
+        }
+      ],
+      "contentIds": [
+        "disease.tuberculosis",
+        "doc.tb-guideline.2025-09-01",
+        "doc.ltbi-guideline.2024-01-01",
+        "doc.tb-contact-investigation.2025-01-01",
+        "doc.dots-manual.2025-01-01",
+        "doc.tb-manual.2025-07-01",
+        "doc.tb-case-definition.2024-01-01",
+        "labtest.tuberculosis",
+        "service.ltbi-treatment",
+        "service.tb-treatment-subsidy",
+        "dataset.tb-new-cases",
+        "research.2025-migrant-tb-active-case-finding",
+        "faq.tb-dots-what",
+        "faq.ltbi-treat-or-not",
+        "faq.mdr-tb"
+      ],
+      "i18n": {
+        "en": {
+          "title": "Tuberculosis control hub",
+          "summary": "Entry point for clinicians and health departments: TB guidelines, manuals, case definition and notification, laboratory testing, DOTS, latent TB infection, contact investigation, drug-resistant TB care, high-risk screening and statistics."
+        }
+      },
+      "assets": [
+        {
+          "file": "end-tb-2035.png",
+          "kind": "image",
+          "alt": "結核病發生率目標路徑長條圖（示意）：每十萬人口由 2016 年 44 例逐年下降，2024 年約 28 例，目標 2035 年降至 10 例以下（紅色虛線）。",
+          "mime": "image/png",
+          "bytes": 1916,
+          "sha256": "dc954355205685a1625cdd088c04d3727a98953374b09bfea6466c8884f8fde5",
+          "width": 480,
+          "height": 270,
+          "source": "疾管署慢性傳染病組（原型示意圖，依 2035 消除結核目標繪製）",
+          "license": "OGDL-1.0",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/files/topic.tb-prevention/end-tb-2035.png"
+        }
+      ],
+      "sourceHash": "c8e50940a2d0",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/tb-prevention/",
+      "path": "/topics/tb-prevention/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/tb-prevention.md",
+      "governance": {
+        "owner": "unit.chronic-infectious",
+        "ownerName": "慢性傳染病組",
+        "steward": "慢性傳染病組承辦人",
+        "reviewedAt": "2026-09-22",
+        "reviewPeriodMonths": 6,
+        "nextReviewAt": "2027-03-22",
+        "daysToReview": 172,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "topic.tb-prevention",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "ended": false,
+        "upcoming": false,
+        "linkHealth": {
+          "total": 1,
+          "ok": 0,
+          "broken": 0,
+          "unchecked": 1
+        },
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "c8e50940a2d0",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "pending"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "topic.ltc-infection-control",
+      "type": "topic",
+      "title": "長照機構感染管制專區",
+      "owner": "unit.infection-control",
+      "publishedAt": "2025-03-01",
+      "reviewedAt": "2026-09-10",
+      "reviewPeriodMonths": 6,
+      "status": "published",
+      "audience": [
+        "professional",
+        "public"
+      ],
+      "tasks": [
+        "vaccines"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.influenza",
+        "disease.covid-19",
+        "disease.tuberculosis"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-10"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-10",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "提供長期照護機構感染管制手冊、查核基準、群聚通報流程、住民與工作人員疫苗接種及教育訓練教材，協助機構預防呼吸道與腸胃道群聚。",
+      "keywords": [
+        "長照機構",
+        "感染管制",
+        "群聚",
+        "查核",
+        "教育訓練",
+        "流感疫苗"
+      ],
+      "image": "/img/topics/ltc-infection-control.svg",
+      "slug": "ltc-infection-control",
+      "kind": "resource-hub",
+      "priority": 5,
+      "introMarkdown": "長照機構住民年紀大、慢性病多、共同生活，是呼吸道與腸胃道群聚的高風險場所。本專區提供機構負責人、護理人員與照服員：\n\n- **手冊與基準**：長期照護機構感染管制手冊、感染管制查核基準。\n- **群聚處理**：住民 3 天內出現 2 人以上類似症狀，請啟動調查並通報衛生局。\n- **疫苗**：住民與工作人員每年接種流感疫苗，並依建議接種新冠疫苗、肺炎鏈球菌疫苗。\n- **教育訓練**：手部衛生、隔離防護、環境清消教材。",
+      "links": [
+        {
+          "label": "長照機構感染管制手冊",
+          "href": "/publications/manual-ltc-infection-control-2026/"
+        },
+        {
+          "label": "影片：長照機構一起打流感疫苗",
+          "href": "/media/ltc-flu-vaccine/"
+        },
+        {
+          "label": "疑似群聚通報 1922",
+          "href": "/apply/cluster-report-1922/"
+        },
+        {
+          "label": "感染管制查核申訴與諮詢",
+          "href": "/apply/infection-control-audit-complaint/"
+        },
+        {
+          "label": "衛福部長照專區",
+          "href": "https://1966.gov.tw/",
+          "external": true,
+          "status": "unchecked",
+          "note": "網址待確認"
+        }
+      ],
+      "contentIds": [
+        "media.ltc-flu-vaccine",
+        "doc.infection-control-healthcare.2026-03-01",
+        "faq.flu-vaccine-who",
+        "publication.manual-ltc-infection-control-2026"
+      ],
+      "i18n": {
+        "en": {
+          "title": "Infection control in long-term care facilities",
+          "summary": "Manuals, audit criteria, cluster reporting, vaccination for residents and staff, and training materials to help long-term care facilities prevent outbreaks."
+        }
+      },
+      "sourceHash": "b98d34e79246",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/ltc-infection-control/",
+      "path": "/topics/ltc-infection-control/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/ltc-infection-control.md",
+      "governance": {
+        "owner": "unit.infection-control",
+        "ownerName": "感染管制及生物安全組",
+        "steward": null,
+        "reviewedAt": "2026-09-10",
+        "reviewPeriodMonths": 6,
+        "nextReviewAt": "2027-03-10",
+        "daysToReview": 160,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "topic.ltc-infection-control",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "ended": false,
+        "upcoming": false,
+        "linkHealth": {
+          "total": 1,
+          "ok": 0,
+          "broken": 0,
+          "unchecked": 1
+        },
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "b98d34e79246",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-10",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "topic.new-residents-migrant-health",
+      "type": "topic",
+      "title": "新住民與移工健康：七語防疫資訊",
+      "owner": "unit.pr",
+      "publishedAt": "2025-09-01",
+      "reviewedAt": "2026-08-15",
+      "reviewPeriodMonths": 6,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "symptoms",
+        "vaccines"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.tuberculosis",
+        "disease.dengue",
+        "disease.measles"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-08-15"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-08-15",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "reviewed",
+          "reviewedAt": "2026-08-15",
+          "reviewer": "越南語審核人（約用通譯）"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "summary": "彙整中、英、日、越、印、泰、菲七語的防疫資訊：移工健康檢查、結核病、登革熱、疫苗接種與 1922 多語服務，供新住民、移工、雇主與仲介使用。",
+      "keywords": [
+        "新住民",
+        "移工",
+        "多語",
+        "越南語",
+        "印尼語",
+        "泰語",
+        "1922"
+      ],
+      "image": "/img/topics/new-residents-migrant-health.svg",
+      "slug": "new-residents-migrant-health",
+      "kind": "resource-hub",
+      "priority": 5,
+      "introMarkdown": "本專區提供**七種語言**（繁體中文、English、日本語、Tiếng Việt、Bahasa Indonesia、ไทย、Tagalog）的防疫資訊與衛教素材。\n\n- **移工健康檢查**：入境後 3 個工作日內及聘僱期間定期檢查。\n- **結核病**：咳嗽超過兩週請就醫，治療免費。\n- **疫苗**：新住民子女與成人可依身分接種公費疫苗。\n- **1922 防疫專線**：提供越南語、印尼語、泰語、英語服務（服務時段以公告為準）。\n\n各語版本的審核狀態標示於每頁語言選單；機器翻譯版本會明確標示。",
+      "links": [
+        {
+          "label": "影片：移工健康檢查（越南語字幕）",
+          "href": "/media/migrant-worker-health-check/"
+        },
+        {
+          "label": "結核病：咳嗽兩週要就醫",
+          "href": "/faq/tb-cough-two-weeks/"
+        },
+        {
+          "label": "Vietnamese / Tiếng Việt",
+          "href": "/vi/"
+        },
+        {
+          "label": "Bahasa Indonesia",
+          "href": "/id/"
+        },
+        {
+          "label": "勞動部勞動力發展署 1955 專線",
+          "href": "https://www.wda.gov.tw/",
+          "external": true,
+          "status": "unchecked",
+          "note": "網址待確認"
+        },
+        {
+          "label": "內政部移民署新住民資訊",
+          "href": "https://www.immigration.gov.tw/",
+          "external": true,
+          "status": "unchecked",
+          "note": "網址待確認"
+        }
+      ],
+      "contentIds": [
+        "media.migrant-worker-health-check",
+        "faq.tb-cough-two-weeks",
+        "disease.tuberculosis",
+        "publication.poster-tb-seven-languages"
+      ],
+      "i18n": {
+        "en": {
+          "title": "Health for new residents and migrant workers: information in seven languages",
+          "summary": "Disease prevention information in seven languages: migrant worker health checks, TB, dengue, vaccines and the multilingual 1922 hotline."
+        },
+        "vi": {
+          "title": "Sức khỏe cho tân di dân và lao động nhập cư: thông tin bằng bảy ngôn ngữ",
+          "summary": "Thông tin phòng dịch bằng bảy ngôn ngữ: khám sức khỏe lao động, bệnh lao, sốt xuất huyết, tiêm chủng và đường dây 1922 đa ngôn ngữ."
+        }
+      },
+      "sourceHash": "46e9969187db",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/new-residents-migrant-health/",
+      "path": "/topics/new-residents-migrant-health/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/new-residents-migrant-health.md",
+      "governance": {
+        "owner": "unit.pr",
+        "ownerName": "公關室",
+        "steward": null,
+        "reviewedAt": "2026-08-15",
+        "reviewPeriodMonths": 6,
+        "nextReviewAt": "2027-02-15",
+        "daysToReview": 137,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "topic.new-residents-migrant-health",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "ended": false,
+        "upcoming": false,
+        "linkHealth": {
+          "total": 2,
+          "ok": 0,
+          "broken": 0,
+          "unchecked": 2
+        },
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "46e9969187db",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-08-15",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "machine"
+          },
+          "tl": {
+            "status": "machine"
+          },
+          "vi": {
+            "status": "reviewed",
+            "reviewedAt": "2026-08-15",
+            "reviewer": "越南語審核人（約用通譯）"
+          },
+          "id": {
+            "status": "machine"
+          },
+          "th": {
+            "status": "machine"
+          }
+        },
+        "translationStale": {
+          "en": false,
+          "ja": false,
+          "tl": false,
+          "vi": false,
+          "id": false,
+          "th": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en",
+          "ja",
+          "tl",
+          "vi",
+          "id",
+          "th"
+        ]
+      }
+    },
+    {
+      "id": "topic.sti-resources",
+      "type": "topic",
+      "title": "性傳染病衛教資源",
+      "owner": "unit.chronic-infectious",
+      "publishedAt": "2025-12-01",
+      "reviewedAt": "2026-07-01",
+      "reviewPeriodMonths": 6,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "symptoms"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.hiv",
+        "disease.mpox"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-07-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "彙整愛滋、梅毒、淋病、M痘等性傳染病的衛教單張、影片與校園教材，說明安全性行為、保險套與篩檢資訊，供民眾、學校與團體下載使用。",
+      "keywords": [
+        "性傳染病",
+        "愛滋",
+        "梅毒",
+        "保險套",
+        "衛教資源",
+        "校園"
+      ],
+      "image": "/img/topics/sti-resources.svg",
+      "slug": "sti-resources",
+      "kind": "resource-hub",
+      "priority": 5,
+      "introMarkdown": "性傳染病多半可以預防、也可以治療。本專區彙整疾管署製作的**衛教單張、影片與教學簡報**，學校、醫療院所與民間團體可免費下載使用（政府資料開放授權）。\n\n- **預防**：全程正確使用保險套與水性潤滑液；高風險者可考慮 PrEP、M痘疫苗。\n- **篩檢**：曾有無套性行為建議定期篩檢 HIV 與梅毒；匿名篩檢不需健保卡。\n- **就醫**：生殖器出現潰瘍、分泌物或皮疹，請儘速至皮膚科、泌尿科或感染科就醫。",
+      "links": [
+        {
+          "label": "HIV 疾病介紹",
+          "href": "/diseases/hiv/"
+        },
+        {
+          "label": "M痘疾病介紹",
+          "href": "/diseases/mpox/"
+        },
+        {
+          "label": "影片：HIV 匿名篩檢這樣做",
+          "href": "/media/hiv-anonymous-testing/"
+        },
+        {
+          "label": "衛教素材資料集",
+          "href": "/data/#dataset.health-education-materials"
+        },
+        {
+          "label": "教育部性別平等教育全球資訊網",
+          "href": "https://www.gender.edu.tw/",
+          "external": true,
+          "status": "unchecked",
+          "note": "網址待確認"
+        }
+      ],
+      "contentIds": [
+        "disease.hiv",
+        "disease.mpox",
+        "media.hiv-anonymous-testing",
+        "media.mpox-vaccine",
+        "dataset.health-education-materials"
+      ],
+      "sourceHash": "c7873c5678ac",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/sti-resources/",
+      "path": "/topics/sti-resources/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/sti-resources.md",
+      "governance": {
+        "owner": "unit.chronic-infectious",
+        "ownerName": "慢性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-07-01",
+        "reviewPeriodMonths": 6,
+        "nextReviewAt": "2027-01-01",
+        "daysToReview": 92,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "topic.sti-resources",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "ended": false,
+        "upcoming": false,
+        "linkHealth": {
+          "total": 1,
+          "ok": 0,
+          "broken": 0,
+          "unchecked": 1
+        },
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "c7873c5678ac",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "topic.vaccine-fund-donation",
+      "type": "topic",
+      "title": "疫苗基金：您的捐款，守護下一代",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2025-01-01",
+      "reviewedAt": "2026-07-01",
+      "reviewPeriodMonths": 6,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "vaccines"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "vaccines": [
+        "vaccine.ev71",
+        "vaccine.pneumococcal"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-07-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-07-01",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "疫苗基金依法接受各界捐款，專款用於公費疫苗採購與新疫苗導入；說明捐款方式、收據與抵稅，並公開基金收支與捐款運用情形。",
+      "keywords": [
+        "疫苗基金",
+        "捐款",
+        "公費疫苗",
+        "抵稅",
+        "收據"
+      ],
+      "image": "/img/topics/vaccine-fund-donation.svg",
+      "slug": "vaccine-fund-donation",
+      "kind": "program",
+      "priority": 6,
+      "introMarkdown": "依《傳染病防治法》設置之**疫苗基金**，用於採購公費疫苗、擴大接種對象與導入新疫苗。基金來源包括政府預算、菸品健康福利捐分配，以及**各界捐款**。\n\n- 捐款可用郵政劃撥、銀行匯款或臨櫃方式辦理，詳見申請服務頁。\n- 疫苗基金開立之收據可依《所得稅法》作為列舉扣除憑證。\n- 基金收支與決算依規定公開，可於開放資料查詢。",
+      "links": [
+        {
+          "label": "我要捐款：捐款方式與收據",
+          "href": "/apply/vaccine-fund-donation/"
+        },
+        {
+          "label": "疫苗與預防接種",
+          "href": "/vaccines/"
+        },
+        {
+          "label": "預算與決算開放資料",
+          "href": "/data/#dataset.budget-final-accounts"
+        }
+      ],
+      "contentIds": [
+        "service.vaccine-fund-donation",
+        "dataset.budget-final-accounts",
+        "vaccine.pneumococcal"
+      ],
+      "i18n": {
+        "en": {
+          "title": "Vaccine Fund donations",
+          "summary": "The statutory Vaccine Fund accepts public donations to purchase publicly funded vaccines; how to donate, receipts, tax deduction and fund disclosures."
+        }
+      },
+      "sourceHash": "b7f61f43b61e",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/vaccine-fund-donation/",
+      "path": "/topics/vaccine-fund-donation/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/vaccine-fund-donation.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-07-01",
+        "reviewPeriodMonths": 6,
+        "nextReviewAt": "2027-01-01",
+        "daysToReview": 92,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "topic.vaccine-fund-donation",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "ended": false,
+        "upcoming": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "b7f61f43b61e",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-07-01",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "topic.world-aids-day-2025",
+      "type": "topic",
+      "title": "2025 世界愛滋日：篩檢、治療、不歧視",
+      "owner": "unit.chronic-infectious",
+      "publishedAt": "2025-11-15",
+      "reviewedAt": "2025-12-15",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "symptoms"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.hiv"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2025-12-15"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "2025 年世界愛滋日活動專區（2025-11-15 至 12-15）：推廣匿名篩檢、U=U 與反歧視，活動已結束，頁面保留作為紀錄。",
+      "keywords": [
+        "世界愛滋日",
+        "HIV",
+        "U=U",
+        "反歧視",
+        "活動"
+      ],
+      "note": "活動已於 2025-12-15 結束，專區保留為紀錄；reviewPeriodMonths 設 0（不再定期審閱）；連結待權責單位確認深層網址",
+      "image": "/img/topics/world-aids-day-2025.svg",
+      "slug": "world-aids-day-2025",
+      "kind": "campaign",
+      "startAt": "2025-11-15",
+      "endAt": "2025-12-15",
+      "priority": 7,
+      "introMarkdown": "**本活動已於 2025 年 12 月 15 日結束**，以下內容保留作為紀錄；最新服務請見「性傳染病匿名諮詢與篩檢」專區。\n\n2025 年世界愛滋日，疾管署以「篩檢、治療、不歧視」為主軸，與民間團體合辦社區篩檢快閃、校園講座與線上活動，推廣 U=U（測不到病毒就不具傳染力）的觀念。",
+      "links": [
+        {
+          "label": "新聞稿：2025 世界愛滋日",
+          "href": "/news/2025-12-01-world-aids-day/"
+        },
+        {
+          "label": "性傳染病匿名諮詢與篩檢（現行服務）",
+          "href": "/topics/anonymous-testing/"
+        },
+        {
+          "label": "UNAIDS World AIDS Day",
+          "href": "https://www.unaids.org/",
+          "external": true,
+          "status": "unchecked"
+        }
+      ],
+      "contentIds": [
+        "news.2025-12-01-world-aids-day",
+        "topic.anonymous-testing",
+        "disease.hiv"
+      ],
+      "sourceHash": "bceada37f4c4",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/world-aids-day-2025/",
+      "path": "/topics/world-aids-day-2025/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/world-aids-day-2025.md",
+      "governance": {
+        "owner": "unit.chronic-infectious",
+        "ownerName": "慢性傳染病組",
+        "steward": null,
+        "reviewedAt": "2025-12-15",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "ended",
+        "lifecycleLabel": "已結束",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "topic.world-aids-day-2025",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [
+          {
+            "kind": "ended",
+            "level": "info",
+            "text": "本專區已於 2025-12-15 結束，保留供查閱。",
+            "href": null,
+            "path": null,
+            "endAt": "2025-12-15"
+          }
+        ],
+        "reverseAuditHits": 0,
+        "ended": true,
+        "upcoming": false,
+        "linkHealth": {
+          "total": 1,
+          "ok": 0,
+          "broken": 0,
+          "unchecked": 1
+        },
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "bceada37f4c4",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "topic.international-cooperation",
+      "type": "topic",
+      "sourceLang": "en",
+      "title": "International Cooperation",
+      "owner": "unit.planning",
+      "steward": "企劃組承辦人",
+      "publishedAt": "2026-10-01",
+      "reviewedAt": "2026-10-01",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-10-01"
+      },
+      "languages": {
+        "en": {
+          "status": "source"
+        },
+        "zh-TW": {
+          "status": "reviewed",
+          "reviewedAt": "2026-10-01",
+          "reviewer": "企劃組中文審核人",
+          "sourceHash": "53b6895040d0"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "How Taiwan CDC works with WHO and partner countries: the 24/7 IHR National Focal Point, multilateral and bilateral cooperation, international training and English publications.",
+      "slug": "international-cooperation",
+      "kind": "program",
+      "priority": 9,
+      "keywords": [
+        "international cooperation",
+        "IHR",
+        "National Focal Point",
+        "WHO",
+        "APEC",
+        "GHSA",
+        "New Southbound",
+        "FETP",
+        "international training"
+      ],
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/En/Category/List/{id}#international-cooperation"
+      ],
+      "introMarkdown": "Taiwan Centers for Disease Control (Taiwan CDC) works with the World Health Organization (WHO), regional networks and partner countries so that outbreaks are detected early and information crosses borders quickly.\n\n- **IHR National Focal Point, 24/7** — Taiwan CDC carries out the National Focal Point functions under the International Health Regulations (IHR 2005). To contact the focal point about an urgent public health event, call the Taiwan CDC hotline 1922 at any time (from abroad +886-800-001922); official correspondence goes through the switchboard +886-2-2395-9825.\n- **Multilateral cooperation** — technical exchanges with WHO and during the World Health Assembly week, the APEC Health Working Group and the Global Health Security Agenda (GHSA).\n- **Bilateral cooperation** — the United States, Japan, the European Union and New Southbound partners in South and Southeast Asia.\n- **Training** — the Field Epidemiology Training Program (FETP), international workshops and laboratory training; foreign health officials apply online through the international training application service.\n- **Publications** — the Taiwan Epidemiology Bulletin and the Taiwan CDC Annual Report in English.",
+      "links": [
+        {
+          "label": "IHR National Focal Point (24/7)",
+          "href": "/international/ihr-focal-point/",
+          "sourceLang": "en",
+          "i18n": {
+            "zh-TW": {
+              "label": "IHR 國家對口窗口（24 小時）"
+            }
+          }
+        },
+        {
+          "label": "Multilateral cooperation: WHO, WHA, APEC, GHSA",
+          "href": "/international/multilateral/",
+          "sourceLang": "en",
+          "i18n": {
+            "zh-TW": {
+              "label": "多邊合作：WHO、WHA、APEC、GHSA"
+            }
+          }
+        },
+        {
+          "label": "Bilateral cooperation and MOUs",
+          "href": "/international/bilateral/",
+          "sourceLang": "en",
+          "i18n": {
+            "zh-TW": {
+              "label": "雙邊合作與合作備忘錄"
+            }
+          }
+        },
+        {
+          "label": "International training and FETP",
+          "href": "/international/training/",
+          "sourceLang": "en",
+          "i18n": {
+            "zh-TW": {
+              "label": "國際訓練與 FETP"
+            }
+          }
+        },
+        {
+          "label": "Global health security",
+          "href": "/international/global-health-security/",
+          "sourceLang": "en",
+          "i18n": {
+            "zh-TW": {
+              "label": "全球衛生安全"
+            }
+          }
+        },
+        {
+          "label": "English publications",
+          "href": "/international/publications-en/",
+          "sourceLang": "en",
+          "i18n": {
+            "zh-TW": {
+              "label": "英文出版品"
+            }
+          }
+        },
+        {
+          "label": "Apply for international training",
+          "href": "/apply/international-training-application/",
+          "sourceLang": "en",
+          "i18n": {
+            "zh-TW": {
+              "label": "申請國際訓練"
+            }
+          }
+        },
+        {
+          "label": "Taiwan Epidemiology Bulletin",
+          "href": "/publications/bulletin-42-18/",
+          "sourceLang": "en",
+          "i18n": {
+            "zh-TW": {
+              "label": "疫情報導（英文）"
+            }
+          }
+        }
+      ],
+      "sections": [
+        "page.international-ihr-focal-point",
+        "page.international-multilateral",
+        "page.international-bilateral",
+        "page.international-training",
+        "page.international-global-health-security",
+        "page.international-publications-en"
+      ],
+      "contentIds": [
+        "page.international-ihr-focal-point",
+        "page.international-multilateral",
+        "page.international-bilateral",
+        "page.international-training",
+        "page.international-global-health-security",
+        "page.international-publications-en",
+        "service.international-training-application",
+        "news.2026-05-22-international-wha-technical-exchange",
+        "news.2026-08-17-international-fetp-workshop",
+        "news.2026-09-15-international-health-mou",
+        "publication.bulletin-42-18",
+        "publication.annual-report-2025",
+        "topic.amr-one-health"
+      ],
+      "i18n": {
+        "zh-TW": {
+          "title": "國際合作",
+          "summary": "疾管署如何與 WHO 及夥伴國家合作：24 小時國際衛生條例國家對口窗口、多邊與雙邊合作、國際訓練與英文出版品。",
+          "keywords": [
+            "國際合作",
+            "國際衛生條例",
+            "國家對口窗口",
+            "世界衛生組織",
+            "APEC",
+            "全球衛生安全綱領",
+            "新南向",
+            "FETP",
+            "國際訓練"
+          ],
+          "introMarkdown": "疾管署與世界衛生組織（WHO）、區域網絡及夥伴國家合作，讓疫情及早被偵測、資訊快速跨境流通。\n\n- **國際衛生條例國家對口窗口（24 小時）**：疾管署執行國際衛生條例（IHR 2005）國家對口窗口職能。緊急公共衛生事件請隨時撥打防疫專線 1922（國外 +886-800-001922）；公文往來請經總機 +886-2-2395-9825。\n- **多邊合作**：與 WHO 技術交流、世界衛生大會（WHA）期間專家會談、APEC 衛生工作小組、全球衛生安全綱領（GHSA）。\n- **雙邊合作**：美國、日本、歐盟與南亞及東南亞的新南向夥伴。\n- **國際訓練**：田野流行病學訓練計畫（FETP）、國際研習營與實驗室訓練；外國衛生人員可線上申請國際訓練。\n- **出版品**：英文疫情報導（Taiwan Epidemiology Bulletin）與疾病管制署年報。"
+        }
+      },
+      "sourceHash": "53b6895040d0",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/international-cooperation/",
+      "path": "/topics/international-cooperation/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/international-cooperation.md",
+      "governance": {
+        "owner": "unit.planning",
+        "ownerName": "企劃組",
+        "steward": "企劃組承辦人",
+        "reviewedAt": "2026-10-01",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-10-01",
+        "daysToReview": 365,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "topic.international-cooperation",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "ended": false,
+        "upcoming": false,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "53b6895040d0",
+        "languages": {
+          "en": {
+            "status": "source"
+          },
+          "zh-TW": {
+            "status": "reviewed",
+            "reviewedAt": "2026-10-01",
+            "reviewer": "企劃組中文審核人",
+            "sourceHash": "53b6895040d0"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "zh-TW": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    }
+  ]
+}

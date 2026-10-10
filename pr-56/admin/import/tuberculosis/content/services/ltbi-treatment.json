@@ -1,0 +1,73 @@
+{
+  "id": "service.ltbi-treatment",
+  "type": "service",
+  "title": "結核病潛伏結核感染治療",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2019-01-15",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "結核病接觸者與計畫對象可接受公費 IGRA 檢驗與潛伏結核感染治療（3HP、1HP、3HR、4R、9H），治療期間由關懷員陪伴服藥（DOPT）。",
+  "slug": "ltbi-treatment",
+  "serviceType": "other",
+  "whoCanApply": [
+    "醫療院所"
+  ],
+  "introMarkdown": "結核病接觸者與計畫對象可接受公費 IGRA 檢驗與潛伏結核感染治療（3HP、1HP、3HR、4R、9H），治療期間由關懷員陪伴服藥（DOPT）。\n\n潛伏結核感染沒有症狀、不會傳染，但一生中約 5–10% 會發病。**完成潛伏結核感染治療可降低 9 成以上的發病風險。**\n\n檢驗以抽血的丙型干擾素釋放試驗（IGRA）為主，陽性者先照胸部 X 光排除發病，再由合作醫師評估處方；治療期間由關懷員陪伴服藥（DOPT）。檢驗、治療與關懷服務由公費支應。",
+  "steps": [
+    {
+      "title": "（待補：舊頁是查詢清單，請補申辦或查詢步驟）"
+    }
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/SuRWu-xWEvR_vwhU83fFUs"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 10 處（mso 樣式 4、Mso 類別 3、命名空間標籤 3）"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站型別是 service（service.ltbi-treatment），草稿直接建成 service，看不出來的欄位以「（待補）」佔位"
+      },
+      {
+        "code": "fields-pending",
+        "severity": "warn",
+        "message": "service 的欄位從舊頁看不出來，以「（待補）」佔位：steps、whoCanApply"
+      },
+      {
+        "code": "field-guessed",
+        "severity": "info",
+        "message": "標題看不出服務種類，serviceType 暫填 other"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/SuRWu-xWEvR_vwhU83fFUs",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "service.ltbi-treatment"
+    ]
+  }
+}

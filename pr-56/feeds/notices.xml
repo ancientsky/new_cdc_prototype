@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>衛生福利部疾病管制署 機關公告</title>
+  <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/notices/</link>
+  <atom:link href="https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/feeds/notices.xml" rel="self" type="application/rss+xml"/>
+  <description>其他機關公告（含字號與截止日，截止後標示「已截止」）；人才招募見 feeds/careers.xml、採購公告見 feeds/procurement.xml。</description>
+  <language>zh-TW</language>
+  <lastBuildDate>Tue, 29 Sep 2026 16:00:00 GMT</lastBuildDate>
+  <item>
+    <title>10 月 3 日晚間官網與傳染病通報系統例行維護</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-30-system-maintenance/</link>
+    <guid isPermaLink="false">news.2026-09-30-system-maintenance</guid>
+    <pubDate>Tue, 29 Sep 2026 16:00:00 GMT</pubDate>
+    <category>其他訊息</category>
+    <description>2026 年 10 月 3 日 22:00 至 10 月 4 日 06:00 進行官網與傳染病通報系統（NIDRS）例行維護，期間服務可能中斷，緊急通報請以電話或傳真通知衛生局。 截止日：2026-10-04</description>
+  </item>
+  <item>
+    <title>林森南路辦公區停車場施工，10 月 5 日至 11 月 30 日暫停開放</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-28-parking-construction/</link>
+    <guid isPermaLink="false">news.2026-09-28-parking-construction</guid>
+    <pubDate>Sun, 27 Sep 2026 16:00:00 GMT</pubDate>
+    <category>其他訊息</category>
+    <description>林森南路辦公區地下停車場因防水與照明工程，2026 年 10 月 5 日至 11 月 30 日暫停開放，洽公民眾請改搭大眾運輸或使用鄰近公有停車場。 截止日：2026-11-30</description>
+  </item>
+  <item>
+    <title>署慶系列活動：防疫科學開放日 10 月 24 日登場</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-26-open-house/</link>
+    <guid isPermaLink="false">news.2026-09-26-open-house</guid>
+    <pubDate>Fri, 25 Sep 2026 16:00:00 GMT</pubDate>
+    <category>其他訊息</category>
+    <description>疾管署署慶系列活動「防疫科學開放日」10 月 24 日舉行，開放親子參觀檢驗實驗室外部展區、防疫體驗關卡，即日起至 10 月 17 日線上報名。 截止日：2026-10-17</description>
+  </item>
+</channel>
+</rss>

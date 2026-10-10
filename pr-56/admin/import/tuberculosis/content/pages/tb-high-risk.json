@@ -1,0 +1,54 @@
+{
+  "id": "page.tb-high-risk",
+  "type": "page",
+  "title": "高風險族群主動篩檢",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2019-01-15",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "依計畫對高風險族群定期胸部 X 光篩檢，並推動潛伏結核感染檢驗與治療。 矯正機關收容人 長期照護機構住民與工作人員 外籍移工 山地鄉居民 糖尿病、洗腎等慢性病人",
+  "slug": "tb-high-risk",
+  "bodyMarkdown": "依計畫對高風險族群定期胸部 X 光篩檢，並推動潛伏結核感染檢驗與治療。\n\n- 矯正機關收容人\n- 長期照護機構住民與工作人員\n- 外籍移工\n- 山地鄉居民\n- 糖尿病、洗腎等慢性病人",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/QNBeCudZadf6-VS4ehcEWG"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 23 處（mso 樣式 21、Mso 類別 6、命名空間標籤 1）"
+      },
+      {
+        "code": "merge-into-target",
+        "severity": "info",
+        "message": "清單判定併入 topic.tb-prevention（topic），草稿以 page 暫存，請人工把內容併進目標後刪除草稿"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/QNBeCudZadf6-VS4ehcEWG",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "topic.tb-prevention"
+    ]
+  }
+}

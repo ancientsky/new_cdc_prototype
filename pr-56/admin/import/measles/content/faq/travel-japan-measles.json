@@ -1,0 +1,75 @@
+{
+  "id": "faq.travel-japan-measles",
+  "type": "faq",
+  "title": "去日本旅遊需要擔心麻疹嗎？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2025-05-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.measles"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "日本自 2026 年 5 月 11 日起被列為麻疹第一級旅遊疫情建議（注意），代表當地有麻疹疫情，請遵守一般預防措施。",
+  "question": "去日本旅遊需要擔心麻疹嗎？",
+  "answerMarkdown": "日本自 2026 年 5 月 11 日起被列為麻疹**第一級旅遊疫情建議（注意）**，代表當地有麻疹疫情，請遵守一般預防措施。\n\n出發前請確認自己是否具麻疹免疫力：**1966 年（含）以後出生**、未完成 2 劑接種或不確定者，建議出國前 2–4 週至旅遊醫學門診評估自費接種 1 劑 MMR。未滿 1 歲嬰兒非必要不建議前往。返國 18 天內若出現發燒、出疹，請戴口罩就醫並告知旅遊史。",
+  "tasks": [
+    "travel"
+  ],
+  "basedOn": [
+    "disease.measles"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/s5OaifVY2y_Oh-5Zt4ecui"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 104 處（mso 樣式 62、Mso 類別 27、命名空間標籤 21）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「麻疹／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「麻疹有哪些症狀？會傳染多久？」從答案抽出結構化候選 {\"daysMin\":3,\"daysMax\":4}，請確認後保留或刪除"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「醫護人員需要接種 MMR 疫苗嗎？」→ vaccines；「我和麻疹病人接觸過，要怎麼辦？」→ symptoms；「衛生局打電話來做麻疹疫調，我要配合什麼？」→ symptoms；「幾年次以後出生的成人需要評估接種 MMR 疫苗？」→ vaccines；「我是 1970 年出生的，出國前需要打 MMR 疫苗嗎？」→ vaccines、travel；「我不確定有沒有打過 MMR，要怎麼評估要不要補打？」→ vaccines；「麻疹有哪些症狀？會傳染多久？」→ symptoms；「MMR 疫苗會造成自閉症嗎？」→ vaccines；「去日本旅遊需要擔心麻疹嗎？」→ travel；「出國回來後發燒，應該怎麼辦？」→ travel、symptoms"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/s5OaifVY2y_Oh-5Zt4ecui",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.travel-japan-measles"
+    ]
+  }
+}

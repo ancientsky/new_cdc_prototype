@@ -1,0 +1,60 @@
+{
+  "id": "clar.2026-04-enterovirus-only-kids",
+  "type": "clarification",
+  "title": "網傳「腸病毒只有小孩會得，大人不用擔心」部分正確",
+  "owner": "unit.pr",
+  "publishedAt": "2026-04-16",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "網傳：腸病毒只有小孩會得，大人不會被傳染，所以大人不用洗手 查核結果：部分正確",
+  "claim": "腸病毒只有小孩會得，大人不用擔心",
+  "verdict": "partly-true",
+  "clarificationMarkdown": "網傳：腸病毒只有小孩會得，大人不會被傳染，所以大人不用洗手\n\n查核結果：部分正確\n\n腸病毒**重症**確實以 5 歲以下幼兒為主，但**成人也會感染**，多數症狀輕微甚至沒有症狀，卻可能把病毒帶回家傳給幼兒。\n\n家有幼兒的大人回家後應先以肥皂洗手、更換衣物再抱小孩；照顧生病幼兒前後也要洗手。\n\n【疾管署說明】腸病毒重症多發生在 5 歲以下幼兒，但大人也會感染，常常沒症狀卻把病毒帶回家。家有幼兒，大人回家先用肥皂洗手、換衣服再抱小孩。",
+  "shareText": "網傳：腸病毒只有小孩會得，大人不會被傳染，所以大人不用洗手 查核結果：部分正確",
+  "reportChannel": "1922",
+  "basedOn": [
+    "disease.enterovirus"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/6zjetJzWqW6DijXlzQOztD?typeid=8772"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 17 處（mso 樣式 7、Mso 類別 5、命名空間標籤 5）"
+      },
+      {
+        "code": "type-from-bulletin",
+        "severity": "info",
+        "message": "公告類別是澄清稿，草稿建成 clarification（claim／verdict 由標題與內文推斷）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/6zjetJzWqW6DijXlzQOztD?typeid=8772",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "clar.2026-04-enterovirus-only-kids"
+    ]
+  }
+}

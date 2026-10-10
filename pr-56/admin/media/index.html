@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-TW" dir="ltr" data-base="/new_cdc_prototype/preview/pr-56" data-lang-path="" data-view="admin">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>影音管理（內容管理後台）</title>
+<meta name="description" content="影音管理：疾管署 AI-ready 新官網原型之內容管理後台示範頁">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/tokens.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/base.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/components.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/admin.css">
+</head>
+<body class="adm " data-today="2026-10-01" data-admin-page="media">
+<a class="skip-link" href="#main">跳到主要內容</a>
+<header class="adm-top"><div class="adm-top__in">
+  <a class="adm-brand" href="/new_cdc_prototype/preview/pr-56/admin/"><strong>內容管理後台</strong><span>疾管署 AI-ready 新官網原型 · 示範</span></a>
+  <div class="adm-who" id="adm-who">
+    <span class="adm-who__id"><span class="adm-who__name" id="adm-who-name">急性傳染病組 · 承辦人</span><span class="adm-who__role" id="adm-who-role"></span></span>
+    <label for="adm-unit"><span class="adm-who__lbl">單位視角</span>
+      <select id="adm-unit" aria-describedby="adm-who-name"><option value="unit.pr" >公關室</option><option value="unit.it" >資訊室</option><option value="unit.oasis" >AI推動辦公室</option><option value="unit.epidemic-intelligence" >疫情中心</option><option value="unit.acute-infectious" selected>急性傳染病組</option><option value="unit.chronic-infectious" >慢性傳染病組</option><option value="unit.preparedness" >新興傳染病整備組</option><option value="unit.infection-control" >感染管制及生物安全組</option><option value="unit.quarantine" >檢疫組</option><option value="unit.lab" >檢驗及疫苗研製中心</option><option value="unit.planning" >企劃組</option><option value="unit.secretariat" >秘書室</option><option value="unit.personnel" >人事室</option><option value="unit.ethics" >政風室</option><option value="unit.preventive-medicine" >預防醫學辦公室</option><option value="unit.accounting" >主計室</option><option value="unit.regional-taipei" >臺北區管制中心</option><option value="unit.regional-northern" >北區管制中心</option><option value="unit.regional-central" >中區管制中心</option><option value="unit.regional-southern" >南區管制中心</option><option value="unit.regional-kaoping" >高屏區管制中心</option><option value="unit.regional-eastern" >東區管制中心</option><option value="unit.governance-committee" >資料治理委員會</option><option value="all">全部單位（總覽）</option></select>
+    </label>
+    <button type="button" class="adm-who__logout" id="adm-logout">登出</button>
+  </div>
+</div></header>
+<nav class="adm-nav" aria-label="後台導覽"><ul><li><a href="/new_cdc_prototype/preview/pr-56/admin/mine/" >我的內容</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/publish/" >上架新內容</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/review/" >複核區<span class="adm-count" data-count="review" aria-label="0 項">0</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/due/" >審閱到期<span class="adm-count" data-count="due" aria-label="18 項">18</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/catalog/" >資料目錄</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/notices/" >公告</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/jobs/" >人才招募<span class="adm-count" data-count="jobs" aria-label="1 項">1</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/tenders/" >採購<span class="adm-count" data-count="tenders" aria-label="1 項">1</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/media/" aria-current="page">影音<span class="adm-count" data-count="media" aria-label="1 項">1</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/links/" >連結</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/migration/" >移轉進度<span class="adm-count" data-count="migration" aria-label="1248 項">1248</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/import/" >舊站匯入</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/glossary/" >詞彙主檔</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/situation/" >疫情發布</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/bulletin/edit/" >疫情報導</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/todos/" >連動待辦<span class="adm-count" data-count="todos" aria-label="112 項">112</span></a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/ai-status/" >AI 開關</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/reports/" >回報</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/eval/" >評估</a></li><li><a href="/new_cdc_prototype/preview/pr-56/admin/" >儀表板</a></li></ul></nav>
+<div class="adm-demo" role="note">示範原型：此後台不連接任何正式系統；登入與所有操作只存在你的瀏覽器（localStorage），正式環境以機關 SSO 登入、一律走 Git Pull Request。</div>
+<main id="main" class="adm-main" tabindex="-1">
+<header class="adm-pagehead"><h1>影音管理</h1><p class="adm-pagehead__what">每支影片的依據正本、製作日、是否已被正本修訂「追過」、逐字稿字數、字幕語言與反向稽核命中。影片不再只是一個 YouTube 連結，而是和文字內容一樣有版本、有權責、會過時的治理對象。</p><p class="adm-pagehead__flow"><strong>正式環境：</strong>影片是 media 型別（content/media/）：必填 basedOn 與逐字稿；producedAt 早於依據正本現行版 effectiveAt ⇒ 引擎自動標「過時」、退出 AI 白名單、產生待辦「影音過時」。逐字稿進 AI 索引（可引用到影片＋章節時間）。</p></header>
+<div class="adm-statrow">
+  <div class="adm-stat adm-stat--info"><p class="adm-stat__label">影片總數</p><p class="adm-stat__value">13</p><p class="adm-stat__note">影片、動畫、Podcast、短影音</p></div>
+  <div class="adm-stat adm-stat--ok"><p class="adm-stat__label">有逐字稿</p><p class="adm-stat__value">13<small style="font-size:var(--fs-md)"> / 13</small></p><p class="adm-stat__note">目標 100%</p></div>
+  <div class="adm-stat adm-stat--warn"><p class="adm-stat__label">依據正本現行版</p><p class="adm-stat__value">12<small style="font-size:var(--fs-md)"> / 13</small></p><p class="adm-stat__note">其餘為過時或未填依據</p></div>
+  <div class="adm-stat adm-stat--bad"><p class="adm-stat__label">過時</p><p class="adm-stat__value">1</p><p class="adm-stat__note">已自動產生待辦</p></div>
+  <div class="adm-stat adm-stat--bad"><p class="adm-stat__label">反向稽核命中</p><p class="adm-stat__value">1</p><p class="adm-stat__note">逐字稿含失效說法</p></div>
+</div>
+
+<details class="adm-details adm-card" open><summary>正本修訂後，過時的影片怎麼處理？（三選一）</summary>
+  <div class="adm-sop-box" style="margin-top:var(--sp-3)">
+    <ol>
+      <li><strong>更新說明欄</strong>：影片內容大致仍可用、只有少數數字或條件變動。YouTube 說明欄第一行改成新的「製作日期 · 依據 · 正本」，並在說明欄置頂補充修訂要點；影片頁的逐字稿同步加註。</li>
+      <li><strong>加資訊卡</strong>：重點差異出現在特定時間點。在 YouTube 該秒數加資訊卡（Cards）「此處建議已修訂，請見正本」，連到現行版；影片頁章節標註。</li>
+      <li><strong>下架</strong>：核心結論已不成立（例如成人 MMR 評估對象改變）。影片設為不公開，<code>status</code> 改 <code>archived</code>，並排入重製；重製版上架時依現行版製作，待辦自動消失。</li>
+    </ol>
+    <p class="adm-muted" style="margin:var(--sp-2) 0 0">不論哪一種，影片頁都會由引擎自動加註「本影片依 {版本} 製作，建議已於 {日期} 修訂」，在人處理完之前民眾不會被誤導。</p>
+  </div></details>
+
+<section class="adm-card" aria-labelledby="m-h"><h2 id="m-h">影片清單</h2>
+  <div class="adm-filters">
+    <div class="adm-field adm-field--grow"><label for="m-q">搜尋（標題或識別碼）</label><input type="search" id="m-q"></div>
+    <div class="adm-field"><label for="m-unit">單位</label><select id="m-unit"><option value="all">全部單位</option><option value="unit.pr" >公關室</option><option value="unit.it" >資訊室</option><option value="unit.oasis" >AI推動辦公室</option><option value="unit.epidemic-intelligence" >疫情中心</option><option value="unit.acute-infectious" >急性傳染病組</option><option value="unit.chronic-infectious" >慢性傳染病組</option><option value="unit.preparedness" >新興傳染病整備組</option><option value="unit.infection-control" >感染管制及生物安全組</option><option value="unit.quarantine" >檢疫組</option><option value="unit.lab" >檢驗及疫苗研製中心</option><option value="unit.planning" >企劃組</option><option value="unit.secretariat" >秘書室</option><option value="unit.personnel" >人事室</option><option value="unit.ethics" >政風室</option><option value="unit.preventive-medicine" >預防醫學辦公室</option><option value="unit.accounting" >主計室</option><option value="unit.regional-taipei" >臺北區管制中心</option><option value="unit.regional-northern" >北區管制中心</option><option value="unit.regional-central" >中區管制中心</option><option value="unit.regional-southern" >南區管制中心</option><option value="unit.regional-kaoping" >高屏區管制中心</option><option value="unit.regional-eastern" >東區管制中心</option><option value="unit.governance-committee" >資料治理委員會</option></select></div>
+    <div class="adm-field"><label for="m-flag">狀態</label><select id="m-flag"><option value="">全部</option><option value="outdated">過時</option><option value="notr">無逐字稿</option><option value="audit">反向稽核命中</option><option value="nobasis">未填依據正本</option></select></div>
+    <a class="adm-btn adm-btn--ghost" href="/new_cdc_prototype/preview/pr-56/admin/publish/?type=media">上架新影音</a>
+    <span class="adm-count-note" id="m-note" aria-live="polite"></span>
+  </div>
+  <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table" id="m-table"><caption>逐字稿字數不含空白；「過時」＝製作日早於依據正本現行版生效日（優先採引擎的 gov.mediaOutdated，無則由欄位推算）。</caption>
+    <thead><tr><th scope="col">影片</th><th scope="col">依據正本</th><th scope="col">製作日</th><th scope="col">是否過時</th><th scope="col">逐字稿</th><th scope="col">字幕</th><th scope="col">反向稽核</th><th scope="col">說明欄</th></tr></thead>
+    <tbody><tr data-id="media.amr-one-health-podcast" data-owner="unit.infection-control" data-q="media.amr-one-health-podcast podcast｜抗生素不是萬靈丹：談抗藥性與防疫一體" data-outdated="0" data-notr="0" data-audit="0" data-nobasis="0">
+      <td><a href="/new_cdc_prototype/preview/pr-56/media/amr-one-health-podcast/">Podcast｜抗生素不是萬靈丹：談抗藥性與防疫一體</a><div class="adm-muted"><code>media.amr-one-health-podcast</code> · Podcast · 示意海報</div></td>
+      <td><div><a href="/new_cdc_prototype/preview/pr-56/documents/infection-control-healthcare.2026-03-01/">醫療機構感染管制措施指引</a><div class="adm-muted">現行版 2026-03（2026-03-01 生效）</div></div><div><a href="/new_cdc_prototype/preview/pr-56/data/">院內感染抗藥性細菌監測年報資料</a></div><div class="adm-muted">影片標示：醫療機構感染管制指引（2026-03-01 版）與抗藥性監測資料</div></td>
+      <td>2026-09-05</td>
+      <td><span class="adm-badge adm-badge--ok">依據現行版</span></td>
+      <td><span class="adm-tick adm-tick--ok" role="img" aria-label="有逐字稿">✓</span> 558 字<div class="adm-muted">4 個章節</div></td>
+      <td>繁體中文</td>
+      <td><span class="adm-muted">無</span></td>
+      <td><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-desc="media.amr-one-health-podcast">產生說明欄文字</button></td></tr><tr data-id="media.covid-prevention-appeal" data-owner="unit.acute-infectious" data-q="media.covid-prevention-appeal 秋冬預防新冠，高風險族群請接種新一季疫苗" data-outdated="0" data-notr="0" data-audit="0" data-nobasis="0">
+      <td><a href="/new_cdc_prototype/preview/pr-56/media/covid-prevention-appeal/">秋冬預防新冠，高風險族群請接種新一季疫苗</a><div class="adm-muted"><code>media.covid-prevention-appeal</code> · 影片 · 示意海報</div></td>
+      <td><div><a href="/new_cdc_prototype/preview/pr-56/documents/covid-vaccine-recommendation.2026-09-15/">新冠疫苗接種建議（2026–2027 年度）</a><div class="adm-muted">現行版 2026-27（2026-09-15 生效）</div></div><div><a href="/new_cdc_prototype/preview/pr-56/diseases/covid-19/">新冠併發重症</a></div><div class="adm-muted">影片標示：2026-09-15 新冠疫苗接種建議</div></td>
+      <td>2026-09-22</td>
+      <td><span class="adm-badge adm-badge--ok">依據現行版</span></td>
+      <td><span class="adm-tick adm-tick--ok" role="img" aria-label="有逐字稿">✓</span> 456 字<div class="adm-muted">3 個章節</div></td>
+      <td>繁體中文、English</td>
+      <td><span class="adm-muted">無</span></td>
+      <td><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-desc="media.covid-prevention-appeal">產生說明欄文字</button></td></tr><tr data-id="media.dengue-village-chief" data-owner="unit.acute-infectious" data-q="media.dengue-village-chief 里長帶頭巡倒清刷：社區防登革熱篇" data-outdated="0" data-notr="0" data-audit="0" data-nobasis="0">
+      <td><a href="/new_cdc_prototype/preview/pr-56/media/dengue-village-chief/">里長帶頭巡倒清刷：社區防登革熱篇</a><div class="adm-muted"><code>media.dengue-village-chief</code> · 影片 · 示意海報</div></td>
+      <td><div><a href="/new_cdc_prototype/preview/pr-56/diseases/dengue/">登革熱</a></div><div><a href="/new_cdc_prototype/preview/pr-56/documents/guidance-dengue.2026-02/">登革熱/屈公病防治工作指引</a><div class="adm-muted">現行版 2026 年 2 月版（2026-02-01 生效）</div></div><div class="adm-muted">影片標示：登革熱/屈公病防治工作指引 2026 年 2 月版</div></td>
+      <td>2026-07-08</td>
+      <td><span class="adm-badge adm-badge--ok">依據現行版</span></td>
+      <td><span class="adm-tick adm-tick--ok" role="img" aria-label="有逐字稿">✓</span> 518 字<div class="adm-muted">4 個章節</div></td>
+      <td>繁體中文</td>
+      <td><span class="adm-muted">無</span></td>
+      <td><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-desc="media.dengue-village-chief">產生說明欄文字</button></td></tr><tr data-id="media.enterovirus-handwashing" data-owner="unit.acute-infectious" data-q="media.enterovirus-handwashing 濕搓沖捧擦：腸病毒洗手五步驟動畫" data-outdated="0" data-notr="0" data-audit="0" data-nobasis="0">
+      <td><a href="/new_cdc_prototype/preview/pr-56/media/enterovirus-handwashing/">濕搓沖捧擦：腸病毒洗手五步驟動畫</a><div class="adm-muted"><code>media.enterovirus-handwashing</code> · 動畫 · 示意海報</div></td>
+      <td><div><a href="/new_cdc_prototype/preview/pr-56/diseases/enterovirus/">腸病毒</a></div><div><a href="/new_cdc_prototype/preview/pr-56/documents/ev-severe-guideline.2026-03-15/">腸病毒感染併發重症臨床處置建議</a><div class="adm-muted">現行版 2026-03（2026-03-15 生效）</div></div><div class="adm-muted">影片標示：2026-03-15 腸病毒重症處置指引</div></td>
+      <td>2026-04-01</td>
+      <td><span class="adm-badge adm-badge--ok">依據現行版</span></td>
+      <td><span class="adm-tick adm-tick--ok" role="img" aria-label="有逐字稿">✓</span> 456 字<div class="adm-muted">4 個章節</div></td>
+      <td>繁體中文、English</td>
+      <td><span class="adm-muted">無</span></td>
+      <td><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-desc="media.enterovirus-handwashing">產生說明欄文字</button></td></tr><tr data-id="media.hiv-anonymous-testing" data-owner="unit.chronic-infectious" data-q="media.hiv-anonymous-testing 想知道就去篩：hiv 匿名篩檢這樣做" data-outdated="0" data-notr="0" data-audit="0" data-nobasis="0">
+      <td><a href="/new_cdc_prototype/preview/pr-56/media/hiv-anonymous-testing/">想知道就去篩：HIV 匿名篩檢這樣做</a><div class="adm-muted"><code>media.hiv-anonymous-testing</code> · 影片 · 示意海報</div></td>
+      <td><div><a href="/new_cdc_prototype/preview/pr-56/diseases/hiv/">人類免疫缺乏病毒感染（愛滋）</a></div><div><a href="/new_cdc_prototype/preview/pr-56/faq/hiv-test-where/">哪裡可以做匿名 HIV 篩檢？</a></div><div class="adm-muted">影片標示：HIV 疾病頁與匿名篩檢說明（2026-06 審閱）</div></td>
+      <td>2026-05-10</td>
+      <td><span class="adm-badge adm-badge--ok">依據現行版</span></td>
+      <td><span class="adm-tick adm-tick--ok" role="img" aria-label="有逐字稿">✓</span> 543 字<div class="adm-muted">4 個章節</div></td>
+      <td>繁體中文、English</td>
+      <td><span class="adm-muted">無</span></td>
+      <td><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-desc="media.hiv-anonymous-testing">產生說明欄文字</button></td></tr><tr data-id="media.ltc-flu-vaccine" data-owner="unit.acute-infectious" data-q="media.ltc-flu-vaccine 長照機構住民與工作人員，一起打流感疫苗" data-outdated="0" data-notr="0" data-audit="0" data-nobasis="0">
+      <td><a href="/new_cdc_prototype/preview/pr-56/media/ltc-flu-vaccine/">長照機構住民與工作人員，一起打流感疫苗</a><div class="adm-muted"><code>media.ltc-flu-vaccine</code> · 影片 · 示意海報</div></td>
+      <td><div><a href="/new_cdc_prototype/preview/pr-56/documents/flu-vaccine-schedule.2026-09-15/">2026–2027 年度公費流感疫苗接種計畫：實施對象與時程</a><div class="adm-muted">現行版 2026-27（2026-09-15 生效）</div></div><div><a href="/new_cdc_prototype/preview/pr-56/vaccines/influenza/">流感疫苗</a></div><div class="adm-muted">影片標示：2026-09-15 流感疫苗接種計畫</div></td>
+      <td>2026-09-20</td>
+      <td><span class="adm-badge adm-badge--ok">依據現行版</span></td>
+      <td><span class="adm-tick adm-tick--ok" role="img" aria-label="有逐字稿">✓</span> 586 字<div class="adm-muted">4 個章節</div></td>
+      <td>繁體中文、English</td>
+      <td><span class="adm-muted">無</span></td>
+      <td><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-desc="media.ltc-flu-vaccine">產生說明欄文字</button></td></tr><tr data-id="media.migrant-worker-health-check" data-owner="unit.chronic-infectious" data-q="media.migrant-worker-health-check 移工健康檢查：入境後三日內與聘僱期間的檢查項目" data-outdated="0" data-notr="0" data-audit="0" data-nobasis="0">
+      <td><a href="/new_cdc_prototype/preview/pr-56/media/migrant-worker-health-check/">移工健康檢查：入境後三日內與聘僱期間的檢查項目</a><div class="adm-muted"><code>media.migrant-worker-health-check</code> · 影片 · 示意海報</div></td>
+      <td><div><a href="/new_cdc_prototype/preview/pr-56/diseases/tuberculosis/">結核病</a></div><div><a href="/new_cdc_prototype/preview/pr-56/documents/tb-manual.2025-07-01/">結核病防治工作手冊</a><div class="adm-muted">現行版 2025（2025-07-01 生效）</div></div><div class="adm-muted">影片標示：外國人健康檢查規定與結核病防治工作手冊</div></td>
+      <td>2026-07-30</td>
+      <td><span class="adm-badge adm-badge--ok">依據現行版</span></td>
+      <td><span class="adm-tick adm-tick--ok" role="img" aria-label="有逐字稿">✓</span> 505 字<div class="adm-muted">4 個章節</div></td>
+      <td>繁體中文、Tiếng Việt、Bahasa Indonesia、ไทย、English</td>
+      <td><span class="adm-muted">無</span></td>
+      <td><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-desc="media.migrant-worker-health-check">產生說明欄文字</button></td></tr><tr data-id="media.mmr-waiting-room-2025" data-owner="unit.acute-infectious" data-q="media.mmr-waiting-room-2025 麻疹 mmr 疫苗候診衛教動畫（2025 年版）" data-outdated="1" data-notr="0" data-audit="1" data-nobasis="0">
+      <td><a href="/new_cdc_prototype/preview/pr-56/media/mmr-waiting-room-2025/">麻疹 MMR 疫苗候診衛教動畫（2025 年版）</a><div class="adm-muted"><code>media.mmr-waiting-room-2025</code> · 動畫 · 示意海報</div></td>
+      <td><div><a href="/new_cdc_prototype/preview/pr-56/documents/mmr-recommendation.2025-04-16/">國內現行 MMR 預防接種建議</a><div class="adm-muted">現行版 114.04.16（2025-04-16 生效）</div></div><div class="adm-muted">影片標示：108.05.14 版建議</div></td>
+      <td>2025-01-14</td>
+      <td><span class="adm-badge adm-badge--bad">過時</span><div class="adm-muted">早於現行版 2025-04-16</div></td>
+      <td><span class="adm-tick adm-tick--ok" role="img" aria-label="有逐字稿">✓</span> 507 字<div class="adm-muted">3 個章節</div></td>
+      <td>繁體中文</td>
+      <td><span class="adm-badge adm-badge--bad">命中 2</span><ul class="adm-muted" style="margin:4px 0 0;padding-left:1.1em"><li>「1981 年以後出生」MMR 接種建議已於 2025-04-16 修訂：成人評估對象改為 1966 年（含）以後出生者；「1981 年」為失效條件</li><li>「日韓非流行區」日本已於 2026-05-11 列為麻疹第一級旅遊疫情建議，「日韓非流行區」已不成立</li></ul></td>
+      <td><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-desc="media.mmr-waiting-room-2025">產生說明欄文字</button></td></tr><tr data-id="media.mmr-waiting-room-2026" data-owner="unit.acute-infectious" data-q="media.mmr-waiting-room-2026 麻疹 mmr 疫苗候診衛教動畫（2026 年重製版）" data-outdated="0" data-notr="0" data-audit="0" data-nobasis="0">
+      <td><a href="/new_cdc_prototype/preview/pr-56/media/mmr-waiting-room-2026/">麻疹 MMR 疫苗候診衛教動畫（2026 年重製版）</a><div class="adm-muted"><code>media.mmr-waiting-room-2026</code> · 動畫 · 示意海報</div></td>
+      <td><div><a href="/new_cdc_prototype/preview/pr-56/documents/mmr-recommendation.2025-04-16/">國內現行 MMR 預防接種建議</a><div class="adm-muted">現行版 114.04.16（2025-04-16 生效）</div></div><div class="adm-muted">影片標示：114.04.16 版建議</div></td>
+      <td>2026-10-01</td>
+      <td><span class="adm-badge adm-badge--ok">依據現行版</span></td>
+      <td><span class="adm-tick adm-tick--ok" role="img" aria-label="有逐字稿">✓</span> 560 字<div class="adm-muted">4 個章節</div></td>
+      <td>繁體中文、English</td>
+      <td><span class="adm-muted">無</span></td>
+      <td><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-desc="media.mmr-waiting-room-2026">產生說明欄文字</button></td></tr><tr data-id="media.mpox-vaccine" data-owner="unit.acute-infectious" data-q="media.mpox-vaccine m痘疫苗兩劑完整保護，高風險族群請把握接種" data-outdated="0" data-notr="0" data-audit="0" data-nobasis="0">
+      <td><a href="/new_cdc_prototype/preview/pr-56/media/mpox-vaccine/">M痘疫苗兩劑完整保護，高風險族群請把握接種</a><div class="adm-muted"><code>media.mpox-vaccine</code> · 短影音 · 示意海報</div></td>
+      <td><div><a href="/new_cdc_prototype/preview/pr-56/diseases/mpox/">M痘</a></div><div><a href="/new_cdc_prototype/preview/pr-56/faq/mpox-who-vaccine/">M痘疫苗誰可以打公費？要打幾劑？</a></div><div class="adm-muted">影片標示：M痘疾病頁與公費疫苗接種對象（2026-08 審閱）</div></td>
+      <td>2026-08-30</td>
+      <td><span class="adm-badge adm-badge--ok">依據現行版</span></td>
+      <td><span class="adm-tick adm-tick--ok" role="img" aria-label="有逐字稿">✓</span> 408 字<div class="adm-muted">3 個章節</div></td>
+      <td>繁體中文</td>
+      <td><span class="adm-muted">無</span></td>
+      <td><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-desc="media.mpox-vaccine">產生說明欄文字</button></td></tr><tr data-id="media.prep-intro" data-owner="unit.chronic-infectious" data-q="media.prep-intro prep 是什麼？三分鐘認識暴露愛滋病毒前預防性投藥" data-outdated="0" data-notr="0" data-audit="0" data-nobasis="0">
+      <td><a href="/new_cdc_prototype/preview/pr-56/media/prep-intro/">PrEP 是什麼？三分鐘認識暴露愛滋病毒前預防性投藥</a><div class="adm-muted"><code>media.prep-intro</code> · 動畫 · 示意海報</div></td>
+      <td><div><a href="/new_cdc_prototype/preview/pr-56/diseases/hiv/">人類免疫缺乏病毒感染（愛滋）</a></div><div><a href="/new_cdc_prototype/preview/pr-56/faq/hiv-pep/">發生沒有保護的性行為後，72 小時內可以做什麼？</a></div><div class="adm-muted">影片標示：HIV 疾病頁與 PrEP 計畫說明</div></td>
+      <td>2026-05-28</td>
+      <td><span class="adm-badge adm-badge--ok">依據現行版</span></td>
+      <td><span class="adm-tick adm-tick--ok" role="img" aria-label="有逐字稿">✓</span> 595 字<div class="adm-muted">4 個章節</div></td>
+      <td>繁體中文、English</td>
+      <td><span class="adm-muted">無</span></td>
+      <td><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-desc="media.prep-intro">產生說明欄文字</button></td></tr><tr data-id="media.tb-cough-two-weeks" data-owner="unit.chronic-infectious" data-q="media.tb-cough-two-weeks 咳嗽超過兩週，快去照胸部 x 光" data-outdated="0" data-notr="0" data-audit="0" data-nobasis="0">
+      <td><a href="/new_cdc_prototype/preview/pr-56/media/tb-cough-two-weeks/">咳嗽超過兩週，快去照胸部 X 光</a><div class="adm-muted"><code>media.tb-cough-two-weeks</code> · 影片 · 示意海報</div></td>
+      <td><div><a href="/new_cdc_prototype/preview/pr-56/diseases/tuberculosis/">結核病</a></div><div><a href="/new_cdc_prototype/preview/pr-56/documents/tb-manual.2025-07-01/">結核病防治工作手冊</a><div class="adm-muted">現行版 2025（2025-07-01 生效）</div></div><div class="adm-muted">影片標示：結核病防治工作手冊（2025-07-01 版）</div></td>
+      <td>2026-03-10</td>
+      <td><span class="adm-badge adm-badge--ok">依據現行版</span></td>
+      <td><span class="adm-tick adm-tick--ok" role="img" aria-label="有逐字稿">✓</span> 473 字<div class="adm-muted">3 個章節</div></td>
+      <td>繁體中文、English</td>
+      <td><span class="adm-muted">無</span></td>
+      <td><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-desc="media.tb-cough-two-weeks">產生說明欄文字</button></td></tr><tr data-id="media.travel-clinic-before-departure" data-owner="unit.quarantine" data-q="media.travel-clinic-before-departure 出國前 4 到 6 週，先到旅遊醫學門診" data-outdated="0" data-notr="0" data-audit="0" data-nobasis="0">
+      <td><a href="/new_cdc_prototype/preview/pr-56/media/travel-clinic-before-departure/">出國前 4 到 6 週，先到旅遊醫學門診</a><div class="adm-muted"><code>media.travel-clinic-before-departure</code> · 影片 · 示意海報</div></td>
+      <td><div><a href="/new_cdc_prototype/preview/pr-56/faq/travel-clinic/">旅遊醫學門診可以做什麼？要出國前多久去？</a></div><div><a href="/new_cdc_prototype/preview/pr-56/documents/mmr-recommendation.2025-04-16/">國內現行 MMR 預防接種建議</a><div class="adm-muted">現行版 114.04.16（2025-04-16 生效）</div></div><div class="adm-muted">影片標示：旅遊醫學門診說明與 114.04.16 版 MMR 建議</div></td>
+      <td>2026-06-05</td>
+      <td><span class="adm-badge adm-badge--ok">依據現行版</span></td>
+      <td><span class="adm-tick adm-tick--ok" role="img" aria-label="有逐字稿">✓</span> 547 字<div class="adm-muted">4 個章節</div></td>
+      <td>繁體中文、English</td>
+      <td><span class="adm-muted">無</span></td>
+      <td><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" data-desc="media.travel-clinic-before-departure">產生說明欄文字</button></td></tr></tbody></table></div>
+  <p class="adm-empty" id="m-empty" hidden>目前沒有影音內容。<a href="/new_cdc_prototype/preview/pr-56/admin/publish/?type=media">到上架表單新增影音</a>，或在 content/media/ 加檔。</p>
+  <div class="adm-desc-out" id="desc-box" hidden>
+    <h3 style="margin:0 0 var(--sp-2)" id="desc-title">YouTube 說明欄文字</h3>
+    <p class="adm-muted">第一行固定格式（7.7 第 4 點）；畫面片頭也要印同樣的製作日期與依據版本。</p>
+    <pre class="adm-pre" id="desc-out" tabindex="0"></pre>
+    <div class="adm-actions"><button type="button" class="adm-btn" id="desc-copy">複製</button></div>
+  </div>
+</section>
+<script type="application/json" id="adm-media-data">{"media.amr-one-health-podcast":{"producedAt":"2026-09-05","label":"醫療機構感染管制指引（2026-03-01 版）與抗藥性監測資料","url":"https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/infection-control-healthcare.2026-03-01/","outdated":false,"curVersion":"2026-03","curEffectiveAt":"2026-03-01","title":"Podcast｜抗生素不是萬靈丹：談抗藥性與防疫一體"},"media.covid-prevention-appeal":{"producedAt":"2026-09-22","label":"2026-09-15 新冠疫苗接種建議","url":"https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/covid-vaccine-recommendation.2026-09-15/","outdated":false,"curVersion":"2026-27","curEffectiveAt":"2026-09-15","title":"秋冬預防新冠，高風險族群請接種新一季疫苗"},"media.dengue-village-chief":{"producedAt":"2026-07-08","label":"登革熱/屈公病防治工作指引 2026 年 2 月版","url":"https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/dengue/","outdated":false,"curVersion":null,"curEffectiveAt":null,"title":"里長帶頭巡倒清刷：社區防登革熱篇"},"media.enterovirus-handwashing":{"producedAt":"2026-04-01","label":"2026-03-15 腸病毒重症處置指引","url":"https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/enterovirus/","outdated":false,"curVersion":null,"curEffectiveAt":null,"title":"濕搓沖捧擦：腸病毒洗手五步驟動畫"},"media.hiv-anonymous-testing":{"producedAt":"2026-05-10","label":"HIV 疾病頁與匿名篩檢說明（2026-06 審閱）","url":"https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/hiv/","outdated":false,"curVersion":null,"curEffectiveAt":null,"title":"想知道就去篩：HIV 匿名篩檢這樣做"},"media.ltc-flu-vaccine":{"producedAt":"2026-09-20","label":"2026-09-15 流感疫苗接種計畫","url":"https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/flu-vaccine-schedule.2026-09-15/","outdated":false,"curVersion":"2026-27","curEffectiveAt":"2026-09-15","title":"長照機構住民與工作人員，一起打流感疫苗"},"media.migrant-worker-health-check":{"producedAt":"2026-07-30","label":"外國人健康檢查規定與結核病防治工作手冊","url":"https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/tuberculosis/","outdated":false,"curVersion":null,"curEffectiveAt":null,"title":"移工健康檢查：入境後三日內與聘僱期間的檢查項目"},"media.mmr-waiting-room-2025":{"producedAt":"2025-01-14","label":"108.05.14 版建議","url":"https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/mmr-recommendation.2025-04-16/","outdated":true,"curVersion":"114.04.16","curEffectiveAt":"2025-04-16","title":"麻疹 MMR 疫苗候診衛教動畫（2025 年版）"},"media.mmr-waiting-room-2026":{"producedAt":"2026-10-01","label":"114.04.16 版建議","url":"https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/mmr-recommendation.2025-04-16/","outdated":false,"curVersion":"114.04.16","curEffectiveAt":"2025-04-16","title":"麻疹 MMR 疫苗候診衛教動畫（2026 年重製版）"},"media.mpox-vaccine":{"producedAt":"2026-08-30","label":"M痘疾病頁與公費疫苗接種對象（2026-08 審閱）","url":"https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/mpox/","outdated":false,"curVersion":null,"curEffectiveAt":null,"title":"M痘疫苗兩劑完整保護，高風險族群請把握接種"},"media.prep-intro":{"producedAt":"2026-05-28","label":"HIV 疾病頁與 PrEP 計畫說明","url":"https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/hiv/","outdated":false,"curVersion":null,"curEffectiveAt":null,"title":"PrEP 是什麼？三分鐘認識暴露愛滋病毒前預防性投藥"},"media.tb-cough-two-weeks":{"producedAt":"2026-03-10","label":"結核病防治工作手冊（2025-07-01 版）","url":"https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/tuberculosis/","outdated":false,"curVersion":null,"curEffectiveAt":null,"title":"咳嗽超過兩週，快去照胸部 X 光"},"media.travel-clinic-before-departure":{"producedAt":"2026-06-05","label":"旅遊醫學門診說明與 114.04.16 版 MMR 建議","url":"https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/travel-clinic/","outdated":false,"curVersion":null,"curEffectiveAt":null,"title":"出國前 4 到 6 週，先到旅遊醫學門診"}}</script></main>
+<footer class="adm-foot"><a href="/new_cdc_prototype/preview/pr-56/">回前台首頁</a><a href="/new_cdc_prototype/preview/pr-56/v1/catalog.json">目錄 API（/v1/catalog.json）</a><a href="/new_cdc_prototype/preview/pr-56/guide/">使用說明</a><span>建置日 2026-10-01</span></footer>
+<script type="module" src="/new_cdc_prototype/preview/pr-56/assets/js/admin/common.js"></script>
+<script type="module" src="/new_cdc_prototype/preview/pr-56/assets/js/admin/media.js"></script>
+</body>
+</html>

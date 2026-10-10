@@ -1,0 +1,315 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "f72f2c8141cb",
+    "lastModified": "2025-11-20"
+  },
+  "data": {
+    "id": "disease.hepatitis-a",
+    "type": "disease",
+    "slug": "hepatitis-a",
+    "title": "急性病毒性A型肝炎",
+    "nameEn": "Acute viral hepatitis A",
+    "aliases": [
+      "A肝",
+      "A型肝炎",
+      "HAV"
+    ],
+    "legalCategory": 2,
+    "icd10": [
+      "B15"
+    ],
+    "notifyWithinHours": 24,
+    "incubation": {
+      "min": 15,
+      "max": 50,
+      "typicalMin": 28,
+      "typicalMax": 30,
+      "unit": "day",
+      "text": "15–50 天（平均 28–30 天）"
+    },
+    "transmission": [
+      "foodborne",
+      "waterborne",
+      "sexual"
+    ],
+    "owner": "unit.acute-infectious",
+    "steward": "急性傳染病組承辦人",
+    "publishedAt": "2018-03-01",
+    "reviewedAt": "2025-11-20",
+    "reviewPeriodMonths": 12,
+    "status": "published",
+    "audience": [
+      "public",
+      "professional"
+    ],
+    "tasks": [
+      "symptoms",
+      "vaccines",
+      "travel"
+    ],
+    "sensitivity": "public",
+    "license": "OGDL-1.0",
+    "diseases": [
+      "disease.hepatitis-a"
+    ],
+    "vaccines": [
+      "vaccine.hepatitis-a"
+    ],
+    "aiWhitelist": {
+      "requested": true,
+      "approvedBy": "unit.oasis",
+      "approvedAt": "2026-09-01"
+    },
+    "languages": {
+      "zh-TW": {
+        "status": "source"
+      },
+      "en": {
+        "status": "machine"
+      },
+      "ja": {
+        "status": "pending"
+      },
+      "tl": {
+        "status": "pending"
+      },
+      "vi": {
+        "status": "machine"
+      },
+      "id": {
+        "status": "machine"
+      },
+      "th": {
+        "status": "machine"
+      }
+    },
+    "summary": "A 型肝炎經由受污染的食物、飲水或口肛性行為傳播，成人感染常出現黃疸。注意飲食衛生、接種疫苗可有效預防；2017 年起出生的幼兒為公費接種對象。",
+    "keywords": [
+      "A型肝炎",
+      "A肝",
+      "黃疸",
+      "生食",
+      "A肝疫苗"
+    ],
+    "legacyUrls": [
+      "https://www.cdc.gov.tw/Disease/Index"
+    ],
+    "keyFacts": {
+      "incubation": "15–50 天（平均 28–30 天）",
+      "symptoms": "發燒、倦怠、食慾不振、噁心、茶色尿、黃疸",
+      "transmission": "糞口傳染（受污染食物、飲水）、口肛性行為",
+      "prevention": "接種疫苗、飯前便後洗手、避免生食",
+      "notify": "24 小時內"
+    },
+    "blocks": [
+      {
+        "key": "what-to-do",
+        "heading": "我該怎麼辦",
+        "cards": [
+          {
+            "if": "出現茶色尿、眼白或皮膚發黃",
+            "title": "儘速就醫抽血",
+            "text": "請儘速就醫並告知近兩個月的飲食與旅遊史，醫師會安排肝功能與 A 肝抗體檢查。"
+          },
+          {
+            "if": "家人確診 A 型肝炎",
+            "title": "2 週內評估接種疫苗",
+            "text": "未具免疫力的同住家人，於暴露後 2 週內接種疫苗可降低發病機會。"
+          },
+          {
+            "if": "前往衛生條件不佳的地區",
+            "title": "出國前接種疫苗",
+            "text": "出發前至少 2 週接種第 1 劑 A 肝疫苗，旅途中不吃生冷食物、只喝煮沸或瓶裝水。"
+          }
+        ]
+      },
+      {
+        "key": "symptoms",
+        "heading": "症狀與警示徵象",
+        "markdown": "常見症狀為發燒、倦怠、食慾不振、噁心嘔吐、腹部不適，數天後出現**茶色尿與黃疸**（皮膚、眼白發黃）。\n\n6 歲以下兒童感染多無症狀，年紀越大症狀越明顯。多數人數週內康復，感染後可終身免疫，**不會變成慢性肝炎**，但少數成人可能發生猛爆性肝炎。",
+        "warning": "意識改變、嗜睡、明顯出血傾向或黃疸急速加深，可能是猛爆性肝炎，請立即就醫。"
+      },
+      {
+        "key": "transmission",
+        "heading": "怎麼傳染",
+        "markdown": "主要經由**糞口途徑**傳染：吃進被病毒污染的食物或飲水，例如生食貝類、未煮熟食物或處理食物者未洗手。也可能經由**口肛性行為**傳染。\n\n發病前 2 週至黃疸出現後 1 週傳染力最強。"
+      },
+      {
+        "key": "prevention",
+        "heading": "如何預防",
+        "markdown": "- **接種 A 肝疫苗**：2 劑間隔 6 個月，保護力可達 95% 以上。\n- 飯前、便後與處理食物前用肥皂洗手。\n- 避免生食，特別是貝類；飲用煮沸過的水。\n- 性行為避免口肛接觸，並使用保險套。"
+      },
+      {
+        "key": "treatment",
+        "heading": "診斷與治療",
+        "markdown": "沒有特效藥，以支持性治療為主：休息、補充營養與水分。避免飲酒及服用非必要藥物，以減輕肝臟負擔。病人在發病後 1 週內應避免準備食物給他人。"
+      },
+      {
+        "key": "vaccine",
+        "heading": "疫苗",
+        "markdown": "公費對象：**2017 年 1 月 1 日（含）以後出生**的幼兒，於出生滿 12 個月、18 個月各接種 1 劑；以及山地鄉、離島等特定地區學童與高風險對象。其他成人可自費接種 2 劑，間隔 6–12 個月。"
+      },
+      {
+        "key": "situation",
+        "heading": "目前疫情與統計",
+        "markdown": "國內病例多為零星發生，曾出現與口肛性行為相關的群聚。"
+      },
+      {
+        "key": "faq",
+        "heading": "常見問題"
+      }
+    ],
+    "professional": {
+      "specimen": "血清檢測 anti-HAV IgM；必要時採糞便或血清進行 RT-PCR 與基因分型。",
+      "notifyNote": "第二類法定傳染病，應於 24 小時內通報；病例若為餐飲從業人員，衛生局將進行食品安全調查。"
+    },
+    "sourceHash": "d03edb592182",
+    "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/hepatitis-a/",
+    "path": "/diseases/hepatitis-a/",
+    "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/hepatitis-a.md",
+    "governance": {
+      "owner": "unit.acute-infectious",
+      "ownerName": "急性傳染病組",
+      "steward": "急性傳染病組承辦人",
+      "reviewedAt": "2025-11-20",
+      "reviewPeriodMonths": 12,
+      "nextReviewAt": "2026-11-20",
+      "daysToReview": 50,
+      "overdue": false,
+      "dueSoon": false,
+      "status": "published",
+      "lifecycle": "current",
+      "lifecycleLabel": "現行版",
+      "whitelist": true,
+      "whitelistTier": "public",
+      "whitelistPublic": true,
+      "whitelistReasons": [],
+      "whitelistReasonLabels": [],
+      "isCurrent": true,
+      "superseded": false,
+      "supersededBy": null,
+      "currentId": "disease.hepatitis-a",
+      "noindex": false,
+      "stale": [],
+      "basisRevisions": [],
+      "predatesBasis": false,
+      "annotations": [],
+      "reverseAuditHits": 0,
+      "license": "OGDL-1.0",
+      "licenseNote": null,
+      "sensitivity": "public",
+      "sourceHash": "d03edb592182",
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "pending"
+        },
+        "tl": {
+          "status": "pending"
+        },
+        "vi": {
+          "status": "machine"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "translationStale": {
+        "en": false,
+        "vi": false,
+        "id": false,
+        "th": false
+      },
+      "renderableLangs": [
+        "zh-TW"
+      ]
+    },
+    "master": {
+      "id": "disease.hepatitis-a",
+      "slug": "hepatitis-a",
+      "name": "急性病毒性A型肝炎",
+      "nameEn": "Acute viral hepatitis A",
+      "aliases": [
+        "A肝",
+        "A型肝炎",
+        "HAV"
+      ],
+      "legalCategory": 2,
+      "icd10": [
+        "B15"
+      ],
+      "notifyWithinHours": 24,
+      "transmission": [
+        "foodborne",
+        "waterborne",
+        "sexual"
+      ],
+      "hasPage": true,
+      "owner": "unit.acute-infectious",
+      "zhuyin": "ㄐ",
+      "strokes": 9,
+      "i18n": {
+        "en": {
+          "name": "Acute viral hepatitis A"
+        }
+      }
+    },
+    "related": {
+      "faq": [],
+      "news": [],
+      "documents": [],
+      "vaccines": [],
+      "datasets": [],
+      "clarifications": [],
+      "media": [],
+      "labtests": [
+        {
+          "id": "labtest.hepatitis-a",
+          "type": "labtest",
+          "title": "急性病毒性A型肝炎檢驗項目與送驗規定",
+          "summary": "急性病毒性 A 型肝炎：血清 2 mL 做 anti-HAV IgM，冷藏 24 小時內送驗；群聚或境外移入個案加採糞便做 RT-PCR 基因定型。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/hepatitis-a/",
+          "path": "/lab/hepatitis-a/",
+          "reviewedAt": "2026-07-15",
+          "owner": "unit.lab",
+          "ownerName": "檢驗及疫苗研製中心",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "services": [],
+      "publications": [],
+      "topics": [
+        {
+          "id": "topic.disaster-evacuation",
+          "type": "topic",
+          "title": "防災避難須知：災後防疫與避難所衛生",
+          "summary": "颱風、地震、水災後的防疫重點：清除積水防登革熱、飲水與食物衛生防腸胃道傳染病、避難所防呼吸道群聚，並連結全民安全指引。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/disaster-evacuation/",
+          "path": "/topics/disaster-evacuation/",
+          "reviewedAt": "2026-09-01",
+          "owner": "unit.preparedness",
+          "ownerName": "新興傳染病整備組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "id": "dataset.vaccine-coverage",
+  "type": "dataset",
+  "title": "常規疫苗接種完成率",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2016-01-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "國內兒童常規疫苗歷年接種完成率（民國年）。數字為示意。",
+  "category": "structured-table",
+  "canonicalUrl": "https://data.cdc.gov.tw/dataset/routine-vaccination-coverage",
+  "updateFrequency": "irregular",
+  "lastUpdated": "2026-09-15",
+  "formats": [],
+  "resources": [],
+  "provenance": {
+    "mode": "snapshot",
+    "fetchedAt": "2026-10-03",
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/Z3nsEXQ6Jne6A13aVu8Ra8"
+  },
+  "series": {
+    "label": "接種完成率（%）",
+    "unit": "%",
+    "granularity": "year",
+    "points": [
+      {
+        "t": "2015",
+        "v": 97.2
+      },
+      {
+        "t": "2016",
+        "v": 97.5
+      },
+      {
+        "t": "2017",
+        "v": 97.8
+      },
+      {
+        "t": "2018",
+        "v": 98
+      },
+      {
+        "t": "2019",
+        "v": 98.1
+      },
+      {
+        "t": "2020",
+        "v": 97.4
+      },
+      {
+        "t": "2021",
+        "v": 96.9
+      },
+      {
+        "t": "2022",
+        "v": 97.3
+      },
+      {
+        "t": "2023",
+        "v": 97.9
+      },
+      {
+        "t": "2024",
+        "v": 98.2
+      },
+      {
+        "t": "2025",
+        "v": 98.4
+      }
+    ]
+  },
+  "portalUrl": "https://data.cdc.gov.tw/dataset/routine-vaccination-coverage",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/Z3nsEXQ6Jne6A13aVu8Ra8"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 76 處（mso 樣式 26、Mso 類別 25、命名空間標籤 25）"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站型別是 dataset（dataset.vaccine-coverage），草稿直接建成 dataset，看不出來的欄位以「（待補）」佔位"
+      },
+      {
+        "code": "series-extracted",
+        "severity": "info",
+        "message": "11 點、2015–2025、%（接種完成率（%））"
+      },
+      {
+        "code": "dataset-by-url",
+        "severity": "info",
+        "message": "canonicalUrl 沿用既有資料集 dataset.vaccine-coverage（清單 target 指定）"
+      },
+      {
+        "code": "field-guessed",
+        "severity": "info",
+        "message": "看不出更新頻率，updateFrequency 暫填 irregular"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/Z3nsEXQ6Jne6A13aVu8Ra8",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "dataset.vaccine-coverage"
+    ]
+  }
+}

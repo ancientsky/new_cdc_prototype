@@ -1,0 +1,56 @@
+{
+  "id": "media.travel-clinic-before-departure",
+  "type": "media",
+  "title": "出國前 4 到 6 週，先到旅遊醫學門診（宣導影片）",
+  "owner": "unit.quarantine",
+  "publishedAt": "2025-03-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "出國前 4 到 6 週先到旅遊醫學門診，讓疫苗有時間產生保護力。 文字稿摘要：出國前評估目的地風險，由醫師建議疫苗與預防用藥，返國後如有不適請主動告知旅遊史。",
+  "mediaType": "video",
+  "youtubeId": "SAMPLE000",
+  "producedAt": "2025-03-01",
+  "transcriptMarkdown": "出國前 4 到 6 週先到旅遊醫學門診，讓疫苗有時間產生保護力。\n\n文字稿摘要：出國前評估目的地風險，由醫師建議疫苗與預防用藥，返國後如有不適請主動告知旅遊史。",
+  "captions": [
+    "zh-TW"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/Pn9O0INzKizskKf7qrqWMN"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站型別是 media（media.travel-clinic-before-departure），草稿直接建成 media，看不出來的欄位以「（待補）」佔位"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/Pn9O0INzKizskKf7qrqWMN",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "media.travel-clinic-before-departure"
+    ]
+  }
+}

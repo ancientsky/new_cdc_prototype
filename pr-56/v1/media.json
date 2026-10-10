@@ -1,0 +1,2319 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "c74f37e9ced7",
+    "lastModified": "2026-10-01",
+    "count": 13
+  },
+  "data": [
+    {
+      "id": "media.mmr-waiting-room-2026",
+      "type": "media",
+      "title": "麻疹 MMR 疫苗候診衛教動畫（2026 年重製版）",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2026-10-01",
+      "reviewedAt": "2026-10-01",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "vaccines",
+        "travel"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "doc.mmr-recommendation"
+      ],
+      "diseases": [
+        "disease.measles"
+      ],
+      "vaccines": [
+        "vaccine.mmr"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-10-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-10-01",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "依 114.04.16 版 MMR 建議重製：1966 年（含）以後出生、不具免疫力的成人，前往流行地區前 2–4 週評估自費接種；流行地區以旅遊疫情建議等級為準。",
+      "keywords": [
+        "麻疹",
+        "MMR",
+        "1966 年",
+        "候診衛教",
+        "旅遊疫情建議"
+      ],
+      "note": "取代 media.mmr-waiting-room-2025；公關室已請各醫院候診區更換播放檔",
+      "mediaType": "animation",
+      "durationSeconds": 104,
+      "producedAt": "2026-10-01",
+      "basedOnVersionLabel": "114.04.16 版建議",
+      "targetGroups": [
+        "醫院候診區民眾",
+        "計畫出國成人",
+        "經常接觸外國人之工作者"
+      ],
+      "series": "候診區衛教動畫",
+      "captions": [
+        "zh-TW",
+        "en"
+      ],
+      "chapters": [
+        {
+          "t": 0,
+          "label": "麻疹傳染力有多強"
+        },
+        {
+          "t": 28,
+          "label": "哪些成人要評估接種"
+        },
+        {
+          "t": 62,
+          "label": "流行地區怎麼查"
+        },
+        {
+          "t": 84,
+          "label": "回國後出現症狀"
+        }
+      ],
+      "transcriptMarkdown": "**[00:00] 麻疹傳染力有多強**\n\n旁白：麻疹是傳染力非常強的疾病，病毒可以在空氣中飄散，和患者待在同一個空間就可能被傳染。症狀包括發燒、咳嗽、流鼻水、結膜炎，接著從耳後、臉部開始出疹，再蔓延到全身，少數人會併發肺炎或腦炎。\n\n**[00:28] 哪些成人要評估接種**\n\n旁白：依疾管署 114 年 4 月 16 日修訂的建議，1966 年（含）以後出生、不具麻疹免疫力的成人，如果計畫前往麻疹流行地區，建議在出國前 2 到 4 週，到旅遊醫學門診評估自費接種一劑 MMR 疫苗。怎麼知道自己有沒有免疫力？曾經完成兩劑接種、抽血驗出抗體陽性，或曾經確診麻疹，都算具有免疫力。醫療照護人員，以及在機場、觀光、移工服務等經常接觸外國人的工作者，也建議評估接種。\n\n**[01:02] 流行地區怎麼查**\n\n旁白：流行地區不是固定的國家名單，會隨疫情變化。出國前請查詢疾管署「國際旅遊疫情建議等級」，看目的地是否列有麻疹旅遊疫情建議。像日本在 2026 年 5 月就曾因麻疹疫情被列為第一級注意，熱門旅遊地也可能是流行地區。\n\n**[01:24] 回國後出現症狀**\n\n旁白：回國後 18 天內如果出現發燒、出疹，請戴口罩就醫，主動告知旅遊史，並避免搭乘大眾運輸。保護自己，也保護身邊的人。更多資訊請撥打 1922。",
+      "youtubeId": null,
+      "poster": "/img/media/mmr-waiting-room-2026.svg",
+      "i18n": {
+        "en": {
+          "title": "Measles and MMR vaccine: waiting-room animation (2026 remake)",
+          "summary": "Remade under the 16 Apr 2025 recommendation: adults born in 1966 or later without measles immunity should be assessed for one self-paid MMR dose 2–4 weeks before travelling to affected areas, which are defined by current travel health notices."
+        }
+      },
+      "sourceHash": "8008b95d4c0d",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/mmr-waiting-room-2026/",
+      "path": "/media/mmr-waiting-room-2026/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/mmr-waiting-room-2026.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-10-01",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-10-01",
+        "daysToReview": 365,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "media.mmr-waiting-room-2026",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "mediaOutdated": false,
+        "hasTranscript": true,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "8008b95d4c0d",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-10-01",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "media.covid-prevention-appeal",
+      "type": "media",
+      "title": "秋冬預防新冠，高風險族群請接種新一季疫苗",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2026-09-26",
+      "reviewedAt": "2026-09-26",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "vaccines",
+        "symptoms"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "doc.covid-vaccine-recommendation",
+        "disease.covid-19"
+      ],
+      "diseases": [
+        "disease.covid-19"
+      ],
+      "vaccines": [
+        "vaccine.covid-19"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-26"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-26",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "秋冬呼吸道疾病好發，影片呼籲 65 歲以上長者與慢性病患者接種新一季新冠疫苗，並提醒有症狀戴口罩、在家休息，出現重症徵兆及早就醫。",
+      "keywords": [
+        "新冠",
+        "COVID-19",
+        "新冠疫苗",
+        "秋冬",
+        "高風險族群"
+      ],
+      "note": "YouTube 影片 id 原型無法驗證，一律 null；頻道網址沿用舊式 /user/taiwancdc，dataset.youtube-channel 記為 @TwCDC，上線前請公關室確認頻道 handle。",
+      "mediaType": "video",
+      "durationSeconds": 90,
+      "producedAt": "2026-09-22",
+      "basedOnVersionLabel": "2026-09-15 新冠疫苗接種建議",
+      "targetGroups": [
+        "65 歲以上長者",
+        "慢性病患者",
+        "一般民眾"
+      ],
+      "series": "秋冬呼吸道疾病防治",
+      "captions": [
+        "zh-TW",
+        "en"
+      ],
+      "chapters": [
+        {
+          "t": 0,
+          "label": "秋冬為什麼要提高警覺"
+        },
+        {
+          "t": 25,
+          "label": "新一季疫苗誰該打"
+        },
+        {
+          "t": 55,
+          "label": "有症狀時怎麼做"
+        }
+      ],
+      "transcriptMarkdown": "**[00:00] 秋冬為什麼要提高警覺**\n\n旁白：天氣轉涼，大家待在室內的時間變長，新冠、流感等呼吸道病毒也更容易傳播。對多數年輕人來說，新冠可能像一場感冒；但對長輩、慢性病患者和免疫力較弱的人，仍可能引起肺炎、住院，甚至危及生命。\n\n**[00:25] 新一季疫苗誰該打**\n\n旁白：新一季新冠疫苗已經依照最新的接種建議開放。65 歲以上長者、有慢性病或免疫功能低下的人、住在長照機構的長輩，以及醫療照護人員，請優先接種。距離上一劑或上次感染已經超過一段時間的人，也可以向醫師詢問是否適合接種。新冠疫苗和流感疫苗可以同一天、在不同部位接種，一次完成更方便。\n\n**[00:55] 有症狀時怎麼做**\n\n旁白：如果出現發燒、咳嗽、喉嚨痛，請戴口罩、盡量在家休息，避免探視長輩或到人多的地方。高風險族群確診後，可以請醫師評估是否使用抗病毒藥物，越早使用效果越好。若出現呼吸急促、胸痛、意識不清或嘴唇發紫，請立即就醫。\n\n旁白：打疫苗、勤洗手、有症狀戴口罩，一起平安過秋冬。詳情請上疾管署網站，或撥打 1922。",
+      "youtubeId": null,
+      "poster": "/img/media/covid-prevention-appeal.svg",
+      "i18n": {
+        "en": {
+          "title": "Autumn and winter COVID-19 prevention: high-risk groups should get this season’s vaccine",
+          "summary": "Older adults and people with chronic conditions are urged to get the new-season COVID-19 vaccine; wear a mask when sick and seek care early for warning signs."
+        }
+      },
+      "sourceHash": "1fb17c65c967",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/covid-prevention-appeal/",
+      "path": "/media/covid-prevention-appeal/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/covid-prevention-appeal.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-09-26",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-09-26",
+        "daysToReview": 360,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "media.covid-prevention-appeal",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "mediaOutdated": false,
+        "hasTranscript": true,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "1fb17c65c967",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-26",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "media.ltc-flu-vaccine",
+      "type": "media",
+      "title": "長照機構住民與工作人員，一起打流感疫苗",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2026-09-25",
+      "reviewedAt": "2026-09-25",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "vaccines"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "doc.flu-vaccine-schedule",
+        "vaccine.influenza"
+      ],
+      "diseases": [
+        "disease.influenza"
+      ],
+      "vaccines": [
+        "vaccine.influenza"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-25"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-25",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "長照機構住民為流感重症高風險族群，影片說明 10 月 1 日起公費流感疫苗開打，住民與工作人員應同步接種，並示範機構內集中接種流程。",
+      "keywords": [
+        "流感疫苗",
+        "長照機構",
+        "公費疫苗",
+        "集中接種",
+        "工作人員"
+      ],
+      "note": "YouTube 影片 id 原型無法驗證，一律 null；頻道網址沿用舊式 /user/taiwancdc，dataset.youtube-channel 記為 @TwCDC，上線前請公關室確認頻道 handle。",
+      "mediaType": "video",
+      "durationSeconds": 150,
+      "producedAt": "2026-09-20",
+      "basedOnVersionLabel": "2026-09-15 流感疫苗接種計畫",
+      "targetGroups": [
+        "長照機構住民",
+        "長照機構工作人員",
+        "機構負責人"
+      ],
+      "series": "流感疫苗宣導",
+      "captions": [
+        "zh-TW",
+        "en"
+      ],
+      "chapters": [
+        {
+          "t": 0,
+          "label": "為什麼長照機構要優先接種"
+        },
+        {
+          "t": 40,
+          "label": "誰可以打公費疫苗"
+        },
+        {
+          "t": 85,
+          "label": "機構集中接種怎麼安排"
+        },
+        {
+          "t": 120,
+          "label": "接種後觀察與通報"
+        }
+      ],
+      "transcriptMarkdown": "**[00:00] 為什麼長照機構要優先接種**\n\n旁白：每年秋冬，流感病毒在社區流行，住在長照機構的長輩因為年紀大、多有慢性病，感染後容易併發肺炎，甚至需要住院。機構裡大家一起吃飯、一起活動，只要一個人感染，很快就會在樓層間傳開。\n\n機構護理長：我們最怕的就是群聚。所以每年疫苗一到，我們就把住民和同仁的接種排在第一週。\n\n**[00:40] 誰可以打公費疫苗**\n\n旁白：今年公費流感疫苗自 10 月 1 日起開打。長期照顧服務機構、安養機構的住民與工作人員，都是公費接種對象。不只照服員，包括護理、廚房、清潔、行政人員，只要在機構內工作，都建議接種。\n\n**[01:25] 機構集中接種怎麼安排**\n\n旁白：機構可以與合約醫療院所或衛生所聯繫，安排到機構集中接種。接種前，請先確認住民的健保卡與同意書；長輩若當天發燒或身體不適，可以先暫緩，等身體狀況穩定再補打。工作人員也別忘了自己，保護自己，就是保護長輩。\n\n**[02:00] 接種後觀察與通報**\n\n旁白：接種後請在現場休息觀察至少 30 分鐘。常見的反應是注射部位紅腫、輕微發燒，通常一到兩天就會改善。若出現持續高燒、呼吸困難等情形，請立即就醫。機構若發現住民陸續出現發燒、咳嗽，請依規定通報衛生單位，及早處理。\n\n旁白：保護長輩，從今年的一劑流感疫苗開始。更多資訊請上疾管署網站，或撥打防疫專線 1922。",
+      "youtubeId": null,
+      "poster": "/img/media/ltc-flu-vaccine.svg",
+      "i18n": {
+        "en": {
+          "title": "Long-term care residents and staff: get your flu shot together",
+          "summary": "Publicly funded flu vaccination starts on 1 October. Residents and all staff of long-term care facilities are eligible and should be vaccinated together."
+        }
+      },
+      "sourceHash": "df5e46a004f2",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/ltc-flu-vaccine/",
+      "path": "/media/ltc-flu-vaccine/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/ltc-flu-vaccine.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-09-25",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-09-25",
+        "daysToReview": 359,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "media.ltc-flu-vaccine",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "mediaOutdated": false,
+        "hasTranscript": true,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "df5e46a004f2",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-25",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "media.amr-one-health-podcast",
+      "type": "media",
+      "title": "Podcast｜抗生素不是萬靈丹：談抗藥性與防疫一體",
+      "owner": "unit.infection-control",
+      "publishedAt": "2026-09-15",
+      "reviewedAt": "2026-09-15",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "doc.infection-control-healthcare",
+        "dataset.antimicrobial-resistance"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-15"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "感管組與獸醫專家對談：抗生素對病毒性感冒無效、不要自行停藥或分藥，並說明人、動物、環境「防疫一體」如何一起減少抗藥性細菌。",
+      "keywords": [
+        "抗生素",
+        "抗藥性",
+        "AMR",
+        "防疫一體",
+        "One Health",
+        "Podcast"
+      ],
+      "note": "YouTube 影片 id 原型無法驗證，一律 null；頻道網址沿用舊式 /user/taiwancdc，dataset.youtube-channel 記為 @TwCDC，上線前請公關室確認頻道 handle。",
+      "mediaType": "podcast",
+      "durationSeconds": 900,
+      "producedAt": "2026-09-05",
+      "basedOnVersionLabel": "醫療機構感染管制指引（2026-03-01 版）與抗藥性監測資料",
+      "targetGroups": [
+        "一般民眾",
+        "醫療人員",
+        "畜牧與獸醫從業人員"
+      ],
+      "series": "防疫一體 Podcast",
+      "captions": [
+        "zh-TW"
+      ],
+      "chapters": [
+        {
+          "t": 0,
+          "label": "開場：什麼是抗藥性"
+        },
+        {
+          "t": 180,
+          "label": "感冒要不要吃抗生素"
+        },
+        {
+          "t": 420,
+          "label": "醫院裡的抗藥性細菌"
+        },
+        {
+          "t": 660,
+          "label": "防疫一體：人、動物、環境"
+        }
+      ],
+      "transcriptMarkdown": "**[00:00] 開場：什麼是抗藥性**\n\n主持人：歡迎收聽疾管署 Podcast。今天要談一個看不見、但越來越重要的問題：抗生素抗藥性。\n\n感管組專員：細菌在長期接觸抗生素之後，會演化出不怕藥的能力，這就是抗藥性。當原本有效的藥物失效，一般的感染也可能變得難以治療。世界衛生組織把抗藥性列為全球重要的公共衛生威脅之一。\n\n**[03:00] 感冒要不要吃抗生素**\n\n主持人：很多人感冒會跟醫師要抗生素，這樣對嗎？\n\n感管組專員：大部分感冒、流感是病毒引起的，抗生素只對細菌有效，吃了不會比較快好，反而增加副作用和抗藥性。如果醫師確實開了抗生素，就要依照醫囑吃完，不要症狀好了就停藥，也不要把剩下的藥留給家人吃。\n\n**[07:00] 醫院裡的抗藥性細菌**\n\n感管組專員：在醫院裡，抗藥性細菌可能透過醫護人員的手或醫療器材傳播。所以我們推動手部衛生、接觸隔離與抗生素管理計畫，請醫院定期監測抗藥性比率，這些資料也會以開放資料公開。\n\n**[11:00] 防疫一體：人、動物、環境**\n\n獸醫專家：抗藥性不是只有人的問題。畜牧業與寵物用藥、環境中的抗生素殘留，都會影響細菌。「防疫一體」就是讓醫療、農業、環境部門一起合作，減少不必要的用藥。\n\n主持人：今天的重點：感冒不吵抗生素、吃藥依醫囑、勤洗手。我們下集見。",
+      "youtubeId": null,
+      "poster": "/img/media/amr-one-health-podcast.svg",
+      "sourceHash": "db87421dea24",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/amr-one-health-podcast/",
+      "path": "/media/amr-one-health-podcast/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/amr-one-health-podcast.md",
+      "governance": {
+        "owner": "unit.infection-control",
+        "ownerName": "感染管制及生物安全組",
+        "steward": null,
+        "reviewedAt": "2026-09-15",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-09-15",
+        "daysToReview": 349,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "media.amr-one-health-podcast",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "mediaOutdated": false,
+        "hasTranscript": true,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "db87421dea24",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "media.mpox-vaccine",
+      "type": "media",
+      "title": "M痘疫苗兩劑完整保護，高風險族群請把握接種",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2026-09-05",
+      "reviewedAt": "2026-09-05",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "vaccines",
+        "travel"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "disease.mpox",
+        "faq.mpox-who-vaccine"
+      ],
+      "diseases": [
+        "disease.mpox"
+      ],
+      "vaccines": [
+        "vaccine.mpox"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-05"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "短影音提醒 M痘疫苗需接種兩劑、間隔至少 4 週才有完整保護，說明公費接種對象與出現皮疹、發燒時應就醫並避免親密接觸。",
+      "keywords": [
+        "M痘",
+        "猴痘",
+        "M痘疫苗",
+        "兩劑",
+        "公費疫苗"
+      ],
+      "note": "YouTube 影片 id 原型無法驗證，一律 null；頻道網址沿用舊式 /user/taiwancdc，dataset.youtube-channel 記為 @TwCDC，上線前請公關室確認頻道 handle。",
+      "mediaType": "short",
+      "durationSeconds": 45,
+      "producedAt": "2026-08-30",
+      "basedOnVersionLabel": "M痘疾病頁與公費疫苗接種對象（2026-08 審閱）",
+      "targetGroups": [
+        "近一年有高風險性行為者",
+        "前往流行地區者",
+        "性病門診就診者"
+      ],
+      "series": "愛滋與性病防治",
+      "captions": [
+        "zh-TW"
+      ],
+      "chapters": [
+        {
+          "t": 0,
+          "label": "M痘怎麼傳染"
+        },
+        {
+          "t": 15,
+          "label": "疫苗打兩劑"
+        },
+        {
+          "t": 32,
+          "label": "有症狀怎麼辦"
+        }
+      ],
+      "transcriptMarkdown": "**[00:00] M痘怎麼傳染**\n\n旁白：M痘，過去稱為猴痘，主要透過親密接觸傳染，例如性行為、皮膚對皮膚的接觸，或接觸到患者的皮疹、體液，以及使用過的床單、毛巾。2026 年國際間仍有 I 型 M痘疫情，出國旅遊或參加大型活動時要特別留意。\n\n**[00:15] 疫苗打兩劑**\n\n旁白：M痘疫苗要打兩劑，兩劑間隔至少 4 週，才有完整的保護力。近一年有高風險性行為、曾經得過性病，或是即將前往流行地區且可能有高風險行為的人，都是公費接種對象。已經打過第一劑的人，別忘了回來打第二劑。全國有多家合約醫療院所提供接種，預約前請先查詢院所名單。\n\n**[00:32] 有症狀怎麼辦**\n\n旁白：如果出現發燒、淋巴結腫大，或是生殖器、肛門、口腔周圍出現皮疹、水泡，請戴口罩、穿長袖遮住皮疹，儘速就醫，並主動告知接觸史。在痊癒之前，請避免和他人有親密接觸，也不要共用毛巾與床單。兩劑疫苗，完整保護。詳情請撥 1922。",
+      "youtubeId": null,
+      "poster": "/img/media/mpox-vaccine.svg",
+      "sourceHash": "38b7e9f41183",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/mpox-vaccine/",
+      "path": "/media/mpox-vaccine/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/mpox-vaccine.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-09-05",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-09-05",
+        "daysToReview": 339,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "media.mpox-vaccine",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "mediaOutdated": false,
+        "hasTranscript": true,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "38b7e9f41183",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "media.migrant-worker-health-check",
+      "type": "media",
+      "title": "移工健康檢查：入境後三日內與聘僱期間的檢查項目",
+      "owner": "unit.chronic-infectious",
+      "publishedAt": "2026-08-10",
+      "reviewedAt": "2026-08-10",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "symptoms"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "disease.tuberculosis",
+        "doc.tb-manual"
+      ],
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-08-10"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "reviewed",
+          "reviewedAt": "2026-08-10",
+          "reviewer": "越南語審核人（約用通譯）"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "summary": "以越南語字幕說明移工入境後三日內及聘僱期間第 6、18、30 個月的健康檢查，包括胸部 X 光等項目，並提醒有咳嗽發燒可撥 1922 多語服務。",
+      "keywords": [
+        "移工",
+        "外籍勞工",
+        "健康檢查",
+        "胸部X光",
+        "越南語",
+        "多語"
+      ],
+      "note": "外國人健康檢查之權責分工（疾管署／衛福部）與檢查時點以現行規定為準，製作前已請權責單位確認；檢查項目為示意摘要",
+      "mediaType": "video",
+      "durationSeconds": 140,
+      "producedAt": "2026-07-30",
+      "basedOnVersionLabel": "外國人健康檢查規定與結核病防治工作手冊",
+      "targetGroups": [
+        "移工",
+        "雇主與仲介",
+        "新住民"
+      ],
+      "series": "新住民與移工健康",
+      "captions": [
+        "zh-TW",
+        "vi",
+        "id",
+        "th",
+        "en"
+      ],
+      "chapters": [
+        {
+          "t": 0,
+          "label": "為什麼要做健康檢查"
+        },
+        {
+          "t": 35,
+          "label": "什麼時候要檢查"
+        },
+        {
+          "t": 80,
+          "label": "檢查項目與醫院"
+        },
+        {
+          "t": 115,
+          "label": "生病了怎麼辦"
+        }
+      ],
+      "transcriptMarkdown": "**[00:00] 為什麼要做健康檢查**\n\n旁白：歡迎來到臺灣工作。為了保護你自己、你的同事和雇主家人的健康，依照規定，來臺工作的移工需要接受定期健康檢查。健康檢查可以及早發現結核病等傳染病，早發現、早治療，大多可以治好。\n\n**[00:35] 什麼時候要檢查**\n\n旁白：入境臺灣後三個工作日內，請由雇主或仲介陪同，到指定醫院完成第一次健康檢查。之後在聘僱期間第 6 個月、第 18 個月、第 30 個月前後，也要再做定期健康檢查。雇主要記得提醒移工按時檢查，並保存檢查結果。\n\n**[01:20] 檢查項目與醫院**\n\n旁白：健康檢查包括胸部 X 光、寄生蟲檢查等項目，醫院會依規定辦理。請一定要到衛生福利部指定的醫院檢查，結果才有效。如果檢查發現胸部 X 光異常，醫院會進一步安排驗痰或就醫，不用緊張，配合醫師就可以。\n\n**[01:55] 生病了怎麼辦**\n\n旁白：如果你咳嗽超過兩週、發燒、體重變輕，請告訴雇主並儘快就醫。確診結核病，政府提供免費治療，關懷員會陪你每天吃藥，治療期間依規定可以繼續在臺工作，不要害怕、不要躲起來。需要協助，請撥打防疫專線 1922，有越南語、印尼語、泰語與英語服務。",
+      "youtubeId": null,
+      "poster": "/img/media/migrant-worker-health-check.svg",
+      "i18n": {
+        "vi": {
+          "title": "Khám sức khỏe cho lao động nước ngoài: trong 3 ngày sau khi nhập cảnh và trong thời gian làm việc",
+          "summary": "Hướng dẫn khám sức khỏe trong 3 ngày làm việc sau khi nhập cảnh và vào khoảng tháng thứ 6, 18, 30; nếu ho, sốt hãy gọi 1922 có hỗ trợ tiếng Việt."
+        }
+      },
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Category/MPage/{id}#migrant-video"
+      ],
+      "sourceHash": "ca0cf1989dc1",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/migrant-worker-health-check/",
+      "path": "/media/migrant-worker-health-check/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/migrant-worker-health-check.md",
+      "governance": {
+        "owner": "unit.chronic-infectious",
+        "ownerName": "慢性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-08-10",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-08-10",
+        "daysToReview": 313,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "media.migrant-worker-health-check",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "mediaOutdated": false,
+        "hasTranscript": true,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "ca0cf1989dc1",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "reviewed",
+            "reviewedAt": "2026-08-10",
+            "reviewer": "越南語審核人（約用通譯）"
+          },
+          "id": {
+            "status": "machine"
+          },
+          "th": {
+            "status": "machine"
+          }
+        },
+        "translationStale": {
+          "en": false,
+          "vi": false,
+          "id": false,
+          "th": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en",
+          "vi",
+          "id",
+          "th"
+        ]
+      }
+    },
+    {
+      "id": "media.dengue-village-chief",
+      "type": "media",
+      "title": "里長帶頭巡倒清刷：社區防登革熱篇",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2026-07-15",
+      "reviewedAt": "2026-07-15",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "symptoms",
+        "situation"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "disease.dengue",
+        "doc.guidance-dengue"
+      ],
+      "diseases": [
+        "disease.dengue"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-07-15"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "由里長示範帶領社區志工「巡、倒、清、刷」清除積水容器，說明孳生源清除比噴藥更重要，並提醒出現發燒、頭痛、骨頭痛應儘速就醫。",
+      "keywords": [
+        "登革熱",
+        "孳生源",
+        "巡倒清刷",
+        "里長",
+        "社區動員"
+      ],
+      "note": "YouTube 影片 id 原型無法驗證，一律 null；頻道網址沿用舊式 /user/taiwancdc，dataset.youtube-channel 記為 @TwCDC，上線前請公關室確認頻道 handle。",
+      "mediaType": "video",
+      "durationSeconds": 120,
+      "producedAt": "2026-07-08",
+      "basedOnVersionLabel": "登革熱/屈公病防治工作指引 2026 年 2 月版",
+      "targetGroups": [
+        "里長與里幹事",
+        "社區志工",
+        "一般民眾"
+      ],
+      "series": "登革熱社區動員",
+      "captions": [
+        "zh-TW"
+      ],
+      "chapters": [
+        {
+          "t": 0,
+          "label": "里長的一週巡查"
+        },
+        {
+          "t": 35,
+          "label": "巡倒清刷四步驟"
+        },
+        {
+          "t": 75,
+          "label": "噴藥不能取代清積水"
+        },
+        {
+          "t": 100,
+          "label": "發燒就醫說旅遊史"
+        }
+      ],
+      "transcriptMarkdown": "**[00:00] 里長的一週巡查**\n\n里長：每個禮拜六早上，我們里的志工都會集合，一條巷子一條巷子走。登革熱是靠埃及斑蚊和白線斑蚊傳播的，蚊子在哪裡生，我們就去哪裡清。\n\n**[00:35] 巡倒清刷四步驟**\n\n旁白：防登革熱，記住四個字：「巡、倒、清、刷」。巡：巡視住家內外可能積水的容器，像花盆底盤、廢輪胎、水桶、帆布。倒：把積水倒掉。清：不要的容器清除，要用的容器倒放或加蓋。刷：容器內壁要刷洗，因為斑蚊的卵會黏在壁上，只倒水不刷，卵還是會孵化。\n\n志工：我們最常找到的地方，是陽台花盆底盤、冷氣滴水，還有工地的積水，下過雨後一定要再巡一次。\n\n**[01:15] 噴藥不能取代清積水**\n\n旁白：有確定病例時，衛生單位會進行緊急防治噴藥，目的是殺死已經帶病毒的成蚊。但噴藥殺不了水裡的孑孓，真正斷根，還是要靠大家清除孳生源。噴藥時請配合關好門窗、收好食物，不必過度擔心。\n\n**[01:40] 發燒就醫說旅遊史**\n\n旁白：如果出現發燒、頭痛、後眼窩痛、肌肉關節痛或出疹，請儘速就醫，並告訴醫師最近去過哪裡。退燒前後是重症的關鍵期，出現腹痛、持續嘔吐、牙齦出血或嗜睡，要立刻回診。里長和志工的一小時，守住全里的一整個夏天。",
+      "youtubeId": null,
+      "poster": "/img/media/dengue-village-chief.svg",
+      "sourceHash": "fcb667d63c4b",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/dengue-village-chief/",
+      "path": "/media/dengue-village-chief/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/dengue-village-chief.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-07-15",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-07-15",
+        "daysToReview": 287,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "media.dengue-village-chief",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "mediaOutdated": false,
+        "hasTranscript": true,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "fcb667d63c4b",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "media.travel-clinic-before-departure",
+      "type": "media",
+      "title": "出國前 4 到 6 週，先到旅遊醫學門診",
+      "owner": "unit.quarantine",
+      "publishedAt": "2026-06-12",
+      "reviewedAt": "2026-06-12",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "travel",
+        "vaccines"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "faq.travel-clinic",
+        "doc.mmr-recommendation"
+      ],
+      "diseases": [
+        "disease.measles",
+        "disease.malaria",
+        "disease.dengue"
+      ],
+      "vaccines": [
+        "vaccine.mmr",
+        "vaccine.hepatitis-a"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-06-12"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-06-12",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "提醒民眾出國前 4 到 6 週到旅遊醫學門診，依目的地旅遊疫情建議等級評估疫苗、預防瘧疾用藥與防蚊，並說明回國後發燒要告知旅遊史。",
+      "keywords": [
+        "旅遊醫學門診",
+        "出國",
+        "旅遊疫情建議",
+        "疫苗",
+        "瘧疾"
+      ],
+      "note": "YouTube 影片 id 原型無法驗證，一律 null；頻道網址沿用舊式 /user/taiwancdc，dataset.youtube-channel 記為 @TwCDC，上線前請公關室確認頻道 handle。",
+      "mediaType": "video",
+      "durationSeconds": 100,
+      "producedAt": "2026-06-05",
+      "basedOnVersionLabel": "旅遊醫學門診說明與 114.04.16 版 MMR 建議",
+      "targetGroups": [
+        "出國旅客",
+        "商務與留學",
+        "探親旅客"
+      ],
+      "series": "旅遊健康",
+      "captions": [
+        "zh-TW",
+        "en"
+      ],
+      "chapters": [
+        {
+          "t": 0,
+          "label": "查目的地疫情等級"
+        },
+        {
+          "t": 25,
+          "label": "旅遊醫學門診做什麼"
+        },
+        {
+          "t": 60,
+          "label": "行李裡的防疫用品"
+        },
+        {
+          "t": 80,
+          "label": "回國後發燒說旅遊史"
+        }
+      ],
+      "transcriptMarkdown": "**[00:00] 查目的地疫情等級**\n\n旁白：計畫出國了嗎？出發前，第一件事是上疾管署網站查詢「國際旅遊疫情建議等級」，確認目的地目前列有哪些疫情建議，以及對應的防護措施。等級會隨國際疫情調整，即使是常去的國家，每次出發前都要重新查一次。\n\n**[00:25] 旅遊醫學門診做什麼**\n\n旁白：建議在出國前 4 到 6 週，到全國的旅遊醫學合約門診諮詢。醫師會依照你的目的地、行程和健康狀況，評估需要的疫苗，例如 A 型肝炎、黃熱病、MMR 等；前往瘧疾流行地區，也會開立預防用藥，並說明怎麼服用。需要國際預防接種證明，也就是俗稱的「黃皮書」，同樣在旅遊醫學門診辦理。部分疫苗需要接種多劑或需要時間產生保護力，所以要提早安排。\n\n**[01:00] 行李裡的防疫用品**\n\n旁白：前往東南亞等蚊媒傳染病流行地區，防蚊最重要：行李裡準備含 DEET 或派卡瑞丁的防蚊液，穿著淺色長袖衣褲，住宿選擇有紗窗或冷氣的房間。另外帶上口罩和常備藥品；在外飲食注意衛生，避免生飲生食。\n\n**[01:20] 回國後發燒說旅遊史**\n\n旁白：入境時如果有發燒、腹瀉等症狀，請主動告知檢疫人員。回國後一段時間內出現發燒、出疹，請戴口罩就醫，並告訴醫師你去過哪裡。旅途平安，從行前準備開始。詳情請撥 1922。",
+      "youtubeId": null,
+      "poster": "/img/media/travel-clinic-before-departure.svg",
+      "i18n": {
+        "en": {
+          "title": "See a travel medicine clinic 4–6 weeks before you leave",
+          "summary": "Check travel health notices for your destination and visit a travel medicine clinic 4–6 weeks ahead for vaccines, malaria prophylaxis and advice; report your travel history if you fall ill after returning."
+        }
+      },
+      "sourceHash": "3d38fda29f36",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/travel-clinic-before-departure/",
+      "path": "/media/travel-clinic-before-departure/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/travel-clinic-before-departure.md",
+      "governance": {
+        "owner": "unit.quarantine",
+        "ownerName": "檢疫組",
+        "steward": null,
+        "reviewedAt": "2026-06-12",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-06-12",
+        "daysToReview": 254,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "media.travel-clinic-before-departure",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "mediaOutdated": false,
+        "hasTranscript": true,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "3d38fda29f36",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-06-12",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "media.prep-intro",
+      "type": "media",
+      "title": "PrEP 是什麼？三分鐘認識暴露愛滋病毒前預防性投藥",
+      "owner": "unit.chronic-infectious",
+      "publishedAt": "2026-06-05",
+      "reviewedAt": "2026-06-05",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "symptoms"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "disease.hiv",
+        "faq.hiv-pep"
+      ],
+      "diseases": [
+        "disease.hiv"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-06-05"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-06-05",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "以動畫說明 PrEP（暴露愛滋病毒前預防性投藥）的原理、每日服藥與事件型服藥兩種方式、服藥前後要做的檢查，以及與 PEP 的不同。",
+      "keywords": [
+        "PrEP",
+        "預防性投藥",
+        "HIV",
+        "PEP",
+        "愛滋"
+      ],
+      "note": "YouTube 影片 id 原型無法驗證，一律 null；頻道網址沿用舊式 /user/taiwancdc，dataset.youtube-channel 記為 @TwCDC，上線前請公關室確認頻道 handle。",
+      "mediaType": "animation",
+      "durationSeconds": 180,
+      "producedAt": "2026-05-28",
+      "basedOnVersionLabel": "HIV 疾病頁與 PrEP 計畫說明",
+      "targetGroups": [
+        "HIV 感染高風險族群",
+        "伴侶為 HIV 感染者",
+        "年輕族群"
+      ],
+      "series": "愛滋防治",
+      "captions": [
+        "zh-TW",
+        "en"
+      ],
+      "chapters": [
+        {
+          "t": 0,
+          "label": "PrEP 是什麼"
+        },
+        {
+          "t": 50,
+          "label": "兩種服藥方式"
+        },
+        {
+          "t": 105,
+          "label": "服藥前後的檢查"
+        },
+        {
+          "t": 145,
+          "label": "PrEP 和 PEP 不一樣"
+        }
+      ],
+      "transcriptMarkdown": "**[00:00] PrEP 是什麼**\n\n旁白：PrEP，全名是「暴露愛滋病毒前預防性投藥」。意思是在可能接觸到 HIV 之前，先服用抗病毒藥物，讓身體裡有足夠的藥物濃度，病毒進來時就不容易建立感染。依照醫囑正確服藥，可以大幅降低經由性行為感染 HIV 的風險。\n\n**[00:50] 兩種服藥方式**\n\n旁白：PrEP 有兩種常見的服用方式。第一種是「每日服藥」，每天固定時間吃一顆，適合性行為頻率較高或無法預期的人。第二種是「事件型服藥」，在性行為前 2 到 24 小時服用兩顆，之後 24 小時、48 小時各再服用一顆。要選哪一種，請和醫師討論，因為事件型服藥並不適合所有人。\n\n**[01:45] 服藥前後的檢查**\n\n旁白：開始使用 PrEP 之前，醫師會先幫你確認沒有感染 HIV，也會檢查腎功能與 B 型肝炎。之後大約每三個月回診一次，定期篩檢 HIV 與其他性傳染病。疾管署與合作醫院推動 PrEP 計畫，符合條件的民眾可以獲得藥物或費用補助，詳情請洽 PrEP 合作醫院。\n\n**[02:25] PrEP 和 PEP 不一樣**\n\n旁白：PrEP 是「事前」預防。如果已經發生高風險行為、事前沒有服用 PrEP，請在 72 小時內、越快越好到醫院評估 PEP，也就是暴露後預防性投藥。另外要提醒，PrEP 不能預防梅毒、淋病等其他性傳染病，搭配保險套，才是更完整的保護。",
+      "youtubeId": null,
+      "poster": "/img/media/prep-intro.svg",
+      "i18n": {
+        "en": {
+          "title": "What is PrEP? Pre-exposure prophylaxis in three minutes",
+          "summary": "An animation explaining how PrEP works, daily versus event-driven dosing, the tests needed before and during PrEP, and how it differs from PEP."
+        }
+      },
+      "sourceHash": "65a9cbec5d52",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/prep-intro/",
+      "path": "/media/prep-intro/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/prep-intro.md",
+      "governance": {
+        "owner": "unit.chronic-infectious",
+        "ownerName": "慢性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-06-05",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-06-05",
+        "daysToReview": 247,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "media.prep-intro",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "mediaOutdated": false,
+        "hasTranscript": true,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "65a9cbec5d52",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-06-05",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "media.hiv-anonymous-testing",
+      "type": "media",
+      "title": "想知道就去篩：HIV 匿名篩檢這樣做",
+      "owner": "unit.chronic-infectious",
+      "publishedAt": "2026-05-20",
+      "reviewedAt": "2026-05-20",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "symptoms"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "disease.hiv",
+        "faq.hiv-test-where"
+      ],
+      "diseases": [
+        "disease.hiv"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-05-20"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "說明 HIV 匿名篩檢不需健保卡、不用留真實姓名，介紹匿名篩檢醫院、自我篩檢與空窗期，並提醒篩檢陽性可立即銜接治療。",
+      "keywords": [
+        "HIV",
+        "愛滋",
+        "匿名篩檢",
+        "自我篩檢",
+        "空窗期",
+        "U=U"
+      ],
+      "note": "YouTube 影片 id 原型無法驗證，一律 null；頻道網址沿用舊式 /user/taiwancdc，dataset.youtube-channel 記為 @TwCDC，上線前請公關室確認頻道 handle。",
+      "mediaType": "video",
+      "durationSeconds": 110,
+      "producedAt": "2026-05-10",
+      "basedOnVersionLabel": "HIV 疾病頁與匿名篩檢說明（2026-06 審閱）",
+      "targetGroups": [
+        "有過無套性行為者",
+        "男男間性行為者",
+        "年輕族群"
+      ],
+      "series": "愛滋防治",
+      "captions": [
+        "zh-TW",
+        "en"
+      ],
+      "chapters": [
+        {
+          "t": 0,
+          "label": "為什麼要篩檢"
+        },
+        {
+          "t": 30,
+          "label": "匿名篩檢怎麼做"
+        },
+        {
+          "t": 65,
+          "label": "自我篩檢與空窗期"
+        },
+        {
+          "t": 90,
+          "label": "陽性也不用怕"
+        }
+      ],
+      "transcriptMarkdown": "**[00:00] 為什麼要篩檢**\n\n旁白：感染 HIV 初期可能沒有任何症狀，也可能只是像感冒一樣發燒、喉嚨痛，很容易被忽略。唯一確定的方法，就是篩檢。只要曾經有過沒有戴保險套的性行為，或與他人共用針具，都建議定期篩檢。\n\n**[00:30] 匿名篩檢怎麼做**\n\n旁白：全國有多家醫院提供 HIV 匿名篩檢服務。匿名篩檢不需要健保卡，也不用留真實姓名，只要用代號登記。醫院會先由個案管理師進行諮詢，了解你的擔心，再抽血檢驗。等待結果期間，也可以詢問預防性投藥 PrEP 或其他性傳染病的檢查。各縣市衛生局所、部分民間團體也提供篩檢服務。\n\n**[01:05] 自我篩檢與空窗期**\n\n旁白：不方便到醫院？可以使用 HIV 自我篩檢試劑，在家自己檢測。要注意的是，篩檢有「空窗期」：感染後到能驗出抗體需要一段時間，如果距離危險行為還不夠久，即使結果是陰性，也建議過一段時間再驗一次。自我篩檢結果為陽性，必須到醫院做確認檢驗。\n\n**[01:30] 陽性也不用怕**\n\n旁白：現在的治療非常進步。確診後及早服藥，可以讓病毒量降到測不到，測不到就不會透過性行為傳染，也就是「U=U」。HIV 已經是可以控制的慢性病。想知道，就去篩。匿名篩檢醫院名單請上疾管署網站查詢，或撥打 1922。",
+      "youtubeId": null,
+      "poster": "/img/media/hiv-anonymous-testing.svg",
+      "sourceHash": "317dd3f3e5ac",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/hiv-anonymous-testing/",
+      "path": "/media/hiv-anonymous-testing/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/hiv-anonymous-testing.md",
+      "governance": {
+        "owner": "unit.chronic-infectious",
+        "ownerName": "慢性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-05-20",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-05-20",
+        "daysToReview": 231,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "media.hiv-anonymous-testing",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "mediaOutdated": false,
+        "hasTranscript": true,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "317dd3f3e5ac",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "media.enterovirus-handwashing",
+      "type": "media",
+      "title": "濕搓沖捧擦：腸病毒洗手五步驟動畫",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2026-04-15",
+      "reviewedAt": "2026-04-15",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "symptoms"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "disease.enterovirus",
+        "doc.ev-severe-guideline"
+      ],
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-04-15"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-04-15",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "以動畫示範「濕、搓、沖、捧、擦」洗手五步驟，提醒大人回家先洗手換衣再抱孩子，並教家長辨識腸病毒重症前兆。",
+      "keywords": [
+        "腸病毒",
+        "洗手",
+        "濕搓沖捧擦",
+        "重症前兆",
+        "幼兒"
+      ],
+      "note": "YouTube 影片 id 原型無法驗證，一律 null；頻道網址沿用舊式 /user/taiwancdc，dataset.youtube-channel 記為 @TwCDC，上線前請公關室確認頻道 handle。",
+      "mediaType": "animation",
+      "durationSeconds": 75,
+      "producedAt": "2026-04-01",
+      "basedOnVersionLabel": "2026-03-15 腸病毒重症處置指引",
+      "targetGroups": [
+        "幼兒家長",
+        "托嬰中心與幼兒園",
+        "學童"
+      ],
+      "series": "腸病毒防治",
+      "captions": [
+        "zh-TW",
+        "en"
+      ],
+      "chapters": [
+        {
+          "t": 0,
+          "label": "腸病毒怎麼傳染"
+        },
+        {
+          "t": 18,
+          "label": "洗手五步驟"
+        },
+        {
+          "t": 45,
+          "label": "大人回家先洗手換衣"
+        },
+        {
+          "t": 58,
+          "label": "重症前兆要就醫"
+        }
+      ],
+      "transcriptMarkdown": "**[00:00] 腸病毒怎麼傳染**\n\n小熊：媽媽，為什麼我又要洗手？\n\n媽媽：因為腸病毒很會躲！它會藏在玩具、門把和大家的手上，透過口水、鼻涕和糞便傳染。5 歲以下的小朋友最容易發生重症，所以洗手很重要。\n\n**[00:18] 洗手五步驟**\n\n旁白：跟著小熊一起做——\n\n- 濕：雙手用水打濕。\n- 搓：抹上肥皂，手心、手背、指縫、指尖、手腕都要搓，至少 20 秒。\n- 沖：用清水把泡泡沖乾淨。\n- 捧：捧水把水龍頭沖一沖。\n- 擦：用乾淨的毛巾或紙巾把手擦乾。\n\n旁白：要用肥皂喔！酒精對腸病毒的效果有限。\n\n**[00:45] 大人回家先洗手換衣**\n\n爸爸：我下班回家，第一件事是洗手、換衣服，再抱寶寶。大人感染腸病毒可能沒有症狀，卻會把病毒帶回家。\n\n**[00:58] 重症前兆要就醫**\n\n旁白：孩子如果出現嗜睡、意識不清、活力不佳、手腳無力，或睡覺時突然肌躍型抽搐，還有持續嘔吐、呼吸急促、心跳加快，這些都是重症前兆，請立刻送到大醫院。生病的孩子請在家休息，不要上學，避免傳染給其他小朋友。",
+      "youtubeId": null,
+      "poster": "/img/media/enterovirus-handwashing.svg",
+      "i18n": {
+        "en": {
+          "title": "Wet, rub, rinse, splash, dry: handwashing against enterovirus",
+          "summary": "An animation showing five steps of handwashing with soap, reminding adults to wash and change clothes before holding children, and listing warning signs of severe enterovirus infection."
+        }
+      },
+      "sourceHash": "ebc862997990",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/enterovirus-handwashing/",
+      "path": "/media/enterovirus-handwashing/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/enterovirus-handwashing.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-04-15",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-04-15",
+        "daysToReview": 196,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "media.enterovirus-handwashing",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "mediaOutdated": false,
+        "hasTranscript": true,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "ebc862997990",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-04-15",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "media.tb-cough-two-weeks",
+      "type": "media",
+      "title": "咳嗽超過兩週，快去照胸部 X 光",
+      "owner": "unit.chronic-infectious",
+      "publishedAt": "2026-03-20",
+      "reviewedAt": "2026-03-20",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "symptoms"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "disease.tuberculosis",
+        "doc.tb-manual"
+      ],
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-03-20"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-03-20",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "咳嗽超過兩週可能是結核病警訊，影片提醒及早就醫照胸部 X 光，說明結核病可以治癒，並介紹都治計畫陪伴完成六個月以上療程。",
+      "keywords": [
+        "結核病",
+        "咳嗽兩週",
+        "胸部X光",
+        "都治計畫",
+        "世界結核病日"
+      ],
+      "note": "YouTube 影片 id 原型無法驗證，一律 null；頻道網址沿用舊式 /user/taiwancdc，dataset.youtube-channel 記為 @TwCDC，上線前請公關室確認頻道 handle。",
+      "mediaType": "video",
+      "durationSeconds": 60,
+      "producedAt": "2026-03-10",
+      "basedOnVersionLabel": "結核病防治工作手冊（2025-07-01 版）",
+      "targetGroups": [
+        "一般民眾",
+        "長者",
+        "糖尿病患者"
+      ],
+      "series": "世界結核病日",
+      "captions": [
+        "zh-TW",
+        "en"
+      ],
+      "chapters": [
+        {
+          "t": 0,
+          "label": "咳嗽不是小事"
+        },
+        {
+          "t": 20,
+          "label": "結核病的症狀"
+        },
+        {
+          "t": 40,
+          "label": "可以治好，要吃完藥"
+        }
+      ],
+      "transcriptMarkdown": "**[00:00] 咳嗽不是小事**\n\n阿伯：咳嗽喔？老毛病啦，喝個枇杷膏就好。\n\n女兒：爸，你已經咳了快三個禮拜了，我們去醫院照個 X 光好不好？\n\n旁白：咳嗽超過兩週，可能不只是感冒。結核病是經由空氣傳染的疾病，病人咳嗽、打噴嚏、說話時，病菌會散布在空氣中。家人長時間待在同一個空間，最容易被傳染。\n\n**[00:20] 結核病的症狀**\n\n旁白：結核病常見的症狀有：咳嗽超過兩週、有痰、胸痛、食慾不振、體重減輕、午後微燒，還有晚上睡覺盜汗。長者、糖尿病患者、免疫力較低的人，風險更高。出現這些症狀，請到醫院胸腔科或家醫科就醫，照一張胸部 X 光，必要時驗痰。\n\n**[00:40] 可以治好，要吃完藥**\n\n旁白：結核病是可以治癒的。只要按時服藥，通常六個月以上就能完成治療，而且開始規則服藥兩週後，傳染力就會大幅下降。千萬不要症狀改善就自行停藥，否則可能產生抗藥性，治療會更困難、更久。疾管署推動「都治計畫」，由關懷員陪伴病人每天服藥，一起把藥吃完。\n\n女兒：還好有早點發現。\n\n旁白：咳嗽兩週，快照 X 光。更多資訊，請撥打 1922。",
+      "youtubeId": null,
+      "poster": "/img/media/tb-cough-two-weeks.svg",
+      "i18n": {
+        "en": {
+          "title": "Coughing for more than two weeks? Get a chest X-ray",
+          "summary": "A persistent cough may be a sign of tuberculosis. TB is curable with at least six months of treatment, supported by directly observed therapy."
+        }
+      },
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Category/MPage/{id}#video"
+      ],
+      "sourceHash": "868755b63859",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/tb-cough-two-weeks/",
+      "path": "/media/tb-cough-two-weeks/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/tb-cough-two-weeks.md",
+      "governance": {
+        "owner": "unit.chronic-infectious",
+        "ownerName": "慢性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-03-20",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-03-20",
+        "daysToReview": 170,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "media.tb-cough-two-weeks",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "mediaOutdated": false,
+        "hasTranscript": true,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "868755b63859",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-03-20",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "media.mmr-waiting-room-2025",
+      "type": "media",
+      "title": "麻疹 MMR 疫苗候診衛教動畫（2025 年版）",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2025-01-20",
+      "reviewedAt": "2025-01-14",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "vaccines",
+        "travel"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "doc.mmr-recommendation"
+      ],
+      "diseases": [
+        "disease.measles"
+      ],
+      "vaccines": [
+        "vaccine.mmr"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2025-12-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "醫院候診區播放的 MMR 衛教動畫，依 108.05.14 版建議製作，內容寫 1981 年以後出生之成人出國前評估接種（已於 2025-04-16 修訂）。",
+      "keywords": [
+        "麻疹",
+        "MMR",
+        "候診衛教",
+        "出國",
+        "成人接種"
+      ],
+      "note": "7.7 事件重現：本片製作於 MMR 建議 114.04.16 修訂之前，畫面仍為舊條件；已由 2026-10 重製版 media.mmr-waiting-room-2026 取代，但舊片仍在部分醫院候診區播放 示範：此影片自 2025-01 上架後未再審閱，正本 2025-04-16 修訂時系統應自動產生「影音過時」待辦（7.7 事件重現）。",
+      "mediaType": "animation",
+      "durationSeconds": 96,
+      "producedAt": "2025-01-14",
+      "basedOnVersionLabel": "108.05.14 版建議",
+      "targetGroups": [
+        "醫院候診區民眾",
+        "計畫出國成人"
+      ],
+      "series": "候診區衛教動畫",
+      "captions": [
+        "zh-TW"
+      ],
+      "chapters": [
+        {
+          "t": 0,
+          "label": "麻疹傳染力有多強"
+        },
+        {
+          "t": 30,
+          "label": "哪些成人要評估接種"
+        },
+        {
+          "t": 60,
+          "label": "出國前怎麼準備"
+        }
+      ],
+      "transcriptMarkdown": "**[00:00] 麻疹傳染力有多強**\n\n旁白：麻疹是傳染力非常強的疾病，病毒可以在空氣中飄散，和患者待在同一個空間，就可能被傳染。感染後會發燒、咳嗽、流鼻水、眼睛紅，接著從耳後開始出疹，再蔓延到全身。少數人會併發肺炎或腦炎。\n\n**[00:30] 哪些成人要評估接種**\n\n旁白：我國幼兒常規接種兩劑 MMR 疫苗，大多數兒童都有保護力。但部分成人小時候只打過一劑，或抗體隨時間下降。依目前建議，1981 年（含）以後出生的成人，如果計畫前往麻疹流行地區，建議出國前評估自費接種一劑 MMR 疫苗。醫療照護工作人員也請評估自己的免疫狀態。\n\n**[01:00] 出國前怎麼準備**\n\n旁白：哪些地方是流行地區呢？東南亞、南亞、非洲部分國家近年疫情較多，出國前請查詢疾管署國際疫情資訊。至於日本、韓國等鄰近國家，目前屬於日韓非流行區，一般旅客不需要特別接種。\n\n旁白：出國前兩週以上，可以到旅遊醫學門診諮詢。回國後 18 天內如果出現發燒、出疹，請戴口罩就醫，並主動告訴醫師旅遊史。也請不要搭乘大眾運輸，避免傳染給別人。\n\n旁白：保護自己，也保護身邊的人。更多資訊，請撥打防疫專線 1922，或上疾管署網站查詢。",
+      "youtubeId": null,
+      "poster": "/img/media/mmr-waiting-room-2025.svg",
+      "sourceHash": "5c42f1f2face",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/mmr-waiting-room-2025/",
+      "path": "/media/mmr-waiting-room-2025/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/mmr-waiting-room-2025.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2025-01-14",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2026-01-14",
+        "daysToReview": -260,
+        "overdue": true,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "overdue",
+        "lifecycleLabel": "逾期待審",
+        "whitelist": false,
+        "whitelistTier": "public",
+        "whitelistPublic": false,
+        "whitelistReasons": [
+          "overdue",
+          "based-on-revised",
+          "predates-basis",
+          "reverse-audit"
+        ],
+        "whitelistReasonLabels": [
+          "已超過審閱期限，待權責單位重新審閱",
+          "所依據的正本已修訂，衍生內容尚未更新",
+          "發布日早於現行正本生效日，不作為答案依據（僅保留加註）",
+          "反向稽核命中與現行正本矛盾的敘述"
+        ],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "media.mmr-waiting-room-2025",
+        "noindex": false,
+        "stale": [
+          {
+            "basedOn": "doc.mmr-recommendation",
+            "revisedAt": "2025-04-16",
+            "currentId": "doc.mmr-recommendation.2025-04-16",
+            "currentTitle": "國內現行 MMR 預防接種建議（114.04.16 版）",
+            "currentVersion": "114.04.16",
+            "currentHref": "/documents/mmr-recommendation.2025-04-16/",
+            "dueAt": "2025-04-23",
+            "resolved": false,
+            "resolvedAt": null
+          }
+        ],
+        "basisRevisions": [
+          {
+            "basedOn": "doc.mmr-recommendation",
+            "revisedAt": "2025-04-16",
+            "currentId": "doc.mmr-recommendation.2025-04-16",
+            "currentTitle": "國內現行 MMR 預防接種建議（114.04.16 版）",
+            "currentVersion": "114.04.16",
+            "currentHref": "/documents/mmr-recommendation.2025-04-16/",
+            "dueAt": "2025-04-23",
+            "resolved": false,
+            "resolvedAt": null
+          }
+        ],
+        "predatesBasis": true,
+        "annotations": [
+          {
+            "kind": "overdue",
+            "level": "warning",
+            "text": "本頁最後審閱於 2025-01-14，已超過審閱期限（2026-01-14），內容可能過時，請以權責單位最新公告為準。",
+            "href": null,
+            "path": null,
+            "reviewedAt": "2025-01-14",
+            "nextReviewAt": "2026-01-14"
+          },
+          {
+            "kind": "based-on-revised",
+            "level": "warning",
+            "text": "本影片依 108.05.14 版建議 製作，所依據的「國內現行 MMR 預防接種建議（114.04.16 版）」已於 2025-04-16 修訂，請以現行版為準",
+            "href": "doc.mmr-recommendation.2025-04-16",
+            "targetId": "doc.mmr-recommendation.2025-04-16",
+            "path": "/documents/mmr-recommendation.2025-04-16/",
+            "revisedAt": "2025-04-16",
+            "currentTitle": "國內現行 MMR 預防接種建議（114.04.16 版）"
+          }
+        ],
+        "reverseAuditHits": 2,
+        "mediaOutdated": true,
+        "hasTranscript": true,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "5c42f1f2face",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,3473 @@
+{
+  "format": "cdc-legacy-import-report/1",
+  "batch": "influenza",
+  "generatedAt": "2026-10-05T02:30:00Z",
+  "exportedAt": "2026-10-03",
+  "simulated": true,
+  "source": {
+    "dir": "data/legacy-export/influenza",
+    "note": "模擬匯出：依 content/migration/_disease-template.json（標準子頁 18 項）＋ content/migration/influenza.json（人工例外 8 項）＋ 近 3 年新聞 5 篇合成，不是舊站的真實資料（網址 ID、數字、PDF 內容皆為示意）。正式匯出取代整個目錄即可。",
+    "site": "https://www.cdc.gov.tw"
+  },
+  "rules": {
+    "file": "content/migration/import/_import-rules.json",
+    "version": 10
+  },
+  "manifest": {
+    "id": "migration.influenza",
+    "file": "content/migration/influenza.json",
+    "synthetic": false,
+    "items": 8,
+    "extends": "migration-template.disease",
+    "derivedItems": 18,
+    "derivedCovered": [
+      {
+        "key": "manual",
+        "coveredBy": "flu-vaccine-manual",
+        "target": "doc.flu-vaccine-manual.2026-09-16"
+      },
+      {
+        "key": "guideline",
+        "coveredBy": "flu-antiviral-eligibility",
+        "target": "doc.flu-antiviral-eligibility.2026-09-18"
+      }
+    ],
+    "disease": "disease.influenza"
+  },
+  "summary": {
+    "pages": 31,
+    "drafts": 32,
+    "mergedPages": 9,
+    "byType": {
+      "faq": 10,
+      "publication": 1,
+      "media": 1,
+      "document": 5,
+      "dataset": 1,
+      "labtest": 1,
+      "page": 4,
+      "topic": 1,
+      "service": 2,
+      "news": 3,
+      "letter": 1,
+      "clarification": 1,
+      "disease": 1
+    },
+    "byKind": {
+      "disease-block": 9,
+      "faq": 1,
+      "publication": 1,
+      "media": 1,
+      "document": 5,
+      "dataset": 1,
+      "labtest": 1,
+      "page": 2,
+      "list": 2,
+      "topic": 1,
+      "service": 2,
+      "news": 4,
+      "clarification": 1
+    },
+    "byAction": {
+      "merge-into-disease": 9,
+      "compare-existing": 14,
+      "review-before-publish": 5,
+      "skip-list": 2,
+      "archive": 1
+    },
+    "avgConfidence": 0.93,
+    "needsReview": 0,
+    "existing": 25,
+    "schemaInvalid": 0,
+    "assets": {
+      "total": 8,
+      "attachment": 5,
+      "image": 2,
+      "data": 1,
+      "needsAlt": 2,
+      "noTextLayer": 2
+    },
+    "issues": {
+      "error": 0,
+      "warn": 13,
+      "info": 112
+    },
+    "manifest": {
+      "items": 8,
+      "matched": 8,
+      "missingPages": 0,
+      "derivedItems": 18,
+      "derivedMatched": 18
+    },
+    "generated": 0,
+    "exportedAt": "2026-10-03",
+    "pagesWithoutOutput": 0
+  },
+  "pages": [
+    {
+      "key": "01-intro",
+      "file": "01-intro.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/onsQVJBHAI493DBVEgcN_0",
+        "title": "疾病介紹",
+        "category": "流感／疾病介紹",
+        "publishedAt": "2017-10-01",
+        "updatedAt": "2026-09-20",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "疾病介紹"
+        ],
+        "tab": ""
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro",
+      "manifestDerived": true,
+      "target": "disease.influenza",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.influenza"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "disease.influenza",
+          "type": "disease",
+          "role": "merged",
+          "block": "transmission",
+          "file": "content/diseases/influenza.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 44 處（mso 樣式 16、Mso 類別 14、命名空間標籤 14）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「流感／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "02-intro-pathogen",
+      "file": "02-intro-pathogen.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/onsQVJBHAI493DBVEgcN_0",
+        "title": "致病原",
+        "category": "流感／疾病介紹",
+        "publishedAt": "2017-10-01",
+        "updatedAt": "2026-09-20",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "疾病介紹",
+          "致病原"
+        ],
+        "tab": "pathogen"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-pathogen",
+      "manifestDerived": true,
+      "target": "disease.influenza",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.influenza"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "disease.influenza",
+          "type": "disease",
+          "role": "merged",
+          "block": "transmission",
+          "file": "content/diseases/influenza.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 4 處（mso 樣式 2、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「流感／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-pathogen（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "03-intro-epidemiology",
+      "file": "03-intro-epidemiology.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/onsQVJBHAI493DBVEgcN_0",
+        "title": "流行病學",
+        "category": "流感／疾病介紹",
+        "publishedAt": "2017-10-01",
+        "updatedAt": "2026-09-20",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "疾病介紹",
+          "流行病學"
+        ],
+        "tab": "epidemiology"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-epidemiology",
+      "manifestDerived": true,
+      "target": "disease.influenza",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.influenza"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "disease.influenza",
+          "type": "disease",
+          "role": "merged",
+          "block": "situation",
+          "file": "content/diseases/influenza.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 63 處（mso 樣式 22、Mso 類別 21、命名空間標籤 20）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「流感／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-epidemiology（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "image-no-alt",
+          "severity": "warn",
+          "message": "圖片「influenza-trend.png」舊頁沒有替代文字，暫用檔名「influenza-trend」，請補 alt（needsAlt）"
+        },
+        {
+          "code": "image-license-assumed",
+          "severity": "info",
+          "message": "圖片「influenza-trend.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 1,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "04-intro-transmission",
+      "file": "04-intro-transmission.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/onsQVJBHAI493DBVEgcN_0",
+        "title": "傳染方式",
+        "category": "流感／疾病介紹",
+        "publishedAt": "2017-10-01",
+        "updatedAt": "2026-09-20",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "疾病介紹",
+          "傳染方式"
+        ],
+        "tab": "transmission"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-transmission",
+      "manifestDerived": true,
+      "target": "disease.influenza",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.influenza"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "disease.influenza",
+          "type": "disease",
+          "role": "merged",
+          "block": "transmission",
+          "file": "content/diseases/influenza.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 7 處（mso 樣式 3、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「流感／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-transmission（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "05-intro-incubation",
+      "file": "05-intro-incubation.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/onsQVJBHAI493DBVEgcN_0",
+        "title": "潛伏期",
+        "category": "流感／疾病介紹",
+        "publishedAt": "2017-10-01",
+        "updatedAt": "2026-09-20",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "疾病介紹",
+          "潛伏期"
+        ],
+        "tab": "incubation"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-incubation",
+      "manifestDerived": true,
+      "target": "disease.influenza",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.influenza"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "disease.influenza",
+          "type": "disease",
+          "role": "merged",
+          "block": "transmission",
+          "file": "content/diseases/influenza.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 23 處（mso 樣式 9、Mso 類別 7、命名空間標籤 7）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「流感／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-incubation（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "06-intro-symptoms",
+      "file": "06-intro-symptoms.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/onsQVJBHAI493DBVEgcN_0",
+        "title": "發病症狀",
+        "category": "流感／疾病介紹",
+        "publishedAt": "2017-10-01",
+        "updatedAt": "2026-09-20",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "疾病介紹",
+          "發病症狀"
+        ],
+        "tab": "symptoms"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-symptoms",
+      "manifestDerived": true,
+      "target": "disease.influenza",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.influenza"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "disease.influenza",
+          "type": "disease",
+          "role": "merged",
+          "block": "symptoms",
+          "file": "content/diseases/influenza.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 11 處（mso 樣式 5、Mso 類別 3、命名空間標籤 3）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「流感／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-symptoms（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "07-intro-prevention",
+      "file": "07-intro-prevention.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/onsQVJBHAI493DBVEgcN_0",
+        "title": "預防方法",
+        "category": "流感／疾病介紹",
+        "publishedAt": "2017-10-01",
+        "updatedAt": "2026-09-20",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "疾病介紹",
+          "預防方法"
+        ],
+        "tab": "prevention"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-prevention",
+      "manifestDerived": true,
+      "target": "disease.influenza",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.influenza"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "disease.influenza",
+          "type": "disease",
+          "role": "merged",
+          "block": "prevention",
+          "file": "content/diseases/influenza.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 17 處（mso 樣式 17、Mso 類別 4、命名空間標籤 0）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「流感／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-prevention（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "08-intro-treatment",
+      "file": "08-intro-treatment.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/onsQVJBHAI493DBVEgcN_0",
+        "title": "治療方法與就醫資訊",
+        "category": "流感／疾病介紹",
+        "publishedAt": "2017-10-01",
+        "updatedAt": "2026-09-20",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "疾病介紹",
+          "治療方法"
+        ],
+        "tab": "treatment"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-treatment",
+      "manifestDerived": true,
+      "target": "disease.influenza",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.influenza"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "disease.influenza",
+          "type": "disease",
+          "role": "merged",
+          "block": "treatment",
+          "file": "content/diseases/influenza.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 7 處（mso 樣式 3、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「流感／疾病介紹」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 intro-treatment（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "09-vaccine",
+      "file": "09-vaccine.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/L-P0gM1I3qTWG35LXVu7xA",
+        "title": "預防接種建議",
+        "category": "流感／預防接種",
+        "publishedAt": "2017-10-01",
+        "updatedAt": "2026-09-20",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "預防接種"
+        ],
+        "tab": "vaccine"
+      },
+      "pattern": "mpage",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "vaccine",
+      "manifestDerived": true,
+      "target": "disease.influenza",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.influenza"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "disease.influenza",
+          "type": "disease",
+          "role": "merged",
+          "block": "vaccine",
+          "file": "content/diseases/influenza.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 25 處（mso 樣式 9、Mso 類別 8、命名空間標籤 8）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「流感／預防接種」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 vaccine（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "10-qa-list",
+      "file": "10-qa-list.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/QAPage/Zfg30duS6fEOkNhHjVRix8",
+        "title": "Q&A",
+        "category": "流感／Q&A",
+        "publishedAt": "2025-12-01",
+        "updatedAt": "2026-09-20",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "Q&A"
+        ],
+        "tab": ""
+      },
+      "pattern": "qa",
+      "kind": "faq",
+      "type": "faq",
+      "manifestKey": "qa-list",
+      "manifestDerived": true,
+      "target": "disease.influenza",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "faq.flu-antiviral-65-no-test",
+        "faq.flu-covid-same-day",
+        "faq.flu-danger-signs",
+        "faq.flu-vaccine-every-year",
+        "faq.flu-vaccine-who",
+        "faq.flu-vs-cold",
+        "faq.influenza-antiviral-who",
+        "faq.influenza-severe-what",
+        "faq.influenza-vaccine-where",
+        "faq.stats-ili-rate",
+        "disease.influenza"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "faq.flu-antiviral-65-no-test",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/flu-antiviral-65-no-test.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.flu-covid-same-day",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/flu-covid-same-day.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.flu-danger-signs",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/flu-danger-signs.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.flu-vaccine-every-year",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/flu-vaccine-every-year.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.flu-vaccine-who",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/flu-vaccine-who.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.flu-vs-cold",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/flu-vs-cold.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.influenza-antiviral-who",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/influenza-antiviral-who.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.influenza-severe-what",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/influenza-severe-what.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.influenza-vaccine-where",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/influenza-vaccine-where.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.stats-ili-rate",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/stats-ili-rate.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 123 處（mso 樣式 81、Mso 類別 29、命名空間標籤 21）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「流感／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "structured-from-text",
+          "severity": "info",
+          "message": "「今年公費流感疫苗誰可以打？什麼時候開始？」從答案抽出結構化候選 {\"ageYears\":65,\"months\":6}，請確認後保留或刪除"
+        },
+        {
+          "code": "tasks-from-keywords",
+          "severity": "info",
+          "message": "tasks 依題目關鍵字給：「65 歲以上長輩有類流感症狀，一定要快篩陽性才能用公費抗病毒藥嗎？」→ symptoms；「流感疫苗和新冠疫苗可以同一天打嗎？」→ vaccines；「得了流感，出現哪些狀況要馬上就醫？」→ symptoms；「流感疫苗去年打過了，今年還要再打嗎？」→ vaccines；「今年公費流感疫苗誰可以打？什麼時候開始？」→ vaccines；「流感和一般感冒要怎麼分辨？」→ symptoms；「哪些人可以使用公費流感抗病毒藥劑？」→ symptoms；「什麼是「流感併發重症」？」→ symptoms；「公費流感疫苗要去哪裡打？要帶什麼？」→ vaccines；「「類流感門急診就診率」是什麼意思？」→ data"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "11-materials-poster",
+      "file": "11-materials-poster.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/Dseef2nyUuF_ufJ_-HsVuH",
+        "title": "衛教宣導：單張海報",
+        "category": "流感／衛教宣導",
+        "publishedAt": "2017-10-01",
+        "updatedAt": "2026-09-20",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "衛教宣導",
+          "單張海報"
+        ],
+        "tab": "posters"
+      },
+      "pattern": "category-list",
+      "kind": "publication",
+      "type": "publication",
+      "manifestKey": "materials-poster",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "publication.influenza-materials-poster",
+          "type": "publication",
+          "role": "draft",
+          "file": "content/publications/influenza-materials-poster.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 4 處（mso 樣式 1、Mso 類別 2、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「流感／衛教宣導」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 materials-poster（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 publication，草稿直接建成 publication，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "pdf-no-text-layer",
+          "severity": "warn",
+          "message": "PDF「influenza-poster-7lang.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+        },
+        {
+          "code": "image-no-alt",
+          "severity": "warn",
+          "message": "圖片「influenza-poster.png」舊頁沒有替代文字，暫用檔名「influenza-poster」，請補 alt（needsAlt）"
+        },
+        {
+          "code": "image-license-assumed",
+          "severity": "info",
+          "message": "圖片「influenza-poster.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 1,
+        "links": 5,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "12-materials-video",
+      "file": "12-materials-video.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/Z9lGEBVEdvHjmkowXcJ_b1",
+        "title": "衛教宣導：影片",
+        "category": "流感／衛教宣導",
+        "publishedAt": "2026-09-25",
+        "updatedAt": "2026-09-20",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "衛教宣導",
+          "影音"
+        ],
+        "tab": "video"
+      },
+      "pattern": "mpage",
+      "kind": "media",
+      "type": "media",
+      "manifestKey": "materials-video",
+      "manifestDerived": true,
+      "target": "media.ltc-flu-vaccine",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "media.ltc-flu-vaccine"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "media.ltc-flu-vaccine",
+          "type": "media",
+          "role": "draft",
+          "file": "content/media/ltc-flu-vaccine.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 37 處（mso 樣式 15、Mso 類別 11、命名空間標籤 11）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「流感／衛教宣導」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 materials-video（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 media（media.ltc-flu-vaccine），草稿直接建成 media，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "模擬匯出的影片 id 為示意值"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "13-case-definition",
+      "file": "13-case-definition.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/DiseaseDefine/YblgPS6l9Yb4mfUYx6mCKZ",
+        "title": "病例定義",
+        "category": "流感／法規與指引",
+        "publishedAt": "2017-10-01",
+        "updatedAt": "2026-09-20",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "法規與指引",
+          "病例定義"
+        ],
+        "tab": ""
+      },
+      "pattern": "disease-docs",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "case-definition",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "doc.influenza-case-definition.2017-10-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/influenza-case-definition.2017-10-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「流感／法規與指引」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 case-definition（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（37 字，低於 40）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2017-10-01"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "14-stats",
+      "file": "14-stats.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/14Z7BcTsilzv0ni-tFHF80",
+        "title": "統計資料",
+        "category": "流感／統計資料",
+        "publishedAt": "2017-10-01",
+        "updatedAt": "2026-09-20",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "統計資料"
+        ],
+        "tab": "statistics"
+      },
+      "pattern": "category-list",
+      "kind": "dataset",
+      "type": "dataset",
+      "manifestKey": "stats",
+      "manifestDerived": true,
+      "target": "dataset.flu-severe",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "dataset.flu-severe"
+      ],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "／統計資料",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "dataset.flu-severe",
+          "type": "dataset",
+          "role": "draft",
+          "file": "content/datasets/flu-severe.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 61 處（mso 樣式 21、Mso 類別 20、命名空間標籤 20）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 stats（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 dataset（dataset.flu-severe），草稿直接建成 dataset，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "series-extracted",
+          "severity": "info",
+          "message": "5 點、2021–2025、人（確定病例數（示意））；另有欄位：每十萬人口發生率（示意）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "15-lab",
+      "file": "15-lab.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/BXQ_3PvoU6VyCBHauEQKa6",
+        "title": "檢驗資訊",
+        "category": "流感／檢驗資訊",
+        "publishedAt": "2025-01-15",
+        "updatedAt": "2026-07-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "檢驗資訊"
+        ],
+        "tab": "lab"
+      },
+      "pattern": "mpage",
+      "kind": "labtest",
+      "type": "labtest",
+      "manifestKey": "lab",
+      "manifestDerived": true,
+      "target": "labtest.influenza",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "labtest.influenza"
+      ],
+      "owner": "unit.lab",
+      "ownerRule": "／檢驗",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "labtest.influenza",
+          "type": "labtest",
+          "role": "draft",
+          "file": "content/labtests/influenza.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 40 處（mso 樣式 22、Mso 類別 12、命名空間標籤 9）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 lab（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 labtest（labtest.influenza），草稿直接建成 labtest，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "labtest 的欄位從舊頁看不出來，以「（待補）」佔位：specimens[].container/volume/storage/transport"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "labs 暫填 cdc-lab（署檢驗中心），合約與區域實驗室請檢驗中心確認"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "16-notify",
+      "file": "16-notify.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/gvY0i6-FEYc2VKEyu5ZRTR",
+        "title": "通報定義與時限",
+        "category": "流感／通報定義",
+        "publishedAt": "2017-10-01",
+        "updatedAt": "2026-09-20",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "通報定義"
+        ],
+        "tab": "notify"
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "notify",
+      "manifestDerived": true,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "／通報",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "page.influenza-notify",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/influenza-notify.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 38 處（mso 樣式 14、Mso 類別 12、命名空間標籤 12）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 notify（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "17-news-list",
+      "file": "17-news-list.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/List/bIp1EzRH4-l_1Wf3-Xbhgv",
+        "title": "新聞稿列表",
+        "category": "流感／最新消息",
+        "publishedAt": "2017-10-01",
+        "updatedAt": "2026-09-20",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "最新消息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "news-list",
+      "manifestDerived": true,
+      "target": "disease.influenza",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.influenza"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "page.influenza-news-list",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/influenza-news-list.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.6,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「流感／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 news-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        },
+        {
+          "code": "target-type-differs",
+          "severity": "info",
+          "message": "對應的新站內容是 disease.influenza（disease），草稿以 page 暫存，請比對後改建為 disease"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 8,
+        "legacyLinks": 8,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "18-links",
+      "file": "18-links.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/6TFWM0mSjy0cOE0UG2TWhz",
+        "title": "相關連結",
+        "category": "流感／相關連結",
+        "publishedAt": "2017-10-01",
+        "updatedAt": "2026-09-20",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "相關連結"
+        ],
+        "tab": "links"
+      },
+      "pattern": "category-list",
+      "kind": "topic",
+      "type": "topic",
+      "manifestKey": "links",
+      "manifestDerived": true,
+      "target": "topic.ltc-infection-control",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "topic.ltc-infection-control"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "topic.influenza-links",
+          "type": "topic",
+          "role": "draft",
+          "file": "content/topics/influenza-links.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「流感／相關連結」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "manifest-derived",
+          "severity": "info",
+          "message": "對到的是模板推導項 links（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 topic（topic.ltc-infection-control），草稿直接建成 topic，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "4 個連結 status 填 unchecked，由連結檢查更新；3 個站外"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 4,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "19-flu-vaccine-zone",
+      "file": "19-flu-vaccine-zone.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/Page/-CgApFZQk-AhWIGG2NnkmA",
+        "title": "流感疫苗專區（首頁）",
+        "category": "流感／流感疫苗專區",
+        "publishedAt": "2017-10-01",
+        "updatedAt": "2026-09-20",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "流感疫苗專區"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "flu-vaccine-zone",
+      "manifestDerived": false,
+      "target": "disease.influenza",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.influenza"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "page.influenza-flu-vaccine-zone",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/influenza-flu-vaccine-zone.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 40 處（mso 樣式 14、Mso 類別 13、命名空間標籤 13）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「流感／流感疫苗專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "target-type-differs",
+          "severity": "info",
+          "message": "對應的新站內容是 disease.influenza（disease），草稿以 page 暫存，請比對後改建為 disease"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 6,
+        "legacyLinks": 6,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "20-flu-vaccine-plan",
+      "file": "20-flu-vaccine-plan.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/File/Get/TRISN3J9An-J4lAzbB1EFN",
+        "title": "公費流感疫苗接種計畫：實施對象與時程",
+        "category": "流感／流感疫苗專區",
+        "publishedAt": "2026-09-15",
+        "updatedAt": "2026-09-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "流感疫苗專區",
+          "接種計畫"
+        ],
+        "tab": ""
+      },
+      "pattern": "file",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "flu-vaccine-plan",
+      "manifestDerived": false,
+      "target": "doc.flu-vaccine-schedule.2026-09-15",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.flu-vaccine-schedule.2026-09-15"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "doc.flu-vaccine-schedule.2026-09-15",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/flu-vaccine-schedule.2026-09-15.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 70 處（mso 樣式 38、Mso 類別 23、命名空間標籤 16）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「流感／流感疫苗專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "doctype-guessed",
+          "severity": "info",
+          "message": "標題與網址看不出文件種類，暫填 guideline"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2026-09-15"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "21-flu-vaccine-manual",
+      "file": "21-flu-vaccine-manual.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/File/Get/k6H6568EM4MUyLmxDp6yVF",
+        "title": "公費流感疫苗接種計畫作業手冊",
+        "category": "流感／流感疫苗專區",
+        "publishedAt": "2026-09-16",
+        "updatedAt": "2026-09-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "流感疫苗專區",
+          "醫療人員"
+        ],
+        "tab": ""
+      },
+      "pattern": "file",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "flu-vaccine-manual",
+      "manifestDerived": false,
+      "target": "doc.flu-vaccine-manual.2026-09-16",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.flu-vaccine-manual.2026-09-16"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "doc.flu-vaccine-manual.2026-09-16",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/flu-vaccine-manual.2026-09-16.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 74 處（mso 樣式 46、Mso 類別 24、命名空間標籤 14）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「流感／流感疫苗專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2026-09-16"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "22-flu-vaccine-contract-sites",
+      "file": "22-flu-vaccine-contract-sites.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/4RgtNMNbqmGxb90C5PCRNH",
+        "title": "公費流感疫苗合約院所查詢",
+        "category": "流感／流感疫苗專區",
+        "publishedAt": "2017-10-01",
+        "updatedAt": "2026-09-20",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "流感疫苗專區",
+          "接種地點"
+        ],
+        "tab": ""
+      },
+      "pattern": "category-list",
+      "kind": "service",
+      "type": "service",
+      "manifestKey": "flu-vaccine-contract-sites",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "service.influenza-flu-vaccine-contract-sites",
+          "type": "service",
+          "role": "draft",
+          "file": "content/services/influenza-flu-vaccine-contract-sites.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.6,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 58 處（mso 樣式 20、Mso 類別 19、命名空間標籤 19）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「流感／流感疫苗專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "type-from-keywords",
+          "severity": "info",
+          "message": "標題看起來是查詢／申辦服務（clinic），草稿建成 service；名單類資料請改掛 dataset"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "service 的欄位從舊頁看不出來，以「（待補）」佔位：steps、whoCanApply"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "合約院所名單屬時效性資料，建議掛 dataset 由系統更新，不要把名單寫進內文"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 1,
+        "legacyLinks": 1,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "23-flu-antiviral-eligibility",
+      "file": "23-flu-antiviral-eligibility.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/Page/DcQhnxOUXS4BnGFxCjEXLb",
+        "title": "公費流感抗病毒藥劑使用對象",
+        "category": "流感／抗病毒藥劑專區",
+        "publishedAt": "2026-09-18",
+        "updatedAt": "2026-10-05",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "抗病毒藥劑專區"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "flu-antiviral-eligibility",
+      "manifestDerived": false,
+      "target": "doc.flu-antiviral-eligibility.2026-09-18",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.flu-antiviral-eligibility.2026-09-18"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "doc.flu-antiviral-eligibility.2026-09-18",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/flu-antiviral-eligibility.2026-09-18.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 52 處（mso 樣式 18、Mso 類別 17、命名空間標籤 17）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「流感／抗病毒藥劑專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站內容是文件 doc.flu-antiviral-eligibility.2026-09-18，草稿依清單建成 document（舊頁本身是欄目內頁）"
+        },
+        {
+          "code": "doctype-guessed",
+          "severity": "info",
+          "message": "標題與網址看不出文件種類，暫填 guideline"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2026-09-18"
+        },
+        {
+          "code": "version-chain",
+          "severity": "info",
+          "message": "版次鏈 doc.flu-antiviral-eligibility：2026-06-01（2026-06-01） → 2026-09-18（2026-09-18）；本版為現行版，supersedes doc.flu-antiviral-eligibility.2026-06-01"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "24-flu-antiviral-eligibility-2026-06",
+      "file": "24-flu-antiviral-eligibility-2026-06.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/Page/Tsy161Va94LybxcU8KHFRV",
+        "title": "公費流感抗病毒藥劑使用對象（全年適用條件）",
+        "category": "流感／抗病毒藥劑專區",
+        "publishedAt": "2026-06-01",
+        "updatedAt": "2026-06-01",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "抗病毒藥劑專區",
+          "歷版"
+        ],
+        "tab": ""
+      },
+      "pattern": "mpage",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "flu-antiviral-eligibility-2026-06",
+      "manifestDerived": false,
+      "target": "doc.flu-antiviral-eligibility.2026-06-01",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.flu-antiviral-eligibility.2026-06-01"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "doc.flu-antiviral-eligibility.2026-06-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/flu-antiviral-eligibility.2026-06-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 52 處（mso 樣式 18、Mso 類別 17、命名空間標籤 17）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「流感／抗病毒藥劑專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站內容是文件 doc.flu-antiviral-eligibility.2026-06-01，草稿依清單建成 document（舊頁本身是欄目內頁）"
+        },
+        {
+          "code": "historical-version",
+          "severity": "info",
+          "message": "歷史版本：建議封存（舊版保留查閱），不取代現行版"
+        },
+        {
+          "code": "doctype-guessed",
+          "severity": "info",
+          "message": "標題與網址看不出文件種類，暫填 guideline"
+        },
+        {
+          "code": "pdf-no-text-layer",
+          "severity": "warn",
+          "message": "PDF「flu-antiviral-eligibility.2026-06-01.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2026-06-01"
+        }
+      ],
+      "action": "archive",
+      "flags": {
+        "historical": true
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "25-flu-antiviral-contract-sites",
+      "file": "25-flu-antiviral-contract-sites.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/Cf1DIbpAUq0ymjkxv1xC7U",
+        "title": "公費抗病毒藥劑合約院所與藥局",
+        "category": "流感／抗病毒藥劑專區",
+        "publishedAt": "2017-10-01",
+        "updatedAt": "2026-09-20",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "抗病毒藥劑專區",
+          "合約院所"
+        ],
+        "tab": ""
+      },
+      "pattern": "category-list",
+      "kind": "service",
+      "type": "service",
+      "manifestKey": "flu-antiviral-contract-sites",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "service.influenza-flu-antiviral-contract-sites",
+          "type": "service",
+          "role": "draft",
+          "file": "content/services/influenza-flu-antiviral-contract-sites.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.6,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 58 處（mso 樣式 20、Mso 類別 19、命名空間標籤 19）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「流感／抗病毒藥劑專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "type-from-keywords",
+          "severity": "info",
+          "message": "標題看起來是查詢／申辦服務（clinic），草稿建成 service；名單類資料請改掛 dataset"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "service 的欄位從舊頁看不出來，以「（待補）」佔位：steps、whoCanApply"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "合約院所名單屬時效性資料，建議掛 dataset 由系統更新，不要把名單寫進內文"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 1,
+        "legacyLinks": 1,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "26-flu-past-seasons",
+      "file": "26-flu-past-seasons.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/ewfWns-6XlMWzGdtpDFLK1",
+        "title": "歷年流感疫苗接種計畫（2020–2024 年度）",
+        "category": "流感／流感疫苗專區",
+        "publishedAt": "2015-06-01",
+        "updatedAt": "2020-12-31",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "流感疫苗專區",
+          "歷年計畫"
+        ],
+        "tab": ""
+      },
+      "pattern": "category-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "flu-past-seasons",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "page.influenza-flu-past-seasons",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/influenza-flu-past-seasons.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.6,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「流感／流感疫苗專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        },
+        {
+          "code": "old-content",
+          "severity": "info",
+          "message": "最後更新於 2020-12-31（5.8 年前），建議走久遠封存而非上線"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false,
+        "old": true
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "27-news-2026-09-29-ili-weekly",
+      "file": "27-news-2026-09-29-ili-weekly.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/8lZ1ophntJAgEqI_IgPLNQ?typeid=9",
+        "title": "流感疫情持續上升，10 月 1 日公費疫苗開打，長者幼兒請優先接種",
+        "category": "流感／最新消息",
+        "publishedAt": "2026-09-29",
+        "updatedAt": "2026-09-29",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "最新消息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-29-ili-weekly"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-09-29-ili-weekly",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-09-29-ili-weekly.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「流感／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "not-in-manifest",
+          "severity": "warn",
+          "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "28-news-2026-09-18-flu-antiviral-extended",
+      "file": "28-news-2026-09-18-flu-antiviral-extended.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/O_J0ATTIK9MciVwL4-h6Jg?typeid=9",
+        "title": "流感疫情進入流行期且持續上升，疾管署延長擴大公費流感抗病毒藥劑使用條件至 10 月 31 日",
+        "category": "流感／最新消息",
+        "publishedAt": "2026-09-18",
+        "updatedAt": "2026-09-18",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "最新消息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-18-flu-antiviral-extended"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-09-18-flu-antiviral-extended",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-09-18-flu-antiviral-extended.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 14 處（mso 樣式 6、Mso 類別 4、命名空間標籤 4）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「流感／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "not-in-manifest",
+          "severity": "warn",
+          "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "29-news-2026-09-18-flu-vaccine-oct1",
+      "file": "29-news-2026-09-18-flu-vaccine-oct1.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/YhMh5ap_Ft8C_2_Gy5z5J9?typeid=9",
+        "title": "2026–2027 年度公費流感疫苗 10 月 1 日開打，新冠疫苗同步提供",
+        "category": "流感／最新消息",
+        "publishedAt": "2026-09-18",
+        "updatedAt": "2026-09-18",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "最新消息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-18-flu-vaccine-oct1"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza",
+        "disease.covid-19"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-09-18-flu-vaccine-oct1",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-09-18-flu-vaccine-oct1.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 8 處（mso 樣式 4、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「流感／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "not-in-manifest",
+          "severity": "warn",
+          "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "30-news-2026-09-18-letter-616-flu-antiviral-extended",
+      "file": "30-news-2026-09-18-letter-616-flu-antiviral-extended.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/B5hGsAn-lgn3yZOUXOX8Oh?typeid=11",
+        "title": "致醫界通函第 616 號：延長擴大公費流感抗病毒藥劑使用對象「有類流感症狀，且具下列身分之流感高傳播族群」之適用期限至 10 月 31 日",
+        "category": "流感／最新消息",
+        "publishedAt": "2026-09-18",
+        "updatedAt": "2026-09-18",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "最新消息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-18-letter-616-flu-antiviral-extended"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "news.2026-09-18-letter-616-flu-antiviral-extended",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2026-09-18-letter-616-flu-antiviral-extended.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 8 處（mso 樣式 4、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「流感／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "not-in-manifest",
+          "severity": "warn",
+          "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
+        },
+        {
+          "code": "news-type-hint",
+          "severity": "info",
+          "message": "標題是致醫界通函，草稿建成 letter（typeid 不是通函類別）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "31-news-2026-09-10-clarify-flu-vaccine-death",
+      "file": "31-news-2026-09-10-clarify-flu-vaccine-death.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/e_1DvbI5FdTnW6hLu35VWK?typeid=8772",
+        "title": "澄清：網傳「打流感疫苗會得流感、長輩打完會死」並非事實",
+        "category": "流感／最新消息",
+        "publishedAt": "2026-09-10",
+        "updatedAt": "2026-09-10",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "流感",
+          "最新消息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-detail",
+      "kind": "clarification",
+      "type": "clarification",
+      "manifestKey": null,
+      "manifestDerived": false,
+      "target": "news.2026-09-10-clarify-flu-vaccine-death",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-10-clarify-flu-vaccine-death"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "clar.2026-09-10-influenza-324aad",
+          "type": "clarification",
+          "role": "draft",
+          "file": "content/clarifications/2026-09-10-influenza-324aad.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 7 處（mso 樣式 3、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「流感／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "not-in-manifest",
+          "severity": "warn",
+          "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
+        },
+        {
+          "code": "type-from-bulletin",
+          "severity": "info",
+          "message": "公告類別是澄清稿，草稿建成 clarification（claim／verdict 由標題與內文推斷）"
+        },
+        {
+          "code": "type-upgrade",
+          "severity": "info",
+          "message": "既有內容 news.2026-09-10-clarify-flu-vaccine-death 以 news 存放同一則澄清，新草稿改為 clarification 型別，請比對後擇一"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    }
+  ],
+  "drafts": [
+    {
+      "id": "faq.flu-antiviral-65-no-test",
+      "type": "faq",
+      "title": "65 歲以上長輩有類流感症狀，一定要快篩陽性才能用公費抗病毒藥嗎？",
+      "file": "content/faq/flu-antiviral-65-no-test.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.flu-antiviral-65-no-test"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.flu-covid-same-day",
+      "type": "faq",
+      "title": "流感疫苗和新冠疫苗可以同一天打嗎？",
+      "file": "content/faq/flu-covid-same-day.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.flu-covid-same-day"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.flu-danger-signs",
+      "type": "faq",
+      "title": "得了流感，出現哪些狀況要馬上就醫？",
+      "file": "content/faq/flu-danger-signs.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.flu-danger-signs"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.flu-vaccine-every-year",
+      "type": "faq",
+      "title": "流感疫苗去年打過了，今年還要再打嗎？",
+      "file": "content/faq/flu-vaccine-every-year.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.flu-vaccine-every-year"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.flu-vaccine-who",
+      "type": "faq",
+      "title": "今年公費流感疫苗誰可以打？什麼時候開始？",
+      "file": "content/faq/flu-vaccine-who.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.flu-vaccine-who"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.flu-vs-cold",
+      "type": "faq",
+      "title": "流感和一般感冒要怎麼分辨？",
+      "file": "content/faq/flu-vs-cold.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.flu-vs-cold"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.influenza-antiviral-who",
+      "type": "faq",
+      "title": "哪些人可以使用公費流感抗病毒藥劑？",
+      "file": "content/faq/influenza-antiviral-who.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.influenza-antiviral-who"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.influenza-severe-what",
+      "type": "faq",
+      "title": "什麼是「流感併發重症」？",
+      "file": "content/faq/influenza-severe-what.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.influenza-severe-what"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.influenza-vaccine-where",
+      "type": "faq",
+      "title": "公費流感疫苗要去哪裡打？要帶什麼？",
+      "file": "content/faq/influenza-vaccine-where.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.influenza-vaccine-where"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.stats-ili-rate",
+      "type": "faq",
+      "title": "「類流感門急診就診率」是什麼意思？",
+      "file": "content/faq/stats-ili-rate.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.stats-ili-rate"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "publication.influenza-materials-poster",
+      "type": "publication",
+      "title": "流感衛教宣導：單張海報",
+      "file": "content/publications/influenza-materials-poster.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 2,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "11-materials-poster"
+      ],
+      "merged": false
+    },
+    {
+      "id": "media.ltc-flu-vaccine",
+      "type": "media",
+      "title": "流感衛教宣導：影片",
+      "file": "content/media/ltc-flu-vaccine.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "media.ltc-flu-vaccine"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "12-materials-video"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.influenza-case-definition.2017-10-01",
+      "type": "document",
+      "title": "病例定義",
+      "file": "content/documents/influenza-case-definition.2017-10-01.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "13-case-definition"
+      ],
+      "merged": false
+    },
+    {
+      "id": "dataset.flu-severe",
+      "type": "dataset",
+      "title": "流感統計資料",
+      "file": "content/datasets/flu-severe.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "dataset.flu-severe"
+      ],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "14-stats"
+      ],
+      "merged": false
+    },
+    {
+      "id": "labtest.influenza",
+      "type": "labtest",
+      "title": "流感檢驗資訊",
+      "file": "content/labtests/influenza.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "labtest.influenza"
+      ],
+      "status": "review",
+      "owner": "unit.lab",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "15-lab"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.influenza-notify",
+      "type": "page",
+      "title": "通報定義與時限",
+      "file": "content/pages/influenza-notify.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "16-notify"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.influenza-news-list",
+      "type": "page",
+      "title": "新聞稿列表",
+      "file": "content/pages/influenza-news-list.json",
+      "confidence": 0.6,
+      "existing": true,
+      "compareWith": [
+        "disease.influenza"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "17-news-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "topic.influenza-links",
+      "type": "topic",
+      "title": "流感相關連結",
+      "file": "content/topics/influenza-links.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "topic.ltc-infection-control"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "18-links"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.influenza-flu-vaccine-zone",
+      "type": "page",
+      "title": "流感疫苗專區（首頁）",
+      "file": "content/pages/influenza-flu-vaccine-zone.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "disease.influenza"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "19-flu-vaccine-zone"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.flu-vaccine-schedule.2026-09-15",
+      "type": "document",
+      "title": "公費流感疫苗接種計畫：實施對象與時程",
+      "file": "content/documents/flu-vaccine-schedule.2026-09-15.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.flu-vaccine-schedule.2026-09-15"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "20-flu-vaccine-plan"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.flu-vaccine-manual.2026-09-16",
+      "type": "document",
+      "title": "公費流感疫苗接種計畫作業手冊",
+      "file": "content/documents/flu-vaccine-manual.2026-09-16.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.flu-vaccine-manual.2026-09-16"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "21-flu-vaccine-manual"
+      ],
+      "merged": false
+    },
+    {
+      "id": "service.influenza-flu-vaccine-contract-sites",
+      "type": "service",
+      "title": "公費流感疫苗合約院所查詢",
+      "file": "content/services/influenza-flu-vaccine-contract-sites.json",
+      "confidence": 0.6,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "22-flu-vaccine-contract-sites"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.flu-antiviral-eligibility.2026-09-18",
+      "type": "document",
+      "title": "公費流感抗病毒藥劑使用對象",
+      "file": "content/documents/flu-antiviral-eligibility.2026-09-18.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.flu-antiviral-eligibility.2026-09-18"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "23-flu-antiviral-eligibility"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.flu-antiviral-eligibility.2026-06-01",
+      "type": "document",
+      "title": "公費流感抗病毒藥劑使用對象（全年適用條件）",
+      "file": "content/documents/flu-antiviral-eligibility.2026-06-01.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.flu-antiviral-eligibility.2026-06-01"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "24-flu-antiviral-eligibility-2026-06"
+      ],
+      "merged": false
+    },
+    {
+      "id": "service.influenza-flu-antiviral-contract-sites",
+      "type": "service",
+      "title": "流感公費抗病毒藥劑合約院所與藥局",
+      "file": "content/services/influenza-flu-antiviral-contract-sites.json",
+      "confidence": 0.6,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "25-flu-antiviral-contract-sites"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.influenza-flu-past-seasons",
+      "type": "page",
+      "title": "歷年流感疫苗接種計畫（2020–2024 年度）",
+      "file": "content/pages/influenza-flu-past-seasons.json",
+      "confidence": 0.6,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "26-flu-past-seasons"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-09-29-ili-weekly",
+      "type": "news",
+      "title": "流感疫情持續上升，10 月 1 日公費疫苗開打，長者幼兒請優先接種",
+      "file": "content/news/2026-09-29-ili-weekly.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-29-ili-weekly"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "27-news-2026-09-29-ili-weekly"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-09-18-flu-antiviral-extended",
+      "type": "news",
+      "title": "流感疫情進入流行期且持續上升，疾管署延長擴大公費流感抗病毒藥劑使用條件至 10 月 31 日",
+      "file": "content/news/2026-09-18-flu-antiviral-extended.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-18-flu-antiviral-extended"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "28-news-2026-09-18-flu-antiviral-extended"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-09-18-flu-vaccine-oct1",
+      "type": "news",
+      "title": "2026–2027 年度公費流感疫苗 10 月 1 日開打，新冠疫苗同步提供",
+      "file": "content/news/2026-09-18-flu-vaccine-oct1.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-18-flu-vaccine-oct1"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "29-news-2026-09-18-flu-vaccine-oct1"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2026-09-18-letter-616-flu-antiviral-extended",
+      "type": "letter",
+      "title": "致醫界通函第 616 號：延長擴大公費流感抗病毒藥劑使用對象「有類流感症狀，且具下列身分之流感高傳播族群」之適用期限至 10 月 31 日",
+      "file": "content/news/2026-09-18-letter-616-flu-antiviral-extended.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-18-letter-616-flu-antiviral-extended"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "30-news-2026-09-18-letter-616-flu-antiviral-extended"
+      ],
+      "merged": false
+    },
+    {
+      "id": "clar.2026-09-10-influenza-324aad",
+      "type": "clarification",
+      "title": "澄清：網傳「打流感疫苗會得流感、長輩打完會死」並非事實",
+      "file": "content/clarifications/2026-09-10-influenza-324aad.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2026-09-10-clarify-flu-vaccine-death"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "31-news-2026-09-10-clarify-flu-vaccine-death"
+      ],
+      "merged": false
+    },
+    {
+      "id": "disease.influenza",
+      "type": "disease",
+      "title": "流感",
+      "file": "content/diseases/influenza.json",
+      "confidence": 0.98,
+      "existing": true,
+      "compareWith": [
+        "disease.influenza"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "01-intro",
+        "02-intro-pathogen",
+        "03-intro-epidemiology",
+        "04-intro-transmission",
+        "05-intro-incubation",
+        "06-intro-symptoms",
+        "07-intro-prevention",
+        "08-intro-treatment",
+        "09-vaccine"
+      ],
+      "merged": true
+    }
+  ],
+  "sampling": {
+    "rate": 0.1,
+    "autoOk": 0,
+    "picked": []
+  },
+  "migration": {
+    "patchFile": "migration-patch.json",
+    "applied": true,
+    "summary": {
+      "derivedItems": 18,
+      "derivedMatched": 18,
+      "items": 8,
+      "matched": 8,
+      "missingPages": 0,
+      "unmatchedPages": 5,
+      "agree": 8,
+      "conflicts": 0,
+      "statusChanges": 0,
+      "pendingToMigrated": 0,
+      "targetChanges": 0,
+      "newPathChanges": 0,
+      "noteChanges": 0,
+      "stillPending": 2
+    },
+    "file": "content/migration/influenza.json",
+    "statusChanges": [],
+    "targetChanges": [],
+    "newPathChanges": [],
+    "noteChanges": 0
+  }
+}

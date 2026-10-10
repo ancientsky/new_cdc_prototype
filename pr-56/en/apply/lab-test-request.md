@@ -1,0 +1,51 @@
+# Laboratory testing for notifiable diseases (specimens from healthcare facilities)
+
+> 權責單位：Center for Diagnostics and Vaccine Development · 最後審閱：2026-07-15 · 下次審閱：2027-07-15 · 授權：OGDL-1.0 · ID：service.lab-test-request · 類別：lab-request
+
+After notification, facilities collect specimens per lab specifications and send them with a requisition form; results are returned via NIDRS.
+
+法定傳染病及新興傳染病之**確認檢驗**由疾管署檢驗及疫苗研製中心或認可檢驗機構執行。醫療院所於**通報後**依「檢驗項目」頁所列檢體、容器、保存與運送條件採檢送驗；檢驗結果於傳染病通報系統（NIDRS）回覆。
+
+各疾病檢體規格請見檢驗專區（/lab/）。
+
+- 誰可申請：醫療院所、地方衛生局、認可檢驗機構
+- 處理天數：5 個工作天
+- 費用：法定傳染病確認檢驗免費
+- 聯絡：疾病管制署檢驗及疫苗研製中心（總機 02-2395-9825）；一般諮詢請撥防疫專線 1922（國外 +886-800-001922）
+- 申請網址：https://nidrs.cdc.gov.tw/
+
+## 申請步驟
+
+1. **完成通報**（醫療院所）（0 日）：於 NIDRS 完成個案通報並取得通報編號。
+2. **依規格採檢**（醫療院所）（0 日）：依檢驗專區所列檢體種類、時機與容器採檢。
+3. **包裝與運送**（醫療院所／衛生局）（1 日）：以 UN3373 三層包裝，依保存條件於時限內送達衛生局或檢驗單位。
+4. **檢驗**（檢驗及疫苗研製中心）（3 日）：實驗室收件、檢驗與品管。
+5. **回覆結果**（檢驗及疫苗研製中心）（1 日）：結果登錄 NIDRS，院所可即時查詢。
+
+## 應備文件
+
+- [ ] 傳染病檢體送驗單（系統列印，含通報編號）
+- [ ] 符合規格之檢體與三層包裝
+- [ ] 必要時：臨床資料與旅遊史
+
+## 法源
+
+- 傳染病防治法第 46 條
+- 傳染病檢驗及檢驗機構管理辦法
+- 感染性生物材料管理辦法
+
+## 表單
+
+- [傳染病檢體送驗單](/pending/?ref=service.lab-test-request&doc=傳染病檢體送驗單)（PDF）
+- [檢體採檢手冊](/pending/?ref=service.lab-test-request&doc=檢體採檢手冊)（PDF）
+
+## 常見問題
+
+### 檢體可以直接寄到疾管署嗎？
+
+原則由轄區衛生局收件後轉送；部分急件與特殊檢體依區管中心指示直送。
+
+### 結果多久出來？
+
+依疾病而異，多數 PCR 檢驗 1 至 3 個工作天；各項目見檢驗專區。
+

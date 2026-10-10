@@ -1,0 +1,52 @@
+{
+  "id": "page.x-vaccines-medications",
+  "type": "page",
+  "title": "國際預防接種及藥物",
+  "owner": "unit.quarantine",
+  "publishedAt": "2016-03-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "黃熱病疫苗接種一劑即可終身有效，接種後約 10 日生效。前往要求黃熱病接種證明的國家，須於出發前至少 10 日完成接種並取得國際預防接種證明書（黃皮書）。",
+  "slug": "x-vaccines-medications",
+  "bodyMarkdown": "### 黃熱病疫苗\n\n黃熱病疫苗接種一劑即可終身有效，接種後約 10 日生效。前往要求黃熱病接種證明的國家，須於出發前至少 10 日完成接種並取得國際預防接種證明書（黃皮書）。\n\n疫苗僅能於指定的黃熱病疫苗接種單位接種，請先向旅遊醫學門診預約。\n\n### 流行性腦脊髓膜炎疫苗\n\n前往沙烏地阿拉伯朝覲（Hajj）或副朝（Umrah）者，入境要求須持有流行性腦脊髓膜炎疫苗接種證明，請於出發前 10 日至 3 年內完成接種。\n\n### 傷寒疫苗\n\n前往南亞、東南亞、非洲等衛生條件較差地區，且停留時間較長或飲食衛生難以掌握者，建議接種傷寒疫苗，並注意飲水與食物安全。\n\n### 瘧疾預防用藥\n\n依前往地區的瘧疾抗藥性選擇預防藥物，須經醫師處方。通常於出發前開始服用，停留期間持續服用，返國後仍需續服一段時間，請依處方完成療程。\n\n同時須落實防蚊措施，藥物不能取代防蚊。\n\n### 其他建議疫苗\n\nA 型肝炎疫苗：前往衛生條件欠佳地區建議接種。日本腦炎疫苗：前往亞洲鄉村地區且停留較久者建議接種。\n\n狂犬病疫苗：前往狂犬病流行地區、可能接觸動物或長期停留者，可評估暴露前接種。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/6786"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 24 處（mso 樣式 8、Mso 類別 8、命名空間標籤 8）"
+      },
+      {
+        "code": "vaccine-not-in-master",
+        "severity": "info",
+        "message": "小節提到主檔沒有的疫苗：黃熱病疫苗、流行性腦脊髓膜炎疫苗、傷寒疫苗；建議新增 vaccine 主檔與疫苗頁後，把這些小節改建成 vaccine"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/6786",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "vaccineCandidates": [
+      "黃熱病疫苗",
+      "流行性腦脊髓膜炎疫苗",
+      "傷寒疫苗"
+    ]
+  }
+}

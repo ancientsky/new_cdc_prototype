@@ -1,0 +1,97 @@
+{
+  "id": "doc.mmr-recommendation.2025-04-16",
+  "type": "document",
+  "title": "國內現行 MMR 預防接種建議（114.04.16 版）",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2025-04-16",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.measles"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "現行 MMR 接種建議：1966 年（含）以後出生、不具免疫力的成人前往流行地區前 2–4 週評估自費接種；新增經常接觸外國人者。",
+  "family": "doc.mmr-recommendation",
+  "docType": "recommendation",
+  "version": "114.04.16",
+  "effectiveAt": "2025-04-16",
+  "machineReadableMarkdown": "現行 MMR 接種建議：1966 年（含）以後出生、不具免疫力的成人前往流行地區前 2–4 週評估自費接種；新增經常接觸外國人者。\n\n### 幼兒常規接種\n\n出生滿 12 個月接種第 1 劑，滿 5 歲至入國小前接種第 2 劑。\n\n### 成人建議\n\n1966 年（含）以後出生、不具麻疹免疫力之成人，若計畫前往麻疹流行地區，建議出國前 2 至 4 週至旅遊醫學門診評估自費接種 1 劑 MMR 疫苗。免疫力以曾完成 2 劑接種、血清抗體陽性或曾經確診為判斷依據。\n\n### 職業與接觸風險\n\n醫療照護工作人員、經常接觸外國人之工作者（如機場、觀光、移工服務），建議評估接種。\n\n本版自 2025 年 4 月 16 日 生效，取代前一版（108.05.14）。歷版請見下方附件（108.05.14），僅供查閱。\n\n| 項目 | 內容 |\n| --- | --- |\n| 文件名稱 | 國內現行 MMR 預防接種建議（114.04.16 版） |\n| 版次 | 114.04.16 |\n| 生效日 | 2025-04-16 |\n| 權責單位 | 急性傳染病組 |\n| 檔案格式 | PDF |",
+  "supersedes": "doc.mmr-recommendation.2019-05-14",
+  "pdfUrl": "/files/doc.mmr-recommendation.2025-04-16/mmr-recommendation-2025-04-16.pdf",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/l3AcSii0GQ0DFTwJAZv75P"
+  ],
+  "assets": [
+    {
+      "file": "mmr-recommendation-2025-04-16.pdf",
+      "kind": "attachment",
+      "label": "國內現行 MMR 預防接種建議（114.04.16 版）（PDF）",
+      "mime": "application/pdf",
+      "bytes": 859,
+      "sha256": "652aed81c789d6236dd2a0ca0349ad1dab26c72103f43bad236229f7b3a5f63f",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 52 處（mso 樣式 18、Mso 類別 17、命名空間標籤 17）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「傳染病介紹／麻疹／指引及手冊」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站內容是文件 doc.mmr-recommendation.2025-04-16，草稿依清單建成 document（舊頁本身是欄目內頁）"
+      },
+      {
+        "code": "effective-from-text",
+        "severity": "info",
+        "message": "生效日 2025-04-16 取自標題（舊頁發布日 2019-05-14）"
+      },
+      {
+        "code": "version-from-attachment",
+        "severity": "info",
+        "message": "附件「國內現行 MMR 預防接種建議（108.05.14 版，2019 年 5 月 14 日）（PDF）」是另一版次（108.05.14），另建純 PDF 草稿 doc.mmr-recommendation.2019-05-14（同家族 doc.mmr-recommendation，不轉內文）"
+      },
+      {
+        "code": "version-chain",
+        "severity": "info",
+        "message": "版次鏈 doc.mmr-recommendation：108.05.14（2019-05-14） → 114.04.16（2025-04-16）；本版為現行版，supersedes doc.mmr-recommendation.2019-05-14"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/l3AcSii0GQ0DFTwJAZv75P",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "doc.mmr-recommendation.2025-04-16"
+    ],
+    "versionChain": {
+      "family": "doc.mmr-recommendation",
+      "position": 2,
+      "of": 2,
+      "current": true
+    }
+  }
+}

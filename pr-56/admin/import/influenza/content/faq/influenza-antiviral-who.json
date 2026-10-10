@@ -1,0 +1,75 @@
+{
+  "id": "faq.influenza-antiviral-who",
+  "type": "faq",
+  "title": "哪些人可以使用公費流感抗病毒藥劑？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2025-12-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "依「公費流感抗病毒藥劑使用對象」，全年適用的對象主要包括： 經通報的流感併發重症與新型 A 型流感病例； 孕婦經評估需及時用藥者； 未滿 5 歲及 65 歲以上的類流感患者； 確診或疑似流感而住院（含急診待床）者；",
+  "question": "哪些人可以使用公費流感抗病毒藥劑？",
+  "answerMarkdown": "依「公費流感抗病毒藥劑使用對象」，**全年適用**的對象主要包括：\n\n- 經通報的**流感併發重症**與**新型 A 型流感**病例；\n- **孕婦**經評估需及時用藥者；\n- **未滿 5 歲及 65 歲以上**的類流感患者；\n- 確診或疑似流感而**住院**（含急診待床）者；\n- 具重大傷病、免疫不全、流感高風險慢性疾病或 **BMI ≥ 30** 的類流感患者；\n- 群聚事件經防疫醫師認定需用藥者等**預防性用藥**對象。\n\n另外，**2026 年 8 月 24 日至 10 月 31 日**（依致醫界通函第 616 號延長），有類流感症狀且屬 7 類**流感高傳播族群**者（醫療院所防疫人員、長照機構住民與工作人員、托育人員、幼兒園至高中職與五專一至三年級學生、高風險族群同住者或照顧者、禽畜業與動物防疫人員、軍營等人口密集機構人員）也適用。\n\n以上對象**經醫師評估符合即可開立，都不需要流感快篩**。是否符合由醫師判斷，請就醫時說明您的狀況。",
+  "tasks": [
+    "symptoms"
+  ],
+  "basedOn": [
+    "disease.influenza"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/Zfg30duS6fEOkNhHjVRix8"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 123 處（mso 樣式 81、Mso 類別 29、命名空間標籤 21）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「流感／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「今年公費流感疫苗誰可以打？什麼時候開始？」從答案抽出結構化候選 {\"ageYears\":65,\"months\":6}，請確認後保留或刪除"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「65 歲以上長輩有類流感症狀，一定要快篩陽性才能用公費抗病毒藥嗎？」→ symptoms；「流感疫苗和新冠疫苗可以同一天打嗎？」→ vaccines；「得了流感，出現哪些狀況要馬上就醫？」→ symptoms；「流感疫苗去年打過了，今年還要再打嗎？」→ vaccines；「今年公費流感疫苗誰可以打？什麼時候開始？」→ vaccines；「流感和一般感冒要怎麼分辨？」→ symptoms；「哪些人可以使用公費流感抗病毒藥劑？」→ symptoms；「什麼是「流感併發重症」？」→ symptoms；「公費流感疫苗要去哪裡打？要帶什麼？」→ vaccines；「「類流感門急診就診率」是什麼意思？」→ data"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/Zfg30duS6fEOkNhHjVRix8",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.influenza-antiviral-who"
+    ]
+  }
+}

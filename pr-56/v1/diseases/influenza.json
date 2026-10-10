@@ -1,0 +1,1000 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "35e3a5ea965e",
+    "lastModified": "2026-09-20"
+  },
+  "data": {
+    "id": "disease.influenza",
+    "type": "disease",
+    "slug": "influenza",
+    "title": "流感",
+    "nameEn": "Influenza",
+    "aliases": [
+      "流行性感冒",
+      "季節性流感",
+      "流感併發重症",
+      "Flu"
+    ],
+    "legalCategory": 4,
+    "icd10": [
+      "J09",
+      "J10",
+      "J11"
+    ],
+    "notifyWithinHours": 168,
+    "incubation": {
+      "min": 1,
+      "max": 4,
+      "typicalMin": 1,
+      "typicalMax": 2,
+      "unit": "day",
+      "text": "1–4 天（平均 2 天）"
+    },
+    "transmission": [
+      "droplet",
+      "contact"
+    ],
+    "owner": "unit.acute-infectious",
+    "steward": "急性傳染病組承辦人",
+    "publishedAt": "2017-10-01",
+    "reviewedAt": "2026-09-20",
+    "reviewPeriodMonths": 12,
+    "status": "published",
+    "audience": [
+      "public",
+      "professional"
+    ],
+    "tasks": [
+      "symptoms",
+      "vaccines",
+      "situation"
+    ],
+    "sensitivity": "public",
+    "license": "OGDL-1.0",
+    "diseases": [
+      "disease.influenza"
+    ],
+    "vaccines": [
+      "vaccine.influenza"
+    ],
+    "aiWhitelist": {
+      "requested": true,
+      "approvedBy": "unit.oasis",
+      "approvedAt": "2026-09-20"
+    },
+    "languages": {
+      "zh-TW": {
+        "status": "source"
+      },
+      "en": {
+        "status": "reviewed",
+        "reviewedAt": "2026-09-24",
+        "reviewer": "內部英文審核人"
+      },
+      "ja": {
+        "status": "machine"
+      },
+      "tl": {
+        "status": "machine"
+      },
+      "vi": {
+        "status": "machine"
+      },
+      "id": {
+        "status": "machine"
+      },
+      "th": {
+        "status": "machine"
+      }
+    },
+    "summary": "流感由流感病毒引起，經飛沫與接觸傳播，秋冬為流行期。長者、幼兒、孕婦與慢性病人易併發重症，每年接種疫苗是最有效的預防方法。",
+    "keywords": [
+      "流感",
+      "類流感",
+      "流感疫苗",
+      "抗病毒藥劑",
+      "危險徵兆",
+      "流感併發重症"
+    ],
+    "legacyUrls": [
+      "https://www.cdc.gov.tw/Disease/Index",
+      "https://www.cdc.gov.tw/Disease/SubIndex/{id}#influenza",
+      "https://www.cdc.gov.tw/Category/QAPage/{id}#influenza",
+      "https://www.cdc.gov.tw/Category/List/{id}#flu-vaccine-program",
+      "https://www.cdc.gov.tw/Bulletin/List/{id}?page=1#influenza"
+    ],
+    "keyFacts": {
+      "incubation": "1–4 天（平均 2 天）",
+      "symptoms": "突然發燒、頭痛、肌肉痠痛、倦怠、喉嚨痛、咳嗽",
+      "transmission": "飛沫、接觸病人分泌物",
+      "prevention": "每年接種流感疫苗、勤洗手、咳嗽戴口罩",
+      "notify": "流感併發重症：一週內"
+    },
+    "blocks": [
+      {
+        "key": "what-to-do",
+        "heading": "我該怎麼辦",
+        "cards": [
+          {
+            "if": "突然發燒、全身痠痛、咳嗽",
+            "title": "戴口罩就醫、在家休息",
+            "text": "儘早就醫並在家休息，症狀緩解後 24 小時再上班上課；醫師會評估是否開立抗病毒藥劑。"
+          },
+          {
+            "if": "出現呼吸困難、胸痛或意識改變",
+            "title": "立即到急診",
+            "text": "這些是流感併發重症的危險徵兆，請立即就醫，不要等待。"
+          },
+          {
+            "if": "65 歲以上、幼兒、孕婦或有慢性病",
+            "title": "10 月 1 日起接種公費疫苗",
+            "text": "公費流感疫苗每年 10 月 1 日開打，可查詢住家附近的合約院所。"
+          }
+        ]
+      },
+      {
+        "key": "symptoms",
+        "heading": "症狀與警示徵象",
+        "markdown": "流感常見症狀為**突然**發燒、頭痛、肌肉痠痛、疲倦、流鼻水、喉嚨痛及咳嗽，部分兒童會有腹瀉、嘔吐。多數人約一週內可康復。\n\n與一般感冒不同的是，流感發病急、全身症狀明顯，且可能併發肺炎、腦炎、心肌炎等嚴重併發症。",
+        "warning": "呼吸急促或困難、發紺（嘴唇發紫）、血痰或痰液變濃、胸痛、意識改變、低血壓；兒童另需留意持續高燒超過 3 天、抽搐、活力明顯變差。"
+      },
+      {
+        "key": "transmission",
+        "heading": "怎麼傳染",
+        "markdown": "流感主要透過病人咳嗽、打噴嚏產生的**飛沫**傳播，也可能因手接觸到病人的口鼻分泌物或被污染的物品，再碰觸自己的眼口鼻而感染。\n\n病人在發病前 1 天至症狀出現後 3–7 天都可能具有傳染力，幼兒與免疫力低下者排毒時間可能更長。"
+      },
+      {
+        "key": "prevention",
+        "heading": "如何預防",
+        "markdown": "- **每年接種流感疫苗**：病毒每年會變異，疫苗成分也每年更新，需每年接種。\n- 勤洗手，咳嗽或打噴嚏時以衣袖或紙巾遮住口鼻。\n- 有呼吸道症狀時戴口罩，生病在家休息，避免出入人多擁擠的場所。\n- 流行期間探視長照機構或醫院時，請先確認自己沒有發燒或咳嗽。"
+      },
+      {
+        "key": "treatment",
+        "heading": "診斷與治療",
+        "markdown": "醫師可依臨床判斷開立抗病毒藥劑（如口服克流感、吸入型瑞樂沙、靜脈注射瑞貝塔、口服紓伏效）。**發病後 48 小時內**使用效果最好，但重症或高風險病人即使超過 48 小時仍可使用。\n\n符合公費使用對象者，由疾管署提供公費抗病毒藥劑，對象條件請見專業版「公費流感抗病毒藥劑使用對象」。退燒止痛以乙醯胺酚為主，18 歲以下避免使用阿斯匹靈。"
+      },
+      {
+        "key": "vaccine",
+        "heading": "疫苗",
+        "markdown": "公費流感疫苗每年 10 月 1 日起分階段開打，對象包括 65 歲以上長者、6 個月以上至國小入學前幼兒、孕婦、高風險慢性病人、醫事及防疫人員、國小至高中職學生等，50–64 歲成人於第二階段開放。\n\n8 歲（含）以下兒童若是第一次接種，需接種 2 劑，間隔 4 週以上。完整對象與時程請見「流感疫苗」頁。"
+      },
+      {
+        "key": "situation",
+        "heading": "目前疫情與統計",
+        "markdown": "類流感門急診就診率、流感併發重症病例數每週由疫情中心更新；流行期間疫情態勢層會標示目前狀態。",
+        "datasets": [
+          "dataset.ili-weekly",
+          "dataset.flu-severe"
+        ]
+      },
+      {
+        "key": "faq",
+        "heading": "常見問題"
+      }
+    ],
+    "professional": {
+      "manualDoc": "doc.flu-antiviral-eligibility",
+      "specimen": "咽喉擦拭液或鼻咽擦拭液，以病毒保存輸送管保存，4°C 冷藏 48 小時內送驗；可進行病毒分離與 RT-PCR。",
+      "notifyNote": "「流感併發重症」為第四類法定傳染病，應於一週內通報；類流感病例不須逐案通報，由定點醫師監測與健保資料掌握。",
+      "programs": [
+        {
+          "key": "public-vaccine-program",
+          "title": "公費流感疫苗接種計畫",
+          "summary": "每年 10 月 1 日起分階段接種：第一階段為長者、幼兒、孕婦、高風險對象與學生等，11 月 1 日起開放 50–64 歲成人；由衛生所與合約院所執行。",
+          "documents": [
+            "doc.flu-vaccine-schedule",
+            "doc.flu-vaccine-manual"
+          ],
+          "services": [
+            "service.vaccination-record-reissue"
+          ],
+          "contentIds": [
+            "faq.influenza-vaccine-where",
+            "faq.flu-vaccine-who",
+            "faq.flu-vaccine-every-year",
+            "news.2026-09-18-flu-vaccine-oct1",
+            "vaccine.influenza",
+            "media.ltc-flu-vaccine"
+          ]
+        },
+        {
+          "key": "antiviral-eligibility",
+          "title": "公費抗病毒藥劑使用對象",
+          "summary": "流感併發重症、孕婦、未滿 5 歲及 65 歲以上、住院、高風險慢性病等類流感患者，經醫師評估不需快篩即可開立；2026-08-24 至 10-31 另擴大至 7 類高傳播族群（致醫界通函第 616 號）。",
+          "documents": [
+            "doc.flu-antiviral-eligibility"
+          ],
+          "services": [],
+          "contentIds": [
+            "faq.influenza-antiviral-who",
+            "faq.flu-antiviral-65-no-test",
+            "news.2026-08-24-flu-antiviral-expanded",
+            "news.2026-09-18-flu-antiviral-extended",
+            "news.2026-09-18-letter-616-flu-antiviral-extended"
+          ]
+        },
+        {
+          "key": "severe-surveillance",
+          "title": "流感併發重症監測",
+          "summary": "流感併發重症為第四類法定傳染病，一週內通報；搭配定點醫師類流感監測、門急診就診率與病毒型別監測掌握流行強度。",
+          "documents": [],
+          "services": [
+            "service.notifiable-disease-report"
+          ],
+          "contentIds": [
+            "faq.influenza-severe-what",
+            "dataset.flu-severe",
+            "dataset.ili-weekly",
+            "dataset.flu-express",
+            "dataset.sentinel-physician",
+            "labtest.influenza"
+          ]
+        }
+      ]
+    },
+    "relatedDocuments": [
+      "doc.flu-antiviral-eligibility",
+      "doc.flu-vaccine-schedule",
+      "doc.flu-vaccine-manual"
+    ],
+    "materials": [
+      {
+        "label": "流感疫苗接種海報",
+        "url": "https://www.cdc.gov.tw/Advocacy",
+        "langs": [
+          "zh-TW",
+          "en",
+          "vi",
+          "id",
+          "th"
+        ]
+      }
+    ],
+    "i18n": {
+      "en": {
+        "title": "Influenza",
+        "summary": "Influenza is caused by influenza viruses spread by droplets and contact, peaking in autumn and winter. Older adults, young children, pregnant women and people with chronic conditions are at higher risk of severe disease; an annual vaccine is the most effective protection.",
+        "keyFacts": {
+          "incubation": "1–4 days (average 2)",
+          "symptoms": "Sudden fever, headache, muscle aches, fatigue, sore throat, cough",
+          "transmission": "Droplets and contact with secretions",
+          "prevention": "Annual flu vaccine, hand washing, mask when coughing",
+          "notify": "Severe complicated influenza: within one week"
+        },
+        "blocks": [
+          {
+            "key": "what-to-do",
+            "heading": "What to do",
+            "cards": [
+              {
+                "if": "have sudden fever, body aches and cough",
+                "title": "Wear a mask, see a doctor and rest at home",
+                "text": "See a doctor early and stay home until 24 hours after symptoms improve; the doctor will assess whether antivirals are needed."
+              },
+              {
+                "if": "have difficulty breathing, chest pain or confusion",
+                "title": "Go to the emergency department now",
+                "text": "These are danger signs of severe influenza. Seek care immediately."
+              },
+              {
+                "if": "are 65+, a young child, pregnant or have a chronic condition",
+                "title": "Get the government-funded vaccine from 1 October",
+                "text": "Government-funded flu vaccination starts on 1 October each year; find a contracted clinic near you."
+              }
+            ]
+          },
+          {
+            "key": "symptoms",
+            "heading": "Symptoms and warning signs",
+            "markdown": "Common symptoms are **sudden** fever, headache, muscle aches, fatigue, runny nose, sore throat and cough; some children have diarrhoea or vomiting. Most people recover within about a week.\n\nUnlike a common cold, influenza starts abruptly with marked whole-body symptoms and can lead to pneumonia, encephalitis or myocarditis.",
+            "warning": "Rapid or difficult breathing, cyanosis (blue lips), bloody or thick sputum, chest pain, altered consciousness, low blood pressure; in children also high fever for more than 3 days, seizures or marked loss of activity."
+          },
+          {
+            "key": "transmission",
+            "heading": "How it spreads",
+            "markdown": "Influenza spreads mainly through **droplets** from coughs and sneezes. It can also spread when hands touch secretions or contaminated objects and then the eyes, nose or mouth.\n\nPeople may be infectious from 1 day before to 3–7 days after symptoms start; young children and immunocompromised people may shed virus longer."
+          },
+          {
+            "key": "prevention",
+            "heading": "Prevention",
+            "markdown": "- **Get vaccinated every year**: the virus changes and the vaccine is updated annually.\n- Wash hands often; cover coughs and sneezes with a sleeve or tissue.\n- Wear a mask when you have respiratory symptoms, stay home when sick and avoid crowds.\n- During flu season, make sure you have no fever or cough before visiting care homes or hospitals."
+          },
+          {
+            "key": "treatment",
+            "heading": "Diagnosis and treatment",
+            "markdown": "Doctors may prescribe antivirals (oral oseltamivir, inhaled zanamivir, intravenous peramivir or oral baloxavir). They work best **within 48 hours of onset**, but severe or high-risk patients can still benefit later.\n\nTaiwan CDC supplies government-funded antivirals for eligible patients; see the professional document on eligibility. Use paracetamol for fever and avoid aspirin in anyone under 18."
+          },
+          {
+            "key": "vaccine",
+            "heading": "Vaccine",
+            "markdown": "Government-funded flu vaccination starts in phases from 1 October each year for people aged 65 and over, children from 6 months to school entry, pregnant women, high-risk chronic patients, health and public health workers, and primary to senior high school students; adults aged 50–64 are included in the second phase.\n\nChildren aged 8 and under receiving flu vaccine for the first time need 2 doses at least 4 weeks apart. See the Influenza vaccine page for details."
+          },
+          {
+            "key": "situation",
+            "heading": "Current situation and statistics",
+            "markdown": "Influenza-like illness visit rates and severe influenza cases are updated weekly by the Epidemic Intelligence Center; the situation layer shows the current status during the season."
+          },
+          {
+            "key": "faq",
+            "heading": "FAQ"
+          }
+        ]
+      }
+    },
+    "sourceHash": "9dd4510bedde",
+    "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/influenza/",
+    "path": "/diseases/influenza/",
+    "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/influenza.md",
+    "governance": {
+      "owner": "unit.acute-infectious",
+      "ownerName": "急性傳染病組",
+      "steward": "急性傳染病組承辦人",
+      "reviewedAt": "2026-09-20",
+      "reviewPeriodMonths": 12,
+      "nextReviewAt": "2027-09-20",
+      "daysToReview": 354,
+      "overdue": false,
+      "dueSoon": false,
+      "status": "published",
+      "lifecycle": "current",
+      "lifecycleLabel": "現行版",
+      "whitelist": true,
+      "whitelistTier": "public",
+      "whitelistPublic": true,
+      "whitelistReasons": [],
+      "whitelistReasonLabels": [],
+      "isCurrent": true,
+      "superseded": false,
+      "supersededBy": null,
+      "currentId": "disease.influenza",
+      "noindex": false,
+      "stale": [],
+      "basisRevisions": [],
+      "predatesBasis": false,
+      "annotations": [],
+      "reverseAuditHits": 0,
+      "license": "OGDL-1.0",
+      "licenseNote": null,
+      "sensitivity": "public",
+      "sourceHash": "9dd4510bedde",
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-24",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "machine"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "translationStale": {
+        "en": false,
+        "ja": false,
+        "tl": false,
+        "vi": false,
+        "id": false,
+        "th": false
+      },
+      "renderableLangs": [
+        "zh-TW",
+        "en"
+      ]
+    },
+    "master": {
+      "id": "disease.influenza",
+      "slug": "influenza",
+      "name": "流感",
+      "nameEn": "Influenza",
+      "aliases": [
+        "流感併發重症",
+        "季節性流感",
+        "類流感",
+        "流行性感冒",
+        "Flu",
+        "Influenza"
+      ],
+      "legalCategory": 4,
+      "icd10": [
+        "J09",
+        "J10",
+        "J11"
+      ],
+      "notifyWithinHours": 168,
+      "transmission": [
+        "droplet",
+        "contact"
+      ],
+      "hasPage": true,
+      "owner": "unit.acute-infectious",
+      "datasets": [
+        "dataset.ili-weekly",
+        "dataset.flu-severe"
+      ],
+      "zhuyin": "ㄌ",
+      "strokes": 10,
+      "legalName": "流感併發重症",
+      "note": "法定通報項目為「流感併發重症」（第四類）；疾病頁以「流感」為題",
+      "i18n": {
+        "en": {
+          "name": "Influenza"
+        }
+      },
+      "auditRules": [
+        {
+          "scope": [
+            "disease.influenza"
+          ],
+          "since": "2026-01-01",
+          "pattern": "(須|需|需要)快篩陽性(才能|才可|始得)",
+          "message": "公費流感抗病毒藥劑使用對象（全年適用）：經醫師評估符合條件者不需流感快篩即可開立公費藥劑；擴大對象高傳播族群同樣免快篩（致醫界通函第 616 號，至 2026-10-31）"
+        }
+      ]
+    },
+    "related": {
+      "faq": [
+        {
+          "id": "faq.flu-antiviral-65-no-test",
+          "type": "faq",
+          "title": "65 歲以上長輩有類流感症狀，一定要快篩陽性才能用公費抗病毒藥嗎？",
+          "summary": "不需要。未滿 5 歲及 65 歲以上之類流感患者是公費抗病毒藥劑的全年適用對象，經醫師評估符合即可開立，不需流感快篩；2026-08-24 至 10-31 擴大的高傳播族群同樣免快篩。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/flu-antiviral-65-no-test/",
+          "path": "/faq/flu-antiviral-65-no-test/",
+          "reviewedAt": "2026-10-05",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.flu-covid-same-day",
+          "type": "faq",
+          "title": "流感疫苗和新冠疫苗可以同一天打嗎？",
+          "summary": "流感疫苗與新冠疫苗可同時分開部位接種，或間隔任何時間接種，不影響保護力。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/flu-covid-same-day/",
+          "path": "/faq/flu-covid-same-day/",
+          "reviewedAt": "2026-09-18",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.flu-danger-signs",
+          "type": "faq",
+          "title": "得了流感，出現哪些狀況要馬上就醫？",
+          "summary": "流感危險徵兆：呼吸困難、發紺、血痰、胸痛、意識改變、低血壓；兒童高燒超過 3 天、抽搐或活力差，都應立即就醫。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/flu-danger-signs/",
+          "path": "/faq/flu-danger-signs/",
+          "reviewedAt": "2026-09-20",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.flu-vaccine-every-year",
+          "type": "faq",
+          "title": "流感疫苗去年打過了，今年還要再打嗎？",
+          "summary": "流感病毒每年變異、疫苗株每年更新，保護力約 6 個月後下降，因此每年都要接種；接種後約 2 週產生保護力。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/flu-vaccine-every-year/",
+          "path": "/faq/flu-vaccine-every-year/",
+          "reviewedAt": "2026-09-18",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.flu-vaccine-who",
+          "type": "faq",
+          "title": "今年公費流感疫苗誰可以打？什麼時候開始？",
+          "summary": "2026–2027 年度公費流感疫苗 10 月 1 日起第一階段（長者、幼兒、孕婦、高風險者、學生等），11 月 1 日起開放 50–64 歲成人。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/flu-vaccine-who/",
+          "path": "/faq/flu-vaccine-who/",
+          "reviewedAt": "2026-09-18",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.flu-vs-cold",
+          "type": "faq",
+          "title": "流感和一般感冒要怎麼分辨？",
+          "summary": "流感突然發病、全身症狀明顯（發燒、肌肉痠痛、倦怠）；感冒多為逐漸出現的上呼吸道症狀。高風險族群有症狀應儘早就醫。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/flu-vs-cold/",
+          "path": "/faq/flu-vs-cold/",
+          "reviewedAt": "2026-09-20",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.influenza-antiviral-who",
+          "type": "faq",
+          "title": "哪些人可以使用公費流感抗病毒藥劑？",
+          "summary": "公費流感抗病毒藥劑全年適用對象：流感併發重症、新型 A 型流感、孕婦、未滿 5 歲及 65 歲以上、住院、高風險慢性病、BMI ≥ 30 之類流感患者與群聚預防性用藥；2026-08-24 至 10-31 另擴大至 7 類高傳播族群。經醫師評估符合者皆不需快篩。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/influenza-antiviral-who/",
+          "path": "/faq/influenza-antiviral-who/",
+          "reviewedAt": "2026-09-24",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.influenza-severe-what",
+          "type": "faq",
+          "title": "什麼是「流感併發重症」？",
+          "summary": "流感併發重症是第四類法定傳染病，指流感併發嚴重症狀並需加護病房治療或死亡者，醫師須一週內通報；出現危險徵兆應立即就醫。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/influenza-severe-what/",
+          "path": "/faq/influenza-severe-what/",
+          "reviewedAt": "2026-09-24",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.influenza-vaccine-where",
+          "type": "faq",
+          "title": "公費流感疫苗要去哪裡打？要帶什麼？",
+          "summary": "公費流感疫苗可至衛生所或合約院所接種，帶健保卡；10 月 1 日起第一階段，11 月 1 日起 50–64 歲成人；接種後留觀 15 分鐘。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/influenza-vaccine-where/",
+          "path": "/faq/influenza-vaccine-where/",
+          "reviewedAt": "2026-09-24",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.stats-ili-rate",
+          "type": "faq",
+          "title": "「類流感門急診就診率」是什麼意思？",
+          "summary": "類流感門急診就診率是每週門急診就診人次中因類流感就醫的比例，用來判斷流感是否進入流行期，不等於確診數。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/stats-ili-rate/",
+          "path": "/faq/stats-ili-rate/",
+          "reviewedAt": "2026-09-20",
+          "owner": "unit.epidemic-intelligence",
+          "ownerName": "疫情中心",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "news": [
+        {
+          "id": "news.2025-10-01-flu-vaccine-start",
+          "type": "news",
+          "title": "114 年度公費流感疫苗 2025 年 10 月 1 日開打，長者與幼兒請儘早接種",
+          "summary": "114 年度公費流感疫苗 2025 年 10 月 1 日開打，第一階段包括長者、幼兒、孕婦、高風險慢性病人與學生等；50–64 歲成人自 11 月 1 日起接種。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-10-01-flu-vaccine-start/",
+          "path": "/news/2025-10-01-flu-vaccine-start/",
+          "reviewedAt": "2025-10-01",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "news.2026-01-20-lunar-new-year-flu",
+          "type": "news",
+          "title": "流感疫情處高峰，春節連假前請儘速接種疫苗並落實咳嗽禮節",
+          "summary": "類流感門急診就診人次處於高峰，春節連假將至，疾管署呼籲尚未接種的高風險族群儘速接種，並提醒連假期間就醫資源。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-01-20-lunar-new-year-flu/",
+          "path": "/news/2026-01-20-lunar-new-year-flu/",
+          "reviewedAt": "2026-01-20",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "news.2026-02-24-flu-declining",
+          "type": "news",
+          "title": "流感疫情緩降，仍處流行期，請持續注意手部衛生與咳嗽禮節",
+          "summary": "春節後類流感門急診就診人次連續兩週下降，但仍高於流行閾值，疾管署提醒持續落實手部衛生與咳嗽禮節。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-02-24-flu-declining/",
+          "path": "/news/2026-02-24-flu-declining/",
+          "reviewedAt": "2026-02-24",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "news.2026-06-03-flu-antiviral-summer",
+          "type": "news",
+          "title": "夏季流感疫情持續，公費抗病毒藥劑使用對象維持現行規定",
+          "summary": "夏季仍有流感病毒活動，疾管署說明公費抗病毒藥劑全年適用對象：未滿 5 歲及 65 歲以上、孕婦、高風險慢性病等類流感患者，經醫師評估不需快篩即可開立。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-06-03-flu-antiviral-summer/",
+          "path": "/news/2026-06-03-flu-antiviral-summer/",
+          "reviewedAt": "2026-06-03",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "based-on-revised",
+          "whitelist": false
+        },
+        {
+          "id": "news.2026-08-24-flu-antiviral-expanded",
+          "type": "news",
+          "title": "國內外近期流感疫情緩升，疾管署自 8 月 24 日起至 9 月 30 日擴大公費流感抗病毒藥劑使用條件",
+          "summary": "流感疫情緩升，疾管署自 2026 年 8 月 24 日至 9 月 30 日擴大公費流感抗病毒藥劑使用對象至有類流感症狀的 7 類高傳播族群，經醫師評估不需快篩即可開立。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-08-24-flu-antiviral-expanded/",
+          "path": "/news/2026-08-24-flu-antiviral-expanded/",
+          "reviewedAt": "2026-08-24",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "based-on-revised",
+          "whitelist": false
+        },
+        {
+          "id": "news.2026-09-10-clarify-flu-vaccine-death",
+          "type": "news",
+          "title": "澄清：網傳「打流感疫苗會得流感、長輩打完會死」並非事實",
+          "summary": "網傳打流感疫苗會得流感、長輩打完會死並非事實。公費流感疫苗為不活化疫苗，不會引起流感；常見副作用為注射部位疼痛與輕微發燒。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-10-clarify-flu-vaccine-death/",
+          "path": "/news/2026-09-10-clarify-flu-vaccine-death/",
+          "reviewedAt": "2026-09-10",
+          "owner": "unit.pr",
+          "ownerName": "公關室",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "news.2026-09-18-flu-antiviral-extended",
+          "type": "news",
+          "title": "流感疫情進入流行期且持續上升，疾管署延長擴大公費流感抗病毒藥劑使用條件至 10 月 31 日",
+          "summary": "流感疫情進入流行期，疾管署宣布有類流感症狀的 7 類高傳播族群使用公費抗病毒藥劑的期限延長至 2026 年 10 月 31 日；經醫師評估符合者不需快篩即可開立。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-18-flu-antiviral-extended/",
+          "path": "/news/2026-09-18-flu-antiviral-extended/",
+          "reviewedAt": "2026-10-05",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "news.2026-09-18-flu-vaccine-oct1",
+          "type": "news",
+          "title": "2026–2027 年度公費流感疫苗 10 月 1 日開打，新冠疫苗同步提供",
+          "summary": "2026–2027 年度公費流感疫苗 10 月 1 日開打，第一階段長者、幼兒、孕婦、高風險者與學生等；11 月 1 日開放 50–64 歲，新冠疫苗同步。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-18-flu-vaccine-oct1/",
+          "path": "/news/2026-09-18-flu-vaccine-oct1/",
+          "reviewedAt": "2026-09-18",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "news.2026-09-18-letter-616-flu-antiviral-extended",
+          "type": "letter",
+          "title": "致醫界通函第 616 號：延長擴大公費流感抗病毒藥劑使用對象「有類流感症狀，且具下列身分之流感高傳播族群」之適用期限至 10 月 31 日",
+          "summary": "疾管署延長擴大公費流感抗病毒藥劑使用對象「有類流感症狀，且具 7 類流感高傳播族群身分者」之適用期限至 2026 年 10 月 31 日；經醫師評估符合者不需快篩即可開立，用藥後至 SMIS 回報。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-18-letter-616-flu-antiviral-extended/",
+          "path": "/news/2026-09-18-letter-616-flu-antiviral-extended/",
+          "reviewedAt": "2026-10-05",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "news.2026-09-29-ili-weekly",
+          "type": "news",
+          "title": "流感疫情持續上升，10 月 1 日公費疫苗開打，長者幼兒請優先接種",
+          "summary": "類流感門急診就診率續升，腸病毒與登革熱本土疫情亦仍活躍。疾管署呼籲 10 月 1 日起長者與幼兒優先接種公費流感疫苗。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-29-ili-weekly/",
+          "path": "/news/2026-09-29-ili-weekly/",
+          "reviewedAt": "2026-09-29",
+          "owner": "unit.epidemic-intelligence",
+          "ownerName": "疫情中心",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "documents": [
+        {
+          "id": "doc.flu-antiviral-eligibility.2026-09-18",
+          "type": "document",
+          "title": "公費流感抗病毒藥劑使用對象（2026 年 9 月延長版：高傳播族群延至 10 月 31 日）",
+          "summary": "現行公費流感抗病毒藥劑使用對象：全年適用對象（含未滿 5 歲及 65 歲以上類流感患者）加上 7 類流感高傳播族群，後者適用期限依致醫界通函第 616 號延長至 2026 年 10 月 31 日；經醫師評估符合者一律不需快篩。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/flu-antiviral-eligibility.2026-09-18/",
+          "path": "/documents/flu-antiviral-eligibility.2026-09-18/",
+          "reviewedAt": "2026-10-05",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "doc.flu-vaccine-manual.2026-09-16",
+          "type": "document",
+          "title": "2026–2027 年度公費流感疫苗接種計畫作業手冊",
+          "summary": "合約院所與衛生所執行公費流感疫苗接種計畫的作業細節：合約與接種點、疫苗訂撥與冷鏈、對象查核與登錄、接種後觀察與不良事件通報、剩餘疫苗處理。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/flu-vaccine-manual.2026-09-16/",
+          "path": "/documents/flu-vaccine-manual.2026-09-16/",
+          "reviewedAt": "2026-09-22",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "doc.flu-vaccine-schedule.2026-09-15",
+          "type": "document",
+          "title": "2026–2027 年度公費流感疫苗接種計畫：實施對象與時程",
+          "summary": "2026–2027 年度公費流感疫苗：10 月 1 日起第一階段開打（長者、幼兒、孕婦、高風險慢性病、學生等），11 月 1 日起 50–64 歲成人。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/flu-vaccine-schedule.2026-09-15/",
+          "path": "/documents/flu-vaccine-schedule.2026-09-15/",
+          "reviewedAt": "2026-09-15",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "doc.infection-control-healthcare.2026-03-01",
+          "type": "document",
+          "title": "醫療機構感染管制措施指引",
+          "summary": "醫療機構標準防護與傳播途徑防護（接觸、飛沫、空氣）、呼吸道衛生、環境清消與工作人員健康管理之共通原則。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/infection-control-healthcare.2026-03-01/",
+          "path": "/documents/infection-control-healthcare.2026-03-01/",
+          "reviewedAt": "2026-03-01",
+          "owner": "unit.infection-control",
+          "ownerName": "感染管制及生物安全組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "vaccines": [
+        {
+          "id": "vaccine.influenza",
+          "type": "vaccine",
+          "title": "流感疫苗",
+          "summary": "2026–2027 年度公費流感疫苗 10 月 1 日開打，第一階段長者、幼兒、孕婦、高風險者與學生等；11 月 1 日起 50–64 歲成人。每年都需接種。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/vaccines/influenza/",
+          "path": "/vaccines/influenza/",
+          "reviewedAt": "2026-09-18",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "datasets": [
+        {
+          "id": "dataset.flu-express",
+          "type": "dataset",
+          "title": "流感速訊（每週流感監測報告）",
+          "summary": "每週發布之流感監測綜合報告：類流感就診、病毒型別、併發重症與國際疫情。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.flu-express",
+          "path": "/data/#dataset.flu-express",
+          "reviewedAt": "2026-09-01",
+          "owner": "unit.epidemic-intelligence",
+          "ownerName": "疫情中心",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "dataset.flu-severe",
+          "type": "dataset",
+          "title": "流感併發重症病例統計",
+          "summary": "流感併發重症確定病例依發病週、年齡層、病毒型別與縣市之統計，含死亡病例數。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.flu-severe",
+          "path": "/data/#dataset.flu-severe",
+          "reviewedAt": "2026-09-01",
+          "owner": "unit.epidemic-intelligence",
+          "ownerName": "疫情中心",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "dataset.ili-weekly",
+          "type": "dataset",
+          "title": "類流感門急診就診統計（健保資料）",
+          "summary": "依健保門診與急診申報資料，彙整每週類流感就診人次與就診率（年齡層、縣市別）。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.ili-weekly",
+          "path": "/data/#dataset.ili-weekly",
+          "reviewedAt": "2026-09-01",
+          "owner": "unit.epidemic-intelligence",
+          "ownerName": "疫情中心",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "dataset.lab-virus-surveillance",
+          "type": "dataset",
+          "title": "病毒性感染症實驗室監測（呼吸道、腸道病毒檢出）",
+          "summary": "合約實驗室每週呼吸道與腸道病毒檢出件數與型別分布（流感 A/B、腸病毒型別、RSV、新冠等）。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.lab-virus-surveillance",
+          "path": "/data/#dataset.lab-virus-surveillance",
+          "reviewedAt": "2026-01-20",
+          "owner": "unit.lab",
+          "ownerName": "檢驗及疫苗研製中心",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "dataset.sentinel-physician",
+          "type": "dataset",
+          "title": "定點醫師監測資料（類流感、腹瀉、手足口病）",
+          "summary": "全國定點醫師每週通報之類流感、腹瀉、手足口病及疱疹性咽峽炎就診比例。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.sentinel-physician",
+          "path": "/data/#dataset.sentinel-physician",
+          "reviewedAt": "2025-11-15",
+          "owner": "unit.epidemic-intelligence",
+          "ownerName": "疫情中心",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "clarifications": [
+        {
+          "id": "clar.2026-01-vinegar-saltwater-flu",
+          "type": "clarification",
+          "title": "網傳「燻白醋、喝鹽水可以殺死流感病毒」沒有科學根據",
+          "summary": "燻白醋、喝鹽水無法殺死流感病毒，燻醋可能刺激呼吸道；預防流感最有效的是每年接種疫苗並勤洗手。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/factcheck/#clar.2026-01-vinegar-saltwater-flu",
+          "path": "/factcheck/#clar.2026-01-vinegar-saltwater-flu",
+          "reviewedAt": "2026-07-01",
+          "owner": "unit.pr",
+          "ownerName": "公關室",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "clar.2026-09-flu-vaccine-causes-flu",
+          "type": "clarification",
+          "title": "網傳「打流感疫苗會得流感、長輩打完會死」並非事實",
+          "summary": "公費流感疫苗是不活化疫苗，不會因接種而得流感；常見反應為注射部位疼痛與輕微發燒，長者流感重症風險遠高於疫苗風險。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/factcheck/#clar.2026-09-flu-vaccine-causes-flu",
+          "path": "/factcheck/#clar.2026-09-flu-vaccine-causes-flu",
+          "reviewedAt": "2026-09-10",
+          "owner": "unit.pr",
+          "ownerName": "公關室",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "media": [
+        {
+          "id": "media.ltc-flu-vaccine",
+          "type": "media",
+          "title": "長照機構住民與工作人員，一起打流感疫苗",
+          "summary": "長照機構住民為流感重症高風險族群，影片說明 10 月 1 日起公費流感疫苗開打，住民與工作人員應同步接種，並示範機構內集中接種流程。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/ltc-flu-vaccine/",
+          "path": "/media/ltc-flu-vaccine/",
+          "reviewedAt": "2026-09-25",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "labtests": [
+        {
+          "id": "labtest.influenza",
+          "type": "labtest",
+          "title": "流感檢驗項目與送驗規定",
+          "summary": "流感併發重症：咽喉或鼻咽拭子置於病毒運送培養基，4°C 冷藏 72 小時內送達，做 RT-PCR 與病毒分離；插管者加採下呼吸道檢體。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/influenza/",
+          "path": "/lab/influenza/",
+          "reviewedAt": "2026-07-15",
+          "owner": "unit.lab",
+          "ownerName": "檢驗及疫苗研製中心",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "services": [],
+      "publications": [
+        {
+          "id": "publication.bulletin-42-12",
+          "type": "publication",
+          "title": "疫情報導 第 42 卷第 12 期",
+          "summary": "本期收錄 2 篇：2025–2026 年流感季重症病例流行病學分析等。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-12/",
+          "path": "/publications/bulletin-42-12/",
+          "reviewedAt": "2026-06-23",
+          "owner": "unit.epidemic-intelligence",
+          "ownerName": "疫情中心",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "publication.bulletin-42-17",
+          "type": "publication",
+          "title": "疫情報導 第 42 卷第 17 期",
+          "summary": "本期收錄 3 篇：2026–2027 年流感疫苗株組成與接種策略等。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-17/",
+          "path": "/publications/bulletin-42-17/",
+          "reviewedAt": "2026-09-08",
+          "owner": "unit.epidemic-intelligence",
+          "ownerName": "疫情中心",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "publication.bulletin-42-18",
+          "type": "publication",
+          "title": "疫情報導 第 42 卷第 18 期",
+          "summary": "本期收錄 4 篇：秋冬腸病毒疫情回升之監測指標分析等。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-18/",
+          "path": "/publications/bulletin-42-18/",
+          "reviewedAt": "2026-09-22",
+          "owner": "unit.epidemic-intelligence",
+          "ownerName": "疫情中心",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "publication.manual-communicable-disease-control-2026",
+          "type": "publication",
+          "title": "傳染病防治工作手冊（2026 年版）",
+          "summary": "供地方衛生局與醫療院所使用之各類法定傳染病防治工作手冊，含病例定義、通報、檢體採檢、疫調、接觸者追蹤與防治措施。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/manual-communicable-disease-control-2026/",
+          "path": "/publications/manual-communicable-disease-control-2026/",
+          "reviewedAt": "2026-03-01",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "publication.manual-ltc-infection-control-2026",
+          "type": "publication",
+          "title": "長期照護機構感染管制手冊（2026 年版）",
+          "summary": "長期照護機構感染管制實務手冊：手部衛生、標準防護、群聚監測與通報、住民與工作人員疫苗接種、結核病篩檢與環境清消。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/manual-ltc-infection-control-2026/",
+          "path": "/publications/manual-ltc-infection-control-2026/",
+          "reviewedAt": "2026-05-15",
+          "owner": "unit.infection-control",
+          "ownerName": "感染管制及生物安全組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "topics": [
+        {
+          "id": "topic.ltc-infection-control",
+          "type": "topic",
+          "title": "長照機構感染管制專區",
+          "summary": "提供長期照護機構感染管制手冊、查核基準、群聚通報流程、住民與工作人員疫苗接種及教育訓練教材，協助機構預防呼吸道與腸胃道群聚。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/topics/ltc-infection-control/",
+          "path": "/topics/ltc-infection-control/",
+          "reviewedAt": "2026-09-10",
+          "owner": "unit.infection-control",
+          "ownerName": "感染管制及生物安全組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ]
+    }
+  }
+}

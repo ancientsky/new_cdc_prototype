@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>衛生福利部疾病管制署 文件版本異動</title>
+  <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/</link>
+  <atom:link href="https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/feeds/documents.xml" rel="self" type="application/rss+xml"/>
+  <description>手冊、指引、病例定義、接種建議的新版發布與取代關係（guid＝版本 id）。</description>
+  <language>zh-TW</language>
+  <lastBuildDate>Fri, 09 Oct 2026 16:00:00 GMT</lastBuildDate>
+  <item>
+    <title>登革熱核心教材（示範匯入版）</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/curriculum-dengue.2026-10-10/</link>
+    <guid isPermaLink="false">doc.curriculum-dengue.2026-10-10</guid>
+    <pubDate>Fri, 09 Oct 2026 16:00:00 GMT</pubDate>
+    <category>curriculum</category>
+    <category>doc.curriculum-dengue</category>
+    <category>尚未生效</category>
+    <description>版本 示範匯入版 於 2026-10-10 生效。</description>
+  </item>
+  <item>
+    <title>麻疹核心教材（示範匯入版）</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/curriculum-measles.2026-10-10/</link>
+    <guid isPermaLink="false">doc.curriculum-measles.2026-10-10</guid>
+    <pubDate>Fri, 09 Oct 2026 16:00:00 GMT</pubDate>
+    <category>curriculum</category>
+    <category>doc.curriculum-measles</category>
+    <category>尚未生效</category>
+    <description>版本 示範匯入版 於 2026-10-10 生效。</description>
+  </item>
+  <item>
+    <title>公費流感抗病毒藥劑使用對象（2026 年 9 月延長版：高傳播族群延至 10 月 31 日）（現行版）</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/flu-antiviral-eligibility.2026-09-18/</link>
+    <guid isPermaLink="false">doc.flu-antiviral-eligibility.2026-09-18</guid>
+    <pubDate>Thu, 17 Sep 2026 16:00:00 GMT</pubDate>
+    <category>guideline</category>
+    <category>doc.flu-antiviral-eligibility</category>
+    <category>現行版</category>
+    <description>版本 2026-09 於 2026-09-18 生效。 取代 2026-08 版。 異動：第 9 條：擴大使用對象適用期限至 2026 年 9 月 30 日止 → 適用期限延長至 2026 年 10 月 31 日止（致醫界通函第 616 號，2026-09-18）；對象與免快篩原則不變</description>
+  </item>
+  <item>
+    <title>2026–2027 年度公費流感疫苗接種計畫作業手冊（現行版）</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/flu-vaccine-manual.2026-09-16/</link>
+    <guid isPermaLink="false">doc.flu-vaccine-manual.2026-09-16</guid>
+    <pubDate>Tue, 15 Sep 2026 16:00:00 GMT</pubDate>
+    <category>manual</category>
+    <category>doc.flu-vaccine-manual</category>
+    <category>現行版</category>
+    <description>版本 2026-27 於 2026-09-16 生效。</description>
+  </item>
+  <item>
+    <title>新冠疫苗接種建議（2026–2027 年度）（現行版）</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/covid-vaccine-recommendation.2026-09-15/</link>
+    <guid isPermaLink="false">doc.covid-vaccine-recommendation.2026-09-15</guid>
+    <pubDate>Mon, 14 Sep 2026 16:00:00 GMT</pubDate>
+    <category>recommendation</category>
+    <category>doc.covid-vaccine-recommendation</category>
+    <category>現行版</category>
+    <description>版本 2026-27 於 2026-09-15 生效。 取代 2025-26 版。 異動：二、劑次與間隔：65 歲以上長者及中重度免疫不全者，本年度第 1 劑後間隔 6 個月可再接種 1 劑；二、劑次與間隔：LP.8.1 單價疫苗 → 依 WHO 2026 年建議株之本年度疫苗</description>
+  </item>
+  <item>
+    <title>2026–2027 年度公費流感疫苗接種計畫：實施對象與時程（現行版）</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/flu-vaccine-schedule.2026-09-15/</link>
+    <guid isPermaLink="false">doc.flu-vaccine-schedule.2026-09-15</guid>
+    <pubDate>Mon, 14 Sep 2026 16:00:00 GMT</pubDate>
+    <category>recommendation</category>
+    <category>doc.flu-vaccine-schedule</category>
+    <category>現行版</category>
+    <description>版本 2026-27 於 2026-09-15 生效。</description>
+  </item>
+  <item>
+    <title>麻疹接觸者追蹤作業指引（現行版）</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/measles-contact-tracing.2026-09-12/</link>
+    <guid isPermaLink="false">doc.measles-contact-tracing.2026-09-12</guid>
+    <pubDate>Fri, 11 Sep 2026 16:00:00 GMT</pubDate>
+    <category>guideline</category>
+    <category>doc.measles-contact-tracing</category>
+    <category>現行版</category>
+    <description>版本 2026-09 於 2026-09-12 生效。</description>
+  </item>
+  <item>
+    <title>登革熱社區防治工作指引：孳生源清除、病媒蚊監測與群聚應變（現行版）</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/dengue-community-workplan.2026-09-10/</link>
+    <guid isPermaLink="false">doc.dengue-community-workplan.2026-09-10</guid>
+    <pubDate>Wed, 09 Sep 2026 16:00:00 GMT</pubDate>
+    <category>guideline</category>
+    <category>doc.dengue-community-workplan</category>
+    <category>現行版</category>
+    <description>版本 2026-09 於 2026-09-10 生效。</description>
+  </item>
+  <item>
+    <title>教托育機構腸病毒防治指引（現行版）</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/ev-childcare-guideline.2026-09-10/</link>
+    <guid isPermaLink="false">doc.ev-childcare-guideline.2026-09-10</guid>
+    <pubDate>Wed, 09 Sep 2026 16:00:00 GMT</pubDate>
+    <category>guideline</category>
+    <category>doc.ev-childcare-guideline</category>
+    <category>現行版</category>
+    <description>版本 2026-09 於 2026-09-10 生效。</description>
+  </item>
+  <item>
+    <title>公費流感抗病毒藥劑使用對象（2026 年 8 月擴大版：高傳播族群，至 9 月 30 日）（已失效）</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/flu-antiviral-eligibility.2026-08-24/</link>
+    <guid isPermaLink="false">doc.flu-antiviral-eligibility.2026-08-24</guid>
+    <pubDate>Sun, 23 Aug 2026 16:00:00 GMT</pubDate>
+    <category>guideline</category>
+    <category>doc.flu-antiviral-eligibility</category>
+    <category>已失效</category>
+    <description>版本 2026-08 於 2026-08-24 生效。 取代 2026-06 版。 異動：第 9 條：新增擴大使用對象：有類流感症狀且具 7 類流感高傳播族群身分者，2026-08-24 至 2026-09-30，經醫師評估不需快篩即可開立 本版已由 2026-09 版取代。</description>
+  </item>
+  <item>
+    <title>公費流感抗病毒藥劑使用對象（全年適用條件）（已失效）</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/flu-antiviral-eligibility.2026-06-01/</link>
+    <guid isPermaLink="false">doc.flu-antiviral-eligibility.2026-06-01</guid>
+    <pubDate>Sun, 31 May 2026 16:00:00 GMT</pubDate>
+    <category>guideline</category>
+    <category>doc.flu-antiviral-eligibility</category>
+    <category>已失效</category>
+    <description>版本 2026-06 於 2026-06-01 生效。 本版已由 2026-09 版取代。</description>
+  </item>
+  <item>
+    <title>腸病毒感染併發重症臨床處置建議（現行版）</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/ev-severe-guideline.2026-03-15/</link>
+    <guid isPermaLink="false">doc.ev-severe-guideline.2026-03-15</guid>
+    <pubDate>Sat, 14 Mar 2026 16:00:00 GMT</pubDate>
+    <category>guideline</category>
+    <category>doc.ev-severe-guideline</category>
+    <category>現行版</category>
+    <description>版本 2026-03 於 2026-03-15 生效。</description>
+  </item>
+  <item>
+    <title>醫療機構感染管制措施指引（現行版）</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/infection-control-healthcare.2026-03-01/</link>
+    <guid isPermaLink="false">doc.infection-control-healthcare.2026-03-01</guid>
+    <pubDate>Sat, 28 Feb 2026 16:00:00 GMT</pubDate>
+    <category>guideline</category>
+    <category>doc.infection-control-healthcare</category>
+    <category>現行版</category>
+    <description>版本 2026-03 於 2026-03-01 生效。</description>
+  </item>
+  <item>
+    <title>登革熱/屈公病防治工作指引（2026 年 2 月版）（現行版）</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/guidance-dengue.2026-02/</link>
+    <guid isPermaLink="false">doc.guidance-dengue.2026-02</guid>
+    <pubDate>Sat, 31 Jan 2026 16:00:00 GMT</pubDate>
+    <category>guideline</category>
+    <category>doc.guidance-dengue</category>
+    <category>現行版</category>
+    <description>版本 2026 年 2 月版 於 2026-02-01 生效。</description>
+  </item>
+  <item>
+    <title>傳染病病例定義：登革熱（2026 年版）（現行版）</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/case-definition-dengue.2026-01-01/</link>
+    <guid isPermaLink="false">doc.case-definition-dengue.2026-01-01</guid>
+    <pubDate>Wed, 31 Dec 2025 16:00:00 GMT</pubDate>
+    <category>case-definition</category>
+    <category>doc.case-definition-dengue</category>
+    <category>現行版</category>
+    <description>版本 2026-01 於 2026-01-01 生效。 取代 2023-01 版。 異動：檢驗條件：臨床檢體分子生物學核酸檢測陽性 → 核酸檢測陽性（含經認可之多重病原核酸檢測平台）；疾病分類：極可能病例：符合臨床條件及單一血清 IgM 陽性 → 極可能病例：符合臨床條件，且單一血清 IgM 陽性或 NS1 抗原快篩陽性</description>
+  </item>
+  <item>
+    <title>新冠疫苗接種建議（2025–2026 年度）（已失效）</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/covid-vaccine-recommendation.2025-09-15/</link>
+    <guid isPermaLink="false">doc.covid-vaccine-recommendation.2025-09-15</guid>
+    <pubDate>Sun, 14 Sep 2025 16:00:00 GMT</pubDate>
+    <category>recommendation</category>
+    <category>doc.covid-vaccine-recommendation</category>
+    <category>已失效</category>
+    <description>版本 2025-26 於 2025-09-15 生效。 本版已由 2026-27 版取代。</description>
+  </item>
+  <item>
+    <title>結核病診治指引（第八版）（現行版）</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/tb-guideline.2025-09-01/</link>
+    <guid isPermaLink="false">doc.tb-guideline.2025-09-01</guid>
+    <pubDate>Sun, 31 Aug 2025 16:00:00 GMT</pubDate>
+    <category>guideline</category>
+    <category>doc.tb-guideline</category>
+    <category>現行版</category>
+    <description>版本 第八版 於 2025-09-01 生效。 取代 第七版 版。 異動：第一章 診斷：具多重抗藥性結核病風險者加做分子快速檢測 → 所有疑似肺結核個案以分子快速檢測（含 rifampin 抗藥基因）為第一線檢驗；第二章 藥物敏感結核病治療：12 歲以上非重症藥物敏感肺結核可考慮 4 個月短程處方；非重症兒童結核病可採 4 個月處方；第三章 抗藥性結核病治療：含第二線注射劑之長程處方，療程 18 至 24 個月 → 優先採全口服短程處方（約 6 個月），不再常規使用注射劑；第四章 潛伏結核感染：新增 1HP 處方（每日服用共 28 劑，13 歲以上）；第五章 特殊族群：新增 rifamycin 類藥物交互作用注意事項</description>
+  </item>
+  <item>
+    <title>結核病防治工作手冊（現行版）</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/tb-manual.2025-07-01/</link>
+    <guid isPermaLink="false">doc.tb-manual.2025-07-01</guid>
+    <pubDate>Mon, 30 Jun 2025 16:00:00 GMT</pubDate>
+    <category>manual</category>
+    <category>doc.tb-manual</category>
+    <category>現行版</category>
+    <description>版本 2025 於 2025-07-01 生效。</description>
+  </item>
+  <item>
+    <title>國內現行 MMR 預防接種建議（114.04.16 版）（現行版）</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/mmr-recommendation.2025-04-16/</link>
+    <guid isPermaLink="false">doc.mmr-recommendation.2025-04-16</guid>
+    <pubDate>Tue, 15 Apr 2025 16:00:00 GMT</pubDate>
+    <category>recommendation</category>
+    <category>doc.mmr-recommendation</category>
+    <category>現行版</category>
+    <description>版本 114.04.16 於 2025-04-16 生效。 取代 108.05.14 版。 異動：成人建議：1981 年（含）以後出生之成人 → 1966 年（含）以後出生、不具麻疹免疫力之成人；成人建議：出國前 2 至 4 週至旅遊醫學門診評估；免疫力判斷依據明定；職業與接觸風險：新增「經常接觸外國人之工作者」；流行地區：以國際疫情資訊為準 → 以旅遊疫情建議等級為準，不以固定國家名單認定</description>
+  </item>
+  <item>
+    <title>結核病都治（DOTS）計畫作業手冊（現行版）</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/dots-manual.2025-01-01/</link>
+    <guid isPermaLink="false">doc.dots-manual.2025-01-01</guid>
+    <pubDate>Tue, 31 Dec 2024 16:00:00 GMT</pubDate>
+    <category>manual</category>
+    <category>doc.dots-manual</category>
+    <category>現行版</category>
+    <description>版本 2025 年版 於 2025-01-01 生效。</description>
+  </item>
+  <item>
+    <title>結核病接觸者檢查指引（現行版）</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/tb-contact-investigation.2025-01-01/</link>
+    <guid isPermaLink="false">doc.tb-contact-investigation.2025-01-01</guid>
+    <pubDate>Tue, 31 Dec 2024 16:00:00 GMT</pubDate>
+    <category>guideline</category>
+    <category>doc.tb-contact-investigation</category>
+    <category>現行版</category>
+    <description>版本 2025 年版 於 2025-01-01 生效。</description>
+  </item>
+  <item>
+    <title>傳染病病例定義：麻疹（現行版）</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/case-definition-measles.2024-01-01/</link>
+    <guid isPermaLink="false">doc.case-definition-measles.2024-01-01</guid>
+    <pubDate>Sun, 31 Dec 2023 16:00:00 GMT</pubDate>
+    <category>case-definition</category>
+    <category>doc.case-definition-measles</category>
+    <category>現行版</category>
+    <description>版本 2024-01 於 2024-01-01 生效。</description>
+  </item>
+  <item>
+    <title>潛伏結核感染診治指引（現行版）</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/ltbi-guideline.2024-01-01/</link>
+    <guid isPermaLink="false">doc.ltbi-guideline.2024-01-01</guid>
+    <pubDate>Sun, 31 Dec 2023 16:00:00 GMT</pubDate>
+    <category>guideline</category>
+    <category>doc.ltbi-guideline</category>
+    <category>現行版</category>
+    <description>版本 2024 年版 於 2024-01-01 生效。</description>
+  </item>
+  <item>
+    <title>結核病病例定義與通報定義（現行版）</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/tb-case-definition.2024-01-01/</link>
+    <guid isPermaLink="false">doc.tb-case-definition.2024-01-01</guid>
+    <pubDate>Sun, 31 Dec 2023 16:00:00 GMT</pubDate>
+    <category>case-definition</category>
+    <category>doc.tb-case-definition</category>
+    <category>現行版</category>
+    <description>版本 2024 年版 於 2024-01-01 生效。</description>
+  </item>
+  <item>
+    <title>傳染病病例定義：登革熱（2023 年版）（已失效）</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/case-definition-dengue.2023-01-01/</link>
+    <guid isPermaLink="false">doc.case-definition-dengue.2023-01-01</guid>
+    <pubDate>Sat, 31 Dec 2022 16:00:00 GMT</pubDate>
+    <category>case-definition</category>
+    <category>doc.case-definition-dengue</category>
+    <category>已失效</category>
+    <description>版本 2023-01 於 2023-01-01 生效。 本版已由 2026-01 版取代。</description>
+  </item>
+  <item>
+    <title>結核病診治指引（第七版）（已失效）</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/tb-guideline.2022-03-01/</link>
+    <guid isPermaLink="false">doc.tb-guideline.2022-03-01</guid>
+    <pubDate>Mon, 28 Feb 2022 16:00:00 GMT</pubDate>
+    <category>guideline</category>
+    <category>doc.tb-guideline</category>
+    <category>已失效</category>
+    <description>版本 第七版 於 2022-03-01 生效。 本版已由 第八版 版取代。</description>
+  </item>
+  <item>
+    <title>國內現行 MMR 預防接種建議（108.5.14 版）（已失效）</title>
+    <link>https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/mmr-recommendation.2019-05-14/</link>
+    <guid isPermaLink="false">doc.mmr-recommendation.2019-05-14</guid>
+    <pubDate>Mon, 13 May 2019 16:00:00 GMT</pubDate>
+    <category>recommendation</category>
+    <category>doc.mmr-recommendation</category>
+    <category>已失效</category>
+    <description>版本 108.05.14 於 2019-05-14 生效。 本版已由 114.04.16 版取代。</description>
+  </item>
+</channel>
+</rss>

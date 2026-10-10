@@ -1,0 +1,4124 @@
+{
+  "format": "cdc-legacy-import-report/1",
+  "batch": "tuberculosis",
+  "generatedAt": "2026-10-05T02:30:00Z",
+  "exportedAt": "2026-10-03",
+  "simulated": true,
+  "source": {
+    "dir": "data/legacy-export/tuberculosis",
+    "note": "模擬匯出：依 content/migration/tuberculosis.json 的 40 筆人工項目合成，不是舊站的真實資料（網址 ID、數字、醫院名單皆為示意）。正式匯出取代整個目錄即可。",
+    "site": "https://www.cdc.gov.tw"
+  },
+  "rules": {
+    "file": "content/migration/import/_import-rules.json",
+    "version": 10
+  },
+  "manifest": {
+    "id": "migration.tuberculosis",
+    "file": "content/migration/tuberculosis.json",
+    "synthetic": false,
+    "items": 40,
+    "extends": null,
+    "derivedItems": 5,
+    "derivedCovered": [
+      {
+        "key": "manual",
+        "coveredBy": "tb-manual-2019",
+        "target": "doc.tb-manual.2025-07-01"
+      }
+    ],
+    "disease": "disease.tuberculosis"
+  },
+  "summary": {
+    "pages": 40,
+    "drafts": 40,
+    "mergedPages": 6,
+    "byType": {
+      "faq": 8,
+      "publication": 1,
+      "media": 2,
+      "document": 10,
+      "service": 4,
+      "labtest": 1,
+      "dataset": 1,
+      "page": 11,
+      "news": 1,
+      "disease": 1
+    },
+    "byKind": {
+      "disease-block": 6,
+      "faq": 3,
+      "publication": 1,
+      "media": 2,
+      "document": 10,
+      "service": 4,
+      "labtest": 1,
+      "dataset": 1,
+      "page": 8,
+      "list": 3,
+      "news": 1
+    },
+    "byAction": {
+      "merge-into-disease": 6,
+      "compare-existing": 25,
+      "archive": 3,
+      "review-before-publish": 2,
+      "manual-review": 1,
+      "skip-list": 2,
+      "drop": 1
+    },
+    "avgConfidence": 0.95,
+    "needsReview": 1,
+    "existing": 36,
+    "schemaInvalid": 0,
+    "assets": {
+      "total": 19,
+      "attachment": 16,
+      "image": 2,
+      "data": 1,
+      "needsAlt": 1,
+      "noTextLayer": 5
+    },
+    "issues": {
+      "error": 1,
+      "warn": 18,
+      "info": 92
+    },
+    "manifest": {
+      "items": 40,
+      "matched": 40,
+      "missingPages": 0,
+      "derivedItems": 5,
+      "derivedMatched": 0
+    },
+    "generated": 0,
+    "exportedAt": "2026-10-03",
+    "pagesWithoutOutput": 0
+  },
+  "pages": [
+    {
+      "key": "01-intro",
+      "file": "01-intro.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/5lgwbqCTQl_W6r-4Tpylxq",
+        "title": "疾病介紹",
+        "category": "結核病／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-03-10",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "疾病介紹"
+        ],
+        "tab": ""
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro",
+      "manifestDerived": false,
+      "target": "disease.tuberculosis",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.tuberculosis"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／疾病介紹",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "disease.tuberculosis",
+          "type": "disease",
+          "role": "merged",
+          "block": "transmission",
+          "file": "content/diseases/tuberculosis.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 45 處（mso 樣式 17、Mso 類別 14、命名空間標籤 14）"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "02-intro-epidemiology",
+      "file": "02-intro-epidemiology.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/5lgwbqCTQl_W6r-4Tpylxq",
+        "title": "流行病學",
+        "category": "結核病／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-04-02",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "疾病介紹",
+          "流行病學"
+        ],
+        "tab": "epidemiology"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-epidemiology",
+      "manifestDerived": false,
+      "target": "disease.tuberculosis",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.tuberculosis"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／疾病介紹",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "disease.tuberculosis",
+          "type": "disease",
+          "role": "merged",
+          "block": "situation",
+          "file": "content/diseases/tuberculosis.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 62 處（mso 樣式 22、Mso 類別 20、命名空間標籤 20）"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "03-intro-transmission",
+      "file": "03-intro-transmission.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/5lgwbqCTQl_W6r-4Tpylxq",
+        "title": "傳染方式與潛伏期",
+        "category": "結核病／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-03-10",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "疾病介紹",
+          "傳染方式"
+        ],
+        "tab": "transmission"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-transmission",
+      "manifestDerived": false,
+      "target": "disease.tuberculosis",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.tuberculosis"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／疾病介紹",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "disease.tuberculosis",
+          "type": "disease",
+          "role": "merged",
+          "block": "transmission",
+          "file": "content/diseases/tuberculosis.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 10 處（mso 樣式 4、Mso 類別 3、命名空間標籤 3）"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "04-intro-symptoms",
+      "file": "04-intro-symptoms.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/5lgwbqCTQl_W6r-4Tpylxq",
+        "title": "臨床症狀",
+        "category": "結核病／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-03-10",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "疾病介紹",
+          "臨床症狀"
+        ],
+        "tab": "symptoms"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-symptoms",
+      "manifestDerived": false,
+      "target": "disease.tuberculosis",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.tuberculosis"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／疾病介紹",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "disease.tuberculosis",
+          "type": "disease",
+          "role": "merged",
+          "block": "symptoms",
+          "file": "content/diseases/tuberculosis.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 12 處（mso 樣式 6、Mso 類別 3、命名空間標籤 3）"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "05-intro-treatment",
+      "file": "05-intro-treatment.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Disease/SubIndex/5lgwbqCTQl_W6r-4Tpylxq",
+        "title": "治療照護",
+        "category": "結核病／疾病介紹",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-05-12",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "疾病介紹",
+          "治療照護"
+        ],
+        "tab": "treatment"
+      },
+      "pattern": "disease-subindex",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "intro-treatment",
+      "manifestDerived": false,
+      "target": "disease.tuberculosis",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.tuberculosis"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／疾病介紹",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "disease.tuberculosis",
+          "type": "disease",
+          "role": "merged",
+          "block": "treatment",
+          "file": "content/diseases/tuberculosis.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 17 處（mso 樣式 9、Mso 類別 4、命名空間標籤 4）"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "06-bcg",
+      "file": "06-bcg.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/-yFBJL84K-ebVCy-5HNS32",
+        "title": "卡介苗接種",
+        "category": "結核病／預防接種",
+        "publishedAt": "2019-06-01",
+        "updatedAt": "2026-02-18",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "預防接種",
+          "卡介苗"
+        ],
+        "tab": "bcg"
+      },
+      "pattern": "mpage",
+      "kind": "disease-block",
+      "type": "disease",
+      "manifestKey": "bcg",
+      "manifestDerived": false,
+      "target": "disease.tuberculosis",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.tuberculosis"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／預防接種",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "disease.tuberculosis",
+          "type": "disease",
+          "role": "merged",
+          "block": "vaccine",
+          "file": "content/diseases/tuberculosis.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 41 處（mso 樣式 15、Mso 類別 13、命名空間標籤 13）"
+        }
+      ],
+      "action": "merge-into-disease",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "07-qa-list",
+      "file": "07-qa-list.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/QAPage/ZW0TrgKarQJWRWZrMIWzeq",
+        "title": "結核病 Q&A",
+        "category": "結核病／Q&A",
+        "publishedAt": "2020-03-24",
+        "updatedAt": "2026-09-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "Q&A"
+        ],
+        "tab": ""
+      },
+      "pattern": "qa",
+      "kind": "faq",
+      "type": "faq",
+      "manifestKey": "qa-list",
+      "manifestDerived": false,
+      "target": "disease.tuberculosis",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "faq.tb-cough-two-weeks",
+        "faq.ltbi-treat-or-not",
+        "faq.tb-dots-what",
+        "faq.tb-contact-screening",
+        "faq.mdr-tb",
+        "faq.tb-treatment-cost",
+        "faq.tb-foreigner-health-check",
+        "faq.tb-contagious-after-treatment",
+        "disease.tuberculosis"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／Q&A",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "faq.tb-cough-two-weeks",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/tb-cough-two-weeks.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.ltbi-treat-or-not",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/ltbi-treat-or-not.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.tb-dots-what",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/tb-dots-what.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.tb-contact-screening",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/tb-contact-screening.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.mdr-tb",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/mdr-tb.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.tb-treatment-cost",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/tb-treatment-cost.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.tb-foreigner-health-check",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/tb-foreigner-health-check.json",
+          "schemaValid": true
+        },
+        {
+          "id": "faq.tb-contagious-after-treatment",
+          "type": "faq",
+          "role": "draft",
+          "file": "content/faq/tb-contagious-after-treatment.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 85 處（mso 樣式 53、Mso 類別 22、命名空間標籤 16）"
+        },
+        {
+          "code": "structured-from-text",
+          "severity": "info",
+          "message": "「咳嗽多久要懷疑是結核病？」從答案抽出結構化候選 {\"weeks\":2,\"months\":6}，請確認後保留或刪除"
+        },
+        {
+          "code": "tasks-from-keywords",
+          "severity": "info",
+          "message": "tasks 依題目關鍵字給：「咳嗽多久要懷疑是結核病？」→ symptoms；「驗出潛伏結核感染，一定要治療嗎？」→ symptoms；「什麼是都治（DOTS）？」→ symptoms；「家人得了結核病，我需要做什麼檢查？」→ symptoms；「什麼是抗藥性結核病？要怎麼治療？」→ symptoms；「結核病治療要花錢嗎？」→ symptoms；「外籍人士來臺工作或居留，需要做結核病檢查嗎？」→ symptoms；「結核病開始吃藥後，還會傳染給家人嗎？」→ symptoms"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "08-qa-cough",
+      "file": "08-qa-cough.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/QAPage/O1wZbGi7vPb9z_a60WXUfb",
+        "title": "Q&A：咳嗽多久要懷疑是結核病？",
+        "category": "結核病／Q&A",
+        "publishedAt": "2020-03-24",
+        "updatedAt": "2026-04-01",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "Q&A"
+        ],
+        "tab": "cough"
+      },
+      "pattern": "qa",
+      "kind": "faq",
+      "type": "faq",
+      "manifestKey": "qa-cough",
+      "manifestDerived": false,
+      "target": "faq.tb-cough-two-weeks",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "faq.tb-cough-two-weeks"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／Q&A",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "faq.tb-cough-two-weeks",
+          "type": "faq",
+          "role": "duplicate",
+          "duplicateOf": "07-qa-list",
+          "file": "content/faq/tb-cough-two-weeks.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.9,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 7 處（mso 樣式 3、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "duplicate-title",
+          "severity": "warn",
+          "message": "問題「咳嗽多久要懷疑是結核病？」已由 07-qa-list 轉出（faq.tb-cough-two-weeks），本頁不重複輸出"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "09-qa-ltbi",
+      "file": "09-qa-ltbi.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/QAPage/phF8VNqXQgWfNk3LB4BkIh",
+        "title": "Q&A：潛伏結核感染需要治療嗎？",
+        "category": "結核病／Q&A",
+        "publishedAt": "2026-09-15",
+        "updatedAt": "2026-09-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "Q&A"
+        ],
+        "tab": "ltbi"
+      },
+      "pattern": "qa",
+      "kind": "faq",
+      "type": "faq",
+      "manifestKey": "qa-ltbi",
+      "manifestDerived": false,
+      "target": "faq.ltbi-treat-or-not",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "faq.ltbi-treat-or-not"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／Q&A",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "faq.ltbi-treat-or-not",
+          "type": "faq",
+          "role": "duplicate",
+          "duplicateOf": "07-qa-list",
+          "file": "content/faq/ltbi-treat-or-not.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.9,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 8 處（mso 樣式 4、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "duplicate-title",
+          "severity": "warn",
+          "message": "問題「驗出潛伏結核感染，一定要治療嗎？」已由 07-qa-list 轉出（faq.ltbi-treat-or-not），本頁不重複輸出"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "10-materials-poster",
+      "file": "10-materials-poster.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/HFc75kGSabhKRWZ0sV_2Ii",
+        "title": "宣導素材：咳嗽兩週要就醫（多國語言海報）",
+        "category": "結核病／宣導素材",
+        "publishedAt": "2026-03-20",
+        "updatedAt": "2026-03-20",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "宣導素材"
+        ],
+        "tab": "posters"
+      },
+      "pattern": "category-list",
+      "kind": "publication",
+      "type": "publication",
+      "manifestKey": "materials-poster",
+      "manifestDerived": false,
+      "target": "publication.poster-tb-seven-languages",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "publication.poster-tb-seven-languages"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／宣導素材",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "publication.poster-tb-seven-languages",
+          "type": "publication",
+          "role": "draft",
+          "file": "content/publications/poster-tb-seven-languages.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 publication（publication.poster-tb-seven-languages），草稿直接建成 publication，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "image-no-alt",
+          "severity": "warn",
+          "message": "圖片「tb-poster-7lang-thumb.png」舊頁沒有替代文字，暫用圖片標題「結核病七語衛教海報縮圖」，請補 alt（needsAlt）"
+        },
+        {
+          "code": "image-license-assumed",
+          "severity": "info",
+          "message": "圖片「tb-poster-7lang-thumb.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        },
+        {
+          "code": "image-only",
+          "severity": "warn",
+          "message": "圖片承載唯一資訊：海報／單張的文字要另有純文字版（可及性），abstractMarkdown 以（待補）佔位"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "publication 的欄位從舊頁看不出來，以「（待補）」佔位：abstractMarkdown"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 1,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "11-materials-video",
+      "file": "11-materials-video.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/dLJ7UFpx2F-K6hTsKuUoSK",
+        "title": "宣導素材：咳嗽兩週快去照胸部 X 光（影片）",
+        "category": "結核病／宣導素材",
+        "publishedAt": "2024-03-24",
+        "updatedAt": "2026-03-24",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "宣導素材",
+          "影音"
+        ],
+        "tab": "video"
+      },
+      "pattern": "mpage",
+      "kind": "media",
+      "type": "media",
+      "manifestKey": "materials-video",
+      "manifestDerived": false,
+      "target": "media.tb-cough-two-weeks",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "media.tb-cough-two-weeks"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／宣導素材",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "media.tb-cough-two-weeks",
+          "type": "media",
+          "role": "draft",
+          "file": "content/media/tb-cough-two-weeks.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 10 處（mso 樣式 4、Mso 類別 3、命名空間標籤 3）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 media（media.tb-cough-two-weeks），草稿直接建成 media，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "material-outdated",
+          "severity": "warn",
+          "message": "素材製作日 2024-03-24 時依據的 doc.tb-guideline.2022-03-01（2022-03-01）已於 2025-09-01 被 doc.tb-guideline.2025-09-01 取代；上線前請確認內容仍正確（治理 R9 影音過時的事前版）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "12-materials-migrant",
+      "file": "12-materials-migrant.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/vONM9MVB6T0IMaoT_2kYS6",
+        "title": "宣導素材：移工健康檢查（影片）",
+        "category": "結核病／宣導素材",
+        "publishedAt": "2024-06-18",
+        "updatedAt": "2026-03-24",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "宣導素材",
+          "影音"
+        ],
+        "tab": "migrant-video"
+      },
+      "pattern": "mpage",
+      "kind": "media",
+      "type": "media",
+      "manifestKey": "materials-migrant",
+      "manifestDerived": false,
+      "target": "media.migrant-worker-health-check",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "media.migrant-worker-health-check"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／宣導素材",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "media.migrant-worker-health-check",
+          "type": "media",
+          "role": "draft",
+          "file": "content/media/migrant-worker-health-check.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 7 處（mso 樣式 3、Mso 類別 2、命名空間標籤 2）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 media（media.migrant-worker-health-check），草稿直接建成 media，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "material-outdated",
+          "severity": "warn",
+          "message": "素材製作日 2024-06-18 時依據的 doc.tb-guideline.2022-03-01（2022-03-01）已於 2025-09-01 被 doc.tb-guideline.2025-09-01 取代；上線前請確認內容仍正確（治理 R9 影音過時的事前版）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "13-guideline-current",
+      "file": "13-guideline-current.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/File/Get/3mTpTQQFER94u5HtekRstw",
+        "title": "結核病診治指引（第八版）",
+        "category": "結核病／指引及手冊",
+        "publishedAt": "2025-09-01",
+        "updatedAt": "2026-01-08",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "指引及手冊"
+        ],
+        "tab": ""
+      },
+      "pattern": "file",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "guideline-current",
+      "manifestDerived": false,
+      "target": "doc.tb-guideline.2025-09-01",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.tb-guideline.2025-09-01"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／指引及手冊",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "doc.tb-guideline.2025-09-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/tb-guideline.2025-09-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 54 處（mso 樣式 20、Mso 類別 17、命名空間標籤 17）"
+        },
+        {
+          "code": "version-chain",
+          "severity": "info",
+          "message": "版次鏈 doc.tb-guideline：第七版（2022-03-01） → 第八版（2025-09-01）；本版為現行版，supersedes doc.tb-guideline.2022-03-01"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 1,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "14-guideline-7th",
+      "file": "14-guideline-7th.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Uploads/archives/%E7%B5%90%E6%A0%B8%E7%97%85%E8%A8%BA%E6%B2%BB%E6%8C%87%E5%BC%95%E7%AC%AC%E4%B8%83%E7%89%88.pdf",
+        "title": "結核病診治指引（第七版）",
+        "category": "結核病／指引及手冊",
+        "publishedAt": "2022-03-01",
+        "updatedAt": "2022-03-01",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "指引及手冊",
+          "歷史版本"
+        ],
+        "tab": ""
+      },
+      "pattern": "file",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "guideline-7th",
+      "manifestDerived": false,
+      "target": "doc.tb-guideline.2022-03-01",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.tb-guideline.2022-03-01"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／指引及手冊",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "doc.tb-guideline.2022-03-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/tb-guideline.2022-03-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 52 處（mso 樣式 18、Mso 類別 17、命名空間標籤 17）"
+        },
+        {
+          "code": "historical-version",
+          "severity": "info",
+          "message": "歷史版本：建議封存（舊版保留查閱），不取代現行版"
+        },
+        {
+          "code": "file-renamed",
+          "severity": "info",
+          "message": "檔名「結核病診治指引第七版.pdf」不合規則，改為 tb-guideline-7th-1.pdf"
+        },
+        {
+          "code": "pdf-no-text-layer",
+          "severity": "warn",
+          "message": "PDF「結核病診治指引第七版.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+        }
+      ],
+      "action": "archive",
+      "flags": {
+        "historical": true
+      },
+      "stats": {
+        "images": 0,
+        "links": 1,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "15-ltbi-guideline",
+      "file": "15-ltbi-guideline.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/File/Get/Ig7qjx7eTWrpnMXjfJgp_g",
+        "title": "潛伏結核感染診治指引",
+        "category": "結核病／指引及手冊",
+        "publishedAt": "2024-01-01",
+        "updatedAt": "2024-01-01",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "指引及手冊"
+        ],
+        "tab": ""
+      },
+      "pattern": "file",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "ltbi-guideline",
+      "manifestDerived": false,
+      "target": "doc.ltbi-guideline.2024-01-01",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.ltbi-guideline.2024-01-01"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／指引及手冊",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "doc.ltbi-guideline.2024-01-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/ltbi-guideline.2024-01-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 84 處（mso 樣式 52、Mso 類別 24、命名空間標籤 16）"
+        },
+        {
+          "code": "file-renamed",
+          "severity": "info",
+          "message": "檔名「LTBI guideline 2024.pdf」不合規則，改為 ltbi-guideline-2024.pdf"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2024-01-01"
+        },
+        {
+          "code": "version-chain",
+          "severity": "info",
+          "message": "版次鏈 doc.ltbi-guideline：2021-05-01（2021-05-01） → 2024-01-01（2024-01-01）；本版為現行版，supersedes doc.ltbi-guideline.2021-05-01"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 1,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "16-ltbi-guideline-old",
+      "file": "16-ltbi-guideline-old.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Uploads/archives/%E6%BD%9B%E4%BC%8F%E7%B5%90%E6%A0%B8%E6%84%9F%E6%9F%93%E6%B2%BB%E7%99%82%E6%8C%87%E5%BC%95.pdf",
+        "title": "潛伏結核感染治療指引（舊版）",
+        "category": "結核病／指引及手冊",
+        "publishedAt": "2021-05-01",
+        "updatedAt": "2021-05-01",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "指引及手冊",
+          "歷史版本"
+        ],
+        "tab": ""
+      },
+      "pattern": "file",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "ltbi-guideline-old",
+      "manifestDerived": false,
+      "target": "doc.ltbi-guideline.2024-01-01",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.ltbi-guideline.2024-01-01"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／指引及手冊",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "doc.ltbi-guideline.2021-05-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/ltbi-guideline.2021-05-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 84 處（mso 樣式 52、Mso 類別 24、命名空間標籤 16）"
+        },
+        {
+          "code": "historical-version",
+          "severity": "info",
+          "message": "歷史版本：建議封存（舊版保留查閱），不取代現行版"
+        },
+        {
+          "code": "target-shared",
+          "severity": "info",
+          "message": "與 15-ltbi-guideline 指向同一個對應 doc.ltbi-guideline.2024-01-01（不同版次），改以 doc.ltbi-guideline.2021-05-01 另列一版"
+        },
+        {
+          "code": "file-renamed",
+          "severity": "info",
+          "message": "檔名「潛伏結核感染治療指引.pdf」不合規則，改為 tb-ltbi-guideline-old-1.pdf"
+        },
+        {
+          "code": "pdf-no-text-layer",
+          "severity": "warn",
+          "message": "PDF「潛伏結核感染治療指引.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2021-05-01"
+        }
+      ],
+      "action": "archive",
+      "flags": {
+        "historical": true
+      },
+      "stats": {
+        "images": 0,
+        "links": 1,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "17-contact-guideline",
+      "file": "17-contact-guideline.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/File/Get/HDxRqA-TWSdShJlGFue-UF",
+        "title": "結核病接觸者檢查指引",
+        "category": "結核病／指引及手冊",
+        "publishedAt": "2025-01-01",
+        "updatedAt": "2025-01-01",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "指引及手冊"
+        ],
+        "tab": ""
+      },
+      "pattern": "file",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "contact-guideline",
+      "manifestDerived": false,
+      "target": "doc.tb-contact-investigation.2025-01-01",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.tb-contact-investigation.2025-01-01"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／指引及手冊",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "doc.tb-contact-investigation.2025-01-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/tb-contact-investigation.2025-01-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 61 處（mso 樣式 29、Mso 類別 19、命名空間標籤 16）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2025-01-01"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 1,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "18-dots-manual",
+      "file": "18-dots-manual.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/File/Get/nXEWGwO9pZUFPxYvi2A3b1",
+        "title": "都治計畫作業手冊",
+        "category": "結核病／指引及手冊",
+        "publishedAt": "2025-01-01",
+        "updatedAt": "2025-01-01",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "指引及手冊"
+        ],
+        "tab": ""
+      },
+      "pattern": "file",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "dots-manual",
+      "manifestDerived": false,
+      "target": "doc.dots-manual.2025-01-01",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.dots-manual.2025-01-01"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／指引及手冊",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "doc.dots-manual.2025-01-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/dots-manual.2025-01-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 70 處（mso 樣式 38、Mso 類別 20、命名空間標籤 16）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2025-01-01"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 1,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "19-tb-manual",
+      "file": "19-tb-manual.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/File/Get/IYwaS2qZ19saaWSRCrUUT8",
+        "title": "結核病防治工作手冊",
+        "category": "結核病／指引及手冊",
+        "publishedAt": "2025-07-01",
+        "updatedAt": "2025-07-01",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "指引及手冊"
+        ],
+        "tab": ""
+      },
+      "pattern": "file",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "tb-manual",
+      "manifestDerived": false,
+      "target": "doc.tb-manual.2025-07-01",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.tb-manual.2025-07-01"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／指引及手冊",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "doc.tb-manual.2025-07-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/tb-manual.2025-07-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 52 處（mso 樣式 18、Mso 類別 17、命名空間標籤 17）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2025-07-01"
+        },
+        {
+          "code": "version-chain",
+          "severity": "info",
+          "message": "版次鏈 doc.tb-manual：2019 年版（2019-06-28） → 2025-07-01（2025-07-01）；本版為現行版，supersedes doc.tb-manual.2019-06-28"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 1,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "20-tb-manual-2019",
+      "file": "20-tb-manual-2019.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Uploads/archives/%E7%B5%90%E6%A0%B8%E7%97%85%E9%98%B2%E6%B2%BB%E5%B7%A5%E4%BD%9C%E6%89%8B%E5%86%8A2019%E5%B9%B4%E7%89%88.pdf",
+        "title": "結核病防治工作手冊（2019 年版）",
+        "category": "結核病／指引及手冊",
+        "publishedAt": "2019-06-28",
+        "updatedAt": "2019-06-28",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "指引及手冊",
+          "歷史版本"
+        ],
+        "tab": ""
+      },
+      "pattern": "file",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "tb-manual-2019",
+      "manifestDerived": false,
+      "target": "doc.tb-manual.2025-07-01",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.tb-manual.2025-07-01"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／指引及手冊",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "doc.tb-manual.2019-06-28",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/tb-manual.2019-06-28.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 52 處（mso 樣式 18、Mso 類別 17、命名空間標籤 17）"
+        },
+        {
+          "code": "historical-version",
+          "severity": "info",
+          "message": "歷史版本：建議封存（舊版保留查閱），不取代現行版"
+        },
+        {
+          "code": "target-shared",
+          "severity": "info",
+          "message": "與 19-tb-manual 指向同一個對應 doc.tb-manual.2025-07-01（不同版次），改以 doc.tb-manual.2019-06-28 另列一版"
+        },
+        {
+          "code": "file-renamed",
+          "severity": "info",
+          "message": "檔名「結核病防治工作手冊2019年版.pdf」不合規則，改為 tb-manual-2019-1.pdf"
+        },
+        {
+          "code": "pdf-no-text-layer",
+          "severity": "warn",
+          "message": "PDF「結核病防治工作手冊2019年版.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+        }
+      ],
+      "action": "archive",
+      "flags": {
+        "historical": true
+      },
+      "stats": {
+        "images": 0,
+        "links": 1,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "21-case-definition",
+      "file": "21-case-definition.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/DiseaseDefine/u-4_D_c5j4hXi35nyiejt2",
+        "title": "結核病病例定義",
+        "category": "結核病／通報定義",
+        "publishedAt": "2024-01-01",
+        "updatedAt": "2026-06-30",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "通報定義"
+        ],
+        "tab": ""
+      },
+      "pattern": "disease-docs",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "case-definition",
+      "manifestDerived": false,
+      "target": "doc.tb-case-definition.2024-01-01",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.tb-case-definition.2024-01-01"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／通報定義",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "doc.tb-case-definition.2024-01-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/tb-case-definition.2024-01-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 70 處（mso 樣式 46、Mso 類別 21、命名空間標籤 12）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2024-01-01"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "22-notify",
+      "file": "22-notify.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/_5VNYfUzdaN4SoFJHvW42f",
+        "title": "通報方式與時限",
+        "category": "結核病／通報",
+        "publishedAt": "2019-01-15",
+        "updatedAt": "2026-05-05",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "通報"
+        ],
+        "tab": "notify"
+      },
+      "pattern": "mpage",
+      "kind": "service",
+      "type": "service",
+      "manifestKey": "notify",
+      "manifestDerived": false,
+      "target": "service.notifiable-disease-report",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "service.notifiable-disease-report"
+      ],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "結核病／通報",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "service.notifiable-disease-report",
+          "type": "service",
+          "role": "draft",
+          "file": "content/services/notifiable-disease-report.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 34 處（mso 樣式 12、Mso 類別 11、命名空間標籤 11）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 service（service.notifiable-disease-report），草稿直接建成 service，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "service 的欄位從舊頁看不出來，以「（待補）」佔位：steps、whoCanApply"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "標題看不出服務種類，serviceType 暫填 other"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "23-lab",
+      "file": "23-lab.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/pcLTri1XT4Q2NERg39nz5q",
+        "title": "檢驗方法與送驗須知",
+        "category": "結核病／檢驗",
+        "publishedAt": "2019-01-15",
+        "updatedAt": "2026-02-26",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "檢驗"
+        ],
+        "tab": "lab"
+      },
+      "pattern": "mpage",
+      "kind": "labtest",
+      "type": "labtest",
+      "manifestKey": "lab",
+      "manifestDerived": false,
+      "target": "labtest.tuberculosis",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "labtest.tuberculosis"
+      ],
+      "owner": "unit.lab",
+      "ownerRule": "結核病／檢驗",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "labtest.tuberculosis",
+          "type": "labtest",
+          "role": "draft",
+          "file": "content/labtests/tuberculosis.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 57 處（mso 樣式 21、Mso 類別 18、命名空間標籤 18）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 labtest（labtest.tuberculosis），草稿直接建成 labtest，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "labtest 的欄位從舊頁看不出來，以「（待補）」佔位：specimens[].container/volume/storage/transport、sendWithinHours"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "labs 暫填 cdc-lab（署檢驗中心），合約與區域實驗室請檢驗中心確認"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 1,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "24-stats",
+      "file": "24-stats.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/IR-4OsM3biF9t30fng00vq",
+        "title": "統計資料",
+        "category": "結核病／統計資料",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-09-20",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "統計資料"
+        ],
+        "tab": "statistics"
+      },
+      "pattern": "category-list",
+      "kind": "dataset",
+      "type": "dataset",
+      "manifestKey": "stats",
+      "manifestDerived": false,
+      "target": "dataset.tb-new-cases",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "dataset.tb-new-cases"
+      ],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "結核病／統計資料",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "dataset.tb-new-cases",
+          "type": "dataset",
+          "role": "draft",
+          "file": "content/datasets/tb-new-cases.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 dataset（dataset.tb-new-cases），草稿直接建成 dataset，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "image-license-assumed",
+          "severity": "info",
+          "message": "圖片「tb-new-cases-trend.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "看不出更新頻率，updateFrequency 暫填 irregular"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 1,
+        "links": 3,
+        "legacyLinks": 1,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "25-annual-report",
+      "file": "25-annual-report.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/InfectionReport/Info/lOWhr-dnr1fNWIqZk4Cs7-?infoId=xxTRr6Bf6B76t5rbVE96_K",
+        "title": "結核病年報（歷年 PDF）",
+        "category": "結核病／統計資料",
+        "publishedAt": "2025-12-31",
+        "updatedAt": "2026-01-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "統計資料",
+          "年報"
+        ],
+        "tab": ""
+      },
+      "pattern": "infection-report",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "annual-report",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.epidemic-intelligence",
+      "ownerRule": "結核病／統計資料",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "doc.tb-annual-report.2025-12-31",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/tb-annual-report.2025-12-31.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 43 處（mso 樣式 15、Mso 類別 14、命名空間標籤 14）"
+        },
+        {
+          "code": "pdf-no-text-layer",
+          "severity": "warn",
+          "message": "PDF「tb-annual-report-2024.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2025-12-31"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 1,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "26-dots",
+      "file": "26-dots.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/y1AAQLAWnwCkChJ47vLGQu",
+        "title": "都治（DOTS）",
+        "category": "結核病／防治政策",
+        "publishedAt": "2019-01-15",
+        "updatedAt": "2026-08-20",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "防治政策",
+          "都治"
+        ],
+        "tab": "dots"
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "dots",
+      "manifestDerived": false,
+      "target": "topic.tb-prevention",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "topic.tb-prevention"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／防治政策",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "page.tb-dots",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/tb-dots.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 19 處（mso 樣式 15、Mso 類別 5、命名空間標籤 2）"
+        },
+        {
+          "code": "merge-into-target",
+          "severity": "info",
+          "message": "清單判定併入 topic.tb-prevention（topic），草稿以 page 暫存，請人工把內容併進目標後刪除草稿"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "27-ltbi",
+      "file": "27-ltbi.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/SuRWu-xWEvR_vwhU83fFUs",
+        "title": "潛伏結核感染治療",
+        "category": "結核病／防治政策",
+        "publishedAt": "2019-01-15",
+        "updatedAt": "2026-09-22",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "防治政策",
+          "潛伏結核感染"
+        ],
+        "tab": "ltbi"
+      },
+      "pattern": "mpage",
+      "kind": "service",
+      "type": "service",
+      "manifestKey": "ltbi",
+      "manifestDerived": false,
+      "target": "service.ltbi-treatment",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "service.ltbi-treatment"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／防治政策",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "service.ltbi-treatment",
+          "type": "service",
+          "role": "draft",
+          "file": "content/services/ltbi-treatment.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 10 處（mso 樣式 4、Mso 類別 3、命名空間標籤 3）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 service（service.ltbi-treatment），草稿直接建成 service，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "service 的欄位從舊頁看不出來，以「（待補）」佔位：steps、whoCanApply"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "標題看不出服務種類，serviceType 暫填 other"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "28-contact",
+      "file": "28-contact.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/fUCzVjg4lAfhr5qje-Wbco",
+        "title": "接觸者檢查",
+        "category": "結核病／防治政策",
+        "publishedAt": "2019-01-15",
+        "updatedAt": "2026-09-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "防治政策",
+          "接觸者檢查"
+        ],
+        "tab": "contact"
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "contact",
+      "manifestDerived": false,
+      "target": "faq.tb-contact-screening",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "faq.tb-contact-screening"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／防治政策",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "page.tb-contact",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/tb-contact.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 22 處（mso 樣式 16、Mso 類別 6、命名空間標籤 3）"
+        },
+        {
+          "code": "target-type-differs",
+          "severity": "info",
+          "message": "對應的新站內容是 faq.tb-contact-screening（faq），草稿以 page 暫存，請比對後改建為 faq"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "29-mdr",
+      "file": "29-mdr.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/mdK6J8sUBWYkJgJXrH5hj2",
+        "title": "多重抗藥性結核病醫療照護體系",
+        "category": "結核病／防治政策",
+        "publishedAt": "2019-01-15",
+        "updatedAt": "2026-09-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "防治政策",
+          "抗藥性結核病"
+        ],
+        "tab": "mdr"
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "mdr",
+      "manifestDerived": false,
+      "target": "topic.tb-prevention",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "topic.tb-prevention"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／防治政策",
+      "diseases": [
+        "disease.tuberculosis",
+        "disease.mdr-tb"
+      ],
+      "outputs": [
+        {
+          "id": "page.tb-mdr",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/tb-mdr.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 12 處（mso 樣式 6、Mso 類別 3、命名空間標籤 3）"
+        },
+        {
+          "code": "merge-into-target",
+          "severity": "info",
+          "message": "清單判定併入 topic.tb-prevention（topic），草稿以 page 暫存，請人工把內容併進目標後刪除草稿"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "30-mdr-hospitals",
+      "file": "30-mdr-hospitals.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/ListContent/KMmkJs7_fOvZYL0fDztyGW?uaid=gudmfQEkqWG4QWSZAdoP5Z",
+        "title": "抗藥性結核病醫療照護團隊醫院名單",
+        "category": "結核病／防治政策",
+        "publishedAt": "2020-06-01",
+        "updatedAt": "2026-07-01",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "防治政策",
+          "抗藥性結核病",
+          "團隊醫院"
+        ],
+        "tab": ""
+      },
+      "pattern": "listcontent",
+      "kind": "service",
+      "type": "service",
+      "manifestKey": "mdr-hospitals",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／防治政策",
+      "diseases": [
+        "disease.tuberculosis",
+        "disease.mdr-tb"
+      ],
+      "outputs": [
+        {
+          "id": "service.tb-mdr-hospitals",
+          "type": "service",
+          "role": "draft",
+          "file": "content/services/tb-mdr-hospitals.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 53 處（mso 樣式 19、Mso 類別 17、命名空間標籤 17）"
+        },
+        {
+          "code": "type-from-keywords",
+          "severity": "info",
+          "message": "標題看起來是查詢／申辦服務（clinic），草稿建成 service；名單類資料請改掛 dataset"
+        },
+        {
+          "code": "table-complex",
+          "severity": "warn",
+          "message": "表格複雜（合併儲存格 2 格）：Markdown 表格不支援合併儲存格，已攤平，請人工檢視"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "service 的欄位從舊頁看不出來，以「（待補）」佔位：steps、whoCanApply"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "合約院所名單屬時效性資料，建議掛 dataset 由系統更新，不要把名單寫進內文"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "31-end-tb-2035",
+      "file": "31-end-tb-2035.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/8qbI2ymDafiYDFkyATCn3b",
+        "title": "2035 消除結核計畫",
+        "category": "結核病／防治政策",
+        "publishedAt": "2019-01-15",
+        "updatedAt": "2026-03-24",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "防治政策",
+          "2035 消除結核"
+        ],
+        "tab": "end-tb-2035"
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "end-tb-2035",
+      "manifestDerived": false,
+      "target": "topic.tb-prevention",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "topic.tb-prevention"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／防治政策",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "page.tb-end-tb-2035",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/tb-end-tb-2035.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 11 處（mso 樣式 5、Mso 類別 3、命名空間標籤 3）"
+        },
+        {
+          "code": "merge-into-target",
+          "severity": "info",
+          "message": "清單判定併入 topic.tb-prevention（topic），草稿以 page 暫存，請人工把內容併進目標後刪除草稿"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "32-high-risk",
+      "file": "32-high-risk.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/QNBeCudZadf6-VS4ehcEWG",
+        "title": "高風險族群主動篩檢",
+        "category": "結核病／防治政策",
+        "publishedAt": "2019-01-15",
+        "updatedAt": "2026-06-01",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "防治政策",
+          "高風險族群"
+        ],
+        "tab": "high-risk"
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "high-risk",
+      "manifestDerived": false,
+      "target": "topic.tb-prevention",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "topic.tb-prevention"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／防治政策",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "page.tb-high-risk",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/tb-high-risk.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 23 處（mso 樣式 21、Mso 類別 6、命名空間標籤 1）"
+        },
+        {
+          "code": "merge-into-target",
+          "severity": "info",
+          "message": "清單判定併入 topic.tb-prevention（topic），草稿以 page 暫存，請人工把內容併進目標後刪除草稿"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "33-subsidy",
+      "file": "33-subsidy.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/RciPYzg3oErAFrFO2Edl3L",
+        "title": "結核病醫療費用補助及隔離治療",
+        "category": "結核病／防治政策",
+        "publishedAt": "2019-01-15",
+        "updatedAt": "2026-04-14",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "防治政策",
+          "補助"
+        ],
+        "tab": "subsidy"
+      },
+      "pattern": "mpage",
+      "kind": "service",
+      "type": "service",
+      "manifestKey": "subsidy",
+      "manifestDerived": false,
+      "target": "service.tb-treatment-subsidy",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "service.tb-treatment-subsidy"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／防治政策",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "service.tb-treatment-subsidy",
+          "type": "service",
+          "role": "draft",
+          "file": "content/services/tb-treatment-subsidy.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 24 處（mso 樣式 18、Mso 類別 6、命名空間標籤 3）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站型別是 service（service.tb-treatment-subsidy），草稿直接建成 service，看不出來的欄位以「（待補）」佔位"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "warn",
+          "message": "service 的欄位從舊頁看不出來，以「（待補）」佔位：whoCanApply"
+        },
+        {
+          "code": "field-guessed",
+          "severity": "info",
+          "message": "標題看不出服務種類，serviceType 暫填 other"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 1,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "34-foreigner",
+      "file": "34-foreigner.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/814q4fuhEVCRH7GDoiAzke",
+        "title": "外籍人士健康檢查（結核病）",
+        "category": "結核病／外籍人士健檢",
+        "publishedAt": "2019-01-15",
+        "updatedAt": "2026-09-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "外籍人士健檢"
+        ],
+        "tab": "foreigner"
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "foreigner",
+      "manifestDerived": false,
+      "target": "faq.tb-foreigner-health-check",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "faq.tb-foreigner-health-check"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／外籍人士健檢",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "page.tb-foreigner",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/tb-foreigner.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 37 處（mso 樣式 15、Mso 類別 11、命名空間標籤 11）"
+        },
+        {
+          "code": "target-type-differs",
+          "severity": "info",
+          "message": "對應的新站內容是 faq.tb-foreigner-health-check（faq），草稿以 page 暫存，請比對後改建為 faq"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "35-research",
+      "file": "35-research.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/ListContent/rTAhO0NMCur-GMHYSvii6e?uaid=W09HLe2JIEXHgC3OOrpAfv",
+        "title": "研究成果：移工結核病主動發現",
+        "category": "結核病／研究成果",
+        "publishedAt": "2025-12-01",
+        "updatedAt": "2026-02-01",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "研究成果"
+        ],
+        "tab": "migrant-tb-research"
+      },
+      "pattern": "listcontent",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "research",
+      "manifestDerived": false,
+      "target": "research.2025-migrant-tb-active-case-finding",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "research.2025-migrant-tb-active-case-finding"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／研究成果",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "page.tb-research",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/tb-research.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 10 處（mso 樣式 4、Mso 類別 3、命名空間標籤 3）"
+        },
+        {
+          "code": "target-type-differs",
+          "severity": "info",
+          "message": "對應的新站內容是 research.2025-migrant-tb-active-case-finding（research），草稿以 page 暫存，請比對後改建為 research"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 1,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "36-training-slides",
+      "file": "36-training-slides.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/IAhbEkxy103_prlTA55Skx",
+        "title": "結核病教育訓練教材（投影片）",
+        "category": "結核病／教育訓練",
+        "publishedAt": "2023-08-10",
+        "updatedAt": "2024-11-12",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "教育訓練"
+        ],
+        "tab": "training"
+      },
+      "pattern": "category-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "training-slides",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "page.tb-training-slides",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/tb-training-slides.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.5,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0,
+        "unique": 0.1
+      },
+      "needsReview": true,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 11 處（mso 樣式 9、Mso 類別 3、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「結核病／教育訓練」沒有對應規則，權責單位依疾病主檔取 unit.chronic-infectious（結核病）"
+        },
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        },
+        {
+          "code": "pdf-no-text-layer",
+          "severity": "warn",
+          "message": "PDF「tb-training-part1.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+        },
+        {
+          "code": "attachment-missing",
+          "severity": "error",
+          "message": "附件「tb-training-part2.pdf」在匯出的 files/ 找不到"
+        }
+      ],
+      "action": "manual-review",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 2,
+        "legacyLinks": 0,
+        "attachments": 2
+      }
+    },
+    {
+      "key": "37-links",
+      "file": "37-links.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/N7LF9kGyYxIzbeM88kVJXH",
+        "title": "相關連結",
+        "category": "結核病／相關連結",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2025-05-05",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "相關連結"
+        ],
+        "tab": "links"
+      },
+      "pattern": "category-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "links",
+      "manifestDerived": false,
+      "target": "topic.tb-prevention",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "topic.tb-prevention"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "page.tb-links",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/tb-links.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.6,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「結核病／相關連結」沒有對應規則，權責單位依疾病主檔取 unit.chronic-infectious（結核病）"
+        },
+        {
+          "code": "merge-into-target",
+          "severity": "info",
+          "message": "清單判定併入 topic.tb-prevention（topic），草稿以 page 暫存，請人工把內容併進目標後刪除草稿"
+        },
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 3,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "38-news-list",
+      "file": "38-news-list.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/List/8RWYNAmObrDrqgCST1ai3c?page=1",
+        "title": "結核病最新消息",
+        "category": "結核病／最新消息",
+        "publishedAt": "2018-03-01",
+        "updatedAt": "2026-09-21",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "最新消息"
+        ],
+        "tab": ""
+      },
+      "pattern": "bulletin-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "news-list",
+      "manifestDerived": false,
+      "target": "disease.tuberculosis",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "disease.tuberculosis"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／最新消息",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "page.tb-news-list",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/tb-news-list.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.6,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        },
+        {
+          "code": "target-type-differs",
+          "severity": "info",
+          "message": "對應的新站內容是 disease.tuberculosis（disease），草稿以 page 暫存，請比對後改建為 disease"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 3,
+        "legacyLinks": 3,
+        "attachments": 0
+      }
+    },
+    {
+      "key": "39-news-world-tb-day-2025",
+      "file": "39-news-world-tb-day-2025.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Bulletin/Detail/r-IuRzP7x9VBeDmGKGqejB?typeid=9",
+        "title": "新聞稿：世界結核病日：咳嗽兩週請就醫，接觸者檢查與潛伏感染治療守護家人",
+        "category": "結核病／最新消息",
+        "publishedAt": "2025-03-24",
+        "updatedAt": "2025-03-24",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "最新消息"
+        ],
+        "tab": "2025-world-tb-day"
+      },
+      "pattern": "bulletin-detail",
+      "kind": "news",
+      "type": "news",
+      "manifestKey": "news-world-tb-day-2025",
+      "manifestDerived": false,
+      "target": "news.2025-03-24-world-tb-day",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "news.2025-03-24-world-tb-day"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／最新消息",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "news.2025-03-24-world-tb-day",
+          "type": "news",
+          "role": "draft",
+          "file": "content/news/2025-03-24-world-tb-day.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 9 處（mso 樣式 3、Mso 類別 3、命名空間標籤 3）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 1,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "40-event-2019",
+      "file": "40-event-2019.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/Page/QQKO4J2F-vQx1ycSsRZ0nI",
+        "title": "2019 世界結核病日健走活動報名",
+        "category": "結核病／活動訊息",
+        "publishedAt": "2019-03-01",
+        "updatedAt": "2019-04-10",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病與防疫專題",
+          "結核病",
+          "活動訊息"
+        ],
+        "tab": "event-2019"
+      },
+      "pattern": "mpage",
+      "kind": "page",
+      "type": "page",
+      "manifestKey": "event-2019",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "page.tb-event-2019",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/tb-event-2019.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 11 處（mso 樣式 9、Mso 類別 3、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「結核病／活動訊息」沒有對應規則，權責單位依疾病主檔取 unit.chronic-infectious（結核病）"
+        },
+        {
+          "code": "old-content",
+          "severity": "info",
+          "message": "久遠且已結束的活動訊息，建議不轉換（回 410）"
+        }
+      ],
+      "action": "drop",
+      "flags": {
+        "historical": false,
+        "drop": true
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 0
+      }
+    }
+  ],
+  "drafts": [
+    {
+      "id": "faq.tb-cough-two-weeks",
+      "type": "faq",
+      "title": "咳嗽多久要懷疑是結核病？",
+      "file": "content/faq/tb-cough-two-weeks.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.tb-cough-two-weeks"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "07-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.ltbi-treat-or-not",
+      "type": "faq",
+      "title": "驗出潛伏結核感染，一定要治療嗎？",
+      "file": "content/faq/ltbi-treat-or-not.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.ltbi-treat-or-not"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "07-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.tb-dots-what",
+      "type": "faq",
+      "title": "什麼是都治（DOTS）？",
+      "file": "content/faq/tb-dots-what.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.tb-dots-what"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "07-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.tb-contact-screening",
+      "type": "faq",
+      "title": "家人得了結核病，我需要做什麼檢查？",
+      "file": "content/faq/tb-contact-screening.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.tb-contact-screening"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "07-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.mdr-tb",
+      "type": "faq",
+      "title": "什麼是抗藥性結核病？要怎麼治療？",
+      "file": "content/faq/mdr-tb.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.mdr-tb"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "07-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.tb-treatment-cost",
+      "type": "faq",
+      "title": "結核病治療要花錢嗎？",
+      "file": "content/faq/tb-treatment-cost.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.tb-treatment-cost"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "07-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.tb-foreigner-health-check",
+      "type": "faq",
+      "title": "外籍人士來臺工作或居留，需要做結核病檢查嗎？",
+      "file": "content/faq/tb-foreigner-health-check.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.tb-foreigner-health-check"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "07-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "faq.tb-contagious-after-treatment",
+      "type": "faq",
+      "title": "結核病開始吃藥後，還會傳染給家人嗎？",
+      "file": "content/faq/tb-contagious-after-treatment.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.tb-contagious-after-treatment"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "07-qa-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "publication.poster-tb-seven-languages",
+      "type": "publication",
+      "title": "結核病咳嗽兩週要就醫（多國語言海報）",
+      "file": "content/publications/poster-tb-seven-languages.json",
+      "confidence": 0.8,
+      "existing": true,
+      "compareWith": [
+        "publication.poster-tb-seven-languages"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 2,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-materials-poster"
+      ],
+      "merged": false
+    },
+    {
+      "id": "media.tb-cough-two-weeks",
+      "type": "media",
+      "title": "結核病咳嗽兩週快去照胸部 X 光（影片）",
+      "file": "content/media/tb-cough-two-weeks.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "media.tb-cough-two-weeks"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "11-materials-video"
+      ],
+      "merged": false
+    },
+    {
+      "id": "media.migrant-worker-health-check",
+      "type": "media",
+      "title": "結核病移工健康檢查（影片）",
+      "file": "content/media/migrant-worker-health-check.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "media.migrant-worker-health-check"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "12-materials-migrant"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.tb-guideline.2025-09-01",
+      "type": "document",
+      "title": "結核病診治指引（第八版）",
+      "file": "content/documents/tb-guideline.2025-09-01.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.tb-guideline.2025-09-01"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "13-guideline-current"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.tb-guideline.2022-03-01",
+      "type": "document",
+      "title": "結核病診治指引（第七版）",
+      "file": "content/documents/tb-guideline.2022-03-01.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.tb-guideline.2022-03-01"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "14-guideline-7th"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.ltbi-guideline.2024-01-01",
+      "type": "document",
+      "title": "潛伏結核感染診治指引",
+      "file": "content/documents/ltbi-guideline.2024-01-01.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.ltbi-guideline.2024-01-01"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "15-ltbi-guideline"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.ltbi-guideline.2021-05-01",
+      "type": "document",
+      "title": "潛伏結核感染治療指引（舊版）",
+      "file": "content/documents/ltbi-guideline.2021-05-01.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.ltbi-guideline.2024-01-01"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "16-ltbi-guideline-old"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.tb-contact-investigation.2025-01-01",
+      "type": "document",
+      "title": "結核病接觸者檢查指引",
+      "file": "content/documents/tb-contact-investigation.2025-01-01.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.tb-contact-investigation.2025-01-01"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "17-contact-guideline"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.dots-manual.2025-01-01",
+      "type": "document",
+      "title": "都治計畫作業手冊",
+      "file": "content/documents/dots-manual.2025-01-01.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.dots-manual.2025-01-01"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "18-dots-manual"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.tb-manual.2025-07-01",
+      "type": "document",
+      "title": "結核病防治工作手冊",
+      "file": "content/documents/tb-manual.2025-07-01.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.tb-manual.2025-07-01"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "19-tb-manual"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.tb-manual.2019-06-28",
+      "type": "document",
+      "title": "結核病防治工作手冊（2019 年版）",
+      "file": "content/documents/tb-manual.2019-06-28.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.tb-manual.2025-07-01"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "20-tb-manual-2019"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.tb-case-definition.2024-01-01",
+      "type": "document",
+      "title": "結核病病例定義",
+      "file": "content/documents/tb-case-definition.2024-01-01.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.tb-case-definition.2024-01-01"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "21-case-definition"
+      ],
+      "merged": false
+    },
+    {
+      "id": "service.notifiable-disease-report",
+      "type": "service",
+      "title": "結核病通報方式與時限",
+      "file": "content/services/notifiable-disease-report.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "service.notifiable-disease-report"
+      ],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "22-notify"
+      ],
+      "merged": false
+    },
+    {
+      "id": "labtest.tuberculosis",
+      "type": "labtest",
+      "title": "結核病檢驗方法與送驗須知",
+      "file": "content/labtests/tuberculosis.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "labtest.tuberculosis"
+      ],
+      "status": "review",
+      "owner": "unit.lab",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "23-lab"
+      ],
+      "merged": false
+    },
+    {
+      "id": "dataset.tb-new-cases",
+      "type": "dataset",
+      "title": "結核病統計資料",
+      "file": "content/datasets/tb-new-cases.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "dataset.tb-new-cases"
+      ],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 2,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "24-stats"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.tb-annual-report.2025-12-31",
+      "type": "document",
+      "title": "結核病年報（歷年 PDF）",
+      "file": "content/documents/tb-annual-report.2025-12-31.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.epidemic-intelligence",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "25-annual-report"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.tb-dots",
+      "type": "page",
+      "title": "都治（DOTS）",
+      "file": "content/pages/tb-dots.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "topic.tb-prevention"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "26-dots"
+      ],
+      "merged": false
+    },
+    {
+      "id": "service.ltbi-treatment",
+      "type": "service",
+      "title": "結核病潛伏結核感染治療",
+      "file": "content/services/ltbi-treatment.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "service.ltbi-treatment"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "27-ltbi"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.tb-contact",
+      "type": "page",
+      "title": "接觸者檢查",
+      "file": "content/pages/tb-contact.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.tb-contact-screening"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "28-contact"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.tb-mdr",
+      "type": "page",
+      "title": "多重抗藥性結核病醫療照護體系",
+      "file": "content/pages/tb-mdr.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "topic.tb-prevention"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "29-mdr"
+      ],
+      "merged": false
+    },
+    {
+      "id": "service.tb-mdr-hospitals",
+      "type": "service",
+      "title": "抗藥性結核病醫療照護團隊醫院名單",
+      "file": "content/services/tb-mdr-hospitals.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "30-mdr-hospitals"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.tb-end-tb-2035",
+      "type": "page",
+      "title": "2035 消除結核計畫",
+      "file": "content/pages/tb-end-tb-2035.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "topic.tb-prevention"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "31-end-tb-2035"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.tb-high-risk",
+      "type": "page",
+      "title": "高風險族群主動篩檢",
+      "file": "content/pages/tb-high-risk.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "topic.tb-prevention"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "32-high-risk"
+      ],
+      "merged": false
+    },
+    {
+      "id": "service.tb-treatment-subsidy",
+      "type": "service",
+      "title": "結核病醫療費用補助及隔離治療",
+      "file": "content/services/tb-treatment-subsidy.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "service.tb-treatment-subsidy"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "33-subsidy"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.tb-foreigner",
+      "type": "page",
+      "title": "外籍人士健康檢查（結核病）",
+      "file": "content/pages/tb-foreigner.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "faq.tb-foreigner-health-check"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "34-foreigner"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.tb-research",
+      "type": "page",
+      "title": "移工結核病主動發現",
+      "file": "content/pages/tb-research.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "research.2025-migrant-tb-active-case-finding"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "35-research"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.tb-training-slides",
+      "type": "page",
+      "title": "結核病教育訓練教材（投影片）",
+      "file": "content/pages/tb-training-slides.json",
+      "confidence": 0.5,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "36-training-slides"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.tb-links",
+      "type": "page",
+      "title": "相關連結",
+      "file": "content/pages/tb-links.json",
+      "confidence": 0.6,
+      "existing": true,
+      "compareWith": [
+        "topic.tb-prevention"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "37-links"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.tb-news-list",
+      "type": "page",
+      "title": "結核病最新消息",
+      "file": "content/pages/tb-news-list.json",
+      "confidence": 0.6,
+      "existing": true,
+      "compareWith": [
+        "disease.tuberculosis"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "38-news-list"
+      ],
+      "merged": false
+    },
+    {
+      "id": "news.2025-03-24-world-tb-day",
+      "type": "news",
+      "title": "世界結核病日：咳嗽兩週請就醫，接觸者檢查與潛伏感染治療守護家人",
+      "file": "content/news/2025-03-24-world-tb-day.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "news.2025-03-24-world-tb-day"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "39-news-world-tb-day-2025"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.tb-event-2019",
+      "type": "page",
+      "title": "2019 世界結核病日健走活動報名",
+      "file": "content/pages/tb-event-2019.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "40-event-2019"
+      ],
+      "merged": false
+    },
+    {
+      "id": "disease.tuberculosis",
+      "type": "disease",
+      "title": "結核病",
+      "file": "content/diseases/tuberculosis.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "disease.tuberculosis"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "01-intro",
+        "02-intro-epidemiology",
+        "03-intro-transmission",
+        "04-intro-symptoms",
+        "05-intro-treatment",
+        "06-bcg"
+      ],
+      "merged": true
+    }
+  ],
+  "sampling": {
+    "rate": 0.1,
+    "autoOk": 0,
+    "picked": []
+  },
+  "migration": {
+    "patchFile": "migration-patch.json",
+    "applied": true,
+    "summary": {
+      "derivedItems": 5,
+      "derivedMatched": 0,
+      "items": 40,
+      "matched": 40,
+      "missingPages": 0,
+      "unmatchedPages": 0,
+      "agree": 40,
+      "conflicts": 0,
+      "statusChanges": 0,
+      "pendingToMigrated": 0,
+      "targetChanges": 0,
+      "newPathChanges": 0,
+      "noteChanges": 0,
+      "stillPending": 3
+    },
+    "file": "content/migration/tuberculosis.json",
+    "statusChanges": [],
+    "targetChanges": [],
+    "newPathChanges": [],
+    "noteChanges": 0
+  }
+}

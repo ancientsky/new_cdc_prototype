@@ -1,0 +1,69 @@
+{
+  "id": "faq.travel-malaria-prevention",
+  "type": "faq",
+  "title": "去非洲需要吃瘧疾預防藥嗎？",
+  "owner": "unit.quarantine",
+  "publishedAt": "2017-11-20",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "前往撒哈拉以南非洲等瘧疾流行地區，多數情況建議使用預防用藥，但種類與服法需由旅遊醫學門診醫師依目的地、停留時間與個人健康狀況評估開立。",
+  "question": "去非洲需要吃瘧疾預防藥嗎？",
+  "answerMarkdown": "前往撒哈拉以南非洲等瘧疾流行地區，多數情況建議使用**預防用藥**，但種類與服法需由旅遊醫學門診醫師依目的地、停留時間與個人健康狀況評估開立。\n\n預防用藥通常需在出發前開始服用，並在返國後持續服用一段時間。同時仍要做好夜間防蚊。返國一年內若發燒，請就醫並告知旅遊史。",
+  "tasks": [
+    "symptoms"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/oDFvYopfPTouRB6a4gWcs5"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 42 處（mso 樣式 20、Mso 類別 11、命名空間標籤 11）"
+      },
+      {
+        "code": "one-to-many",
+        "severity": "info",
+        "message": "一頁 6 題、清單沒有單一目標：status 維持 pending，請決定併入疾病頁（merged）或各題獨立（新站以 tasks 歸類）"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「旅遊醫學門診可以做什麼？要出國前多久去？」從答案抽出結構化候選 {\"weeksMin\":4,\"weeksMax\":6}，請確認後保留或刪除"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「出國前多久要到旅遊醫學門診諮詢？」從答案抽出結構化候選 {\"weeksMin\":4,\"weeksMax\":6}，請確認後保留或刪除"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「旅遊醫學門診可以做什麼？要出國前多久去？」→ travel；「去日本旅遊需要擔心麻疹嗎？」→ travel；「去非洲需要吃瘧疾預防藥嗎？」→ symptoms；「出國回來後發燒，應該怎麼辦？」→ travel、symptoms；「去哪些國家需要黃熱病疫苗證明？」→ vaccines；「出國前多久要到旅遊醫學門診諮詢？」→ travel"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/oDFvYopfPTouRB6a4gWcs5",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.travel-malaria-prevention"
+    ]
+  }
+}

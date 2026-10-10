@@ -1,0 +1,322 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "2d7026703e10",
+    "lastModified": "2025-08-12"
+  },
+  "data": {
+    "id": "disease.japanese-encephalitis",
+    "type": "disease",
+    "slug": "japanese-encephalitis",
+    "title": "日本腦炎",
+    "nameEn": "Japanese encephalitis",
+    "aliases": [
+      "JE",
+      "日腦",
+      "大腦炎"
+    ],
+    "legalCategory": 3,
+    "icd10": [
+      "A83.0"
+    ],
+    "notifyWithinHours": 168,
+    "incubation": {
+      "min": 5,
+      "max": 15,
+      "unit": "day",
+      "text": "5–15 天"
+    },
+    "transmission": [
+      "vector"
+    ],
+    "owner": "unit.acute-infectious",
+    "steward": "急性傳染病組承辦人",
+    "publishedAt": "2018-03-01",
+    "reviewedAt": "2025-08-12",
+    "reviewPeriodMonths": 12,
+    "status": "published",
+    "audience": [
+      "public",
+      "professional"
+    ],
+    "tasks": [
+      "symptoms",
+      "vaccines"
+    ],
+    "sensitivity": "public",
+    "license": "OGDL-1.0",
+    "diseases": [
+      "disease.japanese-encephalitis"
+    ],
+    "vaccines": [
+      "vaccine.je"
+    ],
+    "aiWhitelist": {
+      "requested": true,
+      "approvedBy": "unit.oasis",
+      "approvedAt": "2026-09-01"
+    },
+    "languages": {
+      "zh-TW": {
+        "status": "source"
+      },
+      "en": {
+        "status": "machine"
+      },
+      "ja": {
+        "status": "machine"
+      },
+      "tl": {
+        "status": "pending"
+      },
+      "vi": {
+        "status": "machine"
+      },
+      "id": {
+        "status": "machine"
+      },
+      "th": {
+        "status": "pending"
+      }
+    },
+    "summary": "日本腦炎由病媒蚊（三斑家蚊等）傳播，每年 5 至 10 月流行、6–7 月高峰。多數感染者無症狀，少數發展為腦炎；幼兒依時程接種 2 劑疫苗可有效預防。",
+    "keywords": [
+      "日本腦炎",
+      "三斑家蚊",
+      "疫苗",
+      "豬舍",
+      "流行季"
+    ],
+    "legacyUrls": [
+      "https://www.cdc.gov.tw/Disease/Index"
+    ],
+    "keyFacts": {
+      "incubation": "5–15 天",
+      "symptoms": "多數無症狀；少數頭痛、發燒、嘔吐、意識改變、抽搐",
+      "transmission": "病媒蚊叮咬（三斑家蚊、環紋家蚊、白頭家蚊）",
+      "prevention": "幼兒接種疫苗、黃昏與黎明避免蚊子叮咬",
+      "notify": "一週內"
+    },
+    "blocks": [
+      {
+        "key": "what-to-do",
+        "heading": "我該怎麼辦",
+        "cards": [
+          {
+            "if": "5–10 月出現發燒、頭痛、嘔吐並伴隨嗜睡或抽搐",
+            "title": "立即就醫",
+            "text": "可能是腦炎徵象，請立即就醫並告知住家附近是否有豬舍、稻田。"
+          },
+          {
+            "if": "孩子滿 15 個月",
+            "title": "接種第 1 劑日本腦炎疫苗",
+            "text": "出生滿 15 個月接種第 1 劑，間隔 12 個月接種第 2 劑，可至各地衛生所或合約院所。"
+          },
+          {
+            "if": "住家或工作地點靠近豬舍、稻田",
+            "title": "黃昏黎明加強防蚊",
+            "text": "病媒蚊多在黃昏與黎明活動，外出穿淺色長袖並使用防蚊液，住家裝紗窗。"
+          }
+        ]
+      },
+      {
+        "key": "symptoms",
+        "heading": "症狀與警示徵象",
+        "markdown": "絕大多數感染者**沒有症狀**或僅有輕微發燒、頭痛。不到 1% 的感染者會出現**腦炎**：高燒、劇烈頭痛、嘔吐、頸部僵硬、意識障礙、抽搐、肢體麻痺。\n\n腦炎病例致死率約 20–30%，存活者中有 30–50% 可能留下神經或精神方面的後遺症。",
+        "warning": "意識改變、抽搐、肢體無力、頸部僵硬或持續嘔吐，請立即就醫。"
+      },
+      {
+        "key": "transmission",
+        "heading": "怎麼傳染",
+        "markdown": "日本腦炎病毒經由**病媒蚊叮咬**傳播，台灣主要病媒為三斑家蚊，其次為環紋家蚊與白頭家蚊，多孳生於水稻田、池塘與灌溉溝渠。\n\n豬是病毒的主要增幅動物，蚊子叮咬帶病毒的豬後再叮人而傳播。**不會人傳人**。"
+      },
+      {
+        "key": "prevention",
+        "heading": "如何預防",
+        "markdown": "- **接種疫苗**是最有效的方法：幼兒出生滿 15 個月接種第 1 劑，間隔 12 個月接種第 2 劑。\n- 流行季（5–10 月）黃昏與黎明減少在豬舍、稻田附近活動。\n- 穿淺色長袖衣褲，裸露部位使用衛福部核可的防蚊液。\n- 住家裝設紗窗紗門。"
+      },
+      {
+        "key": "treatment",
+        "heading": "診斷與治療",
+        "markdown": "日本腦炎沒有特效藥，以支持性療法為主，包括控制腦壓、抽搐與呼吸照護，重症需加護病房治療。早期就醫可降低併發症與死亡風險。"
+      },
+      {
+        "key": "vaccine",
+        "heading": "疫苗",
+        "markdown": "國內使用**活性減毒嵌合型日本腦炎疫苗**，公費接種時程為出生滿 15 個月接種第 1 劑、間隔 12 個月接種第 2 劑。過去已接種不活化疫苗的學童，依疾管署銜接建議補接種。成人前往流行地區長期停留或從事戶外工作，可至旅遊醫學門診評估自費接種。"
+      },
+      {
+        "key": "situation",
+        "heading": "目前疫情與統計",
+        "markdown": "國內每年確定病例約 20–40 例，多集中於 6–7 月。"
+      },
+      {
+        "key": "faq",
+        "heading": "常見問題"
+      }
+    ],
+    "professional": {
+      "specimen": "急性期與恢復期血清（間隔 2 週以上）檢測 IgM／IgG；有神經症狀者加採腦脊髓液。",
+      "notifyNote": "第三類法定傳染病，應於一週內通報；病例周邊由衛生局進行病媒蚊調查。"
+    },
+    "sourceHash": "601e9cdd62a7",
+    "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/japanese-encephalitis/",
+    "path": "/diseases/japanese-encephalitis/",
+    "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/japanese-encephalitis.md",
+    "governance": {
+      "owner": "unit.acute-infectious",
+      "ownerName": "急性傳染病組",
+      "steward": "急性傳染病組承辦人",
+      "reviewedAt": "2025-08-12",
+      "reviewPeriodMonths": 12,
+      "nextReviewAt": "2026-08-12",
+      "daysToReview": -50,
+      "overdue": true,
+      "dueSoon": false,
+      "status": "published",
+      "lifecycle": "overdue",
+      "lifecycleLabel": "逾期待審",
+      "whitelist": false,
+      "whitelistTier": "public",
+      "whitelistPublic": false,
+      "whitelistReasons": [
+        "overdue"
+      ],
+      "whitelistReasonLabels": [
+        "已超過審閱期限，待權責單位重新審閱"
+      ],
+      "isCurrent": true,
+      "superseded": false,
+      "supersededBy": null,
+      "currentId": "disease.japanese-encephalitis",
+      "noindex": false,
+      "stale": [],
+      "basisRevisions": [],
+      "predatesBasis": false,
+      "annotations": [
+        {
+          "kind": "overdue",
+          "level": "warning",
+          "text": "本頁最後審閱於 2025-08-12，已超過審閱期限（2026-08-12），內容可能過時，請以權責單位最新公告為準。",
+          "href": null,
+          "path": null,
+          "reviewedAt": "2025-08-12",
+          "nextReviewAt": "2026-08-12"
+        }
+      ],
+      "reverseAuditHits": 0,
+      "license": "OGDL-1.0",
+      "licenseNote": null,
+      "sensitivity": "public",
+      "sourceHash": "601e9cdd62a7",
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "pending"
+        },
+        "vi": {
+          "status": "machine"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "pending"
+        }
+      },
+      "translationStale": {
+        "en": false,
+        "ja": false,
+        "vi": false,
+        "id": false
+      },
+      "renderableLangs": [
+        "zh-TW"
+      ]
+    },
+    "master": {
+      "id": "disease.japanese-encephalitis",
+      "slug": "japanese-encephalitis",
+      "name": "日本腦炎",
+      "nameEn": "Japanese encephalitis",
+      "aliases": [
+        "JE",
+        "日腦",
+        "大腦炎"
+      ],
+      "legalCategory": 3,
+      "icd10": [
+        "A83.0"
+      ],
+      "notifyWithinHours": 168,
+      "transmission": [
+        "vector"
+      ],
+      "hasPage": true,
+      "owner": "unit.acute-infectious",
+      "zhuyin": "ㄖ",
+      "strokes": 4,
+      "i18n": {
+        "en": {
+          "name": "Japanese encephalitis"
+        }
+      }
+    },
+    "related": {
+      "faq": [],
+      "news": [],
+      "documents": [],
+      "vaccines": [],
+      "datasets": [],
+      "clarifications": [],
+      "media": [],
+      "labtests": [
+        {
+          "id": "labtest.japanese-encephalitis",
+          "type": "labtest",
+          "title": "日本腦炎檢驗項目與送驗規定",
+          "summary": "日本腦炎：急性期與恢復期成對血清及腦脊髓液，冷藏 72 小時內送疾管署，做 IgM 捕捉 ELISA 與 RT-PCR；恢復期血清於發病 14 日後採。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/japanese-encephalitis/",
+          "path": "/lab/japanese-encephalitis/",
+          "reviewedAt": "2026-07-15",
+          "owner": "unit.lab",
+          "ownerName": "檢驗及疫苗研製中心",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "services": [],
+      "publications": [
+        {
+          "id": "publication.bulletin-42-16",
+          "type": "publication",
+          "title": "疫情報導 第 42 卷第 16 期",
+          "summary": "本期收錄 2 篇：日本腦炎病例之流行病學特徵：2020–2025 年等。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-16/",
+          "path": "/publications/bulletin-42-16/",
+          "reviewedAt": "2026-08-25",
+          "owner": "unit.epidemic-intelligence",
+          "ownerName": "疫情中心",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "topics": []
+    }
+  }
+}

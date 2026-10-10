@@ -1,0 +1,3506 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "85ed304880d3",
+    "lastModified": "2026-07-15",
+    "count": 16
+  },
+  "data": [
+    {
+      "id": "labtest.chikungunya",
+      "type": "labtest",
+      "title": "屈公病檢驗項目與送驗規定",
+      "owner": "unit.lab",
+      "publishedAt": "2025-01-15",
+      "reviewedAt": "2026-07-15",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "disease.chikungunya"
+      ],
+      "diseases": [
+        "disease.chikungunya"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-07-15"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "屈公病：急性期血清 2–5 mL（發病 7 日內）冷藏 24 小時內送驗，做 RT-PCR 與 IgM；恢復期血清於發病 14 日後採檢以確認抗體陽轉。",
+      "keywords": [
+        "屈公病",
+        "檢體",
+        "送驗",
+        "採檢",
+        "RT-PCR",
+        "IgM 抗體"
+      ],
+      "note": "檢體量、保存與時效為原型示意，以檢驗及疫苗研製中心「傳染病檢體採檢手冊」現行版為準",
+      "disease": "disease.chikungunya",
+      "specimens": [
+        {
+          "name": "急性期血清",
+          "timing": "發病 7 日內",
+          "container": "無菌血清分離管（紅頭或黃頭，無抗凝劑）",
+          "volume": "血清 2–5 mL",
+          "storage": "2–8°C 冷藏",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "RT-PCR",
+            "IgM 抗體"
+          ],
+          "turnaroundDays": 2
+        },
+        {
+          "name": "恢復期血清",
+          "timing": "發病 14–40 日",
+          "container": "無菌血清分離管（紅頭或黃頭，無抗凝劑）",
+          "volume": "血清 2–5 mL",
+          "storage": "2–8°C 冷藏",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "IgM／IgG 抗體（成對血清）"
+          ],
+          "turnaroundDays": 3
+        }
+      ],
+      "labs": [
+        "cdc-lab",
+        "certified-lab"
+      ],
+      "sendWithinHours": 24,
+      "formDoc": "service.lab-test-request",
+      "biosafetyLevel": "BSL-2（病毒培養 BSL-3）",
+      "notesMarkdown": "- 與登革熱症狀相似，送驗時可同時勾選登革熱與屈公病檢驗。\n- 送驗單請註明旅遊國家與返國日期。",
+      "sourceHash": "3e17090f73cf",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/chikungunya/",
+      "path": "/lab/chikungunya/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/chikungunya.md",
+      "governance": {
+        "owner": "unit.lab",
+        "ownerName": "檢驗及疫苗研製中心",
+        "steward": null,
+        "reviewedAt": "2026-07-15",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-07-15",
+        "daysToReview": 287,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "pro",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "labtest.chikungunya",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "labtestCheck": {
+          "disease": "disease.chikungunya",
+          "diseaseName": "屈公病",
+          "notifyWithinHours": 24,
+          "sendWithinHours": 24,
+          "consistent": true,
+          "diseasePage": "disease.chikungunya",
+          "diseaseSpecimen": true
+        },
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "3e17090f73cf",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      },
+      "master": {
+        "id": "disease.chikungunya",
+        "slug": "chikungunya",
+        "name": "屈公病",
+        "nameEn": "Chikungunya fever",
+        "aliases": [
+          "Chikungunya",
+          "屈公熱"
+        ],
+        "legalCategory": 2,
+        "icd10": [
+          "A92.0"
+        ],
+        "notifyWithinHours": 24,
+        "transmission": [
+          "vector"
+        ],
+        "hasPage": true,
+        "owner": "unit.acute-infectious",
+        "zhuyin": "ㄑ",
+        "strokes": 8,
+        "i18n": {
+          "en": {
+            "name": "Chikungunya fever"
+          }
+        }
+      }
+    },
+    {
+      "id": "labtest.covid-19",
+      "type": "labtest",
+      "title": "新冠併發重症檢驗項目與送驗規定",
+      "owner": "unit.lab",
+      "publishedAt": "2025-01-15",
+      "reviewedAt": "2026-07-15",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "disease.covid-19"
+      ],
+      "diseases": [
+        "disease.covid-19"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-07-15"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "新冠併發重症：鼻咽拭子置於病毒運送培養基，4°C 冷藏 72 小時內送驗，由認可實驗室做 RT-PCR，必要時送疾管署做基因定序。",
+      "keywords": [
+        "新冠併發重症",
+        "檢體",
+        "送驗",
+        "採檢",
+        "RT-PCR",
+        "基因定序（監測抽樣）"
+      ],
+      "note": "檢體量、保存與時效為原型示意，以檢驗及疫苗研製中心「傳染病檢體採檢手冊」現行版為準",
+      "disease": "disease.covid-19",
+      "specimens": [
+        {
+          "name": "鼻咽拭子",
+          "timing": "通報時",
+          "container": "病毒運送培養基（VTM）拭子管",
+          "volume": "拭子 1 支（VTM 2–3 mL）",
+          "storage": "2–8°C 冷藏",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "RT-PCR",
+            "基因定序（監測抽樣）"
+          ],
+          "turnaroundDays": 1
+        },
+        {
+          "name": "下呼吸道檢體",
+          "timing": "插管病人",
+          "container": "無菌螺旋蓋容器",
+          "volume": "1–2 mL",
+          "storage": "2–8°C 冷藏",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "RT-PCR"
+          ],
+          "turnaroundDays": 1
+        }
+      ],
+      "labs": [
+        "certified-lab",
+        "hospital-lab",
+        "cdc-lab"
+      ],
+      "sendWithinHours": 72,
+      "formDoc": "service.lab-test-request",
+      "biosafetyLevel": "BSL-2（病毒培養 BSL-3）",
+      "notesMarkdown": "- 醫院自行檢驗陽性者，依監測需要抽樣送疾管署定序。\n- 家用快篩陽性可作為臨床參考，重症通報仍以醫療院所檢驗為準。",
+      "sourceHash": "d9816fbc9528",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/covid-19/",
+      "path": "/lab/covid-19/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/covid-19.md",
+      "governance": {
+        "owner": "unit.lab",
+        "ownerName": "檢驗及疫苗研製中心",
+        "steward": null,
+        "reviewedAt": "2026-07-15",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-07-15",
+        "daysToReview": 287,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "pro",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "labtest.covid-19",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "labtestCheck": {
+          "disease": "disease.covid-19",
+          "diseaseName": "新冠併發重症",
+          "notifyWithinHours": 168,
+          "sendWithinHours": 72,
+          "consistent": true,
+          "diseasePage": "disease.covid-19",
+          "diseaseSpecimen": true
+        },
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "d9816fbc9528",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      },
+      "master": {
+        "id": "disease.covid-19",
+        "slug": "covid-19",
+        "name": "新冠併發重症",
+        "nameEn": "COVID-19 with severe complications",
+        "aliases": [
+          "新冠肺炎",
+          "COVID-19",
+          "新冠",
+          "嚴重特殊傳染性肺炎"
+        ],
+        "legalCategory": 4,
+        "icd10": [
+          "U07.1"
+        ],
+        "notifyWithinHours": 168,
+        "transmission": [
+          "droplet",
+          "airborne",
+          "contact"
+        ],
+        "hasPage": true,
+        "owner": "unit.acute-infectious",
+        "datasets": [
+          "dataset.covid-severe-weekly"
+        ],
+        "zhuyin": "ㄒ",
+        "strokes": 13,
+        "legalName": "新冠併發重症",
+        "note": "2023-03-20 起由第五類「嚴重特殊傳染性肺炎」改列第四類「新冠併發重症」；通報時限原型待權責單位確認",
+        "i18n": {
+          "en": {
+            "name": "COVID-19 with severe complications"
+          }
+        }
+      }
+    },
+    {
+      "id": "labtest.dengue",
+      "type": "labtest",
+      "title": "登革熱檢驗項目與送驗規定",
+      "owner": "unit.lab",
+      "publishedAt": "2025-01-15",
+      "reviewedAt": "2026-07-15",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "disease.dengue",
+        "doc.case-definition-dengue"
+      ],
+      "diseases": [
+        "disease.dengue"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-07-15"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-07-15",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "登革熱：急性期血清 2–5 mL（發病 7 日內），4°C 冷藏 24 小時內送達，可做 NS1 抗原、RT-PCR 與 IgM／IgG；恢復期血清於發病 14–40 日採檢。",
+      "keywords": [
+        "登革熱",
+        "檢體",
+        "送驗",
+        "採檢",
+        "NS1 抗原",
+        "RT-PCR"
+      ],
+      "note": "檢體量、保存與時效為原型示意，以檢驗及疫苗研製中心「傳染病檢體採檢手冊」現行版為準",
+      "disease": "disease.dengue",
+      "specimens": [
+        {
+          "name": "急性期血清",
+          "timing": "發病 7 日內（以發病 1–5 日最佳）",
+          "container": "無菌血清分離管（紅頭或黃頭，無抗凝劑）",
+          "volume": "血清 2–5 mL（全血 5–10 mL）",
+          "storage": "2–8°C 冷藏，勿冷凍全血",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "NS1 抗原",
+            "RT-PCR",
+            "IgM／IgG 抗體"
+          ],
+          "turnaroundDays": 1
+        },
+        {
+          "name": "恢復期血清",
+          "timing": "發病 14–40 日",
+          "container": "無菌血清分離管（紅頭或黃頭，無抗凝劑）",
+          "volume": "血清 2–5 mL",
+          "storage": "2–8°C 冷藏",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "IgM／IgG 抗體（成對血清）"
+          ],
+          "turnaroundDays": 3,
+          "note": "急性期陰性但臨床高度懷疑時採檢"
+        }
+      ],
+      "labs": [
+        "cdc-lab",
+        "certified-lab",
+        "regional-lab"
+      ],
+      "sendWithinHours": 24,
+      "formDoc": "service.lab-test-request",
+      "caseDefinitionDoc": "doc.case-definition-dengue",
+      "biosafetyLevel": "BSL-2",
+      "notesMarkdown": "- 通報後即採檢；NS1 快篩陽性者仍須送驗確認（見致醫界通函第 615 號，示意）。\n- 檢體溶血或脂血會影響結果。\n- 送驗單請註明發病日與旅遊史，以利研判境外移入或本土。",
+      "i18n": {
+        "en": {
+          "title": "Dengue: laboratory tests and specimen requirements",
+          "summary": "Acute-phase serum 2–5 mL within 7 days of onset, refrigerated and delivered within 24 hours for NS1, RT-PCR and IgM/IgG; convalescent serum at 14–40 days."
+        }
+      },
+      "sourceHash": "11711436ef25",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/dengue/",
+      "path": "/lab/dengue/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/dengue.md",
+      "governance": {
+        "owner": "unit.lab",
+        "ownerName": "檢驗及疫苗研製中心",
+        "steward": null,
+        "reviewedAt": "2026-07-15",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-07-15",
+        "daysToReview": 287,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "pro",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "labtest.dengue",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [
+          {
+            "basedOn": "doc.case-definition-dengue",
+            "revisedAt": "2026-01-01",
+            "currentId": "doc.case-definition-dengue.2026-01-01",
+            "currentTitle": "傳染病病例定義：登革熱（2026 年版）",
+            "currentVersion": "2026-01",
+            "currentHref": "/documents/case-definition-dengue.2026-01-01/",
+            "dueAt": "2026-01-08",
+            "resolved": true,
+            "resolvedAt": "2026-07-15"
+          }
+        ],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "labtestCheck": {
+          "disease": "disease.dengue",
+          "diseaseName": "登革熱",
+          "notifyWithinHours": 24,
+          "sendWithinHours": 24,
+          "consistent": true,
+          "diseasePage": "disease.dengue",
+          "diseaseSpecimen": true
+        },
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "11711436ef25",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-07-15",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      },
+      "master": {
+        "id": "disease.dengue",
+        "slug": "dengue",
+        "name": "登革熱",
+        "nameEn": "Dengue fever",
+        "aliases": [
+          "登革出血熱",
+          "天狗熱",
+          "斷骨熱",
+          "Dengue"
+        ],
+        "legalCategory": 2,
+        "icd10": [
+          "A90",
+          "A91"
+        ],
+        "notifyWithinHours": 24,
+        "transmission": [
+          "vector"
+        ],
+        "hasPage": true,
+        "owner": "unit.acute-infectious",
+        "datasets": [
+          "dataset.dengue-daily",
+          "dataset.dengue-local-weekly"
+        ],
+        "zhuyin": "ㄉ",
+        "strokes": 12,
+        "i18n": {
+          "en": {
+            "name": "Dengue fever"
+          }
+        }
+      }
+    },
+    {
+      "id": "labtest.enterovirus",
+      "type": "labtest",
+      "title": "腸病毒檢驗項目與送驗規定",
+      "owner": "unit.lab",
+      "publishedAt": "2025-01-15",
+      "reviewedAt": "2026-07-15",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "disease.enterovirus",
+        "doc.ev-severe-guideline"
+      ],
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-07-15"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "腸病毒感染併發重症：咽喉拭子、糞便或肛門拭子及血清，4°C 冷藏 72 小時內送驗，做 RT-PCR 型別鑑定與病毒分離。",
+      "keywords": [
+        "腸病毒",
+        "檢體",
+        "送驗",
+        "採檢",
+        "RT-PCR",
+        "病毒分離"
+      ],
+      "note": "檢體量、保存與時效為原型示意，以檢驗及疫苗研製中心「傳染病檢體採檢手冊」現行版為準",
+      "disease": "disease.enterovirus",
+      "specimens": [
+        {
+          "name": "咽喉拭子",
+          "timing": "發病 3 日內",
+          "container": "病毒運送培養基（VTM）拭子管",
+          "volume": "拭子 1 支",
+          "storage": "2–8°C 冷藏",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "RT-PCR",
+            "病毒分離",
+            "型別鑑定（EV71、D68 等）"
+          ],
+          "turnaroundDays": 3
+        },
+        {
+          "name": "糞便或肛門拭子",
+          "timing": "發病 14 日內",
+          "container": "無菌糞便盒（拭子用 VTM）",
+          "volume": "糞便 5–10 g（約拇指大小）",
+          "storage": "2–8°C 冷藏",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "RT-PCR",
+            "病毒分離"
+          ],
+          "turnaroundDays": 3
+        },
+        {
+          "name": "血清",
+          "timing": "急性期",
+          "container": "無菌血清分離管（紅頭或黃頭，無抗凝劑）",
+          "volume": "血清 1–2 mL",
+          "storage": "2–8°C 冷藏",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "中和抗體（成對血清）"
+          ],
+          "turnaroundDays": 7
+        }
+      ],
+      "labs": [
+        "cdc-lab",
+        "certified-lab"
+      ],
+      "sendWithinHours": 72,
+      "formDoc": "service.lab-test-request",
+      "biosafetyLevel": "BSL-2",
+      "notesMarkdown": "- 有中樞神經症狀者可加採腦脊髓液 0.5–1 mL。\n- 重症處置不需等待檢驗結果，請依腸病毒重症處置指引。",
+      "sourceHash": "975f4522ef87",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/enterovirus/",
+      "path": "/lab/enterovirus/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/enterovirus.md",
+      "governance": {
+        "owner": "unit.lab",
+        "ownerName": "檢驗及疫苗研製中心",
+        "steward": null,
+        "reviewedAt": "2026-07-15",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-07-15",
+        "daysToReview": 287,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "pro",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "labtest.enterovirus",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [
+          {
+            "basedOn": "doc.ev-severe-guideline",
+            "revisedAt": "2026-03-15",
+            "currentId": "doc.ev-severe-guideline.2026-03-15",
+            "currentTitle": "腸病毒感染併發重症臨床處置建議",
+            "currentVersion": "2026-03",
+            "currentHref": "/documents/ev-severe-guideline.2026-03-15/",
+            "dueAt": "2026-03-22",
+            "resolved": true,
+            "resolvedAt": "2026-07-15"
+          }
+        ],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "labtestCheck": {
+          "disease": "disease.enterovirus",
+          "diseaseName": "腸病毒",
+          "notifyWithinHours": 168,
+          "sendWithinHours": 72,
+          "consistent": true,
+          "diseasePage": "disease.enterovirus",
+          "diseaseSpecimen": true
+        },
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "975f4522ef87",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      },
+      "master": {
+        "id": "disease.enterovirus",
+        "slug": "enterovirus",
+        "name": "腸病毒",
+        "nameEn": "Enterovirus infection",
+        "aliases": [
+          "腸病毒感染併發重症",
+          "手足口病",
+          "疱疹性咽峽炎",
+          "EV71",
+          "腸病毒71型",
+          "克沙奇病毒"
+        ],
+        "legalCategory": 3,
+        "icd10": [
+          "B34.1",
+          "B08.4",
+          "B08.5",
+          "A87.0"
+        ],
+        "notifyWithinHours": 168,
+        "transmission": [
+          "droplet",
+          "contact",
+          "foodborne"
+        ],
+        "hasPage": true,
+        "owner": "unit.acute-infectious",
+        "datasets": [
+          "dataset.ev-visits-weekly"
+        ],
+        "zhuyin": "ㄔ",
+        "strokes": 13,
+        "legalName": "腸病毒感染併發重症",
+        "note": "法定通報項目為「腸病毒感染併發重症」；一般腸病毒輕症不須通報",
+        "i18n": {
+          "en": {
+            "name": "Enterovirus infection"
+          }
+        }
+      }
+    },
+    {
+      "id": "labtest.hepatitis-a",
+      "type": "labtest",
+      "title": "急性病毒性A型肝炎檢驗項目與送驗規定",
+      "owner": "unit.lab",
+      "publishedAt": "2025-01-15",
+      "reviewedAt": "2026-07-15",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "disease.hepatitis-a"
+      ],
+      "diseases": [
+        "disease.hepatitis-a"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-07-15"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "急性病毒性 A 型肝炎：血清 2 mL 做 anti-HAV IgM，冷藏 24 小時內送驗；群聚或境外移入個案加採糞便做 RT-PCR 基因定型。",
+      "keywords": [
+        "急性病毒性A型肝炎",
+        "檢體",
+        "送驗",
+        "採檢",
+        "anti-HAV IgM",
+        "RT-PCR"
+      ],
+      "note": "檢體量、保存與時效為原型示意，以檢驗及疫苗研製中心「傳染病檢體採檢手冊」現行版為準",
+      "disease": "disease.hepatitis-a",
+      "specimens": [
+        {
+          "name": "血清",
+          "timing": "出現黃疸或肝功能異常時",
+          "container": "無菌血清分離管（紅頭或黃頭，無抗凝劑）",
+          "volume": "血清 2 mL",
+          "storage": "2–8°C 冷藏",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "anti-HAV IgM"
+          ],
+          "turnaroundDays": 2
+        },
+        {
+          "name": "糞便",
+          "timing": "發病 14 日內",
+          "container": "無菌糞便盒",
+          "volume": "5–10 g",
+          "storage": "2–8°C 冷藏",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "RT-PCR",
+            "基因定型"
+          ],
+          "turnaroundDays": 5,
+          "note": "群聚事件或境外移入時加採"
+        }
+      ],
+      "labs": [
+        "certified-lab",
+        "cdc-lab",
+        "hospital-lab"
+      ],
+      "sendWithinHours": 24,
+      "formDoc": "service.lab-test-request",
+      "biosafetyLevel": "BSL-2",
+      "notesMarkdown": "- 醫院自行檢驗 anti-HAV IgM 陽性者仍須通報。\n- 餐飲從業人員病例請同時通知衛生局評估工作限制。",
+      "sourceHash": "2c7695d7cd54",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/hepatitis-a/",
+      "path": "/lab/hepatitis-a/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/hepatitis-a.md",
+      "governance": {
+        "owner": "unit.lab",
+        "ownerName": "檢驗及疫苗研製中心",
+        "steward": null,
+        "reviewedAt": "2026-07-15",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-07-15",
+        "daysToReview": 287,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "pro",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "labtest.hepatitis-a",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "labtestCheck": {
+          "disease": "disease.hepatitis-a",
+          "diseaseName": "急性病毒性A型肝炎",
+          "notifyWithinHours": 24,
+          "sendWithinHours": 24,
+          "consistent": true,
+          "diseasePage": "disease.hepatitis-a",
+          "diseaseSpecimen": true
+        },
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "2c7695d7cd54",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      },
+      "master": {
+        "id": "disease.hepatitis-a",
+        "slug": "hepatitis-a",
+        "name": "急性病毒性A型肝炎",
+        "nameEn": "Acute viral hepatitis A",
+        "aliases": [
+          "A肝",
+          "A型肝炎",
+          "HAV"
+        ],
+        "legalCategory": 2,
+        "icd10": [
+          "B15"
+        ],
+        "notifyWithinHours": 24,
+        "transmission": [
+          "foodborne",
+          "waterborne",
+          "sexual"
+        ],
+        "hasPage": true,
+        "owner": "unit.acute-infectious",
+        "zhuyin": "ㄐ",
+        "strokes": 9,
+        "i18n": {
+          "en": {
+            "name": "Acute viral hepatitis A"
+          }
+        }
+      }
+    },
+    {
+      "id": "labtest.hiv",
+      "type": "labtest",
+      "title": "人類免疫缺乏病毒感染檢驗項目與送驗規定",
+      "owner": "unit.lab",
+      "publishedAt": "2025-01-15",
+      "reviewedAt": "2026-07-15",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "disease.hiv"
+      ],
+      "diseases": [
+        "disease.hiv"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-07-15"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "HIV：初篩陽性者採 EDTA 全血或血清 5 mL，冷藏 24 小時內送 HIV 確認檢驗機構，做抗體確認與核酸檢測，確診前應完成確認檢驗。",
+      "keywords": [
+        "人類免疫缺乏病毒感染",
+        "檢體",
+        "送驗",
+        "採檢",
+        "HIV-1／2 抗體確認",
+        "HIV-1 核酸檢測"
+      ],
+      "note": "檢體量、保存與時效為原型示意，以檢驗及疫苗研製中心「傳染病檢體採檢手冊」現行版為準",
+      "disease": "disease.hiv",
+      "specimens": [
+        {
+          "name": "EDTA 全血或血清",
+          "timing": "初篩陽性後",
+          "container": "EDTA 紫頭管或血清分離管",
+          "volume": "全血 5 mL 或血清 2 mL",
+          "storage": "2–8°C 冷藏",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "HIV-1／2 抗體確認",
+            "HIV-1 核酸檢測",
+            "病毒量"
+          ],
+          "turnaroundDays": 3
+        }
+      ],
+      "labs": [
+        "certified-lab",
+        "hospital-lab"
+      ],
+      "sendWithinHours": 24,
+      "formDoc": "service.lab-test-request",
+      "biosafetyLevel": "BSL-2",
+      "notesMarkdown": "- 匿名篩檢陽性者由個管師協助轉介確認檢驗，送驗單以代號填寫。\n- 急性感染期抗體可能尚未陽轉，請加做核酸檢測。",
+      "sourceHash": "50875d3024c4",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/hiv/",
+      "path": "/lab/hiv/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/hiv.md",
+      "governance": {
+        "owner": "unit.lab",
+        "ownerName": "檢驗及疫苗研製中心",
+        "steward": null,
+        "reviewedAt": "2026-07-15",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-07-15",
+        "daysToReview": 287,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "pro",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "labtest.hiv",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "labtestCheck": {
+          "disease": "disease.hiv",
+          "diseaseName": "人類免疫缺乏病毒感染",
+          "notifyWithinHours": 24,
+          "sendWithinHours": 24,
+          "consistent": true,
+          "diseasePage": "disease.hiv",
+          "diseaseSpecimen": true
+        },
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "50875d3024c4",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      },
+      "master": {
+        "id": "disease.hiv",
+        "slug": "hiv",
+        "name": "人類免疫缺乏病毒感染",
+        "nameEn": "HIV infection",
+        "aliases": [
+          "愛滋",
+          "愛滋病毒",
+          "HIV",
+          "AIDS",
+          "後天免疫缺乏症候群"
+        ],
+        "legalCategory": 3,
+        "icd10": [
+          "B20",
+          "B24",
+          "Z21"
+        ],
+        "notifyWithinHours": 24,
+        "transmission": [
+          "sexual",
+          "bloodborne",
+          "vertical"
+        ],
+        "hasPage": true,
+        "owner": "unit.chronic-infectious",
+        "datasets": [
+          "dataset.hiv-monthly"
+        ],
+        "zhuyin": "ㄖ",
+        "strokes": 2,
+        "i18n": {
+          "en": {
+            "name": "HIV infection"
+          }
+        }
+      }
+    },
+    {
+      "id": "labtest.influenza",
+      "type": "labtest",
+      "title": "流感檢驗項目與送驗規定",
+      "owner": "unit.lab",
+      "publishedAt": "2025-01-15",
+      "reviewedAt": "2026-07-15",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "disease.influenza"
+      ],
+      "diseases": [
+        "disease.influenza"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-07-15"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-07-15",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "流感併發重症：咽喉或鼻咽拭子置於病毒運送培養基，4°C 冷藏 72 小時內送達，做 RT-PCR 與病毒分離；插管者加採下呼吸道檢體。",
+      "keywords": [
+        "流感",
+        "檢體",
+        "送驗",
+        "採檢",
+        "RT-PCR（A／B 型與亞型）",
+        "病毒分離"
+      ],
+      "note": "檢體量、保存與時效為原型示意，以檢驗及疫苗研製中心「傳染病檢體採檢手冊」現行版為準",
+      "disease": "disease.influenza",
+      "specimens": [
+        {
+          "name": "咽喉拭子或鼻咽拭子",
+          "timing": "發病 3 日內最佳，重症通報時即採",
+          "container": "病毒運送培養基（VTM）拭子管",
+          "volume": "拭子 1 支（VTM 2–3 mL）",
+          "storage": "2–8°C 冷藏",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "RT-PCR（A／B 型與亞型）",
+            "病毒分離"
+          ],
+          "turnaroundDays": 2
+        },
+        {
+          "name": "下呼吸道檢體（痰液、氣管抽取液）",
+          "timing": "插管或肺炎病人",
+          "container": "無菌螺旋蓋容器",
+          "volume": "1–2 mL",
+          "storage": "2–8°C 冷藏",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "RT-PCR"
+          ],
+          "turnaroundDays": 2
+        }
+      ],
+      "labs": [
+        "cdc-lab",
+        "certified-lab",
+        "regional-lab"
+      ],
+      "sendWithinHours": 72,
+      "formDoc": "service.lab-test-request",
+      "biosafetyLevel": "BSL-2（新型 A 型流感病毒分離 BSL-3）",
+      "notesMarkdown": "- 流感併發重症為第四類法定傳染病，通報時限一週；為利治療與監測，建議通報後 72 小時內送達。\n- 疑似新型 A 型流感（第五類）應 24 小時內通報並依專案送驗。\n- 抗病毒藥劑使用不需等待檢驗結果。",
+      "i18n": {
+        "en": {
+          "title": "Influenza with severe complications: laboratory tests and specimen requirements",
+          "summary": "Throat or nasopharyngeal swab in viral transport medium, refrigerated and delivered within 72 hours for RT-PCR and virus isolation; add lower respiratory specimens for intubated patients."
+        }
+      },
+      "sourceHash": "cbf23d94aebd",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/influenza/",
+      "path": "/lab/influenza/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/influenza.md",
+      "governance": {
+        "owner": "unit.lab",
+        "ownerName": "檢驗及疫苗研製中心",
+        "steward": null,
+        "reviewedAt": "2026-07-15",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-07-15",
+        "daysToReview": 287,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "pro",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "labtest.influenza",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "labtestCheck": {
+          "disease": "disease.influenza",
+          "diseaseName": "流感",
+          "notifyWithinHours": 168,
+          "sendWithinHours": 72,
+          "consistent": true,
+          "diseasePage": "disease.influenza",
+          "diseaseSpecimen": true
+        },
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "cbf23d94aebd",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-07-15",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      },
+      "master": {
+        "id": "disease.influenza",
+        "slug": "influenza",
+        "name": "流感",
+        "nameEn": "Influenza",
+        "aliases": [
+          "流感併發重症",
+          "季節性流感",
+          "類流感",
+          "流行性感冒",
+          "Flu",
+          "Influenza"
+        ],
+        "legalCategory": 4,
+        "icd10": [
+          "J09",
+          "J10",
+          "J11"
+        ],
+        "notifyWithinHours": 168,
+        "transmission": [
+          "droplet",
+          "contact"
+        ],
+        "hasPage": true,
+        "owner": "unit.acute-infectious",
+        "datasets": [
+          "dataset.ili-weekly",
+          "dataset.flu-severe"
+        ],
+        "zhuyin": "ㄌ",
+        "strokes": 10,
+        "legalName": "流感併發重症",
+        "note": "法定通報項目為「流感併發重症」（第四類）；疾病頁以「流感」為題",
+        "i18n": {
+          "en": {
+            "name": "Influenza"
+          }
+        },
+        "auditRules": [
+          {
+            "scope": [
+              "disease.influenza"
+            ],
+            "since": "2026-01-01",
+            "pattern": "(須|需|需要)快篩陽性(才能|才可|始得)",
+            "message": "公費流感抗病毒藥劑使用對象（全年適用）：經醫師評估符合條件者不需流感快篩即可開立公費藥劑；擴大對象高傳播族群同樣免快篩（致醫界通函第 616 號，至 2026-10-31）"
+          }
+        ]
+      }
+    },
+    {
+      "id": "labtest.japanese-encephalitis",
+      "type": "labtest",
+      "title": "日本腦炎檢驗項目與送驗規定",
+      "owner": "unit.lab",
+      "publishedAt": "2025-01-15",
+      "reviewedAt": "2026-07-15",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "disease.japanese-encephalitis"
+      ],
+      "diseases": [
+        "disease.japanese-encephalitis"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-07-15"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "日本腦炎：急性期與恢復期成對血清及腦脊髓液，冷藏 72 小時內送疾管署，做 IgM 捕捉 ELISA 與 RT-PCR；恢復期血清於發病 14 日後採。",
+      "keywords": [
+        "日本腦炎",
+        "檢體",
+        "送驗",
+        "採檢",
+        "IgM 捕捉 ELISA",
+        "RT-PCR"
+      ],
+      "note": "檢體量、保存與時效為原型示意，以檢驗及疫苗研製中心「傳染病檢體採檢手冊」現行版為準",
+      "disease": "disease.japanese-encephalitis",
+      "specimens": [
+        {
+          "name": "急性期血清",
+          "timing": "發病 7 日內",
+          "container": "無菌血清分離管（紅頭或黃頭，無抗凝劑）",
+          "volume": "血清 2 mL",
+          "storage": "2–8°C 冷藏",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "IgM 捕捉 ELISA",
+            "RT-PCR"
+          ],
+          "turnaroundDays": 3
+        },
+        {
+          "name": "腦脊髓液",
+          "timing": "有腦炎症狀時",
+          "container": "無菌螺旋蓋管",
+          "volume": "0.5–1 mL",
+          "storage": "2–8°C 冷藏（72 小時以上 -70°C）",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "IgM 抗體",
+            "RT-PCR"
+          ],
+          "turnaroundDays": 3
+        },
+        {
+          "name": "恢復期血清",
+          "timing": "發病 14 日後",
+          "container": "無菌血清分離管（紅頭或黃頭，無抗凝劑）",
+          "volume": "血清 2 mL",
+          "storage": "2–8°C 冷藏",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "IgM／IgG 抗體（成對血清）"
+          ],
+          "turnaroundDays": 3
+        }
+      ],
+      "labs": [
+        "cdc-lab"
+      ],
+      "sendWithinHours": 72,
+      "formDoc": "service.lab-test-request",
+      "biosafetyLevel": "BSL-2（病毒培養 BSL-3）",
+      "notesMarkdown": "- 需與其他病毒性腦炎鑑別，送驗單請註明接種史。\n- 疫情高峰 5–10 月，豬舍、稻田附近居住史請一併註明。",
+      "sourceHash": "2b4900453ae8",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/japanese-encephalitis/",
+      "path": "/lab/japanese-encephalitis/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/japanese-encephalitis.md",
+      "governance": {
+        "owner": "unit.lab",
+        "ownerName": "檢驗及疫苗研製中心",
+        "steward": null,
+        "reviewedAt": "2026-07-15",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-07-15",
+        "daysToReview": 287,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "pro",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "labtest.japanese-encephalitis",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "labtestCheck": {
+          "disease": "disease.japanese-encephalitis",
+          "diseaseName": "日本腦炎",
+          "notifyWithinHours": 168,
+          "sendWithinHours": 72,
+          "consistent": true,
+          "diseasePage": "disease.japanese-encephalitis",
+          "diseaseSpecimen": true
+        },
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "2b4900453ae8",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      },
+      "master": {
+        "id": "disease.japanese-encephalitis",
+        "slug": "japanese-encephalitis",
+        "name": "日本腦炎",
+        "nameEn": "Japanese encephalitis",
+        "aliases": [
+          "JE",
+          "日腦",
+          "大腦炎"
+        ],
+        "legalCategory": 3,
+        "icd10": [
+          "A83.0"
+        ],
+        "notifyWithinHours": 168,
+        "transmission": [
+          "vector"
+        ],
+        "hasPage": true,
+        "owner": "unit.acute-infectious",
+        "zhuyin": "ㄖ",
+        "strokes": 4,
+        "i18n": {
+          "en": {
+            "name": "Japanese encephalitis"
+          }
+        }
+      }
+    },
+    {
+      "id": "labtest.malaria",
+      "type": "labtest",
+      "title": "瘧疾檢驗項目與送驗規定",
+      "owner": "unit.lab",
+      "publishedAt": "2025-01-15",
+      "reviewedAt": "2026-07-15",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "disease.malaria"
+      ],
+      "diseases": [
+        "disease.malaria"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-07-15"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-07-15",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "瘧疾：EDTA 全血 3 mL 及厚、薄血片各 2 片，室溫或冷藏 24 小時內送驗，做顯微鏡鏡檢與 PCR 蟲種鑑定；結果陰性但高度懷疑應重複採檢。",
+      "keywords": [
+        "瘧疾",
+        "檢體",
+        "送驗",
+        "採檢",
+        "顯微鏡鏡檢",
+        "PCR 蟲種鑑定"
+      ],
+      "note": "檢體量、保存與時效為原型示意，以檢驗及疫苗研製中心「傳染病檢體採檢手冊」現行版為準",
+      "disease": "disease.malaria",
+      "specimens": [
+        {
+          "name": "EDTA 全血",
+          "timing": "發燒時，未服抗瘧藥前",
+          "container": "EDTA 紫頭管",
+          "volume": "3 mL",
+          "storage": "室溫（24 小時內）或 2–8°C",
+          "transport": "室溫或冷藏運送",
+          "tests": [
+            "顯微鏡鏡檢",
+            "PCR 蟲種鑑定"
+          ],
+          "turnaroundDays": 1
+        },
+        {
+          "name": "厚、薄血片",
+          "timing": "同全血",
+          "container": "玻片盒",
+          "volume": "厚薄片各 2 片",
+          "storage": "室溫乾燥",
+          "transport": "室溫運送",
+          "tests": [
+            "顯微鏡鏡檢（原蟲密度）"
+          ],
+          "turnaroundDays": 1
+        }
+      ],
+      "labs": [
+        "cdc-lab",
+        "certified-lab"
+      ],
+      "sendWithinHours": 24,
+      "formDoc": "service.lab-test-request",
+      "biosafetyLevel": "BSL-2",
+      "notesMarkdown": "- 惡性瘧可能快速惡化，治療不需等待確認結果。\n- 陰性但臨床高度懷疑者，每 12–24 小時重複採檢，共 3 次。\n- 送驗單註明旅遊國家與預防用藥史。",
+      "i18n": {
+        "en": {
+          "title": "Malaria: laboratory tests and specimen requirements",
+          "summary": "EDTA whole blood 3 mL plus thick and thin smears, delivered within 24 hours for microscopy and PCR species identification; repeat if negative but suspicion is high."
+        }
+      },
+      "sourceHash": "582e5bd0b36c",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/malaria/",
+      "path": "/lab/malaria/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/malaria.md",
+      "governance": {
+        "owner": "unit.lab",
+        "ownerName": "檢驗及疫苗研製中心",
+        "steward": null,
+        "reviewedAt": "2026-07-15",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-07-15",
+        "daysToReview": 287,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "pro",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "labtest.malaria",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "labtestCheck": {
+          "disease": "disease.malaria",
+          "diseaseName": "瘧疾",
+          "notifyWithinHours": 24,
+          "sendWithinHours": 24,
+          "consistent": true,
+          "diseasePage": "disease.malaria",
+          "diseaseSpecimen": true
+        },
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "582e5bd0b36c",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-07-15",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      },
+      "master": {
+        "id": "disease.malaria",
+        "slug": "malaria",
+        "name": "瘧疾",
+        "nameEn": "Malaria",
+        "aliases": [
+          "Malaria",
+          "打擺子"
+        ],
+        "legalCategory": 2,
+        "icd10": [
+          "B50",
+          "B51",
+          "B52",
+          "B53",
+          "B54"
+        ],
+        "notifyWithinHours": 24,
+        "transmission": [
+          "vector",
+          "bloodborne"
+        ],
+        "hasPage": true,
+        "owner": "unit.acute-infectious",
+        "zhuyin": "ㄋ",
+        "strokes": 14,
+        "i18n": {
+          "en": {
+            "name": "Malaria"
+          }
+        }
+      }
+    },
+    {
+      "id": "labtest.measles",
+      "type": "labtest",
+      "title": "麻疹檢驗項目與送驗規定",
+      "owner": "unit.lab",
+      "publishedAt": "2025-01-15",
+      "reviewedAt": "2026-07-15",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "disease.measles",
+        "doc.case-definition-measles"
+      ],
+      "diseases": [
+        "disease.measles"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-07-15"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-07-15",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "麻疹：咽喉拭子與尿液（出疹 5 日內）做 RT-PCR，血清做 IgM／IgG，冷藏 24 小時內送疾管署；三種檢體應同時採集。",
+      "keywords": [
+        "麻疹",
+        "檢體",
+        "送驗",
+        "採檢",
+        "RT-PCR",
+        "基因定型"
+      ],
+      "note": "檢體量、保存與時效為原型示意，以檢驗及疫苗研製中心「傳染病檢體採檢手冊」現行版為準",
+      "disease": "disease.measles",
+      "specimens": [
+        {
+          "name": "咽喉拭子",
+          "timing": "出疹日起 5 日內",
+          "container": "病毒運送培養基（VTM）拭子管",
+          "volume": "拭子 1 支",
+          "storage": "2–8°C 冷藏",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "RT-PCR",
+            "基因定型"
+          ],
+          "turnaroundDays": 1
+        },
+        {
+          "name": "尿液",
+          "timing": "出疹日起 5 日內",
+          "container": "無菌尿液收集瓶",
+          "volume": "10–50 mL",
+          "storage": "2–8°C 冷藏",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "RT-PCR"
+          ],
+          "turnaroundDays": 1
+        },
+        {
+          "name": "血清",
+          "timing": "出疹後 3 日以上 IgM 較敏感",
+          "container": "無菌血清分離管（紅頭或黃頭，無抗凝劑）",
+          "volume": "血清 2–5 mL",
+          "storage": "2–8°C 冷藏",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "IgM／IgG 抗體"
+          ],
+          "turnaroundDays": 2
+        }
+      ],
+      "labs": [
+        "cdc-lab"
+      ],
+      "sendWithinHours": 24,
+      "formDoc": "service.lab-test-request",
+      "caseDefinitionDoc": "doc.case-definition-measles",
+      "biosafetyLevel": "BSL-2",
+      "notesMarkdown": "- 疑似病例請同時採集咽喉拭子、尿液與血清三種檢體。\n- 採檢人員應具麻疹免疫力並配戴 N95 口罩。\n- 送驗單註明接種史與旅遊史；近期接種 MMR 者需基因定型區分疫苗株。",
+      "i18n": {
+        "en": {
+          "title": "Measles: laboratory tests and specimen requirements",
+          "summary": "Throat swab and urine within 5 days of rash for RT-PCR plus serum for IgM/IgG, refrigerated and sent to Taiwan CDC within 24 hours."
+        }
+      },
+      "sourceHash": "9d7790367549",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/measles/",
+      "path": "/lab/measles/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/measles.md",
+      "governance": {
+        "owner": "unit.lab",
+        "ownerName": "檢驗及疫苗研製中心",
+        "steward": null,
+        "reviewedAt": "2026-07-15",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-07-15",
+        "daysToReview": 287,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "pro",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "labtest.measles",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "labtestCheck": {
+          "disease": "disease.measles",
+          "diseaseName": "麻疹",
+          "notifyWithinHours": 24,
+          "sendWithinHours": 24,
+          "consistent": true,
+          "diseasePage": "disease.measles",
+          "diseaseSpecimen": true
+        },
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "9d7790367549",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-07-15",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      },
+      "master": {
+        "id": "disease.measles",
+        "slug": "measles",
+        "name": "麻疹",
+        "nameEn": "Measles",
+        "aliases": [
+          "Measles",
+          "Rubeola",
+          "痲疹"
+        ],
+        "legalCategory": 2,
+        "icd10": [
+          "B05"
+        ],
+        "notifyWithinHours": 24,
+        "transmission": [
+          "airborne",
+          "droplet"
+        ],
+        "hasPage": true,
+        "owner": "unit.acute-infectious",
+        "datasets": [
+          "dataset.measles-yearly"
+        ],
+        "zhuyin": "ㄇ",
+        "strokes": 11,
+        "i18n": {
+          "en": {
+            "name": "Measles"
+          }
+        },
+        "auditRules": [
+          {
+            "scope": [
+              "disease.measles"
+            ],
+            "since": "2025-04-16",
+            "pattern": "1981\\s*年\\s*[（(]?含?[）)]?\\s*以後出生",
+            "message": "MMR 接種建議已於 2025-04-16 修訂：成人評估對象改為 1966 年（含）以後出生者；「1981 年」為失效條件"
+          },
+          {
+            "scope": [
+              "disease.measles"
+            ],
+            "since": "2026-05-11",
+            "pattern": "日[、,]?韓.{0,4}非流行區",
+            "message": "日本已於 2026-05-11 列為麻疹第一級旅遊疫情建議，「日韓非流行區」已不成立"
+          }
+        ]
+      }
+    },
+    {
+      "id": "labtest.mpox",
+      "type": "labtest",
+      "title": "M痘檢驗項目與送驗規定",
+      "owner": "unit.lab",
+      "publishedAt": "2025-01-15",
+      "reviewedAt": "2026-07-15",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "disease.mpox"
+      ],
+      "diseases": [
+        "disease.mpox"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-07-15"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-07-15",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "M痘：以拭子用力擦拭 2 處以上皮疹病灶（水泡液或痂皮），置乾燥無菌管或 VTM，冷藏 24 小時內送驗做 PCR 與分支鑑定。",
+      "keywords": [
+        "M痘",
+        "檢體",
+        "送驗",
+        "採檢",
+        "PCR",
+        "分支鑑定（Clade I／II）"
+      ],
+      "note": "檢體量、保存與時效為原型示意，以檢驗及疫苗研製中心「傳染病檢體採檢手冊」現行版為準",
+      "disease": "disease.mpox",
+      "specimens": [
+        {
+          "name": "皮疹病灶拭子",
+          "timing": "皮疹出現時，取 2 處以上不同部位",
+          "container": "乾燥無菌拭子管或 病毒運送培養基（VTM）拭子管",
+          "volume": "每處病灶 1 支",
+          "storage": "2–8°C 冷藏；72 小時以上請 -20°C 以下冷凍",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "PCR",
+            "分支鑑定（Clade I／II）"
+          ],
+          "turnaroundDays": 1
+        },
+        {
+          "name": "痂皮",
+          "timing": "病灶結痂時",
+          "container": "無菌螺旋蓋管",
+          "volume": "痂皮 2–3 片",
+          "storage": "2–8°C 冷藏",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "PCR"
+          ],
+          "turnaroundDays": 1
+        },
+        {
+          "name": "咽喉拭子",
+          "timing": "無皮疹或早期",
+          "container": "病毒運送培養基（VTM）拭子管",
+          "volume": "拭子 1 支",
+          "storage": "2–8°C 冷藏",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "PCR"
+          ],
+          "turnaroundDays": 1
+        }
+      ],
+      "labs": [
+        "cdc-lab",
+        "certified-lab"
+      ],
+      "sendWithinHours": 24,
+      "formDoc": "service.lab-test-request",
+      "biosafetyLevel": "BSL-2（病毒培養 BSL-3）",
+      "notesMarkdown": "- 採檢人員穿戴手套、隔離衣、N95 與護目鏡。\n- 有 Clade I 流行地區旅遊史者，送驗單請特別註明以優先分型。",
+      "i18n": {
+        "en": {
+          "title": "Mpox: laboratory tests and specimen requirements",
+          "summary": "Vigorously swab two or more lesions into dry sterile tubes or VTM, refrigerate and deliver within 24 hours for PCR and clade typing."
+        }
+      },
+      "sourceHash": "28d1aa0a77c6",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/mpox/",
+      "path": "/lab/mpox/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/mpox.md",
+      "governance": {
+        "owner": "unit.lab",
+        "ownerName": "檢驗及疫苗研製中心",
+        "steward": null,
+        "reviewedAt": "2026-07-15",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-07-15",
+        "daysToReview": 287,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "pro",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "labtest.mpox",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "labtestCheck": {
+          "disease": "disease.mpox",
+          "diseaseName": "M痘",
+          "notifyWithinHours": 24,
+          "sendWithinHours": 24,
+          "consistent": true,
+          "diseasePage": "disease.mpox",
+          "diseaseSpecimen": true
+        },
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "28d1aa0a77c6",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-07-15",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      },
+      "master": {
+        "id": "disease.mpox",
+        "slug": "mpox",
+        "name": "M痘",
+        "nameEn": "Mpox",
+        "aliases": [
+          "猴痘",
+          "Monkeypox",
+          "Mpox",
+          "MPX"
+        ],
+        "legalCategory": 2,
+        "icd10": [
+          "B04"
+        ],
+        "notifyWithinHours": 24,
+        "transmission": [
+          "contact",
+          "sexual",
+          "droplet"
+        ],
+        "hasPage": true,
+        "owner": "unit.acute-infectious",
+        "zhuyin": "M",
+        "strokes": 0,
+        "note": "2023-03-01 由第五類改列第二類；2022 年中文名由「猴痘」更名為「M痘」",
+        "i18n": {
+          "en": {
+            "name": "Mpox"
+          }
+        }
+      }
+    },
+    {
+      "id": "labtest.pertussis",
+      "type": "labtest",
+      "title": "百日咳檢驗項目與送驗規定",
+      "owner": "unit.lab",
+      "publishedAt": "2025-01-15",
+      "reviewedAt": "2026-07-15",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "disease.pertussis"
+      ],
+      "diseases": [
+        "disease.pertussis"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-07-15"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "百日咳：以細軟拭子採鼻咽檢體（咳嗽 3 週內），PCR 用冷藏、培養用 Regan-Lowe 運送培養基室溫保存，72 小時內送驗。",
+      "keywords": [
+        "百日咳",
+        "檢體",
+        "送驗",
+        "採檢",
+        "PCR",
+        "細菌培養"
+      ],
+      "note": "檢體量、保存與時效為原型示意，以檢驗及疫苗研製中心「傳染病檢體採檢手冊」現行版為準",
+      "disease": "disease.pertussis",
+      "specimens": [
+        {
+          "name": "鼻咽拭子（PCR 用）",
+          "timing": "咳嗽 3 週內",
+          "container": "乾燥無菌拭子管（Dacron／rayon，勿用棉棒）",
+          "volume": "拭子 1 支",
+          "storage": "2–8°C 冷藏",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "PCR"
+          ],
+          "turnaroundDays": 2
+        },
+        {
+          "name": "鼻咽拭子（培養用）",
+          "timing": "咳嗽 2 週內、未使用抗生素前",
+          "container": "Regan-Lowe 運送培養基",
+          "volume": "拭子 1 支",
+          "storage": "室溫",
+          "transport": "室溫運送",
+          "tests": [
+            "細菌培養"
+          ],
+          "turnaroundDays": 7
+        },
+        {
+          "name": "血清",
+          "timing": "咳嗽 2 週以上",
+          "container": "無菌血清分離管（紅頭或黃頭，無抗凝劑）",
+          "volume": "血清 2 mL",
+          "storage": "2–8°C 冷藏",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "抗百日咳毒素 IgG"
+          ],
+          "turnaroundDays": 5
+        }
+      ],
+      "labs": [
+        "cdc-lab",
+        "certified-lab"
+      ],
+      "sendWithinHours": 72,
+      "formDoc": "service.lab-test-request",
+      "biosafetyLevel": "BSL-2",
+      "notesMarkdown": "- 嬰幼兒病例請一併調查家庭接觸者並採檢。\n- 鼻咽拭子須深入鼻咽後壁停留數秒。",
+      "sourceHash": "4a253caafc37",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/pertussis/",
+      "path": "/lab/pertussis/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/pertussis.md",
+      "governance": {
+        "owner": "unit.lab",
+        "ownerName": "檢驗及疫苗研製中心",
+        "steward": null,
+        "reviewedAt": "2026-07-15",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-07-15",
+        "daysToReview": 287,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "pro",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "labtest.pertussis",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "labtestCheck": {
+          "disease": "disease.pertussis",
+          "diseaseName": "百日咳",
+          "notifyWithinHours": 168,
+          "sendWithinHours": 72,
+          "consistent": true,
+          "diseasePage": "disease.pertussis",
+          "diseaseSpecimen": true
+        },
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "4a253caafc37",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      },
+      "master": {
+        "id": "disease.pertussis",
+        "slug": "pertussis",
+        "name": "百日咳",
+        "nameEn": "Pertussis",
+        "aliases": [
+          "Whooping cough",
+          "百日咳桿菌"
+        ],
+        "legalCategory": 3,
+        "icd10": [
+          "A37"
+        ],
+        "notifyWithinHours": 168,
+        "transmission": [
+          "droplet"
+        ],
+        "hasPage": true,
+        "owner": "unit.acute-infectious",
+        "zhuyin": "ㄅ",
+        "strokes": 6,
+        "i18n": {
+          "en": {
+            "name": "Pertussis"
+          }
+        }
+      }
+    },
+    {
+      "id": "labtest.rabies",
+      "type": "labtest",
+      "title": "狂犬病檢驗項目與送驗規定",
+      "owner": "unit.lab",
+      "publishedAt": "2025-01-15",
+      "reviewedAt": "2026-07-15",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "disease.rabies"
+      ],
+      "diseases": [
+        "disease.rabies"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-07-15"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "狂犬病（人類疑似病例）：唾液、頸背部含毛囊皮膚切片與腦脊髓液，冷凍或冷藏 24 小時內送疾管署，做 RT-PCR、抗原與抗體檢驗。",
+      "keywords": [
+        "狂犬病",
+        "檢體",
+        "送驗",
+        "採檢",
+        "RT-PCR"
+      ],
+      "note": "檢體量、保存與時效為原型示意，以檢驗及疫苗研製中心「傳染病檢體採檢手冊」現行版為準",
+      "disease": "disease.rabies",
+      "specimens": [
+        {
+          "name": "唾液",
+          "timing": "每 3–6 小時採 1 次，共 3 次",
+          "container": "無菌螺旋蓋管",
+          "volume": "0.5–1 mL",
+          "storage": "-20°C 以下冷凍",
+          "transport": "乾冰或冷凍運送",
+          "tests": [
+            "RT-PCR"
+          ],
+          "turnaroundDays": 2
+        },
+        {
+          "name": "頸背部皮膚切片（含毛囊）",
+          "timing": "臨床疑似時",
+          "container": "無菌螺旋蓋管（加少量生理食鹽水）",
+          "volume": "直徑 5–6 mm",
+          "storage": "-20°C 以下冷凍",
+          "transport": "乾冰或冷凍運送",
+          "tests": [
+            "RT-PCR",
+            "免疫螢光抗原"
+          ],
+          "turnaroundDays": 2
+        },
+        {
+          "name": "腦脊髓液與血清",
+          "timing": "臨床疑似時",
+          "container": "無菌螺旋蓋管／血清分離管",
+          "volume": "腦脊髓液 1 mL、血清 2 mL",
+          "storage": "2–8°C 冷藏",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "中和抗體"
+          ],
+          "turnaroundDays": 3
+        }
+      ],
+      "labs": [
+        "cdc-lab"
+      ],
+      "sendWithinHours": 24,
+      "formDoc": "service.lab-test-request",
+      "biosafetyLevel": "BSL-3",
+      "notesMarkdown": "- 第一類法定傳染病，24 小時內通報並聯繫區管中心安排送驗。\n- 動物檢體（咬人動物）依農業部動物防疫機關規定送驗。\n- 暴露後預防接種不需等待檢驗結果。",
+      "sourceHash": "bfb7cf0b8ba7",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/rabies/",
+      "path": "/lab/rabies/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/rabies.md",
+      "governance": {
+        "owner": "unit.lab",
+        "ownerName": "檢驗及疫苗研製中心",
+        "steward": null,
+        "reviewedAt": "2026-07-15",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-07-15",
+        "daysToReview": 287,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "pro",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "labtest.rabies",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "labtestCheck": {
+          "disease": "disease.rabies",
+          "diseaseName": "狂犬病",
+          "notifyWithinHours": 24,
+          "sendWithinHours": 24,
+          "consistent": true,
+          "diseasePage": "disease.rabies",
+          "diseaseSpecimen": true
+        },
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "bfb7cf0b8ba7",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      },
+      "master": {
+        "id": "disease.rabies",
+        "slug": "rabies",
+        "name": "狂犬病",
+        "nameEn": "Rabies",
+        "aliases": [
+          "恐水病",
+          "Rabies",
+          "麗沙病毒感染"
+        ],
+        "legalCategory": 1,
+        "icd10": [
+          "A82"
+        ],
+        "notifyWithinHours": 24,
+        "transmission": [
+          "zoonotic"
+        ],
+        "hasPage": true,
+        "owner": "unit.acute-infectious",
+        "zhuyin": "ㄎ",
+        "strokes": 7,
+        "i18n": {
+          "en": {
+            "name": "Rabies"
+          }
+        }
+      }
+    },
+    {
+      "id": "labtest.rubella",
+      "type": "labtest",
+      "title": "德國麻疹檢驗項目與送驗規定",
+      "owner": "unit.lab",
+      "publishedAt": "2025-01-15",
+      "reviewedAt": "2026-07-15",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "disease.rubella"
+      ],
+      "diseases": [
+        "disease.rubella"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-07-15"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "德國麻疹：咽喉拭子（出疹 7 日內）做 RT-PCR，血清做 IgM／IgG，冷藏 24 小時內送疾管署；孕婦接觸者需追蹤抗體。",
+      "keywords": [
+        "德國麻疹",
+        "檢體",
+        "送驗",
+        "採檢",
+        "RT-PCR",
+        "基因定型"
+      ],
+      "note": "檢體量、保存與時效為原型示意，以檢驗及疫苗研製中心「傳染病檢體採檢手冊」現行版為準",
+      "disease": "disease.rubella",
+      "specimens": [
+        {
+          "name": "咽喉拭子",
+          "timing": "出疹日起 7 日內",
+          "container": "病毒運送培養基（VTM）拭子管",
+          "volume": "拭子 1 支",
+          "storage": "2–8°C 冷藏",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "RT-PCR",
+            "基因定型"
+          ],
+          "turnaroundDays": 2
+        },
+        {
+          "name": "血清",
+          "timing": "出疹後 5 日以上 IgM 較敏感",
+          "container": "無菌血清分離管（紅頭或黃頭，無抗凝劑）",
+          "volume": "血清 2–5 mL",
+          "storage": "2–8°C 冷藏",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "IgM／IgG 抗體"
+          ],
+          "turnaroundDays": 2
+        }
+      ],
+      "labs": [
+        "cdc-lab"
+      ],
+      "sendWithinHours": 24,
+      "formDoc": "service.lab-test-request",
+      "biosafetyLevel": "BSL-2",
+      "notesMarkdown": "- 常與麻疹同時鑑別，可於送驗單同時勾選。\n- 孕婦接觸者請另採血清檢測抗體並轉介產科。",
+      "sourceHash": "a7c22c2d2b86",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/rubella/",
+      "path": "/lab/rubella/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/rubella.md",
+      "governance": {
+        "owner": "unit.lab",
+        "ownerName": "檢驗及疫苗研製中心",
+        "steward": null,
+        "reviewedAt": "2026-07-15",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-07-15",
+        "daysToReview": 287,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "pro",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "labtest.rubella",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "labtestCheck": {
+          "disease": "disease.rubella",
+          "diseaseName": "德國麻疹",
+          "notifyWithinHours": 24,
+          "sendWithinHours": 24,
+          "consistent": true,
+          "diseasePage": "disease.rubella",
+          "diseaseSpecimen": true
+        },
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "a7c22c2d2b86",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      },
+      "master": {
+        "id": "disease.rubella",
+        "slug": "rubella",
+        "name": "德國麻疹",
+        "nameEn": "Rubella",
+        "aliases": [
+          "風疹",
+          "Rubella"
+        ],
+        "legalCategory": 2,
+        "icd10": [
+          "B06"
+        ],
+        "notifyWithinHours": 24,
+        "transmission": [
+          "droplet",
+          "vertical"
+        ],
+        "hasPage": true,
+        "owner": "unit.acute-infectious",
+        "zhuyin": "ㄉ",
+        "strokes": 15,
+        "i18n": {
+          "en": {
+            "name": "Rubella"
+          }
+        }
+      }
+    },
+    {
+      "id": "labtest.shigellosis",
+      "type": "labtest",
+      "title": "桿菌性痢疾檢驗項目與送驗規定",
+      "owner": "unit.lab",
+      "publishedAt": "2025-01-15",
+      "reviewedAt": "2026-07-15",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "publication.manual-communicable-disease-control-2026"
+      ],
+      "diseases": [
+        "disease.shigellosis"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-07-15"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-07-15",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "桿菌性痢疾：糞便或肛門拭子置 Cary-Blair 運送培養基，冷藏 24 小時內送驗，做細菌培養、血清分型與抗藥性監測。",
+      "keywords": [
+        "桿菌性痢疾",
+        "檢體",
+        "送驗",
+        "採檢",
+        "細菌培養",
+        "血清分型"
+      ],
+      "note": "檢體量、保存與時效為原型示意，以檢驗及疫苗研製中心「傳染病檢體採檢手冊」現行版為準",
+      "disease": "disease.shigellosis",
+      "specimens": [
+        {
+          "name": "糞便",
+          "timing": "腹瀉期間、使用抗生素前",
+          "container": "Cary-Blair 運送培養基",
+          "volume": "糞便 2–5 g（水樣便 5 mL）",
+          "storage": "2–8°C 冷藏",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "細菌培養",
+            "血清分型",
+            "抗生素感受性"
+          ],
+          "turnaroundDays": 3
+        },
+        {
+          "name": "肛門拭子",
+          "timing": "無法取得糞便時",
+          "container": "Cary-Blair 運送培養基",
+          "volume": "拭子 1 支（可見糞便沾染）",
+          "storage": "2–8°C 冷藏",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "細菌培養"
+          ],
+          "turnaroundDays": 3
+        }
+      ],
+      "labs": [
+        "certified-lab",
+        "cdc-lab",
+        "regional-lab"
+      ],
+      "sendWithinHours": 24,
+      "formDoc": "service.lab-test-request",
+      "biosafetyLevel": "BSL-2",
+      "notesMarkdown": "- 第二類法定傳染病，24 小時內通報；接觸者與餐飲從業人員需採檢至連續 3 次陰性（示意，依工作手冊）。\n- 多重抗藥菌株送疾管署分子分型。",
+      "i18n": {
+        "en": {
+          "title": "Shigellosis: laboratory tests and specimen requirements",
+          "summary": "Stool or rectal swab in Cary-Blair transport medium, refrigerated and delivered within 24 hours for culture, serotyping and antimicrobial susceptibility."
+        }
+      },
+      "sourceHash": "b0817c2c02d0",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/shigellosis/",
+      "path": "/lab/shigellosis/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/shigellosis.md",
+      "governance": {
+        "owner": "unit.lab",
+        "ownerName": "檢驗及疫苗研製中心",
+        "steward": null,
+        "reviewedAt": "2026-07-15",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-07-15",
+        "daysToReview": 287,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "pro",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "labtest.shigellosis",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "labtestCheck": {
+          "disease": "disease.shigellosis",
+          "diseaseName": "桿菌性痢疾",
+          "notifyWithinHours": 24,
+          "sendWithinHours": 24,
+          "consistent": true,
+          "diseasePage": null,
+          "diseaseSpecimen": false
+        },
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "b0817c2c02d0",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-07-15",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      },
+      "master": {
+        "id": "disease.shigellosis",
+        "slug": "shigellosis",
+        "name": "桿菌性痢疾",
+        "nameEn": "Shigellosis",
+        "aliases": [
+          "志賀氏桿菌",
+          "細菌性痢疾"
+        ],
+        "legalCategory": 2,
+        "icd10": [
+          "A03"
+        ],
+        "notifyWithinHours": 24,
+        "transmission": [
+          "foodborne",
+          "waterborne",
+          "contact",
+          "sexual"
+        ],
+        "hasPage": false,
+        "owner": "unit.acute-infectious",
+        "zhuyin": "ㄍ",
+        "strokes": 11,
+        "i18n": {
+          "en": {
+            "name": "Shigellosis"
+          }
+        }
+      }
+    },
+    {
+      "id": "labtest.tuberculosis",
+      "type": "labtest",
+      "title": "結核病檢驗項目與送驗規定",
+      "owner": "unit.lab",
+      "publishedAt": "2025-01-15",
+      "reviewedAt": "2026-07-15",
+      "reviewPeriodMonths": 12,
+      "status": "published",
+      "audience": [
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "basedOn": [
+        "disease.tuberculosis",
+        "doc.tb-manual"
+      ],
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-07-15"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-07-15",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "結核病：連續 3 套痰液（至少 1 套晨痰）各 3–5 mL，冷藏 72 小時內送認可實驗室，做抗酸菌塗片、培養、分子檢測與藥物感受性試驗。",
+      "keywords": [
+        "結核病",
+        "檢體",
+        "送驗",
+        "採檢",
+        "抗酸菌塗片",
+        "分子檢測（MTB／RIF）"
+      ],
+      "note": "檢體量、保存與時效為原型示意，以檢驗及疫苗研製中心「傳染病檢體採檢手冊」現行版為準",
+      "disease": "disease.tuberculosis",
+      "specimens": [
+        {
+          "name": "痰液（3 套）",
+          "timing": "通報前後連續採檢，至少 1 套為清晨第一口痰",
+          "container": "無菌螺旋蓋痰盒",
+          "volume": "每套 3–5 mL",
+          "storage": "2–8°C 冷藏",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "抗酸菌塗片",
+            "分子檢測（MTB／RIF）",
+            "培養與鑑定",
+            "藥物感受性試驗"
+          ],
+          "turnaroundDays": 1,
+          "note": "塗片 1 日；分子檢測 1–2 日；培養 6–8 週"
+        },
+        {
+          "name": "支氣管沖洗液或胃液",
+          "timing": "無法自咳痰者",
+          "container": "無菌螺旋蓋容器",
+          "volume": "5 mL 以上",
+          "storage": "2–8°C 冷藏",
+          "transport": "2–8°C 冷藏運送（UN3373 三層包裝）",
+          "tests": [
+            "抗酸菌塗片",
+            "培養"
+          ],
+          "turnaroundDays": 1
+        }
+      ],
+      "labs": [
+        "certified-lab",
+        "hospital-lab"
+      ],
+      "sendWithinHours": 72,
+      "formDoc": "service.lab-test-request",
+      "biosafetyLevel": "BSL-2（培養與藥敏 BSL-3）",
+      "notesMarkdown": "- 結核病為第三類法定傳染病，通報時限一週；建議通報同時完成 3 套痰液送驗。\n- 多重抗藥性結核菌株送疾管署參考實驗室確認。\n- 痰液請咳出肺部深處痰，非口水。",
+      "i18n": {
+        "en": {
+          "title": "Tuberculosis: laboratory tests and specimen requirements",
+          "summary": "Three sputum samples (at least one early-morning) of 3–5 mL each, refrigerated and sent within 72 hours for smear, molecular tests, culture and drug susceptibility testing."
+        }
+      },
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Category/MPage/{id}#lab"
+      ],
+      "sourceHash": "655d71886662",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/tuberculosis/",
+      "path": "/lab/tuberculosis/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/tuberculosis.md",
+      "governance": {
+        "owner": "unit.lab",
+        "ownerName": "檢驗及疫苗研製中心",
+        "steward": null,
+        "reviewedAt": "2026-07-15",
+        "reviewPeriodMonths": 12,
+        "nextReviewAt": "2027-07-15",
+        "daysToReview": 287,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "pro",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "labtest.tuberculosis",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [
+          {
+            "basedOn": "doc.tb-manual",
+            "revisedAt": "2025-07-01",
+            "currentId": "doc.tb-manual.2025-07-01",
+            "currentTitle": "結核病防治工作手冊",
+            "currentVersion": "2025",
+            "currentHref": "/documents/tb-manual.2025-07-01/",
+            "dueAt": "2025-07-08",
+            "resolved": true,
+            "resolvedAt": "2026-07-15"
+          }
+        ],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "labtestCheck": {
+          "disease": "disease.tuberculosis",
+          "diseaseName": "結核病",
+          "notifyWithinHours": 168,
+          "sendWithinHours": 72,
+          "consistent": true,
+          "diseasePage": "disease.tuberculosis",
+          "diseaseSpecimen": true
+        },
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "655d71886662",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-07-15",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      },
+      "master": {
+        "id": "disease.tuberculosis",
+        "slug": "tuberculosis",
+        "name": "結核病",
+        "nameEn": "Tuberculosis",
+        "aliases": [
+          "肺結核",
+          "TB",
+          "肺癆"
+        ],
+        "legalCategory": 3,
+        "icd10": [
+          "A15",
+          "A16",
+          "A17",
+          "A18",
+          "A19"
+        ],
+        "notifyWithinHours": 168,
+        "transmission": [
+          "airborne"
+        ],
+        "hasPage": true,
+        "owner": "unit.chronic-infectious",
+        "datasets": [
+          "dataset.tb-new-cases"
+        ],
+        "zhuyin": "ㄐ",
+        "strokes": 12,
+        "note": "不含多重抗藥性結核病（第二類）",
+        "i18n": {
+          "en": {
+            "name": "Tuberculosis"
+          }
+        }
+      }
+    }
+  ]
+}

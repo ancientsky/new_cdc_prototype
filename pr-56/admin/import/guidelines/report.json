@@ -1,0 +1,3034 @@
+{
+  "format": "cdc-legacy-import-report/1",
+  "batch": "guidelines",
+  "generatedAt": "2026-10-05T02:30:00Z",
+  "exportedAt": "2026-10-03",
+  "simulated": true,
+  "source": {
+    "dir": "data/legacy-export/guidelines",
+    "note": "模擬匯出：指引及手冊欄目。由既有 content/documents 27 份（19 個文件家族）反推成欄目內頁 21 頁（歷版多以同頁附件呈現，共 6 份歷版 PDF；流感抗病毒藥劑三版各一頁），另合成新站沒有的頁 4 頁與列表頁 1 頁；不是舊站的真實資料（網址 ID、數字、PDF 內容皆為示意）。正式匯出取代整個目錄即可。",
+    "site": "https://www.cdc.gov.tw"
+  },
+  "rules": {
+    "file": "content/migration/import/_import-rules.json",
+    "version": 10
+  },
+  "manifest": {
+    "id": "migration.guidelines",
+    "file": "content/migration/guidelines.json",
+    "synthetic": false,
+    "items": 26,
+    "extends": null,
+    "derivedItems": 0,
+    "derivedCovered": [],
+    "disease": null
+  },
+  "summary": {
+    "pages": 26,
+    "drafts": 32,
+    "mergedPages": 0,
+    "byType": {
+      "document": 31,
+      "page": 1
+    },
+    "byKind": {
+      "document": 25,
+      "list": 1
+    },
+    "byAction": {
+      "compare-existing": 19,
+      "review-before-publish": 2,
+      "archive": 4,
+      "skip-list": 1
+    },
+    "avgConfidence": 0.97,
+    "needsReview": 0,
+    "existing": 21,
+    "schemaInvalid": 0,
+    "assets": {
+      "total": 31,
+      "attachment": 31,
+      "image": 0,
+      "data": 0,
+      "needsAlt": 0,
+      "noTextLayer": 1
+    },
+    "issues": {
+      "error": 0,
+      "warn": 5,
+      "info": 115
+    },
+    "manifest": {
+      "items": 26,
+      "matched": 26,
+      "missingPages": 0,
+      "derivedItems": 0,
+      "derivedMatched": 0
+    },
+    "generated": 0,
+    "exportedAt": "2026-10-03",
+    "pagesWithoutOutput": 0
+  },
+  "pages": [
+    {
+      "key": "01-case-definition-dengue",
+      "file": "01-case-definition-dengue.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/tWFvK3bPGVcG4STNN7K0AJ",
+        "title": "傳染病病例定義：登革熱（2026 年版）",
+        "category": "傳染病介紹／登革熱／指引及手冊",
+        "publishedAt": "2023-01-01",
+        "updatedAt": "2026-01-01",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病介紹",
+          "登革熱",
+          "指引及手冊"
+        ],
+        "tab": "case-definition-dengue"
+      },
+      "pattern": "mpage",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "case-definition-dengue",
+      "manifestDerived": false,
+      "target": "doc.case-definition-dengue.2026-01-01",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.case-definition-dengue.2026-01-01",
+        "doc.case-definition-dengue.2023-01-01"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "doc.case-definition-dengue.2026-01-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/case-definition-dengue.2026-01-01.json",
+          "schemaValid": true
+        },
+        {
+          "id": "doc.case-definition-dengue.2023-01-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/case-definition-dengue.2023-01-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 64 處（mso 樣式 30、Mso 類別 21、命名空間標籤 17）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「傳染病介紹／登革熱／指引及手冊」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站內容是文件 doc.case-definition-dengue.2026-01-01，草稿依清單建成 document（舊頁本身是欄目內頁）"
+        },
+        {
+          "code": "effective-from-text",
+          "severity": "info",
+          "message": "生效日 2026-01-01 取自內文（舊頁發布日 2023-01-01）"
+        },
+        {
+          "code": "version-from-attachment",
+          "severity": "info",
+          "message": "附件「傳染病病例定義：登革熱（2023 年版，2023 年 1 月 1 日）（PDF）」是另一版次（2023 年版），另建純 PDF 草稿 doc.case-definition-dengue.2023-01-01（同家族 doc.case-definition-dengue，不轉內文）"
+        },
+        {
+          "code": "version-chain",
+          "severity": "info",
+          "message": "版次鏈 doc.case-definition-dengue：2023 年版（2023-01-01） → 2026 年版（2026-01-01）；本版為現行版，supersedes doc.case-definition-dengue.2023-01-01"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 2
+      }
+    },
+    {
+      "key": "02-case-definition-measles",
+      "file": "02-case-definition-measles.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/TFUycDkXCfricFUt5j-XxJ",
+        "title": "傳染病病例定義：麻疹",
+        "category": "傳染病介紹／麻疹／指引及手冊",
+        "publishedAt": "2024-01-01",
+        "updatedAt": "2026-01-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病介紹",
+          "麻疹",
+          "指引及手冊"
+        ],
+        "tab": "case-definition-measles"
+      },
+      "pattern": "mpage",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "case-definition-measles",
+      "manifestDerived": false,
+      "target": "doc.case-definition-measles.2024-01-01",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.case-definition-measles.2024-01-01"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "doc.case-definition-measles.2024-01-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/case-definition-measles.2024-01-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 73 處（mso 樣式 39、Mso 類別 24、命名空間標籤 17）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「傳染病介紹／麻疹／指引及手冊」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站內容是文件 doc.case-definition-measles.2024-01-01，草稿依清單建成 document（舊頁本身是欄目內頁）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2024-01-01"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "03-covid-vaccine-recommendation",
+      "file": "03-covid-vaccine-recommendation.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/2G_kk9OEXNAmMOsndOv0Tc",
+        "title": "新冠疫苗接種建議（2026–2027 年度）",
+        "category": "傳染病介紹／新冠併發重症／指引及手冊",
+        "publishedAt": "2025-09-15",
+        "updatedAt": "2026-09-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病介紹",
+          "新冠併發重症",
+          "指引及手冊"
+        ],
+        "tab": "covid-vaccine-recommendation"
+      },
+      "pattern": "mpage",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "covid-vaccine-recommendation",
+      "manifestDerived": false,
+      "target": "doc.covid-vaccine-recommendation.2026-09-15",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.covid-vaccine-recommendation.2026-09-15",
+        "doc.covid-vaccine-recommendation.2025-09-15"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.covid-19"
+      ],
+      "outputs": [
+        {
+          "id": "doc.covid-vaccine-recommendation.2026-09-15",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/covid-vaccine-recommendation.2026-09-15.json",
+          "schemaValid": true
+        },
+        {
+          "id": "doc.covid-vaccine-recommendation.2025-09-15",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/covid-vaccine-recommendation.2025-09-15.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 53 處（mso 樣式 19、Mso 類別 17、命名空間標籤 17）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「傳染病介紹／新冠併發重症／指引及手冊」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（新冠併發重症）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站內容是文件 doc.covid-vaccine-recommendation.2026-09-15，草稿依清單建成 document（舊頁本身是欄目內頁）"
+        },
+        {
+          "code": "effective-from-text",
+          "severity": "info",
+          "message": "生效日 2026-09-15 取自內文（舊頁發布日 2025-09-15）"
+        },
+        {
+          "code": "version-from-attachment",
+          "severity": "info",
+          "message": "附件「新冠疫苗接種建議（2025 年版，2025 年 9 月 15 日）（PDF）」是另一版次（2025 年版），另建純 PDF 草稿 doc.covid-vaccine-recommendation.2025-09-15（同家族 doc.covid-vaccine-recommendation，不轉內文）"
+        },
+        {
+          "code": "version-chain",
+          "severity": "info",
+          "message": "版次鏈 doc.covid-vaccine-recommendation：2025 年版（2025-09-15） → 2027 年版（2026-09-15）；本版為現行版，supersedes doc.covid-vaccine-recommendation.2025-09-15"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 2
+      }
+    },
+    {
+      "key": "04-crowded-ic-guideline",
+      "file": "04-crowded-ic-guideline.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/DiseaseTeach/nAusiBUYAdEsBLO31lifRN",
+        "title": "人口密集機構感染管制措施指引",
+        "category": "感染管制／指引及手冊",
+        "publishedAt": "2025-06-30",
+        "updatedAt": "2025-06-30",
+        "breadcrumbs": [
+          "首頁",
+          "感染管制",
+          "指引及手冊"
+        ],
+        "tab": "crowded-ic-guideline"
+      },
+      "pattern": "disease-docs",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "crowded-ic-guideline",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.infection-control",
+      "ownerRule": "感染管制",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "doc.x-crowded-ic-guideline.2025-06-30",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/x-crowded-ic-guideline.2025-06-30.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（11 字，低於 40）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2025-06-30"
+        },
+        {
+          "code": "pdf-only",
+          "severity": "warn",
+          "message": "舊頁內文只有下載連結，正本是 PDF「人口密集機構感染管制措施指引（2025 年 6 月版）（PDF）」；machineReadableMarkdown 以（待補）佔位，PDF 不整批轉（第 8 節），上架前請提供文字版"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "info",
+          "message": "待補欄位：machineReadableMarkdown（正本文字版）"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "05-dengue-community-workplan",
+      "file": "05-dengue-community-workplan.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/2hJk9W1XoDaTFEiv0r6x2o",
+        "title": "登革熱社區防治工作指引：孳生源清除、病媒蚊監測與群聚應變",
+        "category": "傳染病介紹／登革熱／指引及手冊",
+        "publishedAt": "2026-09-10",
+        "updatedAt": "2026-09-10",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病介紹",
+          "登革熱",
+          "指引及手冊"
+        ],
+        "tab": "dengue-community-workplan"
+      },
+      "pattern": "mpage",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "dengue-community-workplan",
+      "manifestDerived": false,
+      "target": "doc.dengue-community-workplan.2026-09-10",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.dengue-community-workplan.2026-09-10"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue"
+      ],
+      "outputs": [
+        {
+          "id": "doc.dengue-community-workplan.2026-09-10",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/dengue-community-workplan.2026-09-10.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 75 處（mso 樣式 45、Mso 類別 23、命名空間標籤 15）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「傳染病介紹／登革熱／指引及手冊」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站內容是文件 doc.dengue-community-workplan.2026-09-10，草稿依清單建成 document（舊頁本身是欄目內頁）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2026-09-10"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "06-dots-manual",
+      "file": "06-dots-manual.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/yNrS2lvYiqdFRi0xisvyGW",
+        "title": "結核病都治（DOTS）計畫作業手冊",
+        "category": "傳染病介紹／結核病／指引及手冊",
+        "publishedAt": "2025-01-01",
+        "updatedAt": "2026-01-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病介紹",
+          "結核病",
+          "指引及手冊"
+        ],
+        "tab": "dots-manual"
+      },
+      "pattern": "mpage",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "dots-manual",
+      "manifestDerived": false,
+      "target": "doc.dots-manual.2025-01-01",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.dots-manual.2025-01-01"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／指引及手冊",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "doc.dots-manual.2025-01-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/dots-manual.2025-01-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 70 處（mso 樣式 38、Mso 類別 20、命名空間標籤 16）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站內容是文件 doc.dots-manual.2025-01-01，草稿依清單建成 document（舊頁本身是欄目內頁）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2025-01-01"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "07-ev-childcare-guideline",
+      "file": "07-ev-childcare-guideline.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/R-VAtCncWwVYC1rBBa5wpf",
+        "title": "教托育機構腸病毒防治指引",
+        "category": "傳染病介紹／腸病毒／指引及手冊",
+        "publishedAt": "2026-09-10",
+        "updatedAt": "2026-09-10",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病介紹",
+          "腸病毒",
+          "指引及手冊"
+        ],
+        "tab": "ev-childcare-guideline"
+      },
+      "pattern": "mpage",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "ev-childcare-guideline",
+      "manifestDerived": false,
+      "target": "doc.ev-childcare-guideline.2026-09-10",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.ev-childcare-guideline.2026-09-10"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "doc.ev-childcare-guideline.2026-09-10",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/ev-childcare-guideline.2026-09-10.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 78 處（mso 樣式 50、Mso 類別 24、命名空間標籤 14）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「傳染病介紹／腸病毒／指引及手冊」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站內容是文件 doc.ev-childcare-guideline.2026-09-10，草稿依清單建成 document（舊頁本身是欄目內頁）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2026-09-10"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "08-ev-severe-guideline",
+      "file": "08-ev-severe-guideline.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/m70l0M3H8QLwZUchC8H0WU",
+        "title": "腸病毒感染併發重症臨床處置建議",
+        "category": "傳染病介紹／腸病毒／指引及手冊",
+        "publishedAt": "2026-03-15",
+        "updatedAt": "2026-03-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病介紹",
+          "腸病毒",
+          "指引及手冊"
+        ],
+        "tab": "ev-severe-guideline"
+      },
+      "pattern": "mpage",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "ev-severe-guideline",
+      "manifestDerived": false,
+      "target": "doc.ev-severe-guideline.2026-03-15",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.ev-severe-guideline.2026-03-15"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.enterovirus"
+      ],
+      "outputs": [
+        {
+          "id": "doc.ev-severe-guideline.2026-03-15",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/ev-severe-guideline.2026-03-15.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 52 處（mso 樣式 18、Mso 類別 17、命名空間標籤 17）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「傳染病介紹／腸病毒／指引及手冊」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站內容是文件 doc.ev-severe-guideline.2026-03-15，草稿依清單建成 document（舊頁本身是欄目內頁）"
+        },
+        {
+          "code": "doctype-guessed",
+          "severity": "info",
+          "message": "標題與網址看不出文件種類，暫填 guideline"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2026-03-15"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "09-flu-antiviral-eligibility",
+      "file": "09-flu-antiviral-eligibility.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/NbhcebQOefVm48u57Z4rVv",
+        "title": "公費流感抗病毒藥劑使用對象（2026 年 9 月延長版：高傳播族群延至 10 月 31 日）",
+        "category": "傳染病介紹／流感／指引及手冊",
+        "publishedAt": "2026-09-18",
+        "updatedAt": "2026-09-20",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病介紹",
+          "流感",
+          "指引及手冊"
+        ],
+        "tab": "flu-antiviral-eligibility"
+      },
+      "pattern": "mpage",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "flu-antiviral-eligibility",
+      "manifestDerived": false,
+      "target": "doc.flu-antiviral-eligibility.2026-09-18",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.flu-antiviral-eligibility.2026-09-18"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "doc.flu-antiviral-eligibility.2026-09-18",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/flu-antiviral-eligibility.2026-09-18.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 52 處（mso 樣式 18、Mso 類別 17、命名空間標籤 17）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「傳染病介紹／流感／指引及手冊」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站內容是文件 doc.flu-antiviral-eligibility.2026-09-18，草稿依清單建成 document（舊頁本身是欄目內頁）"
+        },
+        {
+          "code": "doctype-guessed",
+          "severity": "info",
+          "message": "標題與網址看不出文件種類，暫填 guideline"
+        },
+        {
+          "code": "effective-from-text",
+          "severity": "info",
+          "message": "生效日 2026-09-01 取自標題（舊頁發布日 2026-09-18）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2026-09-01"
+        },
+        {
+          "code": "version-chain",
+          "severity": "info",
+          "message": "版次鏈 doc.flu-antiviral-eligibility：2026-06-01（2026-06-01） → 2026-08-01（2026-08-01） → 2026-09-01（2026-09-01）；本版為現行版，supersedes doc.flu-antiviral-eligibility.2026-08-24"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "10-flu-antiviral-eligibility-2026-06",
+      "file": "10-flu-antiviral-eligibility-2026-06.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/XJrlXfbtWEd8E3uwbnfBg9",
+        "title": "公費流感抗病毒藥劑使用對象（全年適用條件）",
+        "category": "傳染病介紹／流感／指引及手冊／歷版",
+        "publishedAt": "2026-06-01",
+        "updatedAt": "2026-06-01",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病介紹",
+          "流感",
+          "指引及手冊",
+          "歷版"
+        ],
+        "tab": "flu-antiviral-eligibility-2026-06"
+      },
+      "pattern": "mpage",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "flu-antiviral-eligibility-2026-06",
+      "manifestDerived": false,
+      "target": "doc.flu-antiviral-eligibility.2026-06-01",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.flu-antiviral-eligibility.2026-06-01"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "doc.flu-antiviral-eligibility.2026-06-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/flu-antiviral-eligibility.2026-06-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 52 處（mso 樣式 18、Mso 類別 17、命名空間標籤 17）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「傳染病介紹／流感／指引及手冊／歷版」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站內容是文件 doc.flu-antiviral-eligibility.2026-06-01，草稿依清單建成 document（舊頁本身是欄目內頁）"
+        },
+        {
+          "code": "historical-version",
+          "severity": "info",
+          "message": "歷史版本：建議封存（舊版保留查閱），不取代現行版"
+        },
+        {
+          "code": "doctype-guessed",
+          "severity": "info",
+          "message": "標題與網址看不出文件種類，暫填 guideline"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2026-06-01"
+        }
+      ],
+      "action": "archive",
+      "flags": {
+        "historical": true
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "11-flu-antiviral-eligibility-2026-08",
+      "file": "11-flu-antiviral-eligibility-2026-08.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/utHsvgoFhtVwsL26JL-6TM",
+        "title": "公費流感抗病毒藥劑使用對象（2026 年 8 月擴大版：高傳播族群，至 9 月 30 日）",
+        "category": "傳染病介紹／流感／指引及手冊／歷版",
+        "publishedAt": "2026-08-24",
+        "updatedAt": "2026-08-24",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病介紹",
+          "流感",
+          "指引及手冊",
+          "歷版"
+        ],
+        "tab": "flu-antiviral-eligibility-2026-08"
+      },
+      "pattern": "mpage",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "flu-antiviral-eligibility-2026-08",
+      "manifestDerived": false,
+      "target": "doc.flu-antiviral-eligibility.2026-08-24",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.flu-antiviral-eligibility.2026-08-24"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "doc.flu-antiviral-eligibility.2026-08-24",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/flu-antiviral-eligibility.2026-08-24.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 52 處（mso 樣式 18、Mso 類別 17、命名空間標籤 17）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「傳染病介紹／流感／指引及手冊／歷版」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站內容是文件 doc.flu-antiviral-eligibility.2026-08-24，草稿依清單建成 document（舊頁本身是欄目內頁）"
+        },
+        {
+          "code": "historical-version",
+          "severity": "info",
+          "message": "歷史版本：建議封存（舊版保留查閱），不取代現行版"
+        },
+        {
+          "code": "doctype-guessed",
+          "severity": "info",
+          "message": "標題與網址看不出文件種類，暫填 guideline"
+        },
+        {
+          "code": "effective-from-text",
+          "severity": "info",
+          "message": "生效日 2026-08-01 取自標題（舊頁發布日 2026-08-24）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2026-08-01"
+        }
+      ],
+      "action": "archive",
+      "flags": {
+        "historical": true
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "12-flu-vaccine-manual",
+      "file": "12-flu-vaccine-manual.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/CakZ4t4cZR0bYXTl_3xLDw",
+        "title": "2026–2027 年度公費流感疫苗接種計畫作業手冊",
+        "category": "傳染病介紹／流感／指引及手冊",
+        "publishedAt": "2026-09-16",
+        "updatedAt": "2026-09-16",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病介紹",
+          "流感",
+          "指引及手冊"
+        ],
+        "tab": "flu-vaccine-manual"
+      },
+      "pattern": "mpage",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "flu-vaccine-manual",
+      "manifestDerived": false,
+      "target": "doc.flu-vaccine-manual.2026-09-16",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.flu-vaccine-manual.2026-09-16"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "doc.flu-vaccine-manual.2026-09-16",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/flu-vaccine-manual.2026-09-16.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 74 處（mso 樣式 46、Mso 類別 24、命名空間標籤 14）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「傳染病介紹／流感／指引及手冊」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站內容是文件 doc.flu-vaccine-manual.2026-09-16，草稿依清單建成 document（舊頁本身是欄目內頁）"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "13-flu-vaccine-schedule",
+      "file": "13-flu-vaccine-schedule.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/PwkPHdhebK90v4YVz1uOnQ",
+        "title": "2026–2027 年度公費流感疫苗接種計畫：實施對象與時程",
+        "category": "傳染病介紹／流感／指引及手冊",
+        "publishedAt": "2026-09-15",
+        "updatedAt": "2026-09-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病介紹",
+          "流感",
+          "指引及手冊"
+        ],
+        "tab": "flu-vaccine-schedule"
+      },
+      "pattern": "mpage",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "flu-vaccine-schedule",
+      "manifestDerived": false,
+      "target": "doc.flu-vaccine-schedule.2026-09-15",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.flu-vaccine-schedule.2026-09-15"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza"
+      ],
+      "outputs": [
+        {
+          "id": "doc.flu-vaccine-schedule.2026-09-15",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/flu-vaccine-schedule.2026-09-15.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 70 處（mso 樣式 38、Mso 類別 23、命名空間標籤 16）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「傳染病介紹／流感／指引及手冊」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站內容是文件 doc.flu-vaccine-schedule.2026-09-15，草稿依清單建成 document（舊頁本身是欄目內頁）"
+        },
+        {
+          "code": "doctype-guessed",
+          "severity": "info",
+          "message": "標題與網址看不出文件種類，暫填 guideline"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "14-guidance-dengue",
+      "file": "14-guidance-dengue.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/QwHK502JzEL-7ojyp1B53w",
+        "title": "登革熱／屈公病防治工作指引（第 17 版）",
+        "category": "傳染病介紹／登革熱／指引及手冊",
+        "publishedAt": "2023-05-01",
+        "updatedAt": "2026-07-01",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病介紹",
+          "登革熱",
+          "指引及手冊"
+        ],
+        "tab": "guidance-dengue"
+      },
+      "pattern": "mpage",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "guidance-dengue",
+      "manifestDerived": false,
+      "target": "doc.guidance-dengue.v17",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.guidance-dengue.v17",
+        "doc.guidance-dengue.v15",
+        "doc.guidance-dengue.v16"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.dengue",
+        "disease.chikungunya"
+      ],
+      "outputs": [
+        {
+          "id": "doc.guidance-dengue.v17",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/guidance-dengue.v17.json",
+          "schemaValid": true
+        },
+        {
+          "id": "doc.guidance-dengue.v15",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/guidance-dengue.v15.json",
+          "schemaValid": true
+        },
+        {
+          "id": "doc.guidance-dengue.v16",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/guidance-dengue.v16.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 64 處（mso 樣式 34、Mso 類別 21、命名空間標籤 15）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「傳染病介紹／登革熱／指引及手冊」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站內容是文件 doc.guidance-dengue.v17，草稿依清單建成 document（舊頁本身是欄目內頁）"
+        },
+        {
+          "code": "effective-from-text",
+          "severity": "info",
+          "message": "生效日 2026-07-01 取自內文（舊頁發布日 2023-05-01）"
+        },
+        {
+          "code": "version-from-attachment",
+          "severity": "info",
+          "message": "附件「登革熱／屈公病防治工作指引（v15，2023 年 5 月 1 日）（PDF）」是另一版次（v15），另建純 PDF 草稿 doc.guidance-dengue.v15（同家族 doc.guidance-dengue，不轉內文）"
+        },
+        {
+          "code": "version-from-attachment",
+          "severity": "info",
+          "message": "附件「登革熱／屈公病防治工作指引（v16，2025 年 11 月 1 日）（PDF）」是另一版次（v16），另建純 PDF 草稿 doc.guidance-dengue.v16（同家族 doc.guidance-dengue，不轉內文）"
+        },
+        {
+          "code": "version-chain",
+          "severity": "info",
+          "message": "版次鏈 doc.guidance-dengue：v15（2023-05-01） → v16（2025-11-01） → 第17版（2026-07-01）；本版為現行版，supersedes doc.guidance-dengue.v16"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 3
+      }
+    },
+    {
+      "key": "15-h7n9-guideline-2017",
+      "file": "15-h7n9-guideline-2017.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/DiseaseTeach/avfKJ8q0g9hQK4hGSOyUO8",
+        "title": "H7N9 流感防治工作指引（2017 年版）",
+        "category": "傳染病介紹／流感／指引及手冊／歷版",
+        "publishedAt": "2017-04-10",
+        "updatedAt": "2017-04-10",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病介紹",
+          "流感",
+          "指引及手冊",
+          "歷版"
+        ],
+        "tab": "h7n9-guideline-2017"
+      },
+      "pattern": "disease-docs",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "h7n9-guideline-2017",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.influenza",
+        "disease.novel-influenza-a"
+      ],
+      "outputs": [
+        {
+          "id": "doc.influenza-h7n9-guideline-2017.2017-04-10",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/influenza-h7n9-guideline-2017.2017-04-10.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.8,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「傳染病介紹／流感／指引及手冊／歷版」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+        },
+        {
+          "code": "historical-version",
+          "severity": "info",
+          "message": "歷史版本：建議封存（舊版保留查閱），不取代現行版"
+        },
+        {
+          "code": "pdf-no-text-layer",
+          "severity": "warn",
+          "message": "PDF「h7n9-guideline-2017.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+        },
+        {
+          "code": "body-short",
+          "severity": "warn",
+          "message": "內文過短（17 字，低於 40）"
+        },
+        {
+          "code": "pdf-only",
+          "severity": "warn",
+          "message": "舊頁內文只有下載連結，正本是 PDF「H7N9 流感防治工作指引（2017 年版）（PDF，掃描檔）」；machineReadableMarkdown 以（待補）佔位，PDF 不整批轉（第 8 節），上架前請提供文字版"
+        },
+        {
+          "code": "fields-pending",
+          "severity": "info",
+          "message": "待補欄位：machineReadableMarkdown（正本文字版）"
+        }
+      ],
+      "action": "archive",
+      "flags": {
+        "historical": true
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "16-infection-control-healthcare",
+      "file": "16-infection-control-healthcare.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/4SSpeIQdau_eeWKfkHRO75",
+        "title": "醫療機構感染管制措施指引",
+        "category": "傳染病介紹／感染管制／指引及手冊",
+        "publishedAt": "2026-03-01",
+        "updatedAt": "2026-03-01",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病介紹",
+          "感染管制",
+          "指引及手冊"
+        ],
+        "tab": "infection-control-healthcare"
+      },
+      "pattern": "mpage",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "infection-control-healthcare",
+      "manifestDerived": false,
+      "target": "doc.infection-control-healthcare.2026-03-01",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.infection-control-healthcare.2026-03-01"
+      ],
+      "owner": "unit.infection-control",
+      "ownerRule": "感染管制",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "doc.infection-control-healthcare.2026-03-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/infection-control-healthcare.2026-03-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 52 處（mso 樣式 18、Mso 類別 17、命名空間標籤 17）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站內容是文件 doc.infection-control-healthcare.2026-03-01，草稿依清單建成 document（舊頁本身是欄目內頁）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2026-03-01"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "17-ltbi-guideline",
+      "file": "17-ltbi-guideline.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/8YOZTBVwbu5t_YzrVuqna3",
+        "title": "潛伏結核感染診治指引",
+        "category": "傳染病介紹／結核病／指引及手冊",
+        "publishedAt": "2024-01-01",
+        "updatedAt": "2026-01-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病介紹",
+          "結核病",
+          "指引及手冊"
+        ],
+        "tab": "ltbi-guideline"
+      },
+      "pattern": "mpage",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "ltbi-guideline",
+      "manifestDerived": false,
+      "target": "doc.ltbi-guideline.2024-01-01",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.ltbi-guideline.2024-01-01"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／指引及手冊",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "doc.ltbi-guideline.2024-01-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/ltbi-guideline.2024-01-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 84 處（mso 樣式 52、Mso 類別 24、命名空間標籤 16）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站內容是文件 doc.ltbi-guideline.2024-01-01，草稿依清單建成 document（舊頁本身是欄目內頁）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2024-01-01"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "18-measles-contact-tracing",
+      "file": "18-measles-contact-tracing.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/rE14k7WXGhTM9KpMCIkRiH",
+        "title": "麻疹接觸者追蹤作業指引",
+        "category": "傳染病介紹／麻疹／指引及手冊",
+        "publishedAt": "2026-09-12",
+        "updatedAt": "2026-09-12",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病介紹",
+          "麻疹",
+          "指引及手冊"
+        ],
+        "tab": "measles-contact-tracing"
+      },
+      "pattern": "mpage",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "measles-contact-tracing",
+      "manifestDerived": false,
+      "target": "doc.measles-contact-tracing.2026-09-12",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.measles-contact-tracing.2026-09-12"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "doc.measles-contact-tracing.2026-09-12",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/measles-contact-tracing.2026-09-12.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 75 處（mso 樣式 47、Mso 類別 23、命名空間標籤 14）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「傳染病介紹／麻疹／指引及手冊」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站內容是文件 doc.measles-contact-tracing.2026-09-12，草稿依清單建成 document（舊頁本身是欄目內頁）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2026-09-12"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "19-mmr-recommendation",
+      "file": "19-mmr-recommendation.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/l3AcSii0GQ0DFTwJAZv75P",
+        "title": "國內現行 MMR 預防接種建議（114.04.16 版）",
+        "category": "傳染病介紹／麻疹／指引及手冊",
+        "publishedAt": "2019-05-14",
+        "updatedAt": "2026-01-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病介紹",
+          "麻疹",
+          "指引及手冊"
+        ],
+        "tab": "mmr-recommendation"
+      },
+      "pattern": "mpage",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "mmr-recommendation",
+      "manifestDerived": false,
+      "target": "doc.mmr-recommendation.2025-04-16",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.mmr-recommendation.2025-04-16",
+        "doc.mmr-recommendation.2019-05-14"
+      ],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.measles"
+      ],
+      "outputs": [
+        {
+          "id": "doc.mmr-recommendation.2025-04-16",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/mmr-recommendation.2025-04-16.json",
+          "schemaValid": true
+        },
+        {
+          "id": "doc.mmr-recommendation.2019-05-14",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/mmr-recommendation.2019-05-14.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 52 處（mso 樣式 18、Mso 類別 17、命名空間標籤 17）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「傳染病介紹／麻疹／指引及手冊」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站內容是文件 doc.mmr-recommendation.2025-04-16，草稿依清單建成 document（舊頁本身是欄目內頁）"
+        },
+        {
+          "code": "effective-from-text",
+          "severity": "info",
+          "message": "生效日 2025-04-16 取自標題（舊頁發布日 2019-05-14）"
+        },
+        {
+          "code": "version-from-attachment",
+          "severity": "info",
+          "message": "附件「國內現行 MMR 預防接種建議（108.05.14 版，2019 年 5 月 14 日）（PDF）」是另一版次（108.05.14），另建純 PDF 草稿 doc.mmr-recommendation.2019-05-14（同家族 doc.mmr-recommendation，不轉內文）"
+        },
+        {
+          "code": "version-chain",
+          "severity": "info",
+          "message": "版次鏈 doc.mmr-recommendation：108.05.14（2019-05-14） → 114.04.16（2025-04-16）；本版為現行版，supersedes doc.mmr-recommendation.2019-05-14"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 2
+      }
+    },
+    {
+      "key": "20-rabies-manual",
+      "file": "20-rabies-manual.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/DiseaseManual/j0SEy06cs2n4zoOgnCWVUp",
+        "title": "狂犬病防治工作手冊（113 年 12 月修訂版）",
+        "category": "傳染病介紹／狂犬病／指引及手冊",
+        "publishedAt": "2025-02-03",
+        "updatedAt": "2025-02-03",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病介紹",
+          "狂犬病",
+          "指引及手冊"
+        ],
+        "tab": "rabies-manual"
+      },
+      "pattern": "disease-docs",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "rabies-manual",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.rabies"
+      ],
+      "outputs": [
+        {
+          "id": "doc.rabies-6abd76.2024-12-20",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/rabies-6abd76.2024-12-20.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 12 處（mso 樣式 4、Mso 類別 4、命名空間標籤 4）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「傳染病介紹／狂犬病／指引及手冊」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（狂犬病）"
+        },
+        {
+          "code": "effective-from-text",
+          "severity": "info",
+          "message": "生效日 2024-12-20 取自標題（舊頁發布日 2025-02-03）"
+        },
+        {
+          "code": "version-family",
+          "severity": "info",
+          "message": "去掉版次後與另外 1 頁同名，視為同一文件家族 doc.rabies-6abd76；版次鏈依生效日串接，舊版建議封存"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2024-12-20"
+        },
+        {
+          "code": "version-chain",
+          "severity": "info",
+          "message": "版次鏈 doc.rabies-6abd76：2019-06-01（2019-06-01） → 2024-12-20（2024-12-20）；本版為現行版，supersedes doc.rabies-6abd76.2019-06-01"
+        }
+      ],
+      "action": "review-before-publish",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "21-rabies-manual-2019",
+      "file": "21-rabies-manual-2019.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/DiseaseManual/HnntblEgm7Fz-c5-_K6dZg",
+        "title": "狂犬病防治工作手冊（108 年版）",
+        "category": "傳染病介紹／狂犬病／指引及手冊",
+        "publishedAt": "2019-06-01",
+        "updatedAt": "2019-06-01",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病介紹",
+          "狂犬病",
+          "指引及手冊"
+        ],
+        "tab": "rabies-manual-2019"
+      },
+      "pattern": "disease-docs",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "rabies-manual-2019",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.acute-infectious",
+      "ownerRule": "disease-fallback",
+      "diseases": [
+        "disease.rabies"
+      ],
+      "outputs": [
+        {
+          "id": "doc.rabies-6abd76.2019-06-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/rabies-6abd76.2019-06-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 9 處（mso 樣式 3、Mso 類別 3、命名空間標籤 3）"
+        },
+        {
+          "code": "owner-from-disease",
+          "severity": "info",
+          "message": "類別「傳染病介紹／狂犬病／指引及手冊」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（狂犬病）"
+        },
+        {
+          "code": "version-family",
+          "severity": "info",
+          "message": "去掉版次後與另外 1 頁同名，視為同一文件家族 doc.rabies-6abd76；版次鏈依生效日串接，舊版建議封存"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2019-06-01"
+        },
+        {
+          "code": "historical-version",
+          "severity": "info",
+          "message": "同家族 doc.rabies-6abd76 有更新的版次 doc.rabies-6abd76.2024-12-20（2024-12-20，2024-12-20 生效）；本頁是舊版，建議封存（保留查閱、加失效警示）"
+        }
+      ],
+      "action": "archive",
+      "flags": {
+        "historical": true
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "22-tb-case-definition",
+      "file": "22-tb-case-definition.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/dCCFFfTlJhVsO0kICYVjVK",
+        "title": "結核病病例定義與通報定義",
+        "category": "傳染病介紹／結核病／指引及手冊",
+        "publishedAt": "2024-01-01",
+        "updatedAt": "2026-01-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病介紹",
+          "結核病",
+          "指引及手冊"
+        ],
+        "tab": "tb-case-definition"
+      },
+      "pattern": "mpage",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "tb-case-definition",
+      "manifestDerived": false,
+      "target": "doc.tb-case-definition.2024-01-01",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.tb-case-definition.2024-01-01"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／指引及手冊",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "doc.tb-case-definition.2024-01-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/tb-case-definition.2024-01-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 71 處（mso 樣式 37、Mso 類別 23、命名空間標籤 17）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站內容是文件 doc.tb-case-definition.2024-01-01，草稿依清單建成 document（舊頁本身是欄目內頁）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2024-01-01"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "23-tb-contact-investigation",
+      "file": "23-tb-contact-investigation.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/ayyhfVi2o9zE_68-rGkqz2",
+        "title": "結核病接觸者檢查指引",
+        "category": "傳染病介紹／結核病／指引及手冊",
+        "publishedAt": "2025-01-01",
+        "updatedAt": "2026-01-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病介紹",
+          "結核病",
+          "指引及手冊"
+        ],
+        "tab": "tb-contact-investigation"
+      },
+      "pattern": "mpage",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "tb-contact-investigation",
+      "manifestDerived": false,
+      "target": "doc.tb-contact-investigation.2025-01-01",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.tb-contact-investigation.2025-01-01"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／指引及手冊",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "doc.tb-contact-investigation.2025-01-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/tb-contact-investigation.2025-01-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 61 處（mso 樣式 29、Mso 類別 19、命名空間標籤 16）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站內容是文件 doc.tb-contact-investigation.2025-01-01，草稿依清單建成 document（舊頁本身是欄目內頁）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2025-01-01"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "24-tb-guideline",
+      "file": "24-tb-guideline.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/LLQ48kI8Pnv_c6mNrfaHTT",
+        "title": "結核病診治指引（第八版）",
+        "category": "傳染病介紹／結核病／指引及手冊",
+        "publishedAt": "2022-03-01",
+        "updatedAt": "2026-01-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病介紹",
+          "結核病",
+          "指引及手冊"
+        ],
+        "tab": "tb-guideline"
+      },
+      "pattern": "mpage",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "tb-guideline",
+      "manifestDerived": false,
+      "target": "doc.tb-guideline.2025-09-01",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.tb-guideline.2025-09-01",
+        "doc.tb-guideline.2022-03-01"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／指引及手冊",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "doc.tb-guideline.2025-09-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/tb-guideline.2025-09-01.json",
+          "schemaValid": true
+        },
+        {
+          "id": "doc.tb-guideline.2022-03-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/tb-guideline.2022-03-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 54 處（mso 樣式 20、Mso 類別 17、命名空間標籤 17）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站內容是文件 doc.tb-guideline.2025-09-01，草稿依清單建成 document（舊頁本身是欄目內頁）"
+        },
+        {
+          "code": "effective-from-text",
+          "severity": "info",
+          "message": "生效日 2025-09-01 取自內文（舊頁發布日 2022-03-01）"
+        },
+        {
+          "code": "version-from-attachment",
+          "severity": "info",
+          "message": "附件「結核病診治指引（第七版，2022 年 3 月 1 日）（PDF）」是另一版次（第七版），另建純 PDF 草稿 doc.tb-guideline.2022-03-01（同家族 doc.tb-guideline，不轉內文）"
+        },
+        {
+          "code": "version-chain",
+          "severity": "info",
+          "message": "版次鏈 doc.tb-guideline：第七版（2022-03-01） → 第八版（2025-09-01）；本版為現行版，supersedes doc.tb-guideline.2022-03-01"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 2
+      }
+    },
+    {
+      "key": "25-tb-manual",
+      "file": "25-tb-manual.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/MPage/pzNsf4bKBooWZOAeKz6kOr",
+        "title": "結核病防治工作手冊",
+        "category": "傳染病介紹／結核病／指引及手冊",
+        "publishedAt": "2025-07-01",
+        "updatedAt": "2026-01-15",
+        "breadcrumbs": [
+          "首頁",
+          "傳染病介紹",
+          "結核病",
+          "指引及手冊"
+        ],
+        "tab": "tb-manual"
+      },
+      "pattern": "mpage",
+      "kind": "document",
+      "type": "document",
+      "manifestKey": "tb-manual",
+      "manifestDerived": false,
+      "target": "doc.tb-manual.2025-07-01",
+      "targetExists": true,
+      "existing": true,
+      "compareWith": [
+        "doc.tb-manual.2025-07-01"
+      ],
+      "owner": "unit.chronic-infectious",
+      "ownerRule": "結核病／指引及手冊",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "outputs": [
+        {
+          "id": "doc.tb-manual.2025-07-01",
+          "type": "document",
+          "role": "draft",
+          "file": "content/documents/tb-manual.2025-07-01.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 1,
+      "parts": {
+        "type": 0.4,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "word-cleaned",
+          "severity": "info",
+          "message": "清除 Word 貼上殘留 52 處（mso 樣式 18、Mso 類別 17、命名空間標籤 17）"
+        },
+        {
+          "code": "type-from-manifest",
+          "severity": "info",
+          "message": "清單對應的新站內容是文件 doc.tb-manual.2025-07-01，草稿依清單建成 document（舊頁本身是欄目內頁）"
+        },
+        {
+          "code": "version-unknown",
+          "severity": "info",
+          "message": "標題看不出版次，version 暫填 2025-07-01"
+        }
+      ],
+      "action": "compare-existing",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 0,
+        "legacyLinks": 0,
+        "attachments": 1
+      }
+    },
+    {
+      "key": "26-guidelines-list",
+      "file": "26-guidelines-list.html",
+      "source": {
+        "url": "https://www.cdc.gov.tw/Category/List/tW71wbu3bYJe5jK2HGn7P9",
+        "title": "防疫指引與手冊總覽",
+        "category": "指引及手冊",
+        "publishedAt": "2026-10-03",
+        "updatedAt": "2026-10-03",
+        "breadcrumbs": [
+          "首頁",
+          "指引及手冊"
+        ],
+        "tab": "guidelines-list"
+      },
+      "pattern": "category-list",
+      "kind": "list",
+      "type": "page",
+      "manifestKey": "guidelines-list",
+      "manifestDerived": false,
+      "target": null,
+      "targetExists": false,
+      "existing": false,
+      "compareWith": [],
+      "owner": "unit.oasis",
+      "ownerRule": "首頁／指引及手冊",
+      "diseases": [],
+      "outputs": [
+        {
+          "id": "page.x-guidelines-list",
+          "type": "page",
+          "role": "draft",
+          "file": "content/pages/x-guidelines-list.json",
+          "schemaValid": true
+        }
+      ],
+      "confidence": 0.6,
+      "parts": {
+        "type": 0,
+        "owner": 0.2,
+        "markdown": 0.2,
+        "attachments": 0.1,
+        "unique": 0.1
+      },
+      "needsReview": false,
+      "issues": [
+        {
+          "code": "list-page",
+          "severity": "info",
+          "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+        }
+      ],
+      "action": "skip-list",
+      "flags": {
+        "historical": false
+      },
+      "stats": {
+        "images": 0,
+        "links": 21,
+        "legacyLinks": 21,
+        "attachments": 0
+      }
+    }
+  ],
+  "drafts": [
+    {
+      "id": "doc.case-definition-dengue.2026-01-01",
+      "type": "document",
+      "title": "傳染病病例定義：登革熱（2026 年版）",
+      "file": "content/documents/case-definition-dengue.2026-01-01.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.case-definition-dengue.2026-01-01"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "01-case-definition-dengue"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.case-definition-dengue.2023-01-01",
+      "type": "document",
+      "title": "傳染病病例定義：登革熱（2023 年版）",
+      "file": "content/documents/case-definition-dengue.2023-01-01.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.case-definition-dengue.2023-01-01"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "01-case-definition-dengue"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.case-definition-measles.2024-01-01",
+      "type": "document",
+      "title": "傳染病病例定義：麻疹",
+      "file": "content/documents/case-definition-measles.2024-01-01.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.case-definition-measles.2024-01-01"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "02-case-definition-measles"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.covid-vaccine-recommendation.2026-09-15",
+      "type": "document",
+      "title": "新冠疫苗接種建議（2026–2027 年度）",
+      "file": "content/documents/covid-vaccine-recommendation.2026-09-15.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.covid-vaccine-recommendation.2026-09-15"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "03-covid-vaccine-recommendation"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.covid-vaccine-recommendation.2025-09-15",
+      "type": "document",
+      "title": "新冠疫苗接種建議（2026–2027 年度）（2025 年版）",
+      "file": "content/documents/covid-vaccine-recommendation.2025-09-15.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.covid-vaccine-recommendation.2025-09-15"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "03-covid-vaccine-recommendation"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.x-crowded-ic-guideline.2025-06-30",
+      "type": "document",
+      "title": "人口密集機構感染管制措施指引",
+      "file": "content/documents/x-crowded-ic-guideline.2025-06-30.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.infection-control",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "04-crowded-ic-guideline"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.dengue-community-workplan.2026-09-10",
+      "type": "document",
+      "title": "登革熱社區防治工作指引：孳生源清除、病媒蚊監測與群聚應變",
+      "file": "content/documents/dengue-community-workplan.2026-09-10.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.dengue-community-workplan.2026-09-10"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "05-dengue-community-workplan"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.dots-manual.2025-01-01",
+      "type": "document",
+      "title": "結核病都治（DOTS）計畫作業手冊",
+      "file": "content/documents/dots-manual.2025-01-01.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.dots-manual.2025-01-01"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "06-dots-manual"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.ev-childcare-guideline.2026-09-10",
+      "type": "document",
+      "title": "教托育機構腸病毒防治指引",
+      "file": "content/documents/ev-childcare-guideline.2026-09-10.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.ev-childcare-guideline.2026-09-10"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "07-ev-childcare-guideline"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.ev-severe-guideline.2026-03-15",
+      "type": "document",
+      "title": "腸病毒感染併發重症臨床處置建議",
+      "file": "content/documents/ev-severe-guideline.2026-03-15.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.ev-severe-guideline.2026-03-15"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "08-ev-severe-guideline"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.flu-antiviral-eligibility.2026-09-18",
+      "type": "document",
+      "title": "公費流感抗病毒藥劑使用對象（2026 年 9 月延長版：高傳播族群延至 10 月 31 日）",
+      "file": "content/documents/flu-antiviral-eligibility.2026-09-18.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.flu-antiviral-eligibility.2026-09-18"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "09-flu-antiviral-eligibility"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.flu-antiviral-eligibility.2026-06-01",
+      "type": "document",
+      "title": "公費流感抗病毒藥劑使用對象（全年適用條件）",
+      "file": "content/documents/flu-antiviral-eligibility.2026-06-01.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.flu-antiviral-eligibility.2026-06-01"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "10-flu-antiviral-eligibility-2026-06"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.flu-antiviral-eligibility.2026-08-24",
+      "type": "document",
+      "title": "公費流感抗病毒藥劑使用對象（2026 年 8 月擴大版：高傳播族群，至 9 月 30 日）",
+      "file": "content/documents/flu-antiviral-eligibility.2026-08-24.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.flu-antiviral-eligibility.2026-08-24"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "11-flu-antiviral-eligibility-2026-08"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.flu-vaccine-manual.2026-09-16",
+      "type": "document",
+      "title": "2026–2027 年度公費流感疫苗接種計畫作業手冊",
+      "file": "content/documents/flu-vaccine-manual.2026-09-16.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.flu-vaccine-manual.2026-09-16"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "12-flu-vaccine-manual"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.flu-vaccine-schedule.2026-09-15",
+      "type": "document",
+      "title": "2026–2027 年度公費流感疫苗接種計畫：實施對象與時程",
+      "file": "content/documents/flu-vaccine-schedule.2026-09-15.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.flu-vaccine-schedule.2026-09-15"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "13-flu-vaccine-schedule"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.guidance-dengue.v17",
+      "type": "document",
+      "title": "登革熱／屈公病防治工作指引（第 17 版）",
+      "file": "content/documents/guidance-dengue.v17.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.guidance-dengue.v17"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "14-guidance-dengue"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.guidance-dengue.v15",
+      "type": "document",
+      "title": "登革熱／屈公病防治工作指引（第 17 版）（v15）",
+      "file": "content/documents/guidance-dengue.v15.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.guidance-dengue.v15"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "14-guidance-dengue"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.guidance-dengue.v16",
+      "type": "document",
+      "title": "登革熱／屈公病防治工作指引（第 17 版）（v16）",
+      "file": "content/documents/guidance-dengue.v16.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.guidance-dengue.v16"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "14-guidance-dengue"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.influenza-h7n9-guideline-2017.2017-04-10",
+      "type": "document",
+      "title": "H7N9 流感防治工作指引（2017 年版）",
+      "file": "content/documents/influenza-h7n9-guideline-2017.2017-04-10.json",
+      "confidence": 0.8,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "15-h7n9-guideline-2017"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.infection-control-healthcare.2026-03-01",
+      "type": "document",
+      "title": "醫療機構感染管制措施指引",
+      "file": "content/documents/infection-control-healthcare.2026-03-01.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.infection-control-healthcare.2026-03-01"
+      ],
+      "status": "review",
+      "owner": "unit.infection-control",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "16-infection-control-healthcare"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.ltbi-guideline.2024-01-01",
+      "type": "document",
+      "title": "潛伏結核感染診治指引",
+      "file": "content/documents/ltbi-guideline.2024-01-01.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.ltbi-guideline.2024-01-01"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "17-ltbi-guideline"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.measles-contact-tracing.2026-09-12",
+      "type": "document",
+      "title": "麻疹接觸者追蹤作業指引",
+      "file": "content/documents/measles-contact-tracing.2026-09-12.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.measles-contact-tracing.2026-09-12"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "18-measles-contact-tracing"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.mmr-recommendation.2025-04-16",
+      "type": "document",
+      "title": "國內現行 MMR 預防接種建議（114.04.16 版）",
+      "file": "content/documents/mmr-recommendation.2025-04-16.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.mmr-recommendation.2025-04-16"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "19-mmr-recommendation"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.mmr-recommendation.2019-05-14",
+      "type": "document",
+      "title": "國內現行 MMR 預防接種建議（ 版）（108.05.14）",
+      "file": "content/documents/mmr-recommendation.2019-05-14.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.mmr-recommendation.2019-05-14"
+      ],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "19-mmr-recommendation"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.rabies-6abd76.2024-12-20",
+      "type": "document",
+      "title": "狂犬病防治工作手冊（113 年 12 月修訂版）",
+      "file": "content/documents/rabies-6abd76.2024-12-20.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "20-rabies-manual"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.rabies-6abd76.2019-06-01",
+      "type": "document",
+      "title": "狂犬病防治工作手冊（108 年版）",
+      "file": "content/documents/rabies-6abd76.2019-06-01.json",
+      "confidence": 1,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.acute-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "21-rabies-manual-2019"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.tb-case-definition.2024-01-01",
+      "type": "document",
+      "title": "結核病病例定義與通報定義",
+      "file": "content/documents/tb-case-definition.2024-01-01.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.tb-case-definition.2024-01-01"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "22-tb-case-definition"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.tb-contact-investigation.2025-01-01",
+      "type": "document",
+      "title": "結核病接觸者檢查指引",
+      "file": "content/documents/tb-contact-investigation.2025-01-01.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.tb-contact-investigation.2025-01-01"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "23-tb-contact-investigation"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.tb-guideline.2025-09-01",
+      "type": "document",
+      "title": "結核病診治指引（第八版）",
+      "file": "content/documents/tb-guideline.2025-09-01.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.tb-guideline.2025-09-01"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "24-tb-guideline"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.tb-guideline.2022-03-01",
+      "type": "document",
+      "title": "結核病診治指引（第七版）",
+      "file": "content/documents/tb-guideline.2022-03-01.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.tb-guideline.2022-03-01"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "24-tb-guideline"
+      ],
+      "merged": false
+    },
+    {
+      "id": "doc.tb-manual.2025-07-01",
+      "type": "document",
+      "title": "結核病防治工作手冊",
+      "file": "content/documents/tb-manual.2025-07-01.json",
+      "confidence": 1,
+      "existing": true,
+      "compareWith": [
+        "doc.tb-manual.2025-07-01"
+      ],
+      "status": "review",
+      "owner": "unit.chronic-infectious",
+      "assets": 1,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "25-tb-manual"
+      ],
+      "merged": false
+    },
+    {
+      "id": "page.x-guidelines-list",
+      "type": "page",
+      "title": "防疫指引與手冊總覽",
+      "file": "content/pages/x-guidelines-list.json",
+      "confidence": 0.6,
+      "existing": false,
+      "compareWith": [],
+      "status": "review",
+      "owner": "unit.oasis",
+      "assets": 0,
+      "schemaValid": true,
+      "errors": [],
+      "sourcePages": [
+        "26-guidelines-list"
+      ],
+      "merged": false
+    }
+  ],
+  "sampling": {
+    "rate": 0.1,
+    "autoOk": 0,
+    "picked": []
+  },
+  "migration": {
+    "patchFile": "migration-patch.json",
+    "applied": true,
+    "summary": {
+      "derivedItems": 0,
+      "derivedMatched": 0,
+      "items": 26,
+      "matched": 26,
+      "missingPages": 0,
+      "unmatchedPages": 0,
+      "agree": 26,
+      "conflicts": 0,
+      "statusChanges": 0,
+      "pendingToMigrated": 0,
+      "targetChanges": 0,
+      "newPathChanges": 0,
+      "noteChanges": 0,
+      "stillPending": 4
+    },
+    "file": "content/migration/guidelines.json",
+    "statusChanges": [],
+    "targetChanges": [],
+    "newPathChanges": [],
+    "noteChanges": 0
+  }
+}

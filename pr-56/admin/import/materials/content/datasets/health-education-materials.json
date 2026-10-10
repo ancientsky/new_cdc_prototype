@@ -1,0 +1,176 @@
+{
+  "id": "dataset.health-education-materials",
+  "type": "dataset",
+  "title": "多國語言衛教素材",
+  "owner": "unit.pr",
+  "publishedAt": "2015-01-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "pending"
+    },
+    "vi": {
+      "status": "pending"
+    },
+    "id": {
+      "status": "pending"
+    },
+    "th": {
+      "status": "pending"
+    },
+    "tl": {
+      "status": "pending"
+    },
+    "ja": {
+      "status": "pending"
+    }
+  },
+  "summary": "為服務在臺的新住民、移工與外籍旅客，本署提供多國語言衛教素材，涵蓋登革熱、結核病、流感疫苗、腸病毒、麻疹與 M痘等主題，歡迎下載使用。",
+  "category": "content-page",
+  "canonicalUrl": "https://www.cdc.gov.tw/Advocacy",
+  "updateFrequency": "irregular",
+  "lastUpdated": "2026-09-18",
+  "formats": [],
+  "resources": [],
+  "provenance": {
+    "mode": "snapshot",
+    "fetchedAt": "2026-10-03",
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/Y_AH_Ka7q03cfN15CyI-nQ"
+  },
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/Y_AH_Ka7q03cfN15CyI-nQ"
+  ],
+  "assets": [
+    {
+      "file": "dengue-leaflet-en.pdf",
+      "kind": "attachment",
+      "label": "登革熱防治單張（English）",
+      "mime": "application/pdf",
+      "bytes": 699,
+      "sha256": "9b49f9229425fe82217cfe8b5a39bdf316bd40853796e1756ede673d7d778868",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "dengue-leaflet-vi.pdf",
+      "kind": "attachment",
+      "label": "登革熱防治單張（Tiếng Việt）",
+      "mime": "application/pdf",
+      "bytes": 702,
+      "sha256": "e220770f8ffad2598e582fd52700287da24b90ce6c9cf1b9d80261412e6b5b34",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "tb-poster-id.pdf",
+      "kind": "attachment",
+      "label": "結核病衛教海報（Bahasa Indonesia）",
+      "mime": "application/pdf",
+      "bytes": 697,
+      "sha256": "2288f3fc36e74f97478666486c9f03a2a9dfc82e4ffea585e5b8b80bc34c64e9",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "flu-vaccine-poster-th.pdf",
+      "kind": "attachment",
+      "label": "流感疫苗海報（ไทย）",
+      "mime": "application/pdf",
+      "bytes": 711,
+      "sha256": "291d18dca72deca405ec42de939854de2002e960e15435132d0a5707f4f96eda",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "ev-handwashing-leaflet-tl.pdf",
+      "kind": "attachment",
+      "label": "腸病毒洗手單張（Tagalog）",
+      "mime": "application/pdf",
+      "bytes": 710,
+      "sha256": "5c352dafef59fbdeb2ec1e5b3e8729e2abd5be5e1d6f1988079b53a1c19dc39c",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "measles-leaflet-ja.pdf",
+      "kind": "attachment",
+      "label": "麻疹防治單張（日本語）",
+      "mime": "application/pdf",
+      "bytes": 703,
+      "sha256": "5189707a6cd9304e2bb2c5385ea5774534e572ccefd69ad068945ecf85b55829",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "mpox-leaflet-zh-cn.pdf",
+      "kind": "attachment",
+      "label": "M痘衛教單張（簡體中文）",
+      "mime": "application/pdf",
+      "bytes": 703,
+      "sha256": "341e5e5125c06ac4d91979d7ee5f370d9e095a8b2a86a7ec4110591e2ab830ad",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "dengue-leaflet-zh.pdf",
+      "kind": "attachment",
+      "label": "登革熱防治單張（中文版）",
+      "mime": "application/pdf",
+      "bytes": 705,
+      "sha256": "2dc340b950cfc1484dbcf1df409e8b4257bdf78878bec8768752b079cc8d86e9",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站型別是 dataset（dataset.health-education-materials），草稿直接建成 dataset，看不出來的欄位以「（待補）」佔位"
+      },
+      {
+        "code": "lang-variants",
+        "severity": "info",
+        "message": "附件含 6 種語言版本（en、vi、id、th、tl、ja）：一筆內容、多語檔案；languages 標 pending，請補 i18n 標題與摘要；zh-CN 不在站上七語，只保留附件、不列入 languages"
+      },
+      {
+        "code": "dataset-by-url",
+        "severity": "info",
+        "message": "canonicalUrl 沿用既有資料集 dataset.health-education-materials（清單 target 指定）"
+      },
+      {
+        "code": "field-guessed",
+        "severity": "info",
+        "message": "看不出更新頻率，updateFrequency 暫填 irregular"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/Y_AH_Ka7q03cfN15CyI-nQ",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "dataset.health-education-materials"
+    ]
+  }
+}

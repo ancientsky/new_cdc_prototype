@@ -1,0 +1,3228 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "4cb19b5d4785",
+    "lastModified": "2026-10-01",
+    "count": 45,
+    "keyRule": "去網域、去 hash、百分比編碼統一、小寫、去尾斜線（根目錄保留 /）、query 去掉 page 參數（其餘保留原順序）",
+    "valueRule": "新站路徑（不含 basePath 與語言前綴；可含 #錨點）"
+  },
+  "data": {
+    "/bulletin/detail/rqmqkq2-d6sopvi8dnv75w?typeid=9": "/news/2026-06-02-measles-travel-mmr-1966/",
+    "/bulletin/detail/ygzxk2ifxqew1v_ty1tevq?typeid=9": "/news/2025-01-09-mmr-adults-measles/",
+    "/category/list/3gjwz0etfmdgzis7h0jucg": "/travel/",
+    "/category/list/3uatgj9_kkhimgdkbkskpa": "/policy/legal/",
+    "/category/list/abyrvtgfiteopa1lslezwg": "/policy/foia/",
+    "/category/list/dg4aod4j09j2qw_yhryaz2": "/publications/",
+    "/category/list/hj0frbeq15g18tfkowy7lg": "/travel/",
+    "/category/list/trbpxpzm7eo3-dkc4ryzuq": "/travel/",
+    "/category/list/vofcg57yk3io3i_wxoxoia": "/publications/",
+    "/category/list/yv1yffbi_b1rhm6xdqvlgy": "/publications/",
+    "/category/list/z5jlken6dg0jpwhf4to0jv": "/publications/",
+    "/category/list/zrvs2zjwz03tl8cbkydi8g": "/data/",
+    "/category/listcontent/44k4khkf48a57gnpjrnnj3?uaid=vqrmxbavbgts5ytv4smyz0": "/media/dengue-village-chief/",
+    "/category/listcontent/dg4aod4j09j2qw_yhryaz2?uaid=jatsqwyasrqzpl-tvxo9bs": "/publications/manual-ltc-infection-control-2026/",
+    "/category/listcontent/vujzuu3pxzel4pjbfhh5d8?uaid=2j2wlqqvd-okme7i011cw5": "/media/enterovirus-handwashing/",
+    "/category/listcontent/vujzuu3pxzel4pjbfhh5d8?uaid=gejhb3xrbbo3epvrbvucx2": "/media/amr-one-health-podcast/",
+    "/category/listmovie/dwsgb84e8mevxgbqiqmr6a": "/media/",
+    "/category/listmovie/slfvh8dlgs6fkbliun-whg": "/media/",
+    "/category/mpage/awmzkeq9hvctowgfphydj2": "/publications/statistics-annual-2025/",
+    "/category/mpage/i5n2w9g-fwjkh3agfla-kg": "/data/",
+    "/category/mpage/l_z6zkerzj063m6ov_8nxq": "/topics/antivenom/",
+    "/category/mpage/linw6piojskktzv9oorosg": "/data/#dataset.nidss",
+    "/category/mpage/oypqcu3ibwmljsol_qlald": "/data/#dataset.covid-severe-weekly",
+    "/category/mpage/y_ah_ka7q03cfn15cyi-nq": "/data/#dataset.health-education-materials",
+    "/category/mpage/z3nsexq6jne6a13avu8ra8": "/data/#dataset.vaccine-coverage",
+    "/category/mpage/z6emn04f9zpf9ndxivtxfb": "/data/#dataset.flu-express",
+    "/category/page/fhhhnv-hwyyd00tnkexsla": "/documents/flu-antiviral-eligibility.2026-09-18/",
+    "/category/page/ucmuqnzcjpue77qht0ixeg": "/apply/travel-clinic-appointment/",
+    "/category/qapage/9wwks28y2ggbptpssxmkzg": "/faq/dengue-fever-when-to-see-doctor/",
+    "/category/qapage/txlxjpy4m3fabzipwglo9q": "/faq/measles-mmr-adult-who/",
+    "/disease/subindex/wybke3ae7liy5gb-ea8pbw": "/diseases/dengue/",
+    "/en/category/list/gk4bjwe3qylmnxyjbqecxa": "/en/data/",
+    "/file/get/eh0kllydi__tvudv8al0la": "/documents/curriculum-measles.2026-10-10/",
+    "/news/2026-02-20-procurement-flu-vaccine": "/procurement/flu-vaccine-115/",
+    "/news/2026-05-25-recruit-quarantine-officer": "/careers/quarantine-officer-kaoping/",
+    "/news/2026-06-10-procurement-lab-reagents": "/procurement/lab-reagents-115/",
+    "/news/2026-08-10-recruit-system-analyst": "/careers/system-analyst/",
+    "/news/2026-09-22-procurement-campaign-video": "/procurement/campaign-video/",
+    "/news/2026-09-24-recruit-research-assistant": "/careers/research-assistant-epi/",
+    "/news/2026-09-29-procurement-datacenter-ops": "/procurement/datacenter-ops/",
+    "/news/2026-09-30-recruit-epidemic-physician": "/careers/epidemic-physician/",
+    "/uploads/archives/%e6%bd%9b%e4%bc%8f%e7%b5%90%e6%a0%b8%e6%84%9f%e6%9f%93%e6%b2%bb%e7%99%82%e6%8c%87%e5%bc%95.pdf": "/documents/ltbi-guideline.2024-01-01/",
+    "/uploads/archives/%e7%b5%90%e6%a0%b8%e7%97%85%e8%a8%ba%e6%b2%bb%e6%8c%87%e5%bc%95%e7%ac%ac%e4%b8%83%e7%89%88.pdf": "/documents/tb-guideline.2025-09-01/",
+    "/uploads/archives/%e7%b5%90%e6%a0%b8%e7%97%85%e9%98%b2%e6%b2%bb%e5%b7%a5%e4%bd%9c%e6%89%8b%e5%86%8a2019%e5%b9%b4%e7%89%88.pdf": "/documents/tb-manual.2025-07-01/",
+    "/uploads/archives/mmr%e7%96%ab%e8%8b%97%e6%8e%a5%e7%a8%ae%e5%bb%ba%e8%ad%b0.pdf": "/documents/mmr-recommendation.2025-04-16/"
+  },
+  "patterns": [
+    {
+      "pattern": "/en/bulletin/detail/{id}",
+      "from": "/En/Bulletin/Detail/{id}",
+      "to": "/news/2026-05-22-international-wha-technical-exchange/",
+      "kind": "legacy",
+      "itemId": "news.2026-05-22-international-wha-technical-exchange",
+      "listId": null,
+      "key": null,
+      "oldTitle": null
+    },
+    {
+      "pattern": "/en/bulletin/detail/{id}",
+      "from": "/En/Bulletin/Detail/{id}",
+      "to": "/news/2026-08-17-international-fetp-workshop/",
+      "kind": "legacy",
+      "itemId": "news.2026-08-17-international-fetp-workshop",
+      "listId": null,
+      "key": null,
+      "oldTitle": null
+    },
+    {
+      "pattern": "/en/bulletin/detail/{id}",
+      "from": "/En/Bulletin/Detail/{id}",
+      "to": "/news/2026-09-15-international-health-mou/",
+      "kind": "legacy",
+      "itemId": "news.2026-09-15-international-health-mou",
+      "listId": null,
+      "key": null,
+      "oldTitle": null
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/rabies/",
+      "kind": "migration",
+      "itemId": "disease.rabies",
+      "listId": "migration.rabies",
+      "key": "intro",
+      "oldTitle": "疾病介紹"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/rabies/#transmission",
+      "kind": "migration",
+      "itemId": "disease.rabies",
+      "listId": "migration.rabies",
+      "key": "intro-pathogen",
+      "oldTitle": "致病原"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/rabies/#situation",
+      "kind": "migration",
+      "itemId": "disease.rabies",
+      "listId": "migration.rabies",
+      "key": "intro-epidemiology",
+      "oldTitle": "流行病學"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/rabies/#symptoms",
+      "kind": "migration",
+      "itemId": "disease.rabies",
+      "listId": "migration.rabies",
+      "key": "intro-symptoms",
+      "oldTitle": "發病症狀"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/rabies/#prevention",
+      "kind": "migration",
+      "itemId": "disease.rabies",
+      "listId": "migration.rabies",
+      "key": "intro-prevention",
+      "oldTitle": "預防方法"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/rabies/#treatment",
+      "kind": "migration",
+      "itemId": "disease.rabies",
+      "listId": "migration.rabies",
+      "key": "intro-treatment",
+      "oldTitle": "治療方法與就醫資訊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/diseases/rabies/#vaccine",
+      "kind": "migration",
+      "itemId": "disease.rabies",
+      "listId": "migration.rabies",
+      "key": "vaccine",
+      "oldTitle": "預防接種建議"
+    },
+    {
+      "pattern": "/category/qapage/{id}",
+      "from": "/Category/QAPage/{id}",
+      "to": "/diseases/rabies/#faq",
+      "kind": "migration",
+      "itemId": "disease.rabies",
+      "listId": "migration.rabies",
+      "key": "qa-list",
+      "oldTitle": "Q&A"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/lab/rabies/",
+      "kind": "migration",
+      "itemId": "labtest.rabies",
+      "listId": "migration.rabies",
+      "key": "lab",
+      "oldTitle": "檢驗資訊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/report/#n-rabies",
+      "kind": "migration",
+      "itemId": null,
+      "listId": "migration.rabies",
+      "key": "notify",
+      "oldTitle": "通報定義與時限"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/dengue/",
+      "kind": "migration",
+      "itemId": "disease.dengue",
+      "listId": "migration.dengue",
+      "key": "intro",
+      "oldTitle": "疾病介紹"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/dengue/#transmission",
+      "kind": "migration",
+      "itemId": "disease.dengue",
+      "listId": "migration.dengue",
+      "key": "intro-pathogen",
+      "oldTitle": "致病原"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/dengue/#situation",
+      "kind": "migration",
+      "itemId": "disease.dengue",
+      "listId": "migration.dengue",
+      "key": "intro-epidemiology",
+      "oldTitle": "流行病學"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/dengue/#symptoms",
+      "kind": "migration",
+      "itemId": "disease.dengue",
+      "listId": "migration.dengue",
+      "key": "intro-symptoms",
+      "oldTitle": "發病症狀"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/dengue/#prevention",
+      "kind": "migration",
+      "itemId": "disease.dengue",
+      "listId": "migration.dengue",
+      "key": "intro-prevention",
+      "oldTitle": "預防方法"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/dengue/#treatment",
+      "kind": "migration",
+      "itemId": "disease.dengue",
+      "listId": "migration.dengue",
+      "key": "intro-treatment",
+      "oldTitle": "治療方法與就醫資訊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/diseases/dengue/#vaccine",
+      "kind": "migration",
+      "itemId": "disease.dengue",
+      "listId": "migration.dengue",
+      "key": "vaccine",
+      "oldTitle": "預防接種建議"
+    },
+    {
+      "pattern": "/category/qapage/{id}",
+      "from": "/Category/QAPage/{id}",
+      "to": "/diseases/dengue/#faq",
+      "kind": "migration",
+      "itemId": "disease.dengue",
+      "listId": "migration.dengue",
+      "key": "qa-list",
+      "oldTitle": "Q&A"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/media/dengue-village-chief/",
+      "kind": "migration",
+      "itemId": "media.dengue-village-chief",
+      "listId": "migration.dengue",
+      "key": "materials-video",
+      "oldTitle": "衛教宣導：影片"
+    },
+    {
+      "pattern": "/category/diseasedefine/{id}",
+      "from": "/Category/DiseaseDefine/{id}",
+      "to": "/documents/case-definition-dengue.2026-01-01/",
+      "kind": "migration",
+      "itemId": "doc.case-definition-dengue.2026-01-01",
+      "listId": "migration.dengue",
+      "key": "case-definition",
+      "oldTitle": "病例定義"
+    },
+    {
+      "pattern": "/file/get/{id}",
+      "from": "/File/Get/{id}",
+      "to": "/documents/dengue-community-workplan.2026-09-10/",
+      "kind": "migration",
+      "itemId": "doc.dengue-community-workplan.2026-09-10",
+      "listId": "migration.dengue",
+      "key": "guideline",
+      "oldTitle": "治療指引"
+    },
+    {
+      "pattern": "/category/list/{id}",
+      "from": "/Category/List/{id}",
+      "to": "/data/#dataset.dengue-daily",
+      "kind": "migration",
+      "itemId": "dataset.dengue-daily",
+      "listId": "migration.dengue",
+      "key": "stats",
+      "oldTitle": "統計資料"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/lab/dengue/",
+      "kind": "migration",
+      "itemId": "labtest.dengue",
+      "listId": "migration.dengue",
+      "key": "lab",
+      "oldTitle": "檢驗資訊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/report/#n-dengue",
+      "kind": "migration",
+      "itemId": null,
+      "listId": "migration.dengue",
+      "key": "notify",
+      "oldTitle": "通報定義與時限"
+    },
+    {
+      "pattern": "/bulletin/list/{id}",
+      "from": "/Bulletin/List/{id}",
+      "to": "/diseases/dengue/",
+      "kind": "migration",
+      "itemId": "disease.dengue",
+      "listId": "migration.dengue",
+      "key": "news-list",
+      "oldTitle": "新聞稿列表"
+    },
+    {
+      "pattern": "/category/list/{id}",
+      "from": "/Category/List/{id}",
+      "to": "/topics/disaster-evacuation/",
+      "kind": "migration",
+      "itemId": "topic.disaster-evacuation",
+      "listId": "migration.dengue",
+      "key": "links",
+      "oldTitle": "相關連結"
+    },
+    {
+      "pattern": "/category/page/{id}",
+      "from": "/Category/Page/{id}",
+      "to": "/diseases/dengue/",
+      "kind": "migration",
+      "itemId": "disease.dengue",
+      "listId": "migration.dengue",
+      "key": "dengue-zone",
+      "oldTitle": "登革熱防治專區（首頁）"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/documents/dengue-community-workplan.2026-09-10/",
+      "kind": "migration",
+      "itemId": "doc.dengue-community-workplan.2026-09-10",
+      "listId": "migration.dengue",
+      "key": "dengue-source-reduction",
+      "oldTitle": "孳生源清除與社區動員（巡倒清刷）"
+    },
+    {
+      "pattern": "/bulletin/detail/{id}",
+      "from": "/Bulletin/Detail/{id}",
+      "to": "/news/2026-09-15-letter-615-ns1/",
+      "kind": "migration",
+      "itemId": "news.2026-09-15-letter-615-ns1",
+      "listId": "migration.dengue",
+      "key": "dengue-ns1-notice",
+      "oldTitle": "NS1 抗原快篩試劑配置公告（致醫界通函）"
+    },
+    {
+      "pattern": "/file/get/{id}",
+      "from": "/File/Get/{id}",
+      "to": "/documents/guidance-dengue.2026-02/",
+      "kind": "migration",
+      "itemId": "doc.guidance-dengue.2026-02",
+      "listId": "migration.dengue",
+      "key": "dengue-guidance-v16-archive",
+      "oldTitle": "登革熱／屈公病防治工作指引（第 16 版）"
+    },
+    {
+      "pattern": "/category/list/{id}",
+      "from": "/Category/List/{id}",
+      "to": "/media/dengue-village-chief/",
+      "kind": "migration",
+      "itemId": "media.dengue-village-chief",
+      "listId": "migration.dengue",
+      "key": "dengue-village-chief-video",
+      "oldTitle": "影音：里長帶頭巡倒清刷"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/malaria/",
+      "kind": "migration",
+      "itemId": "disease.malaria",
+      "listId": "migration.malaria",
+      "key": "intro",
+      "oldTitle": "疾病介紹"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/malaria/#transmission",
+      "kind": "migration",
+      "itemId": "disease.malaria",
+      "listId": "migration.malaria",
+      "key": "intro-pathogen",
+      "oldTitle": "致病原"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/malaria/#situation",
+      "kind": "migration",
+      "itemId": "disease.malaria",
+      "listId": "migration.malaria",
+      "key": "intro-epidemiology",
+      "oldTitle": "流行病學"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/malaria/#symptoms",
+      "kind": "migration",
+      "itemId": "disease.malaria",
+      "listId": "migration.malaria",
+      "key": "intro-symptoms",
+      "oldTitle": "發病症狀"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/malaria/#prevention",
+      "kind": "migration",
+      "itemId": "disease.malaria",
+      "listId": "migration.malaria",
+      "key": "intro-prevention",
+      "oldTitle": "預防方法"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/malaria/#treatment",
+      "kind": "migration",
+      "itemId": "disease.malaria",
+      "listId": "migration.malaria",
+      "key": "intro-treatment",
+      "oldTitle": "治療方法與就醫資訊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/diseases/malaria/#vaccine",
+      "kind": "migration",
+      "itemId": "disease.malaria",
+      "listId": "migration.malaria",
+      "key": "vaccine",
+      "oldTitle": "預防接種建議"
+    },
+    {
+      "pattern": "/category/qapage/{id}",
+      "from": "/Category/QAPage/{id}",
+      "to": "/diseases/malaria/#faq",
+      "kind": "migration",
+      "itemId": "disease.malaria",
+      "listId": "migration.malaria",
+      "key": "qa-list",
+      "oldTitle": "Q&A"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/media/travel-clinic-before-departure/",
+      "kind": "migration",
+      "itemId": "media.travel-clinic-before-departure",
+      "listId": "migration.malaria",
+      "key": "materials-video",
+      "oldTitle": "衛教宣導：影片"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/lab/malaria/",
+      "kind": "migration",
+      "itemId": "labtest.malaria",
+      "listId": "migration.malaria",
+      "key": "lab",
+      "oldTitle": "檢驗資訊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/report/#n-malaria",
+      "kind": "migration",
+      "itemId": null,
+      "listId": "migration.malaria",
+      "key": "notify",
+      "oldTitle": "通報定義與時限"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/measles/",
+      "kind": "migration",
+      "itemId": "disease.measles",
+      "listId": "migration.measles",
+      "key": "intro",
+      "oldTitle": "疾病介紹"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/measles/#transmission",
+      "kind": "migration",
+      "itemId": "disease.measles",
+      "listId": "migration.measles",
+      "key": "intro-pathogen",
+      "oldTitle": "致病原"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/measles/#situation",
+      "kind": "migration",
+      "itemId": "disease.measles",
+      "listId": "migration.measles",
+      "key": "intro-epidemiology",
+      "oldTitle": "流行病學"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/measles/#symptoms",
+      "kind": "migration",
+      "itemId": "disease.measles",
+      "listId": "migration.measles",
+      "key": "intro-symptoms",
+      "oldTitle": "發病症狀"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/measles/#prevention",
+      "kind": "migration",
+      "itemId": "disease.measles",
+      "listId": "migration.measles",
+      "key": "intro-prevention",
+      "oldTitle": "預防方法"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/measles/#treatment",
+      "kind": "migration",
+      "itemId": "disease.measles",
+      "listId": "migration.measles",
+      "key": "intro-treatment",
+      "oldTitle": "治療方法與就醫資訊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/diseases/measles/#vaccine",
+      "kind": "migration",
+      "itemId": "disease.measles",
+      "listId": "migration.measles",
+      "key": "vaccine",
+      "oldTitle": "預防接種建議"
+    },
+    {
+      "pattern": "/category/qapage/{id}",
+      "from": "/Category/QAPage/{id}",
+      "to": "/diseases/measles/#faq",
+      "kind": "migration",
+      "itemId": "disease.measles",
+      "listId": "migration.measles",
+      "key": "qa-list",
+      "oldTitle": "Q&A"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/media/mmr-waiting-room-2026/",
+      "kind": "migration",
+      "itemId": "media.mmr-waiting-room-2026",
+      "listId": "migration.measles",
+      "key": "materials-video",
+      "oldTitle": "衛教宣導：影片"
+    },
+    {
+      "pattern": "/category/diseasedefine/{id}",
+      "from": "/Category/DiseaseDefine/{id}",
+      "to": "/documents/case-definition-measles.2024-01-01/",
+      "kind": "migration",
+      "itemId": "doc.case-definition-measles.2024-01-01",
+      "listId": "migration.measles",
+      "key": "case-definition",
+      "oldTitle": "病例定義"
+    },
+    {
+      "pattern": "/file/get/{id}",
+      "from": "/File/Get/{id}",
+      "to": "/documents/measles-contact-tracing.2026-09-12/",
+      "kind": "migration",
+      "itemId": "doc.measles-contact-tracing.2026-09-12",
+      "listId": "migration.measles",
+      "key": "guideline",
+      "oldTitle": "治療指引"
+    },
+    {
+      "pattern": "/category/list/{id}",
+      "from": "/Category/List/{id}",
+      "to": "/data/#dataset.measles-yearly",
+      "kind": "migration",
+      "itemId": "dataset.measles-yearly",
+      "listId": "migration.measles",
+      "key": "stats",
+      "oldTitle": "統計資料"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/lab/measles/",
+      "kind": "migration",
+      "itemId": "labtest.measles",
+      "listId": "migration.measles",
+      "key": "lab",
+      "oldTitle": "檢驗資訊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/report/#n-measles",
+      "kind": "migration",
+      "itemId": null,
+      "listId": "migration.measles",
+      "key": "notify",
+      "oldTitle": "通報定義與時限"
+    },
+    {
+      "pattern": "/bulletin/list/{id}",
+      "from": "/Bulletin/List/{id}",
+      "to": "/diseases/measles/",
+      "kind": "migration",
+      "itemId": "disease.measles",
+      "listId": "migration.measles",
+      "key": "news-list",
+      "oldTitle": "新聞稿列表"
+    },
+    {
+      "pattern": "/category/list/{id}",
+      "from": "/Category/List/{id}",
+      "to": "/topics/new-residents-migrant-health/",
+      "kind": "migration",
+      "itemId": "topic.new-residents-migrant-health",
+      "listId": "migration.measles",
+      "key": "links",
+      "oldTitle": "相關連結"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/documents/measles-contact-tracing.2026-09-12/",
+      "kind": "migration",
+      "itemId": "doc.measles-contact-tracing.2026-09-12",
+      "listId": "migration.measles",
+      "key": "measles-cluster-response",
+      "oldTitle": "麻疹群聚事件應變專區"
+    },
+    {
+      "pattern": "/file/get/{id}",
+      "from": "/File/Get/{id}",
+      "to": "/documents/mmr-recommendation.2025-04-16/",
+      "kind": "migration",
+      "itemId": "doc.mmr-recommendation.2025-04-16",
+      "listId": "migration.measles",
+      "key": "measles-mmr-2019",
+      "oldTitle": "國內 MMR 預防接種建議（108.05.14 版）"
+    },
+    {
+      "pattern": "/category/list/{id}",
+      "from": "/Category/List/{id}",
+      "to": "/media/mmr-waiting-room-2026/",
+      "kind": "migration",
+      "itemId": "media.mmr-waiting-room-2026",
+      "listId": "migration.measles",
+      "key": "measles-mmr-video",
+      "oldTitle": "麻疹 MMR 疫苗候診衛教動畫"
+    },
+    {
+      "pattern": "/bulletin/detail/{id}",
+      "from": "/Bulletin/Detail/{id}",
+      "to": "/news/2026-05-11-japan-measles-level1/",
+      "kind": "migration",
+      "itemId": "news.2026-05-11-japan-measles-level1",
+      "listId": "migration.measles",
+      "key": "measles-japan-travel",
+      "oldTitle": "日本麻疹疫情旅遊提醒"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/hepatitis-a/",
+      "kind": "migration",
+      "itemId": "disease.hepatitis-a",
+      "listId": "migration.hepatitis-a",
+      "key": "intro",
+      "oldTitle": "疾病介紹"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/hepatitis-a/#transmission",
+      "kind": "migration",
+      "itemId": "disease.hepatitis-a",
+      "listId": "migration.hepatitis-a",
+      "key": "intro-pathogen",
+      "oldTitle": "致病原"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/hepatitis-a/#situation",
+      "kind": "migration",
+      "itemId": "disease.hepatitis-a",
+      "listId": "migration.hepatitis-a",
+      "key": "intro-epidemiology",
+      "oldTitle": "流行病學"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/hepatitis-a/#symptoms",
+      "kind": "migration",
+      "itemId": "disease.hepatitis-a",
+      "listId": "migration.hepatitis-a",
+      "key": "intro-symptoms",
+      "oldTitle": "發病症狀"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/hepatitis-a/#prevention",
+      "kind": "migration",
+      "itemId": "disease.hepatitis-a",
+      "listId": "migration.hepatitis-a",
+      "key": "intro-prevention",
+      "oldTitle": "預防方法"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/hepatitis-a/#treatment",
+      "kind": "migration",
+      "itemId": "disease.hepatitis-a",
+      "listId": "migration.hepatitis-a",
+      "key": "intro-treatment",
+      "oldTitle": "治療方法與就醫資訊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/diseases/hepatitis-a/#vaccine",
+      "kind": "migration",
+      "itemId": "disease.hepatitis-a",
+      "listId": "migration.hepatitis-a",
+      "key": "vaccine",
+      "oldTitle": "預防接種建議"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/lab/hepatitis-a/",
+      "kind": "migration",
+      "itemId": "labtest.hepatitis-a",
+      "listId": "migration.hepatitis-a",
+      "key": "lab",
+      "oldTitle": "檢驗資訊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/report/#n-hepatitis-a",
+      "kind": "migration",
+      "itemId": null,
+      "listId": "migration.hepatitis-a",
+      "key": "notify",
+      "oldTitle": "通報定義與時限"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/rubella/",
+      "kind": "migration",
+      "itemId": "disease.rubella",
+      "listId": "migration.rubella",
+      "key": "intro",
+      "oldTitle": "疾病介紹"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/rubella/#transmission",
+      "kind": "migration",
+      "itemId": "disease.rubella",
+      "listId": "migration.rubella",
+      "key": "intro-pathogen",
+      "oldTitle": "致病原"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/rubella/#situation",
+      "kind": "migration",
+      "itemId": "disease.rubella",
+      "listId": "migration.rubella",
+      "key": "intro-epidemiology",
+      "oldTitle": "流行病學"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/rubella/#symptoms",
+      "kind": "migration",
+      "itemId": "disease.rubella",
+      "listId": "migration.rubella",
+      "key": "intro-symptoms",
+      "oldTitle": "發病症狀"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/rubella/#prevention",
+      "kind": "migration",
+      "itemId": "disease.rubella",
+      "listId": "migration.rubella",
+      "key": "intro-prevention",
+      "oldTitle": "預防方法"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/rubella/#treatment",
+      "kind": "migration",
+      "itemId": "disease.rubella",
+      "listId": "migration.rubella",
+      "key": "intro-treatment",
+      "oldTitle": "治療方法與就醫資訊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/diseases/rubella/#vaccine",
+      "kind": "migration",
+      "itemId": "disease.rubella",
+      "listId": "migration.rubella",
+      "key": "vaccine",
+      "oldTitle": "預防接種建議"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/lab/rubella/",
+      "kind": "migration",
+      "itemId": "labtest.rubella",
+      "listId": "migration.rubella",
+      "key": "lab",
+      "oldTitle": "檢驗資訊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/report/#n-rubella",
+      "kind": "migration",
+      "itemId": null,
+      "listId": "migration.rubella",
+      "key": "notify",
+      "oldTitle": "通報定義與時限"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/chikungunya/",
+      "kind": "migration",
+      "itemId": "disease.chikungunya",
+      "listId": "migration.chikungunya",
+      "key": "intro",
+      "oldTitle": "疾病介紹"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/chikungunya/#transmission",
+      "kind": "migration",
+      "itemId": "disease.chikungunya",
+      "listId": "migration.chikungunya",
+      "key": "intro-pathogen",
+      "oldTitle": "致病原"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/chikungunya/#situation",
+      "kind": "migration",
+      "itemId": "disease.chikungunya",
+      "listId": "migration.chikungunya",
+      "key": "intro-epidemiology",
+      "oldTitle": "流行病學"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/chikungunya/#symptoms",
+      "kind": "migration",
+      "itemId": "disease.chikungunya",
+      "listId": "migration.chikungunya",
+      "key": "intro-symptoms",
+      "oldTitle": "發病症狀"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/chikungunya/#prevention",
+      "kind": "migration",
+      "itemId": "disease.chikungunya",
+      "listId": "migration.chikungunya",
+      "key": "intro-prevention",
+      "oldTitle": "預防方法"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/chikungunya/#treatment",
+      "kind": "migration",
+      "itemId": "disease.chikungunya",
+      "listId": "migration.chikungunya",
+      "key": "intro-treatment",
+      "oldTitle": "治療方法與就醫資訊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/diseases/chikungunya/#vaccine",
+      "kind": "migration",
+      "itemId": "disease.chikungunya",
+      "listId": "migration.chikungunya",
+      "key": "vaccine",
+      "oldTitle": "預防接種建議"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/lab/chikungunya/",
+      "kind": "migration",
+      "itemId": "labtest.chikungunya",
+      "listId": "migration.chikungunya",
+      "key": "lab",
+      "oldTitle": "檢驗資訊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/report/#n-chikungunya",
+      "kind": "migration",
+      "itemId": null,
+      "listId": "migration.chikungunya",
+      "key": "notify",
+      "oldTitle": "通報定義與時限"
+    },
+    {
+      "pattern": "/bulletin/list/{id}",
+      "from": "/Bulletin/List/{id}",
+      "to": "/diseases/chikungunya/",
+      "kind": "migration",
+      "itemId": "disease.chikungunya",
+      "listId": "migration.chikungunya",
+      "key": "news-list",
+      "oldTitle": "新聞稿列表"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/mpox/",
+      "kind": "migration",
+      "itemId": "disease.mpox",
+      "listId": "migration.mpox",
+      "key": "intro",
+      "oldTitle": "疾病介紹"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/mpox/#transmission",
+      "kind": "migration",
+      "itemId": "disease.mpox",
+      "listId": "migration.mpox",
+      "key": "intro-pathogen",
+      "oldTitle": "致病原"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/mpox/#situation",
+      "kind": "migration",
+      "itemId": "disease.mpox",
+      "listId": "migration.mpox",
+      "key": "intro-epidemiology",
+      "oldTitle": "流行病學"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/mpox/#symptoms",
+      "kind": "migration",
+      "itemId": "disease.mpox",
+      "listId": "migration.mpox",
+      "key": "intro-symptoms",
+      "oldTitle": "發病症狀"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/mpox/#prevention",
+      "kind": "migration",
+      "itemId": "disease.mpox",
+      "listId": "migration.mpox",
+      "key": "intro-prevention",
+      "oldTitle": "預防方法"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/mpox/#treatment",
+      "kind": "migration",
+      "itemId": "disease.mpox",
+      "listId": "migration.mpox",
+      "key": "intro-treatment",
+      "oldTitle": "治療方法與就醫資訊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/diseases/mpox/#vaccine",
+      "kind": "migration",
+      "itemId": "disease.mpox",
+      "listId": "migration.mpox",
+      "key": "vaccine",
+      "oldTitle": "預防接種建議"
+    },
+    {
+      "pattern": "/category/qapage/{id}",
+      "from": "/Category/QAPage/{id}",
+      "to": "/diseases/mpox/#faq",
+      "kind": "migration",
+      "itemId": "disease.mpox",
+      "listId": "migration.mpox",
+      "key": "qa-list",
+      "oldTitle": "Q&A"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/media/mpox-vaccine/",
+      "kind": "migration",
+      "itemId": "media.mpox-vaccine",
+      "listId": "migration.mpox",
+      "key": "materials-video",
+      "oldTitle": "衛教宣導：影片"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/lab/mpox/",
+      "kind": "migration",
+      "itemId": "labtest.mpox",
+      "listId": "migration.mpox",
+      "key": "lab",
+      "oldTitle": "檢驗資訊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/report/#n-mpox",
+      "kind": "migration",
+      "itemId": null,
+      "listId": "migration.mpox",
+      "key": "notify",
+      "oldTitle": "通報定義與時限"
+    },
+    {
+      "pattern": "/bulletin/list/{id}",
+      "from": "/Bulletin/List/{id}",
+      "to": "/diseases/mpox/",
+      "kind": "migration",
+      "itemId": "disease.mpox",
+      "listId": "migration.mpox",
+      "key": "news-list",
+      "oldTitle": "新聞稿列表"
+    },
+    {
+      "pattern": "/category/list/{id}",
+      "from": "/Category/List/{id}",
+      "to": "/topics/sti-resources/",
+      "kind": "migration",
+      "itemId": "topic.sti-resources",
+      "listId": "migration.mpox",
+      "key": "links",
+      "oldTitle": "相關連結"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/pertussis/",
+      "kind": "migration",
+      "itemId": "disease.pertussis",
+      "listId": "migration.pertussis",
+      "key": "intro",
+      "oldTitle": "疾病介紹"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/pertussis/#transmission",
+      "kind": "migration",
+      "itemId": "disease.pertussis",
+      "listId": "migration.pertussis",
+      "key": "intro-pathogen",
+      "oldTitle": "致病原"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/pertussis/#situation",
+      "kind": "migration",
+      "itemId": "disease.pertussis",
+      "listId": "migration.pertussis",
+      "key": "intro-epidemiology",
+      "oldTitle": "流行病學"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/pertussis/#symptoms",
+      "kind": "migration",
+      "itemId": "disease.pertussis",
+      "listId": "migration.pertussis",
+      "key": "intro-symptoms",
+      "oldTitle": "發病症狀"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/pertussis/#prevention",
+      "kind": "migration",
+      "itemId": "disease.pertussis",
+      "listId": "migration.pertussis",
+      "key": "intro-prevention",
+      "oldTitle": "預防方法"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/pertussis/#treatment",
+      "kind": "migration",
+      "itemId": "disease.pertussis",
+      "listId": "migration.pertussis",
+      "key": "intro-treatment",
+      "oldTitle": "治療方法與就醫資訊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/diseases/pertussis/#vaccine",
+      "kind": "migration",
+      "itemId": "disease.pertussis",
+      "listId": "migration.pertussis",
+      "key": "vaccine",
+      "oldTitle": "預防接種建議"
+    },
+    {
+      "pattern": "/category/qapage/{id}",
+      "from": "/Category/QAPage/{id}",
+      "to": "/diseases/pertussis/#faq",
+      "kind": "migration",
+      "itemId": "disease.pertussis",
+      "listId": "migration.pertussis",
+      "key": "qa-list",
+      "oldTitle": "Q&A"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/lab/pertussis/",
+      "kind": "migration",
+      "itemId": "labtest.pertussis",
+      "listId": "migration.pertussis",
+      "key": "lab",
+      "oldTitle": "檢驗資訊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/report/#n-pertussis",
+      "kind": "migration",
+      "itemId": null,
+      "listId": "migration.pertussis",
+      "key": "notify",
+      "oldTitle": "通報定義與時限"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/japanese-encephalitis/",
+      "kind": "migration",
+      "itemId": "disease.japanese-encephalitis",
+      "listId": "migration.japanese-encephalitis",
+      "key": "intro",
+      "oldTitle": "疾病介紹"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/japanese-encephalitis/#transmission",
+      "kind": "migration",
+      "itemId": "disease.japanese-encephalitis",
+      "listId": "migration.japanese-encephalitis",
+      "key": "intro-pathogen",
+      "oldTitle": "致病原"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/japanese-encephalitis/#situation",
+      "kind": "migration",
+      "itemId": "disease.japanese-encephalitis",
+      "listId": "migration.japanese-encephalitis",
+      "key": "intro-epidemiology",
+      "oldTitle": "流行病學"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/japanese-encephalitis/#symptoms",
+      "kind": "migration",
+      "itemId": "disease.japanese-encephalitis",
+      "listId": "migration.japanese-encephalitis",
+      "key": "intro-symptoms",
+      "oldTitle": "發病症狀"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/japanese-encephalitis/#prevention",
+      "kind": "migration",
+      "itemId": "disease.japanese-encephalitis",
+      "listId": "migration.japanese-encephalitis",
+      "key": "intro-prevention",
+      "oldTitle": "預防方法"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/japanese-encephalitis/#treatment",
+      "kind": "migration",
+      "itemId": "disease.japanese-encephalitis",
+      "listId": "migration.japanese-encephalitis",
+      "key": "intro-treatment",
+      "oldTitle": "治療方法與就醫資訊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/diseases/japanese-encephalitis/#vaccine",
+      "kind": "migration",
+      "itemId": "disease.japanese-encephalitis",
+      "listId": "migration.japanese-encephalitis",
+      "key": "vaccine",
+      "oldTitle": "預防接種建議"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/lab/japanese-encephalitis/",
+      "kind": "migration",
+      "itemId": "labtest.japanese-encephalitis",
+      "listId": "migration.japanese-encephalitis",
+      "key": "lab",
+      "oldTitle": "檢驗資訊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/report/#n-japanese-encephalitis",
+      "kind": "migration",
+      "itemId": null,
+      "listId": "migration.japanese-encephalitis",
+      "key": "notify",
+      "oldTitle": "通報定義與時限"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/tuberculosis/",
+      "kind": "migration",
+      "itemId": "disease.tuberculosis",
+      "listId": "migration.tuberculosis",
+      "key": "intro",
+      "oldTitle": "疾病介紹"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/tuberculosis/#transmission",
+      "kind": "migration",
+      "itemId": "disease.tuberculosis",
+      "listId": "migration.tuberculosis",
+      "key": "intro-pathogen",
+      "oldTitle": "致病原"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/tuberculosis/#situation",
+      "kind": "migration",
+      "itemId": "disease.tuberculosis",
+      "listId": "migration.tuberculosis",
+      "key": "intro-epidemiology",
+      "oldTitle": "流行病學"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/tuberculosis/#symptoms",
+      "kind": "migration",
+      "itemId": "disease.tuberculosis",
+      "listId": "migration.tuberculosis",
+      "key": "intro-symptoms",
+      "oldTitle": "臨床症狀"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/tuberculosis/#prevention",
+      "kind": "migration",
+      "itemId": "disease.tuberculosis",
+      "listId": "migration.tuberculosis",
+      "key": "intro-prevention",
+      "oldTitle": "預防方法"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/tuberculosis/#treatment",
+      "kind": "migration",
+      "itemId": "disease.tuberculosis",
+      "listId": "migration.tuberculosis",
+      "key": "intro-treatment",
+      "oldTitle": "治療照護"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/diseases/tuberculosis/#vaccine",
+      "kind": "migration",
+      "itemId": "disease.tuberculosis",
+      "listId": "migration.tuberculosis",
+      "key": "vaccine",
+      "oldTitle": "預防接種建議"
+    },
+    {
+      "pattern": "/category/qapage/{id}",
+      "from": "/Category/QAPage/{id}",
+      "to": "/diseases/tuberculosis/#faq",
+      "kind": "migration",
+      "itemId": "disease.tuberculosis",
+      "listId": "migration.tuberculosis",
+      "key": "qa-list",
+      "oldTitle": "結核病 Q&A"
+    },
+    {
+      "pattern": "/category/list/{id}",
+      "from": "/Category/List/{id}",
+      "to": "/publications/poster-tb-seven-languages/",
+      "kind": "migration",
+      "itemId": "publication.poster-tb-seven-languages",
+      "listId": "migration.tuberculosis",
+      "key": "materials-poster",
+      "oldTitle": "宣導素材：咳嗽兩週要就醫（多國語言海報）"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/media/tb-cough-two-weeks/",
+      "kind": "migration",
+      "itemId": "media.tb-cough-two-weeks",
+      "listId": "migration.tuberculosis",
+      "key": "materials-video",
+      "oldTitle": "宣導素材：咳嗽兩週快去照胸部 X 光（影片）"
+    },
+    {
+      "pattern": "/category/diseasemanual/{id}",
+      "from": "/Category/DiseaseManual/{id}",
+      "to": "/documents/tb-manual.2025-07-01/",
+      "kind": "migration",
+      "itemId": "doc.tb-manual.2025-07-01",
+      "listId": "migration.tuberculosis",
+      "key": "manual",
+      "oldTitle": "工作手冊"
+    },
+    {
+      "pattern": "/category/diseasedefine/{id}",
+      "from": "/Category/DiseaseDefine/{id}",
+      "to": "/documents/tb-case-definition.2024-01-01/",
+      "kind": "migration",
+      "itemId": "doc.tb-case-definition.2024-01-01",
+      "listId": "migration.tuberculosis",
+      "key": "case-definition",
+      "oldTitle": "結核病病例定義"
+    },
+    {
+      "pattern": "/file/get/{id}",
+      "from": "/File/Get/{id}",
+      "to": "/documents/tb-guideline.2025-09-01/",
+      "kind": "migration",
+      "itemId": "doc.tb-guideline.2025-09-01",
+      "listId": "migration.tuberculosis",
+      "key": "guideline",
+      "oldTitle": "治療指引"
+    },
+    {
+      "pattern": "/category/list/{id}",
+      "from": "/Category/List/{id}",
+      "to": "/data/#dataset.tb-new-cases",
+      "kind": "migration",
+      "itemId": "dataset.tb-new-cases",
+      "listId": "migration.tuberculosis",
+      "key": "stats",
+      "oldTitle": "統計資料"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/lab/tuberculosis/",
+      "kind": "migration",
+      "itemId": "labtest.tuberculosis",
+      "listId": "migration.tuberculosis",
+      "key": "lab",
+      "oldTitle": "檢驗方法與送驗須知"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/apply/notifiable-disease-report/",
+      "kind": "migration",
+      "itemId": "service.notifiable-disease-report",
+      "listId": "migration.tuberculosis",
+      "key": "notify",
+      "oldTitle": "通報方式與時限"
+    },
+    {
+      "pattern": "/bulletin/list/{id}",
+      "from": "/Bulletin/List/{id}?page=1",
+      "to": "/diseases/tuberculosis/",
+      "kind": "migration",
+      "itemId": "disease.tuberculosis",
+      "listId": "migration.tuberculosis",
+      "key": "news-list",
+      "oldTitle": "結核病最新消息"
+    },
+    {
+      "pattern": "/category/list/{id}",
+      "from": "/Category/List/{id}",
+      "to": "/topics/tb-prevention/",
+      "kind": "migration",
+      "itemId": "topic.tb-prevention",
+      "listId": "migration.tuberculosis",
+      "key": "links",
+      "oldTitle": "相關連結"
+    },
+    {
+      "pattern": "/category/qapage/{id}",
+      "from": "/Category/QAPage/{id}",
+      "to": "/faq/tb-cough-two-weeks/",
+      "kind": "migration",
+      "itemId": "faq.tb-cough-two-weeks",
+      "listId": "migration.tuberculosis",
+      "key": "qa-cough",
+      "oldTitle": "Q&A：咳嗽多久要懷疑是結核病？"
+    },
+    {
+      "pattern": "/category/qapage/{id}",
+      "from": "/Category/QAPage/{id}",
+      "to": "/faq/ltbi-treat-or-not/",
+      "kind": "migration",
+      "itemId": "faq.ltbi-treat-or-not",
+      "listId": "migration.tuberculosis",
+      "key": "qa-ltbi",
+      "oldTitle": "Q&A：潛伏結核感染需要治療嗎？"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/media/migrant-worker-health-check/",
+      "kind": "migration",
+      "itemId": "media.migrant-worker-health-check",
+      "listId": "migration.tuberculosis",
+      "key": "materials-migrant",
+      "oldTitle": "宣導素材：移工健康檢查（影片）"
+    },
+    {
+      "pattern": "/file/get/{id}",
+      "from": "/File/Get/{id}",
+      "to": "/documents/ltbi-guideline.2024-01-01/",
+      "kind": "migration",
+      "itemId": "doc.ltbi-guideline.2024-01-01",
+      "listId": "migration.tuberculosis",
+      "key": "ltbi-guideline",
+      "oldTitle": "潛伏結核感染診治指引"
+    },
+    {
+      "pattern": "/file/get/{id}",
+      "from": "/File/Get/{id}",
+      "to": "/documents/tb-contact-investigation.2025-01-01/",
+      "kind": "migration",
+      "itemId": "doc.tb-contact-investigation.2025-01-01",
+      "listId": "migration.tuberculosis",
+      "key": "contact-guideline",
+      "oldTitle": "結核病接觸者檢查指引"
+    },
+    {
+      "pattern": "/file/get/{id}",
+      "from": "/File/Get/{id}",
+      "to": "/documents/dots-manual.2025-01-01/",
+      "kind": "migration",
+      "itemId": "doc.dots-manual.2025-01-01",
+      "listId": "migration.tuberculosis",
+      "key": "dots-manual",
+      "oldTitle": "都治計畫作業手冊"
+    },
+    {
+      "pattern": "/file/get/{id}",
+      "from": "/File/Get/{id}",
+      "to": "/documents/tb-manual.2025-07-01/",
+      "kind": "migration",
+      "itemId": "doc.tb-manual.2025-07-01",
+      "listId": "migration.tuberculosis",
+      "key": "tb-manual",
+      "oldTitle": "結核病防治工作手冊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/topics/tb-prevention/",
+      "kind": "migration",
+      "itemId": "topic.tb-prevention",
+      "listId": "migration.tuberculosis",
+      "key": "dots",
+      "oldTitle": "都治（DOTS）"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/apply/ltbi-treatment/",
+      "kind": "migration",
+      "itemId": "service.ltbi-treatment",
+      "listId": "migration.tuberculosis",
+      "key": "ltbi",
+      "oldTitle": "潛伏結核感染治療"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/faq/tb-contact-screening/",
+      "kind": "migration",
+      "itemId": "faq.tb-contact-screening",
+      "listId": "migration.tuberculosis",
+      "key": "contact",
+      "oldTitle": "接觸者檢查"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/apply/tb-treatment-subsidy/",
+      "kind": "migration",
+      "itemId": "service.tb-treatment-subsidy",
+      "listId": "migration.tuberculosis",
+      "key": "subsidy",
+      "oldTitle": "結核病醫療費用補助及隔離治療"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/faq/tb-foreigner-health-check/",
+      "kind": "migration",
+      "itemId": "faq.tb-foreigner-health-check",
+      "listId": "migration.tuberculosis",
+      "key": "foreigner",
+      "oldTitle": "外籍人士健康檢查（結核病）"
+    },
+    {
+      "pattern": "/category/listcontent/{id}?uaid={uaid}",
+      "from": "/Category/ListContent/{id}?uaid={uaid}",
+      "to": "/research/2025-migrant-tb-active-case-finding/",
+      "kind": "migration",
+      "itemId": "research.2025-migrant-tb-active-case-finding",
+      "listId": "migration.tuberculosis",
+      "key": "research",
+      "oldTitle": "研究成果：移工結核病主動發現"
+    },
+    {
+      "pattern": "/bulletin/detail/{id}?typeid=9",
+      "from": "/Bulletin/Detail/{id}?typeid=9",
+      "to": "/news/2025-03-24-world-tb-day/",
+      "kind": "migration",
+      "itemId": "news.2025-03-24-world-tb-day",
+      "listId": "migration.tuberculosis",
+      "key": "news-world-tb-day-2025",
+      "oldTitle": "新聞稿：世界結核病日（2025）"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/enterovirus/",
+      "kind": "migration",
+      "itemId": "disease.enterovirus",
+      "listId": "migration.enterovirus",
+      "key": "intro",
+      "oldTitle": "疾病介紹"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/enterovirus/#transmission",
+      "kind": "migration",
+      "itemId": "disease.enterovirus",
+      "listId": "migration.enterovirus",
+      "key": "intro-pathogen",
+      "oldTitle": "致病原"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/enterovirus/#situation",
+      "kind": "migration",
+      "itemId": "disease.enterovirus",
+      "listId": "migration.enterovirus",
+      "key": "intro-epidemiology",
+      "oldTitle": "流行病學"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/enterovirus/#symptoms",
+      "kind": "migration",
+      "itemId": "disease.enterovirus",
+      "listId": "migration.enterovirus",
+      "key": "intro-symptoms",
+      "oldTitle": "發病症狀"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/enterovirus/#prevention",
+      "kind": "migration",
+      "itemId": "disease.enterovirus",
+      "listId": "migration.enterovirus",
+      "key": "intro-prevention",
+      "oldTitle": "預防方法"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/enterovirus/#treatment",
+      "kind": "migration",
+      "itemId": "disease.enterovirus",
+      "listId": "migration.enterovirus",
+      "key": "intro-treatment",
+      "oldTitle": "治療方法與就醫資訊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/diseases/enterovirus/#vaccine",
+      "kind": "migration",
+      "itemId": "disease.enterovirus",
+      "listId": "migration.enterovirus",
+      "key": "vaccine",
+      "oldTitle": "預防接種建議"
+    },
+    {
+      "pattern": "/category/qapage/{id}",
+      "from": "/Category/QAPage/{id}",
+      "to": "/diseases/enterovirus/#faq",
+      "kind": "migration",
+      "itemId": "disease.enterovirus",
+      "listId": "migration.enterovirus",
+      "key": "qa-list",
+      "oldTitle": "Q&A"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/media/enterovirus-handwashing/",
+      "kind": "migration",
+      "itemId": "media.enterovirus-handwashing",
+      "listId": "migration.enterovirus",
+      "key": "materials-video",
+      "oldTitle": "衛教宣導：影片"
+    },
+    {
+      "pattern": "/file/get/{id}",
+      "from": "/File/Get/{id}",
+      "to": "/documents/ev-childcare-guideline.2026-09-10/",
+      "kind": "migration",
+      "itemId": "doc.ev-childcare-guideline.2026-09-10",
+      "listId": "migration.enterovirus",
+      "key": "guideline",
+      "oldTitle": "治療指引"
+    },
+    {
+      "pattern": "/category/list/{id}",
+      "from": "/Category/List/{id}",
+      "to": "/data/#dataset.ev-visits-weekly",
+      "kind": "migration",
+      "itemId": "dataset.ev-visits-weekly",
+      "listId": "migration.enterovirus",
+      "key": "stats",
+      "oldTitle": "統計資料"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/lab/enterovirus/",
+      "kind": "migration",
+      "itemId": "labtest.enterovirus",
+      "listId": "migration.enterovirus",
+      "key": "lab",
+      "oldTitle": "檢驗資訊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/report/#n-enterovirus",
+      "kind": "migration",
+      "itemId": null,
+      "listId": "migration.enterovirus",
+      "key": "notify",
+      "oldTitle": "通報定義與時限"
+    },
+    {
+      "pattern": "/bulletin/list/{id}",
+      "from": "/Bulletin/List/{id}",
+      "to": "/diseases/enterovirus/",
+      "kind": "migration",
+      "itemId": "disease.enterovirus",
+      "listId": "migration.enterovirus",
+      "key": "news-list",
+      "oldTitle": "新聞稿列表"
+    },
+    {
+      "pattern": "/category/page/{id}",
+      "from": "/Category/Page/{id}",
+      "to": "/diseases/enterovirus/",
+      "kind": "migration",
+      "itemId": "disease.enterovirus",
+      "listId": "migration.enterovirus",
+      "key": "ev-zone",
+      "oldTitle": "腸病毒防治專區（首頁）"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/documents/ev-childcare-guideline.2026-09-10/",
+      "kind": "migration",
+      "itemId": "doc.ev-childcare-guideline.2026-09-10",
+      "listId": "migration.enterovirus",
+      "key": "ev-closure-reporting",
+      "oldTitle": "停課標準與疫情通報"
+    },
+    {
+      "pattern": "/file/get/{id}",
+      "from": "/File/Get/{id}",
+      "to": "/documents/ev-severe-guideline.2026-03-15/",
+      "kind": "migration",
+      "itemId": "doc.ev-severe-guideline.2026-03-15",
+      "listId": "migration.enterovirus",
+      "key": "ev-severe-clinical",
+      "oldTitle": "腸病毒感染併發重症臨床處置建議"
+    },
+    {
+      "pattern": "/category/page/{id}",
+      "from": "/Category/Page/{id}",
+      "to": "/vaccines/ev71/",
+      "kind": "migration",
+      "itemId": "vaccine.ev71",
+      "listId": "migration.enterovirus",
+      "key": "ev-ev71-vaccine",
+      "oldTitle": "腸病毒 71 型疫苗專區"
+    },
+    {
+      "pattern": "/category/list/{id}",
+      "from": "/Category/List/{id}",
+      "to": "/media/enterovirus-handwashing/",
+      "kind": "migration",
+      "itemId": "media.enterovirus-handwashing",
+      "listId": "migration.enterovirus",
+      "key": "ev-handwashing-video",
+      "oldTitle": "影音：濕搓沖捧擦洗手五步驟動畫"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/hiv/",
+      "kind": "migration",
+      "itemId": "disease.hiv",
+      "listId": "migration.hiv",
+      "key": "intro",
+      "oldTitle": "疾病介紹"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/hiv/#transmission",
+      "kind": "migration",
+      "itemId": "disease.hiv",
+      "listId": "migration.hiv",
+      "key": "intro-pathogen",
+      "oldTitle": "致病原"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/hiv/#situation",
+      "kind": "migration",
+      "itemId": "disease.hiv",
+      "listId": "migration.hiv",
+      "key": "intro-epidemiology",
+      "oldTitle": "流行病學"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/hiv/#symptoms",
+      "kind": "migration",
+      "itemId": "disease.hiv",
+      "listId": "migration.hiv",
+      "key": "intro-symptoms",
+      "oldTitle": "發病症狀"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/hiv/#prevention",
+      "kind": "migration",
+      "itemId": "disease.hiv",
+      "listId": "migration.hiv",
+      "key": "intro-prevention",
+      "oldTitle": "預防方法"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/hiv/#treatment",
+      "kind": "migration",
+      "itemId": "disease.hiv",
+      "listId": "migration.hiv",
+      "key": "intro-treatment",
+      "oldTitle": "治療方法與就醫資訊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/diseases/hiv/#vaccine",
+      "kind": "migration",
+      "itemId": "disease.hiv",
+      "listId": "migration.hiv",
+      "key": "vaccine",
+      "oldTitle": "預防接種建議"
+    },
+    {
+      "pattern": "/category/qapage/{id}",
+      "from": "/Category/QAPage/{id}",
+      "to": "/diseases/hiv/#faq",
+      "kind": "migration",
+      "itemId": "disease.hiv",
+      "listId": "migration.hiv",
+      "key": "qa-list",
+      "oldTitle": "Q&A"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/media/prep-intro/",
+      "kind": "migration",
+      "itemId": "media.prep-intro",
+      "listId": "migration.hiv",
+      "key": "materials-video",
+      "oldTitle": "衛教宣導：影片"
+    },
+    {
+      "pattern": "/category/list/{id}",
+      "from": "/Category/List/{id}",
+      "to": "/data/#dataset.hiv-monthly",
+      "kind": "migration",
+      "itemId": "dataset.hiv-monthly",
+      "listId": "migration.hiv",
+      "key": "stats",
+      "oldTitle": "統計資料"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/lab/hiv/",
+      "kind": "migration",
+      "itemId": "labtest.hiv",
+      "listId": "migration.hiv",
+      "key": "lab",
+      "oldTitle": "檢驗資訊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/report/#n-hiv",
+      "kind": "migration",
+      "itemId": null,
+      "listId": "migration.hiv",
+      "key": "notify",
+      "oldTitle": "通報定義與時限"
+    },
+    {
+      "pattern": "/bulletin/list/{id}",
+      "from": "/Bulletin/List/{id}",
+      "to": "/diseases/hiv/",
+      "kind": "migration",
+      "itemId": "disease.hiv",
+      "listId": "migration.hiv",
+      "key": "news-list",
+      "oldTitle": "新聞稿列表"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/varicella/",
+      "kind": "migration",
+      "itemId": "disease.varicella",
+      "listId": "migration.varicella",
+      "key": "intro",
+      "oldTitle": "疾病介紹"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/varicella/#transmission",
+      "kind": "migration",
+      "itemId": "disease.varicella",
+      "listId": "migration.varicella",
+      "key": "intro-pathogen",
+      "oldTitle": "致病原"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/varicella/#situation",
+      "kind": "migration",
+      "itemId": "disease.varicella",
+      "listId": "migration.varicella",
+      "key": "intro-epidemiology",
+      "oldTitle": "流行病學"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/varicella/#symptoms",
+      "kind": "migration",
+      "itemId": "disease.varicella",
+      "listId": "migration.varicella",
+      "key": "intro-symptoms",
+      "oldTitle": "發病症狀"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/varicella/#prevention",
+      "kind": "migration",
+      "itemId": "disease.varicella",
+      "listId": "migration.varicella",
+      "key": "intro-prevention",
+      "oldTitle": "預防方法"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/varicella/#treatment",
+      "kind": "migration",
+      "itemId": "disease.varicella",
+      "listId": "migration.varicella",
+      "key": "intro-treatment",
+      "oldTitle": "治療方法與就醫資訊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/diseases/varicella/#vaccine",
+      "kind": "migration",
+      "itemId": "disease.varicella",
+      "listId": "migration.varicella",
+      "key": "vaccine",
+      "oldTitle": "預防接種建議"
+    },
+    {
+      "pattern": "/category/qapage/{id}",
+      "from": "/Category/QAPage/{id}",
+      "to": "/diseases/varicella/#faq",
+      "kind": "migration",
+      "itemId": "disease.varicella",
+      "listId": "migration.varicella",
+      "key": "qa-list",
+      "oldTitle": "Q&A"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/report/#n-varicella",
+      "kind": "migration",
+      "itemId": null,
+      "listId": "migration.varicella",
+      "key": "notify",
+      "oldTitle": "通報定義與時限"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/influenza/",
+      "kind": "migration",
+      "itemId": "disease.influenza",
+      "listId": "migration.influenza",
+      "key": "intro",
+      "oldTitle": "疾病介紹"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/influenza/#transmission",
+      "kind": "migration",
+      "itemId": "disease.influenza",
+      "listId": "migration.influenza",
+      "key": "intro-pathogen",
+      "oldTitle": "致病原"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/influenza/#situation",
+      "kind": "migration",
+      "itemId": "disease.influenza",
+      "listId": "migration.influenza",
+      "key": "intro-epidemiology",
+      "oldTitle": "流行病學"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/influenza/#symptoms",
+      "kind": "migration",
+      "itemId": "disease.influenza",
+      "listId": "migration.influenza",
+      "key": "intro-symptoms",
+      "oldTitle": "發病症狀"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/influenza/#prevention",
+      "kind": "migration",
+      "itemId": "disease.influenza",
+      "listId": "migration.influenza",
+      "key": "intro-prevention",
+      "oldTitle": "預防方法"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/influenza/#treatment",
+      "kind": "migration",
+      "itemId": "disease.influenza",
+      "listId": "migration.influenza",
+      "key": "intro-treatment",
+      "oldTitle": "治療方法與就醫資訊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/diseases/influenza/#vaccine",
+      "kind": "migration",
+      "itemId": "disease.influenza",
+      "listId": "migration.influenza",
+      "key": "vaccine",
+      "oldTitle": "預防接種建議"
+    },
+    {
+      "pattern": "/category/qapage/{id}",
+      "from": "/Category/QAPage/{id}",
+      "to": "/diseases/influenza/#faq",
+      "kind": "migration",
+      "itemId": "disease.influenza",
+      "listId": "migration.influenza",
+      "key": "qa-list",
+      "oldTitle": "Q&A"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/media/ltc-flu-vaccine/",
+      "kind": "migration",
+      "itemId": "media.ltc-flu-vaccine",
+      "listId": "migration.influenza",
+      "key": "materials-video",
+      "oldTitle": "衛教宣導：影片"
+    },
+    {
+      "pattern": "/category/diseasemanual/{id}",
+      "from": "/Category/DiseaseManual/{id}",
+      "to": "/documents/flu-vaccine-manual.2026-09-16/",
+      "kind": "migration",
+      "itemId": "doc.flu-vaccine-manual.2026-09-16",
+      "listId": "migration.influenza",
+      "key": "manual",
+      "oldTitle": "工作手冊"
+    },
+    {
+      "pattern": "/file/get/{id}",
+      "from": "/File/Get/{id}",
+      "to": "/documents/flu-antiviral-eligibility.2026-09-18/",
+      "kind": "migration",
+      "itemId": "doc.flu-antiviral-eligibility.2026-09-18",
+      "listId": "migration.influenza",
+      "key": "guideline",
+      "oldTitle": "治療指引"
+    },
+    {
+      "pattern": "/category/list/{id}",
+      "from": "/Category/List/{id}",
+      "to": "/data/#dataset.flu-express",
+      "kind": "migration",
+      "itemId": "dataset.flu-express",
+      "listId": "migration.influenza",
+      "key": "stats",
+      "oldTitle": "統計資料"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/lab/influenza/",
+      "kind": "migration",
+      "itemId": "labtest.influenza",
+      "listId": "migration.influenza",
+      "key": "lab",
+      "oldTitle": "檢驗資訊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/report/#n-influenza",
+      "kind": "migration",
+      "itemId": null,
+      "listId": "migration.influenza",
+      "key": "notify",
+      "oldTitle": "通報定義與時限"
+    },
+    {
+      "pattern": "/bulletin/list/{id}",
+      "from": "/Bulletin/List/{id}",
+      "to": "/diseases/influenza/",
+      "kind": "migration",
+      "itemId": "disease.influenza",
+      "listId": "migration.influenza",
+      "key": "news-list",
+      "oldTitle": "新聞稿列表"
+    },
+    {
+      "pattern": "/category/list/{id}",
+      "from": "/Category/List/{id}",
+      "to": "/topics/ltc-infection-control/",
+      "kind": "migration",
+      "itemId": "topic.ltc-infection-control",
+      "listId": "migration.influenza",
+      "key": "links",
+      "oldTitle": "相關連結"
+    },
+    {
+      "pattern": "/category/page/{id}",
+      "from": "/Category/Page/{id}",
+      "to": "/diseases/influenza/#vaccine",
+      "kind": "migration",
+      "itemId": "disease.influenza",
+      "listId": "migration.influenza",
+      "key": "flu-vaccine-zone",
+      "oldTitle": "流感疫苗專區（首頁）"
+    },
+    {
+      "pattern": "/file/get/{id}",
+      "from": "/File/Get/{id}",
+      "to": "/documents/flu-vaccine-schedule.2026-09-15/",
+      "kind": "migration",
+      "itemId": "doc.flu-vaccine-schedule.2026-09-15",
+      "listId": "migration.influenza",
+      "key": "flu-vaccine-plan",
+      "oldTitle": "公費流感疫苗接種計畫：實施對象與時程"
+    },
+    {
+      "pattern": "/file/get/{id}",
+      "from": "/File/Get/{id}",
+      "to": "/documents/flu-vaccine-manual.2026-09-16/",
+      "kind": "migration",
+      "itemId": "doc.flu-vaccine-manual.2026-09-16",
+      "listId": "migration.influenza",
+      "key": "flu-vaccine-manual",
+      "oldTitle": "公費流感疫苗接種計畫作業手冊"
+    },
+    {
+      "pattern": "/category/page/{id}",
+      "from": "/Category/Page/{id}",
+      "to": "/documents/flu-antiviral-eligibility.2026-09-18/",
+      "kind": "migration",
+      "itemId": "doc.flu-antiviral-eligibility.2026-09-18",
+      "listId": "migration.influenza",
+      "key": "flu-antiviral-eligibility",
+      "oldTitle": "公費流感抗病毒藥劑使用對象"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/covid-19/",
+      "kind": "migration",
+      "itemId": "disease.covid-19",
+      "listId": "migration.covid-19",
+      "key": "intro",
+      "oldTitle": "疾病介紹"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/covid-19/#transmission",
+      "kind": "migration",
+      "itemId": "disease.covid-19",
+      "listId": "migration.covid-19",
+      "key": "intro-pathogen",
+      "oldTitle": "致病原"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/covid-19/#situation",
+      "kind": "migration",
+      "itemId": "disease.covid-19",
+      "listId": "migration.covid-19",
+      "key": "intro-epidemiology",
+      "oldTitle": "流行病學"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/covid-19/#symptoms",
+      "kind": "migration",
+      "itemId": "disease.covid-19",
+      "listId": "migration.covid-19",
+      "key": "intro-symptoms",
+      "oldTitle": "發病症狀"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/covid-19/#prevention",
+      "kind": "migration",
+      "itemId": "disease.covid-19",
+      "listId": "migration.covid-19",
+      "key": "intro-prevention",
+      "oldTitle": "預防方法"
+    },
+    {
+      "pattern": "/disease/subindex/{id}",
+      "from": "/Disease/SubIndex/{id}",
+      "to": "/diseases/covid-19/#treatment",
+      "kind": "migration",
+      "itemId": "disease.covid-19",
+      "listId": "migration.covid-19",
+      "key": "intro-treatment",
+      "oldTitle": "治療方法與就醫資訊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/diseases/covid-19/#vaccine",
+      "kind": "migration",
+      "itemId": "disease.covid-19",
+      "listId": "migration.covid-19",
+      "key": "vaccine",
+      "oldTitle": "預防接種建議"
+    },
+    {
+      "pattern": "/category/qapage/{id}",
+      "from": "/Category/QAPage/{id}",
+      "to": "/diseases/covid-19/#faq",
+      "kind": "migration",
+      "itemId": "disease.covid-19",
+      "listId": "migration.covid-19",
+      "key": "qa-list",
+      "oldTitle": "Q&A"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/media/covid-prevention-appeal/",
+      "kind": "migration",
+      "itemId": "media.covid-prevention-appeal",
+      "listId": "migration.covid-19",
+      "key": "materials-video",
+      "oldTitle": "衛教宣導：影片"
+    },
+    {
+      "pattern": "/file/get/{id}",
+      "from": "/File/Get/{id}",
+      "to": "/documents/infection-control-healthcare.2026-03-01/",
+      "kind": "migration",
+      "itemId": "doc.infection-control-healthcare.2026-03-01",
+      "listId": "migration.covid-19",
+      "key": "guideline",
+      "oldTitle": "治療指引"
+    },
+    {
+      "pattern": "/category/list/{id}",
+      "from": "/Category/List/{id}",
+      "to": "/data/#dataset.covid-severe-weekly",
+      "kind": "migration",
+      "itemId": "dataset.covid-severe-weekly",
+      "listId": "migration.covid-19",
+      "key": "stats",
+      "oldTitle": "統計資料"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/lab/covid-19/",
+      "kind": "migration",
+      "itemId": "labtest.covid-19",
+      "listId": "migration.covid-19",
+      "key": "lab",
+      "oldTitle": "檢驗資訊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/report/#n-covid-19",
+      "kind": "migration",
+      "itemId": null,
+      "listId": "migration.covid-19",
+      "key": "notify",
+      "oldTitle": "通報定義與時限"
+    },
+    {
+      "pattern": "/bulletin/list/{id}",
+      "from": "/Bulletin/List/{id}",
+      "to": "/diseases/covid-19/",
+      "kind": "migration",
+      "itemId": "disease.covid-19",
+      "listId": "migration.covid-19",
+      "key": "news-list",
+      "oldTitle": "新聞稿列表"
+    },
+    {
+      "pattern": "/category/listcontent/{id}",
+      "from": "/Category/ListContent/{id}",
+      "to": "/careers/epidemic-physician/",
+      "kind": "migration",
+      "itemId": "job.2026-09-30-epidemic-physician",
+      "listId": "migration.careers",
+      "key": "job-epidemic-physician",
+      "oldTitle": "徵求防疫醫師（公費醫師）3 名"
+    },
+    {
+      "pattern": "/category/listcontent/{id}",
+      "from": "/Category/ListContent/{id}",
+      "to": "/careers/research-assistant-epi/",
+      "kind": "migration",
+      "itemId": "job.2026-09-24-research-assistant-epi",
+      "listId": "migration.careers",
+      "key": "job-research-assistant",
+      "oldTitle": "疫情中心徵求約聘研究助理 2 名（資料分析）"
+    },
+    {
+      "pattern": "/category/listcontent/{id}",
+      "from": "/Category/ListContent/{id}",
+      "to": "/careers/system-analyst/",
+      "kind": "migration",
+      "itemId": "job.2026-08-10-system-analyst",
+      "listId": "migration.careers",
+      "key": "job-system-analyst",
+      "oldTitle": "資訊室徵求系統分析師 1 名"
+    },
+    {
+      "pattern": "/category/listcontent/{id}",
+      "from": "/Category/ListContent/{id}",
+      "to": "/careers/quarantine-officer-kaoping/",
+      "kind": "migration",
+      "itemId": "job.2026-05-25-quarantine-officer-kaoping",
+      "listId": "migration.careers",
+      "key": "job-quarantine-officer",
+      "oldTitle": "高屏區管制中心徵求港埠檢疫人員 4 名"
+    },
+    {
+      "pattern": "/category/listcontent/{id}",
+      "from": "/Category/ListContent/{id}",
+      "to": "/careers/system-analyst/#result",
+      "kind": "migration",
+      "itemId": "job.2026-08-10-system-analyst",
+      "listId": "migration.careers",
+      "key": "result-system-analyst",
+      "oldTitle": "資訊室約聘系統分析師甄選結果公告"
+    },
+    {
+      "pattern": "/uploads/files/{id}.pdf",
+      "from": "/Uploads/files/{id}.pdf",
+      "to": "/careers/epidemic-physician/#attachments",
+      "kind": "migration",
+      "itemId": "job.2026-09-30-epidemic-physician",
+      "listId": "migration.careers",
+      "key": "brochure-epidemic-physician",
+      "oldTitle": "防疫醫師甄選簡章（PDF）"
+    },
+    {
+      "pattern": "/category/list/{id}",
+      "from": "/Category/List/{id}",
+      "to": "/pro/curriculum/",
+      "kind": "migration",
+      "itemId": null,
+      "listId": "migration.core-curriculum",
+      "key": "core-curriculum-list",
+      "oldTitle": "傳染病核心教材"
+    },
+    {
+      "pattern": "/category/diseaseteach/{id}",
+      "from": "/Category/DiseaseTeach/{id}",
+      "to": "/documents/curriculum-dengue.2026-10-10/",
+      "kind": "migration",
+      "itemId": "doc.curriculum-dengue.2026-10-10",
+      "listId": "migration.core-curriculum",
+      "key": "dengue",
+      "oldTitle": "登革熱核心教材"
+    },
+    {
+      "pattern": "/category/diseaseteach/{id}",
+      "from": "/Category/DiseaseTeach/{id}",
+      "to": "/documents/curriculum-measles.2026-10-10/",
+      "kind": "migration",
+      "itemId": "doc.curriculum-measles.2026-10-10",
+      "listId": "migration.core-curriculum",
+      "key": "measles",
+      "oldTitle": "麻疹核心教材"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/documents/case-definition-dengue.2026-01-01/",
+      "kind": "migration",
+      "itemId": "doc.case-definition-dengue.2026-01-01",
+      "listId": "migration.guidelines",
+      "key": "case-definition-dengue",
+      "oldTitle": "傳染病病例定義：登革熱（2026 年版）"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/documents/case-definition-measles.2024-01-01/",
+      "kind": "migration",
+      "itemId": "doc.case-definition-measles.2024-01-01",
+      "listId": "migration.guidelines",
+      "key": "case-definition-measles",
+      "oldTitle": "傳染病病例定義：麻疹"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/documents/covid-vaccine-recommendation.2026-09-15/",
+      "kind": "migration",
+      "itemId": "doc.covid-vaccine-recommendation.2026-09-15",
+      "listId": "migration.guidelines",
+      "key": "covid-vaccine-recommendation",
+      "oldTitle": "新冠疫苗接種建議（2026–2027 年度）"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/documents/dots-manual.2025-01-01/",
+      "kind": "migration",
+      "itemId": "doc.dots-manual.2025-01-01",
+      "listId": "migration.guidelines",
+      "key": "dots-manual",
+      "oldTitle": "結核病都治（DOTS）計畫作業手冊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/documents/ev-severe-guideline.2026-03-15/",
+      "kind": "migration",
+      "itemId": "doc.ev-severe-guideline.2026-03-15",
+      "listId": "migration.guidelines",
+      "key": "ev-severe-guideline",
+      "oldTitle": "腸病毒感染併發重症臨床處置建議"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/documents/flu-antiviral-eligibility.2026-09-18/",
+      "kind": "migration",
+      "itemId": "doc.flu-antiviral-eligibility.2026-09-18",
+      "listId": "migration.guidelines",
+      "key": "flu-antiviral-eligibility",
+      "oldTitle": "公費流感抗病毒藥劑使用對象（2026 年 9 月延長版：高傳播族群延至 10 月 31 日）"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/documents/flu-vaccine-manual.2026-09-16/",
+      "kind": "migration",
+      "itemId": "doc.flu-vaccine-manual.2026-09-16",
+      "listId": "migration.guidelines",
+      "key": "flu-vaccine-manual",
+      "oldTitle": "2026–2027 年度公費流感疫苗接種計畫作業手冊"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/documents/flu-vaccine-schedule.2026-09-15/",
+      "kind": "migration",
+      "itemId": "doc.flu-vaccine-schedule.2026-09-15",
+      "listId": "migration.guidelines",
+      "key": "flu-vaccine-schedule",
+      "oldTitle": "2026–2027 年度公費流感疫苗接種計畫：實施對象與時程"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/documents/guidance-dengue.2026-02/",
+      "kind": "migration",
+      "itemId": "doc.guidance-dengue.2026-02",
+      "listId": "migration.guidelines",
+      "key": "guidance-dengue",
+      "oldTitle": "登革熱／屈公病防治工作指引（第 17 版）"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/documents/infection-control-healthcare.2026-03-01/",
+      "kind": "migration",
+      "itemId": "doc.infection-control-healthcare.2026-03-01",
+      "listId": "migration.guidelines",
+      "key": "infection-control-healthcare",
+      "oldTitle": "醫療機構感染管制措施指引"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/documents/ltbi-guideline.2024-01-01/",
+      "kind": "migration",
+      "itemId": "doc.ltbi-guideline.2024-01-01",
+      "listId": "migration.guidelines",
+      "key": "ltbi-guideline",
+      "oldTitle": "潛伏結核感染診治指引"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/documents/mmr-recommendation.2025-04-16/",
+      "kind": "migration",
+      "itemId": "doc.mmr-recommendation.2025-04-16",
+      "listId": "migration.guidelines",
+      "key": "mmr-recommendation",
+      "oldTitle": "國內現行 MMR 預防接種建議（114.04.16 版）"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/documents/tb-case-definition.2024-01-01/",
+      "kind": "migration",
+      "itemId": "doc.tb-case-definition.2024-01-01",
+      "listId": "migration.guidelines",
+      "key": "tb-case-definition",
+      "oldTitle": "結核病病例定義與通報定義"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/documents/tb-contact-investigation.2025-01-01/",
+      "kind": "migration",
+      "itemId": "doc.tb-contact-investigation.2025-01-01",
+      "listId": "migration.guidelines",
+      "key": "tb-contact-investigation",
+      "oldTitle": "結核病接觸者檢查指引"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/documents/tb-guideline.2025-09-01/",
+      "kind": "migration",
+      "itemId": "doc.tb-guideline.2025-09-01",
+      "listId": "migration.guidelines",
+      "key": "tb-guideline",
+      "oldTitle": "結核病診治指引（第八版）"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/documents/tb-manual.2025-07-01/",
+      "kind": "migration",
+      "itemId": "doc.tb-manual.2025-07-01",
+      "listId": "migration.guidelines",
+      "key": "tb-manual",
+      "oldTitle": "結核病防治工作手冊"
+    },
+    {
+      "pattern": "/category/list/{id}",
+      "from": "/Category/List/{id}",
+      "to": "/documents/",
+      "kind": "migration",
+      "itemId": null,
+      "listId": "migration.guidelines",
+      "key": "guidelines-list",
+      "oldTitle": "防疫指引與手冊總覽"
+    },
+    {
+      "pattern": "/en/category/list/{id}",
+      "from": "/En/Category/List/{id}",
+      "to": "/topics/international-cooperation/",
+      "kind": "migration",
+      "itemId": "topic.international-cooperation",
+      "listId": "migration.international-cooperation",
+      "key": "intl-root",
+      "oldTitle": "International Cooperation"
+    },
+    {
+      "pattern": "/en/category/mpage/{id}",
+      "from": "/En/Category/MPage/{id}",
+      "to": "/international/ihr-focal-point/",
+      "kind": "migration",
+      "itemId": "page.international-ihr-focal-point",
+      "listId": "migration.international-cooperation",
+      "key": "ihr",
+      "oldTitle": "IHR National Focal Point"
+    },
+    {
+      "pattern": "/en/category/mpage/{id}",
+      "from": "/En/Category/MPage/{id}",
+      "to": "/international/multilateral/",
+      "kind": "migration",
+      "itemId": "page.international-multilateral",
+      "listId": "migration.international-cooperation",
+      "key": "who-wha",
+      "oldTitle": "WHO and World Health Assembly"
+    },
+    {
+      "pattern": "/en/category/mpage/{id}",
+      "from": "/En/Category/MPage/{id}",
+      "to": "/international/global-health-security/",
+      "kind": "migration",
+      "itemId": "page.international-global-health-security",
+      "listId": "migration.international-cooperation",
+      "key": "ghsa",
+      "oldTitle": "Global Health Security"
+    },
+    {
+      "pattern": "/en/category/mpage/{id}",
+      "from": "/En/Category/MPage/{id}",
+      "to": "/international/bilateral/",
+      "kind": "migration",
+      "itemId": "page.international-bilateral",
+      "listId": "migration.international-cooperation",
+      "key": "bilateral",
+      "oldTitle": "Bilateral Cooperation"
+    },
+    {
+      "pattern": "/en/category/mpage/{id}",
+      "from": "/En/Category/MPage/{id}",
+      "to": "/international/training/",
+      "kind": "migration",
+      "itemId": "page.international-training",
+      "listId": "migration.international-cooperation",
+      "key": "training",
+      "oldTitle": "International Training Programs"
+    },
+    {
+      "pattern": "/en/category/mpage/{id}",
+      "from": "/En/Category/MPage/{id}",
+      "to": "/apply/international-training-application/",
+      "kind": "migration",
+      "itemId": "service.international-training-application",
+      "listId": "migration.international-cooperation",
+      "key": "training-apply",
+      "oldTitle": "Training Application"
+    },
+    {
+      "pattern": "/en/category/list/{id}",
+      "from": "/En/Category/List/{id}",
+      "to": "/international/training/",
+      "kind": "migration",
+      "itemId": "page.international-training",
+      "listId": "migration.international-cooperation",
+      "key": "workshops",
+      "oldTitle": "International Workshops"
+    },
+    {
+      "pattern": "/en/category/list/{id}",
+      "from": "/En/Category/List/{id}",
+      "to": "/international/publications-en/",
+      "kind": "migration",
+      "itemId": "page.international-publications-en",
+      "listId": "migration.international-cooperation",
+      "key": "teb",
+      "oldTitle": "Taiwan Epidemiology Bulletin (English)"
+    },
+    {
+      "pattern": "/category/listcontent/{id}",
+      "from": "/Category/ListContent/{id}",
+      "to": "/subscribe/",
+      "kind": "migration",
+      "itemId": null,
+      "listId": "migration.legacy-services",
+      "key": "newsletter",
+      "oldTitle": "電子報訂閱"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/pro/curriculum/",
+      "kind": "migration",
+      "itemId": null,
+      "listId": "migration.legacy-services",
+      "key": "core-curriculum",
+      "oldTitle": "傳染病核心教材"
+    },
+    {
+      "pattern": "/search/{id}",
+      "from": "/Search/{id}",
+      "to": "/search/",
+      "kind": "migration",
+      "itemId": null,
+      "listId": "migration.legacy-services",
+      "key": "advanced-search",
+      "oldTitle": "進階搜尋"
+    },
+    {
+      "pattern": "/category/listcontent/{id}",
+      "from": "/Category/ListContent/{id}",
+      "to": "/procurement/flu-vaccine-115/",
+      "kind": "migration",
+      "itemId": "tender.2026-02-20-flu-vaccine-115",
+      "listId": "migration.procurement",
+      "key": "tender-flu-vaccine",
+      "oldTitle": "「115 年度公費流感疫苗採購案」招標公告"
+    },
+    {
+      "pattern": "/category/listcontent/{id}",
+      "from": "/Category/ListContent/{id}",
+      "to": "/procurement/lab-reagents-115/",
+      "kind": "migration",
+      "itemId": "tender.2026-06-10-lab-reagents-115",
+      "listId": "migration.procurement",
+      "key": "tender-lab-reagents",
+      "oldTitle": "「115 年度傳染病檢驗試劑及耗材採購案」招標公告"
+    },
+    {
+      "pattern": "/category/listcontent/{id}",
+      "from": "/Category/ListContent/{id}",
+      "to": "/procurement/antiviral-115/",
+      "kind": "migration",
+      "itemId": "tender.2026-09-15-antiviral-115",
+      "listId": "migration.procurement",
+      "key": "tender-antiviral-115",
+      "oldTitle": "「115 年度公費流感抗病毒藥劑採購案」招標公告"
+    },
+    {
+      "pattern": "/category/listcontent/{id}",
+      "from": "/Category/ListContent/{id}",
+      "to": "/procurement/campaign-video/",
+      "kind": "migration",
+      "itemId": "tender.2026-09-22-campaign-video",
+      "listId": "migration.procurement",
+      "key": "tender-campaign-video",
+      "oldTitle": "「115 年度防疫宣導影片製作暨多語字幕案」招標公告"
+    },
+    {
+      "pattern": "/category/listcontent/{id}",
+      "from": "/Category/ListContent/{id}",
+      "to": "/procurement/datacenter-ops/",
+      "kind": "migration",
+      "itemId": "tender.2026-09-29-datacenter-ops",
+      "listId": "migration.procurement",
+      "key": "tender-datacenter-ops",
+      "oldTitle": "「資料中心機房維運暨資安監控服務案」招標公告"
+    },
+    {
+      "pattern": "/category/listcontent/{id}",
+      "from": "/Category/ListContent/{id}",
+      "to": "/procurement/flu-vaccine-115/#award",
+      "kind": "migration",
+      "itemId": "tender.2026-02-20-flu-vaccine-115",
+      "listId": "migration.procurement",
+      "key": "award-flu-vaccine",
+      "oldTitle": "「115 年度公費流感疫苗採購案」決標公告"
+    },
+    {
+      "pattern": "/category/qapage/{id}",
+      "from": "/Category/QAPage/{id}",
+      "to": "/diseases/covid-19/",
+      "kind": "migration",
+      "itemId": "disease.covid-19",
+      "listId": "migration.qa",
+      "key": "covid-qa",
+      "oldTitle": "新冠併發重症 Q&A"
+    },
+    {
+      "pattern": "/category/qapage/{id}",
+      "from": "/Category/QAPage/{id}",
+      "to": "/faq/hepb-newborn/",
+      "kind": "migration",
+      "itemId": "faq.hepb-newborn",
+      "listId": "migration.qa",
+      "key": "hepatitis-b-qa",
+      "oldTitle": "急性病毒性B型肝炎 Q&A"
+    },
+    {
+      "pattern": "/category/qapage/{id}",
+      "from": "/Category/QAPage/{id}",
+      "to": "/diseases/hiv/",
+      "kind": "migration",
+      "itemId": "disease.hiv",
+      "listId": "migration.qa",
+      "key": "hiv-qa",
+      "oldTitle": "人類免疫缺乏病毒感染 Q&A"
+    },
+    {
+      "pattern": "/category/qapage/{id}",
+      "from": "/Category/QAPage/{id}",
+      "to": "/diseases/pertussis/",
+      "kind": "migration",
+      "itemId": "disease.pertussis",
+      "listId": "migration.qa",
+      "key": "pertussis-qa",
+      "oldTitle": "百日咳 Q&A"
+    },
+    {
+      "pattern": "/category/qapage/{id}",
+      "from": "/Category/QAPage/{id}",
+      "to": "/diseases/varicella/",
+      "kind": "migration",
+      "itemId": "disease.varicella",
+      "listId": "migration.qa",
+      "key": "varicella-qa",
+      "oldTitle": "水痘併發症 Q&A"
+    },
+    {
+      "pattern": "/category/qapage/{id}",
+      "from": "/Category/QAPage/{id}",
+      "to": "/faq/rabies-bite/",
+      "kind": "migration",
+      "itemId": "faq.rabies-bite",
+      "listId": "migration.qa",
+      "key": "single-qa",
+      "oldTitle": "被狗、貓或野生動物咬傷該怎麼辦？"
+    },
+    {
+      "pattern": "/category/list/{id}",
+      "from": "/Category/List/{id}",
+      "to": "/faq/",
+      "kind": "migration",
+      "itemId": null,
+      "listId": "migration.qa",
+      "key": "qa-list",
+      "oldTitle": "常見問答總覽"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/diseases/malaria/",
+      "kind": "migration",
+      "itemId": "disease.malaria",
+      "listId": "migration.travel",
+      "key": "malaria-prophylaxis",
+      "oldTitle": "瘧疾預防用藥"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/travel/",
+      "kind": "migration",
+      "itemId": null,
+      "listId": "migration.travel",
+      "key": "prescription-query",
+      "oldTitle": "國際旅遊處方箋"
+    },
+    {
+      "pattern": "/travelepidemic/prescription/{id}?iso=br",
+      "from": "/TravelEpidemic/Prescription/{id}?iso=BR",
+      "to": "/travel/BR/",
+      "kind": "migration",
+      "itemId": null,
+      "listId": "migration.travel",
+      "key": "rx-br",
+      "oldTitle": "國際旅遊處方箋：巴西"
+    },
+    {
+      "pattern": "/travelepidemic/prescription/{id}?iso=in",
+      "from": "/TravelEpidemic/Prescription/{id}?iso=IN",
+      "to": "/travel/IN/",
+      "kind": "migration",
+      "itemId": null,
+      "listId": "migration.travel",
+      "key": "rx-in",
+      "oldTitle": "國際旅遊處方箋：印度"
+    },
+    {
+      "pattern": "/travelepidemic/prescription/{id}?iso=jp",
+      "from": "/TravelEpidemic/Prescription/{id}?iso=JP",
+      "to": "/travel/JP/",
+      "kind": "migration",
+      "itemId": null,
+      "listId": "migration.travel",
+      "key": "rx-jp",
+      "oldTitle": "國際旅遊處方箋：日本"
+    },
+    {
+      "pattern": "/travelepidemic/prescription/{id}?iso=ke",
+      "from": "/TravelEpidemic/Prescription/{id}?iso=KE",
+      "to": "/travel/KE/",
+      "kind": "migration",
+      "itemId": null,
+      "listId": "migration.travel",
+      "key": "rx-ke",
+      "oldTitle": "國際旅遊處方箋：肯亞"
+    },
+    {
+      "pattern": "/travelepidemic/prescription/{id}?iso=th",
+      "from": "/TravelEpidemic/Prescription/{id}?iso=TH",
+      "to": "/travel/TH/",
+      "kind": "migration",
+      "itemId": null,
+      "listId": "migration.travel",
+      "key": "rx-th",
+      "oldTitle": "國際旅遊處方箋：泰國"
+    },
+    {
+      "pattern": "/travelepidemic/prescription/{id}?iso=vn",
+      "from": "/TravelEpidemic/Prescription/{id}?iso=VN",
+      "to": "/travel/VN/",
+      "kind": "migration",
+      "itemId": null,
+      "listId": "migration.travel",
+      "key": "rx-vn",
+      "oldTitle": "國際旅遊處方箋：越南"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/data/#dataset.travel-alert-levels",
+      "kind": "migration",
+      "itemId": "dataset.travel-alert-levels",
+      "listId": "migration.travel",
+      "key": "travel-epidemic-levels",
+      "oldTitle": "國際旅遊疫情建議等級表"
+    },
+    {
+      "pattern": "/bulletin/list/{id}",
+      "from": "/Bulletin/List/{id}",
+      "to": "/news/",
+      "kind": "migration",
+      "itemId": null,
+      "listId": "migration.travel",
+      "key": "travel-news-list",
+      "oldTitle": "國際疫情訊息"
+    },
+    {
+      "pattern": "/category/mpage/{id}",
+      "from": "/Category/MPage/{id}",
+      "to": "/apply/international-vaccination-certificate/",
+      "kind": "migration",
+      "itemId": "service.international-vaccination-certificate",
+      "listId": "migration.travel",
+      "key": "yellow-fever-certificate",
+      "oldTitle": "國際預防接種證明書（黃皮書）申請"
+    }
+  ],
+  "gone": [
+    {
+      "key": "/category/page/{id}",
+      "from": "/Category/Page/{id}",
+      "pattern": true,
+      "listId": "migration.tuberculosis",
+      "migrationKey": "event-2019",
+      "oldTitle": "2019 世界結核病日健走活動報名",
+      "note": "過期活動頁（報名已於 2019 年截止），無保存價值；不移轉、不轉址，伺服器回 410。　【匯入 2026-10-03】草稿 page.tb-event-2019（信心 1）",
+      "status": 410
+    },
+    {
+      "key": "/category/list/{id}",
+      "from": "/Category/List/{id}",
+      "pattern": true,
+      "listId": "migration.enterovirus",
+      "migrationKey": "ev-old-posters",
+      "oldTitle": "歷年腸病毒宣導海報（2015–2020）",
+      "note": "內容與現行建議不一致且無查閱需求，不移轉；舊網址回 410。現行海報在疾病頁素材區。　【匯入 2026-10-03】草稿 page.enterovirus-ev-old-posters（信心 0.6）",
+      "status": 410
+    },
+    {
+      "key": "/category/list/{id}",
+      "from": "/Category/List/{id}",
+      "pattern": true,
+      "listId": "migration.influenza",
+      "migrationKey": "flu-past-seasons",
+      "oldTitle": "歷年流感疫苗接種計畫（2020–2024 年度）",
+      "note": "逾 2 個年度的計畫已失效且無查閱需求，不移轉；舊網址回 410，如需查閱改洽署內檔案。　【匯入 2026-10-03】草稿 page.influenza-flu-past-seasons（信心 0.6）",
+      "status": 410
+    },
+    {
+      "key": "/uploads/files/{id}.pdf",
+      "from": "/Uploads/files/{id}.pdf",
+      "pattern": true,
+      "listId": "migration.careers",
+      "migrationKey": "admitted-list-pdf",
+      "oldTitle": "歷年約聘（僱）人員錄取名單（PDF）",
+      "note": "舊 PDF 列出錄取者完整姓名，依個資最小揭露原則不移轉（建議回 410）；新站甄選結果只公布報名編號（正式站建議由人事系統提供結果頁，JSON 只放連結）",
+      "status": 410
+    },
+    {
+      "key": "/category/list/{id}",
+      "from": "/Category/List/{id}?page={page}",
+      "pattern": true,
+      "listId": "migration.procurement",
+      "migrationKey": "archive-before-113",
+      "oldTitle": "113 年度以前採購公告（列表）",
+      "note": "已逾展示期限，不移轉（建議回 410）；正式採購紀錄以政府電子採購網為準",
+      "status": 410
+    }
+  ],
+  "ambiguous": [
+    {
+      "key": "/bulletin/detail/3oyyjuus0gduem9t52fnow?typeid=48",
+      "from": "/Bulletin/Detail/3OyyJUUS0GduEm9t52Fnow?typeid=48",
+      "candidates": [
+        "/news/2026-09-18-letter-616-flu-antiviral-extended/",
+        "/documents/flu-antiviral-eligibility.2026-09-18/"
+      ],
+      "itemIds": [
+        "news.2026-09-18-letter-616-flu-antiviral-extended",
+        "doc.flu-antiviral-eligibility.2026-09-18"
+      ]
+    },
+    {
+      "key": "/bulletin/detail/kmjd41yhus0usxapea0bgw?typeid=9",
+      "from": "/Bulletin/Detail/kMJD41yHUS0usXapeA0BGw?typeid=9",
+      "candidates": [
+        "/news/2026-08-24-flu-antiviral-expanded/",
+        "/documents/flu-antiviral-eligibility.2026-09-18/"
+      ],
+      "itemIds": [
+        "news.2026-08-24-flu-antiviral-expanded",
+        "doc.flu-antiviral-eligibility.2026-08-24"
+      ]
+    },
+    {
+      "key": "/bulletin/list/7tuxjtbf6parvrhel-mrpg",
+      "from": "/Bulletin/List/7tUXjTBf6paRvrhEl-mrPg",
+      "candidates": [
+        "/news/2026-03-15-letter-ev-guideline/",
+        "/news/2026-09-15-letter-615-ns1/"
+      ],
+      "itemIds": [
+        "news.2026-03-15-letter-ev-guideline",
+        "news.2026-09-15-letter-615-ns1"
+      ]
+    },
+    {
+      "key": "/bulletin/list/mmgtpeidar5ooai4-fghzq",
+      "from": "/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ",
+      "candidates": [
+        "/news/2025-02-18-dengue-imported-spring/",
+        "/news/2025-03-24-world-tb-day/",
+        "/news/2025-04-16-mmr-recommendation-revised/",
+        "/news/2025-05-06-enterovirus-season/",
+        "/news/2025-06-10-mpox-summer/",
+        "/news/2025-07-15-clarify-dengue-spray/",
+        "/news/2025-08-05-chikungunya-guangdong/",
+        "/news/2025-10-01-flu-vaccine-start/",
+        "/news/2025-12-01-world-aids-day/",
+        "/news/2026-01-20-lunar-new-year-flu/",
+        "/news/2026-02-24-flu-declining/",
+        "/news/2026-04-14-enterovirus-rising/",
+        "/news/2026-05-11-japan-measles-level1/",
+        "/news/2026-06-03-flu-antiviral-summer/",
+        "/news/2026-07-21-dengue-first-local/",
+        "/news/2026-08-18-dengue-rising-south/",
+        "/news/2026-08-25-mpox-clade-i/",
+        "/news/2026-09-01-covid-weekly/",
+        "/news/2026-09-10-clarify-flu-vaccine-death/",
+        "/news/2026-09-18-flu-antiviral-extended/",
+        "/news/2026-09-18-flu-vaccine-oct1/",
+        "/news/2026-09-29-ili-weekly/"
+      ],
+      "itemIds": [
+        "news.2025-02-18-dengue-imported-spring",
+        "news.2025-03-24-world-tb-day",
+        "news.2025-04-16-mmr-recommendation-revised",
+        "news.2025-05-06-enterovirus-season",
+        "news.2025-06-10-mpox-summer",
+        "news.2025-07-15-clarify-dengue-spray",
+        "news.2025-08-05-chikungunya-guangdong",
+        "news.2025-10-01-flu-vaccine-start",
+        "news.2025-12-01-world-aids-day",
+        "news.2026-01-20-lunar-new-year-flu",
+        "news.2026-02-24-flu-declining",
+        "news.2026-04-14-enterovirus-rising",
+        "news.2026-05-11-japan-measles-level1",
+        "news.2026-06-03-flu-antiviral-summer",
+        "news.2026-07-21-dengue-first-local",
+        "news.2026-08-18-dengue-rising-south",
+        "news.2026-08-25-mpox-clade-i",
+        "news.2026-09-01-covid-weekly",
+        "news.2026-09-10-clarify-flu-vaccine-death",
+        "news.2026-09-18-flu-antiviral-extended",
+        "news.2026-09-18-flu-vaccine-oct1",
+        "news.2026-09-29-ili-weekly"
+      ]
+    },
+    {
+      "key": "/category/list/v6unxi5cvl2fjoap4wvqlw",
+      "from": "/Category/List/V6unXI5CVl2Fjoap4WVQLw",
+      "candidates": [
+        "/documents/mmr-recommendation.2025-04-16/",
+        "/vaccines/covid-19/",
+        "/vaccines/ev71/",
+        "/vaccines/hepatitis-b/",
+        "/vaccines/hpv/",
+        "/vaccines/influenza/",
+        "/vaccines/mmr/",
+        "/vaccines/pneumococcal/",
+        "/vaccines/varicella/"
+      ],
+      "itemIds": [
+        "doc.mmr-recommendation.2025-04-16",
+        "vaccine.covid-19",
+        "vaccine.ev71",
+        "vaccine.hepatitis-b",
+        "vaccine.hpv",
+        "vaccine.influenza",
+        "vaccine.mmr",
+        "vaccine.pneumococcal",
+        "vaccine.varicella"
+      ]
+    },
+    {
+      "key": "/disease/index",
+      "from": "/Disease/Index",
+      "candidates": [
+        "/diseases/chikungunya/",
+        "/diseases/covid-19/",
+        "/diseases/enterovirus/",
+        "/diseases/hepatitis-a/",
+        "/diseases/hiv/",
+        "/diseases/influenza/",
+        "/diseases/japanese-encephalitis/",
+        "/diseases/malaria/",
+        "/diseases/measles/",
+        "/diseases/mpox/",
+        "/diseases/pertussis/",
+        "/diseases/rabies/",
+        "/diseases/rubella/",
+        "/diseases/tuberculosis/",
+        "/diseases/varicella/",
+        "/documents/case-definition-dengue.2026-01-01/",
+        "/documents/case-definition-measles.2024-01-01/",
+        "/documents/covid-vaccine-recommendation.2026-09-15/",
+        "/documents/ev-severe-guideline.2026-03-15/",
+        "/documents/flu-vaccine-schedule.2026-09-15/",
+        "/documents/infection-control-healthcare.2026-03-01/",
+        "/documents/tb-manual.2025-07-01/"
+      ],
+      "itemIds": [
+        "disease.chikungunya",
+        "disease.covid-19",
+        "disease.enterovirus",
+        "disease.hepatitis-a",
+        "disease.hiv",
+        "disease.influenza",
+        "disease.japanese-encephalitis",
+        "disease.malaria",
+        "disease.measles",
+        "disease.mpox",
+        "disease.pertussis",
+        "disease.rabies",
+        "disease.rubella",
+        "disease.tuberculosis",
+        "disease.varicella",
+        "doc.case-definition-dengue.2023-01-01",
+        "doc.case-definition-dengue.2026-01-01",
+        "doc.case-definition-measles.2024-01-01",
+        "doc.covid-vaccine-recommendation.2025-09-15",
+        "doc.covid-vaccine-recommendation.2026-09-15",
+        "doc.ev-severe-guideline.2026-03-15",
+        "doc.flu-vaccine-schedule.2026-09-15",
+        "doc.infection-control-healthcare.2026-03-01",
+        "doc.tb-manual.2025-07-01"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "id": "news.2026-06-02-measles-travel-mmr-1966",
+  "type": "news",
+  "title": "暑假出國前請評估麻疹免疫力：1966 年（含）以後出生者出國前 2 至 4 週評估接種 MMR",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-06-02",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.measles"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "暑假出國旺季將至，疾病管制署提醒，鄰近國家麻疹疫情持續，1966 年（含）以後出生、不具麻疹免疫力的民眾，若計畫前往麻疹流行地區，請於出國前 2 至 4 週至旅遊醫學門診評估自費接種 1 劑 MMR 疫苗。",
+  "newsType": "press",
+  "bodyMarkdown": "暑假出國旺季將至，疾病管制署提醒，鄰近國家麻疹疫情持續，1966 年（含）以後出生、不具麻疹免疫力的民眾，若計畫前往麻疹流行地區，請於出國前 2 至 4 週至旅遊醫學門診評估自費接種 1 劑 MMR 疫苗。\n\n返國後若出現發燒、出疹等症狀，請戴口罩儘速就醫並告知旅遊史。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/gjtvo59pOflfbxnRphUP1p?typeid=9"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 6 處（mso 樣式 2、Mso 類別 2、命名空間標籤 2）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「麻疹／最新消息」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（麻疹）"
+      },
+      {
+        "code": "not-in-manifest",
+        "severity": "warn",
+        "message": "移轉清單裡找不到對應的舊頁（建議新增一筆 pending 項目；模板推導的標準子頁也沒對上）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/gjtvo59pOflfbxnRphUP1p?typeid=9",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "news.2026-06-02-measles-travel-mmr-1966"
+    ]
+  }
+}

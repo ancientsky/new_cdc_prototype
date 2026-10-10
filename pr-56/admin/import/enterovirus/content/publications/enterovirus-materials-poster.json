@@ -1,0 +1,104 @@
+{
+  "id": "publication.enterovirus-materials-poster",
+  "type": "publication",
+  "title": "腸病毒衛教宣導：單張海報",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2017-04-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.enterovirus"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "腸病毒宣導單張與海報，歡迎下載運用（多國語言版本見附件）。 腸病毒防治海報（中文） 腸病毒防治海報（英文） 腸病毒防治海報（越南文） 腸病毒防治海報（印尼文） 腸病毒防治海報（泰文）",
+  "pubType": "poster",
+  "series": "腸病毒宣導素材",
+  "abstractMarkdown": "腸病毒宣導單張與海報，歡迎下載運用（多國語言版本見附件）。\n\n- [腸病毒防治海報（中文）](/files/publication.enterovirus-materials-poster/enterovirus-poster-7lang.pdf)\n- [腸病毒防治海報（英文）](/files/publication.enterovirus-materials-poster/enterovirus-poster-7lang.pdf)\n- [腸病毒防治海報（越南文）](/files/publication.enterovirus-materials-poster/enterovirus-poster-7lang.pdf)\n- [腸病毒防治海報（印尼文）](/files/publication.enterovirus-materials-poster/enterovirus-poster-7lang.pdf)\n- [腸病毒防治海報（泰文）](/files/publication.enterovirus-materials-poster/enterovirus-poster-7lang.pdf)\n\n![enterovirus-poster](/files/publication.enterovirus-materials-poster/enterovirus-poster.png)",
+  "pdfUrl": "/files/publication.enterovirus-materials-poster/enterovirus-poster-7lang.pdf",
+  "basedOn": [
+    "disease.enterovirus"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/56ss3snA1H2Mgxy9BNSOs3"
+  ],
+  "assets": [
+    {
+      "file": "enterovirus-poster-7lang.pdf",
+      "kind": "attachment",
+      "label": "腸病毒防治海報（七語）",
+      "mime": "application/pdf",
+      "bytes": 704,
+      "sha256": "59ecb295af9fd9151835edaf80bcd66483ceb332b22ce5c04d0816f340e6bbb4",
+      "machineReadable": false,
+      "accessibleAlt": null
+    },
+    {
+      "file": "enterovirus-poster.png",
+      "kind": "image",
+      "alt": "enterovirus-poster",
+      "license": "OGDL-1.0",
+      "needsAlt": true,
+      "mime": "image/png",
+      "bytes": 468,
+      "sha256": "eb7095d5f8825203634573c6a1201da4059f5d3efeaa97aebc19cfaeae1932f6",
+      "width": 120,
+      "height": 160
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.8,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 4 處（mso 樣式 1、Mso 類別 2、命名空間標籤 1）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「腸病毒／衛教宣導」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（腸病毒）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 materials-poster（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站型別是 publication，草稿直接建成 publication，看不出來的欄位以「（待補）」佔位"
+      },
+      {
+        "code": "pdf-no-text-layer",
+        "severity": "warn",
+        "message": "PDF「enterovirus-poster-7lang.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+      },
+      {
+        "code": "image-no-alt",
+        "severity": "warn",
+        "message": "圖片「enterovirus-poster.png」舊頁沒有替代文字，暫用檔名「enterovirus-poster」，請補 alt（needsAlt）"
+      },
+      {
+        "code": "image-license-assumed",
+        "severity": "info",
+        "message": "圖片「enterovirus-poster.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/List/56ss3snA1H2Mgxy9BNSOs3",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

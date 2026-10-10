@@ -1,0 +1,93 @@
+{
+  "id": "doc.tb-manual.2019-06-28",
+  "type": "document",
+  "title": "結核病防治工作手冊（2019 年版）",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2019-06-28",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "結核病診斷、通報、治療（含都治）、接觸者檢查與潛伏結核感染治療之作業規定。 疑似肺結核病人應連續收集 3 套痰液（至少 1 套為晨痰）進行塗片、培養及分子快速檢測。醫師開立 2 種以上抗結核藥物治療時即應通報，於一週內完成。",
+  "family": "doc.tb-manual",
+  "docType": "manual",
+  "version": "2019 年版",
+  "effectiveAt": "2019-06-28",
+  "machineReadableMarkdown": "| 項目 | 內容 |\n| --- | --- |\n| 文件名稱 | 結核病防治工作手冊 |\n| 版次 | 2019 年版 |\n| 生效日 | 2025-07-01 |\n| 權責單位 | 慢性傳染病組 |\n| 檔案格式 | PDF |\n\n結核病診斷、通報、治療（含都治）、接觸者檢查與潛伏結核感染治療之作業規定。\n\n### 第一章 診斷與通報\n\n疑似肺結核病人應連續收集 3 套痰液（至少 1 套為晨痰）進行塗片、培養及分子快速檢測。醫師開立 2 種以上抗結核藥物治療時即應通報，於一週內完成。\n\n### 第二章 治療\n\n新病人標準處方為 2HRZE/4HR。治療期間每月追蹤痰液與副作用；治療滿 2 個月痰培養仍陽性者，應評估抗藥性及延長治療。\n\n### 第三章 都治（DOTS）\n\n所有確診病人應納入都治，由關懷員每日送藥並目視服藥，完整記錄服藥情形。病人中斷服藥 3 日以上，關懷員應通報個案管理師追蹤。\n\n下載：[結核病防治工作手冊（2019 年版）PDF](/files/doc.tb-manual.2019-06-28/tb-manual-2019-1.pdf)",
+  "supersedes": null,
+  "pdfUrl": "/files/doc.tb-manual.2019-06-28/tb-manual-2019-1.pdf",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Uploads/archives/%E7%B5%90%E6%A0%B8%E7%97%85%E9%98%B2%E6%B2%BB%E5%B7%A5%E4%BD%9C%E6%89%8B%E5%86%8A2019%E5%B9%B4%E7%89%88.pdf"
+  ],
+  "assets": [
+    {
+      "file": "tb-manual-2019-1.pdf",
+      "kind": "attachment",
+      "label": "結核病防治工作手冊（2019 年版）PDF",
+      "mime": "application/pdf",
+      "bytes": 704,
+      "sha256": "7d48ed7e58de55f45a7a823ee49527f740d7bd4e4e0b0499c78f4338f9f02a57",
+      "machineReadable": false,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 52 處（mso 樣式 18、Mso 類別 17、命名空間標籤 17）"
+      },
+      {
+        "code": "historical-version",
+        "severity": "info",
+        "message": "歷史版本：建議封存（舊版保留查閱），不取代現行版"
+      },
+      {
+        "code": "target-shared",
+        "severity": "info",
+        "message": "與 19-tb-manual 指向同一個對應 doc.tb-manual.2025-07-01（不同版次），改以 doc.tb-manual.2019-06-28 另列一版"
+      },
+      {
+        "code": "file-renamed",
+        "severity": "info",
+        "message": "檔名「結核病防治工作手冊2019年版.pdf」不合規則，改為 tb-manual-2019-1.pdf"
+      },
+      {
+        "code": "pdf-no-text-layer",
+        "severity": "warn",
+        "message": "PDF「結核病防治工作手冊2019年版.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Uploads/archives/%E7%B5%90%E6%A0%B8%E7%97%85%E9%98%B2%E6%B2%BB%E5%B7%A5%E4%BD%9C%E6%89%8B%E5%86%8A2019%E5%B9%B4%E7%89%88.pdf",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "doc.tb-manual.2025-07-01"
+    ],
+    "versionChain": {
+      "family": "doc.tb-manual",
+      "position": 1,
+      "of": 2,
+      "current": false,
+      "supersededBy": "doc.tb-manual.2025-07-01"
+    }
+  }
+}

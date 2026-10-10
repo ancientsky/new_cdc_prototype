@@ -1,0 +1,75 @@
+{
+  "id": "faq.dengue-painkiller",
+  "type": "faq",
+  "title": "懷疑登革熱時，可以自己吃止痛藥嗎？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-09-24",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "懷疑登革熱時應先就醫，不要自行服用阿斯匹靈或非類固醇消炎止痛藥（如布洛芬），這類藥物可能增加出血風險。醫師通常會以乙醯胺酚處理發燒與疼痛，用藥請依醫師指示。",
+  "question": "懷疑登革熱時，可以自己吃止痛藥嗎？",
+  "answerMarkdown": "懷疑登革熱時應先就醫，**不要自行服用阿斯匹靈或非類固醇消炎止痛藥**（如布洛芬），這類藥物可能增加出血風險。醫師通常會以乙醯胺酚處理發燒與疼痛，用藥請依醫師指示。\n\n就醫時請主動告知旅遊史或居住地是否有登革熱病例。",
+  "tasks": [
+    "symptoms"
+  ],
+  "basedOn": [
+    "disease.dengue"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/4kMzhnwTwPIrf_KETxhqzF"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 74 處（mso 樣式 48、Mso 類別 20、命名空間標籤 13）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「登革熱／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「登革熱發燒後幾天內要就醫？」從答案抽出結構化候選 {\"daysMin\":3,\"daysMax\":14,\"hours\":24}，請確認後保留或刪除"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「社區或里長要怎麼帶大家一起防登革熱？」→ situation；「登革熱發燒後幾天內要就醫？」→ symptoms；「從登革熱流行地區回國後，要注意什麼？」→ symptoms；「懷疑登革熱時，可以自己吃止痛藥嗎？」→ symptoms；「衛生單位說要進家裡噴藥，可以拒絕嗎？」→ symptoms；「出國回來後發燒，應該怎麼辦？」→ travel、symptoms"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/4kMzhnwTwPIrf_KETxhqzF",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.dengue-painkiller"
+    ]
+  }
+}

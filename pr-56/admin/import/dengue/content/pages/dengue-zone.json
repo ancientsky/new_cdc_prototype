@@ -1,0 +1,59 @@
+{
+  "id": "page.dengue-zone",
+  "type": "page",
+  "title": "登革熱防治專區（首頁）",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2018-03-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "由登革病毒引起，經埃及斑蚊與白線斑蚊叮咬傳播，不會人傳人。台灣為流行高風險地區，每年夏秋為高峰。",
+  "slug": "dengue-zone",
+  "bodyMarkdown": "由登革病毒引起，經埃及斑蚊與白線斑蚊叮咬傳播，不會人傳人。台灣為流行高風險地區，每年夏秋為高峰。\n\n### 專區內容\n\n- [疾病介紹](https://www.cdc.gov.tw/Category/List/SIOyA__BIny64vntEdKNfS)\n- [Q&A](https://www.cdc.gov.tw/Category/List/FSEx6tIbD9Ri0J2n40BMcA)\n- [宣導素材](https://www.cdc.gov.tw/Category/List/iriWs9MgoAWbNsjyRz3XCT)\n- [指引及手冊](https://www.cdc.gov.tw/Category/List/-2AwAFoZywa36VADMT1GCO)\n- [統計資料](https://www.cdc.gov.tw/Category/List/G5V79Skighk6xUVAndqStg)\n- [最新消息](https://www.cdc.gov.tw/Category/List/aDy2PtD3B2hwtz2UBO2lid)\n\n| 項目 | 內容 |\n| --- | --- |\n| 法定傳染病類別 | 第二類 |\n| 通報時限 | 24 小時內 |\n| ICD-10 | A90、A91 |\n| 主要傳染途徑 | 病媒蚊叮咬（埃及斑蚊、白線斑蚊） |\n| 潛伏期 | 3–14 天（通常 4–7 天） |",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/Page/IUXWpR9CZiGGA6OjQiiKOc"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 40 處（mso 樣式 14、Mso 類別 13、命名空間標籤 13）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「登革熱／防治專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+      },
+      {
+        "code": "target-type-differs",
+        "severity": "info",
+        "message": "對應的新站內容是 disease.dengue（disease），草稿以 page 暫存，請比對後改建為 disease"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/Page/IUXWpR9CZiGGA6OjQiiKOc",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "disease.dengue"
+    ]
+  }
+}

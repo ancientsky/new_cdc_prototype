@@ -1,0 +1,71 @@
+{
+  "id": "doc.tb-annual-report.2025-12-31",
+  "type": "document",
+  "title": "結核病年報（歷年 PDF）",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2025-12-31",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.tuberculosis"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "結核病年報彙整每年新案、死亡、治療成果與高風險族群分析。 全文下載：結核病年報 2024（PDF）",
+  "family": "doc.tb-annual-report",
+  "docType": "report",
+  "version": "2025-12-31",
+  "effectiveAt": "2025-12-31",
+  "machineReadableMarkdown": "結核病年報彙整每年新案、死亡、治療成果與高風險族群分析。\n\n| 項目 | 內容 |\n| --- | --- |\n| 書名 | 結核病年報 2024 |\n| ISBN | 978-000-00-0000-0（示意） |\n| GPN | 0000000000（示意） |\n| 版次 | 2025 年 12 月第 1 版 |\n| 頁數 | 186 |\n\n全文下載：[結核病年報 2024（PDF）](/files/doc.tb-annual-report.2025-12-31/tb-annual-report-2024.pdf)",
+  "pdfUrl": "/files/doc.tb-annual-report.2025-12-31/tb-annual-report-2024.pdf",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/InfectionReport/Info/lOWhr-dnr1fNWIqZk4Cs7-?infoId=xxTRr6Bf6B76t5rbVE96_K"
+  ],
+  "assets": [
+    {
+      "file": "tb-annual-report-2024.pdf",
+      "kind": "attachment",
+      "label": "結核病年報 2024（PDF）",
+      "mime": "application/pdf",
+      "bytes": 704,
+      "sha256": "ee27e5660fd85e15f594840537a34505063daab46e974807cefdf38604b49c83",
+      "machineReadable": false,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 43 處（mso 樣式 15、Mso 類別 14、命名空間標籤 14）"
+      },
+      {
+        "code": "pdf-no-text-layer",
+        "severity": "warn",
+        "message": "PDF「tb-annual-report-2024.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+      },
+      {
+        "code": "version-unknown",
+        "severity": "info",
+        "message": "標題看不出版次，version 暫填 2025-12-31"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/InfectionReport/Info/lOWhr-dnr1fNWIqZk4Cs7-?infoId=xxTRr6Bf6B76t5rbVE96_K",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

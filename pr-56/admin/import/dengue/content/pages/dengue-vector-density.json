@@ -1,0 +1,55 @@
+{
+  "id": "page.dengue-vector-density",
+  "type": "page",
+  "title": "病媒蚊密度調查結果",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2018-03-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "病媒蚊密度調查結果：相關資料清單。 里長帶頭巡倒清刷：社區防登革熱篇 出國前 4 到 6 週，先到旅遊醫學門診 北區：病媒蚊密度調查結果 中區：病媒蚊密度調查結果 南區：病媒蚊密度調查結果 高屏區：病媒蚊密度調查結果 東區：病媒蚊密度調查…",
+  "slug": "dengue-vector-density",
+  "bodyMarkdown": "病媒蚊密度調查結果：相關資料清單。\n\n- [里長帶頭巡倒清刷：社區防登革熱篇](https://www.cdc.gov.tw/Category/MPage/bNjZvXstQzAXnH8gfPnhq4)\n- [出國前 4 到 6 週，先到旅遊醫學門診](https://www.cdc.gov.tw/Category/MPage/H7TX7qO3ycnOzrGLohzVFP)\n- [北區：病媒蚊密度調查結果](#)\n- [中區：病媒蚊密度調查結果](#)\n- [南區：病媒蚊密度調查結果](#)\n- [高屏區：病媒蚊密度調查結果](#)\n- [東區：病媒蚊密度調查結果](#)\n\n| 年度 | 確定病例數（示意） | 每十萬人口發生率（示意） |\n| --- | --- | --- |\n| 2021 | 217 | 37.3 |\n| 2022 | 556 | 31.2 |\n| 2023 | 895 | 25.1 |\n| 2024 | 334 | 19 |\n| 2025 | 673 | 12.9 |",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/3ZwNd9eoMVqqi7PDTlqIyw"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.6,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 58 處（mso 樣式 20、Mso 類別 19、命名空間標籤 19）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「登革熱／防治專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+      },
+      {
+        "code": "list-page",
+        "severity": "info",
+        "message": "清單頁（連結集合）：新站的列表由系統依內容自動產生，通常不需轉換；草稿僅供比對連結"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/List/3ZwNd9eoMVqqi7PDTlqIyw",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

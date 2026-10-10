@@ -1,0 +1,104 @@
+{
+  "id": "publication.chik-materials-poster",
+  "type": "publication",
+  "title": "屈公病衛教宣導：單張海報",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2018-03-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.chikungunya"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "屈公病宣導單張與海報，歡迎下載運用（多國語言版本見附件）。 屈公病防治海報（中文） 屈公病防治海報（英文） 屈公病防治海報（越南文） 屈公病防治海報（印尼文） 屈公病防治海報（泰文）",
+  "pubType": "poster",
+  "series": "屈公病宣導素材",
+  "abstractMarkdown": "屈公病宣導單張與海報，歡迎下載運用（多國語言版本見附件）。\n\n- [屈公病防治海報（中文）](/files/publication.chik-materials-poster/chikungunya-poster-7lang.pdf)\n- [屈公病防治海報（英文）](/files/publication.chik-materials-poster/chikungunya-poster-7lang.pdf)\n- [屈公病防治海報（越南文）](/files/publication.chik-materials-poster/chikungunya-poster-7lang.pdf)\n- [屈公病防治海報（印尼文）](/files/publication.chik-materials-poster/chikungunya-poster-7lang.pdf)\n- [屈公病防治海報（泰文）](/files/publication.chik-materials-poster/chikungunya-poster-7lang.pdf)\n\n![chikungunya-poster](/files/publication.chik-materials-poster/chikungunya-poster.png)",
+  "pdfUrl": "/files/publication.chik-materials-poster/chikungunya-poster-7lang.pdf",
+  "basedOn": [
+    "disease.chikungunya"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/List/leuu0ZjU3Srsg0t0YuLRVJ"
+  ],
+  "assets": [
+    {
+      "file": "chikungunya-poster-7lang.pdf",
+      "kind": "attachment",
+      "label": "屈公病防治海報（七語）",
+      "mime": "application/pdf",
+      "bytes": 704,
+      "sha256": "ee27e5660fd85e15f594840537a34505063daab46e974807cefdf38604b49c83",
+      "machineReadable": false,
+      "accessibleAlt": null
+    },
+    {
+      "file": "chikungunya-poster.png",
+      "kind": "image",
+      "alt": "chikungunya-poster",
+      "license": "OGDL-1.0",
+      "needsAlt": true,
+      "mime": "image/png",
+      "bytes": 468,
+      "sha256": "eb7095d5f8825203634573c6a1201da4059f5d3efeaa97aebc19cfaeae1932f6",
+      "width": 120,
+      "height": 160
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.8,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 4 處（mso 樣式 1、Mso 類別 2、命名空間標籤 1）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「屈公病／衛教宣導」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（屈公病）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 materials-poster（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站型別是 publication，草稿直接建成 publication，看不出來的欄位以「（待補）」佔位"
+      },
+      {
+        "code": "pdf-no-text-layer",
+        "severity": "warn",
+        "message": "PDF「chikungunya-poster-7lang.pdf」沒有文字層（掃描檔），上架前須附同名 .md／.docx 可及性版本，或重做有文字層的 PDF"
+      },
+      {
+        "code": "image-no-alt",
+        "severity": "warn",
+        "message": "圖片「chikungunya-poster.png」舊頁沒有替代文字，暫用檔名「chikungunya-poster」，請補 alt（needsAlt）"
+      },
+      {
+        "code": "image-license-assumed",
+        "severity": "info",
+        "message": "圖片「chikungunya-poster.png」授權暫填 OGDL-1.0（假設為本署自製素材），請確認來源；非本署素材須補 source"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/List/leuu0ZjU3Srsg0t0YuLRVJ",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

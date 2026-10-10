@@ -1,0 +1,48 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "81b87e411a94",
+    "lastModified": "2026-10-01",
+    "aliasOf": "/v1/search-index.json"
+  },
+  "data": {
+    "endpoint": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/search-index.json",
+    "proEndpoint": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/search-index-pro.json",
+    "description": "靜態站沒有伺服器端搜尋：/v1/search 即答案單元索引（search-index.json）。下載後於用戶端以 bigram＋詞彙主檔同義詞＋BM25 檢索；只含 AI 白名單內容，失效版本不在索引中。",
+    "chunks": 734,
+    "chunksPro": 1050,
+    "chunkFields": [
+      "id",
+      "contentId",
+      "type",
+      "lang",
+      "title",
+      "text",
+      "sentences",
+      "url",
+      "owner",
+      "ownerName",
+      "reviewedAt",
+      "nextReviewAt",
+      "audience",
+      "tasks",
+      "diseases",
+      "vaccines",
+      "countries",
+      "version",
+      "effectiveAt",
+      "isCurrent",
+      "whitelist",
+      "terms"
+    ],
+    "glossary": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/v1/glossary.json",
+    "ui": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/ask/"
+  }
+}

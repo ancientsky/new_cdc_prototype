@@ -1,0 +1,2512 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "4ace7b94ede6",
+    "lastModified": "2026-09-22",
+    "count": 15
+  },
+  "data": [
+    {
+      "id": "publication.statistics-annual-2025",
+      "type": "publication",
+      "title": "傳染病統計暨監視年報（2025 年）",
+      "owner": "unit.epidemic-intelligence",
+      "publishedAt": "2026-08-31",
+      "reviewedAt": "2026-08-31",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "professional",
+        "public"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-08-31"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-08-31",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "2025 年各類法定傳染病確定病例數、發生率、年齡性別與縣市分布，以及症狀與實驗室監測統計；表格同步以開放資料提供。",
+      "keywords": [
+        "統計年報",
+        "監視",
+        "法定傳染病",
+        "發生率",
+        "開放資料"
+      ],
+      "note": "ISBN、GPN 為示意號碼",
+      "pubType": "statistics",
+      "series": "傳染病統計暨監視年報",
+      "seriesEn": "Statistics of Communicable Diseases and Surveillance Report",
+      "edition": "2025 年版",
+      "isbn": "978-626-0000-26-7",
+      "gpn": "1011500150",
+      "pages": 312,
+      "authors": [
+        "疫情中心"
+      ],
+      "pdfUrl": "/pending/?ref=publication.statistics-annual-2025&doc=傳染病統計暨監視年報（2025%20年）（PDF）",
+      "abstractMarkdown": "收錄 2025 年第一至第五類法定傳染病之確定病例數與發生率（依年齡、性別、縣市、月份），以及類流感、腸病毒、腹瀉門急診症狀監測與病毒實驗室監測結果。所有統計表同步以 CSV 開放資料提供（dataset.nidss-notifiable），數字以開放資料為準。",
+      "i18n": {
+        "en": {
+          "title": "Statistics of Communicable Diseases and Surveillance Report 2025",
+          "summary": "Confirmed cases and incidence of notifiable diseases by age, sex, county and month in 2025, plus syndromic and laboratory surveillance; tables also released as open data."
+        }
+      },
+      "sourceHash": "8fb443466cf5",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/statistics-annual-2025/",
+      "path": "/publications/statistics-annual-2025/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/statistics-annual-2025.md",
+      "governance": {
+        "owner": "unit.epidemic-intelligence",
+        "ownerName": "疫情中心",
+        "steward": null,
+        "reviewedAt": "2026-08-31",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "publication.statistics-annual-2025",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "8fb443466cf5",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-08-31",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "publication.manual-communicable-disease-control-2026",
+      "type": "publication",
+      "title": "傳染病防治工作手冊（2026 年版）",
+      "owner": "unit.acute-infectious",
+      "publishedAt": "2026-03-01",
+      "reviewedAt": "2026-03-01",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.dengue",
+        "disease.measles",
+        "disease.influenza",
+        "disease.enterovirus"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-03-01"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-03-01",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "供地方衛生局與醫療院所使用之各類法定傳染病防治工作手冊，含病例定義、通報、檢體採檢、疫調、接觸者追蹤與防治措施。",
+      "keywords": [
+        "工作手冊",
+        "傳染病防治",
+        "病例定義",
+        "疫調",
+        "接觸者追蹤"
+      ],
+      "note": "GPN 為示意號碼；手冊內容版本以 documents 現行版為準",
+      "pubType": "manual",
+      "series": "傳染病防治工作手冊",
+      "seriesEn": "Manual for Communicable Disease Control",
+      "edition": "2026 年版（第 9 版）",
+      "gpn": "1011500045",
+      "pages": 420,
+      "authors": [
+        "急性傳染病組",
+        "慢性傳染病組",
+        "急性傳染病組"
+      ],
+      "pdfUrl": "/pending/?ref=publication.manual-communicable-disease-control-2026&doc=傳染病防治工作手冊（2026%20年版）（PDF）",
+      "abstractMarkdown": "本手冊依疾病分章，每章包含：疾病概述、致病原、流行病學、臨床表現、**病例定義**、**通報定義與時限**、檢體採檢送驗、疫情調查、防治措施與接觸者追蹤。2026 年版主要修訂：登革熱病例定義（2026-01-01 生效）、MMR 接種建議引用更新、腸病毒重症處置指引（2026-03-15）。\n\n各疾病之最新病例定義以「文件」區之現行版本為準。",
+      "i18n": {
+        "en": {
+          "title": "Manual for Communicable Disease Control (2026 edition)",
+          "summary": "Chapters by disease with case definitions, reporting, specimen collection, investigation, contact tracing and control measures for health departments and clinicians."
+        }
+      },
+      "sourceHash": "d2b072aff196",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/manual-communicable-disease-control-2026/",
+      "path": "/publications/manual-communicable-disease-control-2026/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/manual-communicable-disease-control-2026.md",
+      "governance": {
+        "owner": "unit.acute-infectious",
+        "ownerName": "急性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-03-01",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": false,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "publication.manual-communicable-disease-control-2026",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "d2b072aff196",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-03-01",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "publication.poster-tb-seven-languages",
+      "type": "publication",
+      "title": "咳嗽兩週要就醫：結核病七語衛教海報",
+      "owner": "unit.chronic-infectious",
+      "publishedAt": "2026-03-20",
+      "reviewedAt": "2026-03-20",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public"
+      ],
+      "tasks": [
+        "symptoms"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.tuberculosis"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-03-20"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-03-20",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "reviewed",
+          "reviewedAt": "2026-03-20",
+          "reviewer": "越南語審核人（約用通譯）"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "summary": "結核病衛教海報，提供繁中、英、日、越、印、泰、菲七種語言，提醒咳嗽兩週就醫、治療免費與都治計畫，可下載張貼於移工宿舍與社區。",
+      "keywords": [
+        "結核病",
+        "海報",
+        "七語",
+        "移工",
+        "多語衛教"
+      ],
+      "pubType": "poster",
+      "series": "多語衛教海報",
+      "seriesEn": "Multilingual health education posters",
+      "edition": "2026 年版",
+      "authors": [
+        "慢性傳染病組"
+      ],
+      "pdfUrl": "/files/publication.poster-tb-seven-languages/poster-tb-seven-languages.pdf",
+      "abstractMarkdown": "A3 直式海報，七種語言各一版（繁體中文、English、日本語、Tiếng Việt、Bahasa Indonesia、ไทย、Tagalog）。重點：咳嗽超過兩週、有痰、體重減輕、夜間盜汗請就醫；結核病可治癒、治療免費；都治關懷員陪伴服藥。海報圖片不承載唯一資訊，文字內容另提供純文字版本。",
+      "i18n": {
+        "en": {
+          "title": "Cough for two weeks? See a doctor: TB poster in seven languages",
+          "summary": "TB awareness poster in seven languages for dormitories and communities: seek care for a two-week cough; treatment is free and supported."
+        },
+        "vi": {
+          "title": "Ho hai tuần hãy đi khám: áp phích bệnh lao bằng bảy ngôn ngữ",
+          "summary": "Áp phích bệnh lao bằng bảy ngôn ngữ: ho trên hai tuần hãy đi khám; điều trị miễn phí và có người hỗ trợ uống thuốc."
+        }
+      },
+      "legacyUrls": [
+        "https://www.cdc.gov.tw/Category/List/{id}#posters"
+      ],
+      "assets": [
+        {
+          "file": "poster-tb-seven-languages.pdf",
+          "kind": "attachment",
+          "label": "結核病七語衛教海報（PDF，A4 示意）",
+          "mime": "application/pdf",
+          "bytes": 3536,
+          "sha256": "51d3b4f7b6b3a81d4403b5ac400c817fad2647d963a887828450d50b626bcf3b",
+          "machineReadable": false,
+          "accessibleAlt": "poster-tb-seven-languages.md",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/files/publication.poster-tb-seven-languages/poster-tb-seven-languages.pdf"
+        },
+        {
+          "file": "poster-tb-seven-languages.md",
+          "kind": "attachment",
+          "label": "結核病七語衛教海報純文字版（Markdown，七語）",
+          "mime": "text/markdown",
+          "bytes": 2781,
+          "sha256": "cf3692f742855ad216692b0e4f5deaeadc8ab3c16a31beaec8624273f8d51049",
+          "machineReadable": true,
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/files/publication.poster-tb-seven-languages/poster-tb-seven-languages.md"
+        }
+      ],
+      "sourceHash": "8af7a36bd2a6",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/poster-tb-seven-languages/",
+      "path": "/publications/poster-tb-seven-languages/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/poster-tb-seven-languages.md",
+      "governance": {
+        "owner": "unit.chronic-infectious",
+        "ownerName": "慢性傳染病組",
+        "steward": null,
+        "reviewedAt": "2026-03-20",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "publication.poster-tb-seven-languages",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "8af7a36bd2a6",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-03-20",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "machine"
+          },
+          "tl": {
+            "status": "machine"
+          },
+          "vi": {
+            "status": "reviewed",
+            "reviewedAt": "2026-03-20",
+            "reviewer": "越南語審核人（約用通譯）"
+          },
+          "id": {
+            "status": "machine"
+          },
+          "th": {
+            "status": "machine"
+          }
+        },
+        "translationStale": {
+          "en": false,
+          "ja": false,
+          "tl": false,
+          "vi": false,
+          "id": false,
+          "th": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en",
+          "ja",
+          "tl",
+          "vi",
+          "id",
+          "th"
+        ]
+      }
+    },
+    {
+      "id": "publication.manual-ltc-infection-control-2026",
+      "type": "publication",
+      "title": "長期照護機構感染管制手冊（2026 年版）",
+      "owner": "unit.infection-control",
+      "publishedAt": "2026-05-15",
+      "reviewedAt": "2026-05-15",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "professional",
+        "public"
+      ],
+      "tasks": [
+        "vaccines"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.influenza",
+        "disease.covid-19",
+        "disease.tuberculosis"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-05-15"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-05-15",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "長期照護機構感染管制實務手冊：手部衛生、標準防護、群聚監測與通報、住民與工作人員疫苗接種、結核病篩檢與環境清消。",
+      "keywords": [
+        "長照機構",
+        "感染管制",
+        "手冊",
+        "群聚",
+        "環境清消"
+      ],
+      "note": "GPN 為示意號碼",
+      "pubType": "manual",
+      "series": "感染管制手冊",
+      "seriesEn": "Infection Control Manual for Long-term Care Facilities",
+      "edition": "2026 年版（第 4 版）",
+      "gpn": "1011500087",
+      "pages": 186,
+      "authors": [
+        "感染管制及生物安全組"
+      ],
+      "pdfUrl": "/pending/?ref=publication.manual-ltc-infection-control-2026&doc=長期照護機構感染管制手冊（2026%20年版）（PDF）",
+      "abstractMarkdown": "適用於住宿式長照機構、護理之家與安養機構。章節：\n\n1. 感染管制組織與人員訓練\n2. 手部衛生與標準防護措施\n3. 住民入住與工作人員健康管理（含結核病胸部 X 光檢查）\n4. 呼吸道、腸胃道群聚監測與通報\n5. 疫苗接種（流感、新冠、肺炎鏈球菌）\n6. 環境清潔消毒與洗衣\n7. 抗藥性細菌管理",
+      "i18n": {
+        "en": {
+          "title": "Infection Control Manual for Long-term Care Facilities (2026 edition)",
+          "summary": "Practical guidance on hand hygiene, standard precautions, outbreak surveillance and reporting, vaccination, TB screening and environmental cleaning."
+        }
+      },
+      "sourceHash": "efe9248a6045",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/manual-ltc-infection-control-2026/",
+      "path": "/publications/manual-ltc-infection-control-2026/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/manual-ltc-infection-control-2026.md",
+      "governance": {
+        "owner": "unit.infection-control",
+        "ownerName": "感染管制及生物安全組",
+        "steward": null,
+        "reviewedAt": "2026-05-15",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "publication.manual-ltc-infection-control-2026",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "efe9248a6045",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-05-15",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "publication.bulletin-42-18",
+      "type": "publication",
+      "title": "疫情報導 第 42 卷第 18 期",
+      "owner": "unit.epidemic-intelligence",
+      "publishedAt": "2026-09-22",
+      "reviewedAt": "2026-09-22",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "professional",
+        "public"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.enterovirus",
+        "disease.influenza",
+        "disease.tuberculosis"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-22"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-22",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "本期收錄 4 篇：秋冬腸病毒疫情回升之監測指標分析等。",
+      "keywords": [
+        "疫情報導",
+        "第 42 卷",
+        "流行病學",
+        "疫情中心",
+        "感染管制及生物安全組"
+      ],
+      "note": "卷期與篇目為示意；ISSN 與 PDF 連結待出版單位確認",
+      "pubType": "bulletin",
+      "series": "疫情報導",
+      "seriesEn": "Taiwan Epidemiology Bulletin",
+      "volume": 42,
+      "issue": 18,
+      "issn": "1680-5739",
+      "authors": [
+        "疾病管制署"
+      ],
+      "pdfUrl": "/pending/?ref=publication.bulletin-42-18&doc=疫情報導%20第%2042%20卷第%2018%20期（PDF）",
+      "abstractMarkdown": "《疫情報導》為疾管署發行之同儕審查期刊，每月出刊 2 期，刊載疫情調查、監測分析與防治政策。本期（第 42 卷第 18 期，2026-09-22 出刊）收錄：\n\n1. 秋冬腸病毒疫情回升之監測指標分析\n2. 醫院抗藥性細菌監測：2025 年度報告摘要\n3. 流感抗病毒藥劑公費使用條件修訂之說明\n4. 一起移工宿舍結核病接觸者調查",
+      "articles": [
+        {
+          "title": "秋冬腸病毒疫情回升之監測指標分析",
+          "authors": [
+            "疫情中心"
+          ],
+          "pages": "1-8",
+          "diseases": [
+            "disease.enterovirus"
+          ]
+        },
+        {
+          "title": "醫院抗藥性細菌監測：2025 年度報告摘要",
+          "authors": [
+            "感染管制及生物安全組"
+          ],
+          "pages": "9-16",
+          "diseases": []
+        },
+        {
+          "title": "流感抗病毒藥劑公費使用條件修訂之說明",
+          "authors": [
+            "急性傳染病組"
+          ],
+          "pages": "17-24",
+          "diseases": [
+            "disease.influenza"
+          ]
+        },
+        {
+          "title": "一起移工宿舍結核病接觸者調查",
+          "authors": [
+            "中區管制中心"
+          ],
+          "pages": "25-32",
+          "diseases": [
+            "disease.tuberculosis"
+          ]
+        }
+      ],
+      "i18n": {
+        "en": {
+          "title": "Taiwan Epidemiology Bulletin, Vol. 42, No. 18",
+          "summary": "This issue contains 4 articles on surveillance, outbreak investigations and control policy."
+        }
+      },
+      "sourceHash": "f8284a71e2a4",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-18/",
+      "path": "/publications/bulletin-42-18/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-18.md",
+      "governance": {
+        "owner": "unit.epidemic-intelligence",
+        "ownerName": "疫情中心",
+        "steward": null,
+        "reviewedAt": "2026-09-22",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "publication.bulletin-42-18",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "f8284a71e2a4",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-22",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "publication.bulletin-42-17",
+      "type": "publication",
+      "title": "疫情報導 第 42 卷第 17 期",
+      "owner": "unit.epidemic-intelligence",
+      "publishedAt": "2026-09-08",
+      "reviewedAt": "2026-09-08",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "professional",
+        "public"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.influenza",
+        "disease.pertussis",
+        "disease.rabies"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-09-08"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-09-08",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "本期收錄 3 篇：2026–2027 年流感疫苗株組成與接種策略等。",
+      "keywords": [
+        "疫情報導",
+        "第 42 卷",
+        "流行病學",
+        "急性傳染病組"
+      ],
+      "note": "卷期與篇目為示意；ISSN 與 PDF 連結待出版單位確認",
+      "pubType": "bulletin",
+      "series": "疫情報導",
+      "seriesEn": "Taiwan Epidemiology Bulletin",
+      "volume": 42,
+      "issue": 17,
+      "issn": "1680-5739",
+      "authors": [
+        "疾病管制署"
+      ],
+      "pdfUrl": "/pending/?ref=publication.bulletin-42-17&doc=疫情報導%20第%2042%20卷第%2017%20期（PDF）",
+      "abstractMarkdown": "《疫情報導》為疾管署發行之同儕審查期刊，每月出刊 2 期，刊載疫情調查、監測分析與防治政策。本期（第 42 卷第 17 期，2026-09-08 出刊）收錄：\n\n1. 2026–2027 年流感疫苗株組成與接種策略\n2. 百日咳嬰兒病例與孕婦 Tdap 接種之關聯\n3. 狂犬病疑似暴露個案之暴露後預防接種追蹤",
+      "articles": [
+        {
+          "title": "2026–2027 年流感疫苗株組成與接種策略",
+          "authors": [
+            "急性傳染病組"
+          ],
+          "pages": "1-8",
+          "diseases": [
+            "disease.influenza"
+          ]
+        },
+        {
+          "title": "百日咳嬰兒病例與孕婦 Tdap 接種之關聯",
+          "authors": [
+            "急性傳染病組"
+          ],
+          "pages": "9-16",
+          "diseases": [
+            "disease.pertussis"
+          ]
+        },
+        {
+          "title": "狂犬病疑似暴露個案之暴露後預防接種追蹤",
+          "authors": [
+            "急性傳染病組"
+          ],
+          "pages": "17-24",
+          "diseases": [
+            "disease.rabies"
+          ]
+        }
+      ],
+      "i18n": {
+        "en": {
+          "title": "Taiwan Epidemiology Bulletin, Vol. 42, No. 17",
+          "summary": "This issue contains 3 articles on surveillance, outbreak investigations and control policy."
+        }
+      },
+      "sourceHash": "1fba84598889",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-17/",
+      "path": "/publications/bulletin-42-17/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-17.md",
+      "governance": {
+        "owner": "unit.epidemic-intelligence",
+        "ownerName": "疫情中心",
+        "steward": null,
+        "reviewedAt": "2026-09-08",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "publication.bulletin-42-17",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "1fba84598889",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-09-08",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "publication.bulletin-42-16",
+      "type": "publication",
+      "title": "疫情報導 第 42 卷第 16 期",
+      "owner": "unit.epidemic-intelligence",
+      "publishedAt": "2026-08-25",
+      "reviewedAt": "2026-08-25",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "professional",
+        "public"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.japanese-encephalitis",
+        "disease.dengue"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-08-25"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "本期收錄 2 篇：日本腦炎病例之流行病學特徵：2020–2025 年等。",
+      "keywords": [
+        "疫情報導",
+        "第 42 卷",
+        "流行病學",
+        "急性傳染病組",
+        "檢驗及疫苗研製中心"
+      ],
+      "note": "卷期與篇目為示意；ISSN 與 PDF 連結待出版單位確認",
+      "pubType": "bulletin",
+      "series": "疫情報導",
+      "seriesEn": "Taiwan Epidemiology Bulletin",
+      "volume": 42,
+      "issue": 16,
+      "issn": "1680-5739",
+      "authors": [
+        "疾病管制署"
+      ],
+      "pdfUrl": "/pending/?ref=publication.bulletin-42-16&doc=疫情報導%20第%2042%20卷第%2016%20期（PDF）",
+      "abstractMarkdown": "《疫情報導》為疾管署發行之同儕審查期刊，每月出刊 2 期，刊載疫情調查、監測分析與防治政策。本期（第 42 卷第 16 期，2026-08-25 出刊）收錄：\n\n1. 日本腦炎病例之流行病學特徵：2020–2025 年\n2. 登革熱 NS1 快篩於基層診所之運用成效",
+      "articles": [
+        {
+          "title": "日本腦炎病例之流行病學特徵：2020–2025 年",
+          "authors": [
+            "急性傳染病組"
+          ],
+          "pages": "1-8",
+          "diseases": [
+            "disease.japanese-encephalitis"
+          ]
+        },
+        {
+          "title": "登革熱 NS1 快篩於基層診所之運用成效",
+          "authors": [
+            "檢驗及疫苗研製中心"
+          ],
+          "pages": "9-16",
+          "diseases": [
+            "disease.dengue"
+          ]
+        }
+      ],
+      "sourceHash": "16d2a6565ff5",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-16/",
+      "path": "/publications/bulletin-42-16/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-16.md",
+      "governance": {
+        "owner": "unit.epidemic-intelligence",
+        "ownerName": "疫情中心",
+        "steward": null,
+        "reviewedAt": "2026-08-25",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "publication.bulletin-42-16",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "16d2a6565ff5",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "publication.bulletin-42-15",
+      "type": "publication",
+      "title": "疫情報導 第 42 卷第 15 期",
+      "owner": "unit.epidemic-intelligence",
+      "publishedAt": "2026-08-11",
+      "reviewedAt": "2026-08-11",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "professional",
+        "public"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.dengue",
+        "disease.mpox",
+        "disease.varicella"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-08-11"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "本期收錄 3 篇：2026 年夏季登革熱本土疫情南部擴散分析等。",
+      "keywords": [
+        "疫情報導",
+        "第 42 卷",
+        "流行病學",
+        "疫情中心",
+        "新興傳染病整備組"
+      ],
+      "note": "卷期與篇目為示意；ISSN 與 PDF 連結待出版單位確認",
+      "pubType": "bulletin",
+      "series": "疫情報導",
+      "seriesEn": "Taiwan Epidemiology Bulletin",
+      "volume": 42,
+      "issue": 15,
+      "issn": "1680-5739",
+      "authors": [
+        "疾病管制署"
+      ],
+      "pdfUrl": "/pending/?ref=publication.bulletin-42-15&doc=疫情報導%20第%2042%20卷第%2015%20期（PDF）",
+      "abstractMarkdown": "《疫情報導》為疾管署發行之同儕審查期刊，每月出刊 2 期，刊載疫情調查、監測分析與防治政策。本期（第 42 卷第 15 期，2026-08-11 出刊）收錄：\n\n1. 2026 年夏季登革熱本土疫情南部擴散分析\n2. M痘 Ib 分支國際疫情與我國邊境應變\n3. 某大學宿舍水痘群聚事件調查",
+      "articles": [
+        {
+          "title": "2026 年夏季登革熱本土疫情南部擴散分析",
+          "authors": [
+            "疫情中心",
+            "南區管制中心"
+          ],
+          "pages": "1-8",
+          "diseases": [
+            "disease.dengue"
+          ]
+        },
+        {
+          "title": "M痘 Ib 分支國際疫情與我國邊境應變",
+          "authors": [
+            "新興傳染病整備組",
+            "檢疫組"
+          ],
+          "pages": "9-16",
+          "diseases": [
+            "disease.mpox"
+          ]
+        },
+        {
+          "title": "某大學宿舍水痘群聚事件調查",
+          "authors": [
+            "北區管制中心"
+          ],
+          "pages": "17-24",
+          "diseases": [
+            "disease.varicella"
+          ]
+        }
+      ],
+      "sourceHash": "407ea9e44ab4",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-15/",
+      "path": "/publications/bulletin-42-15/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-15.md",
+      "governance": {
+        "owner": "unit.epidemic-intelligence",
+        "ownerName": "疫情中心",
+        "steward": null,
+        "reviewedAt": "2026-08-11",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "publication.bulletin-42-15",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "407ea9e44ab4",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "publication.bulletin-42-14",
+      "type": "publication",
+      "title": "疫情報導 第 42 卷第 14 期",
+      "owner": "unit.epidemic-intelligence",
+      "publishedAt": "2026-07-28",
+      "reviewedAt": "2026-07-28",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "professional",
+        "public"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.tuberculosis",
+        "disease.chikungunya"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-07-28"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "本期收錄 2 篇：結核病都治計畫完治率之區域差異分析等。",
+      "keywords": [
+        "疫情報導",
+        "第 42 卷",
+        "流行病學",
+        "慢性傳染病組",
+        "南區管制中心"
+      ],
+      "note": "卷期與篇目為示意；ISSN 與 PDF 連結待出版單位確認",
+      "pubType": "bulletin",
+      "series": "疫情報導",
+      "seriesEn": "Taiwan Epidemiology Bulletin",
+      "volume": 42,
+      "issue": 14,
+      "issn": "1680-5739",
+      "authors": [
+        "疾病管制署"
+      ],
+      "pdfUrl": "/pending/?ref=publication.bulletin-42-14&doc=疫情報導%20第%2042%20卷第%2014%20期（PDF）",
+      "abstractMarkdown": "《疫情報導》為疾管署發行之同儕審查期刊，每月出刊 2 期，刊載疫情調查、監測分析與防治政策。本期（第 42 卷第 14 期，2026-07-28 出刊）收錄：\n\n1. 結核病都治計畫完治率之區域差異分析\n2. 屈公病境外移入病例臨床表現回顧",
+      "articles": [
+        {
+          "title": "結核病都治計畫完治率之區域差異分析",
+          "authors": [
+            "慢性傳染病組"
+          ],
+          "pages": "1-8",
+          "diseases": [
+            "disease.tuberculosis"
+          ]
+        },
+        {
+          "title": "屈公病境外移入病例臨床表現回顧",
+          "authors": [
+            "南區管制中心"
+          ],
+          "pages": "9-16",
+          "diseases": [
+            "disease.chikungunya"
+          ]
+        }
+      ],
+      "sourceHash": "323686cf495b",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-14/",
+      "path": "/publications/bulletin-42-14/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-14.md",
+      "governance": {
+        "owner": "unit.epidemic-intelligence",
+        "ownerName": "疫情中心",
+        "steward": null,
+        "reviewedAt": "2026-07-28",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "publication.bulletin-42-14",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "323686cf495b",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "publication.bulletin-42-13",
+      "type": "publication",
+      "title": "疫情報導 第 42 卷第 13 期",
+      "owner": "unit.epidemic-intelligence",
+      "publishedAt": "2026-07-14",
+      "reviewedAt": "2026-07-14",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "professional",
+        "public"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.dengue",
+        "disease.enterovirus",
+        "disease.covid-19"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-07-14"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "本期收錄 3 篇：2026 年首例本土登革熱病例疫情調查與社區防治等。",
+      "keywords": [
+        "疫情報導",
+        "第 42 卷",
+        "流行病學",
+        "高屏區管制中心",
+        "檢驗及疫苗研製中心"
+      ],
+      "note": "卷期與篇目為示意；ISSN 與 PDF 連結待出版單位確認",
+      "pubType": "bulletin",
+      "series": "疫情報導",
+      "seriesEn": "Taiwan Epidemiology Bulletin",
+      "volume": 42,
+      "issue": 13,
+      "issn": "1680-5739",
+      "authors": [
+        "疾病管制署"
+      ],
+      "pdfUrl": "/pending/?ref=publication.bulletin-42-13&doc=疫情報導%20第%2042%20卷第%2013%20期（PDF）",
+      "abstractMarkdown": "《疫情報導》為疾管署發行之同儕審查期刊，每月出刊 2 期，刊載疫情調查、監測分析與防治政策。本期（第 42 卷第 13 期，2026-07-14 出刊）收錄：\n\n1. 2026 年首例本土登革熱病例疫情調查與社區防治\n2. 腸病毒 71 型實驗室監測與基因型分析\n3. 長照機構新冠群聚事件之感染管制介入評估",
+      "articles": [
+        {
+          "title": "2026 年首例本土登革熱病例疫情調查與社區防治",
+          "authors": [
+            "高屏區管制中心"
+          ],
+          "pages": "1-8",
+          "diseases": [
+            "disease.dengue"
+          ]
+        },
+        {
+          "title": "腸病毒 71 型實驗室監測與基因型分析",
+          "authors": [
+            "檢驗及疫苗研製中心"
+          ],
+          "pages": "9-16",
+          "diseases": [
+            "disease.enterovirus"
+          ]
+        },
+        {
+          "title": "長照機構新冠群聚事件之感染管制介入評估",
+          "authors": [
+            "感染管制及生物安全組"
+          ],
+          "pages": "17-24",
+          "diseases": [
+            "disease.covid-19"
+          ]
+        }
+      ],
+      "sourceHash": "5f4d6895d338",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-13/",
+      "path": "/publications/bulletin-42-13/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-13.md",
+      "governance": {
+        "owner": "unit.epidemic-intelligence",
+        "ownerName": "疫情中心",
+        "steward": null,
+        "reviewedAt": "2026-07-14",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "publication.bulletin-42-13",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "5f4d6895d338",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "publication.bulletin-42-12",
+      "type": "publication",
+      "title": "疫情報導 第 42 卷第 12 期",
+      "owner": "unit.epidemic-intelligence",
+      "publishedAt": "2026-06-23",
+      "reviewedAt": "2026-06-23",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "professional",
+        "public"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.influenza",
+        "disease.measles"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-06-23"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "本期收錄 2 篇：2025–2026 年流感季重症病例流行病學分析等。",
+      "keywords": [
+        "疫情報導",
+        "第 42 卷",
+        "流行病學",
+        "疫情中心",
+        "檢疫組"
+      ],
+      "note": "卷期與篇目為示意；ISSN 與 PDF 連結待出版單位確認",
+      "pubType": "bulletin",
+      "series": "疫情報導",
+      "seriesEn": "Taiwan Epidemiology Bulletin",
+      "volume": 42,
+      "issue": 12,
+      "issn": "1680-5739",
+      "authors": [
+        "疾病管制署"
+      ],
+      "pdfUrl": "/pending/?ref=publication.bulletin-42-12&doc=疫情報導%20第%2042%20卷第%2012%20期（PDF）",
+      "abstractMarkdown": "《疫情報導》為疾管署發行之同儕審查期刊，每月出刊 2 期，刊載疫情調查、監測分析與防治政策。本期（第 42 卷第 12 期，2026-06-23 出刊）收錄：\n\n1. 2025–2026 年流感季重症病例流行病學分析\n2. 日本麻疹疫情升溫對國人旅遊之風險評估",
+      "articles": [
+        {
+          "title": "2025–2026 年流感季重症病例流行病學分析",
+          "authors": [
+            "疫情中心",
+            "急性傳染病組"
+          ],
+          "pages": "1-8",
+          "diseases": [
+            "disease.influenza"
+          ]
+        },
+        {
+          "title": "日本麻疹疫情升溫對國人旅遊之風險評估",
+          "authors": [
+            "檢疫組"
+          ],
+          "pages": "9-16",
+          "diseases": [
+            "disease.measles"
+          ]
+        }
+      ],
+      "sourceHash": "5bfc8329216a",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-12/",
+      "path": "/publications/bulletin-42-12/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-12.md",
+      "governance": {
+        "owner": "unit.epidemic-intelligence",
+        "ownerName": "疫情中心",
+        "steward": null,
+        "reviewedAt": "2026-06-23",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "publication.bulletin-42-12",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "5bfc8329216a",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "publication.bulletin-42-11",
+      "type": "publication",
+      "title": "疫情報導 第 42 卷第 11 期",
+      "owner": "unit.epidemic-intelligence",
+      "publishedAt": "2026-06-09",
+      "reviewedAt": "2026-06-09",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "professional",
+        "public"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [
+        "disease.hiv",
+        "disease.dengue"
+      ],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-06-09"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "本期收錄 3 篇：2026 年第一季國內 HIV 新通報個案流行病學特徵分析等。",
+      "keywords": [
+        "疫情報導",
+        "第 42 卷",
+        "流行病學",
+        "慢性傳染病組",
+        "檢疫組"
+      ],
+      "note": "卷期與篇目為示意；ISSN 與 PDF 連結待出版單位確認",
+      "pubType": "bulletin",
+      "series": "疫情報導",
+      "seriesEn": "Taiwan Epidemiology Bulletin",
+      "volume": 42,
+      "issue": 11,
+      "issn": "1680-5739",
+      "authors": [
+        "疾病管制署"
+      ],
+      "pdfUrl": "/pending/?ref=publication.bulletin-42-11&doc=疫情報導%20第%2042%20卷第%2011%20期（PDF）",
+      "abstractMarkdown": "《疫情報導》為疾管署發行之同儕審查期刊，每月出刊 2 期，刊載疫情調查、監測分析與防治政策。本期（第 42 卷第 11 期，2026-06-09 出刊）收錄：\n\n1. 2026 年第一季國內 HIV 新通報個案流行病學特徵分析\n2. 某國際機場入境旅客發燒篩檢檢出登革熱境外移入個案之分析\n3. 一起國小諾羅病毒腸胃炎群聚事件調查",
+      "articles": [
+        {
+          "title": "2026 年第一季國內 HIV 新通報個案流行病學特徵分析",
+          "authors": [
+            "慢性傳染病組"
+          ],
+          "pages": "1-8",
+          "diseases": [
+            "disease.hiv"
+          ]
+        },
+        {
+          "title": "某國際機場入境旅客發燒篩檢檢出登革熱境外移入個案之分析",
+          "authors": [
+            "檢疫組"
+          ],
+          "pages": "9-16",
+          "diseases": [
+            "disease.dengue"
+          ]
+        },
+        {
+          "title": "一起國小諾羅病毒腸胃炎群聚事件調查",
+          "authors": [
+            "臺北區管制中心"
+          ],
+          "pages": "17-24",
+          "diseases": []
+        }
+      ],
+      "sourceHash": "d4f1f6554649",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-11/",
+      "path": "/publications/bulletin-42-11/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-11.md",
+      "governance": {
+        "owner": "unit.epidemic-intelligence",
+        "ownerName": "疫情中心",
+        "steward": null,
+        "reviewedAt": "2026-06-09",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "publication.bulletin-42-11",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "d4f1f6554649",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "publication.bulletin-42-2",
+      "type": "publication",
+      "title": "疫情報導 第 42 卷第 2 期",
+      "owner": "unit.epidemic-intelligence",
+      "publishedAt": "2026-01-20",
+      "reviewedAt": "2026-01-20",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "professional",
+        "public"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "diseases": [],
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-01-20"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "none"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "本期收錄「2024 年屏東縣某餐廳諾羅病毒食品中毒事件」等文章；全文請見各篇文章頁。",
+      "keywords": [
+        "疫情報導",
+        "第 42 卷",
+        "諾羅病毒",
+        "食品中毒",
+        "疫情調查"
+      ],
+      "note": "卷期編號與出刊日（2026-01-20）取自官網「疫情報導」列表頁的搜尋摘要；本期篇目中只有第 1 篇篇名可對到官網列表，文章內文為示範重寫，未取自原文。ISSN 與 PDF 連結待出版單位確認。",
+      "verification": {
+        "status": "pending",
+        "note": "卷期與第 1 篇篇名取自官網列表摘要，內文為示範重寫；完整篇目、頁碼、ISSN 與 PDF 待出版單位確認。",
+        "pendingItems": [
+          "本期完整篇目與頁碼",
+          "ISSN",
+          "本期 PDF 連結",
+          "第 1 篇作者與服務單位（示範以單位代稱）"
+        ],
+        "sources": [
+          {
+            "label": "疾管署官網「疫情報導」列表",
+            "url": "https://www.cdc.gov.tw/EpidemicTheme/Index/2EvDNIFfEWyH8RlHAp1t8g",
+            "accessedAt": "2026-10-10",
+            "official": true,
+            "verified": false,
+            "note": "開發環境連不到 cdc.gov.tw，只看到搜尋摘要：第 42 卷第 2 期、2026-01-20、篇名「2024年屏東縣某餐廳諾羅病毒食品中毒事件」"
+          }
+        ]
+      },
+      "pubType": "bulletin",
+      "series": "疫情報導",
+      "seriesEn": "Taiwan Epidemiology Bulletin",
+      "volume": 42,
+      "issue": 2,
+      "issn": "1680-5739",
+      "authors": [
+        "疾病管制署"
+      ],
+      "pdfUrl": "/pending/?ref=publication.bulletin-42-2&doc=疫情報導%20第%2042%20卷第%202%20期（PDF）",
+      "abstractMarkdown": "《疫情報導》為疾管署發行之期刊，每月出刊 2 期，刊載疫情調查、監測分析與防治政策。本期（第 42 卷第 2 期，2026-01-20 出刊）第 1 篇為「2024 年屏東縣某餐廳諾羅病毒食品中毒事件」。",
+      "sourceHash": "87e455ce293b",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-2/",
+      "path": "/publications/bulletin-42-2/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-2.md",
+      "governance": {
+        "owner": "unit.epidemic-intelligence",
+        "ownerName": "疫情中心",
+        "steward": null,
+        "reviewedAt": "2026-01-20",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "publication.bulletin-42-2",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [
+          {
+            "kind": "unverified",
+            "level": "warning",
+            "text": "本頁依公開資料整理，尚待權責單位（疫情中心）逐項確認。卷期與第 1 篇篇名取自官網列表摘要，內文為示範重寫；完整篇目、頁碼、ISSN 與 PDF 待出版單位確認。",
+            "href": null,
+            "path": null
+          }
+        ],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "87e455ce293b",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "none"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {},
+        "renderableLangs": [
+          "zh-TW"
+        ]
+      }
+    },
+    {
+      "id": "publication.annual-report-2025",
+      "type": "publication",
+      "title": "衛生福利部疾病管制署 2025 年報",
+      "owner": "unit.planning",
+      "publishedAt": "2026-06-30",
+      "reviewedAt": "2026-06-30",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2026-06-30"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-06-30",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "彙整 2025 年疾管署施政成果：傳染病監測、預防接種、邊境檢疫、國際合作與數位轉型，並附重要統計與大事紀，中英文對照。",
+      "keywords": [
+        "年報",
+        "2025",
+        "施政成果",
+        "傳染病防治",
+        "大事紀"
+      ],
+      "note": "ISBN、GPN 為示意號碼",
+      "pubType": "annual-report",
+      "series": "疾病管制署年報",
+      "seriesEn": "Taiwan CDC Annual Report",
+      "edition": "初版",
+      "isbn": "978-626-0000-25-0",
+      "gpn": "1011500123",
+      "pages": 168,
+      "authors": [
+        "衛生福利部疾病管制署"
+      ],
+      "pdfUrl": "/pending/?ref=publication.annual-report-2025&doc=衛生福利部疾病管制署%202025%20年報（PDF）",
+      "price": "新臺幣 350 元（電子版免費）",
+      "abstractMarkdown": "本年報以中英文對照呈現 2025 年度重點工作：\n\n- 傳染病監測與疫情應變（流感、新冠、登革熱、腸病毒）\n- 預防接種政策調整，包括 MMR 接種建議修訂\n- 邊境檢疫與國際旅遊疫情建議\n- 結核病與愛滋病防治\n- 國際衛生合作與新南向\n- 官網與資料治理數位轉型",
+      "i18n": {
+        "en": {
+          "title": "Taiwan CDC Annual Report 2025",
+          "summary": "Achievements in 2025: surveillance, immunisation, border quarantine, international cooperation and digital transformation, with key statistics; bilingual."
+        }
+      },
+      "sourceHash": "e625b9c25093",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/annual-report-2025/",
+      "path": "/publications/annual-report-2025/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/annual-report-2025.md",
+      "governance": {
+        "owner": "unit.planning",
+        "ownerName": "企劃組",
+        "steward": null,
+        "reviewedAt": "2026-06-30",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "publication.annual-report-2025",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "e625b9c25093",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "reviewed",
+            "reviewedAt": "2026-06-30",
+            "reviewer": "內部英文審核人"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    },
+    {
+      "id": "publication.annual-report-2024",
+      "type": "publication",
+      "title": "衛生福利部疾病管制署 2024 年報",
+      "owner": "unit.planning",
+      "publishedAt": "2025-06-30",
+      "reviewedAt": "2025-06-30",
+      "reviewPeriodMonths": 0,
+      "status": "published",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "tasks": [
+        "data"
+      ],
+      "sensitivity": "public",
+      "license": "OGDL-1.0",
+      "aiWhitelist": {
+        "requested": true,
+        "approvedBy": "unit.oasis",
+        "approvedAt": "2025-06-30"
+      },
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "machine"
+        },
+        "ja": {
+          "status": "none"
+        },
+        "tl": {
+          "status": "none"
+        },
+        "vi": {
+          "status": "none"
+        },
+        "id": {
+          "status": "none"
+        },
+        "th": {
+          "status": "none"
+        }
+      },
+      "summary": "彙整 2024 年疾管署施政成果與重要統計，包括新冠轉常規防治、M痘疫苗接種、登革熱防治與國際衛生合作，中英文對照。",
+      "keywords": [
+        "年報",
+        "2024",
+        "施政成果",
+        "統計",
+        "國際合作"
+      ],
+      "note": "ISBN、GPN 為示意號碼",
+      "pubType": "annual-report",
+      "series": "疾病管制署年報",
+      "seriesEn": "Taiwan CDC Annual Report",
+      "edition": "初版",
+      "isbn": "978-626-0000-24-3",
+      "gpn": "1011400118",
+      "pages": 160,
+      "authors": [
+        "衛生福利部疾病管制署"
+      ],
+      "pdfUrl": "/pending/?ref=publication.annual-report-2024&doc=衛生福利部疾病管制署%202024%20年報（PDF）",
+      "price": "新臺幣 350 元（電子版免費）",
+      "abstractMarkdown": "本年報以中英文對照呈現 2024 年度重點：新冠防治轉入常規、M痘高風險族群疫苗接種、登革熱南部疫情防治、結核病與愛滋防治成果、國際衛生合作，並附年度大事紀與統計。",
+      "sourceHash": "137a57c9b7bc",
+      "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/annual-report-2024/",
+      "path": "/publications/annual-report-2024/",
+      "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/annual-report-2024.md",
+      "governance": {
+        "owner": "unit.planning",
+        "ownerName": "企劃組",
+        "steward": null,
+        "reviewedAt": "2025-06-30",
+        "reviewPeriodMonths": 0,
+        "nextReviewAt": null,
+        "daysToReview": null,
+        "overdue": false,
+        "dueSoon": false,
+        "status": "published",
+        "lifecycle": "current",
+        "lifecycleLabel": "現行版",
+        "whitelist": true,
+        "whitelistTier": "public",
+        "whitelistPublic": true,
+        "whitelistReasons": [],
+        "whitelistReasonLabels": [],
+        "isCurrent": true,
+        "superseded": false,
+        "supersededBy": null,
+        "currentId": "publication.annual-report-2024",
+        "noindex": false,
+        "stale": [],
+        "basisRevisions": [],
+        "predatesBasis": false,
+        "annotations": [],
+        "reverseAuditHits": 0,
+        "license": "OGDL-1.0",
+        "licenseNote": null,
+        "sensitivity": "public",
+        "sourceHash": "137a57c9b7bc",
+        "languages": {
+          "zh-TW": {
+            "status": "source"
+          },
+          "en": {
+            "status": "machine"
+          },
+          "ja": {
+            "status": "none"
+          },
+          "tl": {
+            "status": "none"
+          },
+          "vi": {
+            "status": "none"
+          },
+          "id": {
+            "status": "none"
+          },
+          "th": {
+            "status": "none"
+          }
+        },
+        "translationStale": {
+          "en": false
+        },
+        "renderableLangs": [
+          "zh-TW",
+          "en"
+        ]
+      }
+    }
+  ],
+  "series": [
+    {
+      "series": "傳染病統計暨監視年報",
+      "seriesEn": "Statistics of Communicable Diseases and Surveillance Report",
+      "pubType": "statistics",
+      "issn": null,
+      "count": 1,
+      "latest": "publication.statistics-annual-2025",
+      "items": [
+        "publication.statistics-annual-2025"
+      ]
+    },
+    {
+      "series": "傳染病防治工作手冊",
+      "seriesEn": "Manual for Communicable Disease Control",
+      "pubType": "manual",
+      "issn": null,
+      "count": 1,
+      "latest": "publication.manual-communicable-disease-control-2026",
+      "items": [
+        "publication.manual-communicable-disease-control-2026"
+      ]
+    },
+    {
+      "series": "多語衛教海報",
+      "seriesEn": "Multilingual health education posters",
+      "pubType": "poster",
+      "issn": null,
+      "count": 1,
+      "latest": "publication.poster-tb-seven-languages",
+      "items": [
+        "publication.poster-tb-seven-languages"
+      ]
+    },
+    {
+      "series": "感染管制手冊",
+      "seriesEn": "Infection Control Manual for Long-term Care Facilities",
+      "pubType": "manual",
+      "issn": null,
+      "count": 1,
+      "latest": "publication.manual-ltc-infection-control-2026",
+      "items": [
+        "publication.manual-ltc-infection-control-2026"
+      ]
+    },
+    {
+      "series": "疫情報導",
+      "seriesEn": "Taiwan Epidemiology Bulletin",
+      "pubType": "bulletin",
+      "issn": "1680-5739",
+      "count": 9,
+      "latest": "publication.bulletin-42-18",
+      "items": [
+        "publication.bulletin-42-18",
+        "publication.bulletin-42-17",
+        "publication.bulletin-42-16",
+        "publication.bulletin-42-15",
+        "publication.bulletin-42-14",
+        "publication.bulletin-42-13",
+        "publication.bulletin-42-12",
+        "publication.bulletin-42-11",
+        "publication.bulletin-42-2"
+      ]
+    },
+    {
+      "series": "疾病管制署年報",
+      "seriesEn": "Taiwan CDC Annual Report",
+      "pubType": "annual-report",
+      "issn": null,
+      "count": 2,
+      "latest": "publication.annual-report-2025",
+      "items": [
+        "publication.annual-report-2025",
+        "publication.annual-report-2024"
+      ]
+    }
+  ]
+}

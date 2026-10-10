@@ -1,0 +1,55 @@
+{
+  "id": "news.2021-05-15-legacy-c0b55c",
+  "type": "news",
+  "title": "COVID-19 疫情說明記者會（第 120 場）",
+  "owner": "unit.pr",
+  "publishedAt": "2021-05-15",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.covid-19"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "今日新增本土病例，請民眾落實防疫新生活運動。",
+  "newsType": "press",
+  "bodyMarkdown": "今日新增本土病例，請民眾落實防疫新生活運動。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/Tf45xxeAuvD4SVFkuvIeXM?typeid=9"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.8,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "old-content",
+        "severity": "info",
+        "message": "最後更新於 2021-05-15（5.4 年前），建議走久遠封存而非上線"
+      },
+      {
+        "code": "body-short",
+        "severity": "warn",
+        "message": "內文過短（22 字，低於 40）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/Tf45xxeAuvD4SVFkuvIeXM?typeid=9",
+    "convertedAt": "2026-10-05T02:30:00Z"
+  }
+}

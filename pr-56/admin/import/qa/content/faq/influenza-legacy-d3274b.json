@@ -1,0 +1,92 @@
+{
+  "id": "faq.influenza-legacy-d3274b",
+  "type": "faq",
+  "title": "113 年度公費流感疫苗有哪些廠牌？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2024-09-20",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "113 年度採購四價流感疫苗共 3 家廠牌，均為 6 個月以上適用；各院所依配送量提供，民眾無法指定廠牌。",
+  "question": "113 年度公費流感疫苗有哪些廠牌？",
+  "answerMarkdown": "113 年度採購四價流感疫苗共 3 家廠牌，均為 6 個月以上適用；各院所依配送量提供，民眾無法指定廠牌。",
+  "tasks": [
+    "vaccines"
+  ],
+  "basedOn": [
+    "disease.influenza"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/zU9zOhcsoqjv8REH6XHH-Y"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 10 處（mso 樣式 4、Mso 類別 3、命名空間標籤 3）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「預防接種／流感疫苗／常見問答」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+      },
+      {
+        "code": "one-to-many",
+        "severity": "info",
+        "message": "一頁 3 題、清單沒有單一目標：status 維持 pending，請決定併入疾病頁（merged）或各題獨立（新站以 tasks 歸類）"
+      },
+      {
+        "code": "answer-dated",
+        "severity": "warn",
+        "message": "「113 年度公費流感疫苗什麼時候開打？」的答案寫的期限都已過（114 年 3 月 31 日、113 年度）：請確認是否已有新年度版本或應封存"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「113 年度公費流感疫苗什麼時候開打？」從答案抽出結構化候選 {\"ageYears\":65}，請確認後保留或刪除"
+      },
+      {
+        "code": "answer-dated",
+        "severity": "warn",
+        "message": "「113 年度公費流感疫苗有哪些廠牌？」的答案寫的期限都已過（113 年度）：請確認是否已有新年度版本或應封存"
+      },
+      {
+        "code": "answer-dated",
+        "severity": "warn",
+        "message": "「錯過第一階段，之後還能打嗎？」的答案寫的期限都已過（114 年 3 月 31 日）：請確認是否已有新年度版本或應封存"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「113 年度公費流感疫苗什麼時候開打？」→ vaccines；「113 年度公費流感疫苗有哪些廠牌？」→ vaccines；「錯過第一階段，之後還能打嗎？」→ vaccines"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/zU9zOhcsoqjv8REH6XHH-Y",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "dated": [
+      {
+        "text": "113 年度",
+        "date": "2024-12-31"
+      }
+    ]
+  }
+}

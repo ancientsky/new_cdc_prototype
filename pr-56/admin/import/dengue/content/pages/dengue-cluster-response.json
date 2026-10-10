@@ -1,0 +1,71 @@
+{
+  "id": "page.dengue-cluster-response",
+  "type": "page",
+  "title": "群聚事件應變與緊急防治",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-09-10",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.dengue"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "地方政府與社區推動登革熱防治的作業指引：孳生源清除與社區動員（巡倒清刷）、病媒蚊密度調查與風險分級、本土病例群聚的應變分工與解除條件。",
+  "slug": "dengue-cluster-response",
+  "bodyMarkdown": "地方政府與社區推動登革熱防治的作業指引：孳生源清除與社區動員（巡倒清刷）、病媒蚊密度調查與風險分級、本土病例群聚的應變分工與解除條件。\n\n### 第一章 總則\n\n本指引補充「登革熱／屈公病防治工作指引」的社區端作法，適用於衛生局（所）、環保、民政、教育及社區組織。疫情通報、病例處置與 NS1 快篩試劑配置，依主指引辦理。地方政府應於每年 3 月底前，將本指引的分工納入年度防治計畫。\n\n### 第二章 孳生源清除與社區動員\n\n1. **巡倒清刷**：每週由里（村）、社區志工或家戶巡視積水容器、倒掉積水、清除不需要的容器、刷洗內壁，持續至少每週 1 次。\n2. **公共空間責任**：空地、工地、廢棄物堆置場、公共設施及公私立機構，由管理人負責自主檢查；衛生局得會同環保單位辦理查核，查獲孳生源可依傳染病防治法及地方規定限期改善。\n3. **社區動員**：疫情升溫前（每年 4 月至 5 月）召開里長與社區志工說明會，指定里（村）層級聯絡人，並配合每週通報巡檢結果；動員紀錄由衛生所彙整。\n4. **衛教內容**：以「巡、倒、清、刷」及影音教材為主，避免只強調噴藥；對外籍勞工與新住民提供多語教材。\n\n### 第三章 病媒蚊監測與密度調查\n\n1. 衛生局於病媒蚊活動季每月至少 1 次，選定固定樣點調查**住宅指數、容器指數與布氏指數**，並登錄於防治系統。\n2. 依指數分級：高密度區域增加查核頻率，並優先安排孳生源清除；連續兩次調查下降且無新增病例者，可回復一般頻率。\n3. 本土病例發生地的周邊 150 公尺內，應於接獲通報後 3 日內完成密度調查，作為是否擴大防治範圍的依據。\n4. 調查結果由衛生局彙整，每月通報區管制中心；公開版本只呈現區域別等級，不放個別住戶資訊。\n\n| 項目 | 內容 |\n| --- | --- |\n| 文件名稱 | 登革熱社區防治工作指引：孳生源清除、病媒蚊監測與群聚應變 |\n| 版次 | 2026-09 |\n| 生效日 | 2026-09-10 |\n| 權責單位 | 急性傳染病組 |\n| 檔案格式 | PDF |\n\n完整內容請下載附件：\\<a href=\"https://www.cdc.gov.tw/File/Get/gRLuE98QJ5FACNMoUco8Lu\">登革熱社區防治工作指引：孳生源清除、病媒蚊監測與群聚應變（PDF）\\</a>",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/j_J4tv6ANjXOs3PJQTPe8z"
+  ],
+  "assets": [
+    {
+      "file": "dengue-community-workplan.2026-09-10.pdf",
+      "kind": "attachment",
+      "label": "登革熱社區防治工作指引：孳生源清除、病媒蚊監測與群聚應變",
+      "mime": "application/pdf",
+      "bytes": 883,
+      "sha256": "52e3c9fb72b9baef275f2060688529d4adb548a2ad2226b68a6445adb99287a1",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 75 處（mso 樣式 45、Mso 類別 23、命名空間標籤 15）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「登革熱／防治專區」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（登革熱）"
+      },
+      {
+        "code": "merge-into-target",
+        "severity": "info",
+        "message": "清單判定併入 doc.dengue-community-workplan.2026-09-10（document），草稿以 page 暫存，請人工把內容併進目標後刪除草稿"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/j_J4tv6ANjXOs3PJQTPe8z",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "doc.dengue-community-workplan.2026-09-10"
+    ]
+  }
+}

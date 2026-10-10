@@ -1,0 +1,50 @@
+{
+  "id": "news.2026-09-18-flu-vaccine-oct1",
+  "type": "news",
+  "title": "2026–2027 年度公費流感疫苗 10 月 1 日開打，新冠疫苗同步提供",
+  "owner": "unit.pr",
+  "publishedAt": "2026-09-18",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza",
+    "disease.covid-19"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "疾病管制署宣布，2026–2027 年度公費流感疫苗將於 10 月 1 日開打。",
+  "newsType": "press",
+  "bodyMarkdown": "疾病管制署宣布，2026–2027 年度公費流感疫苗將於 **10 月 1 日**開打。第一階段對象包括 65 歲以上長者、55 歲以上原住民、6 個月以上至國小入學前幼兒、孕婦及 6 個月內嬰兒之父母、19–64 歲高風險對象、國小至高中職與五專一至三年級學生、醫事防疫人員及長照機構住民與工作人員等；**11 月 1 日**起開放 50–64 歲無高風險慢性病成人。\n\n新年度新冠疫苗同日開打，6 個月以上民眾皆可接種，可與流感疫苗同時分開部位接種。接種地點請查詢「流感防治一網通」或疫苗接種地圖。",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Bulletin/Detail/lYMJFMdaheSyPHiJkkKugt?typeid=9"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 8 處（mso 樣式 4、Mso 類別 2、命名空間標籤 2）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Bulletin/Detail/lYMJFMdaheSyPHiJkkKugt?typeid=9",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "news.2026-09-18-flu-vaccine-oct1"
+    ]
+  }
+}

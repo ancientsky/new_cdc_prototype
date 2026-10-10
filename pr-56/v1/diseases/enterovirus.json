@@ -1,0 +1,782 @@
+{
+  "meta": {
+    "api": "v1",
+    "generatedAt": "2026-10-10T13:35:22.557Z",
+    "buildDate": "2026-10-01",
+    "license": "OGDL-1.0",
+    "licenseUrl": "https://data.gov.tw/license",
+    "source": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/",
+    "docs": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/developers/",
+    "openapi": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/openapi.json",
+    "etag": "9b180d4cad96",
+    "lastModified": "2026-04-22"
+  },
+  "data": {
+    "id": "disease.enterovirus",
+    "type": "disease",
+    "slug": "enterovirus",
+    "title": "腸病毒",
+    "nameEn": "Enterovirus infection",
+    "aliases": [
+      "手足口病",
+      "疱疹性咽峽炎",
+      "腸病毒71型",
+      "EV71",
+      "EV-D68",
+      "克沙奇病毒",
+      "腸病毒感染併發重症"
+    ],
+    "legalCategory": 3,
+    "icd10": [
+      "B34.1",
+      "B08.4",
+      "B08.5",
+      "A87.0"
+    ],
+    "notifyWithinHours": 168,
+    "incubation": {
+      "min": 2,
+      "max": 10,
+      "typicalMin": 3,
+      "typicalMax": 5,
+      "unit": "day",
+      "text": "2–10 天（平均 3–5 天）"
+    },
+    "transmission": [
+      "contact",
+      "droplet",
+      "foodborne"
+    ],
+    "owner": "unit.acute-infectious",
+    "steward": "急性傳染病組承辦人",
+    "publishedAt": "2017-04-01",
+    "reviewedAt": "2026-04-22",
+    "reviewPeriodMonths": 12,
+    "status": "published",
+    "audience": [
+      "public",
+      "professional"
+    ],
+    "tasks": [
+      "symptoms",
+      "situation",
+      "vaccines"
+    ],
+    "sensitivity": "public",
+    "license": "OGDL-1.0",
+    "diseases": [
+      "disease.enterovirus"
+    ],
+    "vaccines": [
+      "vaccine.ev71"
+    ],
+    "aiWhitelist": {
+      "requested": true,
+      "approvedBy": "unit.oasis",
+      "approvedAt": "2026-09-01"
+    },
+    "languages": {
+      "zh-TW": {
+        "status": "source"
+      },
+      "en": {
+        "status": "reviewed",
+        "reviewedAt": "2026-05-06",
+        "reviewer": "內部英文審核人"
+      },
+      "ja": {
+        "status": "machine"
+      },
+      "tl": {
+        "status": "machine"
+      },
+      "vi": {
+        "status": "machine"
+      },
+      "id": {
+        "status": "machine"
+      },
+      "th": {
+        "status": "machine"
+      }
+    },
+    "summary": "腸病毒傳染力強，5 歲以下幼兒是重症高危險群。多數表現為手足口病或疱疹性咽峽炎，留意嗜睡、肌躍型抽搐等重症前兆，一出現就送大醫院。",
+    "keywords": [
+      "腸病毒",
+      "手足口病",
+      "疱疹性咽峽炎",
+      "重症前兆",
+      "EV71",
+      "洗手"
+    ],
+    "legacyUrls": [
+      "https://www.cdc.gov.tw/Disease/Index",
+      "https://www.cdc.gov.tw/Disease/SubIndex/{id}#enterovirus",
+      "https://www.cdc.gov.tw/Category/QAPage/{id}#enterovirus",
+      "https://www.cdc.gov.tw/Category/List/{id}#ev-guidance",
+      "https://www.cdc.gov.tw/Bulletin/List/{id}?page=1#enterovirus"
+    ],
+    "keyFacts": {
+      "incubation": "2–10 天（平均 3–5 天）",
+      "symptoms": "發燒、口腔潰瘍、手腳掌與臀部紅疹或水泡",
+      "transmission": "接觸、飛沫、糞口",
+      "prevention": "肥皂洗手、漂白水消毒、生病在家休息",
+      "notify": "腸病毒感染併發重症：一週內"
+    },
+    "blocks": [
+      {
+        "key": "what-to-do",
+        "heading": "我該怎麼辦",
+        "cards": [
+          {
+            "if": "孩子確診手足口病或疱疹性咽峽炎",
+            "title": "在家休息至少 7 天",
+            "text": "在家休息至少 7 天，與其他幼兒分開玩，照顧前後用肥皂洗手。"
+          },
+          {
+            "if": "出現嗜睡、肌躍型抽搐、持續嘔吐等重症前兆",
+            "title": "立即送大醫院",
+            "text": "立即送到重症責任醫院或具兒科急診的大醫院，黃金治療時間很短。"
+          },
+          {
+            "if": "家中有 5 歲以下幼兒",
+            "title": "大人回家先洗手換衣",
+            "text": "大人回家先用肥皂洗手、更換外出衣物，再抱小孩。"
+          }
+        ]
+      },
+      {
+        "key": "symptoms",
+        "heading": "症狀與警示徵象",
+        "markdown": "大多數感染者症狀輕微，常見兩種表現：\n\n- **手足口病**：發燒，口腔、舌頭出現潰瘍，手掌、腳掌、膝蓋、臀部出現紅疹或小水泡。\n- **疱疹性咽峽炎**：突發高燒，喉嚨後方出現小水泡或潰瘍，因疼痛而不吃東西、流口水。\n\n多數 7–10 天內痊癒，但少數會併發腦炎、心肌炎、急性肢體麻痺等重症，以 5 歲以下幼兒風險最高。",
+        "warning": "重症前兆：嗜睡、意識不清、活力不佳、手腳無力、肌躍型抽搐（無故驚嚇或突然全身肌肉收縮）、持續嘔吐、呼吸急促或心跳加快。"
+      },
+      {
+        "key": "transmission",
+        "heading": "怎麼傳染",
+        "markdown": "腸病毒可經由**接觸**病人口鼻分泌物、水泡液、糞便，或吸入病人咳嗽打噴嚏的**飛沫**而感染，也可經由被污染的手、玩具、食物傳播。\n\n發病前數天至發病後一週傳染力最強；病毒可在腸道持續排出數週，因此痊癒後仍要注意如廁後洗手。"
+      },
+      {
+        "key": "prevention",
+        "heading": "如何預防",
+        "markdown": "- **以肥皂濕、搓、沖、捧、擦正確洗手**；乾洗手酒精對腸病毒效果有限。\n- 環境與玩具以 **500 ppm 漂白水**（家用漂白水 1 份加 100 份清水）擦拭消毒。\n- 孩子生病時在家休息，避免與其他幼兒接觸。\n- 教托育機構發現病例應通知家長並加強清消；同一班級一週內 2 名以上幼兒發病時，依地方規定停課。"
+      },
+      {
+        "key": "treatment",
+        "heading": "診斷與治療",
+        "markdown": "腸病毒沒有特效藥，以支持性治療為主：補充水分、退燒、緩解口腔疼痛，可給予冰涼、軟質的飲食。\n\n出現重症前兆時應儘速轉診至**腸病毒重症責任醫院**，由醫師評估靜脈免疫球蛋白、強心劑或葉克膜等處置。"
+      },
+      {
+        "key": "vaccine",
+        "heading": "疫苗",
+        "markdown": "國內已有核准上市的**腸病毒 71 型疫苗**，屬自費接種，適用年齡依各廠牌仿單（多為 2 個月以上至 6 歲以下幼兒）。疫苗只能預防 71 型，無法預防其他型別，接種後仍須落實洗手。"
+      },
+      {
+        "key": "situation",
+        "heading": "目前疫情與統計",
+        "markdown": "腸病毒門急診就診人次每週更新，並標示是否超過流行閾值；開學後與每年 4–6 月為好發期。",
+        "datasets": [
+          "dataset.ev-visits-weekly"
+        ]
+      },
+      {
+        "key": "faq",
+        "heading": "常見問題"
+      }
+    ],
+    "professional": {
+      "manualDoc": "doc.ev-severe-guideline",
+      "specimen": "咽喉擦拭液、糞便或肛門拭子；疑似神經系統併發症加採腦脊髓液。以病毒保存輸送管 4°C 送驗。",
+      "notifyNote": "「腸病毒感染併發重症」為第三類法定傳染病，應於一週內通報；新生兒腸病毒感染亦需留意並通報。",
+      "programs": [
+        {
+          "key": "severe-warning-referral",
+          "title": "重症前兆病徵與轉診",
+          "summary": "嗜睡、意識不清、肌躍型抽搐、持續嘔吐或呼吸急促為重症前兆，應立即送具兒科急診之大醫院或重症責任醫院；醫師依臨床分期處置。",
+          "documents": [
+            "doc.ev-severe-guideline"
+          ],
+          "services": [
+            "service.notifiable-disease-report"
+          ],
+          "contentIds": [
+            "faq.ev-severe-signs",
+            "labtest.enterovirus",
+            "dataset.ev-lab-types",
+            "research.2025-ev-molecular-epidemiology"
+          ]
+        },
+        {
+          "key": "childcare-suspension",
+          "title": "教托育機構停課標準與通報",
+          "summary": "同班 1 週內 2 名以上確診停課 7 日、2 個以上班級停課得全園停課；機構 24 小時內通報衛生局，並落實洗手與 500 ppm 漂白水清消。",
+          "documents": [
+            "doc.ev-childcare-guideline"
+          ],
+          "services": [
+            "service.cluster-report-1922"
+          ],
+          "contentIds": [
+            "faq.enterovirus-class-suspension",
+            "faq.enterovirus-return-school",
+            "faq.enterovirus-childcare-disinfect",
+            "faq.ev-stay-home",
+            "media.enterovirus-handwashing",
+            "news.2026-09-22-enterovirus-alert"
+          ]
+        },
+        {
+          "key": "ev71-vaccine",
+          "title": "腸病毒 71 型疫苗",
+          "summary": "EV71 疫苗為自費接種，只能預防 71 型；接種前與兒科醫師討論，接種後仍須洗手、消毒並留意重症前兆。",
+          "documents": [],
+          "services": [],
+          "contentIds": [
+            "vaccine.ev71",
+            "faq.ev71-vaccine",
+            "clar.2026-04-enterovirus-only-kids"
+          ]
+        }
+      ]
+    },
+    "relatedDocuments": [
+      "doc.ev-severe-guideline",
+      "doc.ev-childcare-guideline"
+    ],
+    "materials": [
+      {
+        "label": "腸病毒重症前兆衛教單張（七語）",
+        "url": "https://www.cdc.gov.tw/Advocacy",
+        "langs": [
+          "zh-TW",
+          "en",
+          "vi",
+          "id",
+          "th",
+          "tl",
+          "ja"
+        ]
+      }
+    ],
+    "i18n": {
+      "en": {
+        "title": "Enterovirus infection",
+        "summary": "Enteroviruses are highly contagious and children under 5 are at greatest risk of severe illness. Most cases present as hand, foot and mouth disease or herpangina. Watch for warning signs such as lethargy or myoclonic jerks and go to a major hospital immediately.",
+        "keyFacts": {
+          "incubation": "2–10 days (average 3–5)",
+          "symptoms": "Fever, mouth ulcers, rash or blisters on hands, feet and buttocks",
+          "transmission": "Contact, droplets, faecal–oral",
+          "prevention": "Wash hands with soap, disinfect with bleach, keep sick children home",
+          "notify": "Severe complicated enterovirus infection: within one week"
+        },
+        "blocks": [
+          {
+            "key": "what-to-do",
+            "heading": "What to do",
+            "cards": [
+              {
+                "if": "your child has hand, foot and mouth disease or herpangina",
+                "title": "Stay home for at least 7 days",
+                "text": "Keep the child home for at least 7 days, away from other children; wash hands with soap before and after care."
+              },
+              {
+                "if": "there is lethargy, myoclonic jerks or persistent vomiting",
+                "title": "Go to a major hospital now",
+                "text": "Go immediately to a designated severe-enterovirus hospital or a large hospital with paediatric emergency care."
+              },
+              {
+                "if": "there are children under 5 at home",
+                "title": "Wash hands and change clothes when you get home",
+                "text": "Adults should wash hands with soap and change out of outdoor clothes before holding young children."
+              }
+            ]
+          },
+          {
+            "key": "symptoms",
+            "heading": "Symptoms and warning signs",
+            "markdown": "Most infections are mild and appear in two common forms:\n\n- **Hand, foot and mouth disease**: fever, ulcers in the mouth and on the tongue, and red spots or small blisters on the palms, soles, knees and buttocks.\n- **Herpangina**: sudden high fever with small blisters or ulcers at the back of the throat; children may refuse food and drool.\n\nMost recover within 7–10 days, but a few develop encephalitis, myocarditis or acute flaccid paralysis; children under 5 are at highest risk.",
+            "warning": "Warning signs: drowsiness, reduced consciousness, poor activity, limb weakness, myoclonic jerks (sudden startles or whole-body muscle jerks), persistent vomiting, rapid breathing or rapid heartbeat."
+          },
+          {
+            "key": "transmission",
+            "heading": "How it spreads",
+            "markdown": "Enteroviruses spread through **contact** with saliva, nasal secretions, blister fluid or stool, through **droplets** from coughs and sneezes, and through contaminated hands, toys or food.\n\nPeople are most contagious from a few days before to one week after onset, and the virus can be shed in stool for weeks, so hand washing after using the toilet remains important."
+          },
+          {
+            "key": "prevention",
+            "heading": "Prevention",
+            "markdown": "- **Wash hands properly with soap and water**; alcohol hand rub is less effective against enteroviruses.\n- Wipe surfaces and toys with **500 ppm bleach** (1 part household bleach to 100 parts water).\n- Keep sick children at home and away from other children.\n- Childcare settings should inform parents and step up cleaning when a case occurs; classes may be suspended under local rules when 2 or more children in a class fall ill within a week."
+          },
+          {
+            "key": "treatment",
+            "heading": "Diagnosis and treatment",
+            "markdown": "There is no specific medicine. Care is supportive: fluids, fever control and pain relief for mouth ulcers; cool, soft food helps.\n\nChildren with warning signs should be transferred quickly to a **designated severe-enterovirus hospital**, where doctors may consider immunoglobulin, inotropes or ECMO."
+          },
+          {
+            "key": "vaccine",
+            "heading": "Vaccine",
+            "markdown": "Licensed **enterovirus A71 (EV71) vaccines** are available in Taiwan on a self-paid basis; eligible ages follow each product label (mostly 2 months to under 6 years). The vaccine protects only against EV71, so hand washing is still essential."
+          },
+          {
+            "key": "situation",
+            "heading": "Current situation and statistics",
+            "markdown": "Weekly enterovirus outpatient and emergency visits are updated with an epidemic threshold indicator; cases rise after school starts and in April to June."
+          },
+          {
+            "key": "faq",
+            "heading": "FAQ"
+          }
+        ]
+      }
+    },
+    "sourceHash": "e21ed42fad19",
+    "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/enterovirus/",
+    "path": "/diseases/enterovirus/",
+    "md": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/diseases/enterovirus.md",
+    "governance": {
+      "owner": "unit.acute-infectious",
+      "ownerName": "急性傳染病組",
+      "steward": "急性傳染病組承辦人",
+      "reviewedAt": "2026-04-22",
+      "reviewPeriodMonths": 12,
+      "nextReviewAt": "2027-04-22",
+      "daysToReview": 203,
+      "overdue": false,
+      "dueSoon": false,
+      "status": "published",
+      "lifecycle": "current",
+      "lifecycleLabel": "現行版",
+      "whitelist": true,
+      "whitelistTier": "public",
+      "whitelistPublic": true,
+      "whitelistReasons": [],
+      "whitelistReasonLabels": [],
+      "isCurrent": true,
+      "superseded": false,
+      "supersededBy": null,
+      "currentId": "disease.enterovirus",
+      "noindex": false,
+      "stale": [],
+      "basisRevisions": [],
+      "predatesBasis": false,
+      "annotations": [],
+      "reverseAuditHits": 0,
+      "license": "OGDL-1.0",
+      "licenseNote": null,
+      "sensitivity": "public",
+      "sourceHash": "e21ed42fad19",
+      "languages": {
+        "zh-TW": {
+          "status": "source"
+        },
+        "en": {
+          "status": "reviewed",
+          "reviewedAt": "2026-05-06",
+          "reviewer": "內部英文審核人"
+        },
+        "ja": {
+          "status": "machine"
+        },
+        "tl": {
+          "status": "machine"
+        },
+        "vi": {
+          "status": "machine"
+        },
+        "id": {
+          "status": "machine"
+        },
+        "th": {
+          "status": "machine"
+        }
+      },
+      "translationStale": {
+        "en": false,
+        "ja": false,
+        "tl": false,
+        "vi": false,
+        "id": false,
+        "th": false
+      },
+      "renderableLangs": [
+        "zh-TW",
+        "en"
+      ]
+    },
+    "master": {
+      "id": "disease.enterovirus",
+      "slug": "enterovirus",
+      "name": "腸病毒",
+      "nameEn": "Enterovirus infection",
+      "aliases": [
+        "腸病毒感染併發重症",
+        "手足口病",
+        "疱疹性咽峽炎",
+        "EV71",
+        "腸病毒71型",
+        "克沙奇病毒"
+      ],
+      "legalCategory": 3,
+      "icd10": [
+        "B34.1",
+        "B08.4",
+        "B08.5",
+        "A87.0"
+      ],
+      "notifyWithinHours": 168,
+      "transmission": [
+        "droplet",
+        "contact",
+        "foodborne"
+      ],
+      "hasPage": true,
+      "owner": "unit.acute-infectious",
+      "datasets": [
+        "dataset.ev-visits-weekly"
+      ],
+      "zhuyin": "ㄔ",
+      "strokes": 13,
+      "legalName": "腸病毒感染併發重症",
+      "note": "法定通報項目為「腸病毒感染併發重症」；一般腸病毒輕症不須通報",
+      "i18n": {
+        "en": {
+          "name": "Enterovirus infection"
+        }
+      }
+    },
+    "related": {
+      "faq": [
+        {
+          "id": "faq.enterovirus-childcare-disinfect",
+          "type": "faq",
+          "title": "幼兒園怎麼消毒，才對腸病毒有效？",
+          "summary": "腸病毒清消以 500 ppm 漂白水（1 份家用漂白水加 100 份清水）擦拭，並以肥皂洗手；酒精與乾洗手效果有限。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/enterovirus-childcare-disinfect/",
+          "path": "/faq/enterovirus-childcare-disinfect/",
+          "reviewedAt": "2026-09-24",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.enterovirus-class-suspension",
+          "type": "faq",
+          "title": "班上有同學得腸病毒，幼兒園會停課嗎？",
+          "summary": "同班 1 週內 2 名以上幼童確診腸病毒，班級停課 7 日；2 個以上班級停課時機構可全面停課；實際以園方與衛生局公告為準。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/enterovirus-class-suspension/",
+          "path": "/faq/enterovirus-class-suspension/",
+          "reviewedAt": "2026-09-24",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.enterovirus-return-school",
+          "type": "faq",
+          "title": "孩子腸病毒好了，什麼時候可以回學校？",
+          "summary": "腸病毒確診的孩子應在家休息至少 7 天，退燒、能進食且症狀改善後再返校，返校後仍須落實洗手。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/enterovirus-return-school/",
+          "path": "/faq/enterovirus-return-school/",
+          "reviewedAt": "2026-09-24",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.ev-severe-signs",
+          "type": "faq",
+          "title": "腸病毒重症前兆有哪些？",
+          "summary": "腸病毒重症前兆：嗜睡、意識不清、活力不佳、手腳無力、肌躍型抽搐、持續嘔吐、呼吸急促或心跳加快，出現就立即送大醫院。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/ev-severe-signs/",
+          "path": "/faq/ev-severe-signs/",
+          "reviewedAt": "2026-04-22",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.ev-stay-home",
+          "type": "faq",
+          "title": "孩子得了腸病毒，要在家休息幾天？",
+          "summary": "腸病毒病童建議在家休息至少 7 天；痊癒後腸道仍可能排出病毒數週，回校後仍需落實肥皂洗手。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/ev-stay-home/",
+          "path": "/faq/ev-stay-home/",
+          "reviewedAt": "2026-04-22",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "faq.ev71-vaccine",
+          "type": "faq",
+          "title": "腸病毒 71 型疫苗是公費的嗎？打了就不會得腸病毒嗎？",
+          "summary": "腸病毒 71 型疫苗目前為自費，只能預防 71 型，接種後仍需落實洗手與留意重症前兆。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/faq/ev71-vaccine/",
+          "path": "/faq/ev71-vaccine/",
+          "reviewedAt": "2026-04-22",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "news": [
+        {
+          "id": "news.2025-05-06-enterovirus-season",
+          "type": "news",
+          "title": "腸病毒進入流行期，籲請家長落實肥皂洗手並留意重症前兆",
+          "summary": "腸病毒門急診就診人次超過流行閾值，進入流行期。疾管署籲請家長與教托育機構落實肥皂洗手、漂白水消毒，並留意重症前兆。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2025-05-06-enterovirus-season/",
+          "path": "/news/2025-05-06-enterovirus-season/",
+          "reviewedAt": "2025-05-06",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "news.2026-03-15-letter-ev-guideline",
+          "type": "letter",
+          "title": "致醫界通函第 608 號：腸病毒感染併發重症臨床處置建議更新",
+          "summary": "腸病毒感染併發重症臨床處置建議更新：重申四期分期、第二期以上轉診重症責任醫院，並提醒流行期前完成院內演練。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-03-15-letter-ev-guideline/",
+          "path": "/news/2026-03-15-letter-ev-guideline/",
+          "reviewedAt": "2026-03-15",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "news.2026-04-14-enterovirus-rising",
+          "type": "news",
+          "title": "腸病毒就診人次連續上升，近期社區以 EV71 為主，籲請提高警覺",
+          "summary": "腸病毒門急診就診人次連續三週上升，社區檢出 EV71 比例增加。疾管署提醒 5 歲以下幼兒是重症高危險群，出現重症前兆請立即就醫。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-04-14-enterovirus-rising/",
+          "path": "/news/2026-04-14-enterovirus-rising/",
+          "reviewedAt": "2026-04-14",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "news.2026-09-22-enterovirus-alert",
+          "type": "news",
+          "title": "國內腸病毒疫情持續，籲請家長及教托育機構提高警覺",
+          "summary": "開學後腸病毒門急診就診人次上升，疾管署籲請家長與教托育機構落實洗手與環境消毒，留意重症前兆。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-22-enterovirus-alert/",
+          "path": "/news/2026-09-22-enterovirus-alert/",
+          "reviewedAt": "2026-09-22",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "news.2026-09-29-ili-weekly",
+          "type": "news",
+          "title": "流感疫情持續上升，10 月 1 日公費疫苗開打，長者幼兒請優先接種",
+          "summary": "類流感門急診就診率續升，腸病毒與登革熱本土疫情亦仍活躍。疾管署呼籲 10 月 1 日起長者與幼兒優先接種公費流感疫苗。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/news/2026-09-29-ili-weekly/",
+          "path": "/news/2026-09-29-ili-weekly/",
+          "reviewedAt": "2026-09-29",
+          "owner": "unit.epidemic-intelligence",
+          "ownerName": "疫情中心",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "documents": [
+        {
+          "id": "doc.ev-childcare-guideline.2026-09-10",
+          "type": "document",
+          "title": "教托育機構腸病毒防治指引",
+          "summary": "幼兒園、托嬰中心與教保機構的腸病毒防治指引：日常清消與洗手、病童處理與居家休息、班級與機構停課標準、通報流程、重症前兆辨識與轉送。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/ev-childcare-guideline.2026-09-10/",
+          "path": "/documents/ev-childcare-guideline.2026-09-10/",
+          "reviewedAt": "2026-09-22",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "doc.ev-severe-guideline.2026-03-15",
+          "type": "document",
+          "title": "腸病毒感染併發重症臨床處置建議",
+          "summary": "腸病毒感染臨床四期分期、重症前兆辨識、各期處置原則與轉診重症責任醫院時機。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/documents/ev-severe-guideline.2026-03-15/",
+          "path": "/documents/ev-severe-guideline.2026-03-15/",
+          "reviewedAt": "2026-03-15",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "vaccines": [
+        {
+          "id": "vaccine.ev71",
+          "type": "vaccine",
+          "title": "腸病毒 71 型疫苗",
+          "summary": "國內已核准上市的腸病毒 71 型疫苗屬自費接種，適用年齡依仿單；只能預防 EV71，接種後仍需落實洗手。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/vaccines/ev71/",
+          "path": "/vaccines/ev71/",
+          "reviewedAt": "2026-04-22",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "datasets": [
+        {
+          "id": "dataset.ev-lab-types",
+          "type": "dataset",
+          "title": "腸病毒型別監測",
+          "summary": "社區腸病毒分離株型別週統計（EV71、克沙奇 A 型、克沙奇 B 型、伊科病毒等）。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.ev-lab-types",
+          "path": "/data/#dataset.ev-lab-types",
+          "reviewedAt": "2026-04-14",
+          "owner": "unit.lab",
+          "ownerName": "檢驗及疫苗研製中心",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "dataset.ev-visits-weekly",
+          "type": "dataset",
+          "title": "腸病毒門急診就診統計（健保資料）",
+          "summary": "依健保門診與急診申報資料，彙整每週腸病毒就診人次（年齡層、縣市別），並標示流行閾值。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.ev-visits-weekly",
+          "path": "/data/#dataset.ev-visits-weekly",
+          "reviewedAt": "2026-04-20",
+          "owner": "unit.epidemic-intelligence",
+          "ownerName": "疫情中心",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "dataset.lab-virus-surveillance",
+          "type": "dataset",
+          "title": "病毒性感染症實驗室監測（呼吸道、腸道病毒檢出）",
+          "summary": "合約實驗室每週呼吸道與腸道病毒檢出件數與型別分布（流感 A/B、腸病毒型別、RSV、新冠等）。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.lab-virus-surveillance",
+          "path": "/data/#dataset.lab-virus-surveillance",
+          "reviewedAt": "2026-01-20",
+          "owner": "unit.lab",
+          "ownerName": "檢驗及疫苗研製中心",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "dataset.sentinel-physician",
+          "type": "dataset",
+          "title": "定點醫師監測資料（類流感、腹瀉、手足口病）",
+          "summary": "全國定點醫師每週通報之類流感、腹瀉、手足口病及疱疹性咽峽炎就診比例。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/data/#dataset.sentinel-physician",
+          "path": "/data/#dataset.sentinel-physician",
+          "reviewedAt": "2025-11-15",
+          "owner": "unit.epidemic-intelligence",
+          "ownerName": "疫情中心",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "clarifications": [
+        {
+          "id": "clar.2026-04-enterovirus-only-kids",
+          "type": "clarification",
+          "title": "網傳「腸病毒只有小孩會得，大人不用擔心」部分正確",
+          "summary": "腸病毒重症以 5 歲以下幼兒為主，但成人也會感染且常無症狀，可能傳給幼兒；大人回家應先洗手換衣。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/factcheck/#clar.2026-04-enterovirus-only-kids",
+          "path": "/factcheck/#clar.2026-04-enterovirus-only-kids",
+          "reviewedAt": "2026-04-22",
+          "owner": "unit.pr",
+          "ownerName": "公關室",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "media": [
+        {
+          "id": "media.enterovirus-handwashing",
+          "type": "media",
+          "title": "濕搓沖捧擦：腸病毒洗手五步驟動畫",
+          "summary": "以動畫示範「濕、搓、沖、捧、擦」洗手五步驟，提醒大人回家先洗手換衣再抱孩子，並教家長辨識腸病毒重症前兆。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/media/enterovirus-handwashing/",
+          "path": "/media/enterovirus-handwashing/",
+          "reviewedAt": "2026-04-15",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "labtests": [
+        {
+          "id": "labtest.enterovirus",
+          "type": "labtest",
+          "title": "腸病毒檢驗項目與送驗規定",
+          "summary": "腸病毒感染併發重症：咽喉拭子、糞便或肛門拭子及血清，4°C 冷藏 72 小時內送驗，做 RT-PCR 型別鑑定與病毒分離。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/lab/enterovirus/",
+          "path": "/lab/enterovirus/",
+          "reviewedAt": "2026-07-15",
+          "owner": "unit.lab",
+          "ownerName": "檢驗及疫苗研製中心",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "services": [],
+      "publications": [
+        {
+          "id": "publication.bulletin-42-13",
+          "type": "publication",
+          "title": "疫情報導 第 42 卷第 13 期",
+          "summary": "本期收錄 3 篇：2026 年首例本土登革熱病例疫情調查與社區防治等。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-13/",
+          "path": "/publications/bulletin-42-13/",
+          "reviewedAt": "2026-07-14",
+          "owner": "unit.epidemic-intelligence",
+          "ownerName": "疫情中心",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "publication.bulletin-42-18",
+          "type": "publication",
+          "title": "疫情報導 第 42 卷第 18 期",
+          "summary": "本期收錄 4 篇：秋冬腸病毒疫情回升之監測指標分析等。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/bulletin-42-18/",
+          "path": "/publications/bulletin-42-18/",
+          "reviewedAt": "2026-09-22",
+          "owner": "unit.epidemic-intelligence",
+          "ownerName": "疫情中心",
+          "lifecycle": "current",
+          "whitelist": true
+        },
+        {
+          "id": "publication.manual-communicable-disease-control-2026",
+          "type": "publication",
+          "title": "傳染病防治工作手冊（2026 年版）",
+          "summary": "供地方衛生局與醫療院所使用之各類法定傳染病防治工作手冊，含病例定義、通報、檢體採檢、疫調、接觸者追蹤與防治措施。",
+          "url": "https://ancientsky.github.io/new_cdc_prototype/preview/pr-56/publications/manual-communicable-disease-control-2026/",
+          "path": "/publications/manual-communicable-disease-control-2026/",
+          "reviewedAt": "2026-03-01",
+          "owner": "unit.acute-infectious",
+          "ownerName": "急性傳染病組",
+          "lifecycle": "current",
+          "whitelist": true
+        }
+      ],
+      "topics": []
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "id": "publication.statistics-annual-2025",
+  "type": "publication",
+  "title": "傳染病統計暨監視年報",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2016-06-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 0,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "傳染病統計暨監視年報彙整每年法定傳染病通報與監測統計、疫情分析與防治成果，各年度年報如下。",
+  "pubType": "annual-report",
+  "series": "傳染病統計暨監視年報",
+  "abstractMarkdown": "傳染病統計暨監視年報彙整每年法定傳染病通報與監測統計、疫情分析與防治成果，各年度年報如下。",
+  "pdfUrl": "/files/publication.statistics-annual-2025/statistics-annual-2020.pdf",
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/MPage/awMzKEQ9hVCtOWGFPHydj2"
+  ],
+  "assets": [
+    {
+      "file": "statistics-annual-2020.pdf",
+      "kind": "attachment",
+      "label": "傳染病統計暨監視年報 2020 年",
+      "mime": "application/pdf",
+      "bytes": 762,
+      "sha256": "b09921d712e164235efb4049366978f4fd63f8198b43bbfa6656769883d0c7ca",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "statistics-annual-2021.pdf",
+      "kind": "attachment",
+      "label": "傳染病統計暨監視年報 2021 年",
+      "mime": "application/pdf",
+      "bytes": 762,
+      "sha256": "02401ce9771ccd83cf214a73a32cd831a24725034a8957800500728836fc9f43",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "statistics-annual-2022.pdf",
+      "kind": "attachment",
+      "label": "傳染病統計暨監視年報 2022 年",
+      "mime": "application/pdf",
+      "bytes": 762,
+      "sha256": "2fc24ee89c2d61dcadf8f186259b102b17323fca50b368d8487566a6fc1b9fa7",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "statistics-annual-2023.pdf",
+      "kind": "attachment",
+      "label": "傳染病統計暨監視年報 2023 年",
+      "mime": "application/pdf",
+      "bytes": 762,
+      "sha256": "07628bceffec65c168dce54a6b53c18fe5574a9cd885f36907f93e626b499589",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "statistics-annual-2024.pdf",
+      "kind": "attachment",
+      "label": "傳染病統計暨監視年報 2024 年",
+      "mime": "application/pdf",
+      "bytes": 762,
+      "sha256": "1e9ac3ad77faa9966e5fcd5ad350f4695dec9631e0dbbd392d0d49f915041c00",
+      "machineReadable": true,
+      "accessibleAlt": null
+    },
+    {
+      "file": "statistics-annual-2025.pdf",
+      "kind": "attachment",
+      "label": "傳染病統計暨監視年報 2025 年",
+      "mime": "application/pdf",
+      "bytes": 762,
+      "sha256": "4f14a8207371073dc45a785b3c079f306b3f0e59a05d1df3d3537680b385714a",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "type-from-manifest",
+        "severity": "info",
+        "message": "清單對應的新站型別是 publication（publication.statistics-annual-2025），草稿直接建成 publication，看不出來的欄位以「（待補）」佔位"
+      },
+      {
+        "code": "periodical-issues",
+        "severity": "info",
+        "message": "附件是 6 期期刊、最新 2025 年；期別不是版次，不拆版次鏈，各期附件留在本筆"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/MPage/awMzKEQ9hVCtOWGFPHydj2",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "publication.statistics-annual-2025"
+    ]
+  }
+}

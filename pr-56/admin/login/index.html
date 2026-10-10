@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-TW" dir="ltr" data-base="/new_cdc_prototype/preview/pr-56" data-lang-path="" data-view="admin">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>登入（內容管理後台）</title>
+<meta name="description" content="登入：疾管署 AI-ready 新官網原型之內容管理後台示範頁">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/tokens.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/base.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/components.css">
+<link rel="stylesheet" href="/new_cdc_prototype/preview/pr-56/assets/styles/admin.css">
+</head>
+<body class="adm adm-login" data-today="2026-10-01" data-admin-page="login">
+<a class="skip-link" href="#main">跳到主要內容</a>
+<header class="adm-top"><div class="adm-top__in">
+  <a class="adm-brand" href="/new_cdc_prototype/preview/pr-56/admin/"><strong>內容管理後台</strong><span>疾管署 AI-ready 新官網原型 · 示範</span></a>
+  <div class="adm-who" id="adm-who">
+    <span class="adm-who__id"><span class="adm-who__name" id="adm-who-name">尚未登入</span><span class="adm-who__role" id="adm-who-role"></span></span>
+    
+  </div>
+</div></header>
+
+<div class="adm-demo" role="note">示範原型：此後台不連接任何正式系統；登入與所有操作只存在你的瀏覽器（localStorage），正式環境以機關 SSO 登入、一律走 Git Pull Request。</div>
+<main id="main" class="adm-main" tabindex="-1">
+<header class="adm-pagehead"><h1>後台登入</h1><p class="adm-pagehead__what">內容管理後台只給署內同事使用。正式環境以<strong>機關單一簽入（SSO）＋雙因子</strong>登入，不另設帳號密碼；登入後的單位與角色由人事／AD 群組帶入，不是在這裡自己選。</p>
+<p class="adm-pagehead__flow"><strong>原型示範：</strong>這頁沒有後端，下面「選一個示範帳號」等於模擬 SSO 回傳的身分；身分只存在你的瀏覽器，8 小時或閒置 30 分鐘後失效。設計說明見 <a href="/new_cdc_prototype/preview/pr-56/guide/">使用說明</a> 與 <code>docs/admin-auth.md</code>。</p></header>
+<div class="adm-login__grid">
+<section class="adm-card adm-login__sso" aria-labelledby="lg-sso"><h2 id="lg-sso">1. 機關 SSO 登入（模擬）</h2>
+  <p class="adm-card__sub">正式環境：按下去會被導到機關的身分提供者（IdP）登入並完成雙因子驗證，再帶著簽章過的身分回到後台。這裡用示範帳號代替 IdP 的回應。</p>
+  <ol class="adm-login__steps" aria-label="正式環境登入流程"><li>導向機關 IdP</li><li>帳號密碼＋第二因子</li><li>IdP 回傳身分（姓名、員編、單位、群組）</li><li>後台對照群組 → 角色，開始工作階段</li></ol>
+  <form id="lg-form" class="adm-login__accounts" aria-label="選一個示範帳號">
+    <fieldset class="adm-fieldset"><legend>示範帳號（姓名已遮罩）</legend>
+    <label class="adm-login__acct"><input type="radio" name="acct" value="demo-001" checked>
+      <span class="adm-login__acct-main"><strong>王○安</strong> · 承辦人<br><span class="adm-muted">急性傳染病組</span></span>
+      <span class="adm-login__acct-roles"><span class="adm-tag">承辦人</span></span></label><label class="adm-login__acct"><input type="radio" name="acct" value="demo-002" >
+      <span class="adm-login__acct-main"><strong>林○慧</strong> · 科長<br><span class="adm-muted">急性傳染病組</span></span>
+      <span class="adm-login__acct-roles"><span class="adm-tag">承辦人</span><span class="adm-tag">複核者</span></span></label><label class="adm-login__acct"><input type="radio" name="acct" value="demo-003" >
+      <span class="adm-login__acct-main"><strong>陳○宏</strong> · 承辦人<br><span class="adm-muted">疫情中心</span></span>
+      <span class="adm-login__acct-roles"><span class="adm-tag">承辦人</span><span class="adm-tag">疫情發布</span></span></label><label class="adm-login__acct"><input type="radio" name="acct" value="demo-004" >
+      <span class="adm-login__acct-main"><strong>張○玲</strong> · 內容總編輯<br><span class="adm-muted">公關室</span></span>
+      <span class="adm-login__acct-roles"><span class="adm-tag">承辦人</span><span class="adm-tag">複核者</span><span class="adm-tag">內容總編輯</span></span></label><label class="adm-login__acct"><input type="radio" name="acct" value="demo-005" >
+      <span class="adm-login__acct-main"><strong>李○翰</strong> · 治理幕僚<br><span class="adm-muted">AI推動辦公室</span></span>
+      <span class="adm-login__acct-roles"><span class="adm-tag">治理幕僚</span><span class="adm-tag">複核者</span></span></label><label class="adm-login__acct"><input type="radio" name="acct" value="demo-006" >
+      <span class="adm-login__acct-main"><strong>吳○瑜</strong> · 平台管理<br><span class="adm-muted">資訊室</span></span>
+      <span class="adm-login__acct-roles"><span class="adm-tag">平台管理</span></span></label><label class="adm-login__acct"><input type="radio" name="acct" value="demo-007" >
+      <span class="adm-login__acct-main"><strong>黃○婷</strong> · 承辦人<br><span class="adm-muted">人事室</span></span>
+      <span class="adm-login__acct-roles"><span class="adm-tag">承辦人</span></span></label><label class="adm-login__acct"><input type="radio" name="acct" value="demo-008" >
+      <span class="adm-login__acct-main"><strong>劉○君</strong> · 承辦人<br><span class="adm-muted">秘書室</span></span>
+      <span class="adm-login__acct-roles"><span class="adm-tag">承辦人</span><span class="adm-tag">複核者</span></span></label>
+    </fieldset>
+    <p class="adm-login__actions"><button type="submit" class="adm-btn" id="lg-sso-btn">以機關 SSO 登入（模擬）</button> <span class="adm-muted" id="lg-next-note"></span></p>
+  </form>
+</section>
+<section class="adm-card" aria-labelledby="lg-manual"><h2 id="lg-manual">2. 自訂示範身分</h2>
+  <p class="adm-card__sub">要測某個單位或角色組合時用。正式環境<strong>沒有</strong>這個表單：單位與角色一律由 AD 群組決定，使用者不能自己改。</p>
+  <form id="lg-manual-form" class="adm-login__manual">
+    <div class="adm-field"><label for="lg-name">姓名（顯示用，建議遮罩，例：王○安）</label><input type="text" id="lg-name" maxlength="20" value="示範○員"></div>
+    <div class="adm-field"><label for="lg-unit">單位</label><select id="lg-unit"><option value="unit.pr">公關室</option><option value="unit.it">資訊室</option><option value="unit.oasis">AI推動辦公室</option><option value="unit.epidemic-intelligence">疫情中心</option><option value="unit.acute-infectious">急性傳染病組</option><option value="unit.chronic-infectious">慢性傳染病組</option><option value="unit.preparedness">新興傳染病整備組</option><option value="unit.infection-control">感染管制及生物安全組</option><option value="unit.quarantine">檢疫組</option><option value="unit.lab">檢驗及疫苗研製中心</option><option value="unit.planning">企劃組</option><option value="unit.secretariat">秘書室</option><option value="unit.personnel">人事室</option><option value="unit.ethics">政風室</option><option value="unit.preventive-medicine">預防醫學辦公室</option><option value="unit.accounting">主計室</option><option value="unit.regional-taipei">臺北區管制中心</option><option value="unit.regional-northern">北區管制中心</option><option value="unit.regional-central">中區管制中心</option><option value="unit.regional-southern">南區管制中心</option><option value="unit.regional-kaoping">高屏區管制中心</option><option value="unit.regional-eastern">東區管制中心</option><option value="unit.governance-committee">資料治理委員會</option></select></div>
+    <fieldset class="adm-fieldset"><legend>角色（可複選）</legend><div class="adm-pills"><label class="adm-pill"><input type="checkbox" name="role" value="editor" checked><span>承辦人</span></label><label class="adm-pill"><input type="checkbox" name="role" value="reviewer" ><span>複核者</span></label><label class="adm-pill"><input type="checkbox" name="role" value="situation-publisher" ><span>疫情發布</span></label><label class="adm-pill"><input type="checkbox" name="role" value="chief-editor" ><span>內容總編輯</span></label><label class="adm-pill"><input type="checkbox" name="role" value="governance" ><span>治理幕僚</span></label><label class="adm-pill"><input type="checkbox" name="role" value="platform" ><span>平台管理</span></label></div>
+    <ul class="adm-login__roledesc"><li><strong>承辦人</strong>：上架、修改自己單位的內容；看自己單位的待辦與審閱到期</li><li><strong>複核者</strong>：複核同單位送出的內容（科長／審核人）；通常同時是承辦人</li><li><strong>疫情發布</strong>：發布首頁疫情態勢（疫情中心）</li><li><strong>內容總編輯</strong>：跨單位看全部內容與複核區（公關室）</li><li><strong>治理幕僚</strong>：治理規則、AI 白名單、評估、AI 開關（OASIS）</li><li><strong>平台管理</strong>：平台、帳號與稽核紀錄、AI 緊急開關（資訊室）</li></ul></fieldset>
+    <p class="adm-login__actions"><button type="submit" class="adm-btn adm-btn--ghost">以此身分進入（模擬）</button></p>
+  </form>
+</section>
+<section class="adm-card" aria-labelledby="lg-rules"><h2 id="lg-rules">誰能進哪些頁</h2>
+  <p class="adm-card__sub">最小權限：只有會改到全站行為或牽涉治理判斷的頁才限制角色；其餘頁任何已登入同事都能看，但<strong>只看得到自己單位</strong>的內容。能切換到別的單位或全部單位的角色：內容總編輯、治理幕僚、平台管理。</p>
+  <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><thead><tr><th scope="col">後台頁</th><th scope="col">允許的角色</th></tr></thead><tbody>
+  <tr><td>複核區</td><td>複核者、內容總編輯、治理幕僚</td></tr><tr><td>疫情發布</td><td>疫情發布、治理幕僚</td></tr><tr><td>AI 開關</td><td>平台管理、治理幕僚</td></tr><tr><td>評估</td><td>治理幕僚、平台管理、內容總編輯</td></tr><tr><td>詞彙主檔</td><td>治理幕僚、承辦人、複核者、內容總編輯、平台管理、疫情發布</td></tr>
+  <tr><td>其他後台頁</td><td>任何已登入角色（限自己單位）</td></tr></tbody></table></div>
+</section>
+<section class="adm-card" aria-labelledby="lg-audit"><h2 id="lg-audit">最近的登入稽核（本機示範）</h2>
+  <p class="adm-card__sub">正式環境：登入、登出、被拒絕的存取、切換單位視角，都寫到集中式稽核日誌（資訊室保管，使用者不能刪），保存至少一年。這裡只存在你的瀏覽器，最多 200 筆。</p>
+  <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table" id="lg-audit-table"><thead><tr><th scope="col">時間</th><th scope="col">事件</th><th scope="col">誰</th><th scope="col">單位</th><th scope="col">說明</th></tr></thead><tbody></tbody></table></div>
+  <p class="adm-empty" id="lg-audit-empty">尚無紀錄。</p>
+  <p><button type="button" class="adm-btn adm-btn--ghost" id="lg-audit-clear">清除本機稽核（示範）</button></p>
+</section>
+</div>
+<script type="application/json" id="lg-accounts">[{"sub":"demo-001","name":"王○安","title":"承辦人","unit":"unit.acute-infectious","roles":["editor"]},{"sub":"demo-002","name":"林○慧","title":"科長","unit":"unit.acute-infectious","roles":["editor","reviewer"]},{"sub":"demo-003","name":"陳○宏","title":"承辦人","unit":"unit.epidemic-intelligence","roles":["editor","situation-publisher"]},{"sub":"demo-004","name":"張○玲","title":"內容總編輯","unit":"unit.pr","roles":["editor","reviewer","chief-editor"]},{"sub":"demo-005","name":"李○翰","title":"治理幕僚","unit":"unit.oasis","roles":["governance","reviewer"]},{"sub":"demo-006","name":"吳○瑜","title":"平台管理","unit":"unit.it","roles":["platform"]},{"sub":"demo-007","name":"黃○婷","title":"承辦人","unit":"unit.personnel","roles":["editor"]},{"sub":"demo-008","name":"劉○君","title":"承辦人","unit":"unit.secretariat","roles":["editor","reviewer"]}]</script>
+<script type="application/json" id="lg-units">{"unit.director":"署長室","unit.pr":"公關室","unit.it":"資訊室","unit.oasis":"AI推動辦公室","unit.epidemic-intelligence":"疫情中心","unit.acute-infectious":"急性傳染病組","unit.chronic-infectious":"慢性傳染病組","unit.preparedness":"新興傳染病整備組","unit.infection-control":"感染管制及生物安全組","unit.quarantine":"檢疫組","unit.lab":"檢驗及疫苗研製中心","unit.planning":"企劃組","unit.secretariat":"秘書室","unit.personnel":"人事室","unit.ethics":"政風室","unit.preventive-medicine":"預防醫學辦公室","unit.accounting":"主計室","unit.regional-taipei":"臺北區管制中心","unit.regional-northern":"北區管制中心","unit.regional-central":"中區管制中心","unit.regional-southern":"南區管制中心","unit.regional-kaoping":"高屏區管制中心","unit.regional-eastern":"東區管制中心","unit.governance-committee":"資料治理委員會"}</script></main>
+<footer class="adm-foot"><a href="/new_cdc_prototype/preview/pr-56/">回前台首頁</a><a href="/new_cdc_prototype/preview/pr-56/v1/catalog.json">目錄 API（/v1/catalog.json）</a><a href="/new_cdc_prototype/preview/pr-56/guide/">使用說明</a><span>建置日 2026-10-01</span></footer>
+<script type="module" src="/new_cdc_prototype/preview/pr-56/assets/js/admin/common.js"></script>
+<script type="module" src="/new_cdc_prototype/preview/pr-56/assets/js/admin/login.js"></script>
+</body>
+</html>

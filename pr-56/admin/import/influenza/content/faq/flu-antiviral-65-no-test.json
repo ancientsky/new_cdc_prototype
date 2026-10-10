@@ -1,0 +1,75 @@
+{
+  "id": "faq.flu-antiviral-65-no-test",
+  "type": "faq",
+  "title": "65 歲以上長輩有類流感症狀，一定要快篩陽性才能用公費抗病毒藥嗎？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2025-12-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "不需要。依「公費流感抗病毒藥劑使用對象」（全年適用）第 4 條，未滿 5 歲及 65 歲以上之類流感患者，經醫師診察研判符合即可開立公費抗病毒藥劑，不需流感快篩；孕婦、住院、高風險慢性病等其他全年適用對象也一樣不需快篩。",
+  "question": "65 歲以上長輩有類流感症狀，一定要快篩陽性才能用公費抗病毒藥嗎？",
+  "answerMarkdown": "不需要。依「公費流感抗病毒藥劑使用對象」（全年適用）第 4 條，**未滿 5 歲及 65 歲以上之類流感患者，經醫師診察研判符合即可開立公費抗病毒藥劑，不需流感快篩**；孕婦、住院、高風險慢性病等其他全年適用對象也一樣不需快篩。\n\n另外，2026 年 8 月 24 日至 10 月 31 日（依致醫界通函第 616 號延長），有類流感症狀且屬 7 類流感高傳播族群者（醫療防疫人員、長照機構、托育人員與學生、高風險同住者、禽畜業、人口密集機構）也可由醫師直接開立，同樣不需快篩。現行規定請以疾管署最新公告為準。",
+  "tasks": [
+    "symptoms"
+  ],
+  "basedOn": [
+    "disease.influenza"
+  ],
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/Zfg30duS6fEOkNhHjVRix8"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 123 處（mso 樣式 81、Mso 類別 29、命名空間標籤 21）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「流感／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（流感）"
+      },
+      {
+        "code": "manifest-derived",
+        "severity": "info",
+        "message": "對到的是模板推導項 qa-list（清單只寫例外），結果列在 migration-patch.json 的 derivedItems，不寫回清單"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「今年公費流感疫苗誰可以打？什麼時候開始？」從答案抽出結構化候選 {\"ageYears\":65,\"months\":6}，請確認後保留或刪除"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「65 歲以上長輩有類流感症狀，一定要快篩陽性才能用公費抗病毒藥嗎？」→ symptoms；「流感疫苗和新冠疫苗可以同一天打嗎？」→ vaccines；「得了流感，出現哪些狀況要馬上就醫？」→ symptoms；「流感疫苗去年打過了，今年還要再打嗎？」→ vaccines；「今年公費流感疫苗誰可以打？什麼時候開始？」→ vaccines；「流感和一般感冒要怎麼分辨？」→ symptoms；「哪些人可以使用公費流感抗病毒藥劑？」→ symptoms；「什麼是「流感併發重症」？」→ symptoms；「公費流感疫苗要去哪裡打？要帶什麼？」→ vaccines；「「類流感門急診就診率」是什麼意思？」→ data"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/Zfg30duS6fEOkNhHjVRix8",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.flu-antiviral-65-no-test"
+    ]
+  }
+}

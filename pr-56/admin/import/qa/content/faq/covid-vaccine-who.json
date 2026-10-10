@@ -1,0 +1,77 @@
+{
+  "id": "faq.covid-vaccine-who",
+  "type": "faq",
+  "title": "今年新冠疫苗誰可以打公費？要打幾劑？",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2023-05-01",
+  "reviewedAt": "2026-10-03",
+  "reviewPeriodMonths": 6,
+  "status": "review",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.covid-19"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "依 2026 年 9 月修訂的「新冠疫苗接種建議（2026–2027 年度）」：",
+  "question": "今年新冠疫苗誰可以打公費？要打幾劑？",
+  "answerMarkdown": "依 2026 年 9 月修訂的「新冠疫苗接種建議（2026–2027 年度）」：\n\n- **6 個月以上民眾**自 2026 年 10 月 1 日起可接種 1 劑公費新冠疫苗，與前一劑間隔至少 12 週。\n- **65 歲以上長者與中重度免疫不全者**，在本年度第 1 劑後間隔 6 個月，可再接種 1 劑。\n\n去年度（2025–2026）的建議沒有「再接種 1 劑」的規定，請以現行版為準。",
+  "tasks": [
+    "vaccines"
+  ],
+  "basedOn": [
+    "disease.covid-19"
+  ],
+  "structured": {
+    "months": 6,
+    "doses": 1,
+    "weeks": 12,
+    "ageYears": 65
+  },
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/QAPage/BvAeVrOkFy2tQv8lwkcQXM"
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 1,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 31 處（mso 樣式 19、Mso 類別 8、命名空間標籤 6）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「新冠併發重症／Q&A」沒有對應規則，權責單位依疾病主檔取 unit.acute-infectious（新冠併發重症）"
+      },
+      {
+        "code": "structured-from-text",
+        "severity": "info",
+        "message": "「今年新冠疫苗誰可以打公費？要打幾劑？」從答案抽出結構化候選 {\"months\":6,\"doses\":1,\"weeks\":12,\"ageYears\":65}，請確認後保留或刪除"
+      },
+      {
+        "code": "tasks-from-keywords",
+        "severity": "info",
+        "message": "tasks 依題目關鍵字給：「新冠確診後，誰可以使用公費口服抗病毒藥？」→ symptoms；「今年新冠疫苗誰可以打公費？要打幾劑？」→ vaccines；「流感疫苗和新冠疫苗可以同一天打嗎？」→ vaccines"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/QAPage/BvAeVrOkFy2tQv8lwkcQXM",
+    "convertedAt": "2026-10-05T02:30:00Z",
+    "existing": true,
+    "compareWith": [
+      "faq.covid-vaccine-who"
+    ],
+    "structuredFromText": true
+  }
+}
