@@ -128,3 +128,20 @@ npm run build
 - 拆頁的好處（單頁比較快）在這個大小（一份 114 頁的指引，HTML 約 300 KB）不明顯。若日後有上千頁的手冊，再考慮每章一頁。
 
 **其他長文件**：手冊、指引只要有 `sections[].pages`（PDF 轉來的都有），或段落達 12 段，就會套用；分章規則是段落 key 的 `ch{N}` 前綴與 `annex-` 前綴（PDF 轉檔工具產生的 key 就是這個格式），其他 key 各自成一組。人工撰寫的長文件若想分章，段落 key 照 `ch1`、`ch1-s1`、`ch1-s2` 命名即可。
+
+## 9. 沒有 PDF 正本時：重建版（第二十八輪，傳染病核心教材）
+
+**情境**：Issue #38 要示範「核心教材」怎麼進新站，但開發環境連不到疾管署網站，教材 PDF 一份都拿不到。只有公開搜尋看得到的零星摘錄，以及站內已經轉入的 2026 年 2 月版登革熱工作指引。
+
+**不能做的事**：憑印象寫一份「看起來像教材」的內容。教材給醫事人員用，答案引擎會引用它；一個編出來的天數或劑量，比空白危險得多。
+
+**做法：重建版**（`scripts/curriculum-to-doc.mjs`，純函式在 `scripts/lib/curriculum.mjs`）
+
+1. 在 `data/curriculum/{疾病}.source.json` 逐句寫重點，**每句都標出處代號**（`src: "A"`、`at: "第 3 頁"`），代號對到同檔的 `sources`：站內內容 id（`ref`）、舊站網址、搜尋摘錄；每個來源記查證狀態（`unverified`／`unreachable`）與取得日。
+2. 找不到出處的地方寫 `pending`，輸出成「（待補：…）」。登革熱的第六章（治療）整章是待補——已匯入的工作指引沒有治療章節，我們就不寫。
+3. 轉成和 PDF 轉檔同一個形狀的文件 JSON：段落 key `ch{N}`／`ch{N}-s{M}`（長文件版面直接套用）、`machineReadableMarkdown`、`derivedFrom`（`sourceKind: reconstructed`、`reviewStatus: machine`、`sources[]`、`sha256` 是來源檔的雜湊）。文末一段「資料來源與查證狀態」表（不入索引）。
+4. schema 擋兩件事：`sourceKind: reconstructed` 時 `reviewStatus` **只能是 `machine`**、`sources` 必填——重建版永遠不能被標成「已校對」。
+
+**系統怎麼對待重建版**：和未校對的 PDF 轉檔一樣不進 AI 白名單（專業版仍可檢索，排序降權）；來源卡改寫成「尚未取得 PDF 正本：依公開摘錄與站內內容重建的示範版，未經權責單位查證」；文件頁頂端一個警示框連到來源表；治理待辦的文字是「提供 PDF 正本、轉檔、刪除重建版」（不是「校對完改 reviewed」）。索引時「（待補：…）」與「對照：…」導覽行不進答案單元，學習目標另成一個單元（`#objectives`）。
+
+**拿到 PDF 正本之後**：照本文件第 2～4 節用 `scripts/pdf-to-md.mjs` 轉出，沿用同一個 `family`（例如 `doc.curriculum-dengue`），然後**刪除重建版**的 JSON 與來源檔。不要用 `supersedes` 把正式版接在重建版後面：重建版不是教材真的某一版，串進版本鏈會讓文件頁出現假的「前版」與「本版異動」。步驟見 [guide-staff.md](guide-staff.md) 第 31 節。

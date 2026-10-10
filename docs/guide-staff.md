@@ -1285,3 +1285,40 @@ npm run build && node scripts/serve.mjs       # 啟動後，/subscribe/ 會自�
 | 疾管署文件 <https://www.cdc.gov.tw/En/File/Get/M2TpHNnBcWt7xWT20loe4w> | 唯一產製並持有藥證（佐證） |
 | 康健 <https://www.commonhealth.com.tw/article/88335>、TVBS <https://news.tvbs.com.tw/health/4024917>、關鍵評論網 <https://www.thenewslens.com/article/164931> | 醫師說法：不綁止血帶、夾板固定、不抬高患肢（第二手資料） |
 | 臺北榮總毒藥物防治諮詢中心簡介（PDF，見 `topic.antivenom` 的 `verification.sources`） | 24 小時諮詢（電話未列） |
+
+## 31. 核心教材：怎麼上架新版、怎麼讓智慧查詢引用到章節（第二十八輪）
+
+「傳染病核心教材」是給醫事與防疫人員的教學用教材（舊站「首頁／專業人員／傳染病核心教材」，各疾病一份 PDF）。新站把它做成文件的一種：`docType: curriculum`。上架後會出現在三個地方：
+
+- 文件頁（長文件版面）：頂端列**學習目標**，接著依章節排，章節可展開收合。
+- 疾病頁專業版的「核心教材」區塊，以及 `/pro/` 首頁的教材卡、`/pro/curriculum/` 總覽（總覽也列出移轉清單裡「舊站有、還沒匯入」的教材與權責單位）。
+- 智慧查詢的**專業版**：每一節是一個答案單元，學習目標也是一個單元；民眾版不會引用教材。
+
+### 31.1 目前上架的是「示範匯入版」，不是教材原文
+
+登革熱、麻疹兩份是第二十八輪的示範：開發環境拿不到教材 PDF，所以內容是**重建版**——每一句都標出處（多數摘自站內已匯入的 2026 年 2 月版登革熱工作指引第幾頁、或站內的麻疹內容），找不到出處的地方寫「（待補：…）」，文末有「資料來源與查證狀態」表。頁面頂端有黃色警示「示範匯入，不是教材原文」。學習目標與章節架構是本站擬的（`chapterPlan: provisional`），**請權責單位對照教材原文確認**。
+
+後台待辦會出現「…是沒有 PDF 正本時的重建版…請提供 PDF 正本」——這一條要等正本來才能消掉，不能靠「校對完改 reviewed」消掉（系統不允許）。
+
+### 31.2 拿到教材 PDF 正本時怎麼上架（請資訊室或 OASIS 協助執行指令）
+
+1. 把 PDF 交給 OASIS，用 PDF 轉檔工具轉出分章機讀版（[pdf-ingest.md](pdf-ingest.md) 第 2～4 節）。文件 `id` 用 `doc.curriculum-{疾病}.{生效日}`，`family` **沿用** `doc.curriculum-{疾病}`。
+2. 補教材欄位：`docType: "curriculum"`、`learningObjectives`（照教材寫的學習目標，一條一句）、`roles`（對象：醫師、護理、檢驗、感管、地方衛生單位）、`diseases`、`curriculum.edition`（教材自己的版次寫法，例如「11401版」）、`curriculum.chapterPlan: "confirmed"`。
+3. 段落 key 照 `ch1`、`ch1-s1`、`ch1-s2` 命名（轉檔工具會這樣產生）；**每一節就是智慧查詢可以引用的一個單位**，節太長（超過一頁）會再依頁碼切。所以章節切得清楚，答案就引得準。
+4. 權責單位抽查校對後把 `derivedFrom.reviewStatus` 改成 `reviewed`（第 20 節），才會進 AI 白名單。
+5. **刪除重建版**：刪掉 `content/documents/curriculum-{疾病}.2026-10-10.json` 與 `data/curriculum/{疾病}.source.json`。不要把正式版的 `supersedes` 指向重建版——重建版不是教材真的某一版，串起來會讓文件頁出現假的「前版」與「本版異動」。
+6. 改移轉清單 `content/migration/core-curriculum.json` 該筆的 `target`，核對舊網址後 `verified: true`。
+7. 跑 `node scripts/build.mjs --check`，評估集要全對。**加一份教材可能讓不相干的題目失敗**：第二十八輪實測，登革熱教材原標題「登革熱防治核心教材」讓「登革熱防治工作指引現行版是第幾版？」引不到工作指引（詳見 legacy-import.md 10.13 第 5 點）。失敗時把結果交給 OASIS，不要為了過關改題目。
+
+### 31.3 寫教材內容時，讓智慧查詢引得好的小原則
+
+- **一節講一件事**，節標題寫具體（「潛伏期與可感染期」比「流行病學（二）」好）：答案會帶「教材 · 第三章 流行病學 · 潛伏期與可感染期」這樣的引用標籤。
+- **數字、天數寫在句子裡**（「發病前 1 天至發病後 5 天」），不要只放在圖表：圖表裡的字機器讀不到。
+- **別份文件的全名不要在每一節重複**：要對照時寫一次在文末，或用「出處 A」這種代號。教材大量重複「某某工作指引」，問那份指引的題目會被教材搶走。
+- 還沒寫的地方用「（待補：…）」佔位，系統會排除它，不會被當成答案。
+
+### 31.4 沒有正本、只能示範時（例如做簡報或測試）
+
+用重建版工具：在 `data/curriculum/{疾病}.source.json` 逐句寫，每句標出處代號，再跑
+`node scripts/curriculum-to-doc.mjs data/curriculum/{疾病}.source.json --out content/documents/curriculum-{疾病}.{日期}.json`。
+規則只有一條：**找不到出處就寫待補，不憑印象寫數字**。細節見 [pdf-ingest.md](pdf-ingest.md) 第 9 節。

@@ -1,0 +1,10 @@
+{
+  "format": "cdc-legacy-export/1",
+  "simulated": true,
+  "exportedAt": "2026-10-10",
+  "site": "https://www.cdc.gov.tw",
+  "batch": "core-curriculum",
+  "pages": 5,
+  "source": "模擬匯出：傳染病核心教材（列表頁 1 頁＋疾病教材頁 4 頁）。標題、附件檔名與日期取自公開搜尋摘錄、未查證；頁面網址 ID 是示意值（只有麻疹教材 PDF 的 /File/Get/ 網址是搜尋結果出現過的真網址）；附件 PDF 是示意檔，不是教材內容。正式匯出取代整個目錄即可。",
+  "generator": "scripts/lib/legacy-import/sim-export-curriculum.mjs"
+}

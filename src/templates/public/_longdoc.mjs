@@ -13,9 +13,12 @@
 // <details> 沒有 JavaScript 也能用（螢幕報讀器會念「已收合／已展開」），Chrome 連到收合區塊裡的錨點也會自動展開。
 import { html, raw } from '../../../scripts/lib/render.mjs';
 
-/** 要不要用長文件版面：有頁碼範圍（PDF 轉來）或段落很多。短文件（5～10 段的病例定義、建議）維持原樣。 */
-export function isLongDoc(sections = []) {
-  return sections.some((s) => Array.isArray(s.pages)) || sections.length >= 12;
+/**
+ * 要不要用長文件版面：有頁碼範圍（PDF 轉來）或段落很多。短文件（5～10 段的病例定義、建議）維持原樣。
+ * 第二十八輪：核心教材（doc.docType === 'curriculum'）一律套用——教材是「分章讀」的文件，就算章節少也要章節卡與收合。
+ */
+export function isLongDoc(sections = [], doc = null) {
+  return doc?.docType === 'curriculum' || sections.some((s) => Array.isArray(s.pages)) || sections.length >= 12;
 }
 
 const segs = (heading) => String(heading ?? '').split(' · ').map((x) => x.trim()).filter(Boolean);

@@ -1272,3 +1272,84 @@ Result = {ok:true, …body} | {ok:false, error:'invalid'|'rate'|'expired'|'notfo
 ### 32.6 留給權責單位
 
 逐字核對五要五不（尤其「包紮傷口上緣」的鬆緊）、「不綁止血帶、患肢固定、不必抬高」（目前出自醫師受訪的媒體報導）是否納入官方建議、儲備院所家數與查詢系統網址、毒藥物防治諮詢中心電話、4 種血清的藥證品名寫法、儲備調度的分工、專業版是否補臨床使用說明、英文與東南亞語版本（`languages` 目前只有中文）。全部確認後把 5 筆內容的 `verification.status` 改 `confirmed` 並填 `confirmedBy`／`confirmedAt`，頁首警示與待辦自動消失。
+
+## 33. 第二十八輪（2026-10-10）：傳染病核心教材示範匯入
+
+Issue #38（Yulun）：舊站「首頁／專業人員／傳染病核心教材」是必移轉項目，要示範幾種疾病的教材怎麼進新站、怎麼在疾病頁與專業版呈現、怎麼讓專業版智慧查詢引用到章節。**限制**：開發環境連不到 www.cdc.gov.tw，教材 PDF 一份都沒有取得；搜尋只看得到零星摘錄。所以本輪的重點是「模型與流程」，內容是可查證的示範，不是教材原文。
+
+### 33.1 選了哪兩種病、為什麼
+
+| 疾病 | 為什麼選 | 內容從哪裡來 |
+| --- | --- | --- |
+| 登革熱 | 站內已匯入**真的**《登革熱/屈公病防治工作指引》2026 年 2 月版（第十九輪 PDF 轉檔），教材七章中六章能找到逐頁出處；舊站頁面與檔名（「2025-04-登革熱防治核心教材.pdf」）有搜尋摘錄 | 29 句有出處（多數是工作指引第 3、4、5、19、21–22、24、36、43、55 頁），6 處待補（治療整章待補：指引沒有治療章節） |
+| 麻疹 | 搜尋找到教材 PDF 的**真網址**（`/File/Get/eH0KllYdi__tvUdV8al0lA`）；站內麻疹內容最多（疾病頁、病例定義、接觸者追蹤、檢驗項目），可以示範「出處是原型示意內容」時怎麼標 | 22 句有出處，7 處待補（致病原整章待補）；出處多為原型內容，來源表逐條標「原型示意」 |
+
+沒選新型A型流感、鼠疫：搜尋只看到教材檔名（「新型A型流感_核心教材-11401版.pdf」「鼠疫核心教材_1140318.pdf」），站內也沒有可引用的句子，硬做只會變成空殼。它們列在移轉清單 `content/migration/core-curriculum.json` 為 pending（權責單位新興傳染病整備組），`/pro/curriculum/` 會顯示「舊站其他核心教材（尚未匯入）」。
+
+### 33.2 內容模型：document 的一種（`docType: curriculum`），不是新型別
+
+**決定**：教材是 `document` 型別、`docType: "curriculum"`。
+**為什麼不另開型別**：教材需要的東西——版本鏈（`family`／`effectiveAt`／`isCurrent`）、權責單位與審閱週期、PDF 轉檔與 `derivedFrom`、長文件版面、分章答案單元、引用標籤——document 全部都有；另開型別要把這些複製一份，治理規則也要各寫一遍。
+
+`schemas/document.json` 新增（其他型別不受影響）：
+
+| 欄位 | 用途 |
+| --- | --- |
+| `learningObjectives[]` | 學習目標（一條一句）；文件頁頂端列出、答案引擎另成一個單元 |
+| `curriculum.series`／`edition`／`chapterPlan` | 系列（傳染病核心教材）、教材自己的版次寫法（檔名上的「11401版」，`version` 仍是新站版本鏈用的）、章節架構是否已與原文核對（`provisional`／`confirmed`） |
+| `docType: curriculum` 的條件 | 必填 `learningObjectives`、`roles`、`diseases`（至少 1）；`audience` 必含 `professional` |
+| `derivedFrom.sourceKind: reconstructed` | 沒有 PDF、由有出處的句子重建；**`reviewStatus` 只能是 `machine`**、`sources[]` 必填（每個來源：label、url 或站內 `ref`、kind、status、accessedAt、note） |
+
+既有欄位的用法：`owner` 依疾病主檔（登革熱、麻疹都是 `unit.acute-infectious`，已對 `content/master/units.json` 與 `diseases.json` 核對）；`roles` 是對象（醫師、護理、檢驗、感管、地方衛生）；`license` OGDL-1.0 加 `licenseNote`（教材內第三方圖表以 PDF 標示為準，待確認）；`reviewPeriodMonths` 12；`basedOn` 指向出處文件的家族（登革熱 → `doc.guidance-dengue`）或疾病（麻疹 → `disease.measles`），出處改版時本頁會被標「依據正本已修訂」。
+
+**版次怎麼寫（踩過的坑）**：一開始把登革熱教材建成「2025 年 4 月版、發布 2025-04-18」（舊站檔名的版次），結果治理的 `predatesBasis`（發布日早於依據正本生效日）把它整份排除在專業索引外——而且這樣寫也不誠實：內容引的是 2026 年 2 月版指引，不是 2025 年 4 月的教材。改成 `version: "示範匯入版"`、`effectiveAt`／`publishedAt`／`reviewedAt` 都是示範匯入日 2026-10-10，舊站版次寫進 `curriculum.edition` 並註明「本頁不是該版內容」。
+
+### 33.3 重建版產生器
+
+`scripts/curriculum-to-doc.mjs`（CLI）＋ `scripts/lib/curriculum.mjs`（純函式，無 import）：`data/curriculum/{疾病}.source.json` → `content/documents/curriculum-{疾病}.2026-10-10.json`。每句 `{ text, src: 來源代號, at: 頁碼 }`；`pending` 輸出「（待補：…）」；`see` 輸出「對照：[…](…)」導覽行；文末「資料來源與查證狀態」表（`index: false`）。輸出與 PDF 轉檔同形狀（`ch{N}`／`ch{N}-s{M}` 段落、`machineReadableMarkdown`、`derivedFrom`），`sha256` 是來源檔的雜湊，測試會重跑比對。詳見 docs/pdf-ingest.md 第 9 節。
+
+**正本來了怎麼辦**：`pdf-to-md.mjs` 轉出同家族正式版，**刪除**重建版（不用 `supersedes` 串：重建版不是教材真的某一版，串進鏈會產生假的「前版／本版異動」）。治理待辦（`pdf-unreviewed`，`scripts/lib/governance.mjs`）對重建版改寫文字為「提供 PDF 正本、轉檔、刪除重建版」，不是「校對完改 reviewed」（schema 也不允許）。
+
+### 33.4 呈現
+
+- **文件頁**（`src/templates/public/documents.mjs`＋新 `_curriculum.mjs`）：`isLongDoc` 對 curriculum 一律套長文件版面；頂端是重建版警示框（連到 `#s-sources`）、系列／教材版次／對象、`section#objectives` 學習目標；目錄多一個「學習目標」。
+- **疾病頁專業區**（`disease.mjs`）：新區塊 `#pro-curriculum`（`hub.pro.curriculum`），列該病教材卡（章數、待補處數、未查證標記），連到 `/pro/curriculum/`；一般文件清單排除教材，避免重複。
+- **/pro/**（`pro/home.mjs`）：教材卡；文件清單排除教材。
+- **/pro/curriculum/**（新 `src/templates/pro/curriculum.mjs`，zh-TW／en）：全部教材＋移轉清單 pending 的教材與權責單位＋承辦人怎麼上架（指向 guide-staff §31）。
+- 字串：`_curriculum.mjs` 自帶 zh-TW／en（教材只給專業人員）；共用的 `i18n.js` 只加 3 個 key（`documents.type.curriculum`、`hub.pro.curriculum` 七語、`hub.pro.curriculum.lead` 中英）。
+
+### 33.5 答案單元與引用
+
+`scripts/lib/index-builder.mjs`：
+
+- 教材只進**專業索引**（document 本來就是）；重建版的單元帶 `extraction.sourceKind: reconstructed`，來源卡（`src/client/answer/render.js`）顯示「尚未取得 PDF 正本：…請以疾管署 PDF 正本為準」。白名單外、排序 ×0.7、組句 −0.6 沿用第十九輪 machine 的處理。
+- 學習目標另成一塊 `{id}#objectives`（「學習目標 1：…」），連到文件頁 `#objectives`。
+- 每一節一塊（`#s-ch3-s2`）；`index: false` 的來源表不入索引。
+- 「（待補：…）」與「對照：…」行**不進答案單元**（`PENDING_TEST`）——佔位不是內容；導覽行全是別份文件的名字（見 33.6）。
+- 引用標籤：教材的「第三章」是章不是條，`section.no` 不推算，標籤寫〈第三章 流行病學 · 潛伏期與可感染期〉。**順帶發現、未修**：PDF 轉入的工作指引也被同一個 `sectionNo` 把「第六章」標成「第 6 條」；改成只認「條／點」後，標題裡引用的法條（「傳染病防治法第三十八條」）又會被當成指引自己的條次。兩種都不對，需要依文件類型決定條次來源，留給 OASIS 另案處理。
+
+### 33.6 評估集與 V011 的教訓
+
+評估集升 `2026.10-r10`（說明「r10 第二十八輪 核心教材」）：CUR001–CUR005（學習目標、可感染期、麻疹檢體、群聚解除、治療章待補不得被當答案）。評估器只比對**內容 id**（`judge.js` 的 `mustCite` 是 `contentId` 前綴），章節層級的引用在 `tests/round28-curriculum.test.mjs` 驗。
+
+**教訓**：加入登革熱教材後，不相干的版本題 V011「登革熱防治工作指引現行版是第幾版？」失敗（`build --check` 擋下）。查到的原因：教材原標題「登革熱**防治**核心教材」讓「熱防」這個詞在專業索引從 15 個單元變 28 個，IDF 下降，工作指引的段落掉出前 10 名；教材裡的出處全名與「對照」行也替「工作指引」這個詞灌水。這題的基準本來就薄（加教材前，工作指引也只是第 4 個來源）。處理：標題改用舊站頁面寫法「登革熱核心教材」、出處只寫代號、對照行不入索引；**沒有**改題目或降低標準。**給 OASIS**：「指名某份文件問版次」需要引擎層的處理（例如問句含文件名與「版」時優先該文件家族），否則每加一份大量引用別份文件的內容都可能再撞到。
+
+### 33.7 舊站匯入（第十二批）
+
+規則檔第 11 版新增 `docTypeStrongKeywords`（標題「核心教材」→ `curriculum`，蓋過 `/Category/DiseaseTeach/` 預設的 `guideline`）與 `curriculum` 預設欄位；匯入器替教材草稿補 `learningObjectives`（待補）、`roles`（預設）、`curriculum`（provisional）並記 `fields-pending`，家族統一 `doc.curriculum-{疾病}`。模擬匯出、清單、結果與教訓見 docs/legacy-import.md 10.13；`legacy-services.json` 的 `core-curriculum` 改 `merged` → `/pro/curriculum/`。
+
+### 33.8 來源與查證狀態（全部未查證）
+
+| 來源 | 狀態 |
+| --- | --- |
+| 站內 `doc.guidance-dengue.2026-02`（真指引，PDF 機器轉出、未校對） | 登革熱教材的主要出處 |
+| https://www.cdc.gov.tw/Category/MPage/O5l65bHP7CwFNJOsF7wXbA（重要指引及教材，登革熱） | 連不到；搜尋摘錄列「登革熱核心教材」、檔名與 2025/4/18，未能重現 |
+| https://www.cdc.gov.tw/Category/DiseaseTeach/R2tEUCtZUlRpUFJUbmRyT0gxSVlpZz09 | 連不到；推測 DiseaseTeach 是教材頁的網址模式 |
+| https://www.cdc.gov.tw/Category/MPage/mOqwmo-IyKx0ouTNWjuSgA（傳染病防治工作手冊） | 連不到 |
+| https://www.cdc.gov.tw/Uploads/files/201302/bf8b5d4a-6896-4115-8c20-adfe4b7914bb.pdf（2013 舊版登革熱教材） | 連不到；只用一句搜尋摘錄（標「搜尋摘錄未查證」） |
+| https://www.cdc.gov.tw/File/Get/eH0KllYdi__tvUdV8al0lA（麻疹核心教材.pdf） | 連不到；本頁沒有引用它的任何內容 |
+| https://www.cdc.gov.tw/File/Get/3TrzNnd9x6LiPghMDkRnyw（麻疹防治工作手冊.pdf） | 連不到 |
+| https://www.cdc.gov.tw/Disease/SubIndex/PZZIpHAC-pjbSdEdboTBCw（麻疹疾病頁） | 連不到；搜尋摘錄 |
+| 站內 `disease.measles`、`doc.case-definition-measles.2024-01-01`、`doc.measles-contact-tracing.2026-09-12`、`labtest.measles` | 原型內容／示意，數字未經權責單位確認 |
+
+**權責單位待辦**：提供兩份教材 PDF 正本（取得後依 guide-staff §31 轉檔、刪除重建版）；確認學習目標與章節架構；確認授權（第三方圖表）；回答系列統籌單位與舊站還有哪些疾病有教材。

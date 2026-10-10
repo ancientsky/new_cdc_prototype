@@ -1,0 +1,131 @@
+{
+  "id": "migration.core-curriculum",
+  "type": "migration",
+  "title": "傳染病核心教材（舊站）→ 新站文件型別 curriculum",
+  "owner": "unit.oasis",
+  "steward": "OASIS 承辦人（各教材權責單位逐筆確認）",
+  "publishedAt": "2026-10-10",
+  "reviewedAt": "2026-10-10",
+  "reviewPeriodMonths": 3,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "舊站「傳染病核心教材」逐份移轉對照（第二十八輪示範批次）：每種疾病的教材一頁（內文只有 PDF 下載連結），轉成新站 document（docType curriculum），列表頁由 /pro/curriculum/ 取代。登革熱、麻疹已有示範匯入版（未查證的重建版）；新型A型流感、鼠疫待移轉。全部 verified:false。",
+  "keywords": [
+    "移轉清單",
+    "核心教材",
+    "傳染病核心教材",
+    "教材",
+    "舊網址"
+  ],
+  "scope": {
+    "kind": "category",
+    "name": "傳染病核心教材"
+  },
+  "legacyRoot": "https://www.cdc.gov.tw/Category/List/{id}",
+  "showLegacyUntil": "2027-12-31",
+  "sourceNote": "開發環境連不到 www.cdc.gov.tw。教材頁網址模式 /Category/DiseaseTeach/{id} 取自搜尋結果（https://www.cdc.gov.tw/Category/DiseaseTeach/R2tEUCtZUlRpUFJUbmRyT0gxSVlpZz09，對應哪一種疾病不明），各疾病頁的實際 ID 不知道，一律以 {id} 佔位、以 #片段區分；教材名稱與附件檔名取自搜尋摘錄、未查證。麻疹教材 PDF 有搜尋結果出現過的真網址 https://www.cdc.gov.tw/File/Get/eH0KllYdi__tvUdV8al0lA（附件，不是頁面，記在該筆 note）。舊站還有哪些疾病有核心教材、列表頁是 List 還是 MPage，待資訊室匯出後補齊。",
+  "items": [
+    {
+      "key": "core-curriculum-list",
+      "oldTitle": "傳染病核心教材",
+      "oldPath": "首頁／專業人員／傳染病核心教材",
+      "oldUrl": "https://www.cdc.gov.tw/Category/List/{id}#core-curriculum-list",
+      "oldType": "list",
+      "verified": false,
+      "status": "merged",
+      "newPath": "/pro/curriculum/",
+      "owner": "unit.oasis",
+      "note": "列表頁不轉內文：新站 /pro/curriculum/ 由 docType curriculum 的現行版自動產生，並列出本清單 pending 的教材。舊站入口在 legacy-services.json 記為 MPage，實際網址模式待資訊室確認。　【匯入 2026-10-10】草稿 page.x-core-curriculum-list（信心 0.4；需人工檢視）"
+    },
+    {
+      "key": "dengue",
+      "oldTitle": "登革熱核心教材",
+      "oldPath": "傳染病介紹／登革熱／傳染病核心教材",
+      "oldUrl": "https://www.cdc.gov.tw/Category/DiseaseTeach/{id}#dengue",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.curriculum-dengue.2026-10-10",
+      "owner": "unit.acute-infectious",
+      "note": "新站目前是示範匯入版（重建版，未查證）：教材 PDF（搜尋摘錄：2025-04-登革熱防治核心教材.pdf，2025/4/18）尚未取得。取得後以 scripts/pdf-to-md.mjs 轉出同家族 doc.curriculum-dengue，並刪除重建版（guide-staff §31）。　【匯入 2026-10-10】草稿 doc.curriculum-dengue.2026-10-10（信心 0.8；既有內容已存在，供比對）",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "versionChain",
+        "machineReadable",
+        "basedOn",
+        "license"
+      ]
+    },
+    {
+      "key": "measles",
+      "oldTitle": "麻疹核心教材",
+      "oldPath": "傳染病介紹／麻疹／傳染病核心教材",
+      "oldUrl": "https://www.cdc.gov.tw/Category/DiseaseTeach/{id}#measles",
+      "oldType": "page",
+      "verified": false,
+      "status": "migrated",
+      "target": "doc.curriculum-measles.2026-10-10",
+      "owner": "unit.acute-infectious",
+      "note": "新站目前是示範匯入版（重建版，未查證）。教材 PDF 在舊站的網址（搜尋結果）：https://www.cdc.gov.tw/File/Get/eH0KllYdi__tvUdV8al0lA，版次與日期不明。取得後以 scripts/pdf-to-md.mjs 轉出同家族 doc.curriculum-measles，並刪除重建版。　【匯入 2026-10-10】草稿 doc.curriculum-measles.2026-10-10（信心 0.8；既有內容已存在，供比對）",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "versionChain",
+        "machineReadable",
+        "basedOn",
+        "license"
+      ]
+    },
+    {
+      "key": "novel-influenza-a",
+      "oldTitle": "新型A型流感核心教材",
+      "oldPath": "傳染病介紹／新型A型流感／傳染病核心教材",
+      "oldUrl": "https://www.cdc.gov.tw/Category/DiseaseTeach/{id}#novel-influenza-a",
+      "oldType": "page",
+      "verified": false,
+      "status": "pending",
+      "owner": "unit.preparedness",
+      "dueAt": "2026-12-31",
+      "note": "搜尋摘錄出現檔名「新型A型流感_核心教材-11401版.pdf」（未查證）。新站尚無內容；由新興傳染病整備組提供 PDF 正本後轉檔上架。　【匯入 2026-10-10】草稿 doc.curriculum-novel-influenza-a.2025-01-15（信心 0.8）",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "versionChain",
+        "machineReadable",
+        "license"
+      ]
+    },
+    {
+      "key": "plague",
+      "oldTitle": "鼠疫核心教材",
+      "oldPath": "傳染病介紹／鼠疫／傳染病核心教材",
+      "oldUrl": "https://www.cdc.gov.tw/Category/DiseaseTeach/{id}#plague",
+      "oldType": "page",
+      "verified": false,
+      "status": "pending",
+      "owner": "unit.preparedness",
+      "dueAt": "2026-12-31",
+      "note": "搜尋摘錄出現檔名「鼠疫核心教材_1140318.pdf」（未查證）。新站尚無內容；由新興傳染病整備組提供 PDF 正本後轉檔上架。　【匯入 2026-10-10】草稿 doc.curriculum-plague.2025-03-18（信心 0.8）",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "versionChain",
+        "machineReadable",
+        "license"
+      ]
+    }
+  ]
+}

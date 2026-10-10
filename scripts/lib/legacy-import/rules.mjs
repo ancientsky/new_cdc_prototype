@@ -106,6 +106,9 @@ export function mergeBlockFor(rules, { title, breadcrumbs = [], category = '' })
 }
 
 export function docTypeFor(rules, title, pattern, url) {
+  // 第十二批（第二十八輪）：「強關鍵字」優先於網址模式。舊站 /Category/DiseaseTeach/ 底下同時放指引與核心教材，
+  // 只看路徑會把教材判成 guideline；標題寫明「核心教材」時以標題為準（docTypeStrongKeywords，規則檔第 11 版）
+  for (const r of rules.docTypeStrongKeywords ?? []) if (r.keys.some((k) => String(title).includes(k))) return { docType: r.docType, clear: true, strong: true };
   if (pattern?.docType) return { docType: pattern.docType, clear: true };
   if (pattern?.docTypeByPath) {
     const u = typeof url === 'string' ? parseUrl(url, rules.siteBase) : url;

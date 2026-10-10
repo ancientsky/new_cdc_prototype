@@ -32,6 +32,8 @@ import { splitByPage } from './pdf-text.mjs';
 import { tagRelativeDate } from './dates.mjs';
 
 const PAGE_MARK_TEST = /^〔p\.\d+〕$/m;
+// 第二十八輪：「（待補：…）」是佔位不是內容，不進答案單元（scripts/lib/curriculum.mjs、legacy-import 的 pdf-only 草稿都用這個寫法）
+const PENDING_TEST = /（待補[:：]|^對照：/;
 
 const MAX_PARA = 300;
 
@@ -415,15 +417,23 @@ export function buildSearchIndex(site) {
           const secs = src.sections?.length ? src.sections : [{ key: 'body', heading: src.title ?? item.title, markdown: src.machineReadableMarkdown ?? '' }];
           // 第十九輪：PDF 轉來的段落帶頁碼標記 〔p.N〕→ 每頁切一塊，引用時能說「PDF 第 N 頁」並連到 #page-N；
           // index:false 的段落（表單、地圖、參考文獻）不入索引（docs/pdf-ingest.md）
-          const extraction = item.derivedFrom ? { reviewStatus: item.derivedFrom.reviewStatus ?? 'machine', pdfUrl: item.pdfUrl ?? null, pageOffset: item.derivedFrom.pdfPageOffset ?? null } : null;
+          const extraction = item.derivedFrom ? { reviewStatus: item.derivedFrom.reviewStatus ?? 'machine', pdfUrl: item.pdfUrl ?? null, pageOffset: item.derivedFrom.pdfPageOffset ?? null, ...(item.derivedFrom.sourceKind === 'reconstructed' ? { sourceKind: 'reconstructed' } : {}) } : null;
+          // 第二十八輪：核心教材（docType curriculum）的學習目標單獨成一塊，問「某某核心教材的學習目標」時引用得到
+          if (isSource && item.docType === 'curriculum' && item.learningObjectives?.length) {
+            add(make(item, 'objectives', `${src.title ?? item.title} · 學習目標`, item.learningObjectives.map((o, i) => `學習目標 ${i + 1}：${o}`), `${base}#objectives`, {
+              ...L, docTitle: src.title ?? item.title, docType: item.docType, section: { key: 'objectives', heading: '學習目標', no: null }, supersedesVersion: prev?.version ?? null, change: null,
+              extraTerms: ['學習目標', '教材', '核心教材'], ...(extraction ? { extraction } : {}),
+            }), { proOnly: true });
+          }
           for (const s of secs) {
             if (s.index === false) continue;
-            const no = sectionNo(s);
+            // 第二十八輪：教材的「第三章」是章不是條，引用標籤用〈章 · 節〉標題，不寫成「第 3 條」
+            const no = item.docType === 'curriculum' ? null : sectionNo(s);
             const change = (item.changes ?? []).find((ch) => ch.section === s.heading || ch.section === s.key || (no && String(ch.section).includes(`第 ${no} 條`)) || (no && String(ch.section).includes(`第${no}條`))) ?? null;
             const parts = PAGE_MARK_TEST.test(s.markdown ?? '') ? splitByPage(s.markdown) : [{ page: null, text: s.markdown }];
             for (const part of parts) {
               const key = part.page ? `${s.key}-p${part.page}` : s.key;
-              add(make(item, key, `${src.title ?? item.title} · ${s.heading}`, mdSentences(part.text), part.page ? `${base}#page-${part.page}` : `${base}#s-${s.key}`, {
+              add(make(item, key, `${src.title ?? item.title} · ${s.heading}`, mdSentences(part.text).filter((x) => !PENDING_TEST.test(x)), part.page ? `${base}#page-${part.page}` : `${base}#s-${s.key}`, {
                 ...L, docTitle: src.title ?? item.title, docType: item.docType ?? null,
                 section: { key: s.key, heading: s.heading, no }, supersedesVersion: prev?.version ?? null,
                 change: change ? { kind: change.kind ?? null, before: change.before ?? null, after: change.after ?? null } : null,

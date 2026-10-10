@@ -8,6 +8,7 @@ import {
   numberSource, datasetSourceCard, hrefFor, isFallbackLink, L, unitName, publishedOf, byDateDesc, dated, itemPath, seriesOf, sitField, licenseLabel,
   isMediaOutdated, isTopicEnded, fmtDur, refItem, isExternal, legacyOf, extLink,
 } from './_partials.mjs';
+import { curricula, curriculumList } from './_curriculum.mjs';
 
 const trailOf = (ctx, item) => [{ label: ctx.t('nav.diseases'), href: '/diseases/' }, { label: L(ctx, item, 'title') }];
 
@@ -42,7 +43,8 @@ function docsFor(site, item) {
   const refs = [...(item.relatedDocuments ?? []), item.professional?.caseDefinitionDoc, item.professional?.manualDoc].filter(Boolean);
   for (const r of refs) { const d = currentDoc(site, r); if (d) out.set(d.family, d); }
   for (const d of site.collections.documents) if (d.isCurrent && d.status === 'published' && d.diseases?.includes(item.id)) out.set(d.family, d);
-  return [...out.values()];
+  // 第二十八輪：核心教材另列「核心教材」區塊（pro-curriculum），不混在指引與手冊裡
+  return [...out.values()].filter((d) => d.docType !== 'curriculum');
 }
 const stripLead = (title, text) => {
   if (title && text?.startsWith(title)) { const r = text.slice(title.length).replace(/^[，、,。;；:：\s]+/, ''); return r || text; }
@@ -179,6 +181,7 @@ export function render(ctx, { item }) {
   const programs = programsOf(item);
   const rel = relatedOf(ctx, item, { sit, blocks, programs });
   const chains = docs.map((d) => docChain(site, d));
+  const currs = curricula(site, { disease: item.id });
   const hubPub = PUB_ORDER.map((k) => blocks.find((b) => b.key === k)).filter(Boolean).filter((b) => {
     if (b.key === 'faq') return faqs.length > 0;
     if (b.key === 'situation') return !!(sit || b.datasets?.length || b.markdown);
@@ -186,6 +189,7 @@ export function render(ctx, { item }) {
   }).map((b) => ({ id: b.key, label: t(`hub.pub.${b.key}`) }));
   const hubPro = [
     chains.length && { id: 'pro-docs', label: t('hub.pro.docs') },
+    currs.length && { id: 'pro-curriculum', label: t('hub.pro.curriculum') },
     hasReport && { id: 'pro-report', label: t('hub.pro.report') },
     programs.length && { id: 'pro-programs', label: t('hub.pro.programs') },
     rel.services.length && { id: 'pro-services', label: t('hub.pro.services') },
@@ -234,6 +238,7 @@ ${breadcrumb(ctx, trailOf(ctx, item))}
           <p class="muted">${d.version ? `${d.version} · ` : ''}${t('prov.effective')} ${fmtDate(d.effectiveAt)}${d.summary ? html` · ${L(ctx, d, 'summary')}` : ''}</p>
           ${olds.length ? html`<details class="c-hubdoc__old" data-group="ondemand"><summary>${t('hub.pro.docs.old', { n: olds.length })}</summary><ul class="c-linklist">${olds.map((o) => html`<li><a href="${hrefFor(ctx, o)}"${isFallbackLink(ctx, o) ? raw(' lang="zh-TW"') : ''}>${L(ctx, o, 'title')}</a> <span class="muted">${o.version ?? ''} · ${t('prov.effective')} ${fmtDate(o.effectiveAt)}</span> <span class="c-pill c-pill--neutral">${t('prov.superseded')}</span></li>`)}</ul></details>` : ''}
         </li>`)}</ul>`) : ''}
+        ${currs.length ? proSection(ctx, 'pro-curriculum', 'hub.pro.curriculum', 'hub.pro.curriculum.lead', html`${curriculumList(ctx, currs)}<p class="c-linkrow"><a href="${url('/pro/curriculum/', { noLang: !['zh-TW', 'en'].includes(lang) })}">${t('hub.pro.curriculum')} →</a></p>`) : ''}
         ${hasReport ? proSection(ctx, 'pro-report', 'hub.pro.report', 'hub.pro.report.lead', html`<dl class="c-deflist">
           <div><dt>${t('kf.notify')}</dt><dd>${pro.notifyNote ?? (item.notifyWithinHours ? t('disease.notify.h', { h: item.notifyWithinHours }) : '')}${item.legalCategory ? html` · <a href="${url('/report/')}#category-${item.legalCategory}">${t('disease.pro.notifytable')} →</a>` : ''}</dd></div>
           ${labtests.length ? html`<div><dt>${t('disease.pro.lab')}</dt><dd>${labtests.map((l) => html`<a href="${hrefFor(ctx, l)}">${L(ctx, l, 'title')}</a> `)}<a href="${url('/lab/')}">${t('lab.title')} →</a></dd></div>` : ''}

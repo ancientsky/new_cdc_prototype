@@ -1,0 +1,110 @@
+{
+  "id": "doc.curriculum-plague.2025-03-18",
+  "type": "document",
+  "title": "鼠疫核心教材",
+  "owner": "unit.preparedness",
+  "publishedAt": "2025-03-18",
+  "reviewedAt": "2026-10-10",
+  "reviewPeriodMonths": 12,
+  "status": "review",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.plague"
+  ],
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "（待補：本文件正本為 PDF「鼠疫核心教材1140318.pdf」，舊頁只有下載連結。上架前請權責單位提供文字版（assets-policy 第 4 節），或確認僅以附件提供。）",
+  "family": "doc.curriculum-plague",
+  "docType": "curriculum",
+  "version": "2025-03-18",
+  "effectiveAt": "2025-03-18",
+  "machineReadableMarkdown": "（待補：本文件正本為 PDF「鼠疫核心教材_1140318.pdf」，舊頁只有下載連結。上架前請權責單位提供文字版（assets-policy 第 4 節），或確認僅以附件提供。）\n\n全文請下載附件。",
+  "pdfUrl": "/files/doc.curriculum-plague.2025-03-18/curriculum-plague-1140318.pdf",
+  "roles": [
+    "physician",
+    "nurse",
+    "local-health"
+  ],
+  "learningObjectives": [
+    "（待補：學習目標，請依教材 PDF 填寫）"
+  ],
+  "curriculum": {
+    "series": "傳染病核心教材",
+    "edition": "舊站附件「鼠疫核心教材_1140318.pdf」（待確認）",
+    "chapterPlan": "provisional"
+  },
+  "legacyUrls": [
+    "https://www.cdc.gov.tw/Category/DiseaseTeach/xeRIJXoPAmAxHAV71GUim1"
+  ],
+  "assets": [
+    {
+      "file": "curriculum-plague-1140318.pdf",
+      "kind": "attachment",
+      "label": "鼠疫核心教材_1140318.pdf",
+      "mime": "application/pdf",
+      "bytes": 812,
+      "sha256": "44cf0a15a2c0681fbcd222d02902aa2fe8b6111eebd417003bc9063fbe315866",
+      "machineReadable": true,
+      "accessibleAlt": null
+    }
+  ],
+  "conversion": {
+    "mode": "auto",
+    "confidence": 0.8,
+    "issues": [
+      {
+        "code": "word-cleaned",
+        "severity": "info",
+        "message": "清除 Word 貼上殘留 3 處（mso 樣式 1、Mso 類別 1、命名空間標籤 1）"
+      },
+      {
+        "code": "owner-from-disease",
+        "severity": "info",
+        "message": "類別「傳染病介紹／鼠疫／傳染病核心教材」沒有對應規則，權責單位依疾病主檔取 unit.preparedness（鼠疫）"
+      },
+      {
+        "code": "doctype-from-title",
+        "severity": "info",
+        "message": "標題含「核心教材」，文件種類判為 curriculum（網址模式 disease-docs 原本會判成 guideline）"
+      },
+      {
+        "code": "fields-pending",
+        "severity": "warn",
+        "message": "curriculum 的教學欄位舊頁看不出來，以佔位填入：learningObjectives（待補）、roles（暫填規則檔預設 physician、nurse、local-health）、curriculum.chapterPlan provisional；請權責單位依教材 PDF 填寫（guide-staff §31）"
+      },
+      {
+        "code": "body-short",
+        "severity": "warn",
+        "message": "內文過短（8 字，低於 40）"
+      },
+      {
+        "code": "version-unknown",
+        "severity": "info",
+        "message": "標題看不出版次，version 暫填 2025-03-18"
+      },
+      {
+        "code": "pdf-only",
+        "severity": "warn",
+        "message": "舊頁內文只有下載連結，正本是 PDF「鼠疫核心教材_1140318.pdf」；machineReadableMarkdown 以（待補）佔位，PDF 不整批轉（第 8 節），上架前請提供文字版"
+      },
+      {
+        "code": "fields-pending",
+        "severity": "info",
+        "message": "待補欄位：machineReadableMarkdown（正本文字版）"
+      }
+    ],
+    "sourceUrl": "https://www.cdc.gov.tw/Category/DiseaseTeach/xeRIJXoPAmAxHAV71GUim1",
+    "convertedAt": "2026-10-10T03:00:00Z",
+    "pdfOnly": true
+  }
+}

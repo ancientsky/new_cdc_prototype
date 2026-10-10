@@ -101,6 +101,8 @@
 | `diseases` | **疾病別名與短碼**。候選以 `content/master/diseases.json` 全部疾病為底，這裡只補主檔沒有的舊站寫法與草稿 id 用的 `short`（沒寫就用主檔 id 去掉 `disease.`） | `disease.tuberculosis`（`tb`）：潛伏結核感染、LTBI…；`disease.dengue`：登革、DENV |
 | `blockKeywords`／`blockHeadings` | **標題關鍵字 → 疾病頁區塊 key**，以及區塊標題 | 「致病原」「傳染方式」→ `transmission`；「症狀」→ `symptoms`；「預防接種」→ `vaccine` |
 | `docTypeKeywords` | 標題關鍵字 → 文件類型 | 「病例定義」→ `case-definition`；「手冊」→ `manual` |
+| `docTypeStrongKeywords` | 標題**強**關鍵字 → 文件類型，**優先於網址模式**（第十二批，規則檔第 11 版）。只放不會誤中的長詞 | 「核心教材」→ `curriculum`（蓋過 `/Category/DiseaseTeach/` 預設的 `guideline`） |
+| `curriculum` | curriculum 草稿的預設欄位：`series`、`defaultRoles`（舊頁看不出對象時暫填，記 `fields-pending`） | `傳染病核心教材`；`physician`、`nurse`、`local-health` |
 | `audience` | 型別 → 對象，專業類別 → 專業人員 | 「指引及手冊」「通報」「檢驗」→ `professional` |
 | `dropRules` | 建議不轉換的條件（回 410） | 標題含「活動報名」且發布日早於 2021-01-01 |
 | `thresholds` | `minBodyChars`（內文過短）、`reviewConfidence`（0.6）、`autoConfidence`（0.8）、`archiveAfterYears`（3）、`summaryChars`（120） | |
@@ -861,9 +863,55 @@ PDF 是**附件**，不是頁面。工具對 PDF 只做三件事：複製檔案�
 - **為什麼比較好**：另外兩種做法都不好——(1) 留著虛構文件不刪，會讓正式內容裡有兩份同名、互相矛盾的指引，答案引擎會答錯；(2) 重跑所有歷史批次，會把「當時轉換器怎麼判斷」的紀錄改掉，測試也失去意義。歷史批次是**對某一天的內容跑的**，就應該讀那一天的內容；`_retired/` 把「那一天」明確保存下來，而且一看就知道哪些東西已經不在正式站。
 - **正式環境的對應**：真實的舊站匯出是一次性的檔案，不會隨新站內容變；這個問題只發生在原型「從新站內容反推舊站」的模擬上。
 
+### 10.13 傳染病核心教材第十二批結果（第二十八輪，Issue #38）
+
+> **這批是示範。** 開發環境連不到 www.cdc.gov.tw，教材 PDF 一份都沒拿到。模擬匯出 `scripts/lib/legacy-import/sim-export-curriculum.mjs`（`_export.json` 標 `simulated: true`，README 逐頁寫依據）合成 5 頁：列表頁 1 頁（`/Category/List/`）＋登革熱、麻疹、新型A型流感、鼠疫的教材頁各 1 頁（`/Category/DiseaseTeach/`，內文只有 PDF 下載連結）。教材名稱與附件檔名取自公開搜尋摘錄（未查證）；頁面網址 ID 是示意值，唯一寫死的是搜尋結果出現過的麻疹教材 PDF 網址 `https://www.cdc.gov.tw/File/Get/eH0KllYdi__tvUdV8al0lA`。移轉清單 `content/migration/core-curriculum.json` 5 筆，全部 `verified: false`。
+>
+> 重跑：`node scripts/lib/legacy-import/sim-export-curriculum.mjs` → `node scripts/import-legacy.mjs data/legacy-export/core-curriculum --out data/legacy-import/core-curriculum --now 2026-10-10T03:00:00Z --apply-migration`。
+
+| 項目 | 結果 |
+| --- | --- |
+| 匯出頁數／草稿 | 5 / 5（文件 4，全是 `docType: curriculum`；頁面 1 是列表頁的比對用草稿） |
+| 建議動作 | 比對既有 2（登革熱、麻疹 → 新站已有的示範匯入版）、上線前檢視 2（新型A型流感、鼠疫）、略過列表頁 1 |
+| 平均信心／需人工檢視 | 0.72／1（列表頁，內文過短） |
+| 草稿 schema 驗證 | 5 / 5 |
+| 移轉清單 | 5 筆對上 5，無衝突；套用後只改 note（5 筆）；仍待移轉 2（新型A型流感、鼠疫，權責單位新興傳染病整備組） |
+| 問題 | 錯誤 0；warn 14（`fields-pending` 4、`pdf-only` 4、`body-short` 5、`date-missing` 1）；info 21（含 `doctype-from-title` 4） |
+
+**第十二批新增的處理經驗（原本怎樣 → 改成怎樣 → 為什麼比較好）**：
+
+1. **標題寫明「核心教材」時，文件種類以標題為準，蓋過網址模式。**
+   原本：`disease-docs` 模式把 `/Category/DiseaseTeach/` 一律判成 `guideline`（第七批的假設：Teach＝指引）。但搜尋到的舊站結構顯示 DiseaseTeach 底下放的是各疾病的**核心教材**，與 DiseaseDefine（病例定義）、DiseaseManual（工作手冊）並列；教材若被判成指引，會跟現行指引搶「現行版」、被答案引擎當成規定引用。
+   改成：規則檔第 11 版新增 `docTypeStrongKeywords`（目前只有「核心教材」→ `curriculum`），在 `docTypeFor` 裡**先於**網址模式比對；命中且與網址模式判斷不同時記 `doctype-from-title`（info），把「原本會判成什麼」寫出來給 Steward 看。
+   為什麼比較好：網址是**容器**（同一個欄目可以放不同種文件），標題才是**這份東西自己說自己是什麼**。強關鍵字只放不會誤中的長詞，所以第七批的 DiseaseTeach 頁（「人口密集機構感染管制措施指引」）仍是 `guideline`，前十一批的輸出一個字都沒變（10.7 節「矩陣網址會蓋過標題」的問題，對教材這一類已解決；`form` 仍未處理）。
+
+2. **schema 要的教學欄位，舊頁看不出來就佔位，不替權責單位編。**
+   原本：`curriculum` 必填 `learningObjectives`、`roles`、`diseases`，舊頁只有一個下載連結，什麼都看不出來。
+   改成：草稿的 `learningObjectives` 寫「（待補：學習目標，請依教材 PDF 填寫）」、`roles` 暫填規則檔的 `curriculum.defaultRoles`、`curriculum.chapterPlan: provisional`，並記 `fields-pending`（warn）；認不出疾病時記 `curriculum-no-disease`（error，schema 也會擋）。
+   為什麼比較好：草稿能過 schema、進後台檢視，但每個猜的欄位都有一條看得到的待辦。學習目標是教材的核心，寧可空著也不能由轉換器寫一份「看起來很像」的。
+
+3. **教材家族一律叫 `doc.curriculum-{疾病}`。**
+   原本：沒有清單 target 的文件，家族由網址雜湊或清單 key 決定（新型A型流感會變成 `doc.novel-influenza-a-novel-influenza-a`）。
+   改成：`curriculum` 一病一個家族 `doc.curriculum-{short}`，與新站已有的 `doc.curriculum-dengue`、`doc.curriculum-measles` 同一套命名。
+   為什麼比較好：之後拿到 PDF 正本轉檔時，新版落在同一個家族，版次鏈與「現行版」判定自然接上；同事看 id 就知道是哪一種病的教材。
+
+4. **轉換器只搬「舊頁有的東西」；示範內容是另一支工具做的，而且會被刪掉。**
+   這批的草稿 `machineReadableMarkdown` 都是 pdf-only 佔位——正本在 PDF，第 8 節「PDF 不整批轉」照舊。新站上看得到的兩份教材（`doc.curriculum-dengue.2026-10-10`、`doc.curriculum-measles.2026-10-10`）是 `scripts/curriculum-to-doc.mjs` 從 `data/curriculum/*.source.json` 產生的**重建版**：每句都有出處（多數是站內已匯入的 2026 年 2 月版登革熱工作指引第幾頁），找不到出處的地方寫（待補），`derivedFrom.sourceKind: reconstructed`、`reviewStatus: machine`（不進白名單、來源卡標「尚未取得 PDF 正本」）。
+   拿到 PDF 正本之後：用 `scripts/pdf-to-md.mjs` 轉出同家族的正式版本，**刪除**重建版，不要用 `supersedes` 串在後面。
+   為什麼刪而不是取代：重建版不是教材真的某一版；串進版本鏈，文件頁會出現「前版」與「本版異動」，讀者會以為教材改過。第二十輪用真的 2026 年 2 月版工作指引取代虛構的第 15～17 版時也是把虛構版本移出 `content/`，而不是串在真版本前面（10.12 節），同一個理由。
+
+5. **加一份專業內容，可能讓不相干的版本題失敗：每次都要跑 `node scripts/build.mjs --check`。**
+   實測：加入登革熱教材後，版本題 V011「登革熱防治工作指引現行版是第幾版？」不再引用工作指引。原因不是教材被引用，而是 BM25 的統計變了——教材原標題「登革熱**防治**核心教材」的 13 個答案單元都帶「熱防」這個詞，讓它在專業索引裡從 15 個單元變成 28 個，這個詞的權重下降，工作指引的附件段落掉出前 10 名。這題本來就很勉強（加教材前，工作指引也只是第 4 個來源）。
+   改成：標題用舊站頁面上的寫法「登革熱核心教材」（檔名「…登革熱防治核心教材.pdf」記在 `curriculum.edition`）；出處只寫代號（「出處 A，第 3 頁」），全名放文末來源表（不入索引）；「對照：…」導覽行不進答案單元。評估集回到 213/213。
+   為什麼比較好：教材裡大量重複別份文件的全名，等於替那份文件的名字「灌水」，問那份文件的題目反而撈到教材。**沒做的**：引擎對「指名某份文件問版次」的題目沒有特別處理，V011 仍然靠 BM25 的相對分數；正式導入真教材（文字量大很多）前，OASIS 應該補這個機制，而不是一直調內容。
+
+6. **看不到日期就不編日期。** 麻疹教材只知道 PDF 網址，頁面日期不明，側檔就不給 `publishedAt`；轉換器記 `date-missing` 並暫用匯出日，Steward 會看到。新型A型流感的「11401版」只出現在附件檔名，`version` 暫填發布日（`version-unknown`）；檔名寫進 `curriculum.edition`（待確認）。
+
+**還沒做的（給資訊室與權責單位）**：真實匯出（哪些疾病有教材、列表頁是 `/Category/List/` 還是欄目頁 MPage、各頁實際 ID）；各教材的 PDF 正本；教材的版次寫法（「11401版」「1140318」）要不要另寫規則轉成 `version`；整套「傳染病核心教材」系列的統籌單位（legacy-services 暫列預防醫學辦公室）。
+
 ## 11. 正式批次的排程建議
 
-1. **一批一個欄目樹**，順序建議：**結核病（已示範）→ 登革熱（第二批，已示範）→ 流感（第三批，已示範）→ 麻疹＋腸病毒（第四批，已示範）→ 其他第一、二類傳染病的疾病頁（第五批：狂犬病、瘧疾、A 型肝炎、德國麻疹、屈公病、M 痘，已示範；其餘第一、二類疾病待建疾病頁後同法處理）→ 新聞稿（近三年；第六批，已示範，無清單、三級處理＋抽樣）→ 指引與手冊（第七批，已示範，版次鏈）→ 常見問答（第八批，已示範，每題一筆＋跨批重複判定）→ 國際旅遊與健康（第九批，已示範，資料產生頁＋ `newPath`）→ 宣導素材（第十批，已示範，型別由欄目位置決定＋圖片承載內容＋多語附件）→ 統計資料（第十一批，已示範，期刊逐期＋表格抽時序＋入口頁對資料集）→ 其他欄目**。每批對應一份移轉清單，批次結束時清單的 `pending` 應清零或決定 `dropped`。有疾病頁的疾病都能先用 `sim-export-disease.mjs` 產模擬匯出演練規則，再等正式匯出。
+1. **一批一個欄目樹**，順序建議：**結核病（已示範）→ 登革熱（第二批，已示範）→ 流感（第三批，已示範）→ 麻疹＋腸病毒（第四批，已示範）→ 其他第一、二類傳染病的疾病頁（第五批：狂犬病、瘧疾、A 型肝炎、德國麻疹、屈公病、M 痘，已示範；其餘第一、二類疾病待建疾病頁後同法處理）→ 新聞稿（近三年；第六批，已示範，無清單、三級處理＋抽樣）→ 指引與手冊（第七批，已示範，版次鏈）→ 常見問答（第八批，已示範，每題一筆＋跨批重複判定）→ 國際旅遊與健康（第九批，已示範，資料產生頁＋ `newPath`）→ 宣導素材（第十批，已示範，型別由欄目位置決定＋圖片承載內容＋多語附件）→ 統計資料（第十一批，已示範，期刊逐期＋表格抽時序＋入口頁對資料集）→ 傳染病核心教材（第十二批，已示範，標題強關鍵字＋教學欄位佔位）→ 其他欄目**。每批對應一份移轉清單，批次結束時清單的 `pending` 應清零或決定 `dropped`。有疾病頁的疾病都能先用 `sim-export-disease.mjs` 產模擬匯出演練規則，再等正式匯出。
 2. **每批的節奏**（約 2–3 週）：匯出（資訊室，2–3 天）→ 規則調校與第一輪轉換（OASIS，2–3 天）→ 看報告、補規則、重跑（1–2 天）→ 人工確認（Steward，依量；建議每人每天不超過 10 頁）→ 上架 PR（走車道）→ 更新清單與確認 `verified`。
 3. **先小後大**：每批先用 20–30 頁試跑，確認規則沒問題再跑全部。
 4. **規則版本化**：規則檔的修改走 PR 並說明影響範圍；報告歸檔（`data/legacy-import/{slug}/`），作為品質稽核與回溯。
