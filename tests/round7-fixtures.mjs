@@ -14,9 +14,10 @@ function job(slug, over) {
   });
 }
 const RESULT = {
-  publishedAt: '2026-09-25', refNo: '疾管人字第 1150100245 號',
-  admitted: [{ seq: 1, candidateNo: '1150924-012', nameMasked: '王○明' }, { seq: 2, candidateNo: '1150924-007', nameMasked: '林○' }],
-  waitlist: [{ rank: 1, candidateNo: '1150924-021', nameMasked: '陳○宏', validUntil: '2027-03-25' }, { rank: 2, candidateNo: '1150924-018', nameMasked: '張○華', validUntil: '2027-03-25' }],
+  // 第三十輪（#55）：名單只有報名編號（沒有姓名欄）；unpublishAt＝備取有效期隔天（建議值規則見 careers-rules.js defaultUnpublishAt）
+  publishedAt: '2026-09-25', unpublishAt: '2027-03-26', refNo: '疾管人字第 1150100245 號',
+  admitted: [{ seq: 1, candidateNo: '1150924-012' }, { seq: 2, candidateNo: '1150924-007' }],
+  waitlist: [{ rank: 1, candidateNo: '1150924-021', validUntil: '2027-03-25' }, { rank: 2, candidateNo: '1150924-018', validUntil: '2027-03-25' }],
   note: '請於 10 月 15 日前攜帶身分證明文件至人事室報到。',
 };
 
@@ -29,8 +30,8 @@ export function jobsFixture() {
     job('closed-waiting', { deadlineAt: '2026-09-25', applyStart: '2026-09-10', examPlan: [{ stage: '筆試', date: '2026-10-20' }], resultPlannedAt: '2026-11-10' }),
     job('screening', { deadlineAt: '2026-09-15', applyStart: '2026-09-01', examPlan: [{ stage: '書面審查', date: '2026-09-20' }, { stage: '口試', date: '2026-10-12' }], resultPlannedAt: '2026-10-30' }),
     job('result-recent', { publishedAt: '2026-08-10', applyStart: '2026-08-10', deadlineAt: '2026-08-31', examPlan: [{ stage: '口試', date: '2026-09-15' }], result: RESULT,
-      waitlistUpdates: [{ date: '2026-09-30', candidateNo: '1150924-021', nameMasked: '陳○宏', note: '遞補第 1 名' }] }),
-    job('result-old', { publishedAt: '2026-03-01', applyStart: '2026-03-01', deadlineAt: '2026-03-20', examPlan: [{ stage: '口試', date: '2026-04-10' }], result: { ...RESULT, publishedAt: '2026-05-01', waitlist: [] } }),
+      waitlistUpdates: [{ date: '2026-09-30', candidateNo: '1150924-021', note: '遞補第 1 名' }] }),
+    job('result-old', { publishedAt: '2026-03-01', applyStart: '2026-03-01', deadlineAt: '2026-03-20', examPlan: [{ stage: '口試', date: '2026-04-10' }], result: { ...RESULT, publishedAt: '2026-05-01', unpublishAt: '2026-11-01', waitlist: [] } }),
     job('cancelled', { manualStatus: 'cancelled', manualStatusNote: '因員額調整停止甄選', deadlineAt: '2026-10-25' }),
   ];
 }

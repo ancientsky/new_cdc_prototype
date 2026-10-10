@@ -346,18 +346,20 @@ export function buildFeeds(fullSite) {
       categories: ['人才招募', j.jobType, unitName(j.hiringUnit), j.gov?.jobStageLabel].filter(Boolean),
       description: [j.summary, j.refNo ? `字號：${j.refNo}` : '', `名額：${j.positions} 名`, `報名期間：${j.applyStart} 至 ${j.deadlineAt}`, `工作地點：${j.workplace}`, j.gov?.applyHref ? `報名：${/^https?:/.test(j.gov.applyHref) ? j.gov.applyHref : absUrl(j.gov.applyHref)}` : ''].filter(Boolean).join(' '),
     });
-    if (j.result?.publishedAt) careerItems.push({
+    // 第三十輪（#55）：不再提姓名；下架後（governance 已拿掉名單）不再發結果項目
+    if (j.result?.publishedAt && !j.gov?.resultTakenDown) careerItems.push({
       title: `【甄選結果】${j.title}`, link: absUrl(`${pathOf(j)}#result`), guid: `${j.id}#result`, date: j.result.publishedAt, categories: ['人才招募', '甄選結果'],
-      description: `正取 ${j.result.admitted?.length ?? 0} 名${j.result.waitlist?.length ? `、備取 ${j.result.waitlist.length} 名` : ''}；名單只公布報名編號與遮罩姓名，請至職缺頁查看。${j.result.refNo ? `字號：${j.result.refNo}` : ''}`,
+      description: j.result.externalUrl ? `名單由人事系統提供（只公布報名編號，本站不存名單），請從職缺頁連過去核對；${j.result.unpublishAt} 下架。${j.result.refNo ? `字號：${j.result.refNo}` : ''}`
+        : `正取 ${j.result.admitted?.length ?? 0} 名${j.result.waitlist?.length ? `、備取 ${j.result.waitlist.length} 名` : ''}；名單只公布報名編號（不公布姓名），請至職缺頁查看，${j.result.unpublishAt} 下架。${j.result.refNo ? `字號：${j.result.refNo}` : ''}`,
     });
     (j.waitlistUpdates ?? []).forEach((u, i) => careerItems.push({
       title: `【遞補公告】${j.title}`, link: absUrl(`${pathOf(j)}#result`), guid: `${j.id}#waitlist-${i + 1}`, date: u.date, categories: ['人才招募', '遞補公告'],
-      description: '備取人員遞補；名單只公布報名編號與遮罩姓名，請至職缺頁查看。',
+      description: '備取人員遞補；名單只公布報名編號（不公布姓名），請至職缺頁查看。',
     }));
   }
   careerItems.sort((a, b) => b.date.localeCompare(a.date) || a.guid.localeCompare(b.guid));
   const careersXml = rss({
-    title: `${config.name} 人才招募`, link: absUrl('/careers/'), self: apiUrl('/feeds/careers.xml'), description: '人事室發布的職缺公告、甄選結果與遞補公告（guid：職缺 id；結果為 id#result、遞補為 id#waitlist-N）。名單只在職缺頁公布報名編號與遮罩姓名。',
+    title: `${config.name} 人才招募`, link: absUrl('/careers/'), self: apiUrl('/feeds/careers.xml'), description: '人事室發布的職缺公告、甄選結果與遞補公告（guid：職缺 id；結果為 id#result、遞補為 id#waitlist-N）。名單只在職缺頁公布報名編號（不公布姓名），到下架日後不再顯示，結果項目也不再出現。',
     lastBuild: maxDate(careerItems.map((x) => x.date)) ?? site.today, items: careerItems.slice(0, 50),
   });
   // 第七輪：採購公告（招標公告一筆＋決標／流標一筆）

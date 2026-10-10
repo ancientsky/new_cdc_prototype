@@ -40,7 +40,7 @@ export function renderPreviewHtml(f, h) {
   const based = (f.basedOn ?? []);
   const langsOn = ['zh-TW', ...Object.entries(f.langs ?? {}).filter(([, v]) => v?.on).map(([k]) => k)];
   const langsOff = Object.entries(f.langs ?? {}).filter(([, v]) => !v?.on).map(([k]) => k);
-  const timing = f.urgent ? '緊急發布：合併後立即上線，公關室事後複核' : f.publishAtLocal ? `排程：${esc(f.publishAtLocal.replace('T', ' '))}（臺北時間）後上線` : '合併後立即上線';
+  const timing = f.urgent ? '緊急發布：送出後立即上線，公關室事後複核' : f.publishAtLocal ? `排程：${esc(f.publishAtLocal.replace('T', ' '))}（臺北時間）後上線` : '核准後立即上線';
   const assets = h.assets ?? [];
   const extra = extraHtml(f, h);
   const audience = (f.audience ?? []).map((a) => ({ public: '民眾', professional: '專業人員' }[a] ?? a));

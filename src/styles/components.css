@@ -380,6 +380,11 @@ html:not(.js) .c-tabs__print{display:block}
 .c-alert{padding:var(--sp-3) var(--sp-4);border-radius:var(--radius-sm);margin:var(--sp-2) 0;border-left:5px solid;font-size:var(--fs-sm)}
 .c-alert__t{margin-right:6px}
 .c-alert__go{font-weight:700;white-space:nowrap}
+/* 第三十輪：表單頁的收件單位與個資蒐集告知（_forms.mjs）、直接送端點時的狀態列（form-post.js） */
+.c-formnotice__list{margin:var(--sp-1) 0 0;padding-left:1.25em}
+.c-formnotice__list li{margin:2px 0}
+.c-mailform__status{font-weight:600}
+.c-mailform__status[data-state="error"]{color:var(--alert-overdue)}
 .c-alert--overdue,.c-alert--unverified{background:var(--alert-overdue-bg);color:var(--alert-overdue);border-color:#d9a400}
 .c-alert--superseded{background:var(--alert-superseded-bg);color:var(--alert-superseded);border-color:var(--status-peak)}
 .c-alert--based-on-revised,.c-alert--revised{background:var(--alert-revised-bg);color:var(--alert-revised);border-color:#e07b00}

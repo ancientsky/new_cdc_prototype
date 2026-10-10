@@ -6,6 +6,7 @@ import { initAssets } from './assets-panel.js';
 import { zipBlob } from './zip-store.js';
 import { initPagePreview } from './page-preview.js';
 import { mdToHtml } from './md-convert.js';
+import { initPublishGateway } from './publish-gateway.js';
 
 const D = readEmbedded('adm-publish-data', {});
 const KEY = 'cdc.admin.draft';
@@ -273,7 +274,7 @@ function paintGroups() {
   const ls = $('#g-langs-sum'); if (ls) { ls.textContent = `${on === P.LANGS.length ? '七語' : `${on} 語`}${off ? `，${off} 語不提供` : ''}${noReason ? `，${noReason} 語缺理由` : ''}`; ls.classList.toggle('adm-red', !!noReason); if (noReason) $('#g-langs').open = true; }
   const ts = $('#g-timing-sum'); if (ts) {
     const at = P.publishAtMs(f.publishAt);
-    ts.textContent = f.urgent ? '緊急發布：立即上線' : Number.isFinite(at) ? `排程 ${P.fmtTaipei(at)}` : '合併後立即上線';
+    ts.textContent = f.urgent ? '緊急發布：立即上線' : Number.isFinite(at) ? `排程 ${P.fmtTaipei(at)}` : '核准後立即上線';
     const bad = P.laneChecks(f, Date.now(), LANES).some((c) => c.level === 'error');
     ts.classList.toggle('adm-red', bad); if (bad) $('#g-timing').open = true;
   }
@@ -439,8 +440,13 @@ function paintEditBox() {
   const o = editing.original;
   const file = `content/${P.DIRS[o.type] ?? `${o.type}s`}/${String(o.id).replace(/^[a-z]+\./, '')}.json`;
   box.hidden = false;
+  if (editing.source === 'gateway') { // 第三十輪：從寫入閘道開啟送審中的內容（?gw=）
+    box.hidden = false;
+    box.innerHTML = `<strong>修改送審中的內容</strong>${esc(o.title ?? o.id)} <code>${esc(o.id)}</code>。表單已帶入目前這一版；改好後按下方「儲存草稿」或「送審」。<span id="edit-diff" class="adm-muted"></span>`;
+    return;
+  }
   box.innerHTML = `<strong>修改已上架的內容</strong>${o.path ? `<a href="${esc(url(o.path))}" target="_blank" rel="noopener">${esc(o.title ?? o.id)}</a>` : esc(o.title ?? o.id)} <code>${esc(o.id)}</code>（發布 ${esc(o.publishedAt ?? '—')}，最後審閱 ${esc(o.reviewedAt ?? '—')}）。
-  表單已帶入現行版；改好後照一般流程「送出預處理」→「產生上架包」，上架包會<strong>覆寫同一個檔</strong> <code>${esc(file)}</code>，PR 只會顯示你改的那幾行。發布日不變、審閱日改為今天；白名單與舊站網址等表單沒有的欄位會原樣保留。
+  表單已帶入現行版；<span data-gw-hide>改好後照一般流程「送出預處理」→「產生上架包」，上架包會<strong>覆寫同一個檔</strong> <code>${esc(file)}</code>，PR 只會顯示你改的那幾行。</span><span class="adm-gw-only">改好後按下方「儲存草稿」或「送審」，審核人只會看到你改的那幾個欄位。</span>發布日不變、審閱日改為今天；白名單與舊站網址等表單沒有的欄位會原樣保留。
   <span id="edit-diff" class="adm-muted"></span> <button type="button" class="adm-btn adm-btn--ghost" id="btn-edit-cancel">取消修改（清空）</button>`;
 }
 function paintEditDiff() {
@@ -449,11 +455,11 @@ function paintEditDiff() {
   const changed = P.editDiff(exportObj(), editing.original).filter((k) => k !== 'assets');
   el.textContent = changed.length ? `目前改動的欄位：${changed.join('、')}` : '目前與現行版相同。';
 }
-async function startEdit(id) {
+async function startEdit(id, preloaded = null) {
   statusEl.textContent = `正在載入 ${id} 的現行版…`;
-  const item = await fetchForEdit(id);
+  const item = preloaded ?? await fetchForEdit(id); // 第三十輪：寫入閘道送來的內容（?gw=）直接帶入
   if (!item) { editing = null; statusEl.textContent = `找不到已上架內容 ${id}（只能修改已發布且在 API 裡的內容；新聞只含近 200 則）。`; writeForm({ type: 'faq', id, idTouched: true }); applyTypeUI(true); return; }
-  editing = { id: item.id, original: item };
+  editing = { id: item.id, original: item, source: preloaded ? 'gateway' : 'site' };
   const f = P.itemToForm(item);
   contentIds = []; datasetIds = [];
   writeForm(f);
@@ -518,13 +524,13 @@ function paintResult() {
   <section aria-labelledby="r-e"><h3 id="r-e">(e) 多語初稿</h3>
     <div class="adm-tablewrap"><table class="adm-table"><thead><tr><th>語言</th><th>初稿狀態</th><th>術語鎖定（詞彙主檔 locked）</th><th>複核規則</th></tr></thead><tbody>${rows}</tbody></table></div>
     <p class="adm-muted">鎖定詞不得由機器自由翻譯，一律替換為主檔譯名。${key ? '偵測到本機 BYOK 金鑰，可由 LLM 模式產生初稿。' : '無 LLM 時只列出會鎖定的詞；初稿待啟用 LLM 模式（/ask/ 右上「進階」輸入自己的 key）後產生。'}</p></section>
-  <section aria-labelledby="r-f"><h3 id="r-f">(f) 送複核</h3>
+  <section aria-labelledby="r-f" data-gw-hide><h3 id="r-f">(f) 送複核</h3>
     <ol class="adm-steps">${steps.map(([a, b], i) => `<li class="${i < stage - 1 ? 'is-done' : i === stage - 1 ? 'is-now' : 'is-wait'}">${a}<small>${b}</small></li>`).join('')}</ol>
     ${miss.length ? `<div class="adm-box adm-box--warn" id="miss-box"><strong>送複核前仍需補齊</strong>${miss.map(esc).join('；')}</div>` : '<div class="adm-box adm-box--ok"><strong>必填欄位已齊</strong>正式驗證在 CI 的 JSON Schema。</div>'}
     <div id="ack-box"></div>
     <div class="adm-actions"><button type="button" class="adm-btn" id="btn-confirm" ${sel.stage === 'submitted' ? 'disabled' : ''}>確認並送複核</button><button type="button" class="adm-btn adm-btn--ghost" id="btn-return">退回修改</button>${sel.stage === 'submitted' ? `<a class="adm-btn adm-btn--ghost" href="${url('/admin/review/')}">前往複核區</a>` : ''}</div>
     <p class="adm-muted" id="submit-msg" role="status" aria-live="polite">${sel.stage === 'submitted' ? '已送複核（示範）：已加入本機複核佇列，狀態為第 2 步「公關室內容審核」。' : ''}</p></section>
-  <section aria-labelledby="r-g"><h3 id="r-g">(g) 產生上架包</h3>
+  <section aria-labelledby="r-g" data-gw-hide><h3 id="r-g">(g) 產生上架包</h3>
     <p class="adm-muted">上架包 ＝ <code>${esc(pathFor(obj))}</code>${obj.assets?.length ? ` ＋ ${obj.assets.length} 個檔案（<code>content/assets/${esc(obj.id)}/</code>）` : ''}。正式環境：解壓縮到 repo 根目錄 → 開 Pull Request → CI 驗證 schema、治理規則、檔案 sha256／大小／檔名與評估集 → 合併即發布。</p>
     <div class="adm-actions" style="margin-top:0"><button type="button" class="adm-btn" id="btn-zip">產生上架包（.zip）</button><button type="button" class="adm-btn adm-btn--ghost" id="btn-sim" aria-controls="sim-out">模擬送出</button><button type="button" class="adm-btn adm-btn--ghost" id="btn-dl">只下載 JSON</button><button type="button" class="adm-btn adm-btn--ghost" id="btn-copy">複製 JSON</button></div>
     <p class="adm-muted" id="pkg-msg" role="status" aria-live="polite"></p>
@@ -839,6 +845,8 @@ const repaintResultSoon = debounce(() => { if (A) paintResultKeepFocus(); }, 300
   document.addEventListener('adm:unit', () => { if (!val('#f-title') && !val('#f-body') && getUnit() !== 'all') $('#f-owner').value = getUnit(); PV?.repaintSoon(); });
   document.addEventListener('click', (e) => { if (e.target?.id === 'btn-edit-cancel') { editing = null; paintEditBox(); store.del(KEY); location.href = url('/admin/publish/'); } });
   form.addEventListener('input', debounce(() => { if (editing) paintEditDiff(); }, 400));
+  // 第三十輪：有寫入閘道就接上「送審與上線」面板（沒有就維持瀏覽器示範）
+  initPublishGateway({ exportObj, loadItem: (item) => startEdit(item.id, item), getContentId: () => val('#f-id').trim() });
   window.__admPublish = { runPreprocess, exportObj, buildPackage, startEdit, get editing() { return editing; }, get editor() { return ED; }, get assets() { return ASSETS; }, get state() { return { sel, A }; }, get preview() { return PV; }, paneTab }; // 供自動化測試
 })();
 void normPath; void today;

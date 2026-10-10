@@ -89,3 +89,23 @@ export function auditEntry(kind, s, detail = '', now = Date.now()) {
   if (!AUDIT_EVENTS.includes(kind)) throw new Error(`unknown audit event ${kind}`);
   return { at: new Date(now).toISOString(), kind, sub: s?.sub ?? null, name: s?.name ?? null, unit: s?.unit ?? null, roles: s?.roles ?? [], detail: String(detail ?? '') };
 }
+
+/* ───────── 第三十輪：AD 群組 ↔ 單位×角色（寫入閘道與正式 SSO 共用的對照；docs/admin-auth.md §7） ─────────
+ * 群組名稱：CDC-WEB-<unitId 去掉 unit.>-<role>，例：CDC-WEB-acute-infectious-editor、CDC-WEB-pr-chief-editor。
+ * 角色名稱本身可能含連字號（situation-publisher、chief-editor），所以解析時「從尾巴比對已知角色」，剩下的才是單位。 */
+export const AD_GROUP_PREFIX = 'CDC-WEB-';
+export const adGroupName = (unitId, role) => `${AD_GROUP_PREFIX}${String(unitId).replace(/^unit\./, '')}-${role}`;
+/** 群組名稱 → { unit, role }；不是本站群組（或角色未知）回 null。網域前綴（CDC\）與大小寫差異都容忍。 */
+export function parseAdGroup(name) {
+  const g = String(name ?? '').trim().replace(/^.*\\/, '');
+  if (g.slice(0, AD_GROUP_PREFIX.length).toUpperCase() !== AD_GROUP_PREFIX) return null;
+  const rest = g.slice(AD_GROUP_PREFIX.length).toLowerCase();
+  const role = [...ROLE_ORDER].sort((a, b) => b.length - a.length).find((r) => rest.endsWith(`-${r}`));
+  if (!role) return null;
+  const unit = rest.slice(0, rest.length - role.length - 1);
+  return /^[a-z0-9][a-z0-9-]*$/.test(unit) ? { unit: `unit.${unit}`, role } : null;
+}
+/** 工作階段（或示範帳號）→ 它在 AD 會有的群組清單 */
+export const adGroupsOf = (s) => (s?.roles ?? []).filter((r) => ROLES[r]).map((r) => adGroupName(s.unit, r));
+/** 後台角色 → 寫入閘道給同事看的三種角色：編輯／審核／管理 */
+export const GATEWAY_ROLE_OF = { editor: '編輯', 'situation-publisher': '編輯', reviewer: '審核', 'chief-editor': '審核', governance: '審核', platform: '管理' };
