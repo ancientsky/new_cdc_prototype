@@ -80,9 +80,10 @@
       "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#core-curriculum",
       "oldType": "page",
       "verified": false,
-      "status": "pending",
+      "status": "merged",
+      "newPath": "/pro/curriculum/",
       "owner": "unit.preventive-medicine",
-      "note": "【必移轉】供醫事與防疫人員使用的教材。移轉時依教材類型分成文件（PDF 轉檔入文件庫）與頁面，標示版次與審閱日；權責單位待確認。",
+      "note": "【必移轉】供醫事與防疫人員使用的教材。第二十八輪（Issue #38）：入口併入新站 /pro/curriculum/（依 docType curriculum 自動產生），各疾病教材逐份見 content/migration/core-curriculum.json（登革熱、麻疹為示範匯入版，新型A型流感、鼠疫待移轉）；每份教材的權責單位依疾病主檔（急性傳染病組、新興傳染病整備組）。仍待確認：整套「傳染病核心教材」系列的統籌單位（本筆暫列預防醫學辦公室）、舊站還有哪些疾病有教材。",
       "newRequirements": [
         "owner",
         "reviewedAt",

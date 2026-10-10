@@ -1,8 +1,8 @@
 {
-  "version": "2026.10-r9",
+  "version": "2026.10-r10",
   "updatedAt": "2026-10-10",
   "owner": "unit.oasis",
-  "note": "答案引擎評估集（原型 140+ 題；規格目標 500 題）。每次正本修訂或換模型都重跑；version 類別（曾因修訂而改變答案的題目）須全對才能上線。requires 列出該題依賴的內容 id／前綴，內容尚未建置時該題略過不計分。 r3（2026-10-02）：新增申請（apply）、檢驗（lab，專業）、通報時限（notify，主檔結構化回答）、公告（notice）類別，與影片版本題（過時影片不得被引用）。 r4（2026-10-02 第六輪）：新增國際合作 3 題（英文來源 sourceLang:en 內容進英文索引、中文譯文進中文索引）。 r5（2026-10-04 第七輪）：人才招募改 careers 意圖（結構化列開放中職缺、問「誰錄取」只給結果頁連結不唸名單）、採購改 procurement 意圖；NC001／NC002 改依職缺與標案內容，新增 NC003–NC006（含「誰錄取」不得出現遮罩姓名與報名編號、錄取者個資拒答）。 r6（2026-10-05）：新增 VA011–VA014 年齡／身分跨疫苗彙整題（由疫苗接種時程主檔結構化回答，行動須連到疫苗接種時程地圖並帶 #age）。 r9（2026-10-10 第二十五輪）：新增 nomatch 類別 NM001–NM005（站內沒有的主題須拒答為 no-match）。",
+  "note": "答案引擎評估集（原型 140+ 題；規格目標 500 題）。每次正本修訂或換模型都重跑；version 類別（曾因修訂而改變答案的題目）須全對才能上線。requires 列出該題依賴的內容 id／前綴，內容尚未建置時該題略過不計分。 r3（2026-10-02）：新增申請（apply）、檢驗（lab，專業）、通報時限（notify，主檔結構化回答）、公告（notice）類別，與影片版本題（過時影片不得被引用）。 r4（2026-10-02 第六輪）：新增國際合作 3 題（英文來源 sourceLang:en 內容進英文索引、中文譯文進中文索引）。 r5（2026-10-04 第七輪）：人才招募改 careers 意圖（結構化列開放中職缺、問「誰錄取」只給結果頁連結不唸名單）、採購改 procurement 意圖；NC001／NC002 改依職缺與標案內容，新增 NC003–NC006（含「誰錄取」不得出現遮罩姓名與報名編號、錄取者個資拒答）。 r6（2026-10-05）：新增 VA011–VA014 年齡／身分跨疫苗彙整題（由疫苗接種時程主檔結構化回答，行動須連到疫苗接種時程地圖並帶 #age）。 r9（2026-10-10 第二十五輪）：新增 nomatch 類別 NM001–NM005（站內沒有的主題須拒答為 no-match）。 r10 第二十八輪 核心教材（2026-10-10）：新增 CUR001–CUR005 專業題，引用登革熱、麻疹核心教材（示範匯入版）的章節與學習目標；第六章（治療）整章待補，不得被當成內容回答。",
   "categories": {
     "version": "版本題：曾因正本修訂而改變答案，引到失效版或過時衍生內容即失敗",
     "fact": "事實題：答案須含關鍵事實並引用正確來源",
@@ -2970,6 +2970,99 @@
       "expect": {
         "mustNotCite": [
           "doc.guidance-dengue.2026-02#annex-7"
+        ]
+      }
+    },
+    {
+      "id": "CUR001",
+      "category": "professional",
+      "view": "pro",
+      "requires": [
+        "doc.curriculum-measles.2026-10-10"
+      ],
+      "q": "麻疹核心教材的學習目標",
+      "note": "第二十八輪：學習目標單獨成一個答案單元（#objectives；評估只比對內容 id，章節錨點由 tests/round28-curriculum.test.mjs 驗）",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "doc.curriculum-measles.2026-10-10"
+        ],
+        "mustInclude": [
+          "學習目標"
+        ],
+        "citeLabel": true
+      }
+    },
+    {
+      "id": "CUR002",
+      "category": "professional",
+      "view": "pro",
+      "requires": [
+        "doc.curriculum-dengue.2026-10-10"
+      ],
+      "q": "登革熱核心教材 可感染期",
+      "note": "第二十八輪：教材第三章第二節（句子摘自工作指引第 3 頁，出處 A）",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "doc.curriculum-dengue.2026-10-10"
+        ],
+        "mustInclude": [
+          "發病前 1 天"
+        ]
+      }
+    },
+    {
+      "id": "CUR003",
+      "category": "professional",
+      "view": "pro",
+      "requires": [
+        "doc.curriculum-measles.2026-10-10"
+      ],
+      "q": "麻疹核心教材 檢體",
+      "note": "第二十八輪：教材第五章（出處 G 本站麻疹檢驗項目，原型示意）",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "doc.curriculum-measles.2026-10-10"
+        ],
+        "mustInclude": [
+          "咽喉拭子"
+        ]
+      }
+    },
+    {
+      "id": "CUR004",
+      "category": "professional",
+      "view": "pro",
+      "requires": [
+        "doc.curriculum-dengue.2026-10-10"
+      ],
+      "q": "登革熱核心教材 群聚解除",
+      "note": "第二十八輪：教材第七章第三節（工作指引第 55 頁）",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "doc.curriculum-dengue.2026-10-10"
+        ],
+        "mustInclude": [
+          "31 天"
+        ]
+      }
+    },
+    {
+      "id": "CUR005",
+      "category": "professional",
+      "view": "pro",
+      "requires": [
+        "doc.curriculum-dengue.2026-10-10"
+      ],
+      "q": "登革熱核心教材 治療",
+      "note": "第二十八輪：第六章（治療）整章待補；（待補）佔位不進答案單元，不得被當成內容回答",
+      "expect": {
+        "refuse": false,
+        "mustNotInclude": [
+          "待補"
         ]
       }
     },

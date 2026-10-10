@@ -680,6 +680,12 @@ export function runImport(opts) {
     } else if (kind === 'document') {
       const dt = docTypeFor(rules, title, pat, u);
       if (!dt.clear) issue('doctype-guessed', 'info', '標題與網址看不出文件種類，暫填 guideline');
+      // 第十二批（第二十八輪）：核心教材。標題強關鍵字蓋過網址模式（DiseaseTeach 預設 guideline）；schema 要的教學欄位舊頁看不出來 ⇒ 佔位
+      if (dt.strong) { const byPath = docTypeFor({ ...rules, docTypeStrongKeywords: [] }, title, pat, u); if (byPath.docType !== dt.docType) issue('doctype-from-title', 'info', `標題含「核心教材」，文件種類判為 ${dt.docType}（網址模式 ${pat?.id ?? '—'} 原本會判成 ${byPath.docType}）`); }
+      if (dt.docType === 'curriculum') {
+        issue('fields-pending', 'warn', `curriculum 的教學欄位舊頁看不出來，以佔位填入：learningObjectives（待補）、roles（暫填規則檔預設 ${(rules.curriculum?.defaultRoles ?? []).join('、') || '—'}）、curriculum.chapterPlan provisional；請權責單位依教材 PDF 填寫（guide-staff §31）`);
+        if (!primary) issue('curriculum-no-disease', 'error', '核心教材必須綁疾病（schema：diseases 至少 1 筆），標題與麵包屑都看不出疾病，請人工指定');
+      }
       // 第七批：生效日優先從標題（「2025 年 9 月版」「114.04.16」）抽，其次內文開頭「…年…月…日修訂／生效」，最後才用發布日
       const effTitle = dateFromText(title);
       const effBody0 = /((?:民國\s*)?\d{2,4}\s*年\s*\d{1,2}\s*月(?:\s*\d{1,2}\s*日)?|\d{2,3}\.\d{1,2}\.\d{1,2}|(?:19|20)\d{2}-\d{2}-\d{2})[^\n。]{0,12}?(修訂|生效|公告|發布|公布|核定|實施)/.exec(textOf(ext.body).slice(0, 600));
@@ -693,7 +699,7 @@ export function runImport(opts) {
       const vf = versionFree(stripTitlePrefix(rules, title));
       const sharesTitle = !pr.target?.startsWith('doc.') && (vfCount.get(vf) ?? 0) > 1;
       // 家族：清單目標存在 ⇒ 用既有文件的 family（id 不一定以日期結尾，如 doc.guidance-dengue.v17）；否則由目標 id 去掉版次段
-      const family0 = pr.target?.startsWith('doc.') ? (index.byId.get(pr.target)?.family ?? pr.target.replace(/\.(\d{4}-\d{2}-\d{2}|v\d+)$/i, '')) : sharesTitle ? `doc.${short}-${h6(vf)}` : `doc.${short}-${pr.manifestKey ?? h6(side.url)}`;
+      const family0 = pr.target?.startsWith('doc.') ? (index.byId.get(pr.target)?.family ?? pr.target.replace(/\.(\d{4}-\d{2}-\d{2}|v\d+)$/i, '')) : dt.docType === 'curriculum' ? `doc.curriculum-${short}` /* 第十二批：教材一病一份，家族名與新站既有教材一致（doc.curriculum-dengue） */ : sharesTitle ? `doc.${short}-${h6(vf)}` : `doc.${short}-${pr.manifestKey ?? h6(side.url)}`;
       if (sharesTitle) issue('version-family', 'info', `去掉版次後與另外 ${vfCount.get(vf) - 1} 頁同名，視為同一文件家族 ${family0}；版次鏈依生效日串接，舊版建議封存`);
       let id = pr.target?.startsWith('doc.') ? pr.target : `${family0}.${eff}`;
       if (usedIds.has(id)) {
@@ -718,7 +724,7 @@ export function runImport(opts) {
         issue('fields-pending', 'info', '待補欄位：machineReadableMarkdown（正本文字版）');
         markdown = `（待補：本文件正本為 PDF「${pdfAtts[0].label ?? pdfAtts[0].file}」，舊頁只有下載連結。上架前請權責單位提供文字版（assets-policy 第 4 節），或確認僅以附件提供。）${markdown.trim() ? `\n\n${markdown.trim()}` : ''}`;
       }
-      units.push({ pageKey: page.name, kind, type: 'document', draftId: id, title: stripTitlePrefix(rules, title), markdown, docType: dt.docType, version: version ?? eff, effectiveAt: eff, family, diseaseId: primary, publishedAt: eff, pdfOnly, conv: pdfOnly ? { pdfOnly: true } : {} });
+      units.push({ pageKey: page.name, kind, type: 'document', draftId: id, title: stripTitlePrefix(rules, title), markdown, docType: dt.docType, version: version ?? eff, effectiveAt: eff, family, diseaseId: primary, publishedAt: eff, pdfOnly, conv: pdfOnly ? { pdfOnly: true } : {}, ...(dt.docType === 'curriculum' ? { editionLabel: pdfAtts[0]?.label ?? null } : {}) });
       pr.outputs.push({ id, type: 'document', role: 'draft' });
       // 第七批：一頁多版——附件列表裡標了別的版次的 PDF（「…第七版（2022 年 3 月）」）⇒ 同家族的舊版各建一份純 PDF 草稿（只搬檔，不轉內文），生效日從附件標籤抽
       const curRank = versionRank(version);
@@ -932,6 +938,13 @@ export function runImport(opts) {
       const bag = bags.get(un.draftId);
       const pdf = bag?.assets.find((a) => a.file.endsWith('.pdf') && a.kind === 'attachment');
       if (pdf) d.pdfUrl = `/files/${un.draftId}/${pdf.file}`;
+      // 第十二批（第二十八輪）：核心教材草稿補 schema 必填的教學欄位（佔位；issue fields-pending 已記）
+      if (un.docType === 'curriculum') {
+        d.audience = uniqBy([...(d.audience ?? []), 'professional'], (x) => x);
+        d.roles = [...(rules.curriculum?.defaultRoles ?? ['physician'])];
+        d.learningObjectives = ['（待補：學習目標，請依教材 PDF 填寫）'];
+        d.curriculum = { series: rules.curriculum?.series ?? '傳染病核心教材', ...(un.editionLabel ? { edition: `舊站附件「${un.editionLabel}」（待確認）` } : {}), chapterPlan: 'provisional' };
+      }
     } else if (STRUCTURED_TYPES.has(un.type)) {
       d = base(un.title, un.markdown, un.type);
       Object.assign(d, un.fields);
