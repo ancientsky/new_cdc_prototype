@@ -192,6 +192,8 @@ export const LAB_PUBLIC_RE = /(要驗什麼|驗什麼|要檢查什麼|做什麼�
 // 問句線索 → 型別加權（第二輪：影音、出版品）
 const MEDIA_CUE = /(影片|影音|宣導片|衛教片|動畫|短片|短影音|Podcast|播客|YouTube|video)/i;
 const RESEARCH_CUE = /(研究計畫|研究案|委託研究|成果報告|計畫編號|IRB|研究的?(目標|目的|結果|發現)|這項研究|哪些研究)/;
+const NEWS_CUE = /(新聞|記者會|宣布|公布|當時|去年|前年|歷年|歷史|(?:20\d{2}|1[01]\d)\s*年(?!.{0,6}出生)|press release|announce)/i;
+const HISTORICAL_WEIGHT = 0.4;
 const PUB_CUE = /(哪一期|第幾期|那一期|哪期|期刊|疫情報導|年報|卷|出版品|手冊下載|刊登)/;
 const OPEN_CUE = /(現在|目前|正在|有在|還有|進行中|開放|可以報名|可以投標|最新|最近|近期|還能)/;
 const RECRUIT_CUE = /(招募|徵才|職缺|徵人|約聘|約僱|甄選|甄試|工作機會|缺額|招考|人員)/;
@@ -225,6 +227,21 @@ const focusOf = (q, c) => titleHits(q, c.title) >= 2 || (c.focusTerms ?? []).som
  *   lowBelow：高於拒答線但低於此值 ⇒ UI 顯示「與你的問題相關程度較低」。
  */
 export const RELEVANCE = { refChunks: 500, hardMinTop: 3, minTop: 8, highCoverage: 0.85, minCoverage: 0.28, minCoverageEntity: 0, minMatchedIdf: 0.3, genericMaxCoverage: 0.5, lowBelow: 0.6 };
+// §39.3：數字＋單位 → Map(單位 → Set(值))
+const CONSISTENCY_UNIT_RE = /(\d+(?:\.\d+)?)(?:\s*(?:至|到|～|~|–|—|-)\s*(\d+(?:\.\d+)?))?\s*(個月|小時|分鐘|天|日|週|周|月|年|歲|劑|次|%|％|公尺|度)/g;
+const CONSISTENCY_DATE_RE = /\d{2,4}\s*年\s*\d{1,2}\s*月(?:\s*\d{1,2}\s*日)?|\d{1,2}\s*月\s*\d{1,2}\s*日|\d{4}[-/]\d{1,2}(?:[-/]\d{1,2})?/g;
+const UNIT_CANON = { 周: '週', 日: '天', '％': '%' };
+export function numbersByUnit(text) {
+  const t = String(text ?? '').normalize('NFKC').replace(CONSISTENCY_DATE_RE, ' ');
+  const m = new Map();
+  for (const x of t.matchAll(CONSISTENCY_UNIT_RE)) {
+    const u = UNIT_CANON[x[3]] ?? x[3];
+    if (!m.has(u)) m.set(u, new Set());
+    m.get(u).add(x[2] ? `${x[1]}-${x[2]}` : x[1]);
+  }
+  return m;
+}
+
 /** 相關度高於拒答線但偏低（UI 顯示「與你的問題相關程度較低」，不再宣稱僅引用官方內容的信心） */
 export function isLowRelevance(result) { return typeof result?.relevance === 'number' && result.relevance < RELEVANCE.lowBelow; }
 /** 問句去掉功能詞後才斷詞，避免「苗哪」「裡打」這種跨功能詞的雜訊雙字拉低涵蓋率 */
@@ -976,6 +993,8 @@ export function createEngine(rawDeps = {}) {
       }
       if (c.type === 'media') s = MEDIA_CUE.test(q) ? s * 1.6 + 1.5 : s * 0.85;
       if (c.type === 'publication' && PUB_CUE.test(q)) s = s * 1.6 + 1.5;
+      // 第三十三輪：歷史新聞稿降權（§39.4）
+      if (c.historical && !NEWS_CUE.test(q)) s *= HISTORICAL_WEIGHT;
       if (c.type === 'research' && RESEARCH_CUE.test(q)) s = s * 1.6 + 1.5;
       if (labPublic && c.block === 'treatment') s = s * 1.5 + 1;
       scored.push({ ...c, _score: Math.round(s * 1000) / 1000, ...(falseToks?.size ? { _falseTokens: falseToks } : {}) });
@@ -1164,6 +1183,7 @@ export function createEngine(rawDeps = {}) {
       isCurrent: c.isCurrent !== false, section: c.section ?? null, family: c.family ?? null, supersedes: c.supersedes ?? null, supersedesVersion: c.supersedesVersion ?? null,
       change: c.change ?? null, license: c.license ?? 'OGDL-1.0', docTitle: c.docTitle ?? null, mdUrl: c.mdUrl ?? null, legacyUrl: c.legacyUrl ?? null,
       pdfPage: c.pdfPage ?? null, extraction: c.extraction ?? null, verification: c.verification ?? null,
+      historical: !!c.historical,
       ...typeExtras(c),
     };
   }
@@ -2024,6 +2044,26 @@ export function createEngine(rawDeps = {}) {
   }
 
   // ───────────── answer ─────────────
+  /** §39.4：句子命中建置時標的 chunk.conflicts ⇒ result.conflicts、兩句都在時優先者排前；不刪句 */
+  function noteConflicts(picked, result) {
+    const at = (arr, x) => arr.findIndex((q) => q.chunk?.contentId === x.contentId && q.text === x.sentence);
+    const notes = new Map();
+    for (const p of picked) for (const x of p.chunk?.conflicts ?? []) {
+      if (x.sentence !== p.text || notes.has(x.id)) continue;
+      const [prefer, other] = x.prefer === 'self' ? [x.self, x.other] : [x.other, x.self];
+      notes.set(x.id, { id: x.id, unit: x.unit, prefer, other, bothShown: at(picked, x.other) >= 0 });
+    }
+    if (!notes.size) return picked;
+    result.conflicts = [...notes.values()];
+    const out = [...picked];
+    for (const n of result.conflicts) {
+      result.guards.push({ kind: 'conflict-noted', id: n.id, unit: n.unit });
+      const wi = at(out, n.prefer), li = at(out, n.other);
+      if (li >= 0 && wi > li) out.splice(li, 0, ...out.splice(wi, 1));
+    }
+    return out;
+  }
+
   function answer(rawQuery, opts = {}) {
     const { lang = 'zh-TW', view = 'public', disease: presetDisease = null, mode, forceIntent = null } = opts;
     const LL = lang;
@@ -2277,6 +2317,7 @@ export function createEngine(rawDeps = {}) {
       result.list = traditionalList(q, view, lang, 8);
       result.fallbackList = true;
     }
+    picked = noteConflicts(picked, result);
     picked = markNotices(picked, result);
     finalizeSentences(result, picked, sourceMap);
     if (!result.sentences.length) return setRefusal(result, 'no-source', 'ref.no-source');

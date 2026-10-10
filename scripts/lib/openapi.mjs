@@ -188,6 +188,7 @@ export const ENDPOINTS = [
   ['/v1/governance/todos.json', 'governance', '治理待辦（正本修訂連動、逾期、譯文過期、反向稽核…）', arr(ref('Todo'))],
   ['/v1/governance/summary.json', 'governance', '治理儀表板數字', free],
   ['/v1/governance/by-owner.json', 'governance', '各權責單位待辦／逾期／白名單／內容數', arr(free)],
+  ['/v1/governance/consistency.json', 'governance', '跨內容說法不一致：待判定候選與已判定（第三十三輪）', free],
   ['/v1/governance/links.json', 'governance', '外部連結健康（fetch-data --check-links 寫回）', arr(ref('ExternalLink'))],
   ['/v1/governance/ai-status.json', 'governance', 'AI 問答開關', ref('AiStatus')],
   ['/v1/governance/whitelist.json', 'governance', 'AI 白名單政策與每筆狀態', free],

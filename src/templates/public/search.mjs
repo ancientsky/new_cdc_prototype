@@ -34,6 +34,7 @@ export function render(ctx) {
         <fieldset class="c-search__fs" data-filter="audience" hidden><legend>${t('search.f.audience')}</legend><div class="c-search__opts" data-options></div></fieldset>
         <div class="c-search__sel" data-filter-select="unit" hidden><label for="search-unit">${t('search.f.unit')}</label><select class="c-input" id="search-unit" name="unit"></select></div>
         <div class="c-search__sel" data-filter-select="year" hidden><label for="search-year">${t('search.f.year')}</label><select class="c-input" id="search-year" name="year"></select></div>
+        <p class="c-search__current"><label><input type="checkbox" id="search-current" name="current" value="1"> ${t('search.f.current')}</label></p>
         <div class="c-search__sel"><label for="search-sort">${t('search.sort')}</label>
           <select class="c-input" id="search-sort" name="sort"><option value="">${t('search.sort.rel')}</option><option value="new">${t('search.sort.new')}</option><option value="old">${t('search.sort.old')}</option></select></div>
         <p class="c-search__clear"><button type="button" class="c-btn c-btn--ghost c-btn--sm" id="search-clear">${t('search.f.clear')}</button></p>

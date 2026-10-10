@@ -506,6 +506,7 @@ export function emitApi(fullSite, write) {
   put('v1/governance/kpi.json', site.gov.kpi, { lastModified: site.today, quarter: quarterOf(site.today) }, {}, '品質指標（7.5 全列）');
   put('v1/governance/todos.json', todos, { lastModified: site.today, overdue: todos.filter((t) => t.overdue).length, kindLabels: TODO_KIND_LABELS }, {}, '治理待辦');
   put('v1/governance/summary.json', site.gov.summary, { lastModified: site.today }, {}, '治理儀表板數字');
+  put('v1/governance/consistency.json', site.gov.consistency ?? { candidates: 0, confirmed: 0, dismissed: 0, list: [] }, { lastModified: site.today, decisions: (site.governance.consistency?.decisions ?? []).length }, {}, '跨內容說法不一致：候選與已判定（第三十三輪）');
   put('v1/governance/by-owner.json', site.gov.byOwner, { lastModified: site.today }, {}, '各權責單位待辦／逾期／白名單／內容數');
   const lh = site.gov.linkHealth ?? {};
   put('v1/governance/links.json', site.gov.externalLinks ?? [], { lastModified: lh.lastCheckedAt ?? site.today, ok: lh.ok ?? 0, broken: lh.broken ?? 0, unchecked: lh.unchecked ?? 0, checker: 'node scripts/fetch-data.mjs --check-links' }, {}, '外部連結健康（status：ok／broken／unchecked）');

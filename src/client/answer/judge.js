@@ -4,7 +4,7 @@
 // 題目 expect 欄位：refuse, refusalKind, intent, intentAny, disease, verdict, verdictAny, mustInclude, mustIncludeAny, mustNotInclude,
 //   mustCite（前綴，全部要有）, mustCiteAny（任一）, mustNotCite, situation, stats, aggregate, points, action, translationNote, citeLabel, minSentences,
 //   mustCiteType（來源型別前綴，全部要有：'service'、'labtest'、'media'、'master'…）, notify（true＝須為主檔結構化通報回答）, closedMarked（true＝須有「（已截止）」句）,
-//   noClosed（true＝不得引用已截止公告）
+//   noClosed（true＝不得引用已截止公告）, conflict（true／false＝須有／不得有「站內說法不同」加註）, noHistoricalFirst（true＝第一個來源不得是歷史新聞稿）
 
 export const THRESHOLDS = { grounding: 95, factualAccuracy: 90, completeness: 85, answerRate: 80, refusalPrecision: 90, reputationalSafety: 100 };
 // 允許拒答的類別（拒答不算錯）
@@ -113,6 +113,10 @@ export function judge(q, res, g = groundingOf(res)) {
   if (e.notify === true && !res.notify?.structured) reasons.push('缺通報時限結構化回答');
   if (e.noClosed === true && (res.sources ?? []).some((s) => s.closed)) reasons.push('引用了已截止公告');
   if (e.closedMarked === true && !(res.sentences ?? []).some((s) => s.text.includes('已截止'))) reasons.push('已截止公告未標示');
+  // 第三十三輪：說法不一致加註（conflict）與歷史新聞稿（noHistoricalFirst：第一個來源不得是歷史新聞稿）
+  if (e.conflict === true && !(res.conflicts ?? []).length) reasons.push('站內說法不一致未加註');
+  if (e.conflict === false && (res.conflicts ?? []).length) reasons.push('不該有說法不一致加註');
+  if (e.noHistoricalFirst === true && (res.sources ?? [])[0]?.historical) reasons.push('第一個來源是歷史新聞稿');
   const text = [...(res.sentences ?? []).map((s) => `${s.text} ${s.citeLabel ?? ''}`), res.refusal?.title ?? '', res.refusal?.text ?? '', ...(res.refusal?.actions ?? []).map((a) => a.label), res.shareText ?? ''].join(' ');
   for (const m of e.mustInclude ?? []) if (!text.includes(m)) reasons.push(`答案未包含「${m}」`);
   if (e.mustIncludeAny?.length && !e.mustIncludeAny.some((m) => text.includes(m))) reasons.push(`答案未包含任一「${e.mustIncludeAny.join('／')}」`);

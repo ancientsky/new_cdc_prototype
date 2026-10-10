@@ -91,6 +91,8 @@ export function loadSite(config) {
   const governance = {
     aiStatus: readJSON(path.join(CONTENT, 'governance/ai-status.json')),
     whitelist: readJSON(path.join(CONTENT, 'governance/whitelist.json')),
+    // 第三十三輪：跨內容說法不一致的判定（scripts/lib/consistency.mjs、guide-staff §37）
+    consistency: readJSON(path.join(CONTENT, 'governance/consistency.json'), { version: 1, decisions: [] }),
     evalSet: readJSON(path.join(CONTENT, 'governance/eval-set.json'), { version: '0', questions: [] }),
   };
   const snapshots = {

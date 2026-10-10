@@ -3489,6 +3489,52 @@
           "disease.hepatitis-a"
         ]
       }
+    },
+    {
+      "id": "CF001",
+      "category": "conflict",
+      "q": "打完流感疫苗要在現場觀察多久",
+      "note": "第三十三輪：Q&A 寫留觀 15 分鐘、長照影片寫至少 30 分鐘，彼此沒有 basedOn。一致性檢查列為待判定候選；答案須加註「站內兩處說法不同」，不得默默並列兩個數字",
+      "expect": {
+        "refuse": false,
+        "conflict": true,
+        "mustCiteAny": [
+          "media.ltc-flu-vaccine",
+          "faq.influenza-vaccine-where"
+        ]
+      }
+    },
+    {
+      "id": "CF002",
+      "category": "conflict",
+      "q": "公費流感疫苗什麼時候開打",
+      "note": "第三十三輪：去年（2025-10-01）的開打新聞稿已超過 12 個月，屬歷史新聞稿；問現行時程不得引用它，第一個來源也不得是歷史新聞稿",
+      "expect": {
+        "refuse": false,
+        "noHistoricalFirst": true,
+        "mustNotCite": [
+          "news.2025-10-01-flu-vaccine-start"
+        ],
+        "mustCiteAny": [
+          "faq.flu-vaccine-who",
+          "doc.flu-vaccine-schedule",
+          "news.2026-09-18-flu-vaccine-oct1"
+        ]
+      }
+    },
+    {
+      "id": "CF003",
+      "category": "conflict",
+      "view": "pro",
+      "q": "潛伏結核感染治療有哪些處方",
+      "note": "第三十三輪：3HP 12 劑與 1HP 28 劑字面相似、數字不同，但 content/governance/consistency.json 已判定 not-conflict（兩種處方）；不得出現不一致加註",
+      "expect": {
+        "refuse": false,
+        "conflict": false,
+        "mustInclude": [
+          "1HP"
+        ]
+      }
     }
   ]
 }

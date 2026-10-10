@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "note": "跨內容說法不一致的判定紀錄（第三十三輪，guide-staff §37）。建置時 scripts/lib/consistency.mjs 找出「講同一件事、同單位數字不同」的句子組，寫成 content-conflict 待辦；權責單位判定後在這裡加一筆。decision：not-conflict（不是同一件事，之後不再提出）或 confirmed（確實矛盾，prefer 填正確那份內容的 id；錯的那句會從智慧問答移除，並開待修正待辦）。unit 省略表示這兩份內容的所有單位都適用。",
+  "decisions": [
+    {
+      "a": "doc.ltbi-guideline.2024-01-01",
+      "b": "doc.tb-guideline.2025-09-01",
+      "unit": "劑",
+      "decision": "not-conflict",
+      "note": "3HP（每週 1 次共 12 劑）與 1HP（每日服用共 28 劑）是兩種不同處方，不是同一建議的新舊說法。",
+      "decidedBy": "示範：Claude 依句意判讀，待慢性傳染病組覆核",
+      "decidedAt": "2026-10-10"
+    },
+    {
+      "a": "doc.tb-contact-investigation.2025-01-01",
+      "b": "doc.tb-manual.2025-07-01",
+      "unit": "個月",
+      "decision": "not-conflict",
+      "note": "「確診後 1 個月內完成第一次檢查」與「確診滿 12 個月完成第二次檢查」是接觸者檢查的兩個步驟。",
+      "decidedBy": "示範：Claude 依句意判讀，待慢性傳染病組覆核",
+      "decidedAt": "2026-10-10"
+    }
+  ]
+}

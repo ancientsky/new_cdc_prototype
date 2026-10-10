@@ -18,6 +18,7 @@ const S = {
     fullSearch: '用全文搜尋找「{q}」', fullSearchNote: '全文搜尋會列出所有含這個關鍵字的頁面，可依類型、單位、年份篩選。',
     paused: 'AI 問答暫停中，目前提供傳統搜尋結果與 1922 人工諮詢。', pausedReason: '原因', updated: '更新',
     proLabel: '專業模式：引用手冊條次與生效日，不做白話化', translationSource: '此語言沒有經審核的譯文，以下為中文原文。', translationMachine: '以下為機器翻譯（鎖定官方譯名），以中文原文為準。',
+    conflictH: '站內兩處說法不同', conflictText: '「{a}」（{ad}）寫 {av} {u}，「{b}」（{bd}）寫 {bv} {u}。已通知權責單位確認；確認前請以排在前面的「{a}」為準，有疑問請撥 1922。', historicalSrc: '歷史新聞稿 · {d} 發布',
     termNote: '「{from}」已改稱「{to}」，以下依現行名稱回答。', lowConf: '這個問題的意圖不夠明確，以下同時列出相關頁面。',
     verdict: { false: '錯誤', 'partly-true': '部分正確', outdated: '已過時', true: '正確', unknown: '查無澄清' }, verdictH: '查證結果', clarH: '官方澄清', shareH: '可轉傳的官方短訊', copy: '複製', copied: '已複製', reportChannel: '通報管道',
     outdatedNote: '已過時：所依據的「{t}」已於 {d} 修訂，請以現行版為準。', noPredict: '只呈現已發布的資料：不推論、不預測。', numberSource: '數字的來源', canonical: '正本', dataOwner: '資料權責', formats: '格式', api: 'API',
@@ -44,6 +45,7 @@ const S = {
     fullSearch: 'Search all pages for “{q}”', fullSearchNote: 'Full-text search lists every page that contains the keyword; you can filter by type, unit and year.',
     paused: 'AI answers are paused. Keyword search results and the 1922 hotline are available.', pausedReason: 'Reason', updated: 'Updated',
     proLabel: 'Professional mode: cites manual sections and effective dates verbatim', translationSource: 'No reviewed translation is available; showing the Chinese original.', translationMachine: 'Machine translation (official terms locked). The Chinese original prevails.',
+    conflictH: 'Two pages on this site disagree', conflictText: '“{a}” ({ad}) says {av} {u}; “{b}” ({bd}) says {bv} {u}. The responsible unit has been asked to confirm. Until then, follow “{a}”, or call 1922.', historicalSrc: 'Archived press release · published {d}',
     termNote: '"{from}" is now called "{to}".', lowConf: 'Your question is ambiguous, so related pages are listed as well.',
     verdict: { false: 'False', 'partly-true': 'Partly true', outdated: 'Outdated', true: 'True', unknown: 'No clarification found' }, verdictH: 'Fact-check result', clarH: 'Official clarification', shareH: 'Shareable official message', copy: 'Copy', copied: 'Copied', reportChannel: 'Report to',
     outdatedNote: 'Outdated: "{t}" was revised on {d}. Please follow the current version.', noPredict: 'Published data only — no inference, no forecasts.', numberSource: 'Where this number comes from', canonical: 'Canonical source', dataOwner: 'Data owner', formats: 'Formats', api: 'API',
@@ -159,6 +161,7 @@ export function sourceMeta(s) {
   if (s.type === 'master') return `${s.subject ?? ''}${s.legalCategory ? ` · ${catLabel(s.legalCategory)}` : ''}${s.hoursLabel ? ` · ${s.hoursLabel}` : ''}`;
   if (s.type === 'service') return `${s.ownerName ?? ''}${s.stepsCount ? ` · ${L('stepsN', { n: s.stepsCount })}` : ''}${s.slaDays != null ? ` · ${L('slaDays')} ${L('days', { n: s.slaDays })}` : ''}`;
   if (s.type === 'labtest') return `${s.ownerName ?? ''}${s.specimen?.name ? ` · ${s.specimen.name}` : ''}${s.sendWithinHours != null ? ` · ${L('sendWithin')} ${L('hours', { n: s.sendWithinHours })}` : ''}`;
+  if (s.historical) return `${s.ownerName ?? ''} · ${L('historicalSrc', { d: s.publishedAt ?? s.reviewedAt ?? '' })}`;
   return `${s.ownerName ?? ''} · ${L('reviewed')} ${s.reviewedAt ?? ''}${s.version ? ` · ${s.version}` : ''}${s.closed ? ` · ${L('closed')}` : ''}`;
 }
 
@@ -186,6 +189,14 @@ export function apaCitation(src) {
   const date = src.effectiveAt ?? src.reviewedAt ?? '';
   const abs = new URL(url(src.url), location.origin).href;
   return `${owner}（${date ? date.slice(0, 4) : 'n.d.'}）。${src.docTitle ?? src.title}${src.version ? `（${src.version}）` : ''}。衛生福利部疾病管制署。最後審閱 ${src.reviewedAt ?? ''}。${abs}`;
+}
+
+/** §39.4 */
+export function conflictNotes(result) {
+  if (!result.conflicts?.length) return '';
+  return result.conflicts.map((c) => `<div class="c-alert c-alert--overdue c-answer__conflict" role="note"><p><strong>${esc(L('conflictH'))}</strong> ${esc(L('conflictText', {
+    a: c.prefer.title, ad: c.prefer.date ?? '', av: (c.prefer.values ?? []).join('、'), b: c.other.title, bd: c.other.date ?? '', bv: (c.other.values ?? []).join('、'), u: c.unit,
+  }))}</p><p>${link(c.prefer.url, c.prefer.title)} · ${link(c.other.url, c.other.title)}</p></div>`).join('');
 }
 
 /** 「答案來源」卡列表 */

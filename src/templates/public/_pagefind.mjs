@@ -34,7 +34,10 @@ export function pagefindFor(meta) {
   const src = { ...(item ?? {}), ...(pagefind ?? {}) };
   const audience = (Array.isArray(src.audience) ? src.audience : []).filter((a) => AUDIENCES.has(a));
   const date = isDate(src.publishedAt ?? src.date) ? String(src.publishedAt ?? src.date).slice(0, 10) : null;
-  return { type, audience, owner: src.owner ?? null, date, year: date ? date.slice(0, 4) : null };
+  // 第三十三輪（ARCHITECTURE §39）：現行／歷史新聞稿／依據已修訂。搜尋結果標示，並可勾「只看現行內容」排除後兩者
+  const g = item?.gov ?? {};
+  const currency = g.predatesBasis || (g.stale?.length ?? 0) > 0 ? 'revised' : g.historical ? 'historical' : 'current';
+  return { type, audience, owner: src.owner ?? null, date, year: date ? date.slice(0, 4) : null, currency };
 }
 
 /**
@@ -51,6 +54,8 @@ export function pagefindMarks(ctx, pf, { unitName, title } = {}) {
   if (pf.owner) parts.push(one('filter', `unit:${pf.owner}`));
   if (pf.year) parts.push(one('filter', `year:${pf.year}`));
   if (pf.date) { parts.push(one('sort', `date:${pf.date}`)); parts.push(one('meta', `date:${pf.date}`)); }
+  parts.push(one('filter', `currency:${pf.currency ?? 'current'}`));
+  if (pf.currency && pf.currency !== 'current') parts.push(one('meta', `currency:${t(`search.currency.${pf.currency}`)}`));
   // 標題明確指定：索引用的副本會在中文字之間補空白（見 scripts/lib/pagefind.mjs），不明指的話結果標題會變成「登 革 熱」
   if (title) parts.push(one('meta', `title:${title}`));
   parts.push(one('meta', `kind:${t(`search.type.${pf.type}`)}`));

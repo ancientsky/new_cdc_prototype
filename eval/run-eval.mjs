@@ -80,9 +80,10 @@ if (isMain) {
   const { config } = await import('../site.config.mjs');
   const { applyGovernance } = await import('../scripts/lib/governance.mjs');
   const { buildSearchIndex } = await import('../scripts/lib/index-builder.mjs');
+  const { applyConsistency } = await import('../scripts/lib/consistency.mjs');
   const { todayISO } = await import('../scripts/lib/render.mjs');
   const site = loadSite(config); site.today = typeof args.today === 'string' ? args.today : process.env.BUILD_TODAY || todayISO();
-  applyGovernance(site); site.searchIndex = buildSearchIndex(site);
+  applyGovernance(site); site.searchIndex = buildSearchIndex(site); applyConsistency(site); // 與 build.mjs 同順序（第三十三輪）
   const r = await runEval(site, { category: typeof args.category === 'string' ? args.category : null });
   if (args.json) console.log(JSON.stringify({ ...r, results: undefined }, null, 2));
   else {
