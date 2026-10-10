@@ -1,0 +1,59 @@
+{
+  "id": "page.foia",
+  "type": "page",
+  "slug": "foia",
+  "title": "政府資訊公開",
+  "owner": "unit.secretariat",
+  "publishedAt": "2026-10-10",
+  "reviewedAt": "2026-10-10",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "依政府資訊公開法第 7 條應主動公開的資訊，在本站的對應頁面、尚待建置的項目與權責單位。",
+  "keywords": [
+    "政府資訊公開",
+    "政府資訊公開法",
+    "主動公開",
+    "預算決算",
+    "會議紀錄"
+  ],
+  "bodyMarkdown": "> **原型說明**：下表逐項對照政府資訊公開法第 7 條第 1 項應主動公開的資訊。已有頁面者直接連結；標示「待建置」者尚無對應頁面，已列出權責單位，正式上線前須補齊。權責單位為建議，待各單位確認。\n\n## 一、主動公開項目對照\n| 項目 | 本站對應 | 狀態／權責單位 |\n| --- | --- | --- |\n| 一、條約、對外關係文書、法規命令及法規性質之行政規則 | [法令規章](/policy/legal/) | 已有頁面 |\n| 二、政府機關之組織、職掌、地址、電話、傳真、網址及電子郵件信箱帳號 | [關於疾管署](/about/)、[聯絡我們](/contact/) | 已有頁面 |\n| 三、行政指導有關文書 | 待建置 | **待建置**（權責：秘書室） |\n| 四、施政計畫、業務統計及研究報告 | [開放資料與統計](/data/)、[出版品](/publications/)、[研究報告](/research/) | 已有頁面 |\n| 五、預算及決算書 | [疾病管制署預算與決算書（資料集）](/data/#dataset.budget-final-accounts) | 已有頁面 |\n| 六、請願之處理結果及訴願之決定 | 待建置 | **待建置**（權責：秘書室（訴願、請願承辦）） |\n| 七、書面之公共工程及採購契約 | [採購公告](/procurement/)（招標與決標資訊；契約本文待建置） | 已有頁面；契約本文 **待建置**（權責：秘書室） |\n| 八、支付或接受之補助 | 待建置 | **待建置**（權責：主計室） |\n| 九、合議制機關之會議紀錄 | 待建置 | **待建置**（權責：秘書室） |\n\n## 二、申請提供政府資訊\n非主動公開的資訊，得依政府資訊公開法向本署申請提供。原型階段請先透過[聯絡我們](/contact/)提出，並註明所需資訊的內容與用途；正式站將提供線上申請與辦理進度查詢（待建置）。\n\n## 三、限制公開或不予提供\n涉及個人隱私、營業祕密、國家安全或其他法律規定應保密者，依政府資訊公開法第 18 條等規定限制公開或不予提供，並於回覆中說明理由。\n\n## 四、授權\n主動公開的資料原則上依[開放資料授權](/policy/open-data/)釋出。",
+  "i18n": {
+    "en": {
+      "title": "Government information disclosure",
+      "summary": "Where the information that must be proactively disclosed under Article 7 of the Freedom of Government Information Law can be found on this site, and which items are still to be built.",
+      "bodyMarkdown": "> **Prototype note:** The table maps each item that Article 7(1) of the Freedom of Government Information Law requires agencies to disclose proactively. Items marked \"to be built\" have no page yet; the responsible unit is listed and must be filled in before launch. Units are proposals pending confirmation.\n\n## 1. Proactive disclosure items\n| Item | Where on this site | Status / responsible unit |\n| --- | --- | --- |\n| Treaties, foreign-relations documents, regulations and administrative rules | [Laws and regulations](/policy/legal/) | Available |\n| Organisation, duties, address, phone, fax, website and email | [About](/about/), [Contact](/contact/) | Available |\n| Documents on administrative guidance | To be built | Secretariat |\n| Policy plans, statistics and research reports | [Open data](/data/), [Publications](/publications/), [Research](/research/) | Available |\n| Budgets and final accounts | [Budget and final accounts dataset](/data/#dataset.budget-final-accounts) | Available |\n| Outcomes of petitions and appeal decisions | To be built | Secretariat |\n| Public works and procurement contracts | [Procurement notices](/procurement/) (contract text to be built) | Secretariat |\n| Subsidies paid or received | To be built | Accounting Office |\n| Minutes of collegial bodies | To be built | Secretariat |\n\n## 2. Requesting government information\nInformation that is not proactively disclosed can be requested under the Law. During the prototype, please use [Contact us](/contact/) and describe what you need and why. Online requests and progress tracking are to be built.\n\n## 3. Restrictions\nInformation involving personal privacy, trade secrets, national security or other legally confidential matters may be withheld, with reasons given in the reply.\n\n## 4. Licence\nProactively disclosed data is released under the [open data licence](/policy/open-data/)."
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "id": "page.legal",
+  "type": "page",
+  "slug": "legal",
+  "title": "法令規章",
+  "owner": "unit.planning",
+  "publishedAt": "2026-10-10",
+  "reviewedAt": "2026-10-10",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "疾管署執行傳染病防治與預防接種所依據的主要法律與子法，以及全國法規資料庫的連結。",
+  "keywords": [
+    "法令規章",
+    "傳染病防治法",
+    "預防接種",
+    "施行細則",
+    "全國法規資料庫"
+  ],
+  "bodyMarkdown": "> **原型說明**：本頁彙整主要法規並連到法務部「全國法規資料庫」。條文以全國法規資料庫公布者為準；標示「待確認」的條目，其法規代碼或名稱尚待法制單位核對，目前連到資料庫的搜尋頁。\n\n## 一、傳染病防治\n- [傳染病防治法](https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=L0050001)：傳染病分類、通報、檢疫、防治措施、預防接種與罰則的母法。\n- [傳染病防治法施行細則](https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=L0050003)：母法的執行細節。\n- 傳染病防治法授權訂定之其他子法（例如傳染病防治醫療網作業辦法、傳染病病人隔離治療相關辦法）：[在全國法規資料庫搜尋「傳染病防治」](https://law.moj.gov.tw/Law/LawSearchResult.aspx?ty=ONEBAR&kw=%E5%82%B3%E6%9F%93%E7%97%85%E9%98%B2%E6%B2%BB)（待確認，建置時逐項補上法規代碼）。\n\n## 二、預防接種\n- [預防接種受害救濟基金徵收及審議辦法](https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=L0050008)：預防接種受害救濟的基金徵收與審議程序。\n- 預防接種相關其他法規（例如接種對象與時程相關公告、預防接種作業相關辦法）：[在全國法規資料庫搜尋「預防接種」](https://law.moj.gov.tw/Law/LawSearchResult.aspx?ty=ONEBAR&kw=%E9%A0%90%E9%98%B2%E6%8E%A5%E7%A8%AE)（待確認）。\n- 現行預防接種建議與時程，見本站[文件庫](/documents/)與[疫苗](/vaccines/)頁；法規不等於接種建議，請以現行版建議為準。\n\n## 三、如何確認條文是現行版\n全國法規資料庫會標示最新修正日期與歷次沿革。引用條文時，請附法規名稱、條次與查閱日期；本站不另存法規全文，避免與正本不一致。\n\n## 四、權責與意見\n本頁由企劃組（建議，待確認）維護，每年至少審閱一次。法規連結失效或有更新，請透過[聯絡我們](/contact/)告知。",
+  "i18n": {
+    "en": {
+      "title": "Laws and regulations",
+      "summary": "The main laws and subsidiary regulations Taiwan CDC relies on for communicable disease control and immunization, with links to the national legal database.",
+      "bodyMarkdown": "> **Prototype note:** This page lists the main laws and links to the Ministry of Justice national legal database. The database is authoritative. Entries marked \"to be confirmed\" still need their statute codes checked by the legal affairs unit and currently link to a database search.\n\n## 1. Communicable disease control\n- [Communicable Disease Control Act](https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=L0050001): the parent act covering classification, notification, quarantine, control measures, vaccination and penalties.\n- [Enforcement Rules of the Communicable Disease Control Act](https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=L0050003).\n- Other regulations made under the Act: [search the database for \"communicable disease control\"](https://law.moj.gov.tw/Law/LawSearchResult.aspx?ty=ONEBAR&kw=%E5%82%B3%E6%9F%93%E7%97%85%E9%98%B2%E6%B2%BB) (to be confirmed).\n\n## 2. Immunization\n- [Regulations on the Levy and Review of the Vaccine Injury Compensation Fund](https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=L0050008).\n- Other immunization rules: [search the database for \"immunization\"](https://law.moj.gov.tw/Law/LawSearchResult.aspx?ty=ONEBAR&kw=%E9%A0%90%E9%98%B2%E6%8E%A5%E7%A8%AE) (to be confirmed).\n- Current vaccination recommendations are in the [document library](/documents/) and [vaccines](/vaccines/) pages; a statute is not a vaccination recommendation, so follow the current version of the recommendation.\n\n## 3. Checking that an article is current\nThe legal database shows the latest amendment date and history. When citing, give the act name, article number and the date you checked. This site does not keep its own copy of statutory text.\n\n## 4. Ownership and feedback\nMaintained by the Planning Division (proposed, to be confirmed) and reviewed at least once a year. Please report broken links through [Contact us](/contact/)."
+    }
+  }
+}

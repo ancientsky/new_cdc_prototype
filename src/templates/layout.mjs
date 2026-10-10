@@ -149,6 +149,7 @@ ${translationBar(ctx, item, hideTranslationBar)}
   <nav class="site-footer__col" aria-labelledby="ft-about"><h2 class="site-footer__t" id="ft-about">${t('footer.group.about')}</h2><ul>
     <li><a href="${url('/about/')}">${t('footer.about')}</a></li>${hasIntl ? html`<li><a href="${url('/international/')}">${t('international.title')}</a></li>` : ''}
     <li><a href="${url('/policy/privacy/')}">${t('footer.privacy')}</a></li><li><a href="${url('/policy/ai/')}">${t('footer.ai')}</a></li><li><a href="${url('/accessibility/')}">${t('footer.a11y')}</a></li>
+    <li><a href="${url('/policy/legal/')}">${t('footer.legal')}</a></li><li><a href="${url('/policy/foia/')}">${t('footer.foia')}</a></li><li><a href="${url('/policy/security/')}">${t('footer.security')}</a></li><li><a href="${url('/policy/copyright/')}">${t('footer.copyright')}</a></li>
     <li><a href="${url('/guide/')}">${t('footer.guide')}</a></li><li><a href="${url('/sitemap-page/')}">${t('sitemap')}</a></li></ul></nav>
   <nav class="site-footer__col" aria-labelledby="ft-dev"><h2 class="site-footer__t" id="ft-dev">${t('footer.group.dev')}</h2><ul>
     <li><a href="${url('/data/')}">${t('nav.data')}</a></li><li><a href="${url('/developers/')}">${t('footer.api')}</a></li><li><a href="${url('/policy/open-data/')}">${t('footer.license')}</a></li>

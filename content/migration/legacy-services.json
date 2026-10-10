@@ -1,0 +1,111 @@
+{
+  "id": "migration.legacy-services",
+  "type": "migration",
+  "title": "舊站既有服務（電子報、抗蛇毒血清、核心教材、進階搜尋）→ 新站",
+  "owner": "unit.it",
+  "steward": "資訊室承辦人",
+  "publishedAt": "2026-10-10",
+  "reviewedAt": "2026-10-10",
+  "reviewPeriodMonths": 3,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "外部審查（Issue #38）指出新站尚缺的四項舊站服務：電子報訂閱、抗蛇毒血清資訊、傳染病核心教材、進階搜尋。逐項列出處理方向與待決策事項。",
+  "keywords": [
+    "移轉清單",
+    "電子報",
+    "抗蛇毒血清",
+    "核心教材",
+    "進階搜尋",
+    "舊網址"
+  ],
+  "scope": {
+    "kind": "category",
+    "name": "舊站既有服務"
+  },
+  "legacyRoot": "https://www.cdc.gov.tw/Category/MPage/{id}",
+  "showLegacyUntil": "2027-12-31",
+  "sourceNote": "開發環境連不到 www.cdc.gov.tw。只有抗蛇毒血清的網址取自外部審查意見；電子報、核心教材、進階搜尋的舊網址以 {id} 佔位，待承辦補。標【必移轉】者新站一定要有；標【待決策】者需權責單位先拍板。全部 verified:false。",
+  "items": [
+    {
+      "key": "newsletter",
+      "oldTitle": "電子報訂閱",
+      "oldPath": "首頁／電子報",
+      "oldUrl": "https://www.cdc.gov.tw/Category/ListContent/{id}#newsletter",
+      "oldType": "page",
+      "verified": false,
+      "status": "pending",
+      "owner": "unit.pr",
+      "note": "【待決策】Email 訂閱需要後端或第三方寄信服務，原型是靜態網站做不到。建議：先以 RSS（新聞稿、致醫界通函）加 LINE 官方帳號取代，並在頁尾說明訂閱方式；若仍要 Email 電子報，需資訊室評估寄信服務、退訂機制與個資保存（見隱私權政策）。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "machineReadable"
+      ]
+    },
+    {
+      "key": "antivenom",
+      "oldTitle": "抗蛇毒血清資訊",
+      "oldPath": "首頁／民眾衛教／抗蛇毒血清",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/l_z6ZKErZJ063m6OV_8nXQ",
+      "oldType": "page",
+      "verified": false,
+      "status": "pending",
+      "owner": "unit.lab",
+      "note": "【必移轉】屬緊急就醫資訊（毒蛇咬傷處理、抗蛇毒血清儲備與供應醫院），搜尋「抗蛇毒血清」目前站內查無答案（Issue #25）。移轉時須與權責單位確認內容正確與最新、補上 1922／119 就醫提醒，並列為一級內容（人工確認才上線）。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "reviewPeriod",
+        "aiWhitelist",
+        "structuredData",
+        "linkCheck"
+      ]
+    },
+    {
+      "key": "core-curriculum",
+      "oldTitle": "傳染病核心教材",
+      "oldPath": "首頁／專業人員／傳染病核心教材",
+      "oldUrl": "https://www.cdc.gov.tw/Category/MPage/{id}#core-curriculum",
+      "oldType": "page",
+      "verified": false,
+      "status": "pending",
+      "owner": "unit.preventive-medicine",
+      "note": "【必移轉】供醫事與防疫人員使用的教材。移轉時依教材類型分成文件（PDF 轉檔入文件庫）與頁面，標示版次與審閱日；權責單位待確認。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "versionChain",
+        "machineReadable",
+        "license"
+      ]
+    },
+    {
+      "key": "advanced-search",
+      "oldTitle": "進階搜尋",
+      "oldPath": "首頁／進階搜尋",
+      "oldUrl": "https://www.cdc.gov.tw/Search/{id}",
+      "oldType": "page",
+      "verified": false,
+      "status": "pending",
+      "owner": "unit.it",
+      "note": "【待決策】兩條路：(A) 直接用 /ask/ 的答案頁，查無或依據不足時附「相關頁面」關鍵字結果清單（已於第二十五輪實作）；(B) 另外導入 Pagefind 之類的靜態全文搜尋，提供依型別、日期篩選的進階搜尋。建議先 A、觀察查無率（見透明報告）再決定是否做 B。",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "accessibility"
+      ]
+    }
+  ]
+}

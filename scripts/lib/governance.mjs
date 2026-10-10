@@ -246,7 +246,7 @@ export function externalLinksOf(item) {
 // ───────────────────────── 路徑 helper（與 4.1 路由一致） ─────────────────────────
 
 /** 頁面 slug 與實際路由不同者（與 src/templates/public/_partials.mjs PAGE_PATHS 一致） */
-const PAGE_SLUG_PATHS = { 'ai-policy': '/policy/ai/', privacy: '/policy/privacy/', 'open-data': '/policy/open-data/' };
+const PAGE_SLUG_PATHS = { 'ai-policy': '/policy/ai/', privacy: '/policy/privacy/', 'open-data': '/policy/open-data/', legal: '/policy/legal/', foia: '/policy/foia/', 'security-policy': '/policy/security/', copyright: '/policy/copyright/' };
 
 /** id 去型別前綴：news.2026-09-22-x → 2026-09-22-x */
 export function slugOf(item) { return String(item.id).replace(/^[a-z]+\./, ''); }
