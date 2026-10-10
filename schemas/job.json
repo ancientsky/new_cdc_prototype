@@ -2,7 +2,7 @@
   "$id": "https://cdc-prototype/schemas/job.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "招募職缺（人事室）",
-  "description": "content/jobs/{yyyy-mm-dd}-{slug}.json；id job.{yyyy-mm-dd}-{slug}，前台路徑 /careers/{slug}/（ARCHITECTURE 15.1）。階段（gov.jobStage）由治理引擎依日期與 result 推導，只有 cancelled／filled 可人工覆蓋（manualStatus）。甄選結果只公布報名編號與遮罩姓名：nameMasked 必須含遮罩字（○◯〇＊）且不得是完整姓名、candidateNo 不得像身分證字號，違反即建置失敗（scripts/lib/validate.mjs 個資閘門）。result 與 waitlistUpdates 不進 AI 答案索引。",
+  "description": "content/jobs/{yyyy-mm-dd}-{slug}.json；id job.{yyyy-mm-dd}-{slug}，前台路徑 /careers/{slug}/（ARCHITECTURE 15.1）。階段（gov.jobStage）由治理引擎依日期與 result 推導，只有 cancelled／filled 可人工覆蓋（manualStatus）。第三十輪（#55，ARCHITECTURE 35）：甄選結果只公布報名編號，不公布姓名（連遮罩姓名 nameMasked 也不行，名稱含 name／姓名的欄位一律擋）；candidateNo 不得像身分證字號；result.unpublishAt（下架日）必填，下架日起不再輸出名單；正式站建議 result.externalUrl（名單留在人事系統）。違反即建置失敗（scripts/lib/validate.mjs 個資閘門）。result 與 waitlistUpdates 不進 AI 答案索引。",
   "allOf": [{ "$ref": "_common.json" }],
   "type": "object",
   "required": ["slug", "hiringUnit", "jobType", "positions", "workplace", "salaryNote", "qualifications", "duties", "requiredDocuments", "applyStart", "deadlineAt", "applyMethod", "examPlan", "contact"],
@@ -61,29 +61,31 @@
     "manualStatusNote": { "type": "string", "description": "人工覆蓋的理由（例：因員額調整停止甄選）" },
     "result": {
       "type": "object",
-      "required": ["publishedAt", "admitted"],
+      "required": ["publishedAt", "unpublishAt"],
       "additionalProperties": false,
-      "description": "甄選結果（公開，但不進 AI 答案索引）。只公布序號、報名編號與遮罩姓名。",
+      "description": "甄選結果（公開，但不進 AI 答案索引）。第三十輪（#55）：只公布序號／順位與報名編號，不公布姓名；必須有下架日 unpublishAt。正式站建議只填 externalUrl（名單由人事系統提供，JSON 不放名單）；externalUrl 與 admitted 擇一（已過下架日、名單已從 JSON 移除者兩者皆可省略）。",
       "properties": {
         "publishedAt": { "type": "string", "format": "date" },
+        "unpublishAt": { "type": "string", "format": "date", "description": "下架日（當日起建置不再輸出名單，頁面改顯示「甄選結果已於 YYYY-MM-DD 下架」）。預設＝max(公告日 + 3 個月, 最後一位備取有效期限隔天)；不得早於公告日 + 30 日、不得晚於公告日 + 12 個月、不得早於或等於備取有效期限（src/client/careers-rules.js jobResultProblems）。下架前 14 日開待辦 job-result-unpublish。" },
+        "externalUrl": { "type": "string", "pattern": "^(https://|/pending/\\?)", "description": "人事系統的甄選結果頁（或它託管的 PDF）。建議做法：名單不進 Git，JSON 只放這個連結；填了就不得再有 admitted／waitlist／waitlistUpdates。原型沒有人事系統，示範資料以 /pending/?ref=…&doc=… 佔位" },
         "refNo": { "type": "string" },
         "admitted": { "type": "array", "items": { "$ref": "#/$defs/jobAdmittedEntry" } },
         "waitlist": { "type": "array", "items": { "$ref": "#/$defs/jobWaitlistEntry" } },
-        "note": { "type": "string", "description": "報到須知等（不得含姓名或身分證字號）" },
+        "note": { "type": "string", "description": "報到須知等（不得含姓名、遮罩姓名或身分證字號）" },
         "attachments": { "$ref": "#/$defs/jobAttachments" }
       }
     },
     "waitlistUpdates": {
       "type": "array",
-      "description": "遞補公告（公開，但不進 AI 答案索引）",
+      "description": "遞補公告（公開，但不進 AI 答案索引；只放報名編號，不放姓名；result 下架時一併停止輸出）",
       "items": {
         "type": "object",
-        "required": ["date", "candidateNo", "nameMasked"],
+        "required": ["date", "candidateNo"],
         "additionalProperties": false,
+        "propertyNames": { "$ref": "#/$defs/jobNoNameField" },
         "properties": {
           "date": { "type": "string", "format": "date" },
           "candidateNo": { "$ref": "#/$defs/jobCandidateNo" },
-          "nameMasked": { "$ref": "#/$defs/jobNameMasked" },
           "note": { "type": "string" }
         }
       }
@@ -92,25 +94,25 @@
   },
   "$defs": {
     "jobCandidateNo": { "type": "string", "pattern": "^[0-9A-Za-z][0-9A-Za-z-]{2,23}$", "description": "報名編號（例：1150924-012＝民國 115 年 9 月 24 日公告第 012 號）；不得使用身分證字號" },
-    "jobNameMasked": { "type": "string", "minLength": 2, "maxLength": 12, "description": "遮罩姓名（例：王○明、林○）；必須含 ○◯〇＊ 之一" },
+    "jobNoNameField": { "not": { "pattern": "[Nn][Aa][Mm][Ee]|姓名|名字" }, "description": "第三十輪（#55）：結果列不得有任何姓名欄（nameMasked、name、fullName、姓名…）；個資閘門另給中文錯誤訊息" },
     "jobAdmittedEntry": {
       "type": "object",
-      "required": ["seq", "candidateNo", "nameMasked"],
+      "required": ["seq", "candidateNo"],
       "additionalProperties": false,
+      "propertyNames": { "$ref": "#/$defs/jobNoNameField" },
       "properties": {
         "seq": { "type": "integer", "minimum": 1 },
-        "candidateNo": { "$ref": "#/$defs/jobCandidateNo" },
-        "nameMasked": { "$ref": "#/$defs/jobNameMasked" }
+        "candidateNo": { "$ref": "#/$defs/jobCandidateNo" }
       }
     },
     "jobWaitlistEntry": {
       "type": "object",
-      "required": ["rank", "candidateNo", "nameMasked"],
+      "required": ["rank", "candidateNo"],
       "additionalProperties": false,
+      "propertyNames": { "$ref": "#/$defs/jobNoNameField" },
       "properties": {
         "rank": { "type": "integer", "minimum": 1 },
         "candidateNo": { "$ref": "#/$defs/jobCandidateNo" },
-        "nameMasked": { "$ref": "#/$defs/jobNameMasked" },
         "validUntil": { "type": "string", "format": "date", "description": "備取有效期限；14 日內屆滿 ⇒ 待辦 job-waitlist-expiring" }
       }
     },

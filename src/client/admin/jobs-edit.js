@@ -2,7 +2,7 @@
 import { $, $$, esc, store, readEmbedded, copyText, downloadText } from './common.js';
 import {
   emptyState, stateFromJob, buildJob, problemsOf, rowProblems, amendmentFor, cancelAmendment, amendmentsSorted, dateChanges, keyDates, exportFilename,
-  jobStageOf, AMEND_KINDS,
+  jobStageOf, AMEND_KINDS, suggestedUnpublishAt,
 } from './jobs-edit-core.js';
 
 const D = readEmbedded('adm-jobs-data', { today: '', jobs: [], units: [], jobTypes: [], examStages: [], stages: {}, amendKinds: {} });
@@ -27,12 +27,12 @@ const ROWS = {
     row: (e, i) => `<tr data-i="${i}"><td><select data-k="stage" class="adm-input" aria-label="第 ${i + 1} 階段">${opt(D.examStages, e.stage)}</select></td><td>${inp('date', e.date, { type: 'date', label: `第 ${i + 1} 階段日期` })}</td><td>${inp('note', e.note, { label: `第 ${i + 1} 階段備註` })}</td>${del('exam', i, `第 ${i + 1} 階段`)}</tr>` },
   am: { tbody: '#jf-am-list', list: () => state.amendments, blank: () => ({ date: TODAY, kind: 'correction', text: '' }),
     row: (a, i) => `<tr data-i="${i}"><td>${inp('date', a.date, { type: 'date', label: '異動日期' })}</td><td><select data-k="kind" class="adm-input" aria-label="異動類型">${Object.entries(AMEND_KINDS).map(([k, v]) => `<option value="${k}"${k === a.kind ? ' selected' : ''}>${v}</option>`).join('')}</select></td><td>${inp('text', a.text, { label: '異動說明' })}</td><td>${inp('refNo', a.refNo ?? '', { label: '異動字號', size: 12 })}</td>${del('am', i, '這筆異動紀錄')}</tr>` },
-  admitted: { tbody: '#jf-admitted', list: () => state.result.admitted, blank: () => ({ seq: String(state.result.admitted.length + 1), candidateNo: '', nameMasked: '' }),
-    row: (a, i) => `<tr data-i="${i}"><td>${inp('seq', a.seq, { type: 'number', label: '序號', size: 3 })}</td><td>${inp('candidateNo', a.candidateNo, { label: '報名編號' })}</td><td>${inp('nameMasked', a.nameMasked, { label: '遮罩姓名', size: 8 })}${why}</td>${del('admitted', i, `正取第 ${i + 1} 列`)}</tr>` },
-  waitlist: { tbody: '#jf-waitlist', list: () => state.result.waitlist, blank: () => ({ rank: String(state.result.waitlist.length + 1), candidateNo: '', nameMasked: '', validUntil: state.result.waitlist.at(-1)?.validUntil ?? '' }),
-    row: (a, i) => `<tr data-i="${i}"><td>${inp('rank', a.rank, { type: 'number', label: '順位', size: 3 })}</td><td>${inp('candidateNo', a.candidateNo, { label: '報名編號' })}</td><td>${inp('nameMasked', a.nameMasked, { label: '遮罩姓名', size: 8 })}${why}</td><td>${inp('validUntil', a.validUntil, { type: 'date', label: '備取有效至' })}</td>${del('waitlist', i, `備取第 ${i + 1} 列`)}</tr>` },
-  wlu: { tbody: '#jf-wlu', list: () => state.waitlistUpdates, blank: () => ({ date: TODAY, candidateNo: '', nameMasked: '', note: '' }),
-    row: (a, i) => `<tr data-i="${i}"><td>${inp('date', a.date, { type: 'date', label: '遞補日期' })}</td><td>${inp('candidateNo', a.candidateNo, { label: '報名編號' })}</td><td>${inp('nameMasked', a.nameMasked, { label: '遮罩姓名', size: 8 })}${why}</td><td>${inp('note', a.note, { label: '遞補說明' })}</td>${del('wlu', i, `遞補第 ${i + 1} 筆`)}</tr>` },
+  admitted: { tbody: '#jf-admitted', list: () => state.result.admitted, blank: () => ({ seq: String(state.result.admitted.length + 1), candidateNo: '' }),
+    row: (a, i) => `<tr data-i="${i}"><td>${inp('seq', a.seq, { type: 'number', label: '序號', size: 3 })}</td><td>${inp('candidateNo', a.candidateNo, { label: '報名編號' })}${why}</td>${del('admitted', i, `正取第 ${i + 1} 列`)}</tr>` },
+  waitlist: { tbody: '#jf-waitlist', list: () => state.result.waitlist, blank: () => ({ rank: String(state.result.waitlist.length + 1), candidateNo: '', validUntil: state.result.waitlist.at(-1)?.validUntil ?? '' }),
+    row: (a, i) => `<tr data-i="${i}"><td>${inp('rank', a.rank, { type: 'number', label: '順位', size: 3 })}</td><td>${inp('candidateNo', a.candidateNo, { label: '報名編號' })}${why}</td><td>${inp('validUntil', a.validUntil, { type: 'date', label: '備取有效至' })}</td>${del('waitlist', i, `備取第 ${i + 1} 列`)}</tr>` },
+  wlu: { tbody: '#jf-wlu', list: () => state.waitlistUpdates, blank: () => ({ date: TODAY, candidateNo: '', note: '' }),
+    row: (a, i) => `<tr data-i="${i}"><td>${inp('date', a.date, { type: 'date', label: '遞補日期' })}</td><td>${inp('candidateNo', a.candidateNo, { label: '報名編號' })}${why}</td><td>${inp('note', a.note, { label: '遞補說明' })}</td>${del('wlu', i, `遞補第 ${i + 1} 筆`)}</tr>` },
 };
 function renderRows(kind) { const R = ROWS[kind]; $(R.tbody).innerHTML = R.list().map(R.row).join(''); }
 function readRows(kind) {
@@ -60,6 +60,7 @@ function fill(st) {
   $('#jf-has-result').checked = !!st.hasResult;
   $('#jf-result').hidden = !st.hasResult;
   $('#jf-r-date').value = st.result.publishedAt ?? ''; $('#jf-r-ref').value = st.result.refNo ?? ''; $('#jf-r-note').value = st.result.note ?? '';
+  $('#jf-r-unpub').value = st.result.unpublishAt ?? ''; $('#jf-r-ext').value = st.result.externalUrl ?? '';
   for (const k of Object.keys(ROWS)) renderRows(k);
 }
 function read() {
@@ -69,7 +70,7 @@ function read() {
   st.hasResult = $('#jf-has-result').checked;
   st.examPlan = readRows('exam');
   st.amendments = readRows('am');
-  st.result = { ...state.result, publishedAt: $('#jf-r-date').value, refNo: $('#jf-r-ref').value, note: $('#jf-r-note').value, admitted: readRows('admitted'), waitlist: readRows('waitlist') };
+  st.result = { ...state.result, publishedAt: $('#jf-r-date').value, unpublishAt: $('#jf-r-unpub').value, externalUrl: $('#jf-r-ext').value, refNo: $('#jf-r-ref').value, note: $('#jf-r-note').value, admitted: readRows('admitted'), waitlist: readRows('waitlist') };
   st.waitlistUpdates = readRows('wlu');
   state = st;
   return st;
@@ -108,7 +109,8 @@ function paint() {
     <h3 class="adm-jf-h3">關鍵日期</h3><div class="adm-tablewrap"><table class="adm-table adm-jf-dates"><tbody>${kd || '<tr><td class="adm-muted">尚未填日期</td></tr>'}</tbody></table></div>
     <h3 class="adm-jf-h3">公告異動（前台依日期倒序）</h3>${ams.length ? `<ul class="adm-jf-amends">${ams.map((a) => `<li><span class="adm-badge adm-badge--${a.kind === 'cancel' ? 'warn' : a.kind === 'extend' ? 'info' : 'gray'}">${esc(AMEND_KINDS[a.kind] ?? a.kind)}</span> <time>${esc(a.date)}</time> ${esc(a.text)}${a.refNo ? ` <span class="adm-muted">（${esc(a.refNo)}）</span>` : ''}</li>`).join('')}</ul>` : '<p class="adm-muted">沒有異動紀錄。</p>'}
     ${job.result || job.waitlistUpdates ? `<h3 class="adm-jf-h3">甄選結果檢核</h3><ul class="adm-jf-checks">
-      <li class="${rowBad ? 'is-no' : 'is-ok'}">${rowBad ? `✗ ${rowBad} 列遮罩姓名或報名編號未通過（左側標紅）` : `✓ ${[...rp.admitted, ...rp.waitlist, ...rp.updates].length} 列遮罩姓名與報名編號都通過`}</li>
+      <li class="${rowBad ? 'is-no' : 'is-ok'}">${job.result?.externalUrl ? '✓ 名單在人事系統（建議做法），本站不存名單' : rowBad ? `✗ ${rowBad} 列報名編號未通過（左側標紅）` : `✓ ${[...rp.admitted, ...rp.waitlist, ...rp.updates].length} 列只有報名編號、不含姓名`}</li>
+      <li class="${job.result?.unpublishAt ? 'is-ok' : 'is-no'}">${job.result?.unpublishAt ? `✓ ${esc(job.result.unpublishAt)} 起自動下架（建議值 ${esc(suggestedUnpublishAt(job.result) ?? '—')}）` : '✗ 沒有下架日'}</li>
       <li class="${job.positions != null && admittedN > job.positions ? 'is-no' : 'is-ok'}">${job.positions != null && admittedN > job.positions ? '✗' : '✓'} 正取 ${admittedN} ／ 名額 ${esc(job.positions ?? '—')}</li>
       <li class="${(job.result?.waitlist ?? []).some((w) => !w.validUntil) ? 'is-no' : 'is-ok'}">${(job.result?.waitlist ?? []).some((w) => !w.validUntil) ? '✗ 有備取沒有填有效期限' : `✓ 備取 ${(job.result?.waitlist ?? []).length} 位`}</li></ul>` : ''}`;
   // 結果列標紅
@@ -117,7 +119,7 @@ function paint() {
       const msgs = list[i] ?? [];
       tr.classList.toggle('adm-jf-bad', msgs.length > 0);
       const w = $('[data-why]', tr); if (w) { w.hidden = !msgs.length; w.textContent = msgs.join('；'); }
-      for (const el of $$('input[data-k="nameMasked"], input[data-k="candidateNo"]', tr)) el.setAttribute('aria-invalid', msgs.length ? 'true' : 'false');
+      for (const el of $$('input[data-k="candidateNo"]', tr)) el.setAttribute('aria-invalid', msgs.length ? 'true' : 'false');
     });
   }
   const pii = problems.filter((p) => /^個資閘門|^甄選結果/.test(p));
@@ -155,8 +157,10 @@ $('#jf-form').addEventListener('change', (e) => {
     read();
     $('#jf-result').hidden = !state.hasResult;
     if (state.hasResult && !state.result.publishedAt) { state.result.publishedAt = TODAY; $('#jf-r-date').value = TODAY; }
-    if (state.hasResult && !state.result.admitted.length) { state.result.admitted.push(ROWS.admitted.blank()); renderRows('admitted'); }
+    if (state.hasResult && !state.result.externalUrl && !state.result.admitted.length) { state.result.admitted.push(ROWS.admitted.blank()); renderRows('admitted'); }
   }
+  // 第三十輪：下架日沒填時，依公告日與備取有效期自動帶入預設值（之後人事室可改）
+  if (state.hasResult && !$('#jf-r-unpub').value) { const d = suggestedUnpublishAt({ publishedAt: $('#jf-r-date').value, waitlist: readRows('waitlist') }); if (d) $('#jf-r-unpub').value = d; }
   paint();
 });
 /** C：選取消／補實時自動追加一筆 kind=cancel（今天、尚未手動改過文字者隨理由更新）；改回「維持自動」時移除自動加的那筆 */

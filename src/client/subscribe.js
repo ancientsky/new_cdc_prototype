@@ -221,7 +221,7 @@ function init(root) {
 
   function showSent(kindKey, email) {
     setText($(root, '[data-sub-sent-text]'), T(kindKey, { email: normalizeEmail(email) }));
-    setText($(root, '[data-sub-sent-where]'), backend.kind === 'mock-http' ? T('subscribe.sent.where.http') : T('subscribe.sent.where.browser'));
+    setText($(root, '[data-sub-sent-where]'), backend.kind === 'live' ? T('subscribe.sent.where.live') : backend.kind === 'mock-http' ? T('subscribe.sent.where.http') : T('subscribe.sent.where.browser'));
     renderInbox($(root, '[data-sub-inbox]'));
     show('sent'); say(T(kindKey, { email: normalizeEmail(email) }));
   }
@@ -330,10 +330,14 @@ function init(root) {
   /* 開始：偵測後端 → 顯示對應橫幅 → 依網址決定畫面 */
   (async () => {
     const force = new URLSearchParams(location.search).get('backend') === 'browser' || root.dataset.backend === 'browser' ? 'browser' : '';
-    backend = await detectBackend({ base, force, makeBrowser: () => createBrowserBackend({ storage: (() => { try { return localStorage; } catch { return null; } })(), linksFor }) });
+    // 第三十輪（#55）：建置時設了訂閱系統端點（data-endpoint）⇒ 直接用它，同一份 HTTP 契約；不再探測本機模擬後端
+    backend = root.dataset.endpoint
+      ? createHttpBackend({ base: root.dataset.endpoint.replace(/\/$/, ''), kind: 'live' })
+      : await detectBackend({ base, force, makeBrowser: () => createBrowserBackend({ storage: (() => { try { return localStorage; } catch { return null; } })(), linksFor }) });
     root.dataset.backendKind = backend.kind;
-    setText(banner, T(backend.kind === 'mock-http' ? 'subscribe.banner.http' : 'subscribe.banner'));
-    setText(note, T(backend.kind === 'mock-http' ? 'subscribe.banner.http.sub' : 'subscribe.banner.sub'));
+    const bk = backend.kind === 'live' ? 'subscribe.banner.live' : backend.kind === 'mock-http' ? 'subscribe.banner.http' : 'subscribe.banner';
+    setText(banner, T(bk));
+    setText(note, T(`${bk}.sub`));
     root.hidden = false;
     const openInbox = $(root, '[data-sub-open-inbox]');
     if (openInbox) openInbox.hidden = !(backend.kind === 'mock-browser' && backend.inbox().length);

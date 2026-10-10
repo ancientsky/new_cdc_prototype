@@ -1,4 +1,4 @@
-// /admin/jobs/ 人才招募管理（人事室；ARCHITECTURE 15.2）：職缺與階段表、待辦、結果上架檢核（遮罩、正取數 ≤ 名額、備取有效期）。
+// /admin/jobs/ 人才招募管理（人事室；ARCHITECTURE 15.2）：職缺與階段表、待辦、結果上架檢核（不含姓名、正取數 ≤ 名額、備取有效期、下架日）。
 // 階段與待辦一律來自治理引擎（item.gov.jobStage、site.gov.todos）；這裡只呈現，不重算規則。
 import { html } from '../../../scripts/lib/render.mjs';
 import { pageHead, adminMeta, jobRows, todoList, daysBetween } from './_partials.mjs';
@@ -10,7 +10,7 @@ export function meta() { return adminMeta('人才招募管理', 'jobs', []); }
 const STAGE = {
   upcoming: ['即將開放', 'info'], open: ['報名中', 'ok'], closed: ['已截止', 'gray'], screening: ['審查與甄試中', 'warn'], result: ['已公布結果', 'ok'], filled: ['已額滿', 'gray'], cancelled: ['已取消', 'gray'],
 };
-const JOB_KINDS = ['job-result-overdue', 'job-waitlist-expiring', 'job-apply-url-dead'];
+const JOB_KINDS = ['job-result-overdue', 'job-waitlist-expiring', 'job-apply-url-dead', 'job-result-unpublish'];
 const badge = (stage) => { const [l, k] = STAGE[stage] ?? [stage, 'gray']; return html`<span class="adm-badge adm-badge--${k}">${l}</span>`; };
 
 export function render(ctx) {
@@ -27,8 +27,8 @@ ${pageHead({
     what: '人事室的招募職缺總覽：每則職缺目前在哪個階段、倒數、報名方式（站內模擬報名或外部系統）、待辦，以及甄選結果上架前的檢核。',
     flow: '職缺是 content/jobs/ 的 job 檔。上架新職缺、延長報名或改期、取消／補實、公告錄取名單與遞補，都用「上架與異動」表單填寫並即時檢核，匯出 JSON 後開 PR（快車道，CI 過即自動合併）；改期與取消會留下異動紀錄給民眾看。階段由日期與 result 欄位推導，截止當天、甄試日到期都不需要任何人動手；結果上架時建置會強制檢查遮罩姓名。',
   })}
-<div class="adm-box adm-box--note" role="note"><strong>結果只公布報名編號與遮罩姓名</strong>
-  <code>result.admitted／waitlist／waitlistUpdates</code> 的 <code>nameMasked</code> 必須含遮罩字（○◯〇＊），且不得出現完整中文姓名樣式；<code>candidateNo</code> 不得像身分證字號。違反時建置失敗，不能上線。AI 問答不會唸出名單，只給結果頁連結。</div>
+<div class="adm-box adm-box--note" role="note"><strong>結果只公布報名編號、到期下架；建議名單留在人事系統</strong>
+  第三十輪起 <code>result.admitted／waitlist／waitlistUpdates</code> 只能有序號／順位、<code>candidateNo</code>（不得像身分證字號）與備取有效期，<strong>不得有任何姓名欄（連遮罩姓名 nameMasked 也不行）</strong>；<code>result.unpublishAt</code>（下架日）必填，當天起網站、API、RSS 與搜尋自動停止顯示名單，下架前 14 日會開待辦。違反時建置失敗，不能上線。名單一旦進 Git 就永遠留在歷史裡，所以<strong>建議只填 <code>result.externalUrl</code></strong>（人事系統的結果頁或它託管的 PDF），JSON 不放名單。AI 問答不會唸出名單，只給結果頁連結。</div>
 
 <div class="adm-statrow" style="margin-top:var(--sp-4)">
   <div class="adm-stat adm-stat--info"><p class="adm-stat__label">報名中</p><p class="adm-stat__value">${n('open')}</p><p class="adm-stat__note">含外部報名系統 ${rows.filter((r) => r.stage === 'open' && r.external).length} 則</p></div>
@@ -52,23 +52,23 @@ ${pageHead({
       <td>${r.applyStart ?? '—'} ～ ${r.deadlineAt ?? '—'}</td>
       <td>${r.stage === 'open' && r.daysLeft != null ? html`<span class="adm-badge adm-badge--${r.daysLeft <= 7 ? 'warn' : 'ok'}">${r.daysLeft === 0 ? '今日截止' : `剩 ${r.daysLeft} 日`}</span>` : r.stage === 'upcoming' ? html`<span class="adm-muted">${r.applyStart} 開放</span>` : '—'}</td>
       <td>${r.external ? html`<a href="${r.applyUrl}" rel="noopener">外部系統</a>` : html`<span class="adm-muted">${r.onSite ? '站內模擬報名' : { email: '電子郵件', mail: '郵寄', 'in-person': '親送' }[r.applyMethod] ?? '—'}</span>`}</td>
-      <td>${r.resultAt ? html`${r.resultAt}${r.waitlistUpdates ? html` <span class="adm-muted">（遞補 ${r.waitlistUpdates} 次）</span>` : ''}` : r.resultOverdue ? html`<span class="adm-badge adm-badge--bad">預計 ${r.resultPlannedAt}，逾 ${r.resultOverdueDays} 日</span>` : r.resultPlannedAt ? html`<span class="adm-muted">預計 ${r.resultPlannedAt}</span>` : '—'}</td></tr>`)}</tbody></table></div>
+      <td>${r.resultAt ? html`${r.resultAt}${r.resultExternal ? html` <span class="adm-badge adm-badge--info">人事系統</span>` : ''}${r.resultDown ? html` <span class="adm-badge adm-badge--gray">已於 ${r.unpublishAt} 下架</span>` : r.unpublishAt ? html` <span class="adm-muted">（${r.unpublishAt} 下架）</span>` : ''}${r.waitlistUpdates ? html` <span class="adm-muted">（遞補 ${r.waitlistUpdates} 次）</span>` : ''}` : r.resultOverdue ? html`<span class="adm-badge adm-badge--bad">預計 ${r.resultPlannedAt}，逾 ${r.resultOverdueDays} 日</span>` : r.resultPlannedAt ? html`<span class="adm-muted">預計 ${r.resultPlannedAt}</span>` : '—'}</td></tr>`)}</tbody></table></div>
   ${rows.length ? '' : html`<p class="adm-empty">尚無職缺資料。</p>`}
 </section>
 
 <section class="adm-card" aria-labelledby="c-h"><h2 id="c-h">結果上架檢核</h2>
-  <p class="adm-card__sub">只檢查已有 <code>result</code> 的職缺。三項都通過才算可上架；「遮罩」未過時建置本來就會失敗，這裡是上架前的提早提醒。</p>
+  <p class="adm-card__sub">只檢查已有 <code>result</code> 的職缺。四項都通過才算可上架；「不含姓名」與「下架日」未過時建置本來就會失敗，這裡是上架前的提早提醒。</p>
   ${withResult.length ? html`<div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><caption>${withResult.length} 則職缺有甄選結果；${bad ? `${bad} 則未通過` : '全部通過'}</caption>
-    <thead><tr><th scope="col">職缺</th><th scope="col">遮罩檢核</th><th scope="col">正取數 ≤ 名額</th><th scope="col">備取有效期</th><th scope="col">結果</th></tr></thead>
+    <thead><tr><th scope="col">職缺</th><th scope="col">不含姓名</th><th scope="col">正取數 ≤ 名額</th><th scope="col">備取有效期</th><th scope="col">下架日</th><th scope="col">結果</th></tr></thead>
     <tbody>${withResult.map((r) => html`<tr data-id="${r.id}"><td><a href="${url(r.front)}#result">${r.title}</a><div class="adm-muted"><code>${r.id}</code></div></td>
-      <td data-check="mask">${mark(r.checks.mask)}</td><td data-check="capacity">${mark(r.checks.capacity)}</td><td data-check="waitlist">${mark(r.checks.waitlist)}</td>
+      <td data-check="names">${mark(r.checks.names)}</td><td data-check="capacity">${mark(r.checks.capacity)}</td><td data-check="waitlist">${mark(r.checks.waitlist)}</td><td data-check="unpublish">${mark(r.checks.unpublish)}</td>
       <td>${r.checksBad ? html`<span class="adm-badge adm-badge--bad">需修正</span>` : html`<span class="adm-badge adm-badge--ok">可上架</span>`}</td></tr>`)}</tbody></table></div>` : html`<p class="adm-empty">目前沒有已公布結果的職缺。</p>`}
 </section>
 
 <section class="adm-card" aria-labelledby="t-h"><h2 id="t-h">待辦（人事室）</h2>
-  <p class="adm-card__sub">由引擎依欄位產生：結果逾期（預計公布日 + 7 日仍無結果）、備取 14 日內到期、外部報名網址失效。完整清單見 <a href="${url('/admin/todos/', { noLang: true })}#job-result-overdue">連動待辦</a>。</p>
+  <p class="adm-card__sub">由引擎依欄位產生：結果逾期（預計公布日 + 7 日仍無結果）、備取 14 日內到期、外部報名網址失效、甄選結果 14 日內下架（下架後 JSON 仍留名單也會提醒刪除）。完整清單見 <a href="${url('/admin/todos/', { noLang: true })}#job-result-overdue">連動待辦</a>。</p>
   ${todos.length ? html`<div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><thead><tr><th scope="col">類型</th><th scope="col">職缺</th><th scope="col">說明</th><th scope="col">期限</th></tr></thead>
-    <tbody>${todos.map((t) => html`<tr><td><span class="adm-badge adm-badge--warn">${{ 'job-result-overdue': '結果逾期', 'job-waitlist-expiring': '備取將到期', 'job-apply-url-dead': '報名網址失效' }[t.kind]}</span></td><td>${t.itemTitle}<div class="adm-muted"><code>${t.itemId}</code></div></td><td>${t.text ?? ''}</td><td>${t.dueAt ?? '—'}${t.dueAt && t.dueAt < site.today ? html` <span class="adm-badge adm-badge--bad">逾期 ${-daysBetween(site.today, t.dueAt)} 日</span>` : ''}</td></tr>`)}</tbody></table></div>`
+    <tbody>${todos.map((t) => html`<tr><td><span class="adm-badge adm-badge--warn">${{ 'job-result-overdue': '結果逾期', 'job-waitlist-expiring': '備取將到期', 'job-apply-url-dead': '報名網址失效', 'job-result-unpublish': '結果下架' }[t.kind]}</span></td><td>${t.itemTitle}<div class="adm-muted"><code>${t.itemId}</code></div></td><td>${t.text ?? ''}</td><td>${t.dueAt ?? '—'}${t.dueAt && t.dueAt < site.today ? html` <span class="adm-badge adm-badge--bad">逾期 ${-daysBetween(site.today, t.dueAt)} 日</span>` : ''}</td></tr>`)}</tbody></table></div>`
     : html`<div class="adm-box adm-box--ok"><strong>目前沒有招募待辦</strong>結果都按時上架，備取也都在有效期內。</div>`}
 </section>`;
 }

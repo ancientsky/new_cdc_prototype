@@ -105,40 +105,35 @@
   ],
   "result": {
     "publishedAt": "2026-06-30",
+    "unpublishAt": "2026-10-11",
     "refNo": "疾管人字第 1150100187 號",
     "admitted": [
       {
         "seq": 1,
-        "candidateNo": "1150525-003",
-        "nameMasked": "陳○婷"
+        "candidateNo": "1150525-003"
       },
       {
         "seq": 2,
-        "candidateNo": "1150525-011",
-        "nameMasked": "林○宏"
+        "candidateNo": "1150525-011"
       },
       {
         "seq": 3,
-        "candidateNo": "1150525-017",
-        "nameMasked": "黃○"
+        "candidateNo": "1150525-017"
       },
       {
         "seq": 4,
-        "candidateNo": "1150525-024",
-        "nameMasked": "張○瑜"
+        "candidateNo": "1150525-024"
       }
     ],
     "waitlist": [
       {
         "rank": 1,
         "candidateNo": "1150525-008",
-        "nameMasked": "吳○豪",
         "validUntil": "2026-10-10"
       },
       {
         "rank": 2,
         "candidateNo": "1150525-020",
-        "nameMasked": "劉○君",
         "validUntil": "2026-10-10"
       }
     ],

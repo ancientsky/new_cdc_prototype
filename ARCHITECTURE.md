@@ -642,10 +642,11 @@ applyStart: date, deadlineAt: date, applyMethod: enum[online, email, mail, in-pe
 examPlan: [{ stage: enum[書面審查, 筆試, 口試, 實作, 體能], date?: date, note?: string }], resultPlannedAt?: date,
 contact: string, attachments?: [{ label, url, machineReadable? }], legacyUrls?: [],
 manualStatus?: enum[cancelled, filled]（人工覆蓋；其餘階段一律由日期與 result 推導）,
-result?: { publishedAt: date, refNo?: string, admitted: [{ seq: int, candidateNo: string, nameMasked: string }], waitlist: [{ rank: int, candidateNo: string, nameMasked: string, validUntil?: date }], note?: string, attachments?: [] },
-waitlistUpdates?: [{ date, candidateNo, nameMasked, note }]（遞補公告）
+result?: { publishedAt: date, unpublishAt: date（第三十輪起必填）, externalUrl?: url（第三十輪：名單在人事系統）, refNo?: string, admitted?: [{ seq: int, candidateNo: string }], waitlist?: [{ rank: int, candidateNo: string, validUntil?: date }], note?: string, attachments?: [] },
+waitlistUpdates?: [{ date, candidateNo, note? }]（遞補公告）
+（第三十輪 #55 起名單不再有 nameMasked 或任何姓名欄，見第 35 節）
 ```
-治理：`gov.jobStage` = upcoming（today < applyStart）｜open（≤ deadlineAt）｜closed（過截止、examPlan 尚未開始）｜screening（examPlan 有已到期日期、無 result）｜result（有 result）｜filled／cancelled（manualStatus）。**個資**：validate 強制 `nameMasked` 必須含遮罩字（○／◯／〇／＊），且不得含 3 個以上連續中文字的完整姓名樣式；candidateNo 不得像身分證字號（`^[A-Z][12]\d{8}$` 擋下）。result 區塊 `sensitivity` 視為 public 但 AI 白名單**排除 result 與 waitlistUpdates**（答案引擎不得唸出名單，只能給連結）。待辦：`job-result-overdue`（today > resultPlannedAt + 7 且無 result，owner 人事室、抄 hiringUnit，中優先）、`job-waitlist-expiring`（備取 validUntil 14 天內，低）、`job-apply-url-dead`（applyUrl 外部連結失效，沿用外部連結健康）。已截止職缺自動退出首頁與開放中清單（沿用公告截止邏輯）；result 後 90 天自動移入「歷史」。
+治理：`gov.jobStage` = upcoming（today < applyStart）｜open（≤ deadlineAt）｜closed（過截止、examPlan 尚未開始）｜screening（examPlan 有已到期日期、無 result）｜result（有 result）｜filled／cancelled（manualStatus）。**個資**：~~validate 強制 `nameMasked` 必須含遮罩字~~（第三十輪起改為：名單列不得有任何姓名欄，含遮罩姓名；到 `unpublishAt` 由建置拿掉名單，見第 35 節）；candidateNo 不得像身分證字號（`^[A-Z][12]\d{8}$` 擋下）。result 區塊 `sensitivity` 視為 public 但 AI 白名單**排除 result 與 waitlistUpdates**（答案引擎不得唸出名單，只能給連結）。待辦：`job-result-overdue`（today > resultPlannedAt + 7 且無 result，owner 人事室、抄 hiringUnit，中優先）、`job-waitlist-expiring`（備取 validUntil 14 天內，低）、`job-apply-url-dead`（applyUrl 外部連結失效，沿用外部連結健康）。已截止職缺自動退出首頁與開放中清單（沿用公告截止邏輯）；result 後 90 天自動移入「歷史」。
 
 **`tender`（採購公告）** `schemas/tender.json`，檔在 `content/tenders/`，id `tender.{yyyy-mm-dd}-{slug}`，路徑 `/procurement/{slug}/`：
 ```
@@ -657,12 +658,12 @@ manualStatus?: enum[cancelled, failed（流標）], award?: { date, winner, amou
 
 既有 9 則 recruit／procurement 新聞 → 轉成 job／tender 檔（原 id 放進 `legacyIds` 以保留 301：`redirects.json` 加 `kind:'moved'`，舊 `/news/{slug}/` → 新路徑），`schemas/news.json` 的 newsType 移除 recruit／procurement。至少做到：職缺 8 筆涵蓋 upcoming、open（3，含 1 筆外部 applyUrl）、closed、screening、result（2，含備取與 1 筆遞補）、cancelled；採購 7 筆涵蓋 open、closed、opened、awarded（2）、failed。
 
-輸出：`/v1/jobs.json`、`/v1/tenders.json`（含 stage）、RSS `feeds/careers.xml`、`feeds/procurement.xml`（錄取結果與決標各自是一筆 feed 項）、JSON-LD `JobPosting`（title、datePosted、validThrough、employmentType、hiringOrganization、jobLocation、applicantLocationRequirements 省略、baseSalary 以文字 description 代替）、tender 用 `GovernmentService`＋`Offer`（簡化）。sitemap 加入；`.md` 機讀版。答案引擎：意圖 `careers`（「疾管署有缺嗎」「怎麼報名」「截止日」）→ 結構化列開放中職缺與截止；問「誰錄取」→ 不唸名單，給結果頁連結並說明只公布報名編號與遮罩姓名；評估集 +3。移轉清單 `content/migration/careers.json`、`content/migration/procurement.json`（scope category，各 6–8 筆）。
+輸出：`/v1/jobs.json`、`/v1/tenders.json`（含 stage）、RSS `feeds/careers.xml`、`feeds/procurement.xml`（錄取結果與決標各自是一筆 feed 項）、JSON-LD `JobPosting`（title、datePosted、validThrough、employmentType、hiringOrganization、jobLocation、applicantLocationRequirements 省略、baseSalary 以文字 description 代替）、tender 用 `GovernmentService`＋`Offer`（簡化）。sitemap 加入；`.md` 機讀版。答案引擎：意圖 `careers`（「疾管署有缺嗎」「怎麼報名」「截止日」）→ 結構化列開放中職缺與截止；問「誰錄取」→ 不唸名單，給結果頁連結並說明只公布報名編號（第三十輪前為「報名編號與遮罩姓名」）；評估集 +3。移轉清單 `content/migration/careers.json`、`content/migration/procurement.json`（scope category，各 6–8 筆）。
 
 ### 15.2 呈現契約（X2 擁有）
 
 - `/careers/`：頁首「加入疾管署」一句＋開放中職缺卡（倒數天數、職稱、用人單位、名額、地點、報名方式、線上報名按鈕）；篩選（職類／地點／單位）；分頁籤：開放中／即將開放／審查與甄試中／錄取結果／歷史；訂閱（RSS 連結＋既有訂閱頁）；人事室聯絡。
-- `/careers/{slug}/`：**時間軸**（公告→報名截止→甄試→結果→遞補）標示目前階段；區塊：工作內容、資格條件、薪資待遇、應備文件、甄試方式與日期、報名方式（open 顯示大按鈕「線上報名」或外部連結；closed 顯示「已截止，結果預計 {date} 公布」）、聯絡、附件、舊網址揭露；有 result 時「甄選結果」區：正取／備取表（序號、報名編號、遮罩姓名、備取有效期）、遞補紀錄、報到須知、結果公告日；頁首 pill 顯示階段。
+- `/careers/{slug}/`：**時間軸**（公告→報名截止→甄試→結果→遞補）標示目前階段；區塊：工作內容、資格條件、薪資待遇、應備文件、甄試方式與日期、報名方式（open 顯示大按鈕「線上報名」或外部連結；closed 顯示「已截止，結果預計 {date} 公布」）、聯絡、附件、舊網址揭露；有 result 時「甄選結果」區：正取／備取表（序號、報名編號、備取有效期；第三十輪拿掉遮罩姓名欄、加下架日與「已下架」「人事系統連結」兩種樣子）、遞補紀錄、報到須知、結果公告日；頁首 pill 顯示階段。
 - `/careers/{slug}/apply/`（**模擬線上報名**，只在 open 且無外部 applyUrl 的職缺輸出；closed 輸出「已截止」頁）：明顯橫幅「原型示範：資料只存在你的瀏覽器，不會送出」；三步驟（基本資料與聯絡方式／學經歷與應備文件（檔案只列檔名不上傳）／聲明與個資告知事項同意→確認）；即時驗證與錯誤摘要、鍵盤可達、草稿存 localStorage、送出後產生報名編號 `CDC-{yyyymmdd}-{6 碼}`、顯示收執（可列印、可下載 JSON、可下載甄試日 .ics）、再次強調非正式。
 - `/procurement/`：分頁籤 招標中／已截止／已開標／已決標／流標；卡片（案名、標案案號、採購方式、預算、投標截止、開標日、政府電子採購網外連）；`/procurement/{slug}/` 標案資訊表、時程、決標資訊、附件、聯絡、舊網址揭露。
 - 導覽：footer「更多服務」把「人才招募與採購」拆成「人才招募」「採購公告」；`/notices/` 移除招募／採購頁籤改為兩張入口卡；`/about/`、`/contact/` 連結更新；首頁若有相關卡片同步。
@@ -1515,3 +1516,84 @@ Issue #38（Yulun）：舊站「首頁／專業人員／傳染病核心教材」
 - 上架包：`content/articles/{slug}.json`、新卷期時 `content/publications/bulletin-{v}-{n}.json`、單篇 PDF `content/assets/{article id}/{file}`（上限沿用 `site.config.assets.maxBytes.pdf`）。
 - 草稿 localStorage `cdc.admin.bulletin-edit`；`?edit={article id}` 帶入既有文章，匯出保留表單沒有的欄位。
 - 檢核有 error 時「產生上架包」停用；warn 只提醒（沒頁碼、沒摘要、沒關鍵字、重點缺句、圖表正文沒提到）。
+
+## 35. 第三十輪（2026-10-10）：個資不進 Git（#55）
+
+背景：Git 是公開、永久的。網站原始碼庫裡的東西，就算下一個 commit 刪掉，歷史、fork、CI 紀錄、GitHub 快取都還在，所以「個資不進 Git」不能只靠編輯小心，要由建置和 PR 檢查擋下。Yulun 完全同意 #55 的三項做法。決策理由見 architecture-decisions §22；同事 SOP 見 guide-staff §33；個資表單系統與表單端點的部署見 deploy.md §13；招募個資原則見 [docs/careers-privacy.md](docs/careers-privacy.md)。這一節只寫契約。
+
+### 35.1 甄選結果：只有報名編號、必填下架日、可改連人事系統
+
+**schema（`schemas/job.json`）**
+
+| 欄位 | 必填 | 說明 |
+| --- | --- | --- |
+| `result.publishedAt` | ✔ | 結果公告日 |
+| `result.unpublishAt` | ✔ | 名單下架日（當天起不再輸出） |
+| `result.externalUrl` | | 名單在人事系統的結果頁，`^(https://\|/pending/\?)`（`/pending/` 是原型佔位）；與名單擇一 |
+| `result.admitted[]` | | `{ seq, candidateNo }`；不再必填（用 `externalUrl`、或已下架時可沒有） |
+| `result.waitlist[]` | | `{ rank, candidateNo, validUntil? }` |
+| `waitlistUpdates[]` | | `{ date, candidateNo, note? }` |
+
+名單列以 `$defs.jobNoNameField`（`propertyNames: { not: { pattern: "[Nn][Aa][Mm][Ee]\|姓名\|名字" } }`）擋任何姓名欄，`nameMasked` 已從 schema 移除。
+
+**規則模組 `src/client/careers-rules.js`**（建置、後台編修頁、測試共用；無 import）
+
+- `RESULT_ROW_KEYS`、`NAME_FIELD_RE`、`nameFieldProblems(row, kind)`、`candidateNoProblems(no)`（身分證樣式、含中文字）、`jobPiiErrors(job)`（名單列姓名欄、編號、`note` 含身分證或遮罩姓名、正取超額、編號重複；訊息不回印姓名與完整號碼）。
+- 下架規則常數：`RESULT_DEFAULT_MONTHS = 3`、`RESULT_MIN_DAYS = 30`、`RESULT_MAX_MONTHS = 12`、`RESULT_UNPUBLISH_NOTICE_DAYS = 14`。
+- `defaultUnpublishAt(result)`＝max（公告日＋3 個月，最後一位備取 `validUntil`＋1 日）。
+- `jobResultProblems(job, today)`：`unpublishAt` 必填（訊息附建議值）、介於公告日＋30 日與＋12 個月、晚於所有 `validUntil`、`externalUrl` 與名單擇一、`externalUrl` 格式、兩者皆無只在「已過下架日」時合法。
+- `resultTakenDown(job, today)`（`today >= unpublishAt`）、`resultHasList(job)`。
+- `validate.mjs` 對每筆 job 跑 `jobPiiErrors` 與 `jobResultProblems(item, site.today)`。
+
+**治理（`scripts/lib/governance.mjs`）**
+
+- `withdrawJobResult(job, today)`：到期就在記憶體把 `result` 縮成 `{ publishedAt, unpublishAt, refNo? }`、刪 `waitlistUpdates`，並掛不可列舉的 `__resultWithdrawn`（冪等）。在 `jobGov` 之前執行，所以**所有下游**（頁面、`.md`、`/v1/jobs.json`、RSS、JSON-LD、Pagefind、答案索引）自然拿不到名單，不必各自判斷。validate 跑在治理之前，看的是原始檔。
+- `item.gov` 新增 `resultUnpublishAt`、`resultTakenDown`、`daysToUnpublish`、`resultExternal`、`resultExternalUrl`、`resultListInSource`；`resultCheck.masked` 改名 `resultCheck.noNames`。
+- 待辦 `job-result-unpublish`（標籤「甄選結果下架」，owner 人事室）兩段：下架前 14 日內 `severity: low`、`phase: upcoming`；已過下架日但原始檔還有名單 `severity: medium`、`phase: remove-from-source`（請人事室把名單從 `content/jobs/*.json` 刪掉）。
+
+**呈現**：`careers.mjs` 的 `resultBlock` 三種 `data-result`：`list`（只有報名編號的表、下架日）、`external`（按鈕連人事系統、下架日）、`down`（「甄選結果已於 YYYY-MM-DD 下架」＋人事室連結）；`.md` 同樣三種。`_careers.mjs` 的 `safeName()` 移除：模板根本不讀姓名欄。後台 `/admin/jobs/` 檢核欄改「不含姓名」（`data-check="names"`）並加「下架日」（`data-check="unpublish"`）；`/admin/jobs/edit/` 加下架日（自動帶 `suggestedUnpublishAt`）與人事系統網址欄，拿掉遮罩姓名欄；`buildJob` 一律不輸出姓名欄。答案引擎與索引句改為「只公布報名編號、不公布姓名，請至職缺頁「甄選結果」以報名編號核對（X 下架）」。評估集：NC003、NC006 加 `mustNotInclude: 遮罩姓名`，新增 NC007（`externalUrl` 職缺）。
+
+**示範內容**：兩筆既有結果移除姓名欄並補下架日（高屏檢疫 2026-10-11、系統分析 2026-12-22）；新增 `job.2026-06-22-admin-assistant-eastern`（東區管制中心，`externalUrl` 示範）。
+
+### 35.2 全庫個資掃描（`scripts/lib/pii-scan.mjs`、`scripts/pii-scan.mjs`）
+
+| 類別 | 偵測 | 為什麼這樣寫 |
+| --- | --- | --- |
+| `national-id` | `[A-Z][12]\d{8}` 且通過內政部檢查碼 | 隨手打的 10 碼（研究核准文號 `N202502011` 等）不誤報 |
+| `arc` | 新式 `[A-Z][89]\d{8}`（同檢查碼）、舊式 `[A-Z][A-D]\d{8}`（第二碼取代碼個位數） | 外籍人士居留證 |
+| `mobile` | `09xx-xxx-xxx` 的各種寫法、`+886`／`(+886)`；前後不能接數字或小數點 | 市話、0800 不算（機關電話本來就公開） |
+| `email` | 網域不在白名單者；`logo@2x.png` 這類檔名排除 | 機關網域與保留網域放行 |
+| `person-name` | 「錄取／正取／備取／申請人／報名人／應考人／考生／報到人／姓名」＋冒號／「為」／空白，後接常見姓氏開頭 2–4 字（含 ○◯〇＊ 遮罩），並排除常見詞；同一串「、」分隔的名單逐一抓 | 啟發式，寧可少報 |
+
+- 範圍 `SCAN_ROOTS = ['content', 'data/snapshots']`（含 `content/assets/` 會複製到 `dist/files/` 的附件）；白名單檔本身不掃。JSON 逐字串（含欄位名）掃，位置寫 `$.a.b[0]`；其他文字檔寫「第 N 行」；PDF 以 latin1 讀出文字層，只套 ASCII 類偵測；圖片不掃（不做 OCR）。
+- 輸出 `formatHit`：檔案、位置、類別、遮罩值（號碼留前 2 後 2，姓名留首字）、遮罩後片段（片段內所有命中都遮）。**不印完整號碼**。
+- 白名單 `content/governance/pii-allowlist.json`：`numbers[]`（機關電話，數字正規化比對）、`domains[]`（`gov.tw`、本站網域、RFC 2606 保留網域）、`entries[]`（`kind`、`value`、可選 `files[]` 限定檔案）。**每筆都要 `reason`**，缺了算錯誤。
+- 接線：`build.mjs` 把 `piiErrors(ROOT)` 併進治理門檻錯誤（`--check` 與正式建置都失敗）；`content-pr.yml` 新步驟 `pii`（Lint 之前，`git diff --name-only -z --diff-filter=d origin/main...HEAD | xargs -0 node scripts/pii-scan.mjs`），失敗擋合併，lane-bot 表格多一列「個資掃描」；`npm run pii` 手動跑；`--all` 不限範圍。GitHub Actions 下另輸出 `::error file=…` 註記。
+- 目前全庫（361 檔）零命中；評測題 AD007 的示範身分證與手機靠 `entries` 限定 `eval-set.json` 放行。以 `--all` 掃 docs、src、tests 等 2123 檔只有 docs 裡兩處刻意的示範號碼。
+
+### 35.3 表單端點（`site.config.mjs` 的 `forms`、`scripts/lib/forms.mjs`）
+
+```js
+forms: {
+  careersApply:    { endpoint: '', mode: 'mock', receiver: 'unit.personnel' },
+  directorMailbox: { endpoint: '', mode: 'mock', receiver: 'unit.secretariat', petitionUrl: '' },
+  newsletter:      { endpoint: '', mode: 'mock', receiver: 'unit.pr' },
+}
+```
+
+- 環境變數覆寫：`FORM_CAREERS_APPLY_ENDPOINT`／`_MODE`、`FORM_DIRECTOR_MAILBOX_ENDPOINT`／`_MODE`／`_PETITION_URL`、`FORM_NEWSLETTER_ENDPOINT`／`_MODE`。沒設 mode 時有端點＝`post`。
+- `formSetting(cfg, key)` 回生效狀態 `active`：`post`（要有 https 端點；本機允許 `http://localhost`）、`link`（只限署長信箱，要 `petitionUrl`）、否則 `mock`。`formErrors(cfg)` 擋矛盾設定（post 沒端點、非 https、mock 卻有端點），併進建置錯誤。`formOrigins(cfg)` 回生效中 post 端點的來源。
+- CSP：`securityHeaders({ formOrigins })` 預設讀設定，只加到 `connect-src` 與 `form-action`，其他指令不動；`dist/headers/README.md` 列出目前加了哪些來源。
+- 用戶端 `src/client/form-post.js`：`sendToEndpoint(endpoint, form|fields, meta)`。無附件送 JSON `{ form, submissionId, submittedAt, lang, page, …meta, fields }`，有附件送 multipart（`_meta` 欄）；`credentials: 'omit'`；回 `{ ok, receiptNo }`。網路錯誤（含 CORS 未設）改用 `nativePost` 一般表單 POST，帶同一個 `submissionId` 供端點去重；HTTP 4xx／5xx 不備援。`form[data-form-post]` 自動接手（署長信箱 post 模式）。
+- 頁面：報名頁（`careers.mjs`）在 post 模式時表單帶 `data-endpoint`、`action`、`method="post" enctype="multipart/form-data"`（沒有 JS 也能送），換掉模擬橫幅，收執只在記憶體；聯絡我們（`contact.mjs`）三種樣子：`mock`（原示範）、`post`（`form-post.js`）、`link`（只有前往陳情系統的按鈕，本站不收資料）；訂閱頁（`subscribe.mjs`／`subscribe.js`）post 模式以 `createHttpBackend({ base: 端點, kind: 'live' })` 走同一份 `/api/subscriptions*` 契約，不再探測本機模擬後端。
+- 每個表單頁都有 `_forms.mjs` 的 `formNotice()`：收件單位、資料送到哪、蒐集目的、保存期限、當事人權利與隱私權政策連結（`data-form-notice`、`data-form-mode`）。字串在 i18n `ROWS_R30`（`form.*`、`subscribe.*` 七語）。
+
+### 35.4 測試與驗收
+
+`tests/round30-pii.test.mjs`（下架規則、schema 擋姓名欄、到期後頁面／`.md`／API／RSS／索引都沒有名單、兩段待辦、`externalUrl` 頁面、檢查碼與各偵測器、遮罩輸出、白名單、CLI 與 `::error`、CI 步驟與 SHA 固定、表單設定、CSP、三個表單頁的告知與 post／link 樣子、送出契約）；`tests/jobs.test.mjs`、`tests/jobs-admin.test.mjs`、`tests/round7-ui.test.mjs` 改為只有報名編號。
+
+### 35.5 已知限制
+
+- **Git 歷史仍保留舊名單**：下架只讓網站與 API 不再輸出。第三十輪之前的提交含遮罩姓名，之後的提交含報名編號。需要徹底移除時，由資訊室評估改寫歷史（`git filter-repo`＋請 GitHub 清快取），會影響所有分支與預覽，不建議例行做。這是推薦 `externalUrl` 的主要理由。
+- 掃描器不做 OCR，壓縮過的 PDF 內文看不到，姓名偵測是啟發式（沒有語境詞或用罕見姓氏就抓不到）。它是最後一道網，不取代「名單不要放進 repo」。
+- 下架靠建置：網站要有排程建置（`pages.yml` 每 2 小時一次），否則下架日到了頁面不會自己變；正式站搬到別的主機時，排程建置要一起搬。

@@ -2,7 +2,8 @@
 // 原則：治理狀態一律來自 item.gov / site.gov（建置時由引擎算），這裡只做呈現，不重算規則。
 import { html, raw, jsonScript, esc, daysBetween } from '../../../scripts/lib/render.mjs';
 import { config } from '../../../site.config.mjs';
-import { allJobs, allTenders, applyOnSite, jobStage, jobIsHistory, tenderStage, jobPath, tenderPath, MASK_RE } from '../public/_careers.mjs';
+import { allJobs, allTenders, applyOnSite, jobStage, jobIsHistory, tenderStage, jobPath, tenderPath } from '../public/_careers.mjs';
+import { nameFieldProblems, jobResultProblems, resultTakenDown } from '../../client/careers-rules.js';
 
 export const DEFAULT_UNIT = 'unit.acute-infectious';
 
@@ -24,9 +25,9 @@ export const KIND_LABEL = {
   'media-outdated': '影音過時', 'media-no-transcript': '無逐字稿', 'link-broken': '連結失效', 'labtest-inconsistent': '檢驗不一致',
   'post-publish-review': '上線後複核', 'attachment-no-accessible-version': 'PDF 附件缺可及性版本', 'image-license-missing': '圖片授權或來源待確認', 'asset-orphan': '未宣告的孤兒檔', 'pdf-unreviewed': 'PDF 機讀版待校對', 'content-unverified': '內容待權責單位確認',
   'migration-pending': '舊頁待移轉',
-  'job-result-overdue': '招募結果逾期', 'job-waitlist-expiring': '備取將到期', 'job-apply-url-dead': '報名網址失效', 'tender-award-overdue': '決標逾期',
+  'job-result-overdue': '招募結果逾期', 'job-waitlist-expiring': '備取將到期', 'job-apply-url-dead': '報名網址失效', 'job-result-unpublish': '甄選結果下架', 'tender-award-overdue': '決標逾期',
 };
-export const KIND_ORDER = ['based-on-revised', 'reverse-audit', 'overdue', 'translation-stale', 'dataset-overdue', 'license-missing', 'superseded-still-linked', 'situation-overdue', 'media-outdated', 'media-no-transcript', 'link-broken', 'labtest-inconsistent', 'migration-pending', 'job-result-overdue', 'job-waitlist-expiring', 'job-apply-url-dead', 'tender-award-overdue', 'post-publish-review', 'attachment-no-accessible-version', 'image-license-missing', 'asset-orphan', 'pdf-unreviewed', 'content-unverified'];
+export const KIND_ORDER = ['based-on-revised', 'reverse-audit', 'overdue', 'translation-stale', 'dataset-overdue', 'license-missing', 'superseded-still-linked', 'situation-overdue', 'media-outdated', 'media-no-transcript', 'link-broken', 'labtest-inconsistent', 'migration-pending', 'job-result-overdue', 'job-waitlist-expiring', 'job-apply-url-dead', 'job-result-unpublish', 'tender-award-overdue', 'post-publish-review', 'attachment-no-accessible-version', 'image-license-missing', 'asset-orphan', 'pdf-unreviewed', 'content-unverified'];
 export const WL_REASON_LABEL = {
   'not-published': '尚未發布', overdue: '逾期未審閱', superseded: '已被新版取代', sensitivity: '敏感等級非公開',
   'based-on-revised': '依據正本已修訂', 'not-requested': '未申請進白名單', 'type-not-allowed': '型別不在白名單政策', 'reverse-audit': '反向稽核命中', 'pdf-unreviewed': 'PDF 機讀版未校對',
@@ -364,32 +365,36 @@ function derivedTodos(site, base) {
 const dayDiff = (a, b) => (a && b ? daysBetween(a, b) : null);
 /**
  * 職缺列：階段優先用 gov.jobStage。結果上架檢核（只對有 result 的職缺）：
- *  - mask：正取／備取／遞補的 nameMasked 是否全含遮罩字（○◯〇＊）
+ *  - names：正取／備取／遞補每一列只有報名編號，沒有任何姓名欄（第三十輪起連遮罩姓名都不行）
  *  - capacity：正取數 ≤ 名額
  *  - waitlist：備取皆有 validUntil、且最晚有效期未過今日（沒有備取視為不適用）
+ *  - unpublish：有下架日且符合上下限；名單在人事系統（externalUrl）或已下架另外標示
  */
 export function jobRows(site) {
   const today = site.today;
   return allJobs(site).map((j) => {
     const stage = jobStage(site, j);
     const r = j.result ?? null;
-    const names = r ? [...(r.admitted ?? []), ...(r.waitlist ?? []), ...(j.waitlistUpdates ?? [])] : [];
-    const maskBad = names.filter((n) => !MASK_RE.test(String(n.nameMasked ?? ''))).length;
+    const rowsOf = r ? [...(r.admitted ?? []).map((x) => [x, 'admitted']), ...(r.waitlist ?? []).map((x) => [x, 'waitlist']), ...(j.waitlistUpdates ?? []).map((x) => [x, 'updates'])] : [];
+    const nameBad = rowsOf.filter(([x, kind]) => nameFieldProblems(x, kind).length).length;
     const admitted = r ? (r.admitted ?? []).length : null;
     const wl = r ? (r.waitlist ?? []) : [];
     const noValid = wl.filter((w) => !w.validUntil).length;
     const lastValid = wl.map((w) => w.validUntil).filter(Boolean).sort().pop() ?? null;
+    const down = r ? resultTakenDown(j, today) : false;
+    const rp = r ? jobResultProblems(j, today) : [];
     const checks = r ? {
-      mask: { ok: maskBad === 0, text: maskBad === 0 ? `${names.length} 筆姓名全含遮罩字` : `${maskBad} 筆姓名沒有遮罩字（建置會失敗）` },
-      capacity: { ok: j.positions == null || admitted <= j.positions, text: `正取 ${admitted} ／ 名額 ${j.positions ?? '—'}` },
+      names: { ok: nameBad === 0, text: r.externalUrl ? '名單在人事系統，本站不存名單' : down ? '已下架，名單不再輸出' : nameBad === 0 ? `${rowsOf.length} 列只有報名編號（不含姓名）` : `${nameBad} 列含姓名欄（建置會失敗）` },
+      capacity: { ok: j.positions == null || admitted <= j.positions, text: r.externalUrl || down ? '—（名單不在本站）' : `正取 ${admitted} ／ 名額 ${j.positions ?? '—'}` },
       waitlist: wl.length ? { ok: noValid === 0 && (!lastValid || lastValid >= today), text: noValid ? `${noValid} 位備取沒有有效期` : lastValid && lastValid < today ? `備取有效期已於 ${lastValid} 屆滿` : `備取 ${wl.length} 位，有效至 ${lastValid ?? '—'}` } : { ok: true, text: '無備取' },
+      unpublish: { ok: !!r.unpublishAt && !rp.length, text: !r.unpublishAt ? '沒有下架日（建置會失敗）' : rp.length ? rp[0].replace(/^[^：]+：/, '') : down ? `已於 ${r.unpublishAt} 下架` : `${r.unpublishAt} 下架（剩 ${daysBetween(today, r.unpublishAt)} 日）` },
     } : null;
     const resultDue = j.resultPlannedAt && !r && ['closed', 'screening'].includes(stage) ? dayDiff(j.resultPlannedAt, today) : null;
     const resultOverdue = resultDue != null && resultDue > 7;
     const checksBad = checks ? Object.values(checks).some((c) => !c.ok) : false;
     return {
       id: j.id, title: j.title, status: j.status, stage, history: jobIsHistory(site, j, stage), jobType: j.jobType ?? '', hiringUnit: j.hiringUnit, hiringName: site.unitById.get(j.hiringUnit)?.name ?? j.hiringUnit ?? '',
-      positions: j.positions ?? null, applyStart: j.applyStart ?? null, deadlineAt: j.deadlineAt ?? null, resultPlannedAt: j.resultPlannedAt ?? null, resultAt: r?.publishedAt ?? null,
+      positions: j.positions ?? null, applyStart: j.applyStart ?? null, deadlineAt: j.deadlineAt ?? null, resultPlannedAt: j.resultPlannedAt ?? null, resultAt: r?.publishedAt ?? null, unpublishAt: r?.unpublishAt ?? null, resultDown: down, resultExternal: !!r?.externalUrl,
       external: !!j.applyUrl, onSite: applyOnSite(j), applyMethod: j.applyMethod ?? '', applyUrl: j.applyUrl ?? '', daysLeft: stage === 'open' ? dayDiff(today, j.deadlineAt) : null, front: jobPath(j),
       checks, checksBad, resultOverdue, resultOverdueDays: resultOverdue ? resultDue : 0, waitlistUpdates: (j.waitlistUpdates ?? []).length,
       attention: checksBad || resultOverdue,

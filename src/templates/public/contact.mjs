@@ -1,9 +1,15 @@
 // /contact/：聯絡我們。三欄：1922 與聯絡資訊、各單位、署長信箱示範（分類→自動分流→信件預覽→mailto／複製）。
 // 原型不寄信：mailto 使用示意信箱；正式環境接署內表單系統。本機記錄存 localStorage cdc.mailbox（不含 email）。
+// 第三十輪（#55）：site.config.mjs forms.directorMailbox 決定三種樣子——
+//   mock（預設）：上述示範（ui.js 的 [data-mailbox]）；
+//   link（建議）：不在本站收信，直接連到機關既有的陳情系統（petitionUrl）——已有分文、回覆時限與稽核，不必另建；
+//   post：同一張表單直接送到 endpoint（form-post.js 的 form[data-form-post]），不經過本站、不進 Git。
+// 三種都會顯示收件單位與個資蒐集告知（_forms.mjs）。
 import { html, raw } from '../../../scripts/lib/render.mjs';
 import { md } from '../../../scripts/lib/markdown.mjs';
 import { config } from '../../../site.config.mjs';
 import { ldFor, pageHead, L, unitName, unitLink, unitPath } from './_partials.mjs';
+import { formOf, formNotice } from './_forms.mjs';
 
 export const MAILBOX_ADDR = 'mailbox@example.cdc.gov.tw';
 /** 分類 → 權責單位（正式環境由署內分文規則取代） */
@@ -23,7 +29,7 @@ export const MAIL_CATEGORIES = [
 
 export function meta(ctx) {
   const item = ctx.site.byId.get('page.contact') ?? null;
-  return { title: ctx.t('contact.title'), description: ctx.t('contact.lead'), item: null, jsonLd: ldFor(ctx, item, [{ label: ctx.t('contact.title') }]), scripts: [] };
+  return { title: ctx.t('contact.title'), description: ctx.t('contact.lead'), item: null, jsonLd: ldFor(ctx, item, [{ label: ctx.t('contact.title') }]), scripts: formOf(ctx, 'directorMailbox').active === 'post' ? ['/assets/js/form-post.js'] : [] };
 }
 
 function infoColumn(ctx) {
@@ -52,17 +58,10 @@ function unitsColumn(ctx) {
 </section>`;
 }
 
-function mailboxColumn(ctx) {
-  const { site, t } = ctx;
-  const p = site.byId.get('page.director-mailbox');
-  const body = p ? (L(ctx, p, 'bodyMarkdown') ?? p.bodyMarkdown ?? '') : '';
-  return html`<section class="c-contact__col c-mailbox" id="mailbox" aria-labelledby="ct-3" data-mailbox data-addr="${MAILBOX_ADDR}">
-  <h2 id="ct-3">${t('contact.mailbox')} <span class="c-pill c-pill--warn">${t('contact.demo')}</span></h2>
-  <p>${p ? L(ctx, p, 'summary') : t('contact.mailbox.lead')}</p>
-  ${body ? html`<details class="c-source-card"><summary>${t('contact.mailbox.about')}</summary><div class="c-prose c-about__body">${raw(md(body))}</div></details>` : ''}
-  <div class="c-alert c-alert--info" role="note"><strong class="c-alert__t">${t('contact.ai.t')}</strong> ${t('contact.ai')} <a href="${ctx.url('/ask/')}">${t('ask.title')} →</a></div>
-  <form class="c-mailform" data-mailbox-form novalidate>
-    <div class="c-field"><label for="mb-cat">${t('contact.f.cat')}</label>
+/** 分類＋主旨＋內容＋email＋同意：mock 與 post 共用的欄位 */
+function mailFields(ctx) {
+  const { t } = ctx;
+  return html`<div class="c-field"><label for="mb-cat">${t('contact.f.cat')}</label>
       <select id="mb-cat" class="c-input c-select" name="category" required data-mb-cat><option value="">${t('contact.f.cat.ph')}</option>${MAIL_CATEGORIES.map((c) => html`<option value="${c.key}" data-unit="${unitName(ctx, c.unit)}" data-label="${t(`contact.cat.${c.key}`)}">${t(`contact.cat.${c.key}`)}</option>`)}</select>
       <p class="c-field__hint" role="status" aria-live="polite" data-mb-route data-empty="${t('contact.route.empty')}" data-tpl="${t('contact.route', { unit: '{unit}' })}">${t('contact.route.empty')}</p></div>
     <div class="c-field"><label for="mb-sub">${t('contact.f.subject')}</label><input id="mb-sub" class="c-input" name="subject" type="text" maxlength="80" required autocomplete="off"></div>
@@ -70,7 +69,42 @@ function mailboxColumn(ctx) {
       <p class="c-field__hint">${t('contact.f.body.hint')}</p></div>
     <div class="c-field"><label for="mb-mail">${t('contact.f.email')}</label><input id="mb-mail" class="c-input" name="email" type="email" autocomplete="email" aria-describedby="mb-mail-h">
       <p class="c-field__hint" id="mb-mail-h">${t('contact.f.email.hint')}</p></div>
-    <div class="c-field c-field--check"><label class="c-checkrow"><input type="checkbox" name="consent" required><span>${t('contact.f.consent')}</span></label></div>
+    <div class="c-field c-field--check"><label class="c-checkrow"><input type="checkbox" name="consent" required><span>${t('contact.f.consent')}</span></label></div>`;
+}
+
+/** link／post：不在本站留任何資料（不輸出 data-mailbox，ui.js 的示範不會接手） */
+function mailboxLive(ctx, f, p, body) {
+  const { t } = ctx;
+  return html`<section class="c-contact__col c-mailbox" id="mailbox" aria-labelledby="ct-3" data-mailbox-mode="${f.active}">
+  <h2 id="ct-3">${t('contact.mailbox')}</h2>
+  <p>${p ? L(ctx, p, 'summary') : t('contact.mailbox.lead')}</p>
+  ${body ? html`<details class="c-source-card"><summary>${t('contact.mailbox.about')}</summary><div class="c-prose c-about__body">${raw(md(body))}</div></details>` : ''}
+  <div class="c-alert c-alert--info" role="note"><strong class="c-alert__t">${t('contact.ai.t')}</strong> ${t('contact.ai')} <a href="${ctx.url('/ask/')}">${t('ask.title')} →</a></div>
+  ${formNotice(ctx, 'directorMailbox')}
+  ${f.active === 'link'
+    ? html`<p><a class="c-btn" href="${f.petitionUrl}" rel="noopener" data-petition-link>${t('form.petition.go')}<span aria-hidden="true"> ↗</span><span class="sr-only"> (${t('external')})</span></a></p>`
+    : html`<form class="c-mailform" data-form-post data-form="director-mailbox" data-endpoint="${f.endpoint}" action="${f.endpoint}" method="post">
+    ${mailFields(ctx)}
+    <p class="c-mailform__status" role="status" aria-live="polite" tabindex="-1" data-fp-status hidden></p>
+    <p><button type="submit" class="c-btn">${t('form.send')}</button></p>
+  </form>`}
+</section>`;
+}
+
+function mailboxColumn(ctx) {
+  const { site, t } = ctx;
+  const p = site.byId.get('page.director-mailbox');
+  const body = p ? (L(ctx, p, 'bodyMarkdown') ?? p.bodyMarkdown ?? '') : '';
+  const f = formOf(ctx, 'directorMailbox');
+  if (f.active !== 'mock') return mailboxLive(ctx, f, p, body);
+  return html`<section class="c-contact__col c-mailbox" id="mailbox" aria-labelledby="ct-3" data-mailbox data-addr="${MAILBOX_ADDR}">
+  <h2 id="ct-3">${t('contact.mailbox')} <span class="c-pill c-pill--warn">${t('contact.demo')}</span></h2>
+  <p>${p ? L(ctx, p, 'summary') : t('contact.mailbox.lead')}</p>
+  ${body ? html`<details class="c-source-card"><summary>${t('contact.mailbox.about')}</summary><div class="c-prose c-about__body">${raw(md(body))}</div></details>` : ''}
+  <div class="c-alert c-alert--info" role="note"><strong class="c-alert__t">${t('contact.ai.t')}</strong> ${t('contact.ai')} <a href="${ctx.url('/ask/')}">${t('ask.title')} →</a></div>
+  ${formNotice(ctx, 'directorMailbox')}
+  <form class="c-mailform" data-mailbox-form novalidate>
+    ${mailFields(ctx)}
     <p class="c-mailform__err" role="alert" data-mb-err hidden>${t('contact.err')}</p>
     <p><button type="submit" class="c-btn">${t('contact.preview')}</button></p>
   </form>

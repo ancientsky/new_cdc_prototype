@@ -15,6 +15,7 @@
     "eval": "node eval/run-eval.mjs",
     "dev": "node scripts/build.mjs && node scripts/serve.mjs",
     "a11y": "node scripts/a11y.mjs",
+    "pii": "node scripts/pii-scan.mjs",
     "gen:map": "node scripts/gen-world-map.mjs",
     "lint": "eslint .",
     "format:check": "prettier --check .",

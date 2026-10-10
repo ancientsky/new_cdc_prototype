@@ -1,7 +1,10 @@
 // /careers/{slug}/apply/ 的「模擬線上報名」（ARCHITECTURE 15.2）。三步驟：基本資料 → 學經歷與應備文件（檔案只記檔名）→ 聲明與確認。
 // 全部資料只存在這個瀏覽器的 localStorage（草稿 cdc.apply.draft.{slug}、收執 cdc.apply.receipts），不送出任何請求，也不讀取檔案內容。
 // 純函式（makeApplyNo、buildIcs、validateField）與 DOM 無關，可在 Node 測試。
+// 第三十輪（#55）：表單有 data-endpoint（site.config.mjs forms.careersApply 為 post）⇒ 送出改為直接 POST 到人事室的報名系統（form-post.js），
+// 收件編號由該系統回傳；收執只顯示在這一頁、不存進 localStorage（個資不留在瀏覽器）。沒有 endpoint 時維持原本的模擬。
 import { t as i18nT } from './i18n.runtime.js';
+import { sendToEndpoint, nativePost } from './form-post.js';
 
 const DRAFT_KEY = (slug) => `cdc.apply.draft.${slug}`;
 const RECEIPTS_KEY = 'cdc.apply.receipts';
@@ -256,12 +259,31 @@ function init(root) {
     a.download = name; document.body.append(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(a.href), 2000);
   };
-  const currentRec = () => (ls.get(RECEIPTS_KEY, []) ?? []).find((r) => r.no === receipt.dataset.no);
+  let liveRec = null; // 送到端點的收執只放記憶體
+  const currentRec = () => liveRec ?? (ls.get(RECEIPTS_KEY, []) ?? []).find((r) => r.no === receipt.dataset.no);
+  const endpoint = form.dataset.endpoint || '';
+
+  async function sendLive() {
+    submit.disabled = true;
+    msg.textContent = T('form.sending');
+    const r = await sendToEndpoint(endpoint, form, { form: 'careers-apply', jobId, jobTitle });
+    submit.disabled = false;
+    if (r.ok === false && r.error === 'network') { msg.textContent = T('form.fallback'); nativePost(form, endpoint, r.submissionId); return; }
+    if (r.ok === false) {
+      errBox.textContent = T('japply.live.err', { status: r.status, msg: r.message }); errBox.hidden = false; errBox.focus(); msg.textContent = '';
+      return;
+    }
+    liveRec = { no: r.receiptNo || r.submissionId, jobId, slug, jobTitle, at: new Date().toISOString(), fields: pairs(), simulated: false };
+    clearTimeout(timer);
+    ls.del(DRAFT_KEY(slug));
+    showReceipt(liveRec);
+  }
 
   function doSubmit() {
     for (const n of [1, 2, 3]) {
       if (!validateStep(n, { focus: false })) { showStep(n, { focus: false }); validateStep(n); return; }
     }
+    if (endpoint) { sendLive(); return; }
     const rec = { no: makeApplyNo(), jobId, slug, jobTitle, at: new Date().toISOString(), fields: pairs(), simulated: true };
     const all = (ls.get(RECEIPTS_KEY, []) ?? []).filter((r) => r.no !== rec.no);
     all.unshift(rec);
@@ -295,7 +317,7 @@ function init(root) {
     if (el.value.trim() || el.getAttribute('aria-invalid') === 'true') { mark(w, check(w)); refreshSummary(); }
   });
   receipt.querySelector('[data-r-print]').addEventListener('click', () => window.print());
-  receipt.querySelector('[data-r-json]').addEventListener('click', () => {
+  receipt.querySelector('[data-r-json]')?.addEventListener('click', () => {
     const rec = currentRec(); if (!rec) return;
     const body = { simulated: true, notice: T('japply.receipt.notofficial'), notice_detail: T('japply.receipt.notofficial.sub'), applicationNo: rec.no, job: { id: rec.jobId, title: rec.jobTitle }, submittedAt: rec.at, fields: rec.fields.map(([label, value]) => ({ label, value })) };
     download(`cdc-apply-${rec.no}.json`, 'application/json', `${JSON.stringify(body, null, 2)}\n`);
@@ -306,7 +328,7 @@ function init(root) {
   });
   receipt.querySelector('[data-r-again]').addEventListener('click', () => {
     receipt.hidden = true; form.hidden = false; root.querySelector('[data-apply-steps]').hidden = false;
-    clearDraft(); msg.textContent = '';
+    liveRec = null; clearDraft(); msg.textContent = '';
     showStep(1);
   });
 
