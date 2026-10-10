@@ -131,7 +131,11 @@ test('智慧查詢（專業版）：引到章節單元與學習目標，來源�
   assert.match(render, /extractionReconstructed: '尚未取得 PDF 正本/);
   assert.match(render, /sourceKind === 'reconstructed' \? 'extractionReconstructed'/);
   const r2 = await engine.answer('登革熱核心教材 群聚解除', { view: 'pro', lang: 'zh-TW' });
-  assert.ok(r2.sentences.some((s) => (s.cite ?? []).includes(`${D}#ch7-s3`) && s.text.includes('31 天')), '引用第七章第三節');
+  const s73 = r2.sentences.find((s) => (s.cite ?? []).includes(`${D}#ch7-s3`) && s.text.includes('31 天'));
+  assert.ok(s73, '引用第七章第三節');
+  // 引用標籤寫章節標題，不把「第七章」當成「第 7 條」
+  assert.match(s73.citeLabel, /〈第七章 通報與防治措施 · 群聚定義與解除〉/);
+  assert.doesNotMatch(s73.citeLabel, /第 7 條/);
   const r3 = await engine.answer('登革熱核心教材 治療', { view: 'pro', lang: 'zh-TW' });
   assert.ok(!r3.sentences.some((s) => s.text.includes('待補')), '待補不得被當成答案');
   const v = await engine.answer('登革熱防治工作指引現行版是第幾版？', { view: 'pro', lang: 'zh-TW' });

@@ -426,7 +426,8 @@ export function buildSearchIndex(site) {
           }
           for (const s of secs) {
             if (s.index === false) continue;
-            const no = sectionNo(s);
+            // 第二十八輪：教材的「第三章」是章不是條，引用標籤用〈章 · 節〉標題，不寫成「第 3 條」
+            const no = item.docType === 'curriculum' ? null : sectionNo(s);
             const change = (item.changes ?? []).find((ch) => ch.section === s.heading || ch.section === s.key || (no && String(ch.section).includes(`第 ${no} 條`)) || (no && String(ch.section).includes(`第${no}條`))) ?? null;
             const parts = PAGE_MARK_TEST.test(s.markdown ?? '') ? splitByPage(s.markdown) : [{ page: null, text: s.markdown }];
             for (const part of parts) {

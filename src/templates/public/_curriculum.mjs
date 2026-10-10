@@ -1,6 +1,6 @@
 // 第二十八輪：傳染病核心教材（document 型別、docType: curriculum）的共用呈現。
 // 用在三個地方：文件頁頂端（學習目標、示範匯入警示）、疾病頁專業版「核心教材」區塊、/pro/ 與 /pro/curriculum/ 的教材清單。
-// 字串只放 zh-TW／en（教材只給專業人員，七語都 fallback 英文；不動共用的 i18n.js）。理由與契約：ARCHITECTURE §33。
+// 字串只放 zh-TW／en（教材只給專業人員，其他語言 fallback 英文；共用的 i18n.js 只加疾病頁區塊標題等 3 個 key）。理由與契約：ARCHITECTURE §33。
 import { html } from '../../../scripts/lib/render.mjs';
 import { alertBox, hrefFor, L, pill, unitLink } from './_partials.mjs';
 
