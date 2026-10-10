@@ -1081,32 +1081,6 @@ PR 開出後 CI 會自動用 axe-core 掃代表頁（桌機與手機 320px 寬�
 
 自動檢測抓不到的（alt 寫得好不好、螢幕閱讀器念起來順不順）仍要人工看；清單見 [a11y.md](a11y.md) 第 3、7 節。
 
-## 27. 給資訊室：Lint、型別檢查、JS 預算怎麼跑、失敗時怎麼看（第二十六輪）
-
-這一節是給維護程式的同仁。內容編輯者不需要看。
-
-**為什麼有這些檢查：** 內容有 schema 與治理閘門把關，但程式碼本身原本沒有自動檢查——寫錯變數名稱、漏 import、不小心把大檔加進每一頁，都要等人發現。這三道檢查花不到一分鐘，把這類錯誤擋在合併前。
-
-### 27.1 怎麼跑
-
-```
-npm run lint        # ESLint：未定義變數、重複 key、不可達程式碼等；warnings 不會讓它失敗
-npm run typecheck   # tsc：目前只檢查 scripts/lib/lanes.mjs、validate.mjs（試點）
-npm run format:check  # Prettier：只強制新檔，既有檔不檢查
-npm run build       # 含「每頁 JS 預算」檢查
-```
-
-### 27.2 失敗時怎麼看
-
-- **Lint 失敗（PR 留言表「Lint（eslint）」❌）**：到「執行紀錄」展開 `Lint (eslint)` 步驟，每個錯誤有「檔案:行:欄 規則名稱」。多數是 `no-undef`（用了沒宣告的變數，常是漏 import 或拼錯）、`no-dupe-keys`（物件重複 key，後面的會覆蓋前面）。修掉，或確實是刻意的就在該行上方加 `// eslint-disable-next-line 規則名 -- 理由`。35 個 warnings（多為未使用的 import）不擋，順手清。
-- **型別檢查失敗**：訊息格式 `檔案(行,欄): error TSxxxx`。多半是 JSDoc 型別與實際用法不符；先看函式註解的 `@param`。要略過某一行用 `// @ts-ignore 理由`，但請優先修正。
-- **JS 預算失敗（build 輸出 `❌ 有頁面的 JS 超過預算：…`）**：訊息列出頁面與大小。通常是有人在 `ui.js` 或某頁 script 新增了大型依賴。先確認是否該放進共用檔；若確實需要，用 `JS_BUDGET_KB=150 npm run build` 暫時放寬，並在 PR 說明為什麼，再決定是否改 `scripts/lib/js-budget.mjs` 的預設值。
-- **瀏覽器上字串顯示成 `vxs.status.due` 這種 key**：該 key 沒被收進語言檔。原因通常是新的動態組字寫法，前綴沒有以「xxx.」字面量出現在 client 原始碼；見 ARCHITECTURE 第 29.1。
-
-### 27.3 介面字串怎麼加
-
-照舊在 `src/client/i18n.js` 加一列（七語）。建置時 `scripts/lib/i18n-split.mjs` 會自動拆到 `dist/assets/js/i18n.<lang>.js`；不需要手改語言檔。若字串只由伺服器端模板使用，它不會出現在瀏覽器的語言檔裡，這是正常的。
-
 ## 26. 新聞稿不要只寫「今（21）日」：相對日期規則與 CI 會怎麼擋（第二十五輪）
 
 ### 26.1 為什麼有這條規則
@@ -1152,3 +1126,29 @@ npm run build       # 含「每頁 JS 預算」檢查
 | 詞彙表 | `/glossary/` | 資料治理（詞彙主檔） | 隨詞彙主檔 | 內容來自 `content/master/glossary.json`；要讓詞條有白話定義，在該筆加 `definition` 欄位，沒填則顯示 `note` |
 
 新增或修改這些頁面都走一般的 Pull Request，頁面是 `content/pages/*.json`。頁尾「關於與政策」欄與網站導覽會自動帶出連結。
+
+## 27. 給資訊室：Lint、型別檢查、JS 預算怎麼跑、失敗時怎麼看（第二十六輪）
+
+這一節是給維護程式的同仁。內容編輯者不需要看。
+
+**為什麼有這些檢查：** 內容有 schema 與治理閘門把關，但程式碼本身原本沒有自動檢查——寫錯變數名稱、漏 import、不小心把大檔加進每一頁，都要等人發現。這三道檢查花不到一分鐘，把這類錯誤擋在合併前。
+
+### 27.1 怎麼跑
+
+```
+npm run lint        # ESLint：未定義變數、重複 key、不可達程式碼等；warnings 不會讓它失敗
+npm run typecheck   # tsc：目前只檢查 scripts/lib/lanes.mjs、validate.mjs（試點）
+npm run format:check  # Prettier：只強制新檔，既有檔不檢查
+npm run build       # 含「每頁 JS 預算」檢查
+```
+
+### 27.2 失敗時怎麼看
+
+- **Lint 失敗（PR 留言表「Lint（eslint）」❌）**：到「執行紀錄」展開 `Lint (eslint)` 步驟，每個錯誤有「檔案:行:欄 規則名稱」。多數是 `no-undef`（用了沒宣告的變數，常是漏 import 或拼錯）、`no-dupe-keys`（物件重複 key，後面的會覆蓋前面）。修掉，或確實是刻意的就在該行上方加 `// eslint-disable-next-line 規則名 -- 理由`。35 個 warnings（多為未使用的 import）不擋，順手清。
+- **型別檢查失敗**：訊息格式 `檔案(行,欄): error TSxxxx`。多半是 JSDoc 型別與實際用法不符；先看函式註解的 `@param`。要略過某一行用 `// @ts-ignore 理由`，但請優先修正。
+- **JS 預算失敗（build 輸出 `❌ 有頁面的 JS 超過預算：…`）**：訊息列出頁面與大小。通常是有人在 `ui.js` 或某頁 script 新增了大型依賴。先確認是否該放進共用檔；若確實需要，用 `JS_BUDGET_KB=150 npm run build` 暫時放寬，並在 PR 說明為什麼，再決定是否改 `scripts/lib/js-budget.mjs` 的預設值。
+- **瀏覽器上字串顯示成 `vxs.status.due` 這種 key**：該 key 沒被收進語言檔。原因通常是新的動態組字寫法，前綴沒有以「xxx.」字面量出現在 client 原始碼；見 ARCHITECTURE 第 29.1。
+
+### 27.3 介面字串怎麼加
+
+照舊在 `src/client/i18n.js` 加一列（七語）。建置時 `scripts/lib/i18n-split.mjs` 會自動拆到 `dist/assets/js/i18n.<lang>.js`；不需要手改語言檔。若字串只由伺服器端模板使用，它不會出現在瀏覽器的語言檔裡，這是正常的。
