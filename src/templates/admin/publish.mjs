@@ -204,7 +204,7 @@ ${pageHead({
       <details class="adm-group" id="g-timing"><summary><span class="adm-group__t">發布時間</span><span class="adm-group__sum" id="g-timing-sum" aria-live="polite"></span></summary>
       <fieldset class="adm-fieldset adm-fieldset--ingroup" id="f-timing"><legend class="adm-sr-only">發布時間</legend>
         <div class="adm-grid adm-grid--2">
-          <div class="adm-field"><label for="f-publish-at">排程發布（選填）</label><input type="datetime-local" id="f-publish-at" name="publishAt" aria-describedby="f-publish-at-hint f-timing-msgs"><span class="adm-hint" id="f-publish-at-hint">臺北時間。留空＝合併後立即上線；填了就到點才上線，未到點網站、索引、sitemap、API 都看不到，狀態標為「排程中」。</span></div>
+          <div class="adm-field"><label for="f-publish-at">排程發布（選填）</label><input type="datetime-local" id="f-publish-at" name="publishAt" aria-describedby="f-publish-at-hint f-timing-msgs"><span class="adm-hint" id="f-publish-at-hint">臺北時間。留空＝核准後立即上線；填了就到點才上線，未到點網站、索引、sitemap、API 都看不到，狀態標為「排程中」。</span></div>
           <div class="adm-field" id="f-urgent-wrap" hidden><label class="adm-check" for="f-urgent"><input type="checkbox" id="f-urgent" name="urgent"> 緊急發布：立即上線並通知複核</label><span class="adm-hint">只限新聞稿、致醫界通函、澄清。走緊急車道（${EM.slaMinutes} 分鐘內上線），上線後公關室 ${EM.postPublishReviewHours} 小時內複核；不要用在不趕時間的內容。</span></div>
         </div>
         <ul class="adm-lanemsgs" id="f-timing-msgs" role="status" aria-live="polite"></ul>
@@ -220,6 +220,16 @@ ${pageHead({
       </div>
       <p class="adm-muted" id="f-status" role="status" aria-live="polite"></p>
     </form>
+    <section class="adm-gwpanel" id="gw-panel" aria-labelledby="gw-h" hidden>
+      <h2 id="gw-h">送審與上線</h2>
+      <p class="adm-hint">「儲存草稿」把這一版存進系統（同單位同事也看得到）；「送審」交給審核人，核准後上線。每一版都會先做與上線時同樣的檢查，通過才會存。</p>
+      <p class="gw-statusline">目前狀態：<span class="adm-badge adm-badge--gray" id="gw-state">尚未送審</span> <span class="adm-muted" id="gw-approvals"></span></p>
+      <div id="gw-notes"></div>
+      <div class="gw-errors" id="gw-errors" tabindex="-1" hidden></div>
+      <div class="adm-actions"><button type="button" class="adm-btn adm-btn--ghost" id="gw-save">儲存草稿</button><button type="button" class="adm-btn" id="gw-submit">送審</button></div>
+      <p class="adm-muted" id="gw-status" role="status" aria-live="polite"></p>
+      <details id="gw-history-wrap" hidden><summary>歷程</summary><ol class="gw-history" id="gw-history"></ol></details>
+    </section>
   </section>
 
   <section class="adm-result adm-result--sticky" aria-label="右側面板：頁面預覽與預處理結果">

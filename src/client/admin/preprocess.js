@@ -1130,7 +1130,7 @@ export function laneChecks({ type, urgent = false, publishAt = '' } = {}, nowMs 
   if (urgent && !urgentAllowed(type, cfg)) out.push({ level: 'error', code: 'urgent-type', title: '緊急發布不能用於此型別', message: `「緊急發布」只能用於新聞稿、致醫界通函、澄清（${allowed.join('、')}）；其他型別請走一般車道，或改選允許的型別。` });
   if (publishAt) {
     const t = publishAtMs(publishAt);
-    if (!Number.isFinite(t)) out.push({ level: 'error', code: 'publish-at-format', title: '排程發布時間格式不正確', message: '請用日期時間欄位選擇（臺北時間），或留空表示合併後立即上線。' });
+    if (!Number.isFinite(t)) out.push({ level: 'error', code: 'publish-at-format', title: '排程發布時間格式不正確', message: '請用日期時間欄位選擇（臺北時間），或留空表示核准後立即上線。' });
     else if (t <= nowMs) out.push({ level: 'error', code: 'publish-at-past', title: '排程發布時間必須晚於現在', message: `你選的是 ${fmtTaipei(t)}（臺北時間），已經過了。要立即上線請清空這個欄位。` });
     else if (urgent) out.push({ level: 'warn', code: 'urgent-and-scheduled', title: '緊急發布與排程發布擇一', message: '緊急發布的意思是立即上線；同時排程沒有意義。請取消其中一項。' });
   }

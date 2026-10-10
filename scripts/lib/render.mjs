@@ -78,7 +78,7 @@ export function addMonths(iso, months) {
 
 export function daysBetween(a, b) {
   const da = new Date(`${a}T00:00:00Z`), db = new Date(`${b}T00:00:00Z`);
-  return Math.round((db - da) / 86400000);
+  return Math.round((db.getTime() - da.getTime()) / 86400000);
 }
 
 export function slugify(s) {

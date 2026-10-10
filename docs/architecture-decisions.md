@@ -159,6 +159,14 @@
 
 ## 18. 編輯介面路線：自建後台、Keystatic、TinaCMS 三案比較與試點計畫
 
+> **更新（2026-10-10 第三十輪）：已決定，本節以下的「待長官決定」與 18.4／18.6 的 Keystatic 試點建議作廢。**（Yulun 2026-10-10 決定）
+>
+> - **決定：保留自建後台，前面加一個小的「寫入閘道」。** 同事在後台按「儲存草稿／送審／核准上線」，閘道代為寫進機關自架 GitLab；不會 Git 的同事永遠不碰 Git，Git 只當版本與稽核紀錄。設計與理由見 §23，部署見 [deploy.md §14](deploy.md)。
+> - **撤回 Keystatic 試點建議。** 原因是它的 github 模式要求**每位編輯者都有自己的 Git 平台帳號**並透過 GitHub App 登入（18.2、18.3「機關 SSO 整合」列）；這和「同事用 AD 單一簽入、不碰 Git」直接衝突。要繞過就得在前面再架 GitHub Enterprise（SAML）或反向代理，等於還是要自建一層，卻又多養一套 0.x 的編輯器與第二份 schema。
+> - **不採 TinaCMS。** 自架要多養 GraphQL 後端、資料層資料庫與 Node 認證服務（18.2），維運面比整個寫入閘道還大；它的 collections 定義也和本專案「`schemas/*.json` 一份、後台與 CI 共用 AJV」的治理方式不合，會變成兩份 schema。
+> - **原本試點想回答的問題（非技術同仁用不用得順）沒有消失**，改在自建後台上量測：18.6 的量測指標（撰寫到上線時間、被擋下的錯誤數、上線後錯誤數、滿意度、培訓時數）照用，只是對象換成「後台＋閘道」。
+> - 18.5（內容維持 JSON＋Markdown 字串欄位）不受影響，仍然有效。
+
 > 狀態：**待長官決定**（第二十六輪，對應 issue #28）。本節是決策紀錄與試點計畫，不改任何程式；結論欄寫的是「建議」，不是已決定。
 > 查證日期：2026-10-10。查證方式與限制見「事實查證」。
 
@@ -310,31 +318,6 @@ Pagefind 內建的中文分詞對台灣用語召回很差：「登革熱」只�
 
 **什麼時候重新考慮：** 零結果查詢的比例持續偏高且主因是同義詞／口語（→ 補詞彙表或導入語意檢索）；泰文使用量上升（→ 索引端加 `Intl.Segmenter('th')` 斷詞，做法與 CJK 補空白相同）；內容量成長到索引超過約 50 MB 或建置時間超過約 2 分鐘（→ 考慮多索引分區，如依型別）；Pagefind 專案停止維護。
 
-
-## 與規劃文件的對照
-
-| 規劃文件主題 | 原型位置 |
-| --- | --- |
-| 11 頁 wireframe：首頁、答案頁、專業專區、上架表單、疾病頁等 | `src/templates/public/*`、`src/templates/pro/home.mjs`、`/admin/publish/` |
-| 第 7.5 節 KPI | `site.gov.kpi`、`/v1/governance/kpi.json`、`/admin/` |
-| 6.1 第 6 點／元件 12／GOV.UK 六指標 | `/transparency/`、`eval/run-eval.mjs` |
-| 三層露出（預設層、狀況層、按需層、專業層） | ARCHITECTURE.md 第 8 節、`layout.mjs`、`pro.js` |
-| 治理欄位與規則 | `schemas/_common.json`、`scripts/lib/governance.mjs` |
-| 附錄 H：llms.txt／robots 政策 | `scripts/lib/emit-seo.mjs`、`/developers/#machine` |
-| 影音、專區、申請、出版品、檢驗、研究、公告（第二輪） | `schemas/{media,topic,service,publication,labtest,research}.json`、ARCHITECTURE.md 第 11 節、`/admin/{media,notices,links}/` |
-| 版本鏈、正本修訂連動（MMR 案例） | `content/documents/`、[guide-staff.md](guide-staff.md) 第 3 節 |
-| 第一／二／三階段路線圖 | [roadmap-mapping.md](roadmap-mapping.md) |
-
-## 哪些是示意資料、哪些是真實結構
-
-**真實結構（可直接沿用到正式環境）：** 內容模型與 JSON Schema、治理規則與測試、API 外殼與路徑、URL 結構、三層露出元件、答案引擎流程、評估集格式、GitHub Actions 流程、`cdc:` 詞彙。
-
-**來自官方來源的資料：** `data/snapshots/` 內的旅遊疫情、國家等級與 CKAN 資料目錄（每檔有 provenance 標示是即時抓取或快照）。
-
-**示意資料（不可當真）：** 疫情態勢的狀態與數字（標「示意」）、致醫界通函第 616 號卡片（語料庫無通函時的版面示範）、「○○醫院 感染管制室」登入畫面、白名單核准日期與核准人、評估集題目與通過率、審閱日與承辦職稱、`pdfUrl` 中的占位網址。部分文字內容（如 MMR 建議、登革熱頁）依公開資訊撰寫，用來示範版本與連動，**正式上線前須由權責單位逐字審閱**。
-
-**尚未實作：** 登入與真實的電子郵件通知、Webhook、伺服器端對話紀錄、API 金鑰與限流、LLM-as-judge 評估與人工抽樣工具。
-
 ## 21. 《疫情報導》：文章是一筆內容，卷期只是容器；稿件切段寧可留白不猜
 
 背景：同事希望《疫情報導》像 MMWR 一樣直接讀全文、也能下載 PDF，並反映文章上架太麻煩。前幾輪的模型是「卷期＝出版品，篇目是卷期 JSON 裡的清單，全文只有整本 PDF」。設計細節在 [bulletin.md](bulletin.md)，契約在 ARCHITECTURE §34。
@@ -380,3 +363,86 @@ Pagefind 內建的中文分詞對台灣用語召回很差：「登革熱」只�
 - 掃 PR 改到的檔（合併前擋）＋建置時掃全庫（擋漏網與白名單被改壞）。
 
 **沒做、留給後續**：PDF 壓縮串流與圖片的 OCR 掃描；改寫 Git 歷史清除第三十輪以前的遮罩姓名（待資訊室評估）；表單端點的實際系統（見 deploy.md §13 待確認清單）。
+
+## 23. 寫入閘道：同事不碰 Git，Git 只當版本與稽核紀錄
+
+> 狀態：**已決定**（第三十輪，2026-10-10，Yulun；對應 issue #28）。取代 §18 的 Keystatic 試點建議（見 §18 開頭的更新）。部署與資訊室待答事項見 [deploy.md §14](deploy.md)，契約見 ARCHITECTURE §36，同事操作見 [guide-staff.md §34](guide-staff.md)。
+
+**背景：** 正式環境放在機關自架 GitLab。原型的後台一直是「產生上架包 → 有人開 Pull Request」，等於要求承辦人懂 Git，或有人代操作。外部審查（#28）問要不要換現成 CMS；§18 比較過，現成方案都把「編輯者有 Git 平台帳號」當前提，這正是本機關做不到也不想做的事。
+
+**決定 1：自建後台＋一個小的寫入閘道（Node，掛在 `/api/gateway/`），不引進 CMS。**
+- 閘道只做四件事：確認是誰（身分轉接器）、確認能做什麼（AD 群組 → 角色）、寫入前驗證（和建置同一份 schema／治理檢查）、把動作翻成 Git（服務帳號提交，提交訊息帶 `Edited-by:`／`Approved-by:`）。沒有資料庫：狀態是一個 JSON 檔，稽核是一個只增不改的 JSONL（每筆帶前一筆的雜湊，竄改看得出來）。
+- 對照表：儲存草稿＝建分支並提交；送審＝開合併請求；退回修改＝合併請求留言＋狀態（意見必填）；核准上線＝核准＋合併。畫面只有「草稿、審核中、退回、已核准、已上線」，**不出現 branch／commit／merge／PR 等字**（端到端測試會檢查畫面文字）。
+- **為什麼是服務帳號提交，而不是每人一個 GitLab 帳號：** 同事不需要 GitLab 授權與訓練；離職只要停 AD。代價是 GitLab 上的作者都是同一個服務帳號，所以「誰改的、誰核准的」寫在提交訊息的 trailer（`Edited-by: 姓名 (AD: 帳號)`、`Approved-by:`），另外閘道稽核檔逐筆記錄；兩者都可調閱。
+- **為什麼不讓前端直接打 GitLab API：** token 會落到瀏覽器；四眼原則與單位權限只能靠前端藏按鈕。閘道把權限放在伺服器端，前端只是顯示結果。
+
+**決定 2：四眼原則由閘道強制。** 只有「審核」「管理」角色能核准或退回；**任何存過這份內容任一版本的人都不能審核它**（不只最後送審的人），主管兼承辦也一樣。需要幾位核准沿用 `lanes.json` 的車道設定（一級內容另加 OASIS 審核人）；緊急車道只開給 `lanes.json` 授權名單，名單可寫 `team:CDC-WEB-…` 直接用 AD 群組，名單外的人送「緊急」會自動降為一般車道並告訴他。
+
+**決定 3：身分只問「是誰、在哪些 AD 群組」，登入方式可換。** 閘道不碰密碼，有四種轉接器，換登入方式不改流程程式：
+
+| 轉接器 | 用在 | 閘道信什麼 |
+| --- | --- | --- |
+| `header` | IIS 反向代理＋Windows 驗證（Kerberos／NTLM） | 只信**設定的代理 IP** 送來的 `X-Remote-User`／`X-Remote-Groups`；其他來源帶這些標頭一律拒絕 |
+| `oidc` | Keycloak 以 LDAP 聯合 AD（可加 Kerberos） | IdP 簽的 JWT：JWKS 驗章、iss／aud／exp；拒絕 `alg: none` 與對稱金鑰 |
+| `google` | Google Workspace 登入 | 授權碼＋PKCE 換到的 id_token；`hd`＝機關網域、`email_verified`、email 也在機關網域，三項都要過 |
+| `dev` | 本機開發與 GitHub Pages 示範 | 後台的模擬登入；只接受本機連線 |
+
+AD 群組命名沿用 `CDC-WEB-<單位>-<角色>`（[admin-auth.md](admin-auth.md)），角色對到同事看得懂的三種：編輯、審核、管理。
+
+**決定 4：三條 SSO 路徑的比較與建議。**
+
+| | A. Keycloak＋LDAP（AD） | B. IIS 反向代理＋Windows 驗證 | C. Google Workspace |
+| --- | --- | --- | --- |
+| 建置工作量 | 中高：要架 Keycloak（含資料庫、憑證、升級）、設 LDAP 聯合與群組對應 | 中：IIS＋URL Rewrite／ARR，開 Windows 驗證，寫一段把群組放進標頭的模組或規則 | **低**：Workspace 已在用；開一個 OAuth client 即可試點 |
+| 真正單一簽入（不再輸入密碼） | 是（加 Kerberos 後，網域電腦免輸入） | 是（網域電腦免輸入） | 是，但是 Google 帳號的 SSO，不是 Windows 登入 |
+| 多因子驗證 | Keycloak 可設 OTP／WebAuthn | 依 Windows 登入；若要 MFA 需另外處理 | **已有 2 步驟驗證**（需確認是否強制） |
+| 需要連到外部網際網路 | 否（可全在機關內網） | 否 | **是**：同事瀏覽器與閘道都要連得到 Google |
+| 群組來源 | AD（LDAP 直接讀） | AD（Windows 權杖） | ID token **沒有群組**：要 Google 群組鏡像 AD 群組（GCDS 同步），或閘道的 email→角色對照檔 |
+| 資安政策疑慮 | 低：全在機關內 | 低：全在機關內 | **外部雲端 IdP 管內部後台**是否符合規定；AD 與 Workspace 不同步時，**離職停權有落差**（停了 AD，Google 帳號可能還在） |
+
+**建議：** 試點用 **Google Workspace**（已經在用、已有 2 步驟驗證、資訊室工作最少，可以最快讓同事真的用後台送審）。正式環境要看**資安政策是否允許後台以外部雲端 IdP 登入**：允許就沿用；不允許就用 **Keycloak**，它可以同時接 AD（LDAP）與 Google（當外部 IdP 代理），試點期的帳號與群組設計可以原樣搬過去。IIS 方案適合「機關已經有 IIS 且不想多養一個服務」的情況。三條路閘道都已實作，選哪條是設定問題，不是改程式。
+
+**Google 路徑的幾個硬規則（為什麼）：**
+- **OAuth 同意畫面設「內部」**：只有機關網域帳號能登入，外部 Google 帳號在 Google 端就被擋。閘道仍然再查 `hd` 與 email 網域，因為 `hd` 在某些情況（例如個人帳號）不存在，只看一項不夠。
+- **授權碼＋PKCE，state 與 nonce 放在簽章的短效 cookie**：防止授權碼被攔截後重放、防止跨站偽造登入。
+- **永遠不信前端送來的 email**：身分只來自 Google 簽章的 id_token。
+- **群組每 15 分鐘重查一次**：AD 群組被移除後，最遲 15 分鐘失去權限；工作階段 8 小時。
+
+**決定 5：寫入前驗證用建置同一套檢查，錯誤翻成白話中文並指到欄位。** 閘道把送來的那一筆放進整站資料，跑 `validateSite()`＋`validateAssets()`，只回這一筆的錯誤，例如「「摘要」最多 200 個字，請縮短」。原因：讓同事在按「送審」時就知道要改哪裡，而不是等 CI 失敗再由資訊室轉告。CI（GitLab 上的檢查）仍是最後一道防線。
+
+**決定 6：檔名只由驗證過的型別＋id 推出，只能寫 `content/` 底下。** 前端完全不能指定路徑；id 的格式不允許 `..`、斜線、大寫或空白。這是路徑穿越的根本防線，比事後過濾字串可靠。
+
+**安全上的其他選擇：** 寫入要同源（Origin／Sec-Fetch-Site）＋CSRF token（依身分簽的 HMAC）＋`application/json`；請求上限 512 KB；回應 `no-store`、`nosniff`、`default-src 'none'`。後台畫面全部用 `textContent` 寫入，不用 `innerHTML` 放使用者資料；審核預覽由閘道用建置同一個 Markdown 淨化器產生，放在沒有任何權限的 `sandbox` iframe。
+
+**漸進式：** 後台先問 `/api/gateway/health`，有回應才換成閘道模式；GitHub Pages 上沒有閘道，就維持原本的瀏覽器示範（`?gateway=off` 也可強制）。所以這一輪不會讓公開示範站壞掉。
+
+**代價：**
+- 多一個要維運的小服務（Node、一個服務帳號 token、兩個 JSON 檔）。它沒有資料庫，壞了重啟即可；狀態檔遺失時，GitLab 上的分支與合併請求仍在，可以人工收尾。
+- 服務帳號的 token 權限大（能推分支、能合併），要放在祕密管理、定期換，並讓 `main` 受保護（只有服務帳號與資訊室能合併）。
+- 閘道驗證時用的「網站現況」是閘道主機上那份內容；`main` 更新後要重新部署或定期同步，否則差異比對的基準會舊。最終把關仍是 GitLab 上的 CI。
+
+**沒做、留給後續：** `github` 供應者（原型 Pages 不需要，GitLab 是正式環境）；把 `content-pr.yml` 的檢查移植成 GitLab CI（`.gitlab-ci.yml`）；Cloud Identity Groups API（目前用 Admin SDK Directory API，兩者擇一即可）；附件（PDF、圖片）經閘道上傳。排程上線不需要另做：核准時若 `publishAt` 在未來，內容照樣合併進 `main`，狀態顯示「已核准」，由建置既有的排程發布機制（`publishAt`，ARCHITECTURE §17）到時間才輸出頁面。
+
+## 與規劃文件的對照
+
+| 規劃文件主題 | 原型位置 |
+| --- | --- |
+| 11 頁 wireframe：首頁、答案頁、專業專區、上架表單、疾病頁等 | `src/templates/public/*`、`src/templates/pro/home.mjs`、`/admin/publish/` |
+| 第 7.5 節 KPI | `site.gov.kpi`、`/v1/governance/kpi.json`、`/admin/` |
+| 6.1 第 6 點／元件 12／GOV.UK 六指標 | `/transparency/`、`eval/run-eval.mjs` |
+| 三層露出（預設層、狀況層、按需層、專業層） | ARCHITECTURE.md 第 8 節、`layout.mjs`、`pro.js` |
+| 治理欄位與規則 | `schemas/_common.json`、`scripts/lib/governance.mjs` |
+| 附錄 H：llms.txt／robots 政策 | `scripts/lib/emit-seo.mjs`、`/developers/#machine` |
+| 影音、專區、申請、出版品、檢驗、研究、公告（第二輪） | `schemas/{media,topic,service,publication,labtest,research}.json`、ARCHITECTURE.md 第 11 節、`/admin/{media,notices,links}/` |
+| 版本鏈、正本修訂連動（MMR 案例） | `content/documents/`、[guide-staff.md](guide-staff.md) 第 3 節 |
+| 第一／二／三階段路線圖 | [roadmap-mapping.md](roadmap-mapping.md) |
+
+## 哪些是示意資料、哪些是真實結構
+
+**真實結構（可直接沿用到正式環境）：** 內容模型與 JSON Schema、治理規則與測試、API 外殼與路徑、URL 結構、三層露出元件、答案引擎流程、評估集格式、GitHub Actions 流程、`cdc:` 詞彙。
+
+**來自官方來源的資料：** `data/snapshots/` 內的旅遊疫情、國家等級與 CKAN 資料目錄（每檔有 provenance 標示是即時抓取或快照）。
+
+**示意資料（不可當真）：** 疫情態勢的狀態與數字（標「示意」）、致醫界通函第 616 號卡片（語料庫無通函時的版面示範）、「○○醫院 感染管制室」登入畫面、白名單核准日期與核准人、評估集題目與通過率、審閱日與承辦職稱、`pdfUrl` 中的占位網址。部分文字內容（如 MMR 建議、登革熱頁）依公開資訊撰寫，用來示範版本與連動，**正式上線前須由權責單位逐字審閱**。
+
+**尚未實作：** 登入與真實的電子郵件通知、Webhook、伺服器端對話紀錄、API 金鑰與限流、LLM-as-judge 評估與人工抽樣工具。

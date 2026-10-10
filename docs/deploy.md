@@ -403,3 +403,236 @@ location ~ ^/pagefind/pagefind\..*\.pf_meta$ { add_header Cache-Control "public,
 ### 13.6 個資掃描（CI 與建置）
 
 `content/`、`data/snapshots/` 與會複製到網站的內容附件，PR 合併前（`content-pr.yml` 的「PII scan」步驟，只掃 PR 改到的檔）與建置時（全部）都會掃身分證／居留證號（檢查碼）、手機、個人信箱、名單語境姓名。白名單 `content/governance/pii-allowlist.json`（每筆要寫理由）。手動：`npm run pii`。**Git 歷史不會被掃、也不會被清**；若有個資誤入歷史，要不要改寫歷史（`git filter-repo`＋請 GitHub 清快取）由資訊室與個資窗口評估。
+
+## 14. 寫入閘道、AD 登入與自架 GitLab（第三十輪）
+
+給資訊室。**一句話：** 同事在後台按「儲存草稿／送審／退回修改／核准上線」，一支小的 Node 服務（寫入閘道，`/api/gateway/`）確認身分與角色、驗證內容，再用一個服務帳號寫進機關自架 GitLab。同事不需要 GitLab 帳號。
+
+- 為什麼這樣設計：見 architecture-decisions §23。
+- 程式契約：見 ARCHITECTURE §36。
+- 同事怎麼操作：見 guide-staff §34。
+
+```
+同事瀏覽器 ──443──▶ 反向代理（IIS／nginx／Keycloak 前的 oauth2-proxy）──▶ 閘道（Node 22，只聽內網或本機）
+                     │ 負責登入（三選一，見 14.3）                         │
+                     └ /admin/* 靜態頁                                      ├──443──▶ 自架 GitLab（REST v4，服務帳號 token）
+                                                                            ├─ .local/gateway-state.json、gateway-audit.jsonl
+                                                                            └─ .local/outbox/（Email .eml、Teams 卡片 JSON）
+GitLab main 更新 ──▶ GitLab CI 建置 dist/ ──▶ 對外網站（本文件 §1～§12 的部署方式不變）
+```
+
+### 14.1 閘道本身
+
+- **程式與執行：**
+  - 程式在 `scripts/lib/gateway/`，只用 Node 內建模組，沒有新的 npm 相依。
+  - 原型由 `scripts/serve.mjs` 掛載，同時送後台靜態頁；本機用 `npm run dev`，`GATEWAY=off` 可關閉。
+  - 正式環境可以同一支程式放在反向代理後面，以 systemd 或 Windows 服務常駐。
+  - `serve.mjs` 原本是開發用伺服器，上線前請資訊室確認日誌輪替與重啟策略。
+- **沒有資料庫：**
+  - 狀態是一個 JSON 檔。
+  - 稽核是只增不改的 JSONL，每筆帶前一筆的雜湊，竄改或刪行都驗得出來（`verifyAudit`）。
+  - 狀態檔遺失時，GitLab 上的分支與合併請求仍在，可以人工收尾。
+- **環境變數：** 祕密只從環境變數或祕密管理來，不進設定檔、不進 Git。
+
+| 變數 | 用途 | 預設 |
+| --- | --- | --- |
+| `GATEWAY_AUTH` | `header`／`oidc`／`google`／`dev` | `dev`（只接受本機連線，**正式環境不可用**） |
+| `GATEWAY_GIT` | `gitlab`／`local` | `local`（`.local/gateway-repo/`） |
+| `GITLAB_URL`、`GITLAB_PROJECT`、`GITLAB_TOKEN`、`GITLAB_TARGET_BRANCH` | GitLab 位址、專案（數字 id 或 `group/project`）、服務帳號 token、目標分支 | 目標分支 `main` |
+| `PUBLIC_ORIGIN` | 後台對外網址，例如 `https://cms.cdc.gov.tw`。用來判斷同源，也用在通知信的連結。**反向代理會改寫 Host 時一定要設** | 空（改用 Host 標頭） |
+| `GATEWAY_CSRF_SECRET` | CSRF token 的簽章金鑰（≥ 32 位元組亂數） | 每次啟動隨機產生，重啟後同事要重新整理頁面 |
+| `GATEWAY_SESSION_SECRET` | Google 模式工作階段 cookie 的簽章金鑰 | 每次啟動隨機產生，重啟後要重新登入 |
+| `GATEWAY_STATE_FILE`、`GATEWAY_AUDIT_FILE`、`OUTBOX_DIR` | 狀態、稽核、寄件匣位置 | `.local/` 底下 |
+| `GATEWAY_SEED_DIR`、`GATEWAY_REPO_DIR` | 只用在 `local` 模式 | |
+| 各登入方式的變數 | 見 14.3 | |
+
+- **閘道已經做的安全措施：**
+  - 寫入要同源（Origin、Sec-Fetch-Site），並帶 CSRF token（依身分簽章）。
+  - 只收 `application/json`，本文上限 512 KB。
+  - 回應一律 `no-store`、`nosniff`、`default-src 'none'`。
+  - 檔名只由驗證過的型別＋id 推出，只能寫 `content/` 底下。
+  - 每個動作（含被拒絕的）都寫進稽核。
+
+### 14.2 AD 群組（三條登入路徑共用）
+
+閘道只問兩件事：**是誰**、**在哪些 AD 群組**。群組命名沿用 [admin-auth.md](admin-auth.md) 的 `CDC-WEB-<單位>-<角色>`，例如 `CDC-WEB-acute-infectious-editor`、`CDC-WEB-pr-chief-editor`、`CDC-WEB-oasis-governance`。單位代碼是 `content/master/units.json` 的 id 去掉 `unit.`；`DOMAIN\` 前綴與大小寫都不影響。
+
+| AD 群組的角色 | 後台顯示 | 能做 |
+| --- | --- | --- |
+| `editor`、`situation-publisher` | 編輯 | 儲存草稿、送審 |
+| `reviewer`、`chief-editor`、`governance` | 審核 | 加上核准、退回（自己編過的不行） |
+| `platform` | 管理 | 同審核；跨單位 |
+
+不是 `CDC-WEB-` 開頭的群組一律忽略；沒有任何這類群組的帳號，進後台會看到「沒有網站內容的角色」。
+
+### 14.3 三條登入路徑
+
+#### 路徑 A：Keycloak＋LDAP 聯合 AD（可加 Kerberos）
+
+1. **Keycloak realm 與 AD 聯合：**
+   - 建一個 realm（例如 `cdc`）。
+   - 在 User Federation 加 LDAP：連線用 `ldaps://` 連 AD，Edit mode 設 `READ_ONLY`，Users DN 指到人員 OU。
+   - 加 `group-ldap-mapper`，只同步 `CN=CDC-WEB-*` 群組。
+2. **Client 與 token 內容：**
+   - 建 confidential client `cdc-web-gateway`。
+   - 加 Group Membership mapper：claim 名 `groups`，**關掉 Full group path**（閘道也會去掉開頭的 `/`）。
+   - 加 Audience mapper，讓 access token 的 `aud` 含 `cdc-web-gateway`。Keycloak 預設的 `aud` 是 `account`，不加會被閘道拒絕。
+3. **（選用）Kerberos 免輸入密碼：**
+   - 在 LDAP provider 開 Kerberos。
+   - 為 Keycloak 主機註冊 SPN `HTTP/<keycloak 主機 FQDN>` 並匯出 keytab。
+   - 用 GPO 把 Keycloak 網址加入瀏覽器的近端內部網路區域。
+4. **前端代理：** 閘道**只驗 token，不負責轉址登入**。前面要有一層 OIDC 代理（例如 oauth2-proxy），以 `--pass-access-token` 把 token 放進 `X-Forwarded-Access-Token`；或在 `Authorization: Bearer` 標頭帶 token。
+5. **閘道設定：**
+   - `GATEWAY_AUTH=oidc`
+   - `OIDC_ISSUER=https://<keycloak>/realms/cdc`
+   - `OIDC_AUDIENCE=cdc-web-gateway`
+   - `OIDC_JWKS_URI=https://<keycloak>/realms/cdc/protocol/openid-connect/certs`
+   - 選用：`OIDC_USER_CLAIM`（預設 `preferred_username`）、`OIDC_GROUPS_CLAIM`（預設 `groups`）、`OIDC_NAME_CLAIM`（預設 `name`）。
+   - 驗章演算法只接受 RS256／PS256／ES256；換金鑰時閘道會自動重抓 JWKS。
+
+#### 路徑 B：IIS 反向代理＋Windows 驗證（信任標頭）
+
+1. **IIS 站台與轉送：**
+   - 開 Windows 驗證（Negotiate／Kerberos 優先），關閉匿名驗證。
+   - 用 ARR＋URL Rewrite 把 `/api/gateway/` 轉給閘道（`http://127.0.0.1:<port>`）。
+2. **身分標頭：** 由代理設定以下標頭，每次都要**覆寫**，不能沿用瀏覽器送來的值：
+   - `X-Remote-User`：取自 `{LOGON_USER}`，例如 `CDC\wang`。
+   - `X-Remote-Groups`：逗號分隔的 `CDC-WEB-*` 群組。
+   - `X-Remote-Name`：顯示名稱，UTF-8 百分比編碼。
+   - `X-Remote-Email`：選用。
+3. **群組怎麼送（要注意）：** URL Rewrite 的伺服器變數拿得到帳號，**拿不到群組清單**。要用以下其中一種：
+   - 寫一小段 IIS 模組或 ASP.NET Core（例如 YARP）中介層，從 Windows 權杖讀群組、只留 `CDC-WEB-*`，再寫進標頭。
+   - 由閘道自己查 LDAP：轉接器已留 `groupLookup` 介面，但**這一輪沒有實作 LDAP 查詢**。
+
+   不論哪種，代理都必須**清掉**瀏覽器送來的 `X-Remote-Groups`，否則同事可以自己宣稱任何群組。
+4. **閘道設定：**
+   - `GATEWAY_AUTH=header`
+   - `GATEWAY_TRUSTED_PROXIES=<IIS 的 IP 或 CIDR>`：閘道只信這些來源送來的身分標頭，其他來源帶這些標頭一律回 401 並寫稽核。
+   - 閘道只聽本機或內網。
+   - 標頭名稱可用 `GATEWAY_USER_HEADER`、`GATEWAY_GROUPS_HEADER`、`GATEWAY_NAME_HEADER`、`GATEWAY_EMAIL_HEADER` 改。
+5. **Host 標頭：** ARR 預設不保留 Host，所以要設 `PUBLIC_ORIGIN`，或在 ARR 開 `preserveHostHeader`。
+
+#### 路徑 C：Google Workspace
+
+1. **建立 OAuth client（由機關 Workspace 的管理員帳號操作）：**
+   - 在 Google Cloud 建一個專案。
+   - OAuth 同意畫面設為 **內部（Internal）**：只有機關網域帳號能登入，外部帳號在 Google 端就被擋。
+   - 建 OAuth client，類型選「網頁應用程式」，重新導向 URI 設 `https://<後台網址>/api/gateway/login/callback`。
+2. **閘道設定：**
+   - `GATEWAY_AUTH=google`
+   - `GOOGLE_CLIENT_ID`、`GOOGLE_CLIENT_SECRET`
+   - `GOOGLE_DOMAIN=<機關網域>`
+   - `GOOGLE_REDIRECT_URI`（同上）
+   - `GATEWAY_SESSION_SECRET`
+3. **閘道怎麼驗證：**
+   - 登入走授權碼＋PKCE（S256），state 與 nonce 放在 10 分鐘的簽章 cookie。
+   - id_token 要同時通過：iss、aud、exp、nonce、`email_verified: true`、`hd`＝機關網域、email 結尾也是 `@機關網域`。`hd` 在某些帳號不存在，只看一項不夠。
+   - **前端送來的 email 一律不信**，身分只來自 Google 簽章的 id_token。
+   - 登入後發 HttpOnly、Secure、SameSite=Lax 的簽章 cookie，效期 8 小時，每 15 分鐘重查一次群組。
+4. **角色從哪來：** Google 的 id_token **沒有群組**，兩種來源可以並用（先查 a，查不到再看 b）：
+
+   **(a) Google 群組鏡像 AD 群組（建議）**
+   - 群組 email 用 `cdc-web-<單位>-<角色>@<網域>`，閘道會換算成 `CDC-WEB-<單位>-<角色>`。最好由 GCDS（Google Cloud Directory Sync）從 AD 同步，人事改 AD 就生效。
+   - 讀取方式：建一個服務帳號，開全網域委派，只給 scope `https://www.googleapis.com/auth/admin.directory.group.readonly`。
+   - `GOOGLE_ADMIN_SUBJECT` 設一位只有「群組讀取」權限的管理員帳號。
+   - 金鑰檔路徑給 `GOOGLE_SA_KEY_FILE`，放在祕密管理，不進 Git。
+   - 閘道呼叫的是 Admin SDK Directory API `groups.list?userKey=`。Cloud Identity Groups API 也可以，但這一輪沒有實作。
+
+   **(b) 對照檔（試點或沒有 GCDS 時）**
+   - `GOOGLE_ROLE_MAP_FILE` 指向一個 JSON：`{ "wang@<網域>": ["CDC-WEB-acute-infectious-editor"] }`。
+   - 由資訊室維護；人員異動要記得改，否則會有權限落差。
+5. **連外：** 同事瀏覽器要連得到 `accounts.google.com`。閘道主機要能連出到：
+   - `oauth2.googleapis.com`
+   - `www.googleapis.com`（JWKS）
+   - `admin.googleapis.com`（只有用群組鏡像時）
+
+#### 三條路徑比較與建議
+
+| | A. Keycloak＋LDAP | B. IIS＋Windows 驗證 | C. Google Workspace |
+| --- | --- | --- | --- |
+| 建置工作量 | 中高（多養一個 Keycloak＋資料庫） | 中（IIS 設定＋一段送群組的中介層） | **低**（開一個 OAuth client） |
+| 真正單一簽入 | 是（加 Kerberos 免輸入） | 是（網域電腦免輸入） | 是（Google 帳號） |
+| 多因子驗證 | Keycloak 可設 OTP／WebAuthn | 依 Windows 登入，另要處理 | 2 步驟驗證（需確認是否強制） |
+| 需要連到外部網際網路 | 否 | 否 | **是**（Google） |
+| 群組來源 | AD（LDAP） | AD（Windows 權杖） | Google 群組（GCDS 同步）或對照檔 |
+| 資安政策疑慮 | 低 | 低 | 外部雲端 IdP 管內部後台；AD 與 Workspace 不同步時，離職停權有落差 |
+
+**建議：**
+- **試點先用 C**：Workspace 已在用、已有 2 步驟驗證，資訊室工作最少。
+- **正式環境**：資安政策允許後台用雲端 IdP，就沿用 C；不允許就用 A。Keycloak 可以同時接 AD 與 Google（Google 當外部 IdP），試點期的群組設計原樣搬過去。
+- **B 適合**已經有 IIS、不想多養服務的情況。
+
+三條路閘道都已實作，選哪一條只是設定，不必改程式。
+
+### 14.4 自架 GitLab 設定
+
+- **登入：** GitLab 本身用 LDAP（`gitlab.rb` 的 `gitlab_rails['ldap_servers']`）接 AD，給資訊室、需要查紀錄的審核者使用。**一般同事不需要 GitLab 帳號。**
+- **服務帳號：**
+  - 建一個專用帳號，例如 `web-gateway` bot 使用者，或使用 Project Access Token。
+  - token scope 只給 `api`（建分支、提交、合併請求、合併都需要），不要給 `sudo` 或 `admin_mode`。
+  - 角色給 **Developer**。
+  - token 有效期最長一年，放在祕密管理，到期前換發，並寫進交接清單。
+- **保護 `main`：**
+  - Allowed to push：**No one**。
+  - Allowed to merge：Developers + Maintainers。
+  - 一般人的角色給 Reporter 以下，這樣只有服務帳號（與資訊室 Maintainer）合併得了。
+  - 不要開 Force push。
+- **合併方式：** 用 Merge commit，閘道會寫 `Approved-by:` trailer 到合併訊息。合併後自動刪除來源分支。
+- **GitLab 上的核准只是鏡像：**
+  - 所有動作都是同一個服務帳號，真正的核准人記在合併訊息的 `Approved-by:`、合併請求留言與閘道稽核。
+  - 第二位核准時 GitLab 回 401（已核准過），閘道會略過，不當失敗。
+  - 不需要買 Premium 的核准規則；四眼原則由閘道強制。
+- **CI（待辦）：**
+  - 目前的檢查在 GitHub Actions（`content-pr.yml`、`pages.yml`），要移植成 `.gitlab-ci.yml`：合併請求跑 `node scripts/build.mjs --check`、測試與無障礙掃描；`main` 跑建置與部署。
+  - 若開「Pipelines must succeed」，閘道目前的「立即合併」會被 GitLab 拒絕，要改成「流水線成功後合併」（`merge_when_pipeline_succeeds`），這一輪沒做。
+- **標籤：** 先建 `網站內容::審核中`、`網站內容::退回`、`網站內容::已核准`（scoped labels 需要 Premium；Free 版照樣可用，只是不會互斥）。
+
+### 14.5 網路
+
+| 從 | 到 | 埠 | 用途 |
+| --- | --- | --- | --- |
+| 同事瀏覽器 | 反向代理 | 443 | 後台頁與 `/api/gateway/` |
+| 反向代理 | 閘道 | 本機或內網埠 | 只允許代理主機 |
+| 閘道 | GitLab | 443 | REST v4 |
+| Keycloak（路徑 A） | AD 網域控制站 | 636（LDAPS）、88（Kerberos） | 帳號與群組 |
+| 同事瀏覽器、閘道（路徑 C） | Google（見 14.3） | 443 | 登入、JWKS、群組 |
+| 閘道 | SMTP、Teams webhook | 25／587、443 | **尚未實作**：目前寫到 `.local/outbox/`，接郵件服務時沿用 §11 的寄信介面 |
+
+建議閘道和 GitLab 放在同一個內網區段，閘道不對外直接開埠。
+
+### 14.6 稽核與備份
+
+- 稽核 `gateway-audit.jsonl` 每筆都有 `seq`、時間、帳號、姓名、單位、角色、登入方式、動作、結果、前一筆雜湊；不記 token 與內容本文。
+  - 建議每日送到集中式日誌，保存一年以上，政風室可調閱。
+  - 檔案本身只增不改。
+- 誰改了什麼、誰核准，同時寫在 GitLab 的提交訊息（`Edited-by:`、`Approved-by:`、`Gateway-Submission:`），兩邊可以互相核對。
+- 備份：`gateway-state.json` 與稽核檔納入主機備份；GitLab 依既有備份。
+
+### 14.7 上線前驗收清單
+
+1. `GET /api/gateway/health` 回 `{ ok: true, auth: '<選定的模式>' }`。
+2. 一位只有 `editor` 群組的同事：能存草稿、送審，**看不到**核准按鈕。
+3. 同單位另一位 `reviewer`：在複核區看到那一筆，能退回（沒寫意見會被擋）；承辦人收到通知，修改後再送審。
+4. 審核人按核准上線：GitLab `main` 多一個合併提交，作者是服務帳號，訊息有 `Edited-by:` 與 `Approved-by:`；GitLab CI 建置後網站更新。
+5. 承辦人兼審核人：對自己編過的內容按核准，會被擋（四眼原則）。
+6. 別的單位的審核人：看不到這一筆。
+7. 偽造測試：從非代理主機直接打閘道並帶 `X-Remote-User`，回 401（路徑 B）；從別的網站送 POST，回 403。
+8. 稽核檔：上述每一步都有紀錄，`verifyAudit` 驗證通過。
+
+### 14.8 資訊室要回答的問題
+
+1. **登入路徑：** 機關有沒有 AD FS 或 Microsoft Entra ID？有的話也可以當 OIDC 來源（走路徑 A 的 `oidc` 轉接器，`groups` claim 設法同上）。
+2. **能不能自架 Keycloak？** 包含資料庫、憑證、升級與值班。不行的話，能不能用既有 IIS 做路徑 B，並寫那一段送群組的中介層？
+3. **Google Workspace：**
+   - 有沒有用 GCDS 從 AD 同步帳號與群組？
+   - Workspace 管理員能不能建立「內部」OAuth client 與唯讀服務帳號（全網域委派）？
+   - 2 步驟驗證是否已對全機關**強制**？
+   - 資安政策是否允許後台以外部雲端 IdP 登入？
+4. **主機位置：** 閘道放哪裡（和 GitLab 同一區段？DMZ 還是內網？），同事從哪些網段連後台，在家能否透過 VPN 使用？
+5. **GitLab：**
+   - 版本、Free 或 Premium？
+   - 服務帳號用 bot 使用者還是 Project Access Token？
+   - token 換發由誰負責？
+   - 要不要開「Pipelines must succeed」（會影響 14.4 的待辦）？
+6. **通知：** 通知要接哪個 SMTP 或 Teams webhook？是否允許閘道主機連出到 Teams？
+7. **稽核：** 稽核檔要送到哪一套集中式日誌，保存多久？

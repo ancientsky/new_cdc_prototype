@@ -43,7 +43,7 @@ test('renderPreviewHtml：每個區塊都有 data-field 且對應到 FIELD_MAP�
   assert.match(html, /尚未填標題/); assert.match(html, /尚未填內文/);
   assert.match(html, /急性傳染病組/); assert.match(html, /一般車道/);
   assert.match(html, /繁體中文.*English/); assert.match(html, /不提供：日本語/);
-  assert.match(html, /合併後立即上線/);
+  assert.match(html, /核准後立即上線/); // 第三十輪：給同事看的字不用「合併」
   assert.match(html, /role="button"/); assert.match(html, /tabindex="0"/);
 });
 
