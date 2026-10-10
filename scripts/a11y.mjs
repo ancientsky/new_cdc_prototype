@@ -1,4 +1,5 @@
 // 無障礙自動檢測（第二十四輪）：用 Playwright 開 Chromium，對 dist/ 的代表頁跑 axe-core。
+/* global document */
 // 用法：BASE_PATH='' node scripts/build.mjs && npm run a11y
 // - 本腳本「不建置」，只讀 dist/（或 DIST_DIR）；沒有 dist 會明確報錯。
 // - 每個樣板挑一頁代表，桌機 1280px 與手機 320px 各跑一次（320px 同時檢查橫向捲動，對應 WCAG 1.4.10 Reflow）。
@@ -83,7 +84,7 @@ async function main() {
             findings.push({ page: p, vp: vp.name, rule: v.id, impact: v.impact, help: v.help, helpUrl: v.helpUrl, nodes: v.nodes.map((n) => ({ target: n.target.join(' '), html: short(n.html) })) });
           }
           if (vp.width <= 320) {
-            const w = await page.evaluate(() => ({ s: document.documentElement.scrollWidth, c: document.documentElement.clientWidth }));
+            const w = await page.evaluate(/* eslint-disable-line no-undef -- 在瀏覽器裡執行 */() => ({ s: document.documentElement.scrollWidth, c: document.documentElement.clientWidth }));
             if (w.s > w.c) overflow.push({ page: p, vp: vp.name, scrollWidth: w.s, clientWidth: w.c });
           }
         } finally { await page.close(); }

@@ -5,7 +5,7 @@ import js from '@eslint/js';
 import globals from 'globals';
 
 export default [
-  { ignores: ['dist/**', 'node_modules/**', 'previews/**', 'data/**', 'content/**', 'src/public/**', 'eval/out/**'] },
+  { ignores: ['dist/**', 'node_modules/**', '.claude/**', 'previews/**', 'data/**', 'content/**', 'src/public/**', 'eval/out/**'] },
   js.configs.recommended,
   {
     languageOptions: { ecmaVersion: 2024, sourceType: 'module' },
