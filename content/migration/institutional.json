@@ -1,0 +1,78 @@
+{
+  "id": "migration.institutional",
+  "type": "migration",
+  "title": "制度性頁面（法令規章、政府資料公開）→ 新站政策頁",
+  "owner": "unit.secretariat",
+  "steward": "秘書室承辦人",
+  "publishedAt": "2026-10-10",
+  "reviewedAt": "2026-10-10",
+  "reviewPeriodMonths": 3,
+  "status": "published",
+  "audience": [
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    }
+  },
+  "summary": "舊站「法令規章」「政府資料公開」兩個欄目移轉對照：改為本站政策頁，列出法規並連到全國法規資料庫，以及政府資訊公開法第 7 條各項的對應頁面與待建置項目。",
+  "keywords": [
+    "移轉清單",
+    "法令規章",
+    "政府資訊公開",
+    "制度性頁面",
+    "舊網址"
+  ],
+  "scope": {
+    "kind": "category",
+    "name": "制度性頁面"
+  },
+  "legacyRoot": "https://www.cdc.gov.tw/Category/List/3UATgJ9_kkHimGdkBKskPA",
+  "showLegacyUntil": "2027-12-31",
+  "sourceNote": "開發環境連不到 www.cdc.gov.tw，兩個欄目網址取自外部審查意見（Issue #27）。欄目子頁內容尚未逐頁盤點，下列為欄目層級對照；資訊安全政策與著作權聲明在舊站是頁尾連結，舊網址待承辦確認後再補。全部 verified:false。",
+  "items": [
+    {
+      "key": "legal-regulations",
+      "oldTitle": "法令規章",
+      "oldPath": "首頁／法令規章",
+      "oldUrl": "https://www.cdc.gov.tw/Category/List/3UATgJ9_kkHimGdkBKskPA",
+      "oldType": "list",
+      "verified": false,
+      "status": "migrated",
+      "target": "page.legal",
+      "owner": "unit.planning",
+      "note": "欄目改為一頁式政策頁：主要法規連到全國法規資料庫，不另存條文全文；子法代碼標「待確認」者由承辦逐筆核對",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "aiWhitelist",
+        "linkCheck",
+        "basedOn"
+      ]
+    },
+    {
+      "key": "foia-open-info",
+      "oldTitle": "政府資料公開",
+      "oldPath": "首頁／政府資料公開",
+      "oldUrl": "https://www.cdc.gov.tw/Category/List/abYRVtgFiTeOpA1lsLeZWg",
+      "oldType": "list",
+      "verified": false,
+      "status": "migrated",
+      "target": "page.foia",
+      "owner": "unit.secretariat",
+      "note": "依政府資訊公開法第 7 條逐項對照本站頁面；尚無對應頁面的項目在頁內標「待建置」並列權責單位",
+      "newRequirements": [
+        "owner",
+        "reviewedAt",
+        "aiWhitelist",
+        "linkCheck"
+      ]
+    }
+  ]
+}

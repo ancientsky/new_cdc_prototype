@@ -1,0 +1,59 @@
+{
+  "id": "page.security-policy",
+  "type": "page",
+  "slug": "security-policy",
+  "title": "資訊安全政策",
+  "owner": "unit.it",
+  "publishedAt": "2026-10-10",
+  "reviewedAt": "2026-10-10",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "疾管署資訊安全管理的目標、原則與責任（示意稿，待資訊室確認）。",
+  "keywords": [
+    "資訊安全政策",
+    "資通安全",
+    "ISMS",
+    "資通安全管理法",
+    "資安事件通報"
+  ],
+  "bodyMarkdown": "> **示意稿，待資訊室確認。** 本頁依一般機關資訊安全管理制度（ISMS）的常見架構擬寫，不代表本署已取得任何驗證或已完成所述全部措施；正式文字須由資訊室依本署實際制度與資通安全責任等級改寫。\n\n## 一、目的\n確保本署所保管的資訊資產（含防疫資料、民眾個人資料與系統服務）之機密性、完整性與可用性，並使業務在資安事件下仍能持續運作。\n\n## 二、適用範圍\n本署全體人員、委外廠商，以及本署所有資訊系統、網路、資料與紙本文件。\n\n## 三、政策聲明\n1. **風險導向**：定期盤點資訊資產、評估風險，並依風險決定防護措施。\n2. **資訊分級**：依機密性與重要性分級保護，個人資料與未公開疫情資料採最嚴格管制。\n3. **最小權限**：存取權限依職務授予並定期檢視；離職或調動即時收回。\n4. **委外管理**：委外廠商須簽署保密與資安條款，並接受稽核。\n5. **事件通報與應變**：發現資安事件應立即通報資訊室，依規定時限向上級機關通報，並保存紀錄。\n6. **教育訓練**：全體人員每年接受資安教育訓練。\n7. **持續改善**：定期內部稽核與管理審查，並依結果修正政策與作法。\n\n## 四、法令依據\n資通安全管理法及其子法、個人資料保護法、政府機關資訊安全相關規範。條文以[全國法規資料庫](https://law.moj.gov.tw/)為準。\n\n## 五、責任\n署長督導資訊安全管理；資訊室負責制度與技術措施；各單位主管對所轄業務的資訊安全負責；全體人員有遵守義務。\n\n## 六、通報資安疑慮\n發現本站有漏洞或資安疑慮，請透過[聯絡我們](/contact/)通知，請勿公開散布細節。",
+  "i18n": {
+    "en": {
+      "title": "Information security policy",
+      "summary": "Objectives, principles and responsibilities for information security management at Taiwan CDC (illustrative draft pending confirmation by the IT Office).",
+      "bodyMarkdown": "> **Illustrative draft pending confirmation by the IT Office.** This page follows the common structure of an agency information security management system (ISMS). It does not claim any certification or that every measure is in place; the IT Office must rewrite it to match the actual system and security responsibility level.\n\n## 1. Purpose\nTo protect the confidentiality, integrity and availability of the information assets Taiwan CDC holds (outbreak data, personal data and system services) and keep operations running during security incidents.\n\n## 2. Scope\nAll staff and contractors, and all information systems, networks, data and paper records of the agency.\n\n## 3. Policy statements\n1. **Risk-based:** assets are inventoried and risks assessed regularly; controls follow the risk.\n2. **Classification:** information is protected by sensitivity; personal data and unpublished outbreak data receive the strictest controls.\n3. **Least privilege:** access follows job duties, is reviewed regularly and revoked promptly on departure or transfer.\n4. **Outsourcing:** contractors sign confidentiality and security clauses and are subject to audit.\n5. **Incident reporting and response:** incidents are reported at once to the IT Office and onward within the required time limits, with records kept.\n6. **Training:** all staff receive annual security training.\n7. **Continual improvement:** regular internal audits and management reviews.\n\n## 4. Legal basis\nThe Cyber Security Management Act and its regulations, the Personal Data Protection Act and related government security rules; see the [national legal database](https://law.moj.gov.tw/).\n\n## 5. Responsibilities\nThe Director-General oversees security management; the IT Office runs the system and technical controls; unit heads are responsible for their areas; all staff must comply.\n\n## 6. Reporting a concern\nIf you find a vulnerability on this site, tell us through [Contact us](/contact/) and please do not publish the details."
+    }
+  }
+}

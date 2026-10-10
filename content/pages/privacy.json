@@ -5,7 +5,7 @@
   "title": "隱私權政策（2026 年修訂）",
   "owner": "unit.it",
   "publishedAt": "2015-01-01",
-  "reviewedAt": "2026-09-22",
+  "reviewedAt": "2026-10-10",
   "reviewPeriodMonths": 12,
   "status": "published",
   "audience": [
@@ -42,20 +42,23 @@
       "status": "none"
     }
   },
-  "summary": "說明本站蒐集的資料、Google Analytics 與分享元件的使用、AI 問答紀錄的去識別保存，以及您的權利與聯絡方式。",
+  "summary": "說明正式站規劃蒐集的資料與 GA4、分享元件的使用、AI 問答紀錄的去識別保存，以及您的權利；並註明原型目前未啟用網站分析、問答紀錄只存在您的瀏覽器。",
   "keywords": [
     "隱私權",
     "個資",
     "Google Analytics",
+    "GA4",
     "AI 問答紀錄",
-    "Cookie"
+    "Cookie",
+    "原型",
+    "BYOK"
   ],
-  "bodyMarkdown": "## 一、適用範圍\n本政策適用於疾病管制署官方網站（含子網域）及其 AI 問答功能。連結至其他機關或網站者，依各該網站之隱私權政策辦理。\n\n## 二、我們蒐集的資料\n1. **瀏覽紀錄**：IP 位址、瀏覽器類型、造訪時間與頁面，用於系統維運與資安防護，保存 6 個月。\n2. **網站分析**：本站使用 **Google Analytics** 統計瀏覽人次與使用路徑，已啟用 IP 匿名化，不蒐集可識別個人之資料。您可透過瀏覽器外掛停用。\n3. **分享元件**：頁面上的 LINE、Facebook 分享按鈕**僅在您點擊時**才連線至該平台，未點擊前不載入第三方追蹤程式。\n4. **AI 問答紀錄**：您輸入的問題會先自動遮蔽身分證字號、電話、電子郵件與地址，再以去識別化方式保存 **12 個月**，用於品質改善與透明報告，不用於模型訓練。\n5. **錯誤回報與聯絡表單**：僅蒐集您主動填寫的內容；聯絡方式為選填。\n\n## 三、本機儲存\n本站以瀏覽器本機儲存（localStorage）記住語言、民眾／專業檢視模式與回報草稿，資料不會傳回伺服器，您可隨時清除。\n\n## 四、資料利用與分享\n除法律另有規定或經您同意外，不會將個人資料提供給第三方。進階 AI 模式由使用者自行提供金鑰，問題直接自您的瀏覽器送至模型供應商，本站不經手該金鑰。\n\n## 五、您的權利\n依個人資料保護法，您得請求查詢、閱覽、補充、更正、停止蒐集處理利用或刪除您的個人資料。請透過「聯絡我們」或撥打 1922 提出。\n\n## 六、修訂\n本政策於 2026 年 9 月修訂，新增 AI 問答紀錄、分享元件與 Google Analytics 之說明。重大修訂將於首頁公告。",
+  "bodyMarkdown": "> **以下為正式站規劃；原型未啟用網站分析工具，問答紀錄只存在你的瀏覽器。** 本頁同時說明「正式站將怎麼做」與「原型現在實際做了什麼」，兩者不同處都會明確標示，避免您誤以為原型已蒐集或已送出任何資料。\n\n## 一、適用範圍\n本政策適用於疾病管制署官方網站（含子網域）及其 AI 問答功能。連結至其他機關或網站者，依各該網站之隱私權政策辦理。\n\n## 二、我們蒐集的資料\n1. **瀏覽紀錄**（正式站規劃）：IP 位址、瀏覽器類型、造訪時間與頁面，用於系統維運與資安防護，保存 6 個月。原型為靜態網站，沒有自建的伺服器紀錄。\n2. **網站分析**（正式站規劃；**原型未啟用任何網站分析工具**）：正式站若採用 **Google Analytics 4（GA4）**，統計瀏覽人次與使用路徑時**不記錄、不儲存 IP 位址**，也不蒐集可識別個人之資料；舊版 Universal Analytics 的「IP 匿名化」設定在 GA4 已不適用，不再作為本站的說明依據。您可透過瀏覽器外掛停用。\n3. **分享元件**：頁面上的 LINE、Facebook 分享按鈕**僅在您點擊時**才連線至該平台，未點擊前不載入第三方追蹤程式。\n4. **AI 問答紀錄**：您輸入的問題會先在您的瀏覽器自動遮蔽身分證字號、電話、電子郵件與地址。**原型不在伺服器端保存任何問答紀錄**，紀錄只存在您自己的瀏覽器，清除瀏覽器資料即消失。**「去識別化後保存 12 個月，用於品質改善與透明報告，不用於模型訓練」是正式站的規劃**，正式上線前將另行公告並更新本頁。\n5. **錯誤回報與聯絡表單**：僅蒐集您主動填寫的內容；聯絡方式為選填。原型的回報表單只存於您的瀏覽器，不會送出。\n\n## 三、本機儲存\n本站以瀏覽器本機儲存（localStorage）記住語言、民眾／專業檢視模式與回報草稿，資料不會傳回伺服器，您可隨時清除。\n\n## 四、資料利用與分享\n除法律另有規定或經您同意外，不會將個人資料提供給第三方。**進階 AI 模式（自備金鑰，BYOK）目前是限內部人員的示範功能，一般民眾看不到也不能使用。** 使用時，金鑰由人員自行提供，**只暫存在該次瀏覽器工作階段（sessionStorage），關閉分頁或瀏覽器即清除**，不寫入長期儲存、不上傳本站；問題直接自人員的瀏覽器送至模型供應商，本站不經手該金鑰，也不保存問答內容。\n\n## 五、您的權利\n依個人資料保護法，您得請求查詢、閱覽、補充、更正、停止蒐集處理利用或刪除您的個人資料。請透過「聯絡我們」或撥打 1922 提出。\n\n## 六、修訂\n本政策於 2026 年 9 月修訂，新增 AI 問答紀錄、分享元件與網站分析之說明；2026 年 10 月 10 日更正：區分「正式站規劃」與「原型現況」、改以 GA4 說明、補充進階 AI 模式的限制。重大修訂將於首頁公告。",
   "i18n": {
     "en": {
       "title": "Privacy policy (revised 2026)",
-      "summary": "What data we collect, how Google Analytics and share buttons are used, how AI Q&A logs are de-identified and kept, and your rights.",
-      "bodyMarkdown": "We collect server logs (kept 6 months), anonymised **Google Analytics** statistics, and **de-identified AI Q&A logs** (personal identifiers masked before processing; kept 12 months; never used for training). Share buttons connect to LINE or Facebook **only when clicked**. Language and view preferences are stored only in your browser. You may request access, correction or deletion of personal data under the Personal Data Protection Act via the contact form or the 1922 hotline. Revised September 2026."
+      "summary": "What the production site plans to collect, how GA4 and share buttons would be used, how AI Q&A logs would be de-identified and kept, and your rights. The prototype runs no analytics and keeps Q&A history only in your browser.",
+      "bodyMarkdown": "> **The sections below describe the production site plan. This prototype runs no web analytics, and your Q&A history stays only in your own browser.**\n\nPlanned for production: server logs (kept 6 months); **Google Analytics 4 (GA4)** statistics that do **not** record or store IP addresses (the old Universal Analytics \"IP anonymisation\" setting no longer applies); and **de-identified AI Q&A logs** (personal identifiers masked first; kept 12 months; never used for training). In the prototype nothing is stored server-side: Q&A history and feedback drafts live only in your browser. Share buttons connect to LINE or Facebook **only when clicked**. Language and view preferences are stored only in your browser. The advanced bring-your-own-key AI mode is a demo limited to staff; the key is kept only for the current browser session (sessionStorage), cleared when the tab or browser is closed, and never sent to this site. You may request access, correction or deletion of personal data under the Personal Data Protection Act via the contact form or the 1922 hotline. Revised September 2026; corrected 10 October 2026."
     }
   }
 }

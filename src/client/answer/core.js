@@ -216,6 +216,20 @@ function titleHits(q, title) {
 const focusOf = (q, c) => titleHits(q, c.title) >= 2 || (c.focusTerms ?? []).some((k) => q.toLowerCase().includes(String(k).toLowerCase()))
   || (!!c.tenderNo && q.toUpperCase().includes(String(c.tenderNo).toUpperCase()));
 
+/**
+ * 第二十五輪（ARCHITECTURE 28.1）：查無門檻。BM25 只要有一個雙字片段撞到就會出分數（「抗蛇毒血清」撞到「病毒血症」），
+ * 所以在組句前先驗證「問句的主題詞有沒有被最佳片段涵蓋」；不夠就說站內查無，不硬拼不相關的引用。
+ *   minTop：最佳片段 BM25 分數下限（涵蓋率 ≥ highCoverage 時放寬，hardMinTop 為絕對下限）；minCoverage：問句有效詞（依 IDF 加權）被前 3 片段涵蓋的比例下限
+ *   （問句已認出病名／疫苗／國家時改用 minCoverageEntity 並略過泛用詞檢查：檢索本身已限定在該實體，雜訊主要來自無實體的問句）；
+ *   minMatchedIdf：命中的詞中最稀有者的 IDF（相對於語料最大 IDF 的比例）下限，且涵蓋率低於 genericMaxCoverage（只命中常見泛用詞＝沒命中主題）；
+ *   lowBelow：高於拒答線但低於此值 ⇒ UI 顯示「與你的問題相關程度較低」。
+ */
+export const RELEVANCE = { refChunks: 500, hardMinTop: 3, minTop: 8, highCoverage: 0.85, minCoverage: 0.28, minCoverageEntity: 0, minMatchedIdf: 0.3, genericMaxCoverage: 0.5, lowBelow: 0.6 };
+/** 相關度高於拒答線但偏低（UI 顯示「與你的問題相關程度較低」，不再宣稱僅引用官方內容的信心） */
+export function isLowRelevance(result) { return typeof result?.relevance === 'number' && result.relevance < RELEVANCE.lowBelow; }
+/** 問句去掉功能詞後才斷詞，避免「苗哪」「裡打」這種跨功能詞的雜訊雙字拉低涵蓋率 */
+const QUERY_FUNC_RE = /(請問|想問|我想知道|可以|怎麼辦|怎麼|怎樣|如何|什麼|哪裡|哪些|哪個|哪一|是否|有沒有|能不能|會不會|需不需要|應該|是不是|告訴我|知道|幫我|一下|的話|為什麼|為何|多少|有哪|[的了嗎呢吧啊是在有沒不也都就還和與及或我你他她它們這那哪要會能請問想誰幾])/g;
+
 /** 旅遊疫情建議「變化」問句（最近哪些國家解除／調升…）；trv.change 意圖規則與 travelChanges 共用 */
 const TRAVEL_CHANGE_KINDS = { lifted: /(解除|取消|撤銷|撤除|\blift(ed)?\b)/i, raised: /(調升|升級|提高|\braised?\b)/i, lowered: /(調降|降級|降低|\blowered\b)/i, new: /(新增|新發布|新列)/ };
 const TRAVEL_CHANGE_RE = /((旅遊疫情建議|旅遊警示|疫情等級|旅遊等級).{0,12}(解除|取消|撤銷|調升|調降|升級|降級|新增|變化|異動|調整)|(解除|取消|撤銷|調升|調降|新增).{0,12}(旅遊疫情建議|旅遊警示|疫情等級)|travel (health )?(notices?|advisor(y|ies)).{0,20}\b(lifted|raised|lowered|changes?)\b)/i;
@@ -369,6 +383,7 @@ const REFUSAL_TEXT = {
     impersonation: { title: '這個要求我不能照做', text: '本服務不能以疾管署或任何機關名義產生新聞稿、公告或聲明。正式訊息請以疾管署官網發布者為準。' },
     opinion: { title: '這個問題不在回答範圍', text: '本服務只轉述官方已發布的內容，不對機關、政策或人員表達意見或評價。意見陳述可透過民意信箱反映。' },
     'no-source': { title: '找不到足夠的官方依據', text: '官方內容中沒有足以回答這個問題的依據，為避免錯答，我不替你判斷。你可以改用關鍵字搜尋，或撥打 1922 詢問。' },
+    'no-match': { title: '站內查無直接答案', text: '本站目前沒有內容直接回答這個問題，為避免拿不相關的內容充數，我不勉強作答。你可以撥打 1922 防疫專線詢問，或從傳染病索引、網站導覽找找看。' },
     'no-clarification': { title: '目前沒有對應的官方澄清', text: '目前沒有與這則訊息對應的官方澄清。請先不要轉傳；可撥打 1922 詢問，或透過本頁回報讓我們查證。' },
     'no-data': { title: '找不到對應的統計資料', text: '資料目錄中沒有可直接回答的統計序列。你可以到開放資料平台查詢原始資料集。' },
     'pro-only': { title: '檢驗與送驗規定屬專業內容', text: '檢體採集、容器、保存運送與送驗時限是給醫療院所與檢驗人員的專業內容，請切換專業模式或到檢驗專區查詢。想了解疾病怎麼診斷，可看疾病頁「診斷與治療」。' },
@@ -390,6 +405,7 @@ const REFUSAL_TEXT = {
     impersonation: { title: "I can't follow that request", text: 'This service cannot produce press releases, notices or statements in the name of Taiwan CDC or any agency.' },
     opinion: { title: 'Outside the scope of this service', text: 'This service only relays published official content and does not express opinions on agencies, policies or officials.' },
     'no-source': { title: 'Not enough official information', text: 'Official content does not contain enough to answer this. To avoid a wrong answer, I will not guess. Please call the 1922 hotline.' },
+    'no-match': { title: 'No direct answer on this site', text: 'This site has no content that directly answers this question, and I will not pad the answer with unrelated content. Please call the 1922 hotline, or browse the diseases index or site map.' },
     'no-clarification': { title: 'No matching official clarification', text: 'There is no official clarification matching this message yet. Please do not forward it; you can call 1922 or report it here.' },
     'no-data': { title: 'No matching statistics', text: 'No statistical series in the data catalogue answers this directly.' },
     'pro-only': { title: 'Specimen rules are professional content', text: 'Specimen collection, containers, storage and shipping rules are for healthcare and laboratory staff. Switch to professional mode or see the laboratory testing page.' },
@@ -877,6 +893,30 @@ export function createEngine(rawDeps = {}) {
     }
     out.qWeights = qw; out.model = model;
     return out;
+  }
+
+  /**
+   * 相關度：{ relevance 0–1, coverage, top, matchedIdf, reason }。reason 非 null ⇒ 應拒答（no-match）。
+   * 涵蓋率＝問句有效詞（功能詞已剔除、單字不計；不在語料的詞以最大 IDF 計，視為未命中）被前 3 個片段的「標題＋內文＋術語」涵蓋的 IDF 加權比例。
+   */
+  function relevanceOf(q, chunks, model, hasEntity = false) {
+    const top = chunks[0]?._score ?? 0;
+    const toks = [...new Set(tokenize(String(q).replace(QUERY_FUNC_RE, ' '), { query: true }))].filter((t) => t.length >= 2 || /[a-z0-9]/.test(t));
+    if (!chunks.length) return { relevance: 0, coverage: 0, top, matchedIdf: 0, reason: 'no-chunk', tokens: toks };
+    const have = new Set(); for (const c of chunks.slice(0, 3)) for (const t of tokenize(`${c.title} ${c.text} ${(c.terms ?? []).join(' ')}`)) have.add(t);
+    let tot = 0, cov = 0, matchedIdf = 0;
+    for (const t of toks) { const idf = model.idf(t); tot += idf; if (have.has(t)) { cov += idf; matchedIdf = Math.max(matchedIdf, idf); } }
+    const coverage = tot ? cov / tot : 0;
+    const relevance = Math.round(Math.max(0, Math.min(1, 0.65 * coverage + 0.35 * Math.min(1, top / 12))) * 100) / 100;
+    // BM25 的 IDF 隨語料大小變動：索引遠小於正式站時（單元測試的迷你站台）按比例縮小絕對分數門檻
+    const maxIdf = model.idf('\u0000'); // 不在語料的詞的 IDF ＝ 最大值
+    const scale = Math.min(1, Math.log(1 + model.N) / Math.log(1 + RELEVANCE.refChunks));
+    let reason = null;
+    if (!toks.length) reason = 'no-terms';
+    else if (top < RELEVANCE.hardMinTop * scale || (top < RELEVANCE.minTop * scale && coverage < RELEVANCE.highCoverage)) reason = 'low-score';
+    else if (coverage < (hasEntity ? RELEVANCE.minCoverageEntity : RELEVANCE.minCoverage)) reason = 'low-coverage';
+    else if (!hasEntity && matchedIdf / maxIdf < RELEVANCE.minMatchedIdf && coverage < RELEVANCE.genericMaxCoverage) reason = 'generic-only';
+    return { relevance, coverage: Math.round(coverage * 100) / 100, top, matchedIdf: Math.round(matchedIdf * 100) / 100, reason, tokens: toks };
   }
 
   // ── 組句 ──
@@ -1561,6 +1601,20 @@ export function createEngine(rawDeps = {}) {
     return result;
   }
   const pickSent = (c, re) => (c.sentences ?? []).find((x) => re.test(x));
+  /**
+   * 職缺／標案問句的「主題詞」：去掉意圖線索、泛用詞與功能詞後剩下的中文／英數詞（≥ 2 字）。
+   * 有主題詞，但同型別的所有片段都沒有出現其中任何一個雙字片段 ⇒ true（查無）。沒有主題詞（「現在有哪些標案」）⇒ false。
+   */
+  const NOTICE_GENERIC_RE = /(疾管署|疾病管制署|本署|機關|單位|時候|日期|何時|公告|公開|招標|採購|標案|投標|決標|開標|案號|預算|廠商|招募|徵才|徵人|職缺|約聘|約僱|甄選|甄試|工作機會|缺額|招考|人員|報名|截止|資格|條件|薪資|薪水|待遇|文件|規格|標的|有哪些|有沒有|現在|目前|最近|最新|近期|正在|進行中|開放|還有|還能|可以|一覽|列表|清單|查詢|資訊|相關|關於|所有|全部)/g;
+  function noticeTopicMiss(q, type, view) {
+    const residual = String(q).normalize('NFKC').toLowerCase().replace(NOTICE_GENERIC_RE, ' ').replace(QUERY_FUNC_RE, ' ').replace(OPEN_CUE, ' ').replace(ADMIT_RE, ' ').replace(CAREERS_DETAIL_RE, ' ').replace(PROCUREMENT_DETAIL_RE, ' ').replace(/\d+/g, ' ');
+    const terms = tokenize(residual, { query: true }).filter((t) => t.length >= 2 || /[a-z]/.test(t));
+    if (!terms.length) return false;
+    const chunks = poolFor(view, 'zh-TW').chunks.filter((c) => c.type === type);
+    if (!chunks.length) return false;
+    const hay = lc(chunks.map((c) => `${c.title} ${(c.focusTerms ?? []).join(' ')} ${c.text}`).join(' '));
+    return !terms.some((t) => hay.includes(t));
+  }
   function careersAnswer(q, result, view) {
     const LL = result.lang;
     const all = overviewChunks('job', view);
@@ -1630,6 +1684,13 @@ export function createEngine(rawDeps = {}) {
   }
 
   // ── 拒答 ──
+  function noMatchActions(LL) {
+    return [
+      { label: tr(LL, '撥打 1922', 'Call 1922'), href: 'tel:1922', kind: 'hotline' },
+      { label: tr(LL, '傳染病與防疫主題', 'Diseases index'), href: '/diseases/', kind: 'link' },
+      { label: tr(LL, '網站導覽', 'Site map'), href: '/sitemap-page/', kind: 'link' },
+    ];
+  }
   function setRefusal(result, kind, ruleId, actions = null) {
     const LL = result.lang;
     const copy = refusalCopy(kind, result.lang);
@@ -1866,7 +1927,7 @@ export function createEngine(rawDeps = {}) {
     const q = pii.text;
     const result = {
       query: q, lang, view, intent: 'unknown', intentReasons: [], intentScores: {}, refused: false, disease: null, diseases: [], entities: { diseases: [], vaccines: [], countries: [] },
-      termNotes: [], sentences: [], sources: [], actions: [], related: [], guards: [], confidence: 0, completeness: null,
+      termNotes: [], sentences: [], sources: [], actions: [], related: [], guards: [], confidence: 0, relevance: null, completeness: null,
       auditId: auditId(), mode: mode ?? aiStatus.mode ?? 'extractive', pii: pii.hits,
       disclosure: { mode: mode ?? aiStatus.mode ?? 'extractive', provider: null, model: null, generatedAt: now().toISOString() },
     };
@@ -1956,6 +2017,12 @@ export function createEngine(rawDeps = {}) {
     }
 
     // 第七輪：人才招募／採購公告（結構化列表、「誰錄取」只給結果頁連結）；細節問句才走檢索
+    // 第二十五輪：問句有主題詞（透析膜）卻沒有任何職缺／標案的標題或內文提到 ⇒ 查無，不列不相關的清單
+    if ((result.intent === 'careers' || result.intent === 'procurement') && noticeTopicMiss(q, result.intent === 'careers' ? 'job' : 'tender', view)) {
+      result.relevance = 0; result.guards.push({ kind: 'no-match', reason: 'notice-topic' });
+      const href = result.intent === 'careers' ? '/careers/' : '/procurement/';
+      return setRefusal(result, 'no-match', 'ref.no-match.notice', [...noMatchActions(LL).slice(0, 1), { label: tr(LL, result.intent === 'careers' ? '看全部職缺' : '看全部採購公告', result.intent === 'careers' ? 'All vacancies' : 'All procurement notices'), href, kind: 'link' }]);
+    }
     if (result.intent === 'careers') { const ca = careersAnswer(q, result, view); if (ca) return ca; }
     if (result.intent === 'procurement') { const pa = procurementAnswer(q, result, view); if (pa) return pa; }
 
@@ -2028,6 +2095,19 @@ export function createEngine(rawDeps = {}) {
       return setRefusal(result, 'no-source', `ref.no-${result.intent}`, [{ label: tr(LL, result.intent === 'careers' ? '看全部職缺' : '看全部採購公告', result.intent === 'careers' ? 'All vacancies' : 'All procurement notices'), href, kind: 'link' }]);
     }
 
+    // 第二十五輪：相關度閘門。態勢／旅遊有結構化資料可答時不套用（它們不靠檢索片段）
+    if (chunks.length && chunks.model) {
+      const rel = relevanceOf(q, chunks, chunks.model, !!(entities.diseases.length || entities.vaccines.length || entities.countries.length));
+      result.relevance = rel.relevance; result.relevanceInfo = { coverage: rel.coverage, top: rel.top, matchedIdf: rel.matchedIdf, reason: rel.reason };
+      const structured = (result.intent === 'situation' && situationFor(entities, result.intent)) || (result.intent === 'travel' && (entities.countries.length || TRAVEL_CHANGE_RE.test(q)));
+      if (rel.reason && !structured && !process.env.NO_GATE) {
+        result.guards.push({ kind: 'no-match', reason: rel.reason, relevance: rel.relevance });
+        // 相關度太低時連關鍵字清單也不附（附了又是「抗蛇毒血清 → 登革熱傳染途徑」那種不相關頁面）
+        result.list = rel.relevance >= 0.4 ? traditionalList(q, view, lang, 8) : [];
+        return setRefusal(result, 'no-match', 'ref.no-match', noMatchActions(LL));
+      }
+    }
+
     // 態勢（只讀結構化欄位）
     const sit = (result.intent === 'situation' || (result.disease && ['symptoms', 'vaccine', 'unknown'].includes(result.intent))) ? situationFor(entities, result.intent) : null;
     if (sit) { result.situation = sit; result.peak = sit.items.some((i) => i.status === 'peak'); }
@@ -2080,6 +2160,8 @@ export function createEngine(rawDeps = {}) {
     let lowConf = result.confidence < 0.35 || !picked.length;
     if (!picked.length) {
       result.list = traditionalList(q, view, lang, 8);
+      // 第二十五輪：檢索完全沒有片段 ⇒ 站內沒有這個主題（no-match）；有片段卻組不出句子才是依據不足（no-source）
+      if (!chunks.length && !entities.diseases.length) { result.relevance = 0; return setRefusal(result, 'no-match', 'ref.no-match', noMatchActions(LL)); }
       return setRefusal(result, 'no-source', 'ref.no-source', actionsFor(result, entities, sit));
     }
     const sitOnly = picked.length && picked.every((p) => p.cite.every((id) => id.startsWith('situation#')));

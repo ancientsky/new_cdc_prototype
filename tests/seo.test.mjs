@@ -88,3 +88,11 @@ test('feeds：RSS 2.0、guid 為穩定 id、文件異動含取代關係', () => 
   assert.ok(docs.includes('取代 108.05.14 版'));
   assert.ok(files.get('feeds/situation.xml').includes(`<guid isPermaLink="false">situation.${site.situation.publishedAt}</guid>`));
 });
+
+test('RSS pubDate：日期補台灣時間 00:00 再轉 RFC 822（UTC 表示）；date-time 內容檔也能用', async () => {
+  const { toRfc822 } = await import('../scripts/lib/dates.mjs');
+  const { files } = emitted();
+  assert.match(files.get('feeds/news.xml'), /<pubDate>[A-Z][a-z]{2}, \d{2} [A-Z][a-z]{2} \d{4} \d{2}:\d{2}:\d{2} GMT<\/pubDate>/);
+  assert.equal(toRfc822('2025-01-09'), 'Wed, 08 Jan 2025 16:00:00 GMT');
+  assert.equal(toRfc822('2025-01-09T10:30:00+08:00'), 'Thu, 09 Jan 2025 02:30:00 GMT');
+});

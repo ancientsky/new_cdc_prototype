@@ -59,7 +59,8 @@
         "locked": { "type": "boolean" },
         "deprecated": { "type": "array", "items": { "type": "string" }, "description": "不再使用的舊名（如「武漢肺炎」）" },
         "refs": { "type": "array", "items": { "type": "string" } },
-        "note": { "type": "string" }
+        "note": { "type": "string" },
+        "definition": { "type": "string", "description": "第二十五輪：公開詞彙頁（/glossary/）顯示的白話定義；沒填則顯示 note" }
       }
     },
     "scheduleItem": {

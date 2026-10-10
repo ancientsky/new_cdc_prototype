@@ -1,7 +1,7 @@
 // 答案頁元件的 HTML 產生器（字串），答案頁、謠言查證、統計問答共用。全部插值經 esc()。
 // 元件：4 AI 回答標示、5 拒答卡、6 回報與稽核編號、9 數字的來源卡；來源卡（三層露出）、態勢卡、判定 pill。
 import { esc, url, LANG, barChart } from './data.js';
-import { pdfHref } from './core.js';
+import { pdfHref, isLowRelevance } from './core.js';
 
 // ───────── UI 字串（zh-TW／en／vi；其他語言 fallback en） ─────────
 const S = {
@@ -14,6 +14,7 @@ const S = {
     cite: '引用本頁', cited: '已複製引用', subscribe: '訂閱異動', subscribed: '已訂閱', nextReview: '下次審閱', section: '條次／段落', pdfPage: '頁碼（PDF 印刷頁碼）', extraction: '文字來源', extractionMachine: '由 PDF 機器轉出，尚未人工校對；請以 PDF 原頁為準', extractionReviewed: '由 PDF 轉出，權責單位已校對', openPdf: '開啟 PDF', change: '本段異動', before: '修訂前', after: '修訂後',
     sitH: '現在的疫情', dataDate: '資料日', publisher: '發布', illustrative: '示意資料', statusBasis: '判定依據', seeTrend: '看完整趨勢',
     refusalH: '這個問題我不能替你判斷', why: '為什麼', call1922: '撥打 1922', relatedPages: '相關官方頁面',
+    lowRelevance: '與你的問題相關程度較低', lowRelevanceSub: '以下是站內最接近的官方內容，不一定能直接回答你的問題；請點開原文確認，或撥打 1922。', relatedListH: '相關頁面',
     paused: 'AI 問答暫停中，目前提供傳統搜尋結果與 1922 人工諮詢。', pausedReason: '原因', updated: '更新',
     proLabel: '專業模式：引用手冊條次與生效日，不做白話化', translationSource: '此語言沒有經審核的譯文，以下為中文原文。', translationMachine: '以下為機器翻譯（鎖定官方譯名），以中文原文為準。',
     termNote: '「{from}」已改稱「{to}」，以下依現行名稱回答。', lowConf: '這個問題的意圖不夠明確，以下同時列出相關頁面。',
@@ -38,6 +39,7 @@ const S = {
     cite: 'Cite this page', cited: 'Citation copied', subscribe: 'Subscribe to changes', subscribed: 'Subscribed', nextReview: 'Next review', section: 'Section', pdfPage: 'PDF page', extraction: 'Text source', extractionMachine: 'Machine-extracted from the PDF, not yet proofread; the PDF page prevails', extractionReviewed: 'Extracted from the PDF and proofread by the responsible unit', openPdf: 'Open PDF', change: 'Change in this section', before: 'Before', after: 'After',
     sitH: 'Current situation', dataDate: 'Data as of', publisher: 'Published by', illustrative: 'Illustrative data', statusBasis: 'Basis', seeTrend: 'See full trend',
     refusalH: "I can't make this judgement for you", why: 'Why', call1922: 'Call 1922', relatedPages: 'Related official pages',
+    lowRelevance: 'Only loosely related to your question', lowRelevanceSub: 'These are the closest official passages on this site and may not answer your question directly. Please open the source, or call 1922.', relatedListH: 'Related pages',
     paused: 'AI answers are paused. Keyword search results and the 1922 hotline are available.', pausedReason: 'Reason', updated: 'Updated',
     proLabel: 'Professional mode: cites manual sections and effective dates verbatim', translationSource: 'No reviewed translation is available; showing the Chinese original.', translationMachine: 'Machine translation (official terms locked). The Chinese original prevails.',
     termNote: '"{from}" is now called "{to}".', lowConf: 'Your question is ambiguous, so related pages are listed as well.',
@@ -203,6 +205,9 @@ export function sentenceList(result, { pro = false } = {}) {
       ${(s.n ?? []).map((n) => `<div class="c-source-card c-cite-pop" id="cite-pop-${i}-${n}" role="region" aria-label="${esc(`${L('sourcesH')} ${n}`)}" hidden><p class="c-cite-pop__t"><b>${esc(n)}</b> ${esc(byN.get(n)?.title ?? '')}</p>${byN.get(n) ? sourceCardBody(byN.get(n), { pro }) : ''}</div>`).join('')}
     </li>`).join('')}</ol>`;
 }
+
+/** 第二十五輪：相關度高於拒答線但偏低 ⇒ 顯示「相關程度較低」，且不再把「僅引用官方內容」當成信心宣稱 */
+export { isLowRelevance };
 
 /** 元件 4＋6：AI 揭露列、有幫助、回報（帶稽核編號） */
 export function disclosureRow(result) {

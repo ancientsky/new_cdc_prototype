@@ -68,3 +68,24 @@ test('GovernmentOrganization、WebSite＋SearchAction、BreadcrumbList、態勢�
   const tv = travelJsonLd(ctx(), { iso2: 'JP', name: '日本', nameEn: 'Japan' }, [{ disease: 'disease.measles', level: 1 }]);
   assert.ok(tv.url.endsWith('/travel/JP/'));
 });
+
+// ───────── 第二十五輪（Issue #37）：日期一律補成台灣時間的時間點 ─────────
+import { toIsoDateTimeTW, toRfc822 } from '../scripts/lib/dates.mjs';
+
+test('dates.mjs：只有日期補 T00:00:00+08:00；已帶時區的 date-time 原樣；空值 undefined', () => {
+  assert.equal(toIsoDateTimeTW('2026-07-21'), '2026-07-21T00:00:00+08:00');
+  assert.equal(toIsoDateTimeTW('2026-07-21T14:30:00+08:00'), '2026-07-21T14:30:00+08:00');
+  assert.equal(toIsoDateTimeTW('2026-07-21T06:30:00Z'), '2026-07-21T06:30:00Z');
+  assert.equal(toIsoDateTimeTW(undefined), undefined);
+  assert.equal(toIsoDateTimeTW(''), undefined);
+  assert.equal(toRfc822('2026-07-21'), 'Mon, 20 Jul 2026 16:00:00 GMT');
+});
+
+test('JSON-LD datePublished／dateModified 帶 +08:00；date-time 內容檔原樣輸出', () => {
+  const item = site.byId.get('news.2025-01-09-mmr-adults-measles');
+  const n = one(item.id);
+  assert.equal(n.datePublished, `${item.publishedAt}T00:00:00+08:00`);
+  assert.equal(n.dateModified, `${item.reviewedAt}T00:00:00+08:00`);
+  const timed = { ...item, publishedAt: '2025-01-09T10:30:00+08:00' };
+  assert.equal(jsonLdFor(ctx(), timed)[0].datePublished, '2025-01-09T10:30:00+08:00');
+});

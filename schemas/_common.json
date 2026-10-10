@@ -62,8 +62,17 @@
       "type": "string"
     },
     "publishedAt": {
-      "type": "string",
-      "format": "date"
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "type": "string",
+          "format": "date-time"
+        }
+      ],
+      "description": "第二十五輪：發布時間。可只填日期（YYYY-MM-DD，既有內容檔的寫法），也可填帶時區的 date-time（例 2026-07-21T14:30:00+08:00）。輸出到 JSON-LD datePublished／RSS pubDate 時一律經 scripts/lib/dates.mjs 補成台灣時間 +08:00，所以不需要為了這個欄位改寫既有內容檔。"
     },
     "publishAt": {
       "anyOf": [

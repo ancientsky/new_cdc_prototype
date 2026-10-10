@@ -29,6 +29,7 @@
 //   sourceLang≠zh-TW 時 i18n['zh-TW']（reviewed）另出中文 chunk（進中文索引）。topic／service 的譯文 chunk 需 i18n 有本文欄位才出。
 import { splitPlain, parseChineseNumber } from '../../src/client/answer/core.js';
 import { splitByPage } from './pdf-text.mjs';
+import { tagRelativeDate } from './dates.mjs';
 
 const PAGE_MARK_TEST = /^〔p\.\d+〕$/m;
 
@@ -404,7 +405,7 @@ export function buildSearchIndex(site) {
             break;
           }
           const paras = paragraphs(src.bodyMarkdown ?? '');
-          paras.forEach((p, i) => add(make(item, `p${i + 1}`, src.title ?? item.title, p, base, { ...L, newsType: item.newsType ?? null, letterNo: item.letterNo ?? null }), { proOnly: item.type === 'letter' }));
+          paras.forEach((p, i) => add(make(item, `p${i + 1}`, src.title ?? item.title, p.map((s) => tagRelativeDate(s, item.publishedAt)), base, { ...L, newsType: item.newsType ?? null, letterNo: item.letterNo ?? null }), { proOnly: item.type === 'letter' }));
           break;
         }
         case 'document': {
@@ -432,7 +433,7 @@ export function buildSearchIndex(site) {
           break;
         }
         case 'clarification':
-          add(make(item, 'c', src.title ?? item.title, [...mdSentences(src.clarificationMarkdown ?? ''), ...(src.shareText ? splitPlain(src.shareText) : [])], base, { ...L, verdict: item.gov?.stale?.length ? 'outdated' : item.verdict, claim: item.claim, extraTerms: [item.claim, ...(item.claimVariants ?? [])] }));
+          add(make(item, 'c', src.title ?? item.title, [...mdSentences(src.clarificationMarkdown ?? ''), ...(src.shareText ? splitPlain(src.shareText) : [])].map((s) => tagRelativeDate(s, item.publishedAt)), base, { ...L, verdict: item.gov?.stale?.length ? 'outdated' : item.verdict, claim: item.claim, extraTerms: [item.claim, ...(item.claimVariants ?? [])] }));
           break;
         case 'vaccine': {
           add(make(item, 'v', src.title ?? item.title, mdSentences(src.bodyMarkdown ?? ''), base, { ...L }));

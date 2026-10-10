@@ -33,7 +33,7 @@ export function itemPath(item) {
     default: return '/';
   }
 }
-export const PAGE_PATHS = { 'ai-policy': '/policy/ai/', privacy: '/policy/privacy/', 'open-data': '/policy/open-data/', accessibility: '/accessibility/', about: '/about/' };
+export const PAGE_PATHS = { 'ai-policy': '/policy/ai/', privacy: '/policy/privacy/', 'open-data': '/policy/open-data/', legal: '/policy/legal/', foia: '/policy/foia/', 'security-policy': '/policy/security/', copyright: '/policy/copyright/', accessibility: '/accessibility/', about: '/about/' };
 
 /** 內容在某語言是否有頁面（與 scripts/lib/pages.mjs 的 langAvailable 同規則；避免循環匯入） */
 export function langOk(site, item, lang) {

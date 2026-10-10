@@ -1,0 +1,60 @@
+{
+  "id": "page.copyright",
+  "type": "page",
+  "slug": "copyright",
+  "title": "著作權聲明",
+  "owner": "unit.pr",
+  "publishedAt": "2026-10-10",
+  "reviewedAt": "2026-10-10",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "本站內容的著作權歸屬、開放資料的授權條款（OGDL 1.0）、合理使用範圍與建議的引用方式。",
+  "keywords": [
+    "著作權",
+    "版權",
+    "授權",
+    "OGDL",
+    "合理使用",
+    "引用方式"
+  ],
+  "bodyMarkdown": "## 一、本署著作\n本站由衛生福利部疾病管制署（下稱本署）製作的文字、統計、圖表與影音等著作，著作權屬本署所有，但另有標示者除外。\n\n## 二、開放資料授權\n本站公開的開放資料與內容，原則上依**政府資料開放授權條款第 1 版（OGDL 1.0）**釋出：可重製、改作、散布與商業利用，但須標示來源、不得暗示本署為您的衍生作品背書。詳見[開放資料授權與使用說明](/policy/open-data/)。\n\n## 三、合理使用\n依著作權法規定，為報導、評論、教學、研究或其他正當目的之必要，在合理範圍內，得引用已公開發表之著作並註明出處。非商業的教育、衛教與媒體報導，本署樂見轉載本站衛教內容；轉載請保持內容完整、不斷章取義，並確認引用的是現行版。\n\n## 四、引用方式\n建議格式：「衛生福利部疾病管制署。〈頁面標題〉。查閱日期：YYYY-MM-DD。網址。」例如：\n\n> 衛生福利部疾病管制署。〈登革熱〉。查閱日期：2026-10-10。https://（本站網址）/diseases/dengue/\n\n各頁面的「引用本頁」功能會自動產生含版次與審閱日的引用文字。\n\n## 五、不在授權範圍\n- 標示為第三方提供之圖片、影片、商標與標誌。\n- 標示「授權待確認」或其他授權的資料集，以該資料集頁面標示為準。\n- 個人資料。\n\n## 六、授權詢問\n超出上述範圍的使用，請透過[聯絡我們](/contact/)洽詢公關室。",
+  "i18n": {
+    "en": {
+      "title": "Copyright notice",
+      "summary": "Who holds copyright in this site's content, the open data licence (OGDL 1.0), fair use, and how to cite.",
+      "bodyMarkdown": "## 1. Works by Taiwan CDC\nText, statistics, charts and audiovisual material produced by Taiwan CDC on this site are owned by Taiwan CDC unless marked otherwise.\n\n## 2. Open data licence\nOpen data and content on this site are released under the **Open Government Data License, version 1.0 (OGDL 1.0)**: you may copy, adapt, distribute and use them commercially, provided you credit the source and do not imply endorsement. See the [open data licence and terms of use](/policy/open-data/).\n\n## 3. Fair use\nUnder copyright law you may quote published works within reasonable limits for reporting, commentary, teaching, research or other legitimate purposes, with attribution. Taiwan CDC welcomes non-commercial reuse of health education content; keep the content complete, not out of context, and check that you cite the current version.\n\n## 4. How to cite\nSuggested format: \"Taiwan Centers for Disease Control, Ministry of Health and Welfare. Page title. Retrieved YYYY-MM-DD. URL.\" Each page has a \"Cite this page\" button that generates a citation with the version and review date.\n\n## 5. Not covered\n- Images, videos, trademarks and logos marked as third-party.\n- Datasets marked \"licence pending\" or with another licence follow the dataset page.\n- Personal data.\n\n## 6. Permission requests\nFor uses beyond the above, ask the Public Relations Office through [Contact us](/contact/)."
+    }
+  }
+}

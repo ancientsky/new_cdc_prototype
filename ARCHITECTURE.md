@@ -1001,6 +1001,76 @@ manualStatus?: enum[cancelled, failed（流標）], award?: { date, winner, amou
 
 依 `Accept-Language` 自動提示切換語言：未做（原型並非每頁都有七語，容易導到不存在的頁；也牽涉記住選擇的 cookie 告知）。
 
+## 28. 第二十五輪（2026-10-10）：智慧查詢相關度門檻、相對日期檢查、制度性頁面、雙語詞彙頁
+
+對應外部審查 Issue #25（查無仍給答案）、#37（相對日期）、#27（缺制度性頁面）、#38（缺舊站服務）、#40（隱私權頁與原型不符）。
+
+### 28.1 相關度門檻與 `no-match`（`src/client/answer/core.js`）
+
+**問題：** BM25 只要問句有任何一個雙字片段出現在語料，就會給分數；`retrieve` 只比較「相對最高分」（`minRel`）與下限 1 分，沒有「絕對夠不夠相關」的判斷。於是「抗蛇毒血清」因為「毒血」撞到登革熱的「病毒血症期」、「量子電腦是什麼」因為「是什麼」撞到「巡倒清刷是什麼」而被回答。
+
+**做法：** `answer()` 檢索並套用型別偏好後，在組句前呼叫 `relevanceOf(q, chunks, model, hasEntity)`，回傳 `{ relevance, coverage, top, matchedIdf, reason }`。常數集中在匯出的 `RELEVANCE`：
+
+| 常數 | 值 | 意義 |
+| --- | --- | --- |
+| `minCoverage` | 0.28 | 問句有效詞（IDF 加權）被前 3 個片段的標題＋內文＋術語涵蓋的比例下限。沒有認出病名／疫苗／國家的問句用這個 |
+| `minCoverageEntity` | 0 | 問句已認出病名／疫苗／國家時略過涵蓋率與泛用詞檢查：檢索本身已限定在該實體（「登革熱會人傳人嗎」「Bệnh ho gà có triệu chứng gì」涵蓋率只有 0.27、0 卻是好答案），只保留分數下限 |
+| `minTop` / `hardMinTop` | 8 / 3 | 最佳片段 BM25 分數下限；涵蓋率 ≥ `highCoverage`（0.85）時放寬到只看 `hardMinTop`（「口罩要戴嗎」分數低但詞全中） |
+| `minMatchedIdf` + `genericMaxCoverage` | 0.3 / 0.5 | 命中的詞中最稀有者的 IDF（相對語料最大 IDF）過低，且涵蓋率 < 0.5 ⇒ 只命中泛用詞 ⇒ 拒答 |
+| `refChunks` | 500 | BM25 的 IDF 隨語料大小變動，索引小於此值（單元測試的迷你站台）時，絕對分數門檻按 `ln(1+N)/ln(1+500)` 縮小；正式語料（約 700 塊）不縮 |
+| `lowBelow` | 0.6 | `relevance` 高於拒答線但低於此值 ⇒ UI 顯示「與你的問題相關程度較低」 |
+
+- 問句先經 `QUERY_FUNC_RE` 去掉功能詞（的、嗎、怎麼、什麼、哪裡…）才斷詞，避免「苗哪」「裡打」這種跨功能詞的雜訊雙字把涵蓋率拉低；不在語料的詞以最大 IDF 計入分母（視為未命中）。
+- `relevance = 0.65 × 涵蓋率 + 0.35 × min(1, top/12)`，四捨五入到兩位。`result.relevance` 一律是 0–1 數字或 `null`（統計、結構化流程沒有檢索片段）；`result.relevanceInfo` 帶 coverage、top、reason 供除錯與透明報告。
+- **不套用門檻的情況**：態勢（`situation` 且有結構化態勢卡）與旅遊（有國家或旅遊建議變化問句）不靠檢索片段，由結構化資料回答。
+- 拒答新種類 **`no-match`**（標題「站內查無直接答案」）：`REFUSAL_TEXT` 的 zh-TW 與 en；行動為撥打 1922、傳染病索引 `/diseases/`、網站導覽 `/sitemap-page/`（`noMatchActions()`）。檢索完全沒有片段（「股票怎麼買」「蛇咬怎麼辦」）以前是 `no-source`，現在在沒有疾病實體時也是 `no-match`；`no-source` 保留給「有片段但組不出句子／信心不足」。
+- **公告類**：`careers`／`procurement` 意圖在列清單前呼叫 `noticeTopicMiss(q, type, view)`：去掉意圖線索、泛用詞、功能詞、細節詞後仍有 ≥ 2 字的主題詞（例：透析膜），且同型別所有片段的標題、`focusTerms`、內文都沒出現其中任何一個 ⇒ `no-match`（附 1922 與「看全部採購公告／職缺」）。沒有主題詞（「現在有哪些標案」）照常列出。
+- `no-match` 時關鍵字清單 `result.list` 只在 `relevance ≥ 0.4` 才附（太低的清單就是另一種不相關頁面）。
+- **評估集**（`content/governance/eval-set.json` r9）：新類別 `nomatch`（「站內沒有的主題」）NM001–NM005：抗蛇毒血清、量子電腦是什麼、採購 透析膜、股票怎麼買、蛇咬怎麼辦，皆期望 `refuse: true`、`refusalKind: 'no-match'`、答案含 1922。類別同步加進 `schemas/governance.json` enum、兩份 `judge.js` 的 `REFUSAL_CATEGORIES`、後台評估頁與透明報告的類別標籤。調門檻時 208 題要全過（`node scripts/build.mjs --check` 會跑）。
+- **UI**（`render.js`、`ui.js`）：`isLowRelevance(result)`（定義在 core.js 以便 Node 測試）；偏低時答案標題的副標改為「以下是站內最接近的官方內容，不一定能直接回答你的問題…」並加一行「與你的問題相關程度較低」；「AI 整理」徽章保留（它是 AI 揭露，不是信心宣稱）。拒答卡下方，`no-match`／`no-source` 時的關鍵字清單標題為「相關頁面」。
+
+### 28.2 相對日期規則（`scripts/lib/dates.mjs`、`validate.mjs`）
+
+- `RELATIVE_DATE_RE`（今（N）日、今日、今天、昨…、今年、去年、上週、本週、明…）與 `ABSOLUTE_DATE_RE`（西元 YYYY 年 M 月 D 日、YYYY-MM-DD、YYYY 年第 N 週、單獨的「YYYY 年」；「114 年度」不算）。`hasRelativeDate(sentence)`＝有相對、沒有絕對。
+- `relativeDateFindings(item)` 只看 `news`／`letter`／`clarification` 的標題、摘要、首段（跳過標題行），逐句檢查。**news／letter＝警告**（`contentWarnings(site)`，build 時印 `⚠ [內容]`，不擋）；**clarification（第一級）＝錯誤**（併入 `validateSite`，擋建置）。
+- 答案單元（`index-builder.mjs`）：news／letter 段落與澄清稿內文，句子仍含相對日期且同句沒有絕對日期 ⇒ 前綴「〔YYYY-MM-DD 發布〕」（`tagRelativeDate`），單獨被引用時也知道是哪一天。
+- 9 則既有新聞稿已改寫。模擬舊站匯出（`data/legacy-export/{news,dengue,influenza,measles,enterovirus}`）從內容重產，因為匯入測試要求匯出與內容一致；`data/legacy-import/` 的轉換草稿未重跑（內容是匯入當時的文字，下次批次重跑時才更新）。
+
+### 28.3 日期輸出單一出口（`scripts/lib/dates.mjs`）
+
+- `schemas/_common.json` 的 `publishedAt` 改 `anyOf [date, date-time]`；不改寫 300 多個內容檔。
+- `toIsoDateTimeTW(v)`：`YYYY-MM-DD` ⇒ `YYYY-MM-DDT00:00:00+08:00`，已帶時區的 date-time 原樣，其他格式取前 10 碼。`toRfc822(v)` 用於 RSS。
+- `jsonld.mjs` 所有 `datePublished`／`dateModified` 都經 `toIsoDateTimeTW`；`dateModified` 取 `reviewedAt ?? updatedAt`。`emit-seo.mjs` 的 `rfc822` 就是 `toRfc822`。**不要在別處自己拼日期字串。**
+- 理由：沒有時區的日期被不同系統解成不同的「當天」；監測系統比對「今日」時尤其容易錯一天。
+
+### 28.4 隱私權頁（`content/pages/privacy.json`）
+
+頁首註明「以下為正式站規劃；原型未啟用網站分析工具，問答紀錄只存在你的瀏覽器」。GA 段落改 GA4（不記錄 IP；UA 的「IP 匿名化」已作廢）；AI 問答紀錄段落改為「原型不在伺服器保存、12 個月去識別保存是正式站規劃」；第四節註明進階 AI 模式（自備金鑰）是限內部人員的示範、金鑰只存在該次瀏覽器工作階段（sessionStorage，由另一個 PR 實作）。`reviewedAt` 2026-10-10。**政策文字必須與實際行為一致：之後原型若真的加了分析或伺服器紀錄，先改這頁再上線。**
+
+### 28.5 制度性頁面與頁尾（Issue #27）
+
+| 頁面 | 路徑 | 建議權責 | 重點 |
+| --- | --- | --- | --- |
+| 法令規章 `page.legal` | `/policy/legal/` | 企劃組 | 傳染病防治法 L0050001、施行細則 L0050003、預防接種受害救濟基金徵收及審議辦法 L0050008 連全國法規資料庫；其他子法連搜尋頁並標「待確認」 |
+| 政府資訊公開 `page.foia` | `/policy/foia/` | 秘書室 | 政府資訊公開法第 7 條九項對照表；已有頁面者連結，行政指導、訴願與請願、補助、會議紀錄、契約本文標「待建置」與權責單位 |
+| 資訊安全政策 `page.security-policy` | `/policy/security/` | 資訊室 | 一般機關 ISMS 架構的示意稿，頁首標「示意稿，待資訊室確認」，不宣稱任何驗證 |
+| 著作權聲明 `page.copyright` | `/policy/copyright/` | 公關室 | 本署著作、OGDL 1.0、合理使用、引用方式 |
+
+- 路由：`PAGE_PATHS`（`_partials.mjs`）與 `PAGE_SLUG_PATHS`（`governance.mjs`）兩處都要加（slug 不含 `/` 的頁預設不獨立成頁）；`emit-seo.mjs` 的 `STATIC_PATHS` 也加。網站導覽「政策與說明」由 `PAGE_PATHS` 自動帶出，需要 i18n 鍵 `page.{slug}`。
+- 頁尾「關於與政策」欄（`layout.mjs`）加四個連結，i18n 鍵 `footer.legal`／`footer.foia`／`footer.security`／`footer.copyright`（七語齊備，`src/client/i18n.js`）。新頁的英文版是機器翻譯（`languages.en: machine`），尚未人工審。
+- 移轉清單：`content/migration/institutional.json`（法令規章、政府資料公開對到 `page.legal`／`page.foia`，現行官網網址取自審查意見）；資訊安全政策與著作權聲明在舊站是頁尾連結，舊網址待承辦補。權責單位都是建議，待各單位確認。
+
+### 28.6 詞彙頁 `/glossary/` 與舊站服務清單（Issue #38）
+
+- `src/templates/public/glossary.mjs`（`pages()` 回 `lang: '*'`，七語各一頁）：詞彙主檔公開版，依英文首字母分組（非字母歸 `#`），每筆含中文正名、English、定義（`definition ?? note`；`definition` 為新增的選填欄位，目前 83 筆中只有 2 筆有 `note`，其餘待單位補）、別名、舊稱、領域、相關疾病頁。每列的 `data-q`（小寫的中文、英文、別名、舊稱）供篩選。
+- `src/client/glossary.js`：有 JS 才把 `hidden` 的篩選框打開並即時過濾，同步隱藏沒有符合項目的字母群；沒有 JS 就是完整清單（漸進增強）。
+- 連結：頁尾「開放資料與開發者」欄、網站導覽「更多服務」、`STATIC_PATHS`。
+- `content/migration/legacy-services.json`：電子報（待決策：Email 訂閱需要後端或寄信服務，建議先 RSS＋LINE 官方帳號）、抗蛇毒血清資訊（必移轉：緊急就醫資訊，舊網址取自審查意見）、傳染病核心教材（必移轉）、進階搜尋（待決策：用 `/ask/` 答案頁加「相關頁面」清單，或另做 Pagefind；本輪不做 Pagefind）。
+
+### 28.7 沒做、留給權責單位決定
+
+電子報走哪個管道、進階搜尋走哪條路、抗蛇毒血清與核心教材的內容匯入、FOIA 頁中標「待建置」的項目、資訊安全政策正式文字、各頁權責單位確認、英文版人工審核、詞彙定義文字。
+
 ## 29. 第二十六輪（2026-10-10）：介面字串依語言拆檔與 JS 預算、Lint／型別檢查、CMS 路線決策紀錄
 
 三個外部審查意見（issue #34 效能、#42 工程品質、#28 CMS 路線）的合約。為什麼這樣做：每頁多載 290 KB 的七語字串、沒有任何自動擋「寫壞但還能跑」的程式、編輯介面的長期路線沒有書面比較。

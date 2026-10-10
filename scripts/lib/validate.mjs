@@ -4,6 +4,7 @@
 // build.mjs 在本檢查後呼叫並把錯誤併入同一份失敗清單（ARCHITECTURE 16.1）。
 import fs from 'node:fs';
 import path from 'node:path';
+import { hasRelativeDate } from './dates.mjs';
 // ajv／ajv-formats 的 CJS 預設匯出在 NodeNext 下型別會變成 module 物件，這裡以 JSDoc 指回真正的建構函式／函式
 import Ajv2020Module from 'ajv/dist/2020.js';
 import addFormatsModule from 'ajv-formats';
@@ -35,10 +36,42 @@ const typeToSchema = {
   migration: 'migration.json', job: 'job.json', tender: 'tender.json',
 };
 
+// ───────────────────────── 第二十五輪：相對日期檢查（Issue #37；規則與理由見 dates.mjs 的 RELATIVE_DATE_RE） ─────────────────────────
+export { RELATIVE_DATE_RE, ABSOLUTE_DATE_RE } from './dates.mjs';
+/** 相對日期規則只管這三種型別（新聞稿、函釋通函、澄清）；澄清屬第一級，直接擋 */
+export const RELATIVE_DATE_TYPES = new Set(['news', 'letter', 'clarification']);
+const splitSentences = (s) => String(s ?? '').split(/(?<=[。！？!?；;\n])/).map((x) => x.trim()).filter(Boolean);
+const firstParagraph = (md) => String(md ?? '').split(/\n\s*\n/).map((p) => p.trim()).find((p) => p && !/^#{1,6}\s/.test(p)) ?? '';
+
+/** → [{ field, sentence }]：相對日期但同一句沒有絕對日期的句子（標題、摘要、首段） */
+export function relativeDateFindings(item) {
+  if (!RELATIVE_DATE_TYPES.has(item?.type)) return [];
+  const out = [];
+  const fields = [['title', item.title], ['summary', item.summary], ['首段', firstParagraph(item.type === 'clarification' ? item.clarificationMarkdown : item.bodyMarkdown)]];
+  for (const [field, text] of fields) {
+    for (const sentence of splitSentences(text)) {
+      if (hasRelativeDate(sentence)) out.push({ field, sentence });
+    }
+  }
+  return out;
+}
+const relativeDateMsg = (f) => `${f.field}含相對日期卻沒有同句的絕對日期：「${f.sentence.slice(0, 50)}」（請改寫成「2026 年 7 月 21 日（今日）」；見 docs/guide-staff.md 第 26 節）`;
+
+/** 內容警告（不擋建置）：news／letter 的相對日期。clarification 屬第一級，已在 validateSite 當 error */
+export function contentWarnings(site) {
+  const out = [];
+  for (const item of site.all) {
+    if (item.type === 'clarification') continue;
+    for (const f of relativeDateFindings(item)) out.push(`${item.__file}: ${relativeDateMsg(f)}`);
+  }
+  return out;
+}
+
 export function validateSite(site) {
   const ajv = loadSchemas();
   const errors = [];
   const push = (file, msg) => errors.push(`${file}: ${msg}`);
+  for (const item of site.all) if (item.type === 'clarification') for (const f of relativeDateFindings(item)) push(item.__file, relativeDateMsg(f));
 
   // 1. schema
   for (const item of site.all) {
