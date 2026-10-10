@@ -170,7 +170,8 @@ test('索引：專業段只進專業版；每段一塊、帶 verification:pendin
   assert.ok(pro.some((c) => c.url.endsWith('#s-professional')));
   for (const c of [...pub, ...pro]) assert.equal(c.verification, 'pending', c.id);
   // 沒有 verification 的內容不帶這個欄位（索引不膨脹）
-  assert.ok(!site.searchIndex.public.some((c) => !c.contentId.match(/antivenom|snakebite/) && 'verification' in c));
+  // 第二十九輪：疫情報導示範文章與第 42 卷第 2 期也是 verification:pending（內文為示範重寫、卷期資訊只看到搜尋摘要），一併排除
+  assert.ok(!site.searchIndex.public.some((c) => !c.contentId.match(/antivenom|snakebite|^article\.|bulletin-42-2$/) && 'verification' in c));
 });
 
 test('智慧查詢：三個驗收問句都有引用蛇傷內容的答案，不再 no-match，且不含錯誤處置', () => {

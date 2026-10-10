@@ -1,0 +1,88 @@
+{
+  "id": "publication.bulletin-42-2",
+  "type": "publication",
+  "title": "疫情報導 第 42 卷第 2 期",
+  "owner": "unit.epidemic-intelligence",
+  "publishedAt": "2026-01-20",
+  "reviewedAt": "2026-01-20",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": [
+    "professional",
+    "public"
+  ],
+  "tasks": [
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-01-20"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "none"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "本期收錄「2024 年屏東縣某餐廳諾羅病毒食品中毒事件」等文章；全文請見各篇文章頁。",
+  "keywords": [
+    "疫情報導",
+    "第 42 卷",
+    "諾羅病毒",
+    "食品中毒",
+    "疫情調查"
+  ],
+  "note": "卷期編號與出刊日（2026-01-20）取自官網「疫情報導」列表頁的搜尋摘要；本期篇目中只有第 1 篇篇名可對到官網列表，文章內文為示範重寫，未取自原文。ISSN 與 PDF 連結待出版單位確認。",
+  "verification": {
+    "status": "pending",
+    "note": "卷期與第 1 篇篇名取自官網列表摘要，內文為示範重寫；完整篇目、頁碼、ISSN 與 PDF 待出版單位確認。",
+    "pendingItems": [
+      "本期完整篇目與頁碼",
+      "ISSN",
+      "本期 PDF 連結",
+      "第 1 篇作者與服務單位（示範以單位代稱）"
+    ],
+    "sources": [
+      {
+        "label": "疾管署官網「疫情報導」列表",
+        "url": "https://www.cdc.gov.tw/EpidemicTheme/Index/2EvDNIFfEWyH8RlHAp1t8g",
+        "accessedAt": "2026-10-10",
+        "official": true,
+        "verified": false,
+        "note": "開發環境連不到 cdc.gov.tw，只看到搜尋摘要：第 42 卷第 2 期、2026-01-20、篇名「2024年屏東縣某餐廳諾羅病毒食品中毒事件」"
+      }
+    ]
+  },
+  "pubType": "bulletin",
+  "series": "疫情報導",
+  "seriesEn": "Taiwan Epidemiology Bulletin",
+  "volume": 42,
+  "issue": 2,
+  "issn": "1680-5739",
+  "authors": [
+    "疾病管制署"
+  ],
+  "pdfUrl": "/pending/?ref=publication.bulletin-42-2&doc=疫情報導%20第%2042%20卷第%202%20期（PDF）",
+  "abstractMarkdown": "《疫情報導》為疾管署發行之期刊，每月出刊 2 期，刊載疫情調查、監測分析與防治政策。本期（第 42 卷第 2 期，2026-01-20 出刊）第 1 篇為「2024 年屏東縣某餐廳諾羅病毒食品中毒事件」。"
+}

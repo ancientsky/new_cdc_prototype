@@ -11,7 +11,7 @@ import { html } from '../../../scripts/lib/render.mjs';
 
 /** 內容型別 → 搜尋頁「內容類型」代碼。不在表內的型別不進索引（banner 沒有獨立頁、dataset 沒有詳情頁）。 */
 export const PF_TYPES = [
-  'disease', 'vaccine', 'news', 'letter', 'clarification', 'document', 'faq', 'service', 'publication', 'labtest',
+  'disease', 'vaccine', 'news', 'letter', 'clarification', 'document', 'faq', 'service', 'publication', 'article', 'labtest',
   'research', 'media', 'topic', 'page', 'job', 'tender',
 ];
 /** 不是內容項目、但要收進索引的頁（meta.pagefind = { type }）：旅遊目的地、詞彙頁 */

@@ -1,0 +1,49 @@
+{
+  "id": "article.teb-42-13-2",
+  "type": "article",
+  "title": "腸病毒 71 型實驗室監測與基因型分析",
+  "titleEn": "Laboratory surveillance and genotyping of enterovirus A71",
+  "owner": "unit.lab",
+  "publishedAt": "2026-07-14",
+  "reviewedAt": "2026-07-14",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": ["professional"],
+  "tasks": ["data"],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": ["disease.enterovirus"],
+  "aiWhitelist": { "requested": true, "approvedBy": "unit.oasis", "approvedAt": "2026-07-14" },
+  "languages": { "zh-TW": { "status": "source" }, "en": { "status": "none" }, "ja": { "status": "none" }, "tl": { "status": "none" }, "vi": { "status": "none" }, "id": { "status": "none" }, "th": { "status": "none" } },
+  "summary": "示範全文：說明實驗室監測如何從合約檢驗室的檢體中偵測腸病毒 71 型，並以基因型分析判讀流行株是否改變；數字與結論為示範。",
+  "keywords": ["腸病毒", "腸病毒 71 型", "實驗室監測", "基因型", "重症"],
+  "note": "示範內容：資料與結論為虛構，用來展示監測報告的版面與圖表呈現；請勿引用。",
+  "verification": { "status": "pending", "note": "示範文章：資料與結論為虛構。", "pendingItems": ["以實際刊載文章取代"] },
+  "issueId": "publication.bulletin-42-13",
+  "articleNo": 2,
+  "articleType": "surveillance",
+  "authors": [
+    { "name": "檢驗及疫苗研製中心病毒組", "unit": "檢驗及疫苗研製中心", "corresponding": true }
+  ],
+  "pages": "9-16",
+  "abstractMarkdown": "腸病毒 71 型（EV-A71）是引起兒童重症的主要血清型。本文整理 2025 年至 2026 年上半年實驗室監測資料：合約檢驗室共送驗 4,812 件檢體，腸病毒陽性 1,236 件，其中 EV-A71 佔 7.8%；基因型以 B5 為主，2026 年起 C4 比例上升。文中說明監測流程、基因型分析方法，以及流行株改變時對重症監測與疫苗政策的意義。（示範摘要）",
+  "highlights": {
+    "known": "EV-A71 基因型會在流行季之間輪替，不同基因型的重症風險與疫苗保護力可能不同。",
+    "added": "示範以季為單位呈現 EV-A71 佔比與基因型分布的變化，並說明判讀門檻。",
+    "implications": "基因型比例明顯改變時，應提前加強重症通報宣導並評估疫苗涵蓋株。"
+  },
+  "sections": [
+    { "key": "intro", "heading": "前言", "markdown": "腸病毒感染併發重症以 EV-A71 為主要病原，實驗室監測可比臨床通報更早偵測流行株的改變。本文說明監測架構與近期結果。（示範內文）" },
+    { "key": "methods", "heading": "材料與方法", "markdown": "檢體來源為全國合約檢驗室之腸病毒送驗檢體；以 RT-PCR 偵測腸病毒並進行血清型鑑定，EV-A71 陽性株再定序 VP1 基因進行基因型分析。資料以季為單位統計。（示範內文）" },
+    { "key": "results", "heading": "結果", "markdown": "2025 年第 1 季至 2026 年第 2 季，EV-A71 占腸病毒陽性檢體之比例由 4.1% 上升至 11.3%（圖 1）。基因型方面，B5 由 92% 降至 71%，C4 由 5% 升至 26%（表 1）。（示範內文）" },
+    { "key": "discussion", "heading": "討論", "markdown": "C4 比例上升是否伴隨重症比例改變，需與重症通報資料對照。基因型監測的限制在於檢體來自就醫者，未必代表社區流行全貌。（示範內文）" },
+    { "key": "conclusion", "heading": "結論", "markdown": "建議維持每季基因型分析頻率，並在單一基因型季增幅超過 10 個百分點時啟動加強監測。（示範內文）" }
+  ],
+  "figures": [
+    { "kind": "figure", "no": 1, "caption": "EV-A71 占腸病毒陽性檢體比例（2025Q1–2026Q2，示範資料）", "alt": "折線圖：比例由 4.1% 逐季上升至 11.3%。", "markdown": "| 季 | 2025Q1 | 2025Q2 | 2025Q3 | 2025Q4 | 2026Q1 | 2026Q2 |\n|---|---|---|---|---|---|---|\n| EV-A71 比例 | 4.1% | 5.0% | 6.2% | 7.9% | 9.6% | 11.3% |" },
+    { "kind": "table", "no": 1, "caption": "EV-A71 基因型分布（示範資料）", "markdown": "| 基因型 | 2025 年 | 2026 年上半年 |\n|---|---|---|\n| B5 | 92% | 71% |\n| C4 | 5% | 26% |\n| 其他 | 3% | 3% |" }
+  ],
+  "references": [
+    "衛生福利部疾病管制署。腸病毒感染併發重症臨床處置建議。（示範引用）"
+  ]
+}

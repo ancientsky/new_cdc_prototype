@@ -164,6 +164,7 @@ export const ENDPOINTS = [
   ['/v1/topics.json', 'content', '專區／專題（governance.ended；links[].status 外部連結檢查）', arr(withApi('Topic'))],
   ['/v1/services.json', 'content', '申請／服務（步驟、應備文件、處理天數、表單）', arr(withApi('Service'))],
   ['/v1/publications.json', 'content', '出版品（書目、卷期）；series 為系列分組', arr(withApi('Publication')), { series: arr(ref('PublicationSeries')) }],
+  ['/v1/articles.json', 'content', '疫情報導文章（第二十九輪）：全文 sections、作者與單位、頁碼、圖表、引用格式；issue 為所屬卷期摘要', arr({ allOf: [ref('Article'), ref('ApiFields'), { type: 'object', properties: { issue: { type: ['object', 'null'] }, citation: { type: 'string' }, citationEn: { type: 'string' } } }] })],
   ['/v1/labtests.json', 'professional', '檢驗項目（疾病 × 檢體 × 容器 × 保存運送 × 時限）', arr({ allOf: [ref('Labtest'), ref('ApiFields'), { type: 'object', properties: { master: { oneOf: [ref('DiseaseMaster'), { type: 'null' }] } } }] })],
   ['/v1/research.json', 'professional', '研究計畫', arr(withApi('Research'))],
   ['/v1/notices.json', 'content', '機關公告：其他訊息（closed、closingSoon、daysToDeadline）；人才招募見 /v1/jobs.json、採購公告見 /v1/tenders.json', arr({ allOf: [ref('News'), ref('ApiFields'), { type: 'object', properties: { closed: { type: 'boolean' }, closingSoon: { type: 'boolean' }, daysToDeadline: { type: ['integer', 'null'] } } }] })],

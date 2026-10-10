@@ -1,0 +1,41 @@
+{
+  "$id": "https://cdc-prototype/schemas/article.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "疫情報導文章（第二十九輪）：一篇文章一個檔，全文 HTML 由 sections 渲染；卷期頁由同一 issueId 的文章自動組成",
+  "allOf": [{ "$ref": "_common.json" }],
+  "type": "object",
+  "required": ["issueId", "articleNo", "authors", "sections"],
+  "properties": {
+    "type": { "const": "article" },
+    "issueId": { "type": "string", "pattern": "^publication\\.", "description": "所屬卷期（content/publications/ 的 publication，pubType 必須是 bulletin）" },
+    "articleNo": { "type": "integer", "minimum": 1, "description": "本期第幾篇；同一期不可重複。網址 /publications/{卷期}/{articleNo}/" },
+    "articleType": { "enum": ["original", "outbreak-report", "surveillance", "review", "brief", "erratum", "other"], "description": "原著文章、疫情調查報告、監測報告、綜論、短訊、更正" },
+    "titleEn": { "type": "string" },
+    "authors": {
+      "type": "array", "minItems": 1,
+      "items": { "type": "object", "required": ["name"], "properties": { "name": { "type": "string", "minLength": 1 }, "unit": { "type": "string", "description": "服務單位（文字；可填單位 id 或名稱）" }, "corresponding": { "type": "boolean" } } }
+    },
+    "pages": { "type": "string", "pattern": "^\\d+(-\\d+)?$", "description": "本期頁碼範圍，例 1-8" },
+    "doi": { "type": "string" },
+    "receivedAt": { "type": "string", "format": "date" },
+    "acceptedAt": { "type": "string", "format": "date" },
+    "abstractMarkdown": { "type": "string", "description": "摘要（文章頁頂端的摘要框）" },
+    "abstractEn": { "type": "string" },
+    "highlights": {
+      "type": "object", "description": "仿 MMWR summary box 的三句話：已知／本文新增／對防疫實務的意義",
+      "properties": { "known": { "type": "string" }, "added": { "type": "string" }, "implications": { "type": "string" } }, "additionalProperties": false
+    },
+    "sections": {
+      "type": "array", "minItems": 1,
+      "items": { "type": "object", "required": ["key", "heading", "markdown"], "properties": { "key": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" }, "heading": { "type": "string" }, "markdown": { "type": "string" }, "level": { "enum": [2, 3] } } }
+    },
+    "figures": {
+      "type": "array",
+      "items": { "type": "object", "required": ["kind", "no", "caption"], "properties": { "kind": { "enum": ["figure", "table"] }, "no": { "type": "integer", "minimum": 1 }, "caption": { "type": "string" }, "file": { "type": "string", "description": "content/assets/{id}/ 下的檔名（圖）" }, "alt": { "type": "string" }, "markdown": { "type": "string", "description": "表格內容（Markdown 表格）或圖的文字版" } } }
+    },
+    "references": { "type": "array", "items": { "type": "string" } },
+    "acknowledgementsMarkdown": { "type": "string" },
+    "pdfUrl": { "type": "string", "description": "單篇 PDF；沒有時文章頁改提供本期 PDF 與列印版" },
+    "note": { "type": "string" }
+  }
+}

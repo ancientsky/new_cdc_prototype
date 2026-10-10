@@ -4,6 +4,7 @@ import { sparklineSvg } from '../../client/charts.js';
 import { html, raw, esc, makeUrl } from '../../../scripts/lib/render.mjs';
 import { config } from '../../../site.config.mjs';
 import * as JL from '../../../scripts/lib/jsonld.mjs';
+import { articlePath } from '../../client/bulletin-rules.js';
 
 let _uid = 0;
 export const uid = (p = 'u') => `${p}${++_uid}`;
@@ -27,6 +28,7 @@ export function itemPath(item) {
     case 'publication': return `/publications/${slugOf(item)}/`;
     case 'labtest': return `/lab/${slugOf(item)}/`;
     case 'research': return `/research/${slugOf(item)}/`;
+    case 'article': return articlePath(item);
     case 'job': return `/careers/${item.slug ?? slugOf(item)}/`;
     case 'tender': return `/procurement/${item.slug ?? slugOf(item)}/`;
     case 'banner': return `/campaigns/#${item.id}`;
@@ -193,7 +195,7 @@ export function alerts(ctx, item, { skip = [] } = {}) {
 }
 
 /* ───────── 元件 3：本頁的資料（頁尾收合） ───────── */
-export function pageData(ctx, item, { schema = 'WebPage', api = null, mdPath = null, extra = '' } = {}) {
+export function pageData(ctx, item, { schema = 'WebPage', api = null, mdPath = null, extra = '', editPath = '/admin/publish/' } = {}) {
   const { t, url } = ctx;
   const g = item.gov ?? {};
   return html`<details class="c-page-data" data-group="ondemand">
@@ -207,7 +209,7 @@ export function pageData(ctx, item, { schema = 'WebPage', api = null, mdPath = n
     <li>ID：<code>${item.id}</code></li>
     ${extra}
     <li><a href="${url('/policy/ai/')}">${t('pagedata.report')}</a></li>
-    <li class="c-page-data__staff"><a href="${url(`/admin/publish/?edit=${encodeURIComponent(item.id)}`, { noLang: true })}" rel="nofollow">${t('pagedata.edit')}</a></li>
+    <li class="c-page-data__staff"><a href="${url(`${editPath}?edit=${encodeURIComponent(item.id)}`, { noLang: true })}" rel="nofollow">${t('pagedata.edit')}</a></li>
   </ul>
 </details>`;
 }

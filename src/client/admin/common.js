@@ -13,6 +13,7 @@
 //   cdc.admin.situation     疫情發布表單草稿
 //   cdc.admin.jobs-edit     人才招募上架與異動表單草稿
 //   cdc.admin.tenders-edit  採購公告上架與異動表單草稿
+//   cdc.admin.bulletin-edit 疫情報導文章上架表單草稿（第二十九輪）
 //   cdc.aiStatusOverride    AI 暫停覆寫（答案頁讀取）{paused, reason, updatedAt, updatedBy}
 //   cdc.reports             前台回報（唯讀）
 //   （sessionStorage）cdc.llmKey  BYOK（唯讀；有才會呼叫 LLM 多語初稿；第二十三輪起只在本分頁，關閉即清除）

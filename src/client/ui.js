@@ -358,6 +358,8 @@ document.addEventListener('click', (e) => {
   const b = e.target.closest('[data-copy-text]');
   if (b) copyText(b.dataset.copyText, b);
 });
+/* 第二十九輪：疫情報導文章頁「列印／另存 PDF」——沒有單篇 PDF 時，列印樣式就是乾淨的文章版面，瀏覽器「另存為 PDF」即可 */
+document.addEventListener('click', (e) => { if (e.target.closest('[data-print]')) window.print(); });
 
 /* 影片：點擊才載入 youtube-nocookie；章節可跳轉（尚未載入就從該秒開始載入）；無 id 的示意影片只提示並展開逐字稿 */
 function loadPlayer(box, start = 0) {

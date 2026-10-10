@@ -3,8 +3,8 @@ import { config } from '../site.config.mjs';
 import { loadSite, sourceHashOf } from '../scripts/lib/load.mjs';
 import { applyGovernance } from '../scripts/lib/governance.mjs';
 
-const COLLECTION_OF = { disease: 'diseases', faq: 'faq', news: 'news', letter: 'news', document: 'documents', clarification: 'clarifications', vaccine: 'vaccines', dataset: 'datasets', banner: 'banners', page: 'pages', media: 'media', topic: 'topics', service: 'services', publication: 'publications', labtest: 'labtests', research: 'research', job: 'jobs', tender: 'tenders' };
-const ID_PREFIX = { document: 'doc', publication: 'pub', labtest: 'lab' };
+const COLLECTION_OF = { disease: 'diseases', faq: 'faq', news: 'news', letter: 'news', document: 'documents', clarification: 'clarifications', vaccine: 'vaccines', dataset: 'datasets', banner: 'banners', page: 'pages', media: 'media', topic: 'topics', service: 'services', publication: 'publications', labtest: 'labtests', research: 'research', job: 'jobs', tender: 'tenders', article: 'articles' };
+const ID_PREFIX = { document: 'doc', publication: 'pub', labtest: 'lab', article: 'article' };
 const LONG_TRANSCRIPT = '（旁白）出現發燒、頭痛、後眼窩痛、肌肉關節痛等症狀，請儘速就醫並告知醫師旅遊史。清除積水容器，落實巡、倒、清、刷，是預防登革熱最有效的方法。';
 
 /** 建一筆合成內容（共同欄位齊全） */
@@ -23,6 +23,7 @@ export function mk(over = {}) {
   if (type === 'service') Object.assign(base, { slug: `s-${Math.random().toString(36).slice(2, 8)}`, serviceType: 'data-request', whoCanApply: ['研究者'], steps: [{ title: '線上申請', text: '填寫申請表。' }, { title: '審查', days: 10 }], requiredDocuments: ['申請書'], slaDays: 14 });
   if (type === 'publication') Object.assign(base, { series: '疫情報導', pubType: 'bulletin', volume: 42, issue: 18, issn: '1818-6858', reviewPeriodMonths: 0, abstractMarkdown: '本期摘要。' });
   if (type === 'labtest') Object.assign(base, { disease: 'disease.dengue', audience: ['professional'], specimens: [{ name: '急性期血清', container: '無菌試管', volume: '2–5 mL', storage: '4°C', transport: '4°C 冷藏 48 小時內送達', timing: '發病 7 日內', tests: ['RT-PCR', 'NS1'] }], labs: ['cdc-lab'], sendWithinHours: 24, reviewPeriodMonths: 12 });
+  if (type === 'article') Object.assign(base, { issueId: 'publication.bulletin-42-13', articleNo: 9, articleType: 'original', authors: [{ name: '測試單位', unit: '疫情中心' }], pages: '90-95', reviewPeriodMonths: 0, abstractMarkdown: '測試摘要段落。', sections: [{ key: 'intro', heading: '前言', markdown: '測試前言。' }, { key: 'methods', heading: '方法', markdown: '測試方法。' }] });
   if (type === 'research') Object.assign(base, { year: 2026, projectStatus: 'ongoing', fundingType: 'commissioned', piUnit: '測試大學公共衛生學院', abstractMarkdown: '研究摘要。', audience: ['professional'], reviewPeriodMonths: 12, projectNo: 'MOHW115-CDC-C-001' });
   return { ...base, ...over };
 }

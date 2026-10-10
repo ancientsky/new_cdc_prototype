@@ -1121,3 +1121,76 @@ html:not(.js) .vxs-form,html:not(.js) .vxs-msg,html:not(.js) .vxs-tabs,html:not(
 .c-curr-obj ol{padding-left:1.5em}
 .c-curr-obj li{margin-bottom:var(--sp-1)}
 .c-curr-meta{margin-top:var(--sp-3)}
+
+/* ───────── 第二十九輪：疫情報導（文章頁 c-teb、卷期目錄 c-teb__toc）。版面理由見 src/templates/public/_bulletin.mjs ───────── */
+.c-teb__head .c-pagehead__main h1{font-size:var(--fs-2xl);line-height:1.3;margin:var(--sp-2) 0}
+.c-teb__titleen{margin:0 0 var(--sp-3);font-size:var(--fs-lg);color:var(--ink-2);font-style:italic}
+.c-teb__issue{font-weight:700;text-decoration:none}
+.c-teb__authors{margin:var(--sp-2) 0 0;font-size:var(--fs-md);line-height:1.7}
+.c-teb__author{white-space:nowrap}
+.c-teb__unit{color:var(--ink-3);font-size:var(--fs-sm)}
+.c-teb__corr{text-decoration:none;color:var(--green-700);font-weight:700}
+.c-teb__corrnote,.c-teb__dates{margin:2px 0 0;font-size:var(--fs-xs)}
+.c-teb__actions{flex-wrap:wrap}
+.c-teb__abstract{margin:0 0 var(--sp-4);padding:var(--sp-4) var(--sp-5);background:var(--paper);border-left:5px solid var(--green-700);border-radius:0 var(--radius) var(--radius) 0}
+.c-teb__abstract h2{margin:0 0 var(--sp-2);font-size:var(--fs-md);letter-spacing:.05em;color:var(--green-900)}
+.c-teb__abstract .c-prose{font-size:var(--fs-md)}
+.c-teb__box{margin:0 0 var(--sp-5);padding:var(--sp-4) var(--sp-5);border:2px solid var(--green-700);border-radius:var(--radius);background:#fff}
+.c-teb__box h2{margin:0 0 var(--sp-3);font-size:var(--fs-md);color:var(--green-900)}
+.c-teb__box dl{margin:0;display:grid;gap:var(--sp-3)}
+.c-teb__box dt{font-weight:700;font-size:var(--fs-sm);color:var(--green-800,var(--green-900));margin-bottom:2px}
+.c-teb__box dd{margin:0;line-height:1.75}
+.c-teb__sec h2{scroll-margin-top:var(--sp-5)}
+.c-teb__fig{margin:var(--sp-4) 0;padding:var(--sp-3) var(--sp-4);border:1px solid var(--line);border-radius:var(--radius);background:#fff;scroll-margin-top:var(--sp-5)}
+.c-teb__fig figcaption{font-size:var(--fs-sm);color:var(--ink-2);margin-bottom:var(--sp-2);line-height:1.6}
+.c-teb__fig img{max-width:100%;height:auto;display:block;margin:0 auto}
+.c-teb__fig--table figcaption{color:var(--ink);font-weight:500}
+.c-teb__figbody .c-tablewrap,.c-teb__figbody table{margin:0}
+.c-teb__figbody table{font-size:var(--fs-sm)}
+.c-teb__textver{margin-top:var(--sp-2);font-size:var(--fs-sm)}
+.c-teb__textver>summary{cursor:pointer;color:var(--green-700)}
+.c-teb__figalt{font-size:var(--fs-sm)}
+.c-teb__refs ol{padding-left:1.8em;font-size:var(--fs-sm);line-height:1.7}
+.c-teb__refs li{margin-bottom:var(--sp-1);scroll-margin-top:var(--sp-5)}
+.c-teb__cites{margin:0;display:grid;gap:var(--sp-3)}
+.c-teb__cite dt{font-size:var(--fs-xs);color:var(--ink-3);margin-bottom:2px}
+.c-teb__cite dd{margin:0;display:flex;gap:var(--sp-2);align-items:flex-start;flex-wrap:wrap}
+.c-teb__cite code{flex:1 1 280px;white-space:normal;word-break:break-word;font-size:var(--fs-sm);padding:var(--sp-2) var(--sp-3);background:var(--paper);border-radius:var(--radius-sm)}
+.c-teb__prevnext{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-3);margin:var(--sp-5) 0}
+.c-teb__prevnext a{display:grid;gap:2px;padding:var(--sp-3) var(--sp-4);border:1px solid var(--line);border-radius:var(--radius);text-decoration:none;color:inherit;font-size:var(--fs-sm)}
+.c-teb__prevnext a:hover{border-color:var(--green-700);background:var(--paper)}
+.c-teb__next{text-align:right}
+.c-toc--teb .c-toc__sub a{padding-left:22px;font-size:var(--fs-xs)}
+.c-toc__figs{margin:var(--sp-2) 0 0;font-size:var(--fs-xs);display:flex;flex-wrap:wrap;gap:4px 8px}
+/* 卷期頁：本期目錄 */
+.c-teb__toc{list-style:none;margin:0;padding:0;counter-reset:none}
+.c-teb__tocitem{display:grid;grid-template-columns:2.4em minmax(0,1fr);gap:var(--sp-3);padding:var(--sp-4) 0;border-bottom:1px solid var(--line)}
+.c-teb__tocitem:first-child{border-top:1px solid var(--line)}
+.c-teb__tocno{display:inline-flex;align-items:center;justify-content:center;width:2.2em;height:2.2em;border-radius:50%;background:var(--green-50);color:var(--green-900);font-weight:700;font-size:var(--fs-sm);flex:none}
+.c-teb__tocbody>p{margin:0 0 4px}
+.c-teb__tocmeta{font-size:var(--fs-xs)}
+.c-teb__toctitle{font-size:var(--fs-lg);font-weight:700;line-height:1.4}
+.c-teb__toctitle a{text-decoration:none}
+.c-teb__toctitle a:hover{text-decoration:underline}
+.c-teb__tocen{font-size:var(--fs-sm);font-style:italic}
+.c-teb__tocauthors{font-size:var(--fs-sm);color:var(--ink-2)}
+.c-teb__tocsum{font-size:var(--fs-sm);color:var(--ink-2);line-height:1.7}
+.c-teb__toclinks{margin-top:var(--sp-2)!important;display:flex;gap:var(--sp-2);flex-wrap:wrap;align-items:center}
+.c-teb__tocdate{margin-top:var(--sp-3);font-size:var(--fs-sm)}
+.c-teb__toc--compact li{display:flex;gap:var(--sp-2);align-items:baseline;padding:4px 0;font-size:var(--fs-sm);border-bottom:1px solid var(--line-2)}
+.c-teb__toc--compact li.is-current{font-weight:700}
+.c-teb__toc--compact .c-teb__tocno{width:1.6em;height:1.6em;font-size:var(--fs-xs)}
+.c-teb__toc--compact a[aria-current="page"]{text-decoration:none;color:inherit}
+.c-teb__issuehead{display:flex;gap:var(--sp-4);align-items:flex-start;flex-wrap:wrap}
+.c-teb__masthead{display:grid;gap:2px;padding:var(--sp-3) var(--sp-4);border:1px solid var(--line);border-radius:var(--radius);background:var(--paper);font-size:var(--fs-sm)}
+.c-teb__masthead strong{font-size:var(--fs-lg);color:var(--green-900)}
+@media (max-width:760px){.c-teb__prevnext{grid-template-columns:1fr}.c-teb__next{text-align:left}.c-teb__tocitem{grid-template-columns:1fr}.c-teb__tocitem .c-teb__tocno{display:none}}
+/* 列印＝乾淨的文章版面（這就是「另存 PDF」的來源）：去掉導覽、側欄、按鈕；摘要框與圖表保留框線 */
+@media print{
+  .c-teb__actions,.c-teb__side,.c-teb__prevnext,.c-teb .c-feedback,.c-teb__corrnote{display:none!important}
+  .c-teb .c-cols--2{display:block}
+  .c-teb__abstract,.c-teb__box{break-inside:avoid;border-color:#000}
+  .c-teb__fig{break-inside:avoid}
+  .c-teb__cite .c-btn{display:none}
+  .c-teb__textver{display:block}.c-teb__textver>summary{display:none}.c-teb__textver>*{display:block}
+}

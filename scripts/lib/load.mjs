@@ -38,6 +38,8 @@ export function sourceHashOf(item) {
     bodyMarkdown: item.bodyMarkdown, blocks: item.blocks, keyFacts: item.keyFacts, machineReadableMarkdown: item.machineReadableMarkdown,
     clarificationMarkdown: item.clarificationMarkdown, claim: item.claim, publicFunded: item.publicFunded, headline: item.headline,
     transcriptMarkdown: item.transcriptMarkdown, introMarkdown: item.introMarkdown, steps: item.steps, abstractMarkdown: item.abstractMarkdown, specimens: item.specimens, articles: item.articles,
+    // 第二十九輪：疫情報導文章的正文欄位
+    highlights: item.highlights, figures: item.figures, references: item.references, authors: item.authors,
     // 連結檢查寫回的欄位（lastCheckedAt、status）不算內容變更，剔除後再雜湊
     links: item.links?.map(({ lastCheckedAt, status, ...rest }) => rest),
     forms: item.forms?.map(({ lastCheckedAt, status, ...rest }) => rest),
@@ -76,6 +78,8 @@ export function loadSite(config) {
     publications: readDirJSON(path.join(CONTENT, 'publications')),
     labtests: readDirJSON(path.join(CONTENT, 'labtests')),
     research: readDirJSON(path.join(CONTENT, 'research')),
+    // 第二十九輪（ARCHITECTURE 34）：疫情報導文章，一篇一檔；卷期頁由 issueId 相同的文章自動組成
+    articles: readDirJSON(path.join(CONTENT, 'articles')),
     // 第七輪（ARCHITECTURE 15.1）：人才招募（人事室）與採購公告（秘書室）
     jobs: readDirJSON(path.join(CONTENT, 'jobs')),
     tenders: readDirJSON(path.join(CONTENT, 'tenders')),

@@ -1,0 +1,50 @@
+{
+  "id": "article.teb-42-13-1",
+  "type": "article",
+  "title": "2026 年首例本土登革熱病例疫情調查與社區防治",
+  "titleEn": "Investigation and community control of the first indigenous dengue case of 2026",
+  "owner": "unit.regional-kaoping",
+  "publishedAt": "2026-07-14",
+  "reviewedAt": "2026-07-14",
+  "reviewPeriodMonths": 0,
+  "status": "published",
+  "audience": ["professional", "public"],
+  "tasks": ["situation"],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": ["disease.dengue"],
+  "aiWhitelist": { "requested": true, "approvedBy": "unit.oasis", "approvedAt": "2026-07-14" },
+  "languages": { "zh-TW": { "status": "source" }, "en": { "status": "none" }, "ja": { "status": "none" }, "tl": { "status": "none" }, "vi": { "status": "none" }, "id": { "status": "none" }, "th": { "status": "none" } },
+  "summary": "示範全文：描述一例本土登革熱病例從通報、疫調、孳生源清除到擴大採檢的完整流程，說明「72 小時內完成社區防治」的作法與成效指標；內容為示範，非真實病例。",
+  "keywords": ["登革熱", "本土病例", "疫情調查", "孳生源", "社區防治", "布氏指數"],
+  "note": "本篇與所屬卷期皆為示範內容，病例、地點、數字皆為虛構，用來展示疫情報導全文版面與上架流程；請勿引用。",
+  "verification": { "status": "pending", "note": "示範文章：病例、地點與數字為虛構。", "pendingItems": ["以實際刊載文章取代"] },
+  "issueId": "publication.bulletin-42-13",
+  "articleNo": 1,
+  "articleType": "outbreak-report",
+  "authors": [
+    { "name": "高屏區管制中心防疫團隊", "unit": "高屏區管制中心", "corresponding": true },
+    { "name": "某市政府衛生局", "unit": "地方衛生局" }
+  ],
+  "pages": "1-8",
+  "abstractMarkdown": "2026 年 5 月，南部某市通報當年首例本土登革熱病例。本文描述自醫院通報至完成社區防治的 72 小時：疫調確認病例無旅遊史、鎖定可能感染地點，衛生局與區管中心於病例住家與活動地周圍 50 公尺進行孳生源清除與成蟲化學防治，並對同戶與鄰近住戶擴大採檢。防治後兩週內未再出現關聯病例，布氏指數由三級降為一級。本文以此事件說明本土病例「發現即防治」的標準作法與成效指標。（示範摘要）",
+  "highlights": {
+    "known": "登革熱在臺灣以境外移入為主，本土病例一旦出現，若未在病媒蚊外在潛伏期內完成防治，容易擴大為社區流行。",
+    "added": "示範以「通報後 72 小時」為時間軸，列出每個步驟的負責單位、完成時限與成效指標（布氏指數、擴大採檢陽性率）。",
+    "implications": "各縣市可依本文的時間軸檢核自己的本土病例應變流程，並在流行季前完成人力與藥劑整備。"
+  },
+  "sections": [
+    { "key": "intro", "heading": "前言", "markdown": "登革熱為埃及斑蚊與白線斑蚊傳播之病毒性疾病，南部縣市因氣候與病媒蚊密度，長年為本土疫情高風險地區。本土病例的早期發現與迅速防治，是避免單一病例擴大成社區流行的關鍵。本文記錄 2026 年首例本土病例的處理過程，作為各地應變流程的參考。（示範內文）" },
+    { "key": "methods", "heading": "方法", "markdown": "### 疫情調查\n\n接獲通報後，由衛生局疫調人員於 24 小時內完成病例訪談，確認發病日、活動史、旅遊史與同住者健康狀況，並依發病日回推可能感染期間與地點。\n\n### 病媒蚊調查與防治\n\n以病例住家與主要活動地為中心，半徑 50 公尺範圍內逐戶查核積水容器並計算布氏指數；同步進行孳生源清除，並於 48 小時內完成成蟲化學防治。\n\n### 擴大採檢\n\n對同住者與防治範圍內有疑似症狀之居民採血，以 NS1 抗原快篩與 RT-PCR 檢測。（示範內文）" },
+    { "key": "results", "heading": "結果", "markdown": "病例為 50 多歲男性，無近期出國史，發病前兩週活動範圍集中於住家與鄰近市場。疫調於通報後 20 小時完成；孳生源查核共 87 戶，陽性容器 14 個，布氏指數為三級；化學防治於通報後 44 小時完成。擴大採檢 23 人皆為陰性。防治後第 7 日與第 14 日複查，布氏指數分別降為二級與一級，兩週內無關聯病例（表 1）。（示範內文）" },
+    { "key": "discussion", "heading": "討論", "markdown": "本事件能在 72 小時內完成全部防治步驟，關鍵在於通報當日即啟動跨單位聯繫，以及流行季前已完成藥劑與人力整備。限制在於單一病例的經驗未必能推論到多點同時爆發的情境。（示範內文）" },
+    { "key": "conclusion", "heading": "結論與建議", "markdown": "建議各縣市以「通報後 72 小時」為檢核點，明訂疫調、孳生源清除、化學防治、擴大採檢的完成時限與負責單位，並於每年 4 月前完成演練。（示範內文）" }
+  ],
+  "figures": [
+    { "kind": "table", "no": 1, "caption": "本土病例應變時間軸與成效指標（示範資料）", "markdown": "| 步驟 | 負責單位 | 完成時間（通報後） | 成效指標 |\n|---|---|---|---|\n| 疫情調查 | 衛生局 | 20 小時 | 確認無旅遊史、鎖定感染地 |\n| 孳生源查核與清除 | 衛生局、區公所 | 36 小時 | 布氏指數三級 → 一級（第 14 日） |\n| 成蟲化學防治 | 衛生局、區管中心 | 44 小時 | 範圍內 87 戶完成 |\n| 擴大採檢 | 衛生局 | 48 小時 | 23 人全部陰性 |" }
+  ],
+  "references": [
+    "衛生福利部疾病管制署。登革熱／屈公病防治工作指引（2026 年 2 月版）。",
+    "World Health Organization. Dengue guidelines for diagnosis, treatment, prevention and control. 2009.（示範引用）"
+  ]
+}

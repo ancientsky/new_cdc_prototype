@@ -16,7 +16,7 @@ function init() {
   const LANG_PATH = html.dataset.langPath || '';
   const PAGE = 10;
   // 內容類型的顯示順序（不在表內的值排最後）；顯示字用 search.type.<code>
-  const TYPE_ORDER = ['disease', 'vaccine', 'faq', 'news', 'letter', 'clarification', 'document', 'service', 'publication', 'labtest', 'research', 'media', 'topic', 'travel', 'glossary', 'page', 'job', 'tender'];
+  const TYPE_ORDER = ['disease', 'vaccine', 'faq', 'news', 'letter', 'clarification', 'document', 'service', 'publication', 'article', 'labtest', 'research', 'media', 'topic', 'travel', 'glossary', 'page', 'job', 'tender'];
   const AUD_ORDER = ['public', 'professional'];
   const UNITS = (() => { try { return JSON.parse(root.dataset.units || '{}'); } catch { return {}; } })();
 

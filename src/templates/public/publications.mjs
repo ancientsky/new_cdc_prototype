@@ -7,6 +7,8 @@ import {
   ldFor, breadcrumb, pageHead, provenance, alerts, pageData, scopeTags, feedback, translationBadge, hrefFor, isFallbackLink, L, unitName, publishedOf, slugOf,
   itemPath, extLink, imgSrc, diseaseHref, diseaseName, mdHeader, proScope, pill,
 } from './_partials.mjs';
+// 第二十九輪：疫情報導卷期頁改成「本期目錄」（每篇全文、PDF、作者、摘要一句），文章全文在 articles.mjs；理由見 _bulletin.mjs 與 docs/bulletin.md
+import { issueTocHtml, otherIssuesHtml, volIssueLabel, articlesOfIssue, citationOf } from './_bulletin.mjs';
 
 const trailOf = (ctx, p) => [{ label: ctx.t('publications.title'), href: '/publications/' }, { label: L(ctx, p, 'title') }];
 const volIssue = (p) => [p.volume != null ? `${p.volume}` : '', p.issue != null ? `(${p.issue})` : ''].join('');
@@ -40,8 +42,8 @@ function listPage(ctx) {
       const sorted = [...vols.entries()].sort((a, b) => num(b[0]) - num(a[0]));
       return html`<section class="c-block" id="${id}" aria-labelledby="h-${id}"><h2 id="h-${id}">${series} <span class="c-pill c-pill--neutral">${list.length}</span></h2>
         ${sorted.map(([v, ps]) => html`<h3 class="c-pubvol">${t('publications.volume', { n: v })}</h3>
-        <div class="c-tablewrap" role="region" tabindex="0" aria-label="${t('a11y.scrollTable')}"><table class="c-table c-table--pub"><caption class="sr-only">${series} ${t('publications.volume', { n: v })}</caption><thead><tr><th scope="col">${t('publications.issue')}</th><th scope="col">${t('publications.date')}</th><th scope="col">${t('publications.articles')}</th><th scope="col">${t('publications.pdf')}</th></tr></thead>
-        <tbody>${ps.sort((a, b) => num(b.issue) - num(a.issue)).map((p) => html`<tr><th scope="row"><a href="${hrefFor(ctx, p)}"${isFallbackLink(ctx, p) ? raw(' lang="zh-TW"') : ''}>${volIssue(p)}</a></th><td>${fmtDate(p.publishedAt)}</td><td>${p.articles?.length ?? '—'}</td><td>${p.pdfUrl ? extLink(ctx, /^https?:/.test(p.pdfUrl) ? p.pdfUrl : ctx.url(p.pdfUrl), 'PDF') : '—'}</td></tr>`)}</tbody></table></div>`)}
+        <div class="c-tablewrap" role="region" tabindex="0" aria-label="${t('a11y.scrollTable')}"><table class="c-table c-table--pub"><caption class="sr-only">${series} ${t('publications.volume', { n: v })}</caption><thead><tr><th scope="col">${t('publications.issue')}</th><th scope="col">${t('publications.date')}</th><th scope="col">${t('publications.articles')}</th><th scope="col">${t('teb.fulltext')}</th><th scope="col">${t('publications.pdf')}</th></tr></thead>
+        <tbody>${ps.sort((a, b) => num(b.issue) - num(a.issue)).map((p) => { const full = articlesOfIssue(site.collections.articles ?? [], p.id).length; const n = Math.max(p.articles?.length ?? 0, full); return html`<tr><th scope="row"><a href="${hrefFor(ctx, p)}"${isFallbackLink(ctx, p) ? raw(' lang="zh-TW"') : ''}>${volIssue(p)}</a></th><td>${fmtDate(p.publishedAt)}</td><td>${n || '—'}</td><td>${full ? html`<span class="c-pill c-pill--ok">${full}</span>` : '—'}</td><td>${p.pdfUrl ? extLink(ctx, /^https?:/.test(p.pdfUrl) ? p.pdfUrl : ctx.url(p.pdfUrl), 'PDF') : '—'}</td></tr>`; })}</tbody></table></div>`)}
       </section>`;
     }
     return html`<section class="c-block" id="${id}" aria-labelledby="h-${id}"><h2 id="h-${id}">${series} <span class="c-pill c-pill--neutral">${list.length}</span></h2>
@@ -56,7 +58,48 @@ ${seriesList.map(section)}
 ${items.length ? '' : html`<p class="c-empty">${t('none')}</p>`}`;
 }
 
+/** 第二十九輪：疫情報導卷期頁＝本期目錄。書目與摘要往下移，PDF 與 RSS 在頂端動作列。 */
+function issueDetail(ctx, p) {
+  const { site, t, lang, fmtDate } = ctx;
+  const langStatus = p.languages?.[lang]?.status;
+  const cite = citation(ctx, p);
+  const full = articlesOfIssue(site.collections.articles ?? [], p.id);
+  const pdf = p.pdfUrl ? (/^https?:/.test(p.pdfUrl) ? p.pdfUrl : ctx.url(p.pdfUrl)) : null;
+  const abs = L(ctx, p, 'abstractMarkdown') ?? p.abstractMarkdown;
+  const rows = [['ISSN', p.issn], ['GPN', p.gpn], [t('publications.owner'), unitName(ctx, p.owner)], [t('publications.date'), fmtDate(p.publishedAt)], [t('publications.pages'), p.pages ? t('publications.pages.n', { n: p.pages }) : null]].filter(([, v]) => v);
+  return html`${breadcrumb(ctx, trailOf(ctx, p))}
+<article class="c-article c-publication c-teb-issue">
+  <header class="c-pagehead"><div class="c-pagehead__main">
+    <p class="c-article__meta">${pill(t('publications.type.bulletin'), 'info')} <span>${p.series}${p.seriesEn ? html` · <span lang="en">${p.seriesEn}</span>` : ''}</span>${p.issn ? html` · ISSN ${p.issn}` : ''}</p>
+    <h1>${L(ctx, p, 'title')}</h1>
+    <p class="lead">${t('teb.about')}</p>
+    <p class="muted">${t('publications.date')}：<time datetime="${p.publishedAt}">${fmtDate(p.publishedAt)}</time>${full.length ? html` · ${t('teb.fulltext')} ${full.length}／${Math.max(full.length, p.articles?.length ?? 0)}` : ''}</p>
+    ${scopeTags(ctx, p, { region: false })}
+    ${langStatus && lang !== 'zh-TW' ? html`<p>${translationBadge(ctx, langStatus === 'reviewed' ? 'reviewed' : 'machine')}</p>` : ''}
+    ${alerts(ctx, p)}${provenance(ctx, p)}
+  </div><div class="c-pagehead__actions c-teb__actions">${pdf ? html`<a class="c-btn" href="${pdf}" rel="noopener">${t('teb.pdf.issue')} ↗</a>` : ''}<button type="button" class="c-btn c-btn--ghost" data-copy-text="${cite}" data-done="${t('copied')}">${t('publications.cite')}</button><a class="c-btn c-btn--ghost" href="${ctx.url('/feeds/publications.xml', { noLang: true })}">RSS</a></div></header>
+  <div class="c-cols c-cols--2">
+    <div class="c-cols__main">
+      <section class="c-block" id="toc" aria-labelledby="toc-h"><h2 id="toc-h">${t('teb.toc')}</h2>${issueTocHtml(ctx, p) || html`<p class="c-empty">${t('none')}</p>`}</section>
+      ${abs ? html`<section class="c-block" aria-labelledby="abs-h"><h2 id="abs-h">${t('publications.abstract')}</h2><div class="c-prose">${raw(md(abs))}</div></section>` : ''}
+      <section class="c-block" aria-labelledby="bib-h"><h2 id="bib-h">${t('publications.bib')}</h2>
+        <div class="c-tablewrap" role="region" tabindex="0" aria-label="${t('a11y.scrollTable')}"><table class="c-table c-table--bib"><tbody>${rows.map(([k, v]) => html`<tr><th scope="row">${k}</th><td>${v}</td></tr>`)}</tbody></table></div>
+        <p class="c-cite-text muted"><span class="sr-only">${t('publications.cite')}：</span><code>${cite}</code></p>
+      </section>
+      ${feedback(ctx, { page: ctx.path })}
+    </div>
+    <aside class="c-cols__side">
+      ${p.cover && imgSrc(ctx, p.cover) ? html`<div class="c-aside-card"><img class="c-publication__cover" src="${imgSrc(ctx, p.cover)}" alt="" width="240" height="320" loading="lazy"></div>` : ''}
+      <div class="c-teb__masthead"><strong>${volIssueLabel(ctx, p)}</strong><span>${p.series}${p.seriesEn ? ` · ${p.seriesEn}` : ''}</span><span>${fmtDate(p.publishedAt)}</span>${p.issn ? html`<span>ISSN ${p.issn}</span>` : ''}</div>
+      ${otherIssuesHtml(ctx, p)}
+      ${pageData(ctx, p, { schema: 'PublicationIssue', api: '/v1/publications.json', mdPath: `${itemPath(p).replace(/\/$/, '')}.md` })}
+    </aside>
+  </div>
+</article>`;
+}
+
 function detail(ctx, p) {
+  if (p.pubType === 'bulletin') return issueDetail(ctx, p);
   const { site, t, lang, fmtDate } = ctx;
   const langStatus = p.languages?.[lang]?.status;
   const cite = citation(ctx, p);
@@ -108,6 +151,8 @@ export function markdown(ctx, { item: p }) {
   for (const [k, v] of [['ISBN', p.isbn], ['ISSN', p.issn], ['GPN', p.gpn], ['版次', p.edition], ['頁數', p.pages], ['作者', p.authors?.join('、')], ['定價', p.price], ['PDF', p.pdfUrl]]) if (v) lines.push(`- ${k}：${v}`);
   lines.push(`- 建議引用：${citation(ctx, p)}`);
   if (p.abstractMarkdown) lines.push('', '## 摘要', '', L(ctx, p, 'abstractMarkdown') ?? p.abstractMarkdown);
+  const full = articlesOfIssue(ctx.site.collections.articles ?? [], p.id);
+  if (full.length) lines.push('', '## 本期全文', '', ...full.map((a) => `${a.articleNo}. [${a.title}](${ctx.url(itemPath(a), { absolute: true })})${a.pages ? ` p.${a.pages}` : ''} — ${citationOf(a, p)}`));
   if (p.articles?.length) lines.push('', '## 篇目', '', ...p.articles.map((a, i) => `${i + 1}. ${a.title}${a.authors?.length ? `（${a.authors.join('、')}）` : ''}${a.pages ? ` p.${a.pages}` : ''}`));
   return lines.join('\n') + '\n';
 }

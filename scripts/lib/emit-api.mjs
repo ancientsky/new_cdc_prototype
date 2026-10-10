@@ -5,6 +5,7 @@ import { createHash } from 'node:crypto';
 import { config, siteOrigin } from '../../site.config.mjs';
 import { pathOf, mdPathOf, WHITELIST_REASON_LABELS, LIFECYCLE_LABELS, TODO_KIND_LABELS, NOTICE_TYPES, legacyPathOf, isLegacyPattern, JOB_STAGE_LABELS, TENDER_STAGE_LABELS, JOB_TAB_LABELS, TENDER_TAB_LABELS } from './governance.mjs';
 import { buildOpenApi } from './openapi.mjs';
+import { citationOf, citationEnOf } from '../../src/client/bulletin-rules.js';
 import { assetSummary, assetUrl } from './assets.mjs';
 // 第九輪（ARCHITECTURE 17.1）：對外輸出一律經 isPublic()（published［＋archived］且 publishAt 已到）；emitApi 一進來就換成 publicView（排程中內容整筆消失，含治理待辦與版本鏈）
 import { isPublic, nowOf, publicView } from './lanes.mjs';
@@ -394,6 +395,10 @@ export function emitApi(fullSite, write) {
     if (!g.latest || (p.publishedAt ?? '') > (site.byId.get(g.latest)?.publishedAt ?? '')) g.latest = p.id;
   }
   put('v1/publications.json', pubs.map(strip), {}, { series: [...seriesMap.values()] }, '出版品（書目完整；series 為系列分組）');
+  // 第二十九輪（ARCHITECTURE 34）：疫情報導文章（全文 sections、作者單位、頁碼、引用格式）；依卷期倒序、篇次正序
+  const issueOf = (a) => site.byId.get(a.issueId);
+  const arts = [...published(c.articles)].sort((a, b) => String(issueOf(b)?.publishedAt ?? '').localeCompare(String(issueOf(a)?.publishedAt ?? '')) || (a.articleNo ?? 0) - (b.articleNo ?? 0));
+  put('v1/articles.json', arts.map((a) => ({ ...strip(a), issue: issueOf(a) ? { id: a.issueId, volume: issueOf(a).volume ?? null, issue: issueOf(a).issue ?? null, publishedAt: issueOf(a).publishedAt ?? null, pdfUrl: issueOf(a).pdfUrl ?? null } : null, citation: citationOf(a, issueOf(a)), citationEn: citationEnOf(a, issueOf(a)) })), {}, {}, '疫情報導文章（全文 sections、作者與單位、頁碼、圖表說明、引用格式；issue 為所屬卷期）');
   put('v1/labtests.json', [...published(c.labtests)].sort((a, b) => a.id.localeCompare(b.id)).map((l) => ({ ...strip(l), master: noFile(site.diseaseMasterById.get(l.disease)) ?? null })), {}, {}, '檢驗項目（疾病 × 檢體 × 容器 × 保存運送 × 時限；含與通報時限一致性）');
   put('v1/research.json', [...published(c.research)].sort((a, b) => (b.year ?? 0) - (a.year ?? 0) || a.id.localeCompare(b.id)).map(strip), {}, {}, '研究計畫（年度、狀態、成果報告、資料集）');
   const notices = published(c.news).filter((n) => NOTICE_TYPES.has(n.newsType))
