@@ -4,7 +4,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   emptyState, stateFromJob, buildJob, problemsOf, rowProblems, amendmentFor, cancelAmendment, amendmentsSorted, exportFilename, parseAttachments, attachmentsText,
-  stripBuild, jobStageOf,
+  stripBuild, jobStageOf, suggestedUnpublishAt,
 } from '../src/client/admin/jobs-edit-core.js';
 import { jobPiiErrors } from '../src/client/careers-rules.js';
 import { validateSite } from '../scripts/lib/validate.mjs';
@@ -120,28 +120,36 @@ test('problemsOf：必填缺漏、日期先後、slug 格式與重複、取消�
   assert.ok(has({ ...ok, amendments: [{ date: TODAY, kind: 'correction', text: '更正 A123456789 的報名資料' }] }, /異動說明.*含身分證字號樣式/));
 });
 
-test('個資檢核：表單與 CI 用同一份 jobPiiErrors；未通過的列逐條回報原因；正取超過名額擋下', () => {
+test('個資檢核：表單與 CI 用同一份 jobPiiErrors／jobResultProblems；姓名欄一律不輸出；未通過的列逐條回報原因；正取超過名額擋下', () => {
   const st = filledState({
     positions: '1', hasResult: true,
-    result: { publishedAt: '2026-10-20', refNo: '', note: '', admitted: [{ seq: '1', candidateNo: 'A123456789', nameMasked: '王小明' }, { seq: '2', candidateNo: '1151001-002', nameMasked: '林○' }], waitlist: [{ rank: '1', candidateNo: '1151001-003', nameMasked: '陳○華', validUntil: '2027-04-20' }] },
+    // 第三十輪：舊草稿可能還有 nameMasked ⇒ buildJob 一律丟掉，不會匯出
+    result: { publishedAt: '2026-10-20', unpublishAt: '', externalUrl: '', refNo: '', note: '', admitted: [{ seq: '1', candidateNo: 'A123456789', nameMasked: '王小明' }, { seq: '2', candidateNo: '1151001-002' }], waitlist: [{ rank: '1', candidateNo: '1151001-003', validUntil: '2027-04-20' }] },
     waitlistUpdates: [{ date: '2026-11-01', candidateNo: '1151001-003', nameMasked: '陳大華', note: '' }],
   });
   const j = buildJob(st, { today: TODAY });
-  assert.deepEqual(j.result.admitted[0], { seq: 1, candidateNo: 'A123456789', nameMasked: '王小明' });
+  assert.deepEqual(j.result.admitted[0], { seq: 1, candidateNo: 'A123456789' });
+  assert.ok(!/nameMasked|王小明|陳大華/.test(JSON.stringify(j)), '匯出的 JSON 不含姓名');
   const pii = jobPiiErrors(j);
   const p = problemsOf(j, TODAY, []);
   for (const e of pii) assert.ok(p.includes(e), `problemsOf 應包含 CI 的錯誤：${e}`);
   assert.ok(p.some((x) => /正取 2 名超過名額 1 名/.test(x)));
   assert.ok(p.some((x) => /result\.admitted\[0\]\.candidateNo/.test(x)));
-  assert.ok(p.some((x) => /waitlistUpdates\[0\]\.nameMasked/.test(x)));
+  assert.ok(p.some((x) => /unpublishAt（下架日）必填/.test(x)), '沒有下架日擋下');
   const rows = rowProblems(j);
-  assert.equal(rows.admitted[0].length, 3, rows.admitted[0].join('\n')); // 沒有遮罩字、疑似完整姓名、編號像身分證
-  assert.deepEqual(rows.admitted[1], []); assert.deepEqual(rows.waitlist[0], []);
-  assert.ok(rows.updates[0].some((m) => /陳大華/.test(m)));
-  // 修好後全過
-  const fixed = buildJob({ ...st, positions: '2', result: { ...st.result, admitted: [{ seq: '1', candidateNo: '1151001-001', nameMasked: '王○明' }, st.result.admitted[1]] }, waitlistUpdates: [{ ...st.waitlistUpdates[0], nameMasked: '陳○華' }] }, { today: TODAY });
+  assert.equal(rows.admitted[0].length, 1, rows.admitted[0].join('\n')); // 編號像身分證
+  assert.deepEqual(rows.admitted[1], []); assert.deepEqual(rows.waitlist[0], []); assert.deepEqual(rows.updates[0], []);
+  // 修好後全過（下架日用建議值：公告日 + 3 個月與備取有效期隔天取晚者）
+  assert.equal(suggestedUnpublishAt(j.result), '2027-04-21');
+  const fixed = buildJob({ ...st, positions: '2', result: { ...st.result, unpublishAt: suggestedUnpublishAt(j.result), admitted: [{ seq: '1', candidateNo: '1151001-001' }, st.result.admitted[1]] } }, { today: TODAY });
   assert.deepEqual(problemsOf(fixed, TODAY, []), []);
   assert.equal(jobStageOf(fixed, TODAY), 'result');
+  // externalUrl（名單在人事系統）：不輸出 admitted；同時有名單 ⇒ 擇一錯誤
+  const ext = buildJob({ ...st, positions: '2', result: { publishedAt: '2026-10-20', unpublishAt: '2027-01-20', externalUrl: 'https://hr.cdc.gov.tw/results/115-001', refNo: '', note: '', admitted: [], waitlist: [] }, waitlistUpdates: [] }, { today: TODAY });
+  assert.equal(ext.result.externalUrl, 'https://hr.cdc.gov.tw/results/115-001'); assert.ok(!('admitted' in ext.result));
+  assert.deepEqual(problemsOf(ext, TODAY, []), []);
+  const both = buildJob({ ...st, positions: '2', result: { ...ext.result, admitted: [{ seq: '1', candidateNo: '1151001-001' }], waitlist: [] }, waitlistUpdates: [] }, { today: TODAY });
+  assert.ok(problemsOf(both, TODAY, []).some((x) => /externalUrl.*擇一/.test(x)));
 });
 
 // ── 匯出 JSON 通過 schema 與跨檔檢查 ──
@@ -165,7 +173,7 @@ test('匯出的 JSON（新增、展延、取消、公布結果）加進 site 後
   assert.deepEqual(problemsOf(cancelled, TODAY, []), []);
   s = fresh(); s.all = s.all.filter((x) => x.id !== base.id); s.collections.jobs = s.collections.jobs.filter((x) => x.id !== base.id); s.byId.delete(base.id); addItem(s, cancelled);
   assert.deepEqual(errsOf(s, base.id), []);
-  const resulted = buildJob({ ...st, hasResult: true, result: { publishedAt: '2026-10-30', refNo: '疾管人字第 2 號', note: '請於 11 月 5 日前報到。', admitted: [{ seq: '1', candidateNo: '1150928-004', nameMasked: '黃○婷' }], waitlist: [{ rank: '1', candidateNo: '1150928-009', nameMasked: '李○', validUntil: '2027-04-30' }] } }, { today: TODAY, base });
+  const resulted = buildJob({ ...st, hasResult: true, result: { publishedAt: '2026-10-30', unpublishAt: '2027-05-01', refNo: '疾管人字第 2 號', note: '請於 11 月 5 日前報到。', admitted: [{ seq: '1', candidateNo: '1150928-004' }], waitlist: [{ rank: '1', candidateNo: '1150928-009', validUntil: '2027-04-30' }] } }, { today: TODAY, base });
   s = fresh(); s.all = s.all.filter((x) => x.id !== base.id); s.collections.jobs = s.collections.jobs.filter((x) => x.id !== base.id); s.byId.delete(base.id); addItem(s, resulted);
   assert.deepEqual(errsOf(s, base.id), []);
   // 反例：schema 擋下錯的 amendments kind

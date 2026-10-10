@@ -39,6 +39,10 @@
 //      （today > resultPlannedAt + 7 且無 result，owner 人事室、cc 用人單位，medium）、job-waitlist-expiring（備取 validUntil 14 日內，low）、
 //      job-apply-url-dead（applyUrl 外部連結檢查失敗，取代 link-broken）。甄選結果個資閘門在 validate（建置失敗）；result／waitlistUpdates
 //      不進答案索引（index-builder）。
+//      第三十輪（#55，ARCHITECTURE 35）：result.unpublishAt（下架日）起 withdrawJobResult() 把名單（admitted／waitlist／waitlistUpdates、
+//      note、attachments、externalUrl）從記憶體中的內容物件拿掉——後面所有消費者（頁面、.md、API、RSS、JSON-LD、搜尋、答案索引）
+//      拿到的都是「沒有名單」的物件，不必各自記得過濾。待辦 job-result-unpublish：下架前 14 日（low）提醒；下架後 JSON 仍有名單（medium）
+//      提醒人事室把名單從 content/jobs/ 刪除（Git 歷史仍保留，所以正式站改用 result.externalUrl）。
 //  R19 檔案資產（第八輪，ARCHITECTURE 16.1）：建置失敗的檢查在 scripts/lib/assets.mjs（validateAssets）；這裡只產生待辦：
 //      attachment-no-accessible-version（medium）：附件 PDF 的 machineReadable 不是 true 且沒有 accessibleAlt（.md／.docx／.odt）；
 //      image-license-missing（medium）：圖片授權待確認——非本署素材（license ≠ OGDL-1.0）缺 source，或 license 不在開放授權清單
@@ -63,7 +67,7 @@
 import { createHash } from 'node:crypto';
 import { addMonths, daysBetween } from './render.mjs';
 import { jobPiiErrors } from './validate.mjs';
-import { jobStageOf, tenderStageOf } from '../../src/client/careers-rules.js';
+import { jobStageOf, tenderStageOf, resultTakenDown, resultHasList, RESULT_UNPUBLISH_NOTICE_DAYS } from '../../src/client/careers-rules.js';
 import { setAssetRegistry } from './markdown.mjs';
 import { articlePath } from '../../src/client/bulletin-rules.js';
 import { assetRegistryOf, assetUrl, extOf, imageLicenseProblems, needsAccessibleVersion } from './assets.mjs';
@@ -117,6 +121,7 @@ export const TODO_KIND_LABELS = {
   'job-result-overdue': '甄選結果逾期未公告',
   'job-waitlist-expiring': '備取有效期將屆',
   'job-apply-url-dead': '報名連結失效',
+  'job-result-unpublish': '甄選結果下架',
   'tender-award-overdue': '決標逾期未公告',
   'attachment-no-accessible-version': 'PDF 附件缺可及性版本',
   'image-license-missing': '圖片授權或來源待確認',
@@ -415,7 +420,11 @@ export function applyGovernance(site) {
       if (gov.ended && published) gov.annotations.push({ kind: 'ended', level: 'info', text: `本專區已於 ${item.endAt} 結束，保留供查閱。`, href: null, path: null, endAt: item.endAt });
     }
     // R17／R18 招募職缺與採購公告
-    if (item.type === 'job') Object.assign(gov, jobGov(item, today, published));
+    if (item.type === 'job') {
+      // 第三十輪：先依下架日拿掉名單，再推導 gov（之後所有輸出都看不到名單）
+      const withdrawn = withdrawJobResult(item, today);
+      Object.assign(gov, jobGov(item, today, published), { resultListInSource: withdrawn.listInSource });
+    }
     if (item.type === 'tender') Object.assign(gov, tenderGov(item, today, published));
     // 宣導 Banner 檔期
     if (item.type === 'banner') {
@@ -732,7 +741,18 @@ export function applyGovernance(site) {
     if (g.resultOverdue) {
       addTodo({ id: `job-result-overdue:${job.id}`, kind: 'job-result-overdue', item: job, owner: 'unit.personnel', cc: [job.hiringUnit].filter(Boolean), ccNames: [job.hiringUnit].filter(Boolean).map(unitName),
         dueAt: g.resultDueAt, severity: 'medium', stage: g.jobStage, resultPlannedAt: job.resultPlannedAt,
-        text: `職缺「${job.title}」預定 ${job.resultPlannedAt} 公告甄選結果，已逾 ${JOB_RESULT_GRACE_DAYS} 日仍未上架：請人事室會同${unitName(job.hiringUnit)}公告結果（只公布報名編號與遮罩姓名），或更新預定日` });
+        text: `職缺「${job.title}」預定 ${job.resultPlannedAt} 公告甄選結果，已逾 ${JOB_RESULT_GRACE_DAYS} 日仍未上架：請人事室會同${unitName(job.hiringUnit)}公告結果（只公布報名編號，不公布姓名；建議由人事系統提供結果頁，JSON 只填 externalUrl），或更新預定日` });
+    }
+    // 第三十輪（#55）：下架前提醒（low）；已下架但 content/ 仍留名單（medium）
+    if (g.resultUnpublishAt && !g.resultTakenDown && g.daysToUnpublish != null && g.daysToUnpublish <= RESULT_UNPUBLISH_NOTICE_DAYS) {
+      addTodo({ id: `job-result-unpublish:${job.id}`, kind: 'job-result-unpublish', item: job, owner: 'unit.personnel', cc: [job.hiringUnit].filter(Boolean), ccNames: [job.hiringUnit].filter(Boolean).map(unitName),
+        dueAt: g.resultUnpublishAt, severity: 'low', phase: 'upcoming', daysLeft: g.daysToUnpublish,
+        text: `職缺「${job.title}」的甄選結果將於 ${g.resultUnpublishAt} 下架（剩 ${g.daysToUnpublish} 日）：當天起網站、API、RSS 與搜尋自動停止顯示名單，不必手動操作；仍需公開（例如還在遞補）請改 result.unpublishAt（最長公告後 12 個月）。下架後請把名單從 content/jobs/ 的檔案刪除。` });
+    }
+    if (g.resultTakenDown && g.resultListInSource) {
+      addTodo({ id: `job-result-unpublish:${job.id}`, kind: 'job-result-unpublish', item: job, owner: 'unit.personnel', cc: [], ccNames: [],
+        dueAt: addDays(g.resultUnpublishAt, RESULT_UNPUBLISH_NOTICE_DAYS), severity: 'medium', phase: 'remove-from-source',
+        text: `職缺「${job.title}」的甄選結果已於 ${g.resultUnpublishAt} 下架，網站已不輸出名單，但 ${job.__file ?? 'content/jobs/'} 仍留著名單：請刪除 result.admitted／waitlist 與 waitlistUpdates（只留 publishedAt、unpublishAt、refNo）。注意 Git 歷史仍保留舊版，所以下一次請改用 result.externalUrl（名單留在人事系統）。` });
     }
     if (g.waitlistExpiring?.length) {
       const first = g.waitlistExpiring[0];
@@ -935,6 +955,24 @@ function stageStats(list, stageKey, tabKey, stageLabels, tabLabels) {
   return { total: pub.length, byStage, byTab };
 }
 
+/**
+ * 第三十輪（#55）：下架日（result.unpublishAt）起把名單從「記憶體中的」職缺物件拿掉（不改 content/ 檔案）。
+ * 只留 publishedAt、unpublishAt、refNo（頁面要寫「甄選結果已於 YYYY-MM-DD 下架」）；名單、遞補、報到須知、結果附件與 externalUrl 一律移除。
+ * 為什麼在治理這一步做、而不是讓每個模板自己判斷：頁面、.md 機讀版、v1/jobs.json、RSS、JSON-LD、Pagefind、答案索引都讀同一個物件，
+ * 在源頭拿掉就不會有哪個出口忘了過濾。回傳 { withdrawn, listInSource }（listInSource＝content/ 檔案裡還留著名單 ⇒ 待辦提醒人事室刪除）。
+ * 冪等：同一物件再跑一次結果相同（標記存在不可列舉的 __resultWithdrawn）。
+ */
+export function withdrawJobResult(job, today) {
+  if (job.__resultWithdrawn) return job.__resultWithdrawn;
+  if (!job.result || !resultTakenDown(job, today)) return { withdrawn: false, listInSource: false };
+  const info = { withdrawn: true, listInSource: resultHasList(job) };
+  const { publishedAt, unpublishAt, refNo } = job.result;
+  job.result = { publishedAt, unpublishAt, ...(refNo ? { refNo } : {}) };
+  delete job.waitlistUpdates;
+  Object.defineProperty(job, '__resultWithdrawn', { value: info, enumerable: false });
+  return info;
+}
+
 /** R17：職缺的 gov 欄位（Object.assign 到 item.gov） */
 export function jobGov(job, today, published = job.status === 'published') {
   const stage = jobStageOf(job, today);
@@ -953,6 +991,10 @@ export function jobGov(job, today, published = job.status === 'published') {
     .sort((a, b) => a.validUntil.localeCompare(b.validUntil) || a.rank - b.rank) : [];
   const pii = job.result || job.waitlistUpdates?.length ? jobPiiErrors(job) : [];
   const admitted = job.result?.admitted?.length ?? 0;
+  // 第三十輪：下架日、人事系統外連
+  const unpublishAt = job.result?.unpublishAt ?? null;
+  const takenDown = !!job.result && resultTakenDown(job, today);
+  const daysToUnpublish = unpublishAt ? daysBetween(today, unpublishAt) : null;
   // 時間軸（模板 /careers/{slug}/ 用）：done＝已發生；current＝目前所在
   const timeline = [
     { key: 'announced', label: '公告', date: job.publishedAt },
@@ -972,14 +1014,21 @@ export function jobGov(job, today, published = job.status === 'published') {
     daysToOpen: stage === 'upcoming' && job.applyStart ? daysBetween(today, job.applyStart) : null,
     applyOnSite, applyHref: job.applyUrl ?? (applyOnSite ? jobApplyPath(job) : null), applyExternal: !!job.applyUrl,
     resultDueAt, resultOverdue, waitlistExpiring,
-    resultCheck: job.result ? { masked: !pii.some((e) => e.startsWith('個資閘門')), errors: pii, admitted, positions: job.positions, withinPositions: admitted <= (job.positions ?? Infinity),
+    resultUnpublishAt: unpublishAt, resultTakenDown: takenDown, daysToUnpublish: takenDown ? null : daysToUnpublish,
+    resultExternal: !!job.result?.externalUrl, resultExternalUrl: job.result?.externalUrl ?? null,
+    resultCheck: job.result ? { noNames: !pii.some((e) => e.startsWith('個資閘門')), errors: pii, admitted, positions: job.positions, withinPositions: admitted <= (job.positions ?? Infinity),
       waitlist: job.result.waitlist?.length ?? 0, waitlistValid: (job.result.waitlist ?? []).every((w) => !w.validUntil || w.validUntil >= job.result.publishedAt), updates: job.waitlistUpdates?.length ?? 0 } : null,
     timeline,
   };
   out.annotations = [];
   if (published) {
     if (stage === 'closed' || stage === 'screening') out.annotations.push({ kind: 'closed', level: 'info', text: `本職缺已於 ${job.deadlineAt} 截止報名${job.result ? '' : job.resultPlannedAt ? `，甄選結果預計 ${job.resultPlannedAt} 公布` : ''}。`, href: null, path: null, deadlineAt: job.deadlineAt });
-    if (stage === 'result') out.annotations.push({ kind: 'job-result', level: 'info', text: `甄選結果已於 ${job.result.publishedAt} 公告；名單只公布報名編號與遮罩姓名。`, href: null, path: `${pathOf(job)}#result` });
+    if (stage === 'result') {
+      const text = takenDown ? `甄選結果已於 ${job.result.publishedAt} 公告，並已於 ${unpublishAt} 下架；查詢請洽人事室。`
+        : job.result.externalUrl ? `甄選結果已於 ${job.result.publishedAt} 公告，名單由人事系統提供（本站不存名單），請以報名編號核對。`
+          : `甄選結果已於 ${job.result.publishedAt} 公告；名單只公布報名編號（不公布姓名），將於 ${unpublishAt} 下架。`;
+      out.annotations.push({ kind: 'job-result', level: 'info', text, href: null, path: `${pathOf(job)}#result` });
+    }
     if (stage === 'cancelled') out.annotations.push({ kind: 'cancelled', level: 'info', text: `本職缺已停止甄選${job.manualStatusNote ? `（${job.manualStatusNote}）` : ''}。`, href: null, path: null });
     if (stage === 'filled') out.annotations.push({ kind: 'filled', level: 'info', text: `本職缺已補實${job.manualStatusNote ? `（${job.manualStatusNote}）` : ''}。`, href: null, path: null });
   }

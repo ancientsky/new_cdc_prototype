@@ -415,7 +415,7 @@ export function emitApi(fullSite, write) {
   // 備取有效期已過者不輸出（與頁面一致）
   for (const j of jobs) if (j.result?.waitlist) j.result = { ...j.result, waitlist: j.result.waitlist.filter((w) => !w.validUntil || String(w.validUntil) >= String(site.today)) };
   put('v1/jobs.json', jobs, { stageLabels: JOB_STAGE_LABELS, tabLabels: JOB_TAB_LABELS, byStage: site.gov.jobs?.byStage ?? {}, byTab: site.gov.jobs?.byTab ?? {}, owner: 'unit.personnel',
-    privacy: '甄選結果（result）只公布序號、報名編號與遮罩姓名；建置時個資閘門檢查，未遮罩即建置失敗。result 與 waitlistUpdates 不進 AI 答案索引。' }, {},
+    privacy: '甄選結果（result）只公布序號與報名編號，不公布姓名（第三十輪起連遮罩姓名都不公布，建置時個資閘門檢查，有姓名欄即建置失敗）；result.unpublishAt（下架日）起名單不再輸出（result 只剩 publishedAt／unpublishAt／refNo）；result.externalUrl＝名單在人事系統，本站不存名單。result 與 waitlistUpdates 不進 AI 答案索引。' }, {},
     '人才招募職缺（stage：upcoming／open／closed／screening／result／filled／cancelled；tab：open／upcoming／review／result／history）');
   const TENDER_TAB_ORDER = Object.keys(TENDER_TAB_LABELS);
   const tenders = published(c.tenders)

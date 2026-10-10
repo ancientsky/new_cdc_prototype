@@ -109,25 +109,23 @@
   ],
   "result": {
     "publishedAt": "2026-09-22",
+    "unpublishAt": "2026-12-22",
     "refNo": "疾管人字第 1150100236 號",
     "admitted": [
       {
         "seq": 1,
-        "candidateNo": "1150810-006",
-        "nameMasked": "李○翰"
+        "candidateNo": "1150810-006"
       }
     ],
     "waitlist": [
       {
         "rank": 1,
         "candidateNo": "1150810-002",
-        "nameMasked": "蔡○廷",
         "validUntil": "2026-12-21"
       },
       {
         "rank": 2,
         "candidateNo": "1150810-013",
-        "nameMasked": "鄭○雯",
         "validUntil": "2026-12-21"
       }
     ],
@@ -137,7 +135,6 @@
     {
       "date": "2026-09-30",
       "candidateNo": "1150810-002",
-      "nameMasked": "蔡○廷",
       "note": "正取人員放棄錄取，由備取第 1 名遞補；請於 2026 年 10 月 7 日前至人事室報到。"
     }
   ],

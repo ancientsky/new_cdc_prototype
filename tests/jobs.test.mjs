@@ -3,7 +3,7 @@
 // 甄選結果個資閘門（建置失敗）、result 不進答案索引、redirects moved、v1／feeds／sitemap／JSON-LD 輸出、答案引擎 careers／procurement、評估集。
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { validateSite, jobPiiErrors, maskedNameProblems, candidateNoProblems } from '../scripts/lib/validate.mjs';
+import { validateSite, jobPiiErrors, nameFieldProblems, candidateNoProblems } from '../scripts/lib/validate.mjs';
 import { jobStageOf, tenderStageOf, jobGov, pathOf, textOf, TODO_KIND_LABELS, JOB_STAGE_LABELS, TENDER_STAGE_LABELS } from '../scripts/lib/governance.mjs';
 import { buildSearchIndex, JOB_INDEX_EXCLUDED_FIELDS } from '../scripts/lib/index-builder.mjs';
 import { emitApi, buildRedirects, serverRedirects, buildLegacyMap } from '../scripts/lib/emit-api.mjs';
@@ -47,6 +47,7 @@ function tender(over = {}) {
     contact: '秘書室（02）2395-9825 轉分機（示意）', ...over,
   };
 }
+// 第三十輪：名單列只有報名編號（不再有姓名）
 const ALL_NAMES = jobs.flatMap((j) => [...(j.result?.admitted ?? []), ...(j.result?.waitlist ?? []), ...(j.waitlistUpdates ?? [])]);
 
 // ── schema 與內容 ──
@@ -87,7 +88,7 @@ test('jobStage 依 today 推導：upcoming → open（含截止當天）→ clos
   assert.equal(jobStageOf(j, '2026-09-30'), 'open', '截止當天仍可報名');
   assert.equal(jobStageOf(j, '2026-10-01'), 'closed');
   assert.equal(jobStageOf(j, '2026-10-05'), 'screening', 'examPlan 日期已到');
-  const r = job({ result: { publishedAt: '2026-10-20', admitted: [{ seq: 1, candidateNo: '1150901-001', nameMasked: '王○明' }] } });
+  const r = job({ result: { publishedAt: '2026-10-20', unpublishAt: '2027-01-20', admitted: [{ seq: 1, candidateNo: '1150901-001' }] } });
   assert.equal(jobStageOf(r, '2026-10-21'), 'result');
   assert.equal(jobGov(r, '2027-01-18').archivedStage, false, '第 90 天仍在錄取結果');
   assert.equal(jobGov(r, '2027-01-19').archivedStage, true);
@@ -142,9 +143,9 @@ test('待辦：job-result-overdue（結果預定日 + 7 天仍無 result，owner
 });
 
 test('待辦：job-waitlist-expiring（備取 validUntil 14 天內，low；已遞補者不算）', () => {
-  const res = { publishedAt: '2026-10-01', admitted: [{ seq: 1, candidateNo: '1150901-001', nameMasked: '王○明' }],
-    waitlist: [{ rank: 1, candidateNo: '1150901-002', nameMasked: '林○', validUntil: '2026-10-20' }, { rank: 2, candidateNo: '1150901-003', nameMasked: '陳○華', validUntil: '2026-10-20' }, { rank: 3, candidateNo: '1150901-004', nameMasked: '張○', validUntil: '2026-12-31' }] };
-  const s = govern('2026-10-10', (x) => addItem(x, job({ slug: 'wl', result: res, waitlistUpdates: [{ date: '2026-10-05', candidateNo: '1150901-002', nameMasked: '林○', note: '遞補' }] })));
+  const res = { publishedAt: '2026-10-01', unpublishAt: '2027-01-01', admitted: [{ seq: 1, candidateNo: '1150901-001' }],
+    waitlist: [{ rank: 1, candidateNo: '1150901-002', validUntil: '2026-10-20' }, { rank: 2, candidateNo: '1150901-003', validUntil: '2026-10-20' }, { rank: 3, candidateNo: '1150901-004', validUntil: '2026-12-31' }] };
+  const s = govern('2026-10-10', (x) => addItem(x, job({ slug: 'wl', result: res, waitlistUpdates: [{ date: '2026-10-05', candidateNo: '1150901-002', note: '遞補' }] })));
   const t = todosOf(s, 'job-waitlist-expiring').find((x) => x.itemId === 'job.2026-09-01-wl');
   assert.ok(t); assert.equal(t.severity, 'low'); assert.deepEqual(t.ranks, [2]); assert.equal(t.dueAt, '2026-10-20');
   assert.ok(!/[○◯〇]/.test(t.text), '待辦文字不放姓名');
@@ -176,41 +177,47 @@ test('待辦：tender-award-overdue（開標 + 30 天仍無決標且非流標／
 
 // ── 個資閘門 ──
 function loadedFresh() { const s = loadSite(config); s.today = TODAY; return s; }
-test('個資閘門：未遮罩姓名、完整姓名樣式、身分證字號樣式的報名編號 ⇒ validate 錯誤（建置失敗），訊息清楚', () => {
-  assert.deepEqual(maskedNameProblems('王○明'), []); assert.deepEqual(maskedNameProblems('林○'), []); assert.deepEqual(maskedNameProblems('歐陽○明'), []); assert.deepEqual(maskedNameProblems('李＊華'), []);
-  assert.ok(maskedNameProblems('王小明').length === 2, '沒遮罩＋3 字完整姓名');
-  assert.ok(maskedNameProblems('王小明○').some((m) => m.includes('連續中文字')));
+test('個資閘門（第三十輪）：結果列有任何姓名欄（含遮罩姓名）、身分證字號樣式的報名編號、說明寫了姓名 ⇒ validate 錯誤（建置失敗），訊息清楚', () => {
+  assert.deepEqual(nameFieldProblems({ seq: 1, candidateNo: '1150924-012' }, 'admitted'), []);
+  assert.deepEqual(nameFieldProblems({ rank: 1, candidateNo: '1150924-012', validUntil: '2027-01-01' }, 'waitlist'), []);
+  assert.ok(nameFieldProblems({ seq: 1, candidateNo: 'x', nameMasked: '王○明' }, 'admitted')[0].includes('不公布姓名'), '遮罩姓名也擋');
+  for (const k of ['name', 'fullName', '姓名']) assert.ok(nameFieldProblems({ seq: 1, candidateNo: 'x', [k]: '王小明' }, 'admitted').length, k);
   assert.deepEqual(candidateNoProblems('1150924-012'), []);
   assert.ok(candidateNoProblems('A123456789')[0].includes('疑似身分證字號'));
   assert.ok(!candidateNoProblems('A123456789')[0].includes('3456789'), '錯誤訊息本身不印出完整號碼');
   const s = loadedFresh();
-  addItem(s, job({ slug: 'pii', result: { publishedAt: '2026-10-20', admitted: [{ seq: 1, candidateNo: 'A123456789', nameMasked: '王小明' }], waitlist: [{ rank: 1, candidateNo: '1150901-009', nameMasked: '陳大文' }] },
+  addItem(s, job({ slug: 'pii', result: { publishedAt: '2026-10-20', unpublishAt: '2027-01-20', admitted: [{ seq: 1, candidateNo: 'A123456789', nameMasked: '王小明' }], waitlist: [{ rank: 1, candidateNo: '1150901-009', nameMasked: '陳大文' }] },
     waitlistUpdates: [{ date: '2026-10-25', candidateNo: 'B223456789', nameMasked: '林○' }] }));
   const errs = validateSite(s).filter((e) => e.includes('pii'));
   assert.ok(errs.length >= 4, errs.join('\n'));
-  assert.ok(errs.some((e) => e.includes('個資閘門') && e.includes('result.admitted[0].nameMasked') && e.includes('王小明')));
+  assert.ok(errs.some((e) => e.includes('個資閘門') && e.includes('result.admitted[0]') && e.includes('nameMasked') && e.includes('不公布姓名')));
+  assert.ok(!errs.some((e) => e.includes('王小明')), '錯誤訊息不回印姓名');
   assert.ok(errs.some((e) => e.includes('result.admitted[0].candidateNo') && e.includes('身分證字號')));
-  assert.ok(errs.some((e) => e.includes('result.waitlist[0].nameMasked')));
+  assert.ok(errs.some((e) => e.includes('result.waitlist[0]') && e.includes('nameMasked')));
   assert.ok(errs.some((e) => e.includes('waitlistUpdates[0].candidateNo')));
-  // 正取超過名額、note 含身分證字號也擋
-  const over = jobPiiErrors(job({ positions: 1, result: { publishedAt: '2026-10-20', note: '請 A123456789 報到', admitted: [{ seq: 1, candidateNo: '1150901-001', nameMasked: '王○明' }, { seq: 2, candidateNo: '1150901-002', nameMasked: '林○' }] } }));
-  assert.ok(over.some((e) => e.includes('超過名額'))); assert.ok(over.some((e) => e.includes('result.note')));
-  // 實際內容全部通過，且結果檢核摘要給後台
-  for (const j of jobs.filter((x) => x.result)) { assert.deepEqual(jobPiiErrors(j), []); assert.equal(j.gov.resultCheck.masked, true); assert.equal(j.gov.resultCheck.withinPositions, true); }
+  assert.ok(errs.some((e) => /\/result\/admitted\/0 .*(property name|additional properties)/.test(e)), 'schema 本身也擋 nameMasked');
+  // 正取超過名額、note 含身分證字號或遮罩姓名也擋
+  const over = jobPiiErrors(job({ positions: 1, result: { publishedAt: '2026-10-20', unpublishAt: '2027-01-20', note: '請 A123456789 與王○明報到', admitted: [{ seq: 1, candidateNo: '1150901-001' }, { seq: 2, candidateNo: '1150901-002' }] } }));
+  assert.ok(over.some((e) => e.includes('超過名額'))); assert.ok(over.some((e) => e.includes('result.note') && e.includes('身分證')));
+  assert.ok(over.some((e) => e.includes('result.note') && e.includes('遮罩姓名') && !e.includes('王○明')));
+  // 實際內容全部通過，且結果檢核摘要給後台；實際內容沒有任何姓名欄
+  for (const j of jobs.filter((x) => x.result)) { assert.deepEqual(jobPiiErrors(j), []); assert.equal(j.gov.resultCheck.noNames, true); assert.equal(j.gov.resultCheck.withinPositions, true); }
+  assert.ok(!/nameMasked/.test(JSON.stringify(jobs)), 'content/jobs 沒有 nameMasked');
 });
 
 // ── AI 白名單：名單不進索引 ──
-test('result／waitlistUpdates 不進答案索引（民眾與專業）：任何 chunk 都沒有遮罩姓名或報名編號；textOf 也不含', () => {
+test('result／waitlistUpdates 不進答案索引（民眾與專業）：任何 chunk 都沒有報名編號；textOf 也不含', () => {
   assert.deepEqual(JOB_INDEX_EXCLUDED_FIELDS, ['result', 'waitlistUpdates']);
   const chunks = [...site.searchIndex.public, ...site.searchIndex.pro].filter((c) => c.type === 'job');
   assert.ok(chunks.length >= jobs.length, '職缺有進索引（白名單）');
   const blob = JSON.stringify(chunks);
   assert.ok(ALL_NAMES.length > 0);
-  for (const r of ALL_NAMES) { assert.ok(!blob.includes(r.nameMasked), r.nameMasked); assert.ok(!blob.includes(r.candidateNo), r.candidateNo); }
+  for (const r of ALL_NAMES) assert.ok(!blob.includes(r.candidateNo), r.candidateNo);
+  assert.ok(!/[○◯〇]/.test(blob), '索引沒有遮罩姓名');
   for (const c of chunks) for (const f of JOB_INDEX_EXCLUDED_FIELDS) assert.ok(!(f in c), `${c.id} 有 ${f}`);
-  for (const j of jobs) { const t = textOf(j); for (const r of [...(j.result?.admitted ?? []), ...(j.result?.waitlist ?? [])]) assert.ok(!t.includes(r.nameMasked)); }
+  for (const j of jobs) { const t = textOf(j); for (const r of [...(j.result?.admitted ?? []), ...(j.result?.waitlist ?? [])]) assert.ok(!t.includes(r.candidateNo)); }
   const sa = site.searchIndex.public.find((c) => c.id === 'job.2026-08-10-system-analyst#overview');
-  assert.ok(sa.sentences.some((x) => x.includes('只公布報名編號與遮罩姓名')));
+  assert.ok(sa.sentences.some((x) => x.includes('只公布報名編號、不公布姓名')));
   assert.equal(sa.resultUrl, '/careers/system-analyst/#result');
   assert.ok(site.searchIndex.public.some((c) => c.type === 'tender'), '採購公告進民眾索引');
 });
@@ -249,7 +256,7 @@ test('v1/jobs.json、v1/tenders.json：含 stage／stageLabel／tab，列入 ind
   assert.equal(j.data.length, jobs.length);
   for (const x of j.data) { assert.ok(JOB_STAGE_LABELS[x.stage]); assert.equal(x.stageLabel, JOB_STAGE_LABELS[x.stage]); assert.ok(x.tab); assert.ok(x.governance.jobStage); }
   assert.equal(j.data[0].tab, 'open', '開放中排最前');
-  assert.ok(j.meta.privacy.includes('遮罩姓名'));
+  assert.ok(j.meta.privacy.includes('不公布姓名') && j.meta.privacy.includes('unpublishAt'));
   const t = jsonOut('v1/tenders.json');
   assert.equal(t.data.length, tenders.length);
   for (const x of t.data) { assert.ok(TENDER_STAGE_LABELS[x.stage]); assert.equal(x.stageLabel, TENDER_STAGE_LABELS[x.stage]); }
@@ -268,7 +275,7 @@ test('feeds：careers.xml（職缺＋甄選結果＋遞補各一筆、不含名�
   assert.ok(c.includes('<guid isPermaLink="false">job.2026-08-10-system-analyst</guid>'));
   assert.ok(c.includes('<guid isPermaLink="false">job.2026-08-10-system-analyst#result</guid>'));
   assert.ok(c.includes('job.2026-08-10-system-analyst#waitlist-1'));
-  for (const r of ALL_NAMES) { assert.ok(!c.includes(r.nameMasked), r.nameMasked); assert.ok(!c.includes(r.candidateNo)); }
+  for (const r of ALL_NAMES) assert.ok(!c.includes(r.candidateNo)); assert.ok(!/[○◯〇]/.test(c), 'RSS 沒有遮罩姓名');
   const p = feeds['feeds/procurement.xml'];
   assert.ok(p.includes('tender.2026-02-20-flu-vaccine-115#award')); assert.ok(p.includes('tender.2026-08-18-cold-chain-monitor#failed'));
   assert.ok(p.includes('<guid isPermaLink="false">tender.2026-09-15-antiviral-115</guid>'));
@@ -292,7 +299,7 @@ test('JSON-LD：job → JobPosting（validThrough、employmentType、hiringOrgan
   assert.deepEqual(jp.employmentType, ['FULL_TIME', 'TEMPORARY']);
   assert.equal(jp.hiringOrganization['@type'], 'GovernmentOrganization'); assert.equal(jp.jobLocation.address.addressRegion, '臺北市');
   assert.equal(jp.totalJobOpenings, 1); assert.ok(jp.description.includes('薪資待遇')); assert.equal(jp.baseSalary, undefined);
-  assert.ok(!JSON.stringify(jp).includes('李○翰'));
+  assert.ok(!JSON.stringify(jp).includes('1150810-006'), 'JSON-LD 不含名單');
   const [open] = jsonLdFor(ctx, byId('job.2026-09-30-epidemic-physician'));
   assert.equal(open.directApply, true); assert.ok(open.potentialAction.target.endsWith('/careers/epidemic-physician/apply/'));
   const [gs] = jsonLdFor(ctx, byId('tender.2026-09-15-antiviral-115'));
@@ -316,9 +323,9 @@ test('答案引擎 careers：結構化列開放中職缺（職稱、用人單位
   const w = eng.answer('誰錄取了？');
   assert.equal(w.intent, 'careers'); assert.equal(w.careers.mode, 'admitted'); assert.equal(w.careers.privacy, true);
   const text = JSON.stringify([w.sentences, w.actions, w.careers]);
-  for (const x of ALL_NAMES) { assert.ok(!text.includes(x.nameMasked), x.nameMasked); assert.ok(!text.includes(x.candidateNo)); }
+  for (const x of ALL_NAMES) assert.ok(!text.includes(x.candidateNo)); assert.ok(!/[○◯〇]|遮罩姓名/.test(text), '答案不提姓名');
   assert.ok(w.actions.some((a) => a.href === '/careers/system-analyst/#result'));
-  assert.ok(w.sentences.every((x) => x.text.includes('遮罩姓名')));
+  assert.ok(w.sentences.every((x) => x.text.includes('報名編號')));
   assert.equal(eng.answer('錄取的人全名是什麼').refusal?.kind, 'privacy');
   // 一年後：沒有開放中職缺
   const later = engineFromSite({ ...site, today: '2027-06-01' });

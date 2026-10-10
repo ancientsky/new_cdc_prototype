@@ -1,9 +1,11 @@
 // /admin/jobs/edit/ 人才招募上架與異動：純函式（不碰 DOM），瀏覽器與測試共用。
 // 表單狀態（全部是字串或簡單陣列）→ job 物件；異動紀錄判定；發布前問題清單；匯出檔名。
 // 個資檢核直接用 ../careers-rules.js（與 CI 的 scripts/lib/validate.mjs 同一份），所以表單說「通過」，建置就一定通過。
-import { jobPiiErrors, maskedNameProblems, candidateNoProblems, jobStageOf, NATIONAL_ID_RE } from '../careers-rules.js';
+import { jobPiiErrors, jobResultProblems, candidateNoProblems, jobStageOf, defaultUnpublishAt, NATIONAL_ID_RE } from '../careers-rules.js';
 
 export { jobStageOf };
+/** 第三十輪：建議下架日（與建置同一份規則：max(公告日 + 3 個月, 最後一位備取有效期限隔天)） */
+export const suggestedUnpublishAt = (result) => defaultUnpublishAt(result);
 
 export const JOB_TYPES = ['約聘人員', '約僱人員', '聘用研究員', '公費醫師', '技工工友駐衛警', '公務人員商調', '計畫助理', '臨時人員'];
 export const EXAM_STAGES = ['書面審查', '筆試', '口試', '實作', '體能'];
@@ -44,7 +46,7 @@ export function emptyState() {
     qualifications: '', duties: '', requiredDocuments: '', applyStart: '', deadlineAt: '', applyMethod: 'online', applyUrl: '',
     examPlan: [{ stage: '書面審查', date: '', note: '' }], resultPlannedAt: '', contact: '', attachments: '',
     amendments: [], manualStatus: '', manualStatusNote: '',
-    hasResult: false, result: { publishedAt: '', refNo: '', note: '', admitted: [], waitlist: [] }, waitlistUpdates: [],
+    hasResult: false, result: { publishedAt: '', unpublishAt: '', externalUrl: '', refNo: '', note: '', admitted: [], waitlist: [] }, waitlistUpdates: [],
   };
 }
 /** 既有職缺 → 表單狀態（選到既有職缺＝帶入全部欄位） */
@@ -60,11 +62,11 @@ export function stateFromJob(job) {
     amendments: (job.amendments ?? []).map((a) => ({ ...a })), manualStatus: job.manualStatus ?? '', manualStatusNote: job.manualStatusNote ?? '',
     hasResult: !!r,
     result: {
-      publishedAt: r?.publishedAt ?? '', refNo: r?.refNo ?? '', note: r?.note ?? '',
-      admitted: (r?.admitted ?? []).map((a) => ({ seq: a.seq != null ? String(a.seq) : '', candidateNo: a.candidateNo ?? '', nameMasked: a.nameMasked ?? '' })),
-      waitlist: (r?.waitlist ?? []).map((w) => ({ rank: w.rank != null ? String(w.rank) : '', candidateNo: w.candidateNo ?? '', nameMasked: w.nameMasked ?? '', validUntil: w.validUntil ?? '' })),
+      publishedAt: r?.publishedAt ?? '', unpublishAt: r?.unpublishAt ?? '', externalUrl: r?.externalUrl ?? '', refNo: r?.refNo ?? '', note: r?.note ?? '',
+      admitted: (r?.admitted ?? []).map((a) => ({ seq: a.seq != null ? String(a.seq) : '', candidateNo: a.candidateNo ?? '' })),
+      waitlist: (r?.waitlist ?? []).map((w) => ({ rank: w.rank != null ? String(w.rank) : '', candidateNo: w.candidateNo ?? '', validUntil: w.validUntil ?? '' })),
     },
-    waitlistUpdates: (job.waitlistUpdates ?? []).map((u) => ({ date: u.date ?? '', candidateNo: u.candidateNo ?? '', nameMasked: u.nameMasked ?? '', note: u.note ?? '' })),
+    waitlistUpdates: (job.waitlistUpdates ?? []).map((u) => ({ date: u.date ?? '', candidateNo: u.candidateNo ?? '', note: u.note ?? '' })),
   };
 }
 
@@ -79,17 +81,23 @@ export function buildJob(state, { today, base = null } = {}) {
   const id = base ? old.id : jobIdOf(publishedAt, slug || '（未填）');
   const ms = s(state.manualStatus);
   const rows = (list, keys) => (list ?? []).filter((r) => keys.some((k) => s(r[k])));
+  // 第三十輪（#55）：結果列只有序號／順位、報名編號（與備取有效期）；姓名欄一律不輸出（舊草稿裡的 nameMasked 也會被丟掉）。
+  // 填了 externalUrl（名單在人事系統）而沒有任何名單列 ⇒ 不輸出 admitted。
+  const admittedRows = rows(state.result?.admitted, ['seq', 'candidateNo']);
+  const ext = s(state.result?.externalUrl);
   const result = state.hasResult ? {
     publishedAt: s(state.result?.publishedAt),
+    ...(s(state.result?.unpublishAt) ? { unpublishAt: s(state.result.unpublishAt) } : {}),
+    ...(ext ? { externalUrl: ext } : {}),
     ...(s(state.result?.refNo) ? { refNo: s(state.result.refNo) } : {}),
-    admitted: rows(state.result?.admitted, ['seq', 'candidateNo', 'nameMasked']).map((a, i) => ({ seq: intOrNull(a.seq) ?? i + 1, candidateNo: s(a.candidateNo), nameMasked: s(a.nameMasked) })),
-    ...(rows(state.result?.waitlist, ['rank', 'candidateNo', 'nameMasked']).length ? {
-      waitlist: rows(state.result.waitlist, ['rank', 'candidateNo', 'nameMasked']).map((w, i) => ({ rank: intOrNull(w.rank) ?? i + 1, candidateNo: s(w.candidateNo), nameMasked: s(w.nameMasked), ...(s(w.validUntil) ? { validUntil: s(w.validUntil) } : {}) })),
+    ...(!ext || admittedRows.length ? { admitted: admittedRows.map((a, i) => ({ seq: intOrNull(a.seq) ?? i + 1, candidateNo: s(a.candidateNo) })) } : {}),
+    ...(rows(state.result?.waitlist, ['rank', 'candidateNo']).length ? {
+      waitlist: rows(state.result.waitlist, ['rank', 'candidateNo']).map((w, i) => ({ rank: intOrNull(w.rank) ?? i + 1, candidateNo: s(w.candidateNo), ...(s(w.validUntil) ? { validUntil: s(w.validUntil) } : {}) })),
     } : {}),
     ...(s(state.result?.note) ? { note: s(state.result.note) } : {}),
     ...(old.result?.attachments ? { attachments: old.result.attachments } : {}),
   } : null;
-  const wlu = rows(state.waitlistUpdates, ['date', 'candidateNo', 'nameMasked']).map((u) => ({ date: s(u.date), candidateNo: s(u.candidateNo), nameMasked: s(u.nameMasked), ...(s(u.note) ? { note: s(u.note) } : {}) }));
+  const wlu = rows(state.waitlistUpdates, ['date', 'candidateNo']).map((u) => ({ date: s(u.date), candidateNo: s(u.candidateNo), ...(s(u.note) ? { note: s(u.note) } : {}) }));
   const attachments = parseAttachments(state.attachments).map((a) => {
     const prev = (old.attachments ?? []).find((x) => x.url === a.url);
     return prev && prev.machineReadable != null ? { ...a, machineReadable: prev.machineReadable } : a;
@@ -167,9 +175,9 @@ export function cancelAmendment(manualStatus, note, today) {
 export const amendmentsSorted = (list) => (list ?? []).map((a, i) => ({ a, i })).sort((x, y) => String(y.a.date).localeCompare(String(x.a.date)) || y.i - x.i).map((x) => x.a);
 
 /* ───────── 檢核 ───────── */
-/** 結果表每一列的個資問題（給表單把列標紅）：{ admitted: string[][], waitlist: string[][], updates: string[][] } */
+/** 結果表每一列的個資問題（給表單把列標紅）：{ admitted: string[][], waitlist: string[][], updates: string[][] }（第三十輪起只剩報名編號要檢查） */
 export function rowProblems(job) {
-  const row = (r) => [...maskedNameProblems(r?.nameMasked), ...candidateNoProblems(r?.candidateNo)];
+  const row = (r) => candidateNoProblems(r?.candidateNo);
   return {
     admitted: (job.result?.admitted ?? []).map(row),
     waitlist: (job.result?.waitlist ?? []).map(row),
@@ -213,6 +221,7 @@ export function problemsOf(job, today, existingIds = []) {
   for (const u of job.waitlistUpdates ?? []) if (!u.date) p.push(`遞補公告（${u.candidateNo || '未填編號'}）的日期未填`);
   if ((job.waitlistUpdates ?? []).length && !job.result) p.push('有遞補公告但沒有甄選結果');
   p.push(...jobPiiErrors(job));
+  p.push(...jobResultProblems(job, today)); // 第三十輪：下架日必填與上下限、externalUrl 與名單擇一
   return p;
 }
 
@@ -221,7 +230,7 @@ export function keyDates(job) {
   return [
     ['公告日', job.publishedAt], ['報名開始', job.applyStart], ['報名截止', job.deadlineAt],
     ...(job.examPlan ?? []).map((e) => [`甄試：${e.stage}`, e.date || '另行公告']),
-    ['結果預計公布', job.resultPlannedAt], ...(job.result ? [['結果公告', job.result.publishedAt]] : []),
+    ['結果預計公布', job.resultPlannedAt], ...(job.result ? [['結果公告', job.result.publishedAt], ['結果下架', job.result.unpublishAt]] : []),
   ].filter(([, v]) => v);
 }
 

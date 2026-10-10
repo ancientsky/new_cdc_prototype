@@ -16,7 +16,7 @@ const Ajv2020 = Ajv2020Module.default ?? Ajv2020Module;
 // @ts-ignore CJS interop
 const addFormats = addFormatsModule.default ?? addFormatsModule;
 import { ROOT } from './load.mjs';
-import { jobPiiErrors } from '../../src/client/careers-rules.js';
+import { jobPiiErrors, jobResultProblems } from '../../src/client/careers-rules.js';
 
 const SCHEMAS = path.join(ROOT, 'schemas');
 
@@ -134,7 +134,7 @@ export function validateSite(site) {
   }
   // 2a. 第七輪（ARCHITECTURE 15.1）：職缺與採購公告
   //     id／slug 一致、slug 唯一、用人／需求單位存在、日期先後、legacyIds 不得與現存 id 重複；
-  //     個資閘門（甄選結果只公布報名編號與遮罩姓名）：違反即建置失敗。
+  //     個資閘門（甄選結果只公布報名編號；第三十輪起不公布任何姓名、必須有下架日）：違反即建置失敗。
   const slugSeen = new Map();
   for (const item of site.all) {
     if (item.type !== 'job' && item.type !== 'tender') continue;
@@ -155,6 +155,8 @@ export function validateSite(site) {
       for (const e of item.examPlan ?? []) if (e.date && item.deadlineAt && e.date < item.deadlineAt) push(item.__file, `examPlan「${e.stage}」日期 ${e.date} 早於報名截止 ${item.deadlineAt}`);
       if (item.result && item.manualStatus === 'cancelled') push(item.__file, 'manualStatus cancelled 的職缺不得有 result');
       for (const msg of jobPiiErrors(item)) push(item.__file, msg);
+      // 第三十輪（#55）：下架日必填與上下限、externalUrl 與名單擇一（today 用來判斷「已下架、名單已移除」）
+      for (const msg of jobResultProblems(item, site.today)) push(item.__file, msg);
     } else {
       if (item.announcedAt && item.deadlineAt && item.announcedAt > item.deadlineAt) push(item.__file, `announcedAt ${item.announcedAt} 晚於 deadlineAt ${item.deadlineAt}`);
       if (item.openingAt && item.deadlineAt && item.openingAt < item.deadlineAt) push(item.__file, `openingAt ${item.openingAt} 早於投標截止 ${item.deadlineAt}`);
@@ -229,7 +231,9 @@ export function validateSite(site) {
 
 // ───────────────────────── 第七輪：甄選結果個資閘門（ARCHITECTURE 15.1） ─────────────────────────
 
-export { MASK_CHARS_RE, FULL_NAME_RE, NATIONAL_ID_RE, CANDIDATE_NO_ID_RE, maskedNameProblems, candidateNoProblems, jobPiiErrors } from '../../src/client/careers-rules.js';
+export {
+  MASK_CHARS_RE, MASKED_NAME_RE, NATIONAL_ID_RE, CANDIDATE_NO_ID_RE, NAME_FIELD_RE, nameFieldProblems, candidateNoProblems, jobPiiErrors, jobResultProblems, defaultUnpublishAt,
+} from '../../src/client/careers-rules.js';
 
 /** 來源語言規則（ARCHITECTURE 14.2）→ 錯誤訊息陣列 */
 export function sourceLangErrors(item) {

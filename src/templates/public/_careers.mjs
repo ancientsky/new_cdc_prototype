@@ -84,14 +84,7 @@ export function tenderCountdown(ctx, x, stage) {
   return html`<span class="c-deadline ${d <= 7 ? 'c-deadline--soon' : 'c-deadline--open'}">${t('notice.daysleft', { n: d })}</span>`;
 }
 
-export const MASK_RE = /[○◯〇＊*]/;
-/** 公布名單的姓名一律是遮罩姓名；萬一資料漏遮（validate 本應擋下），顯示端也只留第一字，其餘以 ○ 取代 */
-export function safeName(s) {
-  const v = String(s ?? '');
-  if (MASK_RE.test(v)) return v;
-  const chars = [...v];
-  return chars.length ? chars[0] + '○'.repeat(Math.max(1, chars.length - 1)) : '○○';
-}
+// 第三十輪（#55）：名單不再有姓名欄，原本顯示端的 safeName()（漏遮時補遮罩）一併移除——模板根本不讀姓名，資料漏放也不會被印出來。
 export const money = (n) => (n == null || n === '' ? '—' : `NT$ ${Number(n).toLocaleString('en-US')}`);
 
 /** 工作地點 → 篩選用的縣市（取開頭的「○○市／縣」；取不到就取第一段） */

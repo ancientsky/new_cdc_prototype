@@ -129,7 +129,11 @@ export function jobSentences(item, site) {
     `${t}報名期間 ${item.applyStart} 至 ${item.deadlineAt}，${APPLY_METHOD_LABELS[item.applyMethod] ?? item.applyMethod}${item.applyUrl ? '（外部報名系統）' : item.applyMethod === 'online' ? '（本站報名頁）' : ''}。`,
     `${t}薪資待遇：${String(item.salaryNote).replace(/[。]$/, '')}。`,
   ];
-  if (item.result?.publishedAt) overview.push(`${t}甄選結果已於 ${item.result.publishedAt} 公告，名單只公布報名編號與遮罩姓名，請至職缺頁「甄選結果」查看。`);
+  // 第三十輪（#55）：不再有姓名；下架後只說已下架；名單在人事系統者說明外連
+  const r = item.result;
+  if (r?.publishedAt && item.gov?.resultTakenDown) overview.push(`${t}甄選結果已於 ${r.publishedAt} 公告（只公布報名編號），並已於 ${r.unpublishAt} 下架；查詢請洽人事室。`);
+  else if (r?.publishedAt && r.externalUrl) overview.push(`${t}甄選結果已於 ${r.publishedAt} 公告，名單由人事系統提供（只公布報名編號），請從職缺頁「甄選結果」連過去以報名編號核對。`);
+  else if (r?.publishedAt) overview.push(`${t}甄選結果已於 ${r.publishedAt} 公告，名單只公布報名編號、不公布姓名，請至職缺頁「甄選結果」以報名編號核對${r.unpublishAt ? `（${r.unpublishAt} 下架）` : ''}。`);
   else if (item.resultPlannedAt && item.manualStatus !== 'cancelled') overview.push(`${t}甄選結果預計 ${item.resultPlannedAt} 公告。`);
   if (item.manualStatus === 'cancelled') overview.push(`${t}已停止甄選${item.manualStatusNote ? `（${String(item.manualStatusNote).replace(/[。]$/, '')}）` : ''}。`);
   if (item.manualStatus === 'filled') overview.push(`${t}已補實。`);

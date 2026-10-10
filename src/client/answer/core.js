@@ -365,7 +365,7 @@ export const REFUSAL_RULES = [
   { id: 'ref.impersonation', kind: 'impersonation', re: /((以|用)(你的|疾管署的?|官方的?|政府的?)(名義|身分|口吻|立場))|((幫我|替我|請你)(寫|發|擬|產生).{0,8}(新聞稿|公告|聲明|公文|澄清稿))|((寫成|改寫成|改成|模仿|仿照|假裝).{0,10}(疾管署|官方|政府|衛福部|機關).{0,6}(口吻|語氣|名義|格式|公告|澄清|新聞稿|聲明))|(write|draft|issue) (a |an )?(press release|official (statement|announcement))/i, note: '冒用機關名義產生公告' },
   { id: 'ref.opinion', kind: 'opinion', re: /((你覺得|你認為|你的看法|你怎麼看|評價一下|給.{0,4}打分數).{0,12}(疾管署|政府|政策|部長|署長|防疫|官員|執政))|((疾管署|政府|部長|署長).{0,8}(爛|無能|失職|該下台|做得好嗎|做得好不好))/, note: '評論機關或政策' },
   { id: 'ref.privacy', kind: 'privacy', test: (q) => /((確診者|個案|病人|患者|感染者).{0,6}(住哪|住在|地址|姓名|名字|是誰|身分|電話|哪一家|工作地點))|(誰確診|哪個人確診|公布.{0,4}(姓名|名單))/.test(q) && !(ADMIT_RE.test(q) && !/(確診|個案|病人|患者|感染)/.test(q)), note: '他人個資（問職缺錄取名單另由 careers 意圖只給結果頁連結）' },
-  { id: 'ref.privacy.admitted', kind: 'privacy', re: /(錄取|正取|備取|遞補|上榜|應考|考生|報名者).{0,12}(住哪|住在|地址|電話|手機|身分證|生日|幾歲|年紀|全名|真名|本名|完整姓名|學校|畢業|臉書|IG|照片)/, note: '錄取者個資（只公布報名編號與遮罩姓名）' },
+  { id: 'ref.privacy.admitted', kind: 'privacy', re: /(錄取|正取|備取|遞補|上榜|應考|考生|報名者).{0,12}(住哪|住在|地址|電話|手機|身分證|生日|幾歲|年紀|全名|真名|本名|完整姓名|學校|畢業|臉書|IG|照片)/, note: '錄取者個資（只公布報名編號，不公布姓名）' },
 ];
 
 const REFUSAL_TEXT = {
@@ -388,7 +388,7 @@ const REFUSAL_TEXT = {
     'no-data': { title: '找不到對應的統計資料', text: '資料目錄中沒有可直接回答的統計序列。你可以到開放資料平台查詢原始資料集。' },
     'pro-only': { title: '檢驗與送驗規定屬專業內容', text: '檢體採集、容器、保存運送與送驗時限是給醫療院所與檢驗人員的專業內容，請切換專業模式或到檢驗專區查詢。想了解疾病怎麼診斷，可看疾病頁「診斷與治療」。' },
     'no-open-job': { title: '目前沒有開放報名的職缺', text: '疾管署目前沒有報名中的職缺。即將開放、審查中與歷次錄取結果請看「人才招募」頁，也可訂閱人才招募 RSS。' },
-    'no-job-result': { title: '目前沒有已公告的甄選結果', text: '目前沒有已公告甄選結果的職缺。甄選結果只在各職缺頁公布報名編號與遮罩姓名，答案不會唸出名單。' },
+    'no-job-result': { title: '目前沒有已公告的甄選結果', text: '目前沒有已公告甄選結果的職缺。甄選結果只在各職缺頁公布報名編號（不公布姓名），答案不會唸出名單。' },
     'no-open-tender': { title: '目前沒有招標中的標案', text: '疾管署目前沒有投標期間內的採購案。已截止、已開標、決標與流標的案件請看「採購公告」頁；正式公告以政府電子採購網為準。' },
   },
   en: {
@@ -410,7 +410,7 @@ const REFUSAL_TEXT = {
     'no-data': { title: 'No matching statistics', text: 'No statistical series in the data catalogue answers this directly.' },
     'pro-only': { title: 'Specimen rules are professional content', text: 'Specimen collection, containers, storage and shipping rules are for healthcare and laboratory staff. Switch to professional mode or see the laboratory testing page.' },
     'no-open-job': { title: 'No open vacancies right now', text: 'Taiwan CDC has no vacancies open for application at the moment. See the Jobs page for upcoming vacancies and past results.' },
-    'no-job-result': { title: 'No published selection results', text: 'No selection results have been published. Results list only applicant numbers and masked names on each vacancy page; this service does not read out the list.' },
+    'no-job-result': { title: 'No published selection results', text: 'No selection results have been published. Results list only application numbers (no names) on each vacancy page; this service does not read out the list.' },
     'no-open-tender': { title: 'No open tenders right now', text: 'Taiwan CDC has no tenders open for bids at the moment. See the Procurement page; official notices are on the Government e-Procurement System.' },
   },
 };
@@ -1580,7 +1580,7 @@ export function createEngine(rawDeps = {}) {
   }
 
   // ── 第七輪：人才招募／採購公告（結構化回答：只讀索引中職缺／標案的結構化句與欄位，不走全文檢索） ──
-  // 個資：職缺 chunk 不含 result／waitlistUpdates（index-builder 排除），問「誰錄取」只引用「甄選結果已於…公告，名單只公布報名編號與遮罩姓名」句並給結果頁連結。
+  // 個資：職缺 chunk 不含 result／waitlistUpdates（index-builder 排除），問「誰錄取」只引用「甄選結果已於…公告，名單只公布報名編號」句並給結果頁連結。
   function overviewChunks(type, view) {
     const seen = new Set();
     return poolFor(view, 'zh-TW').chunks.filter((c) => c.type === type && c.block === 'overview' && !seen.has(c.contentId) && seen.add(c.contentId));
@@ -1632,7 +1632,7 @@ export function createEngine(rawDeps = {}) {
       if (!pool.length) return setRefusal(result, 'no-job-result', 'ref.no-job-result', [careersLink]);
       const picked = pool.map((c) => ({ text: pickSent(c, /甄選結果(已於|預計)/), cite: [c.id], chunk: c, slot: 0, score: 9 })).filter((p) => p.text);
       const items = pool.map((c) => ({ id: c.contentId, title: c.title, url: c.url, resultUrl: c.resultUrl, resultPublishedAt: c.resultPublishedAt ?? null, resultPlannedAt: c.resultPlannedAt ?? null, stage: jobStageNow(c) }));
-      result.careers = { mode: 'admitted', structured: true, privacy: true, items, note: tr(LL, '甄選結果只在職缺頁公布報名編號與遮罩姓名，答案不唸出名單。', 'Results list only applicant numbers and masked names on the vacancy page; this answer does not read out the list.') };
+      result.careers = { mode: 'admitted', structured: true, privacy: true, items, note: tr(LL, '甄選結果只在職缺頁公布報名編號（不公布姓名），答案不唸出名單；請以報名編號自行核對。', 'Results list only application numbers (no names) on the vacancy page; this answer does not read out the list.') };
       const acts = items.filter((x) => x.resultUrl).slice(0, 2).map((x) => ({ label: tr(LL, `看「${x.title}」甄選結果`, 'See selection result'), href: x.resultUrl, kind: 'link' }));
       result.guards.push({ kind: 'admitted-list-withheld', ids: items.map((x) => x.id) });
       return structuredFinish(result, picked, pool, { required: ['result-link'], actions: [...acts, careersLink], markClosed: false });

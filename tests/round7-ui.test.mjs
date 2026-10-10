@@ -101,23 +101,22 @@ test('詳情：報名方式——open 無 applyUrl 有大按鈕連 apply；外�
   assert.ok(!/data-job-apply/.test(mail) && /電子郵件/.test(mail));
   for (const sec of ['工作內容', '資格條件', '薪資待遇', '應備文件', '甄試方式與日期', '聯絡']) assert.ok(on.includes(sec), sec);
 });
-test('詳情：甄選結果區只含遮罩姓名；正取／備取表、遞補紀錄、報到須知', () => {
+test('詳情：甄選結果區只有報名編號（第三十輪不公布姓名）；正取／備取表、遞補紀錄、報到須知、下架日', () => {
   const h = str(careers.render(ctxOf(), { item: jobBy('result-recent') }));
   const r = h.match(/<section class="c-block c-jobresult"[\s\S]*?<\/section>/)[0];
-  const names = [...r.matchAll(/class="c-masked">([^<]*)</g)].map((m) => m[1]);
-  assert.equal(names.length, 5, '2 正取＋2 備取＋1 遞補');
-  for (const n of names) assert.match(n, /[○◯〇＊]/, n);
-  assert.ok(!/王明|林[^○]|陳宏|張華/.test(r), '不含完整姓名');
-  assert.match(r, /1150924-012/); assert.match(r, /備取有效至/); assert.match(r, /遞補紀錄/); assert.match(r, /報到須知/); assert.match(r, /id="h-result"/);
-  assert.match(r, /只公布報名編號與遮罩姓名/);
+  assert.match(r, /data-result="list"/);
+  assert.ok(!/c-masked|[○◯〇]/.test(r), '結果區沒有任何（遮罩）姓名'); assert.ok(!/<th[^>]*>[^<]*姓名/.test(r), '沒有姓名欄');
+  for (const no of ['1150924-012', '1150924-007', '1150924-021', '1150924-018']) assert.ok(r.includes(no), no);
+  assert.match(r, /備取有效至/); assert.match(r, /遞補紀錄/); assert.match(r, /報到須知/); assert.match(r, /id="h-result"/);
+  assert.match(r, /只公布報名編號/); assert.match(r, /2027-03-26/, '顯示下架日');
   // 沒有 result 的職缺沒有結果區
   assert.ok(!str(careers.render(ctxOf(), { item: jobBy('open-online') })).includes('c-jobresult'));
 });
-test('詳情：未遮罩的姓名（資料漏遮）在顯示端也被遮蔽', () => {
+test('詳情：資料裡就算混進姓名欄，模板也不讀、不印（個資閘門在 validate 擋，這裡是第二道）', () => {
   const bad = structuredClone(jobBy('result-recent'));
-  bad.result.admitted[0].nameMasked = '王小明';
+  bad.result.admitted[0].nameMasked = '王小明'; bad.result.waitlist[0].name = '陳大華';
   const h = str(careers.render(ctxOf(), { item: bad }));
-  assert.ok(!h.includes('王小明')); assert.match(h, /王○○/);
+  assert.ok(!h.includes('王小明') && !h.includes('陳大華') && !h.includes('王○'));
 });
 test('詳情：舊網址揭露（gov.legacy）由 provenance 自動帶出', () => {
   const j = structuredClone(jobBy('open-online'));
@@ -254,8 +253,8 @@ test('i18n：七語的導覽、階段、分頁籤、橫幅 key 齊備；沒有�
 test('後台：/admin/jobs/、/admin/tenders/ 可渲染；結果上架檢核、決標逾期；儀表板卡片；待辦頁籤與 KIND_LABEL', () => {
   const ctx = makeCtx(site, 'zh-TW', { path: '/admin/jobs/' });
   const j = str(admJobs.render(ctx));
-  assert.match(j, /職缺與階段/); assert.match(j, /結果上架檢核/); assert.match(j, /data-check="mask"/); assert.match(j, /data-check="capacity"/); assert.match(j, /data-check="waitlist"/);
-  assert.match(j, /全含遮罩字/); assert.match(j, /正取 2 ／ 名額 2/);
+  assert.match(j, /職缺與階段/); assert.match(j, /結果上架檢核/); assert.match(j, /data-check="names"/); assert.match(j, /data-check="capacity"/); assert.match(j, /data-check="waitlist"/); assert.match(j, /data-check="unpublish"/);
+  assert.match(j, /只有報名編號/); assert.ok(!/遮罩字/.test(j)); assert.match(j, /正取 2 ／ 名額 2/);
   noBad(j, 'admin jobs');
   const t = str(admTenders.render(makeCtx(site, 'zh-TW', { path: '/admin/tenders/' })));
   assert.match(t, /標案與階段/); assert.match(t, /決標逾期/); assert.match(t, /opened-overdue|測試標案 opened-overdue/);
@@ -264,18 +263,18 @@ test('後台：/admin/jobs/、/admin/tenders/ 可渲染；結果上架檢核、�
   assert.deepEqual(admJobs.pages().map((p) => p.path), ['/admin/jobs/']); assert.deepEqual(admTenders.pages().map((p) => p.path), ['/admin/tenders/']);
   const idx = str(admIndex.render(ctx));
   assert.match(idx, /id="dash-jobs"/); assert.match(idx, /id="dash-tenders"/); assert.match(idx, /\/admin\/jobs\//); assert.match(idx, /\/admin\/tenders\//);
-  for (const k of ['job-result-overdue', 'job-waitlist-expiring', 'job-apply-url-dead', 'tender-award-overdue']) { assert.ok(KIND_LABEL[k], k); assert.ok(KIND_ORDER.includes(k), k); }
+  for (const k of ['job-result-overdue', 'job-waitlist-expiring', 'job-apply-url-dead', 'job-result-unpublish', 'tender-award-overdue']) { assert.ok(KIND_LABEL[k], k); assert.ok(KIND_ORDER.includes(k), k); }
   const td = str(admTodos.render(ctx));
   for (const k of ['job-result-overdue', 'job-waitlist-expiring', 'job-apply-url-dead', 'tender-award-overdue']) assert.match(td, new RegExp(`data-kind="${k}"`), `待辦頁籤 ${k}`);
   assert.match(td, /data-panel="tender-award-overdue"[\s\S]*測試標案 opened-overdue/, '決標逾期待辦出現');
 });
-test('後台結果檢核：遮罩漏掉、正取超額、備取過期都會被標紅', () => {
+test('後台結果檢核：混進姓名欄、正取超額、備取過期都會被標紅', () => {
   const bad = structuredClone(jobBy('result-recent'));
   bad.result.admitted.push({ seq: 3, candidateNo: '1150924-099', nameMasked: '黃小華' });
   bad.result.waitlist.forEach((w) => { w.validUntil = '2026-09-30'; });
   const s3 = { ...site, collections: { ...site.collections, jobs: [bad] } };
   const t = str(admJobs.render(makeCtx(s3, 'zh-TW', { path: '/admin/jobs/' })));
-  assert.match(t, /1 筆姓名沒有遮罩字/); assert.match(t, /正取 3 ／ 名額 2/); assert.match(t, /備取有效期已於 2026-09-30 屆滿/);
+  assert.match(t, /1 列含姓名欄/); assert.ok(!t.includes('黃小華'), '後台也不回印姓名'); assert.match(t, /正取 3 ／ 名額 2/); assert.match(t, /備取有效期已於 2026-09-30 屆滿/);
   assert.match(t, /需修正/);
 });
 

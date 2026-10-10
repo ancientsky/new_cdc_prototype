@@ -9,8 +9,9 @@ import {
   pill, alertBox, mdHeader, daysUntil,
 } from './_partials.mjs';
 import {
-  jobsOf, allJobs, jobPath, applyPath, applyOnSite, jobStage, jobTab, JOB_TABS, stagePill, jobCountdown, placeOf, safeName, jobSlug, jobIsHistory,
+  jobsOf, allJobs, jobPath, applyPath, applyOnSite, jobStage, jobTab, JOB_TABS, stagePill, jobCountdown, placeOf, jobSlug, jobIsHistory,
 } from './_careers.mjs';
+import { resultTakenDown } from '../../client/careers-rules.js';
 
 const STYLES = ['/assets/styles/careers.css'];
 const LIST_JS = ['/assets/js/careers-list.js'];
@@ -192,15 +193,35 @@ function resultBlock(ctx, j) {
   const waitlist = [...(r.waitlist ?? [])].filter((w) => !w.validUntil || String(w.validUntil) >= String(ctx.today)).sort((a, b) => (a.rank ?? 0) - (b.rank ?? 0));
   const updates = j.waitlistUpdates ?? [];
   const tbl = (cap, head, rows) => html`<div class="c-tablewrap" role="region" tabindex="0" aria-label="${t('a11y.scrollTable')}"><table class="c-table c-table--result"><caption class="sr-only">${cap}</caption><thead><tr>${head.map((h) => html`<th scope="col">${h}</th>`)}</tr></thead><tbody>${rows}</tbody></table></div>`;
-  return html`<section class="c-block c-jobresult" id="result" aria-labelledby="h-result"><h2 id="h-result">${t('job.s.result')}</h2>
-  <p class="c-jobresult__meta"><span>${t('job.result.on')} <time datetime="${r.publishedAt}">${fmtDate(r.publishedAt)}</time></span>${r.refNo ? html` · <span>${t('notice.refNo')}：${r.refNo}</span>` : ''}</p>
-  <div class="c-alert c-alert--info" role="note"><strong class="c-alert__t">${t('job.result.privacy.t')}</strong> ${t('job.result.privacy')}</div>
+  const meta = html`<p class="c-jobresult__meta"><span>${t('job.result.on')} <time datetime="${r.publishedAt}">${fmtDate(r.publishedAt)}</time></span>${r.refNo ? html` · <span>${t('notice.refNo')}：${r.refNo}</span>` : ''}</p>`;
+  // 第三十輪（#55）：下架日起名單已由治理（withdrawJobResult）拿掉，這裡只寫「已於 YYYY-MM-DD 下架」與人事室聯絡方式
+  if (resultTakenDown(j, ctx.today)) {
+    return html`<section class="c-block c-jobresult" id="result" aria-labelledby="h-result" data-result="down"><h2 id="h-result">${t('job.s.result')}</h2>
+  ${meta}
+  <div class="c-alert c-alert--info" role="status"><strong class="c-alert__t">${t('job.result.down.t')}</strong> ${t('job.result.down', { date: fmtDate(r.unpublishAt) })}</div>
+  <p>${t('job.s.contact')}：${j.contact ?? ''} ${unitLink(ctx, 'unit.personnel')}</p>
+</section>`;
+  }
+  // 名單在人事系統（建議做法）：本站只放連結
+  if (r.externalUrl) {
+    const href = isExternal(r.externalUrl) ? r.externalUrl : ctx.url(r.externalUrl);
+    return html`<section class="c-block c-jobresult" id="result" aria-labelledby="h-result" data-result="external"><h2 id="h-result">${t('job.s.result')}</h2>
+  ${meta}
+  <div class="c-alert c-alert--info" role="note"><strong class="c-alert__t">${t('job.result.ext.t')}</strong> ${t('job.result.ext')}</div>
+  <p><a class="c-btn" href="${href}"${isExternal(r.externalUrl) ? raw(' rel="noopener"') : ''}>${t('job.result.ext.link')} →</a></p>
+  ${r.unpublishAt ? html`<p class="muted">${t('job.result.until', { date: fmtDate(r.unpublishAt) })}</p>` : ''}
+  ${r.note ? html`<h3>${t('job.result.checkin')}</h3><div class="c-prose">${raw(md(r.note))}</div>` : ''}
+</section>`;
+  }
+  return html`<section class="c-block c-jobresult" id="result" aria-labelledby="h-result" data-result="list"><h2 id="h-result">${t('job.s.result')}</h2>
+  ${meta}
+  <div class="c-alert c-alert--info" role="note"><strong class="c-alert__t">${t('job.result.privacy.t')}</strong> ${t('job.result.privacy')}${r.unpublishAt ? html` ${t('job.result.until', { date: fmtDate(r.unpublishAt) })}` : ''}</div>
   <h3>${t('job.result.admitted')} <span class="c-pill c-pill--ok">${t('job.positions.n', { n: admitted.length })}</span></h3>
-  ${admitted.length ? tbl(t('job.result.admitted'), [t('job.col.seq'), t('job.col.no'), t('job.col.name')], admitted.map((a) => html`<tr data-row="admitted"><td>${a.seq}</td><td><code>${a.candidateNo}</code></td><td class="c-masked">${safeName(a.nameMasked)}</td></tr>`)) : html`<p class="muted">${t('job.result.none')}</p>`}
+  ${admitted.length ? tbl(t('job.result.admitted'), [t('job.col.seq'), t('job.col.no')], admitted.map((a) => html`<tr data-row="admitted"><td>${a.seq}</td><td><code>${a.candidateNo}</code></td></tr>`)) : html`<p class="muted">${t('job.result.none')}</p>`}
   <h3>${t('job.result.waitlist')}</h3>
-  ${waitlist.length ? tbl(t('job.result.waitlist'), [t('job.col.rank'), t('job.col.no'), t('job.col.name'), t('job.col.validUntil')], waitlist.map((a) => html`<tr data-row="waitlist"><td>${a.rank}</td><td><code>${a.candidateNo}</code></td><td class="c-masked">${safeName(a.nameMasked)}</td><td>${a.validUntil ? html`<time datetime="${a.validUntil}">${fmtDate(a.validUntil)}</time>` : '—'}</td></tr>`)) : html`<p class="muted">${t('job.result.none')}</p>`}
+  ${waitlist.length ? tbl(t('job.result.waitlist'), [t('job.col.rank'), t('job.col.no'), t('job.col.validUntil')], waitlist.map((a) => html`<tr data-row="waitlist"><td>${a.rank}</td><td><code>${a.candidateNo}</code></td><td>${a.validUntil ? html`<time datetime="${a.validUntil}">${fmtDate(a.validUntil)}</time>` : '—'}</td></tr>`)) : html`<p class="muted">${t('job.result.none')}</p>`}
   ${updates.length ? html`<h3>${t('job.result.updates')}</h3>
-  <ol class="c-linklist c-jobresult__updates">${[...updates].sort((a, b) => String(a.date).localeCompare(String(b.date))).map((u) => html`<li data-row="update"><time datetime="${u.date}">${fmtDate(u.date)}</time> · <code>${u.candidateNo}</code> <span class="c-masked">${safeName(u.nameMasked)}</span>${u.note ? html` — ${u.note}` : ''}</li>`)}</ol>` : ''}
+  <ol class="c-linklist c-jobresult__updates">${[...updates].sort((a, b) => String(a.date).localeCompare(String(b.date))).map((u) => html`<li data-row="update"><time datetime="${u.date}">${fmtDate(u.date)}</time> · <code>${u.candidateNo}</code>${u.note ? html` — ${u.note}` : ''}</li>`)}</ol>` : ''}
   ${r.note ? html`<h3>${t('job.result.checkin')}</h3><div class="c-prose">${raw(md(r.note))}</div>` : ''}
   ${r.attachments?.length ? html`<ul class="c-linklist">${r.attachments.map((a) => html`<li>${extLink(ctx, isExternal(a.url) ? a.url : ctx.url(a.url), a.label)}</li>`)}</ul>` : ''}
 </section>`;
@@ -382,10 +403,14 @@ export function markdown(ctx, { item: j }) {
     const KIND = { extend: '展延', reschedule: '改期', correction: '更正', cancel: '取消', other: '其他' };
     lines.push('', '## 公告異動', '', ...amendsOf(j).map((a) => `- ${a.date}［${KIND[a.kind] ?? a.kind}］${a.text}${a.refNo ? `（${a.refNo}）` : ''}`));
   }
-  if (j.result) {
-    lines.push('', `## 甄選結果（${j.result.publishedAt}）`, '', '> 只公布報名編號與遮罩姓名。', '', '### 正取', '', ...(j.result.admitted ?? []).map((a) => `- ${a.seq}. ${a.candidateNo} ${safeName(a.nameMasked)}`));
-    lines.push('', '### 備取', '', ...(j.result.waitlist ?? []).filter((w) => !w.validUntil || String(w.validUntil) >= String(ctx.today)).map((a) => `- ${a.rank}. ${a.candidateNo} ${safeName(a.nameMasked)}${a.validUntil ? `（有效至 ${a.validUntil}）` : ''}`));
-    if (j.waitlistUpdates?.length) lines.push('', '### 遞補紀錄', '', ...j.waitlistUpdates.map((u) => `- ${u.date}：${u.candidateNo} ${safeName(u.nameMasked)}${u.note ? ` — ${u.note}` : ''}`));
+  if (j.result && resultTakenDown(j, ctx.today)) {
+    lines.push('', `## 甄選結果（${j.result.publishedAt}）`, '', `甄選結果已於 ${j.result.unpublishAt} 下架。如需查詢請洽人事室。`);
+  } else if (j.result?.externalUrl) {
+    lines.push('', `## 甄選結果（${j.result.publishedAt}）`, '', `> 名單由人事系統提供，本站不存名單；請以報名編號核對。${j.result.unpublishAt ? `${j.result.unpublishAt} 下架。` : ''}`, '', `- [人事系統甄選結果](${j.result.externalUrl})`);
+  } else if (j.result) {
+    lines.push('', `## 甄選結果（${j.result.publishedAt}）`, '', `> 只公布報名編號，不公布姓名。${j.result.unpublishAt ? `${j.result.unpublishAt} 下架。` : ''}`, '', '### 正取', '', ...(j.result.admitted ?? []).map((a) => `- ${a.seq}. ${a.candidateNo}`));
+    lines.push('', '### 備取', '', ...(j.result.waitlist ?? []).filter((w) => !w.validUntil || String(w.validUntil) >= String(ctx.today)).map((a) => `- ${a.rank}. ${a.candidateNo}${a.validUntil ? `（有效至 ${a.validUntil}）` : ''}`));
+    if (j.waitlistUpdates?.length) lines.push('', '### 遞補紀錄', '', ...j.waitlistUpdates.map((u) => `- ${u.date}：${u.candidateNo}${u.note ? ` — ${u.note}` : ''}`));
   }
   if (j.contact) lines.push('', `## 聯絡`, '', j.contact);
   for (const a of j.attachments ?? []) lines.push('', `- 附件：[${a.label}](${a.url})`);
