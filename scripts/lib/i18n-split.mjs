@@ -15,7 +15,8 @@ const CLIENT_DIR = path.join(ROOT, 'src/client');
 function walkJs(dir, out = []) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
     const p = path.join(dir, e.name);
-    if (e.isDirectory()) walkJs(p, out); else if (e.name.endsWith('.js') && !/^i18n(\.|$)/.test(e.name)) out.push(p);
+    if (e.isDirectory()) walkJs(p, out);
+    else if (e.name.endsWith('.js') && !/^i18n(\.|$)/.test(e.name)) out.push(p);
   }
   return out;
 }
@@ -47,9 +48,11 @@ export function resolveAll(lang) {
 
 /** 單一語言模組原始碼：註冊到 window.CDC.I18N，由 i18n.runtime.js 的 t() 讀取 */
 export function langModuleSource(lang) {
-  return `// 自動產生（scripts/lib/i18n-split.mjs），請勿手改；來源 src/client/i18n.js\n`
-    + `const S=${JSON.stringify(resolveAll(lang))};\n`
-    + `(window.CDC=window.CDC||{}).I18N={lang:${JSON.stringify(lang)},S};\nexport default S;\n`;
+  return (
+    `// 自動產生（scripts/lib/i18n-split.mjs），請勿手改；來源 src/client/i18n.js\n` +
+    `const S=${JSON.stringify(resolveAll(lang))};\n` +
+    `(window.CDC=window.CDC||{}).I18N={lang:${JSON.stringify(lang)},S};\nexport default S;\n`
+  );
 }
 
 /** 在 dist/assets/js 寫出七個語言檔，移除完整的 i18n.js。回傳 { lang: bytes } */

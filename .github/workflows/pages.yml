@@ -34,6 +34,10 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - name: Lint (eslint) + type check (pilot)
+        run: |
+          npm run lint
+          npm run typecheck
       - name: Tests (governance rules, on committed content)
         run: npm test
       - name: Decide whether to refresh official data (manual run, or the 02 UTC schedule)

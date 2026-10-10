@@ -6,7 +6,8 @@ export function t(lang, key, vars = {}) {
   const s = (tab && tab.lang === lang ? tab.S[key] : undefined) ?? key;
   return s.replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? '');
 }
-if (typeof window !== 'undefined') { // Node 端（測試、模板）也會 import 本檔，只取 t()
+if (typeof window !== 'undefined') {
+  // Node 端（測試、模板）也會 import 本檔，只取 t()
   const CDC = (window.CDC = window.CDC || {});
   CDC.t = (k, v) => t(document.documentElement.lang, k, v);
 }

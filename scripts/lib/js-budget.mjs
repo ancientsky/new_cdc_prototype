@@ -17,7 +17,9 @@ const IMPORT_RE = /(?:^|[;\n}])\s*(?:import|export)\s*(?:[^'"()]*?\bfrom\s*)?['"
 function walkHtml(dir, out = []) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
     const p = path.join(dir, e.name);
-    if (e.isDirectory()) { if (e.name !== 'preview') walkHtml(p, out); } else if (e.name.endsWith('.html')) out.push(p);
+    if (e.isDirectory()) {
+      if (e.name !== 'preview') walkHtml(p, out);
+    } else if (e.name.endsWith('.html')) out.push(p);
   }
   return out;
 }
@@ -39,7 +41,15 @@ function closure(entry, cache) {
 }
 
 /** 檢查整個 dist。回傳 { ok, rows, public, admin } */
-export function checkJsBudget(distDir, { basePath = '', publicKb = Number(process.env.JS_BUDGET_KB) || DEFAULT_PUBLIC_KB, adminKb = Number(process.env.ADMIN_JS_BUDGET_KB) || 0, engineKb = Number(process.env.ENGINE_JS_BUDGET_KB) || DEFAULT_ENGINE_KB } = {}) {
+export function checkJsBudget(
+  distDir,
+  {
+    basePath = '',
+    publicKb = Number(process.env.JS_BUDGET_KB) || DEFAULT_PUBLIC_KB,
+    adminKb = Number(process.env.ADMIN_JS_BUDGET_KB) || 0,
+    engineKb = Number(process.env.ENGINE_JS_BUDGET_KB) || DEFAULT_ENGINE_KB,
+  } = {},
+) {
   const cache = new Map();
   const rows = [];
   for (const html of walkHtml(distDir)) {

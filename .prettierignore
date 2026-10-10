@@ -1,0 +1,28 @@
+# 第二十六輪：Prettier 只強制用在「新檔」（下方以 ! 放行），不一次格式化既有程式碼庫（避免 diff 洗版、保留 blame）。
+# 新增模組時，把它加在檔尾的放行清單；既有檔案改到哪就用編輯器的 Prettier 套哪裡，不必整檔重排。
+# 注意：只忽略「檔案」而非目錄（gitignore 規則：父目錄被排除時無法再用 ! 放行）。
+dist/
+node_modules/
+previews/
+data/
+content/
+src/public/
+package-lock.json
+**/*.md
+**/*.json
+**/*.yml
+src/**/*.js
+src/**/*.mjs
+scripts/**/*.mjs
+tests/**/*.mjs
+eval/**/*.mjs
+*.mjs
+.prettierrc
+
+# 新檔放行
+!scripts/lib/i18n-split.mjs
+!scripts/lib/js-budget.mjs
+!src/client/i18n.runtime.js
+!tests/round26-i18n.test.mjs
+**/*.css
+**/*.html

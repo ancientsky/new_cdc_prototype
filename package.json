@@ -15,7 +15,10 @@
     "eval": "node eval/run-eval.mjs",
     "dev": "node scripts/build.mjs && node scripts/serve.mjs",
     "a11y": "node scripts/a11y.mjs",
-    "gen:map": "node scripts/gen-world-map.mjs"
+    "gen:map": "node scripts/gen-world-map.mjs",
+    "lint": "eslint .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
     "ajv": "^8.17.1",
@@ -24,10 +27,16 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.6.5",
     "d3-geo": "^3.1.1",
+    "eslint": "^10.12.0",
+    "globals": "^17.13.0",
     "i18n-iso-countries": "^7.14.0",
     "playwright": "^1.64.0",
+    "prettier": "^3.9.9",
     "topojson-client": "^3.1.0",
+    "typescript": "^7.0.2",
     "world-atlas": "^2.0.2"
   }
 }

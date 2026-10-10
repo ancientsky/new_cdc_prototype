@@ -34,7 +34,8 @@ test('per-lang 的每個字串 = Node 端 t() 的解析結果（該語言 → �
     const keys = Object.keys(S);
     assert.ok(keys.length > 50, `${lang} 至少要有數十個 client key`);
     for (const k of keys) assert.equal(nodeT(lang, k), S[k].replace(/\{(\w+)\}/g, ''), `${lang} ${k}`);
-    for (const k of keys.filter((x) => /\{n\}/.test(S[x])).slice(0, 5)) assert.equal(nodeT(lang, k, { n: 7 }), S[k].replaceAll('{n}', '7').replace(/\{(\w+)\}/g, ''));
+    for (const k of keys.filter((x) => /\{n\}/.test(S[x])).slice(0, 5))
+      assert.equal(nodeT(lang, k, { n: 7 }), S[k].replaceAll('{n}', '7').replace(/\{(\w+)\}/g, ''));
   }
 });
 
@@ -59,7 +60,10 @@ test('執行期：載入 per-lang 模組 + i18n.runtime.js 後 window.CDC.t 與 
     assert.equal(win.CDC.t(k, { n: 3 }), nodeT('vi', k, { n: 3 }));
     assert.equal(rt.t('vi', 'no.such.key'), 'no.such.key'); // 沒有的 key 顯示 key 本身
     assert.equal(rt.t('ja', k).replace(/\{.*?\}/g, ''), k, '頁面載入的是 vi，問 ja 不該拿到 vi 的字串');
-  } finally { delete globalThis.window; delete globalThis.document; }
+  } finally {
+    delete globalThis.window;
+    delete globalThis.document;
+  }
 });
 
 test('dist：完整 i18n.js 不上線、每頁 JS 在預算內、每頁只載入自己語言那一份', (tc) => {
@@ -71,7 +75,13 @@ test('dist：完整 i18n.js 不上線、每頁 JS 在預算內、每頁只載入
     assert.ok(fs.statSync(f).size <= BUDGET_PER_LANG, `${lang} 超過預算`);
   }
   const r = checkJsBudget(DIST, { basePath: config.basePath });
-  assert.ok(r.ok, `超預算：${r.public.over.slice(0, 5).map((x) => `${x.page} ${x.bytes}`).join('；')}`);
+  assert.ok(
+    r.ok,
+    `超預算：${r.public.over
+      .slice(0, 5)
+      .map((x) => `${x.page} ${x.bytes}`)
+      .join('；')}`,
+  );
   const html = fs.readFileSync(path.join(DIST, 'vi/index.html'), 'utf8');
   assert.match(html, /assets\/js\/i18n\.vi\.js/);
   assert.doesNotMatch(html, /i18n\.(zh-TW|en|ja|tl|id|th)\.js/);
@@ -81,23 +91,43 @@ test('dist：完整 i18n.js 不上線、每頁 JS 在預算內、每頁只載入
 // ───────────────────────── 端到端（Playwright）─────────────────────────
 const PW = process.env.PW_MODULE || '/opt/node22/lib/node_modules/playwright/index.mjs';
 const CHROME = process.env.CHROME_BIN || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
-const freePort = () => new Promise((res) => { const s = net.createServer(); s.listen(0, () => { const p = s.address().port; s.close(() => res(p)); }); });
+const freePort = () =>
+  new Promise((res) => {
+    const s = net.createServer();
+    s.listen(0, () => {
+      const p = s.address().port;
+      s.close(() => res(p));
+    });
+  });
 
 test('端到端：/、/vi/、/admin/、/ask/ 無 console 錯誤，client JS 渲染翻譯字串', async (tc) => {
   if (!fs.existsSync(path.join(DIST, 'index.html'))) return tc.skip('dist 尚未建置');
   if (!fs.existsSync(PW) || !fs.existsSync(CHROME)) return tc.skip('沒有 Playwright／Chromium');
   const { chromium } = await import(pathToFileURL(PW).href);
   const port = await freePort();
-  const srv = spawn(process.execPath, [path.join(ROOT, 'scripts/serve.mjs'), String(port)], { cwd: ROOT, stdio: 'ignore', env: { ...process.env, DIST_DIR: DIST } });
+  const srv = spawn(process.execPath, [path.join(ROOT, 'scripts/serve.mjs'), String(port)], {
+    cwd: ROOT,
+    stdio: 'ignore',
+    env: { ...process.env, DIST_DIR: DIST },
+  });
   const browser = await chromium.launch({ executablePath: CHROME, args: ['--no-sandbox'] });
   try {
     const base = `http://localhost:${port}${config.basePath}`;
-    for (let i = 0; i < 50; i++) { try { if ((await fetch(`${base}/`)).ok) break; } catch { /* wait */ } await new Promise((r) => setTimeout(r, 100)); }
+    for (let i = 0; i < 50; i++) {
+      try {
+        if ((await fetch(`${base}/`)).ok) break;
+      } catch {
+        /* wait */
+      }
+      await new Promise((r) => setTimeout(r, 100));
+    }
     const ctx = await browser.newContext();
     for (const p of ['/', '/vi/', '/admin/', '/ask/', '/vi/vaccines/schedule/']) {
       const page = await ctx.newPage();
       const errors = [];
-      page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
+      page.on('console', (m) => {
+        if (m.type() === 'error') errors.push(m.text());
+      });
       page.on('pageerror', (e) => errors.push(String(e)));
       await page.goto(`${base}${p}`, { waitUntil: 'networkidle' });
       assert.deepEqual(errors, [], `${p} console 錯誤`);
@@ -113,5 +143,8 @@ test('端到端：/、/vi/、/admin/、/ask/ 無 console 錯誤，client JS 渲�
       }
       await page.close();
     }
-  } finally { await browser.close(); srv.kill(); }
+  } finally {
+    await browser.close();
+    srv.kill();
+  }
 });
