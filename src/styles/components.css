@@ -18,6 +18,10 @@
 .c-pill--ok{background:var(--ok-bg);color:var(--ok)}
 .c-pill--warn{background:var(--warn-bg);color:var(--warn)}
 .c-pill--info{background:var(--info-bg);color:var(--info)}
+.c-glossary__filter{margin:0 0 var(--sp-4)} .c-glossary__filter input{width:100%;max-width:32rem}
+.c-glossary__az{margin:0 0 var(--sp-4)} .c-glossary__group[hidden],.c-glossary__row[hidden]{display:none}
+.c-glossary__group h2{border-bottom:1px solid var(--line-2);padding-bottom:var(--sp-1)} .c-glossary__row{padding:var(--sp-2) 0;border-bottom:1px solid var(--line-2)}
+.c-glossary__zh{font-weight:600} .c-glossary__en{color:var(--ink-3)} .c-glossary__row dd{margin:0} .c-glossary__row dd p{margin:var(--sp-1) 0}
 .c-empty{padding:var(--sp-5);text-align:center;color:var(--ink-3);background:var(--paper);border-radius:var(--radius)}
 
 /* 問題框 */

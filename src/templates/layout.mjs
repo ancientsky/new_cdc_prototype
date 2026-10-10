@@ -152,7 +152,7 @@ ${translationBar(ctx, item, hideTranslationBar)}
     <li><a href="${url('/policy/legal/')}">${t('footer.legal')}</a></li><li><a href="${url('/policy/foia/')}">${t('footer.foia')}</a></li><li><a href="${url('/policy/security/')}">${t('footer.security')}</a></li><li><a href="${url('/policy/copyright/')}">${t('footer.copyright')}</a></li>
     <li><a href="${url('/guide/')}">${t('footer.guide')}</a></li><li><a href="${url('/sitemap-page/')}">${t('sitemap')}</a></li></ul></nav>
   <nav class="site-footer__col" aria-labelledby="ft-dev"><h2 class="site-footer__t" id="ft-dev">${t('footer.group.dev')}</h2><ul>
-    <li><a href="${url('/data/')}">${t('nav.data')}</a></li><li><a href="${url('/developers/')}">${t('footer.api')}</a></li><li><a href="${url('/policy/open-data/')}">${t('footer.license')}</a></li>
+    <li><a href="${url('/data/')}">${t('nav.data')}</a></li><li><a href="${url('/developers/')}">${t('footer.api')}</a></li><li><a href="${url('/policy/open-data/')}">${t('footer.license')}</a></li><li><a href="${url('/glossary/')}">${t('footer.glossary')}</a></li>
     <li><a href="${url('/transparency/')}">${t('footer.transparency')}</a></li><li><a href="${url('/admin/', { noLang: true })}">${t('footer.admin')}</a></li></ul></nav>
   <div class="site-footer__col site-footer__col--contact"><h2 class="site-footer__t" id="ft-contact">${t('footer.group.contact')}</h2>
     <p class="site-footer__hot"><a href="tel:1922">1922</a><a class="site-footer__hot2" href="tel:0800001922">0800-001922</a></p>
