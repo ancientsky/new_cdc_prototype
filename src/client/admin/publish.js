@@ -27,6 +27,8 @@ let ASSETS = null; // 附件與圖片面板（assets-panel.js）
 let PV = null; // 右側「頁面預覽」（page-preview.js，第二十二輪）
 let lastId = ''; // 內容 ID 變動時，內文裡的 /files/{舊id}/ 引用跟著改
 const LIMITS = P.normalizeLimits(window.CDC_ASSETS_LIMITS ?? D.assetsLimits);
+/** 第二十三輪（26.4）：BYOK key 只在這個分頁的 sessionStorage（答案頁與後台同一個 origin，同分頁可共用）；沒有就回 ''。 */
+function llmKey() { try { return sessionStorage.getItem('cdc.llmKey') || ''; } catch { return ''; } }
 const LANES = P.normalizeLanes(D.lanes); // 發布車道（建置時內嵌 content/governance/lanes.json；缺檔用契約預設）
 let simShown = false; // 已按過「模擬送出」：重繪結果時一併重畫時間軸
 let editing = null; // 修改已上架內容：{ id, original }（?edit={id}；匯出時以 P.mergeEdit 帶回表單沒有的欄位）
@@ -481,7 +483,7 @@ function paintResult() {
   const chip = (m) => `<li><label class="adm-chip${m.kind === 'topic' ? ' adm-chip--plain' : ''}"><input type="checkbox" data-chip="${esc(chipKey(m))}" ${sel.chips[chipKey(m)] ? 'checked' : ''}> ${esc(m.label)}${m.id && m.kind !== 'term' ? ` · <code>${esc(m.id)}</code>` : ''}${m.via?.length ? `<span class="adm-muted">（文中寫作「${esc(m.via.join('、'))}」）</span>` : ''}${m.locked ? '<span class="adm-badge adm-badge--info" title="詞彙主檔鎖定詞：機器翻譯不得自由翻譯">鎖定</span>' : ''}</label></li>`;
   const unm = (u) => `<li><label class="adm-chip adm-chip--warn"><input type="checkbox" data-chip="u:${esc(u.term)}" ${sel.chips[`u:${u.term}`] ? 'checked' : ''}> 『${esc(u.term)}』未在主檔 → 建議新增別名／詞彙<span class="adm-muted">（${esc(u.reason.join('、'))}）</span></label> <a class="adm-muted" href="${url('/admin/glossary/')}?new=${encodeURIComponent(u.term)}">加到詞彙主檔</a></li>`;
   const dep = entities.deprecated.map((d) => `<li><span class="adm-chip adm-chip--warn">『${esc(d.term)}』為停用舊名 → 請改用『${esc(d.preferred)}』</span></li>`).join('');
-  const key = store.raw('cdc.llmKey');
+  const key = llmKey(); // 第二十三輪：BYOK key 改存 sessionStorage（只在本分頁有效）
   const rows = P.LANGS.filter((l) => l.code !== 'zh-TW').map((l) => {
     const want = f.langs[l.code]?.on;
     const termsTxt = locked.length ? locked.map((t) => `<span class="adm-chip adm-chip--plain">${esc(t.zh)} → ${esc(t.tr[l.code] || '（主檔缺此語）')}</span>`).join(' ') : '<span class="adm-muted">本文未命中鎖定詞</span>';
@@ -780,7 +782,7 @@ async function llmOne(lang) {
   llmDrafts[lang] = { pending: true };
   try {
     const mod = await import(url('/assets/js/answer/llm.js'));
-    const key = store.raw('cdc.llmKey');
+    const key = llmKey();
     if (typeof mod.translateWithGlossary === 'function') {
       // 約定介面（若答案引擎日後提供）
       const res = await mod.translateWithGlossary({ text: `${f.title}\n\n${f.body}`, lang, glossary: A.M.glossary, apiKey: key, key });

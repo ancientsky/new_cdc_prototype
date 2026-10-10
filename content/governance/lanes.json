@@ -1,14 +1,21 @@
 {
   "version": "v1",
-  "note": "發布車道（ARCHITECTURE 17.1）。由變更檔案推出車道與審核需求（scripts/lane.mjs，多檔取最嚴格：standard ＞ fast ＞ emergency）；CI（.github/workflows/content-pr.yml）依此決定自動合併或等待審核。一級內容（site.config.tier1Types）走一般車道時，審核人改用 tier1Reviewers。",
+  "note": "發布車道（ARCHITECTURE 17.1）。由變更檔案推出車道與審核需求（scripts/lane.mjs，多檔取最嚴格：standard ＞ fast ＞ emergency）；CI（.github/workflows/content-pr.yml）依此決定自動合併或等待審核。一級內容（site.config.tier1Types）走一般車道時，審核人改用 tier1Reviewers。 第二十三輪（26.3）：自動合併車道還要看「誰」送的——allowedAuthors（GitHub 帳號或 team:org/slug）；不在名單內的 PR 自動降為一般車道（要 1 位核准）。urgent 另受 rules.urgentAllowedAuthors 限制。",
   "lanes": {
     "emergency": {
       "label": "緊急發布",
-      "description": "疫情態勢與標記 urgent 的新聞稿／通函／澄清：檢查通過即上線，公關室 24 小時內上線後複核",
-      "types": ["situation"],
-      "alsoWhen": { "urgent": true },
+      "description": "疫情態勢與標記 urgent 的新聞稿／通函／澄清：檢查通過即上線，公關室 24 小時內上線後複核；僅限 allowedAuthors（值班帳號）",
+      "types": [
+        "situation"
+      ],
+      "alsoWhen": {
+        "urgent": true
+      },
       "autoMerge": true,
       "requiredApprovals": 0,
+      "allowedAuthors": [
+        "ancientsky"
+      ],
       "reviewers": [],
       "postPublishReviewHours": 24,
       "postPublishReviewer": "unit.pr",
@@ -16,10 +23,20 @@
     },
     "fast": {
       "label": "快車道",
-      "description": "新聞稿、通函、澄清、職缺、採購、宣導 Banner：檢查通過即自動合併，送出後約 3 分鐘上線，公關室 24 小時內複核",
-      "types": ["news", "letter", "clarification", "job", "tender", "banner"],
+      "description": "新聞稿、通函、澄清、職缺、採購、宣導 Banner：檢查通過即自動合併，送出後約 3 分鐘上線，公關室 24 小時內複核；僅限 allowedAuthors 名單內的承辦人，其他人送的自動改走一般車道",
+      "types": [
+        "news",
+        "letter",
+        "clarification",
+        "job",
+        "tender",
+        "banner"
+      ],
       "autoMerge": true,
       "requiredApprovals": 0,
+      "allowedAuthors": [
+        "ancientsky"
+      ],
       "reviewers": [],
       "postPublishReviewHours": 24,
       "postPublishReviewer": "unit.pr",
@@ -28,22 +45,59 @@
     "standard": {
       "label": "一般車道",
       "description": "疾病、疫苗、文件、Q&A 等需人審的內容，以及所有程式／文件變更：檢查通過＋1 位核准才合併",
-      "types": ["disease", "vaccine", "document", "faq", "topic", "service", "page", "publication", "labtest", "research", "dataset", "media", "migration"],
+      "types": [
+        "disease",
+        "vaccine",
+        "document",
+        "faq",
+        "topic",
+        "service",
+        "page",
+        "publication",
+        "labtest",
+        "research",
+        "dataset",
+        "media",
+        "migration"
+      ],
       "autoMerge": false,
       "requiredApprovals": 1,
-      "reviewers": ["unit.pr"],
-      "tier1Reviewers": ["unit.pr", "unit.oasis"],
+      "reviewers": [
+        "unit.pr"
+      ],
+      "tier1Reviewers": [
+        "unit.pr",
+        "unit.oasis"
+      ],
       "slaWorkingDays": 2
     }
   },
-  "strictness": ["emergency", "fast", "standard"],
+  "strictness": [
+    "emergency",
+    "fast",
+    "standard"
+  ],
   "rules": {
     "translationsNeverBlock": true,
-    "machineTranslationAllowedFor": ["news", "faq", "topic", "service"],
+    "machineTranslationAllowedFor": [
+      "news",
+      "faq",
+      "topic",
+      "service"
+    ],
     "ciIsTheReviewer": true,
-    "urgentAllowedTypes": ["news", "letter", "clarification"],
+    "urgentAllowedTypes": [
+      "news",
+      "letter",
+      "clarification"
+    ],
     "postPublishReviewSince": "2026-10-04",
-    "timezone": "Asia/Taipei"
+    "timezone": "Asia/Taipei",
+    "urgentAllowedAuthors": [
+      "ancientsky"
+    ],
+    "authorGateSince": "2026-10-10",
+    "authorGateNote": "原型示範：名單只有 repo 擁有者。正式環境改填值班帳號與 team:<org>/<slug>（CI 以 gh api 查 team 成員）；名單變更走一般車道、由 OASIS 與公關室核准。"
   },
   "reviewerAccounts": {
     "unit.pr": "ancientsky",

@@ -114,6 +114,14 @@
 **代價：** 預覽是「示意版面」（用後台樣式畫出同樣的資訊結構），不是跑真正的頁面模板；要做到像素級一致，得把 Node 端模板搬到瀏覽器或用 iframe 載 PR 預覽網址。沒有「在真實頁面上直接打字」：本原型的內文是 Markdown 欄位，表單裡的所見即所得已經涵蓋。
 **什麼時候重新考慮：** 若正式環境決定要有常駐後端（例如代承辦人開 PR 的服務擴大成完整 API），且前台改以 React／Next 建置，TinaCMS（或同類：Decap、Sveltia、Keystatic）可重新評估；屆時本輪定義的「欄位 ↔ 預覽區塊」對應（`FIELD_MAP`）與治理欄位 schema 仍可沿用。
 
+## 15. 原型公開示範但不給索引；民眾端不提供 BYOK，示範限同事且金鑰只活在分頁
+
+**背景：** 2026-10-10 外部檢視（grokbot）指出：原型以疾管署名義公開在 GitHub Pages，有示意的疫情數字，搜尋引擎與 AI 爬蟲都能抓；答案頁的「進階」要民眾貼 Anthropic 金鑰並長期放在 `localStorage`，而 GitHub Pages 專案站同帳號所有專案共用同一 origin 的 localStorage。
+**決定：** (1) 新增站台模式，預設 `prototype`：每頁 `noindex, nofollow`、`robots.txt` 全擋、每頁頂端「非官方原型」橫幅；正式站以 `SITE_MODE=production` 建置才拿掉，AI 政策版 robots 仍保留為 `robots.production.txt`。(2) BYOK 不下架（它是展示「生成式答案也要逐句引用、後檢」的唯一方式），但金鑰改存 `sessionStorage`、欄位只在有後台工作階段的瀏覽器出現、模型名稱由設定帶入。正式站若要生成式答案，走機關受控後端代理，金鑰只在伺服器端（§4 的「何時重考慮」）。
+**為什麼不乾脆拿掉 robots 政策版：** 附錄 H 的三類 AI 爬蟲分流是正式站要用的規格，拿掉就沒地方示範；改成雙檔輸出，原型擋、正式放，兩邊都看得到。
+**為什麼不用 `X-Robots-Tag`：** GitHub Pages 不能自訂回應標頭，只能用 meta 與 robots.txt；正式環境的標頭基準在 deploy.md §10。
+**代價：** 原型期間 Google 等已索引的頁面要等重新爬取才會退出（可在 Search Console 手動移除）；橫幅佔每頁頂端一行。
+
 ## 與規劃文件的對照
 
 | 規劃文件主題 | 原型位置 |

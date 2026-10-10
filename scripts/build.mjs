@@ -18,6 +18,7 @@ import { applyGovernance } from './lib/governance.mjs';
 import { buildSearchIndex } from './lib/index-builder.mjs';
 import { emitApi } from './lib/emit-api.mjs';
 import { emitSeo } from './lib/emit-seo.mjs';
+import { emitHeaders } from './lib/emit-headers.mjs';
 import { renderAllPages } from './lib/pages.mjs';
 import { runEval } from '../eval/run-eval.mjs';
 import { todayISO } from './lib/render.mjs';
@@ -98,6 +99,9 @@ async function main() {
   const copied = copyAssets(publicView(site), DIST);
   log(`檔案資產 → dist/files/：${copied.files} 個檔（${copied.items} 筆內容、${(copied.bytes / 1024).toFixed(0)} KB）`);
   writeOut('.nojekyll', '');
+  // 第二十三輪（26.2）：掃 dist 的 inline script 算雜湊 → 安全標頭設定檔（dist/headers/）。超過 40 段代表有模板把每頁資料塞進 inline script，要改成 data 屬性或 application/json。
+  const hdr = emitHeaders(DIST, writeOut);
+  log(`安全標頭 → dist/headers/（inline script 雜湊 ${hdr.info.count} 段）${hdr.info.count > 40 ? '  ⚠ inline script 過多，請檢查' : ''}`);
   log(`輸出 ${pageCount} 頁 → dist/（${Date.now() - t0} ms）`);
 
   // 全站連結完整性（站內連結必須指到存在的檔案；外部連結收集清單；佔位／示意網址 = error）

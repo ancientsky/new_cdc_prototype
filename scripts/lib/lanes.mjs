@@ -2,7 +2,8 @@
 //
 // 一、車道：content/governance/lanes.json 定義 emergency／fast／standard 三條車道。
 //   laneOfItem(item)            → 'emergency'｜'fast'｜'standard'（urgent:true 且型別允許 ⇒ emergency；否則依型別）
-//   laneForFiles(files, opts)   → scripts/lane.mjs 與 CI 用的 JSON（多檔取最嚴格：standard ＞ fast ＞ emergency）
+//   laneForFiles(files, opts)   → scripts/lane.mjs 與 CI 用的 JSON（多檔取最嚴格：standard ＞ fast ＞ emergency；opts.author 不在 allowedAuthors ⇒ 降為 standard）
+//   authorAllowed(author, list, { teams }) → 第二十三輪：作者是否在車道授權名單（帳號或 team:<org>/<slug>）
 //   slaOf(lane, since)          → { minutes|workingDays, dueAt, label }
 // 二、排程發布：publishAt 以「真實現在時間」判斷（不受 BUILD_TODAY 影響），讓排程內容到點真的上線。
 //   nowOf(site|now)             → 毫秒；優先 site.now（測試注入）→ 環境變數 BUILD_NOW → Date.now()
@@ -45,7 +46,11 @@ export function validateLanes(cfg, allTypes = []) {
     if (!l.autoMerge && !(l.requiredApprovals >= 1)) errs.push(`${k}：非自動合併車道至少要 1 位核准`);
     if (l.slaMinutes == null && l.slaWorkingDays == null) errs.push(`${k}：slaMinutes 或 slaWorkingDays 擇一必填`);
     if (l.autoMerge && !(l.postPublishReviewHours > 0)) errs.push(`${k}：自動合併車道必須有 postPublishReviewHours（上線後複核）`);
+    // 第二十三輪（26.3）：能跳過人審的車道一定要有授權名單，否則任何有寫入權限的人都能直接上線
+    if (l.autoMerge && !(Array.isArray(l.allowedAuthors) && l.allowedAuthors.length)) errs.push(`${k}：自動合併車道必須有 allowedAuthors（誰可以不經人審直接上線）`);
+    if (l.allowedAuthors != null && (!Array.isArray(l.allowedAuthors) || l.allowedAuthors.some((a) => typeof a !== 'string' || !a.trim()))) errs.push(`${k}.allowedAuthors 必須是非空字串陣列`);
   }
+  if (cfg.rules?.urgentAllowedAuthors != null && !Array.isArray(cfg.rules.urgentAllowedAuthors)) errs.push('rules.urgentAllowedAuthors 必須是陣列');
   for (const k of Object.keys(lanes)) if (!LANE_STRICTNESS.includes(k)) errs.push(`未知車道 ${k}`);
   const seen = new Map();
   for (const [k, l] of Object.entries(lanes)) for (const t of l.types ?? []) {
@@ -139,6 +144,23 @@ export function laneOfItem(item, cfg = loadLanes()) {
   return 'standard';
 }
 
+/**
+ * 第二十三輪（26.3）：作者是否在名單內。名單項目：GitHub 帳號（不分大小寫）或 `team:<org>/<slug>`；
+ * team 成員資格由 CI 另查（teams 參數傳入作者所屬的 team slug 清單），本機沒資料就當不在 team 內。
+ * 回傳 { allowed, reason }。
+ */
+export function authorAllowed(author, list, { teams = [] } = {}) {
+  const a = String(author ?? '').trim().toLowerCase();
+  if (!a) return { allowed: false, reason: '未提供 PR 作者' };
+  const names = (list ?? []).map((x) => String(x).trim().toLowerCase()).filter(Boolean);
+  if (!names.length) return { allowed: false, reason: '車道沒有授權名單' };
+  if (names.includes(a)) return { allowed: true, reason: `作者 ${author} 在名單內` };
+  const myTeams = new Set((teams ?? []).map((t) => String(t).trim().toLowerCase()));
+  const hit = names.find((n) => n.startsWith('team:') && myTeams.has(n.slice(5)));
+  if (hit) return { allowed: true, reason: `作者 ${author} 屬於 ${hit}` };
+  return { allowed: false, reason: `作者 ${author} 不在授權名單內（${list.join('、')}）` };
+}
+
 /** 取兩車道中較嚴格者 */
 export const stricter = (a, b) => (LANE_STRICTNESS.indexOf(a) >= LANE_STRICTNESS.indexOf(b) ? a : b);
 
@@ -225,7 +247,7 @@ export function classifyFile(file, { root = ROOT, cfg = loadLanes(), index } = {
  * 變更檔案清單 → CI 用 JSON：
  * { lane, label, ghLabel, autoMerge, requiredApprovals, reviewers, reviewerAccounts, sla, postPublishReview, files:[{file,type,lane,reason}], reasons:[] }
  */
-export function laneForFiles(files, { root = ROOT, cfg = loadLanes(), since = Date.now(), tier1Types = ['disease', 'vaccine', 'clarification', 'situation'] } = {}) {
+export function laneForFiles(files, { root = ROOT, cfg = loadLanes(), since = Date.now(), tier1Types = ['disease', 'vaccine', 'clarification', 'situation'], author = null, teams = [] } = {}) {
   let idx;
   const index = () => (idx ??= contentIndex(root));
   const list = [...new Set((files ?? []).map((x) => String(x).trim()).filter(Boolean))];
@@ -237,6 +259,17 @@ export function laneForFiles(files, { root = ROOT, cfg = loadLanes(), since = Da
   const lanesUsed = new Set(classified.map((c) => c.lane));
   if (lanesUsed.size > 1) reasons.push(`多檔取最嚴格：${cfg.lanes[lane].label}`);
   if (classified.some((c) => c.reason === '程式／文件變更需審核')) reasons.push('程式／文件變更需審核');
+  // 第二十三輪（26.3）：自動合併車道還要看「誰」送的。不在名單 ⇒ 降為一般車道（檔案分類不變，只是要 1 位核准）；
+  // 沒傳作者（本機跑、舊 CI）也視為不在名單，寧可多一道人審。urgent 另看 rules.urgentAllowedAuthors。
+  let authorGate = null;
+  if (cfg.lanes[lane]?.autoMerge) {
+    const gate = authorAllowed(author, cfg.lanes[lane].allowedAuthors, { teams });
+    const urgentFiles = classified.filter((c) => c.lane === 'emergency' && /urgent/.test(c.reason));
+    const urgentGate = urgentFiles.length && cfg.rules?.urgentAllowedAuthors ? authorAllowed(author, cfg.rules.urgentAllowedAuthors, { teams }) : { allowed: true, reason: null };
+    authorGate = { author: author ?? null, allowed: gate.allowed && urgentGate.allowed, reason: gate.allowed ? (urgentGate.allowed ? gate.reason : `urgent：${urgentGate.reason}`) : gate.reason, requestedLane: lane };
+    if (!authorGate.allowed) { reasons.push(`${authorGate.reason} ⇒ 降為${cfg.lanes.standard.label}（需人審）`); lane = 'standard'; }
+    else reasons.push(authorGate.reason);
+  }
   const l = cfg.lanes[lane];
   let reviewers = [...(l.reviewers ?? [])];
   const tier1 = lane === 'standard' && classified.some((c) => c.lane === 'standard' && tier1Types.includes(c.type));
@@ -247,7 +280,7 @@ export function laneForFiles(files, { root = ROOT, cfg = loadLanes(), since = Da
   const reviewerAccounts = [...new Set(reviewers.map((r) => acc[r] ?? acc.default).filter(Boolean))];
   return {
     lane, label: l.label, ghLabel: `lane:${lane}`, description: l.description ?? null,
-    autoMerge: !!l.autoMerge, requiredApprovals: l.requiredApprovals ?? 0, reviewers, reviewerNames: reviewers.map(unitName), reviewerAccounts, tier1,
+    autoMerge: !!l.autoMerge, requiredApprovals: l.requiredApprovals ?? 0, reviewers, reviewerNames: reviewers.map(unitName), reviewerAccounts, tier1, authorGate,
     sla: slaOf(lane, since, cfg),
     postPublishReview: l.postPublishReviewHours ? { owner: l.postPublishReviewer ?? 'unit.pr', ownerName: unitName(l.postPublishReviewer ?? 'unit.pr'), hours: l.postPublishReviewHours } : null,
     files: classified.map(({ file, type, lane: ln, reason }) => ({ file, type, lane: ln, reason })),

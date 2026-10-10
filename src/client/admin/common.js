@@ -15,7 +15,7 @@
 //   cdc.admin.tenders-edit  採購公告上架與異動表單草稿
 //   cdc.aiStatusOverride    AI 暫停覆寫（答案頁讀取）{paused, reason, updatedAt, updatedBy}
 //   cdc.reports             前台回報（唯讀）
-//   cdc.llmKey              BYOK（唯讀；有才會呼叫 LLM 多語初稿）
+//   （sessionStorage）cdc.llmKey  BYOK（唯讀；有才會呼叫 LLM 多語初稿；第二十三輪起只在本分頁，關閉即清除）
 
 import { sessionProblem, canAccess, canCrossUnit, roleLabels, auditEntry, makeSession } from './auth-rules.js';
 

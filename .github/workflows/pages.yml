@@ -14,10 +14,9 @@ on:
         type: boolean
         default: true
 
+# 第二十三輪（26.5）：工作流程層級唯讀，寫入權限下放到 job：build 要 commit 快照回 main（contents: write）；deploy 只要 pages／id-token。
 permissions:
-  contents: write # 排程／手動執行時把官方資料快照 commit 回 main
-  pages: write
-  id-token: write
+  contents: read
 
 concurrency:
   group: pages
@@ -26,9 +25,11 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # 排程／手動執行時把官方資料快照 commit 回 main
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 22
           cache: npm
@@ -84,19 +85,22 @@ jobs:
       - name: Check PR previews are in the upload (dist/preview)
         run: |
           if [ -d dist/preview ]; then ls dist/preview; du -sh dist/preview; else echo "沒有 PR 預覽"; fi
-      - uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5.0.0
         with:
           enablement: true
         continue-on-error: true
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
         with:
           path: dist # 含 dist/preview/pr-N/
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5

@@ -13,7 +13,8 @@ function emitted(opts, mutate) {
 
 test('robots.txt：三類 AI 爬蟲區塊、擋 /ask/ 與 /admin/（含語言前綴）、不擋失效版、列出全部 sitemap', () => {
   const { files } = emitted();
-  const r = files.get('robots.txt');
+  // 第二十三輪：原型模式的 robots.txt 全擋，AI 政策版另存 robots.production.txt（SITE_MODE=production 時才是 robots.txt）
+  const r = files.get(config.isPrototype ? 'robots.production.txt' : 'robots.txt');
   for (const group of Object.values(AI_CRAWLERS)) {
     assert.ok(r.includes(group.label), group.label);
     for (const a of group.agents) assert.match(r, new RegExp(`^User-agent: ${a}$`, 'm'));

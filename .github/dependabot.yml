@@ -1,0 +1,22 @@
+# 第二十三輪（ARCHITECTURE 26.5）：workflow 裡的 action 固定 commit SHA，由 Dependabot 每週開 PR 升版（會同時更新註解裡的版本號）。
+# npm 依賴也每週檢查；全部走一般車道（程式變更需 1 位核准）。
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '09:00'
+      timezone: Asia/Taipei
+    commit-message:
+      prefix: 'ci'
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '09:00'
+      timezone: Asia/Taipei
+    commit-message:
+      prefix: 'deps'

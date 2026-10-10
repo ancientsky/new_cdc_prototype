@@ -7,6 +7,9 @@ export const config = {
   // 本機預覽：BASE_PATH='' node scripts/build.mjs
   basePath: (process.env.BASE_PATH ?? '/new_cdc_prototype').replace(/\/$/, ''),
   siteUrl: process.env.SITE_URL ?? 'https://ancientsky.github.io',
+  // 第二十三輪（ARCHITECTURE 26.1）：站台模式。prototype（預設）＝公開示範站：每頁 noindex、robots.txt 全擋、每頁頂端「非官方原型」橫幅；
+  // production＝正式站：SITE_MODE=production 建置才拿掉上述三項，robots.txt 改用 AI 政策版（附錄 H）。原型版 robots 另輸出 robots.production.txt 供對照。
+  mode: process.env.SITE_MODE === 'production' ? 'production' : 'prototype',
   // 現行官網（來源連結、legacyUrls 用）
   legacyOrigin: 'https://www.cdc.gov.tw',
   openDataOrigin: 'https://data.cdc.gov.tw',
@@ -17,6 +20,9 @@ export const config = {
   hotlineIntl: '+886-800-001922',
   defaultLang: 'zh-TW',
   // 七語：繁中為正本語言；其他語言依內容 languages[lang].status 決定是否渲染
+  get isPrototype() { return this.mode !== 'production'; },
+  // 正式官網（原型橫幅導向用）
+  officialUrl: 'https://www.cdc.gov.tw/',
   langs: [
     { code: 'zh-TW', label: '繁體中文', dir: 'ltr', path: '' },
     { code: 'en', label: 'English', dir: 'ltr', path: '/en' },
@@ -43,6 +49,7 @@ export const config = {
     modelDisclosure: '預設為抽取式整理（不使用生成模型）；啟用 LLM 模式時顯示供應商與模型名稱',
     llmProvider: 'Anthropic',
     llmModel: 'claude-sonnet-5-5',
+    llmModels: ['claude-sonnet-5-5', 'claude-opus-5-5'], // 答案頁下拉可選；第二十三輪起由頁面 data 屬性帶給 llm.js，不在程式寫死
   },
   // 第八輪（ARCHITECTURE 16.1）：檔案資產（content/assets/{content-id}/ → dist/files/{content-id}/，公開網址 /files/{content-id}/{file}）
   // 超限、副檔名不在清單、檔數超過 maxFiles ⇒ 建置失敗（scripts/lib/assets.mjs）。後台上架包預檢也讀這裡（site.config.assets）。

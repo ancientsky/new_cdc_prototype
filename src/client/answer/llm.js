@@ -1,5 +1,7 @@
-// 可選 LLM 模式（BYOK）：使用者在答案頁「進階」輸入自己的 Anthropic API key。
-// key 只存在使用者瀏覽器的 localStorage（cdc.llmKey），由瀏覽器直接呼叫 Anthropic Messages API，不經過本站任何伺服器。
+// 可選 LLM 模式（BYOK）：同事示範用——只有這台瀏覽器有未過期的後台工作階段（cdc.admin.session）時，答案頁「進階」才會出現金鑰欄位。
+// 第二十三輪（ARCHITECTURE 26.4）：key 只存在**這個分頁的 sessionStorage**（cdc.llmKey），關閉分頁即清除；不再用 localStorage，
+// 因為 GitHub Pages 專案站同帳號下所有專案共用同一個 origin 的 localStorage，而且長期存放的金鑰會被惡意擴充功能讀走。
+// 由瀏覽器直接呼叫 Anthropic Messages API，不經過本站任何伺服器。正式站不提供民眾端 BYOK（決策紀錄 §4、§15）。
 //
 // 流程：core 抽取式結果（已完成個資遮蔽、拒答、檢索） → 只把檢索片段交給模型 → 模型輸出
 //       { sentences:[{text, cite:[片段 id]}], confidence, followUps } → 後檢（grounding guard）→ 0 句則退回抽取式。
@@ -8,20 +10,32 @@
 import { tokenize, maskPII } from './core.js';
 
 export const LLM_PROVIDER = 'Anthropic';
-export const LLM_DEFAULT_MODEL = 'claude-sonnet-5-5'; // 與 site.config.mjs ai.llmModel 一致（揭露用）
-export const LLM_MODELS = ['claude-sonnet-5-5', 'claude-opus-5-5'];
+// 模型名稱由頁面帶入（ask.mjs 在 #ask-advanced 放 data-llm-model／data-llm-models，值來自 site.config.mjs ai），不寫死在程式；Node 測試沒有 document 時用備援值。
+const FALLBACK_MODEL = 'claude-sonnet-5-5';
+function advEl() { try { return globalThis.document?.getElementById('ask-advanced') ?? null; } catch { return null; } }
+export function llmModels() { const v = advEl()?.dataset?.llmModels; const list = v ? v.split(',').map((x) => x.trim()).filter(Boolean) : []; return list.length ? list : [llmDefaultModel()]; }
+export function llmDefaultModel() { return advEl()?.dataset?.llmModel || FALLBACK_MODEL; }
+export const LLM_DEFAULT_MODEL = FALLBACK_MODEL; // 向後相容（舊測試引用）；實際以 llmDefaultModel() 為準
+export const LLM_MODELS = [FALLBACK_MODEL, 'claude-opus-5-5']; // 向後相容；實際以 llmModels() 為準
 const API_URL = 'https://api.anthropic.com/v1/messages';
 const KEY_STORE = 'cdc.llmKey';
 const MODEL_STORE = 'cdc.llmModel';
 
-// ───────── key 管理（只在瀏覽器） ─────────
+// ───────── key 管理（只在瀏覽器、只在本分頁） ─────────
+function ss() { try { return globalThis.sessionStorage ?? null; } catch { return null; } }
 function ls() { try { return globalThis.localStorage ?? null; } catch { return null; } }
-export function getKey() { try { return ls()?.getItem(KEY_STORE) || ''; } catch { return ''; } }
-export function setKey(k) { try { if (k) ls()?.setItem(KEY_STORE, String(k).trim()); else ls()?.removeItem(KEY_STORE); } catch { /* 私密模式 */ } }
+/** 第二十三輪：舊版把 key 存在 localStorage；載入時一律清掉，避免殘留 */
+export function purgeLegacyKey() { try { ls()?.removeItem(KEY_STORE); } catch { /* ignore */ } }
+export function getKey() { try { return ss()?.getItem(KEY_STORE) || ''; } catch { return ''; } }
+export function setKey(k) { try { if (k) ss()?.setItem(KEY_STORE, String(k).trim()); else ss()?.removeItem(KEY_STORE); } catch { /* 私密模式 */ } }
 export function clearKey() { setKey(''); }
-export function getModel() { try { const m = ls()?.getItem(MODEL_STORE); return LLM_MODELS.includes(m) ? m : LLM_DEFAULT_MODEL; } catch { return LLM_DEFAULT_MODEL; } }
-export function setModel(m) { try { if (LLM_MODELS.includes(m)) ls()?.setItem(MODEL_STORE, m); } catch { /* ignore */ } }
+export function getModel() { try { const m = ss()?.getItem(MODEL_STORE); return llmModels().includes(m) ? m : llmDefaultModel(); } catch { return llmDefaultModel(); } }
+export function setModel(m) { try { if (llmModels().includes(m)) ss()?.setItem(MODEL_STORE, m); } catch { /* ignore */ } }
 export function hasKey() { return !!getKey(); }
+/** 只有後台工作階段未過期時才開放 BYOK（同事示範用）。session 真偽由後台頁自己再驗；這裡只是「要不要顯示欄位」。 */
+export function staffSessionActive(now = Date.now()) {
+  try { const s = JSON.parse(ls()?.getItem('cdc.admin.session') ?? 'null'); return !!s && typeof s.exp === 'number' && now < s.exp; } catch { return false; }
+}
 
 const LANG_NAME = { 'zh-TW': '繁體中文（台灣用語）', en: 'English', ja: '日本語', tl: 'Tagalog', vi: 'Tiếng Việt', id: 'Bahasa Indonesia', th: 'ภาษาไทย' };
 
