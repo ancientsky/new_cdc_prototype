@@ -1052,7 +1052,8 @@ node scripts/analyze-404-log.mjs access.log --map dist/v1/legacy-map.json --migr
 ### 24.4 給資訊室：安全標頭、Actions 版本
 
 - 建置輸出 `dist/headers/`（nginx／IIS／CDN 三種格式），部署正式站時直接套；怎麼驗見 [deploy.md](deploy.md) §10。
-- `.github/workflows/` 的第三方 action 都釘死在 commit SHA，Dependabot 每週開升版 PR（走一般車道）。看到 `uses: actions/checkout@11d5960…  # v4.4.0` 這種寫法是正常的，不要改回 `@v4`。
+- `.github/workflows/` 的第三方 action 都釘死在 commit SHA，Dependabot 每週開升版 PR（走一般車道）。看到 `uses: actions/checkout@3d3c42e…  # v7.0.1` 這種寫法是正常的，不要改回 `@v7`。
+- 升版 PR 一週最多兩個（Actions 一個、npm minor／patch 一個），major 版另開。Actions 升版 PR 要順手改 `tests/lanes.test.mjs` 裡的 SHA，否則 CI 會紅燈；步驟見 [deploy.md](deploy.md) §9.1。
 
 ## 25. 無障礙：同事上架時要注意什麼、CI 會擋什麼（第二十四輪）
 

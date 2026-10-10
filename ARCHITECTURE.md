@@ -967,7 +967,7 @@ manualStatus?: enum[cancelled, failed（流標）], award?: { date, winner, amou
 - `ask.mjs`：`#ask-advanced[data-llm-model][data-llm-models]`（來自 `config.ai.llmModel/llmModels`）、金鑰欄位包在 `<div data-llm-staff hidden>`；`llm.js` 的 `llmDefaultModel()/llmModels()` 讀 data 屬性，`LLM_DEFAULT_MODEL/LLM_MODELS` 僅為備援常數。後台 `publish.js` 多語初稿改讀 sessionStorage 鍵。
 
 ### 26.5 GitHub Actions
-- 所有 `uses:` 釘 40 字元 commit SHA，行尾註解 `# vX.Y.Z`；`.github/dependabot.yml`（github-actions、npm 每週）。
+- 所有 `uses:` 釘 40 字元 commit SHA，行尾註解 `# vX.Y.Z`；`.github/dependabot.yml`（github-actions、npm 每週；第二十七輪加 `groups`：Actions 全部一組、npm minor／patch 一組，避免相鄰行升版 PR 互相衝突）。`tests/lanes.test.mjs` 寫死 checkout／setup-node／deploy-pages 的 SHA，升版時一併更新（deploy.md §9.1）。
 - `content-pr.yml`、`pages.yml` 工作流程層級 `permissions: contents: read`；寫入權限在 job 層（`lane` job：contents/pull-requests/issues/actions write；`build` job：contents write；`deploy` job：pages/id-token write）。測試 `tests/round23-security.test.mjs` 檢查 SHA 格式、註解、層級。
 
 ## 27. 第二十四輪（2026-10-10）：無障礙修正與 CI 檢測閘門

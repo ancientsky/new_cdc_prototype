@@ -112,6 +112,15 @@
 
 > 限制：(1) 後台的「送出」是**展示**，原型不能代承辦人開 PR，交件仍是下載 ZIP；(2) GitHub 工作流程**無法在本機驗證**，是否如預期運作以開一個真實測試 PR 的結果為準（見 [docs/publishing-lanes.md](docs/publishing-lanes.md) 附錄 B）；(3) 排程發布受每 2 小時重建限制，延遲最多 2 小時；(4) 開發環境連不到舊站，結核病首批用的是**依既有內容反推的模擬匯出**，真實匯出的版型與品質可能不同，規則要用真實樣本校準。
 
+## 第二十七輪：Dependabot 升版 PR 整併、合併順序
+
+第二十三輪加了 Dependabot 之後，第一次跑就開了 6 個升版 PR（5 個 GitHub Actions、1 個 `marked`），其中幾個彼此衝突。這一輪把它們合成一個提交直接進 `main`，並改設定讓以後不再發生。
+
+- **六個升版一次驗完**：`actions/checkout` 7.0.1、`setup-node` 7.1.0、`configure-pages` 6.0.0、`upload-pages-artifact` 5.0.0、`deploy-pages` 5.0.1、`marked` 18.1.0。建置前後逐檔比對 `dist/`：除了時間戳，只有連結網址裡的 `&` 改輸出為 `&amp;`（較正確的 HTML）與空白行，畫面不變；526 項測試、`--check`、lint、typecheck 全過。
+- **為什麼會衝突**：`checkout` 與 `setup-node` 在 workflow 裡是相鄰兩行，Dependabot 一個 action 開一個 PR，合了一個，另一個就衝突。`.github/dependabot.yml` 加 `groups`：同週的 action 升版合成一個 PR；npm 的 minor／patch 合成一個，major 仍各自一個（好單獨驗證、單獨退回）。
+- **為什麼升版 PR 會紅燈**：`tests/lanes.test.mjs` 寫死了 action 的 SHA，所以升 `checkout`、`setup-node`、`deploy-pages` 的 PR 要同時改這個測試檔的 SHA。做法見 `docs/deploy.md` §9.1。
+- **`upload-pages-artifact` v4 起不打包點開頭的檔案**：`dist/.nojekyll` 不會上傳。用 Actions 部署本來就不跑 Jekyll，不受影響；但之後若要放 `/.well-known/`（例如 `security.txt`），要另外處理。
+
 ## 第二十六輪：介面字串依語言拆檔、JS 預算、Lint／型別檢查、CMS 路線決策紀錄
 
 回應三個外部審查意見（詳見 [ARCHITECTURE.md 第 29 章](ARCHITECTURE.md)）：

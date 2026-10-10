@@ -188,6 +188,15 @@ CI 任一項失敗即不部署：JSON Schema 與跨檔參照（`owner`、`basedO
 - 所有 HTML 由 `html` 標籤模板輸出，插值預設跳脫，只有 `raw()` 包起來的才不跳脫；Markdown 經 `marked` 的安全設定處理。審查 PR 時，凡新增 `raw()` 呼叫都要特別看一眼。
 - 依賴極少（三個套件），降低供應鏈風險；升級時看 `npm audit` 並跑完整測試。
 
+### 9.1 Dependabot 升版 PR 怎麼處理（第二十七輪）
+
+- **設定**：`.github/dependabot.yml` 每週一 09:00（台灣時間）檢查。Actions 升版合成一個 PR（`groups.actions`）；npm 的 minor／patch 合成一個（`groups.npm-minor-patch`），major 各自一個。
+- **為什麼要分組**：同一個 workflow 裡 `checkout` 和 `setup-node` 是相鄰兩行。分開的 PR 各改一行，git 會把「相鄰行都被改」當成衝突，合了一個另一個就要重做。合成一個 PR 就沒有這個問題，CI 也只跑一次。
+- **升 action 的 PR 會紅燈是預期的**：`tests/lanes.test.mjs` 寫死 `checkout`、`setup-node`、`deploy-pages` 的 SHA（確保沒人偷偷換回可移動的 tag）。升版時把測試檔裡的 SHA 和註解版本換成 PR 裡的新值即可；SHA 格式另由 `tests/round23-security.test.mjs` 檢查。
+- **升 major 版要看什麼**：讀 release notes 的 breaking changes，跑 `npm test`、`node scripts/build.mjs --check`，再把升版前後的 `dist/` 逐檔比對（`diff -rq`），只剩時間戳差異才算安全。2026-10-10 升 `marked` 15→18 的差異只有 `&`→`&amp;` 與空白行。
+- **已知的行為變化**：`actions/upload-pages-artifact` v4 起不打包點開頭的檔案與目錄（`.nojekyll`、`.well-known/`）。目前沒影響；若要上 `/.well-known/security.txt`，要改由正式站伺服器提供，或另找打包方式。
+- **前端 `src/public/vendor/marked.min.js` 不跟著升**：它是後台貼上轉換用的獨立副本，Dependabot 看不到。要升時手動換檔並測後台「貼上 Word／網頁」轉換。
+
 ## 10. 安全標頭基準（第二十三輪）
 
 靜態站本身回不了標頭，`Content-Security-Policy`、`Strict-Transport-Security` 等要由伺服器或 CDN 加。**建置會把要加的標頭直接輸出成設定檔**，放在 `dist/headers/`：

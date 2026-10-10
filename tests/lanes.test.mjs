@@ -359,7 +359,7 @@ test('content-pr.yml：觸發、權限、併發、檢查、車道、預覽、留
     'pull_request:', 'types: [opened, synchronize, reopened]',
     'permissions:\n  contents: read', 'contents: write', 'pull-requests: write', 'actions: write', '--author="$PR_AUTHOR"',
     'concurrency:', 'content-pr-${{ github.event.pull_request.number }}',
-    'actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0', 'fetch-depth: 0', 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0', 'node-version: 22', 'npm ci', 'npm test',
+    'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1', 'fetch-depth: 0', 'actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0', 'node-version: 22', 'npm ci', 'npm test',
     'BUILD_TODAY=2026-10-01 node scripts/build.mjs --check',
     'node scripts/lane.mjs', 'git diff --name-only origin/main...HEAD',
     'preview/pr-${{ github.event.pull_request.number }}', 'BUILD_TODAY: 2026-10-01', 'SITE_URL: https://', 'LINK_CHECK: warn', 'npm run build',
@@ -393,7 +393,7 @@ test('pages.yml：每 2 小時建置；fetch 只在手動或 02 UTC；previews �
     "cron: '0 */2 * * *'", 'workflow_dispatch:', 'refresh:', 'date -u +%H', '"02"',
     "steps.refresh.outputs.refresh == 'true'", 'npm run fetch', 'git push origin HEAD:main',
     'git fetch --depth 1 origin', 'origin/previews', 'PREVIEWS_DIR', 'previews 分支不存在', 'dist/preview',
-    'path: dist', 'actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5', 'permissions:\n  contents: read', 'pages: write', 'id-token: write', 'npm test', 'npm run build',
+    'path: dist', 'actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1', 'permissions:\n  contents: read', 'pages: write', 'id-token: write', 'npm test', 'npm run build',
   ], rel);
   assert.ok(!text.includes("cron: '0 3 * * *'"));
   assert.ok(!/if: github.event_name != 'push'/.test(text), '快照回寫不再以 push 與否判斷');

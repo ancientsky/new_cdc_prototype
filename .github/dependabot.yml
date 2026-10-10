@@ -1,5 +1,8 @@
 # 第二十三輪（ARCHITECTURE 26.5）：workflow 裡的 action 固定 commit SHA，由 Dependabot 每週開 PR 升版（會同時更新註解裡的版本號）。
 # npm 依賴也每週檢查；全部走一般車道（程式變更需 1 位核准）。
+# groups：同一週的 action 升版合成一個 PR。原因：checkout 與 setup-node 在 workflow 裡是相鄰兩行，
+# 分開的 PR 合了一個，另一個就會衝突（2026-10-10 第一次跑就開了 5 個互相衝突的 PR）。
+# npm 的 minor／patch 也合成一個；major 仍各自一個 PR，方便單獨驗證與退回。
 version: 2
 updates:
   - package-ecosystem: github-actions
@@ -11,6 +14,9 @@ updates:
       timezone: Asia/Taipei
     commit-message:
       prefix: 'ci'
+    groups:
+      actions:
+        patterns: ['*']
   - package-ecosystem: npm
     directory: /
     schedule:
@@ -20,3 +26,6 @@ updates:
       timezone: Asia/Taipei
     commit-message:
       prefix: 'deps'
+    groups:
+      npm-minor-patch:
+        update-types: [minor, patch]
