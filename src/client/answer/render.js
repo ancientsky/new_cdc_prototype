@@ -1,7 +1,9 @@
 // 答案頁元件的 HTML 產生器（字串），答案頁、謠言查證、統計問答共用。全部插值經 esc()。
 // 元件：4 AI 回答標示、5 拒答卡、6 回報與稽核編號、9 數字的來源卡；來源卡（三層露出）、態勢卡、判定 pill。
 import { esc, url, LANG, barChart } from './data.js';
-import { pdfHref, isLowRelevance } from './core.js';
+// 第四十輪：直接從 text.js／rules.js 取，不經 core.js——core.js 是整個引擎（約 70 KB），答案頁要等使用者提問才載入，畫面元件不能把它拉進初始載入
+import { pdfHref } from './text.js';
+import { isLowRelevance } from './rules.js';
 
 // ───────── UI 字串（zh-TW／en／vi；其他語言 fallback en） ─────────
 const S = {

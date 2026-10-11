@@ -37,7 +37,7 @@ async function rerun() {
   try {
     const data = await import(url('/assets/js/answer/data.js'));
     const core = await import(url('/assets/js/answer/core.js'));
-    const [pubL, proL, evalSet, exists] = await Promise.all([data.loadEngine('public'), data.loadEngine('pro'), v1('governance/eval-set', null), makeExists()]);
+    const [pubL, proL, evalSet, exists] = await Promise.all([data.loadEngine('public', { allLangs: true }), data.loadEngine('pro', { allLangs: true }), v1('governance/eval-set', null), makeExists()]) // 第四十輪：評估集有外語題，讀全部語言的索引（答案頁只讀當頁語言分片）;
     if (!evalSet) throw new Error('讀不到 /v1/governance/eval-set.json');
     // 評估看內容與規則本身，不受本機的暫停覆寫影響：用同一份 deps 重建引擎並強制 paused:false
     const mk = (x) => ({ engine: core.createEngine({ ...x.deps, aiStatus: { ...x.deps.aiStatus, paused: false } }) });

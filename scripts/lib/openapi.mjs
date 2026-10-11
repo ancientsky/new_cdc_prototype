@@ -179,6 +179,9 @@ export const ENDPOINTS = [
   ['/v1/search.json', 'search', '搜尋端點說明（靜態站＝search-index 別名）', free],
   ['/v1/search-index.json', 'search', '答案單元索引（民眾，只含白名單）', arr(ref('Chunk'))],
   ['/v1/search-index-pro.json', 'search', '答案單元索引（專業，只含現行版）', arr(ref('Chunk'))],
+  // 第四十輪：依語言分片（內容同上，只含該語言的片段；精簡 JSON）。答案頁只下載當頁語言＋中文兩片
+  ['/v1/search-index.{lang}.json', 'search', '答案單元索引的語言分片（民眾；lang＝zh-TW／en／ja／tl／vi／id／th；meta.shardOf 指回完整檔）', arr(ref('Chunk'))],
+  ['/v1/search-index-pro.{lang}.json', 'search', '答案單元索引的語言分片（專業）', arr(ref('Chunk'))],
   ['/v1/tasks/{task}.json', 'content', '六任務入口聚合（依內容 tasks 欄位）', ref('TaskBundle')],
   ['/v1/redirects.json', 'meta', '舊版／舊網址 → 正本對照（301；kind：superseded／family-latest／legacy／migration；pattern 項只進文件）', arr(ref('Redirect'))],
   ['/v1/legacy-map.json', 'meta', '舊網址精簡對照（404 頁與 /legacy/ 查詢用）；patterns＝{id} 佔位的 URL 模式（不可自動轉址）、gone＝不移轉（建議 410）、ambiguous＝同一舊網址對到多個新頁（不輸出）', ref('LegacyMap'),
@@ -216,7 +219,8 @@ export function buildOpenApi(site) {
     if (p.startsWith('/v1/migration/') && p.includes('{slug}')) params.push({ name: 'slug', in: 'path', required: true, schema: { type: 'string', enum: (site?.migration?.lists ?? []).map((l) => l.slug) }, description: '移轉清單 slug（見 /v1/migration/index.json）' });
     else if (p.includes('{slug}')) params.push({ name: 'slug', in: 'path', required: true, schema: { type: 'string', enum: (site?.collections?.diseases ?? []).map((d) => d.slug) }, description: '疾病頁 slug（見 /v1/diseases.json 的 api 欄位）' });
     if (p.includes('{task}')) params.push({ name: 'task', in: 'path', required: true, schema: { type: 'string', enum: config.tasks.map((t) => t.key) } });
-    const opId = `get${p.replace(/\.json$/, '').split(/[/{}-]+/).filter(Boolean).map((x) => x[0].toUpperCase() + x.slice(1)).join('')}`;
+    if (p.includes('{lang}')) params.push({ name: 'lang', in: 'path', required: true, schema: { type: 'string', enum: config.langs.map((l) => l.code) }, description: '語言（第四十輪：答案單元索引依語言分片）' });
+    const opId = `get${p.replace(/\.json$/, '').split(/[/{}.-]+/).filter(Boolean).map((x) => x[0].toUpperCase() + x.slice(1)).join('')}`;
     paths[p] = {
       get: {
         operationId: opId, tags: [tag], summary, parameters: params.length ? params : undefined,

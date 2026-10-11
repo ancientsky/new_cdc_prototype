@@ -16,11 +16,21 @@
 // 而本掃描只沿「靜態 import」追（動態 import() 不會被 IMPORT_RE 抓到），所以 dist/pagefind/ 不計入——這是刻意的：
 // 搜尋索引是資料不是每頁都要付的程式碼；它的成本改由 scripts/lib/pagefind.mjs 在建置 log 報告（執行期約 0.3 MB、第一次查詢實測約 0.33 MB），
 // 並由 tests/round28-search.test.mjs 擋住「有人在 HTML 直接 <script src> pagefind」這種繞過預算的寫法。
+//
+// 第四十輪（Issue #80）：答案頁的引擎（answer/core.js 與它的模組）改成「使用者提問時才 import()」，所以：
+//   - 「含答案引擎的頁」改以「載入 answer/data.js（引擎載入器）」判定；row.bytes 是立即載入的 JS，row.total 再加上提問時才載入的引擎閉包。
+//     240 KB 的引擎頁預算套在 total 上——一題深連結（/ask/?q=…）的使用者兩份都要付，預算的意義不變，只是初始畫面輕了。
+//   - 新增 checkAskDataBudget()：答案頁提問時要下載的 JSON（當頁語言＋中文的索引分片＋引擎資料，清單與前端共用 src/client/answer/deps-manifest.js），
+//     以 gzip 後位元組估算傳輸量（GitHub Pages 與一般 CDN 對 JSON 都會 gzip；level 6 與它們的預設相近），超過 ASK_DATA_BUDGET_KB 建置失敗。
 import fs from 'node:fs';
 import path from 'node:path';
+import zlib from 'node:zlib';
+import { ENGINE_PRIMARY, ENGINE_SECONDARY, indexShardNames } from '../../src/client/answer/deps-manifest.js';
 
 export const DEFAULT_PUBLIC_KB = 120;
 export const DEFAULT_ENGINE_KB = 240;
+/** 答案頁提問時下載的 JSON（gzip 後）：第四十輪實測最大是英文頁 387 KB（英文分片＋中文分片；zh-TW 350 KB），×1.15 ≈ 445 KB（見 docs/deploy.md §15） */
+export const DEFAULT_ASK_DATA_KB = 445;
 const SRC_RE = /<script\b[^>]*\bsrc="([^"]+\.js)"/g;
 const IMPORT_RE = /(?:^|[;\n}])\s*(?:import|export)\s*(?:[^'"()]*?\bfrom\s*)?['"](\.{1,2}\/[^'"]+)['"]/g;
 
@@ -73,8 +83,13 @@ export function checkJsBudget(
     }
     let bytes = 0;
     for (const f of files) bytes += fs.statSync(f).size;
-    const engine = [...files].some((x) => x.endsWith(`${path.sep}answer${path.sep}core.js`));
-    rows.push({ page: rel, bytes, admin: rel.startsWith('admin/'), engine });
+    const engine = [...files].some((x) => x.endsWith(`${path.sep}answer${path.sep}core.js`) || x.endsWith(`${path.sep}answer${path.sep}data.js`));
+    let total = bytes;
+    if (engine) {
+      const lazy = closure(path.join(distDir, 'assets/js/answer/core.js'), cache);
+      for (const f of lazy) if (!files.has(f)) total += fs.statSync(f).size;
+    }
+    rows.push({ page: rel, bytes, total, admin: rel.startsWith('admin/'), engine });
   }
   const top = (list) => list.reduce((a, r) => (r.bytes > (a?.bytes ?? -1) ? r : a), null);
   const pub = rows.filter((r) => !r.admin && !r.engine);
@@ -82,14 +97,47 @@ export function checkJsBudget(
   const adm = rows.filter((r) => r.admin);
   const tp = top(pub);
   const ta = top(adm);
-  const te = top(eng);
-  const over = [...pub.filter((r) => r.bytes > publicKb * 1024), ...eng.filter((r) => r.bytes > engineKb * 1024)];
+  const te = eng.reduce((a, r) => (r.total > (a?.total ?? -1) ? r : a), null);
+  const ti = top(eng);
+  const over = [...pub.filter((r) => r.bytes > publicKb * 1024), ...eng.filter((r) => r.total > engineKb * 1024)];
   const overAdmin = adminKb ? adm.filter((r) => r.bytes > adminKb * 1024) : [];
   return {
     ok: over.length === 0 && overAdmin.length === 0,
     rows,
-    engine: { budgetKb: engineKb, count: eng.length, max: te?.bytes ?? 0, maxPage: te?.page ?? '' },
+    // max／maxPage：提問後合計（引擎預算套在這裡）；initialMax：立即載入的部分（第四十輪起引擎不在其中）
+    engine: { budgetKb: engineKb, count: eng.length, max: te?.total ?? 0, maxPage: te?.page ?? '', initialMax: ti?.bytes ?? 0, initialMaxPage: ti?.page ?? '' },
     public: { budgetKb: publicKb, count: pub.length, max: tp?.bytes ?? 0, maxPage: tp?.page ?? '', over },
     admin: { budgetKb: adminKb, count: adm.length, max: ta?.bytes ?? 0, maxPage: ta?.page ?? '', over: overAdmin },
   };
+}
+
+const gz = (f) => zlib.gzipSync(fs.readFileSync(f), { level: 6 }).length;
+
+/**
+ * 答案頁的資料傳輸量（第四十輪，Issue #80）：每種語言的 /ask/ 在提問時要下載的 JSON，gzip 後位元組加總。
+ * 算法：索引分片（中文＋當頁語言）＋ deps-manifest 的主要與次要 JSON ＋ v1/index.json（可選檔的清單）；民眾版。
+ * 不含：疾病頁 JSON 與 news.json（答案出來之後側欄才抓、且依問題而定）、專業版（另列 pro，只回報）。
+ * 回傳 { ok, budgetKb, rows: [{ lang, bytes, raw, files }], max, maxLang, pro }。budgetKb 為 0 ＝ 只回報不擋。
+ */
+export function checkAskDataBudget(distDir, { langs = ['zh-TW'], budgetKb = Number(process.env.ASK_DATA_BUDGET_KB) || DEFAULT_ASK_DATA_KB } = {}) {
+  const v1 = (n) => path.join(distDir, 'v1', `${n}.json`);
+  const shared = [...ENGINE_PRIMARY, ...ENGINE_SECONDARY].map(([n]) => n).concat('index');
+  const measure = (names) => {
+    let bytes = 0;
+    let raw = 0;
+    const files = [];
+    for (const n of names) {
+      const f = v1(n);
+      if (!fs.existsSync(f)) continue; // 可選檔不存在時前端也不會抓
+      const b = gz(f);
+      bytes += b;
+      raw += fs.statSync(f).size;
+      files.push([n, b]);
+    }
+    return { bytes, raw, files };
+  };
+  const rows = langs.map((lang) => ({ lang, ...measure([...indexShardNames('search-index', lang), ...shared]) }));
+  const pro = measure([...indexShardNames('search-index-pro', 'zh-TW'), ...shared]);
+  const top = rows.reduce((a, r) => (r.bytes > (a?.bytes ?? -1) ? r : a), null);
+  return { ok: !budgetKb || rows.every((r) => r.bytes <= budgetKb * 1024), budgetKb, rows, max: top?.bytes ?? 0, maxLang: top?.lang ?? '', pro };
 }

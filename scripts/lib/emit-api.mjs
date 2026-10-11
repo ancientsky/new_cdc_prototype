@@ -23,7 +23,8 @@ export function lastModifiedOf(data) {
   return pick(data);
 }
 
-export function wrap(site, data, extra = {}, top = {}) {
+/** { indent }：預設 2（對外 API 好讀）；0 ＝ 精簡（第四十輪：只給程式讀的分片） */
+export function wrap(site, data, extra = {}, top = {}, { indent = 2 } = {}) {
   site.generatedAt ??= new Date().toISOString();
   const meta = {
     api: 'v1', generatedAt: site.generatedAt, buildDate: site.today, license: 'OGDL-1.0', licenseUrl: 'https://data.gov.tw/license',
@@ -32,7 +33,7 @@ export function wrap(site, data, extra = {}, top = {}) {
     ...(Array.isArray(data) ? { count: data.length } : {}),
     ...extra,
   };
-  return JSON.stringify({ meta, data, ...top }, null, 2);
+  return JSON.stringify({ meta, data, ...top }, null, indent || undefined);
 }
 
 /** 每筆內容的治理摘要（API、catalog 共用） */
@@ -475,10 +476,26 @@ export function emitApi(fullSite, write) {
 
   // 搜尋（靜態版＝答案單元索引）
   const si = site.searchIndex ?? { public: [], pro: [] };
-  put('v1/search-index.json', si.public, { lastModified: lastModifiedOf(si.public) ?? site.today }, {}, '答案單元索引（民眾，只含白名單）');
-  put('v1/search-index-pro.json', si.pro, { lastModified: lastModifiedOf(si.pro) ?? site.today }, {}, '答案單元索引（專業，只含現行版）');
+  // 第四十輪（Issue #80）：依語言分片。答案頁只下載「當頁語言＋中文正本」兩片（引擎查不到該語言的審閱譯文時退回中文，所以中文片一定要有），
+  // 不再整包下載七語（zh-TW 頁原本 1.9 MB 裡有 0.3 MB 是用不到的外語片段）。分片是精簡 JSON（不縮排）：只給程式讀，省傳輸也省解析。
+  // 原本的 search-index.json／-pro.json 照舊輸出、內容不變（對外 API 相容）；meta.shards 列出各分片網址。
+  const shardsOf = (base, chunks) => {
+    const out = {};
+    for (const { code } of config.langs) {
+      const part = chunks.filter((ch) => (ch.lang ?? 'zh-TW') === code);
+      const file = `v1/${base}.${code}.json`;
+      write(file, wrap(site, part, { lastModified: lastModifiedOf(part) ?? site.today, lang: code, shardOf: `/v1/${base}.json` }, {}, { indent: 0 }));
+      manifest.push({ path: `/${file}`, url: absUrl(`/${file}`), description: `${base} 的 ${code} 分片（答案頁只載入當頁語言＋中文）`, count: part.length });
+      out[code] = absUrl(`/${file}`);
+    }
+    return out;
+  };
+  const shards = shardsOf('search-index', si.public);
+  const shardsPro = shardsOf('search-index-pro', si.pro);
+  put('v1/search-index.json', si.public, { lastModified: lastModifiedOf(si.public) ?? site.today, shards }, {}, '答案單元索引（民眾，只含白名單；meta.shards 是依語言的分片）');
+  put('v1/search-index-pro.json', si.pro, { lastModified: lastModifiedOf(si.pro) ?? site.today, shards: shardsPro }, {}, '答案單元索引（專業，只含現行版；meta.shards 是依語言的分片）');
   put('v1/search.json', {
-    endpoint: absUrl('/v1/search-index.json'), proEndpoint: absUrl('/v1/search-index-pro.json'),
+    endpoint: absUrl('/v1/search-index.json'), proEndpoint: absUrl('/v1/search-index-pro.json'), shards, proShards: shardsPro,
     description: '靜態站沒有伺服器端搜尋：/v1/search 即答案單元索引（search-index.json）。下載後於用戶端以 bigram＋詞彙主檔同義詞＋BM25 檢索；只含 AI 白名單內容，失效版本不在索引中。',
     chunks: si.public.length, chunksPro: si.pro.length,
     chunkFields: ['id', 'contentId', 'type', 'lang', 'title', 'text', 'sentences', 'url', 'owner', 'ownerName', 'reviewedAt', 'nextReviewAt', 'audience', 'tasks', 'diseases', 'vaccines', 'countries', 'version', 'effectiveAt', 'isCurrent', 'whitelist', 'terms'],

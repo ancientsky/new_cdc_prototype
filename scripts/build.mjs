@@ -22,9 +22,9 @@ import { emitSeo } from './lib/emit-seo.mjs';
 import { emitHeaders } from './lib/emit-headers.mjs';
 import { renderAllPages } from './lib/pages.mjs';
 import { emitI18nBundles } from './lib/i18n-split.mjs';
-import { checkJsBudget } from './lib/js-budget.mjs';
+import { checkJsBudget, checkAskDataBudget } from './lib/js-budget.mjs';
 import { minifyDir } from './lib/minify.mjs';
-import { buildPagefindIndex } from './lib/pagefind.mjs';
+import { buildPagefindIndex, verifyPagefindRecall } from './lib/pagefind.mjs';
 import { runEval } from '../eval/run-eval.mjs';
 import { todayISO } from './lib/render.mjs';
 import { checkInternalLinks, summarize as summarizeLinks } from './lib/check-internal-links.mjs';
@@ -123,17 +123,37 @@ async function main() {
 
   // 每頁 JS 預算（issue #34）：公開頁超過預算 ⇒ 建置失敗。調整方式見 scripts/lib/js-budget.mjs（JS_BUDGET_KB）
   const jsb = checkJsBudget(DIST, { basePath: config.basePath });
-  log(`JS 預算：公開頁最大 ${(jsb.public.max / 1024).toFixed(1)} KB（${jsb.public.maxPage}，預算 ${jsb.public.budgetKb} KB，${jsb.public.count} 頁）；含答案引擎的頁最大 ${(jsb.engine.max / 1024).toFixed(1)} KB（${jsb.engine.maxPage}，預算 ${jsb.engine.budgetKb} KB，${jsb.engine.count} 頁）；後台頁最大 ${(jsb.admin.max / 1024).toFixed(1)} KB（${jsb.admin.maxPage}）`);
+  log(`JS 預算：公開頁最大 ${(jsb.public.max / 1024).toFixed(1)} KB（${jsb.public.maxPage}，預算 ${jsb.public.budgetKb} KB，${jsb.public.count} 頁）；含答案引擎的頁：立即載入最大 ${(jsb.engine.initialMax / 1024).toFixed(1)} KB（${jsb.engine.initialMaxPage}）、提問後合計最大 ${(jsb.engine.max / 1024).toFixed(1)} KB（${jsb.engine.maxPage}，預算 ${jsb.engine.budgetKb} KB，${jsb.engine.count} 頁）；後台頁最大 ${(jsb.admin.max / 1024).toFixed(1)} KB（${jsb.admin.maxPage}）`);
   if (!jsb.ok && mz.skipped) {
     console.warn('⚠ MINIFY=off：JS 預算以壓縮後的大小訂定，未壓縮建置只回報不擋（CI 一律壓縮）');
   } else if (!jsb.ok) {
-    console.error(`❌ 有頁面的 JS 超過預算：${[...jsb.public.over, ...jsb.admin.over].slice(0, 10).map((r) => `${r.page} ${(r.bytes / 1024).toFixed(1)}KB`).join('；')}`);
+    console.error(`❌ 有頁面的 JS 超過預算：${[...jsb.public.over, ...jsb.admin.over].slice(0, 10).map((r) => `${r.page} ${((r.engine ? r.total : r.bytes) / 1024).toFixed(1)}KB`).join('；')}`);
+    process.exit(1);
+  }
+  // 第四十輪（Issue #80）：答案頁提問時下載的 JSON（gzip 後估算）。超過 ASK_DATA_BUDGET_KB（預設見 js-budget.mjs）⇒ 建置失敗
+  const adb = checkAskDataBudget(DIST, { langs: config.langs.map((l) => l.code) });
+  log(`答案頁資料傳輸量（gzip 估算）：${adb.rows.map((r) => `${r.lang} ${(r.bytes / 1024).toFixed(0)}KB`).join('、')}；專業版 ${(adb.pro.bytes / 1024).toFixed(0)}KB（預算 ${adb.budgetKb || '—'} KB）`);
+  if (!adb.ok) {
+    console.error(`❌ 答案頁資料傳輸量超過預算 ${adb.budgetKb} KB：${adb.maxLang} ${(adb.max / 1024).toFixed(1)} KB（最大的檔：${adb.rows.find((r) => r.lang === adb.maxLang).files.sort((a, b) => b[1] - a[1]).slice(0, 3).map(([n, b]) => `${n} ${(b / 1024).toFixed(0)}KB`).join('、')}）`);
     process.exit(1);
   }  log(`輸出 ${pageCount} 頁 → dist/（${Date.now() - t0} ms）`);
 
   // 第二十八輪（ARCHITECTURE 31）：Pagefind 全文索引 → dist/pagefind/。必須在複製 PR 預覽之前（預覽各自有自己的索引，不能混進主站）
   const pfi = await buildPagefindIndex(DIST, { log });
   if (!pfi.skipped) log(`全文索引 → dist/pagefind/：${pfi.pages} 頁、語言 ${pfi.languages.join('／')}、${pfi.files} 檔 ${(pfi.bytes / 1024 / 1024).toFixed(1)} MB（執行期 ${(pfi.runtime / 1024).toFixed(0)} KB，第一次搜尋才載入）、${pfi.ms} ms`);
+  // 第四十輪（Issue #79）：「頁面上有的詞必須搜得到」自我檢查——抽頁、抽 4–8 字中文、用 Node 查剛建好的索引，來源頁必須在結果中。
+  // 有漏就列出來（警告）；召回低於 PAGEFIND_RECALL_MIN（預設 0.98）時 --check／CI 建置失敗。PAGEFIND_VERIFY=off 可略過。
+  if (!pfi.skipped && process.env.PAGEFIND_VERIFY !== 'off') {
+    const v = await verifyPagefindRecall(DIST);
+    const min = Number(process.env.PAGEFIND_RECALL_MIN) || 0.98;
+    log(`全文索引自我檢查：抽 ${v.pages} 頁 ${v.checked} 個 4–8 字中文字串，召回 ${(v.recall * 100).toFixed(1)}%（${v.hit}/${v.checked}）`);
+    if (v.misses.length) console.warn(`⚠ 頁面上有、卻搜不到：${v.misses.slice(0, 10).map((m) => `${m.page}「${m.q}」`).join('；')}`);
+    if (v.recall < min) {
+      const strict = args.check || process.env.CI;
+      console.error(`${strict ? '❌' : '⚠'} 全文索引召回 ${(v.recall * 100).toFixed(1)}% 低於 ${(min * 100).toFixed(0)}%（見 docs/ask-search-llm.md 第四十輪）`);
+      if (strict) process.exit(1);
+    }
+  }
 
   // 全站連結完整性（站內連結必須指到存在的檔案；外部連結收集清單；佔位／示意網址 = error）
   // --check 或 CI 下有 error ⇒ exit 1；LINK_CHECK=warn 可暫時降為警告（整合期用），LINK_CHECK=off 略過。

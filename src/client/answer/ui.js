@@ -1,6 +1,6 @@
 // 搜尋即答案頁（/ask/）：掛到 C 的殼 #ask-form／#ask-q、#answer、#answer-side、#ask-advanced、#llm-key。
 // 流程：讀 ?q= → core（抽取式）→ 依意圖渲染 wireframe 第 3 頁區塊 →（有 key 且啟用）LLM 重組或翻譯 → 後檢 → 重新渲染。
-import { loadEngine, currentView, url, esc, v1, LANG } from './data.js';
+import { loadEngine, prefetchEngine, currentView, url, esc, v1, LANG } from './data.js';
 import { L, link, isLowRelevance, sentenceList, sourceList, disclosureRow, refusalCard, situationCards, verdictBlock, statsBlock, traditionalList, fullTextLink, wireInteractions, ensureStyles, notifyBlock, conflictNotes } from './render.js';
 import './inline.js'; // 頁內問題框（#ask-inline／[data-ask-inline]）→ /ask/
 import { getKey, setKey, getModel, setModel, llmModels, purgeLegacyKey, staffSessionActive } from './llm-key.js';
@@ -28,6 +28,10 @@ if (answerEl) {
   wireInteractions(answerEl, () => current);
   setupAdvanced();
   if (input && params.get('q') && !input.value) input.value = params.get('q');
+  // 第四十輪（Issue #80）：沒有 ?q= 的初始畫面不下載引擎與索引；使用者一聚焦、按下或開始輸入就預取（通常在送出前就載好）
+  const pre = () => prefetchEngine(view);
+  for (const ev of ['focus', 'pointerdown', 'keydown', 'input']) input?.addEventListener(ev, pre, { once: true, passive: true });
+  form?.querySelector('button[type="submit"]')?.addEventListener('pointerdown', pre, { once: true, passive: true });
   form?.addEventListener('submit', (e) => {
     e.preventDefault();
     const q = input?.value.trim() ?? '';
@@ -55,7 +59,16 @@ async function run(q) {
     return;
   }
   busy(true);
-  const { engine, deps } = await loadEngine(view);
+  let loaded;
+  try { loaded = await loadEngine(view); } catch (e) {
+    // 第四十輪：引擎程式改成用到才載入，多了一個可能失敗的網路請求；失敗時不要卡在骨架畫面，給全文搜尋與 1922 的出路（下次提問會重試）
+    console.error('[answer]', e);
+    if (my !== runId) return;
+    answerEl.setAttribute('aria-busy', 'false');
+    answerEl.innerHTML = `<p class="c-alert c-alert--overdue">${esc(LANG === 'zh-TW' ? '智慧問答暫時無法載入，請稍後再試，或用全文搜尋、撥打 1922。' : 'Smart Search could not be loaded. Please try again later, use full-text search, or call 1922.')}</p>${fullTextLink(q)}`;
+    return;
+  }
+  const { engine, deps } = loaded;
   if (my !== runId) return;
   const disease = new URLSearchParams(location.search).get('disease') || null;
   let result = engine.answer(q, { lang: LANG, view, disease });
