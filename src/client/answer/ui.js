@@ -3,7 +3,8 @@
 import { loadEngine, currentView, url, esc, v1, LANG } from './data.js';
 import { L, link, isLowRelevance, sentenceList, sourceList, disclosureRow, refusalCard, situationCards, verdictBlock, statsBlock, traditionalList, fullTextLink, wireInteractions, ensureStyles, notifyBlock, conflictNotes } from './render.js';
 import './inline.js'; // 頁內問題框（#ask-inline／[data-ask-inline]）→ /ask/
-import { getKey, setKey, getModel, setModel, llmModels, llmAnswer, llmTranslate, purgeLegacyKey, staffSessionActive } from './llm.js';
+import { getKey, setKey, getModel, setModel, llmModels, purgeLegacyKey, staffSessionActive } from './llm-key.js';
+// 第三十四輪：提示詞、後檢、呼叫 API 的 llm.js 只在 LLM 模式真的要用時才以 import() 載入（民眾端不下載）。
 
 ensureStyles();
 const answerEl = document.getElementById('answer');
@@ -69,7 +70,9 @@ async function run(q) {
       const note = document.createElement('p');
       note.className = 'c-answer__llm-status'; note.setAttribute('role', 'status'); note.textContent = L('llmWorking');
       answerEl.prepend(note);
-      let next = needTranslate ? await llmTranslate(result, { lang: LANG, glossary: deps.glossary }) : await llmAnswer(result, { lang: LANG });
+      let llm;
+      try { llm = await import('./llm.js'); } catch { note.remove(); return; } // 載入失敗 ⇒ 保留抽取式結果
+      let next = needTranslate ? await llm.llmTranslate(result, { lang: LANG, glossary: deps.glossary }) : await llm.llmAnswer(result, { lang: LANG });
       if (my !== runId) return;
       current = next;
       await render(next, deps);

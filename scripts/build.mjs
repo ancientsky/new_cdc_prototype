@@ -23,6 +23,7 @@ import { emitHeaders } from './lib/emit-headers.mjs';
 import { renderAllPages } from './lib/pages.mjs';
 import { emitI18nBundles } from './lib/i18n-split.mjs';
 import { checkJsBudget } from './lib/js-budget.mjs';
+import { minifyDir } from './lib/minify.mjs';
 import { buildPagefindIndex } from './lib/pagefind.mjs';
 import { runEval } from '../eval/run-eval.mjs';
 import { todayISO } from './lib/render.mjs';
@@ -108,6 +109,9 @@ async function main() {
   // 介面字串依語言拆檔（issue #34）：i18n.<lang>.js 取代完整 i18n.js
   const i18nSizes = emitI18nBundles(DIST);
   log(`i18n 拆檔 → assets/js/i18n.<lang>.js：${Object.entries(i18nSizes).map(([l, b]) => `${l} ${(b / 1024).toFixed(0)}KB`).join('、')}`);
+  // 第三十四輪（ARCHITECTURE 40）：瀏覽器端 JS 逐檔壓縮＋source map；原始碼與註解留在 src/client。MINIFY=off 可關
+  const mz = await minifyDir(path.join(DIST, 'assets/js'));
+  log(mz.skipped ? `JS 壓縮：略過（MINIFY=off），${mz.files} 檔` : `JS 壓縮 → assets/js：${mz.files} 檔，${(mz.before / 1024).toFixed(0)} KB → ${(mz.after / 1024).toFixed(0)} KB（另有 .js.map 供除錯）`);
   if (fs.existsSync(path.join(ROOT, 'src/public'))) copyDir(path.join(ROOT, 'src/public'), DIST);
   // 檔案資產：只複製 published／archived 內容有宣告的檔 → dist/files/{id}/{file}
   const copied = copyAssets(publicView(site), DIST);
@@ -120,7 +124,9 @@ async function main() {
   // 每頁 JS 預算（issue #34）：公開頁超過預算 ⇒ 建置失敗。調整方式見 scripts/lib/js-budget.mjs（JS_BUDGET_KB）
   const jsb = checkJsBudget(DIST, { basePath: config.basePath });
   log(`JS 預算：公開頁最大 ${(jsb.public.max / 1024).toFixed(1)} KB（${jsb.public.maxPage}，預算 ${jsb.public.budgetKb} KB，${jsb.public.count} 頁）；含答案引擎的頁最大 ${(jsb.engine.max / 1024).toFixed(1)} KB（${jsb.engine.maxPage}，預算 ${jsb.engine.budgetKb} KB，${jsb.engine.count} 頁）；後台頁最大 ${(jsb.admin.max / 1024).toFixed(1)} KB（${jsb.admin.maxPage}）`);
-  if (!jsb.ok) {
+  if (!jsb.ok && mz.skipped) {
+    console.warn('⚠ MINIFY=off：JS 預算以壓縮後的大小訂定，未壓縮建置只回報不擋（CI 一律壓縮）');
+  } else if (!jsb.ok) {
     console.error(`❌ 有頁面的 JS 超過預算：${[...jsb.public.over, ...jsb.admin.over].slice(0, 10).map((r) => `${r.page} ${(r.bytes / 1024).toFixed(1)}KB`).join('；')}`);
     process.exit(1);
   }  log(`輸出 ${pageCount} 頁 → dist/（${Date.now() - t0} ms）`);

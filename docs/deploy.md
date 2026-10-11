@@ -156,7 +156,7 @@ CI 任一項失敗即不部署：JSON Schema 與跨檔參照（`owner`、`basedO
   - `npm run lint`：ESLint，PR 的 `content-pr.yml` 與 `pages.yml` 都會跑；0 errors 才算過（warnings 不擋，逐步清）。
   - `npm run typecheck`：`tsc` 型別檢查試點（`lanes.mjs`、`validate.mjs`）。
   - `npm run format:check`：Prettier，只強制新檔，不進 CI。
-  - `npm run build`：最後會印「JS 預算」一行（公開頁 120 KB、含答案引擎的頁 320 KB）；超過即失敗，可用 `JS_BUDGET_KB`／`ENGINE_JS_BUDGET_KB` 暫時調整。每季看一次最大值有沒有往上爬。
+  - `npm run build`：最後會印「JS 壓縮」與「JS 預算」兩行（公開頁 120 KB、含答案引擎的頁 240 KB，第三十四輪由 320 KB 下修）；預算以**壓縮後**大小計，超過即失敗，可用 `JS_BUDGET_KB`／`ENGINE_JS_BUDGET_KB` 暫時調整。每季看一次最大值有沒有往上爬。壓縮用 esbuild（devDependency，`npm ci` 會裝）；`MINIFY=off` 可輸出未壓縮的 dist 方便除錯，此時預算只回報不擋（guide-staff §38、ARCHITECTURE 40）。
 
 ## 7. 部署到其他環境
 

@@ -137,7 +137,7 @@ test('BYOK：金鑰只進 sessionStorage，載入時清掉舊 localStorage 金�
   assert.ok(ask.includes('data-llm-model="${ai.llmModel}"') && ask.includes('<div data-llm-staff hidden>'), '金鑰欄位預設隱藏，由 ui.js 在同事登入時顯示');
   const ui = read('src/client/answer/ui.js');
   assert.ok(ui.includes('staffSessionActive()') && ui.includes('purgeLegacyKey()') && !/localStorage\.(get|set)Item\(LLM_ON_KEY/.test(ui));
-  assert.ok(!/ls\(\)\?\.setItem\(KEY_STORE/.test(read('src/client/answer/llm.js')));
+  for (const f of ['src/client/answer/llm.js', 'src/client/answer/llm-key.js']) assert.ok(!/ls\(\)\?\.setItem\(KEY_STORE/.test(read(f)), f); // 第三十四輪金鑰函式搬到 llm-key.js
   assert.ok(!/store\.raw\('cdc\.llmKey'\)/.test(read('src/client/admin/publish.js')), '後台多語初稿也改讀 sessionStorage');
 });
 

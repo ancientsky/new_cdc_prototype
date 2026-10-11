@@ -8,34 +8,11 @@
 // 後檢：無 cite／cite 不在片段 → 刪；與所引片段的詞彙重疊不足 → 刪；句中數字不在所引片段 → 刪；個人醫療建議語 → 刪。
 // 翻譯模式：非中文且無同語審核片段時，把抽取式句子交給模型翻譯；詞彙主檔 locked 詞先換成 placeholder，翻譯後還原為該語言官方譯名。
 import { tokenize, maskPII, numbersByUnit } from './core.js';
-
-export const LLM_PROVIDER = 'Anthropic';
-// 模型名稱由頁面帶入（ask.mjs 在 #ask-advanced 放 data-llm-model／data-llm-models，值來自 site.config.mjs ai），不寫死在程式；Node 測試沒有 document 時用備援值。
-const FALLBACK_MODEL = 'claude-sonnet-5-5';
-function advEl() { try { return globalThis.document?.getElementById('ask-advanced') ?? null; } catch { return null; } }
-export function llmModels() { const v = advEl()?.dataset?.llmModels; const list = v ? v.split(',').map((x) => x.trim()).filter(Boolean) : []; return list.length ? list : [llmDefaultModel()]; }
-export function llmDefaultModel() { return advEl()?.dataset?.llmModel || FALLBACK_MODEL; }
-export const LLM_DEFAULT_MODEL = FALLBACK_MODEL; // 向後相容（舊測試引用）；實際以 llmDefaultModel() 為準
-export const LLM_MODELS = [FALLBACK_MODEL, 'claude-opus-5-5']; // 向後相容；實際以 llmModels() 為準
+import { getKey, getModel, LLM_DEFAULT_MODEL, LLM_PROVIDER } from './llm-key.js';
 const API_URL = 'https://api.anthropic.com/v1/messages';
-const KEY_STORE = 'cdc.llmKey';
-const MODEL_STORE = 'cdc.llmModel';
+// 第三十四輪：設定與金鑰函式搬到 llm-key.js；這裡 re-export，既有呼叫端（後台多語初稿、測試）不必改。
+export { LLM_PROVIDER, LLM_DEFAULT_MODEL, LLM_MODELS, llmModels, llmDefaultModel, purgeLegacyKey, getKey, setKey, clearKey, getModel, setModel, hasKey, staffSessionActive } from './llm-key.js';
 
-// ───────── key 管理（只在瀏覽器、只在本分頁） ─────────
-function ss() { try { return globalThis.sessionStorage ?? null; } catch { return null; } }
-function ls() { try { return globalThis.localStorage ?? null; } catch { return null; } }
-/** 第二十三輪：舊版把 key 存在 localStorage；載入時一律清掉，避免殘留 */
-export function purgeLegacyKey() { try { ls()?.removeItem(KEY_STORE); } catch { /* ignore */ } }
-export function getKey() { try { return ss()?.getItem(KEY_STORE) || ''; } catch { return ''; } }
-export function setKey(k) { try { if (k) ss()?.setItem(KEY_STORE, String(k).trim()); else ss()?.removeItem(KEY_STORE); } catch { /* 私密模式 */ } }
-export function clearKey() { setKey(''); }
-export function getModel() { try { const m = ss()?.getItem(MODEL_STORE); return llmModels().includes(m) ? m : llmDefaultModel(); } catch { return llmDefaultModel(); } }
-export function setModel(m) { try { if (llmModels().includes(m)) ss()?.setItem(MODEL_STORE, m); } catch { /* ignore */ } }
-export function hasKey() { return !!getKey(); }
-/** 只有後台工作階段未過期時才開放 BYOK（同事示範用）。session 真偽由後台頁自己再驗；這裡只是「要不要顯示欄位」。 */
-export function staffSessionActive(now = Date.now()) {
-  try { const s = JSON.parse(ls()?.getItem('cdc.admin.session') ?? 'null'); return !!s && typeof s.exp === 'number' && now < s.exp; } catch { return false; }
-}
 
 const LANG_NAME = { 'zh-TW': '繁體中文（台灣用語）', en: 'English', ja: '日本語', tl: 'Tagalog', vi: 'Tiếng Việt', id: 'Bahasa Indonesia', th: 'ภาษาไทย' };
 

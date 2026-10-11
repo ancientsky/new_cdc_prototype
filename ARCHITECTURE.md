@@ -1094,7 +1094,7 @@ manualStatus?: enum[cancelled, failed（流標）], award?: { date, winner, amou
 | 類別 | 預設預算 | 環境變數 | 現況（最大） |
 | --- | --- | --- | --- |
 | 公開頁 | 120 KB | `JS_BUDGET_KB` | 約 52 KB（時程地圖頁） |
-| 含答案引擎 `answer/core.js` 的頁（`/ask/`、`/data/`、`/factcheck/`） | 320 KB | `ENGINE_JS_BUDGET_KB` | 約 281 KB |
+| 含答案引擎 `answer/core.js` 的頁（`/ask/`、`/data/`、`/factcheck/`） | 320 KB（第三十四輪改 240 KB，見第 40 章） | `ENGINE_JS_BUDGET_KB` | 約 281 KB（第三十四輪壓縮後約 208 KB） |
 | `/admin/*` | 只回報不擋 | `ADMIN_JS_BUDGET_KB`（設值才擋） | 約 270 KB |
 
 調整方式：`JS_BUDGET_KB=150 npm run build` 暫時放寬；要改預設值請改 `js-budget.mjs` 的 `DEFAULT_*` 常數，並在 PR 說明理由。引擎頁預算是「已知技術債」：`core.js` 約 176 KB，拆檔後（見 29.5）應把引擎預算降到與公開頁相同。
@@ -1112,6 +1112,8 @@ manualStatus?: enum[cancelled, failed（流標）], award?: { date, winner, amou
 `npm test`（含 `tests/round26-i18n.test.mjs`：語言檔大小 ≤ 60 KB、與 Node `t()` 一致、Playwright 端到端）；`npm run lint`；`npm run typecheck`（pages.yml）；`npm run build`（含 JS 預算、連結檢查、評估集版本題）。
 
 ### 29.5 路線圖：大檔拆分提案（不在本輪實作）
+
+> 第三十四輪更新：`core.js` 的頂層部分已拆成 `rules.js`、`text.js`、`lexicon.js`、`structured.js`，並加上建置時壓縮，見第 40 章。`createEngine` 內部（檢索、選句）仍在 `core.js`，理由見 40.5。`governance.mjs` 的拆分尚未進行。
 
 **`src/client/answer/core.js`（2193 行，`createEngine` 一個函式約 1450 行）** 建議拆成：
 
@@ -1815,4 +1817,61 @@ Yulun 問：資料治理還沒辦法很全面，不同組室上架類似答案�
 
 `tests/round33-consistency.test.mjs`（共用函式、優先序、repo 內容的候選與判定、confirmed 移句、validate、R33、答案加註與排序、LLM 後檢、Pagefind currency）；`tests/round28-search.test.mjs` 的 `pagefindFor` 期望值加 `currency`。
 
-**JS 預算注意（給資訊室）：** 這輪把比對與優先序放在建置端，答案頁只多了 `numbersByUnit`、`noteConflicts` 與加註字串；含答案引擎的頁最大由 314.1 KB 變成 319.0 KB（預算 320 KB）。下一次要在答案頁加功能，請先處理 `core.js` 未壓縮的技術債（第二十六輪記錄），不要直接調高預算。
+**JS 預算注意（給資訊室）：**（第三十四輪已處理：壓縮與拆檔後引擎頁約 208 KB、預算 240 KB，見第 40 章。）這輪把比對與優先序放在建置端，答案頁只多了 `numbersByUnit`、`noteConflicts` 與加註字串；含答案引擎的頁最大由 314.1 KB 變成 319.0 KB（預算 320 KB）。下一次要在答案頁加功能，請先處理 `core.js` 未壓縮的技術債（第二十六輪記錄），不要直接調高預算。
+
+## 40. 第三十四輪（2026-10-10）：答案引擎拆檔、生成式模式用到才載入、建置時 JS 壓縮
+
+第三十三輪後，含答案引擎的頁（`/ask/`、`/data/`、`/factcheck/` 與其他語言版）JS 到 319.0 KB，預算 320 KB。Yulun 要求另開一輪處理並寫進手冊（同事版見 [docs/guide-staff.md](docs/guide-staff.md) §38，決策理由見 [docs/architecture-decisions.md](docs/architecture-decisions.md) §27）。三件事，行為不變（評估集 230 題、全部測試照舊）。
+
+### 40.1 `core.js` 拆成五個模組（`src/client/answer/`）
+
+| 檔案 | 內容 | 原位置 |
+| --- | --- | --- |
+| `rules.js` | 問句提示詞（`MEDIA_CUE`、`NEWS_CUE`…）、`RELEVANCE` 查無門檻、`isLowRelevance`、`INTENT_RULES`、`classifyIntent`、`REFUSAL_RULES`、`REFUSAL_TEXT`（七語）、`refusalCopy` | 原第 2、3 節 |
+| `text.js` | `maskPII`、`detectInjection`、`tokenize`、`bigrams`、`parseChineseNumber`、`parseTimeRange`、`rocDate`、`numbersByUnit`、`mdPlain`、`splitPlain`、`pdfHref` | 原第 1 節、斷詞與數字、小工具 |
+| `lexicon.js` | `CROSS_LANG`、`PARAPHRASE`、`buildLexicon`、`matcherFor`、`unwrap`、`isOutdated` 等內容狀態小工具 | 原「輔助：實體、同義詞」 |
+| `structured.js` | `vaxmapHref`、年齡解析（`ageProfileOf`、`ageHashOf`）、`matchSchedule`、`normTravel`、`notifyHoursLabel`、`normalizeNotifyTable`、`NOTICE_TYPES`、`CLOSED_MARK` | 原疫苗地圖、年齡與時程、第二輪小工具 |
+| `core.js` | 只剩 `createEngine`（檢索、組句、各類結構化答案、稽核） | — |
+
+- 依賴方向單向：`text` ← `rules`、`lexicon`、`structured` ← `core`；新模組都不 import `core.js`（測試擋）。
+- **相容**：`core.js` 以 `export … from` 重新匯出拆檔前的全部對外名稱（含 `REFUSAL_PATTERNS` 舊別名），`render.js`、`llm.js`、`scripts/lib/index-builder.mjs`、`consistency.mjs`、tests、eval 都不用改。新程式建議直接從新模組 import。
+- 新模組為了讓 `core.js` 使用，頂層宣告一律 `export`（包含原本的內部小工具）；它們不是穩定 API，外部程式請只用上面列出的名稱。
+- 做法：依原檔區段整段搬移、不改內容，再用 ESLint `no-undef` 找出各檔缺的名稱補 import，確保沒有改到任何規則或文字。
+
+### 40.2 LLM 模式用到才載入
+
+- `llm-key.js`（約 1 KB）：`LLM_PROVIDER`、模型清單、`getKey`／`setKey`、`getModel`／`setModel`、`purgeLegacyKey`、`staffSessionActive`——答案頁一載入就要用（決定是否顯示金鑰欄位）。
+- `llm.js`（提示詞、`groundingGuard`、呼叫 API、翻譯）：`answer/ui.js` 在「LLM 模式啟用且這題可交給模型」時才 `await import('./llm.js')`；載入失敗就保留抽取式結果。`llm.js` 仍 re-export `llm-key.js` 的函式，後台 `admin/publish.js` 的多語初稿（本來就用 `import()`）與測試不用改。
+- `js-budget.mjs` 只沿靜態 import 計算，動態 `import()` 不計——與 Pagefind 執行期同一原則：只有少數人、按了才需要的程式，不由每位民眾付。
+
+### 40.3 建置時壓縮（`scripts/lib/minify.mjs`）
+
+- 位置：`build.mjs` 在 `copyDir(src/client → dist/assets/js)` 與 i18n 拆檔之後、JS 預算之前執行 `minifyDir(dist/assets/js)`。
+- esbuild `transform`，**逐檔、不 bundle**：`format: 'esm'`、`target: 'es2022'`、`minify: true`、`charset: 'utf8'`（中文維持 UTF-8，預設的 `\uXXXX` 會讓每個中文字從 3 位元組變 6 位元組）、`legalComments: 'none'`。檔案路徑、import／export 名稱都不變，模板的 `<script type="module" src>` 與各處 `import()` 不用改。所有 `assets/js` 檔都以 module 載入（`/vendor/marked.min.js` 不在此目錄、不處理）。
+- Source map：每檔輸出 `<檔名>.js.map`（`sources` 為相對 `assets/js` 的路徑、含 `sourcesContent`），檔尾加 `//# sourceMappingURL=`。開發者工具可看到原始碼與註解。`.map` 不被頁面 `<script>` 載入，不計入預算。
+- `MINIFY=off`：不壓縮；此時 `build.mjs` 遇到超預算只印警告不 `exit 1`（預算以壓縮後大小訂定）。CI 不設這個變數。
+- 為什麼不 bundle：每頁載哪些檔由模板決定，`js-budget` 也依檔案間 import 計算；逐檔壓縮不改這個結構，瀏覽器快取也仍以檔為單位（共用的 `render.js`、`core.js` 在 ask／data／factcheck 之間共用快取）。
+- 依賴：`esbuild`（devDependency）。
+
+### 40.4 結果與預算
+
+| 項目 | 第三十三輪 | 第三十四輪 |
+| --- | --- | --- |
+| 含答案引擎的頁（最大，`th/ask/`） | 319.0 KB | 208.2 KB |
+| 同上，gzip 傳輸量（估） | 約 113 KB | 約 85 KB |
+| `/data/`、`/factcheck/` | 約 280 KB | 約 192 KB |
+| 一般公開頁（最大） | 87.2 KB | 58.5 KB |
+| 後台頁（最大，只回報） | 302.1 KB | 211.9 KB |
+| `assets/js` 全部 | 994 KB | 680 KB（另有 `.map`） |
+
+- `DEFAULT_ENGINE_KB` 由 320 改為 **240**（約 15% 餘裕）；公開頁維持 120 KB。
+- 壓縮後引擎頁組成（KB）：`core.js` 71、`render.js` 32、`rules.js` 28、`ui.js` 19、`i18n.<lang>.js` 9–14、`structured.js` 11、`answer/ui.js` 10、`text.js` 9、`lexicon.js` 6、其他 7。
+- **為什麼不降到 120 KB**：壓縮去不掉的是規則表、七語拒答文案（`REFUSAL_TEXT`）、`createEngine` 內各類答案的多語模板、`render.js` 的多語字串——是資料不是程式。再降的兩條路：(a) 依語言拆檔（比照第 29.1 節 i18n，預估再省 20–30 KB，需把多語模板集中成表）；(b) 答案引擎搬到伺服器端（瀏覽器只送問題），可降到一般頁大小，但需要機關後端；與第 38 章正式接 LLM 的後端代理可一起規劃。兩者都等有需求再做。
+
+### 40.5 `createEngine` 內部為什麼還沒拆
+
+第 29.5 節原提議把檢索（`retrieve`）、選句（`composeSentences`）也拆出去。它們目前是 `createEngine` 閉包內的函式，共用索引、詞典、BM25 快取、`today` 等狀態（約 50 個內部函式互相呼叫）；拆出去要先把這些狀態整理成明確的 context 物件，屬於改寫而不是搬移，風險與審查成本都高，而且**不會讓上線檔變小**（引擎頁本來就要載入全部）。本輪先做「純搬移、零行為改變」的部分；需要單獨重用檢索（例如伺服器端引擎、或 LLM 重排序掛勾）時再做，評估集 230 題是保護網。
+
+### 40.6 測試
+
+`tests/round34-engine-split.test.mjs`：`core.js` 匯出名稱完整且與新模組同一物件、`rules.js` 不含檢索也不反向依賴、`ui.js` 不靜態載入 `llm.js`、`minifyDir`（註解去除、中文原字、source map 含原始碼、壓縮後模組間 import 正常、`enabled:false` 不動檔）、預算常數、dist 引擎頁在預算內且有 `.map`。`tests/round23-security.test.mjs` 的「金鑰不寫 localStorage」原始碼檢查同時掃 `llm.js` 與 `llm-key.js`。
