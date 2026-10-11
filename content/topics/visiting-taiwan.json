@@ -1,0 +1,224 @@
+{
+  "id": "topic.visiting-taiwan",
+  "type": "topic",
+  "sourceLang": "en",
+  "title": "Visiting or moving to Taiwan: health information on arrival",
+  "owner": "unit.quarantine",
+  "steward": "檢疫組承辦人（待指派）",
+  "publishedAt": "2026-10-11",
+  "reviewedAt": "2026-10-11",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "travel"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-10-11"
+  },
+  "languages": {
+    "en": {
+      "status": "source"
+    },
+    "zh-TW": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "machine"
+    },
+    "id": {
+      "status": "machine"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "For travellers, students, workers and new residents coming to Taiwan: what happens at airport and seaport quarantine, what to do if you have a fever, which outbreaks are active now, how to avoid mosquito bites, how to see a doctor (with 1922 interpretation), where to get vaccinated and the health checks required for migrant workers.",
+  "keywords": [
+    "visiting Taiwan",
+    "travelling to Taiwan",
+    "traveling to Taiwan",
+    "travel to Taiwan",
+    "coming to Taiwan",
+    "moving to Taiwan",
+    "arriving in Taiwan",
+    "visitors",
+    "foreigners",
+    "entry",
+    "arrival",
+    "quarantine",
+    "fever on arrival",
+    "vaccines before traveling to Taiwan",
+    "precautions",
+    "migrant workers",
+    "1922"
+  ],
+  "slug": "visiting-taiwan",
+  "kind": "resource-hub",
+  "priority": 4,
+  "verification": {
+    "status": "pending",
+    "note": "This page was compiled from public information and has not yet been confirmed item by item by the Division of Quarantine. Follow the instructions of quarantine officers at the airport or seaport.",
+    "pendingItems": [
+      "入境檢疫流程（體溫篩檢、有症狀主動告知）與目前是否需填寫任何健康聲明",
+      "入境是否有任何疫苗接種證明要求（例如黃熱病疫苗，視出發地而定）",
+      "1922 外語服務的語言與時段",
+      "外籍移工入境後與聘僱期間健康檢查的時點與項目（勞動部規定）",
+      "外籍人士加入全民健保的條件（健保署規定）",
+      "勞動部 1955 專線名稱與網址"
+    ],
+    "sources": [
+      {
+        "label": "疾管署官網「國際旅遊與健康」專區（入境檢疫、旅遊疫情）",
+        "url": "https://www.cdc.gov.tw/",
+        "accessedAt": "2026-10-11",
+        "official": true,
+        "verified": false,
+        "note": "開發環境連不到 www.cdc.gov.tw，依既有認識整理"
+      }
+    ]
+  },
+  "introMarkdown": "This page is for anyone **coming to Taiwan** — short-term visitors, students, workers and new residents. Going abroad from Taiwan instead? See [Travel abroad](/en/travel/).",
+  "blocks": [
+    {
+      "key": "before-you-travel",
+      "heading": "Vaccines before traveling to Taiwan",
+      "markdown": "Most visitors do not need any special vaccine to enter Taiwan. Before traveling to Taiwan, make sure your routine vaccines are up to date, especially **measles (MMR)**. During the autumn and winter flu season, an **influenza** vaccine is also recommended. Ask a travel clinic in your home country 4–6 weeks before your trip whether you need anything else for your route and length of stay.",
+      "keywords": ["vaccines before traveling to Taiwan", "vaccines for Taiwan", "vaccinations needed for Taiwan", "visiting Taiwan vaccines", "travel to Taiwan"]
+    },
+    {
+      "key": "arrival",
+      "heading": "Arrival: airport and seaport quarantine",
+      "markdown": "Quarantine officers at Taiwan's international airports and seaports screen arriving passengers for fever.\n\n- If you have **fever, cough, rash, diarrhoea or other symptoms** during the flight or on arrival, **tell the quarantine officer** at the airport or seaport.\n- If you develop a fever **within 14 days after arriving**, see a doctor and tell them where you travelled and when you arrived.\n- Follow the instructions of quarantine officers; requirements can change during an outbreak.",
+      "keywords": ["airport", "quarantine", "fever screening", "arrival", "symptoms on arrival"]
+    },
+    {
+      "key": "outbreaks",
+      "heading": "Outbreaks in Taiwan right now",
+      "markdown": "Check [Current outbreaks](/en/situation/) before and during your visit. In summer and autumn, **dengue fever** occurs mainly in southern Taiwan; from autumn to spring, **influenza** activity rises.\n\n- [Dengue fever](/en/diseases/dengue/)\n- [Influenza](/en/diseases/influenza/)\n- [Measles](/en/diseases/measles/)",
+      "keywords": ["dengue", "influenza", "outbreak", "current situation", "precautions"]
+    },
+    {
+      "key": "mosquitoes",
+      "heading": "Avoid mosquito bites",
+      "markdown": "Dengue is spread by Aedes mosquitoes, which bite during the day.\n\n- Wear light-coloured long sleeves and trousers outdoors.\n- Use insect repellent containing DEET, Picaridin or IR3535.\n- Stay in rooms with window screens or air conditioning.\n- If you get a sudden high fever, see a doctor within 24 hours.",
+      "keywords": ["mosquito", "repellent", "dengue prevention"]
+    },
+    {
+      "key": "healthcare",
+      "heading": "Seeing a doctor and getting interpretation",
+      "markdown": "Clinics and hospitals across Taiwan treat foreign patients; bring your passport or residence card. Visitors without Taiwan's National Health Insurance pay in full, so consider travel health insurance.\n\n- Emergencies: call **119** (ambulance) or go to the nearest emergency department.\n- Questions about infectious diseases: call the Taiwan CDC hotline **1922** (toll-free in Taiwan, or **+886-800-001922** from abroad). The hotline offers help in several languages, including English, Vietnamese, Indonesian and Thai.\n- Foreign residents with a residence permit may be eligible to join National Health Insurance; ask your employer, school or the National Health Insurance Administration.",
+      "keywords": ["doctor", "hospital", "clinic", "interpreter", "interpretation", "1922", "119", "health insurance"]
+    },
+    {
+      "key": "vaccines",
+      "heading": "Where to get vaccinated in Taiwan",
+      "markdown": "If you are staying longer, you can get vaccines at local health centres and contracted clinics. See [Vaccines](/en/vaccines/) for who is eligible for government-funded vaccines and where to get them, and the [childhood immunization schedule](/en/vaccines/schedule/) for children living in Taiwan.",
+      "keywords": ["vaccination", "where to get vaccinated", "health centre"]
+    },
+    {
+      "key": "migrant-workers",
+      "heading": "Health checks for migrant workers",
+      "markdown": "Foreign workers employed in Taiwan need health checks **before entry, within 3 working days after arrival, and at set times during employment** (including a chest X-ray for tuberculosis). Your employer or broker arranges the check at a designated hospital.\n\nSee [Health for new residents and migrant workers](/en/topics/new-residents-migrant-health/) for information in seven languages. For questions about employment, contact the Ministry of Labor 1955 hotline.",
+      "keywords": ["migrant workers", "health check", "health examination", "tuberculosis", "chest X-ray", "employer", "1955"]
+    }
+  ],
+  "links": [
+    {
+      "label": "Current outbreaks in Taiwan",
+      "href": "/situation/",
+      "i18n": {
+        "zh-TW": { "label": "現在的疫情" },
+        "vi": { "label": "Tình hình dịch bệnh hiện nay tại Đài Loan" },
+        "id": { "label": "Situasi wabah saat ini di Taiwan" }
+      }
+    },
+    {
+      "label": "Vaccines and where to get them",
+      "href": "/vaccines/",
+      "i18n": {
+        "zh-TW": { "label": "疫苗與接種地點" },
+        "vi": { "label": "Vắc-xin và nơi tiêm" },
+        "id": { "label": "Vaksin dan tempat vaksinasi" }
+      }
+    },
+    {
+      "label": "Health for new residents and migrant workers (seven languages)",
+      "href": "/topics/new-residents-migrant-health/",
+      "i18n": {
+        "zh-TW": { "label": "新住民與移工健康：七語防疫資訊" },
+        "vi": { "label": "Sức khỏe cho cư dân mới và lao động di cư (bảy ngôn ngữ)" },
+        "id": { "label": "Kesehatan penduduk baru dan pekerja migran (tujuh bahasa)" }
+      }
+    },
+    {
+      "label": "Travel abroad from Taiwan (destination advice)",
+      "href": "/travel/",
+      "i18n": {
+        "zh-TW": { "label": "出國旅遊（目的地疫情建議）" },
+        "vi": { "label": "Đi nước ngoài từ Đài Loan (khuyến cáo theo điểm đến)" },
+        "id": { "label": "Bepergian ke luar negeri dari Taiwan (saran per tujuan)" }
+      }
+    }
+  ],
+  "contentIds": [
+    "disease.dengue",
+    "disease.influenza",
+    "disease.measles",
+    "faq.tb-foreigner-health-check",
+    "topic.new-residents-migrant-health"
+  ],
+  "i18n": {
+    "zh-TW": {
+      "title": "來臺旅遊或居住：入境健康資訊",
+      "summary": "給來臺旅客、學生、工作者與新住民：機場與港口入境檢疫、發燒時怎麼辦、目前的疫情、防蚊、就醫方式與 1922 通譯、哪裡接種疫苗，以及外籍移工的健康檢查。",
+      "introMarkdown": "本頁給**來臺灣**的人——短期旅客、學生、工作者與新住民。要從臺灣出國？請看[出國旅遊](/travel/)。\n\n多數旅客入境臺灣沒有例行的疫苗要求，但**來臺前請確認常規疫苗已接種完整**，特別是**麻疹（MMR）**，秋冬流感季也建議接種**流感疫苗**。是否需要其他疫苗，請依行程與停留時間詢問出發地的旅遊醫學門診。",
+      "blocks": [
+        { "key": "arrival", "heading": "入境：機場與港口檢疫", "markdown": "臺灣國際機場與港口的檢疫人員會對入境旅客進行發燒篩檢。\n\n- 飛行途中或入境時有**發燒、咳嗽、出疹、腹瀉等症狀**，請**主動告知**機場或港口檢疫人員。\n- **入境後 14 天內**出現發燒，請就醫並告知醫師旅遊史與入境日期。\n- 請配合檢疫人員指示；疫情期間規定可能調整。" },
+        { "key": "outbreaks", "heading": "臺灣目前的疫情", "markdown": "來臺前與停留期間請看[現在的疫情](/situation/)。夏秋季**登革熱**主要發生在南部；秋季到春季**流感**活動上升。\n\n- [登革熱](/diseases/dengue/)\n- [流感](/diseases/influenza/)\n- [麻疹](/diseases/measles/)" },
+        { "key": "mosquitoes", "heading": "防蚊", "markdown": "登革熱由白天叮咬的斑蚊傳播。\n\n- 戶外穿淺色長袖長褲。\n- 使用含 DEET、Picaridin 或 IR3535 的防蚊液。\n- 住宿選擇有紗窗或冷氣的房間。\n- 突然高燒請在 24 小時內就醫。" },
+        { "key": "healthcare", "heading": "就醫與通譯", "markdown": "臺灣各地診所與醫院都可為外籍病人看診，請攜帶護照或居留證。未加入全民健保的旅客需自費，建議投保旅遊平安與醫療保險。\n\n- 緊急狀況：撥 **119** 或到最近的急診。\n- 傳染病相關問題：撥疾管署防疫專線 **1922**（國內免付費，國外請撥 **+886-800-001922**），提供英語、越南語、印尼語、泰語等多語服務。\n- 持居留證的外籍人士可能符合加入全民健保的資格，請洽雇主、學校或健保署。" },
+        { "key": "vaccines", "heading": "在臺灣哪裡接種疫苗", "markdown": "長期停留者可到各地衛生所與合約院所接種。公費對象與接種地點請看[疫苗](/vaccines/)，在臺灣生活的兒童請看[兒童預防接種時程](/vaccines/schedule/)。" },
+        { "key": "migrant-workers", "heading": "外籍移工健康檢查", "markdown": "在臺受聘的外籍勞工需在**入境前、入境後 3 個工作日內及聘僱期間的規定時點**接受健康檢查（含結核病胸部 X 光），由雇主或仲介安排到指定醫院檢查。\n\n七語資訊請看[新住民與移工健康](/topics/new-residents-migrant-health/)。勞動相關問題請洽勞動部 1955 專線。" }
+      ]
+    },
+    "vi": {
+      "title": "Đến thăm hoặc sinh sống tại Đài Loan: thông tin sức khỏe khi nhập cảnh",
+      "summary": "Dành cho du khách, du học sinh, người lao động và cư dân mới đến Đài Loan: kiểm dịch tại sân bay và cảng biển, làm gì khi bị sốt, tình hình dịch hiện nay, phòng muỗi, cách đi khám (có thông dịch qua 1922), nơi tiêm vắc-xin và khám sức khỏe cho lao động di cư.",
+      "introMarkdown": "Trang này dành cho người **đến Đài Loan** — du khách ngắn ngày, du học sinh, người lao động và cư dân mới. Muốn đi nước ngoài từ Đài Loan? Xem [Du lịch nước ngoài](/vi/travel/).\n\nĐa số du khách nhập cảnh Đài Loan không có yêu cầu tiêm chủng bắt buộc, nhưng **trước khi đến Đài Loan hãy chắc chắn đã tiêm đủ các vắc-xin thường quy**, đặc biệt là **sởi (MMR)**, và **cúm** vào mùa thu đông. Hãy hỏi phòng khám du lịch ở nước bạn nếu cần thêm vắc-xin khác.",
+      "blocks": [
+        { "key": "arrival", "heading": "Nhập cảnh: kiểm dịch tại sân bay và cảng biển", "markdown": "Nhân viên kiểm dịch tại sân bay và cảng biển quốc tế của Đài Loan kiểm tra sốt đối với hành khách nhập cảnh.\n\n- Nếu bạn **sốt, ho, phát ban, tiêu chảy hoặc có triệu chứng khác** trên chuyến bay hoặc khi đến nơi, hãy **báo cho nhân viên kiểm dịch**.\n- Nếu bị sốt **trong vòng 14 ngày sau khi nhập cảnh**, hãy đi khám và cho bác sĩ biết lịch sử đi lại và ngày nhập cảnh.\n- Làm theo hướng dẫn của nhân viên kiểm dịch; quy định có thể thay đổi khi có dịch." },
+        { "key": "outbreaks", "heading": "Tình hình dịch tại Đài Loan hiện nay", "markdown": "Xem [Tình hình dịch](/vi/situation/) trước và trong thời gian lưu trú. Mùa hè và mùa thu, **sốt xuất huyết** chủ yếu ở miền nam Đài Loan; từ mùa thu đến mùa xuân, **cúm** tăng.\n\n- [Sốt xuất huyết Dengue](/vi/diseases/dengue/)\n- [Cúm](/en/diseases/influenza/) (tiếng Anh)\n- [Sởi](/vi/diseases/measles/)" },
+        { "key": "mosquitoes", "heading": "Phòng tránh muỗi đốt", "markdown": "Sốt xuất huyết lây qua muỗi Aedes đốt vào ban ngày.\n\n- Mặc áo dài tay, quần dài màu sáng khi ra ngoài.\n- Dùng thuốc chống muỗi có DEET, Picaridin hoặc IR3535.\n- Ở phòng có lưới chống muỗi hoặc máy lạnh.\n- Nếu sốt cao đột ngột, đi khám trong vòng 24 giờ." },
+        { "key": "healthcare", "heading": "Đi khám bệnh và thông dịch", "markdown": "Phòng khám và bệnh viện trên khắp Đài Loan đều khám cho người nước ngoài; hãy mang hộ chiếu hoặc thẻ cư trú. Du khách không có Bảo hiểm Y tế Toàn dân phải tự chi trả, nên mua bảo hiểm du lịch.\n\n- Cấp cứu: gọi **119** hoặc đến phòng cấp cứu gần nhất.\n- Hỏi về bệnh truyền nhiễm: gọi đường dây **1922** của CDC Đài Loan (miễn phí trong nước, từ nước ngoài **+886-800-001922**), có hỗ trợ tiếng Anh, tiếng Việt, tiếng Indonesia và tiếng Thái.\n- Người nước ngoài có thẻ cư trú có thể đủ điều kiện tham gia Bảo hiểm Y tế Toàn dân; hãy hỏi chủ sử dụng lao động, trường học hoặc Cục Bảo hiểm Y tế." },
+        { "key": "vaccines", "heading": "Tiêm vắc-xin ở đâu tại Đài Loan", "markdown": "Nếu lưu trú lâu dài, bạn có thể tiêm vắc-xin tại trạm y tế và phòng khám hợp đồng. Xem [Vắc-xin](/vi/vaccines/) về đối tượng được tiêm miễn phí và nơi tiêm, và [lịch tiêm chủng trẻ em](/vi/vaccines/schedule/) cho trẻ sống tại Đài Loan." },
+        { "key": "migrant-workers", "heading": "Khám sức khỏe cho lao động di cư", "markdown": "Lao động nước ngoài làm việc tại Đài Loan phải khám sức khỏe **trước khi nhập cảnh, trong vòng 3 ngày làm việc sau khi đến và vào các thời điểm quy định trong thời gian làm việc** (có chụp X-quang phổi kiểm tra bệnh lao). Chủ sử dụng lao động hoặc công ty môi giới sẽ sắp xếp khám tại bệnh viện được chỉ định.\n\nXem [Sức khỏe cho cư dân mới và lao động di cư](/vi/topics/new-residents-migrant-health/). Câu hỏi về lao động, hãy gọi đường dây 1955 của Bộ Lao động." }
+      ]
+    },
+    "id": {
+      "title": "Berkunjung atau pindah ke Taiwan: informasi kesehatan saat kedatangan",
+      "summary": "Untuk wisatawan, pelajar, pekerja, dan penduduk baru yang datang ke Taiwan: karantina di bandara dan pelabuhan, apa yang dilakukan bila demam, wabah yang sedang terjadi, mencegah gigitan nyamuk, cara berobat (dengan penerjemah melalui 1922), tempat vaksinasi, dan pemeriksaan kesehatan bagi pekerja migran.",
+      "introMarkdown": "Halaman ini untuk siapa saja yang **datang ke Taiwan** — wisatawan jangka pendek, pelajar, pekerja, dan penduduk baru. Ingin bepergian ke luar negeri dari Taiwan? Lihat [Perjalanan ke luar negeri](/id/travel/).\n\nSebagian besar wisatawan yang masuk Taiwan tidak wajib vaksin tertentu, tetapi **sebelum ke Taiwan pastikan vaksin rutin Anda lengkap**, terutama **campak (MMR)**, dan **influenza** pada musim gugur dan dingin. Tanyakan ke klinik perjalanan di negara Anda bila perlu vaksin lain.",
+      "blocks": [
+        { "key": "arrival", "heading": "Kedatangan: karantina di bandara dan pelabuhan", "markdown": "Petugas karantina di bandara dan pelabuhan internasional Taiwan memeriksa demam pada penumpang yang datang.\n\n- Bila Anda **demam, batuk, ruam, diare, atau gejala lain** selama penerbangan atau saat tiba, **beri tahu petugas karantina**.\n- Bila demam **dalam 14 hari setelah tiba**, periksakan diri ke dokter dan sampaikan riwayat perjalanan serta tanggal kedatangan.\n- Ikuti petunjuk petugas karantina; aturan dapat berubah saat wabah." },
+        { "key": "outbreaks", "heading": "Wabah di Taiwan saat ini", "markdown": "Lihat [Situasi wabah](/id/situation/) sebelum dan selama kunjungan. Pada musim panas dan gugur, **demam berdarah** terutama terjadi di Taiwan selatan; dari musim gugur sampai musim semi, **influenza** meningkat.\n\n- [Demam berdarah dengue](/en/diseases/dengue/) (bahasa Inggris)\n- [Influenza](/en/diseases/influenza/) (bahasa Inggris)\n- [Campak](/en/diseases/measles/) (bahasa Inggris)" },
+        { "key": "mosquitoes", "heading": "Hindari gigitan nyamuk", "markdown": "Demam berdarah ditularkan oleh nyamuk Aedes yang menggigit pada siang hari.\n\n- Kenakan baju lengan panjang dan celana panjang berwarna terang di luar ruangan.\n- Gunakan losion antinyamuk yang mengandung DEET, Picaridin, atau IR3535.\n- Tinggal di kamar berkawat kasa atau ber-AC.\n- Bila demam tinggi mendadak, berobat dalam 24 jam." },
+        { "key": "healthcare", "heading": "Berobat dan layanan penerjemah", "markdown": "Klinik dan rumah sakit di seluruh Taiwan melayani pasien asing; bawa paspor atau kartu izin tinggal. Wisatawan tanpa Asuransi Kesehatan Nasional Taiwan membayar penuh, jadi pertimbangkan asuransi perjalanan.\n\n- Darurat: hubungi **119** atau datang ke IGD terdekat.\n- Pertanyaan tentang penyakit menular: hubungi hotline CDC Taiwan **1922** (gratis di Taiwan, dari luar negeri **+886-800-001922**), tersedia dalam bahasa Inggris, Vietnam, Indonesia, dan Thai.\n- Warga asing dengan izin tinggal mungkin dapat ikut Asuransi Kesehatan Nasional; tanyakan ke majikan, sekolah, atau Badan Asuransi Kesehatan Nasional." },
+        { "key": "vaccines", "heading": "Tempat vaksinasi di Taiwan", "markdown": "Bila tinggal lama, Anda bisa vaksin di puskesmas setempat dan klinik mitra. Lihat [Vaksin](/id/vaccines/) untuk siapa yang mendapat vaksin gratis dan tempatnya, serta [jadwal imunisasi anak](/id/vaccines/schedule/) untuk anak yang tinggal di Taiwan." },
+        { "key": "migrant-workers", "heading": "Pemeriksaan kesehatan pekerja migran", "markdown": "Pekerja asing di Taiwan wajib menjalani pemeriksaan kesehatan **sebelum masuk, dalam 3 hari kerja setelah tiba, dan pada waktu tertentu selama masa kerja** (termasuk rontgen dada untuk tuberkulosis). Majikan atau agen mengatur pemeriksaan di rumah sakit yang ditunjuk.\n\nLihat [Kesehatan penduduk baru dan pekerja migran](/id/topics/new-residents-migrant-health/). Untuk pertanyaan ketenagakerjaan, hubungi hotline 1955 Kementerian Tenaga Kerja." }
+      ]
+    }
+  }
+}

@@ -4,7 +4,7 @@
 // 所以同事改一筆主檔，地圖與表格一起變；下載 PNG／SVG／CSV 在瀏覽器端做，另有建置時產生的 /vaccines/schedule.csv。
 // 建置時把精簡 JSON 內嵌在 <script type="application/json" id="vxs-data">，互動由 /assets/js/vaxschedule.js 處理；沒有 JS 時 SVG 與表格仍可看。
 import { html, raw, jsonScript } from '../../../scripts/lib/render.mjs';
-import { ldFor, pageHead, sectionHead, feedback, hrefFor, link, isExternal, vaxmapLinkForVaccine, VAXMAP_GROUP_OF, VAXMAP_INFO_LABEL, mdLine } from './_partials.mjs';
+import { ldFor, pageHead, sectionHead, feedback, hrefFor, link, isExternal, vaxmapLinkForVaccine, VAXMAP_GROUP_OF, VAXMAP_INFO_LABEL, mdLine, multilingualScheduleCard } from './_partials.mjs';
 import { TABS, ageRangeLabel, hardLimitLabel, rowsOf, renderMapSvg, renderTableHtml, FUNDED } from '../../client/vaxschedule.js';
 
 const JS = ['/assets/js/vaxschedule.js'];
@@ -62,6 +62,7 @@ export function render(ctx) {
 <div class="vxs" data-vxs>
 ${unverified ? html`<div class="c-warning vxs-notice" role="note"><strong>${t('vxs.unverified.badge')}</strong>：${t('vxs.unverified.note', { n: unverified })}</div>` : ''}
 ${ctx.lang === 'zh-TW' ? '' : html`<p class="muted vxs-zhonly">${t('vxs.zhonly')}</p>`}
+${multilingualScheduleCard(ctx)}
 <section aria-labelledby="vxs-age-h" class="vxs-age">${sectionHead(ctx, { id: 'vxs-age-h', title: t('vxs.age.t') })}
   <form class="vxs-form" data-vxs-form novalidate>
     <label>${t('vxs.age.years')}<input type="number" name="years" min="0" max="120" inputmode="numeric" autocomplete="off"></label>

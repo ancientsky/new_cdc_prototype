@@ -31,6 +31,7 @@ import { checkInternalLinks, summarize as summarizeLinks } from './lib/check-int
 import { validateAssets, fixAssets, copyAssets, normalizeFileLinks } from './lib/assets.mjs';
 import { publicView, scheduledItems, taipeiTime, publishAtMs } from './lib/lanes.mjs';
 import { piiErrors } from './lib/pii-scan.mjs';
+import { checkI18nQuality, summarizeI18nQuality } from './lib/i18n-quality.mjs';
 import { formErrors } from './lib/forms.mjs';
 
 const args = Object.fromEntries(process.argv.slice(2).map((a) => { const [k, v] = a.replace(/^--/, '').split('='); return [k, v ?? true]; }));
@@ -146,6 +147,17 @@ async function main() {
       console.error(`${strict ? '❌' : '⚠'} 站內連結檢查：${links.counts.errors} 個壞連結（${links.errorsByTarget.length} 種目標）${strict ? '，依治理門檻不得上線' : '（非 --check／CI，僅警告）'}`);
       if (strict) process.exit(1);
     }
+  }
+
+  // 第四十輪（#72、#73）：多語輸出品質，與連結檢查同層級（掃 dist 的可見文字）。
+  //   詞彙鍵值外洩（term.*）＝一定是程式錯誤 ⇒ 不論 --check／CI 都讓建置失敗；
+  //   外語頁中文比例＝先警告並列最差 10 頁（I18N_CJK_CHECK=error 可改擋、=off 關閉；門檻 I18N_CJK_MAX、白名單 I18N_CJK_ALLOW）。見 docs/i18n.md
+  //   鍵值檢查沒有開關：它不會誤判（code／pre 已排除），關掉只會讓 term.influenza 再上線。
+  {
+    const q = checkI18nQuality(DIST);
+    const { fail } = summarizeI18nQuality(q, { log: (m) => console.log(m) });
+    writeOut('v1/governance/i18n-report.json', JSON.stringify({ generatedAt: site.today, threshold: q.cjk.threshold, checked: q.cjk.checked, over: q.cjk.over.length, byLang: q.cjk.byLang, worst: q.cjk.worst, termLeaks: q.termLeaks }, null, 2));
+    if (fail) { console.error(`❌ 多語輸出檢查未通過（詞彙鍵值外洩 ${q.termLeaks.length} 頁${process.env.I18N_CJK_CHECK === 'error' ? `、中文比例超標 ${q.cjk.over.length} 頁` : ''}）`); process.exit(1); }
   }
 
   // PR 預覽（17.2）：連結檢查之後才複製，預覽站不影響主站閘門

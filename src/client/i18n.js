@@ -1987,6 +1987,44 @@ const ROWS_R29 = {
 };
 for (const [key, vals] of Object.entries(ROWS_R29)) vals.forEach((v, i) => { if (v != null && v !== '') STRINGS[ORDER[i]][key] = v; });
 
+/* ───── 第四十輪：多語（issue #72–#74、#76）。順序：zh-TW, en, ja, tl, vi, id, th；ja／tl／th 為機器翻譯初稿，待多語審核 ───── */
+const ROWS_R40 = {
+  // #73 清單標題沒有本語言／英文譯文時的標記（titleLink、topicCard）
+  'i18n.zhOnly': ['僅有中文', 'Chinese only', '中国語のみ', 'Chinese lamang', 'Chỉ có tiếng Trung', 'Hanya bahasa Mandarin', 'มีเฉพาะภาษาจีน'],
+  'i18n.machine.short': ['機器翻譯待審', 'Machine translation, pending review', '機械翻訳（確認待ち）', 'Machine translation, hinihintay ang review', 'Bản dịch máy, chờ duyệt', 'Terjemahan mesin, menunggu tinjauan', 'แปลด้วยเครื่อง รอตรวจทาน'],
+  // #73 疫情數字＝metricNumeric＋單位樣板（src/client/situation-text.js）
+  'sit.unit.percent': ['{n}%', '{n}%', '{n}%', '{n}%', '{n}%', '{n}%', '{n}%'],
+  'sit.unit.visits': ['{n} 人次', '{n} visits', '{n}件', '{n} pagpapatingin', '{n} lượt khám', '{n} kunjungan', '{n} ครั้ง'],
+  'sit.unit.cases': ['{n} 例', '{n} cases', '{n}例', '{n} kaso', '{n} ca', '{n} kasus', '{n} ราย'],
+  'sit.unit.localCases': ['本土 {n} 例', '{n} local cases', '国内感染 {n}例', '{n} lokal na kaso', '{n} ca nội địa', '{n} kasus lokal', 'ผู้ป่วยในประเทศ {n} ราย'],
+  'sit.unit.imported': ['（境外移入 {n} 例）', '({n} imported)', '（うち輸入例 {n}例）', '({n} galing sa ibang bansa)', '({n} ca nhập khẩu)', '({n} kasus impor)', '(นำเข้า {n} ราย)'],
+  'status.basis.generic': ['疫情中心依既有監測門檻判定', 'Set by the Epidemic Intelligence Center against its monitoring thresholds (full basis in Chinese)', '疫情センターが既定の監視基準に基づき判定（詳細は中国語）', 'Itinakda ng Epidemic Intelligence Center ayon sa monitoring threshold (detalye sa Chinese)', 'Do Trung tâm Tình báo Dịch tễ xác định theo ngưỡng giám sát (chi tiết bằng tiếng Trung)', 'Ditetapkan Pusat Intelijen Epidemi berdasarkan ambang pemantauan (rincian dalam bahasa Mandarin)', 'กำหนดโดยศูนย์ข่าวกรองการระบาดตามเกณฑ์เฝ้าระวัง (รายละเอียดเป็นภาษาจีน)'],
+  // #73 首頁原型預覽列（以前寫死中文）
+  'home.preview.label': ['原型預覽：', 'Prototype preview:', 'プロトタイプのプレビュー：', 'Preview ng prototype:', 'Xem trước bản mẫu:', 'Pratinjau prototipe:', 'ตัวอย่างต้นแบบ:'],
+  'home.preview.A': ['目前為做法 A（非高峰，預設）', 'Showing layout A (default, no peak)', 'レイアウトA（通常時・既定）', 'Layout A (default, walang peak)', 'Bố cục A (mặc định, không có đỉnh dịch)', 'Tata letak A (bawaan, tidak ada puncak)', 'รูปแบบ A (ค่าเริ่มต้น ไม่มีช่วงสูงสุด)'],
+  'home.preview.B': ['目前為做法 B（流感高峰自動切換）', 'Showing layout B (switched automatically during the flu peak)', 'レイアウトB（インフルエンザ流行期に自動切替）', 'Layout B (awtomatiko sa peak ng trangkaso)', 'Bố cục B (tự chuyển khi cúm lên đỉnh)', 'Tata letak B (otomatis saat puncak flu)', 'รูปแบบ B (สลับอัตโนมัติช่วงไข้หวัดใหญ่ระบาดสูงสุด)'],
+  'home.preview.forced': ['目前為做法 {x}（網址參數強制）', 'Showing layout {x} (forced by URL)', 'レイアウト{x}（URLで指定）', 'Layout {x} (itinakda ng URL)', 'Bố cục {x} (do tham số URL)', 'Tata letak {x} (dipaksa oleh URL)', 'รูปแบบ {x} (กำหนดโดย URL)'],
+  'home.preview.switch': ['切換看做法', 'Switch to layout', 'レイアウト切替', 'Lumipat sa layout', 'Chuyển sang bố cục', 'Ganti ke tata letak', 'สลับเป็นรูปแบบ'],
+  'home.preview.reset': ['回到自動', 'Back to automatic', '自動に戻す', 'Bumalik sa awtomatiko', 'Trở về tự động', 'Kembali ke otomatis', 'กลับเป็นอัตโนมัติ'],
+  // #74 語言選單：本頁沒有該語言版本（用「目標語言」寫，讀者找的是自己的語言）
+  'lang.pageOnly': ['（此頁僅有{langs}）', '(this page: {langs} only)', '（このページは{langs}のみ）', '(nasa {langs} lamang ang pahinang ito)', '(trang này chỉ có {langs})', '(halaman ini hanya dalam bahasa {langs})', '(หน้านี้มีเฉพาะ{langs})'],
+  'lang.sep': ['／', ' / ', '・', ' / ', ' / ', ' / ', ' / '],
+  // #74 從沒有本語言版本的頁切過來時，首頁預留的提示
+  'home.fromHint.label': ['語言版本提示', 'Language version notice', '言語版のお知らせ', 'Paalala sa bersyon ng wika', 'Thông báo về phiên bản ngôn ngữ', 'Pemberitahuan versi bahasa', 'แจ้งเรื่องฉบับภาษา'],
+  'home.fromHint.t': ['您剛才看的頁面尚無{lang}版本。', 'The page you were viewing is not yet available in {lang}.', 'ご覧になっていたページには{lang}版がまだありません。', 'Wala pang bersyong {lang} ang pahinang tiningnan mo.', 'Trang bạn vừa xem chưa có bản {lang}.', 'Halaman yang Anda lihat belum tersedia dalam bahasa {lang}.', 'หน้าที่คุณเพิ่งดูยังไม่มีฉบับ{lang}'],
+  'home.fromHint.go': ['改看{lang}版', 'View it in {lang}', '{lang}版を見る', 'Tingnan sa {lang}', 'Xem bản {lang}', 'Lihat versi bahasa {lang}', 'ดูฉบับ{lang}'],
+  // #74 現行官網多語兒童預防接種時程表（en／vi／id 疫苗相關頁）
+  'vaccines.mlsched.t': ['多國語言版兒童預防接種時程表', 'Childhood immunization schedule in other languages', '多言語版 小児予防接種スケジュール', 'Iskedyul ng bakuna ng bata sa ibang wika', 'Lịch tiêm chủng trẻ em bằng nhiều ngôn ngữ', 'Jadwal imunisasi anak dalam berbagai bahasa', 'ตารางวัคซีนเด็กหลายภาษา'],
+  'vaccines.mlsched.d': ['現行疾管署官網提供多種語言的兒童預防接種時程表（PDF）。', 'The current Taiwan CDC website offers the childhood immunization schedule as PDFs in several languages, including English, Vietnamese and Indonesian.', '現行の台湾CDCサイトに多言語版の小児予防接種スケジュール（PDF）があります。', 'May iskedyul ng bakuna ng bata (PDF) sa iba’t ibang wika sa kasalukuyang website ng Taiwan CDC.', 'Trang web hiện tại của CDC Đài Loan có lịch tiêm chủng trẻ em (PDF) bằng nhiều ngôn ngữ, gồm tiếng Anh, tiếng Việt và tiếng Indonesia.', 'Situs Taiwan CDC saat ini menyediakan jadwal imunisasi anak (PDF) dalam berbagai bahasa, termasuk bahasa Inggris, Vietnam, dan Indonesia.', 'เว็บไซต์ปัจจุบันของ CDC ไต้หวันมีตารางวัคซีนเด็ก (PDF) หลายภาษา'],
+  'vaccines.mlsched.cta': ['開啟多語時程表（現行官網）', 'Open the multilingual schedules (current Taiwan CDC site)', '多言語版を開く（現行サイト）', 'Buksan ang mga iskedyul (kasalukuyang site)', 'Mở lịch tiêm đa ngôn ngữ (trang hiện tại)', 'Buka jadwal multibahasa (situs saat ini)', 'เปิดตารางหลายภาษา (เว็บไซต์ปัจจุบัน)'],
+  'link.unverified': ['連結未驗證', 'Link not yet verified', 'リンク未確認', 'Hindi pa beripikado ang link', 'Liên kết chưa được kiểm chứng', 'Tautan belum diverifikasi', 'ยังไม่ได้ตรวจสอบลิงก์'],
+  // #76 外語首頁的出國／來台兩個入口
+  'home.travel.out': ['出國', 'Going abroad from Taiwan', '台湾から海外へ', 'Pupunta sa ibang bansa mula Taiwan', 'Đi nước ngoài từ Đài Loan', 'Ke luar negeri dari Taiwan', 'เดินทางจากไต้หวันไปต่างประเทศ'],
+  'home.travel.in': ['來台', 'Visiting or moving to Taiwan', '台湾へ来る方', 'Pagbisita o paglipat sa Taiwan', 'Đến thăm hoặc sinh sống tại Đài Loan', 'Berkunjung atau pindah ke Taiwan', 'มาเยือนหรือย้ายมาไต้หวัน'],
+  'home.travel.in.sub': ['入境檢疫 · 當季疫情 · 就醫與 1922 通譯 · 移工健檢', 'Arrival quarantine · Current outbreaks · Doctors and 1922 interpreters · Migrant worker health checks', '入国時の検疫 · 現在の流行 · 受診と1922通訳 · 外国人労働者の健康診断', 'Quarantine sa pagdating · Kasalukuyang outbreak · Doktor at 1922 interpreter · Health check ng migrante', 'Kiểm dịch nhập cảnh · Dịch bệnh hiện nay · Đi khám và thông dịch 1922 · Khám sức khỏe lao động', 'Karantina kedatangan · Wabah saat ini · Berobat dan penerjemah 1922 · Pemeriksaan pekerja migran', 'การคัดกรองขาเข้า · โรคระบาดขณะนี้ · การพบแพทย์และล่าม 1922 · ตรวจสุขภาพแรงงาน'],
+};
+for (const [key, vals] of Object.entries(ROWS_R40)) vals.forEach((v, i) => { if (v != null && v !== '') STRINGS[ORDER[i]][key] = v; });
+
 
 // translation.bar.reviewed 的 {lang} 佔位：zh 版用語言名稱
 STRINGS['zh-TW']['translation.bar.reviewed'] = STRINGS['zh-TW']['translation.bar.reviewed'].replace('{lang}', '翻譯');

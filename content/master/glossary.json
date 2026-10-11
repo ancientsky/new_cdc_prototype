@@ -76,12 +76,15 @@
     "ja": "インフルエンザ",
     "tl": "Trangkaso",
     "vi": "Cúm mùa",
-    "id_": "Influenza",
+    "id_": "Influenza (flu)",
     "th": "ไข้หวัดใหญ่",
     "domain": "disease",
     "locked": true,
     "refs": [
       "disease.influenza"
+    ],
+    "machineTranslated": [
+      "id"
     ]
   },
   {
@@ -108,14 +111,18 @@
     ],
     "en": "Enterovirus",
     "ja": "エンテロウイルス",
-    "tl": "Enterovirus",
+    "tl": "Impeksyon ng enterovirus",
     "vi": "Enterovirus",
-    "id_": "Enterovirus",
+    "id_": "Infeksi enterovirus",
     "th": "เอนเทอโรไวรัส",
     "domain": "disease",
     "locked": true,
     "refs": [
       "disease.enterovirus"
+    ],
+    "machineTranslated": [
+      "id",
+      "tl"
     ]
   },
   {
@@ -346,7 +353,7 @@
     ],
     "en": "Japanese encephalitis",
     "ja": "日本脳炎",
-    "tl": "Japanese encephalitis",
+    "tl": "Japanese encephalitis (pamamaga ng utak)",
     "vi": "Viêm não Nhật Bản",
     "id_": "Ensefalitis Jepang",
     "th": "ไข้สมองอักเสบเจอี",
@@ -354,6 +361,9 @@
     "locked": true,
     "refs": [
       "disease.japanese-encephalitis"
+    ],
+    "machineTranslated": [
+      "tl"
     ]
   },
   {
@@ -383,7 +393,7 @@
     ],
     "en": "Pertussis (whooping cough)",
     "ja": "百日咳",
-    "tl": "Pertussis (whooping cough)",
+    "tl": "Ubong-dalahit (pertussis)",
     "vi": "Ho gà",
     "id_": "Pertusis (batuk rejan)",
     "th": "โรคไอกรน",
@@ -391,6 +401,9 @@
     "locked": true,
     "refs": [
       "disease.pertussis"
+    ],
+    "machineTranslated": [
+      "tl"
     ]
   },
   {
@@ -686,7 +699,7 @@
     ],
     "en": "Scrub typhus",
     "ja": "ツツガムシ病",
-    "tl": "Scrub typhus",
+    "tl": "Scrub typhus (lagnat mula sa kagat ng mite)",
     "vi": "Sốt mò",
     "id_": "Tifus semak (scrub typhus)",
     "th": "โรคสครับไทฟัส",
@@ -694,6 +707,9 @@
     "locked": true,
     "refs": [
       "disease.scrub-typhus"
+    ],
+    "machineTranslated": [
+      "tl"
     ]
   },
   {
@@ -918,7 +934,7 @@
     ],
     "en": "Yellow fever",
     "ja": "黄熱",
-    "tl": "Yellow fever",
+    "tl": "Yellow fever (dilaw na lagnat)",
     "vi": "Sốt vàng",
     "id_": "Demam kuning",
     "th": "ไข้เหลือง",
@@ -926,6 +942,9 @@
     "locked": true,
     "refs": [
       "disease.yellow-fever"
+    ],
+    "machineTranslated": [
+      "tl"
     ]
   },
   {
@@ -1370,12 +1389,16 @@
     ],
     "en": "Travel medicine clinic",
     "ja": "トラベルクリニック",
-    "tl": "Travel medicine clinic",
+    "tl": "Klinika ng medisina sa paglalakbay",
     "vi": "Phòng khám y học du lịch",
-    "id_": "Klinik kedokteran perjalanan",
+    "id_": "Klinik kesehatan perjalanan",
     "th": "คลินิกเวชศาสตร์การเดินทาง",
     "domain": "org",
-    "locked": true
+    "locked": true,
+    "machineTranslated": [
+      "id",
+      "tl"
+    ]
   },
   {
     "id": "term.165",
@@ -1385,12 +1408,15 @@
     ],
     "en": "165 anti-fraud hotline",
     "ja": "詐欺防止ホットライン165",
-    "tl": "165 anti-fraud hotline",
+    "tl": "165 hotline laban sa panloloko",
     "vi": "Đường dây chống lừa đảo 165",
     "id_": "Hotline anti-penipuan 165",
     "th": "สายด่วนป้องกันการฉ้อโกง 165",
     "domain": "org",
-    "locked": true
+    "locked": true,
+    "machineTranslated": [
+      "tl"
+    ]
   },
   {
     "id": "term.nidss",
@@ -1418,12 +1444,15 @@
     ],
     "en": "Epidemic Intelligence Center",
     "ja": "疫情センター",
-    "tl": "Epidemic Intelligence Center",
+    "tl": "Sentro ng Epidemic Intelligence",
     "vi": "Trung tâm Tình báo Dịch tễ",
     "id_": "Pusat Intelijen Epidemi",
     "th": "ศูนย์ข่าวกรองการระบาด",
     "domain": "org",
-    "locked": true
+    "locked": true,
+    "machineTranslated": [
+      "tl"
+    ]
   },
   {
     "id": "term.travel-notice",
@@ -1486,7 +1515,7 @@
     ],
     "en": "Post-exposure prophylaxis (PEP)",
     "ja": "曝露後予防内服（PEP）",
-    "tl": "Post-exposure prophylaxis (PEP)",
+    "tl": "Post-exposure prophylaxis (PEP, gamot pagkatapos ng exposure)",
     "vi": "Dự phòng sau phơi nhiễm (PEP)",
     "id_": "Profilaksis pascapajanan (PEP)",
     "th": "การป้องกันหลังสัมผัส (PEP)",
@@ -1494,6 +1523,9 @@
     "locked": true,
     "refs": [
       "disease.hiv"
+    ],
+    "machineTranslated": [
+      "tl"
     ]
   },
   {
@@ -1504,7 +1536,7 @@
     ],
     "en": "Pre-exposure prophylaxis (PrEP)",
     "ja": "曝露前予防内服（PrEP）",
-    "tl": "Pre-exposure prophylaxis (PrEP)",
+    "tl": "Pre-exposure prophylaxis (PrEP, gamot bago ang exposure)",
     "vi": "Dự phòng trước phơi nhiễm (PrEP)",
     "id_": "Profilaksis prapajanan (PrEP)",
     "th": "การป้องกันก่อนสัมผัส (PrEP)",
@@ -1512,6 +1544,9 @@
     "locked": true,
     "refs": [
       "disease.hiv"
+    ],
+    "machineTranslated": [
+      "tl"
     ]
   },
   {

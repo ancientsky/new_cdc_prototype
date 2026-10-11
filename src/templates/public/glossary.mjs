@@ -2,7 +2,8 @@
 // 中文正名／English／說明，依英文字母分組；別名與舊稱（deprecated）也可被搜尋。
 // 沒有 JS 時是完整清單；有 JS 時（src/client/glossary.js）才出現篩選框，輸入即時過濾並隱藏沒有符合項目的字母群。
 import { html, raw } from '../../../scripts/lib/render.mjs';
-import { ldFor, pageHead, diseasePage, hrefFor } from './_partials.mjs';
+import { ldFor, pageHead, diseasePage, hrefFor, L } from './_partials.mjs';
+import { glossaryTermInfo } from '../../client/glossary-term.js';
 
 export function pages() { return [{ path: '/glossary/', lang: '*', props: {} }]; }
 
@@ -32,15 +33,21 @@ export function render(ctx) {
   const list = site.master.glossary ?? [];
   const groups = groupGlossary(list);
   const DOMAIN = { disease: t('glossary.domain.disease'), vaccine: t('glossary.domain.vaccine'), org: t('glossary.domain.org'), procedure: t('glossary.domain.procedure'), place: t('glossary.domain.place'), general: t('glossary.domain.general') };
-  const related = (g) => (g.refs ?? []).map((r) => { const d = String(r).startsWith('disease.') ? diseasePage(ctx, r) : null; return d ? html`<a href="${hrefFor(ctx, d)}">${d.title}</a>` : ''; }).filter(Boolean);
+  const related = (g) => (g.refs ?? []).map((r) => { const d = String(r).startsWith('disease.') ? diseasePage(ctx, r) : null; return d ? html`<a href="${hrefFor(ctx, d)}">${L(ctx, d, 'title')}</a>` : ''; }).filter(Boolean);
+  const zh = ctx.lang === 'zh-TW';
   const entry = (g) => {
-    const names = [g['zh-TW'], g.en, ...(g.aliases ?? []), ...(g.deprecated ?? [])].filter(Boolean).join(' ').toLowerCase();
+    // 第四十輪（#72）：外語頁多列「本語言譯名」（走 glossaryTermInfo：id → id_、缺譯退英文；機器翻譯初稿加標記）
+    const loc = !zh && ctx.lang !== 'en' ? glossaryTermInfo(g, ctx.lang) : null;
+    const locShow = loc && loc.lang === ctx.lang && loc.text !== g.en;
+    const names = [g['zh-TW'], g.en, locShow ? loc.text : null, ...(g.aliases ?? []), ...(g.deprecated ?? [])].filter(Boolean).join(' ').toLowerCase();
     const rel = related(g);
+    // 定義、別名、舊名都是中文：外語頁標 lang="zh-TW"（誠實標示，螢幕閱讀器切中文語音；也不算「夾雜」）
+    const zhAttr = zh ? '' : raw(' lang="zh-TW"');
     return html`<div class="c-glossary__row" data-q="${names}">
-      <dt id="${g.id}"><span class="c-glossary__zh" lang="zh-TW">${g['zh-TW']}</span>${g.en ? html` <span class="c-glossary__en" lang="en">${g.en}</span>` : ''}${g.locked ? html` <span class="c-tag">${t('glossary.locked')}</span>` : ''}</dt>
-      <dd>${g.definition || g.note ? html`<p>${g.definition ?? g.note}</p>` : ''}
-        ${(g.aliases ?? []).length ? html`<p class="muted">${t('glossary.aliases')}：${g.aliases.join('、')}</p>` : ''}
-        ${(g.deprecated ?? []).length ? html`<p class="muted">${t('glossary.deprecated')}：${g.deprecated.join('、')}</p>` : ''}
+      <dt id="${g.id}"><span class="c-glossary__zh" lang="zh-TW">${g['zh-TW']}</span>${g.en ? html` <span class="c-glossary__en" lang="en">${g.en}</span>` : ''}${locShow ? html` <span class="c-glossary__loc" lang="${ctx.lang}">${loc.text}</span>${loc.machine ? html` <span class="c-tag">${t('i18n.machine.short')}</span>` : ''}` : ''}${g.locked ? html` <span class="c-tag">${t('glossary.locked')}</span>` : ''}</dt>
+      <dd>${g.definition || g.note ? html`<p${zhAttr}>${g.definition ?? g.note}</p>` : ''}
+        ${(g.aliases ?? []).length ? html`<p class="muted">${t('glossary.aliases')}：<span${zhAttr}>${g.aliases.join('、')}</span></p>` : ''}
+        ${(g.deprecated ?? []).length ? html`<p class="muted">${t('glossary.deprecated')}：<span${zhAttr}>${g.deprecated.join('、')}</span></p>` : ''}
         <p class="muted">${DOMAIN[g.domain] ?? ''}${rel.length ? html` · ${rel}` : ''}</p></dd>
     </div>`;
   };

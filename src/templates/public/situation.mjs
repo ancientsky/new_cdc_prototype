@@ -48,7 +48,7 @@ ${sit.note ? html`<p class="c-alert c-alert--overdue" role="note">${sit.note}</p
           <p class="c-sit-card__metric"><span class="c-sit-card__arrow c-sit-card__arrow--${it.trend}" aria-hidden="true">${trendArrow(it.trend)}</span><span class="c-sit-card__num">${sitField(ctx, it, 'metricValue')}</span>${it.illustrative ? html`<span class="c-sit-card__demo">${t('illustrative')}</span>` : ''}</p>
           <p class="c-sit-card__desc">${sitField(ctx, it, 'metricLabel')}${sitField(ctx, it, 'deltaText') ? html`<br><span class="c-sit-card__delta">${sitField(ctx, it, 'deltaText')}</span>` : ''}</p>
           <p class="c-sit-card__advice"><b>${t('sit.advice')}</b>${sitField(ctx, it, 'advice')}</p>
-          <p class="muted"><b>${t('status.pop.basis')}</b> ${it.basis}</p>
+          <p class="muted"><b>${t('status.pop.basis')}</b> ${sitField(ctx, it, 'basis')}</p>
           <p class="c-linkrow">${href ? html`<a href="${href}">${t('situation.page')} →</a>` : ''}${ds ? html` ${href ? '· ' : ''}<a href="${url('/data/')}#${ds.id}">${t('disease.dataset')}</a>` : ''}</p>
         </div>
         <figure class="c-sitbig__chart">${it.weekly?.length ? raw(barChartSvg(it.weekly, { labels: it.weeklyLabels, color: `var(--status-${it.status})`, width: 420, height: 170, title: `${diseaseName(ctx, dm)} · ${sitField(ctx, it, 'metricLabel')}` })) : ''}<figcaption class="muted">${t('situation.weekly', { n: it.weekly?.length ?? 0 })}${it.illustrative ? ` · ${t('illustrative')}` : ''} ${it.weekly?.length > 1 ? raw(sparklineSvg(it.weekly, { color: `var(--status-${it.status})`, width: 80, height: 22, title: '' })) : ''}</figcaption></figure>

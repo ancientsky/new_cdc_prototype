@@ -1234,3 +1234,19 @@ html:not(.js) .vxs-form,html:not(.js) .vxs-msg,html:not(.js) .vxs-tabs,html:not(
 .vx-hub__card h3{font-size:var(--fs-md);margin:0 0 var(--sp-1)}
 .vx-hub__card .c-linklist{margin:0}
 .vx-hub__card .c-linklist li{margin:0 0 var(--sp-1)}
+
+/* 第四十輪（#73、#74）：多語標示。「僅有中文」標記、語言選單的「此頁僅有…」、從無譯文頁切來的首頁提示 */
+.c-zhonly{display:inline-block;font-size:var(--fs-xs,.75rem);font-weight:600;line-height:1.3;padding:1px 6px;border-radius:var(--radius-sm);background:var(--line-2);color:var(--ink-2);vertical-align:.1em;white-space:nowrap}
+.langs__na{display:block;font-size:var(--fs-xs,.75rem);color:var(--ink-2);font-weight:400;white-space:normal}
+/* 頂端一列空間有限：只留虛線底線提示，完整文字給螢幕閱讀器與 title */
+.langs--inline a[data-same="0"]{text-decoration:underline dotted;text-underline-offset:3px}
+.langs--inline .langs__na{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+.c-fromhint{margin:var(--sp-3) 0}
+.c-fromhint p{margin:0 0 var(--sp-1)}
+.c-fromhint__go .c-btn{margin:var(--sp-1) var(--sp-1) 0 0}
+/* 第四十輪（#76）：出國與入境卡分「出國」「來台」兩個入口（外語首頁） */
+.c-task--split{gap:var(--sp-2)}
+.c-task__half{display:flex;flex-direction:column;gap:2px;padding:var(--sp-2) var(--sp-3);border:1px solid var(--line);border-radius:var(--radius-sm);text-decoration:none;color:var(--ink)}
+.c-task__half:hover,.c-task__half:focus-visible{border-color:var(--green-700);background:var(--green-50)}
+.c-task__h{font-weight:700;color:var(--green-900)}
+.c-task__s{font-size:var(--fs-xs,.75rem);color:var(--ink-2)}

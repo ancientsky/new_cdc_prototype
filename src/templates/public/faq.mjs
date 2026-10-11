@@ -3,7 +3,7 @@ import { html, raw } from '../../../scripts/lib/render.mjs';
 import { md } from '../../../scripts/lib/markdown.mjs';
 import { config } from '../../../site.config.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
-import { ldFor, breadcrumb, pageHead, provenance, alerts, pageData, scopeTags, feedback, translationBadge, askBox, hrefFor, isFallbackLink, L, publishedOf, slugOf, diseasePage, diseaseName, itemPath, sectionHead } from './_partials.mjs';
+import { ldFor, breadcrumb, pageHead, provenance, alerts, pageData, scopeTags, feedback, translationBadge, askBox, hrefFor, L, publishedOf, slugOf, diseasePage, diseaseName, itemPath, sectionHead, titleLink } from './_partials.mjs';
 
 export function meta(ctx, props = {}) {
   if (props.item) { const f = props.item; return { title: L(ctx, f, 'question') ?? f.title, description: L(ctx, f, 'summary'), item: f, jsonLd: ldFor(ctx, f, [{ label: ctx.t('nav.faq'), href: '/faq/' }, { label: L(ctx, f, 'question') ?? f.title }]) }; }
@@ -11,8 +11,7 @@ export function meta(ctx, props = {}) {
 }
 
 function qLink(ctx, f) {
-  const fb = isFallbackLink(ctx, f);
-  return html`<li><a href="${hrefFor(ctx, f)}"${fb ? raw(' lang="zh-TW"') : ''}>${fb ? (f.question ?? f.title) : (L(ctx, f, 'question') ?? f.title)}</a></li>`;
+  return html`<li>${titleLink(ctx, f, { field: f.question ? 'question' : 'title' })}</li>`;
 }
 
 function listPage(ctx) {

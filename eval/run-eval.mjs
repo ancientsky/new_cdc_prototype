@@ -53,6 +53,9 @@ export function engineFromSite(site, extra = {}) {
 }
 
 function contentExists(site, ref) {
+  // 第四十輪：'i18n:<內容 id>:<lang>'＝該內容這個語言的譯文已 reviewed（答案索引只收 reviewed 譯文；機器翻譯初稿不進索引）。
+  // 用在「譯文審核後才應該答得出來」的外語題：審核前 skipped，審核後自動變成必考題。
+  if (ref.startsWith('i18n:')) { const [, id, lang] = ref.split(':'); return site.byId?.get(id)?.languages?.[lang]?.status === 'reviewed'; }
   if (ref.startsWith('situation:')) return (site.situation?.items ?? []).some((i) => i.disease === ref.slice(10));
   if (ref.startsWith('travel:')) { const iso = ref.slice(7).toUpperCase(); return [...(site.snapshots?.countryLevels?.data ?? []), ...(site.snapshots?.travelAlerts?.data ?? [])].some((t) => String(t.iso2 ?? t.ISO2 ?? t.countryCode ?? t.iso ?? t.code ?? '').toUpperCase() === iso); }
   if (ref.startsWith('dataset-series:')) return (site.collections.datasets ?? []).some((d) => d.id === ref.slice(15) && d.series);

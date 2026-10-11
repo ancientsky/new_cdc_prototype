@@ -2,7 +2,7 @@
 import { html, raw } from '../../../scripts/lib/render.mjs';
 import { md } from '../../../scripts/lib/markdown.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
-import { ldFor, breadcrumb, pageHead, sectionHead, provenance, alerts, pageData, scopeTags, feedback, translationBadge, statusTag, hrefFor, isFallbackLink, L, unitName, publishedOf, byDateDesc, slugOf, diseasePage, diseaseName, sitField, itemPath, pill, alertBox, isNotice, isClosed, isClosingSoon, deadlinePill, extLink } from './_partials.mjs';
+import { ldFor, breadcrumb, pageHead, sectionHead, provenance, alerts, pageData, scopeTags, feedback, translationBadge, statusTag, hrefFor, isFallbackLink, L, unitName, publishedOf, byDateDesc, slugOf, diseasePage, diseaseName, sitField, itemPath, pill, alertBox, isNotice, isClosed, isClosingSoon, deadlinePill, extLink, titleLink, localText, langSpan } from './_partials.mjs';
 
 export function kindOf(n) {
   if (n.type === 'clarification') return 'clarification';
@@ -37,7 +37,7 @@ function listPage(ctx) {
 </div>
 <ul class="c-newsfull" id="news-list" aria-live="polite">${items.map((n) => {
     const fb = isFallbackLink(ctx, n);
-    return html`<li data-kind="${kindOf(n)}" data-year="${n.publishedAt.slice(0, 4)}"><time datetime="${n.publishedAt}">${fmtDate(n.publishedAt)}</time><div><p class="c-newsfull__t">${pill(t(`news.type.${kindOf(n)}`), kindOf(n) === 'clarification' ? 'warn' : kindOf(n) === 'letter' ? 'info' : 'neutral')} <a href="${hrefFor(ctx, n)}"${fb ? raw(' lang="zh-TW"') : ''}>${fb ? n.title : L(ctx, n, 'title')}</a>${n.letterNo ? html` <span class="muted">${t('news.letterNo', { n: n.letterNo })}</span>` : ''}</p><p class="muted">${fb ? n.summary : L(ctx, n, 'summary')}</p></div></li>`;
+    return html`<li data-kind="${kindOf(n)}" data-year="${n.publishedAt.slice(0, 4)}"><time datetime="${n.publishedAt}">${fmtDate(n.publishedAt)}</time><div><p class="c-newsfull__t">${pill(t(`news.type.${kindOf(n)}`), kindOf(n) === 'clarification' ? 'warn' : kindOf(n) === 'letter' ? 'info' : 'neutral')} ${titleLink(ctx, n)}${n.letterNo ? html` <span class="muted">${t('news.letterNo', { n: n.letterNo })}</span>` : ''}</p>${(() => { const s = localText(ctx, n, 'summary'); return fb && s.zhOnly ? '' : html`<p class="muted">${langSpan(ctx, s)}</p>`; })()}</div></li>`;
   })}</ul>
 ${items.length ? '' : html`<p class="c-empty">${t('none')}</p>`}`;
 }

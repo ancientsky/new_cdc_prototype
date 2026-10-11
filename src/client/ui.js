@@ -163,11 +163,30 @@ qsa('[data-fill-param]').forEach((i) => { const v = params.get(i.dataset.fillPar
   });
   const other = want === 'A' ? 'B' : 'A';
   const now = bar.querySelector('[data-hero-now]');
-  if (now) now.textContent = `目前為做法 ${want}（網址參數強制）`;
+  if (now) now.textContent = (bar.dataset.forced || '目前為做法 {x}（網址參數強制）').replace('{x}', want); // 第四十輪：樣板由伺服器依頁面語言帶入
   const sw = bar.querySelector('[data-hero-switch]');
   if (sw) { const q = new URLSearchParams(location.search); q.set('hero', other); sw.setAttribute('href', `${location.pathname}?${q}`); sw.querySelector('[data-hero-other]').textContent = other; }
   const reset = bar.querySelector('[data-hero-reset]');
   if (reset) reset.hidden = false;
+})();
+
+/* ───────── 第四十輪（#74）：從沒有本語言版本的頁切語言過來 → 首頁顯示預留的提示（文字由建置時依語言渲染，這裡只填網址） ───────── */
+(() => {
+  const box = document.querySelector('[data-from-hint]');
+  if (!box) return;
+  const q = new URLSearchParams(location.search);
+  const from = q.get('from') || '';
+  // 只接受站內路徑（/ 開頭、不是 //、沒有協定或奇怪字元），避免被拿來做開放轉址
+  if (!/^\/(?!\/)[\w\-./%]*$/.test(from) || from === '/') return;
+  const alts = new Set(String(q.get('alts') || '').split(','));
+  let shown = 0;
+  qsa('[data-from-alt]', box).forEach((a) => {
+    if (!alts.has(a.dataset.fromAlt)) return;
+    a.setAttribute('href', `${CDC.base}${a.dataset.langPath || ''}${from}`);
+    a.hidden = false;
+    shown++;
+  });
+  if (shown) box.hidden = false;
 })();
 
 /* ───────── Banner 輪播（不自動播放；可暫停／手動切換／鍵盤） ───────── */

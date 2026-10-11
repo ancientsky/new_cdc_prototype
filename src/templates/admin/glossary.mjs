@@ -1,5 +1,6 @@
 // /admin/glossary/ 詞彙主檔：七語對照、鎖定詞、別名、deprecated 舊名、引用內容；新增詞彙（示範）輸出 JSON 片段
 import { html } from '../../../scripts/lib/render.mjs';
+import { glossaryField } from '../../client/glossary-term.js';
 import { pageHead, adminMeta, dataScript, LANGS, frontPath } from './_partials.mjs';
 export { layout } from './_layout.mjs';
 
@@ -7,7 +8,9 @@ export function pages() { return [{ path: '/admin/glossary/', props: {}, noindex
 export function meta() { return adminMeta('詞彙主檔', 'glossary', ['/assets/js/admin/glossary.js']); }
 
 const textOf = (i) => [i.title, i.summary, i.question, i.answerMarkdown, i.bodyMarkdown, i.machineReadableMarkdown, i.clarificationMarkdown, ...(i.keywords ?? []), ...(i.blocks ?? []).map((b) => `${b.markdown ?? ''} ${(b.cards ?? []).map((c) => `${c.title} ${c.text}`).join(' ')}`)].filter(Boolean).join('\n');
-const tr = (g, code) => (code === 'id' ? (g.id_ ?? g['id-ID'] ?? '') : (g[code] ?? ''));
+// 後台要看「這個語言實際填了什麼」，不做退回（缺就是空格，才看得出要補）；欄位對照走 glossaryField（id → id_）
+const tr = (g, code) => g[glossaryField(code)] ?? (code === 'id' ? g['id-ID'] : '') ?? '';
+const isMachine = (g, code) => (g.machineTranslated ?? []).includes(code);
 
 export function render(ctx) {
   const { site, url } = ctx;
@@ -28,7 +31,7 @@ ${pageHead({ title: '詞彙主檔', what: '七語詞彙主檔：同一個概念�
   <tbody>${gl.map((g) => { const u = usage(g); return html`<tr data-locked="${g.locked ? 1 : 0}" data-q="${[g['zh-TW'], ...(g.aliases ?? []), ...(g.deprecated ?? []), ...LANGS.map((l) => tr(g, l.code)), g.id].join(' ').toLowerCase()}">
     <td><strong>${g['zh-TW']}</strong><div class="adm-muted"><code>${g.id}</code>${g.domain ? ` · ${g.domain}` : ''}</div>${g.note ? html`<div class="adm-muted">${g.note}</div>` : ''}</td>
     <td>${(g.aliases ?? []).map((a) => html`<span class="adm-chip adm-chip--plain">${a}</span> `)}${(g.deprecated ?? []).map((a) => html`<span class="adm-chip adm-chip--warn" title="舊名，不再使用"><span class="adm-term-del">${a}</span>（停用）</span> `)}</td>
-    ${cols.map((l) => html`<td lang="${l.code}">${tr(g, l.code) || html`<span class="adm-muted">—</span>`}</td>`)}
+    ${cols.map((l) => html`<td lang="${l.code}">${tr(g, l.code) || html`<span class="adm-muted">—</span>`}${isMachine(g, l.code) ? html` <span class="adm-chip adm-chip--warn" title="機器翻譯初稿，待多語審核人確認後移除 machineTranslated" lang="zh-TW">機翻待審</span>` : ''}</td>`)}
     <td>${g.locked ? html`<span class="adm-badge adm-badge--info">鎖定</span>` : html`<span class="adm-muted">否</span>`}</td>
     <td>${u.length ? html`${u.length} 筆<div class="adm-muted">${u.slice(0, 3).map((i) => { const p = frontPath(i); return p ? html`<a href="${url(p)}">${i.id}</a> ` : html`${i.id} `; })}${u.length > 3 ? '…' : ''}</div>` : html`<span class="adm-muted">0</span>`}</td></tr>`; })}</tbody></table></div></section>
 

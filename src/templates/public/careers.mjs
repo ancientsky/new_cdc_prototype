@@ -7,8 +7,8 @@ import { html, raw } from '../../../scripts/lib/render.mjs';
 import { md } from '../../../scripts/lib/markdown.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
 import {
-  ldFor, breadcrumb, pageHead, provenance, alerts, pageData, feedback, translationBadge, hrefFor, isFallbackLink, L, unitName, unitLink, extLink, isExternal,
-  pill, alertBox, mdHeader, daysUntil,
+  ldFor, breadcrumb, pageHead, provenance, alerts, pageData, feedback, translationBadge, L, unitName, unitLink, extLink, isExternal,
+  pill, alertBox, mdHeader, daysUntil, titleLink,
 } from './_partials.mjs';
 import {
   jobsOf, allJobs, jobPath, applyPath, applyOnSite, jobStage, jobTab, JOB_TABS, stagePill, jobCountdown, placeOf, jobSlug, jobIsHistory,
@@ -71,14 +71,13 @@ function amendBlock(ctx, j) {
 function jobCard(ctx, j, tab) {
   const { t, fmtDate, site } = ctx;
   const stage = jobStage(site, j);
-  const fb = isFallbackLink(ctx, j);
   const place = placeOf(j.workplace);
   const showStage = tab !== 'open' && tab !== 'upcoming';
   const amended = (j.amendments ?? []).length > 0 && !jobIsHistory(site, j, stage);
   return html`<li class="c-job" data-jobtype="${j.jobType ?? ''}" data-place="${place}" data-unit="${j.hiringUnit ?? ''}" data-stage="${stage}">
   <div class="c-job__main">
     <p class="c-job__meta">${j.jobType ? pill(L(ctx, j, 'jobType') ?? j.jobType, 'info') : ''}${showStage ? html` ${stagePill(ctx, stage)}` : ''}${j.applyUrl && stage === 'open' ? html` ${pill(t('job.method.external'), 'neutral')}` : ''}${amended ? html` <span class="c-amend-flag" data-amended>${pill(t('job.amend.pill'), 'warn')}</span>` : ''}</p>
-    <h3 class="c-job__t"><a href="${hrefFor(ctx, { ...j, type: 'job' })}"${fb ? raw(' lang="zh-TW"') : ''}>${fb ? j.title : L(ctx, j, 'title')}</a></h3>
+    <h3 class="c-job__t">${titleLink(ctx, { ...j, type: 'job' })}</h3>
     <dl class="c-job__facts">
       ${j.hiringUnit ? html`<div><dt>${t('job.unit')}</dt><dd>${unitLink(ctx, j.hiringUnit)}</dd></div>` : ''}
       ${j.positions != null ? html`<div><dt>${t('job.positions')}</dt><dd>${t('job.positions.n', { n: j.positions })}</dd></div>` : ''}

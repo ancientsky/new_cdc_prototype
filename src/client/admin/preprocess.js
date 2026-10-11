@@ -1,6 +1,7 @@
 // 上架預處理（6.5）：純函式、不碰 DOM，瀏覽器與 Node 測試共用。
 // 流程：實體抽取（比對主檔）→ 未對應詞 → 摘要 → 結構化欄位 → 一致性檢查 → 多語術語鎖定 → 匯出 content JSON。
 // 全部是規則式（regex／字串比對），不呼叫模型；輸出一律「建議」，要人工確認。
+import { glossaryField } from '../glossary-term.js';
 
 export const TYPES = [
   { value: 'faq', label: 'Q&A' },
@@ -70,7 +71,8 @@ export function normRange(s) {
 const isHan = (ch) => /[一-鿿]/.test(ch);
 
 // ---------- 詞庫 ----------
-const termLang = (g, lang) => (lang === 'id' ? (g.id_ ?? g['id-ID'] ?? g.i18n?.id ?? '') : (g[lang] ?? ''));
+// 欄位對照（id → id_）與公開頁共用 glossary-term.js；這裡刻意不退回英文：預處理要知道「這個語言有沒有鎖定譯名」
+const termLang = (g, lang) => g[glossaryField(lang)] ?? (lang === 'id' ? (g['id-ID'] ?? g.i18n?.id) : '') ?? '';
 export { termLang };
 
 export function buildLexicon({ glossary = [], diseases = [], vaccines = [], countries = [] } = {}) {

@@ -1,6 +1,7 @@
 // 共用版面：topbar／header／主選單／翻譯狀態列／頁尾／手機底部 tab。
 // meta 介面：{ title, description, body, jsonLd[], noindex, bodyClass, scripts[], item, canonicalPath, hideTranslationBar }
-import { html, raw, jsonScript } from '../../scripts/lib/render.mjs';
+import { html, raw, esc, jsonScript } from '../../scripts/lib/render.mjs';
+import { t as i18nT } from '../client/i18n.js';
 import { config } from '../../site.config.mjs';
 import * as JL from '../../scripts/lib/jsonld.mjs';
 import { pausedBanner, translationBadge, unitName } from './public/_partials.mjs';
@@ -97,9 +98,15 @@ export function layout(ctx, { styles = [], title, description, body, jsonLd = []
   // 第六輪：國際合作入口。zh-TW 主選單已滿（八項）不加；英文站使用者習慣在主選單找 International Cooperation，所以只有 en 多一項。其他語言放頁尾「關於疾管署」群組
   const hasIntl = !!intlTopic(site);
   if (hasIntl && lang === 'en') navItems.push(['/international/', 'international.title']);
+  // 第四十輪（#74）：本頁沒有某語言版本時，語言選單仍可點，但先標「此頁僅有 中文、英文」（用目標語言寫，讀者找的是自己的語言）；
+  // 連到該語首頁並帶 ?from=本頁&alts=有的語言，首頁的提示區塊（homeFromHint）告訴讀者「此頁尚無印尼文版本，可改看英文版」並給連結。
+  // 以前直接落在首頁、什麼都不說，看起來像內容消失。
+  const altsKnown = alts.filter((c) => config.langs.some((l) => l.code === c));
   const langLinks = config.langs.map((L) => {
     const same = alts.includes(L.code);
-    return html`<a href="${config.basePath}${L.path}${same ? path : '/'}" data-lang-path="${L.path}" data-same="${same ? '1' : '0'}" hreflang="${L.code}" lang="${L.code}" ${L.code === lang ? raw('aria-current="true"') : ''}>${L.label}</a>`;
+    const href = same ? `${config.basePath}${L.path}${path}` : `${config.basePath}${L.path}/?from=${encodeURIComponent(path)}&alts=${altsKnown.join(',')}`;
+    const only = same ? '' : i18nT(L.code, 'lang.pageOnly', { langs: altsKnown.map((c) => i18nT(L.code, `langname.${c}`)).join(i18nT(L.code, 'lang.sep')) });
+    return html`<a href="${href}" data-lang-path="${L.path}" data-same="${same ? '1' : '0'}" hreflang="${L.code}" lang="${L.code}" ${L.code === lang ? raw('aria-current="true"') : ''}${only ? raw(` title="${esc(only)}"`) : ''}>${L.label}${only ? html`<span class="langs__na">${only}</span>` : ''}</a>`;
   });
   return html`<!doctype html>
 <html lang="${lang}" dir="${langDef?.dir ?? 'ltr'}" data-base="${config.basePath}" data-lang-path="${langDef?.path ?? ''}" data-view="${forcePro ? 'pro' : 'public'}"${forcePro ? raw(' data-force-view="pro"') : ''}>

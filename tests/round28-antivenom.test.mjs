@@ -170,10 +170,12 @@ test('索引：專業段只進專業版；每段一塊、帶 verification:pendin
   assert.ok(pro.some((c) => c.url.endsWith('#s-professional')));
   for (const c of [...pub, ...pro]) assert.equal(c.verification, 'pending', c.id);
   // 沒有 verification 的內容不帶這個欄位（索引不膨脹）
-  // 第二十九輪：疫情報導示範文章與第 42 卷第 2 期也是 verification:pending（內文為示範重寫、卷期資訊只看到搜尋摘要），一併排除；第三十五輪的第 42 卷第 19 期（真實文章，待同仁核對）亦同；第三十六輪的受害救濟服務頁與法規委員會頁（依官網分類整理，待急性傳染病組核對）亦同
+  // 第二十九輪：疫情報導示範文章與第 42 卷第 2 期也是 verification:pending（內文為示範重寫、卷期資訊只看到搜尋摘要），一併排除；第三十五輪的第 42 卷第 19 期（真實文章，待同仁核對）亦同；第三十六輪的受害救濟服務頁與法規委員會頁（依官網分類整理，待急性傳染病組核對）亦同；第四十輪的來臺旅客入境健康資訊（topic.visiting-taiwan，依公開資訊整理，待檢疫組核對）亦同
   assert.ok(
     !site.searchIndex.public.some(
-      (c) => !c.contentId.match(/antivenom|snakebite|^article\.|bulletin-42-\d+$|vaccine-injury-compensation|immunization-committees/) && 'verification' in c,
+      (c) =>
+        !c.contentId.match(/antivenom|snakebite|^article\.|bulletin-42-\d+$|vaccine-injury-compensation|immunization-committees|visiting-taiwan/) &&
+        'verification' in c,
     ),
   );
 });
@@ -250,7 +252,8 @@ test('相鄰主題仍 no-match：虎頭蜂、水母螫傷不拿蛇傷內容或�
 
 test('評估集 r10：nomatch 仍 5 題且不再問抗蛇毒血清；AV001–AV005 涵蓋事實與安全', () => {
   const es = site.governance.evalSet;
-  assert.equal(es.version, '2026.10-r10');
+  // 第四十輪：後續輪次會在末尾加題並升版（r11…），這裡只要求不早於 r10，避免每輪都得回頭改這條
+  assert.ok(Number(/^2026\.10-r(\d+)$/.exec(es.version)?.[1]) >= 10, es.version);
   assert.ok(es.note.includes('第二十八輪'));
   const nm = es.questions.filter((x) => x.category === 'nomatch');
   assert.equal(nm.length, 5);

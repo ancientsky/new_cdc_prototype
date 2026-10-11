@@ -1,8 +1,8 @@
 // 首頁：七語；Banner 做法 A（分割式）／B（情境式，pinned 疾病 peak 時自動切換）。
-import { html, raw } from '../../../scripts/lib/render.mjs';
+import { html, raw, makeUrl } from '../../../scripts/lib/render.mjs';
 import { config } from '../../../site.config.mjs';
 import { travelStats } from './travel.mjs';
-import { ldFor, askBox, sitCard, statusTag, taskCard, dated, L, hrefFor, unitName, diseaseName, sitField, publishedOf, byDateDesc, verdictPill, isExternal, link, langOk, imgSrc, mediaCard, topicCard, isMediaOutdated, isTopicEnded, HOME_NEWS_TYPES } from './_partials.mjs';
+import { ldFor, askBox, sitCard, statusTag, taskCard, dated, unitName, diseaseName, sitField, publishedOf, byDateDesc, verdictPill, isExternal, link, langOk, imgSrc, mediaCard, topicCard, isMediaOutdated, isTopicEnded, HOME_NEWS_TYPES, titleLink, localText, langSpan, itemPath } from './_partials.mjs';
 
 export function meta(ctx) {
   return { title: null, description: ctx.t('home.desc'), bodyClass: 'page-home', jsonLd: ldFor(ctx, null, null), item: null };
@@ -30,25 +30,28 @@ function promoImg(ctx, b, { eager = false } = {}) {
   const wide = imgSrc(ctx, b.imageWide);
   const src = wide ?? imgSrc(ctx, b.image);
   if (!src) return promoArt();
-  const head = L(ctx, b, 'headline') ?? b.title;
-  const alt = L(ctx, b, 'imageAlt') ?? head;
-  const altLang = ctx.lang !== 'zh-TW' && b.imageAlt && !b.i18n?.[ctx.lang]?.imageAlt && alt === b.imageAlt;
+  // 第四十輪（#73）：與清單同一規則（localText）：本語言 → 英文 → 中文（標 lang）
+  const alt = localText(ctx, b, b.imageAlt ? 'imageAlt' : 'headline');
+  const altLang = alt.lang !== ctx.lang ? alt.lang : null;
   const [w, h] = wide ? [1200, 675] : [400, 300];
-  return html`<img src="${src}" alt="${alt}"${altLang ? raw(' lang="zh-TW"') : ''} width="${w}" height="${h}" ${eager ? raw('loading="eager" fetchpriority="high" decoding="async"') : raw('loading="lazy" decoding="async"')}>`;
+  return html`<img src="${src}" alt="${alt.text ?? b.title}"${altLang ? raw(` lang="${altLang}"`) : ''} width="${w}" height="${h}" ${eager ? raw('loading="eager" fetchpriority="high" decoding="async"') : raw('loading="lazy" decoding="async"')}>`;
 }
 
 function promoSlide(ctx, b, i, n, { eager = false } = {}) {
   const { t, url, fmtDate } = ctx;
-  const cta = L(ctx, b, 'cta') ?? b.cta;
+  // 第四十輪（#73）：宣導文字沒有本語言譯文時退英文（lang="en"），都沒有才顯示中文並標 lang="zh-TW"；按鈕文字與連結跟著同一份譯文走
+  const ctaR = localText(ctx, b, 'cta');
+  const cta = ctaR.text ?? b.cta;
   const href = isExternal(cta.url) ? cta.url : url(cta.url);
-  const head = L(ctx, b, 'headline') ?? b.title;
+  const head = localText(ctx, b, b.headline ? 'headline' : 'title');
+  const sub = b.subline ? localText(ctx, b, 'subline') : null;
   return html`<div class="c-carousel__slide${i ? '' : ' is-active'}" data-slide role="group" aria-roledescription="slide" aria-label="${i + 1} / ${n}">
       <div class="c-promo__art">${promoImg(ctx, b, { eager: eager && i === 0 })}</div>
       <div class="c-promo__txt">
       <p class="c-promo__kicker">${t('home.promo')}</p>
-      <h2 class="c-promo__title">${head}</h2>
-      ${L(ctx, b, 'subline') ? html`<p class="c-promo__sub">${L(ctx, b, 'subline')}</p>` : ''}
-      <p class="c-promo__cta"><a class="c-btn" href="${href}"${isExternal(cta.url) ? raw(' rel="noopener"') : ''}>${cta.label}${isExternal(cta.url) ? ' ↗' : ' →'}</a></p>
+      <h2 class="c-promo__title">${langSpan(ctx, head)}</h2>
+      ${sub?.text ? html`<p class="c-promo__sub">${langSpan(ctx, sub)}</p>` : ''}
+      <p class="c-promo__cta"><a class="c-btn" href="${href}"${isExternal(cta.url) ? raw(' rel="noopener"') : ''}>${langSpan(ctx, { text: cta.label, lang: ctaR.lang })}${isExternal(cta.url) ? ' ↗' : ' →'}</a></p>
       <p class="c-promo__meta">${t('home.promo.meta', { owner: unitName(ctx, b.owner), from: fmtDate(b.startAt), to: fmtDate(b.endAt) })}</p>
       </div>
     </div>`;
@@ -102,7 +105,7 @@ function heroB(ctx, peak, banners, { eager = false } = {}) {
   const dm = site.diseaseMasterById.get(peak.disease);
   const name = diseaseName(ctx, dm);
   const b = banners[0];
-  const cta = b ? (L(ctx, b, 'cta') ?? b.cta) : null;
+  const cta = b ? (localText(ctx, b, 'cta').text ?? b.cta) : null;
   const art = b ? (imgSrc(ctx, b.imageWide) ?? imgSrc(ctx, b.image)) : null;
   return html`<section class="c-hero c-hero--situational c-hero--${peak.status}" aria-labelledby="hero-h-b">
   ${art ? html`<div class="c-hero__art" aria-hidden="true"><img src="${art}" alt="" width="1200" height="675" ${eager ? raw('loading="eager" fetchpriority="high" decoding="async"') : raw('loading="lazy" decoding="async"')}></div>` : ''}
@@ -126,10 +129,43 @@ function heroBSubject(pinned) {
 }
 
 /** 原型預覽列（topbar 下方、右對齊小灰字）：說明目前是哪一做法、可切換；`?hero=A|B` 由 ui.js 套用（不寫 localStorage）。 */
+// 第四十輪（#73）：預覽列以前寫死中文、外語頁也照出（/en/ 首頁頂端一行「切換看做法 A」）。改成 i18n 字串；
+// ui.js 切換後要改的那句（網址參數強制）用 data-forced 帶已翻譯的樣板，前端不必多載字串表。
 function previewBar(ctx, auto) {
+  const { t } = ctx;
   const other = auto === 'B' ? 'A' : 'B';
-  const label = auto === 'B' ? '目前為做法 B（流感高峰自動切換）' : '目前為做法 A（非高峰，預設）';
-  return html`<div class="c-promo__preview" data-hero-bar lang="zh-TW" data-auto="${auto}"><div class="wrap"><p>原型預覽：<span data-hero-now>${label}</span> · <a data-hero-switch href="${ctx.url('/')}?hero=${other}" rel="nofollow">切換看做法 <span data-hero-other>${other}</span></a><span data-hero-reset hidden> · <a href="${ctx.url('/')}">回到自動</a></span></p></div></div>`;
+  const label = auto === 'B' ? t('home.preview.B') : t('home.preview.A');
+  return html`<div class="c-promo__preview" data-hero-bar data-auto="${auto}" data-forced="${t('home.preview.forced', { x: '{x}' })}"><div class="wrap"><p>${t('home.preview.label')} <span data-hero-now>${label}</span> · <a data-hero-switch href="${ctx.url('/')}?hero=${other}" rel="nofollow">${t('home.preview.switch')} <span data-hero-other>${other}</span></a><span data-hero-reset hidden> · <a href="${ctx.url('/')}">${t('home.preview.reset')}</a></span></p></div></div>`;
+}
+
+/** 「來臺旅遊或居住」專區（content/topics/visiting-taiwan.json）；未發布就不分卡 */
+export const visitingTopic = (site) => (site.collections.topics ?? []).find((x) => x.slug === 'visiting-taiwan' && x.status === 'published') ?? null;
+
+/** 出國與入境：一張卡、兩個入口（出國 → /tasks/travel/；來台 → 來台專區）。來台專區沒有本語言版本時連英文版（它以英文為來源語言） */
+function travelSplitCard(ctx, topic) {
+  const { t, url } = ctx;
+  const path = itemPath(topic);
+  const has = langOk(ctx.site, topic, ctx.lang);
+  const vHref = has ? url(path) : makeUrl('en')(path);
+  return html`<div class="c-task c-task--split"><strong class="c-task__t">${t('task.travel.label')}</strong>
+  <a class="c-task__half" href="${url('/tasks/travel/')}"><span class="c-task__h">${t('home.travel.out')}</span><span class="c-task__s">${t('task.travel.sub')}</span></a>
+  <a class="c-task__half" href="${vHref}"${has ? '' : raw(' hreflang="en"')}><span class="c-task__h">${t('home.travel.in')}</span><span class="c-task__s">${t('home.travel.in.sub')}</span></a>
+</div>`;
+}
+
+/**
+ * 第四十輪（#74）：從「沒有本語言版本的頁」切語言過來時的提示（語言選單帶 ?from=…&alts=…，見 layout.mjs）。
+ * 為什麼「建置時預留區塊＋前端只填網址」而不是全部交給前端：提示文字要七語，放前端就得把字串塞進 i18n.<lang>.js（每頁都載）；
+ * 預先渲染成 hidden 區塊，文字在 HTML 裡、零額外字串，前端只驗證 from 是站內路徑、填 href、取消 hidden（十幾行）。
+ * 沒有 JS 時區塊維持 hidden——讀者在語言選單上已看過「此頁僅有…」的標示，不會毫無預警。
+ */
+function fromHint(ctx) {
+  const { t, lang } = ctx;
+  const order = ['en', 'zh-TW', ...config.langs.map((l) => l.code).filter((c) => c !== 'en' && c !== 'zh-TW')].filter((c) => c !== lang);
+  return html`<div class="wrap"><aside class="c-alert c-alert--info c-fromhint" data-from-hint hidden aria-label="${t('home.fromHint.label')}">
+  <p><strong>${t('home.fromHint.t', { lang: t(`langname.${lang}`) })}</strong></p>
+  <p class="c-fromhint__go">${order.map((c) => { const L = config.langs.find((x) => x.code === c); return html`<a class="c-btn c-btn--sm c-btn--ghost" data-from-alt="${c}" data-lang-path="${L.path}" hreflang="${c}" hidden>${t('home.fromHint.go', { lang: t(`langname.${c}`) })}</a> `; })}</p>
+</aside></div>`;
 }
 
 export function render(ctx) {
@@ -145,7 +181,14 @@ export function render(ctx) {
   const ts = travelStats(site, ctx.today);
   const travelSub = ts.hasData ? [t('home.travel.stat', { n: ts.withAdv }), ts.change?.lifted ? t('home.travel.lifted', { n: ts.change.lifted, days: ts.changeDays }) : ts.change?.new ? t('home.travel.new', { n: ts.change.new, days: ts.changeDays }) : null].filter(Boolean).join(' · ') : null;
   const travelCtx = travelSub ? { ...ctx, t: (k, v) => (k === 'task.travel.sub' ? travelSub : ctx.t(k, v)) } : ctx;
-  const tasks = config.tasks.map((task, i) => (migrant && i === config.tasks.length - 1 ? taskCard(ctx, task, { foreign: true }) : taskCard(task.key === 'travel' ? travelCtx : ctx, task)));
+  // 第四十輪（#76）：外語首頁的「出國與入境」卡分成「出國」與「來台」兩個入口——外語讀者多半是來臺的人，
+  // 以前這張卡只通到國人出國的目的地查詢。中文首頁維持原卡（中文讀者以出國為主，來台頁仍可從 /topics/ 與答案頁找到）。
+  const visiting = visitingTopic(site);
+  const tasks = config.tasks.map((task, i) => {
+    if (migrant && i === config.tasks.length - 1) return taskCard(ctx, task, { foreign: true });
+    if (task.key === 'travel' && visiting && lang !== 'zh-TW') return travelSplitCard(travelCtx, visiting);
+    return taskCard(task.key === 'travel' ? travelCtx : ctx, task);
+  });
   // 兩版（A／B）都輸出，隱藏非預設者；`?hero=A|B` 由 ui.js 切換。同一區塊出現兩次時 id 加後綴，隱藏版用 hidden（不進無障礙樹）。
   const auto = peak ? 'B' : 'A';
   const bSubject = peak ?? heroBSubject(pinned);
@@ -170,7 +213,7 @@ export function render(ctx) {
     <div class="c-sechead"><h2 id="topics-h">${t('home.topics')}</h2><span class="c-sechead__note">${t('home.topics.note')}</span></div>
     <ul class="c-topicrow">${topics.map((x) => topicCard(ctx, x))}</ul>
   </section>` : '';
-  return html`${previewBar(ctx, auto)}
+  return html`${fromHint(ctx)}${previewBar(ctx, auto)}
 ${ver('A', heroA(ctx, banners, pinned, { eager: auto === 'A' }))}
 ${bSubject ? ver('B', heroB(ctx, bSubject, banners, { eager: auto === 'B' })) : ''}
 <div class="wrap c-home">
@@ -187,7 +230,7 @@ ${bSubject ? ver('B', heroB(ctx, bSubject, banners, { eager: auto === 'B' })) : 
     </div>
     <aside class="c-home__side">
       <section class="c-clar" aria-labelledby="clar-h"><h2 id="clar-h">${t('home.clar')}</h2>
-        <ul class="c-clar__list">${clars.map((c) => html`<li>${verdictPill(ctx, c.verdict, { outdated: c.gov?.stale?.length > 0 })}<a href="${hrefFor(ctx, c)}">${L(ctx, c, 'title')}</a></li>`)}</ul>
+        <ul class="c-clar__list">${clars.map((c) => html`<li>${verdictPill(ctx, c.verdict, { outdated: c.gov?.stale?.length > 0 })}${titleLink(ctx, c)}</li>`)}</ul>
         <a class="c-btn c-btn--ghost c-btn--block" href="${url('/factcheck/')}">${t('home.clar.cta')} →</a>
       </section>
     </aside>

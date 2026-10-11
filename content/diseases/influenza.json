@@ -314,6 +314,110 @@
           "heading": "FAQ"
         }
       ]
+    },
+    "id": {
+      "title": "Influenza (flu)",
+      "summary": "Influenza disebabkan oleh virus influenza yang menyebar melalui percikan dan kontak, dengan puncak pada musim gugur dan dingin. Lansia, anak kecil, ibu hamil, dan orang dengan penyakit kronis berisiko lebih tinggi sakit berat; vaksin tahunan adalah perlindungan paling efektif.",
+      "keyFacts": {
+        "incubation": "1–4 hari (rata-rata 2)",
+        "symptoms": "Demam mendadak, sakit kepala, nyeri otot, lelah, sakit tenggorokan, batuk",
+        "transmission": "Percikan dan kontak dengan cairan pernapasan",
+        "prevention": "Vaksin flu setiap tahun, cuci tangan, pakai masker saat batuk",
+        "notify": "Influenza dengan komplikasi berat: dalam satu minggu"
+      },
+      "blocks": [
+        {
+          "key": "symptoms",
+          "heading": "Gejala dan tanda bahaya",
+          "markdown": "Gejala umum adalah demam **mendadak**, sakit kepala, nyeri otot, lelah, pilek, sakit tenggorokan, dan batuk; sebagian anak mengalami diare atau muntah. Kebanyakan orang sembuh dalam sekitar satu minggu.\n\nBerbeda dengan pilek biasa, influenza mulai tiba-tiba dengan gejala seluruh tubuh yang jelas dan dapat menyebabkan radang paru, radang otak, atau radang otot jantung.",
+          "warning": "Napas cepat atau sulit bernapas, bibir kebiruan, dahak berdarah atau kental, nyeri dada, kesadaran menurun, tekanan darah rendah; pada anak juga demam tinggi lebih dari 3 hari, kejang, atau sangat lesu."
+        },
+        {
+          "key": "prevention",
+          "heading": "Pencegahan",
+          "markdown": "- **Vaksin setiap tahun**: virus terus berubah dan vaksin diperbarui setiap tahun.\n- Sering cuci tangan; tutup mulut saat batuk dan bersin dengan lengan baju atau tisu.\n- Pakai masker bila ada gejala pernapasan, tetap di rumah saat sakit, dan hindari keramaian.\n- Selama musim flu, pastikan tidak demam atau batuk sebelum menjenguk panti jompo atau rumah sakit."
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-11"
+    },
+    "vi": {
+      "title": "Cúm",
+      "summary": "Cúm do vi-rút cúm gây ra, lây qua giọt bắn và tiếp xúc, cao điểm vào mùa thu và mùa đông. Người cao tuổi, trẻ nhỏ, phụ nữ mang thai và người có bệnh mạn tính có nguy cơ bệnh nặng cao hơn; tiêm vắc-xin hằng năm là cách bảo vệ hiệu quả nhất.",
+      "keyFacts": {
+        "incubation": "1–4 ngày (trung bình 2 ngày)",
+        "symptoms": "Sốt đột ngột, đau đầu, đau cơ, mệt mỏi, đau họng, ho",
+        "transmission": "Giọt bắn và tiếp xúc với dịch tiết",
+        "prevention": "Tiêm vắc-xin cúm hằng năm, rửa tay, đeo khẩu trang khi ho",
+        "notify": "Cúm biến chứng nặng: trong vòng một tuần"
+      },
+      "blocks": [
+        {
+          "key": "symptoms",
+          "heading": "Triệu chứng và dấu hiệu cảnh báo",
+          "markdown": "Triệu chứng thường gặp là sốt **đột ngột**, đau đầu, đau cơ, mệt mỏi, sổ mũi, đau họng và ho; một số trẻ bị tiêu chảy hoặc nôn. Đa số khỏi trong khoảng một tuần.\n\nKhác với cảm lạnh thông thường, cúm khởi phát đột ngột với triệu chứng toàn thân rõ rệt và có thể dẫn đến viêm phổi, viêm não hoặc viêm cơ tim.",
+          "warning": "Thở nhanh hoặc khó thở, môi tím tái, đờm có máu hoặc đặc, đau ngực, rối loạn ý thức, huyết áp thấp; ở trẻ em còn có sốt cao trên 3 ngày, co giật hoặc lừ đừ rõ rệt."
+        },
+        {
+          "key": "prevention",
+          "heading": "Phòng ngừa",
+          "markdown": "- **Tiêm vắc-xin mỗi năm**: vi-rút thay đổi và vắc-xin được cập nhật hằng năm.\n- Thường xuyên rửa tay; che miệng khi ho, hắt hơi bằng tay áo hoặc khăn giấy.\n- Đeo khẩu trang khi có triệu chứng hô hấp, ở nhà khi bị bệnh và tránh nơi đông người.\n- Trong mùa cúm, hãy chắc chắn mình không sốt, không ho trước khi vào thăm viện dưỡng lão hoặc bệnh viện."
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-11"
+    },
+    "th": {
+      "title": "ไข้หวัดใหญ่",
+      "summary": "ไข้หวัดใหญ่เกิดจากเชื้อไวรัสไข้หวัดใหญ่ แพร่ทางละอองฝอยและการสัมผัส ระบาดมากในฤดูใบไม้ร่วงและฤดูหนาว ผู้สูงอายุ เด็กเล็ก หญิงตั้งครรภ์ และผู้มีโรคเรื้อรังเสี่ยงป่วยรุนแรงมากกว่า การฉีดวัคซีนทุกปีเป็นการป้องกันที่ได้ผลที่สุด",
+      "keyFacts": {
+        "incubation": "1–4 วัน (เฉลี่ย 2 วัน)",
+        "symptoms": "ไข้เฉียบพลัน ปวดศีรษะ ปวดเมื่อยกล้ามเนื้อ อ่อนเพลีย เจ็บคอ ไอ",
+        "transmission": "ละอองฝอยและการสัมผัสสารคัดหลั่ง",
+        "prevention": "ฉีดวัคซีนไข้หวัดใหญ่ทุกปี ล้างมือ สวมหน้ากากเมื่อไอ",
+        "notify": "ไข้หวัดใหญ่ที่มีภาวะแทรกซ้อนรุนแรง: ภายในหนึ่งสัปดาห์"
+      },
+      "blocks": [
+        {
+          "key": "symptoms",
+          "heading": "อาการและสัญญาณอันตราย",
+          "markdown": "อาการที่พบบ่อยคือมีไข้**เฉียบพลัน** ปวดศีรษะ ปวดเมื่อยกล้ามเนื้อ อ่อนเพลีย น้ำมูกไหล เจ็บคอ และไอ เด็กบางคนอาจท้องเสียหรืออาเจียน ส่วนใหญ่หายภายในประมาณหนึ่งสัปดาห์\n\nต่างจากไข้หวัดธรรมดา ไข้หวัดใหญ่เริ่มอย่างกะทันหัน มีอาการทั่วร่างกายชัดเจน และอาจทำให้เกิดปอดอักเสบ สมองอักเสบ หรือกล้ามเนื้อหัวใจอักเสบ",
+          "warning": "หายใจเร็วหรือหายใจลำบาก ริมฝีปากเขียว เสมหะปนเลือดหรือข้น เจ็บหน้าอก ความรู้สึกตัวเปลี่ยนแปลง ความดันต่ำ ในเด็กยังรวมถึงไข้สูงเกิน 3 วัน ชัก หรือซึมมาก"
+        },
+        {
+          "key": "prevention",
+          "heading": "การป้องกัน",
+          "markdown": "- **ฉีดวัคซีนทุกปี** เพราะไวรัสเปลี่ยนแปลงและวัคซีนปรับปรุงทุกปี\n- ล้างมือบ่อย ๆ ปิดปากเวลาไอหรือจามด้วยแขนเสื้อหรือกระดาษทิชชู\n- สวมหน้ากากเมื่อมีอาการทางเดินหายใจ พักอยู่บ้านเมื่อป่วย และหลีกเลี่ยงที่แออัด\n- ในฤดูไข้หวัดใหญ่ ก่อนไปเยี่ยมบ้านพักคนชราหรือโรงพยาบาล ต้องแน่ใจว่าไม่มีไข้และไม่ไอ"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-11"
+    },
+    "tl": {
+      "title": "Trangkaso (influenza)",
+      "summary": "Ang trangkaso ay dulot ng influenza virus na kumakalat sa talsik ng laway at paghawak, at dumarami tuwing taglagas at taglamig. Mas mataas ang panganib ng malubhang sakit sa matatanda, maliliit na bata, buntis, at may malalang sakit; ang taunang bakuna ang pinakamabisang proteksyon.",
+      "keyFacts": {
+        "incubation": "1–4 araw (karaniwang 2)",
+        "symptoms": "Biglaang lagnat, sakit ng ulo, pananakit ng kalamnan, pagkapagod, sakit ng lalamunan, ubo",
+        "transmission": "Talsik ng laway at paghawak sa likido ng may sakit",
+        "prevention": "Taunang bakuna laban sa trangkaso, paghuhugas ng kamay, mask kapag umuubo",
+        "notify": "Malubhang komplikasyon ng trangkaso: sa loob ng isang linggo"
+      },
+      "blocks": [
+        {
+          "key": "symptoms",
+          "heading": "Mga sintomas at babalang senyales",
+          "markdown": "Karaniwang sintomas ang **biglaang** lagnat, sakit ng ulo, pananakit ng kalamnan, pagkapagod, sipon, sakit ng lalamunan, at ubo; may mga batang nagtatae o nagsusuka. Gumagaling ang karamihan sa loob ng mga isang linggo.\n\nIba sa karaniwang sipon, biglaan ang simula ng trangkaso, malinaw ang sintomas sa buong katawan, at maaaring humantong sa pulmonya, pamamaga ng utak, o pamamaga ng puso.",
+          "warning": "Mabilis o hirap na paghinga, pangangasul ng labi, plemang may dugo o malapot, pananakit ng dibdib, pagbabago ng malay, mababang presyon; sa bata, lagnat nang higit 3 araw, kombulsyon, o labis na panghihina."
+        },
+        {
+          "key": "prevention",
+          "heading": "Pag-iwas",
+          "markdown": "- **Magpabakuna taon-taon**: nagbabago ang virus at ina-update ang bakuna bawat taon.\n- Madalas na maghugas ng kamay; takpan ang ubo at bahing gamit ang manggas o tisyu.\n- Magsuot ng mask kapag may sintomas sa paghinga, manatili sa bahay kapag may sakit, at iwasan ang mataong lugar.\n- Sa panahon ng trangkaso, tiyaking wala kang lagnat o ubo bago bumisita sa nursing home o ospital."
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-11"
     }
   }
 }

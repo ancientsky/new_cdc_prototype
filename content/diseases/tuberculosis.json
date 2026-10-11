@@ -447,7 +447,74 @@
         "transmission": "Melalui udara",
         "prevention": "Deteksi dini, pemeriksaan kontak, pengobatan TBC laten, vaksin BCG untuk bayi",
         "notify": "Dalam satu minggu"
-      }
+      },
+      "blocks": [
+        {
+          "key": "symptoms",
+          "heading": "Gejala dan tanda bahaya",
+          "markdown": "TBC paru tahap awal bisa hampir tanpa gejala. Tanda yang umum adalah **batuk lebih dari 2 minggu**, berdahak, nyeri dada, nafsu makan turun, berat badan turun, lelah, demam sore hari, dan keringat malam; pada kasus berat bisa batuk darah.\n\nTBC juga dapat menyerang kelenjar getah bening, tulang, ginjal, dan selaput otak. Orang dengan **infeksi TBC laten** membawa kuman tanpa gejala dan tidak menularkan ke orang lain.",
+          "warning": "Batuk darah, sesak napas, demam tinggi terus-menerus, atau berat badan turun cepat: segera berobat."
+        },
+        {
+          "key": "prevention",
+          "heading": "Pencegahan",
+          "markdown": "- **Deteksi dini dan pengobatan sampai tuntas** menghentikan penularan.\n- Kontak erat sebaiknya ikut **pemeriksaan kontak**; yang terinfeksi TBC laten dianjurkan menjalani pengobatan pencegahan (misalnya 3HP, sekali seminggu sebanyak 12 dosis), yang menurunkan risiko sakit lebih dari 90%.\n- Bayi mendapat vaksin **BCG** pada usia 5 bulan (dianjurkan 5–8 bulan) untuk mencegah TBC berat pada anak seperti meningitis TBC.\n- Jaga ventilasi ruangan dan pakai masker saat batuk."
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-11"
+    },
+    "th": {
+      "title": "วัณโรค",
+      "summary": "วัณโรคติดต่อทางอากาศ หากไอนานเกิน 2 สัปดาห์ควรไปพบแพทย์ กินยาสม่ำเสมออย่างน้อย 6 เดือนเกือบทุกคนหายขาด การตรวจผู้สัมผัสและการรักษาวัณโรคระยะแฝงช่วยป้องกันการป่วยในอนาคต",
+      "keyFacts": {
+        "incubation": "ผู้ติดเชื้อประมาณ 5–10% จะป่วยในช่วงชีวิต ส่วนใหญ่ภายใน 2 ปี",
+        "symptoms": "ไอนานเกิน 2 สัปดาห์ มีเสมหะ น้ำหนักลด ไข้ เหงื่อออกกลางคืน",
+        "transmission": "ทางอากาศ (ผู้ป่วยวัณโรคปอดระยะแพร่เชื้อไอหรือพูด)",
+        "prevention": "ค้นหาผู้ป่วยเร็ว ตรวจผู้สัมผัส รักษาวัณโรคระยะแฝง ฉีดวัคซีนบีซีจีให้ทารก",
+        "notify": "ภายในหนึ่งสัปดาห์"
+      },
+      "blocks": [
+        {
+          "key": "symptoms",
+          "heading": "อาการและสัญญาณอันตราย",
+          "markdown": "วัณโรคปอดระยะแรกอาจมีอาการน้อย อาการที่พบบ่อยคือ**ไอนานเกิน 2 สัปดาห์** มีเสมหะ เจ็บหน้าอก เบื่ออาหาร น้ำหนักลด อ่อนเพลีย มีไข้ช่วงบ่าย และเหงื่อออกกลางคืน รายที่รุนแรงอาจไอเป็นเลือด\n\nวัณโรคยังเกิดที่ต่อมน้ำเหลือง กระดูก ไต และเยื่อหุ้มสมองได้ ผู้ที่มี**การติดเชื้อวัณโรคระยะแฝง**มีเชื้ออยู่ในร่างกายแต่ไม่มีอาการและไม่แพร่เชื้อให้ผู้อื่น",
+          "warning": "ไอเป็นเลือด หายใจลำบาก ไข้สูงต่อเนื่อง หรือน้ำหนักลดเร็ว: ควรรีบไปพบแพทย์"
+        },
+        {
+          "key": "prevention",
+          "heading": "การป้องกัน",
+          "markdown": "- **ค้นพบเร็วและรักษาให้ครบ**จะหยุดการแพร่เชื้อ\n- ผู้สัมผัสใกล้ชิดควรเข้ารับ**การตรวจผู้สัมผัส** ผู้ที่ติดเชื้อระยะแฝงควรรับการรักษาเชิงป้องกัน (เช่น 3HP สัปดาห์ละครั้ง 12 ครั้ง) ซึ่งลดความเสี่ยงการป่วยได้มากกว่า 90%\n- ทารกรับวัคซีน**บีซีจี**เมื่ออายุ 5 เดือน (แนะนำ 5–8 เดือน) เพื่อป้องกันวัณโรครุนแรงในเด็ก เช่น วัณโรคเยื่อหุ้มสมอง\n- เปิดให้อากาศถ่ายเท และสวมหน้ากากเมื่อไอ"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-11"
+    },
+    "tl": {
+      "title": "Tuberkulosis (TB)",
+      "summary": "Kumakalat ang TB sa hangin; magpatingin kung higit 2 linggo ka nang umuubo. Halos lahat ay gumagaling kung regular na iinom ng gamot nang hindi bababa sa 6 na buwan; ang pagsusuri sa mga nakasalamuha at paggamot sa latent TB ay pumipigil sa sakit sa hinaharap.",
+      "keyFacts": {
+        "incubation": "Mga 5–10% ng nahawa ang nagkakasakit sa buong buhay, kadalasan sa loob ng 2 taon",
+        "symptoms": "Ubo nang higit 2 linggo, plema, pagbaba ng timbang, lagnat, pagpapawis sa gabi",
+        "transmission": "Sa hangin (pag-ubo o pagsasalita ng taong may nakakahawang TB sa baga)",
+        "prevention": "Maagang pagtuklas, pagsusuri sa mga nakasalamuha, paggamot sa latent TB, BCG para sa sanggol",
+        "notify": "Sa loob ng isang linggo"
+      },
+      "blocks": [
+        {
+          "key": "symptoms",
+          "heading": "Mga sintomas at babalang senyales",
+          "markdown": "Maaaring kaunti ang sintomas ng maagang TB sa baga. Karaniwang senyales ang **ubong tumatagal nang higit 2 linggo**, plema, pananakit ng dibdib, kawalan ng gana, pagbaba ng timbang, pagkapagod, lagnat sa hapon, at pagpapawis sa gabi; maaaring umubo ng dugo kapag malubha.\n\nMaaari ring tamaan ng TB ang kulani, buto, bato, at lamad ng utak. Ang may **latent TB infection** ay may mikrobyo pero walang sintomas at hindi nakakahawa.",
+          "warning": "Pag-ubo ng dugo, hirap sa paghinga, tuloy-tuloy na mataas na lagnat, o mabilis na pagbaba ng timbang: magpatingin agad."
+        },
+        {
+          "key": "prevention",
+          "heading": "Pag-iwas",
+          "markdown": "- **Maagang pagtuklas at kumpletong gamutan** ang pumipigil sa pagkalat.\n- Dapat sumali sa **contact screening** ang malalapit na nakasalamuha; pinapayuhang magpagamot ang may latent TB (halimbawa 3HP, isang beses kada linggo sa loob ng 12 dosis), na nagpapababa ng panganib nang higit 90%.\n- Binibigyan ng **BCG** ang sanggol sa edad na 5 buwan (inirerekomenda 5–8 buwan) para maiwasan ang malubhang TB sa bata gaya ng TB meningitis.\n- Panatilihing maaliwalas ang kuwarto at magsuot ng mask kapag umuubo."
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-11"
     }
   }
 }
