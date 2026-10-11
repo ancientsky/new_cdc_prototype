@@ -30,3 +30,8 @@ eval/**/*.mjs
 !tests/round31-boundary.test.mjs
 !scripts/lib/minify.mjs
 !tests/round34-engine-split.test.mjs
+!tests/round40-injection-multilingual.test.mjs
+!tests/round40-no-answer.test.mjs
+!tests/round40-engine.test.mjs
+!tests/round40-newparent-faq.test.mjs
+!tests/round40-presets.test.mjs

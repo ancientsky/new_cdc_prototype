@@ -1,8 +1,8 @@
 {
-  "version": "2026.10-r10",
-  "updatedAt": "2026-10-10",
+  "version": "2026.10-r11",
+  "updatedAt": "2026-10-11",
   "owner": "unit.oasis",
-  "note": "答案引擎評估集（原型 140+ 題；規格目標 500 題）。每次正本修訂或換模型都重跑；version 類別（曾因修訂而改變答案的題目）須全對才能上線。requires 列出該題依賴的內容 id／前綴，內容尚未建置時該題略過不計分。 r3（2026-10-02）：新增申請（apply）、檢驗（lab，專業）、通報時限（notify，主檔結構化回答）、公告（notice）類別，與影片版本題（過時影片不得被引用）。 r4（2026-10-02 第六輪）：新增國際合作 3 題（英文來源 sourceLang:en 內容進英文索引、中文譯文進中文索引）。 r5（2026-10-04 第七輪）：人才招募改 careers 意圖（結構化列開放中職缺、問「誰錄取」只給結果頁連結不唸名單）、採購改 procurement 意圖；NC001／NC002 改依職缺與標案內容，新增 NC003–NC006（含「誰錄取」不得出現遮罩姓名與報名編號、錄取者個資拒答）。 r6（2026-10-05）：新增 VA011–VA014 年齡／身分跨疫苗彙整題（由疫苗接種時程主檔結構化回答，行動須連到疫苗接種時程地圖並帶 #age）。 r9（2026-10-10 第二十五輪）：新增 nomatch 類別 NM001–NM005（站內沒有的主題須拒答為 no-match）。 r10（2026-10-10 第二十八輪，Issue #38）：新增抗蛇毒血清內容（topic.antivenom 與 4 則 Q&A），NM001「抗蛇毒血清」與 NM005「蛇咬怎麼辦」改為站內仍沒有的咬螫傷主題（虎頭蜂、水母），並要求不得引用蛇傷內容充數；新增 AV001–AV005（抗蛇毒血清事實題與安全題：答案須引用蛇傷內容、含 119 或血清名，且不得出現冰敷、切開、止血帶、吸毒等錯誤處置的肯定說法）。 r10 第二十八輪 核心教材（2026-10-10）：新增 CUR001–CUR005 專業題，引用登革熱、麻疹核心教材（示範匯入版）的章節與學習目標；第六章（治療）整章待補，不得被當成內容回答。",
+  "note": "答案引擎評估集（原型 140+ 題；規格目標 500 題）。每次正本修訂或換模型都重跑；version 類別（曾因修訂而改變答案的題目）須全對才能上線。requires 列出該題依賴的內容 id／前綴，內容尚未建置時該題略過不計分。 r3（2026-10-02）：新增申請（apply）、檢驗（lab，專業）、通報時限（notify，主檔結構化回答）、公告（notice）類別，與影片版本題（過時影片不得被引用）。 r4（2026-10-02 第六輪）：新增國際合作 3 題（英文來源 sourceLang:en 內容進英文索引、中文譯文進中文索引）。 r5（2026-10-04 第七輪）：人才招募改 careers 意圖（結構化列開放中職缺、問「誰錄取」只給結果頁連結不唸名單）、採購改 procurement 意圖；NC001／NC002 改依職缺與標案內容，新增 NC003–NC006（含「誰錄取」不得出現遮罩姓名與報名編號、錄取者個資拒答）。 r6（2026-10-05）：新增 VA011–VA014 年齡／身分跨疫苗彙整題（由疫苗接種時程主檔結構化回答，行動須連到疫苗接種時程地圖並帶 #age）。 r9（2026-10-10 第二十五輪）：新增 nomatch 類別 NM001–NM005（站內沒有的主題須拒答為 no-match）。 r10（2026-10-10 第二十八輪，Issue #38）：新增抗蛇毒血清內容（topic.antivenom 與 4 則 Q&A），NM001「抗蛇毒血清」與 NM005「蛇咬怎麼辦」改為站內仍沒有的咬螫傷主題（虎頭蜂、水母），並要求不得引用蛇傷內容充數；新增 AV001–AV005（抗蛇毒血清事實題與安全題：答案須引用蛇傷內容、含 119 或血清名，且不得出現冰敷、切開、止血帶、吸毒等錯誤處置的肯定說法）。 r10 第二十八輪 核心教材（2026-10-10）：新增 CUR001–CUR005 專業題，引用登革熱、麻疹核心教材（示範匯入版）的章節與學習目標；第六章（治療）整章待補，不得被當成內容回答。 r11（2026-10-11 第四十輪，Issue #70／#75／#77／#78）：新增 HP001–HP035（首頁 chip1–4 與語言頁移工卡片問句 × 七語；preset 欄位記 i18n key，tests/round40-presets 會比對題目與介面字串一致）、SVC001–SVC003（服務意圖、逐字稿旁白與謠言原文不得被引）、FG001–FG004（外語 where 問句、來臺旅客查無、移工主題）、NP001–NP005（新手爸媽 4 則 FAQ）。",
   "categories": {
     "version": "版本題：曾因正本修訂而改變答案，引到失效版或過時衍生內容即失敗",
     "fact": "事實題：答案須含關鍵事實並引用正確來源",
@@ -3573,6 +3573,764 @@
           "1HP"
         ]
       }
+    },
+    {
+      "id": "HP001",
+      "category": "situation",
+      "preset": "home.chip1",
+      "q": "現在流感嚴重嗎",
+      "expect": {
+        "refuse": false,
+        "intent": "situation",
+        "situation": true,
+        "mustCite": [
+          "situation.current"
+        ]
+      },
+      "note": "首頁預設問句（第四十輪 #75）：流感現況要出態勢卡"
+    },
+    {
+      "id": "HP002",
+      "category": "vaccine",
+      "preset": "home.chip2",
+      "q": "65 歲今年打什麼公費疫苗",
+      "expect": {
+        "refuse": false,
+        "intent": "vaccine",
+        "mustCite": [
+          "master.immunization-schedule",
+          "vaccine.influenza"
+        ],
+        "action": "/vaccines/schedule/#age=65"
+      },
+      "note": "首頁預設問句：65 歲公費疫苗由時程主檔結構化回答"
+    },
+    {
+      "id": "HP003",
+      "category": "travel",
+      "preset": "home.chip3",
+      "q": "帶 2 歲小孩去越南要準備什麼",
+      "expect": {
+        "refuse": false,
+        "intent": "travel",
+        "mustCite": [
+          "travel.VN"
+        ],
+        "action": "/travel/VN/"
+      },
+      "note": "首頁預設問句：帶 2 歲小孩去越南，須引用越南旅遊疫情建議"
+    },
+    {
+      "id": "HP004",
+      "category": "rumor",
+      "preset": "home.chip4",
+      "q": "這則訊息是真的嗎",
+      "expect": {
+        "refuse": true,
+        "refusalKind": "no-clarification",
+        "action": "/factcheck/"
+      },
+      "note": "首頁預設問句：只問「這則訊息是真的嗎」沒有貼訊息 ⇒ 不得亂配一則澄清，改請民眾到澄清專區貼上訊息"
+    },
+    {
+      "id": "HP005",
+      "category": "apply",
+      "preset": "home.foreign.q",
+      "q": "外籍勞工健康檢查與健保怎麼辦理",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.tb-foreigner-health-check",
+          "media.migrant-worker-health-check",
+          "topic.new-residents-migrant-health"
+        ]
+      },
+      "note": "語言頁「給移工與外籍人士」卡片問句：須對應到移工健檢內容（外語先對應主題再檢索，第四十輪 #75）；印尼文版曾因「dan」被誤判為提示注入（#70）"
+    },
+    {
+      "id": "HP006",
+      "category": "situation",
+      "lang": "en",
+      "preset": "home.chip1",
+      "q": "Is the flu serious right now?",
+      "expect": {
+        "refuse": false,
+        "intent": "situation",
+        "situation": true,
+        "mustCite": [
+          "situation.current"
+        ]
+      },
+      "note": "首頁預設問句（第四十輪 #75）：流感現況要出態勢卡"
+    },
+    {
+      "id": "HP007",
+      "category": "vaccine",
+      "lang": "en",
+      "preset": "home.chip2",
+      "q": "Which free vaccines can a 65-year-old get this year?",
+      "expect": {
+        "refuse": false,
+        "intent": "vaccine",
+        "mustCite": [
+          "master.immunization-schedule",
+          "vaccine.influenza"
+        ],
+        "action": "/vaccines/schedule/#age=65"
+      },
+      "note": "首頁預設問句：65 歲公費疫苗由時程主檔結構化回答"
+    },
+    {
+      "id": "HP008",
+      "category": "travel",
+      "lang": "en",
+      "preset": "home.chip3",
+      "q": "What should I prepare to take a 2-year-old to Vietnam?",
+      "expect": {
+        "refuse": false,
+        "intent": "travel",
+        "mustCite": [
+          "travel.VN"
+        ],
+        "action": "/travel/VN/"
+      },
+      "note": "首頁預設問句：帶 2 歲小孩去越南，須引用越南旅遊疫情建議"
+    },
+    {
+      "id": "HP009",
+      "category": "rumor",
+      "lang": "en",
+      "preset": "home.chip4",
+      "q": "Is this message true?",
+      "expect": {
+        "refuse": true,
+        "refusalKind": "no-clarification",
+        "action": "/factcheck/"
+      },
+      "note": "首頁預設問句：只問「這則訊息是真的嗎」沒有貼訊息 ⇒ 不得亂配一則澄清，改請民眾到澄清專區貼上訊息"
+    },
+    {
+      "id": "HP010",
+      "category": "multilingual",
+      "lang": "en",
+      "preset": "home.foreign.q",
+      "q": "How do migrant workers get health checks and health insurance?",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.tb-foreigner-health-check",
+          "media.migrant-worker-health-check",
+          "topic.new-residents-migrant-health"
+        ]
+      },
+      "note": "語言頁「給移工與外籍人士」卡片問句：須對應到移工健檢內容（外語先對應主題再檢索，第四十輪 #75）；印尼文版曾因「dan」被誤判為提示注入（#70）"
+    },
+    {
+      "id": "HP011",
+      "category": "situation",
+      "lang": "ja",
+      "preset": "home.chip1",
+      "q": "今、インフルエンザは深刻ですか",
+      "expect": {
+        "refuse": false,
+        "intent": "situation",
+        "situation": true,
+        "mustCite": [
+          "situation.current"
+        ]
+      },
+      "note": "首頁預設問句（第四十輪 #75）：流感現況要出態勢卡"
+    },
+    {
+      "id": "HP012",
+      "category": "vaccine",
+      "lang": "ja",
+      "preset": "home.chip2",
+      "q": "65歳は今年どの公費ワクチンが打てますか",
+      "expect": {
+        "refuse": false,
+        "intent": "vaccine",
+        "mustCite": [
+          "master.immunization-schedule",
+          "vaccine.influenza"
+        ],
+        "action": "/vaccines/schedule/#age=65"
+      },
+      "note": "首頁預設問句：65 歲公費疫苗由時程主檔結構化回答"
+    },
+    {
+      "id": "HP013",
+      "category": "travel",
+      "lang": "ja",
+      "preset": "home.chip3",
+      "q": "2歳の子とベトナムへ行く準備は？",
+      "expect": {
+        "refuse": false,
+        "intent": "travel",
+        "mustCite": [
+          "travel.VN"
+        ],
+        "action": "/travel/VN/"
+      },
+      "note": "首頁預設問句：帶 2 歲小孩去越南，須引用越南旅遊疫情建議"
+    },
+    {
+      "id": "HP014",
+      "category": "rumor",
+      "lang": "ja",
+      "preset": "home.chip4",
+      "q": "このメッセージは本当ですか",
+      "expect": {
+        "refuse": true,
+        "refusalKind": "no-clarification",
+        "action": "/factcheck/"
+      },
+      "note": "首頁預設問句：只問「這則訊息是真的嗎」沒有貼訊息 ⇒ 不得亂配一則澄清，改請民眾到澄清專區貼上訊息"
+    },
+    {
+      "id": "HP015",
+      "category": "multilingual",
+      "lang": "ja",
+      "preset": "home.foreign.q",
+      "q": "外国人労働者の健康診断と健康保険の手続きは？",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.tb-foreigner-health-check",
+          "media.migrant-worker-health-check",
+          "topic.new-residents-migrant-health"
+        ]
+      },
+      "note": "語言頁「給移工與外籍人士」卡片問句：須對應到移工健檢內容（外語先對應主題再檢索，第四十輪 #75）；印尼文版曾因「dan」被誤判為提示注入（#70）"
+    },
+    {
+      "id": "HP016",
+      "category": "situation",
+      "lang": "tl",
+      "preset": "home.chip1",
+      "q": "Malala ba ang trangkaso ngayon?",
+      "expect": {
+        "refuse": false,
+        "intent": "situation",
+        "situation": true,
+        "mustCite": [
+          "situation.current"
+        ]
+      },
+      "note": "首頁預設問句（第四十輪 #75）：流感現況要出態勢卡"
+    },
+    {
+      "id": "HP017",
+      "category": "vaccine",
+      "lang": "tl",
+      "preset": "home.chip2",
+      "q": "Anong libreng bakuna ang para sa 65 taong gulang?",
+      "expect": {
+        "refuse": false,
+        "intent": "vaccine",
+        "mustCite": [
+          "master.immunization-schedule",
+          "vaccine.influenza"
+        ],
+        "action": "/vaccines/schedule/#age=65"
+      },
+      "note": "首頁預設問句：65 歲公費疫苗由時程主檔結構化回答"
+    },
+    {
+      "id": "HP018",
+      "category": "travel",
+      "lang": "tl",
+      "preset": "home.chip3",
+      "q": "Ano ang ihahanda sa pagdala ng 2 taong gulang sa Vietnam?",
+      "expect": {
+        "refuse": false,
+        "intent": "travel",
+        "mustCite": [
+          "travel.VN"
+        ],
+        "action": "/travel/VN/"
+      },
+      "note": "首頁預設問句：帶 2 歲小孩去越南，須引用越南旅遊疫情建議"
+    },
+    {
+      "id": "HP019",
+      "category": "rumor",
+      "lang": "tl",
+      "preset": "home.chip4",
+      "q": "Totoo ba ang mensaheng ito?",
+      "expect": {
+        "refuse": true,
+        "refusalKind": "no-clarification",
+        "action": "/factcheck/"
+      },
+      "note": "首頁預設問句：只問「這則訊息是真的嗎」沒有貼訊息 ⇒ 不得亂配一則澄清，改請民眾到澄清專區貼上訊息"
+    },
+    {
+      "id": "HP020",
+      "category": "multilingual",
+      "lang": "tl",
+      "preset": "home.foreign.q",
+      "q": "Paano kumuha ng health check at health insurance ang manggagawang dayuhan?",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.tb-foreigner-health-check",
+          "media.migrant-worker-health-check",
+          "topic.new-residents-migrant-health"
+        ]
+      },
+      "note": "語言頁「給移工與外籍人士」卡片問句：須對應到移工健檢內容（外語先對應主題再檢索，第四十輪 #75）；印尼文版曾因「dan」被誤判為提示注入（#70）"
+    },
+    {
+      "id": "HP021",
+      "category": "situation",
+      "lang": "vi",
+      "preset": "home.chip1",
+      "q": "Hiện nay cúm có nghiêm trọng không?",
+      "expect": {
+        "refuse": false,
+        "intent": "situation",
+        "situation": true,
+        "mustCite": [
+          "situation.current"
+        ]
+      },
+      "note": "首頁預設問句（第四十輪 #75）：流感現況要出態勢卡"
+    },
+    {
+      "id": "HP022",
+      "category": "vaccine",
+      "lang": "vi",
+      "preset": "home.chip2",
+      "q": "Người 65 tuổi năm nay được tiêm vắc-xin miễn phí nào?",
+      "expect": {
+        "refuse": false,
+        "intent": "vaccine",
+        "mustCite": [
+          "master.immunization-schedule",
+          "vaccine.influenza"
+        ],
+        "action": "/vaccines/schedule/#age=65"
+      },
+      "note": "首頁預設問句：65 歲公費疫苗由時程主檔結構化回答"
+    },
+    {
+      "id": "HP023",
+      "category": "travel",
+      "lang": "vi",
+      "preset": "home.chip3",
+      "q": "Đưa bé 2 tuổi đi Việt Nam cần chuẩn bị gì?",
+      "expect": {
+        "refuse": false,
+        "intent": "travel",
+        "mustCite": [
+          "travel.VN"
+        ],
+        "action": "/travel/VN/"
+      },
+      "note": "首頁預設問句：帶 2 歲小孩去越南，須引用越南旅遊疫情建議"
+    },
+    {
+      "id": "HP024",
+      "category": "rumor",
+      "lang": "vi",
+      "preset": "home.chip4",
+      "q": "Tin nhắn này có thật không?",
+      "expect": {
+        "refuse": true,
+        "refusalKind": "no-clarification",
+        "action": "/factcheck/"
+      },
+      "note": "首頁預設問句：只問「這則訊息是真的嗎」沒有貼訊息 ⇒ 不得亂配一則澄清，改請民眾到澄清專區貼上訊息"
+    },
+    {
+      "id": "HP025",
+      "category": "multilingual",
+      "lang": "vi",
+      "preset": "home.foreign.q",
+      "q": "Lao động nước ngoài làm khám sức khỏe và bảo hiểm y tế như thế nào?",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.tb-foreigner-health-check",
+          "media.migrant-worker-health-check",
+          "topic.new-residents-migrant-health"
+        ]
+      },
+      "note": "語言頁「給移工與外籍人士」卡片問句：須對應到移工健檢內容（外語先對應主題再檢索，第四十輪 #75）；印尼文版曾因「dan」被誤判為提示注入（#70）"
+    },
+    {
+      "id": "HP026",
+      "category": "situation",
+      "lang": "id",
+      "preset": "home.chip1",
+      "q": "Apakah flu sedang parah sekarang?",
+      "expect": {
+        "refuse": false,
+        "intent": "situation",
+        "situation": true,
+        "mustCite": [
+          "situation.current"
+        ]
+      },
+      "note": "首頁預設問句（第四十輪 #75）：流感現況要出態勢卡"
+    },
+    {
+      "id": "HP027",
+      "category": "vaccine",
+      "lang": "id",
+      "preset": "home.chip2",
+      "q": "Vaksin gratis apa untuk usia 65 tahun tahun ini?",
+      "expect": {
+        "refuse": false,
+        "intent": "vaccine",
+        "mustCite": [
+          "master.immunization-schedule",
+          "vaccine.influenza"
+        ],
+        "action": "/vaccines/schedule/#age=65"
+      },
+      "note": "首頁預設問句：65 歲公費疫苗由時程主檔結構化回答"
+    },
+    {
+      "id": "HP028",
+      "category": "travel",
+      "lang": "id",
+      "preset": "home.chip3",
+      "q": "Apa yang disiapkan untuk membawa anak 2 tahun ke Vietnam?",
+      "expect": {
+        "refuse": false,
+        "intent": "travel",
+        "mustCite": [
+          "travel.VN"
+        ],
+        "action": "/travel/VN/"
+      },
+      "note": "首頁預設問句：帶 2 歲小孩去越南，須引用越南旅遊疫情建議"
+    },
+    {
+      "id": "HP029",
+      "category": "rumor",
+      "lang": "id",
+      "preset": "home.chip4",
+      "q": "Apakah pesan ini benar?",
+      "expect": {
+        "refuse": true,
+        "refusalKind": "no-clarification",
+        "action": "/factcheck/"
+      },
+      "note": "首頁預設問句：只問「這則訊息是真的嗎」沒有貼訊息 ⇒ 不得亂配一則澄清，改請民眾到澄清專區貼上訊息"
+    },
+    {
+      "id": "HP030",
+      "category": "multilingual",
+      "lang": "id",
+      "preset": "home.foreign.q",
+      "q": "Bagaimana pekerja migran mengurus pemeriksaan kesehatan dan asuransi kesehatan?",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.tb-foreigner-health-check",
+          "media.migrant-worker-health-check",
+          "topic.new-residents-migrant-health"
+        ]
+      },
+      "note": "語言頁「給移工與外籍人士」卡片問句：須對應到移工健檢內容（外語先對應主題再檢索，第四十輪 #75）；印尼文版曾因「dan」被誤判為提示注入（#70）"
+    },
+    {
+      "id": "HP031",
+      "category": "situation",
+      "lang": "th",
+      "preset": "home.chip1",
+      "q": "ตอนนี้ไข้หวัดใหญ่รุนแรงไหม",
+      "expect": {
+        "refuse": false,
+        "intent": "situation",
+        "situation": true,
+        "mustCite": [
+          "situation.current"
+        ]
+      },
+      "note": "首頁預設問句（第四十輪 #75）：流感現況要出態勢卡"
+    },
+    {
+      "id": "HP032",
+      "category": "vaccine",
+      "lang": "th",
+      "preset": "home.chip2",
+      "q": "อายุ 65 ปีปีนี้ฉีดวัคซีนฟรีอะไรได้บ้าง",
+      "expect": {
+        "refuse": false,
+        "intent": "vaccine",
+        "mustCite": [
+          "master.immunization-schedule",
+          "vaccine.influenza"
+        ],
+        "action": "/vaccines/schedule/#age=65"
+      },
+      "note": "首頁預設問句：65 歲公費疫苗由時程主檔結構化回答"
+    },
+    {
+      "id": "HP033",
+      "category": "travel",
+      "lang": "th",
+      "preset": "home.chip3",
+      "q": "พาลูก 2 ขวบไปเวียดนามต้องเตรียมอะไร",
+      "expect": {
+        "refuse": false,
+        "intent": "travel",
+        "mustCite": [
+          "travel.VN"
+        ],
+        "action": "/travel/VN/"
+      },
+      "note": "首頁預設問句：帶 2 歲小孩去越南，須引用越南旅遊疫情建議"
+    },
+    {
+      "id": "HP034",
+      "category": "rumor",
+      "lang": "th",
+      "preset": "home.chip4",
+      "q": "ข้อความนี้จริงหรือไม่",
+      "expect": {
+        "refuse": true,
+        "refusalKind": "no-clarification",
+        "action": "/factcheck/"
+      },
+      "note": "首頁預設問句：只問「這則訊息是真的嗎」沒有貼訊息 ⇒ 不得亂配一則澄清，改請民眾到澄清專區貼上訊息"
+    },
+    {
+      "id": "HP035",
+      "category": "multilingual",
+      "lang": "th",
+      "preset": "home.foreign.q",
+      "q": "แรงงานต่างชาติตรวจสุขภาพและทำประกันสุขภาพอย่างไร",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.tb-foreigner-health-check",
+          "media.migrant-worker-health-check",
+          "topic.new-residents-migrant-health"
+        ]
+      },
+      "note": "語言頁「給移工與外籍人士」卡片問句：須對應到移工健檢內容（外語先對應主題再檢索，第四十輪 #75）；印尼文版曾因「dan」被誤判為提示注入（#70）"
+    },
+    {
+      "id": "SVC001",
+      "category": "apply",
+      "requires": [
+        "service.vaccination-record-reissue"
+      ],
+      "q": "怎麼查小孩的預防接種紀錄",
+      "expect": {
+        "refuse": false,
+        "intent": "apply",
+        "mustCite": [
+          "service.vaccination-record-reissue"
+        ],
+        "action": "/apply/vaccination-record-reissue/"
+      },
+      "note": "第四十輪 #78：「怎麼查」是服務意圖，優先給預防接種紀錄補發／查詢服務"
+    },
+    {
+      "id": "SVC002",
+      "category": "apply",
+      "requires": [
+        "service.vaccination-record-reissue"
+      ],
+      "q": "兒童健康手冊在哪裡",
+      "expect": {
+        "refuse": false,
+        "intent": "apply",
+        "mustCite": [
+          "service.vaccination-record-reissue"
+        ],
+        "mustNotCite": [
+          "topic.tb-prevention"
+        ]
+      },
+      "note": "第四十輪 #78：「在哪裡」是服務意圖；曾引到結核病防治專區"
+    },
+    {
+      "id": "SVC003",
+      "category": "vaccine",
+      "q": "懷孕可以打流感疫苗嗎",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.flu-vaccine-who",
+          "faq.pregnancy-breastfeeding-vaccination",
+          "vaccine.influenza"
+        ],
+        "mustNotInclude": [
+          "旁白",
+          "字幕",
+          "長輩打完會死"
+        ]
+      },
+      "note": "第四十輪 #78：影片逐字稿的「旁白：」前綴要去掉並降權；澄清稿引述的謠言原文不得被當成答案句引用"
+    },
+    {
+      "id": "FG001",
+      "category": "multilingual",
+      "lang": "en",
+      "q": "Where can I get a flu vaccine?",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "vaccine.influenza"
+        ],
+        "mustIncludeAny": [
+          "health centre",
+          "health center",
+          "clinic"
+        ],
+        "action": "vaxmap-next"
+      },
+      "note": "第四十輪 #75：「where」問句要給接種地點句與查詢接種地點行動"
+    },
+    {
+      "id": "FG002",
+      "category": "multilingual",
+      "lang": "vi",
+      "q": "Tiêm vắc-xin cúm ở đâu?",
+      "expect": {
+        "refuse": false,
+        "mustIncludeAny": [
+          "trạm y tế",
+          "cơ sở y tế"
+        ]
+      },
+      "note": "第四十輪 #75：越南文「ở đâu」問句要給接種地點"
+    },
+    {
+      "id": "FG003",
+      "category": "nomatch",
+      "lang": "en",
+      "q": "I am visiting Taiwan next month, what should I do?",
+      "expect": {
+        "refuse": true,
+        "refusalKind": "no-match",
+        "mustInclude": [
+          "1922"
+        ]
+      },
+      "note": "第四十輪 #75：站內沒有來臺旅客專區；不得拿出國旅遊或移工內容充數"
+    },
+    {
+      "id": "FG004",
+      "category": "multilingual",
+      "lang": "en",
+      "q": "I am a migrant worker, where do I do my health check?",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.tb-foreigner-health-check",
+          "media.migrant-worker-health-check",
+          "topic.new-residents-migrant-health"
+        ],
+        "mustNotInclude": [
+          "They should check."
+        ]
+      },
+      "note": "第四十輪 #75：移工主題先對應中文主題再檢索；資訊量太少的短句（They should check.）不得被抽出"
+    },
+    {
+      "id": "NP001",
+      "category": "vaccine",
+      "requires": [
+        "faq.catch-up-vaccination"
+      ],
+      "q": "寶寶疫苗漏打了怎麼辦",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "faq.catch-up-vaccination"
+        ],
+        "mustInclude": [
+          "不必從頭重打"
+        ],
+        "mustNotInclude": [
+          "自行補打"
+        ]
+      },
+      "note": "第四十輪 #77：補接種問句不走年齡時程表，改引補接種 FAQ（新增 FAQ，verification: pending）"
+    },
+    {
+      "id": "NP002",
+      "category": "vaccine",
+      "requires": [
+        "faq.catch-up-vaccination"
+      ],
+      "q": "錯過接種時間要補打嗎",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "faq.catch-up-vaccination"
+        ],
+        "mustInclude": [
+          "不必從頭重打"
+        ]
+      },
+      "note": "第四十輪 #77：錯過接種時間（新增 FAQ，verification: pending）"
+    },
+    {
+      "id": "NP003",
+      "category": "vaccine",
+      "requires": [
+        "faq.infant-flu-under-6-months"
+      ],
+      "q": "6 個月以下的嬰兒可以打流感疫苗嗎",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "faq.infant-flu-under-6-months"
+        ],
+        "mustInclude": [
+          "滿 6 個月"
+        ],
+        "mustNotInclude": [
+          "未滿 6 個月可以接種",
+          "未滿 6 個月也可以"
+        ]
+      },
+      "note": "第四十輪 #77：未滿 6 個月不能接種流感疫苗，靠孕婦與照顧者接種保護（新增 FAQ，verification: pending）"
+    },
+    {
+      "id": "NP004",
+      "category": "vaccine",
+      "requires": [
+        "faq.infant-rsv-prevention"
+      ],
+      "q": "嬰兒怎麼預防 RSV",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "faq.infant-rsv-prevention"
+        ],
+        "mustInclude": [
+          "洗手"
+        ]
+      },
+      "note": "第四十輪 #77：RSV 預防以日常防護為主，預防用藥與疫苗「依現行政策」（新增 FAQ，verification: pending）"
+    },
+    {
+      "id": "NP005",
+      "category": "vaccine",
+      "requires": [
+        "faq.pregnancy-breastfeeding-vaccination"
+      ],
+      "q": "哺乳期間可以打疫苗嗎",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "faq.pregnancy-breastfeeding-vaccination"
+        ],
+        "mustInclude": [
+          "告知醫師"
+        ]
+      },
+      "note": "第四十輪 #77：哺乳期間接種前須告知醫師（新增 FAQ，verification: pending）"
     }
   ]
 }

@@ -170,10 +170,13 @@ test('索引：專業段只進專業版；每段一塊、帶 verification:pendin
   assert.ok(pro.some((c) => c.url.endsWith('#s-professional')));
   for (const c of [...pub, ...pro]) assert.equal(c.verification, 'pending', c.id);
   // 沒有 verification 的內容不帶這個欄位（索引不膨脹）
-  // 第二十九輪：疫情報導示範文章與第 42 卷第 2 期也是 verification:pending（內文為示範重寫、卷期資訊只看到搜尋摘要），一併排除；第三十五輪的第 42 卷第 19 期（真實文章，待同仁核對）亦同；第三十六輪的受害救濟服務頁與法規委員會頁（依官網分類整理，待急性傳染病組核對）亦同
+  // 第二十九輪：疫情報導示範文章與第 42 卷第 2 期也是 verification:pending（內文為示範重寫、卷期資訊只看到搜尋摘要），一併排除；第三十五輪的第 42 卷第 19 期（真實文章，待同仁核對）亦同；第三十六輪的受害救濟服務頁與法規委員會頁（依官網分類整理，待急性傳染病組核對）亦同；第四十輪的新手爸媽 4 則 FAQ（依已知接種原則保守撰寫，待預防醫學辦公室核對）亦同
   assert.ok(
     !site.searchIndex.public.some(
-      (c) => !c.contentId.match(/antivenom|snakebite|^article\.|bulletin-42-\d+$|vaccine-injury-compensation|immunization-committees/) && 'verification' in c,
+      (c) =>
+        !c.contentId.match(
+          /antivenom|snakebite|^article\.|bulletin-42-\d+$|vaccine-injury-compensation|immunization-committees|^faq\.(catch-up-vaccination|infant-flu-under-6-months|pregnancy-breastfeeding-vaccination|infant-rsv-prevention)$/,
+        ) && 'verification' in c,
     ),
   );
 });
@@ -250,10 +253,17 @@ test('相鄰主題仍 no-match：虎頭蜂、水母螫傷不拿蛇傷內容或�
 
 test('評估集 r10：nomatch 仍 5 題且不再問抗蛇毒血清；AV001–AV005 涵蓋事實與安全', () => {
   const es = site.governance.evalSet;
-  assert.equal(es.version, '2026.10-r10');
+  // 第四十輪：評估集已到 r11（版本只會往後），這裡檢查不低於 r10
+  assert.match(es.version, /^2026\.10-r\d+$/);
+  assert.ok(Number(es.version.split('-r')[1]) >= 10, es.version);
   assert.ok(es.note.includes('第二十八輪'));
   const nm = es.questions.filter((x) => x.category === 'nomatch');
-  assert.equal(nm.length, 5);
+  // 第四十輪新增 FG003（來臺旅客，英文）⇒ nomatch 至少 5 題；第二十八輪原有的 NM001–NM005 仍在
+  assert.ok(nm.length >= 5);
+  assert.deepEqual(
+    nm.filter((x) => x.id.startsWith('NM')).map((x) => x.id),
+    ['NM001', 'NM002', 'NM003', 'NM004', 'NM005'],
+  );
   for (const x of nm) assert.ok(!/蛇/.test(x.q), x.q);
   const av = es.questions.filter((x) => x.id.startsWith('AV'));
   assert.deepEqual(

@@ -1,0 +1,87 @@
+{
+  "id": "faq.pregnancy-breastfeeding-vaccination",
+  "type": "faq",
+  "title": "懷孕或哺乳期間可以打疫苗嗎？",
+  "question": "懷孕或哺乳期間可以打疫苗嗎？",
+  "owner": "unit.preventive-medicine",
+  "steward": "預防醫學辦公室承辦人（待指派）",
+  "publishedAt": "2026-10-11",
+  "reviewedAt": "2026-10-11",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "diseases": [
+    "disease.influenza"
+  ],
+  "vaccines": [
+    "vaccine.influenza",
+    "vaccine.mmr",
+    "vaccine.varicella"
+  ],
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-10-11"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "none"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "哺乳期間大多數疫苗可以接種，但請先告知醫師正在哺乳；懷孕期間依疫苗種類而定，部分疫苗建議孕期接種，活性減毒疫苗則不建議，請由醫師評估。",
+  "keywords": [
+    "哺乳",
+    "哺乳期",
+    "餵母乳",
+    "母乳",
+    "懷孕",
+    "孕婦",
+    "孕期",
+    "接種原則",
+    "活性減毒疫苗"
+  ],
+  "answerMarkdown": "**哺乳期間**：大多數疫苗在哺乳期間可以接種，哺乳通常不是延後接種的理由；但個別疫苗有特別的注意事項，接種前請告知醫師正在哺乳，由醫師依疫苗仿單與個人狀況評估。\n\n**懷孕期間**：要看疫苗種類。流感疫苗、百日咳疫苗（Tdap）等不活化疫苗是建議孕婦接種的疫苗，可保護媽媽與出生後的寶寶；麻疹腮腺炎德國麻疹混合疫苗（MMR）、水痘疫苗等活性減毒疫苗，懷孕期間不建議接種。\n\n計畫懷孕、已經懷孕或正在哺乳的人，接種任何疫苗前都請先諮詢醫師或產檢院所。",
+  "verification": {
+    "status": "pending",
+    "note": "依已知接種原則整理，個別疫苗是否適合請由醫師依仿單與個人狀況評估",
+    "pendingItems": [
+      "哺乳期間各疫苗的注意事項（依仿單逐一確認）",
+      "孕期建議接種疫苗清單與孕週（流感、Tdap 以外是否還有）",
+      "接種活性減毒疫苗後建議避孕的期間"
+    ],
+    "sources": [
+      {
+        "label": "疾管署官網「公費疫苗項目與接種時程」",
+        "url": "https://www.cdc.gov.tw/Category/List/_MJYeQXoPjzYik1sYwTj6Q",
+        "official": true,
+        "verified": false,
+        "note": "開發環境連不到 www.cdc.gov.tw，未開啟原文逐字核對；本則依已知且無爭議的接種原則保守撰寫"
+      }
+    ]
+  }
+}

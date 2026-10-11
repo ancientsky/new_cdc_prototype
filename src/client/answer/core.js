@@ -26,7 +26,10 @@
 import { CROSS_LANG, PARAPHRASE, annotationsOf, topicAnchorsOf, buildLexicon, isOutdated, lc, matcherFor, ownerNameOf, tr, unwrap } from './lexicon.js';
 import { ANTIVIRAL_RE, CAT_ZH, CLOSED_MARK, NOTICE_TYPES, SCHEDULE_VACCINE_RE, VAXMAP_GROUP_OF, VAXMAP_GROUP_OF_DISEASE, WHICH_VACCINE_RE, ageHashOf, ageProfileOf, hoursPhrase, matchSchedule, mmssOf, normTravel, normalizeNotifyTable, notifyHoursLabel, vaxmapHref } from './structured.js';
 import { EN_STOP, VI_STOP, bigrams, detectInjection, maskPII, maskPIIDetailed, mdPlain, parseChineseNumber, parseTimeRange, rocDate, splitPlain, tokenize } from './text.js';
-import { ADMIT_RE, CAREERS_DETAIL_RE, HISTORICAL_WEIGHT, LAB_PUBLIC_RE, MEDIA_CUE, NEWS_CUE, OPEN_CUE, PERSON, PROCUREMENT_CUE, PROCUREMENT_DETAIL_RE, PUB_CUE, QUERY_FUNC_RE, RECRUIT_CUE, REFUSAL_RULES, RELEVANCE, SERVICE_CUE, VAX_WHERE_RE, RESEARCH_CUE, TRAVEL_CHANGE_KINDS, TRAVEL_CHANGE_RE, classifyIntent, focusOf, refusalCopy, titleHits } from './rules.js';
+import { ADMIT_RE, CAREERS_DETAIL_RE, HISTORICAL_WEIGHT, LAB_PUBLIC_RE, MEDIA_CUE, NEWS_CUE, OPEN_CUE, PERSON, PROCUREMENT_CUE, PROCUREMENT_DETAIL_RE, PUB_CUE, QUERY_FUNC_RE, RECRUIT_CUE, REFUSAL_RULES, RELEVANCE, VAX_WHERE_RE, RESEARCH_CUE, TRAVEL_CHANGE_KINDS, TRAVEL_CHANGE_RE, classifyIntent, focusOf, refusalCopy, titleHits } from './rules.js';
+
+// 第四十輪（issue #77）：補接種問句（漏打、錯過、延遲、忘了打、補打）。命中就不給年齡時程表，改由檢索找補接種 FAQ
+export const CATCHUP_RE = /(漏打|漏接種|補打|補接種|錯過|延遲接種|晚打|忘了打|忘記打|沒打到|重打|missed (?:a |the )?(?:dose|vaccin)|catch-?up)/i;
 
 export { bigrams, detectInjection, maskPII, maskPIIDetailed, numbersByUnit, parseChineseNumber, parseTimeRange, pdfHref, rocDate, splitPlain, tokenize } from './text.js';
 export { ADMIT_RE, INTENT_RULES, LAB_PRO_RE, LAB_PUBLIC_RE, PRO_SUB_INTENTS, REFUSAL_RULES, RELEVANCE, classifyIntent, isLowRelevance } from './rules.js';
@@ -1489,7 +1492,10 @@ export function createEngine(rawDeps = {}) {
     // 第三十七輪：醫事人員檢視會把疫苗問句改判成 professional（pro.view），年齡＋「哪些疫苗」卻沒有任何專業詞時，仍是在問時程 ⇒ 一樣走時程主檔
     if (profile && !forceIntent && view === 'pro' && result.intent === 'professional' && WHICH_VACCINE_RE.test(q) && (result.intentScores.vaccine ?? 0) > 0
       && !result.intentReasons.some((r) => r.startsWith('pro.') && !['pro.view', 'pro.view-override'].includes(r))) { result.intent = 'vaccine'; result.intentReasons.push('vac.age-profile-pro'); }
-    if (profile && result.intent === 'vaccine' && !ANTIVIRAL_RE.test(q) && (!entities.vaccines.length || WHICH_VACCINE_RE.test(q))) {
+    // 第四十輪（issue #77）：「漏打／錯過／補打」問的是補接種原則，不是年齡時程表；整張時程表會蓋掉真正的答案（補接種 FAQ） ⇒ 不走時程主檔
+    const catchUp = CATCHUP_RE.test(q);
+    if (catchUp) result.intentReasons.push('vac.catch-up');
+    if (profile && result.intent === 'vaccine' && !catchUp && !ANTIVIRAL_RE.test(q) && (!entities.vaccines.length || WHICH_VACCINE_RE.test(q))) {
       const sa = scheduleAnswer(q, result, entities, profile);
       if (sa) return sa;
     }
