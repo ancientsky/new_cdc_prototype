@@ -73,6 +73,16 @@ export function numericAge(q) {
     const a = ageNum(m[1]);
     if (a != null) { const v = Math.round(a * 12); return { min: v, max: null, label: `${a} 歲以上${a >= 65 ? '長者' : ''}` }; }
   }
+  // 「之前」：2 歲前、兩歲以前、6 個月之前（第三十七輪：原本被下面的「單純 N 歲」吃掉，「2 歲前」誤當成 2 歲那一年）
+  // 「N 歲前要打哪些」問的是出生到滿 N 歲前的整段，等同「未滿 N 歲」
+  if ((m = q.match(new RegExp(`${N}${Y}\\s*(?:以前|之前|前)`)))) {
+    const a = ageNum(m[1]);
+    if (a != null && a > 0) return { min: 0, max: Math.round(a * 12) - 1, label: `${a} 歲前` };
+  }
+  if ((m = q.match(new RegExp(`(?:出生)?\\s*${N}\\s*個(?:多)?月(?:大)?\\s*(?:以前|之前|前)(?!\\s*(?:打|接種|施打|注射)過)`))) && /(疫苗|預防針|接種|打)/.test(q.slice(m.index + m[0].length))) {
+    const a = ageNum(m[1]);
+    if (a != null && a > 0 && a <= 72) return { min: 0, max: Math.round(a) - 1, label: `${a} 個月前` };
+  }
   // 以下：6 歲以下、未滿 5 歲
   if ((m = q.match(new RegExp(`(?:未滿|不到|小於)\\s*${N}${Y}`)))) {
     const a = ageNum(m[1]);
@@ -155,7 +165,7 @@ export function ageHashOf(profile) {
 }
 
 // 問「哪些／什麼疫苗」：即使問句帶了某疫苗名稱，也走跨疫苗彙整
-export const WHICH_VACCINE_RE = /((哪些|哪幾|哪種|什麼|甚麼|那些)\s*(公費)?\s*(疫苗|預防針|針)|(要|可以|能|該)打(什麼|哪些|甚麼)|打哪些|which vaccines?|what vaccines?|vắc[\s-]?xin (nào|gì))/i;
+export const WHICH_VACCINE_RE = /((哪些|哪幾|哪種|什麼|甚麼|那些)\s*(公費)?\s*(疫苗|預防針|針)|(要|可以|能|該)打(什麼|哪些|甚麼)|打哪些|(疫苗|預防針)\s*(有|是)?\s*(哪些|哪幾種|什麼|甚麼)|which vaccines?|what vaccines?|vắc[\s-]?xin (nào|gì))/i;
 // 意圖未定但問句明顯在問疫苗（年齡／身分＋疫苗詞）
 export const SCHEDULE_VACCINE_RE = /(疫苗|預防針|接種|打針|vaccin|vắc[\s-]?xin|tiêm)/i;
 

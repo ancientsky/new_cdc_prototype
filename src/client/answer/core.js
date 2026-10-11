@@ -910,7 +910,8 @@ export function createEngine(rawDeps = {}) {
       picked.push({ text, cite: [SCHED_ID, ...(page ? [page.id] : [])], scheduleIds: g.items.map((i) => i.id), href: page ? null : `/vaccines/schedule/#${g.items[0].id}` });
     };
     const details = (it) => [it.dose, it.ageLabel, startPhrase(it, T)].filter(Boolean).join('，');
-    const PUB_MAX = 8;
+    // 第三十七輪：8 → 12。「2 歲前」整段有 10 種公費疫苗，原本只列 8 種、A 肝與日本腦炎被收進「另有 2 種」，家長看不到完整清單
+    const PUB_MAX = 12;
     for (const g of pub.slice(0, PUB_MAX)) pushFor(g, `${P}公費疫苗：${vaccineNameOf(g.vid, g.items[0])}（${g.items.map(details).join('；')}）${unv(g.items)}。`);
     if (pub.length > PUB_MAX) picked.push({ text: `另有 ${pub.length - PUB_MAX} 種公費疫苗，請看完整疫苗時程地圖。`, cite: [SCHED_ID] });
     if (!pub.length) {
@@ -1428,6 +1429,9 @@ export function createEngine(rawDeps = {}) {
     const profile = ageProfileOf(q);
     if (profile) result.ageProfile = profile;
     if (profile && !forceIntent && result.intent === 'unknown' && SCHEDULE_VACCINE_RE.test(q)) { result.intent = 'vaccine'; result.intentReasons.push('vac.age-profile'); }
+    // 第三十七輪：醫事人員檢視會把疫苗問句改判成 professional（pro.view），年齡＋「哪些疫苗」卻沒有任何專業詞時，仍是在問時程 ⇒ 一樣走時程主檔
+    if (profile && !forceIntent && view === 'pro' && result.intent === 'professional' && WHICH_VACCINE_RE.test(q) && (result.intentScores.vaccine ?? 0) > 0
+      && !result.intentReasons.some((r) => r.startsWith('pro.') && !['pro.view', 'pro.view-override'].includes(r))) { result.intent = 'vaccine'; result.intentReasons.push('vac.age-profile-pro'); }
     if (profile && result.intent === 'vaccine' && !ANTIVIRAL_RE.test(q) && (!entities.vaccines.length || WHICH_VACCINE_RE.test(q))) {
       const sa = scheduleAnswer(q, result, entities, profile);
       if (sa) return sa;
