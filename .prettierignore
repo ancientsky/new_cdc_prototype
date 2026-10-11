@@ -30,3 +30,7 @@ eval/**/*.mjs
 !tests/round31-boundary.test.mjs
 !scripts/lib/minify.mjs
 !tests/round34-engine-split.test.mjs
+!scripts/lib/i18n-quality.mjs
+!src/client/glossary-term.js
+!src/client/situation-text.js
+!tests/round40-i18n.test.mjs

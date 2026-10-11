@@ -1,6 +1,6 @@
 {
-  "version": "2026.10-r10",
-  "updatedAt": "2026-10-10",
+  "version": "2026.10-r11",
+  "updatedAt": "2026-10-11",
   "owner": "unit.oasis",
   "note": "答案引擎評估集（原型 140+ 題；規格目標 500 題）。每次正本修訂或換模型都重跑；version 類別（曾因修訂而改變答案的題目）須全對才能上線。requires 列出該題依賴的內容 id／前綴，內容尚未建置時該題略過不計分。 r3（2026-10-02）：新增申請（apply）、檢驗（lab，專業）、通報時限（notify，主檔結構化回答）、公告（notice）類別，與影片版本題（過時影片不得被引用）。 r4（2026-10-02 第六輪）：新增國際合作 3 題（英文來源 sourceLang:en 內容進英文索引、中文譯文進中文索引）。 r5（2026-10-04 第七輪）：人才招募改 careers 意圖（結構化列開放中職缺、問「誰錄取」只給結果頁連結不唸名單）、採購改 procurement 意圖；NC001／NC002 改依職缺與標案內容，新增 NC003–NC006（含「誰錄取」不得出現遮罩姓名與報名編號、錄取者個資拒答）。 r6（2026-10-05）：新增 VA011–VA014 年齡／身分跨疫苗彙整題（由疫苗接種時程主檔結構化回答，行動須連到疫苗接種時程地圖並帶 #age）。 r9（2026-10-10 第二十五輪）：新增 nomatch 類別 NM001–NM005（站內沒有的主題須拒答為 no-match）。 r10（2026-10-10 第二十八輪，Issue #38）：新增抗蛇毒血清內容（topic.antivenom 與 4 則 Q&A），NM001「抗蛇毒血清」與 NM005「蛇咬怎麼辦」改為站內仍沒有的咬螫傷主題（虎頭蜂、水母），並要求不得引用蛇傷內容充數；新增 AV001–AV005（抗蛇毒血清事實題與安全題：答案須引用蛇傷內容、含 119 或血清名，且不得出現冰敷、切開、止血帶、吸毒等錯誤處置的肯定說法）。 r10 第二十八輪 核心教材（2026-10-10）：新增 CUR001–CUR005 專業題，引用登革熱、麻疹核心教材（示範匯入版）的章節與學習目標；第六章（治療）整章待補，不得被當成內容回答。",
   "categories": {
@@ -3571,6 +3571,76 @@
         "conflict": false,
         "mustInclude": [
           "1HP"
+        ]
+      }
+    },
+    {
+      "id": "ML008",
+      "category": "multilingual",
+      "lang": "en",
+      "q": "What vaccines do I need before traveling to Taiwan?",
+      "requires": [
+        "topic.visiting-taiwan"
+      ],
+      "note": "第四十輪（#76）：來臺旅客問行前疫苗，必須引用來臺專區；第四十輪前只回答國人出國的 MMR 建議",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "topic.visiting-taiwan"
+        ],
+        "mustInclude": [
+          "Taiwan"
+        ]
+      }
+    },
+    {
+      "id": "ML009",
+      "category": "multilingual",
+      "lang": "en",
+      "q": "I am visiting Taiwan next month, what precautions?",
+      "requires": [
+        "topic.visiting-taiwan"
+      ],
+      "note": "第四十輪（#76）：來臺旅客問注意事項，必須引用來臺專區",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "topic.visiting-taiwan"
+        ]
+      }
+    },
+    {
+      "id": "ML010",
+      "category": "multilingual",
+      "lang": "en",
+      "q": "I am moving to Taiwan for work. Do I need a health check?",
+      "requires": [
+        "topic.visiting-taiwan"
+      ],
+      "note": "第四十輪（#76）：移工健康檢查時點",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "topic.visiting-taiwan"
+        ],
+        "mustInclude": [
+          "3 working days"
+        ]
+      }
+    },
+    {
+      "id": "ML011",
+      "category": "multilingual",
+      "lang": "id",
+      "q": "Apa gejala demam berdarah?",
+      "requires": [
+        "i18n:disease.dengue:id"
+      ],
+      "note": "第四十輪（#74）：印尼文登革熱症狀。印尼文譯文目前是機器翻譯初稿（未審核不進答案索引），審核通過（languages.id.status=reviewed）前 skipped，之後必須引用登革熱頁",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "disease.dengue"
         ]
       }
     }
