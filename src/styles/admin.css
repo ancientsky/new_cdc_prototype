@@ -587,3 +587,22 @@ body.adm { background: var(--paper); color: var(--ink); min-height: 100vh; displ
 .gw-plain { white-space: pre-wrap; margin: 0; overflow-wrap: anywhere; }
 #gw-preview-frame { width: 100%; min-height: 420px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
 .adm-gw-only { display: none; } .adm-gw .adm-gw-only { display: inline; }
+
+/* ── vaxschedule-edit（/admin/vaccines/schedule/ 疫苗接種時程表；第三十六輪） ── */
+.adm-vx-split { grid-template-columns: minmax(0, 440px) minmax(0, 1fr); }
+.adm-vx-list { list-style: none; margin: 0 0 var(--sp-3); padding: 0; max-height: 320px; overflow: auto; border: 1px solid var(--line); border-radius: var(--radius-sm); }
+.adm-vx-grp { position: sticky; top: 0; background: var(--green-50); color: var(--green-900); font-weight: 700; font-size: var(--fs-xs); padding: 4px 10px; border-top: 1px solid var(--line); }
+.adm-vx-item { display: flex; width: 100%; justify-content: space-between; align-items: center; gap: 8px; border: 0; background: transparent; text-align: left; padding: 6px 10px; font: inherit; font-size: var(--fs-sm); cursor: pointer; }
+.adm-vx-item:hover { background: var(--warn-bg); }
+.adm-vx-item.is-cur { background: var(--green-100, #e3efe7); font-weight: 700; }
+.adm-vx-age { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.adm-vx-num { width: 4.5em; }
+.adm-vx-sep { margin-left: var(--sp-3); }
+.adm-vx-verified { margin: var(--sp-3) 0; width: fit-content; }
+.adm-vx-verified small { display: block; font-weight: 400; color: var(--ink-3); }
+.adm-vx-preview .vxs-svg { width: 100%; height: auto; }
+.adm-vx-preview .vxs-mk.is-sel .vxs-shape { stroke: var(--ink); stroke-width: 3.5; }
+.adm-vx-preview .vxs-table tr.is-sel { background: var(--warn-bg); }
+.adm-vx-preview .vxs-table tr { cursor: pointer; }
+.adm-vx-preview .vxs-jsonly { display: none; }
+@media (max-width: 1100px) { .adm-vx-split { grid-template-columns: 1fr; } }

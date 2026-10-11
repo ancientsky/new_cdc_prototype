@@ -5,7 +5,7 @@ import './i18n.runtime.js';
 
 /* ───────── 刻度：分段非線性（月） ───────── */
 /** [起月, 迄月, 寬度 px]：0–24 月逐月、2–6 歲、6–18 歲、18–50 歲、50–65 歲、65 歲以上 */
-export const SEGMENTS = [[0, 24, 480], [24, 72, 150], [72, 216, 150], [216, 600, 150], [600, 780, 120], [780, 960, 120]];
+export const SEGMENTS = [[0, 24, 480], [24, 72, 150], [72, 216, 200], [216, 600, 150], [600, 780, 120], [780, 960, 120]];
 export const END_MONTHS = 960;
 export const PLOT_WIDTH = SEGMENTS.reduce((s, g) => s + g[2], 0);
 
@@ -23,8 +23,8 @@ export function xOf(months) {
 /** 刻度點：[月齡, 標籤類型, 數字]；kind 'm' 月、'y' 歲 */
 export const TICKS = [
   ...[0, 3, 6, 9, 12, 15, 18, 21, 24].map((m) => [m, 'm', m]),
-  ...[3, 4, 5, 6].map((y) => [y * 12, 'y', y]),
-  ...[8, 10, 12, 15, 18].map((y) => [y * 12, 'y', y]),
+  ...[4, 5, 6].map((y) => [y * 12, 'y', y]),
+  ...[9, 12, 15, 18].map((y) => [y * 12, 'y', y]),
   ...[30, 40, 50].map((y) => [y * 12, 'y', y]),
   ...[55, 60, 65].map((y) => [y * 12, 'y', y]),
   ...[70, 80].map((y) => [y * 12, 'y', y]),
@@ -132,6 +132,171 @@ const minOf = (i) => i.ageMinMonths ?? i.min ?? 0;
 /** 排序：公費 → 符合條件公費 → 自費；同類依與目前月齡的距離（65 歲時「長者」先於「嬰幼兒」），再依年齡下限 */
 export const byFunded = (a, b, months = null) => (FUNDED_ORDER[a.funded] - FUNDED_ORDER[b.funded])
   || (months == null ? 0 : Math.abs(minOf(a) - months) - Math.abs(minOf(b) - months)) || (minOf(a) - minOf(b));
+
+/* ───────── 共用渲染（建置端與後台預覽同一份；回傳字串，文字一律 esc） ───────── */
+export const esc = (v) => String(v ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+export const LABEL_W = 150;
+export const AXIS_H = 34;
+export const LANE_H = 18;
+export const ROW_PAD = 8;
+export const FUNDED = ['public', 'conditional', 'self'];
+export const STAGES = ['infant', 'child', 'school', 'adult', 'pregnancy', 'older', 'risk'];
+const minOfItem = (i) => Number(i.ageMinMonths ?? i.min ?? 0);
+const maxOfItem = (i) => (i.ageMaxMonths !== undefined ? i.ageMaxMonths : i.max);
+
+/** 橫軸區間（px）；單一月齡畫成點（半徑 7，中心在該月中央），其餘畫橫條 */
+export function spanOf(i) {
+  const min = minOfItem(i); const max = maxOfItem(i);
+  if (max === min) { const c = xOf(min + 0.5); return { x1: c - 8, x2: c + 8, point: true, c }; }
+  const x1 = xOf(min); const x2 = Math.max(xOf((max ?? END_MONTHS) + 1), x1 + 10);
+  return { x1, x2, point: false, open: max == null };
+}
+/** 同列內重疊的標記分到不同水平帶（lane） */
+export function lanesOf(items) {
+  const ends = []; const out = new Map();
+  for (const i of items) {
+    const s = spanOf(i); let l = ends.findIndex((e) => e + 3 <= s.x1);
+    if (l < 0) { l = ends.length; ends.push(0); }
+    ends[l] = s.x2; out.set(i.id, l);
+  }
+  return { lane: out, n: Math.max(1, ends.length) };
+}
+/** 依疫苗主檔順序分列；只列有時程項目的疫苗；每列依年齡下限排序；主檔沒有的疫苗 id 排最後（建置時 validate 會擋，這裡防呆） */
+export function rowsOf(items, vaccines, { lang = 'zh-TW', hrefOf = () => null } = {}) {
+  const rows = vaccines.map((m) => ({ id: m.id, name: lang === 'zh-TW' ? m.name : (m.nameEn ?? m.name), href: hrefOf(m), items: items.filter((i) => i.vaccine === m.id).sort((a, b) => minOfItem(a) - minOfItem(b)) })).filter((r) => r.items.length);
+  for (const id of new Set(items.map((i) => i.vaccine))) if (!vaccines.some((m) => m.id === id)) rows.push({ id, name: id, href: null, items: items.filter((i) => i.vaccine === id) });
+  return rows;
+}
+export const itemLabel = (i, lang) => (lang === 'zh-TW' || !i.labelEn ? i.label : i.labelEn);
+
+/**
+ * 時程地圖 SVG（字串）。rows 來自 rowsOf()；t 為翻譯函式。
+ * 建置端用 raw() 嵌入頁面，後台改資料後用同一函式重畫預覽，所以同事在後台看到的就是前台會出現的圖。
+ */
+export function renderMapSvg(rows, { t, lang = 'zh-TW' }) {
+  let y = AXIS_H; let ri = 0;
+  const labels = []; const plots = [];
+  for (const r of rows) {
+    const { lane, n } = lanesOf(r.items);
+    const h = n * LANE_H + ROW_PAD;
+    const nm = esc(String(r.name).replace(/ vaccine$/i, ''));
+    const text = `<text x="8" y="${h / 2 + 4}" class="vxs-rtext">${nm}</text>`;
+    const marks = r.items.map((i) => {
+      const s = spanOf(i); const cy = ROW_PAD / 2 + lane.get(i.id) * LANE_H + LANE_H / 2;
+      const verified = i.verified !== false;
+      const ttl = [itemLabel(i, lang), ageRangeLabel(i, t), t(`vxs.funded.${i.funded}`), verified ? '' : t('vxs.unverified.badge')].filter(Boolean).join(' · ');
+      const shape = s.point ? `<circle class="vxs-shape" cx="${s.c}" cy="${cy}" r="7"/>` : `<rect class="vxs-shape" x="${s.x1}" y="${cy - 7}" width="${s.x2 - s.x1}" height="14" rx="7"/>${s.open ? `<path class="vxs-arrow" d="M${s.x2 - 9} ${cy - 4}l5 4l-5 4"/>` : ''}`;
+      return `<a class="vxs-mk vxs-mk--${esc(i.funded)}${verified ? '' : ' is-unverified'}" href="#${esc(i.id)}" data-id="${esc(i.id)}" data-stage="${esc(i.stage)}"><title>${esc(ttl)}</title>${shape}</a>`;
+    }).join('');
+    labels.push(`<g class="vxs-rl" id="vaccine=${esc(r.id)}" data-row="${ri}" data-vaccine="${esc(r.id)}" transform="translate(0 ${y})"><rect class="vxs-rowbg" x="0" y="0" width="${LABEL_W}" height="${h}"/>${r.href ? `<a href="${esc(r.href)}">${text}</a>` : text}</g>`);
+    plots.push(`<g class="vxs-rp" data-row="${ri}" data-vaccine="${esc(r.id)}" data-h="${h}" transform="translate(0 ${y})"><rect class="vxs-rowbg" x="0" y="0" width="${PLOT_WIDTH}" height="${h}"/>${marks}</g>`);
+    y += h; ri++;
+  }
+  const total = y + 4;
+  // 第一個與最後一個刻度文字靠邊對齊，不然會被裁切框切掉一半（匯出的圖尤其明顯）
+  const ticks = TICKS.map(([mo, kind, n]) => { const x = xOf(mo); const anchor = mo === 0 ? 'start' : mo >= END_MONTHS ? 'end' : 'middle'; return `<line class="vxs-grid" x1="${x}" x2="${x}" y1="${AXIS_H - 6}" y2="2400"/><text class="vxs-tick" x="${mo === 0 ? 2 : x}" y="${AXIS_H - 12}" text-anchor="${anchor}">${esc(t(kind === 'm' ? 'vxs.tick.m' : 'vxs.tick.y', { n }))}</text>`; }).join('');
+  return `<svg class="vxs-svg" data-label-w="${LABEL_W}" data-axis-h="${AXIS_H}" viewBox="0 0 ${LABEL_W + PLOT_WIDTH} ${total}" width="${LABEL_W + PLOT_WIDTH}" height="${total}" role="group" aria-labelledby="vxs-svg-t" aria-describedby="vxs-svg-d" focusable="false">
+<title id="vxs-svg-t">${esc(t('vxs.map.t'))}</title><desc id="vxs-svg-d">${esc(t('vxs.map.desc'))}</desc>
+<defs><pattern id="vxs-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" class="vxs-hatch-bg"/><line x1="0" y1="0" x2="0" y2="6" class="vxs-hatch-ln"/></pattern>
+<clipPath id="vxs-clip"><rect x="${LABEL_W}" y="0" width="${PLOT_WIDTH}" height="${total}"/></clipPath></defs>
+<g clip-path="url(#vxs-clip)"><g class="vxs-plot" transform="translate(${LABEL_W} 0)">${ticks}
+<g class="vxs-cursor" hidden><line x1="0" x2="0" y1="${AXIS_H - 4}" y2="2400"/><text x="0" y="10" text-anchor="middle"></text></g>
+${plots.join('\n')}</g></g>
+${labels.join('\n')}
+<rect class="vxs-axisbg" x="0" y="0" width="${LABEL_W}" height="${AXIS_H}"/><text class="vxs-axislabel" x="8" y="${AXIS_H - 12}">${esc(t('vxs.axis'))}</text>
+</svg>`;
+}
+
+export const TABLE_COLS = ['vaccine', 'dose', 'age', 'stage', 'funded', 'group', 'interval', 'note', 'source'];
+const pillOf = (f) => (f === 'public' ? 'ok' : f === 'conditional' ? 'info' : 'neutral');
+/**
+ * 同資料表格（字串）。sourceOf(item) → { href, ext }：建置端把站內網址加 basePath／語言；後台直接用主檔的網址。
+ * zhAttr：非中文頁把中文欄位加 lang="zh-TW"（讀屏正確發音）。
+ */
+export function renderTableHtml(rows, { t, lang = 'zh-TW', sourceOf = (i) => (i.source?.url ? { href: i.source.url, ext: /^https?:/.test(i.source.url) } : null), scrollLabel = '' }) {
+  const z = lang === 'zh-TW' ? '' : ' lang="zh-TW"';
+  const head = `${TABLE_COLS.map((c) => `<th scope="col">${esc(t(`vxs.col.${c}`))}</th>`).join('')}<th scope="col" class="vxs-jsonly">${esc(t('vxs.col.status'))}</th>`;
+  const body = rows.flatMap((r) => r.items.map((i) => {
+    const src = sourceOf(i);
+    const ageText = lang === 'zh-TW' ? (i.ageLabel ?? ageRangeLabel(i, t)) : ageRangeLabel(i, t);
+    return `<tr id="${esc(i.id)}" data-sched="${esc(i.id)}" data-vaccine="${esc(r.id)}">
+<th scope="row">${esc(r.name)}</th><td${z}>${esc(i.dose ?? itemLabel(i, lang))}</td><td>${esc(ageText)}</td><td>${esc(t(`vxs.stage.${i.stage}`))}</td>
+<td><span class="c-pill c-pill--${pillOf(i.funded)}">${esc(t(`vxs.funded.${i.funded}`))}</span>${i.verified === false ? ` <span class="c-pill c-pill--warn">${esc(t('vxs.unverified.badge'))}</span>` : ''}</td>
+<td${z}>${esc(i.group ?? '')}</td><td${z}>${esc(i.interval ?? '')}${i.recurring === 'yearly' ? ` ${esc(t('vxs.recurring.yearly'))}` : ''}</td><td${z}>${esc(i.note ?? '')}${i.startAt ? ` ${esc(t('vxs.col.period'))}：${esc(i.startAt)}${i.endAt ? ` – ${esc(i.endAt)}` : ''}` : ''}</td>
+<td>${src?.href ? `<a href="${esc(src.href)}"${src.ext ? ' target="_blank" rel="noopener"' : ''}${z}>${esc(i.source?.title ?? src.href)}</a>` : ''}</td><td class="vxs-jsonly" data-vxs-st></td></tr>`;
+  })).join('\n');
+  return `<div class="c-tablewrap" role="region" tabindex="0" aria-label="${esc(scrollLabel)}"><table class="c-table vxs-table"><caption class="sr-only">${esc(t('vxs.table.t'))}</caption><thead><tr>${head}</tr></thead><tbody>
+${body}
+</tbody></table></div>`;
+}
+
+/* ───────── CSV（下載按鈕與建置時 /vaccines/schedule.csv 同一函式） ───────── */
+export const CSV_COLS = ['id', 'vaccine', 'vaccineName', 'label', 'dose', 'ageLabel', 'ageMinMonths', 'ageMaxMonths', 'stage', 'funded', 'group', 'interval', 'recurring', 'startAt', 'endAt', 'note', 'sourceTitle', 'sourceUrl', 'verified'];
+export function scheduleCsv(items, nameOf = (id) => id, t = null) {
+  const cell = (v) => { const s = v == null ? '' : String(v); return /[",\r\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
+  const headers = t ? CSV_COLS.map((c) => ({ id: t('vxs.col.id'), vaccine: 'vaccine id', vaccineName: t('vxs.col.vaccine'), label: t('vxs.col.dose'), dose: 'dose', ageLabel: t('vxs.col.age'), ageMinMonths: 'ageMinMonths', ageMaxMonths: 'ageMaxMonths', stage: t('vxs.col.stage'), funded: t('vxs.col.funded'), group: t('vxs.col.group'), interval: t('vxs.col.interval'), recurring: t('vxs.col.recurring'), startAt: 'startAt', endAt: 'endAt', note: t('vxs.col.note'), sourceTitle: t('vxs.col.source'), sourceUrl: 'sourceUrl', verified: 'verified' }[c])) : CSV_COLS;
+  const lines = [headers.map(cell).join(',')];
+  for (const i of items) {
+    const row = { ...i, vaccineName: nameOf(i.vaccine), sourceTitle: i.source?.title ?? '', sourceUrl: i.source?.url ?? '', verified: i.verified === false ? 'false' : 'true', ageMaxMonths: i.ageMaxMonths ?? '' };
+    lines.push(CSV_COLS.map((c) => cell(row[c])).join(','));
+  }
+  return `﻿${lines.join('\r\n')}\r\n`;
+}
+
+/* ───────── 圖片匯出：把畫面上的 SVG 變成可離線開啟的檔案 ───────── */
+/** 匯出時要帶走的樣式屬性（頁面用 CSS 變數上色，離線 SVG 沒有這些變數，所以逐元素寫成實際值） */
+const EXPORT_PROPS = ['fill', 'stroke', 'stroke-width', 'stroke-dasharray', 'font-size', 'font-family', 'font-weight', 'opacity'];
+/**
+ * 複製目前地圖（只含目前頁籤看得到的列）、把 CSS 算出的顏色寫進元素、去掉互動用的游標線，加上標題、日期與圖例文字。
+ * 回傳 { svg: 字串, width, height }。只在瀏覽器執行（需要 getComputedStyle）。
+ */
+export function exportSvg(svgEl, { title, subtitle = '', legend = [], bg = '#ffffff' } = {}) {
+  const clone = svgEl.cloneNode(true);
+  const srcAll = svgEl.querySelectorAll('*'); const dstAll = clone.querySelectorAll('*');
+  const drop = [];
+  dstAll.forEach((d, idx) => {
+    const s = srcAll[idx];
+    if (d.classList?.contains('is-off') || d.classList?.contains('vxs-cursor')) { drop.push(d); return; }
+    const cs = getComputedStyle(s);
+    for (const p of EXPORT_PROPS) { const v = cs.getPropertyValue(p); if (v && v !== 'none' && v !== 'normal' && !(p === 'opacity' && v === '1')) d.setAttribute(p, v); }
+    if (d.tagName === 'a') { d.removeAttribute('href'); d.removeAttribute('data-status'); }
+    d.removeAttribute('tabindex');
+  });
+  drop.forEach((d) => d.remove());
+  const vb = (svgEl.getAttribute('viewBox') ?? '').split(/\s+/).map(Number);
+  const w = vb[2] || Number(svgEl.getAttribute('width')); const h = vb[3] || Number(svgEl.getAttribute('height'));
+  const PAD = 16; const HEAD = title ? 44 : 0; const FOOT = legend.length ? 28 : 0;
+  const W = w + PAD * 2; const H = h + HEAD + FOOT + PAD * 2;
+  clone.setAttribute('x', PAD); clone.setAttribute('y', PAD + HEAD); clone.setAttribute('width', w); clone.setAttribute('height', h);
+  clone.removeAttribute('class'); clone.removeAttribute('style');
+  const font = getComputedStyle(svgEl).fontFamily || 'sans-serif';
+  const ink = getComputedStyle(svgEl).color || '#222';
+  const head = title ? `<text x="${PAD}" y="${PAD + 22}" font-family="${esc(font)}" font-size="18" font-weight="700" fill="${esc(ink)}">${esc(title)}</text>${subtitle ? `<text x="${PAD}" y="${PAD + 40}" font-family="${esc(font)}" font-size="11" fill="${esc(ink)}" opacity=".75">${esc(subtitle)}</text>` : ''}` : '';
+  const foot = legend.length ? `<text x="${PAD}" y="${H - PAD - 8}" font-family="${esc(font)}" font-size="11" fill="${esc(ink)}">${esc(legend.join('　'))}</text>` : '';
+  const inner = new XMLSerializer().serializeToString(clone);
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" font-family="${esc(font)}"><rect width="${W}" height="${H}" fill="${esc(bg)}"/>${head}${inner}${foot}</svg>`;
+  return { svg, width: W, height: H };
+}
+export function downloadBlob(filename, blob) {
+  const a = document.createElement('a'); const u = URL.createObjectURL(blob);
+  a.href = u; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(u), 2000);
+}
+/** SVG 字串 → PNG Blob（scale 2 = 兩倍解析度，列印不糊） */
+export function svgToPng(svg, width, height, scale = 2) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      try {
+        const c = document.createElement('canvas'); c.width = Math.round(width * scale); c.height = Math.round(height * scale);
+        const g = c.getContext('2d'); g.scale(scale, scale); g.drawImage(img, 0, 0);
+        c.toBlob((b) => (b ? resolve(b) : reject(new Error('toBlob'))), 'image/png');
+      } catch (e) { reject(e); }
+    };
+    img.onerror = () => reject(new Error('svg-load'));
+    img.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+  });
+}
 
 /* ───────── 瀏覽器端互動 ───────── */
 function init() {
@@ -288,6 +453,32 @@ function init() {
       const n = tabBtns[(idx + d + tabBtns.length) % tabBtns.length]; n.focus(); n.click();
     });
   });
+
+  /* 下載：PNG／SVG 取目前頁籤的畫面；CSV 取全部資料（與 /vaccines/schedule.csv 同欄位） */
+  const toMaster = (i) => ({ id: i.id, vaccine: i.v, label: i.label, labelEn: i.labelEn, dose: i.dose, ageLabel: i.age, ageMinMonths: i.ageMinMonths, ageMaxMonths: i.ageMaxMonths, stage: i.stage, funded: i.funded, group: i.group, interval: i.interval, recurring: i.recurring, startAt: i.startAt, endAt: i.endAt, note: i.note, source: i.src ? { title: i.src.title, url: i.src.url } : undefined, verified: i.ver !== false });
+  const stamp = () => today();
+  const dlMsg = $('[data-vxs-dlmsg]');
+  const say = (txt) => { if (dlMsg) dlMsg.textContent = txt; };
+  const tabName = () => T(`vxs.tab.${state.tab}`);
+  const exportNow = () => exportSvg(svg, {
+    title: `${T('vxs.title')}（${tabName()}）`,
+    subtitle: T('vxs.dl.stamp', { date: stamp(), url: location.origin + location.pathname }),
+    legend: [...['public', 'conditional', 'self'].map((f) => `${f === 'public' ? '●' : f === 'conditional' ? '▨' : '○'} ${T(`vxs.funded.${f}`)}`), items.some((i) => i.ver === false) ? `┈ ${T('vxs.unverified.badge')}` : ''].filter(Boolean),
+  });
+  const fileBase = () => `${T('vxs.file')}-${state.tab}-${stamp()}`;
+  root.addEventListener('click', async (e) => {
+    const b = e.target.closest('[data-vxs-dl]'); if (!b) return;
+    e.preventDefault();
+    try {
+      if (b.dataset.vxsDl === 'svg') { const { svg: out } = exportNow(); downloadBlob(`${fileBase()}.svg`, new Blob([out], { type: 'image/svg+xml;charset=utf-8' })); }
+      else if (b.dataset.vxsDl === 'png') { const { svg: out, width, height } = exportNow(); downloadBlob(`${fileBase()}.png`, await svgToPng(out, width, height)); }
+      else if (b.dataset.vxsDl === 'csv') downloadBlob(`${T('vxs.file')}-${stamp()}.csv`, new Blob([scheduleCsv(items.map(toMaster), (id) => data.vaccines[id]?.name ?? id, T)], { type: 'text/csv;charset=utf-8' }));
+      say(T('vxs.dl.done'));
+    } catch { say(T('vxs.dl.fail')); }
+  });
+  /* 放大檢視：預設整張圖縮到版面寬度；勾選後用原始尺寸、可左右捲動 */
+  const zoom = $('[data-vxs-zoom]');
+  if (zoom) zoom.addEventListener('change', () => { $('#vxs-map').classList.toggle('is-zoom', zoom.checked); });
 
   /* 標記、結果清單、表格列的點擊 */
   root.addEventListener('click', (e) => {

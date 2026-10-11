@@ -1923,3 +1923,34 @@ Yulun 問：資料治理還沒辦法很全面，不同組室上架類似答案�
 
 - Playwright `setInputFiles` 給含中文的檔案路徑時 change 事件沒有觸發（同一檔改成 `{ name, mimeType, buffer }` 就正常）；實測腳本請用 buffer 形式，不是產品問題。
 - 同一頁兩個元素同 id（`te-h` 標題與 fieldset）在單元測試抓不到，瀏覽器 strict locator 才抓到；新增區塊 id 前先 grep。
+
+## 42. 第三十六輪（2026-10-11）：時程地圖共用渲染、下載、後台主檔編輯、預防接種專區
+
+### 42.1 共用渲染（`src/client/vaxschedule.js`）
+
+| 函式 | 用在哪 | 說明 |
+| --- | --- | --- |
+| `rowsOf(items, vaccines, { lang, hrefOf })` | 建置、後台、`.md` | 依疫苗主檔順序分列，只列有時程的疫苗；主檔沒有的 id 排最後 |
+| `renderMapSvg(rows, { t, lang })` | 建置（`raw()` 嵌入）、後台預覽 | 回傳 SVG 字串；文字一律 `esc()`。標記結構不變：`<a class="vxs-mk vxs-mk--{funded}[ is-unverified]" href="#{id}" data-id data-stage><title>` |
+| `renderTableHtml(rows, { t, lang, sourceOf, scrollLabel })` | 同上 | `sourceOf(item) → { href, ext }`：建置端把站內網址加 basePath／語言，後台直接用主檔網址 |
+| `scheduleCsv(items, nameOf, t)` | 前台下載鈕、後台下載鈕、`emit-api` 的 `vaccines/schedule.csv` | 欄位 `CSV_COLS`（含 id、月齡、人看的年齡、來源、verified）；UTF-8 BOM、CRLF |
+| `exportSvg(svgEl, { title, subtitle, legend })` | 前台下載鈕 | 複製 SVG、去掉 `.is-off`／游標、逐元素把 `getComputedStyle` 的 fill／stroke／字型寫成屬性（離線沒有 CSS 變數）、加標題列與圖例列 |
+| `svgToPng(svg, w, h, scale=2)` | 前台下載鈕 | `<img src=data:svg>` → canvas → `toBlob` |
+
+為什麼改成字串函式而不是沿用模板的 `html` 標籤：後台預覽要在瀏覽器重畫，瀏覽器端沒有 `scripts/lib/render.mjs`；一份字串函式兩邊都能用，才保證「後台看到的＝前台上線的」。代價是這個檔要自己 `esc()`，測試 `tests/round36-vaxschedule.test.mjs` 檢查注入字元不會原樣輸出。
+
+版面：`.vxs-svg{width:100%;height:auto}` 讓 `viewBox` 等比例縮放；`LABEL_W 150`、`LANE_H 18`、`ROW_PAD 8`；學齡段（6–18 歲）寬 200px、刻度 6／9／12／15／18 歲；0 月與 80 歲刻度文字靠邊對齊。`#vxs-map.is-zoom` 時 `width:auto` 回到屬性尺寸可捲動；≤900px 時 `min-width:760px`。
+
+### 42.2 後台 `/admin/vaccines/schedule/`
+
+- 模板 `src/templates/admin/vaccine-schedule.mjs` 內嵌 `adm-vxs-data`：整份主檔、疫苗主檔（id、name、hasPage）、zh-TW 的 `vxs.*` 字串（預覽用的 `t()`）。
+- 純函式 `src/client/admin/vaxschedule-edit-core.js`：`stateFromItem`／`buildItem`（歲＋月 ⇄ 月齡；空值不輸出、欄位順序固定）、`problemsOf`（與 `validate.mjs` 同義：id 格式與重複、疫苗 id 在主檔、上限 ≥ 下限、必填、符合條件公費要有 `group`；警告級：沒來源、未核對）、`nextId`、`sortedForExport`（疫苗主檔順序→年齡下限）、`diffSummary`（新增／刪除／修改 id）。
+- DOM `src/client/admin/vaxschedule-edit.js`：每次 `input` 事件就 `commitForm()` 寫回工作副本並重畫三處（清單、地圖、表格）。**不在 `change` 事件重畫**：`change` 在失焦時才發，若同事改完欄位直接點預覽圖的標記，失焦→重畫會把標記換成新元素，第一下點擊落空（實測踩到）。
+- 暫存：`localStorage['cdc.admin.vaxschedule']`；匯出整份 JSON／CSV；「修訂摘要」是給送審說明的純文字。
+- **未做**：主檔走寫入閘道。第三十輪的閘道 `TYPE_DIR` 只收內容型別，路徑由 id 推出；主檔是一個檔多筆，要另加 `master` 路由（白名單檔名、整份 schema 驗證、四眼原則同一般車道）。做之前後台的「匯出 JSON」就是交件方式。
+
+### 42.3 預防接種專區
+
+- `/vaccines/` 的 `immunizationHub()`（`vaccines.mjs`）：七格導覽，連結只指既有路由或已發布內容（`services`／`topics`／`pages` 以 slug 找，找不到就不輸出那一行；`/v1/` 連結 `noLang`）。
+- 新內容：`service.vaccine-injury-compensation`（`serviceType: other`）、`page.immunization-committees`（slug `vaccines/committees` → `/vaccines/committees/`）。兩者 `verification.status: pending`，走第二十八輪的待確認機制（頁首警示、來源卡加註、`content-unverified` 待辦）。
+- 對照表與理由在 `docs/immunization-ia.md`；沒有新型別、沒有新 schema。

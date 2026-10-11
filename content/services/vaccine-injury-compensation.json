@@ -1,0 +1,74 @@
+{
+  "id": "service.vaccine-injury-compensation",
+  "type": "service",
+  "title": "預防接種受害救濟申請",
+  "owner": "unit.acute-infectious",
+  "steward": "急性傳染病組（預防接種）承辦人",
+  "publishedAt": "2026-10-11",
+  "reviewedAt": "2026-10-11",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": ["public", "professional"],
+  "tasks": ["vaccines"],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": { "requested": true, "approvedBy": "unit.oasis", "approvedAt": "2026-10-11" },
+  "languages": { "zh-TW": { "status": "source" }, "en": { "status": "machine" }, "ja": { "status": "none" }, "tl": { "status": "none" }, "vi": { "status": "none" }, "id": { "status": "none" }, "th": { "status": "none" } },
+  "summary": "接種疫苗後疑似發生不良反應且造成損害，本人或法定代理人可向接種所在地的衛生局提出受害救濟申請；由預防接種受害救濟審議小組依醫學專業審議因果關係，決定是否給付及金額。",
+  "keywords": ["預防接種受害救濟", "疫苗不良反應", "受害救濟申請", "審議小組", "VICP", "疫苗接種後損害", "救濟金"],
+  "note": "本頁依疾管署官網「預防接種受害救濟」分類整理，流程、期限與金額尚待急性傳染病組逐項確認",
+  "slug": "vaccine-injury-compensation",
+  "serviceType": "other",
+  "whoCanApply": ["接種疫苗後疑似受害的本人", "法定代理人（未成年或無行為能力者）", "受害人死亡時的法定繼承人"],
+  "introMarkdown": "依《傳染病防治法》第 30 條與《預防接種受害救濟基金徵收及審議辦法》，因接種疫苗（公費或自費的**國內領有許可證或專案核准**的疫苗）而受害者，可申請救濟。救濟不是賠償，不以證明接種單位有過失為前提，而是由審議小組依醫學專業判斷**損害與接種的關聯性**。\n\n**請留意申請期限**：自知道受害之日起 **2 年內**，且自接種之日起 **5 年內**提出（期限以法規現行條文為準）。\n\n接種後出現不適，請先就醫並保留病歷；接種單位與醫療院所也會依規定通報疑似不良事件。申請救濟與通報是兩件事，通報不等於申請。",
+  "requiredDocuments": [
+    "預防接種受害救濟申請書（向衛生局索取或下載）",
+    "受害人的病歷摘要、診斷證明或相關醫療紀錄（含就醫日期、診斷與治療經過）",
+    "預防接種紀錄（兒童健康手冊、接種證明或接種單位證明）",
+    "受害人與申請人的身分證明文件；法定代理人或繼承人另附關係證明",
+    "死亡案件：死亡證明書、解剖或鑑定報告（若有）"
+  ],
+  "steps": [
+    { "title": "先就醫並保留證據", "text": "接種後出現疑似不良反應先就醫，請醫師詳實記載；保留接種紀錄與所有醫療單據。", "who": "受害人或家屬", "days": 0 },
+    { "title": "向接種所在地衛生局提出申請", "text": "填寫申請書並附應備文件，送交接種所在地的縣市衛生局；衛生局會協助補齊資料並調閱接種與就醫紀錄。", "who": "申請人、縣市衛生局", "days": 7 },
+    { "title": "衛生局初審並轉送疾管署", "text": "衛生局查核文件完整性、蒐集相關病歷後，函送疾管署辦理審議。", "who": "縣市衛生局", "days": 30 },
+    { "title": "審議小組審議", "text": "預防接種受害救濟審議小組（醫學、法律、社會公正人士組成）依病歷與醫學證據審議損害與接種的關聯性，並決定救濟項目與金額；必要時得請專家鑑定或補件。", "who": "疾管署、審議小組", "days": 120 },
+    { "title": "通知結果與給付", "text": "審議結果由疾管署函復申請人；核定給付者由預防接種受害救濟基金撥付。對結果不服可依法提起訴願或行政訴訟。", "who": "疾管署", "days": 14 }
+  ],
+  "slaDays": 180,
+  "fee": "免費（審議所需鑑定費用由基金負擔）",
+  "legalBasis": ["傳染病防治法第 30 條", "預防接種受害救濟基金徵收及審議辦法"],
+  "forms": [
+    { "label": "預防接種受害救濟申請書", "href": "/pending/?ref=service.vaccine-injury-compensation&doc=預防接種受害救濟申請書", "format": "PDF", "machineReadable": false },
+    { "label": "歷次審議結果（公開摘要）", "href": "/pending/?ref=service.vaccine-injury-compensation&doc=審議結果", "format": "網頁", "machineReadable": true }
+  ],
+  "contact": "疾病管制署急性傳染病組（總機 02-2395-9825）；申請請洽接種所在地的縣市衛生局；一般諮詢請撥防疫專線 1922",
+  "faq": [
+    { "q": "自費疫苗也能申請嗎？", "a": "可以。救濟對象是接種國內領有許可證或經專案核准的疫苗，不分公費或自費；但在國外接種、或使用未經核准的疫苗，不在救濟範圍。" },
+    { "q": "要證明接種單位有錯嗎？", "a": "不用。受害救濟是無過失制度，審議的是損害與接種之間的關聯性，不是誰有過失。" },
+    { "q": "多久會有結果？", "a": "依案件複雜度與補件情形不同，審議小組按季或視案量開會；本頁列的天數為示意，正式期程請以衛生局與疾管署通知為準。" },
+    { "q": "通報了不良事件，就等於申請救濟了嗎？", "a": "不是。醫療院所通報疑似不良事件是監測制度；救濟要由本人或法定代理人另外向衛生局提出申請。" }
+  ],
+  "verification": {
+    "status": "pending",
+    "note": "本頁流程、期限與應備文件依疾管署官網分類與法規名稱整理，尚待急性傳染病組逐項核對；申請前請以衛生局說明為準。",
+    "pendingItems": [
+      "申請期限（知悉後 2 年、接種後 5 年）與現行《預防接種受害救濟基金徵收及審議辦法》條文逐字核對",
+      "各階段處理天數（衛生局初審、審議小組審議週期）以實際作業規定取代示意值",
+      "救濟項目與金額上限（死亡、障礙、嚴重疾病、其他不良反應）是否要在本頁列出；若列出需以現行辦法附表為準",
+      "官網「相關表單下載」與「審議結果」頁的正式網址，取代 /pending/ 佔位連結",
+      "英文版文字由承辦人確認後改 reviewed"
+    ],
+    "sources": [
+      { "label": "疾管署官網：預防接種受害救濟 — 簡介及申請說明", "url": "https://www.cdc.gov.tw/Short/7WV0rr", "accessedAt": "2026-10-11", "official": true, "verified": false, "note": "開發環境連不到 cdc.gov.tw；只看到搜尋摘要與分類名稱，未逐字核對" },
+      { "label": "疾管署官網：預防接種受害救濟（分類頁）", "url": "https://www.cdc.gov.tw/Category/List/W2EoTuScoXvFk8a2KpFXeA", "accessedAt": "2026-10-11", "official": true, "verified": false },
+      { "label": "全國法規資料庫：預防接種受害救濟基金徵收及審議辦法", "url": "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=L0050008", "accessedAt": "2026-10-11", "official": true, "verified": false }
+    ]
+  },
+  "i18n": {
+    "en": {
+      "title": "Vaccine Injury Compensation Program (VICP) application",
+      "summary": "If a vaccine recipient suffers harm from a suspected adverse reaction, they or their legal representative can apply for compensation through the local health bureau; an expert review committee decides on causation and payment."
+    }
+  }
+}

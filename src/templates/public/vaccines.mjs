@@ -20,6 +20,32 @@ function fundedTable(ctx, v) {
     ${f.map((r) => html`<tr><th scope="row">${r.group}</th><td>${r.schedule}</td><td>${r.startAt ? html`${fmtDate(r.startAt)}${r.endAt ? ` – ${fmtDate(r.endAt)}` : ''}` : '—'}</td><td>${r.note ?? ''}</td></tr>`)}</tbody></table></div>`;
 }
 
+/**
+ * 預防接種專區導覽（第三十六輪）：對應疾管署官網「預防接種」分類下不只是疫苗本身的內容——受害救濟、工作指引、疫苗基金、
+ * 法規與委員會、接種單位、統計——每一塊指到新站已有或新建的入口。對照表與理由見 docs/immunization-ia.md。
+ * 連結只指向站內既有路由或已登錄的內容（build 的站內連結檢查會擋掉不存在的）。
+ */
+function immunizationHub(ctx) {
+  const { site, t, url } = ctx;
+  const svc = (slug) => site.collections.services.find((s) => s.slug === slug && s.status === 'published');
+  const top = (slug) => site.collections.topics.find((s) => s.slug === slug && s.status === 'published');
+  const pg = (slug) => site.collections.pages.find((s) => s.slug === slug && s.status === 'published');
+  const A = (item, label) => (item ? html`<li><a href="${hrefFor(ctx, item)}">${label ?? L(ctx, item, 'title')}</a>${item.verification?.status === 'pending' ? html` <span class="c-pill c-pill--warn">${t('vxs.unverified.badge')}</span>` : ''}</li>` : '');
+  const R = (path, label, ext = false) => html`<li><a href="${ext ? path : url(path, { noLang: path.startsWith('/v1/') })}"${ext ? raw(' target="_blank" rel="noopener"') : ''}>${label}${ext ? ' ↗' : ''}</a></li>`;
+  const docs = site.collections.documents.filter((d) => d.isCurrent && d.status === 'published' && (d.vaccines?.length || /預防接種|疫苗/.test(d.title))).length;
+  const groups = [
+    { key: 'schedule', items: html`${R('/vaccines/schedule/', t('vxs.entry.t'))}${R('/tasks/vaccines/', t('vaccines.hub.bygroup'))}${R('/vaccines/#vx-funded', t('vaccines.funded.all'))}` },
+    { key: 'where', items: html`${R(vaxmapLinkForVaccine(ctx, { id: 'vaccine.influenza' }), t('vaccines.where.cta'), true)}${A(svc('vaccination-record-reissue'))}${R('/travel/', t('travel.country.clinic'))}` },
+    { key: 'injury', items: html`${A(svc('vaccine-injury-compensation'))}${A(pg('vaccines/committees'), t('vaccines.hub.committee'))}` },
+    { key: 'fund', items: html`${A(top('vaccine-fund-donation'))}${A(svc('vaccine-fund-donation'))}` },
+    { key: 'pro', items: html`${R('/documents/', `${t('vaccines.hub.docs')}${docs ? `（${docs}）` : ''}`)}${R('/pro/', t('vaccines.hub.pro'))}` },
+    { key: 'law', items: html`${R('/policy/legal/', t('vaccines.hub.law'))}${A(pg('vaccines/committees'))}` },
+    { key: 'stats', items: html`${R('/data/', t('vaccines.hub.stats'))}${R('/v1/immunization-schedule.json', t('vxs.api'))}` },
+  ];
+  return html`<section class="c-hub vx-hub" aria-labelledby="vx-hub-h">${sectionHead(ctx, { id: 'vx-hub-h', title: t('vaccines.hub.t'), note: t('vaccines.hub.note') })}
+  <div class="c-cards3 vx-hub__grid">${groups.map((g) => html`<article class="c-card vx-hub__card"><h3>${t(`vaccines.hub.${g.key}`)}</h3><p class="muted">${t(`vaccines.hub.${g.key}.d`)}</p><ul class="c-linklist">${g.items}</ul></article>`)}</div></section>`;
+}
+
 function index(ctx) {
   const { site, t, url } = ctx;
   const pages_ = publishedOf(site, 'vaccines');
@@ -27,6 +53,7 @@ function index(ctx) {
   const rows = pages_.flatMap((v) => (v.publicFunded ?? []).map((r) => ({ v, r })));
   return html`${pageHead(ctx, { trail: [{ label: t('nav.vaccines') }], h1: t('nav.vaccines'), lead: t('vaccines.lead') })}
 <section class="vxs-entry" aria-labelledby="vx-map"><div><h2 id="vx-map">${t('vxs.entry.t')}</h2><p>${t('vxs.entry.d')}</p></div><a class="c-btn" href="${url('/vaccines/schedule/')}">${t('vxs.entry.cta')} →</a></section>
+${immunizationHub(ctx)}
 <section aria-labelledby="vx-list">${sectionHead(ctx, { id: 'vx-list', title: t('vaccines.list') })}
   <div class="c-cards3">${mv.map((m) => {
     const page = pages_.find((v) => v.id === m.id);

@@ -1,0 +1,40 @@
+{
+  "id": "page.immunization-committees",
+  "type": "page",
+  "slug": "vaccines/committees",
+  "title": "預防接種的法規與委員會",
+  "owner": "unit.acute-infectious",
+  "steward": "急性傳染病組（預防接種）承辦人",
+  "publishedAt": "2026-10-11",
+  "reviewedAt": "2026-10-11",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": ["public", "professional"],
+  "tasks": ["vaccines"],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": { "requested": false },
+  "languages": { "zh-TW": { "status": "source" }, "en": { "status": "machine" }, "ja": { "status": "none" }, "tl": { "status": "none" }, "vi": { "status": "none" }, "id": { "status": "none" }, "th": { "status": "none" } },
+  "summary": "誰決定哪些疫苗納入公費、接種建議怎麼訂、受害救濟由誰審議：預防接種諮詢委員會（ACIP）、預防接種受害救濟審議小組，以及相關法規的入口。",
+  "keywords": ["預防接種諮詢委員會", "ACIP", "受害救濟審議小組", "VICP", "傳染病防治諮詢會", "預防接種法規", "疫苗政策"],
+  "verification": {
+    "status": "pending",
+    "note": "本頁依疾管署官網「相關法規與委員會」分類整理，委員會名稱、任務與會議紀錄網址尚待急性傳染病組確認。",
+    "pendingItems": [
+      "預防接種諮詢委員會（ACIP）的正式全銜、設置依據、委員組成與會議紀錄公開網址",
+      "預防接種受害救濟審議小組（VICP）的設置依據與審議結果公開方式",
+      "本頁是否要列委員名單（原型不放真名）",
+      "與 /policy/legal/ 法令規章頁的分工：法規條文只在法令規章頁列一次"
+    ],
+    "sources": [
+      { "label": "疾管署官網：預防接種（分類頁，含「相關法規與委員會」）", "url": "https://www.cdc.gov.tw/Category/List/jEcJbcX-J8_opidAmw3dyg", "accessedAt": "2026-10-11", "official": true, "verified": false, "note": "開發環境連不到 cdc.gov.tw；只看到搜尋摘要" }
+    ]
+  },
+  "bodyMarkdown": "> **原型說明**：本頁是「預防接種」專區裡「法規與委員會」的入口骨架，說明誰決定什麼；法規條文集中在[法令規章](/policy/legal/)頁，不在這裡重複。\n\n## 1. 預防接種諮詢委員會（ACIP）\n\n隸屬傳染病防治諮詢會，由醫學、公共衛生等領域專家組成。負責：\n\n- 審議**哪些疫苗納入公費**、接種對象與時程（例如 2026 年成人肺炎鏈球菌改為 1 劑 PCV20／PCV21）。\n- 訂定各類對象的接種建議（兒童常規、成人、孕婦、醫療照護工作人員、高風險族群）。\n- 新疫苗導入與疫苗基金運用的專業建議。\n\n委員會的決議會反映在[疫苗接種時程地圖](/vaccines/schedule/)與各疫苗頁的「公費對象」表；會議紀錄摘要（待確認公開網址）。\n\n## 2. 預防接種受害救濟審議小組（VICP）\n\n由醫學、法律與社會公正人士組成，審議[預防接種受害救濟](/apply/vaccine-injury-compensation/)案件中損害與接種的關聯性，決定救濟項目與金額。審議結果摘要定期公開（待確認網址）。\n\n## 3. 相關法規\n\n- 《傳染病防治法》第 27 條至第 30 條：預防接種的推動、接種紀錄、受害救濟。\n- 《預防接種受害救濟基金徵收及審議辦法》：基金來源（疫苗廠商按劑徵收）、申請期限、審議程序、給付標準。\n- 《預防接種作業與兒童預防接種紀錄檢查辦法》（名稱待確認）：入學接種紀錄查核。\n\n條文與最新修正日期請看[法令規章](/policy/legal/)（連到全國法規資料庫）。\n\n## 4. 這一頁誰負責\n\n權責單位：急性傳染病組（預防接種）。委員會名稱、組成與會議紀錄網址確認後，本頁會移除「待確認」標示。",
+  "i18n": {
+    "en": {
+      "title": "Immunization laws and committees",
+      "summary": "Who decides which vaccines are publicly funded, how recommendations are set and who reviews injury compensation: the Advisory Committee on Immunization Practices (ACIP), the Vaccine Injury Compensation review panel and the relevant laws."
+    }
+  }
+}
