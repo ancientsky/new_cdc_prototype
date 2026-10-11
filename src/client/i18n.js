@@ -1731,6 +1731,7 @@ const ROWS_SEARCH = {
   'search.status.none': ['「{q}」沒有符合的頁面', 'No pages match “{q}”', '「{q}」に一致するページはありません', 'Walang tugmang pahina para sa “{q}”', 'Không có trang nào khớp “{q}”', 'Tidak ada halaman yang cocok dengan “{q}”', 'ไม่พบหน้าที่ตรงกับ “{q}”'],
   'search.status.nofilter': ['沒有符合篩選條件的頁面', 'No pages match these filters', 'フィルターに一致するページはありません', 'Walang tugmang pahina sa mga filter', 'Không có trang nào khớp bộ lọc', 'Tidak ada halaman yang cocok dengan filter', 'ไม่พบหน้าที่ตรงกับตัวกรอง'],
   'search.status.loose': ['沒有完全相同的字串，以下是同時含有各部分關鍵字的頁面。', 'No exact match for the whole phrase; showing pages that contain each part of it.'],
+  'search.status.trimmed': ['找不到「{q}」，改以「{t}」搜尋。', 'No match for “{q}”; searching for “{t}” instead. ', '「{q}」は見つからないため、「{t}」で検索しました。', 'Walang tugma para sa “{q}”; hinanap ang “{t}”. ', 'Không tìm thấy “{q}”; đã tìm “{t}”. ', 'Tidak ditemukan “{q}”; mencari “{t}”. ', 'ไม่พบ “{q}” จึงค้นหา “{t}” แทน '],
   'search.status.err': ['全文搜尋無法載入，請稍後再試，或改用智慧查詢。', 'Full-text search could not be loaded. Please try again later, or use Smart Search.'],
   'search.more': ['顯示更多結果', 'Show more results', 'さらに表示', 'Magpakita pa', 'Hiển thị thêm', 'Tampilkan lebih banyak', 'แสดงเพิ่มเติม'],
   'search.results': ['搜尋結果', 'Search results', '検索結果', 'Mga resulta ng paghahanap', 'Kết quả tìm kiếm', 'Hasil pencarian', 'ผลการค้นหา'],

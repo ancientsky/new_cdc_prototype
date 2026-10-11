@@ -41,3 +41,8 @@ eval/**/*.mjs
 !tests/round40-engine.test.mjs
 !tests/round40-newparent-faq.test.mjs
 !tests/round40-presets.test.mjs
+# 第四十輪（Issue #79、#80）
+!scripts/perf-ask.mjs
+!src/client/answer/deps-manifest.js
+!tests/round40-search-recall.test.mjs
+!tests/round40-ask-perf.test.mjs

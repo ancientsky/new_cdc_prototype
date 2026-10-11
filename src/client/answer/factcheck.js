@@ -1,7 +1,7 @@
 // @ts-check
 // 謠言查證頁（/factcheck/）：掛 #factcheck-form／#factcheck-input／#factcheck-result。
 // 與答案頁同一份 core：強制謠言意圖（貼上的是網傳訊息本身），只比對官方澄清，不自行判定真偽。
-import { loadEngine, esc, LANG } from './data.js';
+import { loadEngine, prefetchEngine, esc, LANG } from './data.js';
 import { L, verdictBlock, refusalCard, disclosureRow, sourceList, wireInteractions, ensureStyles } from './render.js';
 
 ensureStyles();
@@ -14,6 +14,8 @@ if (input && out) {
   out.classList.add('ask-page', 'c-factcheck-page');
   wireInteractions(out, () => current);
   form?.addEventListener('submit', (e) => { e.preventDefault(); check(input.value); });
+  // 第四十輪：引擎改成用到才載入；使用者一聚焦或開始貼上就預取，送出時通常已經載好
+  for (const ev of ['focus', 'pointerdown', 'paste', 'input']) input.addEventListener(ev, () => prefetchEngine('public'), { once: true, passive: true });
   const q = new URLSearchParams(location.search).get('q');
   if (q) { input.value = q; check(q); }
 }

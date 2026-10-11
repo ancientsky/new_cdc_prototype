@@ -141,21 +141,70 @@ export function buildLexicon({ diseases = [], glossary = [], vaccines = [], unit
   return { names, wholeHit, phrasesIn, falseTokensFor, expandable, segment, chunkHay, size: lexicon.size };
 }
 
+// 第四十輪（Issue #80）：名稱比對器加「必要子字串」預篩。
+// 量測：/ask/?q=登革熱 在 4 倍 CPU 降速的手機上 TBT 4.6 秒，其中約 3.6 秒是 detectEntities／expandQuery 對 1,260 個疾病／國家名稱
+// （一半是帶 \p{L} 與 iu 旗標的拉丁名稱）逐一執行正規式——V8 的正規式是「第一次執行時才編譯」，而且單位元組（英文）與雙位元組（中文）
+// 字串各編一次、跑過一次後再升級成機器碼再編一次；問一題就把上千個正規式各編譯兩三次，而真正會命中的只有兩三個。
+// 做法：每個名稱算出一段「任何命中都一定包含」的字面子字串（名稱裡最長、不含可省略空白的那段，轉小寫），
+// 問句（轉小寫）不含這段就直接判定不命中、不執行也不編譯正規式。判定結果與原本完全相同（只是提早說「不會中」），
+// 引擎邏輯與規則表都沒有改；tests/round40-ask-perf.test.mjs 用評估集全部問句比對新舊結果一致。
+// 為什麼放在 matcherFor 而不是改 core.js 的迴圈：所有用名稱比對器的地方（實體、同義詞展開）一次受益，呼叫端不用改。
+let lastSubject = null;
+let lastLower = '';
+const lowerOf = (s) => {
+  if (s !== lastSubject) { lastSubject = s; lastLower = s.toLowerCase(); }
+  return lastLower;
+};
+// 連 RegExp 物件本身也等到第一次需要才建：帶 \p{L} 與 iu 旗標的正規式「建立」就要展開大小寫等價的 Unicode 字元集，
+// 上千個名稱光建立就約 150 ms（Node 實測；手機 4 倍降速約 0.6 秒），而多數名稱一輩子不會被預篩放行。
+// 呼叫端只用 re.test(s) 與 s.match(re)（後者透過 Symbol.match 呼叫這裡），行為與 RegExp 相同。
+class NameMatcher {
+  constructor(pattern, flags, needle) {
+    this.pattern = pattern;
+    this.flags = flags;
+    this.needle = needle || null;
+    this.rx = null;
+  }
+  get re() { return (this.rx ??= new RegExp(this.pattern, this.flags)); }
+  get source() { return this.re.source; }
+  exec(s) {
+    if (this.needle && !lowerOf(String(s)).includes(this.needle)) return null;
+    return this.re.exec(s);
+  }
+  test(s) { return this.exec(s) !== null; }
+  [Symbol.match](s) { return this.exec(String(s)); }
+  toString() { return String(this.re); }
+}
+/** 名稱切成「中間不會插入 \s*」的字面片段，取最長的一段（小寫）當必要子字串 */
+function needleOf(chars, splitAt) {
+  let best = ''; let cur = '';
+  chars.forEach((ch, i) => {
+    if (ch === ' ' || (i > 0 && splitAt(chars[i - 1], ch))) { if (cur.length > best.length) best = cur; cur = ''; }
+    if (ch !== ' ') cur += ch;
+  });
+  if (cur.length > best.length) best = cur;
+  const low = best.toLowerCase();
+  // 只有「轉小寫」與正規式 i 旗標的大小寫規則一致時才預篩（ASCII、中日文、拉丁擴充字母）；其他字元保守地不預篩
+  return /^[\x21-\x7eÀ-ɏḀ-ỿ぀-ヿ㐀-䶿一-鿿豈-﫿]+$/.test(low) ? low : null;
+}
+const ALNUM = /[A-Za-z0-9]/;
+
 export function matcherFor(name) {
   if (!name) return null;
   const n = String(name).trim();
   if (n.length < 2 && !/[一-鿿]/.test(n)) return null;
-  if (isLatin(n)) return new RegExp(`(?<![\\p{L}\\p{N}])${escapeRe(n).replace(/\\s+/g, '\\s*')}(?![\\p{L}\\p{N}])`, 'iu');
+  if (isLatin(n)) return new NameMatcher(`(?<![\\p{L}\\p{N}])${escapeRe(n).replace(/\\s+/g, '\\s*')}(?![\\p{L}\\p{N}])`, 'iu', needleOf([...n.replace(/\s+/g, ' ')], () => false));
   // 中英混排名稱（A 肝、MMR 疫苗、B 型肝炎）：空白可有可無
   let pat = '';
   const chars = [...n.replace(/\s+/g, ' ')];
+  const transition = (prev, ch) => prev !== ' ' && ch !== ' ' && ALNUM.test(prev) !== ALNUM.test(ch);
   chars.forEach((ch, i) => {
     if (ch === ' ') { pat += '\\s*'; return; }
     const prev = chars[i - 1];
-    if (prev && prev !== ' ' && (/[A-Za-z0-9]/.test(prev) !== /[A-Za-z0-9]/.test(ch))) pat += '\\s*';
+    if (prev && transition(prev, ch)) pat += '\\s*';
     pat += escapeRe(ch);
   });
-  return new RegExp(pat, 'i');
+  return new NameMatcher(pat, 'i', needleOf(chars, transition));
 }
 
 export function ownerNameOf(units, id) { return units.find((u) => u.id === id)?.name ?? id ?? ''; }

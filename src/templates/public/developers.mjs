@@ -22,7 +22,7 @@ const ENDPOINTS = [
   { path: '/v1/datasets.json', desc: '資料目錄（CKAN 快照＋治理欄位：正本位置、授權、更新頻率）', pick: (s) => s.collections.datasets },
   { path: '/v1/catalog.json', desc: '五類資產總目錄（id、type、owner、canonicalUrl、license、sensitivity、whitelist、reviewedAt）', pick: (s) => s.all.filter((i) => i.status === 'published').map((i) => ({ id: i.id, type: i.type, title: i.title, owner: i.owner, license: i.license, sensitivity: i.sensitivity, reviewedAt: i.reviewedAt, whitelist: i.gov?.whitelist?.effective })) },
   { path: '/v1/glossary.json', desc: '七語詞彙主檔；locked 的詞機器翻譯時不得自由翻譯', pick: (s) => s.master.glossary },
-  { path: '/v1/search-index.json', desc: '答案單元（chunk）；只含白名單內容，AI 檢索用', pick: (s) => s.searchIndex?.public },
+  { path: '/v1/search-index.json', desc: '答案單元（chunk）；只含白名單內容，AI 檢索用。另有依語言的分片 /v1/search-index.{lang}.json（例 search-index.zh-TW.json、search-index.en.json；專業版 search-index-pro.{lang}.json），只要某一語言時下載分片即可，網址列在 meta.shards', pick: (s) => s.searchIndex?.public },
   { path: '/v1/governance/kpi.json', desc: '治理 KPI（規劃文件 7.5 每一列：目前值、一年與三年目標）', pick: (s) => s.gov.kpi },
   { path: '/v1/governance/todos.json', desc: '系統產生的待辦：正本修訂連動、逾期、翻譯過期、反向稽核、資料集時效', pick: (s) => s.gov.todos },
   { path: '/v1/governance/ai-status.json', desc: 'AI 問答開關（運作／暫停、原因、生效時間）', pick: (s) => s.governance.aiStatus },

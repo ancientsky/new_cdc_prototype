@@ -43,6 +43,37 @@ export const bagQuery = ({ plain, phrases }) => [...plain, ...phrases].join(' ')
 export const hasLongCjk = (q) => new RegExp(`[${CJK}]{4,}`).test(q ?? '');
 
 /**
+ * 第四十輪（Issue #79）：完整字串與 loose 都查無時的最後退路——把問句裡最長的 CJK 字串逐步去掉前後的字。
+ * 回傳候選 [{ q, term, from }]（q 是整串新查詢、term 是縮短後的字串、from 是原字串），依序試、第一個有結果的就用，
+ * 畫面提示「找不到「兒童健康手冊」，改以「健康手冊」搜尋」。
+ * 順序：長的先（越長越接近原意）；同長度時「保留後段」優先——中文名詞的中心語在後面（兒童健康「手冊」、麻疹「疫苗」），
+ * 去掉前面的修飾語比去掉後面的中心語更接近使用者要找的東西。
+ * 最短縮到原長度的一半（且至少 2 字），候選最多 max 個：避免「傳染病防治法施行細則」縮成「施行」這種已經不是原意的詞。
+ * 使用者自己加引號的片語不縮（那是明確要求「完全相同」）。
+ */
+export function shorterQueries(q, { max = 12 } = {}) {
+  const parts = String(q ?? '').split('"');
+  let best = null; // { part, m, index }
+  parts.forEach((part, i) => {
+    if (i % 2) return;
+    for (const m of part.matchAll(CJK_RUN)) if (m[0].length >= 3 && (!best || m[0].length > best.m.length)) best = { part: i, m: m[0], index: m.index };
+  });
+  if (!best) return [];
+  const { m } = best;
+  const n = m.length;
+  const out = [];
+  for (let L = n - 1; L >= Math.max(2, Math.ceil(n / 2)) && out.length < max; L--) {
+    for (let off = n - L; off >= 0 && out.length < max; off--) {
+      const term = m.slice(off, off + L);
+      const p = [...parts];
+      p[best.part] = p[best.part].slice(0, best.index) + term + p[best.part].slice(best.index + n);
+      out.push({ q: p.join('"'), term, from: m });
+    }
+  }
+  return out;
+}
+
+/**
  * 搜尋＋排序：`pf` 是 Pagefind 模組。回傳 { results, filters }，results 是 Pagefind 的結果物件陣列。
  * 沒有片語（純英文／單字）時就是一次普通查詢；有片語時：每個片語各查一次取交集，順序用 bagQuery（或依日期排序時用查詢本身的順序）。
  */

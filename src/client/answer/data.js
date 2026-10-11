@@ -1,6 +1,17 @@
 // 答案引擎的瀏覽器端資料載入：讀 v1/*.json（記憶體快取），組成 core.createEngine 的 deps。
 // 答案頁、謠言查證、統計問答共用。
-import { createEngine } from './core.js';
+//
+// 第四十輪（Issue #80，/ask/ 手機 Lighthouse 61）：
+//   - 引擎程式（core.js 與它的結構化、詞典模組，壓縮後約 90 KB）不再被靜態 import：loadEngine() 第一次被呼叫時才 import()。
+//     （rules.js 的 isLowRelevance 畫面元件也要用，所以規則表仍在初始載入。）
+//     答案頁沒有 ?q= 時，畫面只需要問題框；使用者聚焦或開始輸入時 ui.js 才呼叫 prefetchEngine()，送出前通常已經載好。
+//   - 答案索引依語言分片：只下載「當頁語言＋中文正本」（引擎查不到該語言的審閱譯文會退回中文，所以中文片一定要有）；
+//     專業版只下載專業索引（民眾索引只在專業索引讀不到時才補抓，core.js 的 poolFor 本來就是「有專業索引就只用專業索引」）。
+//   - 後台的評估重跑要用全部語言（評估集有英文、越南文題），傳 { allLangs: true } 讀完整的 search-index.json。
+import { ENGINE_PRIMARY as PRIMARY, ENGINE_SECONDARY as SECONDARY, indexShardNames } from './deps-manifest.js';
+
+let corePromise = null;
+const loadCore = () => (corePromise ??= import('./core.js').catch((e) => { corePromise = null; throw e; }));
 
 const root = document.documentElement;
 export const BASE = (window.CDC && window.CDC.base) || root.dataset.base || '';
@@ -56,20 +67,41 @@ export function effectiveAiStatus(published) {
   return st;
 }
 
+/** 答案索引：當頁語言＋中文的分片（allLangs ⇒ 完整檔）。分片讀不到（舊建置、離線快取）時退回完整檔，答案不會因此變成查無 */
+export function indexShards(base, { allLangs = false, lang = LANG } = {}) {
+  if (allLangs) return v1(base, []);
+  return Promise.all(indexShardNames(base, lang).map((n) => v1(n, null))).then((parts) => (parts.some((x) => !Array.isArray(x)) ? v1(base, []) : parts.flat()));
+}
+
 const enginePromise = new Map();
-/** 建立引擎（view：public | pro）。 */
-export function loadEngine(view = 'public') {
-  if (enginePromise.has(view)) return enginePromise.get(view);
+
+// 引擎的資料分兩批（第四十輪，清單在 deps-manifest.js）：「主要」是任何問題都會用到的，「次要」只有特定意圖才用到。
+// 兩批在真正提問時一樣要等齊（createEngine 需要完整 deps）；差別在「預取」：使用者剛聚焦問題框時先抓主要的，
+// 次要的交給 requestIdleCallback，在瀏覽器空閒時才抓，不和使用者的打字、頁面其他工作搶主執行緒與頻寬。
+const getSecondary = ([n, fb, optional]) => (optional ? v1Optional(n, fb) : v1(n, fb));
+const indexesFor = (view, allLangs) => {
+  const proIndex = view === 'pro' ? indexShards('search-index-pro', { allLangs }) : Promise.resolve([]);
+  const pubIndex = view === 'pro' ? proIndex.then((x) => (x?.length ? [] : indexShards('search-index', { allLangs }))) : indexShards('search-index', { allLangs });
+  return [pubIndex, proIndex];
+};
+
+/**
+ * 建立引擎（view：public | pro）。opts.allLangs：讀全部語言的索引（後台評估用）。
+ * 引擎程式與資料同時開始下載（import() 與 fetch 並行），不會先等程式再抓資料。
+ */
+export function loadEngine(view = 'public', { allLangs = false } = {}) {
+  const key = `${view}:${allLangs ? '*' : LANG}`;
+  if (enginePromise.has(key)) return enginePromise.get(key);
   const p = (async () => {
-    const [index, indexPro, situation, clarifications, glossary, diseases, vaccines, countries, datasets, faq, units, aiStatus, travelAlerts, countryLevels, services, notifyTable, media, schedule] = await Promise.all([
-      v1('search-index', []), view === 'pro' ? v1('search-index-pro', []) : Promise.resolve([]), v1('situation', null), v1('clarifications', []), v1('glossary', []),
-      v1('diseases', []), v1('vaccines', []), v1('countries', []), v1('datasets', []), v1('faq', []), v1('units', []), v1('governance/ai-status', {}),
-      v1('travel-alerts', []), v1('country-levels', []),
-      // 第二輪（可選，404 容錯）：申請服務（actions）、通報時限表（病例定義與檢驗連結）、影音（來源卡海報）
-      v1Optional('services', []), v1Optional('notify-table', null), v1Optional('media', []),
-      // 疫苗接種時程主檔（可選）：跨疫苗年齡查詢，「65 歲以上可以打哪些公費疫苗」
-      v1Optional('immunization-schedule', []),
+    const core = loadCore();
+    const [[index, indexPro], primary, secondary] = await Promise.all([
+      Promise.all(indexesFor(view, allLangs)),
+      Promise.all(PRIMARY.map(([n, fb]) => v1(n, fb))),
+      // 第二輪（可選，404 容錯）：申請服務（actions）、通報時限表（病例定義與檢驗連結）、影音（來源卡海報）；疫苗接種時程主檔（跨疫苗年齡查詢）
+      Promise.all(SECONDARY.map(getSecondary)),
     ]);
+    const [situation, clarifications, glossary, diseases, vaccines, countries, datasets, faq, units, aiStatus] = primary;
+    const [travelAlerts, countryLevels, services, notifyTable, media, schedule] = secondary;
     const deps = {
       index: index ?? [], indexPro: indexPro ?? [], situation,
       clarifications: (clarifications ?? []).map((c) => ({ ...c, url: c.path ?? `/factcheck/#${c.id}`, ownerName: c.governance?.ownerName ?? c.ownerName })),
@@ -87,11 +119,35 @@ export function loadEngine(view = 'public') {
       schedule: Array.isArray(schedule) ? schedule : [],
       media: (media ?? []).map((x) => ({ id: x.id, mediaType: x.mediaType, poster: x.poster, producedAt: x.producedAt, basedOnVersionLabel: x.basedOnVersionLabel, durationSeconds: x.durationSeconds })),
     };
+    const { createEngine } = await core;
     return { engine: createEngine(deps), deps };
   })();
-  enginePromise.set(view, p);
+  enginePromise.set(key, p);
+  p.catch(() => enginePromise.delete(key)); // 例如引擎程式下載失敗：下次提問重試，而不是永遠卡在同一個失敗
   return p;
 }
+
+/** requestIdleCallback（不支援時用 setTimeout 退而求其次，例如舊版 Safari） */
+export function whenIdle(fn, timeout = 3000) {
+  if (typeof requestIdleCallback === 'function') requestIdleCallback(() => fn(), { timeout });
+  else setTimeout(fn, 200);
+}
+
+let prefetched = false;
+/**
+ * 預取（不等結果、不丟錯）：使用者聚焦問題框、開始輸入或按下送出鈕時呼叫，多次呼叫只做一次。
+ * 只下載（引擎程式＋主要資料立刻抓、次要資料等空閒），不建引擎、不回答——createEngine 是一段約 0.2 秒（手機 4 倍降速約 0.8 秒）的長工作，
+ * 放在使用者打字的當下會讓輸入卡頓；等真正送出時才建，資料已在記憶體快取裡。
+ */
+export function prefetchEngine(view = 'public') {
+  if (prefetched) return;
+  prefetched = true;
+  loadCore().catch(() => {});
+  for (const p of indexesFor(view, false)) p.catch(() => {});
+  for (const [n, fb] of PRIMARY) v1(n, fb);
+  whenIdle(() => { for (const s of SECONDARY) getSecondary(s); });
+}
+
 
 export function currentView() {
   const q = new URLSearchParams(location.search).get('view');

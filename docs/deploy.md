@@ -37,6 +37,9 @@ BASE_PATH='' npm run build && node scripts/serve.mjs
 | `SITE_URL` | `https://ancientsky.github.io` | 絕對網址的網域部分（canonical、sitemap、JSON-LD、API `meta.source`） |
 | `DIST_DIR` | `dist` | 輸出資料夾。多人平行開發時各用各的，避免互相清掉 |
 | `BUILD_TODAY` | 今天 | 以指定日期當「今天」重算逾期與白名單，用來模擬時間前進，例：`BUILD_TODAY=2027-08-01 npm run build` |
+| `PAGEFIND_VERIFY` | （開） | `off` 略過建置後的全文索引召回自我檢查（第四十輪，§12.5） |
+| `PAGEFIND_RECALL_MIN` | `0.98` | 自我檢查的召回下限；低於它時 `--check`／CI 建置失敗（§12.5） |
+| `ASK_DATA_BUDGET_KB` | `445` | 答案頁提問時下載的 JSON（gzip 估算）上限，超過建置失敗（第四十輪，§15） |
 
 `--today=YYYY-MM-DD` 參數效果同 `BUILD_TODAY`。**所有連結都必須經 `ctx.url()`（伺服器端）或 `window.CDC.url()`（瀏覽器端）產生**，直接寫死 `/xxx` 會在子路徑部署時壞掉。
 
@@ -234,7 +237,7 @@ CI 任一項失敗即不部署：JSON Schema 與跨檔參照（`owner`、`basedO
   - `npm run lint`：ESLint，PR 的 `content-pr.yml` 與 `pages.yml` 都會跑；0 errors 才算過（warnings 不擋，逐步清）。
   - `npm run typecheck`：`tsc` 型別檢查試點（`lanes.mjs`、`validate.mjs`）。
   - `npm run format:check`：Prettier，只強制新檔，不進 CI。
-  - `npm run build`：最後會印「JS 壓縮」與「JS 預算」兩行（公開頁 120 KB、含答案引擎的頁 240 KB，第三十四輪由 320 KB 下修）；預算以**壓縮後**大小計，超過即失敗，可用 `JS_BUDGET_KB`／`ENGINE_JS_BUDGET_KB` 暫時調整。每季看一次最大值有沒有往上爬。壓縮用 esbuild（devDependency，`npm ci` 會裝）；`MINIFY=off` 可輸出未壓縮的 dist 方便除錯，此時預算只回報不擋（guide-staff §38、ARCHITECTURE 40）。
+  - `npm run build`：最後會印「JS 壓縮」「JS 預算」「答案頁資料傳輸量」三行（公開頁 120 KB、含答案引擎的頁 240 KB，第三十四輪由 320 KB 下修；第四十輪起引擎頁分列「立即載入」與「提問後合計」，240 KB 套在合計上；資料傳輸量見 §15）；預算以**壓縮後**大小計，超過即失敗，可用 `JS_BUDGET_KB`／`ENGINE_JS_BUDGET_KB` 暫時調整。每季看一次最大值有沒有往上爬。壓縮用 esbuild（devDependency，`npm ci` 會裝）；`MINIFY=off` 可輸出未壓縮的 dist 方便除錯，此時預算只回報不擋（guide-staff §38、ARCHITECTURE 40）。
 
 ## 7. 部署到其他環境
 
@@ -419,6 +422,18 @@ location ~ ^/pagefind/pagefind\..*\.pf_meta$ { add_header Cache-Control "public,
 | PR 預覽站搜不到 | 預覽站的 `BASE_PATH` 是 `/pr-N/`，索引內網址已帶前綴（由 e2e 測過）；若仍錯，確認預覽是用新版 `build.mjs` 建的 |
 | 想排除某頁不被搜到 | 該頁設 `noindex`；或在 `src/templates/public/_pagefind.mjs` 的 `pagefindFor()` 調整規則。見 docs/guide-staff.md 第 29 節 |
 | 想暫時關掉索引 | `PAGEFIND=off npm run build`（`/search/` 頁仍在，但會無法載入索引；僅限本機看版面用） |
+
+### 12.5 召回自我檢查（第四十輪，Issue #79）
+
+建好索引後，`build.mjs` 會從 `dist` 抽 80 個中文頁、每頁抽 2 段 4–8 字的連續中文（只從使用者看得到、且本站有意讓人搜的文字抽：排除 `<form>`、`<nav>`、`<svg>`、`data-pagefind-ignore`），用與 `/search/` 相同的查詢轉換在 **Node 裡**直接查剛建好的索引（`scripts/lib/pagefind.mjs` 的 `verifyPagefindRecall`，不需要瀏覽器，約 3 秒），來源頁必須在結果中。建置摘要印一行：
+
+```
+全文索引自我檢查：抽 80 頁 160 個 4–8 字中文字串，召回 100.0%（160/160）
+```
+
+- 抽樣用固定種子：同一份內容每次抽到同一批字串，數字可以前後比較；內容一變就換一批，長期下來涵蓋全站。
+- 有漏會列出「頁面上有、卻搜不到：/apply/…「兒童健康手冊」」（警告）；召回低於 `PAGEFIND_RECALL_MIN`（預設 0.98）時 `--check`／CI 建置失敗。
+- 為什麼需要它：#79 的漏收不是某個詞的問題，而是 Pagefind 整段丟掉 `<label>` 的內容（勾選清單用 `<label>` 包文字）。這類問題換一個元件就會再出現，只有對整站真實輸出抽樣才抓得到。修法與根因見 docs/ask-search-llm.md 第四十輪。
 
 ## 13. 個資表單系統與表單端點（第三十輪）
 
@@ -714,3 +729,35 @@ GitLab main 更新 ──▶ GitLab CI 建置 dist/ ──▶ 對外網站（本
    - 要不要開「Pipelines must succeed」（會影響 14.4 的待辦）？
 6. **通知：** 通知要接哪個 SMTP 或 Teams webhook？是否允許閘道主機連出到 Teams？
 7. **稽核：** 稽核檔要送到哪一套集中式日誌，保存多久？
+
+## 15. 智慧問答頁的效能預算（第四十輪，Issue #80）
+
+`/ask/` 在手機 Lighthouse 只有 61 分（TBT 2.4 s、傳輸 553 KB）。根因、改法與前後數字見 docs/ask-search-llm.md 第四十輪；這裡只講建置閘門與怎麼量。
+
+### 15.1 建置時擋什麼
+
+| 項目 | 算法 | 門檻 |
+| --- | --- | --- |
+| 立即載入的 JS（每頁） | 沿 `<script src>` 與靜態 `import` 追，壓縮後原始位元組（`scripts/lib/js-budget.mjs`） | 公開頁 120 KB；答案頁（載入 `answer/data.js` 的頁）不另設，因為引擎已改成提問時才 `import()` |
+| 答案頁提問後的 JS 合計 | 立即載入＋`answer/core.js` 的 import 閉包 | 240 KB（`ENGINE_JS_BUDGET_KB`） |
+| 答案頁的資料傳輸量 | 每種語言：索引分片（中文＋當頁語言）＋引擎要讀的 JSON（清單在 `src/client/answer/deps-manifest.js`，與前端同一份）＋`v1/index.json`，逐檔 **gzip level 6** 後加總。不含答案出來後側欄才抓的疾病頁 JSON 與 `news.json`；專業版只回報 | 445 KB（`ASK_DATA_BUDGET_KB`）：第四十輪實測最大是英文頁 387 KB（zh-TW 350 KB），×1.15 |
+
+為什麼用 gzip 估算：GitHub Pages、nginx、IIS 對 JSON 預設都會壓縮，使用者實際付的是壓縮後的位元組；未壓縮大小（zh-TW 約 2.6 MB）會讓門檻失去意義。估算與 Chrome 實測（CDP `encodedDataLength`）相差在 5% 內。
+
+### 15.2 TBT 怎麼量（建置時量不到，用 e2e）
+
+TBT（主執行緒被長工作卡住的時間）要真的跑瀏覽器才量得到，所以不放進建置，寫成可選的量測：
+
+```bash
+BASE_PATH='' npm run build                        # 量測用根路徑的建置
+node scripts/perf-ask.mjs                         # 印出三個情境的 TBT、傳輸量、答案出現時間（各跑 3 次取中位數）
+PERF_RUNS=5 PERF_JSON=perf.json node scripts/perf-ask.mjs   # 多跑幾次、另存 JSON
+ASK_PERF=1 node --test tests/round40-ask-perf.test.mjs      # 當成測試：TBT ≤ ASK_PERF_MAX_TBT_MS（預設 1500 ms）、傳輸 ≤ 600 KB、無 q 時不下載 JSON
+```
+
+- 設定模擬 Lighthouse 手機：412×823 視窗、4 倍 CPU 降速（CDP `Emulation.setCPUThrottlingRate`）、不降網速（網速只影響等待，不影響 TBT）。
+- TBT 取自 Chrome trace：renderer 主執行緒上超過 50 ms 的頂層工作，每個減 50 ms 後加總；區間是「開頁到答案畫出來後 2.5 秒」，比 Lighthouse（只算到 TTI）嚴格，數字會偏高但穩定。
+- 傳輸量是所有 response 的實際傳輸位元組；腳本內建的伺服器像 GitHub Pages 一樣 gzip 文字檔。
+- 瀏覽器：預設用 `/opt/pw-browsers` 內最新的 `chromium-*`，可用 `CHROME_BIN` 指定；`playwright` 是 devDependency。
+- 為什麼不放進 CI 的必要檢查：GitHub Actions 的機器忙閒差很多，TBT 會跳 ±30%，擋 PR 會誤殺；建議改版答案頁或引擎時本機跑一次，數字貼在 PR 說明。
+

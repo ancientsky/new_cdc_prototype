@@ -4,7 +4,7 @@
 // 載入策略：本檔很小（隨 /search/ 頁載入）；pagefind.js（含 WebAssembly）與索引分片在第一次搜尋時才由 import() 動態抓取，
 // 所以不計入 js-budget（budget 只沿靜態 import 追，見 scripts/lib/js-budget.mjs 檔頭）。
 // 網址參數：q、type（逗號分隔）、audience（逗號分隔）、unit、year、current（1＝只看現行內容，第三十三輪）、sort（new|old|空＝相關度）；/ask/ 的「用全文搜尋找…」連到 ?q=。
-import { rankedSearch, despaceExcerpt, hasLongCjk } from './search-query.js';
+import { rankedSearch, despaceExcerpt, hasLongCjk, shorterQueries } from './search-query.js';
 
 const root = typeof document !== 'undefined' ? document.querySelector('[data-search]') : null;
 if (root) init();
@@ -218,10 +218,19 @@ function init() {
       await ensureOptions();
       let s = await rankedSearch(p, st.q, opts, false);
       let loose = false;
+      let trimmed = null; // 第四十輪：{ q, term, from }——改用較短的字串搜尋時，畫面要明說換成了什麼
       if (!s.results.length && st.q && hasLongCjk(st.q)) {
         // 完整字串查無：退一步，把長字串拆成前後兩半（例「麻疹疫苗」→「麻疹」且「疫苗」）
         const s2 = await rankedSearch(p, st.q, opts, true);
         if (s2.results.length) { s = s2; loose = true; }
+      }
+      if (!s.results.length && st.q) {
+        // 第四十輪（Issue #79）：拆半也查無 ⇒ 最後退路，逐步去掉前後的字（兒童健康手冊 → 健康手冊），第一個有結果的就用
+        for (const c of shorterQueries(st.q)) {
+          if (my !== runId) return;
+          const s3 = await rankedSearch(p, c.q, opts, false);
+          if (s3.results.length) { s = s3; trimmed = c; break; }
+        }
       }
       if (my !== runId) return;
       results = s.results;
@@ -232,7 +241,9 @@ function init() {
         emptyEl.hidden = false;
         return;
       }
-      baseStatus = (st.q ? T('search.status.nq', { n, q: st.q }) : T('search.status.n', { n })) + (loose ? `　${T('search.status.loose')}` : '');
+      baseStatus = trimmed
+        ? `${T('search.status.trimmed', { q: trimmed.from, t: trimmed.term })}${T('search.status.nq', { n, q: trimmed.term })}`
+        : (st.q ? T('search.status.nq', { n, q: st.q }) : T('search.status.n', { n })) + (loose ? `　${T('search.status.loose')}` : '');
       await renderMore(false);
     } catch (e) {
       if (my !== runId) return;
