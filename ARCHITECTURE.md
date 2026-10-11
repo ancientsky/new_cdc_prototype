@@ -1875,3 +1875,51 @@ Yulun 問：資料治理還沒辦法很全面，不同組室上架類似答案�
 ### 40.6 測試
 
 `tests/round34-engine-split.test.mjs`：`core.js` 匯出名稱完整且與新模組同一物件、`rules.js` 不含檢索也不反向依賴、`ui.js` 不靜態載入 `llm.js`、`minifyDir`（註解去除、中文原字、source map 含原始碼、壓縮後模組間 import 正常、`enabled:false` 不動檔）、預算常數、dist 引擎頁在預算內且有 `.map`。`tests/round23-security.test.mjs` 的「金鑰不寫 localStorage」原始碼檢查同時掃 `llm.js` 與 `llm-key.js`。
+
+## 41. 第三十五輪（2026-10-11）：《疫情報導》作者註記、DOI 與轉址、分類主檔、圖片上架
+
+同事提出四個問題並附真實文章 PDF（42(19)）；設計說明與答案見 [docs/bulletin.md](docs/bulletin.md) §8–§13，這裡記契約。
+
+### 41.1 資料模型（`schemas/article.json`、`schemas/master.json`）
+
+| 欄位 | 型別 | 說明 |
+| --- | --- | --- |
+| `affiliations[]` | `{ no, name, nameEn? }` | 服務單位清單；`no` 從 1 起 |
+| `authors[].affiliations` | `int[]` | 引用單位編號（取代舊的 `unit` 字串；兩者並存時以編號為準，`unit` 仍可用，`authorNotes` 會自動編號） |
+| `authors[].corresponding`、`email`、`nameEn` | | 通訊作者、E-mail、英文姓名（引用格式與 JSON-LD `alternateName`） |
+| `doi` | `10\.\d{4,9}/\S+` | 不含 `https://doi.org/` |
+| `legacyDoiUrl` | URL | DOI 目前登記的落地網址（舊站文章頁）；進 301 對照 |
+| `receivedAt`、`acceptedAt`、`keywordsEn[]`、`abstractEn` | | 投稿／接受日期、英文關鍵字與摘要 |
+| `articleType` | string | 必須是 `master.bulletinCategories` 的代號；舊代號由 `LEGACY_TYPE_MAP` 對過去 |
+| `master.bulletinCategories[]` | `{ key, label, labelEn, order, description?, retiredAt? }` | 來源 `content/master/bulletin-categories.json`；`key` 規則 `^[a-z][a-z0-9-]{1,30}$` |
+
+### 41.2 共用規則（`src/client/bulletin-rules.js`，建置與後台同一份）
+
+- `authorNotes(a)` → `{ affiliations, authors[{…, nos, sup}], corresponding, showSup }`：上標字串（`1,2*`）由此產生，模板不自己算；只有一個單位時 `showSup=false`。
+- `suggestDoi(issue, no)`、`TEB_DOI_RE`（`10.6524/EB.YYYYMM_卷(期).篇次`）、`doiProblems`（格式／重複 → error；卷期、篇次、慣例不符 → warn）、`doiPath`、`doiUrl`。
+- `categoryProblems`、`categoryOf`、`categoryLabel`、`categoryPath`、`normalizeCategory`。
+- `cnToNum`、`figRefRe(kind, no)`（「圖一」「圖 1」「Fig. 1」）。
+- `splitManuscript(text, { categories })`：新增頁面裝飾去除、META 規則（投稿／接受日期、DOI、通訊作者、E-mail、關鍵字）、腳註式單位配對、作者列解析、篇名（作者列前一行；括號收尾也算）、猜測小標、折行接回、`### 一、小標`、文獻編號獨立成行、英文摘要頁；回傳多 `authors`、`affiliations`、`abstractEn`、`meta{…, doi, doiConflicts, volume, issue, date, pages, category}`、`report`。
+- `articleProblems(a, { issue, siblings, others, categories })`：多分類主檔檢查、單位編號引用、通訊作者 E-mail、DOI、圖檔 alt 與 `assets[]` 宣告。
+
+### 41.3 建置
+
+- `load.mjs`：`site.master.bulletinCategories`（無檔時用 `DEFAULT_CATEGORIES`）；文章 `articleType` 經 `normalizeCategory`。
+- `validate.mjs`：主檔 schema＋`categoryProblems`；文章 `articleProblems` 帶 `others`（全站 DOI 唯一）與 `categories`。
+- `emit-api.mjs`：`doiRedirects(site)` → `redirects.json` 多 `kind: doi`（`/doi/{DOI}` → 文章頁）與 `legacyDoiUrl` 的 `kind: legacy`；`serverRedirects` 把 `doi` 一併輸出到 nginx／IIS／`_redirects`；新檔 `v1/doi.json`、`v1/bulletin-categories.json`；`v1/articles.json` 多 `category`、`affiliations`、`doiUrl`。OpenAPI 同步。
+- `jsonld.mjs`：ScholarlyArticle `author[]` 帶 `affiliation`（Organization）、`alternateName`、`email`；`identifier`（PropertyValue DOI）；`articleSection`。
+- `markdown.mjs` `supSub`：`^x^`、`~x~`（反引號內不轉）；後台 `md-convert.js` 同規則（含無 marked 的退路）。
+- 模板：`public/bulletin.mjs`（`/publications/bulletin/`、`/publications/bulletin/{key}/`，七語；停用且無文章的分類不產頁）；`_bulletin.mjs` 的 `authorsHtml`（`sup > a[href=#aff-N]`＋`sr-only` 說明、`<ol class="c-teb__affils">`、通訊作者 mailto）、`categoryPill`、`doiHtml`、`categoryNavHtml`。
+
+### 41.4 後台（`/admin/bulletin/edit/`）
+
+- 作者欄「姓名 | 單位編號或名稱 | * | E-mail | 英文名」、服務單位欄「編號 | 名稱 | 英文」（`parseAuthors`／`parseAffiliations` 雙向）。
+- 「建議 DOI」按鈕；DOI 提示列。
+- F 區圖檔：`<input type=file multiple>`＋拖放到整個 fieldset；`assignFigureFiles(figures, files)` 依檔名配對（`matchFigureFile`），標準檔名 `figureFileName`；瀏覽器端算 sha256（`preprocess.js` `sha256Hex`）、寬高、blob URL 給預覽；`buildArticle(state, { files })` 寫 `assets[]`。上限 `imageMaxBytes`（資料島，2 MB）。
+- H 區分類管理：既有分類代號唯讀、可停用；新增用 `suggestCategoryKey(labelEn)`；`packageEntries(article, issue, { pdf, images, categories, categoriesOriginal })` 只在 `categoriesChanged` 時多帶主檔。第三個參數仍接受舊的 `{ name, bytes }` PDF 物件。
+- `applyManuscript` 多回傳 `notes`（切段備註，如 DOI 衝突）、`issueHint`；頁首卷期存在就切到「既有卷期」，否則填新卷期欄。
+
+### 41.5 教訓
+
+- Playwright `setInputFiles` 給含中文的檔案路徑時 change 事件沒有觸發（同一檔改成 `{ name, mimeType, buffer }` 就正常）；實測腳本請用 buffer 形式，不是產品問題。
+- 同一頁兩個元素同 id（`te-h` 標題與 fieldset）在單元測試抓不到，瀏覽器 strict locator 才抓到；新增區塊 id 前先 grep。

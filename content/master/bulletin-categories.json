@@ -1,0 +1,10 @@
+[
+  { "key": "original", "label": "原著文章", "labelEn": "Original Article", "order": 1, "description": "具研究設計與分析的原創論文。" },
+  { "key": "investigation", "label": "疫情調查", "labelEn": "Outbreak Investigation", "order": 2, "description": "群聚或個案的疫情調查報告（事件源起、調查、檢驗、研判、討論及建議）。" },
+  { "key": "feature", "label": "焦點特寫", "labelEn": "Feature", "order": 3, "description": "針對特定主題的深入專文、監測分析或綜論。" },
+  { "key": "global-focus", "label": "國內外疫情焦點", "labelEn": "Epidemic Focus", "order": 4, "description": "國內外重要疫情的摘要與研析。" },
+  { "key": "rapid-report", "label": "疫調快報", "labelEn": "Rapid Report", "order": 5, "description": "時效性高的簡要疫情調查通報。" },
+  { "key": "biosafety", "label": "生安專欄", "labelEn": "Biosafety Column", "order": 6, "description": "生物安全與實驗室管理專欄。" },
+  { "key": "vaccine", "label": "疫苗專欄", "labelEn": "Vaccine Column", "order": 7, "description": "疫苗政策、接種與安全監測專欄。" },
+  { "key": "notice", "label": "重要疫訊", "labelEn": "Important Notice", "order": 8, "description": "重要疫情訊息、更正啟事與公告。" }
+]

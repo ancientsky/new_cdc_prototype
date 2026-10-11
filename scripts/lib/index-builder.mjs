@@ -27,7 +27,7 @@
 // 多語：i18n[lang] 有 reviewed（且譯文未過期）者另出同語 chunk；machine 一律不出。
 // 來源語言（ARCHITECTURE 14.2）：頂層欄位以 item.sourceLang（預設 zh-TW）出 chunk（英文來源 ⇒ 進英文索引）；
 //   sourceLang≠zh-TW 時 i18n['zh-TW']（reviewed）另出中文 chunk（進中文索引）。topic／service 的譯文 chunk 需 i18n 有本文欄位才出。
-import { articlePath } from '../../src/client/bulletin-rules.js';
+import { articlePath, authorNotes, categoryLabel } from '../../src/client/bulletin-rules.js';
 import { splitPlain, parseChineseNumber, buildLexicon } from '../../src/client/answer/core.js';
 import { splitByPage } from './pdf-text.mjs';
 import { tagRelativeDate } from './dates.mjs';
@@ -568,7 +568,7 @@ export function buildSearchIndex(site) {
           const issue = site.byId.get(item.issueId);
           const vol = issue ? `第 ${issue.volume} 卷第 ${issue.issue} 期` : '';
           const artExtra = { issueId: item.issueId, volume: issue?.volume ?? null, issue: issue?.issue ?? null, articleNo: item.articleNo, pages: item.pages ?? null, articleType: item.articleType ?? null, authors: (item.authors ?? []).map((a) => a.name) };
-          const aterms = ['疫情報導', vol, issue?.volume != null ? `${issue.volume}卷` : null, issue?.issue != null ? `${issue.issue}期` : null, ...(item.authors ?? []).map((a) => a.unit).filter(Boolean)].filter(Boolean);
+          const aterms = ['疫情報導', vol, issue?.volume != null ? `${issue.volume}卷` : null, issue?.issue != null ? `${issue.issue}期` : null, ...authorNotes(item).affiliations.map((f) => f.name), categoryLabel(site.master.bulletinCategories, item.articleType)].filter(Boolean);
           const abs = mdSentences(item.abstractMarkdown ?? '');
           add(make(item, 'abstract', `${item.title} · 摘要`, abs.length ? abs : splitPlain(item.summary ?? ''), `${base}#abstract`, { ...L, ...artExtra, block: 'abstract', extraTerms: aterms }));
           if (item.highlights) {

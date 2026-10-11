@@ -64,7 +64,7 @@ test('issueToc：全文文章取代同篇次的書目篇目，其餘書目篇目
   assert.equal(citationOf(A1, ISSUE), '高屏區管制中心防疫團隊、某市政府衛生局。2026 年首例本土登革熱病例疫情調查與社區防治。疫情報導 2026；42（13）：1-8。');
   assert.equal(citationEnOf(A1, ISSUE), 'Investigation and community control of the first indigenous dengue case of 2026'.length > 0 && citationEnOf(A1, ISSUE).startsWith('高屏區管制中心防疫團隊, 某市政府衛生局. Investigation') ? citationEnOf(A1, ISSUE) : 'x');
   assert.match(citationEnOf(A1, ISSUE), /Taiwan Epidemiol Bull 2026;42\(13\):1-8\.$/);
-  assert.deepEqual(suggestNextIssue(site.collections.publications, '2026-10-10'), { volume: 42, issue: 19 });
+  assert.deepEqual(suggestNextIssue(site.collections.publications, '2026-10-10'), { volume: 42, issue: 20 }, '第三十五輪已匯入 42(19)，下一期是 20');
   assert.deepEqual(suggestNextIssue(site.collections.publications, '2027-01-05'), { volume: 43, issue: 1 });
   assert.equal(articlePath(A1), '/publications/bulletin-42-13/1/');
 });
@@ -150,7 +150,7 @@ test('後台純函式：稿件套進表單只補空欄；buildArticle 產出通�
   let st = emptyState({ today: TODAY });
   st = { ...st, issueMode: 'existing', issueId: ISSUE.id, articleNo: '4', title: '測試文章', authors: '王小明 | 疫情中心 | *\n李小華 | 高屏區管制中心', pages: '25-30', keywords: '測試、登革熱', diseases: ['disease.dengue'] };
   const r = applyManuscript(st, '摘要文字。\n\n前言\n前言內容。\n\n方法\n方法內容。\n\n結果\n結果內容。\n圖 1 圖說\n\n參考文獻\n1. 文獻');
-  assert.deepEqual(r.report, ['摘要', '3 段正文（前言、材料與方法、結果）', '1 個圖表說明', '1 筆參考文獻']);
+  assert.deepEqual(r.report, ['摘要', '3 段正文（前言、方法、結果）', '1 個圖表說明', '1 筆參考文獻'], '第三十五輪起小標保留原文用字');
   st = r.state;
   const r2 = applyManuscript({ ...st, abstract: '已經手打的摘要' }, '別的摘要。\n\n前言\n另一個前言');
   assert.equal(r2.state.abstract, '已經手打的摘要'); assert.equal(r2.state.sections.length, 3, '同 key 段落不重複加');
@@ -172,16 +172,16 @@ test('後台純函式：稿件套進表單只補空欄；buildArticle 產出通�
 });
 
 test('後台純函式：新卷期產出卷期 JSON 並進上架包；篇次建議；目錄預覽把這篇插進去；預覽區塊都對得到欄位', () => {
-  const st = { ...emptyState({ today: TODAY }), issueMode: 'new', newVolume: '42', newIssue: '19', newDate: '2026-10-07', articleNo: '1', title: '新的一篇', authors: '甲 | 乙單位', sections: [{ key: 'intro', heading: '前言', markdown: '內容' }] };
+  const st = { ...emptyState({ today: TODAY }), issueMode: 'new', newVolume: '42', newIssue: '20', newDate: '2026-10-14', articleNo: '1', title: '新的一篇', authors: '甲 | 乙單位', sections: [{ key: 'intro', heading: '前言', markdown: '內容' }] };
   const issue = resolveIssue(st, site.collections.publications, { today: TODAY });
-  assert.equal(issue.id, 'publication.bulletin-42-19'); assert.equal(issue._new, true); assert.equal(issue.volume, 42);
+  assert.equal(issue.id, 'publication.bulletin-42-20'); assert.equal(issue._new, true); assert.equal(issue.volume, 42);
   const a = buildArticle(st, { today: TODAY, issue });
-  assert.equal(a.id, 'article.teb-42-19-1'); assert.equal(a.publishedAt, '2026-10-07');
-  const entries = packageEntries(a, issue, { name: 'teb-42-19-1.pdf', bytes: new Uint8Array([1, 2]) });
-  assert.deepEqual(entries.map((e) => e.name), ['content/articles/teb-42-19-1.json', 'content/publications/bulletin-42-19.json', 'content/assets/article.teb-42-19-1/teb-42-19-1.pdf']);
+  assert.equal(a.id, 'article.teb-42-20-1'); assert.equal(a.publishedAt, '2026-10-14');
+  const entries = packageEntries(a, issue, { name: 'teb-42-20-1.pdf', bytes: new Uint8Array([1, 2]) });
+  assert.deepEqual(entries.map((e) => e.name), ['content/articles/teb-42-20-1.json', 'content/publications/bulletin-42-20.json', 'content/assets/article.teb-42-20-1/teb-42-20-1.pdf']);
   const issueJson = JSON.parse(entries[1].data); assert.ok(!('_new' in issueJson)); assert.equal(issueJson.pubType, 'bulletin');
   const s2 = govern(TODAY, (s) => { addItem(s, issueJson); addItem(s, structuredClone(a)); });
-  assert.deepEqual(validateSite(s2).filter((e) => /42-19/.test(e)), []);
+  assert.deepEqual(validateSite(s2).filter((e) => /42-20/.test(e)), []);
   assert.equal(suggestArticleNo(site.collections.articles, ISSUE.id, ISSUE), 4, '書目篇目 3 筆、全文 2 篇 ⇒ 下一篇 4');
   const rows = tocPreviewRows({ ...a, issueId: ISSUE.id, articleNo: 4 }, ISSUE, site.collections.articles);
   assert.deepEqual(rows.map((r) => [r.no, r.isCurrent]), [[1, false], [2, false], [3, false], [4, true]]);

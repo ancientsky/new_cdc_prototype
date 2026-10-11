@@ -14,6 +14,7 @@
 //          薪資以 description 文字呈現，不給 baseSalary；甄選名單不放進 JSON-LD）、
 //          tender → GovernmentService＋Offer（簡化：預算、公告／截止日、政府電子採購網連結、決標）
 //   aboutOrgJsonLd(ctx)             → GovernmentOrganization＋subOrganization[]（/about/ 組織架構，master/units＋site.gov.byOwner）
+import { authorNotes, categoryLabel } from '../../src/client/bulletin-rules.js';
 import { config, siteOrigin } from '../../site.config.mjs';
 import { mdToText } from './markdown.mjs';
 import { pathOf, mdPathOf } from './governance.mjs';
@@ -283,8 +284,10 @@ export function jsonLdFor(ctx, item) {
       const issue = ctx?.site?.byId?.get(item.issueId);
       return [clean({ ...baseOf(ctx, item, 'ScholarlyArticle'), headline: name, name, description,
         abstract: mdToText(item.abstractMarkdown ?? '') || undefined, pagination: item.pages, pageStart: item.pages?.split('-')[0], pageEnd: item.pages?.split('-')[1],
-        author: (item.authors ?? []).map((a) => clean({ '@type': 'Person', name: a.name, affiliation: a.unit ? { '@type': 'Organization', name: a.unit } : undefined })),
+        author: authorNotes(item).authors.map((a) => clean({ '@type': 'Person', name: a.name, alternateName: a.nameEn, email: a.corresponding ? a.email : undefined, affiliation: a.nos.length ? a.nos.map((n) => { const f = authorNotes(item).affiliations.find((x) => x.no === n); return f ? clean({ '@type': 'Organization', name: f.name, alternateName: f.nameEn }) : null; }).filter(Boolean) : undefined })),
         sameAs: item.doi ? `https://doi.org/${item.doi}` : undefined,
+        identifier: item.doi ? { '@type': 'PropertyValue', propertyID: 'DOI', value: item.doi } : undefined,
+        articleSection: item.articleType ? categoryLabel(ctx?.site?.master?.bulletinCategories, item.articleType) : undefined,
         isPartOf: issue ? clean({ '@type': 'PublicationIssue', issueNumber: issue.issue, datePublished: dt(issue.publishedAt), url: abs(ctx, pathOf(issue)), isPartOf: { '@type': 'PublicationVolume', volumeNumber: issue.volume, isPartOf: { '@type': 'Periodical', name: issue.series, issn: issue.issn } } }) : undefined,
         encoding: (item.pdfUrl || issue?.pdfUrl) ? [{ '@type': 'MediaObject', encodingFormat: 'application/pdf', contentUrl: linkAbs(ctx, item.pdfUrl || issue.pdfUrl) }] : undefined,
         about: (item.diseases ?? []).map((d) => diseaseRef(ctx, d)), 'cdc:articleType': item.articleType, 'cdc:articleNo': item.articleNo })];

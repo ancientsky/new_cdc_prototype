@@ -1136,6 +1136,13 @@ html:not(.js) .vxs-form,html:not(.js) .vxs-msg,html:not(.js) .vxs-tabs,html:not(
 .c-teb__unit{color:var(--ink-3);font-size:var(--fs-sm)}
 .c-teb__corr{text-decoration:none;color:var(--green-700);font-weight:700}
 .c-teb__corrnote,.c-teb__dates{margin:2px 0 0;font-size:var(--fs-xs)}
+/* 第三十五輪：作者上標與服務單位清單、DOI、分類導覽、分類列表 */
+.c-teb__sup{font-size:.7em;line-height:0;vertical-align:super;margin-left:1px}.c-teb__sup a{text-decoration:none;color:var(--green-700)}
+.c-teb__affils{list-style:none;margin:var(--sp-1) 0 0;padding:0;font-size:var(--fs-sm);color:var(--ink-3)}.c-teb__affils li{margin:0}.c-teb__affils .c-teb__sup{margin-right:3px;min-width:.8em;display:inline-block;vertical-align:baseline;line-height:1}
+.c-teb__doi{word-break:break-all}.c-btn--xs{padding:1px 8px;font-size:var(--fs-xs)}
+.c-teb__cats ul{list-style:none;margin:0;padding:0}.c-teb__cats li{display:flex;justify-content:space-between;gap:var(--sp-2);padding:6px 0;border-bottom:1px solid var(--line)}.c-teb__cats li:last-child{border-bottom:0}.c-teb__cats a[aria-current="page"]{font-weight:700;color:var(--green-800)}
+.c-teb__list{counter-reset:none}.c-teb__card{padding:var(--sp-3) 0;border-bottom:1px solid var(--line)}.c-teb__card:last-child{border-bottom:0}
+.c-teb__cat.c-pill{text-decoration:none}.c-teb__cat.c-pill:hover{text-decoration:underline}
 .c-teb__actions{flex-wrap:wrap}
 .c-teb__abstract{margin:0 0 var(--sp-4);padding:var(--sp-4) var(--sp-5);background:var(--paper);border-left:5px solid var(--green-700);border-radius:0 var(--radius) var(--radius) 0}
 .c-teb__abstract h2{margin:0 0 var(--sp-2);font-size:var(--fs-md);letter-spacing:.05em;color:var(--green-900)}

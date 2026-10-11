@@ -9,8 +9,8 @@
 import { html, raw } from '../../../scripts/lib/render.mjs';
 import { md } from '../../../scripts/lib/markdown.mjs';
 import { assetUrl } from '../../../scripts/lib/assets.mjs';
-import { articlesOfIssue, issueToc, citationOf, citationEnOf, ARTICLE_TYPES, ARTICLE_TYPES_EN } from '../../client/bulletin-rules.js';
-import { L, hrefFor, isFallbackLink, pill, imgSrc } from './_partials.mjs';
+import { articlesOfIssue, issueToc, citationOf, citationEnOf, authorNotes, categoryLabel, categoryPath, doiUrl, BULLETIN_HOME, sortCategories } from '../../client/bulletin-rules.js';
+import { L, hrefFor, isFallbackLink, imgSrc } from './_partials.mjs';
 
 export { articlesOfIssue, issueToc, citationOf, citationEnOf };
 
@@ -18,15 +18,33 @@ export { articlesOfIssue, issueToc, citationOf, citationEnOf };
 export const issueOf = (site, a) => site.byId.get(a.issueId) ?? null;
 /** 「第 42 卷第 13 期」 */
 export const volIssueLabel = (ctx, issue) => (issue ? ctx.t('teb.volissue', { v: issue.volume ?? '—', n: issue.issue ?? '—' }) : '');
-export const articleTypeLabel = (ctx, type) => (ctx.lang === 'zh-TW' ? ARTICLE_TYPES[type] : ARTICLE_TYPES_EN[type]) ?? ARTICLE_TYPES[type] ?? type ?? '';
+export const articleTypeLabel = (ctx, type) => (type ? categoryLabel(ctx.site.master.bulletinCategories, type, ctx.lang) : '');
+/** 分類膠囊：連到分類列表頁（第三十五輪） */
+export const categoryPill = (ctx, type) => (type ? html`<a class="c-pill c-pill--info c-teb__cat" href="${ctx.url(categoryPath(type))}">${articleTypeLabel(ctx, type)}</a>` : '');
+/** DOI 連結（doi.org） */
+export const doiHtml = (ctx, doi) => (doi ? html`<a class="c-teb__doi" href="${doiUrl(doi)}" rel="noopener">${doi}</a>` : '');
+/** 分類導覽（總覽頁與分類頁共用） */
+export function categoryNavHtml(ctx, { current = null } = {}) {
+  const { site, t, url } = ctx;
+  const arts = (site.collections.articles ?? []).filter((a) => a.status === 'published');
+  const cats = sortCategories(site.master.bulletinCategories).filter((c) => !c.retiredAt || arts.some((a) => a.articleType === c.key));
+  return html`<nav class="c-teb__cats" aria-label="${t('teb.categories')}"><ul>${cats.map((c) => { const n = arts.filter((a) => a.articleType === c.key).length; return html`<li><a href="${url(categoryPath(c.key))}"${current === c.key ? raw(' aria-current="page"') : ''}>${ctx.lang === 'zh-TW' ? c.label : c.labelEn || c.label}</a> <span class="muted">${t('teb.count', { n })}</span></li>`; })}</ul></nav>`;
+}
 /** PDF 連結：單篇優先，其次本期 */
 export const pdfHref = (ctx, a, issue) => { const u = a.pdfUrl || issue?.pdfUrl; return u ? (/^https?:/.test(u) ? u : ctx.url(u, { noLang: true })) : null; };
 
-/** 作者列：姓名（單位），通訊作者加星號 */
+/**
+ * 作者列（刊載格式，第三十五輪）：姓名後上標服務單位編號、通訊作者加 *；底下列出單位清單與通訊作者的信箱。
+ * 單位只有一個且資料沒編號時不印數字（與 MMWR 單一單位寫法一致）。上標用 <sup> 配 aria-describedby，朗讀器讀得到「單位 1」。
+ */
 export function authorsHtml(ctx, a) {
-  const { t } = ctx;
-  return html`<p class="c-teb__authors"><span class="sr-only">${t('teb.authors')}：</span>${(a.authors ?? []).map((x, i) => html`<span class="c-teb__author">${x.name}${x.unit ? html`<span class="c-teb__unit">（${x.unit}）</span>` : ''}${x.corresponding ? html`<abbr class="c-teb__corr" title="${t('teb.corresponding')}">＊</abbr>` : ''}</span>${i < a.authors.length - 1 ? html`<span class="c-teb__sep" aria-hidden="true">、</span>` : ''}`)}</p>
-  ${(a.authors ?? []).some((x) => x.corresponding) ? html`<p class="c-teb__corrnote muted">＊${t('teb.corresponding')}</p>` : ''}`;
+  const { t, lang } = ctx;
+  const n = authorNotes(a);
+  const name = (x) => (lang !== 'zh-TW' && x.nameEn ? x.nameEn : x.name);
+  const affName = (f) => (lang !== 'zh-TW' && f.nameEn ? f.nameEn : f.name);
+  return html`<p class="c-teb__authors"><span class="sr-only">${t('teb.authors')}：</span>${n.authors.map((x, i) => html`<span class="c-teb__author">${name(x)}${n.showSup && x.nos.length ? html`<sup class="c-teb__sup"><span class="sr-only">（${t('teb.affiliation')} </span>${x.nos.map((no) => html`<a href="#aff-${no}">${no}</a>`).reduce((acc, cur, j) => (j ? [...acc, ',', cur] : [cur]), [])}<span class="sr-only">）</span></sup>` : ''}${x.corresponding ? html`<abbr class="c-teb__corr" title="${t('teb.corresponding')}">*</abbr>` : ''}</span>${i < n.authors.length - 1 ? html`<span class="c-teb__sep" aria-hidden="true">${lang === 'zh-TW' ? '、' : ', '}</span>` : ''}`)}</p>
+  ${n.affiliations.length ? html`<ol class="c-teb__affils" aria-label="${t('teb.affiliations')}">${n.affiliations.map((f) => html`<li id="aff-${f.no}" value="${f.no}"><sup class="c-teb__sup">${n.showSup ? f.no : ''}</sup>${affName(f)}${lang === 'zh-TW' && f.nameEn ? html` <span class="muted" lang="en">${f.nameEn}</span>` : ''}</li>`)}</ol>` : ''}
+  ${n.corresponding.length ? html`<p class="c-teb__corrnote muted">*${t('teb.corresponding')}：${n.corresponding.map((x) => html`${name(x)}${x.email ? html`（<a href="mailto:${x.email}">${x.email}</a>）` : ''}`).reduce((acc, cur, j) => (j ? [...acc, '、', cur] : [cur]), [])}</p>` : ''}`;
 }
 
 /** 摘要框與重點三句 */
@@ -116,12 +134,12 @@ export function issueTocHtml(ctx, issue, { current = null, compact = false } = {
     return html`<li class="c-teb__tocitem" id="art-${r.no}">
       <span class="c-teb__tocno" aria-hidden="true">${r.no}</span>
       <div class="c-teb__tocbody">
-        <p class="c-teb__tocmeta muted">${a ? html`${pill(articleTypeLabel(ctx, a.articleType), 'info')} ` : ''}${r.pages ? t('teb.pages', { p: r.pages }) : ''}${a?.diseases?.length ? html` · ${a.diseases.map((d) => site.diseaseMasterById.get(d)?.name ?? d).join('、')}` : ''}</p>
+        <p class="c-teb__tocmeta muted">${a ? html`${categoryPill(ctx, a.articleType)} ` : ''}${r.pages ? t('teb.pages', { p: r.pages }) : ''}${a?.diseases?.length ? html` · ${a.diseases.map((d) => site.diseaseMasterById.get(d)?.name ?? d).join('、')}` : ''}${a?.doi ? html` · DOI ${doiHtml(ctx, a.doi)}` : ''}</p>
         <p class="c-teb__toctitle">${title}</p>
         ${a?.titleEn ? html`<p class="c-teb__tocen muted" lang="en">${a.titleEn}</p>` : ''}
         <p class="c-teb__tocauthors">${r.authors.join('、')}</p>
         ${a ? html`<p class="c-teb__tocsum">${L(ctx, a, 'summary')}</p>` : ''}
-        <p class="c-teb__toclinks">${a ? html`<a class="c-btn c-btn--sm" href="${hrefFor(ctx, a)}">${t('teb.fulltext')}</a> ${pdf ? html`<a class="c-btn c-btn--ghost c-btn--sm" href="${pdf}" rel="noopener">${a.pdfUrl ? t('teb.pdf.article') : t('teb.pdf.issue')}</a>` : ''}` : html`<span class="c-pill c-pill--neutral">${t('teb.bibonly')}</span>${r.legacy?.doi ? html` · DOI <a href="https://doi.org/${r.legacy.doi}" rel="noopener">${r.legacy.doi}</a>` : ''}`}</p>
+        <p class="c-teb__toclinks">${a ? html`<a class="c-btn c-btn--sm" href="${hrefFor(ctx, a)}">${t('teb.fulltext')}</a> ${pdf ? html`<a class="c-btn c-btn--ghost c-btn--sm" href="${pdf}" rel="noopener">${a.pdfUrl ? t('teb.pdf.article') : t('teb.pdf.issue')}</a>` : ''}` : html`<span class="c-pill c-pill--neutral">${t('teb.bibonly')}</span>${r.legacy?.doi ? html` · DOI ${doiHtml(ctx, r.legacy.doi)}` : ''}`}</p>
       </div></li>`;
   };
   return html`<ol class="c-teb__toc${compact ? ' c-teb__toc--compact' : ''}" aria-label="${t('teb.toc')}">${rows.map(item)}</ol>${compact ? '' : html`<p class="muted c-teb__tocdate">${t('publications.date')}：${fmtDate(issue.publishedAt)}</p>`}`;
@@ -145,5 +163,5 @@ export function otherIssuesHtml(ctx, issue) {
   const i = list.findIndex((p) => p.id === issue.id);
   const win = list.slice(Math.max(0, i - 2), Math.max(0, i - 2) + 6);
   if (win.length <= 1) return '';
-  return html`<section class="c-aside-card"><h2>${t('teb.issues')}</h2><ul class="c-linklist">${win.map((p) => html`<li${p.id === issue.id ? raw(' aria-current="true"') : ''}>${p.id === issue.id ? html`<strong>${volIssueLabel(ctx, p)}</strong>` : html`<a href="${hrefFor(ctx, p)}">${volIssueLabel(ctx, p)}</a>`} <span class="muted">${ctx.fmtDate(p.publishedAt)}</span></li>`)}</ul><p><a href="${ctx.url('/publications/')}#series-0">${t('publications.title')} →</a></p></section>`;
+  return html`<section class="c-aside-card"><h2>${t('teb.issues')}</h2><ul class="c-linklist">${win.map((p) => html`<li${p.id === issue.id ? raw(' aria-current="true"') : ''}>${p.id === issue.id ? html`<strong>${volIssueLabel(ctx, p)}</strong>` : html`<a href="${hrefFor(ctx, p)}">${volIssueLabel(ctx, p)}</a>`} <span class="muted">${ctx.fmtDate(p.publishedAt)}</span></li>`)}</ul><p><a href="${ctx.url(BULLETIN_HOME)}">${t('teb.home')} →</a> · <a href="${ctx.url('/publications/')}#series-0">${t('publications.title')} →</a></p></section>`;
 }

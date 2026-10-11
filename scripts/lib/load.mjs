@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
+import { normalizeCategory, DEFAULT_CATEGORIES } from '../../src/client/bulletin-rules.js';
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 export const CONTENT = path.join(ROOT, 'content');
@@ -61,6 +62,8 @@ export function loadSite(config) {
     countries: readJSON(path.join(CONTENT, 'master/countries.json'), []),
     glossary: readJSON(path.join(CONTENT, 'master/glossary.json'), []),
     reviewPeriods: readJSON(path.join(CONTENT, 'master/review-periods.json')),
+    // 第三十五輪：疫情報導分類主檔（官網左側分類；後台「分類管理」可加）；沒有檔時用 bulletin-rules 的預設
+    bulletinCategories: readJSON(path.join(CONTENT, 'master/bulletin-categories.json'), DEFAULT_CATEGORIES),
   };
   const collections = {
     diseases: readDirJSON(path.join(CONTENT, 'diseases')),
@@ -79,7 +82,7 @@ export function loadSite(config) {
     labtests: readDirJSON(path.join(CONTENT, 'labtests')),
     research: readDirJSON(path.join(CONTENT, 'research')),
     // 第二十九輪（ARCHITECTURE 34）：疫情報導文章，一篇一檔；卷期頁由 issueId 相同的文章自動組成
-    articles: readDirJSON(path.join(CONTENT, 'articles')),
+    articles: readDirJSON(path.join(CONTENT, 'articles')).map((a) => (a.articleType ? { ...a, articleType: normalizeCategory(a.articleType) } : a)), // 舊代號（outbreak-report…）對應到分類主檔
     // 第七輪（ARCHITECTURE 15.1）：人才招募（人事室）與採購公告（秘書室）
     jobs: readDirJSON(path.join(CONTENT, 'jobs')),
     tenders: readDirJSON(path.join(CONTENT, 'tenders')),

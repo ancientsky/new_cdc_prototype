@@ -528,6 +528,20 @@ body.adm { background: var(--paper); color: var(--ink); min-height: 100vh; displ
 .adm-te-row__tools { display: flex; gap: 4px; margin-left: auto; }
 .adm-te-row__body { width: 100%; font-family: inherit; }
 .adm-te-fig__no { width: 5em; }
+/* 第三十五輪：圖檔縮圖、拖放、分類管理、切段備註 */
+.adm-te-fig__body { display: flex; gap: var(--sp-2); align-items: flex-start; flex-wrap: wrap; margin: var(--sp-1) 0; }
+.adm-te-fig__body > .adm-grid { flex: 1 1 320px; }
+.adm-te-fig__thumb { max-width: 120px; height: auto; border: 1px solid var(--line); border-radius: var(--radius-sm); background: #fff; }
+#te-f.is-drop { outline: 2px dashed var(--green-600); outline-offset: 4px; background: var(--green-50, #f1f8f3); }
+.adm-te-cats td, .adm-te-cats th { padding: 2px 6px; font-size: var(--fs-sm); }
+.adm-te-cats .adm-input--sm { padding: 2px 6px; font-size: var(--fs-sm); }
+.adm-te-cat__order { width: 4em; }
+.adm-te-notes { margin: 0 0 var(--sp-1); padding-left: 1.2em; }
+.adm-pv__affils { list-style: none; margin: 2px 0 0; padding: 0; font-size: var(--fs-xs); color: var(--ink-3); }
+.adm-pv__fig img { max-width: 100%; height: auto; display: block; margin: var(--sp-1) 0; }
+.adm-inline { display: flex; gap: var(--sp-1); align-items: center; flex-wrap: wrap; }
+.adm-inline > input { flex: 1 1 200px; }
+.adm-text-warn { color: var(--warn-ink, #8a5a00); }
 .adm-te-un { white-space: pre-wrap; font-size: var(--fs-xs); max-height: 160px; overflow: auto; margin: var(--sp-2) 0 0; }
 /* 預覽：文章頁的摘要框、重點框、圖表、目錄 */
 .adm-pv__titleen { margin: 0; font-style: italic; color: var(--ink-2); font-size: var(--fs-sm); }

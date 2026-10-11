@@ -15,7 +15,12 @@ function sanitize(htmlStr) {
 // CommonMark 的強調規則在中日韓文裡常失效（「常見**咳嗽**、」兩側都是非空白字元，** 既是左側也是右側分隔符，無法開啟），
 // 先把 **粗體** 轉成 <strong>，再交給 marked；行內 code 區塊不處理。
 export function cjkStrong(src) {
-  return String(src).split(/(`[^`\n]*`)/).map((seg, i) => (i % 2 ? seg : seg.replace(/\*\*([^*\n]+?)\*\*/g, '<strong>$1</strong>'))).join('');
+  return String(src).split(/(`[^`\n]*`)/).map((seg, i) => (i % 2 ? seg : supSub(seg.replace(/\*\*([^*\n]+?)\*\*/g, '<strong>$1</strong>')))).join('');
+}
+// 第三十五輪：上標與下標。Markdown 沒有標準寫法，採 Pandoc 慣例：^上標^、~下標~（兩端不可有空白，所以「~~刪除線~~」不受影響）。
+// 用途：疫情報導正文裡的註記（如「資料來源^1^」）、化學式（CO~2~）；作者的服務單位上標不用這個，由 authorNotes() 產生。
+export function supSub(seg) {
+  return seg.replace(/\^([^\s^]{1,20})\^/g, '<sup>$1</sup>').replace(/(?<!~)~([^\s~]{1,20})~(?!~)/g, '<sub>$1</sub>');
 }
 
 // ── 第八輪（ARCHITECTURE 16.1）：內文圖片 ──

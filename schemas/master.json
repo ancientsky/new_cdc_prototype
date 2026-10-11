@@ -5,93 +5,397 @@
   "$defs": {
     "unit": {
       "type": "object",
-      "required": ["id", "name"],
+      "required": [
+        "id",
+        "name"
+      ],
       "properties": {
-        "id": { "type": "string", "pattern": "^unit\\." },
-        "name": { "type": "string" },
-        "nameEn": { "type": "string" },
-        "kind": { "enum": ["division", "center", "office", "regional", "staff", "committee"] },
-        "stewardTitle": { "type": "string" },
-        "contact": { "type": "string" },
-        "publishes": { "type": "boolean" },
-        "note": { "type": "string" },
-        "slug": { "type": "string", "pattern": "^[a-z0-9-]+$", "description": "第十八輪：單位介紹頁路徑 /about/units/{slug}/" },
-        "intro": { "type": "string", "description": "單位簡介（中文）；introVerified=false 表示原型撰寫、待單位確認" },
-        "introEn": { "type": "string" },
-        "introVerified": { "type": "boolean" },
-        "duties": { "type": "array", "items": { "type": "string" } },
-        "officialUrl": { "type": ["string", "null"], "description": "cdc.gov.tw 上的單位介紹頁；開發環境無法確認，先留 null" },
-        "officialUrlVerified": { "type": "boolean" },
-        "officialUrlNote": { "type": "string" },
-        "dutiesSource": { "type": "string", "description": "主要業務的出處（例：處務規程）" }
+        "id": {
+          "type": "string",
+          "pattern": "^unit\\."
+        },
+        "name": {
+          "type": "string"
+        },
+        "nameEn": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "division",
+            "center",
+            "office",
+            "regional",
+            "staff",
+            "committee"
+          ]
+        },
+        "stewardTitle": {
+          "type": "string"
+        },
+        "contact": {
+          "type": "string"
+        },
+        "publishes": {
+          "type": "boolean"
+        },
+        "note": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$",
+          "description": "第十八輪：單位介紹頁路徑 /about/units/{slug}/"
+        },
+        "intro": {
+          "type": "string",
+          "description": "單位簡介（中文）；introVerified=false 表示原型撰寫、待單位確認"
+        },
+        "introEn": {
+          "type": "string"
+        },
+        "introVerified": {
+          "type": "boolean"
+        },
+        "duties": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "officialUrl": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "cdc.gov.tw 上的單位介紹頁；開發環境無法確認，先留 null"
+        },
+        "officialUrlVerified": {
+          "type": "boolean"
+        },
+        "officialUrlNote": {
+          "type": "string"
+        },
+        "dutiesSource": {
+          "type": "string",
+          "description": "主要業務的出處（例：處務規程）"
+        }
       }
     },
     "diseaseMaster": {
       "type": "object",
-      "required": ["id", "slug", "name", "nameEn", "legalCategory"],
+      "required": [
+        "id",
+        "slug",
+        "name",
+        "nameEn",
+        "legalCategory"
+      ],
       "properties": {
-        "id": { "type": "string", "pattern": "^disease\\." },
-        "slug": { "type": "string" },
-        "name": { "type": "string" },
-        "nameEn": { "type": "string" },
-        "aliases": { "type": "array", "items": { "type": "string" } },
-        "legalCategory": { "type": "integer", "minimum": 1, "maximum": 5 },
-        "icd10": { "type": "array", "items": { "type": "string" } },
-        "notifyWithinHours": { "type": ["integer", "null"] },
-        "transmission": { "type": "array", "items": { "type": "string" } },
-        "hasPage": { "type": "boolean" },
-        "datasets": { "type": "array", "items": { "type": "string" } },
-        "owner": { "type": "string" },
-        "zhuyin": { "type": "string" },
-        "strokes": { "type": "integer" },
-        "i18n": { "type": "object" }
+        "id": {
+          "type": "string",
+          "pattern": "^disease\\."
+        },
+        "slug": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "nameEn": {
+          "type": "string"
+        },
+        "aliases": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "legalCategory": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "icd10": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "notifyWithinHours": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "transmission": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "hasPage": {
+          "type": "boolean"
+        },
+        "datasets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "owner": {
+          "type": "string"
+        },
+        "zhuyin": {
+          "type": "string"
+        },
+        "strokes": {
+          "type": "integer"
+        },
+        "i18n": {
+          "type": "object"
+        }
       }
     },
     "glossaryTerm": {
       "type": "object",
-      "required": ["id", "zh-TW"],
+      "required": [
+        "id",
+        "zh-TW"
+      ],
       "properties": {
-        "id": { "type": "string", "pattern": "^term\\." },
-        "zh-TW": { "type": "string" },
-        "aliases": { "type": "array", "items": { "type": "string" } },
-        "en": { "type": "string" }, "ja": { "type": "string" }, "tl": { "type": "string" }, "vi": { "type": "string" }, "id_": { "type": "string" }, "th": { "type": "string" },
-        "domain": { "enum": ["disease", "vaccine", "org", "procedure", "place", "general"] },
-        "locked": { "type": "boolean" },
-        "deprecated": { "type": "array", "items": { "type": "string" }, "description": "不再使用的舊名（如「武漢肺炎」）" },
-        "refs": { "type": "array", "items": { "type": "string" } },
-        "note": { "type": "string" },
-        "definition": { "type": "string", "description": "第二十五輪：公開詞彙頁（/glossary/）顯示的白話定義；沒填則顯示 note" }
+        "id": {
+          "type": "string",
+          "pattern": "^term\\."
+        },
+        "zh-TW": {
+          "type": "string"
+        },
+        "aliases": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "en": {
+          "type": "string"
+        },
+        "ja": {
+          "type": "string"
+        },
+        "tl": {
+          "type": "string"
+        },
+        "vi": {
+          "type": "string"
+        },
+        "id_": {
+          "type": "string"
+        },
+        "th": {
+          "type": "string"
+        },
+        "domain": {
+          "enum": [
+            "disease",
+            "vaccine",
+            "org",
+            "procedure",
+            "place",
+            "general"
+          ]
+        },
+        "locked": {
+          "type": "boolean"
+        },
+        "deprecated": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "不再使用的舊名（如「武漢肺炎」）"
+        },
+        "refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "note": {
+          "type": "string"
+        },
+        "definition": {
+          "type": "string",
+          "description": "第二十五輪：公開詞彙頁（/glossary/）顯示的白話定義；沒填則顯示 note"
+        }
       }
     },
     "scheduleItem": {
       "type": "object",
-      "required": ["id", "vaccine", "label", "ageMinMonths", "stage", "funded"],
+      "required": [
+        "id",
+        "vaccine",
+        "label",
+        "ageMinMonths",
+        "stage",
+        "funded"
+      ],
       "properties": {
-        "id": { "type": "string", "pattern": "^sched\\." },
-        "vaccine": { "type": "string", "pattern": "^vaccine\\." },
-        "label": { "type": "string" },
-        "labelEn": { "type": "string" },
-        "dose": { "type": "string", "description": "劑次文字，例「第 1 劑」「每年 1 劑」" },
-        "ageMinMonths": { "type": "number", "minimum": 0, "description": "建議年齡下限（月；成人以歲 × 12）" },
-        "ageMaxMonths": { "type": ["number", "null"], "description": "建議年齡上限（月）；null＝不設上限" },
-        "ageLabel": { "type": "string", "description": "人看的年齡寫法，例「出生滿 5 個月（建議 5–8 個月）」" },
-        "stage": { "enum": ["infant", "child", "school", "adult", "pregnancy", "older", "risk"], "description": "時程地圖的分段：嬰幼兒、學齡前、學齡、成人、孕婦、長者、特殊情況" },
-        "funded": { "enum": ["public", "self", "conditional"], "description": "公費／自費／符合條件公費" },
-        "group": { "type": "string", "description": "公費對象身分（條件）" },
-        "interval": { "type": "string" },
-        "recurring": { "enum": ["yearly"] },
-        "startAt": { "type": "string", "format": "date" },
-        "endAt": { "type": "string", "format": "date" },
-        "note": { "type": "string" },
-        "source": { "type": "object", "required": ["title", "url"], "properties": { "title": { "type": "string" }, "url": { "type": "string" } } },
-        "verified": { "type": "boolean", "description": "承辦人已核對過（false 時前台顯示「待確認」）" }
+        "id": {
+          "type": "string",
+          "pattern": "^sched\\."
+        },
+        "vaccine": {
+          "type": "string",
+          "pattern": "^vaccine\\."
+        },
+        "label": {
+          "type": "string"
+        },
+        "labelEn": {
+          "type": "string"
+        },
+        "dose": {
+          "type": "string",
+          "description": "劑次文字，例「第 1 劑」「每年 1 劑」"
+        },
+        "ageMinMonths": {
+          "type": "number",
+          "minimum": 0,
+          "description": "建議年齡下限（月；成人以歲 × 12）"
+        },
+        "ageMaxMonths": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "建議年齡上限（月）；null＝不設上限"
+        },
+        "ageLabel": {
+          "type": "string",
+          "description": "人看的年齡寫法，例「出生滿 5 個月（建議 5–8 個月）」"
+        },
+        "stage": {
+          "enum": [
+            "infant",
+            "child",
+            "school",
+            "adult",
+            "pregnancy",
+            "older",
+            "risk"
+          ],
+          "description": "時程地圖的分段：嬰幼兒、學齡前、學齡、成人、孕婦、長者、特殊情況"
+        },
+        "funded": {
+          "enum": [
+            "public",
+            "self",
+            "conditional"
+          ],
+          "description": "公費／自費／符合條件公費"
+        },
+        "group": {
+          "type": "string",
+          "description": "公費對象身分（條件）"
+        },
+        "interval": {
+          "type": "string"
+        },
+        "recurring": {
+          "enum": [
+            "yearly"
+          ]
+        },
+        "startAt": {
+          "type": "string",
+          "format": "date"
+        },
+        "endAt": {
+          "type": "string",
+          "format": "date"
+        },
+        "note": {
+          "type": "string"
+        },
+        "source": {
+          "type": "object",
+          "required": [
+            "title",
+            "url"
+          ],
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            }
+          }
+        },
+        "verified": {
+          "type": "boolean",
+          "description": "承辦人已核對過（false 時前台顯示「待確認」）"
+        }
       },
       "additionalProperties": false
     },
     "country": {
       "type": "object",
-      "required": ["iso2", "name", "nameEn"],
-      "properties": { "iso2": { "type": "string" }, "name": { "type": "string" }, "nameEn": { "type": "string" }, "region": { "type": "string" } }
+      "required": [
+        "iso2",
+        "name",
+        "nameEn"
+      ],
+      "properties": {
+        "iso2": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "nameEn": {
+          "type": "string"
+        },
+        "region": {
+          "type": "string"
+        }
+      }
+    },
+    "bulletinCategory": {
+      "type": "object",
+      "required": [
+        "key",
+        "label"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "key": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]{1,30}$",
+          "description": "網址與 JSON 用的代號（/publications/bulletin/{key}/），建立後不要改"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "description": "中文名稱（與官網「疫情報導」左側分類一致）"
+        },
+        "labelEn": {
+          "type": "string"
+        },
+        "order": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "description": {
+          "type": "string"
+        },
+        "retiredAt": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "description": "停用日：之後新文章不可選，舊文章仍顯示"
+        }
+      }
     }
   }
 }

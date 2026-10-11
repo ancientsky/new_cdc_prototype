@@ -1924,6 +1924,18 @@ const ROWS_R29 = {
   'teb.issues': ['其他卷期', 'Other issues'],
   'teb.about': ['《疫情報導》為疾管署發行之期刊，每月出刊 2 期；每篇文章都可直接閱讀全文、下載 PDF 與複製引用格式。', 'The Taiwan Epidemiology Bulletin is published twice a month by Taiwan CDC. Every article can be read in full online, downloaded as PDF and cited.'],
   'teb.issn': ['ISSN', 'ISSN'],
+  // 第三十五輪：作者註記、DOI、分類頁
+  'teb.affiliation': ['服務單位', 'affiliation'],
+  'teb.affiliations': ['作者服務單位', 'Author affiliations'],
+  'teb.home': ['《疫情報導》', 'Taiwan Epidemiology Bulletin'],
+  'teb.categories': ['文章分類', 'Categories'],
+  'teb.count': ['{n} 篇', '{n} articles'],
+  'teb.category.empty': ['這個分類還沒有全文文章。', 'No full-text articles in this category yet.'],
+  'teb.latest.articles': ['最新文章', 'Latest articles'],
+  'teb.allissues': ['歷年卷期', 'All issues'],
+  'teb.pdf.latest': ['最新一期 PDF', 'Latest issue PDF'],
+  'teb.masthead': ['本刊物簡介', 'About the Bulletin'],
+  'teb.masthead.text': ['《疫情報導》（Taiwan Epidemiology Bulletin）由衛生福利部疾病管制署發行，刊載疫情調查、監測分析與防疫實務文章；每篇文章都有 DOI，可直接線上閱讀全文、下載 PDF 與複製引用格式。投稿須知與編輯委員會請洽疫情中心。', 'The Taiwan Epidemiology Bulletin is published by Taiwan CDC and carries outbreak investigations, surveillance analyses and public-health practice articles. Every article has a DOI and can be read online, downloaded as PDF and cited.'],
 };
 for (const [key, vals] of Object.entries(ROWS_R29)) vals.forEach((v, i) => { if (v != null && v !== '') STRINGS[ORDER[i]][key] = v; });
 
