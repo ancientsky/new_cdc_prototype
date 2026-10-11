@@ -58,6 +58,7 @@ export const NAV = [
   { key: 'todos', href: '/admin/todos/', label: '連動待辦', count: 'todos' },
   { key: 'ai-status', href: '/admin/ai-status/', label: 'AI 開關' },
   { key: 'reports', href: '/admin/reports/', label: '回報' },
+  { key: 'ask-log', href: '/admin/ask-log/', label: '查詢紀錄' }, // 第四十一輪：智慧問答哪些問題答不出來（docs/ask-log.md）
   { key: 'eval', href: '/admin/eval/', label: '評估' },
   { key: 'dashboard', href: '/admin/', label: '儀表板' },
 ];

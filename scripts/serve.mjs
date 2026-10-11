@@ -6,6 +6,7 @@ import { config } from '../site.config.mjs';
 import { ROOT } from './lib/load.mjs';
 import { createSubscriptionApi } from './lib/subscribe-mock.mjs';
 import { createGatewayApi } from './lib/gateway/index.mjs';
+import { createAskLogApi } from './lib/ask-log-mock.mjs';
 
 const DIST = process.env.DIST_DIR ? path.resolve(process.env.DIST_DIR) : path.join(ROOT, 'dist');
 const port = Number(process.argv[2] || process.env.PORT || 4173);
@@ -15,6 +16,9 @@ const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 
 const subscribeApi = createSubscriptionApi();
 // 第三十輪：寫入閘道（/api/gateway/*；後台的儲存草稿／送審／退回／核准上線，背後寫進 .local/gateway-repo/，見 scripts/lib/gateway/）。GATEWAY=off 可關閉
 const gateway = process.env.GATEWAY === 'off' ? null : createGatewayApi();
+// 第四十一輪：智慧問答查詢紀錄的模擬後端（POST /api/ask-log → .local/ask-log/；本機報表 /api/dev/ask-log/report，見 scripts/lib/ask-log-mock.mjs、docs/ask-log.md）
+// 要掛在訂閱模擬後端之前：訂閱模擬後端對不認得的 /api/ 路徑一律回 404。
+const askLogApi = createAskLogApi();
 
 http.createServer(async (req, res) => {
   const parsed = new URL(req.url, 'http://localhost');
@@ -22,11 +26,13 @@ http.createServer(async (req, res) => {
   try { url = decodeURIComponent(parsed.pathname); } catch { res.statusCode = 400; return res.end('bad request'); }
   if (config.basePath && url.startsWith(config.basePath)) url = url.slice(config.basePath.length) || '/';
   if (gateway && await gateway.handle(req, res, url, parsed.searchParams)) return;
+  if (await askLogApi.handle(req, res, url, parsed.searchParams)) return;
   if (await subscribeApi.handle(req, res, url, parsed.searchParams)) return;
   let file = path.join(DIST, url);
   if (fs.existsSync(file) && fs.statSync(file).isDirectory()) file = path.join(file, 'index.html');
   if (!fs.existsSync(file)) { file = path.join(DIST, '404.html'); res.statusCode = 404; }
   if (!fs.existsSync(file)) { res.statusCode = 404; return res.end('not found'); }
+  res.setHeader('Set-Cookie', askLogApi.cookie); // 第四十一輪：告訴答案頁「這裡有查詢紀錄模擬後端」（只是標記，不含資料）
   res.setHeader('Content-Type', types[path.extname(file)] ?? 'application/octet-stream');
   fs.createReadStream(file).pipe(res);
-}).listen(port, () => console.log(`http://localhost:${port}${config.basePath}/\n訂閱模擬後端：/api/health；模擬信件 → ${path.relative(ROOT, subscribeApi.outboxDir)}/${gateway ? `\n寫入閘道：/api/gateway/health（身分：${gateway.config.auth.mode}；版本庫 → ${path.relative(ROOT, gateway.config.git.dir)}/）` : ''}`));
+}).listen(port, () => console.log(`http://localhost:${port}${config.basePath}/\n訂閱模擬後端：/api/health；模擬信件 → ${path.relative(ROOT, subscribeApi.outboxDir)}/\n查詢紀錄模擬後端：POST /api/ask-log → ${path.relative(ROOT, askLogApi.dir)}/（報表：/api/dev/ask-log/report、/admin/ask-log/）${gateway ? `\n寫入閘道：/api/gateway/health（身分：${gateway.config.auth.mode}；版本庫 → ${path.relative(ROOT, gateway.config.git.dir)}/）` : ''}`));

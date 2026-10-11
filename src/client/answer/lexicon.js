@@ -207,6 +207,24 @@ export function matcherFor(name) {
   return new NameMatcher(pat, 'i', needleOf(chars, transition));
 }
 
+/**
+ * 第四十一輪：拉丁名「≥4 個字母-數字」（COVID-19）的字母詞幹（COVID）也當別名。
+ * 為什麼：拉丁名稱是整字比對（matcherFor 前後不能接字母數字），民眾打「covid」不會命中「COVID-19」，整題就查無；
+ * 但「H5N1」「EV71」這類沒有連字號、或字母不到 4 個的代號，砍掉數字會變成別的東西（H、EV），所以不套用。
+ * 歧義檢查：詞幹本來就是某個已知名稱（known）就不動（同一個東西＝資料已有；別的東西＝不能搶）；
+ * 兩個不同對象（key）推出同一個詞幹也都不加，寧可查無也不答錯，並把它記進 known，讓下一次呼叫（同義詞展開）也跳過。
+ * pairs：[[名稱, key]]；回傳 [[詞幹(小寫), key]]。
+ */
+export function latinStems(pairs, known) {
+  const out = new Map();
+  for (const [n, k] of pairs) {
+    const s = lc(/^([a-z]{4,})-\d+[a-z0-9]*$/i.exec(String(n ?? '').trim())?.[1]);
+    if (s && !known.has(s)) out.set(s, out.has(s) && out.get(s) !== k ? null : k);
+  }
+  for (const [s, k] of out) if (k === null) known.add(s); // 記下有歧義的詞幹：下一輪（同義詞展開）也不加
+  return [...out].filter(([, k]) => k !== null);
+}
+
 export function ownerNameOf(units, id) { return units.find((u) => u.id === id)?.name ?? id ?? ''; }
 export function unwrap(v) { return v && typeof v === 'object' && !Array.isArray(v) && 'data' in v && 'meta' in v ? v.data : v; }
 

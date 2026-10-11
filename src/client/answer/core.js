@@ -23,7 +23,7 @@
 
 // 第三十四輪（ARCHITECTURE 第 40 章）：規則表、斷詞、詞典、結構化資料拆到同目錄四個模組；本檔只留 createEngine。
 // 下面的 re-export 讓既有呼叫端（render.js、llm.js、scripts/lib/*、tests）照舊從 core.js import，不必改。
-import { CROSS_LANG, PARAPHRASE, annotationsOf, topicAnchorsOf, buildLexicon, isOutdated, lc, matcherFor, ownerNameOf, tr, unwrap } from './lexicon.js';
+import { CROSS_LANG, PARAPHRASE, annotationsOf, topicAnchorsOf, buildLexicon, isOutdated, latinStems, lc, matcherFor, ownerNameOf, tr, unwrap } from './lexicon.js';
 import { ANTIVIRAL_RE, CAT_ZH, CLOSED_MARK, NOTICE_TYPES, SCHEDULE_VACCINE_RE, VAXMAP_GROUP_OF, VAXMAP_GROUP_OF_DISEASE, WHICH_VACCINE_RE, ageHashOf, ageProfileOf, hoursPhrase, matchSchedule, mmssOf, normTravel, normalizeNotifyTable, notifyHoursLabel, vaxmapHref } from './structured.js';
 import { EN_STOP, VI_STOP, bigrams, detectInjection, maskPII, maskPIIDetailed, mdPlain, parseChineseNumber, parseTimeRange, rocDate, splitPlain, tokenize } from './text.js';
 import { ADMIT_RE, CAREERS_DETAIL_RE, HISTORICAL_WEIGHT, LAB_PUBLIC_RE, MEDIA_CUE, NEWS_CUE, OPEN_CUE, PERSON, PROCUREMENT_CUE, PROCUREMENT_DETAIL_RE, PUB_CUE, QUERY_FUNC_RE, RECRUIT_CUE, REFUSAL_RULES, RELEVANCE, VAX_WHERE_RE, RESEARCH_CUE, TRAVEL_CHANGE_KINDS, TRAVEL_CHANGE_RE, classifyIntent, focusOf, refusalCopy, titleHits } from './rules.js';
@@ -65,7 +65,6 @@ export function createEngine(rawDeps = {}) {
     for (const a of all) if (String(a).length >= 2) termToCanon.set(lc(a), canon);
     for (const d of g.deprecated ?? []) deprecatedTo.set(d, canon);
   }
-  const termMatchers = [...termToCanon.entries()].map(([alias, canon]) => ({ alias, canon, re: matcherFor(alias) })).filter((x) => x.re).sort((a, b) => b.alias.length - a.alias.length);
 
   // 實體：疾病、疫苗、國家（名稱、別名、英文名；詞彙主檔 refs 也算）
   const entityMatchers = [];
@@ -81,7 +80,12 @@ export function createEngine(rawDeps = {}) {
   }
   for (const v of vaccines) for (const n of [v.name, v.title, ...(v.aliases ?? []), v.nameEn, v.slug && v.slug.length <= 5 ? v.slug.toUpperCase() : null]) addEntity('vaccine', v.id, n);
   for (const c of countries) for (const n of [c.name, c.nameEn, ...(c.aliases ?? [])]) addEntity('country', c.iso2 ?? c.id, n);
+  // 第四十一輪：COVID-19 → 詞幹 COVID 也當別名（先實體、後同義詞展開；實體那輪判定有歧義的詞幹，展開那輪也跳過。規則與「為什麼」見 lexicon.js latinStems）
+  const knownNames = new Set([...termToCanon.keys(), ...entityMatchers.map((m) => lc(m.name))]);
+  for (const [s, k] of latinStems(entityMatchers.map((m) => [m.name, `${m.kind}\t${m.id}`]), knownNames)) addEntity(...k.split('\t'), s);
+  for (const [s, canon] of latinStems([...termToCanon], knownNames)) termToCanon.set(s, canon);
   entityMatchers.sort((a, b) => b.name.length - a.name.length);
+  const termMatchers = [...termToCanon.entries()].map(([alias, canon]) => ({ alias, canon, re: matcherFor(alias) })).filter((x) => x.re).sort((a, b) => b.alias.length - a.alias.length);
 
   const lex = buildLexicon({ diseases, glossary, vaccines, units });
   const { phrasesIn: lexiconPhrasesIn, falseTokensFor, chunkHay } = lex;

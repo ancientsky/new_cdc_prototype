@@ -16,6 +16,7 @@
     "dev": "node scripts/build.mjs && node scripts/serve.mjs",
     "a11y": "node scripts/a11y.mjs",
     "pii": "node scripts/pii-scan.mjs",
+    "ask-log:report": "node scripts/ask-log-report.mjs",
     "gen:map": "node scripts/gen-world-map.mjs",
     "lint": "eslint . --max-warnings=0",
     "format:check": "prettier --check .",

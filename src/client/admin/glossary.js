@@ -41,4 +41,14 @@ $('#n-dl').addEventListener('click', () => downloadText(`${(build().id || 'term'
 // ?new=詞 → 由上架預處理的「未對應詞」帶入
 const nw = new URLSearchParams(location.search).get('new');
 if (nw) { $('#n-zh').value = nw; $('#new-term').scrollIntoView(); $('#n-id').focus(); }
+// 第四十一輪：?alias=民眾用語&canon=候選正名 → 由查詢紀錄報表（/admin/ask-log/）的「加入詞彙主檔」帶入。
+// canon 已在主檔 ⇒ 帶入該條目（ID、正名、原有別名＋新別名），下方檢查會提示「已存在」：請改主檔裡那一條，不要新增重複詞條。
+const sp = new URLSearchParams(location.search), alias = sp.get('alias')?.trim(), canon = sp.get('canon')?.trim();
+if (alias) {
+  const g = canon && G.find((x) => x.zh === canon || x.aliases.includes(canon));
+  $('#n-zh').value = g?.zh ?? canon ?? alias;
+  if (g) $('#n-id').value = g.id;
+  $('#n-aliases').value = [...new Set([...(g?.aliases ?? []), ...(canon ? [alias] : [])])].join('、');
+  $('#new-term').scrollIntoView(); $('#n-aliases').focus();
+}
 paint();

@@ -2021,3 +2021,20 @@ README 第四十輪有逐項說明，這裡只記工程上新增的契約與門�
 
 五位工程師平行做、各自在 git worktree 分支上提交，由本輪負責人合併驗收。合併衝突集中在 `.prettierignore` 放行清單、`eval-set.json` 末尾、`docs/ask-search-llm.md` 末尾與一個 import 列，全部「兩邊都保留」即可；真正的互相影響只有一處：多語組新增的來臺專區讓引擎組「站內沒有來臺內容就查無」的規則與評估題失效，合併後由引擎組在合併結果上重新調整。**教訓：平行開發時，改「規則」的人和改「內容」的人要在合併後再跑一次評估集，單獨各自全綠不代表合起來全綠。**
 
+## 46. 第四十一輪（2026-10-11）：民眾用語與官方用語的橋（covid、做愛）、智慧問答查詢紀錄
+
+README 第四十一輪有逐項說明；這裡只記工程契約。詳細設計：docs/ask-search-llm.md §12（同義詞）、docs/ask-log.md（查詢紀錄）。
+
+| 領域 | 新契約／門檻 | 在哪裡 |
+| --- | --- | --- |
+| 詞彙主檔 | `term.covid-19` 別名加 COVID、Covid、新冠病毒；新詞條 `term.sexual-contact`（性行為，口語別名，`refs: []`）；詞界詞條 `term.cross-immunity`（讓「短暫性交叉免疫」遮住「性交」） | `content/master/glossary.json`、`diseases.json` |
+| 引擎通則 | `latinStems(pairs, known)`：`^[A-Za-z]{4,}-\d+[A-Za-z0-9]*$` 的名稱把字母詞幹也登記為同一對象的別名；詞幹已是任何已知名稱或由兩個對象推出 ⇒ 不加（歧義檢查，實體與同義詞兩輪一致）。今天只有 COVID-19 符合，規則是保險 | `src/client/answer/lexicon.js`、`core.js`（實體比對器先建、`termMatchers` 後建） |
+| 評估集 | r12：BD009–BD016（covid／Covid／新冠病毒；做愛／上床／性交／做愛會得什麼病；專業模式「性交」不得引登革熱教材） | `content/governance/eval-set.json`、`tests/round41-synonyms.test.mjs` |
+| 查詢紀錄：前端 | `log.js` 在答案畫完後 `import()`（不計入引擎 240 KB 預算；測試檢查沒有靜態 import）；事件欄位白名單 `askLogEvent()`；`fetch keepalive + credentials:'omit' + referrerPolicy:'no-referrer'`，sendBeacon 只在無 fetch 且跨網域時；DNT／GPC 不送；`mock` 只在 loopback 且有標記 cookie `cdc_ask_log_mock=1`（`serve.mjs` 設）才送 | `src/client/answer/log.js`、`ui.js`（一行掛點）、`src/templates/public/ask.mjs`（`data-ask-log*`） |
+| 查詢紀錄：設定 | `askLog`：`ASK_LOG_MODE`（mock／post／off）、`ASK_LOG_ENDPOINT`（https）、`ASK_LOG_RETENTION_DAYS`（90）；矛盾設定建置失敗；post 端點只加進 CSP `connect-src` | `site.config.mjs`、`scripts/lib/forms.mjs`（`askLogSetting/Errors/Origins`）、`emit-headers.mjs`、`build.mjs` |
+| 查詢紀錄：收件端契約 | `POST /api/ask-log`（text/plain 或 JSON，≤2 KB，白名單欄位、再遮蔽、收件端時鐘到分鐘、每來源每分鐘 60 筆、204）；`GET /api/dev/ask-log/report` 只限 loopback；`.local/ask-log/YYYY-MM-DD.ndjson`，到期自動刪 | `scripts/lib/ask-log-mock.mjs`（正式端的參考實作）、docs/ask-log.md §7 |
+| 查詢紀錄：報表 | `npm run ask-log:report`：`normalizeQuery`（NFKC、小寫、空白、結尾標點）；k-匿名 `--min`（預設 3 次或 3 天）未達門檻只計數不列文字；`UNANSWERED = no-match、no-source`；疑似同義詞候選（相同／前綴／後綴／包含／編輯距離，整句無候選再拆單字）；`llmPass` 掛點未實作 | `scripts/lib/ask-log-report.mjs`、`scripts/ask-log-report.mjs` |
+| 後台 | `/admin/ask-log/`（讀本機報表或上傳 report.json）；`/admin/glossary/#new-term?alias=&canon=` 預填新增表單 | `src/templates/admin/ask-log.mjs`、`src/client/admin/{ask-log,glossary}.js` |
+| 個資 | 原始紀錄與報表只在 `.local/`（git 忽略）或機關儲存；`npm run pii` 範圍不變；隱私權政策頁待法務文字 | docs/ask-log.md §8 |
+
+設計取捨：引擎只加「有規律、可做歧義檢查」的通則，語意對應（做愛＝性行為）一律寫進詞彙主檔；紀錄的設計先定「不記什麼」（無 IP、無 cookie、無 Referer、時間到分鐘、遮兩次、k-匿名、原型站不送），再定記什麼。
