@@ -1664,6 +1664,44 @@
       "note": "同 VA011，單純年齡寫法"
     },
     {
+      "id": "VA015",
+      "category": "vaccine",
+      "q": "2歲前要打哪些疫苗",
+      "expect": {
+        "intent": "vaccine",
+        "mustInclude": [
+          "B 型肝炎",
+          "五合一",
+          "卡介苗",
+          "MMR",
+          "日本腦炎",
+          "A 型肝炎"
+        ],
+        "mustNotInclude": [
+          "Tdap"
+        ]
+      },
+      "note": "第三十七輪：「N 歲前」＝出生到未滿 N 歲（0–23 個月）。修正前被當成「2 歲」那一年（24–35 個月），只答流感、新冠、日本腦炎第 2 劑"
+    },
+    {
+      "id": "VA016",
+      "category": "vaccine",
+      "view": "pro",
+      "q": "寶寶兩歲以前要打的疫苗有哪些",
+      "expect": {
+        "intent": "vaccine",
+        "mustInclude": [
+          "B 型肝炎",
+          "五合一",
+          "卡介苗"
+        ],
+        "mustNotInclude": [
+          "Tdap"
+        ]
+      },
+      "note": "第三十七輪：醫事人員檢視把疫苗問句改判 professional，年齡＋「疫苗有哪些」仍須走時程主檔；修正前答成孕婦 Tdap 或查無"
+    },
+    {
       "id": "T001",
       "category": "stats",
       "q": "近五年登革熱本土病例",

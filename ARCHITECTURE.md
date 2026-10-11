@@ -1954,3 +1954,18 @@ Yulun 問：資料治理還沒辦法很全面，不同組室上架類似答案�
 - `/vaccines/` 的 `immunizationHub()`（`vaccines.mjs`）：七格導覽，連結只指既有路由或已發布內容（`services`／`topics`／`pages` 以 slug 找，找不到就不輸出那一行；`/v1/` 連結 `noLang`）。
 - 新內容：`service.vaccine-injury-compensation`（`serviceType: other`）、`page.immunization-committees`（slug `vaccines/committees` → `/vaccines/committees/`）。兩者 `verification.status: pending`，走第二十八輪的待確認機制（頁首警示、來源卡加註、`content-unverified` 待辦）。
 - 對照表與理由在 `docs/immunization-ia.md`；沒有新型別、沒有新 schema。
+
+## 43. 第三十七輪（2026-10-11）：「N 歲前」年齡解析、醫事人員檢視的時程路徑
+
+問題與修正（`src/client/answer/structured.js`、`core.js`）：
+
+| | 修正前 | 修正後 |
+| --- | --- | --- |
+| `numericAge('2歲前…')` | 落到「單純 N 歲」規則 → `{24, 35}` | 新規則排在「未滿／以下」之前：`N 歲(以前\|之前\|前)` → `{0, N×12−1, 'N 歲前'}`；`N 個月(以前\|之前\|前)` 且後面接「疫苗／接種／打」、不接「打過」→ `{0, N−1}` |
+| 醫事人員檢視（`view: 'pro'`） | `classifyIntent` 的 `pro.view` 把疫苗問句改判 `professional`，時程路徑條件 `intent === 'vaccine'` 不成立 → 全文檢索 | 有年齡、`WHICH_VACCINE_RE` 命中、`intentScores.vaccine > 0`、且 `intentReasons` 除了 `pro.view`／`pro.view-override` 沒有其他 `pro.*`（沒有專業詞）⇒ 改回 `vaccine`，原因記 `vac.age-profile-pro` |
+| `WHICH_VACCINE_RE` | 只認「哪些疫苗」「要打什麼」 | 加倒裝「疫苗（有／是）哪些／什麼」 |
+| `scheduleAnswer` 的 `PUB_MAX` | 8 | 12（0–23 個月有 10 種公費疫苗） |
+
+為什麼規則要排在「單純 N 歲」前面：`numericAge` 是「第一個命中就回傳」，越寬的規則要越後面，否則會吃掉較具體的說法（第三十一輪「性病」吃掉「急性病毒性」是同一類問題，只是發生在斷詞）。新增年齡說法時，先在測試寫「新說法」與「既有說法不受影響」兩組，再決定插在哪一條前面。
+
+LLM 的位置：`ui.js` 對結構化時程答案也會叫 LLM，但模型拿到的 `retrieved` 就是 `scheduleAnswer` 產生的句子；問句理解錯時模型只會改寫錯的範圍。查無（`refused`）時不叫模型。若要用模型補問句理解，做法見 `docs/ask-search-llm.md` §8.6（模型輸出結構化條件，程式查主檔），不是讓模型摘要檢索結果。
