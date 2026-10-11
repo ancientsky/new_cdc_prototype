@@ -1,6 +1,6 @@
 // 開發者入口 /developers/：API 文件、機讀版說明、cdc: 詞彙表、授權與引用規範、嵌入範例。
 // 端點清單與 ARCHITECTURE.md 4.2 一致；範例回應取真實建置資料（slim 後的前兩筆）。
-import { html, raw, esc } from '../../../scripts/lib/render.mjs';
+import { html } from '../../../scripts/lib/render.mjs';
 import { siteOrigin } from '../../../site.config.mjs';
 import { proStyles } from '../pro/_styles.mjs';
 import { vaxmapLink } from './_partials.mjs';

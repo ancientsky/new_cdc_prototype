@@ -15,7 +15,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { BASE, esc, fakeId, P, H, A, mdHtml, shell, qaPanels } from './sim-export.mjs';
+import { BASE, esc, fakeId, H, A, mdHtml, shell, qaPanels } from './sim-export.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
 const CONTENT = path.join(ROOT, 'content');

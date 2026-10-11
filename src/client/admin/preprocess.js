@@ -1088,7 +1088,6 @@ export function reviewersOf(lane, type) {
   if (lane.id !== 'standard') return [];
   return (TIER1.includes(schemaType(type)) ? lane.tier1Reviewers : lane.reviewers) ?? lane.reviewers ?? [];
 }
-const joinNames = (ids, names = {}) => ids.map((u) => names[u] ?? u).join('、') || '指定審核人';
 const shortUnit = (n) => String(n ?? '').replace(/（.*）$/, '');
 /** 車道一句說明（§17.4 的三句）。names：{unit id: 單位名}。 */
 export function laneSentence(lane, type, names = {}) {

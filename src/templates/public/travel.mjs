@@ -2,7 +2,6 @@
 // 資料：site.snapshots.countryLevels（每國一筆、Diseases[]；Background:true＝全球背景提醒，不逐國列）、countryEvents（事件流，算近 30 天變化）、travelAlerts（近 30 天消息）。欄位名容錯，缺新欄位時退回既有行為。
 // 針對性等級＝排除背景提醒後的最高等級；沒有針對性建議的國家頁面刻意保持平靜（綠勾＋一般預防措施）。契約見 ARCHITECTURE.md §12.2。
 import { html, raw, jsonScript } from '../../../scripts/lib/render.mjs';
-import { config } from '../../../site.config.mjs';
 import * as JL from '../../../scripts/lib/jsonld.mjs';
 import { ldFor, pageHead, sectionHead, askBox, hrefFor, L, diseasePage, publishedOf, feedback, pill } from './_partials.mjs';
 import * as TravelMap from './_travel-map.mjs';
@@ -306,7 +305,7 @@ export function routesOf(master, diseaseName) {
 }
 
 function journey(ctx, c, tg) {
-  const { site, t, url } = ctx;
+  const { site, t } = ctx;
   const sep = ctx.lang === 'zh-TW' ? '、' : ', ';
   const groups = new Map(ROUTE_ORDER.map((r) => [r, []]));
   const other = [];

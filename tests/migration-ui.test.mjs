@@ -40,8 +40,6 @@ function fakeMigration(site, targetId = 'disease.dengue') {
   return site;
 }
 
-const base = govern();
-const dengue = () => base.byId.get('disease.dengue');
 const dctx = (site, lang = 'zh-TW', view = 'public') => makeCtx(site, lang, { path: '/diseases/dengue/', view });
 
 /* ───────── 專區導覽 ───────── */

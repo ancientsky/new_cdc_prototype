@@ -13,7 +13,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { BASE, esc, fakeId, P, LI, LIO, H, A, TABLE, mdHtml, pdfText, shell } from './sim-export.mjs';
+import { BASE, esc, fakeId, P, LI, LIO, H, A, TABLE, pdfText, shell } from './sim-export.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
 const CONTENT = path.join(ROOT, 'content');

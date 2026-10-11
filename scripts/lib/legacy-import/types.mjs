@@ -68,7 +68,7 @@ export function verdictFor(title, md) {
  * @returns {{ fields: object, pending: string[], notes: string[] }} pending＝填了佔位的欄位名；notes＝其他提示
  */
 export function extractFields(kind, ctx) {
-  const { title, markdown: md, mapTo, dm, pageUrl, publishedAt, updatedAt, exportedAt, media = [], assets = [], draftId, professional, short, rules } = ctx;
+  const { title, markdown: md, mapTo, dm, pageUrl, publishedAt, updatedAt, exportedAt, media = [], assets = [], draftId, professional, rules } = ctx;
   const pending = [];
   const notes = [];
   const kv = kvTable(md);

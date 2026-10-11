@@ -1,6 +1,6 @@
 // /admin/situation/ 疫情發布（規劃 6.4）：疫情中心人工發布四級狀態；預覽首頁卡；匯出 situation/current.json
 import { html } from '../../../scripts/lib/render.mjs';
-import { pageHead, adminMeta, dataScript, sitGov, unitOptions } from './_partials.mjs';
+import { pageHead, adminMeta, dataScript, sitGov } from './_partials.mjs';
 import { CARD_STYLES } from '../public/_partials.mjs';
 export { layout } from './_layout.mjs';
 

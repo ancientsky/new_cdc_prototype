@@ -1,6 +1,6 @@
 // /campaigns/：宣導 Banner 總覽。這就是 Banner 的「資料目錄」：進行中／即將開始／已結束，每則都有權責、上下架日與關聯內容。
 import { html, raw } from '../../../scripts/lib/render.mjs';
-import { ldFor, pageHead, hrefFor, isFallbackLink, L, unitName, unitLink, publishedOf, isExternal, imgSrc, itemPath, campaignState } from './_partials.mjs';
+import { ldFor, pageHead, hrefFor, isFallbackLink, L, unitLink, publishedOf, isExternal, imgSrc, itemPath, campaignState } from './_partials.mjs';
 
 export function meta(ctx) {
   return { title: ctx.t('campaigns.title'), description: ctx.t('campaigns.lead'), jsonLd: ldFor(ctx, null, [{ label: ctx.t('campaigns.title') }]) };

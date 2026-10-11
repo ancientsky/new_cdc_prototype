@@ -132,7 +132,6 @@ export function parseHtml(src) {
   return root;
 }
 
-const isEl = (n, ...tags) => n.t === 'el' && (!tags.length || tags.includes(n.tag));
 const styleOf = (n) => String(n.attrs?.style ?? '').toLowerCase().replace(/\s+/g, '');
 const textOf = (n) => (n.t === 'text' ? n.text : n.children.map(textOf).join(''));
 const hasBlockDesc = (n) => n.t === 'el' && n.children.some((c) => c.t === 'el' && !DROP.has(c.tag) && (BLOCKISH.has(c.tag) || hasBlockDesc(c)));

@@ -1,4 +1,4 @@
-import { $, $$, esc, store, v1, readEmbedded, onUnit, getUnit, unitLabel, url, fmtDT } from './common.js';
+import { $, esc, store, v1, readEmbedded, onUnit, getUnit, unitLabel, url, fmtDT } from './common.js';
 
 const D = readEmbedded('adm-review-data', { items: [], demo: [] });
 const TYPE = { disease: '疾病頁', faq: 'Q&A', news: '新聞稿', letter: '致醫界通函', clarification: '澄清', document: '文件', vaccine: '疫苗頁' };

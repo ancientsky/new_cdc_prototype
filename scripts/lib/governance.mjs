@@ -70,7 +70,7 @@ import { jobPiiErrors } from './validate.mjs';
 import { jobStageOf, tenderStageOf, resultTakenDown, resultHasList, RESULT_UNPUBLISH_NOTICE_DAYS } from '../../src/client/careers-rules.js';
 import { setAssetRegistry } from './markdown.mjs';
 import { articlePath } from '../../src/client/bulletin-rules.js';
-import { assetRegistryOf, assetUrl, extOf, imageLicenseProblems, needsAccessibleVersion } from './assets.mjs';
+import { assetRegistryOf, assetUrl, imageLicenseProblems, needsAccessibleVersion } from './assets.mjs';
 import { siteOrigin } from '../../site.config.mjs';
 import { loadLanes, laneOfItem, isScheduled, isPublic, nowOf, publishAtMs, taipeiDate, taipeiTime } from './lanes.mjs';
 

@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import { govern, memWriter, config } from './helpers.mjs';
 import { loadSite } from '../scripts/lib/load.mjs';
 import { validateSite } from '../scripts/lib/validate.mjs';
-import { emitApi, serverRedirects, legacyKey } from '../scripts/lib/emit-api.mjs';
+import { emitApi, serverRedirects } from '../scripts/lib/emit-api.mjs';
 import { MIGRATION_SEVERITY_BY_CATEGORY } from '../scripts/lib/governance.mjs';
 
 const TEMPLATE_ID = 'migration-template.disease';

@@ -4,7 +4,7 @@ import { md } from '../../../scripts/lib/markdown.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
 import { config } from '../../../site.config.mjs';
 import {
-  ldFor, breadcrumb, pageHead, provenance, alerts, alertBox, pageData, scopeTags, feedback, translationBadge, hrefFor, isFallbackLink, L, unitName, unitLink,
+  ldFor, breadcrumb, pageHead, provenance, alerts, pageData, scopeTags, feedback, translationBadge, hrefFor, isFallbackLink, L, unitName, unitLink,
   publishedOf, slugOf, diseasePage, diseaseName, itemPath, mediaCard, posterImg, fmtDur, isMediaOutdated, currentBasis, refItem, mdHeader, extLink,
 } from './_partials.mjs';
 
@@ -108,7 +108,6 @@ function transcript(ctx, m) {
 function detail(ctx, m) {
   const { site, t, fmtDate, lang } = ctx;
   const diseases = (m.diseases ?? []).map((id) => ({ id, page: diseasePage(ctx, id), dm: site.diseaseMasterById.get(id) }));
-  const outdated = isMediaOutdated(site, m);
   const langStatus = m.languages?.[lang]?.status;
   return html`${breadcrumb(ctx, trailOf(ctx, m))}
 <article class="c-article c-media-detail">

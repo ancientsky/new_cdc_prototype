@@ -2,7 +2,7 @@
 // 底線開頭，不會被當成頁面。契約見 ARCHITECTURE.md §12.3。
 // 所有字串由呼叫端傳入（i18n.js 不是本檔的檔案），皆有 zh-TW／英文預設值。
 import fs from 'node:fs';
-import { html, raw, esc } from '../../../scripts/lib/render.mjs';
+import { html, raw } from '../../../scripts/lib/render.mjs';
 
 const WORLD = JSON.parse(fs.readFileSync(new URL('../../data/world-paths.json', import.meta.url), 'utf8'));
 
