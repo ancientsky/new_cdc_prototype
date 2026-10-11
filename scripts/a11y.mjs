@@ -3,7 +3,8 @@
 // 用法：BASE_PATH='' node scripts/build.mjs && npm run a11y
 // - 本腳本「不建置」，只讀 dist/（或 DIST_DIR）；沒有 dist 會明確報錯。
 // - 每個樣板挑一頁代表，桌機 1280px 與手機 320px 各跑一次（320px 同時檢查橫向捲動，對應 WCAG 1.4.10 Reflow）。
-// - serious／critical 違規 → exit 1；moderate／minor 只列警告。
+// - serious／critical 違規 → exit 1；moderate／minor 只列警告（不擋合併），但數量會輸出：報告開頭、終端機最後一行，
+//   以及 A11Y_JSON=路徑 的機器可讀摘要（第四十輪 #83：CI 的 PR 留言讀這份，讓「不擋但有警告」看得到，不會悄悄累積）。
 // - 瀏覽器：CHROME_BIN 優先；其次本機 /opt/pw-browsers 內的 chromium；最後用 Playwright 內建（npx playwright install chromium）。
 // - 結果同時輸出 Markdown 摘要：A11Y_REPORT=路徑 可另存檔；在 GitHub Actions 會自動附加到 job summary。
 import http from 'node:http';
@@ -19,6 +20,7 @@ const BASE = (process.env.BASE_PATH ?? process.env.A11Y_BASE_PATH ?? '').replace
 /** 代表頁：每種樣板一頁；dist 內不存在的路徑會被略過並列警告 */
 export const PAGES = [
   '/', '/diseases/dengue/', '/diseases/', '/vaccines/', '/travel/', '/news/', '/faq/', '/ask/', '/situation/', '/data/', '/pro/',
+  '/ask/?q=%E7%99%BB%E9%9D%A9%E7%86%B1', // 第四十輪（#83）：答案卡渲染後的畫面（標題層級只有載入答案後才看得到，空的 /ask/ 掃不到）
   '/subscribe/', '/en/subscribe/', '/topics/antivenom/', '/admin/', '/admin/publish/', '/admin/review/', '/en/', '/vi/', // 第三十輪：複核區（線上審核區塊要有閘道才顯示，另在 tests/round30-gateway.test.mjs 的端到端跑 axe）
   '/documents/curriculum-dengue.2026-10-10/', // 第二十八輪：核心教材（長文件版面＋學習目標＋示範匯入警示）
   // 第二十八輪：全文搜尋——空狀態與「已有查詢結果」兩種畫面都要掃（結果清單是動態產生的）
@@ -76,10 +78,13 @@ async function main() {
     for (const vp of VIEWPORTS) {
       const ctx = await browser.newContext({ viewport: { width: vp.width, height: vp.height } });
       for (const p of PAGES) {
-        if (!exists(p)) { if (!skipped.includes(p)) skipped.push(p); continue; }
+        // 全文搜尋的「有結果」畫面要 Pagefind 索引；用 PAGEFIND=off 建置的 dist（本機快速檢查）沒有索引，列為略過而不是逾時失敗。CI 的 dist 一定有索引。
+        const noIndex = p.includes('/search/?q=') && !fs.existsSync(path.join(DIST, 'pagefind'));
+        if (noIndex || !exists(p)) { if (!skipped.includes(p)) skipped.push(p); continue; }
         const page = await ctx.newPage();
         try {
           await page.goto(`${origin}${p}`, { waitUntil: 'networkidle' });
+          if (p.includes('/ask/?q=')) await page.waitForSelector('#answer[aria-busy="false"]', { timeout: 15000 }); // 答案由前端引擎渲染，等到有內容才掃（逾時 ⇒ 失敗，比掃到空畫面誠實）
           if (p.includes('/search/?q=')) await page.waitForSelector('#search-results li', { timeout: 15000 }); // 全文搜尋：等 Pagefind 載入並畫出結果才掃（逾時 ⇒ 例外 ⇒ 整個檢測失敗，比掃到空畫面誠實）
           await page.waitForTimeout(300);
           const res = await new AxeBuilder({ page }).withTags(TAGS).analyze();
@@ -103,7 +108,12 @@ async function main() {
   md.push('## 無障礙檢測（axe-core）', '');
   md.push(`- 掃描：${runs} 次（${PAGES.length - skipped.length} 頁 × ${VIEWPORTS.map((v) => v.name).join('、')}）；規則集：${TAGS.join(', ')}`);
   if (skipped.length) md.push(`- 略過（dist 內沒有）：${skipped.join('、')}`);
-  md.push(`- 結果：**${blocking.length + overflow.length} 項阻擋**（serious／critical${overflow.length ? '＋320px 橫向捲動' : ''}）、${warn.length} 項警告（moderate／minor）`, '');
+  md.push(`- 結果：**${blocking.length + overflow.length} 項阻擋**（serious／critical${overflow.length ? '＋320px 橫向捲動' : ''}）、${warn.length} 項警告（moderate／minor）`);
+  // 警告依規則別統計（同一規則在不同頁、不同視窗各算一筆，與下方表格列數一致）
+  const warningRules = {};
+  for (const f of warn) warningRules[f.rule] = (warningRules[f.rule] ?? 0) + 1;
+  if (warn.length) md.push(`- 警告不擋合併，但請排進待辦：${Object.entries(warningRules).map(([r, n]) => `${r}×${n}`).join('、')}`);
+  md.push('');
   const table = (rows, title) => {
     if (!rows.length) return;
     md.push(`### ${title}`, '', '| 影響 | 規則 | 頁面 | 視窗 | 節點數 | 範例節點 |', '|---|---|---|---|---|---|');
@@ -121,6 +131,11 @@ async function main() {
   const report = md.join('\n');
   console.log(report);
   for (const f of blocking) console.log(`\n[${f.impact}] ${f.rule} @ ${f.page} (${f.vp})\n` + f.nodes.slice(0, 4).map((n) => `  - ${n.target}\n    ${n.html}`).join('\n'));
+  console.log(`\n[a11y] 阻擋 ${blocking.length + overflow.length}、警告 ${warn.length}（moderate／minor，不擋合併）${warn.length ? `：${Object.entries(warningRules).map(([r, n]) => `${r}×${n}`).join('、')}` : ''}`);
+  if (process.env.A11Y_JSON) {
+    const summary = { runs, blocking: blocking.length + overflow.length, warnings: warn.length, warningRules };
+    try { fs.writeFileSync(process.env.A11Y_JSON, `${JSON.stringify(summary)}\n`); } catch { /* 摘要寫不出去不影響結果 */ }
+  }
   if (process.env.A11Y_REPORT) fs.writeFileSync(process.env.A11Y_REPORT, `${report}\n`);
   if (process.env.GITHUB_STEP_SUMMARY) { try { fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${report}\n`); } catch { /* 摘要寫不進去不影響結果 */ } }
   process.exit(blocking.length || overflow.length ? 1 : 0);

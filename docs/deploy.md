@@ -131,6 +131,58 @@ PR 關閉 ─▶ preview-cleanup.yml：刪 previews/pr-N/ →（只有沒合併�
 - `previews` 分支只保留一個快照提交（孤兒提交），每次推送覆蓋自己的 `pr-{N}/`；大小過大時調整預覽輸出（例如略過 `/v1/` 與 `/files/` 之外的大型資料）。
 - 預覽用 `BUILD_TODAY=2026-10-01` 建置（與主站一致）；連結檢查在預覽為 `warn`，主站仍是 `error` 閘門。
 
+### 2.2 content-pr 的信任邊界：test／lane 兩個 job，與格式、型別檢查（第四十輪，#81、#82）
+
+**問題**：拆分前 `content-pr.yml` 只有一個 `lane` job，同時有 `contents`、`pull-requests`、`issues`、`actions` 的寫入權限，又在同一個 job 裡 `npm ci`、`npm test`、`npm run build`。PR 的 `package.json` 腳本、相依套件的 `postinstall`、測試檔都在這個 job 裡執行，能讀到有寫入權的 `GITHUB_TOKEN`（可以推 `previews` 分支、合併自己的 PR、改標籤）。Dependabot 升版 PR 就是同 repo 分支，等於「相依套件被入侵」可以直接變成「對 repo 寫入」。
+
+**做法**：
+
+| job | 權限 | 做什麼 | 不做什麼 |
+| --- | --- | --- | --- |
+| `test` | `contents: read` | checkout（`persist-credentials: false`）、`npm ci`、個資掃描、lint、`format:check`、`typecheck`、`npm test`、`build --check`、a11y、`scripts/lane.mjs`、預覽建置；最後把各步驟 outcome、`lane.json`、a11y 摘要（`lane-result` artifact）和預覽 dist（`preview-dist` artifact）上傳 | 沒有任何寫入；job 層級環境變數沒有權杖，只有「查作者 team」那一步（只跑 `gh`）帶 `GITHUB_TOKEN` |
+| `lane` | `contents`／`pull-requests`／`issues`／`actions: write` | `actions/download-artifact` 下載、驗證、`gh` 留言與標籤、`git` 推 `previews` 分支、`gh pr merge`、`gh workflow run pages.yml` | **不 checkout、不 setup-node、不 `npm`、不 `node`、不執行 repo 內任何腳本** |
+
+兩個 job 之間的規矩：
+
+- **artifact 一律當不可信資料**。`lane` job 的「Validate results」先檢查：結果檔存在且是合法 JSON；每個步驟 outcome 只接受 `success|failure|skipped|cancelled`，其他值（含夾帶換行）一律變 `invalid`（`invalid` 不等於 `success`，所以擋合併）；車道、標籤、`autoMerge`、`requiredApprovals` 要符合固定格式；`lane.json` 的檔案清單必須涵蓋 `gh pr diff --name-only` 查到的每個檔（不能少報程式變更來走快車道）。通過的值才寫進 `GITHUB_ENV`，所以 artifact 不可能夾帶額外的環境變數。驗證不過 ⇒ 留言「無法判定」、不合併、job 失敗。
+- **PR 留言改用 `jq` 產生**（以前是 `node --input-type=module -e`）：`jq` 程式寫在 workflow 裡，不來自 artifact，也不是 repo 的檔案。Node 只能執行 repo 內容，而 `lane` job 沒有 checkout，要用就得 checkout，等於把 PR（或 main）的程式放進有寫入權的 job；`jq`／`bash` 是 runner 內建，沒有這個問題。若將來真的需要 Node（例如更複雜的留言），只能 checkout **main**（`ref: main`）而不是 PR，並且在這裡說明理由；測試 `tests/round40-ci-isolation.test.mjs` 目前會擋掉 `lane` job 裡任何 `node`／`npm`／`checkout`，要放寬得同時改測試。
+- 預覽 dist 是 PR 建置出來的檔案，`lane` job 只複製進 `previews` 分支、不執行。這與拆分前相同：預覽內容本來就公開在 GitHub Pages，審核人看的就是 PR 作者能控制的輸出。
+- `test` job 失敗（檢查沒過）時，`lane` job 仍然執行（`if: ${{ !cancelled() }}`），這樣 PR 留言和 `lane:*` 標籤照常更新；`test` 與 `lane` 最後都有「Fail when checks failed」步驟，所以 Actions 上兩個 job 都紅，`main` 的必要狀態檢查名稱仍是 `lane`（沒改名）。
+- 殘留風險：`lane.json` 是 `test` job 用 PR 的 `scripts/lane.mjs` 與 `lanes.json` 算的，惡意 PR 可以在 `test` job 裡偽造「快車道、自動合併」。上面的檔案清單比對只擋「少報檔案」，擋不了「改規則本身」。真正的防線是分支保護（必要狀態檢查＋`CODEOWNERS` 審核）與 `allowedAuthors`；下一步可行的強化是讓 `test` job 另外取 `origin/main` 的 `scripts/lane.mjs`＋`lanes.json` 對 PR 的檔案清單重算一次，兩者不一致就降為一般車道（需要人審）。目前沒做，因為會讓「改車道規則的 PR」永遠被降級，需要先決定這種 PR 要走哪條路。
+
+**若未來要接受 fork 的 PR**：
+
+- **不要改成 `pull_request_target`**。它在 base 分支的脈絡執行、預設帶寫入權杖；只要有一個步驟 checkout 或執行 PR 的程式碼，就是把寫入權杖交給 PR 作者（"pwn request"）。測試 `round40-ci-isolation` 會擋掉任何工作流程出現 `pull_request_target`。
+- 現在的做法本來就能延伸到 fork：`test` job 跑 `pull_request`（fork 的 PR 只拿到唯讀權杖、拿不到 secrets），把結果交給另一個 job。標準寫法是第二個工作流程用 `workflow_run`（`workflows: [Content PR lane]`、`types: [completed]`）在 base 分支的脈絡執行，下載 `test` 的 artifact、驗證後留言與貼標籤；它同樣不 checkout、不執行 artifact 內容。fork 的 PR 要不要自動合併是另一個政策問題，建議一律走一般車道＋人審。
+- 目前 `SAME_REPO` 檢查維持：fork 的 PR 只會跑 `test` job 並在 `lane` job 失敗時顯示結果，不推預覽、不留言、不合併。
+- 任何時候都不要把 `secrets.*` 放進 `test` job，也不要讓 `test` job 的輸出（artifact、job outputs）未經驗證就變成命令列、檔案路徑或 `GITHUB_ENV`。
+
+**`preview-cleanup.yml`**：權限原本掛在工作流程層級（`contents: write`、`actions: write`、`pull-requests: read`），之後新增的任何 job 都會自動繼承。現在工作流程層級是 `permissions: {}`，三項放進 `cleanup` job；這個 job 沒有 checkout，不會執行 repo 內的程式。三項都是必要的：推 `previews` 分支、觸發 `pages.yml`、排程掃描時用 `gh pr view` 查 PR 狀態。
+
+**Actions 的 SHA**：新增 `actions/upload-artifact`（v4.6.2）與 `actions/download-artifact`（v4.3.0），一樣固定 40 字元 commit SHA 並註解版本，Dependabot 會升版；SHA 已加進 `tests/lanes.test.mjs` 的釘死清單，升版 PR 要同步改那兩行（見 9.1）。
+
+**本機沒辦法跑 Actions，所以怎麼驗證**：`tests/round40-ci-isolation.test.mjs` 對每個工作流程的每個 `run` 區塊跑 `bash -n`；把 `lane` job 的「Validate results」步驟用假的 `gh`、假的 `GITHUB_ENV` 真的跑一遍（正常結果、少報檔案、不明車道、夾帶換行的 outcome）；把留言的 `jq` 程式餵真實的 `lane.mjs` 輸出。**測不到的**：`upload-artifact`／`download-artifact` 的實際行為（路徑、隱藏檔、保留天數）、`GITHUB_ENV` 在 step 之間的傳遞、`if:` 運算式的求值、`needs`＋`!cancelled()` 的排程。第一個用這個流程的 PR 請看一次 Actions 紀錄與 PR 留言。
+
+#### 格式與型別檢查（#82）
+
+- `npm run format:check` 與 `npm run typecheck` 進 `content-pr.yml` 的 `test` job（與 lint 並列，各自 `continue-on-error`，不會讓後面的步驟不跑；結果進留言表格、`blocked` 判斷與失敗訊息），`pages.yml` 的「Lint」步驟也加上 `format:check`。以前 `format:check` 不在任何工作流程裡，main 上紅了好幾輪沒人發現。
+- Prettier 仍然只強制用在 `.prettierignore` 放行清單的新檔，不會要求重排既有程式碼；新增檔案時記得把它加進放行清單。
+- `tsconfig.json` 的 `checkJs` 改成 `false`：只檢查檔首有 `// @ts-check` 的檔。`checkJs: true` 會把被 import 的檔也一起檢查（例如 `stats.js` → `render.js` → `core.js`，十二萬位元組），無法逐檔擴大。型別只用 JSDoc 補，不改程式邏輯；`window.CDC` 這類全域的型別宣告在 `src/client/globals.d.ts`。
+- 已納入：`src/client/answer/` 的 `inline.js`、`llm-key.js`、`stats.js`、`factcheck.js`（原本已納入的是 `scripts/lib/lanes.mjs`、`validate.mjs`、`gateway/*.mjs`）。
+- **擴大順序**（由小到大、由少依賴到多依賴；每一步都是「加 `// @ts-check` → 加進 `tsconfig.json` 的 `include` → 修型別錯誤」，一次一個 PR）：
+  1. `data.js`（9 KB，`stats.js`／`factcheck.js` 已經 import 它；只依賴 `window.CDC` 與 `fetch`）
+  2. `judge.js`（11 KB）、`lexicon.js`（11 KB，大多是資料表）
+  3. `text.js`（13 KB，純函式，`core.js` 的基礎）
+  4. `ui.js`（15 KB，DOM 事件；要先處理 `HTMLElement` 的型別轉換）、`llm.js`（16 KB）
+  5. `structured.js`（20 KB）
+  6. `rules.js`（36 KB）、`render.js`（40 KB，與拒答／AI 標籤等區塊的修改衝突最多，放在引擎穩定之後）
+  7. `core.js`（121 KB）最後；它現在被 `stats.js` 等 import 時不會被檢查（`checkJs: false`），但一進 `include` 會有上百個錯誤（`Property 'qWeights' does not exist on type 'any[]'` 之類，要先替資料結構補 `@typedef`），建議拆成多個 PR 或先拆檔。
+  - 太大先不納入的理由：一次修上百個型別錯誤的 PR 無法審，而且和同時進行的功能 PR 衝突；逐檔納入每個 PR 都小、都能獨立回復。
+
+#### 無障礙殘留項（#83）
+
+見 [a11y.md](a11y.md) 第 4 節末的「第四十輪」表與第 5 節（`npm run a11y` 現在輸出 moderate／minor 警告數，PR 留言的「無障礙檢測」列會顯示「另有 N 項 … 警告，不擋合併」）。
+
 ### 發布前的閘門
 
 CI 任一項失敗即不部署：JSON Schema 與跨檔參照（`owner`、`basedOn`、`supersedes` 必須存在）、治理規則測試、**評估集版本題 100%**（`CI=true` 時，未全對會讓建置以非零狀態結束）。
@@ -218,7 +270,7 @@ CI 任一項失敗即不部署：JSON Schema 與跨檔參照（`owner`、`basedO
 
 - **設定**：`.github/dependabot.yml` 每週一 09:00（台灣時間）檢查。Actions 升版合成一個 PR（`groups.actions`）；npm 的 minor／patch 合成一個（`groups.npm-minor-patch`），major 各自一個。
 - **為什麼要分組**：同一個 workflow 裡 `checkout` 和 `setup-node` 是相鄰兩行。分開的 PR 各改一行，git 會把「相鄰行都被改」當成衝突，合了一個另一個就要重做。合成一個 PR 就沒有這個問題，CI 也只跑一次。
-- **升 action 的 PR 會紅燈是預期的**：`tests/lanes.test.mjs` 寫死 `checkout`、`setup-node`、`deploy-pages` 的 SHA（確保沒人偷偷換回可移動的 tag）。升版時把測試檔裡的 SHA 和註解版本換成 PR 裡的新值即可；SHA 格式另由 `tests/round23-security.test.mjs` 檢查。
+- **升 action 的 PR 會紅燈是預期的**：`tests/lanes.test.mjs` 寫死 `checkout`、`setup-node`、`deploy-pages`、`upload-artifact`、`download-artifact` 的 SHA（確保沒人偷偷換回可移動的 tag）。升版時把測試檔裡的 SHA 和註解版本換成 PR 裡的新值即可；SHA 格式另由 `tests/round23-security.test.mjs` 檢查。
 - **升 major 版要看什麼**：讀 release notes 的 breaking changes，跑 `npm test`、`node scripts/build.mjs --check`，再把升版前後的 `dist/` 逐檔比對（`diff -rq`），只剩時間戳差異才算安全。2026-10-10 升 `marked` 15→18 的差異只有 `&`→`&amp;` 與空白行。
 - **已知的行為變化**：`actions/upload-pages-artifact` v4 起不打包點開頭的檔案與目錄（`.nojekyll`、`.well-known/`）。目前沒影響；若要上 `/.well-known/security.txt`，要改由正式站伺服器提供，或另找打包方式。
 - **前端 `src/public/vendor/marked.min.js` 不跟著升**：它是後台貼上轉換用的獨立副本，Dependabot 看不到。要升時手動換檔並測後台「貼上 Word／網頁」轉換。

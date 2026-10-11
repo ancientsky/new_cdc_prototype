@@ -35,9 +35,10 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - name: Lint (eslint) + type check (pilot)
+      - name: Lint (eslint) + format check + type check
         run: |
           npm run lint
+          npm run format:check
           npm run typecheck
       - name: Tests (governance rules, on committed content)
         run: npm test

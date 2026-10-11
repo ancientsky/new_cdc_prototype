@@ -30,3 +30,4 @@ eval/**/*.mjs
 !tests/round31-boundary.test.mjs
 !scripts/lib/minify.mjs
 !tests/round34-engine-split.test.mjs
+!tests/round40-ci-isolation.test.mjs

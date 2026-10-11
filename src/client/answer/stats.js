@@ -1,11 +1,12 @@
+// @ts-check
 // 開放資料與統計頁（/data/）的統計問答：掛 #stats-form／#stats-q／#stats-result。
 // 數字只來自資料目錄中的結構化時序（datasets[].series），附數字的來源卡；不推論、不預測。
 import { loadEngine, esc, LANG } from './data.js';
 import { L, statsBlock, refusalCard, disclosureRow, wireInteractions, ensureStyles } from './render.js';
 
 ensureStyles();
-const form = document.getElementById('stats-form');
-const input = document.getElementById('stats-q') ?? form?.querySelector('input[name="q"]');
+const form = /** @type {HTMLFormElement | null} */ (document.getElementById('stats-form'));
+const input = /** @type {HTMLInputElement | null} */ (document.getElementById('stats-q') ?? form?.querySelector('input[name="q"]'));
 const out = document.getElementById('stats-result');
 let current = null;
 

@@ -1,10 +1,11 @@
+// @ts-check
 // 謠言查證頁（/factcheck/）：掛 #factcheck-form／#factcheck-input／#factcheck-result。
 // 與答案頁同一份 core：強制謠言意圖（貼上的是網傳訊息本身），只比對官方澄清，不自行判定真偽。
 import { loadEngine, esc, LANG } from './data.js';
 import { L, verdictBlock, refusalCard, disclosureRow, sourceList, wireInteractions, ensureStyles } from './render.js';
 
 ensureStyles();
-const input = document.getElementById('factcheck-input');
+const input = /** @type {HTMLInputElement | HTMLTextAreaElement | null} */ (document.getElementById('factcheck-input'));
 const out = document.getElementById('factcheck-result');
 const form = document.getElementById('factcheck-form') ?? input?.closest('form');
 let current = null;

@@ -203,7 +203,7 @@ test('CI：content-pr.yml 在合併前跑個資掃描（PR 改到的檔），lan
   const y = fs.readFileSync(path.join(ROOT, '.github/workflows/content-pr.yml'), 'utf8');
   assert.match(y, /id: pii\n\s+continue-on-error: true\n\s+run: git diff --name-only -z --diff-filter=d origin\/main\.\.\.HEAD \| xargs -0 node scripts\/pii-scan\.mjs/);
   assert.ok(y.indexOf('id: pii') < y.indexOf('id: lint'), '在 Lint 之前');
-  assert.match(y, /\| 個資掃描（[^|]*） \| " \+ icon\(e\.PII\)/);
+  assert.match(y, /\| 個資掃描（[^|]*） \| " \+ icon\(\$e\.PII\)/); // 第四十輪：留言改用 jq 產生
   assert.match(y, /\[ "\$PII" != "success" \]; then ACTION=blocked/);
   assert.match(y, /steps\.pii\.outcome != 'success'\n/);
   for (const m of y.matchAll(/uses: ([^\s@]+)@(\S+)/g)) assert.match(m[2], /^[0-9a-f]{40}$/, `${m[1]} 仍固定 commit SHA`);

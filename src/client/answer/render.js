@@ -254,6 +254,8 @@ export function refusalCard(result) {
   </section>`;
 }
 
+// 第四十輪（#83）：疫情卡的標題是 h2。這一段在答案區塊之前、緊接 sr-only 的 h1，用 h3 會 h1→h3 跳級（axe heading-order）；
+// 它本身是帶 aria-label 的獨立區塊，與下方「回答」同層，所以是 h2。
 /** 態勢卡（只讀結構化欄位） */
 export async function situationCards(sit) {
   if (!sit?.items?.length) return '';
@@ -262,7 +264,7 @@ export async function situationCards(sit) {
     const chart = it.weekly?.length ? await barChart(it.weekly, { labels, unit: it.metricValue?.includes('%') ? '%' : '', title: it.metricLabel, width: 300, height: 110, color: `var(--status-${it.status}, currentColor)` }) : '';
     const i18n = LANG !== 'zh-TW' ? it.i18n?.[LANG] : null;
     return `<article class="c-sit-card c-sit-card--${esc(it.status)} c-answer-sit">
-      <header><h3>${(() => { const nm = LANG !== 'zh-TW' ? (it.diseaseNameEn ?? it.diseaseName) : it.diseaseName; return it.slug ? link(`/diseases/${it.slug}/`, nm) : esc(nm); })()}</h3>
+      <header><h2>${(() => { const nm = LANG !== 'zh-TW' ? (it.diseaseNameEn ?? it.diseaseName) : it.diseaseName; return it.slug ? link(`/diseases/${it.slug}/`, nm) : esc(nm); })()}</h2>
         <span class="c-status-tag c-status-tag--${esc(it.status)}">${esc(statusLabel(it.status))}</span>${it.illustrative ? ` <span class="c-tag">${esc(L('illustrative'))}</span>` : ''}</header>
       <p class="c-sit-card__metric"><span aria-hidden="true">${it.trend === 'up' ? '↑' : it.trend === 'down' ? '↓' : '→'}</span> <b>${esc(it.metricValue)}</b> <span class="muted">${esc(i18n?.metricLabel ?? it.metricLabel)}${it.deltaText ? `，${esc(i18n?.deltaText ?? it.deltaText)}` : ''}</span></p>
       ${it.peakCount != null ? `<p class="c-sit-card__sub"><b>${esc(it.peakCount)}</b> ${esc(it.peakCountLabel ?? '')}</p>` : ''}
