@@ -61,3 +61,12 @@ test('醫事人員檢視：帶專業詞的疫苗問句仍走專業檢索，不�
   const r = engine().answer('65歲以上哪些疫苗的不良事件要通報', { view: 'pro' });
   assert.ok(!r.schedule?.structured);
 });
+
+test('頁籤列不會多出直向小捲軸（Yulun 2026-10-11：時程地圖標題右方的小捲軸）', async () => {
+  const fs = await import('node:fs');
+  const css = fs.readFileSync(new URL('../src/styles/components.css', import.meta.url), 'utf8');
+  const list = css.match(/\.c-tabs__list\{display:flex[^}]*\}/)[0];
+  const btn = css.match(/\.c-tabs__list button\{[^}]*\}/)[0];
+  assert.match(list, /overflow-y:hidden/, 'overflow-x:auto 會讓 overflow-y 變 auto，要明寫 hidden');
+  assert.doesNotMatch(btn, /margin-bottom:-/, '按鈕用負邊距壓線會超出列表高度');
+});
