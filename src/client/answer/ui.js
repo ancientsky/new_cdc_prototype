@@ -19,6 +19,9 @@ let runId = 0;
 let lastQ = ''; // 目前這題的問句（全文搜尋連結用）
 
 const LLM_ON_KEY = 'cdc.llmEnabled';
+// 第四十一輪：查詢紀錄（docs/ask-log.md）。設定由 ask.mjs 的 data-ask-log* 帶入；log.js 用到才 import()（不算進引擎 JS 預算），失敗一律靜默
+const logCfg = document.querySelector('.c-askpage')?.dataset ?? {};
+const logAsk = (r) => { if (/^(mock|post)$/.test(logCfg.askLog ?? '')) import('./log.js').then((m) => m.sendAskLog(r, logCfg)).catch(() => {}); };
 // 第二十三輪：LLM 模式只在「同事後台工作階段有效 ＋ 本分頁有 key」時啟用；開關也存 sessionStorage（跟 key 同生命週期）
 const llmEnabled = () => { try { return staffSessionActive() && !!getKey() && sessionStorage.getItem(LLM_ON_KEY) !== '0'; } catch { return false; } };
 
@@ -75,6 +78,7 @@ async function run(q) {
   current = result;
   await render(result, deps);
   renderSide(result, deps);
+  logAsk(result); // 抽取式結果畫完才記錄；LLM 重組不另記（同一題只記一筆）
   // LLM（BYOK）：重組或翻譯；任何失敗都保留抽取式結果
   if (llmEnabled() && !result.paused && !result.refused) {
     const canAnswer = !result.stats && !result.notify?.structured && result.intent !== 'rumor' && result.retrieved?.length;

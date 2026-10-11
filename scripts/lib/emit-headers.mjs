@@ -17,7 +17,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { config } from '../../site.config.mjs';
-import { formOrigins } from './forms.mjs';
+import { formOrigins, askLogOrigins } from './forms.mjs';
 
 const EXEC_SCRIPT_RE = /<script\b([^>]*)>([\s\S]*?)<\/script>/gi;
 
@@ -58,7 +58,9 @@ export function collectInlineHashes(dist) {
 
 /** 標頭基準（值）。opts.hashes = inline script 雜湊；opts.vaxmapOrigin、opts.extraFrame 可覆寫。 */
 // 第三十輪（#55）：formOrigins＝site.config.mjs forms 裡生效中的 post 端點來源（機關個資表單系統）。只加進 connect-src（fetch 送出）與 form-action（不支援 fetch 時的一般表單 POST），其他指令不動。
-export function securityHeaders({ hashes = [], llmOrigin = 'https://api.anthropic.com', vaxmapOrigin = new URL(config.vaxmapUrl).origin, frameAncestors = "'self'", formOrigins: forms = formOrigins(config) } = {}) {
+// 第四十一輪：askLogOrigins＝site.config.mjs askLog 生效中的 post 端點來源（查詢紀錄收件系統）。fetch／sendBeacon 只受 connect-src 管，所以只加進 connect-src。
+export function securityHeaders({ hashes = [], llmOrigin = 'https://api.anthropic.com', vaxmapOrigin = new URL(config.vaxmapUrl).origin, frameAncestors = "'self'", formOrigins: forms = formOrigins(config), askLogOrigins: askLog = askLogOrigins(config) } = {}) {
+  const connect = [...new Set([...forms, ...askLog])];
   const csp = [
     "default-src 'self'",
     // 'wasm-unsafe-eval'（第二十八輪）：Pagefind 全文搜尋用 WebAssembly；它只允許編譯 .wasm，不允許 eval() 與 new Function()，所以不等於 'unsafe-eval'
@@ -66,7 +68,7 @@ export function securityHeaders({ hashes = [], llmOrigin = 'https://api.anthropi
     "style-src 'self' 'unsafe-inline'", // 後台少量 style="" 屬性；正式站可改成 nonce／class 後拿掉 'unsafe-inline'（README 有清單）
     "img-src 'self' data: https://i.ytimg.com",
     "font-src 'self'",
-    `connect-src 'self' ${llmOrigin} ${forms.join(' ')}`.trim(),
+    `connect-src 'self' ${llmOrigin} ${connect.join(' ')}`.trim(),
     `frame-src ${vaxmapOrigin} https://www.youtube-nocookie.com https://www.youtube.com`,
     `frame-ancestors ${frameAncestors}`,
     "object-src 'none'",
@@ -134,6 +136,7 @@ export function renderReadme(h, info) {
 
 - **CSP**：\`default-src 'self'\` 擋掉第三方腳本注入；inline script 用雜湊而不是 \`'unsafe-inline'\`；\`'wasm-unsafe-eval'\` 只為了全文搜尋（Pagefind）載入 WebAssembly，不開放 \`eval()\`；\`frame-src\` 只放疫苗地圖與 YouTube；\`frame-ancestors 'self'\` 防點擊劫持（現行官網是 \`'self' *.cdc.gov.tw\`，正式站換網域時依需要加子網域）；\`connect-src\` 多 \`api.anthropic.com\` 只因示範用 BYOK，正式站拿掉。
 - **表單端點**（第三十輪）：\`site.config.mjs\` 的 \`forms\` 有設 post 端點時，該來源自動加進 \`connect-src\` 與 \`form-action\`（目前：${formOrigins(config).join('、') || '無，全部表單為原型模擬'}）；個資表單系統換網域只要改設定重建。
+- **查詢紀錄端點**（第四十一輪）：\`site.config.mjs\` 的 \`askLog\` 設為 post 時，該來源自動加進 \`connect-src\`（目前：${askLogOrigins(config).join('、') || '無，未啟用正式端點'}）；詳見 docs/ask-log.md。
 - **HSTS** 一年含子網域；**nosniff**、**Referrer-Policy**、**Permissions-Policy** 為 OWASP Secure Headers 建議值。
 - \`style-src\` 暫留 \`'unsafe-inline'\`：後台頁有少量 \`style=""\` 屬性；清掉後可改為 \`'self'\`。
 

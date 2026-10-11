@@ -56,3 +56,55 @@ export const envKey = (key) => key.replace(/[A-Z]/g, (c) => `_${c}`).toUpperCase
 export function formOrigins(cfg) {
   return [...new Set(FORM_KEYS.map((k) => formSetting(cfg, k)).filter((s) => s.active === 'post').map((s) => s.origin))].sort();
 }
+
+// ───────── 第四十一輪：智慧問答查詢紀錄（site.config.mjs 的 askLog；docs/ask-log.md）─────────
+//
+// 為什麼放在這裡：查詢紀錄的端點和表單端點是同一類設定——「資料送去哪個機關系統」由資訊室決定、建置時用環境變數帶入，
+// 網址規則（https、本機例外）、設定矛盾要在建置時報錯、生效中的端點來源要進 CSP，這些規則都一樣，所以共用 urlOk 與同一套檢查風格。
+// 與表單不同的地方：
+//   - mode 多一個 off（完全不記錄）；預設 mock＝送到本機開發伺服器的模擬後端（scripts/lib/ask-log-mock.mjs）。
+//   - 送出用 navigator.sendBeacon，CSP 只管 connect-src；不需要 form-action。
+//   - retentionDays 是「原始紀錄保存天數」（預設 90）：模擬後端照做；正式端點要自己照做（見 docs/ask-log.md）。
+export const ASK_LOG_MODES = ['mock', 'post', 'off'];
+export const ASK_LOG_DEFAULT_RETENTION_DAYS = 90;
+
+/** 查詢紀錄的生效設定：{ mode（設定值）, active（實際：mock|post|off）, endpoint, origin, retentionDays } */
+export function askLogSetting(cfg) {
+  const a = cfg?.askLog ?? {};
+  const endpoint = String(a.endpoint ?? '').trim();
+  const mode = a.mode || (endpoint ? 'post' : 'mock');
+  let active = 'mock';
+  if (mode === 'off') active = 'off';
+  else if (mode === 'post' && endpoint && urlOk(endpoint)) active = 'post';
+  const days = Number(a.retentionDays);
+  return {
+    mode,
+    active,
+    endpoint: active === 'post' ? endpoint : '',
+    origin: active === 'post' ? new URL(endpoint).origin : '',
+    retentionDays: Number.isInteger(days) && days > 0 ? days : ASK_LOG_DEFAULT_RETENTION_DAYS,
+  };
+}
+
+/** 設定檢查：回傳錯誤字串（build.mjs 併進治理門檻；與 formErrors 同樣「設定矛盾就擋，不默默退回」） */
+export function askLogErrors(cfg) {
+  const a = cfg?.askLog;
+  if (!a) return [];
+  const errs = [];
+  const endpoint = String(a.endpoint ?? '').trim();
+  const mode = a.mode || (endpoint ? 'post' : 'mock');
+  if (!ASK_LOG_MODES.includes(mode)) errs.push(`[查詢紀錄] askLog.mode 只能是 ${ASK_LOG_MODES.join('｜')}（現在是 ${mode}）`);
+  if (!urlOk(endpoint)) errs.push(`[查詢紀錄] askLog.endpoint 必須是 https:// 網址（現在是 ${endpoint}）`);
+  if (mode === 'post' && !endpoint) errs.push('[查詢紀錄] askLog.mode 是 post 但沒有 endpoint（ASK_LOG_ENDPOINT）');
+  if (mode === 'mock' && endpoint) errs.push('[查詢紀錄] askLog 有 endpoint 卻設 mode=mock：紀錄不會送到該端點。請把 mode 改 post，或清空 endpoint');
+  if (mode === 'off' && endpoint) errs.push('[查詢紀錄] askLog 有 endpoint 卻設 mode=off：請清空 endpoint，避免誤以為有在記錄');
+  const rd = a.retentionDays;
+  if (rd != null && rd !== '' && !(Number.isInteger(Number(rd)) && Number(rd) > 0)) errs.push(`[查詢紀錄] askLog.retentionDays 必須是正整數（現在是 ${rd}）`);
+  return errs;
+}
+
+/** 生效中的查詢紀錄 post 端點來源（0 或 1 個）：emit-headers 只加進 connect-src（sendBeacon／fetch 受 connect-src 管） */
+export function askLogOrigins(cfg) {
+  const s = askLogSetting(cfg);
+  return s.active === 'post' ? [s.origin] : [];
+}

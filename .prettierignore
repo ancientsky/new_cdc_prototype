@@ -46,3 +46,11 @@ eval/**/*.mjs
 !src/client/answer/deps-manifest.js
 !tests/round40-search-recall.test.mjs
 !tests/round40-ask-perf.test.mjs
+# 第四十一輪：智慧問答查詢紀錄（docs/ask-log.md）
+!scripts/ask-log-report.mjs
+!scripts/lib/ask-log-mock.mjs
+!scripts/lib/ask-log-report.mjs
+!src/client/answer/log.js
+!src/client/admin/ask-log.js
+!src/templates/admin/ask-log.mjs
+!tests/round41-ask-log.test.mjs
