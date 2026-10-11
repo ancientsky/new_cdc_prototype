@@ -182,6 +182,13 @@
     "label": "輪狀病毒疫苗 2–3 劑",
     "ageMinMonths": 2,
     "ageMaxMonths": 8,
+    "hardLimitMonths": 8,
+    "hardLimitNote": "依仿單最後一劑須於出生滿 8 個月前完成，滿 8 個月起不再接種；第 1 劑最晚開始的週數依廠牌而異，尚未列入，請承辦人依仿單與官網時程表確認",
+    "hardLimitSource": {
+      "title": "疾管署預防接種時程頁（官網）",
+      "url": "https://www.cdc.gov.tw/Category/Page/TxRW-x3WzvPhvEtxM628GA"
+    },
+    "hardLimitVerified": false,
     "stage": "infant",
     "funded": "self",
     "dose": "2 或 3 劑（依廠牌）",

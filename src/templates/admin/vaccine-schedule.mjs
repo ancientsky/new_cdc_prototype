@@ -42,14 +42,25 @@ ${pageHead({ title: '疫苗接種時程表', what: '改一筆，右邊的時程�
       ${field('dose', '劑次', text('dose', '第 1 劑／每年 1 劑'), '表格「劑次／項目」欄顯示它')}
       ${field('labelEn', '英文名稱（選填）', text('labelEn', 'MMR dose 1'))}
     </div>
-    <fieldset class="adm-fieldset"><legend>建議年齡（地圖用月齡畫；兩欄皆空＝0）</legend>
+    <fieldset class="adm-fieldset"><legend>建議年齡區間（地圖用月齡畫；兩欄皆空＝0）</legend>
       <div class="adm-vx-age">
         <span>下限</span>${num('ageY', 120)}<span>歲</span>${num('ageM', 11)}<span>個月</span>
-        <span class="adm-vx-sep">上限</span>${num('maxY', 120)}<span>歲</span>${num('maxM', 11)}<span>個月</span>
+        <span class="adm-vx-sep">建議上限</span>${num('maxY', 120)}<span>歲</span>${num('maxM', 11)}<span>個月</span>
         <label class="adm-pill"><input type="checkbox" id="vx-noMax" data-f="noMax"><span>不設上限（例：65 歲以上）</span></label>
       </div>
       <p class="adm-hint" id="vx-agehint"></p>
       ${field('ageLabel', '年齡（人看的寫法）', text('ageLabel', '出生滿 12 個月'), '表格、詳情卡與問答直接顯示這句；地圖仍用上面的月齡')}
+      <p class="adm-hint">建議上限＝「建議在這個年齡前打完」。超過時前台顯示「應已完成（若尚未接種請洽醫師安排補接種）」，<b>不會</b>說不能打。</p>
+    </fieldset>
+    <fieldset class="adm-fieldset"><legend>可接種年齡上限（選填，第四十輪）</legend>
+      <p class="adm-hint">只有仿單或公告<b>明確寫出</b>「超過就不能打」時才填（例：輪狀病毒最後一劑須於 8 個月前完成 → 填 0 歲 8 個月）。填的是「滿這個月齡起不可接種」（不含當月）。沒填＝沒有上限，前台不會出現「已超過可接種年齡上限」。</p>
+      <div class="adm-vx-age"><span>滿</span>${num('hardY', 120)}<span>歲</span>${num('hardM', 11)}<span>個月起不可接種</span></div>
+      ${field('hardNote', '上限依據（一句話）', text('hardNote', '依仿單最後一劑須於出生滿 8 個月前完成'), '詳情卡顯示')}
+      <div class="adm-grid adm-grid--2">
+        ${field('hardSourceTitle', '上限來源名稱', text('hardSourceTitle', '疫苗仿單／疾管署預防接種時程頁'))}
+        ${field('hardSourceUrl', '上限來源網址', text('hardSourceUrl', 'https://www.cdc.gov.tw/…', 'inputmode="url"'), '填了上限就必填')}
+      </div>
+      <label class="adm-pill"><input type="checkbox" id="vx-hardVerified" data-f="hardVerified"><span>上限數值已核對（未勾時前台在上限旁標「待承辦人確認」）</span></label>
     </fieldset>
     <div class="adm-grid adm-grid--3">
       ${field('stage', '階段（地圖頁籤）', html`<select id="vx-stage" data-f="stage"></select>`)}

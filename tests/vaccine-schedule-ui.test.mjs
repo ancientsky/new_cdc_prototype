@@ -110,7 +110,7 @@ test('verified=false：整體提示橫幅與表格徽章；全部已確認時不
   assert.match(h, /class="c-warning vxs-notice"/);
   assert.ok((h.match(/c-pill--warn">待承辦人確認/g) ?? []).length >= ITEMS.filter((i) => i.verified === false).length);
   const saved = site.master.immunizationSchedule;
-  site.master.immunizationSchedule = saved.map((i) => ({ ...i, verified: true }));
+  site.master.immunizationSchedule = saved.map((i) => ({ ...i, verified: true, ...(i.hardLimitMonths != null ? { hardLimitVerified: true } : {}) })); // 第四十輪：可接種上限也核對完才算全部確認
   try { const ok = body('zh-TW'); assert.doesNotMatch(ok, /vxs-notice/); assert.doesNotMatch(ok, /待承辦人確認/); } finally { site.master.immunizationSchedule = saved; }
 });
 
@@ -189,35 +189,35 @@ test('#age 參數與 hash：65／m12、vaccine、sched；往返一致', () => {
   assert.equal(formatAgeParam(18), 'm18');
   assert.equal(formatAgeParam(30), 'm30');
   assert.equal(formatAgeParam(24), '2');
-  assert.deepEqual(parseHash('#age=65'), { months: 780, vaccine: null, sched: null });
-  assert.deepEqual(parseHash('#age=m12'), { months: 12, vaccine: null, sched: null });
-  assert.deepEqual(parseHash('#vaccine=vaccine.mmr'), { months: null, vaccine: 'vaccine.mmr', sched: null });
-  assert.deepEqual(parseHash('#age=65&vaccine=vaccine.influenza&sched=sched.influenza-older'), { months: 780, vaccine: 'vaccine.influenza', sched: 'sched.influenza-older' });
-  assert.deepEqual(parseHash('#sched.hpv'), { months: null, vaccine: null, sched: 'sched.hpv' });
-  assert.deepEqual(parseHash(''), { months: null, vaccine: null, sched: null });
-  assert.deepEqual(parseHash('#vaccine=<script>'), { months: null, vaccine: null, sched: null }, '不合法的 id 丟棄');
+  assert.deepEqual(parseHash('#age=65'), { months: 780, vaccine: null, sched: null, done: [] });
+  assert.deepEqual(parseHash('#age=m12'), { months: 12, vaccine: null, sched: null, done: [] });
+  assert.deepEqual(parseHash('#vaccine=vaccine.mmr'), { months: null, vaccine: 'vaccine.mmr', sched: null, done: [] });
+  assert.deepEqual(parseHash('#age=65&vaccine=vaccine.influenza&sched=sched.influenza-older'), { months: 780, vaccine: 'vaccine.influenza', sched: 'sched.influenza-older', done: [] });
+  assert.deepEqual(parseHash('#sched.hpv'), { months: null, vaccine: null, sched: 'sched.hpv', done: [] });
+  assert.deepEqual(parseHash(''), { months: null, vaccine: null, sched: null, done: [] });
+  assert.deepEqual(parseHash('#vaccine=<script>'), { months: null, vaccine: null, sched: null, done: [] }, '不合法的 id 丟棄');
   assert.equal(buildHash({ months: 780 }), '#age=65');
   assert.equal(buildHash({ months: 12, vaccine: 'vaccine.mmr' }), '#age=m12&vaccine=vaccine.mmr');
   assert.equal(buildHash({}), '');
   for (const m of [0, 1, 12, 18, 24, 30, 36, 780, 1440]) assert.equal(parseHash(buildHash({ months: m })).months, m);
 });
 
-test('statusFor：due／soon／past／none 與邊界', () => {
+test('statusFor：due／soon／completed-expected／none 與邊界（第四十輪：past 改名為 completed-expected）', () => {
   const hep = { ageMinMonths: 2, ageMaxMonths: 2 };
   assert.equal(statusFor(hep, 2), 'due');
-  assert.equal(statusFor(hep, 3), 'past');
+  assert.equal(statusFor(hep, 3), 'completed-expected');
   assert.equal(statusFor(hep, 1), 'soon');
   assert.equal(statusFor(hep, 0), 'soon', '差 2 個月');
   const mmr2 = { ageMinMonths: 60, ageMaxMonths: 83 };
   assert.equal(statusFor(mmr2, 60), 'due');
   assert.equal(statusFor(mmr2, 83), 'due');
-  assert.equal(statusFor(mmr2, 84), 'past');
+  assert.equal(statusFor(mmr2, 84), 'completed-expected');
   assert.equal(statusFor(mmr2, 54), 'soon', '剛好 6 個月內');
   assert.equal(statusFor(mmr2, 53), 'none', '超過 6 個月');
   const older = { ageMinMonths: 780, ageMaxMonths: null };
   assert.equal(statusFor(older, 779), 'soon');
   assert.equal(statusFor(older, 780), 'due');
-  assert.equal(statusFor(older, 1200), 'due', '無上限永不 past');
+  assert.equal(statusFor(older, 1200), 'due', '無上限永不 completed-expected');
   assert.equal(statusFor(older, 100), 'none');
   assert.equal(statusFor(older, null), 'none');
   assert.equal(statusFor(older, NaN), 'none');
@@ -231,7 +231,7 @@ test('statusFor 套真實資料：12 個月與 65 歲', () => {
   const d65 = due(780);
   for (const id of ['sched.influenza-older', 'sched.pcv-older', 'sched.covid-older']) assert.ok(d65.includes(id), id);
   assert.ok(!d65.includes('sched.mmr-1'));
-  assert.equal(statusFor(ITEMS.find((i) => i.id === 'sched.hepatitis-b-1'), 12), 'past');
+  assert.equal(statusFor(ITEMS.find((i) => i.id === 'sched.hepatitis-b-1'), 12), 'completed-expected');
 });
 
 test('刻度與年齡文字：分段單調、端點、中英格式', () => {

@@ -2,13 +2,13 @@
 // 不碰 DOM，Node 測試直接 import（tests/round36-vaxschedule.test.mjs）。
 export const STAGE_LABEL = { infant: '嬰幼兒（0–2 歲）', child: '學齡前', school: '學生', adult: '成人', pregnancy: '孕婦', older: '長者（65 歲以上）', risk: '特殊情況' };
 export const FUNDED_LABEL = { public: '公費', conditional: '符合條件公費', self: '自費' };
-export const FIELD_LABEL = { id: '編號', vaccine: '疫苗', label: '項目名稱', dose: '劑次', ageMinMonths: '年齡下限', ageMaxMonths: '年齡上限', ageLabel: '年齡（人看的寫法）', stage: '階段', funded: '費用', group: '公費對象', interval: '間隔', note: '備註', sourceTitle: '來源名稱', sourceUrl: '來源網址', startAt: '生效日', endAt: '結束日', recurring: '每年接種', verified: '已核對' };
+export const FIELD_LABEL = { id: '編號', vaccine: '疫苗', label: '項目名稱', dose: '劑次', ageMinMonths: '年齡下限', ageMaxMonths: '建議區間上限', hardLimitMonths: '可接種年齡上限', hardNote: '上限依據', hardSourceTitle: '上限來源名稱', hardSourceUrl: '上限來源網址', hardVerified: '上限已核對', ageLabel: '年齡（人看的寫法）', stage: '階段', funded: '費用', group: '公費對象', interval: '間隔', note: '備註', sourceTitle: '來源名稱', sourceUrl: '來源網址', startAt: '生效日', endAt: '結束日', recurring: '每年接種', verified: '已核對' };
 const ID_RE = /^sched\.[a-z0-9][a-z0-9-]*$/;
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 
 /** 空表單 */
 export function emptyState(vaccine = '') {
-  return { id: '', vaccine, label: '', labelEn: '', dose: '', ageY: '', ageM: '', maxY: '', maxM: '', noMax: false, ageLabel: '', stage: 'infant', funded: 'public', group: '', interval: '', recurring: false, startAt: '', endAt: '', note: '', sourceTitle: '', sourceUrl: '', verified: false };
+  return { id: '', vaccine, label: '', labelEn: '', dose: '', ageY: '', ageM: '', maxY: '', maxM: '', noMax: false, hardY: '', hardM: '', hardNote: '', hardSourceTitle: '', hardSourceUrl: '', hardVerified: false, ageLabel: '', stage: 'infant', funded: 'public', group: '', interval: '', recurring: false, startAt: '', endAt: '', note: '', sourceTitle: '', sourceUrl: '', verified: false };
 }
 /** 月 → { y, m }；null ⇒ 空 */
 export const splitMonths = (mo) => (mo == null || mo === '' ? { y: '', m: '' } : { y: String(Math.floor(Number(mo) / 12)), m: String(Number(mo) % 12) });
@@ -22,9 +22,10 @@ export function joinMonths(y, m) {
 }
 /** 主檔一筆 → 表單 */
 export function stateFromItem(i) {
-  const a = splitMonths(i.ageMinMonths); const b = splitMonths(i.ageMaxMonths);
+  const a = splitMonths(i.ageMinMonths); const b = splitMonths(i.ageMaxMonths); const h = splitMonths(i.hardLimitMonths);
   return {
     id: i.id ?? '', vaccine: i.vaccine ?? '', label: i.label ?? '', labelEn: i.labelEn ?? '', dose: i.dose ?? '', ageY: a.y, ageM: a.m, maxY: b.y, maxM: b.m, noMax: i.ageMaxMonths == null,
+    hardY: h.y, hardM: h.m, hardNote: i.hardLimitNote ?? '', hardSourceTitle: i.hardLimitSource?.title ?? '', hardSourceUrl: i.hardLimitSource?.url ?? '', hardVerified: i.hardLimitVerified === true,
     ageLabel: i.ageLabel ?? '', stage: i.stage ?? 'infant', funded: i.funded ?? 'public', group: i.group ?? '', interval: i.interval ?? '', recurring: i.recurring === 'yearly',
     startAt: i.startAt ?? '', endAt: i.endAt ?? '', note: i.note ?? '', sourceTitle: i.source?.title ?? '', sourceUrl: i.source?.url ?? '', verified: i.verified !== false,
   };
@@ -38,6 +39,14 @@ export function buildItem(s) {
   if (trim(s.labelEn)) out.labelEn = trim(s.labelEn);
   out.ageMinMonths = Number.isFinite(min) ? min : (min === null ? 0 : min);
   out.ageMaxMonths = s.noMax ? null : (max === null ? out.ageMinMonths : max);
+  // 第四十輪：可接種上限（不含當月）。歲／月兩欄都空＝沒有上限，四個 hardLimit* 欄位都不輸出（不能只留來源或核對旗標，schema 會擋）
+  const hard = joinMonths(s.hardY, s.hardM);
+  if (hard !== null) {
+    out.hardLimitMonths = hard;
+    if (trim(s.hardNote)) out.hardLimitNote = trim(s.hardNote);
+    if (trim(s.hardSourceTitle) || trim(s.hardSourceUrl)) out.hardLimitSource = { title: trim(s.hardSourceTitle), url: trim(s.hardSourceUrl) };
+    out.hardLimitVerified = !!s.hardVerified;
+  }
   out.stage = s.stage; out.funded = s.funded;
   if (trim(s.dose)) out.dose = trim(s.dose);
   if (trim(s.ageLabel)) out.ageLabel = trim(s.ageLabel);
@@ -66,6 +75,16 @@ export function problemsOf(item, { others = [], vaccineIds = [] } = {}) {
   if (!Number.isFinite(item.ageMinMonths) || item.ageMinMonths < 0) p.push({ field: 'ageMinMonths', message: '年齡下限要填（歲或月至少一欄，可填 0）' });
   if (item.ageMaxMonths != null && !Number.isFinite(item.ageMaxMonths)) p.push({ field: 'ageMaxMonths', message: '年齡上限格式不對' });
   else if (item.ageMaxMonths != null && Number.isFinite(item.ageMinMonths) && item.ageMaxMonths < item.ageMinMonths) p.push({ field: 'ageMaxMonths', message: '年齡上限小於下限（CI 會擋）' });
+  // 第四十輪：可接種上限。沒有來源就不能宣稱上限（前台會說「已超過可接種年齡上限」，這句話要有依據）
+  if (item.hardLimitMonths != null) {
+    if (!Number.isInteger(item.hardLimitMonths) || item.hardLimitMonths < 1) p.push({ field: 'hardLimitMonths', message: '可接種年齡上限格式不對（整數月，至少 1）' });
+    else if (Number.isFinite(item.ageMinMonths) && item.hardLimitMonths <= item.ageMinMonths) p.push({ field: 'hardLimitMonths', message: '可接種年齡上限要大於建議年齡下限（CI 會擋）' });
+    else if (item.ageMaxMonths != null && item.hardLimitMonths < item.ageMaxMonths) p.push({ field: 'hardLimitMonths', message: '可接種年齡上限不得小於建議區間上限（CI 會擋）' });
+    if (!item.hardLimitSource?.title || !item.hardLimitSource?.url) p.push({ field: item.hardLimitSource?.title ? 'hardSourceUrl' : 'hardSourceTitle', message: '填了可接種上限就要有來源名稱與網址（仿單或公告），沒有依據不得宣稱上限' });
+    else if (!/^(https?:\/\/|\/)/.test(item.hardLimitSource.url)) p.push({ field: 'hardSourceUrl', message: '上限來源網址請填完整網址（https://…）或站內路徑' });
+    if (!item.hardLimitNote) p.push({ field: 'hardNote', message: '建議用一句話寫上限依據（例：依仿單最後一劑須於 8 個月前完成），詳情卡會顯示', level: 'warn' });
+    if (!item.hardLimitVerified) p.push({ field: 'hardVerified', message: '上限數值尚未核對：前台在上限旁標「待承辦人確認」', level: 'warn' });
+  }
   if (!STAGE_LABEL[item.stage]) p.push({ field: 'stage', message: '階段不在允許清單' });
   if (!FUNDED_LABEL[item.funded]) p.push({ field: 'funded', message: '費用不在允許清單' });
   if (item.funded === 'conditional' && !item.group) p.push({ field: 'group', message: '「符合條件公費」要寫清楚條件（公費對象）' });

@@ -269,7 +269,37 @@
             "number",
             "null"
           ],
-          "description": "建議年齡上限（月）；null＝不設上限"
+          "description": "建議區間上限（月，含當月）；null＝不設上限。超過只代表「建議時間已過、一般應已完成」，不代表不可接種——不可接種的上限請填 hardLimitMonths（第四十輪）"
+        },
+        "hardLimitMonths": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "第四十輪：可接種年齡上限（月，不含當月）＝滿這個月齡起不可再接種，例：輪狀病毒依仿單須於 8 個月前完成 → 8。只有仿單或公告明確寫出上限才填；沒填＝主檔沒有上限，前台不得宣稱「已超過上限」。須大於 ageMinMonths、不小於 ageMaxMonths，且必須同時有 hardLimitSource 與 hardLimitVerified"
+        },
+        "hardLimitNote": {
+          "type": "string",
+          "description": "上限的白話依據，詳情卡顯示，例「依仿單最後一劑須於出生滿 8 個月前完成」"
+        },
+        "hardLimitSource": {
+          "type": "object",
+          "required": [
+            "title",
+            "url"
+          ],
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "description": "上限數值的出處（與整筆的 source 分開，因為上限常來自仿單而非時程表）"
+        },
+        "hardLimitVerified": {
+          "type": "boolean",
+          "description": "承辦人已核對上限數值；false 時前台在上限旁標「待承辦人確認」"
         },
         "ageLabel": {
           "type": "string",
@@ -338,7 +368,22 @@
           "description": "承辦人已核對過（false 時前台顯示「待確認」）"
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "dependentRequired": {
+        "hardLimitMonths": [
+          "hardLimitSource",
+          "hardLimitVerified"
+        ],
+        "hardLimitNote": [
+          "hardLimitMonths"
+        ],
+        "hardLimitSource": [
+          "hardLimitMonths"
+        ],
+        "hardLimitVerified": [
+          "hardLimitMonths"
+        ]
+      }
     },
     "country": {
       "type": "object",

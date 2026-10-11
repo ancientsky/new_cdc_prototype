@@ -123,6 +123,9 @@ export function validateSite(site) {
   for (const s of site.master.immunizationSchedule ?? []) {
     if (!vaccineIds.has(s.vaccine)) push('content/master/immunization-schedule.json', `${s.id}：vaccine ${s.vaccine} 不在疫苗主檔`);
     if (s.ageMaxMonths != null && s.ageMaxMonths < s.ageMinMonths) push('content/master/immunization-schedule.json', `${s.id}：ageMaxMonths 小於 ageMinMonths`);
+    // 第四十輪：可接種上限（不含當月）必須在建議區間之後；比下限還早等於「永遠不能打」，一定是填錯
+    if (s.hardLimitMonths != null && s.hardLimitMonths <= s.ageMinMonths) push('content/master/immunization-schedule.json', `${s.id}：hardLimitMonths 必須大於 ageMinMonths`);
+    if (s.hardLimitMonths != null && s.ageMaxMonths != null && s.hardLimitMonths < s.ageMaxMonths) push('content/master/immunization-schedule.json', `${s.id}：hardLimitMonths 不得小於 ageMaxMonths（建議區間不能超過可接種上限）`);
   }
   for (const item of site.all) {
     if (!units.has(item.owner)) push(item.__file, `owner ${item.owner} 不在 units 主檔`);

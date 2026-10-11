@@ -65,7 +65,7 @@ test('scheduleCsv：BOM、表頭、42 列、逗號與引號跳脫、verified 字
   assert.equal(lines[0].split(',').length, CSV_COLS.length);
   assert.match(lines[0], /^編號,vaccine id,疫苗,劑次／項目/);
   const quoted = scheduleCsv([{ id: 'sched.q', vaccine: 'v', label: 'a,b', note: 'say "hi"', ageMinMonths: 0, ageMaxMonths: null, stage: 'infant', funded: 'self', verified: false }], () => 'V');
-  assert.match(quoted, /"a,b"/); assert.match(quoted, /"say ""hi"""/); assert.match(quoted, /,0,,infant,/); assert.match(quoted, /,false\r\n$/);
+  assert.match(quoted, /"a,b"/); assert.match(quoted, /"say ""hi"""/); assert.match(quoted, /,0,,,,,,infant,/, '空上限與第四十輪四個 hardLimit 欄位皆空白'); assert.match(quoted, /,false\r\n$/);
   const plain = scheduleCsv(ITEMS);
   assert.equal(plain.replace(/^﻿/, '').split('\r\n')[0], CSV_COLS.join(','));
 });

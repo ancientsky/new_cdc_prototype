@@ -952,10 +952,21 @@ html:not(.js) .vxs-form,html:not(.js) .vxs-msg,html:not(.js) .vxs-tabs,html:not(
 .vxs-result__grp h3,.vxs-result__grp summary{margin:0 0 var(--sp-1);font-size:var(--fs-md);font-weight:700;cursor:pointer}
 .vxs-result__grp--due h3{color:var(--status-stable)}
 .vxs-result__grp--soon h3{color:var(--info)}
-.vxs-result__grp--past summary{color:var(--warn)}
 .vxs-result__grp--situational h3{color:var(--info)}
+/* 第四十輪：「應已完成」不是警示（多數寶寶已打過），用一般字色；「已超過可接種上限」才用警示色；「已接種」收起、淡色 */
+.vxs-result__grp--completed-expected :is(h3,summary){color:var(--ink)}
+.vxs-result__grp--past-limit h3{color:var(--warn)}
+.vxs-result__grp--done summary{color:var(--ink-2)}
 .vxs-result__hint{margin:0 0 var(--sp-1);font-size:var(--fs-sm)}
+.vxs-result__note{margin:var(--sp-1) 0 var(--sp-2);padding:var(--sp-2) var(--sp-3);border-left:3px solid var(--info);background:var(--info-bg);font-size:var(--fs-sm)}
+.vxs-result__sub{margin:var(--sp-2) 0 var(--sp-1);font-size:var(--fs-sm);font-weight:700;color:var(--ink-2)}
 .vxs-result__list{margin:0;padding-left:1.2em;display:grid;gap:var(--sp-1)}
+/* 項目一列：名稱、徽章、右側「已接種」勾選；窄螢幕自動折行，勾選框 20px＋行高 32px 方便手指點 */
+.vxs-result__list li{display:flex;flex-wrap:wrap;align-items:center;gap:.25em var(--sp-2)}
+.vxs-result__hard{font-size:var(--fs-sm);color:var(--ink-2)}
+.vxs-done{display:inline-flex;align-items:center;gap:.3em;margin-left:auto;font-size:var(--fs-sm);white-space:nowrap;min-height:32px;cursor:pointer}
+.vxs-done input{width:20px;height:20px;margin:0}
+.vxs-result__privacy{margin:var(--sp-2) 0 0;font-size:var(--fs-sm)}
 .vxs-tabs{margin-top:var(--sp-3)}
 .vxs-legend{display:flex;flex-wrap:wrap;gap:var(--sp-2) var(--sp-5);list-style:none;margin:var(--sp-2) 0 var(--sp-3);padding:0;font-size:var(--fs-sm)}
 .vxs-legend li{display:flex;align-items:center;gap:var(--sp-2)}
@@ -1005,7 +1016,7 @@ html:not(.js) .vxs-form,html:not(.js) .vxs-msg,html:not(.js) .vxs-tabs,html:not(
 .vxs-arrow{fill:none;stroke:var(--white);stroke-width:2}
 .vxs-mk--self .vxs-arrow,.vxs-mk--conditional .vxs-arrow{stroke:var(--ink-2)}
 .vxs-mk:hover .vxs-shape,.vxs-mk:focus-visible .vxs-shape,.vxs-mk.is-sel .vxs-shape{stroke:var(--ink);stroke-width:3.5}
-.vxs-svg.has-age .vxs-mk[data-status="none"],.vxs-svg.has-age .vxs-mk[data-status="past"]{opacity:.4}
+.vxs-svg.has-age .vxs-mk[data-status="none"],.vxs-svg.has-age .vxs-mk[data-status="completed-expected"],.vxs-svg.has-age .vxs-mk[data-status="past-limit"],.vxs-svg.has-age .vxs-mk[data-status="done"]{opacity:.4}
 .vxs-svg.has-age .vxs-mk[data-status="due"] .vxs-shape{filter:drop-shadow(0 0 3px var(--status-rising))}
 .vxs-svg.has-age .vxs-mk[data-status="soon"] .vxs-shape{filter:drop-shadow(0 0 2px var(--info))}
 .vxs-sw .vxs-shape{stroke-width:2}
@@ -1015,7 +1026,9 @@ html:not(.js) .vxs-form,html:not(.js) .vxs-msg,html:not(.js) .vxs-tabs,html:not(
 .vxs-table tr[data-status="due"] [data-vxs-st]{color:var(--status-stable);font-weight:700}
 .vxs-table tr[data-status="soon"] [data-vxs-st]{color:var(--info);font-weight:700}
 .vxs-table tr[data-status="situational"] [data-vxs-st]{color:var(--info);font-weight:700}
-.vxs-table tr[data-status="past"] [data-vxs-st]{color:var(--warn);font-weight:700}
+.vxs-table tr[data-status="completed-expected"] [data-vxs-st]{color:var(--ink-2);font-weight:700}
+.vxs-table tr[data-status="past-limit"] [data-vxs-st]{color:var(--warn);font-weight:700}
+.vxs-table tr[data-status="done"] [data-vxs-st]{color:var(--ink-2)}
 @media (max-width:900px){
   .vxs-svg{min-width:760px}
   .vxs-detail__wrap{grid-template-columns:1fr}

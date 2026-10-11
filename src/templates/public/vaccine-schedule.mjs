@@ -5,7 +5,7 @@
 // 建置時把精簡 JSON 內嵌在 <script type="application/json" id="vxs-data">，互動由 /assets/js/vaxschedule.js 處理；沒有 JS 時 SVG 與表格仍可看。
 import { html, raw, jsonScript } from '../../../scripts/lib/render.mjs';
 import { ldFor, pageHead, sectionHead, feedback, hrefFor, link, isExternal, vaxmapLinkForVaccine, VAXMAP_GROUP_OF, VAXMAP_INFO_LABEL, mdLine } from './_partials.mjs';
-import { TABS, ageRangeLabel, rowsOf, renderMapSvg, renderTableHtml, FUNDED } from '../../client/vaxschedule.js';
+import { TABS, ageRangeLabel, hardLimitLabel, rowsOf, renderMapSvg, renderTableHtml, FUNDED } from '../../client/vaxschedule.js';
 
 const JS = ['/assets/js/vaxschedule.js'];
 
@@ -39,7 +39,9 @@ function payload(ctx, rows) {
   }
   return {
     lang: ctx.lang,
-    items: schedOf(ctx.site).map((i) => ({ id: i.id, v: i.vaccine, label: i.label, labelEn: i.labelEn ?? null, dose: i.dose ?? null, min: i.ageMinMonths, max: i.ageMaxMonths ?? null, ageMinMonths: i.ageMinMonths, ageMaxMonths: i.ageMaxMonths ?? null, age: i.ageLabel ?? null, stage: i.stage, funded: i.funded, group: i.group ?? null, interval: i.interval ?? null, recurring: i.recurring ?? null, startAt: i.startAt ?? null, endAt: i.endAt ?? null, note: i.note ?? null, src: i.source ? { title: i.source.title, url: link(ctx, i.source.url), ext: isExternal(i.source.url) } : null, ver: i.verified !== false })),
+    items: schedOf(ctx.site).map((i) => ({ id: i.id, v: i.vaccine, label: i.label, labelEn: i.labelEn ?? null, dose: i.dose ?? null, min: i.ageMinMonths, max: i.ageMaxMonths ?? null, ageMinMonths: i.ageMinMonths, ageMaxMonths: i.ageMaxMonths ?? null, age: i.ageLabel ?? null, stage: i.stage, funded: i.funded, group: i.group ?? null, interval: i.interval ?? null, recurring: i.recurring ?? null, startAt: i.startAt ?? null, endAt: i.endAt ?? null, note: i.note ?? null, src: i.source ? { title: i.source.title, url: link(ctx, i.source.url), ext: isExternal(i.source.url) } : null, ver: i.verified !== false,
+      // 第四十輪：可接種上限只在主檔有填時才帶（沒有欄位＝不宣稱上限）；來源與核對狀態分開帶，因為上限常出自仿單而非時程表
+      ...(i.hardLimitMonths != null ? { hardLimitMonths: i.hardLimitMonths, hardLimitNote: i.hardLimitNote ?? null, hardLimitSource: i.hardLimitSource ? { title: i.hardLimitSource.title, url: link(ctx, i.hardLimitSource.url), ext: isExternal(i.hardLimitSource.url) } : null, hardLimitVerified: i.hardLimitVerified === true } : {}) })),
     vaccines,
   };
 }
@@ -110,7 +112,9 @@ export function markdown(ctx) {
   for (const r of rows) for (const i of r.items) {
     const funded = t(`vxs.funded.${i.funded}`) + (i.verified === false ? `（${t('vxs.unverified.badge')}）` : '');
     const period = i.startAt ? `${t('vxs.col.period')} ${i.startAt}${i.endAt ? ` – ${i.endAt}` : ''}` : '';
-    L.push(`| ${[r.name, i.dose ?? labelOf(ctx, i), ctx.lang === 'zh-TW' ? i.ageLabel : ageRangeLabel(i, t), t(`vxs.stage.${i.stage}`), funded, i.group ?? '', `${i.interval ?? ''}${i.recurring === 'yearly' ? ` ${t('vxs.recurring.yearly')}` : ''}`, [i.note, period].filter(Boolean).join(' '), i.source?.url ? `[${i.source.title}](${isExternal(i.source.url) ? i.source.url : ctx.url(i.source.url)})` : '', i.id].map(cell).join(' | ')} |`);
+    const hard = hardLimitLabel(i, t);
+    const age = `${ctx.lang === 'zh-TW' ? (i.ageLabel ?? ageRangeLabel(i, t)) : ageRangeLabel(i, t)}${hard ? `；${t('vxs.hard.label')}：${hard}${i.hardLimitVerified === false ? `（${t('vxs.unverified.badge')}）` : ''}` : ''}`;
+    L.push(`| ${[r.name, i.dose ?? labelOf(ctx, i), age, t(`vxs.stage.${i.stage}`), funded, i.group ?? '', `${i.interval ?? ''}${i.recurring === 'yearly' ? ` ${t('vxs.recurring.yearly')}` : ''}`, [i.note, period].filter(Boolean).join(' '), i.source?.url ? `[${i.source.title}](${isExternal(i.source.url) ? i.source.url : ctx.url(i.source.url)})` : '', i.id].map(cell).join(' | ')} |`);
   }
   L.push('', `${t('vxs.api')}：/v1/immunization-schedule.json · CSV：/vaccines/schedule.csv`);
   return `${L.join('\n')}\n`;

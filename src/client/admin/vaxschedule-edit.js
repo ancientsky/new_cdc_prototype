@@ -100,7 +100,7 @@ function paintChecks() {
   if (warns.length) mk('adm-box--warn', '建議補齊', warns);
   if (!errs.length && !warns.length) { const d = document.createElement('div'); d.className = 'adm-box adm-box--ok'; d.textContent = '這一筆沒有問題。'; box.appendChild(d); }
   const min = joinMonths(form.ageY, form.ageM); const max = form.noMax ? null : joinMonths(form.maxY, form.maxM);
-  $('#vx-agehint').textContent = `地圖會畫在：${monthsText(Number.isFinite(min) ? min : null)}${form.noMax ? ' 以上' : max == null || max === min ? '（單一月齡，畫成一個點）' : ` 至 ${monthsText(max)}`}`;
+  $('#vx-agehint').textContent = `地圖會畫在：${monthsText(Number.isFinite(min) ? min : null)}${form.noMax ? ' 以上' : max == null || max === min ? '（單一月齡，畫成一個點）' : ` 至 ${monthsText(max)}`}${Number.isFinite(joinMonths(form.hardY, form.hardM)) ? `；可接種上限：滿 ${monthsText(joinMonths(form.hardY, form.hardM))} 起不可接種` : '；沒有可接種上限（超過建議區間只會顯示「應已完成」）'}`;
 }
 function paintExport() {
   const sorted = sortedForExport(items, vaccineIds);
@@ -122,7 +122,7 @@ $('#vx-form').addEventListener('change', (e) => { if (e.target === F.noMax) togg
 $('#vx-list').addEventListener('click', (e) => { const b = e.target.closest('[data-idx]'); if (b) select(Number(b.dataset.idx)); });
 $('#vx-map').addEventListener('click', (e) => { const a = e.target.closest('.vxs-mk'); if (!a) return; e.preventDefault(); const idx = items.findIndex((i) => i.id === a.dataset.id); if (idx >= 0) select(idx); });
 $('#vx-table').addEventListener('click', (e) => { const tr = e.target.closest('tr[data-sched]'); if (!tr || e.target.closest('a')) return; const idx = items.findIndex((i) => i.id === tr.dataset.sched); if (idx >= 0) select(idx); });
-$('#vx-check').addEventListener('click', (e) => { const b = e.target.closest('[data-field]'); if (!b) return; const el = F[b.dataset.field] ?? F[b.dataset.field === 'ageMinMonths' ? 'ageY' : b.dataset.field === 'ageMaxMonths' ? 'maxY' : b.dataset.field]; el?.focus(); el?.closest('.adm-field')?.classList.add('adm-field--hit'); setTimeout(() => el?.closest('.adm-field')?.classList.remove('adm-field--hit'), 1500); });
+$('#vx-check').addEventListener('click', (e) => { const b = e.target.closest('[data-field]'); if (!b) return; const el = F[b.dataset.field] ?? F[b.dataset.field === 'ageMinMonths' ? 'ageY' : b.dataset.field === 'ageMaxMonths' ? 'maxY' : b.dataset.field === 'hardLimitMonths' ? 'hardY' : b.dataset.field]; el?.focus(); el?.closest('.adm-field')?.classList.add('adm-field--hit'); setTimeout(() => el?.closest('.adm-field')?.classList.remove('adm-field--hit'), 1500); });
 $$('[data-vx-tab]').forEach((b) => b.addEventListener('click', () => { tab = b.dataset.vxTab; paintPreview(); }));
 $('#vx-add').addEventListener('click', () => {
   commitForm();

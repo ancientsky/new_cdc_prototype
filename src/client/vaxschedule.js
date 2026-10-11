@@ -1,4 +1,4 @@
-// 疫苗接種時程地圖的前端：年齡輸入（歲＋月／生日）、#age／#vaccine／#sched 深連結、階段頁籤、標記詳情卡、現在可打／即將／已過高亮。
+// 疫苗接種時程地圖的前端：年齡輸入（歲＋月／生日）、#age／#vaccine／#sched 深連結、階段頁籤、標記詳情卡、現在可打／即將／應已完成／已超過可接種上限高亮、「已接種」勾選（#done=，第四十輪）。
 // 純函式（刻度、年齡解析、狀態判斷、年齡文字）自成一體、可在 Node 測試，也供建置端模板畫 SVG 時共用同一份刻度。
 // 沒有 JS 時：SVG 與表格仍完整可看，標記連到表格列錨點（#sched.xxx）。
 import './i18n.runtime.js';
@@ -76,9 +76,28 @@ export function formatAgeParam(months) {
   return months >= 24 && months % 12 === 0 ? String(months / 12) : `m${months}`;
 }
 
-/** 解析 location.hash：'#age=65&vaccine=vaccine.mmr&sched=sched.x'，也接受單獨的 '#sched.xxx'（無 JS 時標記的錨點）。 */
+/**
+ * 第四十輪：「已接種」勾選 ⇄ '#done=' 參數值。存成去掉 'sched.' 前綴、逗號分隔、排序過的字串（網址短、同一組勾選永遠同一個網址）。
+ * 為什麼放在網址而不是 localStorage：與 #age= 同一套機制（可分享給另一位家長、重新整理不會掉），而且不會在共用電腦上默默留下孩子的接種紀錄；
+ * 關掉分頁或按「清除」就沒了。代價是網址會帶著勾選，所以頁面上明寫「分享網址會一起帶出」。
+ */
+export function parseDone(v) {
+  const out = [];
+  for (const raw of String(v ?? '').split(',')) {
+    const x = raw.trim();
+    if (!x) continue;
+    const id = x.startsWith('sched.') ? x : `sched.${x}`;
+    if (/^sched\.[\w.-]+$/.test(id) && !out.includes(id)) out.push(id);
+  }
+  return out;
+}
+export function formatDone(ids) {
+  return [...new Set([...(ids ?? [])].filter((id) => /^sched\.[\w.-]+$/.test(id)))].sort().map((id) => id.slice(6)).join(',');
+}
+
+/** 解析 location.hash：'#age=m3&vaccine=vaccine.mmr&sched=sched.x&done=hepatitis-b-1,pcv-1'，也接受單獨的 '#sched.xxx'（無 JS 時標記的錨點）。 */
 export function parseHash(hash) {
-  const out = { months: null, vaccine: null, sched: null };
+  const out = { months: null, vaccine: null, sched: null, done: [] };
   const s = String(hash ?? '').replace(/^#/, '');
   if (!s) return out;
   if (/^sched\.[\w.-]+$/.test(s)) { out.sched = s; return out; }
@@ -90,19 +109,33 @@ export function parseHash(hash) {
     if (k === 'age') out.months = parseAgeParam(v);
     else if (k === 'vaccine' && /^vaccine\.[\w.-]+$/.test(v)) out.vaccine = v;
     else if (k === 'sched' && /^sched\.[\w.-]+$/.test(v)) out.sched = v;
+    else if (k === 'done') out.done = parseDone(v);
   }
   return out;
 }
-export function buildHash({ months = null, vaccine = null, sched = null } = {}) {
+export function buildHash({ months = null, vaccine = null, sched = null, done = null } = {}) {
   const p = [];
   if (Number.isFinite(months) && months != null) p.push(`age=${formatAgeParam(months)}`);
   if (vaccine) p.push(`vaccine=${vaccine}`);
   if (sched) p.push(`sched=${sched}`);
+  const d = formatDone(done ?? []);
+  if (d) p.push(`done=${d}`);
   return p.length ? `#${p.join('&')}` : '';
 }
 
 /* ───────── 狀態與年齡文字 ───────── */
-/** due＝現在在建議區間內；soon＝SOON_MONTHS 內到下限；past＝已超過上限；none＝尚早或未輸入年齡 */
+/** 可接種年齡上限（月，不含當月）：主檔 hardLimitMonths，內嵌 JSON 用 hard；沒有就是 null（＝主檔沒有上限，不得宣稱上限） */
+export function hardLimitOf(item) {
+  const v = item?.hardLimitMonths ?? item?.hard;
+  return Number.isFinite(v) ? v : null;
+}
+/**
+ * 年齡 → 狀態（第四十輪把舊的 past 拆成兩種）：
+ * - due＝在建議區間內；soon＝SOON_MONTHS 內到下限；none＝尚早或未輸入年齡；situational＝孕婦／特殊情況，不看年齡。
+ * - completed-expected＝已過「建議區間上限」ageMaxMonths。這只代表建議時間已過、一般應已完成，**不代表不能打**——
+ *   0 歲 3 個月的寶寶多半已打過 B 肝第 1、2 劑，舊版把它們說成「已超過年齡上限」，家長會以為錯過了。
+ * - past-limit＝已滿「可接種年齡上限」hardLimitMonths（不含當月）。只有主檔明確填了這個欄位才會出現；沒有欄位就不宣稱上限。
+ */
 export function statusFor(item, months) {
   if (months == null || !Number.isFinite(months)) return 'none';
   // 孕婦、特殊情況（暴露後、高風險）看身分或情況，不看年齡
@@ -110,8 +143,37 @@ export function statusFor(item, months) {
   const min = item.ageMinMonths ?? item.min ?? 0;
   const max = item.ageMaxMonths !== undefined ? item.ageMaxMonths : item.max;
   if (months < min) return min - months <= SOON_MONTHS ? 'soon' : 'none';
-  if (max != null && months > max) return 'past';
+  const hard = hardLimitOf(item);
+  if (hard != null && months >= hard) return 'past-limit';
+  if (max != null && months > max) return 'completed-expected';
   return 'due';
+}
+/** 可以勾「已接種」的狀態：現在可打、應已完成、已超過上限（已打完的人勾掉，就不會再被提醒）。即將／尚早／依情況不給勾，避免誤勾未來的劑次。 */
+export const DONE_ELIGIBLE = ['due', 'completed-expected', 'past-limit'];
+/** 套上使用者的「已接種」勾選（Set 或陣列）：勾過且狀態可勾 ⇒ done；其餘照 statusFor */
+export function statusWithDone(item, months, done = null) {
+  const s = statusFor(item, months);
+  const has = done ? (typeof done.has === 'function' ? done.has(item.id) : done.includes(item.id)) : false;
+  return has && DONE_ELIGIBLE.includes(s) ? 'done' : s;
+}
+/** 結果區的群組順序：先看「現在能做什麼」，再看「之前該做的」，已勾的收到最後 */
+export const RESULT_ORDER = ['due', 'soon', 'completed-expected', 'past-limit', 'situational', 'done'];
+/** 月齡＋勾選 → { 狀態: [項目…] }；每組依 byFunded 排（公費常規 → 符合條件公費 → 自費，同類再依與目前月齡的距離） */
+export function groupResults(items, months, done = null) {
+  const out = Object.fromEntries(RESULT_ORDER.map((s) => [s, []]));
+  for (const i of items) { const s = statusWithDone(i, months, done); if (out[s]) out[s].push(i); }
+  for (const s of RESULT_ORDER) out[s].sort((a, b) => byFunded(a, b, months));
+  return out;
+}
+/** 一組內再依費用分小標（只回有項目的費用類別；順序固定，與 byFunded 一致） */
+export const fundedBuckets = (list) => ['public', 'conditional', 'self'].map((f) => ({ funded: f, items: list.filter((i) => i.funded === f) })).filter((b) => b.items.length);
+/**
+ * 「現在可打」沒有任何公費（含條件公費）時，回傳公費常規項目所在的組（空陣列＝不用提示）。
+ * 為什麼要：0 歲 3 個月時「現在可打」只剩輪狀病毒與 EV71 兩項自費，讀起來像「現在只能打自費」，其實公費常規在「應已完成」與「即將」。
+ */
+export function publicElsewhere(groups) {
+  if ((groups.due ?? []).some((i) => i.funded === 'public' || i.funded === 'conditional')) return [];
+  return ['completed-expected', 'soon'].filter((s) => (groups[s] ?? []).some((i) => i.funded === 'public'));
 }
 
 /** 月齡 → 人看的文字（t 為 (key, vars) 翻譯函式） */
@@ -126,6 +188,11 @@ export function ageRangeLabel(item, t) {
   if (max == null) return t('vxs.fmt.min', { a: formatAge(min, t) });
   if (max === min) return formatAge(min, t);
   return t('vxs.fmt.range', { a: formatAge(min, t), b: formatAge(max, t) });
+}
+/** 可接種上限的人看文字（沒有上限欄位 ⇒ 空字串；呼叫端據此決定要不要顯示，避免「沒有欄位卻宣稱上限」） */
+export function hardLimitLabel(item, t) {
+  const h = hardLimitOf(item);
+  return h == null ? '' : t('vxs.hard.value', { a: formatAge(h, t) });
 }
 const FUNDED_ORDER = { public: 0, conditional: 1, self: 2 };
 const minOf = (i) => i.ageMinMonths ?? i.min ?? 0;
@@ -218,9 +285,10 @@ export function renderTableHtml(rows, { t, lang = 'zh-TW', sourceOf = (i) => (i.
   const head = `${TABLE_COLS.map((c) => `<th scope="col">${esc(t(`vxs.col.${c}`))}</th>`).join('')}<th scope="col" class="vxs-jsonly">${esc(t('vxs.col.status'))}</th>`;
   const body = rows.flatMap((r) => r.items.map((i) => {
     const src = sourceOf(i);
-    const ageText = lang === 'zh-TW' ? (i.ageLabel ?? ageRangeLabel(i, t)) : ageRangeLabel(i, t);
+    const hard = hardLimitLabel(i, t);
+    const ageText = (lang === 'zh-TW' ? (i.ageLabel ?? ageRangeLabel(i, t)) : ageRangeLabel(i, t)) + (hard ? `；${t('vxs.hard.label')}：${hard}` : '');
     return `<tr id="${esc(i.id)}" data-sched="${esc(i.id)}" data-vaccine="${esc(r.id)}">
-<th scope="row">${esc(r.name)}</th><td${z}>${esc(i.dose ?? itemLabel(i, lang))}</td><td>${esc(ageText)}</td><td>${esc(t(`vxs.stage.${i.stage}`))}</td>
+<th scope="row">${esc(r.name)}</th><td${z}>${esc(i.dose ?? itemLabel(i, lang))}</td><td>${esc(ageText)}${hard && i.hardLimitVerified === false ? ` <span class="c-pill c-pill--warn">${esc(t('vxs.unverified.badge'))}</span>` : ''}</td><td>${esc(t(`vxs.stage.${i.stage}`))}</td>
 <td><span class="c-pill c-pill--${pillOf(i.funded)}">${esc(t(`vxs.funded.${i.funded}`))}</span>${i.verified === false ? ` <span class="c-pill c-pill--warn">${esc(t('vxs.unverified.badge'))}</span>` : ''}</td>
 <td${z}>${esc(i.group ?? '')}</td><td${z}>${esc(i.interval ?? '')}${i.recurring === 'yearly' ? ` ${esc(t('vxs.recurring.yearly'))}` : ''}</td><td${z}>${esc(i.note ?? '')}${i.startAt ? ` ${esc(t('vxs.col.period'))}：${esc(i.startAt)}${i.endAt ? ` – ${esc(i.endAt)}` : ''}` : ''}</td>
 <td>${src?.href ? `<a href="${esc(src.href)}"${src.ext ? ' target="_blank" rel="noopener"' : ''}${z}>${esc(i.source?.title ?? src.href)}</a>` : ''}</td><td class="vxs-jsonly" data-vxs-st></td></tr>`;
@@ -231,13 +299,15 @@ ${body}
 }
 
 /* ───────── CSV（下載按鈕與建置時 /vaccines/schedule.csv 同一函式） ───────── */
-export const CSV_COLS = ['id', 'vaccine', 'vaccineName', 'label', 'dose', 'ageLabel', 'ageMinMonths', 'ageMaxMonths', 'stage', 'funded', 'group', 'interval', 'recurring', 'startAt', 'endAt', 'note', 'sourceTitle', 'sourceUrl', 'verified'];
+export const CSV_COLS = ['id', 'vaccine', 'vaccineName', 'label', 'dose', 'ageLabel', 'ageMinMonths', 'ageMaxMonths', 'hardLimitMonths', 'hardLimitNote', 'hardLimitSourceUrl', 'hardLimitVerified', 'stage', 'funded', 'group', 'interval', 'recurring', 'startAt', 'endAt', 'note', 'sourceTitle', 'sourceUrl', 'verified'];
 export function scheduleCsv(items, nameOf = (id) => id, t = null) {
   const cell = (v) => { const s = v == null ? '' : String(v); return /[",\r\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
-  const headers = t ? CSV_COLS.map((c) => ({ id: t('vxs.col.id'), vaccine: 'vaccine id', vaccineName: t('vxs.col.vaccine'), label: t('vxs.col.dose'), dose: 'dose', ageLabel: t('vxs.col.age'), ageMinMonths: 'ageMinMonths', ageMaxMonths: 'ageMaxMonths', stage: t('vxs.col.stage'), funded: t('vxs.col.funded'), group: t('vxs.col.group'), interval: t('vxs.col.interval'), recurring: t('vxs.col.recurring'), startAt: 'startAt', endAt: 'endAt', note: t('vxs.col.note'), sourceTitle: t('vxs.col.source'), sourceUrl: 'sourceUrl', verified: 'verified' }[c])) : CSV_COLS;
+  const headers = t ? CSV_COLS.map((c) => ({ id: t('vxs.col.id'), vaccine: 'vaccine id', vaccineName: t('vxs.col.vaccine'), label: t('vxs.col.dose'), dose: 'dose', ageLabel: t('vxs.col.age'), ageMinMonths: 'ageMinMonths', ageMaxMonths: 'ageMaxMonths', hardLimitMonths: 'hardLimitMonths', hardLimitNote: t('vxs.hard.label'), hardLimitSourceUrl: 'hardLimitSourceUrl', hardLimitVerified: 'hardLimitVerified', stage: t('vxs.col.stage'), funded: t('vxs.col.funded'), group: t('vxs.col.group'), interval: t('vxs.col.interval'), recurring: t('vxs.col.recurring'), startAt: 'startAt', endAt: 'endAt', note: t('vxs.col.note'), sourceTitle: t('vxs.col.source'), sourceUrl: 'sourceUrl', verified: 'verified' }[c])) : CSV_COLS;
   const lines = [headers.map(cell).join(',')];
   for (const i of items) {
-    const row = { ...i, vaccineName: nameOf(i.vaccine), sourceTitle: i.source?.title ?? '', sourceUrl: i.source?.url ?? '', verified: i.verified === false ? 'false' : 'true', ageMaxMonths: i.ageMaxMonths ?? '' };
+    const row = { ...i, vaccineName: nameOf(i.vaccine), sourceTitle: i.source?.title ?? '', sourceUrl: i.source?.url ?? '', verified: i.verified === false ? 'false' : 'true', ageMaxMonths: i.ageMaxMonths ?? '',
+      // 第四十輪：可接種上限四欄；沒有上限時全部空白（不是 0、不是 false），讀 CSV 的人才分得出「沒有上限」與「上限未核對」
+      hardLimitMonths: i.hardLimitMonths ?? '', hardLimitNote: i.hardLimitNote ?? '', hardLimitSourceUrl: i.hardLimitSource?.url ?? '', hardLimitVerified: i.hardLimitMonths == null ? '' : String(i.hardLimitVerified === true) };
     lines.push(CSV_COLS.map((c) => cell(row[c])).join(','));
   }
   return `﻿${lines.join('\r\n')}\r\n`;
@@ -310,7 +380,8 @@ function init() {
   const $ = (s, el = root) => el.querySelector(s);
   const $$ = (s, el = root) => [...el.querySelectorAll(s)];
   const svg = $('.vxs-svg');
-  const state = { months: null, vaccine: null, sched: null, tab: 'all' };
+  // done：使用者勾「已接種」的時程 id（只活在網址 #done=，見 parseDone 的說明）
+  const state = { months: null, vaccine: null, sched: null, tab: 'all', done: new Set() };
   const LABEL_W = Number(svg.dataset.labelW); const AXIS_H = Number(svg.dataset.axisH);
   const clip = svg.querySelector('#vxs-clip rect'); const plot = $('.vxs-plot', svg);
   const cursor = $('.vxs-cursor', svg);
@@ -345,31 +416,61 @@ function init() {
   /* 年齡：標記狀態、游標線、結果清單 */
   function paintStatus() {
     const m = state.months;
-    $$('.vxs-mk', svg).forEach((a) => { a.dataset.status = statusFor(byId.get(a.dataset.id), m); });
-    $$('tr[data-sched]').forEach((tr) => { const s = statusFor(byId.get(tr.dataset.sched), m); tr.dataset.status = s; const c = tr.querySelector('[data-vxs-st]'); if (c) c.textContent = m == null ? '' : s === 'none' ? '' : T(`vxs.status.${s}`); });
+    const st = (id) => statusWithDone(byId.get(id), m, state.done);
+    $$('.vxs-mk', svg).forEach((a) => { a.dataset.status = st(a.dataset.id); });
+    $$('tr[data-sched]').forEach((tr) => { const s = st(tr.dataset.sched); tr.dataset.status = s; const c = tr.querySelector('[data-vxs-st]'); if (c) c.textContent = m == null ? '' : s === 'none' ? '' : T(`vxs.status.${s}`); });
     if (m == null) cursor.setAttribute('hidden', ''); else { cursor.removeAttribute('hidden'); const x = xOf(m); cursor.querySelector('line').setAttribute('x1', x); cursor.querySelector('line').setAttribute('x2', x); const tx = cursor.querySelector('text'); tx.setAttribute('x', x); tx.textContent = formatAge(m, T); }
     svg.classList.toggle('has-age', m != null);
-    const box = $('[data-vxs-result]'); box.textContent = '';
+    const box = $('[data-vxs-result]');
+    // 重畫前記住焦點在哪一組的第幾個勾選框；重畫後聚焦同一組同位置的勾選框（勾掉的那筆已移到「已接種」，焦點留在原組的下一筆，
+    // 鍵盤使用者可以一路往下勾，也不會每勾一次就把收起來的「已接種」撐開）
+    const act = document.activeElement;
+    const focusAt = act?.dataset?.vxsDone ? { grp: act.dataset.grp, idx: $$(`[data-vxs-done][data-grp="${act.dataset.grp}"]`, box).indexOf(act) } : null;
+    const wasOpen = new Set($$('details[data-grp]', box).filter((d) => d.open).map((d) => d.dataset.grp));
+    box.textContent = '';
     if (m == null) { box.hidden = true; return; }
     box.hidden = false;
     box.appendChild(mk('p', 'vxs-result__age', T('vxs.age.now', { age: formatAge(m, T) })));
-    const groups = { due: [], soon: [], past: [], situational: [] };
-    items.forEach((i) => { const s = statusFor(i, m); if (groups[s]) groups[s].push(i); });
-    ['due', 'soon', 'past', 'situational'].forEach((s) => {
-      const list = groups[s].sort((a, b) => byFunded(a, b, m));
-      const wrap = s === 'past' ? mk('details', `vxs-result__grp vxs-result__grp--${s}`) : mk('div', `vxs-result__grp vxs-result__grp--${s}`);
-      const head = mk(s === 'past' ? 'summary' : 'h3', null, `${T(`vxs.status.${s}`)}（${list.length}）`);
-      wrap.appendChild(head);
+    const groups = groupResults(items, m, state.done);
+    const elsewhere = publicElsewhere(groups);
+    RESULT_ORDER.forEach((s) => {
+      const list = groups[s];
+      if (s === 'done' && !list.length) return; // 沒勾任何劑次就不出現「已接種（0）」
+      if (s === 'past-limit' && !list.length) return; // 只有主檔有上限欄位的項目會進這組；空的不顯示，免得讀者以為有「上限」這回事
+      // 摺疊規則：應已完成在嬰幼兒與學齡前（未滿 7 歲）展開，因為家長要在這裡勾已接種；成人看到二十筆嬰幼兒劑次只是雜訊，收起來。已接種一律收起。
+      const fold = s === 'done' || (s === 'completed-expected' && m >= 84);
+      const wrap = mk(fold ? 'details' : 'div', `vxs-result__grp vxs-result__grp--${s}`);
+      if (fold) { wrap.dataset.grp = s; if (wasOpen.has(s)) wrap.open = true; }
+      wrap.appendChild(mk(fold ? 'summary' : 'h3', null, `${T(`vxs.status.${s}`)}（${list.length}）`));
       if (list.length) wrap.appendChild(mk('p', 'muted vxs-result__hint', T(`vxs.status.${s}.d`)));
+      if (s === 'due' && elsewhere.length) wrap.appendChild(mk('p', 'vxs-result__note', T('vxs.res.publicElsewhere', { where: elsewhere.map((x) => `「${T(`vxs.short.${x}`)}」`).join(T('vxs.res.or')) })));
       if (!list.length) { wrap.appendChild(mk('p', 'muted', T('vxs.res.none'))); box.appendChild(wrap); return; }
-      const ul = mk('ul', 'vxs-result__list');
-      list.forEach((i) => {
-        const li = mk('li'); const a = mk('a', null, label(i)); a.href = `#${i.id}`; a.dataset.vxsPick = i.id;
-        li.append(a, ' ', fundedPill(i.funded)); if (i.ver === false) li.append(' ', verPill());
-        ul.appendChild(li);
-      });
-      wrap.appendChild(ul); box.appendChild(wrap);
+      for (const b of fundedBuckets(list)) {
+        wrap.appendChild(mk('h4', `vxs-result__sub vxs-result__sub--${b.funded}`, T(`vxs.res.funded.${b.funded}`)));
+        const ul = mk('ul', 'vxs-result__list');
+        b.items.forEach((i) => {
+          const li = mk('li'); const a = mk('a', null, label(i)); a.href = `#${i.id}`; a.dataset.vxsPick = i.id;
+          li.append(a);
+          if (i.ver === false) li.append(' ', verPill());
+          if (s === 'past-limit') { const h = hardLimitLabel(i, T); if (h) li.append(mk('span', 'vxs-result__hard', `${T('vxs.hard.label')}：${h}`)); }
+          if (s === 'done' || DONE_ELIGIBLE.includes(s)) {
+            const lb = mk('label', 'vxs-done'); const cb = mk('input'); cb.type = 'checkbox'; cb.checked = s === 'done'; cb.dataset.vxsDone = i.id; cb.dataset.grp = s;
+            cb.setAttribute('aria-label', `${T('vxs.done.label')}：${label(i)}`);
+            lb.append(cb, ` ${T('vxs.done.label')}`); li.append(lb);
+          }
+          ul.appendChild(li);
+        });
+        wrap.appendChild(ul);
+      }
+      box.appendChild(wrap);
     });
+    if (groups.done.length || groups['completed-expected'].length || groups.due.length) box.appendChild(mk('p', 'muted vxs-result__privacy', T('vxs.done.note', { clear: T('vxs.age.clear') })));
+    if (focusAt) {
+      const same = $$(`[data-vxs-done][data-grp="${focusAt.grp}"]`, box);
+      const el = same[Math.min(focusAt.idx, same.length - 1)] ?? box.querySelector('.vxs-result__age');
+      if (el === box.querySelector('.vxs-result__age')) el.tabIndex = -1;
+      el?.focus({ preventScroll: true });
+    }
   }
   const label = (i) => (document.documentElement.lang === 'zh-TW' || !i.labelEn ? i.label : i.labelEn);
   const fundedPill = (f) => mk('span', `c-pill c-pill--${f === 'public' ? 'ok' : f === 'conditional' ? 'info' : 'neutral'}`, T(`vxs.funded.${f}`));
@@ -391,10 +492,14 @@ function init() {
     const v = data.vaccines[i.v] ?? {};
     const h = mk('h3', null, label(i)); zh(h);
     const badges = mk('p', 'vxs-detail__badges'); badges.append(fundedPill(i.funded)); if (i.ver === false) badges.append(' ', verPill());
-    const st = statusFor(i, state.months); if (st !== 'none') badges.append(' ', mk('span', `c-pill c-pill--${st === 'due' ? 'ok' : st === 'soon' || st === 'situational' ? 'info' : 'warn'}`, T(`vxs.status.${st}`)));
+    const st = statusWithDone(i, state.months, state.done); if (st !== 'none') badges.append(' ', mk('span', `c-pill c-pill--${st === 'due' || st === 'done' ? 'ok' : st === 'soon' || st === 'situational' ? 'info' : 'warn'}`, T(`vxs.status.${st}`)));
     const dl = mk('dl', 'vxs-detail__dl');
     const row = (k, val, isZh) => { if (!val) return; const d = mk('div'); const dd = mk('dd', null, val); if (isZh) zh(dd); d.append(mk('dt', null, T(k)), dd); dl.appendChild(d); };
     row('vxs.col.age', document.documentElement.lang === 'zh-TW' ? i.age : `${ageRangeLabel(i, T)}`, false);
+    // 可接種上限：只有主檔有 hardLimitMonths 才出現；數值未核對時明寫「待承辦人確認」，依據文字是中文（非中文頁加 lang）
+    const hard = hardLimitLabel(i, T);
+    if (hard) row('vxs.hard.label', `${hard}${i.hardLimitVerified === false ? `（${T('vxs.unverified.badge')}）` : ''}`, false);
+    row('vxs.hard.note', i.hardLimitNote, true);
     row('vxs.col.dose', i.dose, true);
     row('vxs.col.interval', i.interval, true);
     row('vxs.col.group', i.group, true);
@@ -405,6 +510,7 @@ function init() {
     if (v.href) { const a = mk('a', 'c-btn c-btn--ghost', `${T('vxs.detail.vaccine')}：${v.name}`); a.href = v.href; links.appendChild(a); }
     if (v.where) { const a = mk('a', 'c-btn', `${v.whereLabel} ↗`); a.href = v.where; a.target = '_blank'; a.rel = 'noopener'; links.appendChild(a); }
     if (i.src?.url) { const a = mk('a', null, `${T('vxs.detail.source')}：${i.src.title}`); a.href = i.src.url; if (i.src.ext) { a.target = '_blank'; a.rel = 'noopener'; } zh(a); links.appendChild(a); }
+    if (i.hardLimitSource?.url) { const a = mk('a', null, `${T('vxs.hard.source')}：${i.hardLimitSource.title}`); a.href = i.hardLimitSource.url; if (i.hardLimitSource.ext) { a.target = '_blank'; a.rel = 'noopener'; } zh(a); links.appendChild(a); }
     const close = mk('button', 'c-btn c-btn--ghost vxs-detail__close', T('vxs.detail.close')); close.type = 'button'; close.addEventListener('click', () => select(null));
     box.append(h, badges, dl, links, close);
   }
@@ -440,7 +546,15 @@ function init() {
     if (fb.value) fb.value = '';
     setAge(m);
   });
-  $('[data-vxs-clear]', form).addEventListener('click', () => { fb.value = ''; msg.textContent = ''; setAge(null); });
+  // 清除＝年齡與「已接種」勾選一起清掉（網址也不再帶 #done=），共用電腦上按一下就不留痕跡
+  $('[data-vxs-clear]', form).addEventListener('click', () => { fb.value = ''; msg.textContent = ''; state.done = new Set(); setAge(null); });
+  /* 已接種勾選：改 state.done → 重畫結果、地圖與表格狀態 → 寫回網址 */
+  $('[data-vxs-result]').addEventListener('change', (e) => {
+    const cb = e.target.closest('[data-vxs-done]'); if (!cb) return;
+    const next = new Set(state.done);
+    if (cb.checked) next.add(cb.dataset.vxsDone); else next.delete(cb.dataset.vxsDone);
+    state.done = next; paintStatus(); paintDetail(); writeHash();
+  });
   [fy, fm].forEach((el) => el.addEventListener('input', () => { if (fy.value || fm.value) fb.value = ''; }));
 
   /* 頁籤 */
@@ -455,7 +569,7 @@ function init() {
   });
 
   /* 下載：PNG／SVG 取目前頁籤的畫面；CSV 取全部資料（與 /vaccines/schedule.csv 同欄位） */
-  const toMaster = (i) => ({ id: i.id, vaccine: i.v, label: i.label, labelEn: i.labelEn, dose: i.dose, ageLabel: i.age, ageMinMonths: i.ageMinMonths, ageMaxMonths: i.ageMaxMonths, stage: i.stage, funded: i.funded, group: i.group, interval: i.interval, recurring: i.recurring, startAt: i.startAt, endAt: i.endAt, note: i.note, source: i.src ? { title: i.src.title, url: i.src.url } : undefined, verified: i.ver !== false });
+  const toMaster = (i) => ({ id: i.id, vaccine: i.v, label: i.label, labelEn: i.labelEn, dose: i.dose, ageLabel: i.age, ageMinMonths: i.ageMinMonths, ageMaxMonths: i.ageMaxMonths, stage: i.stage, funded: i.funded, group: i.group, interval: i.interval, recurring: i.recurring, startAt: i.startAt, endAt: i.endAt, note: i.note, source: i.src ? { title: i.src.title, url: i.src.url } : undefined, verified: i.ver !== false, hardLimitMonths: i.hardLimitMonths ?? undefined, hardLimitNote: i.hardLimitNote ?? undefined, hardLimitSource: i.hardLimitSource ? { title: i.hardLimitSource.title, url: i.hardLimitSource.url } : undefined, hardLimitVerified: i.hardLimitVerified ?? undefined });
   const stamp = () => today();
   const dlMsg = $('[data-vxs-dlmsg]');
   const say = (txt) => { if (dlMsg) dlMsg.textContent = txt; };
@@ -492,6 +606,7 @@ function init() {
     state.vaccine = h.vaccine;
     state.sched = byId.has(h.sched) ? h.sched : null;
     state.months = h.months;
+    state.done = new Set(h.done.filter((id) => byId.has(id)));
     if (h.months != null) { fy.value = Math.floor(h.months / 12); fm.value = h.months % 12; } else { fy.value = ''; fm.value = ''; }
     if (state.vaccine && state.tab !== 'all') state.tab = 'all';
     if (state.sched) ensureTab(byId.get(state.sched));
