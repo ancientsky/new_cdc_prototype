@@ -1,3 +1,4 @@
+// @ts-check
 // 可選 LLM 模式（BYOK）的設定與金鑰管理：答案頁一載入就要用（決定要不要顯示金鑰欄位），所以獨立成小檔。
 // 第三十四輪（ARCHITECTURE 第 40 章）：提示詞、後檢、呼叫 API 的 llm.js 改成「同事開啟 LLM 模式並送出問題時」才以 import() 載入，
 // 民眾端每次開答案頁不再下載那段程式。金鑰規則（只存本分頁 sessionStorage）見 llm.js 檔首與 ARCHITECTURE 26.4。

@@ -31,3 +31,4 @@ eval/**/*.mjs
 !scripts/lib/minify.mjs
 !tests/round34-engine-split.test.mjs
 !tests/round40-vaxschedule.test.mjs
+!tests/round40-ci-isolation.test.mjs

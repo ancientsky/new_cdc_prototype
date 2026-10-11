@@ -20,7 +20,8 @@
 .ask-page .c-answer-sit.c-sit-card--peak{border-left-color:var(--status-peak)}
 .ask-page .c-answer-sit.c-sit-card--declining{border-left-color:var(--status-declining)}
 .ask-page .c-answer-sit header{display:flex;align-items:center;gap:var(--sp-2);flex-wrap:wrap}
-.ask-page .c-answer-sit h3{margin:0;font-size:var(--fs-md)}
+.ask-page .c-answer-sit h2{margin:0;font-size:var(--fs-md)}
+.ask-page .c-answer-sit h2 a{color:inherit;text-decoration:none}.ask-page .c-answer-sit h2 a:hover{text-decoration:underline}
 .ask-page .c-sit-card__metric{margin:var(--sp-2) 0}
 .ask-page .c-sit-card__metric b{font-size:var(--fs-2xl);color:var(--ink);margin-right:var(--sp-1)}
 .ask-page .c-sit-card__chart svg{max-width:100%;height:auto;color:var(--status-peak)}
@@ -71,6 +72,8 @@
 .c-source-card__t{font-weight:700;color:var(--green-900)}
 .c-source-card__m{font-size:var(--fs-xs);color:var(--ink-3)}
 .c-source-card__body{padding:0 var(--sp-4) var(--sp-3)}
+/* 第四十輪（#83）：來源卡內 dd 裡獨立成行的連結，行高約 20px 又只隔 6px，axe target-size（WCAG 2.5.8）判不足 24px；撐到 24px 以上，視覺只多 2–4px 行距 */
+.c-source-card__body .c-deflist dd a{display:inline-block;min-height:24px;line-height:24px}
 .c-source-card__actions{display:flex;flex-wrap:wrap;gap:var(--sp-2);margin:var(--sp-2) 0 0}
 .ask-page .c-source-card ins{text-decoration:none;background:var(--ok-bg);color:var(--ok)}
 .ask-page .c-source-card del{color:var(--alert-superseded)}

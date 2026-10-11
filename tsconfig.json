@@ -1,16 +1,25 @@
 {
-  "//": "第二十六輪（issue #42）型別檢查試點：只檢查下面 include 的檔案（JS + JSDoc，不改成 TypeScript）。要擴大範圍就把檔案加進 include 並在檔首加 // @ts-check。",
+  "//": "第二十六輪（issue #42）型別檢查試點：只檢查下面 include 的檔案（JS + JSDoc，不改成 TypeScript）。要擴大範圍就把檔案加進 include 並在檔首加 // @ts-check。第四十輪（#82）：checkJs 改 false，只檢查檔首有 // @ts-check 的檔——checkJs: true 會把 import 到的檔（例如 stats.js → render.js → core.js 12 萬位元組）全拖進來一起檢查，無法逐檔擴大。擴大順序見 docs/deploy.md 第四十輪。",
   "compilerOptions": {
     "target": "ES2023",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "allowJs": true,
-    "checkJs": true,
+    "checkJs": false,
     "noEmit": true,
     "strict": false,
     "noImplicitAny": false,
     "skipLibCheck": true,
     "types": ["node"]
   },
-  "include": ["scripts/lib/lanes.mjs", "scripts/lib/validate.mjs", "scripts/lib/gateway/*.mjs"]
+  "include": [
+    "scripts/lib/lanes.mjs",
+    "scripts/lib/validate.mjs",
+    "scripts/lib/gateway/*.mjs",
+    "src/client/globals.d.ts",
+    "src/client/answer/inline.js",
+    "src/client/answer/llm-key.js",
+    "src/client/answer/stats.js",
+    "src/client/answer/factcheck.js"
+  ]
 }

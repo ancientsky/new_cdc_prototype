@@ -5,6 +5,16 @@ name: Content PR lane (checks, preview, auto-merge)
 # → 快車道／緊急發布：檢查全過即 squash 合併；一般車道：有核准（每位審核人最新一則為 APPROVED）且檢查全過才合併。
 # 注意：GITHUB_TOKEN 造成的 push／closed 事件不會再觸發其他工作流程（GitHub 規則），
 #       所以合併後本流程自己再 `gh workflow run pages.yml`；預覽清理另有 preview-cleanup.yml 的每日排程補做。
+#
+# 第四十輪（#81）：拆成兩個 job，把「執行 PR 程式碼」和「持有寫入權杖」分開。
+#   test ：contents: read。npm ci、lint、format、typecheck、npm test、build、a11y、lane.mjs、預覽建置全在這裡——
+#          PR 的 package.json 腳本、相依套件的 postinstall、測試檔都在這個 job 裡執行，能拿到的最多是唯讀權杖。
+#          結果（各步驟 outcome、lane.json、a11y 摘要、預覽 dist）用 upload-artifact 交出去。
+#   lane ：needs: test，有寫入權限。只做 gh 呼叫（留言、標籤、合併、觸發部署）和 git 推 previews 分支。
+#          不 checkout、不 npm ci、不執行 repo 內任何腳本（留言用 jq，不用 node）；artifact 一律當不可信資料，
+#          下載後先驗證格式（列舉值、檔案清單比對 PR 實際變更）才使用。
+# 為什麼不用 pull_request_target：它在 base 分支的脈絡執行並預設帶寫入權杖，一旦 checkout PR 的程式碼就等於把寫入權杖交給 PR 作者
+# （GitHub Security Lab 稱 "pwn request"）。目前只接受同 repo 分支的 PR（SAME_REPO）；若未來接受 fork，見 docs/deploy.md 第四十輪。
 on:
   pull_request:
     types: [opened, synchronize, reopened]
@@ -12,7 +22,7 @@ on:
   pull_request_review:
     types: [submitted]
 
-# 第二十三輪（26.5）：工作流程層級只給唯讀；寫入權限下放到需要的 job（目前只有 lane 一個 job，它要推預覽、留言、合併、觸發部署）。
+# 第二十三輪（26.5）：工作流程層級只給唯讀；寫入權限下放到需要的 job（第四十輪起只有 lane 一個 job 有寫入權限）。
 # 第三方 action 一律固定 commit SHA（註解標版本），升級由 Dependabot（.github/dependabot.yml）開 PR。
 permissions:
   contents: read
@@ -22,27 +32,21 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lane:
+  test:
     runs-on: ubuntu-latest
+    # 執行 PR 程式碼的 job：只有唯讀權杖，而且步驟都不把 GITHUB_TOKEN 放進環境變數（唯一例外是查 team 那一步，只跑 gh 指令）
     permissions:
-      contents: write # 推 previews 分支、合併 PR
-      pull-requests: write # 留言、標籤、合併
-      issues: write # 建立標籤、編輯留言（PR 留言走 issues API）
-      actions: write # gh workflow run pages.yml
+      contents: read
     env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      REPO: ${{ github.repository }}
-      PR: ${{ github.event.pull_request.number }}
       PR_CREATED_AT: ${{ github.event.pull_request.created_at }}
-      # 分叉來的 PR 拿不到寫入權杖：只跑檢查，不推預覽、不留言、不合併
-      SAME_REPO: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
       # 第二十三輪（26.3）：PR 作者；lanes.json 的 allowedAuthors 決定能不能走自動合併車道
       PR_AUTHOR: ${{ github.event.pull_request.user.login }}
-      PREVIEW_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/preview/pr-${{ github.event.pull_request.number }}/
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
+          # 不把權杖留在 .git/config：後面的 npm ci／npm test 讀得到工作目錄，卻讀不到權杖
+          persist-credentials: false
 
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
@@ -64,6 +68,18 @@ jobs:
         id: lint
         continue-on-error: true
         run: npm run lint
+
+      # 第四十輪（#82）：格式與型別檢查也進 CI。main 上曾經 format:check 紅了好幾輪沒人發現，就是因為它不在任何工作流程裡；
+      # Prettier 只強制用在 .prettierignore 放行清單裡的新檔，所以這一步不會要求重排既有程式碼。
+      - name: Format check (prettier, allow-listed new files)
+        id: format
+        continue-on-error: true
+        run: npm run format:check
+
+      - name: Type check (tsc, files with // @ts-check)
+        id: typecheck
+        continue-on-error: true
+        run: npm run typecheck
 
       - name: Tests (governance rules)
         id: test
@@ -95,6 +111,8 @@ jobs:
           DIST_DIR: ${{ runner.temp }}/a11y-dist
         run: node scripts/build.mjs
 
+      # 第四十輪（#83）：A11Y_JSON 另外輸出機器可讀的數字（阻擋數、moderate／minor 警告數與規則別次數），
+      # 下面「Collect results」收進 result.json，PR 留言的無障礙列就看得到「不擋合併但有 N 項警告」。
       - name: Accessibility check (axe-core)
         id: a11y
         if: steps.a11y_build.outcome == 'success'
@@ -102,22 +120,31 @@ jobs:
         env:
           DIST_DIR: ${{ runner.temp }}/a11y-dist
           A11Y_REPORT: ${{ runner.temp }}/a11y-report.md
+          A11Y_JSON: ${{ runner.temp }}/a11y-summary.json
         run: npm run a11y
 
-      - name: Lane (changed files → lane, reviewers, SLA)
-        id: lane
+      # 個人帳號的 repo 沒有 team；組織的 team 清單需要 read:org，GITHUB_TOKEN 給不了，查不到就留空（與拆分前行為相同）。
+      # 這一步只跑 gh 指令，不執行 repo 內任何東西，所以權杖只放在這一步的 env。
+      - name: Lookup author teams (gh only)
+        id: teams
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git diff --name-only origin/main...HEAD
-          # 作者所屬 team（名單可寫 team:<org>/<slug>）：個人帳號下的 repo 沒有 team，查不到就留空
           TEAMS=$(gh api "orgs/${GITHUB_REPOSITORY_OWNER}/teams" --paginate --jq '.[].slug' 2>/dev/null | while read -r slug; do
             if gh api "orgs/${GITHUB_REPOSITORY_OWNER}/teams/$slug/memberships/$PR_AUTHOR" --silent 2>/dev/null; then printf '%s/%s,' "$GITHUB_REPOSITORY_OWNER" "$slug"; fi
           done || true)
-          node scripts/lane.mjs --since="$PR_CREATED_AT" --author="$PR_AUTHOR" --teams="$TEAMS" $(git diff --name-only origin/main...HEAD) < /dev/null > "$RUNNER_TEMP/lane.json"
-          cat "$RUNNER_TEMP/lane.json"
-          echo "lane=$(jq -r .lane "$RUNNER_TEMP/lane.json")" >> "$GITHUB_OUTPUT"
-          echo "label=$(jq -r .ghLabel "$RUNNER_TEMP/lane.json")" >> "$GITHUB_OUTPUT"
-          echo "auto=$(jq -r .autoMerge "$RUNNER_TEMP/lane.json")" >> "$GITHUB_OUTPUT"
-          echo "need=$(jq -r .requiredApprovals "$RUNNER_TEMP/lane.json")" >> "$GITHUB_OUTPUT"
+          echo "teams=$TEAMS" >> "$GITHUB_OUTPUT"
+
+      - name: Lane (changed files → lane, reviewers, SLA)
+        id: lane
+        env:
+          TEAMS: ${{ steps.teams.outputs.teams }}
+        run: |
+          git diff --name-only origin/main...HEAD
+          mkdir -p "$RUNNER_TEMP/result"
+          node scripts/lane.mjs --since="$PR_CREATED_AT" --author="$PR_AUTHOR" --teams="$TEAMS" $(git diff --name-only origin/main...HEAD) < /dev/null > "$RUNNER_TEMP/result/lane.json"
+          cat "$RUNNER_TEMP/result/lane.json"
 
       - name: Build preview
         id: preview_build
@@ -135,9 +162,147 @@ jobs:
         # 預覽站也含 dist/pagefind/（build.mjs 內建），所以 /pr-N/search/ 能直接搜這個 PR 的內容
         run: npm run build
 
+      # 把各步驟的 outcome 收成一個 JSON 交給 lane job。outcome 由工作流程運算式帶入（不是 PR 程式碼寫的），
+      # 但整個 artifact 仍當不可信資料：lane job 會再驗一次格式。always() 讓前面有步驟失敗時也能交出部分結果。
+      - name: Collect results (outcomes and a11y summary into the artifact dir)
+        if: always()
+        env:
+          O_PII: ${{ steps.pii.outcome }}
+          O_LINT: ${{ steps.lint.outcome }}
+          O_FORMAT: ${{ steps.format.outcome }}
+          O_TYPECHECK: ${{ steps.typecheck.outcome }}
+          O_TEST: ${{ steps.test.outcome }}
+          O_CHECK: ${{ steps.check.outcome }}
+          O_A11Y: ${{ steps.a11y.outcome }}
+          O_PREVIEW_BUILD: ${{ steps.preview_build.outcome }}
+          O_LANE: ${{ steps.lane.outcome }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/result"
+          [ -f "$RUNNER_TEMP/a11y-summary.json" ] || echo '{}' > "$RUNNER_TEMP/a11y-summary.json"
+          jq -n --slurpfile a "$RUNNER_TEMP/a11y-summary.json" \
+            --arg pii "$O_PII" --arg lint "$O_LINT" --arg format "$O_FORMAT" --arg typecheck "$O_TYPECHECK" \
+            --arg test "$O_TEST" --arg check "$O_CHECK" --arg a11y "$O_A11Y" --arg preview_build "$O_PREVIEW_BUILD" --arg lane "$O_LANE" \
+            '{outcomes: {pii: $pii, lint: $lint, format: $format, typecheck: $typecheck, test: $test, check: $check, a11y: $a11y, preview_build: $preview_build, lane: $lane}, a11y: ($a[0] // {})}' \
+            > "$RUNNER_TEMP/result/result.json"
+          cat "$RUNNER_TEMP/result/result.json"
+
+      - name: Upload results (lane.json, result.json)
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: lane-result
+          path: ${{ runner.temp }}/result
+          if-no-files-found: error
+          retention-days: 1
+
+      # 預覽 dist 只有建置成功才有。lane job 把它推到 previews 分支（那是 lane job 唯一碰到 PR 產物的地方，只複製檔案、不執行）。
+      - name: Upload preview dist
+        if: steps.preview_build.outcome == 'success'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: preview-dist
+          path: ${{ runner.temp }}/preview-dist
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 1
+
+      - name: Fail when checks failed
+        if: steps.test.outcome != 'success' || steps.lint.outcome != 'success' || steps.format.outcome != 'success' || steps.typecheck.outcome != 'success' || steps.check.outcome != 'success' || steps.a11y.outcome != 'success' || steps.pii.outcome != 'success'
+        env:
+          O_TEST: ${{ steps.test.outcome }}
+          O_LINT: ${{ steps.lint.outcome }}
+          O_FORMAT: ${{ steps.format.outcome }}
+          O_TYPECHECK: ${{ steps.typecheck.outcome }}
+          O_CHECK: ${{ steps.check.outcome }}
+          O_A11Y: ${{ steps.a11y.outcome }}
+          O_PII: ${{ steps.pii.outcome }}
+        run: |
+          echo "測試：$O_TEST；Lint：$O_LINT；格式：$O_FORMAT；型別：$O_TYPECHECK；治理閘門：$O_CHECK；無障礙檢測：$O_A11Y；個資掃描：$O_PII"
+          exit 1
+
+  lane:
+    needs: test
+    # test 失敗（檢查沒過）時 lane 仍要跑：留言、貼標籤、把「擋合併」的原因寫出來。只有整個工作流程被取消才跳過。
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # 推 previews 分支、合併 PR
+      pull-requests: write # 留言、標籤、合併
+      issues: write # 建立標籤、編輯留言（PR 留言走 issues API）
+      actions: write # gh workflow run pages.yml
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      REPO: ${{ github.repository }}
+      PR: ${{ github.event.pull_request.number }}
+      # 分叉來的 PR 拿不到寫入權杖：只跑檢查，不推預覽、不留言、不合併
+      SAME_REPO: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+      PREVIEW_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/preview/pr-${{ github.event.pull_request.number }}/
+    # 這個 job 沒有 checkout、沒有 setup-node、沒有 npm：能執行的只有 runner 內建的 bash／jq／git／gh 和下面釘住 SHA 的 download-artifact。
+    steps:
+      - name: Download results
+        id: download
+        continue-on-error: true
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: lane-result
+          path: ${{ runner.temp }}/result
+
+      # artifact 是 PR 程式碼產生的，一律當資料：每個值都過列舉／格式檢查才寫進 GITHUB_ENV（所以不可能夾帶換行或其他變數），
+      # lane.json 的檔案清單必須涵蓋 PR 實際變更的每個檔（用 API 查，不信 artifact），否則不採用。
+      - name: Validate results (artifact is untrusted data)
+        id: load
+        env:
+          DOWNLOAD: ${{ steps.download.outcome }}
+        run: |
+          D="$RUNNER_TEMP/result"
+          fail() { echo "ok=false" >> "$GITHUB_OUTPUT"; echo "::error::$1"; exit 0; }
+          [ "$DOWNLOAD" = "success" ] || fail "找不到 test job 的結果 artifact（test job 可能在上傳前就失敗）"
+          [ -s "$D/result.json" ] && [ -s "$D/lane.json" ] || fail "結果 artifact 缺 result.json 或 lane.json"
+          jq -e . "$D/result.json" > /dev/null && jq -e . "$D/lane.json" > /dev/null || fail "結果不是合法 JSON"
+          for k in pii lint format typecheck test check a11y preview_build lane; do
+            v="$(jq -r --arg k "$k" '.outcomes[$k] // "skipped" | tostring' "$D/result.json")"
+            case "$v" in success | failure | skipped | cancelled) ;; *) v=invalid ;; esac
+            echo "$(echo "$k" | tr '[:lower:]' '[:upper:]')=$v" >> "$GITHUB_ENV"
+          done
+          LANE="$(jq -r '.lane | tostring' "$D/lane.json")"
+          LABEL="$(jq -r '.ghLabel | tostring' "$D/lane.json")"
+          AUTO="$(jq -r '.autoMerge | tostring' "$D/lane.json")"
+          NEED="$(jq -r '.requiredApprovals | tostring' "$D/lane.json")"
+          [[ "$LANE" =~ ^(emergency|fast|standard)$ ]] || fail "lane 不是已知車道"
+          [[ "$LABEL" =~ ^lane:(emergency|fast|standard)$ ]] || fail "ghLabel 不合法"
+          [[ "$AUTO" =~ ^(true|false)$ ]] || fail "autoMerge 不是布林"
+          [[ "$NEED" =~ ^[0-9]$ ]] || fail "requiredApprovals 不是 0 到 9 的整數"
+          # 比對檔案清單：artifact 說的檔案必須涵蓋 PR 實際改到的每個檔（不能少報）
+          gh pr diff "$PR" -R "$REPO" --name-only | sort -u > "$RUNNER_TEMP/real-files.txt" || fail "查不到 PR 的檔案清單"
+          jq -r '.files[].file' "$D/lane.json" | sort -u > "$RUNNER_TEMP/lane-files.txt"
+          MISSING="$(comm -23 "$RUNNER_TEMP/real-files.txt" "$RUNNER_TEMP/lane-files.txt" | head -n 3)"
+          [ -z "$MISSING" ] || fail "lane.json 的檔案清單漏了 PR 實際變更的檔，不採用：$MISSING"
+          # a11y 警告數與規則別次數（只留數字與規則 id，會原樣放進 PR 留言）
+          WARN="$(jq -r '.a11y.warnings // 0 | tostring' "$D/result.json")"
+          [[ "$WARN" =~ ^[0-9]+$ ]] || WARN=0
+          RULES="$(jq -r '[.a11y.warningRules // {} | to_entries[] | select((.key | test("^[a-z0-9-]+$")) and (.value | type == "number")) | "\(.key)×\(.value)"] | join("、")' "$D/result.json")"
+          {
+            echo "LANE=$LANE"
+            echo "LABEL=$LABEL"
+            echo "AUTO=$AUTO"
+            echo "NEED=$NEED"
+            echo "A11Y_WARN=$WARN"
+            echo "A11Y_RULES=$RULES"
+          } >> "$GITHUB_ENV"
+          echo "ok=true" >> "$GITHUB_OUTPUT"
+
+      - name: Download preview dist
+        id: download_preview
+        if: steps.load.outputs.ok == 'true' && env.PREVIEW_BUILD == 'success' && github.event_name == 'pull_request' && env.SAME_REPO == 'true'
+        continue-on-error: true
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: preview-dist
+          path: ${{ runner.temp }}/preview-dist
+
       - name: Push preview to previews branch (pr-N/)
         id: preview_push
-        if: steps.preview_build.outcome == 'success' && env.SAME_REPO == 'true'
+        if: steps.download_preview.outcome == 'success' && env.SAME_REPO == 'true'
         continue-on-error: true
         run: |
           set -euo pipefail
@@ -176,15 +341,8 @@ jobs:
 
       - name: Decide merge (checks + lane + approvals)
         id: decide
-        if: env.SAME_REPO == 'true'
+        if: steps.load.outputs.ok == 'true' && env.SAME_REPO == 'true'
         env:
-          TEST: ${{ steps.test.outcome }}
-          LINT: ${{ steps.lint.outcome }}
-          CHECK: ${{ steps.check.outcome }}
-          A11Y: ${{ steps.a11y.outcome }}
-          PII: ${{ steps.pii.outcome }}
-          AUTO: ${{ steps.lane.outputs.auto }}
-          NEED: ${{ steps.lane.outputs.need }}
           STATE: ${{ github.event.pull_request.state }}
           DRAFT: ${{ github.event.pull_request.draft }}
         run: |
@@ -192,7 +350,7 @@ jobs:
           APPROVALS=$(gh pr view "$PR" -R "$REPO" --json reviews --jq '[.reviews[] | select(.state != "COMMENTED")] | group_by(.author.login) | map(max_by(.submittedAt)) | map(select(.state == "APPROVED")) | length')
           echo "approvals=$APPROVALS" >> "$GITHUB_OUTPUT"
           if [ "$STATE" != "open" ]; then ACTION=closed
-          elif [ "$TEST" != "success" ] || [ "$LINT" != "success" ] || [ "$CHECK" != "success" ] || [ "$A11Y" != "success" ] || [ "$PII" != "success" ]; then ACTION=blocked
+          elif [ "$TEST" != "success" ] || [ "$LINT" != "success" ] || [ "$FORMAT" != "success" ] || [ "$TYPECHECK" != "success" ] || [ "$CHECK" != "success" ] || [ "$A11Y" != "success" ] || [ "$PII" != "success" ]; then ACTION=blocked
           elif [ "$DRAFT" = "true" ]; then ACTION=draft
           elif [ "$AUTO" = "true" ]; then ACTION=merge
           elif [ "$APPROVALS" -ge "$NEED" ]; then ACTION=merge
@@ -202,63 +360,75 @@ jobs:
           echo "決定：$ACTION（核准 $APPROVALS／需 $NEED）"
 
       - name: Comment on PR (lane, checks, preview, SLA, reviewers)
-        if: always() && env.SAME_REPO == 'true' && steps.lane.outcome == 'success'
+        if: always() && env.SAME_REPO == 'true' && steps.load.outputs.ok == 'true'
         env:
-          TEST: ${{ steps.test.outcome }}
-          LINT: ${{ steps.lint.outcome }}
-          CHECK: ${{ steps.check.outcome }}
-          A11Y: ${{ steps.a11y.outcome }}
-          PII: ${{ steps.pii.outcome }}
-          PREVIEW_BUILD: ${{ steps.preview_build.outcome }}
           PREVIEW_PUSH: ${{ steps.preview_push.outcome }}
           ACTION: ${{ steps.decide.outputs.action }}
           APPROVALS: ${{ steps.decide.outputs.approvals }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
-          node --input-type=module -e '
-            import fs from "node:fs";
-            const L = JSON.parse(fs.readFileSync(process.env.RUNNER_TEMP + "/lane.json", "utf8"));
-            const e = process.env;
-            const icon = (o) => ({ success: "✅ 通過", failure: "❌ 失敗", skipped: "⏭ 略過", cancelled: "⏹ 取消" }[o] ?? "—");
-            const action = {
-              merge: L.autoMerge ? "✅ 檢查全數通過，" + L.label + "自動合併（squash），約 3 分鐘後上線" : "✅ 已有核准且檢查通過，合併（squash）",
-              wait: "⏳ 等待審核：需 " + L.requiredApprovals + " 位核准（目前 " + (e.APPROVALS || 0) + "）；SLA 至 " + L.sla.dueAtLocal + "（台灣時間）",
-              blocked: "❌ 檢查未通過，不合併：請看下方檢查與執行紀錄",
-              draft: "📝 草稿 PR：轉為 Ready for review 後才會合併",
-              closed: "PR 已關閉",
-            }[e.ACTION] ?? "—";
-            const previewOk = e.PREVIEW_PUSH === "success";
-            const lines = [
+          # 留言用 jq 產生（第四十輪：lane job 不執行 node 或 repo 內任何腳本）。這段 jq 程式寫在 workflow 裡，不來自 artifact。
+          cat > "$RUNNER_TEMP/comment.jq" <<'JQ'
+          def icon($o): ({"success": "✅ 通過", "failure": "❌ 失敗", "skipped": "⏭ 略過", "cancelled": "⏹ 取消"}[$o // ""] // "—");
+          . as $L
+          | $ENV as $e
+          | ($e.APPROVALS // "0") as $ap
+          | ({
+              "merge": (if $L.autoMerge then "✅ 檢查全數通過，" + $L.label + "自動合併（squash），約 3 分鐘後上線" else "✅ 已有核准且檢查通過，合併（squash）" end),
+              "wait": ("⏳ 等待審核：需 " + ($L.requiredApprovals | tostring) + " 位核准（目前 " + $ap + "）；SLA 至 " + $L.sla.dueAtLocal + "（台灣時間）"),
+              "blocked": "❌ 檢查未通過，不合併：請看下方檢查與執行紀錄",
+              "draft": "📝 草稿 PR：轉為 Ready for review 後才會合併",
+              "closed": "PR 已關閉"
+            }[$e.ACTION // ""] // "—") as $action
+          | ($e.PREVIEW_PUSH == "success") as $previewOk
+          | (($e.A11Y_WARN // "0") | tonumber? // 0) as $warn
+          | [
               "<!-- lane-bot -->",
-              "### 發布車道：" + L.label + "（`" + L.ghLabel + "`）",
+              "### 發布車道：" + $L.label + "（`" + $L.ghLabel + "`）",
               "",
-              action,
+              $action,
               "",
               "| 項目 | 結果 |",
               "| --- | --- |",
-              "| 測試（npm test） | " + icon(e.TEST) + " |",
-              "| Lint（eslint） | " + icon(e.LINT) + " |",
-              "| 治理閘門（schema、參照、評估集版本題） | " + icon(e.CHECK) + " |",
-              "| 無障礙檢測（axe） | " + icon(e.A11Y) + " |",
-              "| 個資掃描（身分證、居留證、手機、個人信箱、名單姓名） | " + icon(e.PII) + " |",
-              "| 預覽建置 | " + icon(e.PREVIEW_BUILD) + " |",
-              "| 預覽網址 | " + (previewOk ? "[" + e.PREVIEW_URL + "](" + e.PREVIEW_URL + ")（主站重新部署後約 2–3 分鐘可開；含排程中內容）" : "未產生") + " |",
-              "| 自動合併 | " + (L.autoMerge ? "是（不需人工核准）" : "否（需 " + L.requiredApprovals + " 位核准）") + " |",
-              "| 作者授權 | " + (L.authorGate ? (L.authorGate.allowed ? "✅ " + L.authorGate.reason : "⚠ " + L.authorGate.reason + "，降為一般車道") : "—（本車道本來就需人審）") + " |",
-              "| 審核人 | " + (L.reviewers.length ? L.reviewerNames.join("、") + "（" + L.reviewerAccounts.map((a) => "@" + a).join(" ") + "）" : "無（CI 即審核者）") + " |",
-              "| 上線後複核 | " + (L.postPublishReview ? L.postPublishReview.ownerName + " 於上線後 " + L.postPublishReview.hours + " 小時內" : "—") + " |",
-              "| SLA | " + L.sla.label + "，到期 " + L.sla.dueAtLocal + "（台灣時間） |",
+              "| 測試（npm test） | " + icon($e.TEST) + " |",
+              "| Lint（eslint） | " + icon($e.LINT) + " |",
+              "| 格式（prettier，放行清單內的新檔） | " + icon($e.FORMAT) + " |",
+              "| 型別檢查（tsc，檔首有 @ts-check 的檔） | " + icon($e.TYPECHECK) + " |",
+              "| 治理閘門（schema、參照、評估集版本題） | " + icon($e.CHECK) + " |",
+              "| 無障礙檢測（axe） | " + icon($e.A11Y) + (if $warn > 0 then "（另有 " + ($warn | tostring) + " 項 moderate／minor 警告，不擋合併" + (if ($e.A11Y_RULES // "") != "" then "：" + $e.A11Y_RULES else "" end) + "）" else "" end) + " |",
+              "| 個資掃描（身分證、居留證、手機、個人信箱、名單姓名） | " + icon($e.PII) + " |",
+              "| 預覽建置 | " + icon($e.PREVIEW_BUILD) + " |",
+              "| 預覽網址 | " + (if $previewOk then "[" + $e.PREVIEW_URL + "](" + $e.PREVIEW_URL + ")（主站重新部署後約 2–3 分鐘可開；含排程中內容）" else "未產生" end) + " |",
+              "| 自動合併 | " + (if $L.autoMerge then "是（不需人工核准）" else "否（需 " + ($L.requiredApprovals | tostring) + " 位核准）" end) + " |",
+              "| 作者授權 | " + (if $L.authorGate then (if $L.authorGate.allowed then "✅ " + $L.authorGate.reason else "⚠ " + $L.authorGate.reason + "，降為一般車道" end) else "—（本車道本來就需人審）" end) + " |",
+              "| 審核人 | " + (if ($L.reviewers | length) > 0 then ($L.reviewerNames | join("、")) + "（" + ([$L.reviewerAccounts[] | "@" + .] | join(" ")) + "）" else "無（CI 即審核者）" end) + " |",
+              "| 上線後複核 | " + (if $L.postPublishReview then $L.postPublishReview.ownerName + " 於上線後 " + ($L.postPublishReview.hours | tostring) + " 小時內" else "—" end) + " |",
+              "| SLA | " + $L.sla.label + "，到期 " + $L.sla.dueAtLocal + "（台灣時間） |",
               "",
-              "<details><summary>車道判定依據（" + L.files.length + " 個檔案）</summary>",
+              "<details><summary>車道判定依據（" + ($L.files | length | tostring) + " 個檔案）</summary>",
               "",
-              ...L.reasons.map((r) => "- " + r),
+              ($L.reasons[] | "- " + .),
               "",
               "</details>",
               "",
-              "[執行紀錄](" + e.RUN_URL + ")",
-            ];
-            fs.writeFileSync(process.env.RUNNER_TEMP + "/comment.md", lines.join("\n") + "\n");
-          '
+              "[執行紀錄](" + $e.RUN_URL + ")"
+            ]
+          | join("\n")
+          JQ
+          jq -r -f "$RUNNER_TEMP/comment.jq" "$RUNNER_TEMP/result/lane.json" > "$RUNNER_TEMP/comment.md"
+          ID=$(gh api "repos/$REPO/issues/$PR/comments" --paginate --jq '.[] | select(.user.login == "github-actions[bot]" and (.body | contains("<!-- lane-bot -->"))) | .id' | head -n1)
+          if [ -n "$ID" ]; then
+            gh api -X PATCH "repos/$REPO/issues/comments/$ID" -F body=@"$RUNNER_TEMP/comment.md" > /dev/null
+          else
+            gh pr comment "$PR" -R "$REPO" --body-file "$RUNNER_TEMP/comment.md"
+          fi
+
+      - name: Comment when test job produced no usable results
+        if: always() && env.SAME_REPO == 'true' && steps.load.outputs.ok != 'true'
+        env:
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          printf '<!-- lane-bot -->\n### 發布車道：無法判定\n\n❌ test job 沒有產出可用的結果（可能在上傳前就失敗，或結果未通過格式驗證），不合併。請看[執行紀錄](%s)。\n' "$RUN_URL" > "$RUNNER_TEMP/comment.md"
           ID=$(gh api "repos/$REPO/issues/$PR/comments" --paginate --jq '.[] | select(.user.login == "github-actions[bot]" and (.body | contains("<!-- lane-bot -->"))) | .id' | head -n1)
           if [ -n "$ID" ]; then
             gh api -X PATCH "repos/$REPO/issues/comments/$ID" -F body=@"$RUNNER_TEMP/comment.md" > /dev/null
@@ -267,9 +437,7 @@ jobs:
           fi
 
       - name: Label lane
-        if: always() && env.SAME_REPO == 'true' && steps.lane.outcome == 'success'
-        env:
-          LABEL: ${{ steps.lane.outputs.label }}
+        if: always() && env.SAME_REPO == 'true' && steps.load.outputs.ok == 'true'
         run: |
           case "$LABEL" in
             lane:emergency) COLOR=b60205; DESC="緊急發布：檢查通過即上線，24 小時內上線後複核" ;;
@@ -299,7 +467,7 @@ jobs:
         run: gh workflow run pages.yml --ref main -R "$REPO" -f refresh=false
 
       - name: Fail when checks failed
-        if: steps.test.outcome != 'success' || steps.lint.outcome != 'success' || steps.check.outcome != 'success' || steps.a11y.outcome != 'success' || steps.pii.outcome != 'success'
+        if: always() && (steps.load.outputs.ok != 'true' || env.TEST != 'success' || env.LINT != 'success' || env.FORMAT != 'success' || env.TYPECHECK != 'success' || env.CHECK != 'success' || env.A11Y != 'success' || env.PII != 'success')
         run: |
-          echo "測試：${{ steps.test.outcome }}；Lint：${{ steps.lint.outcome }}；治理閘門：${{ steps.check.outcome }}；無障礙檢測：${{ steps.a11y.outcome }}；個資掃描：${{ steps.pii.outcome }}"
+          echo "測試：${TEST:-?}；Lint：${LINT:-?}；格式：${FORMAT:-?}；型別：${TYPECHECK:-?}；治理閘門：${CHECK:-?}；無障礙檢測：${A11Y:-?}；個資掃描：${PII:-?}"
           exit 1

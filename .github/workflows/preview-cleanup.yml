@@ -10,10 +10,9 @@ on:
     - cron: '41 1 * * *'
   workflow_dispatch:
 
-permissions:
-  contents: write # 推 previews 分支
-  actions: write # gh workflow run pages.yml
-  pull-requests: read
+# 第四十輪（#81）：工作流程層級不給任何權限（permissions: {}），需要什麼在 job 層級寫明。
+# 以前三項權限掛在工作流程層級，之後新增任何 job 都會自動繼承 contents: write；改成 job 層級，新 job 預設拿不到。
+permissions: {}
 
 concurrency:
   group: preview-cleanup
@@ -21,6 +20,10 @@ concurrency:
 
 jobs:
   cleanup:
+    permissions:
+      contents: write # 只為了推 previews 分支（刪 pr-N/）；這個 job 沒有 checkout，不會執行 repo 內的程式
+      actions: write # gh workflow run pages.yml
+      pull-requests: read # 排程掃描時 gh pr view 查 PR 是否還開著
     # 分叉來的 PR 沒有預覽、也拿不到寫入權杖
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
