@@ -27,6 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write # 排程／手動執行時把官方資料快照 commit 回 main
+      pull-requests: read # 取 previews 時查 PR 是否還開著（已合併／關閉的預覽不再放進 /preview/）
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
@@ -65,12 +66,27 @@ jobs:
           git commit -m "data: 官方資料快照更新（$(date -u +%F)）"
           git pull --rebase origin main
           git push origin HEAD:main
-      - name: Fetch PR previews (previews branch → dist/preview/ after build; skipped if the branch does not exist)
+      # 第三十八輪（deploy.md 2.1）：只放「還開著」的 PR 的預覽。previews 分支上已合併／關閉的 pr-N/ 在這裡就略過，
+      # 不必等 preview-cleanup.yml 刪掉分支上的目錄再部署一次；人工合併時 push 觸發的這一次部署就是最終版，
+      # 自動合併（GITHUB_TOKEN，不觸發 closed 事件）的預覽也會在合併後的第一次部署就消失，不用等每日排程。
+      # 查不到狀態（API 暫時失敗）就保留，寧可多放一份預覽也不要讓預覽忽有忽無。
+      - name: Fetch PR previews (previews branch → dist/preview/ after build; open PRs only; skipped if the branch does not exist)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           if git fetch --depth 1 origin +refs/heads/previews:refs/remotes/origin/previews 2>/dev/null; then
             mkdir -p "$RUNNER_TEMP/previews"
             git --work-tree="$RUNNER_TEMP/previews" checkout origin/previews -- .
             git reset --quiet # 上一行會改到 index，還原（工作目錄不受影響）
+            for d in "$RUNNER_TEMP"/previews/pr-*/; do
+              [ -d "$d" ] || continue
+              n="$(basename "$d")"; n="${n#pr-}"
+              state="$(gh pr view "$n" -R "$GITHUB_REPOSITORY" --json state --jq .state 2>/dev/null || echo UNKNOWN)"
+              case "$state" in
+                OPEN|UNKNOWN) ;;
+                *) rm -rf "$d"; echo "pr-$n 的 PR 已 $state，不放進 /preview/" ;;
+              esac
+            done
             echo "PREVIEWS_DIR=$RUNNER_TEMP/previews" >> "$GITHUB_ENV"
             ls "$RUNNER_TEMP/previews"
           else

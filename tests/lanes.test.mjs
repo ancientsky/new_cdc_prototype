@@ -379,6 +379,8 @@ test('preview-cleanup.yml、lane-sla.yml：PR 關閉刪預覽並重新部署；�
   const c = yamlSanity('.github/workflows/preview-cleanup.yml');
   assert.deepEqual(c.problems, []);
   has(c.text, ['pull_request:', 'types: [closed]', 'contents: write', 'actions: write', 'previews', 'pr-$PR', 'gh workflow run pages.yml --ref main', '--force-with-lease'], 'preview-cleanup.yml');
+  // 第三十八輪：合併關閉的 PR 不再觸發第二次部署（合併的 push 已觸發 pages.yml，且 pages.yml 自己跳過已合併的預覽）
+  assert.ok(/if: steps\.prune\.outputs\.removed == '1' && github\.event\.pull_request\.merged != true/.test(c.text), 'preview-cleanup.yml：合併後不重複觸發 pages.yml');
   const s = yamlSanity('.github/workflows/lane-sla.yml');
   assert.deepEqual(s.problems, []);
   has(s.text, ['schedule:', "cron: '23 * * * *'", 'pull-requests: write', 'gh pr list', 'lane:', 'slaOf', 'sla:breach', 'gh pr comment', 'gh pr edit', '--add-label', 'gh label create'], 'lane-sla.yml');
@@ -397,6 +399,8 @@ test('pages.yml：每 2 小時建置；fetch 只在手動或 02 UTC；previews �
   ], rel);
   assert.ok(!text.includes("cron: '0 3 * * *'"));
   assert.ok(!/if: github.event_name != 'push'/.test(text), '快照回寫不再以 push 與否判斷');
+  // 第三十八輪：只放還開著的 PR 的預覽（已合併／關閉的 pr-N/ 在取出時就略過；查不到狀態保留）
+  has(text, ['pull-requests: read', 'gh pr view "$n"', '--json state', 'OPEN|UNKNOWN', 'rm -rf "$d"'], rel);
   // build.mjs 會在連結檢查之後複製 PREVIEWS_DIR
   const build = read('scripts/build.mjs');
   assert.ok(build.includes('PREVIEWS_DIR') && build.includes("'preview'"));

@@ -62,7 +62,7 @@ BASE_PATH='' npm run build && node scripts/serve.mjs
 | 檔案 | 觸發 | 做什麼 |
 | --- | --- | --- |
 | `.github/workflows/content-pr.yml` | `pull_request`（開啟／更新／重新開啟）、`pull_request_review`（提交審核） | 測試 → `build --check` → `scripts/lane.mjs` 判定車道 → 以 `BASE_PATH=…/preview/pr-{N}` 建置預覽並推到 `previews` 分支 → PR 留言與 `lane:*` 標籤 → 快車道／緊急發布檢查全過即 squash 合併；一般車道有核准且檢查全過才合併 → 觸發 `pages.yml` |
-| `.github/workflows/preview-cleanup.yml` | PR 關閉、每日 01:41 UTC、手動 | 刪除 `previews` 分支的 `pr-{N}/` 並重新部署（自動合併的 PR 不會觸發 `closed`，由每日排程補清） |
+| `.github/workflows/preview-cleanup.yml` | PR 關閉、每日 01:41 UTC、手動 | 刪除 `previews` 分支的 `pr-{N}/`；**沒有合併就關閉**的 PR 才重新部署（合併的 push 已經部署一次，見 2.1）。自動合併的 PR 不會觸發 `closed`，分支上的目錄由每日排程補清 |
 | `.github/workflows/lane-sla.yml` | 每小時 | 開啟中的 PR 超過車道 SLA ⇒ 留言並加 `sla:breach` |
 
 流程（一個內容 PR 從開啟到上線）：
@@ -80,11 +80,37 @@ PR 開啟／更新 ─▶ content-pr.yml
 審核人按 Approve ─▶ content-pr.yml（pull_request_review）重跑檢查 ⇒ 合併 ⇒ 觸發 pages.yml
 pages.yml（push main／每 2 小時／手動）
    npm test →（02 UTC 排程或手動 refresh）npm run fetch ＋ 快照回寫 main
-   → git fetch origin previews → 取出到 $RUNNER_TEMP/previews（PREVIEWS_DIR；分支不存在就略過）
+   → git fetch origin previews → 取出到 $RUNNER_TEMP/previews（PREVIEWS_DIR；分支不存在就略過；已合併／關閉的 pr-N/ 在這裡就丟掉）
    → npm run build（publishAt 未到的內容不輸出；連結檢查之後把 pr-N/ 複製到 dist/preview/）→ 上傳 dist/ → 部署
-PR 關閉 ─▶ preview-cleanup.yml：刪 previews/pr-N/ → 觸發 pages.yml（每日排程補清自動合併的 PR）
+PR 關閉 ─▶ preview-cleanup.yml：刪 previews/pr-N/ →（只有沒合併就關閉的 PR）觸發 pages.yml；每日排程補清自動合併的 PR
 每小時 ─▶ lane-sla.yml：lane:* 標籤＋PR 建立時間超過 SLA ⇒ 留言＋sla:breach（已有標籤就跳過）
 ```
+
+### 2.1 為什麼同一個 PR 會在 Actions 看到好幾次執行（第三十八輪）
+
+同事看 Actions 的「All workflows」頁，一個修正（例如 PR #65）會出現五、六列，問是不是重複做工。對照 PR #65 的實際紀錄，每一列各有用途，只有一列是真的重複：
+
+| 順序 | 列上寫的 | 觸發原因 | 做了什麼 | 時間 |
+| --- | --- | --- | --- | --- |
+| 1 | Content PR lane … Pull request #65 opened | PR 開啟 | 全部檢查（測試、lint、治理閘門、無障礙、個資）＋建預覽、推 `previews` 分支、留言、貼標籤 | 約 4.5 分鐘 |
+| 2 | Build and deploy … Manually run by github-actions | 第 1 列最後一步 `gh workflow run pages.yml` | 重新部署主站，讓 `/preview/pr-65/` 能打開（主站內容不變） | 約 2 分鐘 |
+| 3 | Merge pull request #65 … pushed by ancientsky | 人工按下 Merge，`main` 有新 commit | 部署含這次修正的主站 | **被第 5 列取消**（跑了 24 秒） |
+| 4 | Preview cleanup … Pull request #65 closed | PR 關閉事件 | 從 `previews` 分支刪掉 `pr-65/` | 18 秒 |
+| 5 | Build and deploy … Manually run by github-actions | 第 4 列最後一步 `gh workflow run pages.yml` | 再部署一次主站，這次 `/preview/pr-65/` 不見了 | 約 2.5 分鐘 |
+
+- 第 1、2 列是**預覽**：審核人要在 PR 合併前看到成品，所以 PR 一開就先建一次、部署一次。
+- 第 3 與第 5 列才是真的重複：兩次都是部署同一個 commit，差別只在第 5 列少了 `pr-65/`。`pages.yml` 的 `concurrency: cancel-in-progress` 會把先跑的取消，所以**實際上網站只部署一次**，沒有壞處，但列表上多一列「取消」，看起來像出錯，也白白排了一次 runner。
+- 為什麼以前要這樣：第 3 列開始時可能還沒等到第 4 列刪目錄就把 `previews` 分支取走了，若不再部署一次，`/preview/pr-65/` 會留到下一次排程。
+
+第三十八輪的做法：把「這個 PR 還開著嗎」的判斷移到 `pages.yml` 取預覽的那一步（用 `gh pr view --json state` 問一次，已合併／關閉的 `pr-N/` 直接不放進 `dist/preview/`，查不到狀態就保留）。於是合併的 push 觸發的那一次部署就是最終版，`preview-cleanup.yml` 在 PR **是合併關閉**時不再觸發第二次部署（`github.event.pull_request.merged != true` 才觸發），只有「沒合併就關閉」的 PR 沒有 push、才由它觸發。附帶的好處：自動合併（機器人用 `GITHUB_TOKEN` 合併，GitHub 不發 `closed` 事件）的預覽，以前要等每日排程清理才消失，現在合併後的第一次部署就沒有了。
+
+為什麼不乾脆拿掉其中一個工作流程：
+
+- 檢查在 PR 上跑一次（第 1 列）、合併後在 `main` 上再跑一次（第 3／5 列的 `npm test`），**不是重複**。PR 上測的是分支當時的內容，合併後 `main` 是「分支＋別人後來合併的東西」，兩者可能不同；2026-10-11 PR #63 合併後主站建置 #189 就在 `main` 上失敗過一次（`tests/round28-newsletter.test.mjs` 啟動本機伺服器逾時，屬偶發），PR 上並沒有看到。
+- 審核人按 Approve 會讓第 1 列整個重跑一次（`pull_request_review` 事件）：這是為了「核准＋檢查都過才合併」必須再確認一次檢查結果；若覺得太慢，可以把這一次改成只讀上一輪的結論，列在待辦。
+- 每 2 小時的排程部署（偶數整點）與這些無關，是讓排程發布與逾期狀態跟著時間更新（見上一節）。
+
+改完之後一個人工合併的 PR 應該看到四列：PR lane、預覽部署、合併部署、Preview cleanup（不再有「取消」那一列）。若之後又看到同一個 commit 連續兩次「Build and deploy」，先看第二次是誰觸發的（`Manually run by github-actions` 代表是其他工作流程用 `gh workflow run` 叫的），再對照這張表。
 
 `previews` 分支：第一次有 PR 預覽時由 `content-pr.yml` 自動建立（孤兒分支，不含 main 的歷史），只放 `pr-N/` 目錄、`README.md` 與 `.nojekyll`；不要手動合併進 `main`。主站部署時把它整包放到 `/preview/`，`robots.txt` 以 `Disallow: /new_cdc_prototype/preview/` 排除。
 

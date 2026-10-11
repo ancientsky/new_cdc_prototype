@@ -76,6 +76,9 @@ jobs:
           done
           exit 1
 
-      - name: Redeploy main site (gh workflow run pages.yml)
-        if: steps.prune.outputs.removed == '1'
+      # 第三十八輪（deploy.md 2.1）：PR 是「合併」關閉的就不再觸發部署。合併本身的 push 已經觸發 pages.yml，
+      # 而 pages.yml 取預覽時會自己跳過已合併的 pr-N/，所以這裡再觸發一次只會把前一次取消、重跑一遍同樣的內容。
+      # 沒有合併就關閉的 PR 沒有 push，仍要在這裡觸發，預覽才會從 /preview/ 消失。
+      - name: Redeploy main site (gh workflow run pages.yml; not after a merge, the merge push already deploys)
+        if: steps.prune.outputs.removed == '1' && github.event.pull_request.merged != true
         run: gh workflow run pages.yml --ref main -R "$REPO" -f refresh=false
