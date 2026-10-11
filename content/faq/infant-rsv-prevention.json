@@ -1,0 +1,78 @@
+{
+  "id": "faq.infant-rsv-prevention",
+  "type": "faq",
+  "title": "嬰兒怎麼預防 RSV（呼吸道融合病毒）？",
+  "question": "嬰兒怎麼預防 RSV（呼吸道融合病毒）？",
+  "owner": "unit.preventive-medicine",
+  "steward": "預防醫學辦公室承辦人（待指派）",
+  "publishedAt": "2026-10-11",
+  "reviewedAt": "2026-10-11",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "vaccines",
+    "symptoms"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-10-11"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "none"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "RSV 可能讓嬰幼兒發生細支氣管炎或肺炎；日常預防靠照顧者洗手、有症狀者避免接觸嬰兒。RSV 預防用藥或疫苗依現行政策，請洽兒科或衛生所。",
+  "keywords": [
+    "RSV",
+    "呼吸道融合病毒",
+    "嬰兒",
+    "新生兒",
+    "早產兒",
+    "細支氣管炎",
+    "預防"
+  ],
+  "answerMarkdown": "RSV（呼吸道融合病毒）可能讓嬰幼兒發生細支氣管炎或肺炎，年紀小的嬰兒與早產兒比較容易出現嚴重症狀。\n\n日常預防：照顧嬰兒前後請用肥皂洗手；有發燒、咳嗽、流鼻水等症狀的家人與訪客，避免親吻或接觸嬰兒；流行期間避免帶嬰兒到人多擁擠的室內場所；不要在嬰兒身邊吸菸。\n\n關於 RSV 的預防用藥或疫苗，**依現行政策**，適用對象與是否公費請洽兒科醫師或衛生所。嬰兒出現呼吸急促、呼吸時胸口凹陷、餵食困難或活動力明顯變差時，請儘速就醫。",
+  "verification": {
+    "status": "pending",
+    "note": "RSV 預防用藥與疫苗的現行政策尚待權責單位補充，請洽兒科醫師或衛生所",
+    "pendingItems": [
+      "現行 RSV 預防政策（嬰兒單株抗體、孕婦 RSV 疫苗是否提供、公費或自費、適用對象與期程）",
+      "RSV 的權責單位與對應的疾病頁（目前傳染病主檔沒有 RSV）",
+      "流行季節與疫情監測資訊來源"
+    ],
+    "sources": [
+      {
+        "label": "疾管署官網「公費疫苗項目與接種時程」",
+        "url": "https://www.cdc.gov.tw/Category/List/_MJYeQXoPjzYik1sYwTj6Q",
+        "official": true,
+        "verified": false,
+        "note": "開發環境連不到 www.cdc.gov.tw，未開啟原文逐字核對；本則依已知且無爭議的接種原則保守撰寫"
+      }
+    ]
+  }
+}

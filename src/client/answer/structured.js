@@ -119,6 +119,11 @@ export function numericAge(q) {
   if ((m = q.match(/dưới\s*(\d{1,3})\s*tuổi/i))) { const a = Number(m[1]); if (a > 0) return { min: 0, max: a * 12 - 1, label: `未滿 ${a} 歲` }; }
   if ((m = q.match(/(\d{1,3})\s*tháng(?:\s*tuổi)?/i))) { const a = Number(m[1]); if (a <= 72) return { min: a, max: a, label: `出生滿 ${a} 個月` }; }
   if ((m = q.match(/(\d{1,3})\s*tuổi/i))) { const a = Number(m[1]); if (a <= 120) return { min: a * 12, max: a * 12 + 11, label: `${a} 歲` }; }
+  // 第四十輪：他加祿（65 taong gulang）、印尼（usia 65 tahun）、泰文（อายุ 65 ปี、2 ขวบ）：首頁預設問題用得到
+  if ((m = q.match(/(\d{1,3})\s*(?:taong gulang|taon)\b/i)) || (m = q.match(/(?:usia|umur)\s*(\d{1,3})/i)) || (m = q.match(/(\d{1,3})\s*tahun\b/i))
+    || (m = q.match(/อายุ\s*(\d{1,3})/)) || (m = q.match(/(\d{1,3})\s*(?:ปี|ขวบ)/))) {
+    const a = Number(m[1]); if (a <= 120) return { min: a * 12, max: a * 12 + 11, label: `${a} 歲` };
+  }
   return null;
 }
 
@@ -165,9 +170,9 @@ export function ageHashOf(profile) {
 }
 
 // 問「哪些／什麼疫苗」：即使問句帶了某疫苗名稱，也走跨疫苗彙整
-export const WHICH_VACCINE_RE = /((哪些|哪幾|哪種|什麼|甚麼|那些)\s*(公費)?\s*(疫苗|預防針|針)|(要|可以|能|該)打(什麼|哪些|甚麼)|打哪些|(疫苗|預防針)\s*(有|是)?\s*(哪些|哪幾種|什麼|甚麼)|which vaccines?|what vaccines?|vắc[\s-]?xin (nào|gì))/i;
+export const WHICH_VACCINE_RE = /((哪些|哪幾|哪種|什麼|甚麼|那些)\s*(公費)?\s*(疫苗|預防針|針)|(要|可以|能|該)打(什麼|哪些|甚麼)|打哪些|(疫苗|預防針)\s*(有|是)?\s*(哪些|哪幾種|什麼|甚麼)|which vaccines?|what vaccines?|vắc[\s-]?xin (nào|gì)|\ban(?:ong|o ang)\b.{0,20}\bbakuna\b|\bvaksin\b.{0,12}\bapa\b|\bapa\b.{0,12}\bvaksin\b|วัคซีน.{0,12}อะไร|どの.{0,8}ワクチン)/i;
 // 意圖未定但問句明顯在問疫苗（年齡／身分＋疫苗詞）
-export const SCHEDULE_VACCINE_RE = /(疫苗|預防針|接種|打針|vaccin|vắc[\s-]?xin|tiêm)/i;
+export const SCHEDULE_VACCINE_RE = /(疫苗|預防針|接種|打針|vaccin|vắc[\s-]?xin|tiêm|ワクチン|bakuna|vaksin|วัคซีน)/i;
 
 export const FUNDED_RANK = { public: 0, conditional: 1, self: 2 };
 export const STAGE_ORDER = ['infant', 'child', 'school', 'adult', 'pregnancy', 'older', 'risk'];

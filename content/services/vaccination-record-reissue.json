@@ -50,7 +50,8 @@
     "補發",
     "黃卡",
     "健康存摺",
-    "衛生所"
+    "衛生所",
+    "兒童健康手冊"
   ],
   "slug": "vaccination-record-reissue",
   "serviceType": "certificate",

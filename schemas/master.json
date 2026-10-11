@@ -411,6 +411,11 @@
         },
         "region": {
           "type": "string"
+        },
+        "aliases": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "第四十輪：其他寫法與外語名（Vietnam、Việt Nam、ベトナム…），只供答案引擎認出目的地；不顯示於前台"
         }
       }
     },

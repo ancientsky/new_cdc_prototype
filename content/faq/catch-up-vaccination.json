@@ -1,0 +1,79 @@
+{
+  "id": "faq.catch-up-vaccination",
+  "type": "faq",
+  "title": "寶寶的疫苗漏打或延遲接種怎麼辦？要從頭重打嗎？",
+  "question": "寶寶的疫苗漏打或延遲接種怎麼辦？要從頭重打嗎？",
+  "owner": "unit.preventive-medicine",
+  "steward": "預防醫學辦公室承辦人（待指派）",
+  "publishedAt": "2026-10-11",
+  "reviewedAt": "2026-10-11",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "tasks": [
+    "vaccines"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-10-11"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "none"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "錯過建議接種時間不必從頭重打，已接種的劑次仍然有效；請帶預防接種紀錄到衛生所或合約院所，由醫師依建議間隔安排補接種。",
+  "keywords": [
+    "漏打",
+    "補打",
+    "補接種",
+    "錯過接種",
+    "延遲接種",
+    "忘記打",
+    "晚打",
+    "重打",
+    "接種時程",
+    "寶寶疫苗"
+  ],
+  "answerMarkdown": "錯過建議的接種時間，**不必從頭重打**，已經接種的劑次仍然有效。\n\n請儘快帶孩子與預防接種紀錄（兒童健康手冊或接種紀錄卡）到衛生所或合約院所，由醫師評估後，依建議的間隔補接種還沒打的劑次。\n\n每種疫苗的補接種間隔與適用年齡不一樣，有些疫苗過了一定年齡就不再補接種或改用其他時程，所以請由醫師或衛生所依現行時程判斷，不要自行調整劑次或間隔。不確定孩子打過哪些疫苗時，可先用健康存摺查詢接種紀錄。",
+  "verification": {
+    "status": "pending",
+    "note": "依已知接種原則整理，各疫苗補接種的間隔與年齡上限請以醫師評估與現行時程為準",
+    "pendingItems": [
+      "各疫苗補接種的最短間隔與年齡上限（依現行時程表逐一列出）",
+      "公費補接種的適用條件與受理單位"
+    ],
+    "sources": [
+      {
+        "label": "疾管署官網「公費疫苗項目與接種時程」",
+        "url": "https://www.cdc.gov.tw/Category/List/_MJYeQXoPjzYik1sYwTj6Q",
+        "official": true,
+        "verified": false,
+        "note": "開發環境連不到 www.cdc.gov.tw，未開啟原文逐字核對；本則依已知且無爭議的接種原則保守撰寫"
+      }
+    ]
+  }
+}

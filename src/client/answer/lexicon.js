@@ -16,7 +16,24 @@ export const CROSS_LANG = [
   [/\bhotline\b|đường dây nóng/i, '1922'], [/\bscam|lừa đảo/i, '詐騙'], [/\binvest\w*|đầu tư/i, '投資'],
   [/\bcases?\b|số ca/i, '病例'], [/\blocal\b|nội địa/i, '本土'], [/\bweeks?\b|tuần/i, '週'], [/\bdays?\b|ngày/i, '天'],
   [/\bhours?\b|giờ/i, '小時'], [/\bdengue\b|sốt xuất huyết/i, '登革熱'], [/\bmeasles\b|sởi/i, '麻疹'], [/\binfluenza|\bflu\b|cúm/i, '流感'],
+  // 第四十輪（issue #75）：日、他加祿、印尼、泰文的常用詞（首頁預設問題用得到的才加）。第三欄 true＝「主題錨點」：
+  // 問句有主題錨點時，回答的片段（前 3 塊）必須講到這個主題（外語片段要有原文詞、中文片段要有對應中文詞），否則不拿別的主題充數。
+  [/ワクチン|予防接種|\bbakuna\b|\bmagpabakuna\b|\bvaksin\w*|\bimunisasi\b|วัคซีน/i, '疫苗 接種'], [/無料|\blibre(ng)?\b|\bgratis\b|ฟรี/i, '公費'],
+  [/旅行|渡航|\bbiyahe\b|\bperjalanan\b|เดินทาง/i, '出國 旅遊'], [/準備|\bihahanda\b|\b(di)?siapkan\b|เตรียม|chuẩn bị|\bprepare\b/i, '準備 行前'],
+  [/子ども|子供|\banak\b|\bbata\b|\bbé\b|ลูก|เด็ก/i, '幼兒 兒童'],
+  [/\bmigrant workers?|\bforeign workers?|lao động (nước ngoài|nhập cư)|pekerja migran|tenaga kerja asing|manggagawang dayuhan|แรงงานต่างชาติ|แรงงานข้ามชาติ|外国人労働者/i, '移工 外籍', true],
+  [/\bhealth (check|exam|screening)s?\b|\bmedical (check|exam)\w*|khám sức khỏe|pemeriksaan kesehatan|ตรวจสุขภาพ|健康診断/i, '健康檢查 健檢'],
+  [/\bhealth insurance\b|bảo hiểm y tế|asuransi kesehatan|ประกันสุขภาพ|健康保険/i, '健保', true],
+  // 來臺旅遊（入境）：站內目前沒有給來臺旅客的接種建議；錨點讓這類問句查無，而不是拿出國旅遊或流感疫苗的片段回答
+  [/\b(?:visit(?:ing)?|holiday in|vacation in|trip to|touring)\s+taiwan\b/i, '來臺旅客 訪臺 來臺旅遊', true],
+  [/\b(vaccination|immuni[sz]ation) records?\b|hồ sơ tiêm chủng|catatan imunisasi|record ng bakuna|ประวัติการฉีดวัคซีน|予防接種の記録|接種記録/i, '接種紀錄', true],
 ];
+/** 第四十輪：問句命中的主題錨點：[{ re, zh[] }]（CROSS_LANG 第三欄為 true 者；中文問句另有 TOPIC_ZH） */
+export function topicAnchorsOf(q) {
+  const out = [];
+  for (const [re, zh, anchor] of CROSS_LANG) if (anchor && re.test(q)) out.push({ re, zh: zh.split(' ') });
+  return out;
+}
 
 // 中文常見口語 → 正式用語（只做檢索展開）
 export const PARAPHRASE = [
@@ -27,6 +44,9 @@ export const PARAPHRASE = [
   [/要驗什麼|驗什麼|怎麼驗|怎麼檢查|做什麼檢查|要檢查什麼|如何診斷|怎麼診斷/, '診斷 檢驗 治療'],
   [/怎麼申請|如何申請|申請流程|怎麼辦理/, '申請 步驟'], [/要帶什麼|準備什麼|帶哪些/, '應備文件 準備'],
   [/影片|宣導片|衛教片|動畫/, '影片 影音'], [/職缺|徵才|徵人/, '招募'], [/標案|招標|投標/, '採購'],
+  // 第四十輪：「外籍勞工／外勞」與站內用語「移工」「外籍人士」；「漏打／錯過」與「補接種」；「哺乳／餵母乳」
+  [/外籍勞工|外勞|外籍移工|外籍看護|外籍工作者/, '移工 外籍'], [/漏打|沒打到|忘了打|忘記打|錯過|延遲接種|晚打|來不及打/, '補接種 補打 漏打'],
+  [/哺乳|餵母乳|親餵|母乳/, '哺乳'], [/懷孕|孕期|妊娠|有孕/, '孕婦 懷孕'],
 ];
 
 export function lc(s) { return String(s ?? '').toLowerCase(); }

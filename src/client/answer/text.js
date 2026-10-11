@@ -27,12 +27,16 @@ export function maskPIIDetailed(text) {
 }
 
 export const INJECTION_RULES = [
-  { id: 'inj.ignore-zh', re: /(忽略|無視|忘記|不要理會|跳過)(掉)?.{0,6}(以上|之前|前面|上述|先前|所有|全部|原本|系統)?.{0,4}(的)?(指示|指令|規則|設定|限制|提示|要求)/ },
+  // 第四十輪：「忘記打第二劑，要照醫師指示補打嗎」原本也中（忘記…指示中間可夾 10 字）；中間只容許 6 字以內，指的必須是「指示」本身
+  { id: 'inj.ignore-zh', re: /(忽略|無視|忘記|不要理會|跳過)(掉)?.{0,2}(以上|之前|前面|上述|先前|所有|全部|原本|系統)?.{0,4}(的)?(指示|指令|規則|設定|限制|提示|要求)/ },
   { id: 'inj.ignore-en', re: /(ignore|disregard|forget)\s+(all\s+|any\s+)?(the\s+)?(previous|above|prior|earlier|your)?\s*(instructions|rules|prompts?|guidelines)/i },
   { id: 'inj.role-zh', re: /(你現在是|你現在扮演|從現在開始你是|假裝你是|扮演一個|你不再是|切換成.{0,6}模式)/ },
   { id: 'inj.role-en', re: /(you are now|act as (?:a|an|my)|pretend (?:to be|you are)|roleplay as|from now on,? you)/i },
   { id: 'inj.system-prompt', re: /(system\s*prompt|系統提示|系統指令|系統訊息|你的(提示詞|指令|設定)|initial instructions|developer message|<\/?\s*system\s*>|\[\s*system\s*\])/i },
-  { id: 'inj.jailbreak', re: /(jailbreak|越獄|DAN 模式|\bDAN\b|developer mode|開發者模式|不受(任何)?限制|解除(所有)?限制|沒有任何限制)/i },
+  // 第四十輪（issue #70）：原本 `\bDAN\b` 加 /i，印尼文連接詞 dan（和）必中，首頁 /id/ 移工卡片的預設問題被當成注入拒答。
+  // 「DAN」越獄只認大寫、而且要有上下文（DAN mode／act as DAN／DAN 模式／Do Anything Now）；單獨一個 DAN 不算。不分大小寫的片語留在 /i 那條。
+  { id: 'inj.jailbreak', re: /(jailbreak|越獄|developer mode|開發者模式|do anything now|不受(任何)?限制|解除(所有)?限制|沒有任何限制)/i },
+  { id: 'inj.jailbreak-dan', re: /(\bDAN\s*(?:[Mm]ode|MODE|[Pp]rompt|模式)|(?:[Aa]ct as|[Yy]ou are(?: now)?|[Pp]retend to be|[Bb]ecome|[Ee]nable|啟用|扮演|你是|變成)\s*(?:a\s+|the\s+)?DAN\b)/ },
   { id: 'inj.reveal', re: /(顯示|列出|輸出|告訴我|print|reveal|show).{0,8}(你的|your).{0,6}(提示|指令|規則|prompt|instructions|rules)/i },
 ];
 

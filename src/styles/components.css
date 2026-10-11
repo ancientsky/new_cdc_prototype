@@ -400,6 +400,8 @@ html:not(.js) .c-tabs__print{display:block}
 .c-ai-badge{display:inline-flex;align-items:center;gap:6px;background:var(--info-bg);color:var(--info);border-radius:var(--radius-pill);padding:2px 12px;font-size:var(--fs-xs);font-weight:700}
 .c-ai-badge::before{content:"✦";font-size:.9em}
 .c-ai-badge__mode{font-weight:400;color:var(--ink-2)}
+/* 第四十輪（issue #84）：未產生答案時的中性標示（不用 AI 標章的藍色與 ✦，避免看起來像 AI 回答了） */
+.c-noanswer-badge{display:inline-flex;align-items:center;background:var(--paper);color:var(--ink-2);border:1px solid var(--line);border-radius:var(--radius-pill);padding:2px 12px;font-size:var(--fs-xs);font-weight:700}
 .c-cite{font-size:.75em;vertical-align:super;line-height:0;margin:0 1px} .c-cite a{color:var(--info);font-weight:700;text-decoration:none;padding:0 2px} .c-cite a:hover{text-decoration:underline}
 /* 5 拒答卡 */
 .c-refusal{border:2px solid var(--status-rising);background:var(--status-rising-bg);border-radius:var(--radius);padding:var(--sp-4) var(--sp-5)}

@@ -36,3 +36,8 @@ eval/**/*.mjs
 !src/client/glossary-term.js
 !src/client/situation-text.js
 !tests/round40-i18n.test.mjs
+!tests/round40-injection-multilingual.test.mjs
+!tests/round40-no-answer.test.mjs
+!tests/round40-engine.test.mjs
+!tests/round40-newparent-faq.test.mjs
+!tests/round40-presets.test.mjs
