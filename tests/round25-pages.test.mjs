@@ -28,7 +28,7 @@ test('四個制度性頁面：存在、已發布、權責單位在主檔、路�
 
 test('頁面內容：法規代碼、FOIA 第 7 條九項、OGDL、示意稿標示', () => {
   const body = (s) => site.byId.get(`page.${s}`).bodyMarkdown;
-  for (const code of ['L0050001', 'L0050003', 'L0050008']) assert.ok(body('legal').includes(`pcode=${code}`), code);
+  for (const code of ['L0050001', 'L0050003', 'L0050021']) assert.ok(body('legal').includes(`pcode=${code}`), code);
   assert.ok(body('legal').includes('待確認'));
   assert.equal((body('foia').match(/^\| [一二三四五六七八九]、/gm) ?? []).length, 9);
   assert.ok(body('foia').includes('待建置'));
