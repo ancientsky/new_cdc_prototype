@@ -3,7 +3,8 @@
 import { esc, url, LANG, barChart } from './data.js';
 import { pdfHref, isLowRelevance } from './core.js';
 
-// ───────── UI 字串（zh-TW／en／vi；其他語言 fallback en） ─────────
+// ───────── UI 字串（zh-TW／en 齊備；vi、ja、tl、id、th 只有民眾最常看到的幾個，其他 fallback en） ─────────
+// 第四十輪（issue #70／#84）：補 ja、tl、id、th 的拒答卡與「未產生答案」字串；vi、ja、tl、id、th 的新增字串為機器初稿，待多語審核。
 const S = {
   'zh-TW': {
     answerH: '回答', answerSub: '僅引用官方內容，每句可點開原文', aiBadge: 'AI 整理', next: '接下來可以', sourcesH: '答案來源', relatedH: '你可能也想知道',
@@ -14,6 +15,7 @@ const S = {
     cite: '引用本頁', cited: '已複製引用', subscribe: '訂閱異動', subscribed: '已訂閱', nextReview: '下次審閱', section: '條次／段落', pdfPage: '頁碼（PDF 印刷頁碼）', extraction: '文字來源', extractionMachine: '由 PDF 機器轉出，尚未人工校對；請以 PDF 原頁為準', extractionReviewed: '由 PDF 轉出，權責單位已校對', verification: '內容確認', verificationPending: '依公開資料整理，內容待權責單位確認', extractionReconstructed: '尚未取得 PDF 正本：依公開摘錄與站內內容重建的示範版，未經權責單位查證；請以疾管署 PDF 正本為準', openPdf: '開啟 PDF', change: '本段異動', before: '修訂前', after: '修訂後',
     sitH: '現在的疫情', dataDate: '資料日', publisher: '發布', illustrative: '示意資料', statusBasis: '判定依據', seeTrend: '看完整趨勢',
     refusalH: '這個問題我不能替你判斷', why: '為什麼', call1922: '撥打 1922', relatedPages: '相關官方頁面',
+    noAnswerBadge: '未產生答案', noAnswer: '這次沒有產生回答：上面是固定的說明文字與官方頁面連結，不是 AI 整理的內容。',
     lowRelevance: '與你的問題相關程度較低', lowRelevanceSub: '以下是站內最接近的官方內容，不一定能直接回答你的問題；請點開原文確認，或撥打 1922。', relatedListH: '相關頁面',
     fullSearch: '用全文搜尋找「{q}」', fullSearchNote: '全文搜尋會列出所有含這個關鍵字的頁面，可依類型、單位、年份篩選。',
     paused: 'AI 問答暫停中，目前提供傳統搜尋結果與 1922 人工諮詢。', pausedReason: '原因', updated: '更新',
@@ -41,6 +43,7 @@ const S = {
     cite: 'Cite this page', cited: 'Citation copied', subscribe: 'Subscribe to changes', subscribed: 'Subscribed', nextReview: 'Next review', section: 'Section', pdfPage: 'PDF page', extraction: 'Text source', extractionMachine: 'Machine-extracted from the PDF, not yet proofread; the PDF page prevails', extractionReviewed: 'Extracted from the PDF and proofread by the responsible unit', verification: 'Confirmation', verificationPending: 'Compiled from public sources; pending confirmation by the responsible unit', extractionReconstructed: 'No original PDF yet: demonstration version rebuilt from public excerpts and site content, not verified by the responsible unit; the official PDF prevails', openPdf: 'Open PDF', change: 'Change in this section', before: 'Before', after: 'After',
     sitH: 'Current situation', dataDate: 'Data as of', publisher: 'Published by', illustrative: 'Illustrative data', statusBasis: 'Basis', seeTrend: 'See full trend',
     refusalH: "I can't make this judgement for you", why: 'Why', call1922: 'Call 1922', relatedPages: 'Related official pages',
+    noAnswerBadge: 'No answer generated', noAnswer: 'No answer was produced for this question. The note and links above are standard text, not AI-generated content.',
     lowRelevance: 'Only loosely related to your question', lowRelevanceSub: 'These are the closest official passages on this site and may not answer your question directly. Please open the source, or call 1922.', relatedListH: 'Related pages',
     fullSearch: 'Search all pages for “{q}”', fullSearchNote: 'Full-text search lists every page that contains the keyword; you can filter by type, unit and year.',
     paused: 'AI answers are paused. Keyword search results and the 1922 hotline are available.', pausedReason: 'Reason', updated: 'Updated',
@@ -64,12 +67,31 @@ const S = {
     disclosure: 'Câu trả lời do AI tổng hợp từ nội dung chính thức, không phải chẩn đoán cá nhân; nếu có triệu chứng hãy đi khám hoặc gọi 1922 (có thông dịch).',
     report: 'Báo lỗi', helpful: 'Hữu ích', refusalH: 'Tôi không thể đánh giá thay bạn', call1922: 'Gọi 1922', translationSource: 'Chưa có bản dịch đã duyệt; hiển thị bản tiếng Trung gốc.', sitH: 'Tình hình dịch hiện nay',
     verdict: { false: 'Sai', 'partly-true': 'Đúng một phần', outdated: 'Đã lỗi thời', true: 'Đúng', unknown: 'Chưa có thông tin' },
+    why: 'Vì sao', relatedPages: 'Trang chính thức liên quan', relatedListH: 'Trang liên quan', auditId: 'Mã kiểm tra',
+    noAnswerBadge: 'Không tạo câu trả lời', noAnswer: 'Không có câu trả lời nào được tạo cho câu hỏi này. Phần giải thích và liên kết ở trên là nội dung cố định, không phải do AI tổng hợp.',
+  },
+  ja: {
+    refusalH: 'この質問にはお答えできません', why: '理由', call1922: '1922 に電話', relatedPages: '関連する公式ページ', relatedListH: '関連ページ', auditId: '監査番号', report: '誤りを報告', helpful: '役に立った',
+    noAnswerBadge: '回答なし', noAnswer: 'この質問には回答を作成していません。上の説明とリンクは定型文で、AI が作成した内容ではありません。',
+  },
+  tl: {
+    refusalH: 'Hindi ko ito mahuhusgahan para sa iyo', why: 'Bakit', call1922: 'Tumawag sa 1922', relatedPages: 'Mga kaugnay na opisyal na pahina', relatedListH: 'Mga kaugnay na pahina', auditId: 'Audit ID', report: 'I-report ang mali', helpful: 'Nakatulong',
+    noAnswerBadge: 'Walang nabuong sagot', noAnswer: 'Walang sagot na nabuo para sa tanong na ito. Ang paliwanag at mga link sa itaas ay karaniwang teksto, hindi gawa ng AI.',
+  },
+  id: {
+    refusalH: 'Saya tidak dapat menilai ini untuk Anda', why: 'Alasan', call1922: 'Hubungi 1922', relatedPages: 'Halaman resmi terkait', relatedListH: 'Halaman terkait', auditId: 'ID audit', report: 'Laporkan kesalahan', helpful: 'Membantu',
+    noAnswerBadge: 'Tidak ada jawaban', noAnswer: 'Tidak ada jawaban yang dibuat untuk pertanyaan ini. Penjelasan dan tautan di atas adalah teks standar, bukan hasil AI.',
+  },
+  th: {
+    refusalH: 'ไม่สามารถวินิจฉัยแทนคุณได้', why: 'เหตุผล', call1922: 'โทร 1922', relatedPages: 'หน้าทางการที่เกี่ยวข้อง', relatedListH: 'หน้าที่เกี่ยวข้อง', auditId: 'รหัสตรวจสอบ', report: 'แจ้งข้อผิดพลาด', helpful: 'มีประโยชน์',
+    noAnswerBadge: 'ไม่ได้สร้างคำตอบ', noAnswer: 'ไม่ได้สร้างคำตอบสำหรับคำถามนี้ คำอธิบายและลิงก์ด้านบนเป็นข้อความมาตรฐาน ไม่ได้สร้างโดย AI',
   },
 };
-export function L(key, vars = {}) {
-  const pick = (lang) => key.split('.').reduce((o, k) => (o == null ? o : o[k]), S[lang]);
-  let v = pick(LANG);
-  if (v == null) v = pick(LANG === 'zh-TW' ? 'zh-TW' : 'en');
+/** 介面字串；lang 預設為頁面語言（第四十輪：可指定語言，測試七語字串用） */
+export function L(key, vars = {}, lang = LANG) {
+  const pick = (lg) => key.split('.').reduce((o, k) => (o == null ? o : o[k]), S[lg]);
+  let v = pick(lang);
+  if (v == null) v = pick(lang === 'zh-TW' ? 'zh-TW' : 'en');
   if (v == null) v = pick('zh-TW');
   if (typeof v === 'string') return v.replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? '');
   return v ?? key;
@@ -223,12 +245,25 @@ export function sentenceList(result, { pro = false } = {}) {
 /** 第二十五輪：相關度高於拒答線但偏低 ⇒ 顯示「相關程度較低」，且不再把「僅引用官方內容」當成信心宣稱 */
 export { isLowRelevance };
 
-/** 元件 4＋6：AI 揭露列、有幫助、回報（帶稽核編號） */
+/**
+ * 第四十輪（issue #84）：這次有沒有「產生答案」。拒答、查無、找不到澄清或統計時，畫面上只有固定說明文字與連結，
+ * 沒有任何 AI 整理的句子 ⇒ 不該掛「AI 整理」標章與「模型：抽取式整理」（那等於宣稱 AI 回答了）。
+ */
+export function isNoAnswer(result) {
+  if (!result || result.paused) return false;
+  return !!result.refused || (!result.sentences?.length && !result.stats && !result.clarification && !result.situation);
+}
+
+/** 元件 4＋6：AI 揭露列、有幫助、回報（帶稽核編號）。未產生答案時改為中性說明（稽核編號、回報照留，方便追查拒答是否合理） */
 export function disclosureRow(result) {
   const d = result.disclosure ?? {};
   const model = d.mode === 'llm' || d.provider ? L('modelLlm', { p: d.provider ?? 'Anthropic', m: d.model ?? '' }) : L('modelExtractive');
-  return `<div class="c-ai-disclosure" data-feedback data-audit-id="${esc(result.auditId)}" data-page="${esc(location.pathname)}">
-    <p><span class="c-ai-badge">${esc(L('aiBadge'))}</span> ${esc(L('disclosure'))} <span class="c-ai-disclosure__model">${esc(model)}</span>${d.transcript ? ` <span class="c-ai-disclosure__transcript">${esc(d.note ?? L('transcriptNote'))}</span>` : ''}</p>
+  const none = isNoAnswer(result);
+  const head = none
+    ? `<p><span class="c-noanswer-badge">${esc(L('noAnswerBadge'))}</span> ${esc(L('noAnswer'))}</p>`
+    : `<p><span class="c-ai-badge">${esc(L('aiBadge'))}</span> ${esc(L('disclosure'))} <span class="c-ai-disclosure__model">${esc(model)}</span>${d.transcript ? ` <span class="c-ai-disclosure__transcript">${esc(d.note ?? L('transcriptNote'))}</span>` : ''}</p>`;
+  return `<div class="c-ai-disclosure${none ? ' c-ai-disclosure--none' : ''}" data-feedback data-audit-id="${esc(result.auditId)}" data-page="${esc(location.pathname)}"${none ? ' data-no-answer' : ''}>
+    ${head}
     <p class="c-ai-disclosure__meta"><span>${esc(L('auditId'))} <code data-audit-slot>${esc(result.auditId)}</code></span>
       <button type="button" class="c-btn c-btn--sm c-btn--ghost" data-act="helpful" aria-pressed="false">${esc(L('helpful'))}</button></p>
     <details class="c-answer-report" data-group="answer-report"><summary class="c-btn c-btn--sm c-btn--ghost">${esc(L('report'))}</summary>
