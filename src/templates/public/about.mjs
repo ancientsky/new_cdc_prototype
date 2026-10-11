@@ -3,7 +3,7 @@ import { html, raw } from '../../../scripts/lib/render.mjs';
 import { md } from '../../../scripts/lib/markdown.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
 import * as JL from '../../../scripts/lib/jsonld.mjs';
-import { ldFor, pageHead, translationBadge, feedback, L, unitName, unitLink, unitPath, ownerStats, hrefFor, PAGE_PATHS } from './_partials.mjs';
+import { ldFor, pageHead, translationBadge, feedback, L, unitLink, unitPath, ownerStats, hrefFor, PAGE_PATHS } from './_partials.mjs';
 import { standalonePath } from './page.mjs';
 import { OFFICIAL_ORG_PAGES } from './units.mjs';
 import { intlTopic } from './_international.mjs';

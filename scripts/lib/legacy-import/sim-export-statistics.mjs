@@ -15,7 +15,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { BASE, esc, fakeId, P, H, A, TABLE, pdfText, shell } from './sim-export.mjs';
+import { BASE, esc, fakeId, P, A, TABLE, pdfText, shell } from './sim-export.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
 export const EXPORTED_AT = '2026-10-03';

@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url';
 import { govern, memWriter, config } from './helpers.mjs';
 import { loadSite } from '../scripts/lib/load.mjs';
 import { validateSite } from '../scripts/lib/validate.mjs';
-import { emitApi, buildRedirects, legacyKey, serverRedirects, goneEntries } from '../scripts/lib/emit-api.mjs';
+import { emitApi, legacyKey, serverRedirects, goneEntries } from '../scripts/lib/emit-api.mjs';
 import { parseLog, detectFormat, analyze, toMarkdown, loadMigrationLists } from '../scripts/analyze-404-log.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));

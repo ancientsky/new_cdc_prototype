@@ -15,7 +15,7 @@ export function meta(ctx) {
 }
 
 export function render(ctx) {
-  const { site, t, url, fmtDate, lang } = ctx;
+  const { site, t, url, fmtDate } = ctx;
   const sit = site.situation;
   const origin = `${config.siteUrl}${config.basePath}`;
   const items = sit.items;

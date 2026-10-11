@@ -1,5 +1,5 @@
 // /report/：通報專區。法定傳染病通報時限表由主檔 master/diseases.json 自動推導（主檔改了表就改）；NIDRS 外部連結、流程、法規、表單。
-import { html, raw } from '../../../scripts/lib/render.mjs';
+import { html } from '../../../scripts/lib/render.mjs';
 import { ldFor, pageHead, inlineAsk, hrefFor, L, publishedOf, diseaseName, diseasePage, extLink, proScope, askBox } from './_partials.mjs';
 import { resolveDoc } from './lab.mjs';
 
@@ -39,7 +39,7 @@ function steps(ctx) {
 }
 
 export function render(ctx) {
-  const { site, t, url, lang } = ctx;
+  const { site, t, url } = ctx;
   const table = notifyTable(site);
   const labByDisease = new Map();
   for (const lt of publishedOf(site, 'labtests')) { if (!labByDisease.has(lt.disease)) labByDisease.set(lt.disease, []); labByDisease.get(lt.disease).push(lt); }

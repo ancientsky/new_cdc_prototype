@@ -78,7 +78,6 @@ function specFor(item, dm, src) {
   const upd = page?.reviewedAt ?? EXPORTED_AT;
   const kf = page?.keyFacts ?? {};
   const target = item.target ? src.byId.get(item.target) : null;
-  const m = item.mapTo ?? {};
   const frag = String(item.oldUrl ?? '').split('#')[1] ?? '';
   const legalLabel = { 1: '第一類', 2: '第二類', 3: '第三類', 4: '第四類', 5: '第五類' }[dm.legalCategory] ?? '—';
   const notifyLabel = dm.notifyWithinHours == null ? '依規定' : dm.notifyWithinHours <= 24 ? `${dm.notifyWithinHours} 小時內` : `${Math.round(dm.notifyWithinHours / 24)} 日內`;

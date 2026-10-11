@@ -913,7 +913,6 @@ export function runImport(opts) {
   for (const un of units) {
     const pr = prByKey.get(un.pageKey);
     if (un.type === 'disease') continue;
-    const dmeta = un.diseaseId ? diseaseById.get(un.diseaseId) : null;
     const diseases = uniqBy([...(un.diseaseId ? [un.diseaseId] : []), ...pr.diseases.slice(1)].map((id) => ({ id })), (x) => x.id).map((x) => x.id);
     const base = (title, summaryMd, type) => common(un.draftId, type, title, { owner: ownerOf(pr), publishedAt: un.publishedAt, audience: audienceFor(type, pr), diseases, summary: summaryOf(summaryMd, title) });
     let d;

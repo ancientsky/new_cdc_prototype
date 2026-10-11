@@ -3,7 +3,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {
-  inspectAsset, extOf, pdfHasTextLayer, suggestFileName, fileNameProblems, MIME_BY_EXT, IMAGE_EXT, DATA_EXT, SIZE_GROUP, DEFAULT_LIMITS, OWN_LICENSE,
+  inspectAsset, extOf, pdfHasTextLayer, suggestFileName, fileNameProblems, MIME_BY_EXT, DATA_EXT, SIZE_GROUP, DEFAULT_LIMITS, OWN_LICENSE,
 } from '../assets.mjs';
 
 const SNIFF_OK = { pdf: ['pdf'], png: ['png'], jpg: ['jpeg'], jpeg: ['jpeg'], webp: ['webp'], svg: ['svg'], docx: ['zip'], xlsx: ['zip'], odt: ['zip'] };

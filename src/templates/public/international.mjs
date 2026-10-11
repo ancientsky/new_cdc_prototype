@@ -189,7 +189,7 @@ function intlNews(ctx, tp) {
 }
 
 export function render(ctx) {
-  const { site, t, lang, url } = ctx;
+  const { site, t, url } = ctx;
   const tp = intlTopic(site);
   const subs = intlSubPages(site);
   const P = (k) => pageOf(subs, k);

@@ -2,7 +2,7 @@
 import { html, raw } from '../../../scripts/lib/render.mjs';
 import { md } from '../../../scripts/lib/markdown.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
-import { ldFor, breadcrumb, provenance, alerts, pageData, feedback, translationBadge, scopeTags, L, PAGE_PATHS, itemPath } from './_partials.mjs';
+import { ldFor, breadcrumb, provenance, alerts, pageData, feedback, translationBadge, L, PAGE_PATHS, itemPath } from './_partials.mjs';
 import { isIntlPage, intlSubPath, intlTopic, seriesNav, seriesPager, authorityNote } from './_international.mjs';
 
 /** 此頁的獨立路徑：既有政策頁走 PAGE_PATHS；slug 含 / 的頁（about/mission → /about/mission/）走 /{slug}/；/about/ 由 about.mjs 的 hub 輸出，其他無 / 的 slug 只內嵌在 hub 與聯絡頁。 */
@@ -18,7 +18,7 @@ export function meta(ctx, { item }) {
 }
 
 export function render(ctx, { item }) {
-  const { t, lang } = ctx;
+  const { lang } = ctx;
   const body = L(ctx, item, 'bodyMarkdown') ?? item.bodyMarkdown ?? '';
   const langStatus = item.languages?.[lang]?.status;
   const intl = isIntlPage(item) ? intlTopic(ctx.site) : null;

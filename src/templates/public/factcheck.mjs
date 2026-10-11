@@ -1,7 +1,7 @@
 // 謠言查證：貼上訊息 → 判定（D 的 factcheck.js 掛到 #factcheck-result）；下方列出最近澄清（伺服器端 render）。
 import { html, raw } from '../../../scripts/lib/render.mjs';
 import { md } from '../../../scripts/lib/markdown.mjs';
-import { ldFor, pageHead, sectionHead, verdictPill, provenance, alerts, hrefFor, L, publishedOf, byDateDesc, unitName, unitLink, isFallbackLink, translationBadge, langOk } from './_partials.mjs';
+import { ldFor, pageHead, sectionHead, verdictPill, provenance, alerts, hrefFor, L, publishedOf, byDateDesc, unitLink, isFallbackLink, translationBadge, langOk } from './_partials.mjs';
 
 export function meta(ctx) {
   return { title: ctx.t('nav.factcheck'), description: ctx.t('factcheck.desc'), styles: ['/assets/styles/answer.css'], scripts: ['/assets/js/answer/factcheck.js'], jsonLd: ldFor(ctx, null, [{ label: ctx.t('nav.factcheck') }]) };

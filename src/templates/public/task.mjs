@@ -1,7 +1,7 @@
 // 六任務入口頁：依內容 tasks 欄位聚合。
 import { html, raw } from '../../../scripts/lib/render.mjs';
 import { config } from '../../../site.config.mjs';
-import { ldFor, pageHead, sectionHead, askBox, sitCard, hrefFor, isFallbackLink, L, publishedOf, byDateDesc, verdictPill, pill, feedback, dated, unitName } from './_partials.mjs';
+import { ldFor, pageHead, sectionHead, askBox, sitCard, hrefFor, isFallbackLink, L, byDateDesc, verdictPill, pill, feedback, dated, unitName } from './_partials.mjs';
 import { quickLookup, adaptiveChanges, changeTiles, travelStyles } from './travel.mjs';
 
 export function meta(ctx, { task }) {
