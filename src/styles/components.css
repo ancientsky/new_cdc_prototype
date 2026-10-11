@@ -957,25 +957,34 @@ html:not(.js) .vxs-form,html:not(.js) .vxs-msg,html:not(.js) .vxs-tabs,html:not(
 .vxs-tabs{margin-top:var(--sp-3)}
 .vxs-legend{display:flex;flex-wrap:wrap;gap:var(--sp-2) var(--sp-5);list-style:none;margin:var(--sp-2) 0 var(--sp-3);padding:0;font-size:var(--fs-sm)}
 .vxs-legend li{display:flex;align-items:center;gap:var(--sp-2)}
-.vxs-grid2{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:var(--sp-4);align-items:start}
+/* 第三十六輪：地圖預設縮到版面寬度（viewBox 等比例），不出現橫向捲軸；勾「放大檢視」才用原始尺寸並可捲動；手機保留最小寬度與捲動 */
+.vxs-bar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:var(--sp-2) var(--sp-4)}
+.vxs-tools{display:flex;flex-wrap:wrap;align-items:center;gap:var(--sp-2);font-size:var(--fs-sm)}
+.vxs-tools__t{color:var(--ink-2)}
+.vxs-tools__msg{min-width:1em}
+.vxs-zoom{display:inline-flex;align-items:center;gap:var(--sp-1);margin-right:var(--sp-3);cursor:pointer}
 .vxs-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--white)}
 .vxs-scroll:focus-visible{outline:var(--focus);outline-offset:2px}
-.vxs-svg{display:block;max-width:none;font-family:var(--font)}
-.vxs-detail{border:1px solid var(--line);border-radius:var(--radius);padding:var(--sp-4);background:var(--white);position:sticky;top:var(--sp-3)}
+.vxs-svg{display:block;width:100%;height:auto;max-width:none;font-family:var(--font)}
+.vxs-scroll.is-zoom .vxs-svg{width:auto;height:auto}
+.vxs-dlnote{margin:var(--sp-2) 0 0;font-size:var(--fs-sm)}
+.vxs-detail{border:1px solid var(--line);border-radius:var(--radius);padding:var(--sp-4);background:var(--white);margin-top:var(--sp-3)}
+.vxs-detail:empty{display:none}
+.vxs-detail__wrap{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--sp-3)}
 .vxs-detail h3{margin:0 0 var(--sp-2);font-size:var(--fs-lg)}
 .vxs-detail__badges{margin:0 0 var(--sp-2)}
 .vxs-detail__dl{margin:0 0 var(--sp-3);display:grid;gap:var(--sp-2)}
 .vxs-detail__dl dt{font-size:var(--fs-xs);color:var(--ink-3);font-weight:700}
 .vxs-detail__dl dd{margin:0;overflow-wrap:anywhere}
-.vxs-detail__links{flex-direction:column;align-items:flex-start}
+.vxs-detail__links{align-items:center}
 .vxs-detail__close{margin-top:var(--sp-2)}
 /* SVG 本體 */
 .vxs-rowbg{fill:transparent;stroke:var(--line-2);stroke-width:1}
 .vxs-rl .vxs-rowbg{fill:var(--white)}
 .vxs-rl.is-focus .vxs-rowbg,.vxs-rp.is-focus .vxs-rowbg{fill:var(--green-50);stroke:var(--green-700)}
 .vxs-axisbg{fill:var(--white)}
-.vxs-axislabel,.vxs-tick{font-size:11px;fill:var(--ink-3)}
-.vxs-rtext{font-size:13px;fill:var(--ink)}
+.vxs-axislabel,.vxs-tick{font-size:12px;fill:var(--ink-3)}
+.vxs-rtext{font-size:14px;fill:var(--ink)}
 .vxs-rl a{cursor:pointer}
 .vxs-rl a:hover .vxs-rtext{text-decoration:underline;fill:var(--green-800)}
 .vxs-grid{stroke:var(--line-2);stroke-width:1}
@@ -1006,8 +1015,8 @@ html:not(.js) .vxs-form,html:not(.js) .vxs-msg,html:not(.js) .vxs-tabs,html:not(
 .vxs-table tr[data-status="situational"] [data-vxs-st]{color:var(--info);font-weight:700}
 .vxs-table tr[data-status="past"] [data-vxs-st]{color:var(--warn);font-weight:700}
 @media (max-width:900px){
-  .vxs-grid2{grid-template-columns:1fr}
-  .vxs-detail{position:static}
+  .vxs-svg{min-width:760px}
+  .vxs-detail__wrap{grid-template-columns:1fr}
   .vxs-entry{padding:var(--sp-4)}
 }
 @media print{.vxs-form,.vxs-tabs,.vxs-detail{display:none}.vxs-scroll{overflow:visible}}
@@ -1206,3 +1215,7 @@ html:not(.js) .vxs-form,html:not(.js) .vxs-msg,html:not(.js) .vxs-tabs,html:not(
   .c-teb__cite .c-btn{display:none}
   .c-teb__textver{display:block}.c-teb__textver>summary{display:none}.c-teb__textver>*{display:block}
 }
+/* 第三十六輪：/vaccines/ 預防接種專區導覽 */
+.vx-hub__card h3{font-size:var(--fs-md);margin:0 0 var(--sp-1)}
+.vx-hub__card .c-linklist{margin:0}
+.vx-hub__card .c-linklist li{margin:0 0 var(--sp-1)}

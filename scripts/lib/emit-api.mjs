@@ -7,6 +7,8 @@ import { pathOf, mdPathOf, WHITELIST_REASON_LABELS, LIFECYCLE_LABELS, TODO_KIND_
 import { buildOpenApi } from './openapi.mjs';
 import { citationOf, citationEnOf, doiPath, doiUrl, categoryLabel, authorNotes } from '../../src/client/bulletin-rules.js';
 import { assetSummary, assetUrl } from './assets.mjs';
+import { scheduleCsv } from '../../src/client/vaxschedule.js';
+import { STRINGS } from '../../src/client/i18n.js';
 // 第九輪（ARCHITECTURE 17.1）：對外輸出一律經 isPublic()（published［＋archived］且 publishAt 已到）；emitApi 一進來就換成 publicView（排程中內容整筆消失，含治理待辦與版本鏈）
 import { isPublic, nowOf, publicView } from './lanes.mjs';
 
@@ -373,6 +375,9 @@ export function emitApi(fullSite, write) {
   put('v1/vaccines.json', published(c.vaccines).map(strip), {}, {}, '疫苗頁');
   // 疫苗接種時程表（主檔；時程地圖與答案引擎的年齡查詢用）
   put('v1/immunization-schedule.json', site.master.immunizationSchedule ?? [], {}, {}, '疫苗接種時程表');
+  // 第三十六輪：同一份主檔的 CSV（Excel 直接開；與地圖頁「下載 CSV」按鈕同函式、同欄位）。
+  // 放在 /vaccines/schedule.csv（與 .md 機讀版同處）而不是 v1/：v1 下一律是 JSON 外殼（meta.etag／lastModified）且每個檔都要在 OpenAPI 描述，CSV 不適用那套契約。
+  write('vaccines/schedule.csv', scheduleCsv(site.master.immunizationSchedule ?? [], (id) => site.master.vaccines.find((m) => m.id === id)?.name ?? id, (k) => STRINGS['zh-TW'][k] ?? k));
   put('v1/faq.json', published(c.faq).map(strip), {}, {}, 'Q&A');
   put('v1/news.json', [...published(c.news)].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt) || a.id.localeCompare(b.id)).slice(0, 200).map(strip), {}, {}, '新聞稿／通函（近 200 則，含自動加註）');
   put('v1/documents.json', [...published(c.documents)].sort((a, b) => (a.family ?? '').localeCompare(b.family ?? '') || (a.effectiveAt ?? '').localeCompare(b.effectiveAt ?? '')).map(strip), {}, { families: site.gov.families }, '文件全部版本（isCurrent、supersedes、supersededBy）；families 為版本鏈');
