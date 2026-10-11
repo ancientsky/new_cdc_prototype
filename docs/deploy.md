@@ -761,3 +761,19 @@ ASK_PERF=1 node --test tests/round40-ask-perf.test.mjs      # 當成測試：TBT
 - 瀏覽器：預設用 `/opt/pw-browsers` 內最新的 `chromium-*`，可用 `CHROME_BIN` 指定；`playwright` 是 devDependency。
 - 為什麼不放進 CI 的必要檢查：GitHub Actions 的機器忙閒差很多，TBT 會跳 ±30%，擋 PR 會誤殺；建議改版答案頁或引擎時本機跑一次，數字貼在 PR 說明。
 
+## 16. 智慧問答查詢紀錄（第四十一輪）
+
+智慧問答的引擎在瀏覽器裡執行，原本什麼都沒記，所以不知道哪些常見問題答不出來。第四十一輪加了「每題一筆已遮蔽個資的紀錄」＋彙整報表，完整說明（記什麼不記什麼、為什麼用 fetch keepalive、為什麼遮兩次、k-匿名、保存期限、收件端契約、資訊室確認清單）見 **[docs/ask-log.md](ask-log.md)**。部署相關重點：
+
+| 環境變數 | 值 | 說明 |
+| --- | --- | --- |
+| `ASK_LOG_MODE` | `mock`（預設）／`post`／`off` | `mock` 只在本機開發伺服器（localhost）送到同源 `/api/ask-log` 模擬後端；GitHub Pages 原型站不送 |
+| `ASK_LOG_ENDPOINT` | `https://…` | 正式收件端點；設了而沒設 mode 視為 `post` |
+| `ASK_LOG_RETENTION_DAYS` | 正整數，預設 90 | 原始紀錄保存天數 |
+| `ASK_LOG_DIR` | 目錄（只給 `scripts/serve.mjs`） | 模擬後端寫入位置，預設 `.local/ask-log/`（已在 `.gitignore`） |
+
+- 設定矛盾（post 沒端點、端點不是 https、mock／off 卻有端點、保存天數不是正整數）**建置時報錯**，與第 13 節表單端點同一套規則（`scripts/lib/forms.mjs` 的 `askLogErrors`）。
+- 生效中的 post 端點來源自動加進 CSP `connect-src`（只有這一項），重新套用 `dist/headers/`（第 10 節）。
+- 收件端必須：欄位白名單、伺服器端再遮蔽個資、不記 IP／User-Agent／Referer／cookie、每分鐘 60 筆節流、成功回 204、原始紀錄 90 天到期刪除。參考實作：`scripts/lib/ask-log-mock.mjs`。
+- 報表：`npm run ask-log:report`（讀 NDJSON 日檔，寫 `.local/ask-log/report.json`）；後台 `/admin/ask-log/` 可載入該檔。原始紀錄與報表都不得進 Git。
+

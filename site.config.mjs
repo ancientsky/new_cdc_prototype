@@ -82,6 +82,15 @@ export const config = {
     directorMailbox: { ...formEnv('DIRECTOR_MAILBOX'), receiver: 'unit.secretariat', petitionUrl: process.env.FORM_DIRECTOR_MAILBOX_PETITION_URL ?? '' },
     newsletter: { ...formEnv('NEWSLETTER'), receiver: 'unit.pr' },
   },
+  // 第四十一輪：智慧問答（/ask/）查詢紀錄——找出「常被問、卻答不出來」的問題，好補詞彙與內容。完整說明：docs/ask-log.md。
+  // mode：mock（預設；只在本機開發伺服器 http://localhost 上送到同源 /api/ask-log 模擬後端，寫進 .local/ask-log/，GitHub Pages 原型站不送）
+  //       post（正式：送到 endpoint，必須是 https；來源自動加進 CSP connect-src）｜off（完全不記錄）。
+  // 環境變數：ASK_LOG_MODE、ASK_LOG_ENDPOINT、ASK_LOG_RETENTION_DAYS（原始紀錄保存天數，預設 90）。設定矛盾（post 沒 endpoint 等）建置時報錯。
+  askLog: {
+    mode: (process.env.ASK_LOG_MODE ?? '').trim() || ((process.env.ASK_LOG_ENDPOINT ?? '').trim() ? 'post' : 'mock'),
+    endpoint: (process.env.ASK_LOG_ENDPOINT ?? '').trim(),
+    retentionDays: process.env.ASK_LOG_RETENTION_DAYS ? Number(process.env.ASK_LOG_RETENTION_DAYS) : 90,
+  },
   licenses: {
     allowed: ['OGDL-1.0', 'CC0-1.0', 'CC-BY-4.0'],
     labels: {

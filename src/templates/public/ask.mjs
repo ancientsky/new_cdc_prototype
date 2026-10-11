@@ -2,6 +2,7 @@
 import { html, raw } from '../../../scripts/lib/render.mjs';
 import { config } from '../../../site.config.mjs';
 import { breadcrumbLd } from './_partials.mjs';
+import { askLogSetting } from '../../../scripts/lib/forms.mjs';
 
 export function meta(ctx) {
   return { title: ctx.t('ask.title'), description: ctx.t('ask.desc'), noindex: true, bodyClass: 'page-ask', styles: ['/assets/styles/answer.css'], scripts: ['/assets/js/answer/ui.js'], jsonLd: [breadcrumbLd(ctx, [{ label: ctx.t('ask.title') }])], hideTranslationBar: false };
@@ -11,8 +12,13 @@ export function render(ctx) {
   const { t, url, site } = ctx;
   const ai = site.config.ai ?? config.ai;
   const paused = site.gov?.pausedAI;
+  // 第四十一輪：查詢紀錄設定（docs/ask-log.md）。用 data 屬性帶給 ui.js／log.js，與 LLM 模型清單同一種做法，不在程式寫死端點。
+  // data-ask-log＝實際生效的模式（mock｜post｜off）；data-ask-log-ev＝建置日（＋CI 的 commit 前 7 碼），報表才知道當時是哪一版詞彙與引擎。
+  const askLog = askLogSetting(site.config?.askLog ? site.config : config);
+  const sha = String(process.env.GITHUB_SHA ?? '').slice(0, 7);
+  const ev = `${site.today ?? ''}${sha ? `+${sha}` : ''}`;
   return html`
-<div class="c-askpage" data-paused="${paused ? '1' : '0'}">
+<div class="c-askpage" data-paused="${paused ? '1' : '0'}" data-ask-log="${askLog.active}" data-ask-log-endpoint="${askLog.endpoint}" data-ask-log-ev="${ev}">
   <header class="c-askpage__bar">
     <h1 class="sr-only">${t('ask.title')}</h1>
     <form class="c-askbox c-askbox--md" id="ask-form" action="${url('/ask/')}" method="get" role="search">
