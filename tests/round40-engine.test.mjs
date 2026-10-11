@@ -91,7 +91,14 @@ test('澄清稿引述的謠言原文記在 noCite，一般問句不會把謠言�
 test('資訊量太少的短句（They should check.）不會被抽出', () => {
   const r = ask('I am a migrant worker, where do I do my health check?', 'en');
   assert.equal(r.refused, false);
-  assert.ok(cites(r).includes('faq.tb-foreigner-health-check'));
+  // 合併來臺專區後：英文來源的來臺專區移工段（同語言）與中文移工健檢 FAQ 都算對，但第一句必須真的回答健檢時點
+  const ok = ['faq.tb-foreigner-health-check', 'media.migrant-worker-health-check', 'topic.new-residents-migrant-health', 'topic.visiting-taiwan'];
+  assert.ok(
+    cites(r).some((c) => ok.includes(c)),
+    cites(r).join(','),
+  );
+  assert.match(r.sentences[0].text, /3 working days|3 個工作日/);
+  assert.doesNotMatch(text(r), /They should check\./);
   for (const s of r.sentences) assert.ok(s.text.split(/\s+/).length >= 4 || /[㐀-鿿]/.test(s.text), s.text);
 });
 
@@ -103,10 +110,15 @@ test('外語主題錨點：移工、健保、接種紀錄、來臺旅遊各自�
   assert.deepEqual(topicAnchorsOf('What are the symptoms of dengue?'), []);
 });
 
-test('站內沒有的外語主題（來臺旅客）拒答為 no-match，不拿出國旅遊或移工內容充數', () => {
-  const r = ask('I am visiting Taiwan next month, what should I do?', 'en');
-  assert.equal(r.refused, true);
-  assert.equal(r.refusal.kind, 'no-match');
+test('來臺問句：主題錨點命中英文來源的來臺專區（標題就在講這個主題 ⇒ 不因用詞相關度偏低而查無），不拿出國旅遊建議充數', () => {
+  for (const q of ['I am visiting Taiwan next month, what should I do?', 'I am visiting Taiwan next month, what precautions?']) {
+    const r = ask(q, 'en');
+    assert.equal(r.refused, false, q);
+    assert.equal(cites(r)[0], 'topic.visiting-taiwan', q);
+    assert.ok(!cites(r).some((c) => c.startsWith('travel.')), q);
+  }
+  // 沒有錨點的無關外語問句仍查無
+  assert.equal(ask('How do I repair a quantum computer cooling system?', 'en').refusal?.kind, 'no-match');
 });
 
 test('「在哪裡打疫苗」：接種地點句排第一、查詢接種地點行動排第一', () => {

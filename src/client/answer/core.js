@@ -360,6 +360,9 @@ export function createEngine(rawDeps = {}) {
     const top = chunks[0]._score || 1;
     const neToks = [...qw.entries()].filter(([t, w]) => w >= 0.5 && model.has(t)).map(([t]) => t);
     const cands = [];
+    // 問「在哪裡打」時，講接種地點的句子本身就是答案；它常常不含問句的詞（Government-funded vaccination … at health centres），
+    // 下方「句子要命中問句詞」的篩選會把它擋掉 ⇒ 前 3 塊片段裡的地點句免篩（合併第四十輪各分支後補，FG001）
+    const whereReq = requiredFor(intent, q).find((r) => r.key === 'where');
     chunks.forEach((c, ci) => {
       // 以「：」結尾的引言句與其後清單項目合併為一個單位（仍是原文連續片段）
       const units = [];
@@ -390,9 +393,11 @@ export function createEngine(rawDeps = {}) {
         if (si === 0 && c.type === 'faq') s += 0.3;
         if (view === 'pro' && (c.type === 'document' || c.type === 'letter')) s += 0.5;
         if (c.extraction?.reviewStatus === 'machine') s -= 0.6; // 未校對的 PDF 文字：同樣講到時讓已審內容先
-        if (cov <= 0.05 && covTitle < 0.3 && !(ci === 0 && si === 0)) return;
+        const whereHit = !!whereReq && ci < 3 && whereReq.re.test(sen);
+        if (whereHit) s += 0.6;
+        if (cov <= 0.05 && covTitle < 0.3 && !(ci === 0 && si === 0) && !whereHit) return;
         // 問句除了病名還有其他關鍵詞時，句子（或其片段標題）至少要命中一個，避免「只因為同一種病」被選入
-        if (neToks.length && !neToks.some((t) => toks.has(t) || titleToks.has(t)) && !(ci === 0 && si === 0)) return;
+        if (neToks.length && !neToks.some((t) => toks.has(t) || titleToks.has(t)) && !(ci === 0 && si === 0) && !whereHit) return;
         cands.push({ text: sen, cite: [c.id], score: s, slot, chunk: c });
       });
     });
@@ -1513,12 +1518,16 @@ export function createEngine(rawDeps = {}) {
     const anchorOk = (cs, zh) => !anchors.length || anchorStrength(cs, zh) > 0;
     let chunks = [];
     let zhChunks = null;
+    let topicConfirmed = false;
     const zhRetrieve = () => (zhChunks ??= retrieve(q, { view, lang: 'zh-TW', k, intent: result.intent, entities, expanded, presetDisease, guards: result.guards }));
     if (lang !== 'zh-TW') {
       chunks = retrieve(q, { view, lang, k, intent: result.intent, entities, expanded, presetDisease, guards: result.guards });
       if (chunks.length && chunks[0]._score < 2.5) chunks = [];
+      // 主題已確認：問句有錨點，且同語言前 3 塊有一塊「標題」就在講這個主題（英文來源的來臺專區）。
+      // 這時相關度偏低只代表問句用詞（what should I do／precautions）和片段不同，不是主題不對 ⇒ 不因相關度門檻丟掉（下方的查無門檻同理）
+      topicConfirmed = anchors.length > 0 && chunks.length > 0 && anchorStrength(chunks, false) === 2;
       // 同語言片段沒講到主題錨點（越南文問移工健檢，越南文語料只有麻疹），或過不了相關度門檻 ⇒ 改用中文原文
-      if (chunks.length && (!anchorOk(chunks, false) || relevanceOf(q, chunks, chunks.model, hasEntity).reason)) { result.guards.push({ kind: 'same-lang-dropped', lang }); chunks = []; }
+      if (chunks.length && (!anchorOk(chunks, false) || (!topicConfirmed && relevanceOf(q, chunks, chunks.model, hasEntity).reason))) { result.guards.push({ kind: 'same-lang-dropped', lang }); chunks = []; }
       // 同語言片段只是「順帶提到」主題（英文 MOU 新聞稿提到 migrant worker health），中文有一塊標題就在講這個主題 ⇒ 用中文原文
       if (chunks.length && anchors.length && anchorStrength(zhRetrieve(), true) > anchorStrength(chunks, false)) { result.guards.push({ kind: 'same-lang-weaker-topic', lang }); chunks = []; }
     }
@@ -1595,7 +1604,10 @@ export function createEngine(rawDeps = {}) {
       if (rel.reason && structured) { result.guards.push({ kind: 'low-relevance-chunks-dropped', reason: rel.reason }); const none = []; none.qWeights = chunks.qWeights; none.model = chunks.model; chunks = none; result.retrieved = chunks; }
       // 第四十輪（issue #75）：外語問句的相關度低於 lowBelow ⇒ 查無，不再「自評相關程度較低卻照樣列片段」。
       // 中文讀者看得懂原文、可以自己判斷片段切不切題；外語讀者拿到的常是中文原文或只有部分譯文，低相關片段只會誤導。
-      if (!rel.reason && !structured && lang !== 'zh-TW' && rel.relevance < RELEVANCE.lowBelow) rel.reason = 'low-relevance-foreign';
+      // 例外：問句有主題錨點，且同語言片段的「標題」就在講這個主題（錨點強度 2，例如英文來源的來臺專區）⇒ 主題已確認，
+      // 相關度偏低只是問句用詞與片段不同（precautions vs. quarantine／mosquito），不算查無（合併第四十輪 i18n 來臺專區後補）
+      if (topicConfirmed && !result.translationNote && rel.reason) { result.guards.push({ kind: 'topic-confirmed-gate-skipped', reason: rel.reason }); rel.reason = null; }
+      if (!rel.reason && !structured && lang !== 'zh-TW' && rel.relevance < RELEVANCE.lowBelow && !topicConfirmed) rel.reason = 'low-relevance-foreign';
       if (rel.reason && !structured && !(typeof process !== 'undefined' && process.env?.NO_GATE)) { // 瀏覽器沒有 process 物件，直接讀會 ReferenceError、no-match 的答案頁就卡在載入中（第二十八輪修正）
         result.guards.push({ kind: 'no-match', reason: rel.reason, relevance: rel.relevance });
         // 相關度太低時連關鍵字清單也不附（附了又是「抗蛇毒血清 → 登革熱傳染途徑」那種不相關頁面）

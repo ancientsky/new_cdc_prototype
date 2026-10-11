@@ -307,7 +307,9 @@ BM25＋bigram＋詞典已處理：錯別字寬容（bigram）、同義詞與舊�
 
 **最低資訊量（#75）**：`core.js` 的 `MIN_INFO = { latinWords: 4, contentWords: 2, cjkChars: 6, thaiChars: 10 }`。拉丁字母語言至少 4 個詞，其中非功能詞（不在 EN_STOP／VI_STOP、長度 ≥ 3）至少 2 個；中日文去掉標點後至少 6 個字；泰文至少 10 個字。這是為了擋掉「They should check.」這種離開上下文就沒意義的短句。結構化句（態勢、時程、旅遊、申請步驟）是欄位串接，不受此限。
 
-**外語先對應主題，再檢索（#75）**：疾病、疫苗、國家本來就由詞彙主檔對應到 ID；這一輪在 `countries.json` 加了 `aliases`（Vietnam、Việt Nam、ベトナム、เวียดนาม…）。主檔以外的主題，由 `lexicon.js` 的 `CROSS_LANG` 第三欄 `true` 標成「主題錨點」，`topicAnchorsOf(q)` 取出，目前有移工、健保、接種紀錄、來臺旅遊四個。外語問句有錨點時，同語言片段要真的提到錨點（前 3 名的標題算 2 分、內文算 1 分），而且中文片段的錨點強度不比它高，才用同語言片段；否則改用中文片段並標 `showing-source`。中文片段也沒提到錨點，就是站內沒有這個主題 ⇒ 查無。舉例：「I am visiting Taiwan next month」站內沒有來臺旅客專區，回查無，不拿出國旅遊或移工內容充數。外語問句的相關度低於 `RELEVANCE.lowBelow` 也一律查無（`low-relevance-foreign`），比給一句不相干的英文好。
+**外語先對應主題，再檢索（#75）**：疾病、疫苗、國家本來就由詞彙主檔對應到 ID；這一輪在 `countries.json` 加了 `aliases`（Vietnam、Việt Nam、ベトナム、เวียดนาม…）。主檔以外的主題，由 `lexicon.js` 的 `CROSS_LANG` 第三欄 `true` 標成「主題錨點」，`topicAnchorsOf(q)` 取出，目前有移工、健保、接種紀錄、來臺旅遊四個。外語問句有錨點時，同語言片段要真的提到錨點（前 3 名的標題算 2 分、內文算 1 分），而且中文片段的錨點強度不比它高，才用同語言片段；否則改用中文片段並標 `showing-source`。中文片段也沒提到錨點，就是站內沒有這個主題 ⇒ 查無。舉例：「I am visiting Taiwan next month」在站內還沒有來臺專區時回查無，不拿出國旅遊或移工內容充數；同輪新增英文來源的來臺專區（`topic.visiting-taiwan`）後，錨點直接命中它的標題。外語問句的相關度低於 `RELEVANCE.lowBelow` 也一律查無（`low-relevance-foreign`），比給一句不相干的英文好；例外是「主題已確認」：同語言前 3 塊有一塊的**標題**就在講錨點主題（錨點強度 2），這時相關度偏低只代表用詞不同（what should I do、precautions），不套相關度門檻（guard `topic-confirmed-gate-skipped`）。
+
+**合併後的兩個修正**：一是錨點的英文說法要涵蓋內容端的寫法（coming to／moving to／arriving in／travelling to Taiwan、Visiting or moving to Taiwan），否則問句命中錨點、片段卻對不上；二是問「在哪裡打」時，前 3 塊片段裡的接種地點句不受「句子要含問句詞」的篩選（Government-funded vaccination … at health centres 不含 flu／vaccine 這兩個詞，合併後分語言索引的 idf 改變，它就被擋掉了）。
 
 **「在哪裡」（#75）**：問句命中 `VAX_WHERE_RE` 時，答案句會把提到衛生所、合約院所、診所、學校、clinic、health centre 的句子排到最前面（`QUERY_POINTS.where`），行動列也把「查詢接種地點」排第一：vaxmap 有這個疫苗的群組就連 vaxmap，沒有就連疫苗主檔的 `whereUrl`。
 
@@ -318,7 +320,7 @@ BM25＋bigram＋詞典已處理：錯別字寬容（bigram）、同義詞與舊�
 - ja／tl／id／th 的同語言語料很少，各只有 2–3 個片段。外語問句大多顯示中文原文並標 `showing-source`，這是誠實的結果，不是翻譯；要改善得靠多語內容，不是靠引擎。
 - 主題錨點是手寫清單（4 個），新主題要人工加；離線把透明報告裡外語查無的問句批次歸納，是比較省的補法（§8.6 同一思路）。
 - 五語的拒答與介面字串是機器初稿，`REFUSAL_TEXT_STATUS` 標 `machine-draft`，要經多語審核才算定稿；ja／vi 只翻了四種拒答類型，其餘退回英文。
-- 站內沒有來臺旅客（inbound visitor）內容，相關問句一律查無。
+- 來臺專區只有英文原文（zh-TW、vi、id 為 machine），其他語言問來臺仍會查無或顯示中文；英文問移工健檢時，來臺專區的移工段（同語言）會比中文移工 FAQ 先被引用，評估集兩者都接受，但要求答案含「入境後 3 個工作日」。
 - 新 FAQ 的 `aiWhitelist.approvedBy` 是原型佔位（比照第二十八輪抗蛇毒血清），上線前要由權責單位實際核准。FAQ 的 `publishedAt` 是 2026-10-11，CI 固定 `BUILD_TODAY=2026-10-01`，所以 CI 跑評估時 NP001–NP005 會因為內容尚未生效而略過，本機與 `site.today=2026-10-11` 的測試會檢查。
 - 新 FAQ 的疾病／疫苗標籤會影響排序：「未滿 6 個月與流感疫苗」原本標了 `disease.influenza`，一般流感疫苗問句（打完要觀察多久）都被它搶走，所以只留 `vaccine.influenza`。新增內容時，標籤要依「這則回答的是誰的問題」來標，不是依「內文提到什麼」。
 
