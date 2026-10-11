@@ -25,7 +25,7 @@ export const CROSS_LANG = [
   [/\bhealth (check|exam|screening)s?\b|\bmedical (check|exam)\w*|khám sức khỏe|pemeriksaan kesehatan|ตรวจสุขภาพ|健康診断/i, '健康檢查 健檢'],
   [/\bhealth insurance\b|bảo hiểm y tế|asuransi kesehatan|ประกันสุขภาพ|健康保険/i, '健保', true],
   // 來臺旅遊（入境）：站內目前沒有給來臺旅客的接種建議；錨點讓這類問句查無，而不是拿出國旅遊或流感疫苗的片段回答
-  [/\b(?:visit(?:ing)?|holiday in|vacation in|trip to|touring)\s+taiwan\b/i, '來臺旅客 訪臺 來臺旅遊', true],
+  [/\b(?:visit(?:ing)?(?: or moving to)?|coming to|moving to|arriving in|travel(?:l)?ing to|travel to|holiday in|vacation in|trip to|touring)\s+taiwan\b/i, '來臺旅客 訪臺 來臺旅遊', true],
   [/\b(vaccination|immuni[sz]ation) records?\b|hồ sơ tiêm chủng|catatan imunisasi|record ng bakuna|ประวัติการฉีดวัคซีน|予防接種の記録|接種記録/i, '接種紀錄', true],
 ];
 /** 第四十輪：問句命中的主題錨點：[{ re, zh[] }]（CROSS_LANG 第三欄為 true 者；中文問句另有 TOPIC_ZH） */
