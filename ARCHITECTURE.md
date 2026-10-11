@@ -2000,3 +2000,24 @@ Actions 紀錄上的 10 個黃色 annotation 全是 `no-unused-vars`（GitHub �
 
 待辦（若公關室決定試行）：把 `engineFromSite()` 的「從 site 物件」與前端的「從 v1 JSON」兩種建法合成一個共用的 `engineFromV1()`；新增 `scripts/answer-service.mjs`（端點、etag 重載、LINE 長度截句、逾時）、測試、OpenAPI 片段；LLM 改寫只能接在這條管線後面（§38、決策紀錄 §25）。
 
+## 45. 第四十輪（2026-10-11）：grokbot 第二批 15 個 issues——外語誤答、時程措辭、搜尋漏收、答案頁效能、CI 權限隔離
+
+README 第四十輪有逐項說明，這裡只記工程上新增的契約與門檻，細節在各文件。
+
+| 領域 | 新契約／門檻 | 在哪裡 |
+| --- | --- | --- |
+| 注入偵測 | `DAN` 只認大寫且要有越獄語境；七語各 ≥20 句一般問句不得觸發（回歸測試） | `src/client/answer/text.js`、`tests/round40-injection-multilingual.test.mjs` |
+| 評估集 | 首頁與各語言頁的預設問句 35 題（`preset` 欄位綁 i18n key，介面改了測試提醒同步）；`requires: i18n:<content>:<lang>` 綁翻譯審核狀態；版本 r11 | `content/governance/eval-set.json`、`tests/round40-presets.test.mjs` |
+| 引擎常數 | `MIN_INFO`（最低資訊量）、`SERVICE_MIN_RATIO`（服務要與問句相干）、`NARRATION_WEIGHT`、`CLARIFICATION_WEIGHT`、片段 `noCite`（引述的謠言原文不當答案句）、`CATCHUP_RE`（漏打類不走時程表）、外語主題錨點 `topicAnchorsOf` | `src/client/answer/core.js`、`lexicon.js`、`scripts/lib/index-builder.mjs`；docs/ask-search-llm.md §10 |
+| 揭露 | 查無／拒答不掛 AI 標章，顯示「未產生答案」，稽核編號保留 | `render.js` `isNoAnswer()` |
+| 詞彙 | `glossaryTerm(g, lang)` 唯一退回規則（該語言 → en → zh-TW，`id` 語言讀 `id_`）；建置掃 dist 可見文字出現 `term.*` 即失敗 | `src/client/glossary-term.js`、docs/i18n.md §2 |
+| 外語頁 | 疫情數字存 `metricUnit`／`metricImported` 由樣板組字；退回中文的標題統一 `lang="zh-TW"`＋「僅有中文」；CJK 比例檢查 `I18N_CJK_CHECK=off\|warn\|error`（預設 warn，門檻 `I18N_CJK_MAX` 0.15），報告 `v1/governance/i18n-report.json` | `scripts/lib/i18n-quality.mjs`、`src/client/situation-text.js` |
+| 翻譯初稿 | 疾病頁 `languages.<lang>.status: machine` 不渲染、不進索引；審核後改 `reviewed` 才上線 | docs/i18n.md §4 |
+| 時程主檔 | `hardLimitMonths`（滿此月齡起不可接種，不含當月）＋ `hardLimitNote`／`hardLimitSource`／`hardLimitVerified`，schema `dependentRequired`；狀態 `completed-expected` 與 `past-limit` 取代 `past`；勾選存 `#done=` | `content/master/immunization-schedule.json`、`src/client/vaxschedule.js`、docs/immunization-ia.md §6 |
+| 全文搜尋 | 索引副本把 `<form>` 外的 `<label>` 改成 `<span>`；建置後召回自我檢查（抽 80 頁 ×2 段，<98% 失敗）；`pagefind.close()` 前等輸出穩定；查無退路「逐步去前後字」 | `scripts/lib/pagefind.mjs`、`src/client/search-query.js`、deploy.md §12.5 |
+| 答案頁效能 | 名稱比對器字面子字串預篩（判定不變，有測試）；索引分片 `v1/search-index.<lang>.json`（`meta.shards`）；引擎動態 import、聚焦才載入；資料傳輸量門檻 `ASK_DATA_BUDGET_KB`（gzip 估算，445 KB）；JS 預算看「提問後合計」；`ASK_PERF=1` 量 TBT | `src/client/answer/{lexicon,data,ui,deps-manifest}.js`、`scripts/lib/js-budget.mjs`、`scripts/perf-ask.mjs`、deploy.md §15 |
+| CI | `content-pr.yml` 拆 `test`（read，跑 PR 程式碼）與 `lane`（write，不 checkout、不跑 node，只驗 artifact）；`preview-cleanup.yml` `permissions: {}`；禁用 `pull_request_target`；`format:check`、`typecheck` 進 CI；`checkJs: false`＋逐檔 `@ts-check` | deploy.md §2.2、`tests/round40-ci-isolation.test.mjs` |
+| 無障礙 | 掃描加 `/ask/?q=登革熱`（等 `aria-busy=false`）；moderate 列警告數不擋；`A11Y_JSON` 摘要進 PR 留言 | `scripts/a11y.mjs`、docs/a11y.md §4.1 |
+
+五位工程師平行做、各自在 git worktree 分支上提交，由本輪負責人合併驗收。合併衝突集中在 `.prettierignore` 放行清單、`eval-set.json` 末尾、`docs/ask-search-llm.md` 末尾與一個 import 列，全部「兩邊都保留」即可；真正的互相影響只有一處：多語組新增的來臺專區讓引擎組「站內沒有來臺內容就查無」的規則與評估題失效，合併後由引擎組在合併結果上重新調整。**教訓：平行開發時，改「規則」的人和改「內容」的人要在合併後再跑一次評估集，單獨各自全綠不代表合起來全綠。**
+
