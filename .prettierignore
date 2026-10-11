@@ -46,3 +46,5 @@ eval/**/*.mjs
 !src/client/answer/deps-manifest.js
 !tests/round40-search-recall.test.mjs
 !tests/round40-ask-perf.test.mjs
+# 第四十一輪（民眾用語 vs 官方用語）
+!tests/round41-synonyms.test.mjs

@@ -28,7 +28,10 @@
     "aliases": [
       "新冠肺炎",
       "COVID-19",
-      "新冠"
+      "新冠",
+      "COVID",
+      "Covid",
+      "新冠病毒"
     ],
     "en": "COVID-19",
     "ja": "COVID-19",
@@ -791,6 +794,63 @@
     ],
     "refs": [],
     "note": "統稱，不是單一疾病：涵蓋梅毒、淋病、愛滋（HIV）、M痘、披衣菌等。第三十一輪新增：民眾常用「性病」查詢，詞彙主檔沒有這個詞時，字元 bigram 會打中「急性病毒性A型肝炎」裡的「性病」兩字而誤答。refs 留空，讓「性病」導向性傳染病專區，而不是指定某一種病。各語言譯名為 Claude 草擬，待詞彙負責人核對。"
+  },
+  {
+    "id": "term.sexual-contact",
+    "zh-TW": "性行為",
+    "aliases": [
+      "做愛",
+      "性交",
+      "上床",
+      "嘿咻",
+      "房事",
+      "親密行為",
+      "性接觸"
+    ],
+    "en": "Sexual activity",
+    "ja": "性行為",
+    "tl": "Pakikipagtalik",
+    "vi": "Quan hệ tình dục",
+    "id_": "Hubungan seksual",
+    "th": "การมีเพศสัมพันธ์",
+    "domain": "general",
+    "locked": false,
+    "refs": [],
+    "note": "第四十一輪新增：民眾口語（做愛、上床、嘿咻、房事）與官方用語（性行為、性接觸）之間的橋。站上內容一律寫「性行為」，詞彙主檔沒有這個詞時，問「做愛」的問句沒有任何字跟內容重疊，整題查無。refs 留空：性行為不是一種病，相關內容散在愛滋、梅毒、A 型肝炎、M痘、PrEP 與性傳染病專區，讓檢索自己找，不指定某一種病。各語言譯名為 Claude 草擬，待詞彙負責人核對。",
+    "machineTranslated": [
+      "en",
+      "ja",
+      "tl",
+      "vi",
+      "id",
+      "th"
+    ]
+  },
+  {
+    "id": "term.cross-immunity",
+    "zh-TW": "交叉免疫",
+    "aliases": [
+      "短暫性交叉免疫",
+      "交叉保護"
+    ],
+    "en": "Cross-immunity",
+    "ja": "交差免疫",
+    "tl": "Cross-immunity",
+    "vi": "Miễn dịch chéo",
+    "id_": "Imunitas silang",
+    "th": "ภูมิคุ้มกันข้ามสายพันธุ์",
+    "domain": "general",
+    "locked": false,
+    "refs": [],
+    "note": "第四十一輪新增，主要是當「詞界」：登革熱教材寫「短暫性交叉免疫力」，裡面剛好有「性交」兩個字；新增「性行為」詞條（別名含「性交」）後，若沒有這個較長的已知詞把它遮住，索引會把登革熱教材誤標成性行為相關、問「性交」可能答出登革熱。詞典邊界規則：短詞只出現在「指別的東西」的較長已知詞裡時不算出現（ARCHITECTURE 第 37 章）。各語言譯名為 Claude 草擬，待詞彙負責人核對。",
+    "machineTranslated": [
+      "en",
+      "ja",
+      "tl",
+      "vi",
+      "id",
+      "th"
+    ]
   },
   {
     "id": "term.chronic-disease",
