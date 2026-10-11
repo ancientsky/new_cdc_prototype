@@ -1974,3 +1974,19 @@ LLM 的位置：`ui.js` 對結構化時程答案也會叫 LLM，但模型拿到�
 
 `.c-tabs__list` 為了手機能左右捲動設了 `overflow-x:auto`。CSS 規定只要一個方向不是 `visible`，另一個方向的 `visible` 會被算成 `auto`；按鈕又用 `margin-bottom:-2px` 壓在列表底線上，內容比列表高 2px，於是頁籤列右端出現一條沒有用的直向捲軸（時程地圖、疾病、常見問答、公告、招募、採購頁都用這個元件）。修正：底線改成 `box-shadow: inset 0 -2px 0`，按鈕不再用負邊距，並明寫 `overflow-y:hidden`。原則：設了 `overflow-x:auto` 的容器，裡面不要用負邊距或超出的裝飾，另一個方向要明寫 `hidden`。
 
+---
+## 44. 第三十八輪（2026-10-11）：同一個 PR 在 Actions 出現多次執行、合併後的重複部署
+
+同事問為什麼一個修正（PR #65）在 Actions 列表出現五、六列。逐列對照見 `docs/deploy.md` 2.1。結論：PR 車道、預覽部署、合併部署、預覽清理各有用途；**真的重複的只有「合併的 push 觸發的部署」與「預覽清理後再觸發的部署」**，兩者部署同一個 commit，靠 `pages.yml` 的 `concurrency: cancel-in-progress` 取消前者，網站只上線一次，但列表多一列「取消」、多排一次 runner。
+
+修正（兩個工作流程、一處測試）：
+
+| 檔案 | 修正前 | 修正後 |
+| --- | --- | --- |
+| `pages.yml` 取 `previews` 分支 | 分支上有什麼 `pr-N/` 就全部放進 `dist/preview/` | 每個 `pr-N/` 問一次 `gh pr view --json state`，不是 `OPEN` 就不放；查不到（`UNKNOWN`）保留。build job 加 `pull-requests: read` |
+| `preview-cleanup.yml` 最後一步 | 刪了目錄就 `gh workflow run pages.yml` | `github.event.pull_request.merged != true` 才觸發：合併的 push 已經部署、且那一次已自己跳過合併掉的預覽；沒合併就關閉的 PR 沒有 push，仍由這裡觸發 |
+
+為什麼把判斷放在建置端而不是清理端：清理端（刪分支目錄）與合併 push 觸發的部署是兩個平行的工作，先後順序不保證，所以過去只能「再部署一次」補救。改成部署時自己看 PR 狀態，順序就不重要了：不論分支上的目錄刪了沒有，合併後的第一次部署一定不含那個預覽。附帶解掉一個舊的小缺口：機器人用 `GITHUB_TOKEN` 自動合併的 PR 不發 `closed` 事件，預覽過去要等每日 01:41 UTC 的排程才消失，現在合併後的第一次部署就沒有了（分支上的目錄仍由每日排程清，只是不再影響網站）。
+
+保留不動的：PR 上的檢查與合併後 `main` 上的檢查都要跑（內容可能不同，`main` 上失敗過的例子見 deploy.md 2.1）；Approve 後 `content-pr.yml` 重跑整輪檢查（待辦：改成只讀上一輪結論可省約 4 分鐘）；每 2 小時排程部署。
+
