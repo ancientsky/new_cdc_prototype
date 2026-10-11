@@ -1,14 +1,15 @@
 // 六任務入口頁：依內容 tasks 欄位聚合。
-import { html, raw } from '../../../scripts/lib/render.mjs';
+import { html } from '../../../scripts/lib/render.mjs';
 import { config } from '../../../site.config.mjs';
-import { ldFor, pageHead, sectionHead, askBox, sitCard, hrefFor, isFallbackLink, L, byDateDesc, verdictPill, pill, feedback, dated, unitName } from './_partials.mjs';
+import { ldFor, pageHead, sectionHead, askBox, sitCard, L, byDateDesc, verdictPill, pill, feedback, dated, unitName, titleLink } from './_partials.mjs';
 import { quickLookup, adaptiveChanges, changeTiles, travelStyles } from './travel.mjs';
 
 export function meta(ctx, { task }) {
   return { title: ctx.t(`task.${task.key}.label`), description: ctx.t(`task.${task.key}.sub`).replaceAll(' · ', '、'), jsonLd: ldFor(ctx, null, [{ label: ctx.t(`task.${task.key}.label`) }]) };
 }
 
-const linkItem = (ctx, it, text) => html`<li><a href="${hrefFor(ctx, it)}"${isFallbackLink(ctx, it) ? raw(' lang="zh-TW"') : ''}>${text ?? L(ctx, it, 'title')}</a>${it.reviewedAt ? html` <span class="muted">${ctx.t('prov.reviewed')} ${ctx.fmtDate(it.reviewedAt)}</span>` : ''}</li>`;
+// 第四十輪（#73）：標題語言規則統一走 titleLink（本語言 → 英文 → 「僅有中文」標記）
+const linkItem = (ctx, it, field = 'title') => html`<li>${titleLink(ctx, it, { field })}${it.reviewedAt ? html` <span class="muted">${ctx.t('prov.reviewed')} ${ctx.fmtDate(it.reviewedAt)}</span>` : ''}</li>`;
 
 export function render(ctx, { task }) {
   const { site, t, url } = ctx;
@@ -25,9 +26,9 @@ export function render(ctx, { task }) {
   const sec = (id, title, list, render_) => (list.length ? html`<section class="c-taskblock" aria-labelledby="tb-${id}"><h2 id="tb-${id}">${title} <span class="muted">(${list.length})</span></h2><ul class="c-linklist">${list.map(render_)}</ul></section>` : '');
   blocks.push(sec('dis', t('nav.diseases'), diseases, (d) => linkItem(ctx, d)));
   blocks.push(sec('vac', t('nav.vaccines'), vaccines, (d) => linkItem(ctx, d)));
-  blocks.push(sec('faq', t('nav.faq'), faqs, (f) => linkItem(ctx, f, L(ctx, f, 'question') ?? f.title)));
+  blocks.push(sec('faq', t('nav.faq'), faqs, (f) => linkItem(ctx, f, f.question ? 'question' : 'title')));
   blocks.push(sec('doc', t('nav.documents'), docs, (d) => linkItem(ctx, d)));
-  blocks.push(sec('clar', t('nav.factcheck'), clars, (c) => html`<li>${verdictPill(ctx, c.verdict, { outdated: c.gov?.stale?.length > 0 })} <a href="${hrefFor(ctx, c)}">${L(ctx, c, 'title')}</a></li>`));
+  blocks.push(sec('clar', t('nav.factcheck'), clars, (c) => html`<li>${verdictPill(ctx, c.verdict, { outdated: c.gov?.stale?.length > 0 })} ${titleLink(ctx, c)}</li>`));
   blocks.push(sec('data', t('nav.data'), datasets, (d) => html`<li><a href="${url('/data/')}#${d.id}">${L(ctx, d, 'title')}</a> <span class="muted">${t('data.col.updated')} ${d.lastUpdated ? ctx.fmtDate(d.lastUpdated) : '—'}</span></li>`));
   blocks.push(news.length ? html`<section class="c-taskblock" aria-labelledby="tb-news"><h2 id="tb-news">${t('nav.news')}</h2><ul class="c-newslist">${news.map((n) => dated(ctx, n))}</ul></section>` : '');
 

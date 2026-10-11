@@ -528,7 +528,7 @@ export function createEngine(rawDeps = {}) {
     if (!items.length && intent === 'situation') items = situation.items.slice(0, 4);
     if (!items.length) return null;
     return {
-      publishedAt: situation.publishedAt, dataDate: situation.dataDate, publisher: situation.publisher, publisherName: ownerNameOf(units, situation.publisher),
+      publishedAt: situation.publishedAt, dataDate: situation.dataDate, publisher: situation.publisher, publisherName: ownerNameOf(units, situation.publisher), publisherNameEn: units.find((u) => u.id === situation.publisher)?.nameEn ?? null,
       source: situation.source, nextReviewAt: situation.nextReviewAt, note: situation.note ?? null,
       items: items.map((i) => ({ ...i, diseaseName: i.diseaseName ?? diseaseById.get(i.disease)?.name ?? i.disease, diseaseNameEn: diseaseById.get(i.disease)?.nameEn ?? null, slug: i.slug ?? diseaseById.get(i.disease)?.slug ?? null })),
     };

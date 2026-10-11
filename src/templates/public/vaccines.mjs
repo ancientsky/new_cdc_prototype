@@ -2,7 +2,7 @@
 import { html, raw } from '../../../scripts/lib/render.mjs';
 import { md } from '../../../scripts/lib/markdown.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
-import { ldFor, pageHead, breadcrumb, provenance, alerts, pageData, scopeTags, feedback, askBox, sectionHead, hrefFor, isFallbackLink, L, publishedOf, byDateDesc, dated, diseasePage, sourceCard, unitName, translationBadge, pill, itemPath, vaxmapButton, vaxmapLinkForVaccine, VAXMAP_GROUP_OF } from './_partials.mjs';
+import { ldFor, pageHead, breadcrumb, provenance, alerts, pageData, scopeTags, feedback, askBox, sectionHead, hrefFor, isFallbackLink, L, publishedOf, byDateDesc, dated, diseasePage, sourceCard, unitName, translationBadge, pill, itemPath, vaxmapButton, vaxmapLinkForVaccine, VAXMAP_GROUP_OF, multilingualScheduleCard } from './_partials.mjs';
 import { currentDoc } from './disease.mjs';
 
 const trailOf = (ctx, item) => [{ label: ctx.t('nav.vaccines'), href: '/vaccines/' }, { label: L(ctx, item, 'title') }];
@@ -53,6 +53,7 @@ function index(ctx) {
   const rows = pages_.flatMap((v) => (v.publicFunded ?? []).map((r) => ({ v, r })));
   return html`${pageHead(ctx, { trail: [{ label: t('nav.vaccines') }], h1: t('nav.vaccines'), lead: t('vaccines.lead') })}
 <section class="vxs-entry" aria-labelledby="vx-map"><div><h2 id="vx-map">${t('vxs.entry.t')}</h2><p>${t('vxs.entry.d')}</p></div><a class="c-btn" href="${url('/vaccines/schedule/')}">${t('vxs.entry.cta')} →</a></section>
+${multilingualScheduleCard(ctx)}
 ${immunizationHub(ctx)}
 <section aria-labelledby="vx-list">${sectionHead(ctx, { id: 'vx-list', title: t('vaccines.list') })}
   <div class="c-cards3">${mv.map((m) => {

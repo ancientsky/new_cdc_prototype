@@ -14,6 +14,7 @@
       "metricLabel": "近四週門急診類流感就診率",
       "metricValue": "12%",
       "metricNumeric": 12,
+      "metricUnit": "percent",
       "deltaText": "連續 4 週上升，已達高峰",
       "weekly": [
         7.8,
@@ -41,22 +42,26 @@
         "en": {
           "metricLabel": "ILI outpatient/ER visit rate",
           "advice": "Older adults and young children should get the flu vaccine from 1 October",
-          "deltaText": "up four weeks running; peak declared"
+          "deltaText": "up four weeks running; peak declared",
+          "basis": "ILI outpatient/ER visit rate rose for 4 consecutive weeks and exceeded the epidemic threshold"
         },
         "vi": {
           "metricLabel": "Tỷ lệ khám hội chứng giống cúm",
           "advice": "Người cao tuổi và trẻ nhỏ nên tiêm vắc-xin cúm từ 1/10",
-          "deltaText": "tăng 4 tuần liên tiếp, đã đạt đỉnh"
+          "deltaText": "tăng 4 tuần liên tiếp, đã đạt đỉnh",
+          "basis": "Tỷ lệ khám hội chứng giống cúm tăng 4 tuần liên tiếp và vượt ngưỡng dịch"
         },
         "id": {
           "metricLabel": "Tingkat kunjungan penyakit mirip influenza",
           "advice": "Lansia dan anak kecil sebaiknya vaksin flu mulai 1 Oktober",
-          "deltaText": "naik 4 minggu berturut-turut; puncak"
+          "deltaText": "naik 4 minggu berturut-turut; puncak",
+          "basis": "Tingkat kunjungan penyakit mirip influenza naik 4 minggu berturut-turut dan melewati ambang epidemi"
         },
         "th": {
           "metricLabel": "อัตราผู้ป่วยอาการคล้ายไข้หวัดใหญ่ที่มาพบแพทย์",
           "advice": "ผู้สูงอายุและเด็กเล็กควรฉีดวัคซีนไข้หวัดใหญ่ตั้งแต่ 1 ตุลาคม",
-          "deltaText": "เพิ่มขึ้นต่อเนื่อง 4 สัปดาห์ เข้าสู่ช่วงสูงสุด"
+          "deltaText": "เพิ่มขึ้นต่อเนื่อง 4 สัปดาห์ เข้าสู่ช่วงสูงสุด",
+          "basis": "อัตราผู้ป่วยอาการคล้ายไข้หวัดใหญ่เพิ่มขึ้นต่อเนื่อง 4 สัปดาห์และเกินเกณฑ์การระบาด"
         },
         "ja": {
           "metricLabel": "インフルエンザ様疾患の外来・救急受診率",
@@ -75,6 +80,7 @@
       "metricLabel": "腸病毒門急診就診人次（週）",
       "metricValue": "8,700 人次",
       "metricNumeric": 8700,
+      "metricUnit": "visits",
       "deltaText": "開學後上升，未達流行閾值",
       "weekly": [
         5100,
@@ -102,22 +108,26 @@
         "en": {
           "metricLabel": "Enterovirus outpatient/ER visits (weekly)",
           "advice": "Wash hands with soap; disinfect childcare settings; watch for warning signs",
-          "deltaText": "rising after school start; below epidemic threshold"
+          "deltaText": "rising after school start; below epidemic threshold",
+          "basis": "Visits rose for 3 consecutive weeks; still below the epidemic threshold of 11,000 visits"
         },
         "vi": {
           "metricLabel": "Số lượt khám enterovirus (tuần)",
           "advice": "Rửa tay bằng xà phòng, khử trùng nhà trẻ, chú ý dấu hiệu nặng",
-          "deltaText": "tăng sau khai giảng, chưa vượt ngưỡng dịch"
+          "deltaText": "tăng sau khai giảng, chưa vượt ngưỡng dịch",
+          "basis": "Số lượt khám tăng 3 tuần liên tiếp, vẫn dưới ngưỡng dịch 11.000 lượt"
         },
         "id": {
           "metricLabel": "Kunjungan enterovirus per minggu",
           "advice": "Cuci tangan dengan sabun, disinfeksi tempat penitipan anak, waspadai tanda bahaya",
-          "deltaText": "naik setelah sekolah dimulai; di bawah ambang epidemi"
+          "deltaText": "naik setelah sekolah dimulai; di bawah ambang epidemi",
+          "basis": "Kunjungan naik 3 minggu berturut-turut; masih di bawah ambang epidemi 11.000 kunjungan"
         },
         "th": {
           "metricLabel": "จำนวนผู้ป่วยเอนเทอโรไวรัสที่มาพบแพทย์ (รายสัปดาห์)",
           "advice": "ล้างมือด้วยสบู่ ฆ่าเชื้อสถานรับเลี้ยงเด็ก สังเกตอาการรุนแรง",
-          "deltaText": "เพิ่มขึ้นหลังเปิดเทอม ยังต่ำกว่าเกณฑ์ระบาด"
+          "deltaText": "เพิ่มขึ้นหลังเปิดเทอม ยังต่ำกว่าเกณฑ์ระบาด",
+          "basis": "จำนวนผู้มาพบแพทย์เพิ่มขึ้นต่อเนื่อง 3 สัปดาห์ ยังต่ำกว่าเกณฑ์การระบาด 11,000 ครั้ง"
         },
         "ja": {
           "metricLabel": "エンテロウイルス外来・救急受診数（週）",
@@ -136,6 +146,7 @@
       "metricLabel": "本週新增本土病例",
       "metricValue": "本土 23 例",
       "metricNumeric": 23,
+      "metricUnit": "localCases",
       "deltaText": "集中於南部縣市",
       "weekly": [
         4,
@@ -163,22 +174,26 @@
         "en": {
           "metricLabel": "New local cases this week",
           "advice": "Remove standing water; see a doctor for fever and mention travel",
-          "deltaText": "concentrated in southern counties"
+          "deltaText": "concentrated in southern counties",
+          "basis": "Local cases increased for 4 consecutive weeks"
         },
         "vi": {
           "metricLabel": "Ca nội địa mới trong tuần",
           "advice": "Dọn nước đọng; sốt hãy đi khám và khai báo đi lại",
-          "deltaText": "tập trung ở các huyện thị miền Nam"
+          "deltaText": "tập trung ở các huyện thị miền Nam",
+          "basis": "Ca bệnh nội địa tăng 4 tuần liên tiếp"
         },
         "id": {
           "metricLabel": "Kasus lokal baru minggu ini",
           "advice": "Buang genangan air; periksa ke dokter bila demam dan sebutkan riwayat perjalanan",
-          "deltaText": "terpusat di wilayah selatan"
+          "deltaText": "terpusat di wilayah selatan",
+          "basis": "Kasus lokal meningkat 4 minggu berturut-turut"
         },
         "th": {
           "metricLabel": "ผู้ป่วยในประเทศรายใหม่สัปดาห์นี้",
           "advice": "เทน้ำขัง หากมีไข้ให้พบแพทย์และแจ้งประวัติการเดินทาง",
-          "deltaText": "กระจุกตัวในเขตภาคใต้"
+          "deltaText": "กระจุกตัวในเขตภาคใต้",
+          "basis": "ผู้ป่วยในประเทศเพิ่มขึ้นต่อเนื่อง 4 สัปดาห์"
         },
         "ja": {
           "metricLabel": "今週の国内感染例",
@@ -197,6 +212,7 @@
       "metricLabel": "新冠併發重症通報數（週）",
       "metricValue": "45 例",
       "metricNumeric": 45,
+      "metricUnit": "cases",
       "deltaText": "連續三週下降",
       "weekly": [
         60,
@@ -224,22 +240,26 @@
         "en": {
           "metricLabel": "Severe COVID-19 reports (weekly)",
           "advice": "High-risk groups get the updated vaccine from 1 October",
-          "deltaText": "down three weeks running"
+          "deltaText": "down three weeks running",
+          "basis": "Reported severe cases fell for 3 consecutive weeks"
         },
         "vi": {
           "metricLabel": "Ca COVID-19 biến chứng nặng (tuần)",
           "advice": "Nhóm nguy cơ cao tiêm vắc-xin mới từ 1/10",
-          "deltaText": "giảm 3 tuần liên tiếp"
+          "deltaText": "giảm 3 tuần liên tiếp",
+          "basis": "Số ca biến chứng nặng được báo cáo giảm 3 tuần liên tiếp"
         },
         "id": {
           "metricLabel": "Laporan COVID-19 berat per minggu",
           "advice": "Kelompok risiko tinggi vaksin terbaru mulai 1 Oktober",
-          "deltaText": "turun 3 minggu berturut-turut"
+          "deltaText": "turun 3 minggu berturut-turut",
+          "basis": "Laporan kasus berat turun 3 minggu berturut-turut"
         },
         "th": {
           "metricLabel": "รายงานผู้ป่วยโควิด-19 อาการรุนแรง (รายสัปดาห์)",
           "advice": "กลุ่มเสี่ยงสูงฉีดวัคซีนใหม่ตั้งแต่ 1 ตุลาคม",
-          "deltaText": "ลดลงต่อเนื่อง 3 สัปดาห์"
+          "deltaText": "ลดลงต่อเนื่อง 3 สัปดาห์",
+          "basis": "รายงานผู้ป่วยอาการรุนแรงลดลงต่อเนื่อง 3 สัปดาห์"
         },
         "ja": {
           "metricLabel": "COVID-19重症報告数（週）",
@@ -258,6 +278,7 @@
       "metricLabel": "近四週 M痘病例數",
       "metricValue": "8 例",
       "metricNumeric": 8,
+      "metricUnit": "cases",
       "deltaText": "零星發生",
       "weekly": [
         2,
@@ -284,22 +305,26 @@
         "en": {
           "metricLabel": "Mpox cases in the past 4 weeks",
           "advice": "Eligible people complete two vaccine doses; see a doctor for unexplained rash",
-          "deltaText": "sporadic"
+          "deltaText": "sporadic",
+          "basis": "Cases in the last four weeks are similar to the previous four weeks; no clusters"
         },
         "vi": {
           "metricLabel": "Ca đậu mùa khỉ (Mpox) trong 4 tuần",
           "advice": "Người đủ điều kiện tiêm đủ 2 liều; phát ban bất thường hãy đi khám",
-          "deltaText": "rải rác"
+          "deltaText": "rải rác",
+          "basis": "Số ca 4 tuần gần đây tương đương 4 tuần trước, không có cụm ca"
         },
         "id": {
           "metricLabel": "Kasus Mpox 4 minggu terakhir",
           "advice": "Yang memenuhi syarat lengkapi 2 dosis vaksin; periksa bila ruam tak jelas",
-          "deltaText": "sporadis"
+          "deltaText": "sporadis",
+          "basis": "Kasus empat minggu terakhir setara dengan empat minggu sebelumnya; tidak ada klaster"
         },
         "th": {
           "metricLabel": "ผู้ป่วยฝีดาษวานร (Mpox) ใน 4 สัปดาห์",
           "advice": "ผู้มีสิทธิ์ฉีดวัคซีนให้ครบ 2 เข็ม มีผื่นผิดปกติให้พบแพทย์",
-          "deltaText": "เกิดประปราย"
+          "deltaText": "เกิดประปราย",
+          "basis": "จำนวนผู้ป่วย 4 สัปดาห์ล่าสุดใกล้เคียงกับ 4 สัปดาห์ก่อนหน้า ไม่มีการระบาดเป็นกลุ่ม"
         }
       }
     },
@@ -310,6 +335,8 @@
       "metricLabel": "今年累計麻疹病例",
       "metricValue": "29 例（境外移入 21 例）",
       "metricNumeric": 29,
+      "metricUnit": "cases",
+      "metricImported": 21,
       "deltaText": "以境外移入為主，日本移入增加",
       "weekly": [
         1,
@@ -337,24 +364,29 @@
         "en": {
           "metricLabel": "Measles cases this year",
           "advice": "People born in 1966 or later without immunity: get assessed for MMR before travel",
-          "deltaText": "mostly imported; more cases from Japan"
+          "deltaText": "mostly imported; more cases from Japan",
+          "basis": "No new local clusters in the last four weeks"
         },
         "vi": {
           "metricLabel": "Ca sởi trong năm",
           "advice": "Người sinh từ 1966 trở về sau chưa có miễn dịch: đánh giá tiêm MMR trước khi ra nước ngoài",
-          "deltaText": "chủ yếu nhập cảnh, tăng ca từ Nhật Bản"
+          "deltaText": "chủ yếu nhập cảnh, tăng ca từ Nhật Bản",
+          "basis": "Không có cụm ca nội địa mới trong 4 tuần gần đây"
         },
         "id": {
           "metricLabel": "Kasus campak tahun ini",
           "advice": "Lahir tahun 1966 atau setelahnya tanpa kekebalan: periksa kebutuhan MMR sebelum bepergian",
-          "deltaText": "sebagian besar impor; lebih banyak dari Jepang"
+          "deltaText": "sebagian besar impor; lebih banyak dari Jepang",
+          "basis": "Tidak ada klaster lokal baru dalam empat minggu terakhir"
         },
         "th": {
           "metricLabel": "ผู้ป่วยโรคหัดปีนี้",
           "advice": "ผู้ที่เกิดปี 1966 เป็นต้นไปและไม่มีภูมิคุ้มกัน ควรประเมินการฉีด MMR ก่อนเดินทาง",
-          "deltaText": "ส่วนใหญ่เป็นผู้ป่วยนำเข้า เพิ่มขึ้นจากญี่ปุ่น"
+          "deltaText": "ส่วนใหญ่เป็นผู้ป่วยนำเข้า เพิ่มขึ้นจากญี่ปุ่น",
+          "basis": "ไม่มีการระบาดเป็นกลุ่มในประเทศรายใหม่ใน 4 สัปดาห์ล่าสุด"
         }
       }
     }
-  ]
+  ],
+  "i18nNote": "第四十輪：i18n.*.basis 為機器翻譯初稿（未經多語審核），外語頁以 metricNumeric＋metricUnit 組數字"
 }

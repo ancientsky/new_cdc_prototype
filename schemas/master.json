@@ -227,6 +227,13 @@
         "definition": {
           "type": "string",
           "description": "第二十五輪：公開詞彙頁（/glossary/）顯示的白話定義；沒填則顯示 note"
+        },
+        "machineTranslated": {
+          "type": "array",
+          "items": {
+            "enum": ["en", "ja", "tl", "vi", "id", "th"]
+          },
+          "description": "第四十輪：哪些語言的譯名是機器翻譯初稿、尚待多語審核人確認（語言碼用頁面語言碼，印尼文寫 id 不是 id_）；審核後把該語言移出"
         }
       }
     },

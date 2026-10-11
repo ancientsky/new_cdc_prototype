@@ -24,6 +24,8 @@
           "metricLabel": { "type": "string" },
           "metricValue": { "type": "string" },
           "metricNumeric": { "type": "number" },
+          "metricUnit": { "enum": ["percent", "visits", "cases", "localCases"], "description": "第四十輪（#73）：數字的單位。外語頁由 metricNumeric＋單位樣板（i18n sit.unit.*）組字，不再顯示中文 metricValue；沒填則退回 i18n[lang].metricValue，再退回只顯示數字" },
+          "metricImported": { "type": "number", "description": "第四十輪：其中境外移入數（如麻疹「29 例（境外移入 21 例）」），外語頁用樣板 sit.unit.imported 組字" },
           "deltaText": { "type": "string" },
           "weekly": { "type": "array", "items": { "type": "number" } },
           "weeklyLabels": { "type": "array", "items": { "type": "string" } },

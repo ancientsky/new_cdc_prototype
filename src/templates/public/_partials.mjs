@@ -5,6 +5,8 @@ import { html, raw, esc, makeUrl } from '../../../scripts/lib/render.mjs';
 import { config } from '../../../site.config.mjs';
 import * as JL from '../../../scripts/lib/jsonld.mjs';
 import { articlePath } from '../../client/bulletin-rules.js';
+import { glossaryTerm, glossaryTermInfo } from '../../client/glossary-term.js';
+import { sitMetricValue, sitBasis } from '../../client/situation-text.js';
 
 let _uid = 0;
 export const uid = (p = 'u') => `${p}${++_uid}`;
@@ -62,6 +64,46 @@ export function L(ctx, item, field) {
   if (ctx.lang === (item.sourceLang ?? 'zh-TW')) return item[field];
   return item.i18n?.[ctx.lang]?.[field] ?? item[field];
 }
+/**
+ * 第四十輪（#73）：清單／卡片上的標題該用哪個語言——全站列表一致的規則（新聞、影音、專區、澄清、公告都走這裡）。
+ *   1. 頁面語言就是來源語言，或 i18n[lang][field] 有譯文 → 用它（lang＝頁面語言）
+ *   2. 頁面不是英文、但有英文譯文 → 用英文（lang='en'；外語讀者多半讀得懂英文，勝過整串中文）
+ *   3. 都沒有 → 中文正本，zhOnly=true：呼叫端必須包「僅有中文」標記＋lang="zh-TW"（見 titleLink）
+ * 為什麼不是直接不列：新聞與公告是時效資訊，外語讀者至少要知道「有這件事、只有中文」，可以自己用翻譯工具或打 1922。
+ */
+export function localText(ctx, item, field = 'title') {
+  const src = item.sourceLang ?? 'zh-TW';
+  if (ctx.lang === src) return { text: item[field], lang: src, zhOnly: false };
+  const own = item.i18n?.[ctx.lang]?.[field];
+  if (own) return { text: own, lang: ctx.lang, zhOnly: false };
+  if (ctx.lang === 'zh-TW') return { text: item[field], lang: src, zhOnly: false };
+  // 疾病名稱有詞彙主檔的七語譯名（鎖定詞）：比英文退回更好
+  if (field === 'title' && item.type === 'disease') {
+    const g = ctx.site.master?.glossary?.find((x) => x.refs?.includes(item.id));
+    const gi = glossaryTermInfo(g, ctx.lang);
+    if (gi.text && gi.lang !== 'zh-TW') return { text: gi.text, lang: gi.lang, zhOnly: false };
+    if (item.nameEn) return { text: item.nameEn, lang: 'en', zhOnly: false };
+  }
+  const en = src === 'en' ? item[field] : item.i18n?.en?.[field];
+  if (en) return { text: en, lang: 'en', zhOnly: false };
+  const zh = src === 'zh-TW' ? item[field] : (item.i18n?.['zh-TW']?.[field] ?? item[field]);
+  return { text: zh, lang: 'zh-TW', zhOnly: true };
+}
+/** 「僅有中文」標記（外語頁）。class 是跨模板契約：c-zhonly */
+export const zhOnlyTag = (ctx) => html`<span class="c-zhonly">${ctx.t('i18n.zhOnly')}</span>`;
+/** 文字包上語言屬性：與頁面語言不同才加 lang（螢幕閱讀器切換語音；中文比例檢查也據此排除已標示的中文） */
+export const langSpan = (ctx, r) => (r.lang && r.lang !== ctx.lang ? html`<span lang="${r.lang}">${r.text}</span>` : r.text);
+/**
+ * 清單標題連結（共用）：連結目標由 hrefFor 決定（該語言沒頁面就連中文正本並加 hreflang="zh-TW"）；
+ * 標題文字由 localText 決定；zhOnly 時在連結內前置「僅有中文」標記。
+ */
+export function titleLink(ctx, item, { field = 'title', cls = '' } = {}) {
+  const r = localText(ctx, item, field);
+  const fb = isFallbackLink(ctx, item);
+  const hl = fb ? (item.sourceLang && item.sourceLang !== 'zh-TW' ? item.sourceLang : 'zh-TW') : null;
+  return html`<a${cls ? raw(` class="${cls}"`) : ''} href="${hrefFor(ctx, item)}"${hl ? raw(` hreflang="${hl}"`) : ''}>${r.zhOnly ? html`${zhOnlyTag(ctx)} ` : ''}${langSpan(ctx, r)}</a>`;
+}
+
 /** 依頁面語言取回「整個物件」的在地化版本：非來源語言時以 i18n[lang] 的欄位覆蓋頂層（含陣列與巢狀欄位），模板可直接讀 sv.steps 等欄位 */
 export function localized(ctx, item) {
   if (!item) return item;
@@ -90,8 +132,9 @@ export function diseaseName(ctx, dm) {
   if (!dm) return '';
   if (ctx.lang === 'zh-TW') return dm.name;
   if (ctx.lang === 'en') return dm.nameEn ?? dm.name;
+  // 第四十輪（#72）：不可寫 g[ctx.lang]——印尼文欄位是 id_，g.id 是識別碼 term.xxx。一律走 glossaryTerm()
   const g = ctx.site.master.glossary.find((x) => x.refs?.includes(dm.id));
-  return g?.[ctx.lang] ?? dm.nameEn ?? dm.name;
+  return glossaryTerm(g, ctx.lang) || dm.nameEn || dm.name;
 }
 export const licenseLabel = (ctx, id) => ctx.site.config.licenses.labels[id] ?? id;
 export const diseasePage = (ctx, diseaseId) => ctx.site.collections.diseases.find((d) => d.id === diseaseId && d.status === 'published');
@@ -101,7 +144,16 @@ export function diseaseHref(ctx, diseaseId) {
 }
 export const publishedOf = (site, key) => site.collections[key].filter((i) => i.status === 'published');
 export const byDateDesc = (a, b) => String(b.publishedAt).localeCompare(String(a.publishedAt));
-export const sitField = (ctx, it, f) => (ctx.lang === 'zh-TW' ? it[f] : (it.i18n?.[ctx.lang]?.[f] ?? it.i18n?.en?.[f] ?? it[f]));
+/**
+ * 疫情態勢欄位的在地化。第四十輪（#73）：metricValue 與 basis 不再退回中文正本（見 src/client/situation-text.js）；
+ * 其他欄位（metricLabel、advice、deltaText）依序 i18n[lang] → i18n.en → 正本。
+ */
+export function sitField(ctx, it, f) {
+  if (ctx.lang === 'zh-TW') return it[f];
+  if (f === 'metricValue') return sitMetricValue(it, ctx.lang, ctx.t);
+  if (f === 'basis') return sitBasis(it, ctx.lang, ctx.t);
+  return it.i18n?.[ctx.lang]?.[f] ?? it.i18n?.en?.[f] ?? it[f];
+}
 export const trendArrow = (trend) => (trend === 'up' ? '↑' : trend === 'down' ? '↓' : '→');
 /** 外部或站內連結：/ 開頭走 ctx.url */
 export const link = (ctx, u) => (u && u.startsWith('/') ? ctx.url(u) : u);
@@ -230,7 +282,7 @@ export function statusTag(ctx, it, { label = null } = {}) {
   return html`<span class="c-status"><span class="c-status-tag c-status-tag--${it.status}" tabindex="0" role="button" aria-describedby="${id}"${label ? raw(` aria-label="${esc(label)}"`) : ''}>${t(`status.${it.status}`)}</span><span class="c-status__pop" id="${id}" role="tooltip">
   <span><b>${t('status.pop.publisher')}</b> ${unitLink(ctx, pub)}</span>
   <span><b>${t('status.pop.effective')}</b> ${fmtDate(site.situation.publishedAt)}</span>
-  <span><b>${t('status.pop.basis')}</b> ${it.basis}</span>
+  <span><b>${t('status.pop.basis')}</b> ${sitField(ctx, it, 'basis')}</span>
   <span class="c-status__pop-note">${t('status.pop.note')}</span></span></span>`;
 }
 
@@ -389,7 +441,7 @@ export function taskCard(ctx, task, { foreign = false } = {}) {
   const { t, url } = ctx;
   if (foreign) {
     const subs = t('home.foreign.sub').split(' · ');
-    return html`<a class="c-task c-task--foreign" href="${url('/ask/')}?q=${encodeURIComponent(t('home.foreign.q'))}"><strong class="c-task__t">${t('home.foreign.label')}</strong><span class="c-task__zh">${t('home.foreign.zh')}</span><ul class="c-task__subs">${subs.map((s) => html`<li>${s}</li>`)}</ul></a>`;
+    return html`<a class="c-task c-task--foreign" href="${url('/ask/')}?q=${encodeURIComponent(t('home.foreign.q'))}"><strong class="c-task__t">${t('home.foreign.label')}</strong><span class="c-task__zh" lang="zh-TW">${t('home.foreign.zh')}</span><ul class="c-task__subs">${subs.map((s) => html`<li>${s}</li>`)}</ul></a>`;
   }
   const subs = t(`task.${task.key}.sub`).split(' · ');
   return html`<a class="c-task" href="${url(`/tasks/${task.key}/`)}"><strong class="c-task__t">${t(`task.${task.key}.label`)}</strong><ul class="c-task__subs">${subs.map((s) => html`<li>${s}</li>`)}</ul></a>`;
@@ -407,9 +459,7 @@ export function sectionHead(ctx, { id, title, more = null, moreHref = null, note
 
 /** 通用清單項：標題 + 日期 */
 export function dated(ctx, item, { type = true } = {}) {
-  const href = hrefFor(ctx, item);
-  const fb = isFallbackLink(ctx, item);
-  return html`<li><time datetime="${item.publishedAt}">${ctx.fmtDate(item.publishedAt)}</time> ${type && item.newsType ? html`<span class="c-pill c-pill--neutral">${ctx.t(`news.type.${item.newsType}`)}</span> ` : ''}<a href="${href}"${fb ? raw(' lang="zh-TW"') : ''}>${L(ctx, item, 'title')}</a></li>`;
+  return html`<li><time datetime="${item.publishedAt}">${ctx.fmtDate(item.publishedAt)}</time> ${type && item.newsType ? html`<span class="c-pill c-pill--neutral">${ctx.t(`news.type.${item.newsType}`)}</span> ` : ''}${titleLink(ctx, item)}</li>`;
 }
 
 /** 資料集序列 → 圖（SVG 字串由呼叫端用 charts.js 產） */
@@ -512,14 +562,13 @@ export function posterImg(ctx, m, { loading = 'lazy' } = {}) {
 export function mediaCard(ctx, m, { tag = 'li' } = {}) {
   const { t } = ctx;
   const outdated = isMediaOutdated(ctx.site, m);
-  const fb = isFallbackLink(ctx, m);
   const open = tag === 'li' ? '<li' : '<div';
   const close = tag === 'li' ? '</li>' : '</div>';
   const diseases = (m.diseases ?? []).join(' ');
   return raw(`${open} class="c-media-card${outdated ? ' c-media-card--outdated' : ''}" data-disease="${esc(diseases)}" data-task="${esc((m.tasks ?? []).join(' '))}" data-cap="${esc((m.captions ?? []).join(' '))}" data-outdated="${outdated ? '1' : '0'}">${html`
   <div class="c-media-card__poster">${posterImg(ctx, m)}${m.durationSeconds ? html`<span class="c-media-card__dur"><span class="sr-only">${t('media.duration')} </span>${fmtDur(m.durationSeconds)}</span>` : ''}${outdated ? html`<span class="c-media-card__flag">${t('media.outdated.tag')}</span>` : ''}</div>
   <div class="c-media-card__body">
-    <h3 class="c-media-card__t"><a href="${hrefFor(ctx, m)}"${fb ? raw(' lang="zh-TW"') : ''}>${fb ? m.title : L(ctx, m, 'title')}</a></h3>
+    <h3 class="c-media-card__t">${titleLink(ctx, m)}</h3>
     ${m.basedOnVersionLabel ? html`<p class="c-media-card__basis">${t('media.basedOn.short', { v: m.basedOnVersionLabel })}</p>` : ''}
   </div>`}${close}`);
 }
@@ -565,11 +614,9 @@ export function deadlinePill(ctx, n) {
 export function noticeRow(ctx, n) {
   const { t, fmtDate, site } = ctx;
   const closed = isClosed(site, n);
-  const fb = isFallbackLink(ctx, n);
-  const href = hrefFor(ctx, n);
   return html`<li class="c-notice${closed ? ' c-notice--closed' : ''}" data-type="${n.newsType}" data-state="${closed ? 'closed' : 'open'}">
   <div class="c-notice__main">
-    <p class="c-notice__t"><span class="c-pill c-pill--${n.newsType === 'recruit' ? 'info' : n.newsType === 'procurement' ? 'warn' : 'neutral'}">${t(`news.type.${n.newsType}`)}</span> <a href="${href}"${fb ? raw(' lang="zh-TW"') : ''}>${fb ? n.title : L(ctx, n, 'title')}</a></p>
+    <p class="c-notice__t"><span class="c-pill c-pill--${n.newsType === 'recruit' ? 'info' : n.newsType === 'procurement' ? 'warn' : 'neutral'}">${t(`news.type.${n.newsType}`)}</span> ${titleLink(ctx, n)}</p>
     <p class="c-notice__meta muted">${n.refNo ? html`${t('notice.refNo')}：${n.refNo} · ` : ''}${t('news.published')} ${fmtDate(n.publishedAt)} · ${unitLink(ctx, n.owner)}${n.positions ? ` · ${t('notice.positions')}：${n.positions}` : ''}${n.budgetNtd ? ` · ${t('notice.budget')}：${Number(n.budgetNtd).toLocaleString('en-US')}` : ''}</p>
   </div>
   <div class="c-notice__side">${deadlinePill(ctx, n)}${n.applyUrl && !closed ? html`<a class="c-btn c-btn--sm c-btn--ghost" href="${n.applyUrl}" rel="noopener">${n.newsType === 'procurement' ? t('notice.bid') : t('notice.apply')} ↗</a>` : ''}</div>
@@ -581,12 +628,30 @@ export function topicCard(ctx, tp) {
   const { t } = ctx;
   const img = imgSrc(ctx, tp.image);
   const fb = isFallbackLink(ctx, tp);
+  const tt = localText(ctx, tp, 'title');
+  const ts = localText(ctx, tp, 'summary');
   return html`<li class="c-topiccard">
-  <a class="c-topiccard__a" href="${hrefFor(ctx, tp)}"${fb ? raw(' lang="zh-TW"') : ''}>
+  <a class="c-topiccard__a" href="${hrefFor(ctx, tp)}"${fb ? raw(' hreflang="zh-TW"') : ''}>
     <span class="c-topiccard__img">${img ? html`<img src="${img}" alt="" width="96" height="96" loading="lazy">` : raw('<svg viewBox="0 0 96 96" aria-hidden="true" focusable="false"><rect width="96" height="96" fill="#e5efe9"/><circle cx="48" cy="44" r="18" fill="#1b5e3f"/><path d="M40 44h16M48 36v16" stroke="#fff" stroke-width="5" stroke-linecap="round"/></svg>')}</span>
-    <span class="c-topiccard__body"><strong class="c-topiccard__t">${fb ? tp.title : L(ctx, tp, 'title')}</strong><span class="c-topiccard__s">${fb ? tp.summary : L(ctx, tp, 'summary')}</span>${tp.endAt ? html`<span class="c-topiccard__until">${t('topic.until', { date: ctx.fmtDate(tp.endAt) })}</span>` : ''}</span>
+    <span class="c-topiccard__body"><strong class="c-topiccard__t">${tt.zhOnly ? html`${zhOnlyTag(ctx)} ` : ''}${langSpan(ctx, tt)}</strong>${ts.text && !ts.zhOnly ? html`<span class="c-topiccard__s">${langSpan(ctx, ts)}</span>` : ''}${tp.endAt ? html`<span class="c-topiccard__until">${t('topic.until', { date: ctx.fmtDate(tp.endAt) })}</span>` : ''}</span>
   </a>
 </li>`;
+}
+
+/* ───── 第四十輪（#74）：現行官網的多語兒童預防接種時程表 PDF ───── */
+/** 現行官網「多國語言版兒童預防接種時程」頁。開發環境連不到 www.cdc.gov.tw，網址依同事提供、未經實際開啟核對（verified:false）。
+ *  確認後把 verified 改 true，標示就會消失；網址失效由外部連結每日檢查（npm run fetch -- --check-links）開待辦。 */
+export const MULTILINGUAL_SCHEDULE_PDF = { url: 'https://www.cdc.gov.tw/Category/Page/TxRW-x3WzvPhvEtxM628GA', verified: false, langs: ['en', 'vi', 'id'] };
+/** 疫苗相關頁的外語連出卡（只在 en／vi／id 出現：這三語有官方多語版時程表的主要讀者——外籍配偶、移工家庭） */
+export function multilingualScheduleCard(ctx) {
+  const P = MULTILINGUAL_SCHEDULE_PDF;
+  if (!P.langs.includes(ctx.lang)) return '';
+  const { t } = ctx;
+  return html`<aside class="c-alert c-alert--info c-mlsched" aria-labelledby="mlsched-h">
+  <h2 id="mlsched-h" class="c-alert__t">${t('vaccines.mlsched.t')}</h2>
+  <p>${t('vaccines.mlsched.d')}</p>
+  <p>${extLink(ctx, P.url, t('vaccines.mlsched.cta'), { cls: 'c-btn c-btn--sm' })}${P.verified ? '' : html` <span class="c-pill c-pill--warn">${t('link.unverified')}</span>`}</p>
+</aside>`;
 }
 
 /* ───── 外部連結標記 ───── */

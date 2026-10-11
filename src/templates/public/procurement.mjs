@@ -4,7 +4,7 @@ import { html, raw, daysBetween } from '../../../scripts/lib/render.mjs';
 import { md } from '../../../scripts/lib/markdown.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
 import {
-  ldFor, breadcrumb, pageHead, provenance, alerts, pageData, feedback, translationBadge, hrefFor, isFallbackLink, L, unitName, extLink, isExternal, pill, mdHeader,
+  ldFor, breadcrumb, pageHead, provenance, alerts, pageData, feedback, translationBadge, L, unitName, extLink, isExternal, pill, mdHeader, titleLink,
 } from './_partials.mjs';
 import { tendersOf, allTenders, tenderPath, tenderStage, tenderTab, TENDER_TABS, stagePill, tenderCountdown, money } from './_careers.mjs';
 
@@ -45,11 +45,10 @@ const pccLink = (ctx, x) => (x.pccUrl ? extLink(ctx, x.pccUrl, ctx.t('proc.pcc')
 function tenderCard(ctx, x) {
   const { t, fmtDate, site } = ctx;
   const stage = tenderStage(site, x);
-  const fb = isFallbackLink(ctx, x);
   return html`<li class="c-job c-tender" data-stage="${stage}">
   <div class="c-job__main">
     <p class="c-job__meta">${x.method ? pill(x.method, 'info') : ''} ${x.category ? pill(x.category, 'neutral') : ''}${stage === 'cancelled' ? html` ${stagePill(ctx, stage, 'tender')}` : ''}${x.amendments?.length && AMEND_PILL_STAGES.includes(stage) ? html` ${pill(t('proc.amend.badge'), 'warn')}` : ''}</p>
-    <h3 class="c-job__t"><a href="${hrefFor(ctx, { ...x, type: 'tender' })}"${fb ? raw(' lang="zh-TW"') : ''}>${fb ? x.title : L(ctx, x, 'title')}</a></h3>
+    <h3 class="c-job__t">${titleLink(ctx, { ...x, type: 'tender' })}</h3>
     <dl class="c-job__facts">
       <div><dt>${t('proc.tenderNo')}</dt><dd>${x.tenderNo ?? '—'}</dd></div>
       <div><dt>${t('proc.budget')}</dt><dd>${money(x.budgetNtd)}</dd></div>

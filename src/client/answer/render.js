@@ -264,11 +264,11 @@ export async function situationCards(sit) {
     return `<article class="c-sit-card c-sit-card--${esc(it.status)} c-answer-sit">
       <header><h3>${(() => { const nm = LANG !== 'zh-TW' ? (it.diseaseNameEn ?? it.diseaseName) : it.diseaseName; return it.slug ? link(`/diseases/${it.slug}/`, nm) : esc(nm); })()}</h3>
         <span class="c-status-tag c-status-tag--${esc(it.status)}">${esc(statusLabel(it.status))}</span>${it.illustrative ? ` <span class="c-tag">${esc(L('illustrative'))}</span>` : ''}</header>
-      <p class="c-sit-card__metric"><span aria-hidden="true">${it.trend === 'up' ? '↑' : it.trend === 'down' ? '↓' : '→'}</span> <b>${esc(it.metricValue)}</b> <span class="muted">${esc(i18n?.metricLabel ?? it.metricLabel)}${it.deltaText ? `，${esc(i18n?.deltaText ?? it.deltaText)}` : ''}</span></p>
+      <p class="c-sit-card__metric"><span aria-hidden="true">${it.trend === 'up' ? '↑' : it.trend === 'down' ? '↓' : '→'}</span> <b>${esc(i18n?.metricValue ?? it.metricValue)}</b> <span class="muted">${esc(i18n?.metricLabel ?? it.metricLabel)}${it.deltaText ? `，${esc(i18n?.deltaText ?? it.deltaText)}` : ''}</span></p>
       ${it.peakCount != null ? `<p class="c-sit-card__sub"><b>${esc(it.peakCount)}</b> ${esc(it.peakCountLabel ?? '')}</p>` : ''}
       ${chart ? `<div class="c-sit-card__chart">${chart}</div>` : ''}
       ${it.basis ? `<p class="c-sit-card__basis"><b>${esc(L('statusBasis'))}：</b>${esc(i18n?.basis ?? it.basis)}</p>` : ''}
-      <p class="c-provenance">${esc(L('dataDate'))} <time datetime="${esc(sit.dataDate)}">${esc(sit.dataDate)}</time> · ${esc(sit.publisherName ?? sit.publisher)} ${esc(L('publisher'))} · ${link('/situation/', L('seeTrend'))}</p>
+      <p class="c-provenance">${esc(L('dataDate'))} <time datetime="${esc(sit.dataDate)}">${esc(sit.dataDate)}</time> · ${LANG === 'zh-TW' ? `${esc(sit.publisherName ?? sit.publisher)} ${esc(L('publisher'))}` : `${esc(L('publisher'))} ${esc(sit.publisherNameEn ?? sit.publisherName ?? sit.publisher)}`} ·${link('/situation/', L('seeTrend'))}</p>
     </article>`;
   }));
   return `<section class="c-answer__situation" aria-label="${esc(L('sitH'))}">${cards.join('')}</section>`;

@@ -314,6 +314,110 @@
           "heading": "FAQ"
         }
       ]
+    },
+    "id": {
+      "title": "Infeksi enterovirus",
+      "summary": "Enterovirus sangat menular dan anak di bawah 5 tahun paling berisiko sakit berat. Sebagian besar kasus berupa penyakit tangan, kaki, dan mulut (HFMD) atau herpangina. Waspadai tanda bahaya seperti lemas atau tersentak-sentak dan segera bawa ke rumah sakit besar.",
+      "keyFacts": {
+        "incubation": "2–10 hari (rata-rata 3–5)",
+        "symptoms": "Demam, sariawan, ruam atau lepuh di tangan, kaki, dan bokong",
+        "transmission": "Kontak, percikan, fekal–oral",
+        "prevention": "Cuci tangan dengan sabun, disinfeksi dengan pemutih, anak sakit tetap di rumah",
+        "notify": "Infeksi enterovirus dengan komplikasi berat: dalam satu minggu"
+      },
+      "blocks": [
+        {
+          "key": "symptoms",
+          "heading": "Gejala dan tanda bahaya",
+          "markdown": "Sebagian besar infeksi ringan dan muncul dalam dua bentuk umum:\n\n- **Penyakit tangan, kaki, dan mulut**: demam, luka di mulut dan lidah, bintik merah atau lepuh kecil di telapak tangan, telapak kaki, lutut, dan bokong.\n- **Herpangina**: demam tinggi mendadak dengan lepuh kecil atau luka di tenggorokan bagian belakang; anak bisa menolak makan dan mengeluarkan air liur.\n\nKebanyakan sembuh dalam 7–10 hari, tetapi sebagian kecil mengalami radang otak, radang otot jantung, atau kelumpuhan layuh akut; anak di bawah 5 tahun paling berisiko.",
+          "warning": "Tanda bahaya: mengantuk, kesadaran menurun, lesu, tungkai lemah, tersentak-sentak (kaget tiba-tiba atau kejang otot seluruh tubuh), muntah terus-menerus, napas cepat, atau jantung berdebar cepat."
+        },
+        {
+          "key": "prevention",
+          "heading": "Pencegahan",
+          "markdown": "- **Cuci tangan dengan sabun dan air dengan benar**; cairan alkohol kurang efektif terhadap enterovirus.\n- Lap permukaan dan mainan dengan **pemutih 500 ppm** (1 bagian pemutih rumah tangga untuk 100 bagian air).\n- Anak yang sakit tetap di rumah dan jauhkan dari anak lain.\n- Tempat penitipan anak sebaiknya memberi tahu orang tua dan meningkatkan kebersihan bila ada kasus."
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-11"
+    },
+    "vi": {
+      "title": "Nhiễm enterovirus",
+      "summary": "Enterovirus lây lan rất mạnh, trẻ dưới 5 tuổi có nguy cơ bệnh nặng cao nhất. Phần lớn biểu hiện là bệnh tay chân miệng hoặc viêm họng mụn nước (herpangina). Chú ý dấu hiệu cảnh báo như lừ đừ, giật mình và đưa trẻ đến bệnh viện lớn ngay.",
+      "keyFacts": {
+        "incubation": "2–10 ngày (trung bình 3–5 ngày)",
+        "symptoms": "Sốt, loét miệng, ban đỏ hoặc mụn nước ở tay, chân và mông",
+        "transmission": "Tiếp xúc, giọt bắn, đường phân – miệng",
+        "prevention": "Rửa tay bằng xà phòng, khử khuẩn bằng nước tẩy, trẻ bệnh ở nhà nghỉ ngơi",
+        "notify": "Nhiễm enterovirus biến chứng nặng: trong vòng một tuần"
+      },
+      "blocks": [
+        {
+          "key": "symptoms",
+          "heading": "Triệu chứng và dấu hiệu cảnh báo",
+          "markdown": "Đa số trường hợp nhẹ, thường gặp hai dạng:\n\n- **Bệnh tay chân miệng**: sốt, loét trong miệng và trên lưỡi, nốt đỏ hoặc mụn nước nhỏ ở lòng bàn tay, lòng bàn chân, đầu gối và mông.\n- **Viêm họng mụn nước (herpangina)**: sốt cao đột ngột, mụn nước hoặc vết loét nhỏ ở phía sau họng; trẻ có thể bỏ ăn, chảy nước dãi.\n\nĐa số khỏi trong 7–10 ngày, nhưng một số ít bị viêm não, viêm cơ tim hoặc liệt mềm cấp; trẻ dưới 5 tuổi có nguy cơ cao nhất.",
+          "warning": "Dấu hiệu cảnh báo: buồn ngủ, ý thức giảm, kém hoạt động, yếu tay chân, giật mình (giật cơ toàn thân), nôn liên tục, thở nhanh hoặc tim đập nhanh."
+        },
+        {
+          "key": "prevention",
+          "heading": "Phòng ngừa",
+          "markdown": "- **Rửa tay đúng cách bằng xà phòng và nước**; dung dịch cồn kém hiệu quả với enterovirus.\n- Lau bề mặt và đồ chơi bằng **nước tẩy 500 ppm** (1 phần nước tẩy gia dụng pha 100 phần nước).\n- Trẻ bị bệnh nên ở nhà, tránh tiếp xúc với trẻ khác.\n- Cơ sở giữ trẻ nên báo cho phụ huynh và tăng cường vệ sinh khi có ca bệnh."
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-11"
+    },
+    "th": {
+      "title": "โรคติดเชื้อเอนเทอโรไวรัส",
+      "summary": "เอนเทอโรไวรัสแพร่ระบาดง่ายมาก เด็กอายุต่ำกว่า 5 ปีเสี่ยงป่วยรุนแรงที่สุด ส่วนใหญ่เป็นโรคมือ เท้า ปาก หรือโรคเฮอร์แปงไจนา ให้สังเกตสัญญาณอันตราย เช่น ซึม หรือสะดุ้งผวา และรีบไปโรงพยาบาลใหญ่ทันที",
+      "keyFacts": {
+        "incubation": "2–10 วัน (เฉลี่ย 3–5 วัน)",
+        "symptoms": "ไข้ แผลในปาก ผื่นหรือตุ่มน้ำที่มือ เท้า และก้น",
+        "transmission": "การสัมผัส ละอองฝอย อุจจาระ–ปาก",
+        "prevention": "ล้างมือด้วยสบู่ ฆ่าเชื้อด้วยน้ำยาฟอกขาว เด็กป่วยให้พักที่บ้าน",
+        "notify": "โรคติดเชื้อเอนเทอโรไวรัสที่มีภาวะแทรกซ้อนรุนแรง: ภายในหนึ่งสัปดาห์"
+      },
+      "blocks": [
+        {
+          "key": "symptoms",
+          "heading": "อาการและสัญญาณอันตราย",
+          "markdown": "ส่วนใหญ่มีอาการไม่รุนแรง พบได้สองแบบหลัก:\n\n- **โรคมือ เท้า ปาก**: ไข้ แผลในปากและลิ้น จุดแดงหรือตุ่มน้ำเล็ก ๆ ที่ฝ่ามือ ฝ่าเท้า เข่า และก้น\n- **โรคเฮอร์แปงไจนา**: ไข้สูงเฉียบพลัน มีตุ่มน้ำหรือแผลเล็ก ๆ ที่คอด้านหลัง เด็กอาจไม่ยอมกินและน้ำลายไหล\n\nส่วนใหญ่หายภายใน 7–10 วัน แต่ส่วนน้อยอาจเกิดสมองอักเสบ กล้ามเนื้อหัวใจอักเสบ หรืออัมพาตอ่อนปวกเปียกเฉียบพลัน เด็กอายุต่ำกว่า 5 ปีเสี่ยงที่สุด",
+          "warning": "สัญญาณอันตราย: ง่วงซึม ความรู้สึกตัวลดลง ไม่ค่อยเคลื่อนไหว แขนขาอ่อนแรง สะดุ้งผวา (กล้ามเนื้อกระตุกทั้งตัว) อาเจียนต่อเนื่อง หายใจเร็ว หรือหัวใจเต้นเร็ว"
+        },
+        {
+          "key": "prevention",
+          "heading": "การป้องกัน",
+          "markdown": "- **ล้างมือด้วยสบู่และน้ำอย่างถูกวิธี** เจลแอลกอฮอล์ได้ผลน้อยกับเอนเทอโรไวรัส\n- เช็ดพื้นผิวและของเล่นด้วย**น้ำยาฟอกขาว 500 ppm** (น้ำยาฟอกขาว 1 ส่วนต่อน้ำ 100 ส่วน)\n- เด็กป่วยให้พักที่บ้านและแยกจากเด็กคนอื่น\n- สถานรับเลี้ยงเด็กควรแจ้งผู้ปกครองและเพิ่มการทำความสะอาดเมื่อพบผู้ป่วย"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-11"
+    },
+    "tl": {
+      "title": "Impeksyon ng enterovirus",
+      "summary": "Lubhang nakakahawa ang enterovirus at ang mga batang wala pang 5 taong gulang ang may pinakamataas na panganib ng malubhang sakit. Kadalasang lumilitaw ito bilang hand, foot and mouth disease o herpangina. Bantayan ang mga babalang senyales tulad ng matinding panghihina o biglaang pagkagulat at dalhin agad sa malaking ospital.",
+      "keyFacts": {
+        "incubation": "2–10 araw (karaniwang 3–5)",
+        "symptoms": "Lagnat, singaw sa bibig, pantal o paltos sa kamay, paa, at puwitan",
+        "transmission": "Paghawak, talsik ng laway, dumi–bibig",
+        "prevention": "Maghugas ng kamay gamit ang sabon, mag-disinfect gamit ang bleach, panatilihin sa bahay ang batang may sakit",
+        "notify": "Malubhang komplikasyon ng enterovirus: sa loob ng isang linggo"
+      },
+      "blocks": [
+        {
+          "key": "symptoms",
+          "heading": "Mga sintomas at babalang senyales",
+          "markdown": "Banayad ang karamihan ng impeksyon at may dalawang karaniwang anyo:\n\n- **Hand, foot and mouth disease**: lagnat, singaw sa bibig at dila, at mapupulang batik o maliliit na paltos sa palad, talampakan, tuhod, at puwitan.\n- **Herpangina**: biglaang mataas na lagnat na may maliliit na paltos o singaw sa likod ng lalamunan; maaaring ayaw kumain at maglaway ang bata.\n\nGumagaling ang karamihan sa loob ng 7–10 araw, pero iilan ang nagkakaroon ng pamamaga ng utak, pamamaga ng puso, o biglaang paralisis; pinakamataas ang panganib sa mga batang wala pang 5 taon.",
+          "warning": "Mga babalang senyales: antok, paghina ng malay, matamlay, panghihina ng braso o binti, biglaang pagkagulat o pangingisay ng buong katawan, tuloy-tuloy na pagsusuka, mabilis na paghinga o mabilis na tibok ng puso."
+        },
+        {
+          "key": "prevention",
+          "heading": "Pag-iwas",
+          "markdown": "- **Maghugas nang tama ng kamay gamit ang sabon at tubig**; hindi gaanong epektibo ang alcohol laban sa enterovirus.\n- Punasan ang mga ibabaw at laruan ng **500 ppm na bleach** (1 bahagi ng bleach sa 100 bahagi ng tubig).\n- Panatilihin sa bahay ang batang may sakit at ilayo sa ibang bata.\n- Dapat ipaalam ng daycare sa mga magulang at paigtingin ang paglilinis kapag may kaso."
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-11"
     }
   }
 }

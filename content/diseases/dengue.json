@@ -75,7 +75,7 @@
       "status": "machine"
     },
     "th": {
-      "status": "pending"
+      "status": "machine"
     }
   },
   "summary": "由登革病毒引起，經埃及斑蚊與白線斑蚊叮咬傳播，不會人傳人。台灣為流行高風險地區，每年夏秋為高峰。",
@@ -379,6 +379,84 @@
           "heading": "Câu hỏi thường gặp"
         }
       ]
+    },
+    "id": {
+      "title": "Demam berdarah dengue",
+      "summary": "Demam berdarah disebabkan oleh virus dengue yang ditularkan oleh nyamuk Aedes aegypti dan Aedes albopictus. Penyakit ini tidak menular langsung dari orang ke orang. Taiwan adalah daerah berisiko tinggi, dengan puncak kasus pada musim panas dan gugur.",
+      "keyFacts": {
+        "incubation": "3–14 hari (biasanya 4–7 hari)",
+        "symptoms": "Demam tinggi mendadak, sakit kepala, nyeri di belakang mata, nyeri otot dan sendi, ruam",
+        "transmission": "Gigitan nyamuk Aedes yang terinfeksi",
+        "prevention": "Buang genangan air; hindari gigitan nyamuk",
+        "notify": "Dalam 24 jam"
+      },
+      "blocks": [
+        {
+          "key": "symptoms",
+          "heading": "Gejala dan tanda bahaya",
+          "markdown": "Gejala khas adalah demam tinggi mendadak (≥ 38°C), sakit kepala, nyeri di belakang mata, nyeri otot dan sendi, serta ruam. Sebagian besar orang sembuh sendiri.\n\nSebagian kecil berkembang menjadi dengue berat, biasanya **sekitar saat demam mulai turun**. Orang yang terinfeksi kedua kali dengan serotipe berbeda berisiko lebih tinggi.",
+          "warning": "Muntah terus-menerus, nyeri perut, perdarahan selaput lendir (gusi, hidung), lemas atau gelisah, pembesaran hati, hematokrit naik disertai trombosit turun."
+        },
+        {
+          "key": "prevention",
+          "heading": "Pencegahan",
+          "markdown": "Belum ada vaksin rutin di Taiwan. Pencegahan berfokus pada menghindari gigitan nyamuk dan membersihkan tempat berkembang biak:\n\n- Periksa wadah di dalam dan di luar rumah setiap minggu: periksa, kuras, bersihkan, dan sikat.\n- Kenakan baju lengan panjang dan celana panjang berwarna terang, dan gunakan losion antinyamuk yang mengandung DEET, Picaridin, atau IR3535.\n- Pasang kawat kasa di jendela dan pintu; gunakan kelambu bila perlu.\n- Selama dua minggu setelah pulang dari daerah terjangkit, tetap hindari gigitan nyamuk agar tidak menjadi sumber penularan."
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-11"
+    },
+    "th": {
+      "title": "ไข้เลือดออก",
+      "summary": "ไข้เลือดออกเกิดจากไวรัสเดงกีที่มียุงลายบ้าน (Aedes aegypti) และยุงลายสวน (Aedes albopictus) เป็นพาหะ ไม่ติดต่อจากคนสู่คนโดยตรง ไต้หวันเป็นพื้นที่เสี่ยงสูง ระบาดมากในฤดูร้อนและฤดูใบไม้ร่วง",
+      "keyFacts": {
+        "incubation": "3–14 วัน (ปกติ 4–7 วัน)",
+        "symptoms": "ไข้สูงเฉียบพลัน ปวดศีรษะ ปวดกระบอกตา ปวดกล้ามเนื้อและข้อ ผื่น",
+        "transmission": "ถูกยุงลายที่มีเชื้อกัด",
+        "prevention": "กำจัดน้ำขัง ป้องกันยุงกัด",
+        "notify": "ภายใน 24 ชั่วโมง"
+      },
+      "blocks": [
+        {
+          "key": "symptoms",
+          "heading": "อาการและสัญญาณอันตราย",
+          "markdown": "อาการทั่วไปคือไข้สูงเฉียบพลัน (≥ 38°C) ปวดศีรษะ ปวดกระบอกตา ปวดกล้ามเนื้อและข้อ และมีผื่น ผู้ป่วยส่วนใหญ่หายได้เอง\n\nผู้ป่วยส่วนน้อยอาจมีอาการรุนแรง มักเกิด**ในช่วงที่ไข้เริ่มลด** ผู้ที่ติดเชื้อซ้ำต่างสายพันธุ์มีความเสี่ยงสูงกว่า",
+          "warning": "อาเจียนต่อเนื่อง ปวดท้อง เลือดออกตามเยื่อบุ ซึมหรือกระสับกระส่าย ตับโต ความเข้มข้นของเลือดสูงขึ้นพร้อมเกล็ดเลือดลดลง"
+        },
+        {
+          "key": "prevention",
+          "heading": "การป้องกัน",
+          "markdown": "ไต้หวันยังไม่มีวัคซีนที่ใช้เป็นประจำ การป้องกันเน้นหลีกเลี่ยงยุงกัดและกำจัดแหล่งเพาะพันธุ์:\n\n- ตรวจภาชนะในและนอกบ้านทุกสัปดาห์: สำรวจ เท ล้าง ขัด\n- สวมเสื้อแขนยาวและกางเกงขายาวสีอ่อน และใช้ยาทากันยุงที่มี DEET, Picaridin หรือ IR3535\n- ติดมุ้งลวดที่หน้าต่างและประตู ใช้มุ้งนอนเมื่อจำเป็น\n- ภายในสองสัปดาห์หลังกลับจากพื้นที่ระบาด ยังต้องป้องกันยุงกัดเพื่อไม่ให้เป็นแหล่งแพร่เชื้อ"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-11"
+    },
+    "tl": {
+      "title": "Dengue",
+      "summary": "Ang dengue ay dulot ng dengue virus na naipapasa ng lamok na Aedes aegypti at Aedes albopictus. Hindi ito direktang nakakahawa mula tao sa tao. Mataas ang panganib sa Taiwan, at dumarami ang kaso tuwing tag-init at taglagas.",
+      "keyFacts": {
+        "incubation": "3–14 araw (karaniwang 4–7)",
+        "symptoms": "Biglaang mataas na lagnat, sakit ng ulo, sakit sa likod ng mata, pananakit ng kalamnan at kasukasuan, pantal",
+        "transmission": "Kagat ng lamok na Aedes na may virus",
+        "prevention": "Alisin ang naipong tubig; iwasan ang kagat ng lamok",
+        "notify": "Sa loob ng 24 oras"
+      },
+      "blocks": [
+        {
+          "key": "symptoms",
+          "heading": "Mga sintomas at babalang senyales",
+          "markdown": "Karaniwang sintomas ang biglaang mataas na lagnat (≥ 38°C), sakit ng ulo, sakit sa likod ng mata, pananakit ng kalamnan at kasukasuan, at pantal. Gumagaling nang kusa ang karamihan.\n\nIilan ang nagkakaroon ng malubhang dengue, kadalasan **sa panahong bumababa ang lagnat**. Mas mataas ang panganib ng mga nahawa sa ikalawang pagkakataon ng ibang serotype.",
+          "warning": "Tuloy-tuloy na pagsusuka, pananakit ng tiyan, pagdurugo sa gilagid o ilong, matinding panghihina o pagkabalisa, paglaki ng atay, pagtaas ng hematocrit kasabay ng pagbaba ng platelet."
+        },
+        {
+          "key": "prevention",
+          "heading": "Pag-iwas",
+          "markdown": "Wala pang regular na bakuna sa Taiwan. Nakatuon ang pag-iwas sa pag-iwas sa kagat at pag-alis ng pinamumugaran ng lamok:\n\n- Suriin linggo-linggo ang mga lalagyan sa loob at labas ng bahay: tingnan, itapon ang tubig, linisin, at kuskusin.\n- Magsuot ng maluwag at mapusyaw na damit na mahaba ang manggas at pantalon, at gumamit ng insect repellent na may DEET, Picaridin, o IR3535.\n- Maglagay ng screen sa bintana at pinto; gumamit ng kulambo kung kailangan.\n- Sa loob ng dalawang linggo matapos umuwi mula sa lugar na may outbreak, patuloy na iwasan ang kagat ng lamok para hindi makahawa."
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-11"
     }
   }
 }

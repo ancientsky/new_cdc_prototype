@@ -2,7 +2,7 @@
 // 登入只加個人化，公開指引不設門檻；原型的「登入」只是示意，角色與訂閱都存在瀏覽器 localStorage。
 import { html, raw } from '../../../scripts/lib/render.mjs';
 import { proStyles } from './_styles.mjs';
-import { servicesGrid, hrefFor, L } from '../public/_partials.mjs';
+import { servicesGrid, hrefFor, L, sitField } from '../public/_partials.mjs';
 import { curricula, curriculumList } from '../public/_curriculum.mjs';
 
 const ROLES = [
@@ -211,7 +211,7 @@ export function render(ctx) {
             return html`<tr>
               <th scope="row">${d?.slug && site.collections.diseases.some((p) => p.id === i.disease) ? html`<a href="${url(`/diseases/${d.slug}/`)}">${en ? d.nameEn ?? d.name : d.name}</a>` : (en ? d?.nameEn ?? i.disease : d?.name ?? i.disease)}</th>
               <td><span class="c-status-tag c-status-tag--${i.status}">${t(`status.${i.status}`)}</span></td>
-              <td>${(en ? i.i18n?.en?.metricValue : null) ?? i.metricValue}<br><small>${(en ? i.i18n?.en?.metricLabel : null) ?? i.metricLabel}${i.illustrative ? ` · ${T.illus}` : ''}</small></td>
+              <td>${sitField(ctx, i, 'metricValue')}<br><small>${(en ? i.i18n?.en?.metricLabel : null) ?? i.metricLabel}${i.illustrative ? ` · ${T.illus}` : ''}</small></td>
             </tr>`;
           })}</tbody>
         </table></div>

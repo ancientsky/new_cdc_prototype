@@ -8,7 +8,8 @@ import { buildOpenApi } from './openapi.mjs';
 import { citationOf, citationEnOf, doiPath, doiUrl, categoryLabel, authorNotes } from '../../src/client/bulletin-rules.js';
 import { assetSummary, assetUrl } from './assets.mjs';
 import { scheduleCsv } from '../../src/client/vaxschedule.js';
-import { STRINGS } from '../../src/client/i18n.js';
+import { STRINGS, t as i18nT } from '../../src/client/i18n.js';
+import { sitMetricValue, sitBasisInfo } from '../../src/client/situation-text.js';
 // 第九輪（ARCHITECTURE 17.1）：對外輸出一律經 isPublic()（published［＋archived］且 publishAt 已到）；emitApi 一進來就換成 publicView（排程中內容整筆消失，含治理待辦與版本鏈）
 import { isPublic, nowOf, publicView } from './lanes.mjs';
 
@@ -69,6 +70,16 @@ export function apiItem(item) {
   return { ...rest, url: absUrl(path), path, md: md ? absUrl(md) : null, governance: govSummary(item) };
 }
 const strip = apiItem;
+/** 疫情態勢項目的外語顯示欄位（第四十輪 #73）：保留疫情中心填的 i18n，補上算出來的 metricValue 與 basis */
+function sitI18n(it) {
+  const out = {};
+  for (const lang of config.langs.map((l) => l.code).filter((l) => l !== 'zh-TW')) {
+    const tl = (k, v) => i18nT(lang, k, v);
+    const b = sitBasisInfo(it, lang, tl);
+    out[lang] = { ...(it.i18n?.[lang] ?? {}), metricValue: sitMetricValue(it, lang, tl), basis: b.text, ...(b.generic ? { basisGeneric: true } : {}) };
+  }
+  return out;
+}
 const noFile = (o) => { if (!o || typeof o !== 'object') return o; const { __file, ...r } = o; return r; };
 const brief = (i) => ({ id: i.id, type: i.type, title: i.title, summary: i.summary, url: absUrl(pathOf(i)), path: pathOf(i), reviewedAt: i.reviewedAt, owner: i.owner, ownerName: i.gov.ownerName, lifecycle: i.gov.lifecycle, whitelist: i.gov.whitelist.effective });
 
@@ -387,7 +398,9 @@ export function emitApi(fullSite, write) {
   const sit = site.situation ?? {};
   put('v1/situation.json', {
     ...noFile(sit), history: (sit.history ?? []).map((h) => ({ publishedAt: h.publishedAt, dataDate: h.dataDate, items: (h.items ?? []).map((it) => ({ disease: it.disease, status: it.status })) })),
-    items: (sit.items ?? []).map((it) => ({ ...it, diseaseName: site.diseaseMasterById.get(it.disease)?.name, slug: site.diseaseMasterById.get(it.disease)?.slug, page: pageById.has(it.disease) ? absUrl(pathOf(pageById.get(it.disease))) : null })),
+    // 第四十輪（#73）：外語的 metricValue（數字＋單位樣板）與 basis（譯文或通用說明，basisGeneric 標示）在這裡算好放進 i18n[lang]，
+    // 答案頁等前端只要讀 i18n[LANG]，不必各自實作單位樣板，也不會退回中文正本
+    items: (sit.items ?? []).map((it) => ({ ...it, i18n: sitI18n(it), diseaseName: site.diseaseMasterById.get(it.disease)?.name, slug: site.diseaseMasterById.get(it.disease)?.slug, page: pageById.has(it.disease) ? absUrl(pathOf(pageById.get(it.disease))) : null })),
     governance: site.gov.situation,
   }, { lastModified: sit.publishedAt ?? site.today }, {}, '疫情態勢層（疫情中心人工發布）');
   const snap = (s) => s ?? { meta: { mode: 'missing' }, data: [] };
