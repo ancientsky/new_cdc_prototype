@@ -508,12 +508,16 @@ export function cjkStrong(src) {
  * Markdown → 淨化 HTML。marked 由呼叫端提供（需有 parse(src, opts)）。
  * 沒有 marked 時退回極簡實作（段落＋跳脫），確保 vendor 檔載入失敗時編輯器仍可用。
  */
+/** 第三十五輪：^上標^、~下標~（與 scripts/lib/markdown.mjs 的 supSub 同一規則；兩邊都要改） */
+export function supSub(seg) {
+  return String(seg).split(/(`[^`\n]*`)/).map((x, i) => (i % 2 ? x : x.replace(/\^([^\s^]{1,20})\^/g, '<sup>$1</sup>').replace(/(?<!~)~([^\s~]{1,20})~(?!~)/g, '<sub>$1</sub>'))).join('');
+}
 export function mdToHtml(md, opts = {}) {
   const src = String(md ?? '');
   const marked = opts.marked;
   let raw;
-  if (marked && typeof marked.parse === 'function') raw = marked.parse(cjkStrong(src), { gfm: true, breaks: false, async: false });
-  else raw = src.split(/\n{2,}/).filter((p) => p.trim()).map((p) => `<p>${escHtml(p).replace(/\n/g, '<br>')}</p>`).join('\n');
+  if (marked && typeof marked.parse === 'function') raw = marked.parse(supSub(cjkStrong(src)), { gfm: true, breaks: false, async: false });
+  else raw = src.split(/\n{2,}/).filter((p) => p.trim()).map((p) => `<p>${supSub(escHtml(p)).replace(/\n/g, '<br>')}</p>`).join('\n');
   return sanitizeHtml(raw, opts);
 }
 

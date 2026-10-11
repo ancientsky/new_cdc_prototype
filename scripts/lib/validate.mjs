@@ -2,7 +2,7 @@
 // JSON Schema 驗證 + 跨檔參照檢查。任何一項失敗 → build 失敗（治理門檻）。
 // 檔案資產（assets[]、/files/ 引用、content/assets/ 實體檔）的檢查在 scripts/lib/assets.mjs 的 validateAssets()，
 // build.mjs 在本檢查後呼叫並把錯誤併入同一份失敗清單（ARCHITECTURE 16.1）。
-import { articleProblems } from '../../src/client/bulletin-rules.js';
+import { articleProblems, categoryProblems } from '../../src/client/bulletin-rules.js';
 import fs from 'node:fs';
 import path from 'node:path';
 import { hasRelativeDate } from './dates.mjs';
@@ -92,6 +92,8 @@ export function validateSite(site) {
   vMaster('diseaseMaster', site.master.diseases, 'content/master/diseases.json');
   vMaster('glossaryTerm', site.master.glossary, 'content/master/glossary.json');
   vMaster('country', site.master.countries, 'content/master/countries.json');
+  vMaster('bulletinCategory', site.master.bulletinCategories ?? [], 'content/master/bulletin-categories.json');
+  for (const m of categoryProblems(site.master.bulletinCategories ?? [])) push('content/master/bulletin-categories.json', `[疫情報導分類] ${m}`);
   vMaster('scheduleItem', site.master.immunizationSchedule ?? [], 'content/master/immunization-schedule.json');
   for (const [def, obj, file] of [
     ['aiStatus', site.governance.aiStatus, 'content/governance/ai-status.json'],
@@ -135,7 +137,8 @@ export function validateSite(site) {
     // 第二十九輪（ARCHITECTURE 34）：疫情報導文章——所屬卷期要存在且是 bulletin、同期篇次不重複、頁碼不重疊。規則與後台同一份（bulletin-rules.js）。
     if (item.type === 'article') {
       const siblings = (site.collections.articles ?? []).filter((x) => x !== item && x.issueId === item.issueId && x.status !== 'draft');
-      for (const pr of articleProblems(item, { issue: site.byId.get(item.issueId) ?? null, siblings })) if (pr.level === 'error') push(item.__file, `[疫情報導] ${pr.msg}`);
+      const others = (site.collections.articles ?? []).filter((x) => x !== item);
+      for (const pr of articleProblems(item, { issue: site.byId.get(item.issueId) ?? null, siblings, others, categories: site.master.bulletinCategories })) if (pr.level === 'error') push(item.__file, `[疫情報導] ${pr.msg}`);
     }
     for (const ref of item.contentIds ?? []) if (!ids.has(ref)) push(item.__file, `contentIds ${ref} 不存在`);
   }

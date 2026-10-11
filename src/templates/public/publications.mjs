@@ -9,6 +9,7 @@ import {
 } from './_partials.mjs';
 // 第二十九輪：疫情報導卷期頁改成「本期目錄」（每篇全文、PDF、作者、摘要一句），文章全文在 articles.mjs；理由見 _bulletin.mjs 與 docs/bulletin.md
 import { issueTocHtml, otherIssuesHtml, volIssueLabel, articlesOfIssue, citationOf } from './_bulletin.mjs';
+import { BULLETIN_HOME } from '../../client/bulletin-rules.js';
 
 const trailOf = (ctx, p) => [{ label: ctx.t('publications.title'), href: '/publications/' }, { label: L(ctx, p, 'title') }];
 const volIssue = (p) => [p.volume != null ? `${p.volume}` : '', p.issue != null ? `(${p.issue})` : ''].join('');
@@ -41,6 +42,7 @@ function listPage(ctx) {
       for (const p of list) { const v = p.volume ?? '—'; if (!vols.has(v)) vols.set(v, []); vols.get(v).push(p); }
       const sorted = [...vols.entries()].sort((a, b) => num(b[0]) - num(a[0]));
       return html`<section class="c-block" id="${id}" aria-labelledby="h-${id}"><h2 id="h-${id}">${series} <span class="c-pill c-pill--neutral">${list.length}</span></h2>
+        <p><a href="${ctx.url(BULLETIN_HOME)}">${t('teb.home')}：${t('teb.masthead')}、${t('teb.categories')}、${t('teb.latest.articles')} →</a></p>
         ${sorted.map(([v, ps]) => html`<h3 class="c-pubvol">${t('publications.volume', { n: v })}</h3>
         <div class="c-tablewrap" role="region" tabindex="0" aria-label="${t('a11y.scrollTable')}"><table class="c-table c-table--pub"><caption class="sr-only">${series} ${t('publications.volume', { n: v })}</caption><thead><tr><th scope="col">${t('publications.issue')}</th><th scope="col">${t('publications.date')}</th><th scope="col">${t('publications.articles')}</th><th scope="col">${t('teb.fulltext')}</th><th scope="col">${t('publications.pdf')}</th></tr></thead>
         <tbody>${ps.sort((a, b) => num(b.issue) - num(a.issue)).map((p) => { const full = articlesOfIssue(site.collections.articles ?? [], p.id).length; const n = Math.max(p.articles?.length ?? 0, full); return html`<tr><th scope="row"><a href="${hrefFor(ctx, p)}"${isFallbackLink(ctx, p) ? raw(' lang="zh-TW"') : ''}>${volIssue(p)}</a></th><td>${fmtDate(p.publishedAt)}</td><td>${n || '—'}</td><td>${full ? html`<span class="c-pill c-pill--ok">${full}</span>` : '—'}</td><td>${p.pdfUrl ? extLink(ctx, /^https?:/.test(p.pdfUrl) ? p.pdfUrl : ctx.url(p.pdfUrl), 'PDF') : '—'}</td></tr>`; })}</tbody></table></div>`)}

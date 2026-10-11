@@ -2,40 +2,237 @@
   "$id": "https://cdc-prototype/schemas/article.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "疫情報導文章（第二十九輪）：一篇文章一個檔，全文 HTML 由 sections 渲染；卷期頁由同一 issueId 的文章自動組成",
-  "allOf": [{ "$ref": "_common.json" }],
+  "allOf": [
+    {
+      "$ref": "_common.json"
+    }
+  ],
   "type": "object",
-  "required": ["issueId", "articleNo", "authors", "sections"],
+  "required": [
+    "issueId",
+    "articleNo",
+    "authors",
+    "sections"
+  ],
   "properties": {
-    "type": { "const": "article" },
-    "issueId": { "type": "string", "pattern": "^publication\\.", "description": "所屬卷期（content/publications/ 的 publication，pubType 必須是 bulletin）" },
-    "articleNo": { "type": "integer", "minimum": 1, "description": "本期第幾篇；同一期不可重複。網址 /publications/{卷期}/{articleNo}/" },
-    "articleType": { "enum": ["original", "outbreak-report", "surveillance", "review", "brief", "erratum", "other"], "description": "原著文章、疫情調查報告、監測報告、綜論、短訊、更正" },
-    "titleEn": { "type": "string" },
-    "authors": {
-      "type": "array", "minItems": 1,
-      "items": { "type": "object", "required": ["name"], "properties": { "name": { "type": "string", "minLength": 1 }, "unit": { "type": "string", "description": "服務單位（文字；可填單位 id 或名稱）" }, "corresponding": { "type": "boolean" } } }
+    "type": {
+      "const": "article"
     },
-    "pages": { "type": "string", "pattern": "^\\d+(-\\d+)?$", "description": "本期頁碼範圍，例 1-8" },
-    "doi": { "type": "string" },
-    "receivedAt": { "type": "string", "format": "date" },
-    "acceptedAt": { "type": "string", "format": "date" },
-    "abstractMarkdown": { "type": "string", "description": "摘要（文章頁頂端的摘要框）" },
-    "abstractEn": { "type": "string" },
+    "issueId": {
+      "type": "string",
+      "pattern": "^publication\\.",
+      "description": "所屬卷期（content/publications/ 的 publication，pubType 必須是 bulletin）"
+    },
+    "articleNo": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "本期第幾篇；同一期不可重複。網址 /publications/{卷期}/{articleNo}/"
+    },
+    "articleType": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{1,30}$",
+      "description": "文章分類代號（第三十五輪改為主檔 content/master/bulletin-categories.json 的 key：original 原著文章、investigation 疫情調查、feature 焦點特寫、global-focus 國內外疫情焦點、rapid-report 疫調快報、biosafety 生安專欄、vaccine 疫苗專欄、notice 重要疫訊；舊代號 outbreak-report／surveillance／review／brief／erratum／other 建置時自動對應）。主檔沒有的代號會擋建置；要加分類請在後台「分類管理」新增。"
+    },
+    "titleEn": {
+      "type": "string"
+    },
+    "authors": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "unit": {
+            "type": "string",
+            "description": "服務單位名稱（只有一個單位、或不想編號時直接填；有 affiliations 時可省略）"
+          },
+          "corresponding": {
+            "type": "boolean"
+          },
+          "affiliations": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "description": "服務單位編號（對 article.affiliations[].no）；多個單位就填多個，文章頁印成上標 1,2"
+          },
+          "nameEn": {
+            "type": "string",
+            "description": "英文姓名（英文引用格式用）"
+          },
+          "email": {
+            "type": "string",
+            "description": "通訊作者的聯絡信箱（刊載格式印在頁尾）；只放機關信箱"
+          }
+        }
+      }
+    },
+    "pages": {
+      "type": "string",
+      "pattern": "^\\d+(-\\d+)?$",
+      "description": "本期頁碼範圍，例 1-8"
+    },
+    "doi": {
+      "type": "string",
+      "description": "DOI（只放 10.… 不含 https://doi.org/）。疫情報導慣例 10.6524/EB.{出刊年月}_{卷}({期}).{篇次 4 位}，後台「建議 DOI」會產生；DOI 永遠不變，站內 /doi/{DOI} 與對外的 doi.org 落地網址都由建置產生的轉址對照維護（ARCHITECTURE §34.6）"
+    },
+    "receivedAt": {
+      "type": "string",
+      "format": "date"
+    },
+    "acceptedAt": {
+      "type": "string",
+      "format": "date"
+    },
+    "abstractMarkdown": {
+      "type": "string",
+      "description": "摘要（文章頁頂端的摘要框）"
+    },
+    "abstractEn": {
+      "type": "string"
+    },
     "highlights": {
-      "type": "object", "description": "仿 MMWR summary box 的三句話：已知／本文新增／對防疫實務的意義",
-      "properties": { "known": { "type": "string" }, "added": { "type": "string" }, "implications": { "type": "string" } }, "additionalProperties": false
+      "type": "object",
+      "description": "仿 MMWR summary box 的三句話：已知／本文新增／對防疫實務的意義",
+      "properties": {
+        "known": {
+          "type": "string"
+        },
+        "added": {
+          "type": "string"
+        },
+        "implications": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
     },
     "sections": {
-      "type": "array", "minItems": 1,
-      "items": { "type": "object", "required": ["key", "heading", "markdown"], "properties": { "key": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" }, "heading": { "type": "string" }, "markdown": { "type": "string" }, "level": { "enum": [2, 3] } } }
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "key",
+          "heading",
+          "markdown"
+        ],
+        "properties": {
+          "key": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]*$"
+          },
+          "heading": {
+            "type": "string"
+          },
+          "markdown": {
+            "type": "string"
+          },
+          "level": {
+            "enum": [
+              2,
+              3
+            ]
+          }
+        }
+      }
     },
     "figures": {
       "type": "array",
-      "items": { "type": "object", "required": ["kind", "no", "caption"], "properties": { "kind": { "enum": ["figure", "table"] }, "no": { "type": "integer", "minimum": 1 }, "caption": { "type": "string" }, "file": { "type": "string", "description": "content/assets/{id}/ 下的檔名（圖）" }, "alt": { "type": "string" }, "markdown": { "type": "string", "description": "表格內容（Markdown 表格）或圖的文字版" } } }
+      "items": {
+        "type": "object",
+        "required": [
+          "kind",
+          "no",
+          "caption"
+        ],
+        "properties": {
+          "kind": {
+            "enum": [
+              "figure",
+              "table"
+            ]
+          },
+          "no": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "caption": {
+            "type": "string"
+          },
+          "file": {
+            "type": "string",
+            "description": "content/assets/{id}/ 下的檔名（圖）"
+          },
+          "alt": {
+            "type": "string"
+          },
+          "markdown": {
+            "type": "string",
+            "description": "表格內容（Markdown 表格）或圖的文字版"
+          }
+        }
+      }
     },
-    "references": { "type": "array", "items": { "type": "string" } },
-    "acknowledgementsMarkdown": { "type": "string" },
-    "pdfUrl": { "type": "string", "description": "單篇 PDF；沒有時文章頁改提供本期 PDF 與列印版" },
-    "note": { "type": "string" }
+    "references": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "acknowledgementsMarkdown": {
+      "type": "string"
+    },
+    "pdfUrl": {
+      "type": "string",
+      "description": "單篇 PDF；沒有時文章頁改提供本期 PDF 與列印版"
+    },
+    "note": {
+      "type": "string"
+    },
+    "affiliations": {
+      "type": "array",
+      "description": "作者服務單位清單（刊載格式頁尾的「1 單位甲 2 單位乙」）；作者以 affiliations:[編號] 引用。只有一個單位時可不填，作者直接填 unit。",
+      "items": {
+        "type": "object",
+        "required": [
+          "no",
+          "name"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "no": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "nameEn": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "keywordsEn": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "英文關鍵字（英文摘要頁）"
+    },
+    "legacyDoiUrl": {
+      "type": "string",
+      "description": "DOI 目前在登錄機構（如華藝）登記的落地網址（通常是舊官網的文章頁）；移轉時用來比對轉址，與 legacyUrls 一起由建置產生 301 對照"
+    }
   }
 }

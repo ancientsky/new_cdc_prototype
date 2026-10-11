@@ -1,11 +1,11 @@
 // /publications/{卷期}/{篇次}/：疫情報導文章全文頁（第二十九輪，ARCHITECTURE §34；版面理由見 _bulletin.mjs 與 docs/bulletin.md）。
 import { html, raw } from '../../../scripts/lib/render.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
-import { ldFor, breadcrumb, provenance, alerts, pageData, scopeTags, feedback, translationBadge, hrefFor, L, slugOf, itemPath, pill, diseasePage } from './_partials.mjs';
-import { issueOf, volIssueLabel, articleTypeLabel, pdfHref, authorsHtml, abstractHtml, bodyHtml, citeHtml, articleToc, issueTocHtml, prevNextHtml, otherIssuesHtml, citationOf, citationEnOf, placeFigures } from './_bulletin.mjs';
-import { articlePath } from '../../client/bulletin-rules.js';
+import { ldFor, breadcrumb, provenance, alerts, pageData, scopeTags, feedback, translationBadge, hrefFor, L, slugOf, itemPath, diseasePage } from './_partials.mjs';
+import { issueOf, volIssueLabel, articleTypeLabel, categoryPill, doiHtml, pdfHref, authorsHtml, abstractHtml, bodyHtml, citeHtml, articleToc, issueTocHtml, prevNextHtml, otherIssuesHtml, citationOf, citationEnOf, placeFigures } from './_bulletin.mjs';
+import { articlePath, authorNotes, BULLETIN_HOME } from '../../client/bulletin-rules.js';
 
-const trailOf = (ctx, a, issue) => [{ label: ctx.t('publications.title'), href: '/publications/' }, ...(issue ? [{ label: L(ctx, issue, 'title'), href: itemPath(issue) }] : []), { label: ctx.t('teb.article.n', { n: a.articleNo }) }];
+const trailOf = (ctx, a, issue) => [{ label: ctx.t('publications.title'), href: '/publications/' }, { label: ctx.t('teb.home'), href: BULLETIN_HOME }, ...(issue ? [{ label: volIssueLabel(ctx, issue), href: itemPath(issue) }] : []), { label: ctx.t('teb.article.n', { n: a.articleNo }) }];
 
 export function meta(ctx, { item: a }) {
   const issue = issueOf(ctx.site, a);
@@ -22,11 +22,11 @@ function detail(ctx, a) {
   return html`${breadcrumb(ctx, trailOf(ctx, a, issue))}
 <article class="c-article c-teb" data-issue="${a.issueId}" data-article-no="${a.articleNo}">
   <header class="c-pagehead c-teb__head"><div class="c-pagehead__main">
-    <p class="c-article__meta c-teb__meta">${pill(articleTypeLabel(ctx, a.articleType), 'info')} ${issue ? html`<a class="c-teb__issue" href="${hrefFor(ctx, issue)}">${issue.series} ${volIssueLabel(ctx, issue)}</a> · <time datetime="${issue.publishedAt}">${fmtDate(issue.publishedAt)}</time>` : ''}${a.pages ? html` · ${t('teb.pages', { p: a.pages })}` : ''}${a.doi ? html` · DOI <a href="https://doi.org/${a.doi}" rel="noopener">${a.doi}</a>` : ''}</p>
+    <p class="c-article__meta c-teb__meta">${categoryPill(ctx, a.articleType)} ${issue ? html`<a class="c-teb__issue" href="${hrefFor(ctx, issue)}">${issue.series} ${volIssueLabel(ctx, issue)}</a> · <time datetime="${issue.publishedAt}">${fmtDate(issue.publishedAt)}</time>` : ''}${a.pages ? html` · ${t('teb.pages', { p: a.pages })}` : ''}</p>
     <h1>${L(ctx, a, 'title')}</h1>
     ${a.titleEn && lang === 'zh-TW' ? html`<p class="c-teb__titleen" lang="en">${a.titleEn}</p>` : ''}
     ${authorsHtml(ctx, a)}
-    ${a.receivedAt || a.acceptedAt ? html`<p class="c-teb__dates muted">${a.receivedAt ? `${t('teb.received')} ${fmtDate(a.receivedAt)}` : ''}${a.receivedAt && a.acceptedAt ? ' · ' : ''}${a.acceptedAt ? `${t('teb.accepted')} ${fmtDate(a.acceptedAt)}` : ''}</p>` : ''}
+    ${a.receivedAt || a.acceptedAt || a.doi ? html`<p class="c-teb__dates muted">${[a.receivedAt ? html`${t('teb.received')} ${fmtDate(a.receivedAt)}` : null, a.acceptedAt ? html`${t('teb.accepted')} ${fmtDate(a.acceptedAt)}` : null, a.doi ? html`DOI ${doiHtml(ctx, a.doi)} <button type="button" class="c-btn c-btn--ghost c-btn--xs" data-copy-text="https://doi.org/${a.doi}" data-done="${t('copied')}">${t('teb.copy')}</button>` : null].filter(Boolean).reduce((acc, cur, j) => (j ? [...acc, ' · ', cur] : [cur]), [])}</p>` : ''}
     ${scopeTags(ctx, a, { region: false })}
     ${langStatus && lang !== 'zh-TW' ? html`<p>${translationBadge(ctx, langStatus === 'reviewed' ? 'reviewed' : 'machine')}</p>` : ''}
     ${alerts(ctx, a)}${provenance(ctx, a)}
@@ -63,7 +63,11 @@ export function markdown(ctx, { item: a }) {
   const lines = [`# ${a.title}`];
   if (a.titleEn) lines.push('', `*${a.titleEn}*`);
   lines.push('', `> ${issue ? `${issue.series} 第 ${issue.volume} 卷第 ${issue.issue} 期（${issue.publishedAt}）` : ''}${a.pages ? ` · 頁 ${a.pages}` : ''} · ${a.articleType ? `${articleTypeLabel(ctx, a.articleType)} · ` : ''}ID：${a.id}${a.pdfUrl || issue?.pdfUrl ? ` · PDF：${a.pdfUrl || issue.pdfUrl}` : ''}`);
-  lines.push(`> 作者：${(a.authors ?? []).map((x) => `${x.name}${x.unit ? `（${x.unit}）` : ''}${x.corresponding ? '＊' : ''}`).join('、')}`);
+  const n = authorNotes(a);
+  lines.push(`> 作者：${n.authors.map((x) => `${x.name}${n.showSup && x.nos.length ? `^${x.nos.join(',')}^` : ''}${x.corresponding ? '*' : ''}`).join('、')}`);
+  if (n.affiliations.length) lines.push(`> 服務單位：${n.affiliations.map((f) => `${n.showSup ? `${f.no} ` : ''}${f.name}${f.nameEn ? `（${f.nameEn}）` : ''}`).join('；')}`);
+  if (n.corresponding.length) lines.push(`> *通訊作者：${n.corresponding.map((x) => `${x.name}${x.email ? `（${x.email}）` : ''}`).join('、')}`);
+  if (a.doi) lines.push(`> DOI：https://doi.org/${a.doi}`);
   for (const an of a.gov?.annotations ?? []) lines.push(`> ⚠ ${an.text}`);
   if (a.abstractMarkdown) lines.push('', '## 摘要', '', a.abstractMarkdown);
   const h = a.highlights;

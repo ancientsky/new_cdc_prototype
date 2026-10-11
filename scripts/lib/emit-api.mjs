@@ -5,7 +5,7 @@ import { createHash } from 'node:crypto';
 import { config, siteOrigin } from '../../site.config.mjs';
 import { pathOf, mdPathOf, WHITELIST_REASON_LABELS, LIFECYCLE_LABELS, TODO_KIND_LABELS, NOTICE_TYPES, legacyPathOf, isLegacyPattern, JOB_STAGE_LABELS, TENDER_STAGE_LABELS, JOB_TAB_LABELS, TENDER_TAB_LABELS } from './governance.mjs';
 import { buildOpenApi } from './openapi.mjs';
-import { citationOf, citationEnOf } from '../../src/client/bulletin-rules.js';
+import { citationOf, citationEnOf, doiPath, doiUrl, categoryLabel, authorNotes } from '../../src/client/bulletin-rules.js';
 import { assetSummary, assetUrl } from './assets.mjs';
 // 第九輪（ARCHITECTURE 17.1）：對外輸出一律經 isPublic()（published［＋archived］且 publishAt 已到）；emitApi 一進來就換成 publicView（排程中內容整筆消失，含治理待辦與版本鏈）
 import { isPublic, nowOf, publicView } from './lanes.mjs';
@@ -173,6 +173,23 @@ export function buildRedirects(site) {
   }
   out.push(...migration);
   out.push(...movedRedirects(site));
+  out.push(...doiRedirects(site));
+  return out;
+}
+
+/**
+ * 第三十五輪：DOI 的站內解析網址 /doi/{DOI} → 文章頁（301）。DOI 本身永遠不變；對外 doi.org 的落地網址在登錄機構（華藝）那邊登記，
+ * 搬站時有兩條路並行：(1) 登錄機構的落地網址改成新文章頁（批次更新 metadata）；(2) 舊落地網址（legacyDoiUrl／legacyUrls）本來就在 301 對照裡，
+ * 所以還沒更新前，點 DOI → 舊網址 → 301 → 新文章頁，一樣到得了。
+ */
+export function doiRedirects(site) {
+  const now = nowOf(site);
+  const out = [];
+  for (const a of site.collections.articles ?? []) {
+    if (!a.doi || !isPublic(a, now, { archived: true })) continue;
+    out.push({ from: doiPath(a.doi), to: pathOf(a), toUrl: absUrl(pathOf(a)), status: 301, kind: 'doi', itemId: a.id, doi: a.doi, doiUrl: doiUrl(a.doi), note: 'DOI 站內解析：/doi/{DOI} → 文章頁；DOI 不變，落地網址由這份對照維護' });
+    if (a.legacyDoiUrl && !(a.legacyUrls ?? []).includes(a.legacyDoiUrl)) out.push({ from: a.legacyDoiUrl, fromPath: legacyPathOf(a.legacyDoiUrl), to: pathOf(a), toUrl: absUrl(pathOf(a)), status: 301, kind: 'legacy', itemId: a.id, pattern: isLegacyPattern(a.legacyDoiUrl), note: 'DOI 目前登記的落地網址（舊站）→ 新文章頁' });
+  }
   return out;
 }
 
@@ -185,7 +202,7 @@ export function buildRedirects(site) {
 export function serverRedirects(redirects) {
   const groups = new Map();
   for (const r of redirects) {
-    if (r.status !== 301 || !['migration', 'legacy', 'moved'].includes(r.kind) || r.pattern) continue;
+    if (r.status !== 301 || !['migration', 'legacy', 'moved', 'doi'].includes(r.kind) || r.pattern) continue;
     const src = r.kind === 'migration' ? r.oldUrl ?? r.from : r.from;
     if (!isLegacyHost(src)) continue;
     const from = r.fromPath ?? legacyPathOf(r.from);
@@ -398,7 +415,10 @@ export function emitApi(fullSite, write) {
   // 第二十九輪（ARCHITECTURE 34）：疫情報導文章（全文 sections、作者單位、頁碼、引用格式）；依卷期倒序、篇次正序
   const issueOf = (a) => site.byId.get(a.issueId);
   const arts = [...published(c.articles)].sort((a, b) => String(issueOf(b)?.publishedAt ?? '').localeCompare(String(issueOf(a)?.publishedAt ?? '')) || (a.articleNo ?? 0) - (b.articleNo ?? 0));
-  put('v1/articles.json', arts.map((a) => ({ ...strip(a), issue: issueOf(a) ? { id: a.issueId, volume: issueOf(a).volume ?? null, issue: issueOf(a).issue ?? null, publishedAt: issueOf(a).publishedAt ?? null, pdfUrl: issueOf(a).pdfUrl ?? null } : null, citation: citationOf(a, issueOf(a)), citationEn: citationEnOf(a, issueOf(a)) })), {}, {}, '疫情報導文章（全文 sections、作者與單位、頁碼、圖表說明、引用格式；issue 為所屬卷期）');
+  const cats = site.master.bulletinCategories;
+  put('v1/articles.json', arts.map((a) => ({ ...strip(a), issue: issueOf(a) ? { id: a.issueId, volume: issueOf(a).volume ?? null, issue: issueOf(a).issue ?? null, publishedAt: issueOf(a).publishedAt ?? null, pdfUrl: issueOf(a).pdfUrl ?? null } : null, category: a.articleType ? { key: a.articleType, label: categoryLabel(cats, a.articleType), labelEn: categoryLabel(cats, a.articleType, 'en') } : null, affiliations: authorNotes(a).affiliations, doiUrl: a.doi ? doiUrl(a.doi) : null, citation: citationOf(a, issueOf(a)), citationEn: citationEnOf(a, issueOf(a)) })), {}, {}, '疫情報導文章（全文 sections、作者與單位註記、頁碼、圖表說明、DOI、分類、引用格式；issue 為所屬卷期）');
+  put('v1/bulletin-categories.json', (cats ?? []).map((c) => ({ ...c, count: arts.filter((a) => a.articleType === c.key).length })), {}, {}, '疫情報導分類主檔（官網左側分類；count 為已上架全文篇數）');
+  put('v1/doi.json', arts.filter((a) => a.doi).map((a) => ({ doi: a.doi, doiUrl: doiUrl(a.doi), path: pathOf(a), url: absUrl(pathOf(a)), resolver: doiPath(a.doi), legacyDoiUrl: a.legacyDoiUrl ?? null, id: a.id, title: a.title })), {}, {}, 'DOI → 文章頁對照（給登錄機構批次更新落地網址、給 /doi/{DOI} 轉址）');
   put('v1/labtests.json', [...published(c.labtests)].sort((a, b) => a.id.localeCompare(b.id)).map((l) => ({ ...strip(l), master: noFile(site.diseaseMasterById.get(l.disease)) ?? null })), {}, {}, '檢驗項目（疾病 × 檢體 × 容器 × 保存運送 × 時限；含與通報時限一致性）');
   put('v1/research.json', [...published(c.research)].sort((a, b) => (b.year ?? 0) - (a.year ?? 0) || a.id.localeCompare(b.id)).map(strip), {}, {}, '研究計畫（年度、狀態、成果報告、資料集）');
   const notices = published(c.news).filter((n) => NOTICE_TYPES.has(n.newsType))
