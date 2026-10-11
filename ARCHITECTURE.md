@@ -1994,3 +1994,9 @@ LLM 的位置：`ui.js` 對結構化時程答案也會叫 LLM，但模型拿到�
 
 Actions 紀錄上的 10 個黃色 annotation 全是 `no-unused-vars`（GitHub 只顯示前 10 個，實際 35 個）：多餘的 import、解構出來沒用的 `lang`／`t`／`url`、算了沒用的區域變數、測試裡沒用到的輔助函式。全部刪除，沒有改任何行為（`npm test` 687 題、`build --check`、完整建置都通過）。`package.json` 的 `lint` 改為 `eslint . --max-warnings=0`：警告會讓 lint 以非零結束，PR 車道與主站建置都把它當失敗。理由：警告不擋合併就會一直累積，紀錄上滿是黃色之後，真正該看的（例如未定義變數）會被淹沒；規則本來就設成「底線開頭的名字可以不用」，刻意保留的參數改名 `_x` 即可。
 
+### 44.2 LINE「疾管家」接新網站當知識庫（評估，未改程式）
+
+同事問疾管家能不能用新網站當知識庫。評估在 `docs/line-chatbot.md`。結論：可以，建議做法是「同一個引擎、兩種呈現」。`src/client/answer/core.js` 的 `createEngine()` 已在瀏覽器（`data.js` 從 `/v1/*.json` 建）與 CI（`eval/run-eval.mjs` 的 `engineFromSite()`）兩處跑同一份程式，第三處就是署內一支無狀態 Node 服務：啟動抓同一組 `/v1/*.json`、看 `meta.etag` 重載、開 HTTP 端點給疾管家 webhook，回 `{ status, sentences[{text,url,title,ownerName,reviewedAt}], related }`。拒答、相關度門檻、白名單、一致性偏好、態勢人工值都在引擎內，所以兩個管道答案一致且不需要第二份評估集。
+
+待辦（若公關室決定試行）：把 `engineFromSite()` 的「從 site 物件」與前端的「從 v1 JSON」兩種建法合成一個共用的 `engineFromV1()`；新增 `scripts/answer-service.mjs`（端點、etag 重載、LINE 長度截句、逾時）、測試、OpenAPI 片段；LLM 改寫只能接在這條管線後面（§38、決策紀錄 §25）。
+
