@@ -38,6 +38,36 @@ const PENDING_TEST = /（待補[:：]|^對照：/;
 
 const MAX_PARA = 300;
 
+// 第四十輪（issue #78）：逐字稿的說話者標籤（「旁白：」「字幕：」）不是內容，抽成答案句時讀起來像劇本 ⇒ 建索引時去掉；
+// 逐字稿 chunk 另標 role: 'narration'，答案引擎在問句沒說要影片時降權（core.js NARRATION_WEIGHT）。
+// 只去掉旁白／字幕這類「非人名」標籤；「醫師：」「署長：」是誰說的，保留。
+export const SPEAKER_PREFIX_RE = /^(旁白|字幕|口白|畫外音|配音|narrator|voice-?over|caption|subtitles?)\s*[:：]\s*/i;
+export const stripSpeaker = (s) => String(s ?? '').replace(SPEAKER_PREFIX_RE, '');
+
+// 第四十輪（issue #78）：澄清稿裡轉述的謠言原文（「針對社群流傳『打流感疫苗反而會得流感…』的訊息」）不可被當答案句引用，只有澄清文可以。
+// 判斷：句中「」引號內容與該則謠言（claim／claimVariants）的雙字重疊 ≥ 0.5，或引號前 12 字內有「網傳、流傳、謠言…」。
+// 這些句子仍留在 chunk 供檢索（問謠言時要找得到），只記在 noCite（句子索引），答案引擎組句時跳過。
+const RUMOR_LEAD_RE = /(網傳|流傳|謠言|傳言|訊息|貼文|聲稱|指稱|說法|網路上|社群)/;
+const bigramSet = (t) => { const x = String(t ?? '').replace(/[\s\p{P}\p{S}]+/gu, ''); const out = new Set(); for (let i = 0; i + 1 < x.length; i++) out.add(x.slice(i, i + 2)); return out; };
+export function quotesClaim(sentence, claims = []) {
+  const sen = String(sentence ?? '');
+  for (const m of sen.matchAll(/「([^」]{4,})」/g)) {
+    if (RUMOR_LEAD_RE.test(sen.slice(Math.max(0, m.index - 12), m.index))) return true;
+    const A = bigramSet(m[1]);
+    for (const c of claims) {
+      const B = bigramSet(c); let n = 0; for (const b of A) if (B.has(b)) n++;
+      if (A.size && B.size && n / Math.min(A.size, B.size) >= 0.5) return true;
+    }
+  }
+  return false;
+}
+function markClaims(chunk, claims) {
+  if (!chunk) return chunk;
+  const idx = chunk.sentences.map((t, i) => (quotesClaim(t, claims) ? i : -1)).filter((i) => i >= 0);
+  if (idx.length) chunk.noCite = idx;
+  return chunk;
+}
+
 /** Markdown → 句子陣列（保留清單項目邊界；不吃連字號） */
 export function mdSentences(markdown) {
   if (!markdown) return [];
@@ -429,7 +459,13 @@ export function buildSearchIndex(site) {
             break;
           }
           const paras = paragraphs(src.bodyMarkdown ?? '');
-          paras.forEach((p, i) => add(make(item, `p${i + 1}`, src.title ?? item.title, p.map((s) => tagRelativeDate(s, item.publishedAt)), base, { ...L, newsType: item.newsType ?? null, letterNo: item.letterNo ?? null }), { proOnly: item.type === 'letter' }));
+          // 第四十輪：澄清型新聞稿也標出轉述謠言原文的句子（對應的 clarification 有 claim 時一併比對）
+          const rel = item.newsType === 'clarification' ? site.byId?.get(item.relatedClarification) : null;
+          const claims = item.newsType === 'clarification' ? [rel?.claim, ...(rel?.claimVariants ?? [])].filter(Boolean) : null;
+          paras.forEach((p, i) => {
+            const ch = make(item, `p${i + 1}`, src.title ?? item.title, p.map((s) => tagRelativeDate(s, item.publishedAt)), base, { ...L, newsType: item.newsType ?? null, letterNo: item.letterNo ?? null });
+            add(claims ? markClaims(ch, claims) : ch, { proOnly: item.type === 'letter' });
+          });
           break;
         }
         case 'document': {
@@ -465,7 +501,7 @@ export function buildSearchIndex(site) {
           break;
         }
         case 'clarification':
-          add(make(item, 'c', src.title ?? item.title, [...mdSentences(src.clarificationMarkdown ?? ''), ...(src.shareText ? splitPlain(src.shareText) : [])].map((s) => tagRelativeDate(s, item.publishedAt)), base, { ...L, verdict: item.gov?.stale?.length ? 'outdated' : item.verdict, claim: item.claim, extraTerms: [item.claim, ...(item.claimVariants ?? [])] }));
+          add(markClaims(make(item, 'c', src.title ?? item.title, [...mdSentences(src.clarificationMarkdown ?? ''), ...(src.shareText ? splitPlain(src.shareText) : [])].map((s) => tagRelativeDate(s, item.publishedAt)), base, { ...L, verdict: item.gov?.stale?.length ? 'outdated' : item.verdict, claim: item.claim, extraTerms: [item.claim, ...(item.claimVariants ?? [])] }), [item.claim, ...(item.claimVariants ?? [])].filter(Boolean)));
           break;
         case 'vaccine': {
           add(make(item, 'v', src.title ?? item.title, mdSentences(src.bodyMarkdown ?? ''), base, { ...L }));
@@ -492,8 +528,9 @@ export function buildSearchIndex(site) {
             const chapter = seg.chapter ? { t: seg.chapter.t, label: seg.chapter.label } : null;
             let key = `t${t}`; for (let n = 2; usedKeys.has(key); n++) key = `t${t}-${n}`;
             usedKeys.add(key);
-            add(make(item, key, `${item.title} · ${chapter?.label ?? mmss(t)}`, k === 0 ? [meta, ...seg.sentences] : seg.sentences, `/media/${id}/#t=${t}`, {
-              ...L, mediaType: item.mediaType ?? 'video', producedAt: item.producedAt ?? null, basedOnVersionLabel: item.basedOnVersionLabel ?? null,
+            const spoken = seg.sentences.map(stripSpeaker);
+            add(make(item, key, `${item.title} · ${chapter?.label ?? mmss(t)}`, k === 0 ? [meta, ...spoken] : spoken, `/media/${id}/#t=${t}`, {
+              ...L, role: 'narration', mediaType: item.mediaType ?? 'video', producedAt: item.producedAt ?? null, basedOnVersionLabel: item.basedOnVersionLabel ?? null,
               chapter, t, poster: item.poster ?? null, durationSeconds: item.durationSeconds ?? null, youtubeId: item.youtubeId ?? null, basedOn: item.basedOn ?? [],
               extraTerms: ['影片', '影音', '宣導影片', '逐字稿', ...(item.series ? [item.series] : []), ...(chapter?.label ? [chapter.label] : [])],
             }));

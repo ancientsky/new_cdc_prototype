@@ -3,7 +3,13 @@
     "iso2": "JP",
     "name": "日本",
     "nameEn": "Japan",
-    "region": "東亞"
+    "region": "東亞",
+    "aliases": [
+      "Nhật Bản",
+      "Jepang",
+      "Hapon",
+      "ญี่ปุ่น"
+    ]
   },
   {
     "iso2": "KR",
@@ -39,25 +45,45 @@
     "iso2": "VN",
     "name": "越南",
     "nameEn": "Viet Nam",
-    "region": "東南亞"
+    "region": "東南亞",
+    "aliases": [
+      "Vietnam",
+      "Việt Nam",
+      "ベトナム",
+      "เวียดนาม"
+    ]
   },
   {
     "iso2": "TH",
     "name": "泰國",
     "nameEn": "Thailand",
-    "region": "東南亞"
+    "region": "東南亞",
+    "aliases": [
+      "Thailand",
+      "ประเทศไทย"
+    ]
   },
   {
     "iso2": "ID",
     "name": "印尼",
     "nameEn": "Indonesia",
-    "region": "東南亞"
+    "region": "東南亞",
+    "aliases": [
+      "Indonesia",
+      "インドネシア"
+    ]
   },
   {
     "iso2": "PH",
     "name": "菲律賓",
     "nameEn": "Philippines",
-    "region": "東南亞"
+    "region": "東南亞",
+    "aliases": [
+      "Philippines",
+      "Pilipinas",
+      "フィリピン",
+      "ฟิลิปปินส์"
+    ]
   },
   {
     "iso2": "MY",

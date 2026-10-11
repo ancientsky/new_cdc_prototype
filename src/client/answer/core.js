@@ -23,10 +23,10 @@
 
 // 第三十四輪（ARCHITECTURE 第 40 章）：規則表、斷詞、詞典、結構化資料拆到同目錄四個模組；本檔只留 createEngine。
 // 下面的 re-export 讓既有呼叫端（render.js、llm.js、scripts/lib/*、tests）照舊從 core.js import，不必改。
-import { CROSS_LANG, PARAPHRASE, annotationsOf, buildLexicon, isOutdated, lc, matcherFor, ownerNameOf, tr, unwrap } from './lexicon.js';
+import { CROSS_LANG, PARAPHRASE, annotationsOf, topicAnchorsOf, buildLexicon, isOutdated, lc, matcherFor, ownerNameOf, tr, unwrap } from './lexicon.js';
 import { ANTIVIRAL_RE, CAT_ZH, CLOSED_MARK, NOTICE_TYPES, SCHEDULE_VACCINE_RE, VAXMAP_GROUP_OF, VAXMAP_GROUP_OF_DISEASE, WHICH_VACCINE_RE, ageHashOf, ageProfileOf, hoursPhrase, matchSchedule, mmssOf, normTravel, normalizeNotifyTable, notifyHoursLabel, vaxmapHref } from './structured.js';
-import { bigrams, detectInjection, maskPII, maskPIIDetailed, mdPlain, parseChineseNumber, parseTimeRange, rocDate, splitPlain, tokenize } from './text.js';
-import { ADMIT_RE, CAREERS_DETAIL_RE, HISTORICAL_WEIGHT, LAB_PUBLIC_RE, MEDIA_CUE, NEWS_CUE, OPEN_CUE, PERSON, PROCUREMENT_CUE, PROCUREMENT_DETAIL_RE, PUB_CUE, QUERY_FUNC_RE, RECRUIT_CUE, REFUSAL_RULES, RELEVANCE, RESEARCH_CUE, TRAVEL_CHANGE_KINDS, TRAVEL_CHANGE_RE, classifyIntent, focusOf, refusalCopy, titleHits } from './rules.js';
+import { EN_STOP, VI_STOP, bigrams, detectInjection, maskPII, maskPIIDetailed, mdPlain, parseChineseNumber, parseTimeRange, rocDate, splitPlain, tokenize } from './text.js';
+import { ADMIT_RE, CAREERS_DETAIL_RE, HISTORICAL_WEIGHT, LAB_PUBLIC_RE, MEDIA_CUE, NEWS_CUE, OPEN_CUE, PERSON, PROCUREMENT_CUE, PROCUREMENT_DETAIL_RE, PUB_CUE, QUERY_FUNC_RE, RECRUIT_CUE, REFUSAL_RULES, RELEVANCE, SERVICE_CUE, VAX_WHERE_RE, RESEARCH_CUE, TRAVEL_CHANGE_KINDS, TRAVEL_CHANGE_RE, classifyIntent, focusOf, refusalCopy, titleHits } from './rules.js';
 
 export { bigrams, detectInjection, maskPII, maskPIIDetailed, numbersByUnit, parseChineseNumber, parseTimeRange, pdfHref, rocDate, splitPlain, tokenize } from './text.js';
 export { ADMIT_RE, INTENT_RULES, LAB_PRO_RE, LAB_PUBLIC_RE, PRO_SUB_INTENTS, REFUSAL_RULES, RELEVANCE, classifyIntent, isLowRelevance } from './rules.js';
@@ -166,6 +166,27 @@ export function createEngine(rawDeps = {}) {
   }
 
   const MACHINE_TEXT_WEIGHT = 0.7;
+  // 第四十輪（issue #78）：影片逐字稿是旁白口語（「旁白：今年公費流感疫苗自 10 月 1 日起開打」），同一件事正本（FAQ、疫苗頁）多半寫得更完整；
+  // 問句沒說要影片時，逐字稿片段（index-builder 標 role: 'narration'）降到 0.6（原本所有影片 0.85），只有正本沒講到時才會被引用。
+  const NARRATION_WEIGHT = 0.6;
+  // 第四十輪（issue #78）：澄清稿（clarification 型別與 newsType 'clarification' 的新聞稿）不是在問謠言時一律 0.5——
+  // 澄清稿的用途是駁斥某則謠言，拿來回答一般問句（懷孕能不能打流感疫苗）容易答偏。
+  const CLARIFICATION_WEIGHT = 0.5;
+  /**
+   * 第四十輪（issue #75）：抽取句的最低資訊量。句子太短（「They should check.」）脫離上下文就沒有意義，被抽出來會誤導。
+   *   拉丁字母語言：至少 MIN_INFO.latinWords 個詞，且非功能詞（不在 EN_STOP／VI_STOP、長度 ≥ 3）至少 MIN_INFO.contentWords 個；
+   *   中日文：去掉標點、空白後至少 MIN_INFO.cjkChars 個字；泰文（無空白）至少 MIN_INFO.thaiChars 個字。
+   * 只用在檢索抽句（composeSentences）；結構化句（態勢、時程、旅遊等級、申請步驟）是欄位串接，不受此限。
+   */
+  const MIN_INFO = { latinWords: 4, contentWords: 2, cjkChars: 6, thaiChars: 10 };
+  function informative(sen) {
+    const t = String(sen ?? '').normalize('NFKC');
+    if (/[\u3040-\u30ff\u3400-\u9fff]/.test(t)) return t.replace(/[\s\p{P}\p{S}]/gu, '').length >= MIN_INFO.cjkChars;
+    if (/[\u0e00-\u0e7f]/.test(t)) return t.replace(/[\s\p{P}\p{S}]/gu, '').length >= MIN_INFO.thaiChars;
+    const words = t.toLowerCase().match(/[\p{L}\p{N}]+(?:['’-][\p{L}\p{N}]+)*/gu) ?? [];
+    const content = words.filter((w) => (w.length >= 3 || /\d/.test(w)) && !EN_STOP.has(w) && !VI_STOP.has(w));
+    return words.length >= MIN_INFO.latinWords && content.length >= MIN_INFO.contentWords;
+  }
   const INTENT_TASK = { symptoms: 'symptoms', vaccine: 'vaccines', travel: 'travel', situation: 'situation', rumor: 'rumor', stats: 'data' };
 
   function poolFor(view, lang) {
@@ -228,7 +249,7 @@ export function createEngine(rawDeps = {}) {
       if (view === 'pro' && (c.type === 'document' || c.type === 'letter')) s *= 1.3;
       // 第十九輪：PDF 機器轉出、尚未校對的段落排在已審內容之後（只有它講到時才會被引用；來源卡另標「以 PDF 為準」）
       if (c.extraction?.reviewStatus === 'machine') s *= MACHINE_TEXT_WEIGHT;
-      if (intent !== 'rumor' && c.type === 'clarification') s *= 0.5;
+      if (intent !== 'rumor' && (c.type === 'clarification' || c.newsType === 'clarification')) s *= CLARIFICATION_WEIGHT;
       // 第二輪：意圖 → 型別加權；問句線索（影片、哪一期）→ 型別加權
       if ((intent === 'apply' || intent === 'notify') && c.type === 'service') s = s * 1.8 + 2;
       if (intent === 'lab' && c.type === 'labtest') s = s * 1.8 + 2;
@@ -245,7 +266,7 @@ export function createEngine(rawDeps = {}) {
         if (c.type === want && !closedNow(c)) s *= 1.2;
         if (wantOpen && c.type === want && closedNow(c)) { guards.push({ kind: 'closed-dropped', id: c.id }); continue; }
       }
-      if (c.type === 'media') s = MEDIA_CUE.test(q) ? s * 1.6 + 1.5 : s * 0.85;
+      if (c.type === 'media') s = MEDIA_CUE.test(q) ? s * 1.6 + 1.5 : s * (c.role === 'narration' ? NARRATION_WEIGHT : 0.85);
       if (c.type === 'publication' && PUB_CUE.test(q)) s = s * 1.6 + 1.5;
       // 第三十三輪：歷史新聞稿降權（§39.4）
       if (c.historical && !NEWS_CUE.test(q)) s *= HISTORICAL_WEIGHT;
@@ -340,9 +361,14 @@ export function createEngine(rawDeps = {}) {
       // 以「：」結尾的引言句與其後清單項目合併為一個單位（仍是原文連續片段）
       const units = [];
       const ss = c.sentences ?? [];
+      // 第四十輪（issue #78）：noCite＝只供檢索、不可當答案句的句子索引（澄清稿裡轉述的謠言原文；index-builder 標記）
+      const noCite = new Set(c.noCite ?? []);
       for (let i = 0; i < ss.length; i++) {
-        let u = ss[i];
+        let u = ss[i]; const from = i;
         if (/[：:]$/.test(u)) { let j = i + 1; while (j < ss.length && j <= i + 4 && (u.length + ss[j].length) <= 180) { u += ` ${ss[j]}`; j++; } i = j - 1; }
+        let quoted = false; for (let x = from; x <= i; x++) if (noCite.has(x)) quoted = true;
+        if (quoted) { guards.push({ kind: 'claim-dropped', id: c.id }); continue; }
+        if (!informative(u)) { guards.push({ kind: 'uninformative-dropped', id: c.id, text: u.slice(0, 40) }); continue; }
         units.push(u);
       }
       const titleToks = new Set(tokenize(c.title));
@@ -405,6 +431,9 @@ export function createEngine(rawDeps = {}) {
       const add = allCands.find((c) => r.re.test(c.text) && !picked.some((p) => p.text === c.text) && !PERSONAL_ADVICE_RE.test(c.text) && c.score > 1);
       if (add) { if (picked.length >= max) picked.pop(); picked.push({ ...add, cite: [...add.cite] }); }
     }
+    // 問地點時，講地點的句子排第一（它才是答案；其餘是補充）
+    const where = req.find((r) => r.key === 'where');
+    if (where) for (const p of picked) if (where.re.test(p.text)) p.slot = -1;
     picked.sort((a, b) => a.slot - b.slot || b.score - a.score);
     return picked;
   }
@@ -417,6 +446,8 @@ export function createEngine(rawDeps = {}) {
     { cue: /(費用|多少錢|收費|免費|規費)/, key: 'fee', label: '費用', re: /(元|費|免費)/, intents: ['apply'] },
     { cue: /(誰能|誰可以|哪些人|資格|對象)/, key: 'who', label: '申請對象', re: /(對象|資格|醫師|醫療院所|民眾|研究|機關|衛生局|者)/, intents: ['apply'] },
     { cue: /(溫度|保存|冷藏|冷凍)/, key: 'storage', label: '保存條件', re: /(保存|°C|冷藏|冷凍|室溫)/, intents: ['lab'] },
+    // 第四十輪（issue #75）：「去哪裡打疫苗／Where can I get a flu vaccine?」答案要有地點句（衛生所、合約院所、clinic…），沒有就從候選補入
+    { cue: VAX_WHERE_RE, key: 'where', label: '接種地點', re: /(衛生所|合約(醫療)?院所|醫療院所|診所|學校|校園|clinic|health (centre|center|station)|hospital|school|trạm y tế|phòng khám|puskesmas|klinik|สถานีอนามัย|โรงพยาบาล)/i, intents: ['vaccine'] },
   ];
   function requiredFor(intent, q) {
     const out = [...(REQUIRED_POINTS[intent] ?? [])];
@@ -722,10 +753,17 @@ export function createEngine(rawDeps = {}) {
     const contQuery = inter / A.size; // 問句是謠言的片段
     return Math.max(jac, 0.85 * contClaim, 0.75 * contQuery * Math.min(1, A.size / 6));
   }
+  // 第四十輪：只問「這是真的嗎」、沒附訊息內容（首頁預設問題就是這樣）。拉丁字母語言的字元雙字很容易跟任何一則英文謠言撞到 0.4 以上，
+  // 不能拿相似度判斷 ⇒ 直接回「目前沒有對應的官方澄清」並引導到澄清專區貼上訊息。七語的「光問句」寫法列在這裡。
+  const RUMOR_ASK_ONLY = /^\s*((這則|這個|這篇)?(訊息|消息|貼文|新聞|傳言)?(是)?(真的嗎|是真的嗎|真的假的|是假的嗎|可信嗎)|is (?:this|that|it) (?:message |news |post |claim |text )?true|このメッセージは本当ですか|totoo ba(?: ang)?(?: mensaheng| balitang)?(?: ito| iyan)?|apakah (?:pesan|berita|kabar) ini benar|tin nhắn này có thật không|ข้อความนี้จริงหรือไม่|ข้อความนี้จริงไหม)\s*[?？!！。.]*\s*$/i;
   function factCheck(q, result) {
     const LL = result.lang;
     const qs = q.replace(RUMOR_STRIP, ' ');
     let best = null, bestScore = 0, bestClaim = null;
+    if (RUMOR_ASK_ONLY.test(q)) {
+      result.verdict = 'unknown'; result.guards.push({ kind: 'rumor-no-message' });
+      return setRefusal(result, 'no-clarification', 'ref.no-clarification.empty', [{ label: tr(LL, '到澄清專區貼上訊息', 'Paste the message on the fact-check page'), href: '/factcheck/', kind: 'link' }, { label: tr(LL, '撥打 1922 詢問', 'Call 1922'), href: 'tel:1922', kind: 'hotline' }]);
+    }
     for (const c of clarifications) {
       // 不在白名單的澄清只在「已過時」時使用（治理引擎判定依據已修訂，需告知民眾已過時）
       const wl = c.gov?.whitelist?.effective ?? c.governance?.whitelist;
@@ -1120,6 +1158,11 @@ export function createEngine(rawDeps = {}) {
         if (ANTIVIRAL_RE.test(result.query ?? '')) a.push({ label: tr(LL, '查附近有流感抗病毒藥劑的院所', 'Find clinics with flu antivirals'), href: vaxmapHref('antiviral', LL), kind: 'external' });
         else if (vacc && !VAXMAP_GROUP_OF[vacc.id]) a.push({ label: tr(LL, '接種資訊（vaxmap）', 'Vaccination info (vaxmap)'), href: vaxmapHref(null, LL, { info: true, anchor: 'where' }), kind: 'external' });
         else a.push({ label: tr(LL, '查附近接種點', 'Find a vaccination site'), href: vaxmapHref(VAXMAP_GROUP_OF[vacc?.id] ?? VAXMAP_GROUP_OF_DISEASE[result.disease] ?? null, LL), kind: 'external' });
+        // 第四十輪：問「去哪裡打」⇒ 接種點連結是答案本身，固定排第一（疫苗頁有 whereUrl 時用 whereUrl；高峰期的 1922 排在它後面）
+        if (result.whereAsk) {
+          const i = a.findIndex((x) => x.kind === 'external');
+          if (i >= 0) { const [w] = a.splice(i, 1); if (vacc?.whereUrl && !VAXMAP_GROUP_OF[vacc.id]) w.href = vacc.whereUrl; a.unshift({ ...w, where: true }); }
+        }
         // 問句帶年齡／身分：接在「查附近接種點」之後，開啟疫苗接種時程地圖並帶入年齡（#age=65、#age=m12）
         if (result.ageProfile) { const h = ageHashOf(result.ageProfile); a.push({ label: tr(LL, '看完整疫苗時程地圖', 'See the full immunization schedule'), href: `/vaccines/schedule/${h ? `#age=${h}` : ''}`, kind: 'link' }); }
         if (vacc?.slug) a.push({ label: tr(LL, `看${vacc.name ?? vacc.title}公費對象`, `Who is eligible: ${vacc.nameEn ?? vacc.name ?? vacc.title}`), href: `/vaccines/${vacc.slug}/`, kind: 'link' });
@@ -1192,7 +1235,7 @@ export function createEngine(rawDeps = {}) {
       default:
         if (d) a.push({ label: tr(LL, `看${d.name}完整頁面`, `${d.nameEn ?? d.name}: full page`), href: `/diseases/${d.slug}/`, kind: 'link' });
     }
-    if (peak || result.intent === 'symptoms') { if (!a.some((x) => x.href === 'tel:1922')) a.unshift({ label: tr(LL, '撥打 1922', 'Call 1922'), href: 'tel:1922', kind: 'hotline' }); }
+    if ((peak || result.intent === 'symptoms') && !a[0]?.where) { if (!a.some((x) => x.href === 'tel:1922')) a.unshift({ label: tr(LL, '撥打 1922', 'Call 1922'), href: 'tel:1922', kind: 'hotline' }); }
     else if (!a.some((x) => x.href === 'tel:1922')) a.push({ label: tr(LL, '撥打 1922', 'Call 1922'), href: 'tel:1922', kind: 'hotline' });
     return a.slice(0, 4);
   }
@@ -1237,9 +1280,22 @@ export function createEngine(rawDeps = {}) {
    * 句子仍逐字出自索引片段；步驟塊不在檢索結果時從同一索引池取出並列入 retrieved。
    */
   const APPLY_HOW = /(怎麼|如何|流程|步驟|程序|方式|怎樣|去哪|哪裡)/;
+  // 第四十輪（issue #78）：強制套用某服務的步驟前，先確認這個服務真的是問句在問的東西——服務標題或關鍵字要有問句詞
+  // （去掉「申請、辦理、流程」這類每個服務都有的泛用詞），且服務片段分數不低於最佳片段的 SERVICE_MIN_RATIO。否則「外籍勞工健康檢查與健保怎麼辦理」會被套上結核病補助的步驟、
+  // 「兒童健康手冊在哪裡」會被套上預防接種受害救濟的步驟；不符時退回一般組句（仍偏好服務片段）。
+  const SERVICE_MIN_RATIO = 0.6;
+  const SERVICE_GENERIC_TOKENS = new Set(['申請', '辦理', '流程', '步驟', '方式', '程序', '表單', '補發', '證明']);
+  function serviceMatches(q, c) {
+    const qt = tokenize(String(q).replace(QUERY_FUNC_RE, ' '), { query: true }).filter((t) => !SERVICE_GENERIC_TOKENS.has(t));
+    // 標題命中 1 個詞即可；只靠關鍵字（含建置時自動加入的單位名「健康服務中心」）要命中 2 個以上，避免一個泛用詞就套上步驟
+    const title = new Set(tokenize(c.title)); const terms = new Set(tokenize((c.terms ?? []).join(' ')));
+    return qt.some((t) => title.has(t)) || new Set(qt.filter((t) => terms.has(t))).size >= 2;
+  }
   function applyCompose(q, chunks, picked, view, sourceMap, result) {
     const top = chunks.find((c) => c.type === 'service');
     if (!top || !APPLY_HOW.test(q)) return picked;
+    // 服務片段的分數遠低於最佳片段（已含 apply 意圖對服務的加權仍落後）＝站內有更切題的非服務內容
+    if (!serviceMatches(q, top) || (top._score ?? 0) < (chunks[0]._score ?? 0) * SERVICE_MIN_RATIO) { result.guards.push({ kind: 'apply-steps-skipped', id: top.id, reason: 'service-not-asked' }); return picked; }
     const pool = poolFor(view, 'zh-TW').chunks;
     const get = (key) => chunks.find((c) => c.id === `${top.contentId}#${key}`) ?? pool.find((c) => c.id === `${top.contentId}#${key}`);
     const steps = get('steps');
@@ -1364,6 +1420,7 @@ export function createEngine(rawDeps = {}) {
     const ci = classifyIntent(q, { view, hasTimeRange: hasRange, hasDisease: !!result.disease, hasCountry: entities.countries.length > 0 });
     result.intent = ci.intent; result.intentReasons = ci.reasons; result.intentScores = ci.scores;
     if (forceIntent) { result.intent = forceIntent; result.intentReasons.push(`forced.${forceIntent}`); }
+    if (VAX_WHERE_RE.test(q)) result.whereAsk = true;
     // 第七輪：問句指名某職缺／標案並問細節（「防疫醫師的資格」「官網改版標案的規格」）⇒ careers／procurement
     if (!forceIntent && !['careers', 'procurement', 'rumor', 'stats', 'notify'].includes(result.intent)) {
       if (CAREERS_DETAIL_RE.test(q) && overviewChunks('job', view).some((c) => titleHits(q, c.title) >= 3 || (c.focusTerms ?? []).some((k) => q.includes(k)))) { result.intent = 'careers'; result.intentReasons.push('car.title-match'); }
@@ -1439,14 +1496,30 @@ export function createEngine(rawDeps = {}) {
 
     // 4 檢索（同語言 reviewed 優先，否則中文）
     const k = view === 'pro' ? 10 : 8;
+    const hasEntity = !!(entities.diseases.length || entities.vaccines.length || entities.countries.length);
+    // 第四十輪（issue #75）：外語問句「先對應到主題，再檢索」。疾病／疫苗／國家由詞彙主檔對應到 ID（detectEntities，檢索時已用 ID 篩片段）；
+    // 其他主題（移工、健保、接種紀錄）由 CROSS_LANG 的主題錨點對應到中文詞。回答的前 3 塊片段至少要講到其中一個錨點，否則不拿別的主題充數
+    //（「移工的健檢與健保」站內只有健檢、沒有健保 ⇒ 仍回答健檢那一半，與中文問句同樣處理）。
+    const anchors = lang !== 'zh-TW' ? topicAnchorsOf(q) : [];
+    // 錨點強度：前 3 塊有一塊「標題」講到錨點＝2（這塊就是在講這個主題）；只在內文順帶提到＝1；都沒有＝0
+    const hit = (a, t, zh) => (zh ? a.zh.some((w) => t.includes(w)) : a.re.test(t));
+    const anchorStrength = (cs, zh) => Math.max(0, ...cs.slice(0, 3).map((c) => Math.max(0, ...anchors.map((a) => (hit(a, c.title ?? '', zh) ? 2 : hit(a, c.text ?? '', zh) ? 1 : 0)))));
+    const anchorOk = (cs, zh) => !anchors.length || anchorStrength(cs, zh) > 0;
     let chunks = [];
+    let zhChunks = null;
+    const zhRetrieve = () => (zhChunks ??= retrieve(q, { view, lang: 'zh-TW', k, intent: result.intent, entities, expanded, presetDisease, guards: result.guards }));
     if (lang !== 'zh-TW') {
       chunks = retrieve(q, { view, lang, k, intent: result.intent, entities, expanded, presetDisease, guards: result.guards });
       if (chunks.length && chunks[0]._score < 2.5) chunks = [];
+      // 同語言片段沒講到主題錨點（越南文問移工健檢，越南文語料只有麻疹），或過不了相關度門檻 ⇒ 改用中文原文
+      if (chunks.length && (!anchorOk(chunks, false) || relevanceOf(q, chunks, chunks.model, hasEntity).reason)) { result.guards.push({ kind: 'same-lang-dropped', lang }); chunks = []; }
+      // 同語言片段只是「順帶提到」主題（英文 MOU 新聞稿提到 migrant worker health），中文有一塊標題就在講這個主題 ⇒ 用中文原文
+      if (chunks.length && anchors.length && anchorStrength(zhRetrieve(), true) > anchorStrength(chunks, false)) { result.guards.push({ kind: 'same-lang-weaker-topic', lang }); chunks = []; }
     }
     if (!chunks.length) {
-      chunks = retrieve(q, { view, lang: 'zh-TW', k, intent: result.intent, entities, expanded, presetDisease, guards: result.guards });
+      chunks = zhRetrieve();
       if (lang !== 'zh-TW' && chunks.length) result.translationNote = 'showing-source';
+      if (lang !== 'zh-TW' && chunks.length && !anchorOk(chunks, true)) { result.guards.push({ kind: 'topic-anchor-miss', anchors: anchors.map((a) => a.zh[0]) }); const none = []; none.qWeights = chunks.qWeights; none.model = chunks.model; chunks = none; }
     }
     // 沒有疾病實體時：以最相關片段的疾病為主，不混入其他疾病的片段
     if (!entities.diseases.length && chunks.length && (chunks[0].diseases ?? []).length && !['situation', 'stats', 'rumor'].includes(result.intent)) {
@@ -1498,10 +1571,25 @@ export function createEngine(rawDeps = {}) {
     }
 
     // 第二十五輪：相關度閘門。態勢／旅遊有結構化資料可答時不套用（它們不靠檢索片段）
+    // 第四十輪：外語問句改用中文片段回答時，問句原文的詞在中文語料裡本來就找不到；相關度改用「對應出來的中文詞」計算。
+    // 對應不出任何中文詞 ＝ 引擎根本不知道在問什麼主題 ⇒ 查無，不拿碰巧撞到的片段回答。
+    const crossZh = expanded.added.filter((w) => /[\u3400-\u9fff]/.test(w)).join(' ');
+    const relQ = result.translationNote === 'showing-source' ? crossZh : q;
+    const structuredOk = (result.intent === 'situation' && situationFor(entities, result.intent)) || (result.intent === 'travel' && (entities.countries.length || TRAVEL_CHANGE_RE.test(q)));
+    if (result.translationNote === 'showing-source' && !crossZh.trim() && !structuredOk) {
+      result.relevance = 0; result.guards.push({ kind: 'no-match', reason: 'no-cross-terms' });
+      return setRefusal(result, 'no-match', 'ref.no-match', noMatchActions(LL));
+    }
     if (chunks.length && chunks.model) {
-      const rel = relevanceOf(q, chunks, chunks.model, !!(entities.diseases.length || entities.vaccines.length || entities.countries.length));
+      const rel = relevanceOf(relQ || q, chunks, chunks.model, hasEntity);
       result.relevance = rel.relevance; result.relevanceInfo = { coverage: rel.coverage, top: rel.top, matchedIdf: rel.matchedIdf, reason: rel.reason };
-      const structured = (result.intent === 'situation' && situationFor(entities, result.intent)) || (result.intent === 'travel' && (entities.countries.length || TRAVEL_CHANGE_RE.test(q)));
+      const structured = structuredOk;
+      // 第四十輪：結構化資料（態勢卡、旅遊等級）可答、但檢索片段過不了門檻 ⇒ 只回結構化答案，不附不相關的片段
+      //（泰文問「現在流感嚴重嗎」附上白醋燻蒸的澄清稿就是這樣來的）
+      if (rel.reason && structured) { result.guards.push({ kind: 'low-relevance-chunks-dropped', reason: rel.reason }); const none = []; none.qWeights = chunks.qWeights; none.model = chunks.model; chunks = none; result.retrieved = chunks; }
+      // 第四十輪（issue #75）：外語問句的相關度低於 lowBelow ⇒ 查無，不再「自評相關程度較低卻照樣列片段」。
+      // 中文讀者看得懂原文、可以自己判斷片段切不切題；外語讀者拿到的常是中文原文或只有部分譯文，低相關片段只會誤導。
+      if (!rel.reason && !structured && lang !== 'zh-TW' && rel.relevance < RELEVANCE.lowBelow) rel.reason = 'low-relevance-foreign';
       if (rel.reason && !structured && !(typeof process !== 'undefined' && process.env?.NO_GATE)) { // 瀏覽器沒有 process 物件，直接讀會 ReferenceError、no-match 的答案頁就卡在載入中（第二十八輪修正）
         result.guards.push({ kind: 'no-match', reason: rel.reason, relevance: rel.relevance });
         // 相關度太低時連關鍵字清單也不附（附了又是「抗蛇毒血清 → 登革熱傳染途徑」那種不相關頁面）
@@ -1528,7 +1616,8 @@ export function createEngine(rawDeps = {}) {
     let picked = composeSentences(q, chunks, result.intent, view, result.guards);
     if (result.intent === 'apply' || result.intent === 'notify') picked = applyCompose(q, chunks, picked, view, sourceMap, result);
     if (result.intent === 'notice') { picked = noticeCompose(q, chunks, picked); if (picked.length) result.confidence = Math.max(result.confidence, 0.6); }
-    if (sit && (result.intent === 'situation' || (!picked.length && sit.items.length) || (result.peak && picked.length < 3))) {
+    // 問「去哪裡打疫苗」時不插態勢句（高峰期的英文問句曾整段答成疫情狀態 peak）；真的組不出句子才用態勢句
+    if (sit && (result.intent === 'situation' || (!picked.length && sit.items.length) || (result.peak && picked.length < 3 && !result.whereAsk))) {
       const ss = situationSentences(sit, lang);
       for (const [id, s] of ss.sources) sourceMap.set(id, s);
       picked = [...ss.sentences.slice(0, Math.max(2, 4 - picked.length)), ...picked].slice(0, view === 'pro' ? 5 : 4);
