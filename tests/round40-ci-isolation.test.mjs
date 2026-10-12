@@ -105,7 +105,7 @@ test('#81 content-pr：lane job 沒有 checkout、setup-node、npm、node、repo
   const uses = [...l.matchAll(/uses:\s*(\S+)(.*)/g)];
   assert.deepEqual(
     uses.map((m) => m[1]),
-    ['actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093', 'actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093'],
+    ['actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333', 'actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333'],
   );
   for (const m of uses) assert.match(m[2], /#\s*v\d/);
   const lCode = l
