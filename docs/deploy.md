@@ -162,7 +162,7 @@ PR 關閉 ─▶ preview-cleanup.yml：刪 previews/pr-N/ →（只有沒合併�
 
 **`preview-cleanup.yml`**：權限原本掛在工作流程層級（`contents: write`、`actions: write`、`pull-requests: read`），之後新增的任何 job 都會自動繼承。現在工作流程層級是 `permissions: {}`，三項放進 `cleanup` job；這個 job 沒有 checkout，不會執行 repo 內的程式。三項都是必要的：推 `previews` 分支、觸發 `pages.yml`、排程掃描時用 `gh pr view` 查 PR 狀態。
 
-**Actions 的 SHA**：新增 `actions/upload-artifact`（v4.6.2）與 `actions/download-artifact`（v4.3.0），一樣固定 40 字元 commit SHA 並註解版本，Dependabot 會升版；SHA 已加進 `tests/lanes.test.mjs` 的釘死清單，升版 PR 要同步改那兩行（見 9.1）。
+**Actions 的 SHA**：新增 `actions/upload-artifact`（v4.6.2，2026-10-12 經 Dependabot 升至 v7.0.2）與 `actions/download-artifact`（v4.3.0，同日升至 v8.0.2），一樣固定 40 字元 commit SHA 並註解版本，Dependabot 會升版；SHA 已加進 `tests/lanes.test.mjs` 的釘死清單，升版 PR 要同步改那兩行（見 9.1）。
 
 **本機沒辦法跑 Actions，所以怎麼驗證**：`tests/round40-ci-isolation.test.mjs` 對每個工作流程的每個 `run` 區塊跑 `bash -n`；把 `lane` job 的「Validate results」步驟用假的 `gh`、假的 `GITHUB_ENV` 真的跑一遍（正常結果、少報檔案、不明車道、夾帶換行的 outcome）；把留言的 `jq` 程式餵真實的 `lane.mjs` 輸出。**測不到的**：`upload-artifact`／`download-artifact` 的實際行為（路徑、隱藏檔、保留天數）、`GITHUB_ENV` 在 step 之間的傳遞、`if:` 運算式的求值、`needs`＋`!cancelled()` 的排程。第一個用這個流程的 PR 請看一次 Actions 紀錄與 PR 留言。
 
@@ -273,8 +273,9 @@ CI 任一項失敗即不部署：JSON Schema 與跨檔參照（`owner`、`basedO
 
 - **設定**：`.github/dependabot.yml` 每週一 09:00（台灣時間）檢查。Actions 升版合成一個 PR（`groups.actions`）；npm 的 minor／patch 合成一個（`groups.npm-minor-patch`），major 各自一個。
 - **為什麼要分組**：同一個 workflow 裡 `checkout` 和 `setup-node` 是相鄰兩行。分開的 PR 各改一行，git 會把「相鄰行都被改」當成衝突，合了一個另一個就要重做。合成一個 PR 就沒有這個問題，CI 也只跑一次。
-- **升 action 的 PR 會紅燈是預期的**：`tests/lanes.test.mjs` 寫死 `checkout`、`setup-node`、`deploy-pages`、`upload-artifact`、`download-artifact` 的 SHA（確保沒人偷偷換回可移動的 tag）。升版時把測試檔裡的 SHA 和註解版本換成 PR 裡的新值即可；SHA 格式另由 `tests/round23-security.test.mjs` 檢查。
+- **升 action 的 PR 會紅燈是預期的**：`tests/lanes.test.mjs` 寫死 `checkout`、`setup-node`、`deploy-pages`、`upload-artifact`、`download-artifact` 的 SHA（確保沒人偷偷換回可移動的 tag），`tests/round40-ci-isolation.test.mjs` 另外寫死 lane job 唯一允許的 `download-artifact` SHA（沒有版本註解，grep 版本號找不到它，要用 SHA 搜）。升版時先 `grep -rn 舊SHA tests/ docs/` 找出所有釘死處，再換成 PR 裡的新值；SHA 格式另由 `tests/round23-security.test.mjs` 檢查。
 - **升 major 版要看什麼**：讀 release notes 的 breaking changes，跑 `npm test`、`node scripts/build.mjs --check`，再把升版前後的 `dist/` 逐檔比對（`diff -rq`），只剩時間戳差異才算安全。2026-10-10 升 `marked` 15→18 的差異只有 `&`→`&amp;` 與空白行。
+- **2026-10-12 `upload-artifact` v4.6.2→v7.0.2、`download-artifact` v4.3.0→v8.0.2（PR #86）**：紅燈正是上面那條釘死清單，PR 的 lint／格式／型別／治理閘門／無障礙／預覽建置全綠，只有 `npm test` 的 `content-pr.yml` 測試不過。release notes 裡會影響我們的只有三點，都不用改 workflow：(1) 兩個 action 改用 Node 24 執行，GitHub 代管 runner 已支援，自架 runner 要 2.327.1 以上；(2) `download-artifact` v8 起 SHA256 比對不符預設直接失敗（之前只警告），對 lane job 反而更安全，因為它下載的 `lane.json` 就是合併決策的依據；(3) v7／v8 新增「不壓縮直接上傳單檔」選項（`archive: false`），我們沒用，維持預設打包。驗證方式：`git ls-remote https://github.com/actions/upload-artifact refs/tags/v7.0.2` 確認 SHA 與 PR 一致，再把 `tests/lanes.test.mjs` 的兩行換新。
 - **已知的行為變化**：`actions/upload-pages-artifact` v4 起不打包點開頭的檔案與目錄（`.nojekyll`、`.well-known/`）。目前沒影響；若要上 `/.well-known/security.txt`，要改由正式站伺服器提供，或另找打包方式。
 - **前端 `src/public/vendor/marked.min.js` 不跟著升**：它是後台貼上轉換用的獨立副本，Dependabot 看不到。要升時手動換檔並測後台「貼上 Word／網頁」轉換。
 

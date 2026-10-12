@@ -361,7 +361,7 @@ test('content-pr.yml：觸發、權限、併發、檢查、車道、預覽、留
     'concurrency:', 'content-pr-${{ github.event.pull_request.number }}',
     'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1', 'fetch-depth: 0', 'actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0', 'node-version: 22', 'npm ci', 'npm test',
     // 第四十輪（#81）：test／lane 兩個 job 之間用 artifact 傳遞，兩個 action 一樣釘 commit SHA
-    'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2', 'actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0',
+    'actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2', 'actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2',
     'npm run format:check', 'npm run typecheck',
     'BUILD_TODAY=2026-10-01 node scripts/build.mjs --check',
     'node scripts/lane.mjs', 'git diff --name-only origin/main...HEAD',
