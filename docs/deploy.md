@@ -739,6 +739,10 @@ GitLab main 更新 ──▶ GitLab CI 建置 dist/ ──▶ 對外網站（本
 9. **GitLab 保護分支：** 推送端點與後台匯入會由服務帳號把 `data/snapshots/travel-epidemic.json`、`intl-epidemic-import.json` **直接提交到目標分支**（不開合併請求）。保護分支是否允許這個服務帳號直接推送？若不允許，要改成「開合併請求＋CI 通過自動合併」（多幾分鐘延遲），或限定服務帳號只能改 `data/snapshots/` 底下（Premium 的 push rules／CODEOWNERS）。
 10. **推送 webhook 的來源 IP：** 中心系統呼叫 `POST /api/intl-epidemic` 時從哪個 IP 或網段出來？能否在反向代理或防火牆只允許這些來源（端點本身另有 Bearer 權杖、每 IP 每分鐘 10 次的限流、2 MB 上限）？這支端點要不要和後台放在同一個對外網址？
 
+### 14.9 附件上限（第四十五輪）
+
+疫情報導後台的「儲存草稿／送審」會把 PDF 與圖（base64）和文章一起送到 `/api/gateway/drafts`、`/submit`：整包上限 24 MB、附件合計 16 MB、最多 20 個檔；內容本身仍限 512 KB。反向代理的請求大小上限（nginx `client_max_body_size`、IIS `maxAllowedContentLength`）要 ≥ 24 MB，否則同事看到的是代理的 413 而不是閘道的中文訊息。閘道超限時會先把請求讀完再回 413（第三十輪的教訓，ARCHITECTURE §36）。
+
 ## 15. 智慧問答頁的效能預算（第四十輪，Issue #80）
 
 `/ask/` 在手機 Lighthouse 只有 61 分（TBT 2.4 s、傳輸 553 KB）。根因、改法與前後數字見 docs/ask-search-llm.md 第四十輪；這裡只講建置閘門與怎麼量。

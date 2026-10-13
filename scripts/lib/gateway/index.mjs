@@ -44,6 +44,11 @@ import { publishFeed, readImportRecord, canImportIntl, PublishError } from '../i
 
 export const SERVICE_NAME = 'cdc-web-gateway';
 export const MAX_BODY = 512 * 1024;
+// 第四十五輪：疫情報導後台把 PDF 與圖檔（base64）跟內容一起送；只有 /drafts 與 /submit 讀到這個上限，內容本身仍限 512 KB
+export const ITEM_WITH_FILES_MAX_BODY = 24 * 1024 * 1024;
+export const MAX_FILES = 20;
+export const MAX_FILES_BYTES = 16 * 1024 * 1024;
+const FILE_NAME_RE = /^[a-z0-9][a-z0-9._-]{0,99}$/i;
 /** 國際疫情手動匯入：一整批 feed 可能比一筆內容大，與推送端點同上限 */
 export const INTL_MAX_BODY = 2 * 1024 * 1024;
 const INTL_DENIED = '國際疫情匯入只開放給疫情中心的承辦人與複核者，或總編輯、治理幕僚、平台管理；如需權限請洽資訊室';
@@ -117,6 +122,27 @@ export function createGatewayApi(opts = {}) {
   };
   const err = (res, status, code, message, fields) => send(res, status, { error: code, message, ...(fields ? { fields } : {}) });
 
+  /** 附件：[{ name, base64 }] → { name: Buffer }；檔名只收 content/assets 規則允許的字元（路徑由伺服器決定，不收路徑） */
+  function decodeFiles(files) {
+    if (files == null) return null;
+    if (!Array.isArray(files) || files.length > MAX_FILES) throw new GatewayError(400, 'bad_files', `附件最多 ${MAX_FILES} 個`);
+    const out = {};
+    let total = 0;
+    for (const f of files) {
+      if (!f || typeof f.name !== 'string' || typeof f.base64 !== 'string' || !FILE_NAME_RE.test(f.name) || f.name.includes('..')) throw new GatewayError(400, 'bad_files', '附件格式不對（需要 name 與 base64；檔名只能用英數、點、連字號）', [{ field: 'assets', label: '附件與圖片', message: `附件「${String(f?.name ?? '').slice(0, 60)}」的檔名或內容格式不對` }]);
+      const buf = Buffer.from(f.base64, 'base64');
+      total += buf.length;
+      if (total > MAX_FILES_BYTES) throw new GatewayError(413, 'too_large', `附件合計超過 ${MAX_FILES_BYTES / 1024 / 1024} MB`);
+      out[f.name] = buf;
+    }
+    return out;
+  }
+  /** 配套內容（跟主內容一起送審、一起上線；例：疫情報導文章的新卷期）：最多 3 筆物件 */
+  function decodeCompanions(list) {
+    if (list == null) return [];
+    if (!Array.isArray(list) || list.length > 3 || list.some((x) => !x || typeof x !== 'object' || Array.isArray(x))) throw new GatewayError(400, 'bad_companions', '配套內容格式不對（最多 3 筆）');
+    return list;
+  }
   // 超過上限時不能中途 break：那會毀掉請求串流，連線被重設，客戶端只看到「fetch failed」而收不到 413
   // （第三十輪 CI 實測：本機常常剛好收得到，GitHub runner 上收不到）。所以超過後只丟棄、讀完再回 413。
   async function readBody(req, max = MAX_BODY) {
@@ -240,9 +266,17 @@ export function createGatewayApi(opts = {}) {
           throw e;
         }
       }
-      const body = await readBody(req);
-      if (sub === '/drafts') return send(res, 200, await workflow.saveDraft(p, { item: body.item, submissionId: typeof body.submissionId === 'string' ? body.submissionId : undefined }));
-      if (sub === '/submit') return send(res, 200, await workflow.submit(p, { item: body.item, submissionId: typeof body.submissionId === 'string' ? body.submissionId : undefined }, ctx));
+      const withFiles = sub === '/drafts' || sub === '/submit';
+      const body = await readBody(req, withFiles ? ITEM_WITH_FILES_MAX_BODY : MAX_BODY);
+      if (withFiles) {
+        const { files, ...rest } = body;
+        if (Buffer.byteLength(JSON.stringify(rest), 'utf8') > MAX_BODY) throw new GatewayError(413, 'too_large', '內容太大（上限 512 KB）；附件請另外處理');
+        const decoded = decodeFiles(files);
+        const companions = decodeCompanions(body.companions);
+        const args = { item: body.item, submissionId: typeof body.submissionId === 'string' ? body.submissionId : undefined, files: decoded, companions };
+        if (sub === '/drafts') return send(res, 200, await workflow.saveDraft(p, args));
+        return send(res, 200, await workflow.submit(p, args, ctx));
+      }
       const m = /^\/items\/(gw-\d{8}-[0-9a-f]{6})\/(return|approve)$/.exec(sub);
       if (m && m[2] === 'return') return send(res, 200, await workflow.returnForChanges(p, { submissionId: m[1], comment: body.comment }, ctx));
       if (m && m[2] === 'approve') return send(res, 200, await workflow.approve(p, { submissionId: m[1], comment: body.comment }, ctx));

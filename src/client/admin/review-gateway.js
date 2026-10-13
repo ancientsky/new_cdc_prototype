@@ -3,7 +3,7 @@
 import { $ } from './common.js';
 import { detectGateway, el, clear, fmtTime, errorText, STATUS_TONE } from './gateway-client.js';
 
-const TYPE = { disease: '疾病頁', faq: 'Q&A', news: '新聞稿', letter: '致醫界通函', clarification: '澄清', document: '文件', vaccine: '疫苗頁', media: '影音', topic: '專區', service: '申請服務', publication: '出版品', labtest: '檢驗項目', research: '研究計畫', job: '人才招募', tender: '採購公告', banner: '宣導 Banner', page: '一般頁', dataset: '資料集', article: '疫情報導文章' };
+const TYPE = { article: '疫情報導文章', disease: '疾病頁', faq: 'Q&A', news: '新聞稿', letter: '致醫界通函', clarification: '澄清', document: '文件', vaccine: '疫苗頁', media: '影音', topic: '專區', service: '申請服務', publication: '出版品', labtest: '檢驗項目', research: '研究計畫', job: '人才招募', tender: '採購公告', banner: '宣導 Banner', page: '一般頁', dataset: '資料集' };
 
 (async function init() {
   const box = $('#gw-review');

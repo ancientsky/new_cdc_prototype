@@ -116,6 +116,7 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
       editors: sub.editors.map(({ account, name }) => ({ account, name })), approvals: sub.approvals.map(({ account, name, at }) => ({ account, name, at })),
       requiredApprovals: sub.lane?.requiredApprovals ?? 1, laneLabel: sub.lane?.label ?? null, laneNotes: sub.lane?.reasons ?? [],
       comments: sub.comments, history: sub.history, publishAt: sub.publishAt ?? null, scheduledFor: sub.publishAt ? taipeiTime(publishAtMs(sub.publishAt) ?? 0) : null,
+      files: sub.files ?? [], companions: (sub.companions ?? []).map(({ id, title }) => ({ id, title })),
       ...(p ? {
         can: {
           edit: !eb && ['draft', 'returned'].includes(st), submit: !eb && ['draft', 'returned'].includes(st),
@@ -135,19 +136,43 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
   const branchOf = (contentId, sid) => `cms/${contentId.replace(/[^a-z0-9-]/g, '-')}-${sid.slice(-6)}`;
   const openFor = (contentId) => store.all().find((s) => s.contentId === contentId && ['draft', 'returned', 'in_review'].includes(s.status));
 
-  function validated(item, status) {
+  function validated(item, status, { extra = [], files = null } = {}) {
     const copy = { ...item, status };
-    const v = validator.validate(copy);
+    const v = validator.validate(copy, { extra, files });
     if (!v.ok) throw new GatewayError(422, 'invalid', `內容有 ${v.errors.length} 個地方需要修正，還沒有存進系統`, v.errors);
     return { item: copy, path: assertContentPath(v.path) };
+  }
+  /** 配套內容（第四十五輪）：各自也要通過檢查；回傳 [{ item, path }]。配套內容不能跟主內容同 id，也不能是已上線且正在別的送審件裡的內容 */
+  function validatedCompanions(main, companions) {
+    const out = [];
+    for (const c of companions ?? []) {
+      if (!c || typeof c !== 'object') continue;
+      if (c.id === main.id) throw new GatewayError(422, 'invalid', '配套內容不能與主內容同一個 ID', [{ field: 'id', label: '內容 ID', message: '配套內容不能與主內容同一個 ID' }]);
+      const other = openFor(c.id);
+      if (other) throw new GatewayError(409, 'busy', `配套內容「${c.title ?? c.id}」已有一個進行中的送審件（${STATUS[other.status]}）`);
+      const v = validator.validate({ ...c, status: c.status ?? 'published' }, { extra: [main, ...(companions ?? []).filter((x) => x !== c)] });
+      if (!v.ok) throw new GatewayError(422, 'invalid', `配套內容「${c.title ?? c.id}」有 ${v.errors.length} 個地方需要修正`, v.errors.map((e) => ({ ...e, message: `配套內容「${c.title ?? c.id}」：${e.message}` })));
+      out.push({ item: { ...c, status: c.status ?? 'published' }, path: assertContentPath(v.path) });
+    }
+    return out;
+  }
+  /** 送審件分支上已有的附件（之前存過草稿）：{ name: Buffer }；再存一版時沒重傳的附件仍要一起檢查 */
+  async function branchFiles(sub) {
+    const out = {};
+    for (const name of sub?.files ?? []) { const buf = await git.readFile(sub.branch, `content/assets/${sub.contentId}/${name}`, { raw: true }); if (buf) out[name] = Buffer.from(buf); }
+    return out;
   }
   function addEditor(sub, p) { if (!sub.editors.some((e) => e.account === p.account)) sub.editors.push({ account: p.account, name: p.name, email: p.email ?? null }); }
 
   /** 存一版到分支（儲存草稿與送審共用） */
-  async function writeVersion(p, item, sid, status, action) {
+  async function writeVersion(p, item, sid, status, action, { files = null, companions = [] } = {}) {
     const checkedEdit = editBlock(p, item?.owner);
     if (checkedEdit) throw new GatewayError(403, 'forbidden', checkedEdit);
-    const { item: clean, path } = validated(item, status);
+    const prior = sid ? store.get(sid) : (item?.id ? openFor(item.id) : null);
+    // 附件：這次送來的＋分支上已有的（沒重傳的）；都沒有就照舊只看站上檔案
+    const allFiles = files || prior?.files?.length ? { ...(prior ? await branchFiles(prior) : {}), ...(files ?? {}) } : null;
+    const comps = validatedCompanions(item, companions);
+    const { item: clean, path } = validated(item, status, { extra: comps.map((c) => c.item), files: allFiles });
     let sub = sid ? store.get(sid) : openFor(clean.id);
     if (sid && !sub) throw new GatewayError(404, 'notfound', '找不到這筆送審件');
     if (sub && sub.contentId !== clean.id) throw new GatewayError(409, 'mismatch', '這筆送審件是另一筆內容的，不能拿來存這份內容（內容 ID 不同）');
@@ -164,16 +189,19 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
     }
     addEditor(sub, p);
     Object.assign(sub, { title: clean.title, owner: clean.owner, type: clean.type, publishAt: clean.publishAt ?? null, lane: laneFor(clean, p), updatedAt: iso() });
-    const r = await git.commit({ branch: sub.branch, files: [{ path, content: stableJson(clean) }], message: message(action, sub, p), author: SERVICE_IDENTITY });
+    const commitFiles = [{ path, content: stableJson(clean) }, ...comps.map((c) => ({ path: c.path, content: stableJson(c.item) })), ...Object.entries(files ?? {}).map(([name, buf]) => ({ path: `content/assets/${clean.id}/${name}`, content: buf }))];
+    sub.files = [...new Set([...(sub.files ?? []), ...Object.keys(files ?? {})])];
+    sub.companions = comps.map((c) => ({ id: c.item.id, title: c.item.title ?? c.item.id, path: c.path }));
+    const r = await git.commit({ branch: sub.branch, files: commitFiles, message: message(action, sub, p), author: SERVICE_IDENTITY });
     return { sub, item: clean, commit: r.sha, unchanged: !!r.unchanged };
   }
 
   /* ───────── 動作 ───────── */
-  async function saveDraft(p, { item, submissionId }) {
+  async function saveDraft(p, { item, submissionId, files = null, companions = [] }) {
     await ensureReady();
     return queue(async () => {
       try {
-        const { sub, commit, unchanged } = await writeVersion(p, item, submissionId, 'draft', '儲存草稿');
+        const { sub, commit, unchanged } = await writeVersion(p, item, submissionId, 'draft', '儲存草稿', { files, companions });
         sub.status = 'draft';
         sub.history.push({ at: iso(), action: 'save', label: '儲存草稿', account: p.account, name: p.name });
         store.put(sub);
@@ -183,19 +211,20 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
     });
   }
 
-  async function submit(p, { item, submissionId }, ctx = {}) {
+  async function submit(p, { item, submissionId, files = null, companions = [] }, ctx = {}) {
     await ensureReady();
     return queue(async () => {
       try {
         let sub, commit;
-        if (item) ({ sub, commit } = await writeVersion(p, item, submissionId, 'review', '送審'));
+        if (item) ({ sub, commit } = await writeVersion(p, item, submissionId, 'review', '送審', { files, companions }));
         else {
           sub = store.get(submissionId);
           if (!sub) throw new GatewayError(404, 'notfound', '找不到這筆送審件');
           const eb = editBlock(p, sub.owner); if (eb) throw new GatewayError(403, 'forbidden', eb);
           if (!['draft', 'returned'].includes(sub.status)) throw new GatewayError(409, 'state', `目前狀態是「${STATUS[sub.status]}」，不能送審`);
           const cur = JSON.parse(await git.readFile(sub.branch, sub.path) ?? 'null');
-          ({ sub, commit } = await writeVersion(p, cur, sub.id, 'review', '送審'));
+          const curComps = []; for (const c of sub.companions ?? []) { const j = JSON.parse(await git.readFile(sub.branch, c.path) ?? 'null'); if (j) curComps.push(j); }
+          ({ sub, commit } = await writeVersion(p, cur, sub.id, 'review', '送審', { companions: curComps }));
         }
         sub.status = 'in_review'; sub.submittedAt = iso(); sub.approvals = [];
         const rv = await git.openReview({ branch: sub.branch, title: `送審：${sub.title}`, description: reviewDescription(sub), labels: [REVIEW_LABEL.in_review] });
@@ -266,7 +295,8 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
     if (!cur) throw new GatewayError(409, 'missing', '找不到送審的內容');
     const today = taipeiDate(now());
     const final = { ...cur, status: 'published', reviewedAt: today, ...(sub.isNew ? { publishedAt: today } : {}) };
-    const { path } = validated(final, 'published');
+    const comps = []; for (const c of sub.companions ?? []) { const j = JSON.parse(await git.readFile(sub.branch, c.path) ?? 'null'); if (j) comps.push(j); }
+    const { path } = validated(final, 'published', { extra: comps, files: sub.files?.length ? await branchFiles(sub) : null });
     const trailers = approvals.map((a) => `Approved-by: ${who(a)}`);
     if (!approvals.length) trailers.push(`Approved-by: 自動（${sub.lane.label}，送審人在授權名單）`);
     trailers.push(`Lane: ${sub.lane.id}`);

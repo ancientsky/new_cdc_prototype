@@ -5,6 +5,9 @@ import { initPagePreview } from './page-preview.js';
 import { zipBlob } from './zip-store.js';
 import { mdToHtml } from './md-convert.js';
 import { sha256Hex } from './preprocess.js';
+import { extractPdf } from './pdf-read.js';
+import { manuscriptText, captionsByPage, linesFromItems, pageText, matchImages, describeExtraction } from './pdf-manuscript.js';
+import { initPublishGateway } from './publish-gateway.js';
 import {
   emptyState, stateFromArticle, applyManuscript, buildArticle, resolveIssue, problemsOf, hasErrors, suggestNextIssue, suggestArticleNo, sectionKeyFor, suggestDoi,
   tocPreviewRows, packageEntries, exportFilename, issueFilename, renderArticlePreview, renderTocPreview, TE_FIELD_MAP, assignFigureFiles, IMAGE_EXT_RE,
@@ -215,16 +218,77 @@ $('#te-split').addEventListener('click', () => {
   paint();
 });
 $('#te-clear-ms').addEventListener('click', () => { $('#te-manuscript').value = ''; $('#te-split-msg').textContent = ''; $('#te-unassigned').hidden = true; read(); });
-$('#te-pdf').addEventListener('change', async (e) => {
-  const f = e.target.files?.[0]; pdf = null;
-  if (!f) { paint(); return; }
-  if (!/\.pdf$/i.test(f.name)) { $('#te-pdf-hint').textContent = '只接受 PDF。'; e.target.value = ''; paint(); return; }
-  if (f.size > D.pdfMaxBytes) { $('#te-pdf-hint').textContent = `檔案 ${(f.size / 1048576).toFixed(1)} MB 超過上限 ${Math.round(D.pdfMaxBytes / 1048576)} MB。`; e.target.value = ''; paint(); return; }
+/** 單篇 PDF 附件：檢查型別與大小、讀 bytes 與 sha256。回傳 null＝不收 */
+async function setPdf(f, hintEl) {
+  pdf = null;
+  if (!f) return null;
+  if (!/\.pdf$/i.test(f.name)) { hintEl.textContent = '只接受 PDF。'; return null; }
+  if (f.size > D.pdfMaxBytes) { hintEl.textContent = `檔案 ${(f.size / 1048576).toFixed(1)} MB 超過上限 ${Math.round(D.pdfMaxBytes / 1048576)} MB。`; return null; }
   const bytes = new Uint8Array(await f.arrayBuffer());
   pdf = { name: f.name.toLowerCase().replace(/[^a-z0-9._-]+/g, '-').replace(/^-+/, '') || 'article.pdf', bytes, sha256: await sha256Hex(bytes) };
-  $('#te-pdf-hint').textContent = `將打包為 content/assets/{文章 id}/${pdf.name}（${(f.size / 1024).toFixed(0)} KB），並宣告進 assets[]。`;
+  hintEl.textContent = `將打包為 content/assets/{文章 id}/${pdf.name}（${(f.size / 1024).toFixed(0)} KB），並宣告進 assets[]。`;
+  return pdf;
+}
+$('#te-pdf').addEventListener('change', async (e) => {
+  const ok = await setPdf(e.target.files?.[0], $('#te-pdf-hint'));
+  if (!ok) e.target.value = '';
   paint();
 });
+
+/* ───────── 第四十五輪：上傳 PDF 自動帶入（文字層 → 稿件欄 → 切段；內嵌圖片 → 圖檔） ───────── */
+let pdfLeftovers = []; // 沒配到圖說的圖：[{ key, blob, width, height, page }]
+function renderLeftovers() {
+  const box = $('#te-pdf-extra');
+  box.hidden = !pdfLeftovers.length;
+  if (!pdfLeftovers.length) { box.innerHTML = ''; return; }
+  const nextNo = () => Math.max(0, ...state.figures.filter((f) => f.kind === 'figure').map((f) => Number(f.no) || 0)) + 1;
+  box.innerHTML = `<p class="adm-hint">PDF 裡還有這些圖沒有對到「圖 N」的圖說（可能是刊頭、或圖說不在同一頁）。要用的話按「當作圖 N」，會新增一列圖表並配上檔案；不要的就略過。</p><div class="adm-te-pdfextra">${pdfLeftovers.map((im, i) => `<figure><img src="${esc(im.url)}" alt="PDF 第 ${im.page} 頁抽出的圖，${im.width}×${im.height}"><figcaption>第 ${im.page} 頁 · ${im.width}×${im.height}<br><button type="button" class="adm-btn adm-btn--sm" data-use-img="${i}">當作圖 ${nextNo()}</button></figcaption></figure>`).join('')}</div>`;
+}
+$('#te-pdf-extra').addEventListener('click', async (e) => {
+  const b = e.target.closest('[data-use-img]'); if (!b) return;
+  const im = pdfLeftovers[Number(b.dataset.useImg)]; if (!im) return;
+  read();
+  const no = Math.max(0, ...state.figures.filter((f) => f.kind === 'figure').map((f) => Number(f.no) || 0)) + 1;
+  await addImageFiles([new File([im.blob], `圖${no}.png`, { type: 'image/png' })]);
+  pdfLeftovers = pdfLeftovers.filter((x) => x !== im); URL.revokeObjectURL(im.url);
+  renderLeftovers();
+});
+async function importPdf(f) {
+  const msg = $('#te-pdfin-msg');
+  const ok = await setPdf(f, $('#te-pdf-hint'));
+  if (!ok) { msg.textContent = $('#te-pdf-hint').textContent; return; }
+  msg.textContent = '讀取 PDF 文字層與圖片中…';
+  let ex;
+  try { ex = await extractPdf(pdf.bytes, { onProgress: (n, t) => { msg.textContent = `讀取 PDF 第 ${n}／${t} 頁…`; } }); } catch (err) {
+    msg.textContent = err?.message === 'pdfjs-unavailable' ? '這個環境沒有部署 PDF 讀取元件（/vendor/pdfjs/），請把 PDF 文字全選複製貼到下面的稿件欄；PDF 本身已當作附件。' : `PDF 讀不出文字層（${err?.message ?? '未知錯誤'}）：可能是掃描檔或受保護的檔案，請貼文字；PDF 本身已當作附件。`;
+    paint(); return;
+  }
+  const text = manuscriptText(ex.pages);
+  if (!text.trim()) { msg.textContent = 'PDF 沒有文字層（掃描檔？）：請把文字貼到下面的稿件欄；PDF 本身已當作附件。'; paint(); return; }
+  read();
+  const st = { ...state, manuscript: text };
+  const r = applyManuscript(st, text, { issues: D.issues });
+  fill(r.state);
+  $('#te-split-msg').textContent = `${r.report.length ? `已帶入：${r.report.join('、')}。` : '沒有認出任何段落。'}${r.notes?.length ? ` 注意：${r.notes.join('；')}` : ''} 請逐段核對。`;
+  $('#te-unassigned').hidden = !r.unassigned.length;
+  if (r.unassigned.length) $('#te-unassigned').innerHTML = `<strong>沒有歸到任何段落的文字（${r.unassigned.length} 段）</strong>：請貼到正確的段落，或刪掉。<ul>${r.unassigned.map((u) => `<li>${esc(u.slice(0, 200))}${u.length > 200 ? '…' : ''}</li>`).join('')}</ul>`;
+  // 圖片：配圖說 → 當作「圖N.png」拖進來
+  const captions = captionsByPage(ex.pages.map((p) => pageText(linesFromItems(p.items))));
+  const { assigned, leftovers, skipped } = matchImages(ex.images, captions);
+  const byKey = new Map(ex.images.map((im) => [im.key, im]));
+  for (const im of pdfLeftovers) URL.revokeObjectURL(im.url);
+  pdfLeftovers = leftovers.map((im) => ({ ...im, url: URL.createObjectURL(im.blob) }));
+  if (assigned.length) await addImageFiles(assigned.map((a) => new File([byKey.get(a.key).blob], a.fileName, { type: 'image/png' })));
+  renderLeftovers();
+  msg.textContent = describeExtraction({ pages: ex.pages.length, chars: text.replace(/\s/g, '').length, assigned, leftovers, skipped });
+  paint();
+  $('#te-title')?.focus();
+}
+$('#te-pdfin').addEventListener('change', (e) => { const f = e.target.files?.[0]; if (f) importPdf(f); });
+const pdfDrop = $('#te-pdfdrop');
+pdfDrop.addEventListener('dragover', (e) => { if (e.dataTransfer?.types?.includes('Files')) { e.preventDefault(); pdfDrop.classList.add('is-drop'); } });
+pdfDrop.addEventListener('dragleave', () => pdfDrop.classList.remove('is-drop'));
+pdfDrop.addEventListener('drop', (e) => { const f = e.dataTransfer?.files?.[0]; if (!f) return; e.preventDefault(); pdfDrop.classList.remove('is-drop'); importPdf(f); });
 /** 圖檔：讀 bytes、sha256、寬高 → 依檔名配到圖表（圖1.png／fig-2.png），認不出的依序補到沒有圖檔的圖 */
 async function addImageFiles(fileList) {
   const files = [...(fileList ?? [])].filter((f) => IMAGE_EXT_RE.test(f.name));
@@ -284,3 +348,23 @@ if (qid && D.articles.some((a) => a.id === qid)) load(qid);
 else if (draft?.state) { load(draft.pick); fill({ ...state, ...draft.state, categories: draft.state.categories ?? state.categories }); $('#te-msg').textContent = `已帶回 ${new Date(draft.savedAt).toLocaleString('zh-TW', { hour12: false })} 存的草稿。`; }
 else load('new');
 paint();
+
+/* ───────── 第四十五輪：送審與上線（有寫入閘道時才出現；GitHub Pages 上仍用上架包） ───────── */
+const b64 = (bytes) => { let out = ''; const CH = 0x8000; for (let i = 0; i < bytes.length; i += CH) out += String.fromCharCode.apply(null, bytes.subarray(i, i + CH)); return btoa(out); };
+const GW_FIELDS = { title: '#te-title', issueId: '#te-issue', articleNo: '#te-no', articleType: '#te-type', pages: '#te-pages', authors: '#te-authors', affiliations: '#te-affils', doi: '#te-doi', keywords: '#te-keywords', abstractMarkdown: '#te-abstract', sections: '#te-sections', figures: '#te-figures', references: '#te-refs', assets: '#te-figfiles', owner: '#te-owner', diseases: '#te-dis-q', summary: '#te-summary', pdfUrl: '#te-pdfurl' };
+initPublishGateway({
+  exportObj: () => current().article,
+  getContentId: () => { const { article } = current(); return /article\.teb-\d+-\d+-\d+$/.test(article.id) ? article.id : ''; },
+  loadItem: (item) => { base = D.articles.find((a) => a.id === item.id) ?? item; fill(stateFromArticle(item, { categories: state.categories })); $('#te-editbox').hidden = false; $('#te-editbox').innerHTML = `<strong>送審中的版本</strong> <code>${esc(item.id)}</code>：已從系統帶回，附件（PDF、圖）留在系統裡，不必重傳。`; paint(); },
+  exportExtra: () => {
+    const { issue, article } = current();
+    const companions = [];
+    if (issue?._new) { const { _new, ...clean } = issue; void _new; companions.push(clean); }
+    const files = [];
+    if (pdf) files.push({ name: pdf.name, base64: b64(pdf.bytes) });
+    for (const [name, m] of images) if ((article.figures ?? []).some((f) => f.file === name)) files.push({ name, base64: b64(m.bytes) });
+    return { companions, files };
+  },
+  fieldInput: GW_FIELDS,
+  onSaved: (sub) => { if (sub?.status === 'published') $('#te-msg').textContent = '文章已上線（含附件與卷期）。'; },
+});

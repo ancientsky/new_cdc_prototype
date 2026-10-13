@@ -2245,3 +2245,50 @@ scanFile(json)
 
 `tests/round44-leadership.test.mjs`：內容與 schema（私人欄位、role enum、photo 網域）、首長頁與總覽頁渲染（中英、JSON-LD、.md）、關於頁區塊與頁尾（含外語 fallback）、個資掃描三情境（放行自己的姓名；別人姓名／手機／信箱／私人欄位詞照擋；同姓名在新聞稿照擋、「出生率」在非簡介檔不誤報）、後台來回（`itemToForm → buildExport → mergeEdit` 保留 slug／profile／verification）、dist 輸出。
 
+
+## 49. 第四十五輪（2026-10-13）：《疫情報導》上傳 PDF 自動帶入、送審件帶附件與配套內容
+
+起因與同事看到的流程在 [docs/bulletin.md](docs/bulletin.md) §14；同仁 SOP 在 guide-staff §45；決策在 docs/architecture-decisions.md §34。這裡記工程契約。
+
+### 49.1 瀏覽器端讀 PDF（後台專用）
+
+| 模組 | 職責 |
+| --- | --- |
+| `src/public/vendor/pdfjs/pdf.min.js`、`pdf.worker.min.js`、`LICENSE.txt` | pdf.js **legacy 版**（`pdfjs-dist` 6.4，Apache-2.0；從 `node_modules/pdfjs-dist/legacy/build/` 複製，檔名改 `.js`）。只有後台用、用到才 `import()`，不算公開站 JS 預算（vendor 目錄本來就不計）。升版：`npm i -D pdfjs-dist@新版` 後重新複製三個檔 |
+| `src/client/admin/pdf-read.js` | 跟 pdf.js 講話的那一層（DOM）。`loadPdfjs()` 動態載入並設 `workerSrc`（失敗回 null）；`extractPdf(bytes, { maxPages=60, onProgress })` → `{ pages:[{ items:[{str,x,y,w,h,size}], width, height }], images:[{ key:'p{n}-{order}', page, order, width, height, fingerprint, blob }], numPages }`。`y` 已換成「從頁面上緣往下」。圖片來自 operator list 的 `paintImageXObject`／`paintInlineImageXObject`，物件用回呼版 `objs.get(name, cb)` 等解碼（上限 8 秒）；交給 `getDocument` 的是 `new Uint8Array(bytes)` 複本（pdf.js 會轉移 ArrayBuffer）。vendor 不在時丟 `Error('pdfjs-unavailable')` |
+| `src/client/admin/pdf-manuscript.js` | 純函式、零依賴、Node 與瀏覽器共用、有測試。`linesFromItems(items)` 字塊→行；`pageText(lines)` 行→一頁文字（左側縮排依 x）；`manuscriptText(pages)` 多頁→稿件文字（頁間空一行）；`captionsByPage(pageTexts)` → `[{ page, kind:'figure'|'table', no, line }]`；`matchImages(images, captions, { minWidth=150, minHeight=80 })` → `{ assigned:[{ key, kind, no, page, fileName:'圖N.png' }], leftovers, skipped:[{…, why:'small'|'repeated'}] }`；`describeExtraction()` 訊息列 |
+| `src/client/bulletin-rules.js` | 切段規則不變，只補一條：分類名比對先去掉空白（刊頭「疫 情 調 查」加寬字距） |
+| `src/client/admin/bulletin-edit.js` | `importPdf(file)`：`setPdf`（同一份檔當單篇 PDF 附件）→ `extractPdf` → `manuscriptText` → `applyManuscript` → 填表 → `captionsByPage`＋`matchImages` → 配到的圖以 `File('圖N.png')` 走第三十五輪 `addImageFiles`（命名 `fig-N.png`、sha256、尺寸）；未配對的圖列縮圖（`data-use-img`）。拖放 `#te-pdfdrop`、檔案 `#te-pdfin` |
+
+排版規則：同一行＝基線 y 差 ≤ max(2, 0.5·size)；同行依 x 排序；字塊間距 > 1 em 補 round(gap／0.5 em) 個空白（上限 40）、> 0.25 em（拉丁字母之間 > 0.1 em）補一個；頁間空一行。目標是和 `pdftotext -layout` 的輸出同形，讓 `splitManuscript` 一套規則吃兩種來源。
+
+### 49.2 寫入閘道：附件與配套內容
+
+`POST /api/gateway/drafts`、`POST /api/gateway/submit` 的 body 多兩個選填欄位：
+
+```json
+{ "item": { …文章 JSON… }, "submissionId": "gw-…",
+  "companions": [ { …publication JSON… } ],
+  "files": [ { "name": "teb-42-20-1.pdf", "base64": "…" }, { "name": "fig-1.png", "base64": "…" } ] }
+```
+
+| 規則 | 值 | 錯誤 |
+| --- | --- | --- |
+| 整包上限（有 files 時） | `ITEM_WITH_FILES_MAX_BODY` 24 MB | 413 |
+| 內容本身（去掉 files 後的 JSON） | `MAX_BODY` 512 KB 不變 | 413 `內容太大（上限 512 KB）；附件請另外處理` |
+| 附件數 | `MAX_FILES` 20 | 400 `bad_files` |
+| 附件合計 | `MAX_FILES_BYTES` 16 MB | 413 |
+| 檔名 | `/^[a-z0-9][a-z0-9._-]{0,99}$/i` | 400 `bad_files` |
+| 配套內容 | 最多 3 筆物件；不能與主內容同 id；不能是另一筆進行中送審件的內容 | 400 `bad_companions`／409 |
+
+工作流程（`workflow.mjs`）：`writeVersion()` 把「分支上已有的附件 ∪ 這次上傳」一起交給驗證，再把內容、配套內容與附件（`content/assets/{id}/{name}`）提交到同一個分支；送審件記 `files[]`（檔名）與 `companions[]`（`{ id, title, path }`）。之後每一版不必重傳附件（`branchFiles()` 從分支讀回）；送審不帶 item 時配套內容也從分支重載。`publish()` 再驗一次（含配套內容與分支附件）後合併，所以配套內容與主內容**同一次核准、同一個合併**。`view()` 多回 `files`、`companions`。
+
+驗證（`validate-item.mjs`）：`validate(item, { extra, files })`。`extra` 的物件加進站台集合（`collections`／`all`／`byId`），所以「所屬卷期存在」查得到新卷期；`files` 給了就建暫存目錄 `gw-assets-*/{id}/`，先複製站上既有的 `content/assets/{id}/`，再寫入上傳的檔，呼叫建置同一支 `validateAssets(view, config, { assetsDir })`，訊息裡的暫存路徑換回 `content/assets/…`，查完即刪。
+
+Git 供應者：`readFile(ref, path, { raw: true })` 回 Buffer（本機：`execFile` 以 `encoding:'buffer'` 且**不**經 `String()`；GitLab：`arrayBuffer()`）；提交時 Buffer 內容走 `hash-object --stdin`（本機）或 `encoding: 'base64'`（GitLab commit actions）。
+
+後台（`publish-gateway.js`）：`initPublishGateway({ exportExtra, fieldInput, onSaved })` 三個新選項——`exportExtra()` 回 `{ companions, files }` 併進 body；`fieldInput` 覆寫錯誤→欄位的對照（疫情報導表單的 id 不同）；`onSaved(current)`。`review-gateway.js` 型別表加 `article`。
+
+### 49.3 測試
+
+`tests/round45-pdf-gateway.test.mjs`：排版（行、縮排、頁間）、圖說與配圖（太小、重複、跨頁、未配對）、真實 PDF 42(19) 經 pdf.js（Node legacy 版）→ `splitManuscript` 全欄位、閘道工作流程（缺卷期擋、sha256 不符擋、缺檔擋；存草稿 → 分支上附件逐位元相同 → 不重傳再存一版 → 送審 → 核准 → `main` 四個檔、`Approved-by`）、HTTP 層上限、GitLab 供應者 base64／raw、模板與 vendor（legacy 版、複製 bytes）。

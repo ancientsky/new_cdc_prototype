@@ -311,7 +311,9 @@ export function splitManuscript(text, { categories = DEFAULT_CATEGORIES } = {}) 
       if (m.index === 0 && m[0].length >= line.length - 1) consumedAll = true; else line = line.replace(m[0], '').trim();
     }
     if (consumedAll) { lines.push(''); continue; }
-    const cat = categories.find((c) => c.label === line || c.labelEn?.toLowerCase() === line.toLowerCase());
+    // 分類名在 PDF 刊頭常是「疫 情 調 查」這種加寬字距的排法，文字層會變成字與字之間有空白；比對時先把空白拿掉
+    const squeezed = line.replace(/\s+/g, '');
+    const cat = categories.find((c) => c.label === line || c.label === squeezed || c.labelEn?.toLowerCase() === line.toLowerCase());
     if (cat && !meta.category) { meta.category = cat.key; lines.push(''); continue; }
     lines.push(line);
   }

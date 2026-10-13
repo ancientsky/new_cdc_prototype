@@ -21,15 +21,16 @@ export const SERVICE_IDENTITY = { name: 'CDC Web Gateway', email: 'web-gateway@c
  * 跑 git；失敗丟錯（含 stderr）。input 會寫進 stdin。
  * @param {string} cwd
  * @param {string[]} args
- * @param {{ input?: string, env?: Record<string, string>, okCodes?: number[] }} [o]
+ * binary＝stdout 回 Buffer（讀附件用）；input 可為 Buffer（寫附件用）。
+ * @param {{ input?: string|Buffer, env?: Record<string, string>, okCodes?: number[], binary?: boolean }} [o]
  * @returns {Promise<any>}
  */
-function git(cwd, args, { input, env = {}, okCodes = [0] } = {}) {
+function git(cwd, args, { input, env = {}, okCodes = [0], binary = false } = {}) {
   return new Promise((resolve, reject) => {
-    const child = execFile('git', args, { cwd, env: { ...process.env, GIT_TERMINAL_PROMPT: '0', LC_ALL: 'C', ...env }, maxBuffer: 64 * 1024 * 1024, encoding: 'utf8' }, (err, stdout, stderr) => {
+    const child = execFile('git', args, { cwd, env: { ...process.env, GIT_TERMINAL_PROMPT: '0', LC_ALL: 'C', ...env }, maxBuffer: 64 * 1024 * 1024, encoding: binary ? 'buffer' : 'utf8' }, (err, stdout, stderr) => {
       const code = err ? (typeof err.code === 'number' ? err.code : 1) : 0;
       if (!okCodes.includes(code)) return reject(Object.assign(new Error(`git ${args[0]} 失敗：${String(stderr || err?.message).trim()}`), { code: 'git', exitCode: code }));
-      resolve({ stdout: String(stdout), code });
+      resolve({ stdout: binary ? Buffer.from(stdout) : String(stdout), code });
     });
     if (input != null) child.stdin?.end(input); else child.stdin?.end();
   });
@@ -108,8 +109,8 @@ export function createLocalGit({ dir, seedDir, seedPrefix = 'content', targetBra
         await run(['update-ref', `refs/heads/${targetBranch}`, c]);
       }
     },
-    async readFile(ref, filePath) {
-      const r = await run(['cat-file', '-p', `${ref}:${filePath}`], { okCodes: [0, 128] });
+    async readFile(ref, filePath, { raw = false } = {}) {
+      const r = await run(['cat-file', '-p', `${ref}:${filePath}`], { okCodes: [0, 128], ...(raw ? { binary: true } : {}) });
       return r.code === 0 ? r.stdout : null;
     },
     async branchExists(branch) { return !!(await rev(`refs/heads/${branch}`)); },

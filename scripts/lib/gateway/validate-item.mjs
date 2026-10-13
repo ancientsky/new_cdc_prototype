@@ -7,11 +7,13 @@
 //
 // 路徑也在這裡決定：檔名一律由「通過格式檢查的 id」推出來（content/<型別目錄>/<id 去掉前綴>.json），
 // 不接受前端送來的路徑——這是防路徑穿越（../../）最可靠的做法：根本不讓外面決定路徑。
+import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { config } from '../../../site.config.mjs';
-import { loadSite } from '../load.mjs';
+import { loadSite, ROOT } from '../load.mjs';
 import { validateSite } from '../validate.mjs';
-import { validateAssets } from '../assets.mjs';
+import { validateAssets, ASSETS_DIR } from '../assets.mjs';
 
 /** 閘道接受的型別 → content 子目錄（疫情態勢、移轉清單、主檔、治理設定不走閘道） */
 export const TYPE_DIR = {
@@ -113,10 +115,11 @@ export function createValidator({ loadBase = () => loadSite(config) } = {}) {
      * @param {any} item
      * @returns {{ ok: boolean, path?: string, errors: {field:string|null,label:string,message:string}[] }}
      */
-    validate(item) {
+    validate(item, { extra = [], files = null } = {}) {
       const where = contentPathOf(item);
       if (where.ok === false) return { ok: false, errors: where.errors };
       const s = site();
+      for (const x of extra) { const w = contentPathOf(x); if (w.ok === false) return { ok: false, path: where.path, errors: w.errors.map((e) => ({ ...e, message: `同時送出的「${x?.title ?? x?.id ?? ''}」：${e.message}` })) }; }
       const existing = s.byId.get(item.id);
       if (existing && existing.type !== item.type && !(TYPE_DIR[existing.type] === TYPE_DIR[item.type])) {
         return { ok: false, path: where.path, errors: [{ field: 'id', label: labelOf('id'), message: '這個「內容 ID」已經被另一種內容使用，請換一個' }] };
@@ -124,14 +127,32 @@ export function createValidator({ loadBase = () => loadSite(config) } = {}) {
       // 把這一筆放進站台資料（同 id 取代），其餘內容原封不動
       const copy = { ...structuredClone(item), __file: where.path };
       for (const k of Object.keys(copy)) if (k.startsWith('__') && k !== '__file') delete copy[k];
-      const col = COLLECTION_OF[item.type];
-      const collections = { ...s.collections, [col]: [...(s.collections[col] ?? []).filter((x) => x.id !== item.id), copy] };
-      const all = [...s.all.filter((x) => x.id !== item.id), copy];
-      const byId = new Map(s.byId); byId.set(copy.id, copy);
+      // 第四十五輪：同時送出的配套內容（例如疫情報導文章的新卷期）也放進站台資料，文章的「所屬卷期存在」才查得到
+      const adds = [copy, ...extra.map((x) => { const w = contentPathOf(x); const c = { ...structuredClone(x), __file: w.ok === false ? '' : w.path }; for (const k of Object.keys(c)) if (k.startsWith('__') && k !== '__file') delete c[k]; return c; })];
+      const ids = new Set(adds.map((x) => x.id));
+      const collections = { ...s.collections };
+      for (const a of adds) { const c = COLLECTION_OF[a.type]; collections[c] = [...(collections[c] ?? []).filter((x) => !ids.has(x.id) && x !== a), a]; }
+      const all = [...s.all.filter((x) => !ids.has(x.id)), ...adds];
+      const byId = new Map(s.byId); for (const a of adds) byId.set(a.id, a);
       const view = { ...s, collections, all, byId };
       const prefix = `${where.path}: `;
       const mine = (e) => e.startsWith(prefix) || e === `重複 id：${item.id}`;
-      const raw = [...validateSite(view).filter(mine), ...validateAssets(view, config).errors.filter(mine)].map((e) => e.startsWith(prefix) ? e.slice(prefix.length) : e);
+      // 附件：送來的檔案（與這筆已在站上的檔案）放進暫存目錄，用建置同一套 validateAssets 查 bytes／sha256／mime／內容；查完就刪
+      const assetErrors = (() => {
+        if (!files) return validateAssets(view, config).errors;
+        const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'gw-assets-'));
+        try {
+          const dir = path.join(tmp, item.id);
+          fs.mkdirSync(dir, { recursive: true });
+          const existing = path.join(ASSETS_DIR, item.id);
+          if (fs.existsSync(existing)) for (const f of fs.readdirSync(existing)) { const src = path.join(existing, f); if (fs.statSync(src).isFile()) fs.copyFileSync(src, path.join(dir, f)); }
+          for (const [name, buf] of Object.entries(files)) { if (!/^[a-z0-9][a-z0-9._-]*$/i.test(name) || /\.\./.test(name)) continue; fs.writeFileSync(path.join(dir, name), buf); }
+          // 錯誤訊息裡的暫存路徑換回正式庫的路徑，同事看到的才是「content/assets/…」
+          const rel = path.relative(ROOT, tmp).split(path.sep).join('/');
+          return validateAssets(view, config, { assetsDir: tmp }).errors.map((e) => String(e).split(rel).join('content/assets'));
+        } finally { fs.rmSync(tmp, { recursive: true, force: true }); }
+      })();
+      const raw = [...validateSite(view).filter(mine), ...assetErrors.filter(mine)].map((e) => e.startsWith(prefix) ? e.slice(prefix.length) : e);
       const seen = new Set();
       const errors = raw.map(plainError).filter((e) => { const k = `${e.field}|${e.message}`; if (seen.has(k)) return false; seen.add(k); return true; });
       return { ok: errors.length === 0, path: where.path, errors };
