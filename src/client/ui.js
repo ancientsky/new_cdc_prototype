@@ -313,6 +313,16 @@ navBtn?.addEventListener('click', () => {
   const open = nav.classList.toggle('is-open');
   navBtn.setAttribute('aria-expanded', String(open));
 });
+// 第四十七輪：主選單小型面板（<details data-nav-dd>）。開合本身靠原生 details（無 JS 也能用）；這裡只補：同時只開一個、Esc 關閉並把焦點還給 summary、
+// 焦點移出或點面板外面就關。不用 hover 開啟、不加箭頭鍵（APG Disclosure Navigation Menu 不要求）。
+const dds = qsa('details[data-nav-dd]');
+dds.forEach((d) => {
+  d.addEventListener('toggle', () => { if (d.open) dds.forEach((o) => { if (o !== d) o.open = false; }); });
+  d.addEventListener('keydown', (e) => { if (e.key === 'Escape' && d.open) { d.open = false; d.querySelector('summary')?.focus(); } });
+  // relatedTarget 為 null（點到面板內的空白文字）時不在這裡關，交給下面的 document click 判斷，避免點面板內文字就收起
+  d.addEventListener('focusout', (e) => { if (e.relatedTarget && !d.contains(e.relatedTarget)) d.open = false; });
+});
+if (dds.length) document.addEventListener('click', (e) => { dds.forEach((d) => { if (d.open && !d.contains(e.target)) d.open = false; }); });
 const tocLinks = qsa('.c-toc a[href^="#"]');
 if (tocLinks.length && 'IntersectionObserver' in window) {
   const map = new Map(tocLinks.map((a) => [a.getAttribute('href').slice(1), a]));

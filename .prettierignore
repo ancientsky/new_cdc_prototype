@@ -72,3 +72,6 @@ eval/**/*.mjs
 !src/client/admin/intl-epidemic.js
 !src/client/admin/intl-epidemic-core.js
 !tests/intl-epidemic-api.test.mjs
+# 第四十七輪：主選單小型面板（docs/navigation.md）
+!src/templates/public/_nav-panels.mjs
+!tests/round47-nav-panels.test.mjs

@@ -2321,3 +2321,78 @@ extractPdf（pdf-read.js，瀏覽器專屬：字塊 + 圖）
 - **測試與驗證：** 同一份程式碼在 Node 以 pdf.js legacy 版跑九份樣本（拋棄式腳本，不進 repo），結果與瀏覽器相同。
 
 `splitManuscript` 與表格相關的契約：`|` 開頭的行與表下註解（`a.`／`註`／`*`／`（表頭上層：…）`）掛到剛剛那個「表 N」的 `markdown`；`SIDEBAR_RE` 收窄成 `/^[│|｜][^\s|│｜]{1,12}[│|｜]$/`，才不會把 Markdown 表格列當側標吃掉；只剩表頭的跨頁殘段（沒有資料列且多半單字格）`markdown` 為空字串、不輸出。`describeExtraction({…, tables})` 多回表格數。
+
+## 50. 第四十七輪（2026-10-13）：主選單小型面板
+
+評估與理由在 [docs/navigation.md](docs/navigation.md)（要不要 mega menu、為什麼用 details、為什麼不 hover、為什麼內容推導）；無障礙對照在 [docs/a11y.md](docs/a11y.md) 第 8 節。這裡記工程契約。現行 cdc.gov.tw 的選單結構是由搜尋快取推斷，未直接連線確認。
+
+### 50.1 檔案
+
+| 檔案 | 改動 |
+| --- | --- |
+| `src/templates/public/_nav-panels.mjs`（新） | 匯出 `navPanels(ctx)`、`PANEL_OF`（`{ '/diseases/':'diseases', '/vaccines/':'vaccines', '/travel/':'travel' }`）、`navPanelHtml(ctx, key, label)`、`DISEASE_MAX = 4`。`navPanels` → `{ diseases, vaccines, travel }`（同 site＋語言＋前綴只算一次），每個是 `{ cols: [{ title, links: [{ href, label, pro?, ext? }] }], all: { href, label } }`。連結只指向已有路由、`status === 'published'` 且本語言可用的內容、或目標頁上真的存在的錨點 id；找不到就不輸出該行 |
+| `src/templates/public/vaccines.mjs` | `immunizationHub()` 內 `groups` 的連結抽成純資料函式 `immunizationLinks(ctx)`（回傳 `[{ group, key, href, label, ext, pending, fallback }]`；`fallback` 表示本語言沒有版本、會連到中文頁），hub 與面板都從它取 |
+| `src/templates/layout.mjs`（`#main-nav`） | 以 `PANEL_OF[path]` 判斷有面板的項目，呼叫 `navPanelHtml()`；其餘項目維持單一 `<a>`，包一層 `.c-nav__item`。要加面板：在 `build()` 加一組、在 `PANEL_OF` 登記路徑 |
+| `src/styles/base.css` | 與既有 `.c-nav` 規則放一起：桌機面板、手機手風琴 |
+| `src/client/ui.js` | 「導覽收合」之後約 10 行（原始碼 +1,057 bytes，建置後 20.5 KB） |
+| `.prettierignore` | 兩條否定項（`_nav-panels.mjs`、`round47-nav-panels.test.mjs`）讓新檔納入 prettier 檢查 |
+| `tests/round6-ui.test.mjs` | 計算選單連結數前先去掉 `<details>` 區塊（面板連結不算主選單項目） |
+| `src/client/i18n.js` | 七語新鍵（50.5） |
+| `tests/round47-nav-panels.test.mjs`（新） | 50.6 |
+
+### 50.2 標記
+
+```html
+<div class="c-nav__item c-nav__item--panel">
+  <a href="/vaccines/" aria-current="page"?>疫苗</a>
+  <details class="c-nav__dd" data-nav-dd>
+    <summary class="c-nav__more"><span class="sr-only">展開「疫苗」的子選單</span><svg class="c-nav__chev" aria-hidden="true">…</svg></summary>
+    <div class="c-nav__panel" id="nav-panel-vaccines" role="group" aria-label="疫苗子選單">
+      <div class="c-nav__col"><p class="c-nav__panel-t">…</p><ul class="c-nav__panel-l"><li><a href="…">…</a></li></ul></div>
+      <div class="c-nav__col">…</div>
+      <p class="c-nav__panel-all"><a href="/vaccines/">前往疫苗專區 →</a></p>
+    </div>
+  </details>
+</div>
+```
+
+- 面板 id：`nav-panel-diseases`、`nav-panel-vaccines`、`nav-panel-travel`。每頁恰好 3 個 `details[data-nav-dd]`。
+- **為什麼 `<details>`**：無 JS 可用、summary 原生鍵盤與 expanded 狀態、與第二十四輪手機語言選單同一套。summary 不放 `aria-label`（支援不一致）、`role`、`aria-expanded`；名稱來自 `.sr-only` 文字（`nav.more`，變數 `{name}`）。
+- 面板小標用 `<p>`，不用 h2/h3（第二十四輪測試檢查標題不跳級）。
+- 每面板連結最多 9 個（含「前往○○專區」）、最少 4 個；每欄最多 5 個。連結支援既有的 `c-pro-only`（`html[data-view="public"] .c-pro-only{display:none}`）。
+- 其他五項（疫情、謠言查證、開放資料與統計、新聞與公告、常見問答，以及 en 的 International Cooperation、`.c-nav__pro`）維持單一 `<a>`。
+- 後台使用 `src/templates/admin/_layout.mjs`，不輸出 `data-nav-dd`。
+
+### 50.3 面板內容規則
+
+- **傳染病**：欄一「近期與常見」最多 `DISEASE_MAX = 4` 個＝ `site.situation`（situation/current.json）目前項目依序對應、已發布且本語言可用的疾病頁的前 4 個，不足才以 `reviewedAt` 最新的已發布疾病頁補上（去重）。**為什麼是 4**：原本 6 個 + 欄二 4 個 + 前往專區 = 11，超過 9 的上限；4 + 4 + 1 = 9；欄二「找法」＝ `/diseases/`（全部 N 種，N = `site.master.diseases.length`）、`/situation/`，專業用（`pro:true`）`/documents/`、`/report/`。
+- **疫苗**：取 `immunizationLinks(ctx)` 的 `/vaccines/schedule/`、`/tasks/vaccines/`、疫苗地圖（外部連結，標 ↗，`target=_blank rel=noopener`）、接種紀錄補發、受害救濟、疫苗基金捐款第一筆、`/data/`；欄一「打疫苗」4 筆、欄二「申請與查詢」3 筆（沒發布的減少）。面板先濾掉 `fallback` 的項目（本語言沒有版本者；hub 仍列出並以中文頁代替），避免外語頁選單出現中文標題：zh-TW 為 7 個 + 前往專區，其他語言 4 個 + 前往專區。**hub 與面板同源**，測試比對。
+- **出國與入境**：欄一「出國前」＝ `/travel/#tv-lookup`、`/tasks/travel/`、`/travel/#tv-tb-h`、`/travel/#tv-mp-h`；欄二「最新」＝ `/travel/#tv-ch-h`、`/travel/#tv-nw-h`，專業用 `/documents/`（僅在有 `isCurrent && published` 且標題含「檢疫」的文件時，目前沒有）。沒有另放國際重要疫情資訊列表連結：站上沒有該列表路由，列表就是 `#tv-nw-h` 區塊。世界地圖項在 `_travel-map.mjs` 沒有 `worldMap` 時不輸出。目前出國面板 = 6 個 + 前往專區。`tv-lookup` 是 section id，其餘是 h2 id；**錨點必須與 `travel.mjs` 實際輸出一致**。
+
+### 50.4 CSS 與陷阱
+
+- **overflow 裁切**：`.c-nav__in` 有 `overflow-x:auto`，其 `overflow-y` 因此被計算成 `auto`，containing block 在它之內的絕對定位面板會被裁成選單列的高度。所以 `.c-nav{position:relative}`、`.c-nav__item--panel{position:static}`，`.c-nav__item`／`details`／`summary` 都不設 `position:relative`；`.c-nav__panel{position:absolute;left:0;right:0;top:100%}` 以 `.c-nav` 為 containing block。
+- 桌機（≥960px）：`.c-nav__item{display:flex;align-items:stretch}`；`.c-nav__more` 去掉 marker（`list-style:none`、`::-webkit-details-marker`）、寬 36px、min-height 44px、沿用全站 `:focus-visible`；`[open]` 時 chevron 轉 180°、背景 `var(--green-50)`。`.c-nav__panel` 白底、`border-top:1px solid var(--line-2)`、`box-shadow:0 8px 24px rgba(0,0,0,.12)`、`z-index:110`、`display:grid;grid-template-columns:repeat(2,minmax(0,1fr)) auto;gap:var(--sp-5)`，連結 min-height 40px。
+- 手機（≤959px，`.c-nav.is-open`）：`.c-nav__item` 改 `flex-wrap:wrap`、`.c-nav__item--panel{position:relative}`（面板本身是 static，不會被裁），`.c-nav__more` 絕對定位在列右側（48×48），連結右側 `padding-right:56px`，`.c-nav__dd{flex:0 0 100%}`；`.c-nav__panel{position:static;box-shadow:none;display:block}` 佔滿整列寬、排在連結下方，欄位直列，連結 min-height 44px；面板就是手風琴，不需另外 JS。
+- **不得有 `:hover` 規則**改變 `details[open]` 或顯示 `.c-nav__panel`／`.c-nav__dd`。列印時 `.c-nav` 已 `display:none`。
+
+### 50.5 JS 與 i18n
+
+`ui.js`：`qsa('details[data-nav-dd]')`，`toggle` 開啟時關掉其他；`keydown` Esc 關閉並 `focus()` 回該 summary；`focusout` 只在 `relatedTarget` 有值且不在 details 內時才關（為什麼：點面板內的純文字，焦點不會移到別的元素，`relatedTarget` 為 null，若也關就會一點到文字面板就收起；這種情形交給下一條）；`document` 的 click 點到 details 外就全部關。不加 hover、不加方向鍵（APG Disclosure Navigation Menu 不要求）。ui.js 原始碼增加 1,057 bytes，建置後 20.5 KB；公開頁 JS 最大 64.5 KB，預算 120 KB。
+
+i18n 新鍵（七語齊備，順序 zh-TW, en, ja, tl, vi, id, th）：`nav.more`、`nav.panel.label`、`nav.panel.goto`、`nav.panel.recent`、`nav.panel.find`、`nav.panel.all.diseases`（帶 `{n}`）、`nav.panel.getvax`、`nav.panel.apply`、`nav.panel.before`、`nav.panel.latest`、`nav.panel.docs.pro`、`nav.panel.report.pro`、`nav.panel.quarantine.pro`、`nav.panel.prep`、`nav.panel.changes`、`nav.panel.news`（集中在 `ROWS_R47` 區塊）；重用 `vxs.entry.t`、`vaccines.hub.bygroup`、`vaccines.where.cta`、`nav.situation`、`travel.*`。這些鍵只在 Node 端模板用，不進 client 的 per-lang 模組（第二十六輪測試檢查 client 用到的鍵）。
+
+### 50.6 測試
+
+`tests/round47-nav-panels.test.mjs`（共 9 個測試；`govern('2026-10-13')` + `renderAllPages`，寫法仿 `round24-a11y.test.mjs`）：
+
+1. 七語首頁各恰好 3 個 `details[data-nav-dd]`；summary 內有 `.sr-only` 文字且無 `aria-label`／`aria-expanded`／`role`；面板 id 唯一。
+2. 每面板連結 4–9 個；站內連結對應到輸出檔；帶 `#id` 者目標頁含 `id="…"`；外部連結有 `rel="noopener"`。
+3. 疫苗面板每個 href 都出現在 `/vaccines/` 的 `.vx-hub` 內。
+4. 傳染病面板依序含 `site.situation` 的已發布疾病頁、≤ 4 個、無重複。
+5. `/pro/` 與 `/` 的面板都含 `c-pro-only` 連結（靠 CSS 隱藏，不靠模板分支）。
+6. base.css：沒有 `:hover` 與 `c-nav__panel`／`c-nav__dd` 在同一選擇器；`.c-nav` 有 `position:relative`；`.c-nav__panel` 的 `position:absolute` 在桌機規則、`position:static` 在 ≤959 規則內。
+7. ui.js 含 `data-nav-dd`、`'Escape'`、`focusout`。
+8. 面板內沒有 `<h1-6>`。
+9. 後台輸出不含 `data-nav-dd`。
+10. Playwright 端到端（沒有 dist 或 chromium 就 `tc.skip`）：1280px 點 ▾ → `open`、面板可見、點另一個前一個關、Esc 關閉且 `activeElement` 是 summary、點空白處關閉；以 `elementFromPoint` 確認面板沒被 `overflow` 裁切；390px 點「選單」→ 點 ▾ → 面板在 summary 下方且 `position` 為 static（含手機版面）；`@axe-core/playwright` 在 1280px 開傳染病面板後掃整個首頁，無 serious／critical。

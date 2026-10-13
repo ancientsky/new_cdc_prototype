@@ -25,25 +25,48 @@ function fundedTable(ctx, v) {
  * 法規與委員會、接種單位、統計——每一塊指到新站已有或新建的入口。對照表與理由見 docs/immunization-ia.md。
  * 連結只指向站內既有路由或已登錄的內容（build 的站內連結檢查會擋掉不存在的）。
  */
-function immunizationHub(ctx) {
+const HUB_GROUPS = ['schedule', 'where', 'injury', 'fund', 'pro', 'law', 'stats'];
+
+/**
+ * 第四十七輪：專區導覽的連結抽成純資料，/vaccines/ 的 immunizationHub 與主選單「疫苗」小面板（_nav-panels.mjs）都從這裡取，兩邊同步。
+ * 回傳 [{ group, key, href, label, ext, pending, fallback }]；找不到已發布內容的那一行就不輸出。fallback＝本語言沒有版本、連到中文頁（hub 照列，主選單面板不列）。
+ */
+export function immunizationLinks(ctx) {
   const { site, t, url } = ctx;
-  const svc = (slug) => site.collections.services.find((s) => s.slug === slug && s.status === 'published');
-  const top = (slug) => site.collections.topics.find((s) => s.slug === slug && s.status === 'published');
-  const pg = (slug) => site.collections.pages.find((s) => s.slug === slug && s.status === 'published');
-  const A = (item, label) => (item ? html`<li><a href="${hrefFor(ctx, item)}">${label ?? L(ctx, item, 'title')}</a>${item.verification?.status === 'pending' ? html` <span class="c-pill c-pill--warn">${t('vxs.unverified.badge')}</span>` : ''}</li>` : '');
-  const R = (path, label, ext = false) => html`<li><a href="${ext ? path : url(path, { noLang: path.startsWith('/v1/') })}"${ext ? raw(' target="_blank" rel="noopener"') : ''}>${label}${ext ? ' ↗' : ''}</a></li>`;
-  const docs = site.collections.documents.filter((d) => d.isCurrent && d.status === 'published' && (d.vaccines?.length || /預防接種|疫苗/.test(d.title))).length;
-  const groups = [
-    { key: 'schedule', items: html`${R('/vaccines/schedule/', t('vxs.entry.t'))}${R('/tasks/vaccines/', t('vaccines.hub.bygroup'))}${R('/vaccines/#vx-funded', t('vaccines.funded.all'))}` },
-    { key: 'where', items: html`${R(vaxmapLinkForVaccine(ctx, { id: 'vaccine.influenza' }), t('vaccines.where.cta'), true)}${A(svc('vaccination-record-reissue'))}${R('/travel/', t('travel.country.clinic'))}` },
-    { key: 'injury', items: html`${A(svc('vaccine-injury-compensation'))}${A(pg('vaccines/committees'), t('vaccines.hub.committee'))}` },
-    { key: 'fund', items: html`${A(top('vaccine-fund-donation'))}${A(svc('vaccine-fund-donation'))}` },
-    { key: 'pro', items: html`${R('/documents/', `${t('vaccines.hub.docs')}${docs ? `（${docs}）` : ''}`)}${R('/pro/', t('vaccines.hub.pro'))}` },
-    { key: 'law', items: html`${R('/policy/legal/', t('vaccines.hub.law'))}${A(pg('vaccines/committees'))}` },
-    { key: 'stats', items: html`${R('/data/', t('vaccines.hub.stats'))}${R('/v1/immunization-schedule.json', t('vxs.api'))}` },
-  ];
+  const col = (n) => site?.collections?.[n] ?? [];
+  const svc = (slug) => col('services').find((s) => s.slug === slug && s.status === 'published');
+  const top = (slug) => col('topics').find((s) => s.slug === slug && s.status === 'published');
+  const pg = (slug) => col('pages').find((s) => s.slug === slug && s.status === 'published');
+  const A = (group, key, item, label) => (item ? { group, key, href: hrefFor(ctx, item), label: label ?? L(ctx, item, 'title'), ext: false, pending: item.verification?.status === 'pending', fallback: isFallbackLink(ctx, item) } : null);
+  const R = (group, key, path, label, ext = false) => ({ group, key, href: ext ? path : url(path, { noLang: path.startsWith('/v1/') }), label, ext, pending: false, fallback: false });
+  const docs = col('documents').filter((d) => d.isCurrent && d.status === 'published' && (d.vaccines?.length || /預防接種|疫苗/.test(d.title))).length;
+  return [
+    R('schedule', 'schedule', '/vaccines/schedule/', t('vxs.entry.t')),
+    R('schedule', 'bygroup', '/tasks/vaccines/', t('vaccines.hub.bygroup')),
+    R('schedule', 'funded', '/vaccines/#vx-funded', t('vaccines.funded.all')),
+    // 外部疫苗地圖網址在 site.config.vaxmapUrl；最小化的 site（單元測試）沒有設定就不輸出
+    site?.config?.vaxmapUrl ? R('where', 'vaxmap', vaxmapLinkForVaccine(ctx, { id: 'vaccine.influenza' }), t('vaccines.where.cta'), true) : null,
+    A('where', 'record', svc('vaccination-record-reissue')),
+    R('where', 'clinic', '/travel/', t('travel.country.clinic')),
+    A('injury', 'injury', svc('vaccine-injury-compensation')),
+    A('injury', 'committee', pg('vaccines/committees'), t('vaccines.hub.committee')),
+    A('fund', 'fund-topic', top('vaccine-fund-donation')),
+    A('fund', 'fund-service', svc('vaccine-fund-donation')),
+    R('pro', 'docs', '/documents/', `${t('vaccines.hub.docs')}${docs ? `（${docs}）` : ''}`),
+    R('pro', 'pro', '/pro/', t('vaccines.hub.pro')),
+    R('law', 'law', '/policy/legal/', t('vaccines.hub.law')),
+    A('law', 'committees', pg('vaccines/committees')),
+    R('stats', 'stats', '/data/', t('vaccines.hub.stats')),
+    R('stats', 'api', '/v1/immunization-schedule.json', t('vxs.api')),
+  ].filter(Boolean);
+}
+
+function immunizationHub(ctx) {
+  const { t } = ctx;
+  const links = immunizationLinks(ctx);
+  const li = (l) => html`<li><a href="${l.href}"${l.ext ? raw(' target="_blank" rel="noopener"') : ''}>${l.label}${l.ext ? ' ↗' : ''}</a>${l.pending ? html` <span class="c-pill c-pill--warn">${t('vxs.unverified.badge')}</span>` : ''}</li>`;
   return html`<section class="c-hub vx-hub" aria-labelledby="vx-hub-h">${sectionHead(ctx, { id: 'vx-hub-h', title: t('vaccines.hub.t'), note: t('vaccines.hub.note') })}
-  <div class="c-cards3 vx-hub__grid">${groups.map((g) => html`<article class="c-card vx-hub__card"><h3>${t(`vaccines.hub.${g.key}`)}</h3><p class="muted">${t(`vaccines.hub.${g.key}.d`)}</p><ul class="c-linklist">${g.items}</ul></article>`)}</div></section>`;
+  <div class="c-cards3 vx-hub__grid">${HUB_GROUPS.map((g) => html`<article class="c-card vx-hub__card"><h3>${t(`vaccines.hub.${g}`)}</h3><p class="muted">${t(`vaccines.hub.${g}.d`)}</p><ul class="c-linklist">${links.filter((l) => l.group === g).map(li)}</ul></article>`)}</div></section>`;
 }
 
 function index(ctx) {

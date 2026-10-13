@@ -1,0 +1,153 @@
+# 主選單與子選單：要不要 mega menu？
+
+給同事與資訊人員讀。第 1–4 節是 2026-10-13 交給 Yulun 的評估（要不要做）；第 5 節是 Yulun 核准後第四十七輪實際做的設計決定與理由；第 6 節是之後要加面板的做法。
+
+> **註記：現行 cdc.gov.tw 的選單結構是「推斷」的。** 開發環境連不到 `www.cdc.gov.tw`，第 2 節描述的現行官網分組，是從搜尋引擎快取的頁面與衛福部頁面側欄推斷而來。正確的項目數與順序，請以官網為準。
+
+## 1. 結論
+
+**不需要照搬現行官網那種「滑鼠移過去就展開整面」的 mega menu。** 新原型的導覽模式（八項扁平主選單、各專區入口頁、四欄分組頁尾、智慧問答與全文搜尋）已經承擔了 mega menu 的主要功能。
+
+但 mega menu 本身**沒有退流行**，只是做法換了：大型網站與政府網站現在的主流，是**點擊才展開、每項最多 7–9 個連結、手機改成手風琴**的小型面板，而不是整面的 hover 選單。評估當時的建議是「先不做，等使用者測試或 ask log 顯示大家在問『疫苗時程在哪』這類找路問題再做」；Yulun 核准後，第四十七輪先做了這個小型面板（第 5 節）。
+
+## 2. 新原型原本的導覽長什麼樣
+
+| 元件 | 做法 |
+| --- | --- |
+| 主選單 | `src/templates/layout.mjs` 的 `#main-nav`：八項扁平連結（傳染病、疫苗、旅遊、疫情、闢謠、資料、新聞、常見問題），英文版多「International Cooperation」。第四十七輪之前沒有任何下拉。 |
+| 手機 | ≤959px 收成「選單」按鈕，點開是直列清單（含語言）；底部另有「首頁／智慧問答／疫情／1922」四格 tab bar。 |
+| 身分切換 | `.audience`：民眾／專業人員／研究與媒體，專業版多出通報、檢驗、指引等入口（`c-pro-only`）。 |
+| 專區入口頁 | `/diseases/`、`/vaccines/`（七格導覽）、`/travel/`、`/services/`：第二層導覽由入口頁承擔；疾病頁另有 sticky 子導覽。 |
+| 頁尾 | 四欄 fat footer（第十七輪，README「為什麼 fat footer 還是對的」、ARCHITECTURE §20）：捲到底的「第二導覽」。 |
+| 找東西 | `/ask/` 智慧問答、`/search/` Pagefind 全文、`/sitemap-page/` 網站導覽；查無時導回 1922、傳染病索引、網站導覽。 |
+
+既有的決定是「主選單不加（八項已滿）」（國際合作那一輪）：新站一直刻意把主選單維持在一行。
+
+## 3. 現行官網的 mega menu 與研究現況
+
+**現行官網（推斷，見上方註記）：** 頂層分組大致是「傳染病與防疫專題」（傳染病介紹、防治工作手冊、病例定義及檢體送驗、手部衛生、應變整備、國際疫情）、「預防接種」（流感新冠疫苗及藥劑地圖、公費疫苗時程、各類對象建議、疫苗簡介、受害救濟、疫苗基金）、「國際旅遊與健康」（國際疫情及建議等級、旅遊醫學、檢疫業務、外國人健康管理）、「應用專區」（通報、檢驗、宣導、統計），每項下還有第三層。
+
+問題不在「有 mega menu」，而在三件事：
+
+1. **以滑鼠 hover 觸發**：鍵盤與讀屏使用者難以操作；觸控裝置沒有 hover，等於另做一套；滑鼠經過就誤開，會遮住內容。
+2. **一面放太多**：一次露出幾十個連結，使用者要在面板裡再找一次，等於把網站導覽頁塞進頁首。
+3. **選單反映組織分工而非使用者任務**：「應用專區」「防疫專題」是內部分類語；民眾要的是「我家小孩要打什麼針」「出國要注意什麼」。
+
+**研究與業界：**
+
+- Nielsen Norman Group 自 2009 年起的立場：大型網站用 mega menu 比一般下拉好（看得到群組與標題、沒有逐層 hover 的「走廊」問題），前提是分組清楚、每組有標題、不塞滿、能用鍵盤。這個立場沒有被推翻，所以「退流行」不成立。
+- 近年 a11y 與 UX 指南（Nomensa、A11y Collective、明尼蘇達大學 Folwell 設計系統）一致建議：**點擊展開而非 hover**、面板是 disclosure、Esc 可關、焦點不跳走、手機改手風琴。
+- 政府網站兩種流派都有：gov.uk 不用 mega menu，靠少量主題入口、強搜尋與頁尾；美國 cdc.gov 2024 年改版後只留幾項主選單加搜尋；衛福部與多數台灣部會仍是 mega menu。差別在**內容是否已整理成任務導向的入口頁**，新原型正是走這條路。
+- WCAG 對應：2.1.1 鍵盤、1.4.13 hover 或焦點出現的內容、2.4.3 焦點順序。hover 式 mega menu 在 1.4.13 最常失分；點擊式天生比較容易過。
+
+## 4. 評估時的建議（當時）
+
+**維持現狀，先不做**，理由：八項主選單已對應民眾任務；第二層由入口頁承擔，入口頁能放說明、狀態、卡片，比選單面板能給的多；專業人員入口走 `/pro/` 身分切換；智慧問答與全文搜尋補「不知道在哪一層」；頁尾已是分組式第二導覽。
+
+**什麼時候該加、加什麼：** 若使用者測試或 ask log（`/admin/ask-log/`）顯示大量「找路」問題，就在**傳染病、疫苗、旅遊**三項加小型面板：點擊展開、不 hover；Esc 與點外面可關；主選單文字本身仍是連到入口頁的連結；每面板 1–2 欄、最多 7–9 個連結；內容取自入口頁已有的區塊、不另維護一份；≤959px 併入「選單」面板變手風琴；疫情、闢謠、資料、新聞、常見問題五項維持單一連結。
+
+**不要做的：** 整面式、hover 觸發、放圖片與宣傳 banner 的 mega menu；把「應用專區」這種內部分類搬進來。
+
+## 5. 第四十七輪實際做的設計決定與理由
+
+### 5.1 做了什麼
+
+主選單維持八項扁平；只在「傳染病、疫苗、出國與入境」三項旁邊加一個 ▾ 鈕，點了展開一個小面板，列出該專區入口頁上**已經有**的 4–9 個連結。手機併入既有「選單」面板變手風琴。不 hover、不放圖。
+
+標記（`layout.mjs` 的 `#main-nav`）：
+
+```html
+<div class="c-nav__item c-nav__item--panel">
+  <a href="/vaccines/">疫苗</a>
+  <details class="c-nav__dd" data-nav-dd>
+    <summary class="c-nav__more"><span class="sr-only">展開「疫苗」的子選單</span><svg class="c-nav__chev" aria-hidden="true">…</svg></summary>
+    <div class="c-nav__panel" id="nav-panel-vaccines" role="group" aria-label="疫苗子選單">
+      <div class="c-nav__col"><p class="c-nav__panel-t">小標</p><ul class="c-nav__panel-l"><li><a href="…">…</a></li></ul></div>
+      <div class="c-nav__col">…</div>
+      <p class="c-nav__panel-all"><a href="/vaccines/">前往疫苗專區 →</a></p>
+    </div>
+  </details>
+</div>
+```
+
+內容來源是新檔 `src/templates/public/_nav-panels.mjs`，匯出 `navPanels(ctx)`（回傳 `{ diseases, vaccines, travel }`）、`PANEL_OF`（路徑對應面板 key）與 `navPanelHtml(ctx, key, label)`（輸出上面那段標記）；`layout.mjs` 用 `PANEL_OF` 判斷哪個項目有面板。其他五項（疫情、謠言查證、開放資料與統計、新聞與公告、常見問答，以及英文版的 International Cooperation 與 `.c-nav__pro`）維持單一連結。
+
+三個面板的內容：
+
+| 面板 | 欄一 | 欄二 |
+| --- | --- | --- |
+| 傳染病 | 「近期與常見」：最多 4 個（常數 `DISEASE_MAX = 4`）。依序取 `situation/current.json` 目前項目對應、且已發布、本語言可用的疾病頁的前 4 個；不足 4 個時才以 `reviewedAt` 最新的已發布疾病頁補上（去重） | 「找法」：全部 N 種傳染病（`/diseases/`）、現在的疫情（`/situation/`）；專業用：指引與手冊（`/documents/`）、通報（`/report/`） |
+| 疫苗 | 「打疫苗」：公費疫苗時程、各類對象建議、哪裡打（疫苗地圖，外部連結 ↗）、接種紀錄補發 | 「申請與查詢」：受害救濟、疫苗基金捐款、統計（`/data/`） |
+
+疫苗面板**略過本語言沒有版本的項目**（`/vaccines/` 的 hub 仍會列出並以中文頁代替）。為什麼：每一頁都有主選單，若面板放了會連到中文頁、標題也是中文的項目，外語頁的選單就會夾雜中文。結果是中文版 7 個連結加「前往疫苗專區」，其他語言 4 個加「前往疫苗專區」。
+| 出國與入境 | 「出國前」：查目的地建議等級（`#tv-lookup`）、出國前準備、等級總表（`#tv-tb-h`）、世界地圖（`#tv-mp-h`） | 「最新」：等級異動（`#tv-ch-h`）、國際疫情新聞（`#tv-nw-h`）；專業用：檢疫文件（有現行、已發布、標題含「檢疫」的文件才輸出，目前沒有） |
+
+出國面板目前是 6 個連結加「前往出國與入境專區」。沒有另放「國際重要疫情資訊列表」：站上沒有獨立的列表路由，列表就是 `/travel/` 的 `#tv-nw-h` 區塊，再放一筆只會是重複連結。
+
+### 5.2 為什麼用 `<details>/<summary>`，而不是自己寫 `<button aria-expanded>`
+
+- **無 JS 也能開合。** summary 原生可用鍵盤（Enter／Space）操作，瀏覽器與讀屏軟體原生朗讀「已展開／已收合」。自寫 button 要自己維護 `aria-expanded`、`aria-controls`、鍵盤事件，任何一處漏掉都是無障礙缺陷。
+- **與第二十四輪手機語言選單同一套做法**（見 [a11y.md](a11y.md) 第 6 節），同事只需要理解一種模式。
+- **JS 只負責「加分」的行為**：Esc 關閉、點外面關閉、同時只開一個。JS 載入失敗時，面板仍能點開，只是不會自動收起，不會壞掉。
+- 評估時寫的是 `button aria-expanded`，實作時改用 details 是刻意的調整：目標（點擊式 disclosure）相同，原生元素的失敗面更小。
+- 附帶規則：summary 的可見內容只有 chevron，無障礙名稱靠 `.sr-only` 文字（i18n 鍵 `nav.more`，帶 `{name}`）；**不在 summary 上放 `aria-label`**（各讀屏軟體支援不一致），也不放 `role`／`aria-expanded`（原生已有，重複設反而可能衝突）。面板內小標用 `<p class="c-nav__panel-t">`，**不用 h2/h3**，因為頁首出現標題會讓整頁標題階層跳級（第二十四輪測試會檢查）。
+
+### 5.3 為什麼不 hover
+
+- 鍵盤與觸控使用者沒有 hover，只能另做一套，等於維護兩種行為。
+- 滑鼠經過就誤開，會遮住使用者正在讀的內容。
+- WCAG 1.4.13 要求 hover 出現的內容可關閉、可停留、不消失；點擊式沒有這個負擔（見 [a11y.md](a11y.md) 第 8 節）。
+- 因此 CSS 不得有任何以 `:hover` 觸發 `details[open]` 或顯示 `.c-nav__panel` 的規則，測試會掃 base.css 確認。
+
+### 5.4 為什麼內容由入口頁的資料推導，不另維護一份
+
+- **選單與頁面不同步是最常見的壞法**：有人在入口頁改了連結，選單還是舊的，使用者點下去發現兩邊不一樣。
+- 疫苗面板的連結，與 `/vaccines/` 的 `.vx-hub`（`vaccines.mjs` 的 `immunizationHub()`）共用同一個純資料函式 `immunizationLinks(ctx)`；測試比對「面板每個 href 都出現在 `.vx-hub` 內」。
+- 傳染病面板由 `situation/current.json` 與已發布疾病頁推導，疫情換了面板自動換，不需要人記得改。
+- 出國面板的錨點 id 必須和 `travel.mjs` 實際輸出一致；測試會驗證目標頁含 `id="…"`，錨點被改掉時建置就會失敗，而不是悄悄變成壞連結。
+- 找不到就不輸出那一行（未發布、該語言沒有的連結直接省略），與 `immunizationHub()` 的 `A()` 同一個風格，所以七語都不會出現指向 404 的選單項目。
+
+### 5.5 為什麼每個面板最多 9 個連結（最少 4、每欄最多 5）
+
+- 傳染病面板的疾病只取 4 個，原因是算術：疾病 6 個加欄二 4 個（全部傳染病、現在的疫情、指引、通報）再加「前往專區」共 11 個，超過 9 的上限；4 + 4 + 1 = 9 剛好，也符合每欄最多 5 個。
+- 評估時的上限是 7–9 個。超過這個量，使用者要在面板裡再找一次，等於把網站導覽頁塞進頁首（現行官網的問題 2）。
+- 少於 4 個就不值得多一次點擊，直接點主選單文字進入口頁即可。
+- 每個面板第一個出口永遠是「前往○○專區 →」，想看全部的人還是回到入口頁，入口頁能放說明、狀態、卡片，比面板能給的多。
+
+### 5.6 overflow 裁切的陷阱（CSS 實作時最容易踩）
+
+`.c-nav__in` 有 `overflow-x:auto`（窄螢幕時主選單可橫向捲動）。CSS 規定：只要一個元素的 `overflow-x` 不是 `visible`，它的 `overflow-y` 就會被計算成 `auto`，**絕對定位的子孫只要 containing block 在它裡面，就會被它裁掉**。所以如果把面板放在 `position:relative` 的 `.c-nav__item` 或 `details` 下，面板會被裁成只剩選單列那一條高度，看起來「按了沒反應」。
+
+做法：`.c-nav{position:relative}`，三個有面板的 `.c-nav__item--panel`、`details`、`summary` **都不設** `position:relative`（甚至明確設 `static`），面板用 `position:absolute;left:0;right:0;top:100%`，containing block 就是 `.c-nav`（在 `overflow` 容器之外），面板可以橫跨整個版心寬度。測試會檢查 base.css 的這幾個宣告；端到端測試也在 1280px 實際點開確認面板可見。
+
+手機（≤959px）則改成 `position:static`，面板直接在文件流中、推開下面的項目，就是手風琴，不需要另外的 JS。這時 `.c-nav__item--panel` 改為 `position:relative`（面板本身已是 static，不會被裁），summary 以絕對定位放在該列右側（48×48），連結右側留 56px 的 padding 避免文字被蓋住，面板佔滿整列寬、排在連結下方。
+
+### 5.7 JS 與預算
+
+`src/client/ui.js` 在「導覽收合」那段之後增加約 20 行（約 1 KB）：打開一個時關掉其他的、Esc 關閉並把焦點還給 summary、焦點離開（`focusout`）與點外面關閉。`focusout` 只在 `relatedTarget` 有值且不在該 details 內時才關；`relatedTarget` 為空（例如點到面板內的空白文字）時交給 `document` 的 click 判斷。為什麼：點面板內的純文字不會把焦點移到別的可聚焦元素，`relatedTarget` 為 null，若一律關閉，使用者只是點到標題就整個面板收起來了。不加 hover、不加方向鍵（WAI-ARIA APG 的 Disclosure Navigation Menu 範式不要求；加了反而要實作 roving tabindex，增加出錯面）。公開頁 JS 預算 120 KB，仍在範圍內。
+
+### 5.8 其他決定
+
+- 後台 `/admin/` 用另一套 layout（`src/templates/admin/_layout.mjs`），不動；測試確認後台輸出不含 `data-nav-dd`。
+- 列印時 `.c-nav` 本來就是 `display:none`，不用額外處理。
+- 面板內連結支援既有的 `c-pro-only`：由 CSS 在民眾視角隱藏，不靠模板分支，所以同一份 HTML 民眾與專業共用、也方便快取。
+- 新增 i18n 鍵七語齊備（`nav.more`、`nav.panel.label`、`nav.panel.goto`、`nav.panel.recent`、`nav.panel.find`、`nav.panel.all.diseases`、`nav.panel.getvax`、`nav.panel.apply`、`nav.panel.before`、`nav.panel.latest`、`nav.panel.docs.pro`、`nav.panel.report.pro`、`nav.panel.quarantine.pro`、`nav.panel.prep`、`nav.panel.changes`、`nav.panel.news`，集中在 i18n.js 的 `ROWS_R47` 區塊）；只在 Node 端模板使用，不進 client 模組。
+
+## 6. 之後要加或改面板
+
+**怎麼加：**
+
+1. 在 `src/templates/public/_nav-panels.mjs` 的 `build()` 回傳值加一組（欄、小標、連結、`all`）。連結用既有路由、已發布內容，或目標頁上**真的存在的錨點 id**；找不到就不輸出該行。
+2. 在同一檔的 `PANEL_OF` 登記該主選單項目的路徑對應 key（例如 `'/diseases/': 'diseases'`）；`layout.mjs` 不用改。
+3. 補七語 i18n 鍵（小標、「前往○○專區」），順序 zh-TW, en, ja, tl, vi, id, th。
+4. 在 `tests/round47-nav-panels.test.mjs` 把新的 key 納入「恰好 N 個 `details[data-nav-dd]`」與「4–9 個連結」的斷言。
+
+**不該做的事：**
+
+- 不要加 `:hover` 開面板，也不要為了「順手」加 `mouseenter`。
+- 不要在面板裡手寫一份獨立的連結清單；要嘛從入口頁共用的資料函式取，要嘛指向真實存在的錨點。
+- 不要把面板放進 `position:relative` 的祖先之下（第 5.6 節）。
+- 不要在 summary 上加 `aria-label`、`aria-expanded` 或 `role`；不要在面板內用 `<h2>`／`<h3>`。
+- 不要超過 9 個連結，也不要放圖片或宣傳 banner；要宣傳請用首頁或專區入口頁的版位。
+- 不要把「疫情、闢謠、資料、新聞、常見問題」改成面板：它們各自就是一頁清單，多一次點擊沒有好處。
+- 不要把內部組織分類（例如「應用專區」）搬進選單；用民眾的任務語言。
