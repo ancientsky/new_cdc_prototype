@@ -11,6 +11,8 @@ import { toRfc822 } from './dates.mjs';
 import { pathOf, mdPathOf, NOTICE_TYPES } from './governance.mjs';
 // 第九輪（ARCHITECTURE 17.1）：排程中（publishAt 未到）內容不進 sitemap／llms.txt／RSS：各輸出函式先換成 publicView，再以 isPublic() 過濾
 import { isPublic, nowOf, publicView } from './lanes.mjs';
+// 第四十三輪：每則國際重要疫情資訊頁 /travel/alerts/{id}/ 與 feeds/travel-alerts.xml（docs/intl-epidemic.md §4）
+import { alertPageRows, recentAlertRows, alertPath, excerptOf } from './travel-alerts.mjs';
 
 const LANGS = () => config.langs.map((l) => l.code);
 const urlFns = new Map();
@@ -51,6 +53,7 @@ export function derivePages(fullSite) {
   for (const p of STATIC_PATHS) add(p, LOCALIZED_STATIC_PATHS.includes(p) ? LANGS() : ['zh-TW'], listLast[p] ?? latest, 'pages');
   for (const t of config.tasks) add(`/tasks/${t.key}/`, LANGS(), latest, 'pages');
   for (const ctry of site.master.countries ?? []) if (ctry.iso2) add(`/travel/${ctry.iso2.toUpperCase()}/`, LANGS(), site.snapshots?.travelAlerts?.meta?.fetchedAt?.slice?.(0, 10) ?? latest, 'pages');
+  for (const a of alertPageRows(site)) add(alertPath(a.id), LANGS(), a.updated ?? a.published ?? latest, 'pages');
   const contentGroups = [['diseases', c.diseases], ['vaccines', c.vaccines], ['faq', c.faq], ['news', c.news], ['documents', c.documents],
     ['media', c.media], ['publications', c.publications], ['publications', c.articles], ['pages', c.topics], ['pages', c.services], ['pages', c.labtests], ['pages', c.research], ['pages', c.jobs], ['pages', c.tenders]];
   for (const [group, arr] of contentGroups) for (const i of pub(arr)) add(pathOf(i), i.gov?.renderableLangs ?? ['zh-TW'], i.reviewedAt, group === 'vaccines' ? 'pages' : group);
@@ -70,7 +73,7 @@ export async function collectPages(fullSite) {
     if (typeof mod.pages !== 'function') continue;
     for (const p of mod.pages(site)) {
       const langs = p.lang === '*' ? LANGS() : [p.lang ?? 'zh-TW'];
-      for (const lang of langs) out.push({ path: p.path, lang, noindex: !!(p.noindex || p.props?.item?.gov?.noindex), file: !!p.file, lastmod: p.props?.item?.reviewedAt });
+      for (const lang of langs) out.push({ path: p.path, lang, noindex: !!(p.noindex || p.props?.item?.gov?.noindex), file: !!p.file, lastmod: p.lastmod ?? p.props?.item?.reviewedAt });
     }
   }
   return out;
@@ -235,7 +238,7 @@ export function buildLlms(fullSite, lang = 'zh-TW') {
     `- [glossary.json](${apiUrl('/v1/glossary.json')})`,
     `- [redirects.json](${apiUrl('/v1/redirects.json')})`,
     `- [media.json](${apiUrl('/v1/media.json')}) · [services.json](${apiUrl('/v1/services.json')}) · [publications.json](${apiUrl('/v1/publications.json')}) · [labtests.json](${apiUrl('/v1/labtests.json')}) · [notices.json](${apiUrl('/v1/notices.json')}) · [jobs.json](${apiUrl('/v1/jobs.json')}) · [tenders.json](${apiUrl('/v1/tenders.json')})`,
-    `- [RSS news](${apiUrl('/feeds/news.xml')}) · [RSS documents](${apiUrl('/feeds/documents.xml')}) · [RSS publications](${apiUrl('/feeds/publications.xml')}) · [RSS notices](${apiUrl('/feeds/notices.xml')}) · [RSS careers](${apiUrl('/feeds/careers.xml')}) · [RSS procurement](${apiUrl('/feeds/procurement.xml')})`, '',
+    `- [RSS news](${apiUrl('/feeds/news.xml')}) · [RSS documents](${apiUrl('/feeds/documents.xml')}) · [RSS publications](${apiUrl('/feeds/publications.xml')}) · [RSS notices](${apiUrl('/feeds/notices.xml')}) · [RSS careers](${apiUrl('/feeds/careers.xml')}) · [RSS procurement](${apiUrl('/feeds/procurement.xml')}) · [RSS travel alerts](${apiUrl('/feeds/travel-alerts.xml')})`, '',
     `## ${T.optional}`, '',
     `- [${T.policy}](${absUrl('/policy/ai/', 'zh-TW')})`,
     `- [${T.opendata}](${absUrl('/policy/open-data/', 'zh-TW')})`,
@@ -386,7 +389,17 @@ export function buildFeeds(fullSite) {
     title: `${config.name} 採購公告`, link: absUrl('/procurement/'), self: apiUrl('/feeds/procurement.xml'), description: '秘書室發布的招標公告與決標／流標（guid：標案 id；決標為 id#award）。正式公告以政府電子採購網為準。',
     lastBuild: maxDate(procItems.map((x) => x.date)) ?? site.today, items: procItems.slice(0, 50),
   });
-  return { 'feeds/news.xml': newsXml, 'feeds/documents.xml': docsXml, 'feeds/situation.xml': sitXml, 'feeds/publications.xml': pubXml, 'feeds/notices.xml': noticeXml, 'feeds/careers.xml': careersXml, 'feeds/procurement.xml': procXml };
+  // 國際重要疫情資訊：近 30 天、有站內頁的則（guid＝疫情中心資料庫的穩定 id；快照尚無 id 時頻道為空，但檔案照出，訂閱網址不變）
+  const alerts = recentAlertRows(site).slice(0, 50);
+  const alertXml = rss({
+    title: `${config.name} 國際重要疫情資訊`, link: absUrl('/travel/'), self: apiUrl('/feeds/travel-alerts.xml'), description: '疫情中心發布的國際重要疫情資訊（近 30 天；guid＝資料庫 id，同一則更新時不變）。旅遊疫情建議等級請看各目的地頁。',
+    lastBuild: maxDate(alerts.map((a) => a.updated ?? a.published)) ?? site.snapshots?.travelAlerts?.meta?.dataDate ?? site.today,
+    items: alerts.map((a) => ({
+      title: a.headline ?? [a.disease, a.areas.map((x) => x.country ?? x.countryEn ?? x.iso2).join('、')].filter(Boolean).join('：'), link: absUrl(alertPath(a.id)), guid: a.id, date: a.publishedAt ?? a.published,
+      categories: ['國際重要疫情資訊', a.disease, ...a.areas.map((x) => x.country ?? x.iso2)].filter(Boolean), description: excerptOf(a.body, 300),
+    })),
+  });
+  return { 'feeds/news.xml': newsXml, 'feeds/documents.xml': docsXml, 'feeds/situation.xml': sitXml, 'feeds/publications.xml': pubXml, 'feeds/notices.xml': noticeXml, 'feeds/careers.xml': careersXml, 'feeds/procurement.xml': procXml, 'feeds/travel-alerts.xml': alertXml };
 }
 
 /** 第二十三輪（ARCHITECTURE 26.1）：原型模式的 robots.txt——全擋。正式版（AI 政策版）另存 robots.production.txt 供對照與部署時替換。 */

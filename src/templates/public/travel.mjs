@@ -5,6 +5,7 @@ import { html, raw, jsonScript } from '../../../scripts/lib/render.mjs';
 import * as JL from '../../../scripts/lib/jsonld.mjs';
 import { ldFor, pageHead, sectionHead, askBox, hrefFor, L, diseasePage, publishedOf, feedback, pill } from './_partials.mjs';
 import * as TravelMap from './_travel-map.mjs';
+import { alertOf, alertPath, excerptOf } from '../../../scripts/lib/travel-alerts.mjs';
 
 export const TRAVEL_CLINIC_URL = null; // 現行官網門診名單頁 ID 未確認；一律連站內 /apply/travel-clinic-appointment/
 export const TRAVEL_LEVEL_PAGE = 'https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09';
@@ -179,7 +180,11 @@ export function travelStats(site, today) {
 
 /** 近 30 天國際重要疫情資訊（依日期新到舊） */
 export function recentNews(site, { days = 30 } = {}) {
-  const rows = asRows(site.snapshots?.travelAlerts).filter((r) => r.disease && (r.country || r.iso2));
+  // 第四十三輪：每列另帶 alert（id／areas／sourceUrl…，scripts/lib/travel-alerts.mjs）；撤下（withdrawn）的不列
+  const snap = site.snapshots?.travelAlerts;
+  const raw = (Array.isArray(snap?.data) ? snap.data : Array.isArray(snap) ? snap : []).filter((x) => x && typeof x === 'object');
+  const rows = raw.map((r) => ({ ...normRow(r), alert: alertOf(r) }))
+    .filter((r) => r.alert.status !== 'withdrawn' && r.disease && (r.country || r.iso2 || r.alert.areas.length));
   const ref = site.snapshots?.travelAlerts?.meta?.dataDate ?? site.today;
   const from = ref ? dayShift(ref, -days) : null;
   return rows.filter((r) => !from || !r.start || r.start >= from).sort((a, b) => String(b.start ?? '').localeCompare(String(a.start ?? '')));
@@ -187,7 +192,7 @@ export function recentNews(site, { days = 30 } = {}) {
 
 /** 疾病名稱 → 主檔（DiseaseId 優先；再完全相符；再包含）。比對時全形／半形斜線視為相同 */
 const normName = (s) => String(s ?? '').toLowerCase().replace(/／/g, '/').replace(/\s+/g, '');
-function diseaseMasterOf(site, e) {
+export function diseaseMasterOf(site, e) {
   const ms = site.master.diseases ?? [];
   if (e.diseaseId) { const m = ms.find((d) => d.id === e.diseaseId); if (m) return m; }
   const name = normName(e.disease);
@@ -195,8 +200,8 @@ function diseaseMasterOf(site, e) {
   const names = (d) => [d.name, d.nameEn, ...(d.aliases ?? [])].filter(Boolean).map(normName);
   return ms.find((d) => names(d).includes(name)) ?? ms.find((d) => names(d).some((n) => n.length >= 2 && name.includes(n))) ?? null;
 }
-const cname = (ctx, c) => (ctx.lang === 'zh-TW' ? c.name ?? c.nameEn : c.nameEn ?? c.name) ?? c.iso2;
-const dname = (ctx, site, e) => { if (ctx.lang === 'zh-TW') return e.disease; const m = diseaseMasterOf(site, e); return e.diseaseEn ?? m?.nameEn ?? e.disease; };
+export const cname = (ctx, c) => (ctx.lang === 'zh-TW' ? c.name ?? c.nameEn : c.nameEn ?? c.name) ?? c.iso2;
+export const dname = (ctx, site, e) => { if (ctx.lang === 'zh-TW') return e.disease; const m = diseaseMasterOf(site, e); return e.diseaseEn ?? m?.nameEn ?? e.disease; };
 const levelName = (ctx, n) => (ctx.lang === 'zh-TW' ? `${ctx.t(`travel.level.${n}`)}（${LEVEL_EN[n]}）` : ctx.t(`travel.level.${n}`));
 const levelPill = (ctx, code) => html`<span class="c-level c-level--${code} tv-lv tv-lv--${LEVEL_KEY[code]}">${levelName(ctx, code)}</span>`;
 const lvShort = (ctx, n) => (n >= 1 && n <= 3 ? ctx.t(`travel.lvs.${n}`) : '');
@@ -222,7 +227,7 @@ function vaccinesFor(ctx, entries) {
   return out;
 }
 
-function clinicLink(ctx) {
+export function clinicLink(ctx) {
   const s = svc(ctx.site, 'travel-clinic-appointment');
   // 服務頁一律存在（content/services/travel-clinic-appointment.json）；若缺則連 /apply/ 總覽，避免輸出外部未確認連結。
   return s ? html`<a href="${hrefFor(ctx, s)}">${ctx.t('travel.clinic.cta')}</a>` : html`<a href="${ctx.url('/apply/')}">${ctx.t('travel.clinic.cta')}</a>`;
@@ -438,6 +443,8 @@ a.tv-chip:hover{border-color:var(--green-700);background:var(--green-50);color:v
 .tv-news li{display:grid;grid-template-columns:7.5em minmax(0,1fr);gap:2px var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--line-2)}
 .tv-news time{color:var(--ink-3);font-size:var(--fs-sm)}
 .tv-news__w{font-weight:700} .tv-news__s{margin:2px 0 0;color:var(--ink-2)}
+.tv-news__areas{margin:4px 0 0} .tv-news__areas .tv-chip{padding:1px 10px;font-size:var(--fs-xs)}
+.tv-news__src{margin:2px 0 0;font-size:var(--fs-xs)} .tv-news__src a{color:var(--ink-3)}
 .tv-newsmore summary{cursor:pointer;color:var(--green-700);margin-top:var(--sp-2)}
 .tv-stages{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--sp-3)}
 .tv-st{border:1px solid var(--line);border-radius:var(--radius);padding:var(--sp-3) var(--sp-4);background:var(--white);min-width:0}
@@ -655,9 +662,29 @@ function newsList(ctx, rows, { max = NEWS_MAX, withCountry = true } = {}) {
     if (!isos.length) return r.country ?? '';
     return isos.map((iso, i) => { const c = byIso.get(iso); const nm = c ? cname(ctx, c) : (ctx.lang === 'zh-TW' && zhNames.length === isos.length ? zhNames[i] : iso); return c ? html`<a href="${ctx.url(`/travel/${c.iso2}/`)}">${nm}</a>` : html`${nm}`; }).map((x, i) => html`${i ? (ctx.lang === 'zh-TW' ? '、' : ', ') : ''}${x}`);
   };
-  const li = (r) => html`<li><time datetime="${r.start ?? ''}">${r.start ? fmtDate(r.start) : '—'}</time><div><span class="tv-news__w">${withCountry ? html`${whoOf(r)} · ` : ''}${dname(ctx, site, r)}</span>${r.summary ? html`<p class="tv-news__s"${zhAttr}>${r.summary}</p>` : ''}</div></li>`;
+  // 第四十三輪：有 id 的則連到站內頁 /travel/alerts/{id}/（摘要縮短），原始網址改成小字「原始來源」；有 areas 就列涉及國家 chips（取代逗號串）
+  const li = (r) => {
+    const a = r.alert;
+    const href = a?.id ? ctx.url(alertPath(a.id)) : null;
+    const dn = dname(ctx, site, r);
+    const chips = a?.areas?.length ? areaChips(ctx, a.areas) : null;
+    const sum = r.summary ? (href ? excerptOf(r.summary, 140) : r.summary) : null;
+    return html`<li><time datetime="${r.start ?? ''}">${r.start ? fmtDate(r.start) : '—'}</time><div><span class="tv-news__w">${withCountry && !chips ? html`${whoOf(r)} · ` : ''}${href ? html`<a href="${href}">${dn}</a>` : dn}</span>${chips ? html`<ul class="tv-chips tv-news__areas" aria-label="${t('travel.alert.areas')}">${chips}</ul>` : ''}${sum ? html`<p class="tv-news__s"${zhAttr}>${sum}</p>` : ''}${a?.sourceUrl ? html`<p class="tv-news__src"><a href="${a.sourceUrl}" rel="noopener">${t('travel.alert.original')}</a></p>` : ''}</div></li>`;
+  };
   const head = rows.slice(0, max); const rest = rows.slice(max);
   return html`<ol class="tv-news">${head.map(li)}</ol>${rest.length ? html`<details class="tv-newsmore"><summary>${t('travel.news.more', { n: rest.length })}</summary><ol class="tv-news">${rest.map(li)}</ol></details>` : ''}`;
+}
+
+/** 涉及國家／地區 chips：主檔有的國家連目的地頁；detail（中文）以小字附在後面 */
+export function areaChips(ctx, areas) {
+  const byIso = new Map((ctx.site.master.countries ?? []).map((c) => [c.iso2, c]));
+  const zhAttr = ctx.lang === 'zh-TW' ? '' : raw(' lang="zh-TW"');
+  return areas.map((a) => {
+    const c = a.iso2 ? byIso.get(a.iso2) : null;
+    const nm = c ? cname(ctx, c) : ((ctx.lang === 'zh-TW' ? a.country ?? a.countryEn : a.countryEn ?? a.country) ?? a.iso2);
+    const inner = html`${nm}${a.detail ? html` <small${zhAttr}>${a.detail}</small>` : ''}`;
+    return html`<li>${c ? html`<a class="tv-chip" href="${ctx.url(`/travel/${c.iso2}/`)}">${inner}</a>` : html`<span class="tv-chip">${inner}</span>`}</li>`;
+  });
 }
 
 function defsSection(ctx) {

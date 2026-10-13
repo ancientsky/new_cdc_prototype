@@ -5,7 +5,7 @@
 // 正式寄信服務上線後，這份規則就是「前後端要對齊的契約」（docs/deploy.md〈電子報寄信服務〉）。
 
 /** 可訂閱的主題＝RSS 摘要頻道的 id（feeds/{id}.xml）。tests/round28-newsletter.test.mjs 會比對它與 buildFeeds() 輸出完全一致。 */
-export const TOPIC_IDS = ['news', 'documents', 'situation', 'publications', 'notices', 'careers', 'procurement'];
+export const TOPIC_IDS = ['news', 'documents', 'situation', 'publications', 'notices', 'careers', 'procurement', 'travel-alerts'];
 export const FREQUENCIES = ['instant', 'weekly'];
 export const MAIL_LANGS = ['zh-TW', 'en'];
 export const EMAIL_MAX = 254; // RFC 5321
@@ -21,6 +21,7 @@ export const TOPIC_NAMES = {
   notices: ['機關公告', 'Notices'],
   careers: ['人才招募', 'Careers'],
   procurement: ['採購公告', 'Procurement'],
+  'travel-alerts': ['國際重要疫情資訊', 'International outbreak news'],
 };
 export const topicName = (id, lang) => (TOPIC_NAMES[id] ?? [id, id])[lang === 'en' ? 1 : 0];
 

@@ -422,6 +422,24 @@ export function situationJsonLd(ctx, situation) {
   });
 }
 
+/**
+ * 第四十三輪：每則國際重要疫情資訊（/travel/alerts/{id}/）→ SpecialAnnouncement。
+ * a＝scripts/lib/travel-alerts.mjs 的 alertOf() 結果；inLanguage 固定 zh-TW（內文只有中文，外語頁只有介面翻譯）。
+ */
+export function travelAlertJsonLd(ctx, a, { diseaseUrl = null } = {}) {
+  const path = `/travel/alerts/${a.id}/`;
+  return clean({
+    '@context': CONTEXT(), '@type': 'SpecialAnnouncement', '@id': `${abs(ctx, path)}#alert`, url: abs(ctx, path), inLanguage: 'zh-TW', identifier: a.id,
+    name: a.headline ?? a.disease, text: a.body ? mdToText(a.body) : undefined, category: 'https://www.wikidata.org/wiki/Q81068910',
+    datePosted: a.publishedAt ? dt(a.publishedAt) ?? a.publishedAt : undefined, dateModified: a.updatedAt ? dt(a.updatedAt) ?? a.updatedAt : undefined,
+    about: a.disease ? clean({ '@type': 'MedicalCondition', name: a.disease, alternateName: a.diseaseEn ?? undefined, url: diseaseUrl ?? undefined }) : undefined,
+    spatialCoverage: (a.areas ?? []).map((x) => clean({ '@type': 'Country', name: x.country ?? undefined, alternateName: x.countryEn ?? undefined, identifier: x.iso2 ?? undefined })),
+    publisher: { '@id': ORG_ID(), '@type': 'GovernmentOrganization', name: config.name },
+    isBasedOn: a.sourceUrl ?? undefined,
+    'cdc:provenance': a.provenance ? clean({ source: a.provenance.source ?? undefined, producer: a.provenance.producer ?? undefined }) : undefined,
+  });
+}
+
 /** 旅遊疫情（自訂）：SpecialAnnouncement + cdc:travel */
 export function travelJsonLd(ctx, country, alerts = []) {
   const path = `/travel/${String(country.iso2 ?? country.id ?? '').toUpperCase()}/`;
