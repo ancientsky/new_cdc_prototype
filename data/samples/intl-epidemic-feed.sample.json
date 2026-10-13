@@ -1,0 +1,50 @@
+{
+  "version": "1",
+  "producer": "範例：疾管署疫情中心 國際疫情資料庫（示意）",
+  "generatedAt": "2026-10-13T08:00:00+08:00",
+  "mode": "delta",
+  "note": "示意資料、未驗證：只用來說明交換格式（docs/intl-epidemic.md 第 3.1 節）與測試匯入器，內容不是真實疫情，請勿引用。id 以 sample- 開頭，不會與官網 epidemicId 撞號。",
+  "items": [
+    {
+      "id": "sample-2026-1013-dengue-vn",
+      "status": "published",
+      "publishedAt": "2026-10-13T07:30:00+08:00",
+      "expiresAt": "2027-01-13T07:30:00+08:00",
+      "disease": "登革熱",
+      "diseaseEn": "Dengue fever",
+      "headline": "越南-登革熱（示意）",
+      "body": "（示意資料，未驗證）越南南部今年第 40 週登革熱病例數較前週上升。\n前往當地請穿著淺色長袖衣褲、使用政府核可的防蚊藥劑；返國後 14 天內如有發燒等症狀，請儘速就醫並告知旅遊史。",
+      "instruction": "提醒遵守當地的一般預防措施",
+      "areas": [{ "country": "越南", "countryEn": "Vietnam", "iso2": "VN", "detail": "南部地區" }],
+      "severity": null,
+      "sourceUrl": "https://www.cdc.gov.tw/",
+      "lang": "zh-TW"
+    },
+    {
+      "id": "sample-2026-1012-measles-multi",
+      "status": "updated",
+      "publishedAt": "2026-10-12T08:00:00+08:00",
+      "updatedAt": "2026-10-13T08:00:00+08:00",
+      "disease": "麻疹",
+      "headline": "墨西哥/加拿大-麻疹（示意）",
+      "body": "（示意資料，未驗證）北美洲麻疹疫情持續，兩國今年累計病例數高於去年同期。\n出國前請確認已完成 2 劑 MMR 疫苗接種。",
+      "areas": [
+        { "country": "墨西哥", "countryEn": "Mexico", "iso2": "MX" },
+        { "country": "加拿大", "countryEn": "Canada", "iso2": "CA" }
+      ],
+      "references": [{ "title": "WHO Disease Outbreak News（示意連結）", "url": "https://www.who.int/emergencies/disease-outbreak-news" }]
+    },
+    {
+      "id": "sample-2026-1011-unknown-disease",
+      "publishedAt": "2026-10-11T08:00:00+08:00",
+      "disease": "不明原因發燒群聚",
+      "headline": "剛果民主共和國-不明原因發燒群聚（示意）",
+      "body": "（示意資料，未驗證）這一則的疾病名稱刻意對不上本站疾病主檔：匯入器會照常上架，並產生「國際疫情對不上主檔」待辦給疫情中心。",
+      "areas": [{ "country": "剛果民主共和國", "iso2": "CD" }]
+    },
+    {
+      "id": "sample-2026-0920-cholera-ye",
+      "status": "withdrawn"
+    }
+  ]
+}

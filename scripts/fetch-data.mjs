@@ -20,6 +20,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { EXTERNAL_LINK_FIELDS } from './lib/governance.mjs';
+import { parseFeed, planImport, applyImport, describePlan, OFFICIAL_EXPORT_URL } from './lib/intl-epidemic.mjs';
+import { LEVEL_TEXT, LEVEL_NONE, pick, normalizeLevel, toISODate, normalizeTravelRow } from './lib/travel-normalize.mjs';
+
+// 欄位正規化移到 scripts/lib/travel-normalize.mjs（第四十三輪：國際疫情匯入器也要用，避免循環匯入）；這裡轉出維持既有 API
+export { LEVEL_TEXT, LEVEL_NONE, normalizeLevel, toISODate, normalizeTravelRow };
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SNAPSHOTS = path.join(ROOT, 'data', 'snapshots');
@@ -35,11 +40,11 @@ const TIMEOUT_MS = 20000;
 const log = (...m) => console.log('[fetch]', ...m);
 
 // ── HTTP ─────────────────────────────────────────────
-async function getJSON(url) {
+async function getJSON(url, extraHeaders = {}) {
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
   try {
-    const res = await fetch(url, { signal: ctrl.signal, headers: { 'User-Agent': UA, Accept: 'application/json' } });
+    const res = await fetch(url, { signal: ctrl.signal, headers: { 'User-Agent': UA, Accept: 'application/json', ...extraHeaders } });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const text = await res.text();
     return JSON.parse(text.replace(/^﻿/, ''));
@@ -80,78 +85,12 @@ function keepSnapshot(file, s, err) {
 // 官方 CountryEpidLevel 匯出（近似）：國家/地區、疾病、等級（「第一級：注意(Watch)」）、發布日期、英文國名、ISO
 // 官方 TravelEpidemic 匯出（近似）：疾病、國家、地區、摘要／內容、發布日
 // 另容錯 CAP 樣式欄位（alert_disease、severity_level、areaDesc、ISO3166、effective、description…）。
-export const LEVEL_TEXT = { 1: '第一級：注意(Watch)', 2: '第二級：警示(Alert)', 3: '第三級：警告(Warning)' };
-export const LEVEL_NONE = '無旅遊疫情建議';
 export const TRAVEL_LEVEL_PAGE = 'https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09';
 export const LEVEL_DEFINITIONS = [
   { code: 1, key: 'watch', name: '第一級：注意', nameEn: 'Level 1: Watch', label: LEVEL_TEXT[1], description: '提醒遵守當地的一般預防措施', descriptionEn: 'Practise usual precautions', color: 'watch' },
   { code: 2, key: 'alert', name: '第二級：警示', nameEn: 'Level 2: Alert', label: LEVEL_TEXT[2], description: '對當地採取加強防護', descriptionEn: 'Practise enhanced precautions', color: 'alert' },
   { code: 3, key: 'warning', name: '第三級：警告', nameEn: 'Level 3: Warning', label: LEVEL_TEXT[3], description: '避免所有非必要旅遊', descriptionEn: 'Avoid all non-essential travel', color: 'warning' },
 ];
-const pick = (o, keys) => { for (const k of keys) if (o?.[k] != null && o[k] !== '') return o[k]; return null; };
-const TK = {
-  country: ['Country', '國家/地區', '國家／地區', '國家', '國家名稱', 'areaDesc', 'country', 'CountryName', 'CountryZh'],
-  countryEn: ['CountryEn', '英文國名', '英文名稱', 'areaDesc_EN', 'country_en', 'CountryEnglish', 'EnglishName'],
-  iso: ['ISO2', 'ISO', 'Iso2', 'iso2', 'ISO3166', 'CountryCode', '國家代碼'],
-  disease: ['Disease', '疾病', '疾病名稱', 'alert_disease', 'disease', 'DiseaseName', 'headline'],
-  diseaseEn: ['DiseaseEn', '疾病英文名稱', 'alert_disease_EN', 'DiseaseEnglish'],
-  region: ['Region', '區域', '洲別', '地區', 'regionDesc', 'region'],
-  level: ['Level', '等級', '旅遊疫情建議等級', '疫情等級', 'severity_level', 'level', 'LevelName', 'AlertLevel'],
-  levelCode: ['LevelCode', 'levelCode', 'Level_Code', 'LevelNo'],
-  start: ['StartDate', '發布日期', '發布日', '發佈日期', '日期', '調整日期', 'effective', 'Effective', 'sent', 'PublishDate', 'Date'],
-  summary: ['Summary', '摘要', '內容', '建議', '說明', 'description', 'instruction', 'Content', 'summary'],
-  area: ['Area', '區域說明', '省份', '疫區', 'areaDetail'],
-  url: ['Url', '網址', '連結', 'web', 'url', 'link'],
-};
-
-/** 等級文字／數字 → 0–3（0＝無建議；null＝無法判讀）。例：「第一級：注意(Watch)」→ 1、「Level 2: Alert」→ 2、「無」→ 0 */
-export function normalizeLevel(v) {
-  if (v == null || v === '') return null;
-  if (typeof v === 'number') return v >= 0 && v <= 3 ? Math.trunc(v) : null;
-  const s = String(v).trim();
-  if (/^[0-3]$/.test(s)) return Number(s);
-  const m = s.match(/第\s*([一二三1-3])\s*級|level\s*([1-3])|^([1-3])\b/i);
-  if (m) { const x = m[1] ?? m[2] ?? m[3]; return '一二三'.includes(x) ? '一二三'.indexOf(x) + 1 : Number(x); }
-  if (/warning|警告/i.test(s)) return 3;
-  if (/alert|警示/i.test(s)) return 2;
-  if (/watch|注意/i.test(s)) return 1;
-  if (/^(無|none|解除|—|-)/i.test(s) || /無旅遊疫情建議/.test(s)) return 0;
-  return null;
-}
-/** 日期容錯：2025/8/5、2025-08-05T…、民國 114/08/05 → 2025-08-05 */
-export function toISODate(v) {
-  if (v == null || v === '') return null;
-  const m = String(v).trim().match(/^(\d{2,4})[/.\-年](\d{1,2})[/.\-月](\d{1,2})/);
-  if (!m) return String(v).slice(0, 10);
-  let y = Number(m[1]); if (y < 1911) y += 1911;
-  return `${y}-${String(m[2]).padStart(2, '0')}-${String(m[3]).padStart(2, '0')}`;
-}
-export function normalizeTravelRow(r) {
-  if (!r || typeof r !== 'object') return r;
-  const levelRaw = pick(r, TK.level);
-  let code = pick(r, TK.levelCode);
-  code = code != null ? normalizeLevel(code) : normalizeLevel(levelRaw);
-  const iso = pick(r, TK.iso);
-  const start = pick(r, TK.start);
-  const out = {
-    ...r,
-    Disease: pick(r, TK.disease),
-    DiseaseEn: pick(r, TK.diseaseEn),
-    Country: pick(r, TK.country),
-    CountryEn: pick(r, TK.countryEn),
-    ISO2: iso && /^[A-Za-z]{2}/.test(String(iso)) ? String(iso).toUpperCase().slice(0, 2) : null,
-    Region: pick(r, TK.region),
-    Level: code ? LEVEL_TEXT[code] : code === 0 ? LEVEL_NONE : levelRaw,
-    LevelCode: code,
-    StartDate: toISODate(start),
-    Summary: pick(r, TK.summary),
-    Url: pick(r, TK.url),
-  };
-  if (levelRaw != null && String(levelRaw) !== out.Level) out.LevelRaw = levelRaw;
-  const area = pick(r, TK.area); if (area != null) out.Area = area;
-  if (out.DiseaseEn == null) delete out.DiseaseEn;
-  return out;
-}
 
 const shortLevel = (code) => LEVEL_TEXT[code].replace(/\(.*\)$/, '');
 /**
@@ -470,8 +409,8 @@ const readMasterCountries = () => { try { return JSON.parse(fs.readFileSync(path
 
 const lastRaw = {};
 export const SOURCES = [
-  { file: 'travel-epidemic.json', url: 'https://www.cdc.gov.tw/TravelEpidemic/ExportJSON', label: '國際重要疫情資訊（近 30 天）', pick: (j) => asArray(j).map(normalizeTravelRow),
-    meta: (data) => ({ sourcePage: TRAVEL_LEVEL_PAGE, dataDate: data.map((r) => r.StartDate).filter(Boolean).sort().at(-1) ?? new Date().toISOString().slice(0, 10) }) },
+  // 第四十三輪（docs/intl-epidemic.md）：國際重要疫情資訊改走匯入器（importTravelEpidemic），不再直接覆寫
+  { file: 'travel-epidemic.json', url: OFFICIAL_EXPORT_URL, label: '國際重要疫情資訊（近 30 天）', importer: true },
   { file: 'country-epid-level.json', url: 'https://www.cdc.gov.tw/CountryEpidLevel/ExportJSON', label: '國際旅遊疫情建議等級表',
     pick: (j) => {
       const rawRows = asArray(j); lastRaw.countryLevels = rawRows;
@@ -517,6 +456,42 @@ export const SOURCES = [
       rawCount: lastRaw.countryLevels?.length ?? null, rawFields: Object.keys(lastRaw.countryLevels?.[0] ?? {}), rawSample: (lastRaw.countryLevels ?? []).slice(0, 3),
       filterNote: `已排除歷史紀錄：有結束日／已解除者、${COVID_NOTICES_LIFTED_AT} 前的 COVID-19 建議、第三級逾 365 天未更新者` }) },
 ];
+
+// ── 國際重要疫情資訊（docs/intl-epidemic.md 第 4 節 B 路）────────────────
+// INTL_FEED_URL 有設（可搭 INTL_FEED_TOKEN，Bearer）⇒ 從疫情中心資料庫拉交換格式 v1；否則維持現行官網 TravelEpidemic/ExportJSON（舊格式 3.3）。
+// 兩者都經過匯入器的把關（planImport／applyImport）：退回 > 20%、full 模式 0 則或少掉一半以上 ⇒ 整批保留、快照不覆寫。
+// 連不上 ⇒ 沿用既有快照（與其他來源相同）。INTL_FEED_URL 可能是內網位址：不寫進快照、不印進 log。
+export async function importTravelEpidemic({ env = process.env, dry = DRY, fetchJSON = getJSON, snapshotsDir = SNAPSHOTS, now = new Date().toISOString(), logger = log } = {}) {
+  const s = SOURCES.find((x) => x.importer);
+  const feedUrl = String(env.INTL_FEED_URL ?? '').trim();
+  const token = String(env.INTL_FEED_TOKEN ?? '').trim();
+  const source = feedUrl ? 'feed' : 'official-export';
+  const label = feedUrl ? '國際重要疫情資訊（疫情中心資料庫 feed）' : s.label;
+  let json;
+  try {
+    json = await fetchJSON(feedUrl || s.url, feedUrl && token ? { Authorization: `Bearer ${token}` } : {});
+  } catch (e) {
+    const err = new Error(String(e.message ?? e).split(feedUrl || '\u0000').join('(INTL_FEED_URL)'));
+    if (snapshotsDir === SNAPSHOTS) keepSnapshot(s.file, { ...s, label, url: feedUrl ? null : s.url }, err);
+    else logger(`✗ ${label}（${err.message}）→ 沿用既有快照`);
+    return { ok: false, source, error: err.message };
+  }
+  let feed;
+  try {
+    feed = parseFeed(json, { shape: feedUrl ? undefined : 'legacy' });
+  } catch (e) {
+    logger(`✗ ${label}：${e.message} → 沿用既有快照`);
+    return { ok: false, source, error: e.message };
+  }
+  let current = null;
+  try { current = JSON.parse(fs.readFileSync(path.join(snapshotsDir, s.file), 'utf8')); } catch {}
+  const plan = planImport({ current, feed, source, by: env.GITHUB_ACTIONS ? 'ci' : null, now, producer: feed.producer ?? (feedUrl ? '疫情中心資料庫' : '現行官網 TravelEpidemic/ExportJSON') });
+  logger(`${plan.held ? '✗' : '✓'} ${label}：${describePlan(plan)}`);
+  for (const r of plan.report.rejected.slice(0, 10)) logger(`    退回 ${r.id ?? `第 ${r.index + 1} 則`}：${r.errors.join('；')}`);
+  const r = applyImport(plan, { snapshotsDir, dry, sourceUrl: feedUrl ? null : s.url });
+  if (dry) logger(`(dry) 不寫入 ${s.file}、intl-epidemic-import.json`);
+  return { ok: !plan.held, source, plan, wrote: r.wrote };
+}
 
 // ── 事件快照與離線重算（--reaggregate）──────────────────────
 const LEVEL_FILE = 'country-epid-level.json';
@@ -760,6 +735,7 @@ async function main() {
   let packages = null;
   if (!SYNC_ONLY) {
     for (const s of SOURCES) {
+      if (s.importer) { try { await importTravelEpidemic(); } catch (e) { keepSnapshot(s.file, s, e); } continue; }
       try { const data = s.pick(await getJSON(s.url)); writeSnapshot(s.file, { sourceUrl: s.url, label: s.label, ...(s.meta?.(data) ?? {}) }, data); s.after?.(data); } catch (e) { keepSnapshot(s.file, s, e); }
     }
     try {

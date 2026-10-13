@@ -1,0 +1,65 @@
+{
+  "$id": "https://cdc-prototype/schemas/intl-epidemic-feed.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "國際重要疫情資訊交換格式 v1（疫情中心資料庫 → 網站）",
+  "description": "docs/intl-epidemic.md 第 3.1 節。三條路（排程拉取、推送、後台貼上）都用這份格式，進同一個匯入器（scripts/lib/intl-epidemic.mjs）。單則不符本 schema 只退回該則；整批的把關（退回 > 20%、full 模式 0 則或少掉一半以上 ⇒ 整批保留）在匯入器。CSV 與現行官網 ExportJSON 舊格式由 src/client/intl-epidemic-rules.js 轉成本格式後再驗。",
+  "type": "object",
+  "required": ["version", "items"],
+  "properties": {
+    "version": { "const": "1", "description": "契約版本；欄位不相容的改版才升號" },
+    "producer": { "type": "string", "maxLength": 200, "description": "誰產生的（自由文字，例：疾管署疫情中心 國際疫情資料庫）" },
+    "generatedAt": { "$ref": "#/$defs/datetime", "description": "產生時間" },
+    "mode": { "enum": ["full", "delta"], "default": "full", "description": "full＝這是現行全部（快照裡有、這裡沒有的 id 視為撤下）；delta＝只送有變動的" },
+    "note": { "type": "string", "description": "給人看的說明（例：示意資料、未驗證）" },
+    "items": { "type": "array", "items": { "$ref": "#/$defs/item" } }
+  },
+  "$defs": {
+    "datetime": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}(?:[T ]\\d{2}:\\d{2}(?::\\d{2}(?:\\.\\d+)?)?(?:Z|[+-]\\d{2}:?\\d{2})?)?$",
+      "description": "ISO 8601 日期或日期時間：2026-10-02、2026-10-02T07:48:32+08:00"
+    },
+    "httpUrl": { "type": "string", "pattern": "^https?://\\S+$" },
+    "area": {
+      "type": "object",
+      "anyOf": [{ "required": ["country"] }, { "required": ["iso2"] }],
+      "properties": {
+        "country": { "type": "string", "minLength": 1, "maxLength": 100, "description": "中文國名（網站用國家主檔名稱／別名對應）" },
+        "countryEn": { "type": "string", "maxLength": 100 },
+        "iso2": { "type": "string", "pattern": "^[A-Z]{2}$", "description": "ISO 3166-1 alpha-2（強烈建議提供）" },
+        "detail": { "type": "string", "maxLength": 200, "description": "國內地區（例：朗布爾專區）" }
+      }
+    },
+    "item": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[A-Za-z0-9_-][A-Za-z0-9_.-]{0,79}$", "description": "中心資料庫的穩定主鍵；同一則更新時 id 不變。也是站內頁 /travel/alerts/{id}/ 的路徑" },
+        "status": { "enum": ["published", "updated", "withdrawn"], "default": "published", "description": "withdrawn＝撤下（只需 id）" },
+        "publishedAt": { "$ref": "#/$defs/datetime" },
+        "updatedAt": { "$ref": "#/$defs/datetime" },
+        "expiresAt": { "$ref": "#/$defs/datetime", "description": "過期即不再列入現行清單" },
+        "disease": { "type": "string", "minLength": 1, "maxLength": 200, "description": "中文疾病名（網站用疾病主檔名稱／別名對應；對不上仍上架並列待辦）" },
+        "diseaseEn": { "type": "string", "maxLength": 200 },
+        "diseaseId": { "type": "string", "pattern": "^disease\\.[a-z0-9-]+$", "description": "選填：本站疾病主檔 id" },
+        "headline": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "body": { "type": "string", "minLength": 1, "maxLength": 8000, "description": "純文字或 Markdown" },
+        "instruction": { "type": ["string", "null"], "maxLength": 2000 },
+        "areas": { "type": "array", "items": { "$ref": "#/$defs/area" } },
+        "severity": { "enum": [1, 2, 3, null], "description": "與旅遊疫情建議等級同義；一般疫情資訊留 null" },
+        "sourceUrl": { "$ref": "#/$defs/httpUrl", "description": "原始頁（舊站或中心系統）" },
+        "references": {
+          "type": "array",
+          "items": { "type": "object", "required": ["url"], "properties": { "title": { "type": "string" }, "url": { "$ref": "#/$defs/httpUrl" } } }
+        },
+        "lang": { "type": "string", "default": "zh-TW" }
+      },
+      "if": { "properties": { "status": { "const": "withdrawn" } }, "required": ["status"] },
+      "then": {},
+      "else": {
+        "required": ["publishedAt", "disease", "headline", "body", "areas"],
+        "properties": { "areas": { "minItems": 1 } }
+      }
+    }
+  }
+}

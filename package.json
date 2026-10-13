@@ -9,6 +9,7 @@
   },
   "scripts": {
     "fetch": "node scripts/fetch-data.mjs",
+    "intl:import": "node scripts/intl-epidemic.mjs",
     "build": "node scripts/build.mjs",
     "check": "node scripts/build.mjs --check",
     "test": "node --test tests/*.test.mjs",

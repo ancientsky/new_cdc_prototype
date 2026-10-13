@@ -56,7 +56,12 @@ eval/**/*.mjs
 !src/client/admin/ask-log.js
 !src/templates/admin/ask-log.mjs
 !tests/round41-ask-log.test.mjs
-# 第四十三輪：國際重要疫情資訊每則頁、列表連結、RSS（docs/intl-epidemic.md §4）
+# 第四十三輪：國際重要疫情資訊自動上架（docs/intl-epidemic.md）
 !scripts/lib/travel-alerts.mjs
 !src/templates/public/travel-alert.mjs
 !tests/travel-alert-ui.test.mjs
+!src/client/intl-epidemic-rules.js
+!scripts/lib/intl-epidemic.mjs
+!scripts/lib/travel-normalize.mjs
+!scripts/intl-epidemic.mjs
+!tests/intl-epidemic.test.mjs
