@@ -7,6 +7,7 @@ import * as JL from '../../scripts/lib/jsonld.mjs';
 import { pausedBanner, translationBadge, unitName } from './public/_partials.mjs';
 import { pagefindFor, pagefindMarks } from './public/_pagefind.mjs';
 import { intlTopic } from './public/_international.mjs';
+import { PANEL_OF, navPanelHtml } from './public/_nav-panels.mjs';
 
 // 介面（UI 字串）本身的翻譯審核狀態；內容頁則看 item.languages[lang]
 const UI_TRANSLATION = { en: { status: 'reviewed', date: '2026-09-10' } };
@@ -106,6 +107,13 @@ export function layout(ctx, { styles = [], title, description, body, jsonLd = []
     const fallback = !['zh-TW', 'en'].includes(c.lang);
     return html`<li><a href="${fallback ? makeUrl('en')(path) : url(path)}"${fallback ? raw(' hreflang="en"') : ''}>${t('footer.leadership')}</a></li>`;
   };
+  // 第四十七輪：主選單小型面板。傳染病、疫苗、出國與入境三項多一個 ▾（<details data-nav-dd>），點擊展開；其他項目維持單一連結。
+  // 面板內容見 public/_nav-panels.mjs（由各專區入口頁的資料推導）；設計理由見 docs/navigation.md
+  const navItem = (p, k) => {
+    const a = html`<a href="${url(p)}" ${path.startsWith(p) ? raw('aria-current="page"') : ''}>${t(k)}</a>`;
+    const key = PANEL_OF[p];
+    return key ? html`<div class="c-nav__item c-nav__item--panel">${a}${navPanelHtml(ctx, key, t(k))}</div>` : html`<div class="c-nav__item">${a}</div>`;
+  };
   // 第四十輪（#74）：本頁沒有某語言版本時，語言選單仍可點，但先標「此頁僅有 中文、英文」（用目標語言寫，讀者找的是自己的語言）；
   // 連到該語首頁並帶 ?from=本頁&alts=有的語言，首頁的提示區塊（homeFromHint）告訴讀者「此頁尚無印尼文版本，可改看英文版」並給連結。
   // 以前直接落在首頁、什麼都不說，看起來像內容消失。
@@ -157,7 +165,7 @@ ${protoBanner(ctx)}
   </div>
   <button type="button" class="c-nav__toggle" aria-expanded="false" aria-controls="main-nav">${t('nav.menu')}</button>
 </div>
-<nav id="main-nav" class="c-nav" aria-label="${t('nav.main')}"><div class="wrap c-nav__in">${navItems.map(([p, k]) => html`<a href="${url(p)}" ${path.startsWith(p) ? raw('aria-current="page"') : ''}>${t(k)}</a>`)}<a class="c-nav__pro c-pro-only" href="${url('/pro/')}">${t('nav.pro')}</a></div>
+<nav id="main-nav" class="c-nav" aria-label="${t('nav.main')}"><div class="wrap c-nav__in">${navItems.map(([p, k]) => navItem(p, k))}<div class="c-nav__item"><a class="c-nav__pro c-pro-only" href="${url('/pro/')}">${t('nav.pro')}</a></div></div>
   <div class="wrap c-nav__langs"><p class="c-nav__langs-t" id="nav-langs-t">${t('lang.menu')}</p><div class="c-nav__langs-l" role="group" aria-labelledby="nav-langs-t">${langLinks}</div></div></nav>
 </header>
 ${pausedBanner(ctx)}

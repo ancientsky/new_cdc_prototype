@@ -2058,6 +2058,27 @@ const ROWS_R40 = {
 };
 for (const [key, vals] of Object.entries(ROWS_R40)) vals.forEach((v, i) => { if (v != null && v !== '') STRINGS[ORDER[i]][key] = v; });
 
+/* ───── 第四十七輪：主選單小型面板（只在 Node 端模板用，不進 client 模組；七語齊備） ───── */
+const ROWS_R47 = {
+  'nav.more': ['展開「{name}」的子選單', 'Open the {name} submenu', '「{name}」のサブメニューを開く', 'Buksan ang submenu ng {name}', 'Mở menu phụ {name}', 'Buka submenu {name}', 'เปิดเมนูย่อย {name}'],
+  'nav.panel.label': ['{name}子選單', '{name} submenu', '{name}のサブメニュー', 'Submenu ng {name}', 'Menu phụ {name}', 'Submenu {name}', 'เมนูย่อย {name}'],
+  'nav.panel.goto': ['前往{name}專區 →', 'Go to {name} →', '{name}のページへ →', 'Pumunta sa {name} →', 'Đến mục {name} →', 'Ke halaman {name} →', 'ไปที่หน้า{name} →'],
+  'nav.panel.recent': ['近期與常見', 'Current and common', '最近・よくある感染症', 'Kasalukuyan at karaniwan', 'Hiện nay và thường gặp', 'Terkini dan umum', 'ล่าสุดและพบบ่อย'],
+  'nav.panel.find': ['找法', 'Find a disease', '探し方', 'Paano maghanap', 'Cách tìm', 'Cara mencari', 'วิธีค้นหา'],
+  'nav.panel.all.diseases': ['全部 {n} 種傳染病', 'All {n} diseases', '全{n}種類の感染症', 'Lahat ng {n} sakit', 'Tất cả {n} bệnh', 'Semua {n} penyakit', 'โรคติดต่อทั้งหมด {n} โรค'],
+  'nav.panel.getvax': ['打疫苗', 'Getting vaccinated', '予防接種を受ける', 'Pagpapabakuna', 'Đi tiêm vắc-xin', 'Vaksinasi', 'การฉีดวัคซีน'],
+  'nav.panel.apply': ['申請與查詢', 'Applications and records', '申請・照会', 'Aplikasyon at rekord', 'Đăng ký và tra cứu', 'Permohonan dan data', 'การยื่นคำขอและตรวจสอบ'],
+  'nav.panel.before': ['出國前', 'Before you travel', '出発前', 'Bago bumiyahe', 'Trước khi đi', 'Sebelum bepergian', 'ก่อนเดินทาง'],
+  'nav.panel.latest': ['最新', 'Latest', '最新情報', 'Pinakabago', 'Mới nhất', 'Terbaru', 'ล่าสุด'],
+  'nav.panel.prep': ['出國前準備', 'Preparing for your trip', '渡航前の準備', 'Paghahanda sa biyahe', 'Chuẩn bị trước chuyến đi', 'Persiapan perjalanan', 'การเตรียมตัวก่อนเดินทาง'],
+  'nav.panel.changes': ['等級異動', 'Level changes', 'レベルの変更', 'Mga pagbabago sa antas', 'Thay đổi mức cảnh báo', 'Perubahan level', 'การเปลี่ยนแปลงระดับ'],
+  'nav.panel.news': ['國際疫情新聞', 'International outbreak news', '海外の感染症情報', 'Balita sa pandaigdigang outbreak', 'Tin dịch bệnh quốc tế', 'Berita wabah internasional', 'ข่าวโรคระบาดต่างประเทศ'],
+  'nav.panel.docs.pro': ['指引與手冊', 'Guidelines and manuals', 'ガイドライン・マニュアル', 'Mga gabay at manwal', 'Hướng dẫn và cẩm nang', 'Pedoman dan manual', 'แนวทางและคู่มือ'],
+  'nav.panel.report.pro': ['通報', 'Disease reporting', '届出', 'Pag-uulat ng sakit', 'Báo cáo bệnh', 'Pelaporan penyakit', 'การรายงานโรค'],
+  'nav.panel.quarantine.pro': ['檢疫文件', 'Quarantine documents', '検疫関連文書', 'Mga dokumento sa quarantine', 'Tài liệu kiểm dịch', 'Dokumen karantina', 'เอกสารการกักกันโรค'],
+};
+for (const [key, vals] of Object.entries(ROWS_R47)) vals.forEach((v, i) => { if (v != null && v !== '') STRINGS[ORDER[i]][key] = v; });
+
 
 // translation.bar.reviewed 的 {lang} 佔位：zh 版用語言名稱
 STRINGS['zh-TW']['translation.bar.reviewed'] = STRINGS['zh-TW']['translation.bar.reviewed'].replace('{lang}', '翻譯');
