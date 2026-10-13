@@ -78,6 +78,7 @@ export async function extractPdf(bytes, { maxPages = 60, onProgress = () => {} }
     for (const t of tc.items) {
       if (!('str' in t)) continue;
       const [a, b, , d, e, f] = t.transform;
+      if (Math.abs(b) > Math.abs(a)) continue; // 直排的字（頁緣的側標「疫情描述」）會黏進同一基線的橫排行，略過
       const size = Math.hypot(a, b) || Math.abs(d) || t.height || 10;
       items.push({ str: t.str, x: e, y: vp.height - f, w: t.width, h: t.height || size, size });
     }

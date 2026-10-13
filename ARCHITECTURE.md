@@ -2292,3 +2292,32 @@ Git 供應者：`readFile(ref, path, { raw: true })` 回 Buffer（本機：`exec
 ### 49.3 測試
 
 `tests/round45-pdf-gateway.test.mjs`：排版（行、縮排、頁間）、圖說與配圖（太小、重複、跨頁、未配對）、真實 PDF 42(19) 經 pdf.js（Node legacy 版）→ `splitManuscript` 全欄位、閘道工作流程（缺卷期擋、sha256 不符擋、缺檔擋；存草稿 → 分支上附件逐位元相同 → 不重傳再存一版 → 送審 → 核准 → `main` 四個檔、`Approved-by`）、HTTP 層上限、GitLab 供應者 base64／raw、模板與 vendor（legacy 版、複製 bytes）。
+
+### 49.4 第四十六輪（2026-10-13）：九份真實 PDF 的修正與表格還原
+
+起因與樣本結果在 [docs/bulletin.md](docs/bulletin.md) §14.7；決策在 docs/architecture-decisions.md §35；同仁提醒在 guide-staff §45.6。
+
+**純函式管線**（`src/client/admin/pdf-manuscript.js`，Node 與瀏覽器共用、有測試）：
+
+```
+extractPdf（pdf-read.js，瀏覽器專屬：字塊 + 圖）
+  → linesFromItems(items)            字塊 → 行 { y, x, text, cells[{text,x0,x1,items[]}], items[] }
+  → tablesFromLines(lines)           認「表 N、」圖說與其後連續多格行 → 表（含註解、續上頁）
+      → tableToMarkdown(rows)        { markdown, spans, hasData }
+  → chartTextLines(lines)            「圖 N」圖說上方的純數字短行 → 略過並留標記行
+  → pageText(lines)                  一頁文字（左側縮排依 x；表換成 Markdown）
+  → manuscriptText(pages)            多頁 → 稿件文字（頁間空一行；(續上頁) 接回）
+  → splitManuscript(text)            bulletin-rules.js：與「貼文字」同一套切段
+  → applyManuscript(…)               bulletin-edit-core.js：f.markdown 帶進表格欄
+```
+
+`linesFromItems` 的新規則：每行除了 `text` 另外切 `cells`（字塊間距 > 0.6 em 為界；拉丁字母相鄰 > 0.1 em 補空白）；完全落在別的字塊範圍內的字塊（留寬）丟掉，處理疊印的隱藏文字。`pdf-read.js` 跳過旋轉的文字（`|b| > |a|` 的 transform，側標直排字）。`splitManuscript` 的原始文字先 NFC 正規化（相容字 U+F9C7「劉」）。
+
+**設計決定：儲存格為主、欄起點為輔。**
+
+- **為什麼不能只用欄起點：** pdf.js 會把**一個儲存格拆成很多字塊**（「案 1」是「案」「1」兩塊，起點不同）。純欄起點模型把每個字塊起點都當欄，「案 1」被切碎。
+- **為什麼不能只看間距：** 「33 (45.2) 24 (32.9)」這種緊密的欄，欄與欄之間的間距跟儲存格內「33」與「(45.2)」之間差不多，純間距模型分不開。
+- **所以兩層：** 先用 >0.6 em 的空隙切出**儲存格**（保住「案 1」）；欄起點用儲存格左緣聚類（≥2 行）；遇到緊密欄再補用**儲存格內部字塊的起點**（≥40% 的行且 ≥3 行）。字塊歸欄時左緣對得上欄起點歸該欄，否則看中心點所在範圍；相鄰兩欄沒有任何一行同時有字就併欄；蓋住 ≥2 欄錨點的文字表頭記成 `spans`（表頭上層）。細節規則見 bulletin.md §14.7 (c)。
+- **測試與驗證：** 同一份程式碼在 Node 以 pdf.js legacy 版跑九份樣本（拋棄式腳本，不進 repo），結果與瀏覽器相同。
+
+`splitManuscript` 與表格相關的契約：`|` 開頭的行與表下註解（`a.`／`註`／`*`／`（表頭上層：…）`）掛到剛剛那個「表 N」的 `markdown`；`SIDEBAR_RE` 收窄成 `/^[│|｜][^\s|│｜]{1,12}[│|｜]$/`，才不會把 Markdown 表格列當側標吃掉；只剩表頭的跨頁殘段（沒有資料列且多半單字格）`markdown` 為空字串、不輸出。`describeExtraction({…, tables})` 多回表格數。

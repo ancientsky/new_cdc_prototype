@@ -280,7 +280,7 @@ async function importPdf(f) {
   pdfLeftovers = leftovers.map((im) => ({ ...im, url: URL.createObjectURL(im.blob) }));
   if (assigned.length) await addImageFiles(assigned.map((a) => new File([byKey.get(a.key).blob], a.fileName, { type: 'image/png' })));
   renderLeftovers();
-  msg.textContent = describeExtraction({ pages: ex.pages.length, chars: text.replace(/\s/g, '').length, assigned, leftovers, skipped });
+  msg.textContent = describeExtraction({ pages: ex.pages.length, chars: text.replace(/\s/g, '').length, assigned, leftovers, skipped, tables: r.state.figures.filter((f) => f.kind === 'table' && f.markdown).length });
   paint();
   $('#te-title')?.focus();
 }
