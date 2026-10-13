@@ -683,7 +683,7 @@ export function areaChips(ctx, areas) {
     const c = a.iso2 ? byIso.get(a.iso2) : null;
     const nm = c ? cname(ctx, c) : ((ctx.lang === 'zh-TW' ? a.country ?? a.countryEn : a.countryEn ?? a.country) ?? a.iso2);
     const inner = html`${nm}${a.detail ? html` <small${zhAttr}>${a.detail}</small>` : ''}`;
-    return html`<li>${c ? html`<a class="tv-chip" href="${ctx.url(`/travel/${c.iso2}/`)}">${inner}</a>` : html`<span class="tv-chip">${inner}</span>`}</li>`;
+    return html`<li class="tv-chip-li">${c ? html`<a class="tv-chip" href="${ctx.url(`/travel/${c.iso2}/`)}">${inner}</a>` : html`<span class="tv-chip">${inner}</span>`}</li>`;
   });
 }
 
