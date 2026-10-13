@@ -18,6 +18,9 @@
 //   POST /api/gateway/submit                 { item?, submissionId? } 送審
 //   POST /api/gateway/items/:id/return       { comment }              退回修改（意見必填）
 //   POST /api/gateway/items/:id/approve      { comment? }             核准上線
+//   GET  /api/gateway/intl-epidemic/status   → { lastRun, history }   國際疫情匯入紀錄（第四十三輪；docs/intl-epidemic.md）
+//   POST /api/gateway/intl-epidemic/import   { feed, mode?, dry? }    後台手動匯入（feed：v1 物件、舊官網匯出列或 CSV 字串；本體 ≤ 2 MB）
+//        只有疫情中心的編輯／審核或跨單位角色可用；與推送端點同一段上架流程（scripts/lib/intl-epidemic-publish.mjs），held → 202
 //
 // 安全：POST 一律要 (1) Content-Type: application/json、(2) Origin 與 Host 同源（Sec-Fetch-Site 若有須為 same-origin）、
 // (3) X-CSRF-Token（GET /session 取得，HMAC 綁帳號）；本體 ≤ 512 KB；回應 no-store＋nosniff＋CSP default-src 'none'。
@@ -37,9 +40,13 @@ import { createValidator } from './validate-item.mjs';
 import { createStateStore, createAuditLog } from './store.mjs';
 import { createNotifier } from './notify.mjs';
 import { createWorkflow, GatewayError } from './workflow.mjs';
+import { publishFeed, readImportRecord, canImportIntl, PublishError } from '../intl-epidemic-publish.mjs';
 
 export const SERVICE_NAME = 'cdc-web-gateway';
 export const MAX_BODY = 512 * 1024;
+/** 國際疫情手動匯入：一整批 feed 可能比一筆內容大，與推送端點同上限 */
+export const INTL_MAX_BODY = 2 * 1024 * 1024;
+const INTL_DENIED = '國際疫情匯入只開放給疫情中心的承辦人與複核者，或總編輯、治理幕僚、平台管理；如需權限請洽資訊室';
 const split = (s) => String(s ?? '').split(/[,\s]+/).map((x) => x.trim()).filter(Boolean);
 
 /** 環境變數 → 設定（祕密只從環境變數來，不進設定檔、不進 Git） */
@@ -81,7 +88,7 @@ export function createGitProvider(g) {
 }
 
 /**
- * @param {Partial<ReturnType<typeof configFromEnv>> & { now?: () => number, gitProvider?: any, authAdapter?: any, validator?: any, directory?: any, lanesCfg?: any }} [opts]
+ * @param {Partial<ReturnType<typeof configFromEnv>> & { now?: () => number, gitProvider?: any, authAdapter?: any, validator?: any, directory?: any, lanesCfg?: any, intl?: { snapshotsDir?: string, today?: string } }} [opts]
  */
 export function createGatewayApi(opts = {}) {
   const cfg = { ...configFromEnv(), ...opts };
@@ -112,10 +119,10 @@ export function createGatewayApi(opts = {}) {
 
   // 超過上限時不能中途 break：那會毀掉請求串流，連線被重設，客戶端只看到「fetch failed」而收不到 413
   // （第三十輪 CI 實測：本機常常剛好收得到，GitHub runner 上收不到）。所以超過後只丟棄、讀完再回 413。
-  async function readBody(req) {
+  async function readBody(req, max = MAX_BODY) {
     const chunks = []; let size = 0;
-    for await (const c of req) { size += c.length; if (size <= MAX_BODY) chunks.push(c); }
-    if (size > MAX_BODY) throw new GatewayError(413, 'too_large', '內容太大（上限 512 KB）；附件請另外處理');
+    for await (const c of req) { size += c.length; if (size <= max) chunks.push(c); }
+    if (size > max) throw new GatewayError(413, 'too_large', max === MAX_BODY ? '內容太大（上限 512 KB）；附件請另外處理' : `內容太大（上限 ${max / 1024 / 1024} MB）；請分批匯入`);
     const text = Buffer.concat(chunks).toString('utf8');
     if (!text) return {};
     try { const j = JSON.parse(text); if (j && typeof j === 'object' && !Array.isArray(j)) return j; } catch { /* 落到下面 */ }
@@ -187,6 +194,10 @@ export function createGatewayApi(opts = {}) {
       const ctx = { origin: originOf(req), basePath: config.basePath };
 
       if (method === 'GET') {
+        if (sub === '/intl-epidemic/status') {
+          if (!canImportIntl(p)) return err(res, 403, 'forbidden', INTL_DENIED);
+          return send(res, 200, readImportRecord(opts.intl?.snapshotsDir));
+        }
         if (sub === '/session') return send(res, 200, { user: { account: p.account, name: p.name, unit: p.primaryUnit, units: p.units, roles: p.roles }, csrfToken: csrfFor(p) });
         if (sub === '/items') {
           const v = ['mine', 'queue', 'all'].includes(String(searchParams.get('view'))) ? String(searchParams.get('view')) : 'mine';
@@ -211,6 +222,24 @@ export function createGatewayApi(opts = {}) {
         return err(res, 404, 'notfound', '找不到');
       }
 
+      if (sub === '/intl-epidemic/import') {
+        if (!canImportIntl(p)) { audit.write('intl-epidemic-import', { actor: p, result: 'denied' }); return err(res, 403, 'forbidden', INTL_DENIED); }
+        const b = await readBody(req, INTL_MAX_BODY);
+        if (b.feed == null || (typeof b.feed !== 'string' && typeof b.feed !== 'object')) return err(res, 400, 'bad_feed', '沒有收到要匯入的資料（feed）');
+        if (b.mode != null && b.mode !== 'full' && b.mode !== 'delta') return err(res, 400, 'bad_mode', '匯入方式只能是「只更新這幾則」（delta）或「這就是現行全部」（full）');
+        try {
+          const out = await publishFeed({
+            feed: b.feed, source: 'manual', ...(b.mode ? { mode: b.mode } : {}), dry: b.dry === true,
+            by: p.account, actor: p, producer: typeof b.feed === 'object' && typeof b.feed.producer === 'string' ? b.feed.producer.slice(0, 120) : `後台手動匯入（${p.account}）`,
+            git, audit, ...(opts.intl?.snapshotsDir ? { snapshotsDir: opts.intl.snapshotsDir } : {}), ...(opts.intl?.today ? { today: opts.intl.today } : {}),
+          });
+          const { wrote, version, ...rest } = out; // 回應不帶檔案路徑與版本細節（同事看不到 Git）
+          return send(res, out.held ? 202 : 200, { ...rest, saved: !out.dry && wrote.length > 0 });
+        } catch (e) {
+          if (e instanceof PublishError) throw new GatewayError(e.status, e.code, e.message);
+          throw e;
+        }
+      }
       const body = await readBody(req);
       if (sub === '/drafts') return send(res, 200, await workflow.saveDraft(p, { item: body.item, submissionId: typeof body.submissionId === 'string' ? body.submissionId : undefined }));
       if (sub === '/submit') return send(res, 200, await workflow.submit(p, { item: body.item, submissionId: typeof body.submissionId === 'string' ? body.submissionId : undefined }, ctx));

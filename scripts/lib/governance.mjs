@@ -135,8 +135,8 @@ export const TODO_KIND_LABELS = {
   'intl-feed-unmapped': '國際疫情對不上主檔',
 };
 /** 第四十三輪：國際疫情匯入待辦連到的頁、對不上主檔的處理期限（日）。
- *  後台 /admin/intl-epidemic/ 上線前先連 /travel/（站內連結檢查不允許連到還不存在的頁）；後台頁合併時改成 '/admin/intl-epidemic/'。 */
-export const INTL_ADMIN_HREF = '/travel/';
+ *  後台 /admin/intl-epidemic/：匯入狀態、退回與對不上清單、手動匯入。 */
+export const INTL_ADMIN_HREF = '/admin/intl-epidemic/';
 export const INTL_UNMAPPED_FIX_DAYS = 14;
 /** 第二十八輪：verification.status:pending 的待辦期限（自 reviewedAt 起算，日）。一級緊急就醫內容不宜長期掛「待確認」 */
 export const UNVERIFIED_FIX_DAYS = 14;
