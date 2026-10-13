@@ -606,3 +606,5 @@ body.adm { background: var(--paper); color: var(--ink); min-height: 100vh; displ
 .adm-vx-preview .vxs-table tr { cursor: pointer; }
 .adm-vx-preview .vxs-jsonly { display: none; }
 @media (max-width: 1100px) { .adm-vx-split { grid-template-columns: 1fr; } }
+/* 第四十三輪：國際疫情匯入預覽表，有錯（會被退回）的列 */
+.adm-ie-bad td { background: var(--alert-superseded-bg); }

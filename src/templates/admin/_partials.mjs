@@ -54,6 +54,7 @@ export const NAV = [
   { key: 'import', href: '/admin/import/', label: '舊站匯入' },
   { key: 'glossary', href: '/admin/glossary/', label: '詞彙主檔' },
   { key: 'situation', href: '/admin/situation/', label: '疫情發布' },
+  { key: 'intl-epidemic', href: '/admin/intl-epidemic/', label: '國際疫情匯入' }, // 第四十三輪（docs/intl-epidemic.md）
   { key: 'vaxschedule', href: '/admin/vaccines/schedule/', label: '疫苗時程' },
   { key: 'bulletin', href: '/admin/bulletin/edit/', label: '疫情報導' },
   { key: 'todos', href: '/admin/todos/', label: '連動待辦', count: 'todos' },
