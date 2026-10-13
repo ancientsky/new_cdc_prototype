@@ -43,7 +43,7 @@
       "status": "none"
     }
   },
-  "summary": "署長綜理署務並指揮監督所屬，副署長與主任秘書襄助；本頁說明署長職掌與年度施政重點，不刊登個人資料，人員異動不影響頁面內容。",
+  "summary": "署長綜理署務並指揮監督所屬，副署長與主任秘書襄助；本頁說明署長職掌與年度施政重點。現任署長、副署長的學經歷見首長簡介。",
   "keywords": [
     "署長",
     "職掌",
@@ -52,11 +52,11 @@
     "組織"
   ],
   "slug": "about/director",
-  "bodyMarkdown": "## 署長職掌\n依《衛生福利部疾病管制署組織法》，署長**綜理署務，並指揮、監督所屬人員**；置副署長二人、主任秘書一人襄助。疫情期間，署長依《傳染病防治法》協助中央流行疫情指揮中心運作。\n\n> 本頁以職稱說明職掌，不刊登個人姓名與照片；首長異動時毋須改版。首長之公開行程與致詞請見新聞稿。\n\n## 2026 年施政重點（示意）\n1. **呼吸道傳染病整合防治**：流感、新冠疫苗同步接種與抗病毒藥物可近性。\n2. **登革熱等蟲媒傳染病**：社區動員與跨國基因監測。\n3. **消除結核病與愛滋**：主動發現、PrEP 與匿名篩檢。\n4. **抗藥性防疫一體**：跨部門抗生素管理。\n5. **數位轉型**：AI-ready 官網、開放資料與資料治理。\n\n## 聯絡\n對署長的意見請使用**署長信箱**，將依內容分流至權責單位處理。",
+  "bodyMarkdown": "## 署長職掌\n依《衛生福利部疾病管制署組織法》，署長**綜理署務，並指揮、監督所屬人員**；置副署長二人、主任秘書一人襄助。疫情期間，署長依《傳染病防治法》協助中央流行疫情指揮中心運作。\n\n> 本頁以職稱說明職掌，首長異動時毋須改版；現任署長、副署長的簡介（學歷、經歷、專長）見[首長簡介](/about/leadership/)。首長之公開行程與致詞請見新聞稿。\n\n## 2026 年施政重點（示意）\n1. **呼吸道傳染病整合防治**：流感、新冠疫苗同步接種與抗病毒藥物可近性。\n2. **登革熱等蟲媒傳染病**：社區動員與跨國基因監測。\n3. **消除結核病與愛滋**：主動發現、PrEP 與匿名篩檢。\n4. **抗藥性防疫一體**：跨部門抗生素管理。\n5. **數位轉型**：AI-ready 官網、開放資料與資料治理。\n\n## 聯絡\n對署長的意見請使用**署長信箱**，將依內容分流至權責單位處理。",
   "i18n": {
     "en": {
       "title": "Director-General: role and policy priorities",
-      "summary": "The Director-General oversees all affairs of the agency, assisted by two deputies and a chief secretary; this page lists the role and 2026 priorities without personal details."
+      "summary": "The Director-General oversees all affairs of the agency, assisted by two deputies and a chief secretary; this page lists the role and 2026 priorities. Profiles of the current leaders are under Leadership."
     }
   }
 }

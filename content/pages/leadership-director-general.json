@@ -1,0 +1,57 @@
+{
+  "id": "page.leadership-director-general",
+  "type": "page",
+  "slug": "about/leadership/director-general",
+  "title": "署長簡介",
+  "owner": "unit.secretariat",
+  "steward": "秘書室承辦人（待指派）",
+  "publishedAt": "2026-10-13",
+  "reviewedAt": "2026-10-13",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": ["public", "professional"],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": { "requested": true, "approvedBy": "unit.oasis", "approvedAt": "2026-10-13" },
+  "languages": {
+    "zh-TW": { "status": "source" },
+    "en": { "status": "reviewed", "reviewedAt": "2026-10-13", "reviewer": "內部英文審核人" },
+    "ja": { "status": "none" }, "tl": { "status": "none" }, "vi": { "status": "none" }, "id": { "status": "none" }, "th": { "status": "none" }
+  },
+  "summary": "第 6 任署長羅一鈞：學歷、證照、經歷與專長。依現行官網署長簡介整理，照片與逐字內容待秘書室確認。",
+  "keywords": ["署長", "署長簡介", "羅一鈞", "Director-General"],
+  "profile": {
+    "role": "director-general",
+    "roleTitle": "署長",
+    "roleTitleEn": "Director-General",
+    "name": "羅一鈞",
+    "nameEn": "Lo, Yi-Chun",
+    "termNo": 6,
+    "since": "2025-09",
+    "order": 1,
+    "photoAlt": "署長羅一鈞"
+  },
+  "verification": {
+    "status": "pending",
+    "note": "本頁依現行官網「署長簡介」的搜尋摘要整理，尚未開啟原頁逐字核對；照片待秘書室提供",
+    "pendingItems": [
+      "逐字核對現行官網署長簡介（學歷、證照、經歷年份、專長）",
+      "英文版住院醫師年份與中文版不同（英文版分 2003–2006 內科住院醫師、2006–2008 感染科研究員），請確認要採哪一版",
+      "提供正式照片（建議 3:4 直式、寬 600px 以上，含替代文字）",
+      "確認英文姓名拼法"
+    ],
+    "sources": [
+      { "label": "現行官網 署長簡介", "url": "https://www.cdc.gov.tw/Category/Page/FBu4BEKk3d-PY0QD25swbQ", "accessedAt": "2026-10-13", "official": true, "verified": false, "note": "開發環境連不到 cdc.gov.tw，內容取自搜尋引擎摘要" },
+      { "label": "現行官網英文版 About CDC", "url": "https://www.cdc.gov.tw/En/Category/MPage/BImRdhwVTXGxnmKbziHCew", "accessedAt": "2026-10-13", "official": true, "verified": false, "note": "英文經歷年份出自此頁摘要" },
+      { "label": "衛福部新聞稿：疾管署新任署長布達及宣誓典禮", "url": "https://www.mohw.gov.tw/cp-2631-14741-1.html", "accessedAt": "2026-10-13", "official": true, "verified": false, "note": "就任時間 2025 年 9 月" }
+    ]
+  },
+  "bodyMarkdown": "## 學歷\n- 2001　國立臺灣大學醫學系畢業\n\n## 證照\n- 2001　專門職業及技術人員檢覈醫師\n- 2001　醫師證書\n\n## 經歷\n- 2003–2008　國立臺灣大學醫學院附設醫院住院醫師\n- 2008–2013　行政院衛生署疾病管制局醫師\n- 2013–2015　衛生福利部疾病管制署醫師\n- 2015–2016　衛生福利部疾病管制署技正\n- 2016–2025　衛生福利部疾病管制署副署長\n- 2025–迄今　衛生福利部疾病管制署署長\n\n## 專長\n- 感染症醫學\n- 傳染病應用流行病學",
+  "i18n": {
+    "en": {
+      "title": "Director-General",
+      "summary": "Dr. Lo Yi-Chun, 6th Director-General: education, licences, career and expertise, compiled from the official profile; photo and wording pending confirmation by the Secretariat.",
+      "bodyMarkdown": "## Education\n- 2001　M.D., National Taiwan University College of Medicine\n\n## Licences\n- 2001　Physician licence, R.O.C. (Taiwan)\n\n## Experience\n- 2003–2006　Internal Medicine Resident, National Taiwan University Hospital\n- 2006–2008　Infectious Diseases Fellow, National Taiwan University Hospital\n- 2008–2013　Medical Officer, Centers for Disease Control, Department of Health\n- 2013–2015　Medical Officer, Taiwan Centers for Disease Control, Ministry of Health and Welfare\n- 2015–2016　Senior Technical Specialist, Taiwan CDC\n- 2016–2025　Deputy Director-General, Taiwan CDC\n- 2025–present　Director-General, Taiwan CDC\n\n## Expertise\n- Infectious diseases\n- Applied epidemiology of communicable diseases"
+    }
+  }
+}

@@ -168,6 +168,15 @@ ${pageHead({
           <div class="adm-field" data-for="service"><label for="x-applyurl">線上申請網址（可空）</label><input type="text" id="x-applyurl"></div>
           <div class="adm-field" data-for="service"><label for="x-contact">聯絡窗口</label><input type="text" id="x-contact" placeholder="例：1922 或單位信箱"></div>
 
+          <div class="adm-field" data-for="page"><label for="x-pageslug">網址（slug）</label><input type="text" id="x-pageslug" placeholder="about/leadership/deputy-director-general-1"><span class="adm-hint">首長簡介用職位命名，不用人名；首長異動時網址不變、只改下面的姓名與內文。</span></div>
+          <div class="adm-field" data-for="page"><label for="x-profilerole">首長職位（一般頁留空）</label><select id="x-profilerole"><option value="">（不是首長簡介）</option><option value="director-general">署長</option><option value="deputy-director-general">副署長</option><option value="chief-secretary">主任秘書</option></select></div>
+          <div class="adm-field" data-for="page"><label for="x-profilename">姓名</label><input type="text" id="x-profilename" autocomplete="off"><span class="adm-hint">只填姓名；學歷、證照、經歷、專長寫在內文的四個段落。</span></div>
+          <div class="adm-field" data-for="page"><label for="x-profilenameen">英文姓名</label><input type="text" id="x-profilenameen" placeholder="Lo, Yi-Chun"></div>
+          <div class="adm-field" data-for="page"><label for="x-profileterm">第幾任（署長才填）</label><input type="number" id="x-profileterm" min="1"></div>
+          <div class="adm-field" data-for="page"><label for="x-profilesince">就任年月</label><input type="text" id="x-profilesince" placeholder="2025-09" pattern="\d{4}(-\d{2})?"></div>
+          <div class="adm-field" data-for="page"><label for="x-profileorder">總覽排序</label><input type="number" id="x-profileorder" min="1" placeholder="署長 1、副署長 2、3"></div>
+          <div class="adm-field" data-for="page"><label for="x-profilephotoalt">照片替代文字</label><input type="text" id="x-profilephotoalt" placeholder="署長○○○"><span class="adm-hint">照片請在下方附件面板上傳（kind：image），或請資訊室放到 /img/leadership/。</span></div>
+
           <div class="adm-field" data-for="publication"><label for="x-pubtype">出版品類型</label><select id="x-pubtype">${[['bulletin', '疫情報導'], ['annual-report', '年報'], ['manual', '手冊'], ['poster', '海報'], ['book', '專書'], ['multimedia', '多媒體'], ['statistics', '統計']].map(([v, l]) => html`<option value="${v}">${l}</option>`)}</select></div>
           <div class="adm-field" data-for="publication"><label for="x-series">系列（必填）</label><input type="text" id="x-series" placeholder="例：疫情報導"></div>
           <div class="adm-field" data-for="publication"><label for="x-volume">卷</label><input type="text" id="x-volume"></div>

@@ -1,0 +1,51 @@
+{
+  "id": "page.leadership-deputy-director-general-1",
+  "type": "page",
+  "slug": "about/leadership/deputy-director-general-1",
+  "title": "副署長簡介",
+  "owner": "unit.secretariat",
+  "steward": "秘書室承辦人（待指派）",
+  "publishedAt": "2026-10-13",
+  "reviewedAt": "2026-10-13",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": ["public", "professional"],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": { "requested": true, "approvedBy": "unit.oasis", "approvedAt": "2026-10-13" },
+  "languages": {
+    "zh-TW": { "status": "source" },
+    "en": { "status": "reviewed", "reviewedAt": "2026-10-13", "reviewer": "內部英文審核人" },
+    "ja": { "status": "none" }, "tl": { "status": "none" }, "vi": { "status": "none" }, "id": { "status": "none" }, "th": { "status": "none" }
+  },
+  "summary": "副署長曾淑慧：學歷、經歷與專長。姓名依現行官網英文版整理，學經歷待秘書室提供。",
+  "keywords": ["副署長", "副署長簡介", "曾淑慧", "Deputy Director-General"],
+  "profile": {
+    "role": "deputy-director-general",
+    "roleTitle": "副署長",
+    "roleTitleEn": "Deputy Director-General",
+    "name": "曾淑慧",
+    "order": 2,
+    "photoAlt": "副署長曾淑慧"
+  },
+  "verification": {
+    "status": "pending",
+    "note": "姓名依現行官網英文版的搜尋摘要整理；學歷、經歷與專長尚未取得，請秘書室依現行官網副署長簡介補上",
+    "pendingItems": [
+      "確認現任副署長名單與排序",
+      "補上學歷、證照、經歷、專長（照現行官網副署長簡介逐字）",
+      "提供英文姓名拼法與正式照片"
+    ],
+    "sources": [
+      { "label": "現行官網英文版 About CDC（列出副署長）", "url": "https://www.cdc.gov.tw/En/Category/MPage/BImRdhwVTXGxnmKbziHCew", "accessedAt": "2026-10-13", "official": true, "verified": false, "note": "開發環境連不到 cdc.gov.tw，只看過搜尋摘要" }
+    ]
+  },
+  "bodyMarkdown": "## 學歷\n- 待秘書室提供\n\n## 經歷\n- 現任　衛生福利部疾病管制署副署長\n- 其餘經歷待秘書室提供\n\n## 專長\n- 待秘書室提供",
+  "i18n": {
+    "en": {
+      "title": "Deputy Director-General",
+      "summary": "Deputy Director-General Tseng Shu-Hui: education, career and expertise to be supplied by the Secretariat.",
+      "bodyMarkdown": "## Education\n- To be supplied\n\n## Experience\n- Present　Deputy Director-General, Taiwan Centers for Disease Control\n\n## Expertise\n- To be supplied"
+    }
+  }
+}

@@ -1,6 +1,6 @@
 // 共用版面：topbar／header／主選單／翻譯狀態列／頁尾／手機底部 tab。
 // meta 介面：{ title, description, body, jsonLd[], noindex, bodyClass, scripts[], item, canonicalPath, hideTranslationBar }
-import { html, raw, esc, jsonScript } from '../../scripts/lib/render.mjs';
+import { html, raw, esc, jsonScript, makeUrl } from '../../scripts/lib/render.mjs';
 import { t as i18nT } from '../client/i18n.js';
 import { config } from '../../site.config.mjs';
 import * as JL from '../../scripts/lib/jsonld.mjs';
@@ -98,6 +98,14 @@ export function layout(ctx, { styles = [], title, description, body, jsonLd = []
   // 第六輪：國際合作入口。zh-TW 主選單已滿（八項）不加；英文站使用者習慣在主選單找 International Cooperation，所以只有 en 多一項。其他語言放頁尾「關於疾管署」群組
   const hasIntl = !!intlTopic(site);
   if (hasIntl && lang === 'en') navItems.push(['/international/', 'international.title']);
+  // 第四十四輪：頁尾「關於」群組加首長簡介；只有中英文頁，其他語言連英文版
+  const leadershipLink = (c) => {
+    const idx = (c.site?.collections?.pages ?? []).find((p) => p.profileIndex && p.status === 'published');
+    if (!idx) return '';
+    const path = `/${String(idx.slug).replace(/^\/+|\/+$/g, '')}/`;
+    const fallback = !['zh-TW', 'en'].includes(c.lang);
+    return html`<li><a href="${fallback ? makeUrl('en')(path) : url(path)}"${fallback ? raw(' hreflang="en"') : ''}>${t('footer.leadership')}</a></li>`;
+  };
   // 第四十輪（#74）：本頁沒有某語言版本時，語言選單仍可點，但先標「此頁僅有 中文、英文」（用目標語言寫，讀者找的是自己的語言）；
   // 連到該語首頁並帶 ?from=本頁&alts=有的語言，首頁的提示區塊（homeFromHint）告訴讀者「此頁尚無印尼文版本，可改看英文版」並給連結。
   // 以前直接落在首頁、什麼都不說，看起來像內容消失。
@@ -159,7 +167,7 @@ ${translationBar(ctx, item, hideTranslationBar)}
   <nav class="site-footer__col" aria-labelledby="ft-svc"><h2 class="site-footer__t" id="ft-svc">${t('footer.services')}</h2><ul>${FOOT_SERVICES.map(([p, k]) => html`<li><a href="${url(p)}">${t(k)}</a></li>`)}
     <li><a href="${url('/subscribe/')}">${t('footer.subscribe')}</a><br><span class="site-footer__hotnote">${t('footer.subscribe.note')}</span></li></ul></nav>
   <nav class="site-footer__col" aria-labelledby="ft-about"><h2 class="site-footer__t" id="ft-about">${t('footer.group.about')}</h2><ul>
-    <li><a href="${url('/about/')}">${t('footer.about')}</a></li>${hasIntl ? html`<li><a href="${url('/international/')}">${t('international.title')}</a></li>` : ''}
+    <li><a href="${url('/about/')}">${t('footer.about')}</a></li>${hasIntl ? html`<li><a href="${url('/international/')}">${t('international.title')}</a></li>` : ''}${leadershipLink(ctx)}
     <li><a href="${url('/policy/privacy/')}">${t('footer.privacy')}</a></li><li><a href="${url('/policy/ai/')}">${t('footer.ai')}</a></li><li><a href="${url('/accessibility/')}">${t('footer.a11y')}</a></li>
     <li><a href="${url('/policy/legal/')}">${t('footer.legal')}</a></li><li><a href="${url('/policy/foia/')}">${t('footer.foia')}</a></li><li><a href="${url('/policy/security/')}">${t('footer.security')}</a></li><li><a href="${url('/policy/copyright/')}">${t('footer.copyright')}</a></li>
     <li><a href="${url('/guide/')}">${t('footer.guide')}</a></li><li><a href="${url('/sitemap-page/')}">${t('sitemap')}</a></li></ul></nav>

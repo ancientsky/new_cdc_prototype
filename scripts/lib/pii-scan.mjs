@@ -27,7 +27,26 @@ const LATIN1_EXT = new Set(['.pdf']);
 // 圖片、字型、影音：不掃（不做 OCR）
 const SKIP_EXT = new Set(['.png', '.jpg', '.jpeg', '.gif', '.webp', '.avif', '.ico', '.woff', '.woff2', '.ttf', '.mp4', '.webm', '.mp3', '.zip']);
 
-export const KIND_LABEL = { 'national-id': '身分證字號', arc: '居留證號', mobile: '手機號碼', email: '個人電子郵件', 'person-name': '疑似中文姓名' };
+export const KIND_LABEL = { 'national-id': '身分證字號', arc: '居留證號', mobile: '手機號碼', email: '個人電子郵件', 'person-name': '疑似中文姓名', 'profile-private': '首長簡介不得刊登的私人資料' };
+
+/* ───────── 第四十四輪：機關首長的公務簡介（content/pages/*.json 含 profile） ─────────
+ * 署長、副署長簡介的「姓名＋職稱＋學經歷」是機關依法主動公開的組織資訊（各部會官網都有首長簡介頁），不是這道掃描要擋的個人資料。
+ * 但「放行姓名」不能靠白名單一筆一筆加（首長會換人，白名單會變成人名清單），也不能把整個檔案排除（那就連手機、信箱都不掃了）。
+ * 做法是把「什麼算公務簡介」寫成規則：
+ *   1. 只有 type:page 且有 profile 物件的檔，才算首長簡介檔；schema（schemas/page.json）限制 profile 只能有職稱、姓名、任次、就任年月、照片、排序。
+ *   2. 在這個檔裡，person-name 只放行「等於 profile.name」的那一個姓名；其他姓名（例如內文提到別人）照常報出。
+ *   3. 手機、信箱、身分證、居留證規則完全不變——首長簡介頁也不准有這些。
+ *   4. 多一條只對首長簡介檔生效的檢查 profile-private：出現「出生」「生日」「住址」「配偶」「子女」等私人欄位詞就擋下。
+ *      因為各部會首長頁偶爾會抄進出生年月日、籍貫，那已超出「公務職位的公開資訊」，新站一律不放。
+ */
+export const PROFILE_PRIVATE = ['出生', '生日', '誕生', '身分證', '住址', '戶籍', '籍貫', '配偶', '子女', '家屬', '血型', '手機', '私人信箱', '婚姻', '宗教', '黨籍'];
+const PROFILE_PRIVATE_RE = new RegExp(PROFILE_PRIVATE.join('|'), 'g');
+/** 這個 JSON 是不是首長簡介檔；是就回傳可放行的姓名集合 */
+export function officialProfileNames(j) {
+  if (!j || typeof j !== 'object' || j.type !== 'page' || !j.profile || typeof j.profile !== 'object') return null;
+  const n = typeof j.profile.name === 'string' ? j.profile.name.trim() : '';
+  return n ? new Set([n]) : new Set();
+}
 
 /* ───────── 檢查碼 ───────── */
 // 字母對照（內政部）：A=10 B=11 C=12 D=13 E=14 F=15 G=16 H=17 I=34 J=18 K=19 L=20 M=21 N=22 O=35 P=23 Q=24 R=25 S=26 T=27 U=28 V=29 W=32 X=30 Y=31 Z=33
@@ -58,7 +77,7 @@ export function maskValue(s) {
 }
 const maskEmail = (s) => { const [u, d] = s.split('@'); return `${u.slice(0, 1)}***@${d}`; };
 const maskName = (s) => s.slice(0, 1) + '＊'.repeat(s.length - 1);
-const maskOf = (kind, v) => (kind === 'email' ? maskEmail(v) : kind === 'person-name' ? maskName(v) : maskValue(v));
+const maskOf = (kind, v) => (kind === 'email' ? maskEmail(v) : kind === 'person-name' ? maskName(v) : kind === 'profile-private' ? `「${v}」` : maskValue(v));
 
 /* ───────── 偵測 ───────── */
 const ID_RE = /(?<![A-Za-z0-9])[A-Z][1289A-D]\d{8}(?![A-Za-z0-9])/g;
@@ -191,10 +210,13 @@ export function scanFile(abs, rel, allow) {
   const ext = path.extname(abs).toLowerCase();
   if (SKIP_EXT.has(ext)) return [];
   const out = [];
+  let profileNames = null; // 第四十四輪：首長簡介檔放行的姓名
   const add = (s, where, opt) => {
     const hits = detect(s, opt);
+    if (profileNames && !opt?.ascii) for (const m of s.matchAll(PROFILE_PRIVATE_RE)) hits.push({ kind: 'profile-private', value: m[0], index: m.index });
     for (const h of hits) {
-      if (allowed(allow, h.kind, h.value, rel)) continue;
+      if (h.kind === 'person-name' && profileNames?.has(h.value)) continue;
+      if (h.kind !== 'profile-private' && allowed(allow, h.kind, h.value, rel)) continue;
       out.push({ file: rel, where, kind: h.kind, label: KIND_LABEL[h.kind], masked: maskOf(h.kind, h.value), excerpt: excerptOf(s, h, hits) });
     }
   };
@@ -207,7 +229,7 @@ export function scanFile(abs, rel, allow) {
   const text = fs.readFileSync(abs, 'utf8');
   if (ext === '.json' || ext === '.geojson') {
     let j; try { j = JSON.parse(text); } catch { j = undefined; }
-    if (j !== undefined) { walk(j, '$', (s, p) => add(s, p)); return out; }
+    if (j !== undefined) { profileNames = officialProfileNames(j); walk(j, '$', (s, p) => add(s, p)); return out; }
   }
   text.split(/\r?\n/).forEach((l, i) => add(l, `第 ${i + 1} 行`));
   return out;

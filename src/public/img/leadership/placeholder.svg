@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 300" role="img" aria-label="照片待提供">
+  <rect width="240" height="300" fill="#eceef1"/>
+  <circle cx="120" cy="112" r="52" fill="#c9ced4"/>
+  <path d="M40 270c0-50 36-86 80-86s80 36 80 86v30H40z" fill="#c9ced4"/>
+  <text x="120" y="292" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" fill="#5b636c">照片待提供</text>
+</svg>

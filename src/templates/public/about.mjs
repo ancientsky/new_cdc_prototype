@@ -4,14 +4,14 @@ import { md } from '../../../scripts/lib/markdown.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
 import * as JL from '../../../scripts/lib/jsonld.mjs';
 import { ldFor, pageHead, translationBadge, feedback, L, unitLink, unitPath, ownerStats, hrefFor, PAGE_PATHS } from './_partials.mjs';
-import { standalonePath } from './page.mjs';
+import { standalonePath, profileList, leadershipIndex } from './page.mjs';
 import { OFFICIAL_ORG_PAGES } from './units.mjs';
 import { intlTopic } from './_international.mjs';
 
 export const ORG_GROUPS = ['office', 'division', 'center', 'regional', 'staff', 'committee'];
 const SECTIONS = [
   { id: 'mission', page: 'page.mission' }, { id: 'org' }, { id: 'regional', page: 'page.regional-centers' },
-  { id: 'history', page: 'page.history' }, { id: 'director', page: 'page.director' }, { id: 'team', page: 'page.about' }, { id: 'international' }, { id: 'contact', page: 'page.contact' },
+  { id: 'history', page: 'page.history' }, { id: 'leadership', page: 'page.leadership' }, { id: 'director', page: 'page.director' }, { id: 'team', page: 'page.about' }, { id: 'international' }, { id: 'contact', page: 'page.contact' },
 ];
 
 function aboutLd(ctx) {
@@ -40,6 +40,18 @@ function pageSection(ctx, sec, { open = false, fallback = null } = {}) {
   ${body ? (open ? html`<div class="c-prose">${raw(md(body))}</div>` : html`<details class="c-source-card c-about__more"><summary>${t('about.expand')}</summary><div class="c-prose c-about__body">${raw(md(body))}</div></details>`) : ''}
   ${provLine(ctx, p)}
   ${sp ? html`<p><a href="${ctx.url(sp)}">${t('about.fullpage')} →</a></p>` : ''}
+</section>`;
+}
+
+/** 第四十四輪：首長簡介區——卡片列（姓名、職稱、照片）＋連到總覽頁；沒有 page.leadership 就不出現 */
+function leadershipSection(ctx) {
+  const idx = leadershipIndex(ctx.site);
+  if (!idx) return '';
+  return html`<section class="c-block" id="leadership" aria-labelledby="h-leadership"><h2 id="h-leadership">${L(ctx, idx, 'title') ?? ctx.t('about.s.leadership')}</h2>
+  ${L(ctx, idx, 'summary') ? html`<p class="lead">${L(ctx, idx, 'summary')}</p>` : ''}
+  ${profileList(ctx)}
+  ${provLine(ctx, idx)}
+  <p><a href="${ctx.url(standalonePath(idx))}">${ctx.t('about.fullpage')} →</a></p>
 </section>`;
 }
 
@@ -84,8 +96,9 @@ ${pageSection(ctx, SECTIONS[0], { open: true, fallback: html`<p>${t('about.missi
 <section class="c-block" id="org" aria-labelledby="h-org"><h2 id="h-org">${t('about.s.org')}</h2><p class="muted">${t('about.org.lead')}</p>${orgChart(ctx)}</section>
 ${pageSection(ctx, SECTIONS[2], { fallback: regionalFallback })}
 ${pageSection(ctx, SECTIONS[3])}
-${pageSection(ctx, SECTIONS[4])}
-${about ? pageSection(ctx, SECTIONS[5], { open: true }) : ''}
+${leadershipSection(ctx)}
+${pageSection(ctx, SECTIONS[5])}
+${about ? pageSection(ctx, SECTIONS[6], { open: true }) : ''}
 ${intl ? html`<section class="c-block" id="international" aria-labelledby="h-international"><h2 id="h-international">${t('international.title')}</h2>
   <p>${L(ctx, intl, 'summary') ?? t('international.lead')}</p>
   <p><a class="c-btn c-btn--ghost c-btn--sm" href="${url('/international/')}">${t('international.title')} →</a></p></section>` : ''}

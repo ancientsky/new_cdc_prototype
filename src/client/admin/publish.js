@@ -59,6 +59,8 @@ function readForm() {
       // 影音
       mediaType: val('#x-mediatype'), youtube: val('#x-ytid').trim(), producedAt: val('#x-produced'), versionLabel: val('#x-vlabel').trim(), chapters: val('#x-chapters'), transcript: val('#x-transcript'),
       captions: $$('input[name="captions"]:checked').map((x) => x.value),
+      // 機關／政策頁（第四十四輪：首長簡介）
+      pageSlug: val('#x-pageslug').trim(), profileRole: val('#x-profilerole'), profileName: val('#x-profilename').trim(), profileNameEn: val('#x-profilenameen').trim(), profileTermNo: val('#x-profileterm').trim(), profileSince: val('#x-profilesince').trim(), profileOrder: val('#x-profileorder').trim(), profilePhotoAlt: val('#x-profilephotoalt').trim(),
       // 專區
       topicKind: val('#x-topickind'), startAt: val('#x-startat'), endAt: val('#x-endat'), links: val('#x-links'), contentIds: [...contentIds],
       // 申請服務
@@ -103,6 +105,7 @@ function writeForm(s) {
   $('#x-mediatype').value = ex.mediaType || 'video'; $('#x-ytid').value = ex.youtube ?? ''; $('#x-produced').value = ex.producedAt ?? ''; $('#x-vlabel').value = ex.versionLabel ?? '';
   $('#x-chapters').value = ex.chapters ?? ''; $('#x-transcript').value = ex.transcript ?? ''; $('#x-transcript-count').textContent = `${(ex.transcript ?? '').length} 字`;
   $$('input[name="captions"]').forEach((x) => { x.checked = (ex.captions ?? []).includes(x.value); });
+  $('#x-pageslug').value = ex.pageSlug ?? ''; $('#x-profilerole').value = ex.profileRole ?? ''; $('#x-profilename').value = ex.profileName ?? ''; $('#x-profilenameen').value = ex.profileNameEn ?? ''; $('#x-profileterm').value = ex.profileTermNo ?? ''; $('#x-profilesince').value = ex.profileSince ?? ''; $('#x-profileorder').value = ex.profileOrder ?? ''; $('#x-profilephotoalt').value = ex.profilePhotoAlt ?? '';
   $('#x-topickind').value = ex.topicKind || 'campaign'; $('#x-startat').value = ex.startAt ?? ''; $('#x-endat').value = ex.endAt ?? ''; $('#x-links').value = ex.links ?? '';
   contentIds = [...(ex.contentIds ?? [])]; paintChips('#x-content-chips', contentIds);
   $('#x-servicetype').value = ex.serviceType || 'data-request'; $$('input[name="who"]').forEach((x) => { x.checked = (ex.who ?? []).includes(x.value); });

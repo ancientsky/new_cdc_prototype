@@ -18,13 +18,15 @@ export const TYPES = [
   { value: 'publication', label: '出版品' },
   { value: 'labtest', label: '檢驗項目' },
   { value: 'research', label: '研究計畫' },
+  // 第四十四輪：政策／機關頁（含首長簡介），讓秘書室能從「同事修改這頁」進來改首長簡介
+  { value: 'page', label: '機關／政策頁' },
 ];
 /** 第七輪起人才招募／採購公告為獨立型別 job／tender（content/jobs、content/tenders；見 docs/guide-staff.md 16、17），示範表單不提供。舊的 recruit／procurement 分支保留以相容既有草稿。 */
 export const schemaType = (t) => (t === 'recruit' || t === 'procurement' ? 'news' : t);
 /** 建議放進 content/ 的哪個子目錄。 */
 export const DIRS = {
   faq: 'faq', disease: 'diseases', news: 'news', letter: 'news', document: 'documents', clarification: 'clarifications', vaccine: 'vaccines',
-  media: 'media', topic: 'topics', service: 'services', publication: 'publications', labtest: 'labtests', research: 'research', recruit: 'news', procurement: 'news',
+  media: 'media', topic: 'topics', service: 'services', publication: 'publications', labtest: 'labtests', research: 'research', recruit: 'news', procurement: 'news', page: 'pages',
 };
 /** 內文欄位在各型別的意義（標籤、placeholder、對應 schema 欄位）。 */
 export const BODY_ROLE = {
@@ -34,6 +36,7 @@ export const BODY_ROLE = {
   publication: { label: '摘要（abstractMarkdown）', field: 'abstractMarkdown' },
   labtest: { label: '備註（notesMarkdown，選填）', field: 'notesMarkdown' },
   research: { label: '研究摘要（abstractMarkdown）', field: 'abstractMarkdown' },
+  page: { label: '頁面內文（bodyMarkdown；首長簡介請用「## 學歷」「## 證照」「## 經歷」「## 專長」四個段落，每項一行）', field: 'bodyMarkdown' },
   recruit: { label: '公告內文（bodyMarkdown）', field: 'bodyMarkdown' },
   procurement: { label: '公告內文（bodyMarkdown）', field: 'bodyMarkdown' },
 };
@@ -46,11 +49,11 @@ export const TASKS = [
   { key: 'symptoms', label: '有症狀怎麼辦' }, { key: 'vaccines', label: '疫苗與預防接種' }, { key: 'travel', label: '出國與入境' },
   { key: 'situation', label: '現在的疫情' }, { key: 'rumor', label: '謠言查證' }, { key: 'data', label: '開放資料與統計' },
 ];
-export const REVIEW_PERIOD_DEFAULT = { disease: 12, vaccine: 6, faq: 6, news: 0, letter: 0, document: 12, clarification: 6, media: 12, topic: 6, service: 12, publication: 0, labtest: 12, research: 12, recruit: 0, procurement: 0 };
+export const REVIEW_PERIOD_DEFAULT = { page: 12, disease: 12, vaccine: 6, faq: 6, news: 0, letter: 0, document: 12, clarification: 6, media: 12, topic: 6, service: 12, publication: 0, labtest: 12, research: 12, recruit: 0, procurement: 0 };
 const SEVEN = ['zh-TW', 'en', 'ja', 'tl', 'vi', 'id', 'th'];
 export const LANG_DEFAULT = {
   disease: SEVEN, vaccine: SEVEN, faq: SEVEN, clarification: SEVEN, letter: ['zh-TW', 'en'], news: ['zh-TW', 'en'], document: ['zh-TW', 'en'],
-  media: ['zh-TW', 'en'], topic: ['zh-TW', 'en'], service: ['zh-TW', 'en'], publication: ['zh-TW'], labtest: ['zh-TW'], research: ['zh-TW'], recruit: ['zh-TW'], procurement: ['zh-TW'],
+  page: ['zh-TW', 'en'], media: ['zh-TW', 'en'], topic: ['zh-TW', 'en'], service: ['zh-TW', 'en'], publication: ['zh-TW'], labtest: ['zh-TW'], research: ['zh-TW'], recruit: ['zh-TW'], procurement: ['zh-TW'],
 };
 export const TIER1 = ['disease', 'vaccine', 'clarification', 'situation'];
 
@@ -609,6 +612,18 @@ export function suggestId(type, { title = '', today = '', slug = '', family = ''
 }
 
 /** content id → slug（schema 要求 ^[a-z0-9-]+$）：去掉型別前綴，其餘非法字元換成連字號。 */
+/** 第四十四輪：首長職位代碼 → [中文職稱, 英文職稱]（schema profile.role 的 enum） */
+export const PROFILE_ROLE_TITLE = { 'director-general': ['署長', 'Director-General'], 'deputy-director-general': ['副署長', 'Deputy Director-General'], 'chief-secretary': ['主任秘書', 'Chief Secretary'] };
+/** 首長簡介頁不得出現的私人欄位詞（與 scripts/lib/pii-scan.mjs 的 PROFILE_PRIVATE 同一份清單；後台預檢用） */
+export const PROFILE_PRIVATE_WORDS = ['出生', '生日', '身分證', '住址', '戶籍', '配偶', '子女', '家屬', '血型', '手機', '私人信箱', '婚姻'];
+export function profileProblems(obj) {
+  if (obj?.type !== 'page' || !obj.profile) return [];
+  const miss = [];
+  const text = `${obj.bodyMarkdown ?? ''}\n${obj.summary ?? ''}\n${Object.values(obj.profile).join('\n')}`;
+  for (const w of PROFILE_PRIVATE_WORDS) if (text.includes(w)) miss.push(`首長簡介不得刊登私人資料：內文出現「${w}」`);
+  if (!/^about\/leadership\//.test(obj.slug ?? '')) miss.push('首長簡介的 slug 要在 about/leadership/ 底下，並以職位命名（例：about/leadership/deputy-director-general-1）');
+  return miss;
+}
 export const slugOfId = (id) => String(id ?? '').replace(/^[a-z]+\./, '').replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '');
 
 const DISEASE_BLOCKS = [
@@ -716,6 +731,21 @@ export function buildExport(st) {
       put('fundingType', ex.fundingType); put('projectNo', ex.projectNo); put('piUnit', ex.piUnit); put('abstractMarkdown', st.body);
       put('datasets', ex.datasets);
       break;
+    case 'page': {
+      // 第四十四輪：slug 以職位命名（about/leadership/director-general），首長異動網址不變；簡介欄位只有 schema 允許的那幾個
+      out.slug = (ex.pageSlug || slugOfId(st.id)).replace(/^\/+|\/+$/g, ''); out.bodyMarkdown = st.body;
+      if (ex.profileName) {
+        const pr = { role: ex.profileRole || 'deputy-director-general', roleTitle: ex.profileRoleTitle || PROFILE_ROLE_TITLE[ex.profileRole || 'deputy-director-general'][0], name: ex.profileName };
+        if (ex.profileRoleTitleEn || PROFILE_ROLE_TITLE[pr.role]) pr.roleTitleEn = ex.profileRoleTitleEn || PROFILE_ROLE_TITLE[pr.role][1];
+        if (ex.profileNameEn) pr.nameEn = ex.profileNameEn;
+        if (ex.profileTermNo) pr.termNo = intOrNull(ex.profileTermNo);
+        if (ex.profileSince) pr.since = ex.profileSince;
+        if (ex.profileOrder) pr.order = intOrNull(ex.profileOrder);
+        if (ex.profilePhotoAlt) pr.photoAlt = ex.profilePhotoAlt;
+        out.profile = pr;
+      }
+      break;
+    }
     case 'recruit': case 'procurement':
       out.newsType = st.type; out.bodyMarkdown = st.body; out.deadlineAt = ex.deadlineAt || '';
       put('refNo', ex.refNo); put('applyUrl', ex.newsApplyUrl);
@@ -739,7 +769,7 @@ export function requiredCheck(obj, ownerIds = [], opts = {}) {
     faq: ['question', 'answerMarkdown'], news: ['newsType', 'bodyMarkdown'], letter: ['newsType', 'bodyMarkdown'], clarification: ['claim', 'verdict', 'clarificationMarkdown', 'shareText'],
     document: ['family', 'docType', 'version', 'effectiveAt', 'machineReadableMarkdown'], disease: ['slug', 'nameEn', 'legalCategory', 'blocks', 'keyFacts'], vaccine: ['slug', 'nameEn', 'publicFunded', 'bodyMarkdown'],
     media: ['mediaType', 'producedAt', 'transcriptMarkdown'], topic: ['slug', 'links'], service: ['slug', 'serviceType', 'whoCanApply', 'steps'], publication: ['series', 'pubType'],
-    labtest: ['disease', 'specimens', 'labs'], research: ['year', 'projectStatus'],
+    labtest: ['disease', 'specimens', 'labs'], research: ['year', 'projectStatus'], page: ['slug', 'bodyMarkdown'],
   }[obj.type] ?? [];
   for (const k of typeNeed) if (obj[k] == null || obj[k] === '' || obj[k] === 0 || (Array.isArray(obj[k]) && !obj[k].length)) miss.push(k);
   // 型別附加規則
@@ -750,6 +780,8 @@ export function requiredCheck(obj, ownerIds = [], opts = {}) {
   if (obj.type === 'news' && ['recruit', 'procurement'].includes(obj.newsType) && !obj.deadlineAt) miss.push('deadlineAt（截止日）');
   if (obj.type === 'labtest' && obj.disease && !/^disease\./.test(obj.disease)) miss.push('disease（須為 disease.*）');
   if ((obj.type === 'topic' || obj.type === 'service') && obj.slug && !/^[a-z0-9-]+$/.test(obj.slug)) miss.push('slug（小寫英數與連字號）');
+  if (obj.type === 'page' && obj.slug && !/^[a-z0-9-]+(\/[a-z0-9-]+)*$/.test(obj.slug)) miss.push('slug（小寫英數、連字號，可用 / 分層，如 about/leadership/director-general）');
+  miss.push(...profileProblems(obj));
   if (obj.summary && obj.summary.length > 120) miss.push('summary（建議 ≤ 120 字）');
   for (const i of assetIssues(obj, opts.limits)) if (i.level === 'error') miss.push(i.msg);
   return miss;
@@ -1191,7 +1223,7 @@ export function submitTimeline(obj, opts = {}) {
 // 原則：表單仍是「產出一份完整 content JSON」，但修改時以 API 的現行版預填，匯出時把表單沒有的欄位（發布日、舊站網址、白名單核准、疾病頁 keyFacts…）
 // 從現行版帶回，所以上架包覆寫同一個檔案時 PR 只會顯示真正改動的幾行；發布日不變、審閱日更新。
 export const API_ONLY_KEYS = new Set(['url', 'path', 'md', 'governance', 'gov', '__file', 'master', 'related']);
-const PREFIX_COLLECTION = { faq: 'faq', news: 'news', doc: 'documents', disease: 'diseases', clar: 'clarifications', vaccine: 'vaccines', topic: 'topics', service: 'services', publication: 'publications', labtest: 'labtests', dataset: 'datasets', media: 'media', research: 'research', job: 'jobs', tender: 'tenders' };
+const PREFIX_COLLECTION = { faq: 'faq', news: 'news', doc: 'documents', disease: 'diseases', clar: 'clarifications', vaccine: 'vaccines', topic: 'topics', service: 'services', publication: 'publications', labtest: 'labtests', dataset: 'datasets', media: 'media', research: 'research', job: 'jobs', tender: 'tenders', page: 'pages' };
 /** 內容 id → 要抓的 v1 集合名（diseases 另有每頁 JSON，由呼叫端依 slug 取） */
 export const collectionOfId = (id) => PREFIX_COLLECTION[String(id ?? '').split('.')[0]] ?? null;
 
@@ -1226,6 +1258,7 @@ export function itemToForm(item) {
     pubType: s(item.pubType), series: s(item.series), volume: s(item.volume), issue: s(item.issue), edition: s(item.edition), isbn: s(item.isbn), issn: s(item.issn), gpn: s(item.gpn), articles: pipeJoin(item.articles, [(a) => a.title, (a) => (a.authors ?? []).join('、'), (a) => a.pages]),
     labDisease: type === 'labtest' ? s(item.disease) : '', sendHours: s(item.sendWithinHours), labs: item.labs ?? [], specimens: pipeJoin(item.specimens, [(x) => x.name, (x) => x.container, (x) => x.volume, (x) => x.storage, (x) => x.transport, (x) => x.timing, (x) => (x.tests ?? []).join('、')]),
     year: s(item.year), projectStatus: s(item.projectStatus), fundingType: s(item.fundingType), projectNo: s(item.projectNo), piUnit: s(item.piUnit), datasets: item.datasets ?? [],
+    pageSlug: type === 'page' ? s(item.slug) : '', profileRole: s(item.profile?.role), profileRoleTitle: s(item.profile?.roleTitle), profileRoleTitleEn: s(item.profile?.roleTitleEn), profileName: s(item.profile?.name), profileNameEn: s(item.profile?.nameEn), profileTermNo: s(item.profile?.termNo), profileSince: s(item.profile?.since), profileOrder: s(item.profile?.order), profilePhotoAlt: s(item.profile?.photoAlt),
     deadlineAt: s(item.deadlineAt), refNo: s(item.refNo), newsApplyUrl: type === 'recruit' || type === 'procurement' ? s(item.applyUrl) : '', positions: s(item.positions), budgetNtd: s(item.budgetNtd),
   };
   return {
@@ -1243,6 +1276,7 @@ export function mergeEdit(out, original) {
   for (const k of ['vaccines', 'countries', 'diseases', 'basedOn', 'tasks', 'keywords']) if (Array.isArray(o[k]) && !o[k].length && !(k in original)) delete o[k]; // 表單固定輸出的空陣列，現行版沒有就不加
   if (original.publishedAt) o.publishedAt = original.publishedAt;
   if (original.aiWhitelist) o.aiWhitelist = original.aiWhitelist; // 修改不重新申請白名單；核准狀態由治理規則判定
+  if (original.profile && o.profile) o.profile = { ...original.profile, ...o.profile }; // 第四十四輪：照片等表單沒有的簡介欄位原樣保留；verification 本來就不在表單裡，照舊保留（待確認狀態不會因為改內文而消失）
   if (Array.isArray(original.assets) && !(out.assets?.length)) o.assets = original.assets.map(({ url, ...a }) => a); // 既有附件在 repo 裡，表單選不到檔，照舊宣告
   if (original.type === 'disease') {
     const sec = splitSections(out.blocks?.[0]?.markdown ?? '');

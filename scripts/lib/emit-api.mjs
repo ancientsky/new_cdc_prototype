@@ -420,6 +420,7 @@ export function emitApi(fullSite, write) {
   const byPubDesc = (a, b) => (b.publishedAt ?? '').localeCompare(a.publishedAt ?? '') || a.id.localeCompare(b.id);
   put('v1/media.json', [...published(c.media)].sort(byPubDesc).map(strip), {}, {}, '影音宣導素材（含逐字稿、章節、依據正本與是否過時）');
   put('v1/topics.json', [...published(c.topics)].sort((a, b) => (a.priority ?? 99) - (b.priority ?? 99) || a.id.localeCompare(b.id)).map(strip), {}, {}, '專區／專題（ended＝已結束；links 含外部連結檢查狀態）');
+  put('v1/pages.json', [...published(c.pages)].sort((a, b) => a.id.localeCompare(b.id)).map(strip), {}, {}, '政策／機關頁（第四十四輪：含首長簡介 profile，供後台「同事修改這頁」載入現行版）');
   put('v1/services.json', [...published(c.services)].sort((a, b) => a.id.localeCompare(b.id)).map(strip), {}, {}, '申請／服務（步驟、應備文件、處理天數、表單）');
   const pubs = [...published(c.publications)].sort((a, b) => (a.series ?? '').localeCompare(b.series ?? '') || String(b.volume ?? '').localeCompare(String(a.volume ?? ''), undefined, { numeric: true }) || String(b.issue ?? '').localeCompare(String(a.issue ?? ''), undefined, { numeric: true }) || byPubDesc(a, b));
   const seriesMap = new Map();
