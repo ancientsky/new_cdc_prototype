@@ -40,6 +40,8 @@ BASE_PATH='' npm run build && node scripts/serve.mjs
 | `PAGEFIND_VERIFY` | （開） | `off` 略過建置後的全文索引召回自我檢查（第四十輪，§12.5） |
 | `PAGEFIND_RECALL_MIN` | `0.98` | 自我檢查的召回下限；低於它時 `--check`／CI 建置失敗（§12.5） |
 | `ASK_DATA_BUDGET_KB` | `445` | 答案頁提問時下載的 JSON（gzip 估算）上限，超過建置失敗（第四十輪，§15） |
+| `INTL_FEED_URL` | 空 | **只給 `npm run fetch`（CI 從 secrets 帶入）**：疫情中心國際疫情資料庫的匯出網址（交換格式 v1 或 CSV）；空＝維持現行官網 `TravelEpidemic/ExportJSON`。可能是內網位址：不寫進快照、不印進 log（第四十三輪，docs/intl-epidemic.md） |
+| `INTL_FEED_TOKEN` | 空 | 兩個用途：(1) `npm run fetch`／`npm run intl:import <URL>` 拉取時當 `Authorization: Bearer`；(2) 閘道的推送端點 `POST /api/intl-epidemic` 驗證中心送來的 Bearer，沒設時端點回 503。CI 放 GitHub secrets（或 GitLab CI 的 masked variable），閘道放主機的祕密管理；拉與推建議用不同的值（正式上線時可拆成兩個變數） |
 
 `--today=YYYY-MM-DD` 參數效果同 `BUILD_TODAY`。**所有連結都必須經 `ctx.url()`（伺服器端）或 `window.CDC.url()`（瀏覽器端）產生**，直接寫死 `/xxx` 會在子路徑部署時壞掉。
 
@@ -538,6 +540,7 @@ GitLab main 更新 ──▶ GitLab CI 建置 dist/ ──▶ 對外網站（本
 | `GATEWAY_SESSION_SECRET` | Google 模式工作階段 cookie 的簽章金鑰 | 每次啟動隨機產生，重啟後要重新登入 |
 | `GATEWAY_STATE_FILE`、`GATEWAY_AUDIT_FILE`、`OUTBOX_DIR` | 狀態、稽核、寄件匣位置 | `.local/` 底下 |
 | `GATEWAY_SEED_DIR`、`GATEWAY_REPO_DIR` | 只用在 `local` 模式 | |
+| `INTL_FEED_TOKEN` | 國際疫情推送端點 `POST /api/intl-epidemic` 的 Bearer 權杖（第四十三輪；發給疫情中心系統）。推送與後台匯入 `POST /api/gateway/intl-epidemic/import` 都用上面的 GitLab 服務帳號把 `data/snapshots/` 兩個檔直接提交到目標分支 | 空（推送端點回 503） |
 | 各登入方式的變數 | 見 14.3 | |
 
 - **閘道已經做的安全措施：**
@@ -730,6 +733,11 @@ GitLab main 更新 ──▶ GitLab CI 建置 dist/ ──▶ 對外網站（本
    - 要不要開「Pipelines must succeed」（會影響 14.4 的待辦）？
 6. **通知：** 通知要接哪個 SMTP 或 Teams webhook？是否允許閘道主機連出到 Teams？
 7. **稽核：** 稽核檔要送到哪一套集中式日誌，保存多久？
+8. **國際疫情資料庫的匯出端點（第四十三輪，docs/intl-epidemic.md §7）：**
+   - 疫情中心的匯出端點放在哪個網段？CI（GitHub Actions 或機關 GitLab Runner）連得到嗎？連不到時，是把 Runner 放進同網段，還是由中心把匯出檔放到 CI 連得到的位置？
+   - 端點要不要權杖？權杖由誰發、多久換一次、放在 CI 的哪個祕密設定（`INTL_FEED_URL`、`INTL_FEED_TOKEN`）？
+9. **GitLab 保護分支：** 推送端點與後台匯入會由服務帳號把 `data/snapshots/travel-epidemic.json`、`intl-epidemic-import.json` **直接提交到目標分支**（不開合併請求）。保護分支是否允許這個服務帳號直接推送？若不允許，要改成「開合併請求＋CI 通過自動合併」（多幾分鐘延遲），或限定服務帳號只能改 `data/snapshots/` 底下（Premium 的 push rules／CODEOWNERS）。
+10. **推送 webhook 的來源 IP：** 中心系統呼叫 `POST /api/intl-epidemic` 時從哪個 IP 或網段出來？能否在反向代理或防火牆只允許這些來源（端點本身另有 Bearer 權杖、每 IP 每分鐘 10 次的限流、2 MB 上限）？這支端點要不要和後台放在同一個對外網址？
 
 ## 15. 智慧問答頁的效能預算（第四十輪，Issue #80）
 

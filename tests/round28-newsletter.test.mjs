@@ -33,14 +33,14 @@ test('主題清單＝RSS 頻道（emit-seo 實際輸出），頻道目錄從輸�
   const files = Object.keys(buildFeeds(site));
   assert.deepEqual(files.map((f) => f.replace(/^feeds\//, '').replace(/\.xml$/, '')), TOPIC_IDS);
   const cat = feedCatalog(site);
-  assert.equal(cat.length, 7);
+  assert.equal(cat.length, 8); // 第四十三輪加 travel-alerts;
   for (const f of cat) {
     assert.ok(f.url.endsWith(`/feeds/${f.id}.xml`), f.url);
     assert.ok(f.title.includes('疾病管制署'), f.title);
     assert.equal(f.count, f.items.length);
   }
   assert.ok(cat.find((f) => f.id === 'news').items.length > 0);
-  assert.equal(subscribe.checkTopics(site).length, 7);
+  assert.equal(subscribe.checkTopics(site).length, 8);
 });
 
 test('/subscribe/：七語都有；列出全部頻道（網址與 buildFeeds 一致）、RSS 說明三步驟、LINE 區塊與「待確認」標記、Email 區塊', () => {

@@ -55,4 +55,4 @@ ${dataScript('lg-accounts', DEMO_ACCOUNTS)}
 ${dataScript('lg-units', Object.fromEntries(site.master.units.map((u) => [u.id, u.name])))}`;
 }
 
-const PAGE_NAMES = { review: '複核區', situation: '疫情發布', 'ai-status': 'AI 開關', eval: '評估', glossary: '詞彙主檔' };
+const PAGE_NAMES = { review: '複核區', situation: '疫情發布', 'intl-epidemic': '國際疫情匯入', 'ai-status': 'AI 開關', eval: '評估', glossary: '詞彙主檔' };

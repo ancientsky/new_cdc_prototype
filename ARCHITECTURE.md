@@ -2038,3 +2038,161 @@ README 第四十一輪有逐項說明；這裡只記工程契約。詳細設計�
 | 個資 | 原始紀錄與報表只在 `.local/`（git 忽略）或機關儲存；`npm run pii` 範圍不變；隱私權政策頁待法務文字 | docs/ask-log.md §8 |
 
 設計取捨：引擎只加「有規律、可做歧義檢查」的通則，語意對應（做愛＝性行為）一律寫進詞彙主檔；紀錄的設計先定「不記什麼」（無 IP、無 cookie、無 Referer、時間到分鐘、遮兩次、k-匿名、原型站不送），再定記什麼。
+
+## 47. 第四十三輪（2026-10-13）：國際重要疫情資訊自動上架
+
+README 第四十三輪有起因與四種做法比較；設計、契約全文與教訓在 docs/intl-epidemic.md（第 3–8 節），決策在 docs/architecture-decisions.md §32，同仁 SOP 在 guide-staff §43。這裡只記工程契約。
+
+### 47.1 資料契約
+
+**輸入：交換格式 v1**（`schemas/intl-epidemic-feed.json`，docs/intl-epidemic.md §3.1）。信封 `{ version: "1", producer?, generatedAt?, mode?: full|delta（預設 full）, note?, items[] }`；每則必填 `id`（`^[A-Za-z0-9_-][A-Za-z0-9_.-]{0,79}$`），非撤下時另必填 `publishedAt`、`disease`、`headline`（≤ 120 字）、`body`（≤ 8000 字）、`areas[]`（≥ 1，每筆要有 `country` 或 `iso2`）。`status: withdrawn` 只需 `id`。另兩種形狀由 `src/client/intl-epidemic-rules.js` 先轉成 v1 再驗：CSV（`CSV_COLUMNS`，多國以 `;`／`；` 分隔）與現行官網 ExportJSON 舊格式（`id` 取 `web` 網址的 `epidemicId`，沒有則用標題＋發布日的穩定雜湊）。`detectShape()` 自動判斷。
+
+**輸出一：現行清單** `data/snapshots/travel-epidemic.json`。每列保留既有欄位（`Disease`、`Country`、`CountryEn`、`ISO2`、`StartDate`、`Summary`、`Url`、`headline`、`description`、`effective`、`expires`…，由 `scripts/lib/travel-normalize.mjs` 的 `normalizeTravelRow()` 產生，舊消費者不變），新增：
+
+| 欄位 | 內容 |
+| --- | --- |
+| `id` | 中心資料庫主鍵；站內頁路徑與 RSS guid |
+| `status` | `published`／`updated`（`withdrawn` 不會留在清單） |
+| `areas[]`、`iso2s[]` | 涉及國家（原樣）與對上國家主檔的 ISO 國碼 |
+| `body` | 內文（純文字或 Markdown） |
+| `diseaseId` | 對上疾病主檔的 id；對不上為 `null` |
+| `references[]` | 選填，參考資料 |
+| `provenance` | `{ source: feed\|official-export\|manual\|push, producer, importedAt, by, hash }`；`hash` 是 `itemFingerprint()`，判斷「與上次相同」用 |
+
+`meta` 保留既有欄位，另加 `source`、`importedAt`、`producer`、`importMode`。**`meta.mode` 與 `meta.importMode` 不是同一件事**：
+
+| 欄位 | 值 | 誰在讀 | 意思 |
+| --- | --- | --- | --- |
+| `meta.mode` | `live`／`snapshot`／`missing` | `/travel/` 資料來源區的狀態標籤、其他快照共用 | 這份資料是不是這次從來源取得的（匯入器寫入時一律 `live`；連不上時 fetch-data 改成沿用快照） |
+| `meta.importMode` | `full`／`delta` | 匯入紀錄、後台 | 這批 feed 是「現行全部」還是「只有變動」 |
+
+`meta.sourceUrl` 只在來源是公開的官網匯出時寫；`INTL_FEED_URL` 可能是內網位址或帶權杖，不進公開快照。
+
+**輸出二：匯入紀錄** `data/snapshots/intl-epidemic-import.json`：
+
+```jsonc
+{
+  "version": 1,
+  "lastRun": {
+    "at": "…", "source": "official-export", "by": "ci", "shape": "legacy", "mode": "full",
+    "producer": "…", "generatedAt": null, "received": 76, "accepted": 76,
+    "counts": { "new": 0, "updated": 0, "withdrawn": 0, "unchanged": 76, "rejected": 0, "upgraded": 76 },
+    "total": 76,
+    "held": null,                         // 或 { "reasons": ["退回 9／30 則（30%），超過 20%"] }
+    "rejected": [{ "id": "…", "index": 3, "headline": "…", "errors": ["缺少發布時間…"] }],
+    "unmapped": [{ "kind": "disease", "value": "沙門氏菌感染症", "ids": ["…"] }],
+    "withdrawn": [{ "id": "…", "reason": "withdrawn|expired|missing" }],
+    "warnings": [{ "id": "…", "message": "…" }],
+    "wroteSnapshot": true
+  },
+  "history": [ /* 近 30 次摘要：at、source、producer、by、mode、received、accepted、total、counts、unmapped（項數）、held、wroteSnapshot */ ]
+}
+```
+
+`upgraded` 是「內容相同、只是補上新欄位」的則數（第一次以舊格式重寫既有快照時 76 則全是這種）。含疑似個資而被退回的則，`headline` 不列出原文。
+
+### 47.2 三條路，一個匯入器
+
+```
+B 拉：CI npm run fetch → importTravelEpidemic()（INTL_FEED_URL＋INTL_FEED_TOKEN；沒設就拉官網 ExportJSON）
+C 推：POST /api/intl-epidemic（intl-feed-api.mjs，Bearer INTL_FEED_TOKEN）─┐ 兩者共用 intl-epidemic-publish.mjs
+A 貼：/admin/intl-epidemic/ → 閘道 POST /api/gateway/intl-epidemic/import ┘（沒有閘道 ⇒ 下載 JSON → npm run intl:import）
+                                   ▼
+scripts/lib/intl-epidemic.mjs：parseFeed → validateFeed → planImport → applyImport
+                                   ▼
+travel-epidemic.json ＋ intl-epidemic-import.json → commit（B：github-actions bot；A／C：閘道服務帳號）→ 建置 → 上線
+```
+
+- `parseFeed(input, { shape })`：字串或物件 → v1；舊格式另帶 `legacy` 對照（id → 原始列），讓快照列保留官網原欄位。
+- `validateFeed(feed, ctx)`：信封與每則跑 ajv；每則再跑 `checkItem()`（白話錯誤、日期合理性、主檔對應）與 `scripts/lib/pii-scan.mjs`（沿用全站個資規則與白名單）。
+- `planImport(opt)`：純函式，不寫檔；回 `{ snapshotRows, report, held, noop, mode, changes }`。
+- `applyImport(plan, opt)`：寫兩個檔；`held` 只寫紀錄；`noop` 且紀錄重點（held、退回、對不上）沒變時兩個檔都不寫，排程不會每天產生空 commit。`fetched: false`（讀本機檔）時 `meta.fetchedAt` 沿用上一版。
+- CLI `scripts/intl-epidemic.mjs`：`npm run intl:import -- <檔案或 URL> [--dry] [--mode full|delta] [--token …] [--shape v1|legacy|csv] [--source …] [--by …] [--today …] [--snapshots …]`；結束碼 0＝完成（含相同）、1＝讀不到或看不懂、2＝整批保留。URL 不印進 log。
+- `scripts/fetch-data.mjs` 的 `SOURCES` 裡 `travel-epidemic.json` 標 `importer: true`，不再直接覆寫；連不上或看不懂 ⇒ 沿用既有快照（與其他來源一致），錯誤訊息裡的 `INTL_FEED_URL` 會被替換成字樣 `(INTL_FEED_URL)`。
+
+### 47.3 把關規則
+
+| 規則 | 層級 | 結果 | 在哪裡 |
+| --- | --- | --- | --- |
+| 單則不符 schema（缺必填、日期格式錯、超長、id 含不安全字元） | 單則 | 退回（白話原因）；該 id 若已在清單，保留上一版 | ajv＋`checkItem()` |
+| `publishedAt` 在明天以後（台北時間） | 單則 | 退回 | `checkItem()` |
+| `expiresAt` 早於 `publishedAt` | 單則 | 退回 | `checkItem()` |
+| 內文、標題、建議、地區細節疑似含個資 | 單則 | 退回；紀錄不列標題原文 | `pii-scan.mjs` |
+| 疾病對不上疾病主檔、國家對不上國家主檔 | 單則 | **接受上架**，列 `unmapped`；「全球」「國際」等不算國家 | `mapDisease()`、`mapCountry()`、`GLOBAL_AREAS` |
+| `expiresAt` 已過 | 單則 | 從清單移除（`reason: expired`） | `planImport()` |
+| `status: withdrawn`；full 模式未再出現 | 單則 | 從清單移除（`withdrawn`／`missing`），保留在紀錄 | `planImport()` |
+| 同一批重複 id | 單則 | 以最後一筆為準，記警告 | `planImport()` |
+| 退回 > 20%（`REJECT_HOLD_SHARE`） | 整批 | **整批保留**，快照不覆寫 | `planImport()` |
+| full 模式收到 0 則 | 整批 | 整批保留（多半是匯出失敗） | `planImport()` |
+| full 模式會讓清單少掉 ≥ 50%（`SHRINK_HOLD_SHARE`） | 整批 | 整批保留，請中心確認 | `planImport()` |
+| 信封格式錯（`version` 不是 "1"、`mode` 不合法） | 整批 | 整批保留 | ajv |
+| 與上次完全相同（指紋與主檔對應都不變） | 整批 | `noop`，不寫檔、不 commit | `applyImport()` |
+
+比對「相同」用 `itemFingerprint()`（不含 `status` 與 provenance）；**改這個函式等於資料遷移**，下一次匯入全部會變 `updated`，要在 PR 說明並預告 RSS 會跳一次。
+
+### 47.4 推送端點與閘道端點（規格；由另一位同事同時實作，合併後以程式為準）
+
+推送與後台手動匯入只差在「誰送的、怎麼認人」，之後的把關、寫檔、版本紀錄、稽核由同一支 `scripts/lib/intl-epidemic-publish.mjs`（`publishFeed()`）處理，避免兩條路慢慢長成兩套規則。CLI 與 CI 排程拉取走同一個匯入器，只是不經過這裡的提交（CI 由 workflow 自己 commit）。
+
+**推送 `POST /api/intl-epidemic`**（`scripts/lib/intl-feed-api.mjs`；給中心系統，機器對機器）：
+
+| 項目 | 契約 |
+| --- | --- |
+| 認證 | `Authorization: Bearer <INTL_FEED_TOKEN>`；比對用 `timingSafeEqual`（先各自 SHA-256）；權杖、`Authorization` 標頭與本文都不寫進 log 或稽核。不吃 cookie、不看 Origin（不是給瀏覽器用的，所以沒有 CSRF 問題） |
+| 本文 | `application/json`（v1 或舊官網匯出列）或 `text/csv`；≤ 2 MB（超過時讀完再回 413，避免連線被重設） |
+| 參數 | 選填 `?mode=full|delta`（覆寫 feed 本身的 mode；急件建議 delta）、`?dry=1`（只檢查不寫） |
+| 回應 | 200 `{ ok, held:false, noop, changes, rejected, unmapped, message, report }`；**整批保留 ⇒ 202**（同形狀、`held:true`，快照沒改、只記匯入紀錄、待辦會產生）；400 `bad_feed`／`bad_json`、401 `unauthorized`、413 `too_large`、415 `unsupported`、429 `rate`（每 IP 每分鐘 10 次，含認證失敗，附 `Retry-After`）、503 `disabled`（伺服器沒設 `INTL_FEED_TOKEN`） |
+| 健康檢查 | `GET /api/intl-epidemic/health` → `{ ok: true, enabled }` |
+| 寫入 | 先 `applyImport()` 寫本機兩個快照檔；有閘道的 git provider 時，把 `data/snapshots/travel-epidemic.json` 與 `intl-epidemic-import.json` **直接 commit 到目標分支**（`GITLAB_TARGET_BRANCH`，作者是服務帳號），不開合併請求、不經人審。提交訊息首行 `data: 國際重要疫情資訊（推送）新增 N、更新 N、撤下 N`（整批保留時為「整批保留，只更新匯入紀錄」），尾端記 `Source: push`、`Producer: <feed.producer>` |
+| 失敗 | 寫檔成功但提交失敗 ⇒ 500 `version_failed`（「同一批再送不會重複上架」，因為下一次會是 noop 或同樣的變更） |
+| 稽核 | 每次寫閘道稽核 `intl-epidemic-import`（`result: ok|held|error|denied`，只記摘要） |
+
+**閘道 `POST /api/gateway/intl-epidemic/import`**（給後台 `/admin/intl-epidemic/`，同事登入後用）：
+
+| 項目 | 契約 |
+| --- | --- |
+| 認證 | 閘道登入＋同源＋CSRF（§36、deploy.md §14 既有機制） |
+| 權限 | `canImportIntl()`：疫情中心（`unit.epidemic-intelligence`）的 `editor`、`reviewer`、`situation-publisher`，或跨單位角色（總編輯、治理幕僚、平台管理）；其他人 403 並寫稽核 `denied` |
+| 本文 | `{ feed, mode?, dry? }`；`feed` 是 v1 物件、舊官網匯出列或 CSV 字串；≤ 2 MB |
+| `dry: true` | 只回 `planImport()` 的摘要（新增／更新／撤下／退回／對不上、會不會整批保留），**不寫任何檔** |
+| 送出 | 同推送端點的寫入方式，`source: manual`、`by: <AD 帳號>`；提交訊息尾端記 `Source: manual`、`Producer`、`Imported-by`、`Gateway-Actor`、`Gateway-Auth`。回應不帶檔案路徑與版本細節（同事看不到 Git），只有 `saved: true|false`；held 一樣回 202 |
+| 狀態 | `GET /api/gateway/intl-epidemic/status` → `{ lastRun, history }`（後台狀態框） |
+
+`provenance.by` 會隨 `/v1/travel-alerts.json` 公開，所以只放帳號；姓名只寫進提交訊息尾端與稽核。原型的現行清單以本機 `data/snapshots/` 為準（閘道與建置同一台）；正式環境若分開，應改成先從 Git 讀現行快照再規劃。
+
+後台頁 `/admin/intl-epidemic/`：讀匯入紀錄顯示匯入狀態、退回與對不上清單、現行清單、歷史；手動貼上／上傳 JSON 或 CSV、或單則表單 → 瀏覽器端用 `intl-epidemic-rules.js` 預檢 → 閘道 dry 預覽 → 送出。沒有閘道（GitHub Pages 原型）時只能「下載 JSON」，交資訊室跑 `npm run intl:import`。
+
+### 47.5 前台
+
+| 項目 | 規則 | 在哪裡 |
+| --- | --- | --- |
+| 每則頁 `/travel/alerts/{id}/` | 只有合法 id（`ALERT_ID_RE` `[A-Za-z0-9_-]{1,64}`，比 feed 的 id 規則嚴，不含點）且非 withdrawn 才出頁；快照沒有 id 時一頁都不產生、列表維持舊行為 | `src/templates/public/travel-alert.mjs`、`scripts/lib/travel-alerts.mjs`（`alertPageRows()`） |
+| 頁面內容 | 標題、發布／更新日、疾病頁連結（有 `diseaseId` 才有）、涉及國家 chips（連目的地頁、附 detail）、內文段落化（像 Markdown 才經 `md()` 淨化）、建議、來源（provenance 白話＋producer＋原始連結）、當時資訊提示、相關與提問框；JSON-LD `SpecialAnnouncement`；`.md` 機讀版 | 同上、`scripts/lib/jsonld.mjs` |
+| 七語 | 骨架用 i18n `travel.alert.*`；內文只有中文 ⇒ 外語頁標 `lang="zh-TW"` 並提示僅有中文 | `src/client/i18n.js` |
+| 列表 | `/travel/` 與目的地頁：有 id 連站內頁，原始網址改小字「原始來源」；有 `areas` 列國家 chips（chip `<li>` 帶 class，與列表項目區分） | `src/templates/public/travel.mjs` |
+| RSS | `feeds/travel-alerts.xml`：近 30 天（以 `meta.dataDate` 為準）、guid＝id、description 取 `excerptOf()` 300 字；進 `llms.txt`、sitemap | `scripts/lib/emit-seo.mjs` |
+| 訂閱 | 主題 `travel-alerts` 加進 `TOPIC_IDS`／`TOPIC_NAMES` 與七語 `subscribe.topic.travel-alerts` | `src/client/subscribe-rules.js`、`tests/round28-newsletter.test.mjs`（頻道數 8） |
+
+`travel-alerts.mjs` 不 import 任何模板，模板與 `emit-seo.mjs` 都用它，避免循環相依。
+
+### 47.6 待辦
+
+| kind | 何時產生 | 權責 | 期限／嚴重度 | 文字重點 |
+| --- | --- | --- | --- | --- |
+| `intl-feed-held` | `lastRun.held` 不為 null | `unit.epidemic-intelligence` | 1 天／high | 這批被整批保留、網站仍顯示上一版、原因；修正後下次排程或後台重貼會自動重新匯入 |
+| `intl-feed-unmapped` | `lastRun.unmapped` 有項目 | 同上 | 14 天（`INTL_UNMAPPED_FIX_DAYS`）／medium | 哪幾個疾病或國家對不上；已上架但不會連疾病頁或目的地頁；請補主檔別名 |
+
+兩者都由 `scripts/lib/governance.mjs` 讀 `site.snapshots` 的匯入紀錄產生（`scripts/lib/load.mjs` 載入 `intl-epidemic-import.json`）。待辦連結 `INTL_ADMIN_HREF` 目前是 `/travel/`：站內連結檢查（`LINK_CHECK=error`）不允許連到還不存在的頁，後台頁合併後改成 `/admin/intl-epidemic/`。
+
+### 47.7 環境變數
+
+| 變數 | 誰用 | 說明 |
+| --- | --- | --- |
+| `INTL_FEED_URL` | CI（`pages.yml` 從 secrets 帶入 `npm run fetch`） | 疫情中心匯出端點；空字串＝維持官網 ExportJSON。可能是內網位址：不寫進快照、不印進 log |
+| `INTL_FEED_TOKEN` | CI（拉取時當 Bearer）；閘道（驗證推送端點的 Bearer）；CLI（讀 URL 時） | 拉與推可共用一把，也可分開（拉取用中心發給網站的唯讀 token，推送用網站發給中心的 token）；建議分開，正式上線前由資訊室決定 |
+
+### 47.8 測試
+
+- `tests/intl-epidemic.test.mjs`（20 項）：CSV 解析（BOM、引號內換行）、三種形狀判斷、舊格式（標題補疾病）、主檔對應（全半形、康熙部首、別名）、白話錯誤、schema 退回、重複 id、個資退回、整批保留三條件、退回的那則保留上一版、withdrawn／過期／delta、noop 不寫檔、快照欄位相容、現有快照再匯入一次＝noop、CLI `--dry`、fetch-data 拉 v1 feed（假 fetch，網址不進快照）、兩種待辦。
+- `tests/travel-alert-ui.test.mjs`（11 項，合成快照）：id 規則、出頁條件、每則頁內容、Markdown 淨化、七語骨架、meta／JSON-LD／`.md`、列表與目的地頁連結與 chips、RSS、sitemap、快照沒有新欄位時的退回行為。
+- Prettier 會格式化 `` html`…` `` 模板內的 HTML，測試比對 HTML 片段時用 `\s+` 而非固定空白。

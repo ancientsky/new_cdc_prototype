@@ -56,3 +56,19 @@ eval/**/*.mjs
 !src/client/admin/ask-log.js
 !src/templates/admin/ask-log.mjs
 !tests/round41-ask-log.test.mjs
+# 第四十三輪：國際重要疫情資訊自動上架（docs/intl-epidemic.md）
+!scripts/lib/travel-alerts.mjs
+!src/templates/public/travel-alert.mjs
+!tests/travel-alert-ui.test.mjs
+!src/client/intl-epidemic-rules.js
+!scripts/lib/intl-epidemic.mjs
+!scripts/lib/travel-normalize.mjs
+!scripts/intl-epidemic.mjs
+!tests/intl-epidemic.test.mjs
+# 第四十三輪：國際疫情推送端點與後台匯入（docs/intl-epidemic.md 第 6 節）
+!scripts/lib/intl-epidemic-publish.mjs
+!scripts/lib/intl-feed-api.mjs
+!src/templates/admin/intl-epidemic.mjs
+!src/client/admin/intl-epidemic.js
+!src/client/admin/intl-epidemic-core.js
+!tests/intl-epidemic-api.test.mjs

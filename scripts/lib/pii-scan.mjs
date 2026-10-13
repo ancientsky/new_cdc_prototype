@@ -151,6 +151,19 @@ export function detect(s, opt = {}) {
   return hits;
 }
 
+/**
+ * 掃一段文字並套白名單（第四十三輪：國際疫情匯入器逐則檢查內文用，規則與全庫掃描相同）。
+ * 回傳只含遮罩過的值，可以直接放進匯入紀錄或錯誤訊息。
+ * @param {string} s
+ * @param {ReturnType<typeof loadAllowlist>} allow
+ * @param {string} [file] 這段文字最後會落在哪個檔（白名單 entries.files 以此比對）
+ * @returns {{ kind:string, label:string, masked:string }[]}
+ */
+export function scanText(s, allow, file = '') {
+  const a = allow ?? { numbers: new Set(), domains: [], entries: [], errors: [] };
+  return detect(s).filter((h) => !allowed(a, h.kind, h.value, file)).map((h) => ({ kind: h.kind, label: KIND_LABEL[h.kind], masked: maskOf(h.kind, h.value) }));
+}
+
 /** 片段：命中前後各 12 字，片段內所有命中都遮罩 */
 function excerptOf(s, hit, all) {
   const a = Math.max(0, hit.index - 12), b = Math.min(s.length, hit.index + hit.value.length + 12);

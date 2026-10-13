@@ -112,6 +112,41 @@
 
 > 限制：(1) 後台的「送出」是**展示**，原型不能代承辦人開 PR，交件仍是下載 ZIP；(2) GitHub 工作流程**無法在本機驗證**，是否如預期運作以開一個真實測試 PR 的結果為準（見 [docs/publishing-lanes.md](docs/publishing-lanes.md) 附錄 B）；(3) 排程發布受每 2 小時重建限制，延遲最多 2 小時；(4) 開發環境連不到舊站，結核病首批用的是**依既有內容反推的模擬匯出**，真實匯出的版型與品質可能不同，規則要用真實樣本校準。
 
+## 第四十三輪：國際疫情資訊從疫情中心資料庫自動上架
+
+疫情中心同事問（2026-10-13）：他們有自己維護的資料庫，未來上架「國際重要疫情資訊」有沒有更聰明或自動化的方式？查下去發現，新站 `/travel/` 的「近 30 天國際重要疫情資訊」本來就是每天從現行官網 `TravelEpidemic/ExportJSON` 拉來的，而那個匯出檔的欄位（`sent`、`effective`、`headline`、`alert_disease`、`areaDesc`、`ISO3166`…）就是 CAP 格式——背後正是疫情中心的資料庫。所以答案不是另造一條路，而是**把今天隱含的格式寫成白紙黑字的契約，讓資料直接從中心資料庫進新站**。設計與契約在 [docs/intl-epidemic.md](docs/intl-epidemic.md)，工程契約 ARCHITECTURE §47，決策 [docs/architecture-decisions.md](docs/architecture-decisions.md) §32，同仁 SOP 在同仁手冊 §43。
+
+### 四種做法，一句話比較
+
+| 做法 | 一句話 | 結論 |
+| --- | --- | --- |
+| A. 後台表單（承辦人再填一次） | 兩個正本、抄錯漏登，等於叫中心多做一份工 | 只當**備援**（系統斷線時貼上） |
+| B. 排程拉取（CI 向中心匯出端點拉） | 中心只給一個網址＋唯讀 token，今天的流程只是換掉 URL | **預設做法** |
+| C. 推送（中心核定時 POST 到網站） | 分鐘級上線，但要開網路通路、管 token | **加值選項**，急件需要時再開 |
+| D. 訂閱標準 feed（RSS／CAP XML） | RSS 會丟掉國碼與疾病對應；CAP XML 雙方都要寫 XML | 不另做；我們的 JSON 就是 CAP 欄位 |
+
+**選定：一份契約＋ B 為主、C 為輔、A 為備援，三條路進同一個匯入器、同一套把關規則。** 網站端**不再加一道人審**——資料庫裡的那一筆已經是中心依既有流程核定的內容，網站該做的是機器把關與事後可見（待辦、匯入紀錄）。
+
+### 做了什麼
+
+- **交換格式 v1**（`schemas/intl-epidemic-feed.json`）：`{ version, producer, generatedAt, mode: full|delta, items[] }`，每則有穩定 `id`、`status`（published／updated／withdrawn，撤下只需 id）、發布／更新／下架時間、疾病、標題、內文、`areas[]`（國名、ISO 國碼、地區細節）。另接受等價的 **CSV**（一則一列、多國以 `;` 分隔）與**現行官網 ExportJSON 舊格式**，讓切換資料來源不必一步到位。
+- **一個匯入器**（`scripts/lib/intl-epidemic.mjs`，CLI `npm run intl:import -- <檔案或 URL> [--dry]`）：讀入 → 驗證（schema＋白話錯誤＋個資掃描）→ 對主檔 → 比對上一版 → 寫檔。單則有錯只退回該則（網站保留它的上一版）；退回超過 20%、full 模式收到 0 則、或會讓清單少掉一半以上 ⇒ **整批保留不動**；與上次完全相同 ⇒ 不寫檔、不產生 commit。疾病或國家對不上主檔照常上架，但列待辦請中心補別名。
+- **排程拉取接上**：`npm run fetch` 看 `INTL_FEED_URL`（＋`INTL_FEED_TOKEN`）有設就拉中心的 v1 feed，沒設維持官網匯出；兩者都經過匯入器。CI 從 secrets 帶入。今天的快照已用舊格式跑過一次匯入器重寫：既有欄位逐列不變，多了 `id`、`status`、`areas`、`body`、`diseaseId`、`provenance`。
+- **推送端點與後台頁（規格，另一位同事同時實作）**：`POST /api/intl-epidemic`（Bearer token、≤ 2 MB、整批保留回 202），閘道 `POST /api/gateway/intl-epidemic/import`（登入＋CSRF，限疫情中心與跨單位管理角色，可先 dry 預覽），後台 `/admin/intl-epidemic/`（匯入狀態、退回與對不上清單、現行清單、歷史；貼上／上傳 JSON 或 CSV、單則表單 → 預覽 → 送出；沒有閘道就下載 JSON 交資訊室跑 `npm run intl:import`）。
+- **前台**：每則有自己的頁 `/travel/alerts/{id}/`（內文、疾病頁與目的地頁連結、來源、七語骨架、JSON-LD、`.md` 機讀版）；`/travel/` 與目的地頁列表改連站內頁，原始網址改小字「原始來源」；新 RSS `feeds/travel-alerts.xml`（guid＝資料庫 id，更新不會變成新的一則），加入電子報訂閱主題。
+- **待辦**：`intl-feed-held`（整批保留，高優先、1 天）、`intl-feed-unmapped`（對不上主檔，14 天），權責都是疫情中心。
+- **測試**：`tests/intl-epidemic.test.mjs`（20 項）、`tests/travel-alert-ui.test.mjs`（11 項）。
+
+### 教訓（全部 12 條在 docs/intl-epidemic.md 第 8 節）
+
+- **新欄位先查誰在讀舊欄位**：原本想把 full／delta 記在快照 `meta.mode`，但 `/travel/` 已經用 `meta.mode` 判斷「即時／快照」；改記在 `meta.importMode`。比較好，因為前台的資料狀態標籤不會悄悄變錯。
+- **真實資料比規格亂**：官網匯出有些列沒有疾病或國家欄位（例「美國-環孢子蟲病」），要從標題「國家-疾病」補；內文混有康熙部首字（⽐、⾮、⻑），主檔比對前要先 NFKC。不處理就會大量退回或對不上。
+- **full 模式下被退回的那則不等於撤下**：原本「這批沒有＝撤下」，會讓一則因格式錯而從網站消失；改成保留上一版。比較好，因為資料有錯的代價不該是民眾看不到既有資訊。
+- **內容指紋一改就是資料遷移**：改 `itemFingerprint`，下次匯入會全部變成「更新」，RSS 也跟著跳；要當資料遷移寫說明。
+- **新增 RSS 頻道不只改一個檔**：訂閱主題清單、七語主題名、round28 測試的頻道數都要同步。
+
+> 限制：(1) `data/samples/` 的範例是**示意資料、未驗證**；(2) 疫情中心資料庫的**真實 schema 未知**，v1 是我們提出的約定格式，要請中心回答 docs/intl-epidemic.md 第 7 節的問題後校準；(3) 開發環境**連不到 cdc.gov.tw**，快照的重寫以 repo 裡既有快照為準，拉取與推送都沒有對真實端點驗證過；(4) 現有快照有 7 個疾病名稱對不上主檔（沙門氏菌感染症、細菌性腸胃炎等），是中心第一批要補的別名；(5) 推送端點、閘道端點與後台頁本輪以規格描述，由另一位同事同時實作，合併後以程式為準。
+
 ## 第四十一輪：「covid」「做愛」答不出來，以及智慧問答從此有查詢紀錄
 
 Yulun 實測回報三件事（2026-10-11）：問「covid」答「找不到足夠的官方依據」，但「covid-19」「新冠」可以；問「做愛」查無，但「性行為」可以；還有，問題到底有沒有 log，想知道哪些常被問的問題答不出來。前兩件是同一類病——**民眾怎麼說與官方怎麼寫之間少一座橋**——第三件是找出下一批橋的方法。兩組人平行做，合併後評估集 290 題全過、個資掃描通過。工程契約在 ARCHITECTURE §46、決策 [docs/architecture-decisions.md](docs/architecture-decisions.md) §31。
@@ -547,6 +582,7 @@ docs/                使用說明與治理文件
 | [docs/line-chatbot.md](docs/line-chatbot.md) | **LINE「疾管家」能不能用新網站當知識庫**：網站現有的知識出口（`.md`、`/v1/*.json`、`llms.txt`、答案索引）、三種接法（只換連結／呼叫同一份問答引擎／再加語言模型）比較與建議順序、要問承辦與廠商的問題、風險與對策（第三十八輪） |
 | [docs/i18n.md](docs/i18n.md) | **多語工程筆記**：詞彙退回規則（`id_` 欄位、永不顯示 `term.*` 鍵值）、外語頁中文比例檢查（`I18N_CJK_CHECK`）、「這頁沒有你的語言」提示、機器翻譯初稿怎麼審核後上線、來臺專區（第四十輪） |
 | [docs/ask-log.md](docs/ask-log.md) | **智慧問答查詢紀錄**：記什麼、不記什麼（遮兩次、無 IP、時間到分鐘、不要追蹤就不送）、為什麼用 fetch keepalive 不用 sendBeacon、k-匿名報表與疑似同義詞候選、正式收件端契約與資訊室確認清單、離線 LLM 掛點（第四十一輪） |
+| [docs/intl-epidemic.md](docs/intl-epidemic.md) | **國際重要疫情資訊自動上架**：四種做法比較（表單／拉取／推送／標準 feed）、交換格式 v1（JSON、CSV、舊官網匯出）、三條路一個匯入器、機器把關規則、實作位置、要請疫情中心與資訊室回答的問題、本輪教訓（第四十三輪） |
 | [docs/transition-faq.md](docs/transition-faq.md) | **同事常問的五個問題**：小改現行官網能不能導入 AI 與治理（能外掛問答、不能做治理）、新站另做舊站留著會怎樣（只能唯讀並行）、怎麼驗廠商能力（三道實作題）、200 字差別說明、費用與時程估算與切換做法、LINE 疾管家會不會跟著換（連到 line-chatbot.md） |
 | [docs/careers-privacy.md](docs/careers-privacy.md) | 人才招募個資處理原則：報名資料不進 repo、模擬報名只存瀏覽器、正式報名在站外或後端、只公布報名編號與遮罩姓名、保存與下架、查詢與刪除、個資法對應與告知事項範本 |
 

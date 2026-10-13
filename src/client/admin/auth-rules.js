@@ -23,6 +23,8 @@ export const CROSS_UNIT_ROLES = ['chief-editor', 'governance', 'platform'];
 export const PAGE_RULES = {
   review: ['reviewer', 'chief-editor', 'governance'],
   situation: ['situation-publisher', 'governance'],
+  // 第四十三輪：國際疫情匯入比照疫情發布（疫情中心＋跨單位管理角色）；寫入閘道另以「疫情中心的編輯／審核或跨單位角色」把關（scripts/lib/intl-epidemic-publish.mjs canImportIntl）
+  'intl-epidemic': ['situation-publisher', 'chief-editor', 'governance', 'platform'],
   'ai-status': ['platform', 'governance'],
   eval: ['governance', 'platform', 'chief-editor'],
   glossary: ['governance', 'editor', 'reviewer', 'chief-editor', 'platform', 'situation-publisher'],

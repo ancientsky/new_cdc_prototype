@@ -7,6 +7,7 @@ import { ROOT } from './lib/load.mjs';
 import { createSubscriptionApi } from './lib/subscribe-mock.mjs';
 import { createGatewayApi } from './lib/gateway/index.mjs';
 import { createAskLogApi } from './lib/ask-log-mock.mjs';
+import { createIntlFeedApi } from './lib/intl-feed-api.mjs';
 
 const DIST = process.env.DIST_DIR ? path.resolve(process.env.DIST_DIR) : path.join(ROOT, 'dist');
 const port = Number(process.argv[2] || process.env.PORT || 4173);
@@ -19,6 +20,9 @@ const gateway = process.env.GATEWAY === 'off' ? null : createGatewayApi();
 // 第四十一輪：智慧問答查詢紀錄的模擬後端（POST /api/ask-log → .local/ask-log/；本機報表 /api/dev/ask-log/report，見 scripts/lib/ask-log-mock.mjs、docs/ask-log.md）
 // 要掛在訂閱模擬後端之前：訂閱模擬後端對不認得的 /api/ 路徑一律回 404。
 const askLogApi = createAskLogApi();
+// 第四十三輪：國際重要疫情資訊推送端點（POST /api/intl-epidemic，Bearer INTL_FEED_TOKEN；沒設定權杖時回 503，見 scripts/lib/intl-feed-api.mjs、docs/intl-epidemic.md）。
+// 有閘道就共用它的版本庫與稽核紀錄；同樣要掛在訂閱模擬後端之前。
+const intlFeedApi = createIntlFeedApi({ gitProvider: gateway?.git, audit: gateway?.audit });
 
 http.createServer(async (req, res) => {
   const parsed = new URL(req.url, 'http://localhost');
@@ -26,6 +30,7 @@ http.createServer(async (req, res) => {
   try { url = decodeURIComponent(parsed.pathname); } catch { res.statusCode = 400; return res.end('bad request'); }
   if (config.basePath && url.startsWith(config.basePath)) url = url.slice(config.basePath.length) || '/';
   if (gateway && await gateway.handle(req, res, url, parsed.searchParams)) return;
+  if (await intlFeedApi.handle(req, res, url, parsed.searchParams)) return;
   if (await askLogApi.handle(req, res, url, parsed.searchParams)) return;
   if (await subscribeApi.handle(req, res, url, parsed.searchParams)) return;
   let file = path.join(DIST, url);
@@ -35,4 +40,4 @@ http.createServer(async (req, res) => {
   res.setHeader('Set-Cookie', askLogApi.cookie); // 第四十一輪：告訴答案頁「這裡有查詢紀錄模擬後端」（只是標記，不含資料）
   res.setHeader('Content-Type', types[path.extname(file)] ?? 'application/octet-stream');
   fs.createReadStream(file).pipe(res);
-}).listen(port, () => console.log(`http://localhost:${port}${config.basePath}/\n訂閱模擬後端：/api/health；模擬信件 → ${path.relative(ROOT, subscribeApi.outboxDir)}/\n查詢紀錄模擬後端：POST /api/ask-log → ${path.relative(ROOT, askLogApi.dir)}/（報表：/api/dev/ask-log/report、/admin/ask-log/）${gateway ? `\n寫入閘道：/api/gateway/health（身分：${gateway.config.auth.mode}；版本庫 → ${path.relative(ROOT, gateway.config.git.dir)}/）` : ''}`));
+}).listen(port, () => console.log(`http://localhost:${port}${config.basePath}/\n訂閱模擬後端：/api/health；模擬信件 → ${path.relative(ROOT, subscribeApi.outboxDir)}/\n查詢紀錄模擬後端：POST /api/ask-log → ${path.relative(ROOT, askLogApi.dir)}/（報表：/api/dev/ask-log/report、/admin/ask-log/）\n國際疫情推送端點：POST /api/intl-epidemic（${intlFeedApi.enabled ? '已啟用' : '未啟用：沒設 INTL_FEED_TOKEN'}）${gateway ? `\n寫入閘道：/api/gateway/health（身分：${gateway.config.auth.mode}；版本庫 → ${path.relative(ROOT, gateway.config.git.dir)}/）` : ''}`));
