@@ -25,7 +25,7 @@ export function createGitLab({ baseUrl, project, token, targetBranch = 'main', f
   if (!baseUrl || !project || !token) throw new Error('gitlab 供應者需要 baseUrl、project、token');
   const root = `${String(baseUrl).replace(/\/$/, '')}/api/v4/projects/${encodeURIComponent(String(project))}`;
   const enc = (p) => encodeURIComponent(p);
-  async function call(method, pathAndQuery, body, { okStatus = [200, 201], allow404 = false } = {}) {
+  async function call(method, pathAndQuery, body, { okStatus = [200, 201], allow404 = false, binary = false } = {}) {
     const ctl = new AbortController();
     const timer = setTimeout(() => ctl.abort(), timeoutMs);
     try {
@@ -40,6 +40,7 @@ export function createGitLab({ baseUrl, project, token, targetBranch = 'main', f
         throw Object.assign(new Error(`GitLab ${method} ${pathAndQuery.split('?')[0]} → ${r.status} ${detail}`), { code: r.status === 409 || r.status === 406 ? 'conflict' : 'gitlab', status: r.status });
       }
       if (method === 'HEAD') return true;
+      if (binary) return Buffer.from(await r.arrayBuffer());
       const type = r.headers?.get?.('content-type') ?? '';
       return type.includes('application/json') ? r.json() : r.text();
     } finally { clearTimeout(timer); }
@@ -49,7 +50,7 @@ export function createGitLab({ baseUrl, project, token, targetBranch = 'main', f
   return {
     name: 'gitlab', targetBranch,
     async ensureReady() { await call('GET', ''); }, // 專案存在且 token 有效
-    async readFile(ref, filePath) { return call('GET', `/repository/files/${enc(filePath)}/raw?ref=${enc(ref)}`, null, { allow404: true }); },
+    async readFile(ref, filePath, { raw = false } = {}) { return call('GET', `/repository/files/${enc(filePath)}/raw?ref=${enc(ref)}`, null, { allow404: true, ...(raw ? { binary: true } : {}) }); },
     async branchExists(branch) { return !!(await call('GET', `/repository/branches/${enc(branch)}`, null, { allow404: true })); },
     async createBranch(branch, from = targetBranch) { const b = await call('POST', '/repository/branches', { branch, ref: from }); return { sha: b?.commit?.id ?? null }; },
     async commit({ branch, files, message, author }) {
@@ -57,7 +58,9 @@ export function createGitLab({ baseUrl, project, token, targetBranch = 'main', f
       for (const f of files) {
         if (f.content == null) { actions.push({ action: 'delete', file_path: f.path }); continue; }
         const exists = await call('HEAD', `/repository/files/${enc(f.path)}?ref=${enc(branch)}`, null, { allow404: true });
-        actions.push({ action: exists ? 'update' : 'create', file_path: f.path, content: f.content, encoding: 'text' });
+        // 附件（Buffer）用 base64 送；內容 JSON 維持 text
+        const bin = Buffer.isBuffer(f.content) || f.content instanceof Uint8Array;
+        actions.push({ action: exists ? 'update' : 'create', file_path: f.path, content: bin ? Buffer.from(f.content).toString('base64') : f.content, encoding: bin ? 'base64' : 'text' });
       }
       const c = await call('POST', '/repository/commits', { branch, commit_message: message, ...(author ? { author_name: author.name, author_email: author.email } : {}), actions });
       return { sha: c?.id ?? null };

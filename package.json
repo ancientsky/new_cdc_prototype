@@ -38,6 +38,7 @@
     "globals": "^17.13.0",
     "i18n-iso-countries": "^7.14.0",
     "pagefind": "^1.5.2",
+    "pdfjs-dist": "^6.4.299",
     "playwright": "^1.64.0",
     "prettier": "^3.9.9",
     "topojson-client": "^3.1.0",

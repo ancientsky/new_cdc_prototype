@@ -78,7 +78,12 @@ ${pageHead({
       ${area('te-summary', '摘要一句（目錄列與搜尋結果用，≤ 160 字）', { rows: 2, hint: '留空＝自動取摘要第一句。' })}
     </fieldset>
 
-    <fieldset class="adm-fieldset adm-te-sec" id="te-c"><legend>C 稿件：整篇貼進來，系統切段</legend>
+    <fieldset class="adm-fieldset adm-te-sec" id="te-c"><legend>C 稿件：上傳 PDF 自動帶入，或整篇貼進來</legend>
+      <div class="adm-te-pdfin" id="te-pdfdrop">
+        <div class="adm-field adm-field--wide"><label for="te-pdfin"><strong>上傳排版好的 PDF，系統自動帶入</strong>（篇名、作者與單位、DOI、日期、關鍵字、摘要、各段正文、圖說與圖片、參考文獻）</label><input type="file" id="te-pdfin" accept=".pdf,application/pdf"><span class="adm-hint">也可以把 PDF 拖到這個區塊。讀的是 PDF 的文字層（掃描檔沒有文字層就讀不到，請貼文字）；同一份 PDF 會一併當作「單篇 PDF」附件。帶入後<strong>請逐段核對</strong>，再往下看檢核。</span></div>
+        <p class="adm-muted" id="te-pdfin-msg" role="status" aria-live="polite"></p>
+        <div id="te-pdf-extra" hidden></div>
+      </div>
       ${area('te-manuscript', '稿件全文（從 Word 或 PDF 全選複製貼上）', { rows: 8, wide: true, ph: '2026 年 10 月 6 日 第 42 卷 第 19 期\n疫情調查\n篇名\n作者甲 1*、作者乙 2\n\n摘要\n…\n關鍵字：…\n\n事件源起\n…\n\n圖一、○○○時序圖\n\n討論及建議\n…\n\n參考文獻\n1. …\n\n1 單位甲\n2 單位乙\n通訊作者：作者甲　E-mail：…\n投稿日期：…　接受日期：…\nDOI：10.6524/…', hint: '系統會抓：頁首的卷期與出刊日、分類標籤、篇名、作者列（姓名＋上標編號＋*）、頁尾的服務單位、通訊作者與 E-mail、投稿／接受日期、DOI、關鍵字；切出摘要、各段（認得「事件源起、背景、個案報告、疫情調查、檢驗結果、疫情研判、討論及建議」等疫情調查報告的段名，不認得但看起來像標題的會列出請你核對）、「圖一」「表 1」圖表說明、參考文獻（折行自動併回）、英文篇名與摘要。從 PDF 複製時夾帶的頁首頁尾會自動剔除。只填還沒填的欄位，不會蓋掉你已經改過的內容。' })}
       <p class="adm-actions"><button type="button" class="adm-btn" id="te-split">自動切段</button><button type="button" class="adm-btn adm-btn--ghost" id="te-clear-ms">清空稿件欄</button><span class="adm-muted" id="te-split-msg" role="status" aria-live="polite"></span></p>
       <div id="te-unassigned" class="adm-box adm-box--warn" role="status" hidden></div>
@@ -125,6 +130,16 @@ ${pageHead({
       <div class="adm-box adm-box--info" id="te-cats-changed" role="note" hidden>分類主檔有改動：上架包會多一個 <code>content/master/bulletin-categories.json</code>。</div>
     </fieldset>
 
+    <section class="adm-gwpanel" id="gw-panel" aria-labelledby="gw-h" hidden>
+      <h2 id="gw-h">送審與上線</h2>
+      <p class="adm-hint">有系統連線時才會出現這一區：「儲存草稿」把這一版（含 PDF、圖檔、新卷期）存進系統；「送審」交給審核人，核准後文章、附件、卷期一起上線，不必再下載上架包交資訊室。檢核頁籤的紅色問題要先改掉。</p>
+      <p class="gw-statusline">目前狀態：<span class="adm-badge adm-badge--gray" id="gw-state">尚未送審</span> <span class="adm-muted" id="gw-approvals"></span></p>
+      <div id="gw-notes"></div>
+      <div class="gw-errors" id="gw-errors" tabindex="-1" hidden></div>
+      <div class="adm-actions"><button type="button" class="adm-btn adm-btn--ghost" id="gw-save">儲存草稿</button><button type="button" class="adm-btn" id="gw-submit">送審</button></div>
+      <p class="adm-muted" id="gw-status" role="status" aria-live="polite"></p>
+      <details id="gw-history-wrap" hidden><summary>歷程</summary><ol class="gw-history" id="gw-history"></ol></details>
+    </section>
     <div class="adm-actions adm-actions--sticky" id="te-actions">
       <button type="button" class="adm-btn" id="te-zip">產生上架包</button>
       <button type="button" class="adm-btn adm-btn--ghost" id="te-dl">下載 JSON</button>

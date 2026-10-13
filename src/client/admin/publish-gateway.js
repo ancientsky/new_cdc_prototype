@@ -9,7 +9,8 @@ const CUR_KEY = 'cdc.admin.gwCurrent'; // { contentId, sid }：這台電腦上�
 const FIELD_INPUT = { title: '#f-title', question: '#f-title', id: '#f-id', owner: '#f-owner', reviewPeriodMonths: '#f-period', summary: '#sum', answerMarkdown: '#f-wys', bodyMarkdown: '#f-wys', clarificationMarkdown: '#f-wys', introMarkdown: '#f-wys', abstractMarkdown: '#f-wys', publishAt: '#f-publish-at', basedOn: '#f-based-q' };
 
 /**
- * @param {{ exportObj: () => any, loadItem: (item: any) => Promise<void>|void, getContentId: () => string }} api
+ * @param {{ exportObj: () => any, loadItem: (item: any) => Promise<void>|void, getContentId: () => string, exportExtra?: () => Promise<{ companions?: any[], files?: { name: string, base64: string }[] }>|{ companions?: any[], files?: { name: string, base64: string }[] }, fieldInput?: Record<string, string>, onSaved?: (sub: any) => void }} api
+ *   exportExtra（第四十五輪）：跟內容一起送的配套內容（如新卷期）與附件（PDF、圖），疫情報導後台用；fieldInput：欄位 → 表單選擇器（預設是 /admin/publish/ 的）
  */
 export async function initPublishGateway(api) {
   const panel = $('#gw-panel');
@@ -58,7 +59,7 @@ export async function initPublishGateway(api) {
     if (!fields?.length) return;
     const list = el('ul', {});
     for (const f of fields) {
-      const target = FIELD_INPUT[f.field];
+      const target = (api.fieldInput ?? FIELD_INPUT)[f.field];
       list.append(el('li', {}, target ? el('button', { type: 'button', class: 'adm-linkbtn', dataset: { target }, text: f.message }) : f.message));
     }
     errBox.append(el('strong', { text: '還需要修正這些地方（點一下就跳到該欄位）' }), list);
@@ -98,9 +99,14 @@ export async function initPublishGateway(api) {
     const body = { item, ...(current && ['draft', 'returned'].includes(current.status) && current.contentId === item.id ? { submissionId: current.id } : {}) };
     btnSave.disabled = true; btnSubmit.disabled = true;
     say(kind === 'save' ? '檢查並儲存中…' : '檢查並送審中…');
+    if (api.exportExtra) {
+      const extra = await api.exportExtra();
+      if (extra?.companions?.length) body.companions = extra.companions;
+      if (extra?.files?.length) { body.files = extra.files; say(`${kind === 'save' ? '檢查並儲存中' : '檢查並送審中'}（含 ${extra.files.length} 個附件）…`); }
+    }
     const r = await gw.post(kind === 'save' ? '/drafts' : '/submit', body);
     if (r.ok) {
-      current = r.data; remember(); showErrors([]); paint();
+      current = r.data; remember(); showErrors([]); paint(); api.onSaved?.(current);
       say(kind === 'save' ? `已儲存草稿（${fmtTime(current.updatedAt)}）。同單位的同事也看得到這一版。` : current.status === 'published' ? '已上線。' : `已送審，已通知審核人。需要 ${current.requiredApprovals} 位核准。`, 'green');
     } else {
       paint();

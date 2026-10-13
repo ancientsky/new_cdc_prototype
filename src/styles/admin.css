@@ -608,3 +608,10 @@ body.adm { background: var(--paper); color: var(--ink); min-height: 100vh; displ
 @media (max-width: 1100px) { .adm-vx-split { grid-template-columns: 1fr; } }
 /* 第四十三輪：國際疫情匯入預覽表，有錯（會被退回）的列 */
 .adm-ie-bad td { background: var(--alert-superseded-bg); }
+
+/* 第四十五輪：疫情報導後台「上傳 PDF 自動帶入」區與沒配到圖說的圖 */
+.adm-te-pdfin { border: 2px dashed var(--green-700, #1b5e3f); border-radius: var(--radius, 6px); padding: var(--sp-3); margin-bottom: var(--sp-3); background: var(--green-50, #f1f8f4); }
+.adm-te-pdfin.is-drop { background: var(--green-100, #dcefe3); }
+.adm-te-pdfextra { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-top: var(--sp-2); }
+.adm-te-pdfextra figure { margin: 0; width: 160px; font-size: var(--fs-sm); }
+.adm-te-pdfextra img { width: 160px; height: 90px; object-fit: contain; border: 1px solid var(--border, #ccc); background: #fff; }
