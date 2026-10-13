@@ -1,0 +1,81 @@
+{
+  "id": "faq.zoster-vaccine-funding",
+  "type": "faq",
+  "title": "帶狀疱疹疫苗是公費的嗎？",
+  "question": "帶狀疱疹疫苗是公費的嗎？",
+  "owner": "unit.acute-infectious",
+  "steward": "預防醫學辦公室承辦人（待指派）",
+  "publishedAt": "2026-10-14",
+  "reviewedAt": "2026-10-14",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-10-14"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "none"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "tasks": [
+    "vaccines"
+  ],
+  "diseases": [
+    "disease.varicella"
+  ],
+  "summary": "帶狀疱疹（皮蛇）疫苗目前為自費，部分縣市可能有補助，請洽衛生局或 1922；一般建議 50 歲以上接種。",
+  "keywords": [
+    "皮蛇",
+    "帶狀疱疹",
+    "疫苗",
+    "公費",
+    "自費",
+    "補助",
+    "50 歲"
+  ],
+  "answerMarkdown": "帶狀疱疹（皮蛇）疫苗目前**不是全國公費項目**，屬**自費**接種。部分縣市衛生局可能提供補助，對象與金額各地不同，請洽**居住地衛生局**或撥 **1922** 防疫專線查詢。\n\n依疫苗仿單，一般建議 **50 歲以上**成人接種；重組疫苗一般需 **2 劑**。免疫功能低下者是否適合、怎麼接種，請由醫師評估。\n\n皮蛇疫苗**不是水痘疫苗**，不能互相取代。詳見[帶狀疱疹疫苗](/vaccines/zoster/)。",
+  "verification": {
+    "status": "pending",
+    "note": "依公開資料保守整理，是否公費、地方補助與適用年齡尚待權責單位確認",
+    "pendingItems": [
+      "目前是否仍為全國自費項目，有無納入公費規劃",
+      "各縣市補助方案或統一查詢入口",
+      "仿單適用年齡與劑數（50 歲以上；免疫功能低下者 18 歲以上）"
+    ],
+    "sources": [
+      {
+        "label": "疾管署官網「疫苗」專區",
+        "url": "https://www.cdc.gov.tw/Category/List/V6unXI5CVl2Fjoap4WVQLw",
+        "accessedAt": "2026-10-14",
+        "official": true,
+        "verified": false,
+        "note": "開發環境連不到 www.cdc.gov.tw，未開啟原文逐字核對；本則依公開常識與保守原則撰寫"
+      }
+    ]
+  }
+}
