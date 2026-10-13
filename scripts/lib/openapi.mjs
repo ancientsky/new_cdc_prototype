@@ -162,6 +162,7 @@ export const ENDPOINTS = [
   ['/v1/banners.json', 'content', '上架中的首頁 Banner', arr(withApi('Banner'))],
   ['/v1/campaigns.json', 'content', '全部宣導 Banner（campaignStatus：active／upcoming／ended）', arr({ allOf: [ref('Banner'), ref('ApiFields'), { type: 'object', properties: { campaignStatus: { enum: ['active', 'upcoming', 'ended'] } } }] })],
   ['/v1/media.json', 'content', '影音宣導素材（逐字稿、章節、依據正本；governance.mediaOutdated）', arr(withApi('Media'))],
+  ['/v1/pages.json', 'content', '政策／機關頁（含首長簡介 profile：職稱、姓名、任次、就任年月）', arr(withApi('Page'))],
   ['/v1/topics.json', 'content', '專區／專題（governance.ended；links[].status 外部連結檢查）', arr(withApi('Topic'))],
   ['/v1/services.json', 'content', '申請／服務（步驟、應備文件、處理天數、表單）', arr(withApi('Service'))],
   ['/v1/publications.json', 'content', '出版品（書目、卷期）；series 為系列分組', arr(withApi('Publication')), { series: arr(ref('PublicationSeries')) }],

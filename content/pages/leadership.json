@@ -1,0 +1,32 @@
+{
+  "id": "page.leadership",
+  "type": "page",
+  "slug": "about/leadership",
+  "title": "首長簡介",
+  "owner": "unit.secretariat",
+  "steward": "秘書室承辦人（待指派）",
+  "publishedAt": "2026-10-13",
+  "reviewedAt": "2026-10-13",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": ["public", "professional"],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": { "requested": true, "approvedBy": "unit.oasis", "approvedAt": "2026-10-13" },
+  "languages": {
+    "zh-TW": { "status": "source" },
+    "en": { "status": "reviewed", "reviewedAt": "2026-10-13", "reviewer": "內部英文審核人" },
+    "ja": { "status": "none" }, "tl": { "status": "none" }, "vi": { "status": "none" }, "id": { "status": "none" }, "th": { "status": "none" }
+  },
+  "summary": "署長與副署長簡介：職稱、學歷、經歷與專長。只刊登與公務職位有關的公開資訊，首長異動時由秘書室在後台更新各人的簡介頁。",
+  "keywords": ["首長簡介", "署長簡介", "副署長簡介", "署長", "副署長", "首長"],
+  "profileIndex": true,
+  "bodyMarkdown": "署長綜理署務並指揮監督所屬人員，置副署長二人襄助。本區每位首長各有一頁簡介，內容限於**職稱、學歷、證照、經歷與專長**等與公務職位有關的公開資訊，依據現行官網首長簡介整理。\n\n署長的職掌與年度施政重點另見[署長職掌與施政重點](/about/director/)；對署長的意見請使用[署長信箱](/contact/)。",
+  "i18n": {
+    "en": {
+      "title": "Leadership",
+      "summary": "Profiles of the Director-General and Deputy Directors-General: title, education, career and expertise. Only public information tied to the office is published.",
+      "bodyMarkdown": "The Director-General oversees all affairs of the agency, assisted by two Deputy Directors-General. Each leader has a profile page limited to **title, education, licences, career and expertise**, compiled from the official profile pages on cdc.gov.tw.\n\nSee also the [Director-General's role and policy priorities](/about/director/) and the [Director-General's mailbox](/contact/)."
+    }
+  }
+}

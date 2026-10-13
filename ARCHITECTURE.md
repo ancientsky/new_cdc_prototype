@@ -2196,3 +2196,52 @@ travel-epidemic.json ＋ intl-epidemic-import.json → commit（B：github-actio
 - `tests/intl-epidemic.test.mjs`（20 項）：CSV 解析（BOM、引號內換行）、三種形狀判斷、舊格式（標題補疾病）、主檔對應（全半形、康熙部首、別名）、白話錯誤、schema 退回、重複 id、個資退回、整批保留三條件、退回的那則保留上一版、withdrawn／過期／delta、noop 不寫檔、快照欄位相容、現有快照再匯入一次＝noop、CLI `--dry`、fetch-data 拉 v1 feed（假 fetch，網址不進快照）、兩種待辦。
 - `tests/travel-alert-ui.test.mjs`（11 項，合成快照）：id 規則、出頁條件、每則頁內容、Markdown 淨化、七語骨架、meta／JSON-LD／`.md`、列表與目的地頁連結與 chips、RSS、sitemap、快照沒有新欄位時的退回行為。
 - Prettier 會格式化 `` html`…` `` 模板內的 HTML，測試比對 HTML 片段時用 `\s+` 而非固定空白。
+
+## 48. 第四十四輪（2026-10-13）：署長、副署長簡介與個資護欄的「公務簡介」規則
+
+README 第四十四輪有起因與對照表；同仁 SOP 在 guide-staff §44；決策在 docs/architecture-decisions.md §33。這裡記工程契約。
+
+### 48.1 內容模型
+
+`type: page`（`schemas/page.json`）新增兩個選填欄位：
+
+| 欄位 | 內容 |
+| --- | --- |
+| `profileIndex: true` | 總覽頁（唯一一頁，`page.leadership`，slug `about/leadership`）。建置時 `page.mjs` 自動列出所有 `profile` 頁，關於頁 `/about/` 的「首長簡介」區塊與頁尾連結都以它存在為前提 |
+| `profile` | `{ role, roleTitle, roleTitleEn?, name, nameEn?, termNo?, since?, order?, photo?, photoAlt? }`，`additionalProperties: false`。`role` enum：`director-general`／`deputy-director-general`／`chief-secretary`。`since` 為 `YYYY` 或 `YYYY-MM`。`photo` 只能是 `/img/…` 或本筆已宣告資產的 `/files/{id}/…`；沒有則依序取第一個 `kind: image` 資產、否則占位圖 `/img/leadership/placeholder.svg` |
+
+學歷、證照、經歷、專長寫在 `bodyMarkdown` 的 `## 學歷`／`## 證照`／`## 經歷`／`## 專長` 段落（每項一行），英文版放 `i18n.en.bodyMarkdown`。**網址以職位命名**（`about/leadership/{role}[-n]`），`profile.order` 決定總覽排序。原型三頁都 `verification.status: pending`，來源 `verified: false`（開發環境連不到 cdc.gov.tw）。
+
+### 48.2 渲染
+
+`src/templates/public/page.mjs`：`leadershipProfiles(site)`、`leadershipIndex(site)`、`profileList(ctx)`（卡片列，關於頁共用）。有 `profile` 的頁走 `renderProfile()`：頁首職稱列（`第 {n} 任署長`／`Director-General (6th)`）、姓名 h1、英文名與職稱、就任 `<time>`、照片（占位時加 `figcaption`「照片待提供」）、provenance 與 alerts（`verification: pending` ⇒ unverified 警示由治理層產生）、內文、適用範圍一句話（`profile.scope`）＋官網來源連結、其他首長卡片、`pageData`（schema `ProfilePage`，`.md` 路徑同一般頁）。`meta()` 多推一筆 JSON-LD `ProfilePage.mainEntity: Person{name, alternateName, jobTitle, worksFor}`。`markdown()` 在內文前加職稱列、總覽頁列出所有首長連結、尾端加適用範圍。照片網址一律走 `imgSrc()`（`noLang`），否則外語頁會指到 `/vi/img/…` 404（第一次建置就踩到）。
+
+`about.mjs`：`SECTIONS` 加 `leadership`（在 history 之後、director 之前），`leadershipSection()` 直接畫卡片列而不是折疊內文。`layout.mjs` 頁尾「關於與政策」群組加 `footer.leadership`；首長頁只有 zh-TW／en，其他語言用 `makeUrl('en')` 連英文版並標 `hreflang="en"`。CSS 在 components.css 尾段（`c-profile-*`）。
+
+### 48.3 個資掃描（`scripts/lib/pii-scan.mjs`）
+
+```
+scanFile(json)
+  profileNames = officialProfileNames(j)   // type:page 且有 profile ⇒ Set([profile.name])；否則 null
+  每個字串值：
+    hits = detect(s)                        // 身分證、居留證、手機、信箱、姓名語境（規則不變）
+    if profileNames: hits += PROFILE_PRIVATE_RE 命中 → kind 'profile-private'
+    person-name 且 value ∈ profileNames  → 放行（只在這個檔）
+    其他 kind                                 → 照白名單規則
+```
+
+`PROFILE_PRIVATE`（出生、生日、誕生、身分證、住址、戶籍、籍貫、配偶、子女、家屬、血型、手機、私人信箱、婚姻、宗教、黨籍）只對簡介檔生效，所以新聞稿寫「出生率」不會誤報；輸出的 `masked` 是「『出生』」這個欄位詞本身（不是個資，可以印）。`KIND_LABEL['profile-private'] = '首長簡介不得刊登的私人資料'`。白名單檔不變。`scanText()`（國際疫情匯入器用）沒有檔案層級的 profile 概念，行為不變。
+
+設計取捨：為什麼不是白名單、也不是整檔排除——白名單會變成人名清單且首長換人要人工改；整檔排除會連手機、信箱都不掃。「同檔只放行 `profile.name`」讓規則對任何一任首長成立，且其他姓名（內文提到別人）仍被抓。
+
+### 48.4 後台與 API
+
+- `preprocess.js`：`TYPES` 加 `page`（機關／政策頁）、`DIRS.page = 'pages'`、`PREFIX_COLLECTION.page = 'pages'`、`REVIEW_PERIOD_DEFAULT.page = 12`、`LANG_DEFAULT.page = zh-TW+en`、`BODY_ROLE.page = bodyMarkdown`。`buildExport` case `page`：`slug = ex.pageSlug || slugOfId(id)`；有 `ex.profileName` 才產生 `profile`（職稱英譯缺時由 `PROFILE_ROLE_TITLE` 補）。`itemToForm` 讀回 `pageSlug`、`profile*`。`mergeEdit`：`original.profile` 與表單的 `profile` 淺合併（照片等表單沒有的欄位保留）；`verification` 本來就不在表單裡，照舊保留。`requiredCheck` page 必填 `slug`、`bodyMarkdown`，slug 允許 `/` 分層；`profileProblems()` 擋 `PROFILE_PRIVATE_WORDS`（與掃描器同清單）與不在 `about/leadership/` 底下的 slug。
+- `publish.mjs`／`publish.js`：`data-for="page"` 欄位 `#x-pageslug`、`#x-profilerole`、`#x-profilename`、`#x-profilenameen`、`#x-profileterm`、`#x-profilesince`、`#x-profileorder`、`#x-profilephotoalt`。
+- `emit-api.mjs`：新端點 `v1/pages.json`（已發布 page，含 `profile`、`verification`、`path`），`openapi.mjs` 同步；後台 `?edit=page.*` 由此載入現行版。
+- 車道：page 走 standard（`laneOf` 預設）。
+
+### 48.5 測試
+
+`tests/round44-leadership.test.mjs`：內容與 schema（私人欄位、role enum、photo 網域）、首長頁與總覽頁渲染（中英、JSON-LD、.md）、關於頁區塊與頁尾（含外語 fallback）、個資掃描三情境（放行自己的姓名；別人姓名／手機／信箱／私人欄位詞照擋；同姓名在新聞稿照擋、「出生率」在非簡介檔不誤報）、後台來回（`itemToForm → buildExport → mergeEdit` 保留 slug／profile／verification）、dist 輸出。
+
