@@ -131,7 +131,13 @@ export const TODO_KIND_LABELS = {
   'content-conflict': '跨內容說法不一致（待權責單位判定）',
   'content-conflict-fix': '說法不一致已判定，待修正內容',
   'content-unverified': '內容待權責單位確認',
+  'intl-feed-held': '國際疫情匯入整批保留',
+  'intl-feed-unmapped': '國際疫情對不上主檔',
 };
+/** 第四十三輪：國際疫情匯入待辦連到的頁、對不上主檔的處理期限（日）。
+ *  後台 /admin/intl-epidemic/ 上線前先連 /travel/（站內連結檢查不允許連到還不存在的頁）；後台頁合併時改成 '/admin/intl-epidemic/'。 */
+export const INTL_ADMIN_HREF = '/travel/';
+export const INTL_UNMAPPED_FIX_DAYS = 14;
 /** 第二十八輪：verification.status:pending 的待辦期限（自 reviewedAt 起算，日）。一級緊急就醫內容不宜長期掛「待確認」 */
 export const UNVERIFIED_FIX_DAYS = 14;
 /** 排程發布（publishAt 未到）的生命週期顯示文字（lifecycle 仍為 scheduled，與文件「尚未生效」共用代碼） */
@@ -865,6 +871,26 @@ export function applyGovernance(site) {
   };
   if (situationGov.overdue) addTodo({ id: `situation-overdue:${sit.publishedAt}`, kind: 'situation-overdue', itemId: 'situation.current', itemType: 'situation', itemTitle: '疫情態勢層', owner: sit.publisher,
     dueAt: sit.nextReviewAt, href: '/situation/', severity: 'high', text: `疫情態勢層（${sit.publishedAt} 發布、資料日 ${sit.dataDate}）已過下次審閱日 ${sit.nextReviewAt}，請疫情中心重新發布或確認` });
+
+  // ── 第四十三輪：國際重要疫情資訊匯入（docs/intl-epidemic.md 第 5 節；紀錄由 scripts/lib/intl-epidemic.mjs 寫入）──
+  const intlRun = site.snapshots?.intlImport?.lastRun;
+  if (intlRun) {
+    const at = String(intlRun.at ?? '').slice(0, 10) || today;
+    const intlCommon = { itemId: 'snapshot.travel-epidemic', itemType: 'snapshot', itemTitle: '國際重要疫情資訊', owner: 'unit.epidemic-intelligence', href: INTL_ADMIN_HREF };
+    if (intlRun.held) {
+      const reasons = intlRun.held.reasons ?? [];
+      addTodo({ id: 'intl-feed-held', kind: 'intl-feed-held', ...intlCommon, dueAt: addDays(at, 1), severity: 'high', reasons, runAt: intlRun.at,
+        text: `國際疫情資訊 ${at} 這批匯入被整批保留，網站仍顯示上一版：${reasons.join('；')}。請確認資料庫匯出是否正常；修正後下次排程（或在後台重新貼上）會自動重新匯入` });
+    }
+    const um = intlRun.unmapped ?? [];
+    if (um.length) {
+      const ids = new Set(um.flatMap((u) => u.ids ?? []));
+      const list = (kind) => um.filter((u) => u.kind === kind).map((u) => u.value);
+      const parts = [list('disease').length ? `疾病：${list('disease').join('、')}` : '', list('country').length ? `國家：${list('country').join('、')}` : ''].filter(Boolean);
+      addTodo({ id: 'intl-feed-unmapped', kind: 'intl-feed-unmapped', ...intlCommon, dueAt: addDays(at, INTL_UNMAPPED_FIX_DAYS), severity: 'medium', values: um, runAt: intlRun.at,
+        text: `${ids.size} 則國際疫情資訊的疾病或國家對不上主檔（${parts.join('；')}）：已照常上架，但這幾則不會連到疾病頁或目的地頁。請在疾病主檔或國家主檔補上別名，下次匯入會自動對上` });
+    }
+  }
 
   // ── R14 移轉清單 ──
   site.migration = buildMigration(site, { addTodo, unitName });

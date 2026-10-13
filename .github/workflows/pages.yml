@@ -57,6 +57,10 @@ jobs:
         if: steps.refresh.outputs.refresh == 'true'
         run: npm run fetch
         continue-on-error: true
+        env:
+          # 國際重要疫情資訊（docs/intl-epidemic.md）：有設就改拉疫情中心資料庫的 v1 feed；沒設（空字串）＝維持現行官網 ExportJSON
+          INTL_FEED_URL: ${{ secrets.INTL_FEED_URL }}
+          INTL_FEED_TOKEN: ${{ secrets.INTL_FEED_TOKEN }}
       - name: Commit refreshed snapshots back to main (02 UTC schedule / manual runs only)
         if: steps.refresh.outputs.refresh == 'true'
         run: |

@@ -1,0 +1,7 @@
+id,status,publishedAt,updatedAt,expiresAt,disease,diseaseEn,headline,body,instruction,countries,countriesEn,iso2s,areaDetail,severity,sourceUrl
+sample-2026-1013-dengue-vn,published,2026-10-13T07:30:00+08:00,,2027-01-13T07:30:00+08:00,登革熱,Dengue fever,越南-登革熱（示意）,"（示意資料，未驗證）越南南部今年第 40 週登革熱病例數較前週上升。
+前往當地請穿著淺色長袖衣褲、使用政府核可的防蚊藥劑；返國後 14 天內如有發燒等症狀，請儘速就醫並告知旅遊史。",提醒遵守當地的一般預防措施,越南,Vietnam,VN,南部地區,,https://www.cdc.gov.tw/
+sample-2026-1012-measles-multi,updated,2026-10-12T08:00:00+08:00,2026-10-13T08:00:00+08:00,,麻疹,,墨西哥/加拿大-麻疹（示意）,"（示意資料，未驗證）北美洲麻疹疫情持續，兩國今年累計病例數高於去年同期。
+出國前請確認已完成 2 劑 MMR 疫苗接種。",,墨西哥;加拿大,Mexico;Canada,MX;CA,,,
+sample-2026-1011-unknown-disease,published,2026-10-11T08:00:00+08:00,,,不明原因發燒群聚,,剛果民主共和國-不明原因發燒群聚（示意）,"（示意資料，未驗證）這一則的疾病名稱刻意對不上本站疾病主檔：匯入器會照常上架，並產生「國際疫情對不上主檔」待辦給疫情中心。",,剛果民主共和國,,CD,,,
+sample-2026-0920-cholera-ye,withdrawn,,,,,,,,,,,,,,

@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "lastRun": {
+    "at": "2026-10-13T07:38:59.297Z",
+    "source": "official-export",
+    "by": "第四十三輪初次轉換",
+    "shape": "legacy",
+    "mode": "full",
+    "producer": "現行官網 TravelEpidemic/ExportJSON",
+    "generatedAt": null,
+    "received": 76,
+    "accepted": 76,
+    "counts": {
+      "new": 0,
+      "updated": 0,
+      "withdrawn": 0,
+      "unchanged": 76,
+      "rejected": 0,
+      "upgraded": 76
+    },
+    "total": 76,
+    "held": null,
+    "rejected": [],
+    "unmapped": [
+      {
+        "kind": "disease",
+        "value": "沙門氏菌感染症",
+        "ids": [
+          "0cESbNbpYyJtuodHwEBVqA",
+          "h5BWyHp6unSxLoPpskILog",
+          "wSD_nn6ZbqArLd50cMPytA"
+        ]
+      },
+      {
+        "kind": "disease",
+        "value": "細菌性腸胃炎",
+        "ids": [
+          "vIHr6595karpNpyRi7SO-g"
+        ]
+      },
+      {
+        "kind": "disease",
+        "value": "呼吸道疾病",
+        "ids": [
+          "dAT_vx9BRnU-7cTwcLwW-A"
+        ]
+      },
+      {
+        "kind": "disease",
+        "value": "病毒性腸胃炎",
+        "ids": [
+          "jOkzESsmwIgQuN7OXjbyaQ"
+        ]
+      },
+      {
+        "kind": "disease",
+        "value": "發熱伴血小板減少綜合症",
+        "ids": [
+          "KWa4JGmWbq2uVRtozoAMYg"
+        ]
+      },
+      {
+        "kind": "disease",
+        "value": "環孢⼦蟲病",
+        "ids": [
+          "Izt40JwE0k2ay1DjeH1l9g"
+        ]
+      },
+      {
+        "kind": "disease",
+        "value": "亞洲⻑⾓⾎蜱正內羅病毒(ALTNV)感染",
+        "ids": [
+          "9xAeGHOJfzumw0CK2bK83g"
+        ]
+      }
+    ],
+    "withdrawn": [],
+    "warnings": [],
+    "wroteSnapshot": true
+  },
+  "history": [
+    {
+      "at": "2026-10-13T07:38:59.297Z",
+      "source": "official-export",
+      "producer": "現行官網 TravelEpidemic/ExportJSON",
+      "by": "第四十三輪初次轉換",
+      "mode": "full",
+      "received": 76,
+      "accepted": 76,
+      "total": 76,
+      "counts": {
+        "new": 0,
+        "updated": 0,
+        "withdrawn": 0,
+        "unchanged": 76,
+        "rejected": 0,
+        "upgraded": 76
+      },
+      "unmapped": 7,
+      "held": null,
+      "wroteSnapshot": true
+    }
+  ]
+}
