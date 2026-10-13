@@ -209,12 +209,18 @@ export function headingKeyOf(line) {
   const r = SECTION_RULES.find((x) => x.re.test(s));
   return r ? r.key : null;
 }
-const FIG_RE = new RegExp(`^(圖|表|Figure|Table|Fig\\.)\\s*(\\d+|${CN_NUM_SRC})[\\s.．、:：]*(.*)$`, 'i');
+const FIG_RE = new RegExp(`^(圖|表|Figure|Table|Fig\\.)\\s*(\\d+|${CN_NUM_SRC})(?:[\\s.．、:：]+(.*)|(?![一-鿿])(.*))$`, 'i'); // 「圖二為…」這種句子不是圖說：中文數字後面要有「、」或空白才算
 const REF_RE = /^\s*(?:\[(\d+)\]|(\d+)[.、．)]|（(\d+)）)\s*(.+)$/;
 // 版面雜物（從 PDF 複製時會夾帶）：頁首「2026 年 10 月 6 日 第 42 卷 第 19 期」、頁尾「疫情報導 183」、側標「│疫情調查│」
 const HEADER_RE = /(\d{4})\s*年\s*(\d{1,2})\s*月\s*(\d{1,2})\s*日\s*第\s*(\d+)\s*卷\s*第\s*(\d+)\s*期/;
-const FOOTER_PAGE_RE = /疫情報導\s+(\d{1,4})\s*$/;
-const SIDEBAR_RE = /^[│|｜].*[│|｜]$/;
+// 頁尾「疫情報導 183」：有些 PDF 的文字層少了「導」字（排版字型），所以「導」可有可無
+const FOOTER_PAGE_RE = /疫情報導?\s+(\d{1,4})\s*$/;
+const CONT_NEXT_RE = /^[（(]\s*接下頁\s*[）)]$/;
+const CONT_PREV_RE = /^[（(]\s*續上頁\s*[）)]\s*/;
+const TABLE_NOTE_RE = /^([a-z][.．:：]\s*|註\s*[\d一二三四五六七八九十]*\s*[：:.]?\s*|\*+\s*|（表頭上層：)\S/;
+const SIDEBAR_RE = /^[│|｜][^\s|│｜]{1,12}[│|｜]$/; // 側標「│原著文章│」；Markdown 表格的「| a | b |」不算
+const FOOTER_LEFT_RE = /^(\d{1,4})\s+疫情報導?(\s+\d{4}\s*年\s*\d{1,2}\s*月\s*\d{1,2}\s*日)?\s*$/; // 舊版左頁頁首「464 疫情報導 2014年11月25日」
+const AFF_NAME_OK = (name) => ORG_WORD.test(name) && !/[。：:（(），、；,;]/.test(name) && !/\d{4}\s*[.．]/.test(name) && !/\s{2,}/.test(name) && (isLatin(name) ? name.length <= 90 && !/\. |\.$/.test(name) : name.length <= 45);
 const PUBLISHER_RE = /^衛生福利部疾病管制署$/;
 // 標籤型資訊（整行或行尾）：投稿／接受日期、DOI、通訊作者、E-mail、關鍵字
 const META_RULES = [
@@ -222,7 +228,7 @@ const META_RULES = [
   { key: 'acceptedAt', re: /(接受日期|接受刊登日期|Accepted)[：:]\s*(\d{4})\s*年\s*(\d{1,2})\s*月\s*(\d{1,2})\s*日/i, date: true },
   { key: 'receivedAt', re: /Received[：:]\s*([A-Za-z]{3,9})\.?\s+(\d{1,2}),\s*(\d{4})/i, enDate: true },
   { key: 'acceptedAt', re: /Accepted[：:]\s*([A-Za-z]{3,9})\.?\s+(\d{1,2}),\s*(\d{4})/i, enDate: true },
-  { key: 'doi', re: /DOI[：:]\s*(10\.\d{4,9}\/[^\s，。]+)/i },
+  { key: 'doi', re: /(?:^|\s{2,}|　)DOI[：:]\s*(10\.\d{4,9}\/[^\s，。]+)/i }, // 只認「DOI：」標籤在行首或欄位起點的；文獻裡的 doi:10.1038/… 不算
   { key: 'correspondingNameEn', re: /Corresponding author[：:]\s*([A-Za-z][A-Za-z.'\- ]+?)\s*[\d*]*$/i },
   { key: 'correspondingName', re: /通訊作者[：:]\s*([^\s，,;；（(]+)/ },
   { key: 'email', re: /E-?mail[：:]\s*([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})/i },
@@ -237,16 +243,17 @@ const LIST_START = /^([-*•]\s|\d+[.、．)]\s*|[一二三四五六七八九十
 const SUBHEAD_RE = /^([一二三四五六七八九十]+[、.．]|\(?[一二三四五六七八九十]\)|（[一二三四五六七八九十]）)\s*([^\s，。；：]{1,14})$/;
 const ORG_WORD = /(署|局|中心|組|室|科|處|院|系|所|部|大學|學校|醫院|衛生|Center|Centre|Division|Department|Institute|University|Hospital|Bureau|Ministry|School|College)/i;
 // 作者列：「李泱 1*、戴詩縈 1、林稜 2」或「Yang Li1*, Shih-Yin Tai1」；每個人：姓名＋（上標編號，可多個）＋（*）
-const AUTH_TOKEN_RE = /^([一-鿿·‧]{2,6}|[A-Za-z][A-Za-z.'\- ]{1,40}?)\s*([\d,，、\s]*)\s*(\*?)$/;
+const AUTH_TOKEN_RE = /^([一-鿿·‧]{2,6}|[A-Za-z][A-Za-z.'\- ]{1,40}?)\s*([\d,，、.．\s]*)\s*(\*?)$/;
 function parseAuthorLine(line) {
-  const s = String(line ?? '').trim();
+  // 「＊」（全形星號）與「1.2」（兩個單位用點隔開）是排版常見寫法，先正規化
+  const s = String(line ?? '').trim().replace(/[＊﹡]/g, '*');
   if (!s || s.length > 240 || /[。；：]/.test(s)) return null;
   const parts = s.includes('、') ? s.split('、') : s.split(/,\s+(?=[A-Z一-鿿])|,(?=[A-Z一-鿿])/);
   const out = [];
   for (const p of parts) {
     const m = p.trim().match(AUTH_TOKEN_RE);
     if (!m) return null;
-    const nos = m[2].split(/[,，、\s]+/).filter(Boolean).map(Number).filter((n) => Number.isInteger(n) && n > 0 && n < 30);
+    const nos = m[2].split(/[,，、.．\s]+/).filter(Boolean).map(Number).filter((n) => Number.isInteger(n) && n > 0 && n < 30);
     out.push({ name: m[1].trim(), affiliations: nos, corresponding: m[3] === '*' });
   }
   const anyMark = out.some((x) => x.affiliations.length || x.corresponding);
@@ -288,7 +295,8 @@ export function splitManuscript(text, { categories = DEFAULT_CATEGORIES } = {}) 
   const out = { title: '', abstract: '', abstractEn: '', sections: [], references: [], figures: [], acknowledgements: '', unassigned: [], authors: [], affiliations: [], meta: {}, guessedHeadings: [], report: [] };
   const meta = out.meta;
   const pagesSeen = [];
-  const raw = String(text ?? '').replace(/\r\n?/g, '\n').split('\n').map((l) => l.replace(/　/g, ' ').replace(/[ \t]+$/g, '').trim());
+  // NFC：PDF 文字層常用相容漢字（「劉」U+F9C7），不正規化就不在 [一-鿿] 範圍、作者列會認不出來
+  const raw = String(text ?? '').normalize('NFC').replace(/\r\n?/g, '\n').split('\n').map((l) => l.replace(/　/g, ' ').replace(/[ \t]+$/g, '').trim());
   // 1. 頁首頁尾與標籤型資訊
   const lines = [];
   for (let li = 0; li < raw.length; li++) {
@@ -297,6 +305,8 @@ export function splitManuscript(text, { categories = DEFAULT_CATEGORIES } = {}) 
     if (h) { meta.date ??= dateOf(h[1], h[2], h[3]); meta.volume ??= Number(h[4]); meta.issue ??= Number(h[5]); line = line.replace(HEADER_RE, '').trim(); }
     const fp = line.match(FOOTER_PAGE_RE);
     if (fp) { pagesSeen.push(Number(fp[1])); line = line.replace(FOOTER_PAGE_RE, '').trim(); }
+    const fl = line.match(FOOTER_LEFT_RE);
+    if (fl) { pagesSeen.push(Number(fl[1])); line = ''; }
     if (line === '疫情報導') { for (let k = li + 1; k <= li + 2 && k < raw.length; k++) { if (/^\d{1,4}$/.test(raw[k])) { pagesSeen.push(Number(raw[k])); raw[k] = ''; break; } if (raw[k]) break; } line = ''; }
     if (!line || SIDEBAR_RE.test(line) || PUBLISHER_RE.test(line)) { lines.push(''); continue; }
     let consumedAll = false;
@@ -320,35 +330,72 @@ export function splitManuscript(text, { categories = DEFAULT_CATEGORIES } = {}) 
   if (pagesSeen.length) meta.pages = `${Math.min(...pagesSeen)}-${Math.max(...pagesSeen)}`;
   // 2. 服務單位：「1 單位甲」同行，或「1」「2」接著兩行單位名
   const affMap = new Map();
+  // 單位列只會在篇首（第一個標題之前）或投稿日期／通訊作者／DOI 那幾行附近（中文頁尾、英文頁尾），參考文獻裡「2. 某某系統」不算
+  const headingAt = lines.findIndex((l) => headingKeyOf(l));
+  const metaAt = raw.map((l, i) => (/通訊作者|投稿日期|接受日期|E-?mail[：:]|Received[：:]|Accepted[：:]|DOI[：:]/i.test(l) ? i : -1)).filter((i) => i >= 0); // 看原始行（第 1 步已把這些標籤從 lines 拿掉）
+  const affRegion = (i) => (headingAt < 0 || i < headingAt) || metaAt.some((k) => Math.abs(k - i) <= 4);
   const setAff = (no, name) => { const cur = affMap.get(no); if (!cur) affMap.set(no, { no, name }); else if (isLatin(name) && !cur.nameEn) cur.nameEn = name; else if (!isLatin(name) && isLatin(cur.name)) { cur.nameEn = cur.name; cur.name = name; } };
   const affIdx = new Set();
   for (let i = 0; i < lines.length; i++) {
-    const m = lines[i].match(/^(\d)\s*[.、]?\s+(.{4,60})$/);
-    if (m && ORG_WORD.test(m[2]) && !/[。：:（(]/.test(m[2])) { setAff(Number(m[1]), m[2].trim()); affIdx.add(i); continue; }
+    if (!affRegion(i)) continue;
+    // 「1 單位甲」「1.單位甲」「1單位甲」（有些 PDF 的上標數字和單位名之間沒有空白）
+    const m = lines[i].match(/^(\d)(?:\s*[.、]\s*|\s+|(?=[一-鿿A-Z]))(.{4,90})$/); // 沒有分隔符時，編號後面要直接接中文或大寫字母（「2020 年…」這種篇名不是）
+    if (m && AFF_NAME_OK(m[2].trim())) { setAff(Number(m[1]), m[2].trim()); affIdx.add(i); continue; }
     if (/^\d$/.test(lines[i])) {
       const nums = [];
       let j = i;
       while (j < lines.length && (/^\d$/.test(lines[j]) || lines[j] === '')) { if (lines[j]) nums.push({ no: Number(lines[j]), idx: j }); j++; }
       let k = j; const names = [];
-      while (k < lines.length && names.length < nums.length && (lines[k] === '' || (ORG_WORD.test(lines[k]) && !/[。：:]/.test(lines[k]) && lines[k].length <= 90))) { if (lines[k]) names.push({ name: lines[k], idx: k }); k++; }
+      while (k < lines.length && names.length < nums.length && (lines[k] === '' || AFF_NAME_OK(lines[k].replace(/^\d\s*[.、]?\s*/, '')))) { if (lines[k]) names.push({ name: lines[k].replace(/^\d\s*[.、]?\s*/, ''), idx: k }); k++; }
       if (nums.length && names.length === nums.length) { nums.forEach((n, x) => { setAff(n.no, names[x].name); affIdx.add(n.idx); affIdx.add(names[x].idx); }); i = k - 1; }
     }
     if (/^\d{1,2}\*$/.test(lines[i])) affIdx.add(i); // 「1*」：通訊作者註記的殘行
   }
   // 3. 作者列與篇名（第一個慣用標題之前）
   let authorIdx = -1;
+  const titleIdx = new Set();
   const firstHeading = lines.findIndex((l) => headingKeyOf(l));
   for (let i = 0; i < (firstHeading < 0 ? lines.length : firstHeading); i++) {
     if (affIdx.has(i)) continue;
-    const au = parseAuthorLine(lines[i]);
+    // 作者列折成兩行（第一行以「、」或「,」收尾）：併起來再解析
+    let au = parseAuthorLine(lines[i]);
+    if (!au && /[、,，]$/.test(lines[i]) && lines[i + 1]) { au = parseAuthorLine(`${lines[i]}${lines[i + 1]}`); if (au) { lines[i] = `${lines[i]}${lines[i + 1]}`; lines[i + 1] = ''; } }
     if (au && !isLatin(au.map((x) => x.name).join(''))) { out.authors = au; authorIdx = i; break; }
   }
-  if (authorIdx > 0) { for (let i = authorIdx - 1; i >= 0; i--) { if (lines[i] && !affIdx.has(i)) { if (lines[i].length <= 120 && (!SENT_END.test(lines[i]) || TITLE_PAREN_RE.test(lines[i]))) out.title = lines[i]; break; } } }
-  const skip = new Set(affIdx); if (authorIdx >= 0) skip.add(authorIdx); if (out.title) skip.add(lines.indexOf(out.title));
+  if (authorIdx > 0) {
+    // 舊版排版：上標數字另成一行放在作者列上方（「1  1  2  3」），數量對得上就照順序配給作者
+    const sup = lines[authorIdx - 1]?.match(/^(\d{1,2}\*?)(\s+\d{1,2}\*?)+$/) ? lines[authorIdx - 1].trim().split(/\s+/) : null;
+    if (sup && sup.length === out.authors.length && out.authors.every((a) => !a.affiliations.length)) { out.authors.forEach((a, k) => { a.affiliations = [Number(sup[k].replace('*', ''))]; if (sup[k].endsWith('*')) a.corresponding = true; }); titleIdx.add(authorIdx - 1); }
+    // 篇名：作者列往上找，最多三行（篇名常折成兩行），短、沒有句號、中間不隔空行
+    let i = authorIdx - 1;
+    while (i >= 0 && (titleIdx.has(i) || affIdx.has(i) || !lines[i])) i--; // 篇名與作者列之間可能隔一個空行（分類名那行被拿掉後也會留空行）
+    const parts = [];
+    while (i >= 0 && lines[i] && !affIdx.has(i) && parts.length < 3 && lines[i].length <= 120 && (!SENT_END.test(lines[i]) || TITLE_PAREN_RE.test(lines[i])) && !HEADER_RE.test(lines[i])) { parts.unshift(lines[i]); titleIdx.add(i); i--; }
+    if (parts.length) out.title = parts.join(parts.every((x) => !isLatin(x)) ? '' : ' ').replace(/\s{2,}/g, ' ');
+  }
+  const skip = new Set([...affIdx, ...titleIdx]); if (authorIdx >= 0) skip.add(authorIdx);
+  // 3b. 整期合刊：第二個「摘要」之後是另一篇文章，切掉放到 unassigned 並提醒（單篇上傳才是正常用法）
+  const absIdx = lines.map((l, i) => (/^摘\s*要$/.test(stripHeadingDeco(l)) ? i : -1)).filter((i) => i >= 0);
+  if (absIdx.length >= 2) {
+    // 第二篇的篇名、作者列（短行，中間可能隔空行）在「摘要」上方：一起切掉；碰到長的正文行或標題就停
+    let cut = absIdx[1];
+    for (let k = absIdx[1] - 1, n = 0; k >= 0 && n < 8; k--, n++) { const l = lines[k]; if (l && (l.length > 60 || headingKeyOf(l) || /[。．.]$/.test(l))) break; cut = k; }
+    const rest = lines.slice(cut).filter((l, i) => !skip.has(cut + i) && l);
+    lines.length = cut;
+    out.unassigned.push(rest.join('\n'));
+    out.report.push(`這份稿件有 ${absIdx.length} 個「摘要」，看起來是整期合刊（多篇文章）；只帶入第一篇，其餘放在「未歸類」。請改成單篇 PDF 再上傳`);
+  }
+  // 全部作者同一單位時，頁尾只有一行單位名（沒有編號）：當作單位 1、配給所有作者
+  if (!affMap.size && out.authors.length && out.authors.every((a) => !a.affiliations.length)) {
+    const metaIdx = metaAt.length ? metaAt[0] : lines.findIndex((l) => /通訊作者|投稿日期|E-?mail[：:]/i.test(l));
+    const near = metaIdx >= 0 ? lines.slice(Math.max(0, metaIdx - 3), metaIdx + 3).find((l) => l && AFF_NAME_OK(l) && !/^\d/.test(l) && !PUBLISHER_RE.test(l)) : null;
+    if (near) { setAff(1, near); out.authors.forEach((a) => { a.affiliations = [1]; }); const li = lines.indexOf(near); if (li >= 0) { lines[li] = ''; skip.add(li); } }
+  }
   // 4. 逐行切段
   let cur = null; // { key, heading, lines, guessed }
   const pre = [];
   const stray = []; // 參考文獻段裡沒有編號、也接不上的行（通常是英文篇名與作者）
+  let lastTable = null; // 剛剛切到的「表 N」，接下來的 | 行是它的內容
   const flush = () => {
     if (!cur) return;
     if (cur.key === 'references') {
@@ -359,7 +406,7 @@ export function splitManuscript(text, { categories = DEFAULT_CATEGORIES } = {}) 
       for (let i = 0; i < ls.length; i++) {
         const joined = /,$/.test(ls[i]) && ls[i + 1] ? `${ls[i]} ${ls[i + 1]}` : null;
         const au = parseAuthorLine(ls[i]) ?? (joined ? parseAuthorLine(joined) : null);
-        if (au && isLatin(au.map((x) => x.name).join(''))) { cut = i > 0 && isLatin(ls[i - 1]) && !REF_RE.test(ls[i - 1]) ? i - 1 : i; break; }
+        if (au && isLatin(au.map((x) => x.name).join(''))) { cut = i; while (cut > 0 && i - cut < 3 && isLatin(ls[cut - 1]) && !REF_RE.test(ls[cut - 1]) && !/[.。;；]$/.test(ls[cut - 1])) cut--; break; }
       }
       const refs = [];
       let pendingNo = false;
@@ -377,7 +424,7 @@ export function splitManuscript(text, { categories = DEFAULT_CATEGORIES } = {}) 
       const body = toMarkdown(cur.lines);
       if (cur.key === 'abstract') {
         if (!out.abstract) out.abstract = body;
-        else if (isLatin(body)) { const paras = body.split(/\n{2,}/); const cut = paras.findIndex((p) => p.length < 80 && !/[.!?]$/.test(p)); out.abstractEn = (cut < 0 ? paras : paras.slice(0, cut)).join('\n\n'); if (cut >= 0) out.unassigned.push(paras.slice(cut).join('\n')); }
+        else if (isLatin(body.split(/\n{2,}/)[0])) { const paras = body.split(/\n{2,}/); const cut = paras.findIndex((p) => p.length < 80 && !/[.!?]$/.test(p)); out.abstractEn = (cut < 0 ? paras : paras.slice(0, cut)).join('\n\n'); if (cut >= 0) out.unassigned.push(paras.slice(cut).join('\n')); }
         else if (body) out.unassigned.push(body);
       }
       else if (cur.key === 'acknowledgements') out.acknowledgements = body;
@@ -400,10 +447,34 @@ export function splitManuscript(text, { categories = DEFAULT_CATEGORIES } = {}) 
     const key = headingKeyOf(line);
     if (key) { openSection(key, stripHeadingDeco(line)); continue; }
     if (!line) { (cur ? cur.lines : pre).push(''); continue; }
-    const fig = line.match(FIG_RE);
+    // 表格內容（pdf-manuscript 依座標還原的 Markdown 表格與表下註解）：掛到剛剛那個「表 N」；「(接下頁)」丟掉、「(續上頁) 表 N」接回同一個表
+    if (CONT_NEXT_RE.test(line)) continue;
+    const chartMark = line.match(/^〔圖內文字\s*(\d+)\s*行已略過〕$/);
+    if (chartMark) { if (!out.report.some((r) => r.startsWith('圖內的文字'))) out.report.push('圖內的文字（座標軸刻度、圖例、資料標籤）已略過，不會進正文；請確認圖檔有一併上傳'); continue; }
+    if (lastTable) {
+      // markdown ＝ 表格列 + 空行 + 註解；「(續上頁)」接回來的列要插在註解之前（不然表格會在註解處斷掉），重複的表頭列與註解不再加
+      if (/^\|/.test(line)) {
+        const [tbl = '', ...rest] = lastTable.markdown ? lastTable.markdown.split('\n\n') : [];
+        const rows = tbl ? tbl.split('\n') : [];
+        if (rows.length < 2 || !rows.slice(0, 2).includes(line)) rows.push(line); // 續頁重印的表頭列與分隔列不再加；內容一樣的資料列照加
+        lastTable.markdown = [rows.join('\n'), ...rest].join('\n\n');
+        continue;
+      }
+      if (lastTable.markdown && TABLE_NOTE_RE.test(line)) { if (!lastTable.markdown.split('\n').includes(line)) lastTable.markdown += `\n\n${line}`; continue; }
+      lastTable = null;
+    }
+    const fig = line.replace(CONT_PREV_RE, '').match(FIG_RE);
     if (fig && cur?.key !== 'references' && line.length <= 160) {
       const no = cnToNum(fig[2]);
-      if (no != null) { out.figures.push({ kind: /^(表|Table)/i.test(fig[1]) ? 'table' : 'figure', no, caption: fig[3].trim() || line }); continue; }
+      if (no != null) {
+        const kind = /^(表|Table)/i.test(fig[1]) ? 'table' : 'figure';
+        const exists = out.figures.find((f) => f.kind === kind && f.no === no);
+        if (exists) { if (kind === 'table') lastTable = exists; continue; }
+        const f = { kind, no, caption: (fig[3] ?? fig[4] ?? '').trim() || line };
+        out.figures.push(f);
+        if (kind === 'table') lastTable = f;
+        continue;
+      }
     }
     // 推測的標題：2～16 字、無標點、不是清單或小標、前一段已收尾（或是第一行）、下一行是正文
     if (cur?.key !== 'references' && line.length >= 2 && line.length <= 16 && /[\u4e00-\u9fff]/.test(line) && !/[\p{P}\d]/u.test(line) && !/^(見|如|詳|註)/.test(line) && !SUBHEAD_RE.test(line)) {
@@ -415,14 +486,22 @@ export function splitManuscript(text, { categories = DEFAULT_CATEGORIES } = {}) 
   flush();
   // 5. 標題之前的文字：還沒有摘要就當摘要；已有摘要就放到 unassigned 讓人決定
   const preText = toMarkdown(pre);
-  if (preText) { if (!out.abstract && out.sections.length) out.abstract = preText; else out.unassigned.push(preText); }
+  if (preText) {
+    if (!out.abstract && out.sections.length) out.abstract = preText;
+    else if (!out.sections.length && !out.abstract && preText.length > 200) { out.sections.push({ key: 'body', heading: '正文', markdown: preText }); out.report.push('稿件沒有章節標題，整篇當作一段「正文」；摘要請自行填寫'); }
+    else out.unassigned.push(preText);
+  }
+  if (!out.title && meta.category) { out.title = categoryLabel(categories, meta.category); out.report.push(`稿件裡找不到篇名（也沒有作者列），先以分類名「${out.title}」代入，請改成正式篇名`); }
   // 6. 參考文獻之後的英文篇名與作者
   for (let i = 0; i < stray.length; i++) {
     if (/,$/.test(stray[i]) && stray[i + 1] && parseAuthorLine(`${stray[i]} ${stray[i + 1]}`)) stray.splice(i, 2, `${stray[i]} ${stray[i + 1]}`);
     const au = parseAuthorLine(stray[i]);
     if (au && isLatin(au.map((x) => x.name).join(''))) {
       meta.authorsEn = au.map((x) => x.name);
-      if (i > 0 && isLatin(stray[i - 1]) && stray[i - 1].length <= 200) { meta.titleEn = stray[i - 1]; stray.splice(i - 1, 2); } else stray.splice(i, 1);
+      // 英文篇名常折成兩三行：往上收連續的英文短行（不是文獻、沒有句號）
+      let from = i;
+      while (from > 0 && i - from < 3 && isLatin(stray[from - 1]) && stray[from - 1].length <= 200 && !REF_RE.test(stray[from - 1]) && !/[.;]$/.test(stray[from - 1])) from--;
+      if (from < i) { meta.titleEn = stray.slice(from, i).join(' ').replace(/\s+/g, ' '); stray.splice(from, i - from + 1); } else stray.splice(i, 1);
       break;
     }
   }

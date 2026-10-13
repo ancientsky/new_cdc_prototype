@@ -162,9 +162,10 @@ export function applyManuscript(state, text, { issues = [] } = {}) {
   }
   if (r.figures.length) {
     const have = new Set(st.figures.map((f) => `${f.kind}${f.no}`));
-    const add = r.figures.filter((f) => !have.has(`${f.kind}${f.no}`)).map((f) => ({ kind: f.kind, no: String(f.no), caption: f.caption, markdown: '', alt: '', file: '' }));
+    const add = r.figures.filter((f) => !have.has(`${f.kind}${f.no}`)).map((f) => ({ kind: f.kind, no: String(f.no), caption: f.caption, markdown: f.markdown ?? '', alt: '', file: '' })); // PDF 匯入時表格已還原成 Markdown
     st.figures = [...st.figures, ...add];
-    if (add.length) report.push(`${add.length} 個圖表說明`);
+    const tables = add.filter((f) => f.kind === 'table' && f.markdown).length;
+    if (add.length) report.push(`${add.length} 個圖表說明${tables ? `（${tables} 個表格含內容）` : ''}`);
   }
   if (r.references.length && !s(st.references)) { st.references = r.references.join('\n'); report.push(`${r.references.length} 筆參考文獻`); }
   if (r.acknowledgements && !s(st.acknowledgements)) { st.acknowledgements = r.acknowledgements; report.push('誌謝'); }
