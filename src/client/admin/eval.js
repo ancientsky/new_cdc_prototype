@@ -42,6 +42,8 @@ async function rerun() {
     // 評估看內容與規則本身，不受本機的暫停覆寫影響：用同一份 deps 重建引擎並強制 paused:false
     const mk = (x) => ({ engine: core.createEngine({ ...x.deps, aiStatus: { ...x.deps.aiStatus, paused: false } }) });
     const pub = mk(pubL), pro = mk(proL);
+    // 第四十九輪：少數意圖的回答分支改成用到才載入（answer/core.js ROUTES）；整份評估集同步重跑前先全部載好
+    await Promise.all([pub, pro].map((x) => x.engine.loadAllRoutes?.()));
     st.textContent = '評估中…';
     const rep = runAll(evalSet.questions ?? [], (q) => {
       const view = q.view ?? (q.category === 'professional' ? 'pro' : 'public');

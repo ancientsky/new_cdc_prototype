@@ -23,10 +23,10 @@
 
 // 第三十四輪（ARCHITECTURE 第 40 章）：規則表、斷詞、詞典、結構化資料拆到同目錄四個模組；本檔只留 createEngine。
 // 下面的 re-export 讓既有呼叫端（render.js、llm.js、scripts/lib/*、tests）照舊從 core.js import，不必改。
-import { CROSS_LANG, PARAPHRASE, annotationsOf, topicAnchorsOf, buildLexicon, isOutdated, latinStems, lc, matcherFor, ownerNameOf, tr, unwrap } from './lexicon.js';
-import { ANTIVIRAL_RE, CAT_ZH, CLOSED_MARK, NOTICE_TYPES, SCHEDULE_VACCINE_RE, VAXMAP_GROUP_OF, VAXMAP_GROUP_OF_DISEASE, WHICH_VACCINE_RE, ageHashOf, ageProfileOf, hoursPhrase, matchSchedule, mmssOf, normTravel, normalizeNotifyTable, notifyHoursLabel, vaxmapHref } from './structured.js';
-import { EN_STOP, VI_STOP, bigrams, detectInjection, maskPII, maskPIIDetailed, mdPlain, parseChineseNumber, parseTimeRange, rocDate, splitPlain, tokenize } from './text.js';
-import { ADMIT_RE, CAREERS_DETAIL_RE, HISTORICAL_WEIGHT, LAB_PUBLIC_RE, MEDIA_CUE, NEWS_CUE, OPEN_CUE, PERSON, PROCUREMENT_CUE, PROCUREMENT_DETAIL_RE, PUB_CUE, QUERY_FACETS, QUERY_FUNC_RE, RECORD_RE, RECRUIT_CUE, REFUSAL_RULES, RELEVANCE, VAX_WHERE_RE, RESEARCH_CUE, TRAVEL_CHANGE_KINDS, TRAVEL_CHANGE_RE, classifyIntent, focusOf, isLowRelevance, refusalCopy, titleHits } from './rules.js';
+import { CROSS_LANG, PARAPHRASE, topicAnchorsOf, buildLexicon, latinStems, lc, matcherFor, ownerNameOf, tr, unwrap } from './lexicon.js';
+import { ANTIVIRAL_RE, CLOSED_MARK, NOTICE_TYPES, SCHEDULE_VACCINE_RE, VAXMAP_GROUP_OF, VAXMAP_GROUP_OF_DISEASE, WHICH_VACCINE_RE, ageHashOf, ageProfileOf, mmssOf, normTravel, normalizeNotifyTable, vaxmapHref } from './structured.js';
+import { EN_STOP, VI_STOP, bigrams, detectInjection, maskPII, maskPIIDetailed, parseTimeRange, rocDate, tokenize } from './text.js';
+import { CAREERS_DETAIL_RE, HISTORICAL_WEIGHT, LAB_PUBLIC_RE, MEDIA_CUE, NEWS_CUE, OPEN_CUE, PROCUREMENT_CUE, PROCUREMENT_DETAIL_RE, PUB_CUE, QUERY_FACETS, QUERY_FUNC_RE, RECORD_RE, RECRUIT_CUE, REFUSAL_RULES, RELEVANCE, VAX_WHERE_RE, RESEARCH_CUE, TRAVEL_CHANGE_RE, classifyIntent, focusOf, isLowRelevance, refusalCopy, titleHits } from './rules.js';
 
 // 第四十輪（issue #77）：補接種問句（漏打、錯過、延遲、忘了打、補打）。命中就不給年齡時程表，改由檢索找補接種 FAQ
 // 第四十八輪（issue #94）：加「晚了兩個月才打」「延後接種」這類口語
@@ -39,10 +39,38 @@ export { buildLexicon } from './lexicon.js';
 /** 相容舊名稱 */
 export { REFUSAL_RULES as REFUSAL_PATTERNS } from './rules.js';
 
+// ───────────────────────── 用到才載入的回答分支（第四十九輪） ─────────────────────────
+// 統計、謠言查證、通報時限、跨疫苗時程彙整、職缺、標案、公告列表、旅遊建議近期變化這幾種回答只有少數問題用得到，搬到 route-*.js，
+// 問到時才 import()（同 llm.js、log.js 的做法），大多數問題不必下載這段程式。為什麼這樣切、量測數字與沒拆的部分見 docs/ask-search-llm.md §14。
+//   - 每個分支只在一種意圖下才用到，一題只會判成一種意圖，所以同一題最多載入一個分支；js-budget 把「最大的一個分支」算進提問後合計。
+//   - answer() 仍是同步函式：走到還沒載入的分支時丟 RouteNotLoaded，engine.answerAsync() 接住、載入那一個分支、整題重算一次。
+//     answer() 除了 result 物件與快取（BM25、詞典）外不改任何狀態，重算的結果與一次算完相同（tests/round49-engine.test.mjs 逐題比對）。
+//   - Node（建置、評估、測試）在載入本檔時就把分支全部載好（top-level await），engine.answer() 照舊同步可用，呼叫端不必改。
+//   - import() 的路徑寫成字面字串：js-budget 的靜態 import 掃描不會把它算進初始閉包（這是刻意的），route-*.js 的命名讓它另外算最大的一個。
+const ROUTES = {
+  stats: () => import('./route-stats.js'),
+  rumor: () => import('./route-rumor.js'),
+  notify: () => import('./route-notify.js'),
+  schedule: () => import('./route-schedule.js'),
+  careers: () => import('./route-careers.js'),
+  procurement: () => import('./route-procurement.js'),
+  notice: () => import('./route-notice.js'),
+  'travel-changes': () => import('./route-travel-changes.js'),
+};
+const ROUTE_MODS = {};
+const importRoute = async (name) => (ROUTE_MODS[name] ??= await ROUTES[name]());
+class RouteNotLoaded extends Error {
+  constructor(name) { super(`answer route not loaded: ${name}`); this.route = name; }
+}
+if (globalThis.process?.versions?.node) await Promise.all(Object.keys(ROUTES).map(importRoute));
+
 
 // ───────────────────────── createEngine ─────────────────────────
 
-export function createEngine(rawDeps = {}) {
+/**
+ * engineOpts.lazyRoutes：true ＝ 只用本引擎以 loadRoute()／answerAsync() 載入過的分支（測試用：在 Node 模擬瀏覽器第一次提問、分支都還沒下載的情況）。
+ */
+export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
   const deps = Object.fromEntries(Object.entries(rawDeps).map(([k, v]) => [k, unwrap(v)]));
   const {
     index = [], indexPro = [], situation = null, clarifications = [], glossary = [], diseases = [], vaccines = [], countries = [],
@@ -671,7 +699,6 @@ export function createEngine(rawDeps = {}) {
     const sents = []; const srcs = new Map();
     for (const c of tr) {
       const id = `travel#${c.iso2}`;
-      const top = c.entries.reduce((a, b) => ((Number(b.level) || 0) > (Number(a.level) || 0) ? b : a));
       const date = c.entries.map((e) => e.date).filter(Boolean).sort().at(-1) ?? null;
       srcs.set(id, { id, contentId: `travel.${c.iso2}`, type: 'travel', title: `旅遊疫情建議 · ${c.name}`, url: `/travel/${c.iso2.toUpperCase()}/`, owner: 'unit.epidemic-intelligence', ownerName: ownerNameOf(units, 'unit.epidemic-intelligence'), reviewedAt: date, isCurrent: true, license: 'OGDL-1.0', lang: 'zh-TW' });
       for (const e of c.entries.slice(0, 4)) {
@@ -684,7 +711,6 @@ export function createEngine(rawDeps = {}) {
         sents.push({ text: lang === 'zh-TW' ? `${c.name}${dz ? `（${dz}）` : ''}：旅遊疫情建議${lvl}${e.date ? `，發布日 ${e.date}` : ''}。` : `${c.name}${dz ? ` (${dz})` : ''}: travel notice level ${e.level ?? '-'}${e.date ? `, issued ${e.date}` : ''}.`, cite: [id], slot: 0, score: 9 });
         if (e.advice && lang === 'zh-TW') sents.push({ text: e.advice, cite: [id], slot: 0, score: 8 });
       }
-      void top;
     }
     // 全球背景提醒：各國共通，只說一次（放在逐國句之後；answer() 會保留這一句）
     const bg = new Map();
@@ -702,454 +728,10 @@ export function createEngine(rawDeps = {}) {
     return { sentences: sents, sources: srcs };
   }
 
-  // ── 旅遊疫情建議的變化（近 30 天新增／調升／調降／解除；資料為等級表各國 RecentChanges） ──
-  const KIND_ZH = { new: '新增', raised: '調升', lowered: '調降', lifted: '解除', renewed: '重新發布' };
-  const KIND_EN = { new: 'new', raised: 'raised', lowered: 'lowered', lifted: 'lifted', renewed: 'renewed' };
-  function travelChanges(q, lang, days = 30) {
-    if (!TRAVEL_CHANGE_RE.test(q)) return null;
-    const rows = travelItems.filter((t) => t.aggregate);
-    // 新格式等級表（有 Targeted*）一律附事件快照推得的 RecentChanges（無變化的國家不帶此欄）；舊快照沒有變化資料 ⇒ 不回答
-    if (!rows.length || !rows.some((r) => Array.isArray(r.recentChanges) || r.targetedLevel != null)) return null;
-    const asOf = today ?? now().toISOString().slice(0, 10);
-    const since = new Date(Date.parse(`${asOf}T00:00:00Z`) - days * 864e5).toISOString().slice(0, 10);
-    const all = rows.flatMap((r) => (r.recentChanges ?? []).map((c) => ({ ...c, iso2: r.iso2, name: r.name }))).filter((e) => e.date <= asOf).sort((a, b) => b.date.localeCompare(a.date));
-    const recent = all.filter((e) => e.date >= since);
-    const asked = Object.entries(TRAVEL_CHANGE_KINDS).filter(([, re]) => re.test(q)).map(([k]) => k);
-    const kinds = asked.length ? asked : ['lifted', 'raised', 'lowered', 'new'];
-    const id = 'travel#changes';
-    const src = { id, contentId: 'travel.changes', type: 'travel', title: '旅遊疫情建議 · 近期變化', url: '/travel/', owner: 'unit.epidemic-intelligence', ownerName: ownerNameOf(units, 'unit.epidemic-intelligence'), reviewedAt: all[0]?.date ?? null, isCurrent: true, license: 'OGDL-1.0', lang: 'zh-TW' };
-    const zh = lang === 'zh-TW';
-    const fmt = (e) => `${e.name}${e.Disease ? `（${e.Disease}${e.Area ? `，${e.Area}` : ''}，${e.date}）` : `（${e.date}）`}`;
-    const sents = [];
-    for (const k of kinds) {
-      const hits = recent.filter((e) => e.kind === k);
-      if (hits.length) sents.push({ text: zh ? `近 ${days} 天${KIND_ZH[k]}旅遊疫情建議的有：${hits.slice(0, 8).map(fmt).join('、')}${hits.length > 8 ? ` 等 ${hits.length} 則` : ''}。` : `Travel notices ${KIND_EN[k]} in the last ${days} days: ${hits.slice(0, 8).map((e) => `${e.name} (${e.Disease}, ${e.date})`).join('; ')}.`, cite: [id], slot: 0, score: 9 });
-      else if (asked.length) {
-        const older = all.filter((e) => e.kind === k);
-        sents.push({ text: zh ? `近 ${days} 天（${since} 起）沒有${KIND_ZH[k]}的旅遊疫情建議${older.length ? `；較早一則為${fmt(older[0])}` : ''}。` : `No travel notices ${KIND_EN[k]} in the last ${days} days (since ${since}).`, cite: [id], slot: 0, score: 9 });
-      }
-    }
-    const n = (k) => recent.filter((e) => e.kind === k).length;
-    sents.push({ text: zh ? `近 ${days} 天變化：新增 ${n('new')}、調升 ${n('raised')}、調降 ${n('lowered')}、解除 ${n('lifted')}；各國現行等級請查目的地。` : `Last ${days} days: ${n('new')} new, ${n('raised')} raised, ${n('lowered')} lowered, ${n('lifted')} lifted.`, cite: [id], slot: 0, score: 8 });
-    return { sentences: sents, sources: new Map([[id, src]]) };
-  }
-
-  // ── 統計 ──
-  const GRAN = { year: /(年|歷年|每年|year|năm)/i, week: /(週|周|星期|week|tuần)/i, month: /(月|month|tháng)/i, day: /(日|天|每日|day|ngày)/i };
-  function seriesList(ds) { const s = ds.series; if (!s) return []; return (Array.isArray(s) ? s : [s]).map((x, i) => ({ ...x, _i: i })); }
-  function matchSeries(q, entities) {
-    const dIds = entities.diseases.map((d) => d.id);
-    const qb = new Set(tokenize(q, { query: true }));
-    let best = null;
-    for (const ds of datasets) for (const se of seriesList(ds)) {
-      let s = 0;
-      const dsDiseases = ds.diseases ?? [];
-      if (dIds.length) {
-        if (dsDiseases.some((d) => dIds.includes(d)) || dIds.some((id) => (ds.title ?? '').includes(diseaseById.get(id)?.name ?? '@@'))) s += 5; else continue;
-      }
-      for (const t of tokenize(`${se.label ?? ''} ${ds.title ?? ''}`)) if (qb.has(t)) s += 1;
-      const g = Object.entries(GRAN).find(([, re]) => re.test(q))?.[0];
-      if (g && se.granularity === g) s += 2;
-      if (/本土/.test(q) && /本土/.test(se.label ?? '')) s += 2;
-      if (/境外/.test(q) && /境外/.test(se.label ?? '')) s += 2;
-      if (/本土/.test(q) && /境外/.test(se.label ?? '')) s -= 3;
-      if (/境外/.test(q) && /本土/.test(se.label ?? '')) s -= 3;
-      if (!best || s > best.s) best = { ds, se, s };
-    }
-    return best && best.s >= 3 ? best : null;
-  }
-  function statsAnswer(q, entities, range, lang) {
-    const m = matchSeries(q, entities);
-    if (!m) return null;
-    const { ds, se } = m;
-    let pts = [...(se.points ?? [])];
-    const yearOf = (t) => Number(String(t).slice(0, 4));
-    const notes = [];
-    if (range.from != null) pts = pts.filter((p) => yearOf(p.t) >= range.from && yearOf(p.t) <= range.to);
-    else if (range.years.length && se.granularity === 'year') pts = pts.filter((p) => range.years.includes(yearOf(p.t)));
-    else if (range.n != null) {
-      const n = Math.round(range.unit === se.granularity ? range.n : range.unit === 'year' && se.granularity === 'week' ? range.n * 52 : range.n);
-      if (pts.length < n) notes.push(`資料僅有 ${pts.length} 個時間點`);
-      pts = pts.slice(-n);
-    } else if (pts.length > 10) pts = pts.slice(-10);
-    if (!pts.length) return { empty: true, ds, se };
-    const unit = se.unit ?? '';
-    const fmt = (v) => (typeof v === 'number' ? v.toLocaleString('en-US') : String(v));
-    const tLabel = (t) => (se.granularity === 'year' && /^\d{4}$/.test(String(t)) ? (lang === 'zh-TW' ? `${t} 年` : String(t)) : String(t));
-    let aggregate = null;
-    if (/(總共|合計|加總|一共|總計|累計|共有|total|in total|altogether|tổng)/i.test(q)) aggregate = { kind: 'sum', value: pts.reduce((s, p) => s + (Number(p.v) || 0), 0) };
-    else if (/(最高|最多|最嚴重|高峰是|peak|highest|most)/i.test(q)) { const p = pts.reduce((a, b) => (Number(b.v) > Number(a.v) ? b : a)); aggregate = { kind: 'max', value: p.v, t: p.t }; }
-    else if (/(最低|最少|lowest|fewest)/i.test(q)) { const p = pts.reduce((a, b) => (Number(b.v) < Number(a.v) ? b : a)); aggregate = { kind: 'min', value: p.v, t: p.t }; }
-    else if (/(平均|average|mean)/i.test(q)) aggregate = { kind: 'avg', value: Math.round((pts.reduce((s, p) => s + (Number(p.v) || 0), 0) / pts.length) * 10) / 10 };
-    const sid = ds.id;
-    const label = se.label ?? ds.title;
-    const sentences = [];
-    if (aggregate) {
-      const span = `${tLabel(pts[0].t)}–${tLabel(pts.at(-1).t)}`;
-      const text = lang === 'zh-TW'
-        ? { sum: `${label}：${span}合計 ${fmt(aggregate.value)} ${unit}。`, max: `${label}：${span}間最高為 ${tLabel(aggregate.t)}，${fmt(aggregate.value)} ${unit}。`, min: `${label}：${span}間最低為 ${tLabel(aggregate.t)}，${fmt(aggregate.value)} ${unit}。`, avg: `${label}：${span}平均每期 ${fmt(aggregate.value)} ${unit}。` }[aggregate.kind]
-        : { sum: `${label}: ${span} total ${fmt(aggregate.value)} ${unit}.`, max: `${label}: highest in ${aggregate.t}, ${fmt(aggregate.value)} ${unit}.`, min: `${label}: lowest in ${aggregate.t}, ${fmt(aggregate.value)} ${unit}.`, avg: `${label}: average ${fmt(aggregate.value)} ${unit} per period.` }[aggregate.kind];
-      sentences.push({ text, cite: [sid] });
-    }
-    for (const p of pts) sentences.push({ text: lang === 'zh-TW' ? `${tLabel(p.t)}：${fmt(p.v)} ${unit}` : `${p.t}: ${fmt(p.v)} ${unit}`, cite: [sid] });
-    const source = {
-      id: sid, contentId: sid, type: 'dataset', title: ds.title, url: ds.canonicalUrl ?? ds.portalUrl, owner: ds.owner, ownerName: ds.ownerName ?? ownerNameOf(units, ds.owner),
-      reviewedAt: ds.lastUpdated ?? ds.reviewedAt, dataDate: ds.lastUpdated, license: ds.license ?? 'OGDL-1.0', formats: ds.formats ?? ds.format ?? [], isCurrent: true,
-      portalUrl: ds.portalUrl, mirrors: ds.mirrors ?? [], schemaUrl: ds.schemaUrl ?? null, apiUrl: '/v1/datasets.json', provenance: ds.provenance ?? null, note: se.note ?? null, lang: 'zh-TW',
-    };
-    return { stats: { dataset: { id: ds.id, title: ds.title }, label, unit, granularity: se.granularity, points: pts, aggregate, range, notes, note: se.note ?? null }, sentences, source };
-  }
-
-  // ── 謠言 ──
-  const RUMOR_STRIP = /(這則|這個|這篇)?(訊息|消息|貼文|新聞|傳言)?(是)?(真的嗎|是真的嗎|真的假的|是假的嗎|假的嗎|可信嗎|是不是真的)|網傳|聽說|有人說|LINE\s*(群組)?(上)?(說|傳)|請問|查證|闢謠|[:：「」『』"“”?？!！，,。]/gi;
-  function similarity(q, claim) {
-    const A = new Set(bigrams(q)), B = new Set(bigrams(claim));
-    if (!A.size || !B.size) return 0;
-    let inter = 0; for (const x of A) if (B.has(x)) inter++;
-    const jac = inter / (A.size + B.size - inter);
-    const contClaim = inter / B.size; // 訊息含整則謠言
-    const contQuery = inter / A.size; // 問句是謠言的片段
-    return Math.max(jac, 0.85 * contClaim, 0.75 * contQuery * Math.min(1, A.size / 6));
-  }
-  // 第四十輪：只問「這是真的嗎」、沒附訊息內容（首頁預設問題就是這樣）。拉丁字母語言的字元雙字很容易跟任何一則英文謠言撞到 0.4 以上，
-  // 不能拿相似度判斷 ⇒ 直接回「目前沒有對應的官方澄清」並引導到澄清專區貼上訊息。七語的「光問句」寫法列在這裡。
-  const RUMOR_ASK_ONLY = /^\s*((這則|這個|這篇)?(訊息|消息|貼文|新聞|傳言)?(是)?(真的嗎|是真的嗎|真的假的|是假的嗎|可信嗎)|is (?:this|that|it) (?:message |news |post |claim |text )?true|このメッセージは本当ですか|totoo ba(?: ang)?(?: mensaheng| balitang)?(?: ito| iyan)?|apakah (?:pesan|berita|kabar) ini benar|tin nhắn này có thật không|ข้อความนี้จริงหรือไม่|ข้อความนี้จริงไหม)\s*[?？!！。.]*\s*$/i;
-  function factCheck(q, result) {
-    const LL = result.lang;
-    const qs = q.replace(RUMOR_STRIP, ' ');
-    let best = null, bestScore = 0, bestClaim = null;
-    if (RUMOR_ASK_ONLY.test(q)) {
-      result.verdict = 'unknown'; result.guards.push({ kind: 'rumor-no-message' });
-      return setRefusal(result, 'no-clarification', 'ref.no-clarification.empty', [{ label: tr(LL, '到澄清專區貼上訊息', 'Paste the message on the fact-check page'), href: '/factcheck/', kind: 'link' }, { label: tr(LL, '撥打 1922 詢問', 'Call 1922'), href: 'tel:1922', kind: 'hotline' }]);
-    }
-    for (const c of clarifications) {
-      // 不在白名單的澄清只在「已過時」時使用（治理引擎判定依據已修訂，需告知民眾已過時）
-      const wl = c.gov?.whitelist?.effective ?? c.governance?.whitelist;
-      if (wl === false && !isOutdated(c)) continue;
-      const claims = [c.claim, ...(c.claimVariants ?? []), ...(result.lang !== 'zh-TW' ? [c.i18n?.[result.lang]?.claim, c.i18n?.[result.lang]?.title, ...(c.i18n?.[result.lang]?.claimVariants ?? [])] : [])].filter(Boolean);
-      for (const claim of claims) { const s = similarity(qs, claim); if (s > bestScore) { bestScore = s; best = c; bestClaim = claim; } }
-    }
-    result.rumorScore = Math.round(bestScore * 100) / 100;
-    if (!best || bestScore < 0.4) {
-      result.verdict = 'unknown';
-      setRefusal(result, 'no-clarification', 'ref.no-clarification', [{ label: tr(LL, '撥打 1922 詢問', 'Call 1922'), href: 'tel:1922', kind: 'hotline' }, { label: tr(LL, '詐騙請撥 165', 'Scams: call 165'), href: 'tel:165', kind: 'hotline' }, { label: tr(LL, '到澄清專區', 'Fact-check page'), href: '/factcheck/', kind: 'link' }]);
-      return result;
-    }
-    const outdated = isOutdated(best);
-    const verdict = outdated ? 'outdated' : best.verdict;
-    const i18n = result.lang !== 'zh-TW' ? best.i18n?.[result.lang] : null;
-    const revised = (best.gov?.stale ?? best.governance?.stale ?? []).map((s) => ({ revisedAt: s.revisedAt, currentId: s.currentId, currentTitle: s.currentTitle }));
-    for (const a of annotationsOf(best)) if (a.kind === 'based-on-revised' && !revised.length) revised.push({ text: a.text, currentId: a.href });
-    const text = best.clarificationText ?? mdPlain(best.clarificationMarkdown ?? '');
-    result.verdict = verdict;
-    result.matchedClaim = bestClaim;
-    result.clarification = {
-      id: best.id, title: i18n?.title ?? best.title, claim: best.claim, verdict, originalVerdict: best.verdict, text: i18n?.clarification ?? text,
-      shareText: i18n?.shareText ?? best.shareText, reportChannel: best.reportChannel, url: best.url ?? '/factcheck/', publishedAt: best.publishedAt, reviewedAt: best.reviewedAt,
-      ownerName: best.ownerName ?? ownerNameOf(units, best.owner), outdated, revised,
-    };
-    result.shareText = result.clarification.shareText; result.reportChannel = best.reportChannel;
-    const src = { id: best.id, contentId: best.id, type: 'clarification', title: best.title, url: best.url ?? `/factcheck/#${best.id}`, owner: best.owner, ownerName: result.clarification.ownerName, reviewedAt: best.reviewedAt, isCurrent: !outdated, license: best.license ?? 'OGDL-1.0', lang: result.lang, n: 1 };
-    result.sources = [src];
-    const sents = splitPlain(result.clarification.text).slice(0, 3);
-    result.sentences = sents.map((t) => ({ text: t, cite: [best.id], n: [1] }));
-    if (outdated) result.guards.push({ kind: 'clarification-outdated', id: best.id });
-    result.actions = [
-      ...(result.shareText ? [{ label: tr(LL, '複製可轉傳短訊', 'Copy shareable message'), kind: 'copy', value: result.shareText }] : []),
-      ...(best.reportChannel ? [{ label: tr(LL, `通報：${best.reportChannel}`, `Report: ${best.reportChannel}`), kind: 'info' }] : []),
-      { label: tr(LL, '撥打 1922', 'Call 1922'), href: 'tel:1922', kind: 'hotline' },
-    ];
-    return result;
-  }
-
-  // ── 通報時限（結構化回答，不走檢索）：只讀傳染病主檔＋通報時限表 ──
-  const NOTIFY_HOW_RE = /(怎麼|如何|流程|方式|哪裡|向誰|找誰|群聚)/;
-  const NOTIFY_PERSONAL_RE = new RegExp(`${PERSON}.{0,10}(得了|得到|感染|確診|疑似|好像得|可能得)`);
-  function masterSource(d, row, cat) {
-    return {
-      id: `master.diseases#${d ? d.id : `category-${cat}`}`, contentId: 'master.diseases', type: 'master', lang: 'zh-TW',
-      title: '傳染病主檔 · 傳染病防治法公告', subject: d ? d.name : `第${CAT_ZH[cat] ?? cat}類法定傳染病`, basis: '傳染病防治法公告',
-      url: `/report/#category-${cat}`, owner: d?.owner ?? 'unit.epidemic-intelligence', ownerName: ownerNameOf(units, d?.owner ?? 'unit.epidemic-intelligence'),
-      reviewedAt: null, nextReviewAt: null, isCurrent: true, license: 'OGDL-1.0', mdUrl: null,
-      legalCategory: cat, notifyWithinHours: d?.notifyWithinHours ?? null, hoursLabel: d ? notifyHoursLabel(d.notifyWithinHours) : null,
-      caseDefinitionUrl: row?.caseDefinitionPath ?? null, labtestUrl: row?.labtestPath ?? null, diseaseUrl: row?.path ?? (d && (d.hasPage || d.page) ? `/diseases/${d.slug}/` : null),
-    };
-  }
-  function notifyAnswer(q, result, entities) {
-    const LL = result.lang;
-    const picked = []; const sources = []; const items = [];
-    const ds = entities.diseases.filter((x) => !x.derived).map((x) => diseaseById.get(x.id)).filter((d) => d && d.legalCategory != null && d.notifyWithinHours != null);
-    if (entities.diseases.some((x) => !x.derived) && !ds.length) return null; // 問的是非法定傳染病：交給檢索
-    // 沒有疾病、問的是「怎麼通報／群聚通報流程」而非時限或類別 ⇒ 交給檢索（申請服務：群聚通報、法定傳染病通報）
-    if (!ds.length && NOTIFY_HOW_RE.test(q) && !/(第\s*[一二三四五1-5]\s*類|幾類|哪一?類|時限|多久|幾小時|幾天)/.test(q)) return null;
-    if (ds.length) {
-      for (const d of ds.slice(0, 3)) {
-        const cat = d.legalCategory; const row = notifyRows.get(d.id) ?? null;
-        const src = masterSource(d, row, cat);
-        const text = LL === 'zh-TW'
-          ? `${d.name}${d.nameEn ? `（${d.nameEn}）` : ''}為第${CAT_ZH[cat] ?? cat}類法定傳染病，應於${hoursPhrase(d.notifyWithinHours)}通報。`
-          : `${d.nameEn ?? d.name} is a Category ${cat} notifiable disease and must be reported within ${d.notifyWithinHours} hours.`;
-        picked.push({ text, cite: [src.id] }); sources.push(src);
-        items.push({ id: d.id, name: d.name, nameEn: d.nameEn ?? null, legalCategory: cat, categoryLabel: `第${CAT_ZH[cat] ?? cat}類`, notifyWithinHours: d.notifyWithinHours, hoursLabel: notifyHoursLabel(d.notifyWithinHours),
-          caseDefinitionUrl: src.caseDefinitionUrl, labtestUrl: src.labtestUrl, diseaseUrl: src.diseaseUrl, reportUrl: src.url });
-      }
-    } else {
-      const m = q.match(/第\s*([一二三四五1-5])\s*類/);
-      const want = m ? (Number(m[1]) || parseChineseNumber(m[1])) : null;
-      const byCat = new Map();
-      for (const d of diseases) if (d.legalCategory != null && d.notifyWithinHours != null) { if (!byCat.has(d.legalCategory)) byCat.set(d.legalCategory, []); byCat.get(d.legalCategory).push(d); }
-      const cats = [...byCat.keys()].sort((a, b) => a - b).filter((c) => want == null || c === want);
-      if (!cats.length) return null;
-      for (const cat of cats) {
-        const list = byCat.get(cat);
-        const counts = new Map(); for (const d of list) counts.set(d.notifyWithinHours, (counts.get(d.notifyWithinHours) ?? 0) + 1);
-        const [h0] = [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0] - b[0])[0];
-        const examples = list.filter((d) => d.notifyWithinHours === h0).slice(0, 3).map((d) => d.name).join('、');
-        const others = [...counts.keys()].filter((h) => h !== h0).sort((a, b) => a - b).map((h) => {
-          const names = list.filter((d) => d.notifyWithinHours === h).map((d) => d.name);
-          return `${names.length <= 3 ? names.join('、') : `${names.slice(0, 3).join('、')}等 ${names.length} 種`}應於${hoursPhrase(h)}通報`;
-        });
-        const src = masterSource(null, null, cat);
-        const text = `第${CAT_ZH[cat] ?? cat}類法定傳染病（主檔共 ${list.length} 種，如${examples}）${others.length ? '多數' : ''}應於${hoursPhrase(h0)}通報${others.length ? `；其中${others.join('，')}` : ''}。`;
-        picked.push({ text, cite: [src.id] }); sources.push(src);
-        items.push({ id: null, name: `第${CAT_ZH[cat] ?? cat}類法定傳染病`, legalCategory: cat, categoryLabel: `第${CAT_ZH[cat] ?? cat}類`, notifyWithinHours: h0, hoursLabel: notifyHoursLabel(h0), count: list.length, reportUrl: src.url });
-      }
-    }
-    const sourceMap = new Map(sources.map((x) => [x.id, x]));
-    finalizeSentences(result, picked, sourceMap);
-    // 結構化片段也放進 retrieved，讓 grounding 檢核可逐句比對
-    result.retrieved = sources.map((x) => { const sents = picked.filter((p) => p.cite[0] === x.id).map((p) => p.text); return { id: x.id, contentId: x.contentId, type: 'master', title: x.title, url: x.url, sentences: sents, text: sents.join(' ') }; });
-    const personal = NOTIFY_PERSONAL_RE.test(q);
-    result.notify = {
-      items, structured: true, source: 'master.diseases', basis: '傳染病防治法公告', personal,
-      note: result.view === 'pro' ? null : tr(LL, '法定傳染病由診治醫師依規定通報；民眾發現疑似病例或群聚，請撥打 1922 防疫專線。', 'Notifiable diseases are reported by the attending physician. If you suspect a case or cluster, call the 1922 hotline.'),
-    };
-    result.confidence = 0.95;
-    result.completeness = { required: ['category', 'hours'], covered: ['category', 'hours'], missing: [], score: 1 };
-    const a = [];
-    if (personal || result.view !== 'pro') a.push({ label: tr(LL, '撥打 1922', 'Call 1922'), href: 'tel:1922', kind: 'hotline' });
-    const it = items[0];
-    a.push({ label: tr(LL, '前往通報專區', 'Reporting'), href: it?.reportUrl ?? '/report/', kind: 'link' });
-    if (it?.caseDefinitionUrl) a.push({ label: tr(LL, `${it.name}病例定義`, `Case definition: ${it.nameEn ?? it.name}`), href: it.caseDefinitionUrl, kind: 'link' });
-    if (it?.labtestUrl) a.push({ label: tr(LL, `${it.name}檢驗項目`, `Lab tests: ${it.nameEn ?? it.name}`), href: it.labtestUrl, kind: 'link' });
-    if (it?.diseaseUrl && a.length < 4) a.push({ label: tr(LL, `看${it.name}完整頁面`, `${it.nameEn ?? it.name}: full page`), href: it.diseaseUrl, kind: 'link' });
-    if (!a.some((x) => x.href === 'tel:1922')) a.push({ label: tr(LL, '撥打 1922', 'Call 1922'), href: 'tel:1922', kind: 'hotline' });
-    result.actions = a.slice(0, 4);
-    result.related = relatedQuestions(result);
-    return result;
-  }
-
-  // ── 跨疫苗彙整（結構化回答，不走檢索）：疫苗接種時程主檔 × 年齡／身分 ──
-  // 句子由時程主檔欄位串接（dose、ageLabel、startAt、group），引用第一順位是「疫苗接種時程表」（grounding 比對對象），
-  // 疫苗有頁面時第二順位引用該頁的接種對象片段（pf-N，依 group／年齡數字對應；找不到用 #v），讓使用者可點進疫苗頁。
-  // verified=false：在句尾加「（待確認）」而不是只記 guards——時程數字直接出現在民眾看到的答案裡，
-  // 承辦人尚未確認的數字應與時程地圖頁一樣明示；確認後（verified=true）字樣自動消失。
-  const SCHED_ID = 'master.immunization-schedule';
-  const SCHED_OWNER = 'unit.acute-infectious';
-  function vaccineNameOf(vid, it) {
-    const v = vaccines.find((x) => x.id === vid);
-    if (v?.name || v?.title) return v.name ?? v.title;
-    const m = String(it?.label ?? '').match(/^(.*?(?:疫苗|卡介苗))/);
-    return m ? m[1].replace(/\s+$/, '') : (it?.label ?? vid);
-  }
-  function startPhrase(it, T) {
-    if (!it.startAt) return '';
-    const s = Date.parse(it.startAt), t = Date.parse(T);
-    if (!Number.isFinite(s) || !Number.isFinite(t)) return '';
-    // 只標示一年內（或尚未開始）的開打日；多年前開始的常規項目不再提起
-    if (t - s > 365 * 86400000) return '';
-    const [y, mo, d] = it.startAt.split('-').map(Number);
-    return `${y} 年 ${mo} 月 ${d} 日起`;
-  }
-  function schedulePageChunk(vid, it, pool) {
-    const pfs = pool.filter((c) => c.contentId === vid && /#pf-\d+$/.test(c.id));
-    const want = new Set(bigrams(`${it.group ?? ''}${it.ageLabel ?? ''}${it.dose ?? ''}`.replace(/\s+/g, '')));
-    const nums = (s) => new Set(String(s ?? '').match(/\d+/g) ?? []);
-    const itNums = nums(`${it.group ?? ''} ${it.ageLabel ?? ''}`);
-    let best = null, bestScore = 0;
-    for (const c of pfs) {
-      const have = new Set(bigrams(String(c.text ?? '').replace(/\s+/g, '')));
-      let n = 0; for (const b of want) if (have.has(b)) n++;
-      let s = n / Math.max(1, want.size);
-      if (c.group && it.group && c.group === it.group) s += 1;
-      const cNums = nums(c.group ?? c.text);
-      if (itNums.size && [...itNums].every((x) => cNums.has(x))) s += 0.3;
-      if (s > bestScore) { best = c; bestScore = s; }
-    }
-    if (best && bestScore >= 0.2) return best;
-    return pool.find((c) => c.id === `${vid}#v`) ?? null;
-  }
-  function scheduleAnswer(q, result, entities, profile) {
-    if (!scheduleItems.length) return null;
-    const LL = result.lang;
-    const T = todayRt();
-    const matched = matchSchedule(scheduleItems, profile, { today: T });
-    const pool = poolFor('public', 'zh-TW').chunks;
-    const P = profile.label || tr('zh-TW', '此年齡', '');
-    const unv = (its) => (its.some((i) => i.verified === false) ? '（待確認）' : '');
-    const uniq = (xs) => [...new Set(xs.filter(Boolean))];
-    // 一疫苗一組：第一個項目的 effFunded 即該疫苗的最佳公費等級（matchSchedule 已依 funded 排序）
-    const groups = new Map();
-    for (const it of matched) {
-      if (!groups.has(it.vaccine)) groups.set(it.vaccine, { vid: it.vaccine, funded: it.effFunded, items: [] });
-      const g = groups.get(it.vaccine);
-      if (it.effFunded === g.funded) g.items.push(it);
-    }
-    const all = [...groups.values()];
-    const pub = all.filter((g) => g.funded === 'public');
-    const cond = all.filter((g) => g.funded === 'conditional');
-    const self = all.filter((g) => g.funded === 'self');
-    const picked = []; const pages = new Map();
-    const pushFor = (g, text) => {
-      const page = schedulePageChunk(g.vid, g.items[0], pool);
-      if (page) pages.set(page.id, page);
-      picked.push({ text, cite: [SCHED_ID, ...(page ? [page.id] : [])], scheduleIds: g.items.map((i) => i.id), href: page ? null : `/vaccines/schedule/#${g.items[0].id}` });
-    };
-    const details = (it) => [it.dose, it.ageLabel, startPhrase(it, T)].filter(Boolean).join('，');
-    // 第三十七輪：8 → 12。「2 歲前」整段有 10 種公費疫苗，原本只列 8 種、A 肝與日本腦炎被收進「另有 2 種」，家長看不到完整清單
-    const PUB_MAX = 12;
-    for (const g of pub.slice(0, PUB_MAX)) pushFor(g, `${P}公費疫苗：${vaccineNameOf(g.vid, g.items[0])}（${g.items.map(details).join('；')}）${unv(g.items)}。`);
-    if (pub.length > PUB_MAX) picked.push({ text: `另有 ${pub.length - PUB_MAX} 種公費疫苗，請看完整疫苗時程地圖。`, cite: [SCHED_ID] });
-    if (!pub.length) {
-      // 沒有任何公費項目：明說，並提示下一次公費接種的時間點（只看不限身分的常規公費項目）
-      const nextPub = profile.maxMonths == null ? [] : scheduleItems
-        .filter((i) => i.funded === 'public' && !['pregnancy', 'risk'].includes(i.stage) && !/(原住民|孕婦)/.test(i.group ?? '') && (i.ageMinMonths ?? 0) > profile.maxMonths && !(i.endAt && i.endAt < T))
-        .sort((a, b) => a.ageMinMonths - b.ageMinMonths);
-      const nexts = nextPub.filter((i) => i.ageMinMonths === nextPub[0]?.ageMinMonths);
-      const nextTxt = nexts.length ? `；下一次公費接種為${nexts[0].ageLabel}（${uniq(nexts.map((i) => vaccineNameOf(i.vaccine, i))).join('、')}）` : '';
-      picked.push({ text: `${P}目前沒有常規公費疫苗${nextTxt}${unv(nexts)}。`, cite: [SCHED_ID], scheduleIds: nexts.map((i) => i.id) });
-    }
-    for (const g of cond.slice(0, 3)) pushFor(g, `符合條件者公費：${vaccineNameOf(g.vid, g.items[0])}（${uniq(g.items.map((i) => i.group || i.ageLabel)).join('；')}；${g.items[0].dose}）${unv(g.items)}。`);
-    if (self.length) {
-      const list = self.slice(0, 4).map((g) => `${vaccineNameOf(g.vid, g.items[0])}（${[g.items[0].dose, g.items[0].ageLabel].filter(Boolean).join('，')}）`);
-      const its = self.slice(0, 4).flatMap((g) => g.items);
-      picked.push({ text: `自費可考慮：${list.join('、')}${unv(its)}。`, cite: [SCHED_ID], scheduleIds: its.map((i) => i.id) });
-    }
-    const schedSrc = {
-      id: SCHED_ID, contentId: SCHED_ID, type: 'schedule', lang: 'zh-TW', title: '疫苗接種時程表', subject: P, url: '/vaccines/schedule/',
-      owner: SCHED_OWNER, ownerName: units.find((u) => u.id === SCHED_OWNER)?.name ?? '急性傳染病組', reviewedAt: null, nextReviewAt: null, publishedAt: null,
-      isCurrent: true, license: 'OGDL-1.0', mdUrl: null, basis: '疫苗接種時程主檔', verified: matched.every((i) => i.verified !== false),
-    };
-    const sourceMap = new Map([[SCHED_ID, schedSrc], ...[...pages.values()].map((c) => [c.id, sourceOf(c)])]);
-    finalizeSentences(result, picked, sourceMap);
-    // 結構化句放進 retrieved（第一順位引用），grounding 檢核可逐句比對；疫苗頁片段一併列出
-    const texts = picked.map((p) => p.text);
-    result.retrieved = [{ id: SCHED_ID, contentId: SCHED_ID, type: 'schedule', title: schedSrc.title, url: schedSrc.url, sentences: texts, text: texts.join(' ') }, ...pages.values()];
-    result.schedule = {
-      structured: true, source: SCHED_ID, profile, ageHash: ageHashOf(profile),
-      items: matched.map((i) => ({ id: i.id, vaccine: i.vaccine, label: i.label, funded: i.effFunded, verified: i.verified !== false })),
-      unverified: matched.filter((i) => i.verified === false).length,
-    };
-    if (LL !== 'zh-TW') result.translationNote = 'showing-source'; // 時程主檔只有中文正本
-    result.confidence = 0.9;
-    // 接種對象＝問句的年齡／身分本身（結構化比對），與通報時限回答相同視為完整
-    result.completeness = { required: ['who'], covered: ['who'], missing: [], score: 1 };
-    result.actions = actionsFor(result, entities, null);
-    result.related = relatedQuestions(result);
-    return result;
-  }
-
-  // ── 第七輪：人才招募／採購公告（結構化回答：只讀索引中職缺／標案的結構化句與欄位，不走全文檢索） ──
-  // 個資：職缺 chunk 不含 result／waitlistUpdates（index-builder 排除），問「誰錄取」只引用「甄選結果已於…公告，名單只公布報名編號」句並給結果頁連結。
+  // ── 第七輪：職缺／標案的概要片段（意圖判定「指名某職缺」也要用，所以留在本檔；結構化回答在 route-careers.js／route-procurement.js） ──
   function overviewChunks(type, view) {
     const seen = new Set();
     return poolFor(view, 'zh-TW').chunks.filter((c) => c.type === type && c.block === 'overview' && !seen.has(c.contentId) && seen.add(c.contentId));
-  }
-  function structuredFinish(result, picked, chunks, extra) {
-    const sourceMap = new Map(chunks.map((c) => [c.id, sourceOf(c)]));
-    // （已截止）只標在報名期間／投標截止句，避免「已決標（已截止）」之類的重複標示
-    const marked = picked.map((p) => (extra.markClosed && closedNow(p.chunk) && /(報名期間|投標截止日)/.test(p.text) && !p.text.includes('已截止') ? { ...p, text: `${p.text}${CLOSED_MARK}`, closed: true } : p));
-    finalizeSentences(result, marked, sourceMap);
-    result.retrieved = chunks;
-    if (result.lang !== 'zh-TW') result.translationNote = 'showing-source'; // 職缺與標案內容只有中文正本
-    result.confidence = 0.9;
-    result.completeness = { required: extra.required ?? ['deadline'], covered: extra.required ?? ['deadline'], missing: [], score: 1 };
-    result.actions = actionsFor(result, result.entities ?? { diseases: [], vaccines: [], countries: [] }, null);
-    if (extra.actions) result.actions = [...extra.actions, ...result.actions.filter((x) => !extra.actions.some((y) => y.href === x.href))].slice(0, 4);
-    result.related = [];
-    return result;
-  }
-  const pickSent = (c, re) => (c.sentences ?? []).find((x) => re.test(x));
-  /**
-   * 職缺／標案問句的「主題詞」：去掉意圖線索、泛用詞與功能詞後剩下的中文／英數詞（≥ 2 字）。
-   * 有主題詞，但同型別的所有片段都沒有出現其中任何一個雙字片段 ⇒ true（查無）。沒有主題詞（「現在有哪些標案」）⇒ false。
-   */
-  const NOTICE_GENERIC_RE = /(疾管署|疾病管制署|本署|機關|單位|時候|日期|何時|公告|公開|招標|採購|標案|投標|決標|開標|案號|預算|廠商|招募|徵才|徵人|職缺|約聘|約僱|甄選|甄試|工作機會|缺額|招考|人員|報名|截止|資格|條件|薪資|薪水|待遇|文件|規格|標的|有哪些|有沒有|現在|目前|最近|最新|近期|正在|進行中|開放|還有|還能|可以|一覽|列表|清單|查詢|資訊|相關|關於|所有|全部)/g;
-  function noticeTopicMiss(q, type, view) {
-    const residual = String(q).normalize('NFKC').toLowerCase().replace(NOTICE_GENERIC_RE, ' ').replace(QUERY_FUNC_RE, ' ').replace(OPEN_CUE, ' ').replace(ADMIT_RE, ' ').replace(CAREERS_DETAIL_RE, ' ').replace(PROCUREMENT_DETAIL_RE, ' ').replace(/\d+/g, ' ');
-    const terms = tokenize(residual, { query: true }).filter((t) => t.length >= 2 || /[a-z]/.test(t));
-    if (!terms.length) return false;
-    const chunks = poolFor(view, 'zh-TW').chunks.filter((c) => c.type === type);
-    if (!chunks.length) return false;
-    const hay = lc(chunks.map((c) => `${c.title} ${(c.focusTerms ?? []).join(' ')} ${c.text}`).join(' '));
-    return !terms.some((t) => hay.includes(t));
-  }
-  function careersAnswer(q, result, view) {
-    const LL = result.lang;
-    const all = overviewChunks('job', view);
-    const focus = all.filter((c) => focusOf(q, c));
-    result.focusIds = focus.map((c) => c.contentId);
-    // 用人單位、職類只當篩選條件（仍只列開放中）
-    const byCat = all.filter((c) => (c.hiringUnitName && q.includes(c.hiringUnitName)) || (c.jobType && q.includes(c.jobType)));
-    const careersLink = { label: tr(LL, '看全部職缺', 'All vacancies'), href: '/careers/', kind: 'link' };
-    // 問錄取結果：不唸名單，給結果頁連結
-    if (ADMIT_RE.test(q)) {
-      let pool = (focus.length ? focus : all).filter((c) => c.hasResult || c.resultPlannedAt);
-      if (!focus.length) pool = pool.filter((c) => c.hasResult);
-      pool.sort((a, b) => (b.hasResult - a.hasResult) || (a.archivedStage - b.archivedStage) || String(b.resultPublishedAt ?? b.resultPlannedAt ?? '').localeCompare(String(a.resultPublishedAt ?? a.resultPlannedAt ?? '')));
-      pool = pool.slice(0, 3);
-      if (!pool.length) return setRefusal(result, 'no-job-result', 'ref.no-job-result', [careersLink]);
-      const picked = pool.map((c) => ({ text: pickSent(c, /甄選結果(已於|預計)/), cite: [c.id], chunk: c, slot: 0, score: 9 })).filter((p) => p.text);
-      const items = pool.map((c) => ({ id: c.contentId, title: c.title, url: c.url, resultUrl: c.resultUrl, resultPublishedAt: c.resultPublishedAt ?? null, resultPlannedAt: c.resultPlannedAt ?? null, stage: jobStageNow(c) }));
-      result.careers = { mode: 'admitted', structured: true, privacy: true, items, note: tr(LL, '甄選結果只在職缺頁公布報名編號（不公布姓名），答案不唸出名單；請以報名編號自行核對。', 'Results list only application numbers (no names) on the vacancy page; this answer does not read out the list.') };
-      const acts = items.filter((x) => x.resultUrl).slice(0, 2).map((x) => ({ label: tr(LL, `看「${x.title}」甄選結果`, 'See selection result'), href: x.resultUrl, kind: 'link' }));
-      result.guards.push({ kind: 'admitted-list-withheld', ids: items.map((x) => x.id) });
-      return structuredFinish(result, picked, pool, { required: ['result-link'], actions: [...acts, careersLink], markClosed: false });
-    }
-    // 指名職缺並問薪資：職缺概要句＋薪資句
-    if (focus.length && /(薪水|薪資|待遇|薪點|月薪|多少錢|起薪)/.test(q)) {
-      const pickedS = [];
-      for (const c of focus.slice(0, 3)) for (const t of [pickSent(c, /用人，職類為/), pickSent(c, /薪資待遇/)]) if (t) pickedS.push({ text: t, cite: [c.id], chunk: c, slot: 0, score: 9 });
-      result.careers = { mode: 'focus', structured: true, items: focus.slice(0, 3).map((c) => ({ id: c.contentId, title: c.title, url: c.url, stage: jobStageNow(c) })) };
-      return structuredFinish(result, pickedS, focus.slice(0, 3), { required: ['salary'], markClosed: true });
-    }
-    if (CAREERS_DETAIL_RE.test(q)) return null; // 資格、薪資、應備文件…：走檢索組句
-    const openOf = (arr) => arr.filter((c) => jobStageNow(c) === 'open');
-    let list = focus.length ? focus : openOf(byCat).length ? openOf(byCat) : openOf(all);
-    if (!focus.length && byCat.length && !openOf(byCat).length && list.length) result.guards.push({ kind: 'category-no-open', fallback: 'all-open' });
-    if (!list.length) {
-      result.careers = { mode: 'list', structured: true, items: [], upcoming: all.filter((c) => jobStageNow(c) === 'upcoming').map((c) => ({ id: c.contentId, title: c.title, url: c.url, applyStart: c.applyStart, deadlineAt: c.deadlineAt })) };
-      return setRefusal(result, 'no-open-job', 'ref.no-open-job', [careersLink]);
-    }
-    list = [...list].sort((a, b) => String(a.deadlineAt).localeCompare(String(b.deadlineAt)) || a.contentId.localeCompare(b.contentId)).slice(0, 5);
-    const picked = [];
-    for (const c of list) {
-      const s1 = pickSent(c, /用人，職類為/); const s2 = pickSent(c, /報名期間/);
-      for (const t of [s1, s2]) if (t) picked.push({ text: t, cite: [c.id], chunk: c, slot: 0, score: 9 });
-      if (focus.length && !['open', 'upcoming'].includes(jobStageNow(c))) { const s3 = pickSent(c, /甄選結果(已於|預計)|已停止甄選|已補實/); if (s3) picked.push({ text: s3, cite: [c.id], chunk: c, slot: 0, score: 9 }); }
-    }
-    result.careers = { mode: focus.length ? 'focus' : 'list', structured: true, items: list.map((c) => ({ id: c.contentId, title: c.title, hiringUnitName: c.hiringUnitName, positions: c.positions, applyStart: c.applyStart, deadlineAt: c.deadlineAt,
-      daysLeft: c.deadlineAt ? Math.round((Date.parse(c.deadlineAt) - Date.parse(todayRt())) / 864e5) : null, url: c.url, applyHref: c.applyHref ?? null, applyExternal: !!c.applyExternal, stage: jobStageNow(c) })) };
-    return structuredFinish(result, picked, list, { required: ['deadline'], markClosed: true });
-  }
-  function procurementAnswer(q, result, view) {
-    const LL = result.lang;
-    const all = overviewChunks('tender', view);
-    const focus = all.filter((c) => focusOf(q, c));
-    result.focusIds = focus.map((c) => c.contentId);
-    const listLink = { label: tr(LL, '看全部採購公告', 'All procurement notices'), href: '/procurement/', kind: 'link' };
-    if (PROCUREMENT_DETAIL_RE.test(q)) return null;
-    const wantAward = /(決標|得標|流標|廢標)/.test(q) && !focus.length;
-    let list = focus.length ? focus : wantAward ? all.filter((c) => ['awarded', 'failed', 'cancelled'].includes(tenderStageNow(c))) : all.filter((c) => tenderStageNow(c) === 'open');
-    if (!list.length) return setRefusal(result, 'no-open-tender', 'ref.no-open-tender', [listLink]);
-    list = [...list].sort((a, b) => (wantAward ? String(b.awardDate ?? b.deadlineAt).localeCompare(String(a.awardDate ?? a.deadlineAt)) : String(a.deadlineAt).localeCompare(String(b.deadlineAt))) || a.contentId.localeCompare(b.contentId)).slice(0, 5);
-    const picked = [];
-    for (const c of list) {
-      const sents = wantAward ? [pickSent(c, /已於 .* 決標|流標|已取消/), pickSent(c, /案號/)] : [pickSent(c, /案號/), pickSent(c, /投標截止日/), ...(focus.length ? [pickSent(c, /已於 .* 決標|流標|已取消/)] : [])];
-      for (const t of sents) if (t) picked.push({ text: t, cite: [c.id], chunk: c, slot: 0, score: 9 });
-    }
-    result.procurement = { mode: focus.length ? 'focus' : wantAward ? 'award' : 'list', structured: true, items: list.map((c) => ({ id: c.contentId, title: c.title, tenderNo: c.tenderNo, requestingUnitName: c.requestingUnitName, budgetNtd: c.budgetNtd, deadlineAt: c.deadlineAt, openingAt: c.openingAt, url: c.url, pccUrl: c.pccUrl ?? null, stage: tenderStageNow(c) })) };
-    return structuredFinish(result, picked, list, { required: ['deadline'], markClosed: !wantAward });
   }
 
   // ── 拒答 ──
@@ -1362,22 +944,6 @@ export function createEngine(rawDeps = {}) {
     return out.slice(0, 7);
   }
 
-  /**
-   * 公告列表：沒問細節（資格、名額、預算…）時，每則公告取一句「截止日」結構化句；進行中在前（依截止日），已截止在後。
-   */
-  const NOTICE_DETAIL = /(資格|條件|名額|預算|金額|字號|案號|待遇|薪|工作內容|地點|怎麼報名|如何報名|怎麼投標)/;
-  function noticeCompose(q, chunks, picked) {
-    if (NOTICE_DETAIL.test(q)) return picked;
-    const ns = chunks.filter((c) => NOTICE_TYPES.includes(c.newsType) && c.deadlineAt);
-    if (!ns.length) return picked;
-    ns.sort((a, b) => (closedNow(a) - closedNow(b)) || (closedNow(a) ? b.deadlineAt.localeCompare(a.deadlineAt) : a.deadlineAt.localeCompare(b.deadlineAt)));
-    const out = [];
-    for (const c of ns.slice(0, 4)) {
-      const t = (c.sentences ?? []).find((x) => x.includes(c.deadlineAt));
-      if (t) out.push({ text: t, cite: [c.id], slot: 0, score: 9, chunk: c });
-    }
-    return out.length ? out : picked;
-  }
 
   /**
    * 公告句後處理：
@@ -1425,6 +991,34 @@ export function createEngine(rawDeps = {}) {
       if (li >= 0 && wi > li) out.splice(li, 0, ...out.splice(wi, 1));
     }
     return out;
+  }
+
+  // ── 用到才載入的回答分支（第四十九輪；說明見檔頭 ROUTES） ──
+  const loadedRoutes = new Set();
+  const routeApis = new Map();
+  const routeReady = (name) => !!ROUTE_MODS[name] && (!lazyRoutes || loadedRoutes.has(name));
+  function route(name) {
+    let api = routeApis.get(name);
+    if (api) return api;
+    if (!routeReady(name)) throw new RouteNotLoaded(name);
+    api = ROUTE_MODS[name].default({
+      clarifications, datasets, diseases, diseaseById, notifyRows, scheduleItems, travelItems, today, now, units, vaccines,
+      actionsFor, closedNow, finalizeSentences, jobStageNow, overviewChunks, poolFor, relatedQuestions, setRefusal, sourceOf, tenderStageNow, todayRt,
+    });
+    routeApis.set(name, api);
+    return api;
+  }
+  async function loadRoute(name) { await importRoute(name); loadedRoutes.add(name); }
+  /** 後台評估重跑（同步跑整份評估集）前先載入全部分支 */
+  const loadAllRoutes = () => Promise.all(Object.keys(ROUTES).map(loadRoute));
+  /** 瀏覽器用：與 answer() 相同，走到還沒載入的分支時先載入再重算（Node 端分支已預載，兩者結果一樣） */
+  async function answerAsync(rawQuery, opts = {}) {
+    for (;;) {
+      try { return answer(rawQuery, opts); } catch (e) {
+        if (!(e instanceof RouteNotLoaded) || routeReady(e.route)) throw e;
+        await loadRoute(e.route);
+      }
+    }
   }
 
   function answer(rawQuery, opts = {}) {
@@ -1491,11 +1085,11 @@ export function createEngine(rawDeps = {}) {
     result.termNotes = expanded.notes;
 
     // 7 謠言
-    if (result.intent === 'rumor') return factCheck(q, result);
+    if (result.intent === 'rumor') return route('rumor').factCheck(q, result);
 
     // 6 統計
     if (result.intent === 'stats') {
-      const st = statsAnswer(q, entities, range, lang);
+      const st = route('stats').statsAnswer(q, entities, range, lang);
       if (st && !st.empty) {
         result.stats = st.stats; result.sources = [{ ...st.source, n: 1 }];
         result.sentences = st.sentences.map((s) => ({ ...s, n: [1] }));
@@ -1520,19 +1114,19 @@ export function createEngine(rawDeps = {}) {
 
     // 通報時限：主檔結構化回答（不走檢索）
     if (result.intent === 'notify') {
-      const na = notifyAnswer(q, result, entities);
+      const na = route('notify').notifyAnswer(q, result, entities);
       if (na) return na;
     }
 
     // 第七輪：人才招募／採購公告（結構化列表、「誰錄取」只給結果頁連結）；細節問句才走檢索
     // 第二十五輪：問句有主題詞（透析膜）卻沒有任何職缺／標案的標題或內文提到 ⇒ 查無，不列不相關的清單
-    if ((result.intent === 'careers' || result.intent === 'procurement') && noticeTopicMiss(q, result.intent === 'careers' ? 'job' : 'tender', view)) {
+    if ((result.intent === 'careers' || result.intent === 'procurement') && route(result.intent).noticeTopicMiss(q, result.intent === 'careers' ? 'job' : 'tender', view)) {
       result.relevance = 0; result.guards.push({ kind: 'no-match', reason: 'notice-topic' });
       const href = result.intent === 'careers' ? '/careers/' : '/procurement/';
       return setRefusal(result, 'no-match', 'ref.no-match.notice', [...noMatchActions(LL).slice(0, 1), { label: tr(LL, result.intent === 'careers' ? '看全部職缺' : '看全部採購公告', result.intent === 'careers' ? 'All vacancies' : 'All procurement notices'), href, kind: 'link' }]);
     }
-    if (result.intent === 'careers') { const ca = careersAnswer(q, result, view); if (ca) return ca; }
-    if (result.intent === 'procurement') { const pa = procurementAnswer(q, result, view); if (pa) return pa; }
+    if (result.intent === 'careers') { const ca = route('careers').careersAnswer(q, result, view); if (ca) return ca; }
+    if (result.intent === 'procurement') { const pa = route('procurement').procurementAnswer(q, result, view); if (pa) return pa; }
 
     // 跨疫苗彙整：問句帶年齡／身分，且沒有指定單一疫苗（或明問「哪些／什麼疫苗」）⇒ 疫苗接種時程主檔結構化回答
     const profile = ageProfileOf(q);
@@ -1552,7 +1146,7 @@ export function createEngine(rawDeps = {}) {
     const anchorIds = new Set(zhA.flatMap((a) => [...a.ids]));
     if (zhA.length) result.guards.push({ kind: 'topic-anchor', terms: zhA.map((a) => a.t) });
     if (profile && result.intent === 'vaccine' && !catchUp && !zhA.length && !ANTIVIRAL_RE.test(q) && (!entities.vaccines.length || WHICH_VACCINE_RE.test(q))) {
-      const sa = scheduleAnswer(q, result, entities, profile);
+      const sa = route('schedule').scheduleAnswer(q, result, entities, profile);
       if (sa) return sa;
     }
 
@@ -1712,7 +1306,7 @@ export function createEngine(rawDeps = {}) {
     const sourceMap = new Map(chunks.map((c) => [c.id, sourceOf(c)]));
     let picked = composeSentences(q, chunks, result.intent, view, result.guards);
     if (result.intent === 'apply' || result.intent === 'notify') picked = applyCompose(q, chunks, picked, view, sourceMap, result);
-    if (result.intent === 'notice') { picked = noticeCompose(q, chunks, picked); if (picked.length) result.confidence = Math.max(result.confidence, 0.6); }
+    if (result.intent === 'notice') { picked = route('notice').noticeCompose(q, chunks, picked); if (picked.length) result.confidence = Math.max(result.confidence, 0.6); }
     // 問「去哪裡打疫苗」時不插態勢句（高峰期的英文問句曾整段答成疫情狀態 peak）；真的組不出句子才用態勢句
     if (sit && (result.intent === 'situation' || (!picked.length && sit.items.length) || (result.peak && picked.length < 3 && !result.whereAsk))) {
       const ss = situationSentences(sit, lang);
@@ -1735,7 +1329,7 @@ export function createEngine(rawDeps = {}) {
         result.confidence = Math.max(result.confidence, 0.7);
       }
     } else if (result.intent === 'travel') {
-      const ch = travelChanges(q, lang);
+      const ch = route('travel-changes').travelChanges(q, lang);
       if (ch?.sentences.length) {
         result.travelChanges = true;
         for (const [id, src] of ch.sources) sourceMap.set(id, src);
@@ -1788,8 +1382,8 @@ export function createEngine(rawDeps = {}) {
   }
 
   return {
-    answer, retrieve, detectEntities, detectDisease, expandQuery, relatedQuestions, traditionalList,
-    classifyIntent: (q, o) => classifyIntent(q, o), maskPII, detectInjection, statsAnswer, situationFor, citeLabelOf, notifyRows,
+    answer, answerAsync, loadRoute, loadAllRoutes, retrieve, detectEntities, detectDisease, expandQuery, relatedQuestions, traditionalList,
+    classifyIntent: (q, o) => classifyIntent(q, o), maskPII, detectInjection, statsAnswer: (...a) => route('stats').statsAnswer(...a), situationFor, citeLabelOf, notifyRows,
     get diseaseById() { return diseaseById; },
   };
 }
