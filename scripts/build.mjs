@@ -13,7 +13,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { config } from '../site.config.mjs';
 import { loadSite, ROOT } from './lib/load.mjs';
-import { validateSite, contentWarnings } from './lib/validate.mjs';
+import { validateSite, contentWarnings, pendingReviewWarnings } from './lib/validate.mjs';
 import { applyGovernance } from './lib/governance.mjs';
 import { buildSearchIndex } from './lib/index-builder.mjs';
 import { applyConsistency } from './lib/consistency.mjs';
@@ -21,7 +21,7 @@ import { emitApi } from './lib/emit-api.mjs';
 import { emitSeo } from './lib/emit-seo.mjs';
 import { emitHeaders } from './lib/emit-headers.mjs';
 import { renderAllPages } from './lib/pages.mjs';
-import { emitI18nBundles } from './lib/i18n-split.mjs';
+import { emitI18nBundles, emitRefusalBundles } from './lib/i18n-split.mjs';
 import { checkJsBudget, checkAskDataBudget } from './lib/js-budget.mjs';
 import { minifyDir } from './lib/minify.mjs';
 import { buildPagefindIndex, verifyPagefindRecall } from './lib/pagefind.mjs';
@@ -68,6 +68,7 @@ async function main() {
   const assetReport = validateAssets(site, config);
   for (const w of assetReport.warnings) console.warn('  ⚠ [assets]', w);
   for (const w of contentWarnings(site)) console.warn('  ⚠ [內容]', w);
+  for (const w of pendingReviewWarnings(site)) console.warn('  ⚠ [待確認]', w); // 第四十八輪（issue #93）：只警告
   // 第三十輪（#55）：個資掃描（content/、data/snapshots/、會複製到 dist 的內容附件）。命中就是治理門檻錯誤，--check 與正式建置都會失敗；表單端點設定矛盾（post 沒端點等）也一樣
   const errors = [...validateSite(site), ...assetReport.errors.map((e) => `[assets] ${e}`), ...piiErrors(ROOT), ...formErrors(config), ...askLogErrors(config)];
   if (errors.length) {
@@ -110,6 +111,9 @@ async function main() {
   // 介面字串依語言拆檔（issue #34）：i18n.<lang>.js 取代完整 i18n.js
   const i18nSizes = emitI18nBundles(DIST);
   log(`i18n 拆檔 → assets/js/i18n.<lang>.js：${Object.entries(i18nSizes).map(([l, b]) => `${l} ${(b / 1024).toFixed(0)}KB`).join('、')}`);
+  // 第四十八輪：答案引擎拒答文案依語言拆檔（answer/refusal-i18n.<lang>.js），答案頁只載當頁語言
+  const refusalSizes = emitRefusalBundles(DIST);
+  log(`拒答文案拆檔 → assets/js/answer/refusal-i18n.<lang>.js：${Object.entries(refusalSizes).map(([l, b]) => `${l} ${(b / 1024).toFixed(1)}KB`).join('、')}`);
   // 第三十四輪（ARCHITECTURE 40）：瀏覽器端 JS 逐檔壓縮＋source map；原始碼與註解留在 src/client。MINIFY=off 可關
   const mz = await minifyDir(path.join(DIST, 'assets/js'));
   log(mz.skipped ? `JS 壓縮：略過（MINIFY=off），${mz.files} 檔` : `JS 壓縮 → assets/js：${mz.files} 檔，${(mz.before / 1024).toFixed(0)} KB → ${(mz.after / 1024).toFixed(0)} KB（另有 .js.map 供除錯）`);

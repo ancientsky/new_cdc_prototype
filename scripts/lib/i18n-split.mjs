@@ -6,6 +6,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { STRINGS } from '../../src/client/i18n.js';
+import { REFUSAL_TEXT_I18N } from '../../src/client/answer/refusal-i18n.js';
 
 export const I18N_LANGS = Object.keys(STRINGS);
 /** 答案頁專用的介面字串前綴（src/client/i18n.ask.js）：另拆成 i18n.ask.<lang>.js，只有答案頁載入，其他公開頁的語言檔不含這些 key */
@@ -82,5 +83,24 @@ export function emitI18nBundles(distDir) {
   }
   fs.rmSync(path.join(dir, 'i18n.ask.js'), { force: true }); // 完整七語的答案頁字串表只留給 Node 端
   fs.rmSync(path.join(dir, 'i18n.js'), { force: true }); // 完整七語檔只留給 Node 端，不上線
+  return sizes;
+}
+
+/**
+ * 第四十八輪：答案引擎的拒答文案（日、他加祿、越、印尼、泰）依語言拆檔，與上面的介面字串同一個做法。
+ * dist 的 answer/refusal-i18n.js 換成空物件（rules.js 照舊 import，中文與英文仍在 rules.js 裡當退回文案），
+ * 每種語言另寫 answer/refusal-i18n.<lang>.js；答案頁 data.js 只動態載入當頁語言那一份。js-budget 把這一份算進該頁的引擎合計。
+ * 回傳 { lang: bytes }
+ */
+export function emitRefusalBundles(distDir) {
+  const dir = path.join(distDir, 'assets/js/answer');
+  const head = '// 自動產生（scripts/lib/i18n-split.mjs），請勿手改；來源 src/client/answer/refusal-i18n.js\n';
+  fs.writeFileSync(path.join(dir, 'refusal-i18n.js'), `${head}export const REFUSAL_TEXT_I18N = {};\n`);
+  const sizes = {};
+  for (const [lang, text] of Object.entries(REFUSAL_TEXT_I18N)) {
+    const src = `${head}export default ${JSON.stringify(text)};\n`;
+    fs.writeFileSync(path.join(dir, `refusal-i18n.${lang}.js`), src);
+    sizes[lang] = Buffer.byteLength(src);
+  }
   return sizes;
 }

@@ -68,6 +68,22 @@ export function contentWarnings(site) {
   return out;
 }
 
+/**
+ * 第四十八輪（issue #93）：待確認內容（verification.status: pending）卻在建立當天就「審閱」又「核准進 AI 白名單」
+ *（aiWhitelist.approvedAt ＝ reviewedAt ＝ publishedAt）：多半是建檔時三個日期一起填，並沒有人真的審過。
+ * 只警告不擋建置（現有內容不因此建置失敗）；承辦人確認後把 verification 改成 confirmed，或把 reviewedAt 改成真正審閱的日期。
+ * 另列一個函式（不併入 contentWarnings）：contentWarnings 對現有內容必須是空的（round25 測試），這條規則現有內容就會命中。
+ */
+export const PENDING_REVIEW_MSG = 'reviewedAt 等於建立日，待確認內容不應標示為已審閱';
+export function pendingReviewWarnings(site) {
+  const out = [];
+  for (const item of site.all) {
+    const at = item.aiWhitelist?.approvedAt;
+    if (item.status === 'published' && item.verification?.status === 'pending' && at && at === item.reviewedAt && at === item.publishedAt) out.push(`${item.__file}: ${PENDING_REVIEW_MSG}（publishedAt／reviewedAt／aiWhitelist.approvedAt 都是 ${at}）`);
+  }
+  return out;
+}
+
 export function validateSite(site) {
   const ajv = loadSchemas();
   const errors = [];

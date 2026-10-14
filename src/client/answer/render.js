@@ -167,12 +167,12 @@ export function conflictNotes(result) {
   }))}</p><p>${link(c.prefer.url, c.prefer.title)} · ${link(c.other.url, c.other.title)}</p></div>`).join('');
 }
 
-/** 「答案來源」卡列表 */
+/** 「答案來源」卡列表。第四十八輪（issue #93）：內容待確認（verification: pending）的來源在卡片摘要列（不必展開）就標「內容待確認」 */
 export function sourceList(sources, { pro = false } = {}) {
   if (!sources?.length) return '';
   return `<section class="c-answer__sources" aria-labelledby="ans-src-h"><h3 id="ans-src-h">${esc(L('sourcesH'))}</h3><ol class="c-source-list">${sources.map((s) => `
     <li id="src-${esc(s.n)}"><details class="c-source-card c-source-card--${esc(s.type ?? 'content')}" data-group="answer-sources"${pro ? ' open' : ''}>
-      <summary><span class="c-source-card__n" aria-hidden="true">${esc(s.n)}</span><span class="c-source-card__t">${s.type === 'media' ? '<span class="c-source-card__kind" aria-hidden="true">▶</span> ' : ''}${esc(s.title)}</span><span class="c-source-card__m">${esc(sourceMeta(s))}</span></summary>
+      <summary><span class="c-source-card__n" aria-hidden="true">${esc(s.n)}</span><span class="c-source-card__t">${s.type === 'media' ? '<span class="c-source-card__kind" aria-hidden="true">▶</span> ' : ''}${esc(s.title)}</span><span class="c-source-card__m">${esc(sourceMeta(s))}${s.verification === 'pending' ? ` <span class="c-tag c-tag--warn">${esc(L('pendingTag'))}</span>` : ''}</span></summary>
       <div class="c-source-card__body">${sourceCardBody(s, { pro })}</div>
     </details></li>`).join('')}</ol></section>`;
 }
