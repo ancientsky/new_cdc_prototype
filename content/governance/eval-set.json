@@ -6576,6 +6576,366 @@
         "action": "view=pro"
       },
       "note": "第五十輪的反向題：問某項檢驗的檢體規格（點名疾病，或問容器、保存、溫度等）⇒ 民眾模式仍導向專業模式（同 LB007）（沒點名疾病但問容器規格）"
+    },
+    {
+      "id": "R52-01",
+      "category": "fact",
+      "q": "長輩確診新冠，什麼時候要送急診",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "disease.covid-19",
+          "faq.covid-antiviral"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十二輪：換句話說挑戰集 dev 題 CH-DIS-covid-19-care-3（長輩）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §10）"
+    },
+    {
+      "id": "R52-02",
+      "category": "fact",
+      "q": "A肝有藥醫嗎",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "disease.hepatitis-a"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十二輪：換句話說挑戰集 dev 題 CH-DIS-hepatitis-a-care-1（口語）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §10）"
+    },
+    {
+      "id": "R52-03",
+      "category": "fact",
+      "q": "感染愛滋是不是要吃藥吃一輩子",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "disease.hiv",
+          "faq.hiv-test-where",
+          "topic.anonymous-testing"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十二輪：換句話說挑戰集 dev 題 CH-DIS-hiv-care-3（否定）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §10）"
+    },
+    {
+      "id": "R52-04",
+      "category": "fact",
+      "q": "感染HIV會有什麼感覺",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "disease.hiv"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十二輪：換句話說挑戰集 dev 題 CH-DIS-hiv-symptoms-2（口語）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §10）"
+    },
+    {
+      "id": "R52-05",
+      "category": "fact",
+      "q": "HIV疫苗可以打嗎",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "disease.hiv"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十二輪：換句話說挑戰集 dev 題 CH-DIS-hiv-vaccine-2（簡寫）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §10）"
+    },
+    {
+      "id": "R52-06",
+      "category": "fact",
+      "q": "瘧疾有疫苗嗎",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "disease.malaria"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十二輪：換句話說挑戰集 dev 題 CH-DIS-malaria-vaccine-1（口語）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §10）"
+    },
+    {
+      "id": "R52-07",
+      "category": "fact",
+      "q": "M痘會起水泡嗎",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "disease.mpox"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十二輪：換句話說挑戰集 dev 題 CH-DIS-mpox-symptoms-2（口語）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §10）"
+    },
+    {
+      "id": "R52-08",
+      "category": "fact",
+      "q": "家裡有新生兒，大人要打百日咳疫苗嗎",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "disease.pertussis",
+          "faq.pregnant-tdap"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十二輪：換句話說挑戰集 dev 題 CH-DIS-pertussis-prevention-2（情境）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §10）"
+    },
+    {
+      "id": "R52-09",
+      "category": "fact",
+      "q": "水痘會傳染給孕婦嗎",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "disease.varicella",
+          "faq.varicella-vaccine-doses",
+          "vaccine.varicella"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十二輪：換句話說挑戰集 dev 題 CH-DIS-varicella-prevention-2（情境）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §10）"
+    },
+    {
+      "id": "R52-10",
+      "category": "fact",
+      "q": "水痘會癢多久",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "disease.varicella"
+        ],
+        "mustNotCite": [
+          "vaccine.zoster",
+          "faq.zoster-vaccine-funding"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十二輪：換句話說挑戰集 dev 題 CH-DIS-varicella-symptoms-2（家長）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §10）"
+    },
+    {
+      "id": "R52-11",
+      "category": "fact",
+      "q": "手足口病要在家隔離多久",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.ev-stay-home",
+          "faq.enterovirus-return-school",
+          "disease.enterovirus"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十二輪：換句話說挑戰集 dev 題 CH-FAQ-ev-stay-home-2（口語）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §10）"
+    },
+    {
+      "id": "R52-12",
+      "category": "fact",
+      "q": "流感 感冒 差別",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.flu-vs-cold",
+          "disease.influenza"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十二輪：換句話說挑戰集 dev 題 CH-FAQ-flu-vs-cold-3（短句）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §10）"
+    },
+    {
+      "id": "R52-13",
+      "category": "fact",
+      "q": "媽媽是B肝帶原，寶寶出生要多打什麼",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.hepb-newborn",
+          "vaccine.hepatitis-b"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十二輪：換句話說挑戰集 dev 題 CH-FAQ-hepb-newborn-2（情境）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §10）"
+    },
+    {
+      "id": "R52-14",
+      "category": "fact",
+      "q": "公費流感藥 對象",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.influenza-antiviral-who",
+          "faq.flu-antiviral-65-no-test",
+          "disease.influenza"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十二輪：換句話說挑戰集 dev 題 CH-FAQ-influenza-antiviral-who-2（短句）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §10）"
+    },
+    {
+      "id": "R52-15",
+      "category": "fact",
+      "q": "我1968年生，下個月要去越南，要打MMR嗎",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.measles-mmr-born-1970",
+          "faq.measles-mmr-adult-who",
+          "faq.measles-mmr-check-record",
+          "faq.travel-japan-measles",
+          "vaccine.mmr",
+          "disease.measles"
+        ],
+        "mustNotCite": [
+          "doc.mmr-recommendation.2019-05-14",
+          "news.2025-01-09-mmr-adults-measles"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十二輪：換句話說挑戰集 dev 題 CH-FAQ-measles-mmr-born-1970-1（情境）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §10）"
+    },
+    {
+      "id": "R52-16",
+      "category": "rumor",
+      "q": "疾管署 詐騙簡訊",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.rumor-sms-link"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十二輪：換句話說挑戰集 dev 題 CH-FAQ-rumor-sms-link-3（短句）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §10）"
+    },
+    {
+      "id": "R52-17",
+      "category": "fact",
+      "q": "咳了一個月都沒好要看哪一科",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.tb-cough-two-weeks",
+          "disease.tuberculosis"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十二輪：換句話說挑戰集 dev 題 CH-FAQ-tb-cough-two-weeks-2（長輩）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §10）"
+    },
+    {
+      "id": "R52-18",
+      "category": "fact",
+      "q": "移工到台灣幾天內要體檢",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.tb-foreigner-health-check",
+          "media.migrant-worker-health-check",
+          "topic.new-residents-migrant-health",
+          "topic.visiting-taiwan"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十二輪：換句話說挑戰集 dev 題 CH-FAQ-tb-foreigner-health-check-3（口語）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §10）"
+    },
+    {
+      "id": "R52-19",
+      "category": "fact",
+      "q": "去肯亞要吃瘧疾藥嗎",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.travel-malaria-prevention",
+          "disease.malaria",
+          "faq.travel-clinic",
+          "service.travel-clinic-appointment"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十二輪：換句話說挑戰集 dev 題 CH-FAQ-travel-malaria-prevention-1（口語）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §10）"
+    },
+    {
+      "id": "R52-20",
+      "category": "fact",
+      "q": "出國回來身體不舒服，要跟醫生說什麼",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.travel-return-fever",
+          "faq.dengue-imported-return",
+          "disease.dengue",
+          "disease.malaria",
+          "disease.measles"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十二輪：換句話說挑戰集 dev 題 CH-FAQ-travel-return-fever-2（口語）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §10）"
+    },
+    {
+      "id": "R52-21",
+      "category": "multilingual",
+      "lang": "th",
+      "q": "เพิ่งกลับจากเที่ยวแล้วมีไข้สูง ปวดตา ต้องไปหาหมอเมื่อไหร่",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "disease.dengue",
+          "faq.dengue",
+          "faq.travel-return-fever"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十二輪：換句話說挑戰集 dev 題 CH-ML-dengue-th-2（情境）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §10）"
+    },
+    {
+      "id": "R52-22",
+      "category": "multilingual",
+      "lang": "id",
+      "q": "Batuk lebih dari dua minggu, harus periksa ke mana?",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "disease.tuberculosis",
+          "faq.tb-",
+          "faq.ltbi",
+          "faq.mdr-tb",
+          "topic.tb-prevention",
+          "service.tb-treatment-subsidy",
+          "service.ltbi-treatment"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十二輪：換句話說挑戰集 dev 題 CH-ML-tuberculosis-id-2（情境）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §10）"
+    },
+    {
+      "id": "R52-23",
+      "category": "notify",
+      "q": "安養院好幾個老人家發燒，要打電話給誰",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "service.cluster-report-1922",
+          "faq.flu-school-cluster"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十二輪：換句話說挑戰集 dev 題 CH-SVC-cluster-report-1922-2（長輩）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §10）"
+    },
+    {
+      "id": "R52-24",
+      "category": "notify",
+      "q": "班上集體腹瀉",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "service.cluster-report-1922",
+          "faq.flu-school-cluster"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十二輪：換句話說挑戰集 dev 題 CH-SVC-cluster-report-1922-4（短句）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §10）"
     }
   ]
 }

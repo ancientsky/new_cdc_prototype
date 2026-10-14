@@ -24,7 +24,9 @@ export function render(ctx) {
   const { site, url } = ctx;
   const tenders = allTenders(site).map(stripBuild).sort((a, b) => String(b.announcedAt ?? '').localeCompare(String(a.announcedAt ?? '')));
   const units = site.master.units.filter((u) => u.publishes !== false).map((u) => ({ id: u.id, name: u.name }));
-  const data = { today: site.today, tenders, units, enums: ENUMS, stages: STAGE_LABEL, amendKinds: AMEND_KIND_LABEL };
+  // 第五十二輪（docs/deploy.md §24）：sourceHashes＝建置算的正本雜湊；修改既有標案改到中文時，用它把既有英譯標成「依舊版翻譯」
+  const sourceHashes = Object.fromEntries(allTenders(site).map((t) => [t.id, t.sourceHash ?? null]));
+  const data = { today: site.today, tenders, units, enums: ENUMS, stages: STAGE_LABEL, amendKinds: AMEND_KIND_LABEL, sourceHashes };
   return html`
 ${pageHead({
     title: '採購公告上架與異動',
@@ -92,6 +94,7 @@ ${pageHead({
   <div id="tf-warn"></div></section>
 <section class="adm-card" aria-labelledby="te-h"><h2 id="te-h">匯出</h2>
   <p class="adm-card__sub">應存的檔名：<code id="tf-file">content/tenders/…</code></p>
+  <p class="adm-hint" id="tf-changed" role="status" aria-live="polite"></p>
   <pre class="adm-pre" id="tf-out" tabindex="0">{ }</pre>
   <div class="adm-actions"><button type="button" class="adm-btn" id="tf-copy">複製</button><button type="button" class="adm-btn adm-btn--ghost" id="tf-dl">下載 .json</button></div>
   <p class="adm-muted">正式環境：新增標案＝把這份存成上面的檔名；既有標案＝整檔覆蓋同名檔。開 Pull Request 後走快車道（CI 通過即自動合併上線），上線後公關室 24 小時內複核（待辦副本給秘書室），秘書室並與政府電子採購網核對日期、金額、得標廠商。</p>

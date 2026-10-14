@@ -5,7 +5,8 @@ import { tokenize } from './text.js';
 
 // 跨語言關鍵詞（非中文問句 → 中文檢索詞），只做檢索展開，不出現在答案中
 export const CROSS_LANG = [
-  [/\b(see a doctor|seek (medical )?care|doctor|clinic|hospital)\b|đi khám|bác sĩ/i, '就醫 看醫生'],
+  // 第五十二輪：印尼（periksa、berobat、ke dokter）、泰（หาหมอ、พบแพทย์）、他加祿（magpatingin、doktor）、日（受診）的「看醫生」
+  [/\b(see a doctor|seek (medical )?care|doctor|clinic|hospital)\b|đi khám|bác sĩ|\b(periksa|berobat|ke dokter|magpatingin|doktor)\b|หาหมอ|พบแพทย์|受診|医者/i, '就醫 看醫生'],
   [/\bfever\b|sốt/i, '發燒'], [/\brash\b|phát ban/i, '出疹 紅疹'], [/\bsymptoms?\b|triệu chứng|\bgejala\b|\bsintomas\b|อาการ|症状/i, '症狀'],
   [/\bwarning signs?\b|dấu hiệu cảnh báo/i, '警示徵象'], [/\bincubation\b|ủ bệnh/i, '潛伏期'],
   [/\bprevent\w*\b|phòng ngừa|phòng bệnh/i, '預防'], [/\btransmi\w*|spread\w*|lây/i, '傳染 傳播'],
@@ -14,7 +15,7 @@ export const CROSS_LANG = [
   [/\bmosquito\w*|muỗi/i, '病媒蚊 防蚊'], [/\bstanding water|water containers?|nước đọng/i, '積水容器'],
   [/\bfree\b|publicly funded|miễn phí/i, '公費'], [/\bwho (can|should|is eligible)|eligib\w*|đối tượng/i, '對象'],
   [/\bhotline\b|đường dây nóng/i, '1922'], [/\bscam|lừa đảo/i, '詐騙'], [/\binvest\w*|đầu tư/i, '投資'],
-  [/\bcases?\b|số ca/i, '病例'], [/\blocal\b|nội địa/i, '本土'], [/\bweeks?\b|tuần/i, '週'], [/\bdays?\b|ngày/i, '天'],
+  [/\bcases?\b|số ca/i, '病例'], [/\blocal\b|nội địa/i, '本土'], [/\bweeks?\b|tuần|\bminggu\b|สัปดาห์|週間/i, '週'], [/\bdays?\b|ngày/i, '天'],
   [/\bhours?\b|giờ/i, '小時'], [/\bdengue\b|sốt xuất huyết/i, '登革熱'], [/\bmeasles\b|sởi/i, '麻疹'], [/\binfluenza|\bflu\b|cúm/i, '流感'],
   // 第四十輪（issue #75）：日、他加祿、印尼、泰文的常用詞（首頁預設問題用得到的才加）。第三欄 true＝「主題錨點」：
   // 問句有主題錨點時，回答的片段（前 3 塊）必須講到這個主題（外語片段要有原文詞、中文片段要有對應中文詞），否則不拿別的主題充數。
@@ -29,6 +30,10 @@ export const CROSS_LANG = [
   // 第四十八輪（issue #101）：被動物咬傷（他加祿 nakagat、印尼 digigit、泰 ถูก…กัด、越 bị…cắn、日 噛まれ）與狗、貓。
   // 只是把外語詞對應到中文檢索詞；主題是否確認由中文錨點（core.js zhAnchors）與疾病實體判斷，不在這裡寫死答案
   [/\bbit(ten|es?)\b|\bscratch(ed)?\b|\b(na)?kagat\b|\bdigigit\b|\bgigitan\b|(ถูก|โดน).{0,8}กัด|bị .{0,10}cắn|噛まれ|かまれ/i, '咬傷 動物咬傷'],
+  // 第五十二輪：症狀與返國的多語說法（咳嗽、發燒、眼睛痛、旅遊回來）。印尼 demam berdarah、泰 ไข้เลือดออก／ไข้หวัด 是病名，不算「發燒」
+  [/\bcough\w*|\bbatuk\b|\bubo\b|ไอ|咳/i, '咳嗽'], [/\bdemam\b(?!\s*berdarah)|\blagnat\b|ไข้(?!เลือดออก|หวัด)|熱が/i, '發燒'],
+  [/\beye pain|behind the eyes?|\b(sakit|nyeri) mata\b|\bmasakit (ang )?mata\b|ปวดตา|ปวดกระบอกตา|đau mắt|目の奥/i, '眼睛痛 後眼窩痛'],
+  [/กลับจาก|\bpulang dari\b|\bgaling sa\b|\bbumalik\b|帰国/i, '回國 返國'], [/\b(two|2) weeks\b|\bdua minggu\b|\bdalawang linggo\b|\bhai tuần\b|สองสัปดาห์|2\s*สัปดาห์|2週間|二週間/i, '兩週 2 週'],
   [/\bdogs?\b|\baso\b|\banjing\b|สุนัข|หมา|\bchó\b|犬/i, '狗'], [/\bcats?\b|\bpusa\b|\bkucing\b|แมว|\bmèo\b|猫/i, '貓'],
   [/\b(vaccination|immuni[sz]ation) records?\b|hồ sơ tiêm chủng|catatan imunisasi|record ng bakuna|ประวัติการฉีดวัคซีน|予防接種の記録|接種記録/i, '接種紀錄', true],
 ];
@@ -38,6 +43,12 @@ export function topicAnchorsOf(q) {
   for (const [re, zh, anchor] of CROSS_LANG) if (anchor && re.test(q)) out.push({ re, zh: zh.split(' ') });
   return out;
 }
+
+/**
+ * 第五十二輪：「同一個地方好幾個人一起生病」的民眾描述（安養院好幾個老人家發燒、班上集體腹瀉、班上有多人得流感）＝疑似群聚。
+ * 用在口語改寫（→ 群聚 通報 1922）與問句型態錨點（core.js QUESTION_CUES：題目本身就在講這種情況的單元帶頭）。
+ */
+export const CLUSTER_DESC_RE = /(好幾(個|位)|幾個人|多個人|多位|多人|很多人|好多人|一群|集體|全班|整班|同班|班上|同一?(班|宿舍|寢室|病房|機構)).{0,10}(發燒|腹瀉|拉肚子|上吐下瀉|嘔吐|咳嗽|出疹|起疹|紅疹|生病|不舒服|得流感)/;
 
 // 中文常見口語 → 正式用語（只做檢索展開）
 export const PARAPHRASE = [
@@ -57,6 +68,14 @@ export const PARAPHRASE = [
   //（「眼睛變黃」與 A 肝頁的「黃疸」字面上一個字都對不到；換過以後涵蓋率量的才是「有沒有講到黃疸」）
   [/長什麼樣子?|會怎樣|會怎麼樣|什麼感覺|是什麼樣子/, '症狀', true], [/驚跳/, '肌躍型抽搐', true], [/(眼睛|眼白|皮膚)變黃|尿很黃|尿.{0,2}變黃/, '黃疸 茶色尿', true],
   [/捐錢|樂捐|捐助/, '捐款', true], [/倍拉維/, 'Paxlovid 抗病毒藥物', true], [/沒戴套|沒有戴套|沒用保險套|無套/, '沒有保護的性行為 保險套', true], [/隔離多久|在家.{0,4}多久/, '在家休息 幾天'],
+  // 第五十二輪：民眾描述情境、站上寫的是處置用語（依挑戰集 dev 失敗類型歸納，每條都是一類說法，不是一題）
+  // 「好幾個人發燒」「班上集體腹瀉」＝疑似群聚（要通報 1922）；「跟醫生說」＝告知醫師；「咳了一個月」「一直咳」＝咳嗽；「看哪一科」＝就醫
+  [CLUSTER_DESC_RE, '群聚 通報 1922', true],
+  [/(跟|和|向|告訴)(醫生|醫師)(說|講|講什麼|說什麼)?/, '告知醫師', true],
+  [/咳(了|很久|好久|不停|不好|超過)|一直咳/, '咳嗽'], [/(看|掛)(哪一?|什麼)(一)?科/, '就醫 門診'],
+  // 「體檢」「健檢」＝健康檢查。不寫進詞彙主檔：站上「抗體檢驗」「檢體檢驗」「人體檢體」都含「體檢」兩字，
+  // 主檔別名會讓索引端把這些片段標上「健康檢查」（第三十一輪「性病」同一種詞界問題）；只在問句端換，並擋掉抗體／檢體
+  [/(?<![抗檢人])體檢(?!體)|健檢/, '健康檢查', true],
 ];
 
 export function lc(s) { return String(s ?? '').toLowerCase(); }
@@ -203,7 +222,9 @@ export function matcherFor(name) {
   if (!name) return null;
   const n = String(name).trim();
   if (n.length < 2 && !/[一-鿿]/.test(n)) return null;
-  if (isLatin(n)) return new NameMatcher(`(?<![\\p{L}\\p{N}])${escapeRe(n).replace(/\\s+/g, '\\s*')}(?![\\p{L}\\p{N}])`, 'iu', needleOf([...n.replace(/\s+/g, ' ')], () => false));
+  // 第五十二輪：拉丁名稱的「整字」邊界只擋拉丁字母、數字與附加符號，不擋中日文——「HIV疫苗」「感染HIV會怎樣」「covid疫苗」的 HIV／covid 要認得
+  //（原本前後不能接任何 \p{L}，中文字也算，中英混打就認不出疾病）。flu ≠ influenza、EV ≠ EV71、越南文前後的拉丁字母照舊擋
+  if (isLatin(n)) return new NameMatcher(`(?<![\\p{Script=Latin}\\p{N}\\p{M}])${escapeRe(n).replace(/\\s+/g, '\\s*')}(?![\\p{Script=Latin}\\p{N}\\p{M}])`, 'iu', needleOf([...n.replace(/\s+/g, ' ')], () => false));
   // 中英混排名稱（A 肝、MMR 疫苗、B 型肝炎）：空白可有可無
   let pat = '';
   const chars = [...n.replace(/\s+/g, ' ')];

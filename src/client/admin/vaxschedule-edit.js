@@ -3,7 +3,7 @@
 // 文字一律 textContent／esc()；只在這台瀏覽器暫存（localStorage），不會自己寫進主檔。
 import { $, $$, esc, store, readEmbedded, copyText, downloadText } from './common.js';
 import { rowsOf, renderMapSvg, renderTableHtml, scheduleCsv, TABS } from '../vaxschedule.js';
-import { emptyState, stateFromItem, buildItem, problemsOf, problemsOfAll, errorsOnly, nextId, monthsText, sortedForExport, diffSummary, STAGE_LABEL, FUNDED_LABEL, FIELD_LABEL, joinMonths } from './vaxschedule-edit-core.js';
+import { emptyState, stateFromItem, buildItem, problemsOf, problemsOfAll, errorsOnly, nextId, monthsText, sortedForExport, diffSummary, mergeSchedule, STAGE_LABEL, FUNDED_LABEL, FIELD_LABEL, joinMonths } from './vaxschedule-edit-core.js';
 
 const D = readEmbedded('adm-vxs-data', { items: [], vaccines: [], strings: {} });
 const KEY = 'cdc.admin.vaxschedule';
@@ -13,6 +13,11 @@ const vname = (id) => D.vaccines.find((v) => v.id === id)?.name ?? id;
 
 /* 狀態：整份主檔（工作副本）＋目前編輯的 index */
 let items = (store.get(KEY)?.items ?? D.items).map((i) => ({ ...i }));
+// 第五十二輪（docs/deploy.md §24）：開始編輯時的現行版。匯出＝mergeSchedule(工作副本, 現行版, orig)：只套用改過的筆與欄位，順序與沒動的筆原樣。
+// 存在這台電腦的草稿一併記下 orig，之後 main 上被別人改的筆不會被草稿蓋回去（舊草稿沒有 orig 就用現行版）。
+let orig = store.get(KEY)?.orig ?? D.items;
+/** 匯出的主檔（下載、複製、修訂摘要、畫面上的 JSON 都用這一份） */
+const exported = () => mergeSchedule(items, D.items, orig);
 let cur = 0;
 let tab = 'all';
 let form = stateFromItem(items[0] ?? emptyState());
@@ -103,10 +108,10 @@ function paintChecks() {
   $('#vx-agehint').textContent = `地圖會畫在：${monthsText(Number.isFinite(min) ? min : null)}${form.noMax ? ' 以上' : max == null || max === min ? '（單一月齡，畫成一個點）' : ` 至 ${monthsText(max)}`}${Number.isFinite(joinMonths(form.hardY, form.hardM)) ? `；可接種上限：滿 ${monthsText(joinMonths(form.hardY, form.hardM))} 起不可接種` : '；沒有可接種上限（超過建議區間只會顯示「應已完成」）'}`;
 }
 function paintExport() {
-  const sorted = sortedForExport(items, vaccineIds);
-  $('#vx-out').textContent = JSON.stringify(sorted, null, 2);
-  const d = diffSummary(D.items, sorted);
-  const all = problemsOfAll(sorted, vaccineIds);
+  const out = exported();
+  $('#vx-out').textContent = JSON.stringify(out, null, 2);
+  const d = diffSummary(D.items, out);
+  const all = problemsOfAll(out, vaccineIds);
   $('#vx-diff').textContent = d.dirty ? `與目前上線版本相比：新增 ${d.added.length}、刪除 ${d.removed.length}、修改 ${d.changed.length}${d.changed.length ? `（${d.changed.slice(0, 6).join('、')}${d.changed.length > 6 ? '…' : ''}）` : ''}` : '與目前上線版本相同。';
   const st = $('#vx-export-state');
   st.textContent = all.length ? `還有 ${all.length} 個錯誤，匯出的檔案會被 CI 擋下` : '檢查通過，可匯出交資訊室';
@@ -138,13 +143,13 @@ $('#vx-del').addEventListener('click', () => {
   items.splice(cur, 1); cur = Math.max(0, cur - 1); form = stateFromItem(items[cur] ?? emptyState()); fill(form); paintAll();
 });
 $('#vx-verify').addEventListener('click', () => { F.verified.checked = true; commitForm(); paintAll(); });
-$('#vx-save').addEventListener('click', () => { commitForm(); store.set(KEY, { items, savedAt: new Date().toISOString() }); $('#vx-msg').textContent = `已暫存在這台電腦（${new Date().toLocaleTimeString('zh-TW', { hour12: false })}）。同事看不到，匯出後才會送出。`; });
-$('#vx-reset').addEventListener('click', () => { if (!confirm('放棄這台電腦上的修改，回到目前上線版本？')) return; store.del(KEY); items = D.items.map((i) => ({ ...i })); cur = 0; form = stateFromItem(items[0] ?? emptyState()); fill(form); paintAll(); $('#vx-msg').textContent = '已回到目前上線版本。'; });
+$('#vx-save').addEventListener('click', () => { commitForm(); store.set(KEY, { items, orig, savedAt: new Date().toISOString() }); $('#vx-msg').textContent = `已暫存在這台電腦（${new Date().toLocaleTimeString('zh-TW', { hour12: false })}）。同事看不到，匯出後才會送出。`; });
+$('#vx-reset').addEventListener('click', () => { if (!confirm('放棄這台電腦上的修改，回到目前上線版本？')) return; store.del(KEY); items = D.items.map((i) => ({ ...i })); orig = D.items; cur = 0; form = stateFromItem(items[0] ?? emptyState()); fill(form); paintAll(); $('#vx-msg').textContent = '已回到目前上線版本。'; });
 $('#vx-copy').addEventListener('click', (e) => copyText(`${$('#vx-out').textContent}\n`, e.currentTarget));
 $('#vx-dl').addEventListener('click', () => downloadText('immunization-schedule.json', `${$('#vx-out').textContent}\n`));
-$('#vx-csv').addEventListener('click', () => downloadText('immunization-schedule.csv', scheduleCsv(sortedForExport(items, vaccineIds), vname, T2), 'text/csv'));
+$('#vx-csv').addEventListener('click', () => downloadText('immunization-schedule.csv', scheduleCsv(sortedForExport(exported(), vaccineIds), vname, T2), 'text/csv'));
 $('#vx-copydiff').addEventListener('click', (e) => {
-  const d = diffSummary(D.items, sortedForExport(items, vaccineIds));
+  const d = diffSummary(D.items, exported());
   const lines = ['疫苗接種時程表修訂（content/master/immunization-schedule.json）', d.added.length ? `新增：${d.added.join('、')}` : '', d.removed.length ? `刪除：${d.removed.join('、')}` : '', d.changed.length ? `修改：${d.changed.join('、')}` : '', '', '依據：（請填疾管署公告名稱與日期）', '同步改了疫苗頁 publicFunded：（有／無，哪些頁）'].filter((l, i) => l !== '' || i > 3);
   copyText(`${lines.join('\n')}\n`, e.currentTarget);
 });

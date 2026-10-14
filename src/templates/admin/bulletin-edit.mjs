@@ -1,6 +1,7 @@
 // /admin/bulletin/edit/ 疫情報導文章上架（第二十九輪，ARCHITECTURE §34；同事 SOP 見 docs/guide-staff.md §32）。
 // 以「一篇文章」為單位：選卷期（或新建）→ 貼稿件自動切段 → 核對作者、頁碼、圖表 → 右側即時預覽文章頁與本期目錄 → 檢核全過才匯出。
 // 純函式在 src/client/admin/bulletin-edit-core.js；檢核與 CI 共用 src/client/bulletin-rules.js。這個模板只輸出靜態骨架與資料島。
+import fs from 'node:fs';
 import { html } from '../../../scripts/lib/render.mjs';
 import { config } from '../../../site.config.mjs';
 import { pageHead, adminMeta, dataScript, unitOptions } from './_partials.mjs';
@@ -12,6 +13,22 @@ export { layout } from './_layout.mjs';
 export function pages() { return [{ path: '/admin/bulletin/edit/', props: {}, noindex: true }]; }
 export function meta() { return adminMeta('疫情報導文章上架', 'bulletin', ['/assets/js/admin/bulletin-edit.js']); }
 
+/**
+ * 第五十二輪：content 檔裡的舊分類代號（outbreak-report…）。載入時（scripts/lib/load.mjs）已換成分類主檔的新代號，
+ * 所以資料島的文章與 content 檔不完全一樣；修改時要以 content 檔為底，否則什麼都沒改，匯出也會把舊代號換成新代號。
+ */
+function legacyArticleTypes(articles) {
+  const out = {};
+  for (const a of articles) {
+    if (!a.__file) continue;
+    try {
+      const raw = JSON.parse(fs.readFileSync(new URL(`../../../${a.__file}`, import.meta.url), 'utf8'));
+      if (raw.id === a.id && raw.articleType && raw.articleType !== a.articleType) out[a.id] = raw.articleType;
+    } catch { /* 測試注入的合成內容沒有實體檔 */ }
+  }
+  return out;
+}
+
 export function render(ctx) {
   const { site, url } = ctx;
   const issues = (site.collections.publications ?? []).filter((p) => p.pubType === 'bulletin').sort((a, b) => Number(b.volume) - Number(a.volume) || Number(b.issue) - Number(a.issue));
@@ -22,6 +39,9 @@ export function render(ctx) {
     issues: issues.map((p) => ({ id: p.id, title: p.title, volume: p.volume, issue: p.issue, publishedAt: p.publishedAt, pubType: p.pubType, series: p.series, issn: p.issn ?? null, pdfUrl: p.pdfUrl ?? null, articles: p.articles ?? [] })),
     articles, units: site.master.units.filter((u) => u.publishes !== false).map((u) => ({ id: u.id, name: u.name })),
     diseases: site.master.diseases.map((d) => ({ id: d.id, name: d.name })), categories: sortCategories(site.master.bulletinCategories), pdfMaxBytes: LIM.pdfBytes, imageMaxBytes: LIM.imageBytes ?? 2 * 1048576,
+    // 第五十二輪（docs/deploy.md §24）：建置算的正本雜湊；修改既有文章改到正文時，用它把既有譯文標成「依舊版翻譯」
+    sourceHashes: Object.fromEntries((site.collections.articles ?? []).map((a) => [a.id, a.sourceHash ?? null])),
+    legacyArticleTypes: legacyArticleTypes(site.collections.articles ?? []),
   };
   const field = (id, label, input, hint = '', wide = false) => html`<div class="adm-field${wide ? ' adm-field--wide' : ''}"><label for="${id}">${label}</label>${input}${hint ? html`<span class="adm-hint">${hint}</span>` : ''}</div>`;
   const text = (id, label, { hint = '', ph = '', wide = false } = {}) => field(id, label, html`<input type="text" id="${id}" placeholder="${ph}" autocomplete="off">`, hint, wide);

@@ -1,5 +1,7 @@
 // /admin/review/ 的線上審核（第三十輪）：有寫入閘道時，審核人在這裡看佇列、白話差異、預覽，按「核准上線」或「退回修改」（意見必填）。
 // 沒有閘道（GitHub Pages）就不出現，複核區維持原本的瀏覽器示範。畫面文字全部以 textContent 寫入。
+// 第五十二輪：送審期間網站上的同一頁被更新了（docs/deploy.md §23）⇒ 差異上方說明、「核准上線」停用，並預先填好退回意見。
+//   疫情報導文章一起送的新卷期與分類主檔（§24.7）也列出來：審核人核准的不只是這一篇。
 import { $ } from './common.js';
 import { detectGateway, el, clear, fmtTime, errorText, STATUS_TONE } from './gateway-client.js';
 
@@ -54,9 +56,14 @@ const TYPE = { article: '疫情報導文章', disease: '疾病頁', faq: 'Q&A', 
     }
     return ol;
   }
+  /** 退回意見預設文字（網站版本已更新時）：審核人可以改 */
+  const OUTDATED_COMMENT = '網站上的版本在送審期間已更新。請重新開啟這個送審件（系統會把網站上的更新併進來，你的修改會保留），確認後再送審。';
   function renderDiff(d) {
     const wrap = clear($('#gw-diff'));
     if (d.note) { wrap.append(el('p', { class: 'adm-muted', text: d.note })); return; }
+    // 第五十二輪：送審件開始後網站版本變了——先說明，下面的差異是這個送審件自己改的
+    if (d.outdated) wrap.append(el('div', { class: 'adm-box adm-box--warn', role: 'alert' }, el('strong', { text: '還不能核准：網站上的版本在送審期間已更新' }), el('p', { text: d.outdated.text })));
+    if (d.categories?.changes?.length) wrap.append(el('div', { class: 'adm-box adm-box--info', id: 'gw-diff-cats' }, el('strong', { text: '核准後也會更新疫情報導的分類（所有文章共用）' }), el('ul', {}, ...d.categories.changes.map((t) => el('li', { text: t })))));
     // 第五十輪：重新審閱——先說清楚「這是確認內容仍正確」與核准後會發生什麼
     if (d.reReview) {
       wrap.append(el('div', { class: 'adm-box adm-box--info' }, el('strong', { text: '重新審閱' }), el('p', { text: d.reReview.text }), d.reReview.note ? el('p', { class: 'gw-comment', text: `承辦人說明：${d.reReview.note}` }) : null));
@@ -68,7 +75,7 @@ const TYPE = { article: '疫情報導文章', disease: '疾病頁', faq: 'Q&A', 
       const sec = el('section', { class: 'gw-change' }, el('h4', {}, el('span', { text: `${c.label}：` }), el('span', { class: 'gw-change__sum', text: c.summary })));
       if (c.type === 'text' && !d.isNew) {
         sec.append(el('div', { class: 'gw-cols' },
-          el('div', {}, el('p', { class: 'gw-col__h', text: '網站上的版本' }), c.before.length ? sentences(c.before, 'before') : el('p', { class: 'adm-muted', text: '（空白）' })),
+          el('div', {}, el('p', { class: 'gw-col__h', text: d.outdated ? '送審開始時網站上的版本' : '網站上的版本' }), c.before.length ? sentences(c.before, 'before') : el('p', { class: 'adm-muted', text: '（空白）' })),
           el('div', {}, el('p', { class: 'gw-col__h', text: '送審的版本' }), c.after.length ? sentences(c.after, 'after') : el('p', { class: 'adm-muted', text: '（空白）' }))));
       } else if (c.type === 'text') sec.append(el('p', { class: 'gw-plain', text: c.after.map((s) => s.t).join('') }));
       else if (c.type === 'value' && c.from && c.to && c.from.length > 40) sec.append(el('div', { class: 'gw-cols' }, el('pre', { class: 'adm-pre', tabindex: '0', text: c.from }), el('pre', { class: 'adm-pre', tabindex: '0', text: c.to })));
@@ -93,14 +100,17 @@ const TYPE = { article: '疫情報導文章', disease: '疾病頁', faq: 'Q&A', 
     row('需要審核', `${current.requiredApprovals} 位（已核准 ${current.approvals.length} 位${current.approvals.length ? `：${current.approvals.map((a) => a.name).join('、')}` : ''}）`);
     if (current.laneLabel) row('發布方式', [current.laneLabel, ...current.laneNotes].join('；'));
     if (current.scheduledFor) row('排程上線', current.scheduledFor);
+    const along = [...(current.companions ?? []).map((c) => c.title), ...(current.categories ? ['疫情報導分類主檔'] : [])];
+    if (along.length) row('一起上線', along.join('、'));
     const prev = (current.comments ?? []).filter((c) => c.kind === 'return');
     if (prev.length) row('之前的退回意見', prev.map((c) => `${c.name}：${c.text}`).join('\n'));
     if (diff.ok) renderDiff(diff.data); else clear($('#gw-diff')).append(el('p', { class: 'adm-red', text: errorText(diff) }));
     closePreview();
-    const can = current.can?.approve;
+    const outdated = diff.ok && !!diff.data?.outdated;
+    const can = current.can?.approve && !outdated;
     $('#gw-approve').disabled = !can; $('#gw-return').disabled = !current.can?.return;
-    $('#gw-why').textContent = can ? '' : current.why?.review ?? '';
-    $('#gw-comment').value = '';
+    $('#gw-why').textContent = outdated && current.can?.approve ? '網站上的版本在送審期間已更新，請退回給承辦人（意見已預先填好，可以修改）。' : can ? '' : current.why?.review ?? '';
+    $('#gw-comment').value = outdated && current.can?.return ? OUTDATED_COMMENT : '';
     $('#gw-d-h').focus();
   }
 
@@ -111,7 +121,18 @@ const TYPE = { article: '疫情報導文章', disease: '疾病頁', faq: 'Q&A', 
     $('#gw-approve').disabled = true; $('#gw-return').disabled = true;
     msg.className = 'adm-muted'; msg.textContent = kind === 'return' ? '退回中…' : '核准中…';
     const r = await gw.post(`/items/${current.id}/${kind}`, { comment });
-    if (!r.ok) { msg.className = 'adm-red'; msg.textContent = errorText(r); if (r.data?.fields?.some((f) => f.field === 'comment')) $('#gw-comment').focus(); $('#gw-approve').disabled = !current.can?.approve; $('#gw-return').disabled = !current.can?.return; return; }
+    if (!r.ok) {
+      msg.className = 'adm-red'; msg.textContent = errorText(r);
+      if (r.data?.fields?.some((f) => f.field === 'comment')) $('#gw-comment').focus();
+      // 第五十二輪：網站版本已更新（outdated）或舊送審件合併不了（conflict）⇒ 不能核准；預先填好退回意見，焦點移到意見欄
+      if (kind === 'approve' && r.status === 409 && ['outdated', 'conflict'].includes(r.data?.error)) {
+        $('#gw-approve').disabled = true; $('#gw-return').disabled = !current.can?.return;
+        if (!$('#gw-comment').value.trim()) $('#gw-comment').value = OUTDATED_COMMENT;
+        $('#gw-comment').focus();
+        return;
+      }
+      $('#gw-approve').disabled = !current.can?.approve; $('#gw-return').disabled = !current.can?.return; return;
+    }
     current = r.data;
     msg.className = 'adm-green';
     msg.textContent = kind === 'return' ? `已退回「${current.title}」，承辦人已收到通知。`

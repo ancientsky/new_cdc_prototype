@@ -4,15 +4,17 @@ import { $, $$, esc, store, readEmbedded, copyText, downloadText, debounce } fro
 import { initPagePreview } from './page-preview.js';
 import { zipBlob } from './zip-store.js';
 import { mdToHtml } from './md-convert.js';
-import { sha256Hex } from './preprocess.js';
+import { sha256Hex, liveItem, sameValue, editDiff, EDIT_DERIVED } from './preprocess.js';
+import { contentVersion, NEW_VERSION } from './content-version.js';
 import { extractPdf } from './pdf-read.js';
 import { manuscriptText, captionsByPage, linesFromItems, pageText, matchImages, describeExtraction } from './pdf-manuscript.js';
 import { initPublishGateway } from './publish-gateway.js';
 import {
   emptyState, stateFromArticle, applyManuscript, buildArticle, resolveIssue, problemsOf, hasErrors, suggestNextIssue, suggestArticleNo, sectionKeyFor, suggestDoi,
   tocPreviewRows, packageEntries, exportFilename, issueFilename, renderArticlePreview, renderTocPreview, TE_FIELD_MAP, assignFigureFiles, IMAGE_EXT_RE,
-  categoriesChanged, suggestCategoryKey, sortCategories, CATEGORIES_FILE, DEFAULT_CATEGORIES,
+  categoriesChanged, suggestCategoryKey, sortCategories, CATEGORIES_FILE, DEFAULT_CATEGORIES, mergeCategories,
 } from './bulletin-edit-core.js';
+import { mergeFormEdit, changedFields, changedText, editorFieldLabel } from './edit-merge.js';
 
 const D = readEmbedded('adm-bulletin-data', { today: '', siteBase: '', issues: [], articles: [], units: [], diseases: [], categories: DEFAULT_CATEGORIES, pdfMaxBytes: 20 * 1048576, imageMaxBytes: 2 * 1048576 });
 const KEY = 'cdc.admin.bulletin-edit';
@@ -24,6 +26,19 @@ const MIME = { png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', webp: 'i
 
 let state = emptyState({ today: TODAY, categories: D.categories });
 let base = null; // 修改中的既有文章
+// 第五十二輪（docs/deploy.md §24）：修改既有文章時，匯出（上架包、下載、送審）＝以現行版為底，只套用同事改過的欄位。
+// live＝現行版（?edit= 是 content 檔的內容；從閘道開啟的是分支上的檔）；editBase＝表單剛帶入、還沒動過時的匯出。
+let live = null;
+let editBase = null;
+// 第五十二輪（docs/deploy.md §23.5、§24.7）：同時修改的版本檢查，與 /admin/publish/ 同一套（publish-gateway.js）。
+// source：live 從哪裡來（site＝網站上的版本；gateway＝送審件）；version：live 的版本碼（存檔時告訴閘道「我是依哪一版改的」）；
+// savedVersion：這頁上次存進系統的版本碼 { id, hash }（之後再存以它為準）。
+let source = 'site';
+let version = NEW_VERSION;
+let savedVersion = null;
+// 分類主檔：catsStart＝合併的起點（頁面載入時的主檔，或送審件開始時的主檔）；catsCarried＝送審件裡已帶著分類主檔（改回原樣也要送，閘道才會改回去）
+let catsStart = D.categories;
+let catsCarried = false;
 let pdf = null; // { name, bytes, sha256 }
 const images = new Map(); // 檔名 → { bytes, url, mime, sha256, width, height }
 let PV = null;
@@ -136,7 +151,30 @@ $('#te-dis-chips').addEventListener('click', (e) => { const b = e.target.closest
 /* ───────── 目前物件與檢核 ───────── */
 const currentIssue = () => resolveIssue(state, D.issues, { today: TODAY });
 const filesMeta = () => { const o = {}; for (const [f, m] of images) o[f] = { kind: 'image', mime: m.mime, bytes: m.bytes.length, sha256: m.sha256, width: m.width, height: m.height }; if (pdf) o[pdf.name] = { kind: 'attachment', mime: 'application/pdf', bytes: pdf.bytes.length, sha256: pdf.sha256 }; return o; };
-const current = () => { read(); const issue = currentIssue(); return { issue, article: buildArticle(state, { today: TODAY, issue, base, files: filesMeta() }) }; };
+const rawArticle = (issue) => buildArticle(state, { today: TODAY, issue, base, files: filesMeta() });
+const current = () => {
+  read(); const issue = currentIssue(); const out = rawArticle(issue);
+  return { issue, article: live && editBase ? mergeFormEdit(out, live, editBase) : out };
+};
+/**
+ * 表單帶入現行版之後立刻記下 editBase（之後才分得出哪些欄位是同事改的）。
+ * sourceHash：建置算的正本雜湊，只有現行版就是 main 上那一版時才有（從閘道帶回的送審版本沒有，見 deploy §22.6 第 4 點）。
+ * editBase 不含這次拖進來的圖檔與 PDF：「載入最新版」時它們仍在頁面上，是同事的修改，不能被當成現行版的一部分。
+ * 第五十二輪：同時記下 live 的版本碼（閘道給的，或由內容算）與來源。
+ */
+function startEdit(item, sourceHash, { version: v = undefined, source: src = 'site' } = {}) {
+  live = item ? { ...item, ...(sourceHash ? { sourceHash } : {}) } : null;
+  editBase = null; source = src; savedVersion = null;
+  version = live ? (v ?? contentVersion(live)) : NEW_VERSION;
+  if (live) { read(); editBase = buildArticle({ ...state, pdfFile: '' }, { today: TODAY, issue: currentIssue(), base, files: {} }); }
+}
+/** 存檔時要帶給閘道的版本碼：上次存進系統的、或開啟時的；新文章是 new */
+function getBaseHash() {
+  const id = current().article.id;
+  if (savedVersion?.id === id) return savedVersion.hash;
+  if (live && live.id === id) return version;
+  return NEW_VERSION;
+}
 
 function paneTab(id) {
   for (const t of $$('.adm-tabs--pane [role="tab"]')) { const on = t.id === `tt-${id}`; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; $(`#${t.getAttribute('aria-controls')}`).hidden = !on; }
@@ -158,6 +196,9 @@ function paint() {
   $('#te-file').textContent = exportFilename(article);
   $('#te-file2').textContent = [issue?._new ? `　＋ ${issueFilename(issue)}` : '', categoriesChanged(state.categories, D.categories) ? `　＋ ${CATEGORIES_FILE}` : '', ...[...images.keys()].filter((f) => (article.figures ?? []).some((x) => x.file === f)).map((f) => `　＋ content/assets/${article.id}/${f}`)].join('');
   $('#te-out').textContent = JSON.stringify(article, null, 2);
+  const ch = live && editBase ? changedFields(article, live) : null;
+  const chEl = $('#te-changed');
+  if (chEl) { chEl.textContent = ch ? ` ${changedText(ch)}` : ''; chEl.dataset.changed = ch ? ch.fields.join(' ') : ''; }
   $('#te-zip').disabled = hasErrors(problems);
   $('#te-zip').title = hasErrors(problems) ? '先把「檢核」頁籤裡會擋建置的問題改掉' : '';
   PV?.repaintSoon();
@@ -175,6 +216,7 @@ PV = initPagePreview({
 /* ───────── 事件 ───────── */
 function load(id) {
   base = id && id !== 'new' ? D.articles.find((a) => a.id === id) ?? null : null;
+  catsStart = D.categories; catsCarried = false;
   pdf = null; $('#te-pdf').value = ''; $('#te-pdf-hint').textContent = '';
   for (const m of images.values()) URL.revokeObjectURL(m.url); images.clear(); $('#te-figfiles').value = ''; $('#te-figfiles-msg').textContent = '';
   if (base) fill(stateFromArticle(base, { categories: D.categories }));
@@ -185,10 +227,17 @@ function load(id) {
     const nx = suggestNextIssue(D.issues, TODAY); st.newVolume = String(nx.volume); st.newIssue = String(nx.issue);
     fill(st);
   }
+  // 現行版＝content 檔：載入時換成新代號的舊分類代號換回來（沒改分類就原樣保留舊代號）
+  startEdit(base && D.legacyArticleTypes?.[base.id] ? { ...base, articleType: D.legacyArticleTypes[base.id] } : base, base ? D.sourceHashes?.[base.id] : null);
   $('#te-editbox').hidden = !base;
-  if (base) $('#te-editbox').innerHTML = `<strong>修改已上架文章</strong> <code>${esc(base.id)}</code>（${esc(D.issues.find((p) => p.id === base.issueId)?.title ?? base.issueId)} 第 ${base.articleNo} 篇）。匯出會保留表單沒有的欄位（languages、i18n…），PR 只會多出真正改動的部分。`;
+  if (base) $('#te-editbox').innerHTML = `<strong>修改已上架文章</strong> <code>${esc(base.id)}</code>（${esc(D.issues.find((p) => p.id === base.issueId)?.title ?? base.issueId)} 第 ${base.articleNo} 篇）。匯出以現行版為底，只套用你改過的欄位；表單沒有的欄位（languages、i18n…）與沒改的欄位一個字都不動。<span class="adm-te-changed" id="te-changed" role="status" aria-live="polite"></span>`;
 }
-$('#te-pick').addEventListener('change', (e) => { load(e.target.value); paint(); });
+/** 第五十二輪：換了要改的文章 ⇒ 網址不再指向原本的送審件；送審面板重新檢查這篇的送審件與網站版本（清掉上一篇的提醒與停用） */
+function targetChanged() {
+  if (new URLSearchParams(location.search).has('gw')) { try { history.replaceState(null, '', location.pathname); } catch { /* 不能改網址也沒關係 */ } }
+  document.dispatchEvent(new CustomEvent('adm:gw-target'));
+}
+$('#te-pick').addEventListener('change', (e) => { load(e.target.value); paint(); targetChanged(); });
 $('#te-issue').addEventListener('change', () => {
   read();
   $('#te-newissue').hidden = $('#te-issue').value !== '__new';
@@ -328,16 +377,17 @@ $('#te-copy').addEventListener('click', (e) => copyText(`${$('#te-out').textCont
 /* ───────── 草稿 ───────── */
 let saveTimer = 0;
 function markDirty() { const s = $('#te-savestate'); s.dataset.state = 'dirty'; $('#te-savestate-text').textContent = '有未存的修改（自動儲存中…）'; clearTimeout(saveTimer); saveTimer = setTimeout(saveDraft, 1200); }
-function saveDraft() { read(); store.set(KEY, { pick: base?.id ?? 'new', state, savedAt: new Date().toISOString() }); const s = $('#te-savestate'); s.dataset.state = 'saved'; $('#te-savestate-text').textContent = `草稿已存在這台電腦 ${new Date().toLocaleTimeString('zh-TW', { hour12: false })}（圖檔與 PDF 不會存，重開頁面要再拖一次）`; }
+function saveDraft() { read(); store.set(KEY, { pick: base?.id ?? 'new', state, editBase, gwVersion: savedVersion, catsStart, catsCarried, ...(source === 'gateway' && live ? { gwLive: live, gwLiveVersion: version } : {}), savedAt: new Date().toISOString() }); const s = $('#te-savestate'); s.dataset.state = 'saved'; $('#te-savestate-text').textContent = `草稿已存在這台電腦 ${new Date().toLocaleTimeString('zh-TW', { hour12: false })}（圖檔與 PDF 不會存，重開頁面要再拖一次）`; }
 $('#te-save').addEventListener('click', () => { saveDraft(); $('#te-msg').textContent = '草稿已儲存。'; });
 document.addEventListener('keydown', (e) => { if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') { e.preventDefault(); saveDraft(); } });
-$('#te-reset').addEventListener('click', () => { store.del(KEY); load('new'); paint(); $('#te-msg').textContent = '已清空表單並刪除本機草稿。'; });
+$('#te-reset').addEventListener('click', () => { store.del(KEY); load('new'); paint(); targetChanged(); $('#te-msg').textContent = '已清空表單並刪除本機草稿。'; });
 $('#te-sample').addEventListener('click', () => {
   load('new'); read();
   const st = { ...state, title: '', authors: '', pages: '', keywords: '',
     manuscript: '2026 年 10 月 6 日 第 42 卷 第 19 期\n疫情調查\n某縣市一起校園腸病毒群聚事件之調查（範例）\n王小明 1*、李小華 1、陳大同 2\n\n摘要\n2026 年 4 月某縣市一所國小通報 12 名學童出現手足口病症狀，衛生局與疫情中心共同調查。本文描述調查方法、結果與介入措施。（範例摘要）\n關鍵字：腸病毒、群聚、學校\n\n前言\n腸病毒感染在每年 4 至 6 月進入流行季，學校與托育機構是群聚最常見的場域。（範例）\n\n材料與方法\n病例定義為 4 月 X 日至 Y 日間出現手足口病或疱疹性咽峽炎症狀之學童；採咽喉拭子送驗。（範例）\n\n結果\n共 12 名病例，分布於 3 個班級；8 件檢體中 6 件檢出克沙奇 A6 型（表一）。流行曲線見圖一。（範例）\n\n圖一、病例發病日分布\n表一、檢體檢驗結果\n\n討論及建議\n班級間傳播與共用遊戲區有關；停課 7 天後無新病例。建議學校於流行季加強洗手與環境消毒。（範例）\n\n誌謝\n感謝該校與衛生局協助。（範例）\n\n參考文獻\n1. 衛生福利部疾病管制署。腸病毒防治工作指引。\n2. 範例文獻二。\n\n1 疾病管制署疫情中心\n2 某縣市政府衛生局\n通訊作者：王小明　E-mail：example@cdc.gov.tw\n投稿日期：2026 年 5 月 1 日　接受日期：2026 年 8 月 1 日\nDOI：10.6524/EB.202610_42(19).0009' };
   fill(st);
   $('#te-split').click();
+  targetChanged();
   $('#te-msg').textContent = '已載入範例稿件並自動切段（篇名、作者、單位、DOI、日期、關鍵字都從稿件抓出）；這是示範資料，請勿直接匯出上架。';
 });
 
@@ -345,17 +395,105 @@ $('#te-sample').addEventListener('click', () => {
 const qid = new URLSearchParams(location.search).get('edit') ?? new URLSearchParams(location.search).get('id');
 const draft = store.get(KEY, null);
 if (qid && D.articles.some((a) => a.id === qid)) load(qid);
-else if (draft?.state) { load(draft.pick); fill({ ...state, ...draft.state, categories: draft.state.categories ?? state.categories }); $('#te-msg').textContent = `已帶回 ${new Date(draft.savedAt).toLocaleString('zh-TW', { hour12: false })} 存的草稿。`; }
+else if (draft?.state) {
+  load(draft.pick); fill({ ...state, ...draft.state, categories: draft.state.categories ?? state.categories }); if (draft.editBase && base) editBase = draft.editBase;
+  // 第五十二輪：從送審件帶回的草稿 ⇒ 現行版仍是那一版（editBase 是依它記的；改用網站上的版本，送審件裡同事的修改會被當成「沒改」而掉回網站上的值）
+  if (draft.gwLive && base && draft.gwLive.id === base.id && draft.editBase) { live = draft.gwLive; source = 'gateway'; version = draft.gwLiveVersion ?? contentVersion(live); }
+  // 上次存進系統的版本碼與分類主檔的起點（重新整理後仍知道依哪一版改的）
+  if (draft.gwVersion?.id && draft.gwVersion?.hash) savedVersion = draft.gwVersion;
+  if (Array.isArray(draft.catsStart)) catsStart = draft.catsStart;
+  catsCarried = draft.catsCarried === true;
+  $('#te-msg').textContent = `已帶回 ${new Date(draft.savedAt).toLocaleString('zh-TW', { hour12: false })} 存的草稿。`; }
 else load('new');
 paint();
 
 /* ───────── 第四十五輪：送審與上線（有寫入閘道時才出現；GitHub Pages 上仍用上架包） ───────── */
 const b64 = (bytes) => { let out = ''; const CH = 0x8000; for (let i = 0; i < bytes.length; i += CH) out += String.fromCharCode.apply(null, bytes.subarray(i, i + CH)); return btoa(out); };
-const GW_FIELDS = { title: '#te-title', issueId: '#te-issue', articleNo: '#te-no', articleType: '#te-type', pages: '#te-pages', authors: '#te-authors', affiliations: '#te-affils', doi: '#te-doi', keywords: '#te-keywords', abstractMarkdown: '#te-abstract', sections: '#te-sections', figures: '#te-figures', references: '#te-refs', assets: '#te-figfiles', owner: '#te-owner', diseases: '#te-dis-q', summary: '#te-summary', pdfUrl: '#te-pdfurl' };
+const GW_FIELDS = { title: '#te-title', issueId: '#te-issue', articleNo: '#te-no', articleType: '#te-type', pages: '#te-pages', authors: '#te-authors', affiliations: '#te-affils', doi: '#te-doi', keywords: '#te-keywords', abstractMarkdown: '#te-abstract', sections: '#te-sections', figures: '#te-figures', references: '#te-refs', assets: '#te-figfiles', owner: '#te-owner', diseases: '#te-dis-q', summary: '#te-summary', pdfUrl: '#te-pdfurl', categories: '#te-cat-new' };
+
+/* ───────── 第五十二輪：從閘道帶回（送審件、載入最新版）與版本檢查（docs/deploy.md §23.5、§24.7） ───────── */
+/** 送審件裡的新卷期（配套內容）：文章所屬卷期網站上還沒有時，表單改回「新卷期」並填回卷、期與出刊日（否則再存一次卷期就掉了） */
+function withIssueFrom(st, companions) {
+  if (!st.issueId || D.issues.some((p) => p.id === st.issueId)) return st;
+  const iss = (companions ?? []).find((c) => c?.type === 'publication' && c.id === st.issueId);
+  return iss ? { ...st, issueMode: 'new', newVolume: String(iss.volume ?? ''), newIssue: String(iss.issue ?? ''), newDate: iss.publishedAt ?? '' } : st;
+}
+/** 表單帶入一筆（送審件或網站上的最新版）並記下 editBase；categories：送審件帶著的分類主檔（沒有就用網站上的） */
+function openItem(item, { version: v, source: src, sourceHash = null, companions = null, categories = undefined, keep = null }) {
+  base = D.articles.find((a) => a.id === item.id) ?? item;
+  if (categories !== undefined) { catsStart = categories?.start ?? D.categories; catsCarried = !!categories; }
+  const cats = categories === undefined ? state.categories : (categories?.items ?? D.categories);
+  fill(withIssueFrom({ ...stateFromArticle(item, { categories: cats }), ...(keep ?? {}) }, companions));
+  startEdit(item, sourceHash, { version: v, source: src });
+}
+const gwEditBox = (item, note = '') => { $('#te-editbox').hidden = false; $('#te-editbox').innerHTML = `<strong>送審中的版本</strong> <code>${esc(item.id)}</code>：已從系統帶回，附件（PDF、圖）留在系統裡，不必重傳。匯出以這個版本為底，只套用你改過的欄位。${note ? ` ${esc(note)}` : ''}<span class="adm-te-changed" id="te-changed" role="status" aria-live="polite"></span>`; };
+/** 分類衝突的說明（給 publish-gateway 的 showMerged） */
+const catConflicts = (list) => (list ?? []).map((c) => ({ label: `分類「${c.label}」`, yours: c.yours ? JSON.stringify(c.yours, null, 1) : '（刪除）' }));
+const catNote = (c) => (c?.text ? `${c.text}${c.conflicts?.length ? `其中「${c.conflicts.map((x) => x.label).join('、')}」兩邊都改了，先用網站上的。` : ''}` : '');
+
+/**
+ * 載入最新版（保留我的修改）。item＝最新版（網站上的現行版，或送審件目前這一版）、v＝它的版本碼。
+ * 「我改的欄位」＝表單匯出跟 editBase（表單剛帶入時）不同的欄位，與 mergeFormEdit 同一個判斷——表單沒有的欄位（提供語言、譯文…）不算。
+ * 「別人改的欄位」＝最新版跟我開啟時的版本（live）不同的欄位。我改、別人沒改 ⇒ 寫回表單；兩邊都改、而且不一樣 ⇒ 先用最新版，列出我的值。
+ * 重點：先以最新版重新帶入表單、重新記 editBase，再把我的修改寫回表單——editBase 一定要換成最新版的，
+ * 否則 mergeFormEdit 會把「網站上的新版本」與「我的舊表單」之間的差異都當成我改的。
+ */
+function reloadLatest(item, v, { source: src = 'site', data = null } = {}) {
+  const old = read();
+  const mineFull = current().article;
+  const raw = rawArticle(currentIssue());
+  try { store.set('cdc.admin.staleCopy', { id: mineFull.id, savedAt: new Date().toISOString(), item: mineFull }); } catch { /* 存不下就算了，畫面仍會列出我的值 */ }
+  const label = (k) => `${editorFieldLabel(k)}${editorFieldLabel(k) === k ? '' : `（${k}）`}`;
+  const show = (x) => (x == null ? '（空白）' : typeof x === 'string' ? x : JSON.stringify(x, null, 1));
+  const before = live && live.id === item.id && editBase ? live : null;
+  // 我的分類修改：合併到送審件帶著的分類上（網站上的主檔不在這裡換，存檔時由閘道合併）
+  let categories;
+  if (src === 'gateway') {
+    const c = data?.categories ?? null;
+    categories = c ? { items: mergeCategories(catsStart, old.categories, c.items).rows, start: c.start } : (categoriesChanged(old.categories, catsStart) ? { items: old.categories, start: catsStart } : null);
+  }
+  const keep = { manuscript: old.manuscript };
+  if (!before) {
+    openItem(item, { version: v, source: src, sourceHash: item.sourceHash ?? null, companions: data?.companions, categories, keep });
+    paint(); saveDraft();
+    return { theirs: [], mine: [], conflicts: editDiff(mineFull, item).map((k) => ({ field: k, label: label(k), yours: show(mineFull[k]) })), copied: true };
+  }
+  const mineKeys = [...new Set([...Object.keys(raw), ...Object.keys(editBase)])].filter((k) => !EDIT_DERIVED.includes(k) && !sameValue(raw[k], editBase[k]));
+  const latest = liveItem(item);
+  const theirKeys = editDiff(latest, before);
+  const conflicts = mineKeys.filter((k) => theirKeys.includes(k) && !sameValue(mineFull[k], latest[k]));
+  const reapply = { ...latest };
+  for (const k of mineKeys) { if (conflicts.includes(k)) continue; if (mineFull[k] === undefined) delete reapply[k]; else reapply[k] = mineFull[k]; }
+  // 卷期是表單上的幾個欄位（新卷期時是卷、期、出刊日）：我改了卷期就整組沿用我的
+  if (mineKeys.includes('issueId') && !conflicts.includes('issueId')) Object.assign(keep, { issueMode: old.issueMode, issueId: old.issueId, newVolume: old.newVolume, newIssue: old.newIssue, newDate: old.newDate });
+  openItem(item, { version: v, source: src, sourceHash: item.sourceHash ?? null, companions: data?.companions, categories });
+  const now = state.categories;
+  if (mineKeys.length) fill(withIssueFrom({ ...stateFromArticle(reapply, { categories: now }), ...keep }, data?.companions));
+  else fill({ ...state, ...keep });
+  if (src === 'gateway') gwEditBox(item, catNote(data?.categories));
+  paint(); saveDraft();
+  return { theirs: theirKeys.map(label), mine: mineKeys.filter((k) => !conflicts.includes(k)).map(label), conflicts: [...conflicts.map((k) => ({ field: k, label: label(k), yours: show(mineFull[k]) })), ...catConflicts(data?.categories?.conflicts)], copied: true };
+}
+/** 分類衝突（409 stale，kind: categories）：閘道附上網站上的主檔；以它為新的起點，把我加或改的分類重新套用上去 */
+function reloadCategories({ rows = [], conflicts = [] } = {}) {
+  read();
+  const m = mergeCategories(catsStart, state.categories, rows);
+  catsStart = rows.map((c) => ({ ...c }));
+  state.categories = m.rows.map((c) => ({ ...c }));
+  renderCats(); renderTypeOptions(state.articleType); paint(); saveDraft();
+  const name = (k) => { const c = m.rows.find((x) => x.key === k) ?? state.categories.find((x) => x.key === k); return `分類「${c?.label ?? k}」`; };
+  const conflictKeys = new Set([...m.conflicts, ...conflicts].map((c) => c.key));
+  return { theirs: m.theirs.map(name), mine: m.mine.filter((k) => !conflictKeys.has(k)).map(name), conflicts: catConflicts(m.conflicts) };
+}
+
 initPublishGateway({
   exportObj: () => current().article,
   getContentId: () => { const { article } = current(); return /article\.teb-\d+-\d+-\d+$/.test(article.id) ? article.id : ''; },
-  loadItem: (item) => { base = D.articles.find((a) => a.id === item.id) ?? item; fill(stateFromArticle(item, { categories: state.categories })); $('#te-editbox').hidden = false; $('#te-editbox').innerHTML = `<strong>送審中的版本</strong> <code>${esc(item.id)}</code>：已從系統帶回，附件（PDF、圖）留在系統裡，不必重傳。`; paint(); },
+  loadItem: (item, meta = {}) => {
+    openItem(item, { version: meta.contentHash, source: 'gateway', companions: meta.companions, categories: meta.categories ?? null });
+    gwEditBox(item, catNote(meta.categories));
+    paint();
+  },
   exportExtra: () => {
     const { issue, article } = current();
     const companions = [];
@@ -363,8 +501,20 @@ initPublishGateway({
     const files = [];
     if (pdf) files.push({ name: pdf.name, base64: b64(pdf.bytes) });
     for (const [name, m] of images) if ((article.figures ?? []).some((f) => f.file === name)) files.push({ name, base64: b64(m.bytes) });
-    return { companions, files };
+    // 第五十二輪：分類主檔改過（或送審件裡已帶著）⇒ 一起送；閘道以分類代號為單位合併到網站上的主檔（docs/deploy.md §24.7）
+    const categories = catsCarried || categoriesChanged(state.categories, catsStart) ? { items: state.categories.map((c) => ({ ...c })), start: catsStart } : null;
+    return { companions, files, categories };
   },
   fieldInput: GW_FIELDS,
-  onSaved: (sub) => { if (sub?.status === 'published') $('#te-msg').textContent = '文章已上線（含附件與卷期）。'; },
+  getBaseHash,
+  getEditTarget: () => (live && source === 'site' ? { id: live.id, type: 'article', version } : null),
+  reloadLatest,
+  reloadCategories,
+  onSaved: (sub) => {
+    if (sub?.contentHash) savedVersion = { id: sub.contentId, hash: sub.contentHash };
+    catsCarried = !!sub?.categories;
+    saveDraft();
+    if (sub?.status === 'published') $('#te-msg').textContent = '文章已上線（含附件與卷期）。';
+  },
 });
+window.__admBulletin = { current, getBaseHash, reloadLatest, get live() { return live; }, get editBase() { return editBase; }, get version() { return version; }, get source() { return source; }, get catsStart() { return catsStart; } }; // 供自動化測試

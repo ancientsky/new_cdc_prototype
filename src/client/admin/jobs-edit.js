@@ -4,8 +4,9 @@ import {
   emptyState, stateFromJob, buildJob, problemsOf, rowProblems, amendmentFor, cancelAmendment, amendmentsSorted, dateChanges, keyDates, exportFilename,
   jobStageOf, AMEND_KINDS, suggestedUnpublishAt,
 } from './jobs-edit-core.js';
+import { mergeFormEdit, changedFields, changedText } from './edit-merge.js';
 
-const D = readEmbedded('adm-jobs-data', { today: '', jobs: [], units: [], jobTypes: [], examStages: [], stages: {}, amendKinds: {} });
+const D = readEmbedded('adm-jobs-data', { today: '', jobs: [], units: [], jobTypes: [], examStages: [], stages: {}, amendKinds: {}, sourceHashes: {}, resultTakenDown: [] });
 const KEY = 'cdc.admin.jobs-edit';
 const TODAY = D.today;
 const byId = new Map(D.jobs.map((j) => [j.id, j]));
@@ -14,6 +15,9 @@ const STAGE_BADGE = { upcoming: 'info', open: 'ok', closed: 'gray', screening: '
 let state = emptyState();
 let base = null; // 選到的既有職缺（原始資料）
 let baseline = null; // B 區比對基準：原公告日期，或上一次加入異動紀錄後的日期
+// 第五十二輪（docs/deploy.md §24）：修改既有職缺時，匯出＝以現行版為底，只套用同事改過的欄位。
+// editBase＝表單剛帶入、還沒動過時的匯出（buildJob 經過真的表單來回一次的結果）；與目前的匯出逐欄比較，相同的欄位保留現行版原樣。
+let editBase = null;
 
 const datesOf = (j) => ({ applyStart: j?.applyStart ?? '', deadlineAt: j?.deadlineAt ?? '', resultPlannedAt: j?.resultPlannedAt ?? '', examPlan: (j?.examPlan ?? []).map((e) => ({ stage: e.stage, date: e.date ?? '' })) });
 
@@ -75,7 +79,10 @@ function read() {
   state = st;
   return st;
 }
-const currentJob = () => buildJob(read(), { today: TODAY, base });
+const rawJob = () => buildJob(read(), { today: TODAY, base });
+/** 現行版（content 檔的內容）＋建置的正本雜湊：mergeFormEdit 用它判斷改到中文時要不要把英譯標成「依舊版翻譯」 */
+const liveOf = (job) => (job ? { ...job, sourceHash: D.sourceHashes?.[job.id] ?? undefined } : null);
+const currentJob = () => { const out = rawJob(); return base && editBase ? mergeFormEdit(out, liveOf(base), editBase) : out; };
 const otherIds = () => D.jobs.map((j) => j.id).filter((id) => id !== base?.id);
 
 /* ───────── 預覽 ───────── */
@@ -131,7 +138,11 @@ function paint() {
   const all = [...problems, ...extra];
   $('#jf-warn').innerHTML = all.length ? `<div class="adm-box adm-box--warn" role="status"><strong>發布前請補齊（${all.length}）</strong><ul class="adm-jf-list">${all.map((p) => `<li>${esc(p)}</li>`).join('')}</ul></div>`
     : '<div class="adm-box adm-box--ok"><strong>檢核全過</strong>可以匯出開 PR；CI 用的是同一份規則。</div>';
-  // 匯出
+  // 匯出：改了哪些欄位（與現行版逐欄比較；已下架的甄選名單另外明說）
+  const ch = base ? changedFields(job, base) : null;
+  const gone = base && (D.resultTakenDown ?? []).includes(base.id) ? `　甄選結果已於 ${base.result?.unpublishAt ?? ''} 下架：這一頁沒有名單（網站已不輸出），匯出的檔案不含正取、備取與遞補名單；這正是下架後要從檔案刪除名單的做法，覆蓋原檔前請確認。` : '';
+  $('#jf-changed').textContent = ch ? `${changedText(ch)}${gone}` : '';
+  $('#jf-changed').dataset.changed = ch ? ch.fields.join(' ') : '';
   $('#jf-file').textContent = exportFilename(job);
   $('#jf-out').textContent = JSON.stringify(job, null, 2);
 }
@@ -143,6 +154,7 @@ function load(id) {
   if (base) base = clean;
   baseline = base ? datesOf(base) : null;
   fill(base ? stateFromJob(base) : emptyState());
+  editBase = base ? rawJob() : null; // 表單帶入後（經過真的欄位）立刻記下，之後才分得出哪些欄位是同事改的
   $('#jf-am-msg').textContent = '';
 }
 $('#jf-pick').addEventListener('change', (e) => { load(e.target.value); paint(); });
@@ -195,7 +207,7 @@ $('#jf-am-add').addEventListener('click', () => {
   $('#jf-am-msg').textContent = `已加入一筆「${AMEND_KINDS[r.kind]}」異動紀錄。`;
   paint();
 });
-$('#jf-save').addEventListener('click', () => { read(); store.set(KEY, { pick: base?.id ?? 'new', state, baseline, savedAt: new Date().toISOString() }); $('#jf-msg').textContent = '草稿已存在這台電腦的瀏覽器。'; });
+$('#jf-save').addEventListener('click', () => { read(); store.set(KEY, { pick: base?.id ?? 'new', state, baseline, editBase, savedAt: new Date().toISOString() }); $('#jf-msg').textContent = '草稿已存在這台電腦的瀏覽器。'; });
 $('#jf-reset').addEventListener('click', () => { store.del(KEY); load($('#jf-pick').value); paint(); $('#jf-msg').textContent = '已放棄草稿，重新帶入目前公告內容。'; });
 $('#jf-copy').addEventListener('click', (e) => copyText(`${$('#jf-out').textContent}\n`, e.currentTarget));
 $('#jf-dl').addEventListener('click', () => downloadText(exportFilename(currentJob()).split('/').pop(), `${$('#jf-out').textContent}\n`));
@@ -207,6 +219,7 @@ if (qid && byId.has(qid)) load(qid);
 else if (saved?.state && (saved.pick === 'new' || byId.has(saved.pick))) {
   load(saved.pick);
   baseline = saved.baseline ?? baseline;
+  if (saved.editBase && base) editBase = saved.editBase; // 草稿開始時的 base：之後 main 上被別人改的欄位，不會被當成同事改的
   fill({ ...emptyState(), ...saved.state, result: { ...emptyState().result, ...(saved.state.result ?? {}) } });
   $('#jf-msg').textContent = `已還原 ${saved.savedAt ? saved.savedAt.slice(0, 16).replace('T', ' ') : ''} 的本機草稿。`;
 } else load('new');

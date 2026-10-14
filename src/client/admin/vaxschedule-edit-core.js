@@ -1,5 +1,6 @@
 // 疫苗接種時程表後台（/admin/vaccines/schedule/）的純函式（第三十六輪）：表單 ⇄ 主檔一筆、檢查（與 CI 的 validate 同規則）、新 id、月齡換算。
 // 不碰 DOM，Node 測試直接 import（tests/round36-vaxschedule.test.mjs）。
+import { mergeValue, sameValue } from './preprocess.js';
 export const STAGE_LABEL = { infant: '嬰幼兒（0–2 歲）', child: '學齡前', school: '學生', adult: '成人', pregnancy: '孕婦', older: '長者（65 歲以上）', risk: '特殊情況' };
 export const FUNDED_LABEL = { public: '公費', conditional: '符合條件公費', self: '自費' };
 export const FIELD_LABEL = { id: '編號', vaccine: '疫苗', label: '項目名稱', dose: '劑次', ageMinMonths: '年齡下限', ageMaxMonths: '建議區間上限', hardLimitMonths: '可接種年齡上限', hardNote: '上限依據', hardSourceTitle: '上限來源名稱', hardSourceUrl: '上限來源網址', hardVerified: '上限已核對', ageLabel: '年齡（人看的寫法）', stage: '階段', funded: '費用', group: '公費對象', interval: '間隔', note: '備註', sourceTitle: '來源名稱', sourceUrl: '來源網址', startAt: '生效日', endAt: '結束日', recurring: '每年接種', verified: '已核對' };
@@ -130,4 +131,38 @@ export function diffSummary(before, after) {
   const added = [...a.keys()].filter((id) => !b.has(id)); const removed = [...b.keys()].filter((id) => !a.has(id));
   const changed = [...a.keys()].filter((id) => b.has(id) && b.get(id) !== a.get(id));
   return { added, removed, changed, dirty: added.length + removed.length + changed.length > 0 };
+}
+
+/**
+ * 第五十二輪（docs/deploy.md §24）：匯出的主檔＝以現行版為底，只套用同事改過的那幾筆、那幾個欄位。
+ * 以前匯出是「工作副本依疫苗與月齡重新排序」：什麼都沒改，檔案順序也和原檔不同；點過的那一筆經過表單重組，鍵的順序也變了
+ * （畫面還說「與目前上線版本相同」，因為摘要只比 id）。現在：
+ *   - 順序沿用現行版；新增的一筆放在它在工作副本裡的前一筆後面（「新增一筆」就是插在目前這筆之後）。
+ *   - 沒動的筆（與載入時相同，或只是經過表單來回）原樣保留現行版的物件，一個位元組都不變。
+ *   - 改過的筆逐欄三方合併：base＝那一筆經過表單來回的樣子（buildItem(stateFromItem(載入時))），只有與 base 不同的欄位寫到現行版上。
+ *   - 刪除的筆（載入時有、工作副本沒有）拿掉；載入之後 main 才多出來的筆（別人加的）保留。
+ * @param {any[]} items 工作副本（頁面上的 items）
+ * @param {any[]} live  現行版（資料島的主檔＝content/master/immunization-schedule.json）
+ * @param {any[]} orig  開始編輯時的現行版（存在這台電腦的草稿要記下它；沒給＝live）
+ */
+export function mergeSchedule(items, live, orig = live) {
+  const was = new Map((orig ?? []).map((i) => [i.id, i]));
+  const now = new Map(items.map((i) => [i.id, i]));
+  const out = [];
+  for (const l of live ?? []) {
+    if (was.has(l.id) && !now.has(l.id)) continue; // 同事刪了這筆
+    const c = now.get(l.id), o = was.get(l.id);
+    if (!c || !o || sameValue(c, o)) { out.push(l); continue; } // 沒動，或是載入之後別人加的
+    out.push(mergeValue(l, buildItem(stateFromItem(o)), c) ?? c);
+  }
+  // 新增的筆：放在工作副本裡前一筆的後面
+  let prev = null;
+  for (const c of items) {
+    if (!was.has(c.id) && !out.some((x) => x.id === c.id)) {
+      const at = prev ? out.findIndex((x) => x.id === prev) : -1;
+      out.splice(at + 1, 0, c);
+    }
+    prev = c.id;
+  }
+  return out;
 }

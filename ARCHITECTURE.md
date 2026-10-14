@@ -2524,3 +2524,21 @@ i18n 新鍵（七語齊備，順序 zh-TW, en, ja, tl, vi, id, th）：`nav.more
 
 **教訓：** 測試若把頁面上「算出來的值」直接當輸入（舊的 `admin-edit.test.mjs` 把現行版的摘要、關鍵字直接餵給匯出函式），就永遠看不到頁面上的錯。驗證「修改」要照頁面的真實步驟：載入、等預處理、不動、匯出、和原檔比。
 
+## 55. 第五十二輪（2026-10-14）：版本碼與 409、四個編輯頁的合併、分類主檔送審、換句話說
+
+民眾看得到的說明在 README 第五十二輪；取捨在 architecture-decisions §40；細節：deploy.md §23–24、eval-challenge.md §10、ask-search-llm.md §17、guide-staff §54–55。
+
+| 機制 | 契約 |
+| --- | --- |
+| 版本碼 | `src/client/admin/content-version.js`（瀏覽器與閘道共用）：`liveItem` 去 API 欄位、忽略 `status`／`reviewedAt`、鍵排序後以純 JS 雜湊（內網後台不一定是 https，不用 `crypto.subtle`）；新內容為 `'new'` |
+| 存檔檢查 | `/drafts`、`/submit` 收 `baseHash`：新送審件比 main、既有送審件比自己的分支；不同 ⇒ 409 `stale`（kind：site／draft／open／moved／companion／categories），不寫入，訊息說誰、何時、哪些欄位，不出現 Git 用語；回應帶 `contentHash`。沒帶 `baseHash` 照舊接受、稽核記 `baseHash: missing`（§23.6） |
+| 送審期間網站變了 | 核准前比對送審件起點：不同 ⇒ 409 `outdated`；審核頁黃色提示、停用核准、預填退回意見；承辦人重新開啟時閘道逐欄三方合併，兩邊改同一欄位保留網站值並列出同事的值；存檔以合併後版本碼從 main 另開分支 |
+| `GET /api/gateway/current` | `?edit=` 開啟時先告知：已有進行中送審件（狀態、誰、「從那一件繼續」，存檔鈕停用）、網站有比靜態 API 新的版本（「載入最新版（保留我的修改）」） |
+| 四個編輯頁合併 | `src/client/admin/edit-merge.js mergeFormEdit` 直接呼叫 `mergeEdit`；字串清單有改時整份取表單（有序清單）；疫情報導 `assets[]` 逐項比對；`editBase` 在表單填好後讀真實欄位；接種時程 `mergeSchedule` 以列 id 合併、保留現行順序 |
+| 分類主檔送審 | `/drafts`、`/submit` 收 `categories: { items, start }`，只能跟疫情報導文章一起；路徑是 `validate-item.mjs` 的常數（忽略前端送來的路徑）；以分類代號合併到現行檔，同一分類兩邊改不同 ⇒ 409 `stale` kind `categories`；刪除已發布分類 422；含分類檔一律一般車道 |
+| 換句話說 | `rules.js DISEASE_FACETS`（點名疾病＋面向，只在同一疾病頁內重排）、`lexicon.js PARAPHRASE`（問句端改寫，「體檢」不進詞彙主檔）、`CROSS_LANG`、拉丁名稱詞界不擋中文字、`text.js` 異體字摺疊；評估集 419 → 443 |
+
+測試：`tests/round52-concurrent-edit.test.mjs`、`round52-editors-preserve.test.mjs`、`round52-bulletin-gateway.test.mjs`、`round52-engine.test.mjs`（皆含 Playwright 端到端）。數字：測試 1098 通過；評估集 443／443；提問後 JS 234.2／240 KB；答案頁資料不變（zh-TW 365、en 404、專業版 486 KB）；挑戰集 holdout 74.2%。
+
+**教訓：** 兩路平行做的功能在接縫上最容易出錯。版本檢查與四個編輯頁的合併各自都有完整測試，合在一起後仍找到三個真問題（從送審件重新開啟會掉新卷期、掉新分類；重新整理頁面會用網站版蓋掉送審件裡同事的修改），都是專門再派一路檢查接縫才發現的。之後平行派工，合併後要把「接縫」當成一件獨立的工作。
+

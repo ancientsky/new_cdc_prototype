@@ -8,6 +8,7 @@ import { initPagePreview } from './page-preview.js';
 import { mdToHtml } from './md-convert.js';
 import { initPublishGateway } from './publish-gateway.js';
 import { fieldLabel } from './field-labels.js';
+import { contentVersion, NEW_VERSION } from './content-version.js';
 
 const D = readEmbedded('adm-publish-data', {});
 const KEY = 'cdc.admin.draft';
@@ -33,7 +34,12 @@ const LIMITS = P.normalizeLimits(window.CDC_ASSETS_LIMITS ?? D.assetsLimits);
 function llmKey() { try { return sessionStorage.getItem('cdc.llmKey') || ''; } catch { return ''; } }
 const LANES = P.normalizeLanes(D.lanes); // 發布車道（建置時內嵌 content/governance/lanes.json；缺檔用契約預設）
 let simShown = false; // 已按過「模擬送出」：重繪結果時一併重畫時間軸
-let editing = null; // 修改已上架內容：{ id, original, base, source }（?edit={id}；匯出時以 P.mergeEdit 把「base→目前表單」的差異套到現行版上，第五十一輪）
+let editing = null; // 修改已上架內容：{ id, original, base, source, version }（?edit={id}；匯出時以 P.mergeEdit 把「base→目前表單」的差異套到現行版上，第五十一輪）
+// 第五十二輪：版本碼（content-version.js；docs/deploy.md §23）——存檔時告訴閘道「這頁是依哪一版改的」，別人在那之後改過就不會被悄悄蓋掉。
+//   editing.version＝開啟時的版本（網站版本或送審件）；savedVersion＝這頁最近一次存進系統的那一版（{ id, hash }）；
+//   legacyDraft＝第五十二輪以前存在這台電腦的草稿（不知道依哪一版改的 ⇒ 不送版本碼，閘道照舊接受）
+let savedVersion = null;
+let legacyDraft = false;
 
 // ---------- 表單讀寫 ----------
 const val = (id) => $(id).value;
@@ -254,7 +260,7 @@ function fillVersionLabel() {
 
 // ---------- 草稿 ----------
 function saveDraft(msg) {
-  const d = { ...readForm(), derived: sel, savedAt: new Date().toISOString(), ...(editing?.base ? { editOf: editing } : {}) }; // 第五十一輪：修改中的草稿要記得現行版與 base，否則重新整理後會被當成新內容整份覆寫
+  const d = { ...readForm(), derived: sel, savedAt: new Date().toISOString(), ...(editing?.base ? { editOf: editing } : {}), gwVersion: legacyDraft ? undefined : savedVersion }; // 第五十一輪：修改中的草稿要記得現行版與 base，否則重新整理後會被當成新內容整份覆寫；第五十二輪：也記得上次存進系統的版本碼
   store.set(KEY, d);
   const hm = new Date().toLocaleTimeString('zh-TW', { hour12: false, hour: '2-digit', minute: '2-digit' });
   if (msg) { statusEl.textContent = `已儲存草稿（${hm}，僅存本機瀏覽器）`; }
@@ -475,11 +481,19 @@ function paintEditDiff() {
   el.textContent = changed.length ? `目前改動的欄位：${changed.map((k) => `${fieldLabel(k)}${fieldLabel(k) === k ? '' : `（${k}）`}`).join('、')}。另外儲存時會更新：${derived}。` : `內容與現行版相同（儲存時只會更新：${derived}）。`;
   el.dataset.changed = changed.join(' ');
 }
-async function startEdit(id, preloaded = null) {
+/**
+ * @param {string} id
+ * @param {any} [preloaded] 寫入閘道送來的內容（?gw= 的送審件，或第五十二輪「載入最新版」的網站現行版）
+ * @param {{ version?: string, source?: 'site'|'gateway', reapply?: any }} [opts]
+ *   version：這一版的版本碼（閘道給的；沒給就由內容算）；source：site＝網站上的現行版、gateway＝送審件；
+ *   reapply（第五十二輪）：載入後再把這份內容寫進表單——同事在舊版上的修改，重新套用到最新版上（base 仍是最新版，所以差異只算他的修改）
+ */
+async function startEdit(id, preloaded = null, opts = {}) {
   statusEl.textContent = `正在載入 ${id} 的現行版…`;
   const item = preloaded ?? await fetchForEdit(id); // 第三十輪：寫入閘道送來的內容（?gw=）直接帶入
   if (!item) { editing = null; statusEl.textContent = `找不到已上架內容 ${id}（只能修改已發布且在 API 裡的內容；新聞只含近 200 則）。`; writeForm({ type: 'faq', id, idTouched: true }); applyTypeUI(true); return; }
-  editing = { id: item.id, original: item, base: null, source: preloaded ? 'gateway' : 'site' };
+  editing = { id: item.id, original: item, base: null, source: opts.source ?? (preloaded ? 'gateway' : 'site'), version: opts.version ?? contentVersion(item) };
+  savedVersion = null; legacyDraft = false;
   const f = P.itemToForm(item);
   contentIds = []; datasetIds = [];
   sel = { chips: {}, manual: [], summary: '', st: {}, ack: false, stage: 'edit' }; llmDrafts = {};
@@ -491,9 +505,58 @@ async function startEdit(id, preloaded = null) {
   await runPreprocess({ silent: true });
   seedFromLive(P.liveItem(item));
   editing.base = exportRaw(); // 「表單剛帶入、還沒動過」的匯出：之後只有跟它不同的欄位才算同事改的
+  if (opts.reapply) { // 第五十二輪：把同事原本的修改寫回表單（表單顯示＝最新版＋他的修改；匯出時只有他改的欄位跟 base 不同）
+    const f2 = P.itemToForm(opts.reapply);
+    writeForm({ ...f2, assets: [] }); idTouched = true;
+    applyTypeUI(false); $('#x-supersedes').value = f2.extra.supersedes ?? '';
+    seedFromLive(P.liveItem(opts.reapply));
+  }
   paintResult(); saveDraft(false);
-  statusEl.textContent = `已載入現行版 ${item.id}，請直接修改。`;
+  statusEl.textContent = opts.reapply ? `已載入最新版 ${item.id}，並重新套用你的修改；請確認後再存。` : `已載入現行版 ${item.id}，請直接修改。`;
   paintEditDiff();
+}
+
+/** 第五十二輪：存檔時要帶給閘道的版本碼；undefined＝不知道（第五十二輪以前存在這台電腦的草稿） */
+function getBaseHash() {
+  const id = val('#f-id').trim();
+  if (savedVersion?.id === id) return savedVersion.hash;
+  if (legacyDraft) return undefined;
+  if (editing && editing.id === id) return editing.version;
+  return NEW_VERSION;
+}
+/** 閘道存好一版：之後再存就以這一版為準 */
+function onGatewaySaved(sub) {
+  if (!sub?.contentHash) return;
+  savedVersion = { id: sub.contentId, hash: sub.contentHash }; legacyDraft = false;
+  saveDraft(false);
+}
+
+/**
+ * 第五十二輪：「載入最新版（保留我的修改）」。item＝最新版（網站現行版或送審件目前這一版）、version＝它的版本碼。
+ * 做法：以我開啟時的版本（editing.original）為準，找出「我改過的欄位」與「對方改過的欄位」；
+ * 我改的、對方沒改的 ⇒ 套到最新版上；兩邊都改、而且不一樣 ⇒ 先用最新版（不悄悄蓋掉對方），把我的值列出來讓我自己決定。
+ * 新內容（沒有開啟時的版本可比）⇒ 不自動套用，我的那一版另存在這台電腦，並可下載。
+ * @returns {Promise<{ theirs: string[], mine: string[], conflicts: { field: string, label: string, yours: string }[], copied: boolean }>}
+ */
+async function reloadLatest(item, version, { source = 'site' } = {}) {
+  ED?.flush();
+  const mineFull = exportObj();
+  const before = editing?.original && editing.id === item.id ? editing.original : null;
+  try { store.set('cdc.admin.staleCopy', { id: mineFull.id, savedAt: new Date().toISOString(), item: mineFull }); } catch { /* 存不下就算了，畫面仍會列出我的值 */ }
+  const label = (k) => `${fieldLabel(k)}${fieldLabel(k) === k ? '' : `（${k}）`}`;
+  const show = (v) => (v == null ? '（空白）' : typeof v === 'string' ? v : JSON.stringify(v, null, 1));
+  if (!before) {
+    await startEdit(item.id, item, { version, source });
+    return { theirs: [], mine: [], conflicts: P.editDiff(mineFull, item).map((k) => ({ field: k, label: label(k), yours: show(mineFull[k]) })), copied: true };
+  }
+  const mineKeys = P.editDiff(mineFull, before);
+  const theirKeys = P.editDiff(P.liveItem(item), before);
+  const latest = P.liveItem(item);
+  const conflicts = mineKeys.filter((k) => theirKeys.includes(k) && !P.sameValue(mineFull[k], latest[k]));
+  const reapply = { ...latest };
+  for (const k of mineKeys) { if (conflicts.includes(k)) continue; if (mineFull[k] === undefined) delete reapply[k]; else reapply[k] = mineFull[k]; }
+  await startEdit(item.id, item, { version, source, reapply: mineKeys.length ? reapply : null });
+  return { theirs: theirKeys.map(label), mine: mineKeys.filter((k) => !conflicts.includes(k)).map(label), conflicts: conflicts.map((k) => ({ field: k, label: label(k), yours: show(mineFull[k]) })), copied: true };
 }
 /**
  * 第五十一輪：預處理的結果欄（關鍵字、摘要、結構化欄位）改以現行版的值帶入，畫面上看到的就是會存的：
@@ -655,6 +718,7 @@ function typeExtraHtml(f) {
 form.addEventListener('submit', (e) => { e.preventDefault(); ED?.flush(); if (!val('#f-body').trim() && !val('#f-title').trim()) { statusEl.textContent = '請先填寫標題或內文。'; $('#f-title').focus(); return; } statusEl.textContent = ''; runPreprocess(); });
 $('#btn-save').addEventListener('click', () => saveDraft(true));
 $('#btn-clear').addEventListener('click', () => {
+  savedVersion = null; legacyDraft = false; // 第五十二輪：清空 ⇒ 新內容
   simShown = false; store.del(KEY); sel = { chips: {}, manual: [], summary: '', st: {}, ack: false, stage: 'edit' }; A = null; llmDrafts = {}; idTouched = false; lastId = ''; ASSETS?.clear();
   writeForm({ type: 'faq', owner: getUnit() === 'all' ? undefined : getUnit(), audience: ['public'] }); applyTypeUI(true);
   resultEl.innerHTML = '<p class="adm-muted">已清空。</p>'; secEl.textContent = '尚未送出'; statusEl.textContent = '已清空草稿。';
@@ -877,6 +941,8 @@ const repaintResultSoon = debounce(() => { if (A) paintResultKeepFocus(); }, 300
   else if (saved && (saved.title || saved.body)) {
     if (saved.derived) sel = { ...sel, ...saved.derived };
     if (saved.editOf?.original && saved.editOf.base && saved.editOf.id === saved.id) { editing = saved.editOf; paintEditBox(); } // 修改中的草稿：仍以現行版為底
+    // 第五十二輪：上次存進系統的版本碼；第五十二輪以前的草稿沒有這一欄（也不知道依哪一版改的）⇒ 不送版本碼
+    if (!('gwVersion' in saved) || (editing && !editing.version)) legacyDraft = true; else savedVersion = saved.gwVersion ?? null;
     writeForm(saved);
     statusEl.textContent = `已還原上次草稿（${saved.savedAt ? new Date(saved.savedAt).toLocaleString('zh-TW', { hour12: false }) : ''}）`;
     if (sel.stage !== 'edit' || (saved.derived && Object.keys(saved.derived.chips ?? {}).length)) runPreprocess({ silent: true });
@@ -891,7 +957,12 @@ const repaintResultSoon = debounce(() => { if (A) paintResultKeepFocus(); }, 300
   document.addEventListener('click', (e) => { if (e.target?.id === 'btn-edit-cancel') { editing = null; paintEditBox(); store.del(KEY); location.href = url('/admin/publish/'); } });
   form.addEventListener('input', debounce(() => { if (editing) paintEditDiff(); }, 400));
   // 第三十輪：有寫入閘道就接上「送審與上線」面板（沒有就維持瀏覽器示範）
-  initPublishGateway({ exportObj, loadItem: (item) => startEdit(item.id, item), getContentId: () => val('#f-id').trim() });
-  window.__admPublish = { runPreprocess, exportObj, buildPackage, startEdit, get editing() { return editing; }, get editor() { return ED; }, get assets() { return ASSETS; }, get state() { return { sel, A }; }, get preview() { return PV; }, paneTab }; // 供自動化測試
+  initPublishGateway({
+    exportObj, loadItem: (item, meta) => startEdit(item.id, item, { version: meta?.contentHash, source: 'gateway' }), getContentId: () => val('#f-id').trim(),
+    // 第五十二輪：版本檢查（存檔帶版本碼、開啟時看網站版本有沒有更新、版本不符時載入最新版並保留修改）
+    getBaseHash, onSaved: onGatewaySaved, reloadLatest,
+    getEditTarget: () => (editing && editing.source === 'site' && editing.id === val('#f-id').trim() ? { id: editing.id, type: editing.original?.type, version: getBaseHash() } : null),
+  });
+  window.__admPublish = { runPreprocess, exportObj, buildPackage, startEdit, getBaseHash, reloadLatest, get editing() { return editing; }, get editor() { return ED; }, get assets() { return ASSETS; }, get state() { return { sel, A }; }, get preview() { return PV; }, paneTab }; // 供自動化測試
 })();
 void normPath; void today;
