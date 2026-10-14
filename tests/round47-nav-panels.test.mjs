@@ -7,7 +7,7 @@ import net from 'node:net';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
-import { govern, memWriter, config } from './helpers.mjs';
+import { govern, memWriter, config, distBasePath, distEnv } from './helpers.mjs';
 import { renderAllPages } from '../scripts/lib/pages.mjs';
 import { langAvailable } from '../scripts/lib/pages.mjs';
 import { DISEASE_MAX } from '../src/templates/public/_nav-panels.mjs';
@@ -39,7 +39,7 @@ const unescape = (s) => s.replace(/&amp;/g, '&');
 /** 站內網址 → 輸出檔路徑（去掉 basePath 與 #…） */
 const outPathOf = (href) => {
   let p = unescape(href).split('#')[0].split('?')[0];
-  if (config.basePath && p.startsWith(config.basePath)) p = p.slice(config.basePath.length);
+  if (config.basePath && p.startsWith(config.basePath)) p = p.slice(config.basePath.length); // 記憶體渲染（pin-env 釘住的預設 basePath），不是 dist
   return p || '/';
 };
 
@@ -189,11 +189,11 @@ test('端到端：桌機點擊開合、同時只開一個、Esc 與點外面關�
   const srv = spawn(process.execPath, [path.join(ROOT, 'scripts/serve.mjs'), String(port)], {
     cwd: ROOT,
     stdio: 'ignore',
-    env: { ...process.env, DIST_DIR: DIST },
+    env: distEnv(DIST),
   });
   const browser = await chromium.launch({ executablePath: CHROME, args: ['--no-sandbox'] });
   try {
-    const base = `http://localhost:${port}${config.basePath}`;
+    const base = `http://localhost:${port}${distBasePath(DIST)}`;
     for (let i = 0; i < 50; i++) {
       try {
         if ((await fetch(`${base}/`)).ok) break;

@@ -15,7 +15,7 @@ import * as llm from '../src/client/answer/llm.js';
 import * as llmKey from '../src/client/answer/llm-key.js';
 import { minifyDir } from '../scripts/lib/minify.mjs';
 import { checkJsBudget, DEFAULT_ENGINE_KB, DEFAULT_PUBLIC_KB } from '../scripts/lib/js-budget.mjs';
-import { config } from '../site.config.mjs';
+import { distBasePath } from './helpers.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = process.env.DIST_DIR ? path.resolve(process.env.DIST_DIR) : path.join(ROOT, 'dist');
@@ -118,7 +118,7 @@ test('dist：答案頁壓縮後在新預算內、不含 llm.js、有 source map'
   if (!fs.existsSync(ask)) return tc.skip('dist 尚未建置');
   const core = fs.readFileSync(path.join(DIST, 'assets/js/answer/core.js'), 'utf8');
   if (core.includes('// 答案引擎核心')) return tc.skip('dist 是 MINIFY=off 建置');
-  const r = checkJsBudget(DIST, { basePath: config.basePath });
+  const r = checkJsBudget(DIST, { basePath: distBasePath(DIST) });
   const row = r.rows.find((x) => x.page === 'ask/index.html');
   assert.ok(row.engine && row.bytes <= DEFAULT_ENGINE_KB * 1024, `ask ${row.bytes}`);
   assert.ok(r.engine.max <= DEFAULT_ENGINE_KB * 1024, `最大引擎頁 ${r.engine.maxPage} ${r.engine.max}`);

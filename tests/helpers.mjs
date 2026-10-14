@@ -1,4 +1,7 @@
 // 測試共用：載入站台、注入合成內容、記憶體 write。（不以 .test.mjs 結尾，不會被 node --test 直接執行）
+import './pin-env.mjs'; // 必須是第一個 import：在 site.config.mjs 讀環境變數之前釘住 BASE_PATH 等（第四十九輪，見 pin-env.mjs）
+import fs from 'node:fs';
+import path from 'node:path';
 import { config } from '../site.config.mjs';
 import { loadSite, sourceHashOf } from '../scripts/lib/load.mjs';
 import { applyGovernance } from '../scripts/lib/governance.mjs';
@@ -55,3 +58,21 @@ export function memWriter() {
 }
 
 export { config };
+
+/**
+ * 已建置的 dist 實際用的 basePath（e2e 測試用）。
+ * 模板測試的 basePath 被 pin-env.mjs 釘在預設值，但 e2e 讀的是「別人先建好的 dist」，那份可能是 BASE_PATH='' 建的（為了讓靜態伺服器不必處理子路徑）。
+ * 真相在 dist 自己：每頁 <html data-base="…">（與前端 data.js 讀的同一個屬性）。讀不到（dist 不存在）時回傳站台預設 basePath。
+ */
+export function distBasePath(distDir) {
+  try {
+    const m = /<html\b[^>]*\sdata-base="([^"]*)"/.exec(fs.readFileSync(path.join(distDir, 'index.html'), 'utf8'));
+    if (m) return m[1];
+  } catch { /* dist 不存在：呼叫端本來就會 skip */ }
+  return config.basePath;
+}
+
+/** 啟動 scripts/serve.mjs 等子行程用的環境：明確帶 dist 的 BASE_PATH，不靠被釘選過的 process.env */
+export function distEnv(distDir, extra = {}) {
+  return { ...process.env, DIST_DIR: distDir, BASE_PATH: distBasePath(distDir), ...extra };
+}

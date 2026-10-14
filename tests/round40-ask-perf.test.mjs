@@ -12,6 +12,7 @@ import { matcherFor } from '../src/client/answer/lexicon.js';
 import { ENGINE_PRIMARY, ENGINE_SECONDARY, indexShardNames } from '../src/client/answer/deps-manifest.js';
 import { checkJsBudget, checkAskDataBudget, DEFAULT_ASK_DATA_KB, DEFAULT_ASK_DATA_PRO_KB, DEFAULT_ENGINE_KB } from '../scripts/lib/js-budget.mjs';
 import { config } from '../site.config.mjs';
+import { distBasePath } from './helpers.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const DIST = process.env.DIST_DIR ? path.resolve(process.env.DIST_DIR) : path.join(ROOT, 'dist');
@@ -118,7 +119,7 @@ test('dist：search-index 依語言分片——各片的聯集＝完整檔、每
 
 test('dist：答案頁立即載入的 JS 不含引擎；提問後合計仍在 240 KB 引擎預算內；資料傳輸量在門檻內', (tc) => {
   if (!hasDist) return tc.skip('dist 尚未建置');
-  const r = checkJsBudget(DIST, { basePath: config.basePath });
+  const r = checkJsBudget(DIST, { basePath: distBasePath(DIST) });
   const ask = r.rows.find((x) => x.page === 'ask/index.html');
   assert.ok(ask.engine, '答案頁仍歸在「含答案引擎的頁」');
   assert.ok(ask.total - ask.bytes > 60 * 1024, `引擎閉包（提問時才載入）約 ${(ask.total - ask.bytes) / 1024} KB`);
@@ -145,7 +146,7 @@ async function withBrowser(tc, fn) {
   if (!hasDist) return tc.skip('dist 尚未建置');
   if (!fs.existsSync(PW) || !fs.existsSync(CHROME)) return tc.skip('沒有 Playwright／Chromium');
   const { chromium } = await import(pathToFileURL(PW).href);
-  const base = config.basePath;
+  const base = distBasePath(DIST); // 讀 dist 自己的 data-base（第四十九輪）
   const srv = http.createServer((req, res) => {
     let u = decodeURIComponent(req.url.split('?')[0]);
     if (base && u.startsWith(base)) u = u.slice(base.length) || '/';

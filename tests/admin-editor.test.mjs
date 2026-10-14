@@ -20,6 +20,7 @@ import * as P from '../src/client/admin/preprocess.js';
 import { makeSession, DEMO_ACCOUNTS } from '../src/client/admin/auth-rules.js';
 const { scanSvg, sniffMismatch, svgSize } = P;
 import { config } from '../site.config.mjs';
+import { distBasePath, distEnv } from './helpers.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const md2html = (m, o = {}) => mdToHtml(m, { marked, ...o });
@@ -484,12 +485,12 @@ test('端到端：所見即所得 → Markdown → 預覽 → 加 PNG 與 PDF �
   if (!fs.existsSync(PW) || !fs.existsSync(CHROME)) return t.skip('沒有 Playwright／Chromium');
   const { chromium } = await import(pathToFileURL(PW).href);
   const port = await freePort();
-  const srv = spawn(process.execPath, [path.join(ROOT, 'scripts/serve.mjs'), String(port)], { cwd: ROOT, stdio: 'ignore', env: { ...process.env, DIST_DIR: DIST } });
+  const srv = spawn(process.execPath, [path.join(ROOT, 'scripts/serve.mjs'), String(port)], { cwd: ROOT, stdio: 'ignore', env: distEnv(DIST) });
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'adm-e2e-'));
   const browser = await chromium.launch({ executablePath: CHROME, args: ['--no-sandbox'] });
   const errors = [];
   try {
-    const base = `http://localhost:${port}${config.basePath}`;
+    const base = `http://localhost:${port}${distBasePath(DIST)}`;
     for (let i = 0; i < 50; i++) { try { if ((await fetch(`${base}/admin/publish/`)).ok) break; } catch { /* wait */ } await new Promise((r) => setTimeout(r, 100)); }
     const ctx = await browser.newContext({ viewport: { width: 1360, height: 1100 }, acceptDownloads: true });
     const page = await ctx.newPage();
