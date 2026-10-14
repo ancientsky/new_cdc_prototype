@@ -7,6 +7,7 @@ import { zipBlob } from './zip-store.js';
 import { initPagePreview } from './page-preview.js';
 import { mdToHtml } from './md-convert.js';
 import { initPublishGateway } from './publish-gateway.js';
+import { fieldLabel } from './field-labels.js';
 
 const D = readEmbedded('adm-publish-data', {});
 const KEY = 'cdc.admin.draft';
@@ -32,7 +33,7 @@ const LIMITS = P.normalizeLimits(window.CDC_ASSETS_LIMITS ?? D.assetsLimits);
 function llmKey() { try { return sessionStorage.getItem('cdc.llmKey') || ''; } catch { return ''; } }
 const LANES = P.normalizeLanes(D.lanes); // 發布車道（建置時內嵌 content/governance/lanes.json；缺檔用契約預設）
 let simShown = false; // 已按過「模擬送出」：重繪結果時一併重畫時間軸
-let editing = null; // 修改已上架內容：{ id, original }（?edit={id}；匯出時以 P.mergeEdit 帶回表單沒有的欄位）
+let editing = null; // 修改已上架內容：{ id, original, base, source }（?edit={id}；匯出時以 P.mergeEdit 把「base→目前表單」的差異套到現行版上，第五十一輪）
 
 // ---------- 表單讀寫 ----------
 const val = (id) => $(id).value;
@@ -253,7 +254,7 @@ function fillVersionLabel() {
 
 // ---------- 草稿 ----------
 function saveDraft(msg) {
-  const d = { ...readForm(), derived: sel, savedAt: new Date().toISOString() };
+  const d = { ...readForm(), derived: sel, savedAt: new Date().toISOString(), ...(editing?.base ? { editOf: editing } : {}) }; // 第五十一輪：修改中的草稿要記得現行版與 base，否則重新整理後會被當成新內容整份覆寫
   store.set(KEY, d);
   const hm = new Date().toLocaleTimeString('zh-TW', { hour12: false, hour: '2-digit', minute: '2-digit' });
   if (msg) { statusEl.textContent = `已儲存草稿（${hm}，僅存本機瀏覽器）`; }
@@ -365,9 +366,17 @@ async function runPreprocess({ silent = false } = {}) {
     ...(isMedia ? { auditText: P.spokenToDigits(st.extra.transcript), auditLabel: '逐字稿' } : {}),
   });
   const locked = P.lockedTerms(text, M.glossary);
+  const keptBefore = editing && !silent && A ? derive().keywords : null; // 修改模式重新預處理：之前留著的關鍵字
   A = { entities, structured, summary0, checks, locked, M, text };
-  // 預設勾選：已對應與主題詞勾選、未對應詞不勾
-  if (!silent || !Object.keys(sel.chips).length) {
+  if (keptBefore) {
+    // 第五十一輪：修改已上架內容時重新預處理，不覆蓋同事（或現行版）的選擇：摘要保留、空的也不自動填（要換請按「重新擬摘要」），
+    // 已勾的詞照舊；內文改了而不再出現的關鍵字移到「手動新增」，不會悄悄消失；新出現的詞照常預設勾選，顯示在結果欄由同事決定。
+    for (const m of entities.mapped) sel.chips[chipKey(m)] ??= true; for (const u of entities.unmapped) sel.chips[`u:${u.term}`] ??= false;
+    for (const s of structured) sel.st[s.key] ??= true;
+    const now = new Set(derive().keywords);
+    for (const k of keptBefore) if (!now.has(k) && !sel.manual.includes(k)) sel.manual.push(k);
+  } else if (!silent || !Object.keys(sel.chips).length) {
+    // 預設勾選：已對應與主題詞勾選、未對應詞不勾
     sel.chips = {}; for (const m of entities.mapped) sel.chips[chipKey(m)] = true; for (const u of entities.unmapped) sel.chips[`u:${u.term}`] = false;
     sel.st = {}; for (const s of structured) sel.st[s.key] = true;
     sel.summary = summary0;
@@ -409,19 +418,25 @@ function derive() {
   for (const s of A?.structured ?? []) if (sel.st[s.key]) structured[s.key] = s.value;
   return { keywords: [...kw], diseases: [...dis], vaccines: [...vac], countries: [...cty], structured };
 }
-function exportObj() {
+/** 表單 → 一份完整的 content JSON（新內容就用這份） */
+function exportRaw() {
   const f = readForm();
   const dv = derive();
   const dm = (D.diseaseMaster ?? []).find((d) => d.id === f.extra.disease);
   const vm = (D.vaccinesMaster ?? []).find((v) => v.id === f.extra.vaccine);
   const extra = { ...f.extra, ...(f.type === 'disease' && dm ? { slug: dm.slug, nameEn: dm.nameEn, legalCategory: dm.legalCategory } : {}), ...(f.type === 'vaccine' && vm ? { slug: vm.slug, nameEn: vm.nameEn } : {}) };
-  const out = P.buildExport({
+  return P.buildExport({
     type: f.type, id: f.id, title: f.title, body: f.body, owner: f.owner, steward: editing?.original?.steward ?? `${unitLabel(f.owner) || ''}承辦人`, reviewPeriodMonths: f.period === '' ? 0 : f.period,
     audience: f.audience, tasks: f.tasks, basedOn: f.basedOn, langs: f.langs, summary: sel.summary, keywords: dv.keywords, diseases: dv.diseases, vaccines: dv.vaccines, countries: dv.countries,
     structured: dv.structured, extra, today: D.today, submitted: sel.stage === 'submitted', publishAt: f.publishAt, urgent: f.urgent && P.urgentAllowed(f.type, LANES),
     assets: P.buildAssetsJson(ASSETS?.exportList() ?? []),
   });
-  return editing?.original && editing.id === f.id ? P.mergeEdit(out, editing.original) : out;
+}
+/** 要存的 JSON：修改已上架內容時，以現行版為底、只套用同事改過的欄位（base＝表單剛帶入時的匯出；還沒記下 base 時視同沒改） */
+function exportObj() {
+  const out = exportRaw();
+  if (!editing?.original || editing.id !== out.id) return out;
+  return P.mergeEdit(out, editing.original, editing.base ?? out);
 }
 
 // ---------- 修改已上架內容（?edit={id}）：公開頁頁尾「同事修改這頁」進來 ----------
@@ -449,29 +464,52 @@ function paintEditBox() {
     return;
   }
   box.innerHTML = `<strong>修改已上架的內容</strong>${o.path ? `<a href="${esc(url(o.path))}" target="_blank" rel="noopener">${esc(o.title ?? o.id)}</a>` : esc(o.title ?? o.id)} <code>${esc(o.id)}</code>（發布 ${esc(o.publishedAt ?? '—')}，最後審閱 ${esc(o.reviewedAt ?? '—')}）。
-  表單已帶入現行版；<span data-gw-hide>改好後照一般流程「送出預處理」→「產生上架包」，上架包會<strong>覆寫同一個檔</strong> <code>${esc(file)}</code>，PR 只會顯示你改的那幾行。</span><span class="adm-gw-only">改好後按下方「儲存草稿」或「送審」，審核人只會看到你改的那幾個欄位。</span>發布日不變、審閱日改為今天；白名單與舊站網址等表單沒有的欄位會原樣保留。
+  表單已帶入現行版；<span data-gw-hide>改好後照一般流程「送出預處理」→「產生上架包」，上架包會<strong>覆寫同一個檔</strong> <code>${esc(file)}</code>，PR 只會顯示你改的那幾行。</span><span class="adm-gw-only">改好後按下方「儲存草稿」或「送審」，審核人只會看到你改的那幾個欄位。</span>存檔時以現行版為底，<strong>只改你動過的欄位</strong>；摘要、關鍵字、各語言譯文與複核紀錄、白名單、舊站網址等，沒動就一個字都不會變。發布日不變；狀態與最後審閱日一定會更新。
   <span id="edit-diff" class="adm-muted"></span> <button type="button" class="adm-btn adm-btn--ghost" id="btn-edit-cancel">取消修改（清空）</button>`;
 }
 function paintEditDiff() {
   const el = $('#edit-diff');
   if (!el || !editing) return;
-  const changed = P.editDiff(exportObj(), editing.original).filter((k) => k !== 'assets');
-  el.textContent = changed.length ? `目前改動的欄位：${changed.join('、')}` : '目前與現行版相同。';
+  const changed = P.editDiff(exportObj(), editing.original); // 第五十一輪：列出所有不同的欄位（含附件、語言、摘要、關鍵字），不再略過任何欄位
+  const derived = P.EDIT_DERIVED.map(fieldLabel).join('、');
+  el.textContent = changed.length ? `目前改動的欄位：${changed.map((k) => `${fieldLabel(k)}${fieldLabel(k) === k ? '' : `（${k}）`}`).join('、')}。另外儲存時會更新：${derived}。` : `內容與現行版相同（儲存時只會更新：${derived}）。`;
+  el.dataset.changed = changed.join(' ');
 }
 async function startEdit(id, preloaded = null) {
   statusEl.textContent = `正在載入 ${id} 的現行版…`;
   const item = preloaded ?? await fetchForEdit(id); // 第三十輪：寫入閘道送來的內容（?gw=）直接帶入
   if (!item) { editing = null; statusEl.textContent = `找不到已上架內容 ${id}（只能修改已發布且在 API 裡的內容；新聞只含近 200 則）。`; writeForm({ type: 'faq', id, idTouched: true }); applyTypeUI(true); return; }
-  editing = { id: item.id, original: item, source: preloaded ? 'gateway' : 'site' };
+  editing = { id: item.id, original: item, base: null, source: preloaded ? 'gateway' : 'site' };
   const f = P.itemToForm(item);
   contentIds = []; datasetIds = [];
-  writeForm(f);
+  sel = { chips: {}, manual: [], summary: '', st: {}, ack: false, stage: 'edit' }; llmDrafts = {};
+  writeForm({ ...f, assets: [] }); // 附件面板只放這次新選的檔；現行版附件由 mergeEdit 保留
   idTouched = true;
   applyTypeUI(false); fillSupersedes(); $('#x-supersedes').value = f.extra.supersedes ?? '';
   paintEditBox();
+  statusEl.textContent = `正在分析 ${item.id} 的現行版…`;
+  await runPreprocess({ silent: true });
+  seedFromLive(P.liveItem(item));
+  editing.base = exportRaw(); // 「表單剛帶入、還沒動過」的匯出：之後只有跟它不同的欄位才算同事改的
+  paintResult(); saveDraft(false);
   statusEl.textContent = `已載入現行版 ${item.id}，請直接修改。`;
-  runPreprocess({ silent: true });
   paintEditDiff();
+}
+/**
+ * 第五十一輪：預處理的結果欄（關鍵字、摘要、結構化欄位）改以現行版的值帶入，畫面上看到的就是會存的：
+ * 關鍵字＝現行版的關鍵字（對得上的詞勾選，其餘列在「手動新增」）；摘要＝現行版的摘要；結構化欄位只勾與現行版相同的值。
+ * 系統建議的摘要要按「重新擬摘要」才會換上去。
+ */
+function seedFromLive(o) {
+  const kws = new Set(o.keywords ?? []);
+  const labels = new Set();
+  sel.chips = {};
+  for (const m of A?.entities.mapped ?? []) { sel.chips[chipKey(m)] = kws.has(m.label); labels.add(m.label); }
+  for (const u of A?.entities.unmapped ?? []) { sel.chips[`u:${u.term}`] = kws.has(u.term); labels.add(u.term); }
+  sel.manual = (o.keywords ?? []).filter((k) => !labels.has(k));
+  sel.st = {}; for (const st of A?.structured ?? []) sel.st[st.key] = o.structured?.[st.key] != null && String(o.structured[st.key]) === String(st.value);
+  sel.summary = o.summary ?? '';
+  sel.stage = 'edit'; sel.ack = false;
 }
 function missAll(obj) {
   const gone = (ASSETS?.missingFiles() ?? []).map((f) => `檔案 ${f}：重新整理後需要重新選取`);
@@ -511,10 +549,10 @@ function paintResult() {
     ${entities.unmapped.length || dep ? `<h4 class="adm-muted" style="margin:10px 0 4px">未對應詞與停用詞</h4><ul class="adm-chips">${entities.unmapped.map(unm).join('')}${dep}</ul>` : ''}
     <div class="adm-row" style="margin-top:8px"><div class="adm-field" style="flex:1 1 200px"><label for="kw-add" class="adm-muted">手動新增關鍵字</label><input type="text" id="kw-add" placeholder="輸入後按 Enter"></div><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" id="kw-add-btn">加入</button></div>
     <ul class="adm-chips" id="kw-manual">${sel.manual.map((k, i) => `<li class="adm-chip">${esc(k)}<button type="button" data-kwrm="${i}" aria-label="移除 ${esc(k)}">×</button></li>`).join('')}</ul>
-    <p class="adm-muted">勾選者會寫入 content JSON 的 <code>keywords</code>／<code>diseases</code>／<code>vaccines</code>／<code>countries</code>（目前 ${dv.keywords.length} 個關鍵字）。</p></section>
+    <p class="adm-muted">勾選者會寫入 content JSON 的 <code>keywords</code>／<code>diseases</code>／<code>vaccines</code>／<code>countries</code>（目前 ${dv.keywords.length} 個關鍵字）。${editing ? '修改模式：已帶入現行版的關鍵字；只有你勾選、取消或新增的會改變，現行版其他的相關疾病、疫苗、國家照舊。' : ''}</p></section>
   <section aria-labelledby="r-b"><h3 id="r-b">(b) 摘要與 meta description 建議</h3>
     <div class="adm-field"><label for="sum" class="adm-muted">抽取式（第一句或最高資訊密度句），可編輯</label><textarea id="sum" rows="3" style="min-height:70px">${esc(sel.summary)}</textarea><span class="adm-counter ${sel.summary.length > 120 ? 'adm-counter--over' : ''}" id="sum-count">${sel.summary.length} / 120 字</span></div>
-    <button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" id="sum-reset">重新擬摘要</button></section>
+    <button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" id="sum-reset">重新擬摘要</button>${editing ? '<p class="adm-muted" id="sum-edit-note">修改模式：這是現行版的摘要。按「重新擬摘要」才會換成系統建議。</p>' : ''}</section>
   <section aria-labelledby="r-c"><h3 id="r-c">(c) 結構化欄位建議</h3>
     ${structured.length ? `<ul class="adm-kv">${structured.map((s) => `<li><label><input type="checkbox" data-st="${esc(s.key)}" ${sel.st[s.key] ? 'checked' : ''}> <span>${esc(s.label)}：<code>${esc(s.value)}</code> <span class="adm-muted">原文「${esc(s.evidence)}」→ <code>structured.${esc(s.key)}</code></span></span></label></li>`).join('')}</ul>` : '<p class="adm-muted">內文未找到可抽出的數字欄位（潛伏期、時限、年份、劑數、年齡）。</p>'}</section>
   <section aria-labelledby="r-d"><h3 id="r-d">(d) 一致性檢查</h3>
@@ -526,6 +564,7 @@ function paintResult() {
   ${typeExtraHtml(f)}
   <section aria-labelledby="r-e"><h3 id="r-e">(e) 多語初稿</h3>
     <div class="adm-tablewrap"><table class="adm-table"><thead><tr><th>語言</th><th>初稿狀態</th><th>術語鎖定（詞彙主檔 locked）</th><th>複核規則</th></tr></thead><tbody>${rows}</tbody></table></div>
+    ${editing ? '<p class="adm-muted" id="lang-edit-note">修改模式：現行版各語言的譯文與複核紀錄原樣保留，只有你取消或新增的語言會改變。改了中文內文時，既有譯文會標為「中文已更新，譯文待複核」。</p>' : ''}
     <p class="adm-muted">鎖定詞不得由機器自由翻譯，一律替換為主檔譯名。${key ? '偵測到本機 BYOK 金鑰，可由 LLM 模式產生初稿。' : '無 LLM 時只列出會鎖定的詞；初稿待啟用 LLM 模式（/ask/ 右上「進階」輸入自己的 key）後產生。'}</p></section>
   <section aria-labelledby="r-f" data-gw-hide><h3 id="r-f">(f) 送複核</h3>
     <ol class="adm-steps">${steps.map(([a, b], i) => `<li class="${i < stage - 1 ? 'is-done' : i === stage - 1 ? 'is-now' : 'is-wait'}">${a}<small>${b}</small></li>`).join('')}</ol>
@@ -545,6 +584,7 @@ function paintResult() {
     <ol class="adm-sop" id="pkg-git">${gitSteps(obj)}</ol>
     <h4 class="adm-sub">content JSON 預覽</h4>
     <pre class="adm-pre" id="exp-pre" tabindex="0">${esc(JSON.stringify(obj, null, 2))}</pre></section>`;
+  if (editing) paintEditDiff();
 }
 // ---------- 模擬送出（只是展示；ARCHITECTURE §17.4）----------
 const SIM_STATUS = { ok: ['adm-badge--ok', '完成'], wait: ['adm-badge--warn', '等待中'], fail: ['adm-badge--bad', '未通過'], skip: ['adm-badge--gray', '未執行'] };
@@ -718,6 +758,7 @@ function refreshExport() {
   const pre = $('#exp-pre'); if (pre) pre.textContent = JSON.stringify(obj, null, 2);
   const miss = missAll(obj);
   const mb = $('#miss-box'); if (mb && !miss.length) paintResult();
+  if (editing) paintEditDiff();
 }
 resultEl.addEventListener('click', async (e) => {
   const t = e.target.closest('button'); if (!t) return;
@@ -835,6 +876,7 @@ const repaintResultSoon = debounce(() => { if (A) paintResultKeepFocus(); }, 300
   if (qe) { startEdit(qe.trim()); }
   else if (saved && (saved.title || saved.body)) {
     if (saved.derived) sel = { ...sel, ...saved.derived };
+    if (saved.editOf?.original && saved.editOf.base && saved.editOf.id === saved.id) { editing = saved.editOf; paintEditBox(); } // 修改中的草稿：仍以現行版為底
     writeForm(saved);
     statusEl.textContent = `已還原上次草稿（${saved.savedAt ? new Date(saved.savedAt).toLocaleString('zh-TW', { hour12: false }) : ''}）`;
     if (sel.stage !== 'edit' || (saved.derived && Object.keys(saved.derived.chips ?? {}).length)) runPreprocess({ silent: true });
