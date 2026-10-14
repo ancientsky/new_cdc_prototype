@@ -6,13 +6,13 @@
 // [名稱（v1/ 之後、不含 .json）, 讀不到時的預設值, 可選（先查 v1/index.json 有沒有列出，沒列出就不發請求）]
 export const ENGINE_PRIMARY = [
   ['situation', null],
-  ['clarifications', []],
+  ['answer/clarifications', []], // 第五十輪：只含已審閱譯文（一級內容不顯示機器初稿）
   ['glossary', []],
   ['diseases', []],
-  ['vaccines', []],
+  ['answer/vaccines', []], // 第五十輪：精簡副本
   ['countries', []],
   ['answer/datasets', []], // 第四十九輪：精簡副本（不含譯文，見 emit-api.mjs）
-  ['faq', []],
+  ['answer/faq', []], // 第五十輪：精簡副本
   ['units', []],
   ['governance/ai-status', {}],
 ];
