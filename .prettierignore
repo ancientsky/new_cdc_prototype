@@ -75,3 +75,6 @@ eval/**/*.mjs
 # 第四十七輪：主選單小型面板（docs/navigation.md）
 !src/templates/public/_nav-panels.mjs
 !tests/round47-nav-panels.test.mjs
+# 第四十九輪：換句話說挑戰集（docs/eval-challenge.md）
+!eval/run-challenge.mjs
+!tests/round49-challenge.test.mjs
