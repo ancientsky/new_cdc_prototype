@@ -157,5 +157,291 @@
   "professional": {
     "specimen": "血清檢測 anti-HAV IgM；必要時採糞便或血清進行 RT-PCR 與基因分型。",
     "notifyNote": "第二類法定傳染病，應於 24 小時內通報；病例若為餐飲從業人員，衛生局將進行食品安全調查。"
+  },
+  "i18n": {
+    "en": {
+      "title": "Acute viral hepatitis A",
+      "summary": "Hepatitis A spreads through contaminated food or water, or through oral–anal sex. Adults often develop jaundice. Careful food hygiene and vaccination prevent it effectively; children born from 2017 onward are covered by the government-funded vaccine.",
+      "keyFacts": {
+        "incubation": "15–50 days (average 28–30 days)",
+        "symptoms": "Fever, tiredness, loss of appetite, nausea, dark tea-coloured urine, jaundice",
+        "transmission": "Faecal–oral (contaminated food or water); oral–anal sex",
+        "prevention": "Vaccination, washing hands before meals and after using the toilet, avoiding raw food",
+        "notify": "Within 24 hours"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "What to do",
+          "cards": [
+            {
+              "if": "have dark tea-coloured urine or yellow eyes or skin",
+              "title": "See a doctor for a blood test as soon as possible",
+              "text": "See a doctor as soon as possible and tell them what you have eaten and where you have travelled in the past two months. The doctor will arrange liver function tests and a hepatitis A antibody test."
+            },
+            {
+              "if": "a family member is confirmed to have hepatitis A",
+              "title": "Be assessed for vaccination within 2 weeks",
+              "text": "Household members who are not immune can lower their chance of illness by getting vaccinated within 2 weeks of exposure."
+            },
+            {
+              "if": "are travelling to an area with poor sanitation",
+              "title": "Get vaccinated before you travel",
+              "text": "Get the first dose of hepatitis A vaccine at least 2 weeks before departure. During the trip, avoid raw or cold foods and drink only boiled or bottled water."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Symptoms and warning signs",
+          "markdown": "Common symptoms are fever, tiredness, loss of appetite, nausea and vomiting, and stomach discomfort. After a few days, **dark tea-coloured urine and jaundice** (yellow skin and eyes) appear.\n\nInfection in children under 6 usually causes no symptoms; the older the person, the more obvious the symptoms. Most people recover within a few weeks. Infection gives lifelong immunity and **never becomes chronic hepatitis**, but a small number of adults may develop fulminant hepatitis.",
+          "warning": "Changes in consciousness, drowsiness, obvious bleeding or rapidly deepening jaundice may mean fulminant hepatitis. Seek medical care immediately."
+        },
+        {
+          "key": "transmission",
+          "heading": "How it spreads",
+          "markdown": "It spreads mainly by the **faecal–oral route**: eating food or drinking water contaminated with the virus, for example raw shellfish, undercooked food, or food handled by someone who has not washed their hands. It can also spread through **oral–anal sex**.\n\nPeople are most infectious from 2 weeks before illness starts to 1 week after jaundice appears."
+        },
+        {
+          "key": "prevention",
+          "heading": "Prevention",
+          "markdown": "- **Get the hepatitis A vaccine**: 2 doses 6 months apart give more than 95% protection.\n- Wash hands with soap before meals, after using the toilet, and before handling food.\n- Avoid raw food, especially shellfish; drink boiled water.\n- During sex, avoid oral–anal contact and use condoms."
+        },
+        {
+          "key": "treatment",
+          "heading": "Diagnosis and treatment",
+          "markdown": "There is no specific treatment. Care is supportive: rest, and enough food and fluids. Avoid alcohol and unnecessary medicines to reduce the load on the liver. Patients should not prepare food for others for 1 week after the illness starts."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vaccine",
+          "markdown": "Government-funded group: children **born on or after 1 January 2017**, who receive 1 dose at 12 months and 1 dose at 18 months; also schoolchildren in specific areas such as mountain townships and offshore islands, and high-risk groups. Other adults can receive 2 doses at their own expense, 6–12 months apart."
+        },
+        {
+          "key": "situation",
+          "heading": "Current situation and statistics",
+          "markdown": "Cases in Taiwan are mostly sporadic. There has been a cluster linked to oral–anal sex."
+        },
+        {
+          "key": "faq",
+          "heading": "FAQ"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Viêm gan A cấp tính do vi-rút",
+      "summary": "Viêm gan A lây qua thực phẩm, nước uống bị ô nhiễm hoặc quan hệ miệng – hậu môn. Người lớn nhiễm bệnh thường bị vàng da. Giữ vệ sinh ăn uống và tiêm vắc-xin giúp phòng ngừa hiệu quả; trẻ sinh từ năm 2017 trở đi thuộc đối tượng tiêm chủng do nhà nước chi trả.",
+      "keyFacts": {
+        "incubation": "15–50 ngày (trung bình 28–30 ngày)",
+        "symptoms": "Sốt, mệt mỏi, chán ăn, buồn nôn, nước tiểu màu trà đậm, vàng da",
+        "transmission": "Đường phân – miệng (thực phẩm, nước uống bị ô nhiễm), quan hệ miệng – hậu môn",
+        "prevention": "Tiêm vắc-xin, rửa tay trước khi ăn và sau khi đi vệ sinh, tránh ăn đồ sống",
+        "notify": "Trong vòng 24 giờ"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "Tôi nên làm gì",
+          "cards": [
+            {
+              "if": "nước tiểu màu trà đậm, lòng trắng mắt hoặc da vàng",
+              "title": "Đi khám và xét nghiệm máu sớm nhất có thể",
+              "text": "Hãy đi khám sớm nhất có thể và cho bác sĩ biết về ăn uống và lịch sử đi lại trong hai tháng qua. Bác sĩ sẽ chỉ định xét nghiệm chức năng gan và kháng thể viêm gan A."
+            },
+            {
+              "if": "người nhà được xác nhận mắc viêm gan A",
+              "title": "Đánh giá việc tiêm vắc-xin trong vòng 2 tuần",
+              "text": "Người sống chung trong nhà chưa có miễn dịch, tiêm vắc-xin trong vòng 2 tuần sau phơi nhiễm có thể giảm khả năng phát bệnh."
+            },
+            {
+              "if": "sắp đến nơi có điều kiện vệ sinh kém",
+              "title": "Tiêm vắc-xin trước khi ra nước ngoài",
+              "text": "Tiêm liều 1 vắc-xin viêm gan A ít nhất 2 tuần trước khi khởi hành; trong chuyến đi không ăn đồ sống, đồ lạnh và chỉ uống nước đun sôi hoặc nước đóng chai."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Triệu chứng và dấu hiệu cảnh báo",
+          "markdown": "Các triệu chứng thường gặp là sốt, mệt mỏi, chán ăn, buồn nôn, nôn, khó chịu ở bụng; vài ngày sau xuất hiện **nước tiểu màu trà đậm và vàng da** (da và lòng trắng mắt vàng).\n\nTrẻ dưới 6 tuổi nhiễm bệnh thường không có triệu chứng; tuổi càng lớn triệu chứng càng rõ. Phần lớn khỏi trong vài tuần, sau nhiễm có miễn dịch suốt đời, **không trở thành viêm gan mạn tính**, nhưng một số ít người lớn có thể bị viêm gan tối cấp.",
+          "warning": "Thay đổi ý thức, li bì, có xu hướng chảy máu rõ rệt hoặc vàng da tăng nhanh có thể là viêm gan tối cấp, hãy đi khám ngay."
+        },
+        {
+          "key": "transmission",
+          "heading": "Lây truyền như thế nào",
+          "markdown": "Chủ yếu lây qua **đường phân – miệng**: ăn thực phẩm hoặc uống nước bị nhiễm vi-rút, ví dụ ăn sống nhuyễn thể, thức ăn chưa nấu chín hoặc người chế biến thức ăn không rửa tay. Cũng có thể lây qua **quan hệ miệng – hậu môn**.\n\nKhả năng lây mạnh nhất từ 2 tuần trước khi phát bệnh đến 1 tuần sau khi xuất hiện vàng da."
+        },
+        {
+          "key": "prevention",
+          "heading": "Phòng ngừa",
+          "markdown": "- **Tiêm vắc-xin viêm gan A**: 2 liều cách nhau 6 tháng, khả năng bảo vệ trên 95%.\n- Rửa tay bằng xà phòng trước khi ăn, sau khi đi vệ sinh và trước khi chế biến thức ăn.\n- Tránh ăn đồ sống, đặc biệt là nhuyễn thể; uống nước đã đun sôi.\n- Khi quan hệ tình dục, tránh tiếp xúc miệng – hậu môn và dùng bao cao su."
+        },
+        {
+          "key": "treatment",
+          "heading": "Chẩn đoán và điều trị",
+          "markdown": "Không có thuốc đặc hiệu, chủ yếu điều trị hỗ trợ: nghỉ ngơi, bổ sung dinh dưỡng và nước. Tránh rượu bia và các thuốc không cần thiết để giảm gánh nặng cho gan. Người bệnh không nên chế biến thức ăn cho người khác trong 1 tuần sau khi phát bệnh."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vắc-xin",
+          "markdown": "Đối tượng do nhà nước chi trả: trẻ **sinh từ ngày 1 tháng 1 năm 2017 trở đi**, tiêm 1 liều lúc tròn 12 tháng và 1 liều lúc 18 tháng; cùng học sinh ở một số khu vực đặc biệt như các hương miền núi, đảo xa và các đối tượng nguy cơ cao. Những người lớn khác có thể tự chi trả tiêm 2 liều, cách nhau 6–12 tháng."
+        },
+        {
+          "key": "situation",
+          "heading": "Tình hình hiện nay và thống kê",
+          "markdown": "Các ca bệnh trong nước chủ yếu rải rác; từng có chùm ca liên quan đến quan hệ miệng – hậu môn."
+        },
+        {
+          "key": "faq",
+          "heading": "Câu hỏi thường gặp"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Hepatitis virus A akut",
+      "summary": "Hepatitis A menular lewat makanan atau air yang tercemar, atau lewat seks oral–anal. Orang dewasa yang terinfeksi sering mengalami penyakit kuning. Menjaga kebersihan makanan dan vaksinasi efektif mencegahnya; anak yang lahir mulai tahun 2017 termasuk sasaran vaksinasi dengan biaya pemerintah.",
+      "keyFacts": {
+        "incubation": "15–50 hari (rata-rata 28–30 hari)",
+        "symptoms": "Demam, lelah, nafsu makan turun, mual, urine berwarna teh pekat, penyakit kuning",
+        "transmission": "Jalur tinja–mulut (makanan atau air yang tercemar), seks oral–anal",
+        "prevention": "Vaksinasi, cuci tangan sebelum makan dan setelah dari toilet, hindari makanan mentah",
+        "notify": "Dalam 24 jam"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "Apa yang harus dilakukan",
+          "cards": [
+            {
+              "if": "urine berwarna teh pekat, atau mata atau kulit menguning",
+              "title": "Segera ke dokter untuk tes darah",
+              "text": "Segera ke dokter dan sampaikan apa yang Anda makan dan ke mana Anda bepergian dalam dua bulan terakhir. Dokter akan mengatur pemeriksaan fungsi hati dan antibodi hepatitis A."
+            },
+            {
+              "if": "anggota keluarga terkonfirmasi hepatitis A",
+              "title": "Nilai vaksinasi dalam 2 minggu",
+              "text": "Anggota keluarga serumah yang belum kebal dapat menurunkan peluang sakit bila divaksin dalam 2 minggu setelah paparan."
+            },
+            {
+              "if": "akan bepergian ke daerah dengan sanitasi buruk",
+              "title": "Vaksinasi sebelum bepergian",
+              "text": "Terima dosis pertama vaksin hepatitis A paling lambat 2 minggu sebelum berangkat. Selama perjalanan, jangan makan makanan mentah atau dingin dan hanya minum air matang atau air kemasan."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Gejala dan tanda bahaya",
+          "markdown": "Gejala yang umum adalah demam, lelah, nafsu makan turun, mual dan muntah, serta perut tidak nyaman. Beberapa hari kemudian muncul **urine berwarna teh pekat dan penyakit kuning** (kulit dan bagian putih mata menguning).\n\nInfeksi pada anak di bawah 6 tahun biasanya tanpa gejala; makin tua usia, makin jelas gejalanya. Sebagian besar sembuh dalam beberapa minggu. Infeksi memberi kekebalan seumur hidup dan **tidak menjadi hepatitis kronis**, tetapi sebagian kecil orang dewasa dapat mengalami hepatitis fulminan.",
+          "warning": "Perubahan kesadaran, mengantuk berlebihan, kecenderungan perdarahan yang jelas, atau penyakit kuning yang cepat memburuk dapat menandakan hepatitis fulminan; segera berobat."
+        },
+        {
+          "key": "transmission",
+          "heading": "Cara penularan",
+          "markdown": "Terutama menular lewat **jalur tinja–mulut**: menelan makanan atau air yang tercemar virus, misalnya kerang mentah, makanan kurang matang, atau makanan yang disiapkan orang yang tidak mencuci tangan. Dapat juga menular lewat **seks oral–anal**.\n\nDaya tular paling kuat dari 2 minggu sebelum sakit sampai 1 minggu setelah penyakit kuning muncul."
+        },
+        {
+          "key": "prevention",
+          "heading": "Pencegahan",
+          "markdown": "- **Vaksinasi hepatitis A**: 2 dosis dengan selang 6 bulan, perlindungannya mencapai lebih dari 95%.\n- Cuci tangan dengan sabun sebelum makan, setelah dari toilet, dan sebelum menyiapkan makanan.\n- Hindari makanan mentah, terutama kerang; minum air yang sudah dimasak sampai mendidih.\n- Saat berhubungan seks, hindari kontak oral–anal dan gunakan kondom."
+        },
+        {
+          "key": "treatment",
+          "heading": "Diagnosis dan pengobatan",
+          "markdown": "Tidak ada obat khusus; pengobatan bersifat suportif: istirahat serta cukup makanan dan cairan. Hindari alkohol dan obat yang tidak perlu untuk mengurangi beban hati. Penderita sebaiknya tidak menyiapkan makanan untuk orang lain selama 1 minggu setelah sakit dimulai."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vaksin",
+          "markdown": "Sasaran dengan biaya pemerintah: anak yang **lahir pada atau setelah 1 Januari 2017**, yang menerima 1 dosis pada usia 12 bulan dan 1 dosis pada usia 18 bulan; serta anak sekolah di daerah tertentu seperti kecamatan pegunungan dan pulau terluar, dan kelompok berisiko tinggi. Orang dewasa lain dapat menerima 2 dosis dengan biaya sendiri, dengan selang 6–12 bulan."
+        },
+        {
+          "key": "situation",
+          "heading": "Situasi terkini dan statistik",
+          "markdown": "Kasus di Taiwan sebagian besar sporadis; pernah muncul klaster yang berkaitan dengan seks oral–anal."
+        },
+        {
+          "key": "faq",
+          "heading": "Pertanyaan yang sering diajukan"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "ไวรัสตับอักเสบเอเฉียบพลัน",
+      "summary": "ไวรัสตับอักเสบเอแพร่เชื้อผ่านอาหารหรือน้ำที่ปนเปื้อน หรือทางเพศสัมพันธ์แบบปาก–ทวารหนัก ผู้ใหญ่ที่ติดเชื้อมักมีอาการตัวเหลืองตาเหลือง การรักษาสุขอนามัยด้านอาหารและการฉีดวัคซีนป้องกันได้อย่างมีประสิทธิภาพ เด็กที่เกิดตั้งแต่ปี 2017 เป็นต้นไปอยู่ในกลุ่มที่รัฐออกค่าวัคซีนให้",
+      "keyFacts": {
+        "incubation": "15–50 วัน (เฉลี่ย 28–30 วัน)",
+        "symptoms": "ไข้ อ่อนเพลีย เบื่ออาหาร คลื่นไส้ ปัสสาวะสีชาเข้ม ตัวเหลืองตาเหลือง",
+        "transmission": "ทางอุจจาระ–ปาก (อาหารและน้ำที่ปนเปื้อน) เพศสัมพันธ์แบบปาก–ทวารหนัก",
+        "prevention": "ฉีดวัคซีน ล้างมือก่อนกินอาหารและหลังเข้าห้องน้ำ หลีกเลี่ยงอาหารดิบ",
+        "notify": "ภายใน 24 ชั่วโมง"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "ควรทำอย่างไร",
+          "cards": [
+            {
+              "if": "ปัสสาวะสีชาเข้ม ตาขาวหรือผิวหนังเหลือง",
+              "title": "ไปพบแพทย์เพื่อตรวจเลือดโดยเร็วที่สุด",
+              "text": "ไปพบแพทย์โดยเร็วที่สุดและแจ้งประวัติการกินอาหารและการเดินทางในสองเดือนที่ผ่านมา แพทย์จะสั่งตรวจการทำงานของตับและตรวจแอนติบอดีต่อไวรัสตับอักเสบเอ"
+            },
+            {
+              "if": "สมาชิกในครอบครัวได้รับการยืนยันว่าเป็นไวรัสตับอักเสบเอ",
+              "title": "ประเมินการฉีดวัคซีนภายใน 2 สัปดาห์",
+              "text": "สมาชิกที่อยู่บ้านเดียวกันและยังไม่มีภูมิคุ้มกัน หากฉีดวัคซีนภายใน 2 สัปดาห์หลังสัมผัสเชื้อ จะลดโอกาสป่วยได้"
+            },
+            {
+              "if": "กำลังจะเดินทางไปพื้นที่ที่สุขาภิบาลไม่ดี",
+              "title": "ฉีดวัคซีนก่อนเดินทางไปต่างประเทศ",
+              "text": "ฉีดวัคซีนไวรัสตับอักเสบเอเข็มแรกอย่างน้อย 2 สัปดาห์ก่อนออกเดินทาง ระหว่างเดินทางไม่กินอาหารดิบหรืออาหารเย็น และดื่มเฉพาะน้ำต้มสุกหรือน้ำบรรจุขวด"
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "อาการและสัญญาณอันตราย",
+          "markdown": "อาการที่พบบ่อยคือ ไข้ อ่อนเพลีย เบื่ออาหาร คลื่นไส้อาเจียน และไม่สบายท้อง อีกไม่กี่วันต่อมาจะมี**ปัสสาวะสีชาเข้มและตัวเหลืองตาเหลือง** (ผิวหนังและตาขาวเหลือง)\n\nเด็กอายุต่ำกว่า 6 ปีที่ติดเชื้อมักไม่มีอาการ ยิ่งอายุมากอาการยิ่งชัดเจน คนส่วนใหญ่หายภายในไม่กี่สัปดาห์ หลังติดเชื้อจะมีภูมิคุ้มกันตลอดชีวิต และ**ไม่กลายเป็นตับอักเสบเรื้อรัง** แต่ผู้ใหญ่จำนวนน้อยอาจเกิดตับอักเสบรุนแรงเฉียบพลัน",
+          "warning": "ระดับความรู้สึกตัวเปลี่ยนแปลง ซึม มีแนวโน้มเลือดออกชัดเจน หรือตัวเหลืองตาเหลืองเพิ่มขึ้นอย่างรวดเร็ว อาจเป็นตับอักเสบรุนแรงเฉียบพลัน ให้ไปพบแพทย์ทันที"
+        },
+        {
+          "key": "transmission",
+          "heading": "แพร่เชื้ออย่างไร",
+          "markdown": "แพร่เชื้อหลักผ่าน**ทางอุจจาระ–ปาก**: กินอาหารหรือดื่มน้ำที่ปนเปื้อนไวรัส เช่น หอยดิบ อาหารที่ปรุงไม่สุก หรืออาหารที่ผู้ปรุงไม่ได้ล้างมือ และอาจแพร่ผ่าน**เพศสัมพันธ์แบบปาก–ทวารหนัก**ได้ด้วย\n\nแพร่เชื้อได้สูงสุดตั้งแต่ 2 สัปดาห์ก่อนเริ่มป่วยจนถึง 1 สัปดาห์หลังเริ่มตัวเหลืองตาเหลือง"
+        },
+        {
+          "key": "prevention",
+          "heading": "การป้องกัน",
+          "markdown": "- **ฉีดวัคซีนไวรัสตับอักเสบเอ**: 2 เข็ม ห่างกัน 6 เดือน ให้การป้องกันมากกว่า 95%\n- ล้างมือด้วยสบู่ก่อนกินอาหาร หลังเข้าห้องน้ำ และก่อนเตรียมอาหาร\n- หลีกเลี่ยงอาหารดิบ โดยเฉพาะหอย ดื่มน้ำต้มสุก\n- เมื่อมีเพศสัมพันธ์ ให้หลีกเลี่ยงการสัมผัสแบบปาก–ทวารหนักและใช้ถุงยางอนามัย"
+        },
+        {
+          "key": "treatment",
+          "heading": "การวินิจฉัยและการรักษา",
+          "markdown": "ไม่มียารักษาโดยเฉพาะ ใช้การรักษาแบบประคับประคอง ได้แก่ พักผ่อน และได้รับอาหารและน้ำอย่างเพียงพอ หลีกเลี่ยงแอลกอฮอล์และยาที่ไม่จำเป็นเพื่อลดภาระของตับ ผู้ป่วยไม่ควรเตรียมอาหารให้ผู้อื่นภายใน 1 สัปดาห์หลังเริ่มป่วย"
+        },
+        {
+          "key": "vaccine",
+          "heading": "วัคซีน",
+          "markdown": "กลุ่มที่รัฐออกค่าใช้จ่าย: เด็กที่**เกิดตั้งแต่วันที่ 1 มกราคม 2017 เป็นต้นไป** ฉีด 1 เข็มเมื่ออายุครบ 12 เดือนและอีก 1 เข็มเมื่ออายุ 18 เดือน รวมถึงเด็กนักเรียนในพื้นที่เฉพาะ เช่น ตำบลบนภูเขาและเกาะนอก และกลุ่มเสี่ยงสูง ผู้ใหญ่คนอื่นสามารถฉีด 2 เข็มโดยจ่ายเอง ห่างกัน 6–12 เดือน"
+        },
+        {
+          "key": "situation",
+          "heading": "สถานการณ์ปัจจุบันและสถิติ",
+          "markdown": "ผู้ป่วยในประเทศส่วนใหญ่เกิดแบบกระจัดกระจาย เคยมีกลุ่มก้อนที่เกี่ยวข้องกับเพศสัมพันธ์แบบปาก–ทวารหนัก"
+        },
+        {
+          "key": "faq",
+          "heading": "คำถามที่พบบ่อย"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
   }
 }

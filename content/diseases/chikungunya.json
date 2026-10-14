@@ -157,5 +157,220 @@
     "caseDefinitionDoc": "doc.case-definition-dengue",
     "specimen": "發病 5 日內血清進行 RT-PCR；發病 5 日後採血清檢測 IgM，建議同時檢驗登革熱以鑑別診斷。",
     "notifyNote": "第二類法定傳染病，應於 24 小時內通報；與登革熱同屬斑蚊傳播，病例周邊同步啟動孳生源清除。"
+  },
+  "i18n": {
+    "en": {
+      "title": "Chikungunya",
+      "summary": "Like dengue, chikungunya is spread by Aedes mosquitoes. It is marked by fever together with severe joint pain, which can last for months in some people. Most cases in Taiwan are imported, so avoiding mosquito bites when travelling is the key to prevention.",
+      "keyFacts": {
+        "incubation": "2–12 days (usually 3–7 days)",
+        "symptoms": "Sudden high fever, severe joint pain, headache, muscle pain, rash",
+        "transmission": "Bite of infected Aedes mosquitoes (Aedes aegypti, Aedes albopictus)",
+        "prevention": "Avoid mosquito bites; remove containers with standing water",
+        "notify": "Within 24 hours"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "What to do",
+          "cards": [
+            {
+              "if": "have a fever and joint pain after returning from an affected area",
+              "title": "See a doctor and mention your travel history",
+              "text": "See a doctor as soon as possible and tell them about your travel history. For two weeks after returning, keep avoiding mosquito bites when you go outside."
+            },
+            {
+              "if": "your joint pain has lasted for several weeks",
+              "title": "Go back for a follow-up",
+              "text": "In some people joint pain lasts for weeks to months. Go back to your doctor, who can assess pain relief and rehabilitation."
+            },
+            {
+              "if": "are about to travel to an affected area",
+              "title": "Prepare mosquito protection before you go",
+              "text": "Pack repellent containing DEET or Picaridin and light-coloured long-sleeved clothes, and choose accommodation with window screens or air conditioning."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Symptoms and warning signs",
+          "markdown": "Typical symptoms are **sudden high fever with severe joint pain**, mostly in small joints such as the wrists, ankles and fingers, often with headache, muscle pain, nausea and a rash.\n\nThe symptoms are similar to dengue, but joint pain is more marked. Most people improve within 1–2 weeks, but in some (especially older people) joint pain can last for months.",
+          "warning": "Newborns, people aged 65 and over, and people with chronic illness are more likely to develop serious complications affecting the nervous system and heart. Seek medical care immediately if symptoms get worse."
+        },
+        {
+          "key": "transmission",
+          "heading": "How it spreads",
+          "markdown": "It spreads through the bite of **Aedes aegypti or Aedes albopictus** mosquitoes carrying the virus, as dengue does. A patient has virus in the blood from 2 days before to 5 days after onset; if a mosquito bites them during this time, local transmission may follow. **It does not spread from person to person.**"
+        },
+        {
+          "key": "prevention",
+          "heading": "Prevention",
+          "markdown": "- When travelling to an affected area, take mosquito-bite precautions throughout: wear light-coloured long sleeves and use repellent.\n- For 2 weeks after returning, keep avoiding mosquito bites when you go outside so you do not become a source of local transmission.\n- At home, check regularly for containers with standing water and follow “inspect, empty, clean and scrub”."
+        },
+        {
+          "key": "treatment",
+          "heading": "Diagnosis and treatment",
+          "markdown": "There is no specific treatment. Treatment is for the symptoms: rest, fluids, and paracetamol for fever and pain. Until dengue has been ruled out, avoid aspirin and non-steroidal anti-inflammatory drugs."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vaccine",
+          "markdown": "Taiwan does not currently have a government-funded chikungunya vaccine. Vaccines approved for use are available in other countries; people who will spend a long time in affected areas can ask at a travel medicine clinic."
+        },
+        {
+          "key": "situation",
+          "heading": "Current situation and statistics",
+          "markdown": "Most cases in Taiwan are imported, mainly from affected areas in South Asia, Southeast Asia and southern mainland China. For international outbreaks, see the Travel section."
+        },
+        {
+          "key": "faq",
+          "heading": "FAQ"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Bệnh chikungunya",
+      "summary": "Giống sốt xuất huyết, bệnh chikungunya do muỗi Aedes truyền. Đặc trưng là sốt kèm đau khớp dữ dội, ở một số người đau khớp có thể kéo dài nhiều tháng. Phần lớn ca bệnh trong nước là nhập từ nước ngoài, vì vậy phòng muỗi đốt khi đi nước ngoài là then chốt.",
+      "keyFacts": {
+        "incubation": "2–12 ngày (thường 3–7 ngày)",
+        "symptoms": "Sốt cao đột ngột, đau khớp dữ dội, đau đầu, đau cơ, phát ban",
+        "transmission": "Muỗi Aedes đốt (Aedes aegypti, Aedes albopictus)",
+        "prevention": "Tránh muỗi đốt, loại bỏ các vật chứa nước đọng",
+        "notify": "Trong vòng 24 giờ"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "Tôi nên làm gì",
+          "cards": [
+            {
+              "if": "bị sốt và đau khớp sau khi từ vùng dịch trở về",
+              "title": "Đi khám và cho bác sĩ biết lịch sử đi lại",
+              "text": "Hãy đi khám sớm nhất có thể và chủ động cho bác sĩ biết lịch sử đi lại; trong hai tuần sau khi về, khi ra ngoài tiếp tục phòng muỗi đốt."
+            },
+            {
+              "if": "đau khớp kéo dài nhiều tuần",
+              "title": "Quay lại tái khám",
+              "text": "Ở một số người, đau khớp kéo dài từ vài tuần đến vài tháng; hãy quay lại để bác sĩ đánh giá việc giảm đau và phục hồi chức năng."
+            },
+            {
+              "if": "sắp đến vùng dịch",
+              "title": "Chuẩn bị đồ phòng muỗi trước khi đi",
+              "text": "Chuẩn bị thuốc chống muỗi chứa DEET hoặc Picaridin và áo dài tay màu sáng; chọn nơi ở có lưới chắn cửa sổ hoặc có điều hòa."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Triệu chứng và dấu hiệu cảnh báo",
+          "markdown": "Triệu chứng điển hình là **sốt cao đột ngột kèm đau khớp dữ dội**, thường ở các khớp nhỏ như cổ tay, cổ chân, ngón tay, thường kèm đau đầu, đau cơ, buồn nôn và phát ban.\n\nTriệu chứng giống sốt xuất huyết nhưng đau khớp rõ hơn. Phần lớn khỏi trong 1–2 tuần, một số người (nhất là người lớn tuổi) đau khớp có thể kéo dài nhiều tháng.",
+          "warning": "Trẻ sơ sinh, người từ 65 tuổi trở lên và người có bệnh mạn tính dễ bị biến chứng nặng ở thần kinh, tim; nếu triệu chứng nặng lên hãy đi khám ngay."
+        },
+        {
+          "key": "transmission",
+          "heading": "Lây truyền như thế nào",
+          "markdown": "Lây qua vết đốt của muỗi **Aedes aegypti hoặc Aedes albopictus** mang vi-rút, giống sốt xuất huyết. Người bệnh có vi-rút trong máu từ 2 ngày trước đến 5 ngày sau khi phát bệnh; nếu bị muỗi đốt trong thời gian này có thể gây lây truyền tại chỗ. **Không lây từ người sang người.**"
+        },
+        {
+          "key": "prevention",
+          "heading": "Phòng ngừa",
+          "markdown": "- Khi đến vùng dịch, thực hiện biện pháp phòng muỗi đốt trong suốt chuyến đi: mặc áo dài tay màu sáng, dùng thuốc chống muỗi.\n- Trong 2 tuần sau khi về, khi ra ngoài tiếp tục phòng muỗi đốt để không trở thành nguồn lây tại chỗ.\n- Ở nhà định kỳ kiểm tra và loại bỏ các vật chứa nước đọng, thực hiện “kiểm tra, đổ, dọn, chà”."
+        },
+        {
+          "key": "treatment",
+          "heading": "Chẩn đoán và điều trị",
+          "markdown": "Không có thuốc đặc hiệu, chủ yếu điều trị triệu chứng: nghỉ ngơi, bổ sung nước, dùng paracetamol để hạ sốt, giảm đau. Cho đến khi loại trừ sốt xuất huyết, cần tránh dùng aspirin và thuốc chống viêm không steroid."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vắc-xin",
+          "markdown": "Hiện Đài Loan chưa có vắc-xin chikungunya do nhà nước chi trả. Ở nước ngoài đã có vắc-xin được phê duyệt lưu hành; người sẽ ở lâu tại vùng dịch có thể đến phòng khám y học du lịch để được tư vấn."
+        },
+        {
+          "key": "situation",
+          "heading": "Tình hình hiện nay và thống kê",
+          "markdown": "Phần lớn ca bệnh trong nước là ca nhập từ nước ngoài, chủ yếu từ các vùng dịch ở Nam Á, Đông Nam Á và miền nam Trung Quốc đại lục; tình hình dịch quốc tế xem tại mục Du lịch nước ngoài."
+        },
+        {
+          "key": "faq",
+          "heading": "Câu hỏi thường gặp"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Chikungunya",
+      "summary": "Seperti demam berdarah dengue, chikungunya ditularkan oleh nyamuk Aedes. Cirinya adalah demam disertai nyeri sendi hebat, dan pada sebagian orang nyeri sendi dapat berlangsung berbulan-bulan. Sebagian besar kasus di Taiwan adalah kasus impor, sehingga menghindari gigitan nyamuk saat bepergian ke luar negeri adalah kunci pencegahan.",
+      "keyFacts": {
+        "incubation": "2–12 hari (biasanya 3–7 hari)",
+        "symptoms": "Demam tinggi mendadak, nyeri sendi hebat, sakit kepala, nyeri otot, ruam",
+        "transmission": "Gigitan nyamuk vektor (Aedes aegypti, Aedes albopictus)",
+        "prevention": "Hindari gigitan nyamuk, singkirkan wadah yang menampung air tergenang",
+        "notify": "Dalam 24 jam"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "Apa yang harus dilakukan",
+          "cards": [
+            {
+              "if": "demam dan nyeri sendi setelah kembali dari daerah wabah",
+              "title": "Berobat dan sampaikan riwayat perjalanan",
+              "text": "Segera berobat dan sampaikan sendiri riwayat perjalanan Anda; dalam dua minggu setelah kembali, tetap lindungi diri dari gigitan nyamuk saat keluar rumah."
+            },
+            {
+              "if": "nyeri sendi berlangsung beberapa minggu",
+              "title": "Kembali untuk kontrol",
+              "text": "Pada sebagian orang nyeri sendi berlangsung berminggu-minggu sampai berbulan-bulan; kembalilah ke dokter agar dinilai kebutuhan pereda nyeri dan rehabilitasi."
+            },
+            {
+              "if": "akan segera bepergian ke daerah wabah",
+              "title": "Siapkan perlengkapan pelindung nyamuk sebelum berangkat",
+              "text": "Siapkan losion antinyamuk yang mengandung DEET atau Picaridin dan pakaian lengan panjang berwarna terang; pilih penginapan dengan kasa jendela atau pendingin udara."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Gejala dan tanda bahaya",
+          "markdown": "Gejala khasnya adalah **demam tinggi mendadak disertai nyeri sendi hebat**, terutama pada sendi kecil seperti pergelangan tangan, pergelangan kaki, dan jari, sering disertai sakit kepala, nyeri otot, mual, dan ruam.\n\nGejalanya mirip demam berdarah dengue, tetapi nyeri sendinya lebih menonjol. Sebagian besar membaik dalam 1–2 minggu, tetapi pada sebagian orang (terutama lansia) nyeri sendi dapat berlangsung berbulan-bulan.",
+          "warning": "Bayi baru lahir, orang berusia 65 tahun ke atas, dan penderita penyakit kronis lebih mungkin mengalami komplikasi berat pada saraf dan jantung; bila gejala memburuk, segera berobat."
+        },
+        {
+          "key": "transmission",
+          "heading": "Cara penularan",
+          "markdown": "Menular lewat gigitan nyamuk **Aedes aegypti atau Aedes albopictus** yang membawa virus, sama seperti demam berdarah dengue. Penderita berada dalam fase viremia dari 2 hari sebelum sampai 5 hari setelah sakit dimulai; bila digigit nyamuk pada masa ini dapat terjadi penularan lokal. **Tidak menular dari orang ke orang.**"
+        },
+        {
+          "key": "prevention",
+          "heading": "Pencegahan",
+          "markdown": "- Saat bepergian ke daerah wabah, lakukan perlindungan dari gigitan nyamuk sepanjang perjalanan: pakai baju lengan panjang berwarna terang dan losion antinyamuk.\n- Dalam 2 minggu setelah kembali, tetap lindungi diri dari gigitan nyamuk saat keluar rumah agar tidak menjadi sumber penularan lokal.\n- Di rumah, periksa secara berkala dan singkirkan wadah yang menampung air tergenang dengan menerapkan “periksa, tuang, bersihkan, sikat”."
+        },
+        {
+          "key": "treatment",
+          "heading": "Diagnosis dan pengobatan",
+          "markdown": "Tidak ada obat khusus; pengobatan berfokus pada gejala: istirahat, minum cukup cairan, dan parasetamol untuk menurunkan demam dan meredakan nyeri. Sebelum demam berdarah dengue disingkirkan, hindari aspirin dan obat antiinflamasi nonsteroid."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vaksin",
+          "markdown": "Saat ini Taiwan belum memiliki vaksin chikungunya dengan biaya pemerintah. Di luar negeri sudah ada vaksin yang disetujui untuk diedarkan; orang yang akan lama tinggal di daerah wabah dapat berkonsultasi di klinik kedokteran perjalanan."
+        },
+        {
+          "key": "situation",
+          "heading": "Situasi terkini dan statistik",
+          "markdown": "Sebagian besar kasus di Taiwan adalah kasus impor, terutama dari daerah wabah di Asia Selatan, Asia Tenggara, dan Tiongkok daratan bagian selatan; untuk situasi wabah internasional, lihat bagian perjalanan ke luar negeri."
+        },
+        {
+          "key": "faq",
+          "heading": "Pertanyaan yang sering diajukan"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
   }
 }
