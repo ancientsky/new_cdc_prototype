@@ -3,7 +3,9 @@
 // 純函式在 src/client/admin/jobs-edit-core.js；個資檢核與 CI 共用 src/client/careers-rules.js。這個模板只輸出靜態骨架與資料島。
 import { html } from '../../../scripts/lib/render.mjs';
 import { JOB_STAGE_LABELS } from '../../../scripts/lib/governance.mjs';
-import { pageHead, adminMeta, dataScript } from './_partials.mjs';
+import fs from 'node:fs';
+import { pageHead, adminMeta, dataScript, gatewayPanel } from './_partials.mjs';
+import { versionOfText } from '../../client/admin/content-version.js';
 import { allJobs, jobStage } from '../public/_careers.mjs';
 import { JOB_TYPES, EXAM_STAGES, APPLY_METHODS, AMEND_KINDS, MANUAL_STATUS, stripBuild } from '../../client/admin/jobs-edit-core.js';
 export { layout } from './_layout.mjs';
@@ -21,6 +23,9 @@ export function render(ctx) {
     // resultTakenDown＝甄選結果已過下架日：建置已把名單從記憶體拿掉（這頁本來就是公開的靜態頁，不能放名單），匯出的檔案因此不含名單，畫面要明說。
     sourceHashes: Object.fromEntries(jobs.map((j) => [j.id, j.sourceHash ?? null])),
     resultTakenDown: jobs.filter((j) => j.gov?.resultTakenDown && j.gov?.resultListInSource).map((j) => j.id),
+    // 第五十三輪（docs/deploy.md §25）：每一筆 content 檔的版本碼（經寫入閘道存檔時告訴閘道「我是依哪一版改的」）。
+    // 由檔案算、不由資料島算：已下架的名單只在檔案裡（資料島沒有），兩者算出的碼不同。
+    versions: Object.fromEntries(jobs.map((j) => [j.id, j.__file ? versionOfText(fs.readFileSync(new URL(`../../../${j.__file}`, import.meta.url), 'utf8')) : null])),
     units: site.master.units.map((u) => ({ id: u.id, name: u.name })),
     jobTypes: JOB_TYPES, examStages: EXAM_STAGES, stages: JOB_STAGE_LABELS, amendKinds: AMEND_KINDS,
   };
@@ -122,7 +127,9 @@ ${pageHead({
 
     <div class="adm-actions"><button type="button" class="adm-btn" id="jf-save">儲存草稿（本機）</button><button type="button" class="adm-btn adm-btn--ghost" id="jf-reset">放棄草稿、重新帶入</button></div>
     <p class="adm-muted" id="jf-msg" role="status" aria-live="polite"></p>
-  </form></section>
+  </form>
+  ${gatewayPanel('有系統連線時才會出現這一區：「儲存草稿」把這一版存進系統（人事室同事也看得到）；「送審」交給審核人，核准後上線，不必再下載 JSON 開 PR。存檔時以網站上的現行版為底，只改你動過的欄位；你開啟之後別人改過，系統會先擋下並幫你把修改套到最新版。甄選結果仍只能公布報名編號，並且要有下架日。')}
+</section>
 <div class="adm-jf-aside">
 <section class="adm-card" aria-labelledby="jp-h"><h2 id="jp-h">預覽與檢核</h2>
   <div id="jf-preview" aria-live="polite"></div>
@@ -132,7 +139,8 @@ ${pageHead({
   <p class="adm-hint" id="jf-changed" role="status" aria-live="polite"></p>
   <pre class="adm-pre" id="jf-out" tabindex="0">{ }</pre>
   <div class="adm-actions"><button type="button" class="adm-btn" id="jf-copy">複製</button><button type="button" class="adm-btn adm-btn--ghost" id="jf-dl">下載 .json</button></div>
-  <ol class="adm-jf-steps">
+  <p class="adm-hint adm-gw-only">有系統連線：用左側「送審與上線」存草稿、送審即可，不必下載這份 JSON。</p>
+  <ol class="adm-jf-steps" data-gw-hide>
     <li>新增職缺：把下載的檔案放到 <code>content/jobs/</code>（檔名照上面）；既有職缺：整份覆蓋同名檔。</li>
     <li>開 Pull Request。職缺走<strong>快車道</strong>：CI（schema、日期先後、個資閘門）全過就自動合併，約 3 分鐘上線。</li>
     <li>上線後 24 小時內完成上線後複核（<code>post-publish-review</code> 待辦給公關室，副本人事室）；小錯直接再改一版。</li>

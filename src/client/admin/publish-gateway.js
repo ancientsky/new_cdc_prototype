@@ -10,6 +10,11 @@
 //   - 疫情報導（§23.5、§24.7）：exportExtra 可以多給 categories（分類主檔 { items, start }）；重新開啟送審件時，閘道送回的配套內容與分類主檔
 //     交給 loadItem／reloadLatest（meta.companions、meta.categories），頁面據以帶回表單；分類衝突（kind: categories）交給 reloadCategories。
 //     頁面換了要改的內容（例：疫情報導的「選文章」）⇒ 發 adm:gw-target 事件，這裡重新檢查（進行中的送審件、網站版本）。
+//
+// 第五十三輪（docs/deploy.md §25、guide-staff §56）：職缺、採購、接種時程的編輯頁也用這一支（同一套存檔、送審、版本碼、「載入最新版」）。
+//   - 主檔（接種時程）沒有「一筆內容」：頁面給 exportMaster()（{ name, items, start }），這裡改送 master 而不是 item；
+//     主檔衝突（409 stale，kind: master）時閘道附上現在的整份主檔，直接交給 reloadLatest（不必再抓）。
+//   - downloadName：「下載我這一版」的檔名（主檔沒有內容 ID）。
 import { $, $$, store, downloadText } from './common.js';
 import { detectGateway, el, clear, fmtTime, errorText, STATUS_TONE } from './gateway-client.js';
 
@@ -22,7 +27,8 @@ const FIELD_INPUT = { title: '#f-title', question: '#f-title', id: '#f-id', owne
  * @typedef {{ companions?: any[], files?: { name: string, base64: string }[], categories?: { items: any[], start: any[] }|null }} Extra
  * @param {{ exportObj: () => any, loadItem: (item: any, meta?: { contentHash?: string, update?: any, companions?: any[], categories?: any }) => Promise<void>|void, getContentId: () => string, exportExtra?: () => Promise<Extra>|Extra, fieldInput?: Record<string, string>, onSaved?: (sub: any) => void,
  *   getBaseHash?: () => string|undefined, reloadLatest?: (item: any, version: string, o: { source: 'site'|'gateway', data?: any }) => Promise<MergeSummary>|MergeSummary, getEditTarget?: () => ({ id: string, type: string, version?: string }|null),
- *   reloadCategories?: (stale: { rows: any[], conflicts: any[] }) => Promise<MergeSummary>|MergeSummary }} api
+ *   reloadCategories?: (stale: { rows: any[], conflicts: any[] }) => Promise<MergeSummary>|MergeSummary,
+ *   exportMaster?: () => { name: string, items: any[], start: any[] }, downloadName?: () => string }} api
  *   exportExtra（第四十五輪）：跟內容一起送的配套內容（如新卷期）與附件（PDF、圖），疫情報導後台用；fieldInput：欄位 → 表單選擇器（預設是 /admin/publish/ 的）
  *   第五十二輪：getBaseHash（這頁依哪一版改的）、reloadLatest（載入最新版並重新套用同事的修改）、getEditTarget（修改已上架內容時：開啟時檢查網站版本）——都可省略
  */
@@ -97,7 +103,7 @@ export async function initPublishGateway(api) {
   const box = (tone, ...kids) => el('div', { class: `adm-box adm-box--${tone}`, role: tone === 'warn' ? 'alert' : 'status' }, ...kids);
   const gwLink = (sid) => `${location.pathname}?gw=${encodeURIComponent(sid)}`;
   /** 我這一版：下載成 JSON（任何情況都不丟掉同事的修改） */
-  function downloadMine(obj = api.exportObj()) { downloadText(`${String(obj?.id ?? 'content').replace(/[^a-z0-9.-]/gi, '_')}-我的版本.json`, `${JSON.stringify(obj, null, 2)}\n`); }
+  function downloadMine(obj = api.exportObj()) { downloadText(`${String(api.downloadName?.() ?? obj?.id ?? 'content').replace(/[^a-z0-9.-]/gi, '_')}-我的版本.json`, `${JSON.stringify(obj, null, 2)}\n`); }
   const dlBtn = (obj) => { const b = el('button', { type: 'button', class: 'adm-btn adm-btn--ghost adm-btn--sm', text: '下載我這一版（JSON）' }); b.addEventListener('click', () => downloadMine(obj)); return b; };
   /** 存檔要帶的版本碼 */
   function baseHashFor(body) {
@@ -151,7 +157,10 @@ export async function initPublishGateway(api) {
   async function reloadFrom(st) {
     const mine = api.exportObj();
     say('正在載入最新版…');
-    if (st.kind === 'categories' && api.reloadCategories) { // 疫情報導分類：閘道已附上網站上的主檔，不必再抓
+    if (st.kind === 'master' && st.master?.rows) { // 第五十三輪：主檔衝突——閘道已附上現在的整份主檔（網站上的，或送審件裡的），不必再抓
+      const sum = await api.reloadLatest(st.master.rows, st.contentHash, { source: st.submissionId ? 'gateway' : 'site', data: st });
+      blocked = ''; paint(); showMerged(sum, mine);
+    } else if (st.kind === 'categories' && api.reloadCategories) { // 疫情報導分類：閘道已附上網站上的主檔，不必再抓
       const sum = await api.reloadCategories(st.categories ?? { rows: [], conflicts: [] });
       blocked = ''; paint(); showMerged(sum, mine, '疫情報導的分類已換成網站上最新的主檔，你加或改的分類已重新套用。');
     } else if (st.submissionId) {
@@ -163,7 +172,8 @@ export async function initPublishGateway(api) {
       const sum = await api.reloadLatest(c.data.item, c.data.contentHash, { source: 'gateway', data: c.data });
       blocked = ''; paint(); showMerged(sum, mine, c.data.update?.text ?? '');
     } else {
-      const r = await gw.get(`/current?contentId=${encodeURIComponent(mine.id)}&type=${encodeURIComponent(mine.type)}`);
+      const t = api.getEditTarget?.() ?? { id: mine.id, type: mine.type };
+      const r = await gw.get(`/current?contentId=${encodeURIComponent(t.id ?? api.getContentId())}&type=${encodeURIComponent(t.type)}`);
       if (!r.ok || !r.data?.item) { say(errorText(r), 'red'); return; }
       const sum = await api.reloadLatest(r.data.item, r.data.contentHash, { source: 'site', data: r.data });
       blocked = ''; paint(); showMerged(sum, mine);
@@ -176,7 +186,7 @@ export async function initPublishGateway(api) {
     const st = data.stale ?? {};
     const kids = [el('strong', { text: st.kind === 'exists' ? '網站上已經有這個內容 ID' : '這一版還沒有存：別人在你開啟之後改過' }), el('p', { text: data.message })];
     const row = el('div', { class: 'adm-actions' });
-    if (['site', 'draft', 'open', 'moved', 'categories'].includes(st.kind)) {
+    if (['site', 'draft', 'open', 'moved', 'categories', 'master'].includes(st.kind)) {
       if (st.kind === 'categories' ? api.reloadCategories : api.reloadLatest) {
         const b = el('button', { type: 'button', class: 'adm-btn adm-btn--sm', text: '載入最新版（保留我的修改）' });
         b.addEventListener('click', () => { b.disabled = true; reloadFrom(st).finally(() => { b.disabled = false; }); });
@@ -232,8 +242,11 @@ export async function initPublishGateway(api) {
   }
 
   async function act(kind) {
-    const item = api.exportObj();
-    const body = { item, ...(current && ['draft', 'returned'].includes(current.status) && current.contentId === item.id ? { submissionId: current.id } : {}) };
+    const master = api.exportMaster?.() ?? null;
+    const item = master ? null : api.exportObj();
+    const cid = master ? api.getContentId() : item.id;
+    /** @type {any} */
+    const body = { ...(master ? { master } : { item }), ...(current && ['draft', 'returned'].includes(current.status) && current.contentId === cid ? { submissionId: current.id } : {}) };
     const baseHash = baseHashFor(body);
     if (baseHash) body.baseHash = baseHash;
     btnSave.disabled = true; btnSubmit.disabled = true;

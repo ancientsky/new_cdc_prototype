@@ -5,6 +5,8 @@
 //   - 文字欄位切成句子（。！？；與換行），以最長共同子序列（LCS）對齊，連續的刪＋增配成「改了」；改了的句子再做字元層級對照，標出改動的字。
 //   - 清單（關鍵字、對象…）說「新增／移除」哪些；日期、數字、選項說「由 A 改為 B」。
 //   - 提供語言、內容區塊（blocks／sections）逐項說明；其他複雜欄位退回「已修改」並附前後內容。
+//   - 第五十三輪（docs/deploy.md §25）：職缺、採購經閘道送審後，異動紀錄、甄試日程、正取／備取／遞補名單、附件、決標資訊、
+//     甄選結果這類「物件清單」或「物件」逐筆說明（type: 'rows'：新增／刪除／修改哪一筆，每筆一句白話），不再只是「已修改」加一大段 JSON。
 // 回傳純資料（不含 HTML），由瀏覽器端以 textContent 組畫面，避免任何 HTML 注入。
 import { fieldLabel as labelOf } from '../../../src/client/admin/field-labels.js';
 
@@ -88,6 +90,66 @@ export function textDiff(beforeText, afterText) {
 }
 
 const isText = (v) => typeof v === 'string';
+const isPlainObj = (v) => v != null && typeof v === 'object' && !Array.isArray(v);
+const isObjList = (v) => v == null || (Array.isArray(v) && v.every(isPlainObj));
+
+/* ───────── 第五十三輪：物件清單與一組欄位的白話說明（職缺、採購經閘道送審，審核人要看得懂「異動紀錄多一筆」「下架日改了」） ───────── */
+const AMEND = { extend: '展延', reschedule: '改期', correction: '更正', cancel: '取消', other: '其他' };
+/** 子欄位名稱（依所在欄位；_ 是通用的） */
+const SUB = {
+  result: { publishedAt: '公告日', unpublishAt: '下架日', refNo: '字號', externalUrl: '人事系統的結果連結', admitted: '正取名單', waitlist: '備取名單', note: '說明', attachments: '附件' },
+  award: { date: '決標日', winner: '得標廠商', amountNtd: '決標金額', note: '說明' },
+  aiWhitelist: { requested: '申請列入', approvedBy: '核准單位', approvedAt: '核准日' },
+  postPublishReview: { status: '狀態', reviewer: '複核人', reviewedAt: '複核日', note: '說明' },
+  _: { date: '日期', label: '標題', title: '標題', url: '網址', note: '說明', text: '說明', kind: '類型', stage: '階段', format: '格式', status: '狀態' },
+};
+const subLabel = (field, k) => SUB[field]?.[k] ?? SUB._[k] ?? labelOf(k);
+const cut = (t, n = 160) => (t.length > n ? `${t.slice(0, n)}…` : t);
+/** 清單裡的一項 → 一句話 */
+function rowText(field, x, names) {
+  if (!isPlainObj(x)) return show(x, names);
+  if (field === 'amendments') return `${x.date ?? ''} ${AMEND[x.kind] ?? x.kind ?? ''}：${x.text ?? ''}${x.refNo ? `（${x.refNo}）` : ''}`.trim();
+  if (field === 'examPlan') return `${x.stage ?? ''}：${x.date || '另行公告'}${x.note ? `（${x.note}）` : ''}`;
+  if (field === 'admitted') return `正取第 ${x.seq ?? '?'} 名：${x.candidateNo ?? ''}`;
+  if (field === 'waitlist') return `備取第 ${x.rank ?? '?'} 名：${x.candidateNo ?? ''}${x.validUntil ? `（有效至 ${x.validUntil}）` : ''}`;
+  if (field === 'waitlistUpdates') return `${x.date ?? ''} 遞補：${x.candidateNo ?? ''}${x.note ? `（${x.note}）` : ''}`;
+  if ((x.label || x.title) && x.url) return `${x.label ?? x.title}（${x.url}）`;
+  const prim = Object.entries(x).filter(([, v]) => v == null || typeof v !== 'object').map(([k, v]) => `${subLabel(field, k)}：${show(v, names)}`);
+  return cut(prim.length ? prim.join('；') : JSON.stringify(x));
+}
+/** 兩份物件清單 → [{ kind: added|removed|changed|order, text }]：一樣的不列；同位置的「刪一項＋加一項」配成「改了」 */
+function listRows(field, a, b, names) {
+  const ca = a.map(canon), cb = b.map(canon);
+  const removed = a.filter((_, i) => !cb.includes(ca[i])), added = b.filter((_, i) => !ca.includes(cb[i]));
+  const rows = [];
+  const n = Math.min(removed.length, added.length);
+  for (let i = 0; i < n; i++) rows.push({ kind: 'changed', text: `「${rowText(field, removed[i], names)}」改為「${rowText(field, added[i], names)}」` });
+  for (const x of added.slice(n)) rows.push({ kind: 'added', text: rowText(field, x, names) });
+  for (const x of removed.slice(n)) rows.push({ kind: 'removed', text: rowText(field, x, names) });
+  if (!rows.length) rows.push({ kind: 'order', text: '順序調整' });
+  return rows;
+}
+function rowsSummary(rows) {
+  const c = (k) => rows.filter((r) => r.kind === k).length;
+  return [c('added') ? `新增 ${c('added')} 項` : '', c('changed') ? `修改 ${c('changed')} 項` : '', c('removed') ? `移除 ${c('removed')} 項` : '', c('order') ? '順序調整' : ''].filter(Boolean).join('；');
+}
+/** 一組欄位 → 逐個子欄位說明（子欄位是清單時逐項） */
+function objRows(field, a, b, names) {
+  const rows = [];
+  for (const k of [...new Set([...Object.keys(b), ...Object.keys(a)])]) {
+    const x = a[k], y = b[k];
+    if (same(x, y)) continue;
+    const lab = subLabel(field, k);
+    if (isObjList(x) && isObjList(y) && [...(x ?? []), ...(y ?? [])].length) {
+      for (const r of listRows(k, x ?? [], y ?? [], names)) rows.push({ kind: r.kind, text: `${lab}：${r.kind === 'added' ? '新增 ' : r.kind === 'removed' ? '移除 ' : ''}${r.text}` });
+      continue;
+    }
+    const sx = x == null ? null : cut(typeof x === 'object' ? JSON.stringify(x) : show(x, names));
+    const sy = y == null ? null : cut(typeof y === 'object' ? JSON.stringify(y) : show(y, names));
+    rows.push(sx == null ? { kind: 'added', text: `${lab}：填寫為「${sy}」` } : sy == null ? { kind: 'removed', text: `${lab}：刪除（原「${sx}」）` } : { kind: 'changed', text: `${lab}：由「${sx}」改為「${sy}」` });
+  }
+  return rows;
+}
 const show = (v, names) => (v == null || v === '' ? '（空白）' : typeof v === 'boolean' ? (v ? '是' : '否') : names?.[v] ?? String(v));
 
 /**
@@ -142,6 +204,16 @@ export function fieldDiff(before, after, { unitNames = {} } = {}) {
       }
       if (changes.length === n0) changes.push({ field, label, kind: 'changed', type: 'list', summary: '區塊順序調整', items: [] });
       continue;
+    }
+    // 第五十三輪：物件清單（異動紀錄、甄試日程、附件連結、遞補公告…）與一組欄位（甄選結果、決標資訊…）逐項說明，不再整段 JSON
+    if (isObjList(va) && isObjList(vb) && [...(va ?? []), ...(vb ?? [])].length) {
+      const rows = listRows(field, va ?? [], vb ?? [], unitNames);
+      changes.push({ field, label, kind: va == null ? 'added' : vb == null ? 'removed' : 'changed', type: 'rows', summary: rowsSummary(rows), rows });
+      continue;
+    }
+    if (isPlainObj(va ?? {}) && isPlainObj(vb ?? {}) && (isPlainObj(va) || isPlainObj(vb))) {
+      const rows = objRows(field, va ?? {}, vb ?? {}, unitNames);
+      if (rows.length) { changes.push({ field, label, kind: va == null ? 'added' : vb == null ? 'removed' : 'changed', type: 'rows', summary: va == null ? '新填寫' : vb == null ? '整組刪除' : `改了 ${rows.length} 項`, rows }); continue; }
     }
     if (Array.isArray(va) || Array.isArray(vb)) {
       const sa = (va ?? []).map((x) => (x && typeof x === 'object' ? canon(x) : String(x))), sb = (vb ?? []).map((x) => (x && typeof x === 'object' ? canon(x) : String(x)));

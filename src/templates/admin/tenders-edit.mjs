@@ -3,7 +3,8 @@
 // 檢核與階段推導在 src/client/admin/tenders-edit-core.js（純函式；階段用 careers-rules.js 的 tenderStageOf，與 CI 同一份）。
 import { readFileSync } from 'node:fs';
 import { html } from '../../../scripts/lib/render.mjs';
-import { pageHead, adminMeta, dataScript } from './_partials.mjs';
+import { pageHead, adminMeta, dataScript, gatewayPanel } from './_partials.mjs';
+import { versionOfText } from '../../client/admin/content-version.js';
 import { allTenders } from '../public/_careers.mjs';
 import { STAGE_LABEL, AMEND_KIND_LABEL, stripBuild } from '../../client/admin/tenders-edit-core.js';
 export { layout } from './_layout.mjs';
@@ -26,7 +27,9 @@ export function render(ctx) {
   const units = site.master.units.filter((u) => u.publishes !== false).map((u) => ({ id: u.id, name: u.name }));
   // 第五十二輪（docs/deploy.md §24）：sourceHashes＝建置算的正本雜湊；修改既有標案改到中文時，用它把既有英譯標成「依舊版翻譯」
   const sourceHashes = Object.fromEntries(allTenders(site).map((t) => [t.id, t.sourceHash ?? null]));
-  const data = { today: site.today, tenders, units, enums: ENUMS, stages: STAGE_LABEL, amendKinds: AMEND_KIND_LABEL, sourceHashes };
+  // 第五十三輪（docs/deploy.md §25）：每一筆 content 檔的版本碼（經寫入閘道存檔時告訴閘道「我是依哪一版改的」）
+  const versions = Object.fromEntries(allTenders(site).map((t) => [t.id, t.__file ? versionOfText(readFileSync(new URL(`../../../${t.__file}`, import.meta.url), 'utf8')) : null]));
+  const data = { today: site.today, tenders, units, enums: ENUMS, stages: STAGE_LABEL, amendKinds: AMEND_KIND_LABEL, sourceHashes, versions };
   return html`
 ${pageHead({
     title: '採購公告上架與異動',
@@ -87,7 +90,9 @@ ${pageHead({
 
     <div class="adm-actions"><button type="button" class="adm-btn" id="tf-save">儲存草稿（本機）</button><button type="button" class="adm-btn adm-btn--ghost" id="tf-reset">重新帶入（放棄修改）</button></div>
     <p class="adm-muted" id="tf-msg" role="status" aria-live="polite"></p>
-  </form></section>
+  </form>
+  ${gatewayPanel('有系統連線時才會出現這一區：「儲存草稿」把這一版存進系統（秘書室同事也看得到）；「送審」交給審核人，核准後上線，不必再下載 JSON 開 PR。存檔時以網站上的現行版為底，只改你動過的欄位；你開啟之後別人改過，系統會先擋下並幫你把修改套到最新版。')}
+</section>
 <div>
 <section class="adm-card" aria-labelledby="tp-h"><h2 id="tp-h">預覽與檢核</h2>
   <div class="adm-tf-preview" id="tf-preview" aria-live="polite"></div>
@@ -97,7 +102,8 @@ ${pageHead({
   <p class="adm-hint" id="tf-changed" role="status" aria-live="polite"></p>
   <pre class="adm-pre" id="tf-out" tabindex="0">{ }</pre>
   <div class="adm-actions"><button type="button" class="adm-btn" id="tf-copy">複製</button><button type="button" class="adm-btn adm-btn--ghost" id="tf-dl">下載 .json</button></div>
-  <p class="adm-muted">正式環境：新增標案＝把這份存成上面的檔名；既有標案＝整檔覆蓋同名檔。開 Pull Request 後走快車道（CI 通過即自動合併上線），上線後公關室 24 小時內複核（待辦副本給秘書室），秘書室並與政府電子採購網核對日期、金額、得標廠商。</p>
+  <p class="adm-hint adm-gw-only">有系統連線：用左側「送審與上線」存草稿、送審即可，不必下載這份 JSON。</p>
+  <p class="adm-muted" data-gw-hide>正式環境：新增標案＝把這份存成上面的檔名；既有標案＝整檔覆蓋同名檔。開 Pull Request 後走快車道（CI 通過即自動合併上線），上線後公關室 24 小時內複核（待辦副本給秘書室），秘書室並與政府電子採購網核對日期、金額、得標廠商。</p>
   <p class="adm-muted">回 <a href="${url('/admin/tenders/', { noLang: true })}">採購公告管理</a> 看全部標案的階段與決標逾期待辦。</p></section>
 </div></div>
 ${dataScript('adm-tenders-data', data)}`;

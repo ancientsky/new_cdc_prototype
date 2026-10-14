@@ -23,7 +23,15 @@ const DIFF_LABELS = {
   kind: '專區類型', startAt: '開始日', endAt: '結束日', contentIds: '相關內容', image: '圖片', priority: '排序', serviceType: '服務類型', captions: '字幕',
   basedOnVersionLabel: '依據版本', pubType: '出版品類型', series: '系列', volume: '卷', issue: '期', edition: '版次', isbn: 'ISBN', issn: 'ISSN', gpn: 'GPN',
   articles: '篇目', year: '年度', projectStatus: '計畫狀態', fundingType: '經費來源', projectNo: '計畫編號', piUnit: '主持單位', datasets: '資料集',
-  refNo: '案號', positions: '名額', budgetNtd: '預算金額', licenseNote: '授權備註', linkChecks: '連結檢查紀錄',
+  refNo: '公告字號', positions: '名額', budgetNtd: '預算金額', licenseNote: '授權備註', linkChecks: '連結檢查紀錄',
+  // 第五十三輪：職缺、採購、疫情報導編輯頁的欄位（第五十二輪放在 edit-merge.js）。職缺、採購經閘道送審後，審核人的差異也要叫得出這些名字，所以移到這裡共用
+  hiringUnit: '用人單位', jobType: '職類', workplace: '工作地點', salaryNote: '薪資待遇', qualifications: '資格條件', duties: '工作內容', applyStart: '報名開始日',
+  applyMethod: '報名方式', examPlan: '甄試日程', resultPlannedAt: '結果預計公布日', attachments: '附件連結', amendments: '異動紀錄', manualStatus: '取消／補實',
+  manualStatusNote: '取消／補實原因', result: '甄選結果', waitlistUpdates: '遞補公告', tenderNo: '標案案號', requestingUnit: '需求單位', method: '採購方式', awardRule: '決標原則',
+  category: '標的分類', announcedAt: '公告日', openingAt: '開標日', briefingAt: '廠商說明會', pccUrl: '政府電子採購網連結', scope: '採購範圍', specialTerms: '特別條款',
+  contractPeriod: '履約期限', award: '決標資訊', titleEn: '英文篇名', affiliations: '服務單位', articleType: '分類', keywordsEn: '英文關鍵字', doi: 'DOI', legacyDoiUrl: '舊 DOI 網址',
+  receivedAt: '投稿日期', acceptedAt: '接受日期', abstractEn: '英文摘要', highlights: '重點三句話', figures: '圖表', references: '參考文獻', acknowledgementsMarkdown: '誌謝',
+  pdfUrl: 'PDF', note: '備註', legacyIds: '舊內容 ID', postPublishReview: '上線後複核',
 };
 /** 差異顯示用的欄位名稱：認得的叫中文名，不認得的直接顯示欄位代碼（寧可難看，也不能漏報） */
 export const fieldLabel = (field) => FIELD_LABELS[field] ?? DIFF_LABELS[field] ?? field;

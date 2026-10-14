@@ -380,11 +380,15 @@ test('接種時程：改一筆的一個欄位只動那一欄；新增插在前�
 /* ───────────────────────── 頁面接線 ───────────────────────── */
 test('四個編輯頁都用以現行版為底的匯出，並顯示「目前改動的欄位」', () => {
   const src = (f) => rawText(`src/client/admin/${f}`);
-  assert.match(src('jobs-edit.js'), /mergeFormEdit\(out, liveOf\(base\), editBase\)/);
+  // 第五十三輪：職缺、採購、接種時程接上寫入閘道後，合併的底改成 live（網站上的現行版，或送審件裡的那一版；與疫情報導編輯頁同一個寫法）
+  assert.match(src('jobs-edit.js'), /mergeFormEdit\(out, live, editBase\)/);
+  assert.match(src('jobs-edit.js'), /live = liveOf\(base\)/);
   assert.match(src('jobs-edit.js'), /editBase = base \? rawJob\(\) : null/);
-  assert.match(src('tenders-edit.js'), /mergeFormEdit\(out, liveOf\(base\), editBase\)/);
+  assert.match(src('tenders-edit.js'), /mergeFormEdit\(out, live, editBase\)/);
+  assert.match(src('tenders-edit.js'), /live = liveOf\(base\)/);
   assert.match(src('bulletin-edit.js'), /mergeFormEdit\(out, live, editBase\)/);
-  assert.match(src('vaxschedule-edit.js'), /mergeSchedule\(items, D\.items, orig\)/);
+  assert.match(src('vaxschedule-edit.js'), /mergeSchedule\(items, live, orig\)/);
+  assert.match(src('vaxschedule-edit.js'), /let live = saved0\?\.gwLive \?\? D\.items/);
   assert.doesNotMatch(src('vaxschedule-edit.js'), /JSON\.stringify\(sortedForExport/);
   for (const [tpl, p, id] of [
     [jobsTpl, '/admin/jobs/edit/', 'jf-changed'],

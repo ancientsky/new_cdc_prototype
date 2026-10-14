@@ -1,12 +1,17 @@
 // /admin/tenders/edit/ 採購公告上架與異動：只做 DOM 綁定；組物件、檢核、異動紀錄都在 tenders-edit-core.js。
+// 第五十三輪（docs/deploy.md §25、guide-staff §56）：有寫入閘道時接上「送審與上線」（publish-gateway.js，與上架頁、疫情報導編輯頁同一套）：
+//   存檔帶版本碼（getBaseHash）、被擋時「載入最新版（保留我的修改）」（reloadLatest）、從送審件開啟（?gw=）。沒有閘道時照舊只產生 JSON。
 import { $, esc, store, readEmbedded, copyText, downloadText } from './common.js';
+import { liveItem, sameValue, editDiff, EDIT_DERIVED } from './preprocess.js';
+import { contentVersion, NEW_VERSION } from './content-version.js';
+import { initPublishGateway } from './publish-gateway.js';
 import {
   buildTender, problemsOf, amendmentFor, cancelAmendment, exportFilename, dateChanges, describeChanges, stageInfo, sortedAmendments,
-  attachmentsText, slugOfId, DATE_FIELDS,
+  attachmentsText, slugOfId, DATE_FIELDS, stripBuild, SLUG_RE, ID_PREFIX_RE,
 } from './tenders-edit-core.js';
-import { mergeFormEdit, changedFields, changedText } from './edit-merge.js';
+import { mergeFormEdit, changedFields, changedText, editorFieldLabel } from './edit-merge.js';
 
-const D = readEmbedded('adm-tenders-data', { tenders: [], units: [], stages: {}, amendKinds: {} });
+const D = readEmbedded('adm-tenders-data', { tenders: [], units: [], stages: {}, amendKinds: {}, versions: {} });
 const KEY = 'cdc.admin.tenders-edit';
 const TODAY = D.today;
 const byId = new Map(D.tenders.map((x) => [x.id, x]));
@@ -20,15 +25,23 @@ let autoCancel = null; // C 區自動加入的那一筆
 // 第五十二輪（docs/deploy.md §24）：修改既有標案時，匯出＝以現行版為底，只套用同事改過的欄位。
 // editBase＝表單剛帶入現行版、還沒動過時的匯出（經過真的欄位來回一次）；與目前的匯出逐欄比較，相同的欄位保留現行版原樣。
 let editBase = null;
+// 第五十三輪：同時修改的版本檢查（docs/deploy.md §23、§25）。live＝現行版（合併的底；網站上的，或送審件裡的）＋正本雜湊；
+// source：live 從哪裡來（site／gateway）；version：live 的版本碼；savedVersion：這頁上次存進系統的版本碼 { id, hash }。
+let live = null;
+let source = 'site';
+let version = NEW_VERSION;
+let savedVersion = null;
 
 const datesOf = (x) => Object.fromEntries(Object.keys(DATE_FIELDS).map((k) => [k, x?.[k] ?? '']));
 const asText = (v) => (Array.isArray(v) ? v.join('\n') : v ?? '');
 const val = (id) => $(`#${id}`).value;
 const setVal = (id, v) => { $(`#${id}`).value = v ?? ''; };
 
-function fill(x) {
-  base = x?.id && byId.has(x.id) ? byId.get(x.id) : null;
+/** 表單帶入 x；b＝這筆的現行版（省略時依 id 從網站資料找；從系統帶回的一筆由呼叫端給） */
+function fill(x, b) {
+  base = b !== undefined ? b : x?.id && byId.has(x.id) ? byId.get(x.id) : null;
   const t = x ?? {};
+  if (base && !$(`#tf-pick option[value="${CSS.escape(base.id)}"]`)) $('#tf-pick').append(new Option(`${base.title}（送審中）`, base.id));
   setVal('tf-pick', base?.id ?? '');
   setVal('tf-title', t.title); setVal('tf-summary', t.summary); setVal('tf-slug', t.slug ?? (t.id ? slugOfId(t.id) : ''));
   setVal('tf-no', t.tenderNo); setVal('tf-unit', t.requestingUnit); setVal('tf-method', t.method); setVal('tf-rule', t.awardRule); setVal('tf-cat', t.category);
@@ -58,10 +71,36 @@ function read() {
 }
 const rawTender = () => buildTender(read(), { today: TODAY, base });
 /** 現行版＋建置的正本雜湊（改到中文時，mergeFormEdit 會把既有英譯標成「依舊版翻譯」） */
-const liveOf = (t) => (t ? { ...t, sourceHash: D.sourceHashes?.[t.id] ?? undefined } : null);
-const current = () => { const out = rawTender(); return base && editBase ? mergeFormEdit(out, liveOf(base), editBase) : out; };
+const liveOf = (t, sourceHash = D.sourceHashes?.[t?.id]) => (t ? { ...t, sourceHash: sourceHash ?? undefined } : null);
+const current = () => { const out = rawTender(); return base && editBase && live ? mergeFormEdit(out, live, editBase) : out; };
 /** 帶入現行版（或空白新增）並記下 editBase */
-function openTender(x) { fill(x); editBase = base ? rawTender() : null; }
+function openTender(x) {
+  fill(x);
+  live = liveOf(base); source = 'site'; savedVersion = null;
+  version = base ? (D.versions?.[base.id] ?? contentVersion(base)) : NEW_VERSION;
+  editBase = base ? rawTender() : null;
+}
+/** 第五十三輪：表單帶入系統送回的一筆（送審件，或網站上的最新版）並重新記 editBase */
+function openItem(item, { version: v, source: src, sourceHash = null }) {
+  const clean = stripBuild(item);
+  fill(clean, clean);
+  live = liveOf(clean, sourceHash);
+  source = src; savedVersion = null;
+  version = v ?? contentVersion(item);
+  editBase = rawTender();
+}
+/** 存檔時要帶給閘道的版本碼：上次存進系統的、或開啟時的；新標案是 new */
+function getBaseHash() {
+  const id = current().id;
+  if (savedVersion?.id === id) return savedVersion.hash;
+  if (live && live.id === id) return version;
+  return NEW_VERSION;
+}
+/** 換了要處理的標案 ⇒ 網址不再指向原本的送審件；送審面板重新檢查這筆的送審件與網站版本 */
+function targetChanged() {
+  if (new URLSearchParams(location.search).has('gw')) { try { history.replaceState(null, '', location.pathname); } catch { /* 不能改網址也沒關係 */ } }
+  document.dispatchEvent(new CustomEvent('adm:gw-target'));
+}
 const otherIds = () => D.tenders.map((x) => x.id).filter((id) => id !== base?.id);
 
 function paintAmends() {
@@ -108,7 +147,7 @@ function paint() {
   const errs = w.filter((x) => x.level === 'error'), warns = w.filter((x) => x.level === 'warn');
   $('#tf-warn').innerHTML = (errs.length ? `<div class="adm-box adm-box--warn" role="status"><strong>發布前請補齊（${errs.length}）</strong><ul class="adm-tf-list">${errs.map((x) => `<li>${esc(x.text)}</li>`).join('')}</ul></div>` : '<div class="adm-box adm-box--ok"><strong>必填與日期檢核都通過</strong>可以匯出開 PR。</div>')
     + (warns.length ? `<div class="adm-box adm-box--note"><strong>提醒（${warns.length}）</strong><ul class="adm-tf-list">${warns.map((x) => `<li>${esc(x.text)}</li>`).join('')}</ul></div>` : '');
-  const ch = base ? changedFields(t, base) : null;
+  const ch = base && live ? changedFields(t, live) : null;
   $('#tf-changed').textContent = ch ? changedText(ch) : '';
   $('#tf-changed').dataset.changed = ch ? ch.fields.join(' ') : '';
   $('#tf-file').textContent = exportFilename(t);
@@ -134,9 +173,12 @@ function addAmendment() {
   paint();
 }
 
-function save() {
+function saveLocal() {
   const form = read();
-  store.set(KEY, { pick: base?.id ?? '', form: { ...form, id: base?.id, amendments, _mark: mark }, editBase, savedAt: new Date().toISOString() });
+  store.set(KEY, { pick: base?.id ?? '', form: { ...form, id: base?.id, amendments, _mark: mark }, editBase, gwVersion: savedVersion, ...(source === 'gateway' && live ? { gwLive: live, gwLiveVersion: version } : {}), savedAt: new Date().toISOString() });
+}
+function save() {
+  saveLocal();
   $('#tf-msg').textContent = '草稿已存在本機瀏覽器。';
 }
 
@@ -147,7 +189,7 @@ $('#tf-form').addEventListener('input', (e) => {
   paint();
 });
 $('#tf-form').addEventListener('change', (e) => {
-  if (e.target.id === 'tf-pick') { openTender(e.target.value ? byId.get(e.target.value) : null); $('#tf-msg').textContent = ''; }
+  if (e.target.id === 'tf-pick') { openTender(e.target.value ? byId.get(e.target.value) ?? null : null); $('#tf-msg').textContent = ''; targetChanged(); }
   if (e.target.name === 'tf-ms') syncCancel();
   paint();
 });
@@ -161,7 +203,7 @@ $('#tf-amends').addEventListener('click', (e) => {
 $('#tf-am-add').addEventListener('click', addAmendment);
 $('#tf-aw-clear').addEventListener('click', () => { ['tf-aw-date', 'tf-aw-winner', 'tf-aw-amount', 'tf-aw-note'].forEach((id) => setVal(id, '')); paint(); });
 $('#tf-save').addEventListener('click', save);
-$('#tf-reset').addEventListener('click', () => { const id = val('tf-pick'); openTender(id ? byId.get(id) : null); store.del(KEY); $('#tf-msg').textContent = '已重新帶入，草稿已清除。'; paint(); });
+$('#tf-reset').addEventListener('click', () => { const id = val('tf-pick'); openTender(id ? byId.get(id) ?? null : null); store.del(KEY); $('#tf-msg').textContent = '已重新帶入，草稿已清除。'; paint(); targetChanged(); });
 $('#tf-copy').addEventListener('click', (e) => copyText(`${$('#tf-out').textContent}\n`, e.currentTarget));
 $('#tf-dl').addEventListener('click', () => downloadText(exportFilename(current()).split('/').pop(), `${$('#tf-out').textContent}\n`));
 
@@ -172,7 +214,64 @@ if (qid && byId.has(qid)) openTender(byId.get(qid));
 else if (saved?.form) {
   // 修改中的草稿：先帶入現行版記下 editBase（舊草稿沒存 editBase 時用），再換成草稿內容；草稿有存就用草稿開始時的 editBase
   openTender(saved.form.id && byId.has(saved.form.id) ? byId.get(saved.form.id) : null);
+  // 第五十三輪：從送審件帶回的草稿 ⇒ 現行版仍是那一版（editBase 是依它記的）；上次存進系統的版本碼也帶回來
+  if (saved.gwLive && saved.gwLive.id === saved.form.id) { base = stripBuild(saved.gwLive); live = saved.gwLive; source = 'gateway'; version = saved.gwLiveVersion ?? contentVersion(live); }
+  if (saved.gwVersion?.id && saved.gwVersion?.hash) savedVersion = saved.gwVersion;
   if (saved.editBase && base) editBase = saved.editBase;
-  fill(saved.form); $('#tf-msg').textContent = `已還原本機草稿（${saved.savedAt?.slice(0, 16).replace('T', ' ') ?? ''}）。`; }
+  fill(saved.form, base); $('#tf-msg').textContent = `已還原本機草稿（${saved.savedAt?.slice(0, 16).replace('T', ' ') ?? ''}）。`; }
 else { openTender(null); setVal('tf-announced', TODAY); }
 paint();
+
+/* ───────── 第五十三輪：送審與上線（有寫入閘道時才出現；GitHub Pages 與 ?gateway=off 仍只產生 JSON） ───────── */
+const GW_FIELDS = { id: '#tf-slug', slug: '#tf-slug', title: '#tf-title', summary: '#tf-summary', tenderNo: '#tf-no', requestingUnit: '#tf-unit', method: '#tf-method', awardRule: '#tf-rule', category: '#tf-cat', budgetNtd: '#tf-budget', announcedAt: '#tf-announced', deadlineAt: '#tf-deadline', openingAt: '#tf-opening', briefingAt: '#tf-briefing', pccUrl: '#tf-pcc', scope: '#tf-scope', specialTerms: '#tf-terms', contractPeriod: '#tf-period', attachments: '#tf-att', contact: '#tf-contact', amendments: '#tf-am-text', manualStatus: '#tf-ms-note', manualStatusNote: '#tf-ms-note', award: '#tf-aw-date' };
+/**
+ * 載入最新版（保留我的修改）：與疫情報導編輯頁同一個做法（docs/deploy.md §23.5）。
+ * 「我改的欄位」＝表單匯出跟 editBase 不同的欄位；「別人改的」＝最新版跟我開啟時的版本（live）不同的欄位。
+ * 先以最新版重新帶入表單、重新記 editBase，再把我改、別人沒改的欄位寫回表單；兩邊都改的先用最新版，列出我的值。
+ * 異動紀錄：我加的、最新版還沒有的那幾筆仍標成「本次新增」（可以移除），最新版已有的標成已公告。
+ */
+function reloadLatest(item, v, { source: src = 'site' } = {}) {
+  const mineFull = current();
+  const raw = rawTender();
+  try { store.set('cdc.admin.staleCopy', { id: mineFull.id, savedAt: new Date().toISOString(), item: mineFull }); } catch { /* 存不下就算了，畫面仍會列出我的值 */ }
+  const label = (k) => `${editorFieldLabel(k)}${editorFieldLabel(k) === k ? '' : `（${k}）`}`;
+  const show = (x) => (x == null ? '（空白）' : typeof x === 'string' ? x : JSON.stringify(x, null, 1));
+  const before = live && live.id === item.id && editBase ? live : null;
+  const oldMark = mark;
+  const latest = liveItem(stripBuild(item));
+  if (!before) {
+    openItem(item, { version: v, source: src, sourceHash: item.sourceHash ?? null });
+    paint(); saveLocal();
+    return { theirs: [], mine: [], conflicts: editDiff(mineFull, latest).map((k) => ({ field: k, label: label(k), yours: show(mineFull[k]) })) };
+  }
+  const mineKeys = [...new Set([...Object.keys(raw), ...Object.keys(editBase)])].filter((k) => !EDIT_DERIVED.includes(k) && !sameValue(raw[k], editBase[k]));
+  const theirKeys = editDiff(latest, before);
+  const conflicts = mineKeys.filter((k) => theirKeys.includes(k) && !sameValue(mineFull[k], latest[k]));
+  const reapply = { ...latest };
+  for (const k of mineKeys) { if (conflicts.includes(k)) continue; if (mineFull[k] === undefined) delete reapply[k]; else reapply[k] = mineFull[k]; }
+  openItem(item, { version: v, source: src, sourceHash: item.sourceHash ?? null });
+  if (mineKeys.length) {
+    const had = latest.amendments ?? [];
+    const amends = (reapply.amendments ?? []).map((a) => (had.some((x) => sameValue(x, a)) ? { ...a } : { ...a, _new: true }));
+    // 我已經記過異動紀錄（日期的比對基準移過）⇒ 沿用我的基準，不重複提醒「日期變了還沒記」
+    const keepMark = mineKeys.includes('amendments') && !conflicts.includes('amendments');
+    fill({ ...reapply, amendments: amends, ...(keepMark ? { _mark: oldMark } : {}) }, base);
+  }
+  paint(); saveLocal();
+  return { theirs: theirKeys.map(label), mine: mineKeys.filter((k) => !conflicts.includes(k)).map(label), conflicts: conflicts.map((k) => ({ field: k, label: label(k), yours: show(mineFull[k]) })) };
+}
+initPublishGateway({
+  exportObj: () => current(),
+  getContentId: () => { const t = current(); return ID_PREFIX_RE.test(t.id ?? '') && SLUG_RE.test(slugOfId(t.id)) ? t.id : ''; },
+  loadItem: (item, meta = {}) => { openItem(item, { version: meta.contentHash, source: 'gateway' }); paint(); },
+  fieldInput: GW_FIELDS,
+  getBaseHash,
+  getEditTarget: () => (live && source === 'site' ? { id: live.id, type: 'tender', version } : null),
+  reloadLatest,
+  onSaved: (sub) => {
+    if (sub?.contentHash) savedVersion = { id: sub.contentId, hash: sub.contentHash };
+    saveLocal();
+    if (sub?.status === 'published') $('#tf-msg').textContent = '採購公告已上線。';
+  },
+});
+window.__admTenders = { current, getBaseHash, reloadLatest, get live() { return live; }, get editBase() { return editBase; }, get version() { return version; }, get source() { return source; } }; // 供自動化測試
