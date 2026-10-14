@@ -63,5 +63,43 @@
   "answerMarkdown": "建議孕婦**每次懷孕於第 28 至 36 週**接種 1 劑 Tdap（減量破傷風、白喉、非細胞性百日咳混合疫苗）。媽媽產生的抗體可經胎盤傳給寶寶，保護出生後還來不及接種疫苗的小嬰兒。\n\nTdap 目前多為自費，部分縣市提供補助，可向產檢院所或衛生所洽詢。",
   "structured": {
     "gestationWeeks": "28–36"
+  },
+  "i18n": {
+    "en": {
+      "question": "Do pregnant women need the whooping cough vaccine?",
+      "answerMarkdown": "Pregnant women are advised to receive 1 dose of Tdap (reduced-dose tetanus, diphtheria and acellular pertussis combined vaccine) **between weeks 28 and 36 of every pregnancy**. The mother's antibodies pass to the baby through the placenta and protect young infants who are not yet old enough to be vaccinated.\n\nTdap is currently mostly self-paid, and some cities and counties offer subsidies; ask your prenatal care clinic or local health centre.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "ja": {
+      "question": "妊婦は百日咳のワクチンを接種する必要がありますか？",
+      "answerMarkdown": "妊婦には、**妊娠のたびに妊娠28～36週**に、Tdap（破傷風・ジフテリア・無細胞百日咳の減量混合ワクチン）を1回接種することをおすすめします。母親がつくった抗体は胎盤を通じて赤ちゃんに伝わり、生まれた後まだワクチンを接種できない小さな赤ちゃんを守ります。\n\nTdapは現在、多くが自費での接種です。一部の県・市では補助があるので、妊婦健診を受けている医療機関や保健所（衛生所）に問い合わせてください。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Kailangan bang magpabakuna laban sa whooping cough ang mga buntis?",
+      "answerMarkdown": "Inirerekomenda sa mga buntis na tumanggap ng 1 dose ng Tdap (pinagsamang bakuna sa tetano, dipterya, at acellular na pertussis na mababa ang dose) **sa ika-28 hanggang ika-36 na linggo ng bawat pagbubuntis**. Ang antibody ng ina ay naipapasa sa sanggol sa pamamagitan ng inunan at pinoprotektahan nito ang maliliit na sanggol na hindi pa nababakunahan pagkapanganak.\n\nSa kasalukuyan, ang Tdap ay kadalasang sariling gastos, at may ilang lungsod at county na nagbibigay ng tulong-pinansyal; magtanong sa klinika o ospital ng inyong prenatal checkup o sa health center.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Phụ nữ mang thai có cần tiêm vắc-xin ho gà không?",
+      "answerMarkdown": "Khuyến cáo phụ nữ mang thai tiêm 1 liều Tdap (vắc-xin phối hợp uốn ván, bạch hầu, ho gà vô bào liều giảm) **vào tuần thứ 28 đến 36 của mỗi lần mang thai**. Kháng thể của người mẹ truyền qua nhau thai cho em bé, bảo vệ trẻ sơ sinh nhỏ tuổi chưa kịp tiêm vắc-xin sau khi chào đời.\n\nHiện nay Tdap phần lớn là loại tự chi trả, một số thành phố/huyện có hỗ trợ; bạn có thể hỏi cơ sở khám thai hoặc trạm y tế.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Apakah ibu hamil perlu vaksin batuk rejan (pertusis)?",
+      "answerMarkdown": "Ibu hamil dianjurkan menerima 1 dosis Tdap (vaksin kombinasi tetanus, difteri, dan pertusis aselular dosis rendah) **pada minggu ke-28 hingga ke-36 setiap kehamilan**. Antibodi ibu dapat diteruskan ke bayi melalui plasenta, melindungi bayi kecil yang setelah lahir belum sempat divaksin.\n\nTdap saat ini sebagian besar dengan biaya sendiri; beberapa kota/kabupaten memberikan subsidi, silakan tanyakan ke fasilitas pemeriksaan kehamilan atau puskesmas setempat.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "หญิงตั้งครรภ์ต้องฉีดวัคซีนไอกรนหรือไม่?",
+      "answerMarkdown": "แนะนำให้หญิงตั้งครรภ์ฉีด Tdap (วัคซีนรวมบาดทะยัก คอตีบ และไอกรนชนิดไม่มีเซลล์ ที่ลดขนาดยาลง) 1 เข็ม **ในสัปดาห์ที่ 28 ถึง 36 ของการตั้งครรภ์ทุกครั้ง** ภูมิคุ้มกันที่แม่สร้างขึ้นจะส่งผ่านรกไปยังทารก ปกป้องทารกตัวเล็กที่ยังไม่ถึงวัยรับวัคซีนหลังคลอด\n\nปัจจุบัน Tdap ส่วนใหญ่ต้องชำระค่าใช้จ่ายเอง และบางเมือง/อำเภอมีเงินอุดหนุน สอบถามได้ที่สถานพยาบาลที่ฝากครรภ์หรือศูนย์สาธารณสุขท้องถิ่น",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
   }
 }

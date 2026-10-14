@@ -70,6 +70,36 @@
     "en": {
       "question": "I had a flu vaccine last year. Do I need another one this year?",
       "answerMarkdown": "Yes. Influenza viruses change from year to year and the WHO updates the vaccine strains annually based on surveillance. Protection also wanes after about 6 months, **so vaccination is needed every year**.\n\nProtection develops about 2 weeks after vaccination, so get it early before the season peaks."
+    },
+    "ja": {
+      "question": "去年インフルエンザワクチンを接種しましたが、今年も接種が必要ですか？",
+      "answerMarkdown": "はい、必要です。インフルエンザウイルスは毎年変異することがあり、世界保健機関（WHO）は毎年、監視の結果にもとづいてワクチン株を更新します。また、接種後の予防効果は約6か月後から徐々に弱まるため、**毎年の接種が必要です**。\n\n接種後、約2週間で予防効果が得られます。流行シーズンの前に、できるだけ早く接種を済ませることをおすすめします。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Nagpabakuna ako ng bakuna sa trangkaso noong nakaraang taon. Kailangan ko pa bang magpabakuna ngayong taon?",
+      "answerMarkdown": "Oo. Maaaring magbago ang mga virus ng trangkaso taun-taon, at ina-update ng World Health Organization (WHO) ang mga strain ng bakuna kada taon batay sa resulta ng surveillance. Unti-unti ring humihina ang proteksyon pagkatapos ng mga 6 na buwan mula sa pagbabakuna, **kaya kailangan ang pagbabakuna bawat taon**.\n\nNabubuo ang proteksyon mga 2 linggo pagkatapos ng pagbabakuna, kaya inirerekomenda na magpabakuna nang maaga bago ang panahon ng pagkalat.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Năm ngoái tôi đã tiêm vắc-xin cúm rồi, năm nay có cần tiêm lại không?",
+      "answerMarkdown": "Có. Virus cúm có thể biến đổi hằng năm, và Tổ chức Y tế Thế giới (WHO) cập nhật chủng vắc-xin mỗi năm dựa trên kết quả giám sát; ngoài ra khả năng bảo vệ sau khi tiêm giảm dần sau khoảng 6 tháng, **vì vậy cần tiêm mỗi năm**.\n\nKhoảng 2 tuần sau khi tiêm sẽ có khả năng bảo vệ, nên tiêm càng sớm càng tốt trước mùa dịch.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Tahun lalu saya sudah divaksin influenza. Apakah tahun ini perlu divaksin lagi?",
+      "answerMarkdown": "Perlu. Virus influenza dapat bermutasi setiap tahun, dan Organisasi Kesehatan Dunia (WHO) memperbarui strain vaksin setiap tahun berdasarkan hasil pemantauan. Selain itu, perlindungan setelah vaksinasi berangsur menurun setelah sekitar 6 bulan, **sehingga vaksinasi diperlukan setiap tahun**.\n\nPerlindungan terbentuk sekitar 2 minggu setelah vaksinasi, jadi sebaiknya vaksinasi diselesaikan sedini mungkin sebelum musim penyebaran.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "ปีที่แล้วฉีดวัคซีนไข้หวัดใหญ่ไปแล้ว ปีนี้ต้องฉีดอีกหรือไม่?",
+      "answerMarkdown": "ต้องฉีด ไวรัสไข้หวัดใหญ่อาจกลายพันธุ์ได้ทุกปี และองค์การอนามัยโลก (WHO) จะปรับปรุงสายพันธุ์วัคซีนทุกปีตามผลการเฝ้าระวัง อีกทั้งภูมิคุ้มกันหลังฉีดจะค่อย ๆ ลดลงหลังประมาณ 6 เดือน **ดังนั้นต้องฉีดทุกปี**\n\nร่างกายจะสร้างภูมิคุ้มกันประมาณ 2 สัปดาห์หลังฉีด จึงแนะนำให้ฉีดให้เสร็จโดยเร็วก่อนถึงฤดูระบาด",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

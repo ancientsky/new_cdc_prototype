@@ -71,6 +71,36 @@
     "en": {
       "question": "Does someone aged 65+ with flu-like symptoms need a positive rapid test to get government-funded antivirals?",
       "answerMarkdown": "No. Under Article 4 of the year-round eligibility criteria for government-funded influenza antivirals, **children under 5 and adults aged 65 or older with influenza-like illness can be prescribed antivirals directly once a physician judges them eligible; no rapid test is required**. The same applies to the other year-round groups (pregnant women, hospitalised patients, people with high-risk chronic conditions).\n\nFrom 24 August to 31 October 2026 (extended by Letter to the Medical Community No. 616), people with flu-like symptoms in seven high-transmission groups are also eligible without a rapid test. Check Taiwan CDC's latest announcements for the current rules."
+    },
+    "ja": {
+      "question": "インフルエンザ様症状のある65歳以上の高齢者は、迅速検査で陽性にならないと公費の抗ウイルス薬を使えませんか？",
+      "answerMarkdown": "いいえ、必要ありません。「公費インフルエンザ抗ウイルス薬の使用対象」（通年適用）第4条により、**5歳未満および65歳以上のインフルエンザ様症状のある患者は、医師が診察して該当すると判断すれば、インフルエンザ迅速検査なしで公費の抗ウイルス薬を処方できます**。妊婦、入院患者、高リスクの慢性疾患のある人など、通年適用のほかの対象者も、迅速検査は不要です。\n\nまた、2026年8月24日から10月31日まで（医療界向け通知第616号により延長）は、インフルエンザ様症状があり、感染が広がりやすい7種類の集団（医療・防疫従事者、長期ケア施設、保育従事者と学生、高リスクの人と同居する人、家禽・家畜業、人が密集する施設）に当てはまる人にも、医師が直接処方でき、同じく迅速検査は不要です。現行の規定は、Taiwan CDC の最新の発表を確認してください。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Kailangan bang magpositibo sa rapid test ang may edad na 65 pataas na may sintomas na tulad ng trangkaso para makagamit ng antiviral na pinondohan ng gobyerno?",
+      "answerMarkdown": "Hindi. Ayon sa Artikulo 4 ng \"Mga Pamantayan sa Paggamit ng Antiviral na Gamot sa Trangkaso na Pinondohan ng Gobyerno\" (para sa buong taon), **ang mga pasyenteng wala pang 5 taong gulang at may edad na 65 pataas na may influenza-like illness ay maaaring resetahan ng antiviral na pinondohan ng gobyerno kapag natukoy ng doktor na sila ay kwalipikado, at hindi kailangan ang rapid test sa trangkaso**. Pareho rin ito sa iba pang grupong saklaw sa buong taon, tulad ng mga buntis, mga naospital, at mga may high-risk na malalang karamdaman.\n\nBukod dito, mula Agosto 24 hanggang Oktubre 31, 2026 (pinalawig ayon sa Liham Blg. 616 sa komunidad ng medisina), ang mga may sintomas na tulad ng trangkaso na kabilang sa 7 grupong madaling makahawa (mga manggagawa sa medisina at pag-iwas sa sakit, mga pasilidad ng pangmatagalang pangangalaga, mga tagapag-alaga ng bata at mga estudyante, mga kasamang nakatira ng mga may mataas na panganib, industriya ng manok at hayop, at mga institusyong siksikan ang tao) ay maaari ring resetahan nang direkta ng doktor, at hindi rin kailangan ang rapid test. Para sa kasalukuyang mga patakaran, sumangguni sa pinakabagong anunsyo ng Taiwan CDC.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Người từ 65 tuổi trở lên có triệu chứng giống cúm có nhất thiết phải xét nghiệm nhanh dương tính mới được dùng thuốc kháng virus do nhà nước chi trả không?",
+      "answerMarkdown": "Không cần. Theo Điều 4 của \"Đối tượng sử dụng thuốc kháng virus cúm do nhà nước chi trả\" (áp dụng quanh năm), **bệnh nhân có triệu chứng giống cúm dưới 5 tuổi và từ 65 tuổi trở lên, sau khi bác sĩ khám và xác định phù hợp thì có thể được kê thuốc kháng virus do nhà nước chi trả, không cần xét nghiệm nhanh cúm**; phụ nữ mang thai, người nhập viện, người có bệnh mạn tính nguy cơ cao và các đối tượng khác áp dụng quanh năm cũng không cần xét nghiệm nhanh.\n\nNgoài ra, từ ngày 24 tháng 8 đến ngày 31 tháng 10 năm 2026 (được gia hạn theo Công văn gửi giới y tế số 616), người có triệu chứng giống cúm thuộc 7 nhóm dễ lây truyền cúm cao (nhân viên y tế và phòng chống dịch, cơ sở chăm sóc dài hạn, nhân viên chăm sóc trẻ và học sinh, người sống chung với người có nguy cơ cao, ngành gia cầm gia súc, cơ sở đông người) cũng có thể được bác sĩ kê thuốc trực tiếp, cũng không cần xét nghiệm nhanh. Quy định hiện hành xin tham khảo thông báo mới nhất của Taiwan CDC.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Apakah lansia 65 tahun ke atas dengan gejala mirip influenza harus hasil tes cepat positif untuk dapat menggunakan antivirus yang ditanggung pemerintah?",
+      "answerMarkdown": "Tidak perlu. Berdasarkan Pasal 4 \"Kriteria Penerima Obat Antivirus Influenza yang Ditanggung Pemerintah\" (berlaku sepanjang tahun), **pasien dengan gejala mirip influenza (influenza-like illness) yang berusia di bawah 5 tahun dan 65 tahun ke atas dapat diresepkan antivirus yang ditanggung pemerintah setelah dokter memeriksa dan menilai memenuhi syarat, tanpa perlu tes cepat influenza**; ibu hamil, pasien rawat inap, penderita penyakit kronis berisiko tinggi, dan kelompok lain yang berlaku sepanjang tahun juga tidak memerlukan tes cepat.\n\nSelain itu, pada 24 Agustus hingga 31 Oktober 2026 (diperpanjang berdasarkan Surat Edaran untuk Kalangan Medis No. 616), orang dengan gejala mirip influenza yang termasuk 7 kelompok dengan penularan influenza tinggi (tenaga medis dan pencegahan epidemi, fasilitas perawatan jangka panjang, tenaga penitipan anak dan pelajar, orang yang tinggal serumah dengan orang berisiko tinggi, peternak unggas dan ternak, serta institusi padat penghuni) juga dapat langsung diresepkan oleh dokter, juga tanpa tes cepat. Untuk aturan yang berlaku saat ini, mohon merujuk pada pengumuman terbaru Taiwan CDC.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "ผู้สูงอายุ 65 ปีขึ้นไปที่มีอาการคล้ายไข้หวัดใหญ่ ต้องตรวจเร็วพบผลบวกก่อนจึงจะใช้ยาต้านไวรัสที่รัฐออกค่าใช้จ่ายให้ได้หรือไม่?",
+      "answerMarkdown": "ไม่จำเป็น ตามข้อ 4 ของ \"เกณฑ์ผู้มีสิทธิ์ใช้ยาต้านไวรัสไข้หวัดใหญ่ที่รัฐออกค่าใช้จ่ายให้\" (ใช้ได้ตลอดปี) **ผู้ป่วยที่มีอาการคล้ายไข้หวัดใหญ่ซึ่งมีอายุต่ำกว่า 5 ปีและอายุ 65 ปีขึ้นไป เมื่อแพทย์ตรวจและพิจารณาแล้วว่าเข้าเกณฑ์ ก็สั่งจ่ายยาต้านไวรัสที่รัฐออกค่าใช้จ่ายให้ได้เลย โดยไม่ต้องตรวจไข้หวัดใหญ่แบบเร็ว** หญิงตั้งครรภ์ ผู้ป่วยที่นอนโรงพยาบาล ผู้ที่มีโรคเรื้อรังกลุ่มเสี่ยงสูง และกลุ่มอื่น ๆ ที่ใช้ได้ตลอดปี ก็ไม่ต้องตรวจเร็วเช่นกัน\n\nนอกจากนี้ ตั้งแต่วันที่ 24 สิงหาคม ถึง 31 ตุลาคม 2026 (ขยายเวลาตามหนังสือแจ้งวงการแพทย์ฉบับที่ 616) ผู้ที่มีอาการคล้ายไข้หวัดใหญ่และอยู่ใน 7 กลุ่มที่แพร่เชื้อไข้หวัดใหญ่ได้สูง (บุคลากรทางการแพทย์และป้องกันโรค สถานดูแลระยะยาว ผู้ดูแลเด็กและนักเรียน ผู้ที่อยู่อาศัยร่วมกับผู้มีความเสี่ยงสูง ผู้ประกอบอาชีพเลี้ยงสัตว์ปีกและปศุสัตว์ และสถานที่ที่มีผู้คนอยู่กันหนาแน่น) แพทย์ก็สั่งจ่ายยาให้ได้โดยตรงเช่นกัน โดยไม่ต้องตรวจเร็ว สำหรับกฎระเบียบปัจจุบัน โปรดดูประกาศล่าสุดของ Taiwan CDC",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

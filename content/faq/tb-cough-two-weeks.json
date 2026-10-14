@@ -68,6 +68,36 @@
     "en": {
       "question": "How long should a cough last before I suspect tuberculosis?",
       "answerMarkdown": "If you have **coughed for more than 2 weeks**, especially with sputum, chest pain, weight loss, poor appetite, afternoon fever or night sweats, see a chest physician for a chest X-ray and sputum test.\n\nAlmost everyone with TB is cured by taking medicine regularly for at least 6 months, and early detection protects your family."
+    },
+    "ja": {
+      "question": "咳がどのくらい続いたら、結核を疑うべきですか？",
+      "answerMarkdown": "**咳が2週間を超えて続く**とき、特に痰、胸の痛み、体重減少、食欲不振、午後の発熱、夜間の寝汗を伴うときは、病院の呼吸器科（胸腔科）を受診し、胸部X線検査と喀痰検査を受けてください。\n\n結核は、決められた通りに少なくとも6か月間薬を飲めば、ほとんどの場合治ります。早期に見つかれば、家族にうつすことも防げます。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Gaano katagal ang ubo bago pagdudahan ang tuberculosis?",
+      "answerMarkdown": "Kung **umubo nang higit sa 2 linggo**, lalo na kung may kasamang plema, pananakit ng dibdib, pagbaba ng timbang, kawalan ng ganang kumain, lagnat sa hapon, o pagpapawis sa gabi, magpatingin sa chest department (pulmonology) ng ospital para sa chest X-ray at pagsusuri ng plema.\n\nHalos lahat ng may TB ay gumagaling kung regular na iinom ng gamot nang hindi bababa sa 6 na buwan, at ang maagang pagkakatuklas ay nakakaiwas ding makahawa sa pamilya.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Ho kéo dài bao lâu thì nên nghi ngờ bệnh lao?",
+      "answerMarkdown": "**Ho kéo dài hơn 2 tuần**, đặc biệt khi kèm theo có đờm, đau ngực, sụt cân, chán ăn, sốt về chiều hoặc ra mồ hôi trộm ban đêm, thì cần đến khoa hô hấp (khoa lồng ngực) của bệnh viện để chụp X-quang ngực và xét nghiệm đờm.\n\nBệnh lao nếu uống thuốc đều đặn ít nhất 6 tháng thì hầu như đều chữa khỏi, và phát hiện sớm cũng giúp tránh lây cho người trong nhà.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Batuk berapa lama yang perlu dicurigai sebagai tuberkulosis (TB)?",
+      "answerMarkdown": "Jika **batuk lebih dari 2 minggu**, terutama disertai dahak, nyeri dada, penurunan berat badan, nafsu makan menurun, demam pada sore hari, atau keringat malam, segera berobat ke poli paru (poli dada) di rumah sakit untuk menjalani rontgen dada dan pemeriksaan dahak.\n\nTB hampir selalu dapat disembuhkan bila obat diminum teratur setidaknya 6 bulan, dan deteksi dini juga dapat mencegah penularan kepada keluarga.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "ไอนานแค่ไหนจึงควรสงสัยวัณโรค?",
+      "answerMarkdown": "หาก**ไอเกิน 2 สัปดาห์** โดยเฉพาะเมื่อมีเสมหะ เจ็บหน้าอก น้ำหนักลด เบื่ออาหาร มีไข้ช่วงบ่าย หรือเหงื่อออกตอนกลางคืน ให้ไปพบแพทย์ที่แผนกอายุรกรรมโรคทรวงอก (แผนกปอด) ของโรงพยาบาล เพื่อเอกซเรย์ทรวงอกและตรวจเสมหะ\n\nวัณโรคเกือบทั้งหมดรักษาให้หายได้หากกินยาสม่ำเสมออย่างน้อย 6 เดือน และการพบตั้งแต่เนิ่น ๆ ยังช่วยป้องกันการแพร่เชื้อสู่คนในครอบครัวด้วย",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   },
   "legacyUrls": [

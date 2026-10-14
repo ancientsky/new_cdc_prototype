@@ -74,6 +74,36 @@
     "en": {
       "question": "Who can get the government-funded mpox vaccine and how many doses are needed?",
       "answerMarkdown": "Government-funded mpox (formerly monkeypox) vaccine is offered to **people with high-risk sexual behaviour in the past year**, such as those with multiple partners, sex workers, or people who have had sex at commercial venues, and to close contacts assessed by health authorities.\n\nIt requires **2 doses at least 4 weeks apart** for full protection. After contact with a case, get vaccinated ideally within 4 days and no later than 14 days."
+    },
+    "ja": {
+      "question": "Mpox（エムポックス）ワクチンは、誰が公費で接種できますか？何回接種しますか？",
+      "answerMarkdown": "公費のmpox（旧称：サル痘）ワクチンは、**過去1年以内に高リスクの性行為があった人**が対象です。たとえば、複数の性的パートナーがいる人、性風俗サービスに従事する人、営業施設で性行為をしたことがある人、また、衛生当局が評価した確定患者の濃厚接触者などです。\n\nワクチンは**2回、少なくとも4週間あけて**接種します。2回完了して初めて十分な予防効果が得られます。確定患者と接触したあとは、4日以内が望ましく、遅くとも14日以内に接種してください。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Sino ang puwedeng magpabakuna ng mpox nang pinondohan ng gobyerno? Ilang dose ang kailangan?",
+      "answerMarkdown": "Ang bakuna sa mpox (dating tinatawag na monkeypox) na pinondohan ng gobyerno ay para sa **mga taong may high-risk na pakikipagtalik sa nakalipas na isang taon**, tulad ng mga may maraming kapareha sa pakikipagtalik, mga sex worker, mga nakipagtalik sa mga komersyal na establisimyento, at mga malapitang nakasalamuha ng kumpirmadong kaso na sinuri ng mga awtoridad sa kalusugan.\n\nKailangan ito ng **2 dose na may pagitang hindi bababa sa 4 na linggo**; kumpleto lamang ang proteksyon kapag natapos ang 2 dose. Pagkatapos makasalamuha ang kumpirmadong kaso, pinakamainam na magpabakuna sa loob ng 4 na araw at hindi lalampas sa 14 na araw.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Ai được tiêm vắc-xin mpox do nhà nước chi trả? Cần tiêm mấy liều?",
+      "answerMarkdown": "Vắc-xin mpox (tên cũ là đậu mùa khỉ) do nhà nước chi trả dành cho **người có hành vi tình dục nguy cơ cao trong một năm qua**, ví dụ người có nhiều bạn tình, người hoạt động mại dâm, người từng quan hệ tình dục tại các cơ sở kinh doanh, cũng như người tiếp xúc gần với ca bệnh xác định đã được cơ quan y tế đánh giá.\n\nCần tiêm **2 liều, cách nhau ít nhất 4 tuần**; phải hoàn thành đủ 2 liều mới có khả năng bảo vệ đầy đủ. Sau khi tiếp xúc với ca bệnh xác định, tốt nhất tiêm trong vòng 4 ngày, muộn nhất trong vòng 14 ngày.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Siapa yang dapat menerima vaksin mpox yang ditanggung pemerintah, dan berapa dosisnya?",
+      "answerMarkdown": "Vaksin mpox (dahulu disebut cacar monyet) yang ditanggung pemerintah diberikan kepada **orang dengan perilaku seksual berisiko tinggi dalam satu tahun terakhir**, misalnya orang dengan banyak pasangan seksual, pekerja seks, orang yang pernah berhubungan seksual di tempat usaha komersial, serta kontak erat kasus terkonfirmasi yang dinilai oleh instansi kesehatan.\n\nVaksin diberikan **2 dosis dengan jarak minimal 4 minggu**; perlindungan penuh baru diperoleh setelah 2 dosis selesai. Setelah kontak dengan kasus terkonfirmasi, sebaiknya divaksin dalam 4 hari, paling lambat dalam 14 hari.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "ใครฉีดวัคซีนเอ็มพอกซ์ที่รัฐออกค่าใช้จ่ายให้ได้บ้าง? ต้องฉีดกี่เข็ม?",
+      "answerMarkdown": "วัคซีนเอ็มพอกซ์ (ชื่อเดิม ฝีดาษวานร) ที่รัฐออกค่าใช้จ่ายให้ มีไว้สำหรับ**ผู้ที่มีพฤติกรรมทางเพศเสี่ยงสูงในช่วงหนึ่งปีที่ผ่านมา** เช่น ผู้ที่มีคู่นอนหลายคน ผู้ให้บริการทางเพศ ผู้ที่เคยมีเพศสัมพันธ์ในสถานประกอบการ และผู้สัมผัสใกล้ชิดของผู้ป่วยยืนยันที่หน่วยงานสาธารณสุขประเมินแล้ว\n\nต้องฉีด **2 เข็ม ห่างกันอย่างน้อย 4 สัปดาห์** ต้องฉีดครบ 2 เข็มจึงจะป้องกันได้เต็มที่ หลังสัมผัสผู้ป่วยยืนยัน ควรฉีดภายใน 4 วัน และช้าที่สุดไม่เกิน 14 วัน",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

@@ -73,6 +73,36 @@
     "en": {
       "question": "Who can get this season's government-funded flu vaccine, and when does it start?",
       "answerMarkdown": "Under the 2026–27 government-funded influenza vaccination programme:\n\n- **From 1 October 2026 (phase 1)**: adults 65+, indigenous people 55+, children from 6 months to school entry, pregnant women and parents of infants under 6 months, high-risk adults aged 19–64 (chronic illness, BMI ≥ 30, rare diseases, catastrophic illness), primary to senior high school students, health and public health workers, and long-term care residents and staff.\n- **From 1 November 2026 (phase 2)**: adults aged 50–64 without high-risk conditions.\n\nEligible groups may change each year; follow the current season's programme."
+    },
+    "ja": {
+      "question": "今年の公費インフルエンザワクチンは、誰が接種できますか？いつから始まりますか？",
+      "answerMarkdown": "「2026～2027年度の公費インフルエンザワクチン接種計画」によると：\n\n- **2026年10月1日から（第1段階）**：65歳以上の高齢者、55歳以上の先住民、生後6か月以上から小学校入学前の幼児、妊婦および生後6か月以内の乳児の親、19～64歳の高リスク対象者（慢性疾患、BMI ≥ 30、希少疾患、重大傷病）、小学生から高校生、5年制専科学校（五専）1～3年生までの学生、医療・防疫従事者、長期ケア施設の入所者と職員など。\n- **2026年11月1日から（第2段階）**：高リスクの慢性疾患のない50～64歳の成人。\n\n対象者は毎年変更されることがあります。その年度の計画に従ってください。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Sino ang puwedeng magpabakuna ng bakuna sa trangkaso na pinondohan ng gobyerno ngayong taon? Kailan ito magsisimula?",
+      "answerMarkdown": "Ayon sa \"Programa sa Pagbabakuna Laban sa Trangkaso na Pinondohan ng Gobyerno para sa 2026–2027\":\n\n- **Simula Oktubre 1, 2026 (unang yugto)**: mga may edad na 65 pataas, mga katutubo na 55 pataas, mga batang 6 na buwan pataas hanggang bago pumasok sa elementarya, mga buntis at mga magulang ng sanggol na wala pang 6 na buwan, mga may mataas na panganib na may edad 19–64 (malalang karamdaman, BMI ≥ 30, bihirang sakit, malubhang sakit na nasa listahan), mga estudyante mula elementarya hanggang senior high school at unang hanggang ikatlong taon ng five-year junior college, mga manggagawa sa medisina at pag-iwas sa sakit, at mga residente at kawani ng pasilidad ng pangmatagalang pangangalaga, atbp.\n- **Simula Nobyembre 1, 2026 (ikalawang yugto)**: mga adulto na may edad 50 hanggang 64 na walang mataas na panganib na malalang karamdaman.\n\nMaaaring magbago ang mga saklaw na grupo bawat taon; sundin ang programa ng kasalukuyang taon.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Năm nay ai được tiêm vắc-xin cúm do nhà nước chi trả? Bắt đầu từ khi nào?",
+      "answerMarkdown": "Theo \"Chương trình tiêm vắc-xin cúm do nhà nước chi trả niên độ 2026–2027\":\n\n- **Từ ngày 1 tháng 10 năm 2026 (giai đoạn 1)**: người từ 65 tuổi trở lên, người bản địa từ 55 tuổi trở lên, trẻ từ 6 tháng tuổi đến trước khi vào tiểu học, phụ nữ mang thai và cha mẹ của trẻ sơ sinh dưới 6 tháng tuổi, đối tượng nguy cơ cao từ 19–64 tuổi (bệnh mạn tính, BMI ≥ 30, bệnh hiếm, bệnh nặng thuộc diện đặc biệt), học sinh từ tiểu học đến trung học phổ thông và sinh viên năm 1 đến năm 3 hệ cao đẳng 5 năm, nhân viên y tế và phòng chống dịch, người cao tuổi và nhân viên tại cơ sở chăm sóc dài hạn, v.v.\n- **Từ ngày 1 tháng 11 năm 2026 (giai đoạn 2)**: người trưởng thành từ 50 đến 64 tuổi không có bệnh mạn tính nguy cơ cao.\n\nĐối tượng có thể thay đổi hằng năm, vui lòng làm theo chương trình của năm đó.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Siapa yang dapat menerima vaksin influenza gratis (ditanggung pemerintah) tahun ini? Kapan dimulai?",
+      "answerMarkdown": "Berdasarkan \"Program Vaksinasi Influenza yang Ditanggung Pemerintah Tahun 2026–2027\":\n\n- **Mulai 1 Oktober 2026 (tahap pertama)**: lansia 65 tahun ke atas, masyarakat adat 55 tahun ke atas, anak usia 6 bulan ke atas hingga sebelum masuk sekolah dasar, ibu hamil dan orang tua bayi di bawah 6 bulan, kelompok berisiko tinggi usia 19–64 tahun (penyakit kronis, BMI ≥ 30, penyakit langka, penyakit berat/katastropik), pelajar dari sekolah dasar hingga SMA dan mahasiswa tahun pertama sampai ketiga politeknik lima tahun, tenaga medis dan pencegahan epidemi, serta penghuni dan staf fasilitas perawatan jangka panjang, dan lain-lain.\n- **Mulai 1 November 2026 (tahap kedua)**: dewasa usia 50 hingga 64 tahun tanpa penyakit kronis berisiko tinggi.\n\nKelompok sasaran dapat berubah setiap tahun, ikuti program pada tahun berjalan.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "ปีนี้ใครฉีดวัคซีนไข้หวัดใหญ่ที่รัฐออกค่าใช้จ่ายให้ได้บ้าง? เริ่มเมื่อไร?",
+      "answerMarkdown": "ตาม \"แผนการฉีดวัคซีนไข้หวัดใหญ่ที่รัฐออกค่าใช้จ่ายให้ ปี 2026–2027\":\n\n- **ตั้งแต่วันที่ 1 ตุลาคม 2026 (ระยะที่ 1)**: ผู้สูงอายุ 65 ปีขึ้นไป ชนพื้นเมืองอายุ 55 ปีขึ้นไป เด็กอายุ 6 เดือนขึ้นไปจนถึงก่อนเข้าเรียนประถม หญิงตั้งครรภ์และผู้ปกครองของทารกอายุต่ำกว่า 6 เดือน กลุ่มเสี่ยงสูงอายุ 19–64 ปี (โรคเรื้อรัง BMI ≥ 30 โรคหายาก โรคร้ายแรงที่อยู่ในรายการ) นักเรียนตั้งแต่ประถมถึงมัธยมปลายและนักศึกษาปี 1 ถึงปี 3 ของวิทยาลัยห้าปี บุคลากรทางการแพทย์และป้องกันโรค ผู้พักอาศัยและเจ้าหน้าที่ของสถานดูแลระยะยาว ฯลฯ\n- **ตั้งแต่วันที่ 1 พฤศจิกายน 2026 (ระยะที่ 2)**: ผู้ใหญ่อายุ 50 ถึง 64 ปีที่ไม่มีโรคเรื้อรังกลุ่มเสี่ยงสูง\n\nกลุ่มเป้าหมายอาจเปลี่ยนแปลงในแต่ละปี โปรดยึดแผนของปีนั้นเป็นหลัก",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

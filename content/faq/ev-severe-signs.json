@@ -68,6 +68,36 @@
     "en": {
       "question": "What are the warning signs of severe enterovirus infection?",
       "answerMarkdown": "If a child under 5 with enterovirus shows **drowsiness, confusion, poor activity, limb weakness, myoclonic jerks** (sudden startles or whole-body jerks), **persistent vomiting, rapid breathing or a fast heartbeat**, go to a major hospital immediately.\n\nSevere complications usually appear 2 to 7 days after onset, so parents should watch closely during this period."
+    },
+    "ja": {
+      "question": "エンテロウイルス感染症の重症化の前ぶれにはどんなものがありますか？",
+      "answerMarkdown": "5歳未満の幼児がエンテロウイルスに感染し、**ぼんやりして眠りがち、意識がはっきりしない、元気がない、手足に力が入らない、ミオクローヌス様けいれん**（理由もなく驚いたようになる、または突然全身の筋肉が収縮する）、**嘔吐が続く、呼吸が速い、脈が速い**などの重症化の前ぶれが出た場合は、すぐに大きな病院を受診してください。\n\n重症化は、多くの場合、発症から2～7日の間に起こります。この期間は保護者が特に注意してください。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Ano ang mga babalang palatandaan ng malubhang impeksyon sa enterovirus?",
+      "answerMarkdown": "Kapag ang batang wala pang 5 taong gulang na may enterovirus ay nagpakita ng **labis na antok, pagkalito ng malay, kawalan ng sigla, panghihina ng mga braso at binti, myoclonic jerks** (biglang pagkagulat nang walang dahilan o biglang paninigas ng mga kalamnan sa buong katawan), **patuloy na pagsusuka, mabilis na paghinga o mabilis na tibok ng puso**, o iba pang babalang palatandaan ng malubhang sakit, dalhin agad sa malaking ospital.\n\nAng malubhang sakit ay kadalasang lumilitaw 2 hanggang 7 araw matapos magsimula ang sakit, kaya dapat lalong magbantay ang mga magulang sa panahong ito.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Những dấu hiệu báo trước enterovirus diễn tiến nặng là gì?",
+      "answerMarkdown": "Khi trẻ dưới 5 tuổi nhiễm enterovirus mà có các dấu hiệu báo trước diễn tiến nặng như **lơ mơ buồn ngủ, rối loạn ý thức, kém linh hoạt, yếu tay chân, giật cơ kiểu myoclonic** (giật mình vô cớ hoặc các cơ toàn thân đột ngột co lại), **nôn liên tục, thở nhanh hoặc tim đập nhanh**, hãy đưa trẻ đến bệnh viện lớn ngay lập tức.\n\nBệnh nặng thường xuất hiện từ 2 đến 7 ngày sau khi khởi phát, trong thời gian này cha mẹ cần đặc biệt chú ý.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Apa saja tanda awal infeksi enterovirus menjadi berat?",
+      "answerMarkdown": "Jika anak di bawah 5 tahun yang terinfeksi enterovirus menunjukkan tanda awal penyakit berat seperti **kantuk berlebihan, kesadaran menurun, lemas, kelemahan tangan dan kaki, kejang mioklonik** (terkejut tanpa sebab atau otot seluruh tubuh tiba-tiba menegang), **muntah terus-menerus, napas cepat atau jantung berdetak cepat**, segera bawa ke rumah sakit besar.\n\nPenyakit berat biasanya muncul 2 hingga 7 hari setelah gejala awal, sehingga orang tua perlu sangat waspada selama masa ini.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "สัญญาณเตือนล่วงหน้าของการติดเชื้อเอนเทอโรไวรัสที่รุนแรงมีอะไรบ้าง?",
+      "answerMarkdown": "เมื่อเด็กอายุต่ำกว่า 5 ปีติดเชื้อเอนเทอโรไวรัส หากมีสัญญาณเตือนล่วงหน้าของอาการรุนแรง เช่น **ซึมง่วงนอน ความรู้สึกตัวลดลง ไม่ค่อยมีแรง แขนขาอ่อนแรง อาการกระตุกแบบไมโอโคลนิก** (ตกใจโดยไม่มีสาเหตุ หรือกล้ามเนื้อทั่วร่างกายหดเกร็งขึ้นมาทันที) **อาเจียนต่อเนื่อง หายใจเร็ว หรือหัวใจเต้นเร็ว** ให้รีบพาไปโรงพยาบาลขนาดใหญ่ทันที\n\nอาการรุนแรงมักเกิดขึ้นหลังเริ่มป่วย 2 ถึง 7 วัน ผู้ปกครองต้องเฝ้าสังเกตเป็นพิเศษในช่วงนี้",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

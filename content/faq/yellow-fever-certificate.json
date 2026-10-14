@@ -68,5 +68,43 @@
   "structured": {
     "daysBeforeTravelMin": 10,
     "validity": "終身"
+  },
+  "i18n": {
+    "en": {
+      "question": "Which countries require a yellow fever vaccination certificate?",
+      "answerMarkdown": "Some countries in Africa and Central and South America require arriving travellers to show an **International Certificate of Vaccination (Yellow Card)**, or require it only from travellers coming from yellow-fever-endemic areas. Requirements are set by each country and may change, so check the latest rules for your destination before you leave.\n\nThe yellow fever vaccine must be given **at least 10 days before departure**; the certificate takes effect from day 10 after vaccination and is valid for life. You can get the vaccine at your own expense and have the certificate issued at a Taiwan CDC contracted travel medicine clinic.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "ja": {
+      "question": "黄熱ワクチンの接種証明書が必要なのは、どの国ですか？",
+      "answerMarkdown": "アフリカや中南米の一部の国では、入国する旅行者に**国際予防接種証明書（イエローカード）**の提示を求めています。または、黄熱の流行地域から来た人にだけ提示を求めています。規定は各国が定めており、変更されることがあるため、出発前に目的地の国の最新の規定を確認してください。\n\n黄熱ワクチンは**出発の少なくとも10日前**に接種する必要があります。証明書は、接種後10日目から有効になり、生涯有効です。Taiwan CDC の契約渡航医学外来で、自費で接種し、証明書を発行してもらえます。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Aling mga bansa ang nangangailangan ng patunay ng bakuna sa yellow fever?",
+      "answerMarkdown": "Ang ilang bansa sa Africa at Central at South America ay nangangailangan sa mga dumarating na biyahero na magpakita ng **International Certificate of Vaccination (Yellow Card)**, o hinihingi lamang ito sa mga galing sa mga lugar na may yellow fever. Ang mga patakaran ay itinatakda ng bawat bansa at maaaring magbago, kaya tingnan ang pinakabagong patakaran ng bansang pupuntahan bago umalis.\n\nAng bakuna sa yellow fever ay kailangang ibigay **nang hindi bababa sa 10 araw bago umalis**; ang sertipiko ay may bisa simula sa ika-10 araw matapos ang pagbabakuna at may bisa habambuhay. Maaari kayong magpabakuna nang sariling gastos at magpa-isyu ng sertipiko sa mga kontratadong travel medicine clinic ng Taiwan CDC.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Đến những nước nào cần giấy chứng nhận tiêm vắc-xin sốt vàng?",
+      "answerMarkdown": "Một số nước ở châu Phi và Trung–Nam Mỹ yêu cầu du khách nhập cảnh xuất trình **Giấy chứng nhận tiêm chủng quốc tế (Sổ vàng)**, hoặc chỉ yêu cầu đối với người đến từ vùng có dịch sốt vàng. Quy định do từng nước đặt ra và có thể thay đổi, vì vậy trước khi khởi hành hãy tra cứu quy định mới nhất của nước đến.\n\nVắc-xin sốt vàng cần được tiêm **ít nhất 10 ngày trước khi khởi hành**; giấy chứng nhận có hiệu lực từ ngày thứ 10 sau khi tiêm và có giá trị suốt đời. Bạn có thể tự chi trả để tiêm và được cấp giấy chứng nhận tại phòng khám y học du lịch có hợp đồng với Taiwan CDC.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Negara mana saja yang mewajibkan sertifikat vaksinasi demam kuning?",
+      "answerMarkdown": "Beberapa negara di Afrika dan Amerika Tengah serta Selatan mewajibkan pelancong yang masuk menunjukkan **Sertifikat Vaksinasi Internasional (Kartu Kuning)**, atau hanya mewajibkannya bagi yang datang dari daerah endemis demam kuning. Ketentuan ditetapkan oleh masing-masing negara dan dapat berubah, jadi periksa aturan terbaru negara tujuan sebelum berangkat.\n\nVaksin demam kuning harus diberikan **minimal 10 hari sebelum berangkat**; sertifikat berlaku mulai hari ke-10 setelah vaksinasi dan berlaku seumur hidup. Anda dapat divaksin dengan biaya sendiri dan memperoleh sertifikat di klinik kedokteran perjalanan yang bekerja sama dengan Taiwan CDC.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "ประเทศใดบ้างที่ต้องมีหนังสือรับรองการฉีดวัคซีนไข้เหลือง?",
+      "answerMarkdown": "บางประเทศในแอฟริกาและอเมริกากลางและใต้กำหนดให้นักเดินทางที่เข้าประเทศแสดง**หนังสือรับรองการฉีดวัคซีนระหว่างประเทศ (สมุดเหลือง)** หรือกำหนดเฉพาะผู้ที่มาจากพื้นที่ที่มีไข้เหลืองระบาด กฎระเบียบกำหนดโดยแต่ละประเทศและอาจเปลี่ยนแปลงได้ ก่อนเดินทางโปรดตรวจสอบกฎล่าสุดของประเทศปลายทาง\n\nวัคซีนไข้เหลืองต้องฉีด**ก่อนออกเดินทางอย่างน้อย 10 วัน** หนังสือรับรองมีผลตั้งแต่วันที่ 10 หลังฉีดและใช้ได้ตลอดชีพ สามารถไปฉีดโดยชำระค่าใช้จ่ายเองและขอออกหนังสือรับรองได้ที่คลินิกเวชศาสตร์การเดินทางที่ทำสัญญากับ Taiwan CDC",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
   }
 }

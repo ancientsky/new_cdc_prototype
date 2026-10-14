@@ -63,5 +63,43 @@
   "answerMarkdown": "目前腸病毒 71 型疫苗屬**自費**接種，適用年齡依各廠牌仿單，家長可與兒科醫師討論。\n\n疫苗**只能預防 71 型**，無法預防克沙奇病毒等其他型別，接種後仍要落實肥皂洗手與環境消毒，並留意重症前兆。",
   "structured": {
     "publicFunded": "否"
+  },
+  "i18n": {
+    "en": {
+      "question": "Is the enterovirus 71 vaccine government-funded? Does getting it mean my child will not get enterovirus?",
+      "answerMarkdown": "At present the enterovirus 71 vaccine is **self-paid**. The eligible age follows each brand's package insert, and parents can discuss it with a paediatrician.\n\nThe vaccine **only protects against type 71**. It does not prevent other types such as coxsackieviruses, so after vaccination you should still wash hands with soap, disinfect the environment and watch for warning signs of severe illness.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "ja": {
+      "question": "エンテロウイルス71型ワクチンは公費ですか？接種すればエンテロウイルス感染症にかからないのですか？",
+      "answerMarkdown": "現在、エンテロウイルス71型ワクチンは**自費**での接種です。対象年齢は各メーカーの添付文書によって異なります。保護者は小児科の医師に相談してください。\n\nこのワクチンが予防できるのは**71型だけ**で、コクサッキーウイルスなど、ほかの型は予防できません。接種後も、石けんでの手洗いと環境の消毒を徹底し、重症化の前ぶれに注意してください。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Pinondohan ba ng gobyerno ang bakuna laban sa enterovirus 71? Hindi na ba magkakaroon ng enterovirus kapag nabakunahan?",
+      "answerMarkdown": "Sa kasalukuyan, ang pagbabakuna laban sa enterovirus 71 ay **sariling gastos**. Ang angkop na edad ay ayon sa package insert ng bawat tatak, at maaaring pag-usapan ng mga magulang ito kasama ang pediatrician.\n\nAng bakuna ay **nakakaprotekta lamang laban sa uri 71**; hindi nito napipigilan ang iba pang uri tulad ng coxsackievirus. Kaya pagkatapos magpabakuna, dapat pa ring maghugas ng kamay gamit ang sabon, mag-disimpekta ng kapaligiran, at bantayan ang mga babalang palatandaan ng malubhang sakit.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Vắc-xin enterovirus 71 có do nhà nước chi trả không? Tiêm rồi có không bị bệnh do enterovirus nữa không?",
+      "answerMarkdown": "Hiện nay vắc-xin enterovirus 71 là loại **tự chi trả**. Độ tuổi chỉ định theo tờ hướng dẫn sử dụng của từng nhãn hiệu, cha mẹ có thể trao đổi với bác sĩ nhi khoa.\n\nVắc-xin **chỉ phòng được týp 71**, không phòng được các týp khác như virus Coxsackie. Sau khi tiêm vẫn cần rửa tay bằng xà phòng, khử khuẩn môi trường và chú ý các dấu hiệu báo trước bệnh nặng.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Apakah vaksin enterovirus 71 ditanggung pemerintah? Apakah setelah divaksin tidak akan terkena enterovirus?",
+      "answerMarkdown": "Saat ini vaksin enterovirus 71 diberikan dengan **biaya sendiri**. Usia yang dapat divaksin mengikuti brosur (package insert) masing-masing merek, dan orang tua dapat mendiskusikannya dengan dokter anak.\n\nVaksin ini **hanya mencegah tipe 71** dan tidak mencegah tipe lain seperti virus coxsackie. Setelah vaksinasi, tetap cuci tangan dengan sabun, lakukan disinfeksi lingkungan, dan waspadai tanda awal penyakit berat.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "วัคซีนเอนเทอโรไวรัส 71 รัฐออกค่าใช้จ่ายให้หรือไม่? ฉีดแล้วจะไม่เป็นโรคเอนเทอโรไวรัสใช่หรือไม่?",
+      "answerMarkdown": "ปัจจุบันวัคซีนเอนเทอโรไวรัส 71 เป็นวัคซีน**ชำระค่าใช้จ่ายเอง** ช่วงอายุที่ฉีดได้เป็นไปตามเอกสารกำกับยาของแต่ละยี่ห้อ ผู้ปกครองสามารถปรึกษากุมารแพทย์ได้\n\nวัคซีน**ป้องกันได้เฉพาะสายพันธุ์ 71 เท่านั้น** ไม่สามารถป้องกันสายพันธุ์อื่น เช่น ไวรัสค็อกแซกกี หลังฉีดวัคซีนแล้วจึงยังต้องล้างมือด้วยสบู่ ฆ่าเชื้อสิ่งแวดล้อม และสังเกตสัญญาณเตือนล่วงหน้าของอาการรุนแรง",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
   }
 }

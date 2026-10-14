@@ -77,6 +77,36 @@
     "en": {
       "question": "I was born in 1970. Do I need an MMR vaccine before travelling?",
       "answerMarkdown": "Possibly. Under the \"Current MMR vaccination recommendations\" revised on 16 April 2025, adults **born in 1966 or later** without measles immunity who plan to visit affected areas should see a travel clinic **2 to 4 weeks before departure** to be assessed for one self-paid MMR dose.\n\nBeing born in 1970 puts you within this group. You are considered immune if you have had 2 doses, a positive antibody test or confirmed measles in the past."
+    },
+    "ja": {
+      "question": "1970年生まれです。出国前にMMRワクチンを接種する必要がありますか？",
+      "answerMarkdown": "必要な場合があります。2025年4月16日に改訂された「国内の現行MMR予防接種の推奨」によると、**1966年（含む）以降に生まれ**、麻疹の免疫がない成人が、麻疹の流行地域へ行く予定がある場合は、**出国の2～4週間前**に渡航医学外来を受診し、自費でMMRワクチン1回の接種を検討することをおすすめします。\n\n1970年生まれは、この検討の対象範囲に入ります。MMRを2回完了している、抗体検査で陽性だった、または麻疹と確定診断されたことがある場合は、免疫があるとみなされます。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Ipinanganak ako noong 1970. Kailangan ko bang magpabakuna ng MMR bago maglakbay sa ibang bansa?",
+      "answerMarkdown": "Maaaring kailanganin. Ayon sa \"Kasalukuyang Rekomendasyon sa Pagbabakuna ng MMR sa Loob ng Bansa\" na binago noong Abril 16, 2025, ang mga adulto na **ipinanganak noong 1966 o mas bago pa** at walang immunity sa tigdas, kung plano nilang pumunta sa mga lugar na may pagkalat ng tigdas, ay inirerekomendang magpunta sa travel medicine clinic **2 hanggang 4 na linggo bago umalis** para suriin kung maaari silang magpabakuna ng 1 dose ng MMR nang sariling gastos.\n\nKasama sa saklaw ng pagsusuri ang ipinanganak noong 1970. Kung nakumpleto na ninyo ang 2 dose, positibo ang resulta ng antibody test, o nagkaroon na kayo ng kumpirmadong tigdas, itinuturing kayong may immunity.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Tôi sinh năm 1970, trước khi xuất cảnh có cần tiêm vắc-xin MMR không?",
+      "answerMarkdown": "Có thể cần. Theo \"Khuyến cáo tiêm chủng MMR hiện hành trong nước\" được sửa đổi ngày 16 tháng 4 năm 2025, người trưởng thành **sinh từ năm 1966 trở về sau (bao gồm năm 1966)** mà chưa có miễn dịch với bệnh sởi, nếu dự định đến vùng đang có dịch sởi, được khuyến cáo đến phòng khám y học du lịch **2 đến 4 tuần trước khi xuất cảnh** để được đánh giá tiêm 1 liều vắc-xin MMR tự chi trả.\n\nNgười sinh năm 1970 nằm trong phạm vi đánh giá. Nếu bạn đã hoàn thành 2 liều, xét nghiệm kháng thể dương tính hoặc từng được chẩn đoán xác định mắc bệnh sởi, thì được xem là có miễn dịch.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Saya lahir tahun 1970. Apakah saya perlu vaksin MMR sebelum bepergian ke luar negeri?",
+      "answerMarkdown": "Mungkin perlu. Berdasarkan \"Rekomendasi Vaksinasi MMR yang Berlaku di Dalam Negeri\" yang direvisi pada 16 April 2025, orang dewasa yang **lahir pada tahun 1966 atau setelahnya** dan belum memiliki kekebalan terhadap campak, jika berencana bepergian ke daerah wabah campak, dianjurkan mengunjungi klinik kedokteran perjalanan **2 hingga 4 minggu sebelum berangkat** untuk dinilai kelayakannya menerima 1 dosis vaksin MMR dengan biaya sendiri.\n\nKelahiran tahun 1970 termasuk dalam cakupan penilaian ini. Jika Anda telah menyelesaikan 2 dosis, hasil tes antibodi positif, atau pernah terkonfirmasi campak, Anda dianggap memiliki kekebalan.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "ฉันเกิดปี 1970 ก่อนไปต่างประเทศต้องฉีดวัคซีน MMR หรือไม่?",
+      "answerMarkdown": "อาจต้องฉีด ตาม \"ข้อแนะนำการฉีดวัคซีน MMR ภายในประเทศที่ใช้อยู่ในปัจจุบัน\" ที่แก้ไขเมื่อวันที่ 16 เมษายน 2025 ผู้ใหญ่ที่**เกิดตั้งแต่ปี 1966 เป็นต้นไป (รวมปี 1966)** และไม่มีภูมิคุ้มกันต่อโรคหัด หากมีแผนเดินทางไปพื้นที่ที่มีการระบาดของโรคหัด แนะนำให้ไปคลินิกเวชศาสตร์การเดินทาง**ก่อนออกเดินทาง 2 ถึง 4 สัปดาห์** เพื่อประเมินการฉีดวัคซีน MMR 1 เข็มโดยชำระค่าใช้จ่ายเอง\n\nผู้ที่เกิดปี 1970 อยู่ในกลุ่มที่ควรประเมิน หากคุณเคยฉีดครบ 2 เข็ม ตรวจแอนติบอดีได้ผลบวก หรือเคยได้รับการวินิจฉัยยืนยันว่าเป็นโรคหัด ถือว่ามีภูมิคุ้มกัน",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

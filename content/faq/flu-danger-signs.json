@@ -67,6 +67,36 @@
     "en": {
       "question": "What signs mean someone with influenza should see a doctor immediately?",
       "answerMarkdown": "Seek care immediately for these **danger signs**: rapid or difficult breathing, blue lips (cyanosis), bloody or thick sputum, chest pain, altered consciousness or low blood pressure.\n\nIn children also watch for high fever lasting more than 3 days, seizures, fast breathing, marked loss of activity or refusing to drink. These may signal severe complications of influenza."
+    },
+    "ja": {
+      "question": "インフルエンザにかかったとき、どんな状態になったらすぐに受診すべきですか？",
+      "answerMarkdown": "次の**危険なサイン**があるときは、すぐに受診してください：呼吸が速い、または呼吸が苦しい、唇が紫色になる（チアノーゼ）、血の混じった痰や痰が濃くなる、胸の痛み、意識の変化、低血圧。\n\n子どもでは、次の点にも注意してください：3日を超えて続く高熱、けいれん、呼吸が速い、明らかに元気がなくなる、水を飲みたがらない。これらは、インフルエンザの重い合併症の前ぶれの可能性があります。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Kapag may trangkaso, anong mga kondisyon ang nangangailangan ng agarang pagpapatingin sa doktor?",
+      "answerMarkdown": "Magpatingin agad sa doktor kapag may mga sumusunod na **babalang palatandaan**: mabilis na paghinga o hirap sa paghinga, pagiging asul ng labi (cyanosis), duguang plema o lumapot na plema, pananakit ng dibdib, pagbabago sa malay, mababang presyon ng dugo.\n\nSa mga bata, bantayan din ang: mataas na lagnat na tumatagal nang higit sa 3 araw, kombulsyon, mabilis na paghinga, malinaw na pagkawala ng sigla, o ayaw uminom ng tubig. Maaaring mga babalang palatandaan ito ng malubhang komplikasyon ng trangkaso.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Khi bị cúm, xuất hiện những tình trạng nào thì cần đi khám ngay?",
+      "answerMarkdown": "Nếu xuất hiện các **dấu hiệu nguy hiểm** sau, hãy đi khám ngay: thở nhanh hoặc khó thở, môi tím tái (xanh tím), khạc đờm lẫn máu hoặc đờm đặc hơn, đau ngực, thay đổi ý thức, huyết áp thấp.\n\nỞ trẻ em, cần lưu ý thêm: sốt cao kéo dài hơn 3 ngày, co giật, thở nhanh, kém linh hoạt rõ rệt hoặc không chịu uống nước. Đây có thể là dấu hiệu báo trước biến chứng nặng của bệnh cúm.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Jika terkena influenza, kondisi apa saja yang mengharuskan segera berobat?",
+      "answerMarkdown": "Segera berobat jika muncul **tanda bahaya** berikut: napas cepat atau sesak napas, bibir membiru (sianosis), dahak berdarah atau dahak menjadi kental, nyeri dada, perubahan kesadaran, tekanan darah rendah.\n\nPada anak, perhatikan juga: demam tinggi yang berlangsung lebih dari 3 hari, kejang, napas cepat, anak tampak jelas kurang aktif atau tidak mau minum. Ini bisa menjadi tanda awal komplikasi berat influenza.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "เมื่อเป็นไข้หวัดใหญ่ หากมีอาการแบบใดต้องไปพบแพทย์ทันที?",
+      "answerMarkdown": "หากมี**สัญญาณอันตราย**ต่อไปนี้ ให้ไปพบแพทย์ทันที: หายใจเร็วหรือหายใจลำบาก ริมฝีปากเขียวคล้ำ (ตัวเขียว) เสมหะมีเลือดปนหรือเสมหะข้นขึ้น เจ็บหน้าอก ความรู้สึกตัวเปลี่ยนไป ความดันโลหิตต่ำ\n\nสำหรับเด็ก ควรสังเกตเพิ่มเติม: ไข้สูงต่อเนื่องเกิน 3 วัน ชัก หายใจเร็ว ซึมลงอย่างเห็นได้ชัด หรือไม่ยอมดื่มน้ำ สิ่งเหล่านี้อาจเป็นสัญญาณเตือนล่วงหน้าของภาวะแทรกซ้อนรุนแรงจากไข้หวัดใหญ่",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

@@ -73,6 +73,36 @@
     "en": {
       "question": "Do healthcare workers need the MMR vaccine?",
       "answerMarkdown": "They should check. **Healthcare workers** are at high risk of measles exposure, and under the current MMR recommendations and the infection-control guideline for healthcare facilities they should be immune to measles: two documented MMR doses, a positive antibody test or past confirmed measles.\n\nThose without immunity are advised to get MMR; new staff should have measles, rubella, varicella and hepatitis B immunity recorded on hiring. Non-immune staff should not care for measles patients."
+    },
+    "ja": {
+      "question": "医療従事者はMMRワクチンを接種する必要がありますか？",
+      "answerMarkdown": "確認が必要です。**医療従事者**（医療・ケアに携わる職員）は麻疹にさらされるリスクが高い集団です。現行のMMR予防接種の推奨と医療機関の感染管理指針により、医療従事者は麻疹に対する免疫を持っている必要があります。MMRを2回完了している、抗体検査が陽性、または過去に麻疹と確定診断されたことがある場合は、免疫があるとみなされます。\n\n免疫がない人にはMMRの接種をおすすめします。新しく採用された職員は、着任時に、麻疹、風疹、水痘、B型肝炎の免疫の記録を確認し、作成してください。免疫がない職員は、麻疹の患者のケアをしてはいけません。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Kailangan bang magpabakuna ng MMR ang mga healthcare worker?",
+      "answerMarkdown": "Kailangang suriin. Ang mga **healthcare worker** (mga manggagawa sa pangangalagang medikal) ay may mataas na panganib na ma-expose sa tigdas. Ayon sa kasalukuyang rekomendasyon sa pagbabakuna ng MMR at sa mga alituntunin sa pagkontrol ng impeksyon sa mga pasilidad medikal, dapat silang may immunity sa tigdas: itinuturing na may immunity ang nakatapos ng 2 dose ng MMR, may positibong resulta sa pagsusuri ng antibody, o nagkaroon na ng kumpirmadong tigdas.\n\nInirerekomenda ang MMR sa mga walang immunity. Dapat tiyakin at itala ang immunity sa tigdas, rubella, bulutong-tubig (varicella), at hepatitis B ng mga bagong empleyado pagpasok nila sa trabaho. Ang mga kawaning walang immunity ay hindi dapat mag-alaga ng mga pasyente ng tigdas.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Nhân viên y tế có cần tiêm vắc-xin MMR không?",
+      "answerMarkdown": "Cần kiểm tra. **Nhân viên y tế** (người làm công tác chăm sóc y tế) là nhóm có nguy cơ cao phơi nhiễm bệnh sởi. Theo khuyến cáo tiêm chủng MMR hiện hành và hướng dẫn kiểm soát nhiễm khuẩn tại cơ sở y tế, nhân viên y tế cần có miễn dịch với bệnh sởi: đã hoàn thành 2 liều MMR, xét nghiệm kháng thể dương tính hoặc từng được chẩn đoán xác định mắc bệnh được xem là có miễn dịch.\n\nNgười chưa có miễn dịch được khuyến cáo tiêm MMR; nhân viên mới khi nhận việc cần được xác nhận và lập hồ sơ miễn dịch với sởi, rubella, thủy đậu và viêm gan B. Nhân viên chưa có miễn dịch không được chăm sóc bệnh nhân sởi.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Apakah tenaga kesehatan perlu menerima vaksin MMR?",
+      "answerMarkdown": "Perlu diperiksa. **Tenaga kesehatan** (petugas pelayanan kesehatan) adalah kelompok berisiko tinggi terpapar campak. Berdasarkan rekomendasi vaksinasi MMR yang berlaku dan pedoman pengendalian infeksi di fasilitas kesehatan, tenaga kesehatan harus memiliki kekebalan terhadap campak: telah menyelesaikan 2 dosis MMR, hasil tes antibodi positif, atau pernah terkonfirmasi sakit campak dianggap memiliki kekebalan.\n\nMereka yang belum memiliki kekebalan dianjurkan menerima MMR; staf baru perlu dipastikan dan dicatat kekebalannya terhadap campak, rubella, cacar air, dan hepatitis B saat mulai bekerja. Staf yang belum memiliki kekebalan tidak boleh merawat pasien campak.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "บุคลากรทางการแพทย์ต้องฉีดวัคซีน MMR หรือไม่?",
+      "answerMarkdown": "ต้องตรวจสอบ **บุคลากรทางการแพทย์** (ผู้ปฏิบัติงานดูแลสุขภาพ) เป็นกลุ่มเสี่ยงสูงต่อการสัมผัสเชื้อหัด ตามข้อแนะนำการฉีดวัคซีน MMR ปัจจุบันและแนวปฏิบัติการควบคุมการติดเชื้อของสถานพยาบาล บุคลากรทางการแพทย์ควรมีภูมิคุ้มกันต่อโรคหัด โดยผู้ที่เคยฉีด MMR ครบ 2 เข็ม ตรวจแอนติบอดีได้ผลบวก หรือเคยได้รับการวินิจฉัยยืนยันว่าเป็นโรคหัด ถือว่ามีภูมิคุ้มกัน\n\nผู้ที่ไม่มีภูมิคุ้มกันแนะนำให้ฉีด MMR บุคลากรใหม่เมื่อเริ่มงานต้องตรวจสอบและบันทึกภูมิคุ้มกันต่อโรคหัด หัดเยอรมัน อีสุกอีใส และไวรัสตับอักเสบบี บุคลากรที่ไม่มีภูมิคุ้มกันไม่ควรดูแลผู้ป่วยโรคหัด",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }
