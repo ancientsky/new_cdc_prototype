@@ -108,7 +108,7 @@ async function render(r, deps) {
     parts.push(traditionalList(r.list) || `<p>${esc(L('empty'))}</p>`);
     return paint(parts, r);
   }
-  for (const n of r.termNotes ?? []) parts.push(`<p class="c-answer__termnote">${esc(L('termNote', n))}</p>`);
+  for (const n of r.termNotes ?? []) parts.push(`<p class="c-answer__termnote">${esc(L(n.kind === 'typo' ? 'termTypo' : 'termNote', n))}</p>`);
   if (r.llmError) parts.push(`<p class="c-alert c-alert--overdue c-answer__llm-status">${esc(L('llmError', { m: r.llmError.message }))}</p>`);
   else if (r.fallback === 'extractive') parts.push(`<p class="c-alert c-alert--overdue c-answer__llm-status">${esc(L('llmFallback'))}</p>`);
 

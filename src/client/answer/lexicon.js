@@ -26,7 +26,7 @@ export const CROSS_LANG = [
   [/\bhealth (check|exam|screening)s?\b|\bmedical (check|exam)\w*|khám sức khỏe|pemeriksaan kesehatan|ตรวจสุขภาพ|健康診断/i, '健康檢查 健檢'],
   [/\bhealth insurance\b|bảo hiểm y tế|asuransi kesehatan|ประกันสุขภาพ|健康保険/i, '健保', true],
   // 來臺旅遊（入境）：站內目前沒有給來臺旅客的接種建議；錨點讓這類問句查無，而不是拿出國旅遊或流感疫苗的片段回答
-  [/\b(?:visit(?:ing)?(?: or moving to)?|coming to|moving to|arriving in|travel(?:l)?ing to|travel to|holiday in|vacation in|trip to|touring)\s+taiwan\b/i, '來臺旅客 訪臺 來臺旅遊', true],
+  [/\b(?:visit(?:ing)?(?: or moving to)?|coming to|moving to|arriving in|travel(?:l)?ing to|travel to|holiday in|vacation in|trip to|touring)\s+taiwan\b/i, '來臺旅客 訪臺 來臺旅遊', 'strict'],
   // 第四十八輪（issue #101）：被動物咬傷（他加祿 nakagat、印尼 digigit、泰 ถูก…กัด、越 bị…cắn、日 噛まれ）與狗、貓。
   // 只是把外語詞對應到中文檢索詞；主題是否確認由中文錨點（core.js zhAnchors）與疾病實體判斷，不在這裡寫死答案
   [/\bbit(ten|es?)\b|\bscratch(ed)?\b|\b(na)?kagat\b|\bdigigit\b|\bgigitan\b|(ถูก|โดน).{0,8}กัด|bị .{0,10}cắn|噛まれ|かまれ/i, '咬傷 動物咬傷'],
@@ -35,12 +35,18 @@ export const CROSS_LANG = [
   [/\beye pain|behind the eyes?|\b(sakit|nyeri) mata\b|\bmasakit (ang )?mata\b|ปวดตา|ปวดกระบอกตา|đau mắt|目の奥/i, '眼睛痛 後眼窩痛'],
   [/กลับจาก|\bpulang dari\b|\bgaling sa\b|\bbumalik\b|帰国/i, '回國 返國'], [/\b(two|2) weeks\b|\bdua minggu\b|\bdalawang linggo\b|\bhai tuần\b|สองสัปดาห์|2\s*สัปดาห์|2週間|二週間/i, '兩週 2 週'],
   [/\bdogs?\b|\baso\b|\banjing\b|สุนัข|หมา|\bchó\b|犬/i, '狗'], [/\bcats?\b|\bpusa\b|\bkucing\b|แมว|\bmèo\b|猫/i, '貓'],
+  // 第五十三輪：「什麼時候開始（開打）」的越、印尼、泰、他加祿、日、英說法（外語的公費流感疫苗問句「…什麼時候開打」）
+  [/\bbao giờ\b|\bkhi nào\b|bắt đầu|\bkapan\b|\bmulai\b|เมื่อไร|เมื่อไหร่|เริ่ม|\bkailan\b|\bmagsisimula\b|いつから|\bwhen (does|do|will|is)\b.{0,30}\bstart/i, '開打 開始 起'],
   [/\b(vaccination|immuni[sz]ation) records?\b|hồ sơ tiêm chủng|catatan imunisasi|record ng bakuna|ประวัติการฉีดวัคซีน|予防接種の記録|接種記録/i, '接種紀錄', true],
 ];
-/** 第四十輪：問句命中的主題錨點：[{ re, zh[] }]（CROSS_LANG 第三欄為 true 者；中文問句另有 TOPIC_ZH） */
+/**
+ * 第四十輪：問句命中的主題錨點：[{ re, zh[], strict }]（CROSS_LANG 第三欄為 true 者；中文問句另有 TOPIC_ZH）。
+ * 第五十三輪：第三欄 'strict'＝錨點改變了答案的前提（來臺旅客 ≠ 出國旅遊），中文內容沒講到就一律查無；
+ * true＝錨點是限定對象（移工、健保、接種紀錄），問句另外字面點名了疾病、而最佳片段就是那個疾病時，先回答點名疾病的那一半（core.js topic-anchor-partial）
+ */
 export function topicAnchorsOf(q) {
   const out = [];
-  for (const [re, zh, anchor] of CROSS_LANG) if (anchor && re.test(q)) out.push({ re, zh: zh.split(' ') });
+  for (const [re, zh, anchor] of CROSS_LANG) if (anchor && re.test(q)) out.push({ re, zh: zh.split(' '), strict: anchor === 'strict' });
   return out;
 }
 
@@ -73,6 +79,10 @@ export const PARAPHRASE = [
   [CLUSTER_DESC_RE, '群聚 通報 1922', true],
   [/(跟|和|向|告訴)(醫生|醫師)(說|講|講什麼|說什麼)?/, '告知醫師', true],
   [/咳(了|很久|好久|不停|不好|超過)|一直咳/, '咳嗽'], [/(看|掛)(哪一?|什麼)(一)?科/, '就醫 門診'],
+  // 第五十三輪：出國前「要看什麼門診／看哪一科」＝旅遊醫學門診（不是在問某個疾病；沒有這條時主要疾病投票會選到旅遊內容裡提到的麻疹）
+  [/(出國|出遠門|去國外|出境)(前|之前|以前).{0,10}(門診|看診|哪一?科|看醫生|看什麼)/, '旅遊醫學門診', true],
+  // 「去東南亞回來」「從國外玩回來」＝回國（站上寫「回國後」「返國」）；只認地區與國外、海外這類說法，「從醫院回來」不算
+  [/(東南亞|南亞|非洲|中南美洲?|南美洲?|中東|國外|海外|外國).{0,6}回來/, '回國 返國', true],
   // 「體檢」「健檢」＝健康檢查。不寫進詞彙主檔：站上「抗體檢驗」「檢體檢驗」「人體檢體」都含「體檢」兩字，
   // 主檔別名會讓索引端把這些片段標上「健康檢查」（第三十一輪「性病」同一種詞界問題）；只在問句端換，並擋掉抗體／檢體
   [/(?<![抗檢人])體檢(?!體)|健檢/, '健康檢查', true],
@@ -167,7 +177,34 @@ export function buildLexicon({ diseases = [], glossary = [], vaccines = [], unit
     let out = ''; for (let i = 0; i < str.length; i++) { if (cuts.has(i)) out += ' '; out += str[i]; }
     return out.replace(/\s+/g, ' ').trim();
   }
-  return { names, wholeHit, phrasesIn, falseTokensFor, expandable, segment, chunkHay, size: lexicon.size };
+  /**
+   * 第五十三輪：錯字容錯（near-miss）。認錯病名比拒答更糟，所以只在兩種很窄的情況下改字，其餘一律照原字：
+   *  （1）五字以上、全中文的疾病／疫苗名稱（疱疹性咽峽炎、日本腦炎疫苗）恰好錯一個字，且錯的不是頭尾字（自費／公費流感疫苗、
+   *       日本腦炎疫苗／疫情的差別都在頭尾，不改）；錯字所在的那幾個字本身不是另一個已知名稱；站上自己的文字也沒有這樣寫過
+   *       （seen：「肉毒桿菌抗毒素」「人類免疫缺乏病毒傳染防治…條例」與病名只差一字，但它們是真的詞）；同一句只對到一個名稱。
+   *  （2）咬傷句「被X咬／抓」裡的 X 是動物名的同音字（舌→蛇、苟→狗、喉→猴）：只認「被」與「咬／抓」緊貼的單字，「咬到舌頭」不改。
+   * 回傳 { text, fixes: [{ from, to }] } 或 null；答案頁會告訴使用者「以下依『…』回答」，不默默換字。
+   */
+  const fuzzy = names.filter((n) => n.length >= 5 && /^[一-鿿]+$/.test(n) && /^(disease|vaccine)$/.test(lexicon.get(n).kind));
+  function nearMiss(q, seen) {
+    let text = String(q ?? ''); const fixes = [];
+    const bite = /被([舌佘苟枸喉侯])(?=[咬抓])/.exec(text);
+    if (bite) { const to = '蛇蛇狗狗猴猴'['舌佘苟枸喉侯'.indexOf(bite[1])]; fixes.push({ from: `被${bite[1]}`, to: `被${to}` }); text = text.replace(bite[0], `被${to}`); }
+    const hits = [];
+    for (const n of fuzzy) {
+      if (text.includes(n)) continue;
+      for (let i = 0; i + n.length <= text.length; i++) {
+        const s = text.slice(i, i + n.length); let d = -1, k = 0;
+        for (let j = 0; j < n.length && k < 2; j++) if (s[j] !== n[j]) { d = j; k++; }
+        if (k !== 1 || d === 0 || d === n.length - 1 || !/[一-鿿]/.test(s[d]) || lexicon.has(s)) continue;
+        if (names.some((x) => { const p = s.indexOf(x); return p >= 0 && p <= d && d < p + x.length; }) || seen?.(s)) continue;
+        hits.push({ from: s, to: n, canon: lexicon.get(n).canon });
+      }
+    }
+    if (hits.length && hits.every((h) => h.canon === hits[0].canon)) { fixes.push({ from: hits[0].from, to: hits[0].to }); text = text.replace(hits[0].from, hits[0].to); }
+    return fixes.length ? { text, fixes } : null;
+  }
+  return { names, wholeHit, phrasesIn, falseTokensFor, expandable, segment, chunkHay, nearMiss, size: lexicon.size };
 }
 
 // 第四十輪（Issue #80）：名稱比對器加「必要子字串」預篩。
