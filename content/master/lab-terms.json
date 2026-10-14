@@ -1,0 +1,316 @@
+{
+  "_doc": "檢驗檢體用語對照（受控詞彙）：檢體種類、採檢時機、容器、量、保存、運送。第四十九輪起供 /en/lab/ 使用。全部為機器初稿（machineTranslated），畫面上以「機器翻譯」提示標示；以中文正本與檢驗單位指引為準。要新增語言就在每個詞條加上語言代碼欄位。",
+  "machineTranslated": true,
+  "machineTranslatedAt": "2026-10-14",
+  "terms": {
+    "-20°C 以下冷凍": {
+      "en": "Frozen at -20°C or below"
+    },
+    "2–8°C 冷藏": {
+      "en": "Refrigerated at 2–8°C"
+    },
+    "2–8°C 冷藏，勿冷凍全血": {
+      "en": "Refrigerated at 2–8°C; do not freeze whole blood"
+    },
+    "2–8°C 冷藏；72 小時以上請 -20°C 以下冷凍": {
+      "en": "Refrigerated at 2–8°C; freeze at -20°C or below if longer than 72 hours"
+    },
+    "2–8°C 冷藏（72 小時以上 -70°C）": {
+      "en": "Refrigerated at 2–8°C (-70°C if longer than 72 hours)"
+    },
+    "2–8°C 冷藏運送（UN3373 三層包裝）": {
+      "en": "Transport refrigerated at 2–8°C (UN3373 triple packaging)"
+    },
+    "5 mL 以上": {
+      "en": "5 mL or more"
+    },
+    "下呼吸道檢體": {
+      "en": "Lower respiratory tract specimen"
+    },
+    "下呼吸道檢體（痰液、氣管抽取液）": {
+      "en": "Lower respiratory tract specimen (sputum, tracheal aspirate)"
+    },
+    "支氣管沖洗液或胃液": {
+      "en": "Bronchial washing or gastric aspirate"
+    },
+    "出疹日起 5 日內": {
+      "en": "Within 5 days of rash onset"
+    },
+    "出疹日起 7 日內": {
+      "en": "Within 7 days of rash onset"
+    },
+    "出疹後 3 日以上 IgM 較敏感": {
+      "en": "IgM is more sensitive 3 or more days after rash onset"
+    },
+    "出疹後 5 日以上 IgM 較敏感": {
+      "en": "IgM is more sensitive 5 or more days after rash onset"
+    },
+    "出現黃疸或肝功能異常時": {
+      "en": "When jaundice or abnormal liver function appears"
+    },
+    "皮疹出現時，取 2 處以上不同部位": {
+      "en": "When the rash appears; sample 2 or more different sites"
+    },
+    "皮疹病灶拭子": {
+      "en": "Rash lesion swab"
+    },
+    "全血 5 mL 或血清 2 mL": {
+      "en": "Whole blood 5 mL or serum 2 mL"
+    },
+    "同全血": {
+      "en": "Same as whole blood"
+    },
+    "有腦炎症狀時": {
+      "en": "When encephalitis symptoms are present"
+    },
+    "血清": {
+      "en": "Serum"
+    },
+    "血清 1–2 mL": {
+      "en": "Serum 1–2 mL"
+    },
+    "血清 2 mL": {
+      "en": "Serum 2 mL"
+    },
+    "血清 2–5 mL": {
+      "en": "Serum 2–5 mL"
+    },
+    "血清 2–5 mL（全血 5–10 mL）": {
+      "en": "Serum 2–5 mL (whole blood 5–10 mL)"
+    },
+    "初篩陽性後": {
+      "en": "After a positive initial screen"
+    },
+    "尿液": {
+      "en": "Urine"
+    },
+    "每 3–6 小時採 1 次，共 3 次": {
+      "en": "Collect once every 3–6 hours, 3 times in total"
+    },
+    "每套 3–5 mL": {
+      "en": "3–5 mL per set"
+    },
+    "每處病灶 1 支": {
+      "en": "1 swab per lesion"
+    },
+    "肛門拭子": {
+      "en": "Rectal swab"
+    },
+    "直徑 5–6 mm": {
+      "en": "Diameter 5–6 mm"
+    },
+    "厚、薄血片": {
+      "en": "Thick and thin blood smears"
+    },
+    "厚薄片各 2 片": {
+      "en": "2 each of thick and thin smears"
+    },
+    "咳嗽 2 週內、未使用抗生素前": {
+      "en": "Within 2 weeks of cough onset, before antibiotics are used"
+    },
+    "咳嗽 2 週以上": {
+      "en": "Cough lasting 2 weeks or more"
+    },
+    "咳嗽 3 週內": {
+      "en": "Within 3 weeks of cough onset"
+    },
+    "咽喉拭子": {
+      "en": "Throat swab"
+    },
+    "咽喉拭子或鼻咽拭子": {
+      "en": "Throat swab or nasopharyngeal swab"
+    },
+    "室溫": {
+      "en": "Room temperature"
+    },
+    "室溫（24 小時內）或 2–8°C": {
+      "en": "Room temperature (within 24 hours) or 2–8°C"
+    },
+    "室溫或冷藏運送": {
+      "en": "Transport at room temperature or refrigerated"
+    },
+    "室溫乾燥": {
+      "en": "Dry, at room temperature"
+    },
+    "室溫運送": {
+      "en": "Transport at room temperature"
+    },
+    "急性期": {
+      "en": "Acute phase"
+    },
+    "急性期血清": {
+      "en": "Acute-phase serum"
+    },
+    "恢復期血清": {
+      "en": "Convalescent-phase serum"
+    },
+    "拭子 1 支": {
+      "en": "1 swab"
+    },
+    "拭子 1 支（可見糞便沾染）": {
+      "en": "1 swab (visibly stool-stained)"
+    },
+    "拭子 1 支（VTM 2–3 mL）": {
+      "en": "1 swab (VTM 2–3 mL)"
+    },
+    "玻片盒": {
+      "en": "Slide box"
+    },
+    "痂皮": {
+      "en": "Scab (crust)"
+    },
+    "痂皮 2–3 片": {
+      "en": "2–3 scab pieces"
+    },
+    "病灶結痂時": {
+      "en": "When the lesion has formed a scab"
+    },
+    "病毒運送培養基（VTM）拭子管": {
+      "en": "Swab tube with viral transport medium (VTM)"
+    },
+    "乾冰或冷凍運送": {
+      "en": "Transport on dry ice or frozen"
+    },
+    "乾燥無菌拭子管（Dacron／rayon，勿用棉棒）": {
+      "en": "Dry sterile swab tube (Dacron/rayon; do not use cotton swabs)"
+    },
+    "乾燥無菌拭子管或 病毒運送培養基（VTM）拭子管": {
+      "en": "Dry sterile swab tube or swab tube with viral transport medium (VTM)"
+    },
+    "唾液": {
+      "en": "Saliva"
+    },
+    "通報前後連續採檢，至少 1 套為清晨第一口痰": {
+      "en": "Collect serially around notification; at least 1 set should be the first sputum of the morning"
+    },
+    "通報時": {
+      "en": "At the time of notification"
+    },
+    "插管或肺炎病人": {
+      "en": "Intubated or pneumonia patients"
+    },
+    "插管病人": {
+      "en": "Intubated patients"
+    },
+    "無皮疹或早期": {
+      "en": "No rash, or early stage"
+    },
+    "無法自咳痰者": {
+      "en": "For patients unable to cough up sputum"
+    },
+    "無法取得糞便時": {
+      "en": "When a stool sample cannot be obtained"
+    },
+    "無菌血清分離管（紅頭或黃頭，無抗凝劑）": {
+      "en": "Sterile serum separator tube (red or yellow top, no anticoagulant)"
+    },
+    "無菌尿液收集瓶": {
+      "en": "Sterile urine collection bottle"
+    },
+    "無菌糞便盒": {
+      "en": "Sterile stool container"
+    },
+    "無菌糞便盒（拭子用 VTM）": {
+      "en": "Sterile stool container (VTM for swabs)"
+    },
+    "無菌螺旋蓋容器": {
+      "en": "Sterile screw-cap container"
+    },
+    "無菌螺旋蓋痰盒": {
+      "en": "Sterile screw-cap sputum container"
+    },
+    "無菌螺旋蓋管": {
+      "en": "Sterile screw-cap tube"
+    },
+    "無菌螺旋蓋管（加少量生理食鹽水）": {
+      "en": "Sterile screw-cap tube (with a small amount of normal saline)"
+    },
+    "無菌螺旋蓋管／血清分離管": {
+      "en": "Sterile screw-cap tube / serum separator tube"
+    },
+    "發病 14 日內": {
+      "en": "Within 14 days of onset"
+    },
+    "發病 14 日後": {
+      "en": "More than 14 days after onset"
+    },
+    "發病 14–40 日": {
+      "en": "14–40 days after onset"
+    },
+    "發病 3 日內": {
+      "en": "Within 3 days of onset"
+    },
+    "發病 3 日內最佳，重症通報時即採": {
+      "en": "Best within 3 days of onset; collect at once when a severe case is notified"
+    },
+    "發病 7 日內": {
+      "en": "Within 7 days of onset"
+    },
+    "發病 7 日內（以發病 1–5 日最佳）": {
+      "en": "Within 7 days of onset (best on days 1–5 after onset)"
+    },
+    "發燒時，未服抗瘧藥前": {
+      "en": "During fever, before antimalarial drugs are taken"
+    },
+    "痰液（3 套）": {
+      "en": "Sputum (3 sets)"
+    },
+    "腦脊髓液": {
+      "en": "Cerebrospinal fluid (CSF)"
+    },
+    "腦脊髓液 1 mL、血清 2 mL": {
+      "en": "CSF 1 mL, serum 2 mL"
+    },
+    "腦脊髓液與血清": {
+      "en": "CSF and serum"
+    },
+    "腹瀉期間、使用抗生素前": {
+      "en": "During diarrhea, before antibiotics are used"
+    },
+    "鼻咽拭子": {
+      "en": "Nasopharyngeal swab"
+    },
+    "鼻咽拭子（培養用）": {
+      "en": "Nasopharyngeal swab (for culture)"
+    },
+    "鼻咽拭子（PCR 用）": {
+      "en": "Nasopharyngeal swab (for PCR)"
+    },
+    "頸背部皮膚切片（含毛囊）": {
+      "en": "Skin biopsy from the nape of the neck (including hair follicles)"
+    },
+    "糞便": {
+      "en": "Stool"
+    },
+    "糞便 2–5 g（水樣便 5 mL）": {
+      "en": "Stool 2–5 g (watery stool 5 mL)"
+    },
+    "糞便 5–10 g（約拇指大小）": {
+      "en": "Stool 5–10 g (about the size of a thumb)"
+    },
+    "糞便或肛門拭子": {
+      "en": "Stool or rectal swab"
+    },
+    "臨床疑似時": {
+      "en": "When clinically suspected"
+    },
+    "Cary-Blair 運送培養基": {
+      "en": "Cary-Blair transport medium"
+    },
+    "EDTA 全血": {
+      "en": "EDTA whole blood"
+    },
+    "EDTA 全血或血清": {
+      "en": "EDTA whole blood or serum"
+    },
+    "EDTA 紫頭管": {
+      "en": "EDTA purple-top tube"
+    },
+    "EDTA 紫頭管或血清分離管": {
+      "en": "EDTA purple-top tube or serum separator tube"
+    },
+    "Regan-Lowe 運送培養基": {
+      "en": "Regan-Lowe transport medium"
+    }
+  }
+}

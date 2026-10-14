@@ -119,6 +119,30 @@
     "en": {
       "title": "Media interview and filming requests",
       "summary": "Media should apply to the Public Relations Office at least three working days in advance, stating the topic, desired expertise and publication date."
+    },
+    "tl": {
+      "title": "Kahilingan para sa panayam at pagkuha ng larawan ng media",
+      "summary": "Dapat mag-apply ang media sa Public Relations Office nang hindi bababa sa tatlong araw ng trabaho bago ang panayam, na nakasaad ang paksa, hinihinging eksperto at petsa ng paglalathala.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Đăng ký phỏng vấn và quay phim của báo chí",
+      "summary": "Cơ quan truyền thông cần nộp đơn cho Phòng Quan hệ công chúng ít nhất ba ngày làm việc trước, nêu rõ chủ đề, chuyên gia cần phỏng vấn và ngày phát hành.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Permohonan wawancara dan peliputan oleh media",
+      "summary": "Media perlu mengajukan permohonan ke Kantor Hubungan Masyarakat paling lambat tiga hari kerja sebelumnya, dengan mencantumkan topik, narasumber yang diinginkan, dan tanggal penayangan.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "การขอสัมภาษณ์และถ่ายทำของสื่อมวลชน",
+      "summary": "สื่อมวลชนต้องยื่นคำขอต่อสำนักงานประชาสัมพันธ์ล่วงหน้าอย่างน้อยสามวันทำการ โดยระบุหัวข้อ ผู้เชี่ยวชาญที่ต้องการ และวันเผยแพร่",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

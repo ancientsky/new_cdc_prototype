@@ -77,5 +77,13 @@
   "formats": [
     "PDF",
     "ODS"
-  ]
+  ],
+  "i18n": {
+    "en": {
+      "title": "Taiwan CDC budget and final accounts",
+      "summary": "The annual statutory budget, final accounts and affiliated-unit budgets of Taiwan CDC, published under the Budget Act.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

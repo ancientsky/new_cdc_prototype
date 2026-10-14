@@ -1,7 +1,8 @@
 // 開放資料與統計：統計問答殼（D 的 stats.js）+ 資料目錄 + 開放資料與 API 卡。
 import { html, raw } from '../../../scripts/lib/render.mjs';
 import { config } from '../../../site.config.mjs';
-import { ldFor, pageHead, sectionHead, unitName, licenseLabel, publishedOf, pill, L, feedback } from './_partials.mjs';
+import { ldFor, pageHead, sectionHead, unitName, licenseLabel, publishedOf, pill, feedback, langSpan } from './_partials.mjs';
+import { pick, shownNote, zhOnlyBadge } from './_listing.mjs';
 
 const CATS = ['open-dataset', 'stats-system', 'structured-table', 'document-library', 'content-page', 'press', 'media'];
 const V1 = ['diseases', 'vaccines', 'faq', 'news', 'documents', 'clarifications', 'situation', 'travel-alerts', 'country-levels', 'datasets', 'catalog', 'glossary', 'search-index', 'redirects'];
@@ -38,10 +39,17 @@ export function render(ctx) {
   <div class="c-tablewrap" role="region" tabindex="0" aria-label="${t('a11y.scrollTable')}"><table class="c-table c-table--catalog" id="catalog-table">
     <caption class="sr-only">${t('data.catalog.t')}</caption>
     <thead><tr><th scope="col">${t('data.col.name')}</th><th scope="col">${t('data.col.owner')}</th><th scope="col">${t('data.col.freq')}</th><th scope="col">${t('data.col.updated')}</th><th scope="col">${t('data.col.license')}</th><th scope="col">${t('data.col.wl')}</th><th scope="col">${t('data.col.canon')}</th></tr></thead>
-    <tbody>${ds.map((d) => html`<tr id="${d.id}" data-cat="${d.category}">
-      <th scope="row"><span class="c-catalog__name">${L(ctx, d, 'title')}</span><br><span class="muted">${t(`data.cat.${d.category}`)}${d.formats?.length ? ` · ${d.formats.join('/')}` : ''}</span>
-        ${d.resources?.length ? html`<details class="c-catalog__res" data-group="catalog"><summary>${t('data.resources', { n: d.resources.length })}</summary><ul>${d.resources.map((r) => html`<li><a href="${r.url}" rel="noopener">${r.name ?? r.url}</a> ${r.format ? html`<code>${r.format}</code>` : ''}</li>`)}</ul></details>` : ''}
-        ${L(ctx, d, 'summary') ? html`<details class="c-catalog__res" data-group="catalog"><summary>${t('data.summary')}</summary><p>${L(ctx, d, 'summary')}</p>${d.series?.note ? html`<p class="muted">${d.series.note}</p>` : ''}</details>` : ''}
+    <tbody>${ds.map((d) => {
+      // 第四十九輪：目錄名稱、摘要、資源名稱依「頁面語言 → 英文 → 中文」取；只有中文的標 lang="zh-TW"。資源檔名多半是「資料集名稱（格式）」，
+      // 沒有譯名時改寫成「<資料集名稱> (<格式>)」，不把中文檔名印在外語頁上。
+      const ti = pick(ctx, d, 'title');
+      const su = pick(ctx, d, 'summary');
+      const sn = d.series?.note ? (ctx.lang === 'zh-TW' ? { text: d.series.note, lang: 'zh-TW' } : (pick(ctx, d, 'seriesNote').zhOnly ? { text: d.series.note, lang: 'zh-TW' } : pick(ctx, d, 'seriesNote'))) : null;
+      const resName = (r) => (ctx.lang === 'zh-TW' || !/[㐀-鿿]/.test(r.name ?? '') ? (r.name ?? r.url) : html`${langSpan(ctx, ti)}${r.format ? ` (${r.format})` : ''}`);
+      return html`<tr id="${d.id}" data-cat="${d.category}">
+      <th scope="row"><span class="c-catalog__name">${zhOnlyBadge(ctx, { r: ti })}${langSpan(ctx, ti)}</span><br><span class="muted">${t(`data.cat.${d.category}`)}${d.formats?.length ? ` · ${d.formats.join('/')}` : ''}</span>
+        ${d.resources?.length ? html`<details class="c-catalog__res" data-group="catalog"><summary>${t('data.resources', { n: d.resources.length })}</summary><ul>${d.resources.map((r) => html`<li><a href="${r.url}" rel="noopener">${resName(r)}</a> ${r.format ? html`<code>${r.format}</code>` : ''}</li>`)}</ul></details>` : ''}
+        ${su.text ? html`<details class="c-catalog__res" data-group="catalog"><summary>${t('data.summary')}</summary>${shownNote(ctx, su)}<p${su.lang !== ctx.lang ? html` lang="${su.lang}"` : ''}>${su.text}</p>${d.series?.note ? html`<p class="muted">${langSpan(ctx, sn)}</p>` : ''}</details>` : ''}
       </th>
       <td>${unitName(ctx, d.owner)}</td>
       <td>${t(`freq.${d.updateFrequency}`)}${d.gov?.datasetOverdue ? html` ${pill(t('data.overdue'), 'warn')}` : ''}</td>
@@ -49,7 +57,8 @@ export function render(ctx) {
       <td><span title="${licenseLabel(ctx, d.license)}">${d.license}</span></td>
       <td>${d.gov?.whitelist?.effective ? pill(t('data.wl.yes'), 'ok') : pill(t('data.wl.no'), 'neutral')}</td>
       <td><a href="${d.canonicalUrl}" rel="noopener">${t('data.open')} ↗</a>${d.provenance?.mode ? html`<br><span class="muted">${d.provenance.mode}${d.provenance.fetchedAt ? ` · ${String(d.provenance.fetchedAt).slice(0, 10)}` : ''}</span>` : ''}</td>
-    </tr>`)}</tbody>
+    </tr>`;
+    })}</tbody>
   </table></div>
   ${ds.length ? '' : html`<p class="c-empty">${t('none')}</p>`}
 </section>

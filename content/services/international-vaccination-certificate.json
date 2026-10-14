@@ -125,6 +125,30 @@
     "en": {
       "title": "International Certificate of Vaccination (yellow card)",
       "summary": "Travellers to countries requiring yellow fever vaccination get vaccinated and receive the certificate at travel medicine clinics; it becomes valid 10 days after vaccination."
+    },
+    "tl": {
+      "title": "Internasyonal na Sertipiko ng Pagbabakuna (dilaw na card)",
+      "summary": "Ang mga biyaherong pupunta sa bansang humihingi ng patunay ng bakuna sa yellow fever ay nagpapabakuna at tumatanggap ng sertipiko sa mga klinika ng travel medicine; magiging balido ito 10 araw matapos ang pagbabakuna.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Giấy chứng nhận tiêm chủng quốc tế (sổ vàng)",
+      "summary": "Người đến các nước yêu cầu chứng nhận tiêm vắc-xin sốt vàng da tiêm chủng và nhận giấy chứng nhận tại phòng khám y học du lịch; giấy có hiệu lực sau 10 ngày kể từ khi tiêm.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Sertifikat Vaksinasi Internasional (kartu kuning)",
+      "summary": "Pelancong ke negara yang mewajibkan bukti vaksin demam kuning divaksinasi dan menerima sertifikat di klinik kedokteran perjalanan; sertifikat berlaku 10 hari setelah vaksinasi.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "ใบรับรองการฉีดวัคซีนระหว่างประเทศ (สมุดเหลือง)",
+      "summary": "ผู้เดินทางไปประเทศที่กำหนดให้มีหลักฐานการฉีดวัคซีนไข้เหลืองจะรับวัคซีนและรับใบรับรองได้ที่คลินิกเวชศาสตร์การเดินทาง ใบรับรองมีผลหลังฉีดวัคซีน 10 วัน",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

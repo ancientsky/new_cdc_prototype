@@ -63,5 +63,13 @@
     "RSS",
     "JSON"
   ],
-  "canonicalUrl": "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
+  "canonicalUrl": "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ",
+  "i18n": {
+    "en": {
+      "title": "Press releases and letters to the medical community (RSS)",
+      "summary": "RSS feed of Taiwan CDC press releases, letters to the medical community and clarifications. This site also provides v1/news.json.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

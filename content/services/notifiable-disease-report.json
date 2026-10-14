@@ -131,6 +131,30 @@
     "en": {
       "title": "Notifiable disease reporting (physicians and facilities)",
       "summary": "Physicians must report suspected notifiable diseases via NIDRS within category-specific deadlines (24 hours for categories 1–2, one week for most category 3)."
+    },
+    "tl": {
+      "title": "Pag-uulat ng mga sakit na dapat iulat (mga manggagamot at pasilidad)",
+      "summary": "Dapat iulat ng mga manggagamot ang pinaghihinalaang sakit na dapat iulat sa pamamagitan ng NIDRS sa loob ng takdang oras ng kategorya (24 oras para sa kategorya 1–2, isang linggo para sa karamihan ng kategorya 3).",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Báo cáo bệnh truyền nhiễm phải khai báo (bác sĩ và cơ sở y tế)",
+      "summary": "Bác sĩ phải báo cáo trường hợp nghi ngờ mắc bệnh truyền nhiễm phải khai báo qua hệ thống NIDRS trong thời hạn theo từng nhóm bệnh (24 giờ với nhóm 1–2, một tuần với phần lớn nhóm 3).",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Pelaporan penyakit menular wajib lapor (dokter dan fasilitas kesehatan)",
+      "summary": "Dokter wajib melaporkan dugaan penyakit wajib lapor melalui NIDRS dalam batas waktu tiap kategori (24 jam untuk kategori 1–2, satu minggu untuk sebagian besar kategori 3).",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "การรายงานโรคติดต่อที่ต้องแจ้ง (แพทย์และสถานพยาบาล)",
+      "summary": "แพทย์ต้องรายงานผู้ป่วยสงสัยโรคติดต่อที่ต้องแจ้งผ่านระบบ NIDRS ภายในเวลาที่กำหนดตามประเภท (24 ชั่วโมงสำหรับประเภท 1–2 และหนึ่งสัปดาห์สำหรับประเภท 3 ส่วนใหญ่)",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   },
   "legacyUrls": [

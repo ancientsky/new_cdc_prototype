@@ -79,5 +79,13 @@
   "formats": [
     "JSON",
     "CSV"
-  ]
+  ],
+  "i18n": {
+    "en": {
+      "title": "Key international epidemic information",
+      "summary": "Summaries of key international epidemics compiled by Taiwan CDC (disease, country, release date, summary), updated daily.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

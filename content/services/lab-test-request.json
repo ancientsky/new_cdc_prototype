@@ -136,6 +136,30 @@
     "en": {
       "title": "Laboratory testing for notifiable diseases (specimens from healthcare facilities)",
       "summary": "After notification, facilities collect specimens per lab specifications and send them with a requisition form; results are returned via NIDRS."
+    },
+    "tl": {
+      "title": "Pagsusuri sa laboratoryo para sa mga nakahahawang sakit na dapat iulat (mga ispesimen mula sa pasilidad pangkalusugan)",
+      "summary": "Pagkatapos iulat ang sakit, kumukuha ng ispesimen ang pasilidad ayon sa mga alituntunin ng laboratoryo at ipinapadala ito kasama ang requisition form; ibinabalik ang resulta sa pamamagitan ng NIDRS.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Đề nghị xét nghiệm các bệnh truyền nhiễm phải báo cáo (mẫu bệnh phẩm từ cơ sở y tế)",
+      "summary": "Sau khi báo cáo, cơ sở lấy mẫu theo quy định của phòng xét nghiệm và gửi kèm phiếu yêu cầu; kết quả được trả qua hệ thống NIDRS.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Pengujian laboratorium untuk penyakit menular wajib lapor (spesimen dari fasilitas kesehatan)",
+      "summary": "Setelah melapor, fasilitas mengambil spesimen sesuai spesifikasi laboratorium dan mengirimkannya bersama formulir permintaan; hasil dikembalikan melalui NIDRS.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "การส่งตรวจทางห้องปฏิบัติการโรคติดต่อที่ต้องรายงาน (ตัวอย่างจากสถานพยาบาล)",
+      "summary": "หลังรายงานโรคแล้ว สถานพยาบาลเก็บตัวอย่างตามข้อกำหนดของห้องปฏิบัติการและส่งพร้อมใบขอตรวจ ผลตรวจจะส่งกลับผ่านระบบ NIDRS",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

@@ -190,6 +190,30 @@
           "machineReadable": false
         }
       ]
+    },
+    "tl": {
+      "title": "Mag-apply para sa internasyonal na pagsasanay ng Taiwan CDC",
+      "summary": "Maaaring mag-apply online ang mga dayuhang opisyal at propesyonal sa kalusugan para sa internasyonal na pagsasanay ng Taiwan CDC (palitan ng FETP, workshop, laboratoryo, TB-DOTS at pagkontrol ng dengue); susuriin ang aplikasyon sa loob ng 30 araw.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Đăng ký chương trình đào tạo quốc tế của Taiwan CDC",
+      "summary": "Cán bộ và chuyên gia y tế nước ngoài có thể đăng ký trực tuyến các chương trình đào tạo quốc tế của Taiwan CDC (trao đổi FETP, hội thảo, phòng xét nghiệm, TB-DOTS và phòng chống sốt xuất huyết); hồ sơ được xem xét trong vòng 30 ngày.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Mendaftar pelatihan internasional Taiwan CDC",
+      "summary": "Pejabat dan profesional kesehatan asing dapat mendaftar secara daring untuk pelatihan internasional Taiwan CDC (pertukaran FETP, lokakarya, laboratorium, TB-DOTS, dan pengendalian demam berdarah); pendaftaran ditinjau dalam 30 hari.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "สมัครเข้ารับการฝึกอบรมนานาชาติของ Taiwan CDC",
+      "summary": "เจ้าหน้าที่และผู้เชี่ยวชาญด้านสาธารณสุขจากต่างประเทศสมัครออนไลน์เพื่อเข้ารับการฝึกอบรมนานาชาติของ Taiwan CDC ได้ (การแลกเปลี่ยน FETP การอบรมเชิงปฏิบัติการ ห้องปฏิบัติการ TB-DOTS และการควบคุมไข้เลือดออก) ใบสมัครจะได้รับการพิจารณาภายใน 30 วัน",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

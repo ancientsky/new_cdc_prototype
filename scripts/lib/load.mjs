@@ -64,6 +64,8 @@ export function loadSite(config) {
     reviewPeriods: readJSON(path.join(CONTENT, 'master/review-periods.json')),
     // 第三十五輪：疫情報導分類主檔（官網左側分類；後台「分類管理」可加）；沒有檔時用 bulletin-rules 的預設
     bulletinCategories: readJSON(path.join(CONTENT, 'master/bulletin-categories.json'), DEFAULT_CATEGORIES),
+    // 第四十九輪：檢驗檢體用語對照（受控詞彙，機器初稿）；/lab/ 的外語頁用，沒有檔就整頁維持中文
+    labTerms: readJSON(path.join(CONTENT, 'master/lab-terms.json'), { terms: {} }),
   };
   const collections = {
     diseases: readDirJSON(path.join(CONTENT, 'diseases')),

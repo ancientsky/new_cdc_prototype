@@ -121,6 +121,30 @@
     "en": {
       "title": "Request for research project reports and data",
       "summary": "How to request full reports, datasets and code from commissioned or in-house research projects; processing takes about 20 days."
+    },
+    "tl": {
+      "title": "Kahilingan para sa mga ulat at datos ng proyektong pananaliksik",
+      "summary": "Paano humiling ng buong ulat, dataset at code mula sa mga proyektong pananaliksik na ipinagkaloob o ginawa mismo ng ahensya; mga 20 araw ang pagproseso.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Đề nghị cung cấp báo cáo và dữ liệu của các đề tài nghiên cứu",
+      "summary": "Hướng dẫn đề nghị cung cấp toàn văn báo cáo, bộ dữ liệu và mã phân tích từ các đề tài nghiên cứu do cơ quan đặt hàng hoặc tự thực hiện; thời gian xử lý khoảng 20 ngày.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Permintaan laporan dan data proyek penelitian",
+      "summary": "Cara meminta laporan lengkap, kumpulan data, dan kode dari proyek penelitian yang ditugaskan atau dilakukan sendiri oleh lembaga; pemrosesan sekitar 20 hari.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "การขอรายงานและข้อมูลของโครงการวิจัย",
+      "summary": "วิธีขอรายงานฉบับเต็ม ชุดข้อมูล และโค้ดวิเคราะห์จากโครงการวิจัยที่หน่วยงานว่าจ้างหรือดำเนินการเอง ใช้เวลาดำเนินการประมาณ 20 วัน",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

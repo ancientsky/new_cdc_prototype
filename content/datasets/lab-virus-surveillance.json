@@ -78,5 +78,13 @@
   "lastUpdated": "2026-09-26",
   "formats": [
     "CSV"
-  ]
+  ],
+  "i18n": {
+    "en": {
+      "title": "Laboratory surveillance of viral infections (respiratory and enteric virus detections)",
+      "summary": "Weekly counts and type distribution of respiratory and enteric virus detections from contracted laboratories (influenza A/B, enterovirus types, RSV, COVID-19 and others).",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

@@ -4,6 +4,7 @@ import { md } from '../../../scripts/lib/markdown.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
 import { ldFor, breadcrumb, provenance, alerts, pageData, feedback, translationBadge, L, PAGE_PATHS, itemPath, imgSrc } from './_partials.mjs';
 import { isIntlPage, intlSubPath, intlTopic, seriesNav, seriesPager, authorityNote } from './_international.mjs';
+import { badgeKind } from './_listing.mjs';
 
 /** 此頁的獨立路徑：既有政策頁走 PAGE_PATHS；slug 含 / 的頁（about/mission → /about/mission/）走 /{slug}/；/about/ 由 about.mjs 的 hub 輸出，其他無 / 的 slug 只內嵌在 hub 與聯絡頁。 */
 export function standalonePath(item) {
@@ -107,7 +108,7 @@ export function render(ctx, { item }) {
 <article class="c-article c-article--page">
   <header class="c-pagehead"><div class="c-pagehead__main"><h1>${L(ctx, item, 'title')}</h1>
     ${L(ctx, item, 'summary') ? html`<p class="lead">${L(ctx, item, 'summary')}</p>` : ''}
-    ${item.sourceLang && item.sourceLang !== 'zh-TW' ? authorityNote(ctx, item) : (langStatus && lang !== 'zh-TW' ? html`<p>${translationBadge(ctx, langStatus === 'reviewed' ? 'reviewed' : 'machine')}</p>` : '')}
+    ${item.sourceLang && item.sourceLang !== 'zh-TW' ? authorityNote(ctx, item) : (langStatus && lang !== 'zh-TW' ? html`<p>${translationBadge(ctx, badgeKind(item, lang, ['title', 'summary', 'bodyMarkdown']))}</p>` : '')}
     ${provenance(ctx, item, { showAi: false })}${alerts(ctx, item)}</div></header>
   ${intl ? seriesNav(ctx, item) : ''}
   <div class="c-prose c-prose--page">${raw(md(body))}</div>

@@ -57,7 +57,12 @@
   "i18n": {
     "en": {
       "title": "Mission and statutory functions",
-      "summary": "Taiwan CDC aims to keep communicable diseases out at the border and contain them in the community, with statutory functions in surveillance, immunisation, quarantine, infection control, laboratory research and vaccine development."
+      "summary": "Taiwan CDC aims to keep communicable diseases out at the border and contain them in the community, with statutory functions in surveillance, immunisation, quarantine, infection control, laboratory research and vaccine development.",
+      "bodyMarkdown": "## Mission\nBased on evidence, **keep communicable diseases out at the border and stop them in the community** to protect the health of the people; respond quickly when outbreaks occur, and in normal times keep up surveillance, preparedness and communication so that the public can get accurate, timely and trustworthy information on disease prevention.\n\n## Vision\nTo be a trusted disease control agency in step with the world.\n\n## Statutory functions\nUnder the Organization Act of the Taiwan Centers for Disease Control, Ministry of Health and Welfare, the agency is responsible for the following (summary):\n\n1. Formulating and implementing policies, systems and regulations for communicable disease control.\n2. Surveillance, investigation, early warning and information management of outbreaks at home and abroad.\n3. Planning immunization policy and managing the vaccine supply.\n4. Quarantine at international ports and travel medicine.\n5. Infection control in medical institutions and laboratory biosafety.\n6. Laboratory testing, research and vaccine development for communicable diseases.\n7. Stockpiling of epidemic prevention supplies and emergency response.\n8. International health cooperation and liaison under the International Health Regulations.\n9. Other matters related to disease control.\n\n## Main laws and regulations\n- Communicable Disease Control Act\n- Organization Act of the Taiwan Centers for Disease Control, Ministry of Health and Welfare, and its rules of procedure\n- International Health Regulations (2005) (followed by Taiwan in the same manner)\n\nFor the organisational structure and the duties of each unit, see the organisation chart under \"About Taiwan CDC\" (generated automatically from the unit master file).",
+      "machineTranslatedAt": "2026-10-14",
+      "machineFields": [
+        "bodyMarkdown"
+      ]
     }
   }
 }

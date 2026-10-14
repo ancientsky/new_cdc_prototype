@@ -118,5 +118,105 @@
       "q": "多久查核一次？",
       "a": "原則每年由區管中心查核，未符基準者限期改善。"
     }
-  ]
+  ],
+  "i18n": {
+    "en": {
+      "title": "Designation of response hospitals and isolation beds in the communicable disease control medical network",
+      "summary": "A hospital that applies to become a response hospital of the communicable disease control medical network, or to set up negative-pressure isolation beds, must meet facility, staffing and infection control standards, undergo an on-site review by the regional centre and be designated. Handling takes about 60 days.",
+      "whoCanApply": [
+        "Hospitals",
+        "Local health bureaus"
+      ],
+      "introMarkdown": "Under Article 14 of the Communicable Disease Control Act, the central competent authority may designate response hospitals, isolation hospitals and isolation beds of the **communicable disease control medical network**, which maintain capacity in normal times and admit patients with communicable diseases during outbreaks.\n\nApplying hospitals must meet standards for negative-pressure isolation ward facilities, infection control staffing, training and drills, and are subject to regular audits and funding subsidies.",
+      "requiredDocuments": [
+        "Application form",
+        "Specifications and test report of the negative-pressure isolation ward facilities",
+        "Infection control staffing plan",
+        "Annual training and drill plan",
+        "Letter of recommendation from the local health bureau"
+      ],
+      "steps": [
+        {
+          "title": "Apply to the local health bureau",
+          "text": "Submit the required documents.",
+          "who": "Hospital",
+          "days": 1
+        },
+        {
+          "title": "Preliminary review and recommendation by the health bureau",
+          "text": "Confirms regional needs and the documents.",
+          "who": "Local health bureau",
+          "days": 14
+        },
+        {
+          "title": "On-site review by the regional centre",
+          "text": "Checks facilities, patient flow and staff training.",
+          "who": "Regional centre",
+          "days": 30
+        },
+        {
+          "title": "Designation and announcement",
+          "text": "After approval, a designation letter is issued and the hospital is added to the network roster.",
+          "who": "Division of Preparedness and Emerging Infectious Diseases",
+          "days": 15
+        }
+      ],
+      "fee": "Free",
+      "contact": "Taiwan CDC Division of Preparedness and Emerging Infectious Diseases (switchboard +886-2-2395-9825); for general enquiries call the 1922 hotline (from abroad +886-800-001922), or contact your regional centre.",
+      "legalBasis": [
+        "Communicable Disease Control Act, Article 14",
+        "Regulations on the Operation of the Communicable Disease Control Medical Network"
+      ],
+      "forms": [
+        {
+          "label": "Hospital application form for the communicable disease control medical network",
+          "href": "/pending/?ref=service.response-hospital-designation&doc=傳染病防治醫療網醫院申請書",
+          "format": "PDF",
+          "machineReadable": false
+        },
+        {
+          "label": "Negative-pressure isolation ward audit checklist",
+          "href": "/pending/?ref=service.response-hospital-designation&doc=負壓隔離病房查核表",
+          "format": "PDF",
+          "machineReadable": false
+        }
+      ],
+      "faq": [
+        {
+          "q": "Is there funding after designation?",
+          "a": "Costs of operating isolation wards and holding drills are subsidised according to the annual budget, and treatment costs are paid as prescribed during outbreaks."
+        },
+        {
+          "q": "How often are audits carried out?",
+          "a": "As a rule, the regional centre audits every year; hospitals that do not meet the standards must improve within a set time."
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Pagtatalaga ng mga ospital na tumutugon at mga isolation bed sa medikal na network ng pagkontrol ng nakahahawang sakit",
+      "summary": "Ang ospital na nais maging ospital na tumutugon sa network o magtayo ng negative-pressure na isolation bed ay dapat tumugon sa mga pamantayan sa pasilidad, tauhan at pagkontrol ng impeksyon, at dadaan sa on-site na pagsusuri ng rehiyonal na sentro. Mga 60 araw ang pagproseso.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Chỉ định bệnh viện ứng phó và giường cách ly trong mạng lưới y tế phòng chống bệnh truyền nhiễm",
+      "summary": "Bệnh viện muốn trở thành bệnh viện ứng phó của mạng lưới hoặc lắp đặt giường cách ly áp lực âm phải đáp ứng tiêu chuẩn về cơ sở vật chất, nhân lực và kiểm soát nhiễm khuẩn, được trung tâm khu vực thẩm định tại chỗ và chỉ định. Thời gian xử lý khoảng 60 ngày.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Penunjukan rumah sakit tanggap dan tempat tidur isolasi dalam jaringan medis pengendalian penyakit menular",
+      "summary": "Rumah sakit yang ingin menjadi rumah sakit tanggap dalam jaringan atau menyiapkan tempat tidur isolasi tekanan negatif harus memenuhi standar fasilitas, tenaga, dan pengendalian infeksi, serta ditinjau langsung oleh pusat regional sebelum ditunjuk. Pemrosesan sekitar 60 hari.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "การกำหนดโรงพยาบาลตอบโต้และเตียงแยกโรคในเครือข่ายการแพทย์ควบคุมโรคติดต่อ",
+      "summary": "โรงพยาบาลที่ต้องการเป็นโรงพยาบาลตอบโต้ของเครือข่ายหรือจัดตั้งเตียงแยกโรคความดันลบต้องผ่านเกณฑ์ด้านสิ่งอำนวยความสะดวก บุคลากร และการควบคุมการติดเชื้อ ได้รับการตรวจประเมินในพื้นที่โดยศูนย์ควบคุมโรคระดับภูมิภาค และได้รับการกำหนด ใช้เวลาดำเนินการประมาณ 60 วัน",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

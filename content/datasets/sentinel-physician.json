@@ -77,5 +77,13 @@
   "lastUpdated": "2026-09-28",
   "formats": [
     "CSV"
-  ]
+  ],
+  "i18n": {
+    "en": {
+      "title": "Sentinel physician surveillance data (influenza-like illness, diarrhea, hand-foot-mouth disease)",
+      "summary": "Weekly proportions of visits for influenza-like illness, diarrhea, hand-foot-mouth disease and herpangina reported by sentinel physicians nationwide.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

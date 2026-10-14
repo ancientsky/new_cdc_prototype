@@ -132,6 +132,30 @@
     "en": {
       "title": "Donate to the Vaccine Fund",
       "summary": "Individuals and companies can donate by postal transfer, bank transfer or in person; donations fund publicly funded vaccines and receipts are tax-deductible."
+    },
+    "tl": {
+      "title": "Mag-donate sa Vaccine Fund",
+      "summary": "Maaaring mag-donate ang mga indibidwal at kumpanya sa pamamagitan ng postal transfer, bank transfer o nang personal; ang mga donasyon ay para sa mga bakunang pinopondohan ng gobyerno at maaaring ibawas sa buwis ang resibo.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Quyên góp cho Quỹ vắc-xin",
+      "summary": "Cá nhân và doanh nghiệp có thể quyên góp qua chuyển khoản bưu điện, chuyển khoản ngân hàng hoặc trực tiếp; khoản đóng góp dùng để mua vắc-xin tiêm miễn phí và biên lai được khấu trừ thuế.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Donasi ke Dana Vaksin",
+      "summary": "Individu dan perusahaan dapat berdonasi melalui transfer pos, transfer bank, atau langsung di loket; donasi digunakan untuk membeli vaksin yang dibiayai pemerintah dan tanda terimanya dapat dikurangkan dari pajak.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "บริจาคให้กองทุนวัคซีน",
+      "summary": "บุคคลและบริษัทสามารถบริจาคผ่านการโอนทางไปรษณีย์ โอนผ่านธนาคาร หรือบริจาคด้วยตนเอง เงินบริจาคใช้จัดซื้อวัคซีนที่รัฐสนับสนุน และใบเสร็จนำไปหักลดหย่อนภาษีได้",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

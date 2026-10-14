@@ -56,7 +56,12 @@
   "i18n": {
     "en": {
       "title": "Director-General: role and policy priorities",
-      "summary": "The Director-General oversees all affairs of the agency, assisted by two deputies and a chief secretary; this page lists the role and 2026 priorities. Profiles of the current leaders are under Leadership."
+      "summary": "The Director-General oversees all affairs of the agency, assisted by two deputies and a chief secretary; this page lists the role and 2026 priorities. Profiles of the current leaders are under Leadership.",
+      "bodyMarkdown": "## Role of the Director-General\nUnder the Organization Act of the Taiwan Centers for Disease Control, Ministry of Health and Welfare, the Director-General **oversees all affairs of the agency and directs and supervises its staff**, assisted by two Deputy Directors-General and one Chief Secretary. During outbreaks, the Director-General supports the operation of the Central Epidemic Command Center under the Communicable Disease Control Act.\n\n> This page describes the role by job title, so it does not need to change when leaders change; for profiles (education, experience and expertise) of the current Director-General and Deputy Directors-General, see [Leadership profiles](/en/about/leadership/). For public schedules and speeches of the leaders, see the press releases.\n\n## 2026 policy priorities (illustrative)\n1. **Integrated control of respiratory infections**: co-administration of influenza and COVID-19 vaccines and access to antivirals.\n2. **Vector-borne diseases such as dengue**: community mobilisation and cross-border genomic surveillance.\n3. **Eliminating tuberculosis and HIV**: active case finding, PrEP and anonymous screening.\n4. **Antimicrobial resistance and One Health**: cross-sector antibiotic stewardship.\n5. **Digital transformation**: AI-ready website, open data and data governance.\n\n## Contact\nPlease use the **Director-General's mailbox** for comments to the Director-General; they will be routed to the responsible unit according to their content.",
+      "machineTranslatedAt": "2026-10-14",
+      "machineFields": [
+        "bodyMarkdown"
+      ]
     }
   }
 }

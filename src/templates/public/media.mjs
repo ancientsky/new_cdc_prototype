@@ -4,9 +4,13 @@ import { md } from '../../../scripts/lib/markdown.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
 import { config } from '../../../site.config.mjs';
 import {
-  ldFor, breadcrumb, pageHead, provenance, alerts, pageData, scopeTags, feedback, translationBadge, hrefFor, isFallbackLink, L, unitName, unitLink,
-  publishedOf, slugOf, diseasePage, diseaseName, itemPath, mediaCard, posterImg, fmtDur, isMediaOutdated, currentBasis, refItem, mdHeader, extLink,
+  ldFor, breadcrumb, pageHead, provenance, alerts, pageData, scopeTags, feedback, translationBadge, hrefFor, L, unitName, unitLink,
+  publishedOf, slugOf, diseasePage, diseaseName, itemPath, mediaCard, posterImg, fmtDur, isMediaOutdated, currentBasis, refItem, mdHeader, extLink, localized,
 } from './_partials.mjs';
+import { pick, langAttr, shownNote, zhText, listEntry, entryLink } from './_listing.mjs';
+
+/** 第四十九輪：這個欄位在頁面語言有譯文嗎（zh-TW 頁與來源語言一律算有）。沒有的欄位保持中文並標 lang="zh-TW"，不假裝是頁面語言 */
+const has = (ctx, m, f) => ctx.lang === (m.sourceLang ?? 'zh-TW') || m.i18n?.[ctx.lang]?.[f] != null;
 
 const YT_RE = /^[A-Za-z0-9_-]{6,15}$/;
 const trailOf = (ctx, m) => [{ label: ctx.t('media.title'), href: '/media/' }, { label: L(ctx, m, 'title') }];
@@ -53,9 +57,9 @@ function basisCard(ctx, m) {
   return html`<section class="c-basis${outdated ? ' c-basis--outdated' : ''}" aria-labelledby="basis-h">
   <h2 id="basis-h">${t('media.basis.t')}</h2>
   <dl class="c-deflist c-deflist--sm">
-    ${m.basedOnVersionLabel ? html`<div><dt>${t('media.basis.made')}</dt><dd><strong>${t('media.basedOn.short', { v: m.basedOnVersionLabel })}</strong></dd></div>` : ''}
+    ${m.basedOnVersionLabel ? html`<div><dt>${t('media.basis.made')}</dt><dd><strong>${(() => { const [pre, post] = t('media.basedOn.short', { v: '\u0000' }).split('\u0000'); return html`${pre}${has(ctx, m, 'basedOnVersionLabel') ? m.basedOnVersionLabel : zhText(ctx, m.basedOnVersionLabel)}${post ?? ''}`; })()}</strong></dd></div>` : ''}
     <div><dt>${t('media.producedAt')}</dt><dd>${fmtDate(m.producedAt)}</dd></div>
-    ${refs.map((r) => html`<div><dt>${t('media.basis.doc')}</dt><dd><a href="${hrefFor(ctx, r)}"${isFallbackLink(ctx, r) ? raw(' lang="zh-TW"') : ''}>${L(ctx, r, 'title')}</a>${r.version ? html` <span class="muted">${r.version}</span>` : ''}</dd></div>`)}
+    ${refs.map((r) => html`<div><dt>${t('media.basis.doc')}</dt><dd>${entryLink(ctx, listEntry(ctx, r))}${r.version ? html` <span class="muted">${r.version}</span>` : ''}</dd></div>`)}
     ${cur ? html`<div><dt>${t('media.basis.current')}</dt><dd><a href="${hrefFor(ctx, cur)}">${cur.version ?? L(ctx, cur, 'title')}</a>${cur.effectiveAt ? html` <span class="muted">${t('prov.effective')} ${fmtDate(cur.effectiveAt)}</span>` : ''} ${outdated ? html`<span class="c-pill c-pill--warn">${t('media.outdated.tag')}</span>` : html`<span class="c-pill c-pill--ok">${t('media.basis.ok')}</span>`}</dd></div>` : ''}
   </dl>
   <p class="muted">${t('media.basis.note')}</p>
@@ -84,13 +88,14 @@ function chapters(ctx, m) {
   const { t } = ctx;
   if (!m.chapters?.length) return '';
   return html`<section class="c-block" aria-labelledby="chap-h"><h2 id="chap-h">${t('media.chapters')}</h2>
-  <ol class="c-chapters">${m.chapters.map((c) => html`<li id="ch-${c.t}"><button type="button" class="c-chapters__btn" data-seek="${c.t}"><span class="c-chapters__t">${fmtDur(c.t)}</span> ${c.label}</button></li>`)}</ol>
+  <ol class="c-chapters">${m.chapters.map((c) => html`<li id="ch-${c.t}"><button type="button" class="c-chapters__btn" data-seek="${c.t}"><span class="c-chapters__t">${fmtDur(c.t)}</span> ${has(ctx, m, 'chapters') ? c.label : zhText(ctx, c.label)}</button></li>`)}</ol>
   <p class="muted">${m.youtubeId ? t('media.chapters.note') : t('media.chapters.demo')}</p></section>`;
 }
 
 function transcript(ctx, m) {
   const { t } = ctx;
-  const body = L(ctx, m, 'transcriptMarkdown') ?? m.transcriptMarkdown ?? '';
+  const tr = pick(ctx, m, 'transcriptMarkdown');
+  const body = tr.text ?? m.transcriptMarkdown ?? '';
   return html`<section class="c-block" aria-labelledby="tr-h"><h2 id="tr-h">${t('media.transcript')}</h2>
   <details class="c-transcript" id="transcript" data-transcript>
     <summary>${t('media.transcript.open')}</summary>
@@ -100,21 +105,24 @@ function transcript(ctx, m) {
       <span class="c-transcript__count muted" role="status" data-transcript-count></span>
       <button type="button" class="c-btn c-btn--sm c-btn--ghost" data-copy-target="transcript-body" data-done="${t('copied')}">${t('media.transcript.copy')}</button>
     </div>
-    <div class="c-prose c-transcript__body" id="transcript-body">${raw(md(body))}</div>
+    ${shownNote(ctx, tr)}<div class="c-prose c-transcript__body" id="transcript-body"${langAttr(ctx, tr)}>${raw(md(body))}</div>
   </details>
   <p class="muted">${t('media.transcript.note')}</p></section>`;
 }
 
-function detail(ctx, m) {
+function detail(ctx, m0) {
   const { site, t, fmtDate, lang } = ctx;
+  const m = localized(ctx, m0); // i18n[lang] 的欄位（章節、對象、系列、依據版本標籤）覆蓋頂層；title／summary／逐字稿另走 pick（頁面語言 → 英文 → 中文）
+  const ti = pick(ctx, m0, 'title');
+  const su = pick(ctx, m0, 'summary');
   const diseases = (m.diseases ?? []).map((id) => ({ id, page: diseasePage(ctx, id), dm: site.diseaseMasterById.get(id) }));
   const langStatus = m.languages?.[lang]?.status;
-  return html`${breadcrumb(ctx, trailOf(ctx, m))}
+  return html`${breadcrumb(ctx, [{ label: t('media.title'), href: '/media/' }, { label: ti.text }])}
 <article class="c-article c-media-detail">
   <header class="c-pagehead"><div class="c-pagehead__main">
-    <p class="c-article__meta"><span class="c-pill c-pill--info">${t(`media.type.${m.mediaType}`)}</span>${m.durationSeconds ? html` <span>${t('media.duration')} ${fmtDur(m.durationSeconds)}</span>` : ''} · <span>${t('media.producedAt')} ${fmtDate(m.producedAt)}</span>${m.series ? html` · <span>${m.series}</span>` : ''}</p>
-    <h1>${L(ctx, m, 'title')}</h1>
-    <p class="lead">${L(ctx, m, 'summary')}</p>
+    <p class="c-article__meta"><span class="c-pill c-pill--info">${t(`media.type.${m.mediaType}`)}</span>${m.durationSeconds ? html` <span>${t('media.duration')} ${fmtDur(m.durationSeconds)}</span>` : ''} · <span>${t('media.producedAt')} ${fmtDate(m.producedAt)}</span>${m.series ? html` · <span>${has(ctx, m0, 'series') ? m.series : zhText(ctx, m.series)}</span>` : ''}</p>
+    <h1${langAttr(ctx, ti)}>${ti.text}</h1>
+    <p class="lead"${langAttr(ctx, su)}>${su.text}</p>
     ${scopeTags(ctx, m, { region: false })}
     ${langStatus && lang !== 'zh-TW' ? html`<p>${translationBadge(ctx, langStatus === 'reviewed' ? 'reviewed' : 'machine')}</p>` : ''}
     ${alerts(ctx, m)}
@@ -133,8 +141,8 @@ function detail(ctx, m) {
       <section class="c-aside-card"><h2>${t('media.info')}</h2><dl class="c-deflist c-deflist--sm">
         <div><dt>${t('prov.owner')}</dt><dd>${unitLink(ctx, m.owner)}</dd></div>
         ${m.captions?.length ? html`<div><dt>${t('media.captions')}</dt><dd>${m.captions.map(langLabel).join('、')}</dd></div>` : ''}
-        ${m.targetGroups?.length ? html`<div><dt>${t('media.target')}</dt><dd>${m.targetGroups.join('、')}</dd></div>` : ''}
-        ${m.series ? html`<div><dt>${t('media.series')}</dt><dd>${m.series}</dd></div>` : ''}
+        ${m.targetGroups?.length ? html`<div><dt>${t('media.target')}</dt><dd>${has(ctx, m0, 'targetGroups') ? m.targetGroups.join('、') : zhText(ctx, m.targetGroups.join('、'))}</dd></div>` : ''}
+        ${m.series ? html`<div><dt>${t('media.series')}</dt><dd>${has(ctx, m0, 'series') ? m.series : zhText(ctx, m.series)}</dd></div>` : ''}
       </dl></section>
       ${pageData(ctx, m, { schema: 'VideoObject', api: '/v1/media.json', mdPath: `${itemPath(m).replace(/\/$/, '')}.md` })}
     </aside>

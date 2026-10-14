@@ -60,7 +60,7 @@ export function render(ctx, { unit: u }) {
 <aside class="c-unitpage__aside">
   <section class="c-aside-card"><h2>${t('unit.page.facts')}</h2>
     <dl class="c-kv"><div><dt>${t('unit.page.kind')}</dt><dd>${t(`about.org.${u.kind}`)}</dd></div>
-    ${u.stewardTitle ? html`<div><dt>${t('unit.page.steward')}</dt><dd>${u.stewardTitle}</dd></div>` : ''}
+    ${u.stewardTitle ? html`<div><dt>${t('unit.page.steward')}</dt><dd>${ctx.lang === 'zh-TW' ? u.stewardTitle : (u.stewardTitleEn ?? u.stewardTitle)}</dd></div>` : ''}
     <div><dt>ID</dt><dd><code>${u.id}</code></dd></div></dl></section>
   <section class="c-aside-card"><h2>${t('unit.page.official')}</h2>
     ${u.officialUrl ? html`<ul class="c-linklist">${OFFICIAL_ORG_PAGES.map((p) => html`<li><a href="${p.url === OFFICIAL_ORG_PAGES[0].url ? u.officialUrl : p.url}" rel="external noopener" lang="zh-TW">${t(`unit.page.official.${p.key}`)}</a>${p.key === 'org' && u.officialUrlVerified === false ? html` <span class="c-pill c-pill--warn">unverified</span>` : ''}</li>`)}</ul>

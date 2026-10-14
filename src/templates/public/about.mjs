@@ -7,6 +7,7 @@ import { ldFor, pageHead, translationBadge, feedback, L, unitLink, unitPath, own
 import { standalonePath, profileList, leadershipIndex } from './page.mjs';
 import { OFFICIAL_ORG_PAGES } from './units.mjs';
 import { intlTopic } from './_international.mjs';
+import { pick, langAttr, shownNote } from './_listing.mjs';
 
 export const ORG_GROUPS = ['office', 'division', 'center', 'regional', 'staff', 'committee'];
 const SECTIONS = [
@@ -29,15 +30,23 @@ function provLine(ctx, p) {
   return html`<p class="c-about__prov muted">${ctx.t('prov.owner')}：${unitLink(ctx, p.owner)} · ${ctx.t('prov.reviewed')} ${ctx.fmtDate(p.reviewedAt)}</p>`;
 }
 
+/**
+ * 第四十九輪：區塊的標題、摘要、本文各自依「頁面語言 → 英文 → 中文」取（pick），不再整段退回中文。
+ * 為什麼：th／id／tl／vi 的 /about/ 原本把使命、沿革、署長職掌等中文本文整段印出（約 27–29% 漢字）；英文譯文已審核過，退英文比退中文對讀者有用，
+ * 且包在 lang="en" 裡，螢幕閱讀器會切換語音。三者都沒有才是中文（加「僅有中文」標記與 lang="zh-TW"）。
+ */
 function pageSection(ctx, sec, { open = false, fallback = null } = {}) {
   const { site, t } = ctx;
   const p = pg(site, sec.page);
   if (!p) return fallback ? html`<section class="c-block" id="${sec.id}" aria-labelledby="h-${sec.id}"><h2 id="h-${sec.id}">${t(`about.s.${sec.id}`)}</h2>${fallback}</section>` : '';
   const sp = standalonePath(p);
-  const body = L(ctx, p, 'bodyMarkdown') ?? p.bodyMarkdown ?? '';
-  return html`<section class="c-block" id="${sec.id}" aria-labelledby="h-${sec.id}"><h2 id="h-${sec.id}">${L(ctx, p, 'title') ?? t(`about.s.${sec.id}`)}</h2>
-  ${L(ctx, p, 'summary') ? html`<p class="lead">${L(ctx, p, 'summary')}</p>` : ''}
-  ${body ? (open ? html`<div class="c-prose">${raw(md(body))}</div>` : html`<details class="c-source-card c-about__more"><summary>${t('about.expand')}</summary><div class="c-prose c-about__body">${raw(md(body))}</div></details>`) : ''}
+  const title = pick(ctx, p, 'title');
+  const summary = pick(ctx, p, 'summary');
+  const body = pick(ctx, p, 'bodyMarkdown');
+  const bodyText = body.text ?? '';
+  return html`<section class="c-block" id="${sec.id}" aria-labelledby="h-${sec.id}"><h2 id="h-${sec.id}"${langAttr(ctx, title)}>${title.text ?? t(`about.s.${sec.id}`)}</h2>
+  ${summary.text ? html`<p class="lead"${langAttr(ctx, summary)}>${summary.text}</p>` : ''}
+  ${bodyText ? html`${shownNote(ctx, body)}${open ? html`<div class="c-prose"${langAttr(ctx, body)}>${raw(md(bodyText))}</div>` : html`<details class="c-source-card c-about__more"><summary>${t('about.expand')}</summary><div class="c-prose c-about__body"${langAttr(ctx, body)}>${raw(md(bodyText))}</div></details>`}` : ''}
   ${provLine(ctx, p)}
   ${sp ? html`<p><a href="${ctx.url(sp)}">${t('about.fullpage')} →</a></p>` : ''}
 </section>`;
@@ -47,8 +56,8 @@ function pageSection(ctx, sec, { open = false, fallback = null } = {}) {
 function leadershipSection(ctx) {
   const idx = leadershipIndex(ctx.site);
   if (!idx) return '';
-  return html`<section class="c-block" id="leadership" aria-labelledby="h-leadership"><h2 id="h-leadership">${L(ctx, idx, 'title') ?? ctx.t('about.s.leadership')}</h2>
-  ${L(ctx, idx, 'summary') ? html`<p class="lead">${L(ctx, idx, 'summary')}</p>` : ''}
+  return html`<section class="c-block" id="leadership" aria-labelledby="h-leadership"><h2 id="h-leadership"${langAttr(ctx, pick(ctx, idx, 'title'))}>${pick(ctx, idx, 'title').text ?? ctx.t('about.s.leadership')}</h2>
+  ${pick(ctx, idx, 'summary').text ? html`<p class="lead"${langAttr(ctx, pick(ctx, idx, 'summary'))}>${pick(ctx, idx, 'summary').text}</p>` : ''}
   ${profileList(ctx)}
   ${provLine(ctx, idx)}
   <p><a href="${ctx.url(standalonePath(idx))}">${ctx.t('about.fullpage')} →</a></p>
@@ -61,7 +70,7 @@ function unitCard(ctx, u) {
   return html`<li class="c-org__unit c-org__unit--${u.kind}" id="${u.id.replace('unit.', 'u-')}">
   <strong class="c-org__name"><a href="${ctx.url(unitPath(u))}">${lang === 'zh-TW' ? u.name : (u.nameEn ?? u.name)}</a></strong>
   ${lang === 'zh-TW' && u.nameEn ? html`<span class="c-org__en" lang="en">${u.nameEn}</span>` : (lang !== 'zh-TW' ? html`<span class="c-org__en" lang="zh-TW">${u.name}</span>` : '')}
-  ${u.stewardTitle ? html`<span class="c-org__steward">${t('about.org.steward')}：${u.stewardTitle}</span>` : ''}
+  ${u.stewardTitle ? html`<span class="c-org__steward">${t('about.org.steward')}：${lang === 'zh-TW' ? u.stewardTitle : (u.stewardTitleEn ?? u.stewardTitle)}</span>` : ''}
   <span class="c-org__counts"><span>${t('about.org.content')} <b>${st.content}</b></span><span>${t('about.org.wl')} <b>${st.whitelist}</b></span></span>
   ${st.latest ? html`<span class="c-org__latest">${t('about.org.latest')} ${ctx.fmtDate(st.latest)}</span>` : ''}
 </li>`;
@@ -100,7 +109,7 @@ ${leadershipSection(ctx)}
 ${pageSection(ctx, SECTIONS[5])}
 ${about ? pageSection(ctx, SECTIONS[6], { open: true }) : ''}
 ${intl ? html`<section class="c-block" id="international" aria-labelledby="h-international"><h2 id="h-international">${t('international.title')}</h2>
-  <p>${L(ctx, intl, 'summary') ?? t('international.lead')}</p>
+  <p${langAttr(ctx, pick(ctx, intl, 'summary'))}>${pick(ctx, intl, 'summary').text ?? t('international.lead')}</p>
   <p><a class="c-btn c-btn--ghost c-btn--sm" href="${url('/international/')}">${t('international.title')} →</a></p></section>` : ''}
 <section class="c-block" id="contact" aria-labelledby="h-contact"><h2 id="h-contact">${t('about.s.contact')}</h2>
   <p>${t('about.contact')} <a class="c-btn c-btn--sm" href="${url('/contact/')}">${t('contact.title')} →</a></p>

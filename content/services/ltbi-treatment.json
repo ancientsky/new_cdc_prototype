@@ -166,5 +166,37 @@
       "sha256": "cf82c2bade3bc4430c694a35632536e7def3204049b33c30b7925c40ae970ea4",
       "machineReadable": true
     }
-  ]
+  ],
+  "i18n": {
+    "en": {
+      "title": "Latent TB infection testing and treatment",
+      "summary": "Contacts of people with TB and programme target groups can receive publicly funded IGRA testing and latent TB infection treatment (3HP, 1HP, 3HR, 4R, 9H), with a care worker accompanying the patient during treatment (DOPT).",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Pagsusuri at paggamot sa latent na impeksyon ng tuberkulosis",
+      "summary": "Maaaring tumanggap ng libreng IGRA at paggamot sa latent na impeksyon ng TB (3HP, 1HP, 3HR, 4R, 9H) ang mga nakasalamuha ng taong may TB at ang mga target ng programa; may tagapag-alaga na sasama sa pag-inom ng gamot (DOPT).",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Xét nghiệm và điều trị nhiễm lao tiềm ẩn",
+      "summary": "Người tiếp xúc với bệnh nhân lao và các đối tượng của chương trình được xét nghiệm IGRA và điều trị nhiễm lao tiềm ẩn (3HP, 1HP, 3HR, 4R, 9H) bằng kinh phí công; trong thời gian điều trị có nhân viên chăm sóc theo dõi uống thuốc (DOPT).",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Pemeriksaan dan pengobatan infeksi TB laten",
+      "summary": "Kontak pasien TB dan kelompok sasaran program dapat menjalani pemeriksaan IGRA dan pengobatan infeksi TB laten (3HP, 1HP, 3HR, 4R, 9H) dengan biaya publik; selama pengobatan, petugas pendamping mengawasi minum obat (DOPT).",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "การตรวจและรักษาวัณโรคระยะแฝง",
+      "summary": "ผู้สัมผัสผู้ป่วยวัณโรคและกลุ่มเป้าหมายของโครงการรับการตรวจ IGRA และการรักษาวัณโรคระยะแฝง (3HP, 1HP, 3HR, 4R, 9H) โดยใช้งบภาครัฐ ระหว่างรักษามีเจ้าหน้าที่ดูแลกำกับการกินยา (DOPT)",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

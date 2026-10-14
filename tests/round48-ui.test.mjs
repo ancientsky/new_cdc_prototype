@@ -120,8 +120,8 @@ test('#99 頁籤面板的 h2 在螢幕上是「只給螢幕閱讀器」而不是
 
 /* ───────── #100(c) CJK 比例檢查 ───────── */
 test('#100 高流量頁（/<lang>/、/<lang>/ask/）超標＝建置失敗，其他頁維持警告', () => {
-  for (const ok of ['/en/index.html', '/th/index.html', '/vi/ask/index.html', '/tl/ask/index.html']) assert.ok(isStrictCjkPage(ok), ok);
-  for (const no of ['/en/about/index.html', '/th/sitemap-page/index.html', '/en/diseases/index.html', '/index.html', '/ask/index.html']) assert.ok(!isStrictCjkPage(no), no);
+  for (const ok of ['/en/index.html', '/th/index.html', '/vi/ask/index.html', '/tl/ask/index.html', '/th/sitemap-page/index.html', '/en/apply/index.html']) assert.ok(isStrictCjkPage(ok), ok); // 第四十九輪起 apply 與 sitemap-page 也是高流量頁
+  for (const no of ['/en/about/index.html', '/en/diseases/index.html', '/index.html', '/ask/index.html']) assert.ok(!isStrictCjkPage(no), no);
   const log = () => {};
   const base = { termLeaks: [], cjk: { threshold: 0.15, checked: 2, worst: [], byLang: {} } };
   const row = (page) => ({ page, lang: 'en', ratio: 0.4, cjk: 4, total: 10, sample: [] });

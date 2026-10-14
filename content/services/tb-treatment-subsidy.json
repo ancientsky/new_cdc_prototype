@@ -128,5 +128,37 @@
       "q": "隔離治療要住多久？",
       "a": "依病人傳染力與治療反應而定，經醫師評估痰檢查轉陰、不具傳染力後解除。"
     }
-  ]
+  ],
+  "i18n": {
+    "en": {
+      "title": "Tuberculosis treatment cost subsidy and isolation treatment",
+      "summary": "National Health Insurance covers care for people with TB and Taiwan CDC pays the co-payments; multidrug-resistant TB is treated by the TMTC at public expense; where isolation treatment is ordered by law, the government bears the cost.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Subsidiya sa gastos ng paggamot sa tuberkulosis at isolation treatment",
+      "summary": "Sakop ng National Health Insurance ang pagpapagamot ng may TB at ang co-payment ay binabayaran ng Taiwan CDC; ang multidrug-resistant TB ay ginagamot ng TMTC sa pondo ng gobyerno; kapag iniutos ng batas ang isolation treatment, gobyerno ang sumasagot sa gastos.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Hỗ trợ chi phí khám chữa bệnh lao và điều trị cách ly",
+      "summary": "Người bệnh lao được bảo hiểm y tế toàn dân chi trả, phần cùng chi trả do Taiwan CDC đảm nhận; lao đa kháng thuốc do TMTC điều trị bằng kinh phí công; trường hợp điều trị cách ly theo luật thì chi phí do nhà nước chịu.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Subsidi biaya pengobatan tuberkulosis dan pengobatan isolasi",
+      "summary": "Pasien TB ditanggung Asuransi Kesehatan Nasional dan biaya ikut tanggung (co-payment) dibayar Taiwan CDC; TB resisten obat ganda ditangani TMTC dengan dana publik; bila pengobatan isolasi diwajibkan oleh hukum, biayanya ditanggung pemerintah.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "การช่วยเหลือค่ารักษาวัณโรคและการรักษาแบบแยกกัก",
+      "summary": "ผู้ป่วยวัณโรคได้รับความคุ้มครองจากประกันสุขภาพแห่งชาติ และส่วนที่ผู้ป่วยต้องร่วมจ่ายเป็นภาระของ Taiwan CDC วัณโรคดื้อยาหลายขนานรักษาโดย TMTC ด้วยงบภาครัฐ และกรณีที่กฎหมายกำหนดให้รักษาแบบแยกกัก รัฐเป็นผู้รับผิดชอบค่าใช้จ่าย",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

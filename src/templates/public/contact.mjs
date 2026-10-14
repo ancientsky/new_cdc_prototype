@@ -8,8 +8,9 @@
 import { html, raw } from '../../../scripts/lib/render.mjs';
 import { md } from '../../../scripts/lib/markdown.mjs';
 import { config } from '../../../site.config.mjs';
-import { ldFor, pageHead, L, unitName, unitLink, unitPath } from './_partials.mjs';
+import { ldFor, pageHead, unitName, unitLink, unitPath } from './_partials.mjs';
 import { formOf, formNotice } from './_forms.mjs';
+import { pick, langAttr, shownNote } from './_listing.mjs';
 
 export const MAILBOX_ADDR = 'mailbox@example.cdc.gov.tw';
 /** 分類 → 權責單位（正式環境由署內分文規則取代） */
@@ -35,11 +36,12 @@ export function meta(ctx) {
 function infoColumn(ctx) {
   const { site, t } = ctx;
   const p = site.byId.get('page.contact');
-  const body = p ? (L(ctx, p, 'bodyMarkdown') ?? p.bodyMarkdown ?? '') : '';
+  // 第四十九輪：本文依「頁面語言 → 英文 → 中文」取，外語頁不再整段中文（見 _listing.mjs 的 pick）
+  const body = p ? pick(ctx, p, 'bodyMarkdown') : { text: '' };
   return html`<section class="c-contact__col" aria-labelledby="ct-1"><h2 id="ct-1">${t('contact.info')}</h2>
   <div class="c-callout c-callout--hotline"><p class="c-callout__big"><a href="tel:1922">1922</a></p><p>${t('contact.1922')}</p>
     <ul class="c-linklist"><li>${t('contact.toll')}：<a href="tel:0800001922">0800-001922</a></li><li>${t('contact.intl')}：<a href="tel:${config.hotlineIntl.replace(/[^+\d]/g, '')}">${config.hotlineIntl}</a></li></ul></div>
-  ${body ? html`<div class="c-prose">${raw(md(body))}</div>` : ''}
+  ${body.text ? html`${shownNote(ctx, body)}<div class="c-prose"${langAttr(ctx, body)}>${raw(md(body.text))}</div>` : ''}
   ${p ? html`<p class="c-about__prov muted">${t('prov.owner')}：${unitLink(ctx, p.owner)} · ${t('prov.reviewed')} ${ctx.fmtDate(p.reviewedAt)}</p>` : ''}
   <p class="muted">${t('contact.emergency')}</p>
   <h3 class="c-contact__sub">${t('contact.other')}</h3>
@@ -77,8 +79,8 @@ function mailboxLive(ctx, f, p, body) {
   const { t } = ctx;
   return html`<section class="c-contact__col c-mailbox" id="mailbox" aria-labelledby="ct-3" data-mailbox-mode="${f.active}">
   <h2 id="ct-3">${t('contact.mailbox')}</h2>
-  <p>${p ? L(ctx, p, 'summary') : t('contact.mailbox.lead')}</p>
-  ${body ? html`<details class="c-source-card"><summary>${t('contact.mailbox.about')}</summary><div class="c-prose c-about__body">${raw(md(body))}</div></details>` : ''}
+  <p${p ? langAttr(ctx, pick(ctx, p, 'summary')) : ''}>${p ? pick(ctx, p, 'summary').text : t('contact.mailbox.lead')}</p>
+  ${body.text ? html`<details class="c-source-card"><summary>${t('contact.mailbox.about')}</summary>${shownNote(ctx, body)}<div class="c-prose c-about__body"${langAttr(ctx, body)}>${raw(md(body.text))}</div></details>` : ''}
   <div class="c-alert c-alert--info" role="note"><strong class="c-alert__t">${t('contact.ai.t')}</strong> ${t('contact.ai')} <a href="${ctx.url('/ask/')}">${t('ask.title')} →</a></div>
   ${formNotice(ctx, 'directorMailbox')}
   ${f.active === 'link'
@@ -94,13 +96,13 @@ function mailboxLive(ctx, f, p, body) {
 function mailboxColumn(ctx) {
   const { site, t } = ctx;
   const p = site.byId.get('page.director-mailbox');
-  const body = p ? (L(ctx, p, 'bodyMarkdown') ?? p.bodyMarkdown ?? '') : '';
+  const body = p ? pick(ctx, p, 'bodyMarkdown') : { text: '' };
   const f = formOf(ctx, 'directorMailbox');
   if (f.active !== 'mock') return mailboxLive(ctx, f, p, body);
   return html`<section class="c-contact__col c-mailbox" id="mailbox" aria-labelledby="ct-3" data-mailbox data-addr="${MAILBOX_ADDR}">
   <h2 id="ct-3">${t('contact.mailbox')} <span class="c-pill c-pill--warn">${t('contact.demo')}</span></h2>
-  <p>${p ? L(ctx, p, 'summary') : t('contact.mailbox.lead')}</p>
-  ${body ? html`<details class="c-source-card"><summary>${t('contact.mailbox.about')}</summary><div class="c-prose c-about__body">${raw(md(body))}</div></details>` : ''}
+  <p${p ? langAttr(ctx, pick(ctx, p, 'summary')) : ''}>${p ? pick(ctx, p, 'summary').text : t('contact.mailbox.lead')}</p>
+  ${body.text ? html`<details class="c-source-card"><summary>${t('contact.mailbox.about')}</summary>${shownNote(ctx, body)}<div class="c-prose c-about__body"${langAttr(ctx, body)}>${raw(md(body.text))}</div></details>` : ''}
   <div class="c-alert c-alert--info" role="note"><strong class="c-alert__t">${t('contact.ai.t')}</strong> ${t('contact.ai')} <a href="${ctx.url('/ask/')}">${t('ask.title')} →</a></div>
   ${formNotice(ctx, 'directorMailbox')}
   <form class="c-mailform" data-mailbox-form novalidate>
