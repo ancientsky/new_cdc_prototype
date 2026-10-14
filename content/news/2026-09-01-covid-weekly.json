@@ -72,6 +72,46 @@
     "en": {
       "title": "COVID-19 declining for three weeks; new-season vaccine starts 1 October with flu vaccine",
       "summary": "COVID-19 visits and severe cases have fallen for three weeks. The 2026–27 COVID-19 vaccine will be offered from 1 October alongside the flu vaccine."
+    },
+    "ja": {
+      "title": "新型コロナの流行は3週連続で減少、10月から新年度ワクチンをインフルエンザワクチンと同時に接種開始",
+      "summary": "新型コロナの外来・救急受診者数と重症化の届出数が3週連続で減少しました。2026–2027年度の新型コロナワクチンは、10月1日からインフルエンザワクチンと同時に接種が始まります。",
+      "bodyMarkdown": "台湾CDCによると、直近1週間の新型コロナの外来・救急受診者数と、新型コロナの重症化の届出数は3週連続で減少しており、夏の流行は落ち着いてきています。\n\n2026–2027年度の新型コロナワクチンは、10月1日からインフルエンザワクチンと同時に接種が始まり、生後6か月以上のすべての人が公費ワクチンを接種できます。台湾CDCは、65歳以上の高齢者と慢性疾患のある人は、陽性が分かったら早めに受診し、医師の評価のうえ、発症から5日以内に経口抗ウイルス薬を使うよう呼びかけています。",
+      "declText": "受診者数と重症化の届出数が3週連続で減少",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Tatlong linggo nang bumababa ang COVID-19; magsisimula sa Oktubre ang bakuna para sa bagong panahon kasabay ng bakuna sa trangkaso",
+      "summary": "Tatlong linggo nang bumababa ang mga outpatient at emergency visit para sa COVID-19 at ang bilang ng mga naiulat na malubhang kaso. Magsisimula sa Oktubre 1 ang bakuna sa COVID-19 para sa 2026–27 kasabay ng bakuna sa trangkaso.",
+      "bodyMarkdown": "Ayon sa Taiwan CDC, sa nakaraang linggo ay tatlong linggo nang magkakasunod na bumababa ang mga outpatient at emergency visit para sa COVID-19 at ang bilang ng mga naiulat na malubhang komplikasyon ng COVID-19; humuhupa na ang epidemya sa tag-init.\n\nAng bakuna sa COVID-19 para sa 2026–27 ay magsisimula sa Oktubre 1 kasabay ng bakuna sa trangkaso, at maaaring tumanggap ng bakunang pinondohan ng pamahalaan ang lahat ng may edad 6 na buwan pataas. Ipinapaalala ng Taiwan CDC na ang mga may edad 65 pataas at mga taong may malalang sakit ay dapat magpatingin sa doktor nang maaga kapag nagpositibo, upang masuri ng doktor kung gagamit ng oral na antiviral sa loob ng 5 araw mula nang magsimula ang sakit.",
+      "declText": "Tatlong linggo nang bumababa ang mga pagbisita at ang bilang ng mga naiulat na malubhang kaso",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Dịch COVID-19 giảm ba tuần liên tiếp, từ tháng 10 vắc-xin niên vụ mới được tiêm cùng đợt với vắc-xin cúm",
+      "summary": "Số lượt khám ngoại trú, cấp cứu do COVID-19 và số ca biến chứng nặng được báo cáo đã giảm ba tuần liên tiếp. Vắc-xin COVID-19 niên vụ 2026–2027 sẽ bắt đầu tiêm từ ngày 1/10 cùng với vắc-xin cúm.",
+      "bodyMarkdown": "CDC Đài Loan cho biết trong tuần qua, số lượt khám ngoại trú, cấp cứu do COVID-19 và số ca COVID-19 biến chứng nặng được báo cáo đã giảm ba tuần liên tiếp, dịch mùa hè đang dịu đi.\n\nVắc-xin COVID-19 niên vụ 2026–2027 sẽ bắt đầu tiêm từ ngày 1/10 cùng với vắc-xin cúm; mọi người từ 6 tháng tuổi trở lên đều có thể tiêm vắc-xin do nhà nước chi trả. CDC Đài Loan nhắc người từ 65 tuổi trở lên và người mắc bệnh mạn tính khi dương tính cần đi khám sớm để bác sĩ đánh giá việc dùng thuốc kháng vi-rút đường uống trong vòng 5 ngày kể từ khi khởi phát.",
+      "declText": "Số lượt khám và số ca biến chứng nặng được báo cáo giảm ba tuần liên tiếp",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "COVID-19 turun tiga minggu berturut-turut; mulai Oktober vaksin musim baru diberikan bersamaan dengan vaksin flu",
+      "summary": "Kunjungan rawat jalan dan gawat darurat akibat COVID-19 serta laporan kasus berat turun tiga minggu berturut-turut. Vaksin COVID-19 2026–2027 mulai diberikan pada 1 Oktober bersamaan dengan vaksin flu.",
+      "bodyMarkdown": "Menurut CDC Taiwan, dalam seminggu terakhir kunjungan rawat jalan dan gawat darurat akibat COVID-19 serta jumlah laporan komplikasi berat COVID-19 turun tiga minggu berturut-turut, dan wabah musim panas mereda.\n\nVaksin COVID-19 2026–2027 mulai diberikan pada 1 Oktober bersamaan dengan vaksin flu, dan semua orang berusia 6 bulan ke atas dapat menerima vaksin yang dibiayai pemerintah. CDC Taiwan mengingatkan lansia 65 tahun ke atas dan penderita penyakit kronis agar segera berobat setelah terkonfirmasi positif, supaya dokter menilai penggunaan obat antivirus oral dalam 5 hari sejak gejala muncul.",
+      "declText": "Kunjungan dan laporan kasus berat turun tiga minggu berturut-turut",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "โควิด-19 ลดลงต่อเนื่องสามสัปดาห์ ตั้งแต่เดือนตุลาคมวัคซีนประจำปีใหม่เริ่มฉีดพร้อมวัคซีนไข้หวัดใหญ่",
+      "summary": "จำนวนผู้ป่วยนอกและผู้ป่วยฉุกเฉินที่มารับการรักษาด้วยโควิด-19 และจำนวนรายงานผู้ป่วยอาการรุนแรงลดลงต่อเนื่องสามสัปดาห์ วัคซีนโควิด-19 ประจำปี 2026–2027 จะเริ่มฉีดวันที่ 1 ตุลาคมพร้อมวัคซีนไข้หวัดใหญ่",
+      "bodyMarkdown": "CDC ไต้หวันระบุว่าในสัปดาห์ที่ผ่านมา จำนวนผู้ป่วยนอกและผู้ป่วยฉุกเฉินที่มารับการรักษาด้วยโควิด-19 และจำนวนรายงานผู้ป่วยโควิด-19 ที่มีภาวะแทรกซ้อนรุนแรงลดลงต่อเนื่องสามสัปดาห์ การระบาดในฤดูร้อนทุเลาลง\n\nวัคซีนโควิด-19 ประจำปี 2026–2027 จะเริ่มฉีดตั้งแต่วันที่ 1 ตุลาคมพร้อมวัคซีนไข้หวัดใหญ่ ผู้ที่มีอายุ 6 เดือนขึ้นไปทุกคนรับวัคซีนที่รัฐสนับสนุนค่าใช้จ่ายได้ CDC ไต้หวันเตือนว่าผู้สูงอายุ 65 ปีขึ้นไปและผู้ป่วยโรคเรื้อรังเมื่อผลเป็นบวกควรรีบไปพบแพทย์ เพื่อให้แพทย์ประเมินการใช้ยาต้านไวรัสชนิดรับประทานภายใน 5 วันหลังเริ่มมีอาการ",
+      "declText": "จำนวนผู้ป่วยที่มารับการรักษาและจำนวนรายงานผู้ป่วยอาการรุนแรงลดลงต่อเนื่องสามสัปดาห์",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

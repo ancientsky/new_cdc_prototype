@@ -58,5 +58,14 @@
     "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
   ],
   "relatedClarification": "clar.2025-07-dengue-spraying-poison",
-  "bodyMarkdown": "針對網路流傳「登革熱噴藥會毒死人，可以拒絕開門配合」的訊息，疾病管制署澄清，此為錯誤訊息。\n\n登革熱緊急防治使用的環境衛生用藥均經主管機關核准，並依規定稀釋、由專業人員施作；噴藥前會通知住戶收妥食物、餐具並暫時離開，依指示通風後即可返回。依傳染病防治法，民眾應配合衛生單位進行孳生源清除與防治措施。噴藥只能殺死成蚊，**清除積水容器才是根本**。"
+  "bodyMarkdown": "針對網路流傳「登革熱噴藥會毒死人，可以拒絕開門配合」的訊息，疾病管制署澄清，此為錯誤訊息。\n\n登革熱緊急防治使用的環境衛生用藥均經主管機關核准，並依規定稀釋、由專業人員施作；噴藥前會通知住戶收妥食物、餐具並暫時離開，依指示通風後即可返回。依傳染病防治法，民眾應配合衛生單位進行孳生源清除與防治措施。噴藥只能殺死成蚊，**清除積水容器才是根本**。",
+  "i18n": {
+    "en": {
+      "title": "Clarification: the claim that dengue spraying is deadly and can be refused is false",
+      "summary": "The online claim that dengue spraying is deadly and that you can refuse to open your door is false. The insecticides used are approved and diluted as required, and cooperating with breeding-site removal and spraying is a duty under the Communicable Disease Control Act.",
+      "bodyMarkdown": "Regarding a message circulating online that \"dengue spraying can poison people and you can refuse to open the door\", Taiwan CDC clarifies that this message is false.\n\nThe environmental health insecticides used for emergency dengue control are all approved by the competent authority, diluted as required and applied by professionals. Before spraying, residents are told to put away food and tableware and leave temporarily, and they may return after ventilating as instructed. Under the Communicable Disease Control Act, the public must cooperate with health authorities in breeding-site removal and control measures. Spraying only kills adult mosquitoes; **removing containers of standing water is the real solution**.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

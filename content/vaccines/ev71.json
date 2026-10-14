@@ -72,5 +72,49 @@
   ],
   "bodyMarkdown": "腸病毒 71 型（EV71）是較容易引起重症的型別。國內已有核准上市的 EV71 不活化疫苗，屬**自費**接種，家長可與兒科醫師討論是否接種。\n\n疫苗**只能預防 71 型**，無法預防克沙奇病毒等其他型別，因此接種後仍要落實肥皂洗手、環境消毒，並留意重症前兆。",
   "precautions": "對疫苗成分過敏者不可接種；發燒或急性疾病者宜延後接種。",
-  "whereUrl": "https://ancientsky.github.io/vaxmap-next/info.html#where"
+  "whereUrl": "https://ancientsky.github.io/vaxmap-next/info.html#where",
+  "i18n": {
+    "en": {
+      "title": "Enterovirus A71 (EV71) vaccine",
+      "summary": "The enterovirus 71 vaccine approved in Taiwan is self-paid; the age range follows the package insert. It protects against EV71 only, so handwashing is still needed after vaccination.",
+      "bodyMarkdown": "Enterovirus 71 (EV71) is the type more likely to cause severe illness. An inactivated EV71 vaccine has been approved in Taiwan; it is **self-paid**, and parents can discuss with a paediatrician whether to vaccinate.\n\nThe vaccine **protects against type 71 only**, not other types such as coxsackieviruses, so keep washing hands with soap, disinfecting surfaces and watching for warning signs of severe illness after vaccination.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "ja": {
+      "title": "エンテロウイルス71型（EV71）ワクチン",
+      "summary": "台湾で承認されているエンテロウイルス71型ワクチンは自費接種で、対象年齢は添付文書に従います。予防できるのはEV71のみのため、接種後も手洗いの徹底が必要です。",
+      "bodyMarkdown": "エンテロウイルス71型（EV71）は、重症化しやすい型です。台湾ではEV71の不活化ワクチンが承認されており、**自費**での接種となります。接種するかどうかは、保護者が小児科医と相談できます。\n\nこのワクチンが**予防できるのは71型のみ**で、コクサッキーウイルスなど他の型は予防できません。そのため、接種後も石けんでの手洗い、環境の消毒を徹底し、重症化の前兆に注意してください。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Bakuna sa EV71",
+      "summary": "Sariling bayad ang bakuna sa enterovirus 71 na aprubado sa Taiwan; ang angkop na edad ay ayon sa package insert. Protektado lamang ito laban sa EV71, kaya kailangan pa ring maghugas ng kamay pagkatapos magpabakuna.",
+      "bodyMarkdown": "Ang enterovirus 71 (EV71) ay ang uri na mas malamang na magdulot ng malubhang sakit. May aprubadong inactivated na bakuna sa EV71 sa Taiwan; ito ay **sariling bayad**, at maaaring pag-usapan ng mga magulang at ng pediatrician kung magpapabakuna.\n\nAng bakuna ay **nagpoprotekta lamang laban sa uri 71**, hindi sa iba pang uri tulad ng coxsackievirus, kaya patuloy na maghugas ng kamay gamit ang sabon, mag-disimpekta ng kapaligiran at bantayan ang mga babala ng malubhang sakit pagkatapos magpabakuna.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Vắc-xin EV71",
+      "summary": "Vắc-xin enterovirus 71 đã được cấp phép tại Đài Loan là loại tự chi trả; độ tuổi áp dụng theo tờ hướng dẫn sử dụng. Vắc-xin chỉ phòng EV71, nên sau khi tiêm vẫn phải rửa tay.",
+      "bodyMarkdown": "Enterovirus 71 (EV71) là týp dễ gây bệnh nặng. Đài Loan đã cấp phép vắc-xin EV71 bất hoạt, tiêm **tự chi trả**; phụ huynh có thể trao đổi với bác sĩ nhi khoa về việc có nên tiêm hay không.\n\nVắc-xin **chỉ phòng týp 71**, không phòng được các týp khác như coxsackievirus, vì vậy sau khi tiêm vẫn phải rửa tay bằng xà phòng, khử khuẩn môi trường và chú ý các dấu hiệu báo trước bệnh nặng.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Vaksin EV71",
+      "summary": "Vaksin enterovirus 71 yang disetujui di Taiwan bersifat biaya sendiri; usia penerima mengikuti brosur produk. Vaksin hanya melindungi dari EV71, sehingga mencuci tangan tetap perlu setelah vaksinasi.",
+      "bodyMarkdown": "Enterovirus 71 (EV71) adalah tipe yang lebih mudah menyebabkan sakit berat. Vaksin EV71 inaktif sudah disetujui di Taiwan dan diberikan dengan **biaya sendiri**; orang tua dapat berdiskusi dengan dokter anak apakah perlu divaksin.\n\nVaksin ini **hanya melindungi dari tipe 71**, tidak dari tipe lain seperti coxsackievirus, jadi setelah vaksinasi tetap cuci tangan dengan sabun, disinfeksi lingkungan, dan waspadai tanda awal sakit berat.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "วัคซีนเอนเทอโรไวรัส 71 (EV71)",
+      "summary": "วัคซีนเอนเทอโรไวรัส 71 ที่ได้รับอนุมัติในไต้หวันเป็นการฉีดแบบจ่ายเอง ช่วงอายุที่ฉีดได้เป็นไปตามเอกสารกำกับยา วัคซีนป้องกันได้เฉพาะ EV71 จึงยังต้องล้างมือหลังฉีด",
+      "bodyMarkdown": "เอนเทอโรไวรัส 71 (EV71) เป็นสายพันธุ์ที่ทำให้เกิดอาการรุนแรงได้ง่ายกว่า ไต้หวันอนุมัติวัคซีน EV71 ชนิดเชื้อตายแล้ว เป็นการฉีดแบบ**จ่ายเอง** ผู้ปกครองสามารถปรึกษากุมารแพทย์ว่าควรฉีดหรือไม่\n\nวัคซีน**ป้องกันได้เฉพาะสายพันธุ์ 71** ไม่ป้องกันสายพันธุ์อื่น เช่น ค็อกซากีไวรัส ดังนั้นหลังฉีดวัคซีนยังต้องล้างมือด้วยสบู่ ฆ่าเชื้อสิ่งแวดล้อม และสังเกตสัญญาณเตือนของอาการรุนแรง",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

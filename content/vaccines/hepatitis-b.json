@@ -78,5 +78,49 @@
   ],
   "bodyMarkdown": "台灣自 1984 年起全面推動新生兒 B 型肝炎疫苗接種，大幅降低兒童帶原率與肝癌發生率。\n\n新生兒**出生後 24 小時內儘速接種第 1 劑**，滿 1 個月、滿 6 個月各接種 1 劑。母親為 B 型肝炎表面抗原陽性者，新生兒另需在出生後 24 小時內注射 B 型肝炎免疫球蛋白（HBIG），並於 12 個月大時抽血追蹤。成人未具抗體者可自費接種。",
   "precautions": "對疫苗成分過敏者不可接種。",
-  "whereUrl": "https://ancientsky.github.io/vaxmap-next/info.html#where"
+  "whereUrl": "https://ancientsky.github.io/vaxmap-next/info.html#where",
+  "i18n": {
+    "en": {
+      "title": "Hepatitis B vaccine",
+      "summary": "Newborns receive 3 government-funded doses of hepatitis B vaccine: within 24 hours of birth, at 1 month and at 6 months; babies of HBsAg-positive mothers also receive HBIG within 24 hours.",
+      "bodyMarkdown": "Taiwan has vaccinated all newborns against hepatitis B since 1984, greatly reducing carrier rates in children and the incidence of liver cancer.\n\nNewborns should receive **dose 1 as soon as possible within 24 hours of birth**, then one dose at 1 month and one at 6 months. If the mother is hepatitis B surface antigen positive, the baby also needs hepatitis B immunoglobulin (HBIG) within 24 hours of birth, and a blood test for follow-up at 12 months of age. Adults without antibodies can get vaccinated at their own expense.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "ja": {
+      "title": "B型肝炎ワクチン",
+      "summary": "新生児は公費でB型肝炎ワクチンを3回接種します（出生後24時間以内、生後1か月、生後6か月）。母親がHBsAg陽性の場合は、24時間以内にHBIGも注射します。",
+      "bodyMarkdown": "台湾では1984年から新生児へのB型肝炎ワクチン接種を全面的に進めてきました。これにより、小児の保有率と肝がんの発生率が大きく下がりました。\n\n新生児は**出生後24時間以内にできるだけ早く1回目**を接種し、生後1か月と生後6か月にそれぞれ1回接種します。母親がB型肝炎表面抗原陽性の場合、新生児は出生後24時間以内にB型肝炎免疫グロブリン（HBIG）も注射する必要があり、生後12か月に採血して経過を確認します。抗体のない成人は自費で接種できます。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Bakuna sa Hepatitis B",
+      "summary": "Ang mga bagong silang ay tumatanggap ng 3 dosis ng bakuna sa hepatitis B na pinondohan ng pamahalaan: sa loob ng 24 oras mula ipanganak, sa edad na 1 buwan at sa edad na 6 na buwan; ang sanggol ng inang HBsAg-positive ay tumatanggap din ng HBIG sa loob ng 24 oras.",
+      "bodyMarkdown": "Mula pa noong 1984, binabakunahan na ng Taiwan ang lahat ng bagong silang laban sa hepatitis B, na lubos na nagpababa sa bilang ng mga batang may dalang virus at sa insidente ng kanser sa atay.\n\nDapat tanggapin ng mga bagong silang ang **unang dosis sa lalong madaling panahon sa loob ng 24 oras mula ipanganak**, at sunod ang tig-isang dosis sa edad na 1 buwan at 6 na buwan. Kung positibo ang ina sa hepatitis B surface antigen, kailangan din ng sanggol ng hepatitis B immunoglobulin (HBIG) sa loob ng 24 oras mula ipanganak, at pagsusuri ng dugo para sa pagsubaybay sa edad na 12 buwan. Ang mga nasa hustong gulang na walang antibody ay maaaring magpabakuna nang sariling bayad.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Vắc-xin viêm gan B",
+      "summary": "Trẻ sơ sinh được tiêm 3 mũi vắc-xin viêm gan B do nhà nước chi trả: trong vòng 24 giờ sau sinh, khi đủ 1 tháng và khi đủ 6 tháng; trẻ có mẹ dương tính HBsAg còn được tiêm HBIG trong vòng 24 giờ.",
+      "bodyMarkdown": "Từ năm 1984, Đài Loan tiêm vắc-xin viêm gan B cho toàn bộ trẻ sơ sinh, giúp giảm mạnh tỷ lệ mang vi-rút ở trẻ em và tỷ lệ ung thư gan.\n\nTrẻ sơ sinh cần được **tiêm mũi 1 càng sớm càng tốt trong vòng 24 giờ sau sinh**, sau đó tiêm mỗi mũi khi đủ 1 tháng và đủ 6 tháng. Nếu người mẹ dương tính với kháng nguyên bề mặt viêm gan B, trẻ còn cần tiêm globulin miễn dịch viêm gan B (HBIG) trong vòng 24 giờ sau sinh và được lấy máu theo dõi khi 12 tháng tuổi. Người lớn chưa có kháng thể có thể tự chi trả để tiêm.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Vaksin hepatitis B",
+      "summary": "Bayi baru lahir mendapat 3 dosis vaksin hepatitis B yang dibiayai pemerintah: dalam 24 jam setelah lahir, pada usia 1 bulan, dan pada usia 6 bulan; bayi dari ibu HBsAg-positif juga mendapat HBIG dalam 24 jam.",
+      "bodyMarkdown": "Sejak 1984 Taiwan memvaksinasi semua bayi baru lahir terhadap hepatitis B, yang menurunkan angka pembawa virus pada anak dan kejadian kanker hati secara besar.\n\nBayi baru lahir sebaiknya mendapat **dosis 1 secepat mungkin dalam 24 jam setelah lahir**, lalu satu dosis pada usia 1 bulan dan satu dosis pada usia 6 bulan. Jika ibu positif antigen permukaan hepatitis B, bayi juga memerlukan imunoglobulin hepatitis B (HBIG) dalam 24 jam setelah lahir, dan pemeriksaan darah lanjutan pada usia 12 bulan. Orang dewasa yang belum memiliki antibodi dapat divaksin dengan biaya sendiri.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "วัคซีนไวรัสตับอักเสบบี",
+      "summary": "ทารกแรกเกิดได้รับวัคซีนไวรัสตับอักเสบบี 3 เข็มโดยรัฐสนับสนุนค่าใช้จ่าย คือ ภายใน 24 ชั่วโมงหลังคลอด เมื่ออายุครบ 1 เดือน และเมื่ออายุครบ 6 เดือน ทารกที่มารดามีผล HBsAg เป็นบวกจะได้รับ HBIG ภายใน 24 ชั่วโมงด้วย",
+      "bodyMarkdown": "ไต้หวันฉีดวัคซีนไวรัสตับอักเสบบีให้ทารกแรกเกิดทุกคนตั้งแต่ปี 1984 ทำให้อัตราการเป็นพาหะในเด็กและการเกิดมะเร็งตับลดลงอย่างมาก\n\nทารกแรกเกิดควร**ฉีดเข็มที่ 1 โดยเร็วที่สุดภายใน 24 ชั่วโมงหลังคลอด** จากนั้นฉีดอีก 1 เข็มเมื่ออายุครบ 1 เดือน และอีก 1 เข็มเมื่ออายุครบ 6 เดือน หากมารดามีผลแอนติเจนพื้นผิวไวรัสตับอักเสบบีเป็นบวก ทารกต้องได้รับอิมมูโนโกลบูลินไวรัสตับอักเสบบี (HBIG) ภายใน 24 ชั่วโมงหลังคลอดด้วย และเจาะเลือดติดตามผลเมื่ออายุ 12 เดือน ผู้ใหญ่ที่ไม่มีภูมิคุ้มกันสามารถฉีดโดยจ่ายค่าใช้จ่ายเอง",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

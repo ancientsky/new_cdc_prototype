@@ -92,5 +92,14 @@
     "media.hiv-anonymous-testing",
     "media.mpox-vaccine",
     "dataset.health-education-materials"
-  ]
+  ],
+  "i18n": {
+    "en": {
+      "title": "Health education resources on sexually transmitted infections",
+      "summary": "Compiles leaflets, videos and school teaching materials on sexually transmitted infections such as HIV, syphilis, gonorrhoea and mpox, with information on safer sex, condoms and testing, free to download for the public, schools and organisations.",
+      "introMarkdown": "Most sexually transmitted infections can be prevented and treated. This section compiles the **leaflets, videos and teaching slides** produced by Taiwan CDC, which schools, medical institutions and community organisations can download and use free of charge (Open Government Data License).\n\n- **Prevention**: use condoms and water-based lubricant correctly every time; people at higher risk can consider PrEP and the mpox vaccine.\n- **Testing**: if you have had sex without a condom, regular testing for HIV and syphilis is recommended; anonymous testing does not need a health insurance card.\n- **Symptoms and seeking care**: common symptoms of sexually transmitted infections are genital sores, discharge, rash or painful urination, but there may be no symptoms at all. If you are concerned, see a dermatology, urology or infectious disease clinic promptly; see each disease page for its symptoms.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

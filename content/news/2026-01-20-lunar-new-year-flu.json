@@ -66,5 +66,15 @@
     "disease": "disease.influenza",
     "text": "類流感門急診就診人次處於流行高峰"
   },
-  "bodyMarkdown": "疾病管制署表示，近一週類流感門急診就診人次持續處於高峰，社區以 A 型 H3N2 為主，流感併發重症病例亦增加。\n\n春節連假人潮聚集，疾管署呼籲尚未接種公費流感疫苗的長者、幼兒及慢性病人儘速接種；有發燒、咳嗽等症狀應戴口罩、在家休息。如出現呼吸困難、胸痛、意識改變等危險徵兆，請立即就醫。連假期間可查詢各縣市開診院所。"
+  "bodyMarkdown": "疾病管制署表示，近一週類流感門急診就診人次持續處於高峰，社區以 A 型 H3N2 為主，流感併發重症病例亦增加。\n\n春節連假人潮聚集，疾管署呼籲尚未接種公費流感疫苗的長者、幼兒及慢性病人儘速接種；有發燒、咳嗽等症狀應戴口罩、在家休息。如出現呼吸困難、胸痛、意識改變等危險徵兆，請立即就醫。連假期間可查詢各縣市開診院所。",
+  "i18n": {
+    "en": {
+      "title": "Influenza at its peak: get vaccinated before the Lunar New Year holiday and practise good cough etiquette",
+      "summary": "Visits for influenza-like illness are at their peak and the Lunar New Year holiday is near. Taiwan CDC urges high-risk people who have not yet been vaccinated to do so promptly, and reminds the public about medical services during the holiday.",
+      "bodyMarkdown": "Taiwan CDC said that outpatient and emergency visits for influenza-like illness have stayed at a peak over the past week, with influenza A(H3N2) predominant in the community; severe influenza complication cases have also increased.\n\nWith crowds gathering for the Lunar New Year holiday, Taiwan CDC urges older adults, young children and people with chronic conditions who have not yet received the government-funded flu vaccine to get vaccinated promptly. If you have fever, cough or other symptoms, wear a mask and rest at home. If you have danger signs such as difficulty breathing, chest pain or altered consciousness, seek medical care immediately. During the holiday you can check which clinics are open in each county and city.",
+      "declText": "Visits for influenza-like illness are at the epidemic peak",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

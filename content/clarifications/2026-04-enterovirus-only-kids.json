@@ -78,6 +78,36 @@
     "en": {
       "title": "Claim that only children get enterovirus is partly true",
       "shareText": "Taiwan CDC: severe enterovirus mostly affects children under 5, but adults can be infected too, often without symptoms, and bring the virus home. Adults should wash hands with soap and change clothes before holding young children."
+    },
+    "ja": {
+      "title": "「エンテロウイルスは子どもだけがかかる、大人は心配ない」は一部のみ正しい",
+      "shareText": "【台湾CDCより】エンテロウイルスの重症例は5歳未満の幼児に多いですが、大人も感染します。症状がないまま、ウイルスを家に持ち帰ることもよくあります。幼い子どもがいる家庭では、大人は帰宅したらまず石けんで手を洗い、着替えてから子どもを抱いてください。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Bahagyang totoo ang sabing \"mga bata lang ang nagkakaroon ng enterovirus, hindi dapat mag-alala ang mga matanda\"",
+      "shareText": "Taiwan CDC: karamihan sa malubhang enterovirus ay nangyayari sa mga batang wala pang 5 taong gulang, ngunit maaari ring mahawa ang mga nasa hustong gulang, kadalasan nang walang sintomas, at maiuwi ang virus sa bahay. Maghugas ng kamay gamit ang sabon at magpalit ng damit bago buhatin ang maliliit na bata.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Tin đồn \"chỉ trẻ em mới mắc enterovirus, người lớn không cần lo\" chỉ đúng một phần",
+      "shareText": "CDC Đài Loan: enterovirus thể nặng chủ yếu xảy ra ở trẻ dưới 5 tuổi, nhưng người lớn cũng có thể nhiễm, thường không có triệu chứng và mang vi-rút về nhà. Người lớn nên rửa tay bằng xà phòng và thay quần áo trước khi bế trẻ nhỏ.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Kabar \"enterovirus hanya menyerang anak-anak, orang dewasa tidak perlu khawatir\" hanya benar sebagian",
+      "shareText": "CDC Taiwan: enterovirus berat sebagian besar terjadi pada anak di bawah 5 tahun, tetapi orang dewasa juga bisa terinfeksi, sering tanpa gejala, dan membawa virus ke rumah. Orang dewasa sebaiknya mencuci tangan dengan sabun dan berganti pakaian sebelum menggendong anak kecil.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "ข่าวลือ \"เอนเทอโรไวรัสเป็นเฉพาะเด็ก ผู้ใหญ่ไม่ต้องกังวล\" ถูกต้องเพียงบางส่วน",
+      "shareText": "CDC ไต้หวัน: เอนเทอโรไวรัสชนิดรุนแรงส่วนใหญ่เกิดในเด็กอายุต่ำกว่า 5 ปี แต่ผู้ใหญ่ก็ติดเชื้อได้ มักไม่มีอาการและนำไวรัสกลับบ้าน ผู้ใหญ่ควรล้างมือด้วยสบู่และเปลี่ยนเสื้อผ้าก่อนอุ้มเด็กเล็ก",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

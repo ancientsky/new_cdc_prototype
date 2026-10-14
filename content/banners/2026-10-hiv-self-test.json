@@ -65,5 +65,19 @@
   },
   "startAt": "2026-10-01",
   "endAt": "2026-12-31",
-  "priority": 4
+  "priority": 4,
+  "i18n": {
+    "en": {
+      "title": "Anonymous HIV testing and self-testing",
+      "summary": "HIV testing campaign banner (1 October to 31 December 2026): anonymous testing does not need a health insurance card, and self-test kits are also available. If you want to know, get tested.",
+      "headline": "Want to know? Get tested",
+      "subline": "Anonymous HIV testing needs no health insurance card; you can also self-test at home",
+      "cta": {
+        "label": "Where can I get an anonymous test?",
+        "url": "/topics/anonymous-testing/"
+      },
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

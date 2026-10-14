@@ -82,5 +82,14 @@
     "news.2025-12-01-world-aids-day",
     "topic.anonymous-testing",
     "disease.hiv"
-  ]
+  ],
+  "i18n": {
+    "en": {
+      "title": "2025 World AIDS Day: testing, treatment, no discrimination",
+      "summary": "Page for the 2025 World AIDS Day campaign (15 November to 15 December 2025): promoted anonymous testing, U=U and anti-discrimination. The campaign has ended and the page is kept as a record.",
+      "introMarkdown": "**This campaign ended on 15 December 2025.** The content below is kept as a record; for current services, see the section on anonymous counselling and testing for sexually transmitted infections.\n\nFor World AIDS Day 2025, Taiwan CDC chose \"testing, treatment, no discrimination\" as its theme and worked with community organisations on pop-up community testing, campus talks and online activities, promoting the idea of U=U (undetectable = untransmittable).",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

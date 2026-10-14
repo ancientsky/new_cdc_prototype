@@ -107,6 +107,12 @@
     "tl": {
       "title": "Hindi totoo na \"nagkakatrangkaso dahil sa bakuna at namamatay ang matatanda pagkatapos magpabakuna\"",
       "shareText": "Taiwan CDC: inactivated ang libreng bakuna sa trangkaso at walang buhay na virus, kaya hindi ito nagdudulot ng trangkaso. Karaniwang reaksyon ang masakit na braso o bahagyang lagnat nang 1–2 araw. Mas mapanganib ang trangkaso sa matatanda kaysa sa bakuna. Magpabakuna simula Oktubre 1. Magtanong: tumawag sa 1922."
+    },
+    "ja": {
+      "title": "「インフルエンザワクチンを打つとインフルエンザにかかる、高齢者は接種後に死ぬ」は事実ではありません",
+      "shareText": "【台湾CDCによる訂正】公費のインフルエンザワクチンは不活化ワクチンで、生きたウイルスを含まないため、接種してもインフルエンザにはかかりません。よくある反応は腕の痛みや軽い発熱で、1〜2日で治ります。高齢者にとってインフルエンザの重症化リスクはワクチンのリスクよりはるかに高いため、10月1日からは安心して接種してください。ご質問は1922へ。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

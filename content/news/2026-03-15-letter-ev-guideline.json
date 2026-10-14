@@ -67,5 +67,21 @@
       "url": "/documents/ev-severe-guideline.2026-03-15/",
       "machineReadable": true
     }
-  ]
+  ],
+  "i18n": {
+    "en": {
+      "title": "Letter to the Medical Community No. 608: updated clinical management recommendations for severe enterovirus complications",
+      "summary": "Updated clinical management recommendations for severe enterovirus complications: the four-stage classification is reaffirmed, patients at stage 2 or above should be referred to a designated hospital for severe enterovirus cases, and hospitals are reminded to complete in-house drills before the epidemic season.",
+      "bodyMarkdown": "1. As the enterovirus epidemic season approaches, Taiwan CDC has updated the \"Clinical management recommendations for severe enterovirus complications\", effective 15 March 2026.\n2. Please educate parents about the warning signs of severe illness, and arrange a follow-up visit within 1–2 days for children under 3 years old who are within the first 3 days of illness.\n3. Children at stage 2 (central nervous system involvement) or above should be referred promptly to a designated hospital for severe enterovirus cases, with continuous monitoring of heart rate and blood oxygen during transfer.\n4. Please report severe enterovirus complications within one week.",
+      "attachments": [
+        {
+          "label": "Clinical management recommendations for severe enterovirus complications",
+          "url": "/documents/ev-severe-guideline.2026-03-15/",
+          "machineReadable": true
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

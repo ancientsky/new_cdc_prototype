@@ -60,5 +60,14 @@
   "legacyUrls": [
     "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
   ],
-  "bodyMarkdown": "114 年度公費流感疫苗自 2025 年 10 月 1 日（今日）起開打。疾病管制署呼籲，65 歲以上長者、6 個月以上至國小入學前幼兒、孕婦及高風險慢性病人等第一階段對象儘早接種；50 至 64 歲無高風險慢性病成人自 11 月 1 日起接種。\n\n疫苗接種後約需 2 週產生保護力，民眾可至「流感防治一網通」查詢合約院所。"
+  "bodyMarkdown": "114 年度公費流感疫苗自 2025 年 10 月 1 日（今日）起開打。疾病管制署呼籲，65 歲以上長者、6 個月以上至國小入學前幼兒、孕婦及高風險慢性病人等第一階段對象儘早接種；50 至 64 歲無高風險慢性病成人自 11 月 1 日起接種。\n\n疫苗接種後約需 2 週產生保護力，民眾可至「流感防治一網通」查詢合約院所。",
+  "i18n": {
+    "en": {
+      "title": "Government-funded flu vaccination for 2025 (ROC year 114) starts on 1 October; older adults and young children, please get vaccinated early",
+      "summary": "Government-funded flu vaccination for 2025 (ROC year 114) starts on 1 October. Phase 1 includes older adults, young children, pregnant women, people with high-risk chronic conditions and students; adults aged 50–64 can be vaccinated from 1 November.",
+      "bodyMarkdown": "Government-funded flu vaccination for 2025 (ROC year 114) starts today, 1 October 2025. Taiwan CDC urges Phase 1 groups to get vaccinated early: adults aged 65 and over, children from 6 months to school entry, pregnant women and people with high-risk chronic conditions. Adults aged 50 to 64 without high-risk chronic conditions can be vaccinated from 1 November.\n\nProtection takes about 2 weeks to develop after vaccination. Use the \"Influenza Prevention One-Stop Portal\" to find contracted clinics.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

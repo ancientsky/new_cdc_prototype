@@ -65,6 +65,41 @@
     "en": {
       "title": "World TB Day: see a doctor if you have coughed for two weeks; contact screening and latent TB treatment protect families",
       "summary": "Taiwan CDC urges anyone coughing for more than two weeks to get a chest X-ray, and asks contacts of patients to join screening; treating latent TB infection greatly lowers the risk of disease."
+    },
+    "ja": {
+      "title": "世界結核デー：2週間以上咳が続いたら受診を。接触者健診と潜在性結核感染の治療で家族を守る",
+      "summary": "世界結核デーにあたり、台湾CDCは、2週間以上咳が続く人は受診して胸部X線検査を受けるよう呼びかけています。患者の家族は接触者健診に協力し、潜在性結核感染の人は治療を受けることで、発病のリスクを大きく下げられます。",
+      "bodyMarkdown": "3月24日は世界結核デーです。台湾CDCによると、台湾の結核新規患者数は2005年から6割以上減少しましたが、高齢者や糖尿病の人などの高リスク群には引き続き注意が必要です。\n\n台湾CDCは、2週間以上咳が続く、痰がある、体重が減る、夜間に寝汗をかくといった人は、胸部内科を受診して胸部X線検査を受けるよう呼びかけています。確定診断を受けた人の家族や濃厚接触者は、保健所（衛生所）が手配する接触者健診に協力してください。潜在性結核感染が見つかった人は、3HPなどの短期治療を受けることで、発病のリスクを9割以上下げることができ、費用は公費で負担されます。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Pandaigdigang Araw ng TB: magpatingin kung dalawang linggo nang umuubo; pinoprotektahan ng pagsusuri sa mga nakasalamuha at paggamot sa latent TB ang pamilya",
+      "summary": "Sa Pandaigdigang Araw ng TB, hinihimok ng Taiwan CDC ang sinumang umuubo nang mahigit dalawang linggo na magpa-chest X-ray, at ang mga nakasalamuha ng pasyente na sumali sa pagsusuri; ang paggamot sa latent TB infection ay lubhang nagpapababa ng panganib na magkasakit.",
+      "bodyMarkdown": "Ang Marso 24 ay Pandaigdigang Araw ng TB. Ayon sa Taiwan CDC, bumaba nang mahigit anim sa bawat sampu ang bagong kaso ng tuberkulosis sa Taiwan mula noong 2005, ngunit kailangan pa ring bantayan ang mga grupong mataas ang panganib tulad ng matatanda at mga may diabetes.\n\nHinihimok ng Taiwan CDC ang mga umuubo nang mahigit dalawang linggo, may plema, pumapayat o pinagpapawisan sa gabi na magpatingin sa chest medicine at magpa-chest X-ray. Ang mga kapamilya at malalapit na nakasalamuha ng taong na-diagnose ay dapat makipagtulungan sa pagsusuri sa mga nakasalamuha na inaayos ng health center. Kung may natuklasang latent TB infection, ang pagtanggap ng maikling gamutan tulad ng 3HP ay makababawas ng mahigit 90% sa panganib na magkasakit, at ang gastos ay sagot ng pondong pampubliko.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Ngày Thế giới phòng chống Lao: ho hai tuần cần đi khám; khám sàng lọc người tiếp xúc và điều trị lao tiềm ẩn bảo vệ gia đình",
+      "summary": "Nhân Ngày Thế giới phòng chống Lao, CDC Đài Loan kêu gọi người ho quá hai tuần đi chụp X-quang phổi, người tiếp xúc với bệnh nhân tham gia khám sàng lọc; điều trị nhiễm lao tiềm ẩn giúp giảm mạnh nguy cơ phát bệnh.",
+      "bodyMarkdown": "Ngày 24/3 là Ngày Thế giới phòng chống Lao. CDC Đài Loan cho biết số ca lao mới của Đài Loan đã giảm hơn 60% kể từ năm 2005, nhưng các nhóm nguy cơ cao như người cao tuổi và người mắc tiểu đường vẫn cần tiếp tục được quan tâm.\n\nCDC Đài Loan kêu gọi người ho quá hai tuần, có đờm, sụt cân hoặc ra mồ hôi đêm đến khám chuyên khoa hô hấp và chụp X-quang phổi. Người nhà và người tiếp xúc gần của người được chẩn đoán xin phối hợp khám sàng lọc người tiếp xúc do trạm y tế sắp xếp; người được phát hiện nhiễm lao tiềm ẩn điều trị ngắn ngày như 3HP có thể giảm hơn 90% nguy cơ phát bệnh, chi phí do nhà nước chi trả.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Hari TBC Sedunia: periksa ke dokter bila batuk dua minggu; pemeriksaan kontak dan pengobatan TBC laten melindungi keluarga",
+      "summary": "Pada Hari TBC Sedunia, CDC Taiwan mengimbau siapa pun yang batuk lebih dari dua minggu untuk menjalani rontgen dada, dan kontak pasien mengikuti pemeriksaan; mengobati infeksi TBC laten sangat menurunkan risiko jatuh sakit.",
+      "bodyMarkdown": "Tanggal 24 Maret adalah Hari TBC Sedunia. Menurut CDC Taiwan, kasus baru tuberkulosis di Taiwan telah turun lebih dari enam puluh persen sejak 2005, tetapi kelompok berisiko tinggi seperti lansia dan penderita diabetes tetap perlu diperhatikan.\n\nCDC Taiwan mengimbau orang yang batuk lebih dari dua minggu, berdahak, berat badan turun, atau berkeringat di malam hari untuk berobat ke poli paru dan menjalani rontgen dada. Keluarga dan kontak erat orang yang terdiagnosis diminta bekerja sama dalam pemeriksaan kontak yang diatur puskesmas; bagi yang ditemukan terinfeksi TBC laten, pengobatan singkat seperti 3HP dapat menurunkan risiko jatuh sakit lebih dari 90%, dan biayanya ditanggung dana publik.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "วันวัณโรคโลก: ไอนานสองสัปดาห์ควรไปพบแพทย์ การตรวจผู้สัมผัสและการรักษาวัณโรคระยะแฝงช่วยปกป้องครอบครัว",
+      "summary": "ในวันวัณโรคโลก CDC ไต้หวันเรียกร้องให้ผู้ที่ไอนานเกินสองสัปดาห์ไปเอกซเรย์ทรวงอก และผู้สัมผัสผู้ป่วยเข้ารับการตรวจคัดกรอง การรักษาผู้ติดเชื้อวัณโรคระยะแฝงช่วยลดความเสี่ยงการป่วยได้มาก",
+      "bodyMarkdown": "วันที่ 24 มีนาคมเป็นวันวัณโรคโลก CDC ไต้หวันระบุว่าจำนวนผู้ป่วยวัณโรครายใหม่ของไต้หวันลดลงกว่าหกสิบเปอร์เซ็นต์นับตั้งแต่ปี 2005 แต่กลุ่มเสี่ยงสูง เช่น ผู้สูงอายุและผู้ป่วยเบาหวาน ยังต้องติดตามต่อเนื่อง\n\nCDC ไต้หวันเรียกร้องให้ผู้ที่ไอนานเกินสองสัปดาห์ มีเสมหะ น้ำหนักลด หรือเหงื่อออกตอนกลางคืน ไปพบแพทย์แผนกอายุรกรรมโรคทรวงอกและเอกซเรย์ทรวงอก ครอบครัวและผู้สัมผัสใกล้ชิดของผู้ที่ได้รับการวินิจฉัยโปรดให้ความร่วมมือในการตรวจผู้สัมผัสที่สถานีอนามัยจัดให้ หากตรวจพบการติดเชื้อวัณโรคระยะแฝง การรักษาระยะสั้น เช่น 3HP ช่วยลดความเสี่ยงการป่วยได้มากกว่า 90% โดยค่าใช้จ่ายมาจากงบประมาณของรัฐ",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

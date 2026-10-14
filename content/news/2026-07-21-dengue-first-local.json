@@ -61,5 +61,15 @@
     "disease": "disease.dengue",
     "text": "出現今年首例本土病例（高雄市）"
   },
-  "bodyMarkdown": "疾病管制署於 2026 年 7 月 21 日（今日）公布 2026 年（今年）首例登革熱本土病例（示意），個案居住於高雄市，發病前兩週無出國史。衛生局已完成疫情調查，並於個案住家及活動地點周邊進行孳生源清除與針對性室內噴藥。\n\n疾管署提醒，夏季高溫多雨，民眾應每週落實「巡、倒、清、刷」，清除住家內外積水容器；出現發燒、頭痛、後眼窩痛、肌肉關節痛等症狀，請儘速就醫。"
+  "bodyMarkdown": "疾病管制署於 2026 年 7 月 21 日（今日）公布 2026 年（今年）首例登革熱本土病例（示意），個案居住於高雄市，發病前兩週無出國史。衛生局已完成疫情調查，並於個案住家及活動地點周邊進行孳生源清除與針對性室內噴藥。\n\n疾管署提醒，夏季高溫多雨，民眾應每週落實「巡、倒、清、刷」，清除住家內外積水容器；出現發燒、頭痛、後眼窩痛、肌肉關節痛等症狀，請儘速就醫。",
+  "i18n": {
+    "en": {
+      "title": "First local dengue case of 2026 reported in Kaohsiung; please remove containers of standing water",
+      "summary": "The first local dengue case of 2026 was reported in Kaohsiung. Health authorities have completed the epidemiological investigation and removed breeding sites nearby. Taiwan CDC urges the public to carry out \"Inspect, Empty, Clean, Scrub\" every week.",
+      "bodyMarkdown": "On 21 July 2026 (today), Taiwan CDC announced the first local dengue case of 2026 (illustrative). The patient lives in Kaohsiung and had no history of travel abroad in the two weeks before onset. The health bureau has completed the epidemiological investigation and has removed breeding sites and carried out targeted indoor spraying around the patient's home and places visited.\n\nTaiwan CDC reminds the public that summer is hot and rainy, so everyone should carry out \"Inspect, Empty, Clean, Scrub\" every week and remove containers holding standing water inside and outside the home. If you have fever, headache, pain behind the eyes, or muscle and joint pain, see a doctor promptly.",
+      "declText": "The first local case of the year has appeared (Kaohsiung)",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

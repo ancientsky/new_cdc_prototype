@@ -138,6 +138,34 @@
       "title": "Vắc-xin cúm",
       "summary": "Vắc-xin cúm miễn phí mùa 2026–2027 bắt đầu từ 1/10 cho người cao tuổi, trẻ nhỏ, phụ nữ mang thai, nhóm nguy cơ cao và học sinh; người 50–64 tuổi từ 1/11. Cần tiêm mỗi năm.",
       "bodyMarkdown": "Vi-rút cúm thay đổi hằng năm nên **cần tiêm vắc-xin mỗi năm**. Sau khi tiêm khoảng 2 tuần sẽ có miễn dịch. Từ **1/10/2026** có thể tiêm tại trạm y tế và cơ sở y tế ký hợp đồng."
+    },
+    "ja": {
+      "title": "インフルエンザワクチン",
+      "summary": "2026–2027年度の公費インフルエンザワクチンは10月1日から、第1段階として高齢者、幼児、妊婦、高リスクの人、学生などを対象に開始。11月1日から50〜64歳の成人が対象になります。毎年の接種が必要です。",
+      "bodyMarkdown": "インフルエンザウイルスは毎年変異し、世界保健機関（WHO）がワクチン株を毎年更新するため、**毎年の接種が必要**です。今年度は3価不活化ワクチンを調達しており、接種から約2週間で免疫ができ、その効果は約6か月続きます。\n\n公費ワクチンは**2026年10月1日**から段階的に開始され、保健所（衛生所）と契約医療機関で接種できます。学生は主に学校での集団接種です。インフルエンザワクチンは、新型コロナワクチンや肺炎球菌ワクチンと、部位を変えて同時に接種できます。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Bakuna sa trangkaso",
+      "summary": "Magsisimula sa Oktubre 1 ang pagbabakuna sa trangkaso para sa 2026–27 na pinondohan ng pamahalaan para sa matatanda, maliliit na bata, buntis, mga may mataas na panganib at mga mag-aaral; mula Nobyembre 1 para sa mga nasa hustong gulang na 50–64. Magpabakuna bawat taon.",
+      "bodyMarkdown": "Nagbabago ang mga virus ng trangkaso bawat taon at ina-update ng WHO ang mga strain ng bakuna taun-taon, kaya **kailangan ang pagbabakuna bawat taon**. Ang bakunang gamit ngayong panahon ay trivalent inactivated; nabubuo ang proteksyon mga 2 linggo pagkatapos magpabakuna at tumatagal nang mga 6 na buwan.\n\nAng pagbabakuna na pinondohan ng pamahalaan ay magsisimula nang paunti-unti mula **Oktubre 1, 2026** sa mga health center at mga contracted na klinika; ang mga mag-aaral ay binabakunahan sa paaralan. Maaaring ibigay ang bakuna sa trangkaso kasabay ng bakuna sa COVID-19 o pneumococcal sa magkaibang bahagi ng katawan.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Vaksin influenza",
+      "summary": "Vaksinasi flu 2026–2027 yang dibiayai pemerintah dimulai pada 1 Oktober untuk lansia, anak kecil, ibu hamil, kelompok berisiko tinggi, dan pelajar; orang dewasa usia 50–64 tahun mulai 1 November. Vaksinasi diperlukan setiap tahun.",
+      "bodyMarkdown": "Virus influenza berubah setiap tahun dan WHO memperbarui strain vaksin setiap tahun, sehingga **vaksinasi diperlukan setiap tahun**. Musim ini digunakan vaksin inaktif trivalen; perlindungan terbentuk sekitar 2 minggu setelah vaksinasi dan bertahan sekitar 6 bulan.\n\nVaksinasi yang dibiayai pemerintah dimulai bertahap sejak **1 Oktober 2026** di puskesmas dan klinik rekanan; pelajar divaksin di sekolah. Vaksin flu dapat diberikan bersamaan dengan vaksin COVID-19 atau pneumokokus pada bagian tubuh yang berbeda.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "วัคซีนไข้หวัดใหญ่",
+      "summary": "การฉีดวัคซีนไข้หวัดใหญ่ประจำปี 2026–2027 ที่รัฐสนับสนุนค่าใช้จ่ายเริ่มวันที่ 1 ตุลาคม สำหรับผู้สูงอายุ เด็กเล็ก หญิงตั้งครรภ์ กลุ่มเสี่ยงสูง และนักเรียน ส่วนผู้ใหญ่อายุ 50–64 ปีเริ่มวันที่ 1 พฤศจิกายน ต้องฉีดทุกปี",
+      "bodyMarkdown": "ไวรัสไข้หวัดใหญ่กลายพันธุ์ทุกปี และองค์การอนามัยโลก (WHO) ปรับสายพันธุ์วัคซีนทุกปี จึง**ต้องฉีดวัคซีนทุกปี** ฤดูกาลนี้ใช้วัคซีนเชื้อตายชนิด 3 สายพันธุ์ ร่างกายสร้างภูมิคุ้มกันได้ประมาณ 2 สัปดาห์หลังฉีด และคงอยู่ได้ประมาณ 6 เดือน\n\nวัคซีนที่รัฐสนับสนุนค่าใช้จ่ายเริ่มฉีดเป็นระยะตั้งแต่ **1 ตุลาคม 2026** ที่สถานีอนามัยและสถานพยาบาลที่ทำสัญญา นักเรียนฉีดที่โรงเรียนเป็นหลัก วัคซีนไข้หวัดใหญ่ฉีดพร้อมวัคซีนโควิด-19 หรือวัคซีนนิวโมคอคคัสได้ โดยฉีดคนละตำแหน่ง",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

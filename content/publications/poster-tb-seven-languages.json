@@ -75,6 +75,30 @@
     "vi": {
       "title": "Ho hai tuần hãy đi khám: áp phích bệnh lao bằng bảy ngôn ngữ",
       "summary": "Áp phích bệnh lao bằng bảy ngôn ngữ: ho trên hai tuần hãy đi khám; điều trị miễn phí và có người hỗ trợ uống thuốc."
+    },
+    "ja": {
+      "title": "2週間咳が続いたら受診を：結核の7言語啓発ポスター",
+      "summary": "結核の啓発ポスターです。繁体字中国語、英語、日本語、ベトナム語、インドネシア語、タイ語、フィリピン語の7言語で、2週間咳が続いたら受診すること、治療は無料であること、DOTS（都治）プログラムを案内しています。ダウンロードして、外国人労働者の寮や地域に掲示できます。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Umuubo nang dalawang linggo? Magpatingin sa doktor: poster tungkol sa TB sa pitong wika",
+      "summary": "Poster tungkol sa TB sa pitong wika: Traditional Chinese, English, Japanese, Vietnamese, Indonesian, Thai at Filipino. Ipinapaalala nito na magpatingin kapag umuubo nang dalawang linggo, na libre ang paggamot, at ang programang DOTS; maaaring i-download at idikit sa mga dormitoryo ng migranteng manggagawa at sa komunidad.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Batuk dua minggu harus berobat: poster TBC dalam tujuh bahasa",
+      "summary": "Poster edukasi TBC dalam tujuh bahasa: Mandarin tradisional, Inggris, Jepang, Vietnam, Indonesia, Thai, dan Filipino. Mengingatkan untuk berobat jika batuk dua minggu, pengobatan gratis, dan program DOTS; dapat diunduh dan dipasang di asrama pekerja migran dan di masyarakat.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "ไอสองสัปดาห์ต้องไปพบแพทย์: โปสเตอร์วัณโรคเจ็ดภาษา",
+      "summary": "โปสเตอร์ให้ความรู้เรื่องวัณโรคใน 7 ภาษา ได้แก่ จีนตัวเต็ม อังกฤษ ญี่ปุ่น เวียดนาม อินโดนีเซีย ไทย และฟิลิปปินส์ เตือนให้ไปพบแพทย์เมื่อไอสองสัปดาห์ การรักษาไม่มีค่าใช้จ่าย และโครงการ DOTS ดาวน์โหลดไปติดที่หอพักแรงงานข้ามชาติและในชุมชนได้",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   },
   "legacyUrls": [

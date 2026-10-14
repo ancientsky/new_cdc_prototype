@@ -68,6 +68,41 @@
     "en": {
       "title": "Chikungunya rising in Guangdong, China: travel notice raised to Level 2",
       "summary": "Taiwan CDC raised its travel health notice for Guangdong Province to Level 2 (Alert). Travellers should prevent mosquito bites and see a doctor for fever or joint pain after return."
+    },
+    "ja": {
+      "title": "中国・広東省でチクングニア熱が拡大、渡航疫情勧告をレベル2に引き上げ",
+      "summary": "中国・広東省でチクングニア熱の流行が拡大しているため、台湾CDCは同地の渡航疫情勧告をレベル2（警戒）に引き上げました。渡航する人は蚊に刺されないよう対策を強化し、帰国後に発熱や関節痛があれば受診してください。",
+      "bodyMarkdown": "台湾CDCによると、中国・広東省で最近チクングニア熱の流行が拡大し、複数の都市に広がっているため、同省の渡航疫情勧告を**レベル2：警戒（Alert）**に引き上げました。渡航する人は予防対策を強化するよう勧めています。\n\nチクングニア熱はデング熱と同じくAedes属の蚊（ヤブカ）が媒介し、主な症状は発熱と激しい関節痛です。台湾CDCは、現地では滞在中ずっと蚊に刺されないよう注意し、帰国後2週間は外出時にも蚊に刺されない対策を続け、発熱、関節痛、発疹が出たら早めに受診して渡航歴を伝えるよう呼びかけています。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Tumataas ang chikungunya sa Guangdong, China: itinaas sa Level 2 ang abiso sa paglalakbay",
+      "summary": "Dahil tumataas ang chikungunya sa Guangdong, China, itinaas ng Taiwan CDC ang travel health notice para sa lugar na iyon sa Level 2 (Alert). Dapat magpalakas ng proteksyon laban sa lamok ang mga maglalakbay, at magpatingin sa doktor kung magkaroon ng lagnat o pananakit ng kasukasuan pagbalik.",
+      "bodyMarkdown": "Ayon sa Taiwan CDC, kamakailan ay tumaas ang chikungunya sa Guangdong Province, China at kumalat na sa maraming lungsod, kaya itinaas ang travel health notice para sa lalawigan sa **Level 2: Alert**, at pinapayuhan ang mga maglalakbay na palakasin ang proteksyon.\n\nAng chikungunya, tulad ng dengue, ay ikinakalat ng mga lamok na Aedes at ang pangunahing sintomas ay lagnat at matinding pananakit ng kasukasuan. Ipinapaalala ng Taiwan CDC na iwasan ang kagat ng lamok sa buong pananatili roon; sa loob ng dalawang linggo pagbalik, ipagpatuloy ang pag-iwas sa kagat ng lamok tuwing lalabas, at kung magkaroon ng lagnat, pananakit ng kasukasuan o pantal, magpatingin agad sa doktor at banggitin ang inyong paglalakbay.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Dịch sốt Chikungunya tăng ở Quảng Đông, Trung Quốc, nâng cảnh báo du lịch lên mức 2",
+      "summary": "Dịch sốt Chikungunya ở tỉnh Quảng Đông, Trung Quốc đang gia tăng, CDC Đài Loan nâng cảnh báo dịch tễ du lịch của khu vực này lên mức 2 (Cảnh báo). Người đến đó cần tăng cường phòng muỗi đốt, về nước nếu sốt, đau khớp cần đi khám.",
+      "bodyMarkdown": "CDC Đài Loan cho biết dịch sốt Chikungunya tại tỉnh Quảng Đông, Trung Quốc gần đây gia tăng và đã lan ra nhiều thành phố, nên nâng cảnh báo dịch tễ du lịch của tỉnh này lên **mức 2: Cảnh báo (Alert)**, khuyến cáo người đến đó tăng cường phòng bảo vệ.\n\nSốt Chikungunya cũng như sốt xuất huyết Dengue do muỗi vằn truyền; triệu chứng chính là sốt và đau khớp dữ dội. CDC Đài Loan nhắc nhở: khi ở đó hãy phòng muỗi đốt suốt thời gian lưu trú; trong hai tuần sau khi về nước, khi ra ngoài vẫn tiếp tục phòng muỗi đốt; nếu bị sốt, đau khớp, nổi ban, hãy đi khám sớm và cho biết tiền sử đi lại.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Chikungunya meningkat di Guangdong, Tiongkok: peringatan perjalanan dinaikkan ke Level 2",
+      "summary": "Karena chikungunya meningkat di Provinsi Guangdong, Tiongkok, CDC Taiwan menaikkan peringatan kesehatan perjalanan untuk wilayah itu ke Level 2 (Waspada). Pelancong perlu memperkuat perlindungan dari gigitan nyamuk, dan berobat ke dokter bila demam atau nyeri sendi setelah pulang.",
+      "bodyMarkdown": "Menurut CDC Taiwan, chikungunya di Provinsi Guangdong, Tiongkok baru-baru ini meningkat dan menyebar ke beberapa kota, sehingga peringatan kesehatan perjalanan untuk provinsi itu dinaikkan ke **Level 2: Waspada (Alert)**, dan pelancong disarankan memperkuat perlindungan.\n\nChikungunya, seperti demam berdarah dengue, ditularkan oleh nyamuk Aedes, dengan gejala utama demam dan nyeri sendi yang hebat. CDC Taiwan mengingatkan agar mencegah gigitan nyamuk selama berada di sana; selama dua minggu setelah pulang, tetap cegah gigitan nyamuk saat keluar rumah, dan jika muncul demam, nyeri sendi, atau ruam, segera berobat dan sampaikan riwayat perjalanan.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "ชิคุนกุนยาระบาดหนักขึ้นในมณฑลกวางตุ้ง ประเทศจีน ยกระดับคำเตือนการเดินทางเป็นระดับ 2",
+      "summary": "โรคชิคุนกุนยาในมณฑลกวางตุ้ง ประเทศจีน ระบาดหนักขึ้น CDC ไต้หวันจึงยกระดับคำเตือนด้านสุขภาพสำหรับการเดินทางไปพื้นที่นี้เป็นระดับ 2 (เฝ้าระวัง) ผู้เดินทางควรป้องกันยุงกัดให้เข้มงวด และหากมีไข้หรือปวดข้อหลังกลับมาควรไปพบแพทย์",
+      "bodyMarkdown": "CDC ไต้หวันระบุว่าโรคชิคุนกุนยาในมณฑลกวางตุ้ง ประเทศจีน ระบาดหนักขึ้นเมื่อไม่นานมานี้และแพร่ไปหลายเมือง จึงยกระดับคำเตือนด้านสุขภาพสำหรับการเดินทางของมณฑลนี้เป็น**ระดับ 2: เฝ้าระวัง (Alert)** แนะนำให้ผู้เดินทางป้องกันตนเองให้เข้มงวดขึ้น\n\nชิคุนกุนยาแพร่โดยยุงลายเช่นเดียวกับไข้เลือดออก อาการหลักคือไข้และปวดข้ออย่างรุนแรง CDC ไต้หวันเตือนให้ป้องกันยุงกัดตลอดเวลาที่อยู่ที่นั่น หลังกลับมาสองสัปดาห์ยังต้องป้องกันยุงกัดเมื่อออกนอกบ้านต่อไป และหากมีไข้ ปวดข้อ หรือมีผื่น ให้รีบไปพบแพทย์และแจ้งประวัติการเดินทาง",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

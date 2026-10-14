@@ -18,5 +18,6 @@
   "summary": "開學後腸病毒門急診就診人次上升，疾管署籲請家長與教托育機構落實洗手與環境消毒，留意重症前兆。",
   "keywords": ["腸病毒", "開學", "重症前兆"],
   "bodyMarkdown": "疾病管制署表示，開學後腸病毒門急診就診人次上升，尚未達流行閾值，但仍須提高警覺。籲請家長及教托育機構落實正確洗手、以漂白水稀釋液消毒環境，並留意幼兒是否出現嗜睡、意識不清、活力不佳、手腳無力、肌躍型抽搐、持續嘔吐、呼吸急促或心跳加快等重症前兆，一旦出現請立即送往大醫院。",
-  "situationDeclaration": { "disease": "disease.enterovirus", "text": "就診人次上升，未達流行閾值" }
+  "situationDeclaration": { "disease": "disease.enterovirus", "text": "就診人次上升，未達流行閾值" },
+  "i18n": { "en": { "title": "Enterovirus activity continues in Taiwan; parents, schools and childcare centres urged to stay alert", "summary": "Enterovirus outpatient and emergency visits have risen since the new school term began. Taiwan CDC urges parents, schools and childcare centres to wash hands, disinfect surfaces and watch for warning signs of severe illness.", "bodyMarkdown": "Taiwan CDC said that enterovirus outpatient and emergency visits have risen since the new school term began; they have not yet reached the epidemic threshold, but vigilance is still needed. Parents, schools and childcare centres are urged to wash hands correctly, disinfect surfaces with diluted bleach solution, and watch for warning signs of severe illness in young children such as drowsiness, confusion, listlessness, limb weakness, myoclonic jerks, persistent vomiting, rapid breathing or a rapid heartbeat. If any of these appear, take the child to a large hospital immediately.", "declText": "Visits are rising but have not reached the epidemic threshold", "machineTranslated": true, "machineTranslatedAt": "2026-10-14" } }
 }

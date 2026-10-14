@@ -85,5 +85,13 @@
   "contact": "疾管署人事室：（02）2395-9825 轉人事室分機（示意）；職務內容洽詢：企劃組（同總機轉接）",
   "manualStatus": "cancelled",
   "manualStatusNote": "因年度員額調整停止本次甄選；已報名者由人事室另行通知",
-  "note": "聯絡電話為疾管署總機，分機與報名信箱以正式簡章為準（本原型為示意，不放承辦人姓名）；薪資待遇為示意文字，實際依核定薪點折算。"
+  "note": "聯絡電話為疾管署總機，分機與報名信箱以正式簡章為準（本原型為示意，不放承辦人姓名）；薪資待遇為示意文字，實際依核定薪點折算。",
+  "i18n": {
+    "en": {
+      "title": "Division of Planning and Coordination: one contract staff member wanted (international affairs)",
+      "summary": "The Division of Planning and Coordination was recruiting one contract staff member for international cooperation administration; this recruitment has been cancelled because of the annual headcount adjustment.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

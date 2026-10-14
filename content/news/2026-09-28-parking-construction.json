@@ -51,5 +51,14 @@
   "note": "原型 units 主檔無秘書室，暫由企劃組為權責單位",
   "newsType": "other",
   "deadlineAt": "2026-11-30",
-  "bodyMarkdown": "林森南路辦公區（臺北市中正區林森南路 6 號）地下停車場進行防水與照明改善工程：\n\n- **施工期間**：2026 年 10 月 5 日至 11 月 30 日\n- **影響**：停車場暫停開放，身心障礙者專用車位改設於大門側臨時停車區（需事先來電預約）。\n- **建議**：搭乘捷運至臺大醫院站，步行約 5 分鐘。\n\n造成不便，敬請見諒。"
+  "bodyMarkdown": "林森南路辦公區（臺北市中正區林森南路 6 號）地下停車場進行防水與照明改善工程：\n\n- **施工期間**：2026 年 10 月 5 日至 11 月 30 日\n- **影響**：停車場暫停開放，身心障礙者專用車位改設於大門側臨時停車區（需事先來電預約）。\n- **建議**：搭乘捷運至臺大醫院站，步行約 5 分鐘。\n\n造成不便，敬請見諒。",
+  "i18n": {
+    "en": {
+      "title": "Linsen South Road office car park closed for construction from 5 October to 30 November",
+      "summary": "The underground car park at the Linsen South Road office will be closed from 5 October to 30 November 2026 for waterproofing and lighting works. Visitors are asked to use public transport or nearby public car parks.",
+      "bodyMarkdown": "The underground car park at the Linsen South Road office (No. 6, Linsen South Road, Zhongzheng District, Taipei City) is undergoing waterproofing and lighting improvements:\n\n- **Construction period**: 5 October to 30 November 2026\n- **Impact**: The car park is temporarily closed. Accessible parking spaces are moved to a temporary parking area beside the main entrance (advance booking by phone required).\n- **Suggestion**: Take the MRT to NTU Hospital Station and walk about 5 minutes.\n\nWe apologise for any inconvenience.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }
