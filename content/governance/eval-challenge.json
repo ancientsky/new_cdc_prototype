@@ -922,23 +922,6 @@
       }
     },
     {
-      "id": "CH-FAQ-ev-stay-home-2",
-      "category": "faq",
-      "source": "faq.ev-stay-home",
-      "style": "口語",
-      "split": "dev",
-      "q": "手足口病要在家隔離多久",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.ev-stay-home",
-          "faq.enterovirus-return-school",
-          "disease.enterovirus"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-FAQ-ev-stay-home-3",
       "category": "faq",
       "source": "faq.ev-stay-home",
@@ -1315,22 +1298,6 @@
       }
     },
     {
-      "id": "CH-FAQ-flu-vs-cold-3",
-      "category": "faq",
-      "source": "faq.flu-vs-cold",
-      "style": "短句",
-      "split": "dev",
-      "q": "流感 感冒 差別",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.flu-vs-cold",
-          "disease.influenza"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-FAQ-healthcare-workers-mmr-1",
       "category": "faq",
       "source": "faq.healthcare-workers-mmr",
@@ -1403,22 +1370,6 @@
       "style": "家長",
       "split": "dev",
       "q": "剛出生的寶寶B肝疫苗什麼時候打",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.hepb-newborn",
-          "vaccine.hepatitis-b"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-FAQ-hepb-newborn-2",
-      "category": "faq",
-      "source": "faq.hepb-newborn",
-      "style": "情境",
-      "split": "dev",
-      "q": "媽媽是B肝帶原，寶寶出生要多打什麼",
       "expect": {
         "refuse": false,
         "mustCiteAny": [
@@ -1687,23 +1638,6 @@
       "style": "口語",
       "split": "holdout",
       "q": "誰可以拿免費的克流感",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.influenza-antiviral-who",
-          "faq.flu-antiviral-65-no-test",
-          "disease.influenza"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-FAQ-influenza-antiviral-who-2",
-      "category": "faq",
-      "source": "faq.influenza-antiviral-who",
-      "style": "短句",
-      "split": "dev",
-      "q": "公費流感藥 對象",
       "expect": {
         "refuse": false,
         "mustCiteAny": [
@@ -2174,30 +2108,6 @@
         "mustCiteAny": [
           "faq.measles-mmr-adult-who",
           "faq.measles-mmr-born-1970",
-          "faq.measles-mmr-check-record",
-          "faq.travel-japan-measles",
-          "vaccine.mmr",
-          "disease.measles"
-        ],
-        "mustNotCite": [
-          "doc.mmr-recommendation.2019-05-14",
-          "news.2025-01-09-mmr-adults-measles"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-FAQ-measles-mmr-born-1970-1",
-      "category": "faq",
-      "source": "faq.measles-mmr-born-1970",
-      "style": "情境",
-      "split": "dev",
-      "q": "我1968年生，下個月要去越南，要打MMR嗎",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.measles-mmr-born-1970",
-          "faq.measles-mmr-adult-who",
           "faq.measles-mmr-check-record",
           "faq.travel-japan-measles",
           "vaccine.mmr",
@@ -2726,21 +2636,6 @@
       }
     },
     {
-      "id": "CH-FAQ-rumor-sms-link-3",
-      "category": "faq",
-      "source": "faq.rumor-sms-link",
-      "style": "短句",
-      "split": "dev",
-      "q": "疾管署 詐騙簡訊",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.rumor-sms-link"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-FAQ-snakebite-dont-1",
       "category": "faq",
       "source": "faq.snakebite-dont",
@@ -3027,22 +2922,6 @@
       }
     },
     {
-      "id": "CH-FAQ-tb-cough-two-weeks-2",
-      "category": "faq",
-      "source": "faq.tb-cough-two-weeks",
-      "style": "長輩",
-      "split": "dev",
-      "q": "咳了一個月都沒好要看哪一科",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.tb-cough-two-weeks",
-          "disease.tuberculosis"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-FAQ-tb-cough-two-weeks-3",
       "category": "faq",
       "source": "faq.tb-cough-two-weeks",
@@ -3131,24 +3010,6 @@
       "style": "俗稱",
       "split": "holdout",
       "q": "外勞入境要照X光嗎",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.tb-foreigner-health-check",
-          "media.migrant-worker-health-check",
-          "topic.new-residents-migrant-health",
-          "topic.visiting-taiwan"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-FAQ-tb-foreigner-health-check-3",
-      "category": "faq",
-      "source": "faq.tb-foreigner-health-check",
-      "style": "口語",
-      "split": "dev",
-      "q": "移工到台灣幾天內要體檢",
       "expect": {
         "refuse": false,
         "mustCiteAny": [
@@ -3302,24 +3163,6 @@
       }
     },
     {
-      "id": "CH-FAQ-travel-malaria-prevention-1",
-      "category": "faq",
-      "source": "faq.travel-malaria-prevention",
-      "style": "口語",
-      "split": "dev",
-      "q": "去肯亞要吃瘧疾藥嗎",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.travel-malaria-prevention",
-          "disease.malaria",
-          "faq.travel-clinic",
-          "service.travel-clinic-appointment"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-FAQ-travel-malaria-prevention-2",
       "category": "faq",
       "source": "faq.travel-malaria-prevention",
@@ -3362,25 +3205,6 @@
       "style": "情境",
       "split": "holdout",
       "q": "從印尼回來第三天開始發燒，怎麼辦",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.travel-return-fever",
-          "faq.dengue-imported-return",
-          "disease.dengue",
-          "disease.malaria",
-          "disease.measles"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-FAQ-travel-return-fever-2",
-      "category": "faq",
-      "source": "faq.travel-return-fever",
-      "style": "口語",
-      "split": "dev",
-      "q": "出國回來身體不舒服，要跟醫生說什麼",
       "expect": {
         "refuse": false,
         "mustCiteAny": [
@@ -3611,44 +3435,12 @@
       }
     },
     {
-      "id": "CH-SVC-cluster-report-1922-2",
-      "category": "service",
-      "source": "service.cluster-report-1922",
-      "style": "長輩",
-      "split": "dev",
-      "q": "安養院好幾個老人家發燒，要打電話給誰",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "service.cluster-report-1922",
-          "faq.flu-school-cluster"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-SVC-cluster-report-1922-3",
       "category": "service",
       "source": "service.cluster-report-1922",
       "style": "口語",
       "split": "holdout",
       "q": "群聚感染要怎麼通報",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "service.cluster-report-1922",
-          "faq.flu-school-cluster"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-SVC-cluster-report-1922-4",
-      "category": "service",
-      "source": "service.cluster-report-1922",
-      "style": "短句",
-      "split": "dev",
-      "q": "班上集體腹瀉",
       "expect": {
         "refuse": false,
         "mustCiteAny": [
@@ -4592,22 +4384,6 @@
       }
     },
     {
-      "id": "CH-DIS-covid-19-care-3",
-      "category": "disease",
-      "source": "disease.covid-19#care",
-      "style": "長輩",
-      "split": "dev",
-      "q": "長輩確診新冠，什麼時候要送急診",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "disease.covid-19",
-          "faq.covid-antiviral"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-DIS-dengue-symptoms-1",
       "category": "disease",
       "source": "disease.dengue#symptoms",
@@ -5139,21 +4915,6 @@
       }
     },
     {
-      "id": "CH-DIS-hepatitis-a-care-1",
-      "category": "disease",
-      "source": "disease.hepatitis-a#care",
-      "style": "口語",
-      "split": "dev",
-      "q": "A肝有藥醫嗎",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "disease.hepatitis-a"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-DIS-hepatitis-a-care-2",
       "category": "disease",
       "source": "disease.hepatitis-a#care",
@@ -5175,21 +4936,6 @@
       "style": "口語",
       "split": "holdout",
       "q": "愛滋初期症狀",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "disease.hiv"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-DIS-hiv-symptoms-2",
-      "category": "disease",
-      "source": "disease.hiv#symptoms",
-      "style": "口語",
-      "split": "dev",
-      "q": "感染HIV會有什麼感覺",
       "expect": {
         "refuse": false,
         "mustCiteAny": [
@@ -5286,21 +5032,6 @@
       }
     },
     {
-      "id": "CH-DIS-hiv-vaccine-2",
-      "category": "disease",
-      "source": "disease.hiv#vaccine",
-      "style": "簡寫",
-      "split": "dev",
-      "q": "HIV疫苗可以打嗎",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "disease.hiv"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-DIS-hiv-vaccine-3",
       "category": "disease",
       "source": "disease.hiv#vaccine",
@@ -5339,23 +5070,6 @@
       "style": "情境",
       "split": "holdout",
       "q": "確診HIV，藥費要自己付嗎",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "disease.hiv",
-          "faq.hiv-test-where",
-          "topic.anonymous-testing"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-DIS-hiv-care-3",
-      "category": "disease",
-      "source": "disease.hiv#care",
-      "style": "否定",
-      "split": "dev",
-      "q": "感染愛滋是不是要吃藥吃一輩子",
       "expect": {
         "refuse": false,
         "mustCiteAny": [
@@ -5821,21 +5535,6 @@
       }
     },
     {
-      "id": "CH-DIS-malaria-vaccine-1",
-      "category": "disease",
-      "source": "disease.malaria#vaccine",
-      "style": "口語",
-      "split": "dev",
-      "q": "瘧疾有疫苗嗎",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "disease.malaria"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-DIS-malaria-vaccine-2",
       "category": "disease",
       "source": "disease.malaria#vaccine",
@@ -6175,21 +5874,6 @@
       }
     },
     {
-      "id": "CH-DIS-mpox-symptoms-2",
-      "category": "disease",
-      "source": "disease.mpox#symptoms",
-      "style": "口語",
-      "split": "dev",
-      "q": "M痘會起水泡嗎",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "disease.mpox"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-DIS-mpox-symptoms-3",
       "category": "disease",
       "source": "disease.mpox#symptoms",
@@ -6397,22 +6081,6 @@
       "style": "口語",
       "split": "dev",
       "q": "怎麼預防百日咳",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "disease.pertussis",
-          "faq.pregnant-tdap"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-DIS-pertussis-prevention-2",
-      "category": "disease",
-      "source": "disease.pertussis#prevention",
-      "style": "情境",
-      "split": "dev",
-      "q": "家裡有新生兒，大人要打百日咳疫苗嗎",
       "expect": {
         "refuse": false,
         "mustCiteAny": [
@@ -7229,25 +6897,6 @@
       }
     },
     {
-      "id": "CH-DIS-varicella-symptoms-2",
-      "category": "disease",
-      "source": "disease.varicella#symptoms",
-      "style": "家長",
-      "split": "dev",
-      "q": "水痘會癢多久",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "disease.varicella"
-        ],
-        "mustNotCite": [
-          "vaccine.zoster",
-          "faq.zoster-vaccine-funding"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-DIS-varicella-symptoms-3",
       "category": "disease",
       "source": "disease.varicella#symptoms",
@@ -7273,23 +6922,6 @@
       "style": "口語",
       "split": "holdout",
       "q": "怎麼預防水痘",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "disease.varicella",
-          "faq.varicella-vaccine-doses",
-          "vaccine.varicella"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-DIS-varicella-prevention-2",
-      "category": "disease",
-      "source": "disease.varicella#prevention",
-      "style": "情境",
-      "split": "dev",
-      "q": "水痘會傳染給孕婦嗎",
       "expect": {
         "refuse": false,
         "mustCiteAny": [
@@ -7529,24 +7161,6 @@
       "lang": "th",
       "split": "holdout",
       "q": "ไข้เลือดออกป้องกันยังไง",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "disease.dengue",
-          "faq.dengue",
-          "faq.travel-return-fever"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-ML-dengue-th-2",
-      "category": "multilingual",
-      "source": "ml.dengue@th",
-      "style": "情境",
-      "lang": "th",
-      "split": "dev",
-      "q": "เพิ่งกลับจากเที่ยวแล้วมีไข้สูง ปวดตา ต้องไปหาหมอเมื่อไหร่",
       "expect": {
         "refuse": false,
         "mustCiteAny": [
@@ -7963,28 +7577,6 @@
       "lang": "id",
       "split": "holdout",
       "q": "Gejala TBC apa saja?",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "disease.tuberculosis",
-          "faq.tb-",
-          "faq.ltbi",
-          "faq.mdr-tb",
-          "topic.tb-prevention",
-          "service.tb-treatment-subsidy",
-          "service.ltbi-treatment"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-ML-tuberculosis-id-2",
-      "category": "multilingual",
-      "source": "ml.tuberculosis@id",
-      "style": "情境",
-      "lang": "id",
-      "split": "dev",
-      "q": "Batuk lebih dari dua minggu, harus periksa ke mana?",
       "expect": {
         "refuse": false,
         "mustCiteAny": [
@@ -8840,6 +8432,198 @@
       "id": "CH-DIS-varicella-care-1",
       "source": "disease.varicella#care",
       "q": "小孩出水痘可以吃阿斯匹靈嗎",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-DIS-covid-19-care-3",
+      "source": "disease.covid-19#care",
+      "q": "長輩確診新冠，什麼時候要送急診",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-DIS-hepatitis-a-care-1",
+      "source": "disease.hepatitis-a#care",
+      "q": "A肝有藥醫嗎",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-DIS-hiv-care-3",
+      "source": "disease.hiv#care",
+      "q": "感染愛滋是不是要吃藥吃一輩子",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-DIS-hiv-symptoms-2",
+      "source": "disease.hiv#symptoms",
+      "q": "感染HIV會有什麼感覺",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-DIS-hiv-vaccine-2",
+      "source": "disease.hiv#vaccine",
+      "q": "HIV疫苗可以打嗎",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-DIS-malaria-vaccine-1",
+      "source": "disease.malaria#vaccine",
+      "q": "瘧疾有疫苗嗎",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-DIS-mpox-symptoms-2",
+      "source": "disease.mpox#symptoms",
+      "q": "M痘會起水泡嗎",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-DIS-pertussis-prevention-2",
+      "source": "disease.pertussis#prevention",
+      "q": "家裡有新生兒，大人要打百日咳疫苗嗎",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-DIS-varicella-prevention-2",
+      "source": "disease.varicella#prevention",
+      "q": "水痘會傳染給孕婦嗎",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-DIS-varicella-symptoms-2",
+      "source": "disease.varicella#symptoms",
+      "q": "水痘會癢多久",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-ev-stay-home-2",
+      "source": "faq.ev-stay-home",
+      "q": "手足口病要在家隔離多久",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-flu-vs-cold-3",
+      "source": "faq.flu-vs-cold",
+      "q": "流感 感冒 差別",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-hepb-newborn-2",
+      "source": "faq.hepb-newborn",
+      "q": "媽媽是B肝帶原，寶寶出生要多打什麼",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-influenza-antiviral-who-2",
+      "source": "faq.influenza-antiviral-who",
+      "q": "公費流感藥 對象",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-measles-mmr-born-1970-1",
+      "source": "faq.measles-mmr-born-1970",
+      "q": "我1968年生，下個月要去越南，要打MMR嗎",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-rumor-sms-link-3",
+      "source": "faq.rumor-sms-link",
+      "q": "疾管署 詐騙簡訊",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-tb-cough-two-weeks-2",
+      "source": "faq.tb-cough-two-weeks",
+      "q": "咳了一個月都沒好要看哪一科",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-tb-foreigner-health-check-3",
+      "source": "faq.tb-foreigner-health-check",
+      "q": "移工到台灣幾天內要體檢",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-travel-malaria-prevention-1",
+      "source": "faq.travel-malaria-prevention",
+      "q": "去肯亞要吃瘧疾藥嗎",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-travel-return-fever-2",
+      "source": "faq.travel-return-fever",
+      "q": "出國回來身體不舒服，要跟醫生說什麼",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-ML-dengue-th-2",
+      "source": "ml.dengue@th",
+      "q": "เพิ่งกลับจากเที่ยวแล้วมีไข้สูง ปวดตา ต้องไปหาหมอเมื่อไหร่",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-ML-tuberculosis-id-2",
+      "source": "ml.tuberculosis@id",
+      "q": "Batuk lebih dari dua minggu, harus periksa ke mana?",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-SVC-cluster-report-1922-2",
+      "source": "service.cluster-report-1922",
+      "q": "安養院好幾個老人家發燒，要打電話給誰",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-SVC-cluster-report-1922-4",
+      "source": "service.cluster-report-1922",
+      "q": "班上集體腹瀉",
       "split": "dev",
       "promotedAt": "2026-10-14",
       "to": "eval-set.json"

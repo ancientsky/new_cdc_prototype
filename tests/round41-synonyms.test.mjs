@@ -85,10 +85,11 @@ test('latinStems：只認「≥4 字母-數字」；詞幹已是已知名稱或�
 
 test('詞幹規則（合成資料）：covid 認得是新冠，且同義詞展開會補上 COVID-19 讓 BM25 找得到片段', () => {
   const e = synthetic();
+  // 第五十二輪：拉丁名稱的整字邊界不再擋中文字，中英混打的「covid怎麼預防」也認得（§17；原本列為已知限制）
   for (const q of ['covid', 'Covid', 'COVID 症狀', 'covid怎麼預防']) {
     assert.deepEqual(
       e.detectEntities(q).diseases.map((d) => d.id),
-      q === 'covid怎麼預防' ? [] : ['disease.covid-19'],
+      ['disease.covid-19'],
       q,
     );
   }
