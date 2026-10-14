@@ -4603,6 +4603,565 @@
         ]
       },
       "note": "第四十輪 #77：哺乳期間接種前須告知醫師（新增 FAQ，verification: pending）"
+    },
+    {
+      "id": "R48-01",
+      "category": "vaccine",
+      "requires": [
+        "faq.infant-rsv-prevention"
+      ],
+      "q": "新生兒呼吸道融合病毒要打針嗎",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "faq.infant-rsv-prevention"
+        ],
+        "mustNotInclude": [
+          "B 型肝炎疫苗（第 1 劑"
+        ]
+      },
+      "note": "第四十八輪 #94：RSV 民眾說法（全名＋口語）——主題錨點「呼吸道融合病毒／RSV」，不改走新生兒時程表"
+    },
+    {
+      "id": "R48-02",
+      "category": "vaccine",
+      "requires": [
+        "faq.infant-rsv-prevention"
+      ],
+      "q": "呼吸道融合病毒",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "faq.infant-rsv-prevention"
+        ],
+        "mustNotInclude": [
+          "B 型肝炎疫苗（第 1 劑"
+        ]
+      },
+      "note": "第四十八輪 #94：RSV 民眾說法（短句）——主題錨點「呼吸道融合病毒／RSV」，不改走新生兒時程表"
+    },
+    {
+      "id": "R48-03",
+      "category": "vaccine",
+      "requires": [
+        "faq.infant-rsv-prevention"
+      ],
+      "q": "RSV 是什麼",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "faq.infant-rsv-prevention"
+        ],
+        "mustNotInclude": [
+          "B 型肝炎疫苗（第 1 劑"
+        ]
+      },
+      "note": "第四十八輪 #94：RSV 民眾說法（英文縮寫）——主題錨點「呼吸道融合病毒／RSV」，不改走新生兒時程表"
+    },
+    {
+      "id": "R48-04",
+      "category": "vaccine",
+      "requires": [
+        "faq.infant-rsv-prevention"
+      ],
+      "q": "早產兒要怎麼預防呼吸道融合病毒",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "faq.infant-rsv-prevention"
+        ],
+        "mustNotInclude": [
+          "B 型肝炎疫苗（第 1 劑"
+        ]
+      },
+      "note": "第四十八輪 #94：RSV 民眾說法（口語）——主題錨點「呼吸道融合病毒／RSV」，不改走新生兒時程表"
+    },
+    {
+      "id": "R48-05",
+      "category": "vaccine",
+      "requires": [
+        "faq.infant-rsv-prevention"
+      ],
+      "q": "新生兒不用打RSV嗎",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "faq.infant-rsv-prevention"
+        ],
+        "mustNotInclude": [
+          "B 型肝炎疫苗（第 1 劑"
+        ]
+      },
+      "note": "第四十八輪 #94：RSV 民眾說法（否定句）——主題錨點「呼吸道融合病毒／RSV」，不改走新生兒時程表"
+    },
+    {
+      "id": "R48-06",
+      "category": "vaccine",
+      "requires": [
+        "faq.pregnancy-breastfeeding-vaccination"
+      ],
+      "q": "餵母乳可以打新冠疫苗嗎",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "faq.pregnancy-breastfeeding-vaccination"
+        ]
+      },
+      "note": "第四十八輪 #94：哺乳期接種民眾說法（俗稱＋指名疫苗）——「餵母乳／親餵」是 FAQ 關鍵字（主題錨點），題目沒點名疾病的 FAQ 不因問新冠而被排除"
+    },
+    {
+      "id": "R48-07",
+      "category": "vaccine",
+      "requires": [
+        "faq.pregnancy-breastfeeding-vaccination"
+      ],
+      "q": "親餵可以打流感疫苗嗎",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "faq.pregnancy-breastfeeding-vaccination"
+        ]
+      },
+      "note": "第四十八輪 #94：哺乳期接種民眾說法（口語）——「餵母乳／親餵」是 FAQ 關鍵字（主題錨點），題目沒點名疾病的 FAQ 不因問新冠而被排除"
+    },
+    {
+      "id": "R48-08",
+      "category": "vaccine",
+      "requires": [
+        "faq.pregnancy-breastfeeding-vaccination"
+      ],
+      "q": "正在餵母乳可以打疫苗嗎",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "faq.pregnancy-breastfeeding-vaccination"
+        ]
+      },
+      "note": "第四十八輪 #94：哺乳期接種民眾說法（全句）——「餵母乳／親餵」是 FAQ 關鍵字（主題錨點），題目沒點名疾病的 FAQ 不因問新冠而被排除"
+    },
+    {
+      "id": "R48-09",
+      "category": "vaccine",
+      "requires": [
+        "faq.pregnancy-breastfeeding-vaccination"
+      ],
+      "q": "哺乳打疫苗",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "faq.pregnancy-breastfeeding-vaccination"
+        ]
+      },
+      "note": "第四十八輪 #94：哺乳期接種民眾說法（短句）——「餵母乳／親餵」是 FAQ 關鍵字（主題錨點），題目沒點名疾病的 FAQ 不因問新冠而被排除"
+    },
+    {
+      "id": "R48-10",
+      "category": "vaccine",
+      "requires": [
+        "faq.pregnancy-breastfeeding-vaccination"
+      ],
+      "q": "餵奶期間不能打疫苗嗎",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "faq.pregnancy-breastfeeding-vaccination"
+        ]
+      },
+      "note": "第四十八輪 #94：哺乳期接種民眾說法（否定句）——「餵母乳／親餵」是 FAQ 關鍵字（主題錨點），題目沒點名疾病的 FAQ 不因問新冠而被排除"
+    },
+    {
+      "id": "R48-11",
+      "category": "vaccine",
+      "requires": [
+        "faq.catch-up-vaccination"
+      ],
+      "q": "小孩五合一晚了兩個月才打可以嗎",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "faq.catch-up-vaccination"
+        ],
+        "mustInclude": [
+          "不必從頭重打"
+        ]
+      },
+      "note": "第四十八輪 #94：補接種民眾說法（口語＋指名疫苗）——CATCHUP_RE／口語改寫「晚了…才打」「延後」→ 漏打（主題錨點）"
+    },
+    {
+      "id": "R48-12",
+      "category": "vaccine",
+      "requires": [
+        "faq.catch-up-vaccination"
+      ],
+      "q": "疫苗延後打要重打嗎",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "faq.catch-up-vaccination"
+        ]
+      },
+      "note": "第四十八輪 #94：補接種民眾說法（口語）——CATCHUP_RE／口語改寫「晚了…才打」「延後」→ 漏打（主題錨點）"
+    },
+    {
+      "id": "R48-13",
+      "category": "vaccine",
+      "requires": [
+        "faq.catch-up-vaccination"
+      ],
+      "q": "寶寶疫苗沒打到怎麼辦",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "faq.catch-up-vaccination"
+        ]
+      },
+      "note": "第四十八輪 #94：補接種民眾說法（俗稱）——CATCHUP_RE／口語改寫「晚了…才打」「延後」→ 漏打（主題錨點）"
+    },
+    {
+      "id": "R48-14",
+      "category": "vaccine",
+      "requires": [
+        "faq.catch-up-vaccination"
+      ],
+      "q": "疫苗晚打不用重打嗎",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "faq.catch-up-vaccination"
+        ],
+        "mustInclude": [
+          "不必從頭重打"
+        ]
+      },
+      "note": "第四十八輪 #94：補接種民眾說法（否定句）——CATCHUP_RE／口語改寫「晚了…才打」「延後」→ 漏打（主題錨點）"
+    },
+    {
+      "id": "R48-15",
+      "category": "apply",
+      "requires": [
+        "service.vaccination-record-reissue"
+      ],
+      "q": "打過什麼疫苗要去哪裡查",
+      "expect": {
+        "refuse": false,
+        "intent": "apply",
+        "mustCite": [
+          "service.vaccination-record-reissue"
+        ],
+        "mustNotCite": [
+          "faq.influenza-vaccine-where"
+        ]
+      },
+      "note": "第四十八輪 #94：查接種紀錄民眾說法（口語）——查的是紀錄（RECORD_RE），不是接種點"
+    },
+    {
+      "id": "R48-16",
+      "category": "apply",
+      "requires": [
+        "service.vaccination-record-reissue"
+      ],
+      "q": "接種紀錄怎麼查",
+      "expect": {
+        "refuse": false,
+        "intent": "apply",
+        "mustCite": [
+          "service.vaccination-record-reissue"
+        ],
+        "mustNotCite": [
+          "faq.influenza-vaccine-where"
+        ]
+      },
+      "note": "第四十八輪 #94：查接種紀錄民眾說法（全名）——查的是紀錄（RECORD_RE），不是接種點"
+    },
+    {
+      "id": "R48-17",
+      "category": "apply",
+      "requires": [
+        "service.vaccination-record-reissue"
+      ],
+      "q": "疫苗紀錄不見了",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "service.vaccination-record-reissue"
+        ],
+        "mustNotCite": [
+          "faq.influenza-vaccine-where"
+        ]
+      },
+      "note": "第四十八輪 #94：查接種紀錄民眾說法（短句）——查的是紀錄（RECORD_RE），不是接種點"
+    },
+    {
+      "id": "R48-18",
+      "category": "apply",
+      "requires": [
+        "service.vaccination-record-reissue"
+      ],
+      "q": "我小時候打過哪些疫苗",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "service.vaccination-record-reissue"
+        ],
+        "mustNotCite": [
+          "faq.influenza-vaccine-where"
+        ]
+      },
+      "note": "第四十八輪 #94：查接種紀錄民眾說法（口語）——查的是紀錄（RECORD_RE），不是接種點"
+    },
+    {
+      "id": "R48-19",
+      "category": "fact",
+      "q": "被鼬獾咬",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "disease.rabies",
+          "faq.rabies-bite"
+        ]
+      },
+      "note": "第四十八輪 #94：鼬獾咬傷民眾說法（短句）——「鼬獾」是狂犬病頁關鍵字（主題錨點），短問句不因字面涵蓋率低而查無"
+    },
+    {
+      "id": "R48-20",
+      "category": "fact",
+      "q": "鼬獾",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "disease.rabies",
+          "faq.rabies-bite"
+        ]
+      },
+      "note": "第四十八輪 #94：鼬獾咬傷民眾說法（只有名詞）——「鼬獾」是狂犬病頁關鍵字（主題錨點），短問句不因字面涵蓋率低而查無"
+    },
+    {
+      "id": "R48-21",
+      "category": "fact",
+      "q": "被白鼻心咬到怎麼辦",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "disease.rabies",
+          "faq.rabies-bite"
+        ]
+      },
+      "note": "第四十八輪 #94：鼬獾咬傷民眾說法（別的野生動物）——「鼬獾」是狂犬病頁關鍵字（主題錨點），短問句不因字面涵蓋率低而查無"
+    },
+    {
+      "id": "R48-22",
+      "category": "fact",
+      "q": "被鼬獾咬不用打疫苗嗎",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "disease.rabies",
+          "faq.rabies-bite"
+        ],
+        "mustNotCite": [
+          "faq.pregnancy-breastfeeding-vaccination"
+        ]
+      },
+      "note": "第四十八輪 #94：鼬獾咬傷民眾說法（否定句）——「鼬獾」是狂犬病頁關鍵字（主題錨點），短問句不因字面涵蓋率低而查無"
+    },
+    {
+      "id": "R48-23",
+      "category": "vaccine",
+      "q": "皮蛇疫苗",
+      "expect": {
+        "mustNotCite": [
+          "disease.varicella",
+          "vaccine.varicella",
+          "faq.varicella-vaccine-doses"
+        ]
+      },
+      "note": "第四十八輪 #95：指名帶狀疱疹疫苗（俗稱短句）——不得答成同一疾病的水痘疫苗；不論帶狀疱疹疫苗頁是否已上線都成立（沒頁面時回「本站尚無帶狀疱疹疫苗專頁」）"
+    },
+    {
+      "id": "R48-24",
+      "category": "vaccine",
+      "q": "皮蛇疫苗公費嗎",
+      "expect": {
+        "mustNotCite": [
+          "disease.varicella",
+          "vaccine.varicella",
+          "faq.varicella-vaccine-doses"
+        ]
+      },
+      "note": "第四十八輪 #95：指名帶狀疱疹疫苗（俗稱＋公費）——不得答成同一疾病的水痘疫苗；不論帶狀疱疹疫苗頁是否已上線都成立（沒頁面時回「本站尚無帶狀疱疹疫苗專頁」）"
+    },
+    {
+      "id": "R48-25",
+      "category": "vaccine",
+      "q": "帶狀疱疹疫苗去哪裡打",
+      "expect": {
+        "mustNotCite": [
+          "disease.varicella",
+          "vaccine.varicella",
+          "faq.varicella-vaccine-doses"
+        ]
+      },
+      "note": "第四十八輪 #95：指名帶狀疱疹疫苗（全名＋接種地點）——不得答成同一疾病的水痘疫苗；不論帶狀疱疹疫苗頁是否已上線都成立（沒頁面時回「本站尚無帶狀疱疹疫苗專頁」）"
+    },
+    {
+      "id": "R48-26",
+      "category": "fact",
+      "requires": [
+        "faq.flu-school-cluster"
+      ],
+      "q": "流感停課",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "faq.flu-school-cluster"
+        ]
+      },
+      "note": "第四十八輪 #96：學校流感群聚（短句）——內容上線前略過；上線後這則 FAQ 必須勝出"
+    },
+    {
+      "id": "R48-27",
+      "category": "fact",
+      "requires": [
+        "faq.flu-school-cluster"
+      ],
+      "q": "流感班上幾個人要停課",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "faq.flu-school-cluster"
+        ]
+      },
+      "note": "第四十八輪 #96：學校流感群聚（口語）——內容上線前略過；上線後這則 FAQ 必須勝出"
+    },
+    {
+      "id": "R48-28",
+      "category": "fact",
+      "requires": [
+        "faq.flu-school-cluster"
+      ],
+      "q": "學校流感群聚怎麼處理",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "faq.flu-school-cluster"
+        ]
+      },
+      "note": "第四十八輪 #96：學校流感群聚（全句）——內容上線前略過；上線後這則 FAQ 必須勝出"
+    },
+    {
+      "id": "R48-29",
+      "category": "fact",
+      "q": "流感班上幾個人要停課",
+      "expect": {
+        "mustNotInclude": [
+          "正在哺乳",
+          "但個別疫苗"
+        ],
+        "mustNotCite": [
+          "faq.pregnancy-breastfeeding-vaccination",
+          "faq.enterovirus-class-suspension"
+        ]
+      },
+      "note": "第四十八輪 #96：以連接詞「但」開頭、上一句沒選入的句子不得單獨出現；也不拿腸病毒停課標準回答流感"
+    },
+    {
+      "id": "R48-30",
+      "category": "fact",
+      "q": "咳嗽三週了會不會是肺結核，要去哪裡看",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "disease.tuberculosis"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十八輪 #102：切題答案（同一疾病、同一面向）不標「與你的問題相關程度較低」"
+    },
+    {
+      "id": "R48-31",
+      "category": "fact",
+      "q": "肺結核看病要錢嗎",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "faq.tb-treatment-cost"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十八輪 #102：切題答案（同一疾病、同一面向）不標「與你的問題相關程度較低」"
+    },
+    {
+      "id": "R48-32",
+      "category": "fact",
+      "q": "被流浪貓抓傷要打狂犬病疫苗嗎",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "disease.rabies"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十八輪 #102：切題答案（同一疾病、同一面向）不標「與你的問題相關程度較低」"
+    },
+    {
+      "id": "R48-33",
+      "category": "multilingual",
+      "lang": "id",
+      "q": "Apa gejala demam berdarah?",
+      "expect": {
+        "refuse": false,
+        "translationNote": "showing-source",
+        "mustCiteAny": [
+          "disease.dengue",
+          "faq.dengue"
+        ]
+      },
+      "note": "第四十八輪 #101：外語問句主題已確認（詞彙主檔各語名稱／跨語言錨點），沒有審閱譯文時以中文原文回答並附 translationSource，不判查無"
+    },
+    {
+      "id": "R48-34",
+      "category": "multilingual",
+      "lang": "id",
+      "q": "Apa gejala dan cara mencegah demam berdarah?",
+      "expect": {
+        "refuse": false,
+        "translationNote": "showing-source",
+        "mustCiteAny": [
+          "disease.dengue",
+          "faq.dengue"
+        ]
+      },
+      "note": "第四十八輪 #101：外語問句主題已確認（詞彙主檔各語名稱／跨語言錨點），沒有審閱譯文時以中文原文回答並附 translationSource，不判查無"
+    },
+    {
+      "id": "R48-35",
+      "category": "multilingual",
+      "lang": "th",
+      "q": "อาการไข้เลือดออกมีอะไรบ้าง",
+      "expect": {
+        "refuse": false,
+        "translationNote": "showing-source",
+        "mustCiteAny": [
+          "disease.dengue",
+          "faq.dengue"
+        ]
+      },
+      "note": "第四十八輪 #101：外語問句主題已確認（詞彙主檔各語名稱／跨語言錨點），沒有審閱譯文時以中文原文回答並附 translationSource，不判查無"
+    },
+    {
+      "id": "R48-36",
+      "category": "multilingual",
+      "lang": "tl",
+      "q": "Nakagat ako ng aso, ano ang dapat kong gawin?",
+      "expect": {
+        "refuse": false,
+        "translationNote": "showing-source",
+        "mustCiteAny": [
+          "faq.rabies-bite",
+          "disease.rabies"
+        ]
+      },
+      "note": "第四十八輪 #101：外語問句主題已確認（詞彙主檔各語名稱／跨語言錨點），沒有審閱譯文時以中文原文回答並附 translationSource，不判查無"
     }
   ]
 }

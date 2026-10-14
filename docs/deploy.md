@@ -1,7 +1,7 @@
 # 部署與維運
 
 > 給誰看：資訊室、OASIS，以及要擴充內容型別或修改 schema 的工程同事。
-> 需求：Node.js 20 以上（CI 使用 22）。依賴只有 `ajv`、`ajv-formats`、`marked`。
+> 需求：Node.js 22 以上（CI 使用 22；`.nvmrc`、`.node-version` 也是 22。pdfjs-dist 需要 `Promise.withResolvers`，Node 20 跑不了 PDF 閘道測試，見 Issue #105）。依賴只有 `ajv`、`ajv-formats`、`marked`。
 
 ## 1. 本機預覽
 
@@ -753,7 +753,7 @@ GitLab main 更新 ──▶ GitLab CI 建置 dist/ ──▶ 對外網站（本
 | --- | --- | --- |
 | 立即載入的 JS（每頁） | 沿 `<script src>` 與靜態 `import` 追，壓縮後原始位元組（`scripts/lib/js-budget.mjs`） | 公開頁 120 KB；答案頁（載入 `answer/data.js` 的頁）不另設，因為引擎已改成提問時才 `import()` |
 | 答案頁提問後的 JS 合計 | 立即載入＋`answer/core.js` 的 import 閉包 | 240 KB（`ENGINE_JS_BUDGET_KB`） |
-| 答案頁的資料傳輸量 | 每種語言：索引分片（中文＋當頁語言）＋引擎要讀的 JSON（清單在 `src/client/answer/deps-manifest.js`，與前端同一份）＋`v1/index.json`，逐檔 **gzip level 6** 後加總。不含答案出來後側欄才抓的疾病頁 JSON 與 `news.json`；專業版只回報 | 445 KB（`ASK_DATA_BUDGET_KB`）：第四十輪實測最大是英文頁 387 KB（zh-TW 350 KB），×1.15 |
+| 答案頁的資料傳輸量 | 每種語言：索引分片（中文＋當頁語言）＋引擎要讀的 JSON（清單在 `src/client/answer/deps-manifest.js`，與前端同一份）＋`v1/index.json`，逐檔 **gzip level 6** 後加總。不含答案出來後側欄才抓的疾病頁 JSON 與 `news.json`；專業版另算（15.3） | 445 KB（`ASK_DATA_BUDGET_KB`）：第四十輪實測最大是英文頁 387 KB（zh-TW 350 KB），×1.15 |
 
 為什麼用 gzip 估算：GitHub Pages、nginx、IIS 對 JSON 預設都會壓縮，使用者實際付的是壓縮後的位元組；未壓縮大小（zh-TW 約 2.6 MB）會讓門檻失去意義。估算與 Chrome 實測（CDP `encodedDataLength`）相差在 5% 內。
 
@@ -790,3 +790,45 @@ ASK_PERF=1 node --test tests/round40-ask-perf.test.mjs      # 當成測試：TBT
 - 收件端必須：欄位白名單、伺服器端再遮蔽個資、不記 IP／User-Agent／Referer／cookie、每分鐘 60 筆節流、成功回 204、原始紀錄 90 天到期刪除。參考實作：`scripts/lib/ask-log-mock.mjs`。
 - 報表：`npm run ask-log:report`（讀 NDJSON 日檔，寫 `.local/ask-log/report.json`）；後台 `/admin/ask-log/` 可載入該檔。原始紀錄與報表都不得進 Git。
 
+### 15.3 專業版資料預算與 `perf:ask`（第四十八輪，Issue #103）
+
+**專業版資料預算：565 KB（`ASK_DATA_PRO_BUDGET_KB`，預設在 `scripts/lib/js-budget.mjs` 的 `DEFAULT_ASK_DATA_PRO_KB`）。** 以前專業版只回報，結果它已經長到 489 KB、超過民眾版的 445 KB 預算卻沒有任何東西會紅燈。現在建置會擋：算法與民眾版完全一樣（`search-index-pro.zh-TW` 加上引擎要讀的 JSON 加 `index`，逐檔 gzip level 6），門檻用同一條「實測 ×1.15」規則：489 × 1.15 ≈ 562，取整為 565。專業版比民眾版大是因為它的索引多了只給專業人員看的內容（`search-index-pro.zh-TW` gzip 後 273 KB，民眾版 151 KB），不是異常，所以預算獨立訂，而不是把 445 放寬。設 `ASK_DATA_PRO_BUDGET_KB=0` 可暫時只回報（不建議常態使用）。
+
+設了 ×1.15 的餘裕之後，往後每增加約 15% 才會失敗；真的撞到時，先看錯誤訊息列出的最大三個檔，通常是索引分片，處理方式見 17 節。**不要**為了讓建置過關就直接調高數字而不寫原因；調高時在這裡補一行「日期、舊值、新值、為什麼」。
+
+**`npm run perf:ask`：** 等於 `node scripts/perf-ask.mjs`（原本只能直接呼叫腳本）。可選門檻 `PERF_MAX_TBT_MS=…`：`/ask/?q=登革熱` 的 TBT 中位數超過就 exit 1，不設只回報。**刻意不放進 CI 必要檢查**，也不進 `content-pr.yml` 的 lane：這個量測要真的開 Chromium 並把 CPU 降速 4 倍，GitHub 代管 runner 的 CPU 忙閒差很多（同一份程式 TBT 可跳 ±30%），放進必要檢查會讓無關的 PR 隨機紅燈，大家學到的是「紅燈重跑就好」，真的退步時反而被忽略。建議的用法是：改答案頁或引擎的 PR 在本機跑一次，把數字貼在 PR 說明；要做成 CI，請另開手動觸發（`workflow_dispatch`）或夜間排程的獨立 workflow，並把 `PERF_MAX_TBT_MS` 設成實測中位數的 2 倍左右（見下表，約 1100 ms）。
+
+2026-10-14 本機實測（`BASE_PATH='' BUILD_TODAY=2026-10-14 npm run build && npm run perf:ask`，每情境 3 次中位數，4 倍 CPU 降速、412×823）：
+
+| 情境 | TBT | long task 合計 | 傳輸 | 請求數 | 答案出現 | LCP |
+| --- | --- | --- | --- | --- | --- | --- |
+| `/ask/`（無 q） | 140 ms | 198 ms（1 個） | 96.6 KB（JSON 0） | 16 | — | 292 ms |
+| `/ask/?q=登革熱` | 532 ms | 732 ms（4 個） | 524 KB（JSON 384.4） | 40 | 1121 ms | 280 ms |
+| `/en/ask/?q=dengue` | 296 ms | 496 ms（4 個） | 562.2 KB（JSON 423.5） | 41 | 857 ms | 160 ms |
+
+建置時的資料傳輸量（gzip 估算）：zh-TW 366 KB、en 405 KB、專業版 489 KB。TBT 遠低於 `tests/round40-ask-perf.test.mjs` 的 1500 ms 上限；傳輸量中 JSON 占約 3/4，這就是 17 節討論分片的原因。
+
+## 17. 設計備忘：答案資料依主題分片（尚未實作，Issue #103）
+
+**問題。** 提問時瀏覽器要下載整份索引：中文分片 `v1/search-index.zh-TW.json`（原始 1.16 MB、gzip 151 KB；專業版 2.1 MB／273 KB），非中文頁再加當頁語言分片。使用者問登革熱，卻也下載了疫苗、就業、標案、新聞的段落。grokbot 建議只載入與問題相符的分片。
+
+**現況。** `scripts/lib/index-builder.mjs` 的 `buildSearchIndex()` 產出一個陣列的 chunk（約 567 個，型別：disease 141、news 73、service 70、faq 63、media 45、vaccine 41、publication 37、article 27、topic 25、job 22、tender 16、clarification 7），每個 chunk 帶 `diseases`、`vaccines`、`countries`、`tasks`、`type`、`url`。`src/client/answer/deps-manifest.js` 的 `indexShardNames(base, lang)` 決定要抓哪些檔（中文＋當頁語言），`src/client/answer/data.js` 用 `Promise.all` 抓完後 `flat()`；`core.js` 把全部 chunk 建成一個 BM25 模型（`df`／`idf`／`avgdl` 都由全部 chunk 算）。
+
+**可能的切法。**
+1. 依「疾病錨點」切：每個 chunk 已有 `diseases[]`。建置時產出 `search-index.<lang>.d-<diseaseId>.json`（只放主要屬於該疾病的 chunk）＋ `search-index.<lang>.core.json`（沒有疾病的 chunk：服務、標案、徵才、文章、一般 FAQ）。另產一份很小的路由表 `search-index.<lang>.route.json`：詞（疾病名、別名、關鍵字）→ 分片，約數 KB。
+2. 依 `type` 切：最簡單（新聞、標案、徵才、媒體與疾病內容分開），但一個問題的答案常跨 type（疾病＋疫苗＋FAQ），切完幾乎每題都要抓 2–3 片，省不了多少。
+3. 兩者混合：疾病相關 type（disease、vaccine、faq、clarification）依疾病切，其餘 type 合成少數幾片。
+
+**要付的代價。**
+- **多一次往返：** 先抓路由表，才知道要抓哪片。目前引擎程式和資料是平行下載（`import()` 與 `fetch` 並行，見 `data.js` 開頭註解），路由表會變成串在中間的一關；手機 4G 一個往返約 100–300 ms，抵銷一部分省下的下載時間。可用 `prefetchEngine()` 時順便預抓路由表來減輕，但那只是搬位置。
+- **跨主題問題要多片：** 「登革熱和日本腦炎疫苗差在哪」「出國前要打什麼」要同時抓好幾片，最壞情況比現在多出路由表與請求數的成本；路由辨識錯誤（別名沒收進路由表）還會直接少答，比慢更糟，因為使用者看到的是「查不到」而不是等待。
+- **相關度閘門需要全域 IDF：** `core.js` 的 `relevance()` 用 `idf`、`maxIdf` 判斷「題目是否真的在語料裡」（`generic-only`、`no-match` 拒答）。分片後 `df`、`N` 只剩局部，同一個詞在小分片裡 IDF 會偏高，閘門門檻（`RELEVANCE`）整組失準，原本被擋掉的無關問題可能被放行，這是安全邊界，不是效能細節。解法是建置時把全域 `df` 表（詞→文件數，詞約 2–3 萬個，gzip 後仍有幾十 KB）另外輸出給閘門用，等於把省下的一部分又吐回去。
+- **維運複雜度：** 分片數隨疾病數成長；`js-budget.mjs` 的 `checkAskDataBudget`、`deps-manifest.js`、離線快取、專業版（另一整套分片）、七種語言都要同步；測試要證明「分片後的答案與不分片完全相同」。
+
+**估算。** 一般只問一種疾病時，中文頁約可省一半的索引下載（151 KB → 約 60–80 KB，視該疾病章節多寡），但引擎要讀的其他 JSON（`faq`、`travel-alerts`、`services`、`media`…合計約 190 KB）與 JS（約 100 KB）不會變，整頁傳輸從約 524 KB 降到 400 KB 上下，約 20–25%，TBT 幾乎不變（主要成本在建模型與檢索，不在下載）。
+
+**建議：現在不做。**
+1. 效益有限且集中在傳輸量，不在 TBT；目前 TBT 532 ms、遠低於 1500 ms 上限。
+2. 風險集中在安全邊界（全域 IDF 與拒答閘門）和少答，需要完整的對照測試才敢上。
+3. 比分片便宜、風險小的做法先做：（a）把引擎讀的次要 JSON（`travel-alerts`、`services`、`media`，合計約 75 KB）改成「答案類型需要才抓」；（b）專業版索引裡民眾版沒有的部分另成一個差異分片，專業版 = 民眾版分片 + 差異分片（可共用快取，專業版額外只下載約 120 KB）。這兩項都不動 BM25 與閘門。
+4. 重新評估的條件：專業版或民眾版預算在六個月內被撞到兩次以上，或索引 gzip 超過 300 KB。屆時優先走方案 3，並先實作「建置時輸出全域 df 表」這個前置工作。

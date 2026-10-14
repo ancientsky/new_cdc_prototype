@@ -385,6 +385,9 @@ export function emitApi(fullSite, write) {
     put(`v1/diseases/${d.slug}.json`, { ...strip(d), master: site.diseaseMasterById.get(d.id) ?? null, related: related.get(d.id) ?? null }, {}, {}, `疾病頁：${d.title}`);
   }
   put('v1/vaccines.json', published(c.vaccines).map(strip), {}, {}, '疫苗頁');
+  // 第四十八輪（issue #95）：疫苗主檔（含還沒有疫苗頁的帶狀疱疹、卡介苗…）。答案引擎要認得「皮蛇疫苗」才能說「本站尚無這支疫苗的專頁」，
+  // 而不是把它當成沒有疫苗名的問句、答成同一疾病的水痘疫苗；建置期評估（engineFromSite）本來就用主檔，前端補上同一份才一致
+  put('v1/vaccine-master.json', (site.master.vaccines ?? []).map((v) => ({ id: v.id, slug: v.slug, name: v.name, nameEn: v.nameEn, aliases: v.aliases ?? [], diseases: v.diseases ?? [], hasPage: !!v.hasPage })), {}, {}, '疫苗主檔');
   // 疫苗接種時程表（主檔；時程地圖與答案引擎的年齡查詢用）
   put('v1/immunization-schedule.json', site.master.immunizationSchedule ?? [], {}, {}, '疫苗接種時程表');
   // 第三十六輪：同一份主檔的 CSV（Excel 直接開；與地圖頁「下載 CSV」按鈕同函式、同欄位）。

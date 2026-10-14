@@ -169,7 +169,7 @@ ${protoBanner(ctx)}
   <div class="wrap c-nav__langs"><p class="c-nav__langs-t" id="nav-langs-t">${t('lang.menu')}</p><div class="c-nav__langs-l" role="group" aria-labelledby="nav-langs-t">${langLinks}</div></div></nav>
 </header>
 ${pausedBanner(ctx)}
-<main id="main"${wide ? '' : raw(' class="wrap"')}${raw(pf.bodyAttr)}>${raw(pf.weigh(body))}${pf.tail}</main>
+<main id="main" tabindex="-1"${wide ? '' : raw(' class="wrap"')}${raw(pf.bodyAttr)}>${raw(pf.weigh(body))}${pf.tail}</main>
 ${translationBar(ctx, item, hideTranslationBar)}
 <footer class="site-footer"><div class="wrap site-footer__in">
   <nav class="site-footer__col" aria-labelledby="ft-svc"><h2 class="site-footer__t" id="ft-svc">${t('footer.services')}</h2><ul>${FOOT_SERVICES.map(([p, k]) => html`<li><a href="${url(p)}">${t(k)}</a></li>`)}

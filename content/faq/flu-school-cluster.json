@@ -1,0 +1,84 @@
+{
+  "id": "faq.flu-school-cluster",
+  "type": "faq",
+  "title": "學校班上有多人得流感，要停課嗎？怎麼處理？",
+  "question": "學校班上有多人得流感，要停課嗎？怎麼處理？",
+  "owner": "unit.acute-infectious",
+  "steward": "急性傳染病組承辦人",
+  "publishedAt": "2026-10-14",
+  "reviewedAt": "2026-10-14",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-10-14"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "none"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "tasks": [
+    "symptoms"
+  ],
+  "diseases": [
+    "disease.influenza"
+  ],
+  "summary": "流感沒有像腸病毒那樣的全國統一停課標準，是否停課由學校依衛生局、教育主管機關指引決定；班級短期內多人有類流感症狀請通報衛生局，病童在家休息至症狀緩解。",
+  "keywords": [
+    "流感",
+    "類流感",
+    "停課",
+    "群聚",
+    "學校",
+    "班級",
+    "通報",
+    "請假"
+  ],
+  "answerMarkdown": "**流感沒有像腸病毒那樣全國統一的停課標準。** 是否停課由學校依衛生局與教育主管機關的指引決定，請以學校通知為準。\n\n班級在短時間內有**多人**出現發燒、咳嗽等類流感症狀時：\n\n- **通知學校與衛生局**：由學校或家長依[疑似傳染病群聚通報](/apply/cluster-report-1922/)管道通報，衛生局會協助評估與採檢。\n- **生病的孩子在家休息**：發燒、咳嗽時請就醫並在家休養，**症狀緩解後再觀察 24 小時**，沒有發燒再回學校，回校後仍要戴口罩、注意咳嗽禮節。\n- **勤洗手、戴口罩**：用肥皂洗手，咳嗽用手肘或衛生紙遮住口鼻。\n- **環境清潔消毒**：常接觸的桌面、門把、教具定期清潔，教室保持通風。\n- **接種流感疫苗**：是最有效的預防方式，流行季前請依公費對象及時程接種。\n\n孩子出現呼吸急促、持續高燒、意識不清或抽搐，請立即就醫。",
+  "verification": {
+    "status": "pending",
+    "note": "流感群聚與停課門檻以衛生局、教育主管機關現行規定為準，待權責單位提供",
+    "pendingItems": [
+      "類流感群聚的通報定義與門檻（人數、天數、班級或全校）：以衛生局／教育主管機關現行規定為準，待權責單位提供",
+      "流感是否有任何停課建議（全國或地方）與決定單位",
+      "病童返校條件的官方用語（症狀緩解後 24 小時是否為現行建議）",
+      "學校群聚通報管道是否與現有「疑似傳染病群聚通報」完全相同",
+      "學校環境清消方式與消毒劑建議"
+    ],
+    "sources": [
+      {
+        "label": "疾管署官網「流感」專區與校園傳染病防治資料",
+        "url": "https://www.cdc.gov.tw/Category/List/V6unXI5CVl2Fjoap4WVQLw",
+        "accessedAt": "2026-10-14",
+        "official": true,
+        "verified": false,
+        "note": "開發環境連不到 www.cdc.gov.tw，未開啟原文逐字核對；本則依公開常識與保守原則撰寫"
+      }
+    ]
+  }
+}

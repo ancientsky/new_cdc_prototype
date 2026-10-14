@@ -5,7 +5,7 @@
   "type": "module",
   "description": "疾管署 AI-ready 新官網可動原型：內容與資料只存一份，展示與 AI 都是它的消費者。",
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "scripts": {
     "fetch": "node scripts/fetch-data.mjs",
@@ -16,6 +16,7 @@
     "eval": "node eval/run-eval.mjs",
     "dev": "node scripts/build.mjs && node scripts/serve.mjs",
     "a11y": "node scripts/a11y.mjs",
+    "perf:ask": "node scripts/perf-ask.mjs",
     "pii": "node scripts/pii-scan.mjs",
     "ask-log:report": "node scripts/ask-log-report.mjs",
     "gen:map": "node scripts/gen-world-map.mjs",

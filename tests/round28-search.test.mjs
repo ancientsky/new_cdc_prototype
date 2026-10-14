@@ -150,7 +150,7 @@ test('排除項目：後台、PR 預覽、舊站轉址頁、404、搜尋頁、�
 test('篩選標籤：疾病頁有 type／audience／unit／year／sort／meta；英文版的顯示字是英文；主體不含 header／footer 導覽', (tc) => {
   if (!hasDist) return tc.skip('dist 尚未建置');
   const zh = fs.readFileSync(path.join(DIST, 'diseases/dengue/index.html'), 'utf8');
-  for (const needle of ['<main id="main" class="wrap" data-pagefind-body>', 'data-pagefind-filter="type:disease"', 'data-pagefind-filter="audience:public"', 'data-pagefind-filter="audience:professional"', 'data-pagefind-filter="unit:unit.acute-infectious"', 'data-pagefind-filter="year:2018"', 'data-pagefind-sort="date:2018-03-01"', 'data-pagefind-meta="title:登革熱"', 'data-pagefind-meta="kind:傳染病"', 'data-pagefind-weight="10"'])
+  for (const needle of ['<main id="main" tabindex="-1" class="wrap" data-pagefind-body>', 'data-pagefind-filter="type:disease"', 'data-pagefind-filter="audience:public"', 'data-pagefind-filter="audience:professional"', 'data-pagefind-filter="unit:unit.acute-infectious"', 'data-pagefind-filter="year:2018"', 'data-pagefind-sort="date:2018-03-01"', 'data-pagefind-meta="title:登革熱"', 'data-pagefind-meta="kind:傳染病"', 'data-pagefind-weight="10"'])
     assert.ok(zh.includes(needle), needle);
   assert.ok(zh.indexOf('data-pagefind-body') > zh.indexOf('</header>'), 'body 標記在站台 header 之後');
   assert.ok(zh.indexOf('data-pagefind-body') < zh.indexOf('<footer class="site-footer">') && zh.indexOf('</main>') < zh.indexOf('<footer class="site-footer">'));

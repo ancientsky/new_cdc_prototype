@@ -42,7 +42,7 @@ ${pageHead({
 
 <section class="adm-card" aria-labelledby="j-h"><h2 id="j-h">職缺與階段</h2>
   <p class="adm-card__sub">前台：<a href="${url('/careers/')}">/careers/</a>。依報名截止日排序；歷史＝結果公布滿 90 天、已額滿或已取消。</p>
-  <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><caption>共 ${rows.length} 則職缺（建置日 ${site.today}）</caption>
+  <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><caption>共 ${rows.length} 則職缺（倒數天數以建置日 ${site.today} 計）</caption>
     <thead><tr><th scope="col">職缺</th><th scope="col">階段</th><th scope="col">用人單位</th><th scope="col" class="num">名額</th><th scope="col">報名期間</th><th scope="col">倒數</th><th scope="col">報名方式</th><th scope="col">結果</th></tr></thead>
     <tbody>${rows.map((r) => html`<tr data-id="${r.id}" data-stage="${r.stage}">
       <td><a href="${url(r.front)}">${r.title}</a><div class="adm-muted"><code>${r.id}</code> · ${r.jobType} · <a href="${url('/admin/jobs/edit/', { noLang: true })}?id=${encodeURIComponent(r.id)}">異動</a></div></td>

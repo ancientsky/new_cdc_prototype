@@ -68,6 +68,24 @@
     "en": {
       "question": "What should I do if I am bitten by a dog, cat or wild animal?",
       "answerMarkdown": "Remember **\"wash, identify, seek care, observe\"**:\n\n1. **Wash** the wound with soap and plenty of water for 15 minutes, then disinfect with povidone-iodine.\n2. **Identify** the animal's appearance and where it was.\n3. **Seek care** promptly; a doctor will assess the need for rabies vaccine and immunoglobulin.\n4. **Observe** the animal for 10 days if it can be safely confined.\n\nBites from wild ferret-badgers or masked palm civets in Taiwan, or animal bites abroad, should always be assessed for post-exposure vaccination."
+    },
+    "id": {
+      "question": "Apa yang harus dilakukan jika digigit anjing, kucing, atau hewan liar?",
+      "answerMarkdown": "Ingat **\"cuci, kenali, berobat, amati\"**:\n\n1. **Cuci**: segera cuci luka dengan sabun dan air mengalir yang banyak selama 15 menit, lalu beri antiseptik povidone-iodine.\n2. **Kenali**: ingat ciri-ciri hewan dan tempat kejadiannya.\n3. **Berobat**: segera ke fasilitas kesehatan; dokter akan menilai apakah perlu vaksin rabies dan imunoglobulin.\n4. **Amati**: jika hewan dapat dikurung dengan aman, amati selama 10 hari.\n\nGigitan hewan liar di Taiwan (musang luwak, linsang) atau gigitan hewan di luar negeri selalu perlu dinilai oleh dokter untuk vaksinasi pasca-paparan.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "ถูกสุนัข แมว หรือสัตว์ป่ากัด ควรทำอย่างไร?",
+      "answerMarkdown": "จำหลัก **\"ล้าง จำ พบแพทย์ สังเกต\"**:\n\n1. **ล้าง**: รีบล้างแผลด้วยสบู่และน้ำสะอาดปริมาณมากนาน 15 นาที แล้วใช้โพวิโดนไอโอดีนฆ่าเชื้อ\n2. **จำ**: จดจำลักษณะของสัตว์และสถานที่ที่เกิดเหตุ\n3. **พบแพทย์**: ไปสถานพยาบาลโดยเร็ว แพทย์จะประเมินว่าต้องฉีดวัคซีนป้องกันโรคพิษสุนัขบ้าและอิมมูโนโกลบูลินหรือไม่\n4. **สังเกต**: หากสามารถกักสัตว์ไว้ได้อย่างปลอดภัย ให้สังเกตอาการนาน 10 วัน\n\nหากถูกสัตว์ป่าในไต้หวัน (เช่น พังพอน ชะมด) กัด หรือถูกสัตว์กัดในต่างประเทศ ควรไปให้แพทย์ประเมินการฉีดวัคซีนหลังสัมผัสเชื้อทุกครั้ง",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Ano ang gagawin kung nakagat ng aso, pusa, o ligaw na hayop?",
+      "answerMarkdown": "Tandaan ang **\"hugasan, kilalanin, magpagamot, obserbahan\"**:\n\n1. **Hugasan**: agad hugasan ang sugat gamit ang sabon at maraming tubig sa loob ng 15 minuto, saka lagyan ng povidone-iodine.\n2. **Kilalanin**: tandaan ang itsura ng hayop at kung saan ito nakita.\n3. **Magpagamot**: pumunta agad sa ospital o klinika; susuriin ng doktor kung kailangan ng bakuna laban sa rabies at immunoglobulin.\n4. **Obserbahan**: kung ligtas na maikukulong ang hayop, obserbahan ito sa loob ng 10 araw.\n\nAng kagat ng ligaw na hayop sa Taiwan (tulad ng ferret-badger o palm civet) o kagat ng hayop sa ibang bansa ay laging dapat ipasuri sa doktor para sa bakuna pagkatapos ng exposure.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

@@ -194,7 +194,7 @@
     "diseases": [
       "disease.varicella"
     ],
-    "hasPage": false,
+    "hasPage": true,
     "publicFunded": false
   }
 ]

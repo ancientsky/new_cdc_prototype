@@ -26,10 +26,11 @@
 import { CROSS_LANG, PARAPHRASE, annotationsOf, topicAnchorsOf, buildLexicon, isOutdated, latinStems, lc, matcherFor, ownerNameOf, tr, unwrap } from './lexicon.js';
 import { ANTIVIRAL_RE, CAT_ZH, CLOSED_MARK, NOTICE_TYPES, SCHEDULE_VACCINE_RE, VAXMAP_GROUP_OF, VAXMAP_GROUP_OF_DISEASE, WHICH_VACCINE_RE, ageHashOf, ageProfileOf, hoursPhrase, matchSchedule, mmssOf, normTravel, normalizeNotifyTable, notifyHoursLabel, vaxmapHref } from './structured.js';
 import { EN_STOP, VI_STOP, bigrams, detectInjection, maskPII, maskPIIDetailed, mdPlain, parseChineseNumber, parseTimeRange, rocDate, splitPlain, tokenize } from './text.js';
-import { ADMIT_RE, CAREERS_DETAIL_RE, HISTORICAL_WEIGHT, LAB_PUBLIC_RE, MEDIA_CUE, NEWS_CUE, OPEN_CUE, PERSON, PROCUREMENT_CUE, PROCUREMENT_DETAIL_RE, PUB_CUE, QUERY_FUNC_RE, RECRUIT_CUE, REFUSAL_RULES, RELEVANCE, VAX_WHERE_RE, RESEARCH_CUE, TRAVEL_CHANGE_KINDS, TRAVEL_CHANGE_RE, classifyIntent, focusOf, refusalCopy, titleHits } from './rules.js';
+import { ADMIT_RE, CAREERS_DETAIL_RE, HISTORICAL_WEIGHT, LAB_PUBLIC_RE, MEDIA_CUE, NEWS_CUE, OPEN_CUE, PERSON, PROCUREMENT_CUE, PROCUREMENT_DETAIL_RE, PUB_CUE, QUERY_FACETS, QUERY_FUNC_RE, RECORD_RE, RECRUIT_CUE, REFUSAL_RULES, RELEVANCE, VAX_WHERE_RE, RESEARCH_CUE, TRAVEL_CHANGE_KINDS, TRAVEL_CHANGE_RE, classifyIntent, focusOf, isLowRelevance, refusalCopy, titleHits } from './rules.js';
 
 // 第四十輪（issue #77）：補接種問句（漏打、錯過、延遲、忘了打、補打）。命中就不給年齡時程表，改由檢索找補接種 FAQ
-export const CATCHUP_RE = /(漏打|漏接種|補打|補接種|錯過|延遲接種|晚打|忘了打|忘記打|沒打到|重打|missed (?:a |the )?(?:dose|vaccin)|catch-?up)/i;
+// 第四十八輪（issue #94）：加「晚了兩個月才打」「延後接種」這類口語
+export const CATCHUP_RE = /(漏打|漏接種|補打|補接種|錯過|延遲接種|晚打|晚了.{0,8}才打|延後(接種|打)|忘了打|忘記打|沒打到|重打|missed (?:a |the )?(?:dose|vaccin)|catch-?up)/i;
 
 export { bigrams, detectInjection, maskPII, maskPIIDetailed, numbersByUnit, parseChineseNumber, parseTimeRange, pdfHref, rocDate, splitPlain, tokenize } from './text.js';
 export { ADMIT_RE, INTENT_RULES, LAB_PRO_RE, LAB_PUBLIC_RE, PRO_SUB_INTENTS, REFUSAL_RULES, RELEVANCE, classifyIntent, isLowRelevance } from './rules.js';
@@ -89,6 +90,27 @@ export function createEngine(rawDeps = {}) {
 
   const lex = buildLexicon({ diseases, glossary, vaccines, units });
   const { phrasesIn: lexiconPhrasesIn, falseTokensFor, chunkHay } = lex;
+
+  // 第四十八輪（issue #94）：中文主題錨點。內容的 keywords（index-builder 放進 chunk.terms）裡，只屬於少數幾則內容（≤ ANCHOR_MAX）、
+  // 全站也只有這幾則提到的詞（呼吸道融合病毒、鼬獾、餵母乳、漏打）就是那個主題的「名字」：問句含這個詞時，
+  // 那幾則內容是優先候選（檢索加權、不受「問 A 病不拿 B 病」排除、相關度斷詞以它為詞界、不改走年齡時程表）。
+  // 為什麼不寫死問句→答案：錨點完全由內容的 keywords 推得，承辦人加一個關鍵字就生效；「預防」「症狀」這類到處都有的詞因為出現的內容太多，自動不算錨點。
+  const ANCHOR_MAX = 3;
+  const zhPub = index.filter((c) => (c.lang ?? 'zh-TW') === 'zh-TW' && c.whitelist !== false);
+  const termIds = new Map();
+  // 只收「答案單元」（FAQ、疾病頁、疫苗頁、申請服務、專區）的關鍵字：影片逐字稿、新聞、期刊的關鍵字不讓它們搶到優先
+  for (const c of zhPub) if (/^(faq|disease|vaccine|service|topic)$/.test(c.type)) for (const t of c.terms ?? []) { const k = lc(t).trim(); if (k.length > 1 && !/^[\d\s]+$/.test(k)) (termIds.get(k) ?? termIds.set(k, new Set()).get(k)).add(c.contentId); }
+  const hays = new WeakMap();
+  const hayOf = (c) => { let h = hays.get(c); if (h == null) hays.set(c, (h = chunkHay(c))); return h; };
+  function zhAnchors(q) {
+    const lq = lc(q); const out = [];
+    for (const [t, ids] of termIds) {
+      if (ids.size > ANCHOR_MAX || !lq.includes(t) || !lex.wholeHit(lq, t)) continue;
+      const seen = new Set(); for (const c of zhPub) if (hayOf(c).includes(t)) seen.add(c.contentId);
+      if (seen.size <= ANCHOR_MAX) out.push({ t, ids });
+    }
+    return out.filter((a) => !out.some((b) => b.t.length > a.t.length && b.t.includes(a.t)));
+  }
 
   function detectEntities(q) {
     const found = { diseases: [], vaccines: [], countries: [] };
@@ -220,6 +242,7 @@ export function createEngine(rawDeps = {}) {
     const dIds = new Set(entities.diseases.map((d) => d.id)); if (opts.presetDisease) dIds.add(opts.presetDisease);
     const vIds = new Set(entities.vaccines.map((v) => v.id));
     const cIds = new Set(entities.countries.map((c) => c.id));
+    const aIds = opts.anchorIds ?? new Set();
     const task = INTENT_TASK[intent];
     const qLower = lc(expanded.text);
     const wantOpen = OPEN_CUE.test(q);
@@ -242,11 +265,15 @@ export function createEngine(rawDeps = {}) {
         }
       }
       for (const t of c.terms ?? []) if (t && String(t).length >= 2 && !ent.names.has(lc(t)) && qLower.includes(lc(t))) s += 0.6;
+      const anc = aIds.has(c.contentId);
       if (dIds.size) {
         if ((c.diseases ?? []).some((x) => dIds.has(x))) s = s * 1.6 + 2;
-        else if ((c.diseases ?? []).length) continue; // 問的是 A 病，不拿 B 病的內容回答
+        // 問的是 A 病，不拿 B 病的內容回答。第四十八輪例外：主題錨點命中、且題目沒點名任何疾病的 FAQ（「懷孕或哺乳期間可以打疫苗嗎」標了流感只因內文舉例）
+        //（題目點名疾病的 FAQ 仍排除：「腸病毒停課標準」不拿來回答「流感停課」）
+        else if ((c.diseases ?? []).length && !(anc && c.type === 'faq' && !detectEntities(c.question ?? c.title).diseases.length)) continue;
         else s *= 0.6;
       }
+      if (anc) s = s * 1.5 + 3;
       if (vIds.size && (c.vaccines ?? []).some((x) => vIds.has(x))) s = s * 1.3 + 1;
       if (cIds.size) {
         if ((c.countries ?? []).some((x) => cIds.has(x))) s = s * 1.3 + 1;
@@ -279,7 +306,7 @@ export function createEngine(rawDeps = {}) {
       if (c.historical && !NEWS_CUE.test(q)) s *= HISTORICAL_WEIGHT;
       if (c.type === 'research' && RESEARCH_CUE.test(q)) s = s * 1.6 + 1.5;
       if (labPublic && c.block === 'treatment') s = s * 1.5 + 1;
-      scored.push({ ...c, _score: Math.round(s * 1000) / 1000, ...(falseToks?.size ? { _falseTokens: falseToks } : {}) });
+      scored.push({ ...c, _score: Math.round(s * 1000) / 1000, ...(falseToks?.size ? { _falseTokens: falseToks } : {}), ...(anc ? { _anchor: true } : {}) });
     }
     scored.sort((a, b) => b._score - a._score);
     const top = scored[0]?._score ?? 0;
@@ -300,10 +327,11 @@ export function createEngine(rawDeps = {}) {
    * 相關度：{ relevance 0–1, coverage, top, matchedIdf, reason }。reason 非 null ⇒ 應拒答（no-match）。
    * 涵蓋率＝問句有效詞（功能詞已剔除、單字不計；不在語料的詞以最大 IDF 計，視為未命中）被前 3 個片段的「標題＋內文＋術語」涵蓋的 IDF 加權比例。
    */
-  function relevanceOf(q, chunks, model, hasEntity = false) {
+  function relevanceOf(q, chunks, model, hasEntity = false, anchors = []) {
     const top = chunks[0]?._score ?? 0;
     // 第三十一輪：跨過詞界的假 bigram（「性病症狀」裡的「病症」）不列入涵蓋率分母——只保留「原句斷詞」與「詞典斷詞」都有的 token
-    const segToks = new Set(tokenize(lex.segment(String(q)).replace(QUERY_FUNC_RE, ' '), { query: true }));
+    // 第四十八輪（issue #94）：主題錨點也當詞界（「被鼬獾咬」→「被 鼬獾 咬」，不再有「被鼬」「獾咬」兩個假詞拉低涵蓋率）
+    const segToks = new Set(tokenize(lex.segment(anchors.reduce((x, a) => x.split(a.t).join(` ${a.t} `), lc(q))).replace(QUERY_FUNC_RE, ' '), { query: true }));
     const toks = [...new Set(tokenize(String(q).replace(QUERY_FUNC_RE, ' '), { query: true }))].filter((t) => (t.length >= 2 || /[a-z0-9]/.test(t)) && segToks.has(t));
     if (!chunks.length) return { relevance: 0, coverage: 0, top, matchedIdf: 0, reason: 'no-chunk', tokens: toks };
     const have = new Set(); for (const c of chunks.slice(0, 3)) for (const t of tokenize(`${c.title} ${c.text} ${(c.terms ?? []).join(' ')}`)) if (!c._falseTokens?.has(t)) have.add(t);
@@ -349,6 +377,8 @@ export function createEngine(rawDeps = {}) {
     careers: [{ key: 'job', label: '職缺資訊', re: /(報名期間|資格|工作內容|應備文件|甄試|薪資|名額)/ }],
     procurement: [{ key: 'tender', label: '標案資訊', re: /(案號|投標截止|標的|決標|預算)/ }],
   };
+  // 第四十八輪（issue #96）：句首是連接詞／承上指稱詞（但、不過、因此、此時、其中…；However、But、Also…）＝依附上一句的句子
+  const CONNECTIVE_RE = /^(但是?|不過|然而|另外|此外|因此|所以|此時|這時候?|其中)|^(however|but|also|therefore|thus|in this case)\b/i;
   const PERSONAL_ADVICE_RE = /(你應該(服用|吃|使用)|建議你(吃|服用|使用)|你可以(吃|服用).{0,6}藥|你(就是|應該是|可能是|一定是)(得了|感染)|you should take|you (definitely|probably) have)/i;
 
   function slotOf(intent, text) {
@@ -379,12 +409,12 @@ export function createEngine(rawDeps = {}) {
         let quoted = false; for (let x = from; x <= i; x++) if (noCite.has(x)) quoted = true;
         if (quoted) { guards.push({ kind: 'claim-dropped', id: c.id }); continue; }
         if (!informative(u)) { guards.push({ kind: 'uninformative-dropped', id: c.id, text: u.slice(0, 40) }); continue; }
-        units.push(u);
+        units.push({ u, from, to: i });
       }
       const titleToks = new Set(tokenize(c.title));
       let covTitle = 0; for (const [t, w] of qw) if (titleToks.has(t) && model.has(t)) covTitle += w * model.idf(t);
       covTitle /= qIdfSum;
-      units.forEach((sen, si) => {
+      units.forEach(({ u: sen, from, to }, si) => {
         const toks = new Set(tokenize(sen));
         let cov = 0; for (const [t, w] of qw) if (toks.has(t)) cov += w * model.idf(t);
         cov /= qIdfSum;
@@ -395,6 +425,7 @@ export function createEngine(rawDeps = {}) {
         if (slot === 0) s += 0.6; else if (slot === 1) s += 0.3;
         if (sen.length > (sen.includes('： ') ? 200 : 140)) s -= 0.6; else if (sen.length < 10) s -= 0.6;
         if (si === 0 && c.type === 'faq') s += 0.3;
+        if (c._anchor) s += 0.8; // 第四十八輪（issue #94）：主題錨點命中的內容，句子也優先
         if (view === 'pro' && (c.type === 'document' || c.type === 'letter')) s += 0.5;
         if (c.extraction?.reviewStatus === 'machine') s -= 0.6; // 未校對的 PDF 文字：同樣講到時讓已審內容先
         const whereHit = !!whereReq && ci < 3 && whereReq.re.test(sen);
@@ -402,7 +433,7 @@ export function createEngine(rawDeps = {}) {
         if (cov <= 0.05 && covTitle < 0.3 && !(ci === 0 && si === 0) && !whereHit) return;
         // 問句除了病名還有其他關鍵詞時，句子（或其片段標題）至少要命中一個，避免「只因為同一種病」被選入
         if (neToks.length && !neToks.some((t) => toks.has(t) || titleToks.has(t)) && !(ci === 0 && si === 0) && !whereHit) return;
-        cands.push({ text: sen, cite: [c.id], score: s, slot, chunk: c });
+        cands.push({ text: sen, cite: [c.id], score: s, slot, chunk: c, from, to, dep: CONNECTIVE_RE.test(sen) });
       });
     });
     cands.sort((a, b) => b.score - a.score);
@@ -424,6 +455,13 @@ export function createEngine(rawDeps = {}) {
     };
     for (let c = nextCand(); c; c = nextCand()) {
       if (PERSONAL_ADVICE_RE.test(c.text)) { guards.push({ kind: 'medical-advice-dropped', text: c.text.slice(0, 40) }); continue; }
+      // 第四十八輪（issue #96）：以連接詞開頭的句子（但、不過、因此、此外…）離開上一句就不知道在說什麼。
+      // 上一句（同片段、緊鄰）已選入 ⇒ 接在它後面（原文本來就連在一起，grounding 照樣比得到）；否則不選
+      if (c.dep) {
+        const prev = picked.find((p) => p.chunk === c.chunk && p.to === c.from - 1);
+        if (prev) { prev.text += ` ${c.text}`; prev.to = c.to; } else guards.push({ kind: 'dangling-connective-dropped', id: c.chunk.id, text: c.text.slice(0, 40) });
+        continue;
+      }
       const dup = picked.find((p) => similar(p.text, c.text) > 0.7);
       if (dup) {
         // 專業模式：同義句以正本文件原文為準、文件引用排第一
@@ -440,13 +478,15 @@ export function createEngine(rawDeps = {}) {
     const req = requiredFor(intent, q);
     for (const r of req) {
       if (picked.some((p) => r.re.test(p.text))) continue;
-      const add = allCands.find((c) => r.re.test(c.text) && !picked.some((p) => p.text === c.text) && !PERSONAL_ADVICE_RE.test(c.text) && c.score > 1);
+      const add = allCands.find((c) => !c.dep && r.re.test(c.text) && !picked.some((p) => p.text === c.text) && !PERSONAL_ADVICE_RE.test(c.text) && c.score > 1);
       if (add) { if (picked.length >= max) picked.pop(); picked.push({ ...add, cite: [...add.cite] }); }
     }
     // 問地點時，講地點的句子排第一（它才是答案；其餘是補充）
     const where = req.find((r) => r.key === 'where');
     if (where) for (const p of picked) if (where.re.test(p.text)) p.slot = -1;
-    picked.sort((a, b) => a.slot - b.slot || b.score - a.score);
+    // 第四十八輪（issue #94）：主題錨點命中的內容排在其他句子前面（「五合一晚了兩個月才打」先答補接種 FAQ，再補五合一時程）
+    const rank = (p) => (p.chunk?._anchor ? Math.min(p.slot, -0.5) : p.slot);
+    picked.sort((a, b) => rank(a) - rank(b) || b.score - a.score);
     return picked;
   }
 
@@ -545,6 +585,7 @@ export function createEngine(rawDeps = {}) {
     return s;
   }
 
+  const PENDING_MARK = { 'zh-TW': '（待確認）', en: ' (pending verification)' };
   function finalizeSentences(result, picked, sourceMap) {
     // sourceMap: id → source；依出現順序編號
     const order = []; const sources = [];
@@ -557,6 +598,11 @@ export function createEngine(rawDeps = {}) {
       const cite = p.cite.filter((id) => nOf.has(id));
       if (!cite.length) { result.guards.push({ kind: 'uncited-dropped', text: p.text.slice(0, 40) }); continue; }
       const s = { text: p.text, cite, n: cite.map((id) => nOf.get(id)) };
+      // 第四十八輪（issue #93）：引用的內容 verification 為 pending ⇒ 句尾加與時程表相同的「（待確認）」（英文等譯文片段用英文字樣），
+      // 民眾不必點開來源卡才知道這句尚待權責單位確認；s.pending 讓 grounding 檢核比對前先去掉字樣
+      const pend = cite.map((id) => sourceMap.get(id)).find((x) => x?.verification === 'pending');
+      if (pend) { const m = PENDING_MARK[pend.lang] ?? PENDING_MARK.en; if (!s.text.endsWith(m) && !s.text.endsWith(PENDING_MARK['zh-TW'])) { s.text += m; s.pending = m; } }
+      for (const k of ['closed', 'scheduleIds', 'href']) if (p[k] && p[k].length !== 0) s[k] = p[k];
       if (result.view === 'pro') { const docId = cite.find((id) => ['document', 'letter'].includes(sourceMap.get(id)?.type)); const lab = docId ? citeLabelOf(sourceMap.get(docId)) : null; if (lab) s.citeLabel = lab; }
       result.sentences.push(s);
     }
@@ -986,11 +1032,6 @@ export function createEngine(rawDeps = {}) {
     };
     const sourceMap = new Map([[SCHED_ID, schedSrc], ...[...pages.values()].map((c) => [c.id, sourceOf(c)])]);
     finalizeSentences(result, picked, sourceMap);
-    for (const s of result.sentences) {
-      const p = picked.find((x) => x.text === s.text);
-      if (p?.scheduleIds?.length) s.scheduleIds = p.scheduleIds;
-      if (p?.href) s.href = p.href;
-    }
     // 結構化句放進 retrieved（第一順位引用），grounding 檢核可逐句比對；疫苗頁片段一併列出
     const texts = picked.map((p) => p.text);
     result.retrieved = [{ id: SCHED_ID, contentId: SCHED_ID, type: 'schedule', title: schedSrc.title, url: schedSrc.url, sentences: texts, text: texts.join(' ') }, ...pages.values()];
@@ -1019,7 +1060,6 @@ export function createEngine(rawDeps = {}) {
     // （已截止）只標在報名期間／投標截止句，避免「已決標（已截止）」之類的重複標示
     const marked = picked.map((p) => (extra.markClosed && closedNow(p.chunk) && /(報名期間|投標截止日)/.test(p.text) && !p.text.includes('已截止') ? { ...p, text: `${p.text}${CLOSED_MARK}`, closed: true } : p));
     finalizeSentences(result, marked, sourceMap);
-    for (const s of result.sentences) { const p = marked.find((x) => x.text === s.text); if (p?.closed) s.closed = true; }
     result.retrieved = chunks;
     if (result.lang !== 'zh-TW') result.translationNote = 'showing-source'; // 職缺與標案內容只有中文正本
     result.confidence = 0.9;
@@ -1177,7 +1217,7 @@ export function createEngine(rawDeps = {}) {
         }
         // 問句帶年齡／身分：接在「查附近接種點」之後，開啟疫苗接種時程地圖並帶入年齡（#age=65、#age=m12）
         if (result.ageProfile) { const h = ageHashOf(result.ageProfile); a.push({ label: tr(LL, '看完整疫苗時程地圖', 'See the full immunization schedule'), href: `/vaccines/schedule/${h ? `#age=${h}` : ''}`, kind: 'link' }); }
-        if (vacc?.slug) a.push({ label: tr(LL, `看${vacc.name ?? vacc.title}公費對象`, `Who is eligible: ${vacc.nameEn ?? vacc.name ?? vacc.title}`), href: `/vaccines/${vacc.slug}/`, kind: 'link' });
+        if (vacc?.slug && vacc.hasPage !== false) a.push({ label: tr(LL, `看${vacc.name ?? vacc.title}公費對象`, `Who is eligible: ${vacc.nameEn ?? vacc.name ?? vacc.title}`), href: `/vaccines/${vacc.slug}/`, kind: 'link' });
         else a.push({ label: tr(LL, '看疫苗與預防接種', 'Vaccines & immunization'), href: '/tasks/vaccines/', kind: 'link' });
         break;
       case 'travel': {
@@ -1307,7 +1347,7 @@ export function createEngine(rawDeps = {}) {
     const top = chunks.find((c) => c.type === 'service');
     if (!top || !APPLY_HOW.test(q)) return picked;
     // 服務片段的分數遠低於最佳片段（已含 apply 意圖對服務的加權仍落後）＝站內有更切題的非服務內容
-    if (!serviceMatches(q, top) || (top._score ?? 0) < (chunks[0]._score ?? 0) * SERVICE_MIN_RATIO) { result.guards.push({ kind: 'apply-steps-skipped', id: top.id, reason: 'service-not-asked' }); return picked; }
+    if (!(top._anchor || serviceMatches(q, top)) || (top._score ?? 0) < (chunks[0]._score ?? 0) * SERVICE_MIN_RATIO) { result.guards.push({ kind: 'apply-steps-skipped', id: top.id, reason: 'service-not-asked' }); return picked; }
     const pool = poolFor(view, 'zh-TW').chunks;
     const get = (key) => chunks.find((c) => c.id === `${top.contentId}#${key}`) ?? pool.find((c) => c.id === `${top.contentId}#${key}`);
     const steps = get('steps');
@@ -1432,7 +1472,7 @@ export function createEngine(rawDeps = {}) {
     const ci = classifyIntent(q, { view, hasTimeRange: hasRange, hasDisease: !!result.disease, hasCountry: entities.countries.length > 0 });
     result.intent = ci.intent; result.intentReasons = ci.reasons; result.intentScores = ci.scores;
     if (forceIntent) { result.intent = forceIntent; result.intentReasons.push(`forced.${forceIntent}`); }
-    if (VAX_WHERE_RE.test(q)) result.whereAsk = true;
+    if (VAX_WHERE_RE.test(q) && !RECORD_RE.test(q)) result.whereAsk = true;
     // 第七輪：問句指名某職缺／標案並問細節（「防疫醫師的資格」「官網改版標案的規格」）⇒ careers／procurement
     if (!forceIntent && !['careers', 'procurement', 'rumor', 'stats', 'notify'].includes(result.intent)) {
       if (CAREERS_DETAIL_RE.test(q) && overviewChunks('job', view).some((c) => titleHits(q, c.title) >= 3 || (c.focusTerms ?? []).some((k) => q.includes(k)))) { result.intent = 'careers'; result.intentReasons.push('car.title-match'); }
@@ -1504,7 +1544,14 @@ export function createEngine(rawDeps = {}) {
     // 第四十輪（issue #77）：「漏打／錯過／補打」問的是補接種原則，不是年齡時程表；整張時程表會蓋掉真正的答案（補接種 FAQ） ⇒ 不走時程主檔
     const catchUp = CATCHUP_RE.test(q);
     if (catchUp) result.intentReasons.push('vac.catch-up');
-    if (profile && result.intent === 'vaccine' && !catchUp && !ANTIVIRAL_RE.test(q) && (!entities.vaccines.length || WHICH_VACCINE_RE.test(q))) {
+    // 第四十八輪（issue #94）：中文主題錨點。中文問句看原句＋口語改寫（晚了兩個月才打 → 漏打），外語問句看跨語言對應出來的中文詞（nakagat → 動物咬傷）；
+    // 不看詞彙主檔同義詞展開（MMR → 麻疹腮腺炎德國麻疹混合疫苗是實體，已由疾病／疫苗實體處理）。問句點名了某個主題（新生兒＋呼吸道融合病毒）⇒ 那則內容才是答案，不改走年齡時程表
+    const crossZh = expanded.added.filter((w) => /[\u3400-\u9fff]/.test(w)).join(' ');
+    const viaRules = (rules) => rules.filter(([re]) => re.test(q)).map((r) => r[1]).join(' ');
+    const zhA = zhAnchors(lang === 'zh-TW' ? `${q} ${viaRules(PARAPHRASE)}` : viaRules(CROSS_LANG));
+    const anchorIds = new Set(zhA.flatMap((a) => [...a.ids]));
+    if (zhA.length) result.guards.push({ kind: 'topic-anchor', terms: zhA.map((a) => a.t) });
+    if (profile && result.intent === 'vaccine' && !catchUp && !zhA.length && !ANTIVIRAL_RE.test(q) && (!entities.vaccines.length || WHICH_VACCINE_RE.test(q))) {
       const sa = scheduleAnswer(q, result, entities, profile);
       if (sa) return sa;
     }
@@ -1523,15 +1570,17 @@ export function createEngine(rawDeps = {}) {
     let chunks = [];
     let zhChunks = null;
     let topicConfirmed = false;
-    const zhRetrieve = () => (zhChunks ??= retrieve(q, { view, lang: 'zh-TW', k, intent: result.intent, entities, expanded, presetDisease, guards: result.guards }));
+    const zhRetrieve = () => (zhChunks ??= retrieve(q, { view, lang: 'zh-TW', k, intent: result.intent, entities, expanded, presetDisease, guards: result.guards, anchorIds }));
     if (lang !== 'zh-TW') {
-      chunks = retrieve(q, { view, lang, k, intent: result.intent, entities, expanded, presetDisease, guards: result.guards });
+      chunks = retrieve(q, { view, lang, k, intent: result.intent, entities, expanded, presetDisease, guards: result.guards, anchorIds });
       if (chunks.length && chunks[0]._score < 2.5) chunks = [];
       // 主題已確認：問句有錨點，且同語言前 3 塊有一塊「標題」就在講這個主題（英文來源的來臺專區）。
       // 這時相關度偏低只代表問句用詞（what should I do／precautions）和片段不同，不是主題不對 ⇒ 不因相關度門檻丟掉（下方的查無門檻同理）
       topicConfirmed = anchors.length > 0 && chunks.length > 0 && anchorStrength(chunks, false) === 2;
       // 同語言片段沒講到主題錨點（越南文問移工健檢，越南文語料只有麻疹），或過不了相關度門檻 ⇒ 改用中文原文
-      if (chunks.length && (!anchorOk(chunks, false) || (!topicConfirmed && relevanceOf(q, chunks, chunks.model, hasEntity).reason))) { result.guards.push({ kind: 'same-lang-dropped', lang }); chunks = []; }
+      // 第四十八輪（issue #101）：同語言片段的相關度低到會被判「外語低相關查無」時，也改試中文原文（泰文問登革熱症狀，泰文語料只有一則登革熱謠言澄清）
+      const sl = chunks.length && !topicConfirmed && relevanceOf(q, chunks, chunks.model, hasEntity);
+      if (chunks.length && (!anchorOk(chunks, false) || (sl && (sl.reason || sl.relevance < RELEVANCE.lowBelow)))) { result.guards.push({ kind: 'same-lang-dropped', lang }); chunks = []; }
       // 同語言片段只是「順帶提到」主題（英文 MOU 新聞稿提到 migrant worker health），中文有一塊標題就在講這個主題 ⇒ 用中文原文
       if (chunks.length && anchors.length && anchorStrength(zhRetrieve(), true) > anchorStrength(chunks, false)) { result.guards.push({ kind: 'same-lang-weaker-topic', lang }); chunks = []; }
     }
@@ -1539,10 +1588,19 @@ export function createEngine(rawDeps = {}) {
       chunks = zhRetrieve();
       if (lang !== 'zh-TW' && chunks.length) result.translationNote = 'showing-source';
       if (lang !== 'zh-TW' && chunks.length && !anchorOk(chunks, true)) { result.guards.push({ kind: 'topic-anchor-miss', anchors: anchors.map((a) => a.zh[0]) }); const none = []; none.qWeights = chunks.qWeights; none.model = chunks.model; chunks = none; }
+      // 第四十八輪（issue #101）：外語問句改用中文原文時，主題已確認＝問句點名的疾病（詞彙主檔各語言名稱對應出來的）就是最佳片段的疾病，
+      // 或中文錨點（被狗咬 → 動物咬傷）命中前 3 塊。這時相關度偏低只是外語與中文用詞對不上，照樣以中文原文回答並附 translationSource 說明
+      const d0 = entities.diseases.find((d) => !d.derived)?.id;
+      topicConfirmed = lang !== 'zh-TW' && chunks.length > 0 && !!d0 && (chunks[0].diseases ?? []).includes(d0);
     }
+    // 第四十八輪（issue #94／#101）：前 3 塊有主題錨點命中的內容（被鼬獾咬、晚了兩個月才打 → 漏打、外語「被狗咬」→ 動物咬傷）＝主題已確認，
+    // 不因問句口語、字面涵蓋率低而判查無
+    if (chunks.slice(0, 3).some((c) => anchorIds.has(c.contentId))) topicConfirmed = true;
     // 沒有疾病實體時：以最相關片段的疾病為主，不混入其他疾病的片段
-    if (!entities.diseases.length && chunks.length && (chunks[0].diseases ?? []).length && !['situation', 'stats', 'rumor'].includes(result.intent)) {
-      const dom = new Set(chunks[0].diseases);
+    // 第四十八輪（issue #94）：問句有主題錨點時，以錨點命中的片段的疾病為主（「被鼬獾咬不用打疫苗嗎」是狂犬病，不是分數最高的孕婦接種 FAQ 的流感）
+    const lead = chunks.find((c) => anchorIds.has(c.contentId) && c.diseases?.length) ?? chunks[0];
+    if (!entities.diseases.length && lead && (lead.diseases ?? []).length && !['situation', 'stats', 'rumor'].includes(result.intent)) {
+      const dom = new Set(lead.diseases);
       const kept = chunks.filter((c) => !(c.diseases ?? []).length || c.diseases.some((d) => dom.has(d)));
       kept.qWeights = chunks.qWeights; kept.model = chunks.model;
       chunks = kept;
@@ -1575,6 +1633,24 @@ export function createEngine(rawDeps = {}) {
       const kept = chunks.filter((c) => result.focusIds.includes(c.contentId));
       if (kept.length) { kept.qWeights = chunks.qWeights; kept.model = chunks.model; if (kept.length < chunks.length) result.guards.push({ kind: 'focus', ids: result.focusIds, dropped: chunks.length - kept.length }); chunks = kept; }
     }
+    // 第四十八輪（issue #95）：問句點名某支疫苗（皮蛇疫苗＝帶狀疱疹疫苗），同一疾病另有別支疫苗（水痘疫苗）時，
+    // 不拿別支疫苗的內容回答（片段標了別支疫苗、或內文寫到別支疫苗名稱而沒寫到這一支）；剩下的片段都沒講到這支疫苗 ⇒
+    // 說「本站尚無○○疫苗專頁」並連到時程表上這支疫苗的那一列，而不是答成別的疫苗。這支疫苗日後有頁面，它的片段自然會被留下來回答
+    for (const ev of entities.vaccines) {
+      const V = vaccines.find((x) => x.id === ev.id); if (!V) continue;
+      const sib = vaccines.filter((x) => x.id !== V.id && (x.diseases ?? []).some((d) => (V.diseases ?? []).includes(d)));
+      if (!sib.length) continue;
+      const says = (c, v) => (c.vaccines ?? []).includes(v.id) || [v.name, v.title, ...(v.aliases ?? [])].some((n) => n && hayOf(c).replace(/\s+/g, '').includes(lc(n).replace(/\s+/g, '')));
+      const kept = chunks.filter((c) => says(c, V) || !sib.some((x) => says(c, x)));
+      if (!kept.some((c) => says(c, V))) {
+        const row = scheduleItems.find((i) => i.vaccine === V.id);
+        result.relevance = 0; result.guards.push({ kind: 'no-match', reason: 'vaccine-no-page', vaccine: V.id });
+        setRefusal(result, 'no-match', 'ref.no-match.vaccine', row ? [{ label: tr(LL, `看時程表的${V.name}`, `${V.nameEn ?? V.name} in the immunization schedule`), href: `/vaccines/schedule/#${row.id}`, kind: 'link' }] : null);
+        result.refusal.text = tr(LL, `本站尚無${V.name}專頁，請撥 1922 或洽衛生所。`, `This site has no page on the ${V.nameEn ?? V.name} yet. Please call the 1922 hotline or ask your local health centre.`);
+        return result;
+      }
+      if (kept.length < chunks.length) { result.guards.push({ kind: 'sibling-vaccine-dropped', vaccine: V.id, dropped: chunks.length - kept.length }); kept.qWeights = chunks.qWeights; kept.model = chunks.model; chunks = kept; }
+    }
     result.retrieved = chunks;
 
     // 公告意圖但檢索不到任何公告（全部截止、或尚未進白名單）⇒ 不拿無關片段硬湊，導向公告頁
@@ -1592,7 +1668,6 @@ export function createEngine(rawDeps = {}) {
     // 第二十五輪：相關度閘門。態勢／旅遊有結構化資料可答時不套用（它們不靠檢索片段）
     // 第四十輪：外語問句改用中文片段回答時，問句原文的詞在中文語料裡本來就找不到；相關度改用「對應出來的中文詞」計算。
     // 對應不出任何中文詞 ＝ 引擎根本不知道在問什麼主題 ⇒ 查無，不拿碰巧撞到的片段回答。
-    const crossZh = expanded.added.filter((w) => /[\u3400-\u9fff]/.test(w)).join(' ');
     const relQ = result.translationNote === 'showing-source' ? crossZh : q;
     const structuredOk = (result.intent === 'situation' && situationFor(entities, result.intent)) || (result.intent === 'travel' && (entities.countries.length || TRAVEL_CHANGE_RE.test(q)));
     if (result.translationNote === 'showing-source' && !crossZh.trim() && !structuredOk) {
@@ -1600,7 +1675,7 @@ export function createEngine(rawDeps = {}) {
       return setRefusal(result, 'no-match', 'ref.no-match', noMatchActions(LL));
     }
     if (chunks.length && chunks.model) {
-      const rel = relevanceOf(relQ || q, chunks, chunks.model, hasEntity);
+      const rel = relevanceOf(relQ || q, chunks, chunks.model, hasEntity, zhA);
       result.relevance = rel.relevance; result.relevanceInfo = { coverage: rel.coverage, top: rel.top, matchedIdf: rel.matchedIdf, reason: rel.reason };
       const structured = structuredOk;
       // 第四十輪：結構化資料（態勢卡、旅遊等級）可答、但檢索片段過不了門檻 ⇒ 只回結構化答案，不附不相關的片段
@@ -1610,7 +1685,7 @@ export function createEngine(rawDeps = {}) {
       // 中文讀者看得懂原文、可以自己判斷片段切不切題；外語讀者拿到的常是中文原文或只有部分譯文，低相關片段只會誤導。
       // 例外：問句有主題錨點，且同語言片段的「標題」就在講這個主題（錨點強度 2，例如英文來源的來臺專區）⇒ 主題已確認，
       // 相關度偏低只是問句用詞與片段不同（precautions vs. quarantine／mosquito），不算查無（合併第四十輪 i18n 來臺專區後補）
-      if (topicConfirmed && !result.translationNote && rel.reason) { result.guards.push({ kind: 'topic-confirmed-gate-skipped', reason: rel.reason }); rel.reason = null; }
+      if (topicConfirmed && rel.reason) { result.guards.push({ kind: 'topic-confirmed-gate-skipped', reason: rel.reason }); rel.reason = null; }
       if (!rel.reason && !structured && lang !== 'zh-TW' && rel.relevance < RELEVANCE.lowBelow && !topicConfirmed) rel.reason = 'low-relevance-foreign';
       if (rel.reason && !structured && !(typeof process !== 'undefined' && process.env?.NO_GATE)) { // 瀏覽器沒有 process 物件，直接讀會 ReferenceError、no-match 的答案頁就卡在載入中（第二十八輪修正）
         result.guards.push({ kind: 'no-match', reason: rel.reason, relevance: rel.relevance });
@@ -1690,7 +1765,13 @@ export function createEngine(rawDeps = {}) {
     picked = markNotices(picked, result);
     finalizeSentences(result, picked, sourceMap);
     if (!result.sentences.length) return setRefusal(result, 'no-source', 'ref.no-source');
-    for (const s of result.sentences) { const p = picked.find((x) => x.text === s.text); if (p?.closed) s.closed = true; }
+    // 第四十八輪（issue #102）：相關度偏低時再看答案本身——第一句出自的是同一疾病（問句點名的，或沒點名時的主導疾病）的 FAQ／片段，
+    // 而且題目、標題或第一句與問句在問同一面向（QUERY_FACETS：費用、就醫、疫苗…）⇒ 切題，不標「相關程度較低」。改的是判斷，不是調低門檻。
+    // 沒綁疾病的通用 FAQ（例：補接種）對任何疾病都算同主題——「五合一晚了兩個月才打」第一句就出自補接種 FAQ，不該因為 FAQ 沒列疾病而被標低相關
+    const c0 = picked[0]?.chunk;
+    const d1 = result.disease ?? chunks[0]?.diseases?.[0];
+    if (isLowRelevance(result) && c0 && (c0.type === 'faq' ? !d1 || !c0.diseases?.length || c0.diseases.includes(d1) : (c0.diseases ?? []).includes(d1))
+      && QUERY_FACETS.some((re) => re.test(q) && re.test(`${c0.question ?? c0.title} ${picked[0].text}`))) { result.topicMatch = c0.type === 'faq' ? 'faq' : 'disease'; result.guards.push({ kind: 'topic-match', id: c0.id }); }
     result.completeness = completenessOf(result.intent, result.sentences, { situation: !!sit, q });
     result.actions = actionsFor(result, entities, sit);
     // 民眾問「要驗什麼」：導向疾病頁「診斷與治療」區塊（檢驗細節屬專業內容）

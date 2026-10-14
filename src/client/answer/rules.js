@@ -1,5 +1,6 @@
 // 答案引擎：意圖規則、拒答規則與查無門檻（治理人員最常審的一份；只有資料與規則，沒有檢索邏輯）。第三十四輪自 core.js 拆出，ARCHITECTURE 第 40 章。
 import { detectInjection } from './text.js';
+import { REFUSAL_TEXT_I18N } from './refusal-i18n.js';
 
 // ───────────────────────── 2. 意圖規則 ─────────────────────────
 
@@ -47,8 +48,17 @@ export const focusOf = (q, c) => titleHits(q, c.title) >= 2 || (c.focusTerms ?? 
  */
 export const RELEVANCE = { refChunks: 500, hardMinTop: 3, minTop: 8, highCoverage: 0.85, minCoverage: 0.28, minCoverageEntity: 0, minMatchedIdf: 0.3, genericMaxCoverage: 0.5, lowBelow: 0.6 };
 
-/** 相關度高於拒答線但偏低（UI 顯示「與你的問題相關程度較低」，不再宣稱僅引用官方內容的信心） */
-export function isLowRelevance(result) { return typeof result?.relevance === 'number' && result.relevance < RELEVANCE.lowBelow; }
+/**
+ * 相關度高於拒答線但偏低（UI 顯示「與你的問題相關程度較低」，不再宣稱僅引用官方內容的信心）。
+ * 第四十八輪（issue #102）：引擎判定答案切題（result.topicMatch，見 core.js）時不標低相關——
+ * 相關度分數是「問句的字被片段涵蓋多少」，口語問句（咳嗽三週了會不會是肺結核，要去哪裡看）字多、涵蓋率天生低，分數低不等於答偏。
+ */
+export function isLowRelevance(result) { return typeof result?.relevance === 'number' && result.relevance < RELEVANCE.lowBelow && !result.topicMatch; }
+/**
+ * 第四十八輪（issue #102）：問句的「面向」詞組（費用、就醫、疫苗、症狀、預防、傳染、咬抓傷）。
+ * 問句與第一句答案（或它出自的 FAQ 題目、片段標題）落在同一個面向、且講的是同一個疾病 ⇒ 答案切題（topicMatch），不標低相關。
+ */
+export const QUERY_FACETS = [/(費用|錢|自付|自費|部分負擔|免費|公費|補助|健保)/, /(就醫|看醫生|看病|看診|門診|哪裡看|掛號|胸腔科|醫院)/, /(疫苗|接種|打針|施打|補打|漏打|晚打|才打|打過|打了)/, /(症狀|徵兆|徵象|前兆)/, /(預防|防範|避免)/, /(傳染|傳播|會傳)/, /(咬|抓傷)/];
 /** 問句去掉功能詞後才斷詞，避免「苗哪」「裡打」這種跨功能詞的雜訊雙字拉低涵蓋率 */
 export const QUERY_FUNC_RE = /(請問|想問|我想知道|可以|怎麼辦|怎麼|怎樣|如何|什麼|哪裡|哪些|哪個|哪一|是否|有沒有|能不能|會不會|需不需要|應該|是不是|告訴我|知道|幫我|一下|的話|為什麼|為何|多少|有哪|[的了嗎呢吧啊是在有沒不也都就還和與及或我你他她它們這那哪要會能請問想誰幾])/g;
 
@@ -63,6 +73,9 @@ export const TRAVEL_CHANGE_RE = /((旅遊疫情建議|旅遊警示|疫情等級|
 export const SERVICE_CUE = /(怎麼查|如何查|哪裡查|去哪裡?(查|申請|辦|拿|領|補|索取|下載|取得)|哪裡(可以|能)?(查|申請|辦|拿|領|補|索取|下載|取得)|在哪(裡)?(查|申請|辦|拿|領|補|索取|下載|取得)?\s*[?？]?\s*$|怎麼(申請|取得|拿到|補發|下載|辦理)|如何(申請|取得|補發|下載|辦理)|\bwhere (?:can|do|should) i (?:get|find|apply|obtain|download)\b|\bhow (?:do|can) i (?:get|apply|obtain|find|download)\b)/i;
 /** 「去哪裡打疫苗」：找接種點（疫苗意圖＋vaxmap 連結），不當成申請服務 */
 export const VAX_WHERE_RE = /((哪裡|哪邊|在哪|去哪).{0,8}(打|接種|施打)|(打|接種|施打).{0,6}(哪裡|哪邊|在哪)|(疫苗|預防針).{0,6}(哪裡|哪邊|在哪)|\bwhere\b.{0,40}\b(vaccin\w*|shots?|jabs?|immuni[sz]\w*)|\b(vaccin\w*|shots?|jabs?)\b.{0,30}\bwhere\b|ở đâu.{0,20}(tiêm|vắc)|(tiêm|vắc[\s-]?xin).{0,30}ở đâu)/i;
+
+/** 第四十八輪（issue #94）：要查的是「紀錄」（打過什麼疫苗、接種紀錄、兒童健康手冊）⇒ 申請服務（紀錄補發），不是找接種點，即使句子也有「疫苗…去哪裡」 */
+export const RECORD_RE = /(紀錄|記錄|打過(什麼|哪些|幾劑)|接種過|健康手冊|黃卡)/;
 
 /**
  * 可解釋意圖規則。每條：{ id, intent, weight, re, note, gate? }。命中加權，最高分者為意圖；分數 < 2 → unknown。
@@ -138,7 +151,7 @@ export const INTENT_RULES = [
   { id: 'rum.ml', intent: 'rumor', weight: 5, re: /(本当ですか|デマ|うわさ|\btotoo ba\b|\btsismis\b|pekeng balita|\bapakah\b.{0,30}\bbenar\b|\bhoaks\b|จริงหรือไม่|จริงไหม|ข่าวปลอม)/i, note: '日／他加祿／印尼／泰文：是真的嗎' },
   // 第四十輪（issue #78／#75）：服務型問句「怎麼查／怎麼申請／去哪裡拿／在哪裡／how do I get」⇒ 申請服務（services）優先。
   // 「去哪裡打疫苗」是找接種點，不是申請服務 ⇒ 由 VAX_WHERE_RE 排除，留在疫苗意圖（actions 帶接種點地圖、答案帶地點句）。
-  { id: 'svc.where-how', intent: 'apply', weight: 4, test: (q) => SERVICE_CUE.test(q) && !VAX_WHERE_RE.test(q), note: '服務型問句（怎麼查、怎麼申請、去哪裡拿、在哪裡、how do I get）；問去哪裡打疫苗除外' },
+  { id: 'svc.where-how', intent: 'apply', weight: 4, test: (q) => SERVICE_CUE.test(q) && (!VAX_WHERE_RE.test(q) || RECORD_RE.test(q)), note: '服務型問句（怎麼查、怎麼申請、去哪裡拿、在哪裡、how do I get）；問去哪裡打疫苗除外（查接種紀錄不算）' },
 ];
 /** 專業子意圖（專業模式下不被 professional 覆寫） */
 export const PRO_SUB_INTENTS = ['apply', 'lab', 'notify', 'notice', 'careers', 'procurement'];
@@ -252,60 +265,17 @@ export const REFUSAL_TEXT = {
     'no-job-result': { title: 'No published selection results', text: 'No selection results have been published. Results list only application numbers (no names) on each vacancy page; this service does not read out the list.' },
     'no-open-tender': { title: 'No open tenders right now', text: 'Taiwan CDC has no tenders open for bids at the moment. See the Procurement page; official notices are on the Government e-Procurement System.' },
   },
-  // ── 第四十輪（issue #70）：以下五語為「機器初稿，待多語審核」（REFUSAL_TEXT_STATUS）。只譯最常出現的拒答／查無；其餘 kind 退回英文。
+  // ── 第四十輪（issue #70）：日、他加祿、越、印尼、泰五語為「機器初稿，待多語審核」（REFUSAL_TEXT_STATUS）。只譯最常出現的拒答／查無；其餘 kind 退回英文。
   // 原則：句子短、不加新資訊（只說「不能判斷、請就醫、撥 1922」），審核時只需核對語氣與用詞。
-  ja: {
-    'prompt-injection': { title: 'このご依頼にはお応えできません', text: 'システムの規則を変更しようとする指示が含まれています。本サービスは公式情報の整理のみを行います。知りたい感染症対策の質問をそのまま入力してください。' },
-    'no-match': { title: 'このサイトに直接の回答はありません', text: 'この質問に直接答える内容が本サイトにありません。無関係な内容で補うことはしません。1922 にお電話いただくか、感染症一覧やサイトマップをご覧ください。' },
-    'no-source': { title: '公式の根拠が足りません', text: '公式情報だけではこの質問に答えられないため、推測はしません。1922 にお問い合わせください。' },
-    'no-clarification': { title: '対応する公式の説明はまだありません', text: 'このメッセージに対応する公式の説明はまだありません。転送はお控えください。1922 へのお問い合わせ、またはこのページからの報告ができます。' },
-  },
-  tl: {
-    'prompt-injection': { title: 'Hindi ko masusunod ang hiling na ito', text: 'Mukhang sinusubukang baguhin ang mga patakaran ng sistema. Opisyal na nilalaman lamang ang ibinubuod ng serbisyong ito. I-type na lang ang tanong mo tungkol sa kalusugan.' },
-    harmful: { title: 'Hindi ko ito masasagot', text: 'Hindi nagbibigay ang serbisyong ito ng impormasyong maaaring makasama sa kalusugan ng publiko.' },
-    emergency: { title: 'Magpatingin agad sa emergency', text: 'Maaaring delikado sa buhay ang inilalarawan mo. Tumawag agad sa 119 o pumunta sa pinakamalapit na emergency room.' },
-    'personal-diagnosis': { title: 'Hindi ko ito mahuhusgahan para sa iyo', text: 'Kailangang suriin ng doktor nang personal ang mga sintomas. Masasabi ng opisyal na nilalaman kung kailan dapat magpatingin, pero hindi kung ikaw ay may impeksyon.' },
-    medication: { title: 'Hindi ko ito mahuhusgahan para sa iyo', text: 'Doktor o parmasyutiko ang dapat magpasya kung anong gamot at gaano karami. Walang personal na payo sa gamot ang site na ito.' },
-    forecast: { title: 'Walang hula o pagtataya', text: 'Inilalahad lamang ng serbisyong ito ang nailathalang datos at hindi nanghuhula ng mga kaso sa hinaharap.' },
-    privacy: { title: 'Hindi ko ito masasagot', text: 'Hindi kailanman ibinubunyag ang personal na impormasyon ng sinumang kaso.' },
-    'no-source': { title: 'Kulang ang opisyal na batayan', text: 'Hindi sapat ang opisyal na nilalaman para sagutin ito, kaya hindi ako manghuhula. Tumawag sa 1922.' },
-    'no-match': { title: 'Walang direktang sagot sa site na ito', text: 'Walang nilalaman sa site na direktang sumasagot sa tanong na ito, at hindi ko ito pupunuin ng walang kaugnayang nilalaman. Tumawag sa 1922, o tingnan ang listahan ng mga sakit o ang mapa ng site.' },
-    'no-clarification': { title: 'Wala pang katugmang opisyal na paglilinaw', text: 'Wala pang opisyal na paglilinaw para sa mensaheng ito. Huwag muna itong ipasa; maaari kang tumawag sa 1922 o i-report ito rito.' },
-  },
-  vi: {
-    'prompt-injection': { title: 'Tôi không thể làm theo yêu cầu này', text: 'Yêu cầu này có vẻ muốn thay đổi quy tắc của hệ thống. Dịch vụ chỉ tổng hợp nội dung chính thức. Hãy nhập trực tiếp câu hỏi về phòng dịch.' },
-    'no-match': { title: 'Trang web không có câu trả lời trực tiếp', text: 'Trang web hiện không có nội dung trả lời trực tiếp câu hỏi này, và tôi sẽ không dùng nội dung không liên quan để trả lời. Hãy gọi 1922 (có thông dịch) hoặc xem danh mục bệnh, sơ đồ trang web.' },
-    'no-source': { title: 'Không đủ căn cứ chính thức', text: 'Nội dung chính thức không đủ để trả lời câu hỏi này nên tôi sẽ không suy đoán. Hãy gọi 1922 (có thông dịch).' },
-    'no-clarification': { title: 'Chưa có thông tin làm rõ chính thức', text: 'Chưa có thông tin làm rõ chính thức cho tin nhắn này. Xin đừng chuyển tiếp; bạn có thể gọi 1922 hoặc báo cáo tại trang này.' },
-  },
-  id: {
-    'prompt-injection': { title: 'Saya tidak dapat mengikuti permintaan ini', text: 'Permintaan ini tampak mencoba mengubah aturan sistem. Layanan ini hanya merangkum konten resmi. Silakan ketik langsung pertanyaan Anda tentang pencegahan penyakit.' },
-    harmful: { title: 'Saya tidak dapat menjawab ini', text: 'Layanan ini tidak memberikan informasi yang dapat membahayakan kesehatan masyarakat.' },
-    emergency: { title: 'Segera cari pertolongan darurat', text: 'Kondisi yang Anda gambarkan dapat mengancam nyawa. Segera hubungi 119 atau pergi ke IGD terdekat.' },
-    'personal-diagnosis': { title: 'Saya tidak dapat menilai ini untuk Anda', text: 'Gejala pribadi perlu diperiksa langsung oleh dokter. Konten resmi dapat memberi tahu kapan harus ke dokter dan tanda bahaya, tetapi tidak dapat memastikan apakah Anda terinfeksi.' },
-    medication: { title: 'Saya tidak dapat menilai ini untuk Anda', text: 'Jenis dan dosis obat harus ditentukan oleh dokter atau apoteker. Situs ini tidak memberikan saran obat pribadi.' },
-    forecast: { title: 'Tidak ada ramalan', text: 'Layanan ini hanya menyampaikan data yang telah diterbitkan dan tidak meramalkan kasus di masa depan.' },
-    privacy: { title: 'Saya tidak dapat menjawab ini', text: 'Informasi pribadi tentang kasus mana pun tidak pernah diungkapkan.' },
-    'no-source': { title: 'Dasar resmi tidak cukup', text: 'Konten resmi tidak cukup untuk menjawab pertanyaan ini, jadi saya tidak akan menebak. Silakan hubungi 1922.' },
-    'no-match': { title: 'Tidak ada jawaban langsung di situs ini', text: 'Situs ini belum memiliki konten yang langsung menjawab pertanyaan ini, dan saya tidak akan mengisinya dengan konten yang tidak terkait. Silakan hubungi 1922, atau lihat daftar penyakit atau peta situs.' },
-    'no-clarification': { title: 'Belum ada klarifikasi resmi yang sesuai', text: 'Belum ada klarifikasi resmi untuk pesan ini. Jangan teruskan dulu; Anda dapat menghubungi 1922 atau melaporkannya di halaman ini.' },
-  },
-  th: {
-    'prompt-injection': { title: 'ไม่สามารถทำตามคำขอนี้ได้', text: 'คำขอนี้ดูเหมือนพยายามเปลี่ยนกฎของระบบ บริการนี้สรุปเฉพาะเนื้อหาทางการ กรุณาพิมพ์คำถามเรื่องการป้องกันโรคโดยตรง' },
-    harmful: { title: 'ไม่สามารถตอบคำถามนี้ได้', text: 'บริการนี้ไม่ให้ข้อมูลที่อาจเป็นอันตรายต่อสุขภาพของประชาชน' },
-    emergency: { title: 'โปรดไปห้องฉุกเฉินทันที', text: 'อาการที่คุณบอกอาจเป็นอันตรายถึงชีวิต โทร 119 หรือไปห้องฉุกเฉินที่ใกล้ที่สุดทันที' },
-    'personal-diagnosis': { title: 'ไม่สามารถวินิจฉัยแทนคุณได้', text: 'อาการส่วนตัวต้องให้แพทย์ตรวจโดยตรง เนื้อหาทางการบอกได้ว่าเมื่อไรควรไปพบแพทย์และสัญญาณอันตราย แต่บอกไม่ได้ว่าคุณติดเชื้อหรือไม่' },
-    medication: { title: 'ไม่สามารถวินิจฉัยแทนคุณได้', text: 'ชนิดและขนาดยาต้องให้แพทย์หรือเภสัชกรเป็นผู้กำหนด เว็บไซต์นี้ไม่ให้คำแนะนำการใช้ยาเฉพาะบุคคล' },
-    forecast: { title: 'ไม่พยากรณ์', text: 'บริการนี้ถ่ายทอดเฉพาะข้อมูลที่เผยแพร่แล้ว ไม่พยากรณ์จำนวนผู้ป่วยในอนาคต' },
-    privacy: { title: 'ไม่สามารถตอบคำถามนี้ได้', text: 'ไม่เปิดเผยข้อมูลส่วนบุคคลของผู้ป่วยรายใดทั้งสิ้น' },
-    'no-source': { title: 'หลักฐานทางการไม่เพียงพอ', text: 'เนื้อหาทางการไม่เพียงพอที่จะตอบคำถามนี้ จึงจะไม่คาดเดา โปรดโทร 1922' },
-    'no-match': { title: 'เว็บไซต์นี้ไม่มีคำตอบโดยตรง', text: 'เว็บไซต์นี้ยังไม่มีเนื้อหาที่ตอบคำถามนี้โดยตรง และจะไม่นำเนื้อหาที่ไม่เกี่ยวข้องมาตอบแทน โปรดโทร 1922 หรือดูรายชื่อโรคหรือแผนผังเว็บไซต์' },
-    'no-clarification': { title: 'ยังไม่มีคำชี้แจงทางการที่ตรงกัน', text: 'ยังไม่มีคำชี้แจงทางการสำหรับข้อความนี้ โปรดอย่าเพิ่งส่งต่อ โทร 1922 หรือแจ้งผ่านหน้านี้ได้' },
-  },
+  // 第四十八輪：五語文案搬到 refusal-i18n.js（建置時依語言拆檔，答案頁只載當頁語言；見該檔說明）
+  ...REFUSAL_TEXT_I18N,
 };
 
 /** 第四十輪：各語拒答文案的審核狀態（machine-draft＝機器初稿，待多語審核；審過改 reviewed 並在 PR 記審核人） */
 export const REFUSAL_TEXT_STATUS = { 'zh-TW': 'source', en: 'reviewed', ja: 'machine-draft', tl: 'machine-draft', vi: 'machine-draft', id: 'machine-draft', th: 'machine-draft' };
+
+/** 第四十八輪：答案頁載入當頁語言的拒答文案拆檔（refusal-i18n.<lang>.js）後併入；原始碼裡本來就齊全，已有的語言不覆寫 */
+export function registerRefusalText(lang, text) { REFUSAL_TEXT[lang] ??= text; }
 
 /** 拒答文案：該語言有就用該語言；沒有的 kind 退回英文（中文頁退回中文），再退回中文 */
 export function refusalCopy(kind, lang) {

@@ -10,7 +10,7 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { matcherFor } from '../src/client/answer/lexicon.js';
 import { ENGINE_PRIMARY, ENGINE_SECONDARY, indexShardNames } from '../src/client/answer/deps-manifest.js';
-import { checkJsBudget, checkAskDataBudget, DEFAULT_ASK_DATA_KB, DEFAULT_ENGINE_KB } from '../scripts/lib/js-budget.mjs';
+import { checkJsBudget, checkAskDataBudget, DEFAULT_ASK_DATA_KB, DEFAULT_ASK_DATA_PRO_KB, DEFAULT_ENGINE_KB } from '../scripts/lib/js-budget.mjs';
 import { config } from '../site.config.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
@@ -126,6 +126,8 @@ test('dist：答案頁立即載入的 JS 不含引擎；提問後合計仍在 24
   const d = checkAskDataBudget(DIST, { langs: config.langs.map((l) => l.code) });
   assert.ok(d.ok, `資料 ${d.maxLang} ${d.max}`);
   assert.ok(d.max <= DEFAULT_ASK_DATA_KB * 1024);
+  assert.ok(d.pro.bytes <= DEFAULT_ASK_DATA_PRO_KB * 1024, `專業版 ${d.pro.bytes}`);
+  assert.ok(d.proBudgetKb === DEFAULT_ASK_DATA_PRO_KB && !checkAskDataBudget(DIST, { langs: ['zh-TW'], proBudgetKb: 1 }).ok, '專業版超過自己的預算時整體失敗');
   const zh = d.rows.find((x) => x.lang === 'zh-TW');
   assert.ok(
     zh.files.some(([n]) => n === 'search-index.zh-TW'),

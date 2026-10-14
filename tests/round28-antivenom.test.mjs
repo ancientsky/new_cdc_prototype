@@ -170,12 +170,13 @@ test('索引：專業段只進專業版；每段一塊、帶 verification:pendin
   assert.ok(pro.some((c) => c.url.endsWith('#s-professional')));
   for (const c of [...pub, ...pro]) assert.equal(c.verification, 'pending', c.id);
   // 沒有 verification 的內容不帶這個欄位（索引不膨脹）
+  // 第四十八輪：帶狀疱疹疫苗頁、其公費 FAQ、校園流感群聚 FAQ 也是 verification:pending（#95、#96）。
   // 第二十九輪：疫情報導示範文章與第 42 卷第 2 期也是 verification:pending（內文為示範重寫、卷期資訊只看到搜尋摘要），一併排除；第三十五輪的第 42 卷第 19 期（真實文章，待同仁核對）亦同；第三十六輪的受害救濟服務頁與法規委員會頁（依官網分類整理，待急性傳染病組核對）亦同；第四十輪的來臺旅客入境健康資訊（topic.visiting-taiwan，待檢疫組核對）與新手爸媽 4 則 FAQ（依已知接種原則保守撰寫，待預防醫學辦公室核對）亦同
   assert.ok(
     !site.searchIndex.public.some(
       (c) =>
         !c.contentId.match(
-          /antivenom|snakebite|^article\.|bulletin-42-\d+$|vaccine-injury-compensation|immunization-committees|visiting-taiwan|^faq\.(catch-up-vaccination|infant-flu-under-6-months|pregnancy-breastfeeding-vaccination|infant-rsv-prevention)$/,
+          /antivenom|snakebite|^article\.|bulletin-42-\d+$|vaccine-injury-compensation|immunization-committees|visiting-taiwan|^faq\.(catch-up-vaccination|infant-flu-under-6-months|pregnancy-breastfeeding-vaccination|infant-rsv-prevention|zoster-vaccine-funding|flu-school-cluster)$|^vaccine\.zoster$/,
         ) && 'verification' in c,
     ),
   );
@@ -213,7 +214,8 @@ test('來源卡：待確認內容顯示「內容待權責單位確認」標籤',
   // render.js 需要瀏覽器 DOM（同 pdf-ingest.test.mjs 的做法）：檢查來源卡有讀 verification 欄位與字串
   const render = fs.readFileSync('src/client/answer/render.js', 'utf8');
   assert.match(render, /if \(src\.verification === 'pending'\) add\(L\('verification'\), `<span class="c-tag c-tag--warn">/);
-  assert.match(render, /verificationPending: '依公開資料整理，內容待權責單位確認'/);
+  // 第四十八輪：字串表搬到 src/client/i18n.ask.js（key 為 ask.ui.*）
+  assert.match(fs.readFileSync('src/client/i18n.ask.js', 'utf8'), /"ask\.ui\.verificationPending": \["依公開資料整理，內容待權責單位確認"/);
   const r = engine.answer('被蛇咬怎麼辦');
   assert.equal(r.sources[0].verification, 'pending');
 });

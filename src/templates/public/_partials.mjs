@@ -490,6 +490,15 @@ export const daysUntil = (today, iso) => (iso ? dayDiff(today, iso) : null);
 /** 距截止日天數：治理引擎的 gov.daysToDeadline 優先 */
 export const daysLeft = (site, n) => (typeof n.gov?.daysToDeadline === 'number' ? n.gov.daysToDeadline : daysUntil(site.today, n.deadlineAt));
 
+/**
+ * 倒數 span（第四十八輪，Issue #97）：建置時用 site.today 算好的文字當沒有 JS 時的後備，並附 data-deadline／data-kind，
+ * 載入 ui.js 後由 countdown.js 以瀏覽器現在的日期（台灣日界線）重算。後備文字後面接「（以 YYYY-MM-DD 計）」，只有沒有 JS 時看得到。
+ * admin：後台頁不載入 ui.js 的重算，直接標「以建置日計」（admin 模板自己處理）。
+ */
+export function countdownEl(ctx, { cls, kind = 'left', deadline, text }) {
+  return html`<span class="${cls}" data-deadline="${deadline}" data-kind="${kind}">${text}</span><span class="c-asof">${ctx.t('notice.asof', { date: ctx.site.today })}</span>`;
+}
+
 /** 公告是否已截止：治理引擎的 gov.closed 優先，否則由欄位推算 */
 export function isClosed(site, n) {
   if (n.gov && typeof n.gov.closed === 'boolean') return n.gov.closed;
@@ -609,7 +618,7 @@ export function deadlinePill(ctx, n) {
   if (closed) return html`<span class="c-deadline c-deadline--closed">${t('notice.closed.on', { date: fmtDate(n.deadlineAt) })}</span>`;
   const soon = isClosingSoon(site, n);
   const txt = d === 0 ? t('notice.today') : t('notice.daysleft', { n: d });
-  return html`<span class="c-deadline ${soon ? 'c-deadline--soon' : 'c-deadline--open'}">${txt}</span>`;
+  return countdownEl(ctx, { cls: `c-deadline ${soon ? 'c-deadline--soon' : 'c-deadline--open'}`, deadline: n.deadlineAt, text: txt });
 }
 export function noticeRow(ctx, n) {
   const { t, fmtDate, site } = ctx;

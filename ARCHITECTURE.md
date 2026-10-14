@@ -2396,3 +2396,49 @@ i18n 新鍵（七語齊備，順序 zh-TW, en, ja, tl, vi, id, th）：`nav.more
 8. 面板內沒有 `<h1-6>`。
 9. 後台輸出不含 `data-nav-dd`。
 10. Playwright 端到端（沒有 dist 或 chromium 就 `tc.skip`）：1280px 點 ▾ → `open`、面板可見、點另一個前一個關、Esc 關閉且 `activeElement` 是 summary、點空白處關閉；以 `elementFromPoint` 確認面板沒被 `overflow` 裁切；390px 點「選單」→ 點 ▾ → 面板在 summary 下方且 `position` 為 static（含手機版面）；`@axe-core/playwright` 在 1280px 開傳染病面板後掃整個首頁，無 serious／critical。
+
+## 51. 第四十八輪（2026-10-14）：grokbot 第三批——錨點、切題判斷、待確認標記、依語言拆檔、前端倒數
+
+民眾看得到的說明在 README 第四十八輪；取捨在 architecture-decisions §36；各領域細節：ask-search-llm.md §13、a11y.md §9–10、i18n.md §7、deploy.md §15.3／§17、guide-staff §46–47。這裡記工程契約。
+
+### 51.1 答案引擎（src/client/answer/）
+
+| 機制 | 契約 |
+| --- | --- |
+| 主題錨點（#94，`core.js zhAnchors`／`retrieve`） | 問句（含口語改寫 `PARAPHRASE`；外語走 `CROSS_LANG`）裡只屬於 ≤ 3 份答案單元的詞成為錨點；錨定片段加權並排前。錨點只取自問句原文，不取詞彙主檔展開。只有未綁疾病的錨定 FAQ 能越過疾病過濾 |
+| 口語改寫 | `lexicon.js PARAPHRASE` 新增「晚了才打／延後接種」→ 補接種、「打過什麼疫苗／接種紀錄」→ 紀錄；`rules.js RECORD_RE` 讓「去哪裡查」先判受詞是紀錄還是疫苗（紀錄 → 服務意圖 apply） |
+| 指名疫苗（#95） | 問句命中疫苗主檔名稱／別名、而站上沒有任何片段提到該疫苗 ⇒ 拒答 `ref.no-vaccine-page`（文案「本站尚無 X 專頁，請撥 1922」），時程表有該疫苗就附 `/vaccines/schedule/#sched.<id>`；不以同疾病的其他疫苗作答。瀏覽器端新增 `v1/vaccine-master.json`（emit-api、openapi、deps-manifest、data.js），兩端共用疫苗主檔；沒有專頁的疫苗不顯示疫苗頁連結 |
+| 連接詞句（#96，`composeSentences`） | 以 但／但是／不過／然而／另外／此外／因此／所以／其中、However／But／Also 開頭的句子：前一句已選入就接成一句（原文連續、grounding 仍通過），否則不選 |
+| 切題判斷（#102，`rules.js QUERY_FACETS`、`isLowRelevance`） | 相關度 < `lowBelow` 時再看第一句：出自同一疾病（問句點名的或主導疾病）的 FAQ／片段，或未綁疾病的通用 FAQ，且問句與「FAQ 題目＋標題＋第一句」命中同一面向（費用／就醫／疫苗／症狀／預防／傳染／咬抓傷）⇒ `result.topicMatch`，不標低相關；`judge.js` 支援 `expect.lowRelevance` |
+| 外語回退（#101） | 外語問句的疾病與第一名片段相符即視為主題確認；同語言但低相關的片段丟掉，改以 zh-TW 片段作答並帶 `translationNote: showing-source`。`latinStems` 新規則：名稱去掉頭／尾同義字也算別名（Demam berdarah dengue → demam berdarah）；詞彙補 症狀／被咬／狗／貓 多語 |
+| 待確認標記（#93） | 片段 `verification: 'pending'` ⇒ 引用句尾加「（待確認）」（與時程表同一標記；`judge.js` 比對前先去掉）；來源卡摘要列加 `ask.ui.pendingTag`。`validate.mjs pendingReviewWarnings`：pending 且 `reviewedAt` ＝ `publishedAt` ＝ `aiWhitelist.approvedAt` 的內容建置時列「⚠ [待確認]」，只警告 |
+| 預算 | 拒答文案依語言拆檔 `assets/js/answer/refusal-i18n.<lang>.js`（`i18n-split.mjs emitRefusalBundles`，data.js 動態載入，js-budget 只計當頁語言那一檔）。提問後合計 238.4／240 KB |
+
+### 51.2 答案頁字串依語言拆檔（#100）
+
+- `src/client/i18n.ask.js ROWS_ASK`：key `ask.ui.*`，七語（巢狀 `verdict.*`／`side.*`／`media.*` 攤平；陣列以「|」串接，`L()` 拆回）。`i18n-split.mjs` 另拆成 `dist/assets/js/i18n.ask.<lang>.js`，只有 `/ask/`、`/data/`、`/factcheck/` 載入；其他公開頁語言檔不變大。
+- `render.js L()`：瀏覽器讀 `window.CDC.I18N`；Node（測試、評估）以 `globalThis.process` 判斷後動態載入完整 `i18n.js`，瀏覽器不執行、預算不計。
+- `render.js link()` 的「（另開視窗）」改 `ask.ui.newWindow`；來源卡 `ownerLabel()` 非中文頁取 `units.json nameEn`（`factcheck.js`／`stats.js` 各加一行 `setUnits`）；疫情卡語言欄位不齊時整張改英文。
+- `i18n-quality.mjs STRICT_CJK_PAGES`：`/<lang>/` 與 `/<lang>/ask/` 中文比例 > 15% ⇒ 建置失敗；其餘維持警告。
+
+### 51.3 倒數（#97）
+
+`_partials.mjs countdownEl()`：輸出建置時文字＋`data-deadline="YYYY-MM-DD"`、`data-kind=left|opens|campaign`，加 `.c-asof`「（以 建置日 計）」（有 JS 時以 `html.js` 隱藏）。`src/client/countdown.js`（`taipeiToday`、`dayDiff`、`countdownView`、`applyCountdowns`）日界線固定 UTC+8；`ui.js` 只在頁面有 `[data-deadline]` 時動態載入。使用者：`_careers.mjs jobCountdown`／`tenderCountdown`、`deadlinePill`、`campaigns.mjs`。後台表格維持建置日數字並註明。
+
+### 51.4 無障礙（#98、#99、#104）
+
+- `scripts/a11y.mjs`：VIEWPORTS 新增「文字 200%／390」（根字級 200%），`scrollWidth > viewport` 列為阻擋；PAGES 加 `/procurement/`、`/careers/`。
+- CSS：`.c-job__side` 可縮可換行；`.c-askbox input` `flex:1 1 9rem`，askband／askpage `flex-basis: min(…,100%)`；task 格子與 deflist `minmax(0,1fr)`；subscribe 網格 `min(14em,100%)`。
+- `.c-tabs__print` 改為 sr-only（不再 `display:none`），/procurement/、/careers/、/notices/、疾病頁頁籤的 h2 都讓讀屏讀到。
+- `layout.mjs` `<main id="main" tabindex="-1">`（iOS VoiceOver 跳到主要內容需要），`#main:focus{outline:none}`。
+
+### 51.5 內容與資料（#95、#96、#101、#103、#105）
+
+- 新增 `content/vaccines/zoster.json`（主檔 `vaccine.zoster.hasPage: true`）、`content/faq/zoster-vaccine-funding.json`、`content/faq/flu-school-cluster.json`，皆 `verification.status: pending`；`content/services/vaccination-record-reissue.json` 加關鍵字。
+- `content/faq/rabies-bite.json`、`tb-treatment-cost.json`：id／th／tl `languages.<lang>.status: machine` 初稿（依 §45 政策：顯示並標「機器翻譯」、不進答案索引）。
+- `js-budget.mjs DEFAULT_ASK_DATA_PRO_KB = 565`（`ASK_DATA_PRO_BUDGET_KB`，0 ＝只回報）；`checkAskDataBudget` 回傳 `publicOk`／`proOk`，build.mjs 任一超過即 exit 1。`npm run perf:ask`。
+- `package.json engines.node >=22`、`.nvmrc`、`.node-version`。
+
+### 51.6 測試
+
+`tests/round48-engine.test.mjs`（13）、`round48-ui.test.mjs`、`round48-ask-i18n.test.mjs`；評估集 R48-01～36（含 `requires: faq.flu-school-cluster` 與 lang id／th／tl 題）。合併四路工作後重跑：評估集 326／326、a11y 0 阻擋。

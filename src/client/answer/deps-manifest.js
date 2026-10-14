@@ -23,6 +23,7 @@ export const ENGINE_SECONDARY = [
   ['notify-table', null, true],
   ['media', [], true],
   ['immunization-schedule', [], true],
+  ['vaccine-master', [], true], // 第四十八輪（issue #95）：還沒有疫苗頁的疫苗也要認得（皮蛇疫苗）
 ];
 
 /** 某語言的答案頁要下載的索引分片（中文正本一定要有：引擎查不到該語言的審閱譯文時退回中文） */

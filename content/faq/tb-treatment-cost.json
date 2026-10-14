@@ -39,16 +39,16 @@
       "status": "none"
     },
     "tl": {
-      "status": "none"
+      "status": "machine"
     },
     "vi": {
       "status": "none"
     },
     "id": {
-      "status": "none"
+      "status": "machine"
     },
     "th": {
-      "status": "none"
+      "status": "machine"
     }
   },
   "summary": "結核病診治由健保給付、部分負擔由疾管署支應；都治、接觸者檢查與潛伏感染治療也由公費支應，隔離治療費用由政府負擔。",
@@ -62,5 +62,25 @@
   "legacyUrls": [
     "https://www.cdc.gov.tw/Category/QAPage/{id}#cost"
   ],
-  "answerMarkdown": "結核病個案的**診斷與治療費用由健保給付，就醫的部分負擔由疾管署支應**，病人看診、拿藥原則上不需自付部分負擔；都治關懷員送藥服務、接觸者檢查與潛伏結核感染治療也都由公費支應。\n\n多重抗藥性結核病個案由抗藥性結核病醫療照護體系收治，治療費用由公費支應。依《傳染病防治法》經衛生主管機關施行隔離治療者，隔離治療期間費用由政府負擔。申請方式與條件請見「結核病診治費用補助與隔離治療」。"
+  "answerMarkdown": "結核病個案的**診斷與治療費用由健保給付，就醫的部分負擔由疾管署支應**，病人看診、拿藥原則上不需自付部分負擔；都治關懷員送藥服務、接觸者檢查與潛伏結核感染治療也都由公費支應。\n\n多重抗藥性結核病個案由抗藥性結核病醫療照護體系收治，治療費用由公費支應。依《傳染病防治法》經衛生主管機關施行隔離治療者，隔離治療期間費用由政府負擔。申請方式與條件請見「結核病診治費用補助與隔離治療」。",
+  "i18n": {
+    "id": {
+      "question": "Apakah pengobatan TBC berbayar?",
+      "answerMarkdown": "**Biaya diagnosis dan pengobatan TBC ditanggung asuransi kesehatan nasional (JKN Taiwan), dan biaya partisipasi pasien ditanggung oleh CDC.** Pada prinsipnya pasien tidak perlu membayar sendiri untuk berobat dan mengambil obat. Layanan petugas pendamping DOTS yang mengantar obat, pemeriksaan kontak, dan pengobatan infeksi TBC laten juga dibiayai dana publik.\n\nPasien TBC resisten obat ganda dirawat dalam sistem perawatan TBC resisten obat dan biayanya dibiayai dana publik. Jika isolasi pengobatan dilakukan oleh otoritas kesehatan berdasarkan Undang-Undang Pencegahan Penyakit Menular, biaya selama isolasi ditanggung pemerintah. Untuk cara dan syarat pengajuan, lihat \"Bantuan biaya pengobatan TBC dan isolasi pengobatan\".",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "รักษาวัณโรคต้องเสียค่าใช้จ่ายหรือไม่?",
+      "answerMarkdown": "**ค่าวินิจฉัยและค่ารักษาวัณโรคเบิกจากประกันสุขภาพแห่งชาติ (NHI) และค่าส่วนที่ผู้ป่วยต้องร่วมจ่ายนั้น CDC เป็นผู้รับผิดชอบ** โดยหลักการผู้ป่วยไม่ต้องจ่ายเองเมื่อไปพบแพทย์และรับยา บริการเจ้าหน้าที่ดูแลที่นำยาไปให้ (DOTS) การตรวจผู้สัมผัส และการรักษาวัณโรคระยะแฝงก็ใช้งบประมาณของรัฐเช่นกัน\n\nผู้ป่วยวัณโรคดื้อยาหลายขนานจะได้รับการรักษาในระบบดูแลวัณโรคดื้อยา โดยค่ารักษาใช้งบประมาณของรัฐ หากหน่วยงานสาธารณสุขสั่งให้แยกกักตัวเพื่อรักษาตามพระราชบัญญัติป้องกันโรคติดต่อ ค่าใช้จ่ายระหว่างแยกกักตัวรัฐเป็นผู้ออกให้ สำหรับวิธีและเงื่อนไขการขอรับ โปรดดู \"เงินช่วยเหลือค่ารักษาวัณโรคและการแยกกักตัวเพื่อรักษา\"",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Magbabayad ba para sa paggamot ng TB?",
+      "answerMarkdown": "**Ang diagnosis at paggamot ng TB ay sakop ng pambansang health insurance (NHI), at ang co-payment ng pasyente ay sinasagot ng CDC.** Sa prinsipyo, hindi na kailangang magbayad ang pasyente sa pagpapakonsulta at pagkuha ng gamot. Pinopondohan din ng gobyerno ang serbisyo ng DOTS na naghahatid ng gamot, ang pagsusuri sa mga nakasalamuha, at ang paggamot sa latent TB infection.\n\nAng mga pasyenteng may multidrug-resistant TB ay ginagamot sa sistema ng pangangalaga para sa drug-resistant TB, at pampublikong pondo ang sumasagot sa gastos. Kapag isinailalim sa isolation treatment ng health authority alinsunod sa Communicable Disease Control Act, ang gobyerno ang sasagot sa gastos habang naka-isolate. Para sa paraan at kondisyon ng aplikasyon, tingnan ang \"Tulong sa gastos sa paggamot ng TB at isolation treatment\".",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

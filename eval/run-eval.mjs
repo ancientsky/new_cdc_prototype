@@ -9,7 +9,8 @@
 //     refuse?: bool, refusalKind?: string, intent?: string, intentAny?: [], disease?: string, verdict?: string,
 //     mustInclude?: [], mustIncludeAny?: [], mustNotInclude?: [], mustCite?: [前綴], mustCiteAny?: [前綴], mustNotCite?: [前綴],
 //     situation?: bool, stats?: bool, aggregate?: 'sum'|'max'|'min'|'avg', points?: n, action?: href 片段, translationNote?: string,
-//     citeLabel?: bool, minSentences?: n, mustCiteType?: [型別前綴], notify?: bool, closedMarked?: bool } }
+//     citeLabel?: bool, minSentences?: n, mustCiteType?: [型別前綴], notify?: bool, closedMarked?: bool,
+//     lowRelevance?: bool（第四十八輪 issue #102：false＝答案不得被標「與你的問題相關程度較低」，與 UI 同用 rules.js isLowRelevance） } }
 // requires：內容 id／前綴、'situation:<id>'、'travel:<ISO2>'、'dataset-series:<id>'、'newsType:<type>[:open]'。
 // requires 中的內容不存在 → 該題 skipped（不計分，報告列出），避免內容尚未建置時誤擋上線。
 import { createEngine } from '../src/client/answer/core.js';

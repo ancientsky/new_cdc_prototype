@@ -6,8 +6,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { STRINGS } from '../../src/client/i18n.js';
+import { REFUSAL_TEXT_I18N } from '../../src/client/answer/refusal-i18n.js';
 
 export const I18N_LANGS = Object.keys(STRINGS);
+/** 答案頁專用的介面字串前綴（src/client/i18n.ask.js）：另拆成 i18n.ask.<lang>.js，只有答案頁載入，其他公開頁的語言檔不含這些 key */
+export const ASK_PREFIX = 'ask.ui.';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const CLIENT_DIR = path.join(ROOT, 'src/client');
@@ -36,10 +39,11 @@ export function clientKeys(allKeys) {
 }
 
 /** 與 i18n.js 的 t() 同一條 fallback 規則，但回傳「未做佔位替換」的原始字串；只含瀏覽器會用到的 key */
-export function resolveAll(lang) {
+export function resolveAll(lang, { ask = false } = {}) {
   const keys = new Set(Object.values(STRINGS).flatMap((o) => Object.keys(o)));
   const out = {};
-  for (const k of clientKeys([...keys].sort())) {
+  const picked = ask ? [...keys].filter((k) => k.startsWith(ASK_PREFIX)).sort() : clientKeys([...keys].sort()).filter((k) => !k.startsWith(ASK_PREFIX));
+  for (const k of picked) {
     const s = STRINGS[lang]?.[k] ?? STRINGS.en?.[k] ?? STRINGS['zh-TW'][k];
     if (s != null) out[k] = s;
   }
@@ -55,6 +59,18 @@ export function langModuleSource(lang) {
   );
 }
 
+/** 答案頁專用語言檔：把 ask.ui.* 併進 i18n.<lang>.js 已註冊的字串表（頁面的 script 順序：i18n.<lang>.js → i18n.ask.<lang>.js → answer/*.js） */
+export function askModuleSource(lang) {
+  // 檔內的 key 去掉 ask.ui. 前綴（150 個 key × 7 位元組 ≈ 1 KB，引擎頁預算只剩不到 1 KB 餘裕），載入時再補回前綴
+  const S = Object.fromEntries(Object.entries(resolveAll(lang, { ask: true })).map(([k, v]) => [k.slice(ASK_PREFIX.length), v]));
+  return (
+    `// 自動產生（scripts/lib/i18n-split.mjs），請勿手改；來源 src/client/i18n.ask.js\n` +
+    `const S=${JSON.stringify(S)};\n` +
+    `const C=(window.CDC=window.CDC||{});const I=(C.I18N=C.I18N||{lang:${JSON.stringify(lang)},S:{}});\n` +
+    `for(const k in S)I.S[${JSON.stringify(ASK_PREFIX)}+k]=S[k];\nexport default S;\n`
+  );
+}
+
 /** 在 dist/assets/js 寫出七個語言檔，移除完整的 i18n.js。回傳 { lang: bytes } */
 export function emitI18nBundles(distDir) {
   const dir = path.join(distDir, 'assets/js');
@@ -63,7 +79,28 @@ export function emitI18nBundles(distDir) {
     const src = langModuleSource(lang);
     fs.writeFileSync(path.join(dir, `i18n.${lang}.js`), src);
     sizes[lang] = Buffer.byteLength(src);
+    fs.writeFileSync(path.join(dir, `i18n.ask.${lang}.js`), askModuleSource(lang));
   }
+  fs.rmSync(path.join(dir, 'i18n.ask.js'), { force: true }); // 完整七語的答案頁字串表只留給 Node 端
   fs.rmSync(path.join(dir, 'i18n.js'), { force: true }); // 完整七語檔只留給 Node 端，不上線
+  return sizes;
+}
+
+/**
+ * 第四十八輪：答案引擎的拒答文案（日、他加祿、越、印尼、泰）依語言拆檔，與上面的介面字串同一個做法。
+ * dist 的 answer/refusal-i18n.js 換成空物件（rules.js 照舊 import，中文與英文仍在 rules.js 裡當退回文案），
+ * 每種語言另寫 answer/refusal-i18n.<lang>.js；答案頁 data.js 只動態載入當頁語言那一份。js-budget 把這一份算進該頁的引擎合計。
+ * 回傳 { lang: bytes }
+ */
+export function emitRefusalBundles(distDir) {
+  const dir = path.join(distDir, 'assets/js/answer');
+  const head = '// 自動產生（scripts/lib/i18n-split.mjs），請勿手改；來源 src/client/answer/refusal-i18n.js\n';
+  fs.writeFileSync(path.join(dir, 'refusal-i18n.js'), `${head}export const REFUSAL_TEXT_I18N = {};\n`);
+  const sizes = {};
+  for (const [lang, text] of Object.entries(REFUSAL_TEXT_I18N)) {
+    const src = `${head}export default ${JSON.stringify(text)};\n`;
+    fs.writeFileSync(path.join(dir, `refusal-i18n.${lang}.js`), src);
+    sizes[lang] = Buffer.byteLength(src);
+  }
   return sizes;
 }

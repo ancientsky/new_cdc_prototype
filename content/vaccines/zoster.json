@@ -1,0 +1,100 @@
+{
+  "id": "vaccine.zoster",
+  "type": "vaccine",
+  "slug": "zoster",
+  "title": "帶狀疱疹疫苗（皮蛇疫苗）",
+  "nameEn": "Zoster (shingles) vaccine",
+  "aliases": [
+    "皮蛇疫苗",
+    "皮蛇",
+    "帶狀疱疹疫苗",
+    "帶狀皰疹疫苗",
+    "生蛇",
+    "Shingles vaccine",
+    "Shingrix"
+  ],
+  "owner": "unit.acute-infectious",
+  "steward": "預防醫學辦公室承辦人（待指派）",
+  "publishedAt": "2026-10-14",
+  "reviewedAt": "2026-10-14",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": true,
+    "approvedBy": "unit.oasis",
+    "approvedAt": "2026-10-14"
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "none"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "tasks": [
+    "vaccines"
+  ],
+  "diseases": [
+    "disease.varicella"
+  ],
+  "summary": "帶狀疱疹（皮蛇）疫苗目前為自費項目，是否有地方補助請洽各縣市衛生局或 1922；一般建議 50 歲以上接種，皮蛇疫苗不是水痘疫苗。",
+  "keywords": [
+    "皮蛇",
+    "帶狀疱疹",
+    "帶狀皰疹",
+    "生蛇",
+    "自費",
+    "兩劑",
+    "50 歲以上",
+    "補助"
+  ],
+  "publicFunded": [],
+  "bodyMarkdown": "帶狀疱疹（俗稱「皮蛇」）是小時候感染水痘後、潛伏在神經節的水痘帶狀疱疹病毒再度活化所引起，常見水泡與神經痛，年紀越大、免疫力越低越容易發生，也可能留下長期神經痛。\n\n**皮蛇疫苗不是水痘疫苗。** 水痘疫苗（見[水痘疫苗](/vaccines/varicella/)）是給兒童與未感染過水痘者預防水痘的疫苗，依兒童時程接種；皮蛇疫苗是給已經有水痘病毒潛伏的成人，預防病毒再活化。兩者不能互相取代。\n\n**是否公費：** 帶狀疱疹疫苗目前**不在全國公費項目**內，屬**自費**接種。部分縣市衛生局可能有補助方案，對象與金額各地不同，請洽**居住地的衛生局**或撥 **1922** 防疫專線查詢，不要自行假設有補助。\n\n**建議接種對象（依疫苗仿單，待確認）：** 一般為 **50 歲以上**成人；重組疫苗依仿單也可用於 18 歲以上免疫功能低下者。疫苗種類、年齡限制與禁忌請以仿單及醫師評估為準。\n\n**劑數：** 重組（非活性）疫苗一般需接種 **2 劑**，間隔時間依仿單，請醫師或接種院所說明。曾得過皮蛇或曾接種過水痘疫苗者是否適合接種，請詢問醫師。\n\n**去哪裡接種：** 到有提供自費成人疫苗的**醫療院所**（診所、醫院）詢問，費用由院所自訂。\n\n皮蛇疫苗不能取代發病時的治療：長水泡、疼痛應儘早就醫，抗病毒藥物越早使用效果越好。",
+  "precautions": "對疫苗成分過敏者不可接種；發燒或急性疾病者宜延後；免疫功能低下者請由醫師評估疫苗種類（詳細禁忌以仿單為準，待權責單位確認）。",
+  "whereUrl": "https://ancientsky.github.io/vaxmap-next/info.html#where",
+  "verification": {
+    "status": "pending",
+    "note": "本頁依公開資料與仿單常識保守整理，尚待權責單位確認；費用與補助請洽衛生局或 1922",
+    "pendingItems": [
+      "確認帶狀疱疹疫苗目前是否仍為全國自費項目，以及有無納入公費的規劃",
+      "各縣市補助方案清單（對象、金額、期間）或統一的查詢入口",
+      "核可上市的疫苗種類（重組疫苗、減毒活疫苗）與各自的仿單適用年齡",
+      "重組疫苗適用對象：50 歲以上，以及 18 歲以上免疫功能低下者的仿單用語",
+      "重組疫苗劑數與間隔（一般為 2 劑）、免疫功能低下者可縮短間隔的規定",
+      "曾得過皮蛇、曾接種水痘疫苗者的接種建議，與禁忌、注意事項",
+      "是否提供 vaxmap 或疾管署的自費疫苗院所查詢（目前 whereUrl 沿用疫苗地圖通用頁）",
+      "權責承辦人（目前 steward 為待指派）"
+    ],
+    "sources": [
+      {
+        "label": "疾管署官網「疫苗」專區（帶狀疱疹疫苗）",
+        "url": "https://www.cdc.gov.tw/Category/List/V6unXI5CVl2Fjoap4WVQLw",
+        "accessedAt": "2026-10-14",
+        "official": true,
+        "verified": false,
+        "note": "開發環境連不到 www.cdc.gov.tw，未開啟原文逐字核對；本則依公開常識與保守原則撰寫"
+      }
+    ]
+  }
+}

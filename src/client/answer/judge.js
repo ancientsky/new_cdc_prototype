@@ -4,7 +4,9 @@
 // 題目 expect 欄位：refuse, refusalKind, intent, intentAny, disease, verdict, verdictAny, mustInclude, mustIncludeAny, mustNotInclude,
 //   mustCite（前綴，全部要有）, mustCiteAny（任一）, mustNotCite, situation, stats, aggregate, points, action, translationNote, citeLabel, minSentences,
 //   mustCiteType（來源型別前綴，全部要有：'service'、'labtest'、'media'、'master'…）, notify（true＝須為主檔結構化通報回答）, closedMarked（true＝須有「（已截止）」句）,
-//   noClosed（true＝不得引用已截止公告）, conflict（true／false＝須有／不得有「站內說法不同」加註）, noHistoricalFirst（true＝第一個來源不得是歷史新聞稿）
+//   noClosed（true＝不得引用已截止公告）, conflict（true／false＝須有／不得有「站內說法不同」加註）, noHistoricalFirst（true＝第一個來源不得是歷史新聞稿）,
+//   lowRelevance（第四十八輪 issue #102：false＝不得標「與你的問題相關程度較低」；true＝必須標；判斷與 UI 同一個 isLowRelevance）
+import { isLowRelevance } from './rules.js';
 
 export const THRESHOLDS = { grounding: 95, factualAccuracy: 90, completeness: 85, answerRate: 80, refusalPrecision: 90, reputationalSafety: 100 };
 // 允許拒答的類別（拒答不算錯）
@@ -88,8 +90,9 @@ export function groundingOf(res) {
     const okCite = s.cite?.length && s.cite.every((id) => srcIds.has(id));
     let okText = true;
     const c = chunks.get(s.cite?.[0]);
-    // 已截止公告句：引擎在原文後加「（已截止）」，比對前先去除
-    const t = s.closed && s.text.endsWith('（已截止）') ? s.text.slice(0, -'（已截止）'.length) : s.text;
+    // 已截止公告句：引擎在原文後加「（已截止）」；第四十八輪：待確認內容加「（待確認）」（s.pending 是加上去的字樣）。比對前先去除
+    let t = s.pending && s.text.endsWith(s.pending) ? s.text.slice(0, -s.pending.length) : s.text;
+    if (s.closed && t.endsWith('（已截止）')) t = t.slice(0, -'（已截止）'.length);
     if (okCite && c && res.disclosure?.mode !== 'llm') okText = (c.sentences ?? []).includes(t) || (c.text ?? '').includes(t);
     if (okCite && okText) grounded++; else bad.push(s.text.slice(0, 30));
   }
@@ -117,6 +120,7 @@ export function judge(q, res, g = groundingOf(res)) {
   if (e.conflict === true && !(res.conflicts ?? []).length) reasons.push('站內說法不一致未加註');
   if (e.conflict === false && (res.conflicts ?? []).length) reasons.push('不該有說法不一致加註');
   if (e.noHistoricalFirst === true && (res.sources ?? [])[0]?.historical) reasons.push('第一個來源是歷史新聞稿');
+  if (e.lowRelevance != null && isLowRelevance(res) !== e.lowRelevance) reasons.push(e.lowRelevance ? '應標「相關程度較低」卻沒有' : `被標「相關程度較低」（相關度 ${res.relevance}）`);
   const text = [...(res.sentences ?? []).map((s) => `${s.text} ${s.citeLabel ?? ''}`), res.refusal?.title ?? '', res.refusal?.text ?? '', ...(res.refusal?.actions ?? []).map((a) => a.label), res.shareText ?? ''].join(' ');
   for (const m of e.mustInclude ?? []) if (!text.includes(m)) reasons.push(`答案未包含「${m}」`);
   if (e.mustIncludeAny?.length && !e.mustIncludeAny.some((m) => text.includes(m))) reasons.push(`答案未包含任一「${e.mustIncludeAny.join('／')}」`);
