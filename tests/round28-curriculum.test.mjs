@@ -128,7 +128,7 @@ test('智慧查詢（專業版）：引到章節單元與學習目標，來源�
   assert.equal(src.extraction?.sourceKind, 'reconstructed');
   // render.js 需要瀏覽器 DOM（與 pdf-ingest 測試同做法）：只檢查來源卡依 sourceKind 換字
   const render = fs.readFileSync(path.join(ROOT, 'src/client/answer/render.js'), 'utf8');
-  assert.match(render, /extractionReconstructed: '尚未取得 PDF 正本/);
+  assert.match(fs.readFileSync(path.join(ROOT, 'src/client/i18n.ask.js'), 'utf8'), /"ask\.ui\.extractionReconstructed": \["尚未取得 PDF 正本/); // 第四十八輪：字串表搬到 i18n.ask.js
   assert.match(render, /sourceKind === 'reconstructed' \? 'extractionReconstructed'/);
   const r2 = await engine.answer('登革熱核心教材 群聚解除', { view: 'pro', lang: 'zh-TW' });
   const s73 = r2.sentences.find((s) => (s.cite ?? []).includes(`${D}#ch7-s3`) && s.text.includes('31 天'));

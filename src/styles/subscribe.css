@@ -12,7 +12,7 @@
 .c-sub__set{border:1px solid var(--line);border-radius:var(--radius);padding:var(--sp-3) var(--sp-4);margin:0 0 var(--sp-4);background:#fff;min-width:0}
 .c-sub__set legend{font-weight:700;padding:0 var(--sp-2);color:var(--green-900)}
 .c-sub__set .c-checkrow{margin:6px 0}
-.c-sub__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(14em,1fr));gap:0 var(--sp-4)}
+.c-sub__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(14em,100%),1fr));gap:0 var(--sp-4)}
 .c-sub__errors{margin:0 0 var(--sp-4)}
 .c-sub__errors ul{margin:var(--sp-2) 0 0;padding-left:1.3em}
 .c-sub__errors a{color:inherit;font-weight:700}

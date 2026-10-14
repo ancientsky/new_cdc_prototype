@@ -70,17 +70,18 @@ test('#72 鍵值外洩檢查：可見文字的 term.* 抓得到；code／pre／s
 test('#72 checkI18nQuality 掃 dist：鍵值外洩讓 summarize 回報 fail；中文比例只警告', () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'r40-'));
   fs.mkdirSync(path.join(dir, 'id'), { recursive: true });
-  fs.mkdirSync(path.join(dir, 'en'), { recursive: true });
+  fs.mkdirSync(path.join(dir, 'en', 'about'), { recursive: true });
   fs.writeFileSync(path.join(dir, 'index.html'), '<html lang="zh-TW"><body><p>中文正本全是中文</p></body></html>');
   fs.writeFileSync(path.join(dir, 'id', 'index.html'), '<html lang="id"><body><p>Situasi: term.influenza naik</p></body></html>');
-  fs.writeFileSync(path.join(dir, 'en', 'index.html'), '<html lang="en"><body><p>流感疫情上升中請注意</p><p>Flu</p></body></html>');
+  // 第四十八輪：/en/ 首頁與 /en/ask/ 的中文比例超標改為錯誤（見 round48-ui.test.mjs），這個「只警告」的情境改用一般內頁
+  fs.writeFileSync(path.join(dir, 'en', 'about', 'index.html'), '<html lang="en"><body><p>流感疫情上升中請注意</p><p>Flu</p></body></html>');
   const rep = checkI18nQuality(dir, { threshold: 0.15, allow: [] });
   assert.deepEqual(
     rep.termLeaks.map((r) => r.page),
     ['/id/index.html'],
   );
   assert.equal(rep.cjk.checked, 2, 'zh-TW 頁不列入');
-  assert.equal(rep.cjk.worst[0].page, '/en/index.html');
+  assert.equal(rep.cjk.worst[0].page, '/en/about/index.html');
   const logs = [];
   assert.equal(summarizeI18nQuality(rep, { log: (m) => logs.push(m), mode: 'warn' }).fail, true, '鍵值外洩一定 fail');
   assert.ok(logs.some((l) => l.includes('最高的 10 頁')));

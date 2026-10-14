@@ -1,6 +1,7 @@
 // 七語 UI 字串（Node 與瀏覽器共用）。內容翻譯在 content/*.json 的 i18n；這裡只有介面字。
 // 欄位順序：zh-TW, en, ja, tl, vi, id, th。後面的語言省略 = 該語言 fallback 英文，再 fallback 中文。
 // 用法：t(lang, 'key', { var }) ；瀏覽器端 window.CDC.t('key', vars)（由 i18n.runtime.js 提供，字串來自建置時拆出的 i18n.<lang>.js）。
+import { ROWS_ASK } from './i18n.ask.js';
 const ORDER = ['zh-TW', 'en', 'ja', 'tl', 'vi', 'id', 'th'];
 
 const ROWS = {
@@ -2078,7 +2079,18 @@ const ROWS_R47 = {
   'nav.panel.quarantine.pro': ['檢疫文件', 'Quarantine documents', '検疫関連文書', 'Mga dokumento sa quarantine', 'Tài liệu kiểm dịch', 'Dokumen karantina', 'เอกสารการกักกันโรค'],
 };
 for (const [key, vals] of Object.entries(ROWS_R47)) vals.forEach((v, i) => { if (v != null && v !== '') STRINGS[ORDER[i]][key] = v; });
+for (const [key, vals] of Object.entries(ROWS_ASK)) vals.forEach((v, i) => { if (v != null && v !== '') STRINGS[ORDER[i]][key] = v; }); // 答案頁介面字串（第四十八輪）
 
+/* ───── 第四十八輪（#97）：倒數字串七語齊備＋「以建置日計」後備提示（倒數由 countdown.js 在瀏覽器重算，沒有 JS 時才看得到後備提示） ───── */
+const ROWS_R48 = {
+  'notice.daysleft': ['剩 {n} 天', '{n} days left', 'あと {n} 日', '{n} araw na lang', 'Còn {n} ngày', 'Sisa {n} hari', 'เหลือ {n} วัน'],
+  'notice.today': ['今天截止', 'Closes today', '本日締切', 'Magsasara ngayon', 'Hết hạn hôm nay', 'Ditutup hari ini', 'ปิดรับวันนี้'],
+  'notice.closed.on': ['{date} 已截止', 'Closed {date}', '{date} に締切', 'Sarado noong {date}', 'Đã đóng ngày {date}', 'Ditutup {date}', 'ปิดรับเมื่อ {date}'],
+  'job.opensin': ['{n} 天後開放', 'Opens in {n} days', '{n} 日後に受付開始', 'Magbubukas sa {n} araw', 'Mở sau {n} ngày', 'Dibuka dalam {n} hari', 'เปิดรับในอีก {n} วัน'],
+  'campaigns.daysleft': ['剩 {n} 天下架', '{n} days left', '掲載終了まであと {n} 日', '{n} araw na lang bago alisin', 'Còn {n} ngày trước khi gỡ', 'Sisa {n} hari sebelum diturunkan', 'เหลือ {n} วันก่อนถอดออก'],
+  'notice.asof': ['（以 {date} 計）', '(as of {date})', '（{date} 時点）', '(hanggang {date})', '(tính đến {date})', '(per {date})', '(ณ วันที่ {date})'],
+};
+for (const [key, vals] of Object.entries(ROWS_R48)) vals.forEach((v, i) => { if (v != null && v !== '') STRINGS[ORDER[i]][key] = v; });
 
 // translation.bar.reviewed 的 {lang} 佔位：zh 版用語言名稱
 STRINGS['zh-TW']['translation.bar.reviewed'] = STRINGS['zh-TW']['translation.bar.reviewed'].replace('{lang}', '翻譯');

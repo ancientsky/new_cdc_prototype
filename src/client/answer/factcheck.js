@@ -2,7 +2,7 @@
 // 謠言查證頁（/factcheck/）：掛 #factcheck-form／#factcheck-input／#factcheck-result。
 // 與答案頁同一份 core：強制謠言意圖（貼上的是網傳訊息本身），只比對官方澄清，不自行判定真偽。
 import { loadEngine, prefetchEngine, esc, LANG } from './data.js';
-import { L, verdictBlock, refusalCard, disclosureRow, sourceList, wireInteractions, ensureStyles } from './render.js';
+import { L, setUnits, verdictBlock, refusalCard, disclosureRow, sourceList, wireInteractions, ensureStyles } from './render.js';
 
 ensureStyles();
 const input = /** @type {HTMLInputElement | HTMLTextAreaElement | null} */ (document.getElementById('factcheck-input'));
@@ -25,7 +25,8 @@ async function check(text) {
   if (!q) { out.innerHTML = `<p class="muted">${esc(L('empty'))}</p>`; return; }
   out.setAttribute('aria-busy', 'true');
   out.innerHTML = '<div class="c-skeleton" aria-hidden="true"><span></span><span class="short"></span></div>';
-  const { engine } = await loadEngine('public');
+  const { engine, deps } = await loadEngine('public');
+  setUnits(deps.units);
   const r = engine.answer(q, { lang: LANG, forceIntent: 'rumor' });
   current = r;
   const parts = [];

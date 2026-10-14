@@ -21,6 +21,17 @@ const SKIP = new Set(['script', 'style', 'template', 'noscript', 'datalist']);
 const ENT = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ', '#39': "'" };
 
 /** 預設白名單：專有名詞與機關名稱的中文寫法在外語頁出現是合理的（例如官方中文名稱並列）。 */
+/**
+ * 第四十八輪（#100）：高流量頁面的中文比例超標＝錯誤（擋建置），其餘仍是警告。
+ * 為什麼用路徑白名單而不是全部改 error：全站外語頁仍有數十頁因內容尚未翻譯而超標（全部擋會讓每次內容更新都被卡住），
+ * 但首頁與問答入口是外語使用者第一眼看到的頁面，這兩類不能被中文蓋掉。
+ * 範圍：/<lang>/（首頁）、/<lang>/ask/（問答頁的靜態殼）。/<lang>/ask/?q=… 的答案由瀏覽器端產生，不在靜態 HTML 內，
+ * 其字串由 tests/round48-ui.test.mjs 檢查 th／id／tl 的 ans.* 齊備。要加頁面：在這裡加一條，並先確認該頁已低於門檻。
+ * 頁面路徑格式是 dist 內的相對路徑（以 / 開頭、含 index.html）。
+ */
+export const STRICT_CJK_PAGES = [/^\/(?:en|ja|tl|vi|id|th)\/index\.html$/, /^\/(?:en|ja|tl|vi|id|th)\/ask\/index\.html$/]; // 語言前綴與 site.config 的 languages 一致
+export const isStrictCjkPage = (page) => STRICT_CJK_PAGES.some((re) => re.test(page));
+
 export const DEFAULT_CJK_ALLOW = ['衛生福利部疾病管制署', '疾病管制署', '疾管署', '繁體中文', '中文'];
 
 /**
@@ -142,7 +153,11 @@ export function checkI18nQuality(distDir, opts = {}) {
     b.total += r.total;
     if (r.ratio > threshold) b.over++;
   }
-  return { termLeaks, cjk: { threshold, checked: rows.length, over: rows.filter((r) => r.ratio > threshold), worst: rows.slice(0, 10), byLang } };
+  const over = rows.filter((r) => r.ratio > threshold);
+  return {
+    termLeaks,
+    cjk: { threshold, checked: rows.length, over, strictOver: over.filter((r) => isStrictCjkPage(r.page)), worst: rows.slice(0, 10), byLang },
+  };
 }
 
 /** 建置摘要（給 build.mjs 用）。回傳是否要讓建置失敗 */
@@ -164,6 +179,11 @@ export function summarizeI18nQuality(rep, { log = console.log, mode = process.en
     log(`[i18n] ❌ ${rep.termLeaks.length} 頁的可見文字出現詞彙鍵值（term.*）：`);
     for (const r of rep.termLeaks.slice(0, 20)) log(`  ✗ ${r.page}：${r.keys.join('、')}`);
   }
-  const cjkFail = mode === 'error' && c.over.length > 0;
+  const strictOver = mode === 'off' ? [] : (c.strictOver ?? []);
+  if (strictOver.length) {
+    log(`[i18n] ❌ 高流量頁面（首頁、問答頁）中文比例超過 ${pct(c.threshold)}：`);
+    for (const r of strictOver) log(`  ✗ ${pct(r.ratio)} ${r.page}（${r.cjk}/${r.total}）${r.sample.length ? `例：${r.sample.join('｜')}` : ''}`);
+  }
+  const cjkFail = strictOver.length > 0 || (mode === 'error' && c.over.length > 0);
   return { fail: rep.termLeaks.length > 0 || cjkFail };
 }

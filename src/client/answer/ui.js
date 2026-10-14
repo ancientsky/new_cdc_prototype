@@ -1,7 +1,7 @@
 // 搜尋即答案頁（/ask/）：掛到 C 的殼 #ask-form／#ask-q、#answer、#answer-side、#ask-advanced、#llm-key。
 // 流程：讀 ?q= → core（抽取式）→ 依意圖渲染 wireframe 第 3 頁區塊 →（有 key 且啟用）LLM 重組或翻譯 → 後檢 → 重新渲染。
 import { loadEngine, prefetchEngine, currentView, url, esc, v1, LANG } from './data.js';
-import { L, link, isLowRelevance, sentenceList, sourceList, disclosureRow, refusalCard, situationCards, verdictBlock, statsBlock, traditionalList, fullTextLink, wireInteractions, ensureStyles, notifyBlock, conflictNotes } from './render.js';
+import { L, link, setUnits, ownerLabel, isLowRelevance, sentenceList, sourceList, disclosureRow, refusalCard, situationCards, verdictBlock, statsBlock, traditionalList, fullTextLink, wireInteractions, ensureStyles, notifyBlock, conflictNotes } from './render.js';
 import './inline.js'; // 頁內問題框（#ask-inline／[data-ask-inline]）→ /ask/
 import { getKey, setKey, getModel, setModel, llmModels, purgeLegacyKey, staffSessionActive } from './llm-key.js';
 // 第三十四輪：提示詞、後檢、呼叫 API 的 llm.js 只在 LLM 模式真的要用時才以 import() 載入（民眾端不下載）。
@@ -72,6 +72,7 @@ async function run(q) {
     return;
   }
   const { engine, deps } = loaded;
+  setUnits(deps.units);
   if (my !== runId) return;
   const disease = new URLSearchParams(location.search).get('disease') || null;
   let result = engine.answer(q, { lang: LANG, view, disease });
@@ -180,7 +181,7 @@ async function renderSide(r, deps) {
     const gov = page?.governance ?? d.governance ?? {};
     blocks.push(`<section class="c-side-card c-side-card--disease"><h2>${esc(L('side.disease'))}：${esc(pageI18n?.title ?? d.name)}</h2>
       ${facts ? `<dl class="c-deflist c-deflist--sm">${facts}</dl>` : `<p class="muted">${esc(d.nameEn ?? '')}${d.legalCategory ? ` · 第 ${esc(d.legalCategory)} 類法定傳染病` : ''}</p>`}
-      ${gov.reviewedAt ? `<p class="c-provenance">${esc(L('reviewed'))} ${esc(gov.reviewedAt)} · ${esc(gov.ownerName ?? '')}</p>` : ''}
+      ${gov.reviewedAt ? `<p class="c-provenance">${esc(L('reviewed'))} ${esc(gov.reviewedAt)} · ${esc(ownerLabel(gov))}</p>` : ''}
       ${d.hasPage || d.page ? `<p>${link(`/diseases/${d.slug}/`, `${L('side.full')} →`)}</p>` : ''}</section>`);
     const news = page?.related?.news?.length ? page.related.news : (await v1('news', [])).filter((n) => (n.diseases ?? []).includes(d.id) && n.governance?.whitelist !== false);
     if (news?.length) blocks.push(`<section class="c-side-card"><h2>${esc(L('side.news'))}</h2><ul class="c-side-list">${news.slice(0, 3).map((n) => `<li>${link(n.path ?? `/news/${String(n.id).replace(/^news\./, '')}/`, n.title)} <span class="muted">${esc(n.publishedAt ?? n.reviewedAt ?? '')}</span></li>`).join('')}</ul></section>`);

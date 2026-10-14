@@ -177,7 +177,7 @@ async function main() {
     const q = checkI18nQuality(DIST);
     const { fail } = summarizeI18nQuality(q, { log: (m) => console.log(m) });
     writeOut('v1/governance/i18n-report.json', JSON.stringify({ generatedAt: site.today, threshold: q.cjk.threshold, checked: q.cjk.checked, over: q.cjk.over.length, byLang: q.cjk.byLang, worst: q.cjk.worst, termLeaks: q.termLeaks }, null, 2));
-    if (fail) { console.error(`❌ 多語輸出檢查未通過（詞彙鍵值外洩 ${q.termLeaks.length} 頁${process.env.I18N_CJK_CHECK === 'error' ? `、中文比例超標 ${q.cjk.over.length} 頁` : ''}）`); process.exit(1); }
+    if (fail) { console.error(`❌ 多語輸出檢查未通過（詞彙鍵值外洩 ${q.termLeaks.length} 頁${process.env.I18N_CJK_CHECK === 'error' ? `、中文比例超標 ${q.cjk.over.length} 頁` : ''}${q.cjk.strictOver.length ? `、首頁／問答頁中文比例超標 ${q.cjk.strictOver.length} 頁` : ''}）`); process.exit(1); }
   }
 
   // PR 預覽（17.2）：連結檢查之後才複製，預覽站不影響主站閘門

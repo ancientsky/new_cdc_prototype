@@ -113,7 +113,7 @@ test('來源卡：頁碼、未校對提醒；PDF 連結只有在知道偏移量�
   // render.js 需要瀏覽器 DOM：只檢查來源卡有讀這兩個欄位
   const render = fs.readFileSync('src/client/answer/render.js', 'utf8');
   assert.match(render, /if \(src\.pdfPage\) add\(L\('pdfPage'\)/);
-  assert.match(render, /extractionMachine: '由 PDF 機器轉出，尚未人工校對/);
+  assert.match(fs.readFileSync('src/client/i18n.ask.js', 'utf8'), /"ask\.ui\.extractionMachine": \["由 PDF 機器轉出，尚未人工校對/); // 第四十八輪：字串表搬到 i18n.ask.js
   assert.equal(pdfHref(src), '/files/x/guide.pdf');
   assert.equal(pdfHref({ ...src, extraction: { ...src.extraction, pageOffset: 4 } }), '/files/x/guide.pdf#page=59');
   assert.equal(pdfHref({ ...src, extraction: { ...src.extraction, pdfUrl: '/pending/?ref=x', pageOffset: 4 } }), '/pending/?ref=x');

@@ -1,7 +1,6 @@
 // 第七輪：人才招募（job）與採購公告（tender）共用的取值與呈現輔助。底線開頭＝不會被當成頁面模板自動登錄。
 // 原則：階段一律優先讀治理引擎算好的 item.gov.jobStage／tenderStage；引擎還沒有（或測試用合成內容）時才由欄位推導，結果與契約（ARCHITECTURE 15.1）一致。
-import { html } from '../../../scripts/lib/render.mjs';
-import { pill, slugOf, daysUntil } from './_partials.mjs';
+import { pill, slugOf, daysUntil, countdownEl } from './_partials.mjs';
 
 /* ───────── 取集合（容錯：collections.jobs／job；tenders／tender） ───────── */
 export const allJobs = (site) => site.collections?.jobs ?? site.collections?.job ?? [];
@@ -68,20 +67,23 @@ export const stagePill = (ctx, stage, kind = 'job') => pill(ctx.t(`${kind}.stage
 /** 倒數：upcoming「N 天後開放」、open「剩 N 天」（7 日內黃）、今日截止；其他階段回傳空字串 */
 export function jobCountdown(ctx, j, stage) {
   const { t, site } = ctx;
-  if (stage === 'upcoming') { const d = daysUntil(site.today, j.applyStart); return d == null ? '' : html`<span class="c-deadline c-deadline--info">${t('job.opensin', { n: d })}</span>`; }
+  if (stage === 'upcoming') { const d = daysUntil(site.today, j.applyStart); return d == null ? '' : countdownEl(ctx, { cls: 'c-deadline c-deadline--info', kind: 'opens', deadline: j.applyStart, text: t('job.opensin', { n: d }) }); }
   if (stage !== 'open') return '';
   const d = daysUntil(site.today, j.deadlineAt);
   if (d == null) return '';
-  if (d === 0) return html`<span class="c-deadline c-deadline--soon">${t('notice.today')}</span>`;
-  return html`<span class="c-deadline ${d <= 7 ? 'c-deadline--soon' : 'c-deadline--open'}">${t('notice.daysleft', { n: d })}</span>`;
+  return openCountdown(ctx, j.deadlineAt, d);
+}
+function openCountdown(ctx, deadline, d) {
+  const { t } = ctx;
+  if (d === 0) return countdownEl(ctx, { cls: 'c-deadline c-deadline--soon', deadline, text: t('notice.today') });
+  return countdownEl(ctx, { cls: `c-deadline ${d <= 7 ? 'c-deadline--soon' : 'c-deadline--open'}`, deadline, text: t('notice.daysleft', { n: d }) });
 }
 export function tenderCountdown(ctx, x, stage) {
-  const { t, site } = ctx;
+  const { site } = ctx;
   if (stage !== 'open') return '';
   const d = daysUntil(site.today, x.deadlineAt);
   if (d == null) return '';
-  if (d === 0) return html`<span class="c-deadline c-deadline--soon">${t('notice.today')}</span>`;
-  return html`<span class="c-deadline ${d <= 7 ? 'c-deadline--soon' : 'c-deadline--open'}">${t('notice.daysleft', { n: d })}</span>`;
+  return openCountdown(ctx, x.deadlineAt, d);
 }
 
 // 第三十輪（#55）：名單不再有姓名欄，原本顯示端的 safeName()（漏遮時補遮罩）一併移除——模板根本不讀姓名，資料漏放也不會被印出來。
