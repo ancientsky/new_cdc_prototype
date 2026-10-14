@@ -2,6 +2,7 @@
 // 流程：實體抽取（比對主檔）→ 未對應詞 → 摘要 → 結構化欄位 → 一致性檢查 → 多語術語鎖定 → 匯出 content JSON。
 // 全部是規則式（regex／字串比對），不呼叫模型；輸出一律「建議」，要人工確認。
 import { glossaryField } from '../glossary-term.js';
+import { sourcePickOf } from '../source-pick.js';
 
 export const TYPES = [
   { value: 'faq', label: 'Q&A' },
@@ -1220,9 +1221,17 @@ export function submitTimeline(obj, opts = {}) {
 }
 
 // ---------- 修改已上架內容（第十二輪／第五批）：公開頁頁尾「同事修改這頁」→ /admin/publish/?edit={id} ----------
-// 原則：表單仍是「產出一份完整 content JSON」，但修改時以 API 的現行版預填，匯出時把表單沒有的欄位（發布日、舊站網址、白名單核准、疾病頁 keyFacts…）
-// 從現行版帶回，所以上架包覆寫同一個檔案時 PR 只會顯示真正改動的幾行；發布日不變、審閱日更新。
-export const API_ONLY_KEYS = new Set(['url', 'path', 'md', 'governance', 'gov', '__file', 'master', 'related']);
+// 第五十一輪改成「以現行版為底，只套用同事真正改過的欄位」（docs/deploy.md §22）：
+//   以前是「表單匯出一份完整 JSON，再把表單沒有的欄位從現行版補回來」。表單有、但只裝得下一部分的欄位（摘要、關鍵字、
+//   提供語言、結構化欄位、申請對象…）就會被表單版本蓋掉——什麼都沒改，存檔後英文譯文的「已複核」也會變回「待翻譯」。
+//   現在：載入時先記下「表單剛帶入、還沒動過」的匯出結果（base），存檔時逐欄比較 base 與目前的匯出結果（current），
+//   只有不同的欄位才寫到現行版上；其他欄位（含表單根本沒有的）一個位元組都不動，鍵的順序也不變。
+/** 建置或 API 才加上的欄位（不是 content 檔的一部分）：修改時不寫回。isCurrent／supersededBy 是文件版本鏈的計算欄位（schema 註明不手填） */
+export const API_ONLY_KEYS = new Set(['url', 'path', 'md', 'governance', 'gov', '__file', 'master', 'related', 'sourceHash', 'isCurrent', 'supersededBy']);
+/** 修改時一定會改、而且是刻意的欄位（畫面、文件都明列）：status＝草稿／送審；reviewedAt＝今天（核准上線時閘道會再改成核准當天） */
+export const EDIT_DERIVED = ['status', 'reviewedAt'];
+/** 表單只放佔位值、並不真正持有的欄位：修改時一律保留現行版 */
+const FORM_PLACEHOLDER = { disease: ['keyFacts'], vaccine: ['publicFunded'] };
 const PREFIX_COLLECTION = { faq: 'faq', news: 'news', doc: 'documents', disease: 'diseases', clar: 'clarifications', vaccine: 'vaccines', topic: 'topics', service: 'services', publication: 'publications', labtest: 'labtests', dataset: 'datasets', media: 'media', research: 'research', job: 'jobs', tender: 'tenders', page: 'pages' };
 /** 內容 id → 要抓的 v1 集合名（diseases 另有每頁 JSON，由呼叫端依 slug 取） */
 export const collectionOfId = (id) => PREFIX_COLLECTION[String(id ?? '').split('.')[0]] ?? null;
@@ -1268,36 +1277,131 @@ export function itemToForm(item) {
   };
 }
 
-/** 表單匯出的 JSON ＋ 現行版 → 要寫回 repo 的 JSON（保留表單沒有的欄位；發布日不變） */
-export function mergeEdit(out, original) {
-  if (!original) return out;
-  const o = { ...out };
-  for (const [k, v] of Object.entries(original)) if (!API_ONLY_KEYS.has(k) && !(k in o)) o[k] = v;
-  for (const k of ['vaccines', 'countries', 'diseases', 'basedOn', 'tasks', 'keywords']) if (Array.isArray(o[k]) && !o[k].length && !(k in original)) delete o[k]; // 表單固定輸出的空陣列，現行版沒有就不加
-  if (original.publishedAt) o.publishedAt = original.publishedAt;
-  if (original.aiWhitelist) o.aiWhitelist = original.aiWhitelist; // 修改不重新申請白名單；核准狀態由治理規則判定
-  if (original.profile && o.profile) o.profile = { ...original.profile, ...o.profile }; // 第四十四輪：照片等表單沒有的簡介欄位原樣保留；verification 本來就不在表單裡，照舊保留（待確認狀態不會因為改內文而消失）
-  if (Array.isArray(original.assets) && !(out.assets?.length)) o.assets = original.assets.map(({ url, ...a }) => a); // 既有附件在 repo 裡，表單選不到檔，照舊宣告
-  if (original.type === 'disease') {
-    const sec = splitSections(out.blocks?.[0]?.markdown ?? '');
-    o.blocks = (original.blocks ?? []).map((b) => { const md = sec.get(b.heading); if (!md || md === (b.markdown ?? '').trim()) return b; const { status, ...rest } = b; return { ...rest, markdown: md }; }); // 區塊其他欄位（warning、datasets…）原樣保留；填了內文的區塊去掉 pending
-    o.slug = original.slug; o.nameEn = original.nameEn; o.legalCategory = original.legalCategory ?? o.legalCategory;
-    if (original.keyFacts) o.keyFacts = original.keyFacts;
-    if (original.notifyWithinHours != null) o.notifyWithinHours = original.notifyWithinHours;
+/** API 的一筆（或閘道送回的檔案內容）→ content 檔的樣子：拿掉 API 才有的欄位與附件的公開網址，其餘原樣（鍵順序不變） */
+export function liveItem(item) {
+  if (!item) return item;
+  const o = {};
+  for (const [k, v] of Object.entries(item)) if (!API_ONLY_KEYS.has(k) && !k.startsWith('__')) o[k] = v;
+  if (Array.isArray(o.assets)) o.assets = o.assets.map((a) => { if (!a || typeof a !== 'object') return a; const { url, ...rest } = a; return rest; });
+  return clone(o);
+}
+const clone = (v) => (v === undefined ? undefined : JSON.parse(JSON.stringify(v)));
+const isPlain = (v) => v != null && typeof v === 'object' && !Array.isArray(v);
+const isPrim = (v) => v == null || ['string', 'number', 'boolean'].includes(typeof v);
+/** 比較用的正規化 JSON：物件鍵排序（鍵的順序不算修改），陣列順序照舊（順序算修改） */
+export function canon(v) {
+  if (Array.isArray(v)) return `[${v.map((x) => (x === undefined ? 'null' : canon(x))).join(',')}]`;
+  if (isPlain(v)) return `{${Object.keys(v).filter((k) => v[k] !== undefined).sort().map((k) => `${JSON.stringify(k)}:${canon(v[k])}`).join(',')}}`;
+  return v === undefined ? 'undefined' : JSON.stringify(v);
+}
+export const sameValue = (a, b) => canon(a) === canon(b);
+
+/**
+ * 三方合併一個值：orig＝現行版、base＝表單剛帶入時的匯出、cur＝目前的匯出。base 與 cur 相同 ⇒ 同事沒動 ⇒ 原樣保留現行版。
+ *   - 字串／數字清單（關鍵字、相關疾病、對象…）：只套用「新增了哪些、移除了哪些」，現行版其他項目與順序不變。
+ *   - 物件（structured…）：逐鍵三方合併，表單沒有的鍵保留。
+ *   - 物件清單（連結、步驟、表單、檢體…）：跟載入時一樣的那幾項沿用現行版（保留表單沒有的子欄位，如連結的各語言標題）；
+ *     筆數相同時逐項合併；其他情況用表單的版本。
+ *   - 其他：用表單的版本；表單清空 ⇒ 移除欄位。
+ */
+export function mergeValue(orig, base, cur) {
+  if (sameValue(base, cur)) return clone(orig);
+  if (cur === undefined) { // 表單清空：清單／物件只拿掉表單上原本有的那幾項（表單沒有的項目保留），其他型別整欄移除
+    if (!Array.isArray(base) && !isPlain(base)) return undefined;
+    const r = mergeValue(orig, base, Array.isArray(base) ? [] : {});
+    return r === undefined || (Array.isArray(r) ? !r.length : !Object.keys(r).length) ? undefined : r;
   }
-  if (original.type === 'vaccine') { o.slug = original.slug; o.nameEn = original.nameEn; if (Array.isArray(original.publicFunded)) o.publicFunded = original.publicFunded; }
-  if (original.type === 'document' && !out.supersedes) o.supersedes = original.supersedes ?? null;
+  if (Array.isArray(cur) && Array.isArray(base) && (orig === undefined || Array.isArray(orig))) {
+    const o = orig ?? [];
+    if ([...base, ...cur, ...o].every(isPrim)) {
+      const removed = base.filter((x) => !cur.includes(x)), added = cur.filter((x) => !base.includes(x) && !o.includes(x));
+      const out = [...o.filter((x) => !removed.includes(x)), ...added];
+      return orig === undefined && !out.length ? undefined : out;
+    }
+    if (o.length === base.length) {
+      const used = new Set();
+      const pos = cur.map((c) => { const j = base.findIndex((b, bi) => !used.has(bi) && sameValue(b, c)); if (j >= 0) used.add(j); return j; });
+      return cur.map((c, i) => (pos[i] >= 0 ? clone(o[pos[i]]) : cur.length === base.length && !used.has(i) && isPlain(o[i]) && isPlain(c) ? mergeValue(o[i], base[i], c) : clone(c)));
+    }
+    return clone(cur);
+  }
+  if (isPlain(cur) && isPlain(base) && (orig === undefined || isPlain(orig))) {
+    const r = clone(orig ?? {});
+    for (const k of new Set([...Object.keys(base), ...Object.keys(cur)])) {
+      const v = mergeValue(orig?.[k], base[k], cur[k]);
+      if (v === undefined) delete r[k]; else r[k] = v;
+    }
+    return orig === undefined && !Object.keys(r).length ? undefined : r;
+  }
+  return clone(cur);
+}
+
+/** 提供語言：一個語言一個語言比；同事改了某語言（取消、新增）才換掉那一個語言的整筆紀錄，其他語言的複核紀錄原樣保留 */
+function mergeLanguages(orig, base, cur) {
+  const r = clone(orig ?? {});
+  for (const l of new Set([...Object.keys(base ?? {}), ...Object.keys(cur ?? {})])) {
+    if (sameValue(base?.[l], cur?.[l])) continue;
+    if (cur?.[l] === undefined) delete r[l]; else r[l] = clone(cur[l]);
+  }
+  return r;
+}
+/** 附件：表單只列這次新選的檔；同名的換掉，其餘現行版附件照舊宣告（表單不能刪現行版附件，要刪請找資訊室） */
+function mergeAssets(orig, cur) {
+  const r = clone(orig ?? []);
+  for (const a of cur ?? []) { const i = r.findIndex((x) => x?.file === a?.file); if (i >= 0) r[i] = clone(a); else r.push(clone(a)); }
+  return r.length ? r : undefined;
+}
+/** 疾病頁：內文欄是各區塊以「## 標題」接起來的一份；只換掉內文有改的區塊（區塊其他欄位如 warning、datasets 保留，填了內文的區塊去掉 pending） */
+function mergeDiseaseBlocks(orig, cur) {
+  const sec = splitSections(cur?.[0]?.markdown ?? '');
+  return (orig ?? []).map((b) => { const md = sec.get(b.heading); if (!md || md === (b.markdown ?? '').trim()) return clone(b); const { status, ...rest } = b; return { ...clone(rest), markdown: md }; });
+}
+/** 正本文字有沒有改（與建置的 sourceHash 用同一份欄位，src/client/source-pick.js） */
+export const sourceChanged = (a, b) => JSON.stringify(sourcePickOf(a ?? {})) !== JSON.stringify(sourcePickOf(b ?? {}));
+
+/**
+ * 修改已上架內容：以現行版為底，只套用同事真正改過的欄位。
+ * @param {any} out       目前表單的匯出（buildExport 的結果）
+ * @param {any} original  現行版（API 的一筆，或閘道送回的檔案內容）
+ * @param {any} base      表單剛帶入、還沒動過時的匯出（publish.js 在載入完成時記下）
+ * @returns 要寫回 repo 的 JSON：未改的欄位與現行版逐位元組相同、鍵順序不變；EDIT_DERIVED 一定更新；
+ *          改到正本文字時，沒有 sourceHash 的既有譯文補上舊版的 sourceHash（建置會顯示「中文已更新，譯文待複核」）
+ */
+export function mergeEdit(out, original, base) {
+  if (!original) return out;
+  if (!base) throw new TypeError('mergeEdit 需要 base（表單剛帶入時的匯出），否則分不出哪些欄位是同事改的');
+  const live = liveItem(original);
+  const o = clone(live);
+  const keep = new Set([...EDIT_DERIVED, ...API_ONLY_KEYS, ...(FORM_PLACEHOLDER[live.type] ?? [])]);
+  for (const k of new Set([...Object.keys(base), ...Object.keys(out)])) {
+    if (keep.has(k) || sameValue(base[k], out[k])) continue; // 沒動：保留現行版（現行版沒有這欄就維持沒有）
+    const v = k === 'languages' ? mergeLanguages(live.languages, base.languages, out.languages)
+      : k === 'assets' ? mergeAssets(live.assets, out.assets)
+      : k === 'blocks' && live.type === 'disease' ? mergeDiseaseBlocks(live.blocks, out.blocks)
+      : mergeValue(live[k], base[k], out[k]);
+    if (v === undefined) delete o[k]; else o[k] = v;
+  }
+  for (const k of EDIT_DERIVED) if (out[k] !== undefined) o[k] = out[k];
+  // 改到正本文字：既有譯文是依舊版翻的。沒有 sourceHash 的舊資料一律被當成「最新」，所以補上舊版的雜湊，讓治理規則 R5 標出「譯文待複核」
+  const oldHash = original.sourceHash;
+  if (oldHash && o.languages && sourceChanged(o, live)) {
+    const src = o.sourceLang ?? 'zh-TW';
+    for (const [l, meta] of Object.entries(o.languages)) {
+      if (l === src || !meta || !['reviewed', 'machine'].includes(meta.status) || meta.sourceHash || o.i18n?.[l]?.sourceHash) continue;
+      o.languages[l] = { ...meta, sourceHash: oldHash };
+    }
+  }
   return o;
 }
 
-/** 改了哪些欄位（給畫面與 PR 說明；Markdown 內文只報「內文」） */
+/** 改了哪些欄位（給畫面與 PR 說明）：與現行版逐欄比較，回傳所有不同的欄位；只排除 EDIT_DERIVED（畫面另外明列） */
 export function editDiff(out, original) {
   if (!original) return [];
-  const keys = new Set([...Object.keys(out), ...Object.keys(original).filter((k) => !API_ONLY_KEYS.has(k))]);
+  const live = liveItem(original);
   const changed = [];
-  for (const k of keys) {
-    if (['reviewedAt', 'status', 'steward', 'keywords', 'summary', 'languages', 'structured', 'sensitivity'].includes(k)) continue;
-    if (JSON.stringify(out[k] ?? null) !== JSON.stringify(original[k] ?? null)) changed.push(k);
+  for (const k of new Set([...Object.keys(out ?? {}), ...Object.keys(live)])) {
+    if (EDIT_DERIVED.includes(k) || API_ONLY_KEYS.has(k)) continue;
+    if (!sameValue(out?.[k], live[k])) changed.push(k);
   }
   return changed.sort();
 }

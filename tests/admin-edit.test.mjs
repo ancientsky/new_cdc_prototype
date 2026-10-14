@@ -9,13 +9,14 @@ import * as P from '../src/client/admin/preprocess.js';
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = (rel) => JSON.parse(fs.readFileSync(path.join(ROOT, rel), 'utf8'));
 const apiLike = (item) => ({ ...item, url: 'https://example/x/', path: '/x/', md: null, governance: { lifecycle: 'current' } });
+// 第五十一輪：mergeEdit 要第三個參數 base（表單剛帶入、還沒改時的匯出），只有與 base 不同的欄位才寫到現行版上（見 round51-edit-preserve）
+const exportOf = (item, f) => P.buildExport({
+  type: f.type, id: f.id, title: f.title, body: f.body, owner: f.owner, steward: item.steward, reviewPeriodMonths: f.period, audience: f.audience, tasks: f.tasks, basedOn: f.basedOn, langs: f.langs,
+  summary: item.summary, keywords: item.keywords, diseases: item.diseases, vaccines: item.vaccines, countries: item.countries, today: '2026-10-05', extra: f.extra,
+});
 const roundTrip = (item, patch = (f) => f) => {
-  const f = patch(P.itemToForm(apiLike(item)));
-  const out = P.buildExport({
-    type: f.type, id: f.id, title: f.title, body: f.body, owner: f.owner, steward: item.steward, reviewPeriodMonths: f.period, audience: f.audience, tasks: f.tasks, basedOn: f.basedOn, langs: f.langs,
-    summary: item.summary, keywords: item.keywords, diseases: item.diseases, vaccines: item.vaccines, countries: item.countries, today: '2026-10-05', extra: f.extra,
-  });
-  return P.mergeEdit(out, apiLike(item));
+  const f0 = P.itemToForm(apiLike(item));
+  return P.mergeEdit(exportOf(item, patch(structuredClone(f0))), apiLike(item), exportOf(item, f0));
 };
 
 test('collectionOfId：id 前綴 → v1 集合；未知前綴 null', () => {

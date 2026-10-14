@@ -5,6 +5,7 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { normalizeCategory, DEFAULT_CATEGORIES } from '../../src/client/bulletin-rules.js';
+import { sourcePickOf } from '../../src/client/source-pick.js';
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 export const CONTENT = path.join(ROOT, 'content');
@@ -34,22 +35,8 @@ function readDirJSON(dir) {
  * i18n（含 sourceLang≠zh-TW 時的 i18n['zh-TW']）不參與，所以譯文更新不會讓其他語言過期（ARCHITECTURE 14.2）。
  */
 export function sourceHashOf(item) {
-  const pick = {
-    title: item.title, summary: item.summary, question: item.question, answerMarkdown: item.answerMarkdown,
-    bodyMarkdown: item.bodyMarkdown, blocks: item.blocks, keyFacts: item.keyFacts, machineReadableMarkdown: item.machineReadableMarkdown,
-    clarificationMarkdown: item.clarificationMarkdown, claim: item.claim, publicFunded: item.publicFunded, headline: item.headline,
-    transcriptMarkdown: item.transcriptMarkdown, introMarkdown: item.introMarkdown, steps: item.steps, abstractMarkdown: item.abstractMarkdown, specimens: item.specimens, articles: item.articles,
-    // 第二十九輪：疫情報導文章的正文欄位
-    highlights: item.highlights, figures: item.figures, references: item.references, authors: item.authors,
-    // 連結檢查寫回的欄位（lastCheckedAt、status）不算內容變更，剔除後再雜湊
-    links: item.links?.map(({ lastCheckedAt, status, ...rest }) => rest),
-    forms: item.forms?.map(({ lastCheckedAt, status, ...rest }) => rest),
-  };
-  // 第七輪（ARCHITECTURE 15.1）：職缺與採購公告的正文欄位（只限 job／tender，其他型別雜湊不變；不含 result／waitlistUpdates／award：結果公告不影響譯文）
-  if (item.type === 'job' || item.type === 'tender') {
-    Object.assign(pick, { duties: item.duties, qualifications: item.qualifications, requiredDocuments: item.requiredDocuments, salaryNote: item.salaryNote, workplace: item.workplace, scope: item.scope, specialTerms: item.specialTerms });
-  }
-  return createHash('sha1').update(JSON.stringify(pick)).digest('hex').slice(0, 12);
+  // 欄位清單在 src/client/source-pick.js（第五十一輪：後台修改已上架內容時也要用同一份判斷「有沒有改到正本」）
+  return createHash('sha1').update(JSON.stringify(sourcePickOf(item))).digest('hex').slice(0, 12);
 }
 
 export function loadSite(config) {
