@@ -69,11 +69,12 @@ function contentExists(site, ref) {
   return false;
 }
 
-export async function runEval(site, { category = null } = {}) {
+// 第四十九輪：set 可換成別份題庫（eval/run-challenge.mjs 用來跑不擋建置的換句話說挑戰集）；預設仍是 eval-set.json。
+export async function runEval(site, { category = null, set = null } = {}) {
   // 固定亂數，讓稽核編號在報告中可重現
   let seed = 7; const random = () => ((seed = (seed * 9301 + 49297) % 233280) / 233280);
   const engine = engineFromSite(site, { random });
-  return scoreEvalSet(engine, site.governance.evalSet ?? {}, { exists: (r) => contentExists(site, r), category, today: site.today });
+  return scoreEvalSet(engine, set ?? site.governance.evalSet ?? {}, { exists: (r) => contentExists(site, r), category, today: site.today });
 }
 
 // ───────── CLI ─────────
