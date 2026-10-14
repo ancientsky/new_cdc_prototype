@@ -8,6 +8,7 @@
   "reviewPeriodMonths": 12,
   "status": "published",
   "audience": [
+    "public",
     "professional"
   ],
   "sensitivity": "public",
