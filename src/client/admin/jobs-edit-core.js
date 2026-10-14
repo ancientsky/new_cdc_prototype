@@ -106,7 +106,8 @@ export function buildJob(state, { today, base = null } = {}) {
   const job = {
     id, type: 'job', title: s(state.title), owner: 'unit.personnel', steward: old.steward ?? '人事室承辦人',
     publishedAt, reviewedAt: today, reviewPeriodMonths: 0, status: 'published', audience: ['public'], sensitivity: 'public', license: 'OGDL-1.0',
-    aiWhitelist: { requested: true, approvedBy: 'unit.oasis', approvedAt: today },
+    // 既有職缺沿用原本的 AI 白名單紀錄：核准日是公關室核准的那天，不是這次匯出的日子（第五十二輪，docs/deploy.md §24）
+    aiWhitelist: old.aiWhitelist ?? { requested: true, approvedBy: 'unit.oasis', approvedAt: today },
     languages: old.languages ?? { 'zh-TW': { status: 'source' } },
     summary: s(state.summary),
     ...(old.keywords ? { keywords: old.keywords } : {}),

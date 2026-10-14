@@ -17,6 +17,10 @@ export function render(ctx) {
   const data = {
     today: site.today,
     jobs: jobs.map((j) => ({ ...stripBuild(j), stage: jobStage(site, j) })),
+    // 第五十二輪（docs/deploy.md §24）：修改既有職缺時以現行版為底合併。sourceHash＝建置算的正本雜湊（改到中文時把既有英譯標成「依舊版翻譯」）；
+    // resultTakenDown＝甄選結果已過下架日：建置已把名單從記憶體拿掉（這頁本來就是公開的靜態頁，不能放名單），匯出的檔案因此不含名單，畫面要明說。
+    sourceHashes: Object.fromEntries(jobs.map((j) => [j.id, j.sourceHash ?? null])),
+    resultTakenDown: jobs.filter((j) => j.gov?.resultTakenDown && j.gov?.resultListInSource).map((j) => j.id),
     units: site.master.units.map((u) => ({ id: u.id, name: u.name })),
     jobTypes: JOB_TYPES, examStages: EXAM_STAGES, stages: JOB_STAGE_LABELS, amendKinds: AMEND_KINDS,
   };
@@ -125,6 +129,7 @@ ${pageHead({
   <div id="jf-warn"></div></section>
 <section class="adm-card" aria-labelledby="je-h"><h2 id="je-h">匯出</h2>
   <p>存成：<code id="jf-file">content/jobs/…</code></p>
+  <p class="adm-hint" id="jf-changed" role="status" aria-live="polite"></p>
   <pre class="adm-pre" id="jf-out" tabindex="0">{ }</pre>
   <div class="adm-actions"><button type="button" class="adm-btn" id="jf-copy">複製</button><button type="button" class="adm-btn adm-btn--ghost" id="jf-dl">下載 .json</button></div>
   <ol class="adm-jf-steps">

@@ -86,3 +86,6 @@ eval/**/*.mjs
 !src/client/search-bestbet.js
 !src/templates/public/_bestbet.mjs
 !tests/round51-search-bestbet.test.mjs
+# 第五十二輪：其他四個編輯頁以現行版為底合併（docs/deploy.md §24）
+!src/client/admin/edit-merge.js
+!tests/round52-editors-preserve.test.mjs

@@ -13,6 +13,7 @@ import {
   tocPreviewRows, packageEntries, exportFilename, issueFilename, renderArticlePreview, renderTocPreview, TE_FIELD_MAP, assignFigureFiles, IMAGE_EXT_RE,
   categoriesChanged, suggestCategoryKey, sortCategories, CATEGORIES_FILE, DEFAULT_CATEGORIES,
 } from './bulletin-edit-core.js';
+import { mergeFormEdit, changedFields, changedText } from './edit-merge.js';
 
 const D = readEmbedded('adm-bulletin-data', { today: '', siteBase: '', issues: [], articles: [], units: [], diseases: [], categories: DEFAULT_CATEGORIES, pdfMaxBytes: 20 * 1048576, imageMaxBytes: 2 * 1048576 });
 const KEY = 'cdc.admin.bulletin-edit';
@@ -24,6 +25,10 @@ const MIME = { png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', webp: 'i
 
 let state = emptyState({ today: TODAY, categories: D.categories });
 let base = null; // 修改中的既有文章
+// 第五十二輪（docs/deploy.md §24）：修改既有文章時，匯出（上架包、下載、送審）＝以現行版為底，只套用同事改過的欄位。
+// live＝現行版（?edit= 是 content 檔的內容；從閘道開啟的是分支上的檔）；editBase＝表單剛帶入、還沒動過時的匯出。
+let live = null;
+let editBase = null;
 let pdf = null; // { name, bytes, sha256 }
 const images = new Map(); // 檔名 → { bytes, url, mime, sha256, width, height }
 let PV = null;
@@ -136,7 +141,16 @@ $('#te-dis-chips').addEventListener('click', (e) => { const b = e.target.closest
 /* ───────── 目前物件與檢核 ───────── */
 const currentIssue = () => resolveIssue(state, D.issues, { today: TODAY });
 const filesMeta = () => { const o = {}; for (const [f, m] of images) o[f] = { kind: 'image', mime: m.mime, bytes: m.bytes.length, sha256: m.sha256, width: m.width, height: m.height }; if (pdf) o[pdf.name] = { kind: 'attachment', mime: 'application/pdf', bytes: pdf.bytes.length, sha256: pdf.sha256 }; return o; };
-const current = () => { read(); const issue = currentIssue(); return { issue, article: buildArticle(state, { today: TODAY, issue, base, files: filesMeta() }) }; };
+const rawArticle = (issue) => buildArticle(state, { today: TODAY, issue, base, files: filesMeta() });
+const current = () => {
+  read(); const issue = currentIssue(); const out = rawArticle(issue);
+  return { issue, article: live && editBase ? mergeFormEdit(out, live, editBase) : out };
+};
+/**
+ * 表單帶入現行版之後立刻記下 editBase（之後才分得出哪些欄位是同事改的）。
+ * sourceHash：建置算的正本雜湊，只有現行版就是 main 上那一版時才有（從閘道帶回的送審版本沒有，見 deploy §22.6 第 4 點）。
+ */
+function startEdit(item, sourceHash) { live = item ? { ...item, ...(sourceHash ? { sourceHash } : {}) } : null; editBase = null; if (live) { read(); editBase = rawArticle(currentIssue()); } }
 
 function paneTab(id) {
   for (const t of $$('.adm-tabs--pane [role="tab"]')) { const on = t.id === `tt-${id}`; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; $(`#${t.getAttribute('aria-controls')}`).hidden = !on; }
@@ -158,6 +172,9 @@ function paint() {
   $('#te-file').textContent = exportFilename(article);
   $('#te-file2').textContent = [issue?._new ? `　＋ ${issueFilename(issue)}` : '', categoriesChanged(state.categories, D.categories) ? `　＋ ${CATEGORIES_FILE}` : '', ...[...images.keys()].filter((f) => (article.figures ?? []).some((x) => x.file === f)).map((f) => `　＋ content/assets/${article.id}/${f}`)].join('');
   $('#te-out').textContent = JSON.stringify(article, null, 2);
+  const ch = live && editBase ? changedFields(article, live) : null;
+  const chEl = $('#te-changed');
+  if (chEl) { chEl.textContent = ch ? ` ${changedText(ch)}` : ''; chEl.dataset.changed = ch ? ch.fields.join(' ') : ''; }
   $('#te-zip').disabled = hasErrors(problems);
   $('#te-zip').title = hasErrors(problems) ? '先把「檢核」頁籤裡會擋建置的問題改掉' : '';
   PV?.repaintSoon();
@@ -185,8 +202,10 @@ function load(id) {
     const nx = suggestNextIssue(D.issues, TODAY); st.newVolume = String(nx.volume); st.newIssue = String(nx.issue);
     fill(st);
   }
+  // 現行版＝content 檔：載入時換成新代號的舊分類代號換回來（沒改分類就原樣保留舊代號）
+  startEdit(base && D.legacyArticleTypes?.[base.id] ? { ...base, articleType: D.legacyArticleTypes[base.id] } : base, base ? D.sourceHashes?.[base.id] : null);
   $('#te-editbox').hidden = !base;
-  if (base) $('#te-editbox').innerHTML = `<strong>修改已上架文章</strong> <code>${esc(base.id)}</code>（${esc(D.issues.find((p) => p.id === base.issueId)?.title ?? base.issueId)} 第 ${base.articleNo} 篇）。匯出會保留表單沒有的欄位（languages、i18n…），PR 只會多出真正改動的部分。`;
+  if (base) $('#te-editbox').innerHTML = `<strong>修改已上架文章</strong> <code>${esc(base.id)}</code>（${esc(D.issues.find((p) => p.id === base.issueId)?.title ?? base.issueId)} 第 ${base.articleNo} 篇）。匯出以現行版為底，只套用你改過的欄位；表單沒有的欄位（languages、i18n…）與沒改的欄位一個字都不動。<span class="adm-te-changed" id="te-changed" role="status" aria-live="polite"></span>`;
 }
 $('#te-pick').addEventListener('change', (e) => { load(e.target.value); paint(); });
 $('#te-issue').addEventListener('change', () => {
@@ -328,7 +347,7 @@ $('#te-copy').addEventListener('click', (e) => copyText(`${$('#te-out').textCont
 /* ───────── 草稿 ───────── */
 let saveTimer = 0;
 function markDirty() { const s = $('#te-savestate'); s.dataset.state = 'dirty'; $('#te-savestate-text').textContent = '有未存的修改（自動儲存中…）'; clearTimeout(saveTimer); saveTimer = setTimeout(saveDraft, 1200); }
-function saveDraft() { read(); store.set(KEY, { pick: base?.id ?? 'new', state, savedAt: new Date().toISOString() }); const s = $('#te-savestate'); s.dataset.state = 'saved'; $('#te-savestate-text').textContent = `草稿已存在這台電腦 ${new Date().toLocaleTimeString('zh-TW', { hour12: false })}（圖檔與 PDF 不會存，重開頁面要再拖一次）`; }
+function saveDraft() { read(); store.set(KEY, { pick: base?.id ?? 'new', state, editBase, savedAt: new Date().toISOString() }); const s = $('#te-savestate'); s.dataset.state = 'saved'; $('#te-savestate-text').textContent = `草稿已存在這台電腦 ${new Date().toLocaleTimeString('zh-TW', { hour12: false })}（圖檔與 PDF 不會存，重開頁面要再拖一次）`; }
 $('#te-save').addEventListener('click', () => { saveDraft(); $('#te-msg').textContent = '草稿已儲存。'; });
 document.addEventListener('keydown', (e) => { if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') { e.preventDefault(); saveDraft(); } });
 $('#te-reset').addEventListener('click', () => { store.del(KEY); load('new'); paint(); $('#te-msg').textContent = '已清空表單並刪除本機草稿。'; });
@@ -345,7 +364,7 @@ $('#te-sample').addEventListener('click', () => {
 const qid = new URLSearchParams(location.search).get('edit') ?? new URLSearchParams(location.search).get('id');
 const draft = store.get(KEY, null);
 if (qid && D.articles.some((a) => a.id === qid)) load(qid);
-else if (draft?.state) { load(draft.pick); fill({ ...state, ...draft.state, categories: draft.state.categories ?? state.categories }); $('#te-msg').textContent = `已帶回 ${new Date(draft.savedAt).toLocaleString('zh-TW', { hour12: false })} 存的草稿。`; }
+else if (draft?.state) { load(draft.pick); fill({ ...state, ...draft.state, categories: draft.state.categories ?? state.categories }); if (draft.editBase && base) editBase = draft.editBase; $('#te-msg').textContent = `已帶回 ${new Date(draft.savedAt).toLocaleString('zh-TW', { hour12: false })} 存的草稿。`; }
 else load('new');
 paint();
 
@@ -355,7 +374,7 @@ const GW_FIELDS = { title: '#te-title', issueId: '#te-issue', articleNo: '#te-no
 initPublishGateway({
   exportObj: () => current().article,
   getContentId: () => { const { article } = current(); return /article\.teb-\d+-\d+-\d+$/.test(article.id) ? article.id : ''; },
-  loadItem: (item) => { base = D.articles.find((a) => a.id === item.id) ?? item; fill(stateFromArticle(item, { categories: state.categories })); $('#te-editbox').hidden = false; $('#te-editbox').innerHTML = `<strong>送審中的版本</strong> <code>${esc(item.id)}</code>：已從系統帶回，附件（PDF、圖）留在系統裡，不必重傳。`; paint(); },
+  loadItem: (item) => { base = D.articles.find((a) => a.id === item.id) ?? item; fill(stateFromArticle(item, { categories: state.categories })); startEdit(item); $('#te-editbox').hidden = false; $('#te-editbox').innerHTML = `<strong>送審中的版本</strong> <code>${esc(item.id)}</code>：已從系統帶回，附件（PDF、圖）留在系統裡，不必重傳。匯出以這個版本為底，只套用你改過的欄位。<span class="adm-te-changed" id="te-changed" role="status" aria-live="polite"></span>`; paint(); },
   exportExtra: () => {
     const { issue, article } = current();
     const companions = [];

@@ -309,7 +309,25 @@ export function tocPreviewRows(article, issue, articles) {
 
 /** 分類主檔有沒有改（與資料島的原版比） */
 export const categoriesChanged = (cats, original) => JSON.stringify(sortCategories(cats).map(({ key, label, labelEn, order, description, retiredAt }) => clean({ key, label, labelEn, order, description, retiredAt }))) !== JSON.stringify(sortCategories(original).map(({ key, label, labelEn, order, description, retiredAt }) => clean({ key, label, labelEn, order, description, retiredAt })));
-export const categoriesJson = (cats) => `${JSON.stringify(sortCategories(cats).map(({ key, label, labelEn, order, description, retiredAt }) => clean({ key, label, labelEn, order, description, retiredAt })), null, 2)}\n`;
+/**
+ * 分類主檔的檔案內容（content/master/bulletin-categories.json）。
+ * 第五十二輪（docs/deploy.md §24）：以前整份依表單重寫，而且換成每個鍵一行的格式——只加一個分類，PR 也是整個檔案每一行都變。
+ * 現在：沒改的分類沿用原檔的物件（表單沒有的鍵也保留），格式跟原檔一樣「一個分類一行」，加一個分類就只多一行。
+ * original：資料島的原版（content 檔）；沒給就只輸出表單的欄位。
+ */
+export function categoriesJson(cats, original = []) {
+  const pick = ({ key, label, labelEn, order, description, retiredAt }) => clean({ key, label, labelEn, order, description, retiredAt });
+  const rows = sortCategories(cats).map((c) => {
+    const o = (original ?? []).find((x) => x.key === c.key);
+    if (!o) return pick(c);
+    if (JSON.stringify(pick(o)) === JSON.stringify(pick(c))) return o;
+    const r = { ...o }, now = pick(c);
+    for (const k of ['key', 'label', 'labelEn', 'order', 'description', 'retiredAt']) { if (now[k] === undefined) delete r[k]; else r[k] = now[k]; }
+    return r;
+  });
+  const line = (o) => `{ ${Object.entries(o).map(([k, v]) => `${JSON.stringify(k)}: ${JSON.stringify(v)}`).join(', ')} }`;
+  return `[\n${rows.map((o) => `  ${line(o)}`).join(',\n')}\n]\n`;
+}
 /** 新分類的預設代號：英文名轉小寫連字號；沒有英文名就 cat-N */
 export function suggestCategoryKey(labelEn, existing = []) {
   let key = String(labelEn ?? '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 30);
@@ -327,7 +345,7 @@ export function packageEntries(article, issue, extra = null) {
   const x = extra && !(extra instanceof Uint8Array) && extra.name == null ? extra : { pdf: extra };
   const out = [{ name: exportFilename(article), data: `${JSON.stringify(article, null, 2)}\n` }];
   if (issue?._new) { const { _new, ...clean2 } = issue; void _new; out.push({ name: issueFilename(clean2), data: `${JSON.stringify(clean2, null, 2)}\n` }); }
-  if (x.categories && x.categoriesOriginal && categoriesChanged(x.categories, x.categoriesOriginal)) out.push({ name: CATEGORIES_FILE, data: categoriesJson(x.categories) });
+  if (x.categories && x.categoriesOriginal && categoriesChanged(x.categories, x.categoriesOriginal)) out.push({ name: CATEGORIES_FILE, data: categoriesJson(x.categories, x.categoriesOriginal) });
   if (x.pdf?.name) out.push({ name: `content/assets/${article.id}/${x.pdf.name}`, data: x.pdf.bytes });
   for (const [file, bytes] of Object.entries(x.images ?? {})) if ((article.figures ?? []).some((f) => f.file === file)) out.push({ name: `content/assets/${article.id}/${file}`, data: bytes });
   return out;
