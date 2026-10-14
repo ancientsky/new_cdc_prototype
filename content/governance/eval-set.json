@@ -6936,6 +6936,186 @@
         "lowRelevance": false
       },
       "note": "第五十二輪：換句話說挑戰集 dev 題 CH-SVC-cluster-report-1922-4（短句）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §10）"
+    },
+    {
+      "id": "R53-01",
+      "category": "fact",
+      "q": "去東南亞回來要防蚊多久",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.dengue-imported-return",
+          "faq.travel-return-fever",
+          "disease.dengue",
+          "faq.dengue-fever-when-to-see-doctor"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十三輪：換句話說挑戰集 dev 題 CH-FAQ-dengue-imported-return-2（口語）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §12）"
+    },
+    {
+      "id": "R53-02",
+      "category": "fact",
+      "q": "打完流感疫苗要隔多久才能打新冠",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.flu-covid-same-day"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十三輪：換句話說挑戰集 dev 題 CH-FAQ-flu-covid-same-day-3（否定）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §12）"
+    },
+    {
+      "id": "R53-03",
+      "category": "fact",
+      "q": "新聞說流感併發重症又增加，那是指什麼",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.influenza-severe-what",
+          "disease.influenza",
+          "faq.flu-danger-signs"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十三輪：換句話說挑戰集 dev 題 CH-FAQ-influenza-severe-what-2（情境）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §12）"
+    },
+    {
+      "id": "R53-04",
+      "category": "fact",
+      "q": "被舌咬要怎麼辦",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.snakebite-first-aid",
+          "faq.snakebite-dont",
+          "topic.antivenom",
+          "faq.antivenom-where"
+        ],
+        "mustNotCite": [
+          "faq.rabies-bite",
+          "disease.rabies"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十三輪：換句話說挑戰集 dev 題 CH-FAQ-snakebite-first-aid-3（錯字）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §12）"
+    },
+    {
+      "id": "R53-05",
+      "category": "fact",
+      "q": "結核病接觸者要照X光幾次",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.tb-contact-screening",
+          "disease.tuberculosis",
+          "service.ltbi-treatment"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十三輪：換句話說挑戰集 dev 題 CH-FAQ-tb-contact-screening-2（口語）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §12）"
+    },
+    {
+      "id": "R53-06",
+      "category": "fact",
+      "q": "出國前要去看什麼門診",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.travel-clinic",
+          "service.travel-clinic-appointment"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十三輪：換句話說挑戰集 dev 題 CH-FAQ-travel-clinic-1（口語）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §12）"
+    },
+    {
+      "id": "R53-07",
+      "category": "fact",
+      "q": "疱疹性咽喉炎是什麼",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "disease.enterovirus",
+          "faq.ev-",
+          "faq.enterovirus"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十三輪：換句話說挑戰集 dev 題 CH-DIS-enterovirus-symptoms-3（錯字）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §12）"
+    },
+    {
+      "id": "R53-08",
+      "category": "apply",
+      "q": "3HP要吃多久",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "service.ltbi-treatment",
+          "faq.ltbi-treat-or-not",
+          "disease.tuberculosis"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十三輪：換句話說挑戰集 dev 題 CH-SVC-ltbi-treatment-1（簡寫）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §12）"
+    },
+    {
+      "id": "R53-09",
+      "category": "multilingual",
+      "lang": "id",
+      "q": "Apakah vaksin flu gratis untuk pekerja migran?",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "disease.influenza",
+          "vaccine.influenza",
+          "faq.flu-vaccine",
+          "faq.influenza-vaccine-where",
+          "faq.infant-flu-under-6-months",
+          "master.immunization-schedule"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十三輪：換句話說挑戰集 dev 題 CH-ML-flu-vaccine-id-2（情境）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §12）"
+    },
+    {
+      "id": "R53-10",
+      "category": "multilingual",
+      "lang": "th",
+      "q": "วัคซีนไข้หวัดใหญ่ฟรีไหม",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "disease.influenza",
+          "vaccine.influenza",
+          "faq.flu-vaccine",
+          "faq.influenza-vaccine-where",
+          "faq.infant-flu-under-6-months",
+          "master.immunization-schedule"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十三輪：換句話說挑戰集 dev 題 CH-ML-flu-vaccine-th-2（口語）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §12）"
+    },
+    {
+      "id": "R53-11",
+      "category": "multilingual",
+      "lang": "vi",
+      "q": "Bao giờ bắt đầu tiêm vắc-xin cúm năm nay?",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "disease.influenza",
+          "vaccine.influenza",
+          "faq.flu-vaccine",
+          "faq.influenza-vaccine-where",
+          "faq.infant-flu-under-6-months",
+          "master.immunization-schedule"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十三輪：換句話說挑戰集 dev 題 CH-ML-flu-vaccine-vi-2（口語）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §12）"
     }
   ]
 }

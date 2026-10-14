@@ -594,24 +594,6 @@
       }
     },
     {
-      "id": "CH-FAQ-dengue-imported-return-2",
-      "category": "faq",
-      "source": "faq.dengue-imported-return",
-      "style": "口語",
-      "split": "dev",
-      "q": "去東南亞回來要防蚊多久",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.dengue-imported-return",
-          "faq.travel-return-fever",
-          "disease.dengue",
-          "faq.dengue-fever-when-to-see-doctor"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-FAQ-dengue-imported-return-3",
       "category": "faq",
       "source": "faq.dengue-imported-return",
@@ -1045,21 +1027,6 @@
       "style": "長輩",
       "split": "holdout",
       "q": "兩種疫苗同一天打會不會太傷身體",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.flu-covid-same-day"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-FAQ-flu-covid-same-day-3",
-      "category": "faq",
-      "source": "faq.flu-covid-same-day",
-      "style": "否定",
-      "split": "dev",
-      "q": "打完流感疫苗要隔多久才能打新冠",
       "expect": {
         "refuse": false,
         "mustCiteAny": [
@@ -1672,23 +1639,6 @@
       "style": "口語",
       "split": "holdout",
       "q": "流感重症是什麼意思",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.influenza-severe-what",
-          "disease.influenza",
-          "faq.flu-danger-signs"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-FAQ-influenza-severe-what-2",
-      "category": "faq",
-      "source": "faq.influenza-severe-what",
-      "style": "情境",
-      "split": "dev",
-      "q": "新聞說流感併發重症又增加，那是指什麼",
       "expect": {
         "refuse": false,
         "mustCiteAny": [
@@ -2722,28 +2672,6 @@
       }
     },
     {
-      "id": "CH-FAQ-snakebite-first-aid-3",
-      "category": "faq",
-      "source": "faq.snakebite-first-aid",
-      "style": "錯字",
-      "split": "dev",
-      "q": "被舌咬要怎麼辦",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.snakebite-first-aid",
-          "faq.snakebite-dont",
-          "topic.antivenom",
-          "faq.antivenom-where"
-        ],
-        "mustNotCite": [
-          "faq.rabies-bite",
-          "disease.rabies"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-FAQ-stats-ili-rate-2",
       "category": "faq",
       "source": "faq.stats-ili-rate",
@@ -2813,23 +2741,6 @@
       "style": "情境",
       "split": "holdout",
       "q": "我媽確診肺結核，我們全家要檢查嗎",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.tb-contact-screening",
-          "disease.tuberculosis",
-          "service.ltbi-treatment"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-FAQ-tb-contact-screening-2",
-      "category": "faq",
-      "source": "faq.tb-contact-screening",
-      "style": "口語",
-      "split": "dev",
-      "q": "結核病接觸者要照X光幾次",
       "expect": {
         "refuse": false,
         "mustCiteAny": [
@@ -3066,22 +2977,6 @@
           "faq.tb-treatment-cost",
           "service.tb-treatment-subsidy",
           "faq.mdr-tb"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-FAQ-travel-clinic-1",
-      "category": "faq",
-      "source": "faq.travel-clinic",
-      "style": "口語",
-      "split": "dev",
-      "q": "出國前要去看什麼門診",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.travel-clinic",
-          "service.travel-clinic-appointment"
         ],
         "lowRelevance": false
       }
@@ -3645,23 +3540,6 @@
         "mustCiteAny": [
           "service.lab-test-request",
           "labtest."
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-SVC-ltbi-treatment-1",
-      "category": "service",
-      "source": "service.ltbi-treatment",
-      "style": "簡寫",
-      "split": "dev",
-      "q": "3HP要吃多久",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "service.ltbi-treatment",
-          "faq.ltbi-treat-or-not",
-          "disease.tuberculosis"
         ],
         "lowRelevance": false
       }
@@ -4596,23 +4474,6 @@
       "style": "口語",
       "split": "holdout",
       "q": "腸病毒會不會發燒",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "disease.enterovirus",
-          "faq.ev-",
-          "faq.enterovirus"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-DIS-enterovirus-symptoms-3",
-      "category": "disease",
-      "source": "disease.enterovirus#symptoms",
-      "style": "錯字",
-      "split": "dev",
-      "q": "疱疹性咽喉炎是什麼",
       "expect": {
         "refuse": false,
         "mustCiteAny": [
@@ -7808,27 +7669,6 @@
       }
     },
     {
-      "id": "CH-ML-flu-vaccine-id-2",
-      "category": "multilingual",
-      "source": "ml.flu-vaccine@id",
-      "style": "情境",
-      "lang": "id",
-      "split": "dev",
-      "q": "Apakah vaksin flu gratis untuk pekerja migran?",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "disease.influenza",
-          "vaccine.influenza",
-          "faq.flu-vaccine",
-          "faq.influenza-vaccine-where",
-          "faq.infant-flu-under-6-months",
-          "master.immunization-schedule"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-ML-flu-vaccine-th-1",
       "category": "multilingual",
       "source": "ml.flu-vaccine@th",
@@ -7836,27 +7676,6 @@
       "lang": "th",
       "split": "holdout",
       "q": "ฉีดวัคซีนไข้หวัดใหญ่ได้ที่ไหน",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "disease.influenza",
-          "vaccine.influenza",
-          "faq.flu-vaccine",
-          "faq.influenza-vaccine-where",
-          "faq.infant-flu-under-6-months",
-          "master.immunization-schedule"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-ML-flu-vaccine-th-2",
-      "category": "multilingual",
-      "source": "ml.flu-vaccine@th",
-      "style": "口語",
-      "lang": "th",
-      "split": "dev",
-      "q": "วัคซีนไข้หวัดใหญ่ฟรีไหม",
       "expect": {
         "refuse": false,
         "mustCiteAny": [
@@ -7920,27 +7739,6 @@
       "lang": "vi",
       "split": "holdout",
       "q": "Vắc-xin cúm có miễn phí không?",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "disease.influenza",
-          "vaccine.influenza",
-          "faq.flu-vaccine",
-          "faq.influenza-vaccine-where",
-          "faq.infant-flu-under-6-months",
-          "master.immunization-schedule"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-ML-flu-vaccine-vi-2",
-      "category": "multilingual",
-      "source": "ml.flu-vaccine@vi",
-      "style": "口語",
-      "lang": "vi",
-      "split": "dev",
-      "q": "Bao giờ bắt đầu tiêm vắc-xin cúm năm nay?",
       "expect": {
         "refuse": false,
         "mustCiteAny": [
@@ -8624,6 +8422,94 @@
       "id": "CH-SVC-cluster-report-1922-4",
       "source": "service.cluster-report-1922",
       "q": "班上集體腹瀉",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-dengue-imported-return-2",
+      "source": "faq.dengue-imported-return",
+      "q": "去東南亞回來要防蚊多久",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-flu-covid-same-day-3",
+      "source": "faq.flu-covid-same-day",
+      "q": "打完流感疫苗要隔多久才能打新冠",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-influenza-severe-what-2",
+      "source": "faq.influenza-severe-what",
+      "q": "新聞說流感併發重症又增加，那是指什麼",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-snakebite-first-aid-3",
+      "source": "faq.snakebite-first-aid",
+      "q": "被舌咬要怎麼辦",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-tb-contact-screening-2",
+      "source": "faq.tb-contact-screening",
+      "q": "結核病接觸者要照X光幾次",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-travel-clinic-1",
+      "source": "faq.travel-clinic",
+      "q": "出國前要去看什麼門診",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-DIS-enterovirus-symptoms-3",
+      "source": "disease.enterovirus#symptoms",
+      "q": "疱疹性咽喉炎是什麼",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-SVC-ltbi-treatment-1",
+      "source": "service.ltbi-treatment",
+      "q": "3HP要吃多久",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-ML-flu-vaccine-id-2",
+      "source": "ml.flu-vaccine@id",
+      "q": "Apakah vaksin flu gratis untuk pekerja migran?",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-ML-flu-vaccine-th-2",
+      "source": "ml.flu-vaccine@th",
+      "q": "วัคซีนไข้หวัดใหญ่ฟรีไหม",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-ML-flu-vaccine-vi-2",
+      "source": "ml.flu-vaccine@vi",
+      "q": "Bao giờ bắt đầu tiêm vắc-xin cúm năm nay?",
       "split": "dev",
       "promotedAt": "2026-10-14",
       "to": "eval-set.json"

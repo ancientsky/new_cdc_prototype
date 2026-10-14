@@ -186,6 +186,7 @@ test('外語「咳嗽兩週」（印尼文、越南文）⇒ 結核病，答案�
 test('外語同語言池相關度不足 ⇒ 改用中文原文池重答（same-lang-retry-zh），不是拒答', async () => {
   const r = await ask('ไอมาสองสัปดาห์', 'th');
   assert.equal(r.refused, false);
-  assert.ok(r.guards.some((g) => g.kind === 'same-lang-retry-zh'));
+  // 第五十三輪：泰文語料這題只撞到澄清稿，現在更早一步就改用中文原文（same-lang-clarification-only）；兩條路都是「改用中文、不拒答」
+  assert.ok(r.guards.some((g) => g.kind === 'same-lang-retry-zh' || g.kind === 'same-lang-clarification-only'));
   assert.ok(cites(r).some((id) => id.startsWith('disease.tuberculosis')));
 });
