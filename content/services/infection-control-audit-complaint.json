@@ -113,5 +113,98 @@
       "q": "複核期間需要先改善嗎？",
       "a": "涉及病人安全之缺失仍須先行改善，複核結果另行通知。"
     }
-  ]
+  ],
+  "i18n": {
+    "en": {
+      "title": "Infection control audit appeals and enquiries for medical and long-term care facilities",
+      "summary": "A facility that disagrees with an infection control audit result may apply for a review within 30 days of receiving the notice; members of the public who notice infection control lapses at a facility may petition the local health bureau or Taiwan CDC. Handling takes about 30 days.",
+      "whoCanApply": [
+        "Medical institutions",
+        "Long-term care facilities",
+        "General public"
+      ],
+      "introMarkdown": "Infection control audits are carried out by local health bureaus together with Taiwan CDC.\n\n- **Facility applying for a review**: if you disagree with the audit result, submit your reasons and supporting evidence **within 30 days** of receiving the notice.\n- **Public petition**: if you have concerns about infection control at a hospital or long-term care facility (for example hand hygiene not being followed, or a cluster not reported), petition the local health bureau or write to the Director-General's mailbox.\n\nThis service does not handle medical disputes or complaints about individual clinical decisions; please contact the medical affairs unit of the local health bureau.",
+      "requiredDocuments": [
+        "Facility review request: application form, audit result notice, supporting documents",
+        "Public petition: name of the facility, time of the incident, concrete facts (anonymous petitions are accepted, but cannot be answered)"
+      ],
+      "steps": [
+        {
+          "title": "Submit the request or petition",
+          "text": "Facilities submit an official letter; members of the public use the mailbox or telephone.",
+          "who": "Applicant",
+          "days": 0
+        },
+        {
+          "title": "Assign the case",
+          "text": "The case is sent to the health bureau and regional centre where the facility is located.",
+          "who": "Division of Infection Control and Biosafety",
+          "days": 3
+        },
+        {
+          "title": "Investigation or review",
+          "text": "Document review, with an on-site visit if necessary.",
+          "who": "Local health bureau / regional centre",
+          "days": 20
+        },
+        {
+          "title": "Reply with the result",
+          "text": "A written reply is sent to the applicant.",
+          "who": "Division of Infection Control and Biosafety",
+          "days": 7
+        }
+      ],
+      "fee": "Free",
+      "contact": "Taiwan CDC Division of Infection Control and Biosafety (switchboard +886-2-2395-9825); for general enquiries call the 1922 hotline (from abroad +886-800-001922).",
+      "legalBasis": [
+        "Communicable Disease Control Act, Article 32",
+        "Regulations on Infection Control Measures and Audits for Medical Institutions",
+        "Administrative Procedure Act"
+      ],
+      "forms": [
+        {
+          "label": "Application form for review of infection control audit results",
+          "href": "/pending/?ref=service.infection-control-audit-complaint&doc=感染管制查核結果複核申請書",
+          "format": "PDF",
+          "machineReadable": false
+        }
+      ],
+      "faq": [
+        {
+          "q": "Will the facility know it was me who petitioned?",
+          "a": "The identity of the petitioner is protected by law and is not disclosed during the investigation."
+        },
+        {
+          "q": "Do we need to make improvements while the review is under way?",
+          "a": "Deficiencies that affect patient safety must still be corrected first; the review result will be notified separately."
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Apela at konsultasyon sa pagsusuri ng pagkontrol sa impeksyon para sa mga pasilidad medikal at pangmatagalang pangangalaga",
+      "summary": "Maaaring humiling ng muling pagsusuri ang pasilidad sa loob ng 30 araw mula sa pagtanggap ng abiso; maaaring magsumite ng petisyon sa lokal na kawanihan ng kalusugan o sa Taiwan CDC ang publiko. Mga 30 araw ang pagproseso.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Khiếu nại và tư vấn về kết quả kiểm tra kiểm soát nhiễm khuẩn đối với cơ sở y tế và chăm sóc dài hạn",
+      "summary": "Cơ sở không đồng ý với kết quả kiểm tra có thể xin xem xét lại trong vòng 30 ngày kể từ khi nhận thông báo; người dân phát hiện sai sót về kiểm soát nhiễm khuẩn có thể kiến nghị với cục y tế địa phương hoặc Taiwan CDC. Thời gian xử lý khoảng 30 ngày.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Banding dan konsultasi hasil audit pengendalian infeksi untuk fasilitas medis dan perawatan jangka panjang",
+      "summary": "Fasilitas yang keberatan dengan hasil audit dapat mengajukan peninjauan ulang dalam 30 hari sejak menerima pemberitahuan; masyarakat yang menemukan kelalaian pengendalian infeksi dapat mengadu ke dinas kesehatan setempat atau Taiwan CDC. Pemrosesan sekitar 30 hari.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "การอุทธรณ์และขอคำปรึกษาผลการตรวจประเมินการควบคุมการติดเชื้อของสถานพยาบาลและสถานดูแลระยะยาว",
+      "summary": "สถานพยาบาลที่ไม่เห็นด้วยกับผลการตรวจสามารถขอให้ทบทวนได้ภายใน 30 วันนับจากได้รับแจ้ง ประชาชนที่พบข้อบกพร่องด้านการควบคุมการติดเชื้อสามารถร้องเรียนต่อสำนักงานสาธารณสุขท้องถิ่นหรือ Taiwan CDC ใช้เวลาดำเนินการประมาณ 30 วัน",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

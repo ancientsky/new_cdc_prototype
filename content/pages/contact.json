@@ -65,7 +65,12 @@
   "i18n": {
     "en": {
       "title": "Contact us",
-      "summary": "Taiwan CDC, No. 6 Linsen S. Rd., Zhongzheng Dist., Taipei 100008; switchboard +886-2-2395-9825; hotline 1922 (+886-800-001922 from abroad); TTY fax 0800-655955."
+      "summary": "Taiwan CDC, No. 6 Linsen S. Rd., Zhongzheng Dist., Taipei 100008; switchboard +886-2-2395-9825; hotline 1922 (+886-800-001922 from abroad); TTY fax 0800-655955.",
+      "bodyMarkdown": "## Taiwan Centers for Disease Control\n- **Address**: No. 6, Linsen South Road, Zhongzheng District, Taipei 100008\n- **Switchboard**: 02-2395-9825 (office hours)\n- **Hotline**: **1922** (from mobile or landline; toll-free 0800-001922; from abroad +886-800-001922)\n- **Fax for people with hearing or speech disabilities**: 0800-655955\n\n## Who should I contact?\n| I want to… | Channel |\n| --- | --- |\n| Ask about disease prevention, vaccines or travel health | Call **1922** |\n| Report a suspected cluster of illness | Call **1922** or the local health bureau |\n| Make a suggestion or petition about policy | [Director-General's mailbox](/en/contact/mailbox/) |\n| Report an error on a web page | \"Report an error\" on each page |\n| Report an error in an AI answer | The \"Report\" button on the answer page |\n| Media interviews | Public Relations Office: [media interview request](/en/apply/media-interview-request/) |\n\n## Regional centers\n| Regional center | Jurisdiction | Telephone |\n| --- | --- | --- |\n| Taipei Regional Center | Taipei City, New Taipei City, Keelung City, Yilan County, Kinmen County, Lienchiang County | (02) 2085-xxxx (illustrative) |\n| Northern Regional Center | Taoyuan City, Hsinchu City, Hsinchu County, Miaoli County | (03) 398-xxxx (illustrative) |\n| Central Regional Center | Taichung City, Changhua County, Nantou County | (04) 2473-xxxx (illustrative) |\n| Southern Regional Center | Yunlin County, Chiayi City, Chiayi County, Tainan City | (06) 269-xxxx (illustrative) |\n| Kaoping Regional Center | Kaohsiung City, Pingtung County, Penghu County | (07) 557-xxxx (illustrative) |\n| Eastern Regional Center | Hualien County, Taitung County | (03) 822-xxxx (illustrative) |\n\nRegional center telephone numbers are illustrative.",
+      "machineTranslatedAt": "2026-10-14",
+      "machineFields": [
+        "bodyMarkdown"
+      ]
     }
   }
 }

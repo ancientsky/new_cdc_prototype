@@ -136,7 +136,14 @@ export function diseaseName(ctx, dm) {
   const g = ctx.site.master.glossary.find((x) => x.refs?.includes(dm.id));
   return glossaryTerm(g, ctx.lang) || dm.nameEn || dm.name;
 }
-export const licenseLabel = (ctx, id) => ctx.site.config.licenses.labels[id] ?? id;
+// 授權名稱：站台設定裡是中文正式名稱；外語頁改用 i18n 的 license.<代碼>（只有 OGDL-1.0 這種中文名稱需要，CC0／CC BY 本來就是外文），沒有字串就退回設定值
+export function licenseLabel(ctx, id) {
+  const label = ctx.site.config.licenses.labels[id] ?? id;
+  if (ctx.lang === 'zh-TW' || !/[\u3400-\u9fff]/.test(label)) return label;
+  const key = `license.${id}`;
+  const r = ctx.t(key);
+  return r === key ? label : r;
+}
 export const diseasePage = (ctx, diseaseId) => ctx.site.collections.diseases.find((d) => d.id === diseaseId && d.status === 'published');
 export function diseaseHref(ctx, diseaseId) {
   const d = diseasePage(ctx, diseaseId);
@@ -831,6 +838,8 @@ export function legacyDisclosure(ctx, item) {
   // 揭露截止日：gov.legacy 若帶 showUntil 優先；否則取包含此頁為 target 的移轉清單之 showLegacyUntil（最晚者）
   const until = lg.showUntil ?? lg.showLegacyUntil
     ?? (ctx.site.migration?.lists ?? []).filter((l) => (l.items ?? []).some((i) => i.target === item.id)).map((l) => l.showLegacyUntil).filter(Boolean).sort().pop() ?? null;
+  // 第四十九輪：舊網站的頁面標題、路徑與備註是中文原文（舊站頁名＝專有名稱），外語頁標 lang="zh-TW"：螢幕閱讀器切換語音，中文比例檢查也不會把它當成漏譯
+  const zh = (txt) => (ctx.lang === 'zh-TW' || !txt ? txt : html`<span lang="zh-TW">${txt}</span>`);
   return html`<div class="c-legacy" data-legacy="${n}">
   <p class="c-legacy__line"><span class="c-legacy__ic" aria-hidden="true">↪</span> ${t('legacy.line', { n })}</p>
   <details class="c-legacy__more" data-group="ondemand">
@@ -840,10 +849,10 @@ export function legacyDisclosure(ctx, item) {
       const st = it.status ?? 'migrated';
       const ph = hasPlaceholder(it.oldUrl);
       return html`<li class="c-legacy__item">
-        <p class="c-legacy__row"><strong class="c-legacy__title">${it.oldTitle ?? showUrl(it.oldUrl)}</strong> <span class="c-pill c-pill--${LEGACY_STATUS_KIND[st] ?? 'neutral'}">${t(`legacy.status.${st}`)}</span></p>
-        ${it.oldPath ? html`<p class="c-legacy__path muted">${it.oldPath}</p>` : ''}
+        <p class="c-legacy__row"><strong class="c-legacy__title">${it.oldTitle ? zh(it.oldTitle) : showUrl(it.oldUrl)}</strong> <span class="c-pill c-pill--${LEGACY_STATUS_KIND[st] ?? 'neutral'}">${t(`legacy.status.${st}`)}</span></p>
+        ${it.oldPath ? html`<p class="c-legacy__path muted">${zh(it.oldPath)}</p>` : ''}
         ${it.oldUrl ? html`<p class="c-legacy__url"><span class="c-legacy__k">${t('legacy.oldurl')}</span> ${ph ? html`<code>${showUrl(it.oldUrl)}</code> <span class="muted">${t('legacy.placeholder')}</span>` : html`<a href="${it.oldUrl}" rel="nofollow noopener">${showUrl(it.oldUrl)}<span aria-hidden="true"> ↗</span><span class="sr-only"> (${t('external')})</span></a>`}${!ph ? html`<span class="c-pro-only"> · <a href="${url('/legacy/')}?u=${encodeURIComponent(it.oldUrl)}">${t('legacy.pro.lookup')} →</a></span>` : ''}</p>` : ''}
-        ${it.note ? html`<p class="c-legacy__note">${it.note}</p>` : ''}
+        ${it.note ? html`<p class="c-legacy__note">${zh(it.note)}</p>` : ''}
         ${legacyReqChips(ctx, it.newRequirements ?? [])}
       </li>`;
     })}</ul>

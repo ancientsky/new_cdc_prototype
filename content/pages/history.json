@@ -57,7 +57,12 @@
   "i18n": {
     "en": {
       "title": "History",
-      "summary": "Established in 1999 as the Centers for Disease Control under the Department of Health, Taiwan CDC became part of the Ministry of Health and Welfare in 2013 after responding to SARS and H1N1."
+      "summary": "Established in 1999 as the Centers for Disease Control under the Department of Health, Taiwan CDC became part of the Ministry of Health and Welfare in 2013 after responding to SARS and H1N1.",
+      "bodyMarkdown": "| Year | Milestone |\n| --- | --- |\n| 1999 | On 1 July, the Department of Health, Executive Yuan, merged the Bureau of Epidemic Prevention, the Bureau of Quarantine and the Institute of Preventive Medicine to form the Centers for Disease Control under the Department of Health. |\n| 2003 | The SARS outbreak: large-scale outbreak response launched; the epidemic prevention system was strengthened after a review. |\n| 2004 | Major amendment of the Communicable Disease Control Act; the communicable disease control medical network and the National Health Command Center were established. |\n| 2009 | The H1N1 influenza pandemic: universal vaccination against the new influenza was promoted. |\n| 2013 | On 23 July the Ministry of Health and Welfare was established and the agency became the Taiwan Centers for Disease Control, Ministry of Health and Welfare. |\n| 2020 | The Central Epidemic Command Center for severe special infectious pneumonia was set up to respond to COVID-19. |\n| 2023 | COVID-19 was reclassified as a category 4 notifiable disease, the command center was stood down and routine disease control resumed. |\n| 2026 | The AI-ready website redesign began: content is stored once, governance becomes fields, and AI only relays. |\n\nThis table is a summary of key events; see the agency's annual report for the detailed history.",
+      "machineTranslatedAt": "2026-10-14",
+      "machineFields": [
+        "bodyMarkdown"
+      ]
     }
   }
 }

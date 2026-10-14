@@ -124,6 +124,30 @@
     "en": {
       "title": "Report a suspected outbreak (public, schools, facilities)",
       "summary": "If several people at the same place fall ill with similar symptoms within a short time, call 1922 or the local health bureau for investigation and testing."
+    },
+    "tl": {
+      "title": "Pag-uulat ng pinaghihinalaang kumpol ng sakit (publiko, paaralan, pasilidad)",
+      "summary": "Kung maraming tao sa iisang lugar ang nagkasakit na may magkakahawig na sintomas sa maikling panahon, tumawag sa 1922 o sa lokal na kawanihan ng kalusugan para sa imbestigasyon at pagsusuri.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Báo cáo nghi ngờ ổ dịch (người dân, trường học, cơ sở)",
+      "summary": "Khi nhiều người tại cùng một nơi có triệu chứng tương tự trong thời gian ngắn, hãy gọi 1922 hoặc báo cho cục y tế địa phương để được điều tra và lấy mẫu xét nghiệm.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Pelaporan dugaan klaster penyakit (masyarakat, sekolah, fasilitas)",
+      "summary": "Jika beberapa orang di tempat yang sama jatuh sakit dengan gejala serupa dalam waktu singkat, hubungi 1922 atau dinas kesehatan setempat untuk penyelidikan dan pengambilan sampel.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "การแจ้งการระบาดเป็นกลุ่มที่สงสัย (ประชาชน โรงเรียน สถานพยาบาลและสถานดูแล)",
+      "summary": "หากมีหลายคนในสถานที่เดียวกันป่วยด้วยอาการคล้ายกันในเวลาสั้น ๆ ให้โทร 1922 หรือแจ้งสำนักงานสาธารณสุขท้องถิ่นเพื่อสอบสวนและเก็บตัวอย่างตรวจ",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

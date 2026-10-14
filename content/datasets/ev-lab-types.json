@@ -75,5 +75,13 @@
   "lastUpdated": "2026-09-26",
   "formats": [
     "CSV"
-  ]
+  ],
+  "i18n": {
+    "en": {
+      "title": "Enterovirus type surveillance",
+      "summary": "Weekly statistics on the types of community enterovirus isolates (EV71, coxsackievirus A, coxsackievirus B, echovirus and others).",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

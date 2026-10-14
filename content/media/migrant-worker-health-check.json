@@ -104,6 +104,102 @@
     "vi": {
       "title": "Khám sức khỏe cho lao động nước ngoài: trong 3 ngày sau khi nhập cảnh và trong thời gian làm việc",
       "summary": "Hướng dẫn khám sức khỏe trong 3 ngày làm việc sau khi nhập cảnh và vào khoảng tháng thứ 6, 18, 30; nếu ho, sốt hãy gọi 1922 có hỗ trợ tiếng Việt."
+    },
+    "en": {
+      "title": "Health checks for migrant workers: check-ups within three days of arrival and during employment",
+      "summary": "Explains, with Vietnamese subtitles, the health check within three days of arrival and the check-ups around months 6, 18 and 30 of employment, including a chest X-ray, and reminds viewers that they can call the 1922 multilingual line if they have cough or fever.",
+      "basedOnVersionLabel": "Health examination rules for foreign nationals and the Tuberculosis Control Manual",
+      "targetGroups": [
+        "Migrant workers",
+        "Employers and recruitment agencies",
+        "New residents"
+      ],
+      "series": "New residents and migrant worker health",
+      "chapters": [
+        {
+          "t": 0,
+          "label": "Why a health check is needed"
+        },
+        {
+          "t": 35,
+          "label": "When to have the check"
+        },
+        {
+          "t": 80,
+          "label": "What is checked and where"
+        },
+        {
+          "t": 115,
+          "label": "What to do if you are ill"
+        }
+      ],
+      "transcriptMarkdown": "**[00:00] Why a health check is needed**\n\nNarrator: Welcome to work in Taiwan. To protect your own health and that of your co-workers and your employer's family, migrant workers who come to Taiwan must have regular health checks as required. A health check can find tuberculosis and other communicable diseases early; found early and treated early, most can be cured.\n\n**[00:35] When to have the check**\n\nNarrator: Within three working days after entering Taiwan, go with your employer or agency to a designated hospital for the first health check. Afterwards, during employment, you must have regular health checks around the 6th, 18th and 30th months. Employers should remind workers to attend on time and keep the results.\n\n**[01:20] What is checked and where**\n\nNarrator: The health check includes a chest X-ray, a parasite test and other items, which the hospital carries out as required. You must have the check at a hospital designated by the Ministry of Health and Welfare for the result to be valid. If the chest X-ray is abnormal, the hospital will arrange a sputum test or further care. There is no need to be nervous; just work with the doctor.\n\n**[01:55] What to do if you are ill**\n\nNarrator: If you have had a cough for more than two weeks, fever or weight loss, tell your employer and see a doctor as soon as possible. If you are diagnosed with tuberculosis, the government provides free treatment, a care worker will accompany you in taking your medicine every day, and as a rule you can keep working in Taiwan during treatment. Do not be afraid and do not hide. If you need help, call the 1922 hotline, which offers service in Vietnamese, Indonesian, Thai and English.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Pemeriksaan kesehatan pekerja migran: dalam tiga hari setelah tiba dan selama masa kerja",
+      "summary": "Menjelaskan dengan subtitle bahasa Vietnam pemeriksaan kesehatan dalam tiga hari setelah tiba serta pemeriksaan pada sekitar bulan ke-6, 18, dan 30 masa kerja, termasuk rontgen dada, dan mengingatkan bahwa saluran multibahasa 1922 dapat dihubungi bila batuk atau demam.",
+      "basedOnVersionLabel": "Ketentuan pemeriksaan kesehatan warga negara asing dan Manual Pengendalian Tuberkulosis",
+      "targetGroups": [
+        "Pekerja migran",
+        "Pemberi kerja dan agen",
+        "Penduduk baru"
+      ],
+      "series": "Kesehatan penduduk baru dan pekerja migran",
+      "chapters": [
+        {
+          "t": 0,
+          "label": "Mengapa perlu pemeriksaan kesehatan"
+        },
+        {
+          "t": 35,
+          "label": "Kapan harus diperiksa"
+        },
+        {
+          "t": 80,
+          "label": "Apa yang diperiksa dan di mana"
+        },
+        {
+          "t": 115,
+          "label": "Jika Anda sakit"
+        }
+      ],
+      "transcriptMarkdown": "**[00:00] Mengapa perlu pemeriksaan kesehatan**\n\nNarator: Selamat datang untuk bekerja di Taiwan. Untuk melindungi kesehatan Anda sendiri, rekan kerja, dan keluarga pemberi kerja, pekerja migran yang datang ke Taiwan wajib menjalani pemeriksaan kesehatan berkala sesuai ketentuan. Pemeriksaan kesehatan dapat menemukan tuberkulosis dan penyakit menular lain sejak dini; jika ditemukan dan diobati sejak dini, sebagian besar dapat disembuhkan.\n\n**[00:35] Kapan harus diperiksa**\n\nNarator: Dalam tiga hari kerja setelah tiba di Taiwan, pergilah bersama pemberi kerja atau agen ke rumah sakit yang ditunjuk untuk pemeriksaan kesehatan pertama. Selanjutnya, selama masa kerja, Anda juga harus menjalani pemeriksaan kesehatan berkala sekitar bulan ke-6, ke-18, dan ke-30. Pemberi kerja harus mengingatkan pekerja agar memeriksakan diri tepat waktu dan menyimpan hasilnya.\n\n**[01:20] Apa yang diperiksa dan di mana**\n\nNarator: Pemeriksaan kesehatan mencakup rontgen dada, pemeriksaan parasit, dan item lain yang dilaksanakan rumah sakit sesuai ketentuan. Anda harus diperiksa di rumah sakit yang ditunjuk Kementerian Kesehatan dan Kesejahteraan agar hasilnya sah. Jika rontgen dada menunjukkan kelainan, rumah sakit akan mengatur pemeriksaan dahak atau perawatan lebih lanjut. Tidak perlu cemas, cukup ikuti arahan dokter.\n\n**[01:55] Jika Anda sakit**\n\nNarator: Jika Anda batuk lebih dari dua minggu, demam, atau berat badan turun, beri tahu pemberi kerja dan segera berobat. Bila didiagnosis tuberkulosis, pemerintah menyediakan pengobatan gratis, petugas pendamping akan menemani Anda minum obat setiap hari, dan selama pengobatan umumnya Anda boleh tetap bekerja di Taiwan. Jangan takut dan jangan bersembunyi. Jika membutuhkan bantuan, hubungi saluran 1922 yang melayani dalam bahasa Vietnam, Indonesia, Thai, dan Inggris.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "การตรวจสุขภาพแรงงานข้ามชาติ: ภายในสามวันหลังเข้าประเทศและระหว่างการจ้างงาน",
+      "summary": "อธิบายด้วยคำบรรยายภาษาเวียดนามเกี่ยวกับการตรวจสุขภาพภายในสามวันหลังเข้าประเทศ และการตรวจในช่วงเดือนที่ 6, 18 และ 30 ของการจ้างงาน รวมถึงเอกซเรย์ปอด และเตือนว่าหากไอหรือมีไข้ สามารถโทรสายด่วนหลายภาษา 1922",
+      "basedOnVersionLabel": "ข้อกำหนดการตรวจสุขภาพคนต่างชาติและคู่มือการควบคุมวัณโรค",
+      "targetGroups": [
+        "แรงงานข้ามชาติ",
+        "นายจ้างและตัวแทนจัดหางาน",
+        "ผู้อพยพใหม่"
+      ],
+      "series": "สุขภาพของผู้อพยพใหม่และแรงงานข้ามชาติ",
+      "chapters": [
+        {
+          "t": 0,
+          "label": "ทำไมต้องตรวจสุขภาพ"
+        },
+        {
+          "t": 35,
+          "label": "ต้องตรวจเมื่อไร"
+        },
+        {
+          "t": 80,
+          "label": "ตรวจอะไรและที่ไหน"
+        },
+        {
+          "t": 115,
+          "label": "หากป่วยต้องทำอย่างไร"
+        }
+      ],
+      "transcriptMarkdown": "**[00:00] ทำไมต้องตรวจสุขภาพ**\n\nผู้บรรยาย: ยินดีต้อนรับสู่การทำงานในไต้หวัน เพื่อปกป้องสุขภาพของตัวคุณเอง เพื่อนร่วมงาน และครอบครัวของนายจ้าง แรงงานข้ามชาติที่เข้ามาทำงานในไต้หวันต้องเข้ารับการตรวจสุขภาพเป็นระยะตามข้อกำหนด การตรวจสุขภาพช่วยค้นพบวัณโรคและโรคติดต่ออื่น ๆ ได้ตั้งแต่ระยะแรก หากพบเร็วและรักษาเร็ว ส่วนใหญ่รักษาหายได้\n\n**[00:35] ต้องตรวจเมื่อไร**\n\nผู้บรรยาย: ภายในสามวันทำการหลังเข้าไต้หวัน ให้ไปตรวจสุขภาพครั้งแรกที่โรงพยาบาลที่กำหนดพร้อมนายจ้างหรือตัวแทนจัดหางาน หลังจากนั้นระหว่างการจ้างงาน ต้องตรวจสุขภาพเป็นระยะอีกครั้งในช่วงเดือนที่ 6 เดือนที่ 18 และเดือนที่ 30 นายจ้างควรเตือนให้แรงงานไปตรวจตามกำหนดและเก็บผลตรวจไว้\n\n**[01:20] ตรวจอะไรและที่ไหน**\n\nผู้บรรยาย: การตรวจสุขภาพประกอบด้วยเอกซเรย์ปอด การตรวจปรสิต และรายการอื่น ๆ ซึ่งโรงพยาบาลจะดำเนินการตามข้อกำหนด ต้องตรวจที่โรงพยาบาลที่กระทรวงสาธารณสุขและสวัสดิการกำหนดเท่านั้น ผลจึงจะใช้ได้ หากผลเอกซเรย์ปอดผิดปกติ โรงพยาบาลจะจัดให้ตรวจเสมหะหรือรักษาต่อ ไม่ต้องกังวล เพียงให้ความร่วมมือกับแพทย์\n\n**[01:55] หากป่วยต้องทำอย่างไร**\n\nผู้บรรยาย: หากคุณไอนานกว่าสองสัปดาห์ มีไข้ หรือน้ำหนักลด ให้แจ้งนายจ้างและไปพบแพทย์โดยเร็ว หากวินิจฉัยว่าเป็นวัณโรค รัฐให้การรักษาฟรี เจ้าหน้าที่ดูแลจะอยู่เป็นเพื่อนในการกินยาทุกวัน และตามกฎระเบียบสามารถทำงานในไต้หวันต่อได้ระหว่างการรักษา อย่ากลัวและอย่าหลบซ่อน หากต้องการความช่วยเหลือ โทรสายด่วน 1922 มีบริการภาษาเวียดนาม อินโดนีเซีย ไทย และอังกฤษ",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   },
   "legacyUrls": [

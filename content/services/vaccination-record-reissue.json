@@ -119,5 +119,98 @@
       "q": "新冠疫苗接種證明怎麼取得？",
       "a": "可透過健康存摺下載接種紀錄，或至接種院所申請紙本。"
     }
-  ]
+  ],
+  "i18n": {
+    "en": {
+      "title": "Vaccination record and vaccination certificate reissue",
+      "summary": "If a child's vaccination record card is lost, or a vaccination certificate is needed for school or travel, apply for a reissue at the public health centre or the original vaccination site; records can also be viewed and downloaded through My Health Bank.",
+      "whoCanApply": [
+        "General public",
+        "Parents or legal representatives",
+        "Schools"
+      ],
+      "introMarkdown": "Vaccination records in Taiwan are kept in the national immunization information system (NIIS). To obtain your records:\n\n- **Look them up yourself**: view and download them in \"My Health Bank\" in the NHI Express App.\n- **Reissue of a child's vaccination record card**: bring the child's NHI card and the parent's ID to the public health centre where you are registered or live.\n- **English vaccination certificate** (for study or travel abroad): apply at a public health centre or the original vaccination site; some sites charge a handling fee.",
+      "requiredDocuments": [
+        "NHI card or ID of the person vaccinated",
+        "ID of the applicant acting on their behalf, with proof of the relationship",
+        "A copy of the passport (for an English certificate)"
+      ],
+      "steps": [
+        {
+          "title": "Check your records yourself first",
+          "text": "Use My Health Bank to see whether a complete record already exists.",
+          "who": "General public",
+          "days": 0
+        },
+        {
+          "title": "Apply in person",
+          "text": "Bring your documents to a public health centre or the original vaccination site.",
+          "who": "General public",
+          "days": 0
+        },
+        {
+          "title": "Check the NIIS record",
+          "text": "Staff compare the system record; where entries are missing, they help verify with the original vaccination site.",
+          "who": "Public health centre",
+          "days": 3
+        },
+        {
+          "title": "Issue",
+          "text": "The record card or certificate is issued on the spot or after verification.",
+          "who": "Public health centre",
+          "days": 1
+        }
+      ],
+      "fee": "Reissue of the record card is free; the handling fee for an English certificate is set by each site.",
+      "contact": "Taiwan CDC Division of Acute Infectious Diseases (switchboard +886-2-2395-9825); for general enquiries call the 1922 hotline (from abroad +886-800-001922); for reissue, contact your local public health centre.",
+      "legalBasis": [
+        "Communicable Disease Control Act",
+        "Regulations on Vaccination Operations and Inspection of Children's Vaccination Records (illustrative)"
+      ],
+      "forms": [
+        {
+          "label": "Application form for reissue of vaccination records",
+          "href": "/pending/?ref=service.vaccination-record-reissue&doc=預防接種紀錄補發申請書",
+          "format": "PDF",
+          "machineReadable": false
+        }
+      ],
+      "faq": [
+        {
+          "q": "What if my childhood records cannot be found?",
+          "a": "Older records may not have been digitised. Ask the public health centre of your original household registration about paper records. If there is truly no record, a physician can assess whether to revaccinate or to check antibody levels by blood test."
+        },
+        {
+          "q": "How do I get proof of COVID-19 vaccination?",
+          "a": "Download the record from My Health Bank, or ask the vaccination site for a paper copy."
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Muling pag-isyu ng talaan at sertipiko ng pagbabakuna",
+      "summary": "Kung nawala ang card ng talaan ng pagbabakuna ng bata, o kailangan ng sertipiko ng pagbabakuna para sa paaralan o paglalakbay, mag-apply ng muling pag-isyu sa health center o sa orihinal na lugar ng pagbabakuna; maaari ring tingnan at i-download ang talaan sa My Health Bank.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Cấp lại sổ và giấy chứng nhận tiêm chủng",
+      "summary": "Khi mất sổ tiêm chủng của trẻ hoặc cần giấy chứng nhận tiêm chủng để nhập học, xuất ngoại, có thể xin cấp lại tại trạm y tế hoặc cơ sở đã tiêm; cũng có thể tra cứu và tải hồ sơ tiêm chủng qua My Health Bank.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Penerbitan ulang catatan dan sertifikat vaksinasi",
+      "summary": "Jika kartu catatan vaksinasi anak hilang atau diperlukan sertifikat vaksinasi untuk sekolah atau perjalanan, ajukan penerbitan ulang di puskesmas atau tempat vaksinasi semula; catatan juga dapat dilihat dan diunduh melalui My Health Bank.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "การออกบัตรบันทึกและใบรับรองการฉีดวัคซีนใหม่",
+      "summary": "หากบัตรบันทึกการฉีดวัคซีนของเด็กสูญหาย หรือต้องใช้ใบรับรองการฉีดวัคซีนสำหรับเข้าเรียนหรือเดินทางไปต่างประเทศ ยื่นขอออกใหม่ได้ที่ศูนย์สาธารณสุขหรือสถานที่ที่ฉีดวัคซีนเดิม และดูหรือดาวน์โหลดประวัติได้ทาง My Health Bank",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

@@ -4,7 +4,8 @@ import { md } from '../../../scripts/lib/markdown.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
 import { isLongDoc, longDocMain, longDocToc } from './_longdoc.mjs';
 import { curriculumHead, CS } from './_curriculum.mjs';
-import { ldFor, breadcrumb, pageHead, sectionHead, provenance, alerts, alertBox, pageData, scopeTags, feedback, translationBadge, hrefFor, L, unitName, unitLink, slugOf, itemPath, pill, diseasePage, askBox } from './_partials.mjs';
+import { ldFor, breadcrumb, pageHead, sectionHead, provenance, alerts, alertBox, pageData, scopeTags, feedback, translationBadge, hrefFor, L, unitName, unitLink, slugOf, itemPath, pill, diseasePage, askBox, zhOnlyTag } from './_partials.mjs';
+import { zhText } from './_listing.mjs';
 
 export function familyOf(site, d) {
   const m = site.gov?.docsByFamily?.get(d.family);
@@ -73,6 +74,9 @@ function detail(ctx, d) {
   // 第二十一輪：PDF 轉來或段落很多的文件改用分章摺疊版面（_longdoc.mjs）；短文件維持原樣
   // 第二十八輪：核心教材（docType curriculum）不論段落多寡都用長文件版面，並在主欄頂端列學習目標
   const long = isLongDoc(sections, d);
+  // 第四十九輪：條文與異動對照多半只有中文正本（譯文只有標題與摘要）。外語頁把這些內容標 lang="zh-TW" 並加「僅有中文」小標，不假裝是頁面語言
+  const zhBody = lang !== 'zh-TW' && !d.i18n?.[lang]?.sections && (sections.length > 0 || !!d.machineReadableMarkdown);
+  const zhA = zhBody ? raw(' lang="zh-TW"') : '';
   return html`${breadcrumb(ctx, [{ label: t('nav.documents'), href: '/documents/' }, { label: L(ctx, d, 'title') }])}
 <article class="c-article" data-family="${d.family}">
   ${old ? alertBox('superseded', html`<strong class="c-alert__t">${t('alert.superseded.t')}</strong> ${t('doc.superseded', { v: d.version, cur: cur.version, date: fmtDate(cur.effectiveAt) })} <a class="c-alert__go" href="${hrefFor(ctx, cur)}">${t('doc.gocurrent')} →</a>`) : ''}
@@ -102,16 +106,17 @@ function detail(ctx, d) {
   <div class="c-cols c-cols--2">
     <div class="c-cols__main">
       ${curriculumHead(ctx, d)}
+      ${zhBody ? html`<p class="c-shown">${zhOnlyTag(ctx)}</p>` : ''}
       ${changes.length ? html`<section class="c-block" id="changes"><h2>${t('documents.changes')}</h2><div class="c-tablewrap" role="region" tabindex="0" aria-label="${t('a11y.scrollTable')}"><table class="c-table c-table--changes"><caption class="sr-only">${t('documents.changes')}</caption><thead><tr><th scope="col">${t('documents.section')}</th><th scope="col">${t('documents.before')}</th><th scope="col">${t('documents.after')}</th></tr></thead><tbody>
-        ${changes.map((c) => html`<tr class="c-change c-change--${c.kind ?? 'changed'}"><th scope="row">${c.section} <span class="c-change__kind">${t(`documents.kind.${c.kind ?? 'changed'}`)}</span></th><td>${c.before ? html`<del>${c.before}</del>` : html`<span class="muted">—</span>`}</td><td>${c.after ? html`<ins>${c.after}</ins>` : html`<span class="muted">—</span>`}</td></tr>`)}</tbody></table></div></section>` : ''}
-      ${long ? longDocMain(ctx, sections, sectionHtml) : sections.length ? sections.map((s) => html`<section class="c-block${s.level === 3 ? ' c-block--sub' : ''}" id="s-${s.key}">${s.level === 3 ? html`<h3>${s.heading}</h3>` : html`<h2>${s.heading}</h2>`}${raw(sectionHtml(s))}</section>`) : (d.machineReadableMarkdown ? html`<section class="c-block"><div class="c-prose">${raw(md(d.machineReadableMarkdown))}</div></section>` : '')}
+        ${changes.map((c) => html`<tr class="c-change c-change--${c.kind ?? 'changed'}"><th scope="row">${zhText(ctx, c.section)} <span class="c-change__kind">${t(`documents.kind.${c.kind ?? 'changed'}`)}</span></th><td>${c.before ? html`<del>${zhText(ctx, c.before)}</del>` : html`<span class="muted">—</span>`}</td><td>${c.after ? html`<ins>${zhText(ctx, c.after)}</ins>` : html`<span class="muted">—</span>`}</td></tr>`)}</tbody></table></div></section>` : ''}
+      ${long ? (zhBody ? html`<div${zhA}>${longDocMain(ctx, sections, sectionHtml)}</div>` : longDocMain(ctx, sections, sectionHtml)) : sections.length ? sections.map((s) => html`<section class="c-block${s.level === 3 ? ' c-block--sub' : ''}" id="s-${s.key}"${zhA}>${s.level === 3 ? html`<h3>${s.heading}</h3>` : html`<h2>${s.heading}</h2>`}${raw(sectionHtml(s))}</section>`) : (d.machineReadableMarkdown ? html`<section class="c-block"><div class="c-prose"${zhA}>${raw(md(d.machineReadableMarkdown))}</div></section>` : '')}
       <section class="c-block" id="chain"><h2>${t('documents.chain')}</h2>
         <ol class="c-timeline c-timeline--chain">${chain.map((v) => html`<li class="${v.isCurrent ? 'is-current' : ''}${v.id === d.id ? ' is-here' : ''}"><time datetime="${v.effectiveAt}">${fmtDate(v.effectiveAt)}</time> <a href="${hrefFor(ctx, v)}">${v.version}</a> ${v.isCurrent ? pill(t('prov.current'), 'ok') : pill(t('documents.expired'), 'neutral')}${v.id === d.id ? html` <span class="muted">← ${t('documents.here')}</span>` : ''}${v.supersedes ? '' : html` <span class="muted">${t('documents.first')}</span>`}</li>`)}</ol>
       </section>
       ${feedback(ctx, { page: ctx.path })}
     </div>
     <aside class="c-cols__side${long ? ' c-cols__side--longdoc' : ''}">
-      ${long ? '' : sections.length ? html`<nav class="c-aside-card c-toc" aria-label="${t('disease.toc')}"><h2>${t('disease.toc')}</h2><ol>${changes.length ? html`<li><a href="#changes">${t('documents.changes')}</a></li>` : ''}${sections.map((s) => html`<li><a href="#s-${s.key}">${s.heading}</a></li>`)}<li><a href="#chain">${t('documents.chain')}</a></li></ol></nav>` : ''}
+      ${long ? '' : sections.length ? html`<nav class="c-aside-card c-toc" aria-label="${t('disease.toc')}"><h2>${t('disease.toc')}</h2><ol>${changes.length ? html`<li><a href="#changes">${t('documents.changes')}</a></li>` : ''}${sections.map((s) => html`<li><a href="#s-${s.key}">${zhText(ctx, s.heading)}</a></li>`)}<li><a href="#chain">${t('documents.chain')}</a></li></ol></nav>` : ''}
       ${dis.length ? html`<section class="c-aside-card"><h2>${t('news.related')}</h2><ul class="c-linklist">${dis.map((x) => html`<li><a href="${hrefFor(ctx, x)}">${L(ctx, x, 'title')}</a></li>`)}</ul></section>` : ''}
       ${pageData(ctx, d, { schema: 'DigitalDocument', api: '/v1/documents.json', mdPath: mdUrl })}
       ${long ? longDocToc(ctx, sections, { before: html`${d.learningObjectives?.length ? html`<li><a href="#objectives">${CS(ctx, 'objectives')}</a></li>` : ''}${changes.length ? html`<li><a href="#changes">${t('documents.changes')}</a></li>` : ''}`, after: html`<li><a href="#chain">${t('documents.chain')}</a></li>` }) : ''}

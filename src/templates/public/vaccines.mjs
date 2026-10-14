@@ -4,6 +4,8 @@ import { md } from '../../../scripts/lib/markdown.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
 import { ldFor, pageHead, breadcrumb, provenance, alerts, pageData, scopeTags, feedback, askBox, sectionHead, hrefFor, isFallbackLink, L, publishedOf, byDateDesc, dated, diseasePage, sourceCard, unitName, translationBadge, pill, itemPath, vaxmapButton, vaxmapLinkForVaccine, VAXMAP_GROUP_OF, multilingualScheduleCard } from './_partials.mjs';
 import { currentDoc } from './disease.mjs';
+import { reviewedText, zhText } from './_listing.mjs';
+import { langSpan } from './_partials.mjs';
 
 const trailOf = (ctx, item) => [{ label: ctx.t('nav.vaccines'), href: '/vaccines/' }, { label: L(ctx, item, 'title') }];
 
@@ -17,7 +19,7 @@ function fundedTable(ctx, v) {
   const f = v.publicFunded ?? [];
   if (!f.length) return html`<p class="muted">${t('vaccines.nofunded')}</p>`;
   return html`<div class="c-tablewrap" role="region" tabindex="0" aria-label="${t('a11y.scrollTable')}"><table class="c-table"><caption class="sr-only">${t('vaccines.funded')}</caption><thead><tr><th scope="col">${t('vaccines.group')}</th><th scope="col">${t('vaccines.schedule')}</th><th scope="col">${t('vaccines.period')}</th><th scope="col">${t('vaccines.note')}</th></tr></thead><tbody>
-    ${f.map((r) => html`<tr><th scope="row">${r.group}</th><td>${r.schedule}</td><td>${r.startAt ? html`${fmtDate(r.startAt)}${r.endAt ? ` – ${fmtDate(r.endAt)}` : ''}` : '—'}</td><td>${r.note ?? ''}</td></tr>`)}</tbody></table></div>`;
+    ${f.map((r) => html`<tr><th scope="row">${zhText(ctx, r.group)}</th><td>${zhText(ctx, r.schedule)}</td><td>${r.startAt ? html`${fmtDate(r.startAt)}${r.endAt ? ` – ${fmtDate(r.endAt)}` : ''}` : '—'}</td><td>${zhText(ctx, r.note ?? '')}</td></tr>`)}</tbody></table></div>`;
 }
 
 /**
@@ -83,12 +85,25 @@ ${immunizationHub(ctx)}
     const page = pages_.find((v) => v.id === m.id);
     const name = ctx.lang === 'zh-TW' ? m.name : m.nameEn;
     const dis = (m.diseases ?? []).map((d) => diseasePage(ctx, d)).filter(Boolean);
-    return html`<article class="c-card"><h3>${page ? html`<a href="${hrefFor(ctx, page)}">${L(ctx, page, 'title') ?? name}</a>` : name}</h3><p class="muted" lang="en">${m.nameEn}</p>
-      ${page ? html`<p>${L(ctx, page, 'summary')}</p><p class="muted">${t('prov.reviewed')} ${ctx.fmtDate(page.reviewedAt)}</p>` : html`<p class="muted">${t('vaccines.nopage')}</p><a href="${url('/ask/')}?q=${encodeURIComponent(m.name)}">${t('diseases.askit')} →</a>`}
+    // 第四十九輪：一級內容只認 reviewed 的譯文；本語言沒有時卡片標題退英文名（nameEn），摘要退 reviewed 英文，再沒有才是中文並標 lang="zh-TW"
+    const fb = page && isFallbackLink(ctx, page);
+    const ti = page ? reviewedText(ctx, page, 'title') : null;
+    const su = page ? reviewedText(ctx, page, 'summary') : null;
+    const shownName = fb && ctx.lang !== 'zh-TW' && m.nameEn ? { text: m.nameEn, lang: 'en' } : { text: page ? (ti.text ?? name) : name, lang: page ? ti.lang : ctx.lang };
+    return html`<article class="c-card"><h3>${page ? html`<a href="${hrefFor(ctx, page)}"${fb ? raw(` hreflang="${page.sourceLang ?? 'zh-TW'}"`) : ''}>${langSpan(ctx, shownName)}</a>` : name}</h3><p class="muted" lang="en">${m.nameEn}</p>
+      ${page ? html`<p>${langSpan(ctx, su)}</p><p class="muted">${t('prov.reviewed')} ${ctx.fmtDate(page.reviewedAt)}</p>` : html`<p class="muted">${t('vaccines.nopage')}</p><a href="${url('/ask/')}?q=${encodeURIComponent(m.name)}">${t('diseases.askit')} →</a>`}
       ${dis.length ? html`<p class="c-linkrow">${dis.map((d) => html`<a href="${hrefFor(ctx, d)}">${L(ctx, d, 'title')}</a> `)}</p>` : ''}
-      ${page && isFallbackLink(ctx, page) ? translationBadge(ctx, 'none') : ''}</article>`;
+      ${page && fb ? translationBadge(ctx, 'none') : ''}</article>`;
   })}</div></section>
-${rows.length ? html`<section aria-labelledby="vx-funded">${sectionHead(ctx, { id: 'vx-funded', title: t('vaccines.funded.all') })}<div class="c-tablewrap" role="region" tabindex="0" aria-label="${t('a11y.scrollTable')}"><table class="c-table"><thead><tr><th scope="col">${t('nav.vaccines')}</th><th scope="col">${t('vaccines.group')}</th><th scope="col">${t('vaccines.schedule')}</th><th scope="col">${t('vaccines.note')}</th></tr></thead><tbody>${rows.map(({ v, r }) => html`<tr><th scope="row"><a href="${hrefFor(ctx, v)}">${L(ctx, v, 'title')}</a></th><td>${r.group}</td><td>${r.schedule}</td><td>${r.note ?? ''}</td></tr>`)}</tbody></table></div></section>` : ''}
+${rows.length ? html`<section aria-labelledby="vx-funded">${sectionHead(ctx, { id: 'vx-funded', title: t('vaccines.funded.all') })}<div class="c-tablewrap" role="region" tabindex="0" aria-label="${t('a11y.scrollTable')}"><table class="c-table"><thead><tr><th scope="col">${t('nav.vaccines')}</th><th scope="col">${t('vaccines.group')}</th><th scope="col">${t('vaccines.schedule')}</th><th scope="col">${t('vaccines.note')}</th></tr></thead><tbody>${rows.filter(({ v }, i) => !(ctx.lang !== 'zh-TW' && isFallbackLink(ctx, v) && rows.findIndex((x) => x.v === v) !== i)).map(({ v, r }) => {
+  // 第四十九輪：公費對象列是一級內容、只有中文；本語言沒有 reviewed 版本的疫苗，整列收成一格「僅有中文」連結，有版本的疫苗其中文儲存格標 lang="zh-TW"
+  const fb = isFallbackLink(ctx, v);
+  const ti = reviewedText(ctx, v, 'title');
+  const nm = fb && ctx.lang !== 'zh-TW' ? { text: mv.find((m) => m.id === v.id)?.nameEn ?? ti.text, lang: mv.find((m) => m.id === v.id)?.nameEn ? 'en' : ti.lang } : ti;
+  return fb && ctx.lang !== 'zh-TW'
+    ? html`<tr><th scope="row"><a href="${hrefFor(ctx, v)}" hreflang="${v.sourceLang ?? 'zh-TW'}">${langSpan(ctx, nm)}</a></th><td colspan="3"><span class="c-zhonly">${t('i18n.zhOnly')}</span> <a href="${hrefFor(ctx, v)}" hreflang="${v.sourceLang ?? 'zh-TW'}">${t('i18n.zhOnly.go')}</a></td></tr>`
+    : html`<tr><th scope="row"><a href="${hrefFor(ctx, v)}">${langSpan(ctx, ti)}</a></th><td>${zhText(ctx, r.group)}</td><td>${zhText(ctx, r.schedule)}</td><td>${zhText(ctx, r.note ?? '')}</td></tr>`;
+})}</tbody></table></div></section>` : ''}
 <section class="c-ask-inline">${askBox(ctx, { id: 'vq', size: 'md', task: 'vaccines', placeholder: t('vaccines.ask.ph') })}</section>
 ${feedback(ctx, { page: ctx.path })}`;
 }

@@ -70,7 +70,120 @@
   "i18n": {
     "en": {
       "title": "Vaccine Injury Compensation Program (VICP) application",
-      "summary": "If a vaccine recipient suffers harm from a suspected adverse reaction, they or their legal representative can apply for compensation through the local health bureau; an expert review committee decides on causation and payment."
+      "summary": "If a vaccine recipient suffers harm from a suspected adverse reaction, they or their legal representative can apply for compensation through the local health bureau; an expert review committee decides on causation and payment.",
+      "whoCanApply": [
+        "A person who suspects they were harmed after vaccination",
+        "Legal representatives (for minors or persons without legal capacity)",
+        "Legal heirs, if the injured person has died"
+      ],
+      "introMarkdown": "Under Article 30 of the Communicable Disease Control Act and the Regulations on the Levy and Review of the Vaccine Injury Compensation Fund, people harmed by a vaccine (publicly funded or self-paid, provided it is **licensed in Taiwan or approved under a special case**) may apply for relief. Relief is not damages and does not depend on proving fault by the vaccination site; the review committee decides, on medical grounds, **whether the harm is related to the vaccination**.\n\n**Note the deadlines**: apply **within 2 years** of learning of the harm; no application can be made more than **5 years** after the harm occurred (the current text of the regulations prevails). Common, mild and expected reactions (for example redness or swelling at the injection site, or a brief fever) are outside the scope of relief.\n\nIf you feel unwell after vaccination, see a doctor first and keep your medical records. Vaccination sites and medical institutions also report suspected adverse events as required. Applying for relief and reporting are two different things; a report is not an application.\n\n## Benefits and maximum amounts\n\nThe review committee decides the amount within the ranges below according to the degree of relationship with the vaccination and the severity of the injury; the table shows **maximums**, and the actual amount depends on the course of treatment and severity in each case.\n\n| Type of benefit | Confirmed as related to vaccination | Relationship cannot be determined |\n| --- | --- | --- |\n| Death benefit | Up to NT$6 million | Up to NT$3.5 million |\n| Disability benefit: profound | Up to NT$6 million | Up to NT$3.5 million |\n| Disability benefit: severe | Up to NT$5 million | Up to NT$3 million |\n| Disability benefit: moderate | Up to NT$4 million | Up to NT$2.5 million |\n| Disability benefit: mild | Up to NT$2.5 million | Up to NT$2 million |\n| Serious illness benefit | Up to NT$3 million | Up to NT$1.2 million |\n| Other adverse reaction benefit | Up to NT$200,000 | Determined according to the schedule |\n\nFixed-amount benefits also apply:\n\n- **Funeral subsidy**: NT$300,000 where death is suspected to be due to vaccination and a pathological autopsy has been performed.\n- **Stillbirth or miscarriage**: NT$100,000 for a gestation of 20 weeks or more, NT$50,000 for less than 20 weeks.\n- **Overlapping benefits**: where a case qualifies for two or more benefits, the higher amount is paid; if a lower amount has already been paid, the difference is made up.\n\nDisability grades are determined under the laws on the rights of persons with disabilities; serious illnesses are determined by the scope of catastrophic illnesses under National Health Insurance or the rules on reporting serious adverse drug reactions.\n\n> This table is compiled from public explanations by the Ministry of Health and Welfare in 2021 and **has not yet been checked word for word against the current schedule of the regulations**; before applying, rely on the current schedule published by the health bureau and Taiwan CDC.",
+      "requiredDocuments": [
+        "Application form for vaccine injury compensation (obtain or download from the health bureau)",
+        "Medical record summary, diagnosis certificate or other medical records of the injured person (including dates of visits, diagnosis and treatment)",
+        "Vaccination record (child health handbook, vaccination certificate or a certificate from the vaccination site)",
+        "ID documents of the injured person and the applicant; legal representatives or heirs must add proof of relationship",
+        "In case of death: death certificate and autopsy or expert report (if any)"
+      ],
+      "steps": [
+        {
+          "title": "See a doctor first and keep the evidence",
+          "text": "If a suspected adverse reaction occurs after vaccination, see a doctor first and ask them to record it in detail; keep the vaccination record and all medical receipts.",
+          "who": "Injured person or family",
+          "days": 0
+        },
+        {
+          "title": "Apply to the health bureau where the vaccination took place",
+          "text": "Fill in the application form and attach the required documents; submit to the county or city health bureau where the vaccination took place. The bureau will help complete the file and retrieve vaccination and medical records.",
+          "who": "Applicant, county or city health bureau",
+          "days": 7
+        },
+        {
+          "title": "Preliminary review by the health bureau and referral to Taiwan CDC",
+          "text": "The health bureau checks that the documents are complete, collects the relevant medical records and sends the file to Taiwan CDC for review.",
+          "who": "County or city health bureau",
+          "days": 30
+        },
+        {
+          "title": "Review by the committee",
+          "text": "The Vaccine Injury Compensation Review Committee (medical, legal and public-interest members) reviews the harm and its relationship to the vaccination on the basis of medical records and evidence, and decides the benefit and amount; it may request expert opinions or additional documents.",
+          "who": "Taiwan CDC, review committee",
+          "days": 120
+        },
+        {
+          "title": "Notification and payment",
+          "text": "Taiwan CDC replies to the applicant in writing; approved benefits are paid from the Vaccine Injury Compensation Fund. An applicant who disagrees with the result may file an administrative appeal or lawsuit as provided by law.",
+          "who": "Taiwan CDC",
+          "days": 14
+        }
+      ],
+      "fee": "Free (expert assessment costs required for the review are borne by the Fund)",
+      "contact": "Taiwan CDC Division of Acute Infectious Diseases (switchboard +886-2-2395-9825); to apply, contact the county or city health bureau where the vaccination took place; for general enquiries call the 1922 hotline.",
+      "legalBasis": [
+        "Communicable Disease Control Act, Article 30",
+        "Regulations on the Levy and Review of the Vaccine Injury Compensation Fund"
+      ],
+      "forms": [
+        {
+          "label": "Application form for vaccine injury compensation",
+          "href": "/pending/?ref=service.vaccine-injury-compensation&doc=預防接種受害救濟申請書",
+          "format": "PDF",
+          "machineReadable": false
+        },
+        {
+          "label": "Past review results (public summary)",
+          "href": "/pending/?ref=service.vaccine-injury-compensation&doc=審議結果",
+          "format": "網頁",
+          "machineReadable": true
+        }
+      ],
+      "faq": [
+        {
+          "q": "Can I apply for a self-paid vaccine?",
+          "a": "Yes. Relief covers vaccines licensed in Taiwan or approved under a special case, whether publicly funded or self-paid; vaccinations received abroad, or with unapproved vaccines, are outside the scope of relief."
+        },
+        {
+          "q": "Do I have to prove that the vaccination site was at fault?",
+          "a": "No. Vaccine injury compensation is a no-fault system; the committee reviews the relationship between the harm and the vaccination, not who is at fault."
+        },
+        {
+          "q": "How long until there is a result?",
+          "a": "It depends on the complexity of the case and any requests for additional documents; the committee meets quarterly or according to the caseload. The number of days listed on this page is illustrative; for the official timeline, rely on notices from the health bureau and Taiwan CDC."
+        },
+        {
+          "q": "Does reporting an adverse event count as applying for relief?",
+          "a": "No. Reporting of suspected adverse events by medical institutions is a surveillance system; relief must be applied for separately by the person concerned or their legal representative through the health bureau."
+        },
+        {
+          "q": "What is the maximum benefit?",
+          "a": "For death benefits or profound disability benefits under the vaccine injury compensation program, the maximum is NT$6 million where the relationship with vaccination is confirmed and NT$3.5 million where it cannot be determined. For serious illness benefits, the maximum is NT$3 million where the relationship is confirmed and NT$1.2 million where it cannot be determined. Maximums for severe, moderate and mild disability and for other adverse reactions are in the table \"Benefits and maximum amounts\" on this page; the actual amount is decided by the review committee case by case (amounts are yet to be checked by the responsible officer against the current schedule)."
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Aplikasyon para sa Vaccine Injury Compensation Program (VICP)",
+      "summary": "Kung ang nabakunahan ay nagkaroon ng pinsala dahil sa pinaghihinalaang masamang reaksyon, siya o ang kanyang legal na kinatawan ay maaaring mag-apply ng kompensasyon sa pamamagitan ng lokal na kawanihan ng kalusugan; ang lupon ng mga eksperto ang magpapasya sa ugnayan ng pinsala at pagbabakuna at sa halaga ng bayad.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Đơn xin bồi thường tổn hại do tiêm chủng (VICP)",
+      "summary": "Người tiêm vắc-xin bị tổn hại nghi do phản ứng bất lợi, hoặc người đại diện hợp pháp, có thể nộp đơn xin bồi thường qua cục y tế địa phương; hội đồng chuyên gia xem xét mối liên quan nhân quả và quyết định việc chi trả.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Permohonan Program Kompensasi Cedera Vaksin (VICP)",
+      "summary": "Jika penerima vaksin mengalami cedera akibat dugaan reaksi merugikan, ia atau wakil hukumnya dapat mengajukan kompensasi melalui dinas kesehatan setempat; komite pakar menilai hubungan sebab akibat dan menentukan pembayaran.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "การยื่นขอรับการเยียวยาความเสียหายจากการฉีดวัคซีน (VICP)",
+      "summary": "หากผู้ได้รับวัคซีนได้รับความเสียหายจากอาการไม่พึงประสงค์ที่สงสัยว่าเกี่ยวข้อง ตนเองหรือผู้แทนโดยชอบด้วยกฎหมายยื่นขอรับการเยียวยาผ่านสำนักงานสาธารณสุขท้องถิ่นได้ คณะกรรมการผู้เชี่ยวชาญจะพิจารณาความเกี่ยวข้องและกำหนดการจ่ายเงิน",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

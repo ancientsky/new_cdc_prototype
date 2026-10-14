@@ -122,7 +122,12 @@
   "i18n": {
     "en": {
       "title": "Six regional centers and their jurisdictions",
-      "summary": "Taiwan CDC operates six regional centers (Taipei, Northern, Central, Southern, Kaoping, Eastern) for outbreak investigation, local health bureau support and port quarantine."
+      "summary": "Taiwan CDC operates six regional centers (Taipei, Northern, Central, Southern, Kaoping, Eastern) for outbreak investigation, local health bureau support and port quarantine.",
+      "bodyMarkdown": "The six regional centers are Taiwan CDC's front line at the local level, responsible for: outbreak surveillance and investigation in their jurisdictions, supervising local health bureaus, airport and seaport quarantine, the communicable disease control medical network, and infection control audits.\n\n| Regional center | Counties and cities covered | Telephone |\n| --- | --- | --- |\n| Taipei Regional Center | Taipei City, New Taipei City, Keelung City, Yilan County, Kinmen County, Lienchiang County | (02) 2085-xxxx (illustrative) |\n| Northern Regional Center | Taoyuan City, Hsinchu City, Hsinchu County, Miaoli County | (03) 398-xxxx (illustrative) |\n| Central Regional Center | Taichung City, Changhua County, Nantou County | (04) 2473-xxxx (illustrative) |\n| Southern Regional Center | Yunlin County, Chiayi City, Chiayi County, Tainan City | (06) 269-xxxx (illustrative) |\n| Kaoping Regional Center | Kaohsiung City, Pingtung County, Penghu County | (07) 557-xxxx (illustrative) |\n| Eastern Regional Center | Hualien County, Taitung County | (03) 822-xxxx (illustrative) |\n\nTelephone numbers are illustrative; official numbers are as announced by each center. For general disease prevention enquiries, call **1922**.",
+      "machineTranslatedAt": "2026-10-14",
+      "machineFields": [
+        "bodyMarkdown"
+      ]
     }
   }
 }

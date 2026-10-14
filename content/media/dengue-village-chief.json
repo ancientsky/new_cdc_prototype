@@ -93,5 +93,39 @@
   ],
   "transcriptMarkdown": "**[00:00] 里長的一週巡查**\n\n里長：每個禮拜六早上，我們里的志工都會集合，一條巷子一條巷子走。登革熱是靠埃及斑蚊和白線斑蚊傳播的，蚊子在哪裡生，我們就去哪裡清。\n\n**[00:35] 巡倒清刷四步驟**\n\n旁白：防登革熱，記住四個字：「巡、倒、清、刷」。巡：巡視住家內外可能積水的容器，像花盆底盤、廢輪胎、水桶、帆布。倒：把積水倒掉。清：不要的容器清除，要用的容器倒放或加蓋。刷：容器內壁要刷洗，因為斑蚊的卵會黏在壁上，只倒水不刷，卵還是會孵化。\n\n志工：我們最常找到的地方，是陽台花盆底盤、冷氣滴水，還有工地的積水，下過雨後一定要再巡一次。\n\n**[01:15] 噴藥不能取代清積水**\n\n旁白：有確定病例時，衛生單位會進行緊急防治噴藥，目的是殺死已經帶病毒的成蚊。但噴藥殺不了水裡的孑孓，真正斷根，還是要靠大家清除孳生源。噴藥時請配合關好門窗、收好食物，不必過度擔心。\n\n**[01:40] 發燒就醫說旅遊史**\n\n旁白：如果出現發燒、頭痛、後眼窩痛、肌肉關節痛或出疹，請儘速就醫，並告訴醫師最近去過哪裡。退燒前後是重症的關鍵期，出現腹痛、持續嘔吐、牙齦出血或嗜睡，要立刻回診。里長和志工的一小時，守住全里的一整個夏天。",
   "youtubeId": null,
-  "poster": "/img/media/dengue-village-chief.svg"
+  "poster": "/img/media/dengue-village-chief.svg",
+  "i18n": {
+    "en": {
+      "title": "Village chiefs lead the way: \"Inspect, Empty, Clear, Scrub\" for community dengue prevention",
+      "summary": "A village chief shows community volunteers how to \"inspect, empty, clear and scrub\" containers holding standing water, explains why removing breeding sources matters more than spraying, and reminds viewers to seek care promptly if they have fever, headache or bone pain.",
+      "basedOnVersionLabel": "Dengue and chikungunya control guidelines, February 2026 edition",
+      "targetGroups": [
+        "Village chiefs and village administrators",
+        "Community volunteers",
+        "General public"
+      ],
+      "series": "Community mobilisation against dengue",
+      "chapters": [
+        {
+          "t": 0,
+          "label": "The village chief's weekly patrol"
+        },
+        {
+          "t": 35,
+          "label": "Four steps: inspect, empty, clear, scrub"
+        },
+        {
+          "t": 75,
+          "label": "Spraying cannot replace clearing standing water"
+        },
+        {
+          "t": 100,
+          "label": "Fever: seek care and mention your travel history"
+        }
+      ],
+      "transcriptMarkdown": "**[00:00] The village chief's weekly patrol**\n\nVillage chief: Every Saturday morning, the volunteers in our village gather and walk the neighbourhood lane by lane. Dengue is spread by Aedes aegypti and Aedes albopictus mosquitoes; wherever the mosquitoes breed, that is where we clear.\n\n**[00:35] Four steps: inspect, empty, clear, scrub**\n\nNarrator: To prevent dengue, remember four words: \"inspect, empty, clear, scrub\". Inspect: check containers in and around your home that may hold water, such as flowerpot saucers, old tyres, buckets and tarpaulins. Empty: pour out the standing water. Clear: remove containers you do not need, and turn over or cover those you keep. Scrub: scrub the inside walls of containers, because Aedes eggs stick to the walls; if you only pour out the water and do not scrub, the eggs will still hatch.\n\nVolunteer: The places we find most often are balcony flowerpot saucers, air-conditioner drip water and standing water at construction sites. After it rains, always patrol again.\n\n**[01:15] Spraying cannot replace clearing standing water**\n\nNarrator: When there is a confirmed case, the health authorities carry out emergency spraying to kill adult mosquitoes that already carry the virus. But spraying cannot kill the larvae in the water. To really cut it off at the root, everyone must clear breeding sources. When spraying takes place, please close doors and windows and put away food; there is no need to worry excessively.\n\n**[01:40] Fever: seek care and mention your travel history**\n\nNarrator: If you have fever, headache, pain behind the eyes, muscle or joint pain or a rash, seek medical care promptly and tell the doctor where you have been recently. The period around when the fever goes down is the critical time for severe disease; if you have abdominal pain, persistent vomiting, bleeding gums or drowsiness, return to the doctor immediately. One hour from the village chief and volunteers protects the whole village for a whole summer.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

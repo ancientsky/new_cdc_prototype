@@ -33,6 +33,10 @@
         "stewardTitle": {
           "type": "string"
         },
+        "stewardTitleEn": {
+          "type": "string",
+          "description": "第四十九輪：stewardTitle 的英文版（外語頁的單位卡用；機器翻譯初稿，待英文審核人確認）"
+        },
         "contact": {
           "type": "string"
         },

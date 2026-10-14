@@ -125,6 +125,30 @@
     "en": {
       "title": "Book a travel medicine clinic",
       "summary": "Book a contracted travel medicine clinic 4–6 weeks before departure for vaccines, malaria prophylaxis, the yellow card and pre-travel advice."
+    },
+    "tl": {
+      "title": "Mag-book sa klinika ng travel medicine",
+      "summary": "Mag-book sa kontratadong klinika ng travel medicine 4–6 na linggo bago umalis para sa mga bakuna, gamot na pangontra sa malarya, dilaw na card at payo bago maglakbay.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Đặt lịch khám tại phòng khám y học du lịch",
+      "summary": "Đặt lịch tại phòng khám y học du lịch có hợp đồng 4–6 tuần trước chuyến đi để được tư vấn tiêm vắc-xin, thuốc dự phòng sốt rét, sổ vàng và hướng dẫn trước khi đi.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Buat janji di klinik kedokteran perjalanan",
+      "summary": "Buat janji di klinik kedokteran perjalanan yang bekerja sama 4–6 minggu sebelum keberangkatan untuk vaksin, obat pencegah malaria, kartu kuning, dan penyuluhan sebelum bepergian.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "นัดหมายคลินิกเวชศาสตร์การเดินทาง",
+      "summary": "นัดหมายคลินิกเวชศาสตร์การเดินทางที่ทำสัญญากับหน่วยงาน 4–6 สัปดาห์ก่อนออกเดินทาง เพื่อรับวัคซีน ยาป้องกันมาลาเรีย สมุดเหลือง และคำแนะนำก่อนเดินทาง",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }
