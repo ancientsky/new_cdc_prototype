@@ -96,3 +96,6 @@ eval/**/*.mjs
 !tests/round52-bulletin-gateway.test.mjs
 # 第五十三輪：盲測題組 holdout v2（docs/eval-challenge.md §11）
 !tests/round53-holdout2.test.mjs
+# 第五十三輪：職缺、採購、接種時程接上寫入服務（docs/deploy.md §25）
+!src/client/admin/master-merge.js
+!tests/round53-editors-gateway.test.mjs

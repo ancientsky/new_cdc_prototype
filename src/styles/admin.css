@@ -583,6 +583,8 @@ body.adm { background: var(--paper); color: var(--ink); min-height: 100vh; displ
 .gw-sents li { margin: 2px 0; }
 .gw-sents ins, .gw-plain ins { background: #d7f5dd; color: #0b4a1c; text-decoration: underline; }
 .gw-sents del { background: #fde2e1; color: #8a1c14; text-decoration: line-through; }
+.gw-rows { margin: 0; padding-left: 1.4em; overflow-wrap: anywhere; } .gw-rows li { margin: 2px 0; }
+.gw-rows ins { background: #d7f5dd; color: #0b4a1c; text-decoration: underline; } .gw-rows del { background: #fde2e1; color: #8a1c14; text-decoration: line-through; }
 .gw-s--changed, .gw-s--added, .gw-s--removed { background: rgba(255, 191, 71, .12); }
 .gw-plain { white-space: pre-wrap; margin: 0; overflow-wrap: anywhere; }
 #gw-preview-frame { width: 100%; min-height: 420px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }

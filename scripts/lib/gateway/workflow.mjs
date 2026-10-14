@@ -19,6 +19,12 @@
 //   - 疫情報導分類主檔（§24.7）可以跟疫情報導文章一起送：路徑寫死（validate-item.mjs 的 CATEGORIES_PATH），
 //     以分類代號為單位三方合併到網站上的主檔（別人加的分類不會被蓋掉）；同一個分類兩邊改得不一樣 ⇒ 409 stale（kind: categories）。
 //     送審期間網站上的主檔變了 ⇒ 不能核准（409 outdated），重新開啟或「不用修改，再送出」時併入、從 main 另開新分支。
+// 第五十三輪（docs/deploy.md §25）：
+//   - 職缺、採購、接種時程編輯頁也經閘道存檔與送審（同一套 /drafts、/submit、baseHash、409 stale、「載入最新版」）。
+//   - 主檔（validate-item.mjs 的 MASTER_FILES，目前只有疫苗接種時程表）可以單獨送審：/drafts、/submit 收 master: { name, items, start }（不收 item）。
+//     路徑寫死、以列的 id 三方合併到網站上的主檔（master-merge.js；不同列、同一列的不同欄位都不算衝突），同一列同一欄兩邊改得不一樣 ⇒ 409 stale（kind: master）。
+//     一律一般車道（主檔變更需審核）；審核人看到逐筆、逐欄的差異；送審期間網站上的主檔變了 ⇒ 不能核准（409 outdated），重新開啟時併入。
+//   - requireBaseHash（設定開關，預設關）：開了之後沒帶版本碼的寫入一律 428，不再「照舊接受」。
 // 規則：
 //   - 角色由 AD 群組來（編輯／審核／管理）；只能動自己單位的內容，跨單位角色（總編輯、治理幕僚、平台管理）與車道指定審核單位例外。
 //   - 四眼原則：只要在這個送審件存過任何一版，就不能核准或退回它（即使同時有審核角色）。
@@ -31,13 +37,15 @@ import { loadLanes, laneOfItem, authorAllowed, publishAtMs, taipeiDate, taipeiTi
 import { DEMO_ACCOUNTS, CROSS_UNIT_ROLES } from '../../../src/client/admin/auth-rules.js';
 import { normAccount } from './auth.mjs';
 import { fieldDiff } from './field-diff.mjs';
-import { assertContentPath, contentPathOf, CATEGORIES_PATH } from './validate-item.mjs';
+import { assertContentPath, contentPathOf, CATEGORIES_PATH, MASTER_FILES, MASTER_TYPE, masterOf, duplicateRows } from './validate-item.mjs';
 import { SERVICE_IDENTITY } from './git-local.mjs';
 import { contentVersion, versionOfText, NEW_VERSION } from '../../../src/client/admin/content-version.js';
 import { canon } from '../../../src/client/admin/preprocess.js';
 import { fieldLabel } from '../../../src/client/admin/field-labels.js';
 import { sourceHashOf } from '../load.mjs';
 import { mergeCategories, categoriesJson, categoryChanges } from '../../../src/client/admin/bulletin-edit-core.js';
+import { mergeRows, rowChanges, rowChangeText } from '../../../src/client/admin/master-merge.js';
+import { scheduleDiffOptions } from '../../../src/client/admin/vaxschedule-edit-core.js';
 
 export const STATUS = { draft: '草稿', in_review: '審核中', returned: '退回', approved: '已核准', published: '已上線' };
 /** 送審件的種類（第五十輪）：一般修改／新內容（edit）與重新審閱（rereview：到期內容由權責單位確認仍正確，核准後更新最後審閱日） */
@@ -105,9 +113,10 @@ const stableJson = (item) => {
 const who = (p) => `${p.name} (AD: ${p.account})`;
 
 /**
- * @param {{ git: any, validator: any, store: any, audit: any, notifier: any, directory?: any, lanesCfg?: any, unitNames?: Record<string,string>, now?: () => number, tier1Types?: string[] }} deps
+ * @param {{ git: any, validator: any, store: any, audit: any, notifier: any, directory?: any, lanesCfg?: any, unitNames?: Record<string,string>, vaccineNames?: Record<string,string>, now?: () => number, tier1Types?: string[], requireBaseHash?: boolean }} deps
+ *   requireBaseHash（第五十三輪）：true ⇒ 沒帶版本碼（baseHash）的寫入一律 428（預設 false：照舊接受，稽核記 baseHash: missing；docs/deploy.md §25.6）
  */
-export function createWorkflow({ git, validator, store, audit, notifier, directory = createDemoDirectory(), lanesCfg = loadLanes(), unitNames = {}, now = () => Date.now(), tier1Types = config.tier1Types ?? ['disease', 'vaccine', 'clarification', 'situation'] }) {
+export function createWorkflow({ git, validator, store, audit, notifier, directory = createDemoDirectory(), lanesCfg = loadLanes(), unitNames = {}, vaccineNames = {}, now = () => Date.now(), tier1Types = config.tier1Types ?? ['disease', 'vaccine', 'clarification', 'situation'], requireBaseHash = false }) {
   const queue = serial();
   let ready = null;
   const ensureReady = () => (ready ??= git.ensureReady().catch((e) => { ready = null; throw e; }));
@@ -121,13 +130,16 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
 
   /**
    * 這筆內容走哪條車道、要幾位核准、誰審（與 CI 的 laneForFiles 同一份設定）。
-   * master（第五十二輪）：同時改了分類主檔 ⇒ 一律一般車道（CI 的 classifyFile 也是「主檔變更需審核」）
+   * master（第五十二輪）：同時改了分類主檔 ⇒ 一律一般車道（CI 的 classifyFile 也是「主檔變更需審核」）。
+   * 第五十三輪：master 也可以是主檔的名稱（單獨送審的主檔，例：疫苗接種時程表），理由寫那個名稱。
+   * @param {any} item @param {any} p @param {{ master?: boolean|string }} [o]
    */
   function laneFor(item, p, { master = false } = {}) {
     const reasons = [];
     let id = laneOfItem(item, lanesCfg);
     const want = lanesCfg.lanes[id];
-    if (want?.autoMerge && master) { reasons.push(`同時更新疫情報導分類主檔：主檔變更需審核，改走${lanesCfg.lanes.standard.label}`); id = 'standard'; }
+    if (typeof master === 'string') { if (want?.autoMerge) id = 'standard'; reasons.push(`更新${master}：主檔變更需審核，走${lanesCfg.lanes.standard.label}`); }
+    else if (want?.autoMerge && master) { reasons.push(`同時更新疫情報導分類主檔：主檔變更需審核，改走${lanesCfg.lanes.standard.label}`); id = 'standard'; }
     else if (want?.autoMerge) {
       const gate = authorAllowed(p.account, want.allowedAuthors, { teams: p.groups });
       const urgentGate = item.urgent === true && id === 'emergency' && lanesCfg.rules?.urgentAllowedAuthors ? authorAllowed(p.account, lanesCfg.rules.urgentAllowedAuthors, { teams: p.groups }) : { allowed: true };
@@ -170,7 +182,7 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
       editors: sub.editors.map(({ account, name }) => ({ account, name })), approvals: sub.approvals.map(({ account, name, at }) => ({ account, name, at })),
       requiredApprovals: sub.lane?.requiredApprovals ?? 1, laneLabel: sub.lane?.label ?? null, laneNotes: sub.lane?.reasons ?? [],
       comments: sub.comments, history: sub.history, publishAt: sub.publishAt ?? null, scheduledFor: sub.publishAt ? taipeiTime(publishAtMs(sub.publishAt) ?? 0) : null,
-      files: sub.files ?? [], companions: (sub.companions ?? []).map(({ id, title }) => ({ id, title })), categories: !!sub.categories,
+      files: sub.files ?? [], companions: (sub.companions ?? []).map(({ id, title }) => ({ id, title })), categories: !!sub.categories, master: sub.master ?? null,
       kind: sub.kind ?? 'edit', kindLabel: KIND_LABEL[sub.kind ?? 'edit'], reReviewNote: sub.reReviewNote ?? null, reviewedAt: sub.reviewedAt ?? null,
       ...(p ? {
         can: {
@@ -247,11 +259,20 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
     : `${b.name || '同事'}在 ${b.atText} 存了一版`)).join('；');
   const fieldText = (fields) => (fields.length ? `改了：${fields.slice(0, 12).join('、')}${fields.length > 12 ? ` 等 ${fields.length} 個欄位` : ''}` : '');
 
+  /* ───────── 第五十三輪：單獨送審的主檔（docs/deploy.md §25） ───────── */
+  const isMaster = (sub) => sub?.type === MASTER_TYPE;
+  /** 主檔的合併與差異選項（列名、欄位名、值的白話）；目前只有疫苗接種時程表 */
+  const masterOpts = (name) => (name === 'immunization-schedule' ? scheduleDiffOptions((id) => vaccineNames[id] ?? id) : { key: MASTER_FILES[name]?.key ?? 'id' });
+  const masterRowsAt = async (ref, p) => { if (!ref) return []; const j = await readJson(ref, p); return Array.isArray(j) ? j : []; };
+  /** 主檔兩版之間改了哪幾筆（白話名稱，「…」（id）） */
+  const masterFields = (name, before, after) => rowChanges(before, after, masterOpts(name)).rows.map((r) => `「${r.label}」（${r.key}）`);
+
   /**
    * 送審件目前的內容與版本碼（第五十二輪）。送審件開始之後 main 又變了 ⇒ 內容是三方合併的結果，版本碼是「分支版本＋main 版本」，
    * 承辦人拿這一版改、存檔時帶這個碼，閘道就知道他已經看過 main 的更新，從 main 另開新分支寫入。
    */
   async function draftState(sub) {
+    if (isMaster(sub)) return masterDraftState(sub);
     const branchItem = await readJson(sub.branch, sub.path);
     const branchVersion = contentVersion(branchItem);
     const moved = OPEN.includes(sub.status) ? await mainMoved(sub) : null;
@@ -263,7 +284,21 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
     return { item: m.item, token: `${branchVersion}+${moved.version}`, branchVersion, moved, update: { fields: m.changed.map(fieldLabel), conflicts: m.conflicts, by, text: `這個送審件開始之後，網站上的版本已經更新${by.length ? `（${describeBy(by)}）` : ''}${m.changed.length ? `，${fieldText(m.changed.map(fieldLabel))}` : ''}。` } };
   }
 
-  /** 版本不符 ⇒ 409（白話；不出現 Git 用語）。kind：site（網站上的版本更新了）／exists（網站上已有同 ID）／draft（同一件裡別人又存了）／open（已有進行中的送審件）／moved（送審件開始後網站版本更新了）／categories（同一個疫情報導分類兩邊改得不一樣） */
+  /** 主檔送審件目前的內容（第五十三輪）：送審件開始之後網站上的主檔變了 ⇒ 以列為單位三方合併（開始時／送審件／網站上），衝突的列先用網站上的 */
+  async function masterDraftState(sub) {
+    const branchRows = await masterRowsAt(sub.branch, sub.path);
+    const branchVersion = contentVersion(branchRows);
+    const moved = OPEN.includes(sub.status) ? await mainMoved(sub) : null;
+    if (!moved) return { item: branchRows, token: branchVersion, branchVersion, moved: null };
+    const opts = masterOpts(sub.master);
+    const start = await masterRowsAt(sub.base.commit, sub.path), main = await masterRowsAt(git.targetBranch, sub.path);
+    const m = mergeRows(start, branchRows, main, opts);
+    const fields = masterFields(sub.master, start, main);
+    const by = publishedSince(sub.contentId, sub.base.version, sub.id);
+    return { item: m.rows, token: `${branchVersion}+${moved.version}`, branchVersion, moved, update: { fields, conflicts: m.conflicts.map((c) => ({ field: c.key, label: `「${c.label}」（${c.key}）${c.fields.length ? `的${c.fields.map((f) => opts.fieldLabel?.(f) ?? f).join('、')}` : ''}`, yours: showValue(c.yours) })), by, text: `這個送審件開始之後，網站上的${MASTER_FILES[sub.master]?.title ?? '主檔'}已經更新${by.length ? `（${describeBy(by)}）` : ''}${fields.length ? `，改了：${fields.slice(0, 8).join('、')}${fields.length > 8 ? ` 等 ${fields.length} 筆` : ''}` : ''}。` } };
+  }
+
+  /** 版本不符 ⇒ 409（白話；不出現 Git 用語）。kind：site（網站上的版本更新了）／exists（網站上已有同 ID）／draft（同一件裡別人又存了）／open（已有進行中的送審件）／moved（送審件開始後網站版本更新了）／categories（同一個疫情報導分類兩邊改得不一樣）／master（第五十三輪：主檔的同一筆同一欄兩邊改得不一樣） */
   function staleError(kind, text, info) {
     const tail = kind === 'exists' ? '' : '為了不蓋掉別人的修改，這一版還沒有存。請按「載入最新版」：你在這頁的修改會保留並重新套用，確認後再存。';
     return new GatewayError(409, kind === 'exists' ? 'exists' : 'stale', `${text}${tail}`, undefined, { stale: { kind, ...info } });
@@ -339,6 +374,7 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
   async function writeVersion(p, item, sid, status, action, { files = null, companions = [], baseHash = undefined, internal = false, categories = null } = {}) {
     const checkedEdit = editBlock(p, item?.owner);
     if (checkedEdit) throw new GatewayError(403, 'forbidden', checkedEdit);
+    if (baseHash === undefined && !internal && requireBaseHash) throw versionRequired();
     const prior = sid ? store.get(sid) : (item?.id ? openFor(item.id) : null);
     let sub = prior;
     if (sid && !sub) throw new GatewayError(404, 'notfound', '找不到這筆送審件');
@@ -419,31 +455,109 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
     return { sub, item: clean, commit: r.sha, unchanged: !!r.unchanged, contentHash, legacy: baseHash === undefined && !internal, rebased: rebase };
   }
 
+  /** 第五十三輪：沒帶版本碼、而設定要求一定要帶（requireBaseHash）⇒ 428，不寫入（白話，不出現 Git 用語） */
+  const versionRequired = () => new GatewayError(428, 'version_required', '這個頁面沒有告訴系統你是依哪一版改的（可能是很久以前開啟的舊頁面），為了不蓋掉別人的修改，這一版還沒有存。你的修改仍在這台電腦上；請重新整理頁面後再存。');
+
+  /**
+   * 存一版主檔（第五十三輪，docs/deploy.md §25）。master＝{ name, items, start }：名稱（MASTER_FILES 的鍵）、頁面上的整份主檔、同事開始改時的整份主檔。
+   * 不收路徑：路徑、權責單位都由名稱查 MASTER_FILES。baseHash＝開始時主檔的版本碼（contentVersion(start)），與 start 對不上 ⇒ 400。
+   * 寫入的是「開始時 → 頁面上」的差異套到網站上（或送審件裡）現在的主檔（mergeRows）：別人改的列不會被蓋掉；同一筆同一欄兩邊改得不一樣 ⇒ 409 stale（kind: master，附現在的主檔與衝突的列）。
+   * 送審件開始後網站上的主檔變了 ⇒ 先把網站上的更新併進送審件（有衝突、而同事還沒看過 ⇒ 409 moved），再從網站上的最新版另開新分支寫入（與 §23.4 同一條路）。
+   */
+  async function writeMaster(p, master, sid, status, action, { baseHash = undefined, internal = false } = {}) {
+    const name = String(master?.name ?? '');
+    const def = Object.hasOwn(MASTER_FILES, name) ? MASTER_FILES[name] : null;
+    if (!def) throw new GatewayError(422, 'invalid', '這個主檔不能從後台送審', [{ field: 'master', label: '主檔', message: '這個主檔不能從後台送審' }]);
+    const eb = editBlock(p, def.owner);
+    if (eb) throw new GatewayError(403, 'forbidden', eb);
+    if (baseHash === undefined && !internal && requireBaseHash) throw versionRequired();
+    let sub = sid ? store.get(sid) : openFor(def.contentId);
+    if (sid && !sub) throw new GatewayError(404, 'notfound', '找不到這筆送審件');
+    if (sub && sub.contentId !== def.contentId) throw new GatewayError(409, 'mismatch', '這筆送審件是另一筆內容的，不能拿來存這份主檔');
+    if (sub && sub.status === 'in_review') throw new GatewayError(409, 'in_review', `${def.title}正在審核中，審核結束前不能修改；需要修改請請審核人先退回`);
+    if (sub && !['draft', 'returned'].includes(sub.status)) sub = null;
+    if (!sub) { const other = openFor(def.contentId); if (other) throw new GatewayError(409, 'busy', `${def.title}已有一個進行中的送審件（${STATUS[other.status]}，承辦：${namesOf(other.editors)}），請從那一件繼續`, undefined, { open: { submissionId: other.id, status: other.status } }); }
+    if (baseHash !== undefined && baseHash !== NEW_VERSION && baseHash !== contentVersion(master.start)) throw new GatewayError(400, 'bad_master', '版本碼和開始修改時的主檔對不上，請重新整理頁面後再存（你的修改仍在這台電腦上）');
+    // 沒指定送審件、主檔卻已有進行中的送審件，而同事是依網站上的版本改的 ⇒ 與一般內容同一個規則（409 open）：請從那一件繼續，不悄悄寫進別人的送審件
+    if (!sid && sub && baseHash !== undefined) {
+      const st = await masterDraftState(sub);
+      if (baseHash !== st.token && baseHash !== st.branchVersion) {
+        throw staleError('open', `${def.title}已經有一個進行中的送審件（${STATUS[sub.status]}，承辦：${namesOf(sub.editors)}）。你開始修改的是網站上的版本，不含那一件的修改。`, { contentId: sub.contentId, submissionId: sub.id, title: sub.title, status: sub.status, statusLabel: STATUS[sub.status], editors: sub.editors.map((e) => e.name), contentHash: st.token, by: [], fields: [] });
+      }
+    }
+    // 編號重複的列要在合併前擋下：合併以編號對應，重複的那一列會被吃掉，同事卻不知道
+    const dup = duplicateRows(def, master.items);
+    if (dup.length) throw new GatewayError(422, 'invalid', `${def.title}有 ${dup.length} 個地方需要修正，還沒有存進系統`, dup);
+    const opts = masterOpts(name);
+    const mainRaw = await git.readFile(git.targetBranch, def.path);
+    const mainRows = await masterRowsAt(git.targetBranch, def.path);
+    let theirs = mainRows, rebase = false, movedVersion = null;
+    if (sub) {
+      const moved = await mainMoved(sub);
+      if (!moved) theirs = await masterRowsAt(sub.branch, sub.path);
+      else {
+        const st = await masterDraftState(sub);
+        // 網站上的更新與送審件裡的修改改到同一筆同一欄、而同事開始改的不是合併後的版本 ⇒ 不能替他決定，請他重新開啟
+        if (st.update.conflicts.length && contentVersion(master.start) !== contentVersion(st.item)) throw staleError('moved', `${st.update.text}其中${st.update.conflicts.map((c) => c.label).join('、')}這個送審件也改了，系統不能替你決定用哪一版。`, { contentId: sub.contentId, submissionId: sub.id, by: st.update.by, fields: st.update.fields, contentHash: st.token });
+        theirs = st.item; rebase = true; movedVersion = moved.version;
+      }
+    }
+    const mg = mergeRows(master.start, master.items, theirs, opts);
+    if (mg.conflicts.length) {
+      const list = mg.conflicts.map((c) => `「${c.label}」（${c.key}）${c.fields.length ? `的${c.fields.map((f) => opts.fieldLabel?.(f) ?? f).join('、')}` : ''}`);
+      throw staleError('master', `${def.title}的${list.join('、')}在你開始修改之後，已經有人改過，和你改的不同。`, { contentId: def.contentId, ...(sub ? { submissionId: sub.id } : {}), contentHash: contentVersion(theirs), master: { name, rows: theirs, conflicts: mg.conflicts.map((c, i) => ({ key: c.key, label: list[i], yours: c.yours })) } });
+    }
+    const rows = mg.rows;
+    const v = validator.validateMaster(name, rows);
+    if (!v.ok) throw new GatewayError(422, 'invalid', `${def.title}有 ${v.errors.length} 個地方需要修正，還沒有存進系統`, v.errors);
+    const path = assertContentPath(def.path);
+    if (!sub) {
+      const id = `gw-${taipeiDate(now()).replace(/-/g, '')}-${crypto.randomBytes(3).toString('hex')}`;
+      sub = { id, contentId: def.contentId, type: MASTER_TYPE, master: name, title: def.title, path, owner: def.owner, branch: branchOf(def.contentId, id), reviewId: null, status: 'draft', isNew: mainRaw == null, editors: [], approvals: [], comments: [], history: [], createdAt: iso(), updatedAt: iso(), createdBy: p.account, lane: null };
+      const b = await git.createBranch(sub.branch, git.targetBranch);
+      sub.base = { version: versionOfText(mainRaw), commit: b?.sha ?? null };
+    } else if (rebase) {
+      const n = (sub.rebases ?? 0) + 1;
+      const branch = `${branchOf(sub.contentId, sub.id)}-v${n + 1}`;
+      const b = await git.createBranch(branch, git.targetBranch);
+      if (sub.reviewId != null) { try { await git.closeReview(sub.reviewId); } catch { /* 送審時會開新的 */ } sub.reviewId = null; }
+      Object.assign(sub, { branch, rebases: n, base: { version: movedVersion, commit: b?.sha ?? null } });
+      sub.history.push({ at: iso(), action: 'rebase', label: '併入網站上的最新版本', account: p.account, name: p.name });
+    }
+    addEditor(sub, p);
+    Object.assign(sub, { title: def.title, owner: def.owner, lane: laneFor({ type: MASTER_TYPE }, p, { master: def.title }), updatedAt: iso() });
+    const r = await git.commit({ branch: sub.branch, files: [{ path, content: `${JSON.stringify(rows, null, 2)}\n` }], message: message(action, sub, p, [`Master-File: ${name}`]), author: SERVICE_IDENTITY });
+    const contentHash = contentVersion(rows);
+    sub.versions = [...(sub.versions ?? []), { version: contentHash, at: iso(), account: p.account, name: p.name, label: action, commit: r.sha }].slice(-30);
+    return { sub, rows, commit: r.sha, unchanged: !!r.unchanged, contentHash, legacy: baseHash === undefined && !internal, rebased: rebase, merged: mg.theirs.length > 0 };
+  }
+
   /* ───────── 動作 ───────── */
   /** 版本檢查的稽核欄位：沒帶版本碼（舊版頁面）記 missing；從 main 另開新分支記 rebased */
   const versionAudit = (w) => ({ ...(w.legacy ? { baseHash: 'missing' } : {}), ...(w.rebased ? { rebased: true } : {}) });
 
-  async function saveDraft(p, { item, submissionId, files = null, companions = [], baseHash = undefined, categories = null }) {
+  async function saveDraft(p, { item, submissionId, files = null, companions = [], baseHash = undefined, categories = null, master = null }) {
     await ensureReady();
     return queue(async () => {
       try {
-        const w = await writeVersion(p, item, submissionId, 'draft', '儲存草稿', { files, companions, baseHash, categories });
+        const w = master ? await writeMaster(p, master, submissionId, 'draft', '儲存草稿', { baseHash }) : await writeVersion(p, item, submissionId, 'draft', '儲存草稿', { files, companions, baseHash, categories });
         const { sub, commit, unchanged } = w;
         sub.status = 'draft';
         sub.history.push({ at: iso(), action: 'save', label: '儲存草稿', account: p.account, name: p.name });
         store.put(sub);
         audit.write('save-draft', { actor: p, detail: { submission: sub.id, contentId: sub.contentId, path: sub.path, branch: sub.branch, commit, unchanged, ...versionAudit(w) } });
-        return { ...view(sub, p), contentHash: w.contentHash };
-      } catch (e) { auditFail('save-draft', p, e, { contentId: item?.id }); throw e; }
+        return { ...view(sub, p), contentHash: w.contentHash, ...(w.rows ? { rows: w.rows } : {}) };
+      } catch (e) { auditFail('save-draft', p, e, { contentId: item?.id ?? (master ? MASTER_FILES[master.name]?.contentId : undefined) }); throw e; }
     });
   }
 
-  async function submit(p, { item, submissionId, files = null, companions = [], reReview = false, baseHash = undefined, categories = null }, ctx = {}) {
+  async function submit(p, { item, submissionId, files = null, companions = [], reReview = false, baseHash = undefined, categories = null, master = null }, ctx = {}) {
     await ensureReady();
     return queue(async () => {
       try {
         let w;
-        if (item) w = await writeVersion(p, item, submissionId, 'review', '送審', { files, companions, baseHash, categories });
+        if (master) w = await writeMaster(p, master, submissionId, 'review', '送審', { baseHash });
+        else if (item) w = await writeVersion(p, item, submissionId, 'review', '送審', { files, companions, baseHash, categories });
         else {
           // 不改內容直接送審（例：「審閱到期」頁的「不用修改，再送出」）：閘道讀分支上的版本原樣送
           const s0 = store.get(submissionId);
@@ -453,8 +567,11 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
           const st = await draftState(s0);
           // 第五十二輪：送審件開始後網站版本變了 ⇒ 沒有衝突就由閘道直接併入；有衝突要承辦人開啟修改頁自己決定
           if (st.moved && st.update.conflicts.length) throw staleError('moved', `${st.update.text}其中「${st.update.conflicts.map((c) => c.label).join('、')}」這個送審件也改了，系統不能替你決定用哪一版。請按「開啟修改」，確認後再送審。`, { contentId: s0.contentId, submissionId: s0.id, by: st.update.by, fields: st.update.fields, conflicts: st.update.conflicts });
-          const curComps = []; for (const c of s0.companions ?? []) { const j = await readJson(s0.branch, c.path); if (j) curComps.push(j); }
-          w = await writeVersion(p, st.item, s0.id, 'review', '送審', { companions: curComps, internal: true, ...(st.moved ? { baseHash: st.token } : {}) });
+          if (isMaster(s0)) w = await writeMaster(p, { name: s0.master, items: st.item, start: st.item }, s0.id, 'review', '送審', { internal: true });
+          else {
+            const curComps = []; for (const c of s0.companions ?? []) { const j = await readJson(s0.branch, c.path); if (j) curComps.push(j); }
+            w = await writeVersion(p, st.item, s0.id, 'review', '送審', { companions: curComps, internal: true, ...(st.moved ? { baseHash: st.token } : {}) });
+          }
         }
         const { sub, commit } = w;
         // 第五十二輪：沒帶版本碼的舊頁面在網站版本變了之後送審 ⇒ 不送（審核人也核准不了），請承辦人重新開啟
@@ -465,8 +582,8 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
         // 第五十輪：承辦人在上架頁修改到期內容時可勾「這也是重新審閱」；之後退回再送審，種類沿用
         if (reReview === true && !sub.isNew) sub.kind = 'rereview';
         const out = await enterReview(p, sub, commit, ctx, sub.kind === 'rereview' ? 'rereview' : 'submit', versionAudit(w));
-        return { ...out, contentHash: w.contentHash };
-      } catch (e) { auditFail('submit', p, e, { submission: submissionId, contentId: item?.id }); throw e; }
+        return { ...out, contentHash: w.contentHash, ...(w.rows ? { rows: w.rows } : {}) };
+      } catch (e) { auditFail('submit', p, e, { submission: submissionId, contentId: item?.id ?? (master ? MASTER_FILES[master.name]?.contentId : undefined) }); throw e; }
     });
   }
 
@@ -594,6 +711,7 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
   /** 最後一步：提交上線版（status: published）並合併到 main */
   async function publish(sub, p, approvals, ctx) {
     await assertCurrent(sub, approvals.length === 0);
+    if (isMaster(sub)) return publishMaster(sub, p, approvals, ctx);
     const cur = await readJson(sub.branch, sub.path);
     if (!cur) throw new GatewayError(409, 'missing', '找不到送審的內容');
     const today = taipeiDate(now());
@@ -631,6 +749,31 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
     notifier.send('approved', { to: sub.editors, title: sub.title, unitName: unitName(sub.owner), actorName: approvals.length ? p.name : '系統（快速上線）', scheduled: scheduled ? taipeiTime(publishAtMs(final.publishAt) ?? 0) : null, reReview: rr, reviewedAt: today, link: link(ctx, rr ? 'due' : 'publish', sub.id) });
   }
 
+  /**
+   * 第五十三輪：主檔的上線。主檔沒有狀態與最後審閱日，所以不再提交一版，直接再檢查一次、合併到 main；
+   * 上線紀錄（之前／之後的版本碼、改了哪幾筆）與一般內容一樣記在送審件上，別人存檔被擋時用它說明「誰、何時、改了什麼」。
+   */
+  async function publishMaster(sub, p, approvals, ctx) {
+    const rows = await masterRowsAt(sub.branch, sub.path);
+    const v = validator.validateMaster(sub.master, rows);
+    if (!v.ok) throw new GatewayError(422, 'invalid', `${sub.title}有 ${v.errors.length} 個地方需要修正，不能上線`, v.errors);
+    const before = await masterRowsAt(git.targetBranch, sub.path);
+    const trailers = approvals.map((a) => `Approved-by: ${who(a)}`);
+    if (!approvals.length) trailers.push(`Approved-by: 自動（${sub.lane.label}，送審人在授權名單）`);
+    trailers.push(`Lane: ${sub.lane.id}`, `Master-File: ${sub.master}`);
+    let merged;
+    try { merged = await git.merge(sub.reviewId, { message: message('上線', sub, p, trailers), author: SERVICE_IDENTITY }); } catch (e) {
+      if (e?.code === 'conflict') throw new GatewayError(409, 'conflict', `${sub.title}在送審期間，網站上的版本已被更新，無法直接上線（這次核准沒有生效）。請按「退回修改」，請承辦人重新開啟這個送審件，確認後再送審。`);
+      throw e;
+    }
+    const today = taipeiDate(now());
+    sub.status = 'published'; sub.publishedAt = iso(); sub.updatedAt = iso(); sub.reviewedAt = today;
+    sub.published = { at: iso(), before: contentVersion(before), after: contentVersion(rows), fields: masterFields(sub.master, before, rows) };
+    sub.history.push({ at: iso(), action: 'publish', label: '已上線', account: p.account, name: p.name });
+    audit.write('publish', { actor: p, detail: { submission: sub.id, contentId: sub.contentId, path: sub.path, commit: null, merge: merged.sha, approvedBy: approvals.map((a) => a.account), lane: sub.lane.id, master: sub.master, rows: sub.published.fields.length } });
+    notifier.send('approved', { to: sub.editors, title: sub.title, unitName: unitName(sub.owner), actorName: approvals.length ? p.name : '系統（快速上線）', scheduled: null, reReview: false, reviewedAt: today, link: link(ctx, 'publish', sub.id, sub) });
+  }
+
   function mustReview(p, sid) {
     const sub = store.get(sid);
     if (!sub) throw new GatewayError(404, 'notfound', '找不到這筆送審件');
@@ -644,7 +787,9 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
     else audit.write(action, { actor: p, result: 'error', detail: { ...detail, reason: String(e?.message ?? e).slice(0, 200) } });
   }
   const reviewDescription = (sub) => [...(sub.kind === 'rereview' ? ['重新審閱：權責單位確認內容仍正確（審閱期限到了）；核准後只把「最後審閱日」更新為核准當天。', ...(sub.reReviewNote ? [`說明：${sub.reReviewNote}`] : []), ''] : []), `權責單位：${unitName(sub.owner)}`, `承辦：${sub.editors.map((e) => e.name).join('、')}`, `車道：${sub.lane.label}（需 ${sub.lane.requiredApprovals} 位核准）`, ...sub.lane.reasons, '', '本合併請求由網站內容管理系統（寫入閘道）代為建立；請在後台「複核區」審核，不要直接在 GitLab 合併。'].join('\n');
-  const link = (ctx, page, sid) => `${ctx.origin ?? ''}${ctx.basePath ?? config.basePath}/admin/${page}/${page === 'due' ? '' : `?${page === 'review' ? 'item' : 'gw'}=${encodeURIComponent(sid)}`}`;
+  /** 第五十三輪：「開啟修改」的連結開在那一種內容自己的編輯頁（疫情報導、職缺、採購、接種時程各有編輯頁；其他用上架頁） */
+  const EDIT_PAGE = { article: 'bulletin/edit', job: 'jobs/edit', tender: 'tenders/edit', [MASTER_TYPE]: 'vaccines/schedule' };
+  const link = (ctx, page, sid, sub = store.get(sid)) => `${ctx.origin ?? ''}${ctx.basePath ?? config.basePath}/admin/${page === 'publish' ? (EDIT_PAGE[sub?.type] ?? 'publish') : page}/${page === 'due' ? '' : `?${page === 'review' ? 'item' : 'gw'}=${encodeURIComponent(sid)}`}`;
 
   /* ───────── 查詢 ───────── */
   /**
@@ -715,6 +860,7 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
    * @param {any} p @param {{ contentId: string, type: string, base?: string }} q
    */
   async function current(p, { contentId, type, base }) {
+    if (type === MASTER_TYPE) return currentMaster(p, { contentId, base });
     const where = contentPathOf({ id: contentId, type });
     if (where.ok === false) throw new GatewayError(422, 'invalid', '找不到這筆內容（內容 ID 或型別不對）', where.errors);
     await ensureReady();
@@ -738,10 +884,49 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
       return out;
     });
   }
+  /** 第五十三輪：主檔的 /current（網站上的整份主檔、版本碼、進行中的送審件、頁面上的版本是否已過期）；主檔是公開資料，有角色的同事都看得到 */
+  async function currentMaster(p, { contentId, base }) {
+    const m = masterOf(contentId);
+    if (!m) throw new GatewayError(422, 'invalid', '這個主檔不能從後台送審');
+    await ensureReady();
+    return queue(async () => {
+      const raw = await git.readFile(git.targetBranch, m.path);
+      const rows = await masterRowsAt(git.targetBranch, m.path);
+      const contentHash = versionOfText(raw);
+      const sub = openFor(contentId);
+      let open = null;
+      if (sub && canSee(p, sub)) { const st = await draftState(sub); open = { ...view(sub, p), companionOf: null, contentHash: st.token }; }
+      const out = { exists: raw != null, contentHash, open, item: raw != null ? rows : null };
+      if (base && base !== contentHash && !(open && base === open.contentHash)) {
+        const by = publishedSince(contentId, base);
+        const fields = [...new Set(by.flatMap((b) => b.fields))];
+        return { ...out, stale: { kind: 'site', by, fields, text: `網站上的${m.title}比這頁顯示的新${by.length ? `（${describeBy(by)}）` : ''}${fields.length ? `，改了：${fields.slice(0, 8).join('、')}` : ''}。網站更新要幾分鐘，這頁可能還沒跟上。` } };
+      }
+      return out;
+    });
+  }
+  /** 第五十三輪：主檔的差異（逐筆、逐欄）。送審件開始後網站上的主檔變了 ⇒ 跟開始時比，並說明為什麼還不能核准 */
+  async function masterDiff(sub) {
+    const moved = OPEN.includes(sub.status) ? await mainMoved(sub) : null;
+    const before = moved && sub.base.commit ? await masterRowsAt(sub.base.commit, sub.path) : await masterRowsAt(git.targetBranch, sub.path);
+    const after = await masterRowsAt(sub.branch, sub.path);
+    const rc = rowChanges(before, after, masterOpts(sub.master));
+    const kindText = { added: '新增一筆', removed: '刪除這一筆' };
+    const changes = rc.rows.map((r) => ({
+      field: r.key, label: `「${r.label}」（${r.key}）`, kind: r.kind, type: 'rows', summary: kindText[r.kind] ?? `改了：${r.fields.map((f) => f.label).join('、')}`, text: rowChangeText(r),
+      rows: r.fields.map((f) => (f.from == null ? { kind: 'added', text: `${f.label}：${f.to}` } : f.to == null ? { kind: 'removed', text: `${f.label}：清空（原「${f.from}」）` } : { kind: 'changed', text: `${f.label}：由「${f.from}」改為「${f.to}」` })),
+    }));
+    if (rc.reordered) changes.push({ field: 'order', label: '順序', kind: 'changed', type: 'rows', summary: '只調整了順序', text: '只調整了順序', rows: [] });
+    /** @type {any} */
+    const d = { isNew: false, changes, master: { name: sub.master, label: sub.title, text: `核准後更新${sub.title}（${rc.rows.length} 筆有修改）：前台的時程地圖、表格、問答「幾歲能打哪些公費疫苗」、開放資料 JSON／CSV 都讀這份主檔，網站下次更新後一起變。` } };
+    if (moved) { const st = await draftState(sub); d.outdated = { text: `${st.update.text}這個送審件是依更新前的版本改的（下面列的是它自己改的地方），直接核准會蓋掉那次更新，所以還不能核准。請按「退回修改」，請承辦人重新開啟這個送審件（系統會把網站上的更新併進來，他的修改會保留），確認後再送審。`, fields: st.update.fields, conflicts: st.update.conflicts.map((c) => c.label), by: st.update.by }; }
+    return d;
+  }
   async function diff(p, sid) {
     const sub = getVisible(p, sid);
     await ensureReady();
     if (!(await git.branchExists(sub.branch))) return { isNew: sub.isNew, changes: [], note: sub.status === 'published' || sub.status === 'approved' ? '這筆內容已經上線，沒有待審的修改' : '沒有內容' };
+    if (isMaster(sub)) return masterDiff(sub);
     // 第五十二輪：送審件開始後網站版本變了 ⇒ 差異改跟「開始時的版本」比（審核人看到的是這個送審件自己改的），並說明為什麼還不能核准
     const moved = OPEN.includes(sub.status) ? await mainMoved(sub) : null;
     const before = moved && sub.base.commit ? await git.readFile(sub.base.commit, sub.path) : await git.readFile(git.targetBranch, sub.path);

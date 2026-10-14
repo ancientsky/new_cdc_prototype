@@ -26,6 +26,11 @@
 //        baseHash（第五十二輪）：開啟時的版本碼（src/client/admin/content-version.js；新內容為 'new'）。與現在的版本不同 ⇒
 //        409 { error: 'stale', message, stale: { kind, by[], fields[], contentHash, submissionId? } }，不寫入；網站上已有同 ID ⇒ 409 exists。
 //        沒帶 ⇒ 照舊接受（舊版頁面、其他編輯頁），稽核記 baseHash: missing。回應多帶 contentHash（存好的這一版的版本碼）。
+//   第五十三輪（docs/deploy.md §25）：/drafts、/submit 另收 master: { name, items, start }（不帶 item）＝單獨送審的主檔（目前只有 immunization-schedule）。
+//        路徑與權責單位由名稱查 validate-item.mjs 的 MASTER_FILES（不收路徑）；各最多 400 列、每列是物件，否則 400。baseHash＝開始時主檔的版本碼。
+//        以列的 id 合併到網站上的主檔；同一筆同一欄兩邊改得不一樣 ⇒ 409 stale（kind: master，附現在的主檔與衝突的列）。回應多帶 rows（寫進去的整份主檔）。
+//        GET /current?contentId=master.immunization-schedule&type=master 回網站上的整份主檔與版本碼。
+//   GATEWAY_REQUIRE_BASE_HASH=1（第五十三輪，預設關）：沒帶 baseHash 的 /drafts、/submit 一律 428 version_required（預設照舊接受、稽核記 baseHash: missing）。
 //   POST /api/gateway/rereview               { contentId, type, note? } 送出重新審閱（第五十輪：內容不改，現行版原樣送審；核准後只更新最後審閱日）
 //        /submit 另收 reReview: true（修改到期內容時一併標為重新審閱）
 //   POST /api/gateway/items/:id/return       { comment }              退回修改（意見必填）
@@ -48,7 +53,7 @@ const esc = (v) => String(v ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').
 import { createAuth, DEV_SESSION_HEADER } from './auth.mjs';
 import { createLocalGit } from './git-local.mjs';
 import { createGitLab } from './git-gitlab.mjs';
-import { createValidator } from './validate-item.mjs';
+import { createValidator, MASTER_FILES } from './validate-item.mjs';
 import { createStateStore, createAuditLog } from './store.mjs';
 import { createNotifier } from './notify.mjs';
 import { createWorkflow, GatewayError } from './workflow.mjs';
@@ -90,6 +95,8 @@ export function configFromEnv(env = process.env) {
     outboxDir: local('OUTBOX_DIR', '.local/outbox'),
     publicOrigin: env.PUBLIC_ORIGIN || '',
     csrfSecret: env.GATEWAY_CSRF_SECRET || '',
+    // 第五十三輪：要不要拒絕沒帶版本碼的寫入（docs/deploy.md §25.6）。預設關：照舊接受，稽核記 baseHash: missing
+    requireBaseHash: env.GATEWAY_REQUIRE_BASE_HASH === '1',
   };
 }
 
@@ -118,7 +125,9 @@ export function createGatewayApi(opts = {}) {
   const units = readJSON(path.join(ROOT, 'content/master/units.json'), []);
   const unitNames = Object.fromEntries(units.map((u) => [u.id, u.name]));
   const validator = opts.validator ?? createValidator();
-  const workflow = createWorkflow({ git, validator, store, audit, notifier, unitNames, now, ...(opts.directory ? { directory: opts.directory } : {}), ...(opts.lanesCfg ? { lanesCfg: opts.lanesCfg } : {}) });
+  // 第五十三輪：接種時程主檔的差異寫疫苗名稱（審核人看「B 型肝炎疫苗」而不是 vaccine.hepatitis-b）
+  const vaccineNames = Object.fromEntries(readJSON(path.join(ROOT, 'content/master/vaccines.json'), []).map((v) => [v.id, v.name]));
+  const workflow = createWorkflow({ git, validator, store, audit, notifier, unitNames, vaccineNames, now, requireBaseHash: cfg.requireBaseHash === true, ...(opts.directory ? { directory: opts.directory } : {}), ...(opts.lanesCfg ? { lanesCfg: opts.lanesCfg } : {}) });
   const secret = cfg.csrfSecret ? Buffer.from(cfg.csrfSecret) : crypto.randomBytes(32);
   const csrfFor = (p) => crypto.createHmac('sha256', secret).update(`${p.authMode}|${p.account}`).digest('base64url');
 
@@ -164,6 +173,14 @@ export function createGatewayApi(opts = {}) {
     if (typeof v !== 'object' || Array.isArray(v) || !rows(v.items) || !rows(v.start)) throw new GatewayError(400, 'bad_categories', '分類主檔格式不對（最多 60 個分類）', [{ field: 'categories', label: '分類管理', message: '分類主檔格式不對（最多 60 個分類）' }]);
     return { items: v.items, start: v.start };
   }
+  /** 單獨送審的主檔（第五十三輪）：{ name, items: [...], start: [...] }，名稱要在 MASTER_FILES、各最多 maxRows 列、每列是物件；格式不對就 400（內容由 validateMaster 用建置同一套規則檢查） */
+  function decodeMaster(v) {
+    if (v == null) return null;
+    const def = v && typeof v === 'object' && typeof v.name === 'string' && Object.hasOwn(MASTER_FILES, v.name) ? MASTER_FILES[v.name] : null;
+    const rows = (x) => Array.isArray(x) && x.length <= (def?.maxRows ?? 0) && x.every((r) => r && typeof r === 'object' && !Array.isArray(r));
+    if (!def || typeof v !== 'object' || Array.isArray(v) || !rows(v.items) || !rows(v.start)) throw new GatewayError(400, 'bad_master', `主檔格式不對（只收可送審的主檔；最多 ${def?.maxRows ?? 0} 筆）`, [{ field: 'master', label: def?.title ?? '主檔', message: '主檔格式不對' }]);
+    return { name: v.name, items: v.items, start: v.start };
+  }
   // 超過上限時不能中途 break：那會毀掉請求串流，連線被重設，客戶端只看到「fetch failed」而收不到 413
   // （第三十輪 CI 實測：本機常常剛好收得到，GitHub runner 上收不到）。所以超過後只丟棄、讀完再回 413。
   async function readBody(req, max = MAX_BODY) {
@@ -192,6 +209,14 @@ export function createGatewayApi(opts = {}) {
   /** 預覽頁：用建置同一個 Markdown 淨化器；CSP sandbox，頁內不會執行任何腳本 */
   function previewHtml(item, sub) {
     const base = config.basePath;
+    // 第五十三輪：主檔（一整份表）：列出每一筆的名稱、年齡、階段、費用與是否已核對（差異在審核頁看，這裡看整份長什麼樣）
+    if (Array.isArray(item)) {
+      const css0 = ['tokens', 'base', 'components'].map((n) => `<link rel="stylesheet" href="${base}/assets/styles/${n}.css">`).join('');
+      const tr = item.map((r) => `<tr><td>${esc(r?.label ?? r?.id ?? '')}</td><td>${esc(r?.ageLabel ?? '')}</td><td>${esc(r?.stage ?? '')}</td><td>${esc(r?.funded ?? '')}</td><td>${r?.verified === false ? '待核對' : '已核對'}</td></tr>`).join('');
+      return `<!doctype html><html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>預覽：${esc(sub.title)}</title>${css0}</head>
+<body><div role="note" style="background:#fff4ce;border-bottom:2px solid #c9a227;padding:10px 16px"><strong>預覽（尚未上線）</strong>　狀態：${esc(sub.statusLabel)}　·　權責單位：${esc(sub.ownerName)}　·　送審中的整份主檔（${item.length} 筆），只有同事看得到。</div>
+<main id="main" style="max-width:60rem;margin:0 auto;padding:16px"><h1>${esc(sub.title)}</h1><table><thead><tr><th scope="col">項目</th><th scope="col">年齡</th><th scope="col">階段</th><th scope="col">費用</th><th scope="col">核對</th></tr></thead><tbody>${tr}</tbody></table></main></body></html>`;
+    }
     const css = ['tokens', 'base', 'components'].map((n) => `<link rel="stylesheet" href="${base}/assets/styles/${n}.css">`).join('');
     const textFields = ['answerMarkdown', 'bodyMarkdown', 'clarificationMarkdown', 'introMarkdown', 'abstractMarkdown', 'machineReadableMarkdown', 'transcriptMarkdown'];
     const blocks = [...textFields.filter((f) => item?.[f]).map((f) => md(item[f])), ...(item?.blocks ?? []).filter((b) => b.markdown).map((b) => `<h2>${esc(b.heading ?? '')}</h2>${md(b.markdown)}`), ...(item?.sections ?? []).filter((b) => b.markdown).map((b) => `<h2>${esc(b.heading ?? '')}</h2>${md(b.markdown)}`)];
@@ -299,7 +324,9 @@ export function createGatewayApi(opts = {}) {
         if (Buffer.byteLength(JSON.stringify(rest), 'utf8') > MAX_BODY) throw new GatewayError(413, 'too_large', '內容太大（上限 512 KB）；附件請另外處理');
         const decoded = decodeFiles(files);
         const companions = decodeCompanions(body.companions);
-        const args = { item: body.item, submissionId: typeof body.submissionId === 'string' ? body.submissionId : undefined, files: decoded, companions, reReview: body.reReview === true, baseHash: baseOf(body.baseHash), categories: decodeCategories(body.categories) };
+        const master = decodeMaster(body.master);
+        if (master && body.item != null) throw new GatewayError(400, 'bad_master', '主檔要單獨送，不能跟內容一起送');
+        const args = { item: body.item, submissionId: typeof body.submissionId === 'string' ? body.submissionId : undefined, files: decoded, companions, reReview: body.reReview === true, baseHash: baseOf(body.baseHash), categories: decodeCategories(body.categories), master };
         if (sub === '/drafts') return send(res, 200, await workflow.saveDraft(p, args));
         return send(res, 200, await workflow.submit(p, args, ctx));
       }
