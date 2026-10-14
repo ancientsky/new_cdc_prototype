@@ -455,7 +455,7 @@ test('packagePaths／renderTree：放置路徑與樹狀圖', () => {
 });
 
 // ───────────────────────── 端到端（Playwright）─────────────────────────
-const PW = process.env.PW_MODULE || '/tmp/claude-0/-home-user-new-cdc-prototype/dd0b2a7d-938a-5a8a-a024-801e7fcada0e/scratchpad/pw/node_modules/playwright/index.mjs';
+const PW = process.env.PW_MODULE || '/opt/node22/lib/node_modules/playwright/index.mjs';
 const CHROME = process.env.CHROME_BIN || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
 const DIST = process.env.DIST_DIR ? path.resolve(process.env.DIST_DIR) : path.join(ROOT, 'dist');
 const freePort = () => new Promise((res) => { const s = net.createServer(); s.listen(0, () => { const p = s.address().port; s.close(() => res(p)); }); });
@@ -485,7 +485,8 @@ test('端到端：所見即所得 → Markdown → 預覽 → 加 PNG 與 PDF �
   if (!fs.existsSync(PW) || !fs.existsSync(CHROME)) return t.skip('沒有 Playwright／Chromium');
   const { chromium } = await import(pathToFileURL(PW).href);
   const port = await freePort();
-  const srv = spawn(process.execPath, [path.join(ROOT, 'scripts/serve.mjs'), String(port)], { cwd: ROOT, stdio: 'ignore', env: distEnv(DIST) });
+  // 這個測試走「沒有寫入閘道」的流程（產生上架包 ZIP）。serve.mjs 預設會帶起閘道（第三十輪），有閘道時 (f)(g) 兩段會隱藏，所以伺服器關閘道、頁面也加 ?gateway=off（不去探測，免得 404 被當成 console 錯誤）。
+  const srv = spawn(process.execPath, [path.join(ROOT, 'scripts/serve.mjs'), String(port)], { cwd: ROOT, stdio: 'ignore', env: { ...distEnv(DIST), GATEWAY: 'off' } });
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'adm-e2e-'));
   const browser = await chromium.launch({ executablePath: CHROME, args: ['--no-sandbox'] });
   const errors = [];
@@ -498,7 +499,7 @@ test('端到端：所見即所得 → Markdown → 預覽 → 加 PNG 與 PDF �
     await ctx.addInitScript(({ s }) => { localStorage.setItem('cdc.admin.session', JSON.stringify(s)); }, { s: makeSession(DEMO_ACCOUNTS[0]) });
     page.on('pageerror', (e) => errors.push(e.message));
     page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
-    await page.goto(`${base}/admin/publish/`);
+    await page.goto(`${base}/admin/publish/?gateway=off`);
     await page.waitForSelector('#f-wys');
     // 無障礙結構
     assert.equal(await page.getAttribute('#f-wys', 'role'), 'textbox');
