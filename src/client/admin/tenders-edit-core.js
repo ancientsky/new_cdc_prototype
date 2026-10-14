@@ -73,7 +73,8 @@ export function buildTender(form, { today, base = null } = {}) {
     id, type: 'tender', title: String(f.title ?? '').trim(), owner: DEFAULTS.owner, steward: b?.steward || DEFAULTS.steward,
     publishedAt: b?.publishedAt || announcedAt || today, reviewedAt: today, reviewPeriodMonths: DEFAULTS.reviewPeriodMonths, status: DEFAULTS.status,
     audience: [...DEFAULTS.audience], sensitivity: DEFAULTS.sensitivity, license: DEFAULTS.license,
-    aiWhitelist: { requested: true, approvedBy: DEFAULTS.approvedBy, approvedAt: today },
+    // 既有標案沿用原本的 AI 白名單紀錄：核准日是公關室核准的那天，不是這次匯出的日子（第五十二輪，docs/deploy.md §24）
+    aiWhitelist: b?.aiWhitelist ?? { requested: true, approvedBy: DEFAULTS.approvedBy, approvedAt: today },
     languages: b?.languages ?? { 'zh-TW': { status: 'source' } },
     summary: String(f.summary ?? '').trim(),
   };

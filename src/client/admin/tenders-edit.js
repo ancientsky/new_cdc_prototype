@@ -4,6 +4,7 @@ import {
   buildTender, problemsOf, amendmentFor, cancelAmendment, exportFilename, dateChanges, describeChanges, stageInfo, sortedAmendments,
   attachmentsText, slugOfId, DATE_FIELDS,
 } from './tenders-edit-core.js';
+import { mergeFormEdit, changedFields, changedText } from './edit-merge.js';
 
 const D = readEmbedded('adm-tenders-data', { tenders: [], units: [], stages: {}, amendKinds: {} });
 const KEY = 'cdc.admin.tenders-edit';
@@ -16,6 +17,9 @@ let orig = {}; // 帶入時的日期（預覽新舊對照用）
 let mark = {}; // 上次加入異動紀錄時的日期（判斷還有沒有未記錄的改期）
 let amendments = []; // 含既有紀錄；本次新增的帶 _new
 let autoCancel = null; // C 區自動加入的那一筆
+// 第五十二輪（docs/deploy.md §24）：修改既有標案時，匯出＝以現行版為底，只套用同事改過的欄位。
+// editBase＝表單剛帶入現行版、還沒動過時的匯出（經過真的欄位來回一次）；與目前的匯出逐欄比較，相同的欄位保留現行版原樣。
+let editBase = null;
 
 const datesOf = (x) => Object.fromEntries(Object.keys(DATE_FIELDS).map((k) => [k, x?.[k] ?? '']));
 const asText = (v) => (Array.isArray(v) ? v.join('\n') : v ?? '');
@@ -52,7 +56,12 @@ function read() {
     award: { date: val('tf-aw-date'), winner: val('tf-aw-winner'), amountNtd: val('tf-aw-amount'), note: val('tf-aw-note') },
   };
 }
-const current = () => buildTender(read(), { today: TODAY, base });
+const rawTender = () => buildTender(read(), { today: TODAY, base });
+/** 現行版＋建置的正本雜湊（改到中文時，mergeFormEdit 會把既有英譯標成「依舊版翻譯」） */
+const liveOf = (t) => (t ? { ...t, sourceHash: D.sourceHashes?.[t.id] ?? undefined } : null);
+const current = () => { const out = rawTender(); return base && editBase ? mergeFormEdit(out, liveOf(base), editBase) : out; };
+/** 帶入現行版（或空白新增）並記下 editBase */
+function openTender(x) { fill(x); editBase = base ? rawTender() : null; }
 const otherIds = () => D.tenders.map((x) => x.id).filter((id) => id !== base?.id);
 
 function paintAmends() {
@@ -99,6 +108,9 @@ function paint() {
   const errs = w.filter((x) => x.level === 'error'), warns = w.filter((x) => x.level === 'warn');
   $('#tf-warn').innerHTML = (errs.length ? `<div class="adm-box adm-box--warn" role="status"><strong>發布前請補齊（${errs.length}）</strong><ul class="adm-tf-list">${errs.map((x) => `<li>${esc(x.text)}</li>`).join('')}</ul></div>` : '<div class="adm-box adm-box--ok"><strong>必填與日期檢核都通過</strong>可以匯出開 PR。</div>')
     + (warns.length ? `<div class="adm-box adm-box--note"><strong>提醒（${warns.length}）</strong><ul class="adm-tf-list">${warns.map((x) => `<li>${esc(x.text)}</li>`).join('')}</ul></div>` : '');
+  const ch = base ? changedFields(t, base) : null;
+  $('#tf-changed').textContent = ch ? changedText(ch) : '';
+  $('#tf-changed').dataset.changed = ch ? ch.fields.join(' ') : '';
   $('#tf-file').textContent = exportFilename(t);
   $('#tf-out').textContent = JSON.stringify(t, null, 2);
 }
@@ -124,7 +136,7 @@ function addAmendment() {
 
 function save() {
   const form = read();
-  store.set(KEY, { pick: base?.id ?? '', form: { ...form, id: base?.id, amendments, _mark: mark }, savedAt: new Date().toISOString() });
+  store.set(KEY, { pick: base?.id ?? '', form: { ...form, id: base?.id, amendments, _mark: mark }, editBase, savedAt: new Date().toISOString() });
   $('#tf-msg').textContent = '草稿已存在本機瀏覽器。';
 }
 
@@ -135,7 +147,7 @@ $('#tf-form').addEventListener('input', (e) => {
   paint();
 });
 $('#tf-form').addEventListener('change', (e) => {
-  if (e.target.id === 'tf-pick') { fill(e.target.value ? byId.get(e.target.value) : null); $('#tf-msg').textContent = ''; }
+  if (e.target.id === 'tf-pick') { openTender(e.target.value ? byId.get(e.target.value) : null); $('#tf-msg').textContent = ''; }
   if (e.target.name === 'tf-ms') syncCancel();
   paint();
 });
@@ -149,14 +161,18 @@ $('#tf-amends').addEventListener('click', (e) => {
 $('#tf-am-add').addEventListener('click', addAmendment);
 $('#tf-aw-clear').addEventListener('click', () => { ['tf-aw-date', 'tf-aw-winner', 'tf-aw-amount', 'tf-aw-note'].forEach((id) => setVal(id, '')); paint(); });
 $('#tf-save').addEventListener('click', save);
-$('#tf-reset').addEventListener('click', () => { const id = val('tf-pick'); fill(id ? byId.get(id) : null); store.del(KEY); $('#tf-msg').textContent = '已重新帶入，草稿已清除。'; paint(); });
+$('#tf-reset').addEventListener('click', () => { const id = val('tf-pick'); openTender(id ? byId.get(id) : null); store.del(KEY); $('#tf-msg').textContent = '已重新帶入，草稿已清除。'; paint(); });
 $('#tf-copy').addEventListener('click', (e) => copyText(`${$('#tf-out').textContent}\n`, e.currentTarget));
 $('#tf-dl').addEventListener('click', () => downloadText(exportFilename(current()).split('/').pop(), `${$('#tf-out').textContent}\n`));
 
 // 初始：網址 ?id= 指定 → 本機草稿 → 空白新增
 const qid = new URLSearchParams(location.search).get('id');
 const saved = store.get(KEY);
-if (qid && byId.has(qid)) fill(byId.get(qid));
-else if (saved?.form) { fill(saved.form); $('#tf-msg').textContent = `已還原本機草稿（${saved.savedAt?.slice(0, 16).replace('T', ' ') ?? ''}）。`; }
-else { fill(null); setVal('tf-announced', TODAY); }
+if (qid && byId.has(qid)) openTender(byId.get(qid));
+else if (saved?.form) {
+  // 修改中的草稿：先帶入現行版記下 editBase（舊草稿沒存 editBase 時用），再換成草稿內容；草稿有存就用草稿開始時的 editBase
+  openTender(saved.form.id && byId.has(saved.form.id) ? byId.get(saved.form.id) : null);
+  if (saved.editBase && base) editBase = saved.editBase;
+  fill(saved.form); $('#tf-msg').textContent = `已還原本機草稿（${saved.savedAt?.slice(0, 16).replace('T', ' ') ?? ''}）。`; }
+else { openTender(null); setVal('tf-announced', TODAY); }
 paint();

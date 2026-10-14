@@ -89,3 +89,6 @@ eval/**/*.mjs
 # 第五十二輪：同時修改的版本檢查（docs/deploy.md §23）
 !src/client/admin/content-version.js
 !tests/round52-concurrent-edit.test.mjs
+# 第五十二輪：其他四個編輯頁以現行版為底合併（docs/deploy.md §24）
+!src/client/admin/edit-merge.js
+!tests/round52-editors-preserve.test.mjs
