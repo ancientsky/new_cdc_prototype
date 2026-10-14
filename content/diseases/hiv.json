@@ -246,6 +246,361 @@
           "heading": "FAQ"
         }
       ]
+    },
+    "ja": {
+      "title": "HIV 感染症（エイズ）",
+      "summary": "HIV は、コンドームを使わない性行為、注射器の共用、母子感染で広がります。定期的な検査、PrEP（曝露前予防内服）、コンドームで効果的に予防できます。診断されたらすぐに服薬を始め、ウイルス量が検出限界未満になれば他の人にうつしません（U=U）。",
+      "keyFacts": {
+        "incubation": "急性期は 2～6 週間；ウィンドウ期は約 2 週間～3 か月",
+        "symptoms": "急性期には発熱、のどの痛み、発疹、リンパ節の腫れが出ることがある；その後、何年も症状がないことがある",
+        "transmission": "コンドームなしの性行為、注射器の共用、輸血、母子感染",
+        "prevention": "コンドームと水溶性潤滑剤、PrEP、定期的な検査、注射器を共用しない",
+        "notify": "24 時間以内"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "どうすればよいか",
+          "cards": [
+            {
+              "if": "72 時間以内に、避妊具なしの性行為や針刺し事故があった",
+              "title": "できるだけ早く受診し、PEP について相談する",
+              "text": "曝露後 72 時間以内（早いほどよい）に、PEP 指定病院で曝露後予防内服が必要かどうかの評価を受けてください。服薬は 28 日間続ける必要があります。"
+            },
+            {
+              "if": "感染のリスクがあり、自分の状態を知りたい",
+              "title": "匿名検査または自己検査を受ける",
+              "text": "匿名検査を行う病院や地域の検査会場に行くか、HIV 自己検査キットを使うことができます。陽性の場合は、病院で確認検査を受ける必要があります。"
+            },
+            {
+              "if": "HIV と診断された",
+              "title": "できるだけ早く服薬を始める",
+              "text": "診断後できるだけ早く抗ウイルス薬を飲み始め、飲み続けてウイルス量を検出限界未満にすれば、性行為でパートナーにうつすことはありません（U=U）。"
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "症状と警告サイン",
+          "markdown": "感染して 2～6 週間後に、一部の人でかぜに似た**急性期症状**（発熱、のどの痛み、だるさ、発疹、リンパ節の腫れ）が出ることがあります。通常は数週間で自然に消えます。\n\nその後、何年も症状がないことがありますが、ウイルスは免疫を壊し続けています。治療しないと、免疫力が下がって日和見感染症が起こり、「エイズ（AIDS）」の段階に入ります。**感染しているかどうかを確実に知る方法は、検査だけです。**",
+          "warning": "原因不明の発熱が長く続く、体重が急に減る、下痢が続く、口の中に白い斑点ができる、肺炎を繰り返す：すぐに受診し、HIV 検査を受けたいと医師に伝えてください。"
+        },
+        {
+          "key": "transmission",
+          "heading": "感染経路",
+          "markdown": "HIV は次の 3 つの経路で感染します。\n\n1. **性行為**：コンドームなしの肛門性交、膣性交、口腔性交。\n2. **血液**：注射器や溶解液の共用、汚染された血液の輸血。\n3. **母子感染**：妊娠中、出産時、授乳中。\n\n握手、抱擁、一緒に食事をする、トイレの共用、蚊に刺されるなどの日常的な接触では、HIV は**うつりません**。"
+        },
+        {
+          "key": "prevention",
+          "heading": "予防",
+          "markdown": "- 性行為のたびに、**最初から最後まで正しくコンドームを使い**、水溶性潤滑剤を併用します。\n- 感染のリスクがある人は、**曝露前予防内服（PrEP）**について相談できます。決められたとおりに飲めば、感染のリスクを大きく下げられます。一部の対象者は、公費による PrEP を申請できます。\n- 定期的に検査を受け、自分とパートナーの状態を知りましょう。\n- 注射器や溶解液を共用しないでください。清潔な注射器の提供プログラムを利用できます。\n- 妊婦健診では HIV 検査が受けられます。感染している妊婦が妊娠中に服薬すると、母子感染を 1% 未満に下げられます。"
+        },
+        {
+          "key": "treatment",
+          "heading": "診断と治療",
+          "markdown": "現在のところ完治はできませんが、**抗レトロウイルス薬（ART）**でウイルスを効果的に抑えられ、決められたとおりに服薬すれば、ほぼ一般の人と同じ寿命が期待できます。台湾では、診断後に**すぐ服薬を始める**ことを勧めており、薬代は公費でまかなわれます。\n\n服薬を続けて血液中のウイルス量が**検出限界未満**になれば（U=U、Undetectable = Untransmittable）、性行為で他の人にうつすことはありません。"
+        },
+        {
+          "key": "vaccine",
+          "heading": "ワクチン",
+          "markdown": "HIV を予防するワクチンは、今のところありません。予防は、コンドーム、PrEP、定期的な検査が中心です。感染している人は、医師のすすめにより、B 型肝炎、肺炎球菌、エムポックスなどのワクチンを接種できます。"
+        },
+        {
+          "key": "situation",
+          "heading": "現在の発生状況と統計",
+          "markdown": "台湾の HIV 新規届出数は、2017 年以降、年々減っています。月別の統計はデータセットをご覧ください。"
+        },
+        {
+          "key": "faq",
+          "heading": "よくある質問"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Impeksyon sa HIV (AIDS)",
+      "summary": "Kumakalat ang HIV sa pamamagitan ng pakikipagtalik nang walang condom, pagbabahagi ng karayom, at mula sa ina patungo sa anak. Epektibong pag-iwas ang regular na pagpapasuri, PrEP at condom. Simulan agad ang gamutan pagkatapos ma-diagnose; kapag hindi na matukoy ang viral load, hindi na ito makakahawa (U=U).",
+      "keyFacts": {
+        "incubation": "Talamak na yugto: 2–6 na linggo; window period: mga 2 linggo hanggang 3 buwan",
+        "symptoms": "Sa talamak na yugto, maaaring magkaroon ng lagnat, masakit na lalamunan, pantal, at namamagang kulani; pagkatapos nito, maaaring walang sintomas sa loob ng maraming taon",
+        "transmission": "Pakikipagtalik nang walang condom, pagbabahagi ng karayom, pagsasalin ng dugo, mula sa ina patungo sa anak",
+        "prevention": "Condom na may water-based na lubricant, PrEP, regular na pagpapasuri, hindi pagbabahagi ng karayom",
+        "notify": "Sa loob ng 24 oras"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "Ano ang dapat gawin",
+          "cards": [
+            {
+              "if": "nagkaroon ng pakikipagtalik na walang proteksyon o natusok ng karayom sa nakalipas na 72 oras",
+              "title": "Magpatingin sa doktor sa lalong madaling panahon para sa PEP",
+              "text": "Sa loob ng 72 oras pagkatapos ng pagkakalantad (mas maaga, mas mabuti), pumunta sa itinalagang ospital para sa PEP upang masuri kung kailangan ang post-exposure prophylaxis. Kailangang inumin ang gamot nang tuloy-tuloy sa loob ng 28 araw."
+            },
+            {
+              "if": "may panganib na mahawa at gustong malaman ang iyong katayuan",
+              "title": "Magpasuri nang walang pagbubunyag ng pangalan, o gumamit ng self-test",
+              "text": "Maaari kang pumunta sa mga ospital na may anonymous na pagsusuri o sa mga community testing site, o gumamit ng HIV self-test kit; kailangang kumpirmahin sa ospital ang positibong resulta."
+            },
+            {
+              "if": "na-diagnose na may HIV",
+              "title": "Simulan agad ang gamutan",
+              "text": "Uminom ng antiretroviral na gamot sa lalong madaling panahon pagkatapos ma-diagnose; kung patuloy ang pag-inom at hindi na matukoy ang viral load, hindi mo ito maipapasa sa kapareha sa pamamagitan ng pakikipagtalik (U=U)."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Mga sintomas at babalang senyales",
+          "markdown": "Sa loob ng 2–6 na linggo pagkatapos mahawa, may ilang taong nagkakaroon ng **talamak na sintomas** na parang trangkaso: lagnat, masakit na lalamunan, pagkapagod, pantal, at namamagang lymph node. Karaniwang nawawala ito nang kusa sa loob ng ilang linggo.\n\nPagkatapos nito, maaaring walang sintomas sa loob ng maraming taon, ngunit patuloy na sinisira ng virus ang immune system. Kapag hindi ginamot, bumababa ang resistensya at nagkakaroon ng mga oportunistikong impeksyon, ang yugto ng “AIDS”. **Ang pagpapasuri lamang ang tanging paraan para matiyak kung nahawa ka.**",
+          "warning": "Matagal na lagnat na hindi alam ang sanhi, mabilis na pagbaba ng timbang, patuloy na pagtatae, puting batik sa bibig, o paulit-ulit na pulmonya: magpatingin agad sa doktor at sabihing gusto mong magpa-HIV test."
+        },
+        {
+          "key": "transmission",
+          "heading": "Paano ito kumakalat",
+          "markdown": "Kumakalat ang HIV sa tatlong paraan:\n\n1. **Pakikipagtalik**: anal, vaginal o oral na pakikipagtalik na walang proteksyon.\n2. **Dugo**: pagbabahagi ng karayom o ng panghalo ng gamot, o pagsasalin ng kontaminadong dugo.\n3. **Mula sa ina patungo sa anak**: sa pagbubuntis, panganganak o pagpapasuso.\n\nAng karaniwang pakikisalamuha, gaya ng pakikipagkamay, pagyayakap, pagsasalo sa pagkain, paggamit ng parehong banyo, o kagat ng lamok, ay **hindi** nagpapakalat ng HIV."
+        },
+        {
+          "key": "prevention",
+          "heading": "Pag-iwas",
+          "markdown": "- Gumamit ng condom **nang tama sa buong tagal ng bawat pakikipagtalik**, kasama ang water-based na lubricant.\n- Ang mga may panganib na mahawa ay maaaring magtanong tungkol sa **pre-exposure prophylaxis (PrEP)**, na lubhang nagpapababa ng panganib na mahawa kapag ininom ayon sa tagubilin; may ilang grupo na maaaring mag-aplay para sa PrEP na pinopondohan ng gobyerno.\n- Magpasuri nang regular at alamin ang katayuan mo at ng iyong kapareha.\n- Huwag magbahagi ng karayom o ng panghalo ng gamot; maaaring gamitin ang mga programa para sa malinis na karayom.\n- Inaalok ang HIV test sa lahat ng prenatal checkup ng mga buntis; kapag umiinom ng gamot ang nahawang ina habang nagbubuntis, bumababa sa 1% pababa ang paghahawa mula sa ina patungo sa anak."
+        },
+        {
+          "key": "treatment",
+          "heading": "Diagnosis at paggamot",
+          "markdown": "Sa kasalukuyan, hindi pa ito ganap na magagamot, ngunit nakokontrol ng **antiretroviral therapy (ART)** ang virus, at ang mga regular na umiinom nito ay maaaring magkaroon ng halos normal na haba ng buhay. Hinihikayat sa Taiwan na **simulan agad ang gamot** pagkatapos ma-diagnose, at ang gastos sa gamot ay sinasagot ng gobyerno.\n\nKapag **hindi na matukoy** ang viral load sa dugo dahil sa tuloy-tuloy na pag-inom ng gamot (U=U, Undetectable = Untransmittable), hindi na ito naipapasa sa iba sa pamamagitan ng pakikipagtalik."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Bakuna",
+          "markdown": "Sa kasalukuyan, walang bakuna na pumipigil sa HIV. Nakasalalay ang pag-iwas sa condom, PrEP at regular na pagpapasuri. Ang mga taong may HIV ay maaaring magpabakuna ng hepatitis B, pneumococcal, mpox at iba pa, ayon sa payo ng doktor."
+        },
+        {
+          "key": "situation",
+          "heading": "Kasalukuyang sitwasyon at estadistika",
+          "markdown": "Taon-taon nang bumababa mula 2017 ang bilang ng bagong naiulat na kaso ng HIV sa Taiwan; tingnan ang dataset para sa buwanang estadistika."
+        },
+        {
+          "key": "faq",
+          "heading": "Mga madalas itanong"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Nhiễm HIV (AIDS)",
+      "summary": "HIV lây qua quan hệ tình dục không dùng bao cao su, dùng chung kim tiêm và từ mẹ sang con. Xét nghiệm định kỳ, PrEP và bao cao su giúp phòng ngừa hiệu quả; sau khi được chẩn đoán, hãy bắt đầu uống thuốc ngay, khi tải lượng vi-rút không phát hiện được thì không còn khả năng lây truyền (U=U).",
+      "keyFacts": {
+        "incubation": "Giai đoạn cấp 2–6 tuần; thời kỳ cửa sổ khoảng 2 tuần đến 3 tháng",
+        "symptoms": "Giai đoạn cấp có thể sốt, đau họng, phát ban, hạch to; sau đó có thể nhiều năm không có triệu chứng",
+        "transmission": "Quan hệ tình dục không dùng bao cao su, dùng chung kim tiêm, truyền máu, từ mẹ sang con",
+        "prevention": "Bao cao su và chất bôi trơn gốc nước, PrEP, xét nghiệm định kỳ, không dùng chung kim tiêm",
+        "notify": "Trong vòng 24 giờ"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "Tôi nên làm gì",
+          "cards": [
+            {
+              "if": "có quan hệ tình dục không an toàn hoặc bị kim đâm trong 72 giờ qua",
+              "title": "Đi khám sớm nhất có thể để đánh giá PEP",
+              "text": "Trong vòng 72 giờ sau phơi nhiễm (càng sớm càng tốt), hãy đến bệnh viện được chỉ định về PEP để được đánh giá việc dùng thuốc dự phòng sau phơi nhiễm. Cần uống thuốc liên tục 28 ngày."
+            },
+            {
+              "if": "có nguy cơ nhiễm và muốn biết tình trạng của mình",
+              "title": "Xét nghiệm ẩn danh hoặc tự xét nghiệm",
+              "text": "Bạn có thể đến bệnh viện xét nghiệm ẩn danh, điểm xét nghiệm cộng đồng, hoặc dùng bộ tự xét nghiệm HIV; kết quả dương tính cần được xác nhận tại bệnh viện."
+            },
+            {
+              "if": "được chẩn đoán nhiễm HIV",
+              "title": "Bắt đầu dùng thuốc sớm nhất có thể",
+              "text": "Sau khi chẩn đoán, hãy uống thuốc kháng vi-rút sớm nhất có thể; duy trì uống thuốc để tải lượng vi-rút không phát hiện được thì sẽ không lây cho bạn tình qua quan hệ tình dục (U=U)."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Triệu chứng và dấu hiệu cảnh báo",
+          "markdown": "Từ 2–6 tuần sau khi nhiễm, một số người có **triệu chứng giai đoạn cấp** giống cảm cúm: sốt, đau họng, mệt mỏi, phát ban, hạch to, thường tự hết trong vài tuần.\n\nSau đó có thể nhiều năm không có triệu chứng, nhưng vi-rút vẫn tiếp tục phá hủy hệ miễn dịch. Nếu không điều trị, khi miễn dịch suy giảm sẽ xuất hiện nhiễm trùng cơ hội, tức là bước vào giai đoạn “AIDS”. **Cách duy nhất để biết mình có nhiễm hay không là xét nghiệm.**",
+          "warning": "Sốt kéo dài không rõ nguyên nhân, sụt cân nhanh, tiêu chảy kéo dài, đốm trắng trong miệng, viêm phổi tái đi tái lại: hãy đi khám ngay và nói với bác sĩ rằng bạn muốn xét nghiệm."
+        },
+        {
+          "key": "transmission",
+          "heading": "Lây truyền như thế nào",
+          "markdown": "HIV lây qua ba đường:\n\n1. **Tình dục**: quan hệ qua hậu môn, âm đạo, miệng không có biện pháp bảo vệ.\n2. **Máu**: dùng chung kim tiêm, dung dịch pha loãng hoặc truyền máu bị ô nhiễm.\n3. **Từ mẹ sang con**: khi mang thai, sinh con hoặc cho con bú.\n\nTiếp xúc sinh hoạt thông thường như bắt tay, ôm, ăn chung, dùng chung nhà vệ sinh, muỗi đốt **không** lây HIV."
+        },
+        {
+          "key": "prevention",
+          "heading": "Phòng ngừa",
+          "markdown": "- Dùng **bao cao su đúng cách trong suốt mỗi lần quan hệ**, kết hợp chất bôi trơn gốc nước.\n- Người có nguy cơ nhiễm có thể tư vấn về **dự phòng trước phơi nhiễm (PrEP)**; uống đúng quy định sẽ giảm rất nhiều nguy cơ nhiễm; một số đối tượng có thể đăng ký PrEP do nhà nước chi trả.\n- Xét nghiệm định kỳ, biết tình trạng của mình và bạn tình.\n- Không dùng chung kim tiêm và dung dịch pha loãng; có thể tham gia chương trình kim tiêm sạch.\n- Khám thai luôn có xét nghiệm HIV; người nhiễm uống thuốc trong thai kỳ có thể giảm lây từ mẹ sang con xuống dưới 1%."
+        },
+        {
+          "key": "treatment",
+          "heading": "Chẩn đoán và điều trị",
+          "markdown": "Hiện chưa thể chữa khỏi hoàn toàn, nhưng **thuốc kháng vi-rút (ART)** kiểm soát vi-rút hiệu quả; người nhiễm uống thuốc đều đặn có thể có tuổi thọ gần như người bình thường. Đài Loan khuyến khích **uống thuốc ngay** sau khi chẩn đoán, chi phí thuốc do nhà nước chi trả.\n\nKhi uống thuốc đều để tải lượng vi-rút trong máu **không phát hiện được** (U=U, Undetectable = Untransmittable) thì sẽ không lây cho người khác qua quan hệ tình dục."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vắc-xin",
+          "markdown": "Hiện chưa có vắc-xin phòng HIV. Phòng ngừa chủ yếu dựa vào bao cao su, PrEP và xét nghiệm định kỳ. Người nhiễm HIV có thể tiêm các vắc-xin như viêm gan B, phế cầu, đậu mùa khỉ (mpox) theo khuyến nghị của bác sĩ."
+        },
+        {
+          "key": "situation",
+          "heading": "Tình hình hiện nay và thống kê",
+          "markdown": "Số ca HIV mới được báo cáo ở Đài Loan giảm dần qua từng năm kể từ 2017; thống kê theo tháng xem trong bộ dữ liệu."
+        },
+        {
+          "key": "faq",
+          "heading": "Câu hỏi thường gặp"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Infeksi HIV (AIDS)",
+      "summary": "HIV menular melalui hubungan seks tanpa kondom, pemakaian jarum bersama, dan dari ibu ke anak. Tes rutin, PrEP, dan kondom efektif mencegahnya; mulai minum obat segera setelah terdiagnosis, dan bila viral load tidak terdeteksi maka tidak menular (U=U).",
+      "keyFacts": {
+        "incubation": "Fase akut 2–6 minggu; masa jendela sekitar 2 minggu sampai 3 bulan",
+        "symptoms": "Fase akut bisa disertai demam, sakit tenggorokan, ruam, dan kelenjar getah bening membesar; setelah itu bisa bertahun-tahun tanpa gejala",
+        "transmission": "Seks tanpa kondom, jarum bersama, transfusi darah, dari ibu ke anak",
+        "prevention": "Kondom dengan pelumas berbahan air, PrEP, tes rutin, tidak berbagi jarum",
+        "notify": "Dalam 24 jam"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "Apa yang harus dilakukan",
+          "cards": [
+            {
+              "if": "dalam 72 jam terakhir berhubungan seks tanpa perlindungan atau tertusuk jarum",
+              "title": "Segera ke dokter untuk menilai kebutuhan PEP",
+              "text": "Dalam 72 jam setelah paparan (makin cepat makin baik), datang ke rumah sakit rujukan PEP untuk dinilai perlunya obat pencegahan pascapaparan. Obat harus diminum terus-menerus selama 28 hari."
+            },
+            {
+              "if": "berisiko tertular dan ingin tahu status Anda",
+              "title": "Tes anonim atau tes mandiri",
+              "text": "Anda dapat datang ke rumah sakit tes anonim, titik tes komunitas, atau memakai alat tes mandiri HIV; hasil positif harus dipastikan di rumah sakit."
+            },
+            {
+              "if": "terdiagnosis HIV",
+              "title": "Segera mulai pengobatan",
+              "text": "Segera minum obat antivirus setelah terdiagnosis; bila diminum terus sampai viral load tidak terdeteksi, Anda tidak akan menularkannya kepada pasangan lewat hubungan seks (U=U)."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Gejala dan tanda bahaya",
+          "markdown": "Pada 2–6 minggu setelah tertular, sebagian orang mengalami **gejala fase akut** mirip flu: demam, sakit tenggorokan, lelah, ruam, dan kelenjar getah bening membesar, yang biasanya hilang sendiri dalam beberapa minggu.\n\nSetelah itu bisa bertahun-tahun tanpa gejala, tetapi virus terus merusak sistem kekebalan. Bila tidak diobati, kekebalan menurun dan muncul infeksi oportunistik, yaitu masuk tahap “AIDS”. **Satu-satunya cara memastikan apakah tertular adalah dengan tes.**",
+          "warning": "Demam berkepanjangan tanpa sebab jelas, berat badan turun cepat, diare terus-menerus, bercak putih di mulut, atau pneumonia berulang: segera ke dokter dan sampaikan bahwa Anda ingin tes HIV."
+        },
+        {
+          "key": "transmission",
+          "heading": "Cara penularan",
+          "markdown": "HIV menular lewat tiga jalur:\n\n1. **Hubungan seks**: seks anal, vaginal, atau oral tanpa perlindungan.\n2. **Darah**: berbagi jarum atau cairan pelarut, atau transfusi darah yang tercemar.\n3. **Dari ibu ke anak**: saat hamil, melahirkan, atau menyusui.\n\nKontak sehari-hari seperti berjabat tangan, berpelukan, makan bersama, memakai toilet yang sama, atau gigitan nyamuk **tidak** menularkan HIV."
+        },
+        {
+          "key": "prevention",
+          "heading": "Pencegahan",
+          "markdown": "- Pakai **kondom dengan benar selama seluruh hubungan seks, setiap kali**, bersama pelumas berbahan air.\n- Orang yang berisiko tertular dapat berkonsultasi tentang **profilaksis pra-paparan (PrEP)**; bila diminum sesuai aturan, risiko tertular turun sangat besar; sebagian kelompok dapat mengajukan PrEP yang dibiayai pemerintah.\n- Tes secara rutin, ketahui status Anda dan pasangan.\n- Jangan berbagi jarum dan cairan pelarut; Anda dapat memanfaatkan program jarum bersih.\n- Pemeriksaan kehamilan selalu menyertakan tes HIV; ibu yang terinfeksi dan minum obat selama hamil dapat menurunkan penularan dari ibu ke anak hingga di bawah 1%."
+        },
+        {
+          "key": "treatment",
+          "heading": "Diagnosis dan pengobatan",
+          "markdown": "Saat ini HIV belum dapat disembuhkan sepenuhnya, tetapi **obat antiretroviral (ART)** dapat mengendalikan virus, dan penderita yang minum obat teratur dapat memiliki harapan hidup hampir sama dengan orang pada umumnya. Taiwan menganjurkan **segera minum obat** setelah terdiagnosis, dengan biaya obat ditanggung pemerintah.\n\nBila minum obat terus-menerus sehingga viral load dalam darah **tidak terdeteksi** (U=U, Undetectable = Untransmittable), HIV tidak akan menular kepada orang lain lewat hubungan seks."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vaksin",
+          "markdown": "Saat ini tidak ada vaksin untuk mencegah HIV. Pencegahan bertumpu pada kondom, PrEP, dan tes rutin. Orang dengan HIV dapat divaksinasi hepatitis B, pneumokokus, mpox, dan lainnya sesuai saran dokter."
+        },
+        {
+          "key": "situation",
+          "heading": "Situasi terkini dan statistik",
+          "markdown": "Jumlah laporan kasus baru HIV di Taiwan menurun dari tahun ke tahun sejak 2017; statistik bulanan dapat dilihat di dataset."
+        },
+        {
+          "key": "faq",
+          "heading": "Pertanyaan yang sering diajukan"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "การติดเชื้อเอชไอวี (เอดส์)",
+      "summary": "เอชไอวีแพร่เชื้อทางการมีเพศสัมพันธ์โดยไม่ใช้ถุงยางอนามัย การใช้เข็มฉีดยาร่วมกัน และจากแม่สู่ลูก การตรวจเป็นประจำ PrEP และถุงยางอนามัยป้องกันได้อย่างมีประสิทธิภาพ เมื่อได้รับการวินิจฉัยให้เริ่มกินยาทันที หากตรวจไม่พบปริมาณไวรัสในเลือดก็จะไม่แพร่เชื้อ (U=U)",
+      "keyFacts": {
+        "incubation": "ระยะเฉียบพลัน 2–6 สัปดาห์ ระยะที่ตรวจยังไม่พบเชื้อ (window period) ประมาณ 2 สัปดาห์ถึง 3 เดือน",
+        "symptoms": "ระยะเฉียบพลันอาจมีไข้ เจ็บคอ ผื่น ต่อมน้ำเหลืองโต หลังจากนั้นอาจไม่มีอาการนานหลายปี",
+        "transmission": "มีเพศสัมพันธ์โดยไม่ใช้ถุงยางอนามัย ใช้เข็มฉีดยาร่วมกัน รับเลือด จากแม่สู่ลูก",
+        "prevention": "ถุงยางอนามัยกับสารหล่อลื่นชนิดน้ำ PrEP ตรวจเป็นประจำ ไม่ใช้เข็มร่วมกัน",
+        "notify": "ภายใน 24 ชั่วโมง"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "ควรทำอย่างไร",
+          "cards": [
+            {
+              "if": "มีเพศสัมพันธ์โดยไม่มีการป้องกัน หรือถูกเข็มทิ่มภายใน 72 ชั่วโมงที่ผ่านมา",
+              "title": "ไปพบแพทย์โดยเร็วที่สุดเพื่อประเมินการใช้ PEP",
+              "text": "ภายใน 72 ชั่วโมงหลังสัมผัสเชื้อ (ยิ่งเร็วยิ่งดี) ให้ไปโรงพยาบาลที่กำหนดสำหรับ PEP เพื่อประเมินการกินยาป้องกันหลังสัมผัสเชื้อ ต้องกินยาต่อเนื่อง 28 วัน"
+            },
+            {
+              "if": "มีความเสี่ยงติดเชื้อและอยากรู้สถานะของตนเอง",
+              "title": "ตรวจแบบไม่เปิดเผยตัวตน หรือตรวจด้วยตนเอง",
+              "text": "ไปที่โรงพยาบาลที่ให้ตรวจแบบไม่เปิดเผยตัวตน จุดตรวจในชุมชน หรือใช้ชุดตรวจเอชไอวีด้วยตนเองได้ หากผลเป็นบวกต้องยืนยันผลที่โรงพยาบาล"
+            },
+            {
+              "if": "ได้รับการวินิจฉัยว่าติดเชื้อเอชไอวี",
+              "title": "เริ่มกินยาโดยเร็วที่สุด",
+              "text": "หลังได้รับการวินิจฉัย ให้กินยาต้านไวรัสโดยเร็วที่สุด หากกินยาต่อเนื่องจนตรวจไม่พบปริมาณไวรัสในเลือด ก็จะไม่แพร่เชื้อให้คู่ผ่านการมีเพศสัมพันธ์ (U=U)"
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "อาการและสัญญาณอันตราย",
+          "markdown": "ใน 2–6 สัปดาห์หลังติดเชื้อ บางคนจะมี**อาการระยะเฉียบพลัน**คล้ายไข้หวัดใหญ่ ได้แก่ ไข้ เจ็บคอ อ่อนเพลีย ผื่น ต่อมน้ำเหลืองโต ซึ่งมักหายเองภายในไม่กี่สัปดาห์\n\nหลังจากนั้นอาจไม่มีอาการนานหลายปี แต่ไวรัสยังคงทำลายระบบภูมิคุ้มกันอย่างต่อเนื่อง หากไม่รักษา ภูมิคุ้มกันจะลดลงและเกิดการติดเชื้อฉวยโอกาส คือเข้าสู่ระยะ “เอดส์ (AIDS)” **วิธีเดียวที่จะรู้ว่าติดเชื้อหรือไม่คือการตรวจ**",
+          "warning": "มีไข้เรื้อรังไม่ทราบสาเหตุ น้ำหนักลดเร็ว ท้องเสียต่อเนื่อง มีฝ้าขาวในปาก หรือปอดอักเสบซ้ำ ๆ: ให้ไปพบแพทย์ทันทีและแจ้งว่าต้องการตรวจเอชไอวี"
+        },
+        {
+          "key": "transmission",
+          "heading": "แพร่เชื้ออย่างไร",
+          "markdown": "เอชไอวีแพร่เชื้อได้ 3 ทาง:\n\n1. **เพศสัมพันธ์**: การมีเพศสัมพันธ์ทางทวารหนัก ช่องคลอด หรือทางปากโดยไม่มีการป้องกัน\n2. **เลือด**: ใช้เข็มฉีดยาหรือตัวทำละลายร่วมกัน หรือรับเลือดที่ปนเปื้อน\n3. **จากแม่สู่ลูก**: ระหว่างตั้งครรภ์ คลอด หรือให้นมบุตร\n\nการสัมผัสในชีวิตประจำวัน เช่น จับมือ กอด กินอาหารร่วมกัน ใช้ห้องน้ำร่วมกัน หรือยุงกัด **ไม่**ทำให้ติดเชื้อเอชไอวี"
+        },
+        {
+          "key": "prevention",
+          "heading": "การป้องกัน",
+          "markdown": "- ใช้**ถุงยางอนามัยอย่างถูกวิธีตลอดการมีเพศสัมพันธ์ทุกครั้ง** ร่วมกับสารหล่อลื่นชนิดน้ำ\n- ผู้ที่มีความเสี่ยงสามารถปรึกษาเรื่อง**การกินยาป้องกันก่อนสัมผัสเชื้อ (PrEP)** ซึ่งลดความเสี่ยงติดเชื้อได้มากเมื่อกินตามที่กำหนด บางกลุ่มสามารถขอรับ PrEP ที่รัฐออกค่าใช้จ่ายได้\n- ตรวจเป็นประจำ และรู้สถานะของตนเองและคู่\n- ไม่ใช้เข็มฉีดยาและตัวทำละลายร่วมกัน สามารถใช้โครงการเข็มสะอาดได้\n- การตรวจครรภ์มีการตรวจเอชไอวีให้ทุกราย หญิงตั้งครรภ์ที่ติดเชื้อและกินยาระหว่างตั้งครรภ์จะลดการแพร่เชื้อจากแม่สู่ลูกเหลือต่ำกว่า 1%"
+        },
+        {
+          "key": "treatment",
+          "heading": "การวินิจฉัยและการรักษา",
+          "markdown": "ปัจจุบันยังรักษาให้หายขาดไม่ได้ แต่**ยาต้านไวรัส (ART)** ควบคุมไวรัสได้อย่างมีประสิทธิภาพ ผู้ติดเชื้อที่กินยาสม่ำเสมอมีอายุขัยใกล้เคียงคนทั่วไป ไต้หวันสนับสนุนให้**เริ่มกินยาทันที**หลังได้รับการวินิจฉัย โดยรัฐออกค่ายา\n\nเมื่อกินยาต่อเนื่องจน**ตรวจไม่พบ**ปริมาณไวรัสในเลือด (U=U, Undetectable = Untransmittable) ก็จะไม่แพร่เชื้อให้ผู้อื่นผ่านการมีเพศสัมพันธ์"
+        },
+        {
+          "key": "vaccine",
+          "heading": "วัคซีน",
+          "markdown": "ปัจจุบันยังไม่มีวัคซีนป้องกันเอชไอวี การป้องกันอาศัยถุงยางอนามัย PrEP และการตรวจเป็นประจำเป็นหลัก ผู้ติดเชื้อเอชไอวีสามารถฉีดวัคซีนตับอักเสบบี นิวโมคอคคัส ฝีดาษวานร (mpox) ฯลฯ ตามคำแนะนำของแพทย์"
+        },
+        {
+          "key": "situation",
+          "heading": "สถานการณ์ปัจจุบันและสถิติ",
+          "markdown": "จำนวนผู้ติดเชื้อเอชไอวีรายใหม่ที่รายงานในไต้หวันลดลงทุกปีตั้งแต่ปี 2017 ดูสถิติรายเดือนได้ที่ชุดข้อมูล"
+        },
+        {
+          "key": "faq",
+          "heading": "คำถามที่พบบ่อย"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }
