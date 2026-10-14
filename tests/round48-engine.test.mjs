@@ -154,12 +154,13 @@ test('#95：那支疫苗有片段時用它回答，並排除只講別支疫苗�
 
 test('#95：實站（不論帶狀疱疹疫苗頁是否已上線）皮蛇疫苗不答成水痘疫苗', () => {
   const s = site();
-  const without = engineFromSite({ ...s, searchIndex: { public: s.searchIndex.public.filter((c) => c.contentId !== 'vaccine.zoster' && !(c.vaccines ?? []).includes('vaccine.zoster')), pro: s.searchIndex.pro } });
+  const without = engineFromSite({ ...s, searchIndex: { public: s.searchIndex.public.filter((c) => c.contentId !== 'vaccine.zoster' && !(c.vaccines ?? []).includes('vaccine.zoster') && !/帶狀疱疹|皮蛇|zoster/i.test(`${c.title ?? ''} ${c.text ?? ''} ${c.question ?? ''} ${c.contentId}`)), pro: s.searchIndex.pro } });
   for (const E of [engine(), without]) {
     for (const q of ['皮蛇疫苗', '皮蛇疫苗公費嗎', '帶狀疱疹疫苗去哪裡打']) {
       const r = E.answer(q, { lang: 'zh-TW' });
       assert.ok(!cites(r).some((c) => /varicella/.test(c)), `${q}：${cites(r).join()}`);
-      assert.ok(!text(r).includes('水痘疫苗'), q);
+      // 帶狀疱疹疫苗頁上線後，頁面本身會寫「皮蛇疫苗不是水痘疫苗」——只在沒有專頁時要求答案不出現「水痘疫苗」
+      if (E === without) assert.ok(!text(r).includes('水痘疫苗'), q);
     }
   }
   const r = without.answer('皮蛇疫苗公費嗎', { lang: 'zh-TW' });

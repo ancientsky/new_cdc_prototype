@@ -175,3 +175,6 @@ html[data-view="pro"] .c-public-only{display:none!important}
 }
 
 @media (max-width:480px){ .site-footer__in{grid-template-columns:1fr} }
+
+/* 第四十八輪（#104 走查）：<main tabindex="-1"> 讓「跳到主要內容」把焦點真正移進 main（iOS VoiceOver 需要），程式聚焦不畫外框 */
+#main:focus{outline:none}

@@ -1766,10 +1766,11 @@ export function createEngine(rawDeps = {}) {
     finalizeSentences(result, picked, sourceMap);
     if (!result.sentences.length) return setRefusal(result, 'no-source', 'ref.no-source');
     // 第四十八輪（issue #102）：相關度偏低時再看答案本身——第一句出自的是同一疾病（問句點名的，或沒點名時的主導疾病）的 FAQ／片段，
-    // 而且題目、標題或第一句與問句在問同一面向（QUERY_FACETS：費用、就醫、疫苗…）⇒ 切題，不標「相關程度較低」。改的是判斷，不是調低門檻
+    // 而且題目、標題或第一句與問句在問同一面向（QUERY_FACETS：費用、就醫、疫苗…）⇒ 切題，不標「相關程度較低」。改的是判斷，不是調低門檻。
+    // 沒綁疾病的通用 FAQ（例：補接種）對任何疾病都算同主題——「五合一晚了兩個月才打」第一句就出自補接種 FAQ，不該因為 FAQ 沒列疾病而被標低相關
     const c0 = picked[0]?.chunk;
     const d1 = result.disease ?? chunks[0]?.diseases?.[0];
-    if (isLowRelevance(result) && c0 && (c0.type === 'faq' ? !d1 || (c0.diseases ?? []).includes(d1) : (c0.diseases ?? []).includes(d1))
+    if (isLowRelevance(result) && c0 && (c0.type === 'faq' ? !d1 || !c0.diseases?.length || c0.diseases.includes(d1) : (c0.diseases ?? []).includes(d1))
       && QUERY_FACETS.some((re) => re.test(q) && re.test(`${c0.question ?? c0.title} ${picked[0].text}`))) { result.topicMatch = c0.type === 'faq' ? 'faq' : 'disease'; result.guards.push({ kind: 'topic-match', id: c0.id }); }
     result.completeness = completenessOf(result.intent, result.sentences, { situation: !!sit, q });
     result.actions = actionsFor(result, entities, sit);
