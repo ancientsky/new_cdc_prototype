@@ -31,6 +31,8 @@ export const DEFAULT_PUBLIC_KB = 120;
 export const DEFAULT_ENGINE_KB = 240;
 /** 答案頁提問時下載的 JSON（gzip 後）：第四十輪實測最大是英文頁 387 KB（英文分片＋中文分片；zh-TW 350 KB），×1.15 ≈ 445 KB（見 docs/deploy.md §15） */
 export const DEFAULT_ASK_DATA_KB = 445;
+/** 專業版（search-index-pro＋同一組引擎資料）：第四十八輪實測 489 KB，×1.15 ≈ 563 KB，取 565（Issue #103；見 docs/deploy.md §15.3）。ASK_DATA_PRO_BUDGET_KB 可覆寫，0 ＝ 只回報 */
+export const DEFAULT_ASK_DATA_PRO_KB = 565;
 const SRC_RE = /<script\b[^>]*\bsrc="([^"]+\.js)"/g;
 const IMPORT_RE = /(?:^|[;\n}])\s*(?:import|export)\s*(?:[^'"()]*?\bfrom\s*)?['"](\.{1,2}\/[^'"]+)['"]/g;
 
@@ -116,10 +118,17 @@ const gz = (f) => zlib.gzipSync(fs.readFileSync(f), { level: 6 }).length;
 /**
  * 答案頁的資料傳輸量（第四十輪，Issue #80）：每種語言的 /ask/ 在提問時要下載的 JSON，gzip 後位元組加總。
  * 算法：索引分片（中文＋當頁語言）＋ deps-manifest 的主要與次要 JSON ＋ v1/index.json（可選檔的清單）；民眾版。
- * 不含：疾病頁 JSON 與 news.json（答案出來之後側欄才抓、且依問題而定）、專業版（另列 pro，只回報）。
+ * 不含：疾病頁 JSON 與 news.json（答案出來之後側欄才抓、且依問題而定）、專業版（另列 pro，第四十八輪起也有自己的預算 ASK_DATA_PRO_BUDGET_KB）。
  * 回傳 { ok, budgetKb, rows: [{ lang, bytes, raw, files }], max, maxLang, pro }。budgetKb 為 0 ＝ 只回報不擋。
  */
-export function checkAskDataBudget(distDir, { langs = ['zh-TW'], budgetKb = Number(process.env.ASK_DATA_BUDGET_KB) || DEFAULT_ASK_DATA_KB } = {}) {
+export function checkAskDataBudget(
+  distDir,
+  {
+    langs = ['zh-TW'],
+    budgetKb = Number(process.env.ASK_DATA_BUDGET_KB) || DEFAULT_ASK_DATA_KB,
+    proBudgetKb = process.env.ASK_DATA_PRO_BUDGET_KB === undefined ? DEFAULT_ASK_DATA_PRO_KB : Number(process.env.ASK_DATA_PRO_BUDGET_KB) || 0,
+  } = {},
+) {
   const v1 = (n) => path.join(distDir, 'v1', `${n}.json`);
   const shared = [...ENGINE_PRIMARY, ...ENGINE_SECONDARY].map(([n]) => n).concat('index');
   const measure = (names) => {
@@ -139,5 +148,7 @@ export function checkAskDataBudget(distDir, { langs = ['zh-TW'], budgetKb = Numb
   const rows = langs.map((lang) => ({ lang, ...measure([...indexShardNames('search-index', lang), ...shared]) }));
   const pro = measure([...indexShardNames('search-index-pro', 'zh-TW'), ...shared]);
   const top = rows.reduce((a, r) => (r.bytes > (a?.bytes ?? -1) ? r : a), null);
-  return { ok: !budgetKb || rows.every((r) => r.bytes <= budgetKb * 1024), budgetKb, rows, max: top?.bytes ?? 0, maxLang: top?.lang ?? '', pro };
+  const publicOk = !budgetKb || rows.every((r) => r.bytes <= budgetKb * 1024);
+  const proOk = !proBudgetKb || pro.bytes <= proBudgetKb * 1024;
+  return { ok: publicOk && proOk, publicOk, proOk, budgetKb, proBudgetKb, rows, max: top?.bytes ?? 0, maxLang: top?.lang ?? '', pro };
 }

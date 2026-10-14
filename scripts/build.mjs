@@ -133,11 +133,16 @@ async function main() {
   }
   // 第四十輪（Issue #80）：答案頁提問時下載的 JSON（gzip 後估算）。超過 ASK_DATA_BUDGET_KB（預設見 js-budget.mjs）⇒ 建置失敗
   const adb = checkAskDataBudget(DIST, { langs: config.langs.map((l) => l.code) });
-  log(`答案頁資料傳輸量（gzip 估算）：${adb.rows.map((r) => `${r.lang} ${(r.bytes / 1024).toFixed(0)}KB`).join('、')}；專業版 ${(adb.pro.bytes / 1024).toFixed(0)}KB（預算 ${adb.budgetKb || '—'} KB）`);
-  if (!adb.ok) {
+  log(`答案頁資料傳輸量（gzip 估算）：${adb.rows.map((r) => `${r.lang} ${(r.bytes / 1024).toFixed(0)}KB`).join('、')}；專業版 ${(adb.pro.bytes / 1024).toFixed(0)}KB（預算 ${adb.budgetKb || '—'} KB；專業版預算 ${adb.proBudgetKb || '—'} KB）`);
+  if (!adb.proOk) {
+    console.error(`❌ 專業版答案資料傳輸量 ${(adb.pro.bytes / 1024).toFixed(1)} KB 超過預算 ${adb.proBudgetKb} KB（ASK_DATA_PRO_BUDGET_KB；最大的檔：${adb.pro.files.slice().sort((a, b) => b[1] - a[1]).slice(0, 3).map(([n, b]) => `${n} ${(b / 1024).toFixed(0)}KB`).join('、')}）`);
+    process.exit(1);
+  }
+  if (!adb.publicOk) {
     console.error(`❌ 答案頁資料傳輸量超過預算 ${adb.budgetKb} KB：${adb.maxLang} ${(adb.max / 1024).toFixed(1)} KB（最大的檔：${adb.rows.find((r) => r.lang === adb.maxLang).files.sort((a, b) => b[1] - a[1]).slice(0, 3).map(([n, b]) => `${n} ${(b / 1024).toFixed(0)}KB`).join('、')}）`);
     process.exit(1);
-  }  log(`輸出 ${pageCount} 頁 → dist/（${Date.now() - t0} ms）`);
+  }
+  log(`輸出 ${pageCount} 頁 → dist/（${Date.now() - t0} ms）`);
 
   // 第二十八輪（ARCHITECTURE 31）：Pagefind 全文索引 → dist/pagefind/。必須在複製 PR 預覽之前（預覽各自有自己的索引，不能混進主站）
   const pfi = await buildPagefindIndex(DIST, { log });
