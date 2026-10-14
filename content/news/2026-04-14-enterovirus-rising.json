@@ -72,6 +72,46 @@
     "en": {
       "title": "Enterovirus visits rising, EV71 predominant in the community",
       "summary": "Enterovirus outpatient visits have risen for three weeks and EV71 detections are increasing. Children under 5 are at highest risk; seek care immediately if warning signs appear."
+    },
+    "ja": {
+      "title": "エンテロウイルスの受診者数が連続で増加、最近の地域流行はEV71が中心。警戒を呼びかけ",
+      "summary": "エンテロウイルスの外来・救急受診者数が3週連続で増加し、地域でEV71が検出される割合も増えています。台湾CDCは、5歳未満の幼児が重症化の高リスク群であることを伝え、重症化の前兆が出たらすぐに受診するよう呼びかけています。",
+      "bodyMarkdown": "台湾CDCによると、エンテロウイルスの外来・救急受診者数は3週連続で増加し、検査室でのサーベイランスでは、最近、地域でエンテロウイルス71型の検出割合が増えています。EV71は重症化しやすく、5歳未満の幼児が高リスク群です。\n\n台湾CDCは、保護者に石けんでの手洗いを徹底し、幼児に、眠りがち、意識がはっきりしない、元気がない、手足に力が入らない、ミオクローヌス様のけいれん、嘔吐が続く、呼吸が速い、心拍が速いといった重症化の前兆がないか注意し、現れたらすぐに重症責任病院へ連れて行くよう呼びかけています。",
+      "declText": "受診者数が3週連続で増加、地域でEV71の割合が増加",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Tumataas ang mga pagbisita dahil sa enterovirus, EV71 ang nangingibabaw sa komunidad; hinihimok na mag-ingat",
+      "summary": "Tatlong linggo nang tumataas ang mga outpatient at emergency visit para sa enterovirus at dumarami ang natutuklasang EV71 sa komunidad. Ipinapaalala ng Taiwan CDC na mataas ang panganib sa malubhang sakit ng mga batang wala pang 5 taong gulang; kapag lumitaw ang mga babala ng malubhang sakit, agad magpatingin sa doktor.",
+      "bodyMarkdown": "Ayon sa Taiwan CDC, tatlong linggo nang tumataas ang mga outpatient at emergency visit para sa enterovirus, at ipinapakita ng laboratory surveillance na dumarami kamakailan ang natutuklasang enterovirus 71 sa komunidad. Mas malamang na magdulot ng malubhang sakit ang EV71, at mataas ang panganib ng mga batang wala pang 5 taong gulang.\n\nHinihimok ng Taiwan CDC ang mga magulang na maghugas ng kamay gamit ang sabon at bantayan kung may mga babala ng malubhang sakit ang bata, tulad ng pagkaantok, kawalan ng malay, kawalan ng sigla, panghihina ng mga kamay at paa, myoclonic jerks, tuloy-tuloy na pagsusuka, mabilis na paghinga o mabilis na tibok ng puso. Kapag lumitaw ang alinman, agad dalhin ang bata sa itinalagang ospital para sa malubhang kaso.",
+      "declText": "Tatlong linggo nang tumataas ang mga pagbisita; dumarami ang EV71 sa komunidad",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Lượt khám do enterovirus tăng liên tiếp, gần đây trong cộng đồng chủ yếu là EV71; kêu gọi nâng cao cảnh giác",
+      "summary": "Số lượt khám ngoại trú và cấp cứu do enterovirus đã tăng liên tục ba tuần, tỷ lệ phát hiện EV71 trong cộng đồng tăng. CDC Đài Loan nhắc trẻ dưới 5 tuổi là nhóm nguy cơ cao mắc bệnh nặng; khi xuất hiện dấu hiệu báo trước bệnh nặng, hãy đi khám ngay.",
+      "bodyMarkdown": "CDC Đài Loan cho biết số lượt khám ngoại trú và cấp cứu do enterovirus đã tăng liên tục ba tuần; giám sát xét nghiệm cho thấy gần đây tỷ lệ phát hiện enterovirus týp 71 trong cộng đồng tăng. EV71 dễ gây bệnh nặng hơn, trẻ dưới 5 tuổi là nhóm nguy cơ cao.\n\nCDC Đài Loan kêu gọi phụ huynh rửa tay bằng xà phòng, chú ý xem trẻ có các dấu hiệu báo trước bệnh nặng như li bì, mất ý thức, kém hoạt bát, yếu tay chân, giật cơ, nôn liên tục, thở nhanh hoặc tim đập nhanh hay không; khi xuất hiện, hãy đưa trẻ ngay đến bệnh viện chịu trách nhiệm điều trị ca nặng.",
+      "declText": "Lượt khám tăng liên tiếp ba tuần, tỷ lệ EV71 trong cộng đồng tăng",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Kunjungan akibat enterovirus naik berturut-turut, EV71 dominan di masyarakat; imbauan untuk waspada",
+      "summary": "Kunjungan rawat jalan dan gawat darurat akibat enterovirus naik tiga minggu berturut-turut dan proporsi EV71 yang terdeteksi di masyarakat bertambah. CDC Taiwan mengingatkan bahwa anak di bawah 5 tahun termasuk kelompok berisiko tinggi sakit berat; segera berobat jika muncul tanda awal sakit berat.",
+      "bodyMarkdown": "Menurut CDC Taiwan, kunjungan rawat jalan dan gawat darurat akibat enterovirus naik tiga minggu berturut-turut, dan surveilans laboratorium menunjukkan proporsi enterovirus 71 yang terdeteksi di masyarakat bertambah belakangan ini. EV71 lebih mudah menyebabkan sakit berat, dan anak di bawah 5 tahun termasuk kelompok berisiko tinggi.\n\nCDC Taiwan mengimbau orang tua untuk mencuci tangan dengan sabun dan mewaspadai tanda awal sakit berat pada anak, seperti mengantuk berlebihan, kesadaran menurun, lesu, lemah pada tangan dan kaki, kejang mioklonik, muntah terus-menerus, napas cepat, atau denyut jantung cepat. Jika muncul, segera bawa anak ke rumah sakit penanggung jawab kasus berat.",
+      "declText": "Kunjungan naik tiga minggu berturut-turut, proporsi EV71 di masyarakat meningkat",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "ผู้ป่วยเอนเทอโรไวรัสที่มารับการรักษาเพิ่มขึ้นต่อเนื่อง ช่วงนี้ในชุมชนพบ EV71 เป็นหลัก เรียกร้องให้เพิ่มความระมัดระวัง",
+      "summary": "จำนวนผู้ป่วยนอกและผู้ป่วยฉุกเฉินที่มารับการรักษาด้วยเอนเทอโรไวรัสเพิ่มขึ้นต่อเนื่องสามสัปดาห์ และสัดส่วนที่ตรวจพบ EV71 ในชุมชนเพิ่มขึ้น CDC ไต้หวันเตือนว่าเด็กอายุต่ำกว่า 5 ปีเป็นกลุ่มเสี่ยงสูงต่อการป่วยรุนแรง หากมีสัญญาณเตือนของอาการรุนแรงให้ไปพบแพทย์ทันที",
+      "bodyMarkdown": "CDC ไต้หวันระบุว่าจำนวนผู้ป่วยนอกและผู้ป่วยฉุกเฉินที่มารับการรักษาด้วยเอนเทอโรไวรัสเพิ่มขึ้นต่อเนื่องสามสัปดาห์ การเฝ้าระวังทางห้องปฏิบัติการพบว่าช่วงนี้สัดส่วนที่ตรวจพบเอนเทอโรไวรัส 71 ในชุมชนเพิ่มขึ้น EV71 ทำให้เกิดอาการรุนแรงได้ง่ายกว่า เด็กอายุต่ำกว่า 5 ปีเป็นกลุ่มเสี่ยงสูง\n\nCDC ไต้หวันเรียกร้องให้ผู้ปกครองล้างมือด้วยสบู่ และสังเกตว่าเด็กมีสัญญาณเตือนของอาการรุนแรงหรือไม่ เช่น ซึม ไม่รู้สึกตัว ไม่ค่อยมีแรง แขนขาอ่อนแรง กระตุกแบบกล้ามเนื้อกระตุก อาเจียนไม่หยุด หายใจเร็ว หรือหัวใจเต้นเร็ว หากพบให้รีบพาไปโรงพยาบาลที่รับผิดชอบผู้ป่วยรุนแรงทันที",
+      "declText": "ผู้ป่วยที่มารับการรักษาเพิ่มขึ้นต่อเนื่องสามสัปดาห์ สัดส่วน EV71 ในชุมชนเพิ่มขึ้น",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

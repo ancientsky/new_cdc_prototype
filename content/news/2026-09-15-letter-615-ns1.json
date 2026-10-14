@@ -68,5 +68,21 @@
       "url": "/pending/?ref=news.2026-09-15-letter-615-ns1&doc=NS1%20快篩試劑配置表（2026-09-22%20起）",
       "machineReadable": false
     }
-  ]
+  ],
+  "i18n": {
+    "en": {
+      "title": "Letter to the Medical Community No. 615: updated allocation of dengue NS1 antigen rapid test kits",
+      "summary": "From 22 September 2026 the allocation of dengue NS1 rapid test kits is updated: primary care clinics in the affected southern areas receive more kits, kits are requested through an online system, and positive rapid tests must still be reported within 24 hours. (Illustrative prototype letter; the letter number is not real.)",
+      "bodyMarkdown": "1. In response to rising local dengue transmission in southern Taiwan, Taiwan CDC is updating the allocation of NS1 antigen rapid diagnostic test kits from 22 September 2026.\n2. The allocation for primary care clinics in affected areas of Kaohsiung City, Tainan City and Pingtung County is increased to 40 kits per clinic; other counties and cities remain at 20 kits. If more are needed, clinics may request additional kits from their local health bureau.\n3. Kits are now requested online through the \"Epidemic Prevention Supplies Management Information System\"; the previous paper request form is no longer used.\n4. Under Chapter 5 of the \"Dengue/Chikungunya Control Guidelines\", a positive rapid test must be reported within 24 hours; if the rapid test is negative but clinical suspicion is high, a specimen should still be collected and sent for testing.",
+      "attachments": [
+        {
+          "label": "NS1 rapid test kit allocation table (from 2026-09-22)",
+          "url": "/pending/?ref=news.2026-09-15-letter-615-ns1&doc=NS1%20快篩試劑配置表（2026-09-22%20起）",
+          "machineReadable": false
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

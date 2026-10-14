@@ -68,6 +68,46 @@
     "en": {
       "title": "Local dengue rising in southern Taiwan: please cooperate with breeding-site removal",
       "summary": "Local dengue cases in southern cities have risen for two weeks. Taiwan CDC asks residents to cooperate with breeding-site removal and spraying; doctors can use NS1 rapid tests for early diagnosis."
+    },
+    "ja": {
+      "title": "南部でデング熱の国内感染が増加、ボウフラの発生源除去と防除への協力を呼びかけ",
+      "summary": "南部の県市でデング熱の国内感染例が増え続けています。台湾CDCは、保健当局による発生源の除去と薬剤散布への協力を呼びかけています。発熱で受診した場合、医師がNS1迅速検査を行うことがあります。",
+      "bodyMarkdown": "台湾CDCによると、この2週間、南部の県市でデング熱の国内感染例が増え続けており（例示）、症例は高雄市と台南市の一部の行政区に集中していて、流行が広がるおそれがあります。\n\n台湾CDCは、保健当局による蚊の発生源の除去と薬剤散布に協力するよう呼びかけています。また、医師には発熱患者に対する警戒を高め、NS1迅速検査キットを活用して早期に診断・届出を行うよう促しています。外出時は、薄い色の長袖・長ズボンを着て、虫よけを使ってください。",
+      "declText": "南部の県市で国内感染例が連続して増加",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Tumataas ang lokal na dengue sa timog: hinihimok ang pakikipagtulungan sa pag-aalis ng pinamumugaran ng lamok at sa mga hakbang sa pagkontrol",
+      "summary": "Patuloy na dumarami ang mga lokal na kaso ng dengue sa mga lungsod at county sa timog. Hinihimok ng Taiwan CDC ang publiko na makipagtulungan sa pag-aalis ng pinamumugaran ng lamok at pag-spray ng mga awtoridad sa kalusugan; kapag nagpatingin dahil sa lagnat, maaaring magsagawa ang doktor ng NS1 rapid test.",
+      "bodyMarkdown": "Ayon sa Taiwan CDC, patuloy na dumarami sa nakaraang dalawang linggo ang mga lokal na kaso ng dengue sa mga lungsod at county sa timog (halimbawa), na nakatuon sa ilang distrito ng Kaohsiung at Tainan, at may panganib na kumalat ang epidemya.\n\nHinihimok ng Taiwan CDC ang publiko na makipagtulungan sa mga awtoridad sa kalusugan sa pag-aalis ng pinamumugaran ng lamok at sa pag-spray, at pinapaalalahanan ang mga doktor na maging mapagbantay sa mga pasyenteng may lagnat at gamitin ang NS1 rapid test kit para sa maagang pagsusuri at pag-uulat. Kapag lalabas ng bahay, magsuot ng magagaan ang kulay na mahabang manggas at mahabang pantalon at gumamit ng panlaban sa lamok.",
+      "declText": "Patuloy na dumarami ang mga lokal na kaso sa mga lungsod at county sa timog",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Dịch sốt xuất huyết Dengue nội địa ở miền Nam gia tăng, kêu gọi phối hợp diệt ổ lăng quăng và phòng chống dịch",
+      "summary": "Số ca sốt xuất huyết Dengue nội địa ở các huyện thị miền Nam tiếp tục tăng. CDC Đài Loan kêu gọi người dân phối hợp với cơ quan y tế diệt nơi sinh sản của muỗi và phun thuốc; khi đi khám vì sốt, bác sĩ có thể làm xét nghiệm nhanh NS1.",
+      "bodyMarkdown": "CDC Đài Loan cho biết trong hai tuần qua, số ca sốt xuất huyết Dengue nội địa ở các huyện thị miền Nam tiếp tục tăng (minh họa), tập trung ở một số quận của thành phố Cao Hùng và Đài Nam, có nguy cơ dịch lan rộng.\n\nCDC Đài Loan kêu gọi người dân phối hợp với cơ quan y tế loại bỏ nơi sinh sản của muỗi và phun thuốc, đồng thời nhắc bác sĩ nâng cao cảnh giác với bệnh nhân sốt, tận dụng bộ xét nghiệm nhanh NS1 để chẩn đoán và báo cáo sớm. Khi ra ngoài, hãy mặc quần áo dài tay, quần dài màu sáng và dùng thuốc chống muỗi.",
+      "declText": "Số ca nội địa ở các huyện thị miền Nam tăng liên tiếp",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Demam berdarah dengue lokal di selatan meningkat: imbauan untuk bekerja sama dalam pembersihan sarang nyamuk dan pengendalian",
+      "summary": "Kasus lokal demam berdarah dengue di kota dan kabupaten di selatan terus bertambah. CDC Taiwan mengimbau masyarakat bekerja sama dengan otoritas kesehatan dalam pembersihan sarang nyamuk dan penyemprotan; jika berobat karena demam, dokter dapat melakukan tes cepat NS1.",
+      "bodyMarkdown": "Menurut CDC Taiwan, dalam dua minggu terakhir kasus lokal demam berdarah dengue di kota dan kabupaten di selatan terus bertambah (ilustrasi), terkonsentrasi di beberapa distrik di Kota Kaohsiung dan Tainan, dengan risiko wabah meluas.\n\nCDC Taiwan mengimbau masyarakat bekerja sama dengan otoritas kesehatan dalam pembersihan sarang nyamuk dan penyemprotan, serta mengingatkan dokter untuk meningkatkan kewaspadaan terhadap pasien demam dan memanfaatkan kit tes cepat NS1 untuk diagnosis dan pelaporan dini. Saat keluar rumah, kenakan baju lengan panjang dan celana panjang berwarna terang serta gunakan losion antinyamuk.",
+      "declText": "Kasus lokal di kota dan kabupaten di selatan terus bertambah",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "ไข้เลือดออกในประเทศทางภาคใต้เพิ่มขึ้น เรียกร้องให้ร่วมมือกำจัดแหล่งเพาะพันธุ์ยุงและมาตรการควบคุมโรค",
+      "summary": "ผู้ป่วยไข้เลือดออกที่ติดเชื้อในประเทศในเมืองและอำเภอทางภาคใต้เพิ่มขึ้นต่อเนื่อง CDC ไต้หวันเรียกร้องให้ประชาชนร่วมมือกับหน่วยงานสาธารณสุขในการกำจัดแหล่งเพาะพันธุ์ยุงและการพ่นยา เมื่อไปพบแพทย์ด้วยอาการไข้ แพทย์อาจตรวจ NS1 แบบเร็ว",
+      "bodyMarkdown": "CDC ไต้หวันระบุว่าในสองสัปดาห์ที่ผ่านมา ผู้ป่วยไข้เลือดออกที่ติดเชื้อในประเทศในเมืองและอำเภอทางภาคใต้เพิ่มขึ้นต่อเนื่อง (ตัวอย่าง) กระจุกตัวในบางเขตของเกาสงและไถหนาน มีความเสี่ยงที่การระบาดจะขยายวง\n\nCDC ไต้หวันเรียกร้องให้ประชาชนร่วมมือกับหน่วยงานสาธารณสุขในการกำจัดแหล่งเพาะพันธุ์ยุงและการพ่นยา และเตือนแพทย์ให้เฝ้าระวังผู้ป่วยที่มีไข้ ใช้ชุดตรวจ NS1 แบบเร็วเพื่อวินิจฉัยและรายงานตั้งแต่เนิ่น ๆ เมื่อออกนอกบ้านให้สวมเสื้อแขนยาวและกางเกงขายาวสีอ่อนและใช้ยากันยุง",
+      "declText": "ผู้ป่วยที่ติดเชื้อในประเทศในเมืองและอำเภอทางภาคใต้เพิ่มขึ้นต่อเนื่อง",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

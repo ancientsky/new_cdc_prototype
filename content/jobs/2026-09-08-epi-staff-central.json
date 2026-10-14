@@ -94,5 +94,13 @@
       "machineReadable": false
     }
   ],
-  "note": "聯絡電話為疾管署總機，分機與報名信箱以正式簡章為準（本原型為示意，不放承辦人姓名）；薪資待遇為示意文字，實際依核定薪點折算。"
+  "note": "聯絡電話為疾管署總機，分機與報名信箱以正式簡章為準（本原型為示意，不放承辦人姓名）；薪資待遇為示意文字，實際依核定薪點折算。",
+  "i18n": {
+    "en": {
+      "title": "Central Regional Center: one contract staff member wanted (epidemic prevention work)",
+      "summary": "Central Regional Center is recruiting one contract staff member for communicable disease control liaison and outbreak investigation administration in its area; applications closed on 25 September 2026, and applicants who pass the document review will be notified separately of their oral examination.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

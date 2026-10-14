@@ -60,5 +60,14 @@
   "legacyUrls": [
     "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
   ],
-  "bodyMarkdown": "疾病管制署表示，2026 年（今年）入夏後仍有流感病毒活動，近期以 A 型 H1N1 為主。依「公費流感抗病毒藥劑使用對象」（全年適用），未滿 5 歲及 65 歲以上之類流感患者、孕婦、具高風險慢性病之類流感患者、流感併發重症及住院病患等，經醫師診察研判符合者，不需流感快篩即可使用公費抗病毒藥劑。\n\n疾管署提醒，抗病毒藥劑於發病 48 小時內使用效果最佳，有症狀請儘早就醫。"
+  "bodyMarkdown": "疾病管制署表示，2026 年（今年）入夏後仍有流感病毒活動，近期以 A 型 H1N1 為主。依「公費流感抗病毒藥劑使用對象」（全年適用），未滿 5 歲及 65 歲以上之類流感患者、孕婦、具高風險慢性病之類流感患者、流感併發重症及住院病患等，經醫師診察研判符合者，不需流感快篩即可使用公費抗病毒藥劑。\n\n疾管署提醒，抗病毒藥劑於發病 48 小時內使用效果最佳，有症狀請儘早就醫。",
+  "i18n": {
+    "en": {
+      "title": "Influenza continues into summer; eligibility for government-funded antivirals remains unchanged",
+      "summary": "Influenza viruses are still circulating in summer. Taiwan CDC explains the year-round eligibility for government-funded antivirals: people with influenza-like illness who are under 5 or over 65, pregnant women, or people with high-risk chronic conditions can be prescribed the drug without a rapid test if a doctor judges them eligible.",
+      "bodyMarkdown": "Taiwan CDC said that influenza viruses are still circulating in summer 2026, with influenza A(H1N1) predominant recently. Under the \"Eligibility for government-funded influenza antivirals\" (applicable year-round), people with influenza-like illness who are under 5 or aged 65 and over, pregnant women, people with influenza-like illness who have high-risk chronic conditions, and patients with severe influenza complications or hospitalised patients can receive government-funded antivirals without a rapid influenza test if the examining doctor judges that they meet the criteria.\n\nTaiwan CDC reminds the public that antivirals work best when started within 48 hours of symptom onset, so please see a doctor early if you have symptoms.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

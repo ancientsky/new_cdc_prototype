@@ -74,5 +74,13 @@
   ],
   "irb": {
     "required": false
+  },
+  "i18n": {
+    "en": {
+      "title": "Molecular epidemiology surveillance of enterovirus 71 and D68",
+      "summary": "In-house study (ongoing, 2025–2027): whole-genome sequencing is used to track genotype changes of enterovirus 71 and D68 and analyse their association with severe cases, as a reference for evaluating vaccine strains.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
   }
 }

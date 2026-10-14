@@ -68,6 +68,41 @@
     "en": {
       "title": "Summer travel and events ahead: eligible people should complete two doses of mpox vaccine",
       "summary": "Taiwan CDC reminds people with high-risk sexual behaviour in the past year to complete two government-funded mpox doses; anyone with symptoms should cover lesions and see a doctor."
+    },
+    "ja": {
+      "title": "夏休みの旅行や大型イベントを前に、対象の人はエムポックスワクチンを2回接種しましょう",
+      "summary": "夏休みを前に、台湾CDCは、この1年間にリスクの高い性行為があった人に、公費のエムポックスワクチンの接種を呼びかけています。2回接種して初めて十分な予防効果が得られます。疑わしい症状が出たら、発疹を覆って受診してください。",
+      "bodyMarkdown": "夏休みの旅行シーズンと大型イベントを前に、台湾CDCは、エムポックスは主に親密な接触で感染するため、公費接種の条件に当てはまる人はできるだけ早く2回のワクチンを完了するよう呼びかけています。2回の間隔は少なくとも4週間です。\n\n発熱、リンパ節の腫れ、発疹や水疱が出たら、マスクを着け、長袖で患部を覆って受診し、接触歴を自分から伝えてください。受診までの間は、他の人との親密な接触を避けてください。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Papalapit ang bakasyon sa tag-init at mga malalaking kaganapan: kumpletuhin ng mga kwalipikado ang 2 dosis ng bakuna sa mpox",
+      "summary": "Papalapit na ang bakasyon sa tag-init; pinapaalalahanan ng Taiwan CDC ang mga may mataas na panganib na pakikipagtalik sa nakaraang taon na magpabakuna ng bakuna sa mpox na pinondohan ng pamahalaan; ang 2 dosis lamang ang nagbibigay ng buong proteksyon. Kung may mga sintomas, takpan ang mga pantal at magpatingin sa doktor.",
+      "bodyMarkdown": "Papalapit ang abalang panahon ng bakasyon sa tag-init at mga malalaking kaganapan, kaya ipinapaalala ng Taiwan CDC na ang mpox ay pangunahing kumakalat sa pamamagitan ng malapit na kontak; ang mga kwalipikado sa bakunang pinondohan ng pamahalaan ay dapat kumpletuhin agad ang 2 dosis ng bakuna, na may pagitang hindi bababa sa 4 na linggo.\n\nKung magkaroon ng lagnat, namamagang lymph node, pantal o paltos, magsuot ng mask, takpan ng mahabang manggas ang mga sugat at magpatingin sa doktor, at kusang banggitin ang inyong kasaysayan ng pakikisalamuha. Iwasan ang malapit na kontak sa ibang tao bago magpatingin.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Sắp đến kỳ nghỉ hè và các sự kiện lớn: người đủ điều kiện hãy tiêm đủ 2 mũi vắc-xin Mpox",
+      "summary": "Sắp đến kỳ nghỉ hè, CDC Đài Loan nhắc những người có quan hệ tình dục nguy cơ cao trong năm qua nên tiêm vắc-xin Mpox do nhà nước chi trả; phải tiêm đủ 2 mũi mới được bảo vệ đầy đủ. Khi có triệu chứng nghi ngờ, hãy che phát ban và đi khám.",
+      "bodyMarkdown": "Mùa du lịch hè cao điểm và các sự kiện lớn sắp đến, CDC Đài Loan nhắc rằng Mpox lây chủ yếu qua tiếp xúc gần gũi; người đủ điều kiện tiêm do nhà nước chi trả hãy sớm hoàn thành 2 mũi vắc-xin, hai mũi cách nhau ít nhất 4 tuần.\n\nNếu bị sốt, nổi hạch hoặc phát ban, mụn nước, hãy đeo khẩu trang, mặc áo dài tay che vùng tổn thương rồi đi khám, và chủ động cho biết tiền sử tiếp xúc; trước khi đi khám, tránh tiếp xúc gần gũi với người khác.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Liburan musim panas dan acara besar segera tiba: yang memenuhi syarat, selesaikan 2 dosis vaksin mpox",
+      "summary": "Menjelang liburan musim panas, CDC Taiwan mengingatkan orang yang melakukan hubungan seksual berisiko tinggi dalam setahun terakhir untuk memanfaatkan vaksin mpox yang dibiayai pemerintah; perlindungan penuh baru didapat setelah 2 dosis. Jika muncul gejala yang mencurigakan, tutupi ruam dan segera berobat.",
+      "bodyMarkdown": "Musim liburan musim panas dan acara besar segera tiba. CDC Taiwan mengingatkan bahwa mpox menular terutama melalui kontak erat; orang yang memenuhi syarat vaksinasi yang dibiayai pemerintah diminta segera menyelesaikan 2 dosis vaksin, dengan jarak antardosis minimal 4 minggu.\n\nJika muncul demam, pembengkakan kelenjar getah bening, atau ruam dan lepuh, pakai masker, kenakan lengan panjang untuk menutupi lesi lalu berobat, dan sampaikan riwayat kontak Anda; sebelum berobat, hindari kontak erat dengan orang lain.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "ใกล้ช่วงปิดเทอมภาคฤดูร้อนและงานใหญ่: ผู้ที่เข้าเกณฑ์ควรรีบฉีดวัคซีนฝีดาษวานรให้ครบ 2 เข็ม",
+      "summary": "ใกล้ช่วงปิดเทอมภาคฤดูร้อน CDC ไต้หวันเตือนผู้ที่มีเพศสัมพันธ์เสี่ยงสูงในช่วงหนึ่งปีที่ผ่านมาให้รีบรับวัคซีนฝีดาษวานรที่รัฐสนับสนุนค่าใช้จ่าย ต้องฉีดให้ครบ 2 เข็มจึงจะได้รับการป้องกันเต็มที่ หากมีอาการน่าสงสัยให้ปิดผื่นไว้แล้วไปพบแพทย์",
+      "bodyMarkdown": "ช่วงเที่ยวฤดูร้อนและงานใหญ่ใกล้เข้ามา CDC ไต้หวันเตือนว่าฝีดาษวานรแพร่ติดต่อหลักผ่านการสัมผัสใกล้ชิด ผู้ที่เข้าเกณฑ์รับวัคซีนที่รัฐสนับสนุนค่าใช้จ่ายโปรดรีบฉีดให้ครบ 2 เข็ม โดยห่างกันอย่างน้อย 4 สัปดาห์\n\nหากมีไข้ ต่อมน้ำเหลืองโต หรือมีผื่น ตุ่มน้ำ ให้สวมหน้ากากอนามัย สวมเสื้อแขนยาวปิดรอยโรคแล้วไปพบแพทย์ และแจ้งประวัติการสัมผัสด้วยตนเอง ก่อนไปพบแพทย์ให้หลีกเลี่ยงการสัมผัสใกล้ชิดกับผู้อื่น",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

@@ -79,5 +79,13 @@
   ],
   "irb": {
     "required": false
+  },
+  "i18n": {
+    "en": {
+      "title": "Regional analysis of influenza vaccine coverage and influenza-like illness consultation rates",
+      "summary": "In-house study from 2025 (completed): analyses the association between influenza vaccine coverage among people aged 65 and over in each county and city and influenza-like illness consultation rates and severe-case rates in the flu season, as a reference for allocating vaccination resources.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
   }
 }

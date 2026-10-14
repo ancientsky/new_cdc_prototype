@@ -104,6 +104,41 @@
       "title": "MMR vaccine (measles, mumps and rubella)",
       "summary": "MMR protects against measles, mumps and rubella. Children get one dose at 12 months and one between age 5 and school entry; adults born in 1966 or later without immunity should be assessed before travel.",
       "bodyMarkdown": "MMR is a live attenuated vaccine; two doses are about 97% effective against measles.\n\nUnder the recommendations revised on 16 April 2025, adults **born in 1966 or later** without measles immunity who plan to visit affected areas should see a travel clinic 2 to 4 weeks before departure to be assessed for one self-paid dose; health workers and people in frequent contact with foreign nationals should also be assessed."
+    },
+    "ja": {
+      "title": "MMRワクチン（麻しん・おたふくかぜ・風しん混合ワクチン）",
+      "summary": "MMRワクチンは麻しん、おたふくかぜ、風しんを予防します。幼児は12か月で1回、満5歳から小学校入学前までに1回接種します。1966年以降に生まれて免疫のない成人は、出国前に自費接種の要否を評価してください。",
+      "bodyMarkdown": "MMRは弱毒生ワクチンで、2回接種すると麻しんに対する予防効果は約97%です。\n\n2025年4月16日に改訂された「台湾における現行のMMR接種推奨」では、**1966年以降に生まれ**、麻しんの免疫がない成人が麻しんの流行地域への渡航を予定している場合、出国の2〜4週間前にトラベルクリニックで、自費で1回接種するかどうかの評価を受けることが推奨されています。\n\n**医療従事者**（医療・ケアの従事者）や、外国人と接する機会の多い職種（空港、観光、外国人労働者支援の担当者など）も、麻しんの免疫の有無を確認し、接種の要否を評価することが推奨されています。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Bakunang MMR (tigdas, beke at rubella)",
+      "summary": "Pinoprotektahan ng MMR laban sa tigdas, beke at rubella. Ang mga bata ay tumatanggap ng isang dosis sa 12 buwan at isa pa sa pagitan ng edad 5 at pagpasok sa elementarya; ang mga nasa hustong gulang na isinilang noong 1966 o pagkatapos na walang kaligtasan ay dapat masuri bago maglakbay para sa sariling bayad na dosis.",
+      "bodyMarkdown": "Ang MMR ay live attenuated na bakuna; ang dalawang dosis ay mga 97% epektibo laban sa tigdas.\n\nAyon sa mga rekomendasyong binago noong Abril 16, 2025, ang mga nasa hustong gulang na **isinilang noong 1966 o pagkatapos** na walang kaligtasan sa tigdas at nagbabalak pumunta sa mga apektadong lugar ay dapat magpatingin sa travel clinic 2 hanggang 4 na linggo bago umalis upang masuri para sa 1 dosis na sariling bayad.\n\nAng mga **manggagawang pangkalusugan** (mga manggagawa sa pangangalagang medikal) at mga manggagawang madalas makasalamuha ang mga dayuhan (tulad ng mga tauhan sa paliparan, turismo at serbisyo para sa mga migranteng manggagawa) ay dapat ding tiyakin ang kanilang kaligtasan sa tigdas at masuri para sa pagbabakuna.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Vắc-xin MMR (sởi, quai bị, rubella)",
+      "summary": "Vắc-xin MMR phòng sởi, quai bị và rubella. Trẻ em tiêm 1 mũi lúc 12 tháng tuổi và 1 mũi từ đủ 5 tuổi đến trước khi vào tiểu học; người lớn sinh từ năm 1966 trở về sau chưa có miễn dịch nên được đánh giá tiêm tự chi trả trước khi đi nước ngoài.",
+      "bodyMarkdown": "MMR là vắc-xin sống giảm độc lực; tiêm đủ 2 mũi có hiệu quả bảo vệ khoảng 97% đối với bệnh sởi.\n\nTheo khuyến cáo tiêm MMR hiện hành tại Đài Loan được sửa đổi ngày 16/4/2025, người lớn **sinh từ năm 1966 trở về sau** chưa có miễn dịch với sởi và dự định đến vùng có dịch sởi nên đến phòng khám y học du lịch trước khi đi 2 đến 4 tuần để được đánh giá tiêm 1 mũi tự chi trả.\n\n**Nhân viên y tế** (người làm công tác chăm sóc y tế) và những người thường xuyên tiếp xúc với người nước ngoài (như nhân viên sân bay, du lịch, dịch vụ lao động nhập cư) cũng nên kiểm tra miễn dịch với sởi và được đánh giá việc tiêm chủng.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Vaksin MMR (campak, gondongan, dan rubela)",
+      "summary": "Vaksin MMR melindungi dari campak, gondongan, dan rubela. Anak mendapat satu dosis pada usia 12 bulan dan satu dosis pada usia 5 tahun hingga sebelum masuk SD; orang dewasa yang lahir pada 1966 atau sesudahnya dan belum memiliki kekebalan perlu dinilai sebelum bepergian untuk dosis dengan biaya sendiri.",
+      "bodyMarkdown": "MMR adalah vaksin hidup yang dilemahkan; dua dosis memberi perlindungan sekitar 97% terhadap campak.\n\nMenurut anjuran yang direvisi pada 16 April 2025, orang dewasa yang **lahir pada 1966 atau sesudahnya**, belum memiliki kekebalan terhadap campak, dan berencana mengunjungi daerah wabah sebaiknya datang ke klinik kesehatan perjalanan 2 hingga 4 minggu sebelum berangkat untuk dinilai apakah perlu 1 dosis dengan biaya sendiri.\n\n**Tenaga kesehatan** (petugas layanan kesehatan) dan pekerja yang sering berhubungan dengan warga negara asing (seperti petugas bandara, pariwisata, dan layanan pekerja migran) juga dianjurkan memastikan kekebalan terhadap campak dan dinilai untuk vaksinasi.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "วัคซีน MMR (หัด คางทูม หัดเยอรมัน)",
+      "summary": "วัคซีน MMR ป้องกันโรคหัด คางทูม และหัดเยอรมัน เด็กฉีด 1 เข็มเมื่ออายุ 12 เดือน และอีก 1 เข็มตั้งแต่อายุครบ 5 ปีจนถึงก่อนเข้าเรียนชั้นประถม ผู้ใหญ่ที่เกิดตั้งแต่ปี 1966 เป็นต้นมาและไม่มีภูมิคุ้มกัน ควรได้รับการประเมินก่อนเดินทางไปต่างประเทศเพื่อฉีดแบบจ่ายเอง",
+      "bodyMarkdown": "MMR เป็นวัคซีนเชื้อเป็นอ่อนฤทธิ์ ฉีดครบ 2 เข็มป้องกันโรคหัดได้ประมาณ 97%\n\nตามคำแนะนำการฉีด MMR ปัจจุบันของไต้หวันที่แก้ไขเมื่อวันที่ 16 เมษายน 2025 ผู้ใหญ่ที่**เกิดตั้งแต่ปี 1966 เป็นต้นมา** และไม่มีภูมิคุ้มกันโรคหัด หากวางแผนเดินทางไปพื้นที่ที่มีการระบาดของโรคหัด ควรไปคลินิกเวชศาสตร์การเดินทางก่อนออกเดินทาง 2 ถึง 4 สัปดาห์ เพื่อประเมินการฉีด 1 เข็มโดยจ่ายค่าใช้จ่ายเอง\n\n**บุคลากรทางการแพทย์** (ผู้ปฏิบัติงานด้านการดูแลสุขภาพ) และผู้ที่ทำงานใกล้ชิดกับชาวต่างชาติเป็นประจำ (เช่น เจ้าหน้าที่สนามบิน การท่องเที่ยว และงานบริการแรงงานข้ามชาติ) ควรตรวจสอบภูมิคุ้มกันโรคหัดและได้รับการประเมินการฉีดวัคซีนด้วย",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

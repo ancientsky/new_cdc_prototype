@@ -65,5 +65,13 @@
   ],
   "pdfUrl": "/pending/?ref=publication.annual-report-2024&doc=衛生福利部疾病管制署%202024%20年報（PDF）",
   "price": "新臺幣 350 元（電子版免費）",
-  "abstractMarkdown": "本年報以中英文對照呈現 2024 年度重點：新冠防治轉入常規、M痘高風險族群疫苗接種、登革熱南部疫情防治、結核病與愛滋防治成果、國際衛生合作，並附年度大事紀與統計。"
+  "abstractMarkdown": "本年報以中英文對照呈現 2024 年度重點：新冠防治轉入常規、M痘高風險族群疫苗接種、登革熱南部疫情防治、結核病與愛滋防治成果、國際衛生合作，並附年度大事紀與統計。",
+  "i18n": {
+    "en": {
+      "title": "Taiwan Centers for Disease Control 2024 Annual Report",
+      "summary": "Compiles Taiwan CDC's 2024 achievements and key statistics, including the transition of COVID-19 to routine control, mpox vaccination, dengue control and international health cooperation, in Chinese and English side by side.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

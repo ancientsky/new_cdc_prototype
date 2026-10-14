@@ -99,5 +99,13 @@
     "refNo": "疾管人字第 1150100203 號",
     "note": "正取人員請依人事系統結果頁所列日期至東區管制中心報到；請以報名編號自行核對。"
   },
-  "note": "第三十輪（#55）示範「名單不進 Git」：result 只放 externalUrl（正式站為人事系統的結果查詢頁或其託管的 PDF），本站不存任何名單；原型沒有人事系統，連結以 /pending/ 佔位。聯絡電話為疾管署總機（示意）。"
+  "note": "第三十輪（#55）示範「名單不進 Git」：result 只放 externalUrl（正式站為人事系統的結果查詢頁或其託管的 PDF），本站不存任何名單；原型沒有人事系統，連結以 /pending/ 佔位。聯絡電話為疾管署總機（示意）。",
+  "i18n": {
+    "en": {
+      "title": "Eastern Regional Center: one contract staff member wanted (administration and epidemic supplies management)",
+      "summary": "Eastern Regional Center is recruiting one contract staff member for official documents, procurement and epidemic supplies management; the selection results were announced on 31 July 2026. The list is provided by the personnel system (this site only links to it and does not store names).",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

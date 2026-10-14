@@ -139,5 +139,13 @@
     ],
     "note": "正取人員請於 2026 年 7 月 13 日上午 9 時攜帶應備文件正本至高屏區管制中心報到；逾期未報到者，由備取人員依序遞補。備取有效期間至 2026 年 10 月 10 日。"
   },
-  "note": "聯絡電話為疾管署總機，分機與報名信箱以正式簡章為準（本原型為示意，不放承辦人姓名）；薪資待遇為示意文字，實際依核定薪點折算。"
+  "note": "聯絡電話為疾管署總機，分機與報名信箱以正式簡章為準（本原型為示意，不放承辦人姓名）；薪資待遇為示意文字，實際依核定薪點折算。",
+  "i18n": {
+    "en": {
+      "title": "Kaoping Regional Center: four contract port quarantine officers wanted",
+      "summary": "Kaoping Regional Center is recruiting four contract port quarantine officers to carry out health assessments of arriving travellers and ship sanitation inspections at Kaohsiung International Airport and Kaohsiung Port; the selection results were announced on 30 June 2026.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

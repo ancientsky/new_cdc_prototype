@@ -74,5 +74,13 @@
   ],
   "irb": {
     "required": false
+  },
+  "i18n": {
+    "en": {
+      "title": "Southeast Asia cross-border dengue virus genomic surveillance collaboration",
+      "summary": "International cooperation project from 2026 (planned): exchanges dengue virus gene sequences with partner countries in Southeast Asia to track changes in serotypes and genotypes and give early warning of local outbreaks triggered by imported cases.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
   }
 }

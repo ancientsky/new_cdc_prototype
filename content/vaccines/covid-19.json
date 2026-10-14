@@ -100,6 +100,41 @@
       "title": "COVID-19 vaccine",
       "summary": "The 2026–27 COVID-19 vaccine starts on 1 October alongside flu vaccine: one government-funded dose for everyone aged 6 months and over; people 65+ and the immunocompromised may get another dose 6 months later.",
       "bodyMarkdown": "COVID-19 vaccines are updated each year as the virus changes. The 2026–27 vaccine follows WHO-recommended strains and is available from **1 October** for everyone aged 6 months and over; priority groups include adults 65+, indigenous people 55+, health workers, long-term care residents and staff, high-risk chronic patients and pregnant women.\n\nIt can be given with the flu vaccine in different sites, or at any interval."
+    },
+    "ja": {
+      "title": "新型コロナワクチン",
+      "summary": "2026–2027年度の新型コロナワクチンは10月1日からインフルエンザワクチンと同時に接種開始。生後6か月以上の人は公費で1回。65歳以上と免疫不全の人は、6か月あけてさらに1回接種できます。",
+      "bodyMarkdown": "新型コロナワクチンは、ウイルス株の変化に合わせて毎年成分が更新されます。2026–2027年度のワクチンはWHOの推奨株に基づき、**10月1日**から接種が始まり、生後6か月以上のすべての人が公費ワクチンを接種できます。65歳以上の高齢者、55歳以上の先住民、医療従事者、長期ケア施設の入所者と職員、高リスクの慢性疾患患者、妊婦が優先対象です。\n\nインフルエンザワクチンとは、部位を変えて同時に接種することも、任意の間隔をあけて接種することもできます。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Bakuna sa COVID-19",
+      "summary": "Magsisimula sa Oktubre 1 ang bakuna sa COVID-19 para sa 2026–27 kasabay ng bakuna sa trangkaso: isang dosis na pinondohan ng pamahalaan para sa lahat ng may edad 6 na buwan pataas; ang mga may edad 65 pataas at mga may mahinang resistensya ay maaaring tumanggap ng isa pang dosis pagkalipas ng 6 na buwan.",
+      "bodyMarkdown": "Taun-taong ina-update ang mga bakuna sa COVID-19 habang nagbabago ang virus. Ang bakuna para sa 2026–27 ay batay sa mga strain na inirekomenda ng WHO at makukuha mula **Oktubre 1** ng lahat ng may edad 6 na buwan pataas sa pamamagitan ng bakunang pinondohan ng pamahalaan. Kabilang sa mga prayoridad ang mga may edad 65 pataas, mga katutubo na may edad 55 pataas, mga manggagawang pangkalusugan, mga residente at kawani ng long-term care facility, mga pasyenteng may malalang sakit na mataas ang panganib at mga buntis.\n\nMaaari itong ibigay kasabay ng bakuna sa trangkaso sa magkaibang bahagi ng katawan, o sa anumang pagitan ng panahon.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Vắc-xin COVID-19",
+      "summary": "Vắc-xin COVID-19 niên vụ 2026–2027 bắt đầu tiêm từ ngày 1/10 cùng với vắc-xin cúm: mọi người từ 6 tháng tuổi trở lên được tiêm 1 mũi do nhà nước chi trả; người từ 65 tuổi trở lên và người suy giảm miễn dịch có thể tiêm thêm 1 mũi sau 6 tháng.",
+      "bodyMarkdown": "Vắc-xin COVID-19 được cập nhật thành phần hằng năm theo sự biến đổi của vi-rút. Vắc-xin niên vụ 2026–2027 dựa trên chủng do WHO khuyến cáo, bắt đầu tiêm từ ngày **1/10**; mọi người từ 6 tháng tuổi trở lên đều có thể tiêm vắc-xin do nhà nước chi trả. Các đối tượng ưu tiên gồm người từ 65 tuổi trở lên, người bản địa từ 55 tuổi trở lên, nhân viên y tế, cư dân và nhân viên cơ sở chăm sóc dài hạn, người mắc bệnh mạn tính nguy cơ cao và phụ nữ mang thai.\n\nCó thể tiêm cùng lúc với vắc-xin cúm ở vị trí khác nhau, hoặc tiêm cách nhau bất kỳ khoảng thời gian nào.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Vaksin COVID-19",
+      "summary": "Vaksin COVID-19 tahun 2026–2027 mulai diberikan pada 1 Oktober bersamaan dengan vaksin flu: satu dosis yang dibiayai pemerintah untuk semua orang berusia 6 bulan ke atas; lansia 65 tahun ke atas dan orang dengan gangguan kekebalan dapat menerima satu dosis lagi setelah 6 bulan.",
+      "bodyMarkdown": "Vaksin COVID-19 diperbarui setiap tahun mengikuti perubahan virus. Vaksin 2026–2027 mengikuti strain yang direkomendasikan WHO dan tersedia mulai **1 Oktober** untuk semua orang berusia 6 bulan ke atas dengan vaksin yang dibiayai pemerintah. Kelompok prioritas meliputi lansia 65 tahun ke atas, penduduk asli 55 tahun ke atas, tenaga kesehatan, penghuni dan petugas fasilitas perawatan jangka panjang, penderita penyakit kronis berisiko tinggi, dan ibu hamil.\n\nVaksin ini dapat diberikan bersamaan dengan vaksin flu di bagian tubuh yang berbeda, atau dengan jarak waktu berapa pun.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "วัคซีนโควิด-19",
+      "summary": "วัคซีนโควิด-19 ประจำปี 2026–2027 เริ่มฉีดวันที่ 1 ตุลาคมพร้อมวัคซีนไข้หวัดใหญ่ ผู้ที่มีอายุ 6 เดือนขึ้นไปทุกคนได้รับ 1 เข็มโดยรัฐสนับสนุนค่าใช้จ่าย ผู้ที่มีอายุ 65 ปีขึ้นไปและผู้ที่ภูมิคุ้มกันบกพร่องฉีดเพิ่มได้อีก 1 เข็มเมื่อห่างกัน 6 เดือน",
+      "bodyMarkdown": "วัคซีนโควิด-19 มีการปรับสูตรทุกปีตามการเปลี่ยนแปลงของไวรัส วัคซีนประจำปี 2026–2027 ใช้สายพันธุ์ที่ WHO แนะนำ เริ่มฉีด **วันที่ 1 ตุลาคม** ผู้ที่มีอายุ 6 เดือนขึ้นไปทุกคนรับวัคซีนที่รัฐสนับสนุนค่าใช้จ่ายได้ กลุ่มที่ได้รับสิทธิ์ก่อน ได้แก่ ผู้สูงอายุ 65 ปีขึ้นไป ชนพื้นเมืองอายุ 55 ปีขึ้นไป บุคลากรทางการแพทย์ ผู้พักอาศัยและเจ้าหน้าที่ในสถานดูแลระยะยาว ผู้ป่วยโรคเรื้อรังกลุ่มเสี่ยงสูง และหญิงตั้งครรภ์\n\nฉีดพร้อมวัคซีนไข้หวัดใหญ่ได้โดยฉีดคนละตำแหน่ง หรือฉีดห่างกันเท่าใดก็ได้",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

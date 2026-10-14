@@ -99,5 +99,13 @@
       "machineReadable": false
     }
   ],
-  "note": "聯絡電話為疾管署總機，分機與報名信箱以正式簡章為準（本原型為示意，不放承辦人姓名）；薪資待遇為示意文字，實際依核定薪點折算。"
+  "note": "聯絡電話為疾管署總機，分機與報名信箱以正式簡章為準（本原型為示意，不放承辦人姓名）；薪資待遇為示意文字，實際依核定薪點折算。",
+  "i18n": {
+    "en": {
+      "title": "Center for Diagnostics and Vaccine Development: one contract laboratory technician wanted (respiratory virus testing)",
+      "summary": "The Center for Diagnostics and Vaccine Development is recruiting one contract laboratory technician responsible for respiratory virus nucleic acid testing and specimen management; apply online on this site by 12 October 2026.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

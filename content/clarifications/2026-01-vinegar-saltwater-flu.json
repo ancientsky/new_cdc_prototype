@@ -93,6 +93,18 @@
     "th": {
       "title": "การรมควันน้ำส้มสายชูหรือดื่มน้ำเกลือไม่สามารถฆ่าเชื้อไข้หวัดใหญ่ได้",
       "shareText": "CDC ไต้หวัน: การรมควันน้ำส้มสายชูและดื่มน้ำเกลือไม่สามารถฆ่าไวรัสไข้หวัดใหญ่ และควันน้ำส้มสายชูอาจระคายเคืองทางเดินหายใจ วิธีป้องกันที่ดีที่สุดคือฉีดวัคซีนไข้หวัดใหญ่ทุกปี ล้างมือบ่อย ๆ สวมหน้ากากเมื่อไอ และเปิดให้อากาศถ่ายเท สอบถามโทร 1922"
+    },
+    "ja": {
+      "title": "「白酢を焚く・塩水を飲むとインフルエンザウイルスを殺せる」は科学的根拠なし",
+      "shareText": "【台湾CDCによる訂正】白酢を焚いたり塩水を飲んだりしても、インフルエンザウイルスは死滅しません。酢を焚くと気道を刺激するおそれもあります。インフルエンザの予防に最も効果的なのは毎年のワクチン接種で、あわせてこまめな手洗い、咳が出るときのマスク、室内の換気を行ってください。ご質問は1922へ。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Walang siyentipikong batayan ang sabing \"napapatay ng pagpapausok ng puting suka o pag-inom ng tubig-alat ang virus ng trangkaso\"",
+      "shareText": "Taiwan CDC: hindi napapatay ng pagpapausok ng puting suka o pag-inom ng tubig-alat ang virus ng trangkaso, at ang usok ng suka ay maaaring makairita sa daanan ng hangin. Ang pinakaepektibong proteksyon ay ang taunang bakuna sa trangkaso, kasama ang madalas na paghuhugas ng kamay, pagsusuot ng mask kapag umuubo at maayos na bentilasyon sa loob ng bahay. Magtanong: tumawag sa 1922.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }
