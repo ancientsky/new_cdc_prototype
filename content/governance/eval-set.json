@@ -5501,6 +5501,504 @@
         ]
       },
       "note": "第四十九輪：漏打／補打／錯過／沒按時打 → 第一句出自補接種 FAQ，不被單一疫苗的 FAQ 或接種時程表搶走"
+    },
+    {
+      "id": "R49-21",
+      "category": "fact",
+      "q": "抗蛇毒血清可以自己去藥局買來放家裡嗎",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.antivenom-where",
+          "topic.antivenom",
+          "faq.antivenom-which-snake",
+          "faq.snakebite-first-aid"
+        ],
+        "mustNotCite": [
+          "faq.rabies-bite",
+          "disease.rabies"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-FAQ-antivenom-where-3（口語）修好後收進評估集，防止退步"
+    },
+    {
+      "id": "R49-22",
+      "category": "fact",
+      "q": "阿公確診新冠可以拿公費的藥嗎",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.covid-antiviral",
+          "disease.covid-19"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-FAQ-covid-antiviral-1（長輩）修好後收進評估集，防止退步"
+    },
+    {
+      "id": "R49-23",
+      "category": "fact",
+      "q": "確診可以吃倍拉維嗎",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.covid-antiviral",
+          "disease.covid-19"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-FAQ-covid-antiviral-2（俗稱）修好後收進評估集，防止退步"
+    },
+    {
+      "id": "R49-24",
+      "category": "fact",
+      "q": "懷疑登革熱要多快去看醫生",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.dengue-fever-when-to-see-doctor",
+          "disease.dengue",
+          "faq.dengue-imported-return",
+          "faq.travel-return-fever"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-FAQ-dengue-fever-when-to-see-doctor-1（口語）修好後收進評估集，防止退步"
+    },
+    {
+      "id": "R49-25",
+      "category": "fact",
+      "q": "班上一個小朋友腸病毒，會停課嗎",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.enterovirus-class-suspension",
+          "disease.enterovirus"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-FAQ-enterovirus-class-suspension-1（家長）修好後收進評估集，防止退步"
+    },
+    {
+      "id": "R49-26",
+      "category": "fact",
+      "q": "孩子腸病毒第五天精神很好，可以回學校嗎",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.enterovirus-return-school",
+          "faq.ev-stay-home",
+          "disease.enterovirus"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-FAQ-enterovirus-return-school-3（情境）修好後收進評估集，防止退步"
+    },
+    {
+      "id": "R49-27",
+      "category": "fact",
+      "q": "寶寶得手足口病，睡覺一直驚跳是怎樣",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.ev-severe-signs",
+          "disease.enterovirus"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-FAQ-ev-severe-signs-3（情境）修好後收進評估集，防止退步"
+    },
+    {
+      "id": "R49-28",
+      "category": "fact",
+      "q": "我阿嬤七十歲發燒咳嗽，沒做快篩可以拿克流感嗎",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.flu-antiviral-65-no-test",
+          "faq.influenza-antiviral-who",
+          "disease.influenza"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-FAQ-flu-antiviral-65-no-test-1（長輩）修好後收進評估集，防止退步"
+    },
+    {
+      "id": "R49-29",
+      "category": "fact",
+      "q": "老人家沒做流感快篩就不能開公費藥嗎",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.flu-antiviral-65-no-test",
+          "faq.influenza-antiviral-who",
+          "disease.influenza"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-FAQ-flu-antiviral-65-no-test-2（否定）修好後收進評估集，防止退步"
+    },
+    {
+      "id": "R49-30",
+      "category": "fact",
+      "q": "流感疫苗為什麼每年都要打",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.flu-vaccine-every-year",
+          "disease.influenza",
+          "vaccine.influenza"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-FAQ-flu-vaccine-every-year-2（口語）修好後收進評估集，防止退步"
+    },
+    {
+      "id": "R49-31",
+      "category": "fact",
+      "q": "我50歲上班族，可以打公費流感嗎",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.flu-vaccine-who",
+          "vaccine.influenza",
+          "disease.influenza",
+          "master.immunization-schedule"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-FAQ-flu-vaccine-who-2（情境）修好後收進評估集，防止退步"
+    },
+    {
+      "id": "R49-32",
+      "category": "fact",
+      "q": "昨天沒戴套，很擔心怎麼辦",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.hiv-pep",
+          "disease.hiv",
+          "topic.prep",
+          "topic.anonymous-testing",
+          "topic.sti-resources"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-FAQ-hiv-pep-1（口語）修好後收進評估集，防止退步"
+    },
+    {
+      "id": "R49-33",
+      "category": "fact",
+      "q": "我爸七十歲，以前打過23價，現在還要打嗎",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.pcv-elderly",
+          "vaccine.pneumococcal"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-FAQ-pcv-elderly-4（情境）修好後收進評估集，防止退步"
+    },
+    {
+      "id": "R49-34",
+      "category": "fact",
+      "q": "Tdap 孕婦 幾週",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.pregnant-tdap",
+          "disease.pertussis",
+          "faq.pregnancy-breastfeeding-vaccination"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-FAQ-pregnant-tdap-2（簡寫）修好後收進評估集，防止退步"
+    },
+    {
+      "id": "R49-35",
+      "category": "fact",
+      "q": "給狗仔咬到要打針嗎",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.rabies-bite",
+          "disease.rabies"
+        ],
+        "mustNotCite": [
+          "faq.snakebite-first-aid",
+          "faq.snakebite-dont",
+          "topic.antivenom"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-FAQ-rabies-bite-3（長輩）修好後收進評估集，防止退步"
+    },
+    {
+      "id": "R49-36",
+      "category": "fact",
+      "q": "蛇咬到要不要用繩子綁起來",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.snakebite-dont",
+          "faq.snakebite-first-aid",
+          "topic.antivenom"
+        ],
+        "mustNotCite": [
+          "faq.rabies-bite",
+          "disease.rabies"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-FAQ-snakebite-dont-2（長輩）修好後收進評估集，防止退步"
+    },
+    {
+      "id": "R49-37",
+      "category": "fact",
+      "q": "類流感就診率是在算什麼",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.stats-ili-rate"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-FAQ-stats-ili-rate-1（口語）修好後收進評估集，防止退步"
+    },
+    {
+      "id": "R49-38",
+      "category": "fact",
+      "q": "就診率高是不是代表很多人確診流感",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.stats-ili-rate"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-FAQ-stats-ili-rate-3（否定）修好後收進評估集，防止退步"
+    },
+    {
+      "id": "R49-39",
+      "category": "fact",
+      "q": "帶一歲小孩去東京玩要擔心麻疹嗎",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.travel-japan-measles",
+          "travel.JP",
+          "disease.measles",
+          "faq.measles-mmr-adult-who"
+        ],
+        "mustNotCite": [
+          "doc.mmr-recommendation.2019-05-14",
+          "news.2025-01-09-mmr-adults-measles"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-FAQ-travel-japan-measles-2（家長）修好後收進評估集，防止退步"
+    },
+    {
+      "id": "R49-40",
+      "category": "fact",
+      "q": "去巴西要黃皮書嗎",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.yellow-fever-certificate",
+          "service.international-vaccination-certificate"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-FAQ-yellow-fever-certificate-1（俗稱）修好後收進評估集，防止退步"
+    },
+    {
+      "id": "R49-41",
+      "category": "apply",
+      "q": "外國衛生官員想來疾管署受訓，怎麼報名",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "service.international-training-application",
+          "page.international-training",
+          "topic.international-cooperation"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-SVC-international-training-application-1（口語）修好後收進評估集，防止退步"
+    },
+    {
+      "id": "R49-42",
+      "category": "apply",
+      "q": "電視台要去疾管署拍攝怎麼申請",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "service.media-interview-request"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-SVC-media-interview-request-2（口語）修好後收進評估集，防止退步"
+    },
+    {
+      "id": "R49-43",
+      "category": "apply",
+      "q": "小孩的黃卡弄丟了",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "service.vaccination-record-reissue"
+        ],
+        "mustNotCite": [
+          "faq.influenza-vaccine-where"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-SVC-vaccination-record-reissue-1（家長）修好後收進評估集，防止退步"
+    },
+    {
+      "id": "R49-44",
+      "category": "apply",
+      "q": "想捐錢幫忙買疫苗",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "service.vaccine-fund-donation",
+          "topic.vaccine-fund-donation"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-SVC-vaccine-fund-donation-1（口語）修好後收進評估集，防止退步"
+    },
+    {
+      "id": "R49-45",
+      "category": "apply",
+      "q": "疫苗副作用的救濟金怎麼申請",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "service.vaccine-injury-compensation"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-SVC-vaccine-injury-compensation-2（口語）修好後收進評估集，防止退步"
+    },
+    {
+      "id": "R49-46",
+      "category": "fact",
+      "q": "眼睛變黃尿很黃，要去哪裡檢查",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "disease.hepatitis-a"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-DIS-hepatitis-a-care-3（情境）修好後收進評估集，防止退步"
+    },
+    {
+      "id": "R49-47",
+      "category": "fact",
+      "q": "得流感會怎樣",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "disease.influenza",
+          "faq.flu-vs-cold",
+          "faq.flu-danger-signs"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-DIS-influenza-symptoms-1（口語）修好後收進評估集，防止退步"
+    },
+    {
+      "id": "R49-48",
+      "category": "fact",
+      "q": "流感退燒幾天可以回去上班",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "disease.influenza",
+          "faq.influenza-antiviral-who",
+          "faq.flu-antiviral-65-no-test",
+          "faq.flu-danger-signs"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-DIS-influenza-care-3（情境）修好後收進評估集，防止退步"
+    },
+    {
+      "id": "R49-49",
+      "category": "fact",
+      "q": "麻疹長什麼樣子",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "disease.measles",
+          "faq.measles",
+          "faq.travel-japan-measles",
+          "faq.healthcare-workers-mmr"
+        ],
+        "mustNotCite": [
+          "disease.rubella"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-DIS-measles-symptoms-1（口語）修好後收進評估集，防止退步"
+    },
+    {
+      "id": "R49-50",
+      "category": "fact",
+      "q": "狂犬病發作是什麼樣子",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "disease.rabies"
+        ],
+        "mustNotCite": [
+          "faq.snakebite-first-aid",
+          "faq.snakebite-dont",
+          "topic.antivenom"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-DIS-rabies-symptoms-3（口語）修好後收進評估集，防止退步"
+    },
+    {
+      "id": "R49-51",
+      "category": "multilingual",
+      "lang": "tl",
+      "q": "Kailangan ba ng medical pagdating sa Taiwan bilang OFW?",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.tb-foreigner-health-check",
+          "media.migrant-worker-health-check",
+          "topic.new-residents-migrant-health",
+          "topic.visiting-taiwan"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-ML-migrant-health-check-tl-1（簡寫）修好後收進評估集，防止退步"
+    },
+    {
+      "id": "R49-52",
+      "category": "multilingual",
+      "lang": "vi",
+      "q": "Lao động sang Đài Loan phải khám sức khỏe khi nào?",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.tb-foreigner-health-check",
+          "media.migrant-worker-health-check",
+          "topic.new-residents-migrant-health",
+          "topic.visiting-taiwan"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：換句話說挑戰集 dev 題 CH-ML-migrant-health-check-vi-1（口語）修好後收進評估集，防止退步"
     }
   ]
 }

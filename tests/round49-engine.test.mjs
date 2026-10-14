@@ -189,3 +189,49 @@ test('補接種：漏打／補打／沒按時打第一句出自補接種 FAQ；�
   assert.equal(firstSource(dtap), 'faq.catch-up-vaccination');
   assert.ok(cites(dtap).includes('disease.pertussis'), cites(dtap).join());
 });
+
+// ───────── 第三部分：換句話說挑戰集 dev 題帶出來的通用規則（docs/ask-search-llm.md §14.6） ─────────
+test('意圖：上班族／回去上班／受訓報名不是職缺；「公費的藥」不是疫苗；問「是什麼／為什麼」不是要統計數字', async () => {
+  const { classifyIntent } = await import('../src/client/answer/rules.js');
+  for (const q of ['我50歲上班族，可以打公費流感嗎', '流感退燒幾天可以回去上班', '外國衛生官員想來疾管署受訓，怎麼報名'])
+    assert.notEqual(classifyIntent(q).intent, 'careers', q);
+  for (const q of ['防疫醫師報名到什麼時候？', '想去疾管署上班']) assert.equal(classifyIntent(q).intent, 'careers', q);
+  assert.notEqual(classifyIntent('阿公確診新冠可以拿公費的藥嗎').intent, 'vaccine');
+  assert.equal(classifyIntent('流感疫苗公費嗎').intent, 'vaccine');
+  for (const q of ['類流感就診率是在算什麼', '流感疫苗為什麼每年都要打']) assert.notEqual(classifyIntent(q).intent, 'stats', q);
+  for (const q of ['登革熱每年病例數', '類流感就診率是多少']) assert.equal(classifyIntent(q).intent, 'stats', q);
+});
+
+test('切題：FAQ 題目／服務標題與問句相符（長情境句、服務問句）不標低相關；只差在疾病名的不算', async () => {
+  const e = await engine();
+  const { isLowRelevance } = await import('../src/client/answer/rules.js');
+  for (const [q, id] of [
+    ['孩子腸病毒第五天精神很好，可以回學校嗎', 'faq.enterovirus-return-school'],
+    ['電視台要去疾管署拍攝怎麼申請', 'service.media-interview-request'],
+    ['疫苗副作用的救濟金怎麼申請', 'service.vaccine-injury-compensation'],
+  ]) {
+    const r = e.answer(q);
+    assert.equal(firstSource(r), id, q);
+    assert.equal(isLowRelevance(r), false, `${q}：relevance ${r.relevance}`);
+  }
+});
+
+test('民眾說法：疫苗簡稱（Tdap、23價）、描述（眼睛變黃、長什麼樣子、捐錢）、外語移工口語都答得出來', async () => {
+  const e = await engine();
+  const { isLowRelevance } = await import('../src/client/answer/rules.js');
+  for (const [q, prefix, lang = 'zh-TW'] of [
+    ['Tdap 孕婦 幾週', 'faq.pregnant-tdap'],
+    ['我爸七十歲，以前打過23價，現在還要打嗎', 'faq.pcv-elderly'],
+    ['眼睛變黃尿很黃，要去哪裡檢查', 'disease.hepatitis-a'],
+    ['想捐錢幫忙買疫苗', 'service.vaccine-fund-donation'],
+    ['小孩的黃卡弄丟了', 'service.vaccination-record-reissue'],
+    ['Lao động sang Đài Loan phải khám sức khỏe khi nào?', 'faq.tb-foreigner-health-check', 'vi'],
+  ]) {
+    const r = e.answer(q, { lang });
+    assert.equal(r.refused, false, q);
+    assert.ok(firstSource(r).startsWith(prefix), `${q}：${cites(r)}`);
+    assert.equal(isLowRelevance(r), false, `${q}：relevance ${r.relevance}`);
+  }
+  // 錨點帶頭時不拿字面撞到的片段湊句（黃卡 → 只答接種紀錄補發，不接腸病毒「抱小孩前洗手」）
+  assert.ok(cites(e.answer('小孩的黃卡弄丟了')).every((c) => c === 'service.vaccination-record-reissue'));
+});

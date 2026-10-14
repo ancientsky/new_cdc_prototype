@@ -26,7 +26,7 @@
 import { CROSS_LANG, PARAPHRASE, topicAnchorsOf, buildLexicon, latinStems, lc, matcherFor, ownerNameOf, tr, unwrap } from './lexicon.js';
 import { ANTIVIRAL_RE, CLOSED_MARK, NOTICE_TYPES, SCHEDULE_VACCINE_RE, VAXMAP_GROUP_OF, VAXMAP_GROUP_OF_DISEASE, WHICH_VACCINE_RE, ageHashOf, ageProfileOf, mmssOf, normTravel, normalizeNotifyTable, vaxmapHref } from './structured.js';
 import { EN_STOP, VI_STOP, bigrams, detectInjection, maskPII, maskPIIDetailed, parseTimeRange, rocDate, tokenize } from './text.js';
-import { ANIMAL_RE, BITE_RE, CAREERS_DETAIL_RE, HISTORICAL_WEIGHT, LAB_PUBLIC_RE, MEDIA_CUE, NEWS_CUE, OPEN_CUE, PROCUREMENT_CUE, PROCUREMENT_DETAIL_RE, PUB_CUE, QUERY_FACETS, QUERY_FUNC_RE, RECORD_RE, RECRUIT_CUE, REFUSAL_RULES, RELEVANCE, VAX_WHERE_RE, RESEARCH_CUE, TRAVEL_CHANGE_RE, classifyIntent, focusOf, isLowRelevance, refusalCopy, titleHits } from './rules.js';
+import { ANIMAL_RE, BITE_RE, CAREERS_DETAIL_RE, EXPLAIN_RE, HISTORICAL_WEIGHT, LAB_PUBLIC_RE, MEDIA_CUE, NEWS_CUE, OPEN_CUE, PROCUREMENT_CUE, PROCUREMENT_DETAIL_RE, PUB_CUE, QUERY_FACETS, QUERY_FUNC_RE, RECORD_RE, RECRUIT_CUE, REFUSAL_RULES, RELEVANCE, VAX_WHERE_RE, RESEARCH_CUE, TRAVEL_CHANGE_RE, classifyIntent, focusOf, isLowRelevance, refusalCopy, titleHits } from './rules.js';
 
 // 第四十輪（issue #77）：補接種問句（漏打、錯過、延遲、忘了打、補打）。命中就不給年齡時程表，改由檢索找補接種 FAQ
 // 第四十八輪（issue #94）：加「晚了兩個月才打」「延後接種」這類口語
@@ -140,9 +140,30 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
   const animalsIn = (t) => new Set((String(t).match(ANIMAL_RE) ?? []).map((a) => (a === '犬' ? '狗' : a)));
   /** 單元的題目／標題寫了泛稱「動物」，或點名了問句裡的動物 */
   const animalFits = (c, qa) => { const sub = subjectOf(c); return sub.includes('動物') || [...animalsIn(sub)].some((a) => qa.has(a)); };
+  /**
+   * 第四十九輪：題目相符——FAQ 題目／服務標題與問句共有的詞（bigram；扣掉疾病名與功能詞）至少 2 個，或 1 個但佔題目的 1/4、問句的 1/2 以上。
+   * 功能詞只拿掉多字的（怎麼、可以…）與「兩個字都是功能字」的 bigram：單字功能字（請、與）也出現在「申請」「參與」這類實詞裡，不能整個刪
+   */
+  const FUNC_CHARS = QUERY_FUNC_RE.source.match(/\[([^\]]+)\]/)[1];
+  const MULTI_FUNC_RE = new RegExp(QUERY_FUNC_RE.source.replace(`|[${FUNC_CHARS}]`, ''), 'g');
+  const formToks = (s, drop) => new Set(tokenize(String(s ?? '').replace(MULTI_FUNC_RE, ' '), { query: true }).filter((t) => t.length >= 2 && [...t].some((ch) => !FUNC_CHARS.includes(ch)) && !drop.some((n) => n.includes(t))));
+  function formMatch(q, title, dIds) {
+    const drop = dIds.filter(Boolean).flatMap((id) => { const d = diseaseById.get(id); return d ? [d.name, ...(d.aliases ?? [])].map(lc) : []; });
+    const want = formToks(title, drop); const have = formToks(q, drop);
+    const n = [...want].filter((t) => have.has(t)).length;
+    return n >= 2 || (n >= 1 && n * 4 >= want.size && n * 2 >= have.size);
+  }
   // 第四十九輪：問句提到的疫苗（字面：「MMR漏打」「五合一晚打」——實體比對要求拉丁名稱前後不接文字，中英相連的 MMR 抓不到）
-  const vaccineStems = vaccines.map((v) => [v.id, [v.name, String(v.name ?? '').replace(/\s*疫苗$/, ''), v.slug && v.slug.length <= 5 ? v.slug : null].filter((n) => n && String(n).length >= 2).map(lc)]);
-  const vaccinesNamedIn = (t) => { const h = lc(t); return new Set(vaccineStems.filter(([, ns]) => ns.some((n) => h.includes(n))).map(([id]) => id)); };
+  // 簡稱＝名稱去掉「疫苗」（五合一、Tdap）與短代號（MMR）。比對問句時都認，但去掉後剩下疾病名的（水痘）不算——那是在講病；
+  // 比對片段內文時（strict）只認全名、別名與含英數字的簡稱（Tdap、MMR）：片段寫「帶狀疱疹」多半在講病，不是在講帶狀疱疹疫苗
+  const namesDisease = (n) => entityMatchers.some((m) => m.kind === 'disease' && String(n).match(m.re));
+  const norm = (ns) => ns.filter(Boolean).map((n) => lc(n).replace(/\s+/g, '')).filter((n) => n.length >= (/^[a-z0-9]+$/.test(n) ? 3 : 2));
+  const vaccineStems = new Map(vaccines.map((v) => {
+    const short = String(v.name ?? '').replace(/\s*疫苗$/, '');
+    const full = [v.name, v.title, ...(v.aliases ?? []), v.slug && v.slug.length <= 5 ? v.slug : null, /[a-z0-9]/i.test(short) ? short : null];
+    return [v.id, { strict: norm(full), loose: norm([...full, namesDisease(short) ? null : short]) }];
+  }));
+  const vaccinesNamedIn = (t, strict = false) => { const h = lc(t).replace(/\s+/g, ''); return new Set([...vaccineStems].filter(([, s]) => s[strict ? 'strict' : 'loose'].some((n) => h.includes(n))).map(([id]) => id)); };
   const QUESTION_CUES = [
     // 咬傷：問句要點名動物（狗、鼬獾…）或說「動物」才算（被蚊子咬不是這類問題），單元也要講得到這種動物
     { re: BITE_RE, fits: (c, x) => (x.animals.size > 0 || x.text.includes('動物')) && animalFits(c, x.animals) },
@@ -1227,11 +1248,12 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
       const kept = chunks.filter((c) => !animalsIn(subjectOf(c)).size || animalFits(c, qAnimals));
       if (kept.length < chunks.length) { result.guards.push({ kind: 'other-animal-dropped', animals: [...qAnimals], dropped: chunks.length - kept.length }); kept.qWeights = chunks.qWeights; kept.model = chunks.model; chunks = kept; }
     }
-    // 第四十九輪：問句型態錨點帶頭（咬傷、補接種）⇒ 只留同一件事的片段：錨點單元本身、與它同疾病，或問句自己點名的疾病／疫苗。
+    // 第四十九輪：問句型態錨點（咬傷、補接種）或主題錨點（黃卡 → 接種紀錄補發）帶頭 ⇒ 只留同一件事的片段：錨點單元本身、與它同疾病，或問句自己點名的疾病／疫苗。
     // 其他片段只是字面撞到（「怎麼處理」→ 媒體採訪申請「處理天數」、「補打」→ 日本麻疹澄清），不拿來湊句
-    if (chunks[0]?._cue) {
-      const keepDis = new Set([...chunks.filter((c) => c._cue).flatMap((c) => c.diseases ?? []), ...entities.diseases.map((d) => d.id)]);
-      const kept = chunks.filter((c) => c._cue || (c.diseases ?? []).some((d) => keepDis.has(d)) || (c.vaccines ?? []).some((v) => cueCtx.vaccines.has(v)));
+    if (chunks[0]?._cue || anchorIds.has(chunks[0]?.contentId)) {
+      const lead = (c) => c._cue || anchorIds.has(c.contentId);
+      const keepDis = new Set([...chunks.filter(lead).flatMap((c) => c.diseases ?? []), ...entities.diseases.map((d) => d.id)]);
+      const kept = chunks.filter((c) => lead(c) || (c.diseases ?? []).some((d) => keepDis.has(d)) || (c.vaccines ?? []).some((v) => cueCtx.vaccines.has(v)));
       if (kept.length < chunks.length) { result.guards.push({ kind: 'cue-focus', dropped: chunks.length - kept.length }); kept.qWeights = chunks.qWeights; kept.model = chunks.model; chunks = kept; }
     }
     // 第四十八輪（issue #94／#101）：前 3 塊有主題錨點命中的內容（被鼬獾咬、晚了兩個月才打 → 漏打、外語「被狗咬」→ 動物咬傷）＝主題已確認，
@@ -1281,7 +1303,8 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
       const V = vaccines.find((x) => x.id === ev.id); if (!V) continue;
       const sib = vaccines.filter((x) => x.id !== V.id && (x.diseases ?? []).some((d) => (V.diseases ?? []).includes(d)));
       if (!sib.length) continue;
-      const says = (c, v) => (c.vaccines ?? []).includes(v.id) || [v.name, v.title, ...(v.aliases ?? [])].some((n) => n && hayOf(c).replace(/\s+/g, '').includes(lc(n).replace(/\s+/g, '')));
+      // 第四十九輪：名稱也認簡稱（「Tdap」不寫「Tdap 疫苗」、「五合一」不寫「五合一疫苗」）
+      const says = (c, v) => (c.vaccines ?? []).includes(v.id) || vaccinesNamedIn(hayOf(c), true).has(v.id);
       const kept = chunks.filter((c) => says(c, V) || !sib.some((x) => says(c, x)));
       if (!kept.some((c) => says(c, V))) {
         const row = scheduleItems.find((i) => i.vaccine === V.id);
@@ -1309,7 +1332,7 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
     // 第二十五輪：相關度閘門。態勢／旅遊有結構化資料可答時不套用（它們不靠檢索片段）
     // 第四十輪：外語問句改用中文片段回答時，問句原文的詞在中文語料裡本來就找不到；相關度改用「對應出來的中文詞」計算。
     // 對應不出任何中文詞 ＝ 引擎根本不知道在問什麼主題 ⇒ 查無，不拿碰巧撞到的片段回答。
-    const relQ = result.translationNote === 'showing-source' ? crossZh : q;
+    const relQ = result.translationNote === 'showing-source' ? crossZh : PARAPHRASE.reduce((x, [re, zh, sub]) => (sub ? x.replace(re, ` ${zh} `) : x), q);
     const structuredOk = (result.intent === 'situation' && situationFor(entities, result.intent)) || (result.intent === 'travel' && (entities.countries.length || TRAVEL_CHANGE_RE.test(q)));
     if (result.translationNote === 'showing-source' && !crossZh.trim() && !structuredOk) {
       result.relevance = 0; result.guards.push({ kind: 'no-match', reason: 'no-cross-terms' });
@@ -1345,8 +1368,9 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
       const qw = chunks.qWeights; const model = chunks.model;
       const topToks = new Set(tokenize(`${chunks[0].title} ${chunks[0].text}`));
       let cov = 0, tot = 0; for (const [t, w] of qw) { if (!model.has(t)) continue; const idf = model.idf(t) * w; tot += idf; if (topToks.has(t)) cov += idf; }
-      // 第四十九輪：第一塊是問句型態錨點（問法相同、點名的動物也對得上）＝題目層級已對題，覆蓋率以 1 計（它寫「動物」不寫「路邊的狗」）
-      if (chunks[0]._cue) cov = tot;
+      // 第四十九輪：第一塊是問句型態錨點（問法相同、點名的動物也對得上）或主題錨點命中的單元（黃卡 → 接種紀錄補發）＝題目層級已對題，
+      // 覆蓋率以 1 計（它寫「動物」不寫「路邊的狗」、寫「接種紀錄」不寫「弄丟了」）
+      if (chunks[0]._cue || anchorIds.has(chunks[0].contentId)) cov = tot;
       const ent = result.disease ? ((chunks[0].diseases ?? []).includes(result.disease) ? 1 : 0) : 0.5;
       result.confidence = Math.round(Math.min(1, 0.6 * (cov / (tot || 1)) + 0.25 * ent + 0.15 * Math.min(1, chunks[0]._score / 12)) * 100) / 100;
     }
@@ -1357,7 +1381,8 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
     if (result.intent === 'apply' || result.intent === 'notify') picked = applyCompose(q, chunks, picked, view, sourceMap, result);
     if (result.intent === 'notice') { picked = route('notice').noticeCompose(q, chunks, picked); if (picked.length) result.confidence = Math.max(result.confidence, 0.6); }
     // 問「去哪裡打疫苗」時不插態勢句（高峰期的英文問句曾整段答成疫情狀態 peak）；真的組不出句子才用態勢句
-    if (sit && (result.intent === 'situation' || (!picked.length && sit.items.length) || (result.peak && picked.length < 3 && !result.whereAsk))) {
+    // 第四十九輪：問「是指什麼／為什麼」要的是解釋，高峰期也不把態勢句插在前面（「新聞說流感併發重症又增加，那是指什麼」）
+    if (sit && (result.intent === 'situation' || (!picked.length && sit.items.length) || (result.peak && picked.length < 3 && !result.whereAsk && !EXPLAIN_RE.test(q)))) {
       const ss = situationSentences(sit, lang);
       for (const [id, s] of ss.sources) sourceMap.set(id, s);
       picked = [...ss.sentences.slice(0, Math.max(2, 4 - picked.length)), ...picked].slice(0, view === 'pro' ? 5 : 4);
@@ -1413,8 +1438,13 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
     // 沒綁疾病的通用 FAQ（例：補接種）對任何疾病都算同主題——「五合一晚了兩個月才打」第一句就出自補接種 FAQ，不該因為 FAQ 沒列疾病而被標低相關
     const c0 = picked[0]?.chunk;
     const d1 = result.disease ?? chunks[0]?.diseases?.[0];
-    if (isLowRelevance(result) && c0 && (c0.type === 'faq' ? !d1 || !c0.diseases?.length || c0.diseases.includes(d1) : (c0.diseases ?? []).includes(d1))
-      && QUERY_FACETS.some((re) => re.test(q) && re.test(`${c0.question ?? c0.title} ${picked[0].text}`))) { result.topicMatch = c0.type === 'faq' ? 'faq' : 'disease'; result.guards.push({ kind: 'topic-match', id: c0.id }); }
+    // 第四十九輪：服務頁比照 FAQ；另一種切題是「題目相符」（formMatch）：FAQ 題目／服務標題扣掉疾病名以後的詞，問句講到兩個以上（或四分之一以上）。
+    // 長的情境句（「孩子腸病毒第五天精神很好，可以回學校嗎」）多出來的情境詞會拉低涵蓋率，但它問的正是那則 FAQ 的題目（回學校）
+    const generic = c0 && /^(faq|service)$/.test(c0.type);
+    if (isLowRelevance(result) && c0 && (generic ? !d1 || !c0.diseases?.length || c0.diseases.includes(d1) : (c0.diseases ?? []).includes(d1))
+      && (QUERY_FACETS.some((re) => re.test(q) && re.test(`${c0.question ?? c0.title} ${picked[0].text}`)) || (generic && (anchorIds.has(c0.contentId) || formMatch(q, c0.question ?? c0.title, [...(c0.diseases ?? []), d1]))))) {
+      result.topicMatch = generic ? c0.type : 'disease'; result.guards.push({ kind: 'topic-match', id: c0.id });
+    }
     result.completeness = completenessOf(result.intent, result.sentences, { situation: !!sit, q });
     result.actions = actionsFor(result, entities, sit);
     // 民眾問「要驗什麼」：導向疾病頁「診斷與治療」區塊（檢驗細節屬專業內容）
