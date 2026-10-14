@@ -213,7 +213,8 @@ test('來源卡：待確認內容顯示「內容待權責單位確認」標籤',
   // render.js 需要瀏覽器 DOM（同 pdf-ingest.test.mjs 的做法）：檢查來源卡有讀 verification 欄位與字串
   const render = fs.readFileSync('src/client/answer/render.js', 'utf8');
   assert.match(render, /if \(src\.verification === 'pending'\) add\(L\('verification'\), `<span class="c-tag c-tag--warn">/);
-  assert.match(render, /verificationPending: '依公開資料整理，內容待權責單位確認'/);
+  // 第四十八輪：字串表搬到 src/client/i18n.ask.js（key 為 ask.ui.*）
+  assert.match(fs.readFileSync('src/client/i18n.ask.js', 'utf8'), /"ask\.ui\.verificationPending": \["依公開資料整理，內容待權責單位確認"/);
   const r = engine.answer('被蛇咬怎麼辦');
   assert.equal(r.sources[0].verification, 'pending');
 });

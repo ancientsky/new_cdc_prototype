@@ -5,98 +5,42 @@ import { esc, url, LANG, barChart } from './data.js';
 import { pdfHref } from './text.js';
 import { isLowRelevance } from './rules.js';
 
-// ───────── UI 字串（zh-TW／en 齊備；vi、ja、tl、id、th 只有民眾最常看到的幾個，其他 fallback en） ─────────
-// 第四十輪（issue #70／#84）：補 ja、tl、id、th 的拒答卡與「未產生答案」字串；vi、ja、tl、id、th 的新增字串為機器初稿，待多語審核。
-const S = {
-  'zh-TW': {
-    answerH: '回答', answerSub: '僅引用官方內容，每句可點開原文', aiBadge: 'AI 整理', next: '接下來可以', sourcesH: '答案來源', relatedH: '你可能也想知道',
-    moreH: '其他相關結果', listH: '搜尋結果', disclosure: '本回答由 AI 依官方內容整理，不提供個人診斷；有症狀請洽醫師或撥 1922。',
-    modelExtractive: '模型：抽取式整理，未使用生成模型', modelLlm: '模型：{p} · {m}（BYOK，由你的瀏覽器直接呼叫）', report: '回報錯誤', helpful: '有幫助', auditId: '稽核編號',
-    reportH: '回報這則回答', reportKind: '問題類型', reportKinds: ['內容錯誤', '已過時', '不完整', '引用來源不對', '其他'], reportText: '說明（請勿填寫個資）', send: '送出', reportDone: '已收到，承辦單位會依稽核編號查核。',
-    owner: '權責單位', reviewed: '最後審閱', current: '現行版', currentYes: '是（現行有效）', currentNo: '否（已被取代）', license: '授權', openOriginal: '開啟原文', machine: '機讀版', version: '版次', effective: '生效日', supersedes: '取代',
-    cite: '引用本頁', cited: '已複製引用', subscribe: '訂閱異動', subscribed: '已訂閱', nextReview: '下次審閱', section: '條次／段落', pdfPage: '頁碼（PDF 印刷頁碼）', extraction: '文字來源', extractionMachine: '由 PDF 機器轉出，尚未人工校對；請以 PDF 原頁為準', extractionReviewed: '由 PDF 轉出，權責單位已校對', verification: '內容確認', verificationPending: '依公開資料整理，內容待權責單位確認', extractionReconstructed: '尚未取得 PDF 正本：依公開摘錄與站內內容重建的示範版，未經權責單位查證；請以疾管署 PDF 正本為準', openPdf: '開啟 PDF', change: '本段異動', before: '修訂前', after: '修訂後',
-    sitH: '現在的疫情', dataDate: '資料日', publisher: '發布', illustrative: '示意資料', statusBasis: '判定依據', seeTrend: '看完整趨勢',
-    refusalH: '這個問題我不能替你判斷', why: '為什麼', call1922: '撥打 1922', relatedPages: '相關官方頁面',
-    noAnswerBadge: '未產生答案', noAnswer: '這次沒有產生回答：上面是固定的說明文字與官方頁面連結，不是 AI 整理的內容。',
-    lowRelevance: '與你的問題相關程度較低', lowRelevanceSub: '以下是站內最接近的官方內容，不一定能直接回答你的問題；請點開原文確認，或撥打 1922。', relatedListH: '相關頁面',
-    fullSearch: '用全文搜尋找「{q}」', fullSearchNote: '全文搜尋會列出所有含這個關鍵字的頁面，可依類型、單位、年份篩選。',
-    paused: 'AI 問答暫停中，目前提供傳統搜尋結果與 1922 人工諮詢。', pausedReason: '原因', updated: '更新',
-    proLabel: '專業模式：引用手冊條次與生效日，不做白話化', translationSource: '此語言沒有經審核的譯文，以下為中文原文。', translationMachine: '以下為機器翻譯（鎖定官方譯名），以中文原文為準。',
-    conflictH: '站內兩處說法不同', conflictText: '「{a}」（{ad}）寫 {av} {u}，「{b}」（{bd}）寫 {bv} {u}。已通知權責單位確認；確認前請以排在前面的「{a}」為準，有疑問請撥 1922。', historicalSrc: '歷史新聞稿 · {d} 發布',
-    termNote: '「{from}」已改稱「{to}」，以下依現行名稱回答。', lowConf: '這個問題的意圖不夠明確，以下同時列出相關頁面。',
-    verdict: { false: '錯誤', 'partly-true': '部分正確', outdated: '已過時', true: '正確', unknown: '查無澄清' }, verdictH: '查證結果', clarH: '官方澄清', shareH: '可轉傳的官方短訊', copy: '複製', copied: '已複製', reportChannel: '通報管道',
-    outdatedNote: '已過時：所依據的「{t}」已於 {d} 修訂，請以現行版為準。', noPredict: '只呈現已發布的資料：不推論、不預測。', numberSource: '數字的來源', canonical: '正本', dataOwner: '資料權責', formats: '格式', api: 'API',
-    statsH: '統計結果', total: '合計', max: '最高', min: '最低', avg: '平均', loading: '整理中…', llmWorking: '正在用 LLM 依同一批官方片段重新整理…', llmFallback: 'LLM 模式未能產生通過檢核的回答，已改顯示抽取式結果。', llmError: 'LLM 呼叫失敗：{m}。已改顯示抽取式結果。',
-    llmDropped: '已刪除 {n} 句無法對應官方片段的句子。', empty: '請輸入問題。', side: { disease: '疾病百科', news: '最新新聞稿', data: '相關資料集', channels: '同一答案，三個管道', full: '完整頁面', symptoms: '症狀', transmission: '傳染途徑', incubation: '潛伏期', prevention: '預防', treatment: '治療', notify: '通報時限' },
-    channels: ['網站：本頁的答案與來源', 'API：v1/search-index.json 同一份答案單元', '1922：話務人員使用相同的官方內容'],
-    confidence: '信心', guards: '輸出檢查',
-    media: { video: '影片', animation: '動畫', podcast: 'Podcast', short: '短影音' }, watchAt: '從 {t} 開始看', transcriptNote: '引用自官方影片逐字稿', basedOnLabel: '製作依據', producedAt: '製作日',
-    steps: '步驟', stepsN: '{n} 個步驟', slaDays: '處理天數', days: '{n} 天', fee: '費用', applyPage: '前往申請頁', forms: '表單',
-    specimen: '檢體', container: '容器', volume: '量', timing: '採檢時機', storage: '保存', transport: '運送', tests: '可做檢驗', turnaround: '週轉', sendWithin: '送驗時限', labs: '檢驗單位', hours: '{n} 小時',
-    masterBasis: '依傳染病防治法公告', masterNote: '主檔結構化欄位，非檢索摘錄', scheduleBasis: '疫苗接種時程表（主檔）', scheduleNote: '由時程表欄位組句，非檢索摘錄；標「（待確認）」的項目尚待承辦人核對', notifyH: '通報時限', notifyCategory: '法定傳染病類別', notifyWithin: '應於', notifyReport: '通報專區', caseDef: '病例定義', labtestLink: '檢驗項目', diseasePage: '疾病頁',
-    closed: '已截止', deadline: '截止日', notices: '全部公告', proOnlyNote: '專業內容',
-  },
-  en: {
-    answerH: 'Answer', answerSub: 'Quotes official content only — tap a number to see the source', aiBadge: 'AI summary', next: 'What you can do next', sourcesH: 'Sources', relatedH: 'You may also want to know',
-    moreH: 'Other related results', listH: 'Search results', disclosure: 'This answer was assembled by AI from official content. It is not a personal diagnosis; if you have symptoms, see a doctor or call 1922.',
-    modelExtractive: 'Model: extractive (no generative model used)', modelLlm: 'Model: {p} · {m} (BYOK, called directly from your browser)', report: 'Report an error', helpful: 'Helpful', auditId: 'Audit ID',
-    reportH: 'Report this answer', reportKind: 'Type', reportKinds: ['Incorrect', 'Outdated', 'Incomplete', 'Wrong source', 'Other'], reportText: 'Details (no personal data please)', send: 'Send', reportDone: 'Received. The responsible unit will review it using the audit ID.',
-    owner: 'Responsible unit', reviewed: 'Last reviewed', current: 'Current version', currentYes: 'Yes', currentNo: 'No (superseded)', license: 'Licence', openOriginal: 'Open original', machine: 'Machine-readable', version: 'Version', effective: 'Effective', supersedes: 'Supersedes',
-    cite: 'Cite this page', cited: 'Citation copied', subscribe: 'Subscribe to changes', subscribed: 'Subscribed', nextReview: 'Next review', section: 'Section', pdfPage: 'PDF page', extraction: 'Text source', extractionMachine: 'Machine-extracted from the PDF, not yet proofread; the PDF page prevails', extractionReviewed: 'Extracted from the PDF and proofread by the responsible unit', verification: 'Confirmation', verificationPending: 'Compiled from public sources; pending confirmation by the responsible unit', extractionReconstructed: 'No original PDF yet: demonstration version rebuilt from public excerpts and site content, not verified by the responsible unit; the official PDF prevails', openPdf: 'Open PDF', change: 'Change in this section', before: 'Before', after: 'After',
-    sitH: 'Current situation', dataDate: 'Data as of', publisher: 'Published by', illustrative: 'Illustrative data', statusBasis: 'Basis', seeTrend: 'See full trend',
-    refusalH: "I can't make this judgement for you", why: 'Why', call1922: 'Call 1922', relatedPages: 'Related official pages',
-    noAnswerBadge: 'No answer generated', noAnswer: 'No answer was produced for this question. The note and links above are standard text, not AI-generated content.',
-    lowRelevance: 'Only loosely related to your question', lowRelevanceSub: 'These are the closest official passages on this site and may not answer your question directly. Please open the source, or call 1922.', relatedListH: 'Related pages',
-    fullSearch: 'Search all pages for “{q}”', fullSearchNote: 'Full-text search lists every page that contains the keyword; you can filter by type, unit and year.',
-    paused: 'AI answers are paused. Keyword search results and the 1922 hotline are available.', pausedReason: 'Reason', updated: 'Updated',
-    proLabel: 'Professional mode: cites manual sections and effective dates verbatim', translationSource: 'No reviewed translation is available; showing the Chinese original.', translationMachine: 'Machine translation (official terms locked). The Chinese original prevails.',
-    conflictH: 'Two pages on this site disagree', conflictText: '“{a}” ({ad}) says {av} {u}; “{b}” ({bd}) says {bv} {u}. The responsible unit has been asked to confirm. Until then, follow “{a}”, or call 1922.', historicalSrc: 'Archived press release · published {d}',
-    termNote: '"{from}" is now called "{to}".', lowConf: 'Your question is ambiguous, so related pages are listed as well.',
-    verdict: { false: 'False', 'partly-true': 'Partly true', outdated: 'Outdated', true: 'True', unknown: 'No clarification found' }, verdictH: 'Fact-check result', clarH: 'Official clarification', shareH: 'Shareable official message', copy: 'Copy', copied: 'Copied', reportChannel: 'Report to',
-    outdatedNote: 'Outdated: "{t}" was revised on {d}. Please follow the current version.', noPredict: 'Published data only — no inference, no forecasts.', numberSource: 'Where this number comes from', canonical: 'Canonical source', dataOwner: 'Data owner', formats: 'Formats', api: 'API',
-    statsH: 'Statistics', total: 'Total', max: 'Highest', min: 'Lowest', avg: 'Average', loading: 'Preparing…', llmWorking: 'Re-assembling with the LLM from the same official passages…', llmFallback: 'The LLM answer did not pass the grounding check; showing the extractive answer.', llmError: 'LLM call failed: {m}. Showing the extractive answer.',
-    llmDropped: '{n} sentence(s) without matching official passages were removed.', empty: 'Please enter a question.', side: { disease: 'Disease facts', news: 'Latest press releases', data: 'Related datasets', channels: 'One answer, three channels', full: 'Full page', symptoms: 'Symptoms', transmission: 'Transmission', incubation: 'Incubation', prevention: 'Prevention', treatment: 'Treatment', notify: 'Notification' },
-    channels: ['Web: this page with sources', 'API: the same answer units in v1/search-index.json', '1922: hotline staff use the same official content'],
-    confidence: 'Confidence', guards: 'Output checks',
-    media: { video: 'Video', animation: 'Animation', podcast: 'Podcast', short: 'Short video' }, watchAt: 'Watch from {t}', transcriptNote: 'Quoted from official video transcripts', basedOnLabel: 'Based on', producedAt: 'Produced',
-    steps: 'Steps', stepsN: '{n} steps', slaDays: 'Processing time', days: '{n} days', fee: 'Fee', applyPage: 'Go to application page', forms: 'Forms',
-    specimen: 'Specimen', container: 'Container', volume: 'Volume', timing: 'Timing', storage: 'Storage', transport: 'Transport', tests: 'Tests', turnaround: 'Turnaround', sendWithin: 'Send within', labs: 'Laboratories', hours: '{n} hours',
-    masterBasis: 'Communicable Disease Control Act announcement', masterNote: 'Structured master data, not a retrieved excerpt', scheduleBasis: 'Immunization schedule (master data)', scheduleNote: 'Composed from schedule fields, not a retrieved excerpt; items marked “pending verification” await staff review', notifyH: 'Notification deadline', notifyCategory: 'Notifiable disease category', notifyWithin: 'Report within', notifyReport: 'Reporting', caseDef: 'Case definition', labtestLink: 'Lab tests', diseasePage: 'Disease page',
-    closed: 'Closed', deadline: 'Deadline', notices: 'All notices', proOnlyNote: 'Professional content',
-  },
-  vi: {
-    answerH: 'Câu trả lời', answerSub: 'Chỉ trích dẫn nội dung chính thức', aiBadge: 'AI tổng hợp', next: 'Bạn có thể', sourcesH: 'Nguồn', relatedH: 'Có thể bạn muốn biết',
-    disclosure: 'Câu trả lời do AI tổng hợp từ nội dung chính thức, không phải chẩn đoán cá nhân; nếu có triệu chứng hãy đi khám hoặc gọi 1922 (có thông dịch).',
-    report: 'Báo lỗi', helpful: 'Hữu ích', refusalH: 'Tôi không thể đánh giá thay bạn', call1922: 'Gọi 1922', translationSource: 'Chưa có bản dịch đã duyệt; hiển thị bản tiếng Trung gốc.', sitH: 'Tình hình dịch hiện nay',
-    verdict: { false: 'Sai', 'partly-true': 'Đúng một phần', outdated: 'Đã lỗi thời', true: 'Đúng', unknown: 'Chưa có thông tin' },
-    why: 'Vì sao', relatedPages: 'Trang chính thức liên quan', relatedListH: 'Trang liên quan', auditId: 'Mã kiểm tra',
-    noAnswerBadge: 'Không tạo câu trả lời', noAnswer: 'Không có câu trả lời nào được tạo cho câu hỏi này. Phần giải thích và liên kết ở trên là nội dung cố định, không phải do AI tổng hợp.',
-  },
-  ja: {
-    refusalH: 'この質問にはお答えできません', why: '理由', call1922: '1922 に電話', relatedPages: '関連する公式ページ', relatedListH: '関連ページ', auditId: '監査番号', report: '誤りを報告', helpful: '役に立った',
-    noAnswerBadge: '回答なし', noAnswer: 'この質問には回答を作成していません。上の説明とリンクは定型文で、AI が作成した内容ではありません。',
-  },
-  tl: {
-    refusalH: 'Hindi ko ito mahuhusgahan para sa iyo', why: 'Bakit', call1922: 'Tumawag sa 1922', relatedPages: 'Mga kaugnay na opisyal na pahina', relatedListH: 'Mga kaugnay na pahina', auditId: 'Audit ID', report: 'I-report ang mali', helpful: 'Nakatulong',
-    noAnswerBadge: 'Walang nabuong sagot', noAnswer: 'Walang sagot na nabuo para sa tanong na ito. Ang paliwanag at mga link sa itaas ay karaniwang teksto, hindi gawa ng AI.',
-  },
-  id: {
-    refusalH: 'Saya tidak dapat menilai ini untuk Anda', why: 'Alasan', call1922: 'Hubungi 1922', relatedPages: 'Halaman resmi terkait', relatedListH: 'Halaman terkait', auditId: 'ID audit', report: 'Laporkan kesalahan', helpful: 'Membantu',
-    noAnswerBadge: 'Tidak ada jawaban', noAnswer: 'Tidak ada jawaban yang dibuat untuk pertanyaan ini. Penjelasan dan tautan di atas adalah teks standar, bukan hasil AI.',
-  },
-  th: {
-    refusalH: 'ไม่สามารถวินิจฉัยแทนคุณได้', why: 'เหตุผล', call1922: 'โทร 1922', relatedPages: 'หน้าทางการที่เกี่ยวข้อง', relatedListH: 'หน้าที่เกี่ยวข้อง', auditId: 'รหัสตรวจสอบ', report: 'แจ้งข้อผิดพลาด', helpful: 'มีประโยชน์',
-    noAnswerBadge: 'ไม่ได้สร้างคำตอบ', noAnswer: 'ไม่ได้สร้างคำตอบสำหรับคำถามนี้ คำอธิบายและลิงก์ด้านบนเป็นข้อความมาตรฐาน ไม่ได้สร้างโดย AI',
-  },
+// ───────── UI 字串（第四十八輪，#100：七語齊備，且依語言拆檔） ─────────
+// 字串表在 src/client/i18n.ask.js（key 以 ans. 開頭），由 scripts/lib/i18n-split.mjs 依語言拆進 dist/assets/js/i18n.<lang>.js：
+// 答案頁只下載當頁語言那一份，不再把七種語言全打包進 render.js（原本補齊 th／id／tl／ja 後會超出 240 KB 的引擎頁預算）。
+// 瀏覽器：window.CDC.I18N 就是當頁語言（已套用 語言→英文→中文 的 fallback）。Node（測試、評估）：動態載入完整 i18n.js；
+// 瀏覽器永遠不會執行這一行（下面的 globalThis.process 判斷），預算掃描也只追靜態 import，所以不計入上線大小。
+const NODE_STRINGS = globalThis.process?.versions?.node ? (await import('../i18n.js')).STRINGS : null;
+const ARRAY_KEYS = new Set(['reportKinds', 'channels']); // 以「|」串接存放的清單
+const stringFor = (lang, key) => {
+  const tab = globalThis.window?.CDC?.I18N;
+  if (tab?.lang === lang) return tab.S[`ask.ui.${key}`];
+  const S = NODE_STRINGS;
+  return S ? (S[lang]?.[`ask.ui.${key}`] ?? S.en?.[`ask.ui.${key}`] ?? S['zh-TW']?.[`ask.ui.${key}`]) : undefined;
 };
 /** 介面字串；lang 預設為頁面語言（第四十輪：可指定語言，測試七語字串用） */
 export function L(key, vars = {}, lang = LANG) {
-  const pick = (lg) => key.split('.').reduce((o, k) => (o == null ? o : o[k]), S[lg]);
-  let v = pick(lang);
-  if (v == null) v = pick(lang === 'zh-TW' ? 'zh-TW' : 'en');
-  if (v == null) v = pick('zh-TW');
-  if (typeof v === 'string') return v.replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? '');
-  return v ?? key;
+  let v = stringFor(lang, key);
+  if (v == null && lang !== 'zh-TW') v = stringFor('zh-TW', key);
+  if (v == null) return key;
+  if (ARRAY_KEYS.has(key)) return v.split('|');
+  return v.replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? '');
+}
+
+// 權責單位名稱依頁面語言顯示（第四十八輪，#100）：索引分片裡的 ownerName 一律是中文，/en/ask/ 的來源卡因此出現「檢疫組」。
+// 單位主檔（content/master/units.json → v1/units.json）有 nameEn；引擎載入後由 ui.js／factcheck.js／stats.js 呼叫 setUnits(deps.units)。
+// 非中文頁一律用英文名（站內其他頁的 unitName() 也是這個規則），主檔查不到才退回中文，不顯示空白。
+let UNIT_BY_ID = new Map();
+let UNIT_BY_NAME = new Map();
+export function setUnits(units) {
+  UNIT_BY_ID = new Map((units ?? []).map((u) => [u.id, u]));
+  UNIT_BY_NAME = new Map((units ?? []).map((u) => [u.name, u]));
+}
+export function ownerLabel(src) {
+  const zh = src?.ownerName ?? src?.owner ?? '';
+  if (LANG === 'zh-TW') return zh;
+  const u = UNIT_BY_ID.get(src?.owner) ?? UNIT_BY_NAME.get(src?.ownerName);
+  return u?.nameEn ?? zh;
 }
 
 const STATUS = { stable: { 'zh-TW': '平穩', en: 'Stable' }, rising: { 'zh-TW': '上升', en: 'Rising' }, peak: { 'zh-TW': '高峰', en: 'Peak' }, declining: { 'zh-TW': '下降', en: 'Declining' } };
@@ -105,7 +49,7 @@ const isExternal = (h) => /^https?:/.test(h ?? '');
 
 export function link(href, text, cls = '') {
   const ext = isExternal(href);
-  return `<a class="${cls}" href="${esc(url(href))}"${ext ? ' rel="noopener" target="_blank"' : ''}>${esc(text)}${ext ? '<span class="sr-only">（另開視窗）</span>' : ''}</a>`;
+  return `<a class="${cls}" href="${esc(url(href))}"${ext ? ' rel="noopener" target="_blank"' : ''}>${esc(text)}${ext ? `<span class="sr-only">${esc(L('newWindow'))}</span>` : ''}</a>`;
 }
 
 const LICENSE_LABEL = { 'OGDL-1.0': '政府資料開放授權條款第 1 版', 'CC0-1.0': 'CC0 1.0', 'CC-BY-4.0': 'CC BY 4.0' };
@@ -123,7 +67,7 @@ export function sourceCardBody(src, { pro = false } = {}) {
   // 第十四輪：疫苗接種時程表（主檔）來源卡
   if (src.type === 'schedule') add(L('scheduleBasis'), esc(L('scheduleNote')));
   rows.push(...typeRows(src).map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${v}</dd></div>`));
-  add(L('owner'), esc(src.ownerName ?? src.owner));
+  add(L('owner'), esc(ownerLabel(src)));
   add(L('reviewed'), src.reviewedAt ? `<time datetime="${esc(src.reviewedAt)}">${esc(src.reviewedAt)}</time>` : '');
   if (src.verification === 'pending') add(L('verification'), `<span class="c-tag c-tag--warn">${esc(L('verificationPending'))}</span>`);
   add(L('current'), src.isCurrent === false ? `<span class="c-tag c-tag--warn">${esc(L('currentNo'))}</span>` : esc(L('currentYes')));
@@ -181,12 +125,12 @@ export function typeRows(src) {
 /** 來源卡摘要列（summary 第二行）：依型別顯示「影片 · 章節 · mm:ss」「主檔 · 依法公告」等 */
 export function sourceMeta(s) {
   if (s.type === 'media') return `${L(`media.${s.mediaType ?? 'video'}`)}${s.chapter?.label ? ` · ${s.chapter.label}` : ''} · ${s.timeLabel ?? mmss(s.t)}${s.producedAt ? ` · ${L('producedAt')} ${s.producedAt}` : ''}`;
-  if (s.type === 'schedule') return `${s.ownerName ?? ''} · ${L('scheduleBasis')}`;
+  if (s.type === 'schedule') return `${ownerLabel(s)} · ${L('scheduleBasis')}`;
   if (s.type === 'master') return `${s.subject ?? ''}${s.legalCategory ? ` · ${catLabel(s.legalCategory)}` : ''}${s.hoursLabel ? ` · ${s.hoursLabel}` : ''}`;
-  if (s.type === 'service') return `${s.ownerName ?? ''}${s.stepsCount ? ` · ${L('stepsN', { n: s.stepsCount })}` : ''}${s.slaDays != null ? ` · ${L('slaDays')} ${L('days', { n: s.slaDays })}` : ''}`;
-  if (s.type === 'labtest') return `${s.ownerName ?? ''}${s.specimen?.name ? ` · ${s.specimen.name}` : ''}${s.sendWithinHours != null ? ` · ${L('sendWithin')} ${L('hours', { n: s.sendWithinHours })}` : ''}`;
-  if (s.historical) return `${s.ownerName ?? ''} · ${L('historicalSrc', { d: s.publishedAt ?? s.reviewedAt ?? '' })}`;
-  return `${s.ownerName ?? ''} · ${L('reviewed')} ${s.reviewedAt ?? ''}${s.version ? ` · ${s.version}` : ''}${s.closed ? ` · ${L('closed')}` : ''}`;
+  if (s.type === 'service') return `${ownerLabel(s)}${s.stepsCount ? ` · ${L('stepsN', { n: s.stepsCount })}` : ''}${s.slaDays != null ? ` · ${L('slaDays')} ${L('days', { n: s.slaDays })}` : ''}`;
+  if (s.type === 'labtest') return `${ownerLabel(s)}${s.specimen?.name ? ` · ${s.specimen.name}` : ''}${s.sendWithinHours != null ? ` · ${L('sendWithin')} ${L('hours', { n: s.sendWithinHours })}` : ''}`;
+  if (s.historical) return `${ownerLabel(s)} · ${L('historicalSrc', { d: s.publishedAt ?? s.reviewedAt ?? '' })}`;
+  return `${ownerLabel(s)} · ${L('reviewed')} ${s.reviewedAt ?? ''}${s.version ? ` · ${s.version}` : ''}${s.closed ? ` · ${L('closed')}` : ''}`;
 }
 
 /** 通報時限結構化卡（類別 pill、時限大字、連結）：r.notify 存在時取代一般句子列表的上方 */
@@ -294,19 +238,35 @@ export function refusalCard(result) {
 // 第四十輪（#83）：疫情卡的標題是 h2。這一段在答案區塊之前、緊接 sr-only 的 h1，用 h3 會 h1→h3 跳級（axe heading-order）；
 // 它本身是帶 aria-label 的獨立區塊，與下方「回答」同層，所以是 h2。
 /** 態勢卡（只讀結構化欄位） */
+// 疫情態勢卡的自由文字（metricLabel／deltaText／basis）是疫情中心填的整句，外語版可能只翻了一部分
+// （例：tl 有 metricLabel 沒有 deltaText，卡片就變成「Bagong lokal na kaso ngayong linggo，集中於南部縣市」）。
+// 第四十八輪（#100）規則：整張卡只用同一種語言——當頁語言的三個欄位都齊（有中文原文的欄位都有非中文譯文）就用當頁語言，
+// 否則整張卡改用英文版（en 缺的欄位就不顯示，basis 用通用說明），絕不把中文整句塞進外語頁，也不一句兩種語言混著。
+const HAN = /[㐀-鿿]/;
+const SIT_FIELDS = ['metricLabel', 'deltaText', 'basis'];
+function sitI18n(it) {
+  if (LANG === 'zh-TW') return null;
+  const complete = (t) => t && SIT_FIELDS.every((f) => !it[f] || (t[f] && !HAN.test(t[f])));
+  const own = it.i18n?.[LANG];
+  if (complete(own)) return own;
+  const en = it.i18n?.en;
+  return en ? Object.fromEntries(Object.entries(en).filter(([, v]) => !HAN.test(String(v)))) : {};
+}
+const sitNumber = (it) => (HAN.test(it.metricValue ?? '') ? String(it.metricNumeric ?? '') : (it.metricValue ?? ''));
+const sitGenericBasis = () => globalThis.window?.CDC?.t?.('status.basis.generic') ?? '';
 export async function situationCards(sit) {
   if (!sit?.items?.length) return '';
   const cards = await Promise.all(sit.items.map(async (it) => {
     const labels = it.weeklyLabels ?? it.weekly?.map((_, i) => `W${i + 1}`);
     const chart = it.weekly?.length ? await barChart(it.weekly, { labels, unit: it.metricValue?.includes('%') ? '%' : '', title: it.metricLabel, width: 300, height: 110, color: `var(--status-${it.status}, currentColor)` }) : '';
-    const i18n = LANG !== 'zh-TW' ? it.i18n?.[LANG] : null;
+    const i18n = sitI18n(it);
     return `<article class="c-sit-card c-sit-card--${esc(it.status)} c-answer-sit">
       <header><h2>${(() => { const nm = LANG !== 'zh-TW' ? (it.diseaseNameEn ?? it.diseaseName) : it.diseaseName; return it.slug ? link(`/diseases/${it.slug}/`, nm) : esc(nm); })()}</h2>
         <span class="c-status-tag c-status-tag--${esc(it.status)}">${esc(statusLabel(it.status))}</span>${it.illustrative ? ` <span class="c-tag">${esc(L('illustrative'))}</span>` : ''}</header>
-      <p class="c-sit-card__metric"><span aria-hidden="true">${it.trend === 'up' ? '↑' : it.trend === 'down' ? '↓' : '→'}</span> <b>${esc(i18n?.metricValue ?? it.metricValue)}</b> <span class="muted">${esc(i18n?.metricLabel ?? it.metricLabel)}${it.deltaText ? `，${esc(i18n?.deltaText ?? it.deltaText)}` : ''}</span></p>
+      <p class="c-sit-card__metric"><span aria-hidden="true">${it.trend === 'up' ? '↑' : it.trend === 'down' ? '↓' : '→'}</span> <b>${esc(i18n ? (i18n.metricValue ?? sitNumber(it)) : it.metricValue)}</b> <span class="muted">${esc(i18n ? i18n.metricLabel ?? '' : it.metricLabel)}${(i18n ? i18n.deltaText : it.deltaText) ? `，${esc(i18n ? i18n.deltaText : it.deltaText)}` : ''}</span></p>
       ${it.peakCount != null ? `<p class="c-sit-card__sub"><b>${esc(it.peakCount)}</b> ${esc(it.peakCountLabel ?? '')}</p>` : ''}
       ${chart ? `<div class="c-sit-card__chart">${chart}</div>` : ''}
-      ${it.basis ? `<p class="c-sit-card__basis"><b>${esc(L('statusBasis'))}：</b>${esc(i18n?.basis ?? it.basis)}</p>` : ''}
+      ${it.basis ? `<p class="c-sit-card__basis"><b>${esc(L('statusBasis'))}：</b>${esc(i18n ? (i18n.basis ?? sitGenericBasis()) : it.basis)}</p>` : ''}
       <p class="c-provenance">${esc(L('dataDate'))} <time datetime="${esc(sit.dataDate)}">${esc(sit.dataDate)}</time> · ${LANG === 'zh-TW' ? `${esc(sit.publisherName ?? sit.publisher)} ${esc(L('publisher'))}` : `${esc(L('publisher'))} ${esc(sit.publisherNameEn ?? sit.publisherName ?? sit.publisher)}`} ·${link('/situation/', L('seeTrend'))}</p>
     </article>`;
   }));
@@ -335,7 +295,7 @@ export function numberSource(src) {
   return `<details class="c-number-source c-source-card" open><summary>${esc(L('numberSource'))}</summary><dl class="c-deflist c-deflist--sm">
     <div><dt>${esc(L('canonical'))}</dt><dd>${link(src.url, src.title)}</dd></div>
     <div><dt>${esc(L('dataDate'))}</dt><dd>${esc(src.dataDate ?? src.reviewedAt ?? '')}</dd></div>
-    <div><dt>${esc(L('dataOwner'))}</dt><dd>${esc(src.ownerName ?? src.owner ?? '')}</dd></div>
+    <div><dt>${esc(L('dataOwner'))}</dt><dd>${esc(ownerLabel(src))}</dd></div>
     <div><dt>${esc(L('license'))}</dt><dd>${esc(LICENSE_LABEL[src.license] ?? src.license ?? '')}</dd></div>
     <div><dt>${esc(L('formats'))}</dt><dd>${esc(formats || 'CSV / JSON')} · ${link(src.url, 'CSV')} · ${link(src.url, 'JSON')} · ${link(src.apiUrl ?? '/v1/datasets.json', 'API')}</dd></div>
     ${src.provenance?.mode ? `<div><dt>provenance</dt><dd>${esc(src.provenance.mode)} · ${esc(src.provenance.fetchedAt ?? '')}</dd></div>` : ''}

@@ -555,3 +555,7 @@ export function staffEditFab(doc = document) {
   return a;
 }
 try { staffEditFab(); } catch { /* 任何情況都不能影響公開頁 */ }
+
+/* ───────── 倒數（剩 N 天）：以瀏覽器現在的台灣日期重算（Issue #97，見 countdown.js） ───────── */
+// 只有真的有倒數標記的頁面才下載 countdown.js（動態 import，不計入沒有倒數的頁面，包含答案引擎頁的 JS 預算）
+if (CDC.t && document.querySelector('[data-deadline]')) import('./countdown.js').then((m) => m.applyCountdowns(document, T)).catch(() => { /* 失敗時保留建置時的後備文字 */ });

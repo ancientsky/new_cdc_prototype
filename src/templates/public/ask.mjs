@@ -5,7 +5,7 @@ import { breadcrumbLd } from './_partials.mjs';
 import { askLogSetting } from '../../../scripts/lib/forms.mjs';
 
 export function meta(ctx) {
-  return { title: ctx.t('ask.title'), description: ctx.t('ask.desc'), noindex: true, bodyClass: 'page-ask', styles: ['/assets/styles/answer.css'], scripts: ['/assets/js/answer/ui.js'], jsonLd: [breadcrumbLd(ctx, [{ label: ctx.t('ask.title') }])], hideTranslationBar: false };
+  return { title: ctx.t('ask.title'), description: ctx.t('ask.desc'), noindex: true, bodyClass: 'page-ask', styles: ['/assets/styles/answer.css'], scripts: [`/assets/js/i18n.ask.${ctx.lang}.js`, '/assets/js/answer/ui.js'], jsonLd: [breadcrumbLd(ctx, [{ label: ctx.t('ask.title') }])], hideTranslationBar: false };
 }
 
 export function render(ctx) {

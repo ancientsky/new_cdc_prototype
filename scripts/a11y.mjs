@@ -19,14 +19,16 @@ const BASE = (process.env.BASE_PATH ?? process.env.A11Y_BASE_PATH ?? '').replace
 
 /** 代表頁：每種樣板一頁；dist 內不存在的路徑會被略過並列警告 */
 export const PAGES = [
-  '/', '/diseases/dengue/', '/diseases/', '/vaccines/', '/travel/', '/news/', '/faq/', '/ask/', '/situation/', '/data/', '/pro/',
+  '/', '/diseases/dengue/', '/diseases/', '/vaccines/', '/travel/', '/news/', '/faq/', '/ask/', '/procurement/', '/careers/', '/situation/', '/data/', '/pro/',
   '/ask/?q=%E7%99%BB%E9%9D%A9%E7%86%B1', // 第四十輪（#83）：答案卡渲染後的畫面（標題層級只有載入答案後才看得到，空的 /ask/ 掃不到）
   '/subscribe/', '/en/subscribe/', '/topics/antivenom/', '/admin/', '/admin/publish/', '/admin/review/', '/en/', '/vi/', // 第三十輪：複核區（線上審核區塊要有閘道才顯示，另在 tests/round30-gateway.test.mjs 的端到端跑 axe）
   '/documents/curriculum-dengue.2026-10-10/', // 第二十八輪：核心教材（長文件版面＋學習目標＋示範匯入警示）
   // 第二十八輪：全文搜尋——空狀態與「已有查詢結果」兩種畫面都要掃（結果清單是動態產生的）
   '/search/', '/search/?q=%E7%99%BB%E9%9D%A9%E7%86%B1&type=faq,news',
 ];
-export const VIEWPORTS = [{ name: '桌機 1280', width: 1280, height: 900 }, { name: '手機 320', width: 320, height: 700 }];
+// 第四十八輪（#98）：新增「文字 200%／390」——390 px 寬、根字級放大到 200%（WCAG 1.4.4 放大文字＋1.4.10 Reflow 的實際合併情境）；
+// 這個模式與 320 px 一樣要檢查橫向捲動，並列為阻擋項。
+export const VIEWPORTS = [{ name: '桌機 1280', width: 1280, height: 900 }, { name: '手機 320', width: 320, height: 700 }, { name: '文字 200%／390', width: 390, height: 700, fontScale: 200 }];
 const TAGS = ['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa', 'best-practice'];
 const BLOCKING = new Set(['serious', 'critical']);
 
@@ -84,6 +86,7 @@ async function main() {
         const page = await ctx.newPage();
         try {
           await page.goto(`${origin}${p}`, { waitUntil: 'networkidle' });
+          if (vp.fontScale) await page.evaluate((pct) => { document.documentElement.style.fontSize = `${pct}%`; }, vp.fontScale);
           if (p.includes('/ask/?q=')) await page.waitForSelector('#answer[aria-busy="false"]', { timeout: 15000 }); // 答案由前端引擎渲染，等到有內容才掃（逾時 ⇒ 失敗，比掃到空畫面誠實）
           if (p.includes('/search/?q=')) await page.waitForSelector('#search-results li', { timeout: 15000 }); // 全文搜尋：等 Pagefind 載入並畫出結果才掃（逾時 ⇒ 例外 ⇒ 整個檢測失敗，比掃到空畫面誠實）
           await page.waitForTimeout(300);
@@ -92,7 +95,7 @@ async function main() {
           for (const v of res.violations) {
             findings.push({ page: p, vp: vp.name, rule: v.id, impact: v.impact, help: v.help, helpUrl: v.helpUrl, nodes: v.nodes.map((n) => ({ target: n.target.join(' '), html: short(n.html) })) });
           }
-          if (vp.width <= 320) {
+          if (vp.width <= 390) {
             const w = await page.evaluate(/* eslint-disable-line no-undef -- 在瀏覽器裡執行 */() => ({ s: document.documentElement.scrollWidth, c: document.documentElement.clientWidth }));
             if (w.s > w.c) overflow.push({ page: p, vp: vp.name, scrollWidth: w.s, clientWidth: w.c });
           }
@@ -108,7 +111,7 @@ async function main() {
   md.push('## 無障礙檢測（axe-core）', '');
   md.push(`- 掃描：${runs} 次（${PAGES.length - skipped.length} 頁 × ${VIEWPORTS.map((v) => v.name).join('、')}）；規則集：${TAGS.join(', ')}`);
   if (skipped.length) md.push(`- 略過（dist 內沒有）：${skipped.join('、')}`);
-  md.push(`- 結果：**${blocking.length + overflow.length} 項阻擋**（serious／critical${overflow.length ? '＋320px 橫向捲動' : ''}）、${warn.length} 項警告（moderate／minor）`);
+  md.push(`- 結果：**${blocking.length + overflow.length} 項阻擋**（serious／critical${overflow.length ? '＋橫向捲動' : ''}）、${warn.length} 項警告（moderate／minor）`);
   // 警告依規則別統計（同一規則在不同頁、不同視窗各算一筆，與下方表格列數一致）
   const warningRules = {};
   for (const f of warn) warningRules[f.rule] = (warningRules[f.rule] ?? 0) + 1;
@@ -122,8 +125,8 @@ async function main() {
   };
   table(blocking, '阻擋（serious／critical）');
   if (overflow.length) {
-    md.push('### 阻擋：320px 橫向捲動（WCAG 1.4.10）', '', '| 頁面 | scrollWidth | clientWidth |', '|---|---|---|');
-    for (const o of overflow) md.push(`| \`${o.page}\` | ${o.scrollWidth} | ${o.clientWidth} |`);
+    md.push('### 阻擋：橫向捲動（320 px／文字 200%＋390 px；WCAG 1.4.10）', '', '| 頁面 | 視窗 | scrollWidth | clientWidth |', '|---|---|---|---|');
+    for (const o of overflow) md.push(`| \`${o.page}\` | ${o.vp} | ${o.scrollWidth} | ${o.clientWidth} |`);
     md.push('');
   }
   table(warn, '警告（moderate／minor，不擋合併）');

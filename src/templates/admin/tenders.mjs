@@ -33,7 +33,7 @@ ${pageHead({
 
 <section class="adm-card" aria-labelledby="p-h"><h2 id="p-h">標案與階段</h2>
   <p class="adm-card__sub">前台：<a href="${url('/procurement/')}">/procurement/</a>。正式投標一律在政府電子採購網，本站只彙整公告與決標資訊。</p>
-  <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><caption>共 ${rows.length} 件標案（建置日 ${site.today}）</caption>
+  <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><caption>共 ${rows.length} 件標案（倒數天數以建置日 ${site.today} 計）</caption>
     <thead><tr><th scope="col">標案</th><th scope="col">階段</th><th scope="col">採購方式</th><th scope="col" class="num">預算（元）</th><th scope="col">投標截止</th><th scope="col">開標</th><th scope="col">決標</th><th scope="col">採購網</th></tr></thead>
     <tbody>${rows.map((r) => html`<tr data-id="${r.id}" data-stage="${r.stage}">
       <td><a href="${url(r.front)}">${r.title}</a><div class="adm-muted"><code>${r.id}</code> · ${r.tenderNo} · ${r.requestingName} · <a href="${url('/admin/tenders/edit/', { noLang: true })}?id=${r.id}">異動</a></div></td>

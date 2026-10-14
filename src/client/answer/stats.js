@@ -2,7 +2,7 @@
 // 開放資料與統計頁（/data/）的統計問答：掛 #stats-form／#stats-q／#stats-result。
 // 數字只來自資料目錄中的結構化時序（datasets[].series），附數字的來源卡；不推論、不預測。
 import { loadEngine, esc, LANG } from './data.js';
-import { L, statsBlock, refusalCard, disclosureRow, wireInteractions, ensureStyles } from './render.js';
+import { L, setUnits, statsBlock, refusalCard, disclosureRow, wireInteractions, ensureStyles } from './render.js';
 
 ensureStyles();
 const form = /** @type {HTMLFormElement | null} */ (document.getElementById('stats-form'));
@@ -29,7 +29,8 @@ async function ask(q) {
   if (!q) { out.innerHTML = ''; return; }
   out.setAttribute('aria-busy', 'true');
   out.innerHTML = '<div class="c-skeleton" aria-hidden="true"><span></span><span class="short"></span></div>';
-  const { engine } = await loadEngine('public');
+  const { engine, deps } = await loadEngine('public');
+  setUnits(deps.units);
   const r = engine.answer(q, { lang: LANG, forceIntent: 'stats' });
   current = r;
   const parts = [];

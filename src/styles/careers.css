@@ -12,6 +12,8 @@
 .c-joblist{list-style:none;margin:0 0 var(--sp-4);padding:0;display:grid;gap:var(--sp-3)}
 .c-job{display:flex;gap:var(--sp-4);justify-content:space-between;align-items:flex-start;flex-wrap:wrap;border:1px solid var(--line);border-radius:var(--radius);background:#fff;padding:var(--sp-4)}
 .c-job[hidden]{display:none}
+.c-joblist>li{min-width:0}
+.c-job{min-width:0;max-width:100%}
 .c-job__main{flex:1 1 360px;min-width:0}
 .c-job__meta{display:flex;flex-wrap:wrap;gap:var(--sp-2);margin:0 0 var(--sp-2)}
 .c-job__t{font-size:var(--fs-lg);margin:0 0 var(--sp-2)}
@@ -20,7 +22,11 @@
 .c-job__facts dt{color:var(--ink-3)}
 .c-job__facts dt::after{content:"："}
 .c-job__facts dd{margin:0}
-.c-job__side{display:flex;flex-direction:column;align-items:flex-end;gap:var(--sp-2);flex:0 0 auto;text-align:right}
+.c-job__side{display:flex;flex-direction:column;align-items:flex-end;gap:var(--sp-2);flex:0 1 auto;min-width:0;max-width:100%;text-align:right}
+/* 第四十八輪（#98）：窄螢幕或放大文字時，側欄的日期、連結、按鈕可以換行，不再把卡片撐出視窗 */
+.c-job__side>*{max-width:100%;overflow-wrap:anywhere}
+.c-job__side .c-deadline{white-space:normal}
+.c-job__side .c-btn{white-space:normal;text-align:center}
 .c-job__date{font-size:var(--fs-sm)}
 .c-deadline--info{background:var(--info-bg);color:var(--info)}
 .c-tabs__hint{margin:0 0 var(--sp-3)}
@@ -66,6 +72,7 @@ html:not(.js) .c-jobfilters{display:none}
 
 /* ───── 模擬報名 ───── */
 .c-demo-banner{display:flex;gap:var(--sp-3);align-items:flex-start;background:#1d2540;color:#fff;border-left:8px solid #e8a400;border-radius:var(--radius);padding:var(--sp-3) var(--sp-4);margin:0 0 var(--sp-4)}
+.c-demo-banner>div:not(.c-demo-banner__ic){min-width:0;overflow-wrap:anywhere}
 .c-demo-banner__ic{flex:none;width:26px;height:26px;border-radius:50%;background:#e8a400;color:#1d2540;font-weight:900;display:flex;align-items:center;justify-content:center}
 .c-demo-banner--strong{background:var(--alert-overdue-bg);color:var(--alert-overdue);border:2px solid #d9a400;border-left-width:8px}
 .c-apply__steps{list-style:none;margin:0 0 var(--sp-3);padding:0;display:flex;gap:var(--sp-2);flex-wrap:wrap}
@@ -111,6 +118,7 @@ html:not(.js) .c-jobfilters{display:none}
   .c-job__side{align-items:flex-start;text-align:left;flex-direction:row;flex-wrap:wrap}
 }
 @media (max-width:640px){
+  .c-job__side{flex:1 1 100%;align-items:flex-start;text-align:left}
   .c-entrycards{grid-template-columns:1fr}
   .c-job{padding:var(--sp-3)}
   .c-apply__clear{margin-left:0}
