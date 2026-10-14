@@ -5,6 +5,8 @@ import { createHash } from 'node:crypto';
 import { config, siteOrigin } from '../../site.config.mjs';
 import { pathOf, mdPathOf, WHITELIST_REASON_LABELS, LIFECYCLE_LABELS, TODO_KIND_LABELS, NOTICE_TYPES, legacyPathOf, isLegacyPattern, JOB_STAGE_LABELS, TENDER_STAGE_LABELS, JOB_TAB_LABELS, TENDER_TAB_LABELS } from './governance.mjs';
 import { buildOpenApi } from './openapi.mjs';
+import { PRO_DELTA_BASE } from '../../src/client/answer/index-delta.js';
+import { buildProDeltaShards } from './index-builder.mjs';
 import { citationOf, citationEnOf, doiPath, doiUrl, categoryLabel, authorNotes } from '../../src/client/bulletin-rules.js';
 import { assetSummary, assetUrl } from './assets.mjs';
 import { scheduleCsv } from '../../src/client/vaxschedule.js';
@@ -509,10 +511,19 @@ export function emitApi(fullSite, write) {
   };
   const shards = shardsOf('search-index', si.public);
   const shardsPro = shardsOf('search-index-pro', si.pro);
+  // 第四十九輪（Issue #103）：專業版差異分片＝專業版多出來的片段＋插回原位置的資訊。專業版頁面下載「民眾版分片＋差異分片」（與民眾版共用 HTTP 快取），
+  // 前端在記憶體合回與完整 -pro 分片逐位元相同的陣列（建置時已驗證）。完整的 -pro 檔照舊輸出，外部 API 使用者與舊快取不受影響。
+  const shardsProDelta = {};
+  for (const [code, delta] of Object.entries(buildProDeltaShards(si, config.langs.map((l) => l.code)))) {
+    const file = `v1/${PRO_DELTA_BASE}.${code}.json`;
+    write(file, wrap(site, delta, { lang: code, deltaOf: `/v1/search-index.${code}.json`, shardOf: '/v1/search-index-pro.json', count: delta.chunks.length }, {}, { indent: 0 }));
+    manifest.push({ path: `/${file}`, url: absUrl(`/${file}`), description: `專業版索引的 ${code} 差異分片（專業版 = 民眾版分片 + 本檔；格式見 src/client/answer/index-delta.js）`, count: delta.chunks.length });
+    shardsProDelta[code] = absUrl(`/${file}`);
+  }
   put('v1/search-index.json', si.public, { lastModified: lastModifiedOf(si.public) ?? site.today, shards }, {}, '答案單元索引（民眾，只含白名單；meta.shards 是依語言的分片）');
   put('v1/search-index-pro.json', si.pro, { lastModified: lastModifiedOf(si.pro) ?? site.today, shards: shardsPro }, {}, '答案單元索引（專業，只含現行版；meta.shards 是依語言的分片）');
   put('v1/search.json', {
-    endpoint: absUrl('/v1/search-index.json'), proEndpoint: absUrl('/v1/search-index-pro.json'), shards, proShards: shardsPro,
+    endpoint: absUrl('/v1/search-index.json'), proEndpoint: absUrl('/v1/search-index-pro.json'), shards, proShards: shardsPro, proDeltaShards: shardsProDelta,
     description: '靜態站沒有伺服器端搜尋：/v1/search 即答案單元索引（search-index.json）。下載後於用戶端以 bigram＋詞彙主檔同義詞＋BM25 檢索；只含 AI 白名單內容，失效版本不在索引中。',
     chunks: si.public.length, chunksPro: si.pro.length,
     chunkFields: ['id', 'contentId', 'type', 'lang', 'title', 'text', 'sentences', 'url', 'owner', 'ownerName', 'reviewedAt', 'nextReviewAt', 'audience', 'tasks', 'diseases', 'vaccines', 'countries', 'version', 'effectiveAt', 'isCurrent', 'whitelist', 'terms'],

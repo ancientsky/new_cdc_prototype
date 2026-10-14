@@ -184,6 +184,8 @@ export const ENDPOINTS = [
   // 第四十輪：依語言分片（內容同上，只含該語言的片段；精簡 JSON）。答案頁只下載當頁語言＋中文兩片
   ['/v1/search-index.{lang}.json', 'search', '答案單元索引的語言分片（民眾；lang＝zh-TW／en／ja／tl／vi／id／th；meta.shardOf 指回完整檔）', arr(ref('Chunk'))],
   ['/v1/search-index-pro.{lang}.json', 'search', '答案單元索引的語言分片（專業）', arr(ref('Chunk'))],
+  // 第四十九輪：專業版差異分片。專業版 = 民眾版分片 + 本檔；data 不是陣列而是 { v, base, omit, at, chunks }，一般 API 使用者請用上面的完整檔
+  ['/v1/search-index-pro-delta.{lang}.json', 'search', '專業版答案單元索引的差異分片（專業版 = 同語言民眾版分片 + 本檔；data＝{ v, base{count,first,last}, omit[], at[], chunks[] }：chunks 是專業版多出的片段、at 是它們在合併後陣列的位置、omit 是民眾版有而專業版沒有的片段 id）。答案頁專業版用它省去重複下載；要完整索引請用 search-index-pro.{lang}.json', free],
   ['/v1/tasks/{task}.json', 'content', '六任務入口聚合（依內容 tasks 欄位）', ref('TaskBundle')],
   ['/v1/redirects.json', 'meta', '舊版／舊網址 → 正本對照（301；kind：superseded／family-latest／legacy／migration；pattern 項只進文件）', arr(ref('Redirect'))],
   ['/v1/legacy-map.json', 'meta', '舊網址精簡對照（404 頁與 /legacy/ 查詢用）；patterns＝{id} 佔位的 URL 模式（不可自動轉址）、gone＝不移轉（建議 410）、ambiguous＝同一舊網址對到多個新頁（不輸出）', ref('LegacyMap'),
