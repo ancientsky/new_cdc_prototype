@@ -7,6 +7,9 @@
 //     從送審件開啟（?gw=）時閘道給的碼、這頁上次存好時閘道回的碼；都沒有就不送（閘道照舊接受）。
 //   - 開啟時就說：這筆內容已有進行中的送審件（誰、什麼狀態、從那一件繼續）；網站上的版本比這頁顯示的新。
 //   - 存檔被擋（409 stale）：說明誰、何時、改了什麼；「載入最新版（保留我的修改）」與「下載我這一版」，不丟掉同事的修改。
+//   - 疫情報導（§23.5、§24.7）：exportExtra 可以多給 categories（分類主檔 { items, start }）；重新開啟送審件時，閘道送回的配套內容與分類主檔
+//     交給 loadItem／reloadLatest（meta.companions、meta.categories），頁面據以帶回表單；分類衝突（kind: categories）交給 reloadCategories。
+//     頁面換了要改的內容（例：疫情報導的「選文章」）⇒ 發 adm:gw-target 事件，這裡重新檢查（進行中的送審件、網站版本）。
 import { $, $$, store, downloadText } from './common.js';
 import { detectGateway, el, clear, fmtTime, errorText, STATUS_TONE } from './gateway-client.js';
 
@@ -15,8 +18,11 @@ const CUR_KEY = 'cdc.admin.gwCurrent'; // { contentId, sid }：這台電腦上�
 const FIELD_INPUT = { title: '#f-title', question: '#f-title', id: '#f-id', owner: '#f-owner', reviewPeriodMonths: '#f-period', summary: '#sum', answerMarkdown: '#f-wys', bodyMarkdown: '#f-wys', clarificationMarkdown: '#f-wys', introMarkdown: '#f-wys', abstractMarkdown: '#f-wys', publishAt: '#f-publish-at', basedOn: '#f-based-q' };
 
 /**
- * @param {{ exportObj: () => any, loadItem: (item: any, meta?: { contentHash?: string, update?: any }) => Promise<void>|void, getContentId: () => string, exportExtra?: () => Promise<{ companions?: any[], files?: { name: string, base64: string }[] }>|{ companions?: any[], files?: { name: string, base64: string }[] }, fieldInput?: Record<string, string>, onSaved?: (sub: any) => void,
- *   getBaseHash?: () => string|undefined, reloadLatest?: (item: any, version: string, o: { source: 'site'|'gateway' }) => Promise<{ theirs: string[], mine: string[], conflicts: { label: string, yours: string }[] }>, getEditTarget?: () => ({ id: string, type: string, version?: string }|null) }} api
+ * @typedef {{ theirs: string[], mine: string[], conflicts: { label: string, yours: string }[] }} MergeSummary
+ * @typedef {{ companions?: any[], files?: { name: string, base64: string }[], categories?: { items: any[], start: any[] }|null }} Extra
+ * @param {{ exportObj: () => any, loadItem: (item: any, meta?: { contentHash?: string, update?: any, companions?: any[], categories?: any }) => Promise<void>|void, getContentId: () => string, exportExtra?: () => Promise<Extra>|Extra, fieldInput?: Record<string, string>, onSaved?: (sub: any) => void,
+ *   getBaseHash?: () => string|undefined, reloadLatest?: (item: any, version: string, o: { source: 'site'|'gateway', data?: any }) => Promise<MergeSummary>|MergeSummary, getEditTarget?: () => ({ id: string, type: string, version?: string }|null),
+ *   reloadCategories?: (stale: { rows: any[], conflicts: any[] }) => Promise<MergeSummary>|MergeSummary }} api
  *   exportExtra（第四十五輪）：跟內容一起送的配套內容（如新卷期）與附件（PDF、圖），疫情報導後台用；fieldInput：欄位 → 表單選擇器（預設是 /admin/publish/ 的）
  *   第五十二輪：getBaseHash（這頁依哪一版改的）、reloadLatest（載入最新版並重新套用同事的修改）、getEditTarget（修改已上架內容時：開啟時檢查網站版本）——都可省略
  */
@@ -145,18 +151,21 @@ export async function initPublishGateway(api) {
   async function reloadFrom(st) {
     const mine = api.exportObj();
     say('正在載入最新版…');
-    if (st.submissionId) {
+    if (st.kind === 'categories' && api.reloadCategories) { // 疫情報導分類：閘道已附上網站上的主檔，不必再抓
+      const sum = await api.reloadCategories(st.categories ?? { rows: [], conflicts: [] });
+      blocked = ''; paint(); showMerged(sum, mine, '疫情報導的分類已換成網站上最新的主檔，你加或改的分類已重新套用。');
+    } else if (st.submissionId) {
       const [d, c] = await Promise.all([gw.get(`/items/${st.submissionId}`), gw.get(`/items/${st.submissionId}/content`)]);
       if (!d.ok || !c.ok || !c.data?.item) { say(errorText(d.ok ? c : d), 'red'); return; }
       current = d.data; remember();
       try { history.replaceState(null, '', gwLink(st.submissionId)); } catch { /* 不能改網址也沒關係 */ }
       tracked = { sid: current.id, hash: c.data.contentHash };
-      const sum = await api.reloadLatest(c.data.item, c.data.contentHash, { source: 'gateway' });
+      const sum = await api.reloadLatest(c.data.item, c.data.contentHash, { source: 'gateway', data: c.data });
       blocked = ''; paint(); showMerged(sum, mine, c.data.update?.text ?? '');
     } else {
       const r = await gw.get(`/current?contentId=${encodeURIComponent(mine.id)}&type=${encodeURIComponent(mine.type)}`);
       if (!r.ok || !r.data?.item) { say(errorText(r), 'red'); return; }
-      const sum = await api.reloadLatest(r.data.item, r.data.contentHash, { source: 'site' });
+      const sum = await api.reloadLatest(r.data.item, r.data.contentHash, { source: 'site', data: r.data });
       blocked = ''; paint(); showMerged(sum, mine);
     }
     say('已載入最新版，請確認後再存。', 'green');
@@ -167,8 +176,8 @@ export async function initPublishGateway(api) {
     const st = data.stale ?? {};
     const kids = [el('strong', { text: st.kind === 'exists' ? '網站上已經有這個內容 ID' : '這一版還沒有存：別人在你開啟之後改過' }), el('p', { text: data.message })];
     const row = el('div', { class: 'adm-actions' });
-    if (['site', 'draft', 'open', 'moved'].includes(st.kind)) {
-      if (api.reloadLatest) {
+    if (['site', 'draft', 'open', 'moved', 'categories'].includes(st.kind)) {
+      if (st.kind === 'categories' ? api.reloadCategories : api.reloadLatest) {
         const b = el('button', { type: 'button', class: 'adm-btn adm-btn--sm', text: '載入最新版（保留我的修改）' });
         b.addEventListener('click', () => { b.disabled = true; reloadFrom(st).finally(() => { b.disabled = false; }); });
         row.append(b);
@@ -199,15 +208,15 @@ export async function initPublishGateway(api) {
     }
   }
 
-  async function refresh() {
+  async function refresh({ skipGw = false } = {}) {
     const qs = new URLSearchParams(location.search);
     const sid = qs.get('gw');
     blocked = ''; clear(sync);
-    if (sid && /^gw-\d{8}-[0-9a-f]{6}$/.test(sid) && !current) {
+    if (sid && /^gw-\d{8}-[0-9a-f]{6}$/.test(sid) && !current && !skipGw) {
       const [d, c] = await Promise.all([gw.get(`/items/${sid}`), gw.get(`/items/${sid}/content`)]);
       if (d.ok) {
         current = d.data;
-        if (c.ok && c.data?.item) { tracked = { sid, hash: c.data.contentHash }; await api.loadItem(c.data.item, { contentHash: c.data.contentHash, update: c.data.update }); }
+        if (c.ok && c.data?.item) { tracked = { sid, hash: c.data.contentHash }; await api.loadItem(c.data.item, { contentHash: c.data.contentHash, update: c.data.update, companions: c.data.companions, categories: c.data.categories }); }
         remember(); paint();
         say(current.status === 'returned' ? '這筆內容被退回了，請依意見修改後再送審。' : `已開啟送審中的內容（${current.statusLabel}）。`);
         if (c.data?.update) showUpdate(c.data.update);
@@ -232,6 +241,7 @@ export async function initPublishGateway(api) {
     if (api.exportExtra) {
       const extra = await api.exportExtra();
       if (extra?.companions?.length) body.companions = extra.companions;
+      if (extra?.categories) body.categories = extra.categories;
       if (extra?.files?.length) { body.files = extra.files; say(`${kind === 'save' ? '檢查並儲存中' : '檢查並送審中'}（含 ${extra.files.length} 個附件）…`); }
     }
     const r = await gw.post(kind === 'save' ? '/drafts' : '/submit', body);
@@ -253,6 +263,8 @@ export async function initPublishGateway(api) {
   btnSubmit.addEventListener('click', () => act('submit'));
   $('#f-id')?.addEventListener('change', () => { current = null; tracked = null; refresh(); });
   $$('#btn-clear').forEach((b) => b.addEventListener('click', () => { current = null; tracked = null; blocked = ''; clear(sync); paint(); }));
+  // 第五十二輪：編輯頁換了要改的內容（疫情報導的「選文章」）⇒ 重新找這筆內容的送審件、重新檢查網站版本
+  document.addEventListener('adm:gw-target', () => { current = null; tracked = null; refresh({ skipGw: true }); });
   await refresh();
   return gw;
 }

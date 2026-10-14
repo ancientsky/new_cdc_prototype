@@ -23,6 +23,11 @@ export const TYPE_DIR = {
   labtest: 'labtests', research: 'research', job: 'jobs', tender: 'tenders', article: 'articles',
 };
 const COLLECTION_OF = { ...TYPE_DIR, letter: 'news' };
+/**
+ * 第五十二輪：閘道唯一接受的主檔——疫情報導分類主檔（只能跟疫情報導文章一起送）。路徑寫死在這裡，不從送來的資料推，
+ * 更不收前端送的路徑；其他主檔（單位、疾病、詞彙…）與治理設定仍不走閘道。
+ */
+export const CATEGORIES_PATH = 'content/master/bulletin-categories.json';
 export const ID_RE = /^[a-z]+\.[a-z0-9][a-z0-9-]*(?:\.[a-z0-9][a-z0-9-]*)*$/; // 比 schema 再嚴一點：不允許連續的點（避免 ..）
 export const MAX_ID = 120;
 
@@ -68,6 +73,21 @@ export function plainError(raw) {
   return { field, label: field ? labelOf(field) : '內容', message };
 }
 
+/** 分類主檔的一行錯誤 → { field: 'categories', … }（「第 N 個分類（名稱）的英文名稱…」；不出現 JSON 路徑） */
+const CAT_FIELD = { key: '代號', label: '中文名稱', labelEn: '英文名稱', order: '順序', description: '說明', retiredAt: '停用日' };
+function categoryError(raw, rows) {
+  const s = String(raw).replace(/^\[疫情報導分類\] /, '');
+  const m = /^\/(\d+)(?:\/(\w+))? (must .*)$/.exec(s);
+  let message = s;
+  if (m) {
+    const row = rows?.[Number(m[1])];
+    const label = `第 ${Number(m[1]) + 1} 個分類${row?.label ? `「${String(row.label).slice(0, 30)}」` : ''}${m[2] ? `的${CAT_FIELD[m[2]] ?? m[2]}` : ''}`;
+    message = plainAjv(m[3], label).message;
+    if (/additional properties/.test(m[3])) message = `${label}有系統不認得的欄位`;
+  } else if (/^\/? ?must /.test(s)) message = '分類主檔的格式不對';
+  return { field: 'categories', label: '分類管理', message: `分類主檔：${message}` };
+}
+
 /**
  * 由內容決定檔案路徑；任何不合格都回 { ok:false }。路徑只由 type 與 id 推出，並再確認落在 content/ 之內。
  * @returns {{ ok: true, path: string, dir: string } | { ok: false, errors: {field:string,label:string,message:string}[] }}
@@ -105,9 +125,11 @@ export function createValidator({ loadBase = () => loadSite(config) } = {}) {
     reload() { base = null; },
     /**
      * @param {any} item
+     * @param {{ extra?: any[], files?: Record<string, Buffer>|null, categories?: any[]|null }} [opts]
+     *   categories（第五十二輪）：跟疫情報導文章一起送的分類主檔（整份，已合併好）；錯誤以 field 'categories' 回報
      * @returns {{ ok: boolean, path?: string, errors: {field:string|null,label:string,message:string}[] }}
      */
-    validate(item, { extra = [], files = null } = {}) {
+    validate(item, { extra = [], files = null, categories = null } = {}) {
       const where = contentPathOf(item);
       if (where.ok === false) return { ok: false, errors: where.errors };
       const s = site();
@@ -126,8 +148,11 @@ export function createValidator({ loadBase = () => loadSite(config) } = {}) {
       for (const a of adds) { const c = COLLECTION_OF[a.type]; collections[c] = [...(collections[c] ?? []).filter((x) => !ids.has(x.id) && x !== a), a]; }
       const all = [...s.all.filter((x) => !ids.has(x.id)), ...adds];
       const byId = new Map(s.byId); for (const a of adds) byId.set(a.id, a);
-      const view = { ...s, collections, all, byId };
+      // 第五十二輪：疫情報導分類主檔跟文章一起送時，換成送來的那一份（文章的「分類存在」也依它檢查），並一起檢查主檔本身
+      const master = categories ? { ...s.master, bulletinCategories: structuredClone(categories) } : s.master;
+      const view = { ...s, collections, all, byId, master };
       const prefix = `${where.path}: `;
+      const catPrefix = `${CATEGORIES_PATH}: `;
       const mine = (e) => e.startsWith(prefix) || e === `重複 id：${item.id}`;
       // 附件：送來的檔案（與這筆已在站上的檔案）放進暫存目錄，用建置同一套 validateAssets 查 bytes／sha256／mime／內容；查完就刪
       const assetErrors = (() => {
@@ -144,9 +169,11 @@ export function createValidator({ loadBase = () => loadSite(config) } = {}) {
           return validateAssets(view, config, { assetsDir: tmp }).errors.map((e) => String(e).split(rel).join('content/assets'));
         } finally { fs.rmSync(tmp, { recursive: true, force: true }); }
       })();
-      const raw = [...validateSite(view).filter(mine), ...assetErrors.filter(mine)].map((e) => e.startsWith(prefix) ? e.slice(prefix.length) : e);
+      const siteErrors = validateSite(view);
+      const raw = [...siteErrors.filter(mine), ...assetErrors.filter(mine)].map((e) => e.startsWith(prefix) ? e.slice(prefix.length) : e);
       const seen = new Set();
-      const errors = raw.map(plainError).filter((e) => { const k = `${e.field}|${e.message}`; if (seen.has(k)) return false; seen.add(k); return true; });
+      const catErrors = categories ? siteErrors.filter((e) => e.startsWith(catPrefix)).map((e) => categoryError(e.slice(catPrefix.length), categories)) : [];
+      const errors = [...raw.map(plainError), ...catErrors].filter((e) => { const k = `${e.field}|${e.message}`; if (seen.has(k)) return false; seen.add(k); return true; });
       return { ok: errors.length === 0, path: where.path, errors };
     },
   };

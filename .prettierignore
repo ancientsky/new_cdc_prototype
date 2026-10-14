@@ -92,3 +92,5 @@ eval/**/*.mjs
 # 第五十二輪：其他四個編輯頁以現行版為底合併（docs/deploy.md §24）
 !src/client/admin/edit-merge.js
 !tests/round52-editors-preserve.test.mjs
+# 第五十二輪合併後：疫情報導編輯頁的版本檢查、分類主檔經閘道送審（docs/deploy.md §23.5、§24.7）
+!tests/round52-bulletin-gateway.test.mjs

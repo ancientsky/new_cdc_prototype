@@ -328,6 +328,52 @@ export function categoriesJson(cats, original = []) {
   const line = (o) => `{ ${Object.entries(o).map(([k, v]) => `${JSON.stringify(k)}: ${JSON.stringify(v)}`).join(', ')} }`;
   return `[\n${rows.map((o) => `  ${line(o)}`).join(',\n')}\n]\n`;
 }
+/** 分類一列「表單管得到的欄位」（比對用；表單沒有的鍵不算修改） */
+export const categoryRow = ({ key, label, labelEn, order, description, retiredAt } = {}) => clean({ key, label, labelEn, order, description, retiredAt });
+const sameCat = (a, b) => JSON.stringify(a ? categoryRow(a) : null) === JSON.stringify(b ? categoryRow(b) : null);
+/**
+ * 分類主檔的三方合併（第五十二輪，docs/deploy.md §24.7）：以「分類代號」為單位。
+ * start＝同事開始改時的分類（頁面載入時的主檔，或送審件開始時的主檔）、mine＝表單上的分類、theirs＝現在網站上（main）的主檔。
+ * 只有一方改的分類用那一方；兩方改成一樣照用；兩方把同一個分類改得不一樣 ⇒ 衝突，先用網站上的（不悄悄蓋掉別人），同事的值列出來。
+ * 為什麼不整份比對版本碼：分類主檔是所有文章共用的一個檔，別人加了一個不相干的分類，不該讓這一篇存不進去；
+ * 以代號為單位合併，兩個人各加一個分類時兩個都會在。
+ * @returns {{ rows: any[], conflicts: { key: string, label: string, yours: any }[], theirs: string[], mine: string[] }}
+ *   rows：合併後的分類（交給 categoriesJson 排序與排版）；theirs／mine：開始之後網站上／同事各改了哪些代號
+ */
+export function mergeCategories(start, mine, theirs) {
+  const by = (list) => new Map((Array.isArray(list) ? list : []).filter((c) => c && typeof c === 'object').map((c) => [String(c.key), c]));
+  const S = by(start), M = by(mine), T = by(theirs);
+  const rows = [], conflicts = [], theirsChanged = [], mineChanged = [];
+  for (const k of new Set([...T.keys(), ...M.keys(), ...S.keys()])) {
+    const s0 = S.get(k), m = M.get(k), t = T.get(k);
+    if (!sameCat(s0, t)) theirsChanged.push(k);
+    if (!sameCat(s0, m)) mineChanged.push(k);
+    let v;
+    if (sameCat(m, s0) || sameCat(m, t)) v = t;
+    else if (sameCat(t, s0)) v = m;
+    else { v = t; conflicts.push({ key: k, label: (m ?? t ?? s0)?.label ?? k, yours: m ? categoryRow(m) : null }); }
+    if (v) rows.push(v);
+  }
+  return { rows, conflicts, theirs: theirsChanged, mine: mineChanged };
+}
+/** 分類主檔改了什麼（給審核人看的白話句子）：新增、停用、改了哪些欄位、刪除 */
+export function categoryChanges(before, after) {
+  const B = new Map((before ?? []).map((c) => [c.key, c])), A = new Map((after ?? []).map((c) => [c.key, c]));
+  const NAME = { label: '中文名稱', labelEn: '英文名稱', order: '順序', description: '說明' };
+  const out = [];
+  for (const [k, a] of A) {
+    const b = B.get(k);
+    if (!b) { out.push(`新增分類「${a.label}」（代號 ${k}）`); continue; }
+    if (sameCat(a, b)) continue;
+    const ra = categoryRow(a), rb = categoryRow(b);
+    if (ra.retiredAt && !rb.retiredAt) out.push(`停用分類「${a.label}」`);
+    else if (!ra.retiredAt && rb.retiredAt) out.push(`恢復使用分類「${a.label}」`);
+    const fields = Object.keys(NAME).filter((f) => ra[f] !== rb[f]);
+    if (fields.length) out.push(`修改分類「${rb.label}」：${fields.map((f) => NAME[f]).join('、')}`);
+  }
+  for (const [k, b] of B) if (!A.has(k)) out.push(`刪除分類「${b.label}」（代號 ${k}）`);
+  return out;
+}
 /** 新分類的預設代號：英文名轉小寫連字號；沒有英文名就 cat-N */
 export function suggestCategoryKey(labelEn, existing = []) {
   let key = String(labelEn ?? '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 30);

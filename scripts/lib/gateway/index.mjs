@@ -12,13 +12,17 @@
 //   GET  /api/gateway/items?view=mine|queue|all&contentId=   → { items: [...] }
 //   GET  /api/gateway/items/:id              → 送審件（狀態、歷程、意見、能做什麼）
 //   GET  /api/gateway/items/:id/diff         → 白話欄位差異
-//   GET  /api/gateway/items/:id/content      → { item, contentHash, update? } 目前這版的內容（承辦人被退回後重新開啟用）；
+//   GET  /api/gateway/items/:id/content      → { item, contentHash, update?, companions?, categories? } 目前這版的內容（承辦人被退回後重新開啟用）；
+//        companions／categories（第五十二輪）：一起送的配套內容與分類主檔，編輯頁重新開啟時帶回表單；
 //        contentHash＝版本碼（第五十二輪），存檔時以 baseHash 帶回；update＝送審件開始後網站版本變了，內容已三方合併（§23）
 //   GET  /api/gateway/current?contentId=&type=&base=   → { exists, contentHash, item, open, stale? }
 //        修改已上架內容（?edit=）開啟時用：main 上的現行版、進行中的送審件、頁面上的版本（base）是否已過期（第五十二輪）
 //   GET  /api/gateway/items/:id/preview      → 預覽頁（HTML；CSP sandbox，不執行任何腳本）
-//   POST /api/gateway/drafts                 { item, submissionId?, baseHash? }  儲存草稿
-//   POST /api/gateway/submit                 { item?, submissionId?, baseHash? } 送審
+//   POST /api/gateway/drafts                 { item, submissionId?, baseHash?, companions?, files?, categories? }  儲存草稿
+//   POST /api/gateway/submit                 { item?, submissionId?, baseHash?, companions?, files?, categories? } 送審
+//        categories（第五十二輪，docs/deploy.md §24.7）：{ items, start }＝疫情報導分類主檔（表單上的與開始改時的；各最多 60 列），
+//        只能跟疫情報導文章一起送；閘道以分類代號為單位合併到網站上的主檔再寫入，路徑由閘道決定（不收路徑）。
+//        同一個分類兩邊改得不一樣 ⇒ 409 stale（kind: categories，附網站上的主檔與衝突的分類）。
 //        baseHash（第五十二輪）：開啟時的版本碼（src/client/admin/content-version.js；新內容為 'new'）。與現在的版本不同 ⇒
 //        409 { error: 'stale', message, stale: { kind, by[], fields[], contentHash, submissionId? } }，不寫入；網站上已有同 ID ⇒ 409 exists。
 //        沒帶 ⇒ 照舊接受（舊版頁面、其他編輯頁），稽核記 baseHash: missing。回應多帶 contentHash（存好的這一版的版本碼）。
@@ -152,6 +156,13 @@ export function createGatewayApi(opts = {}) {
     if (list == null) return [];
     if (!Array.isArray(list) || list.length > 3 || list.some((x) => !x || typeof x !== 'object' || Array.isArray(x))) throw new GatewayError(400, 'bad_companions', '配套內容格式不對（最多 3 筆）');
     return list;
+  }
+  /** 疫情報導分類主檔（第五十二輪）：{ items: [...], start: [...] }，各最多 60 列、每列是物件；格式不對就 400（內容由 validate-item.mjs 用建置同一套規則檢查） */
+  function decodeCategories(v) {
+    if (v == null) return null;
+    const rows = (x) => Array.isArray(x) && x.length <= 60 && x.every((r) => r && typeof r === 'object' && !Array.isArray(r));
+    if (typeof v !== 'object' || Array.isArray(v) || !rows(v.items) || !rows(v.start)) throw new GatewayError(400, 'bad_categories', '分類主檔格式不對（最多 60 個分類）', [{ field: 'categories', label: '分類管理', message: '分類主檔格式不對（最多 60 個分類）' }]);
+    return { items: v.items, start: v.start };
   }
   // 超過上限時不能中途 break：那會毀掉請求串流，連線被重設，客戶端只看到「fetch failed」而收不到 413
   // （第三十輪 CI 實測：本機常常剛好收得到，GitHub runner 上收不到）。所以超過後只丟棄、讀完再回 413。
@@ -288,7 +299,7 @@ export function createGatewayApi(opts = {}) {
         if (Buffer.byteLength(JSON.stringify(rest), 'utf8') > MAX_BODY) throw new GatewayError(413, 'too_large', '內容太大（上限 512 KB）；附件請另外處理');
         const decoded = decodeFiles(files);
         const companions = decodeCompanions(body.companions);
-        const args = { item: body.item, submissionId: typeof body.submissionId === 'string' ? body.submissionId : undefined, files: decoded, companions, reReview: body.reReview === true, baseHash: baseOf(body.baseHash) };
+        const args = { item: body.item, submissionId: typeof body.submissionId === 'string' ? body.submissionId : undefined, files: decoded, companions, reReview: body.reReview === true, baseHash: baseOf(body.baseHash), categories: decodeCategories(body.categories) };
         if (sub === '/drafts') return send(res, 200, await workflow.saveDraft(p, args));
         return send(res, 200, await workflow.submit(p, args, ctx));
       }
