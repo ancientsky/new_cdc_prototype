@@ -6458,6 +6458,124 @@
         "lowRelevance": false
       },
       "note": "第五十輪（2026-10-14 Yulun 決定「開放給民眾版」）：原本只給專業版的申請服務頁加上民眾對象，民眾模式也能回答"
+    },
+    {
+      "id": "R50-21",
+      "category": "apply",
+      "requires": [
+        "service.lab-test-request"
+      ],
+      "q": "診所要怎麼送檢體",
+      "expect": {
+        "refuse": false,
+        "intent": "apply",
+        "mustCite": [
+          "service.lab-test-request"
+        ],
+        "action": "/apply/lab-test-request/",
+        "lowRelevance": false
+      },
+      "note": "第五十輪（2026-10-14，Yulun 開放「診所送檢體」服務頁給民眾版）：問送驗流程（怎麼送、可以直接寄到…嗎、要準備什麼）、沒點名疾病、沒問檢體規格 ⇒ 由檢驗委託服務頁回答"
+    },
+    {
+      "id": "R50-22",
+      "category": "apply",
+      "requires": [
+        "service.lab-test-request"
+      ],
+      "q": "檢體可以直接寄到疾管署嗎",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "service.lab-test-request"
+        ],
+        "mustInclude": [
+          "衛生局"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十輪（2026-10-14，Yulun 開放「診所送檢體」服務頁給民眾版）：問送驗流程（怎麼送、可以直接寄到…嗎、要準備什麼）、沒點名疾病、沒問檢體規格 ⇒ 由檢驗委託服務頁回答"
+    },
+    {
+      "id": "R50-23",
+      "category": "apply",
+      "requires": [
+        "service.lab-test-request"
+      ],
+      "q": "送驗要準備什麼",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "service.lab-test-request"
+        ],
+        "mustInclude": [
+          "送驗單"
+        ],
+        "mustNotCite": [
+          "service.vaccine-fund-donation",
+          "service.travel-clinic-appointment"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第五十輪（2026-10-14，Yulun 開放「診所送檢體」服務頁給民眾版）：問送驗流程（怎麼送、可以直接寄到…嗎、要準備什麼）、沒點名疾病、沒問檢體規格 ⇒ 由檢驗委託服務頁回答；只引檢驗委託，不混其他服務的應備文件"
+    },
+    {
+      "id": "R50-24",
+      "category": "apply",
+      "view": "pro",
+      "requires": [
+        "service.lab-test-request"
+      ],
+      "q": "診所要怎麼送檢體",
+      "expect": {
+        "refuse": false,
+        "mustCite": [
+          "service.lab-test-request"
+        ]
+      },
+      "note": "第五十輪（2026-10-14，Yulun 開放「診所送檢體」服務頁給民眾版）：問送驗流程（怎麼送、可以直接寄到…嗎、要準備什麼）、沒點名疾病、沒問檢體規格 ⇒ 由檢驗委託服務頁回答（專業模式同理：檢驗項目表不回答流程）"
+    },
+    {
+      "id": "R50-25",
+      "category": "lab",
+      "requires": [
+        "labtest.measles"
+      ],
+      "q": "麻疹檢體要怎麼送",
+      "expect": {
+        "refuse": true,
+        "refusalKind": "pro-only",
+        "intent": "lab",
+        "action": "view=pro"
+      },
+      "note": "第五十輪的反向題：問某項檢驗的檢體規格（點名疾病，或問容器、保存、溫度等）⇒ 民眾模式仍導向專業模式（同 LB007）（點名疾病：各疾病的運送條件在檢驗項目表）"
+    },
+    {
+      "id": "R50-26",
+      "category": "lab",
+      "requires": [
+        "labtest.influenza"
+      ],
+      "q": "流感檢體保存溫度",
+      "expect": {
+        "refuse": true,
+        "refusalKind": "pro-only",
+        "intent": "lab",
+        "action": "view=pro"
+      },
+      "note": "第五十輪的反向題：問某項檢驗的檢體規格（點名疾病，或問容器、保存、溫度等）⇒ 民眾模式仍導向專業模式（同 LB007）"
+    },
+    {
+      "id": "R50-27",
+      "category": "lab",
+      "q": "檢體要用什麼容器",
+      "expect": {
+        "refuse": true,
+        "refusalKind": "pro-only",
+        "intent": "lab",
+        "action": "view=pro"
+      },
+      "note": "第五十輪的反向題：問某項檢驗的檢體規格（點名疾病，或問容器、保存、溫度等）⇒ 民眾模式仍導向專業模式（同 LB007）（沒點名疾病但問容器規格）"
     }
   ]
 }
