@@ -12,14 +12,20 @@
 //   GET  /api/gateway/items?view=mine|queue|all&contentId=   → { items: [...] }
 //   GET  /api/gateway/items/:id              → 送審件（狀態、歷程、意見、能做什麼）
 //   GET  /api/gateway/items/:id/diff         → 白話欄位差異
-//   GET  /api/gateway/items/:id/content      → 目前這版的內容 JSON（承辦人被退回後重新開啟用）
+//   GET  /api/gateway/items/:id/content      → { item, contentHash, update? } 目前這版的內容（承辦人被退回後重新開啟用）；
+//        contentHash＝版本碼（第五十二輪），存檔時以 baseHash 帶回；update＝送審件開始後網站版本變了，內容已三方合併（§23）
+//   GET  /api/gateway/current?contentId=&type=&base=   → { exists, contentHash, item, open, stale? }
+//        修改已上架內容（?edit=）開啟時用：main 上的現行版、進行中的送審件、頁面上的版本（base）是否已過期（第五十二輪）
 //   GET  /api/gateway/items/:id/preview      → 預覽頁（HTML；CSP sandbox，不執行任何腳本）
-//   POST /api/gateway/drafts                 { item, submissionId? }  儲存草稿
-//   POST /api/gateway/submit                 { item?, submissionId? } 送審
+//   POST /api/gateway/drafts                 { item, submissionId?, baseHash? }  儲存草稿
+//   POST /api/gateway/submit                 { item?, submissionId?, baseHash? } 送審
+//        baseHash（第五十二輪）：開啟時的版本碼（src/client/admin/content-version.js；新內容為 'new'）。與現在的版本不同 ⇒
+//        409 { error: 'stale', message, stale: { kind, by[], fields[], contentHash, submissionId? } }，不寫入；網站上已有同 ID ⇒ 409 exists。
+//        沒帶 ⇒ 照舊接受（舊版頁面、其他編輯頁），稽核記 baseHash: missing。回應多帶 contentHash（存好的這一版的版本碼）。
 //   POST /api/gateway/rereview               { contentId, type, note? } 送出重新審閱（第五十輪：內容不改，現行版原樣送審；核准後只更新最後審閱日）
 //        /submit 另收 reReview: true（修改到期內容時一併標為重新審閱）
 //   POST /api/gateway/items/:id/return       { comment }              退回修改（意見必填）
-//   POST /api/gateway/items/:id/approve      { comment? }             核准上線
+//   POST /api/gateway/items/:id/approve      { comment? }             核准上線（送審期間網站版本變了 ⇒ 409 outdated，不記核准）
 //   GET  /api/gateway/intl-epidemic/status   → { lastRun, history }   國際疫情匯入紀錄（第四十三輪；docs/intl-epidemic.md）
 //   POST /api/gateway/intl-epidemic/import   { feed, mode?, dry? }    後台手動匯入（feed：v1 物件、舊官網匯出列或 CSV 字串；本體 ≤ 2 MB）
 //        只有疫情中心的編輯／審核或跨單位角色可用；與推送端點同一段上架流程（scripts/lib/intl-epidemic-publish.mjs），held → 202
@@ -122,7 +128,9 @@ export function createGatewayApi(opts = {}) {
     res.end(JSON.stringify(body));
     return true;
   };
-  const err = (res, status, code, message, fields) => send(res, status, { error: code, message, ...(fields ? { fields } : {}) });
+  const err = (res, status, code, message, fields, extra) => send(res, status, { error: code, message, ...(fields ? { fields } : {}), ...(extra ?? {}) });
+  /** 版本碼：'new' 或 v1-…（合併後的是兩段以 + 相接）；格式不對就當沒帶 */
+  const baseOf = (v) => (typeof v === 'string' && /^(new|v1-[0-9a-z-]{8,64}(\+v1-[0-9a-z-]{8,64}|\+new)?)$/.test(v) ? v : undefined);
 
   /** 附件：[{ name, base64 }] → { name: Buffer }；檔名只收 content/assets 規則允許的字元（路徑由伺服器決定，不收路徑） */
   function decodeFiles(files) {
@@ -226,6 +234,11 @@ export function createGatewayApi(opts = {}) {
           if (!canImportIntl(p)) return err(res, 403, 'forbidden', INTL_DENIED);
           return send(res, 200, readImportRecord(opts.intl?.snapshotsDir));
         }
+        if (sub === '/current') {
+          const cid = String(searchParams.get('contentId') ?? ''), type = String(searchParams.get('type') ?? '');
+          if (!/^[a-z]+\.[a-z0-9.-]{1,120}$/.test(cid) || !/^[a-z]{2,20}$/.test(type)) return err(res, 400, 'bad_query', '缺少內容 ID 或型別');
+          return send(res, 200, await workflow.current(p, { contentId: cid, type, base: baseOf(searchParams.get('base')) }));
+        }
         if (sub === '/session') return send(res, 200, { user: { account: p.account, name: p.name, unit: p.primaryUnit, units: p.units, roles: p.roles }, csrfToken: csrfFor(p) });
         if (sub === '/items') {
           const v = ['mine', 'queue', 'all'].includes(String(searchParams.get('view'))) ? String(searchParams.get('view')) : 'mine';
@@ -236,7 +249,7 @@ export function createGatewayApi(opts = {}) {
         if (m) {
           if (!m[2]) return send(res, 200, workflow.detail(p, m[1]));
           if (m[2] === '/diff') return send(res, 200, await workflow.diff(p, m[1]));
-          if (m[2] === '/content') return send(res, 200, { item: await workflow.content(p, m[1]) });
+          if (m[2] === '/content') return send(res, 200, await workflow.contentFor(p, m[1]));
           const item = await workflow.content(p, m[1]);
           res.statusCode = 200;
           res.setHeader('Content-Type', 'text/html; charset=utf-8');
@@ -275,7 +288,7 @@ export function createGatewayApi(opts = {}) {
         if (Buffer.byteLength(JSON.stringify(rest), 'utf8') > MAX_BODY) throw new GatewayError(413, 'too_large', '內容太大（上限 512 KB）；附件請另外處理');
         const decoded = decodeFiles(files);
         const companions = decodeCompanions(body.companions);
-        const args = { item: body.item, submissionId: typeof body.submissionId === 'string' ? body.submissionId : undefined, files: decoded, companions, reReview: body.reReview === true };
+        const args = { item: body.item, submissionId: typeof body.submissionId === 'string' ? body.submissionId : undefined, files: decoded, companions, reReview: body.reReview === true, baseHash: baseOf(body.baseHash) };
         if (sub === '/drafts') return send(res, 200, await workflow.saveDraft(p, args));
         return send(res, 200, await workflow.submit(p, args, ctx));
       }
@@ -288,7 +301,7 @@ export function createGatewayApi(opts = {}) {
       if (m && m[2] === 'approve') return send(res, 200, await workflow.approve(p, { submissionId: m[1], comment: body.comment }, ctx));
       return err(res, 404, 'notfound', '找不到');
     } catch (e) {
-      if (e instanceof GatewayError) return err(res, e.status, e.code, e.message, e.fields);
+      if (e instanceof GatewayError) return err(res, e.status, e.code, e.message, e.fields, e.extra);
       console.error('[gateway]', e?.message ?? e);
       return err(res, 500, 'server', '系統暫時無法處理，請稍後再試；若持續發生請洽資訊室');
     }

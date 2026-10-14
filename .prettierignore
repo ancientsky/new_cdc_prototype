@@ -86,3 +86,6 @@ eval/**/*.mjs
 !src/client/search-bestbet.js
 !src/templates/public/_bestbet.mjs
 !tests/round51-search-bestbet.test.mjs
+# 第五十二輪：同時修改的版本檢查（docs/deploy.md §23）
+!src/client/admin/content-version.js
+!tests/round52-concurrent-edit.test.mjs
